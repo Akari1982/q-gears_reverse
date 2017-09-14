@@ -1631,10 +1631,10 @@ Lad894:	; 800AD894
     V1 = w[S0];
     if( V1 == 0 )
     {
-        A0 = w[S0 + c];
-        A1 = S1 + w[S0 + 4];
-        A2 = w[S0 + 8];
-        func42d98;
+        A0 = w[S0 + c]; // dst
+        A1 = S1 + w[S0 + 4]; // src
+        A2 = w[S0 + 8]; // len
+        system_bios_memcpy();
     }
     else if( V1 == 1 ) // replace image block in global texture
     {

@@ -1,7 +1,7 @@
 ////////////////////////////////
 // func1c8d4
 
-func1c808();
+system_get_current_pad_buttons();
 
 8001C8E4	addu   a2, v0, zero
 8001C8E8	lui    v1, $ffff
@@ -47,53 +47,6 @@ L1c96c:	; 8001C96C
 
 L1c970:	; 8001C970
 return A0 | A3;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func1c808()
-if( w[80062fa0] == 0 )
-{
-    if( bu[800696ac] != ff )
-    {
-        if( bu[800696ad] == 41 )
-        {
-            A0 = (bu[800696ae] << 8) NOR bu[800696af];
-        }
-        else
-        {
-            A0 = 0;
-        }
-    }
-    else
-    {
-        A0 = 0;
-    }
-}
-else // tutorial
-{
-    func1c788(); // return pressed button
-    A0 = V0;
-}
-
-if( bu[800696ce] != ff )
-{
-    if( bu[800696cf] == 41 )
-    {
-        V0 = bu[800696d1] NOR (bu[800696d0] << 8);
-    }
-    else
-    {
-        V0 = 0;
-    }
-}
-else
-{
-    V0 = 0;
-}
-
-return (V0 << 10) | (A0 & ffff);
 ////////////////////////////////
 
 
@@ -254,4 +207,110 @@ switch( V1 )
 }
 
 return 0000;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_current_pad_buttons()
+
+if( w[80062fa0] == 0 ) // input enabled
+{
+    if( bu[800696ac] != ff ) // if data ok
+    {
+        if( bu[800696ac + 1] == 41 ) // digital_pad
+        {
+            A0 = (bu[800696ac + 2] << 8) NOR bu[800696ac + 3]; // get buttons state
+        }
+        else
+        {
+            A0 = 0;
+        }
+    }
+    else
+    {
+        A0 = 0;
+    }
+}
+else // for tutorial
+{
+    func1c788();
+    A0 = V0;
+}
+
+// second controller
+if( bu[800696ac + 22] != ff )
+{
+    if( bu[800696ac + 22 + 1] == 41 )
+    {
+        V0 = (bu[800696ac + 22 + 2] << 8) NOR bu[800696ac + 22 + 3];
+    }
+    else
+    {
+        V0 = 0;
+    }
+}
+else
+{
+    V0 = 0;
+}
+
+return (V0 << 10) | (A0 & ffff);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c498()
+V1 = bu[800696ac];
+
+8001C4A0	ori    v0, zero, $00ff
+8001C4A4	beq    v1, v0, L1c4e0 [$8001c4e0]
+8001C4A8	addu   v0, zero, zero
+8001C4AC	lui    v1, $8007
+8001C4B0	lbu    v1, $96ad(v1)
+8001C4B4	ori    v0, zero, $0041
+8001C4B8	bne    v1, v0, L1c4dc [$8001c4dc]
+8001C4BC	nop
+8001C4C0	lui    v0, $8007
+8001C4C4	lbu    v0, $96ae(v0)
+8001C4C8	lui    v1, $8007
+8001C4CC	lbu    v1, $96af(v1)
+8001C4D0	sll    v0, v0, $08
+8001C4D4	j      L1c4e0 [$8001c4e0]
+8001C4D8	nor    v0, v1, v0
+
+L1c4dc:	; 8001C4DC
+8001C4DC	addu   v0, zero, zero
+
+L1c4e0:	; 8001C4E0
+8001C4E4	andi   v0, v0, $ffff
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c434()
+
+if( bu[GP + 2c] == 0 )
+{
+    [GP + 2c] = b(1);
+
+    system_bios_start_pad();
+
+    A0 = 800696ac;
+    A1 = 4;
+    A2 = 800696ac + 22;
+    A3 = 4;
+    system_bios_init_pad();
+}
+[80062fa0] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cebc()
+
+system_bios_stop_pad();
 ////////////////////////////////

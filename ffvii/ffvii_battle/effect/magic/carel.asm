@@ -105,7 +105,7 @@ if (bu[80062d98] == 0)
 
     S3 = 0;
     L01a4:	; 800001A4
-        func42da8; // random
+        system_bios_rand();
         bone = (h[S1 + 14] + (V0 & 3) + 1) % number_of_bones;
 
         [S1 + 14] = h(bone);
@@ -119,19 +119,19 @@ if (bu[80062d98] == 0)
         A2 = S0 + 4;
         battle_get_point_by_model_bone;
 
-        func42da8; // random
+        system_bios_rand();
         [S0 + 4] = h(hu[S0 + 4] + (V0 % 1f4) - fa);
 
-        func42da8; // random
+        system_bios_rand();
         [S0 + 6] = h(hu[S0 + 6] + (V0 % 1f4) - fa);
 
-        func42da8; // random
+        system_bios_rand();
         [S0 + 8] = h(hu[S0 + 8] + (V0 % 1f4) - fa);
 
         [S0 + d] = b(bu[S1 + d]);
         [S0 + e] = h(hu[S1 + e]);
 
-        func42da8; // random
+        system_bios_rand();
         [S0 + 10] = h(V0 & fff + 1000);
         [S0 + 16] = h(hu[S1 + 16]);
 

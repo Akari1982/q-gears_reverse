@@ -372,8 +372,8 @@ else
 ////////////////////////////////
 // funca2f78()
 
-800A2F80	jal    func1c808 [$8001c808]
-800A2F84	nop
+system_get_current_pad_buttons();
+
 800A2F88	lui    v1, $800a
 800A2F8C	lw     v1, $ac5c(v1)
 800A2F90	lui    at, $8011

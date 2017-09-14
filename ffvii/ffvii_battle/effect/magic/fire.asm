@@ -52,7 +52,7 @@ if (V1 == 0)
         funcbbeac; // fire effect
         S0 = 80162978 + V0 * 20;
 
-        func42da8; // random
+        system_bios_rand();
         rand = V0 & f;
 
         [S1 + 6] = h((h[S1 + 6] + rand + 1) % h[801518e4 + h[S1 + 4] * b9c + 10]); // % by number of bones in target model

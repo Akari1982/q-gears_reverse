@@ -44,13 +44,13 @@ if( bu[80062d98] == 0 )
                 A1 = S2 + 8;
                 funcd3a6c; // set effect start position
 
-                func42da8; // random
+                system_bios_rand();
                 [SP + 30] = h(-3c - V0 & f);
 
-                func42da8; // random
+                system_bios_rand();
                 [SP + 32] = h(V0 & 1f - 96);
 
-                func42da8; // random
+                system_bios_rand();
                 [SP + 34] = h(V0 & f + 14);
 
                 A0 = 801518e4 + h[S1 + 6] * b9c + 160; // attacker root rotation data
@@ -154,7 +154,7 @@ else
 V0 = h[801590d4];
 S1 = 801621f0 + V0 * 20;
 
-func42da8; // some random
+system_bios_rand();
 [800f1956] = h(V0 & 3ff); // random Y rotation
 
 A0 = 800f1954;
@@ -271,15 +271,15 @@ if (V1 == 0)
     {
         [S0 + a] = h(-h[S0 + a] / 4);
 
-        func42da8; // random
+        system_bios_rand();
         V0 = V0 & 1f;
         [S0 + 10] = h((h[S0 + 10] / 4) + V0 - 10);
 
-        func42da8; // random
+        system_bios_rand();
         V0 = V0 & 1f;
         [S0 + 12] = h(-h[S0 + 12] / 4 - V0);
 
-        func42da8; // random
+        system_bios_rand();
         V0 = V0 & 1f;
         [S0 + 14] = hu(h[S0 + 14] / 4 + V0 - 10);
 

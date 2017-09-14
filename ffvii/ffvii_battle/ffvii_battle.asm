@@ -26665,7 +26665,7 @@ Ld6f58:	; 800D6F58
 800D7010	swr    v0, $0004(s1)
 800D7014	swl    v1, $000b(s1)
 800D7018	swr    v1, $0008(s1)
-800D701C	jal    func42da8 [$80042da8]
+800D701C	jal    system_bios_rand [$80042da8]
 800D7020	nop
 800D7024	andi   s0, v0, $0fff
 800D7028	jal    system_get_sin [$80039a74]

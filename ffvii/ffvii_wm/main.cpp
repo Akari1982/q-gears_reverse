@@ -496,7 +496,7 @@ La4cc8:	; 800A4CC8
 800A4CCC	jal    funca141c [$800a141c]
 800A4CD0	sra    a0, a0, $10
 
-800A4CD4	jal    func1c808 [$8001c808]
+system_get_current_pad_buttons();
 
 if( ( V0 & 90f ) == 90f ) // reset game if all shifts and start + select pressed
 {

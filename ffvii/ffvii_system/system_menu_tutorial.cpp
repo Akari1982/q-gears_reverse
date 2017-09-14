@@ -84,10 +84,10 @@ if( bu[GP + 97] == 0 )
 ////////////////////////////////
 // func1cb48
 
-func1c808; // lower two bytes of return is input mask
+system_get_current_pad_buttons();
 
 A1 = V0;
-[80062d80] = h(A1 >> 10);
+[80062d80] = h(A1 >> 10); // second pad buttons mask
 
 if( ( ( hu[8009d7be] >> 2 ) & 3 == 0 ) || ( w[80062fa0] == 0 ) )
 {
