@@ -1,0 +1,1 @@
+adisasm cnfgmenu.mnu cnfgmenu1.asm -v -b 801d0000 801d0000 -u -a
