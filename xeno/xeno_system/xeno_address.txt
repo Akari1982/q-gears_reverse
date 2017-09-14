@@ -1,22 +1,68 @@
+8004e948 array if file indexes in dir 0_1.
+8004e9ac [][][][] -1 during battle load.
+8004e9c8 [][][][] store here value from 800b1774 + encounter * 2.
+8004e9d4 [][][][] looks like current field.
+8004e9d8 [][][][] init with -1 after field load and set to 0 when start field load.
+8004e9dc [][][][] compare this with value from 800b1774 + encounter * 2 during battle load.
+8004e9ec [][][][] store here 1 in some cases during battle load.
+8004e9f0 [][][][] field id to load.
+
+8004f23c store 4 points xyz for sprite tile during calculation in func1e264
++00 [][] x0
++02 [][] y0
++04 [][] z0
++06 [][]
++08 [][] x1
++0a [][] y1
++0c [][] z1
++0e [][]
++10 [][] x3
++12 [][] y3
++14 [][] z3
++16 [][]
++18 [][] x2
++1a [][] y2
++1c [][] z2
++1e [][]
+
+
+
+8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
+8004f498 [][][][] ???
+8004f49c [][][][] file size to load.
+8004f4a0 [][][][] store 1 here before load.
+8004f4a8 [][][][] file sector to load.
+8004f4ac [][][][] pointer to allocated memory for file load.
+8004f4b0 [][][][] 0
+8004f4b4 [][][][] 0
+8004f4b8 [][][][] start id of files in dir or some marker.
+8004f4c0 [][][][] store 8004f4b8 here at start of loading.
+8004f4d4 [][][][] pointer to allocated memory for file load.
+8004f4d8 [][][][] 0
+8004f4dc [][][][] some func param (0).
+8004f4ec [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
+
+
+
 8004f4f4 data for load 3d data.
 // load_poly functions
 //                                                         18       1c       20       24
-//00 48DE0280 30EB0280 80E20280 ECE60280 48DE0280 48DE0280 DCCB0280 08000000 04000000 14000000
-//01 5CDE0280 F0F00280 94E20280 00E70280 1CED0280 F4EE0280 24D60280 08000000 08000000 20000000 textured monochrome triangle (with lighting calculation)
-//02 34DE0280 C4F40280 6CE20280 D8E60280 34DE0280 34DE0280 BCD40280 08000000 04000000 1C000000
-//03 20DE0280 C4F20280 58E20280 C4E60280 20DE0280 20DE0280 24D80280 08000000 08000000 28000000 textured gourad triangle (with lighting calculation)
-//04 48DE0280 48DE0280 80E20280 ECE60280 48DE0280 48DE0280 44CD0280 08000000 04000000 14000000 monochrome triangle
-//05 5CDE0280 5CDE0280 94E20280 00E70280 1CED0280 F4EE0280 94D70280 08000000 08000000 20000000 textured monochrome triangle
-//06 34DE0280 34DE0280 6CE20280 D8E60280 34DE0280 34DE0280 8CD50280 08000000 04000000 1C000000
-//07 20DE0280 20DE0280 58E20280 C4E60280 20DE0280 20DE0280 24D80280 08000000 08000000 28000000
-//08 64E00280 E0F60280 84E40280 F0E80280 64E00280 64E00280 68CD0280 08000000 04000000 18000000
-//09 78E00280 F8F80280 98E40280 04E90280 0CFB0280 1CFD0280 40D30280 08000000 0C000000 28000000 textured monochrome quad (with lighting calculation)
-//0a 50E00280 50E00280 70E40280 DCE80280 50E00280 50E00280 90CF0280 08000000 04000000 24000000
-//0b 3CE00280 3CE00280 5CE40280 C8E80280 3CE00280 3CE00280 54D00280 08000000 0C000000 34000000
-//0c 64E00280 64E00280 84E40280 F0E80280 64E00280 64E00280 D0CE0280 08000000 04000000 18000000 monochrome quad
-//0d 78E00280 78E00280 98E40280 04E90280 0CFB0280 1CFD0280 F4CE0280 08000000 0C000000 28000000 textured monochrome quad
-//0e 50E00280 50E00280 70E40280 DCE80280 50E00280 50E00280 90CF0280 08000000 04000000 24000000
-//0f 3CE00280 3CE00280 5CE40280 C8E80280 3CE00280 3CE00280 54D00280 08000000 0C000000 34000000
+//00 48DE0280 30EB0280 80E20280 ECE60280 48DE0280 48DE0280 DCCB0280 08000000 04000000 14000000 triangle monochrome (80058bd8)
+//01 5CDE0280 F0F00280 94E20280 00E70280 1CED0280 F4EE0280 24D60280 08000000 08000000 20000000 triangle monochrome textured (d8)
+//02 34DE0280 C4F40280 6CE20280 D8E60280 34DE0280 34DE0280 BCD40280 08000000 04000000 1C000000 triangle gourad (80058bc8)
+//03 20DE0280 C4F20280 58E20280 C4E60280 20DE0280 20DE0280 24D80280 08000000 08000000 28000000 triangle gourad textured (c8)
+//04 48DE0280 48DE0280 80E20280 ECE60280 48DE0280 48DE0280 44CD0280 08000000 04000000 14000000 triangle monochrome
+//05 5CDE0280 5CDE0280 94E20280 00E70280 1CED0280 F4EE0280 94D70280 08000000 08000000 20000000 triangle monochrome textured
+//06 34DE0280 34DE0280 6CE20280 D8E60280 34DE0280 34DE0280 8CD50280 08000000 04000000 1C000000 triangle gourad (c8)
+//07 20DE0280 20DE0280 58E20280 C4E60280 20DE0280 20DE0280 24D80280 08000000 08000000 28000000 triangle gourad textured (c8)
+//08 64E00280 E0F60280 84E40280 F0E80280 64E00280 64E00280 68CD0280 08000000 04000000 18000000 quad monochrome (d8)
+//09 78E00280 F8F80280 98E40280 04E90280 0CFB0280 1CFD0280 40D30280 08000000 0C000000 28000000 quad monochrome textured (d8)
+//0a 50E00280 50E00280 70E40280 DCE80280 50E00280 50E00280 90CF0280 08000000 04000000 24000000 quad gourad (c8)
+//0b 3CE00280 3CE00280 5CE40280 C8E80280 3CE00280 3CE00280 54D00280 08000000 0C000000 34000000 quad gourad textured (c8)
+//0c 64E00280 64E00280 84E40280 F0E80280 64E00280 64E00280 D0CE0280 08000000 04000000 18000000 quad monochrome
+//0d 78E00280 78E00280 98E40280 04E90280 0CFB0280 1CFD0280 F4CE0280 08000000 0C000000 28000000 quad monochrome textured
+//0e 50E00280 50E00280 70E40280 DCE80280 50E00280 50E00280 90CF0280 08000000 04000000 24000000 quad gourad (c8)
+//0f 3CE00280 3CE00280 5CE40280 C8E80280 3CE00280 3CE00280 54D00280 08000000 0C000000 34000000 quad gourad textured (c8)
 +18 - function to fill the packet.
 +1c - size of polygon data.
 +20 - size of tex data.
@@ -25,7 +71,39 @@
 8004f7ac [][][][] some tex page global setting. If 1 or 2 we use some default values.
 8004f7b0 [][][][] some clut global setting. If 0 then we use some default values.
 
+8004f8d0 [][][][] timer for repeated buttons for controller 1 (80058b40).
+8004f8d4 [][][][] timer for repeated buttons for controller 2 (80058b44).
+
 8004ff84 [][][][] address of SPU registers 0x1f801c00.
+
+80055b54 [][][][] cd debug level.
+                  0: no checks performed
+                  1: check primitive commands
+                  2: print execution status of primitive commands
+                  3: print issued command error
+
+80055b64 array of stored params of CdlSetloc command (size 0x01 items 0x04).
+80055b68 []       stored param of CdlSetmode command.
+80055b69 []       stored cdl command.
+
+80055b70 array of pointers to Cdl commands strings (size 0x04 items 0x20).
+         00 CdlSync      01 CdlNop       02 CdlSetloc    03 CdlPlay      04 CdlForward   05 CdlBackward  06 CdlReadN     07 CdlStandby
+         08 CdlStop      09 CdlPause     0a CdlReset     0b CdlMute      0c CdlDemute    0d CdlSetfilter 0e CdlSetmode   0f ?
+         10 CdlGetlocL   11 CdlGetlocP   12 ?            13 CdlGetTN     14 CdlGetTD     15 CdlSeekL     16 CdlSeekP     17 ?
+         18 ?            19 ?            1a ?            1b CdlReadS     1c ?            1d ?            1e ?            1f ?
+80055bf0 array of pointers to CD interupts result strings (size 0x04 items 0x8).
+         00 NoIntr       01 DataReady    02 Complete     03 Acknowledge  04 DataEnd      05 DiskError    06 ?            07 ?
+80055c90 array of something related with Cdl commands (size 0x04 items 0x20).
+        00000000        00000000        00000000        01000000        01000000        01000000        01000000        00000000
+        00000000        00000000        00000000        00000000        00000000        00000000        00000000        00000000
+        00000000        00000000        00000000        00000000        00000000        01000000        01000000        00000000
+        00000000        00000000        00000000        01000000        00000000        00000000        00000000        00000000
+80055d90 array of number of arguments in Cdl commands (size 0x04 items 0x20).
+
+80055e28 []       cd sync interrupt result.
+80055e29 []       cd ready interrupt result.
+
+80055f7c [][][][] draw sync callback pointer.
 
 800560a0 square root data (0x2 each). 12bit fixed point.
 
@@ -36,9 +114,20 @@
 800584d0 [][][][] shifter for spu address (always 3)
 
 80058810 GP
-+1ac [][]     store 4 here when we start parse model and animation.
-+1c0 [][][][] store 0 here when we start parse model and animation.
+    + 20 [][][][] pointer to last struct_164 (used to create list of render sprites).
+    + 24 [][]     some y of texture (used as * 0x40 + 140). Increment by 1 when +26 >= 0x41 each func call limited by 3.
+    + 26 [][]     some x of texture (used as + 300). Increment by A1 each func call limited by 41.
+    + 28 [][][][] ???
+    + 38 [][][][] rotation dta for some sprite animation if flag 0x2000 in sprite animation data not set.
+    + 3d []       if this != 0 then we use +38 to calculate rotation matrix for sprite animation (if flag 0x2000 not set).
+    +1ac [][]     store 4 here when we start parse model and animation.
+    +1b0 [][][][] pointer to start of allocated memory.
+    +1c0 [][][][] store 0 here when we start parse model and animation.
+    +1cc [][][][] store size of allocated data here.
+    +1d0 [][][][] place in code from where we call current function.
 
+80058958 [][][][] pointer to file loaded via func19a50() (we allocate place for file here).
+8005895c [][][][] store here id of file to load via func19a50().
 
 800589a8 [][]     store tex page setting here during initialization.
 800589ac [][]     store here clut setting during initialization.
@@ -46,6 +135,15 @@
 800589b4 [][][][] we get here default clut Y setting and store it to 800589ac if 8004f7ac == 0.
 
 800589e8 [][][][] store start of extended text characters here. 0xf8 in japanese.
+800589fc [][][][] pointer to pack of some texts.
+
+80058a10 [][]     previously pressed button mask for controller 1 (details in 80058c0c).
+80058a14 [][]     previously pressed button mask for controller 2 (details in 80058c0c).
+80058a18 [][][][] number of button mask received since last update.
+80058a1c [][][][] current store index of buffer for received button masks
+80058a20 [][][][] current receive index of buffer for received button masks.
+
+80058a24 []       ID1 of last reveived controller input.
 
 80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
 
@@ -53,19 +151,60 @@
 
 80058adc [][][][] pointer to some SED file (0391.sed).
 80058ac0 [][][][] store here pointer to place for packets.
+80058ac4 [][][][] store here data from sprite opcode 0xa7 & 0x7f if 0x80 is set. Some wait.
+
+80058ae0 []       state of RightJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
+80058ae8 []       state of RightJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
+80058acc []       state of LeftJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
+80058ad4 []       state of LeftJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
+80058ae4 []       state of RightJoyX for controller 2 (0x00=Left, 0x80=Center, 0xFF=Right).
+80058aec []       state of RightJoyY for controller 2 (0x00=Up, 0x80=Center, 0xFF=Down).
+80058ad0 []       state of LeftJoyX for controller 2 (0x00=Left, 0x80=Center, 0xFF=Right).
+80058ad8 []       state of LeftJoyY for controller 2 (0x00=Up, 0x80=Center, 0xFF=Down).
+
+80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40.
+80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
+80058b28 [][]     mask of buttons that was pressed in last update for controller 2 (details in 80058c0c).
 
 80058b34 [][][][] store here pointer to precalculated normal for polygon lighting. Allocated memory from +18 in model data file.
 
+80058b40 [][]     repeated buttons for controller 1 (details in 80058c0c). 0x20 timer to repeat.
+80058b44 [][]     repeated buttons for controller 2 (details in 80058c0c). 0x20 timer to repeat.
+
+80058b94 [][][][] store here 0 when start load battle exe.
 80058b98 [][][][] flags for turning SPU Voice ON.
 
+80058ba4 [][][][] store here id of encounter in field.
+
+80058bc4 [][][][] store here pointer to polygons data block in 3d model file.
 80058bc8 [][][][] we store here +0c [][][][] from model parts header. Maybe for futher use in inner functions.
 
-80058bd8 [][][][] pointer to vertex block in model data file.
+80058bd4 [][][][] store here pointer to texture data block in 3d model file.
+80058bd8 [][][][] pointer to vertex block in model data file during packet init.
 
 80058bf0 [][][][] flags for turning SPU Voice OFF.
 80058bf4 [][][][] pointer to SND file (with wds signature).
 
 80058c00 [][][][] pointer to snd music structs data after header.
+
+80058c0c [][]     pressed buttons in Xeno format for controller 1. (1=Pressed, 0=Released)
+                    0x0001 L2
+                    0x0002 R2
+                    0x0004 L1
+                    0x0008 R1
+                    0x0010 Triangle
+                    0x0020 Circle
+                    0x0040 Cross
+                    0x0080 Square
+                    0x0100 Select
+                    0x0200 L3
+                    0x0400 R3
+                    0x0800 Start
+                    0x1000 Up
+                    0x2000 Right
+                    0x4000 Down
+                    0x8000 Left
+80058c10 [][]     pressed buttons in Xeno format for controller 2.
 
 80058c18 [][]     some sound control flags.
                     0x0040 we don't play sound thread if this is set.
@@ -83,8 +222,54 @@
 
 80058c80 [][][][] last address in spu struct data (0x8006b490).
 
+80059594 [][][][] 0
+80059598 [][][][] 0
+8005959c [][][][] 0
+800595a8 [][][][] global file id to load.
+800595ac cd command param array.
+80059b6c [][][][] 0.
+
+80059600 light matrix
+    +00 [][][][] R11R12 for light matrix calculation.
+    +04 [][][][] R13R21 for light matrix calculation.
+    +08 [][][][] R22R23 for light matrix calculation.
+    +0c [][][][] R31R32 for light matrix calculation.
+    +10 [][][][] R33 for light matrix calculation.
+
+80059640 array of four bytes values. Store 0 in slot GP + 0x1ac when we start parse model and animation.
+         during model initialization if flaf 0x2000 i  +58 in model struct exist we store [80059640 + 3 * 4] = w(0) before +1c initialization
+         after +1c init we store [80059640 + 8 * 4] = w(0)
+         looks like we store in GP + 0x1ac index of this struct. GP + 1c0 set to 0 in both cases.
+
 80059674 struct with data for text.
-+1c [][][][] pointer to next character.
+    +1c [][][][] pointer to next character.
+
+80059764 [][]     store addition here (0x10) when translate number to letters for text.
+80059766 temp array with decimal numbers generated from number to render as text (0x2 size 0xa items).
+8005977a [][]     store -1 here when translate number to letters for text.
+80059780 temp array with letters generated from numbers to insert number in text (in usual text format).
+
+80059b50 [][][][] file size for loading field file.
+80059b70 [][][][] pointer to allocated memory for loading field file.
+
+80061c8c controller input buffers (size 0x22 2 items).
+    +02 [][]     button mask. (0=Pressed, 1=Released)
+                    0x0001 Select
+                    0x0002 L3
+                    0x0004 R3
+                    0x0008 Start
+                    0x0010 Up
+                    0x0020 Right
+                    0x0040 Down
+                    0x0080 Left
+                    0x0100 L2
+                    0x0200 R2
+                    0x0400 L1
+                    0x0800 R1
+                    0x1000 Triangle
+                    0x2000 Circle
+                    0x4000 Cross
+                    0x8000 Square
 
 80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4.
 
@@ -95,13 +280,16 @@
 +00 [][]     some id. In music set to 2;
 +02 [][]     0.
 +04 [][][][] 0.
++06 [][]     add 0x01f5 when we enable channel.
 +08 [][][][] end of data in this struct (number of channels * 0x158 + 0x94 if bu[smd + 15] != 0 then add 0x180).
 +0c [][][][] link to next struct.
 
 // start of music data (0x94 size) after this starts channels structs
 +00 [][][][] store here previous music data pointer from 0x80058c00.
 +08 [][][][] pointer to smd file.
-+10 [][]     some flags. Add 0x0001 on init.
++10 [][]     some flags.
+                0x0001 add on init.
+                0x8000 remove when stops all channels.
 +12 [][]     smd + 10.
 +14 []       number of channels.
 +16 [][]     smd + 16.

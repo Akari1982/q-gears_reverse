@@ -572,7 +572,7 @@ loop1e48f8:	; 801E48F8
         A0 = 800cc408 + S6 * 170;
         A1 = S7 + V1 * 170;
         A2 = 170;
-        func3f844;
+        system_memmove;
 
         V0 = bu[S3];
         801E4940	lui    v1, $800c

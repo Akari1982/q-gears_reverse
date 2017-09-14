@@ -36,31 +36,35 @@
 0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
 0140030000 000000 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
 
-0104010104080806 0000000000000000
-00010506070b131b
+8006f06c battle formation struct from 80064f6c.
 
+800C1788 [][]      unit id -> bit mask conversion data.
 
-800C1788      [][]      unit id -> bit mask conversion data.
+800c3504 [][][][]  pointer to battle text block.
 
-800C3504      [][][][]  pointer to battle text block.
+800c35ac []        some byte checked dirung action_text_output.
 
-800C35AC      []        some byte checked dirung action_text_output.
+800c35cc [][][][]  pointer to some data.
++ 2da []       current 800c3708 id of attack data to calculate.
 
-800C35CC      [][][][]  pointer to some data.
+800c35d4 some unit data. (0x1c size).
+800c35d4 []
+800c35d7 []        we check this == 0 during party accessable check.
 
-800C35D4                some unit data. (size 0x1C).
-800C35D4      []
-800C35D7      []        we check this == 0 during party accessable check.
+800c3708 calculated attack data (0x48 size).
++  0          array of inflicted damage for each unit (0xa items, 0x2 size). Init with 0.
++ 16 [][]     target mask.
++ 18          array of some unit data (0xa items, 0x1 size). Init with 0xff.
++ 23 [][]     attacker id.
++ 24          array of some unit data (0xa items, 0x2 size). Init with 0x0000.
++ 3a []       store byte set during skip turn or jump to enemy here 0x00.
++ 3c          array of some unit data (0xa items, 0x1 size). Init with 0x00.
++ 47 []       writed 0xff here for all units during script cycle start. Write 0xf7 here during skip turn. Write 0xfd here during jump to unit.
 
-800C3708                calculated attack data (size 0x48).
-800C3708 +   0 [][]     inflicted damage.
-800C3708 +  18 []       unknown (FF) during reset at start of action parsing.
-800C3708 +  23 [][]     attacker id.
-800C3708 +  24 [][]     unknown (0000) during reset at start of action parsing.
-800C3708 +  3A []       store byte set during skip turn here (00).
-800C3708 +  3C []       unknown (00) during reset at start of action parsing.
-800C3708 +  47 []       writed FF here for all units during script cycle start.
-                        write F7 here during skip turn function.
+800c400c array of some data (0x9 items, 0x6 size)
++0 [][]     reset with 0xffff. Init 1st item with 0x00.
++2 [][]     reset with 0xffff. Init 1st item with 0x00.
++4 []       init 1st item with 0x00.
 
 800CC408                unit data array (0x170 size)
 800CC408 +  4C [][]     unit current hp.
@@ -73,15 +77,17 @@
 
 800D24EC      []       array of unit exists in battle (1-3 party, 3-A enemy). (0 - no 1 - yes)
 
-800D257C               attack queue array. (size 0x100 0x08).
-800D257C + 06 [][]     target mask.
+800d257c attack queue array. (size 0x08 items 0x20).
++ 00 []       action id.
++ 04 []       in jump to unit we check if this != 1.
++ 06 [][]     target mask.
 
 800D29C1      []       array of something unit related. (size 0x08).
 
-800D2B20               array of struct with script pointers for enemy unit (index = unit_is - 3) (size 0x40).
-800D2B20 + 00 [][][][] pointer to script.
-800D2B20 + 20          variable store array (0x08 0x02).
-800D2B20 + 30          variable store array (0x10 0x01).
+800d2b20               array of struct with script pointers for enemy unit (index = unit_is - 3) (size 0x40).
+800d2b20 + 00 [][][][] pointer to script.
+800d2b20 + 20          variable store array (0x08 0x02).
+800d2b20 + 30          variable store array (0x10 0x01).
 
 800D2E40               some data (size 0x60). read in text output finction.
 800D2E40 + 00 [][][][] pointer to some data related to string.

@@ -1,0 +1,39 @@
+sequence data (just animation script)
+00-0f                       play frame id from +34 and wait 0x0f frames (store frame id + 1 in +34).
+10-1f                       play first frame in direction frame id array and store it in +34 and wait 0x0f frames (uses direction frame id from +a8 (usually 0)).
+20-2f                       play frame id from +34 and wait 0x0f frames (store frame id - 1 in +34).
+30-3f                       wait 0x0f frames
+80                          start default animation +b0 and return from script.
+81                          start play default +b0/call some callback set flags and return from script.
+82                          immidiately start animation and script from +af and call some callback.
+85                          jump to stored script pos in +8e stack and pop value (return from e2 sub function call).
+86                          wait until +10 became >= 0 and then continue script execution.
+87                          wait until +6 became >= +84 and then continue script execution.
+8a                          set animation move and animation move speed to 0.
+8c                          set animation move based on move towards direction of entity in +74.
+8d                          apply texture x and y stored in +110 (+4 +6)
+8e                          set script pointer to 0 and return.
+90                          load new sprite pack from +4c or +48.
+91                          remove lighting from sprite.
+92                          add lighting to sprite.
+93                          copy additional tile data from sprite in +70 and apply.
+94                          set Y rotation from sprite in +70.
+96                          call some callbacks for all sprites.
+98                          maybe wain until connected sprite starts some animatiuon and then continue script execution.
+a0[speed]                   set animation move speed.
+a7[wait]                    set wait 0x7f if 0x80 not set, set wait 0x7f to 0x80058ac4 otherwise.
+b3[direction_frame_id]      set direction frame id & 0x3f.
+b4[value]                   push value to track +8e.
+b5[scale]                   set scale to sprite.
+be[[flags]]                 set frame to play.
+                            0x01ff - frame id.
+                            0x0200 - invert y flag in [struct_164 + ac] (if y and x inversion in [struct_164 + ac] not equal then set [struct_164 + 3c] x inversion).
+                            0x0400 - invert tile y and height.
+                            0x7800 - wait value.
+                            0x8000 - use directed frame???
+c6[value]                   set value to +f4 +c (unknown).
+c8[opcode][data_offset]     executes opcode in param and sets pointer to params for this opcode from scripf if 0x80 in data offset exist or from stack otherwise.
+d4[[jump]]                  jump by number of signed bytes defined in jump and call callback.
+e1[[jump]]                  jump by number of signed bytes defined in jump.
+e2[[jump]]                  push script_pos to +8e stack and jump by number of signed bytes defined in jump (sub function call).
+e4[[jump]]                  decrement value from stack by 1 and jump. If value in stack +8e == 0 move forward (for cycle).

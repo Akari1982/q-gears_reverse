@@ -98,7 +98,7 @@ else
 80038ED4	addu   s1, a0, zero
 80038ED8	lui    a0, $8006
 80038EDC	lw     a0, $8c58(a0)
-80038EE4	jal    func4032c [$8004032c]
+80038EE4	jal    system_bios_disable_event [$8004032c]
 
 80038EEC	addiu  v0, s1, $000f
 80038EF0	addiu  v1, zero, $fff0 (=-$10)
@@ -158,7 +158,7 @@ L38f70:	; 80038F70
 80038FA8	lui    a0, $8006
 80038FAC	lw     a0, $8c58(a0)
 80038FB0	sw     v1, $000c(v0)
-80038FB4	jal    func4031c [$8004031c]
+80038FB4	jal    system_bios_enable_event [$8004031c]
 80038FB8	sw     v0, $000c(a2)
 80038FBC	addu   a0, s0, zero
 80038FC0	jal    func39194 [$80039194]
@@ -228,7 +228,7 @@ if( V0 == 0 )
         func3bc64;
     8003BB94	bne    v0, zero, loop3bb8c [$8003bb8c]
 
-    8003BB9C	jal    func4034c [$8004034c]
+    system_enter_critical_section();
 }
 
 V0 = hu[80058b90];
@@ -265,7 +265,7 @@ if( V1 == 0 )
 8003BC28	andi   v0, s1, $0004
 8003BC2C	bne    v0, zero, L3bc3c [$8003bc3c]
 8003BC30	nop
-8003BC34	jal    func4035c [$8004035c]
+8003BC34	jal    system_exit_critical_section [$8004035c]
 8003BC38	nop
 
 L3bc3c:	; 8003BC3C
@@ -624,11 +624,11 @@ return 0;
 
 
 ////////////////////////////////
-// func3962c
+// func3962c()
 // find first item in array with 00 == 0
 V1 = 0;
 loop39634:	; 80039634
-    if( bu[8006f08c + V1 * 10 + 00] == 0 )
+    if( bu[8006f08c + V1 * 10 + 0] == 0 )
     {
         return V1;
     }
@@ -689,7 +689,7 @@ if( A0 == 0 )
     8004CCAC	ori    a0, a0, $0030
     8004CCB0	sh     a0, $01aa(v0)
 }
-else if( A0 == 1 ) // wait until spu addres is set
+else if( A0 == 1 ) // wait until spu address is set
 {
     A1 = w[800584a8];
 

@@ -1,0 +1,10 @@
+lui    t6, $0001
+lw     t6, $8604(t6)
+addiu  sp, sp, $ffe8 (=-$18)
+beq    t6, zero, L1980 [$80001980]
+sw     ra, $0014(sp)
+lui    t8, $0000
+lw     t8, $6d40(t8)
+addiu  t7, zero, $ffdf (=-$21)
+jal    func0f40 [$80000f40]
+sw     t7, $0000(t8)

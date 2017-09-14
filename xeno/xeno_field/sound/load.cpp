@@ -1,9 +1,7 @@
 ////////////////////////////////
-// func78170
-80078170	addiu  sp, sp, $ffe8 (=-$18)
-80078174	sw     ra, $0010(sp)
-80078178	jal    system_get_random_2_bytes [$8003f8b0]
-8007817C	nop
+// func78170()
+system_get_random_2_bytes();
+
 80078180	lui    v1, $8005
 80078184	lw     v1, $e9ac(v1)
 80078188	addiu  v0, zero, $ffff (=-$1)
@@ -27,25 +25,19 @@ L781ac:	; 800781AC
 800781C8	sw     v0, $d0f0(at)
 
 L781cc:	; 800781CC
-800781CC	lw     ra, $0010(sp)
-800781D0	addiu  sp, sp, $0018
-800781D4	jr     ra 
-800781D8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func852a4
-800852A4	addiu  sp, sp, $ffe0 (=-$20)
-800852A8	sw     s1, $0014(sp)
-800852AC	addu   s1, a0, zero
-800852B0	sw     s0, $0010(sp)
+// func852a4()
+S1 = A0;
+
 800852B4	lui    s0, $8005
 800852B8	lw     s0, $e9f8(s0)
 800852BC	ori    v0, zero, $0001
 800852C0	bne    s0, v0, L8531c [$8008531c]
-800852C4	sw     ra, $0018(sp)
+
 800852C8	jal    func85250 [$80085250]
 800852CC	nop
 800852D0	addiu  v1, zero, $ffff (=-$1)
@@ -53,10 +45,10 @@ L781cc:	; 800781CC
 800852D8	addiu  v0, zero, $ffff (=-$1)
 800852DC	jal    func3bca4 [$8003bca4]
 800852E0	ori    a0, zero, $0010
-800852E4	lui    a0, $800c
-800852E8	lw     a0, $2ef0(a0)
-800852EC	jal    func31f0c [$80031f0c]
-800852F0	nop
+
+A0 = w[800c2ef0];
+system_memory_free();
+
 800852F4	sll    v0, s1, $01
 800852F8	lui    at, $8005
 800852FC	sw     zero, $e9f8(at)
@@ -100,28 +92,26 @@ L85378:	; 80085378
 8008537C	lw     v0, $f128(v0)
 80085380	ori    s0, zero, $0001
 80085384	bne    v0, s0, L853e8 [$800853e8]
-80085388	nop
-8008538C	lui    v0, $8005
-80085390	lw     v0, $e9dc(v0)
-80085394	nop
-80085398	beq    v0, s1, L853d8 [$800853d8]
-8008539C	ori    a0, zero, $001c
-800853A0	jal    func28280 [$80028280]
-800853A4	addu   a1, zero, zero
-800853A8	sll    a0, s1, $01
-800853AC	addiu  a0, a0, $0014
-800853B0	lui    a1, $8006
-800853B4	addiu  a1, a1, $1cd8
-800853B8	addu   a2, zero, zero
-800853BC	jal    func293e8 [$800293e8]
-800853C0	ori    a3, zero, $0080
-800853C4	lui    at, $8005
-800853C8	sw     s0, $e9fc(at)
-800853CC	ori    a0, zero, $0004
-800853D0	jal    func28280 [$80028280]
-800853D4	addu   a1, zero, zero
 
-L853d8:	; 800853D8
+if( w[8004e9dc] != S1 )
+{
+    A0 = 1c;
+    A1 = 0;
+    func28280(); // set directory
+
+    A0 = 14 + S1 * 2;
+    A1 = 80061cd8;
+    A2 = 0;
+    A3 = 80;
+    func293e8();
+
+    [8004e9fc] = w(S0);
+
+    A0 = 4;
+    A1 = 0;
+    func28280(); // set directory
+}
+
 800853D8	lui    at, $800b
 800853DC	sw     zero, $f128(at)
 800853E0	j      L854e8 [$800854e8]
@@ -202,12 +192,6 @@ L854d0:	; 800854D0
 800854E4	sw     v1, $ea10(at)
 
 L854e8:	; 800854E8
-800854E8	lw     ra, $0018(sp)
-800854EC	lw     s1, $0014(sp)
-800854F0	lw     s0, $0010(sp)
-800854F4	addiu  sp, sp, $0020
-800854F8	jr     ra 
-800854FC	nop
 ////////////////////////////////
 
 
@@ -274,10 +258,9 @@ L84b24:	; 80084B24
 80084B3C	nop
 80084B40	bne    v0, zero, L84b64 [$80084b64]
 80084B44	addu   v0, zero, zero
-80084B48	lui    a0, $800b
-80084B4C	lw     a0, $d090(a0)
-80084B50	jal    func31f0c [$80031f0c]
-80084B54	nop
+A0 = w[800ad090];
+system_memory_free();
+
 80084B58	lui    at, $800b
 80084B5C	sw     zero, $d004(at)
 80084B60	addiu  v0, zero, $ffff (=-$1)

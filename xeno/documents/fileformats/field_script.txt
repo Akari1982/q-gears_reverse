@@ -1,0 +1,20 @@
+script file
++00 array of signs for 800c2f3c memory block. Each bit - sign for 2 byte value in 800c2f3c.
++80 [][][][] number of scripts.
++84 start of arrays of pointers to separate scripts (size 0x2 items 0x20).
++84 + number_of_scripts * 0x40 - start of scripts (+84 offsets starts from here).
+
+
+
+scripts
++0 []       use spawn table? (0xff - not use). Which table to use defined in 2nd slot in memory block. Used in function func9efe4.
+spawn table
++0 [][]     x
++2 [][]     z
++4 []       walkmesh id.
++5 []       camera rotation. If 0xff - use value from slot 8 in memory block.
++6 []       entity rotation. If 0xff - use value from slot 6 in memory block.
+
+
+
+then there are scripts data...

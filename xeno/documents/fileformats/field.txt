@@ -1,0 +1,36 @@
+first 0x100 bytes of data copied to 0x800b144c.
+
+
+
++ 10c [][][][] uncompressed size of subfile 0 (unknown).
++ 110 [][][][] uncompressed size of subfile 1 (walkmesh).
++ 114 [][][][] uncompressed size of subfile 2 (3d model).
++ 118 [][][][] uncompressed size of subfile 3 (sprite data).
++ 11c [][][][] uncompressed size of subfile 4 (add textures).
++ 120 [][][][] uncompressed size of subfile 5 (script).
++ 124 [][][][] uncompressed size of subfile 6 (unknown).
++ 128 [][][][] uncompressed size of subfile 7 (dialogs).
++ 12c [][][][] uncompressed size of subfile 8 (triggers).
++ 130 [][][][] offset to subfile 0 (unknown).
++ 134 [][][][] offset to subfile 1 (walkmesh).
++ 138 [][][][] offset to subfile 2 (3d model).
++ 13c [][][][] offset to subfile 3 (sprite data).
++ 140 [][][][] offset to subfile 4 (add textures).
++ 144 [][][][] offset to subfile 5 (script).
++ 148 [][][][] offset to subfile 6 (unknown).
++ 14c [][][][] offset to subfile 7 (dialogs).
++ 150 [][][][] offset to subfile 8 (triggers).
+
++ 154
+
+
++ 18c [][][][] number of model/sprite entities.
++ 190 start of entities data (0x10 size).
+    + 00 [][]     flags.
+    + 02 [][]     x rot.
+    + 04 [][]     y rot.
+    + 06 [][]     z rot.
+    + 08 [][]     x pos.
+    + 0a [][]     y pos.
+    + 0c [][]     z pos.
+    + 0e [][]     model id.

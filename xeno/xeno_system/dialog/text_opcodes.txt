@@ -1,0 +1,43 @@
+0x00 Return()
+    finish current text parsing. If we have stored pointer - return to it.
+
+0x01 Row()
+    set +18 to 0x64.
+
+0x02 NewWindow()
+    set window to wait for player input and flag 0x0040.
+
+0x03 Wait()
+    set window to wait for player input.
+
+0x0F00 SpecialWait( u8 wait )
+    set number of calls to wait before continue parsing.
+
+0x0F01 SpecialLettersToRead( u8 number )
+    set number of letters to read at once. Store previous default value. If number is 0 - restore stored values.
+
+0x0F02 SpecialWaitAndClose( u8 wait )
+    set number of calls to wait before closing window.
+
+0x0F03 SpecialText1( u8 category_id, u8 text_id )
+    set subtext to read and read first lertter at this call.
+
+0x0F04 SpecialText2()
+    set subtext to read from +98 data in window struct.
+    0x00ff - text id.
+    0x0700 - category specifier (0x0 - ???, 0x1 - ???, 0x2 - ???, 0x3 - ???, 0x4 - ???).
+
+0x0F05 SpecialName( u8 char_id )
+    set character name as subtext and read first letter at this call.
+
+0x0F06 SpecialText3( u8 text_id )
+    set subtext from category 0x17 to read and read first lertter at this call.
+
+0x0F07 SpecialText4( u8 text_id )
+    set subtext from category 0x18 to read and read first lertter at this call.
+
+0x0F08 SpecialText5( u8 text_id )
+    set subtext from category 0x19 to read and read first lertter at this call.
+
+0x0F0E SpecialLettersToRead( u8 number )
+    set number of letters to read at once. Store previous default value. If number is 0 - restore stored values.

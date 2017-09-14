@@ -1,8 +1,8 @@
 ////////////////////////////////
 // func1c8d4
 
-8001C8DC	jal    func1c808 [$8001c808]
-8001C8E0	nop
+func1c808();
+
 8001C8E4	addu   a2, v0, zero
 8001C8E8	lui    v1, $ffff
 8001C8EC	lui    v0, $800a
@@ -52,17 +52,14 @@ return A0 | A3;
 
 
 ////////////////////////////////
-// func1c808
+// func1c808()
 if( w[80062fa0] == 0 )
 {
     if( bu[800696ac] != ff )
     {
         if( bu[800696ad] == 41 )
         {
-            V0 = bu[800696ae] << 8;
-            V1 = bu[800696af];
-
-            A0 = V1 NOR V0;
+            A0 = (bu[800696ae] << 8) NOR bu[800696af];
         }
         else
         {
@@ -76,8 +73,7 @@ if( w[80062fa0] == 0 )
 }
 else // tutorial
 {
-    func1c788; // return pressed burron
-
+    func1c788(); // return pressed button
     A0 = V0;
 }
 

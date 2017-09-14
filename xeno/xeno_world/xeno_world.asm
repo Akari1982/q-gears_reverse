@@ -3,7 +3,7 @@
 80070394	sw     s1, $001c(sp)
 80070398	jal    func75924 [$80075924]
 8007039C	sw     s0, $0018(sp)
-800703A0	jal    func44448 [$80044448]
+800703A0	jal    system_draw_sync [$80044448]
 800703A4	addu   a0, zero, zero
 800703A8	jal    func4b3f4 [$8004b3f4]
 800703AC	addu   a0, zero, zero
@@ -228,7 +228,7 @@ loop706c4:	; 800706C4
 800706F0	nop
 800706F4	jal    func96be8 [$80096be8]
 800706F8	nop
-800706FC	jal    func44448 [$80044448]
+800706FC	jal    system_draw_sync [$80044448]
 80070700	addu   a0, zero, zero
 80070704	jal    func4b3f4 [$8004b3f4]
 80070708	addu   a0, zero, zero
@@ -381,9 +381,9 @@ L708f4:	; 800708F4
 80070914	addiu  a3, zero, $0040
 80070918	sh     zero, $0010(sp)
 8007091C	sh     zero, $0012(sp)
-80070920	jal    func445dc [$800445dc]
+80070920	jal    system_clear_image [$800445dc]
 80070924	sh     v0, $0016(sp)
-80070928	jal    func44448 [$80044448]
+80070928	jal    system_draw_sync [$80044448]
 8007092C	addu   a0, zero, zero
 
 L70930:	; 80070930
@@ -514,7 +514,7 @@ L70ad8:	; 80070AD8
 80070AEC	sltiu  v0, v0, $0001
 80070AF0	lui    at, $800a
 80070AF4	sw     v0, $cbd8(at)
-80070AF8	jal    func44950 [$80044950]
+80070AF8	jal    system_clear_otagr [$80044950]
 80070AFC	addiu  a1, zero, $0400
 80070B00	lui    a0, $800a
 80070B04	lw     a0, $cbd8(a0)
@@ -524,7 +524,7 @@ L70ad8:	; 80070AD8
 80070B14	nop
 80070B18	jal    func96be8 [$80096be8]
 80070B1C	nop
-80070B20	jal    func44448 [$80044448]
+80070B20	jal    system_draw_sync [$80044448]
 80070B24	addu   a0, zero, zero
 80070B28	jal    func4b3f4 [$8004b3f4]
 80070B2C	addiu  a0, zero, $0002
@@ -862,7 +862,7 @@ L70fac:	; 80070FAC
 80070FEC	nop
 80070FF0	bne    v0, zero, L7099c [$8007099c]
 80070FF4	nop
-80070FF8	jal    func43f88 [$80043f88]
+80070FF8	jal    system_reset_graph [$80043f88]
 80070FFC	addiu  a0, zero, $0001
 80071000	lui    v0, $800a
 80071004	lw     v0, $cbd8(v0)
@@ -876,13 +876,13 @@ L70fac:	; 80070FAC
 80071024	sh     zero, $0010(sp)
 80071028	sh     v1, $0012(sp)
 8007102C	sh     v0, $0014(sp)
-80071030	jal    func447d4 [$800447d4]
+80071030	jal    system_move_image [$800447d4]
 80071034	sh     v1, $0016(sp)
 
 L71038:	; 80071038
 80071038	jal    func95a7c [$80095a7c]
 8007103C	nop
-80071040	jal    func44448 [$80044448]
+80071040	jal    system_draw_sync [$80044448]
 80071044	addu   a0, zero, zero
 80071048	jal    func4b3f4 [$8004b3f4]
 8007104C	addu   a0, zero, zero
@@ -1464,9 +1464,9 @@ func7180c:	; 8007180C
 80071888	addiu  v0, zero, $00d8
 8007188C	sh     zero, $0010(sp)
 80071890	sh     zero, $0012(sp)
-80071894	jal    func447d4 [$800447d4]
+80071894	jal    system_move_image [$800447d4]
 80071898	sh     v0, $0016(sp)
-8007189C	jal    func44448 [$80044448]
+8007189C	jal    system_draw_sync [$80044448]
 800718A0	addu   a0, zero, zero
 800718A4	addiu  a0, zero, $0040
 800718A8	addu   a1, zero, zero
@@ -1692,7 +1692,7 @@ loop71bac:	; 80071BAC
 L71bb4:	; 80071BB4
 80071BB4	lui    a0, $800a
 80071BB8	lw     a0, $bc74(a0)
-80071BBC	jal    func31f0c [$80031f0c]
+80071BBC	jal    system_memory_free [$80031f0c]
 80071BC0	nop
 80071BC4	lui    a0, $8006
 80071BC8	lw     a0, $1c2c(a0)
@@ -1740,7 +1740,7 @@ L71c10:	; 80071C10
 L71c5c:	; 80071C5C
 80071C5C	lui    a0, $800a
 80071C60	lw     a0, $bc74(a0)
-80071C64	jal    func31f0c [$80031f0c]
+80071C64	jal    system_memory_free [$80031f0c]
 80071C68	nop
 80071C6C	lui    a0, $8006
 80071C70	lw     a0, $1c2c(a0)
@@ -2005,7 +2005,7 @@ L71ff8:	; 80071FF8
 8007200C	nop
 80072010	lui    a0, $8006
 80072014	lw     a0, $1c2c(a0)
-80072018	jal    func31f0c [$80031f0c]
+80072018	jal    system_memory_free [$80031f0c]
 8007201C	nop
 
 loop72020:	; 80072020
@@ -2017,7 +2017,7 @@ loop72020:	; 80072020
 80072034	nop
 80072038	beq    a0, zero, L7205c [$8007205c]
 8007203C	nop
-80072040	jal    func22f24 [$80022f24]
+80072040	jal    system_field_sprite_memory_free [$80022f24]
 80072044	nop
 80072048	lui    v0, $800a
 8007204C	lw     v0, $b20c(v0)
@@ -2073,27 +2073,27 @@ L720a0:	; 800720A0
 80072104	nop
 80072108	lui    a0, $800a
 8007210C	lw     a0, $b020(a0)
-80072110	jal    func31f0c [$80031f0c]
+80072110	jal    system_memory_free [$80031f0c]
 80072114	nop
 80072118	lui    a0, $800a
 8007211C	lw     a0, $b098(a0)
-80072120	jal    func31f0c [$80031f0c]
+80072120	jal    system_memory_free [$80031f0c]
 80072124	nop
 80072128	lui    a0, $800a
 8007212C	lw     a0, $b024(a0)
-80072130	jal    func31f0c [$80031f0c]
+80072130	jal    system_memory_free [$80031f0c]
 80072134	nop
 80072138	lui    a0, $800a
 8007213C	lw     a0, $b09c(a0)
 80072140	lui    s2, $800a
 80072144	addiu  s2, s2, $b1e0 (=-$4e20)
-80072148	jal    func31f0c [$80031f0c]
+80072148	jal    system_memory_free [$80031f0c]
 8007214C	nop
 80072150	lui    a0, $800a
 80072154	lw     a0, $b568(a0)
 80072158	lui    s1, $800a
 8007215C	addiu  s1, s1, $c11c (=-$3ee4)
-80072160	jal    func31f0c [$80031f0c]
+80072160	jal    system_memory_free [$80031f0c]
 80072164	nop
 
 loop72168:	; 80072168
@@ -2101,7 +2101,7 @@ loop72168:	; 80072168
 8007216C	nop
 80072170	beq    a0, zero, L72180 [$80072180]
 80072174	nop
-80072178	jal    func31f0c [$80031f0c]
+80072178	jal    system_memory_free [$80031f0c]
 8007217C	nop
 
 L72180:	; 80072180
@@ -2109,7 +2109,7 @@ L72180:	; 80072180
 80072184	nop
 80072188	beq    a0, zero, L72198 [$80072198]
 8007218C	nop
-80072190	jal    func31f0c [$80031f0c]
+80072190	jal    system_memory_free [$80031f0c]
 80072194	nop
 
 L72198:	; 80072198
@@ -2136,12 +2136,12 @@ func721d8:	; 800721D8
 800721DC	addiu  a0, zero, $0001
 800721E0	sw     ra, $0020(sp)
 800721E4	sw     s1, $001c(sp)
-800721E8	jal    func43f88 [$80043f88]
+800721E8	jal    system_reset_graph [$80043f88]
 800721EC	sw     s0, $0018(sp)
 800721F0	addiu  v0, zero, $0100
 800721F4	lui    at, $800a
 800721F8	sw     v0, $b0c4(at)
-800721FC	jal    func49ff4 [$80049ff4]
+800721FC	jal    system_gte_set_projection_plane_distance [$80049ff4]
 80072200	addiu  a0, zero, $0100
 80072204	lui    s1, $800a
 80072208	addiu  s1, s1, $afb0 (=-$5050)
@@ -2449,7 +2449,7 @@ loop72660:	; 80072660
 8007268C	lw     v0, $0000(a2)
 80072690	nop
 80072694	sw     v0, $0000(a3)
-80072698	jal    func44448 [$80044448]
+80072698	jal    system_draw_sync [$80044448]
 8007269C	addu   a0, zero, zero
 800726A0	jal    func4b3f4 [$8004b3f4]
 800726A4	addu   a0, zero, zero
@@ -2487,7 +2487,7 @@ L72704:	; 80072704
 L72718:	; 80072718
 80072718	addu   s0, v0, zero
 8007271C	lw     a0, $0070(v0)
-80072720	jal    func44950 [$80044950]
+80072720	jal    system_clear_otagr [$80044950]
 80072724	addiu  a1, zero, $0400
 80072728	lw     v0, $0070(s0)
 8007272C	lw     v1, $0000(s1)
@@ -2576,7 +2576,7 @@ L72814:	; 80072814
 80072870	lw     t1, $0028(sp)
 80072874	and    v0, v0, s5
 80072878	or     v0, v0, t1
-8007287C	jal    func44448 [$80044448]
+8007287C	jal    system_draw_sync [$80044448]
 80072880	sw     v0, $0000(v1)
 
 L72884:	; 80072884
@@ -2596,7 +2596,7 @@ L72884:	; 80072884
 800728B8	nop
 
 L728bc:	; 800728BC
-800728BC	jal    func44448 [$80044448]
+800728BC	jal    system_draw_sync [$80044448]
 800728C0	addu   a0, zero, zero
 800728C4	jal    func4b3f4 [$8004b3f4]
 800728C8	addu   a0, zero, zero
@@ -2604,11 +2604,11 @@ L728bc:	; 800728BC
 800728D0	addiu  a0, a0, $b084 (=-$4f7c)
 800728D4	jal    func44d14 [$80044d14]
 800728D8	nop
-800728DC	jal    func31f0c [$80031f0c]
+800728DC	jal    system_memory_free [$80031f0c]
 800728E0	addu   a0, s1, zero
-800728E4	jal    func31f0c [$80031f0c]
+800728E4	jal    system_memory_free [$80031f0c]
 800728E8	addu   a0, s4, zero
-800728EC	jal    func31f0c [$80031f0c]
+800728EC	jal    system_memory_free [$80031f0c]
 800728F0	addu   a0, fp, zero
 800728F4	lw     ra, $0054(sp)
 800728F8	lw     fp, $0050(sp)
@@ -2809,7 +2809,7 @@ func72b58:	; 80072B58
 80072B74	addu   a0, s0, zero
 80072B78	lui    at, $800a
 80072B7C	sw     v0, $b568(at)
-80072B80	jal    func31f0c [$80031f0c]
+80072B80	jal    system_memory_free [$80031f0c]
 80072B84	addu   a0, s0, zero
 80072B88	addu   a3, zero, zero
 80072B8C	lui    v0, $800a
@@ -3030,13 +3030,13 @@ func72e14:	; 80072E14
 80072EA4	sw     zero, $0040(at)
 80072EA8	lui    at, $1f80
 80072EAC	sw     zero, $003c(at)
-80072EB0	jal    func491c4 [$800491c4]
+80072EB0	jal    system_gte_matrix_mult_and_trans [$800491c4]
 80072EB4	ori    a2, a2, $0008
 80072EB8	lui    a0, $1f80
-80072EBC	jal    func49da4 [$80049da4]
+80072EBC	jal    system_gte_set_rotation_matrix [$80049da4]
 80072EC0	ori    a0, a0, $0008
 80072EC4	lui    a0, $1f80
-80072EC8	jal    func49e34 [$80049e34]
+80072EC8	jal    system_gte_set_translation_vector [$80049e34]
 80072ECC	ori    a0, a0, $0008
 
 loop72ed0:	; 80072ED0
@@ -3289,13 +3289,13 @@ func7312c:	; 8007312C
 80073280	sw     zero, $0050(at)
 80073284	lui    at, $1f80
 80073288	sw     zero, $004c(at)
-8007328C	jal    func491c4 [$800491c4]
+8007328C	jal    system_gte_matrix_mult_and_trans [$800491c4]
 80073290	ori    a2, a2, $0018
 80073294	lui    a0, $1f80
-80073298	jal    func49da4 [$80049da4]
+80073298	jal    system_gte_set_rotation_matrix [$80049da4]
 8007329C	ori    a0, a0, $0018
 800732A0	lui    a0, $1f80
-800732A4	jal    func49e34 [$80049e34]
+800732A4	jal    system_gte_set_translation_vector [$80049e34]
 800732A8	ori    a0, a0, $0018
 
 loop732ac:	; 800732AC
@@ -3623,7 +3623,7 @@ loop73754:	; 80073754
 80073760	addu   a1, s5, zero
 80073764	sh     zero, $00ba(s3)
 80073768	sh     zero, $00b8(s3)
-8007376C	jal    func3f5e0 [$8003f5e0]
+8007376C	jal    system_calculate_rotation_matrix [$8003f5e0]
 80073770	sh     v0, $00bc(s3)
 80073774	lui    v0, $d00d
 80073778	lw     a0, $0000(s7)
@@ -4047,15 +4047,15 @@ func73d74:	; 80073D74
 80073D78	lw     a0, $b200(a0)
 80073D7C	addiu  sp, sp, $ffe8 (=-$18)
 80073D80	sw     ra, $0010(sp)
-80073D84	jal    func31f0c [$80031f0c]
+80073D84	jal    system_memory_free [$80031f0c]
 80073D88	nop
 80073D8C	lui    a0, $800a
 80073D90	lw     a0, $b1fc(a0)
-80073D94	jal    func31f0c [$80031f0c]
+80073D94	jal    system_memory_free [$80031f0c]
 80073D98	nop
 80073D9C	lui    a0, $800a
 80073DA0	lw     a0, $c6f4(a0)
-80073DA4	jal    func31f0c [$80031f0c]
+80073DA4	jal    system_memory_free [$80031f0c]
 80073DA8	nop
 80073DAC	lw     ra, $0010(sp)
 80073DB0	addiu  sp, sp, $0018
@@ -4587,7 +4587,7 @@ func7452c:	; 8007452C
 80074530	lw     a0, $cb68(a0)
 80074534	addiu  sp, sp, $ffe8 (=-$18)
 80074538	sw     ra, $0010(sp)
-8007453C	jal    func31f0c [$80031f0c]
+8007453C	jal    system_memory_free [$80031f0c]
 80074540	nop
 80074544	lw     ra, $0010(sp)
 80074548	addiu  sp, sp, $0018
@@ -4654,7 +4654,7 @@ L745f4:	; 800745F4
 80074608	lh     a1, $0000(v0)
 8007460C	lw     v0, $0000(s1)
 80074610	sll    a1, a1, $04
-80074614	jal    func4470c [$8004470c]
+80074614	jal    system_load_image [$8004470c]
 80074618	addu   a1, v0, a1
 
 L7461c:	; 8007461C
@@ -4734,7 +4734,7 @@ func74704:	; 80074704
 80074708	lw     a0, $cbb8(a0)
 8007470C	addiu  sp, sp, $ffe8 (=-$18)
 80074710	sw     ra, $0010(sp)
-80074714	jal    func31f0c [$80031f0c]
+80074714	jal    system_memory_free [$80031f0c]
 80074718	nop
 8007471C	lw     ra, $0010(sp)
 80074720	addiu  sp, sp, $0018
@@ -4811,7 +4811,7 @@ L747cc:	; 800747CC
 80074800	mult   v1, v0
 80074804	lw     a1, $0000(s1)
 80074808	mflo   a2
-8007480C	jal    func4470c [$8004470c]
+8007480C	jal    system_load_image [$8004470c]
 80074810	addu   a1, a1, a2
 
 L74814:	; 80074814
@@ -5369,17 +5369,17 @@ L74f80:	; 80074F80
 80074F9C	nop
 80074FA0	lui    a0, $800a
 80074FA4	lw     a0, $b024(a0)
-80074FA8	jal    func31f0c [$80031f0c]
+80074FA8	jal    system_memory_free [$80031f0c]
 80074FAC	nop
 80074FB0	lui    a0, $800a
 80074FB4	lw     a0, $b09c(a0)
-80074FB8	jal    func31f0c [$80031f0c]
+80074FB8	jal    system_memory_free [$80031f0c]
 80074FBC	nop
 80074FC0	addiu  a0, zero, $0004
 80074FC4	jal    func319ec [$800319ec]
 80074FC8	addiu  a1, zero, $0001
 80074FCC	addu   s0, v0, zero
-80074FD0	jal    func31f0c [$80031f0c]
+80074FD0	jal    system_memory_free [$80031f0c]
 80074FD4	addu   a0, s0, zero
 80074FD8	lui    v0, $00ff
 80074FDC	ori    v0, v0, $ffff
@@ -5412,7 +5412,7 @@ L74f80:	; 80074F80
 80075048	addiu  v0, zero, $0080
 8007504C	sh     v1, $0012(sp)
 80075050	sh     v0, $0014(sp)
-80075054	jal    func44770 [$80044770]
+80075054	jal    system_store_image [$80044770]
 80075058	sh     v1, $0016(sp)
 8007505C	addiu  a0, sp, $0010
 80075060	addiu  v0, zero, $01b0
@@ -5422,7 +5422,7 @@ L74f80:	; 80074F80
 80075070	addiu  v0, zero, $0050
 80075074	sh     zero, $0010(sp)
 80075078	sh     s0, $0014(sp)
-8007507C	jal    func44770 [$80044770]
+8007507C	jal    system_store_image [$80044770]
 80075080	sh     v0, $0016(sp)
 80075084	lui    v0, $800a
 80075088	lw     v0, $cbd8(v0)
@@ -5435,7 +5435,7 @@ L74f80:	; 80074F80
 800750A4	sh     zero, $0010(sp)
 800750A8	sh     v0, $0012(sp)
 800750AC	sh     s0, $0014(sp)
-800750B0	jal    func447d4 [$800447d4]
+800750B0	jal    system_move_image [$800447d4]
 800750B4	sh     v0, $0016(sp)
 
 L750b8:	; 800750B8
@@ -5446,9 +5446,9 @@ L750b8:	; 800750B8
 800750C8	sh     zero, $0010(sp)
 800750CC	sh     zero, $0012(sp)
 800750D0	sh     s0, $0014(sp)
-800750D4	jal    func447d4 [$800447d4]
+800750D4	jal    system_move_image [$800447d4]
 800750D8	sh     v0, $0016(sp)
-800750DC	jal    func44448 [$80044448]
+800750DC	jal    system_draw_sync [$80044448]
 800750E0	addu   a0, zero, zero
 800750E4	addiu  a0, zero, $0010
 800750E8	addu   a1, zero, zero
@@ -5468,11 +5468,11 @@ loop750f8:	; 800750F8
 80075110	lw     a0, $c910(a0)
 80075114	lui    a1, $800a
 80075118	lw     a1, $bbcc(a1)
-8007511C	jal    func32cd8 [$80032cd8]
+8007511C	jal    system_extract_archive [$80032cd8]
 80075120	nop
 80075124	lui    a0, $800a
 80075128	lw     a0, $c910(a0)
-8007512C	jal    func31f0c [$80031f0c]
+8007512C	jal    system_memory_free [$80031f0c]
 80075130	nop
 80075134	addiu  a0, sp, $0010
 80075138	addu   a1, zero, zero
@@ -5482,9 +5482,9 @@ loop750f8:	; 800750F8
 80075148	addiu  v0, zero, $00d8
 8007514C	sh     zero, $0010(sp)
 80075150	sh     zero, $0012(sp)
-80075154	jal    func447d4 [$800447d4]
+80075154	jal    system_move_image [$800447d4]
 80075158	sh     v0, $0016(sp)
-8007515C	jal    func44448 [$80044448]
+8007515C	jal    system_draw_sync [$80044448]
 80075160	addu   a0, zero, zero
 80075164	jal    func28870 [$80028870]
 80075168	addu   a0, zero, zero
@@ -5508,11 +5508,11 @@ func75180:	; 80075180
 800751A4	addu   a1, zero, zero
 800751A8	lui    a0, $8006
 800751AC	lw     a0, $8af8(a0)
-800751B0	jal    func31f0c [$80031f0c]
+800751B0	jal    system_memory_free [$80031f0c]
 800751B4	addiu  s0, zero, $0100
 800751B8	lui    a0, $800a
 800751BC	lw     a0, $bbcc(a0)
-800751C0	jal    func31f0c [$80031f0c]
+800751C0	jal    system_memory_free [$80031f0c]
 800751C4	addiu  s1, zero, $0140
 800751C8	jal    func721d8 [$800721d8]
 800751CC	nop
@@ -5544,17 +5544,17 @@ func75180:	; 80075180
 80075234	addiu  v0, zero, $00d8
 80075238	sh     s0, $0012(sp)
 8007523C	sh     s1, $0014(sp)
-80075240	jal    func447d4 [$800447d4]
+80075240	jal    system_move_image [$800447d4]
 80075244	sh     v0, $0016(sp)
 80075248	addiu  a0, sp, $0010
 8007524C	addu   a1, zero, zero
-80075250	jal    func447d4 [$800447d4]
+80075250	jal    system_move_image [$800447d4]
 80075254	addiu  a2, zero, $00d8
 80075258	lui    v0, $800a
 8007525C	lw     v0, $b224(v0)
 80075260	nop
 80075264	lw     a0, $0070(v0)
-80075268	jal    func44950 [$80044950]
+80075268	jal    system_clear_otagr [$80044950]
 8007526C	addiu  a1, zero, $0400
 80075270	jal    func28870 [$80028870]
 80075274	addu   a0, zero, zero
@@ -5568,7 +5568,7 @@ func75180:	; 80075180
 80075294	addiu  v0, zero, $0080
 80075298	sh     s0, $0012(sp)
 8007529C	sh     v0, $0014(sp)
-800752A0	jal    func4470c [$8004470c]
+800752A0	jal    system_load_image [$8004470c]
 800752A4	sh     s0, $0016(sp)
 800752A8	addiu  a0, sp, $0010
 800752AC	lui    a1, $800a
@@ -5578,17 +5578,17 @@ func75180:	; 80075180
 800752BC	addiu  v0, zero, $0050
 800752C0	sh     zero, $0010(sp)
 800752C4	sh     s1, $0014(sp)
-800752C8	jal    func4470c [$8004470c]
+800752C8	jal    system_load_image [$8004470c]
 800752CC	sh     v0, $0016(sp)
-800752D0	jal    func44448 [$80044448]
+800752D0	jal    system_draw_sync [$80044448]
 800752D4	addu   a0, zero, zero
 800752D8	lui    a0, $800a
 800752DC	lw     a0, $bbe8(a0)
-800752E0	jal    func31f0c [$80031f0c]
+800752E0	jal    system_memory_free [$80031f0c]
 800752E4	nop
 800752E8	lui    a0, $800a
 800752EC	lw     a0, $bc78(a0)
-800752F0	jal    func31f0c [$80031f0c]
+800752F0	jal    system_memory_free [$80031f0c]
 800752F4	nop
 800752F8	jal    func96ce4 [$80096ce4]
 800752FC	nop
@@ -5816,13 +5816,13 @@ L7549c:	; 8007549C
 80075824	sw     a3, $0108(at)
 80075828	lui    at, $1f80
 8007582C	sw     v0, $010c(at)
-80075830	jal    func491c4 [$800491c4]
+80075830	jal    system_gte_matrix_mult_and_trans [$800491c4]
 80075834	ori    a2, a2, $0110
 80075838	lui    a0, $1f80
-8007583C	jal    func49da4 [$80049da4]
+8007583C	jal    system_gte_set_rotation_matrix [$80049da4]
 80075840	ori    a0, a0, $0110
 80075844	lui    a0, $1f80
-80075848	jal    func49e34 [$80049e34]
+80075848	jal    system_gte_set_translation_vector [$80049e34]
 8007584C	ori    a0, a0, $0110
 80075850	lui    t0, $1f80
 80075854	ori    t0, t0, $00a0
@@ -5884,19 +5884,19 @@ L7590c:	; 8007590C
 func75924:	; 80075924
 80075924	addiu  sp, sp, $ffe8 (=-$18)
 80075928	sw     ra, $0010(sp)
-8007592C	jal    func44448 [$80044448]
+8007592C	jal    system_draw_sync [$80044448]
 80075930	addu   a0, zero, zero
 80075934	jal    func4b3f4 [$8004b3f4]
 80075938	addu   a0, zero, zero
-8007593C	jal    func4034c [$8004034c]
+8007593C	jal    system_enter_critical_section [$8004034c]
 80075940	nop
-80075944	jal    func44448 [$80044448]
+80075944	jal    system_draw_sync [$80044448]
 80075948	addu   a0, zero, zero
 8007594C	jal    func4b3f4 [$8004b3f4]
 80075950	addu   a0, zero, zero
-80075954	jal    func402cc [$800402cc]
+80075954	jal    system_bios_flush_cache [$800402cc]
 80075958	nop
-8007595C	jal    func4035c [$8004035c]
+8007595C	jal    system_exit_critical_section [$8004035c]
 80075960	nop
 80075964	lw     ra, $0010(sp)
 80075968	addiu  sp, sp, $0018
@@ -5911,7 +5911,7 @@ func75974:	; 80075974
 80075980	lw     s1, $8b24(s1)
 80075984	addu   a0, zero, zero
 80075988	sw     ra, $0020(sp)
-8007598C	jal    func44448 [$80044448]
+8007598C	jal    system_draw_sync [$80044448]
 80075990	sw     s0, $0018(sp)
 80075994	jal    func4b3f4 [$8004b3f4]
 80075998	addu   a0, zero, zero
@@ -5927,7 +5927,7 @@ func75974:	; 80075974
 800759C0	sh     zero, $0010(sp)
 800759C4	sh     v1, $0012(sp)
 800759C8	sh     v0, $0014(sp)
-800759CC	jal    func447d4 [$800447d4]
+800759CC	jal    system_move_image [$800447d4]
 800759D0	sh     v1, $0016(sp)
 
 L759d4:	; 800759D4
@@ -5941,7 +5941,7 @@ L759d4:	; 800759D4
 800759F0	nop
 
 loop759f4:	; 800759F4
-800759F4	jal    func44448 [$80044448]
+800759F4	jal    system_draw_sync [$80044448]
 800759F8	addu   a0, zero, zero
 800759FC	jal    func4b3f4 [$8004b3f4]
 80075A00	addu   a0, zero, zero
@@ -6020,7 +6020,7 @@ L75b00:	; 80075B00
 80075B14	nop
 80075B18	jal    func37d34 [$80037d34]
 80075B1C	nop
-80075B20	jal    func44448 [$80044448]
+80075B20	jal    system_draw_sync [$80044448]
 80075B24	addu   a0, zero, zero
 80075B28	jal    func4b3f4 [$8004b3f4]
 80075B2C	addu   a0, zero, zero
@@ -6032,7 +6032,7 @@ L75b00:	; 80075B00
 80075B44	addiu  v0, zero, $00d8
 80075B48	sh     zero, $0010(sp)
 80075B4C	sh     zero, $0012(sp)
-80075B50	jal    func447d4 [$800447d4]
+80075B50	jal    system_move_image [$800447d4]
 80075B54	sh     v0, $0016(sp)
 80075B58	lui    v0, $800a
 80075B5C	lw     v0, $cbd8(v0)
@@ -6176,7 +6176,7 @@ func75d3c:	; 80075D3C
 80075D58	addu   a0, s0, zero
 80075D5C	lui    at, $800a
 80075D60	sw     v0, $b568(at)
-80075D64	jal    func31f0c [$80031f0c]
+80075D64	jal    system_memory_free [$80031f0c]
 80075D68	addu   a0, s0, zero
 80075D6C	lui    v1, $800a
 80075D70	lw     v1, $b568(v1)
@@ -6840,9 +6840,9 @@ L765f4:	; 800765F4
 80076620	addiu  v0, zero, $00d8
 80076624	sh     zero, $0010(sp)
 80076628	sh     zero, $0012(sp)
-8007662C	jal    func447d4 [$800447d4]
+8007662C	jal    system_move_image [$800447d4]
 80076630	sh     v0, $0016(sp)
-80076634	jal    func44448 [$80044448]
+80076634	jal    system_draw_sync [$80044448]
 80076638	addu   a0, zero, zero
 8007663C	addiu  a0, zero, $0040
 80076640	addu   a1, zero, zero
@@ -7012,23 +7012,23 @@ loop7679c:	; 8007679C
 800768B4	nop
 800768B8	lui    a0, $800a
 800768BC	lw     a0, $b020(a0)
-800768C0	jal    func31f0c [$80031f0c]
+800768C0	jal    system_memory_free [$80031f0c]
 800768C4	nop
 800768C8	lui    a0, $800a
 800768CC	lw     a0, $b098(a0)
-800768D0	jal    func31f0c [$80031f0c]
+800768D0	jal    system_memory_free [$80031f0c]
 800768D4	nop
 800768D8	lui    a0, $800a
 800768DC	lw     a0, $b024(a0)
-800768E0	jal    func31f0c [$80031f0c]
+800768E0	jal    system_memory_free [$80031f0c]
 800768E4	nop
 800768E8	lui    a0, $800a
 800768EC	lw     a0, $b09c(a0)
-800768F0	jal    func31f0c [$80031f0c]
+800768F0	jal    system_memory_free [$80031f0c]
 800768F4	nop
 800768F8	lui    a0, $800a
 800768FC	lw     a0, $b568(a0)
-80076900	jal    func31f0c [$80031f0c]
+80076900	jal    system_memory_free [$80031f0c]
 80076904	nop
 80076908	jal    func96a88 [$80096a88]
 8007690C	nop
@@ -7308,7 +7308,7 @@ L76c44:	; 80076C44
 80076D0C	andi   v0, v0, $0fff
 80076D10	lui    at, $800a
 80076D14	sh     v0, $b122(at)
-80076D18	jal    func49ff4 [$80049ff4]
+80076D18	jal    system_gte_set_projection_plane_distance [$80049ff4]
 80076D1C	nop
 80076D20	addiu  v0, zero, $0001
 80076D24	lw     ra, $0018(sp)
@@ -7406,11 +7406,11 @@ L76dd8:	; 80076DD8
 80076E70	addiu  v0, zero, $00d8
 80076E74	sh     zero, $0010(sp)
 80076E78	sh     zero, $0012(sp)
-80076E7C	jal    func447d4 [$800447d4]
+80076E7C	jal    system_move_image [$800447d4]
 
 L76e80:	; 80076E80
 80076E80	sh     v0, $0016(sp)
-80076E84	jal    func44448 [$80044448]
+80076E84	jal    system_draw_sync [$80044448]
 80076E88	addu   a0, zero, zero
 80076E8C	addiu  a0, zero, $0040
 80076E90	addu   a1, zero, zero
@@ -7566,7 +7566,7 @@ loop76ffc:	; 80076FFC
 800770C4	nop
 800770C8	lui    a0, $8006
 800770CC	lw     a0, $1c2c(a0)
-800770D0	jal    func31f0c [$80031f0c]
+800770D0	jal    system_memory_free [$80031f0c]
 800770D4	nop
 800770D8	jal    func83c00 [$80083c00]
 800770DC	nop
@@ -7586,25 +7586,25 @@ loop76ffc:	; 80076FFC
 80077114	nop
 80077118	lui    a0, $800a
 8007711C	lw     a0, $b020(a0)
-80077120	jal    func31f0c [$80031f0c]
+80077120	jal    system_memory_free [$80031f0c]
 80077124	nop
 80077128	lui    a0, $800a
 8007712C	lw     a0, $b098(a0)
-80077130	jal    func31f0c [$80031f0c]
+80077130	jal    system_memory_free [$80031f0c]
 80077134	nop
 80077138	lui    a0, $800a
 8007713C	lw     a0, $b024(a0)
-80077140	jal    func31f0c [$80031f0c]
+80077140	jal    system_memory_free [$80031f0c]
 80077144	nop
 
 L77148:	; 80077148
 80077148	lui    a0, $800a
 8007714C	lw     a0, $b09c(a0)
-80077150	jal    func31f0c [$80031f0c]
+80077150	jal    system_memory_free [$80031f0c]
 80077154	nop
 80077158	lui    a0, $800a
 8007715C	lw     a0, $b568(a0)
-80077160	jal    func31f0c [$80031f0c]
+80077160	jal    system_memory_free [$80031f0c]
 80077164	nop
 80077168	jal    func96a88 [$80096a88]
 8007716C	nop
@@ -8494,9 +8494,9 @@ L77dd4:	; 80077DD4
 80077E6C	addiu  v0, zero, $00d8
 80077E70	sh     zero, $0010(sp)
 80077E74	sh     zero, $0012(sp)
-80077E78	jal    func447d4 [$800447d4]
+80077E78	jal    system_move_image [$800447d4]
 80077E7C	sh     v0, $0016(sp)
-80077E80	jal    func44448 [$80044448]
+80077E80	jal    system_draw_sync [$80044448]
 80077E84	addu   a0, zero, zero
 80077E88	addiu  a0, zero, $0040
 80077E8C	addu   a1, zero, zero
@@ -8676,7 +8676,7 @@ L78128:	; 80078128
 80078128	nop
 8007812C	lui    a0, $8006
 80078130	lw     a0, $1c2c(a0)
-80078134	jal    func31f0c [$80031f0c]
+80078134	jal    system_memory_free [$80031f0c]
 80078138	nop
 8007813C	jal    func83c00 [$80083c00]
 80078140	nop
@@ -8698,23 +8698,23 @@ L78128:	; 80078128
 80078180	lw     a0, $b020(a0)
 
 L78184:	; 80078184
-80078184	jal    func31f0c [$80031f0c]
+80078184	jal    system_memory_free [$80031f0c]
 80078188	nop
 8007818C	lui    a0, $800a
 80078190	lw     a0, $b098(a0)
-80078194	jal    func31f0c [$80031f0c]
+80078194	jal    system_memory_free [$80031f0c]
 80078198	nop
 8007819C	lui    a0, $800a
 800781A0	lw     a0, $b024(a0)
-800781A4	jal    func31f0c [$80031f0c]
+800781A4	jal    system_memory_free [$80031f0c]
 800781A8	nop
 800781AC	lui    a0, $800a
 800781B0	lw     a0, $b09c(a0)
-800781B4	jal    func31f0c [$80031f0c]
+800781B4	jal    system_memory_free [$80031f0c]
 800781B8	nop
 800781BC	lui    a0, $800a
 800781C0	lw     a0, $b568(a0)
-800781C4	jal    func31f0c [$80031f0c]
+800781C4	jal    system_memory_free [$80031f0c]
 800781C8	nop
 800781CC	jal    func96a88 [$80096a88]
 800781D0	nop
@@ -10326,9 +10326,9 @@ L79954:	; 80079954
 800799E8	addiu  v0, zero, $00d8
 800799EC	sh     zero, $0010(sp)
 800799F0	sh     zero, $0012(sp)
-800799F4	jal    func447d4 [$800447d4]
+800799F4	jal    system_move_image [$800447d4]
 800799F8	sh     v0, $0016(sp)
-800799FC	jal    func44448 [$80044448]
+800799FC	jal    system_draw_sync [$80044448]
 80079A00	addu   a0, zero, zero
 80079A04	addiu  a0, zero, $0040
 80079A08	addu   a1, zero, zero
@@ -10509,7 +10509,7 @@ loop79b80:	; 80079B80
 80079CB0	nop
 80079CB4	lui    a0, $8006
 80079CB8	lw     a0, $1c2c(a0)
-80079CBC	jal    func31f0c [$80031f0c]
+80079CBC	jal    system_memory_free [$80031f0c]
 80079CC0	nop
 80079CC4	jal    func83c00 [$80083c00]
 80079CC8	nop
@@ -10529,23 +10529,23 @@ loop79b80:	; 80079B80
 80079D00	nop
 80079D04	lui    a0, $800a
 80079D08	lw     a0, $b020(a0)
-80079D0C	jal    func31f0c [$80031f0c]
+80079D0C	jal    system_memory_free [$80031f0c]
 80079D10	nop
 80079D14	lui    a0, $800a
 80079D18	lw     a0, $b098(a0)
-80079D1C	jal    func31f0c [$80031f0c]
+80079D1C	jal    system_memory_free [$80031f0c]
 80079D20	nop
 80079D24	lui    a0, $800a
 80079D28	lw     a0, $b024(a0)
-80079D2C	jal    func31f0c [$80031f0c]
+80079D2C	jal    system_memory_free [$80031f0c]
 80079D30	nop
 80079D34	lui    a0, $800a
 80079D38	lw     a0, $b09c(a0)
-80079D3C	jal    func31f0c [$80031f0c]
+80079D3C	jal    system_memory_free [$80031f0c]
 80079D40	nop
 80079D44	lui    a0, $800a
 80079D48	lw     a0, $b568(a0)
-80079D4C	jal    func31f0c [$80031f0c]
+80079D4C	jal    system_memory_free [$80031f0c]
 80079D50	nop
 80079D54	jal    func96a88 [$80096a88]
 80079D58	nop
@@ -11960,7 +11960,7 @@ L7b120:	; 8007B120
 8007B204	addiu  v0, zero, $f000 (=-$1000)
 8007B208	sh     zero, $00a0(s4)
 8007B20C	sh     v0, $00a2(s4)
-8007B210	jal    system_matrix_vector_multiply_GTE [$80049b94]
+8007B210	jal    system_gte_apply_matrix [$80049b94]
 8007B214	sh     zero, $00a4(s4)
 8007B218	addu   a0, s4, zero
 8007B21C	addu   a1, s3, zero
@@ -12049,9 +12049,9 @@ L7b308:	; 8007B308
 8007B35C	addiu  v0, zero, $00d8
 8007B360	sh     zero, $0010(sp)
 8007B364	sh     zero, $0012(sp)
-8007B368	jal    func447d4 [$800447d4]
+8007B368	jal    system_move_image [$800447d4]
 8007B36C	sh     v0, $0016(sp)
-8007B370	jal    func44448 [$80044448]
+8007B370	jal    system_draw_sync [$80044448]
 8007B374	addu   a0, zero, zero
 8007B378	addiu  a0, zero, $0040
 8007B37C	addu   a1, zero, zero
@@ -12248,7 +12248,7 @@ loop7b4ec:	; 8007B4EC
 8007B664	nop
 8007B668	lui    a0, $8006
 8007B66C	lw     a0, $1c2c(a0)
-8007B670	jal    func31f0c [$80031f0c]
+8007B670	jal    system_memory_free [$80031f0c]
 8007B674	nop
 8007B678	jal    func83c00 [$80083c00]
 8007B67C	nop
@@ -12268,23 +12268,23 @@ loop7b4ec:	; 8007B4EC
 8007B6B4	nop
 8007B6B8	lui    a0, $800a
 8007B6BC	lw     a0, $b020(a0)
-8007B6C0	jal    func31f0c [$80031f0c]
+8007B6C0	jal    system_memory_free [$80031f0c]
 8007B6C4	nop
 8007B6C8	lui    a0, $800a
 8007B6CC	lw     a0, $b098(a0)
-8007B6D0	jal    func31f0c [$80031f0c]
+8007B6D0	jal    system_memory_free [$80031f0c]
 8007B6D4	nop
 8007B6D8	lui    a0, $800a
 8007B6DC	lw     a0, $b024(a0)
-8007B6E0	jal    func31f0c [$80031f0c]
+8007B6E0	jal    system_memory_free [$80031f0c]
 8007B6E4	nop
 8007B6E8	lui    a0, $800a
 8007B6EC	lw     a0, $b09c(a0)
-8007B6F0	jal    func31f0c [$80031f0c]
+8007B6F0	jal    system_memory_free [$80031f0c]
 8007B6F4	nop
 8007B6F8	lui    a0, $800a
 8007B6FC	lw     a0, $b568(a0)
-8007B700	jal    func31f0c [$80031f0c]
+8007B700	jal    system_memory_free [$80031f0c]
 8007B704	nop
 8007B708	jal    func96a88 [$80096a88]
 8007B70C	nop
@@ -13807,9 +13807,9 @@ L7cce8:	; 8007CCE8
 8007CD28	addiu  v0, zero, $00d8
 8007CD2C	sh     zero, $0010(sp)
 8007CD30	sh     zero, $0012(sp)
-8007CD34	jal    func447d4 [$800447d4]
+8007CD34	jal    system_move_image [$800447d4]
 8007CD38	sh     v0, $0016(sp)
-8007CD3C	jal    func44448 [$80044448]
+8007CD3C	jal    system_draw_sync [$80044448]
 8007CD40	addu   a0, zero, zero
 8007CD44	addiu  a0, zero, $0040
 8007CD48	addu   a1, zero, zero
@@ -13949,7 +13949,7 @@ loop7cf3c:	; 8007CF3C
 L7cf44:	; 8007CF44
 8007CF44	lui    a0, $800a
 8007CF48	lw     a0, $bc74(a0)
-8007CF4C	jal    func31f0c [$80031f0c]
+8007CF4C	jal    system_memory_free [$80031f0c]
 8007CF50	nop
 8007CF54	lui    a0, $8006
 8007CF58	lw     a0, $1c2c(a0)
@@ -14060,7 +14060,7 @@ L7cf44:	; 8007CF44
 8007D0F8	nop
 8007D0FC	lui    a0, $8006
 8007D100	lw     a0, $1c2c(a0)
-8007D104	jal    func31f0c [$80031f0c]
+8007D104	jal    system_memory_free [$80031f0c]
 8007D108	nop
 8007D10C	jal    func83c00 [$80083c00]
 8007D110	nop
@@ -14080,23 +14080,23 @@ L7cf44:	; 8007CF44
 8007D148	nop
 8007D14C	lui    a0, $800a
 8007D150	lw     a0, $b020(a0)
-8007D154	jal    func31f0c [$80031f0c]
+8007D154	jal    system_memory_free [$80031f0c]
 8007D158	nop
 8007D15C	lui    a0, $800a
 8007D160	lw     a0, $b098(a0)
-8007D164	jal    func31f0c [$80031f0c]
+8007D164	jal    system_memory_free [$80031f0c]
 8007D168	nop
 8007D16C	lui    a0, $800a
 8007D170	lw     a0, $b024(a0)
-8007D174	jal    func31f0c [$80031f0c]
+8007D174	jal    system_memory_free [$80031f0c]
 8007D178	nop
 8007D17C	lui    a0, $800a
 8007D180	lw     a0, $b09c(a0)
-8007D184	jal    func31f0c [$80031f0c]
+8007D184	jal    system_memory_free [$80031f0c]
 8007D188	nop
 8007D18C	lui    a0, $800a
 8007D190	lw     a0, $b568(a0)
-8007D194	jal    func31f0c [$80031f0c]
+8007D194	jal    system_memory_free [$80031f0c]
 8007D198	nop
 8007D19C	jal    func96a88 [$80096a88]
 8007D1A0	nop
@@ -15768,7 +15768,7 @@ L7e9b4:	; 8007E9B4
 8007EA6C	ori    a0, s4, $00f0
 8007EA70	addu   a1, s0, zero
 8007EA74	addiu  s0, s5, $0020
-8007EA78	jal    func490b4 [$800490b4]
+8007EA78	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 8007EA7C	addu   a2, s0, zero
 8007EA80	addu   a0, s0, zero
 8007EA84	addu   a1, s4, zero
@@ -15867,7 +15867,7 @@ L7e9b4:	; 8007E9B4
 8007EBF8	addu   a0, s1, zero
 8007EBFC	addu   a1, s0, zero
 8007EC00	addiu  s0, s5, $0020
-8007EC04	jal    func490b4 [$800490b4]
+8007EC04	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 8007EC08	addu   a2, s0, zero
 8007EC0C	addu   a0, s0, zero
 8007EC10	addu   a1, s4, zero
@@ -16135,7 +16135,7 @@ L7ef84:	; 8007EF84
 8007EFD4	ori    a0, s4, $00f0
 8007EFD8	addu   a1, s0, zero
 8007EFDC	addiu  s0, s3, $0020
-8007EFE0	jal    func490b4 [$800490b4]
+8007EFE0	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 8007EFE4	addu   a2, s0, zero
 8007EFE8	lw     v0, $0028(s2)
 8007EFEC	nop
@@ -16390,9 +16390,9 @@ L7f338:	; 8007F338
 8007F37C	addiu  v0, zero, $00d8
 8007F380	sh     zero, $0010(sp)
 8007F384	sh     zero, $0012(sp)
-8007F388	jal    func447d4 [$800447d4]
+8007F388	jal    system_move_image [$800447d4]
 8007F38C	sh     v0, $0016(sp)
-8007F390	jal    func44448 [$80044448]
+8007F390	jal    system_draw_sync [$80044448]
 8007F394	addu   a0, zero, zero
 8007F398	addiu  a0, zero, $0040
 8007F39C	addu   a1, zero, zero
@@ -16563,7 +16563,7 @@ loop7f514:	; 8007F514
 8007F61C	nop
 8007F620	lui    a0, $8006
 8007F624	lw     a0, $1c2c(a0)
-8007F628	jal    func31f0c [$80031f0c]
+8007F628	jal    system_memory_free [$80031f0c]
 8007F62C	nop
 8007F630	jal    func83c00 [$80083c00]
 8007F634	nop
@@ -16585,23 +16585,23 @@ loop7f514:	; 8007F514
 8007F674	nop
 8007F678	lui    a0, $800a
 8007F67C	lw     a0, $b020(a0)
-8007F680	jal    func31f0c [$80031f0c]
+8007F680	jal    system_memory_free [$80031f0c]
 8007F684	nop
 8007F688	lui    a0, $800a
 8007F68C	lw     a0, $b098(a0)
-8007F690	jal    func31f0c [$80031f0c]
+8007F690	jal    system_memory_free [$80031f0c]
 8007F694	nop
 8007F698	lui    a0, $800a
 8007F69C	lw     a0, $b024(a0)
-8007F6A0	jal    func31f0c [$80031f0c]
+8007F6A0	jal    system_memory_free [$80031f0c]
 8007F6A4	nop
 8007F6A8	lui    a0, $800a
 8007F6AC	lw     a0, $b09c(a0)
-8007F6B0	jal    func31f0c [$80031f0c]
+8007F6B0	jal    system_memory_free [$80031f0c]
 8007F6B4	nop
 8007F6B8	lui    a0, $800a
 8007F6BC	lw     a0, $b568(a0)
-8007F6C0	jal    func31f0c [$80031f0c]
+8007F6C0	jal    system_memory_free [$80031f0c]
 8007F6C4	nop
 8007F6C8	jal    func96a88 [$80096a88]
 8007F6CC	nop
@@ -17339,9 +17339,9 @@ L800cc:	; 800800CC
 80080110	addiu  v0, zero, $00d8
 80080114	sh     zero, $0010(sp)
 80080118	sh     zero, $0012(sp)
-8008011C	jal    func447d4 [$800447d4]
+8008011C	jal    system_move_image [$800447d4]
 80080120	sh     v0, $0016(sp)
-80080124	jal    func44448 [$80044448]
+80080124	jal    system_draw_sync [$80044448]
 80080128	addu   a0, zero, zero
 8008012C	addiu  a0, zero, $0040
 80080130	addu   a1, zero, zero
@@ -17465,7 +17465,7 @@ loop802e4:	; 800802E4
 L802ec:	; 800802EC
 800802EC	lui    a0, $800a
 800802F0	lw     a0, $bc74(a0)
-800802F4	jal    func31f0c [$80031f0c]
+800802F4	jal    system_memory_free [$80031f0c]
 800802F8	nop
 800802FC	lui    a0, $8006
 80080300	lw     a0, $1c2c(a0)
@@ -17566,7 +17566,7 @@ L80404:	; 80080404
 80080470	nop
 80080474	lui    a0, $8006
 80080478	lw     a0, $1c2c(a0)
-8008047C	jal    func31f0c [$80031f0c]
+8008047C	jal    system_memory_free [$80031f0c]
 80080480	nop
 80080484	jal    func83c00 [$80083c00]
 80080488	nop
@@ -17586,23 +17586,23 @@ L80404:	; 80080404
 800804C0	nop
 800804C4	lui    a0, $800a
 800804C8	lw     a0, $b020(a0)
-800804CC	jal    func31f0c [$80031f0c]
+800804CC	jal    system_memory_free [$80031f0c]
 800804D0	nop
 800804D4	lui    a0, $800a
 800804D8	lw     a0, $b098(a0)
-800804DC	jal    func31f0c [$80031f0c]
+800804DC	jal    system_memory_free [$80031f0c]
 800804E0	nop
 800804E4	lui    a0, $800a
 800804E8	lw     a0, $b024(a0)
-800804EC	jal    func31f0c [$80031f0c]
+800804EC	jal    system_memory_free [$80031f0c]
 800804F0	nop
 800804F4	lui    a0, $800a
 800804F8	lw     a0, $b09c(a0)
-800804FC	jal    func31f0c [$80031f0c]
+800804FC	jal    system_memory_free [$80031f0c]
 80080500	nop
 80080504	lui    a0, $800a
 80080508	lw     a0, $b568(a0)
-8008050C	jal    func31f0c [$80031f0c]
+8008050C	jal    system_memory_free [$80031f0c]
 80080510	nop
 80080514	jal    func96a88 [$80096a88]
 80080518	nop
@@ -18902,9 +18902,9 @@ L816f0:	; 800816F0
 80081734	addiu  v0, zero, $00d8
 80081738	sh     zero, $0010(sp)
 8008173C	sh     zero, $0012(sp)
-80081740	jal    func447d4 [$800447d4]
+80081740	jal    system_move_image [$800447d4]
 80081744	sh     v0, $0016(sp)
-80081748	jal    func44448 [$80044448]
+80081748	jal    system_draw_sync [$80044448]
 8008174C	addu   a0, zero, zero
 80081750	addiu  a0, zero, $0040
 80081754	addu   a1, zero, zero
@@ -19034,7 +19034,7 @@ loop81920:	; 80081920
 L81928:	; 80081928
 80081928	lui    a0, $800a
 8008192C	lw     a0, $bc74(a0)
-80081930	jal    func31f0c [$80031f0c]
+80081930	jal    system_memory_free [$80031f0c]
 80081934	nop
 80081938	lui    a0, $8006
 8008193C	lw     a0, $1c2c(a0)
@@ -19138,7 +19138,7 @@ L81a64:	; 80081A64
 80081AB8	nop
 80081ABC	lui    a0, $8006
 80081AC0	lw     a0, $1c2c(a0)
-80081AC4	jal    func31f0c [$80031f0c]
+80081AC4	jal    system_memory_free [$80031f0c]
 80081AC8	nop
 80081ACC	jal    func83c00 [$80083c00]
 80081AD0	nop
@@ -19160,23 +19160,23 @@ L81a64:	; 80081A64
 80081B10	nop
 80081B14	lui    a0, $800a
 80081B18	lw     a0, $b020(a0)
-80081B1C	jal    func31f0c [$80031f0c]
+80081B1C	jal    system_memory_free [$80031f0c]
 80081B20	nop
 80081B24	lui    a0, $800a
 80081B28	lw     a0, $b098(a0)
-80081B2C	jal    func31f0c [$80031f0c]
+80081B2C	jal    system_memory_free [$80031f0c]
 80081B30	nop
 80081B34	lui    a0, $800a
 80081B38	lw     a0, $b024(a0)
-80081B3C	jal    func31f0c [$80031f0c]
+80081B3C	jal    system_memory_free [$80031f0c]
 80081B40	nop
 80081B44	lui    a0, $800a
 80081B48	lw     a0, $b09c(a0)
-80081B4C	jal    func31f0c [$80031f0c]
+80081B4C	jal    system_memory_free [$80031f0c]
 80081B50	nop
 80081B54	lui    a0, $800a
 80081B58	lw     a0, $b568(a0)
-80081B5C	jal    func31f0c [$80031f0c]
+80081B5C	jal    system_memory_free [$80031f0c]
 80081B60	nop
 80081B64	jal    func96a88 [$80096a88]
 80081B68	nop
@@ -19747,14 +19747,14 @@ func8234c:	; 8008234C
 800823A4	andi   v0, v0, $7fff
 800823A8	sw     v0, $0000(s2)
 800823AC	lw     a0, $006c(s1)
-800823B0	jal    func3f758 [$8003f758]
+800823B0	jal    system_sin [$8003f758]
 800823B4	addiu  s0, s2, $00f0
 800823B8	addiu  a0, s2, $00a0
 800823BC	addu   a1, s0, zero
 800823C0	sll    v1, v0, $01
 800823C4	addu   v1, v1, v0
 800823C8	sll    v1, v1, $01
-800823CC	jal    func3f5e0 [$8003f5e0]
+800823CC	jal    system_calculate_rotation_matrix [$8003f5e0]
 800823D0	sw     v1, $0008(s2)
 800823D4	addu   a0, s0, zero
 800823D8	jal    func49c74 [$80049c74]
@@ -20127,7 +20127,7 @@ L8285c:	; 8008285C
 800828E0	bne    v1, v0, L82934 [$80082934]
 800828E4	nop
 800828E8	sh     zero, $0004(a0)
-800828EC	jal    func44448 [$80044448]
+800828EC	jal    system_draw_sync [$80044448]
 800828F0	addu   a0, zero, zero
 800828F4	jal    func4b3f4 [$8004b3f4]
 800828F8	addu   a0, zero, zero
@@ -20166,9 +20166,9 @@ L82934:	; 80082934
 80082968	addiu  v0, zero, $00d8
 8008296C	sh     zero, $0010(sp)
 80082970	sh     zero, $0012(sp)
-80082974	jal    func447d4 [$800447d4]
+80082974	jal    system_move_image [$800447d4]
 80082978	sh     v0, $0016(sp)
-8008297C	jal    func44448 [$80044448]
+8008297C	jal    system_draw_sync [$80044448]
 80082980	addu   a0, zero, zero
 80082984	addiu  a0, zero, $0040
 80082988	addu   a1, zero, zero
@@ -20329,7 +20329,7 @@ loop82af8:	; 80082AF8
 80082BE0	nop
 80082BE4	lui    a0, $8006
 80082BE8	lw     a0, $1c2c(a0)
-80082BEC	jal    func31f0c [$80031f0c]
+80082BEC	jal    system_memory_free [$80031f0c]
 80082BF0	nop
 80082BF4	jal    func83c00 [$80083c00]
 80082BF8	nop
@@ -20349,23 +20349,23 @@ loop82af8:	; 80082AF8
 80082C30	nop
 80082C34	lui    a0, $800a
 80082C38	lw     a0, $b020(a0)
-80082C3C	jal    func31f0c [$80031f0c]
+80082C3C	jal    system_memory_free [$80031f0c]
 80082C40	nop
 80082C44	lui    a0, $800a
 80082C48	lw     a0, $b098(a0)
-80082C4C	jal    func31f0c [$80031f0c]
+80082C4C	jal    system_memory_free [$80031f0c]
 80082C50	nop
 80082C54	lui    a0, $800a
 80082C58	lw     a0, $b024(a0)
-80082C5C	jal    func31f0c [$80031f0c]
+80082C5C	jal    system_memory_free [$80031f0c]
 80082C60	nop
 80082C64	lui    a0, $800a
 80082C68	lw     a0, $b09c(a0)
-80082C6C	jal    func31f0c [$80031f0c]
+80082C6C	jal    system_memory_free [$80031f0c]
 80082C70	nop
 80082C74	lui    a0, $800a
 80082C78	lw     a0, $b568(a0)
-80082C7C	jal    func31f0c [$80031f0c]
+80082C7C	jal    system_memory_free [$80031f0c]
 80082C80	nop
 80082C84	jal    func96a88 [$80096a88]
 80082C88	nop
@@ -21169,15 +21169,15 @@ func837f4:	; 800837F4
 80083844	addu   s3, v0, zero
 80083848	jal    func2db30 [$8002db30]
 8008384C	addu   a0, s3, zero
-80083850	jal    func44448 [$80044448]
+80083850	jal    system_draw_sync [$80044448]
 80083854	addu   a0, zero, zero
-80083858	jal    func31f0c [$80031f0c]
+80083858	jal    system_memory_free [$80031f0c]
 8008385C	addu   a0, s3, zero
 80083860	lui    a0, $800a
 80083864	lw     a0, $b108(a0)
 80083868	lui    s2, $800a
 8008386C	addiu  s2, s2, $b0c8 (=-$4f38)
-80083870	jal    func31f0c [$80031f0c]
+80083870	jal    system_memory_free [$80031f0c]
 80083874	addiu  s1, zero, $01f0
 80083878	addiu  a0, zero, $0200
 8008387C	jal    func319ec [$800319ec]
@@ -21194,9 +21194,9 @@ func837f4:	; 800837F4
 800838A8	sh     zero, $0010(sp)
 800838AC	sh     s1, $0012(sp)
 800838B0	sh     s0, $0014(sp)
-800838B4	jal    func44770 [$80044770]
+800838B4	jal    system_store_image [$80044770]
 800838B8	sh     v1, $0016(sp)
-800838BC	jal    func44448 [$80044448]
+800838BC	jal    system_draw_sync [$80044448]
 800838C0	addu   a0, zero, zero
 800838C4	addu   a0, s3, zero
 800838C8	addu   a1, s4, zero
@@ -21211,9 +21211,9 @@ func837f4:	; 800837F4
 L838e8:	; 800838E8
 800838E8	sh     s1, $0012(sp)
 800838EC	sh     s0, $0014(sp)
-800838F0	jal    func4470c [$8004470c]
+800838F0	jal    system_load_image [$8004470c]
 800838F4	sh     v0, $0016(sp)
-800838F8	jal    func44448 [$80044448]
+800838F8	jal    system_draw_sync [$80044448]
 800838FC	addu   a0, zero, zero
 
 loop83900:	; 80083900
@@ -21229,9 +21229,9 @@ loop83900:	; 80083900
 80083924	slti   v0, s5, $0010
 80083928	bne    v0, zero, loop83900 [$80083900]
 8008392C	addiu  s2, s2, $0002
-80083930	jal    func31f0c [$80031f0c]
+80083930	jal    system_memory_free [$80031f0c]
 80083934	addu   a0, s4, zero
-80083938	jal    func31f0c [$80031f0c]
+80083938	jal    system_memory_free [$80031f0c]
 8008393C	addu   a0, s3, zero
 80083940	lw     ra, $0038(sp)
 80083944	lw     s5, $0034(sp)
@@ -21441,7 +21441,7 @@ loop83c24:	; 80083C24
 80083C2C	nop
 80083C30	addu   v0, s0, v0
 80083C34	lw     a0, $0048(v0)
-80083C38	jal    func31f0c [$80031f0c]
+80083C38	jal    system_memory_free [$80031f0c]
 80083C3C	addiu  s1, s1, $0001
 80083C40	lui    v0, $800a
 80083C44	lw     v0, $ba08(v0)
@@ -21460,7 +21460,7 @@ loop83c24:	; 80083C24
 L83c74:	; 80083C74
 80083C74	lui    a0, $800a
 80083C78	lw     a0, $ba08(a0)
-80083C7C	jal    func31f0c [$80031f0c]
+80083C7C	jal    system_memory_free [$80031f0c]
 80083C80	nop
 80083C84	lw     ra, $0020(sp)
 80083C88	lw     s1, $001c(sp)
@@ -21692,11 +21692,11 @@ L83f98:	; 80083F98
 80083FE0	addiu  a0, a0, $bbf0 (=-$4410)
 80083FE4	addu   a1, s3, zero
 80083FE8	addiu  s0, s1, $0110
-80083FEC	jal    func491c4 [$800491c4]
+80083FEC	jal    system_gte_matrix_mult_and_trans [$800491c4]
 80083FF0	addu   a2, s0, zero
-80083FF4	jal    func49da4 [$80049da4]
+80083FF4	jal    system_gte_set_rotation_matrix [$80049da4]
 80083FF8	addu   a0, s0, zero
-80083FFC	jal    func49e34 [$80049e34]
+80083FFC	jal    system_gte_set_translation_vector [$80049e34]
 80084000	addu   a0, s0, zero
 80084004	addiu  v0, s1, $00a0
 80084008	lwc2   zero, $0000(v0)
@@ -21909,10 +21909,10 @@ L84258:	; 80084258
 800842E4	jal    func49c74 [$80049c74]
 800842E8	addu   fp, zero, zero
 800842EC	lui    a0, $1f80
-800842F0	jal    func49da4 [$80049da4]
+800842F0	jal    system_gte_set_rotation_matrix [$80049da4]
 800842F4	ori    a0, a0, $00f0
 800842F8	lui    a0, $1f80
-800842FC	jal    func49e34 [$80049e34]
+800842FC	jal    system_gte_set_translation_vector [$80049e34]
 80084300	ori    a0, a0, $00f0
 80084304	lw     a0, $0044(s1)
 80084308	lui    v0, $1f80
@@ -22141,10 +22141,10 @@ func84540:	; 80084540
 80084658	jal    func49c74 [$80049c74]
 8008465C	ori    s2, s2, $0020
 80084660	lui    a0, $1f80
-80084664	jal    func49da4 [$80049da4]
+80084664	jal    system_gte_set_rotation_matrix [$80049da4]
 80084668	ori    a0, a0, $00f0
 8008466C	lui    a0, $1f80
-80084670	jal    func49e34 [$80049e34]
+80084670	jal    system_gte_set_translation_vector [$80049e34]
 80084674	ori    a0, a0, $00f0
 80084678	lui    a1, $1f80
 8008467C	addiu  a2, sp, $0010
@@ -22312,10 +22312,10 @@ func84800:	; 80084800
 
 L848f8:	; 800848F8
 800848F8	lui    a0, $1f80
-800848FC	jal    func49da4 [$80049da4]
+800848FC	jal    system_gte_set_rotation_matrix [$80049da4]
 80084900	ori    a0, a0, $00f0
 80084904	lui    a0, $1f80
-80084908	jal    func49e34 [$80049e34]
+80084908	jal    system_gte_set_translation_vector [$80049e34]
 8008490C	ori    a0, a0, $00f0
 80084910	lui    a1, $1f80
 80084914	addiu  a2, sp, $0010
@@ -22439,7 +22439,7 @@ L848f8:	; 800848F8
 80084AEC	sh     a3, $0114(at)
 80084AF0	lui    at, $1f80
 80084AF4	sh     a3, $011a(at)
-80084AF8	jal    func49324 [$80049324]
+80084AF8	jal    system_gte_apply_matrix_lv [$80049324]
 80084AFC	ori    a2, a2, $0040
 80084B00	lui    v0, $1f80
 80084B04	lw     v0, $0040(v0)
@@ -22529,10 +22529,10 @@ func84b48:	; 80084B48
 80084C48	jal    func49c74 [$80049c74]
 80084C4C	lui    a1, $1f80
 80084C50	lui    a0, $1f80
-80084C54	jal    func49da4 [$80049da4]
+80084C54	jal    system_gte_set_rotation_matrix [$80049da4]
 80084C58	ori    a0, a0, $00f0
 80084C5C	lui    a0, $1f80
-80084C60	jal    func49e34 [$80049e34]
+80084C60	jal    system_gte_set_translation_vector [$80049e34]
 80084C64	ori    a0, a0, $00f0
 80084C68	sll    v0, s0, $03
 80084C6C	subu   v0, v0, s0
@@ -22888,9 +22888,9 @@ L85174:	; 80085174
 80085180	addiu  s0, s0, $0080
 80085184	lui    s0, $800a
 80085188	addiu  s0, s0, $bbf0 (=-$4410)
-8008518C	jal    func49da4 [$80049da4]
+8008518C	jal    system_gte_set_rotation_matrix [$80049da4]
 80085190	addu   a0, s0, zero
-80085194	jal    func49e34 [$80049e34]
+80085194	jal    system_gte_set_translation_vector [$80049e34]
 80085198	addu   a0, s0, zero
 8008519C	lui    v0, $800a
 800851A0	lw     v0, $b20c(v0)
@@ -23149,11 +23149,11 @@ func8550c:	; 8008550C
 80085510	lw     a0, $cbd4(a0)
 80085514	addiu  sp, sp, $ffe8 (=-$18)
 80085518	sw     ra, $0010(sp)
-8008551C	jal    func31f0c [$80031f0c]
+8008551C	jal    system_memory_free [$80031f0c]
 80085520	nop
 80085524	lui    a0, $800a
 80085528	lw     a0, $cbd0(a0)
-8008552C	jal    func31f0c [$80031f0c]
+8008552C	jal    system_memory_free [$80031f0c]
 80085530	nop
 80085534	lw     ra, $0010(sp)
 80085538	addiu  sp, sp, $0018
@@ -23449,11 +23449,11 @@ func85950:	; 80085950
 80085954	lw     a0, $c29c(a0)
 80085958	addiu  sp, sp, $ffe8 (=-$18)
 8008595C	sw     ra, $0010(sp)
-80085960	jal    func31f0c [$80031f0c]
+80085960	jal    system_memory_free [$80031f0c]
 80085964	nop
 80085968	lui    a0, $800a
 8008596C	lw     a0, $c538(a0)
-80085970	jal    func31f0c [$80031f0c]
+80085970	jal    system_memory_free [$80031f0c]
 80085974	nop
 80085978	lw     ra, $0010(sp)
 8008597C	addiu  sp, sp, $0018
@@ -23547,11 +23547,11 @@ func85ab0:	; 80085AB0
 80085AB4	lw     a0, $cbe4(a0)
 80085AB8	addiu  sp, sp, $ffe8 (=-$18)
 80085ABC	sw     ra, $0010(sp)
-80085AC0	jal    func31f0c [$80031f0c]
+80085AC0	jal    system_memory_free [$80031f0c]
 80085AC4	nop
 80085AC8	lui    a0, $800a
 80085ACC	lw     a0, $cbe0(a0)
-80085AD0	jal    func31f0c [$80031f0c]
+80085AD0	jal    system_memory_free [$80031f0c]
 80085AD4	nop
 80085AD8	lw     ra, $0010(sp)
 80085ADC	addiu  sp, sp, $0018
@@ -23771,20 +23771,20 @@ L85dac:	; 80085DAC
 80085DDC	addu   a0, s2, zero
 80085DE0	addu   a1, s5, zero
 80085DE4	addiu  s0, s1, $02b0
-80085DE8	jal    func490b4 [$800490b4]
+80085DE8	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 80085DEC	addu   a2, s0, zero
 80085DF0	addu   a0, s3, zero
 80085DF4	addu   a1, s0, zero
-80085DF8	jal    func490b4 [$800490b4]
+80085DF8	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 80085DFC	addu   a2, s2, zero
 80085E00	lui    a0, $800a
 80085E04	lh     a0, $b122(a0)
-80085E08	jal    func3f774 [$8003f774]
+80085E08	jal    system_cos [$8003f774]
 80085E0C	addiu  a0, a0, $fe97 (=-$169)
 80085E10	lui    a0, $800a
 80085E14	lh     a0, $b122(a0)
 80085E18	addu   s0, v0, zero
-80085E1C	jal    func3f758 [$8003f758]
+80085E1C	jal    system_sin [$8003f758]
 80085E20	addiu  a0, a0, $fe97 (=-$169)
 80085E24	sll    s0, s0, $10
 80085E28	andi   v0, v0, $ffff
@@ -23792,19 +23792,19 @@ L85dac:	; 80085DAC
 80085E30	lh     a0, $b122(a0)
 80085E34	or     s0, s0, v0
 80085E38	sw     s0, $0230(s1)
-80085E3C	jal    func3f774 [$8003f774]
+80085E3C	jal    system_cos [$8003f774]
 80085E40	addiu  a0, a0, $0169
 80085E44	lui    a0, $800a
 80085E48	lh     a0, $b122(a0)
 80085E4C	addu   s0, v0, zero
-80085E50	jal    func3f758 [$8003f758]
+80085E50	jal    system_sin [$8003f758]
 80085E54	addiu  a0, a0, $0169
 80085E58	sll    s0, s0, $10
 80085E5C	andi   v0, v0, $ffff
 80085E60	lui    a0, $800a
 80085E64	lh     a0, $b122(a0)
 80085E68	or     s0, s0, v0
-80085E6C	jal    func3f758 [$8003f758]
+80085E6C	jal    system_sin [$8003f758]
 80085E70	sw     s0, $0234(s1)
 80085E74	subu   v0, zero, v0
 80085E78	sra    v0, v0, $01
@@ -23814,7 +23814,7 @@ L85dac:	; 80085DAC
 80085E88	lh     a0, $b122(a0)
 80085E8C	sll    v1, v1, $01
 80085E90	addu   v1, v1, v0
-80085E94	jal    func3f774 [$8003f774]
+80085E94	jal    system_cos [$8003f774]
 80085E98	sw     v1, $0240(s1)
 80085E9C	addu   s3, zero, zero
 80085EA0	addiu  s0, s1, $02d4
@@ -24727,11 +24727,11 @@ L86ac4:	; 80086AC4
 80086B8C	sh     v0, $00ac(at)
 80086B90	lui    at, $1f80
 80086B94	sh     v0, $00a4(at)
-80086B98	jal    func3f5e0 [$8003f5e0]
+80086B98	jal    system_calculate_rotation_matrix [$8003f5e0]
 80086B9C	addiu  a1, s0, $0410
 80086BA0	lui    a0, $1f80
 80086BA4	ori    a0, a0, $00a8
-80086BA8	jal    func3f5e0 [$8003f5e0]
+80086BA8	jal    system_calculate_rotation_matrix [$8003f5e0]
 80086BAC	addiu  a1, s0, $04b8
 80086BB0	addiu  v0, zero, $0001
 80086BB4	lw     ra, $0014(sp)
@@ -24802,11 +24802,11 @@ L86ac4:	; 80086AC4
 80086CB0	sh     v0, $00ac(at)
 80086CB4	lui    at, $1f80
 80086CB8	sh     v0, $00a4(at)
-80086CBC	jal    func3f5e0 [$8003f5e0]
+80086CBC	jal    system_calculate_rotation_matrix [$8003f5e0]
 80086CC0	addiu  a1, a1, $0020
 80086CC4	lui    a0, $1f80
 80086CC8	ori    a0, a0, $00a8
-80086CCC	jal    func3f5e0 [$8003f5e0]
+80086CCC	jal    system_calculate_rotation_matrix [$8003f5e0]
 80086CD0	addiu  a1, s0, $0020
 80086CD4	addiu  v0, zero, $0001
 80086CD8	lw     ra, $001c(sp)
@@ -24974,11 +24974,11 @@ func86dc8:	; 80086DC8
 80086F30	sll    v0, v0, $02
 80086F34	addu   v0, v0, v1
 80086F38	sll    v0, v0, $02
-80086F3C	jal    func3f5e0 [$8003f5e0]
+80086F3C	jal    system_calculate_rotation_matrix [$8003f5e0]
 80086F40	addu   s0, s0, v0
 80086F44	lui    a0, $1f80
 80086F48	ori    a0, a0, $00a8
-80086F4C	jal    func3f5e0 [$8003f5e0]
+80086F4C	jal    system_calculate_rotation_matrix [$8003f5e0]
 80086F50	addiu  a1, s0, $0020
 80086F54	addiu  v0, zero, $0001
 80086F58	lw     ra, $001c(sp)
@@ -26398,7 +26398,7 @@ func883dc:	; 800883DC
 800883E0	lw     a0, $b1dc(a0)
 800883E4	addiu  sp, sp, $ffe8 (=-$18)
 800883E8	sw     ra, $0010(sp)
-800883EC	jal    func31f0c [$80031f0c]
+800883EC	jal    system_memory_free [$80031f0c]
 800883F0	nop
 800883F4	lw     ra, $0010(sp)
 800883F8	addiu  sp, sp, $0018
@@ -26485,11 +26485,11 @@ func88510:	; 80088510
 80088514	lw     a0, $b204(a0)
 80088518	addiu  sp, sp, $ffe8 (=-$18)
 8008851C	sw     ra, $0010(sp)
-80088520	jal    func31f0c [$80031f0c]
+80088520	jal    system_memory_free [$80031f0c]
 80088524	nop
 80088528	lui    a0, $800a
 8008852C	lw     a0, $b208(a0)
-80088530	jal    func31f0c [$80031f0c]
+80088530	jal    system_memory_free [$80031f0c]
 80088534	nop
 80088538	lw     ra, $0010(sp)
 8008853C	addiu  sp, sp, $0018
@@ -27045,7 +27045,7 @@ L88c1c:	; 80088C1C
 80088C44	sw     v0, $ffbc(s2)
 80088C48	addu   a0, s0, zero
 80088C4C	addiu  a1, s6, $0024
-80088C50	jal    system_matrix_vector_multiply_GTE [$80049b94]
+80088C50	jal    system_gte_apply_matrix [$80049b94]
 80088C54	addiu  a2, s3, $0020
 80088C58	andi   v0, s4, $0020
 80088C5C	bne    v0, zero, L88c7c [$80088c7c]
@@ -27139,7 +27139,7 @@ L88d44:	; 80088D44
 80088D84	mflo   a3
 80088D88	addu   v0, v0, a3
 80088D8C	addu   v0, v0, v1
-80088D90	jal    system_matrix_vector_multiply_GTE [$80049b94]
+80088D90	jal    system_gte_apply_matrix [$80049b94]
 80088D94	sw     v0, $ffc8(s2)
 80088D98	andi   v0, s4, $0040
 80088D9C	bne    v0, zero, L88dbc [$80088dbc]
@@ -28652,7 +28652,7 @@ loop8a2fc:	; 8008A2FC
 8008A380	sll    a0, v0, $10
 8008A384	sra    a0, a0, $10
 8008A388	sw     v0, $005c(s0)
-8008A38C	jal    func3f758 [$8003f758]
+8008A38C	jal    system_sin [$8003f758]
 8008A390	sh     v0, $0048(s0)
 8008A394	sll    v1, v0, $01
 8008A398	addu   v1, v1, v0
@@ -28661,7 +28661,7 @@ loop8a2fc:	; 8008A2FC
 8008A3A4	addu   v0, v0, v1
 8008A3A8	sw     v0, $0000(s2)
 8008A3AC	lh     a0, $0048(s0)
-8008A3B0	jal    func3f774 [$8003f774]
+8008A3B0	jal    system_cos [$8003f774]
 8008A3B4	nop
 8008A3B8	addiu  a0, s0, $0028
 8008A3BC	addu   a1, s2, zero
@@ -29366,7 +29366,7 @@ L8ad10:	; 8008AD10
 8008ADA8	sll    a0, v0, $10
 8008ADAC	sra    a0, a0, $10
 8008ADB0	sw     v0, $005c(s1)
-8008ADB4	jal    func3f758 [$8003f758]
+8008ADB4	jal    system_sin [$8003f758]
 8008ADB8	sh     v0, $0048(s1)
 8008ADBC	sll    v1, v0, $01
 8008ADC0	addu   v1, v1, v0
@@ -29375,7 +29375,7 @@ L8ad10:	; 8008AD10
 8008ADCC	addu   v0, v0, v1
 8008ADD0	sw     v0, $0000(s3)
 8008ADD4	lh     a0, $0048(s1)
-8008ADD8	jal    func3f774 [$8003f774]
+8008ADD8	jal    system_cos [$8003f774]
 8008ADDC	nop
 8008ADE0	addiu  a0, s1, $0028
 8008ADE4	addu   a1, s3, zero
@@ -31076,7 +31076,7 @@ L8c564:	; 8008C564
 8008C598	nop
 8008C59C	sll    a0, v0, $10
 8008C5A0	sra    a0, a0, $10
-8008C5A4	jal    func3f758 [$8003f758]
+8008C5A4	jal    system_sin [$8003f758]
 8008C5A8	sh     v0, $0048(s1)
 8008C5AC	sll    v1, v0, $01
 8008C5B0	addu   v1, v1, v0
@@ -31085,7 +31085,7 @@ L8c564:	; 8008C564
 8008C5BC	addu   v0, v0, v1
 8008C5C0	sw     v0, $0000(s4)
 8008C5C4	lh     a0, $0048(s1)
-8008C5C8	jal    func3f774 [$8003f774]
+8008C5C8	jal    system_cos [$8003f774]
 8008C5CC	nop
 8008C5D0	addu   a0, s0, zero
 8008C5D4	addu   a1, s4, zero
@@ -31641,10 +31641,10 @@ L8cd80:	; 8008CD80
 8008CDCC	sw     a0, $0008(s3)
 8008CDD0	addiu  a0, v0, $0400
 8008CDD4	andi   a0, a0, $0fff
-8008CDD8	jal    func3f758 [$8003f758]
+8008CDD8	jal    system_sin [$8003f758]
 8008CDDC	sh     a0, $0048(s1)
 8008CDE0	lh     a0, $0048(s1)
-8008CDE4	jal    func3f774 [$8003f774]
+8008CDE4	jal    system_cos [$8003f774]
 8008CDE8	sw     v0, $0038(s1)
 8008CDEC	addiu  a1, zero, $0001
 8008CDF0	lw     a0, $004c(s1)
@@ -31767,7 +31767,7 @@ L8ce8c:	; 8008CE8C
 8008CFBC	nop
 8008CFC0	sll    a0, v0, $10
 8008CFC4	sra    a0, a0, $10
-8008CFC8	jal    func3f758 [$8003f758]
+8008CFC8	jal    system_sin [$8003f758]
 8008CFCC	sh     v0, $0048(s1)
 8008CFD0	sll    v1, v0, $01
 8008CFD4	addu   v1, v1, v0
@@ -31776,7 +31776,7 @@ L8ce8c:	; 8008CE8C
 8008CFE0	addu   v0, v0, v1
 8008CFE4	sw     v0, $0000(s3)
 8008CFE8	lh     a0, $0048(s1)
-8008CFEC	jal    func3f774 [$8003f774]
+8008CFEC	jal    system_cos [$8003f774]
 8008CFF0	nop
 8008CFF4	addu   a0, s0, zero
 8008CFF8	addu   a1, s3, zero
@@ -32144,10 +32144,10 @@ func8d4d8:	; 8008D4D8
 8008D504	sw     ra, $004c(sp)
 
 loop8d508:	; 8008D508
-8008D508	jal    func3f758 [$8003f758]
+8008D508	jal    system_sin [$8003f758]
 8008D50C	addu   a0, s0, zero
 8008D510	addu   a0, s0, zero
-8008D514	jal    func3f774 [$8003f774]
+8008D514	jal    system_cos [$8003f774]
 8008D518	sw     v0, $0028(sp)
 8008D51C	addu   a0, s1, zero
 8008D520	subu   v0, zero, v0
@@ -34471,10 +34471,10 @@ L8f4c8:	; 8008F4C8
 8008F620	lui    v0, $fff0
 8008F624	sw     v0, $002c(s2)
 8008F628	addiu  v0, zero, $0200
-8008F62C	jal    func3f758 [$8003f758]
+8008F62C	jal    system_sin [$8003f758]
 8008F630	sh     v0, $0048(s2)
 8008F634	lh     a0, $0048(s2)
-8008F638	jal    func3f774 [$8003f774]
+8008F638	jal    system_cos [$8003f774]
 8008F63C	sw     v0, $0038(s2)
 8008F640	addiu  s0, s3, $00a0
 8008F644	addu   a0, s0, zero
@@ -35131,10 +35131,10 @@ L8ff38:	; 8008FF38
 8008FF48	beq    v0, zero, L8ff70 [$8008ff70]
 8008FF4C	nop
 8008FF50	lh     a0, $0048(s0)
-8008FF54	jal    func3f758 [$8003f758]
+8008FF54	jal    system_sin [$8003f758]
 8008FF58	nop
 8008FF5C	lh     a0, $0048(s0)
-8008FF60	jal    func3f774 [$8003f774]
+8008FF60	jal    system_cos [$8003f774]
 8008FF64	sw     v0, $0038(s0)
 8008FF68	subu   v0, zero, v0
 8008FF6C	sw     v0, $0040(s0)
@@ -35270,10 +35270,10 @@ L9011c:	; 8009011C
 8009012C	beq    v0, zero, L90154 [$80090154]
 80090130	nop
 80090134	lh     a0, $0048(s0)
-80090138	jal    func3f758 [$8003f758]
+80090138	jal    system_sin [$8003f758]
 8009013C	nop
 80090140	lh     a0, $0048(s0)
-80090144	jal    func3f774 [$8003f774]
+80090144	jal    system_cos [$8003f774]
 80090148	sw     v0, $0038(s0)
 8009014C	subu   v0, zero, v0
 80090150	sw     v0, $0040(s0)
@@ -35393,10 +35393,10 @@ L902c8:	; 800902C8
 800902D8	beq    v0, zero, L90300 [$80090300]
 800902DC	nop
 800902E0	lh     a0, $0048(s0)
-800902E4	jal    func3f758 [$8003f758]
+800902E4	jal    system_sin [$8003f758]
 800902E8	nop
 800902EC	lh     a0, $0048(s0)
-800902F0	jal    func3f774 [$8003f774]
+800902F0	jal    system_cos [$8003f774]
 800902F4	sw     v0, $0038(s0)
 800902F8	subu   v0, zero, v0
 800902FC	sw     v0, $0040(s0)
@@ -35741,15 +35741,15 @@ L90704:	; 80090704
 80090704	lui    s0, $800a
 80090708	addiu  s0, s0, $b122 (=-$4ede)
 8009070C	lh     a0, $0000(s0)
-80090710	jal    func3f758 [$8003f758]
+80090710	jal    system_sin [$8003f758]
 80090714	nop
 80090718	lw     a0, $0070(s1)
 8009071C	sw     v0, $0038(s1)
-80090720	jal    func3f758 [$8003f758]
+80090720	jal    system_sin [$8003f758]
 80090724	sra    a0, a0, $0c
 80090728	sw     v0, $003c(s1)
 8009072C	lh     a0, $0000(s0)
-80090730	jal    func3f774 [$8003f774]
+80090730	jal    system_cos [$8003f774]
 80090734	nop
 80090738	addiu  a0, s1, $0038
 8009073C	subu   v0, zero, v0
@@ -38627,11 +38627,11 @@ func92e44:	; 80092E44
 80092EA0	lui    a0, $800a
 80092EA4	lw     a0, $ba00(a0)
 80092EA8	addu   s5, v1, s3
-80092EAC	jal    func3f758 [$8003f758]
+80092EAC	jal    system_sin [$8003f758]
 80092EB0	addu   a0, a0, s2
 80092EB4	sll    v0, v0, $04
 80092EB8	sra    s4, v0, $03
-80092EBC	jal    func3f758 [$8003f758]
+80092EBC	jal    system_sin [$8003f758]
 80092EC0	addu   a0, s5, zero
 80092EC4	mult   v0, s4
 80092EC8	addiu  s1, s1, $0001
@@ -38649,11 +38649,11 @@ func92e44:	; 80092E44
 80092EF8	addu   v1, v1, v0
 80092EFC	lui    at, $1f80
 80092F00	sh     v1, $00a2(at)
-80092F04	jal    func3f758 [$8003f758]
+80092F04	jal    system_sin [$8003f758]
 80092F08	addu   a0, a0, s2
 80092F0C	sll    v0, v0, $04
 80092F10	sra    s4, v0, $03
-80092F14	jal    func3f758 [$8003f758]
+80092F14	jal    system_sin [$8003f758]
 80092F18	addu   a0, s5, zero
 80092F1C	mult   v0, s4
 80092F20	addiu  s0, s0, $0001
@@ -38671,11 +38671,11 @@ func92e44:	; 80092E44
 80092F50	addu   v1, v1, v0
 80092F54	lui    at, $1f80
 80092F58	sh     v1, $00aa(at)
-80092F5C	jal    func3f758 [$8003f758]
+80092F5C	jal    system_sin [$8003f758]
 80092F60	addu   a0, a0, s0
 80092F64	sll    v0, v0, $04
 80092F68	sra    s4, v0, $03
-80092F6C	jal    func3f758 [$8003f758]
+80092F6C	jal    system_sin [$8003f758]
 80092F70	addu   a0, s5, zero
 80092F74	mult   v0, s4
 80092F78	lui    v0, $800a
@@ -38691,11 +38691,11 @@ func92e44:	; 80092E44
 80092FA0	addu   v1, v1, v0
 80092FA4	lui    at, $1f80
 80092FA8	sh     v1, $00b2(at)
-80092FAC	jal    func3f758 [$8003f758]
+80092FAC	jal    system_sin [$8003f758]
 80092FB0	addu   a0, a0, s0
 80092FB4	sll    v0, v0, $04
 80092FB8	sra    s4, v0, $03
-80092FBC	jal    func3f758 [$8003f758]
+80092FBC	jal    system_sin [$8003f758]
 80092FC0	addu   a0, s5, zero
 80092FC4	mult   v0, s4
 80092FC8	addu   a0, s7, zero
@@ -39159,11 +39159,11 @@ func935ac:	; 800935AC
 800935DC	subu   a1, a2, a1
 800935E0	addiu  a0, v0, $0400
 800935E4	andi   a0, a0, $0fff
-800935E8	jal    func3f758 [$8003f758]
+800935E8	jal    system_sin [$8003f758]
 800935EC	sh     a0, $0000(s0)
 800935F0	sw     v0, $0000(s1)
 800935F4	lh     a0, $0000(s0)
-800935F8	jal    func3f774 [$8003f774]
+800935F8	jal    system_cos [$8003f774]
 800935FC	nop
 80093600	subu   v0, zero, v0
 80093604	sw     v0, $0008(s1)
@@ -41425,11 +41425,11 @@ L954e4:	; 800954E4
 800954E8	lw     a0, $c7a8(a0)
 
 L954ec:	; 800954EC
-800954EC	jal    func31f0c [$80031f0c]
+800954EC	jal    system_memory_free [$80031f0c]
 800954F0	nop
 800954F4	lui    a0, $800a
 800954F8	lw     a0, $cbbc(a0)
-800954FC	jal    func31f0c [$80031f0c]
+800954FC	jal    system_memory_free [$80031f0c]
 80095500	nop
 80095504	lw     ra, $0014(sp)
 80095508	lw     s0, $0010(sp)
@@ -41908,7 +41908,7 @@ loop95b04:	; 80095B04
 loop95b08:	; 80095B08
 80095B08	lw     a0, $0000(s3)
 80095B0C	addu   a1, zero, zero
-80095B10	jal    func4c1c0 [$8004c1c0]
+80095B10	jal    system_devkit_pc_open [$8004c1c0]
 80095B14	addu   a2, zero, zero
 80095B18	addu   s1, v0, zero
 80095B1C	bne    s1, s4, L95b38 [$80095b38]
@@ -41925,7 +41925,7 @@ L95b38:	; 80095B38
 L95b3c:	; 80095B3C
 80095B3C	lw     a1, $fffc(s2)
 80095B40	addu   a2, zero, zero
-80095B44	jal    func4c1f0 [$8004c1f0]
+80095B44	jal    system_devkit_pc_seek [$8004c1f0]
 80095B48	addu   s0, zero, zero
 
 loop95b4c:	; 80095B4C
@@ -41943,7 +41943,7 @@ L95b70:	; 80095B70
 80095B70	addu   s0, zero, zero
 
 loop95b74:	; 80095B74
-80095B74	jal    func4c1e0 [$8004c1e0]
+80095B74	jal    system_devkit_pc_close [$8004c1e0]
 80095B78	addu   a0, s1, zero
 80095B7C	beq    v0, zero, L95b94 [$80095b94]
 80095B80	nop
@@ -42145,7 +42145,7 @@ func95d84:	; 80095D84
 80095E10	sw     a2, $c2a0(at)
 80095E14	lui    at, $800a
 80095E18	sw     v1, $b978(at)
-80095E1C	jal    func412a8 [$800412a8]
+80095E1C	jal    system_psyq_CdIntToPos [$800412a8]
 80095E20	addu   a1, s0, zero
 80095E24	lui    a0, $8009
 80095E28	addiu  a0, a0, $5e54
@@ -42233,7 +42233,7 @@ func95d84:	; 80095D84
 80095F68	addiu  v0, zero, $0001
 80095F6C	lui    at, $800a
 80095F70	sw     v0, $c12c(at)
-80095F74	jal    func412a8 [$800412a8]
+80095F74	jal    system_psyq_CdIntToPos [$800412a8]
 80095F78	addu   a1, s0, zero
 80095F7C	addiu  a0, zero, $0002
 80095F80	j      L95fd8 [$80095fd8]
@@ -42288,7 +42288,7 @@ L95fe0:	; 80095FE0
 80096018	addu   a0, s0, zero
 8009601C	jal    func41224 [$80041224]
 80096020	addiu  a1, zero, $0003
-80096024	jal    func413ac [$800413ac]
+80096024	jal    system_psyq_CdPosToInt [$800413ac]
 
 L96028:	; 80096028
 80096028	addu   a0, s0, zero
@@ -42412,7 +42412,7 @@ L96178:	; 80096178
 800961B8	sw     a0, $cbdc(at)
 800961BC	lui    at, $800a
 800961C0	sw     v0, $c12c(at)
-800961C4	jal    func412a8 [$800412a8]
+800961C4	jal    system_psyq_CdIntToPos [$800412a8]
 800961C8	addu   a1, s0, zero
 800961CC	addiu  a0, zero, $0002
 800961D0	j      L962e0 [$800962e0]
@@ -42554,7 +42554,7 @@ L96370:	; 80096370
 80096394	sw     zero, $0004(at)
 80096398	lui    at, $1f80
 8009639C	sw     s0, $0008(at)
-800963A0	jal    func49324 [$80049324]
+800963A0	jal    system_gte_apply_matrix_lv [$80049324]
 800963A4	ori    a2, a2, $0010
 800963A8	lui    v0, $1f80
 800963AC	lw     v0, $0010(v0)
@@ -42594,7 +42594,7 @@ L96418:	; 80096418
 80096424	sh     v0, $00a2(at)
 80096428	lui    at, $1f80
 8009642C	sh     zero, $00a4(at)
-80096430	jal    system_matrix_vector_multiply_GTE [$80049b94]
+80096430	jal    system_gte_apply_matrix [$80049b94]
 80096434	addiu  a2, s1, $0010
 80096438	lw     ra, $0020(sp)
 8009643C	lw     s3, $001c(sp)
@@ -42673,7 +42673,7 @@ func96458:	; 80096458
 80096554	lui    a1, $1f80
 80096558	ori    a1, a1, $0110
 8009655C	lui    a2, $1f80
-80096560	jal    func490b4 [$800490b4]
+80096560	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 80096564	ori    a2, a2, $0130
 
 L96568:	; 80096568
@@ -42711,7 +42711,7 @@ L965bc:	; 800965BC
 800965DC	lui    a1, $1f80
 800965E0	ori    a1, a1, $0110
 800965E4	lui    a2, $1f80
-800965E8	jal    func490b4 [$800490b4]
+800965E8	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 800965EC	ori    a2, a2, $00f0
 800965F0	lui    a0, $1f80
 800965F4	lh     a0, $00f6(a0)
@@ -42853,7 +42853,7 @@ L966b8:	; 800966B8
 800967F0	lw     v1, $001c(s1)
 800967F4	sw     v0, $0018(t0)
 800967F8	sw     v1, $001c(t0)
-800967FC	jal    system_matrix_vector_multiply_GTE [$80049b94]
+800967FC	jal    system_gte_apply_matrix [$80049b94]
 80096800	lui    a2, $1f80
 80096804	addu   a0, s1, zero
 80096808	jal    func49c44 [$80049c44]
@@ -42960,7 +42960,7 @@ L96958:	; 80096958
 80096970	lui    a1, $1f80
 80096974	ori    a1, a1, $0110
 80096978	lui    a2, $1f80
-8009697C	jal    func490b4 [$800490b4]
+8009697C	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 80096980	ori    a2, a2, $0150
 80096984	lui    a0, $1f80
 80096988	ori    a0, a0, $0130
@@ -42968,7 +42968,7 @@ L96958:	; 80096958
 80096990	ori    a1, a1, $0150
 80096994	lui    s0, $800a
 80096998	addiu  s0, s0, $bbf0 (=-$4410)
-8009699C	jal    func490b4 [$800490b4]
+8009699C	jal    system_gte_matrix_multiplication_to_A2 [$800490b4]
 800969A0	addu   a2, s0, zero
 800969A4	lui    a0, $1f80
 800969A8	ori    a0, a0, $00f0
@@ -43002,7 +43002,7 @@ L96958:	; 80096958
 80096A18	sw     v0, $0010(s1)
 80096A1C	sw     v1, $0014(s1)
 80096A20	sw     a3, $0018(s1)
-80096A24	jal    system_matrix_vector_multiply_GTE [$80049b94]
+80096A24	jal    system_gte_apply_matrix [$80049b94]
 80096A28	sw     t0, $001c(s1)
 80096A2C	addu   a0, s0, zero
 80096A30	jal    func49c44 [$80049c44]
@@ -43037,7 +43037,7 @@ func96a88:	; 80096A88
 80096A8C	lw     a0, $b20c(a0)
 80096A90	addiu  sp, sp, $ffe8 (=-$18)
 80096A94	sw     ra, $0010(sp)
-80096A98	jal    func31f0c [$80031f0c]
+80096A98	jal    system_memory_free [$80031f0c]
 80096A9C	nop
 80096AA0	lw     ra, $0010(sp)
 80096AA4	addiu  sp, sp, $0018
@@ -43206,7 +43206,7 @@ L96c60:	; 80096C60
 L96ca0:	; 80096CA0
 80096CA0	beq    a0, zero, L96cb0 [$80096cb0]
 80096CA4	nop
-80096CA8	jal    func22f24 [$80022f24]
+80096CA8	jal    system_field_sprite_memory_free [$80022f24]
 80096CAC	nop
 
 L96cb0:	; 80096CB0
@@ -43308,15 +43308,15 @@ func96db0:	; 80096DB0
 80096DEC	addu   a0, s4, zero
 
 L96df0:	; 80096DF0
-80096DF0	jal    func44448 [$80044448]
+80096DF0	jal    system_draw_sync [$80044448]
 80096DF4	addu   a0, zero, zero
-80096DF8	jal    func31f0c [$80031f0c]
+80096DF8	jal    system_memory_free [$80031f0c]
 80096DFC	addu   a0, s4, zero
 80096E00	lui    a0, $800a
 80096E04	lw     a0, $b984(a0)
 80096E08	lui    s3, $800a
 80096E0C	addiu  s3, s3, $c09c (=-$3f64)
-80096E10	jal    func31f0c [$80031f0c]
+80096E10	jal    system_memory_free [$80031f0c]
 80096E14	addiu  s1, zero, $0100
 80096E18	addiu  a0, zero, $0400
 80096E1C	jal    func319ec [$800319ec]
@@ -43335,9 +43335,9 @@ L96e44:	; 80096E44
 80096E48	addu   s5, v0, zero
 80096E4C	sh     zero, $0010(sp)
 80096E50	sh     s1, $0014(sp)
-80096E54	jal    func44770 [$80044770]
+80096E54	jal    system_store_image [$80044770]
 80096E58	sh     v1, $0016(sp)
-80096E5C	jal    func44448 [$80044448]
+80096E5C	jal    system_draw_sync [$80044448]
 80096E60	addu   a0, zero, zero
 80096E64	addu   a0, s4, zero
 80096E68	addu   a1, s5, zero
@@ -43360,9 +43360,9 @@ L96e98:	; 80096E98
 80096EA4	addiu  v0, zero, $0040
 80096EA8	sh     zero, $0010(sp)
 80096EAC	sh     s1, $0014(sp)
-80096EB0	jal    func4470c [$8004470c]
+80096EB0	jal    system_load_image [$8004470c]
 80096EB4	sh     v0, $0016(sp)
-80096EB8	jal    func44448 [$80044448]
+80096EB8	jal    system_draw_sync [$80044448]
 80096EBC	addu   a0, zero, zero
 
 loop96ec0:	; 80096EC0
@@ -43414,9 +43414,9 @@ loop96f44:	; 80096F44
 80096F64	slti   v0, s2, $0007
 80096F68	bne    v0, zero, loop96f44 [$80096f44]
 80096F6C	addiu  s1, s1, $0002
-80096F70	jal    func31f0c [$80031f0c]
+80096F70	jal    system_memory_free [$80031f0c]
 80096F74	addu   a0, s5, zero
-80096F78	jal    func31f0c [$80031f0c]
+80096F78	jal    system_memory_free [$80031f0c]
 80096F7C	addu   a0, s4, zero
 80096F80	lw     ra, $0030(sp)
 80096F84	lw     s5, $002c(sp)
@@ -43571,7 +43571,7 @@ loop97168:	; 80097168
 8009716C	nop
 80097170	beq    a0, zero, L97180 [$80097180]
 80097174	nop
-80097178	jal    func31f0c [$80031f0c]
+80097178	jal    system_memory_free [$80031f0c]
 8009717C	nop
 
 L97180:	; 80097180
@@ -44098,13 +44098,13 @@ L977c8:	; 800977C8
 
 L9781c:	; 8009781C
 8009781C	sw     s1, $004c(sp)
-80097820	jal    func491c4 [$800491c4]
+80097820	jal    system_gte_matrix_mult_and_trans [$800491c4]
 80097824	sw     s0, $0048(sp)
 80097828	lui    a0, $1f80
-8009782C	jal    func49da4 [$80049da4]
+8009782C	jal    system_gte_set_rotation_matrix [$80049da4]
 80097830	ori    a0, a0, $0110
 80097834	lui    a0, $1f80
-80097838	jal    func49e34 [$80049e34]
+80097838	jal    system_gte_set_translation_vector [$80049e34]
 8009783C	ori    a0, a0, $0110
 80097840	lui    s5, $800a
 80097844	addiu  s5, s5, $ca00 (=-$3600)
@@ -44768,7 +44768,7 @@ L98138:	; 80098138
 8009813C	sll    s0, s0, $02
 80098140	addu   s0, s0, s3
 80098144	lw     a0, $0000(s0)
-80098148	jal    func31f0c [$80031f0c]
+80098148	jal    system_memory_free [$80031f0c]
 8009814C	nop
 80098150	sw     zero, $0000(s0)
 
@@ -45293,11 +45293,11 @@ loop9878c:	; 8009878C
 800987F4	addiu  a0, a0, $bbf0 (=-$4410)
 800987F8	ori    a1, s2, $0350
 800987FC	addiu  s0, s2, $0370
-80098800	jal    func491c4 [$800491c4]
+80098800	jal    system_gte_matrix_mult_and_trans [$800491c4]
 80098804	addu   a2, s0, zero
-80098808	jal    func49da4 [$80049da4]
+80098808	jal    system_gte_set_rotation_matrix [$80049da4]
 8009880C	addu   a0, s0, zero
-80098810	jal    func49e34 [$80049e34]
+80098810	jal    system_gte_set_translation_vector [$80049e34]
 80098814	addu   a0, s0, zero
 80098818	lw     v0, $0000(s1)
 8009881C	nop
@@ -50132,7 +50132,7 @@ La0814:	; 800A0814
 800A0818	addu   s0, s0, s3
 800A081C	sw     v0, $0000(s0)
 800A0820	lw     a0, $0000(s1)
-800A0824	jal    func31f0c [$80031f0c]
+800A0824	jal    system_memory_free [$80031f0c]
 800A0828	nop
 800A082C	lui    v1, $800b
 800A0830	lw     v1, $f54c(v1)

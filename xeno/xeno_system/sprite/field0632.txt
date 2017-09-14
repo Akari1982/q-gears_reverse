@@ -1,0 +1,58 @@
+field 0608
+02 sprite
+stop:   flag=0042 script: B402 15090509 B3FF E4FAFF B3FF 10 A730 82
+naku:   flag=0042 script: 190900 A73A 29 81
+
+
+
+field 0616
+07 sprite
+:       flag=0040 script: C6FF 96 FCC00100 E0E2FF 81
+:       flag=0040 script: C6FF 96 E086FF 81
+
+
+
+field 632
+00 sprite - Timothy Father
+stop:   flag=0042 script: 13 81
+walk:   flag=0042 script: A014 1505050505050505 82
+yes:    flag=0042 script: 17 090B2927 80
+drink:  flag=0042 script: 1D 0D0F00 A726 00 A73A B3FF 17 80
+
+01 sprite - Aruru no Shukufu
+stop:   flag=0042 script: 13 81
+walk:   flag=0042 script: A014 1707050507070505 82
+yes:    flag=0042 script: 190F3329 80
+yes1:   flag=0042 script: 19 81
+
+02 sprite - Dan
+stop:   flag=0042 script: 13 81
+walk:   flag=0042 script: A014 1205050505050505 B3FF 12 82
+gattu:  flag=0042 script: 1D0F33070720 A724 80
+yes:    flag=0042 script: 1505052525 81
+smile:  flag=0042 script: 130F3323072307230723072307 B3FF 13 81
+yubi:   flag=0042 script: 1F3D0F330F33 81
+
+03 sprite - Maid
+stop:   flag=0042 script: 13 81
+walk:   flag=0042 script: A014 1505070505050705 82
+yes:    flag=0042 script: 15 05052525 B3FF 81
+
+04 sprite - Lee
+stop:   flag=0042 script: 13 81
+walk:   flag=0042 script: A014 1707070507070705 82
+smile:  flag=0042 script: 13 0505250525052505250525052523 80
+
+05 sprite - ???
+:       flag=0042 script: 13 81
+:       flag=0042 script: A014 1505050505050505 82
+:       flag=0042 script: 1F3D0505050525052505252525 81
+:       flag=0042 script: 15030303030303030303 B3FF 80
+:       flag=0042 script: 1F330F33 81
+:       flag=0042 script: 19090909 81
+
+06 sprite - Timothy
+:       flag=0042 script: 13 81
+:       flag=0042 script: A014 1105050505050505 B3FF 13 82
+:       flag=0042 script: 15 0507 2525 81
+:       flag=0042 script: 17 050525052505250525052505 B3FF 15 80

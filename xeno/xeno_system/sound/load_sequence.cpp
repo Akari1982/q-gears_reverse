@@ -404,7 +404,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// func38fec
+// func38fec()
 main_struct = A0;
 
 // syscall

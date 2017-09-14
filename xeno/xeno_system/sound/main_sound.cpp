@@ -160,7 +160,7 @@ if( main_struct != 0 )
                         [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
 
                         A0 = main_struct;
-                        func3af08; // stop all channels
+                        func3af08(); // stop all channels
 
                         [main_struct + 10] = h(hu[main_struct + 10] | 0100);
                     }
@@ -240,16 +240,19 @@ return 0;
 
 
 ////////////////////////////////
-// func39af4
-if( A0 == 0 )
+// func39af4()
+main_struct = A0;
+if( main_struct == 0 )
 {
     A0 = 5;
     80039B00	jal    func3f558 [$8003f558]
 }
 else
 {
-    [A0 + 10] = h(hu[A0 + 10] & 7fff);
-    func3af08; // stop all channels
+    [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
+
+    A0 = main_struct;
+    func3af08(); // stop all channels
 }
 ////////////////////////////////
 
@@ -325,7 +328,7 @@ if( V0 != 0 )
         long DisableEvent( A0 ); // Turns off event handling for specified event.
 
         A0 = S1;
-        func3af08; // stop all channels
+        func3af08(); // stop all channels
 
         8003AD88	addu   a0, s1, zero
         8003AD7C	lw     a1, $0004(s1)
@@ -350,7 +353,8 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// func3af08
+// func3af08()
+// stop all channels
 main_struct = A0;
 channel_struct = main_struct + 94;
 number_of_channels = bu[main_struct + 14];

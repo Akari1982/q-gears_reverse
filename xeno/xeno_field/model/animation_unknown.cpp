@@ -650,7 +650,7 @@ if( T4 != 0 )
                 801DE6B4	addiu  a0, t4, $002c
                 801DE6B8	mflo   v0
                 801DE6BC	sra    v0, v0, $0c
-                801DE6C0	jal    system_matrix_vector_multiply_GTE [$80049b94]
+                801DE6C0	jal    system_gte_apply_matrix [$80049b94]
                 801DE6C4	sh     v0, $0014(sp)
                 801DE6C8	lw     v0, $0018(sp)
                 801DE6CC	lw     t3, $0040(sp)

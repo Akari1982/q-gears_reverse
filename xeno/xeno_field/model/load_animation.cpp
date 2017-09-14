@@ -54,7 +54,7 @@ if (arg_3 > 0)
         A0 = w[model_struct + 4] + 2c; // matrix
         A1 = SP + 48; // vector
         A2 = SP + 38; // result
-        system_matrix_vector_multiply_GTE;
+        system_gte_apply_matrix;
 
         A0 = w[model_struct + 4];
         [A0 + 5c] = w(w[A0 + 5c] + ((h[model_struct + 1c] * w[SP + 38]) >> c));
@@ -883,7 +883,7 @@ FC511E80 49
         801E458C	sll    a1, a1, $10
         801E4590	sra    a1, a1, $10
         801E4594	sll    a2, a2, $10
-        801E4598	jal    func447d4 [$800447d4]
+        801E4598	jal    system_move_image [$800447d4]
         801E459C	sra    a2, a2, $10
         801E45A0	j      L1e5974 [$801e5974]
         801E45A4	nop
@@ -1144,12 +1144,12 @@ FC511E80 49
         801E4908	lw     v0, $0004(s4)
         801E490C	sll    s0, s0, $02
         801E4910	addu   s0, s0, v0
-        801E4914	jal    func49da4 [$80049da4]
+        801E4914	jal    system_gte_set_rotation_matrix [$80049da4]
         801E4918	addiu  a0, s0, $002c
         801E491C	addiu  a0, sp, $0070
         801E4920	sw     zero, $0084(sp)
         801E4924	sw     zero, $0088(sp)
-        801E4928	jal    func49e34 [$80049e34]
+        801E4928	jal    system_gte_set_translation_vector [$80049e34]
         801E492C	sw     zero, $008c(sp)
         801E4930	lw     t2, $0120(sp)
         801E4934	ori    t3, zero, $1000
@@ -2353,7 +2353,7 @@ L1e59a0:	; 801E59A0
 
 
 ////////////////////////////////
-// func1e8330
+// func1e8330()
 model_id = A0;
 animation_id = A2;
 

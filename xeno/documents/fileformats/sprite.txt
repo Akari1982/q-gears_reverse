@@ -1,0 +1,100 @@
+Структура простая: каждый спрайт состоит из 2x файлов: описания и текстуры к нему.
+Описание состоит из трех подфайлов. Первый из них определяет анимации, второй описывает
+фреймы, управление которыми осуществляет первый подфайл, третий это используемая палитра.
+Каждый фрейм состоит из нескольких тайлов, каждый из которых представляет собой рендер
+квад с настройками отображения и позицией.
+Анимации имеют несколько настроек. Во первых анимация может быть специально нарисована
+так чтобы быть к игроку только одной стороной (используется в катсценах),
+иметь 4 стороны или 8, если можно вертеть камеру вокруг.
+Каждая анимация имеет указатель на скрипт, который позволяет делать дополнительные
+эффекты и собственно дефиниции какие фреймы использовать, в каком порядке и как.
+Также в анимации есть указатель на список фреймов для необходимых направлений. Они нужны
+поскольку в анимации может указыватся фрейм который надо использовать, но то какой это
+реально будет фрейм зависит от того как камера смотрит на спрайт и соответственно надо
+показывать фрейм нужного угла обзора.
+
+
+
+SPRITE_0
+header
++00 [][]     0x003f - number of animations.
++02 array of pointers to animations data 2 bytes each.
+
+animation data
++00 [][]     flags.
+                0x0003 - direction type id.
+                            0x00 - 1 direction.
+                            0x01 - 4 direction.
+                            0x02 - 8 direction.
+                0x00fc - some data for multilpy and store to +1c in struct_164.
+                0x0800 - if flag not set we set +c +10 +14 +18 in struct_164 to 0.
+                0x1000 - if flag not set we set rotation x y z to 0 and calculate rotation matrix.
+                0x2000 - if flag not set we use w[80058810 + 38] as rotation for sprite.
+                0x8000 - if flag set then we set up tile data to render by frame_id during sprite update.
++02 [][]     offset to sprite sequence data.
++04 [][]     offset to something related to sprite direction. If there is more directions then there is more offsets to differend data up to 5 for 8 directions.
+
+direction frame id (array of two bytes frame_id)
++00 [][]     frame id.
+
+
+
+SPRITE_1
+header
++00 [][]     0x01ff - number of frames - 1
+             0x7e00 - number of tiles (allocate 0x18 for each item)
+             0x8000 - if flag is set then tile position is +04 + number_of_tiles * 2, +06 + number_of_tiles * 4 otherwise.
++02 array of offsets to frame data 2 bytes each
+
+frame data
++00 []         0x3f - number of tiles
+               0x80 - two bytes tile position
++01 []
++02 []
++03 []
+// 0x8000 set
++04 array of tile offsets to tile description 2 bytes each.
++04 + number_of_tiles * 2 - tile position setting if flag 0x8000 set.
+// 0x8000 not set
++04 []       we move GP + 26 by this value each tex call.
++06 + number_of_tiles * 4 - tile position setting if flag 0x8000 not set.
+
+tile position setting
++0 [] 0x80 - special settings. After special settings we go next cycle
+0x80 set
+    +0 [] 0x40 - set additional tile data
+    0x40 set 0x07 additional tile data id (used in rotation matrix and translation vector)
+        0x10 - tile z rotation
+        +1 [] rotation data (used as <<4)
+        0x20 - tile xy offset to additional data
+        +1 [] x offset
+        +2 [] y offset
+    0x40 not set
+        0x01 - width increase flag
+        +1 [] width increase
+        0x02 - height increase flag
+        +1 [] height increase
+        0x04 - flip vertical
+0x80 not set then go to position settings (data can be 1 or 2 bytes dependings on frame flag)
++0 [] 0x40 - flip horizontal
+      0x30 - abr
+      0x0f - texture x
++1 [] or [][] x pos
++2 or +3 [] or [][] y pos
+
+tile description
++0 [] flags
+        0x01 - set flag 0x00000008 in sprite_data+14, 8-bit CLUT. Unset if flag not set, 4-bit CLUT.
+        0x10 - additional flags byte
++1 [] additional flags byte if 0x10 set.
++1 [] x
++2 [] y
++3 [] width
++4 [] height
+
+
+
+SPRITE_2
+header
++00 [][]     palette width (must b multiplied by 10 to get real value)
++04 start of palette

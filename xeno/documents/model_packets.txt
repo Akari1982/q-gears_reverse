@@ -1,34 +1,153 @@
-// triangle monochrome textured packet
+// triangle monochrome packet (type 0x00, 0x04)
++00 [][][]
++03 []       store 04 here.
++04 []       R.
++05 []       G.
++06 []       B.
++07 []       store control byte here.
++08 [][][][] place for vertex 0.
++0c [][][][] place for vertex 1.
++10 [][][][] place for vertex 2.
+
+
+
+// triangle monochrome textured packet (type 0x01, 0x05)
 +00 [][][]
 +03 []       store 07 here.
 +04 []       R.
 +05 []       G.
 +06 []       B.
 +07 []       store control byte here.
-+08 [][][][] place for vertex 1
-+0c [][]     texture UV for vertex 1.
++08 [][][][] place for vertex 0.
++0c [][]     texture UV for vertex 0.
 +0e [][]     CLUT.
-+10 [][][][] place for vertex 2
-+14 [][]     texture UV for vertex 2.
++10 [][][][] place for vertex 1.
++14 [][]     texture UV for vertex 1.
 +16 [][]     texture page info.
-+18 [][][][] place for vertex 3
-+1c [][]     texture UV for vertex 3.
++18 [][][][] place for vertex 2.
++1c [][]     texture UV for vertex 2.
 
 
 
-// quad monochrome textured packet
+// triangle gourad packet (type 0x02, 0x06)
++00 [][][]
++03 []       store 06 here.
++04 []       R0.
++05 []       G0.
++06 []       B0.
++08 [][][][] place for vertex 0.
++0c []       R1.
++0d []       G1.
++0e []       B1.
++10 [][][][] place for vertex 1.
++14 []       R2.
++15 []       G2.
++16 []       B2.
++18 [][][][] place for vertex 2.
+
+
+
+// triangle gourad textured packet (type 0x03, 0x07)
++00 [][][]
++03 []       store 09 here.
++04 []       R0.
++05 []       G0.
++06 []       B0.
++08 [][][][] place for vertex 0.
++0c [][]     texture UV for vertex 0.
++0e [][]     CLUT.
++10 []       R1.
++11 []       G1.
++12 []       B1.
++14 [][][][] place for vertex 1.
++18 [][]     texture UV for vertex 1.
++1a [][]     texture page info.
++1c []       R2.
++1d []       G2.
++1e []       B2.
++20 [][][][] place for vertex 2.
++24 [][]     texture UV for vertex 2.
+
+
+
+// quad monochrome packet (type 0x08, 0x0c)
++00 [][][]
++03 []       store 04 for type 0x08 and 05 for type 0x0c here.
++04 []       R.
++05 []       G.
++06 []       B.
++07 []       store control byte here.
++08 [][][][] place for vertex 0.
++0c [][][][] place for vertex 1.
++10 [][][][] place for vertex 2.
++14 [][][][] place for vertex 3.
+
+
+
+// quad monochrome textured packet (type 0x09, 0x0d)
 +00 [][][]
 +03 []       store 09 here.
 +04 []       R.
 +05 []       G.
 +06 []       B.
 +07 []       store control byte here.
-+08 [][][][] place for vertex 1
++08 [][][][] place for vertex 0.
 +0c [][]     texture UV for vertex 1.
 +0e [][]     CLUT.
-+10 [][][][] place for vertex 2
++10 [][][][] place for vertex 1.
 +14 [][]     texture UV for vertex 2.
 +16 [][]     texture page info.
-+18 [][][][] place for vertex 3
++18 [][][][] place for vertex 2.
 +1c [][]     texture UV for vertex 3.
-+24 [][]     texture UV for vertex 4.
++20 [][][][] place for vertex 3.
++24 [][]     texture UV for vertex 3.
+
+
+
+// quad gourad packet (type 0x0a, 0x0e)
++00 [][][]
++03 []       store 08 here.
++04 []       R0.
++05 []       G0.
++06 []       B0.
++08 [][][][] place for vertex 0.
++0c []       R1.
++0d []       G1.
++0e []       B1.
++10 [][][][] place for vertex 1.
++14 []       R2.
++15 []       G2.
++16 []       B2.
++18 [][][][] place for vertex 2.
++1c []       R2.
++1d []       G2.
++1e []       B2.
++20 [][][][] place for vertex 3.
+
+
+
+// quad gourad textured packet (type 0x0b, 0x0f)
++00 [][][]
++03 []       store 0c here.
++04 []       R0.
++05 []       G0.
++06 []       B0.
++08 [][][][] place for vertex 0.
++0c [][]     texture UV for vertex 0.
++0e [][]     CLUT.
++10 []       R1.
++11 []       G1.
++12 []       B1.
++14 [][][][] place for vertex 1.
++18 [][]     texture UV for vertex 1.
++1a [][]     texture page info.
++1c []       R2.
++1d []       G2.
++1e []       B2.
++20 [][][][] place for vertex 2.
++24 [][]     texture UV for vertex 2.
++28 []       R3.
++29 []       G3.
++2a []       B3.
++2c [][][][] place for vertex 3.
++30 [][]     texture UV for vertex 3.

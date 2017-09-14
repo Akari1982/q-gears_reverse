@@ -158,7 +158,7 @@ if (T0 < a)
             A1 = w[model_file_pointer + 8]; // model pointer
             [801e8638] = w(A0);
             A2 = size_of_model;
-            system_copy_memory;
+            system_memcpy;
 
             [801e8634] = w(0);
             loop1e76bc:	; 801E76BC
@@ -516,12 +516,11 @@ if (T0 < a)
             A0 = S0;
             A1 = w[801e8638];
             A2 = S1;
-            system_copy_memory;
+            system_memcpy;
 
-            801E7CAC	lui    a0, $801f
-            801E7CB0	lw     a0, $8638(a0)
-            801E7CB4	jal    func31f0c [$80031f0c]
-            801E7CB8	nop
+            A0 = w[801e8638];
+            system_memory_free();
+
             801E7CBC	lw     a0, $0000(s3)
             801E7CC0	jal    func1dce18 [$801dce18]
             801E7CC4	addu   a1, zero, zero
@@ -716,7 +715,7 @@ while ((hu[skeleton_pointer + 0] < w[S4 + 4]) || (hu[skeleton_pointer + 0] == ff
         A0 = w[S0 + 6c]; // destination
         A1 = w[S0 + 68]; // source
         A2 = w[pointer_to_part + 34]; // size
-        system_copy_memory;
+        system_memcpy;
     }
     else
     {
@@ -1019,8 +1018,10 @@ L1e1c18:	; 801E1C18
 L1e1c28:	; 801E1C28
 801E1C28	nop
 801E1C2C	sw     zero, $0014(t5)
-801E1C30	jal    func31f0c [$80031f0c]
-801E1C34	addu   a0, zero, zero
+
+A0 = 0;
+system_memory_free();
+
 801E1C38	j      L1e22c4 [$801e22c4]
 801E1C3C	nop
 
@@ -1049,16 +1050,18 @@ L1e1c58:	; 801E1C58
 801E1C8C	bne    a1, zero, L1e1cc0 [$801e1cc0]
 801E1C90	addu   t0, zero, zero
 801E1C94	lw     t5, $0010(sp)
-801E1C98	addu   a0, zero, zero
-801E1C9C	jal    func31f0c [$80031f0c]
 801E1CA0	sw     zero, $0014(t5)
+
+A0 = 0;
+system_memory_free();
+
 801E1CA4	lw     t6, $0010(sp)
 
 L1e1ca8:	; 801E1CA8
 801E1CA8	nop
-801E1CAC	lw     a0, $001c(t6)
-801E1CB0	jal    func31f0c [$80031f0c]
-801E1CB4	nop
+A0 = w[T6 + 1c];
+system_memory_free();
+
 801E1CB8	j      L1e22c4 [$801e22c4]
 801E1CBC	nop
 
@@ -1154,19 +1157,21 @@ L1e1db8:	; 801E1DB8
 801E1DE0	addu   s7, v0, zero
 801E1DE4	lw     t1, $00f8(sp)
 801E1DE8	bne    s7, zero, L1e1e20 [$801e1e20]
-801E1DEC	addu   a0, zero, zero
+
 801E1DF0	lw     t6, $0010(sp)
-801E1DF4	jal    func31f0c [$80031f0c]
 801E1DF8	sw     zero, $0014(t6)
+A0 = 0;
+system_memory_free();
+
 801E1DFC	lw     t5, $0010(sp)
 
 L1e1e00:	; 801E1E00
-801E1E00	nop
-801E1E04	lw     a0, $001c(t5)
-801E1E08	jal    func31f0c [$80031f0c]
-801E1E0C	nop
-801E1E10	jal    func31f0c [$80031f0c]
-801E1E14	addu   a0, fp, zero
+A0 = w[T5 + 1c];
+system_memory_free();
+
+A0 = FP;
+system_memory_free();
+
 801E1E18	j      L1e22c4 [$801e22c4]
 801E1E1C	nop
 

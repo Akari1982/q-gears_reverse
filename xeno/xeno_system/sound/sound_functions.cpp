@@ -1,4 +1,135 @@
 ﻿////////////////////////////////
+// func382d0()
+800382D8	addu   s0, a0, zero
+800382DC	lui    v0, $8006
+800382E0	lhu    v0, $8c18(v0)
+800382E4	nop
+800382E8	andi   v0, v0, $0080
+if( V0 == 0 )
+{
+    V1 = w[80058adc];
+    if( V1 != 0 )
+    {
+        80038308	lhu    a1, $0014(s0)
+
+        loop3830c:	; 8003830C
+            8003830C	lhu    v0, $0014(v1)
+            80038310	nop
+            80038314	beq    a1, v0, L3835c [$8003835c]
+            80038318	nop
+            8003831C	lw     v1, $001c(v1)
+            80038320	nop
+        80038324	bne    v1, zero, loop3830c [$8003830c]
+    }
+}
+
+A1 = 73646573;
+A1 = 101;
+80038334	jal    func3f4bc [$8003f4bc]
+
+8003833C	sll    v0, v0, $10
+80038340	sra    a0, v0, $10
+80038344	beq    a0, zero, L3836c [$8003836c]
+80038348	nop
+8003834C	jal    func3f558 [$8003f558]
+80038350	nop
+80038354	j      L383c0 [$800383c0]
+80038358	nop
+
+L3835c:	; 8003835C
+8003835C	jal    func3f558 [$8003f558]
+80038360	ori    a0, zero, $0015
+80038364	j      L383c0 [$800383c0]
+80038368	nop
+
+L3836c:	; 8003836C
+A0 = w[80058c58]; // sound event callback
+system_bios_disable_event();
+
+8003837C	lui    v0, $8006
+80038380	lw     v0, $8adc(v0)
+80038384	lui    a0, $8006
+80038388	addiu  a0, a0, $8adc (=-$7524)
+if( V0 != 0 )
+{
+    loop38394:	; 80038394
+        80038394	lw     v0, $0000(a0)
+        80038398	nop
+        8003839C	lw     v1, $001c(v0)
+        800383A0	nop
+        800383A8	addiu  a0, v0, $001c
+    800383A4	bne    v1, zero, loop38394 [$80038394]
+}
+
+800383AC	sw     s0, $0000(a0)
+800383BC	sw     zero, $001c(s0)
+
+A0 = w[80058c58];
+system_bios_enable_event();
+
+L383c0:	; 800383C0
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3bca4()
+if( A0 & 10 )
+{
+    loop3bcb0:	; 8003BCB0
+        V0 = hu[80058c18] & 0010;
+    8003BCC0	bne    v0, zero, loop3bcb0 [$8003bcb0]
+}
+
+if( hu[80058c18] & 0010 )
+{
+    V1 = hu[80058bac];
+    V0 = w[80058af4];
+    return h[V0 + V1 * c];
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func37d34()
+channel_id = 0;
+loop37d40:	; 80037D40
+    V1 = w[80061bbc + channel_id * 4];
+    if( V1 != 0 )
+    {
+        [V1 + 6] = h(hu[V1 + 6] | 01f5);
+    }
+    channel_id = channel_id + 1;
+    V0 = channel_id < 18;
+80037D64	bne    v0, zero, loop37d40 [$80037d40]
+
+[80058c18] = h(hu[80058c18] & ffbf); // remove stop sound flag
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func37d8c()
+[80058c18] = h(hu[80058c18] | 0040); // add stop sound flag
+
+spu = w[8004ff84]; // SPU registers 0x1f801c00
+channel_id = 0;
+loop37db4:	; 80037DB4
+    [spu + channel_id * 10 + 0] = h(0); // 38 left volume
+    [spu + channel_id * 10 + 2] = h(0); // 3a right volume
+    [spu + channel_id * 10 + 4] = h(0); // 44 pitch
+    [spu + channel_id * 10 + 8] = h(bu[spu + channel_id * 10 + 8] + 7f00); // attack mode and rate
+    [spu + channel_id * 10 + a] = h(1fdf); // sustain mode and rate
+    channel_id = channel_id + 1;
+    V0 = channel_id < 18;
+80037DDC	bne    v0, zero, loop37db4 [$80037db4]
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func3e6e4
 if( A1 < 18 && w[80061bbc + A1 * 4] == A0 )
 {
@@ -11,9 +142,8 @@ if( A1 < 18 && w[80061bbc + A1 * 4] == A0 )
 
 
 ////////////////////////////////
-// func3a0b4
-A0 = A0 & fe;
-A0 = A0 XOR 8;
+// func3a0b4()
+A0 = (A0 & fe) XOR 8;
 
 S3 = w[80058c74];
 
@@ -24,13 +154,11 @@ loop3a110:	; 8003A110
     if (hu[S0 + 94] & 0001)
     {
         [S0 + 94] = h(0);
-
-        V0 = 1 << bu[S0 + 9a];
-        [S3 + 48] = w(w[S3 + 48] & (0 NOR V0)); // remove bit
+        [S3 + 48] = w(w[S3 + 48] & (0 NOR (1 << bu[S0 + 9a]))); // remove bit
 
         A0 = S0 + c4; // stored channel address
         A1 = bu[S0 + 27]; // channel id
-        func3e6e4;
+        func3e6e4();
     }
 
     S2 = S2 - 1;
@@ -109,7 +237,7 @@ sound_sequence = S2 + 20 + sound_id * 4;
 channel = S4 + S0 * 158;
 
 A0 = w[80058c58];
-8003B60C	jal    func4032c [$8004032c]
+system_bios_disable_event();
 
 
 
@@ -191,5 +319,34 @@ loop3b614:	; 8003B614
 [S4 + 10] = h(hu[S4 + 10] | 8000);
 
 A0 = w[80058c58];
-8003B79C	jal    func4031c [$8004031c]
+8003B79C	jal    system_bios_enable_event [$8004031c]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func39588()
+A1 = 8006f08c;
+A2 = 0;
+
+L39598:	; 80039598
+    if( w[A1 + 4] == A0 )
+    {
+        [A2 + 2] = h(hu[A1 + 2]);
+        [A1 + 0] = b(0);
+        [A1 + 1] = b(0);
+        [A1 + 4] = w(0);
+        [A1 + 2] = h(0);
+        return A0;
+    }
+
+    V0 = h[A1 + 2];
+    if( V0 == 0 )
+    {
+        return 0;
+    }
+
+    A2 = A1;
+    A1 = 8006f08c + V0 * 10;
+800395DC	j      L39598 [$80039598]
 ////////////////////////////////

@@ -32,6 +32,7 @@
 + b4 [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
 + b8 []       number of something.
 +150 [][][][] wait tutorial opcode value.
++158 [][][][]
 +174 [][][][] store here pointer to text of tutorial menu.
 +220 [][][][] current main menu level (0 1 or 2)
 +27c [][][][] enable or disable input in menu? we only handle input if this == 1.
