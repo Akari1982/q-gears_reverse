@@ -379,14 +379,15 @@
 +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
 +10d8 []       battle speed.
 8009d7bd []       battle message speed (used as value >> 2 + 4)
-8009d7be [][]     config flags
++10da [][]     config flags
                     0x1c00 - magic order
                     0x0300 - camera (0x0000-auto,0x0100-fixed)
                     0x00c0 - atb/recommended/wait (0x0000-atb,0x0040-recommended,0x0080-wait)
                     0x0010 - cursor (0x0000-initial,0x0010-memory)
                     0x0004 - conroller (0x0000-normal,0x0004-custom)
                     0x0001 - sound (0x0000-mono,0x0001-stereo)
-8009d7d0 []       savemap message speed.
++10dc array of button remap. Each record represent one button in buttons mask (0x10 items 0x1 size)
+    +00 [] new button bit
 8009d7d0 []       savemap message speed.
 
 

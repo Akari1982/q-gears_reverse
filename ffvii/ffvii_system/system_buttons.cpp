@@ -1,52 +1,31 @@
 ////////////////////////////////
-// func1c8d4
+// system_get_buttons_with_config_remap()
 
 system_get_current_pad_buttons();
+cb1 = V0 & 0000ffff; // first controller
+cb2 = V0 & ffff0000; // second controller
 
-8001C8E4	addu   a2, v0, zero
-8001C8E8	lui    v1, $ffff
-8001C8EC	lui    v0, $800a
-8001C8F0	lhu    v0, $d7be(v0)
-8001C8F4	nop
-8001C8F8	srl    v0, v0, $02
-8001C8FC	andi   v0, v0, $0003
-8001C900	beq    v0, zero, L1c96c [$8001c96c]
-8001C904	and    a3, a2, v1
-8001C908	lui    v0, $8006
-8001C90C	lw     v0, $2fa0(v0)
-8001C910	nop
-8001C914	bne    v0, zero, L1c970 [$8001c970]
-8001C918	andi   a0, a2, $ffff
-8001C91C	addu   a0, zero, zero
-8001C920	addu   v1, zero, zero
-8001C924	ori    a1, zero, $0001
-8001C928	sllv   v0, v1, a1
+// if controller config set to normal or input not enabled
+if( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 || w[80062fa0] != 0 )
+{
+    return cb2 | cb1;
+}
 
+// remap buttons according to config options
+A0 = 0;
+V1 = 0;
 L1c92c:	; 8001C92C
-8001C92C	and    v0, a2, v0
-8001C930	beq    v0, zero, L1c954 [$8001c954]
-8001C934	nop
-8001C938	lui    at, $800a
-8001C93C	addiu  at, at, $d7c0 (=-$2840)
-8001C940	addu   at, at, v1
-8001C944	lbu    v0, $0000(at)
-8001C948	nop
-8001C94C	sllv   v0, v0, a1
-8001C950	or     a0, a0, v0
+    if( cb1 & ( 1 << V1 ) )
+    {
+        A0 = A0 | (1 << bu[8009c6e4 + 10dc + V1]);
+    }
 
-L1c954:	; 8001C954
-8001C954	addiu  v1, v1, $0001
-8001C958	slti   v0, v1, $0010
-8001C95C	beq    v0, zero, L1c970 [$8001c970]
-8001C960	nop
+    V1 = V1 + 1;
+    if( V1 >= 10 )
+    {
+        return cb2 | A0;
+    }
 8001C964	j      L1c92c [$8001c92c]
-8001C968	sllv   v0, v1, a1
-
-L1c96c:	; 8001C96C
-8001C96C	andi   a0, a2, $ffff
-
-L1c970:	; 8001C970
-return A0 | A3;
 ////////////////////////////////
 
 

@@ -13818,7 +13818,7 @@ func1c484:	; 8001C484
 // system_get_current_pad_buttons
 8001C808-8001C8D0
 ////////////////////////////////
-// func1c8d4
+// system_get_buttons_with_config_remap
 8001C8D4-8001C97C
 ////////////////////////////////
 

@@ -55,9 +55,9 @@ if (V0 != 0)
 800AD734	jal    funca21a4 [$800a21a4]
 800AD738	nop
 800AD73C	beq    v0, zero, Lad770 [$800ad770]
-800AD740	nop
-800AD744	jal    func1c8d4 [$8001c8d4]
-800AD748	nop
+
+system_get_buttons_with_config_remap();
+
 800AD74C	andi   v0, v0, $0020
 800AD750	beq    v0, zero, Lad75c [$800ad75c]
 800AD754	ori    a1, zero, $0003
