@@ -7,7 +7,6 @@
     type 0x110 - get immediate value.
     type 0x114 - get true if bit (0x1 << (top value & 7)) exist in byte (top value >> 3).
     type 0x11c - get 2 bytes value from savemap memory. Value is memory offset.
-
     type 0x11b - get data according to value.
         0x05 - get value at 0x8011626c.
 0x200 - jump to next two bytes.
@@ -31,7 +30,7 @@
 019 0302
 
 --01a 0001 1C01 0000 1001 E803 6300 0102 2600
-if (savemap2_hu(0x00) >= 0x3e8) -- after sephiroth summon meteor
+if( savemap2_hu( 0x00 ) >= 0x3e8 ) -- after sephiroth summon meteor
 {
     --022 0001 1001 0100 5003
     [0x8010b174] = w(1); -- add meteor to sky

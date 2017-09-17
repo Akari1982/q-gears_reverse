@@ -1,33 +1,56 @@
 ////////////////////////////////
-// funcad63c
-800AD63C	lui    v0, $8011
-800AD640	lw     v0, $ade4(v0)
-800AD654	lh     v0, $0046(v0)
-800AD658	lui    at, $8011
-800AD65C	sw     zero, $ade8(at)
-800AD664	addu   s1, a0, zero
+// funcad788()
 
-if (V0 != 0)
+A0 = 80109d74;
+[8010ade4] = w(A0);
+[8010ad3c] = w(A0);
+
+funcad63c();
+
+S0 = w[8010ad38];
+if( S0 != 0 )
+{
+    loopad7c8:	; 800AD7C8
+        [8010ad3c] = w(S0);
+        [8010ade4] = w(S0);
+
+        A0 = S0;
+        funcad63c();
+
+        S0 = w[S0];
+    800AD7E8	bne    s0, zero, loopad7c8 [$800ad7c8]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcad63c()
+
+S1 = A0;
+
+[8010ade8] = w(0);
+
+script_data = w[8010ade4];
+script_start = w[8010ad6c];
+
+if( h[script_data + 46] != 0 )
 {
     S0 = 0;
-
     loopad66c:	; 800AD66C
-        A0 = w[8010ade4];
-        V0 = h[A0 + 46];
-        [A0 + 46] = h(V0 + 1);
+        V0 = h[script_data + 46];
+        [script_data + 46] = h(V0 + 1);
 
-        V1 = w[8010ad6c];
-        A0 = hu[V1 + V0 * 2];
-
-        if (A0 < 100)
+        A0 = hu[script_start + V0 * 2];
+        if( A0 < 100 )
         {
-            funcabfc0;
+            funcabfc0();
         }
-        else if (A0 < 200)
+        else if( A0 < 200 )
         {
-            funcac3c0;
+            funcac3c0();
         }
-        else if (A0 < 300)
+        else if( A0 < 300 )
         {
             funcac484;
             S0 = V0;
@@ -40,37 +63,35 @@ if (V0 != 0)
     800AD6FC	beq    s0, zero, loopad66c [$800ad66c]
 }
 
-800AD704	lh     a0, $0040(s1)
+A0 = h[S1 + 40];
 800AD708	jal    funca9678 [$800a9678]
-800AD70C	nop
-800AD710	lw     v0, $0004(s1)
-800AD714	nop
-800AD718	beq    v0, zero, Lad770 [$800ad770]
-800AD71C	nop
-800AD720	lui    v0, $8011
-800AD724	lw     v0, $adec(v0)
-800AD728	nop
-800AD72C	bne    v0, zero, Lad770 [$800ad770]
-800AD730	nop
-800AD734	jal    funca21a4 [$800a21a4]
-800AD738	nop
-800AD73C	beq    v0, zero, Lad770 [$800ad770]
 
-system_get_buttons_with_config_remap();
+if( w[S1 + 4] != 0 )
+{
+    V0 = w[8010adec];
+    if( V0 == 0 )
+    {
+        800AD734	jal    funca21a4 [$800a21a4]
 
-800AD74C	andi   v0, v0, $0020
-800AD750	beq    v0, zero, Lad75c [$800ad75c]
-800AD754	ori    a1, zero, $0003
-800AD758	ori    a1, zero, $0004
+        if( V0 != 0 )
+        {
+            system_get_buttons_with_config_remap();
 
-Lad75c:	; 800AD75C
-800AD75C	lw     v0, $0004(s1)
-800AD760	nop
-800AD764	lbu    a0, $0050(v0)
-800AD768	jal    funcab988 [$800ab988]
-800AD76C	nop
+            if( V0 & 0020 )
+            {
+                A1 = 4;
+            }
+            else
+            {
+                A1 = 3;
+            }
 
-Lad770:	; 800AD770
+            V0 = w[S1 + 4];
+            A0 = bu[V0 + 50];
+            800AD768	jal    funcab988 [$800ab988]
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -215,10 +236,10 @@ else
 
 
 ////////////////////////////////
-// funcac3c0
+// funcac3c0()
 S0 = A0;
 V1 = S0 & ffff;
-if (A0 == 100)
+if( A0 == 100 )
 {
     [8010ad90] = w(8010ad70);
 }
@@ -240,8 +261,9 @@ else
 
 
 ////////////////////////////////
-// funcabfc0
-switch (A0)
+// funcabfc0()
+
+switch( A0 )
 {
 15 FCBF0A80
 16 90C30A80

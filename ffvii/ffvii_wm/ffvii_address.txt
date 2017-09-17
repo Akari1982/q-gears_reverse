@@ -1,11 +1,40 @@
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
-8010ad34 [][][][] next pointer after one that was inserted in world map models list.
-8010ad38 [][][][] pointer to first element in world map models list (each item 0xe0 size).
-+00 [][][][] pointer to next element.
-+50 []       id.
-+58 []       ??
-8010ad3c [][][][] current pointer to world map models list. We store pointer to founded 8010ad38 list structure here in opcode 0x300.
+8010626c [][][][] if 1 then place snow pole on map or remove their coords from savemap otherwise.
+
+80109d74 some model struct. Init with all zeroes.
+80109e54 some model struct. Init with all zeroes.
+80109f34 start of model struct linked list. (0x0e items 0xe0 size)
++00 [][][][] pointer to next element. After insertion replace with previous.
++50 []       model id.
++58 []       ???
++5e []       init with -1.
++90 start of packet for buffer 1.
++a8 start of packet for buffer 2
+    +03 []       store 0x09 here.
+    +04 []       R
+    +05 []       G
+    +06 []       B
+    +07 []       store 0x2e here.
+    +0c [][]     uv0.
+    +0e [][]     CLUT.
+    +14 [][]     uv1.
+    +16 [][]     texpage.
+    +1c [][]     uv2.
+    +24 [][]     uv3.
+8010ad34 [][][][] next free model pointer.
+8010ad38 [][][][] last inserted model. Init with 0.
+8010ad3c [][][][] last inserted model. Current pointer to world map models list. We store pointer to founded 8010ad38 list structure here in opcode 0x300. Init with 0.
+8010ad40 [][][][] init with 0.
+8010ad44 [][]     init with 0.
+8010ad48 [][]     init with 0.
+8010ad4c [][]     init with 0.
+8010ad50 [][][][] init with pointer to player coords on world map (8009c6e4 + f5c).
+8010ad54 [][][][] init with 0.
+8010ad58 [][][][] init with 0.
+8010ad5c [][][][] init with 0.
+8010ad60 [][][][] init with 0.
+8010ad64 [][][][] init with 0.
 
 8010ad6c [][][][] pointer to start of script. Each opcode or param takes 2 bytes.
 8010ad70 start of stack. (0x8 size)
