@@ -5506,41 +5506,12 @@ La6928:	; 800A6928
 800A6928	nop
 
 
-funca692c:	; 800A692C
-800A692C	beq    a0, zero, La698c [$800a698c]
-800A6930	lui    v0, $0004
-800A6934	lw     v1, $0000(a0)
-800A6938	ori    v0, v0, $7fff
-800A693C	slt    v0, v0, v1
-800A6940	bne    v0, zero, La6954 [$800a6954]
-800A6944	lui    v0, $fffb
-800A6948	bgez   v1, La6964 [$800a6964]
-800A694C	lui    v0, $0003
-800A6950	lui    v0, $0004
 
-La6954:	; 800A6954
-800A6954	ori    v0, v0, $8000
-800A6958	addu   v0, v1, v0
-800A695C	sw     v0, $0000(a0)
-800A6960	lui    v0, $0003
+////////////////////////////////
+// wm_loop_coords_around_world
+800A692C-800A6990
+////////////////////////////////
 
-La6964:	; 800A6964
-800A6964	lw     v1, $0008(a0)
-800A6968	ori    v0, v0, $7fff
-800A696C	slt    v0, v0, v1
-800A6970	bne    v0, zero, La6980 [$800a6980]
-800A6974	lui    v0, $fffc
-800A6978	bgez   v1, La698c [$800a698c]
-800A697C	lui    v0, $0003
-
-La6980:	; 800A6980
-800A6980	ori    v0, v0, $8000
-800A6984	addu   v0, v1, v0
-800A6988	sw     v0, $0008(a0)
-
-La698c:	; 800A698C
-800A698C	jr     ra 
-800A6990	nop
 
 
 funca6994:	; 800A6994
@@ -5641,7 +5612,7 @@ La6aa0:	; 800A6AA0
 800A6ADC	sra    v0, v0, $02
 800A6AE0	lui    at, $8011
 800A6AE4	sw     v0, $9d4c(at)
-800A6AE8	jal    funca692c [$800a692c]
+800A6AE8	jal    wm_loop_coords_around_world [$800a692c]
 800A6AEC	addu   a0, s0, zero
 800A6AF0	lw     v0, $0000(s1)
 800A6AF4	lw     s0, $0000(s0)
@@ -9300,126 +9271,10 @@ La9afc:	; 800A9AFC
 800A9B00	nop
 
 
-funca9b04:	; 800A9B04
-800A9B04	andi   a1, a1, $00ff
-800A9B08	ori    v0, zero, $000d
-800A9B0C	beq    a1, v0, La9b4c [$800a9b4c]
-800A9B10	andi   a0, a0, $001f
-800A9B14	slti   v0, a1, $000e
-800A9B18	beq    v0, zero, La9b30 [$800a9b30]
-800A9B1C	ori    v0, zero, $0008
-800A9B20	beq    a1, v0, La9c5c [$800a9c5c]
-800A9B24	addiu  v0, zero, $fff1 (=-$f)
-800A9B28	j      La9c30 [$800a9c30]
-800A9B2C	ori    v0, zero, $0001
 
-La9b30:	; 800A9B30
-800A9B30	ori    v0, zero, $0013
-800A9B34	beq    a1, v0, La9b54 [$800a9b54]
-800A9B38	ori    v0, zero, $0019
-800A9B3C	beq    a1, v0, La9c5c [$800a9c5c]
-800A9B40	addu   v0, zero, zero
-800A9B44	j      La9c30 [$800a9c30]
-800A9B48	ori    v0, zero, $0001
-
-La9b4c:	; 800A9B4C
-800A9B4C	j      La9c5c [$800a9c5c]
-800A9B50	addiu  v0, zero, $ff10 (=-$f0)
-
-La9b54:	; 800A9B54
-800A9B54	addiu  v0, a0, $fffd (=-$3)
-800A9B58	sltiu  v0, v0, $0004
-800A9B5C	bne    v0, zero, La9b6c [$800a9b6c]
-800A9B60	ori    v0, zero, $001a
-800A9B64	bne    a0, v0, La9c28 [$800a9c28]
-800A9B68	ori    v0, zero, $0001
-
-La9b6c:	; 800A9B6C
-800A9B6C	lui    v0, $8011
-800A9B70	lw     v0, $ad40(v0)
-800A9B74	nop
-800A9B78	lbu    v0, $0051(v0)
-800A9B7C	nop
-800A9B80	andi   v0, v0, $0001
-800A9B84	beq    v0, zero, La9bc4 [$800a9bc4]
-800A9B88	ori    v0, zero, $0004
-800A9B8C	lui    v0, $8011
-800A9B90	lw     v0, $ad64(v0)
-800A9B94	nop
-800A9B98	bgez   v0, La9c5c [$800a9c5c]
-800A9B9C	nop
-800A9BA0	addiu  v0, v0, $0014
-800A9BA4	lui    at, $8011
-800A9BA8	sw     v0, $ad64(at)
-800A9BAC	blez   v0, La9c18 [$800a9c18]
-800A9BB0	nop
-800A9BB4	lui    at, $8011
-800A9BB8	sw     zero, $ad64(at)
-800A9BBC	j      La9c18 [$800a9c18]
-800A9BC0	nop
-
-La9bc4:	; 800A9BC4
-800A9BC4	beq    a0, v0, La9bd4 [$800a9bd4]
-800A9BC8	ori    v0, zero, $0006
-800A9BCC	bne    a0, v0, La9bd8 [$800a9bd8]
-800A9BD0	addiu  a0, zero, $ff06 (=-$fa)
-
-La9bd4:	; 800A9BD4
-800A9BD4	addiu  a0, zero, $ffce (=-$32)
-
-La9bd8:	; 800A9BD8
-800A9BD8	lui    v1, $8011
-800A9BDC	lw     v1, $ad64(v1)
-800A9BE0	nop
-800A9BE4	slt    v0, a0, v1
-800A9BE8	beq    v0, zero, La9c00 [$800a9c00]
-800A9BEC	addiu  v0, v1, $fff6 (=-$a)
-800A9BF0	lui    at, $8011
-800A9BF4	sw     v0, $ad64(at)
-800A9BF8	j      La9c18 [$800a9c18]
-800A9BFC	nop
-
-La9c00:	; 800A9C00
-800A9C00	addiu  v0, a0, $ffec (=-$14)
-800A9C04	slt    v0, v1, v0
-800A9C08	beq    v0, zero, La9c18 [$800a9c18]
-800A9C0C	nop
-800A9C10	lui    at, $8011
-800A9C14	sw     a0, $ad64(at)
-
-La9c18:	; 800A9C18
-800A9C18	lui    v0, $8011
-800A9C1C	lw     v0, $ad64(v0)
-800A9C20	j      La9c5c [$800a9c5c]
-800A9C24	nop
-
-La9c28:	; 800A9C28
-800A9C28	lui    at, $8011
-800A9C2C	sw     zero, $ad64(at)
-
-La9c30:	; 800A9C30
-800A9C30	beq    a0, v0, La9c58 [$800a9c58]
-800A9C34	ori    v0, zero, $0019
-800A9C38	beq    a0, v0, La9c58 [$800a9c58]
-800A9C3C	ori    v0, zero, $0004
-800A9C40	beq    a0, v0, La9c50 [$800a9c50]
-800A9C44	ori    v0, zero, $0007
-800A9C48	bne    a0, v0, La9c5c [$800a9c5c]
-800A9C4C	addu   v0, zero, zero
-
-La9c50:	; 800A9C50
-800A9C50	j      La9c5c [$800a9c5c]
-800A9C54	addiu  v0, zero, $ffc0 (=-$40)
-
-La9c58:	; 800A9C58
-800A9C58	addiu  v0, zero, $ff40 (=-$c0)
-
-La9c5c:	; 800A9C5C
-800A9C5C	jr     ra 
-800A9C60	nop
-
-
-
+////////////////////////////////
+// funca9b04
+800A9B04-800A9C60
 ////////////////////////////////
 // funca9c64
 800A9C64-800A9D58

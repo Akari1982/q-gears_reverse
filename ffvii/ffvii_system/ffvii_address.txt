@@ -374,6 +374,12 @@
 +0f0c field map name for menu (0x17 size).
 +0f2a (+86) []       flags
                         0x10 - used in world map
++0f5c array of coords for vehicles left on map (0x8 size 0x6 items) (cloud, wild chokobo, bronco/chocobo, buggy/highwind, submarine, diamond/ultimate/ruby).
+    +00 [][][][] 0x0007ffff x.
+                 0x00f80000 model id.
+                 0xff000000 direction.
+    +04 [][][][] 0x0003ffff z.
+                 0xfffc0000 y.
 +0fa4 savemap memory bank 7/f start
 +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
 +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.

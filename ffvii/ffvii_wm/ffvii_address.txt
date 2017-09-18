@@ -6,7 +6,20 @@
 80109e54 some model struct. Init with all zeroes.
 80109f34 start of model struct linked list. (0x0e items 0xe0 size)
 +00 [][][][] pointer to next element. After insertion replace with previous.
++0c [][][][] X
++10 [][][][] Y
++14 [][][][] Z
++18 [][][][] ???
++1c [][][][] X
++20 [][][][] Y
++24 [][][][] Z
++3c [][]     rotation.
++3e [][]     init with 0.
++40 [][]     rotation.
++4c [][]     rotation.
 +50 []       model id.
++51 []       some flags.
+                0x80 - if set we init model pos just by X and Y (xz).
 +58 []       ???
 +5e []       init with -1.
 +90 start of packet for buffer 1.
