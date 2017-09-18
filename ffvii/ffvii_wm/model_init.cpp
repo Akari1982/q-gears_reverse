@@ -275,105 +275,65 @@ else if( A1 == 8 )
     return -f;
 }
 
-if( A1 < e )
+if( A1 >= e )
 {
-    800A9B28	j      La9c30 [$800a9c30]
+    if( A1 != 13 )
+    {
+        if( A1 == 19 )
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        if( A0 - 3 < 4 || A0 == 1a )
+        {
+            V0 = w[8010ad40];
+            if( bu[V0 + 51] & 1 )
+            {
+                if( w[8010ad64] >= 0 )
+                {
+                    return w[8010ad64];
+                }
+                [8010ad64] = w(w[8010ad64] + 14);
+                if( w[8010ad64] > 0 )
+                {
+                    [8010ad64] = w(0);
+                }
+                return w[8010ad64];
+            }
+            if( A0 == 4 || A0 == 6 )
+            {
+                A0 = -32;
+            }
+            else
+            {
+                A0 = -fa;
+            }
+            if( A0 < w[8010ad64] )
+            {
+                [8010ad64] = w(w[8010ad64] - a);
+                return w[8010ad64];
+            }
+            if( A0 - 14 > w[8010ad64] )
+            {
+                [8010ad64] = w(A0);
+            }
+            return w[8010ad64];
+        }
+        [8010ad64] = w(0);
+    }
 }
 
-800A9B30	ori    v0, zero, $0013
-800A9B34	beq    a1, v0, La9b54 [$800a9b54]
-
-if( A1 == 19 )
+if( A0 == 1 || A0 == 19 )
 {
-    return 0;
+    return -c0;
 }
-
-800A9B44	j      La9c30 [$800a9c30]
-
-La9b4c:	; 800A9B4C
-return -f0;
-
-La9b54:	; 800A9B54
-800A9B54	addiu  v0, a0, $fffd (=-$3)
-800A9B58	sltiu  v0, v0, $0004
-800A9B5C	bne    v0, zero, La9b6c [$800a9b6c]
-800A9B60	ori    v0, zero, $001a
-800A9B64	bne    a0, v0, La9c28 [$800a9c28]
-800A9B68	ori    v0, zero, $0001
-
-La9b6c:	; 800A9B6C
-800A9B6C	lui    v0, $8011
-800A9B70	lw     v0, $ad40(v0)
-800A9B74	nop
-800A9B78	lbu    v0, $0051(v0)
-800A9B7C	nop
-800A9B80	andi   v0, v0, $0001
-800A9B84	beq    v0, zero, La9bc4 [$800a9bc4]
-800A9B88	ori    v0, zero, $0004
-
-if( w[8010ad64] >= 0 )
+if( A0 == 4 || A0 == 7 )
 {
-    return w[8010ad64];
+    return -40;
 }
-
-800A9BA0	addiu  v0, v0, $0014
-800A9BA4	lui    at, $8011
-800A9BA8	sw     v0, $ad64(at)
-if( V0 > 0 )
-{
-    [8010ad64] = w(0);
-}
-return w[8010ad64];
-
-La9bc4:	; 800A9BC4
-800A9BC4	beq    a0, v0, La9bd4 [$800a9bd4]
-800A9BC8	ori    v0, zero, $0006
-800A9BCC	bne    a0, v0, La9bd8 [$800a9bd8]
-800A9BD0	addiu  a0, zero, $ff06 (=-$fa)
-
-La9bd4:	; 800A9BD4
-800A9BD4	addiu  a0, zero, $ffce (=-$32)
-
-La9bd8:	; 800A9BD8
-800A9BD8	lui    v1, $8011
-800A9BDC	lw     v1, $ad64(v1)
-800A9BE0	nop
-800A9BE4	slt    v0, a0, v1
-800A9BE8	beq    v0, zero, La9c00 [$800a9c00]
-800A9BEC	addiu  v0, v1, $fff6 (=-$a)
-800A9BF0	lui    at, $8011
-800A9BF4	sw     v0, $ad64(at)
-return w[8010ad64];
-
-La9c00:	; 800A9C00
-800A9C00	addiu  v0, a0, $ffec (=-$14)
-if( V1 < V0 )
-{
-    [8010ad64] = w(A0);
-}
-return w[8010ad64];
-
-La9c28:	; 800A9C28
-[8010ad64] = w(0);
-
-La9c30:	; 800A9C30
-800A9B2C	ori    v0, zero, $0001
-800A9C30	beq    a0, v0, La9c58 [$800a9c58]
-800A9C34	ori    v0, zero, $0019
-800A9C38	beq    a0, v0, La9c58 [$800a9c58]
-800A9C3C	ori    v0, zero, $0004
-800A9C40	beq    a0, v0, La9c50 [$800a9c50]
-
-if( A0 != 7 )
-{
-    return 0;
-}
-
-La9c50:	; 800A9C50
-return -40;
-
-La9c58:	; 800A9C58
-return -c0;
+return 0;
 ////////////////////////////////
 
 
