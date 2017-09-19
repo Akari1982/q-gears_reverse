@@ -1,110 +1,84 @@
 ////////////////////////////////
 // funcb7228()
 
-800B7230	addu   s1, a0, zero
-800B7238	addu   s2, a1, zero
+S1 = A0;
+S2 = A1;
 S3 = A2;
 
-800B7244	addu   v1, zero, zero
-800B724C	ori    s0, zero, $0380
-
+V1 = 0;
+S0 = 0;
 loopb7254:	; 800B7254
-800B7254	lui    at, $800a
-800B7258	addiu  at, at, $d288 (=-$2d78)
-800B725C	addu   at, at, s0
-800B7260	lbu    v0, $0000(at)
-800B7264	addiu  s0, s0, $0001
-800B7268	addu   v1, v1, v0
-800B726C	slti   v0, s0, $0400
+    V1 = V1 + bu[8009c6e4 + f24 + S0];
+    S0 = S0 + 1;
+    V0 = S0 < 80;
 800B7270	bne    v0, zero, loopb7254 [$800b7254]
-800B7274	andi   v0, v1, $00ff
-800B7278	beq    v0, zero, Lb7288 [$800b7288]
-800B727C	nop
-800B7280	jal    funca0b40 [$800a0b40]
-800B7284	ori    a0, zero, $0002
 
-Lb7288:	; 800B7288
-800B7288	beq    s1, zero, Lb72a8 [$800b72a8]
-800B728C	nop
-800B7290	lw     v0, $0000(s1)
-800B7294	nop
-800B7298	lui    at, $8011
-800B729C	sw     v0, $626c(at)
-800B72A0	j      Lb72b0 [$800b72b0]
-800B72A4	nop
+if( V1 & ff )
+{
+    A0 = 2;
+    800B7280	jal    funca0b40 [$800a0b40]
+}
 
-Lb72a8:	; 800B72A8
-800B72A8	lui    at, $8011
-800B72AC	sw     zero, $626c(at)
+if( S1 != 0 )
+{
+    [8011626c] = w(w[S1]);
+}
+else
+{
+    [8011626c] = w(0);
+}
 
-Lb72b0:	; 800B72B0
-800B72B0	beq    s2, zero, Lb72d0 [$800b72d0]
-800B72B4	nop
-800B72B8	lw     v0, $0000(s2)
-800B72BC	nop
-800B72C0	lui    at, $8011
-800B72C4	sw     v0, $6270(at)
-800B72C8	j      Lb72d8 [$800b72d8]
-800B72CC	nop
+if( S2 != 0 )
+{
+    [80116270] = w(w[S2]);
+}
+else
+{
+    [80116270] = w(0);
+}
 
-Lb72d0:	; 800B72D0
-800B72D0	lui    at, $8011
-800B72D4	sw     zero, $6270(at)
+V0 = (hu[8009d680] >> c) & 3;
 
-Lb72d8:	; 800B72D8
-800B72D8	lui    v0, $800a
-800B72DC	lhu    v0, $d680(v0)
-800B72E0	nop
-800B72E4	srl    v0, v0, $0c
-800B72E8	andi   v0, v0, $0003
-800B72EC	sltiu  a0, v0, $0003
-800B72F0	subu   a0, zero, a0
+A0 = V0 < 3;
+A0 = 0 - A0;
+A0 = V0 & A0;
 800B72F4	jal    funca2088 [$800a2088]
-800B72F8	and    a0, v0, a0
-800B72FC	lui    v1, $8011
-800B7300	lw     v1, $626c(v1)
-800B7304	nop
-800B7308	bne    v1, zero, Lb7324 [$800b7324]
-800B730C	addiu  v0, v1, $ffff (=-$1)
-800B7310	lui    v0, $8011
-800B7314	lw     v0, $6270(v0)
-800B7318	nop
-800B731C	beq    v0, zero, Lb7330 [$800b7330]
-800B7320	addiu  v0, v1, $ffff (=-$1)
 
-Lb7324:	; 800B7324
-800B7324	sltiu  v0, v0, $0002
-800B7328	beq    v0, zero, Lb7340 [$800b7340]
-800B732C	nop
+if( w[8011626c] != 0 )
+{
+    if( w[8011626c] - 1 < 2 )
+    {
+        A0 = hu[8009c6e4 + f9c] & fff;
+        800B7338	jal    funca1d38 [$800a1d38]
+    }
+}
+else if( ( w[80116270] == 0 ) || ( w[8011626c] - 1 < 2 ) )
+{
+    A0 = hu[8009c6e4 + f9c] & fff;
+    800B7338	jal    funca1d38 [$800a1d38]
+}
 
-Lb7330:	; 800B7330
-800B7330	lui    a0, $800a
-800B7334	lhu    a0, $d680(a0)
-800B7338	jal    funca1d38 [$800a1d38]
-800B733C	andi   a0, a0, $0fff
+A0 = hu[8009c6e4 + f9c] >> e; // cam rot or angle
+800B734C	jal    funcbc9e8 [$800bc9e8]
 
-Lb7340:	; 800B7340
 S1 = 8009c6e4 + f9c;
 
-800B7348	lhu    a0, $0000(s1)
-800B734C	jal    funcbc9e8 [$800bc9e8]
-800B7350	srl    a0, a0, $0e
-800B7354	addiu  a0, s1, $fd11 (=-$2ef)
-800B7358	addiu  a1, s1, $f55c (=-$aa4)
+A0 = S1 - 2ef;
+A1 = S1 - aa4;
+A2 = 0;
 800B735C	jal    funcb787c [$800b787c]
-800B7360	addu   a2, zero, zero
-800B7364	lui    a0, $800a
-800B7368	lw     a0, $d264(a0)
-800B736C	jal    funcadea8 [$800adea8]
-800B7370	nop
-800B7374	lui    a0, $800a
-800B7378	lw     a0, $d67c(a0)
-800B737C	jal    funcb3300 [$800b3300]
-800B7380	nop
-800B7384	lui    a0, $800a
-800B7388	lhu    a0, $d63e(a0)
-800B738C	jal    funca7e8c [$800a7e8c]
 
+A0 = w[8009c6e4 + b80]; // total number of seconds played
+funcadea8();
+
+[800c68ee] = h(w[8009c6e4 + f98] & 00ff);
+[800c6902] = h((w[8009c6e4 + f98] >> 08) & 00ff);
+[800c6916] = h((w[8009c6e4 + f98] >> 10) & 00ff);
+[8010cb14] = w(w[8009c6e4 + f98] >> 18);
+[8010cb1c] = w(0);
+[8010cb18] = w(0);
+
+[80109d6c] = w(hu[8009c6e4 + f5a]);
 
 A0 = 8009c6e4 + f5c; // Party leader's coordinates on world map
 wm_clean_all_model_structs();
@@ -128,7 +102,7 @@ else
     [8010cb00] = h(0);
 
     // set snow pole
-    if( w[8010626c] == 1 )
+    if( w[8011626c] == 1 )
     {
         S0 = 0;
         S1 = 8009c6e4 + f8c; // snow pole coordinate. 
@@ -146,7 +120,7 @@ else
 
                 A0 = w[8010ad3c];
                 A1 = SP + 10;
-                funca9c64();
+                funca9c64(); // set pos here
             }
 
             S0 = S0 + 1;
@@ -167,7 +141,118 @@ else
     }
 }
 
-800B7458	jal    funcb7820 [$800b7820]
+[80116278] = w(0);
+[8009c6e4 + c03] = b(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcadea8()
+
+A3 = 0;
+A2 = 0;
+
+loopadec4:	; 800ADEC4
+    A1 = 1f;
+
+    loopadec8:	; 800ADEC8
+        V0 = A0 * 5d588b65;
+        800ADECC	addiu  a1, a1, $ffff (=-$1)
+        V1 = A3 >> 01;
+        A0 = A0 + 0001;
+        V0 = A0 & 80000000;
+        A3 = V1 | V0;
+    800ADEE0	bgez   a1, loopadec8 [$800adec8]
+
+    [SP + 10 + A2 * 4] = w(A3);
+    A2 = A2 + 1;
+    V0 = A2 < 11;
+800ADF00	bne    v0, zero, loopadec4 [$800adec4]
+
+A1 = SP + 0054;
+A0 = w[SP + 4c];
+V1 = w[SP + 10] >> 9;
+V0 = (w[SP + 50] << 17) ^ V1;
+V0 = V0 ^ A0;
+[SP + 0050] = w(V0);
+
+A2 = 11;
+loopadf2c:	; 800ADF2C
+    A2 = A2 + 0001;
+    V0 = w[A1 + ffbc];
+    V1 = w[A1 + ffc0];
+    A0 = w[A1 + fffc];
+    V0 = V0 << 17;
+    V1 = V1 >> 09;
+    V0 = V0 ^ V1 ^ A0;
+    [A1 + 0000] = w(V0);
+    A1 = A1 + 0004;
+    V0 = A2 < 0209;
+800ADF54	bne    v0, zero, loopadf2c [$800adf2c]
+
+A2 = 0;
+loopadf64:	; 800ADF64
+    [8010ae5c + A2] = b(bu[SP + 10 + A2 * 4]);
+    A2 = A2 + 1;
+    V0 = A2 < 209;
+800ADF84	bne    v0, zero, loopadf64 [$800adf64]
+
+800ADF8C	jal    funcade30 [$800ade30]
+
+800ADF94	jal    funcade30 [$800ade30]
+
+800ADF9C	jal    funcade30 [$800ade30]
+
+[8010ae58] = w(208);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcade30
+
+A0 = 0;
+loopade3c:	; 800ADE3C
+    [8010ae5c + A0] = b(bu[8010ae5c + A0] ^ bu[8010b045 + A0]);
+    A0 = A0 + 1;
+    V0 = A0 < 20;
+800ADE60	bne    v0, zero, loopade3c [$800ade3c]
+
+A0 = 20;
+loopade74:	; 800ADE74
+    [8010ae7c + A0] = b(bu[8010ae7c + A0] ^ bu[8010ae3c + A0]);
+    A0 = A0 + 1;
+    V0 = A0 < 209;
+800ADE98	bne    v0, zero, loopade74 [$800ade74]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3300()
+
+[800c68ee] = h(A0 & 00ff);
+[800c6902] = h((A0 >> 08) & 00ff);
+[800c6916] = h((A0 >> 10) & 00ff);
+[8010cb14] = w(A0 >> 18);
+[8010cb1c] = w(0);
+[8010cb18] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca7e8c()
+[80109d6c] = w(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7820()
+[80116278] = w(0);
+[8009c6e4 + c03] = b(0);
 ////////////////////////////////
 
 
@@ -210,12 +295,11 @@ else
 
     A0 = h[model_struct + 4a];
     A1 = bu[model_struct + 50];
-    funca9b04();
-
-    [model_struct + 10] = w(w[model_struct + 10] + V1);
+    funca9b04(); // get Y pos modifier.
+    [model_struct + 10] = w(w[model_struct + 10] + V0);
 }
 
-[model_struct + 42] = h(hu[S1 + 4]);
+[model_struct + 42] = h(hu[coords + 4]);
 
 if( ( w[model_struct + c] != w[model_struct + 1c] ) || ( w[model_struct + 14] != w[model_struct + 24] ) )
 {
