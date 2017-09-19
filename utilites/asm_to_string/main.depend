@@ -5,3 +5,9 @@
 1426278813 source:d:\svn\q-gears\reversing\utilites\hack_multiply\main.cpp
 	<stdio.h>
 
+1505851175 source:d:\reverse\svn\q-gears_reverse\utilites\asm_to_string\main.cpp
+	<stdio.h>
+	<cstdlib>
+	<regex>
+	<iostream>
+
