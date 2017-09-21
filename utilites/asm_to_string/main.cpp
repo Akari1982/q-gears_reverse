@@ -65,7 +65,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|or|ori|sltu|sltiu|slti|subu|sll|sra|srl)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]|zero)$";
+        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|sltu|sltiu|slti|subu|sll|sra|srl|sllv)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]|zero)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m1 = std::regex_replace( str, e, "$1" );
@@ -76,7 +76,7 @@ int main( int argc, char *argv[] )
             if( m3 == "ZERO" ) m3 = "0";
             if( m4 == "ZERO" ) m4 = "0";
 
-            if( m1 == "andi" || m1 == "ori" || m1 == "addiu" || m1 == "addi" || m1 == "sltiu" || m1 == "slti" )
+            if( m1 == "andi" || m1 == "ori" || m1 == "addiu" || m1 == "addi" || m1 == "sltiu" || m1 == "slti" || m1 == "xori" )
             {
                 m4 = m4.substr( 1, 4 );
                 std::transform( m4.begin(), m4.end(), m4.begin(), ::tolower );
@@ -100,17 +100,33 @@ int main( int argc, char *argv[] )
             }
             else
             {
-                ss << m3;
+                if( m1 == "sllv" )
+                {
+                    ss << m4;
+                }
+                else
+                {
+                    ss << m3;
+                }
 
                 if( m1 == "addu" || m1 == "addiu" || m1 == "addi" ) ss << " + ";
                 if( m1 == "and" || m1 == "andi" ) ss << " & ";
-                if( m1 == "xor" ) ss << " ^ ";
+                if( m1 == "xor" || m1 == "xori" ) ss << " ^ ";
                 if( m1 == "or" || m1 == "ori" ) ss << " | ";
+                if( m1 == "nor" ) ss << " NOR ";
                 if( m1 == "sltu" || m1 == "sltiu" || m1 == "slti" ) ss << " < ";
                 if( m1 == "subu" ) ss << " - ";
-                if( m1 == "sll" ) ss << " << ";
+                if( m1 == "sll" || m1 == "sllv" ) ss << " << ";
                 if( m1 == "sra" || m1 == "srl" ) ss << " >> ";
-                ss << m4 << ";";
+
+                if( m1 == "sllv" )
+                {
+                    ss << m3 << ";";
+                }
+                else
+                {
+                    ss << m4 << ";";
+                }
             }
             str = ss.str();
         }

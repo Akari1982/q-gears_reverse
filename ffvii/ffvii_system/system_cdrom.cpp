@@ -499,199 +499,110 @@ result_ptr = S6 = A1;
 A0 = -1;
 8003EA08	jal    func3cedc [$8003cedc]
 
-S3 = 800516cc;
-S2 = 80051904;
-S4 = 80051905;
-V0 = V0 + 03c0;
+[8006e138] = w(V0 + 3c0);
+[8006e13c] = w(0);
+[8006e140] = w(80010834); // "CD_sync"
 
-[8006e138] = w(V0);
-V0 = 80010834; // "CD_sync"
 
-8003EA38	lui    at, $8007
-[AT + e13c] = w(0);
-8003EA40	lui    at, $8007
-[AT + e140] = w(V0);
 
 L3ea48:	; 8003EA48
-8003EA48	jal    func3cedc [$8003cedc]
-8003EA4C	addiu  a0, zero, $ffff (=-$1)
-8003EA50	lui    v1, $8007
-V1 = w[V1 + e138];
-8003EA58	nop
-8003EA5C	slt    v1, v1, v0
-8003EA60	bne    v1, zero, L3ea90 [$8003ea90]
-8003EA64	nop
-8003EA68	lui    v1, $8007
-V1 = w[V1 + e13c];
-8003EA70	nop
-V0 = V1 + 0001;
-8003EA78	lui    at, $8007
-[AT + e13c] = w(V0);
-8003EA80	lui    v0, $003c
-8003EA84	slt    v0, v0, v1
-8003EA88	beq    v0, zero, L3eb08 [$8003eb08]
-8003EA8C	nop
+    A0 = -1;
+    8003EA48	jal    func3cedc [$8003cedc]
 
-L3ea90:	; 8003EA90
-A0 = 800107ac; // "CD timeout:"
-system_bios_std_out_puts();
+    V1 = w[8006e138] < V0;
+    8003EA60	bne    v1, zero, L3ea90 [$8003ea90]
 
-A0 = bu[S2 + 0000];
-V0 = bu[S2 + 0001];
-8003EAA8	lui    a1, $8007
-A1 = w[A1 + e140];
-V0 = V0 << 02;
-V0 = V0 + S3;
-A0 = A0 << 02;
-V1 = w[V0 + 0000];
-8003EAC0	lui    v0, $8005
-V0 = bu[V0 + 1649];
-A0 = A0 + S3;
-V0 = V0 << 02;
-[SP + 0010] = w(V1);
-8003EAD4	lui    at, $8005
-AT = AT + 164c;
-AT = AT + V0;
-A2 = w[AT + 0000];
-A3 = w[A0 + 0000];
-8003EAE8	lui    a0, $8001
-A0 = A0 + 07bc;
-8003EAF0	jal    system_bios_printf [$80042dc8]
-8003EAF4	nop
-8003EAF8	jal    func3f420 [$8003f420]
-8003EAFC	nop
-8003EB00	j      L3eb0c [$8003eb0c]
-8003EB04	addiu  v0, zero, $ffff (=-$1)
+    V1 = w[8006e13c];
+    [8006e13c] = w(V1 + 1);
 
-L3eb08:	; 8003EB08
-V0 = 0;
+    if( V1 > 003c0000 )
+    {
+        L3ea90:	; 8003EA90
+        A0 = 800107ac; // "CD timeout:"
+        system_bios_std_out_puts();
 
-L3eb0c:	; 8003EB0C
-8003EB0C	bne    v0, zero, L3ec34 [$8003ec34]
-8003EB10	addiu  v0, zero, $ffff (=-$1)
-8003EB14	jal    func3d214 [$8003d214]
-8003EB18	nop
-8003EB1C	beq    v0, zero, L3ebcc [$8003ebcc]
-8003EB20	nop
-8003EB24	lui    v0, $8005
-V0 = w[V0 + 18ec];
-8003EB2C	nop
-V0 = bu[V0 + 0000];
-8003EB34	nop
-S1 = V0 & 0003;
+        A0 = 800107bc; // "%s:(%s) Sync=%s, Ready=%s"
+        A1 = w[8006e140]; // "CD_sync"
+        V0 = bu[80051649];
+        A2 = w[8005164c + V0 * 4];
+        V0 = bu[80051904];
+        A3 = w[800516cc + V0 * 4];
+        V0 = bu[80051905];
+        A4 = w[800516cc + V0 * 4];
+        system_bios_printf();
 
-loop3eb3c:	; 8003EB3C
-8003EB3C	jal    func3e454 [$8003e454]
-8003EB40	nop
-S0 = V0;
-8003EB48	beq    s0, zero, L3ebbc [$8003ebbc]
-V0 = S0 & 0004;
-8003EB50	beq    v0, zero, L3eb84 [$8003eb84]
-V0 = S0 & 0002;
-8003EB58	lui    v0, $8005
-V0 = w[V0 + 162c];
-8003EB60	nop
-8003EB64	beq    v0, zero, L3eb80 [$8003eb80]
-8003EB68	nop
-A0 = bu[S4 + 0000];
-8003EB70	lui    a1, $8007
-8003EB74	addiu  a1, a1, $e128 (=-$1ed8)
-8003EB78	jalr   v0 ra
-8003EB7C	nop
+        8003EAF8	jal    func3f420 [$8003f420]
 
-L3eb80:	; 8003EB80
-V0 = S0 & 0002;
+        return -1;
+    }
 
-L3eb84:	; 8003EB84
-8003EB84	beq    v0, zero, loop3eb3c [$8003eb3c]
-8003EB88	nop
-8003EB8C	lui    v0, $8005
-V0 = w[V0 + 1628];
-8003EB94	nop
-8003EB98	beq    v0, zero, loop3eb3c [$8003eb3c]
-8003EB9C	nop
-A0 = bu[S2 + 0000];
-8003EBA4	lui    a1, $8007
-8003EBA8	addiu  a1, a1, $e120 (=-$1ee0)
-8003EBAC	jalr   v0 ra
-8003EBB0	nop
-8003EBB4	j      loop3eb3c [$8003eb3c]
-8003EBB8	nop
 
-L3ebbc:	; 8003EBBC
-8003EBBC	lui    v0, $8005
-V0 = w[V0 + 18ec];
-8003EBC4	nop
-[V0 + 0000] = b(S1);
 
-L3ebcc:	; 8003EBCC
-V0 = bu[S2 + 0000];
-8003EBD0	nop
-A2 = V0 & 00ff;
-V0 = 0 | 0002;
-8003EBDC	beq    a2, v0, L3ebec [$8003ebec]
-V0 = 0 | 0005;
-8003EBE4	bne    a2, v0, L3ec2c [$8003ec2c]
-8003EBE8	nop
+    8003EB14	jal    func3d214 [$8003d214]
 
-L3ebec:	; 8003EBEC
-V0 = 0 | 0002;
-[S2 + 0000] = b(V0);
-A1 = S6;
-8003EBF8	lui    a0, $8007
-8003EBFC	addiu  a0, a0, $e120 (=-$1ee0)
-8003EC00	beq    a1, zero, L3ec24 [$8003ec24]
-V1 = 0 | 0007;
-8003EC08	addiu  a3, zero, $ffff (=-$1)
+    if( V0 != 0 )
+    {
+        V0 = w[800518ec];
+        S1 = bu[V0] & 03;
 
-loop3ec0c:	; 8003EC0C
-V0 = bu[A0 + 0000];
-A0 = A0 + 0001;
-8003EC14	addiu  v1, v1, $ffff (=-$1)
-[A1 + 0000] = b(V0);
-8003EC1C	bne    v1, a3, loop3ec0c [$8003ec0c]
-A1 = A1 + 0001;
+        loop3eb3c:	; 8003EB3C
+            func3e454();
+            S0 = V0;
 
-L3ec24:	; 8003EC24
-8003EC24	j      L3ec34 [$8003ec34]
-V0 = A2;
+            if( S0 == 0 )
+            {
+                break;
+            }
+            if( ( S0 & 4 ) && ( w[8005162c] != 0 ) )
+            {
+                A0 = bu[80051905];
+                A1 = 8006e128;
+                80041B4C	jalr   w[8005162c] ra
+            }
+            if( ( S0 & 2 ) && ( w[80051628] != 0 ) )
+            {
+                A0 = bu[80051904];
+                A1 = 8006e120;
+                80041B80	jalr   w[80051628] ra
+            }
+        80041B88	j      loop41b10 [$80041b10]
 
-L3ec2c:	; 8003EC2C
+        V0 = w[800518ec];
+        [V0] = b(S1);
+    }
+
+    if( ( bu[80051904] == 2 ) || ( bu[80051904] == 5 ) )
+    {
+        [80051904] = b(2);
+
+        if( result_ptr != 0 )
+        {
+            V1 = 7;
+            A0 = 0;
+            loop3ec0c:	; 8003EC0C
+                [result_ptr + A0] = b(bu[8006e120 + A0]);
+                A0 = A0 + 1;
+                V1 = V1 - 1;
+            8003EC1C	bne    v1, -1, loop3ec0c [$8003ec0c]
+        }
+
+        return bu[80051904];
+    }
 8003EC2C	beq    s5, zero, L3ea48 [$8003ea48]
-V0 = 0;
 
-L3ec34:	; 8003EC34
-RA = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-8003EC58	jr     ra 
-8003EC5C	nop
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3ec60
-8003EC60	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 0034] = w(S7);
+// func3ec60()
+
 S7 = A0;
-[SP + 0028] = w(S4);
 S4 = A1;
 8003EC74	addiu  a0, zero, $ffff (=-$1)
-[SP + 0038] = w(RA);
-[SP + 0030] = w(S6);
-[SP + 002c] = w(S5);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
 8003EC90	jal    func3cedc [$8003cedc]
-[SP + 0018] = w(S0);
+
 8003EC98	lui    s5, $8005
 S5 = S5 + 16cc;
 8003ECA0	lui    s2, $8005
@@ -701,8 +612,7 @@ S3 = S2 + 0002;
 V0 = V0 + 03c0;
 8003ECB4	lui    at, $8007
 [AT + e138] = w(V0);
-8003ECBC	lui    v0, $8001
-V0 = V0 + 083c;
+V0 = 8001083c; // "CD_ready"
 8003ECC4	lui    at, $8007
 [AT + e13c] = w(0);
 8003ECCC	lui    at, $8007
@@ -875,16 +785,4 @@ L3eef8:	; 8003EEF8
 V0 = 0;
 
 L3ef00:	; 8003EF00
-RA = w[SP + 0038];
-S7 = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0040;
-8003EF28	jr     ra 
-8003EF2C	nop
 ////////////////////////////////
