@@ -98,6 +98,22 @@
 
 
 ////////////////////////////////
+// system_bios_init_heap()
+// A(39h) - InitHeap(addr, size)
+// Initializes the address and size of the heap - the BIOS does not automatically do this,
+// so, before using the heap, InitHeap must be called by software. Usually, the heap would
+// be memory region between the end of the boot executable, and the bottom of the
+// executable's stack. InitHeap can be also used to deallocate all memory handles
+// (eg. when a new exe file has been loaded, it may use it to deallocate all old memory).
+// The heap is used only by malloc/realloc/calloc/free, and by the "qsort" function.
+T2 = a0;
+T1 = 39;
+80042994	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_printf()
 // A(3Fh) - Printf(txt,param1,param2,etc.) - Print string to console
 // in:  A0                     Pointer to 0 terminated string
@@ -133,6 +149,23 @@
 80042DC8	addiu  t2, zero, $00a0
 80042DCC	jr     t2 
 80042DD0	addiu  t1, zero, $003f
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_set_mem_size()
+// A(9Fh) - SetMemSize(megabytes)
+// Changes the effective RAM size (2 or 8 megabytes) by manipulating port 1F801060h,
+// and additionally stores the size in megabytes in RAM at [00000060h].
+// Note: The BIOS bootcode accidently sets the RAM value to 2MB (which is the
+// correct physical memory size), but initializes the I/O port to 8MB (which mirrors
+// the physical 2MB within that 8MB region), so the initial values don't match up with each other.
+// Caution: Applying the correct size of 2MB may cause the "realloc" function
+//  to crash (that function may accidently access memory above 2MB).
+T2 = a0;
+T1 = 9f;
+800429D4	jr     t2 
 ////////////////////////////////
 
 
