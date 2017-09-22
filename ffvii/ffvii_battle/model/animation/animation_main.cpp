@@ -4784,7 +4784,7 @@ loopbbed0:	; 800BBED0
 func3cebc;
 
 A0 = 1;
-func43938;
+system_psyq_reset_graph;
 
 func3d1b4;
 
@@ -4883,7 +4883,7 @@ loopbc070:	; 800BC070
 func3cebc;
 
 A0 = 1;
-func43938;
+system_psyq_reset_graph;
 
 func3d1b4;
 
@@ -5014,7 +5014,7 @@ loopbbfa0:	; 800BBFA0
 
 800BC018	jal    func3cebc [$8003cebc]
 800BC01C	nop
-800BC020	jal    func43938 [$80043938]
+800BC020	jal    system_psyq_reset_graph [$80043938]
 800BC024	ori    a0, zero, $0001
 800BC028	jal    func3d1b4 [$8003d1b4]
 800BC02C	nop

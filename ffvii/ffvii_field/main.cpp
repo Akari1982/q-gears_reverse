@@ -292,7 +292,7 @@ La25bc:	; 800A25BC
 
     La2a94:	; 800A2A94
     A0 = 1;
-    800A2A94	jal    func43938 [$80043938]
+    system_psyq_reset_graph();
 
     if( hu[80114488] == 0 )
     {

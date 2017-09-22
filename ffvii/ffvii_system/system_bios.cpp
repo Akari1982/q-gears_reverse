@@ -154,6 +154,28 @@ T1 = 39;
 
 
 ////////////////////////////////
+// system_bios_gpu_cw()
+// A(49h) - GPU_cw(gp0cmd)      ;send GP0 command word
+// Calls gpu_sync(), and does then write [1F801810h]=gp0cmd. Returns the return
+// value from the gpu_sync() call.
+T2 = 00a0;
+T1 = 0049;
+80046560	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_cd_remove()
+// A(56h) or A(72h) CdRemove()  ;does NOT work due to SysDeqIntRP bug
+T2 = 00a0;
+T1 = 0072;
+800429C4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_set_mem_size()
 // A(9Fh) - SetMemSize(megabytes)
 // Changes the effective RAM size (2 or 8 megabytes) by manipulating port 1F801060h,
@@ -276,6 +298,59 @@ T1 = 9f;
 
 
 ////////////////////////////////
+// system_bios_return_from_exception()
+// B(17h) - ReturnFromException()
+// Restores the CPU registers (R1-R31,HI,LO,SR,PC) (except R26/K0) from the
+// current TCB. This function is usually executed automatically at the end of the
+// ExceptionHandler, however, functions in the exception chain may call
+// ReturnFromException to to return immediately, without processing chain elements
+// of lower priority.
+T2 = 00b0;
+T1 = 0017;
+80042AB4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_set_default_exit_from_exception()
+// B(18h) - SetDefaultExitFromException()
+// Applies the default "Exit" structure (which consists of a pointer to
+// ReturnFromException, and the Kernel's exception stacktop (minus 4, for whatever
+// reason), and zeroes for the R16..R23,R28,R30 registers. Returns the address of
+// that structure.
+// See SetCustomExitFromException for details.
+T2 = 00b0;
+T1 = 0018;
+80042AC4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_set_custom_exit_from_exception()
+// B(19h) - SetCustomExitFromException(addr)
+// addr points to a structure (with same format as for the SaveState function):
+//  00h 4    r31/ra,pc ;usually ptr to ReturnFromException function
+//  04h 4    r28/sp    ;usually exception stacktop, minus 4, for whatever reason
+//  08h 4    r30/fp    ;usually 0
+//  0Ch 4x8  r16..r23  ;usually 0
+//  2Ch 4    r28/gp    ;usually 0
+// The hook function is executed only if the ExceptionHandler has been fully
+// executed (after processing an IRQ, many interrupt handlers are calling
+// ReturnFromException to abort further exception handling, and thus do skip the
+// hook function). Once when the hook function has finished, it should execute
+// ReturnFromException. The hook function is called with r2=1 (that is important
+// if the hook address was recorded with SaveState, where it "returns" to the
+// SaveState caller, with r2 as "return value").
+T2 = 00b0;
+T1 = 0019;
+80042AD4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_exit()
 // A(06h) or B(38h) - exit(exitcode)
 // Terminates the program and returns control to the BIOS; which does then lockup
@@ -298,6 +373,30 @@ T1 = 9f;
 80042D48	addiu  t2, zero, $00b0
 80042D4C	jr     t2 
 80042D50	addiu  t1, zero, $003f
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_change_clear_pad()
+// B(5Bh) ChangeClearPad(int)   ;pad AND card (ie. used also for Card)
+T2 = 00b0;
+T1 = 005b;
+80042BA4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_change_clear_r_cnt()
+// C(0Ah) - ChangeClearRCnt(t,flag) ;root counter (aka timer)
+// Selects what the kernel's timer/vblank IRQ handlers shall do after they have
+// processed an IRQ (t=0..2: timer 0..2, or t=3: vblank) (flag=0: do nothing; or
+// flag=1: automatically acknowledge the IRQ and immediately return from
+// exception). The function returns the old (previous) flag value.
+T2 = 00c0;
+T1 = 000a;
+80042BB4	jr     t2 
 ////////////////////////////////
 
 

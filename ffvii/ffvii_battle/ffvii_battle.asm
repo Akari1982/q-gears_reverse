@@ -13076,7 +13076,7 @@ V0 = V0 < V1;
 800BBE2C	nop
 800BBE30	jal    func3cebc [$8003cebc]
 800BBE34	nop
-800BBE38	jal    func43938 [$80043938]
+800BBE38	jal    system_psyq_reset_graph [$80043938]
 A0 = 0001;
 800BBE40	jal    func3d1b4 [$8003d1b4]
 800BBE44	nop
@@ -13095,7 +13095,7 @@ V0 = V0 < V1;
 800BBE70	nop
 800BBE74	jal    func3cebc [$8003cebc]
 800BBE78	nop
-800BBE7C	jal    func43938 [$80043938]
+800BBE7C	jal    system_psyq_reset_graph [$80043938]
 A0 = 0001;
 800BBE84	jal    func3d1b4 [$8003d1b4]
 800BBE88	nop

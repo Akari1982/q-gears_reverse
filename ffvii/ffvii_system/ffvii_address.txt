@@ -15,7 +15,8 @@
 
 8004bc98 Sin and Cos table. Sin +00 [][], Cos +02 [][]
 
-
+800604de [][]     store Interrupt mask register (0x1f801074) here.
+800504e0 [][][][] store DMA Control Register (0x1f8010f0) here.
 
 80062bb8 array of some function pointers (0x4 size).
 +08 [][][][] 80045a24 function. Called when copy data from palette to ram and back.

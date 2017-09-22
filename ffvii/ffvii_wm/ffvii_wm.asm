@@ -823,7 +823,7 @@ A0 = V0 ^ 0001;
 A0 = A0 < 0001;
 800A1664	jal    func3cedc [$8003cedc]
 A0 = V0 - A0;
-800A166C	jal    func43938 [$80043938]
+800A166C	jal    system_psyq_reset_graph [$80043938]
 A0 = 0001;
 800A1674	lui    a0, $800d
 A0 = w[A0 + 05e4];

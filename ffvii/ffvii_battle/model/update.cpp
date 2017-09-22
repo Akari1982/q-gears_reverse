@@ -106,7 +106,7 @@ Lb8128:	; 800B8128
 800B8150	nop
 800B8154	bne    v0, zero, Lb8170 [$800b8170]
 800B8158	nop
-800B815C	jal    func43938 [$80043938]
+800B815C	jal    system_psyq_reset_graph [$80043938]
 800B8160	ori    a0, zero, $0001
 800B8164	ori    v0, zero, $0001
 800B8168	lui    at, $8010

@@ -44,7 +44,7 @@ system_bios_set_mem_size();
 
 S1 = 1;
 
-func1171c()
+func1171c(); // init intr and graph
 
 S7 = 20000000;
 
