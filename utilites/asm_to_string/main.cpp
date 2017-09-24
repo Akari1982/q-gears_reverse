@@ -110,14 +110,14 @@ int main( int argc, char *argv[] )
                 }
 
                 if( m1 == "addu" || m1 == "addiu" || m1 == "addi" ) ss << " + ";
-                if( m1 == "and" || m1 == "andi" ) ss << " & ";
-                if( m1 == "xor" || m1 == "xori" ) ss << " ^ ";
-                if( m1 == "or" || m1 == "ori" ) ss << " | ";
-                if( m1 == "nor" ) ss << " NOR ";
-                if( m1 == "sltu" || m1 == "sltiu" || m1 == "slti" ) ss << " < ";
-                if( m1 == "subu" ) ss << " - ";
-                if( m1 == "sll" || m1 == "sllv" ) ss << " << ";
-                if( m1 == "sra" || m1 == "srl" ) ss << " >> ";
+                else if( m1 == "and" || m1 == "andi" ) ss << " & ";
+                else if( m1 == "xor" || m1 == "xori" ) ss << " ^ ";
+                else if( m1 == "or" || m1 == "ori" ) ss << " | ";
+                else if( m1 == "nor" ) ss << " NOR ";
+                else if( m1 == "sltu" || m1 == "sltiu" || m1 == "slti" ) ss << " < ";
+                else if( m1 == "subu" ) ss << " - ";
+                else if( m1 == "sll" || m1 == "sllv" ) ss << " << ";
+                else if( m1 == "sra" || m1 == "srl" ) ss << " >> ";
 
                 if( m1 == "sllv" )
                 {
@@ -128,6 +128,59 @@ int main( int argc, char *argv[] )
                     ss << m4 << ";";
                 }
             }
+            str = ss.str();
+        }
+
+        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](mfc0|mtc0)\\s*([a-z][0-9a-z]),([a-z][0-9a-z])$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m1 = std::regex_replace( str, e, "$1" );
+            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
+
+            std::stringstream ss;
+
+            if( m1 == "mfc0" )
+            {
+                ss << m2 << " = " << m3 << ";";
+            }
+            else if( m1 == "mtc0" )
+            {
+                ss << m3 << " = " << m2 << ";";
+            }
+            str = ss.str();
+        }
+
+        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23)\\s*$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m1 = std::regex_replace( str, e, "$1" );
+            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
+
+            if( m2 == "ZERO" ) m2 = "0";
+
+            // mtc
+            if( m3 == "R11R12" ) m3 = "VXY0"; // 0
+            if( m3 == "R13R21" ) m3 = "VZ0"; // 1
+            if( m3 == "R22R23" ) m3 = "VXY1"; // 2
+            if( m3 == "L11L12" ) m3 = "IR0"; // 8
+            if( m3 == "L13L21" ) m3 = "IR1"; // 9
+            if( m3 == "L22L23" ) m3 = "IR2"; // 10
+            if( m3 == "L31L32" ) m3 = "IR3"; // 11
+
+            // ctc
+            if( m3 == "MAC0" ) m3 = "OFX"; // 24
+            if( m3 == "MAC1" ) m3 = "OFY"; // 25
+            if( m3 == "MAC2" ) m3 = "H"; // 26
+            if( m3 == "MAC3" ) m3 = "DQA"; // 27
+            if( m3 == "IRGB" ) m3 = "DQB"; // 28
+            if( m3 == "ORGB" ) m3 = "ZSF3"; // 29
+            if( m3 == "LZCS" ) m3 = "ZSF4"; // 30
+
+            std::stringstream ss;
+
+            ss << m3 << " = " << m2 << ";";
             str = ss.str();
         }
 

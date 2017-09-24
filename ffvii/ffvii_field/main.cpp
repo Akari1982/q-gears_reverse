@@ -287,7 +287,7 @@ La25bc:	; 800A25BC
     800A2A80	sll    v0, v0, $10
     800A2A84	bne    v0, zero, La2a94 [$800a2a94]
     800A2A88	nop
-    800A2A8C	jal    func43d3c [$80043d3c]
+    800A2A8C	jal    system_psyq_set_disp_mask [$80043d3c]
     800A2A90	ori    a0, zero, $0001
 
     La2a94:	; 800A2A94

@@ -2485,7 +2485,7 @@ V0 = V0 + 0001;
 [AT + 566c] = w(V0);
 800A3C20	bne    v0, zero, La3c64 [$800a3c64]
 800A3C24	nop
-800A3C28	jal    func43d3c [$80043d3c]
+800A3C28	jal    system_psyq_set_disp_mask [$80043d3c]
 A0 = 0001;
 800A3C30	lui    v1, $800e
 V1 = w[V1 + 5634];

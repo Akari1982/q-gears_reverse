@@ -12251,9 +12251,9 @@ T6 = w[T8 + 0010];
 T4 = hu[V1 + 0000];
 T5 = hu[V1 + 0006];
 T6 = hu[V1 + 000c];
-800BADEC	mtc2   t4,l13l21
-800BADF0	mtc2   t5,l22l23
-800BADF4	mtc2   t6,l31l32
+IR1 = T4;
+IR2 = T5;
+IR3 = T6;
 800BADF8	nop
 800BADFC	nop
 800BAE00	gte_func18t1,dqb
@@ -12267,9 +12267,9 @@ V0 = V1 + 0002;
 T4 = hu[V0 + 0000];
 T5 = hu[V0 + 0006];
 T6 = hu[V0 + 000c];
-800BAE2C	mtc2   t4,l13l21
-800BAE30	mtc2   t5,l22l23
-800BAE34	mtc2   t6,l31l32
+IR1 = T4;
+IR2 = T5;
+IR3 = T6;
 800BAE38	nop
 800BAE3C	nop
 800BAE40	gte_func18t1,dqb
@@ -12283,9 +12283,9 @@ V0 = V1 + 0004;
 T4 = hu[V0 + 0000];
 T5 = hu[V0 + 0006];
 T6 = hu[V0 + 000c];
-800BAE6C	mtc2   t4,l13l21
-800BAE70	mtc2   t5,l22l23
-800BAE74	mtc2   t6,l31l32
+IR1 = T4;
+IR2 = T5;
+IR3 = T6;
 800BAE78	nop
 800BAE7C	nop
 800BAE80	gte_func18t1,dqb
@@ -17257,7 +17257,7 @@ Lc4b38:	; 800C4B38
 800C4B3C	nop
 800C4B40	lui    at, $8016
 [AT + 3c74] = w(V0);
-800C4B48	jal    func43d3c [$80043d3c]
+800C4B48	jal    system_psyq_set_disp_mask [$80043d3c]
 A0 = 0;
 
 Lc4b50:	; 800C4B50
@@ -18770,7 +18770,7 @@ A0 = A0 << 03;
 800C63E8	lwc2   a2, $0000(s2)
 T4 = w[S2 + 000c];
 800C63F0	nop
-800C63F4	mtc2   t4,l11l12
+IR0 = T4;
 800C63F8	nop
 800C63FC	nop
 800C6400	gte_func19t8,r11r12
@@ -27183,13 +27183,13 @@ V0 = w[T4 + 0000];
 V1 = w[T4 + 0004];
 800D7E24	add    v0, v0, t0
 800D7E28	add    v1, v1, t1
-800D7E2C	mtc2   v0,r11r12
-800D7E30	mtc2   v1,r13r21
+VXY0 = V0;
+VZ0 = V1;
 V0 = w[T5 + 0000];
 V1 = w[T5 + 0004];
 800D7E3C	add    v0, v0, t0
 800D7E40	add    v1, v1, t1
-800D7E44	mtc2   v0,r22r23
+VXY1 = V0;
 800D7E48	mtc2   v1,r31r32
 V0 = w[T6 + 0000];
 V1 = w[T6 + 0004];
@@ -27301,7 +27301,7 @@ V1 = S0 & 0010;
 V1 = S2 & ffff;
 800D7FDC	beq    v1, zero, Ld8028 [$800d8028]
 800D7FE0	nop
-800D7FE4	mtc2   v1,l11l12
+IR0 = V1;
 800D7FE8	mtc2   v0,try
 800D7FEC	nop
 800D7FF0	nop
@@ -27354,13 +27354,13 @@ V0 = w[T4 + 0000];
 V1 = w[T4 + 0004];
 800D8080	add    v0, v0, t0
 800D8084	add    v1, v1, t1
-800D8088	mtc2   v0,r11r12
-800D808C	mtc2   v1,r13r21
+VXY0 = V0;
+VZ0 = V1;
 V0 = w[T5 + 0000];
 V1 = w[T5 + 0004];
 800D8098	add    v0, v0, t0
 800D809C	add    v1, v1, t1
-800D80A0	mtc2   v0,r22r23
+VXY1 = V0;
 800D80A4	mtc2   v1,r31r32
 V0 = w[T6 + 0000];
 V1 = w[T6 + 0004];
@@ -27400,8 +27400,8 @@ V0 = w[T7 + 0000];
 V1 = w[T7 + 0004];
 800D8130	add    v0, v0, t0
 800D8134	add    v1, v1, t1
-800D8138	mtc2   v0,r11r12
-800D813C	mtc2   v1,r13r21
+VXY0 = V0;
+VZ0 = V1;
 800D8140	mfc2   t0,l33
 800D8144	mfc2   t1,rbk
 800D8148	mfc2   t2,gbk
@@ -27490,7 +27490,7 @@ V1 = S0 & 0010;
 V1 = S2 & ffff;
 800D8278	beq    v1, zero, Ld82c4 [$800d82c4]
 800D827C	nop
-800D8280	mtc2   v1,l11l12
+IR0 = V1;
 800D8284	mtc2   v0,try
 800D8288	nop
 800D828C	nop

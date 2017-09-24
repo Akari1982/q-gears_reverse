@@ -1,17 +1,4 @@
-﻿4523 (17699) -> 801B0000 BATTLE/BATTLE.X
-4563 (17763) -> 801C0000 BATTLE/BATINI.X
-458a (17802) -> 801C0000 BATTLE/SCENE.BIN (part)
-init data, after we copy coords for all enemy we load camera data
-45f8 (17912) -> 800698F0 STAGE1/CAMDAT0.LZS -> 801A0000
-we read field ID and load field after that
-48D0 (18640) -> 800698F0 STAGE1/STAGE09.LZS -> 801B0000
-6200 (25088) -> 800698F0 ENEMY/ENEMY016.LZS -> 801B0000
-755e (30046) -> 800698F0 ENEMY6/SEFFECT.LZS
-(80067) -> CLOUD.LZS
-
-
-
-////////////////////////////////
+﻿////////////////////////////////
 // 800A1160
 // seems like total battle cycle
 
