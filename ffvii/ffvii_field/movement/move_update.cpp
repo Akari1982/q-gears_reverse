@@ -534,7 +534,7 @@ if (number_of_models > 0)
                     [SP + 18] = w(V0);
 
                     A0 = A1 * A1 + A0 * A0 + V0 * V0;
-                    system_square_root;
+                    system_square_root();
 
                     [80074EA4 + S2 * 84 + 30] = h(V0 * 4);
                     [80074EA4 + S2 * 84 + 32] = h(0);

@@ -32520,72 +32520,32 @@ SP = SP + 0008;
 // func395c8
 800395C8-80039640
 ////////////////////////////////
-
-
-
-////////////////////////////////
 // func39644
 80039644-800396BC
-////////////////////////////////
-
-
-
 ////////////////////////////////
 // func396c0
 800396C0-80039738
 ////////////////////////////////
-
-
-
-////////////////////////////////
 // func3973c
 8003973C-800397C4
-////////////////////////////////
-
-
-
 ////////////////////////////////
 // func397c8
 800397C8-8003984C
 ////////////////////////////////
-
-
-
-////////////////////////////////
 // func39850
 80039850-800398E8
-////////////////////////////////
-
-
-
 ////////////////////////////////
 // func398ec
 800398EC-800399CC
 ////////////////////////////////
-
-
-
-////////////////////////////////
 // func399d0
 800399D0-80039A70
-////////////////////////////////
-
-
-
 ////////////////////////////////
 // system_get_sin
 80039A74-80039AAC
 ////////////////////////////////
-
-
-
-////////////////////////////////
 // func39ab0
 80039AB0-80039B3C
-////////////////////////////////
-
-
-
 ////////////////////////////////
 // system_get_cos
 80039B40-80039BDC
@@ -32834,18 +32794,15 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// func39edc
+// system_gte_init_geom
 80039EDC-80039F58
 ////////////////////////////////
 // system_square_root
-80039F5C-80039FDC
+80039F5C-80039FE8
 ////////////////////////////////
 
 
 
-80039FE0	nop
-80039FE4	nop
-80039FE8	nop
 80039FEC	mtc2   a0,zsf4
 80039FF0	nop
 80039FF4	nop
@@ -33191,17 +33148,15 @@ T5 = w[SP + 0010];
 8003A590	jr     ra 
 8003A594	nop
 
-////////////////////////////////////////////////////////
+
+
+////////////////////////////////
 // func3a59c
 8003A59C-8003A62C
-////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////
+////////////////////////////////
 // system_transformation_data_multiply
 8003A63C-8003A798
-////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
@@ -33882,19 +33837,17 @@ T1 = T1 | T7;
 V0 = A0;
 8003B160	jr     ra 
 8003B164	nop
-
 8003B168	nop
 
 
 
 ////////////////////////////////
 // system_matrixes_multiply
-8003B16C-8003B274
+8003B16C-8003B278
 ////////////////////////////////
 
 
 
-8003B278	nop
 T0 = w[A0 + 0000];
 T1 = w[A0 + 0004];
 T2 = w[A0 + 0008];
@@ -33920,41 +33873,13 @@ V0 = A2;
 
 ////////////////////////////////
 // system_matrix_vector_multiply
-8003B2CC-8003B324
-////////////////////////////////
-
-
-
-8003B328	nop
-
-
-
+8003B2CC-8003B328
 ////////////////////////////////
 // system_copy_vector_to_matrix_translation
-8003B32C-8003B34C
-////////////////////////////////
-
-
-
-8003B350	nop
-8003B354	nop
-8003B358	nop
-
-
-
+8003B32C-8003B358
 ////////////////////////////////
 // system_scale_matrix_by_vector
-8003B35C-8003B47C
-////////////////////////////////
-
-
-
-8003B480	nop
-8003B484	nop
-8003B488	nop
-
-
-
+8003B35C-8003B488
 ////////////////////////////////
 // system_set_rotation_matrix_to_GTE
 8003B48C-8003B4B8
@@ -34128,10 +34053,10 @@ OFY = A1;
 8003B6D8	nop
 
 
-//////////////////////////////////////////////////////////
-system_set_gte_mac2
+////////////////////////////////
+// system_set_gte_mac2
 8003B6DC-8003B6E4
-//////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
@@ -34384,10 +34309,10 @@ T2 = w[A0 + 0008];
 
 
 
-///////////////////////////////////////////////////////
+////////////////////////////////
 // OuterProduct0
 8003BA68-8003BABC
-///////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
@@ -35769,7 +35694,7 @@ V1 = w[V1 + 1540];
 V0 = w[V0 + 04e0];
 8003D774	nop
 [V1 + 0000] = w(V0);
-8003D77C	jal    system_exit_critical_section [$80042b00]
+8003D77C	jal    system_bios_exit_critical_section [$80042b00]
 8003D780	nop
 8003D784	j      L3d790 [$8003d790]
 V0 = S0;
@@ -38040,7 +37965,7 @@ SP = SP + 0018;
 func408f8:	; 800408F8
 800408F8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80040900	jal    system_enter_critical_section [$80042af0]
+80040900	jal    system_bios_enter_critical_section [$80042af0]
 80040904	nop
 80040908	jal    func3e28c [$8003e28c]
 A0 = 0;
@@ -38054,7 +37979,7 @@ V0 = w[V0 + 194c];
 V0 = w[V0 + 1958];
 80040930	nop
 [V0 + 0000] = b(0);
-80040938	jal    system_exit_critical_section [$80042b00]
+80040938	jal    system_bios_exit_critical_section [$80042b00]
 8004093C	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -40621,10 +40546,10 @@ T1 = 0020;
 
 
 ////////////////////////////////
-// system_enter_critical_section
+// system_bios_enter_critical_section
 80042AF0-80042AFC
 ////////////////////////////////
-// system_exit_critical_section
+// system_bios_exit_critical_section
 80042B00-80042B0C
 ////////////////////////////////
 
@@ -46731,7 +46656,7 @@ S0 = A0;
 [SP + 0014] = w(RA);
 80048A00	jal    system_bios_change_clear_pad [$80042ba0]
 A0 = 0;
-80048A08	jal    system_enter_critical_section [$80042af0]
+80048A08	jal    system_bios_enter_critical_section [$80042af0]
 80048A0C	nop
 80048A10	jal    func48aac [$80048aac]
 A0 = S0;
@@ -46739,7 +46664,7 @@ A0 = S0;
 80048A1C	nop
 80048A20	jal    func48bec [$80048bec]
 80048A24	nop
-80048A28	jal    system_exit_critical_section [$80042b00]
+80048A28	jal    system_bios_exit_critical_section [$80042b00]
 80048A2C	nop
 RA = w[SP + 0014];
 S0 = w[SP + 0010];
@@ -46749,13 +46674,13 @@ SP = SP + 0018;
 
 80048A44	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80048A4C	jal    system_enter_critical_section [$80042af0]
+80048A4C	jal    system_bios_enter_critical_section [$80042af0]
 80048A50	nop
 80048A54	jal    func48abc [$80048abc]
 80048A58	nop
 80048A5C	jal    system_bios_change_clear_pad [$80042ba0]
 A0 = 0;
-80048A64	jal    system_exit_critical_section [$80042b00]
+80048A64	jal    system_bios_exit_critical_section [$80042b00]
 80048A68	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -46829,7 +46754,7 @@ L48b2c:	; 80048B2C
 func48b34:	; 80048B34
 80048B34	lui    at, $8006
 [AT + 2ee0] = w(RA);
-80048B3C	jal    system_enter_critical_section [$80042af0]
+80048B3C	jal    system_bios_enter_critical_section [$80042af0]
 80048B40	nop
 T2 = 00b0;
 80048B48	jalr   t2 ra
@@ -46883,7 +46808,7 @@ loop48bd8:	; 80048BD8
 func48bec:	; 80048BEC
 80048BEC	lui    at, $8006
 [AT + 2ee0] = w(RA);
-80048BF4	jal    system_enter_critical_section [$80042af0]
+80048BF4	jal    system_bios_enter_critical_section [$80042af0]
 80048BF8	nop
 T2 = 00b0;
 80048C00	jalr   t2 ra
@@ -46930,7 +46855,7 @@ loop48c60:	; 80048C60
 func48c7c:	; 80048C7C
 80048C7C	lui    at, $8006
 [AT + 2ef0] = w(RA);
-80048C84	jal    system_enter_critical_section [$80042af0]
+80048C84	jal    system_bios_enter_critical_section [$80042af0]
 80048C88	nop
 T2 = 00b0;
 80048C90	jalr   t2 ra
@@ -46949,7 +46874,7 @@ V0 = V0 + 0004;
 [V0 + 006c] = w(V1);
 80048CC0	jal    system_bios_flush_cache [$800429a0]
 80048CC4	nop
-80048CC8	jal    system_exit_critical_section [$80042b00]
+80048CC8	jal    system_bios_exit_critical_section [$80042b00]
 80048CCC	nop
 80048CD0	lui    ra, $8006
 RA = w[RA + 2ef0];

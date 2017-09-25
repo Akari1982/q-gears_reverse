@@ -11,7 +11,6 @@
 25  mtc2 GPR, ofy       - MAC1      r/w     MAC1            1,31,0          Sum of products value 1
 26  mtc2 GPR, h         - MAC2      r/w     MAC2            1,31,0          Sum of products value 1
 27  mtc2 GPR, dqa       - MAC3      r/w     MAC3            1,31,0          Sum of products value 1
-30  mtc2 GPR, zsf4      - LZCS      w       LZCS            1,31,0          Leading zero count source data. (Note 4)
 
 // data registers
 0   lwc2 zero, MEMORY   - VXY0      r/w     VY0     VX0     1,3,12 / 1,15,0 Vector 0 X and Y
@@ -21,9 +20,6 @@
 4   lwc2 a0, MEMORY     - VXY2      r/w     VY2     VX2     1,3,12 / 1,15,0 Vector 2 X and Y
 5   lwc2 a1, MEMORY     - VZ2       r/w     0       VZ2     1,3,12 / 1,15,0 Vector 2 Z
 6   lwc2 a2, MEMORY     - RGB       r/w     Code, RG, B     8 bits for each RGB value. Code is passed, but not used in calculation
-9   lwc2 t1, MEMORY     - IR1       r/w     Sign    IR3     1,3,12          Intermediate value 1. Format may differ
-10  lwc2 t2, MEMORY     - IR2       r/w     Sign    IR3     1,3,12          Intermediate value 2. Format may differ
-11  lwc2 t3, MEMORY     - IR3       r/w     Sign    IR3     1,3,12          Intermediate value 3. Format may differ
 17  lwc2 s1, MEMORY     - SZ1       r/w     0       SZ1     0,16,0          Screen Z FIFO
 18  lwc2 s2, MEMORY     - SZ2       r/w     0       SZ2     0,16,0          Screen Z FIFO
 19  lwc2 s3, MEMORY     - SZ3       r/w     0       SZ3     0,16,0          Screen Z FIFO
@@ -73,7 +69,6 @@ GET REGISTERS
 25  mfc2 GPR, ofy       - MAC1      r/w     MAC1            1,31,0          Sum of products value 1
 26  mfc2 GPR, h         - MAC2      r/w     MAC2            1,31,0          Sum of products value 1
 27  mfc2 GPR, dqa       - MAC3      r/w     MAC3            1,31,0          Sum of products value 1
-31  mfc2 GPR, flag      - LZCR      r       LZCR            6,6,0           Leading zero count result (Note 4)
 
 // data registers
 9   swc2 t1, MEMORY     - IR1       r/w     Sign    IR1     1,3,12          Intermediate value 1. Format may differ
@@ -87,16 +82,8 @@ GET REGISTERS
 19  swc2 s3, MEMORY     - SZ3       r/w     0       SZ3     0,16, 0         Screen Z FIFO
 22  swc2 s6, MEMORY     - RGB2      r/w     CD2, B2G0, R2   8 bits each     CD2 is the bit pattern of currently executed function
 24  swc2 t8, MEMORY     - MAC0      r/w     MAC0            1,31,0          Sum of products value 1
-25  swc2 t9, MEMORY     - MAC1      r/w     MAC1            1,31,0          Sum of products value 1
-26  swc2 k0, MEMORY     - MAC2      r/w     MAC2            1,31,0          Sum of products value 1
-27  swc2 k1, MEMORY     - MAC3      r/w     MAC3            1,31,0          Sum of products value 1
 
 // control registers
-0   cfc2 GPR, vxy0      - R11R12    Rotation matrix elements 1 to 1, 1 to 2
-1   cfc2 GPR, vz0       - R13R21    Rotation matrix elements 1 to 3, 2 to 1
-2   cfc2 GPR, vxy1      - R22R23    Rotation matrix elements 2 to 2, 2 to 3
-3   cfc2 GPR, vz1       - R31R32    Rotation matrix elements 3 to 1, 3 to 2
-4   cfc2 GPR, vxy2      - R33       Rotation matrix elements 3 to 3
 5   cfc2 GPR, vz2       - TRX       Translation vector X
 6   cfc2 GPR, rgb       - TRY       Translation vector Y
 7   cfc2 GPR, otz       - TRZ       Translation vector Z
@@ -131,7 +118,6 @@ gte_func26t8,r11r12     gte_AVSZ3       Average of three Z values.
 
 gte_func27t0,r11r12     AVSZ4           Average of four Z values
 gte_func27t8,r11r12     gte_op12        Outer product.
-gte_func27s0,r11r12     OP              Outer Product
 
 gte_func28t8,r11r12     gte_gpf12       General purpose interpolation.
 gte_func28s0,r11r12     gte_GPF         General Purpose Interpolation.

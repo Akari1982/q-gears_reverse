@@ -1,12 +1,104 @@
 ////////////////////////////////
-system_set_gte_mac2
-a0 - value to be set in GTE mac2 register
+// system_gte_init_geom()
+
+[8004b658] = w(RA);
+
+func3cd9c(); // patch C(06h) - ExceptionHandler()
+
+RA = w[8004b658];
+
+SR = 40000000 | SR; // CU2 COP2 Enable (0=Disable, 1=Enable) (GTE in PSX)
+ZSF3 = 155;
+ZSF4 = 100;
+H = 3e8;
+DQA = -1062;
+DQB = 140;
+OFX = 0;
+OFY = 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_perspective_transformation_on_4_points
+// system_square_root()
+
+// count number of leading zeroes
+LZCS = A0;
+zeroes = LZCR;
+
+// square root from 0 - 0
+if( zeroes == 20 )
+{
+    return 0;
+}
+
+T2 = zeroes & fffffffd;
+T1 = (13 - T2) >> 1;
+
+if( ( T2 - 18 ) > 0 )
+{
+    T4 = A0 << (T2 - 18);
+}
+else
+{
+    T4 = A0 >> (18 - T2);
+}
+
+// 00 - 1000    с0 - 1fef
+T5 = h[8004b668 + (T4 - 40) * 2];
+
+if( T1 >= 0 )
+{
+    return T5 << T1;
+}
+else
+{
+    return T5 >> (0 - T1);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cd9c()
+// patch C(06h) - ExceptionHandler()
+
+[80062ed0] = w(RA);
+
+system_bios_enter_critical_section();
+
+T2 = 00b0;
+T1 = 0056;
+8003CDB0	jalr   t2 ra // B(56h) GetC0Table()
+
+V0 = w[V0 + 18];
+T2 = 8003ce04; // new ExceptionHandler() func
+loop3cdcc:	; 8003CDCC
+    [V0] = w(w[T2]);
+    V0 = V0 + 4;
+    T2 = T2 + 4;
+8003CDD8	bne    t2, 8003ce3c, loop3cdcc [$8003cdcc]
+
+system_bios_flush_cache();
+
+system_bios_exit_critical_section();
+
+RA = w[80062ed0];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_set_gte_mac2()
+
+H = A0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_perspective_transformation_on_4_points()
+
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4]
 VXY1 = w[A1 + 0];
@@ -36,7 +128,8 @@ return OTZ;
 
 
 ////////////////////////////////
-// system_matrix_vector_multiply
+// system_matrix_vector_multiply()
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -55,7 +148,8 @@ return A2;
 
 
 ////////////////////////////////
-// system_set_far_color_to_GTE
+// system_set_far_color_to_GTE()
+
 RFC = w(A0 << 4);
 GFC = w(A1 << 4);
 BFC = w(A2 << 4);
@@ -64,7 +158,8 @@ BFC = w(A2 << 4);
 
 
 ////////////////////////////////
-// system_call_rtv0tr_from_GTE
+// system_call_rtv0tr_from_GTE()
+
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
 gte_rtv0tr; // v0 * rotmatrix + tr vector.
@@ -80,7 +175,8 @@ return FLAG;
 
 
 ////////////////////////////////
-// system_set_translation_vector_to_GTE
+// system_set_translation_vector_to_GTE()
+
 TRX = w[A0 + 14];
 TRY = w[A0 + 18];
 TRZ = w[A0 + 1c];
@@ -89,7 +185,8 @@ TRZ = w[A0 + 1c];
 
 
 ////////////////////////////////
-// system_set_rotation_matrix_to_GTE
+// system_set_rotation_matrix_to_GTE()
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -100,7 +197,7 @@ R33 = w[A0 + 10];
 
 
 ////////////////////////////////
-// system_matrixes_multiply
+// system_matrixes_multiply()
 // multiply matrixes A0 and A1 and store result to A1
 
 // set rotation matrix
@@ -141,7 +238,7 @@ return A1;
 
 
 ////////////////////////////////
-// system_transformation_data_multiply
+// system_transformation_data_multiply()
 // multiply matrixes and vector A0 and A1 and store result to A2
 
 // set rotation matrix
@@ -191,54 +288,9 @@ return A2;
 
 
 
-////////////////////////////////////////////////////////
-// system_square_root
-8003A59C	mtc2   a0,zsf4
-8003A5A8	mfc2   v0,flag
+////////////////////////////////
+// system_normalize_vector_T0_T1_T2()
 
-if (V0 != 20)
-{
-    T0 = V0 & 1;
-    T2 = V0 & FFFFFFFD
-    T1 = 13;
-    T1 = T1 - T2;
-    T1 = T1 >> 1;
-    T3 = T2 + FFE8 (-18);
-
-    if (T3 > 0)
-    {
-        T4 = T3 << A0;
-    }
-    else
-    {
-        T3 = 18 - T2;
-        T4 = T3 >> A0;
-    }
-
-    8003A5F0	addi   t4, t4, $ffc0 (=-$40)
-    8003A5F4	sll    t4, t4, $01
-    8003A5F8	lui    t5, $8005
-    8003A5FC	addu   t5, t5, t4
-    8003A600	lh     t5, $b668(t5)
-
-    if (T1 >= 0)
-    {
-        V0 = T1 << T5;
-        return V0;
-    }
-
-    T1 = 0 - T1;
-    V0 = T1 >> T5;
-    return V0;
-}
-
-return 0;
-////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////
-// system_normalize_vector_T0_T1_T2
 IR1 = T0;
 IR2 = T1;
 IR3 = T2;
@@ -280,31 +332,32 @@ gte_GPF; // General Purpose Interpolation. IR0 - scale
 T0 = MAC1 >> T6;
 T1 = MAC2 >> T6;
 T2 = MAC3 >> T6;
-////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-///////////////////////////////////////////////////////
-// OuterProduct0
-A0 - first vector address
-A1 - second vector address
-A2 - outer product address
+////////////////////////////////
+// OuterProduct0()
 
-VXY0 = [A0 + 0]
-VXY1 = [A0 + 4]
-VXY2 = [A0 + 8]
-T1 = [A1 + 0]
-T2 = [A1 + 4]
-T3 = [A1 + 8]
+// save rot matrix
+T5 = R11R12;
+T6 = R22R23;
+T7 = R33;
 
-[R11R12,R22R23,R33] vector 1
-[IR1,IR2,IR3]       vector 2
-MAC1 = R22R23*IR3 - R33   *IR2
-MAC2 = R33   *IR1 - R11R12*IR3
-MAC3 = R11R12*IR2 - R22R23*IR1
-[MAC1,MAC2,MAC3] outer product
+R11R12 = w[A0 + 0];
+R22R23 = w[A0 + 4];
+R33 = w[A0 + 8];
 
-[A2 + 0] = T9;
-[A2 + 4] = K0;
-[A2 + 8] = K1;
-///////////////////////////////////////////////////////
+IR1 = w[A1 + 0];
+IR2 = w[A1 + 4];
+IR3 = w[A1 + 8];
+gte_OP(); // Outer Product
+[A2 + 0] = w(MAC1);
+[A2 + 4] = w(MAC2);
+[A2 + 8] = w(MAC3);
+
+// restore rot matrix
+R11R12 = T5;
+R22R23 = T6;
+R33 = T7;
+////////////////////////////////

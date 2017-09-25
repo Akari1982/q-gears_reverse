@@ -242,57 +242,7 @@ system_psyq_set_graph_debug();
 A0 = 0;
 system_psyq_set_disp_mask();
 
-func39edc(); // init gte
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func39edc()
-
-[8004b658] = w(RA);
-
-func3cd9c(); // patch C(06h) - ExceptionHandler()
-
-RA = w[8004b658];
-
-SR = 40000000 | SR; // CU2 COP2 Enable (0=Disable, 1=Enable) (GTE in PSX)
-ZSF3 = 155;
-ZSF4 = 100;
-H = 3e8;
-DQA = -1062;
-DQB = 140;
-OFX = 0;
-OFY = 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3cd9c()
-// patch C(06h) - ExceptionHandler()
-
-[80062ed0] = w(RA);
-
-system_enter_critical_section();
-
-T2 = 00b0;
-T1 = 0056;
-8003CDB0	jalr   t2 ra // B(56h) GetC0Table()
-
-V0 = w[V0 + 18];
-T2 = 8003ce04; // new ExceptionHandler() func
-loop3cdcc:	; 8003CDCC
-    [V0] = w(w[T2]);
-    V0 = V0 + 4;
-    T2 = T2 + 4;
-8003CDD8	bne    t2, 8003ce3c, loop3cdcc [$8003cdcc]
-
-system_bios_flush_cache();
-
-system_exit_critical_section();
-
-RA = w[80062ed0];
+system_gte_init_geom();
 ////////////////////////////////
 
 
@@ -427,7 +377,7 @@ if( w[8004aaf0] == 0 )
 {
     [8004aaf0] = w(1);
 
-    system_enter_critical_section();
+    system_bios_enter_critical_section();
 
     A0 = 8003688c;
     func36fd8();
@@ -442,7 +392,7 @@ if( w[8004aaf0] == 0 )
     A0 = V0;
     system_bios_enable_event();
 
-    system_exit_critical_section();
+    system_bios_exit_critical_section();
 }
 ////////////////////////////////
 
@@ -774,7 +724,7 @@ if( hu[800504ac] == 0 )
     return 0;
 }
 
-system_enter_critical_section();
+system_bios_enter_critical_section();
 
 V0 = w[8005153c]; // 1f801074 Interrupt mask register
 [800604de] = h(hu[V0]);
@@ -858,7 +808,7 @@ system_bios_cd_remove();
 
 S0 = 800504ac;
 
-system_exit_critical_section();
+system_bios_exit_critical_section();
 
 return S0;
 ////////////////////////////////

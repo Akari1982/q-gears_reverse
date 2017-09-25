@@ -452,7 +452,7 @@ T1 = 000a;
 
 
 ////////////////////////////////
-// system_enter_critical_section()
+// system_bios_enter_critical_section()
 // SYS(01h) - EnterCriticalSection() ;syscall with r4=01h
 // Disables interrupts by clearing SR (cop0r12) Bit 2 and 10
 // (of which, Bit2 gets copied to Bit0 once when returning
@@ -465,7 +465,7 @@ T1 = 000a;
 
 
 ////////////////////////////////
-// system_exit_critical_section()
+// system_bios_exit_critical_section()
 // SYS(02h) - ExitCriticalSection() ;syscall with r4=02h
 // Enables interrupts by set SR (cop0r12) Bit 2 and 10
 // (of which, Bit2 gets copied to Bit0 once when returning from

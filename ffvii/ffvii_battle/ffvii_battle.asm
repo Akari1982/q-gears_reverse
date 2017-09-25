@@ -28493,7 +28493,7 @@ S5 = A3;
 [SP + 001c] = w(S1);
 800D9220	jal    func1c980 [$8001c980]
 S2 = 0001;
-800D9228	jal    func39edc [$80039edc]
+800D9228	jal    system_gte_init_geom [$80039edc]
 800D922C	nop
 A0 = S3 >> 1f;
 A0 = S3 + A0;
