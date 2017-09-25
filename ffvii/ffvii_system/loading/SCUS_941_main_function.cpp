@@ -2,23 +2,23 @@
 // func33b70()
 
 loop33b78:	; 80033B78
-    func3dbd0()
+    system_psyq_cd_init();
 80033B80	beq    v0, zero, loop33b78 [$80033b78]
 
 [80071a60] = w(0);
 
 A0 = 0;
-80033B90	jal    func3dda4 [$8003dda4]
+func3dda4(); // set text debug to 0
 
-80033B98	jal    func34f3c [$80034f3c]
+func34f3c(); // init MDEC
 
-A0 = e;
-A1 = 80;
-A2 = 0;
-80033BA8	jal    func3e100 [$8003e100]
+A0 = e; // CdlSetmode Set basic mode.
+A1 = 80; // CdlModeSpeed.
+A2 = 0; // 0: Normal speed.
+func3e100();
 
 A0 = 3;
-80033BB0	jal    func3cedc [$8003cedc]
+func3cedc();
 
 80033BB8	jal    func34350 [$80034350]
 
@@ -30,33 +30,167 @@ A0 = 3;
 
 
 ////////////////////////////////
-// func3dbd0()
+// func3cedc()
 
-S0 = 4;
+V0 = w[8005049c];
+V1 = w[800504a0];
+S0 = w[V0];
+S1 = (w[V1] - w[800504a4]) & ffff;
 
-loop3dbe0:	; 8003DBE0
-    A0 = 1;
-    func3dd18();
+if( A0 < 0 )
+{
+    return w[80051568];
+}
 
-    if( V0 == 1 )
+if( A0 == 1 )
+{
+    return S1;
+}
+
+if( A0 > 0 )
+{
+    V0 = w[800504a8] - 1 + A0;
+}
+else
+{
+    V0 = w[800504a8];
+}
+
+A1 = 0;
+if( A0 > 0 )
+{
+    A1 = A0 - 1;
+}
+
+A0 = V0;
+func3d024();
+
+V0 = w[8005049c];
+S0 = w[V0];
+
+A0 = w[80051568] + 1;
+A1 = 1;
+func3d024();
+
+if( S0 & 00080000 )
+{
+    V1 = w[8005049c];
+    if( ( S0 ^ w[V1] ) > 0 )
     {
-        A0 = 8003dc60;
-        8003DBFC	jal    func3de6c [$8003de6c]
+        loop3cfcc:	; 8003CFCC
+            V0 = (S0 ^ w[V1]) & 80000000;
+        8003CFDC	beq    v0, zero, loop3cfcc [$8003cfcc]
+    }
+}
 
-        A0 = 8003dc88;
-        8003DC0C	jal    func3de84 [$8003de84]
+[800504a8] = w(w[80051568]);
+V1 = w[800504a0];
+[800504a4] = w(w[V1]);
 
-        A0 = 8003dcb0;
-        8003DC1C	jal    func41efc [$80041efc]
+return S1;
+////////////////////////////////
 
-        return 1;
+
+
+////////////////////////////////
+// func3d024()
+
+A1 = A1 << 0f;
+wait = A1;
+if( w[80051568] < A0 )
+{
+    loop3d04c:	; 8003D04C
+        wait = wait - 1;
+        if( wait == -1 )
+        {
+            A0 = 800105a8; // "VSync: timeout"
+            system_bios_std_out_puts();
+
+            A0 = 0;
+            system_bios_change_clear_pad();
+
+            A0 = 3;
+            A1 = 0;
+            system_bios_change_clear_r_cnt();
+
+            return;
+        }
+
+        V0 = w[80051568] < A0;
+    8003D0A8	bne    v0, zero, loop3d04c [$8003d04c]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3e100()
+
+cdl_command = A0;
+S1 = A1;
+S2 = A2;
+
+S5 = w[80051628];
+
+S0 = 3;
+loop3e150:	; 8003E150
+    [80051628] = w(0);
+
+    if( cdl_command != 1 )
+    {
+        if( bu[80051638] & 10 )
+        {
+            A0 = 1; // CdlNop
+            A1 = 0;
+            A2 = 0;
+            A3 = 0;
+            func3ef30(); // exec command
+        }
     }
 
-    S0 = S0 - 1;
-8003DC30	bne    s0, -1, loop3dbe0 [$8003dbe0]
+    8003E18C	beq    s1, zero, L3e1bc [$8003e1bc]
 
-A0 = 80010650; // "CdInit: Init failed"
-system_bios_printf();
+    V0 = w[800515a8 + cdl_command * 4];
+
+    8003E19C	beq    v0, zero, L3e1bc [$8003e1bc]
+
+    A0 = 2; // CdlSetloc Set the seek target position.
+    A1 = S1;
+    A2 = S2;
+    A3 = 0;
+    func3ef30(); // exec command
+
+    8003E1B4	bne    v0, zero, L3e1e0 [$8003e1e0]
+
+    L3e1bc:	; 8003E1BC
+    [80051628] = w(S5);
+
+    A0 = cdl_command & ff;
+    A1 = S1;
+    A2 = S2;
+    A3 = 0;
+    func3ef30(); // exec command
+
+    8003E1D8	beq    v0, zero, L3e1f8 [$8003e1f8]
+    V0 = 0;
+
+    L3e1e0:	; 8003E1E0
+    S0 = S0 - 1;
+8003E1E8	bne    s0, -1, loop3e150 [$8003e150]
+
+[80051628] = w(S5);
+
+L3e1f8:	; 8003E1F8
+if( V0 == 0 )
+{
+    A0 = 0;
+    A1 = S2;
+    system_psyq_cd_sync();
+
+    V0 = V0 ^ 0002;
+    V0 = V0 < 0001;
+    return V0;
+}
 
 return 0;
 ////////////////////////////////
@@ -64,156 +198,135 @@ return 0;
 
 
 ////////////////////////////////
-// func3dd18()
-
-S0 = A0;
-
-if( S0 == 2 )
-{
-    func3f5f4();
-    return 1;
-}
-
-func3f644();
-
-if( V0 != 0 )
-{
-    return 0;
-}
-
-if( S0 != 1 )
-{
-    return 1;
-}
-
-8003DD5C	jal    func3f500 [$8003f500]
-
-if( V0 != 0 )
-{
-    return 0;
-}
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3f644()
-
-A0 = 8001089c; // "CD_init:"
-system_bios_std_out_puts();
-
-A0 = 800108a8; // "addr=%08x"
-A1 = 80051908;
-system_bios_printf();
-
-[80051649] = b(0);
-[80051648] = b(0);
-[8005162c] = w(0);
-[80051628] = w(0);
-[8005163c] = w(0);
-[80051638] = w(0);
-
-func3d0c0();
-
-A0 = 2;
-A1 = 8003faac;
-func3d0f0();
-
-V1 = w[800518ec];
-[V1] = b(1);
-
-V0 = w[800518f8];
-V0 = bu[V0] & 0007;
-A0 = 1;
-8003F6E4	beq    v0, zero, L3f740 [$8003f740]
-
-
-loop3f6f0:	; 8003F6F0
-    V0 = w[800518ec];
-    [V0] = b(A0);
-    V0 = w[800518f8];
-    [V0] = b(7);
-    V0 = w[800518f4];
-    [V0] = b(7);
-    V0 = w[800518f8];
-    V0 = bu[V0] & 7;
-8003F738	bne    v0, zero, loop3f6f0 [$8003f6f0]
-
-L3f740:	; 8003F740
-A0 = 0 | 0001;
-A1 = 0;
-A2 = 0;
-
-[80051906] = b(0);
-V1 = bu[80051906];
-V0 = 80051905;
-[V0] = b(V1);
-V1 = w[800518ec];
-V0 = 2;
-[80051904] = b(V0);
-[V1] = b(0);
-V0 = w[800518f8];
-A3 = 0;
-[V0] = b(0);
-V1 = w[800518fc];
-V0 = 1325;
-[V1] = w(V0);
-8003F7A0	jal    func3ef30 [$8003ef30]
-
-V0 = w[80051638] & 10;
-if( V0 != 0 )
-{
-    A0 = 1;
-    A1 = 0;
-    A2 = 0;
-    A3 = 0;
-    8003F7C8	jal    func3ef30 [$8003ef30]
-}
-
-A0 = a;
-A1 = 0;
-A2 = 0;
-8003F7DC	jal    func3ef30 [$8003ef30]
-A3 = 0;
-8003F7E4	bne    v0, zero, L3f820 [$8003f820]
-8003F7E8	addiu  v0, zero, $ffff (=-$1)
-
-A0 = c;
-A1 = 0;
-A2 = 0;
-8003F7F8	jal    func3ef30 [$8003ef30]
-A3 = 0;
-8003F800	bne    v0, zero, L3f820 [$8003f820]
-8003F804	addiu  v0, zero, $ffff (=-$1)
+// func34f3c()
 
 A0 = 0;
-A1 = 0;
-system_psyq_cd_sync();
-
-V0 = V0 ^ 0002;
-V0 = 0 < V0;
-V0 = 0 - V0;
-
-L3f820:	; 8003F820
+func41f14();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f5f4()
+// func41f14()
 
-[8005162c] = w(0);
-[80051628] = w(0);
-[8005163c] = w(0);
-[80051638] = w(0);
+S0 = A0;
+if( S0 == 0 )
+{
+    func3d0c0()
+}
 
-func3d0c0();
+A0 = S0;
+func42168();
+////////////////////////////////
 
-A0 = 2;
-A1 = 8003faac;
-func3d0f0();
+
+
+////////////////////////////////
+// func42168()
+
+if( A0 == 0 )
+{
+    V1 = w[80051b88];
+    [V1] = w(80000000);
+    V0 = w[80051b5c];
+    [V0] = w(0);
+    V0 = w[80051b68];
+    [V0] = w(0);
+    V1 = w[80051b88];
+    [V1 + 0000] = w(60000000);
+
+    A0 = 80051a4c;
+    A1 = 0020;
+    func42270();
+
+    A0 = 80051ad0;
+    A1 = 0020;
+    func42270();
+
+    return V0;
+}
+if( A0 == 1 )
+{
+    V1 = w[80051b88];
+    [V1] = w(80000000);
+    V0 = w[80051b5c];
+    [V0] = w(0);
+    V0 = w[80051b68];
+    [V0] = w(0);
+    V0 = w[80051b68];
+    V1 = w[80051b88];
+    [V1] = w(60000000);
+    return w[V0];
+}
+
+A0 = 80010b10; // "MDEC_rest:bad option(%d)"
+system_bios_printf();
+
+system_bios_exit();
+
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func42270()
+
+S1 = A0;
+S0 = A1;
+
+func42394();
+
+V1 = w[80051b8c];
+[V1] = w(w[V1] | 0088);
+V1 = w[80051b54];
+[V1] = w(S1 + 4);
+V0 = w[80051b58];
+[V0] = w(((S0 >> 05) << 10) | 20);
+V1 = w[80051b84];
+[V1] = w(w[S1]);
+V0 = w[80051b5c];
+[V0] = w(01000201);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func42394()
+
+wait = 100000;
+
+V1 = w[80051b88];
+if( w[V1] & 20000000 )
+{
+    V0 = 0;
+    loop423c4:	; 800423C4
+        wait = wait - 1;
+        if( wait == -1 )
+        {
+            A0 = 80010b2c; // "MDEC_in_sync"
+
+            800423EC	jal    func424c4 [$800424c4]
+
+            return -1;
+        }
+
+        V0 = w[80051b88];
+        V0 = w[V0] & 20000000;
+    80042414	bne    v0, zero, loop423c4 [$800423c4]
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3dda4()
+
+V0 = w[80051634];
+[80051634] = w(A0);
+return V0;
 ////////////////////////////////
 
 

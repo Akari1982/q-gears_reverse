@@ -162,28 +162,28 @@ int main( int argc, char *argv[] )
 
             // mtc mfc
             if( m3 == "R11R12" ) m3 = "VXY0"; // 0
-            if( m3 == "R13R21" ) m3 = "VZ0"; // 1
-            if( m3 == "R22R23" ) m3 = "VXY1"; // 2
-            if( m3 == "L11L12" ) m3 = "IR0"; // 8
-            if( m3 == "L13L21" ) m3 = "IR1"; // 9
-            if( m3 == "L22L23" ) m3 = "IR2"; // 10
-            if( m3 == "L31L32" ) m3 = "IR3"; // 11
-            if( m3 == "ZSF4" ) m3 = "LZCS"; // 30
-            if( m3 == "FLAG" ) m3 = "LZCR"; // 31
+            else if( m3 == "R13R21" ) m3 = "VZ0"; // 1
+            else if( m3 == "R22R23" ) m3 = "VXY1"; // 2
+            else if( m3 == "L11L12" ) m3 = "IR0"; // 8
+            else if( m3 == "L13L21" ) m3 = "IR1"; // 9
+            else if( m3 == "L22L23" ) m3 = "IR2"; // 10
+            else if( m3 == "L31L32" ) m3 = "IR3"; // 11
+            else if( m3 == "ZSF4" ) m3 = "LZCS"; // 30
+            else if( m3 == "FLAG" ) m3 = "LZCR"; // 31
 
             // ctc cfc
-            if( m3 == "VXY0" ) m3 = "R11R12"; // 0
-            if( m3 == "VZ0" ) m3 = "R13R21"; // 1
-            if( m3 == "VXY1" ) m3 = "R22R23"; // 2
-            if( m3 == "VZ1" ) m3 = "R31R32"; // 3
-            if( m3 == "VXY2" ) m3 = "R33"; // 4
-            if( m3 == "MAC0" ) m3 = "OFX"; // 24
-            if( m3 == "MAC1" ) m3 = "OFY"; // 25
-            if( m3 == "MAC2" ) m3 = "H"; // 26
-            if( m3 == "MAC3" ) m3 = "DQA"; // 27
-            if( m3 == "IRGB" ) m3 = "DQB"; // 28
-            if( m3 == "ORGB" ) m3 = "ZSF3"; // 29
-            if( m3 == "LZCS" ) m3 = "ZSF4"; // 30
+            else if( m3 == "VXY0" ) m3 = "R11R12"; // 0
+            else if( m3 == "VZ0" ) m3 = "R13R21"; // 1
+            else if( m3 == "VXY1" ) m3 = "R22R23"; // 2
+            else if( m3 == "VZ1" ) m3 = "R31R32"; // 3
+            else if( m3 == "VXY2" ) m3 = "R33"; // 4
+            else if( m3 == "MAC0" ) m3 = "OFX"; // 24
+            else if( m3 == "MAC1" ) m3 = "OFY"; // 25
+            else if( m3 == "MAC2" ) m3 = "H"; // 26
+            else if( m3 == "MAC3" ) m3 = "DQA"; // 27
+            else if( m3 == "IRGB" ) m3 = "DQB"; // 28
+            else if( m3 == "ORGB" ) m3 = "ZSF3"; // 29
+            else if( m3 == "LZCS" ) m3 = "ZSF4"; // 30
 
             std::stringstream ss;
 
