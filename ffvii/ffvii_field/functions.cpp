@@ -4,40 +4,40 @@
 system_get_current_pad_buttons();
 
 800A2F88	lui    v1, $800a
-800A2F8C	lw     v1, $ac5c(v1)
+V1 = w[V1 + ac5c];
 800A2F90	lui    at, $8011
-800A2F94	sw     v0, $4454(at)
+[AT + 4454] = w(V0);
 800A2F98	lui    at, $800a
-800A2F9C	sw     v0, $ac5c(at)
+[AT + ac5c] = w(V0);
 800A2FA0	lui    at, $800a
-800A2FA4	sw     v1, $ac60(at)
-800A2FA8	xor    v1, v0, v1
-800A2FAC	and    a0, v1, v0
-800A2FB0	nor    v0, zero, v0
-800A2FB4	and    v1, v1, v0
+[AT + ac60] = w(V1);
+V1 = V0 ^ V1;
+A0 = V1 & V0;
+V0 = 0 NOR V0;
+V1 = V1 & V0;
 800A2FB8	lui    at, $800a
-800A2FBC	sw     a0, $ac64(at)
+[AT + ac64] = w(A0);
 800A2FC0	lui    at, $800a
-800A2FC4	sw     v1, $ac68(at)
+[AT + ac68] = w(V1);
 
 system_get_buttons_with_config_remap();
 
 800A2FD0	lui    v1, $800a
-800A2FD4	lw     v1, $ac6c(v1)
+V1 = w[V1 + ac6c];
 800A2FD8	lui    at, $8011
-800A2FDC	sw     v0, $4454(at)
+[AT + 4454] = w(V0);
 800A2FE0	lui    at, $800a
-800A2FE4	sw     v0, $ac6c(at)
+[AT + ac6c] = w(V0);
 800A2FE8	lui    at, $800a
-800A2FEC	sw     v1, $ac70(at)
-800A2FF0	xor    v1, v0, v1
-800A2FF4	and    a0, v1, v0
+[AT + ac70] = w(V1);
+V1 = V0 ^ V1;
+A0 = V1 & V0;
 800A2FF8	lui    at, $800a
-800A2FFC	sw     a0, $ac74(at)
-800A3000	nor    a0, zero, v0
-800A3004	and    v1, v1, a0
+[AT + ac74] = w(A0);
+A0 = 0 NOR V0;
+V1 = V1 & A0;
 800A3008	lui    at, $800a
-800A300C	sw     v1, $ac78(at)
+[AT + ac78] = w(V1);
 ////////////////////////////////
 
 
@@ -47,9 +47,9 @@ system_get_buttons_with_config_remap();
 V0 = bu[8009d70b] & 80;
 
 800AB738	bne    v0, zero, Lab75c [$800ab75c]
-800AB73C	ori    v0, zero, $00ff
+V0 = 00ff;
 800AB740	lui    v0, $800e
-800AB744	lbu    v0, $48d8(v0)
+V0 = bu[V0 + 48d8];
 800AB748	nop
 800AB74C	beq    v0, zero, Lab778 [$800ab778]
 800AB750	addiu  v0, v0, $ffff (=-$1)
@@ -58,152 +58,152 @@ V0 = bu[8009d70b] & 80;
 
 Lab75c:	; 800AB75C
 800AB75C	lui    v1, $800e
-800AB760	lbu    v1, $48d8(v1)
+V1 = bu[V1 + 48d8];
 800AB764	nop
 800AB768	beq    v1, v0, Lab778 [$800ab778]
-800AB76C	addiu  v0, v1, $0001
+V0 = V1 + 0001;
 
 Lab770:	; 800AB770
 800AB770	lui    at, $800e
-800AB774	sb     v0, $48d8(at)
+[AT + 48d8] = b(V0);
 
 Lab778:	; 800AB778
-800AB778	ori    t4, zero, $0001
+T4 = 0001;
 V0 = 800e42d8;
-800AB784	addiu  a3, v0, $0010
-800AB788	addu   t1, v0, zero
-800AB78C	addiu  t0, t1, $0014
-800AB790	addu   a2, zero, zero
+A3 = V0 + 0010;
+T1 = V0;
+T0 = T1 + 0014;
+A2 = 0;
 V0 = bu[800e48d8];
 V1 = h[800965e0]; // manual visible entity
 T3 = V0 >> 2;
 T2 = V1 * 84;
 
 Lab7b4:	; 800AB7B4
-    800AB7B4	lh     v0, $0000(a3)
-    800AB7B8	nop
-    800AB7BC	bne    v0, zero, Lab948 [$800ab948]
-    800AB7C0	sll    v0, t3, $01
-    800AB7C4	addu   v0, v0, t3
-    800AB7C8	sll    v0, v0, $03
-    800AB7CC	lui    v1, $800e
-    800AB7D0	addiu  v1, v1, $42e8
-    800AB7D4	addu   v0, v0, v1
-    800AB7D8	slt    v0, a3, v0
-    800AB7DC	beq    v0, zero, Lab934 [$800ab934]
-    800AB7E0	nop
-    800AB7E4	lui    at, $800e
-    800AB7E8	addiu  at, at, $42ea
-    800AB7EC	addu   at, at, a2
-    800AB7F0	lhu    v0, $0000(at)
-    800AB7F4	lui    at, $800e
-    800AB7F8	addiu  at, at, $42ee
-    800AB7FC	addu   at, at, a2
-    800AB800	sh     t4, $0000(at)
-    800AB804	addiu  v0, v0, $0001
-    800AB808	sh     v0, $0012(t1)
-    800AB80C	ori    v0, zero, $0007
-    800AB810	sh     v0, $0000(a3)
-    800AB814	lui    at, $800e
-    800AB818	addiu  at, at, $42ea
-    800AB81C	addu   at, at, a2
-    800AB820	lh     v0, $0000(at)
-    V1 = w[80074ea4 + T2 + c] >> c; // X
-    800AB834	sll    a1, v0, $01
-    800AB838	addu   a1, a1, v0
-    V0 = bu[800e42ea + A2];
-    A0 = bu[800e0638 + V0];
-    800AB860	andi   a1, a1, $00ff
-    800AB864	sll    v0, a0, $01
-    800AB868	addu   v0, v0, a0
-    800AB86C	sll    v0, v0, $02
-    800AB870	addu   v1, v1, v0
-    800AB874	addiu  v1, v1, $fa00 (=-$600)
-    800AB878	lui    at, $800e
-    800AB87C	addiu  at, at, $42e0
-    800AB880	addu   at, at, a2
-    800AB884	sh     v1, $0000(at)
-    800AB888	lui    at, $8007
-    800AB88C	addiu  at, at, $4eb4
-    800AB890	addu   at, at, t2
-    800AB894	lw     v1, $0000(at)
-    800AB898	lui    at, $800e
-    800AB89C	addiu  at, at, $0638
-    800AB8A0	addu   at, at, a1
-    800AB8A4	lbu    a0, $0000(at)
-    800AB8A8	sra    v1, v1, $0c
-    800AB8AC	sll    v0, a0, $01
-    800AB8B0	addu   v0, v0, a0
-    800AB8B4	sll    v0, v0, $02
-    800AB8B8	addu   v1, v1, v0
-    800AB8BC	lui    at, $800e
-    800AB8C0	addiu  at, at, $42e0
-    800AB8C4	addu   at, at, a2
-    800AB8C8	lhu    v0, $0000(at)
-    800AB8CC	addiu  v1, v1, $fa00 (=-$600)
-    800AB8D0	lui    at, $800e
-    800AB8D4	addiu  at, at, $42e2
-    800AB8D8	addu   at, at, a2
-    800AB8DC	sh     v1, $0000(at)
-    800AB8E0	lui    at, $800e
-    800AB8E4	addiu  at, at, $42e2
-    800AB8E8	addu   at, at, a2
-    800AB8EC	lhu    v1, $0000(at)
-    800AB8F0	lui    at, $800e
-    800AB8F4	addiu  at, at, $42d8
-    800AB8F8	addu   at, at, a2
-    800AB8FC	sh     v0, $0000(at)
-    800AB900	lui    at, $800e
-    800AB904	addiu  at, at, $42da
-    800AB908	addu   at, at, a2
-    800AB90C	sh     v1, $0000(at)
-    800AB910	lui    at, $8007
-    800AB914	addiu  at, at, $4eb8
-    800AB918	addu   at, at, t2
-    800AB91C	lw     v0, $0000(at)
-    800AB920	nop
-    800AB924	sra    v0, v0, $0c
-    800AB928	addiu  v0, v0, $fd00 (=-$300)
-    800AB92C	j      Lab948 [$800ab948]
-    800AB930	sh     v0, $0000(t0)
+V0 = h[A3 + 0000];
+800AB7B8	nop
+800AB7BC	bne    v0, zero, Lab948 [$800ab948]
+V0 = T3 << 01;
+V0 = V0 + T3;
+V0 = V0 << 03;
+800AB7CC	lui    v1, $800e
+V1 = V1 + 42e8;
+V0 = V0 + V1;
+800AB7D8	slt    v0, a3, v0
+800AB7DC	beq    v0, zero, Lab934 [$800ab934]
+800AB7E0	nop
+800AB7E4	lui    at, $800e
+AT = AT + 42ea;
+AT = AT + A2;
+V0 = hu[AT + 0000];
+800AB7F4	lui    at, $800e
+AT = AT + 42ee;
+AT = AT + A2;
+[AT + 0000] = h(T4);
+V0 = V0 + 0001;
+[T1 + 0012] = h(V0);
+V0 = 0007;
+[A3 + 0000] = h(V0);
+800AB814	lui    at, $800e
+AT = AT + 42ea;
+AT = AT + A2;
+V0 = h[AT + 0000];
+V1 = w[80074ea4 + T2 + c] >> c; // X
+A1 = V0 << 01;
+A1 = A1 + V0;
+V0 = bu[800e42ea + A2];
+A0 = bu[800e0638 + V0];
+A1 = A1 & 00ff;
+V0 = A0 << 01;
+V0 = V0 + A0;
+V0 = V0 << 02;
+V1 = V1 + V0;
+800AB874	addiu  v1, v1, $fa00 (=-$600)
+800AB878	lui    at, $800e
+AT = AT + 42e0;
+AT = AT + A2;
+[AT + 0000] = h(V1);
+800AB888	lui    at, $8007
+AT = AT + 4eb4;
+AT = AT + T2;
+V1 = w[AT + 0000];
+800AB898	lui    at, $800e
+AT = AT + 0638;
+AT = AT + A1;
+A0 = bu[AT + 0000];
+V1 = V1 >> 0c;
+V0 = A0 << 01;
+V0 = V0 + A0;
+V0 = V0 << 02;
+V1 = V1 + V0;
+800AB8BC	lui    at, $800e
+AT = AT + 42e0;
+AT = AT + A2;
+V0 = hu[AT + 0000];
+800AB8CC	addiu  v1, v1, $fa00 (=-$600)
+800AB8D0	lui    at, $800e
+AT = AT + 42e2;
+AT = AT + A2;
+[AT + 0000] = h(V1);
+800AB8E0	lui    at, $800e
+AT = AT + 42e2;
+AT = AT + A2;
+V1 = hu[AT + 0000];
+800AB8F0	lui    at, $800e
+AT = AT + 42d8;
+AT = AT + A2;
+[AT + 0000] = h(V0);
+800AB900	lui    at, $800e
+AT = AT + 42da;
+AT = AT + A2;
+[AT + 0000] = h(V1);
+800AB910	lui    at, $8007
+AT = AT + 4eb8;
+AT = AT + T2;
+V0 = w[AT + 0000];
+800AB920	nop
+V0 = V0 >> 0c;
+800AB928	addiu  v0, v0, $fd00 (=-$300)
+800AB92C	j      Lab948 [$800ab948]
+[T0 + 0000] = h(V0);
 
-    Lab934:	; 800AB934
-    800AB934	sh     t4, $0000(a3)
-    800AB938	lui    at, $800e
-    800AB93C	addiu  at, at, $42ee
-    800AB940	addu   at, at, a2
-    800AB944	sh     zero, $0000(at)
+Lab934:	; 800AB934
+[A3 + 0000] = h(T4);
+800AB938	lui    at, $800e
+AT = AT + 42ee;
+AT = AT + A2;
+[AT + 0000] = h(0);
 
-    Lab948:	; 800AB948
-    800AB948	lhu    v0, $0000(a3)
-    800AB94C	lhu    v1, $0000(t0)
-    800AB950	andi   v0, v0, $0007
-    800AB954	sll    v0, v0, $07
-    800AB958	addu   v1, v1, v0
-    800AB95C	lui    at, $800e
-    800AB960	addiu  at, at, $42e4
-    800AB964	addu   at, at, a2
-    800AB968	sh     v1, $0000(at)
-    800AB96C	lhu    v0, $0000(a3)
-    800AB970	lhu    v1, $0000(t0)
-    800AB974	addiu  t0, t0, $0018
-    800AB978	andi   v0, v0, $0007
-    800AB97C	sll    v0, v0, $07
-    800AB980	addiu  v0, v0, $0100
-    800AB984	addu   v1, v1, v0
-    800AB988	lui    at, $800e
-    800AB98C	addiu  at, at, $42dc
-    800AB990	addu   at, at, a2
-    800AB994	sh     v1, $0000(at)
-    800AB998	lhu    v0, $0000(a3)
-    800AB99C	addiu  a3, a3, $0018
-    800AB9A0	addiu  a2, a2, $0018
-    800AB9A4	addiu  v0, v0, $ffff (=-$1)
-    800AB9A8	sh     v0, $0010(t1)
-    800AB9AC	lui    v0, $800e
-    800AB9B0	addiu  v0, v0, $48e8
-    800AB9BC	addiu  t1, t1, $0018
-    800AB9B4	slt    v0, a3, v0
+Lab948:	; 800AB948
+V0 = hu[A3 + 0000];
+V1 = hu[T0 + 0000];
+V0 = V0 & 0007;
+V0 = V0 << 07;
+V1 = V1 + V0;
+800AB95C	lui    at, $800e
+AT = AT + 42e4;
+AT = AT + A2;
+[AT + 0000] = h(V1);
+V0 = hu[A3 + 0000];
+V1 = hu[T0 + 0000];
+T0 = T0 + 0018;
+V0 = V0 & 0007;
+V0 = V0 << 07;
+V0 = V0 + 0100;
+V1 = V1 + V0;
+800AB988	lui    at, $800e
+AT = AT + 42dc;
+AT = AT + A2;
+[AT + 0000] = h(V1);
+V0 = hu[A3 + 0000];
+A3 = A3 + 0018;
+A2 = A2 + 0018;
+800AB9A4	addiu  v0, v0, $ffff (=-$1)
+[T1 + 0010] = h(V0);
+800AB9AC	lui    v0, $800e
+V0 = V0 + 48e8;
+T1 = T1 + 0018;
+800AB9B4	slt    v0, a3, v0
 800AB9B8	bne    v0, zero, Lab7b4 [$800ab7b4]
 ////////////////////////////////
 
@@ -213,7 +213,7 @@ Lab7b4:	; 800AB7B4
 // funcba65c
 S0 = A0;
 800BA65C	lui    v0, $8008
-800BA660	lbu    v0, $ebe0(v0)
+V0 = bu[V0 + ebe0];
 800BA670	beq    v0, zero, Lba738 [$800ba738]
 
 800BA678	jal    funcd4bfc [$800d4bfc]
@@ -225,51 +225,51 @@ S0 = A0;
 800BA690	jal    funcd7f9c [$800d7f9c]
 800BA694	nop
 800BA698	lui    v0, $800a
-800BA69C	lw     v0, $c6dc(v0)
+V0 = w[V0 + c6dc];
 800BA6A0	lui    at, $8009
-800BA6A4	sb     zero, $5dcc(at)
+[AT + 5dcc] = b(0);
 800BA6A8	lui    at, $800a
-800BA6AC	sb     zero, $fe8c(at)
+[AT + fe8c] = b(0);
 800BA6B0	lui    at, $8008
-800BA6B4	sb     zero, $ebe0(at)
-800BA6B8	lbu    v0, $0001(v0)
+[AT + ebe0] = b(0);
+V0 = bu[V0 + 0001];
 800BA6BC	nop
-800BA6C0	sltiu  v0, v0, $0005
+V0 = V0 < 0005;
 800BA6C4	beq    v0, zero, Lba6d4 [$800ba6d4]
-800BA6C8	ori    a0, zero, $004b
+A0 = 004b;
 800BA6CC	jal    func429e0 [$800429e0]
-800BA6D0	ori    a1, zero, $000b
+A1 = 000b;
 
 Lba6d4:	; 800BA6D4
 800BA6D4	lui    v0, $800a
-800BA6D8	lw     v0, $c6dc(v0)
+V0 = w[V0 + c6dc];
 800BA6DC	nop
-800BA6E0	lbu    v0, $0000(v0)
+V0 = bu[V0 + 0000];
 800BA6E4	nop
-800BA6E8	sltiu  v0, v0, $0002
+V0 = V0 < 0002;
 800BA6EC	beq    v0, zero, Lba6fc [$800ba6fc]
-800BA6F0	ori    a0, zero, $004b
+A0 = 004b;
 800BA6F4	jal    func429e0 [$800429e0]
-800BA6F8	ori    a1, zero, $000a
+A1 = 000a;
 
 Lba6fc:	; 800BA6FC
 800BA6FC	lui    v1, $800a
-800BA700	lw     v1, $c6dc(v1)
+V1 = w[V1 + c6dc];
 800BA704	nop
-800BA708	lbu    v0, $0000(v1)
+V0 = bu[V1 + 0000];
 800BA70C	nop
-800BA710	sltiu  v0, v0, $0003
+V0 = V0 < 0003;
 800BA714	beq    v0, zero, Lba730 [$800ba730]
-800BA718	ori    a0, zero, $004b
-800BA71C	lbu    v0, $0001(v1)
+A0 = 004b;
+V0 = bu[V1 + 0001];
 800BA720	nop
-800BA724	sltiu  v0, v0, $0006
+V0 = V0 < 0006;
 800BA728	bne    v0, zero, Lba738 [$800ba738]
 800BA72C	nop
 
 Lba730:	; 800BA730
 800BA730	jal    func429e0 [$800429e0]
-800BA734	ori    a1, zero, $000c
+A1 = 000c;
 
 Lba738:	; 800BA738
 if (bu[80099ffc] != 4 || bu[80099ffc] != 5 || bu[80070788] != 0)
