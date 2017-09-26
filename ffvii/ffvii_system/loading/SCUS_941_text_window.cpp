@@ -1,5 +1,6 @@
 ////////////////////////////////
-// func1f1bc
+// func1f1bc()
+
 window_data = A0;
 number_to_render = A1; // 4 in field, 1 in wm
 current_messege = 0;
@@ -235,7 +236,8 @@ L1f25c:	; 8001F25C
 
 
 ////////////////////////////////
-// func44ac0
+// func44ac0()
+
 S0 = A1;
 S1 = A0;
 
@@ -411,7 +413,8 @@ return;
 
 
 ////////////////////////////////
-// func43814
+// func43814()
+
 8004381C	lw     s3, $0038(sp)
 80043824	addu   s4, a0, zero
 8004382C	addu   s1, a1, zero
@@ -446,7 +449,8 @@ V0 = S4;
 
 
 ////////////////////////////////
-// func1eb2c
+// func1eb2c()
+
 8001EB34	addu   s0, a0, zero
 8001EB3C	addu   s1, a1, zero
 packet = w[80062f24];

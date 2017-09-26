@@ -1,5 +1,6 @@
 ////////////////////////////////
-// system_draw_single_menu_font_character
+// system_draw_single_menu_font_character()
+
 pos_x = A0;
 pos_y = A1;
 colour = S4 = A3;
@@ -245,7 +246,8 @@ A1 = colour + 1e0;
 
 
 ////////////////////////////////
-// system_draw_menu_8width_font
+// system_draw_menu_8width_font()
+
 pointer = A2;
 pos_y = A1;
 pos_x = A0;

@@ -28,6 +28,633 @@ return 0;
 
 
 ////////////////////////////////
+// system_psyq_cd_read_sync()
+// Check completion of CdRead() and related functions.
+// Checks the current status of a data read operation initiated by CdRead(), CdReadFile(), and related
+// functions. If mode is 0, the function waits for the operation to complete. If mode is 1, it returns the current
+// status immediately
+// Return value Number of sectors remaining. If operation completed, 0 is returned. On error, -1 is returned.
+
+S2 = A0;
+S3 = A1;
+S1 = 80051a3c;
+
+loop41e58:	; 80041E58
+80041E58	jal    func3cedc [$8003cedc]
+80041E5C	addiu  a0, zero, $ffff (=-$1)
+V1 = w[S1 + 0000];
+80041E64	nop
+V1 = V1 + 04b0;
+80041E6C	slt    v1, v1, v0
+80041E70	bne    v1, zero, L41ec0 [$80041ec0]
+80041E74	addiu  s0, zero, $ffff (=-$1)
+V0 = w[S1 + fff8];
+80041E7C	nop
+80041E80	bltz   v0, L41ea8 [$80041ea8]
+80041E84	nop
+80041E88	jal    func3cedc [$8003cedc]
+80041E8C	addiu  a0, zero, $ffff (=-$1)
+V1 = w[S1 + fffc];
+80041E94	nop
+V1 = V1 + 003c;
+80041E9C	slt    v1, v1, v0
+80041EA0	beq    v1, zero, L41ebc [$80041ebc]
+80041EA4	nop
+
+L41ea8:	; 80041EA8
+80041EA8	jal    func41afc [$80041afc]
+A0 = 0001;
+S0 = w[S1 + ffe4];
+80041EB4	j      L41ec0 [$80041ec0]
+80041EB8	nop
+
+L41ebc:	; 80041EBC
+S0 = w[S1 + fff8];
+
+L41ec0:	; 80041EC0
+80041EC0	bne    s2, zero, L41ed0 [$80041ed0]
+A0 = 0001;
+80041EC8	bgtz   s0, loop41e58 [$80041e58]
+80041ECC	nop
+
+L41ed0:	; 80041ED0
+80041ED0	jal    func3de4c [$8003de4c]
+A1 = S3;
+V0 = S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_cd_read()
+// Read multiple sectors from the CD-ROM.
+// Reads one or more sectors of data from the CD-ROM to the specified buffer in memory. The starting
+// position for the read is the position last specified for CdlSetloc. Each CdRead() requires a separate CdlSetloc command.
+// CdRead() is non-blocking. Check for completion using CdReadSync() or CdReadCallback(). CdRead() uses
+// CdReadyCallback() internally, so that function cannot be used with CdRead().
+// The return code from CdRead() only indicates if the command was issued successfully or not. For
+// information about CD-ROM errors which occur during reading, check the result array of CdReadSync()
+// Return value 1 if command issued successfully, otherwise 0
+
+V0 = 80051a2c;
+[V0] = w(A2);
+V0 = w[V0];
+V1 = V0 & 30;
+80041D48	beq    v1, zero, L41d64 [$80041d64]
+A3 = A0;
+V0 = 0020;
+80041D54	beq    v1, v0, L41d78 [$80041d78]
+V0 = 0249;
+80041D5C	j      L41d88 [$80041d88]
+V0 = 0246;
+
+L41d64:	; 80041D64
+V0 = 0200;
+[80051a30] = w(V0);
+80041D70	j      L41d94 [$80041d94]
+80041D74	nop
+
+L41d78:	; 80041D78
+[80051a30] = w(V0);
+80041D80	j      L41d94 [$80041d94]
+80041D84	nop
+
+L41d88:	; 80041D88
+V1 = 80051a30;
+[V1 + 0000] = w(V0);
+
+L41d94:	; 80041D94
+V1 = 80051a2c;
+V0 = w[V1 + 0000];
+A0 = 0;
+V0 = V0 | 0020;
+[V1 + 0000] = w(V0);
+80041DAC	lui    at, $8005
+[AT + 1a24] = w(A1);
+80041DB4	lui    at, $8005
+[AT + 1a20] = w(A3);
+80041DBC	jal    func3de6c [$8003de6c]
+80041DC0	nop
+A0 = 0;
+80041DC8	lui    at, $8005
+[AT + 1a44] = w(V0);
+80041DD0	jal    func3de84 [$8003de84]
+80041DD4	nop
+80041DD8	addiu  a0, zero, $ffff (=-$1)
+80041DDC	lui    at, $8005
+[AT + 1a48] = w(V0);
+80041DE4	jal    func3cedc [$8003cedc]
+
+[80051a3c] = w(V0);
+80041DF4	jal    func3dcd8 [$8003dcd8]
+
+V0 = V0 & 00e0;
+80041E00	beq    v0, zero, L41e14 [$80041e14]
+A0 = 0009;
+A1 = 0;
+80041E0C	jal    func3e100 [$8003e100]
+A2 = 0;
+
+L41e14:	; 80041E14
+A0 = 0;
+80041E14	jal    func41afc [$80041afc]
+
+80041E1C	slt    v0, zero, v0
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_cd_search_file()
+// Get location and size from CD-ROM file name
+// Determines the position time code (minutes, seconds, sectors) and total length of the specified file on the
+// CD-ROM. The result is stored in the CdlFILE structure pointed to by fp.
+// name must be a complete path to the file.
+// CdSearchFile() caches directory information, so subsequent consecutive calls for files in the same directory
+// do not require additional CD-ROM reads. Only one directory is cached at a time, and reading information
+// for a file in another directory invalidates the entire cache.
+// For the best possible performance, include file location and size information in your program at compile
+// time instead of using CdSearchFile().
+// Return value Pointer to the CD-ROM file structure obtained; 0 if file not found
+V1 = w[80051938];
+V0 = w[80051640];
+S5 = A0;
+S3 = A1;
+8003FBC0	beq    v1, v0, L3fbec [$8003fbec]
+
+8003FBC8	jal    func3fe98 [$8003fe98]
+8003FBCC	nop
+8003FBD0	beq    v0, zero, L3fe4c [$8003fe4c]
+V0 = 0;
+V0 = w[80051640];
+[80051938] = w(V0);
+
+L3fbec:	; 8003FBEC
+V1 = bu[S3 + 0000];
+V0 = 005c;
+8003FBF4	beq    v1, v0, L3fc0c [$8003fc0c]
+A0 = 0001;
+8003FBFC	j      L3fe4c [$8003fe4c]
+V0 = 0;
+
+loop3fc04:	; 8003FC04
+8003FC04	j      L3fc9c [$8003fc9c]
+[SP + 0010] = b(0);
+
+L3fc0c:	; 8003FC0C
+[SP + 0010] = b(0);
+S0 = S3;
+S2 = 0;
+S4 = 005c;
+
+loop3fc1c:	; 8003FC1C
+V0 = bu[S0 + 0000];
+8003FC20	nop
+8003FC24	beq    v0, s4, L3fc60 [$8003fc60]
+S1 = SP + 0010;
+V1 = 005c;
+V0 = bu[S0 + 0000];
+
+loop3fc34:	; 8003FC34
+8003FC34	nop
+8003FC38	beq    v0, zero, L3fca0 [$8003fca0]
+V0 = S2 < 0008;
+V0 = bu[S0 + 0000];
+S0 = S0 + 0001;
+[S1 + 0000] = b(V0);
+V0 = bu[S0 + 0000];
+8003FC50	nop
+8003FC54	bne    v0, v1, loop3fc34 [$8003fc34]
+S1 = S1 + 0001;
+V0 = bu[S0 + 0000];
+
+L3fc60:	; 8003FC60
+8003FC60	nop
+8003FC64	beq    v0, zero, L3fca0 [$8003fca0]
+V0 = S2 < 0008;
+S0 = S0 + 0001;
+[S1 + 0000] = b(0);
+8003FC74	jal    func4018c [$8004018c]
+A1 = SP + 0010;
+A0 = V0;
+8003FC80	addiu  v0, zero, $ffff (=-$1)
+8003FC84	beq    a0, v0, loop3fc04 [$8003fc04]
+8003FC88	nop
+S2 = S2 + 0001;
+V0 = S2 < 0008;
+8003FC94	bne    v0, zero, loop3fc1c [$8003fc1c]
+8003FC98	nop
+
+L3fc9c:	; 8003FC9C
+V0 = S2 < 0008;
+
+L3fca0:	; 8003FCA0
+8003FCA0	bne    v0, zero, L3fcd4 [$8003fcd4]
+8003FCA4	nop
+V0 = w[80051634];
+8003FCB0	nop
+8003FCB4	blez   v0, L3fe48 [$8003fe48]
+A1 = S3;
+A0 = 800108c0; // "%s: path level (%d) error"
+A2 = S2;
+system_bios_printf();
+
+8003FCCC	j      L3fe4c [$8003fe4c]
+V0 = 0;
+
+L3fcd4:	; 8003FCD4
+V0 = bu[SP + 0010];
+8003FCDC	bne    v0, zero, L3fd08 [$8003fd08]
+
+V0 = w[80051634];
+
+8003FCF0	blez   v0, L3fe48 [$8003fe48]
+A1 = S3;
+A0 = 800108dc; // "%s: dir was not found"
+8003FD00	j      L3fe40 [$8003fe40]
+8003FD04	nop
+
+L3fd08:	; 8003FD08
+8003FD08	jal    func40238 [$80040238]
+[S1 + 0000] = b(0);
+8003FD10	bne    v0, zero, L3fd44 [$8003fd44]
+
+V0 = w[80051634];
+8003FD20	nop
+8003FD24	blez   v0, L3fe4c [$8003fe4c]
+V0 = 0;
+A0 = 800108f4; // "CdSearchFile: disc error"
+system_bios_printf();
+
+8003FD3C	j      L3fe4c [$8003fe4c]
+V0 = 0;
+
+L3fd44:	; 8003FD44
+8003FD44	lui    v0, $8005
+V0 = w[80051634];
+8003FD4C	nop
+V0 = V0 < 0002;
+8003FD54	bne    v0, zero, L3fd6c [$8003fd6c]
+S2 = 0;
+8003FD5C	lui    a0, $8001
+A0 = A0 + 0910;
+8003FD64	jal    system_bios_printf [$80042dc8]
+A1 = SP + 0010;
+
+L3fd6c:	; 8003FD6C
+8003FD6C	lui    v0, $8007
+8003FD70	addiu  v0, v0, $e14c (=-$1eb4)
+8003FD74	addiu  s0, v0, $fff8 (=-$8)
+S3 = V0;
+S1 = 0;
+
+loop3fd80:	; 8003FD80
+8003FD80	lui    at, $8007
+8003FD84	addiu  at, at, $e14c (=-$1eb4)
+AT = AT + S1;
+V0 = bu[AT + 0000];
+8003FD90	nop
+8003FD94	beq    v0, zero, L3fe24 [$8003fe24]
+A0 = S3;
+8003FD9C	jal    func3fe74 [$8003fe74]
+A1 = SP + 0010;
+8003FDA4	beq    v0, zero, L3fe0c [$8003fe0c]
+
+V0 = w[80051634] < 0002;
+8003FDBC	bne    v0, zero, L3fdd4 [$8003fdd4]
+
+A0 = 80010930; // "%s:  found"
+A1 = SP + 10;
+system_bios_printf();
+
+L3fdd4:	; 8003FDD4
+V0 = w[S0 + 0000];
+V1 = w[S0 + 0004];
+A0 = w[S0 + 0008];
+A1 = w[S0 + 000c];
+[S5 + 0000] = w(V0);
+[S5 + 0004] = w(V1);
+[S5 + 0008] = w(A0);
+[S5 + 000c] = w(A1);
+V0 = w[S0 + 0010];
+V1 = w[S0 + 0014];
+[S5 + 0010] = w(V0);
+[S5 + 0014] = w(V1);
+8003FE04	j      L3fe4c [$8003fe4c]
+V0 = S0;
+
+L3fe0c:	; 8003FE0C
+S0 = S0 + 0018;
+S3 = S3 + 0018;
+S2 = S2 + 0001;
+V0 = S2 < 0040;
+8003FE1C	bne    v0, zero, loop3fd80 [$8003fd80]
+S1 = S1 + 0018;
+
+L3fe24:	; 8003FE24
+8003FE24	lui    v0, $8005
+V0 = w[V0 + 1634];
+8003FE2C	nop
+8003FE30	blez   v0, L3fe48 [$8003fe48]
+A1 = SP + 0010;
+A0 = 8001093c; // "%s: not found"
+
+L3fe40:	; 8003FE40
+8003FE40	jal    system_bios_printf [$80042dc8]
+8003FE44	nop
+
+L3fe48:	; 8003FE48
+V0 = 0;
+
+L3fe4c:	; 8003FE4C
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34b44()
+
+// infinite loop
+if( w[80071a60] >= 15 )
+{
+    L34b60:	; 80034B60
+    80034B60	j      L34b60 [$80034b60]
+}
+
+V0 = w[80071a60];
+V0 = w[8004a634 + V0 * 4];
+
+// C0440380 2 F8460380 5 54470380 6 28440380 7 44570380 8  30540380 9
+// B4470380 b F8470380 c F4480380 d 74490380 e 44440380 10 30440380 11 584A0380 13 904A0380 14
+
+// 0 a f 12 - func34420()
+// 1 - func3447c()
+// 3 - func345bc()
+// 4 - func34600()
+80034B90	jalr   v0 ra
+
+V0 = w[80071a60];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34600()
+
+A0 = 0001;
+
+L3460c:	; 8003460C
+8003460C	jal    func3de2c [$8003de2c]
+A1 = 0;
+V1 = V0;
+V0 = 0002;
+8003461C	beq    v1, v0, L34634 [$80034634]
+V0 = 0005;
+80034624	beq    v1, v0, L34644 [$80034644]
+80034628	nop
+8003462C	j      L34698 [$80034698]
+80034630	nop
+
+L34634:	; 80034634
+80034634	lui    at, $8007
+[AT + 1a60] = w(V0);
+8003463C	j      L346e8 [$800346e8]
+80034640	nop
+
+L34644:	; 80034644
+80034644	lui    v1, $8007
+80034648	addiu  v1, v1, $98ec (=-$6714)
+V0 = w[V1 + 0000];
+80034650	nop
+V0 = V0 + 0001;
+[V1 + 0000] = w(V0);
+V0 = V0 < 0010;
+80034660	bne    v0, zero, L34688 [$80034688]
+V0 = 0003;
+80034668	jal    func34104 [$80034104]
+[V1 + 0000] = w(0);
+
+loop34670:	; 80034670
+80034670	jal    func34cac [$80034cac]
+A0 = 0003;
+80034678	jal    func34150 [$80034150]
+8003467C	nop
+80034680	bne    v0, zero, loop34670 [$80034670]
+V0 = 0003;
+
+L34688:	; 80034688
+80034688	lui    at, $8007
+[AT + 1a60] = w(V0);
+80034690	j      L346e8 [$800346e8]
+80034694	nop
+
+L34698:	; 80034698
+80034698	jal    func3cedc [$8003cedc]
+8003469C	addiu  a0, zero, $ffff (=-$1)
+800346A0	lui    a1, $8007
+800346A4	addiu  a1, a1, $e0f0 (=-$1f10)
+V1 = w[A1 + 0000];
+A0 = V0;
+800346B0	beq    v1, a0, L346e8 [$800346e8]
+V1 = 0e10;
+800346B8	lui    v0, $8007
+V0 = w[V0 + e0f4];
+[A1 + 0000] = w(A0);
+V0 = V0 + 0001;
+800346C8	lui    at, $8007
+[AT + e0f4] = w(V0);
+800346D0	bne    v0, v1, L346e8 [$800346e8]
+
+[80071a60] = w(3);
+
+A0 = 3;
+800346E0	jal    func34cac [$80034cac]
+
+L346e8:	; 800346E8
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3dfd4();
+
+S1 = A1;
+S3 = A0;
+S0 = 3;
+S2 = S3 & 00ff;
+V1 = 800515a8;
+[SP + 0020] = w(S4);
+S4 = w[80051628];
+V0 = S2 << 02;
+S5 = V0 + V1;
+S6 = 0;
+
+loop3e024:	; 8003E024
+[80051628] = w(0);
+8003E030	beq    s2, 1, L3e060 [$8003e060]
+
+V0 = bu[80051638] & 10;
+8003E048	beq    v0, zero, L3e060 [$8003e060]
+
+A0 = 1;
+A1 = 0;
+A2 = 0;
+A3 = 0;
+func3ef30(); // exec command
+
+L3e060:	; 8003E060
+8003E060	beq    s1, zero, L3e090 [$8003e090]
+8003E064	nop
+V0 = w[S5 + 0000];
+8003E06C	nop
+8003E070	beq    v0, zero, L3e090 [$8003e090]
+
+A0 = 2;
+A1 = S1;
+A2 = 0;
+A3 = 0;
+func3ef30(); // exec command
+
+8003E088	bne    v0, zero, L3e0b4 [$8003e0b4]
+8003E08C	nop
+
+L3e090:	; 8003E090
+[80051628] = w(S4);
+
+A0 = S3 & ff;
+A1 = S1;
+A2 = 0;
+A3 = 1;
+func3ef30(); // exec command
+
+8003E0AC	beq    v0, zero, L3e0d4 [$8003e0d4]
+V0 = S6 + 0001;
+
+L3e0b4:	; 8003E0B4
+8003E0B4	addiu  s0, s0, $ffff (=-$1)
+8003E0B8	addiu  v0, zero, $ffff (=-$1)
+8003E0BC	bne    s0, v0, loop3e024 [$8003e024]
+
+[80051628] = w(S4);
+8003E0CC	addiu  s6, zero, $ffff (=-$1)
+V0 = S6 + 0001;
+
+L3e0d4:	; 8003E0D4
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func345bc()
+
+A0 = 2;
+A1 = 80071a68;
+func3dfd4();
+
+[80071a60] = w(4);
+[8006e0f4] = w(0);
+[800698ec] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34420()
+
+return;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3447c()
+
+A0 = 2;
+A1 = 80071a68;
+8003448C	jal    func3dfd4 [$8003dfd4]
+
+[80071a60] = w(2);
+[8006e0f4] = w(0);
+[800698ec] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3e100()
+
+cdl_command = A0;
+S1 = A1;
+S2 = A2;
+
+S5 = w[80051628];
+
+S0 = 3;
+loop3e150:	; 8003E150
+    [80051628] = w(0);
+
+    if( cdl_command != 1 )
+    {
+        if( bu[80051638] & 10 )
+        {
+            A0 = 1; // CdlNop
+            A1 = 0;
+            A2 = 0;
+            A3 = 0;
+            func3ef30(); // exec command
+        }
+    }
+
+    8003E18C	beq    s1, zero, L3e1bc [$8003e1bc]
+
+    V0 = w[800515a8 + cdl_command * 4];
+
+    8003E19C	beq    v0, zero, L3e1bc [$8003e1bc]
+
+    A0 = 2; // CdlSetloc Set the seek target position.
+    A1 = S1;
+    A2 = S2;
+    A3 = 0;
+    func3ef30(); // exec command
+
+    8003E1B4	bne    v0, zero, L3e1e0 [$8003e1e0]
+
+    L3e1bc:	; 8003E1BC
+    [80051628] = w(S5);
+
+    A0 = cdl_command & ff;
+    A1 = S1;
+    A2 = S2;
+    A3 = 0;
+    func3ef30(); // exec command
+
+    8003E1D8	beq    v0, zero, L3e1f8 [$8003e1f8]
+    V0 = 0;
+
+    L3e1e0:	; 8003E1E0
+    S0 = S0 - 1;
+8003E1E8	bne    s0, -1, loop3e150 [$8003e150]
+
+[80051628] = w(S5);
+
+L3e1f8:	; 8003E1F8
+if( V0 == 0 )
+{
+    A0 = 0;
+    A1 = S2;
+    system_psyq_cd_sync();
+
+    V0 = V0 ^ 0002;
+    V0 = V0 < 0001;
+    return V0;
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func41efc()
 
 V0 = w[80051a1c];

@@ -1,5 +1,6 @@
 ////////////////////////////////
-//func1d6a8
+// func1d6a8()
+
 dialog_width = h(A2);
 [SP + 28] = h(0);
 index = 0;
@@ -409,22 +410,25 @@ return pos_y;
 
 
 ////////////////////////////////
-// func1521c
+// func1521c()
+
 A0 = A0;
-system_get_pointer_to_battle_text_in_kernel_with_id;
+system_get_pointer_to_battle_text_in_kernel_with_id();
+
 A0 = V0;
 A1 = A0;
-system_copy_text_from_kernel;
+system_copy_text_from_kernel();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_get_pointer_to_battle_text_in_kernel_with_id
+// system_get_pointer_to_battle_text_in_kernel_with_id()
+
 A1 = A0;
 A0 = 10;
 A2 = 0;
-system_get_pointer_to_text_in_kernel_with_block_and_text_id;
+system_get_pointer_to_text_in_kernel_with_block_and_text_id();
 
 return V0;
 ////////////////////////////////
@@ -432,7 +436,8 @@ return V0;
 
 
 ////////////////////////////////
-// system_get_pointer_to_text_in_kernel_with_block_and_text_id
+// system_get_pointer_to_text_in_kernel_with_block_and_text_id()
+
 A0 = A0 + A2;
 V1 = hu[80069490 + A0 * 2]; // 0x52ae
 V0 = hu[80063690 + V1 + A1 * 2]; // kernel begin
@@ -523,7 +528,8 @@ return 80063560;
 
 
 ////////////////////////////////
-// func26f44
+// func26f44()
+
 S0 = A2;
 80026F54	addu   s3, a3, zero
 80026F60	beq    s0, zero, L2706c [$8002706c]
@@ -603,7 +609,8 @@ L2706c:	; 8002706C
 
 
 ////////////////////////////////
-func26c5c
+// func26c5c()
+
 S3 = A0
 S6 = A1;
 S7 = A2;
@@ -819,8 +826,9 @@ L26f10:	; 80026F10
 
 
 ////////////////////////////////
-// func1ec70
+// func1ec70()
 // draw timer
+
 8001EC78	addu   s4, a0, zero
 8001EC80	addu   s5, a1, zero
 S3 = A2;

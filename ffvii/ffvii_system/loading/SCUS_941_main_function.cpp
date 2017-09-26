@@ -1,4 +1,96 @@
 ////////////////////////////////
+// func33f40()
+
+sector = A0;
+size = A1;
+buffer = A2;
+S3 = A3;
+
+loop33f6c:	; 80033F6C
+    A0 = sector;
+    A1 = size;
+    A2 = buffer;
+    A3 = S3;
+    func33e34();
+80033F7C	bne    v0, zero, loop33f6c [$80033f6c]
+
+L33f84:	; 80033F84
+    func34b44(); // some callback chain
+
+    if( V0 == 0 )
+    {
+        return 0;
+    }
+
+    A0 = 0;
+    func3cedc();
+80033F9C	j      L33f84 [$80033f84]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func33e34()
+
+sector = A0;
+size = A1;
+buffer = A2;
+A4 = A4;
+
+A0 = 3;
+A1 = sector;
+A2 = size;
+A3 = buffer;
+func33cb8();
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func33cb8()
+
+S5 = A0;
+sector = A1;
+size = A2;
+buffer = A3;
+S6 = A4;
+
+loop33cf4:	; 80033CF4
+    func34b44(); // some callback chain
+    S0 = V0;
+
+    if( S0 >= 0008 )
+    {
+        if( S0 < b )
+        {
+            80033D24	jal    func35658 [$80035658]
+        }
+        else if( S0 == 12 )
+        {
+            A0 = 9;
+            A1 = 0;
+            A2 = 0;
+            80033D38	jal    func3de9c [$8003de9c]
+        }
+    }
+80033D40	bne    s0, zero, loop33cf4 [$80033cf4]
+
+A0 = sector;
+A1 = 80071a68;
+80033D50	jal    func3e2d0 [$8003e2d0]
+
+[80071a6c] = w((size + 07ff) >> 0b);
+[80071a80] = w(buffer);
+[80071a84] = w(S6);
+[80071a60] = w(S5);
+////////////////////////////////
+
+
+
+
+////////////////////////////////
 // func33b70()
 
 loop33b78:	; 80033B78
@@ -20,11 +112,85 @@ func3e100();
 A0 = 3;
 func3cedc();
 
-80033BB8	jal    func34350 [$80034350]
-
+// load "\MINT\DISKINFO.CNF;1" into 800698f0
+// and return bu[800698f7] - 30 (disk number)
+func34350();
 [80071a64] = w(V0);
 
-80033BC8	jal    func34f5c [$80034f5c]
+// load "\MINT\MOVIE_ID.BIN;1" into 8009a1f4
+func34f5c();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34f5c()
+
+loop34f64:	; 80034F64
+    loop34f64:	; 80034F64
+        A0 = SP + 10;
+        A1 = 8001049c; // "\MINT\MOVIE_ID.BIN;1"
+        system_psyq_cd_search_file();
+    80034F74	beq    v0, zero, loop34f64 [$80034f64]
+
+    A0 = 2;
+    A1 = SP + 0010;
+    A2 = 0;
+    func3e100();
+
+    A0 = 1;
+    A1 = 8009a1f4;
+    A2 = 80;
+    system_psyq_cd_read();
+
+    loop34fa0:	; 80034FA0
+        A0 = 0001;
+        A1 = 0;
+        80034FA0	jal    system_psyq_cd_read_sync [$80041e30]
+    80034FA8	bgtz   v0, loop34fa0 [$80034fa0]
+80034FB0	bne    v0, zero, loop34f64 [$80034f64]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34350()
+
+loop34358:	; 80034358
+    func34b44(); // some callback chain
+80034360	bne    v0, zero, loop34358 [$80034358]
+
+loop34368:	; 80034368
+    A0 = SP + 10;
+    A1 = 80010484; // "\MINT\DISKINFO.CNF;1"
+    system_psyq_cd_search_file();
+
+    if( V0 <= 0 )
+    {
+        if( ( V0 - 1 ) == 0 )
+        {
+            return -1;
+        }
+    }
+
+    A0 = 2; // CdlSetloc Set the seek target position.
+    A1 = SP + 10;
+    A2 = 0;
+    func3e100();
+
+    A0 = 1; // number of sectors
+    A1 = 800698f0; // buffer
+    A2 = 80;
+    system_psyq_cd_read();
+
+    loop343b8:	; 800343B8
+        A0 = 1;
+        A1 = 0;
+        system_psyq_cd_read_sync();
+    800343C0	bgtz   v0, loop343b8 [$800343b8]
+800343C8	bne    v0, zero, loop34368 [$80034368]
+
+return bu[800698f7] - 30;
 ////////////////////////////////
 
 
@@ -119,80 +285,6 @@ if( w[80051568] < A0 )
         V0 = w[80051568] < A0;
     8003D0A8	bne    v0, zero, loop3d04c [$8003d04c]
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3e100()
-
-cdl_command = A0;
-S1 = A1;
-S2 = A2;
-
-S5 = w[80051628];
-
-S0 = 3;
-loop3e150:	; 8003E150
-    [80051628] = w(0);
-
-    if( cdl_command != 1 )
-    {
-        if( bu[80051638] & 10 )
-        {
-            A0 = 1; // CdlNop
-            A1 = 0;
-            A2 = 0;
-            A3 = 0;
-            func3ef30(); // exec command
-        }
-    }
-
-    8003E18C	beq    s1, zero, L3e1bc [$8003e1bc]
-
-    V0 = w[800515a8 + cdl_command * 4];
-
-    8003E19C	beq    v0, zero, L3e1bc [$8003e1bc]
-
-    A0 = 2; // CdlSetloc Set the seek target position.
-    A1 = S1;
-    A2 = S2;
-    A3 = 0;
-    func3ef30(); // exec command
-
-    8003E1B4	bne    v0, zero, L3e1e0 [$8003e1e0]
-
-    L3e1bc:	; 8003E1BC
-    [80051628] = w(S5);
-
-    A0 = cdl_command & ff;
-    A1 = S1;
-    A2 = S2;
-    A3 = 0;
-    func3ef30(); // exec command
-
-    8003E1D8	beq    v0, zero, L3e1f8 [$8003e1f8]
-    V0 = 0;
-
-    L3e1e0:	; 8003E1E0
-    S0 = S0 - 1;
-8003E1E8	bne    s0, -1, loop3e150 [$8003e150]
-
-[80051628] = w(S5);
-
-L3e1f8:	; 8003E1F8
-if( V0 == 0 )
-{
-    A0 = 0;
-    A1 = S2;
-    system_psyq_cd_sync();
-
-    V0 = V0 ^ 0002;
-    V0 = V0 < 0001;
-    return V0;
-}
-
-return 0;
 ////////////////////////////////
 
 
