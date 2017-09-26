@@ -1,0 +1,1 @@
+adisasm BATINI.X BATINI.X.asm -v -b 801b0000 801b0000 -u -a

@@ -1,5 +1,6 @@
 ////////////////////////////////
-// main_walkmesh_move
+// main_walkmesh_move()
+
 triggers_block_offset = w[800716C4];
 id_block_offset       = w[800E4274];
 
@@ -1090,6 +1091,7 @@ V0 = S4 < 20;
 
 ////////////////////////////////
 // move_gateway_check()
+
 entity_data = A0;
 S1 = A1;
 new_pos = A2;
@@ -1150,6 +1152,7 @@ loopaa3e8:	; 800AA3E8
 
 ////////////////////////////////
 // set_gateway_to_map_load()
+
 [8009abf4 + 01] = b(1);
 [8009abf4 + 02] = h(hu[A0 + 12]); // map id
 [8009abf4 + 04] = h(hu[A0 + 0c]); // x

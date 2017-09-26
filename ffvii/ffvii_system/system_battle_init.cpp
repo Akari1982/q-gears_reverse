@@ -11,18 +11,20 @@ func33e34();
 
 
 ////////////////////////////////
-// func145bc
-loop145cc:	; 800145CC
-    func34b44;
+// func145bc()
 
-    if (V0 == 0)
+S0 = A0;
+
+loop145cc:	; 800145CC
+    func34b44();
+    if( V0 == 0 )
     {
         return;
     }
 
-    800145DC	beq    s0, zero, loop145cc [$800145cc]
-    800145E0	nop
-    800145E4	jalr   s0 ra
-    800145E8	nop
+    if( S0 != 0 )
+    {
+        800145E4	jalr   s0 ra
+    }
 800145EC	j      loop145cc [$800145cc]
 ////////////////////////////////

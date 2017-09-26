@@ -86,6 +86,272 @@ V0 = S0;
 
 
 ////////////////////////////////
+// func34fc8()
+
+V0 = w[80071a60];
+S1 = A0;
+map_id = S2 = A1;
+if( V0 != 0 )
+{
+    return 0;
+}
+
+V1 = w[80071a64];
+[8009a004] = w(0000001e);
+[8009a008] = w(00007fff);
+
+if( V1 == 1 )
+{
+    if( map_id == 26 )
+    {
+        [8009a008] = w(0);
+    }
+    else if( map_id == 31 )
+    {
+        [8009a008] = w(00001800);
+    }
+}
+
+[8009a000] = h(00c9);
+80035060	jal    func2da7c [$8002da7c]
+
+A0 = 0001;
+80035068	jal    func41f14 [$80041f14]
+
+S0 = S2 * 14;
+V1 = 80075df0;
+[80095da8] = w(0);
+[80095db0] = w(0);
+[80095dac] = w(0);
+A0 = hu[8009a206 + S2 * 14];
+[V1 + 0000] = h(0);
+[80075e00] = h(140);
+V0 = 00e0;
+800350C0	lui    at, $8007
+[AT + 5e02] = h(V0);
+800350C8	lui    at, $8007
+[AT + 5d00] = w(V1);
+[80095dc4] = h(A0);
+V1 = hu[80095dc4];
+[8006e118] = w(0);
+[80075df2] = h(0);
+800350F4	lui    at, $8007
+[AT + 5df4] = h(0);
+800350FC	lui    at, $8007
+[AT + 5df6] = h(0);
+80035104	lui    at, $8007
+[AT + 5dfc] = w(0);
+8003510C	lui    at, $8007
+[AT + 5e04] = w(0);
+80035114	lui    at, $8007
+[AT + 5e08] = w(0);
+8003511C	lui    at, $8007
+[AT + 5df8] = w(0);
+80035124	lui    at, $8007
+[AT + e110] = w(V0);
+8003512C	lui    at, $8007
+[AT + e114] = w(0);
+if( V1 == 1 )
+{
+    return 0;
+}
+
+V0 = V1 < 0002;
+8003513C	beq    v0, zero, L35154 [$80035154]
+80035140	nop
+80035144	beq    v1, zero, L35168 [$80035168]
+80035148	lui    v1, $0001
+8003514C	j      L35414 [$80035414]
+V0 = S1;
+
+L35154:	; 80035154
+V0 = V1 < 0004;
+80035158	beq    v0, zero, L35414 [$80035414]
+V0 = S1;
+80035160	j      L352a8 [$800352a8]
+S0 = S2 << 02;
+
+L35168:	; 80035168
+80035168	lui    at, $800a
+8003516C	addiu  at, at, $a1fc (=-$5e04)
+AT = AT + S0;
+V0 = hu[AT + 0000];
+80035178	nop
+8003517C	lui    at, $8009
+[AT + 5d88] = w(V0);
+80035184	lui    at, $800a
+80035188	addiu  at, at, $a1fe (=-$5e02)
+AT = AT + S0;
+V0 = hu[AT + 0000];
+V1 = V1 | 9b00;
+80035198	lui    at, $8009
+[AT + 5d8c] = w(V0);
+800351A0	lui    at, $800a
+800351A4	addiu  at, at, $a204 (=-$5dfc)
+AT = AT + S0;
+A2 = hu[AT + 0000];
+A1 = 0024;
+800351B4	lui    at, $8009
+[AT + 5d9c] = w(S1);
+S1 = S1 + V1;
+800351C0	lui    at, $8009
+[AT + 5da0] = w(S1);
+S1 = S1 + V1;
+800351CC	lui    at, $8009
+[AT + 5da4] = w(S1);
+S1 = S1 + 2d00;
+V0 = 0140;
+800351DC	lui    at, $8009
+[AT + 5d90] = w(V0);
+V0 = 00e0;
+800351E8	lui    at, $8009
+[AT + 5d94] = w(V0);
+800351F0	lui    at, $8009
+[AT + 5d98] = w(A2);
+800351F8	jal    func3dba0 [$8003dba0]
+A0 = S1;
+80035200	lui    v0, $0001
+V0 = V0 | 2000;
+S1 = S1 + V0;
+8003520C	lui    a0, $8003
+A0 = A0 + 6038;
+80035214	lui    v0, $8007
+V0 = V0 + 7f3c;
+8003521C	lui    at, $8008
+[AT + 3270] = w(V0);
+80035224	jal    func42144 [$80042144]
+80035228	nop
+A0 = 0001;
+A1 = 0;
+80035234	addiu  a2, zero, $ffff (=-$1)
+A3 = 0;
+8003523C	jal    func40a40 [$80040a40]
+[SP + 0010] = w(0);
+80035244	lui    at, $800a
+80035248	addiu  at, at, $a1f4 (=-$5e0c)
+AT = AT + S0;
+A0 = w[AT + 0000];
+80035254	lui    a1, $8003
+A1 = A1 + 5d64;
+8003525C	jal    func33dac [$80033dac]
+80035260	nop
+A1 = 0;
+80035268	lui    at, $800a
+8003526C	addiu  at, at, $a200 (=-$5e00)
+AT = AT + S0;
+A0 = hu[AT + 0000];
+80035278	lui    at, $800a
+8003527C	addiu  at, at, $a202 (=-$5dfe)
+AT = AT + S0;
+A2 = hu[AT + 0000];
+80035288	jal    func33c20 [$80033c20]
+A3 = 0;
+80035290	lui    at, $8009
+[AT + 65e4] = w(0);
+80035298	lui    at, $800a
+[AT + a060] = w(0);
+800352A0	j      L35414 [$80035414]
+V0 = S1;
+
+L352a8:	; 800352A8
+S0 = S0 + S2;
+S0 = S0 << 02;
+800352B0	lui    at, $800a
+800352B4	addiu  at, at, $a1fc (=-$5e04)
+AT = AT + S0;
+V0 = hu[AT + 0000];
+800352C0	nop
+800352C4	lui    at, $8009
+[AT + 5d88] = w(V0);
+800352CC	lui    at, $800a
+800352D0	addiu  at, at, $a1fe (=-$5e02)
+AT = AT + S0;
+V0 = hu[AT + 0000];
+800352DC	nop
+800352E0	lui    at, $8009
+[AT + 5d8c] = w(V0);
+800352E8	lui    at, $800a
+800352EC	addiu  at, at, $a204 (=-$5dfc)
+AT = AT + S0;
+V0 = hu[AT + 0000];
+800352F8	nop
+800352FC	lui    at, $8009
+[AT + 5d98] = w(V0);
+80035304	lui    at, $800a
+80035308	addiu  at, at, $a200 (=-$5e00)
+AT = AT + S0;
+V0 = hu[AT + 0000];
+80035314	nop
+80035318	lui    at, $8009
+[AT + 5d90] = w(V0);
+80035320	lui    at, $800a
+80035324	addiu  at, at, $a202 (=-$5dfe)
+AT = AT + S0;
+V0 = hu[AT + 0000];
+80035330	nop
+80035334	lui    at, $8009
+[AT + 5d94] = w(V0);
+8003533C	lui    at, $800a
+80035340	addiu  at, at, $a1f8 (=-$5e08)
+AT = AT + S0;
+V0 = w[AT + 0000];
+8003534C	lui    a0, $8003
+A0 = A0 + 6190;
+80035354	lui    at, $8007
+[AT + e0fc] = w(S1);
+V0 = V0 + 0003;
+V0 = V0 >> 02;
+V0 = V0 << 02;
+S1 = S1 + V0;
+V0 = c800;
+80035370	lui    at, $8009
+[AT + 5d9c] = w(S1);
+S1 = S1 + V0;
+8003537C	lui    at, $8009
+[AT + 5da0] = w(S1);
+S1 = S1 + V0;
+80035388	lui    at, $8009
+[AT + 5da4] = w(S1);
+80035390	jal    func42144 [$80042144]
+S1 = S1 + 1c00;
+A0 = 00ff;
+A1 = 0;
+A2 = 00ff;
+800353A4	jal    func33c20 [$80033c20]
+A3 = 0;
+A0 = 0;
+A1 = 0;
+800353B4	addiu  a2, zero, $ffff (=-$1)
+A3 = 0;
+800353BC	jal    func40a40 [$80040a40]
+[SP + 0010] = w(0);
+800353C4	lui    at, $800a
+800353C8	addiu  at, at, $a1f4 (=-$5e0c)
+AT = AT + S0;
+A0 = w[AT + 0000];
+800353D4	lui    at, $800a
+800353D8	addiu  at, at, $a1f8 (=-$5e08)
+AT = AT + S0;
+A1 = w[AT + 0000];
+800353E4	lui    a2, $8007
+A2 = w[A2 + e0fc];
+800353EC	lui    a3, $8003
+A3 = A3 + 5d64;
+800353F4	jal    func33e34 [$80033e34]
+800353F8	nop
+V0 = 0001;
+80035400	lui    at, $8009
+[AT + 65e4] = w(V0);
+80035408	lui    at, $800a
+[AT + a060] = w(V0);
+V0 = S1;
+
+L35414:	; 80035414
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_psyq_cd_read()
 // Read multiple sectors from the CD-ROM.
 // Reads one or more sectors of data from the CD-ROM to the specified buffer in memory. The starting

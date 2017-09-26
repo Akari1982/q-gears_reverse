@@ -1256,14 +1256,14 @@ V1 = bu[S0];
 if( V1 == 3 && h[8009abf4 + 28] == 0 )
 {
     A0 = w[80075e10];
-    A1 = h[8009abf6]; // map id to load
+    A1 = h[8009abf4 + 2]; // map id to load
 
     if( A0 >= 801affff )
     {
         A0 = 801b0000;
     }
 
-    800AB3F0	jal    func34fc8 [$80034fc8]
+    func34fc8();
 
     [8009abf4 + 28] = h(1);
     [800e4d44] = h(1);
@@ -1289,21 +1289,18 @@ V1 = bu[S0 + 0000];
 800AB458	nop
 800AB45C	bne    v1, v0, Lab478 [$800ab478]
 
-V0 = 0002;
-800AB468	lui    at, $800a
-[AT + ac1a] = h(V0);
-V1 = bu[S0 + 0000];
+[8009ac1a] = h(2);
+V1 = bu[S0];
 
 Lab478:	; 800AB478
 V0 = 0004;
 800AB478	bne    v1, v0, Lab498 [$800ab498]
-S0 = 0001;
-800AB480	lui    at, $800a
-[AT + ac1a] = h(S0);
+
+[8009ac1a] = h(1);
+
 800AB488	jal    func354cc [$800354cc]
-800AB48C	nop
-800AB490	lui    at, $8011
-[AT + 4488] = h(S0);
+
+[80114488] = h(1);
 
 Lab498:	; 800AB498
 ////////////////////////////////

@@ -1,6 +1,6 @@
 ﻿////////////////////////////////
-// 800A1160
-// seems like total battle cycle
+// funca1160()
+// battle cycle
 
 // copy party characters
 S0 = 0;
@@ -10,22 +10,22 @@ loopa1188:	; 800A1188
     V0 = S0 < 4;
 800A11A8	bne    v0, zero, loopa1188 [$800a1188]
 
-
-
 [80062d44 + 01d0] = w(-1); // reset battle error
 [800617b8] = w(0);
-[8016376a] = h(hu[800707be]); store previous battle result here.
+[8016376a] = h(hu[800707be]); // store previous battle result here.
 
-S1 = hu[800707bc]; // battle id
-if (S1 != ffff)
+
+
+battle_id = hu[800707bc]; // battle id
+if( battle_id != ffff )
 {
     FP = 1;
 
     La1200:	; 800A1200
-        [80062f54] = w(S1); // battle to load
+        [80062f54] = w(battle_id); // battle to load
         [800707be] = h(0); // battle result
 
-        if (FP != 1)
+        if( FP != 1 )
         {
             S0 = 800a3354;
             S2 = 801b0490;
@@ -50,71 +50,73 @@ if (S1 != ffff)
         A1 = 801b0000;
         func15ca0;
 
-        A0 = S1;
+        A0 = battle_id;
         800A1270	jalr   s2 ra // call function where we init datas func1b0050
 
-        800A1278	addu   s0, zero, zero
+
+
+        S0 = 0;
         800A127C	lui    a1, $800f
-        800A1280	addiu  a1, a1, $5bc6
-        800A1284	addu   a2, zero, zero
+        A1 = A1 + 5bc6;
+        A2 = 0;
         800A1288	lui    v1, $8010
         800A128C	addiu  v1, v1, $83d0 (=-$7c30)
-        800A1290	lhu    v0, $0000(v1)
-        800A1294	addu   a0, zero, zero
-        800A1298	andi   v0, v0, $fffd
-        800A129C	sh     v0, $0000(v1)
+        V0 = hu[V1 + 0000];
+        A0 = 0;
+        V0 = V0 & fffd;
+        [V1 + 0000] = h(V0);
 
         loopa12a0:	; 800A12A0
             800A12A0	lui    at, $8010
-            800A12A4	addu   at, at, a2
-            800A12A8	lw     v0, $83e0(at)
-            800A12AC	addiu  a2, a2, $0068
-            800A12B0	addiu  s0, s0, $0001
+            AT = AT + A2;
+            V0 = w[AT + 83e0];
+            A2 = A2 + 0068;
+            S0 = S0 + 0001;
             V0 = V0 & 0fffffff;
             800A12B8	lui    at, $8016
-            800A12BC	addu   at, at, a0
-            800A12C0	sw     v0, $36c0(at)
+            AT = AT + A0;
+            [AT + 36c0] = w(V0);
             800A12C4	lui    at, $8016
-            800A12C8	addu   at, at, a0
-            800A12CC	sw     v0, $36c4(at)
-            800A12D0	lbu    v0, $0000(a1)
-            800A12D4	addiu  a0, a0, $0010
-            800A12D8	ori    v0, v0, $000f
-            800A12DC	sb     v0, $0000(a1)
-            800A12E0	slti   v0, s0, $000a
-            800A12E8	addiu  a1, a1, $0044
+            AT = AT + A0;
+            [AT + 36c4] = w(V0);
+            V0 = bu[A1 + 0000];
+            A0 = A0 + 0010;
+            V0 = V0 | 000f;
+            [A1 + 0000] = b(V0);
+            V0 = S0 < 000a;
+            A1 = A1 + 0044;
         800A12E4	bne    v0, zero, loopa12a0 [$800a12a0]
 
         800A12EC	jalr   s3 ra // we call function that loads field and camera here (stops when already show start of battle but no anyone take action)
 
-        800A12F0	ori    s0, zero, $0004
-        S4 = ff;
-        800A12F8	ori    s3, zero, $0110
-        800A12FC	ori    s2, zero, $0040
-        800A1300	ori    s1, zero, $01a0
+S0 = 0004;
+S4 = ff;
+S3 = 0110;
+S2 = 0040;
+S1 = 01a0;
 
         loopa1304:	; 800A1304
-            800A1304	lui    at, $8010
-            800A1308	addu   at, at, s1
-            800A130C	lbu    a1, $842f(at)
-            800A1310	nop
-            if (A1 != S4)
-            {
-                A0 = S0;
-                funca4b3c;
-            }
+800A1304	lui    at, $8010
+AT = AT + S1;
+A1 = bu[AT + 842f];
+800A1310	nop
+if (A1 != S4)
+{
+    A0 = S0;
+    funca4b3c;
+}
 
-            800A1324	lui    at, $8016
-            800A1328	addu   at, at, s2
-            800A132C	lbu    v0, $36bc(at)
-            800A1330	addiu  s2, s2, $0010
-            800A1334	addiu  s1, s1, $0068
-            800A1338	addiu  s0, s0, $0001
-            800A133C	lui    at, $800f
-            800A1340	addu   at, at, s3
-            800A1344	sb     v0, $5be3(at)
-            800A1350	addiu  s3, s3, $0044
-            800A1348	slti   v0, s0, $000a
+800A1324	lui    at, $8016
+AT = AT + S2;
+V0 = bu[AT + 36bc];
+S2 = S2 + 0010;
+S1 = S1 + 0068;
+S0 = S0 + 0001;
+800A133C	lui    at, $800f
+AT = AT + S3;
+[AT + 5be3] = b(V0);
+S3 = S3 + 0044;
+V0 = S0 < 000a;
         800A134C	bne    v0, zero, loopa1304 [$800a1304]
 
 
@@ -316,60 +318,62 @@ if (S1 != ffff)
 
 
 
-        800A167C	lui    v0, $8016
-        800A1680	lhu    v0, $376a(v0)
-        800A1684	nop
-        800A1688	andi   v0, v0, $0040
-        800A168C	beq    v0, zero, La16b0 [$800a16b0]
-        800A1690	nop
-        V1 = hu[800f83a4 + 22];
-        800A169C	andi   v0, v1, $0004
-        800A16A0	beq    v0, zero, La16b0 [$800a16b0]
-        800A16A4	andi   v0, v1, $fffb
-        800A16A8	ori    v0, v0, $0002
-        [800f83a4 + 22] = h(V0);
+800A167C	lui    v0, $8016
+V0 = hu[V0 + 376a];
+800A1684	nop
+V0 = V0 & 0040;
+800A168C	beq    v0, zero, La16b0 [$800a16b0]
+800A1690	nop
+V1 = hu[800f83a4 + 22];
+V0 = V1 & 0004;
+800A16A0	beq    v0, zero, La16b0 [$800a16b0]
+V0 = V1 & fffb;
+V0 = V0 | 0002;
+[800f83a4 + 22] = h(V0);
 
-        La16b0:	; 800A16B0
-        800A16B0	lui    v0, $8010
-        800A16B4	lhu    v0, $83c6(v0)
-        800A16B8	nop
-        800A16BC	andi   v0, v0, $001e
-        800A16C0	bne    v0, zero, La16f0 [$800a16f0]
-        800A16C4	ori    s1, zero, $ffff
-        800A16C8	lui    v0, $8016
-        800A16CC	lhu    v0, $376a(v0)
-        800A16D0	lui    s1, $8016
-        800A16D4	lhu    s1, $3616(s1)
-        800A16D8	andi   v0, v0, $0040
-        800A16DC	beq    v0, zero, La16f4 [$800a16f4]
-        800A16E0	ori    v0, zero, $ffff
-        800A16E4	jal    funca35f8 [$800a35f8]
-        800A16E8	nop
-        800A16EC	addu   s1, v0, zero
+La16b0:	; 800A16B0
+800A16B0	lui    v0, $8010
+V0 = hu[V0 + 83c6];
+800A16B8	nop
+V0 = V0 & 001e;
+800A16C0	bne    v0, zero, La16f0 [$800a16f0]
+S1 = ffff;
+800A16C8	lui    v0, $8016
+V0 = hu[V0 + 376a];
+800A16D0	lui    s1, $8016
+S1 = hu[S1 + 3616];
+V0 = V0 & 0040;
+800A16DC	beq    v0, zero, La16f4 [$800a16f4]
+V0 = ffff;
+800A16E4	jal    funca35f8 [$800a35f8]
+800A16E8	nop
+S1 = V0;
 
-        La16f0:	; 800A16F0
-        800A16F0	ori    v0, zero, $ffff
+La16f0:	; 800A16F0
+V0 = ffff;
 
-        La16f4:	; 800A16F4
-        FP = FP + 1;
-    800A16F4	bne    s1, v0, La1200 [$800a1200]
+La16f4:	; 800A16F4
+FP = FP + 1;
+800A16F4	bne    s1, v0, La1200 [$800a1200]
 
     FP = FP - 1;
 }
 
-A0 = 8;
-A1 = 801c0000;
-A2 = 0;
-func14578;
+A1 = w[80048d84 + 8 * 8 + 4];
+A0 = w[80048d84 + 8 * 8 + 0];
+A3 = 0;
+A2 = 801c0000;
+func33e34();
+
 
 A0 = 800a3354;
-func145bc;
+func145bc();
 
 A0 = 801c0000;
 A1 = 801b0000;
-func15ca0;
+func15ca0();
 
-func1b000;
+func1b000();
 
 // copy party back
 S0 = 0;
