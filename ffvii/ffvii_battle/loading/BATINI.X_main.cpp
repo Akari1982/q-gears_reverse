@@ -1,0 +1,1843 @@
+////////////////////////////////
+// func1b0050
+// main init function
+// we load scene and unit data here
+
+S5 = A0; // battle id
+
+A0 = -1;
+func3cedc;
+
+A0 = V0;
+func14c44;
+
+A0 = -1;
+func3cedc;
+
+// init player
+// init data in player structure
+S0 = 0;
+loop1b0090:	; 801B0090
+    A0 = S0;
+    system_init_player_weapon_stat();
+
+    A0 = S0;
+    system_init_player_materia();
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+801B00A8	bne    v0, zero, loop1b0090 [$801b0090]
+
+system_calculate_total_lure_gil_preemptive_value();
+
+// read 0x7e battle string from kernel to temp
+A0 = 7e;
+func1521c();
+
+// write 0x10
+[800fafd0] = w(bu[V0 + 0]);
+// write 0x21
+[800f7ed0] = w(bu[V0 + 1]);
+
+// init some values
+funca3278();
+
+// init some array
+funca283c();
+
+// init some array
+funcad480();
+
+// clear attack stack data.
+V0 = 1f8;
+loop1b00f8:	; 801B00F8
+    [800f692c + 8 + V0] = b(ff); // init priority
+    V0 = V0 - 8;
+801B0108	bgez   v0, loop1b00f8 [$801b00f8]
+
+V0 = 48;
+loop1b0118:	; 801B0118
+    [800f6b34 + V0] = b(ff);
+    V0 = V0 - 8;
+801B0128	bgez   v0, loop1b0118 [$801b0118]
+
+V0 = 8;
+loop1b0138:	; 801B0138
+    [800f6b86 + V0] = b(ff);
+    V0 = V0 - 8;
+801B0148	bgez   v0, loop1b0138 [$801b0138]
+
+funca71f4();
+
+[801620a8] = w(-1);
+
+A0 = -1;
+funcdcf94();
+
+// init some values in unit structures
+S0 = 0;
+loop1b0178:	; 801B0178
+    [800f83e0 + S0 * 68 + 08] = b(ff);
+    [800f83e0 + S0 * 68 + 13] = b(10);
+    S0 = S0 + 1;
+    V0 = S0 < a;
+801B0198	bne    v0, zero, loop1b0178 [$801b0178]
+
+funca55bc();
+
+initbattle_init_player();
+
+initbattle_init_item();
+
+// init enemy
+S4 = -1;
+S3 = 1;
+A0 = S5;
+A1 = 0;
+initbattle_load_enemy_from_scene();
+
+initbattle_init_unit_datas();
+
+// battle speed
+A0 = bu[8009d7bc];
+func1b085c();
+
+// set atb type
+V0 = hu[8009d7be]; // config flags
+V0 = V0 & c000; // atb type
+V0 = V0 >> 6;
+[800f7daa] = h(V0);
+
+S0 = 0;
+loop1b0200:	; 801B0200
+    A0 = S0;
+    funcae954();
+
+    if (b[800f83e0 + S0 * 68 + 8] != -1)
+    {
+        [800f83a4 + a] = h(hu[800f83a4 + a] | (1 << S0));
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < a;
+801B0230	bne    v0, zero, loop1b0200 [$801b0200]
+
+[800f83a4 + 04] = b(bu[8016360c + 8 + 12]);
+[800f83a4 + 28] = h(S5); // battle id
+
+func1b19ac();
+
+battle_update_unit_mask();
+
+// we run player setup ai if needed here
+func1b1120();
+
+// we run enemy setup here
+func1b2308();
+
+// run scripts for unit 3
+funca61d4;
+
+battle_update_unit_mask();
+
+// init time values for units
+initbattle_init_units_time_value();
+
+// copy current hp and mp to 0x44 structure
+funca4480();
+
+[800f7de8] = h(hu[800f7de8] | 1);
+
+// try sneack attacks
+S0 = 0;
+loop1b02ac:	; 801B02AC
+    A0 = S0;
+    A1 = 1;
+    funca5bc8;
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+801B02BC	bne    v0, zero, loop1b02ac [$801b02ac]
+
+// if not preemprive battle
+V0 = hu[800f83a4 + 2c];
+if (V0 & 0008 == 0)
+{
+    funca2894;
+}
+else
+{
+    // set battle speed to 0x80
+    A0 = 0080;
+    func1b085c();
+
+    // set atb type to 0
+    [800f7daa] = h(0); // atb type
+
+    S0 = 0;
+    L1b02f0:	; 801B02F0
+        A0 = S0;
+        func1b137c();
+
+        S0 = S0 + 1;
+        V0 = S0 < 3;
+    801B0300	beq    v0, zero, L1b0318 [$801b0318]
+    801B0304	nop
+    801B0308	j      L1b02f0 [$801b02f0]
+}
+
+V0 = hu[800f83a4 + 2c];
+if (V0 & 0004)
+{
+    V1 = w[GP + 244];
+    if (V1 & 0004 == 0)
+    {
+        V0 = V1 | 0004;
+        [GP + 244] = w(V0);
+        [80075d04] = w(-1);
+    }
+
+
+
+    A2 = 80075d08;
+    T1 = 80075d04;
+    A3 = 1a0;
+    A1 = hu[800f83a4 + 30];
+    V1 = 1;
+    801B0380	sll    v0, a1, $01
+    801B0384	addu   v0, v0, a1
+    801B0388	sll    a0, v0, $01
+    801B038C	sllv   a0, a0, v1
+    801B0390	addiu  v1, a2, $0004
+    801B0394	sll    v0, v0, $03
+    801B0398	addu   t0, v0, v1
+    801B039C	sw     a1, $0000(a2)
+
+    S0 = 0;
+    loop1b03a0:	; 801B03A0
+        V1 = w[T1];
+        if( V1 & A0 )
+        {
+            801B03B0	nor    v0, zero, a0
+            801B03B4	and    v0, v1, v0
+            801B03BC	sw     v0, $0000(t1)
+        }
+        else
+        {
+            V0 = b[800f83e0 + A3 + 8];
+            if (V0 != -1)
+            {
+                V0 = w[T0];
+                [800f83e0 + A3 + 2c] = w(V0); // current hp
+                if (V0 == 0)
+                {
+                    [800f83e0 + A3 +  0] = w(w[800f83e0 + A3 +  0] | 00000001); // current status
+                    [800f83e0 + A3 + 44] = w(w[800f83e0 + A3 + 44] | 00000001); // init status
+                    [800f83e4 + A3] = w(w[800f83e4 + A3] & ffffffe7);
+                }
+            }
+        }
+
+        L1b0448:	; 801B0448
+        A0 = A0 << 1;
+        T0 = T0 + 4;
+        S0 = S0 + 1;
+        A3 = A3 + 68;
+        V0 = S0 < 6;
+    801B0458	bne    v0, zero, loop1b03a0 [$801b03a0]
+
+    battle_update_unit_mask();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// initbattle_init_player()
+
+T4 = 800f5bb8;
+S5 = 800f5efc;
+structure_44 = 800f5bb8;
+
+total_dexterity = w(0);
+number_of_party = w(0);
+
+[800f83a4 + 18] = h(0);
+
+
+
+party_id = 0;
+L1b0928:	; 801B0928
+    FP = bu[8009cbdc + party_id]; // character id in party slot
+
+    [801636b8 + party_id * 10] = b(-1);
+
+    ui_structure = 800f5e60 + party_id * 34;
+    structure_440 = 8009d84c + party_id * 440;
+    structure_68 = 800f83e0 + party_id * 68;
+
+    if (FP != ff)
+    {
+        T2 = 0;
+        T3 = party_id * 10;
+        T4 = party_id * 44;
+        T1 = 0;
+
+        L1b09a8:	; 801B09A8
+            savemap_player = 8009c738 + T1; // player records in savemap
+
+
+
+            V0 = hu[8016376A]; // previous battle result
+            if (V0 & 0040)
+            {
+                A3 = 80167938;
+                A2 = savemap_player;
+                T0 = savemap_player + 80;
+
+                loop1b09d8:	; 801B09D8
+                    [A3 + 0] = w(w[A2 + 0]);
+                    [A3 + 4] = w(w[A2 + 4]);
+                    [A3 + 8] = w(w[A2 + 8]);
+                    [A3 + c] = w(w[A2 + c]);
+
+                    A2 = A2 + 10;
+                    A3 = A3 + 10;
+                801B09FC	bne    a2, t0, loop1b09d8 [$801b09d8]
+
+                [A3] = w(w[A2]);
+            }
+
+
+
+            // init player data for this player
+            V0 = bu[savemap_player];
+            if (V0 == FP)
+            {
+                [structure_44 + party_id * 44 + 0c] = b(FF);
+                [structure_44 + party_id * 44 + 0f] = b(FF);
+                [structure_44 + party_id * 44 + 29] = b(1);
+
+                [801636b8 + T3] = b(FP);
+
+                [structure_68 + 04] = w(00000008);
+                [structure_68 + 08] = b(FP); // enemy index
+                [structure_68 + 09] = b(bu[savemap_player + 1]); // set level
+                [structure_68 + 0c] = b(FP + 10); // formation id
+                [structure_68 + 11] = b(5);
+                [structure_68 + 16] = b(0);
+                [structure_68 + 56] = b(8);
+
+                [ui_structure + 0] = w(savemap_player);
+
+
+
+                // add bits for player units
+                T4 = party_id;
+                V0 = hu[800f83bc];
+                V1 = 1 << T4;
+                V0 = V0 | V1;
+                [800f83bc] = h(V0);
+
+
+
+                V0 = bu[savemap_player + 20]; // row of character in savemap
+                if (V0 & 01 == 0) // if back row
+                {
+                    [structure_68 + 4] = w(w[structure_68 + 4] | 00000040);
+                }
+
+
+
+                // set hp/mp
+                [structure_68 + 2c] = w(h[structure_440 + 10]);
+                [structure_68 + 28] = h(h[structure_440 + 14]);
+                [ui_structure + 0e] = h(w[structure_68 + 2c]);
+                [ui_structure + 0c] = h(h[structure_68 + 28]);
+
+
+
+                // copy and init some values
+                A0 = structure_440;
+                A1 = ui_structure;
+                A2 = structure_68;
+                func1b18f8();
+
+
+
+                [structure_68 + 12] = b(10);
+                [structure_68 + 44] = w(0);
+
+
+
+                // set sadness/fury flags
+                V0 = bu[savemap_player + 1f];
+                V0 = V0 & 30;
+                [structure_68 + 0] = w(V0);
+
+
+
+                // set status protect.
+                [structure_44 + party_id * 44 + 34] = w(w[structure_440 + 48]);
+
+
+
+                // init attack data from weapon
+                [S5 + party_id * 18 + 00] = b(bu[structure_440 + 408 + 0]);
+                [S5 + party_id * 18 + 01] = b(bu[structure_440 + 408 + 1]);
+                [S5 + party_id * 18 + 02] = b(bu[structure_440 + 408 + 2]);
+                [S5 + party_id * 18 + 03] = b(bu[structure_440 + 408 + 8]);
+                [S5 + party_id * 18 + 04] = b(bu[structure_440 + 408 + 27]);
+                [S5 + party_id * 18 + 05] = b(bu[structure_440 + 408 + 7]);
+                [S5 + party_id * 18 + 0e] = h(hu[structure_440 + 408 + 10] | hu[structure_440 + 3c]); // attack element
+                [S5 + party_id * 18 + 10] = h(hu[structure_440 + 408 + c]);
+                [S5 + party_id * 18 + 12] = h(hu[structure_440 + 408 + 28]);
+                [S5 + party_id * 18 + 14] = w(w[structure_440 + 44]); // status attack
+
+
+
+                V1 = bu[savemap_player + 1d]; // armor id
+                [structure_68 + 0f] = b(bu[80071e44 + V1 * 24 + 4]); // evade
+                [structure_68 + 4d] = b(bu[80071e44 + V1 * 24 + 5]); // magic evade
+
+
+
+                // add permanent statuses from accessory
+                A0 = party_id;
+                A1 = bu[savemap_player + 1e]; // equipped accessory
+                func1b1598();
+
+
+
+                [structure_68 + 50] = h(0);
+                [structure_68 + 52] = h(ffff);
+
+
+
+                // 
+                A0 = 0;
+                A1 = S5 + party_id * 18;
+                S6 = 1;
+                loop1b0be4:	; 801B0BE4
+                    V1 = bu[structure_440 + 408 + 24 + A0];
+                    V0 = bu[structure_440 + 408 + b];
+                    if (V0 & S6)
+                    {
+                        V1 = V1 | 0100;
+                    }
+
+                    [A1 + 8] = h(V1);
+
+                    S6 = S6 + 1;
+                    A0 = A0 + 1;
+                    A1 = A1 + 2;
+                    V0 = A0 < 3;
+                801B0C10	bne    v0, zero, loop1b0be4 [$801b0be4]
+
+
+
+                // remove long range flag
+                V0 = bu[structure_44 + party_id * 44 + 29];
+                V0 = V0 & fd;
+                [structure_44 + party_id * 44 + 29] = b(V0);
+
+                // if long range materia equipped set weaon to long range
+                V0 = bu[structure_440 + 23];
+                if (V0 & 04)
+                {
+                    V0 = bu[S5 + party_id * 18 + 0];
+                    V0 = V0 & df;
+                    [S5 + party_id * 18 + 0] = b(V0);
+                }
+
+                // add long range flag if such weapon is equipped
+                if ((bu[S5 + party_id * 18 + 0] & 20) == 0)
+                {
+                    V0 = bu[structure_44 + party_id * 44 + 29];
+                    V0 = V0 | 2;
+                    [structure_44 + party_id * 44 + 29] = b(V0);
+                }
+
+
+
+                [structure_44 + party_id * 44 + 4] = h(0);
+
+                [structure_440 + 18] = h(0);
+                [structure_440 + 1a] = h(0);
+                [structure_440 + 1c] = h(0);
+                [structure_440 + 1e] = h(0);
+                [structure_440 + 20] = b(1);
+                [structure_440 + 22] = b(0);
+
+
+
+                // unset limit
+                [ui_structure + 5] = b(ff);
+
+
+
+                // if players with limit
+                if (FP < 9)
+                {
+                    limit_level = bu[savemap_player + e] - 1; // current limit level
+
+                    [ui_structure + 5] = b(limit_level);
+                    V0 = bu[savemap_player + f]; // limit bar
+                    [ui_structure + 8] = h(V0);
+                    [ui_structure + a] = h(V0);
+                    [ui_structure + 1c] = w(w[80082268 + FP * 38 + 28 + limit_level * 4]); // HP Divisor
+
+                    [structure_440 + 1a] = h(hu[ui_structure + 8] * 100);
+                    [structure_440 + 20] = b(bu[savemap_player + e]);
+
+                    A0 = FP;
+                    A1 = hu[savemap_player + 22];
+                    A2 = structure_440 + ac;
+                    func1b13dc();
+                }
+
+
+
+                // add activate flag
+                [structure_68 + 4] = w(w[structure_68 + 4] | 00000008);
+
+
+
+                // if hp == 0 set death
+                if( w[structure_68 + 2c] == 0 ) // current hp
+                {
+                    [structure_68 + 0] = w(w[structure_68 + 0] | 00000001);
+                }
+
+
+
+                // change some attack types
+                A0 = party_id;
+                func1b11bc();
+
+
+
+                A0 = party_id;
+                funca4ba4();
+
+
+
+                // if currently limit break
+                if( hu[ui_structure + 8] == ff )
+                {
+                    A0 = party_id;
+                    funca4e80();
+
+                    [800f5bc0 + party_id * 44] = h(hu[800f5bc0 + party_id * 44] & fffe);
+                }
+
+
+
+                // if we have some status write something to 80163798 stack
+                if( w[structure_68 + 0] != 0 )
+                {
+                    A0 = party_id;
+                    funcb108c();
+                }
+
+
+
+                A0 = savemap_player;
+                func1b1530(); // we check enemy skill materia here.
+                [ui_structure + 24] = w(V0);
+                [ui_structure + 28] = w(V0);
+
+
+
+                number_of_party = number_of_party + 1;
+
+                V0 = bu[savemap_player + 6]; // dexterity
+                total_dexterity = total_dexterity + V0;
+
+                break;
+            }
+
+            T2 = T2 + 1;
+            T1 = T1 + 84;
+            V0 = T2 < 9;
+        801B0E00	bne    v0, zero, L1b09a8 [$801b09a8]
+    }
+
+    party_id = party_id + 1;
+    V0 = party_id < 3;
+801B0E68	bne    v0, zero, L1b0928 [$801b0928]
+
+
+
+if (number_of_party != 0)
+{
+    [800f7da8] = h((total_dexterity - 1 + number_of_party) / number_of_party + 32);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b1530()
+savemap_player = S0 = A0;
+
+S1 = 0;
+S2 = 0
+loop1b1550:	; 801B1550
+    A0 = w[savemap_player + 40 + S2 * 4]; // weapon materia
+    func1b14e8();
+
+    S1 = S1 | V0;
+
+    A0 = w[savemap_player + 60 + S2 * 4]; // armor materia
+    func1b14e8();
+
+    S1 = S1 | V0;
+
+    S2 = S2 + 1;
+    V0 = S2 < 8;
+801B1574	bne    v0, zero, loop1b1550 [$801b1550]
+
+return S1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b14e8()
+
+A1 = 0;
+materia_id = A0 & FF;
+if (materia_id != FF)
+{
+    V0 = bu[800730D0 + materia_id * 14 + 0d]; // materia type from kernel
+
+    V0 = V0 & f;
+    if (V0 == 7) // enemy skill materia?
+    {
+        V1 = A0 >> 8;
+        A1 = V1 | 80000000;
+    }
+}
+
+return A1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b18f8()
+//                A0 = S0; 0x440
+//                A1 = S4; // ui
+//                A2 = S1; // 0x68
+
+[A2 + 14] = b(bu[A0 + 06]); // dexterity
+[A2 + 15] = b(bu[A0 + 07]); // luck
+[A2 + 30] = w(h[A0 + 12]);  // max hp
+[A2 + 2a] = h(h[A0 + 16]);  // max mp
+[A2 + 0d] = b(hu[A0 + 08]); // attack
+[A2 + 0e] = b(hu[A0 + 0c]); // magic
+[A2 + 20] = h(hu[A0 + 0a]); // defense
+[A2 + 22] = h(hu[A0 + 0e]); // magic defense
+
+V1 = bu[A2 + d];
+if (V1 == 0)
+{
+    [A2 + d] = b(1);
+}
+
+[A1 + 12] = h(w[A2 + 30]); // max hp
+[A1 + 10] = h(hu[A2 + 2a]); // max mp
+
+V0 = bu[A0 + 23];
+if (V0 & 08) // hp<>mp equipped
+{
+    [A1 + 16] = h(03e7);
+    [A1 + 14] = h(270f);
+}
+else
+{
+    [A1 + 16] = h(270f);
+    [A1 + 14] = h(03e7);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// initbattle_init_item()
+
+T0 = 0;
+A3 = 0;
+T1 = 0;
+
+loop1b1cbc:	; 801B1CBC
+    T2 = 0;
+    A1 = 0;
+    A2 = 801671b8 + T1;
+    A0 = hu[8009cbe0 + A3 * 2]; // party item
+    if (A0 != ffff)
+    {
+        V1 = b;
+        T2 = A0 >> 9;
+        A0 = A0 & 1ff;
+
+        // usual item
+        if (A0 < 80)
+        {
+            V1 = hu[800722cc + A0 * 1c + a]; // item command restriction
+            V1 = V1 & b;
+            A1 = bu[800722cc + A0 * 1c + c]; // attack target
+        }
+        // weapon
+        else if (A0 < 100)
+        {
+            V0 = hu[800738a0 + (A0 - 80) * 2c + 2a]; // item command restriction
+            V1 = V0 & b;
+            A1 = bu[800738a0 + (A0 - 80) * 2c + 00]; // attack target
+        }
+        // armor
+        else if (A0 < 120)
+        {
+            V0 = hu[80071e44 + (A0 - 100) * 24 + 20];
+            V1 = V0 & b;
+            A1 = 3;
+        }
+        // accesory
+        else if (A0 < 140)
+        {
+            V0 = hu[80071c32 + (A0 - 120) * 10];
+            V1 = V0 & b;
+            A1 = 3;
+        }
+
+        T0 = A3 + 1;
+    }
+
+    T1 = T1 + 6;
+    A3 = A3 + 1;
+    V0 = A3 < 140;
+
+    [A2 + 0] = h(A0);
+    [A2 + 2] = b(T2);
+    [A2 + 3] = b(A1);
+    [A2 + 4] = b(V1);
+801B1DD4	bne    v0, zero, loop1b1cbc [$801b1cbc]
+
+
+
+V0 = T0 + 1;
+V1 = V0 >> 1f;
+V0 = V0 + V1;
+V1 = V0 >> 1;
+if (V1 < 3)
+{
+    V1 = 3;
+}
+
+[80166f74] = b(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// initbattle_get_id_of_scene_file_with_battle_id()
+V1 = 1;
+
+loop1b273c:	; 801B273C
+    V0 = bu[80082268 + f1c + V1]; // id of file
+    if (A0 < V0)
+    {
+        break;
+    }
+
+    V1 = V1 + 1;
+    V0 = V1 < 40;
+801B2760	bne    v0, zero, loop1b273c [$801b273c]
+
+return V1 - 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// initbattle_load_enemy_from_scene()
+
+battle_id = A0;
+// A1 = 0;
+801B23E0	addiu  sp, sp, $e050 (=-$1fb0)
+S4 = battle_id;
+S2 = A1;
+S0 = S4;
+S5 = 801c0000;
+
+if (S4 != 0)
+{
+    S0 = S4 + 3;
+}
+
+S0 = S0 / 4;
+A0 = S0;
+initbattle_get_id_of_scene_file_with_battle_id();
+S1 = V0;
+
+// get offset to scene file.
+A0 = 7;
+func144d8;
+
+// extract scene file
+A0 = V0 + S1 * 4;
+A1 = 2000;
+A2 = 801c0000;
+A3 = 0;
+func33e34;
+
+
+
+V0 = bu[80083184 + S1];
+S3 = S0 - V0;
+
+// unknown
+A0 = S2;
+func145bc;
+
+S3 = w[801c0000 + S3 * 4];
+
+
+
+// extract???
+A0 = 801c0000 + S3 * 4;
+A1 = SP + 110;
+func17108;
+
+
+
+// id in battle file
+S3 = S4 - S0 * 4;
+
+
+
+// copy enemy ID
+A0 = 8016360C;
+A1 = SP + 110;
+A2 = 8;
+func14a00;
+
+// copy battle setup 1
+A0 = 8016360C + 8;
+A1 = SP + 110 + S3 * 14 + 8;
+A2 = 14;
+func14a00;
+
+// copy battle setup 2
+A0 = 8016360C + 1C;
+A1 = SP + 110 + S3 * 30 + 58;
+A2 = 30;
+func14a00;
+
+// copy battle formation
+A0 = 8016360C + 4C;
+A1 = SP + 110 + S3 * 60 + 118;
+A2 = 60;
+func14a00;
+
+// copy enemy data
+A0 = 800f5f44;
+A1 = SP + 110 + 298;
+A2 = 228;
+func14a00;
+
+// copy attack data
+A0 = 800f616c;
+A1 = SP + 110 + 4c0;
+A2 = 380;
+func14a00;
+
+// copy attack ID
+A0 = 800f5f44 + 5a8;
+A1 = SP + 110 + 840;
+A2 = 40;
+func14a00;
+
+// copy attack names
+A0 = 800f5f44 + 5e8;
+A1 = SP + 110 + 880;
+A2 = 400;
+func14a00;
+
+// copy FF padding
+A0 = 800f6ba4;
+A1 = SP + 110 + c80;
+A2 = 200;
+func14a00;
+
+// copy enemy AI
+A0 = 800f6da4;
+A1 = SP + 110 + e80;
+A2 = 1000;
+func14a00;
+
+
+
+// some camera modification acording to previous battle result some flag and camera
+if ((hu[8016376a] & 4) && (hu[8016360C + 8 + 10] & 10) && (bu[8016360C + 8 + 12] == 0))
+{
+    [8016360c + 8 + 12] = b(1);
+}
+
+
+
+V0 = bu[8016360c + 8 + 12];
+//00 01 02 03 04 03 03 03 05
+[800f7dc8] = h(bu[801b0044 + V0]);
+
+
+
+// previous battle result modification
+V1 = hu[8016376a];
+// if we must continue arena battle
+if (V1 & 40)
+{
+    V0 = hu[8016360c + 8 + 10];
+    V0 = V0 | 4;
+    [8016360c + 8 + 10] = h(V0);
+
+    [80163614] = h(25); // set battle location id to 0x25
+
+    get_random_byte_from_table;
+
+    [8016360c + 8 + 13] = b((V0 & 3) + 60);
+    [8016360c + 8 + 04] = h(1);
+
+    // boost enemy
+    S3 = 0;
+    loop1b2630:	; 801B2630
+        // enemy hp doubled
+        [800f5f44 + S3 * b8 + a4] = w(w[800f5f44 + S3 * b8 + a4] * 2);
+
+        A0 = bu[800f5f44 + S3 * b8 + 24];
+        initbattle_calculate_stat_add25_percent();
+        [800f5f44 + S3 * B8 + 24] = b(V0);
+
+        A0 = bu[800f5f44 + S3 * b8 + 26];
+        initbattle_calculate_stat_add25_percent();
+        [800f5f44 + S3 * b8 + 26] = b(V0);
+
+        S3 = S3 + 1;
+        V0 = S3 < 3;
+    801B2664	bne    v0, zero, loop1b2630 [$801b2630]
+}
+else if (V1 & 08)
+{
+    V0 = hu[8016360c + 8 + 10];
+    V0 = V0 & fffb;
+    [8016360c + 8 + 10] = h(V0);
+}
+
+
+
+V0 = hu[8016360c + 8 + 10];
+if ((V0 & 4) == 0)
+{
+    [8016376a] = h(hu[8016376a] | 8);
+}
+
+
+
+[800f7db2] = h(hu[8016360c + 8 + 4]);
+
+
+
+V1 = hu[800f7dc8];
+if (V1 == 1 || V1 == 3)
+{
+    [800f7db2] = h(1);
+}
+
+[800f7db6] = h(hu[800f7db2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// initbattle_init_unit_datas
+[800f83be] = h(0);
+
+
+
+// clear number of enemies with same id
+V0 = 800f7dd6;
+T3 = 2;
+loop1b1e48:	; 801B1E48
+    [V0] = b(0);
+    T3 = T3 - 1;
+    V0 = V0 - 1;
+801B1E50	bgez   t3, loop1b1e48 [$801b1e48]
+
+
+
+// init enemy 0x80 structure with zeros
+T3 = 0;
+V1 = 800f89f0;
+loop1b1e64:	; 801B1E64
+    A2 = 1F;
+    V0 = V1 + 7C;
+
+    loop1b1e6c:	; 801B1E6C
+        [V0] = w(0);
+
+        A2 = A2 - 1;
+        V0 = V0 - 4;
+    801B1E74	bgez   a2, loop1b1e6c [$801b1e6c]
+
+    T3 = T3 + 1;
+    V1 = V1 + 80;
+    V0 = T3 < 6;
+801B1E84	bne    v0, zero, loop1b1e64 [$801b1e64]
+
+
+
+T3 = 0;
+L1b1ecc:	; 801B1ECC
+    [800f8580 + T3 * 68 + 00] = w(0);
+    [800f8580 + T3 * 68 + 04] = w(0);
+    [800f8580 + T3 * 68 + 08] = b(ff);
+    [800f8580 + T3 * 68 + 24] = h(ffff);
+    [800f8580 + T3 * 68 + 4F] = b(ff);
+
+    [800f692c + 208 + 20 + T3 * 8] = b(ff);
+
+
+
+    // init 10-1f with zeros
+    A2 = F;
+    V1 = 800f5cc8 + T3 * 44 + 1F;
+    loop1b1f18:	; 801B1F18
+        [V1] = b(0);
+
+        A2 = A2 - 1;
+        V1 = V1 - 1;
+    801B1F20	bgez   a2, loop1b1f18 [$801b1f18]
+
+
+
+    // init 20-27 with zeros
+    A2 = 7;
+    V0 = 800f5cc8 + T3 * 44 + 27;
+    loop1b1f30:	; 801B1F30
+        [V0] = b(0);
+
+        A2 = A2 - 1;
+        V0 = V0 - 1;
+    801B1F38	bgez   a2, loop1b1f30 [$801b1f30]
+
+
+
+    A0 = hu[8016360c + 4c + T3 * 10];
+    // if enemy exist
+    if (A0 != -1)
+    {
+        [800f8580 + T3 * 68 + 24] = h(A0);
+
+
+
+        index = 0;
+        loop1b1f64:	; 801B1F64
+            V0 = h[8016360c + index * 2];
+            if (V0 == A0)
+            {
+                break;
+            }
+
+            index = index + 1;
+            V0 = index < 3;
+        801B1F7C	bne    v0, zero, loop1b1f64 [$801b1f64]
+
+
+
+        // increment enemy index
+        V0 = bu[800f7dd4 + index];
+        V0 = V0 + 1;
+        [800f7dd4 + index] = b(V0);
+
+
+
+        [8016360c + 4c + T3 * 10 + 00] = h(index); // store index here instead of real enemy id
+
+        [800f8580 + T3 * 68 + 00] = w(0);
+        [800f8580 + T3 * 68 + 08] = b(index);
+        [800f8580 + T3 * 68 + 09] = b(bu[800f5f44 + index * b8 + 20]);
+        [800f8580 + T3 * 68 + 0d] = b(bu[800f5f44 + index * b8 + 24]);
+        [800f8580 + T3 * 68 + 0e] = b(bu[800f5f44 + index * b8 + 26]);
+        [800f8580 + T3 * 68 + 0f] = b(bu[800f5f44 + index * b8 + 23]);
+        [800f8580 + T3 * 68 + 10] = b(0);
+        [800f8580 + T3 * 68 + 11] = b(1);
+        [800f8580 + T3 * 68 + 12] = b(bu[800f5f44 + index * b8 + a2]);
+        [800f8580 + T3 * 68 + 14] = b(bu[800f5f44 + index * b8 + 21]);
+        [800f8580 + T3 * 68 + 15] = b(bu[800f5f44 + index * b8 + 22]);
+        [800f8580 + T3 * 68 + 20] = h(bu[800f5f44 + index * b8 + 25] * 2);
+        [800f8580 + T3 * 68 + 22] = h(bu[800f5f44 + index * b8 + 27] * 2);
+        [800f8580 + T3 * 68 + 28] = h(hu[800f5f44 + index * b8 + 9c]);
+        [800f8580 + T3 * 68 + 2a] = h(hu[800f5f44 + index * b8 + 9c]);
+        [800f8580 + T3 * 68 + 2c] = w(w[800f5f44 + index * b8 + a4]);
+        [800f8580 + T3 * 68 + 30] = w(w[800f5f44 + index * b8 + a4]);
+        [800f8580 + T3 * 68 + 44] = w(0);
+        [800f8580 + T3 * 68 + 4c] = b(1);
+        [800f8580 + T3 * 68 + 4e] = b(hu[8016360C + 8 + 14 + 30 + T3 * 10 + 8]);
+        [800f8580 + T3 * 68 + 50] = h(0);
+        [800f8580 + T3 * 68 + 52] = h(ffff);
+        [800f8580 + T3 * 68 + 56] = b(2);
+        [800f8580 + T3 * 68 + 58] = w(w[800f5f44 + index * b8 + ac]);
+        [800f8580 + T3 * 68 + 5c] = w(w[800f5f44 + index * b8 + a8]);
+
+        V0 = w[8016360c + 8 + 14 + 30 + T3 * 10 + c];
+        V0 = V0 & 0000001f;
+        [800f8580 + T3 * 68 + 04] = w(V0);
+
+
+
+        [800f5cc8 + T3 * 44 + 38] = w(800f5f44 + index * b8);
+        [800f5cc8 + T3 * 44 + 0c] = b(ff);
+        [800f5cc8 + T3 * 44 + 0d] = b(ff);
+        [800f5cc8 + T3 * 44 + 0f] = b(ff);
+
+        // set status immunities
+        V0 = w[800f5f44 + index * b8 + b0];
+        V0 = 0 nor V0;
+        [800f5cc8 + T3 * 44 + 34] = w(V0);
+
+
+
+        // add bits for inited enemy
+        V1 = hu[800f83a4 + 1a];
+        V0 = 1 << (T3 + 4);
+        V1 = V1 | V0;
+        [800f83a4 + 1a] = h(V1);
+
+
+
+        // init formation number
+        [800f8580 + T3 * 68 + 0c] = b(0);
+        if (T3 > 0)
+        {
+            A0 = hu[800f8580 + T3 * 68 + 24]; // real enemy id
+            A2 = 0;
+            loop1b211c:	; 801B211C
+                V0 = hu[800f83e0 + 4 * 68 + V1 + 24];
+                if (V0 == A0)
+                {
+                    V0 = bu[800f8580 + T3 * 68 + 0c];
+                    V0 = V0 + 1;
+                    [800f8580 + T3 * 68 + 0c] = b(V0);
+                }
+
+                A2 = A2 + 1;
+                V1 = V1 + 68;
+
+                V0 = A2 < T3;
+            801B214C	bne    v0, zero, loop1b211c [$801b211c]
+        }
+
+
+
+        // add manipulate
+        A2 = 0;
+        // go through all manipulate
+        loop1b2168:	; 801B2168
+            [ + T3 * 60 + A2 * 6 + 00] = b(ff);
+            [80166f78 + T3 * 60 + A2 * 6 + 01] = b(0);
+            [80166f78 + T3 * 60 + A2 * 6 + 02] = b(0);
+            [80166f78 + T3 * 60 + A2 * 6 + 03] = b(3);
+
+            V1 = hu[800f5f44 + index * b8 + 94 + A2 * 2]; // manipulate attacks id
+            if( V1 != ffff )
+            {
+                A1 = 0;
+
+                // search for this attack
+                loop1b219c:	; 801B219C
+                    V0 = hu[800f64ec + A1 * 2];
+                    if( V0 == V1 )
+                    {
+                        V0 = bu[800f616c + A1 * 1c + c]; // target from attack data
+                        if( V0 != 0 )
+                        {
+                            V0 = V0 ^ 2;
+                        }
+
+                        [80166F78 + T3 * 60 + A2 * 6 + 00] = b(A1);
+                        [80166F78 + T3 * 60 + A2 * 6 + 02] = b(V0);
+                        [80166F78 + T3 * 60 + A2 * 6 + 03] = b(0);
+                        break;
+                    }
+
+                    A1 = A1 + 1;
+                    V0 = A1 < 20;
+                801B21E4	bne    v0, zero, loop1b219c [$801b219c]
+            }
+
+            A2 = A2 + 1;
+            V0 = A2 < 3;
+        801B21F8	bne    v0, zero, loop1b2168 [$801b2168]
+
+
+
+        A2 = 3;
+        loop1b2220:	; 801B2220
+            V0 = 80166f78 + T3 * 60 + A2 * 6;
+            [V0 + 00] = b(FF);
+            [V0 + 01] = b(0);
+            [V0 + 02] = b(0);
+            [V0 + 03] = b(3);
+
+            A2 = A2 + 1;
+            V0 = A2 < 10;
+        801B223C	bne    v0, zero, loop1b2220 [$801b2220]
+
+
+
+        [800f5cc8 + T3 * 44 + 29] = b(0);
+    }
+
+    T3 = T3 + 1;
+    V0 = T3 < 6;
+801B2268	bne    v0, zero, L1b1ecc [$801b1ecc]
+
+
+
+T3 = 0;
+loop1b2280:	; 801B2280
+    V0 = h[8016360c + 8 + 14 + 30 + T3 * 10]; // enemy index
+    V0 = bu[800f7dd4 + V0];
+    if (V0 >= 2)
+    {
+        [800f5cc8 + T3 * 44 + f] = b(bu[800f83e0 + 4 * 68 + T3 * 68 + c]);
+    }
+
+    T3 = T3 + 1;
+    V0 = T3 < 6;
+801B22D0	bne    v0, zero, loop1b2280 [$801b2280]
+
+return;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b085c()
+
+config_speed = A0;
+V0 = 10000 / (((config_speed * 1e0 / 100) + 78) * 2);
+[800f7da6] = h(V0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b19ac
+enemy_mask = hu[800f83a4 + 1a];
+player_mask = hu[800f83a4 + 18]; // player mask
+
+S2 = 5;
+if (bu[8016360c + 8 + 12] == 7)
+{
+    S2 = fffffffa; // -6
+}
+
+V0 = hu[800f7dc8];
+A0 = bu[801b003c + V0];
+
+if (A0 != ff) // FF 32 33 34 35 FF
+{
+    if (hu[800f83a4 + 28] != 03d6) // ruby weapon battle id
+    {
+        funcb1060;
+    }
+}
+
+
+
+A2 = 0;
+[SP + 10] = h(0); // right fighter
+[SP + 12] = h(0); // middle fighter
+[SP + 14] = h(0); // left fighter
+
+V1 = hu[800f7dc8];
+if (V1 == 0)
+{
+    A2 = enemy_mask;
+    [SP + 10] = h(player_mask); // right fighter
+    [SP + 12] = h(enemy_mask); // middle fighter
+}
+else if (V1 == 1 || V1 == 3 || V1 == 5)
+{
+    V1 = 0 NOR S2;
+    A2 = player_mask & V1;
+
+    [SP + 10] = h(player_mask & S2);
+    [SP + 12] = h(enemy_mask);
+    [SP + 14] = h(player_mask & V1);
+
+    A1 = 0;
+    loop1b1b48:	; 801B1B48
+        V0 = enemy_mask >> (A1 + 4);
+        if (V0 & 1)
+        {
+            V0 = h[80163658 + A1 * 10 + 6];
+            if (V0 >= 0)
+            {
+                V0 = 1 << (A1 + 4);
+                A2 = A2 | V0;
+            }
+        }
+
+        A1 = A1 + 1;
+        V0 = A1 < 6;
+    801B1B80	bne    v0, zero, loop1b1b48 [$801b1b48]
+}
+else if (V1 == 2)
+{
+    A2 = player_mask;
+    [SP + 10] = h(enemy_mask);
+    [SP + 12] = h(player_mask);
+}
+else if (V1 == 4)
+{
+    [SP + 12] = h(player_mask);
+
+    A1 = 0;
+    loop1b1aa8:	; 801B1AA8
+        V0 = enemy_mask >> (A1 + 4);
+        A0 = 1 << (A1 + 4);
+        if (V0 & 1)
+        {
+            V0 = w[800f83e0 + 4 * 68 + A1 * 68 + 4];
+            V0 = V0 & 00000002;
+            V1 = hu[SP + 10 + V0 * 2];
+            V1 = V1 | A0;
+            [SP + 10 + V0 * 2] = h(V1);
+        }
+
+        A1 = A1 + 1;
+        V0 = A1 < 6;
+    801B1AF0	bne    v0, zero, loop1b1aa8 [$801b1aa8]
+
+
+
+    V1 = hu[SP + 14];
+    A2 = V1 | (player_mask & 0002);
+    if (hu[800f83a4 + 28] == 3d6) // if battle with ruby weapon
+    {
+        A2 = A2 & (0 NOR player_mask);
+    }
+}
+
+
+
+A1 = 0;
+loop1b1b9c:	; 801B1B9C
+    [800f83e0 + A1 * 68 + 4] = w(w[800f83e0 + A1 * 68 + 4] & ffffff7d); // remove 0x00000080 and 0x00000002 bits
+
+    // if we in left command add 0x00000002 bit
+    V0 = hu[SP + 14] >> A1;
+    if (V0 & 1)
+    {
+        [800f83e0 + A1 * 68 + 4] = w(w[800f83e0 + A1 * 68 + 4] | 00000002);
+    }
+
+    // looks like models that looks different direction
+    V0 = A2 & ffff >> A1;
+    if (V0 & 1)
+    {
+        [800f83e0 + A1 * 68 + 4] = w(w[800f83e0 + A1 * 68 + 4] | 00000080);
+    }
+
+    A1 = A1 + 1;
+    V0 = A1 < a;
+801B1BF0	bne    v0, zero, loop1b1b9c [$801b1b9c]
+
+
+
+A3 = 0;
+loop1b1c14:	; 801B1C14
+    A2 = w[800f83e0 + A3 * 68 + 4];
+    V1 = hu[800f7dc8];
+    A0 = A2 >> 6;
+    A0 = A0 & 1;
+
+    if (V1 >= 2)
+    {
+        if (V1 == 2)
+        {
+            A0 = A0 < 1;
+            [800f83e0 + A3 * 68 + 4] = w(w[800f83e0 + A3 * 68 + 4] XOR 0040);
+        }
+        else
+        {
+            A0 = 0;
+            // remove backrow if this is 3 row battle
+            [800f83e0 + A3 * 68 + 4] = w(w[800f83e0 + A3 * 68 + 4] & ffffffbf);
+        }
+    }
+
+    [801636be + A3 * 10] = h(A0);
+    A3 = A3 + 1;
+    V0 = A3 < 3;
+801B1C68	bne    v0, zero, loop1b1c14 [$801b1c14]
+
+
+
+[8016376e] = h(hu[SP + 10]);
+[80163770] = h(hu[SP + 12]);
+[80163772] = h(hu[SP + 14]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b1120()
+
+S0 = 0;
+loop1b1148:	; 801B1148
+    V0 = bu[801636b8 + S0 * 10];
+    if (V0 != -1)
+    {
+        V0 = w[800f83e0 + S0 * 68 + 0];
+        V0 = V0 & 00000001;
+        if (V0 == 0) // if not dead
+        {
+            // execute script 0 for players
+            A0 = S0;
+            A1 = 0;
+            A2 = 0;
+            funca6000;
+        }
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+801B1194	bne    v0, zero, loop1b1148 [$801b1148]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b2308()
+
+S2 = -1;
+
+S0 = 0;
+loop1b2328:	; 801B2328
+    V0 = h[80163658 + S0 * 10 + 0];
+    if (V0 != -1)
+    {
+        A0 = S0 + 4;
+        A1 = 0
+        A2 = 0;
+        funca6000;
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < 6;
+801B2354	bne    v0, zero, loop1b2328 [$801b2328]
+
+
+
+S0 = 0;
+loop1b2368:	; 801B2368
+    [80163658 + S0 * 10 + c] = w(w[800f83e0 + (S0 + 4) * 68 + 4]);
+    [801636b9 + (S0 + 4) * 10] = b(bu[800f83e0 + (S0 + 4) * 68 + 10]);
+    [800f83e0 + (S0 + 4) * 68 + 44] = w(w[800f83e0 + (S0 + 4) * 68 + 0]);
+
+    S0 = S0 + 1;
+    V0 = S0 < 6;
+801B23BC	bne    v0, zero, loop1b2368 [$801b2368]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// initbattle_init_units_time_value()
+
+S4 = hu[8016375a];
+S3 = 0;
+S0 = 0;
+loop1b069c:	; 801B069C
+    [800f5bbc + S0 * 44] = h(0);
+    V0 = S4 >> S0;
+    V0 = V0 & 1;
+    V1 = 0;
+    if (V0 != 0)
+    {
+        battle_opcodes_get_random;
+        V0 = V0 & ffff;
+
+        V1 = V0 / 2;
+        if (S3 < V1)
+        {
+            S3 = V1;
+        }
+    }
+
+    [SP + 10 + S0 * 4] = w(V1);
+    S0 = S0 + 1;
+    V0 = S0 < a;
+801B06E8	bne    v0, zero, loop1b069c [$801b069c]
+
+
+
+S0 = 0;
+loop1b0700:	; 801B0700
+    V0 = S4 >> S0;
+    V0 = V0 & 1;
+    if (V0 != 0)
+    {
+        V1 = hu[800f7dc8];
+        if (V1 == 0 || V1 == 5)
+        {
+            [SP + 10 + S0 * 4] = w(w[SP + 10 + S0 * 4] + e000 - S3);
+        }
+        if (V1 == 1 || V1 == 3)
+        {
+            if (S0 >= 4)
+            {
+                V0 = w[SP + 10 + S0 * 4];
+                [SP + 10 + S0 * 4] = w(V0 / 8);
+            }
+            else
+            {
+                [SP + 10 + S0 * 4] = w(fffe);
+            }
+        }
+        if (V1 == 2 || V1 == 4)
+        {
+            if (S0 >= 4)
+            {
+                [SP + 10 + S0 * 4] = w(w[SP + 10 + S0 * 4] + f000);
+            }
+            else
+            {
+                [SP + 10 + S0 * 4] = w(0);
+            }
+        }
+
+
+
+        V0 = hu[800f83a4 + 2c];
+        if (V0 & 8)
+        {
+            if (S0 < 3)
+            {
+                [SP + 10 + S0 * 4] = w(fffe);
+            }
+            else
+            {
+                [SP + 10 + S0 * 4] = w(0);
+            }
+        }
+
+        [800f5bb8 + S0 * 44 + 4] = h(w[SP + 10 + S0 * 4]);
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < a;
+801B07F8	bne    v0, zero, loop1b0700 [$801b0700]
+
+
+
+S0 = 0;
+loop1b080c:	; 801B080C
+    [8009d84c + S0 * 440 + 18] = h(hu[800f5bb8 + S0 * 44 + 4]);
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+801B0830	bne    v0, zero, loop1b080c [$801b080c]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b137c()
+
+[8009d84c + A0 * 440 + 21] = b(1);
+
+A1 = 1;
+loop1b13ac:	; 801B13AC
+    [8009d84c + A0 * 440 + 4c + A1 * 6 + 0] = b(ff);
+    [8009d84c + A0 * 440 + 4c + A1 * 6 + 1] = b(0);
+    [8009d84c + A0 * 440 + 4c + A1 * 6 + 2] = b(0);
+    [8009d84c + A0 * 440 + 4c + A1 * 6 + 3] = b(3);
+    [8009d84c + A0 * 440 + 4c + A1 * 6 + 4] = b(0);
+    [8009d84c + A0 * 440 + 4c + A1 * 6 + 5] = b(0);
+
+    A1 = A1 + 1;
+    V0 = A1 < 4;
+801B13CC	bne    v0, zero, loop1b13ac [$801b13ac]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b1598()
+// add permanent statuses from accessory
+party_id = A0;
+// A1 = equipped accessory
+T0 = A1;
+
+V0 = w[800f5e60 + A0 * 34 + 20];
+V1 = w[800f83e0 + A0 * 68 + 0]; // current status of player
+V0 = 0 NOR V0;
+V1 = V1 & V0;
+[800f83e0 + A0 * 68 + 0] = w(V1);
+
+V0 = w[800f5e60 + A0 * 34 + 20];
+V1 = w[800f5bb8 + A0 * 44 + 34]; // status protect
+V0 = 0 NOR V0;
+V1 = V1 & V0;
+[800f5bb8 + A0 * 44 + 34] = w(V1);
+
+[800f5e60 + A0 * 34 + 20] = w(0);
+[800f5bb8 + A0 * 44 + d] = b(ff);
+
+if (T0 != ff)
+{
+    V0 = bu[80071c24 + T0 * 10 + 5]; // special effect
+    V1 = V0 & ff;
+    [A0 + d] = b(V0);
+
+    switch (V0)
+    {
+        case 0: // haste
+        {
+            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00000100);
+            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00000100);
+            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00000100);
+        }
+        break;
+
+        case 1: // fury
+        {
+            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00800000);
+            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00800000);
+            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00800000);
+        }
+        break;
+
+        case 2: // death sentense
+        {
+            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00200000);
+            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00200000);
+            [800f5bb8 + A0 * 44 + 12] = b(ff);
+            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00200000);
+        }
+        break;
+
+        case 3: // reflect
+        {
+            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00040000);
+            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00040000);
+            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00040000);
+        }
+        break;
+
+        case 6: // barrier + magic barrier
+        {
+            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00030000);
+            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00030000);
+            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00030000);
+        }
+        break;
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b13dc()
+//                    A0 = FP;
+//                    A1 = hu[savemap_player + 22];
+//                    A2 = structure_440 + ac;
+
+S7 = A0;
+learned_limit = A1;
+S6 = A2; // structure_440ac
+
+active_limit = 0;
+S3 = S6;
+S1 = S6;
+
+S4 = 0;
+loop1b1424:	; 801B1424
+    S0 = 0;
+    V1 = bu[S1 + 0];
+    if (V1 != ff)
+    {
+        loop1b143c:	; 801B143C
+            A0 = S7; // party id
+            A1 = S0;
+            system_get_limit_id;
+
+            V1 = bu[S1 + 0];
+            if (V0 == V1)
+            {
+                break;
+            }
+
+            S0 = S0 + 1;
+            V0 = S0 < c;
+        801B145C	bne    v0, zero, loop1b143c [$801b143c]
+
+        if (S0 == c)
+        {
+            A0 = 26;
+            func155a4
+        }
+        else
+        {
+            V0 = learned_limit >> S0;
+            if (V0 & 01)
+            {
+                active_limit = active_limit + 1;
+                [S1 + 3] = b(bu[S3 + 14]);
+            }
+        }
+    }
+
+    S3 = S3 + 1c;
+    S1 = S1 + 1;
+    S4 = S4 + 1;
+    V0 = S4 < 3;
+801B14A4	bne    v0, zero, loop1b1424 [$801b1424]
+
+[S6 + 7] = b(0);
+[S6 + 6] = b(active_limit); // number of activated limit
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1b11bc()
+
+party_id = A0;
+T0 = 8009d84c + party_id * 440;
+[T0 + 21] = b(1);
+A3 = 0;
+T1 = ff;
+T2 = party_id * 18;
+A1 = party_id * 44;
+A0 = T0;
+
+loop1b11f8:	; 801B11F8
+    V1 = bu[A0 + 4c];
+
+    if (V1 != ff)
+    {
+        A2 = bu[800707c4 + V1 * 8 + 1]; // default target type
+        if (A2 == ff)
+        {
+            A2 = bu[800f5efc + party_id * 18]; // first byte from weapon info
+        }
+
+        // if attack replacers
+        if (V1 < 1c && V1 >= 18)
+        {
+            [A0 + 4c + 4] = b(ff);
+        }
+
+        // action 1 5 11 19 single enemy/ally attack
+        V1 = bu[A0 + 4c + 1];
+        if (V1 == 7)
+        {
+            // if long ranged
+            V0 = bu[800F5BB8 + A1 + 29];
+            if (V0 & 2)
+            {
+                [A0 + 4c + 1] = b(0);
+            }
+
+            V0 = bu[A0 + 4c + 4];
+            V1 = bu[A0 + 4c + 0];
+            if (V0 != 0 && V1 != 19)
+            {
+                A2 = A2 | 000c;
+            }
+
+            // if steal or mug
+            if (V1 == 5 || V1 == 11)
+            {
+                A2 = A2 | 0010;
+
+                V0 = bu[A0 + 4c + 4];
+                if (V0 != 0)
+                {
+                    [A0 + 4c + 1] = b(0);
+                }
+            }
+        }
+
+        V0 = A3 / 4;
+        V0 = V0 + 1;
+        [T0 + 21] = b(V0);
+    }
+
+    [A0 + 4c + 2] = b(A2);
+    A3 = A3 + 1;
+    A0 = A0 + 6;
+    V0 = A3 < 10;
+801B12E4	bne    v0, zero, loop1b11f8 [$801b11f8]
+
+
+
+T1 = ff;
+V1 = T0;
+T0 = V1 + 240;
+A1 = V1 + 1c0;
+A3 = A1;
+A2 = V1 + 300;
+
+loop1b1304:	; 801B1304
+    A0 = bu[V1 + 108];
+    if (A0 != ff)
+    {
+        if (V1 >= T0)
+        {
+            A0 = A0 + 48;
+        }
+        else
+        {
+            801B1318	slt    v0, v1, a3
+            801B1324	bne    v0, zero, L1b133c [$801b133c]
+
+            A0 = A0 + 8;
+        }
+
+        if (V1 < A1)
+        {
+            L1b133c:	; 801B133C
+            V0 = bu[800708c4 + A0 * 1c + c]; // attack type
+            V0 = V0 & 08;
+            if (V0 == 0)
+            {
+                [V1 + 10a] = b(0);
+            }
+        }
+    }
+
+    V1 = V1 + 8;
+    V0 = V1 < A2;
+801B136C	bne    v0, zero, loop1b1304 [$801b1304]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// initbattle_calculate_stat_add25_percent()
+A0 = A0 + A0 * 25 / 100;
+
+if (A0 >= 100)
+{
+    A0 = ff;
+}
+
+return A0;
+////////////////////////////////

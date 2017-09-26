@@ -28,13 +28,13 @@ if( battle_id != ffff )
         if( FP != 1 )
         {
             S0 = 800a3354;
-            S2 = 801b0490;
+            S2 = 801b0490; // func1b0490()
             S3 = 800b33a4;
         }
         else
         {
             S0 = 0;
-            S2 = 801b0050;
+            S2 = 801b0050; // func1b0050()
             S3 = 800b30e4;
         }
 
@@ -44,11 +44,11 @@ if( battle_id != ffff )
         func14578; // load BATTLE/BATINI.X
 
         A0 = S0;
-        func145bc;
+        func145bc();
 
         A0 = 801c0000;
         A1 = 801b0000;
-        func15ca0;
+        func15ca0();
 
         A0 = battle_id;
         800A1270	jalr   s2 ra // call function where we init datas func1b0050
