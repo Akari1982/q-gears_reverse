@@ -1,1 +1,1 @@
-adisasm BATINI.X BATINI.X.asm -v -b 801b0000 801b0000 -u -a
+adisasm WORLD.BIN_u WORLD.BIN_u.asm -v -b 800A0000 800A0B48 -u -a

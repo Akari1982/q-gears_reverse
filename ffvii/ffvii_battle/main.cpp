@@ -41,7 +41,7 @@ if( battle_id != ffff )
         A0 = 6;
         A1 = 801c0000;
         A2 = 0;
-        func14578; // load BATTLE/BATINI.X
+        func14578(); // load BATTLE/BATINI.X
 
         A0 = S0;
         func145bc();

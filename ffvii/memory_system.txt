@@ -1,0 +1,19 @@
+
+
+80010000-80070ffc main executable "SCUS_941" loaded here.
+
+80011170 [][][][] max working size of application here (00020000).
+
+80062d34 [][][][] size of stack (00008000).
+80062d44 GP (global pointer).
+
+80062e0c-8009fe94 clear this area with 0.
+
+80062e0c [][][][] store RA here before critical system bios func.
+
+8009fe98 start of heap.
+
+
+
+
+

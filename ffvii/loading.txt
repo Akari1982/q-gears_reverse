@@ -1,0 +1,2 @@
+From config settings "SCUS_941" loaded to 80010000-80070ffc and entry point 800110C0 executed.
+Entry point inits stack, heap and working area and runs main func11c1c().
