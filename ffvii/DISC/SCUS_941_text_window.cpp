@@ -208,7 +208,7 @@ L1f25c:	; 8001F25C
         }
 
         A3 = h[window_data + current_messege * 30 + 08]; // WINDOW width
-        [SP + 10] = w(h[window_data + current_messege * 30 + 0a]); // WINDOW height
+        A4 = h[window_data + current_messege * 30 + 0a]; // WINDOW height
         func43814();
 
         A0 = w[80062f24];

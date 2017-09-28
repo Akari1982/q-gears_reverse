@@ -17,9 +17,7 @@ S3 = 800e560c;
 La4668:	; 800A4668
     if( w[S2] != 0 )
     {
-        800A4678	jal    funcb7218 [$800b7218]
-
-        [800e5634] = w(V0);
+        [800e5634] = w(bu[8009d686]);
     }
     else
     {
@@ -46,32 +44,30 @@ La4668:	; 800A4668
     funcb717c(); // maybe get tutorial flags from game progress and flags
     S0 = V0;
 
-    V1 = w[S2 + 0000];
-    800A46F4	bne    v1, zero, La4724 [$800a4724]
-
-    V0 = (w[S4] - 24) < 4;
-
-    800A470C	beq    v0, zero, La4724 [$800a4724]
-    800A4710	nop
-    800A4714	blez   s0, La4750 [$800a4750]
-    A0 = 0009;
-    800A471C	j      La4750 [$800a4750]
-    A0 = 000a;
-
-    La4724:	; 800A4724
-    if( w[800e5634] != 0 )
+    if( ( w[S2] == 0 ) && ( (w[S4] - 24) < 4 ) )
     {
-        V0 = hu[800e5634] + 9;
+        if( S0 > 0 )
+        {
+            A0 = a;
+        }
+        else
+        {
+            A0 = 9;
+        }
     }
     else
     {
-        V0 = S0;
+        if( w[800e5634] != 0 )
+        {
+            A0 = h[800e5634] + 9;
+        }
+        else
+        {
+            A0 = S0;
+        }
     }
 
-    A0 = (V0 << 10) >> 10;
-
-    La4750:	; 800A4750
-    800A4750	jal    funca0d2c [$800a0d2c]
+    funca0d2c();
 
     funcb650c(); // play some AKAO commands
 

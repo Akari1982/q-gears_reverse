@@ -18,6 +18,9 @@
 800604de [][]     store Interrupt mask register (0x1f801074) here.
 800504e0 [][][][] store DMA Control Register (0x1f8010f0) here.
 
+800617b8 [][][][] store 0 here at the start of total battle circle.
+
+
 80062bb8 array of some function pointers (0x4 size).
 +08 [][][][] 80045a24 function. Called when copy data from palette to ram and back.
 +1c [][][][] 80045654 function. Passed as parameter when copy palette to ram.
@@ -33,15 +36,42 @@
 + a4 [][]     y position of tutorial text window.
 + b4 [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
 + b8 []       number of something.
++110 []       store array of values from 0x5 type materia to use in paired functions.
++118 []       init with 0. Store 1 here if we has mastered Preemptive materia.
++11c [][][][] pointer to data about current unit attack (8009d84c).
++120 []       number of enabled commands.
++124 []       number of enabled spells.
++128 [][]     init with 0. Add gil plus value. Limit to 0x20.
++12a [][]     init with 0. Add encounter value (enemy lure/away). Limit to 0xff.
++12c [][]     init with 0. Add chokobo lure value. Limit to 0x20.
++12e [][]     init with 0. Add preemptive value. Limit it to 0x55.
++130 [][]     init with 0. Add here number of stars equipped enemy away materia has. Limit to 0xff.
++134 []       Store 1 2 8 or 10 here in case of hp absorb, mp absorb, steal as well, added cut nateria pairing. used in appropriate function.
++138 [][][][] number of command (used in cycle during copy commands from temp to unit structure)
++13c [][][][] number of counter materia already applied (8 max)
++140 [][][][] store 8 here if we have counter materia equipped (set in pair check). Used when set counter command.
++144 [][]     store 0 here. Used when set counter command.
++148 []       store 1 here if we has magic or master magic materia in battle, 2 in case of w-magic.
++14c []       store 1 here if we has summon or master summon materia in battle, 2 in case of w-summon.
 +150 [][][][] wait tutorial opcode value.
 +158 [][][][]
 +174 [][][][] store here pointer to text of tutorial menu.
++1cc [][][][] store AP to next star here (in case of menu).
++1d0 [][][][] store -1 here at the start of total battle circle. We set error id here.
++1d4 []       add gil plus value from all player structure. Limit to 0x20.
++1d5 []       calculate and add emenu lure value (Limit 0x2-0x20).
++1d6 []       add chokobo lure value from all player structure. Limit to 0x20.
++1d7 []       add preemptive value from all player structure. Limit to 0x55. Add bit 0x80 if we have mastered preemptive materia equipped.
 +220 [][][][] current main menu level (0 1 or 2)
++238 [][][][] address to store something in case of menu.
++244 [][][][] some flags. used in loading units.
++278 [][][][] total number of stars currently parsing materia has.
 +27c [][][][] enable or disable input in menu? we only handle input if this == 1.
                     0 - 
                     1 - enabled
                     2 - 
-
++2b8 []       we store magic number here according to added materia.
++2dc []       0 - we load battle, 1 - we load menu.
 
 80062d7c [][]     key data.
                     0001 - L2

@@ -86,27 +86,6 @@ V1 = w[80062bfc];
 
 
 ////////////////////////////////
-// func145bc()
-
-S0 = A0;
-
-loop145cc:	; 800145CC
-    func34b44();
-    if( V0 == 0 )
-    {
-        return;
-    }
-
-    if( S0 != 0 )
-    {
-        800145E4	jalr   s0 ra
-    }
-800145EC	j      loop145cc [$800145cc]
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_calculate_total_lure_gil_preemptive_value
 S2 = 0;
 S1 = 0;

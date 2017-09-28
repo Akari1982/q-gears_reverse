@@ -1,1 +1,1 @@
-adisasm WORLD.BIN_u WORLD.BIN_u.asm -v -b 800A0000 800A0B48 -u -a
+adisasm BATTLE.X_u BATTLE.X.asm -v -b 800a0000 800a1158 -u -a

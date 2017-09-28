@@ -21,3 +21,83 @@ A3 = A2;
 A2 = buffer;
 func33e34();
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// func14658()
+
+func = A1;
+
+A0 = A0;
+A1 = 801b0000;
+A2 = 0;
+func14578(); // start load file
+
+A0 = 0;
+80014674	jal    func145bc [$800145bc]
+
+A0 = 801b0000;
+A1 = 800a0000;
+func15ca0(); // gzip decode and copy
+
+80014688	jalr   func ra
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func146a4()
+
+S0 = -1;
+loop146c4:	; 800146C4
+    V0 = h[8009c560];
+    if( V0 != 2 )
+    {
+        if( V0 != 4 )
+        {
+            S0 = 0;
+        }
+        else
+        {
+            A0 = 0;
+            800146E8	jal    func145bc [$800145bc]
+
+            A0 = 3; // BROM.X
+            A1 = 800a00cc; // start func
+            func14658(); // load and run
+        }
+    }
+    else
+    {
+        80014708	jal    func140f4 [$800140f4]
+
+        A0 = 5; // BATTLE.X
+        A1 = 800a1158; // start func
+        func14658(); // load and run
+    }
+8001472C	bne    s0, zero, loop146c4 [$800146c4]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func145bc()
+// wait for loading finishes
+// call callback each cycle
+
+func = A0;
+
+loop145cc:	; 800145CC
+    func34b44();
+    if( V0 == 0 )
+    {
+        return;
+    }
+
+    if( func != 0 )
+    {
+        800145E4	jalr   func ra
+    }
+800145EC	j      loop145cc [$800145cc]
+////////////////////////////////

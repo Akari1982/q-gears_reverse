@@ -1,32 +1,33 @@
 ////////////////////////////////
 // func1b0050()
-// main init function
+// first battle init function
 // we load scene and unit data here
 
-S5 = A0; // battle id
+battle_id = A0;
 
 A0 = -1;
-func3cedc;
+func3cedc(); // wait
 
 A0 = V0;
-func14c44;
+func14c44(); // store tome to GP
 
 A0 = -1;
-func3cedc;
+func3cedc(); // wait
 
 // init player
 // init data in player structure
-S0 = 0;
-loop1b0090:	; 801B0090
-    A0 = S0;
+for( int i = 0; i < 3; ++i )
+{
+    A0 = i;
     system_init_player_weapon_stat();
 
-    A0 = S0;
+    A0 = i;
     system_init_player_materia();
+}
 
-    S0 = S0 + 1;
-    V0 = S0 < 3;
-801B00A8	bne    v0, zero, loop1b0090 [$801b0090]
+
+
+
 
 system_calculate_total_lure_gil_preemptive_value();
 
@@ -92,7 +93,7 @@ initbattle_init_item();
 // init enemy
 S4 = -1;
 S3 = 1;
-A0 = S5;
+A0 = battle_id;
 A1 = 0;
 initbattle_load_enemy_from_scene();
 
@@ -123,7 +124,7 @@ loop1b0200:	; 801B0200
 801B0230	bne    v0, zero, loop1b0200 [$801b0200]
 
 [800f83a4 + 04] = b(bu[8016360c + 8 + 12]);
-[800f83a4 + 28] = h(S5); // battle id
+[800f83a4 + 28] = h(battle_id);
 
 func1b19ac();
 
@@ -254,6 +255,8 @@ if (V0 & 0004)
 
 ////////////////////////////////
 // func1b0490()
+// second and next battle init function
+
 801B0490	lui    v0, $8016
 V0 = hu[V0 + 376c];
 801B0498	addiu  sp, sp, $ffd0 (=-$30)

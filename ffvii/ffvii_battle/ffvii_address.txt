@@ -1,37 +1,5 @@
 800491b0 elemental bit accordinance array (00 - 0x0001, 01 - 0x0002 etc)
 
-800617b8 [][][][] store 0 here at the start of total battle circle.
-
-80062d44               GP
-+0110 []       store array of values from 0x5 type materia to use in paired functions.
-+0118 []       init with 0. Store 1 here if we has mastered Preemptive materia.
-+011c [][][][] pointer to data about current unit attack (8009d84c).
-+0120 []       number of enabled commands.
-+0124 []       number of enabled spells.
-+0128 [][]     init with 0. Add gil plus value. Limit to 0x20.
-+012a [][]     init with 0. Add encounter value (enemy lure/away). Limit to 0xff.
-+012c [][]     init with 0. Add chokobo lure value. Limit to 0x20.
-+012e [][]     init with 0. Add preemptive value. Limit it to 0x55.
-+0130 [][]     init with 0. Add here number of stars equipped enemy away materia has. Limit to 0xff.
-+0134 []       Store 1 2 8 or 10 here in case of hp absorb, mp absorb, steal as well, added cut nateria pairing. used in appropriate function.
-+0138 [][][][] number of command (used in cycle during copy commands from temp to unit structure)
-+013c [][][][] number of counter materia already applied (8 max)
-+0140 [][][][] store 8 here if we have counter materia equipped (set in pair check). Used when set counter command.
-+0144 [][]     store 0 here. Used when set counter command.
-+0148 []       store 1 here if we has magic or master magic materia in battle, 2 in case of w-magic.
-+014c []       store 1 here if we has summon or master summon materia in battle, 2 in case of w-summon.
-+01cc [][][][] store AP to next star here (in case of menu).
-+01d0 [][][][] store -1 here at the start of total battle circle. We set error id here.
-+01d4 []       add gil plus value from all player structure. Limit to 0x20.
-+01d5 []       calculate and add emenu lure value (Limit 0x2-0x20).
-+01d6 []       add chokobo lure value from all player structure. Limit to 0x20.
-+01d7 []       add preemptive value from all player structure. Limit to 0x55. Add bit 0x80 if we have mastered preemptive materia equipped.
-+0238 [][][][] address to store something in case of menu.
-+0244 [][][][] some flags. used in loading units.
-+0278 [][][][] total number of stars currently parsing materia has.
-+02b8 []       we store magic number here according to added materia.
-+02dc []       0 - we load battle, 1 - we load menu.
-
 80062d98 []       if this is not 0 we will not render effect?
 
 80063014      [][][][] pointer to temp array for action calculation.
