@@ -18,8 +18,9 @@ func3cedc(); // wait
 // init data in player structure
 for( int i = 0; i < 3; ++i )
 {
+    // init base stat, status, elemental attacks and defence from equip 
     A0 = i;
-    system_init_player_weapon_stat();
+    system_init_player_stat_from_equip();
 
     A0 = i;
     system_init_player_materia();

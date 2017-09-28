@@ -54,7 +54,7 @@ loop24ae0:	; 80024AE0
 80024AF4	nop
 80024AF8	beq    v0, s1, L24b18 [$80024b18]
 80024AFC	nop
-80024B00	jal    system_init_player_weapon_stat [$80020058]
+80024B00	jal    system_init_player_stat_from_equip [$80020058]
 80024B04	nop
 80024B08	jal    system_init_player_materia [$8001786c]
 80024B0C	andi   a0, s0, $00ff

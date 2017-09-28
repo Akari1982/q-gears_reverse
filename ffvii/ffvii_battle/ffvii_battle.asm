@@ -43451,7 +43451,7 @@ AT = AT + A0;
 [AT + 0000] = h(V0);
 
 Le65c8:	; 800E65C8
-800E65C8	jal    system_init_player_weapon_stat [$80020058]
+800E65C8	jal    system_init_player_stat_from_equip [$80020058]
 A0 = S3;
 800E65D0	jal    system_init_player_materia [$8001786c]
 A0 = S3 & 00ff;

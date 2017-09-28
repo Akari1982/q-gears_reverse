@@ -507,14 +507,21 @@ third 0x18 records about enemy skill (0x8 size) first byte - attack id.
 
 +408                struct with equipped weapon data
 +411 []     weapon model id (in player model file).
-+00
-+04
-+08
-+0c
-+10
-+14
-+18
-+1c
+    +00
+    +04
+    +05 []       attack status bit id.
+    +08
+    +0c
+    +10 [][]     attack element type.
+    +14 []       stat1 id.
+    +15 []       stat2 id.
+    +16 []       stat3 id.
+    +17 []       stat4 id.
+    +18 []       stat1 bonus.
+    +19 []       stat2 bonus.
+    +1a []       stat3 bonus.
+    +1b []       stat4 bonus.
+    +1c [][][][]
 
 +437 []             init with 0. Add here number of stars equipped enemy away materia has from temp.
 +43c []             init with 0. Add Gil Plus value from temp.

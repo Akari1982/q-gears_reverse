@@ -11750,32 +11750,6 @@ L1fba4:	; 8001FBA4
 
 
 
-////////////////////////////////
-// system_add_stats
-8001FCDC-8001FE68
-////////////////////////////////
-// system_add_elemental_defense
-8001FE6C-8001FF4C
-////////////////////////////////
-// system_add_attack_type
-8001FF50-8001FF88
-////////////////////////////////
-// system_add_status_attack_bit
-8001FF8C-8001FFD0
-////////////////////////////////
-// system_add_status_protect_bit
-8001FFD4-80020018
-////////////////////////////////
-// system_add_status_protect
-8002001C-80020054
-////////////////////////////////
-// system_init_player_weapon_stat
-// used in battle loading
-80020058-800206E0
-////////////////////////////////
-
-
-
 800206E4	addiu  sp, sp, $ff90 (=-$70)
 [SP + 0064] = w(S7);
 S7 = A0;
@@ -15834,7 +15808,7 @@ S1 = bu[AT + 0000];
 V0 = 0 | 00ff;
 80026150	beq    s1, v0, L261b0 [$800261b0]
 80026154	nop
-80026158	jal    system_init_player_weapon_stat [$80020058]
+80026158	jal    system_init_player_stat_from_equip [$80020058]
 A0 = S0;
 80026160	jal    system_init_player_materia [$8001786c]
 A0 = S0 & 00ff;
