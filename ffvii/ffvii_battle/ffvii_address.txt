@@ -9,56 +9,6 @@
 80063690      command description in kernel
 8006893e      battle and battle-screen text in kernel
 
-// temp data to init
-800694b4 []            0x10 slots array where we store number of summons (we just add number of active stars to current value, so if 2 or more materias equipped there can be more than 5 summons of the same type). Set 0xff in case of master summon.
-800694c4 []            0x10 slots array. Init with 0. Add 1 to this every time we add paired Quadra Magic with this summon.
-800694d4 []            0x10 slots array. Init with 0. Add number of stars in Quadra Magic linked to this summon.
-800694e4 [][]          Init with 0. Add materia strength modifier (Materia 00 Plus). Limit to 0x64.
-800694e6 [][]          Init with 0. Add materia vitality modifier (Materia 01 Plus). Limit to 0x64.
-800694e8 [][]          Init with 0. Add materia magic modifier (Magic Plus). Limit to 0x64.
-800694ea [][]          Init with 0. Add materia spirit modifier (Materia 03 Plus). Limit to 0x64.
-800694ec [][]          Init with 0. Add materia dexterity modifier (Speed Plus). Limit to 0x64.
-800694ee [][]          Init with 0. Add materia luck modifier (Luck Plus). Limit to 0x64.
-800694f0 [][]          Init with 0. Add materia attack modifier (Materia 06 Plus). Limit to 0x64.
-800694f2 [][]          Init with 0. Add materia defense modifier (Materia 07 Plus). Limit to 0x64.
-800694f4 [][]          Init with 0. Add materia equip boost. Add materia max hp modifier. Add materia hp modifier (HP Plus). Limit to 0x64.
-800694f6 [][]          Init with 0. Add materia equip boost. Add materia max mp modifier. Add materia mp modifier (MP Plus). Limit to 0x64.
-800694f8 [][]          Init with 0. Add materia exp modifier (Exp Plus) (0x18 0x20). Limit to 0x64. Limit to 0x20.
-800694fa [][]          Init with 0. Add materia cover modifier (added from Cover materia). Limit to 0x64.
-800694fc [][]          Init with 0. Add materia equip strength modifier. Limit to 0xff if greater than zero.
-800694fe [][]          Init with 0. Add materia equip vitality modifier. Limit to 0xff if greater than zero.
-80069500 [][]          Init with 0. Add materia equip magic modifier. Limit to 0xff if greater than zero.
-80069502 [][]          Init with 0. Add materia equip spirit modifier. Limit to 0xff if greater than zero.
-80069504 [][]          Init with 0. Add materia equip luck modifier. Limit to 0xff if greater than zero.
-80069506 [][]          Init with 0. Add materia equip dexterity modifier. Limit to 0xff if greater than zero.
-80069508               0x10 slots array for active commands (0x3 size).
-+0 []                  Init with ff. Action id.
-+1 []                  Init with 0. We store number of stars here (but only in case of w command).
-+2 []                  Init with 0. Flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut)
-80069538 [][]          Init with unit structure 0x440 + 0 (not inited data).
-8006953a [][]          Init with unit structure 0x440 + 1 (not inited data).
-8006953c [][]          Init with unit strength. Apply all boosts and store result here (limit to 0xff).
-8006953e [][]          Init with unit vitality. Apply all boosts and store result here (limit to 0xff).
-80069540 [][]          Init with unit magic. Apply all boosts and store result here (limit to 0xff).
-80069542 [][]          Init with unit spirit. Apply all boosts and store result here (limit to 0xff).
-80069544 [][]          Init with unit dexterity. Apply all boosts and store result here (limit to 0xff).
-80069546 [][]          Init with unit luck. Apply all boosts and store result here (limit to 0xff).
-80069548 [][]          Init with attack from weapon. Apply all boosts and store result here. Add boosted strength (limit to 0xff)
-8006954a [][]          Init with defense from armor. Apply all boosts and store result here. Add boosted vitality (limit to 0xff)
-8006954c [][]          Init with 0. Add magic to magic attack.
-8006954e [][]          Init with 0. Add spirit to magic defense.
-80069550 [][]          Init with base hp. Apply all boosts and store result here (limit to 9999).
-80069552 [][]          Init with base mp. Apply all boosts and store result here (limit to 999).
-80069554               0x38 slots for active spels (0x5 size).
-+0 []       magic id. Init with ff. Set if of active spell.
-+1 []       number of "all" effect. Init with 0. Add number of stars from paired all materia.
-+2 []       init with 0. Add 1 to this every time we add paired Quadra Magic with this magic.
-+3 []       init with 0. Add number of stars in Quadra Magic linked to this magic.
-+4 []       init with 0. Add number of stars in MP turbo linked to this magic to this 0xe0 (5 maximum) and leave 0x1f as is. 0x1f - flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut)
-
-8006966C      [][][][] we copy 8 weapon materia data here (size 0x4).
-8006968C      [][][][] we copy 8 armor materia data here (size 0x4).
-
 800707bc [][]          battle id.
 
 800707be [][]          battle result stored here. Loaded by 0x23 BTRLD.

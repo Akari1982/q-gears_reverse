@@ -9894,13 +9894,6 @@ SP = SP + 0008;
 
 
 
-//////////////////////////////////////////////////////////////////////
-// system_get_limit_id
-80015AFC-80015B40
-//////////////////////////////////////////////////////////////////////
-
-
-
 func15b44:	; 80015B44
 [GP + 00ec] = w(A0);
 80015B48	jr     ra 
@@ -10358,109 +10351,6 @@ S0 = w[SP + 0038];
 SP = SP + 0060;
 80017670	jr     ra 
 80017674	nop
-
-
-
-////////////////////////////////
-// system_calculate_total_lure_gil_preemptive_value
-80017678-80017868
-////////////////////////////////
-// system_add_pair_materia_with_slot_check
-80017E68-80017F34
-////////////////////////////////
-// system_add_pair_materia_unordered
-80017F38-80018024
-////////////////////////////////
-// system_add_pair_materia_ordered
-80018028-8001821C
-////////////////////////////////
-// system_add_pair_with_elemental
-80018220-800182F8
-////////////////////////////////
-// system_add_pair_with_added_effect
-800182FC-8001838C
-////////////////////////////////
-// system_add_pair_with_counter
-80018390-80018408
-////////////////////////////////
-// system_add_pair_with_magic_counter
-8001840C-800184BC
-////////////////////////////////
-// system_add_pair_with_sneak_final_attack
-800184C0-800185A4
-////////////////////////////////
-// system_add_pair_master_materia_with_counter
-800185A8-8001862C
-////////////////////////////////
-// system_add_pair_command_with_counter
-80018630-80018830
-////////////////////////////////
-// system_add_pair_magic_with_magic_counter
-80018834-80018930
-////////////////////////////////
-// system_add_pair_summon_with_magic_counter
-80018934-80018A00
-////////////////////////////////
-// system_add_pair_summon_with_mp_turbo
-80018A04-80018AAC
-////////////////////////////////
-// system_add_pair_master_summon_with_mp_turbo
-80018AB0-80018B10
-////////////////////////////////
-// system_add_pair_master_magic_with_mp_turbo
-80018B14-80018BB4
-////////////////////////////////
-// system_add_pair_magic_with_mp_turbo
-80018BB8-80018C90
-////////////////////////////////
-// system_add_pair_with_mp_turbo
-80018C94-80018D48
-////////////////////////////////
-// system_add_pair_with_mp_absorb
-80018D4C-80018E14
-////////////////////////////////
-// system_add_pair_summon_with_mp_absorb
-80018E18-80018E8C
-////////////////////////////////
-// system_add_pair_master_summon_with_mp_absorb
-80018E90-80018EC8
-////////////////////////////////
-// system_add_pair_command_with_mp_absorb
-80018ECC-80018FBC
-////////////////////////////////
-// system_add_pair_master_command_with_mp_absorb
-80018FC0-80019060
-////////////////////////////////
-// system_add_pair_master_magic_with_mp_absorb
-80019064-800190E4
-////////////////////////////////
-// system_add_pair_magic_with_mp_absorb
-800190E8-8001919C
-////////////////////////////////
-// system_add_pair_with_quadra_magic
-800191A0-80019250
-////////////////////////////////
-// system_add_pair_magic_with_quadra_magic
-80019254-80019334
-////////////////////////////////
-// system_add_pair_master_magic_with_quadra_magic
-80019338-80019378
-////////////////////////////////
-// system_add_pair_summon_with_quadra_magic
-8001937C-800193F0
-////////////////////////////////
-// system_add_pair_master_summon_with_quadra_magic
-800193F4-8001943C
-////////////////////////////////
-// system_add_pair_with_all
-80019440-800194B8
-////////////////////////////////
-// system_add_pair_master_magic_with_all
-800194BC-80019540
-////////////////////////////////
-// system_add_pair_magic_with_all
-80019544-80019604
-////////////////////////////////
 
 
 
@@ -15111,20 +15001,6 @@ V0 = V0 + V1;
 L25750:	; 80025750
 80025750	jr     ra 
 80025754	nop
-
-
-
-///////////////////////////////////////////////////////////////////
-// system_get_armor_address_by_id
-80025758-80025770
-///////////////////////////////////////////////////////////////////
-
-
-
-///////////////////////////////////////////////////////////////////
-// system_get_accessory_address_by_id
-80025774-80025784
-///////////////////////////////////////////////////////////////////
 
 
 
