@@ -3667,34 +3667,34 @@ SP = SP + 0060;
 // system_add_materia_equip_stat_bonus
 80019978-80019D18
 ////////////////////////////////
-// system_add_materia_02
+// system_add_materia_X2
 80019D1C-80019D70
 ////////////////////////////////
-// func19d74
+// system_add_materia_30
 80019D74-80019D9C
 ////////////////////////////////
 // func19da0
 80019DA0-80019E48
 ////////////////////////////////
-// func19e4c
+// system_add_materia_long_range
 80019E4C-80019E80
 ////////////////////////////////
-// func19e84
+// system_add_materia_12
 80019E84-80019F8C
 ////////////////////////////////
-// system_add_materia_03
+// system_add_materia_X3
 80019F90-8001A170
 ////////////////////////////////
-// system_add_materia_05
+// system_add_materia_X5
 8001A174-8001A1C4
 ////////////////////////////////
-// func1a1c8
+// system_add_materia_35
 8001A1C8-8001A27C
 ////////////////////////////////
-// func1a280
+// system_add_materia_25
 8001A280-8001A380
 ////////////////////////////////
-// system_add_materia_04
+// system_add_materia_X4
 8001A384-8001A3B4
 ////////////////////////////////
 // system_add_materia_07
@@ -3710,25 +3710,25 @@ SP = SP + 0060;
 // master summon
 8001A518-8001A5B0
 ////////////////////////////////
-// system_add_materia_00
+// system_add_materia_X0
 8001A5B4-8001A680
 ////////////////////////////////
-// system_add_materia_00_00
+// system_add_materia_00
 8001A684-8001A77C
 ////////////////////////////////
-// func1a780
+// system_add_materia_20
 8001A780-8001A870
 ////////////////////////////////
-// func1a874
+// system_add_materia_40
 8001A874-8001A97C
 ////////////////////////////////
-// system_add_materia_01
+// system_add_materia_X1
 8001A980-8001A9C8
 ////////////////////////////////
-// func1a9cc
+// system_add_materia_21
 8001A9CC-8001AB18
 ////////////////////////////////
-// func1ab1c
+// system_add_materia_41
 8001AB1C-8001AC98
 ////////////////////////////////
 // system_get_materia_activated_stars

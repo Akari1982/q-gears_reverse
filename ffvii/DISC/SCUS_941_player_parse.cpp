@@ -294,7 +294,7 @@ if( materia_id != ff )
             A0 = param;
             A1 = materia_id;
             A2 = materia_exp;
-            system_add_materia_00();
+            system_add_materia_X0();
         }
         break;
 
@@ -303,7 +303,7 @@ if( materia_id != ff )
             A0 = param;
             A1 = materia_id;
             A2 = materia_exp;
-            system_add_materia_01;
+            system_add_materia_X1();
         }
         break;
 
@@ -312,7 +312,7 @@ if( materia_id != ff )
             A0 = param;
             A1 = materia_id;
             A2 = materia_exp;
-            system_add_materia_02;
+            system_add_materia_X2();
         }
         break;
 
@@ -321,7 +321,7 @@ if( materia_id != ff )
             A0 = param;
             A1 = materia_id;
             A2 = materia_exp;
-            system_add_materia_03;
+            system_add_materia_X3();
         }
         break;
 
@@ -329,7 +329,7 @@ if( materia_id != ff )
         {
             A0 = materia_id;
             A1 = materia_exp;
-            system_add_materia_04;
+            system_add_materia_X4();
         }
         break;
 
@@ -338,7 +338,7 @@ if( materia_id != ff )
             A0 = param;
             A1 = materia_id;
             A2 = materia_exp;
-            system_add_materia_05;
+            system_add_materia_X5();
         }
         break;
 

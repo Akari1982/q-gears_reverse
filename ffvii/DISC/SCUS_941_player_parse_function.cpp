@@ -128,7 +128,7 @@ if( equip_eff_id != ff )
 
 
 ////////////////////////////////
-// system_add_materia_00()
+// system_add_materia_X0()
 
 materia_param = A0;
 materia_id = A1;
@@ -143,32 +143,32 @@ if( materia_param == 0 )
 {
     A0 = materia_id;
     A1 = materia_exp;
-    system_add_materia_00_00();
+    system_add_materia_00();
 }
-if (materia_param == 2)
+if( materia_param == 2 )
 {
     A0 = materia_id;
     A1 = materia_exp;
-    func1a780;
+    system_add_materia_20();
 }
-if (materia_param == 3)
+if( materia_param == 3 )
 {
     A0 = stars;
     A1 = materia_id;
-    func19d74;
+    system_add_materia_30();
 }
-if (materia_param == 4)
+if( materia_param == 4 )
 {
     A0 = materia_id;
     A1 = materia_exp;
-    func1a874;
+    system_add_materia_40();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_materia_00_00()
+// system_add_materia_00()
 
 materia_id = A0;
 materia_exp = A1;
@@ -200,39 +200,34 @@ else // menu
 
 
 ////////////////////////////////
-// func1a780
-// 2_0
+// system_add_materia_20()
+
 materia_id = A0;
 materia_exp = A1;
 
 A0 = materia_id;
 A1 = materia_exp;
-system_get_materia_activated_stars;
-A1 = V0;
+system_get_materia_activated_stars();
+stars = V0;
 
-if (materia_id == d) // counter attack
+if( materia_id == d ) // counter attack
 {
-    A0 = A1 & ff;
+    A0 = stars;
     A1 = d;
-    func19da0;
+    system_add_materia_counter_attack();
 }
 else
 {
-    V0 = bu[GP + 2dc];
-    // battle
-    if (V0 == 0)
+    if( bu[GP + 2dc] == 0 ) // battle
     {
-        type = bu[800730d0 + materia_id * 14 + e];
-
-        V0 = bu[800730d0 + materia_id * 14 + e + A1];
-        [800694e4 + A0 * 2] = h(hu[800694e4 + type * 2] + V0);
+        modifier = bu[800730d0 + materia_id * 14 + e];
+        [800694e4 + modifier * 2] = h(hu[800694e4 + modifier * 2] + bu[800730d0 + materia_id * 14 + e + stars]);
     }
-    // menu
-    else
+    else // menu
     {
         A0 = w[GP + 238];
         [A0 + 1a] = b(bu[800730d0 + materia_id * 14 + e]);
-        [A0 + 1b] = b(bu[800730d0 + materia_id * 14 + e + A1]);
+        [A0 + 1b] = b(bu[800730d0 + materia_id * 14 + e + stars]);
 
         [GP + 2b8] = b(4);
     }
@@ -242,207 +237,169 @@ else
 
 
 ////////////////////////////////
-// func19da0
-// 2_0/d/counter attack
+// system_add_materia_counter_attack()
+
 number_of_star = A0;
 materia_id = A1;
 
-V0 = bu[GP + 2dc];
-// battle
-if (V0 == 0)
+if( bu[GP + 2dc] == 0 ) // battle
 {
     A0 = w[GP + 13c];
-    if (A0 != 8)
+    if( A0 != 8 )
     {
         V1 = w[GP + 11c];
         [V1 + A0 * 3 + 24] = b(9);
         [V1 + A0 * 3 + 25] = b(9);
-
-        counter_value = bu[800730d0 + materia_id * 14 + e + number_of_star];
-        V1 = w[GP + 11c];
-        [V1 + A0 * 3 + 26] = b(counter_value);
-
-        V0 = w[GP + 13c];
-        V0 = V0 + 1;
-        [GP + 13c] = w(V0);
+        [V1 + A0 * 3 + 26] = b(bu[800730d0 + materia_id * 14 + e + number_of_star]); // counter_value
+        [GP + 13c] = w(w[GP + 13c] + 1);
     }
 }
-else
+else // menu
 {
     [GP + 2b8] = b(12);
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func19d74
-// 30
+// system_add_materia_30()
+
+stars = A0;
 materia_id = A1;
-if (materia_id == b)
+
+if( materia_id == b )
 {
-    func19e4c;
+    system_add_materia_long_range();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func19e4c
-// 30/b/long range
-V0 = bu[GP + 2dc];
-// battle
-if (V0 == 0)
+// system_add_materia_long_range()
+
+if( bu[GP + 2dc] == 0 ) // battle
 {
     V1 = bu[GP + 11c];
-    V0 = bu[V1 + 23];
-    V0 = V0 | 4;
-    [V1 + 23] = b(V0);
+    [V1 + 23] = b(bu[V1 + 23] | 4);
 }
-else
+else // menu
 {
     [GP + 2b8] = b(12);
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1a874
-// 40
+// system_add_materia_40()
+
 materia_id = A0;
 materia_exp = A1;
 
 A0 = materia_id;
 A1 = materia_exp;
-system_get_materia_activated_stars;
-A0 = V0;
+system_get_materia_activated_stars();
+stars = V0;
 
-if (A0 > 0)
+if( stars > 0 )
 {
-    V1 = 800730d0 + materia_id * 14 + e + A0;
-
-    loop1ab6c:	; 8001AB6C
-        V0 = bu[V1];
-        if (V0 != ff)
+    for( int i = stars; i >= 0; --i )
+    {
+        mod_value = bu[800730d0 + materia_id * 14 + e + i];
+        if( mod_value != ff )
         {
-            S2 = V0;
             break;
         }
-
-        V1 = V1 - 1;
-        A0 = A0 - 1;
-    8001AB7C	bgtz   a0, loop1ab6c [$8001ab6c]
+    }
 }
 
-V0 = bu[GP + 2dc];
-// battle
-if (V0 == 0)
+if( bu[GP + 2dc] == 0 ) // battle
 {
-    V1 = bu[800730d0 + materia_id * 14 + e];
-    V0 = hu[800694e4 + V1 * 2];
-    V0 = V0 + S2;
-    [800694e4 + V1 * 2] = h(V0);
+    modifier = bu[800730d0 + materia_id * 14 + e];
+    [800694e4 + modifier * 2] = h(hu[800694e4 + modifier * 2] + mod_value);
 }
-else
+else // menu
 {
-    V0 = bu[800730d0 + materia_id * 14 + e];
-
     V1 = w[GP + 238];
-    [V1 + 1a] = b(V0);
-    [V1 + 1b] = b(S2);
-
+    [V1 + 1a] = b(bu[800730d0 + materia_id * 14 + e]);
+    [V1 + 1b] = b(mod_value);
     [GP + 2b8] = b(d);
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_materia_01
-// 1
+// system_add_materia_X1()
+
 materia_param = A0;
 materia_id = A1;
 materia_exp = A2;
 
-if (materia_param == 2)
+if( materia_param == 2 )
 {
     A0 = materia_id;
     A1 = materia_exp;
-    func1a9cc;
+    system_add_materia_21();
 
 }
-else if (materia_param == 4)
+else if( materia_param == 4 )
 {
     A0 = materia_id;
     A1 = materia_exp;
-    func1ab1c;
+    system_add_materia_41();
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1a9cc
-// 21
+// system_add_materia_21()
+
 materia_id = A0;
 materia_exp = A1;
 
 A0 = materia_id;
-system_get_materia_activated_stars;
-A1 = V0;
+A1 = materia_exp;
+system_get_materia_activated_stars();
+stars = V0;
 
-if (A1 > 0)
+if( stars > 0 )
 {
-    A0 = A1;
-
-    loop1aa1c:	; 8001AA1C
-        V0 = bu[800730d0 + materia_id * 14 + e + A0];
-        if (V0 != ff)
+    for( int i = stars; i >= 0; --i )
+    {
+        mod_value = bu[800730d0 + materia_id * 14 + e + i];
+        if( mod_value != ff )
         {
-            S2 = V0;
             break;
         }
-
-        A0 = A0 - 1;
-    8001AA2C	bgtz   a0, loop1aa1c [$8001aa1c]
+    }
 }
 
-V0 = bu[GP + 2dc];
-// battle
-if (V0 == 0)
+if( bu[GP + 2dc] == 0 ) // battle
 {
-    A0 = materia_id;
-    V1 = bu[800730d0 + A0 * 14 + e];
-    [GP + 128 + V1 * 2] = h(hu[GP + 128 + V1 * 2] + S2);
+    type = bu[800730d0 + materia_id * 14 + e];
+    [GP + 128 + type * 2] = h(hu[GP + 128 + type * 2] + mod_value);
 
-    if (A0 == a)
+    if( materia_id == a ) // preemptive
     {
-        V0 = h[GP + 12e];
-        if (V0 >= 56)
+        if( h[GP + 12e] >= 56 )
         {
             [GP + 12e] = h(55);
         }
-
-        if (A1 == 5)
+        if( stars == 5 )
         {
             [GP + 118] = b(1);
         }
     }
 }
-else
+else // menu
 {
     V1 = w[GP + 238];
-    [V1 + 1a] = b(bu[800730de + materia_id * 14]);
-    [V1 + 1b] = (A1);
+    [V1 + 1a] = b(bu[800730d0 + materia_id * 14 + e]);
+    [V1 + 1b] = (stars);
     [GP + 2b8] = b(a);
 }
 ////////////////////////////////
@@ -450,82 +407,68 @@ else
 
 
 ////////////////////////////////
-// func1ab1c
-// 41
+// system_add_materia_41()
+
 materia_id = A0;
 materia_exp = A1;
 
 A0 = materia_id;
 A1 = materia_exp;
-system_get_materia_activated_stars;
-V1 = V0;
+system_get_materia_activated_stars();
+stars = V0;
 
-A0 = V0;
-if (A0 > 0)
+if( stars > 0 )
 {
-    V1 = 800730d0 + materia_id * 14 + e + A0;
-
-    loop1ab6c:	; 8001AB6C
-        V0 = bu[V1];
-        if (V0 != ff)
+    for( int i = stars; i >= 0; --i )
+    {
+        mod_value = bu[800730d0 + materia_id * 14 + e + i];
+        if( mod_value != ff )
         {
-            S2 = V0;
             break;
         }
-
-        V1 = V1 - 1;
-        A0 = A0 - 1;
-    8001AB7C	bgtz   a0, loop1ab6c [$8001ab6c]
+    }
 }
 
-V0 = bu[GP + 2dc];
-// battle
-if (V0 == 0)
+if( bu[GP + 2dc] == 0 ) // battle
 {
-    if (V1 == 7)
+    if( materia_id == 7 )
     {
-        [GP + 130] = h(hu[GP + 130] + S2);
+        [GP + 130] = h(hu[GP + 130] + mod_value);
     }
     else
     {
-        V1 = bu[800730d0 + materia_id * 14 + e];
-        [GP + 128 + V1 * 2] = h(hu[GP + 128 + V1 * 2] + S2);
+        type = bu[800730d0 + materia_id * 14 + e];
+        [GP + 128 + type * 2] = h(hu[GP + 128 + type * 2] + mod_value);
     }
 }
 else
 {
-    V0 = bu[800730d0 + materia_id * 14 + e];
-
     V1 = w[GP + 238];
-    [V1 + 1a] = b(V0);
+    [V1 + 1a] = b(bu[800730d0 + materia_id * 14 + e]);
     [V1 + 1b] = b(S2);
-
     [GP + 2b8] = b(9);
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_materia_02
-// 2
-// replace attack with command
+// system_add_materia_X2()
+
 materia_param = A0;
 materia_id = A1;
 materia_exp = A2;
 
 A0 = materia_id;
 A1 = materia_exp;
-system_get_materia_activated_stars;
-A0 = V0;
+system_get_materia_activated_stars();
+stars = V0;
 
-if (materia_param == 1)
+if( materia_param == 1 )
 {
-    A0 = A0 & ff;
+    A0 = stars;
     A1 = materia_id;
-    func19e84;
+    system_add_materia_12();
 }
 
 return;
@@ -534,52 +477,36 @@ return;
 
 
 ////////////////////////////////
-// func19e84
+// system_add_materia_12()
+
 number_of_star = A0;
 materia_id = A1;
 
-V0 = bu[GP + 2dc];
-// battle
-if (V0 == 0)
+if( bu[GP + 2dc] == 0 ) // battle
 {
     A2 = number_of_star - 1;
-    if (A2 > 0)
+    for( ; A2 > 0; --A2 )
     {
-        V1 = 800730d0 + materia_id * 14 + e + A2;
+        if( bu[800730d0 + materia_id * 14 + e + A2] != ff )
+        {
+            break;
+        }
+    }
+    [80069508 + 0] = b(bu[800730d0 + materia_id * 14 + e + A2]);
+}
+else // menu
+{
+    A3 = w[GP + 238];
 
-        loop19ec4:	; 80019EC4
-            V0 = bu[V1];
-            if (V0 != ff)
-            {
-                break;
-            }
-
-            A2 = A2 - 1;
-            V1 = V1 - 1;
-        80019ED8	bgtz   a2, loop19ec4 [$80019ec4]
+    for( int i = 0; i < 5; ++i )
+    {
+        A3 = w[GP + 238];
+        [A3 + 1b] = b(0);
+        [A3 + 1a] = b(bu[800730d0 + materia_id * 14 + e + i]);
     }
 
-    [80069508] = b(bu[800730d0 + materia_id * 14 + e + A2]);
-}
-else
-{
-    A2 = 0;
-    A3 = w[GP + 238];
-    V1 = 800730d0 + materia_id * 14 + e;
-    A1 = A3;
-
-    loop19f3c:	; 80019F3C
-        V0 = bu[V1];
-        V1 = V1 + 1;
-        A2 = A2 + 1;
-        [A1 + 1b] = b(0);
-        [A1 + 1a] = b(V0);
-        A1 = A1 + 2;
-        V0 = A2 < 5;
-    80019F54	bne    v0, zero, loop19f3c [$80019f3c]
-
     V0 = bu[A3 + 1];
-    if (V0 == number_of_star)
+    if( V0 == number_of_star )
     {
         V0 = number_of_star - 2;
     }
@@ -596,186 +523,173 @@ else
 
 
 ////////////////////////////////
-// system_add_materia_03
-// 3
-// add W command or replace existed command with W analog
+// system_add_materia_X3()
+
 materia_param = A0;
 materia_id = A1;
 materia_exp = A2;
 
 A0 = materia_id;
 A1 = materia_exp;
-system_get_materia_activated_stars;
-number_of_star = V0;
+system_get_materia_activated_stars();
+stars = V0;
 
-V1 = bu[GP + 2dc];
-// battle
-if (V1 == 0)
+if( bu[GP + 2dc] == 0 ) // battle
 {
     V1 = bu[800730d0 + materia_id * 14 + e];
-
-    if (V1 == 15) // w-magic
+    if( V1 == 15 ) // w-magic
     {
         [GP + 148] = b(2);
 
         A0 = 2;
-        system_search_existed_command;
-        V1 = V0;
+        system_search_existed_command();
 
-        if (V1 == -1)
+        if( V0 == -1 )
         {
             A0 = 2;
-            system_add_command;
-            [80069508 + V0 * 3 + 1] = b(number_of_star);
+            system_add_command();
+            [80069508 + V0 * 3 + 1] = b(stars);
         }
         else
         {
-            [80069508 + V1 * 3] = b(2);
-            [80069509 + V1 * 3] = b(number_of_star);
+            [80069508 + V0 * 3 + 0] = b(2);
+            [80069508 + V0 * 3 + 1] = b(stars);
         }
     }
-    else if (V1 == 16) // w-summon
+    else if( V1 == 16 ) // w-summon
     {
         [GP + 14c] = b(2);
 
         A0 = 3;
-        system_search_existed_command;
-        V1 = V0;
+        system_search_existed_command();
 
-        if (V1 == -1)
+        if( V0 == -1 )
         {
             A0 = 3;
-            system_add_command;
-            [80069509 + V0 * 3] = b(number_of_star);
+            system_add_command();
+            [80069508 + V0 * 3 + 1] = b(stars);
         }
         else
         {
-            [80069508 + V1 * 3] = b(3)
-            [80069509 + V1 * 3] = b(number_of_star);
+            [80069508 + V1 * 3 + 0] = b(3)
+            [80069508 + V1 * 3 + 1] = b(stars);
         }
     }
-    else if (V1 == 17) w-item
+    else if( V1 == 17 ) // w-item
     {
         A0 = 4;
-        system_search_existed_command;
+        system_search_existed_command();
 
         [80069508 + V0 * 3] = b(17);
-        [80069509 + V0 * 3] = b(number_of_star);
+        [80069509 + V0 * 3] = b(stars);
     }
 }
-else
+else // menu
 {
     [GP + 2b8] = b(e);
 
     V1 = w[GP + 238];
     [V1 + 1a] = b(bu[800730d0 + materia_id * 14 + e]);
-    [V1 + 1b] = b(number_of_star);
+    [V1 + 1b] = b(stars);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_materia_04
-// 4
+// system_add_materia_X4()
 // mega all
-A0 = A0 & ff;
-system_get_materia_activated_stars;
 
-V0 = bu[GP + 2dc];
-if (V0 != 0)
+if( bu[GP + 2dc] != 0 ) // menu
 {
     [GP + 2b8] = b(b);
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_materia_05
-// 05
-A0 = A0 & ff;
-if (A0 == 2)
+// system_add_materia_X5()
+
+materia_param = A0;
+materia_id = A1;
+materia_exp = A2;
+
+if( materia_param == 2 )
 {
-    A0 = A1 & ff;
-    A1 = A2;
-    func1a280;
+    A0 = materia_id;
+    A1 = materia_exp;
+    system_add_materia_25();
 }
-else if (A0 == 3)
+else if( materia_param == 3 )
 {
-    A0 = A1 & ff;
-    A1 = A2;
-    func1a1c8;
+    A0 = materia_id;
+    A1 = materia_exp;
+    system_add_materia_35();
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1a280
-// 25
-S0 = A0 & ff;
+// system_add_materia_25()
 
-A0 = S0;
-system_get_materia_activated_stars;
+materia_id = A0;
+materia_exp = A1;
 
-V1 = bu[GP + 2dc];
-if (V1 != 0)
+A0 = materia_id;
+A1 = materia_exp;
+system_get_materia_activated_stars();
+stars = V0;
+
+if( bu[GP + 2dc] != 0 ) // menu
 {
     A0 = w[GP + 238];
-    [A0 + 1a] = b(bu[800730d0 + S0 * 14 + e]);
-    [A0 + 1b] = b(V0 * a);
+    [A0 + 1a] = b(bu[800730d0 + materia_id * 14 + e]);
+    [A0 + 1b] = b(stars * a);
 
-    V0 = bu[800730d0 + S0 * 14 + e];
-    switch (V0)
+    switch( bu[800730d0 + materia_id * 14 + e] )
     {
         case 54 55:                      [GP + 2b8] = b(0f); break;
         case 56 58 59 5a 5c 5d 5e 5f 64: [GP + 2b8] = b(10); break;
     }
 }
-
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1a1c8
-// 35
-S0 = A0 & ff;
-A0 = S0;
-system_get_materia_activated_stars;
-A1 = V0;
+// system_add_materia_35()
 
-V1 = bu[GP + 2dc];
-if (V1 != 0)
+materia_id = A0;
+materia_exp = A1;
+
+A0 = materia_id;
+A1 = materia_exp;
+system_get_materia_activated_stars();
+stars = V0;
+
+if( bu[GP + 2dc] != 0 ) // menu
 {
     A0 = w[GP + 238];
 
-    V1 = bu[800730d0 + S0 * 14 + e];
-    [A0 + 1a] = b(V1);
-    [A0 + 1b] = b(A1);
+    [A0 + 1a] = b(bu[800730d0 + materia_id * 14 + e]);
+    [A0 + 1b] = b(stars);
 
-    V1 = bu[800730d0 + S0 * 14 + e];
-    if (V1 == 51)
+    V1 = bu[800730d0 + materia_id * 14 + e];
+    if( V1 == 51 ) // all
     {
         [GP + 2b8] = b(f);
     }
-    else if (V1 == 57)
+    else if( V1 == 57 ) // final attack
     {
         [GP + 2b8] = b(10);
     }
-    else if (V1 == 63)
+    else if( V1 == 63 ) // quadra magic
     {
         [GP + 2b8] = b(f);
     }
 }
-
-return;
 ////////////////////////////////
 
 
@@ -1243,23 +1157,17 @@ return bu[GP + 120] - 1;
 
 
 ////////////////////////////////
-// system_search_existed_command
+// system_search_existed_command()
 
-A0 = A0 & ff;
+command_id = A0;
 
-V1 = 0;
-A1 = 0;
-loop19614:	; 80019614
-    V0 = bu[80069508 + A1];
-    if (V0 == A0)
+for( int i = 0; i < 10; ++i )
+{
+    if( bu[80069508 + i * 3] == command_id )
     {
-        return V1;
+        return i;
     }
-
-    V1 = V1 + 1;
-    A1 = A1 + 3;
-    V0 = V1 < 10;
-80019638	bne    v0, zero, loop19614 [$80019614]
+}
 
 return -1;
 ////////////////////////////////
