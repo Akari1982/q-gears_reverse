@@ -1,4 +1,4 @@
-    func110b8:	; 800110B8
+func110b8:	; 800110B8
 800110B8	jr     ra 
 800110BC	nop
 
@@ -3607,25 +3607,25 @@ SP = SP + 0060;
 // system_add_pair_with_mp_turbo
 80018C94-80018D48
 ////////////////////////////////
-// system_add_pair_with_mp_absorb
+// system_add_pair_flag_to_command_magic_summon
 80018D4C-80018E14
 ////////////////////////////////
-// system_add_pair_summon_with_mp_absorb
+// system_add_pair_flag_to_summon
 80018E18-80018E8C
 ////////////////////////////////
-// system_add_pair_master_summon_with_mp_absorb
+// system_add_pair_flag_to_all_summons
 80018E90-80018EC8
 ////////////////////////////////
-// system_add_pair_command_with_mp_absorb
+// system_add_pair_flag_to_active_command
 80018ECC-80018FBC
 ////////////////////////////////
-// system_add_pair_master_command_with_mp_absorb
+// system_add_pair_flag_to_all_active_commands
 80018FC0-80019060
 ////////////////////////////////
-// system_add_pair_master_magic_with_mp_absorb
+// system_add_pair_flag_to_all_magics
 80019064-800190E4
 ////////////////////////////////
-// system_add_pair_magic_with_mp_absorb
+// system_add_pair_flag_to_magic
 800190E8-8001919C
 ////////////////////////////////
 // system_add_pair_with_quadra_magic
@@ -3697,16 +3697,16 @@ SP = SP + 0060;
 // system_add_materia_X4
 8001A384-8001A3B4
 ////////////////////////////////
-// system_add_materia_07
+// system_add_materia_X7
 8001A3B8-8001A43C
 ////////////////////////////////
-// system_add_materia_08
+// system_add_materia_X8
 8001A440-8001A4A4
 ////////////////////////////////
-// system_add_materia_0a
+// system_add_materia_Xa
 8001A4A8-8001A514
 ////////////////////////////////
-// system_add_materia_0c
+// system_add_materia_Xc
 // master summon
 8001A518-8001A5B0
 ////////////////////////////////
@@ -3740,20 +3740,20 @@ SP = SP + 0060;
 // system_copy_boosted_stat_to_unit_structure
 8001AEE4-8001B49C
 ////////////////////////////////
-// system_add_materia_0b
+// system_add_materia_Xb
 8001B4A0-8001B56C
 ////////////////////////////////
 // system_copy_summon_to_unit_structure
 8001B570-8001B5E0
 ////////////////////////////////
-// system_add_materia_09
+// system_add_materia_X9
 // magic
 8001B5E4-8001B700
 ////////////////////////////////
-// system_add_materia_06
+// system_add_materia_X6
 8001B704-8001B830
 ////////////////////////////////
-// system_add_command
+// system_add_command_to_temp
 8001B834-8001B8A4
 ////////////////////////////////
 // system_remove_steal_if_mug
@@ -3771,7 +3771,7 @@ SP = SP + 0060;
 // system_copy_temp_magic_to_unit_structure
 8001BC18-8001BCE4
 ////////////////////////////////
-// func1bce8
+// system_add_magic_to_temp
 8001BCE8-8001BD4C
 ////////////////////////////////
 // system_add_magic_summon_skill_to_unit_structure

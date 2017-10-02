@@ -34,26 +34,22 @@ if( char_id != ff )
         system_parse_materia_equip();
     }
 
-
-
-
     // paired weapon materia
-    S1 = 0;
-    loop179d4:	; 800179D4
-        V1 = w[GP + 11c];
+    for( int i = 0; i < 4; ++i )
+    {
+        unit_structure = w[GP + 11c];
+        A0 = bu[unit_structure + 408 + 1c + i * 2]; // weapon left slot value
+        A1 = bu[unit_structure + 408 + 1d + i * 2]; // weapon right slot value
+        A2 = w[8006966c + i * 8 + 0];
+        A3 = w[8006966c + i * 8 + 4];
+        A4 = 0;
+        A5 = 0;
+        A6 = 0;
+        system_add_pair_materia_with_slot_check();
+    }
 
-        A0 = bu[V1 + S1 * 2 + 408 + 1c]; // weapon left slot value
-        A1 = bu[V1 + S1 * 2 + 408 + 1d]; // weapon right slot value
-        A2 = w[8006966c + S1 * 8 + 0];
-        A3 = w[8006966c + S1 * 8 + 4];
-        [SP + 10] = w(0);
-        [SP + 14] = w(0);
-        [SP + 18] = w(0);
-        system_add_pair_materia_with_slot_check;
 
-        S1 = S1 + 1;
-        V0 = S1 < 4;
-    80017A10	bne    v0, zero, loop179d4 [$800179d4]
+
 
 
 
@@ -346,7 +342,7 @@ if( materia_id != ff )
         {
             A0 = materia_id;
             A1 = materia_exp;
-            system_add_materia_06;
+            system_add_materia_X6();
         }
         break;
 
@@ -355,13 +351,13 @@ if( materia_id != ff )
             A0 = param;
             A1 = materia_id;
             A2 = materia_exp;
-            system_add_materia_07;
+            system_add_materia_X7();
         }
         break;
 
         case 08: // master command
         {
-            system_add_materia_08;
+            system_add_materia_X8();
         }
         break;
 
@@ -369,27 +365,27 @@ if( materia_id != ff )
         {
             A0 = materia_id;
             A1 = materia_exp;
-            system_add_materia_09;
+            system_add_materia_X9();
         }
         break;
 
-        case 0A: // master magic
+        case 0a: // master magic
         {
-            system_add_materia_0a;
+            system_add_materia_Xa();
         }
         break;
 
-        case 0B: // summon
+        case 0b: // summon
         {
             A0 = materia_id;
             A1 = materia_exp;
-            system_add_materia_0b;
+            system_add_materia_Xb();
         }
         break;
 
-        case 0C: // master summon
+        case 0c: // master summon
         {
-            system_add_materia_0c;
+            system_add_materia_Xc();
         }
         break;
     }
@@ -518,11 +514,11 @@ system_get_player_base_attack_defense();
 
 // add attack command to this unit
 A0 = 1;
-system_add_command();
+system_add_command_to_temp();
 
 // add item command to this unit
 A0 = 4;
-system_add_command();
+system_add_command_to_temp();
 
 // init add materia values (lure encounter gil preemptive away)
 for( int i = 0; i < 5; ++i )
