@@ -291,7 +291,7 @@ lower_function_01;
 // lower_function_0a
 address = w[80063014];
 A0 = w[address + 18]; // target mask
-count_active_bits;
+system_count_active_bits;
 
 A0 = 0;
 if (V0 != 0)
@@ -394,7 +394,7 @@ loopae104:	; 800AE104
     800AE17C	sb     v1, $3774(at)
 
     Lae180:	; 800AE180
-    800AE180	jal    increment_seed_for_random [$80014b54]
+    800AE180	jal    system_increment_seed_for_random [$80014b54]
     800AE184	addiu  s0, s0, $0001
     800AE188	slt    v0, s0, s1
 800AE18C	bne    v0, zero, loopae104 [$800ae104]

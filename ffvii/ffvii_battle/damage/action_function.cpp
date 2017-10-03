@@ -9,7 +9,7 @@ attack_stack_offset = A0; // 800f692c
 
 
 // increment GP + D4 (0-7 and repeat)
-increment_seed_for_random;
+system_increment_seed_for_random;
 
 
 
@@ -95,7 +95,7 @@ if (attacker_id < 3 && w[800F83E0 + attacker_id * 68] & 00000800) // if player i
         [attack_stack_offset + 3] = b(1);
 
         A0 = hu[attack_stack_offset + 6];
-        select_random_bit;
+        system_select_random_bit;
         [attack_stack_offset + 6] = h(V0);
     }
 }
@@ -183,7 +183,7 @@ loopa1a3c:	; 800A1A3C
 
 // if there is no target (for player) or more than one
 A0 = attack_mask;
-count_active_bits;
+system_count_active_bits;
 if ((V0 == 0 && attacker_id < 3 ) || V0 >= 2)
 {
     V0 = w[address + 90];

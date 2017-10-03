@@ -2,7 +2,7 @@
 // battle_add_random_modifier_and_zero_check
 S0 = A0;
 // modify damage by random 0.937 - 1.000
-get_random_byte_from_table;
+system_get_random_byte_from_table;
 
 V0 = V0 + F01;
 V1 = S0 * V0;

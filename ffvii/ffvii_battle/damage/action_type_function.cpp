@@ -362,7 +362,7 @@ if (V0 != -1)
                                 if( is_single_target != 0 ) // leave only one random bit
                                 {
                                     A0 = w[address + 18];
-                                    select_random_bit;
+                                    system_select_random_bit;
                                     [address + 18] = w(V0);
                                 }
 
@@ -1142,7 +1142,7 @@ if (V0 >= 3)
 
     A0 = V0 & ffff;
     [address + 18] = w(A0);
-    get_last_significant_bit_number;
+    system_get_last_significant_bit_number;
 
     [address + 0] = w(V0);
     [address + 20] = w(2f);
@@ -1646,7 +1646,7 @@ else
         if ((V0 & 00000200) == 0)
         {
             A0 = S1;
-            select_random_bit;
+            system_select_random_bit;
             [address + 18] = w(V0);
         }
     }
@@ -1673,7 +1673,7 @@ else
     if ((V0 & 00200000) == 0)
     {
         A0 = w[address + 94];
-        count_active_bits;
+        system_count_active_bits;
 
         if (S3 != 0 || (A1 != 0 && V0 >= 2)
         {
@@ -1716,7 +1716,7 @@ else
                 if ((V0 & 0200) == 0)
                 {
                     A0 = S1;
-                    select_random_bit;
+                    system_select_random_bit;
                     S1 = V0;
                 }
             }
@@ -1731,14 +1731,14 @@ else
             if (V0 == 00100200)
             {
                 A0 = w[address + 18];
-                select_random_bit;
+                system_select_random_bit;
                 [address + 18] = w(V0);
             }
         }
         else
         {
             A0 = w[address + 18];
-            select_random_bit;
+            system_select_random_bit;
             [address + 18] = w(V0);
         }
     }
@@ -1750,7 +1750,7 @@ else
         V0 = hu[80163772];
         if (V1 & V0)
         {
-            get_random_byte_from_table;
+            system_get_random_byte_from_table;
             V0 = V0 & 0002;
             V0 = V0 << 1;
             V0 = 8016376E + V0;
@@ -2144,7 +2144,7 @@ funca2f4c;
 S1 = V0;
 
 A0 = S0;
-count_active_bits;
+system_count_active_bits;
 [address + b8] = w(V0);
 
 [S1 + 0] = b(w[address + 0]);

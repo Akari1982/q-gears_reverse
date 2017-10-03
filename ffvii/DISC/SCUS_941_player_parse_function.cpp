@@ -1119,7 +1119,7 @@ materia1_data = A2;
 materia2_data = A3;
 S3 = A4;
 S4 = A5;
-S1 = A6;
+is_armor = A6;
 
 if( ( left_slot == 2 && right_slot == 3 ) || ( left_slot == 6 && right_slot == 7 ) ) // if linked
 {
@@ -1127,7 +1127,7 @@ if( ( left_slot == 2 && right_slot == 3 ) || ( left_slot == 6 && right_slot == 7
     A1 = materia2_data;
     A2 = S3;
     A3 = S4;
-    A4 = S1;
+    A4 = is_armor;
     system_add_pair_materia_unordered();
 }
 ////////////////////////////////
@@ -1141,7 +1141,7 @@ materia1_data = A0
 materia2_data = A1;
 unk1 = A2;
 unk2 = A3;
-unk3 = A4;
+is_armor = A4;
 
 materia1_id = materia1_data & 000000ff;
 materia2_id = materia2_data & 000000ff;
@@ -1157,7 +1157,7 @@ if( materia1_id != ff && materia2_id != ff )
             A0 = materia2_data;
             A1 = materia1_data;
             A2 = unk1;
-            A3 = unk3;
+            A3 = is_armor;
             system_add_pair_materia_ordered();
         }
     }
@@ -1168,7 +1168,7 @@ if( materia1_id != ff && materia2_id != ff )
             A0 = materia1_data;
             A1 = materia2_data;
             A2 = unk2;
-            A3 = unk3;
+            A3 = is_armor;
             system_add_pair_materia_ordered();
         }
     }
@@ -1182,7 +1182,7 @@ if( materia1_id != ff && materia2_id != ff )
 
 materia_5type_data = A0;
 materia_pair_data = A1;
-S3 = A3;
+is_armor = A3;
 
 
 materia_5type_id = materia_5type_data & 000000ff;
@@ -1221,10 +1221,9 @@ switch( bu[800730d0 + materia_5type_id * 14 + e] )
     case 55: // magic counter
     {
         [GP + 140] = w(7);
-        A0 = materia_5type_id;
         A1 = number_of_5type_stars;
         A2 = materia_pair_data;
-        system_add_pair_with_magic_counter;
+        system_add_pair_with_magic_counter();
     }
     break;
 
@@ -1234,7 +1233,7 @@ switch( bu[800730d0 + materia_5type_id * 14 + e] )
         A0 = materia_5type_id;
         A1 = number_of_5type_stars;
         A2 = materia_pair_data;
-        system_add_pair_with_sneak_final_attack;
+        system_add_pair_with_sneak_final_attack();
     }
     break;
 
@@ -1244,7 +1243,7 @@ switch( bu[800730d0 + materia_5type_id * 14 + e] )
         A0 = materia_5type_id;
         A1 = number_of_5type_stars;
         A2 = materia_pair_data;
-        system_add_pair_with_sneak_final_attack;
+        system_add_pair_with_sneak_final_attack();
     }
     break;
 
@@ -1252,7 +1251,7 @@ switch( bu[800730d0 + materia_5type_id * 14 + e] )
     {
         A0 = number_of_5type_stars;
         A1 = materia_pair_data;
-        system_add_pair_with_mp_turbo;
+        system_add_pair_with_mp_turbo();
     }
     break;
 
@@ -1292,8 +1291,8 @@ switch( bu[800730d0 + materia_5type_id * 14 + e] )
     {
         A0 = number_of_5type_stars;
         A1 = materia_pair_data;
-        A2 = S3 & ff;
-        system_add_pair_with_elemental;
+        A2 = is_armor;
+        system_add_pair_with_elemental();
     }
     break;
 
@@ -1301,8 +1300,8 @@ switch( bu[800730d0 + materia_5type_id * 14 + e] )
     {
         A0 = number_of_5type_stars;
         A1 = materia_pair_data;
-        A2 = S3 & ff;
-        system_add_pair_with_added_effect;
+        A2 = is_armor;
+        system_add_pair_with_added_effect();
     }
     break;
 
@@ -1311,7 +1310,7 @@ switch( bu[800730d0 + materia_5type_id * 14 + e] )
         A0 = materia_5type_id;
         A1 = number_of_5type_stars;
         A2 = materia_pair_data;
-        system_add_pair_with_quadra_magic;
+        system_add_pair_with_quadra_magic();
     }
     break;
 }
@@ -1361,11 +1360,9 @@ for( int i = stars; i > 0; --i )
 {
     A0 = bu[800730d0 + materia_pair_id * 14 + d + i];
     system_search_existed_magic();
-    data_id = V0;
-
-    if( data_id != -1 )
+    if( V0 != -1 )
     {
-        [80069554 + data_id * 5 + 1] = b(bu[80069554 + data_id * 5 + 1] + number_of_5type_stars);
+        [80069554 + V0 * 5 + 1] = b(bu[80069554 + V0 * 5 + 1] + number_of_5type_stars);
     }
 }
 ////////////////////////////////
@@ -1381,11 +1378,9 @@ for( int i = 0; i < 38; ++i )
 {
     A0 = i;
     system_search_existed_magic();
-    data_id = V0;
-
-    if( data_id != -1 )
+    if( V0 != -1 )
     {
-        [80069555 + data_id * 5] = b(bu[80069555 + data_id * 5] + number_of_5type_stars);
+        [80069555 + V0 * 5] = b(bu[80069555 + V0 * 5] + number_of_5type_stars);
     }
 }
 ////////////////////////////////
@@ -1481,7 +1476,6 @@ if( counter_slot != 0 )
     [unit_structure + counter_slot * 3 + 24] = b(bu[GP + 140] + bu[GP + 144]);
     [unit_structure + counter_slot * 3 + 25] = b(A1);
     [unit_structure + counter_slot * 3 + 26] = b(bu[GP + 10f + number_of_5type_stars]);
-
     [GP + 13c] = w(counter_slot + 1);
 }
 ////////////////////////////////
@@ -1491,98 +1485,91 @@ if( counter_slot != 0 )
 ////////////////////////////////
 // system_add_pair_with_magic_counter()
 
-materia_5type_id = A0;
 number_of_5type_stars = A1;
 materia_pair_data = A2;
 
-materia_pair_id = A2 & 000000ff
-materia_pair_exp = A2 >> 8;
+materia_pair_id = materia_pair_data & 000000ff
+materia_pair_exp = materia_pair_data >> 8;
 
 [GP + 144] = h(0);
 
-V0 = bu[800730d0 + materia_pair_id * 14 + d];
-V1 = V0 & 0f;
+type = bu[800730d0 + materia_pair_id * 14 + d] & 0f;
 
-if( V1 == 9 )
+if( type == 9 )
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
-    system_add_pair_magic_with_magic_counter;
+    A2 = materia_pair_exp;
+    system_add_pair_magic_with_magic_counter();
 }
-else if (V1 == a)
+else if( type == a )
 {
     A0 = number_of_5type_stars;
     A1 = fe;
-    system_add_pair_master_materia_with_counter;
+    system_add_pair_master_materia_with_counter();
 }
-else if (V1 == b)
+else if( type == b )
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
-    system_add_pair_summon_with_magic_counter;
+    A2 = materia_pair_exp;
+    system_add_pair_summon_with_magic_counter();
 }
-else if (V1 == c)
+else if( type == c )
 {
     A0 = number_of_5type_stars;
     A1 = ff;
-    system_add_pair_master_materia_with_counter;
+    system_add_pair_master_materia_with_counter();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_pair_magic_with_magic_counter
+// system_add_pair_magic_with_magic_counter()
+
 number_of_5type_stars = A0;
 materia_pair_id = A1;
+materia_pair_exp = A2;
 
 A0 = materia_pair_id;
-A1 = A2;
-system_get_materia_activated_stars;
-A0 = V0;
+A1 = materia_pair_exp;
+system_get_materia_activated_stars();
+stars = V0;
 
-if (A0 > 0)
+for( int i = stars; i > 0; --i )
 {
-    loop18878:	; 80018878
-        V1 = bu[800730d0 + materia_pair_id * 14 + d + A0];
-
-        if (V1 != ff)
+    if( bu[800730d0 + materia_pair_id * 14 + d + i] != ff )
+    {
+        counter_slot = w[GP + 13c];
+        if( counter_slot != 8 )
         {
-            counter_slot = w[GP + 13c];
-            if (counter_slot == 8)
-            {
-                return;
-            }
-
             unit_structure = w[GP + 11c];
-            [unit_structure + counter_slot * 3 + 24] = b(bu[GP + 140] + bu[GP + 144]);
-            [unit_structure + counter_slot * 3 + 25] = b(V1);
-            [unit_structure + counter_slot * 3 + 26] = b(bu[GP + 10f + number_of_5type_stars]);
-
+            [unit_structure + 24 + counter_slot * 3 + 0] = b(bu[GP + 140] + bu[GP + 144]);
+            [unit_structure + 24 + counter_slot * 3 + 1] = b(bu[800730d0 + materia_pair_id * 14 + d + i]);
+            [unit_structure + 24 + counter_slot * 3 + 2] = b(bu[GP + 10f + number_of_5type_stars]);
             [GP + 13c] = w(counter_slot + 1);
-            return;
         }
-
-        A0 = A0 - 1;
-    80018914	bgtz   a0, loop18878 [$80018878]
+        return;
+    }
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_pair_summon_with_magic_counter
+// system_add_pair_summon_with_magic_counter()
+
 number_of_5type_stars = A0;
 materia_pair_id = A1;
 
 counter_slot = w[GP + 13c];
-if (counter_slot != 8)
+if( counter_slot != 8 )
 {
     unit_structure = w[GP + 11c];
-    [unit_structure + counter_slot * 3 + 24] = b(bu[GP + 140] + bu[GP + 144]);
-    [unit_structure + counter_slot * 3 + 25] = b(bu[800730d0 + materia_pair_id * 14 + e]);
-    [unit_structure + counter_slot * 3 + 26] = b(bu[GP + 10f + number_of_5type_stars]);
-
+    [unit_structure + 24 + counter_slot * 3 + 0] = b(bu[GP + 140] + bu[GP + 144]);
+    [unit_structure + 24 + counter_slot * 3 + 1] = b(bu[800730d0 + materia_pair_id * 14 + e]);
+    [unit_structure + 24 + counter_slot * 3 + 2] = b(bu[GP + 10f + number_of_5type_stars]);
     [GP + 13c] = w(counter_slot + 1);
 }
 ////////////////////////////////
@@ -1590,7 +1577,8 @@ if (counter_slot != 8)
 
 
 ////////////////////////////////
-// system_add_pair_with_sneak_final_attack
+// system_add_pair_with_sneak_final_attack()
+
 materia_5type_id = A0;
 number_of_5type_stars = A1;
 materia_pair_data = A2;
@@ -1598,16 +1586,16 @@ materia_pair_data = A2;
 materia_pair_id = A2 & 000000ff
 materia_pair_exp = A2 >> 8;
 
-V0 = bu[800730d0 + materia_pair_id * 14 + d];
-V0 = V0 & 0f;
-switch (V1)
+type = bu[800730d0 + materia_pair_id * 14 + d] & 0f;
+
+switch( type )
 {
     case 6:
     {
         [GP + 144] = h(1);
         A0 = number_of_5type_stars;
         A1 = materia_pair_id;
-        system_add_pair_command_with_counter;
+        system_add_pair_command_with_counter();
     }
     break;
 
@@ -1616,7 +1604,7 @@ switch (V1)
         [GP + 144] = h(1);
         A0 = number_of_5type_stars;
         A1 = fd;
-        system_add_pair_master_materia_with_counter;
+        system_add_pair_master_materia_with_counter();
     }
     break;
 
@@ -1625,7 +1613,8 @@ switch (V1)
         [GP + 144] = h(0);
         A0 = number_of_5type_stars;
         A1 = materia_pair_id;
-        system_add_pair_magic_with_magic_counter;
+        A2 = materia_pair_exp;
+        system_add_pair_magic_with_magic_counter();
     }
     break;
 
@@ -1634,7 +1623,7 @@ switch (V1)
         [GP + 144] = h(0);
         A0 = number_of_5type_stars;
         A1 = fe;
-        system_add_pair_master_materia_with_counter;
+        system_add_pair_master_materia_with_counter();
     }
     break;
 
@@ -1643,7 +1632,7 @@ switch (V1)
         [GP + 144] = h(0);
         A0 = number_of_5type_stars;
         A1 = materia_pair_id;
-        system_add_pair_summon_with_magic_counter;
+        system_add_pair_summon_with_magic_counter();
     }
     break;
 
@@ -1652,7 +1641,7 @@ switch (V1)
         [GP + 144] = h(0);
         A0 = number_of_5type_stars;
         A1 = ff;
-        system_add_pair_master_materia_with_counter;
+        system_add_pair_master_materia_with_counter();
     }
     break;
 }
@@ -1661,151 +1650,119 @@ switch (V1)
 
 
 ////////////////////////////////
-// system_add_pair_with_mp_turbo
+// system_add_pair_with_mp_turbo()
+
 number_of_5type_stars = A0;
 materia_pair_data = A1;
 
 materia_pair_id = materia_pair_data & ff;
 materia_pair_exp = materia_pair_data >> 8;
 
-V0 = bu[800730d0 + materia_pair_id * 14 + d];
-V1 = V0 & 0f;
-if (V1 == 9)
+type = bu[800730d0 + materia_pair_id * 14 + d] & 0f;
+
+if( type == 9 )
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
-    system_add_pair_magic_with_mp_turbo;
+    system_add_pair_magic_with_mp_turbo();
 }
-else if (V1 == a)
+else if( type == a )
 {
     A0 = number_of_5type_stars;
-    system_add_pair_master_magic_with_mp_turbo;
+    system_add_pair_master_magic_with_mp_turbo();
 }
-else if (V1 == b)
+else if( type == b )
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
-    system_add_pair_summon_with_mp_turbo;
+    system_add_pair_summon_with_mp_turbo();
 }
-else if (V1 == c)
+else if( type == c )
 {
     A0 = number_of_5type_stars;
-    system_add_pair_master_summon_with_mp_turbo;
+    system_add_pair_master_summon_with_mp_turbo();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_pair_magic_with_mp_turbo
+// system_add_pair_magic_with_mp_turbo()
+
 number_of_5type_stars = A0;
 materia_pair_id = A1;
 materia_pair_exp = A2;
 
 A0 = materia_pair_id;
 A1 = materia_pair_exp;
-system_get_materia_activated_stars;
-S0 = V0;
+system_get_materia_activated_stars();
+stars = V0;
 
-if (S0 > 0)
+for( int i = stars; i > 0; --i )
 {
-    loop18bf8:	; 80018BF8
-        A0 = bu[800730d0 + materia_pair_id * 14 + d + S0];
-        system_search_existed_magic;
-        magic_slot = V0;
-
-        if (magic_slot != -1)
-        {
-            A1 = bu[80069554 + magic_slot * 5 + 4];
-            V1 = A1 >> 5;
-            A0 = V1 + number_of_5type_stars;
-            if (A0 >= 6)
-            {
-                A0 = 5;
-            }
-            V0 = A0 & 7;
-            V0 = V0 << 5;
-
-            V1 = A1 & 1f;
-            V1 = V1 | V0;
-            [80069554 + magic_slot * 5 + 4] = b(V1);
-        }
-
-        S0 = S0 - 1;
-    80018C70	bgtz   s0, loop18bf8 [$80018bf8]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_add_pair_master_magic_with_mp_turbo
-number_of_5type_stars = A0;
-
-S0 = 0;
-loop18b2c:	; 80018B2C
-    A0 = S0;
-    system_search_existed_magic;
-    magic_slot = V0;
-
-    if (magic_slot != -1)
+    A0 = bu[800730d0 + materia_pair_id * 14 + d + i];
+    system_search_existed_magic();
+    if( V0 != -1 )
     {
-        A1 = bu[80069554 + magic_slot * 5 + 4];
-        V1 = A1 >> 5;
-        A0 = V1 + number_of_5type_stars;
-        if (A0 >= 6)
+        A0 = (bu[80069554 + V0 * 5 + 4] >> 5) + number_of_5type_stars;
+        if( A0 >= 6 )
         {
             A0 = 5;
         }
-        V0 = A0 & 7;
-        V0 = V0 << 5;
-
-        V1 = A1 & 1f;
-        V1 = V1 | V0;
-        [80069554 + magic_slot * 5 + 4] = b(V1);
+        [80069554 + V0 * 5 + 4] = b((bu[80069554 + V0 * 5 + 4] & 1f) | ((A0 & 7) << 5));
     }
-
-    S0 = S0 + 1;
-    V0 = S0 < 38;
-80018B98	bne    v0, zero, loop18b2c [$80018b2c]
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_pair_master_summon_with_mp_turbo
+// system_add_pair_master_magic_with_mp_turbo()
+
 number_of_5type_stars = A0;
 
-T0 = 0;
-loop18abc:	; 80018ABC
-    unit_structure = w[GP + 11c];
-    A1 = bu[unit_structure + 108 + 38 * 8 + T0 * 8 + 7];
-    V0 = A1 >> 5;
-    V1 = V0 + number_of_5type_stars;
+for( int i = 0; i < 38; ++i )
+{
+    A0 = i;
+    system_search_existed_magic();
+    if( V0 != -1 )
+    {
+        A0 = (bu[80069554 + V0 * 5 + 4] >> 5) + number_of_5type_stars;
+        if( A0 >= 6 )
+        {
+            A0 = 5;
+        }
+        [80069554 + V0 * 5 + 4] = b((bu[80069554 + V0 * 5 + 4] & 1f) | ((A0 & 7) << 5));
+    }
+}
+////////////////////////////////
 
-    if (V1 >= 6)
+
+
+////////////////////////////////
+// system_add_pair_master_summon_with_mp_turbo()
+
+number_of_5type_stars = A0;
+
+for( int i = 0; i < 10; ++i )
+{
+    unit_structure = w[GP + 11c];
+    V1 = (bu[unit_structure + 108 + 38 * 8 + i * 8 + 7] >> 5) + number_of_5type_stars;
+    if( V1 >= 6 )
     {
         V1 = 5;
     }
-
-    V0 = A1 & 1f;
-    V1 = V1 & 7;
-    V1 = V1 << 5;
-    V0 = V0 | V1;
-    [unit_structure + 108 + 38 * 8 + T0 * 8 + 7] = b(V0);
-
-    T0 = T0 + 1;
-    V0 = T0 < 10;
-80018B04	bne    v0, zero, loop18abc [$80018abc]
+    [unit_structure + 108 + 38 * 8 + i * 8 + 7] = b((bu[unit_structure + 108 + 38 * 8 + i * 8 + 7] & 1f) | ((V1 & 7) << 5));
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_pair_summon_with_mp_turbo
-// there is bug here. Bost will get first 4 initializing magic as well. but maybe this data is rewritten.
+// system_add_pair_summon_with_mp_turbo()
+
 number_of_5type_stars = A0;
 materia_pair_id = A1;
 materia_pair_exp = A2;
@@ -1813,29 +1770,19 @@ materia_pair_exp = A2;
 A0 = materia_pair_id;
 A1 = materia_pair_exp;
 system_get_materia_activated_stars;
-A2 = V0;
-if (A2 > 0)
+stars = V0;
+
+for( int i = stars; i > 0; --i )
 {
-    loop18a48:	; 80018A48
-        V0 = bu[800730d0 + materia_pair_id * 14 + d + A2];
+    V0 = bu[800730d0 + materia_pair_id * 14 + d + i];
 
-        V1 = w[GP + 11c];
-        A3 = V1 + V0 * 8;
-        V1 = bu[A3 + 108 + 7];
-        V0 = V1 >> 5;
-        A1 = V0 + number_of_5type_stars;
-        if (A1 >= 6)
-        {
-            A1 = 5;
-        }
-
-        V0 = A1 & 7;
-        V0 = V0 << 5;
-        V1 = V1 | V0;
-        [A3 + 10f] = b(V1);
-
-        A2 = A2 - 1;
-    80018A90	bgtz   a2, loop18a48 [$80018a48]
+    unit_structure = w[GP + 11c];
+    A1 = (bu[unit_structure + 108 + V0 * 8 + 7] >> 5) + number_of_5type_stars;
+    if( A1 >= 6 )
+    {
+        A1 = 5;
+    }
+    [unit_structure + 108 + V0 * 8 + 7] = b((bu[unit_structure + 108 + V0 * 8 + 7] & 1f) | ((A1 & 7) << 5));
 }
 ////////////////////////////////
 
@@ -2010,155 +1957,141 @@ for( int i = 0; i < 10; ++i )
 
 
 ////////////////////////////////
-// system_add_pair_with_quadra_magic
+// system_add_pair_with_quadra_magic()
+
 number_of_5type_stars = A1;
-A1 = A2 & ff;
-V0 = bu[800730d0 + A1 * 14 + d];
-A2 = A2 >> 8;
-V1 = V0 & 0f;
-if (V1 == 9)
-{
-    A0 = number_of_5type_stars;
-    A1 = A1;
-    A2 = A2;
-    system_add_pair_magic_with_quadra_magic;
-}
-else if (V1 == a)
-{
-    A0 = number_of_5type_stars;
-    system_add_pair_master_magic_with_quadra_magic;
-}
-else if (V1 == b)
-{
-    A0 = number_of_5type_stars;
-    system_add_pair_summon_with_quadra_magic;
-}
-else if (V1 == c)
-{
-    A0 = number_of_5type_stars;
-    system_add_pair_master_summon_with_quadra_magic;
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_add_pair_magic_with_quadra_magic
-S2 = A0;
-S1 = A1 & ff;
-A0 = S1;
-A1 = A2;
-system_get_materia_activated_stars;
-S0 = V0;
-if (S0 > 0)
-{
-    loop192a0:	; 800192A0
-        A0 = bu[800730d0 + S1 * 14 + d + S0];
-        system_search_existed_magic;
-        magic_slot = V0;
-
-        if (magic_slot != -1)
-        {
-            V1 = bu[80069554 + magic_slot * 5 + 2];
-            V1 = bu[80069554 + magic_slot * 5 + 3];
-            V1 = V1 + 1;
-            A0 = A0 + S2;
-            [80069554 + magic_slot * 5 + 2] = b(V1);
-            [80069554 + magic_slot * 5 + 3] = b(A0);
-        }
-
-        S0 = S0 - 1;
-    80019310	bgtz   s0, loop192a0 [$800192a0]
-}
-L19318:	; 80019318
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_add_pair_master_magic_with_quadra_magic
-A2 = 0;
-loop19348:	; 80019348
-    [80069554 + A2 * 5 + 2] = b(bu[80069554 + A2 * 5 + 2] + 1);
-    [80069554 + A2 * 5 + 3] = b(bu[80069554 + A2 * 5 + 2] + A0);
-    A2 = A2 + 1;
-    V0 = A2 < 38;
-8001936C	bne    v0, zero, loop19348 [$80019348]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_add_pair_summon_with_quadra_magic
-A1 = A1 & ff;
-V1 = bu[800730de + A1 * 14];
-V1 = V1 - 38;
-[800694c4 + V1] = b(bu[800694c4 + V1] + 1);
-[800694d4 + V1] = b(bu[800694d4 + V1] + A0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_add_pair_master_summon_with_quadra_magic
-V1 = 800694d4;
-A1 = 800694c4;
-A2 = V1 + 10;
-
-loop19408:	; 80019408
-    [A1] = b(bu[A1] + 1);
-    [V1] = b(bu[V1] + A0);
-
-    V1 = V1 + 1;
-    A1 = A1 + 1;
-    V0 = V1 < A2;
-80019430	bne    v0, zero, loop19408 [$80019408]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_add_pair_with_elemental
-number_of_5type_stars = A0;
-materia_pair_data = A1;
-equipment_type = A2; // 0 - weapon, 1 - armor
+materia_pair_data = A2;
 
 materia_pair_id = materia_pair_data & ff;
-V1 = bu[800730d0 + materia_pair_id * 14 + c];
-if (V1 < 20)
+materia_pair_exp = materia_pair_data >> 8;
+
+type = bu[800730d0 + A1 * 14 + d] & 0f;
+
+if( type == 9 )
 {
-    A1 = hu[800491b0 + V1 * 2];
-    A0 = A0 & ff;
-    V0 = A2 & ff;
-    if (V0 == 0)
+    A0 = number_of_5type_stars;
+    A1 = materia_pair_id;
+    A2 = materia_pair_exp;
+    system_add_pair_magic_with_quadra_magic();
+}
+else if( type == a )
+{
+    A0 = number_of_5type_stars;
+    system_add_pair_master_magic_with_quadra_magic();
+}
+else if( type == b )
+{
+    A0 = number_of_5type_stars;
+    A1 = materia_pair_id;
+    system_add_pair_summon_with_quadra_magic();
+}
+else if( type == c )
+{
+    A0 = number_of_5type_stars;
+    system_add_pair_master_summon_with_quadra_magic();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_add_pair_magic_with_quadra_magic()
+
+number_of_5type_stars = A0;
+materia_pair_id = A1;
+materia_pair_exp = A2;
+
+A0 = materia_pair_id;
+A1 = materia_pair_exp;
+system_get_materia_activated_stars();
+stars = V0;
+
+for( int i = 0; i > 0; --i )
+{
+    A0 = bu[800730d0 + materia_pair_id * 14 + d + i];
+    system_search_existed_magic();
+    if( V0 != -1)
     {
-        V1 = w[GP + 11c];
-        V0 = hu[V1 + 3c];
-        V0 = A1 | V0;
-        [V1 + 3c] = h[V0];
+        [80069554 + V0 * 5 + 2] = b(bu[80069554 + V0 * 5 + 2] + 1);
+        [80069554 + V0 * 5 + 3] = b(bu[80069554 + V0 * 5 + 3] + number_of_5type_stars);
     }
-    else
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_add_pair_master_magic_with_quadra_magic()
+
+number_of_5type_stars = A0;
+
+for( int i = 0; i < 38; ++i )
+{
+    [80069554 + i * 5 + 2] = b(bu[80069554 + i * 5 + 2] + 1);
+    [80069554 + i * 5 + 3] = b(bu[80069554 + i * 5 + 2] + number_of_5type_stars);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_add_pair_summon_with_quadra_magic()
+
+number_of_5type_stars = A0;
+materia_pair_id = A1;
+
+V1 = bu[800730d0 + materia_pair_id * 14 + e] - 38;
+[800694c4 + V1] = b(bu[800694c4 + V1] + 1);
+[800694d4 + V1] = b(bu[800694d4 + V1] + number_of_5type_stars);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_add_pair_master_summon_with_quadra_magic()
+
+number_of_5type_stars = A0;
+
+for( int i = 0; i < 10; ++i )
+{
+    [800694c4 + i] = b(bu[800694c4 + i] + 1);
+    [800694d4 + i] = b(bu[800694d4 + i] + number_of_5type_stars);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_add_pair_with_elemental()
+
+number_of_5type_stars = A0;
+materia_pair_data = A1;
+is_armor = A2;
+
+materia_pair_id = materia_pair_data & ff;
+
+element_id = bu[800730d0 + materia_pair_id * 14 + c];
+if( element_id < 20 )
+{
+    unit_structure = w[GP + 11c];
+
+    if( is_armor == 0 ) // weapon
     {
-        if (A0 == 1)
+        [unit_structure + 3c] = h(hu[unit_structure + 3c] | hu[800491b0 + element_id * 2]);
+    }
+    else // armor
+    {
+        if( number_of_5type_stars == 1 )
         {
-            V1 = w[GP + 11c];
-            V0 = hu[V1 + 3e];
-            V0 = A1 | V0;
-            [V1 + 3e] = h[V0];
+            [unit_structure + 3e] = h(hu[unit_structure + 3e] | hu[800491b0 + element_id * 2]);
         }
-        else if (A0 == 2)
+        else if( number_of_5type_stars == 2 )
         {
-            V1 = w[GP + 11c];
-            V0 = hu[V1 + 40];
-            V0 = A1 | V0;
-            [V1 + 40] = h[V0];
+            [unit_structure + 40] = h(hu[unit_structure + 40] | hu[800491b0 + element_id * 2]);
         }
-        else if (A0 >= 3)
+        else if( number_of_5type_stars >= 3 )
         {
-            V1 = w[GP + 11c];
-            V0 = hu[V1 + 42];
-            V0 = A1 | V0;
-            [V1 + 42] = h[V0];
+            [unit_structure + 42] = h(hu[unit_structure + 42] | hu[800491b0 + element_id * 2]);
         }
     }
 }
@@ -2167,30 +2100,21 @@ if (V1 < 20)
 
 
 ////////////////////////////////
-// system_add_pair_with_added_effect
-A1 = A1 & ff;
-V0 = A1 * 14;
-A2 = A2 & ff;
-V1 = bu[800730d0 + V0 + a];
-A0 = bu[800730d0 + V0 + 9];
-V0 = bu[800730d0 + V0 + b];
-V1 = V1 << 8;
-A0 = A0 + V1;
-V0 = V0 << 10;
-A0 = A0 + V0;
-if (A2 == 0)
+// system_add_pair_with_added_effect()
+
+materia_pair_data = A1;
+materia_pair_id = materia_pair_data & ff;
+is_armor = A2;
+status_mask = (bu[800730d0 + materia_pair_id * 14 + b] << 10) + (bu[800730d0 + materia_pair_id * 14 + a] << 8) + bu[800730d0 + materia_pair_id * 14 + 9]
+unit_structure = w[GP + 11c];
+
+if( is_armor == 0 ) // weapon
 {
-    V1 = w[GP + 11c];
-    V0 = w[V1 + 44];
-    V0 = A1 | V0;
-    [V1 + 44] = w[V0];
+    [unit_structure + 44] = w(w[unit_structure + 44] | status_mask);
 }
-else
+else // armor
 {
-    V1 = w[GP + 11c];
-    V0 = w[V1 + 48];
-    V0 = A1 | V0;
-    [V1 + 48] = w[V0];
+    [unit_structure + 48] = w(w[unit_structure + 48] | status_mask);
 }
 ////////////////////////////////
 
@@ -2396,26 +2320,21 @@ return A2;
 
 
 ////////////////////////////////
-// system_copy_temp_magic_to_unit_structure
-S0 = 0;
-S1 = 0;
+// system_copy_temp_magic_to_unit_structure()
 
-loop1bc30:	; 8001BC30
-    A0 = bu[80069554 + S0];
-    A1 = S1 & ff;
-    A2 = A0;
-    system_add_magic_summon_skill_to_unit_structure;
+for( int i = 0; i < 38; ++i )
+{
+    A0 = bu[80069554 + i * 5 + 0];
+    A1 = i;
+    A2 = bu[80069554 + i * 5 + 0];
+    system_add_magic_summon_skill_to_unit_structure();
 
     unit_structure = w[GP + 11c];
-    [unit_structure + 108 + S1 * 8 + 2] = b(bu[80069554 + S0 + 1]);
-    [unit_structure + 108 + S1 * 8 + 3] = b(bu[80069554 + S0 + 2]);
-    [unit_structure + 108 + S1 * 8 + 4] = b(bu[80069554 + S0 + 3]);
-    [unit_structure + 108 + S1 * 8 + 7] = b(bu[80069554 + S0 + 4]);
-
-    S1 = S1 + 1;
-    S0 = S0 + 5;
-    V0 = S1 < 38;
-8001BCC8	bne    v0, zero, loop1bc30 [$8001bc30]
+    [unit_structure + 108 + i * 8 + 2] = b(bu[80069554 + i * 5 + 1]);
+    [unit_structure + 108 + i * 8 + 3] = b(bu[80069554 + i * 5 + 2]);
+    [unit_structure + 108 + i * 8 + 4] = b(bu[80069554 + i * 5 + 3]);
+    [unit_structure + 108 + i * 8 + 7] = b(bu[80069554 + i * 5 + 4]);
+}
 ////////////////////////////////
 
 

@@ -1,5 +1,5 @@
 ////////////////////////////////
-// system_init_player_materia
+// system_init_player_materia()
 
 party_id = A0;
 
@@ -44,37 +44,34 @@ if( char_id != ff )
         A3 = w[8006966c + i * 8 + 4];
         A4 = 0;
         A5 = 0;
-        A6 = 0;
+        A6 = 0; // is_armor == false
         system_add_pair_materia_with_slot_check();
     }
-
-
-
-
-
-
 
     armor_id = bu[8009c738 + save_id * 84 + 1d];
 
     // paired armor materia
-    S1 = 0;
-    loop17a24:	; 80017A24
-        A0 = bu[80071e4d + armor_id * 24 + S1 * 2 + 0];
-        A1 = bu[80071e4d + armor_id * 24 + S1 * 2 + 1];
-        A2 = w[8006968c + S1 * 8 + 0];
-        A3 = w[8006968c + S1 * 8 + 4];
-        [SP + 10] = w(0);
-        [SP + 14] = w(0);
-        [SP + 18] = w(1);
-        system_add_pair_materia_with_slot_check;
+    for( int i = 0; i < 4; ++i )
+    {
+        A0 = bu[80071e4d + armor_id * 24 + i * 2 + 0];
+        A1 = bu[80071e4d + armor_id * 24 + i * 2 + 1];
+        A2 = w[8006968c + i * 8 + 0];
+        A3 = w[8006968c + i * 8 + 4];
+        A4 = 0;
+        A5 = 0;
+        A6 = 1; // is_armor == true
+        system_add_pair_materia_with_slot_check();
+    }
 
-        S1 = S1 + 1;
-        V0 = S1 < 4;
-    80017A5C	bne    v0, zero, loop17a24 [$80017a24]
-
+    system_copy_temp_magic_to_unit_structure();
 
 
-    system_copy_temp_magic_to_unit_structure;
+
+
+
+
+
+
     system_copy_and_sort_command;
     system_copy_summon_to_unit_structure;
     system_copy_boosted_stat_to_unit_structure;
@@ -581,6 +578,7 @@ if( char_id != ff )
     [8009d84c + party_id * 440 + 408 + 14] = w(w[800738a0 + weapon_id * 2c + 14]);
     [8009d84c + party_id * 440 + 408 + 18] = w(w[800738a0 + weapon_id * 2c + 18]);
     [8009d84c + party_id * 440 + 408 + 1c] = w(w[800738a0 + weapon_id * 2c + 1c]);
+    [8009d84c + party_id * 440 + 408 + 20] = w(w[800738a0 + weapon_id * 2c + 20]);
 
     // add base stat bonus from weapon
     for( int i = 0; i < 4; ++i )

@@ -1,14 +1,13 @@
 ////////////////////////////////
-// system_normalize_vector_A0_to_A1
-t0 = [a0 + 0];
-t1 = [a0 + 4];
-t2 = [a0 + 8];
+// system_normalize_vector_A0_to_A1()
 
-system_normalize_vector_T0_T1_T2;
-
-[a1 + 0] = t0;
-[a1 + 4] = t1;
-[a1 + 8] = t2;
+T0 = [A0 + 0];
+T1 = [A0 + 4];
+T2 = [A0 + 8];
+system_normalize_vector_T0_T1_T2();
+[A1 + 0] = T0;
+[A1 + 4] = T1;
+[A1 + 8] = T2;
 ////////////////////////////////
 
 
@@ -138,7 +137,7 @@ return A1;
 
 
 ////////////////////////////////
-// add_sub_with_max_min_bound
+// system_add_sub_with_max_min_bound
 cur = A0;
 dam = A1;
 max = A2;
@@ -169,7 +168,7 @@ return A0;
 
 
 ////////////////////////////////
-// count_active_bits
+// system_count_active_bits
 V1 = 0;
 if (A0 != 0)
 {
@@ -189,17 +188,17 @@ return V1;
 
 
 ////////////////////////////////
-// select_random_bit
+// system_select_random_bit
 S2 = A0;
 S1 = 0;
-count_active_bits;
+system_count_active_bits;
 S0 = V0;
 
 if (S0 != 0)
 {
     S1 = 1;
 
-    get_random_byte_from_table;
+    system_get_random_byte_from_table;
 
     V1 = V0 * S0;
     S0 = V1 >> 8;
@@ -227,7 +226,7 @@ return S1;
 
 
 ////////////////////////////////
-// get_last_significant_bit_number
+// system_get_last_significant_bit_number
 V0 = 0;
 
 A0 = A0 >> 1;
@@ -246,7 +245,7 @@ return V0;
 
 
 ////////////////////////////////
-// increment_seed_for_random
+// system_increment_seed_for_random
 V0 = w[GP + D4];
 V0 = V0 + 1;
 V0 = V0 & 7;
@@ -256,7 +255,7 @@ V0 = V0 & 7;
 
 
 ////////////////////////////////
-// get_random_byte_from_table
+// system_get_random_byte_from_table
 V1 = w[GP + D4];
 V0 = bu[80062E10 + V1];
 A0 = V0 + 1;
@@ -270,7 +269,7 @@ return V0;
 
 ////////////////////////////////
 // system_random_two_bytes
-get_random_byte_from_table;
+system_get_random_byte_from_table;
 S0 = V0;
 
 V1 = w[GP + 8];
@@ -280,10 +279,10 @@ V1 = V1 & 7;
 
 if (V1 != 0)
 {
-    increment_seed_for_random;
+    system_increment_seed_for_random;
 }
 
-get_random_byte_from_table;
+system_get_random_byte_from_table;
 V0 = V0 & ff;
 V0 = V0 << 8;
 V1 = S0 & ff;

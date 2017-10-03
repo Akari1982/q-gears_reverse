@@ -731,9 +731,9 @@ A0 = S1;
 800A36C4	nop
 
 La36c8:	; 800A36C8
-800A36C8	jal    select_random_bit [$80014a84]
+800A36C8	jal    system_select_random_bit [$80014a84]
 A0 = S2;
-800A36D0	jal    get_last_significant_bit_number [$80014a38]
+800A36D0	jal    system_get_last_significant_bit_number [$80014a38]
 A0 = V0;
 S1 = V0;
 A1 = 0;
@@ -4743,7 +4743,7 @@ loopa9cc4:	; 800A9CC4
 800A9CC4	jal    func14ba8 [$80014ba8]
 A0 = 000a;
 V0 = V0 & 00ff;
-800A9CD0	jal    increment_seed_for_random [$80014b54]
+800A9CD0	jal    system_increment_seed_for_random [$80014b54]
 S0 = S0 + V0;
 S1 = S1 + 0001;
 V0 = S1 < 0004;
@@ -5301,12 +5301,12 @@ S1 = S1 | 0002;
 Laa49c:	; 800AA49C
 800AA49C	lui    a0, $0400
 A0 = A0 | 029a;
-800AA4A4	jal    count_active_bits [$80014a58]
+800AA4A4	jal    system_count_active_bits [$80014a58]
 A0 = S1 & A0;
 S0 = V0;
 800AA4B0	lui    a0, $0020
 A0 = A0 | 2000;
-800AA4B8	jal    count_active_bits [$80014a58]
+800AA4B8	jal    system_count_active_bits [$80014a58]
 A0 = S1 & A0;
 V0 = V0 << 01;
 800AA4C4	lui    v1, $8006
@@ -8364,7 +8364,7 @@ battle_opcodes_store_values
 funcb2f30:	; 800B2F30
 800B2F30	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800B2F38	jal    get_random_byte_from_table [$80014b70]
+800B2F38	jal    system_get_random_byte_from_table [$80014b70]
 800B2F3C	nop
 RA = w[SP + 0010];
 V0 = V0 & 00ff;

@@ -159,7 +159,7 @@ if( ( w[address + 218] & 00000001 ) == 0 ) // if we not missing
                 funcaa700;
 
                 A0 = V0;
-                get_last_significant_bit_number;
+                system_get_last_significant_bit_number;
 
                 [800f494c + S0] = b(V0);
                 V1 = V0;
@@ -920,7 +920,7 @@ F4980A80 1c
             800A8FE4	nop
             800A8FE8	j      La9bf8 [$800a9bf8]
             800A8FEC	addu   v0, zero, zero
-            800A8FF0	jal    get_random_byte_from_table [$80014b70]
+            800A8FF0	jal    system_get_random_byte_from_table [$80014b70]
             800A8FF4	nop
             800A8FF8	lui    a0, $8006
             800A8FFC	lw     a0, $3014(a0)
@@ -1861,7 +1861,7 @@ if (A1 != 0)
         A2 = hu[800F83E0 + target_id * 68 + 2A];
         // heal flag
         A3 = V0 & 0001;
-        add_sub_with_max_min_bound;
+        system_add_sub_with_max_min_bound;
         [800F83E0 + target_id * 68 + 28] = h(V0);
     }
     // damage to HP
@@ -1873,7 +1873,7 @@ if (A1 != 0)
         A2 = w[800F83E0 + target_id * 68 + 30];
         // heal flag
         A3 = V0 & 0001;
-        add_sub_with_max_min_bound;
+        system_add_sub_with_max_min_bound;
         [800F83E0 + target_id * 68 + 2C] = w(V0);
 
         // if HP now 0 and was not 0
@@ -2072,12 +2072,12 @@ if (V0 != 0)
 
 // darkness, slow, silence, sadness, poison, near death
 A0 = S1 & 0400029a;
-count_active_bits;
+system_count_active_bits;
 S0 = V0;
 
 // death sentence, slow-numb
 A0 = S1 & 00202000;
-count_active_bits;
+system_count_active_bits;
 V0 = V0 * 2;
 
 S0 = S0 + V0;
@@ -2245,12 +2245,12 @@ if ((target_id < 3) && (w[address + 48] != 0) && (target_id != w[address + 0]) &
 
             A0 = hu[800f83a4 + 18];
             A0 = S2 & A0;
-            select_random_bit;
+            system_select_random_bit;
 
             if (V0 != 0)
             {
                 A0 = V0;
-                get_last_significant_bit_number;
+                system_get_last_significant_bit_number;
                 [FP + 0] = b(V0);
 
                 [FP + 1] = b(target_id);
@@ -2915,7 +2915,7 @@ loopb0f50:	; 800B0F50
             S0 = (V1 & 3f) * roll / 100;
         }
 
-        get_random_byte_from_table;
+        system_get_random_byte_from_table;
 
         if( S0 >= ( V0 & 3f ) )
         {

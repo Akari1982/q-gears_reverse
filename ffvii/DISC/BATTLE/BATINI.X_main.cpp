@@ -2182,7 +2182,7 @@ if (V1 & 40)
 
     [80163614] = h(25); // set battle location id to 0x25
 
-    get_random_byte_from_table;
+    system_get_random_byte_from_table;
 
     [8016360c + 8 + 13] = b((V0 & 3) + 60);
     [8016360c + 8 + 04] = h(1);

@@ -693,7 +693,7 @@ Lb1da0:	; 800B1DA0
                             battle_opcodes_load_values;
 
                             A0 = hu[800F83A4 + 0C]; // self unit mask
-                            get_last_significant_bit_number;
+                            system_get_last_significant_bit_number;
 
                             V1 = w[800F4AC4];
                             A0 = V0;
