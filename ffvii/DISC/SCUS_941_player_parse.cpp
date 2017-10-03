@@ -65,100 +65,86 @@ if( char_id != ff )
 
     system_copy_temp_magic_to_unit_structure();
 
+    system_copy_and_sort_command();
 
+    system_copy_summon_to_unit_structure();
 
+    system_copy_boosted_stat_to_unit_structure();
 
-
-
-
-
-    system_copy_and_sort_command;
-    system_copy_summon_to_unit_structure;
-    system_copy_boosted_stat_to_unit_structure;
-
-
-
-    unit_structure = A2 = w[GP + 11c];
+    unit_structure = w[GP + 11c];
 
     // add strength to attack
     attack = hu[80069548] + bu[unit_structure + 2];
-    if (attack >= 100)
+    if( attack >= 100 )
     {
         attack = ff;
     }
-    if (attack < 0)
+    if( attack < 0 )
     {
         attack = 0;
     }
     [80069548] = h(attack);
 
-
-
     // add vitality to defense
     defense = hu[8006954a] + bu[unit_structure + 3];
-    if (defense >= 100)
+    if( defense >= 100 )
     {
         defense = ff;
     }
-    if (defense < 0)
+    if( defense < 0 )
     {
         defense = 0;
     }
     [8006954a] = h(defense);
 
-
-
     // add magic to magic attack
     mattack = hu[8006954c] + bu[unit_structure + 4];
-    if (mattack >= 100)
+    if( mattack >= 100 )
     {
         mattack = ff;
     }
-    if (mattack < 0)
+    if( mattack < 0 )
     {
         mattack = 0;
     }
     [8006954c] = h(mattack);
 
-
-
     // add spirit to magic defense
     mdefense = hu[8006954e] + bu[unit_structure + 5];
-    if (mdefense >= 100)
+    if( mdefense >= 100 )
     {
         mdefense = ff;
     }
-    if (mdefense < 0)
+    if( mdefense < 0 )
     {
         mdefense = 0;
     }
     [8006954e] = h(mdefense);
 
-
-
     // copy temp data to unit structure
-    [A2 + 8] = h(hu[A1 + 0]);
-    [A2 + a] = h(hu[A1 + 2]);
-    [A2 + c] = h(hu[A1 + 4]);
-    [A2 + e] = h(hu[A1 + 6]);
+    [unit_structure + 8] = h(hu[80069548]);
+    [unit_structure + a] = h(hu[8006954a]);
+    [unit_structure + c] = h(hu[8006954c]);
+    [unit_structure + e] = h(hu[8006954e]);
+
+    // copy preemptive away lure add gil and so on
+    func1ae08();
 
 
 
-    // copy global stats
-    func1ae08;
+
+
 
 
 
     // run through all materia
-    S0 = 8006966c;
-    S1 = 0;
-    loop17bc4:	; 80017BC4
-        A0 = w[8006966c + S1 * 4];
-        system_parse_megaall_materia;
+    for( int i = 0; i < 10; ++i )
+    {
+        A0 = w[8006966c + i * 4];
+        system_parse_megaall_materia();
+    }
 
-        S1 = S1 + 1;
-        V0 = S1 < 10;
-    80017BD8	bne    v0, zero, loop17bc4 [$80017bc4]
+
 
 
 

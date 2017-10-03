@@ -2340,352 +2340,294 @@ for( int i = 0; i < 38; ++i )
 
 
 ////////////////////////////////
-// system_copy_and_sort_command
+// system_copy_and_sort_command()
+
 [GP + 138] = w(0);
 [GP + 13c] = w(0);
 
-system_remove_steal_if_mug;
+system_remove_steal_if_mug();
 
-S1 = 0;
-loop1b974:	; 8001B974
-    V1 = bu[80069508 + S1];
-    if (V1 != ff)
+for( int i = 0; i < 30; ++i )
+{
+    action_id = bu[80069508 + i + 0];
+    if( action_id != ff )
     {
-        // replace magic with w-magic
-        if (V1 == 2)
+        if( action_id == 2 ) // replace magic with w-magic
         {
-            V0 = bu[GP + 148];
-            if (V0 == 2)
+            if( bu[GP + 148] == 2 )
             {
-                [80069508 + S1] = b(15);
+                [80069508 + i + 0] = b(15);
             }
         }
 
-        // replace summon with w-summon
-        if (V1 == 3)
+        if( action_id == 3 ) // replace summon with w-summon
         {
-            V0 = bu[GP + 14c];
-            if (V0 == 2)
+            if( bu[GP + 14c] == 2 )
             {
                 [80069508 + S1] = b(16);
             }
         }
 
-        A0 = bu[80069508 + S1];
-        system_get_command_order;
+        A0 = bu[80069508 + i + 0];
+        system_get_command_order();
 
-        A0 = bu[80069508 + S1];
-        A1 = V0 & ff;
-        system_copy_command_to_unit_structure;
+        A0 = bu[80069508 + i + 0];
+        A1 = V0;
+        system_copy_command_to_unit_structure();
 
-        V0 = w[GP + 138];
-        V0 = V0 + 1;
-        [GP + 138] = w(V0);
+        [GP + 138] = w(w[GP + 138] + 1);
     }
+}
 
-    S1 = S1 + 3;
-    V0 = S1 < 30;
-8001BA0C	bne    v0, zero, loop1b974 [$8001b974]
-
-V1 = [GP + 138];
-A0 = w[GP + 11c];
-V0 = V1 / 4;
-[A0 + 21] = b(V0);
+unit_structure = w[GP + 11c];
+[unit_structure + 21] = b([GP + 138] / 4);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_remove_steal_if_mug
-A0 = 0;
-A1 = 0;
+// system_remove_steal_if_mug()
 
-loop1b8b8:	; 8001B8B8
-    V0 = bu[80069508 + A0 * 3 + 0];
-    if (V0 == 11) // mug
+mug_found = 0;
+
+for( int i = 0; i < 10; ++i )
+{
+    if( bu[80069508 + i * 3 + 0] == 11 ) // mug
     {
-        A1 = 1;
+        mug_found = 1;
         break;
     }
+}
 
-    A0 = A0 + 1;
-    V1 = V1 + 3;
-    V0 = A0 < 10;
-8001B8E0	bne    v0, zero, loop1b8b8 [$8001b8b8]
-
-A0 = 0;
-loop1b8fc:	; 8001B8FC
-    if (A1 == 1)
+if( mug_found == 1 )
+{
+    for( int i = 0; i < 10; ++i )
     {
-        V0 = bu[80069508 + A0 * 3];
-        if (V0 == 5)
+        if( bu[80069508 + i * 3] == 5 )
         {
-            [80069508 + A0 * 3] = b(ff);
+            [80069508 + i * 3] = b(ff);
         }
     }
-
-    A0 = A0 + 1;
-    V0 = A0 < 10;
-8001B934	bne    v0, zero, loop1b8fc [$8001b8fc]
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_get_command_order
-if (A0 == 18 || A0 == 19 || A0 == 1a || A0 == 1b || A0 == 1)
+// system_get_command_order()
+
+if( A0 == 18 || A0 == 19 || A0 == 1a || A0 == 1b || A0 == 1 )
 {
     return 0;
 }
-if (A0 == 2 || A0 == 15)
+if( A0 == 2 || A0 == 15 ) // magic w-magic
 {
     return 1;
 }
-if (A0 == 3 || A0 == 16)
+if( A0 == 3 || A0 == 16 ) // summon w-summon
 {
     return 2;
 }
-if (A0 == 4 || A0 == 17)
+if( A0 == 4 || A0 == 17 ) // item w-item
 {
     return 3;
 }
 
-// if there is no magic
-V0 = bu[GP + 148];
-if (V0 == 0)
+if( bu[GP + 148] == 0 ) // if there is no magic
 {
     [GP + 148] = b(1);
     return 1;
 }
 
-// if there is no summon
-V0 = bu[GP + 14c];
-if (V0 == 0)
+if( bu[GP + 14c] == 0 ) // if there is no summon
 {
     [GP + 14c] = b(1);
     return 2;
 }
 
 // order for all others
-V1 = 4;
-loop1bb08:	; 8001BB08
-    V0 = w[GP + 11c];
-    V0 = bu[V0 + 4c + V1 * 6];
-    if (V0 == ff)
+for( int i = 4; i < 10; ++i )
+{
+    unit_structure = w[GP + 11c];
+    if( bu[unit_structure + 4c + i * 6 + 0] == ff )
     {
-        return V1;
+        return i;
     }
-
-    V1 = V1 + 1;
-    V0 = V1 < 10;
-8001BB20	bne    v0, zero, loop1bb08 [$8001bb08]
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_copy_command_to_unit_structure
+// system_copy_command_to_unit_structure()
+
 command_id = A0;
 command_slot = A1;
 
 unit_structure = w[GP + 11c];
+[unit_structure + 4c + command_slot * 6 + 0] = b(command_id);
+[unit_structure + 4c + command_slot * 6 + 1] = b(bu[800707c4 + command_id * 8 + 0]); // default
+[unit_structure + 4c + command_slot * 6 + 2] = b(bu[800707c4 + command_id * 8 + 1]); // default target type
+[unit_structure + 4c + command_slot * 6 + 3] = b(0);
 
-[unit_structure + command_slot * 6 + 4c + 0] = b(command_id);
-[unit_structure + command_slot * 6 + 4c + 1] = b(bu[800707c4 + command_id * 8 + 0]); // default 
-[unit_structure + command_slot * 6 + 4c + 2] = b(bu[800707c4 + command_id * 8 + 1]); // default target type
-[unit_structure + command_slot * 6 + 4c + 3] = b(0);
-
-A3 = 0;
-loop1bba8:	; 8001BBA8
-    V0 = bu[80069508 + A1];
-    if (command_id == V0)
+for( int i = 0; i < 10; ++i )
+{
+    if( command_id == bu[80069508 +  + i * 3 + 0] )
     {
-        [unit_structure + command_slot * 6 + 4c + 4] = b(bu[80069508 + A3 * 3 + 1]);
-        [unit_structure + command_slot * 6 + 4c + 5] = b(bu[80069508 + A3 * 3 + 2]);
-
+        [unit_structure + 4c + command_slot * 6 + 4] = b(bu[80069508 + i * 3 + 1]);
+        [unit_structure + 4c + command_slot * 6 + 5] = b(bu[80069508 + i * 3 + 2]);
         return;
     }
-
-    A3 = A3 + 1;
-    V0 = A3 < 10;
-8001BC08	bne    v0, zero, loop1bba8 [$8001bba8]
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_copy_summon_to_unit_structure
-A1 = 0;
+// system_copy_summon_to_unit_structure()
+
 unit_structure = w[GP + 11c];
 
-loop1b578:	; 8001B578
-    [unit_structure + 108 + 38 * 8 + A1 * 8 + 2] = b(bu[800694b4 + A1]);
-    [unit_structure + 108 + 38 * 8 + A1 * 8 + 3] = b(bu[800694c4 + A1]);
-    [unit_structure + 108 + 38 * 8 + A1 * 8 + 4] = b(bu[800694d4 + A1]);
-
-    A1 = A1 + 1;
-    V0 = A1 < 10;
-8001B5D4	bne    v0, zero, loop1b578 [$8001b578]
+for( int i = 0; i < 10; ++i )
+{
+    [unit_structure + 108 + 38 * 8 + i * 8 + 2] = b(bu[800694b4 + i]);
+    [unit_structure + 108 + 38 * 8 + i * 8 + 3] = b(bu[800694c4 + i]);
+    [unit_structure + 108 + 38 * 8 + i * 8 + 4] = b(bu[800694d4 + i]);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_copy_boosted_stat_to_unit_structure
-materia boost no greater than 0x64 (from plus type materia)
-A1 = 0;
-loop1af1c:	; 8001AF1C
-    V0 = h[800694e4 + A1 * 2];
-    if (V0 >= 65)
+// system_copy_boosted_stat_to_unit_structure()
+
+// materia boost no greater than 0x64 (from plus type materia)
+for( int i = 0; i < b; ++i )
+{
+    if( h[800694e4 + i * 2] >= 65 )
     {
-        [800694e4 + A1 * 2] = h(64);
+        [800694e4 + i * 2] = h(64);
     }
-
-    A1 = A1 + 1;
-    V0 = A1 < b;
-8001AF38	bne    v0, zero, loop1af1c [$8001af1c]
+}
 
 // limit exp to 0x20
-V0 = h[800694f8];
-if (V0 >= 21)
+if( h[800694f8] >= 21 )
 {
     [800694f8] = h(20);
 }
 
 // limit materia equip modifiers to 0xff if greater than zero
-A1 = 0;
-loop1af6c:	; 8001AF6C
-    V0 = h[800694fc + A1 * 2];
-    V1 = V0;
-    V0 = V0 & 8000;
-    if (V0 == 0)
+for( int i = 0; i < 6; ++i )
+{
+    if( ( h[800694fc + i * 2] & 8000 ) == 0 )
     {
-        [800694fc + A1 * 2] = h(V1 & ff);
+        [800694fc + i * 2] = h(h[800694fc + i * 2] & ff);
     }
-
-    A1 = A1 + 1;
-    V0 = A1 < 6;
-8001AF90	bne    v0, zero, loop1af6c [$8001af6c]
-
-
+}
 
 // calculate final strength
 strength = h[8006953c]; // unit strength
 boost = h[800694e4]; // materia boost %
 equip = hu[800694fc]; // materia equip
 strength = strength + strength * 100 / boost + equip;
-if (strength >= 100)
+if( strength >= 100 )
 {
     strength = ff;
 }
-if (strength < 0)
+if( strength < 0 )
 {
     strength = 0;
 }
 [8006953c] = h(strength); // set new unit strength
-
-
 
 // calculate final vitality
 vitality = h[8006953e];
 boost = h[800694e6];
 equip = hu[800694fe];
 vitality = vitality + vitality * 100 / boost + equip;
-if (vitality >= 100)
+if( vitality >= 100 )
 {
     vitality = ff;
 }
-if (vitality < 0)
+if( vitality < 0 )
 {
     vitality = 0;
 }
 [8006953e] = h(vitality);
-
-
 
 // calculate final magic
 magic = h[80069540];
 boost = h[800694e8];
 equip = hu[80069500];
 magic = magic + magic * 100 / boost + equip;
-if (magic >= 100)
+if( magic >= 100 )
 {
     magic = ff;
 }
-if (magic < 0)
+if( magic < 0 )
 {
     magic = 0;
 }
 [80069540] = h(magic);
-
-
 
 // calculate final spirit
 spirit = h[80069542];
 boost = h[800694ea];
 equip = hu[80069502];
 spirit = spirit + spirit * 100 / boost + equip;
-if (spirit >= 100)
+if( spirit >= 100 )
 {
     spirit = ff;
 }
-if (spirit < 0)
+if( spirit < 0 )
 {
     spirit = 0;
 }
 [80069542] = h(spirit);
-
-
 
 // calculate final dexterity
 dexterity = h[80069544];
 boost = h[800694ec];
 equip = hu[80069504];
 dexterity = dexterity + dexterity * 100 / boost + equip;
-if (dexterity >= 100)
+if( dexterity >= 100 )
 {
     dexterity = ff;
 }
-if (dexterity < 0)
+if( dexterity < 0 )
 {
     dexterity = 0;
 }
 [80069544] = h(dexterity);
-
-
 
 // calculate final luck
 luck = h[80069546];
 boost = h[800694ee];
 equip = hu[80069506];
 luck = luck + luck * 100 / boost + equip;
-if (luck >= 100)
+if( luck >= 100 )
 {
     luck = ff;
 }
-if (luck < 0)
+if( luck < 0 )
 {
     luck = 0;
 }
 [80069546] = h(luck);
 
-
-
 // calculate final hp
 hp = h[80069550];
 boost = h[800694f4];
 hp = hp + hp * 100 / boost;
-if (hp >= 2710) // 10000
+if( hp >= 2710 ) // 10000
 {
     hp = 270f; // 9999
 }
-if (hp < 0)
+if( hp < 0 )
 {
     hp = 0;
 }
 [80069550] = h(hp);
-
-
 
 // calculate final attack
 attack = h[80069548];
@@ -2693,46 +2635,37 @@ boost = h[800694f0];
 attack = attack + attack * 100 / boost;
 [80069548] = h(attack);
 
-
-
 // calculate final defense
 defense = h[8006954a];
 boost = h[800694f2];
 defense = defense + defense * 100 / boost;
 [8006954a] = h(defense);
 
-
-
 // calculate final mp
 mp = h[80069552];
 boost = h[800694f6];
 mp = mp + mp * 100 / boost;
-if (mp >= 3e8) // 1000
+if( mp >= 3e8 ) // 1000
 {
     hp = 3e7; // 999
 }
-if (mp < 0)
+if( mp < 0 )
 {
     mp = 0;
 }
 [80069552] = h(mp);
 
-
-
 unit_structure = w[GP + 11c];
 [unit_structure + 00] = b(bu[800694f8]); // exp modifier
 [unit_structure + 01] = b(bu[800694fa]); // cover modifier
-
 [unit_structure + 02] = b(bu[8006953c]); // set strength
 [unit_structure + 03] = b(bu[8006953e]); // set vitality
 [unit_structure + 04] = b(bu[80069540]); // set magic
 [unit_structure + 05] = b(bu[80069542]); // set spirit
 [unit_structure + 06] = b(bu[80069544]); // set dexterity
 [unit_structure + 07] = b(bu[80069546]); // set luck
-
-[unit_structure + 0c] = h(hu[8006954c]);
-[unit_structure + 0e] = h(hu[8006954e]);
-
+[unit_structure + 0c] = h(hu[8006954c]); // magic attack
+[unit_structure + 0e] = h(hu[8006954e]); // magic defense
 [unit_structure + 12] = b(bu[80069550]); // set hp
 [unit_structure + 16] = b(bu[80069552]); // set mp
 ////////////////////////////////
@@ -2740,33 +2673,26 @@ unit_structure = w[GP + 11c];
 
 
 ////////////////////////////////
-// func1ae08
-V0 = h[GP + 128];
-if (V0 >= 21)
+// func1ae08()
+
+if( h[GP + 128] >= 21 )
 {
     [GP + 128] = h(20);
 }
-
-V0 = h[GP + 12c];
-if (V0 >= 21)
-{
-    [GP + 12c] = h(20);
-}
-
-V0 = h[GP + 12a];
-if (V0 >= 100)
+if( h[GP + 12a] >= 100 )
 {
     [GP + 12a] = h(ff);
 }
-
-V0 = h[GP + 130];
-if (V0 >= 100)
+if( h[GP + 12c] >= 21 )
+{
+    [GP + 12c] = h(20);
+}
+if( h[GP + 130] >= 100 )
 {
     [GP + 130] = h(ff);
 }
 
 unit_structure = w[GP + 11c];
-
 [unit_structure + 437] = b(bu[unit_structure + 437] + bu[GP + 130]);
 [unit_structure + 43c] = b(bu[unit_structure + 43c] + bu[GP + 128]);
 [unit_structure + 43d] = b(bu[unit_structure + 43d] + bu[GP + 12a]);
@@ -2842,7 +2768,7 @@ if (V0 == 4)
     {
         A0 = 18;
         A1 = 0;
-        system_copy_command_to_unit_structure;
+        system_copy_command_to_unit_structure();
     }
 }
 ////////////////////////////////
