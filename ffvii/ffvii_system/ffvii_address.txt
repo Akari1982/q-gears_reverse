@@ -59,7 +59,7 @@
 +1cc [][][][] store AP to next star here (in case of menu).
 +1d0 [][][][] store -1 here at the start of total battle circle. We set error id here.
 +1d4 []       add gil plus value from all player structure. Limit to 0x20.
-+1d5 []       calculate and add emenu lure value (Limit 0x2-0x20).
++1d5 []       calculate and add enemy lure value (Limit 0x2-0x20).
 +1d6 []       add chokobo lure value from all player structure. Limit to 0x20.
 +1d7 []       add preemptive value from all player structure. Limit to 0x55. Add bit 0x80 if we have mastered preemptive materia equipped.
 +220 [][][][] current main menu level (0 1 or 2)

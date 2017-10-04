@@ -43453,7 +43453,7 @@ AT = AT + A0;
 Le65c8:	; 800E65C8
 800E65C8	jal    system_init_player_stat_from_equip [$80020058]
 A0 = S3;
-800E65D0	jal    system_init_player_materia [$8001786c]
+800E65D0	jal    system_init_player_stat_from_materia [$8001786c]
 A0 = S3 & 00ff;
 800E65D8	lui    v0, $8016
 V0 = bu[V0 + 3604];

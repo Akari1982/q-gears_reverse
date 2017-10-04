@@ -56,7 +56,7 @@ loop24ae0:	; 80024AE0
 80024AFC	nop
 80024B00	jal    system_init_player_stat_from_equip [$80020058]
 80024B04	nop
-80024B08	jal    system_init_player_materia [$8001786c]
+80024B08	jal    system_init_player_stat_from_materia [$8001786c]
 80024B0C	andi   a0, s0, $00ff
 80024B10	jal    system_calculate_total_lure_gil_preemptive_value [$80017678]
 80024B14	nop

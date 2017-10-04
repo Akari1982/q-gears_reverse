@@ -23,14 +23,16 @@ for( int i = 0; i < 3; ++i )
     system_init_player_stat_from_equip();
 
     A0 = i;
-    system_init_player_materia();
+    system_init_player_stat_from_materia();
 }
 
-
-
-
-
+// calculate and store to global vars
 system_calculate_total_lure_gil_preemptive_value();
+
+
+
+
+
 
 // read 0x7e battle string from kernel to temp
 A0 = 7e;

@@ -1,5 +1,5 @@
 ////////////////////////////////
-// system_init_player_materia()
+// system_init_player_stat_from_materia()
 
 party_id = A0;
 
@@ -130,13 +130,6 @@ if( char_id != ff )
     // copy preemptive away lure add gil and so on
     func1ae08();
 
-
-
-
-
-
-
-
     // run through all materia
     for( int i = 0; i < 10; ++i )
     {
@@ -144,97 +137,61 @@ if( char_id != ff )
         system_parse_megaall_materia();
     }
 
-
-
-
-
+    // sort and additionally removes quadra from escape and knights of the round
     A0 = party_id;
-    system_sort_magic_in_unit_structure;
+    system_sort_magic_in_unit_structure();
 
-
-
-    // apply mp turbo boost
-    S1 = 0;
-    loop17bf4:	; 80017BF4
-        V0 = w[GP + 11c];
-        V1 = S1 * 8;
-        A1 = V0 + V1;
-        V0 = bu[A1 + 108 + 7];
-        if (V0 & e0) // if stars in MP Turbo exist
+    // apply mp turbo increase of mana cost
+    for( int i = 0; i < 48; ++i )
+    {
+        mp_turbo_stars = bu[unit_structure + 108 + i * 8 + 7] >> 5;
+        if( mp_turbo_stars != 0 )
         {
-            V0 = V0 >> 5;
-            A0 = bu[A1 + 108 + 1];
-            A0 = A0 + A0 * V0 * a / 64 + 1
-            if (A0 >= 100)
+            A0 = bu[unit_structure + 108 + i * 8 + 1] + A0 * mp_turbo_stars * a / 64 + 1
+            if( A0 >= 100 )
             {
                 A0 = ff;
             }
-            [A1 + 109] = b(A0);
+            [unit_structure + 108 + i * 8 + 1] = b(A0);
         }
-
-        S1 = S1 + 1;
-        V0 = S1 < 48;
-    80017C5C	bne    v0, zero, loop17bf4 [$80017bf4]
-
-
+    }
 
     // flip hp/mp if hp<>mp materia equipped
-    V1 = w[GP + 11c];
-    V0 = bu[V1 + 23];
-    if (V0 & 8)
+    if( bu[unit_structure + 23] & 08 )
     {
-        V0 = hu[V1 + 16];
-        S1 = h[V1 + 12];
-        [V1 + 12] = h(V0);
-        [V1 + 16] = h(S1);
+        hp = h[unit_structure + 12];
+        [unit_structure + 12] = h(hu[unit_structure + 16]);
+        [unit_structure + 16] = h(hp);
     }
 
-    V1 = w[GP + 11c];
-    V0 = h[V1 + 12];
-    if (V0 < a)
+    // hp can't be less than 0xa
+    if( h[unit_structure + 12] < a )
     {
-        [V1 + 12] = h(a);
+        [unit_structure + 12] = h(a);
     }
 
-    V1 = w[GP + 11c];
-    V0 = h[V1 + 16];
-    if (V0 < a)
+    // mp can't be less than 0xa
+    if( h[unit_structure + 16] < a )
     {
-        [V1 + 16] = h(a);
+        [unit_structure + 16] = h(a);
     }
 
-
-
-    // if current hp greater than max
-    A0 = w[GP + 11c];
-    V0 = h[A0 + 12];
-    V1 = h[A0 + 10];
-    A1 = V0;
-    if (V0 < V1)
+    // current hp can't be greater than max
+    if( h[unit_structure + 12] < h[unit_structure + 10] )
     {
-        [A0 + 10] = h(A1);
-        [8009c764 + save_id * 84] = h(A1);
+        [unit_structure + 10] = h(h[unit_structure + 12]);
+        [8009c764 + save_id * 84] = h(h[unit_structure + 12]);
     }
 
-
-
-    // if current mp greater than max
-    A0 = w[GP + 11c];
-    V0 = h[A0 + 16];
-    V1 = h[A0 + 14];
-    A1 = V0;
-    if (V0 < V1)
+    // current mp can't be greater than max
+    if( h[unit_structure + 16] < h[unit_structure + 14] )
     {
-        V0 = party_id;
-        [A0 + 14] = h(A1);
-        [8009c768 + save_id * 84] = h(A1);
+        [unit_structure + 14] = h(h[unit_structure + 16]);
+        [8009c768 + save_id * 84] = h(h[unit_structure + 16]);
     }
 
-
-
-    A1 = w[GP + 11c];
-    [8009c770 + save_id * 84] = h(hu[A1 + 12]);
-    [8009c772 + save_id * 84] = h(hu[A1 + 16]);
+    [8009c770 + save_id * 84] = h(hu[unit_structure + 12]);
+    [8009c772 + save_id * 84] = h(hu[unit_structure + 16]);
 }
 ////////////////////////////////
 

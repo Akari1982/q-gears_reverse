@@ -2155,10 +2155,11 @@ return V1;
 
 
 ////////////////////////////////
-// system_calculate_total_lure_gil_preemptive_value
-S2 = 0;
-S1 = 0;
+// system_calculate_total_lure_gil_preemptive_value()
 
+// set base value
+en_away = 0;
+en_lure = 0;
 [GP + 1d4] = b(10);
 [GP + 1d5] = b(10);
 [GP + 1d6] = b(0);
@@ -2167,100 +2168,79 @@ S1 = 0;
 // remove underwater timer
 [8009d302] = b(bu[8009d302] & 7f);
 
-
-
-S0 = 0;
-loop176d8:	; 800176D8
-    V1 = bu[8009cbdc + S0];
-    if (V1 != ff)
+// add value from unit struct
+for( int i = 0; i < 3; ++i )
+{
+    if( bu[8009cbdc + i] != ff )
     {
-        A0 = S0;
-        system_get_party_player_structure_address_by_party_id;
+        A0 = i;
+        system_get_party_player_structure_address_by_party_id();
         [GP + 11c] = w(V0);
 
+        en_away = en_away + bu[V0 + 437]; // number of stars equipped enemy away materia has
+        en_lure = en_lure + bu[V0 + 43d]; // encounter value (enemy lure/away)
         [GP + 1d4] = b(bu[GP + 1d4] + bu[V0 + 43c]);
         [GP + 1d6] = b(bu[GP + 1d6] + bu[V0 + 43e]);
         [GP + 1d7] = b(bu[GP + 1d7] + bu[V0 + 43f]);
 
-        S2 = S2 + bu[V0 + 43d]; // encounter value (enemy lure/away)
-        S1 = S1 + bu[V0 + 437]; // number of stars equipped enemy away materia has
-
         // if underwater materia equipped add timer to battle ui
-        V0 = bu[V0 + 23];
-        if (V0 & 01)
+        if( bu[V0 + 23] & 01 )
         {
-            V0 = bu[8009d302];
-            V0 = V0 | 80;
-            [8009d302] = b(V0);
+            [8009d302] = b(bu[8009d302] | 80);
         }
     }
+}
 
-    S0 = S0 + 1;
-    V0 = S0 < 3;
-80017784	bne    v0, zero, loop176d8 [$800176d8]
-
-
-
-V0 = bu[GP + 1d4];
-if (V0 >= 21)
+// limit gil plus
+if( bu[GP + 1d4] >= 21 )
 {
     [GP + 1d4] = b(20);
 }
 
-
-
-
-if (S2 + 10 >= S1)
+// limit enemy lure/away
+if( en_lure + 10 >= en_away )
 {
-    [GP + 1d5] = b(S2 - S1 + 10);
+    [GP + 1d5] = b(en_lure - en_away + 10);
 }
 else
 {
     [GP + 1d5] = b(2);
 }
 
-V0 = bu[GP + 1d5];
-if (V0 >= 21)
+if( bu[GP + 1d5] >= 21)
 {
     [GP + 1d5] = b(20);
 }
 
-
-
-
-V0 = bu[GP + 1d6];
-if (V0 >= 21)
+// limit chokobo lure
+if( bu[GP + 1d6] >= 21 )
 {
     [GP + 1d6] = b(20);
 }
 
-
-
-V0 = bu[GP + 1d7];
-if (V0 >= 56)
+// limit preemptive
+if( bu[GP + 1d7] >= 56 )
 {
     [GP + 1d7] = b(55);
 }
 
 // if mastered pre emptive
-V0 = bu[GP + 118];
-if (V0 != 0)
+if( bu[GP + 118] != 0 )
 {
-    V0 = bu[GP + 1d7];
-    V0 = V0 | 80;
-    [GP + 1d7] = b(V0);
+    [GP + 1d7] = b(bu[GP + 1d7] | 80);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_get_party_player_structure_address_by_party_id
-// A0 - party id
-V1 = bu[8009cbdc + A0];
-if (V1 != ff)
+// system_get_party_player_structure_address_by_party_id()
+
+party_id = A0;
+
+if( bu[8009cbdc + party_id] != ff )
 {
-    return 8009d84c + A0 * 440;
+    return 8009d84c + party_id * 440;
 }
 ////////////////////////////////
 
@@ -2703,68 +2683,47 @@ unit_structure = w[GP + 11c];
 
 
 ////////////////////////////////
-// system_parse_megaall_materia
+// system_parse_megaall_materia()
+
 materia_data = A0;
-A2 = A0 & ff;
-V0 = bu[800730d0 + A2 * 14 + d];
-V0 = V0 & 0f;
-if (V0 == 4)
+materia_id = materia_data & ff;
+materia_exp = materia_data >> 8;
+
+type = bu[800730d0 + A1 * 14 + d] & 0f;
+if( type == 4 )
 {
-    A0 = A2;
-    A1 = A0 >> 8;
-    system_get_materia_activated_stars;
-    A1 = V0;
+    A0 = materia_id;
+    A1 = materia_exp;
+    system_get_materia_activated_stars();
+    stars = V0;
+
+    unit_structure = w[GP + 11c];
 
     // add all to all magic
-    A0 = 0;
-    loop196dc:	; 800196DC
-        V0 = w[GP + 11c];
-        V1 = A0 * 8;
-        V1 = V0 + V1;
-        [V1 + 108] = b(V0);
-        if (V0 != ff)
+    for( int i = 0; i < 38; ++i )
+    {
+        if( bu[unit_structure + 108 + i * 8 + 0] != ff )
         {
-            [V1 + 10a] = b(bu[V1 + 10a] + A1);
+            [unit_structure + 108 + i * 8 + 2] = b(bu[unit_structure + 108 + i * 8 + 2] + stars);
         }
+    }
 
-        A0 = A0 + 1;
-        V0 = A0 < 38;
-    8001970C	bne    v0, zero, loop196dc [$800196dc]
-
-
-
-    A3 = ff;
-    A2 = 800101e8;
-    A0 = 0;
-
-    loop19720:	; 80019720
-        V0 = w[GP + 11c];
-        V0 = V0 + A0;
-        V0 = bu[V0 + 4c];
-
-        if (V0 != ff)
+    for( int i = 0; i < 10; ++i )
+    {
+        if( bu[unit_structure + 4c + i * 6] != ff )
         {
-            switch (V1)
+            switch( V1 )
             {
                 case 5 6 9 a b 11:
                 {
-                    V1 = w[GP + 11c];
-                    [V1 + A0 + 4c + 4] = b(V0 + A1);
-
+                    [unit_structure + 4c + i * 6 + 4] = b(bu[unit_structure + 4c + i * 6 + 4] + stars);
                 }
             }
         }
-
-        A0 = A0 + 6;
-        V0 = A0 < 60;
-    80019780	bne    v0, zero, loop19720 [$80019720]
-
-
+    }
 
     // if first command not flash - replace it with slash all.
-    V0 = w[GP + 11c];
-    V1 = bu[V0 + 4c];
-    if (V1 != 1a)
+    if( bu[unit_structure + 4c + 0 * 6 + 0] != 1a )
     {
         A0 = 18;
         A1 = 0;
@@ -2776,180 +2735,128 @@ if (V0 == 4)
 
 
 ////////////////////////////////
-// system_sort_magic_in_unit_structure
+// system_sort_magic_in_unit_structure()
+
 party_id = A0;
-T1 = SP + 98;
-V0 = hu[8009d7be];
-V0 = V0 >> a;
-T3 = V0 & 7; // magic order
-A3 = SP;
 
-T2 = 0;
-loop1c12c:	; 8001C12C
-    [SP + d0 + T2 * 8] = w(w[8009d84c + party_id * 440 + 108 + T2 * 8 + 0]);
-    [SP + d4 + T2 * 8] = w(w[8009d84c + party_id * 440 + 108 + T2 * 8 + 4]);
+order_type = (hu[8009c6e4 + 10da] >> a) & 7; // magic order
 
-    V0 = bu[8009d84c + party_id * 440 + 108 + T2 * 8];
-    if (V0 != ff)
+// copy all magic from unit structure to [d0]
+// store existed magic struct id to [98]
+// remove magic from unit structure
+for( int i = 0; i < 38; ++i )
+{
+    [SP + d0 + i * 8 + 0] = w(w[8009d84c + party_id * 440 + 108 + i * 8 + 0]);
+    [SP + d0 + i * 8 + 4] = w(w[8009d84c + party_id * 440 + 108 + i * 8 + 4]);
+
+    V0 = bu[8009d84c + party_id * 440 + 108 + i * 8 + 0];
+    if( V0 != ff )
     {
-        [SP + 98 + V0] = b(T2);
+        [SP + 98 + V0] = b(i);
     }
+    [8009d84c + party_id * 440 + 108 + i * 8 + 0] = b(ff);
+}
 
+// clear order list [00] with ff
+for( int i = 0; i < 4; ++i )
+{
+    for( int j = 0; j < 18; ++j )
+    {
+        [SP + i * 18 + j] = b(ff);
+    }
+}
 
-    [8009d84c + party_id * 440 + 108 + T2 * 8] = b(ff);
+// create order list [00]
+for( int i = 0; i < 36; ++i )
+{
+    // 00 01 02 08 03 04 05 06 07 0-8 restorative
+    // 43 44 40 41 42 45 49 4A 4B 51 46 47 48 4C 4D 4E 4F 50 9-1a independent
+    // 20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 1b-2c attack elemental
+    // 60 61 62 63 64 65 66 68 67 2d-35
+    A0 = bu[80082268 + f5c + i];
+    sort = A0 & 1f;
+    type = A0 >> 5;
+    // 00010203
+    // 00020103
+    // 02000103
+    // 01000203
+    // 01020003
+    // 02010003
+    V1 = bu[8001029c + order_type * 4 + type];
+    [SP + V1 * 18 + sort] = b(i);
+}
 
-    T2 = T2 + 1;
-    V0 = T2 < 38;
-8001C170	bne    v0, zero, loop1c12c [$8001c12c]
+// clear 38 slots in [60]
+for( int i = 60; i < 98; ++i)
+{
+    [SP + i] = b(ff);
+}
 
-
-
-// clear with ff
-T2 = 0;
-loop1c184:	; 8001C184
-    V1 = 17;
-    loop1c18c:	; 8001C18C
-        [SP + T2 * 18 + V1] = b(ff);
-        V1 = V1 - 1;
-    8001C194	bgez   v1, loop1c18c [$8001c18c]
-
-    T2 = T2 + 1;
-    V0 = T2 < 4;
-8001C1A4	bne    v0, zero, loop1c184 [$8001c184]
-
-
-
-// create order list
-T2 = 0;
-loop1c1c0:	; 8001C1C0
-    A0 = bu[80082268 + f5c + T2];
-00 01 02 08 03 04 05 06 07 0-8 restorative
-43 44 40 41 42 45 49 4A 4B 51 46 47 48 4C 4D 4E 4F 50 9-1a independent
-20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 1b-2c attack elemental
-60 61 62 63 64 65 66 68 67 2d-35
-    V0 = A0 >> 5;
-    V1 = bu[8001029c + T3 * 4 + V0];
-00010203
-00020103
-02000103
-01000203
-01020003
-02010003
-    A0 = A0 & 1f;
-    [SP + V1 * 18 + A0] = b(T2);
-    T2 = T2 + 1;
-    V0 = T2 < 36;
-8001C200	bne    v0, zero, loop1c1c0 [$8001c1c0]
-
-
-
-// clear 38 slots in 60
-T2 = 37;
-V0 = SP + 97;
-loop1c210:	; 8001C210
-    [V0] = b(ff);
-    V0 = V0 - 1;
-    T2 = T2 - 1;
-8001C218	bgez   t2, loop1c210 [$8001c210]
-
-
-
-// copy magic id to 0x60 ordered by id
-T2 = 0;
-loop1c230:	; 8001C230
-    V1 = bu[SP + d0 + T2 * 8];
-    if (V1 != ff)
+// copy magic id to [60] ordered by magic id
+for( int i = 0; i < 38; ++i )
+{
+    V1 = bu[SP + d0 + i * 8 + i];
+    if( V1 != ff )
     {
         [SP + 60 + V1] = b(V1);
     }
+}
 
-    T2 = T2 + 1;
-    V0 = T2 < 38;
-8001C250	bne    v0, zero, loop1c230 [$8001c230]
-
-
-
-T2 = 0;
-loop1c268:	; 8001C268
-    V1 = SP + T2 * 18;
-    loop1c270:	; 8001C270
-        V0 = bu[V1];
-        if (V0 != ff)
+// copy magic id from [60] to [00] ordered
+// this will replace non existed magic with ff
+for( int i = 0; i < 4; ++i )
+{
+    for( int j = 0; j < 18; ++j )
+    {
+        V0 = bu[SP + i * 18 + j];
+        if( V0 != ff )
         {
-            [V1] = b(bu[SP + 60 + V0]);
+            [SP + i * 18 + j] = b(bu[SP + 60 + V0]);
         }
-
-        V1 = V1 + 1;
-        V0 = V1 < SP + T2 * 18 + 18;
-    8001C294	bne    v0, zero, loop1c270 [$8001c270]
-
-    T2 = T2 + 1;
-    V0 = T2 < 4;
-8001C2A4	bne    v0, zero, loop1c268 [$8001c268]
+    }
+}
 
 
 
+// copy magic from [d0] to unit struct by magic struct id in [98]
 T3 = 0;
-order_group = 0;
-loop1c2c0:	; 8001C2C0
-    T0 = 0;
-    loop1c2c8:	; 8001C2C8
-        V0 = bu[SP + order_group * 18 + T0 + 0];
-        A0 = bu[SP + order_group * 18 + T0 + 1];
-        V1 = bu[SP + order_group * 18 + T0 + 2];
-        V0 = V0 & A0;
-        V1 = V1 & V0;
-        if (V1 != ff)
+for( int i = 0; i < 4; ++i )
+{
+    for( int j = 0; j < 18; j += 3 )
+    {
+        if( ( bu[SP + i * 18 + j + 0] & bu[SP + i * 18 + j + 1] & bu[SP + i * 18 + j + 2] ) != ff )
         {
-            T1 = 8009d84c + party_id * 440 + 108 + T3 * 8
-            A3 = SP + order_group * 18 + T0;
-            T4 = SP + order_group * 18 + T0 + 3;
-
-            loop1c2f0:	; 8001C2F0
-                V0 = bu[A3];
-                if (V0 != ff)
+            for( int k = 0; k < 3; ++k )
+            {
+                V0 = bu[SP + i * 18 + j + k];
+                if( V0 != ff )
                 {
                     V0 = bu[SP + 98 + V0];
-                    [T1 + 0] = w(w[SP + V0 * 8 + 0]);
-                    [T1 + 4] = w(w[SP + V0 * 8 + 4]);
+                    [8009d84c + party_id * 440 + 108 + T3 * 8 + 0] = w(w[SP + d0 + V0 * 8 + 0]);
+                    [8009d84c + party_id * 440 + 108 + T3 * 8 + 4] = w(w[SP + d0 + V0 * 8 + 4]);
                 }
-
-                T1 = T1 + 8;
-                A3 = A3 + 1;
                 T3 = T3 + 1;
-                V0 = A3 < T4;
-            8001C33C	bne    v0, zero, loop1c2f0 [$8001c2f0]
+            }
         }
+    }
+}
 
-        T0 = T0 + 3;
-        V0 = T0 < 18;
-    8001C34C	bne    v0, zero, loop1c2c8 [$8001c2c8]
-
-    order_group = order_group + 1;
-    V0 = order_group < 4;
-8001C35C	bne    v0, zero, loop1c2c0 [$8001c2c0]
-
-
-
-T2 = 0;
-loop1c378:	; 8001C378
-    V1 = bu[8009d84c + party_id * 440 + 108 + T2 * 8];
-    if (V1 != ff)
+for( int i = 0; i < 48; ++i )
+{
+    V1 = bu[8009d84c + party_id * 440 + 108 + i * 8 + 0];
+    if( V1 != ff )
     {
-        if (T2 >= 38)
+        if( i >= 38 ) // summons
         {
             V1 = V1 + 38;
         }
 
-        if (V1 == 19 || V1 == 47)
+        if( V1 == 19 || V1 == 47 ) // remove quadra for escape and knights of round
         {
-            [8009d84c + party_id * 440 + 108 + T2 * 8 + 4] = b(0);
+            [8009d84c + party_id * 440 + 108 + i * 8 + 4] = b(0);
         }
     }
-
-    T2 = T2 + 1;
-    V0 = T2 < 48;
-8001C3B0	bne    v0, zero, loop1c378 [$8001c378]
+}
 ////////////////////////////////
 
 
