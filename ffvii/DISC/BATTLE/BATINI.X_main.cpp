@@ -29,28 +29,34 @@ for( int i = 0; i < 3; ++i )
 // calculate and store to global vars
 system_calculate_total_lure_gil_preemptive_value();
 
-
-
-
-
-
-// read 0x7e battle string from kernel to temp
-A0 = 7e;
+// read 0x7e battle string from kernel to temp 80063560
+A0 = 7e; // "0A"
 func1521c();
-
-// write 0x10
-[800fafd0] = w(bu[V0 + 0]);
-// write 0x21
-[800f7ed0] = w(bu[V0 + 1]);
+[800fafd0] = w(bu[V0 + 0]); // 0 0x10
+[800f7ed0] = w(bu[V0 + 1]); // A 0x21
 
 // init some values
-funca3278();
+[800f3944] = w(0); // action index in 80163798
+[800f3948] = w(0); // attack impact struct index 800fa9d0
+[80163798 + 0] = b(ff); // clear first action
 
 // init some array
 funca283c();
 
 // init some array
 funcad480();
+
+
+
+
+
+
+
+
+
+
+
+
 
 // clear attack stack data.
 V0 = 1f8;

@@ -62,13 +62,24 @@ FFFFFFFFFFFFFFFF FFFFFFFFFFFFFFFF
 800a0000 + 1  []       default attack formula.
 800a0000 + 2  [][]     some default flags.
 
+800a0098 some values
+                1F 0E 09 1F 00 0C 09 1F 01 0C 09 1F 02 0D 09 1F
+                1E 09 1F 0A 16 09 1F 1D 09 1F 19 09 1F 0E 1C 09
+                1F 0E 1B 09 1F 1A 09 1F 17 1F 03 0C 09 1F 1F 1F
+                1F 0E 09 1F 04 0B 0F 1F 05 1F 06 0C 09 1F 00 0C
+                09 1F 01 0C 09 1F 02 0D 09 1F 0E 09 1F 12 0E 09
+                1F 0E 18 09 1F 10 0E 09 1F 1F 1F 1F 1F 07 0C 09
+                1F 08 1F 11 1F 13 09 1F 14 1F 15 0F 1F
+
 800a0d98 default matrix for billboards.
 
 800e7a38      [][][][] maybe current unit (during attack queue).
 
 800e7a58      []       array of player unit_ids. Used if we want some player unit to execute another player logic.
 
-800e7bbc               array of some 
+800e7bbc array of some 
+        08 00 02 08 01 08 03 08 04 08 05 08 00 02 08 01
+        08 07 08 06 08 00 02 08 00 08 08 08 08 08
 
 800e7d10 up vector for battle camera. (3 items, 0x4 size)
 800e7d20 vector to scale rotation matrix for 3d. (3 items, 0x4 size)
@@ -432,6 +443,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 +08 [][][][] +c from formation data
 
 
+800f7ed0 [][][][] init with "A" string (0x21)
 800f7ed4 []       init with 0.
 800f7ed8 struct 0x28 size. 0x10 items. Camera related.
 // for function 800bfda0
@@ -735,6 +747,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 +04 [][]     init with 0. Add some flags later.
                 0x0001 - add if we do damage.
 +08 [][][][] store current status of target.
+
+800fafd0 [][][][] init with "0" string (0x10)
 
 800fafdc []       init with 0.
 800fafe0 []       store attacker id here.

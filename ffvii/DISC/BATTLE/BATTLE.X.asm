@@ -1238,34 +1238,13 @@ La2808:	; 800A2808
 800A2834	jr     ra 
 800A2838	nop
 
-800A283C	addu   v1, zero, zero
-800A2840	addu   a1, zero, zero
-800A2844	ori    a2, zero, $001f
-800A2848	lui    a0, $800f
-800A284C	addiu  a0, a0, $38ac
 
-loopa2850:	; 800A2850
-800A2850	bne    v1, a1, La2860 [$800a2860]
-800A2854	nop
-800A2858	sw     v1, $0000(a0)
-800A285C	addiu  a0, a0, $0004
 
-La2860:	; 800A2860
-800A2860	lui    at, $800a
-800A2864	addu   at, at, v1
-800A2868	lbu    v0, $0098(at)
-800A286C	nop
-800A2870	bne    v0, a2, La287c [$800a287c]
-800A2874	nop
-800A2878	addiu  a1, v1, $0001
+////////////////////////////////
+// funca283c
+800A283C-800A2890
+////////////////////////////////
 
-La287c:	; 800A287C
-800A287C	addiu  v1, v1, $0001
-800A2880	sltiu  v0, v1, $006d
-800A2884	bne    v0, zero, loopa2850 [$800a2850]
-800A2888	nop
-800A288C	jr     ra 
-800A2890	nop
 
 
 funca2894:	; 800A2894
@@ -2028,16 +2007,13 @@ La3270:	; 800A3270
 800A3274	nop
 
 
-funca3278:	; 800A3278
-800A3278	addiu  v0, zero, $ffff (=-$1)
-800A327C	lui    at, $800f
-800A3280	sw     zero, $3944(at)
-800A3284	lui    at, $800f
-800A3288	sw     zero, $3948(at)
-800A328C	lui    at, $8016
-800A3290	sb     v0, $3798(at)
-800A3294	jr     ra 
-800A3298	nop
+
+////////////////////////////////
+// funca3278
+800A3278-800A3298
+////////////////////////////////
+
+
 
 800A329C	lui    v0, $800f
 800A32A0	lw     v0, $3944(v0)
@@ -3976,71 +3952,13 @@ La4b6c:	; 800A4B6C
 800A4B9C	jr     ra 
 800A4BA0	nop
 
-800A4BA4	lui    a1, $800f
-800A4BA8	addiu  a1, a1, $39f0
-800A4BAC	sll    a2, a0, $01
-800A4BB0	addu   a2, a2, a0
-800A4BB4	sll    a3, a2, $01
-800A4BB8	addu   a1, a3, a1
-800A4BBC	sll    v1, a0, $04
-800A4BC0	addu   v1, v1, a0
-800A4BC4	sll    v0, v1, $06
-800A4BC8	lui    at, $800a
-800A4BCC	addu   at, at, v0
-800A4BD0	lwl    a0, $d89b(at)
-800A4BD4	lui    at, $800a
-800A4BD8	addu   at, at, v0
-800A4BDC	lwr    a0, $d898(at)
-800A4BE0	lui    at, $800a
-800A4BE4	addu   at, at, v0
-800A4BE8	lb     t0, $d89c(at)
-800A4BEC	lui    at, $800a
-800A4BF0	addu   at, at, v0
-800A4BF4	lb     t1, $d89d(at)
-800A4BF8	swl    a0, $0003(a1)
-800A4BFC	swr    a0, $0000(a1)
-800A4C00	sb     t0, $0004(a1)
-800A4C04	sb     t1, $0005(a1)
-800A4C08	lwl    v0, $0003(a1)
-800A4C0C	lwr    v0, $0000(a1)
-800A4C10	lb     a0, $0004(a1)
-800A4C14	lb     t0, $0005(a1)
-800A4C18	lui    at, $800f
-800A4C1C	addu   at, at, a3
-800A4C20	swl    v0, $3a07(at)
-800A4C24	lui    at, $800f
-800A4C28	addu   at, at, a3
-800A4C2C	swr    v0, $3a04(at)
-800A4C30	lui    at, $800f
-800A4C34	addu   at, at, a3
-800A4C38	sb     a0, $3a08(at)
-800A4C3C	lui    at, $800f
-800A4C40	addu   at, at, a3
-800A4C44	sb     t0, $3a09(at)
-800A4C48	ori    v0, zero, $0001
-800A4C4C	sll    v1, v1, $02
-800A4C50	lui    at, $800f
-800A4C54	addu   at, at, a3
-800A4C58	sb     v0, $3a04(at)
-800A4C5C	lui    at, $800f
-800A4C60	addu   at, at, v1
-800A4C64	lbu    v0, $5be1(at)
-800A4C68	sll    a2, a2, $03
-800A4C6C	andi   v0, v0, $0002
-800A4C70	sltiu  v0, v0, $0001
-800A4C74	subu   v0, zero, v0
-800A4C78	andi   v0, v0, $0007
-800A4C7C	lui    at, $800f
-800A4C80	addu   at, at, a3
-800A4C84	sb     v0, $3a05(at)
-800A4C88	lui    at, $800f
-800A4C8C	addu   at, at, a2
-800A4C90	lbu    v0, $5efc(at)
-800A4C94	lui    at, $800f
-800A4C98	addu   at, at, a3
-800A4C9C	sb     v0, $3a06(at)
-800A4CA0	jr     ra 
-800A4CA4	nop
+
+
+////////////////////////////////
+// funca4ba4
+800A4BA4-800A4CA4
+////////////////////////////////
+
 
 
 funca4ca8:	; 800A4CA8
@@ -4201,46 +4119,12 @@ La4e6c:	; 800A4E6C
 800A4E7C	nop
 
 
-funca4e80:	; 800A4E80
-800A4E80	addu   a1, a0, zero
-800A4E84	sll    v0, a1, $01
-800A4E88	addu   v0, v0, a1
-800A4E8C	sll    v0, v0, $02
-800A4E90	addu   v0, v0, a1
-800A4E94	sll    v0, v0, $02
-800A4E98	lui    at, $800f
-800A4E9C	addu   at, at, v0
-800A4EA0	lbu    v1, $5e65(at)
-800A4EA4	ori    v0, zero, $00ff
-800A4EA8	beq    v1, v0, La4f0c [$800a4f0c]
-800A4EAC	ori    v0, zero, $0001
-800A4EB0	lui    a0, $8016
-800A4EB4	addiu  a0, a0, $3762
-800A4EB8	lhu    v1, $0000(a0)
-800A4EBC	sllv   v0, a1, v0
-800A4EC0	or     v1, v1, v0
-800A4EC4	sll    v0, a1, $04
-800A4EC8	addu   v0, v0, a1
-800A4ECC	sll    v0, v0, $02
-800A4ED0	sh     v1, $0000(a0)
-800A4ED4	lui    at, $800f
-800A4ED8	addu   at, at, v0
-800A4EDC	lhu    v1, $5bc0(at)
-800A4EE0	lui    at, $800f
-800A4EE4	addu   at, at, v0
-800A4EE8	lbu    a0, $5bc6(at)
-800A4EEC	ori    v1, v1, $0001
-800A4EF0	ori    a0, a0, $0001
-800A4EF4	lui    at, $800f
-800A4EF8	addu   at, at, v0
-800A4EFC	sh     v1, $5bc0(at)
-800A4F00	lui    at, $800f
-800A4F04	addu   at, at, v0
-800A4F08	sb     a0, $5bc6(at)
 
-La4f0c:	; 800A4F0C
-800A4F0C	jr     ra 
-800A4F10	nop
+////////////////////////////////
+// funca4e80
+800A4E80-800A4F10
+////////////////////////////////
+
 
 
 funca4f14:	; 800A4F14
@@ -4746,22 +4630,13 @@ funca555c:	; 800A555C
 800A55B4	jr     ra 
 800A55B8	sb     v0, $0001(v1)
 
-800A55BC	addiu  a0, zero, $ffff (=-$1)
-800A55C0	addu   v1, zero, zero
 
-loopa55c4:	; 800A55C4
-800A55C4	lui    at, $800f
-800A55C8	addu   at, at, v1
-800A55CC	sh     a0, $3a40(at)
-800A55D0	lui    at, $800f
-800A55D4	addu   at, at, v1
-800A55D8	sh     a0, $3a42(at)
-800A55DC	addiu  v1, v1, $0004
-800A55E0	slti   v0, v1, $0040
-800A55E4	bne    v0, zero, loopa55c4 [$800a55c4]
-800A55E8	nop
-800A55EC	jr     ra 
-800A55F0	nop
+
+////////////////////////////////
+// funca55bc
+800A55BC-800A55F0
+////////////////////////////////
+
 
 
 funca55f4:	; 800A55F4
@@ -6858,34 +6733,13 @@ funca71e8:	; 800A71E8
 800A71EC	jr     ra 
 800A71F0	andi   v0, v0, $007f
 
-800A71F4	addu   a0, zero, zero
-800A71F8	ori    a3, zero, $00ff
-800A71FC	lui    a2, $800f
-800A7200	addiu  a2, a2, $4914
-800A7204	lui    a1, $800f
-800A7208	addiu  a1, a1, $4908
 
-loopa720c:	; 800A720C
-800A720C	ori    v1, zero, $007f
-800A7210	sll    v0, a0, $09
-800A7214	addiu  v0, v0, $01fc
 
-loopa7218:	; 800A7218
-800A7218	lui    at, $800f
-800A721C	addu   at, at, v0
-800A7220	sb     a3, $4308(at)
-800A7224	addiu  v1, v1, $ffff (=-$1)
-800A7228	bgez   v1, loopa7218 [$800a7218]
-800A722C	addiu  v0, v0, $fffc (=-$4)
-800A7230	sw     zero, $0000(a1)
-800A7234	sw     zero, $0000(a2)
-800A7238	addiu  a2, a2, $0004
-800A723C	addiu  a0, a0, $0001
-800A7240	slti   v0, a0, $0003
-800A7244	bne    v0, zero, loopa720c [$800a720c]
-800A7248	addiu  a1, a1, $0004
-800A724C	jr     ra 
-800A7250	nop
+////////////////////////////////
+// funca71f4
+800A71F4-800A7250
+////////////////////////////////
+
 
 
 funca7254:	; 800A7254
@@ -14142,39 +13996,13 @@ Lad448:	; 800AD448
 800AD478	jr     ra 
 800AD47C	nop
 
-800AD480	addu   a1, zero, zero
-800AD484	addu   v1, zero, zero
-800AD488	addu   a2, zero, zero
-800AD48C	ori    a3, zero, $0008
-800AD490	lui    a0, $800f
-800AD494	addiu  a0, a0, $495c
 
-loopad498:	; 800AD498
-800AD498	slti   v0, a1, $0010
-800AD49C	beq    v0, zero, Lad4d4 [$800ad4d4]
-800AD4A0	nop
-800AD4A4	bne    v1, a2, Lad4b8 [$800ad4b8]
-800AD4A8	nop
-800AD4AC	sw     v1, $0000(a0)
-800AD4B0	addiu  a0, a0, $0004
-800AD4B4	addiu  a1, a1, $0001
 
-Lad4b8:	; 800AD4B8
-800AD4B8	lui    at, $800e
-800AD4BC	addu   at, at, v1
-800AD4C0	lbu    v0, $7bcc(at)
-800AD4C4	nop
-800AD4C8	bne    v0, a3, Lad4d4 [$800ad4d4]
-800AD4CC	nop
-800AD4D0	addiu  a2, v1, $0001
+////////////////////////////////
+// funcad480
+800AD480-800AD4E8
+////////////////////////////////
 
-Lad4d4:	; 800AD4D4
-800AD4D4	addiu  v1, v1, $0001
-800AD4D8	sltiu  v0, v1, $001e
-800AD4DC	bne    v0, zero, loopad498 [$800ad498]
-800AD4E0	nop
-800AD4E4	jr     ra 
-800AD4E8	nop
 
 
 funcad4ec:	; 800AD4EC
@@ -18671,17 +18499,12 @@ funcb1060:	; 800B1060
 800B1088	nop
 
 
-funcb108c:	; 800B108C
-800B108C	addiu  sp, sp, $ffe8 (=-$18)
-800B1090	sw     ra, $0010(sp)
-800B1094	ori    a1, zero, $0005
-800B1098	addu   a2, zero, zero
-800B109C	jal    funca31a0 [$800a31a0]
-800B10A0	addu   a3, zero, zero
-800B10A4	lw     ra, $0010(sp)
-800B10A8	addiu  sp, sp, $0018
-800B10AC	jr     ra 
-800B10B0	nop
+
+////////////////////////////////
+// funcb108c
+800B108C-800B10B0
+////////////////////////////////
+
 
 
 funcb10b4:	; 800B10B4
