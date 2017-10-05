@@ -46,54 +46,50 @@ funca283c();
 // init some array
 funcad480();
 
-
-
-
-
-
-
-
-
-
-
-
-
 // clear attack stack data.
-V0 = 1f8;
-loop1b00f8:	; 801B00F8
-    [800f692c + 8 + V0] = b(ff); // init priority
-    V0 = V0 - 8;
-801B0108	bgez   v0, loop1b00f8 [$801b00f8]
+for( int i = 0; i < 40; ++i )
+{
+    [800f692c + 8 + i * 8 + 0] = b(ff); // init priority
+}
 
-V0 = 48;
-loop1b0118:	; 801B0118
-    [800f6b34 + V0] = b(ff);
-    V0 = V0 - 8;
-801B0128	bgez   v0, loop1b0118 [$801b0118]
+// clear some unit data
+for( int i = 0; i < a; ++i )
+{
+    [800f6b34 + i * 8 + 0] = b(ff);
+}
 
-V0 = 8;
-loop1b0138:	; 801B0138
-    [800f6b86 + V0] = b(ff);
-    V0 = V0 - 8;
-801B0148	bgez   v0, loop1b0138 [$801b0138]
+// clear command exec data
+for( int i = 0; i < 2; ++i )
+{
+    [800f6b84 + i * 8 + 2] = b(ff);
+}
 
+// init 800f4308 array and indexes
 funca71f4();
 
 [801620a8] = w(-1);
-
-A0 = -1;
-funcdcf94();
+[800f1e4f] = b(0);
 
 // init some values in unit structures
-S0 = 0;
-loop1b0178:	; 801B0178
-    [800f83e0 + S0 * 68 + 08] = b(ff);
-    [800f83e0 + S0 * 68 + 13] = b(10);
-    S0 = S0 + 1;
-    V0 = S0 < a;
-801B0198	bne    v0, zero, loop1b0178 [$801b0178]
+for( int i = 0; i < a; ++i )
+{
+    [800f83e0 + i * 68 + 08] = b(ff); // character id
+    [800f83e0 + i * 68 + 13] = b(10); // scale
+}
 
+// init item using array
 funca55bc();
+
+
+
+
+
+
+
+
+
+
+
 
 initbattle_init_player();
 
@@ -516,258 +512,177 @@ V0 = 10000 / (((config_speed * 1e0 / 100) + 78) * 2);
 ////////////////////////////////
 // initbattle_init_player()
 
-T4 = 800f5bb8;
-S5 = 800f5efc;
-structure_44 = 800f5bb8;
-
-total_dexterity = w(0);
-number_of_party = w(0);
+total_dexterity = 0;
+party_size = 0;
 
 [800f83a4 + 18] = h(0);
 
+for( int party_id = 0; party_id < 3; ++party_id )
+{
+    [801636b8 + party_id * 10 + 0] = b(-1);
 
+    char_id = bu[8009c6e4 + 4f8 + party_id]; // character id in party slot
 
-party_id = 0;
-L1b0928:	; 801B0928
-    FP = bu[8009cbdc + party_id]; // character id in party slot
-
-    [801636b8 + party_id * 10] = b(-1);
-
-    ui_structure = 800f5e60 + party_id * 34;
-    structure_440 = 8009d84c + party_id * 440;
-    structure_68 = 800f83e0 + party_id * 68;
-
-    if (FP != ff)
+    if( char_id != ff )
     {
-        T2 = 0;
-        T3 = party_id * 10;
-        T4 = party_id * 44;
-        T1 = 0;
+        // search data for this char in savemap
+        for( int j = 0; j < 9; ++j )
+        {
+            savemap_player = 8009c6e4 + 54 + j * 84; // player records in savemap
 
-        L1b09a8:	; 801B09A8
-            savemap_player = 8009c738 + T1; // player records in savemap
-
-
-
-            V0 = hu[8016376A]; // previous battle result
-            if (V0 & 0040)
+            // copy savemap player data into temp if this is battle arena next battle
+            if( hu[8016376a] & 0040 ) // previous battle result
             {
-                A3 = 80167938;
-                A2 = savemap_player;
-                T0 = savemap_player + 80;
-
-                loop1b09d8:	; 801B09D8
-                    [A3 + 0] = w(w[A2 + 0]);
-                    [A3 + 4] = w(w[A2 + 4]);
-                    [A3 + 8] = w(w[A2 + 8]);
-                    [A3 + c] = w(w[A2 + c]);
-
-                    A2 = A2 + 10;
-                    A3 = A3 + 10;
-                801B09FC	bne    a2, t0, loop1b09d8 [$801b09d8]
-
-                [A3] = w(w[A2]);
+                for( int k = 0; k < 84; k = k + 4 )
+                {
+                    [80167938 + k] = w(w[savemap_player + k]);
+                }
             }
 
-
-
             // init player data for this player
-            V0 = bu[savemap_player];
-            if (V0 == FP)
+            if( bu[savemap_player] == char_id )
             {
-                [structure_44 + party_id * 44 + 0c] = b(FF);
-                [structure_44 + party_id * 44 + 0f] = b(FF);
-                [structure_44 + party_id * 44 + 29] = b(1);
+                [800f5bb8 + party_id * 44 + 0c] = b(ff);
+                [800f5bb8 + party_id * 44 + 0f] = b(ff);
+                [800f5bb8 + party_id * 44 + 29] = b(1);
 
-                [801636b8 + T3] = b(FP);
+                [801636b8 + party_id * 10 + 0] = b(char_id);
 
-                [structure_68 + 04] = w(00000008);
-                [structure_68 + 08] = b(FP); // enemy index
-                [structure_68 + 09] = b(bu[savemap_player + 1]); // set level
-                [structure_68 + 0c] = b(FP + 10); // formation id
-                [structure_68 + 11] = b(5);
-                [structure_68 + 16] = b(0);
-                [structure_68 + 56] = b(8);
+                [800f83e0 + party_id * 68 + 04] = w(00000008);
+                [800f83e0 + party_id * 68 + 08] = b(char_id); // enemy index
+                [800f83e0 + party_id * 68 + 09] = b(bu[savemap_player + 1]); // set level
+                [800f83e0 + party_id * 68 + 0c] = b(char_id + 10); // formation id
+                [800f83e0 + party_id * 68 + 11] = b(5);
+                [800f83e0 + party_id * 68 + 16] = b(0);
+                [800f83e0 + party_id * 68 + 56] = b(8);
 
-                [ui_structure + 0] = w(savemap_player);
-
-
+                [800f5e60 + party_id * 34 + 0] = w(savemap_player);
 
                 // add bits for player units
-                T4 = party_id;
-                V0 = hu[800f83bc];
-                V1 = 1 << T4;
-                V0 = V0 | V1;
-                [800f83bc] = h(V0);
+                [800f83a4 + 18] = h(hu[800f83a4 + 18] | (1 << party_id));
 
-
-
-                V0 = bu[savemap_player + 20]; // row of character in savemap
-                if (V0 & 01 == 0) // if back row
+                // row of character in savemap
+                if( bu[savemap_player + 20] & 01 == 0 ) // if back row
                 {
-                    [structure_68 + 4] = w(w[structure_68 + 4] | 00000040);
+                    [800f83e0 + party_id * 68 + 4] = w(w[800f83e0 + party_id * 68 + 4] | 00000040);
                 }
 
-
-
                 // set hp/mp
-                [structure_68 + 2c] = w(h[structure_440 + 10]);
-                [structure_68 + 28] = h(h[structure_440 + 14]);
-                [ui_structure + 0e] = h(w[structure_68 + 2c]);
-                [ui_structure + 0c] = h(h[structure_68 + 28]);
-
-
+                [800f83e0 + party_id * 68 + 2c] = w(h[8009d84c + party_id * 440 + 10]);
+                [800f83e0 + party_id * 68 + 28] = h(h[8009d84c + party_id * 440 + 14]);
+                [800f5e60 + party_id * 34 + 0c] = h(h[800f83e0 + party_id * 68 + 28]);
+                [800f5e60 + party_id * 34 + 0e] = h(w[800f83e0 + party_id * 68 + 2c]);
 
                 // copy and init some values
-                A0 = structure_440;
-                A1 = ui_structure;
-                A2 = structure_68;
+                A0 = 8009d84c + party_id * 440;
+                A1 = 800f5e60 + party_id * 34;
+                A2 = 800f83e0 + party_id * 68;
                 func1b18f8();
 
+                [800f83e0 + party_id * 68 + 0] = w(bu[savemap_player + 1f] & 30); // set sadness/fury flags
+                [800f83e0 + party_id * 68 + 12] = b(10); // back damage multiplier
+                [800f83e0 + party_id * 68 + 44] = w(0); // init status of unit
 
-
-                [structure_68 + 12] = b(10);
-                [structure_68 + 44] = w(0);
-
-
-
-                // set sadness/fury flags
-                V0 = bu[savemap_player + 1f];
-                V0 = V0 & 30;
-                [structure_68 + 0] = w(V0);
-
-
-
-                // set status protect.
-                [structure_44 + party_id * 44 + 34] = w(w[structure_440 + 48]);
-
-
+                [800f5bb8 + party_id * 44 + 34] = w(w[8009d84c + party_id * 440 + 48]); // set status protect.
 
                 // init attack data from weapon
-                [S5 + party_id * 18 + 00] = b(bu[structure_440 + 408 + 0]);
-                [S5 + party_id * 18 + 01] = b(bu[structure_440 + 408 + 1]);
-                [S5 + party_id * 18 + 02] = b(bu[structure_440 + 408 + 2]);
-                [S5 + party_id * 18 + 03] = b(bu[structure_440 + 408 + 8]);
-                [S5 + party_id * 18 + 04] = b(bu[structure_440 + 408 + 27]);
-                [S5 + party_id * 18 + 05] = b(bu[structure_440 + 408 + 7]);
-                [S5 + party_id * 18 + 0e] = h(hu[structure_440 + 408 + 10] | hu[structure_440 + 3c]); // attack element
-                [S5 + party_id * 18 + 10] = h(hu[structure_440 + 408 + c]);
-                [S5 + party_id * 18 + 12] = h(hu[structure_440 + 408 + 28]);
-                [S5 + party_id * 18 + 14] = w(w[structure_440 + 44]); // status attack
-
-
+                [800f5efc + party_id * 18 + 00] = b(bu[8009d84c + party_id * 440 + 408 + 0]);
+                [800f5efc + party_id * 18 + 01] = b(bu[8009d84c + party_id * 440 + 408 + 1]);
+                [800f5efc + party_id * 18 + 02] = b(bu[8009d84c + party_id * 440 + 408 + 2]);
+                [800f5efc + party_id * 18 + 03] = b(bu[8009d84c + party_id * 440 + 408 + 8]);
+                [800f5efc + party_id * 18 + 04] = b(bu[8009d84c + party_id * 440 + 408 + 27]);
+                [800f5efc + party_id * 18 + 05] = b(bu[8009d84c + party_id * 440 + 408 + 7]);
+                [800f5efc + party_id * 18 + 0e] = h(hu[8009d84c + party_id * 440 + 408 + 10] | hu[8009d84c + party_id * 440 + 3c]); // attack element
+                [800f5efc + party_id * 18 + 10] = h(hu[8009d84c + party_id * 440 + 408 + c]);
+                [800f5efc + party_id * 18 + 12] = h(hu[8009d84c + party_id * 440 + 408 + 28]);
+                [800f5efc + party_id * 18 + 14] = w(w[8009d84c + party_id * 440 + 44]); // status attack
 
                 V1 = bu[savemap_player + 1d]; // armor id
-                [structure_68 + 0f] = b(bu[80071e44 + V1 * 24 + 4]); // evade
-                [structure_68 + 4d] = b(bu[80071e44 + V1 * 24 + 5]); // magic evade
-
-
+                [800f83e0 + party_id * 68 + 0f] = b(bu[80071e44 + V1 * 24 + 4]); // evade
+                [800f83e0 + party_id * 68 + 4d] = b(bu[80071e44 + V1 * 24 + 5]); // magic evade
 
                 // add permanent statuses from accessory
                 A0 = party_id;
                 A1 = bu[savemap_player + 1e]; // equipped accessory
-                func1b1598();
+                initbattle_add_status_from_accessory();
 
+                [800f83e0 + party_id * 68 + 50] = h(0);
+                [800f83e0 + party_id * 68 + 52] = h(ffff);
 
-
-                [structure_68 + 50] = h(0);
-                [structure_68 + 52] = h(ffff);
-
-
-
-                // 
-                A0 = 0;
-                A1 = S5 + party_id * 18;
-                S6 = 1;
-                loop1b0be4:	; 801B0BE4
-                    V1 = bu[structure_440 + 408 + 24 + A0];
-                    V0 = bu[structure_440 + 408 + b];
-                    if (V0 & S6)
+                // set sound effect id for normal critical & missed attack from weapon
+                for( int i = 0; i < 3; ++i )
+                {
+                    V1 = bu[8009d84c + party_id * 440 + 408 + 24 + i]; // sound effect id
+                    if( bu[8009d84c + party_id * 440 + 408 + b] & ( i + 1 ) )
                     {
                         V1 = V1 | 0100;
                     }
-
-                    [A1 + 8] = h(V1);
-
-                    S6 = S6 + 1;
-                    A0 = A0 + 1;
-                    A1 = A1 + 2;
-                    V0 = A0 < 3;
-                801B0C10	bne    v0, zero, loop1b0be4 [$801b0be4]
-
-
+                    [800f5efc + party_id * 18 + 8 + i * 2] = h(V1);
+                }
 
                 // remove long range flag
-                V0 = bu[structure_44 + party_id * 44 + 29];
-                V0 = V0 & fd;
-                [structure_44 + party_id * 44 + 29] = b(V0);
+                [800f5bb8 + party_id * 44 + 29] = b(bu[800f5bb8 + party_id * 44 + 29] & fd);
 
-                // if long range materia equipped set weaon to long range
-                V0 = bu[structure_440 + 23];
-                if (V0 & 04)
+                // if long range materia equipped set weapon to long range
+                if( bu[8009d84c + party_id * 440 + 23] & 04 )
                 {
-                    V0 = bu[S5 + party_id * 18 + 0];
-                    V0 = V0 & df;
-                    [S5 + party_id * 18 + 0] = b(V0);
+                    [800f5efc + party_id * 18 + 0] = b(bu[800f5efc + party_id * 18 + 0] & df);
                 }
 
                 // add long range flag if such weapon is equipped
-                if ((bu[S5 + party_id * 18 + 0] & 20) == 0)
+                if( ( bu[800f5efc + party_id * 18 + 0] & 20 ) == 0 )
                 {
-                    V0 = bu[structure_44 + party_id * 44 + 29];
-                    V0 = V0 | 2;
-                    [structure_44 + party_id * 44 + 29] = b(V0);
+                    [800f5bb8 + party_id * 44 + 29] = b(bu[800f5bb8 + party_id * 44 + 29] | 02);
                 }
 
+                [800f5bb8 + party_id * 44 + 4] = h(0);
 
-
-                [structure_44 + party_id * 44 + 4] = h(0);
-
-                [structure_440 + 18] = h(0);
-                [structure_440 + 1a] = h(0);
-                [structure_440 + 1c] = h(0);
-                [structure_440 + 1e] = h(0);
-                [structure_440 + 20] = b(1);
-                [structure_440 + 22] = b(0);
-
-
+                [8009d84c + party_id * 440 + 18] = h(0);
+                [8009d84c + party_id * 440 + 1a] = h(0);
+                [8009d84c + party_id * 440 + 1c] = h(0);
+                [8009d84c + party_id * 440 + 1e] = h(0);
+                [8009d84c + party_id * 440 + 20] = b(1);
+                [8009d84c + party_id * 440 + 22] = b(0);
 
                 // unset limit
-                [ui_structure + 5] = b(ff);
-
-
+                [800f5e60 + party_id * 34 + 5] = b(ff);
 
                 // if players with limit
-                if (FP < 9)
+                if( char_id < 9 )
                 {
                     limit_level = bu[savemap_player + e] - 1; // current limit level
 
-                    [ui_structure + 5] = b(limit_level);
-                    V0 = bu[savemap_player + f]; // limit bar
-                    [ui_structure + 8] = h(V0);
-                    [ui_structure + a] = h(V0);
-                    [ui_structure + 1c] = w(w[80082268 + FP * 38 + 28 + limit_level * 4]); // HP Divisor
+                    [800f5e60 + party_id * 34 + 5] = b(limit_level);
+                    [800f5e60 + party_id * 34 + 8] = h(bu[savemap_player + f]); // limit bar
+                    [800f5e60 + party_id * 34 + a] = h(bu[savemap_player + f]); // limit bar
+                    [800f5e60 + party_id * 34 + 1c] = w(w[80082268 + char_id * 38 + 28 + limit_level * 4]); // HP Divisor
 
-                    [structure_440 + 1a] = h(hu[ui_structure + 8] * 100);
-                    [structure_440 + 20] = b(bu[savemap_player + e]);
+                    [8009d84c + party_id * 440 + 1a] = h(hu[800f5e60 + party_id * 34 + 8] * 100);
+                    [8009d84c + party_id * 440 + 20] = b(bu[savemap_player + e]);
 
-                    A0 = FP;
+                    A0 = char_id;
                     A1 = hu[savemap_player + 22];
-                    A2 = structure_440 + ac;
+                    A2 = 8009d84c + party_id * 440 + ac;
                     func1b13dc();
                 }
 
 
 
+
+
+
+
+
+
                 // add activate flag
-                [structure_68 + 4] = w(w[structure_68 + 4] | 00000008);
+                [800f83e0 + party_id * 68 + 4] = w(w[800f83e0 + party_id * 68 + 4] | 00000008);
 
 
 
                 // if hp == 0 set death
-                if( w[structure_68 + 2c] == 0 ) // current hp
+                if( w[800f83e0 + party_id * 68 + 2c] == 0 ) // current hp
                 {
-                    [structure_68 + 0] = w(w[structure_68 + 0] | 00000001);
+                    [800f83e0 + party_id * 68 + 0] = w(w[800f83e0 + party_id * 68 + 0] | 00000001);
                 }
 
 
@@ -784,7 +699,7 @@ L1b0928:	; 801B0928
 
 
                 // if currently limit break
-                if( hu[ui_structure + 8] == ff )
+                if( hu[800f5e60 + party_id * 34 + 8] == ff )
                 {
                     A0 = party_id;
                     funca4e80();
@@ -795,7 +710,7 @@ L1b0928:	; 801B0928
 
 
                 // if we have some status write something to 80163798 stack
-                if( w[structure_68 + 0] != 0 )
+                if( w[800f83e0 + party_id * 68 + 0] != 0 )
                 {
                     A0 = party_id;
                     funcb108c();
@@ -805,34 +720,26 @@ L1b0928:	; 801B0928
 
                 A0 = savemap_player;
                 func1b1530(); // we check enemy skill materia here.
-                [ui_structure + 24] = w(V0);
-                [ui_structure + 28] = w(V0);
+                [800f5e60 + party_id * 34 + 24] = w(V0);
+                [800f5e60 + party_id * 34 + 28] = w(V0);
 
 
 
-                number_of_party = number_of_party + 1;
+                party_size = party_size + 1;
 
-                V0 = bu[savemap_player + 6]; // dexterity
-                total_dexterity = total_dexterity + V0;
+                total_dexterity = total_dexterity + bu[savemap_player + 6]; // dexterity
 
                 break;
             }
-
-            T2 = T2 + 1;
-            T1 = T1 + 84;
-            V0 = T2 < 9;
-        801B0E00	bne    v0, zero, L1b09a8 [$801b09a8]
+        }
     }
-
-    party_id = party_id + 1;
-    V0 = party_id < 3;
-801B0E68	bne    v0, zero, L1b0928 [$801b0928]
+}
 
 
 
-if (number_of_party != 0)
+if (party_size != 0)
 {
-    [800f7da8] = h((total_dexterity - 1 + number_of_party) / number_of_party + 32);
+    [800f7da8] = h((total_dexterity - 1 + party_size) / party_size + 32);
 }
 ////////////////////////////////
 
@@ -944,7 +851,7 @@ V0 = V0 | 0002;
 
 L1b1084:	; 801B1084
 A1 = bu[S1 + 001e];
-801B1088	jal    func1b1598 [$801b1598]
+801B1088	jal    initbattle_add_status_from_accessory [$801b1598]
 A0 = S4;
 801B1090	jal    func1b11bc [$801b11bc]
 A0 = S4;
@@ -1157,6 +1064,7 @@ loop1b13ac:	; 801B13AC
 
 ////////////////////////////////
 // func1b13dc()
+
 //                    A0 = FP;
 //                    A1 = hu[savemap_player + 22];
 //                    A2 = structure_440 + ac;
@@ -1267,73 +1175,62 @@ return S1;
 
 
 ////////////////////////////////
-// func1b1598()
-// add permanent statuses from accessory
+// initbattle_add_status_from_accessory()
+
 party_id = A0;
-// A1 = equipped accessory
-T0 = A1;
+accessory_id = A1;
 
-V0 = w[800f5e60 + A0 * 34 + 20];
-V1 = w[800f83e0 + A0 * 68 + 0]; // current status of player
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-[800f83e0 + A0 * 68 + 0] = w(V1);
+[800f83e0 + party_id * 68 + 0] = w(w[800f83e0 + party_id * 68 + 0] & (0 NOR w[800f5e60 + party_id * 34 + 20])); // current status of player
+[800f5bb8 + party_id * 44 + 34] = w(w[800f5bb8 + party_id * 44 + 34] & (0 NOR w[800f5e60 + party_id * 34 + 20]));
 
-V0 = w[800f5e60 + A0 * 34 + 20];
-V1 = w[800f5bb8 + A0 * 44 + 34]; // status protect
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-[800f5bb8 + A0 * 44 + 34] = w(V1);
+[800f5e60 + party_id * 34 + 20] = w(0);
+[800f5bb8 + party_id * 44 + d] = b(ff);
 
-[800f5e60 + A0 * 34 + 20] = w(0);
-[800f5bb8 + A0 * 44 + d] = b(ff);
-
-if (T0 != ff)
+if( accessory_id != ff )
 {
-    V0 = bu[80071c24 + T0 * 10 + 5]; // special effect
-    V1 = V0 & ff;
-    [A0 + d] = b(V0);
+    V0 = bu[80071c24 + accessory_id * 10 + 5]; // special effect
+    [800f5bb8 + party_id * 44 + d] = b(V0); // accessory special effect
 
-    switch (V0)
+    switch( V0 )
     {
         case 0: // haste
         {
-            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00000100);
-            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00000100);
-            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00000100);
+            [800f83e0 + party_id * 68 + 00] = w(w[800f83e0 + party_id * 68 + 00] | 00000100);
+            [800f5bb8 + party_id * 44 + 34] = w(w[800f5bb8 + party_id * 44 + 34] | 00000100);
+            [800f5e60 + party_id * 34 + 20] = w(w[800f5e60 + party_id * 34 + 20] | 00000100);
         }
         break;
 
         case 1: // fury
         {
-            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00800000);
-            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00800000);
-            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00800000);
+            [800f83e0 + party_id * 68 + 00] = w(w[800f83e0 + party_id * 68 + 00] | 00800000);
+            [800f5bb8 + party_id * 44 + 34] = w(w[800f5bb8 + party_id * 44 + 34] | 00800000);
+            [800f5e60 + party_id * 34 + 20] = w(w[800f5e60 + party_id * 34 + 20] | 00800000);
         }
         break;
 
         case 2: // death sentense
         {
-            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00200000);
-            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00200000);
-            [800f5bb8 + A0 * 44 + 12] = b(ff);
-            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00200000);
+            [800f83e0 + party_id * 68 + 00] = w(w[800f83e0 + party_id * 68 + 00] | 00200000);
+            [800f5bb8 + party_id * 44 + 34] = w(w[800f5bb8 + party_id * 44 + 34] | 00200000);
+            [800f5bb8 + party_id * 44 + 12] = b(ff);
+            [800f5e60 + party_id * 34 + 20] = w(w[800f5e60 + party_id * 34 + 20] | 00200000);
         }
         break;
 
         case 3: // reflect
         {
-            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00040000);
-            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00040000);
-            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00040000);
+            [800f83e0 + party_id * 68 + 00] = w(w[800f83e0 + party_id * 68 + 00] | 00040000);
+            [800f5bb8 + party_id * 44 + 34] = w(w[800f5bb8 + party_id * 44 + 34] | 00040000);
+            [800f5e60 + party_id * 34 + 20] = w(w[800f5e60 + party_id * 34 + 20] | 00040000);
         }
         break;
 
         case 6: // barrier + magic barrier
         {
-            [800f83e0 + A0 * 68 + 00] = w(w[800f83e0 + A0 * 68 + 00] | 00030000);
-            [800f5bb8 + A0 * 44 + 34] = w(w[800f5bb8 + A0 * 44 + 34] | 00030000);
-            [800f5e60 + A0 * 34 + 20] = w(w[800f5e60 + A0 * 34 + 20] | 00030000);
+            [800f83e0 + party_id * 68 + 00] = w(w[800f83e0 + party_id * 68 + 00] | 00030000);
+            [800f5bb8 + party_id * 44 + 34] = w(w[800f5bb8 + party_id * 44 + 34] | 00030000);
+            [800f5e60 + party_id * 34 + 20] = w(w[800f5e60 + party_id * 34 + 20] | 00030000);
         }
         break;
     }
@@ -1473,38 +1370,35 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // func1b18f8()
-//                A0 = S0; 0x440
-//                A1 = S4; // ui
-//                A2 = S1; // 0x68
 
-[A2 + 14] = b(bu[A0 + 06]); // dexterity
-[A2 + 15] = b(bu[A0 + 07]); // luck
-[A2 + 30] = w(h[A0 + 12]);  // max hp
-[A2 + 2a] = h(h[A0 + 16]);  // max mp
-[A2 + 0d] = b(hu[A0 + 08]); // attack
-[A2 + 0e] = b(hu[A0 + 0c]); // magic
-[A2 + 20] = h(hu[A0 + 0a]); // defense
-[A2 + 22] = h(hu[A0 + 0e]); // magic defense
+struct_440 = A0;
+struct_34 = A1;
+struct_68 = A2;
 
-V1 = bu[A2 + d];
-if (V1 == 0)
+[struct_68 + 14] = b(bu[struct_440 + 06]); // dexterity
+[struct_68 + 15] = b(bu[struct_440 + 07]); // luck
+[struct_68 + 0d] = b(hu[struct_440 + 08]); // attack
+if( bu[struct_68 + 0d] == 0 )
 {
-    [A2 + d] = b(1);
+    [struct_68 + 0d] = b(1);
 }
+[struct_68 + 20] = h(hu[struct_440 + 0a]); // defense
+[struct_68 + 0e] = b(hu[struct_440 + 0c]); // magic
+[struct_68 + 22] = h(hu[struct_440 + 0e]); // magic defense
+[struct_68 + 30] = w(h[struct_440 + 12]);  // max hp
+[struct_68 + 2a] = h(h[struct_440 + 16]);  // max mp
+[struct_34 + 12] = h(w[struct_68 + 30]); // max hp
+[struct_34 + 10] = h(hu[struct_68 + 2a]); // max mp
 
-[A1 + 12] = h(w[A2 + 30]); // max hp
-[A1 + 10] = h(hu[A2 + 2a]); // max mp
-
-V0 = bu[A0 + 23];
-if (V0 & 08) // hp<>mp equipped
+if( bu[struct_440 + 23] & 08 ) // hp<>mp equipped
 {
-    [A1 + 16] = h(03e7);
-    [A1 + 14] = h(270f);
+    [struct_34 + 16] = h(03e7);
+    [struct_34 + 14] = h(270f);
 }
 else
 {
-    [A1 + 16] = h(270f);
-    [A1 + 14] = h(03e7);
+    [struct_34 + 16] = h(270f);
+    [struct_34 + 14] = h(03e7);
 }
 ////////////////////////////////
 

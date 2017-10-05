@@ -67559,27 +67559,12 @@ funcdcf60:	; 800DCF60
 800DCF90	nop
 
 
-funcdcf94:	; 800DCF94
-800DCF94	addu   v1, a0, zero
-800DCF98	sll    a0, a0, $10
-800DCF9C	sra    a0, a0, $10
-800DCFA0	addiu  v0, zero, $ffff (=-$1)
-800DCFA4	bne    a0, v0, Ldcfbc [$800dcfbc]
-800DCFA8	ori    v0, zero, $0001
-800DCFAC	lui    at, $800f
-800DCFB0	sb     zero, $1e4f(at)
-800DCFB4	j      Ldcfcc [$800dcfcc]
-800DCFB8	nop
 
-Ldcfbc:	; 800DCFBC
-800DCFBC	lui    at, $800f
-800DCFC0	sb     v0, $1e4f(at)
-800DCFC4	lui    at, $800f
-800DCFC8	sh     v1, $1e50(at)
+////////////////////////////////
+// funcdcf94
+800DCF94-800DCFD0
+////////////////////////////////
 
-Ldcfcc:	; 800DCFCC
-800DCFCC	jr     ra 
-800DCFD0	nop
 
 
 funcdcfd4:	; 800DCFD4

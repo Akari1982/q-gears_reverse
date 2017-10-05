@@ -32575,29 +32575,6 @@ A1 = A1 >> 10;
 800DCF90	nop
 
 
-funcdcf94:	; 800DCF94
-V1 = A0;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-800DCFA0	addiu  v0, zero, $ffff (=-$1)
-800DCFA4	bne    a0, v0, Ldcfbc [$800dcfbc]
-V0 = 0001;
-800DCFAC	lui    at, $800f
-[AT + 1e4f] = b(0);
-800DCFB4	j      Ldcfcc [$800dcfcc]
-800DCFB8	nop
-
-Ldcfbc:	; 800DCFBC
-800DCFBC	lui    at, $800f
-[AT + 1e4f] = b(V0);
-800DCFC4	lui    at, $800f
-[AT + 1e50] = h(V1);
-
-Ldcfcc:	; 800DCFCC
-800DCFCC	jr     ra 
-800DCFD0	nop
-
-
 funcdcfd4:	; 800DCFD4
 800DCFD4	lui    v0, $800a
 V0 = bu[V0 + d302];

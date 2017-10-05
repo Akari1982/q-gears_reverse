@@ -1,52 +1,3 @@
-800491b0 elemental bit accordinance array (00 - 0x0001, 01 - 0x0002 etc)
-
-80062d98 []       if this is not 0 we will not render effect?
-
-80063014      [][][][] pointer to temp array for action calculation.
-
-80063560 we copy kernel string here to display.
-
-80063690      command description in kernel
-8006893e      battle and battle-screen text in kernel
-
-800707bc [][]          battle id.
-
-800707be [][]          battle result stored here. Loaded by 0x23 BTRLD.
-
-800707c4               command data in kernel (size 0x8).
-00FFFFFFFFFFFFFF 07FFFFFFFFFFFFFF
-01FFFFFFFFFFFFFF 02FFFFFFFFFFFFFF
-03FFFFFFFFFFFFFF 07FFFFFFB800B900
-001FFFFFBC00BD00 0B17FFFFC500C500
-050BFFFFC400C400 001FFFFFBE00BF00
-001FFFFFC000C100 001FFFFFC200C300
-0000FFFFFFFFFFFF 04FFFFFFFFFFFFFF
-00FFFFFFFFFFFFFF 00FFFFFFFFFFFFFF
-00FFFFFFFFFFFFFF 07FFFFFFFFFFB400
-0000FFFFFFFFFFFF 0000FFFFFFFFFFFF
-06FFFFFFFFFFFFFF 08FFFFFFFFFFFFFF
-09FFFFFFFFFFFFFF 0AFFFFFFFFFFFFFF
-0017FFFFB400B400 07FFFFFFB500B500
-0017FFFFB700B700 0097FFFFB600B600
-FFFFFFFFFFFFFFFF FFFFFFFFFFFFFFFF
-FFFFFFFFFFFFFFFF FFFFFFFFFFFFFFFF
-800707c4 + 0  []       default something.
-800707c4 + 1  []       target type.
-800707c4 + 4  [][]     default 8th 2bytes from attack data (Camera movement single).
-800707c4 + 6  [][]     default Ath 2bytes from attack data (Camera movement multiple).
-
-800708c4               attack data in kernel file (2nd section) (0x1c size).
-80071a60
-80071c24               accessory data in kernel (0x10 size).
-80071e44               armor data in kernel (0x24 size).
-800722cc               item data in kernel (0x1c size).
-800730d0               materia data in kernel file (0x14 size).
-800738a0               weapon data in kernel (0x2c size).
-
-80082268               player ai and some data in kernel (3rd file).
-
-
-
 800a0000               some action default values (size 0x4).
     00 00 0000          14 11 0000 attack       1D 00 0000 magic        1F 00 0000 summon
     21 37 0000 item     22 00 0600 steal        26 00 1204 sense        21 0A 0000 coin
@@ -77,9 +28,9 @@ FFFFFFFFFFFFFFFF FFFFFFFFFFFFFFFF
 
 800e7a58      []       array of player unit_ids. Used if we want some player unit to execute another player logic.
 
-800e7bbc array of some 
-        08 00 02 08 01 08 03 08 04 08 05 08 00 02 08 01
-        08 07 08 06 08 00 02 08 00 08 08 08 08 08
+800e7bbc some values
+                08 00 02 08 01 08 03 08 04 08 05 08 00 02 08 01
+                08 07 08 06 08 00 02 08 00 08 08 08 08 08
 
 800e7d10 up vector for battle camera. (3 items, 0x4 size)
 800e7d20 vector to scale rotation matrix for 3d. (3 items, 0x4 size)
@@ -133,13 +84,15 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f195c here is transformation data for machinegun effect (matrix and vector)
 800f197c 3d data for machinegun fire effect.
 
-800f38ac      [][][][] array of some data. Init in funca283c. Related with 800a0098 data.
+800f1e4f []       init with 0.
 
-800f3944      [][][][] index of 80163798 element. Init with 0.
-800f3948      [][][][] index of 800fa9d0 element. Init with 0.
+800f38ac [][][][] array of some data. Init in funca283c. Related with 800a0098 data.
 
-800f3950      [][][][] copy 800f3944 here at start ob battle damage calculation.
-800f3954      [][][][] copy 800f3948 here at start ob battle damage calculation.
+800f3944 [][][][] index of 80163798 element. Init with 0.
+800f3948 [][][][] index of 800fa9d0 element. Init with 0.
+
+800f3950 [][][][] copy 800f3944 here at start ob battle damage calculation.
+800f3954 [][][][] copy 800f3948 here at start ob battle damage calculation.
 
 800f39f0 berserk toad action stats for player units. Copy first action command for unit here. (size 0x6).
     +0 []     Init with ff. Copy action id from temp.
@@ -158,31 +111,36 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +5 []     Init with 0. Flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut).
 
 800f3a40 array of some items structures 0x4 size (0x10 items) If some data in here and same user and same item - discard (write ffff).
-    +0 [][]     id of unit using item
-    +2 [][]     index of item
+    +0 [][]     id of unit using item. Init with 0xffff.
+    +2 [][]     index of item. Init with 0xffff.
 
 800f3a80 string buffer 0x800 size. We can add a lot of strings in one frame but they will be displayed one by one. We use this buffer and array of indexes into it for this.
 800f4280 array of string buffer positions indexed by 800f4304.
 800f4300 [][][][] string buffer position.
 800f4304 [][][][] index into 800f4280.
 
-800f4308 some structures that holds 0x80 values with size 0x04 (0x200 0x04 size). We add something here and increment cell so next time we add to next cell.
-+00 []       store attacker id here (player)
-+01 []       we store here 6 at start of battle for player characters.
-+02 [][]     we store here 0 at start of battle for player characters.
+800f4308 3 arrays with 0x80 items each with size 0x04 (0x04 size 0x3 * 0x80 items). We add something here and increment cell so next time we add to next cell.
+    +00 []       store attacker id here (player)
+    +01 []       we store here 6 at start of battle for player characters.
+    +02 [][]     we store here 0 at start of battle for player characters.
+800f4908 [][][][] something for 1st 0x200 800f4308. Init with 0.
+800f490c [][][][] something for 2nd 0x200 800f4308. Init with 0.
+800f4910 [][][][] something for 3rd 0x200 800f4308. Init with 0.
+800f4914 [][][][] current slot in 1st 0x200 800f4308. Init with 0.
+800f4918 [][][][] current slot in 2nd 0x200 800f4308. Init with 0.
+800f491c [][][][] current slot in 3rd 0x200 800f4308. Init with 0.
 
-800f4914      [][][][] array of current slots in 0x200 structures for 800f4308 array. 
+800f4920 [][][][] init with 0 at start of attack calculation in action_type_09. Add 0009 flags gefore actual calculation.
+800f4924 [][]     array of something. Copy 800f4938 array gere during cycle of attack. (0xa items)
+800f4938 [][]     array of target mask. Inited with 0 at beginning of damage calculation (just before real calculation) Set all to 0 after copy to 800f4924 (0xa items). Store target mask of attacking unit here (in it's slot)
+800f494c []       array of something. Inited with 0xff at beginning of damage calculation (just before real calculation) (0xa items)
+800f4958 [][]     init with 0. Some mask. Related with reflection.
+800f495c array of 0x10 values. Init in funcad480. Related with 800e7bcc data.
 
-800f4920      [][][][] init with 0 at start of attack calculation in action_type_09. Add 0009 flags gefore actual calculation.
-800f4924      [][]     array of something. Copy 800f4938 array gere during cycle of attack. (0xa items)
-800f4938      [][]     array of target mask. Inited with 0 at beginning of damage calculation (just before real calculation) Set all to 0 after copy to 800f4924 (0xa items). Store target mask of attacking unit here (in it's slot)
-800f494c      []       array of something. Inited with 0xff at beginning of damage calculation (just before real calculation) (0xa items)
-800f4958      [][]     init with 0. Some mask. Related with reflection.
-
-800f4ac0      [][][][] store offset to ai script here during funtion that handles battle opcode.
-800f4ac4      [][][][] pointer to battle temp structure.
-800f4ac8      [][][][] init with 0. Priority for added action (in script).
-800f4acc      [][][][]
+800f4ac0 [][][][] store offset to ai script here during funtion that handles battle opcode.
+800f4ac4 [][][][] pointer to battle temp structure.
+800f4ac8 [][][][] init with 0. Priority for added action (in script).
+800f4acc [][][][]
 
 800f4b00 []       init with 0.
 
@@ -203,8 +161,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f5b73 []       init with 1f.
 800f5b74 [][]     init with 0. Address used during unknown action in funcba360 function. 3d models color related.
 
-800f5bb8               some unit structure. (size 0x44).
-800f5cc8               some unit structure. enemy starts here. (size 0x44).
+800f5bb8 some unit structure. (size 0x44).
+800f5cc8 some unit structure. enemy starts here. (size 0x44).
     +00 [][]     looks like unit speed.
     +02 [][]     time value addition (increase with it). Initialized in funcae954 with (battle_speed * unit_dexterity / party_dexterity). We read this in main battle queue function.
     +04 [][]     init with 0. Time value (init in battleinit_init_units_time_value).
@@ -212,10 +170,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +08 [][]     add 0x0001 bit if player with limit break and remove it during init. Limit time speed (time speed increased 4 times when this flag is on).
     +0a [][]     init with 0x00, 0x22, 0x44, 0x88 in case of (dead slow normal haste).
     +0c []       init with 0xff. if this is not 0xff add to target mask during sense.
-    +0c []       init with 0xff. if this is not 0xff add to target mask.
-    +0d []       init with 0xff. set if hypno clown equipped (acording to TF).
+    +0d []       init with 0xff. Accessory special effect.
     +0e []       add 0x01 bit if player with limit break.
-    +0f []       Init with 0xff. Store enemy type number (+0c from  from 800f83e0) here (formation number).
+    +0f []       init with 0xff. Store enemy type number (+0c from  from 800f83e0) here (formation number).
     +10 []       store 0 here during init.
     +11 []       store 0 here during init.
     +12 []       init with 0. Store 0xff here if we set death sentence through curse ring equip.
@@ -247,7 +204,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +2b
     +2c [][][][] some data checked after damage apply in action_type_09 function.
     +30 [][][][] some data checked after damage apply in action_type_09 function.
-    +34 [][][][] init with status protect in case of player. Add statuses from equipment here (like haste or barrier from accessory). Set inversed status immunities from enemy data structure in case of enemy (+b0).
+    +34 [][][][] init with status protect mask in case of player. Add statuses from equipment here (like haste or barrier from accessory). Set inversed status immunities from enemy data structure in case of enemy (+b0).
     +38 [][][][] pointer to original enemy data structure (800f5f44 + index * b8).
     +3c [][]     current hp.
     +3e [][]     current mp.
@@ -256,11 +213,11 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +42
     +43
 
-800f5e60               some unit structure (posibly data for battle hud unit records) (size 0x34 3 items).
+800f5e60 some unit structure (posibly data for battle hud unit records) (size 0x34 3 items).
     +00 [][][][] pointer to character data in savemap.
     +05 []       limit level (0-3,0xff)
     +06 []       manipulated entity id?
-    +08 [][]     init with limit bar value. We copy this to +0a every battle cycle (for player units).
+    +08 [][]     init with limit bar value. We copy this to +a every battle cycle (for player units).
     +0a [][]     init with limit bar value. We copy +08 here every battle cycle (for player units).
     +0c [][]     store current unit MP here.
     +0e [][]     store current unit HP here.
@@ -277,19 +234,19 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f5efc Struct with weapon attack info for each player. (0x18 size)
     +00 []       target type flags (0x20 - not long range). Set from +0 equipped weapon data.
-    +01 []       set from +1 equipped weapon data.
+    +01 []       set from +1 equipped weapon data. Attack effect id.
     +02 []       damage formula id. Set from +2 equipped weapon data.
     +03 []       weapon hit chance. Set from +8 equipped weapon data.
     +04 []       impact effect id. Set from +27 equipped weapon data.
     +05 []       critical hit chance. Set from +7 equipped weapon data.
     +06
     +07
-    +08 [][]     normal attack sound. Set from +24[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
-    +0a [][]     critical attack sound. Set from +25[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
-    +0c [][]     miss attack sound. Set from +26[] equipped weapon data. Add bit 0x0100 if something in +b[] equipped weapon data
+    +08 [][]     normal attack sound. Set from +24[] equipped weapon data. Add bit 0x0100 if mask set in +b[] equipped weapon data
+    +0a [][]     critical attack sound. Set from +25[] equipped weapon data. Add bit 0x0100 if mask set in +b[] equipped weapon data
+    +0c [][]     miss attack sound. Set from +26[] equipped weapon data. Add bit 0x0100 if mask set in +b[] equipped weapon data
     +0e [][]     attack element. Set from +10 equipped weapon data and currently calculated attack element in player structure.
-    +10 [][]     set from +c equipped weapon data. (always 0xffff)
-    +12 [][]     spesial attack flags. set from +28 equipped weapon data. (always 0xffff)
+    +10 [][]     camera movement id. Set from +c equipped weapon data. (always 0xffff)
+    +12 [][]     special attack flags. set from +28 equipped weapon data. (always 0xffff)
     +14 [][][][] set status attack mask from player structure.
 
 
@@ -342,60 +299,60 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 
-800f692c               attack stack data (0x200(all) + 0x8(current)).
-+00 []       priority. Init with 0xff (exept current).
-+01 []       order inside priority.
-+02 []       unit_id.
-+03 []       action type (0x01 - player attack
-                0x02 - player magic
-                0x03 - player summon
-                0x04 - player item
-                0x05 - player steal
-                0x06 - player sense
-                0x07 - player coin
-                0x08 - player throw
-                0x09 - player morph
-                0x0A - player deathblow
-                0x0B - player manipulate
-                0x0C - player mime
-                0x0D - player enemy skill
-                0x0E - ???
-                0x0F - ???
-                0x10 - ???
-                0x11 - player mug
-                0x12 - player change
-                0x13 - player defend
-                0x14 - player limit
-                0x15 - this replaces with magic after modification
-                0x16 - this replaces with summon after modification
-                0x17 - this replaces with item after modification
-                0x18 - player slash-all
-                0x19 - player 2x-cut
-                0x1A - player flash
-                0x1B - player 4x-cut
-                0x1C - ???
-                0x1D - ???
-                0x1E - ???
-                0x1F - ???
-                0x20 - enemy attack
-                0x21 - ???
-                0x22 - run scripts
-                0x23 - ???
-                0x24 - ???
-                0x25 - ???
-+04 [][]     attack index.
-+06 [][]     attack mask.
-800f692c + 208 + unit_id * 8 + 0 we copy here data during some circumstances in battle queue function.
+800f692c attack stack data (0x200(all) + 0x8(current)).
+    +00 []       priority. Init with 0xff (exept current).
+    +01 []       order inside priority.
+    +02 []       unit_id.
+    +03 []       action type (0x01 - player attack
+                    0x02 - player magic
+                    0x03 - player summon
+                    0x04 - player item
+                    0x05 - player steal
+                    0x06 - player sense
+                    0x07 - player coin
+                    0x08 - player throw
+                    0x09 - player morph
+                    0x0A - player deathblow
+                    0x0B - player manipulate
+                    0x0C - player mime
+                    0x0D - player enemy skill
+                    0x0E - ???
+                    0x0F - ???
+                    0x10 - ???
+                    0x11 - player mug
+                    0x12 - player change
+                    0x13 - player defend
+                    0x14 - player limit
+                    0x15 - this replaces with magic after modification
+                    0x16 - this replaces with summon after modification
+                    0x17 - this replaces with item after modification
+                    0x18 - player slash-all
+                    0x19 - player 2x-cut
+                    0x1A - player flash
+                    0x1B - player 4x-cut
+                    0x1C - ???
+                    0x1D - ???
+                    0x1E - ???
+                    0x1F - ???
+                    0x20 - enemy attack
+                    0x21 - ???
+                    0x22 - run scripts
+                    0x23 - ???
+                    0x24 - ???
+                    0x25 - ???
+    +04 [][]     attack index.
+    +06 [][]     attack mask.
+
+800f6b34 array of something. We copy here data during some circumstances in battle queue function (0x8 size 0xa items).
     +00 []       init with 0xff in case of enemy.
-800f6b84 store here data after command executement for player.
-+00 []       priority. Init with 0xff (exept current).
-+01 []       order inside priority.
-+02 []       unit_id.
-+03 []       action type (0x01 - player attack
-+04 [][]     attack index.
-+06 [][]     attack mask.
 
-
+800f6b84 store here data after command executement for player (0x8 size 0x2 items).
+    +00 []       priority. Init with 0xff (exept current).
+    +01 []       order inside priority.
+    +02 []       unit_id. Init with 0xff.
+    +03 []       action type (0x01 - player attack
+    +04 [][]     attack index.
+    +06 [][]     attack mask.
 
 800f6b94      []       array of executed order number for priority. Readed during main battle queue function. Must be different from 800F6B9B to anything happens.
 
@@ -533,139 +490,111 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f8394 [][][][] address where model data for 2nd enemy model stored (without texture because it's loaded to vram)
 800f8398 [][][][] address where model data for 3rd enemy model stored (without texture because it's loaded to vram)
 
-800f83a4               battle global structure. (address 0x2000).
-00 []       store data performed action type id here. (0x20 for example)
-01 []       store data performed attack index here.
-02
-03
-04 []       camera data from battle setup 1 (+12[]).
-05
-06
-07
-08
-09
-0a [][]     add bits for every inited unit here. Mask for alive units???
-0c [][]     self mask for current unit ().
-0e [][]     attack mask for current unit (2070).
-10 [][]     friends mask for current unit (2080).
-12 [][]     0 ().
-14 [][]     opponents mask for current unit (0x20A0).
-16 [][]     0 ().
-18 [][]     init with 0. Add bits for player units.
-1a [][]     init with 0. Addt bits for inited enemy units.
-1c [][]     all units mask ().
-1e
-1f
-20
-21
-22 [][]     init with 0 at start of battle cycle. Some flags. A0 = (V0 & 25) ? 1 : 7; funca23e0; // battle queue function
-24
-25
-26
-27
-28 [][]     store battle id here.
-29
-2a
-2b
-2c [][]     something flags used during attack queue coping. Used during 8 and A 2bytes copying from attack data. 0x0004 checked in battle cycle.
-2e [][]     flags. 0x0004 (magical or physical attack)
-30 [][]
-32
-33
-34
-35
-36
-37
-38 [][][][] 
+800f83a4 battle global structure. (address 0x2000).
+    00 []       store data performed action type id here. (0x20 for example)
+    01 []       store data performed attack index here.
+    02
+    03
+    04 []       camera data from battle setup 1 (+12[]).
+    05
+    06
+    07
+    08
+    09
+    0a [][]     add bits for every inited unit here. Mask for alive units???
+    0c [][]     self mask for current unit ().
+    0e [][]     attack mask for current unit (2070).
+    10 [][]     friends mask for current unit (2080).
+    12 [][]     0 ().
+    14 [][]     opponents mask for current unit (0x20A0).
+    16 [][]     0 ().
+    + 18 [][]     init with 0. Add bits for player units.
+    1a [][]     init with 0. Addt bits for inited enemy units.
+    1c [][]     all units mask ().
+    1e
+    1f
+    20
+    21
+    22 [][]     init with 0 at start of battle cycle. Some flags. A0 = (V0 & 25) ? 1 : 7; funca23e0; // battle queue function
+    24
+    25
+    26
+    27
+    28 [][]     store battle id here.
+    29
+    2a
+    2b
+    2c [][]     something flags used during attack queue coping. Used during 8 and A 2bytes copying from attack data. 0x0004 checked in battle cycle.
+    2e [][]     flags. 0x0004 (magical or physical attack)
+    30 [][]
+    32
+    33
+    34
+    35
+    36
+    37
+    38 [][][][] 
 
 
-800f83e0               unit data structure. (size 0x68). (address 0x4000).
-800f8580               enemy start
-00 [][][][] current status. Init with 0. Set sandess/fury flags from savemap structure in case of player. Add 0x00000001 if current hp of character is 0.
-04 [][][][] some flags. Init with 0 in case of enemy. Set +0c in battle formation &0x1f here in case of enemy.
-            00000002 - looks like if this bit set we are left fighters (right otherwise) in case of side battle.
-            00000008 - seems like enabled units in battle. Init with this in case of player.
-            00000010 - units with activates auto script 0x01 (action).
-            00000020 - defend flag. Remove this flag if we add action with priority >= 2.
-            00000040 - set this bit if we in back row.
-            00000080 - set this bit for: enemies in case of battle type 0, player in case of battle 2, left row an player 2 in case of battle 4. func1b19ac.
-            00000100 - looks like nullify phisical attack.
-            00000200 - looks like nullify magic attack.
-            00000400 - maybe like immune to statuses?.
-            00000800 - probably bit for temporary unreachable unit (set in battle_update_unit_mask).
-            00001000 - no death animation?
-            00002000 - set this bit if unit is dead in battle (if unit was dead at the begin of battle flag is not set).
-            00004000 - invisibility flag. All attack will miss this target.
-            00008000 - reflect all?
-            00020000 - absorb all magic?
-08 []       index. Init with 0xff. Set player character id here in case of player. Set index in case of enemy.
-09 []       level. Init with player level.
-0a
-0b []       store minimum elemental influence here (0 - death, 2 - 200%damage, 3 - normal, 4 - 50%damage, 5 - 0%damage, 6 - 100%absorb, 7 - fully recover)
-0c []       formation number. Init with 0. If we init second unit of this type we increment this value by 1 for this unit. If 6 same unit on field they will have 0,1,2,3,4,5 as this value. Set player character id + 0x10 in case of player.
-0d []       attack power (strength in enemy data format).
-0e []       magic power (magic in enemy data format).
-0f []       set evade from armor in case of player (defense% in game).
-10 []       init with 0. Set 0x10 during player init. Idle action id.
-11 []       init with 5 in case of player. Init with 1 in case of enemy. Hurt action id.
-12 []       back damage multiplier. set from +a2[] in enemy data (usually 0x10).
-13 []       model scale (just changing doesn't work)?. init with 10.
-14 []       dexterity.
-15 []       luck.
-16 []       init with 0 in case of player.
-17 []       store 0xff here at start of battle_main_damage_calculation. Index of character that we cover.
-18 [][]     attack mask set during run command.
-1a [][]     - some mask (maybe mask of those who attack this unit)
-1c [][]     -
-1e [][]     -
-20 [][]     defense. Multiplied by 2 in case of enemy.
-22 [][]     magic defense. Multiplied by 2 in case of enemy.
-24 [][]     init with 0xffff. Set enemy id here.
-26 [][]     elements mask. add this to absorb elements mask during damage calc.
-28 [][]     current MP.
-2a [][]     max MP.
-2c [][][][] current HP.
-30 [][][][] max HP.
-34
-35
-36
-37
-38
-39
-3A
-3B
-3C
-3D
-3E
-3F
-40
-41
-42
-43
-44 [][][][] Init with 0. Store status of this unit here during initialization.
-48
-49
-4a
-4b
-4c []       Init with 1.
-4d []       set magic evade (magic defense% in game) from armor equipped in case of player.
-4e []       store row from battle formation here during init.
-4f []       init with 0xff.
-50 [][]     init with 0.
-52 [][]     init with 0xffff.
-54 [][]     elements mask. add this to no damage elements mask during damage calc.
-56 []       store 2 here during init in case of enemy. Init with 8 in case of player.
-56 [][]     ap.
-58 [][][][] gil.
-5c [][][][] exp.
-60
-61
-62
-63
-64
-65
-66
-67
+800f83e0 unit data structure. (size 0x68). (address 0x4000).
+800f8580 enemy start
+    + 00 [][][][] current status. Init with 0.
+                00000001 - death. Set if current hp of character is 0.
+                00000010 - sadness.
+                00000020 - fury.
+    + 04 [][][][] some flags. Init with 0 in case of enemy. Set +0c in battle formation &0x1f here in case of enemy.
+                00000002 - looks like if this bit set we are left fighters (right otherwise) in case of side battle.
+                00000008 - seems like enabled units in battle. Init with this in case of player.
+                00000010 - units with activates auto script 0x01 (action).
+                00000020 - defend flag. Remove this flag if we add action with priority >= 2.
+                00000040 - set this bit if we in back row.
+                00000080 - set this bit for: enemies in case of battle type 0, player in case of battle 2, left row an player 2 in case of battle 4. func1b19ac.
+                00000100 - looks like nullify phisical attack.
+                00000200 - looks like nullify magic attack.
+                00000400 - maybe like immune to statuses?.
+                00000800 - probably bit for temporary unreachable unit (set in battle_update_unit_mask).
+                00001000 - no death animation?
+                00002000 - set this bit if unit is dead in battle (if unit was dead at the begin of battle flag is not set).
+                00004000 - invisibility flag. All attack will miss this target.
+                00008000 - reflect all?
+                00020000 - absorb all magic?
+    + 08 []       index. Init with 0xff. Set player character id here in case of player. Set index in case of enemy.
+    + 09 []       level. Init with player level.
+    0b []       store minimum elemental influence here (0 - death, 2 - 200%damage, 3 - normal, 4 - 50%damage, 5 - 0%damage, 6 - 100%absorb, 7 - fully recover)
+    + 0c []       formation number. Init with 0. If we init second unit of this type we increment this value by 1 for this unit. If 6 same unit on field they will have 0,1,2,3,4,5 as this value. Set player character id + 0x10 in case of player.
+    + 0d []       attack power (strength in enemy data format).
+    + 0e []       magic power (magic in enemy data format).
+    + 0f []       set evade from armor in case of player (defense% in game).
+    10 []       init with 0. Set 0x10 during player init. Idle action id.
+    + 11 []       init with 5 in case of player. Init with 1 in case of enemy. Hurt action id.
+    + 12 []       back damage multiplier. set from +a2[] in enemy data (usually 0x10).
+    13 []       model scale (just changing doesn't work)?. init with 10.
+    + 14 []       dexterity.
+    + 15 []       luck.
+    + 16 []       init with 0 in case of player.
+    17 []       store 0xff here at start of battle_main_damage_calculation. Index of character that we cover.
+    18 [][]     attack mask set during run command.
+    1a [][]     - some mask (maybe mask of those who attack this unit)
+    + 20 [][]     defense. Multiplied by 2 in case of enemy.
+    + 22 [][]     magic defense. Multiplied by 2 in case of enemy.
+    24 [][]     init with 0xffff. Set enemy id here.
+    26 [][]     elements mask. add this to absorb elements mask during damage calc.
+    + 28 [][]     current MP.
+    + 2a [][]     max MP.
+    + 2c [][][][] current HP.
+    + 30 [][][][] max HP.
+    + 44 [][][][] Init with 0. Store status of this unit here during initialization.
+    4c []       Init with 1.
+    + 4d []       set magic evade (magic defense% in game) from armor equipped in case of player.
+    4e []       store row from battle formation here during init.
+    4f []       init with 0xff.
+    + 50 [][]     init with 0.
+    + 52 [][]     init with 0xffff.
+    54 [][]     elements mask. add this to no damage elements mask during damage calc.
+    + 56 []       store 2 here during init in case of enemy. Init with 8 in case of player.
+    56 [][]     ap.
+    58 [][][][] gil.
+    5c [][][][] exp.
 
 800f87f0               temp variable unit data structure. (size 0x80). (address 0x0000).
 800f89f0               enemy part. Init whole structure with 0.
@@ -908,6 +837,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 801620a0 []       init with 0.
 801620a4 []       init with 0.
+801620a8 [][][][] init with -1;
 
 
 
@@ -1179,7 +1109,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +03 []       target type
     +04 []       item command restriction &b.
 
-
+80167938 copy here whole savemap character data during battle init.
 
 
 
