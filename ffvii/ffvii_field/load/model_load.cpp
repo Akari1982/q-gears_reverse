@@ -776,7 +776,7 @@ if( number_of_model != 0 )
 
                 A0 = SP + 30;
                 A1 = w[800dfca0] + w[w[800dfca0] + c] + face_id * 20; // palette data
-                func44000; // load image to VRAM
+                system_psyq_load_image; // load image to VRAM
 
                 [1f800000] = b(0);
                 [1f800001] = b(0);
@@ -910,7 +910,7 @@ if (S3 != 0)
 
         A0 = SP + 10;
         A1 = S2 + w[S0 + 8];
-        func44000;
+        system_psyq_load_image;
 
         S1 = S1 + 1;
         S0 = S0 + c;
@@ -1678,7 +1678,7 @@ Lad894:	; 800AD894
     {
         A0 = S0 + c; // pointer with data 2 bytes vram_x, vram_y, width, height
         A1 = S1 + w[S0 + 4]; // pointer to image data to load
-        func44000;
+        system_psyq_load_image;
     }
 
     S2 = S2 + 1;

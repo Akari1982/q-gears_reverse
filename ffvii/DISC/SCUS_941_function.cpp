@@ -456,28 +456,6 @@ return w[8009c6e4 + b7c];
 
 
 ////////////////////////////////
-// func44000
-S0 = A0; // descript struct
-S1 = A1; // adress to store/read
-
-A0 = 80010dcc;
-A1 = S0;
-func43e44;
-
-A1 = S0;
-V0 = w[80062bf8];
-
-A0 = w[V0 + 20];
-V0 = w[V0 + 8];
-
-A2 = 8;
-A3 = S1;
-80044044	jalr   v0 ra
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func44064
 S0 = A0; // descript struct
 S1 = A1; // adress to store/read
@@ -665,7 +643,7 @@ else if (tp == 2)
 
 A0 = SP + 10;
 A1 = address;
-func44000;
+system_psyq_load_image;
 
 A0 = tp;
 A1 = abr;

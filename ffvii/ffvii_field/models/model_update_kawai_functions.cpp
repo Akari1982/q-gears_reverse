@@ -23,7 +23,7 @@ if( model_id < 21 )
     A0 = SP + 10;
     V0 = bu[800dfca4 + face_id * 7 + bu[S3 + 0]];
     A1 = w[800dfca0] + image_offset + V0 * 200;
-    func44000;
+    system_psyq_load_image;
 
     [SP + 10] = h(300 + model_id % 4 * 10 + 8);
     [SP + 12] = h(100 + model_id / 4 * 20);
@@ -32,7 +32,7 @@ if( model_id < 21 )
     A0 = SP + 10;
     V0 = bu[800dfca4 + face_id * 7 + bu[S3 + 1]];
     A1 = w[800dfca0] + image_offset + V0 * 200;
-    func44000;
+    system_psyq_load_image;
 
     [SP + 10] = h(300 + model_id % 8 * 8 + 0);
     [SP + 12] = h(1a0 + model_id / 8 * 20);
@@ -41,7 +41,7 @@ if( model_id < 21 )
     A0 = SP + 10;
     V0 = bu[800dfd94 + face_id * 3 + bu[S3 + 2]];
     A1 = w[800dfca0] + image_offset + V0 * 200;
-    func44000;
+    system_psyq_load_image;
 }
 
 return 1;

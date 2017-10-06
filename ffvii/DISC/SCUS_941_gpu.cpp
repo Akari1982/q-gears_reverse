@@ -1,4 +1,34 @@
 ////////////////////////////////
+// system_psyq_load_image()
+// Transfer data to a frame buffer.
+// Transfers the contents of memory from the address p to the rectangular area in the frame buffer specified by recp.
+// Because LoadImage() is a non-blocking function, transmission termination must be detected by DrawSync()
+// or by installing a callback routine with DrawSyncCallback().
+// The source and destination areas are not affected by the drawing environment (clip, offset). The destination
+// area must be located within a drawable area (0, 0) - (1023, 511). See the description of the DR_LOAD primitive.
+// Return value position of this command in the libgpu command queue.
+
+S0 = A0; // RECT *recp, Pointer to destination rectangular area
+S1 = A1; // Pointer to main memory address of source of transmission
+
+A0 = 80010dcc; // "LoadImage"
+A1 = S0;
+func43e44;
+
+A1 = S0;
+
+V0 = w[80062bf8];
+A0 = w[V0 + 20];
+V0 = w[V0 + 8];
+
+A2 = 8;
+A3 = S1;
+80044044	jalr   v0 ra
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_psyq_reset_graph()
 // Initialize drawing engine.
 // Resets the graphic system according to mode:

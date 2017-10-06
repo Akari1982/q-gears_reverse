@@ -2,90 +2,73 @@
 // funca0d2c();
 
 S2 = A0;
-V1 = 801ad800;
-V0 = 801ce000;
-S0 = 800cc564;
 
-[800d05d8] = w(V0);
-S1 = 00e0;
-[S0] = w(V1);
+[800d05d8] = w(801ce000);
+[800cc564] = w(801ad800);
 
+// init window 1
 A0 = 800c84f4;
-A1 = 0; // WINDOW x
-A2 = 0008; // WINDOW y
-A3 = 0140; // WINDOW width
-A4 = e0; // WINDOW height
+A1 = 0; // x
+A2 = 0008; // y
+A3 = 0140; // width
+A4 = e0; // height
 func43814();
+[800c84f4 + 18] = b(1);
+[800c84f4 + 19] = b(0);
+[800c84f4 + 1a] = b(0);
+[800c84f4 + 1b] = b(0);
 
-A0 = S0 + 0004;
+// init window 2
+A0 = 800cc568;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
 A4 = e0;
 func43814();
+[800cc568 + 18] = b(1);
+[800cc568 + 19] = b(0);
+[800cc568 + 1a] = b(0);
+[800cc568 + 1b] = b(0);
 
-800A0DA0	addiu  a0, s0, $bfec (=-$4014)
+// init window 3
+A0 = 800c8550;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
-V0 = 0001;
-800A0DB4	lui    at, $800d
-[AT + c580] = b(V0);
-800A0DBC	lui    at, $800d
-[AT + 850c] = b(V0);
-800A0DC4	lui    at, $800d
-[AT + 850d] = b(0);
-800A0DCC	lui    at, $800d
-[AT + 850e] = b(0);
-800A0DD4	lui    at, $800d
-[AT + 850f] = b(0);
-800A0DDC	lui    at, $800d
-[AT + c581] = b(0);
-800A0DE4	lui    at, $800d
-[AT + c582] = b(0);
-800A0DEC	lui    at, $800d
-[AT + c583] = b(0);
-A4 = S1;
-800A0DF4	jal    $800438d4
+A4 = e0;
+func438d4()
+[800c8550 + a] = h(8);
+[800c8550 + e] = h(e0);
 
-A0 = S0 + 0060;
+// init window 4
+A0 = 800cc5c4;
 A1 = 0;
 A2 = 0008;
 A3 = 0140;
-A4 = S1;
-800A0E0C	jal    $800438d4
+A4 = e0; // WINDOW height
+func438d4()
+[800cc5c4 + c] = h(8);
+[800cc5c4 + e] = h(e0);
 
-V0 = 0008;
-800A0E18	lui    at, $800d
-[AT + c5ce] = h(V0);
-800A0E20	lui    at, $800d
-[AT + 855a] = h(V0);
-V0 = 00e0;
+
+
 S3 = S2;
 S2 = S2 << 10;
 S2 = S2 >> 10;
-800A0E38	lui    at, $800d
-[AT + c5d2] = h(V0);
-800A0E40	lui    at, $800d
-[AT + 855e] = h(V0);
-V0 = S2 < 000b;
-800A0E4C	bne    v0, zero, La0e5c [$800a0e5c]
-800A0E50	nop
-800A0E54	lui    at, $800e
-[AT + 567c] = w(0);
+if( S2 >= b )
+{
+    [800e567c] = w(0);
+}
 
-La0e5c:	; 800A0E5C
-800A0E5C	lui    a0, $800e
-A0 = w[A0 + 567c];
-800A0E64	nop
+A0 = w[800e567c];
 800A0E68	beq    a0, zero, La0f64 [$800a0f64]
-800A0E6C	lui    a1, $8011
-800A0E70	jal    funca5c08 [$800a5c08]
-A1 = A1 | 7000;
-800A0E78	lui    a2, $8019
-800A0E7C	lui    v0, $800c
-V0 = V0 + 744c;
-A1 = S2 << 03;
+
+A1 = 80117000;
+funca5c08()
+
+A2 = 80190000;
+V0 = 800c744c;
+A1 = S2 * 8;
 V1 = A1 + V0;
 V0 = V0 + A1;
 A0 = w[V1 + 0000];
@@ -94,47 +77,34 @@ A1 = w[V0 + 0004];
 A3 = 0001;
 
 loopa0ea0:	; 800A0EA0
-800A0EA0	lui    v0, $8009
-V0 = hu[V0 + 5dd4];
-800A0EA8	nop
+    V0 = hu[80095dd4];
 800A0EAC	bne    v0, zero, loopa0ea0 [$800a0ea0]
-800A0EB0	lui    s0, $8011
-S0 = S0 | 7000;
-V0 = w[S0 + 0000];
-800A0EBC	nop
-800A0EC0	beq    v0, zero, La0efc [$800a0efc]
-800A0EC4	lui    s2, $8019
-A0 = S0 + 0004;
 
-loopa0ecc:	; 800A0ECC
-800A0ECC	jal    $80044000
-A1 = S0 + 000c;
-V0 = w[S0 + 0000];
-800A0ED8	nop
-V0 = V0 >> 02;
-V0 = V0 << 02;
-S0 = S0 + V0;
-V0 = w[S0 + 0000];
-800A0EEC	nop
-800A0EF0	bne    v0, zero, loopa0ecc [$800a0ecc]
-A0 = S0 + 0004;
-800A0EF8	lui    s2, $8019
+// load needed images to vram
+S0 = 80117000;
+if( w[S0] != 0 )
+{
+    loopa0ecc:	; 800A0ECC
+        A0 = S0 + 4; // vram rect
+        A1 = S0 + c; // pointer to image
+        system_psyq_load_image()
 
-La0efc:	; 800A0EFC
-S2 = S2 | 0004;
-800A0F00	lui    at, $800e
-[AT + 567c] = w(0);
-800A0F08	jal    $80043dd8
+        S0 = S0 + ((w[S0] >> 2) << 2);
+        V0 = w[S0];
+    800A0EF0	bne    v0, zero, loopa0ecc [$800a0ecc]
+}
+
+S2 = 80190004;
+[800e567c] = w(0);
 A0 = 0;
-800A0F10	lui    a0, $8013
-V0 = w[S2 + 0000];
-800A0F18	lui    v1, $8019
-V1 = w[V1 + 0008];
-V0 = V0 >> 02;
-V0 = V0 << 02;
+800A0F08	jal    $80043dd8
+
+A0 = 80130000;
+V0 = w[S2];
+V1 = w[80190008];
+V0 = (V0 >> 2) << 2;
 S0 = V0 + S2;
-V1 = V1 >> 02;
-V1 = V1 << 02;
+V1 = (V1 >> 2) << 2;
 V1 = S0 + V1;
 V0 = S0 < V1;
 800A0F3C	beq    v0, zero, La0fa8 [$800a0fa8]
@@ -151,10 +121,8 @@ A0 = A0 + 0004;
 800A0F60	nop
 
 La0f64:	; 800A0F64
-800A0F64	lui    a2, $8013
-A2 = A2 | a7cc;
-800A0F6C	lui    v0, $800c
-V0 = V0 + 73e4;
+A2 = 8013a7cc;
+V0 = 800c73e4;
 A1 = S2 << 03;
 V1 = A1 + V0;
 V0 = V0 + A1;
@@ -188,7 +156,6 @@ V0 = w[S0 + 0000];
 S0 = S0 + 0004;
 [V1 + 0000] = w(V0);
 V0 = w[S2 + 0008];
-800A0FE0	nop
 V0 = V0 >> 02;
 V0 = V0 << 02;
 V0 = S2 + V0;
@@ -199,35 +166,25 @@ V1 = V1 + 0004;
 
 La1000:	; 800A1000
 V0 = w[S2 + 0008];
-800A1004	nop
 V0 = V0 >> 02;
 V0 = V0 << 02;
-V0 = V0 + 0800;
+V0 = V0 + 800;
 S0 = S2 + V0;
-V0 = w[S0 + 0000];
-800A101C	nop
-800A1020	beq    v0, zero, La105c [$800a105c]
-S1 = 0;
-A0 = S0 + 0004;
+if( w[S0] != 0 )
+{
+    loopa102c:	; 800A102C
+        A0 = S0 + 4;
+        A1 = S0 + c; // pointer to image
+        system_psyq_load_image();
 
-loopa102c:	; 800A102C
-800A102C	jal    $80044000
-A1 = S0 + 000c;
-V0 = w[S0 + 0000];
-800A1038	nop
-V0 = V0 >> 02;
-V0 = V0 << 02;
-S0 = S0 + V0;
-V0 = w[S0 + 0000];
-800A104C	nop
-800A1050	bne    v0, zero, loopa102c [$800a102c]
-A0 = S0 + 0004;
-S1 = 0;
+        S0 = S0 + ((w[S0] >> 2) << 2);
+        V0 = w[S0];
+    800A1050	bne    v0, zero, loopa102c [$800a102c]
+}
 
-La105c:	; 800A105C
+S1 = 0;
 V0 = w[S2 + 000c];
-800A1060	lui    v1, $800d
-V1 = V1 + 75ec;
+V1 = 800d75ec;
 V0 = V0 >> 02;
 V0 = V0 << 02;
 S0 = S2 + V0;
@@ -1625,4 +1582,91 @@ system_execute_AKAO();
 [8009a000] = h(bc);
 [8009a004] = w(0);
 system_execute_AKAO();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca5c08()
+
+A2 = A0;
+A3 = 0;
+V0 = w[A2 + 0000];
+T1 = A1;
+V0 = A2 + V0;
+T2 = V0 + 0003;
+A2 = A2 + 0004;
+
+La5c24:	; 800A5C24
+800A5C24	bne    a3, zero, La5c44 [$800a5c44]
+V0 = T0 & 0001;
+V0 = A2 < T2;
+800A5C30	beq    v0, zero, La5cf8 [$800a5cf8]
+A3 = 0008;
+T0 = bu[A2 + 0000];
+A2 = A2 + 0001;
+V0 = T0 & 0001;
+
+La5c44:	; 800A5C44
+800A5C44	beq    v0, zero, La5c68 [$800a5c68]
+V0 = A2 < T2;
+800A5C4C	beq    v0, zero, La5cf8 [$800a5cf8]
+800A5C50	nop
+V0 = bu[A2 + 0000];
+A2 = A2 + 0001;
+[A1 + 0000] = b(V0);
+800A5C60	j      La5cec [$800a5cec]
+A1 = A1 + 0001;
+
+La5c68:	; 800A5C68
+800A5C68	beq    v0, zero, La5cf8 [$800a5cf8]
+800A5C6C	nop
+A0 = bu[A2 + 0000];
+A2 = A2 + 0001;
+V1 = bu[A2 + 0000];
+A2 = A2 + 0001;
+V0 = V1 & 00f0;
+V0 = V0 << 04;
+A0 = A0 | V0;
+V0 = A1 - T1;
+V0 = V0 + 0fee;
+V0 = V0 - A0;
+V0 = V0 & 0fff;
+A0 = A1 - V0;
+V1 = V1 & 000f;
+V1 = A1 + V1;
+V0 = A0 < T1;
+800A5CAC	beq    v0, zero, La5ce0 [$800a5ce0]
+V1 = V1 + 0003;
+
+loopa5cb4:	; 800A5CB4
+[A1 + 0000] = b(0);
+A0 = A0 + 0001;
+V0 = A0 < T1;
+800A5CC0	bne    v0, zero, loopa5cb4 [$800a5cb4]
+A1 = A1 + 0001;
+800A5CC8	j      La5ce4 [$800a5ce4]
+V0 = A1 < V1;
+
+loopa5cd0:	; 800A5CD0
+V0 = bu[A0 + 0000];
+A0 = A0 + 0001;
+[A1 + 0000] = b(V0);
+A1 = A1 + 0001;
+
+La5ce0:	; 800A5CE0
+V0 = A1 < V1;
+
+La5ce4:	; 800A5CE4
+800A5CE4	bne    v0, zero, loopa5cd0 [$800a5cd0]
+800A5CE8	nop
+
+La5cec:	; 800A5CEC
+T0 = T0 >> 01;
+800A5CF0	j      La5c24 [$800a5c24]
+800A5CF4	addiu  a3, a3, $ffff (=-$1)
+
+La5cf8:	; 800A5CF8
+800A5CF8	jr     ra 
+800A5CFC	nop
 ////////////////////////////////

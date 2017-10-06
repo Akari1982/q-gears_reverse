@@ -37,7 +37,7 @@ func43dd8;
 
 A0 = SP + 20;
 A1 = w[800e4d90];
-func44000; // load to vram
+system_psyq_load_image; // load to vram
 
 A0 = 0;
 func43dd8;
