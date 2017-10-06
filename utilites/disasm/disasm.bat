@@ -1,1 +1,1 @@
-adisasm BATTLE.X_u BATTLE.X.asm -v -b 800a0000 800a1158 -u -a
+adisasm SCUS_941 SCUS_941.asm -v -b 8000f800 800110C0 -u -a

@@ -1,4 +1,61 @@
 ////////////////////////////////
+// func3a59c
+8003A59C-8003A638
+LZCS = A0;
+8003A5A0	nop
+8003A5A4	nop
+V0 = LZCR;
+AT = 0020;
+8003A5B0	beq    v0, at, L3a628 [$8003a628]
+8003A5B4	nop
+T0 = V0 & 0001;
+8003A5BC	addiu  t2, zero, $fffe (=-$2)
+T2 = V0 & T2;
+T1 = 0013;
+8003A5C8	sub    t1, t1, t2
+T1 = T1 >> 01;
+8003A5D0	addi   t3, t2, $ffe8 (=-$18)
+8003A5D4	bltz   t3, L3a5e4 [$8003a5e4]
+8003A5D8	nop
+T4 = A0 << T3;
+8003A5E0	beq    zero, zero, L3a5f0 [$8003a5f0]
+
+L3a5e4:	; 8003A5E4
+T3 = 0018;
+8003A5E8	sub    t3, t3, t2
+8003A5EC	srav   t4, t3, a0
+
+L3a5f0:	; 8003A5F0
+8003A5F0	addi   t4, t4, $ffc0 (=-$40)
+T4 = T4 << 01;
+8003A5F8	lui    t5, $8005
+T5 = T5 + T4;
+T5 = h[T5 + b668];
+8003A604	nop
+8003A608	bltz   t1, L3a61c [$8003a61c]
+8003A60C	nop
+V0 = T5 << T1;
+8003A614	jr     ra 
+8003A618	nop
+
+
+L3a61c:	; 8003A61C
+8003A61C	sub    t1, zero, t1
+8003A620	jr     ra 
+8003A624	srlv   v0, t1, t5
+
+
+L3a628:	; 8003A628
+8003A628	jr     ra 
+V0 = 0000;
+8003A630	nop
+8003A634	nop
+8003A638	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_gte_init_geom()
 
 [8004b658] = w(RA);
