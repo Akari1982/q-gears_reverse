@@ -144,23 +144,3 @@ Ld2ebc:	; 800D2EBC
 800D2F34	jr     ra 
 800D2F38	nop
 ////////////////////////////////
-
-
-
-////////////////////////////////
-// funccf60c
-800CF614	lui    s0, $800a
-800CF618	addiu  s0, s0, $d391 (=-$2c6f)
-800CF61C	addu   a0, s0, zero
-800CF620	addiu  a1, s0, $f84b (=-$7b5)
-800CF628	addiu  s1, sp, $0018
-800CF62C	addiu  a2, sp, $0010
-800CF634	jal    funccf4cc [$800cf4cc]
-800CF638	addu   a3, s1, zero
-800CF63C	addu   a0, s0, zero
-800CF640	jal    funccf66c [$800cf66c]
-800CF644	addu   a1, s1, zero
-800CF648	addu   a0, s0, zero
-800CF650	addiu  a1, sp, $0010
-800CF64C	jal    funccf6c0 [$800cf6c0]
-////////////////////////////////

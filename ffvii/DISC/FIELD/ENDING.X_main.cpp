@@ -11,48 +11,44 @@ funca2504();
 
 loopa006c:	; 800A006C
     A0 = SP + 0020;
+    A1 = 800a0018; // "\STARTUP\SCEAP.LZS;1"
+    system_psyq_cd_search_file();
 
-    A1 = 800a0018;
-    800A0074	jal    $8003fb8c
+    if( V0 <= 0 )
+    {
+        if( V0 >= -1 )
+        {
+            A0 = 800a0000; // "scea file read error"
+            system_bios_printf();
 
-    800A007C	bgtz   v0, La00a4 [$800a00a4]
-    800A0080	slti   v0, v0, $ffff (=-$1)
-    800A0084	bne    v0, zero, La00a8 [$800a00a8]
-    A0 = 0002;
-    800A008C	lui    a0, $800a
-    A0 = A0 + 0000;
-    800A0094	jal    $80042dc8
-    800A0098	nop
-    800A009C	j      La049c [$800a049c]
-    800A00A0	nop
+            return;
+        }
+    }
 
-    La00a4:	; 800A00A4
-    A0 = 0002;
-
-    La00a8:	; 800A00A8
-    A1 = SP + 0020;
-    800A00AC	jal    $8003e100
+    A0 = 2; // Setloc
+    A1 = SP + 20;
     A2 = 0;
-    800A00B4	lui    a1, $8018
-    A0 = w[SP + 0024];
+    func3e100(); // execute command
+
+    A0 = (w[SP + 24] + 07ff) >> 0b;
+    A1 = 80180000;
     A2 = 0080;
-    A0 = A0 + 07ff;
-    800A00C4	jal    $80041d28
-    A0 = A0 >> 0b;
-    A0 = 0001;
+    system_psyq_cd_read();
 
     loopa00d0:	; 800A00D0
-    800A00D0	jal    $80041e30
-    A1 = 0;
+        A0 = 1;
+        A1 = 0;
+        system_psyq_cd_read_sync();
     800A00D8	bgtz   v0, loopa00d0 [$800a00d0]
-    A0 = 0001;
 800A00E0	bne    v0, zero, loopa006c [$800a006c]
 
-800A00E4	lui    a0, $8018
+A0 = 80180000;
+A1 = 80100000;
 800A00E8	jal    $80034bb0
-800A00EC	lui    a1, $8010
-800A00F0	jal    $80043d3c
+
 A0 = 0001;
+system_psyq_set_disp_mask();
+
 S5 = 00fe;
 S4 = 00fe;
 S3 = 00fe;
@@ -83,8 +79,9 @@ loopa0104:	; 800A0104
 
     loopa015c:	; 800A015C
     A0 = SP + 0018;
-    800A0160	jal    $80044000
     A1 = S0;
+    system_psyq_load_image();
+
     800A0168	jal    $80043dd8
     A0 = 0;
     V0 = hu[SP + 001a];
@@ -103,17 +100,19 @@ loopa0104:	; 800A0104
     V0 = V0 + 64e4;
     S1 = S1 + V0;
     A0 = S1;
+    A1 = 0001;
     800A01A8	jal    $80044244
-    A1 = 0001;
+
     S0 = S2 << 04;
-    800A01B4	lui    v0, $800a
-    V0 = V0 + 6504;
+    V0 = 800a6504;
     S0 = S0 + V0;
+    A0 = S0;
     800A01C0	jal    $800469b0
+
     A0 = S0;
-    A0 = S0;
-    800A01CC	jal    $80046848
     A1 = 0001;
+    system_change_semi_transparency_in_packet();
+
     A0 = S1;
     A1 = S0;
     V0 = 001e;
@@ -126,25 +125,28 @@ loopa0104:	; 800A0104
     [A1 + 000e] = h(V0);
     [A1 + 0004] = b(S3);
     [A1 + 0005] = b(S4);
-    800A0204	jal    $80046794
     [A1 + 0006] = b(S5);
+    system_add_render_packet_to_queue();
+
     A0 = 0002;
     A1 = 0002;
     A2 = 0;
-    800A0218	jal    $8004656c
     A3 = 0;
+    system_create_texture_page_settings_for_packet();
+
     S0 = S2 << 01;
     S0 = S0 + S2;
     S0 = S0 << 02;
-    800A022C	lui    v1, $800a
-    V1 = V1 + 64ec;
+    V1 = 800a64ec;
     S0 = S0 + V1;
     A0 = S0;
     A1 = 0001;
     A2 = 0001;
     A3 = V0 & ffff;
-    800A0248	jal    $80044a68
     [SP + 0010] = w(0);
+    func44a68(); // set some tex settings
+
+
     A0 = S1;
     800A0254	jal    $80046794
     A1 = S0;
@@ -178,26 +180,28 @@ V0 = V0 >> 10;
 V0 = V0 < 01e0;
 [SP + 0018] = h(0);
 [SP + 001a] = h(0);
-800A02C8	beq    v0, zero, La0308 [$800a0308]
 [SP + 001a] = h(A0);
 
-loopa02d0:	; 800A02D0
-A0 = SP + 0018;
-800A02D4	jal    $80044000
-A1 = S0;
-800A02DC	jal    $80043dd8
-A0 = 0;
-V0 = hu[SP + 001a];
-800A02E8	nop
-V0 = V0 + 0002;
-[SP + 001a] = h(V0);
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 01e0;
-800A0300	bne    v0, zero, loopa02d0 [$800a02d0]
-S0 = S0 + 0a00;
+if( V0 != 0 )
+{
+    loopa02d0:	; 800A02D0
+        A0 = SP + 0018;
+        A1 = S0;
+        system_psyq_load_image();
 
-La0308:	; 800A0308
+        800A02DC	jal    $80043dd8
+        A0 = 0;
+        V0 = hu[SP + 001a];
+        800A02E8	nop
+        V0 = V0 + 0002;
+        [SP + 001a] = h(V0);
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        V0 = V0 < 01e0;
+        S0 = S0 + 0a00;
+    800A0300	bne    v0, zero, loopa02d0 [$800a02d0]
+}
+
 S1 = S1 + 0001;
 V0 = S1 < 012c;
 800A0310	bne    v0, zero, loopa0278 [$800a0278]
@@ -231,8 +235,9 @@ loopa0320:	; 800A0320
 
     loopa0378:	; 800A0378
     A0 = SP + 0018;
-    800A037C	jal    $80044000
     A1 = S0;
+    system_psyq_load_image()
+
     800A0384	jal    $80043dd8
     A0 = 0;
     V0 = hu[SP + 001a];
@@ -247,21 +252,20 @@ loopa0320:	; 800A0320
 
     La03b0:	; 800A03B0
     S1 = S2 << 02;
-    800A03B4	lui    v0, $800a
-    V0 = V0 + 64e4;
+    V0 = 800a64e4;
     S1 = S1 + V0;
     A0 = S1;
     800A03C4	jal    $80044244
     A1 = 0001;
     S0 = S2 << 04;
-    800A03D0	lui    v0, $800a
-    V0 = V0 + 6504;
+    V0 = 800a6504;
     S0 = S0 + V0;
     800A03DC	jal    $800469b0
     A0 = S0;
     A0 = S0;
-    800A03E8	jal    $80046848
     A1 = 0001;
+    system_change_semi_transparency_in_packet();
+
     A0 = S1;
     A1 = S0;
     V0 = 001e;
@@ -274,13 +278,15 @@ loopa0320:	; 800A0320
     [A1 + 000e] = h(V0);
     [A1 + 0004] = b(S3);
     [A1 + 0005] = b(S4);
-    800A0420	jal    $80046794
     [A1 + 0006] = b(S5);
+    system_add_render_packet_to_queue();
+
     A0 = 0002;
     A1 = 0002;
     A2 = 0;
-    800A0434	jal    $8004656c
     A3 = 0;
+    system_create_texture_page_settings_for_packet();
+
     S0 = S2 << 01;
     S0 = S0 + S2;
     S0 = S0 << 02;
@@ -291,11 +297,11 @@ loopa0320:	; 800A0320
     A2 = 0001;
     A3 = V0 & ffff;
     A4 = 0;
-    800A0464	jal    $80044a68
+    func44a68(); // set some tex settings
 
     A0 = S1;
     A1 = S0;
-    800A0470	jal    $80046794
+    system_add_render_packet_to_queue();
 
     A0 = S1;
     800A0478	jal    $8004433c
@@ -308,9 +314,7 @@ loopa0320:	; 800A0320
 
 La0494:	; 800A0494
 A0 = 0;
-800A0494	jal    $80043d3c
-
-La049c:	; 800A049C
+system_psyq_set_disp_mask();
 ////////////////////////////////
 
 
@@ -401,9 +405,7 @@ A0 = SP + 0018;
 A1 = 0;
 A2 = 0;
 A3 = 0;
-V0 = 0001;
-800A2650	lui    at, $800b
-[AT + f408] = w(V0);
+[800af408] = w(1);
 V0 = S3 << 01;
 V0 = V0 + S3;
 V1 = V0 >> 1f;
