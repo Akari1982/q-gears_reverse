@@ -21383,104 +21383,13 @@ SP = SP + 0018;
 800B6B24	nop
 
 
-funcb6b28:	; 800B6B28
-800B6B28	addiu  sp, sp, $ffc8 (=-$38)
-800B6B2C	lui    a1, $8011
-800B6B30	lui    v0, $8014
-V0 = bu[V0 + a800];
-A1 = A1 | 7000;
-[SP + 002c] = w(S3);
-S3 = 0;
-[SP + 0034] = w(RA);
-[SP + 0030] = w(S4);
-[SP + 0028] = w(S2);
-[SP + 0024] = w(S1);
-800B6B54	blez   v0, Lb6b94 [$800b6b94]
-[SP + 0020] = w(S0);
-S0 = 0;
 
-loopb6b60:	; 800B6B60
-A2 = S3;
-800B6B64	lui    a0, $8014
-A0 = w[A0 + a804];
-S3 = S3 + 0001;
-800B6B70	jal    funcbfbf0 [$800bfbf0]
-A0 = S0 + A0;
-A1 = V0;
-800B6B7C	lui    v0, $8014
-V0 = bu[V0 + a800];
-800B6B84	nop
-800B6B88	slt    v0, s3, v0
-800B6B8C	bne    v0, zero, loopb6b60 [$800b6b60]
-S0 = S0 + 0024;
+////////////////////////////////
+// funcb6b28
+800B6B28-800B6C80
+////////////////////////////////
 
-Lb6b94:	; 800B6B94
-S3 = 0003;
-800B6B98	lui    s4, $800c
-S4 = S4 + 7114;
 
-loopb6ba0:	; 800B6BA0
-800B6BA0	lui    v0, $8011
-V0 = w[V0 + 5a58];
-800B6BA8	nop
-V0 = V0 << 05;
-V0 = V0 + S4;
-V0 = V0 + S3;
-V0 = bu[V0 + 0000];
-800B6BBC	nop
-800B6BC0	lui    at, $8011
-AT = AT + 59e8;
-AT = AT + S3;
-[AT + 0000] = b(V0);
-V0 = V0 << 18;
-800B6BD4	bltz   v0, Lb6c48 [$800b6c48]
-V0 = 0018;
-800B6BDC	bne    s3, v0, Lb6c48 [$800b6c48]
-800B6BE0	nop
-800B6BE4	lui    v1, $8011
-V1 = b[V1 + 5a00];
-S2 = 0;
-V0 = V1 << 03;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800B6BFC	lui    v1, $8014
-V1 = w[V1 + a804];
-800B6C04	addiu  v0, v0, $ffdc (=-$24)
-S1 = V0 + V1;
-A0 = hu[S1 + 0018];
-V0 = w[S1 + 001c];
-V1 = bu[S1 + 0003];
-800B6C18	nop
-800B6C1C	blez   v1, Lb6c48 [$800b6c48]
-A0 = A0 + V0;
-S0 = A0;
-
-loopb6c28:	; 800B6C28
-A0 = S0;
-800B6C2C	jal    funcc3db0 [$800c3db0]
-A1 = 0001;
-V0 = bu[S1 + 0003];
-S2 = S2 + 0001;
-800B6C3C	slt    v0, s2, v0
-800B6C40	bne    v0, zero, loopb6c28 [$800b6c28]
-S0 = S0 + 0020;
-
-Lb6c48:	; 800B6C48
-S3 = S3 + 0001;
-V0 = S3 < 0020;
-800B6C50	bne    v0, zero, loopb6ba0 [$800b6ba0]
-V0 = 0001;
-800B6C58	lui    at, $8011
-[AT + 5a4c] = w(V0);
-RA = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0038;
-800B6C7C	jr     ra 
-800B6C80	nop
 
 800B6C84	lui    v0, $8011
 V0 = w[V0 + 5a60];
@@ -21677,22 +21586,10 @@ SP = SP + 0018;
 // funcb6efc
 800B6EFC-800B7100
 ////////////////////////////////
+// funcb7104
+800B7104-800B7130
+////////////////////////////////
 
-
-
-funcb7104:	; 800B7104
-800B7104	addiu  sp, sp, $ffe8 (=-$18)
-A0 = A0 << 10;
-A0 = A0 >> 10;
-[SP + 0010] = w(RA);
-800B7114	lui    at, $8011
-[AT + 5a58] = w(A0);
-800B711C	jal    funcb6b28 [$800b6b28]
-800B7120	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B712C	jr     ra 
-800B7130	nop
 
 
 funcb7134:	; 800B7134
