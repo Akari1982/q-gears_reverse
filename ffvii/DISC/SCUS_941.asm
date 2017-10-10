@@ -650,7 +650,7 @@ A2 = h[AT + 0000];
 A0 = A0 + A3;
 
 loop12a6c:	; 80012A6C
-80012A6C	jal    func43dd8 [$80043dd8]
+80012A6C	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0001;
 80012A74	bne    v0, zero, loop12a6c [$80012a6c]
 80012A78	nop
@@ -1186,7 +1186,7 @@ V0 = S1 & 0001;
 80014294	lui    s4, $801b
 
 L14298:	; 80014298
-80014298	jal    func43dd8 [$80043dd8]
+80014298	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 800142A0	blez   s1, L142d4 [$800142d4]
 V1 = S0;
@@ -1208,7 +1208,7 @@ L142d4:	; 800142D4
 V0 = S1 < 0003;
 800142D8	beq    v0, zero, L142e8 [$800142e8]
 A0 = SP + 0018;
-800142E0	jal    func44064 [$80044064]
+800142E0	jal    system_psyq_store_image [$80044064]
 A1 = S4;
 
 L142e8:	; 800142E8
@@ -1637,7 +1637,7 @@ SP = SP + 0018;
 func149e0:	; 800149E0
 800149E0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800149E8	jal    func43dd8 [$80043dd8]
+800149E8	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -6954,7 +6954,7 @@ func22b5c:	; 80022B5C
 80022B5C	addiu  sp, sp, $ffe0 (=-$20)
 A0 = 0001;
 [SP + 001c] = w(RA);
-80022B68	jal    func43dd8 [$80043dd8]
+80022B68	jal    system_psyq_draw_sync [$80043dd8]
 [SP + 0018] = w(S0);
 80022B70	bne    v0, zero, L22dd0 [$80022dd0]
 80022B74	nop
@@ -8504,7 +8504,7 @@ V0 = 0030;
 V0 = 0078;
 A0 = SP + 0010;
 [SP + 0018] = w(RA);
-80025BB8	jal    func44064 [$80044064]
+80025BB8	jal    system_psyq_store_image [$80044064]
 [SP + 0016] = h(V0);
 RA = w[SP + 0018];
 SP = SP + 0020;
@@ -8541,7 +8541,7 @@ V0 = 0009;
 A0 = SP + 0010;
 [SP + 0018] = w(RA);
 [SP + 0012] = h(0);
-80025C3C	jal    func44064 [$80044064]
+80025C3C	jal    system_psyq_store_image [$80044064]
 [SP + 0016] = h(V0);
 RA = w[SP + 0018];
 SP = SP + 0020;
@@ -8598,7 +8598,7 @@ A0 = SP + 0010;
 [SP + 0018] = w(RA);
 [SP + 0010] = h(V1);
 [SP + 0014] = h(V1);
-80025CFC	jal    func44064 [$80044064]
+80025CFC	jal    system_psyq_store_image [$80044064]
 [SP + 0016] = h(V0);
 RA = w[SP + 0018];
 SP = SP + 0020;
@@ -8638,7 +8638,7 @@ A0 = w[SP + 0014];
 A1 = w[SP + 0018];
 80025D80	jal    system_psyq_load_image [$80044000]
 80025D84	nop
-80025D88	jal    func43dd8 [$80043dd8]
+80025D88	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 
 L25d90:	; 80025D90
@@ -8656,7 +8656,7 @@ A0 = w[SP + 001c];
 A1 = w[SP + 0020];
 80025DC0	jal    system_psyq_load_image [$80044000]
 80025DC4	nop
-80025DC8	jal    func43dd8 [$80043dd8]
+80025DC8	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 80025DD0	j      loop25d40 [$80025d40]
 80025DD4	nop
@@ -8714,7 +8714,7 @@ A2 = A2 + V0;
 A2 = A2 << 04;
 80025E94	jal    func25d14 [$80025d14]
 A2 = A2 + 0100;
-80025E9C	jal    func43dd8 [$80043dd8]
+80025E9C	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 S0 = S0 + 0001;
 V0 = S0 < 0009;
@@ -8737,7 +8737,7 @@ A0 = 0;
 [SP + 0024] = w(S3);
 [SP + 0020] = w(S2);
 [SP + 001c] = w(S1);
-80025EF4	jal    func43dd8 [$80043dd8]
+80025EF4	jal    system_psyq_draw_sync [$80043dd8]
 [SP + 0018] = w(S0);
 S3 = 0;
 S5 = 0340;
@@ -8788,7 +8788,7 @@ V1 = V1 << 04;
 V0 = V0 + V1;
 80025FA0	jal    func440c8 [$800440c8]
 [SP + 0012] = h(V0);
-80025FA8	jal    func43dd8 [$80043dd8]
+80025FA8	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 A0 = SP + 0010;
 A1 = 0100;
@@ -8800,7 +8800,7 @@ V0 = 0001;
 [SP + 0014] = h(S4);
 80025FD0	jal    func440c8 [$800440c8]
 [SP + 0016] = h(V0);
-80025FD8	jal    func43dd8 [$80043dd8]
+80025FD8	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 
 L25fe0:	; 80025FE0
@@ -8813,7 +8813,7 @@ S2 = S2 + 0030;
 A0 = A0 + 56f8;
 80025FFC	jal    func25cd4 [$80025cd4]
 80026000	nop
-80026004	jal    func43dd8 [$80043dd8]
+80026004	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 RA = w[SP + 0030];
 S5 = w[SP + 002c];
@@ -8877,11 +8877,11 @@ loop260fc:	; 800260FC
 80026100	nop
 80026104	bne    v0, zero, loop260fc [$800260fc]
 80026108	nop
-8002610C	jal    func43dd8 [$80043dd8]
+8002610C	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 80026114	jal    func25c14 [$80025c14]
 A0 = SP + 0020;
-8002611C	jal    func43dd8 [$80043dd8]
+8002611C	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 S0 = 0;
 80026128	lui    s4, $8005
@@ -8918,7 +8918,7 @@ A2 = S2;
 A3 = 0180;
 800261A0	jal    func25d14 [$80025d14]
 [SP + 0010] = w(S0);
-800261A8	jal    func43dd8 [$80043dd8]
+800261A8	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 
 L261b0:	; 800261B0
@@ -8935,13 +8935,13 @@ V0 = 0100;
 [SP + 001c] = h(V0);
 V0 = 0003;
 [SP + 001a] = h(0);
-800261E4	jal    func44064 [$80044064]
+800261E4	jal    system_psyq_store_image [$80044064]
 [SP + 001e] = h(V0);
-800261EC	jal    func43dd8 [$80043dd8]
+800261EC	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 800261F4	jal    func25c54 [$80025c54]
 A0 = SP + 0020;
-800261FC	jal    func43dd8 [$80043dd8]
+800261FC	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 80026204	jal    func3cedc [$8003cedc]
 A0 = 0006;
@@ -18440,9 +18440,9 @@ V0 = V0 + V1;
 V1 = V0 >> 1f;
 V0 = V0 + V1;
 V0 = V0 >> 01;
-80035720	jal    func43f6c [$80043f6c]
+80035720	jal    system_psyq_clear_image [$80043f6c]
 [SP + 0014] = h(V0);
-80035728	jal    func43dd8 [$80043dd8]
+80035728	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 
 L35730:	; 80035730
@@ -18634,9 +18634,9 @@ V0 = V0 + V1;
 V1 = V0 >> 1f;
 V0 = V0 + V1;
 V0 = V0 >> 01;
-800359E4	jal    func43f6c [$80043f6c]
+800359E4	jal    system_psyq_clear_image [$80043f6c]
 [SP + 001c] = h(V0);
-800359EC	jal    func43dd8 [$80043dd8]
+800359EC	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 
 L359f4:	; 800359F4
@@ -18826,9 +18826,9 @@ V0 = V0 + V1;
 V1 = V0 >> 1f;
 V0 = V0 + V1;
 V0 = V0 >> 01;
-80035CC4	jal    func43f6c [$80043f6c]
+80035CC4	jal    system_psyq_clear_image [$80043f6c]
 [SP + 001c] = h(V0);
-80035CCC	jal    func43dd8 [$80043dd8]
+80035CCC	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 
 L35cd4:	; 80035CD4
@@ -30452,95 +30452,19 @@ SP = SP + 0018;
 // system_psyq_set_disp_mask
 80043D3C-80043DD4
 ////////////////////////////////
-
-
-
-func43dd8:	; 80043DD8
-80043DD8	lui    v0, $8006
-V0 = bu[V0 + 2c02];
-80043DE0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-V0 = V0 < 0002;
-80043DF0	bne    v0, zero, L43e14 [$80043e14]
-[SP + 0014] = w(RA);
-80043DF8	lui    a0, $8001
-A0 = A0 + 0d88;
-80043E00	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80043E08	nop
-80043E0C	jalr   v0 ra
-A1 = S0;
-
-L43e14:	; 80043E14
-80043E14	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-80043E1C	nop
-V0 = w[V0 + 003c];
-80043E24	nop
-80043E28	jalr   v0 ra
-A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80043E3C	jr     ra 
-80043E40	nop
-
-
-
+// system_psyq_draw_sync
+80043DD8-80043E40
 ////////////////////////////////
 // func43e44
 80043E44-80043F68
 ////////////////////////////////
-
-
-
-func43f6c:	; 80043F6C
-80043F6C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S3);
-S3 = A0;
-80043F78	lui    a0, $8001
-A0 = A0 + 0dc0;
-[SP + 0018] = w(S2);
-S2 = A1;
-A1 = S3;
-[SP + 0014] = w(S1);
-S1 = A2;
-[SP + 0010] = w(S0);
-[SP + 0020] = w(RA);
-80043F9C	jal    func43e44 [$80043e44]
-S0 = A3;
-A1 = S3;
-S0 = S0 & 00ff;
-S0 = S0 << 10;
-S1 = S1 & 00ff;
-S1 = S1 << 08;
-S0 = S0 | S1;
-S2 = S2 & 00ff;
-80043FC0	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-A2 = 0008;
-A0 = w[V0 + 000c];
-V0 = w[V0 + 0008];
-80043FD4	nop
-80043FD8	jalr   v0 ra
-A3 = S0 | S2;
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-80043FF8	jr     ra 
-80043FFC	nop
-
-
-
+// system_psyq_clear_image
+80043F6C-80043FFC
 ////////////////////////////////
 // system_psyq_load_image
 80044000-80044060
 ////////////////////////////////
-// func44064
+// system_psyq_store_image
 80044064-800440C4
 ////////////////////////////////
 
@@ -30657,47 +30581,13 @@ SP = SP + 0020;
 80044240	nop
 
 
-func44244:	; 80044244
-80044244	lui    v0, $8006
-V0 = bu[V0 + 2c02];
-8004424C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(S1);
-S1 = A1;
-V0 = V0 < 0002;
-80044264	bne    v0, zero, L4428c [$8004428c]
-[SP + 0018] = w(RA);
-8004426C	lui    a0, $8001
-A0 = A0 + 0e08;
-A1 = S0;
-80044278	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80044280	nop
-80044284	jalr   v0 ra
-A2 = S1;
 
-L4428c:	; 8004428C
-8004428C	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-A0 = S0;
-V0 = w[V0 + 002c];
-8004429C	nop
-800442A0	jalr   v0 ra
-A1 = S1;
-800442A8	lui    a0, $00ff
-A0 = A0 | ffff;
-V0 = S0;
-800442B4	lui    v1, $8006
-V1 = V1 + 2cbc;
-V1 = V1 & A0;
-[V0 + 0000] = w(V1);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800442D4	jr     ra 
-800442D8	nop
+////////////////////////////////
+// system_psyq_clear_o_tag_r
+80044244-800442D8
+////////////////////////////////
+
+
 
 800442DC	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0010] = w(S0);

@@ -621,7 +621,7 @@ bsx_texture_loading_to_vram;
 
 
 A0 = 0;
-func43dd8; // ????
+system_psyq_draw_sync();
 
 
 

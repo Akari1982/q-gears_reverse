@@ -214,8 +214,7 @@ A0 = SP + 18;
 A1 = 0;
 A2 = 0;
 A3 = 0;
-800A113C	jal    $80043f6c
-
+system_psyq_clear_image();
 
 if( w[800e5634] == 2 )
 {
@@ -1650,84 +1649,74 @@ system_execute_AKAO();
 
 A2 = A0;
 A3 = 0;
-V0 = w[A2 + 0000];
+V0 = w[A2];
 T1 = A1;
 V0 = A2 + V0;
-T2 = V0 + 0003;
-A2 = A2 + 0004;
+T2 = V0 + 3;
+A2 = A2 + 4;
 
 La5c24:	; 800A5C24
-800A5C24	bne    a3, zero, La5c44 [$800a5c44]
-V0 = T0 & 0001;
-V0 = A2 < T2;
-800A5C30	beq    v0, zero, La5cf8 [$800a5cf8]
-A3 = 0008;
-T0 = bu[A2 + 0000];
-A2 = A2 + 0001;
-V0 = T0 & 0001;
+    if( A3 == 0 )
+    {
+        if( A2 >= T2 )
+        {
+            return;
+        }
 
-La5c44:	; 800A5C44
-800A5C44	beq    v0, zero, La5c68 [$800a5c68]
-V0 = A2 < T2;
-800A5C4C	beq    v0, zero, La5cf8 [$800a5cf8]
-800A5C50	nop
-V0 = bu[A2 + 0000];
-A2 = A2 + 0001;
-[A1 + 0000] = b(V0);
-800A5C60	j      La5cec [$800a5cec]
-A1 = A1 + 0001;
+        A3 = 8;
+        T0 = bu[A2];
+        A2 = A2 + 1;
+    }
 
-La5c68:	; 800A5C68
-800A5C68	beq    v0, zero, La5cf8 [$800a5cf8]
-800A5C6C	nop
-A0 = bu[A2 + 0000];
-A2 = A2 + 0001;
-V1 = bu[A2 + 0000];
-A2 = A2 + 0001;
-V0 = V1 & 00f0;
-V0 = V0 << 04;
-A0 = A0 | V0;
-V0 = A1 - T1;
-V0 = V0 + 0fee;
-V0 = V0 - A0;
-V0 = V0 & 0fff;
-A0 = A1 - V0;
-V1 = V1 & 000f;
-V1 = A1 + V1;
-V0 = A0 < T1;
-800A5CAC	beq    v0, zero, La5ce0 [$800a5ce0]
-V1 = V1 + 0003;
+    if( A2 >= T2 )
+    {
+        return;
+    }
 
-loopa5cb4:	; 800A5CB4
-[A1 + 0000] = b(0);
-A0 = A0 + 0001;
-V0 = A0 < T1;
-800A5CC0	bne    v0, zero, loopa5cb4 [$800a5cb4]
-A1 = A1 + 0001;
-800A5CC8	j      La5ce4 [$800a5ce4]
-V0 = A1 < V1;
+    if( T0 & 1 )
+    {
+        [A1] = b(bu[A2]);
+        A2 = A2 + 1;
+        A1 = A1 + 1;
+    }
+    else
+    {
+        A0 = bu[A2];
+        A2 = A2 + 1;
+        V1 = bu[A2];
+        A2 = A2 + 1;
 
-loopa5cd0:	; 800A5CD0
-V0 = bu[A0 + 0000];
-A0 = A0 + 0001;
-[A1 + 0000] = b(V0);
-A1 = A1 + 0001;
+        A0 = A0 | ((V1 & f0) << 04);
+        A0 = A1 - ((A1 - T1 + fee - A0) & fff);
+        V1 = A1 + (V1 & f);
+        V0 = A0 < T1;
+        V1 = V1 + 3;
+        800A5CAC	beq    v0, zero, La5ce0 [$800a5ce0]
 
-La5ce0:	; 800A5CE0
-V0 = A1 < V1;
+        loopa5cb4:	; 800A5CB4
+            [A1] = b(0);
+            A0 = A0 + 1;
+            A1 = A1 + 1;
+            V0 = A0 < T1;
+        800A5CC0	bne    v0, zero, loopa5cb4 [$800a5cb4]
 
-La5ce4:	; 800A5CE4
-800A5CE4	bne    v0, zero, loopa5cd0 [$800a5cd0]
-800A5CE8	nop
+        800A5CC8	j      La5ce4 [$800a5ce4]
 
-La5cec:	; 800A5CEC
-T0 = T0 >> 01;
+        loopa5cd0:	; 800A5CD0
+            [A1] = b(bu[A0]);
+            A0 = A0 + 1;
+            A1 = A1 + 1;
+
+            La5ce0:	; 800A5CE0
+            La5ce4:	; 800A5CE4
+
+            V0 = A1 < V1;
+        800A5CE4	bne    v0, zero, loopa5cd0 [$800a5cd0]
+    }
+
+    T0 = T0 >> 1;
+    A3 = A3 - 1;
 800A5CF0	j      La5c24 [$800a5c24]
-800A5CF4	addiu  a3, a3, $ffff (=-$1)
-
-La5cf8:	; 800A5CF8
-800A5CF8	jr     ra 
-800A5CFC	nop
 ////////////////////////////////
 
 

@@ -88,7 +88,7 @@ L11cf8:	; 80011CF8
     A1 = 0;
     A2 = 0;
     A3 = 0;
-    80011D74	jal    func43f6c [$80043f6c]
+    system_psyq_clear_image();
 
     80011D7C	jal    func26258 [$80026258]
 
@@ -302,7 +302,7 @@ L11cf8:	; 80011CF8
 
             loop1223c:	; 8001223C
                 A0 = 1;
-                8001223C	jal    func43dd8 [$80043dd8]
+                system_psyq_draw_sync();
             80012244	bne    v0, zero, loop1223c [$8001223c]
 
             8001224C	jal    func119e4 [$800119e4]

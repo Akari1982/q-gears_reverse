@@ -17,13 +17,14 @@ A1 = 800a0000;
 
 A0 = S4;
 A1 = 0001;
-800A172C	jal    func44244 [$80044244]
+system_psyq_clear_o_tag_r();
 
 
 S7 = 80100818;
 A0 = S7;
-800A1740	jal    func44244 [$80044244]
 A1 = 0001;
+system_psyq_clear_o_tag_r();
+
 S1 = S4 + 0008;
 A0 = S1;
 800A1750	lui    s0, $8008
@@ -134,13 +135,15 @@ S1 = 0001;
 [AT + 4224] = b(0);
 800A18E0	lui    at, $8011
 [AT + 4280] = b(0);
-800A18E8	jal    func44244 [$80044244]
-A1 = 0001;
+A1 = 1;
+system_psyq_clear_o_tag_r();
+
 800A18F0	lui    s7, $8010
 S7 = S7 + 081c;
 A0 = S7;
-800A18FC	jal    func44244 [$80044244]
-A1 = 0001;
+A1 = 1;
+system_psyq_clear_o_tag_r();
+
 S0 = S4 + 0048;
 A0 = S0;
 A1 = FP;
@@ -259,7 +262,7 @@ V0 = V0 >> 10;
 A0 = S0;
 A1 = 0;
 A2 = 0;
-800A1AD8	jal    func43f6c [$80043f6c]
+800A1AD8	jal    system_psyq_clear_image [$80043f6c]
 A3 = 0;
 
 La1ae0:	; 800A1AE0
@@ -330,86 +333,52 @@ La1c78:	; 800A1C78
 
 loopa1c8c:	; 800A1C8C
     A0 = 1;
-    800A1C8C	jal    func43dd8 [$80043dd8]
+    system_psyq_draw_sync();
 800A1C94	bne    v0, zero, loopa1c8c [$800a1c8c]
 
 
 
-800A1C9C	lui    v0, $8009
-V0 = hu[V0 + 65ec];
-800A1CA4	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800A1CB0	beq    v0, s4, La1cd4 [$800a1cd4]
-V0 = 0010;
-[S3 + 0000] = h(S2);
-[S3 + 0004] = h(V0);
-V0 = 0100;
-[S3 + 0002] = h(V0);
-[S3 + 0006] = h(0);
-[S3 + 0008] = h(0);
-[S3 + 000a] = h(0);
+if( h[800965ec] != S4 )
+{
+    [S3 + 0000] = h(S2);
+    [S3 + 0002] = h(100);
+    [S3 + 0004] = h(10);
+    [S3 + 0006] = h(0);
+    [S3 + 0008] = h(0);
+    [S3 + 000a] = h(0);
+}
 
-La1cd4:	; 800A1CD4
-800A1CD4	lui    v0, $8009
-V0 = hu[V0 + 65ec];
-800A1CDC	nop
+V0 = hu[800965ec];
 800A1CE0	beq    v0, zero, La1dc8 [$800a1dc8]
-800A1CE4	nop
-800A1CE8	lui    v0, $8009
-V0 = hu[V0 + 65ec];
-800A1CF0	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
+
+V0 = h[800965ec];
 800A1CFC	beq    v0, s2, La1dc8 [$800a1dc8]
-800A1D00	nop
-800A1D04	lui    v0, $8009
-V0 = hu[V0 + 65ec];
-800A1D0C	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
+
+V0 = h[800965ec];
 800A1D18	beq    v0, s5, La1dc8 [$800a1dc8]
-800A1D1C	nop
-800A1D20	lui    v0, $8009
-V0 = hu[V0 + 65ec];
+
+V0 = h[800965ec];
 V1 = 0006;
-V0 = V0 << 10;
-V0 = V0 >> 10;
 800A1D34	beq    v0, v1, La1dc8 [$800a1dc8]
-800A1D38	nop
-800A1D3C	lui    v0, $8009
-V0 = hu[V0 + 65ec];
+
+V0 = h[800965ec];
 V1 = 0008;
-V0 = V0 << 10;
-V0 = V0 >> 10;
 800A1D50	beq    v0, v1, La1dc8 [$800a1dc8]
-800A1D54	nop
-800A1D58	lui    v0, $8009
-V0 = hu[V0 + 65ec];
+
+V0 = h[800965ec];
 V1 = 0007;
-V0 = V0 << 10;
-V0 = V0 >> 10;
 800A1D6C	beq    v0, v1, La1dc8 [$800a1dc8]
-800A1D70	nop
-800A1D74	lui    v0, $8009
-V0 = hu[V0 + 65ec];
+
+V0 = h[800965ec];
 V1 = 0009;
-V0 = V0 << 10;
-V0 = V0 >> 10;
 800A1D88	beq    v0, v1, La1dc8 [$800a1dc8]
-800A1D8C	nop
-800A1D90	lui    v0, $8009
-V0 = hu[V0 + 65ec];
+
+V0 = h[800965ec];
 V1 = 000b;
-V0 = V0 << 10;
-V0 = V0 >> 10;
 800A1DA4	beq    v0, v1, La1dc8 [$800a1dc8]
-800A1DA8	nop
-800A1DAC	lui    v0, $8009
-V0 = hu[V0 + 65ec];
+
+V0 = hu[800965ec];
 V1 = 000a;
-V0 = V0 << 10;
-V0 = V0 >> 10;
 800A1DC0	bne    v0, v1, La1ee8 [$800a1ee8]
 V0 = 0002;
 
@@ -487,34 +456,29 @@ loopa1ec0:	; 800A1EC0
 800A1ECC	addiu  v0, v0, $ffff (=-$1)
 
 A0 = w[800716c4] + 158; // offset to sector 5 triggers
-field_init_triggered_background_state;
+field_init_triggered_background_state();
 
 800A1EE0	j      La1ef4 [$800a1ef4]
 800A1EE4	nop
 
 La1ee8:	; 800A1EE8
-800A1EE8	lui    v1, $800a
-800A1EEC	addiu  v1, v1, $ac1a (=-$53e6)
-[V1 + 0000] = h(V0);
+[8009ac1a] = h(V0);
 
 La1ef4:	; 800A1EF4
 800A1EF4	jal    funcbb1b4 [$800bb1b4]
 
 A0 = 8007e7ac;
-line_clear_entity_in_line;
+line_clear_entity_in_line();
 
 800A1F0C	lui    a0, $800f
 800A1F10	addiu  a0, a0, $8df0 (=-$7210)
-800A1F14	lui    at, $8007
-[AT + 16d0] = b(0);
-800A1F1C	jal    funcabf0c [$800abf0c]
+[800716d0] = b(0);
 A1 = A0 + 0180;
-800A1F24	lui    a0, $8010
-A0 = A0 + 068c;
-800A1F2C	lui    a1, $8010
-A1 = A1 + 080c;
+800A1F1C	jal    funcabf0c [$800abf0c]
+
+A0 = 8010068c;
+A1 = 8010080c;
 800A1F34	jal    funcabf0c [$800abf0c]
-800A1F38	nop
 
 if (h[800965ec] != 5 && h[800965ec] != d)
 {
@@ -536,13 +500,13 @@ if (h[800965ec] == 2)
 
 
 
-funca2314; // main game
+funca2314(); // main game
 
 
 
 loopa1fe4:	; 800A1FE4
     A0 = 1;
-    800A1FE4	jal    func43dd8 [$80043dd8]
+    system_psyq_draw_sync();
 800A1FEC	bne    v0, zero, loopa1fe4 [$800a1fe4]
 
 
@@ -829,18 +793,20 @@ La25bc:	; 800A25BC
 
     A2 = hu[80075dec];
     V1 = h[80075dec];
-    A1 = 1000;
     S1 = 800e4df0 + V1 * 1789c;
-    A0 = S1;
     [S2] = b(A2);
-    800A2658	jal    func44244 [$80044244]
+
+    A0 = S1;
+    A1 = 1000;
+    system_psyq_clear_o_tag_r();
 
     800A2660	lui    s0, $0001
     800A2664	ori    s0, s0, $748c
     800A2668	addu   s0, s1, s0
     800A266C	addu   a0, s0, zero
-    800A2670	jal    func44244 [$80044244]
-    800A2674	ori    a1, zero, $0001
+    A1 = 1;
+    system_psyq_clear_o_tag_r();
+
     800A2678	jal    funcab2b4 [$800ab2b4]
     800A267C	nop
 
@@ -995,53 +961,48 @@ La25bc:	; 800A25BC
     A3 = S1 + 17490;
     800A29E4	jal    funcab5e8 [$800ab5e8]
 
-A0 = S1;
-800A29F0	lui    a2, $8007
-A2 = w[A2 + 16c4];
-800A29F8	lui    a1, $8007
-A1 = w[A1 + 1e40];
-800A2A00	jal    funcabfe8 [$800abfe8]
-A2 = A2 + 0038;
-800A2A08	jal    func138ec [$800138ec]
-800A2A0C	nop
-800A2A10	jal    func3cedc [$8003cedc]
-A0 = 0001;
-800A2A18	lui    at, $8011
-[AT + 4478] = w(V0);
+    A0 = S1;
+    A1 = w[80071e40];
+    A2 = w[800716c4] + 38;
+    800A2A00	jal    funcabfe8 [$800abfe8]
+
+    800A2A08	jal    func138ec [$800138ec]
+
+    A0 = 1;
+    800A2A10	jal    func3cedc [$8003cedc]
+
+    [80114478] = w(V0);
 
     loopa2a20:	; 800A2A20
         A0 = 1;
-        800A2A20	jal    func43dd8 [$80043dd8]
+        system_psyq_draw_sync();
     800A2A28	bne    v0, zero, loopa2a20 [$800a2a20]
 
     A0 = 1;
     800A2A30	jal    func3cedc [$8003cedc]
 
-800A2A38	lui    v1, $8011
-V1 = hu[V1 + 4488];
-800A2A40	lui    at, $8011
-[AT + 447c] = w(V0);
-800A2A48	beq    v1, zero, La2a68 [$800a2a68]
-A0 = 0002;
-800A2A50	lui    v1, $8009
-V1 = w[V1 + 65e4];
-V0 = 0001;
-800A2A5C	beq    v1, v0, La2a68 [$800a2a68]
-800A2A60	nop
-A0 = 0003;
+    V1 = hu[80114488];
+    [8011447c] = w(V0);
+    800A2A48	beq    v1, zero, La2a68 [$800a2a68]
+    A0 = 0002;
+    V1 = w[800965e4];
+    V0 = 0001;
+    800A2A5C	beq    v1, v0, La2a68 [$800a2a68]
+
+    A0 = 0003;
 
     La2a68:	; 800A2A68
-800A2A68	jal    func3cedc [$8003cedc]
-800A2A6C	nop
-V0 = S3 << 10;
-800A2A74	beq    v0, zero, La2a94 [$800a2a94]
-800A2A78	addiu  v0, s3, $ffff (=-$1)
-S3 = V0;
-V0 = V0 << 10;
-800A2A84	bne    v0, zero, La2a94 [$800a2a94]
-800A2A88	nop
-800A2A8C	jal    system_psyq_set_disp_mask [$80043d3c]
-A0 = 0001;
+    800A2A68	jal    func3cedc [$8003cedc]
+    800A2A6C	nop
+    V0 = S3 << 10;
+    800A2A74	beq    v0, zero, La2a94 [$800a2a94]
+    800A2A78	addiu  v0, s3, $ffff (=-$1)
+    S3 = V0;
+    V0 = V0 << 10;
+    800A2A84	bne    v0, zero, La2a94 [$800a2a94]
+    800A2A88	nop
+    800A2A8C	jal    system_psyq_set_disp_mask [$80043d3c]
+    A0 = 0001;
 
     La2a94:	; 800A2A94
     A0 = 1;
@@ -1117,34 +1078,34 @@ V0 = bu[AT + 0000];
 A2 = 0;
 A0 = SP + 0028;
 A1 = 0;
-800A2BF4	jal    func43f6c [$80043f6c]
+800A2BF4	jal    system_psyq_clear_image [$80043f6c]
 A3 = 0;
 A0 = SP + 0030;
 A1 = 0;
 A2 = 0;
-800A2C08	jal    func43f6c [$80043f6c]
+800A2C08	jal    system_psyq_clear_image [$80043f6c]
 A3 = 0;
 800A2C10	j      La2c3c [$800a2c3c]
 A0 = SP + 0038;
 
     La2c18:	; 800A2C18
 A0 = SP + 0010;
-800A2C1C	jal    func43f6c [$80043f6c]
+800A2C1C	jal    system_psyq_clear_image [$80043f6c]
 A3 = 0;
 A0 = SP + 0018;
 A1 = 0;
 A2 = 0;
-800A2C30	jal    func43f6c [$80043f6c]
+800A2C30	jal    system_psyq_clear_image [$80043f6c]
 A3 = 0;
     800A2C38	addiu  a0, sp, $0020
 
     La2c3c:	; 800A2C3C
-A1 = 0;
-A2 = 0;
-A3 = 0;
+    A1 = 0;
+    A2 = 0;
+    A3 = 0;
 
     La2c48:	; 800A2C48
-    800A2C48	jal    func43f6c [$80043f6c]
+    system_psyq_clear_image();
 
     [8007ebd8] = w(8007eb68 + h[80075dec] * 14); // 80075dec - screen buffer index
     [8007ebd0] = w(80113f2c + h[80075dec] * 5c); // 80075dec - screen buffer index

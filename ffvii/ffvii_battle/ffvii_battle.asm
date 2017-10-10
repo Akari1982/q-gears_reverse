@@ -23458,7 +23458,7 @@ S0 = S0 + 0014;
 Ld2670:	; 800D2670
 A0 = w[S0 + 0000];
 A1 = w[S0 + 0004];
-800D2678	jal    func44064 [$80044064]
+800D2678	jal    system_psyq_store_image [$80044064]
 S0 = S0 + 0014;
 800D2680	j      Ld26b8 [$800d26b8]
 800D2684	nop
@@ -23475,7 +23475,7 @@ S0 = S0 + 0014;
 Ld26a4:	; 800D26A4
 A0 = w[S0 + 0000];
 A2 = 0;
-800D26AC	jal    func43f6c [$80043f6c]
+800D26AC	jal    system_psyq_clear_image [$80043f6c]
 A3 = 0;
 S0 = S0 + 0014;
 
@@ -27846,7 +27846,7 @@ funcd8a78:	; 800D8A78
 funcd8a88:	; 800D8A88
 800D8A88	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800D8A90	jal    func43dd8 [$80043dd8]
+800D8A90	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 800D8A98	lui    a0, $800f
 A0 = bu[A0 + 19a4];
@@ -28106,7 +28106,7 @@ A0 = w[A0 + 17c0];
 A1 = bu[A0 + 0019];
 A2 = bu[A0 + 001a];
 A3 = bu[A0 + 001b];
-800D8E00	jal    func43f6c [$80043f6c]
+800D8E00	jal    system_psyq_clear_image [$80043f6c]
 800D8E04	nop
 
 Ld8e08:	; 800D8E08

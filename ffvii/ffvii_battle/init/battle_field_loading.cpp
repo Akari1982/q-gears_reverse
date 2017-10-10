@@ -215,7 +215,7 @@ A2 = 8d04;
 func1c3cc;
 
 A0 = 0;
-func43dd8;
+system_psyq_draw_sync();
 ////////////////////////////////
 
 

@@ -71,7 +71,7 @@ value1 = hu[80075dec];
 
 A0 = 8007e7a0 + value1 * 4;
 A1 = 1;
-func44244;
+system_psyq_clear_o_tag_r();
 
 [8009a078 + value1 * 30] = b(red);
 [8009a088 + value1 * 30] = b(red);
@@ -118,7 +118,7 @@ value1 = hu[80075dec];
 
 A0 = 8007e7a0 + value1 * 4;
 A1 = 1;
-func44244;
+system_psyq_clear_o_tag_r();
 
 [8009a078 + value1 * 30] = b(S0);
 [8009a088 + value1 * 30] = b(S0);
@@ -171,7 +171,7 @@ fade_start = hu[8009abf4 + 4e]; // start value of fade
 
 A0 = 8007e7a0 + value1 * 4;
 A1 = 1;
-func44244;
+system_psyq_clear_o_tag_r();
 
 A0 = fade_start * red;
 V0 = A0 >> 8;

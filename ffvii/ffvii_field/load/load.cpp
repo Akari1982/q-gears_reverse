@@ -33,14 +33,14 @@ A1 = A1 + ((w[A1 + 0] >> 2) << 2);
 [SP + 26] = h(10);
 
 A0 = 0;
-func43dd8;
+system_psyq_draw_sync();
 
 A0 = SP + 20;
 A1 = w[800e4d90];
 system_psyq_load_image; // load to vram
 
 A0 = 0;
-func43dd8;
+system_psyq_draw_sync();
 
 A0 = w[800e4da4]; // address
 A1 = 1; // 8 bit clut
@@ -56,7 +56,7 @@ func436c0; // load texture to vram and return texpage settings
 if (w[800e4dd8] != 0)
 {
     A0 = 0;
-    func43dd8;
+    system_psyq_draw_sync();
 
     A0 = w[800e4dd4];
     A1 = 1;
@@ -70,7 +70,7 @@ if (w[800e4dd8] != 0)
 }
 
 A0 = 0;
-func43dd8;
+system_psyq_draw_sync();
 ////////////////////////////////
 
 

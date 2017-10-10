@@ -5,7 +5,7 @@ funcb7fb4;
 800B7FEC	lui    a0, $8015
 800B7FF0	lw     a0, $17c0(a0)
 800B7FF4	ori    a1, zero, $0010
-800B7FF8	jal    func44244 [$80044244]
+800B7FF8	jal    system_psyq_clear_o_tag_r [$80044244]
 800B7FFC	addiu  a0, a0, $40a4
 800B8000	lui    a0, $8015
 800B8004	lw     a0, $17c0(a0)
@@ -20,12 +20,12 @@ funcb7fb4;
 800B8028	lui    a0, $8015
 800B802C	lw     a0, $17c0(a0)
 800B8030	ori    a1, zero, $1000
-800B8034	jal    func44244 [$80044244]
+800B8034	jal    system_psyq_clear_o_tag_r [$80044244]
 800B8038	addiu  a0, a0, $0070
 800B803C	lui    a0, $8015
 800B8040	lw     a0, $17c0(a0)
 800B8044	ori    a1, zero, $0009
-800B8048	jal    func44244 [$80044244]
+800B8048	jal    system_psyq_clear_o_tag_r [$80044244]
 800B804C	addiu  a0, a0, $4080
 800B8050	lui    a0, $8015
 800B8054	lw     a0, $17c0(a0)

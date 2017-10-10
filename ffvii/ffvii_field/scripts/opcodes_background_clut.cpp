@@ -98,7 +98,7 @@ read_memory_block_one_byte;
 
 A0 = SP + 10;
 A1 = 80095de0 + V0 * 20;
-func44064;
+system_psyq_store_image();
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
 ////////////////////////////////
@@ -394,7 +394,7 @@ script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
 A0 = SP + 10;
 A1 = 80095de0 + bu[script + 2] * 20 + bu[script + 3] * 2;
-func44064;
+system_psyq_store_image();
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
 ////////////////////////////////

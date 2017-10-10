@@ -167,7 +167,7 @@ D00B1D80
 800E1D80
 
     A0 = 0;
-    80024CBC	jal    func43dd8 [$80043dd8]
+    system_psyq_draw_sync();
 
     A0 = 0;
     80024CC4	jal    func3cedc [$8003cedc]
@@ -798,7 +798,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     S6 = 800756f8;
                     [SP + 36] = h(S0);
                     A1 = S6 + A1 * 200;
-                    func44064;
+                    system_psyq_store_image();
 
                     A1 = b[S5];
                     V0 = w[GP + 2d8];
@@ -809,7 +809,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     A1 = S6 + A1 * 200;
                     V0 = V0 + 1ed;
                     [SP + 32] = h(V0);
-                    func44064
+                    system_psyq_store_image();
 
                     800240C0	addu   a0, s2, zero
                     800240C4	ori    a1, zero, $0340
@@ -829,7 +829,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     800240F8	jal    func440c8 [$800440c8]
 
                     A0 = 0;
-                    80024100	jal    func43dd8 [$80043dd8]
+                    system_psyq_draw_sync();
 
                     A0 = S2;
                     A1 = 3c0;
@@ -841,7 +841,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     80024144	jal    func440c8 [$800440c8]
 
                     A0 = 0;
-                    8002414C	jal    func43dd8 [$80043dd8]
+                    system_psyq_draw_sync();
 
                     A0 = S2;
                     A1 = 3c0;
@@ -854,13 +854,13 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     80024180	jal    func440c8 [$800440c8]
 
                     A0 = 0;
-                    80024188	jal    func43dd8 [$80043dd8]
+                    system_psyq_draw_sync();
 
                     A0 = S6;
                     80024190	jal    func25c94 [$80025c94]
 
                     A0 = 0;
-                    80024198	jal    func43dd8 [$80043dd8]
+                    system_psyq_draw_sync();
                 }
             }
         }
