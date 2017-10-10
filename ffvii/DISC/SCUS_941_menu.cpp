@@ -190,7 +190,7 @@ D00B1D80
     80024D08	sll    a0, a0, $02
     80024D0C	lui    v0, $8007
     80024D10	addiu  v0, v0, $06a4
-    80024D14	jal    func443b0 [$800443b0]
+    80024D14	jal    system_psyq_put_draw_env [$800443b0]
     80024D18	addu   a0, a0, v0
     80024D1C	lw     a0, $0160(gp)
     80024D20	jal    func4433c [$8004433c]

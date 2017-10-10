@@ -30,13 +30,13 @@ A0 = S1;
 800A1750	lui    s0, $8008
 800A1754	addiu  s0, s0, $eaac (=-$1554)
 A1 = S0;
-func44ac0();
+system_prepare_draw_env_packets();
 
 800A1760	lui    s3, $8010
 S3 = S3 + 0820;
 A0 = S3;
 A1 = S0 + 005c;
-func44ac0();
+system_prepare_draw_env_packets();
 
 800A1774	lui    s2, $00ff
 S2 = S2 | ffff;
@@ -147,14 +147,14 @@ system_psyq_clear_o_tag_r();
 S0 = S4 + 0048;
 A0 = S0;
 A1 = FP;
-func44ac0();
+system_prepare_draw_env_packets();
 
-800A1914	lui    s3, $8010
-S3 = S3 + 0860;
-800A191C	lui    a1, $8011
-A1 = A1 + 3f88;
-800A1924	jal    func44ac0 [$80044ac0]
+S3 = 80100860;
+
 A0 = S3;
+A1 = 80113f88;
+system_prepare_draw_env_packets();
+
 800A192C	lui    fp, $8011
 FP = FP + 3fe4;
 A0 = FP;
@@ -540,7 +540,7 @@ A0 = A0 - V0;
 A0 = A0 << 02;
 800A2060	lui    v0, $8008
 800A2064	addiu  v0, v0, $eaac (=-$1554)
-800A2068	jal    func443b0 [$800443b0]
+800A2068	jal    system_psyq_put_draw_env [$800443b0]
 A0 = A0 + V0;
 
 [800965ec] = h(S2);
@@ -1039,7 +1039,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
-800A2B60	jal    func443b0 [$800443b0]
+800A2B60	jal    system_psyq_put_draw_env [$800443b0]
 A0 = A0 + S0;
 800A2B68	lui    v0, $8011
 V0 = hu[V0 + 4488];

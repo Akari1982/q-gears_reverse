@@ -140,7 +140,7 @@ V0 = 005f;
 [SP + 002c] = h(V0);
 8001F4A4	addiu  v1, v1, $fffa (=-$6)
 [SP + 001e] = h(V1);
-func44ac0;
+system_prepare_draw_env_packets;
 
 8001F4B0	lui    a1, $8006
 A1 = w[A1 + 2f24];
@@ -216,7 +216,7 @@ L1f4f8:	; 8001F4F8
         [SP + 30] = b(0);
         [SP + 2f] = b(1);
         [SP + 2c] = h(5f);
-        func44ac0;
+        system_prepare_draw_env_packets;
 
         A0 = S6;
         A1 = w[80062f24];
@@ -231,183 +231,6 @@ L1f4f8:	; 8001F4F8
     current_messege = current_messege + 1;
     V1 = current_messege < number_to_render;
 8001F674	bne    v1, zero, L1f25c [$8001f25c]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func44ac0()
-
-S0 = A1;
-S1 = A0;
-
-A0 = h[S0 + 0]; // x top clip
-A1 = h[S0 + 2]; // y top clip
-func44dc0; // set top clip corner
-
-[S1 + 4] = w(V0);
-
-A0 = h[S0 + 0] + h[S0 + 4] - 1;
-A1 = h[S0 + 2] + hu[S0 + 6] - 1;
-func44e8c; // set bottom clip corner
-
-[S1 + 0008] = w(V0);
-A0 = h[S0 + 0008];
-A1 = h[S0 + 000a];
-80044B2C	jal    func44f58 [$80044f58]
-80044B30	nop
-[S1 + 000c] = w(V0);
-A0 = bu[S0 + 0017];
-A1 = bu[S0 + 0016];
-A2 = hu[S0 + 0014];
-80044B44	jal    func44d64 [$80044d64]
-80044B48	nop
-A0 = S0 + 000c;
-80044B50	jal    func44fa0 [$80044fa0]
-[S1 + 0010] = w(V0);
-[S1 + 0014] = w(V0);
-80044B5C	lui    v0, $e600
-[S1 + 0018] = w(V0);
-V0 = bu[S0 + 0018];
-80044B68	nop
-80044B6C	beq    v0, zero, L44d44 [$80044d44]
-T0 = 0007;
-V0 = hu[S0 + 0000];
-80044B78	nop
-[SP + 0010] = h(V0);
-V0 = hu[S0 + 0002];
-80044B84	nop
-[SP + 0012] = h(V0);
-V0 = hu[S0 + 0004];
-80044B90	nop
-[SP + 0014] = h(V0);
-V1 = hu[S0 + 0006];
-V0 = V0 << 10;
-[SP + 0016] = h(V1);
-V1 = V0 >> 10;
-80044BA8	bltz   v1, L44be0 [$80044be0]
-V0 = 0;
-80044BB0	lui    v0, $8006
-V0 = V0 + 2c04;
-V0 = hu[V0 + 0000];
-80044BBC	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
-80044BC8	addiu  a0, v0, $ffff (=-$1)
-80044BCC	slt    v0, a0, v1
-80044BD0	beq    v0, zero, L44be0 [$80044be0]
-V0 = V1;
-V1 = A0;
-V0 = V1;
-
-L44be0:	; 80044BE0
-V1 = h[SP + 0016];
-80044BE4	nop
-80044BE8	bltz   v1, L44c24 [$80044c24]
-[SP + 0014] = h(V0);
-80044BF0	lui    v0, $8006
-V0 = V0 + 2c06;
-V0 = hu[V0 + 0000];
-80044BFC	nop
-V0 = V0 << 10;
-
-L44c04:	; 80044C04
-V0 = V0 >> 10;
-80044C08	addiu  a0, v0, $ffff (=-$1)
-80044C0C	slt    v0, a0, v1
-80044C10	beq    v0, zero, L44c28 [$80044c28]
-V0 = V1;
-V1 = A0;
-80044C1C	j      L44c28 [$80044c28]
-V0 = V1;
-
-L44c24:	; 80044C24
-V0 = 0;
-
-L44c28:	; 80044C28
-V1 = hu[SP + 0010];
-[SP + 0016] = h(V0);
-V0 = V1 & 003f;
-80044C34	bne    v0, zero, L44c50 [$80044c50]
-A2 = T0 << 02;
-V0 = hu[SP + 0014];
-80044C40	nop
-V0 = V0 & 003f;
-80044C48	beq    v0, zero, L44cec [$80044cec]
-
-L44c4c:	; 80044C4C
-A1 = T0 << 02;
-
-L44c50:	; 80044C50
-T0 = T0 + 0001;
-A1 = T0 << 02;
-T0 = T0 + 0001;
-V0 = hu[S0 + 0008];
-A2 = A2 + S1;
-V0 = V1 - V0;
-[SP + 0010] = h(V0);
-V0 = hu[SP + 0012];
-V1 = hu[S0 + 000a];
-80044C74	lui    a0, $6000
-V0 = V0 - V1;
-[SP + 0012] = h(V0);
-V0 = bu[S0 + 001b];
-V1 = bu[S0 + 001a];
-V0 = V0 << 10;
-V1 = V1 << 08;
-V1 = V1 | A0;
-A0 = bu[S0 + 0019];
-V0 = V0 | V1;
-V0 = V0 | A0;
-[A2 + 0000] = w(V0);
-V0 = w[SP + 0010];
-A1 = A1 + S1;
-[A1 + 0000] = w(V0);
-V0 = T0 << 02;
-V1 = w[SP + 0014];
-V0 = V0 + S1;
-[V0 + 0000] = w(V1);
-V0 = hu[SP + 0010];
-V1 = hu[S0 + 0008];
-80044CC8	nop
-V0 = V0 + V1;
-[SP + 0010] = h(V0);
-V0 = hu[SP + 0012];
-V1 = hu[S0 + 000a];
-T0 = T0 + 0001;
-V0 = V0 + V1;
-80044CE4	j      L44d44 [$80044d44]
-[SP + 0012] = h(V0);
-
-L44cec:	; 80044CEC
-T0 = T0 + 0001;
-A2 = T0 << 02;
-T0 = T0 + 0001;
-A3 = T0 << 02;
-T0 = T0 + 0001;
-A1 = A1 + S1;
-80044D04	lui    a0, $0200
-V0 = bu[S0 + 001b];
-V1 = bu[S0 + 001a];
-V0 = V0 << 10;
-V1 = V1 << 08;
-V1 = V1 | A0;
-A0 = bu[S0 + 0019];
-V0 = V0 | V1;
-V0 = V0 | A0;
-[A1 + 0000] = w(V0);
-V0 = w[SP + 0010];
-A2 = A2 + S1;
-[A2 + 0000] = w(V0);
-V0 = w[SP + 0014];
-A3 = A3 + S1;
-[A3 + 0000] = w(V0);
-
-L44d44:	; 80044D44
-V0 = T0 - 1;
-[S1 + 3] = b(V0);
-
-return;
 ////////////////////////////////
 
 

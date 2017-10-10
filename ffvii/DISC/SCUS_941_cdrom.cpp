@@ -28,6 +28,31 @@ return 0;
 
 
 ////////////////////////////////
+// func33e74()
+
+sector = A0;
+size = A1;
+buffer = A2;
+A4 = A3;
+
+A0 = b;
+A1 = sector;
+A2 = size;
+A3 = buffer;
+func33cb8();
+
+[800698e8] = w(sector);
+
+A0 = 800698f0
+A1 = buffer;
+80033EB8	jal    func34d2c [$80034d2c]
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func33e34()
 
 sector = A0;

@@ -28093,7 +28093,7 @@ A0 = w[A0 + 17c0];
 A0 = A0 + 005c;
 800D8DC4	lui    a0, $8015
 A0 = w[A0 + 17c0];
-800D8DCC	jal    func443b0 [$800443b0]
+800D8DCC	jal    system_psyq_put_draw_env [$800443b0]
 800D8DD0	nop
 800D8DD4	lui    v0, $8016
 V0 = bu[V0 + 20a0];
@@ -28261,7 +28261,7 @@ V0 = 0001;
 [AT + 57f0] = b(0);
 800D902C	lui    at, $800f
 [AT + 57ef] = b(V0);
-800D9034	jal    func44ac0 [$80044ac0]
+800D9034	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = S2;
 800D903C	lui    a0, $800f
 A0 = w[A0 + 1994];
@@ -28427,7 +28427,7 @@ V0 = 01d8;
 [AT + b00c] = b(S2);
 800D9280	lui    at, $8010
 [AT + b00b] = b(S2);
-800D9288	jal    func443b0 [$800443b0]
+800D9288	jal    system_psyq_put_draw_env [$800443b0]
 A0 = S1;
 800D9290	jal    func3cedc [$8003cedc]
 A0 = 0;
@@ -28605,7 +28605,7 @@ V0 = 005f;
 [AT + 57f0] = b(0);
 800D9530	lui    at, $800f
 [AT + 57ec] = h(V0);
-800D9538	jal    func44ac0 [$80044ac0]
+800D9538	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = S1;
 A1 = w[S0 + 0000];
 800D9544	jal    system_add_render_packet_to_queue [$80046794]
@@ -29032,7 +29032,7 @@ V0 = 005f;
 [AT + 57f0] = b(0);
 800D9BA8	lui    at, $800f
 [AT + 57ec] = h(V0);
-800D9BB0	jal    func44ac0 [$80044ac0]
+800D9BB0	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = S1;
 A1 = w[S0 + 0000];
 800D9BBC	jal    system_add_render_packet_to_queue [$80046794]
@@ -29171,7 +29171,7 @@ V1 = 005f;
 800D9D9C	addiu  v0, v0, $fffa (=-$6)
 800D9DA0	lui    at, $800f
 [AT + 57de] = h(V0);
-800D9DA8	jal    func44ac0 [$80044ac0]
+800D9DA8	jal    system_prepare_draw_env_packets [$80044ac0]
 800D9DAC	addiu  a1, a2, $fffc (=-$4)
 800D9DB0	lui    a0, $8006
 A0 = w[A0 + 2fc4];
@@ -29548,7 +29548,7 @@ V1 = 005f;
 AT = AT + 5530;
 AT = AT + V0;
 [AT + 0000] = h(V1);
-800DA318	jal    func44ac0 [$80044ac0]
+800DA318	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V0 + S3;
 800DA320	lui    v1, $800f
 V1 = w[V1 + 1994];
@@ -29748,7 +29748,7 @@ V1 = V1 << 02;
 AT = AT + 5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DA62C	jal    func44ac0 [$80044ac0]
+800DA62C	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V1 + T2;
 S1 = S1 + 0014;
 800DA638	lui    a1, $800f
@@ -29964,7 +29964,7 @@ V1 = V1 << 02;
 AT = AT + 5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DA984	jal    func44ac0 [$80044ac0]
+800DA984	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V1 + T2;
 800DA98C	lui    v1, $800f
 V1 = w[V1 + 1994];
@@ -30210,7 +30210,7 @@ V1 = V1 << 02;
 AT = AT + 5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DAD44	jal    func44ac0 [$80044ac0]
+800DAD44	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V1 + S3;
 800DAD4C	lui    v1, $800f
 V1 = w[V1 + 1994];
@@ -30387,7 +30387,7 @@ V1 = V1 << 02;
 AT = AT + 5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DAFF8	jal    func44ac0 [$80044ac0]
+800DAFF8	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V1 + T2;
 S1 = S1 + 0014;
 800DB004	lui    a1, $800f
@@ -30605,7 +30605,7 @@ V1 = V1 << 02;
 AT = AT + 5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DB358	jal    func44ac0 [$80044ac0]
+800DB358	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V1 + T2;
 800DB360	lui    v1, $800f
 V1 = w[V1 + 1994];
@@ -30880,7 +30880,7 @@ V1 = V1 << 02;
 AT = AT + 5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DB79C	jal    func44ac0 [$80044ac0]
+800DB79C	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V1 + S1;
 800DB7A4	lui    t2, $ff00
 800DB7A8	lui    v1, $800f
@@ -31151,7 +31151,7 @@ V1 = V1 << 02;
 AT = AT + 5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DBBAC	jal    func44ac0 [$80044ac0]
+800DBBAC	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = V1 + S4;
 800DBBB4	lui    v1, $800f
 V1 = w[V1 + 1994];
@@ -33313,7 +33313,7 @@ V1 = V1 + 57ec;
 S0 = S0 + 2f24;
 A0 = w[S0 + 0000];
 V0 = 005f;
-800DDA98	jal    func44ac0 [$80044ac0]
+800DDA98	jal    system_prepare_draw_env_packets [$80044ac0]
 [V1 + 0000] = h(V0);
 A1 = w[S0 + 0000];
 800DDAA4	jal    system_add_render_packet_to_queue [$80046794]
@@ -33509,7 +33509,7 @@ S4 = 0001;
 [AT + 57f0] = b(0);
 800DDD64	lui    at, $800f
 [AT + 57ef] = b(S4);
-800DDD6C	jal    func44ac0 [$80044ac0]
+800DDD6C	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = S6;
 A1 = w[S1 + 0000];
 800DDD78	jal    system_add_render_packet_to_queue [$80046794]
@@ -33562,7 +33562,7 @@ A0 = w[S1 + 0000];
 [AT + 57f0] = b(0);
 800DDE38	lui    at, $800f
 [AT + 57ef] = b(S4);
-800DDE40	jal    func44ac0 [$80044ac0]
+800DDE40	jal    system_prepare_draw_env_packets [$80044ac0]
 A1 = S6;
 A1 = w[S1 + 0000];
 800DDE4C	jal    system_add_render_packet_to_queue [$80046794]

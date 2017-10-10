@@ -50,7 +50,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
             A0 = S2 + 41d4;
             A1 = 80113f34 - 8;
             A2 = offset_to_camera;
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
         else
         {
@@ -60,7 +60,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
             A0 = 80100860;
             A1 = 80113f88;
             A2 = offset_to_camera;
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
     }
     else
@@ -73,7 +73,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
             A0 = 80100860;
             A1 = 80113f90 - 8;
             A2 = hu[80071e38];
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
         else
         {
@@ -83,7 +83,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
             A0 = S2 + 41d4;
             A1 = 80113f34 - 8;
             A2 = hu[80071e38];
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
     }
 }
@@ -171,7 +171,7 @@ else
             A0 = 800e4df0 + 41d4;
             A1 = 80113f34 - 8;
             A2 = hu[8007eb90] - h[SP + 18];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [8011415e] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
             [8011415c] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
@@ -179,7 +179,7 @@ else
             A0 = 800e4df0 + 4294;
             A1 = 8011415c - 8;
             A2 = hu[8007eb94] - hu[SP + 1a];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114216] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
             [80114214] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
@@ -187,7 +187,7 @@ else
             A0 = 800e4df0 + 42d4;
             A1 = 80114214 - 8;
             A2 = hu[8007eb94] - hu[SP + 1a];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80113fec] = h(b[8009ac81] - hu[8007eb90] - S5);
             [80113fee] = h(b[8009ac8f] + hu[8007eb94] - S4);
@@ -195,7 +195,7 @@ else
             A0 = 800e4df0 + 4214;
             A1 = 80113fec - 8;
             A2 = hu[8007eb90] - S5;
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [801140a4] = h(b[8009ac81] + hu[8007eb90] - S7);
             [801140a6] = h(b[8009ac8f] + hu[8007eb94] - S6);
@@ -203,7 +203,7 @@ else
             A0 = 800e4df0 + 4254;
             A1 = 801140a4 - 8;
             A2 = hu[8007eb90] - S7;
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
         else
         {
@@ -213,7 +213,7 @@ else
             A0 = 80100860;
             A1 = 80113f90 - 8;
             A2 = hu[8007eb90] - h[SP + 18];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [801141ba] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
             [801141b8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
@@ -221,7 +221,7 @@ else
             A0 = 80100860 + c0;
             A1 = 801141b8 - 8;
             A2 = hu[8007eb94] - hu[SP + 1a];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114272] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
             [80114270] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
@@ -229,7 +229,7 @@ else
             A0 = 80100860 + 100;
             A1 = 80114270 - 8;
             A2 = hu[8007eb94] - hu[SP + 1a];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114048] = h(b[8009ac81] + hu[8007eb90] - S5);
             [8011404a] = h(b[8009ac8f] + hu[8007eb94] - S4 + e8);
@@ -237,7 +237,7 @@ else
             A0 = 80100860 + 40;
             A1 = 80114048 - 8;
             A2 = hu[8007eb90] - S5;
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114100] = h(b[8009ac81] + hu[8007eb90] - S7);
             [80114102] = h(b[8009ac8f] + hu[8007eb94] - S6 + e8);
@@ -245,7 +245,7 @@ else
             A0 = 80100860 + 80;
             A1 = 80114100 - 8;
             A2 = hu[8007eb90] - S7;
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
 
         [80071e38] = h(0 - hu[SP + 18]);
@@ -275,7 +275,7 @@ else
             A0 = 800e8fc4;
             A1 = 80113f2c;
             A2 = hu[offset_to_camera + 22];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [8011415c] = h(val1);
             [8011415e] = h(val2);
@@ -283,7 +283,7 @@ else
             A0 = 800e9084;
             A1 = 80114154;
             A2 = val2;
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114214] = h(val1);
             [80114216] = h(val2);
@@ -291,7 +291,7 @@ else
             A0 = 800e90c4;
             A1 = 8011420c;
             A2 = val2;
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80113fec] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[offset_to_camera + 20] - S3);
             [80113fee] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[offset_to_camera + 22] - S4);
@@ -299,7 +299,7 @@ else
             A0 = 800e9004;
             A1 = 80113fe4;
             A2 = hu[offset_to_camera + 22];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [801140a4] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[offset_to_camera + 20] - S5);
             [801140a6] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[offset_to_camera + 22] - S6);
@@ -307,7 +307,7 @@ else
             A0 = 800e9044;
             A1 = 8011409c;
             A2 = hu[offset_to_camera + 22];
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
         else
         {
@@ -320,7 +320,7 @@ else
             A0 = 80100830;
             A1 = 80113f90 - 8;
             A2 = hu[offset_to_camera + 22];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [801141b8] = h(val1);
             [801141ba] = h(val2 + e8);
@@ -328,7 +328,7 @@ else
             A0 = 80100830 + c0;
             A1 = 801141b8 - 8;
             A2 = val2 + e8;
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114270] = h(val1);
             [80114272] = h(val2 + e8);
@@ -336,7 +336,7 @@ else
             A0 = 80100830 + 100;
             A1 = 80114270 - 8;
             A2 = val2 + e8;
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114048] = h(b[8009ac81] + hu[8007eb90] - hu[offset_to_camera + 20] - S3);
             [8011404a] = h(b[8009ac8f] + hu[8007eb94] + hu[offset_to_camera + 22] - S4 + e8);
@@ -344,7 +344,7 @@ else
             A0 = 80100830 + 40;
             A1 = 80114048 - 8;
             A2 = hu[offset_to_camera + 22];
-            func44ac0;
+            system_prepare_draw_env_packets;
 
             [80114100] = h(b[8009ac81] + hu[8007eb90] - hu[offset_to_camera + 20] - S5);
             [80114102] = h(b[8009ac8f] + hu[8007eb94] + hu[offset_to_camera + 22] - S6 + e8);
@@ -352,7 +352,7 @@ else
             A0 = 80100830 + 80;
             A1 = 80114100 - 8;
             A2 = hu[offset_to_camera + 22];
-            func44ac0;
+            system_prepare_draw_env_packets;
         }
 
         [80071a48] = h(140 - hu[80071e38] - hu[8007eb90] - b[8009abf4 + 8d]); // background X centered
