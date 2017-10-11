@@ -28089,7 +28089,7 @@ V0 = 0001;
 A0 = w[A0 + 17c0];
 800D8DB4	lui    at, $8006
 [AT + 2fdc] = w(V0);
-800D8DBC	jal    func444ac [$800444ac]
+800D8DBC	jal    system_psyq_put_disp_env [$800444ac]
 A0 = A0 + 005c;
 800D8DC4	lui    a0, $8015
 A0 = w[A0 + 17c0];

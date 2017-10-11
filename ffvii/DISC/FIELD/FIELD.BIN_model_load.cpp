@@ -1,11 +1,12 @@
 ////////////////////////////////
-// we call function that init 0x24 model data structure here
 // funcaa930
+// we call function that init 0x24 model data structure here
+
 [800dfca0] = w(80128000); // address for global texture
 
 A0 = w[8007e770]; // offset to block 7 in dat file.
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
-model_new_structure_initing;
+model_new_structure_initing();
 [80075e10] = w(V0); // store pointer to part after all new structures for the model.
 [800e0204] = w(V0); // store pointer to part after all new structures for the model.
 
@@ -90,7 +91,8 @@ return V0;
 
 
 ////////////////////////////////
-// model_new_structure_initing
+// model_new_structure_initing()
+
 block_7          = A0;
 block_7_array    = block_7 + 4;
 model_data       = A1;
@@ -189,7 +191,8 @@ return A1;
 
 
 ////////////////////////////////
-// load_and_global_models_and_textures
+// load_and_global_models_and_textures()
+
 S3 = w[1f800000]; // CLOUD.BCX start sector.
 S5 = w[1f800004]; // FIELD.TDB start sector.
 
@@ -236,7 +239,8 @@ return S2;
 
 
 ////////////////////////////////
-// load_and_init_global_models
+// load_and_init_global_models()
+
 block_7       = A0; // offset to block 7 in dat file.
 block_7_array = block_7 + 4;
 model_data    = A1; // offset to new model structure at 80138250.
@@ -1120,57 +1124,57 @@ Lacd30:	; 800ACD30
         S0 = S5 + 7;
 
         Lacfd4:	; 800ACFD4
-            800ACFD4	lw     v0, $fff4(s4)
+            V0 = w[S4 + fff4];
             800ACFD8	nop
-            800ACFDC	sw     v0, $fffd(s0)
-            800ACFE0	lw     v0, $fff8(s4)
+            [S0 + fffd] = w(V0);
+            V0 = w[S4 + fff8];
             800ACFE4	nop
-            800ACFE8	sw     v0, $0009(s0)
-            800ACFEC	lw     v0, $fffc(s4)
+            [S0 + 0009] = w(V0);
+            V0 = w[S4 + fffc];
             800ACFF0	nop
-            800ACFF4	sw     v0, $0015(s0)
-            800ACFF8	lw     v1, $0000(s4)
+            [S0 + 0015] = w(V0);
+            V1 = w[S4 + 0000];
             800ACFFC	nop
-            800AD000	andi   v0, v1, $00ff
-            800AD004	sll    v0, v0, $01
-            800AD008	addu   v0, v0, a3
-            800AD00C	lhu    v0, $0000(v0)
+            V0 = V1 & 00ff;
+            V0 = V0 << 01;
+            V0 = V0 + A3;
+            V0 = hu[V0 + 0000];
             800AD010	nop
-            800AD014	sh     v0, $0005(s0)
-            800AD018	andi   v0, v1, $ff00
-            800AD01C	srl    v0, v0, $07
-            800AD020	addu   v0, v0, a3
-            800AD024	srl    v1, v1, $0f
-            800AD028	andi   v1, v1, $01fe
-            800AD02C	lhu    v0, $0000(v0)
-            800AD030	addu   v1, v1, a3
-            800AD034	sh     v0, $0011(s0)
-            800AD038	lhu    v0, $0000(v1)
+            [S0 + 0005] = h(V0);
+            V0 = V1 & ff00;
+            V0 = V0 >> 07;
+            V0 = V0 + A3;
+            V1 = V1 >> 0f;
+            V1 = V1 & 01fe;
+            V0 = hu[V0 + 0000];
+            V1 = V1 + A3;
+            [S0 + 0011] = h(V0);
+            V0 = hu[V1 + 0000];
             800AD03C	nop
-            800AD040	sh     v0, $001d(s0)
-            800AD044	lbu    s6, $0000(fp)
-            800AD048	addiu  fp, fp, $0001
+            [S0 + 001d] = h(V0);
+            S6 = bu[FP + 0000];
+            FP = FP + 0001;
             T0 = block4_data;
-            800AD050	andi   v0, s6, $000f
-            800AD054	sll    v0, v0, $02
-            800AD058	addu   v0, v0, t0
-            800AD05C	lw     s1, $0000(v0)
+            V0 = S6 & 000f;
+            V0 = V0 << 02;
+            V0 = V0 + T0;
+            S1 = w[V0 + 0000];
             T1 = model_id;
-            800AD064	andi   v0, s1, $003f
-            800AD068	xori   v0, v0, $0002
+            V0 = S1 & 003f;
+            V0 = V0 ^ 0002;
 
             Lad06c:	; 800AD06C
-            800AD06C	sltu   v0, zero, v0
-            800AD070	subu   v0, zero, v0
-            800AD074	and    v0, t1, v0
-            800AD078	sll    v1, s1, $01
-            800AD07C	srl    v1, v1, $17
-            800AD080	addu   v1, v1, v0
-            800AD084	sll    v1, v1, $06
-            800AD088	srl    v0, s1, $10
-            800AD08C	andi   v0, v0, $003f
-            800AD090	or     v1, v1, v0
-            800AD094	sh     v1, $0007(s0)
+            V0 = 0 < V0;
+            V0 = 0 - V0;
+            V0 = T1 & V0;
+            V1 = S1 << 01;
+            V1 = V1 >> 17;
+            V1 = V1 + V0;
+            V1 = V1 << 06;
+            V0 = S1 >> 10;
+            V0 = V0 & 003f;
+            V1 = V1 | V0;
+            [S0 + 0007] = h(V1);
 
             func43cc0;
             if (V0 != 1 && V0 != 2)
@@ -1190,49 +1194,49 @@ Lacd30:	; 800ACD30
 
 
 
-            800AD110	andi   v1, s1, $003f
+            V1 = S1 & 003f;
             800AD114	bne    v1, zero, Lad12c [$800ad12c]
-            800AD118	ori    v0, zero, $0001
+            V0 = 0001;
             A0 = global_tex_x1;
             A1 = global_tex_y1;
             800AD124	j      Lad14c [$800ad14c]
-            800AD128	ori    v0, zero, $0009
+            V0 = 0009;
 
             Lad12c:	; 800AD12C
             800AD12C	bne    v1, v0, Lad144 [$800ad144]
-            800AD130	addu   a1, zero, zero
+            A1 = 0;
             A0 = global_tex_x2;
             A1 = global_tex_y2;
             800AD13C	j      Lad14c [$800ad14c]
-            800AD140	ori    v0, zero, $0009
+            V0 = 0009;
 
             Lad144:	; 800AD144
-            800AD144	addu   a0, zero, zero
-            800AD148	ori    v0, zero, $0009
+            A0 = 0;
+            V0 = 0009;
 
             Lad14c:	; 800AD14C
-            800AD14C	sb     v0, $fffc(s0)
+            [S0 + fffc] = b(V0);
             [S0 + 0] = b(34);
-            800AD158	lbu    v0, $0005(s0)
-            800AD15C	lbu    v1, $0006(s0)
-            800AD160	addu   v0, v0, a0
-            800AD164	sb     v0, $0005(s0)
-            800AD168	lbu    v0, $0011(s0)
-            800AD16C	addu   v1, v1, a1
-            800AD170	sb     v1, $0006(s0)
-            800AD174	lbu    v1, $0012(s0)
-            800AD178	addu   v0, v0, a0
-            800AD17C	sb     v0, $0011(s0)
-            800AD180	lbu    v0, $001d(s0)
-            800AD184	addu   v1, v1, a1
-            800AD188	sb     v1, $0012(s0)
-            800AD18C	lbu    v1, $001e(s0)
-            800AD190	addu   v0, v0, a0
-            800AD194	addu   v1, v1, a1
-            800AD198	sb     v0, $001d(s0)
-            800AD19C	andi   v0, s6, $0010
+            V0 = bu[S0 + 0005];
+            V1 = bu[S0 + 0006];
+            V0 = V0 + A0;
+            [S0 + 0005] = b(V0);
+            V0 = bu[S0 + 0011];
+            V1 = V1 + A1;
+            [S0 + 0006] = b(V1);
+            V1 = bu[S0 + 0012];
+            V0 = V0 + A0;
+            [S0 + 0011] = b(V0);
+            V0 = bu[S0 + 001d];
+            V1 = V1 + A1;
+            [S0 + 0012] = b(V1);
+            V1 = bu[S0 + 001e];
+            V0 = V0 + A0;
+            V1 = V1 + A1;
+            [S0 + 001d] = b(V0);
+            V0 = S6 & 0010;
             800AD1A0	beq    v0, zero, Lad1b0 [$800ad1b0]
-            800AD1A4	sb     v1, $001e(s0)
+            [S0 + 001e] = b(V1);
             [S0 + 0] = b(36);
 
             Lad1b0:	; 800AD1B0
@@ -1253,58 +1257,58 @@ Lacd30:	; 800ACD30
     S2 = 0;
     if (S7 != 0)
     {
-        800AD1E4	addiu  s0, s5, $0007
+        S0 = S5 + 0007;
 
         Lad1e8:	; 800AD1E8
-        800AD1E8	lw     v0, $0004(s3)
+        V0 = w[S3 + 0004];
         800AD1EC	nop
-        800AD1F0	sw     v0, $fffd(s0)
-        800AD1F4	lw     v1, $0008(s3)
+        [S0 + fffd] = w(V0);
+        V1 = w[S3 + 0008];
         800AD1F8	nop
-        800AD1FC	andi   v0, v1, $00ff
-        800AD200	sll    v0, v0, $01
-        800AD204	addu   v0, v0, a3
-        800AD208	lhu    v0, $0000(v0)
+        V0 = V1 & 00ff;
+        V0 = V0 << 01;
+        V0 = V0 + A3;
+        V0 = hu[V0 + 0000];
         800AD20C	nop
-        800AD210	sh     v0, $0005(s0)
-        800AD214	andi   v0, v1, $ff00
-        800AD218	srl    v0, v0, $07
-        800AD21C	addu   v0, v0, a3
-        800AD220	lhu    v0, $0000(v0)
+        [S0 + 0005] = h(V0);
+        V0 = V1 & ff00;
+        V0 = V0 >> 07;
+        V0 = V0 + A3;
+        V0 = hu[V0 + 0000];
         800AD224	nop
-        800AD228	sh     v0, $000d(s0)
-        800AD22C	srl    v0, v1, $0f
-        800AD230	andi   v0, v0, $01fe
-        800AD234	addu   v0, v0, a3
-        800AD238	srl    v1, v1, $18
-        800AD23C	sll    v1, v1, $01
-        800AD240	lhu    v0, $0000(v0)
-        800AD244	addu   v1, v1, a3
-        800AD248	sh     v0, $0015(s0)
-        800AD24C	lhu    v0, $0000(v1)
+        [S0 + 000d] = h(V0);
+        V0 = V1 >> 0f;
+        V0 = V0 & 01fe;
+        V0 = V0 + A3;
+        V1 = V1 >> 18;
+        V1 = V1 << 01;
+        V0 = hu[V0 + 0000];
+        V1 = V1 + A3;
+        [S0 + 0015] = h(V0);
+        V0 = hu[V1 + 0000];
         800AD250	nop
-        800AD254	sh     v0, $001d(s0)
-        800AD258	lbu    s4, $0000(fp)
-        800AD25C	addiu  fp, fp, $0001
+        [S0 + 001d] = h(V0);
+        S4 = bu[FP + 0000];
+        FP = FP + 0001;
         T0 = block4_data;
-        800AD264	andi   v0, s4, $000f
-        800AD268	sll    v0, v0, $02
-        800AD26C	addu   v0, v0, t0
-        800AD270	lw     s1, $0000(v0)
+        V0 = S4 & 000f;
+        V0 = V0 << 02;
+        V0 = V0 + T0;
+        S1 = w[V0 + 0000];
         T1 = model_id;
-        800AD278	andi   v0, s1, $003f
-        800AD27C	xori   v0, v0, $0002
-        800AD280	sltu   v0, zero, v0
-        800AD284	subu   v0, zero, v0
-        800AD288	and    v0, t1, v0
-        800AD28C	sll    v1, s1, $01
-        800AD290	srl    v1, v1, $17
-        800AD294	addu   v1, v1, v0
-        800AD298	sll    v1, v1, $06
-        800AD29C	srl    v0, s1, $10
-        800AD2A0	andi   v0, v0, $003f
-        800AD2A4	or     v1, v1, v0
-        800AD2A8	sh     v1, $0007(s0)
+        V0 = S1 & 003f;
+        V0 = V0 ^ 0002;
+        V0 = 0 < V0;
+        V0 = 0 - V0;
+        V0 = T1 & V0;
+        V1 = S1 << 01;
+        V1 = V1 >> 17;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        V0 = S1 >> 10;
+        V0 = V0 & 003f;
+        V1 = V1 | V0;
+        [S0 + 0007] = h(V1);
 
             func43cc0;
             if (V0 != 1 && V0 != 2)
@@ -1322,64 +1326,64 @@ Lacd30:	; 800ACD30
             tx = (S1 & 00000f00) >> 8;
             [S0 + f] = h(clut_type | blending | ty | tx);
 
-        800AD324	andi   v1, s1, $003f
+        V1 = S1 & 003f;
         800AD328	bne    v1, zero, Lad340 [$800ad340]
-        800AD32C	ori    v0, zero, $0001
+        V0 = 0001;
         A0 = global_tex_x1;
         A1 = global_tex_y1;
         800AD338	j      Lad360 [$800ad360]
-        800AD33C	ori    v0, zero, $0009
+        V0 = 0009;
 
         Lad340:	; 800AD340
         800AD340	bne    v1, v0, Lad358 [$800ad358]
-        800AD344	addu   a1, zero, zero
+        A1 = 0;
         A0 = global_tex_x2;
         A1 = global_tex_y2;
         800AD350	j      Lad360 [$800ad360]
-        800AD354	ori    v0, zero, $0009
+        V0 = 0009;
 
         Lad358:	; 800AD358
-        800AD358	addu   a0, zero, zero
-        800AD35C	ori    v0, zero, $0009
+        A0 = 0;
+        V0 = 0009;
 
         Lad360:	; 800AD360
-        800AD360	sb     v0, $fffc(s0)
+        [S0 + fffc] = b(V0);
         [S0 + 0] = b(2C);
-        800AD36C	lbu    v0, $0005(s0)
-        800AD370	lbu    v1, $0006(s0)
-        800AD374	addu   v0, v0, a0
-        800AD378	sb     v0, $0005(s0)
-        800AD37C	lbu    v0, $000d(s0)
-        800AD380	addu   v1, v1, a1
-        800AD384	sb     v1, $0006(s0)
-        800AD388	lbu    v1, $000e(s0)
-        800AD38C	addu   v0, v0, a0
-        800AD390	sb     v0, $000d(s0)
-        800AD394	lbu    v0, $0015(s0)
-        800AD398	addu   v1, v1, a1
-        800AD39C	sb     v1, $000e(s0)
-        800AD3A0	lbu    v1, $0016(s0)
-        800AD3A4	addu   v0, v0, a0
-        800AD3A8	sb     v0, $0015(s0)
-        800AD3AC	lbu    v0, $001d(s0)
-        800AD3B0	addu   v1, v1, a1
-        800AD3B4	sb     v1, $0016(s0)
-        800AD3B8	lbu    v1, $001e(s0)
-        800AD3BC	addu   v0, v0, a0
-        800AD3C0	addu   v1, v1, a1
-        800AD3C4	sb     v0, $001d(s0)
-        800AD3C8	andi   v0, s4, $0010
+        V0 = bu[S0 + 0005];
+        V1 = bu[S0 + 0006];
+        V0 = V0 + A0;
+        [S0 + 0005] = b(V0);
+        V0 = bu[S0 + 000d];
+        V1 = V1 + A1;
+        [S0 + 0006] = b(V1);
+        V1 = bu[S0 + 000e];
+        V0 = V0 + A0;
+        [S0 + 000d] = b(V0);
+        V0 = bu[S0 + 0015];
+        V1 = V1 + A1;
+        [S0 + 000e] = b(V1);
+        V1 = bu[S0 + 0016];
+        V0 = V0 + A0;
+        [S0 + 0015] = b(V0);
+        V0 = bu[S0 + 001d];
+        V1 = V1 + A1;
+        [S0 + 0016] = b(V1);
+        V1 = bu[S0 + 001e];
+        V0 = V0 + A0;
+        V1 = V1 + A1;
+        [S0 + 001d] = b(V0);
+        V0 = S4 & 0010;
         800AD3CC	beq    v0, zero, Lad3dc [$800ad3dc]
-        800AD3D0	sb     v1, $001e(s0)
+        [S0 + 001e] = b(V1);
         [S0 + 0] = b(2E);
 
         Lad3dc:	; 800AD3DC
-        800AD3DC	addiu  s2, s2, $0001
-        800AD3E0	addiu  s0, s0, $0028
-        800AD3E4	addiu  s5, s5, $0028
-        800AD3E8	sltu   v0, s2, s7
+        S2 = S2 + 0001;
+        S0 = S0 + 0028;
+        S5 = S5 + 0028;
+        V0 = S2 < S7;
         800AD3EC	bne    v0, zero, Lad1e8 [$800ad1e8]
-        800AD3F0	addiu  s3, s3, $000c
+        S3 = S3 + 000c;
     }
 
 
@@ -1390,52 +1394,52 @@ Lacd30:	; 800ACD30
     S2 = 0;
     if (S7 != 0)
     {
-        800AD40C	addiu  s0, s5, $0007
+        S0 = S5 + 0007;
 
         Lad410:	; 800AD410
-        800AD410	lw     v0, $0004(s3)
+        V0 = w[S3 + 0004];
         800AD414	nop
-        800AD418	sw     v0, $fffd(s0)
-        800AD41C	lw     v1, $0008(s3)
+        [S0 + fffd] = w(V0);
+        V1 = w[S3 + 0008];
         800AD420	nop
-        800AD424	andi   v0, v1, $00ff
-        800AD428	sll    v0, v0, $01
-        800AD42C	addu   v0, v0, a3
-        800AD430	lhu    v0, $0000(v0)
+        V0 = V1 & 00ff;
+        V0 = V0 << 01;
+        V0 = V0 + A3;
+        V0 = hu[V0 + 0000];
         800AD434	nop
-        800AD438	sh     v0, $0005(s0)
-        800AD43C	andi   v0, v1, $ff00
-        800AD440	srl    v0, v0, $07
-        800AD444	addu   v0, v0, a3
-        800AD448	srl    v1, v1, $0f
-        800AD44C	andi   v1, v1, $01fe
-        800AD450	lhu    v0, $0000(v0)
-        800AD454	addu   v1, v1, a3
-        800AD458	sh     v0, $000d(s0)
-        800AD45C	lhu    v0, $0000(v1)
+        [S0 + 0005] = h(V0);
+        V0 = V1 & ff00;
+        V0 = V0 >> 07;
+        V0 = V0 + A3;
+        V1 = V1 >> 0f;
+        V1 = V1 & 01fe;
+        V0 = hu[V0 + 0000];
+        V1 = V1 + A3;
+        [S0 + 000d] = h(V0);
+        V0 = hu[V1 + 0000];
         800AD460	nop
-        800AD464	sh     v0, $0015(s0)
-        800AD468	lbu    s4, $0000(fp)
-        800AD46C	addiu  fp, fp, $0001
+        [S0 + 0015] = h(V0);
+        S4 = bu[FP + 0000];
+        FP = FP + 0001;
         T0 = block4_data;
-        800AD474	andi   v0, s4, $000f
-        800AD478	sll    v0, v0, $02
-        800AD47C	addu   v0, v0, t0
-        800AD480	lw     s1, $0000(v0)
+        V0 = S4 & 000f;
+        V0 = V0 << 02;
+        V0 = V0 + T0;
+        S1 = w[V0 + 0000];
         T1 = model_id;
-        800AD488	andi   v0, s1, $003f
-        800AD48C	xori   v0, v0, $0002
-        800AD490	sltu   v0, zero, v0
-        800AD494	subu   v0, zero, v0
-        800AD498	and    v0, t1, v0
-        800AD49C	sll    v1, s1, $01
-        800AD4A0	srl    v1, v1, $17
-        800AD4A4	addu   v1, v1, v0
-        800AD4A8	sll    v1, v1, $06
-        800AD4AC	srl    v0, s1, $10
-        800AD4B0	andi   v0, v0, $003f
-        800AD4B4	or     v1, v1, v0
-        800AD4B8	sh     v1, $0007(s0)
+        V0 = S1 & 003f;
+        V0 = V0 ^ 0002;
+        V0 = 0 < V0;
+        V0 = 0 - V0;
+        V0 = T1 & V0;
+        V1 = S1 << 01;
+        V1 = V1 >> 17;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        V0 = S1 >> 10;
+        V0 = V0 & 003f;
+        V1 = V1 | V0;
+        [S0 + 0007] = h(V1);
 
             func43cc0;
             if (V0 != 1 && V0 != 2)
@@ -1453,60 +1457,60 @@ Lacd30:	; 800ACD30
             tx = (S1 & 00000f00) >> 8;
             [S0 + f] = h(clut_type | blending | ty | tx);
 
-        800AD534	andi   v1, s1, $003f
+        V1 = S1 & 003f;
         800AD538	bne    v1, zero, Lad550 [$800ad550]
-        800AD53C	ori    v0, zero, $0001
+        V0 = 0001;
         A0 = global_tex_x1;
         A1 = global_tex_y1;
 
         Lad548:	; 800AD548
         800AD548	j      Lad570 [$800ad570]
-        800AD54C	ori    v0, zero, $0007
+        V0 = 0007;
 
         Lad550:	; 800AD550
         800AD550	bne    v1, v0, Lad568 [$800ad568]
-        800AD554	addu   a1, zero, zero
+        A1 = 0;
         A0 = global_tex_x2;
         A1 = global_tex_y2;
         800AD560	j      Lad570 [$800ad570]
-        800AD564	ori    v0, zero, $0007
+        V0 = 0007;
 
         Lad568:	; 800AD568
-        800AD568	addu   a0, zero, zero
-        800AD56C	ori    v0, zero, $0007
+        A0 = 0;
+        V0 = 0007;
 
         Lad570:	; 800AD570
-        800AD570	sb     v0, $fffc(s0)
+        [S0 + fffc] = b(V0);
         [S0 + 0] = b(24);
-        800AD57C	lbu    v0, $0005(s0)
-        800AD580	lbu    v1, $0006(s0)
-        800AD584	addu   v0, v0, a0
-        800AD588	sb     v0, $0005(s0)
-        800AD58C	lbu    v0, $000d(s0)
-        800AD590	addu   v1, v1, a1
-        800AD594	sb     v1, $0006(s0)
-        800AD598	lbu    v1, $000e(s0)
-        800AD59C	addu   v0, v0, a0
-        800AD5A0	sb     v0, $000d(s0)
-        800AD5A4	lbu    v0, $0015(s0)
-        800AD5A8	addu   v1, v1, a1
-        800AD5AC	sb     v1, $000e(s0)
-        800AD5B0	lbu    v1, $0016(s0)
-        800AD5B4	addu   v0, v0, a0
-        800AD5B8	addu   v1, v1, a1
-        800AD5BC	sb     v0, $0015(s0)
-        800AD5C0	andi   v0, s4, $0010
+        V0 = bu[S0 + 0005];
+        V1 = bu[S0 + 0006];
+        V0 = V0 + A0;
+        [S0 + 0005] = b(V0);
+        V0 = bu[S0 + 000d];
+        V1 = V1 + A1;
+        [S0 + 0006] = b(V1);
+        V1 = bu[S0 + 000e];
+        V0 = V0 + A0;
+        [S0 + 000d] = b(V0);
+        V0 = bu[S0 + 0015];
+        V1 = V1 + A1;
+        [S0 + 000e] = b(V1);
+        V1 = bu[S0 + 0016];
+        V0 = V0 + A0;
+        V1 = V1 + A1;
+        [S0 + 0015] = b(V0);
+        V0 = S4 & 0010;
         800AD5C4	beq    v0, zero, Lad5d4 [$800ad5d4]
-        800AD5C8	sb     v1, $0016(s0)
+        [S0 + 0016] = b(V1);
         [S0 + 0] = b(26);
 
         Lad5d4:	; 800AD5D4
-        800AD5D4	addiu  s2, s2, $0001
-        800AD5D8	addiu  s0, s0, $0020
-        800AD5DC	addiu  s5, s5, $0020
-        800AD5E0	sltu   v0, s2, s7
+        S2 = S2 + 0001;
+        S0 = S0 + 0020;
+        S5 = S5 + 0020;
+        V0 = S2 < S7;
         800AD5E4	bne    v0, zero, Lad410 [$800ad410]
-        800AD5E8	addiu  s3, s3, $000c
+        S3 = S3 + 000c;
         T1 = parts_data;
     }
 
@@ -1730,14 +1734,14 @@ if (number_of_parts != 0)
 
 T4 = w[1f800000];
 T5 = w[1f800004];
-800AF7B4	ctc2   t4,vxy0
-800AF7B8	ctc2   t5,vz0
+R11R12 = T4;
+R13R21 = T5;
 T4 = w[1f800008];
 T5 = w[1f80000c];
 T6 = w[1f800010];
-800AF7C8	ctc2   t4,vxy1
-800AF7CC	ctc2   t5,vz1
-800AF7D0	ctc2   t6,vxy2
+R22R23 = T4;
+R31R32 = T5;
+R33 = T6;
 T4 = w[1f800014];
 T5 = w[1f800018];
 800AF7DC	ctc2   t4,vz2
@@ -1813,14 +1817,14 @@ if ((w[V0 + 0] & 1) == 0 || A2 != 0)
 
     T4 = w[1f800000];
     T5 = w[1f800004];
-    800AF9FC	ctc2   t4,vxy0
-    800AFA00	ctc2   t5,vz0
+    R11R12 = T4;
+    R13R21 = T5;
     T4 = w[1f800008];
     T5 = w[1f80000c];
     T6 = w[1f800010];
-    800AFA10	ctc2   t4,vxy1
-    800AFA14	ctc2   t5,vz1
-    800AFA18	ctc2   t6,vxy2
+    R22R23 = T4;
+    R31R32 = T5;
+    R33 = T6;
     T4 = w[1f800014];
     T5 = w[1f800018];
     800AFA24	ctc2   t4,vz2
@@ -1879,14 +1883,14 @@ if (V0 == 0 || A2 != 0)
 
     T4 = w[1f800000];
     T5 = w[1f800004];
-    800AFB50	ctc2   t4,vxy0
-    800AFB54	ctc2   t5,vz0
+    R11R12 = T4;
+    R13R21 = T5;
     T4 = w[1f800008];
     T5 = w[1f80000c];
     T6 = w[1f800010];
-    800AFB64	ctc2   t4,vxy1
-    800AFB68	ctc2   t5,vz1
-    800AFB6C	ctc2   t6,vxy2
+    R22R23 = T4;
+    R31R32 = T5;
+    R33 = T6;
     T4 = w[1f800014];
     T5 = w[1f800018];
     800AFB78	ctc2   t4,vz2
@@ -1970,11 +1974,11 @@ if (V0 == 0 || A2 != 0)
     V1 = w[A0 + c];
     [V1 + 0] = w(1);
 }
-////////////////////////////////////////////////////////
+////////////////////////////////
 
 
 
-////////////////////////////////////////////////////////
+////////////////////////////////
 // funcb1e40
             [1f800000] = b(bu[S1 + 8]);
             [1f800001] = b(bu[S1 + 9]);
@@ -2036,53 +2040,53 @@ T6 = V0 << 4;
 
 [1f800200] = h(bu[A1 + 3] << 4);
 [1f800206] = h(bu[A1 + 4] << 4);
-800B1EC4	lbu    v0, $0005(a1)
+V0 = bu[A1 + 0005];
 800B1EC8	nop
-800B1ECC	sll    v0, v0, $04
+V0 = V0 << 04;
 800B1ED0	lui    at, $1f80
-800B1ED4	sh     v0, $020c(at)
-800B1ED8	lbu    v0, $0006(a1)
+[AT + 020c] = h(V0);
+V0 = bu[A1 + 0006];
 800B1EDC	nop
-800B1EE0	sll    v0, v0, $04
+V0 = V0 << 04;
 800B1EE4	lui    at, $1f80
-800B1EE8	sh     v0, $0202(at)
-800B1EEC	lbu    v0, $0007(a1)
+[AT + 0202] = h(V0);
+V0 = bu[A1 + 0007];
 800B1EF0	nop
-800B1EF4	sll    v0, v0, $04
+V0 = V0 << 04;
 800B1EF8	lui    at, $1f80
-800B1EFC	sh     v0, $0208(at)
-800B1F00	lbu    v0, $0008(a1)
+[AT + 0208] = h(V0);
+V0 = bu[A1 + 0008];
 800B1F04	nop
-800B1F08	sll    v0, v0, $04
+V0 = V0 << 04;
 800B1F0C	lui    at, $1f80
-800B1F10	sh     v0, $020e(at)
-800B1F14	lbu    v0, $0009(a1)
+[AT + 020e] = h(V0);
+V0 = bu[A1 + 0009];
 800B1F18	nop
-800B1F1C	sll    v0, v0, $04
+V0 = V0 << 04;
 800B1F20	lui    at, $1f80
-800B1F24	sh     v0, $0204(at)
-800B1F28	lbu    v0, $000a(a1)
+[AT + 0204] = h(V0);
+V0 = bu[A1 + 000a];
 800B1F2C	nop
-800B1F30	sll    v0, v0, $04
+V0 = V0 << 04;
 800B1F34	lui    at, $1f80
-800B1F38	sh     v0, $020a(at)
-800B1F3C	lbu    v0, $000b(a1)
+[AT + 020a] = h(V0);
+V0 = bu[A1 + 000b];
 800B1F40	lui    at, $1f80
-800B1F44	sw     zero, $021c(at)
+[AT + 021c] = w(0);
 800B1F48	lui    at, $1f80
-800B1F4C	sw     zero, $0218(at)
+[AT + 0218] = w(0);
 800B1F50	lui    at, $1f80
-800B1F54	sw     zero, $0214(at)
-800B1F58	sll    v0, v0, $04
+[AT + 0214] = w(0);
+V0 = V0 << 04;
 800B1F5C	lui    at, $1f80
-800B1F60	sh     v0, $0210(at)
-800B1F64	lw     t4, $0000(v1)
-800B1F68	lw     t5, $0004(v1)
+[AT + 0210] = h(V0);
+T4 = w[V1 + 0000];
+T5 = w[V1 + 0004];
 800B1F6C	ctc2   t4,sz0
 800B1F70	ctc2   t5,sz1
-800B1F74	lw     t4, $0008(v1)
-800B1F78	lw     t5, $000c(v1)
-800B1F7C	lw     t6, $0010(v1)
+T4 = w[V1 + 0008];
+T5 = w[V1 + 000c];
+T6 = w[V1 + 0010];
 800B1F80	ctc2   t4,sz2
 800B1F84	ctc2   t5,sz3
 800B1F88	ctc2   t6,rgb0
@@ -2121,27 +2125,27 @@ if (V0 != 0)
                 // root rotation/scale matrix
                 T4 = w[S1 + 0];
                 T5 = w[S1 + 4];
-                800B2094	ctc2   t4,vxy0
-                800B2098	ctc2   t5,vz0
+                R11R12 = T4;
+                R13R21 = T5;
                 T4 = w[S1 + 8];
                 T5 = w[S1 + c];
                 T6 = w[S1 + 10];
-                800B20A8	ctc2   t4,vxy1
-                800B20AC	ctc2   t5,vz1
-                800B20B0	ctc2   t6,vxy2
+                R22R23 = T4;
+                R31R32 = T5;
+                R33 = T6;
 
                 bone_data = S1 + bu[S0 + 1] * 20; // bone this part attached to
 
                 T4 = hu[bone_data + 0];
                 T5 = hu[bone_data + 6];
                 T6 = hu[bone_data + c];
-                800B20D0	mtc2   t4,l13l21
-                800B20D4	mtc2   t5,l22l23
-                800B20D8	mtc2   t6,l31l32
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B20E4	gte_func18t1,dqb
-                800B20E8	mfc2   t4,l13l21
-                800B20EC	mfc2   t5,l22l23
-                800B20F0	mfc2   t6,l31l32
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
                 [1f800220] = h(T4);
                 [1f800226] = h(T5);
                 [1f80022c] = h(T6);
@@ -2149,13 +2153,13 @@ if (V0 != 0)
                 T4 = hu[bone_data + 2];
                 T5 = hu[bone_data + 8];
                 T6 = hu[bone_data + e];
-                800B2120	mtc2   t4,l13l21
-                800B2124	mtc2   t5,l22l23
-                800B2128	mtc2   t6,l31l32
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B2134	gte_func18t1,dqb
-                800B2140	mfc2   t4,l13l21
-                800B2144	mfc2   t5,l22l23
-                800B2148	mfc2   t6,l31l32
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
                 [1f800222] = h(T4);
                 [1f800228] = h(T5);
                 [1f80022e] = h(T6);
@@ -2163,13 +2167,13 @@ if (V0 != 0)
                 T4 = hu[bone_data + 4];
                 T5 = hu[bone_data + a];
                 T6 = hu[bone_data + 10];
-                800B2178	mtc2   t4,l13l21
-                800B217C	mtc2   t5,l22l23
-                800B2180	mtc2   t6,l31l32
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B218C	gte_func18t1,dqb
-                800B2198	mfc2   t4,l13l21
-                800B219C	mfc2   t5,l22l23
-                800B21A0	mfc2   t6,l31l32
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
                 [1f800224] = h(T4);
                 [1f80022a] = h(T5);
                 [1f800230] = h(T6);
@@ -2184,7 +2188,7 @@ if (V0 != 0)
                 T4 = hu[bone_data + 14];
                 T5 = hu[bone_data + 18];
                 T4 = (T5 << 10) | T4;
-                800B21EC	mtc2   t4,r11r12
+                VXY0 = T4;
                 800B21F0	lwc2   at, $001c(bone_data)
                 800B21FC	gte_func18t0,r11r12
                 800B2208	swc2   t1, $0000(1f800234)
@@ -2194,25 +2198,25 @@ if (V0 != 0)
                 // set light matrix
                 T4 = w[SP + 10];
                 T5 = w[SP + 14];
-                800B221C	ctc2   t4,vxy0
-                800B2220	ctc2   t5,vz0
+                R11R12 = T4;
+                R13R21 = T5;
                 T4 = w[SP + 18];
                 T5 = w[SP + 1c];
                 T6 = w[SP + 20];
-                800B2230	ctc2   t4,vxy1
-                800B2234	ctc2   t5,vz1
-                800B2238	ctc2   t6,vxy2
+                R22R23 = T4;
+                R31R32 = T5;
+                R33 = T6;
 
                 T4 = hu[1f800220];
                 T5 = hu[1f800226];
                 T6 = hu[1f80022c];
-                800B2248	mtc2   t4,l13l21
-                800B224C	mtc2   t5,l22l23
-                800B2250	mtc2   t6,l31l32
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B225C	gte_func18t1,dqb
-                800B2260	mfc2   t4,l13l21
-                800B2264	mfc2   t5,l22l23
-                800B2268	mfc2   t6,l31l32
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
                 [1f800240] = h(T4);
                 [1f800246] = h(T5);
                 [1f80024c] = h(T6);
@@ -2220,13 +2224,13 @@ if (V0 != 0)
                 T4 = hu[1f800222];
                 T5 = hu[1f800228];
                 T6 = hu[1f80022e];
-                800B228C	mtc2   t4,l13l21
-                800B2290	mtc2   t5,l22l23
-                800B2294	mtc2   t6,l31l32
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B22A0	gte_func18t1,dqb
-                800B22AC	mfc2   t4,l13l21
-                800B22B0	mfc2   t5,l22l23
-                800B22B4	mfc2   t6,l31l32
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
                 [1f800242] = h(T4);
                 [1f800248] = h(T5);
                 [1f80024e] = h(T6);
@@ -2234,15 +2238,15 @@ if (V0 != 0)
                 T4 = hu[1f800224];
                 T5 = hu[1f80022a];
                 T6 = hu[1f800230];
-                800B22D8	mtc2   t4,l13l21
-                800B22DC	mtc2   t5,l22l23
-                800B22E0	mtc2   t6,l31l32
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B22EC	gte_func18t1,dqb
                 800B22F0	lui    a3, $1f80
-                800B22F4	ori    a3, a3, $0244
-                800B22F8	mfc2   t4,l13l21
-                800B22FC	mfc2   t5,l22l23
-                800B2300	mfc2   t6,l31l32
+                A3 = A3 | 0244;
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
                 [1f800244] = h(T4);
                 [1f80024a] = h(T5);
                 [1f800250] = h(T6);
@@ -2257,7 +2261,7 @@ if (V0 != 0)
                 T5 = hu[1f800238];
                 T4 = hu[1f800234];
                 T4 = (T5 << 10) | T4;
-                800B2340	mtc2   t4,r11r12
+                VXY0 = T4;
                 800B2344	lwc2   at, $0008(a3)
                 800B2350	gte_func18t0,r11r12
                 800B235C	swc2   t1, $0000(1f800254)
@@ -2277,97 +2281,97 @@ if (V0 != 0)
             }
             else
             {
-                800B2398	lw     t4, $0000(s2)
-                800B239C	lw     t5, $0004(s2)
-                800B23A0	ctc2   t4,vxy0
-                800B23A4	ctc2   t5,vz0
-                800B23A8	lw     t4, $0008(s2)
-                800B23AC	lw     t5, $000c(s2)
-                800B23B0	lw     t6, $0010(s2)
-                800B23B4	ctc2   t4,vxy1
-                800B23B8	ctc2   t5,vz1
-                800B23BC	ctc2   t6,vxy2
-                800B23C0	lbu    v0, $0001(s0)
+                T4 = w[S2 + 0000];
+                T5 = w[S2 + 0004];
+                R11R12 = T4;
+                R13R21 = T5;
+                T4 = w[S2 + 0008];
+                T5 = w[S2 + 000c];
+                T6 = w[S2 + 0010];
+                R22R23 = T4;
+                R31R32 = T5;
+                R33 = T6;
+                V0 = bu[S0 + 0001];
                 800B23C4	nop
-                800B23C8	sll    v0, v0, $05
-                800B23CC	addu   v0, s1, v0
-                800B23D0	lhu    t4, $0000(v0)
-                800B23D4	lhu    t5, $0006(v0)
-                800B23D8	lhu    t6, $000c(v0)
-                800B23DC	mtc2   t4,l13l21
-                800B23E0	mtc2   t5,l22l23
-                800B23E4	mtc2   t6,l31l32
+                V0 = V0 << 05;
+                V0 = S1 + V0;
+                T4 = hu[V0 + 0000];
+                T5 = hu[V0 + 0006];
+                T6 = hu[V0 + 000c];
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B23E8	nop
                 800B23EC	nop
                 800B23F0	gte_func18t1,dqb
-                800B23F4	mfc2   t4,l13l21
-                800B23F8	mfc2   t5,l22l23
-                800B23FC	mfc2   t6,l31l32
-                800B2400	sh     t4, $0000(a0)
-                800B2404	sh     t5, $0006(a0)
-                800B2408	sh     t6, $000c(a0)
-                800B240C	lbu    v0, $0001(s0)
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
+                [A0 + 0000] = h(T4);
+                [A0 + 0006] = h(T5);
+                [A0 + 000c] = h(T6);
+                V0 = bu[S0 + 0001];
                 800B2410	nop
-                800B2414	sll    v0, v0, $05
-                800B2418	addu   v0, s1, v0
-                800B241C	addiu  v0, v0, $0002
-                800B2420	lhu    t4, $0000(v0)
-                800B2424	lhu    t5, $0006(v0)
-                800B2428	lhu    t6, $000c(v0)
-                800B242C	mtc2   t4,l13l21
-                800B2430	mtc2   t5,l22l23
-                800B2434	mtc2   t6,l31l32
+                V0 = V0 << 05;
+                V0 = S1 + V0;
+                V0 = V0 + 0002;
+                T4 = hu[V0 + 0000];
+                T5 = hu[V0 + 0006];
+                T6 = hu[V0 + 000c];
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B2438	nop
                 800B243C	nop
                 800B2440	gte_func18t1,dqb
                 800B2444	lui    a3, $1f80
-                800B2448	ori    a3, a3, $0222
-                800B244C	mfc2   t4,l13l21
-                800B2450	mfc2   t5,l22l23
-                800B2454	mfc2   t6,l31l32
-                800B2458	sh     t4, $0000(a3)
-                800B245C	sh     t5, $0006(a3)
-                800B2460	sh     t6, $000c(a3)
-                800B2464	lbu    v0, $0001(s0)
+                A3 = A3 | 0222;
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
+                [A3 + 0000] = h(T4);
+                [A3 + 0006] = h(T5);
+                [A3 + 000c] = h(T6);
+                V0 = bu[S0 + 0001];
                 800B2468	nop
-                800B246C	sll    v0, v0, $05
-                800B2470	addu   v0, s1, v0
-                800B2474	addiu  v0, v0, $0004
-                800B2478	lhu    t4, $0000(v0)
-                800B247C	lhu    t5, $0006(v0)
-                800B2480	lhu    t6, $000c(v0)
-                800B2484	mtc2   t4,l13l21
-                800B2488	mtc2   t5,l22l23
-                800B248C	mtc2   t6,l31l32
+                V0 = V0 << 05;
+                V0 = S1 + V0;
+                V0 = V0 + 0004;
+                T4 = hu[V0 + 0000];
+                T5 = hu[V0 + 0006];
+                T6 = hu[V0 + 000c];
+                IR1 = T4;
+                IR2 = T5;
+                IR3 = T6;
                 800B2490	nop
                 800B2494	nop
                 800B2498	gte_func18t1,dqb
                 800B249C	lui    a3, $1f80
-                800B24A0	ori    a3, a3, $0224
-                800B24A4	mfc2   t4,l13l21
-                800B24A8	mfc2   t5,l22l23
-                800B24AC	mfc2   t6,l31l32
+                A3 = A3 | 0224;
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
 
-                800B24B0	sh     t4, $0000(a3)
-                800B24B4	sh     t5, $0006(a3)
-                800B24B8	sh     t6, $000c(a3)
-                800B24BC	lw     t4, $0014(s2)
-                800B24C0	lw     t5, $0018(s2)
+                [A3 + 0000] = h(T4);
+                [A3 + 0006] = h(T5);
+                [A3 + 000c] = h(T6);
+                T4 = w[S2 + 0014];
+                T5 = w[S2 + 0018];
                 800B24C4	ctc2   t4,vz2
-                800B24C8	lw     t6, $001c(s2)
+                T6 = w[S2 + 001c];
                 800B24CC	ctc2   t5,rgb
                 800B24D0	ctc2   t6,otz
-                800B24D4	lbu    v0, $0001(s0)
+                V0 = bu[S0 + 0001];
                 800B24D8	nop
-                800B24DC	sll    v0, v0, $05
-                800B24E0	addu   v0, s1, v0
-                800B24E4	addiu  v0, v0, $0014
-                800B24E8	lhu    t5, $0004(v0)
-                800B24EC	lhu    t4, $0000(v0)
-                800B24F0	sll    t5, t5, $10
-                800B24F4	or     t4, t4, t5
+                V0 = V0 << 05;
+                V0 = S1 + V0;
+                V0 = V0 + 0014;
+                T5 = hu[V0 + 0004];
+                T4 = hu[V0 + 0000];
+                T5 = T5 << 10;
+                T4 = T4 | T5;
 
-                800B24F8	mtc2   t4,r11r12
+                VXY0 = T4;
                 800B24FC	lwc2   at, $0008(v0)
                 800B2508	gte_func18t0,r11r12
                 800B2514	swc2   t1, $0000(1f800234)
@@ -2476,221 +2480,221 @@ if ((V0 & 2) == 0 || A1 != 0)
 
 
 
-    800B26F0	srl    v0, t5, $10
-    800B26F4	andi   t2, v0, $00ff
+    V0 = T5 >> 10;
+    T2 = V0 & 00ff;
     800B26F8	beq    t2, zero, Lb2764 [$800b2764]
-    800B26FC	addu   a2, zero, zero
-    800B2700	addiu  v1, t0, $0006
+    A2 = 0;
+    V1 = T0 + 0006;
 
     loopb2704:	; 800B2704
-        800B2704	lbu    v0, $0001(v1)
+        V0 = bu[V1 + 0001];
         800B2708	nop
-        800B270C	sll    v0, v0, $03
-        800B2710	addu   v0, t4, v0
+        V0 = V0 << 03;
+        V0 = T4 + V0;
         800B2714	lwc2   zero, $0000(v0)
         800B2718	lwc2   at, $0004(v0)
-        800B271C	addiu  v0, t0, $0004
+        V0 = T0 + 0004;
         800B2720	lwc2   a2, $0000(v0)
         800B2724	nop
         800B2728	nop
         800B272C	gte_func24t0,r11r12
         800B2730	swc2   s6, $0000(t1)
-        800B2734	lbu    v0, $0000(t1)
+        V0 = bu[T1 + 0000];
         800B2738	nop
-        800B273C	sb     v0, $fffe(v1)
-        800B2740	lbu    v0, $0001(t1)
-        800B2744	addiu  a2, a2, $0001
-        800B2748	sb     v0, $ffff(v1)
-        800B274C	lbu    v0, $0002(t1)
-        800B2750	addiu  t0, t0, $000c
-        800B2754	sb     v0, $0000(v1)
-        800B2758	sltu   v0, a2, t2
-        800B2760	addiu  v1, v1, $000c
+        [V1 + fffe] = b(V0);
+        V0 = bu[T1 + 0001];
+        A2 = A2 + 0001;
+        [V1 + ffff] = b(V0);
+        V0 = bu[T1 + 0002];
+        T0 = T0 + 000c;
+        [V1 + 0000] = b(V0);
+        V0 = A2 < T2;
+        V1 = V1 + 000c;
     800B275C	bne    v0, zero, loopb2704 [$800b2704]
 
 
     Lb2764:	; 800B2764
-    800B2764	srl    t2, t5, $18
+    T2 = T5 >> 18;
     800B2768	beq    t2, zero, Lb27d4 [$800b27d4]
-    800B276C	addu   a2, zero, zero
-    800B2770	addiu  v1, t0, $0006
+    A2 = 0;
+    V1 = T0 + 0006;
 
     loopb2774:	; 800B2774
-        800B2774	lbu    v0, $0001(v1)
+        V0 = bu[V1 + 0001];
         800B2778	nop
-        800B277C	sll    v0, v0, $03
-        800B2780	addu   v0, t4, v0
+        V0 = V0 << 03;
+        V0 = T4 + V0;
         800B2784	lwc2   zero, $0000(v0)
         800B2788	lwc2   at, $0004(v0)
-        800B278C	addiu  v0, t0, $0004
+        V0 = T0 + 0004;
         800B2790	lwc2   a2, $0000(v0)
         800B2794	nop
         800B2798	nop
         800B279C	gte_func24t0,r11r12
         800B27A0	swc2   s6, $0000(t1)
-        800B27A4	lbu    v0, $0000(t1)
+        V0 = bu[T1 + 0000];
         800B27A8	nop
-        800B27AC	sb     v0, $fffe(v1)
-        800B27B0	lbu    v0, $0001(t1)
-        800B27B4	addiu  a2, a2, $0001
-        800B27B8	sb     v0, $ffff(v1)
-        800B27BC	lbu    v0, $0002(t1)
-        800B27C0	addiu  t0, t0, $000c
-        800B27C4	sb     v0, $0000(v1)
-        800B27C8	sltu   v0, a2, t2
-        800B27D0	addiu  v1, v1, $000c
+        [V1 + fffe] = b(V0);
+        V0 = bu[T1 + 0001];
+        A2 = A2 + 0001;
+        [V1 + ffff] = b(V0);
+        V0 = bu[T1 + 0002];
+        T0 = T0 + 000c;
+        [V1 + 0000] = b(V0);
+        V0 = A2 < T2;
+        V1 = V1 + 000c;
     800B27CC	bne    v0, zero, loopb2774 [$800b2774]
 
 
     Lb27d4:	; 800B27D4
-    800B27D4	lw     t5, $0008(a0)
+    T5 = w[A0 + 0008];
     800B27D8	nop
-    800B27DC	andi   t2, t5, $00ff
+    T2 = T5 & 00ff;
     800B27E0	beq    t2, zero, Lb284c [$800b284c]
-    800B27E4	addu   a2, zero, zero
-    800B27E8	addiu  v1, t0, $0006
+    A2 = 0;
+    V1 = T0 + 0006;
 
     loopb27ec:	; 800B27EC
-        800B27EC	lbu    v0, $0001(v1)
+        V0 = bu[V1 + 0001];
         800B27F0	nop
-        800B27F4	sll    v0, v0, $03
-        800B27F8	addu   v0, t4, v0
+        V0 = V0 << 03;
+        V0 = T4 + V0;
         800B27FC	lwc2   zero, $0000(v0)
         800B2800	lwc2   at, $0004(v0)
-        800B2804	addiu  v0, t0, $0004
+        V0 = T0 + 0004;
         800B2808	lwc2   a2, $0000(v0)
         800B280C	nop
         800B2810	nop
         800B2814	gte_func24t0,r11r12
         800B2818	swc2   s6, $0000(t1)
-        800B281C	lbu    v0, $0000(t1)
+        V0 = bu[T1 + 0000];
         800B2820	nop
-        800B2824	sb     v0, $fffe(v1)
-        800B2828	lbu    v0, $0001(t1)
-        800B282C	addiu  a2, a2, $0001
-        800B2830	sb     v0, $ffff(v1)
-        800B2834	lbu    v0, $0002(t1)
-        800B2838	addiu  t0, t0, $0008
-        800B283C	sb     v0, $0000(v1)
-        800B2840	sltu   v0, a2, t2
-        800B2848	addiu  v1, v1, $0008
+        [V1 + fffe] = b(V0);
+        V0 = bu[T1 + 0001];
+        A2 = A2 + 0001;
+        [V1 + ffff] = b(V0);
+        V0 = bu[T1 + 0002];
+        T0 = T0 + 0008;
+        [V1 + 0000] = b(V0);
+        V0 = A2 < T2;
+        V1 = V1 + 0008;
     800B2844	bne    v0, zero, loopb27ec [$800b27ec]
 
 
     Lb284c:	; 800B284C
-    800B284C	andi   v0, t5, $ff00
-    800B2850	srl    t2, v0, $08
+    V0 = T5 & ff00;
+    T2 = V0 >> 08;
     800B2854	beq    t2, zero, Lb28c0 [$800b28c0]
-    800B2858	addu   a2, zero, zero
-    800B285C	addiu  v1, t0, $0006
+    A2 = 0;
+    V1 = T0 + 0006;
 
     loopb2860:	; 800B2860
-        800B2860	lbu    v0, $0001(v1)
+        V0 = bu[V1 + 0001];
         800B2864	nop
-        800B2868	sll    v0, v0, $03
-        800B286C	addu   v0, t4, v0
+        V0 = V0 << 03;
+        V0 = T4 + V0;
         800B2870	lwc2   zero, $0000(v0)
         800B2874	lwc2   at, $0004(v0)
-        800B2878	addiu  v0, t0, $0004
+        V0 = T0 + 0004;
         800B287C	lwc2   a2, $0000(v0)
         800B2880	nop
         800B2884	nop
         800B2888	gte_func24t0,r11r12
         800B288C	swc2   s6, $0000(t1)
-        800B2890	lbu    v0, $0000(t1)
+        V0 = bu[T1 + 0000];
         800B2894	nop
-        800B2898	sb     v0, $fffe(v1)
-        800B289C	lbu    v0, $0001(t1)
-        800B28A0	addiu  a2, a2, $0001
-        800B28A4	sb     v0, $ffff(v1)
-        800B28A8	lbu    v0, $0002(t1)
-        800B28AC	addiu  t0, t0, $0008
-        800B28B0	sb     v0, $0000(v1)
-        800B28B4	sltu   v0, a2, t2
-        800B28BC	addiu  v1, v1, $0008
+        [V1 + fffe] = b(V0);
+        V0 = bu[T1 + 0001];
+        A2 = A2 + 0001;
+        [V1 + ffff] = b(V0);
+        V0 = bu[T1 + 0002];
+        T0 = T0 + 0008;
+        [V1 + 0000] = b(V0);
+        V0 = A2 < T2;
+        V1 = V1 + 0008;
     800B28B8	bne    v0, zero, loopb2860 [$800b2860]
 
     Lb28c0:	; 800B28C0
-    800B28C0	srl    v0, t5, $10
-    800B28C4	andi   t2, v0, $00ff
+    V0 = T5 >> 10;
+    T2 = V0 & 00ff;
     800B28C8	beq    t2, zero, Lb2950 [$800b2950]
-    800B28CC	addu   a2, zero, zero
+    A2 = 0;
 
     loopb28d0:	; 800B28D0
-        800B28D0	addu   t3, t0, zero
-        800B28D4	addu   a1, zero, zero
-        800B28D8	ori    a3, zero, $0004
-        800B28DC	addu   v1, t0, zero
+        T3 = T0;
+        A1 = 0;
+        A3 = 0004;
+        V1 = T0;
 
         loopb28e0:	; 800B28E0
-            800B28E0	lbu    v0, $0007(v1)
+            V0 = bu[V1 + 0007];
             800B28E4	nop
-            800B28E8	sll    v0, v0, $03
-            800B28EC	addu   v0, t4, v0
+            V0 = V0 << 03;
+            V0 = T4 + V0;
             800B28F0	lwc2   zero, $0000(v0)
             800B28F4	lwc2   at, $0004(v0)
-            800B28F8	addu   v0, t3, a3
+            V0 = T3 + A3;
             800B28FC	lwc2   a2, $0000(v0)
             800B2900	nop
             800B2904	nop
             800B2908	gte_func24t0,r11r12
             800B290C	swc2   s6, $0000(t1)
-            800B2910	lbu    v0, $0000(t1)
+            V0 = bu[T1 + 0000];
             800B2914	nop
-            800B2918	sb     v0, $0004(v1)
-            800B291C	lbu    v0, $0001(t1)
-            800B2920	addiu  a3, a3, $0004
-            800B2924	sb     v0, $0005(v1)
-            800B2928	lbu    v0, $0002(t1)
-            800B292C	addiu  a1, a1, $0001
-            800B2930	sb     v0, $0006(v1)
-            800B2934	sltiu  v0, a1, $0003
+            [V1 + 0004] = b(V0);
+            V0 = bu[T1 + 0001];
+            A3 = A3 + 0004;
+            [V1 + 0005] = b(V0);
+            V0 = bu[T1 + 0002];
+            A1 = A1 + 0001;
+            [V1 + 0006] = b(V0);
+            V0 = A1 < 0003;
         800B2938	bne    v0, zero, loopb28e0 [$800b28e0]
-        800B293C	addiu  v1, v1, $0004
-        800B2940	addiu  a2, a2, $0001
-        800B2944	sltu   v0, a2, t2
+        V1 = V1 + 0004;
+        A2 = A2 + 0001;
+        V0 = A2 < T2;
     800B2948	bne    v0, zero, loopb28d0 [$800b28d0]
-    800B294C	addiu  t0, t0, $0010
+    T0 = T0 + 0010;
 
     Lb2950:	; 800B2950
-    800B2950	srl    t2, t5, $18
+    T2 = T5 >> 18;
     800B2954	beq    t2, zero, Lb29dc [$800b29dc]
-    800B2958	addu   a2, zero, zero
+    A2 = 0;
 
     loopb295c:	; 800B295C
-        800B295C	addu   t3, t0, zero
-        800B2960	addu   a1, zero, zero
-        800B2964	ori    a3, zero, $0004
-        800B2968	addu   v1, t0, zero
+        T3 = T0;
+        A1 = 0;
+        A3 = 0004;
+        V1 = T0;
 
         loopb296c:	; 800B296C
-            800B296C	lbu    v0, $0007(v1)
+            V0 = bu[V1 + 0007];
             800B2970	nop
-            800B2974	sll    v0, v0, $03
-            800B2978	addu   v0, t4, v0
+            V0 = V0 << 03;
+            V0 = T4 + V0;
             800B297C	lwc2   zero, $0000(v0)
             800B2980	lwc2   at, $0004(v0)
-            800B2984	addu   v0, t3, a3
+            V0 = T3 + A3;
             800B2988	lwc2   a2, $0000(v0)
             800B298C	nop
             800B2990	nop
             800B2994	gte_func24t0,r11r12
             800B2998	swc2   s6, $0000(t1)
-            800B299C	lbu    v0, $0000(t1)
+            V0 = bu[T1 + 0000];
             800B29A0	nop
-            800B29A4	sb     v0, $0004(v1)
-            800B29A8	lbu    v0, $0001(t1)
-            800B29AC	addiu  a3, a3, $0004
-            800B29B0	sb     v0, $0005(v1)
-            800B29B4	lbu    v0, $0002(t1)
-            800B29B8	addiu  a1, a1, $0001
-            800B29BC	sb     v0, $0006(v1)
-            800B29C0	sltiu  v0, a1, $0004
+            [V1 + 0004] = b(V0);
+            V0 = bu[T1 + 0001];
+            A3 = A3 + 0004;
+            [V1 + 0005] = b(V0);
+            V0 = bu[T1 + 0002];
+            A1 = A1 + 0001;
+            [V1 + 0006] = b(V0);
+            V0 = A1 < 0004;
         800B29C4	bne    v0, zero, loopb296c [$800b296c]
-        800B29C8	addiu  v1, v1, $0004
-        800B29CC	addiu  a2, a2, $0001
-        800B29D8	addiu  t0, t0, $0014
-        800B29D0	sltu   v0, a2, t2
+        V1 = V1 + 0004;
+        A2 = A2 + 0001;
+        T0 = T0 + 0014;
+        V0 = A2 < T2;
     800B29D4	bne    v0, zero, loopb295c [$800b295c]
 
 

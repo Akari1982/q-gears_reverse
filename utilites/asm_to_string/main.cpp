@@ -30,48 +30,52 @@ int main( int argc, char *argv[] )
     string str;
     while( std::getline( src, str ) )
     {
-        std::regex e ( "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]l(hu|w|h|b|bu)\\s*([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$" );
+        std::regex e ( "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]l(hu|w|h|b|bu)\\s*([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$" );
         if( std::regex_match( str ,e ) )
         {
-            std::string m1 = std::regex_replace( str, e, "$1" ); std::transform( m1.begin(), m1.end(), m1.begin(), ::tolower );
-            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
-            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
-            std::string m4 = std::regex_replace( str, e, "$4" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
+            std::string m0 = std::regex_replace( str, e, "$1" );
+            std::string m1 = std::regex_replace( str, e, "$2" ); std::transform( m1.begin(), m1.end(), m1.begin(), ::tolower );
+            std::string m2 = std::regex_replace( str, e, "$3" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
+            std::string m4 = std::regex_replace( str, e, "$5" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
             std::stringstream ss;
-            ss << m2 << " = " << m1 << "[" << m4 << " + " << m3 << "];";
+            ss << m0 << m2 << " = " << m1 << "[" << m4 << " + " << m3 << "];";
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]s(hu|w|h|b|bu)\\s*([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]s(hu|w|h|b|bu)\\s*([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
-            std::string m1 = std::regex_replace( str, e, "$1" ); std::transform( m1.begin(), m1.end(), m1.begin(), ::tolower );
-            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
-            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
-            std::string m4 = std::regex_replace( str, e, "$4" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
+            std::string m0 = std::regex_replace( str, e, "$1" );
+            std::string m1 = std::regex_replace( str, e, "$2" ); std::transform( m1.begin(), m1.end(), m1.begin(), ::tolower );
+            std::string m2 = std::regex_replace( str, e, "$3" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
+            std::string m4 = std::regex_replace( str, e, "$5" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
             std::stringstream ss;
-            ss << "[" << m4 << " + " << m3 << "] = " << m1 << "(" << m2 << ");";
+            ss << m0 << "[" << m4 << " + " << m3 << "] = " << m1 << "(" << m2 << ");";
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]s(hu|w|h|b|bu)\\s*zero, \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]s(hu|w|h|b|bu)\\s*zero, \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
-            std::string m1 = std::regex_replace( str, e, "$1" ); std::transform( m1.begin(), m1.end(), m1.begin(), ::tolower );
-            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::tolower );
-            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
+            std::string m0 = std::regex_replace( str, e, "$1" );
+            std::string m1 = std::regex_replace( str, e, "$2" ); std::transform( m1.begin(), m1.end(), m1.begin(), ::tolower );
+            std::string m2 = std::regex_replace( str, e, "$3" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::tolower );
+            std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
             std::stringstream ss;
-            ss << "[" << m3 << " + " << m2 << "] = " << m1 << "(0);";
+            ss << m0 << "[" << m3 << " + " << m2 << "] = " << m1 << "(0);";
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|sltu|sltiu|slti|subu|sll|sra|srl|sllv)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]|zero)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|sltu|sltiu|slti|subu|sll|sra|srl|sllv|srav)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]|zero)$";
         if( std::regex_match( str ,e ) )
         {
-            std::string m1 = std::regex_replace( str, e, "$1" );
-            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
-            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
-            std::string m4 = std::regex_replace( str, e, "$4" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
+            std::string m0 = std::regex_replace( str, e, "$1" );
+            std::string m1 = std::regex_replace( str, e, "$2" );
+            std::string m2 = std::regex_replace( str, e, "$3" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
+            std::string m4 = std::regex_replace( str, e, "$5" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
 
             if( m3 == "ZERO" ) m3 = "0";
             if( m4 == "ZERO" ) m4 = "0";
@@ -88,7 +92,7 @@ int main( int argc, char *argv[] )
             }
 
             std::stringstream ss;
-            ss << m2 << " = ";
+            ss << m0 << m2 << " = ";
 
             if( m4 == "0" && m1 == "addu" )
             {
@@ -100,7 +104,7 @@ int main( int argc, char *argv[] )
             }
             else
             {
-                if( m1 == "sllv" )
+                if( m1 == "sllv" || m1 == "srav" )
                 {
                     ss << m4;
                 }
@@ -117,9 +121,9 @@ int main( int argc, char *argv[] )
                 else if( m1 == "sltu" || m1 == "sltiu" || m1 == "slti" ) ss << " < ";
                 else if( m1 == "subu" ) ss << " - ";
                 else if( m1 == "sll" || m1 == "sllv" ) ss << " << ";
-                else if( m1 == "sra" || m1 == "srl" ) ss << " >> ";
+                else if( m1 == "sra" || m1 == "srl" || m1 == "srav" ) ss << " >> ";
 
-                if( m1 == "sllv" )
+                if( m1 == "sllv" || m1 == "srav" )
                 {
                     ss << m3 << ";";
                 }
@@ -131,14 +135,16 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](mfc0|mtc0)\\s*([a-z][0-9a-z]),([a-z][0-9a-z])$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](mfc0|mtc0)\\s*([a-z][0-9a-z]),([a-z][0-9a-z])$";
         if( std::regex_match( str ,e ) )
         {
-            std::string m1 = std::regex_replace( str, e, "$1" );
-            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
-            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
+            std::string m0 = std::regex_replace( str, e, "$1" );
+            std::string m1 = std::regex_replace( str, e, "$2" );
+            std::string m2 = std::regex_replace( str, e, "$3" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
 
             std::stringstream ss;
+            ss << m0;
 
             if( m1 == "mfc0" )
             {
@@ -151,12 +157,13 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2)\\s*$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2)\\s*$";
         if( std::regex_match( str ,e ) )
         {
-            std::string m1 = std::regex_replace( str, e, "$1" );
-            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
-            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
+            std::string m0 = std::regex_replace( str, e, "$1" );
+            std::string m1 = std::regex_replace( str, e, "$2" );
+            std::string m2 = std::regex_replace( str, e, "$3" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::toupper );
 
             if( m2 == "ZERO" ) m2 = "0";
 
@@ -186,6 +193,7 @@ int main( int argc, char *argv[] )
             else if( m3 == "LZCS" ) m3 = "ZSF4"; // 30
 
             std::stringstream ss;
+            ss << m0;
 
             if( m1 == "ctc2" || m1 == "mtc2" )
             {
@@ -198,13 +206,14 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(t1|t2|t3|t9|k0|k1), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(t1|t2|t3|t9|k0|k1), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
-            std::string m1 = std::regex_replace( str, e, "$1" );
-            std::string m2 = std::regex_replace( str, e, "$2" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
-            std::string m3 = std::regex_replace( str, e, "$3" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
-            std::string m4 = std::regex_replace( str, e, "$4" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
+            std::string m0 = std::regex_replace( str, e, "$1" );
+            std::string m1 = std::regex_replace( str, e, "$2" );
+            std::string m2 = std::regex_replace( str, e, "$3" ); std::transform( m2.begin(), m2.end(), m2.begin(), ::toupper );
+            std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
+            std::string m4 = std::regex_replace( str, e, "$5" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
 
             if( m2 == "T1" ) m2 = "IR1"; // 9
             if( m2 == "T2" ) m2 = "IR2"; // 10
@@ -214,6 +223,7 @@ int main( int argc, char *argv[] )
             if( m2 == "K1" ) m2 = "MAC3"; // 27
 
             std::stringstream ss;
+            ss << m0;
 
             if( m1 == "lwc2" )
             {
@@ -226,10 +236,14 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27s0,r11r12$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27s0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
-            str = "gte_OP(); // Outer Product";
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_OP(); // Outer Product";
+            str = ss.str();
         }
 
         str += "\n";

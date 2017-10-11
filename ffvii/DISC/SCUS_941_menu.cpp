@@ -1,4 +1,5 @@
 ﻿////////////////////////////////
+////////////////////////////////
 // func24a3c
 // A0 - pointer to tutorial settings
 [GP + b4] = w(1);
@@ -179,7 +180,7 @@ D00B1D80
     80024CDC	sll    a0, a0, $02
     80024CE0	lui    v0, $8007
     80024CE4	addiu  v0, v0, $075c
-    80024CE8	jal    func444ac [$800444ac]
+    80024CE8	jal    system_psyq_put_disp_env [$800444ac]
     80024CEC	addu   a0, a0, v0
     80024CF0	lw     v0, $0214(gp)
     80024CF4	nop

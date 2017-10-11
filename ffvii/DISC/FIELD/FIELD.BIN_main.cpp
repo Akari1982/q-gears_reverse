@@ -526,7 +526,7 @@ V0 = V0 >> 10;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 02;
-800A2030	jal    func444ac [$800444ac]
+800A2030	jal    system_psyq_put_disp_env [$800444ac]
 A0 = A0 + V1;
 800A2038	lui    v0, $8007
 V0 = hu[V0 + 5dec];
@@ -1026,7 +1026,7 @@ A0 = A0 + V0;
 A0 = A0 << 02;
 800A2B24	lui    v0, $8008
 800A2B28	addiu  v0, v0, $eb68 (=-$1498)
-800A2B2C	jal    func444ac [$800444ac]
+800A2B2C	jal    system_psyq_put_disp_env [$800444ac]
 A0 = A0 + V0;
 800A2B34	lui    v0, $8007
 V0 = hu[V0 + 5dec];

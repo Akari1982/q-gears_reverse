@@ -125,7 +125,7 @@ A0 = A0 + V0;
 A0 = A0 << 02;
 800114E4	lui    v0, $8008
 800114E8	addiu  v0, v0, $eb68 (=-$1498)
-800114EC	jal    func444ac [$800444ac]
+800114EC	jal    system_psyq_put_disp_env [$800444ac]
 A0 = A0 + V0;
 800114F4	lui    v0, $8007
 V0 = hu[V0 + 5dec];
@@ -336,7 +336,7 @@ V0 = 0001;
 [AT + eac4] = b(0);
 8001182C	lui    at, $8008
 [AT + eb20] = b(0);
-80011834	jal    func444ac [$800444ac]
+80011834	jal    system_psyq_put_disp_env [$800444ac]
 A0 = S2;
 8001183C	jal    system_psyq_put_draw_env [$800443b0]
 A0 = S1;
@@ -1129,7 +1129,7 @@ V0 = 0001;
 [AT + da3c] = b(0);
 800141C4	lui    at, $801a
 [AT + da38] = h(0);
-800141CC	jal    func444ac [$800444ac]
+800141CC	jal    system_psyq_put_disp_env [$800444ac]
 A0 = A0 | da80;
 800141D4	lui    a0, $8019
 800141D8	jal    system_psyq_put_draw_env [$800443b0]
@@ -5193,7 +5193,7 @@ A0 = 0;
 [S2 + 0014] = h(V0);
 80021174	jal    func3cedc [$8003cedc]
 [S3 + 0014] = h(V0);
-8002117C	jal    func444ac [$800444ac]
+8002117C	jal    system_psyq_put_disp_env [$800444ac]
 A0 = S4;
 80021184	jal    system_psyq_put_draw_env [$800443b0]
 A0 = S3;
@@ -6965,7 +6965,7 @@ A0 = A0 + V0;
 A0 = A0 << 02;
 80022B8C	lui    v0, $8007
 V0 = V0 + 075c;
-80022B94	jal    func444ac [$800444ac]
+80022B94	jal    system_psyq_put_disp_env [$800444ac]
 A0 = A0 + V0;
 V0 = w[GP + 0214];
 80022BA0	nop
@@ -7272,7 +7272,7 @@ A0 = A0 + V0;
 A0 = A0 << 02;
 80023004	lui    v0, $8007
 V0 = V0 + 075c;
-8002300C	jal    func444ac [$800444ac]
+8002300C	jal    system_psyq_put_disp_env [$800444ac]
 A0 = A0 + V0;
 V0 = w[GP + 0214];
 80023018	nop
@@ -7406,7 +7406,7 @@ func24a04:	; 80024A04
 [SP + 0010] = w(RA);
 80024A0C	lui    a0, $8007
 A0 = A0 + 075c;
-80024A14	jal    func444ac [$800444ac]
+80024A14	jal    system_psyq_put_disp_env [$800444ac]
 80024A18	nop
 80024A1C	lui    a0, $8007
 A0 = A0 + 0700;
@@ -30650,7 +30650,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func444ac
+// system_psyq_put_disp_env
 800444AC-800448CC
 ////////////////////////////////
 

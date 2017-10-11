@@ -550,7 +550,7 @@ V1 = S0 & 001f;
 loopa17e4:	; 800A17E4
 800A17E4	lui    v0, $2000
 V0 = V0 | 6000;
-800A17EC	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 800A17F4	bne    v0, zero, La181c [$800a181c]
 V0 = A0;
@@ -562,7 +562,7 @@ La1804:	; 800A1804
 
 La1808:	; 800A1808
 V0 = V0 | 6f83;
-800A180C	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 800A1814	beq    v0, zero, La19dc [$800a19dc]
 V0 = A0;
@@ -605,12 +605,12 @@ AT = AT + 6614;
 AT = AT + V0;
 V0 = w[AT + 0000];
 800A1894	j      La18a8 [$800a18a8]
-800A1898	srav   v0, s0, v0
+V0 = V0 >> S0;
 
 La189c:	; 800A189C
 800A189C	lui    v0, $2000
 V0 = V0 | 6000;
-800A18A4	srav   v0, s0, v0
+V0 = V0 >> S0;
 
 La18a8:	; 800A18A8
 800A18A8	j      La19dc [$800a19dc]
@@ -680,7 +680,7 @@ La1980:	; 800A1980
 La1984:	; 800A1984
 V0 = V0 | 6f83;
 V1 = S0 & 001f;
-800A198C	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 800A1994	beq    v0, zero, La19a0 [$800a19a0]
 A0 = 0;
@@ -700,7 +700,7 @@ La19b8:	; 800A19B8
 V1 = S0 & 001f;
 
 La19bc:	; 800A19BC
-800A19BC	srav   v0, v1, v0
+V0 = V0 >> V1;
 800A19C0	j      La19dc [$800a19dc]
 V0 = V0 & 0001;
 V0 = S0 & 001f;
@@ -8015,7 +8015,7 @@ V1 = bu[V0 + 0050];
 800A91BC	nop
 V0 = V1 < 0020;
 800A91C4	beq    v0, zero, La91d4 [$800a91d4]
-800A91C8	srav   v0, v1, a0
+V0 = A0 >> V1;
 800A91CC	j      La91d8 [$800a91d8]
 V0 = V0 & 0001;
 
@@ -8035,7 +8035,7 @@ V1 = bu[V0 + 0050];
 800A91F8	nop
 V0 = V1 < 0020;
 800A9200	beq    v0, zero, La9210 [$800a9210]
-800A9204	srav   v0, v1, a0
+V0 = A0 >> V1;
 800A9208	j      La9214 [$800a9214]
 V0 = V0 & 0001;
 
@@ -8051,7 +8051,7 @@ funca921c:	; 800A921C
 A1 = A1 & 00ff;
 V0 = A1 < 0020;
 800A9224	beq    v0, zero, La9234 [$800a9234]
-800A9228	srav   v0, a1, a0
+V0 = A0 >> A1;
 800A922C	j      La9238 [$800a9238]
 V0 = V0 & 0001;
 
@@ -9304,7 +9304,7 @@ V0 = V0 + A0;
 V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800AA480	nop
-800AA484	srav   v0, a2, v0
+V0 = V0 >> A2;
 V0 = V0 & 0001;
 800AA48C	bne    v0, zero, Laa4c8 [$800aa4c8]
 T1 = 0;
@@ -9317,7 +9317,7 @@ V0 = V0 - V1;
 V1 = 0007;
 V0 = bu[V0 + 0000];
 V1 = V1 - A2;
-800AA4B8	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 800AA4C0	beq    v0, zero, Laa4cc [$800aa4cc]
 800AA4C4	nop
@@ -10524,7 +10524,7 @@ Lab43c:	; 800AB43C
 V0 = hu[S0 + 004a];
 V1 = V1 | 6f05;
 V0 = V0 & 001f;
-800AB448	srav   v1, v0, v1
+V1 = V1 >> V0;
 V1 = V1 & 0001;
 800AB450	bne    v1, zero, Lab470 [$800ab470]
 800AB454	nop
@@ -11257,7 +11257,7 @@ A0 = A0 << 10;
 800ADC90	lui    a1, $8011
 A1 = w[A1 + ae54];
 V1 = A0 >> 10;
-800ADC9C	srav   v0, v1, a1
+V0 = A1 >> V1;
 V0 = V0 & 0001;
 800ADCA4	beq    v0, zero, Ladccc [$800adccc]
 [SP + 0014] = w(RA);
@@ -11315,79 +11315,10 @@ SP = SP + 0018;
 800ADD48	nop
 
 
-funcadd4c:	; 800ADD4C
-800ADD4C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-V1 = A0 + 0001;
-800ADD64	addiu  v0, zero, $ffff (=-$1)
-800ADD68	lui    a1, $8011
-A1 = w[A1 + ae54];
-V0 = V0 << V1;
-V0 = V0 & A1;
-800ADD78	bne    v0, zero, Ladd90 [$800add90]
-[SP + 0014] = w(RA);
-800ADD80	srav   v0, a0, a1
-V0 = V0 & 0001;
-800ADD88	bne    v0, zero, Ladd9c [$800add9c]
-V0 = S0 << 10;
 
-Ladd90:	; 800ADD90
-800ADD90	jal    funca0b40 [$800a0b40]
-A0 = 0050;
-V0 = S0 << 10;
-
-Ladd9c:	; 800ADD9C
-A0 = V0 >> 10;
-A2 = 0001;
-V0 = A2 << A0;
-800ADDA8	lui    v1, $8011
-V1 = w[V1 + ae54];
-V0 = 0 NOR V0;
-A1 = V0 & V1;
-800ADDB8	lui    at, $8011
-[AT + ae54] = w(A1);
-800ADDC0	beq    a0, zero, Lade1c [$800ade1c]
-800ADDC4	addiu  v0, a0, $ffff (=-$1)
-V1 = A2 << V0;
-800ADDCC	beq    v1, zero, Lade08 [$800ade08]
-V0 = V1 & A1;
-800ADDD4	bne    v0, zero, Lade08 [$800ade08]
-800ADDD8	nop
-V1 = V1 >> 01;
-800ADDE0	beq    v1, zero, Lade08 [$800ade08]
-V0 = V1 & A1;
-800ADDE8	bne    v0, zero, Lade0c [$800ade0c]
-V0 = 0001;
-A0 = A1;
-
-loopaddf4:	; 800ADDF4
-V1 = V1 >> 01;
-800ADDF8	beq    v1, zero, Lade08 [$800ade08]
-V0 = V1 & A0;
-800ADE00	beq    v0, zero, loopaddf4 [$800addf4]
-800ADE04	nop
-
-Lade08:	; 800ADE08
-V0 = 0001;
-
-Lade0c:	; 800ADE0C
-800ADE0C	bne    v1, v0, Lade1c [$800ade1c]
-800ADE10	nop
-800ADE14	jal    funca8048 [$800a8048]
-800ADE18	nop
-
-Lade1c:	; 800ADE1C
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800ADE28	jr     ra 
-800ADE2C	nop
-
-
-
+////////////////////////////////
+// funcadd4c
+800ADD4C-800ADE2C
 ////////////////////////////////
 // funcade30
 800ADE30-800ADEA4
@@ -15160,7 +15091,7 @@ V1 = A0 & 00e0;
 800B1338	lui    v0, $321b
 V0 = V0 | 6f83;
 V1 = A0 & 001f;
-800B1344	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 800B134C	beq    v0, zero, Lb163c [$800b163c]
 V0 = A1 | 0040;
@@ -15897,7 +15828,7 @@ V1 = A1 & 00e0;
 800B1D3C	lui    v0, $321b
 V0 = V0 | 6f83;
 V1 = A1 & 001f;
-800B1D48	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 800B1D50	beq    v0, zero, Lb21c4 [$800b21c4]
 800B1D54	addiu  v0, zero, $ffff (=-$1)
@@ -19170,7 +19101,7 @@ V0 = 000a;
 Lb4a3c:	; 800B4A3C
 800B4A3C	lui    v0, $0111
 V0 = V0 | 0701;
-800B4A44	srav   v0, s7, v0
+V0 = V0 >> S7;
 V0 = V0 & 0001;
 800B4A4C	beq    v0, zero, Lb4ae8 [$800b4ae8]
 V0 = 0064;
@@ -20560,7 +20491,7 @@ Lb5ea4:	; 800B5EA4
 [S2 + 0001] = b(V0);
 800B5EAC	lui    v0, $0604
 V0 = V0 | 00fa;
-800B5EB4	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 800B5EBC	beq    v0, zero, Lb5ef0 [$800b5ef0]
 V1 = S4 & 00ff;
@@ -21238,71 +21169,11 @@ SP = SP + 0040;
 // funcb69a4
 800B69A4-800B6A48
 ////////////////////////////////
-
-
-
-funcb6a4c:	; 800B6A4C
-800B6A4C	addiu  sp, sp, $ffe8 (=-$18)
-800B6A50	lui    v0, $8014
-800B6A54	lui    a0, $8015
-A0 = w[A0 + a608];
-V0 = V0 | a604;
-[SP + 0014] = w(RA);
-[SP + 0010] = w(S0);
-A0 = A0 >> 02;
-A0 = A0 << 02;
-800B6A70	jal    funcc0808 [$800c0808]
-A0 = A0 + V0;
-800B6A78	lui    a1, $8014
-A1 = A1 | fc00;
-800B6A80	lui    s0, $8015
-S0 = w[S0 + a610];
-A2 = 0;
-800B6A8C	jal    funcbfbf0 [$800bfbf0]
-A0 = S0;
-800B6A94	jal    funcb6724 [$800b6724]
-A0 = S0;
-V0 = 0001;
-800B6AA0	addiu  v1, zero, $ffff (=-$1)
-800B6AA4	lui    at, $8011
-[AT + 5a48] = w(V0);
-800B6AAC	lui    v0, $8011
-V0 = w[V0 + 5a5c];
-800B6AB4	lui    a0, $8011
-A0 = A0 + 59e8;
-800B6ABC	lui    at, $8011
-[AT + 59ea] = b(V1);
-800B6AC4	lui    at, $8011
-[AT + 59e9] = b(V1);
-[A0 + 0000] = b(V1);
-V0 = V0 + A0;
-[V0 + 0000] = b(0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800B6AE4	jr     ra 
-800B6AE8	nop
-
-800B6AEC	lui    v0, $8011
-V0 = w[V0 + 5a60];
-800B6AF4	addiu  sp, sp, $ffe8 (=-$18)
-800B6AF8	beq    v0, zero, Lb6b18 [$800b6b18]
-[SP + 0010] = w(RA);
-800B6B00	lui    at, $8011
-[AT + 5a60] = w(0);
-800B6B08	jal    funcadd4c [$800add4c]
-A0 = 0002;
-800B6B10	jal    funcb6a4c [$800b6a4c]
-800B6B14	nop
-
-Lb6b18:	; 800B6B18
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B6B20	jr     ra 
-800B6B24	nop
-
-
-
+// funcb6a4c
+800B6A4C-800B6AE8
+////////////////////////////////
+// funcb6aec
+800B6AEC-800B6B24
 ////////////////////////////////
 // funcb6b28
 800B6B28-800B6C80
@@ -26782,7 +26653,7 @@ Lbbc2c:	; 800BBC2C
 V0 = V0 | 0f83;
 
 Lbbc30:	; 800BBC30
-800BBC30	srav   v0, s0, v0
+V0 = V0 >> S0;
 V0 = V0 & 0001;
 
 Lbbc38:	; 800BBC38

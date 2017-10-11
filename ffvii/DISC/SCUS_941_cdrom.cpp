@@ -33,12 +33,13 @@ return 0;
 sector = A0;
 size = A1;
 buffer = A2;
-A4 = A3;
+callback = A3;
 
 A0 = b;
 A1 = sector;
 A2 = size;
 A3 = buffer;
+A4 = callback;
 func33cb8();
 
 [800698e8] = w(sector);
@@ -58,12 +59,13 @@ return 0;
 sector = A0;
 size = A1;
 buffer = A2;
-A4 = A4;
+callback = A4;
 
 A0 = 3;
 A1 = sector;
 A2 = size;
 A3 = buffer;
+A4 = callback;
 func33cb8();
 
 return 0;
@@ -78,7 +80,7 @@ S5 = A0;
 sector = A1;
 size = A2;
 buffer = A3;
-S6 = A4;
+callback = A4;
 
 loop33cf4:	; 80033CF4
     func34b44(); // some callback chain
@@ -106,7 +108,7 @@ A1 = 80071a68;
 
 [80071a6c] = w((size + 07ff) >> 0b);
 [80071a80] = w(buffer);
-[80071a84] = w(S6);
+[80071a84] = w(callback);
 [80071a60] = w(S5);
 ////////////////////////////////
 
