@@ -748,7 +748,7 @@ loopb5928:	; 800B5928
 
     [model_struct + 90 + S2 * 28 + e] = h(7cc4); // clut
 
-    if( bu[80062c00 == 2 )
+    if( bu[80062c00] == 2 )
     {
         [model_struct + 90 + S2 * 28 + 16] = h(59); // texpage
     }

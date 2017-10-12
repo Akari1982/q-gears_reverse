@@ -184,6 +184,22 @@ return S0;
 
 
 ////////////////////////////////
+// func43cc0()
+
+return bu[80062c00];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func43cd0()
+
+return bu[80062c02]; // get debug
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_psyq_draw_sync()
 // Waits for drawing to terminate.
 // If DrawSync(0) is used, and execution of the primitive list takes an exceptionally long time (approximately
@@ -751,9 +767,7 @@ V0 = V0 & ffff
 
 S1 = A0; // pointer to drawing environment start address
 
-S2 = 80062c02;
-
-if( bu[S2] >= 2 )
+if( bu[80062c02] >= 2 )
 {
     A0 = 80010e34; // "PutDrawEnv(%08x)..."
     A1 = S1;
@@ -773,7 +787,7 @@ A2 = 40;
 A3 = 0;
 8004443C	jalr   w[V1 + 8] ra
 
-A0 = S2 + e;
+A0 = 80062c10;
 A1 = S1;
 A2 = 005c;
 system_bios_memcpy();
@@ -1091,11 +1105,11 @@ V0 = w[V0 + 0010];
 A0 = S2;
 
 L44898:	; 80044898
-80044898	lui    a0, $8006
-A0 = A0 + 2c6c;
+A0 = 80062c6c;
 A1 = S0;
-800448A4	jal    system_bios_memcpy [$80042d98]
 A2 = 0014;
+system_bios_memcpy();
+
 return S0;
 ////////////////////////////////
 
