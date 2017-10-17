@@ -330,7 +330,7 @@ if (number_of_models > 0)
 
                 A0 = 80074EA4 + S2 * 84;
                 A1 = h[80074EA4 + S2 * 84 + 68];
-                La8858;
+                funca8858();
 
                 if (V0 == 0)
                 {
@@ -794,7 +794,7 @@ return;
 
 
 ////////////////////////////////
-La8858
+// funca8858
 model_data_offset = A0;
 model_data_68 = A1;
 

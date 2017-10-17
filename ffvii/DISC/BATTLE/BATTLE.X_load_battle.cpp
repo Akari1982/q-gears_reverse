@@ -114,7 +114,8 @@ for( int i = 0; i < 10; ++i )
 
 
 ////////////////////////////////
-// funca4ba4
+// funca4ba4()
+
 party_id = A0;
 
 // copy usual attack command
@@ -122,33 +123,32 @@ party_id = A0;
 [800f39f0 + party_id * 6 + 4] = b(b[8009d84c + party_id * 440 + 4c + 4]);
 [800f39f0 + party_id * 6 + 5] = b(b[8009d84c + party_id * 440 + 4c + 5]);
 
-[800f3a04 + party_id * 6 + 0] = w(w[800f39f0 + party_id * 6 + 0]);
+[800f3a04 + party_id * 6 + 0] = b(1);
 [800f3a04 + party_id * 6 + 4] = b(b[800f39f0 + party_id * 6 + 4]);
 [800f3a04 + party_id * 6 + 5] = b(b[800f39f0 + party_id * 6 + 5]);
 
-[800f3a04 + party_id * 6 + 0] = b(1);
+if( bu[800f5bb8 + party_id * 44 + 29] & 2 ) // if long ranged
+{
+    [800f3a04 + party_id * 6 + 1] = b(0);
+}
+else
+{
+    [800f3a04 + party_id * 6 + 1] = b(7);
+}
 
-V0 = nu[800f5bb8 + party_id * 44 + 29];
-V0 = V0 & 2; // if long ranged
-V0 = V0 < 1; // if not long
-V0 = 0 - V0;
-V0 = V0 & 7;
-[800f3a04 + party_id * 6 + 1] = b(V0); // set 0 if long ranged, 0x07 otherwise
 [800f3a04 + party_id * 6 + 2] = b(bu[800f5efc + party_id * 18 + 0]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca4e80
+// funca4e80()
+
 party_id = A0;
-V1 = bu[800f5e65 + party_id * 34]; // limit level
-if (V1 != ff)
+
+if( bu[800f5e60 + party_id * 34 + 5] != ff ) // limit level
 {
-    V1 = hu[80163762];
-    V0 = 1 << party_id;
-    V1 = V1 | V0;
-    [80163762] = h(V1);
+    [80163762] = h(hu[80163762] | (1 << party_id));
 
     [800f5bb8 + party_id * 44 + 8] = h(hu[800f5bb8 + party_id * 44 + 8] | 0001);
     [800f5bb8 + party_id * 44 + e] = b(bu[800f5bb8 + party_id * 44 + e] | 01);
@@ -158,10 +158,54 @@ if (V1 != ff)
 
 
 ////////////////////////////////
-// funcb108c
+// funcb108c()
+
 A0 = party_id = A0;
 A1 = 5;
 A2 = 0;
 A3 = 0;
-funca31a0;
+funca31a0();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca31a0()
+
+S0 = A0;
+S1 = A1;
+S2 = A2;
+S3 = A3;
+
+funca2f4c();
+
+[V0 + 0] = b(S0);
+[V0 + 1] = b(S1);
+[V0 + 5] = b(S2);
+[V0 + 6] = h(S3);
+[V0 + 8] = h(-1);
+[V0 + a] = h(-1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca2f4c()
+
+V1 = w[800f3944];
+[80163798 + V1 * c + 2] = b(0);
+[80163798 + V1 * c + 3] = b(0);
+[80163798 + V1 * c + a] = h(w[800f3948]);
+
+if( V1 < 40 )
+{
+    [800f3944] = w(w[800f3944] + 1);
+}
+else
+{
+    A0 = 0028; // error code
+    func155a4();
+}
+
+return 80163798 + V1 * c;
 ////////////////////////////////

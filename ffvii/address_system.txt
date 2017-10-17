@@ -576,9 +576,9 @@
         +3 []     set +b4+1c*0+c[] here during init for limit 1.
         +4 []     set +b4+1c*1+c[] here during init for limit 2.
         +5 []     set +b4+1c*2+c[] here during init for limit 3.
-        +6 []     Number of activated/learned limits.
-        +7 []     Init with 0.
-    +0b4          array for limit data (3 elements with 0x1c size)
+        +6 []     number of activated/learned limits.
+        +7 []     init with 0.
+    +0b4          array for limit data (0x3 item 0x1c size)
         +0c []    this copied to +ac+3(+4,+5) during limit initialization.
     +108 start of attacks data (0x60 items)
         first 0x38 records about magic (0x8 size).

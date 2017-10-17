@@ -331,30 +331,24 @@ A4 = h[S0 + 6];
 // system_psyq_reset_graph()
 // Initialize drawing engine.
 // Resets the graphic system according to mode:
-// 0 Complete reset. The drawing environment
-// and display environment are initialized.
-// 1 Cancels the current drawing and flushes
-// the command buffer.
-// 3 Initializes the drawing engine while
-// preserving the current display environment
-// (i.e. the screen is not cleared or the screen
-// mode changed).
+// 0 Complete reset. The drawing environment and display environment are initialized.
+// 1 Cancels the current drawing and flushes the command buffer.
+// 3 Initializes the drawing engine while preserving the current display environment (i.e. the screen is not cleared or the screen mode changed).
 // This function does not actually change the display environment. It merely sets the members of the specified
 // structure as desired. Use PutDispEnv() with this structure to change the actual environment.
 // Note: While the screen width and height are set to (0, 0), internally they are processed as (256, 240).
 // Return value: Pointer to the display environment set.
 
-mode = S1 = A0;
+mode = A0;
 
 if( ( mode & 7 ) == 0 )
 {
     A0 = 80010ccc; // "ResetGraph:jtb=%08x,env=%08x"
     A1 = 80062bb8;
-    S0 = 80062c00;
-    A2 = S0;
+    A2 = 80062c00;
     system_bios_printf();
 
-    A0 = S0;
+    A0 = 80062c00;
     V0 = 80 - 1;
     loop46540:	; 80046540
         [A0] = b(0);
@@ -369,15 +363,15 @@ if( ( mode & 7 ) == 0 )
 
     A0 = mode;
     func4602c();
-    [S0] = b(V0);
+    [80062c00] = b(V0); // 3 in normal cases
 
     [80062c01] = b(1);
 
-    V0 = bu[S0];
+    V0 = bu[80062c00];
     [80062c04] = h(hu[80062c80 + V0 * 4]);
     [80062c06] = h(hu[80062c94 + V0 * 4]);
 
-    A0 = S0 + 10;
+    A0 = 80062c00 + 10;
     V0 = 5c - 1;
     loop46540:	; 80046540
         [A0] = b(-1);
@@ -385,7 +379,7 @@ if( ( mode & 7 ) == 0 )
         V0 = V0 - 1;
     80046548	bne    v0, -1, loop46540 [$80046540]
 
-    A0 = S0 + 006c;
+    A0 = 80062c00 + 006c;
     V0 = 14 - 1;
     loop46540:	; 80046540
         [A0] = b(-1);
@@ -393,7 +387,7 @@ if( ( mode & 7 ) == 0 )
         V0 = V0 - 1;
     80046548	bne    v0, -1, loop46540 [$80046540]
 
-    return bu[S0];
+    return bu[80062c00];
 }
 else
 {
@@ -485,21 +479,24 @@ return V0;
 
 mode = A0;
 
-V0 = w[80062cd4];
-[V0] = w(10000007);
+// GP0 Send GP0 Commands/Packets (Rendering and VRAM Access)
+// GPUREAD Read responses to GP0(C0h) and GP1(10h) commands
+gpu_1f801810 = w[80062cd0];
+// GP1 Send GP1 Commands (Display Control)
+// GPUSTAT Read GPU Status Register
+gpu_1f801814 = w[80062cd4];
 
-A1 = w[80062cd0];
-V0 = w[A1] & 00ffffff;
-if( V0 != 2 )
+// Read GPU Type (usually 2) See "GPU Versions" notes below
+[gpu_1f801814] = w(10000007);
+
+if( ( w[gpu_1f801810] & 00ffffff ) != 2 ) // GPU type
 {
-    V0 = w[80062cd4];
-    [A1] = w(e1001000 | (w[V0] & 3fff));
-    V0 = w[80062cd0];
-    V1 = w[80062cd4];
-    V0 = w[V0];
-    V0 = w[V1];
+    // 12 Textured Rectangle X-Flip (BIOS does set this bit on power-up)
+    [gpu_1f801810] = w(e1001000 | (w[gpu_1f801814] & 00003fff));
+    V0 = w[gpu_1f801810]; // get response from prev command
 
-    if( ( V0 & 1000 ) == 0 )
+    // Draw Pixels (0=Always, 1=Not to Masked areas)
+    if( ( w[gpu_1f801814] & 00001000 ) == 0 )
     {
         return 0;
     }
@@ -509,14 +506,19 @@ if( V0 != 2 )
         return 1;
     }
 
-    [V1] = w(20000504);
+    // GP1(20h) - Ancient Texture Disable
+    // 0-23  Unknown (501h=Texture Enable, 504h=Texture Disable, or so?)
+    // Seems to be a used only on whatever older GPUs, instead of GP1(09h). See "GPU
+    // Versions" notes below.
+    [gpu_1f801814] = w(20000504);
+
     return 2;
 }
 
 if( mode & 0008 )
 {
-    V1 = w[80062cd4];
-    [V1] = w(09000001);
+    // Texture Disable (0=Normal, 1=Allow Disable via GP0(E1h).11) ;GPUSTAT.15
+    [gpu_1f801814] = w(09000001);
     return 4;
 }
 
@@ -811,24 +813,19 @@ if( bu[80062c02] >= 2 )
 
 800444E0	lui    s2, $0800
 
-80044500	lui    v0, $8006
-V0 = bu[V0 + 2c00];
-80044508	nop
-8004450C	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < 0002;
-80044514	beq    v0, zero, L44540 [$80044540]
-80044518	nop
-8004451C	jal    func45024 [$80045024]
-A0 = S0;
-V1 = hu[S0 + 0002];
-V0 = V0 & 0fff;
-V1 = V1 & 0fff;
-V1 = V1 << 0c;
-V1 = V1 | V0;
-80044538	j      L4455c [$8004455c]
-8004453C	lui    v0, $0500
+if( ( bu[80062c00] - 1 ) < 2 )
+{
+    8004451C	jal    func45024 [$80045024]
+    A0 = S0;
+    V1 = hu[S0 + 0002];
+    V0 = V0 & 0fff;
+    V1 = V1 & 0fff;
+    V1 = V1 << 0c;
+    V1 = V1 | V0;
+    80044538	j      L4455c [$8004455c]
+    8004453C	lui    v0, $0500
+}
 
-L44540:	; 80044540
 V0 = hu[S0 + 0002];
 V1 = hu[S0 + 0000];
 V0 = V0 & 03ff;

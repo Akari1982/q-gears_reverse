@@ -1027,24 +1027,24 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 0e
 0f
 
-80163758      [][]     all enabled units.
-8016375a      [][]     unit mask. Seems to init with all posible enabled units in battle_update_unit_mask.
-8016375c      [][]     unit mask. Something related with row. Probably reachable units. Set in battle_update_unit_mask.
-8016375e      [][]     store all enabled units here.
+80163758 [][]     all enabled units.
+8016375a [][]     unit mask. Seems to init with all posible enabled units in battle_update_unit_mask.
+8016375c [][]     unit mask. Something related with row. Probably reachable units. Set in battle_update_unit_mask.
+8016375e [][]     store all enabled units here.
 
-80163762      [][]     unit mask. Add players with limit break.
+80163762 [][]     unit mask. Add players with limit break.
 
-80163766      [][]     dead units mask.
-80163768      [][]     mask with units with 00000010 flag in +4 unit structure 0x68. There is no units like this at start of battle.
-8016376a      [][]     store previous battle result here. If this is 0x40 then set battle location to 0x25 (arena battle).
+80163766 [][]     dead units mask.
+80163768 [][]     mask with units with 00000010 flag in +4 unit structure 0x68. There is no units like this at start of battle.
+8016376a [][]     store previous battle result here. If this is 0x40 then set battle location to 0x25 (arena battle).
 
-8016376e      [][]     right fighters mask.
-80163770      [][]     middle fighters mask.
-80163772      [][]     left fighters mask.
+8016376e [][]     right fighters mask.
+80163770 [][]     middle fighters mask.
+80163772 [][]     left fighters mask.
 
-80163780      [][]     store here last mask with enemy units in case of battle type 4 (0 - there is no enemy in right mask, 1 - there is no enemy in left mask, 2 - enemies in both masks)
+80163780 [][]     store here last mask with enemy units in case of battle type 4 (0 - there is no enemy in right mask, 1 - there is no enemy in left mask, 2 - enemies in both masks)
 80163784 one byte unit array with idle? actions id for each.
-80163790      [][][][] party slots data.
+80163790 [][][][] party slots data.
 
 
 

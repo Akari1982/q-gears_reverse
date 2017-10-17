@@ -1754,44 +1754,13 @@ funca2f24:	; 800A2F24
 800A2F48	nop
 
 
-funca2f4c:	; 800A2F4C
-800A2F4C	lui    v1, $800f
-800A2F50	lw     v1, $3944(v1)
-800A2F54	addiu  sp, sp, $ffe8 (=-$18)
-800A2F58	sw     ra, $0014(sp)
-800A2F5C	sw     s0, $0010(sp)
-800A2F60	sll    v0, v1, $01
-800A2F64	addu   v0, v0, v1
-800A2F68	sll    v0, v0, $02
-800A2F6C	lui    v1, $8016
-800A2F70	addiu  v1, v1, $3798
-800A2F74	addu   s0, v0, v1
-800A2F78	sb     zero, $0003(s0)
-800A2F7C	sb     zero, $0002(s0)
-800A2F80	lui    v0, $800f
-800A2F84	lw     v0, $3948(v0)
-800A2F88	lui    v1, $800f
-800A2F8C	lw     v1, $3944(v1)
-800A2F90	sh     v0, $000a(s0)
-800A2F94	slti   v0, v1, $0040
-800A2F98	beq    v0, zero, La2fb0 [$800a2fb0]
-800A2F9C	addiu  v0, v1, $0001
-800A2FA0	lui    at, $800f
-800A2FA4	sw     v0, $3944(at)
-800A2FA8	j      La2fbc [$800a2fbc]
-800A2FAC	addu   v0, s0, zero
 
-La2fb0:	; 800A2FB0
-800A2FB0	jal    $800155a4
-800A2FB4	ori    a0, zero, $0028
-800A2FB8	addu   v0, s0, zero
 
-La2fbc:	; 800A2FBC
-800A2FBC	lw     ra, $0014(sp)
-800A2FC0	lw     s0, $0010(sp)
-800A2FC4	addiu  sp, sp, $0018
-800A2FC8	jr     ra 
-800A2FCC	nop
+////////////////////////////////
+// funca2f4c
+800A2F4C-800A2FCC
+////////////////////////////////
+
 
 
 funca2fd0:	; 800A2FD0
@@ -1940,33 +1909,12 @@ funca317c:	; 800A317C
 800A319C	addiu  sp, sp, $0018
 
 
-funca31a0:	; 800A31A0
-800A31A0	addiu  sp, sp, $ffd8 (=-$28)
-800A31A4	sw     s0, $0010(sp)
-800A31A8	addu   s0, a0, zero
-800A31AC	sw     s1, $0014(sp)
-800A31B0	addu   s1, a1, zero
-800A31B4	sw     s2, $0018(sp)
-800A31B8	addu   s2, a2, zero
-800A31BC	sw     s3, $001c(sp)
-800A31C0	sw     ra, $0020(sp)
-800A31C4	jal    funca2f4c [$800a2f4c]
-800A31C8	addu   s3, a3, zero
-800A31CC	addiu  v1, zero, $ffff (=-$1)
-800A31D0	sb     s0, $0000(v0)
-800A31D4	sb     s1, $0001(v0)
-800A31D8	sb     s2, $0005(v0)
-800A31DC	sh     s3, $0006(v0)
-800A31E0	sh     v1, $0008(v0)
-800A31E4	sh     v1, $000a(v0)
-800A31E8	lw     ra, $0020(sp)
-800A31EC	lw     s3, $001c(sp)
-800A31F0	lw     s2, $0018(sp)
-800A31F4	lw     s1, $0014(sp)
-800A31F8	lw     s0, $0010(sp)
-800A31FC	addiu  sp, sp, $0028
-800A3200	jr     ra 
-800A3204	nop
+
+////////////////////////////////
+// funca31a0
+800A31A0-800A3204
+////////////////////////////////
+
 
 
 funca3208:	; 800A3208

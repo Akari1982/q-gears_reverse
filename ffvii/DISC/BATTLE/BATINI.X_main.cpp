@@ -77,21 +77,26 @@ for( int i = 0; i < a; ++i )
     [800f83e0 + i * 68 + 13] = b(10); // scale
 }
 
-// init item using array
+// init items array
 funca55bc();
 
-
-
-
-
-
-
-
-
-
-
-
 initbattle_init_player();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 initbattle_init_item();
 
@@ -108,11 +113,8 @@ initbattle_init_unit_datas();
 A0 = bu[8009d7bc];
 func1b085c();
 
-// set atb type
-V0 = hu[8009d7be]; // config flags
-V0 = V0 & c000; // atb type
-V0 = V0 >> 6;
-[800f7daa] = h(V0);
+// set atb type from config flags
+[800f7daa] = h((hu[8009d7be] & c000) >> 6);
 
 S0 = 0;
 loop1b0200:	; 801B0200
@@ -210,23 +212,23 @@ if (V0 & 0004)
     A3 = 1a0;
     A1 = hu[800f83a4 + 30];
     V1 = 1;
-    801B0380	sll    v0, a1, $01
-    801B0384	addu   v0, v0, a1
-    801B0388	sll    a0, v0, $01
-    801B038C	sllv   a0, a0, v1
-    801B0390	addiu  v1, a2, $0004
-    801B0394	sll    v0, v0, $03
-    801B0398	addu   t0, v0, v1
-    801B039C	sw     a1, $0000(a2)
+    V0 = A1 << 01;
+    V0 = V0 + A1;
+    A0 = V0 << 01;
+    A0 = V1 << A0;
+    V1 = A2 + 0004;
+    V0 = V0 << 03;
+    T0 = V0 + V1;
+    [A2 + 0000] = w(A1);
 
     S0 = 0;
     loop1b03a0:	; 801B03A0
         V1 = w[T1];
         if( V1 & A0 )
         {
-            801B03B0	nor    v0, zero, a0
-            801B03B4	and    v0, v1, v0
-            801B03BC	sw     v0, $0000(t1)
+            V0 = 0 NOR A0;
+            V0 = V1 & V0;
+            [T1 + 0000] = w(V0);
         }
         else
         {
@@ -666,18 +668,8 @@ for( int party_id = 0; party_id < 3; ++party_id )
                     func1b13dc();
                 }
 
-
-
-
-
-
-
-
-
                 // add activate flag
                 [800f83e0 + party_id * 68 + 4] = w(w[800f83e0 + party_id * 68 + 4] | 00000008);
-
-
 
                 // if hp == 0 set death
                 if( w[800f83e0 + party_id * 68 + 2c] == 0 ) // current hp
@@ -685,18 +677,12 @@ for( int party_id = 0; party_id < 3; ++party_id )
                     [800f83e0 + party_id * 68 + 0] = w(w[800f83e0 + party_id * 68 + 0] | 00000001);
                 }
 
-
-
-                // change some attack types
+                // change some attack types, fix all effect for magic
                 A0 = party_id;
                 func1b11bc();
 
-
-
                 A0 = party_id;
                 funca4ba4();
-
-
 
                 // if currently limit break
                 if( hu[800f5e60 + party_id * 34 + 8] == ff )
@@ -704,26 +690,21 @@ for( int party_id = 0; party_id < 3; ++party_id )
                     A0 = party_id;
                     funca4e80();
 
-                    [800f5bc0 + party_id * 44] = h(hu[800f5bc0 + party_id * 44] & fffe);
+                    [800f5bb8 + party_id * 44 + 8] = h(hu[800f5bb8 + party_id * 44 + 8] & fffe);
                 }
 
-
-
                 // if we have some status write something to 80163798 stack
+                // maybe apply status to model
                 if( w[800f83e0 + party_id * 68 + 0] != 0 )
                 {
                     A0 = party_id;
                     funcb108c();
                 }
 
-
-
                 A0 = savemap_player;
-                func1b1530(); // we check enemy skill materia here.
+                func1b1530(); // get enemy skill abilities
                 [800f5e60 + party_id * 34 + 24] = w(V0);
                 [800f5e60 + party_id * 34 + 28] = w(V0);
-
-
 
                 party_size = party_size + 1;
 
@@ -735,9 +716,7 @@ for( int party_id = 0; party_id < 3; ++party_id )
     }
 }
 
-
-
-if (party_size != 0)
+if( party_size != 0 )
 {
     [800f7da8] = h((total_dexterity - 1 + party_size) / party_size + 32);
 }
@@ -930,113 +909,76 @@ loop1b1148:	; 801B1148
 // func1b11bc()
 
 party_id = A0;
-T0 = 8009d84c + party_id * 440;
-[T0 + 21] = b(1);
-A3 = 0;
-T1 = ff;
-T2 = party_id * 18;
-A1 = party_id * 44;
-A0 = T0;
 
-loop1b11f8:	; 801B11F8
-    V1 = bu[A0 + 4c];
+[8009d84c + party_id * 440 + 21] = b(1);
 
-    if (V1 != ff)
+for( int i = 0; i < 10; ++i )
+{
+    action_id = bu[8009d84c + party_id * 440 + 4c + i * 6 + 0];
+
+    if( action_id != ff )
     {
-        A2 = bu[800707c4 + V1 * 8 + 1]; // default target type
-        if (A2 == ff)
+        A2 = bu[800707c4 + action_id * 8 + 1]; // default target type
+        if( A2 == ff )
         {
-            A2 = bu[800f5efc + party_id * 18]; // first byte from weapon info
+            A2 = bu[800f5efc + party_id * 18 + 0]; // first byte from weapon info
         }
 
         // if attack replacers
-        if (V1 < 1c && V1 >= 18)
+        if( action_id < 1c && action_id >= 18 )
         {
-            [A0 + 4c + 4] = b(ff);
+            [8009d84c + party_id * 440 + 4c + i * 6 + 4] = b(ff);
         }
 
         // action 1 5 11 19 single enemy/ally attack
-        V1 = bu[A0 + 4c + 1];
-        if (V1 == 7)
+        V1 = bu[8009d84c + party_id * 440 + 4c + i * 6 + 1];
+        if( V1 == 7 )
         {
             // if long ranged
-            V0 = bu[800F5BB8 + A1 + 29];
-            if (V0 & 2)
+            if( bu[800f5bb8 + party_id * 44 + 29] & 02 )
             {
-                [A0 + 4c + 1] = b(0);
+                [8009d84c + party_id * 440 + 4c + i * 6 + 1] = b(0);
             }
 
-            V0 = bu[A0 + 4c + 4];
-            V1 = bu[A0 + 4c + 0];
-            if (V0 != 0 && V1 != 19)
+            V0 = bu[8009d84c + party_id * 440 + 4c + i * 6 + 4];
+            V1 = bu[8009d84c + party_id * 440 + 4c + i * 6 + 0];
+            if( V0 != 0 && V1 != 19 )
             {
                 A2 = A2 | 000c;
             }
 
             // if steal or mug
-            if (V1 == 5 || V1 == 11)
+            if( V1 == 5 || V1 == 11 )
             {
                 A2 = A2 | 0010;
 
-                V0 = bu[A0 + 4c + 4];
-                if (V0 != 0)
+                if( bu[8009d84c + party_id * 440 + 4c + i * 6 + 4] != 0 )
                 {
-                    [A0 + 4c + 1] = b(0);
+                    [8009d84c + party_id * 440 + 4c + i * 6 + 1] = b(0);
                 }
             }
         }
 
-        V0 = A3 / 4;
-        V0 = V0 + 1;
-        [T0 + 21] = b(V0);
+        [8009d84c + party_id * 440 + 21] = b(i / 4 + 1);
     }
 
-    [A0 + 4c + 2] = b(A2);
-    A3 = A3 + 1;
-    A0 = A0 + 6;
-    V0 = A3 < 10;
-801B12E4	bne    v0, zero, loop1b11f8 [$801b11f8]
+    [8009d84c + party_id * 440 + 4c + i * 6 + 2] = b(A2);
+}
 
-
-
-T1 = ff;
-V1 = T0;
-T0 = V1 + 240;
-A1 = V1 + 1c0;
-A3 = A1;
-A2 = V1 + 300;
-
-loop1b1304:	; 801B1304
-    A0 = bu[V1 + 108];
-    if (A0 != ff)
+for( int i = 0; i < 60; ++i )
+{
+    attack_id = bu[8009d84c + party_id * 440 + 108 + i * 8 + 0];
+    if( attack_id != ff )
     {
-        if (V1 >= T0)
+        if( i < 38 )
         {
-            A0 = A0 + 48;
-        }
-        else
-        {
-            801B1318	slt    v0, v1, a3
-            801B1324	bne    v0, zero, L1b133c [$801b133c]
-
-            A0 = A0 + 8;
-        }
-
-        if (V1 < A1)
-        {
-            L1b133c:	; 801B133C
-            V0 = bu[800708c4 + A0 * 1c + c]; // attack type
-            V0 = V0 & 08;
-            if (V0 == 0)
+            if( ( bu[800708c4 + attack_id * 1c + c] & 08 ) == 0 ) // single attack type
             {
-                [V1 + 10a] = b(0);
+                [8009d84c + party_id * 440 + 108 + i * 8 + 2] = b(0); // remove all effect
             }
         }
     }
-
-    V1 = V1 + 8;
-    V0 = V1 < A2;
-801B136C	bne    v0, zero, loop1b1304 [$801b1304]
+}
 ////////////////////////////////
 
 
@@ -1065,63 +1007,46 @@ loop1b13ac:	; 801B13AC
 ////////////////////////////////
 // func1b13dc()
 
-//                    A0 = FP;
-//                    A1 = hu[savemap_player + 22];
-//                    A2 = structure_440 + ac;
-
-S7 = A0;
+char_id = A0;
 learned_limit = A1;
-S6 = A2; // structure_440ac
+struct_440_ac_limit = A2;
 
 active_limit = 0;
-S3 = S6;
-S1 = S6;
 
-S4 = 0;
-loop1b1424:	; 801B1424
-    S0 = 0;
-    V1 = bu[S1 + 0];
-    if (V1 != ff)
+for( int i = 0; i < 3; ++ i )
+{
+    if( bu[struct_440_ac_limit + i + 0] != ff )
     {
-        loop1b143c:	; 801B143C
-            A0 = S7; // party id
-            A1 = S0;
-            system_get_limit_id;
-
-            V1 = bu[S1 + 0];
-            if (V0 == V1)
+        int j = 0;
+        for( ; j < c; ++j )
+        {
+            A0 = char_id;
+            A1 = j;
+            system_get_limit_id();
+            if( V0 == bu[struct_440_ac_limit + i + 0] )
             {
                 break;
             }
+        }
 
-            S0 = S0 + 1;
-            V0 = S0 < c;
-        801B145C	bne    v0, zero, loop1b143c [$801b143c]
-
-        if (S0 == c)
+        if( j == c )
         {
-            A0 = 26;
-            func155a4
+            A0 = 26; // error code
+            func155a4();
         }
         else
         {
-            V0 = learned_limit >> S0;
-            if (V0 & 01)
+            if( ( learned_limit >> j ) & 1 )
             {
                 active_limit = active_limit + 1;
-                [S1 + 3] = b(bu[S3 + 14]);
+                [struct_440_ac_limit + 3 + i] = b(bu[struct_440_ac_limit + 8 + i * 1c + c]); // copy from +b4
             }
         }
     }
+}
 
-    S3 = S3 + 1c;
-    S1 = S1 + 1;
-    S4 = S4 + 1;
-    V0 = S4 < 3;
-801B14A4	bne    v0, zero, loop1b1424 [$801b1424]
-
-[S6 + 7] = b(0);
-[S6 + 6] = b(active_limit); // number of activated limit
+[struct_440_ac_limit + 6] = b(active_limit); // number of activated limit
+[struct_440_ac_limit + 7] = b(0);
 ////////////////////////////////
 
 
@@ -1129,20 +1054,17 @@ loop1b1424:	; 801B1424
 ////////////////////////////////
 // func1b14e8()
 
-A1 = 0;
-materia_id = A0 & FF;
-if (materia_id != FF)
-{
-    V0 = bu[800730D0 + materia_id * 14 + 0d]; // materia type from kernel
+materia_data = A0;
+materia_id = materia_data & ff;
 
-    V0 = V0 & f;
-    if (V0 == 7) // enemy skill materia?
+A1 = 0;
+if( materia_id != ff )
+{
+    if( ( bu[800730D0 + materia_id * 14 + 0d] & f ) == 7 ) // enemy skill materia
     {
-        V1 = A0 >> 8;
-        A1 = V1 | 80000000;
+        A1 = 80000000 | (materia_data >> 8);
     }
 }
-
 return A1;
 ////////////////////////////////
 
@@ -1150,25 +1072,20 @@ return A1;
 
 ////////////////////////////////
 // func1b1530()
-savemap_player = S0 = A0;
+
+savemap_player = A0;
 
 S1 = 0;
-S2 = 0
-loop1b1550:	; 801B1550
-    A0 = w[savemap_player + 40 + S2 * 4]; // weapon materia
+for( int i = 0; i < 8; ++i )
+{
+    A0 = w[savemap_player + 40 + i * 4]; // weapon materia
     func1b14e8();
-
     S1 = S1 | V0;
 
-    A0 = w[savemap_player + 60 + S2 * 4]; // armor materia
+    A0 = w[savemap_player + 60 + i * 4]; // armor materia
     func1b14e8();
-
     S1 = S1 | V0;
-
-    S2 = S2 + 1;
-    V0 = S2 < 8;
-801B1574	bne    v0, zero, loop1b1550 [$801b1550]
-
+}
 return S1;
 ////////////////////////////////
 
@@ -1325,7 +1242,7 @@ loop1b1858:	; 801B1858
 801B1858	lui    v0, $8010
 V0 = bu[V0 + 9da0];
 801B1860	nop
-801B1864	srav   v0, s0, v0
+V0 = V0 >> S0;
 V0 = V0 & 0001;
 801B186C	beq    v0, zero, L1b18c4 [$801b18c4]
 A0 = 0002;
