@@ -74,7 +74,17 @@ else
 // func14578()
 
 file_id = A0;
+return w[80048d84 + file_id * 8 + 0] // sector;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func14578()
+
+file_id = A0;
 buffer = A1;
+callback = A2;
 
 // 66020000 00000000 0 "INIT\YAMADA.BIN"
 // 67020000 D2330000 1 "INIT\WINDOW.BIN"
@@ -89,8 +99,8 @@ buffer = A1;
 
 A0 = w[80048d84 + file_id * 8 + 0]; // sector
 A1 = w[80048d84 + file_id * 8 + 4]; // size
-A3 = A2;
 A2 = buffer;
+A3 = callback;
 func33e34();
 ////////////////////////////////
 
@@ -107,7 +117,7 @@ A2 = 0;
 func14578(); // start load file
 
 A0 = 0;
-80014674	jal    func145bc [$800145bc]
+func145bc(); // load sync
 
 A0 = 801b0000;
 A1 = 800a0000;
@@ -133,7 +143,7 @@ loop146c4:	; 800146C4
         else
         {
             A0 = 0;
-            800146E8	jal    func145bc [$800145bc]
+            func145bc(); // load sync
 
             A0 = 3; // BROM.X
             A1 = 800a00cc; // start func
@@ -172,4 +182,19 @@ loop145cc:	; 800145CC
         800145E4	jalr   func ra
     }
 800145EC	j      loop145cc [$800145cc]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func14a00()
+
+to = A0;
+from = A1;
+size = A2 / 4;
+
+for( int i = 0; i < size; ++ i )
+{
+    [to + i * 4] = w(w[from + i * 4]);
+}
 ////////////////////////////////

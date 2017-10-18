@@ -82,30 +82,22 @@ funca55bc();
 
 initbattle_init_player();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 initbattle_init_item();
+
+A0 = battle_id;
+A1 = 0; // callback for scene load
+initbattle_load_enemy_from_scene();
+
+
+
+
+
+
+
 
 // init enemy
 S4 = -1;
 S3 = 1;
-A0 = battle_id;
-A1 = 0;
-initbattle_load_enemy_from_scene();
 
 initbattle_init_unit_datas();
 
@@ -1485,74 +1477,56 @@ loop1b1c14:	; 801B1C14
 ////////////////////////////////
 // initbattle_init_item()
 
-T0 = 0;
-A3 = 0;
-T1 = 0;
+last_item = 0;
 
-loop1b1cbc:	; 801B1CBC
-    T2 = 0;
-    A1 = 0;
-    A2 = 801671b8 + T1;
-    A0 = hu[8009cbe0 + A3 * 2]; // party item
-    if (A0 != ffff)
+for( int i = 0; i < 140; ++i )
+{
+    quantity = 0;
+    target = 0;
+
+    A0 = hu[8009c6e4 + 4fc + i * 2]; // party item
+    if( A0 != ffff )
     {
-        V1 = b;
-        T2 = A0 >> 9;
-        A0 = A0 & 1ff;
+        quantity = A0 >> 9;
+        item_id = A0 & 1ff;
+        restriction = b;
 
-        // usual item
-        if (A0 < 80)
+        if( item_id < 80 ) // usual item
         {
-            V1 = hu[800722cc + A0 * 1c + a]; // item command restriction
-            V1 = V1 & b;
-            A1 = bu[800722cc + A0 * 1c + c]; // attack target
+            restriction = hu[800722cc + item_id * 1c + a] & b; // item command restriction
+            target = bu[800722cc + item_id * 1c + c]; // attack target
         }
-        // weapon
-        else if (A0 < 100)
+        else if( item_id < 100 ) // weapon
         {
-            V0 = hu[800738a0 + (A0 - 80) * 2c + 2a]; // item command restriction
-            V1 = V0 & b;
-            A1 = bu[800738a0 + (A0 - 80) * 2c + 00]; // attack target
+            restriction = hu[800738a0 + (item_id - 80) * 2c + 2a] & b;
+            target = bu[800738a0 + (item_id - 80) * 2c + 00];
         }
-        // armor
-        else if (A0 < 120)
+        else if( item_id < 120 ) // armor
         {
-            V0 = hu[80071e44 + (A0 - 100) * 24 + 20];
-            V1 = V0 & b;
-            A1 = 3;
+            restriction = hu[80071e44 + (item_id - 100) * 24 + 20] & b;
+            target = 3;
         }
-        // accesory
-        else if (A0 < 140)
+        else if( item_id < 140 ) // accesory
         {
-            V0 = hu[80071c32 + (A0 - 120) * 10];
-            V1 = V0 & b;
-            A1 = 3;
+            restriction = hu[80071c32 + (item_id - 120) * 10] & b;
+            target = 3;
         }
 
-        T0 = A3 + 1;
+        last_item = i + 1;
     }
 
-    T1 = T1 + 6;
-    A3 = A3 + 1;
-    V0 = A3 < 140;
+    [801671b8 + i * 6 + 0] = h(item_id);
+    [801671b8 + i * 6 + 2] = b(quantity);
+    [801671b8 + i * 6 + 3] = b(target);
+    [801671b8 + i * 6 + 4] = b(restriction);
+}
 
-    [A2 + 0] = h(A0);
-    [A2 + 2] = b(T2);
-    [A2 + 3] = b(A1);
-    [A2 + 4] = b(V1);
-801B1DD4	bne    v0, zero, loop1b1cbc [$801b1cbc]
-
-
-
-V0 = T0 + 1;
-V1 = V0 >> 1f;
-V0 = V0 + V1;
-V1 = V0 >> 1;
-if (V1 < 3)
+// calculate number of item rows
+V1 = last_item / 2;
+if( V1 < 3 )
 {
     V1 = 3;
 }
-
 [80166f74] = b(V1);
 ////////////////////////////////
 
@@ -1861,88 +1835,73 @@ loop1b2368:	; 801B2368
 // initbattle_load_enemy_from_scene()
 
 battle_id = A0;
-// A1 = 0;
-801B23E0	addiu  sp, sp, $e050 (=-$1fb0)
-S4 = battle_id;
-S2 = A1;
-S0 = S4;
-S5 = 801c0000;
+callback = A1;
 
-if (S4 != 0)
-{
-    S0 = S4 + 3;
-}
+scene_id = battle_id / 4;
 
-S0 = S0 / 4;
-A0 = S0;
-initbattle_get_id_of_scene_file_with_battle_id();
-S1 = V0;
+A0 = scene_id;
+initbattle_get_scene_pack_id_from_scene_id();
+scene_pack_id = V0;
 
-// get offset to scene file.
-A0 = 7;
-func144d8;
+A0 = 7; // "BATTLE\SCENE.BIN"
+func144d8(); // get cd sector
 
-// extract scene file
-A0 = V0 + S1 * 4;
-A1 = 2000;
-A2 = 801c0000;
-A3 = 0;
-func33e34;
+A0 = V0 + scene_pack_id * 4; // sector
+A1 = 2000; // size
+A2 = 801c0000; // buffer
+A3 = 0; // callback
+func33e34(); // load needed scene pack from cd
 
+A0 = callback;
+func145bc(); // load sync
 
+pack_start_scene = bu[80082268 + f1c + scene_pack_id]; // scene.bin look-up table
 
-V0 = bu[80083184 + S1];
-S3 = S0 - V0;
-
-// unknown
-A0 = S2;
-func145bc;
-
-S3 = w[801c0000 + S3 * 4];
-
-
-
-// extract???
-A0 = 801c0000 + S3 * 4;
+A0 = 801c0000 + w[801c0000 + (scene_id - pack_start_scene) * 4] * 4; // scene start pointer
 A1 = SP + 110;
-func17108;
-
-
-
-// id in battle file
-S3 = S4 - S0 * 4;
-
-
+func17108(); // extract gzip
 
 // copy enemy ID
-A0 = 8016360C;
-A1 = SP + 110;
-A2 = 8;
-func14a00;
+A0 = 8016360c; // to
+A1 = SP + 110; // from
+A2 = 8; // size
+func14a00();
 
-// copy battle setup 1
-A0 = 8016360C + 8;
-A1 = SP + 110 + S3 * 14 + 8;
+// id in battle file
+local_battle_id = battle_id - scene_id * 4;
+
+// copy battle setup
+A0 = 8016360c + 8;
+A1 = SP + 110 + 8 + local_battle_id * 14;
 A2 = 14;
-func14a00;
+func14a00();
 
-// copy battle setup 2
-A0 = 8016360C + 1C;
-A1 = SP + 110 + S3 * 30 + 58;
+// copy camera setup
+A0 = 8016360c + 1c;
+A1 = SP + 110 + 58 + local_battle_id * 30;
 A2 = 30;
-func14a00;
+func14a00();
 
 // copy battle formation
-A0 = 8016360C + 4C;
-A1 = SP + 110 + S3 * 60 + 118;
+A0 = 8016360c + 4c;
+A1 = SP + 110 + 118 + local_battle_id * 60;
 A2 = 60;
-func14a00;
+func14a00();
 
 // copy enemy data
 A0 = 800f5f44;
 A1 = SP + 110 + 298;
 A2 = 228;
-func14a00;
+func14a00();
+
+
+
+
+
+
+
+
+
 
 // copy attack data
 A0 = 800f616c;
@@ -2057,21 +2016,20 @@ if (V1 == 1 || V1 == 3)
 
 
 ////////////////////////////////
-// initbattle_get_id_of_scene_file_with_battle_id()
-V1 = 1;
+// initbattle_get_scene_pack_id_from_scene_id()
 
-loop1b273c:	; 801B273C
-    V0 = bu[80082268 + f1c + V1]; // id of file
-    if (A0 < V0)
+battle_id = A0;
+
+int i = 1;
+for( ; i < 40; ++i )
+{
+    if( bu[80082268 + f1c + i] > battle_id ) // scene.bin look-up table
     {
         break;
     }
+}
 
-    V1 = V1 + 1;
-    V0 = V1 < 40;
-801B2760	bne    v0, zero, loop1b273c [$801b273c]
-
-return V1 - 1;
+return i - 1;
 ////////////////////////////////
 
 

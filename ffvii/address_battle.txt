@@ -252,6 +252,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 800f5f44 enemy data structure from scene file (0xb8 size 0x3 records).
+    +00 enemy name (0x20 size string).
     +20 []       level.
     +21 []       dexterity.
     +22 []       luck.
@@ -260,9 +261,11 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +25 []       defense.
     +26 []       magic.
     +27 []       magic defense.
-    +28 []       array of elements (0x8 items)
-    +30 []       array of elements influence here (0 - death, 2 - 200%damage, 3 - normal, 4 - 50%damage, 5 - 0%damage, 6 - 100%absorb, 7 - fully recover). (0x8 items)
-
+    +28 array of elements id (0x8 items 0x1 size)
+    +30 array of elements influence (0 - death, 2 - 200%damage, 3 - normal, 4 - 50%damage, 5 - 0%damage, 6 - 100%absorb, 7 - fully recover) (0x8 items 0x1 size)
+    +38 array of action animation index (0x10 items 0x1 size).
+    +48 array of attack ids (0x10 items 0x2 size).
+    +68 array of attacks camera id for single and multiple targets. If set this will overwrite camera movement set in attack. (0x10 items 0x2 size)
     +88 []       1st stole item chance.
     +89 []       2nd stole item chance.
     +8a []       3rd stole item chance.
@@ -276,11 +279,14 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +98 [][]     manipulate attack id 2.
     +9a [][]     unknown, 0xffff and 0xfffe
     +9c [][]     mp.
-
+    +9e [][]     ap.
+    +a0 [][]     enemy can be morphed into this item. 0xffff if it can't be morphed.
+    +a2 []       multiplier for back damage. damage = damage * 0xXX / 8.
+    +a3 []       align 0xff.
     +a4 [][][][] hp.
     +a8 [][][][] exp.
     +ac [][][][] gil.
-    +b0 [][][][] statuses that can affect enemy.
+    +b0 [][][][] status immunities mask.
 
 800f616c attack data structure from scene file (0x1c size 0x20 records).
 800f64ec attack id data from scene file (0x02 size 0x20 records).
@@ -966,66 +972,66 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80163608 [][]     mask of units covered with physical barrier.
 
-8016360c + 8 + 14 + 30 data from scene file.
-+08 enemy id
-+14 battle setup 1
-    00 [][]     battle location ID.
-    02
-    03
-    04 [][]     Set to 1 if previous battle result &0x40. Store this to 800f7db2. Some related to escape (maybe escape counter)
-    06
-    07
-    08
-    09
-    0A
-    0B
-    0C
-    0D
-    0E
-    0F
-    10 [][]     some flags checked as &10 during enemy init. If (this & 4) == 0 then add 0x08 to previous battle result. Make this&fffb if previous battle result &08. Add 0x04 bit to this if previous battle result &40. Looks like escape flags
-    12 []       formation type id. Used for load camdat (0,1,8 - CAMDAT0.LZS, 2 - CAMDAT1.LZS, 3,4,5,6,7 - CAMDAT2.LZS). Checked if this ==0 during enemy init and store 1 here if few conditions met.
-        00 - Normal fight
-        01 - Preemptive
-        02 - Back attack
-        03 - Side attack (we surround enemy)
-        04 - Attacked from both sides (pincer attack, reverse side attack)
-        05 - Side attack (we surround enemy)
-        06 - Side attack (we surround enemy)
-        07 - A third side attack
-        08 - Normal battle that locks you in the front row, change command is disabled 
-    13 []       store (random byte & 3) + 0x60 here if previous battle result &0x40. Used as init camera script id.
-
-+30 battle camera setup. 4 record 0xc size. 80163b3c - index for those.
-    00 [][]     start camera X
-    02 [][]     start camera Y
-    04 [][]     start camera Z
-    06 [][]     end camera X
-    08 [][]     end camera Y
-    0a [][]     end camera Z
-
-80163658      [][]     battle formation. (size 0x10)
-00 [][]     enemy id. Set with index (0,1,2)
-02 [][]     x
-04 [][]     y
-06 [][]     z
-08 [][]     row
-0A [][]     
-0C [][][][] &0000001F unit states (set to +4 in unit structure). Store status of enemy here from +4 0x68 structure.
+8016360c data from scene file.
+    +00 [][]     enemy 1 id.
+    +02 [][]     enemy 2 id.
+    +04 [][]     enemy 3 id.
+    +06 [][]     0xffff from scene file.
+    +08 [][]     location id.
+    +0a [][]     after victory begin battle with this id.
+    +0c [][]     escape counter.
+    +0e [][]     0xffff from scene file.
+    +10 [][]     1st formation id of candidates for next arena battle.
+    +12 [][]     2nd formation id of candidates for next arena battle.
+    +14 [][]     3rd formation id of candidates for next arena battle.
+    +16 [][]     4th formation id of candidates for next arena battle.
+    +18 [][]     escape flags.
+                    Some flags checked as &10 during enemy init.
+                    If (this & 4) == 0 then add 0x08 to previous battle result.
+                    Make this & fffb if previous battle result &08.
+                    Add 0x04 bit to this if previous battle result &40.
+    +1a []       formation type id.
+                    Used for load camdat (0,1,8 - CAMDAT0.LZS, 2 - CAMDAT1.LZS, 3,4,5,6,7 - CAMDAT2.LZS).
+                    Checked if this ==0 during enemy init and store 1 here if few conditions met.
+                    00 - Normal fight
+                    01 - Preemptive
+                    02 - Back attack
+                    03 - Side attack (we surround enemy)
+                    04 - Attacked from both sides (pincer attack, reverse side attack)
+                    05 - Side attack (we surround enemy)
+                    06 - Side attack (we surround enemy)
+                    07 - A third side attack
+                    08 - Normal battle that locks you in the front row, change command is disabled.
+    +1b []       init camera script id.
+    +1c array of battle camera setup. (0x4 items 0xc size). 80163b3c - index for those.
+        +00 [][]     start camera X
+        +02 [][]     start camera Y
+        +04 [][]     start camera Z
+        +06 [][]     end camera X
+        +08 [][]     end camera Y
+        +0a [][]     end camera Z
+    +4c array of enemies for current battle formation. (0x6 items 0x10 size)
+        +00 [][]     enemy id. Set with index (0,1,2)
+        +02 [][]     x
+        +04 [][]     y
+        +06 [][]     z
+        +08 [][]     row
+        +0a [][]     
+        +0c [][][][] &0000001f unit states (set to +4 in unit structure). Store status of enemy here from +4 0x68 structure.
 
 801636b8 units structure (size 0x10)
-00 []       init with -1. If this is not -1 and player not dead we execure ai script 0.
-01 []       idle action id. in case of enemy init with +10 from 0x68 structure (there is 0 there).
-02
-03
-04 []       dead effect. Init from 801518e4+27 & 3f.
-05
-06 [][]     in case of player store w[800f83e0 + A3 * 68 + 4] & 1 here for battle types 0,1. Store !(w[800f83e0 + A3 * 68 + 4] & 1) for battle 2 and 0 for battle types 3,4,5. Function func1b19ac.
-08 [][][][] we copy 0x0fffffff of unit status here during battle every cycle.
-0c
-0d
-0e
-0f
+    00 []       init with -1. If this is not -1 and player not dead we execure ai script 0.
+    01 []       idle action id. in case of enemy init with +10 from 0x68 structure (there is 0 there).
+    02
+    03
+    04 []       dead effect. Init from 801518e4+27 & 3f.
+    05
+    06 [][]     in case of player store w[800f83e0 + A3 * 68 + 4] & 1 here for battle types 0,1. Store !(w[800f83e0 + A3 * 68 + 4] & 1) for battle 2 and 0 for battle types 3,4,5. Function func1b19ac.
+    08 [][][][] we copy 0x0fffffff of unit status here during battle every cycle.
+    0c
+    0d
+    0e
+    0f
 
 80163758 [][]     all enabled units.
 8016375a [][]     unit mask. Seems to init with all posible enabled units in battle_update_unit_mask.
@@ -1093,7 +1099,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80166f58 []       init with 0.
 
-80166f74 []       some data related to item (lesser value is 3). Number of rows in battle item menu?
+80166f74 []       number of rows in battle item menu. Minimum 3.
 
 80166f78 some structure where we store manipulate attacks from monster (size 0x6, 0x10 per monster (only 0-2 inited as manipulate, others inited with base value0xff 0 0 3))
     +00 []       init with 0xff. Attack index (from scene file)
@@ -1104,10 +1110,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +05
 
 801671b8 battle item struct. (0x6 size)
-    +00 [][]     item data XXXX&1ff from savemap.
-    +02 []       item data XXXX>>9 from savemap.
+    +00 [][]     item id.
+    +02 []       item quantity.
     +03 []       target type
-    +04 []       item command restriction &b.
+    +04 []       item command restriction & b.
 
 80167938 copy here whole savemap character data during battle init.
 

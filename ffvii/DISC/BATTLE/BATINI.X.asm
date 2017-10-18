@@ -59,7 +59,7 @@
 // initbattle_load_enemy_from_scene
 801B23E0-801B2734
 ////////////////////////////////
-// initbattle_get_id_of_scene_file_with_battle_id
+// initbattle_get_scene_pack_id_from_scene_id
 801B2738-801B276C
 ////////////////////////////////
 // initbattle_calculate_stat_add25_percent
