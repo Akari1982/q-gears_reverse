@@ -88,6 +88,9 @@ A0 = battle_id;
 A1 = 0; // callback for scene load
 initbattle_load_enemy_from_scene();
 
+initbattle_init_unit_datas();
+
+
 
 
 
@@ -99,7 +102,7 @@ initbattle_load_enemy_from_scene();
 S4 = -1;
 S3 = 1;
 
-initbattle_init_unit_datas();
+
 
 // battle speed
 A0 = bu[8009d7bc];
@@ -1534,6 +1537,7 @@ if( V1 < 3 )
 
 ////////////////////////////////
 // initbattle_init_unit_datas
+
 [800f83be] = h(0);
 
 
@@ -1674,24 +1678,14 @@ L1b1ecc:	; 801B1ECC
         [800f5cc8 + T3 * 44 + 0d] = b(ff);
         [800f5cc8 + T3 * 44 + 0f] = b(ff);
 
-        // set status immunities
-        V0 = w[800f5f44 + index * b8 + b0];
-        V0 = 0 nor V0;
-        [800f5cc8 + T3 * 44 + 34] = w(V0);
-
-
+        [800f5cc8 + T3 * 44 + 34] = w(0 nor w[800f5f44 + index * b8 + b0]); // set status immunities
 
         // add bits for inited enemy
-        V1 = hu[800f83a4 + 1a];
-        V0 = 1 << (T3 + 4);
-        V1 = V1 | V0;
-        [800f83a4 + 1a] = h(V1);
-
-
+        [800f83a4 + 1a] = h(hu[800f83a4 + 1a] | (1 << (T3 + 4)));
 
         // init formation number
         [800f8580 + T3 * 68 + 0c] = b(0);
-        if (T3 > 0)
+        if( T3 > 0 )
         {
             A0 = hu[800f8580 + T3 * 68 + 24]; // real enemy id
             A2 = 0;
@@ -1778,20 +1772,15 @@ L1b1ecc:	; 801B1ECC
 
 
 
-T3 = 0;
-loop1b2280:	; 801B2280
-    V0 = h[8016360c + 8 + 14 + 30 + T3 * 10]; // enemy index
-    V0 = bu[800f7dd4 + V0];
-    if (V0 >= 2)
+
+for( int i = 0; i < 6; ++i )
+{
+    V0 = h[8016360c + 4c + i * 10 + 0]; // enemy index
+    if( bu[800f7dd4 + V0] >= 2 )
     {
-        [800f5cc8 + T3 * 44 + f] = b(bu[800f83e0 + 4 * 68 + T3 * 68 + c]);
+        [800f5cc8 + T3 * 44 + f] = b(bu[800f83e0 + (4 + i) * 68 + c]);
     }
-
-    T3 = T3 + 1;
-    V0 = T3 < 6;
-801B22D0	bne    v0, zero, loop1b2280 [$801b2280]
-
-return;
+}
 ////////////////////////////////
 
 
@@ -1894,118 +1883,86 @@ A1 = SP + 110 + 298;
 A2 = 228;
 func14a00();
 
-
-
-
-
-
-
-
-
-
 // copy attack data
 A0 = 800f616c;
 A1 = SP + 110 + 4c0;
 A2 = 380;
-func14a00;
+func14a00();
 
 // copy attack ID
-A0 = 800f5f44 + 5a8;
+A0 = 800f64ec;
 A1 = SP + 110 + 840;
 A2 = 40;
-func14a00;
+func14a00();
 
 // copy attack names
-A0 = 800f5f44 + 5e8;
+A0 = 800f652c;
 A1 = SP + 110 + 880;
 A2 = 400;
-func14a00;
+func14a00();
 
-// copy FF padding
+// copy formation script
 A0 = 800f6ba4;
 A1 = SP + 110 + c80;
 A2 = 200;
-func14a00;
+func14a00();
 
 // copy enemy AI
 A0 = 800f6da4;
 A1 = SP + 110 + e80;
 A2 = 1000;
-func14a00;
-
-
+func14a00();
 
 // some camera modification acording to previous battle result some flag and camera
-if ((hu[8016376a] & 4) && (hu[8016360C + 8 + 10] & 10) && (bu[8016360C + 8 + 12] == 0))
+if( ( hu[8016376a] & 0004 ) && ( hu[8016360C + 18] & 0010 ) && (bu[8016360c + 1a] == 0))
 {
-    [8016360c + 8 + 12] = b(1);
+    [8016360c + 1a] = b(1); // preemptive
 }
 
-
-
-V0 = bu[8016360c + 8 + 12];
-//00 01 02 03 04 03 03 03 05
-[800f7dc8] = h(bu[801b0044 + V0]);
-
-
+V0 = bu[8016360c + 1a];
+[800f7dc8] = h(bu[801b0044 + V0]); //00 01 02 03 04 03 03 03 05
 
 // previous battle result modification
-V1 = hu[8016376a];
+V1 = ;
 // if we must continue arena battle
-if (V1 & 40)
+if( hu[8016376a] & 40 )
 {
-    V0 = hu[8016360c + 8 + 10];
-    V0 = V0 | 4;
-    [8016360c + 8 + 10] = h(V0);
-
     [80163614] = h(25); // set battle location id to 0x25
 
-    system_get_random_byte_from_table;
+    [8016360c + c] = h(1);
+    [8016360c + 18] = h(hu[8016360c + 18] | 0004);
 
-    [8016360c + 8 + 13] = b((V0 & 3) + 60);
-    [8016360c + 8 + 04] = h(1);
+    system_get_random_byte_from_table();
+    [8016360c + 1b] = b((V0 & 3) + 60);
 
     // boost enemy
-    S3 = 0;
-    loop1b2630:	; 801B2630
+    for( int i = 0; i < 3; ++i )
+    {
         // enemy hp doubled
-        [800f5f44 + S3 * b8 + a4] = w(w[800f5f44 + S3 * b8 + a4] * 2);
+        [800f5f44 + i * b8 + a4] = w(w[800f5f44 + i * b8 + a4] * 2);
 
-        A0 = bu[800f5f44 + S3 * b8 + 24];
+        A0 = bu[800f5f44 + i * b8 + 24];
         initbattle_calculate_stat_add25_percent();
-        [800f5f44 + S3 * B8 + 24] = b(V0);
+        [800f5f44 + i * b8 + 24] = b(V0);
 
-        A0 = bu[800f5f44 + S3 * b8 + 26];
+        A0 = bu[800f5f44 + i * b8 + 26];
         initbattle_calculate_stat_add25_percent();
-        [800f5f44 + S3 * b8 + 26] = b(V0);
-
-        S3 = S3 + 1;
-        V0 = S3 < 3;
-    801B2664	bne    v0, zero, loop1b2630 [$801b2630]
+        [800f5f44 + i * b8 + 26] = b(V0);
+    }
 }
-else if (V1 & 08)
+else if( hu[8016376a] & 0008 )
 {
-    V0 = hu[8016360c + 8 + 10];
-    V0 = V0 & fffb;
-    [8016360c + 8 + 10] = h(V0);
+    [8016360c + 18] = h(hu[8016360c + 18] & fffb);
 }
 
-
-
-V0 = hu[8016360c + 8 + 10];
-if ((V0 & 4) == 0)
+if( ( hu[8016360c + 18] & 0004 ) == 0 )
 {
-    [8016376a] = h(hu[8016376a] | 8);
+    [8016376a] = h(hu[8016376a] | 0008);
 }
 
+[800f7db2] = h(hu[8016360c + c]);
 
-
-[800f7db2] = h(hu[8016360c + 8 + 4]);
-
-
-
-V1 = hu[800f7dc8];
-if (V1 == 1 || V1 == 3)
+if( hu[800f7dc8] == 1 || hu[800f7dc8] == 3 )
 {
     [800f7db2] = h(1);
 }
@@ -2036,12 +1993,11 @@ return i - 1;
 
 ////////////////////////////////
 // initbattle_calculate_stat_add25_percent()
-A0 = A0 + A0 * 25 / 100;
 
-if (A0 >= 100)
+A0 = A0 + A0 * 25 / 100;
+if( A0 >= 100 )
 {
     A0 = ff;
 }
-
 return A0;
 ////////////////////////////////
