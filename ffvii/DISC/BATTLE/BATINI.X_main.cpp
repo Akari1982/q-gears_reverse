@@ -325,10 +325,10 @@ L1b0560:	; 801B0560
 A1 = A1 + 3354;
 801B0568	jal    func1b23e0 [$801b23e0]
 A0 = S5;
-801B0570	jal    initbattle_init_unit_datas [$801b1e0c]
 S0 = 0;
-801B0578	lui    v0, $8010
-801B057C	addiu  v0, v0, $83ae (=-$7c52)
+801B0570	jal    initbattle_init_unit_datas [$801b1e0c]
+
+V0 = 800f83ae;
 [V0 + 0000] = h(0);
 801B0584	addiu  s4, zero, $ffff (=-$1)
 S3 = 0001;
@@ -1536,92 +1536,58 @@ if( V1 < 3 )
 
 
 ////////////////////////////////
-// initbattle_init_unit_datas
+// initbattle_init_unit_datas()
 
 [800f83be] = h(0);
 
+// clear number of same enemies
+for( int i = 0; i < 3; ++i )
+{
+    [800f7dd4 + i] = b(0);
+}
 
+// init enemy temp variables for units ai
+for( int i = 0; i < 6; ++i )
+{
+    for( int j = 0; j < 20; ++j )
+    {
+        [800f89f0 + i * 80 + j * 4] = w(0);
+    }
+}
 
-// clear number of enemies with same id
-V0 = 800f7dd6;
-T3 = 2;
-loop1b1e48:	; 801B1E48
-    [V0] = b(0);
-    T3 = T3 - 1;
-    V0 = V0 - 1;
-801B1E50	bgez   t3, loop1b1e48 [$801b1e48]
+for( int i = 0; i < 6; ++i )
+{
+    [800f8580 + i * 68 + 0] = w(0);
+    [800f8580 + i * 68 + 4] = w(0);
+    [800f8580 + i * 68 + 8] = b(ff);
+    [800f8580 + i * 68 + 24] = h(ffff);
+    [800f8580 + i * 68 + 4f] = b(ff);
 
-
-
-// init enemy 0x80 structure with zeros
-T3 = 0;
-V1 = 800f89f0;
-loop1b1e64:	; 801B1E64
-    A2 = 1F;
-    V0 = V1 + 7C;
-
-    loop1b1e6c:	; 801B1E6C
-        [V0] = w(0);
-
-        A2 = A2 - 1;
-        V0 = V0 - 4;
-    801B1E74	bgez   a2, loop1b1e6c [$801b1e6c]
-
-    T3 = T3 + 1;
-    V1 = V1 + 80;
-    V0 = T3 < 6;
-801B1E84	bne    v0, zero, loop1b1e64 [$801b1e64]
-
-
-
-T3 = 0;
-L1b1ecc:	; 801B1ECC
-    [800f8580 + T3 * 68 + 00] = w(0);
-    [800f8580 + T3 * 68 + 04] = w(0);
-    [800f8580 + T3 * 68 + 08] = b(ff);
-    [800f8580 + T3 * 68 + 24] = h(ffff);
-    [800f8580 + T3 * 68 + 4F] = b(ff);
-
-    [800f692c + 208 + 20 + T3 * 8] = b(ff);
-
-
+    [800f6b34 + 20 + i * 8 + 0] = b(ff);
 
     // init 10-1f with zeros
-    A2 = F;
-    V1 = 800f5cc8 + T3 * 44 + 1F;
-    loop1b1f18:	; 801B1F18
-        [V1] = b(0);
-
-        A2 = A2 - 1;
-        V1 = V1 - 1;
-    801B1F20	bgez   a2, loop1b1f18 [$801b1f18]
-
-
+    for( int j = 0; j < 10; ++j )
+    {
+        [800f5cc8 + i * 44 + 10 + j] = b(0);
+    }
 
     // init 20-27 with zeros
-    A2 = 7;
-    V0 = 800f5cc8 + T3 * 44 + 27;
-    loop1b1f30:	; 801B1F30
-        [V0] = b(0);
-
-        A2 = A2 - 1;
-        V0 = V0 - 1;
-    801B1F38	bgez   a2, loop1b1f30 [$801b1f30]
-
-
-
-    A0 = hu[8016360c + 4c + T3 * 10];
-    // if enemy exist
-    if (A0 != -1)
+    for( int j = 0; j < 8; ++j )
     {
-        [800f8580 + T3 * 68 + 24] = h(A0);
+        [800f5cc8 + i * 44 + 20 + j] = b(0);
+    }
+
+    enemy_id = A0 = hu[8016360c + 4c + i * 10 + 0];
+    // if enemy exist
+    if( enemy_id != -1 )
+    {
+        [800f8580 + i * 68 + 24] = h(enemy_id);
 
 
 
         index = 0;
         loop1b1f64:	; 801B1F64
-            V0 = h[8016360c + index * 2];
-            if (V0 == A0)
+            if( h[8016360c + index * 2] == enemy_id )
             {
                 break;
             }
@@ -1639,69 +1605,69 @@ L1b1ecc:	; 801B1ECC
 
 
 
-        [8016360c + 4c + T3 * 10 + 00] = h(index); // store index here instead of real enemy id
+        [8016360c + 4c + i * 10 + 00] = h(index); // store index here instead of real enemy id
 
-        [800f8580 + T3 * 68 + 00] = w(0);
-        [800f8580 + T3 * 68 + 08] = b(index);
-        [800f8580 + T3 * 68 + 09] = b(bu[800f5f44 + index * b8 + 20]);
-        [800f8580 + T3 * 68 + 0d] = b(bu[800f5f44 + index * b8 + 24]);
-        [800f8580 + T3 * 68 + 0e] = b(bu[800f5f44 + index * b8 + 26]);
-        [800f8580 + T3 * 68 + 0f] = b(bu[800f5f44 + index * b8 + 23]);
-        [800f8580 + T3 * 68 + 10] = b(0);
-        [800f8580 + T3 * 68 + 11] = b(1);
-        [800f8580 + T3 * 68 + 12] = b(bu[800f5f44 + index * b8 + a2]);
-        [800f8580 + T3 * 68 + 14] = b(bu[800f5f44 + index * b8 + 21]);
-        [800f8580 + T3 * 68 + 15] = b(bu[800f5f44 + index * b8 + 22]);
-        [800f8580 + T3 * 68 + 20] = h(bu[800f5f44 + index * b8 + 25] * 2);
-        [800f8580 + T3 * 68 + 22] = h(bu[800f5f44 + index * b8 + 27] * 2);
-        [800f8580 + T3 * 68 + 28] = h(hu[800f5f44 + index * b8 + 9c]);
-        [800f8580 + T3 * 68 + 2a] = h(hu[800f5f44 + index * b8 + 9c]);
-        [800f8580 + T3 * 68 + 2c] = w(w[800f5f44 + index * b8 + a4]);
-        [800f8580 + T3 * 68 + 30] = w(w[800f5f44 + index * b8 + a4]);
-        [800f8580 + T3 * 68 + 44] = w(0);
-        [800f8580 + T3 * 68 + 4c] = b(1);
-        [800f8580 + T3 * 68 + 4e] = b(hu[8016360C + 8 + 14 + 30 + T3 * 10 + 8]);
-        [800f8580 + T3 * 68 + 50] = h(0);
-        [800f8580 + T3 * 68 + 52] = h(ffff);
-        [800f8580 + T3 * 68 + 56] = b(2);
-        [800f8580 + T3 * 68 + 58] = w(w[800f5f44 + index * b8 + ac]);
-        [800f8580 + T3 * 68 + 5c] = w(w[800f5f44 + index * b8 + a8]);
+        [800f8580 + i * 68 + 00] = w(0);
+        [800f8580 + i * 68 + 08] = b(index);
+        [800f8580 + i * 68 + 09] = b(bu[800f5f44 + index * b8 + 20]);
+        [800f8580 + i * 68 + 0d] = b(bu[800f5f44 + index * b8 + 24]);
+        [800f8580 + i * 68 + 0e] = b(bu[800f5f44 + index * b8 + 26]);
+        [800f8580 + i * 68 + 0f] = b(bu[800f5f44 + index * b8 + 23]);
+        [800f8580 + i * 68 + 10] = b(0);
+        [800f8580 + i * 68 + 11] = b(1);
+        [800f8580 + i * 68 + 12] = b(bu[800f5f44 + index * b8 + a2]);
+        [800f8580 + i * 68 + 14] = b(bu[800f5f44 + index * b8 + 21]);
+        [800f8580 + i * 68 + 15] = b(bu[800f5f44 + index * b8 + 22]);
+        [800f8580 + i * 68 + 20] = h(bu[800f5f44 + index * b8 + 25] * 2);
+        [800f8580 + i * 68 + 22] = h(bu[800f5f44 + index * b8 + 27] * 2);
+        [800f8580 + i * 68 + 28] = h(hu[800f5f44 + index * b8 + 9c]);
+        [800f8580 + i * 68 + 2a] = h(hu[800f5f44 + index * b8 + 9c]);
+        [800f8580 + i * 68 + 2c] = w(w[800f5f44 + index * b8 + a4]);
+        [800f8580 + i * 68 + 30] = w(w[800f5f44 + index * b8 + a4]);
+        [800f8580 + i * 68 + 44] = w(0);
+        [800f8580 + i * 68 + 4c] = b(1);
+        [800f8580 + i * 68 + 4e] = b(hu[8016360C + 8 + 14 + 30 + i * 10 + 8]);
+        [800f8580 + i * 68 + 50] = h(0);
+        [800f8580 + i * 68 + 52] = h(ffff);
+        [800f8580 + i * 68 + 56] = b(2);
+        [800f8580 + i * 68 + 58] = w(w[800f5f44 + index * b8 + ac]);
+        [800f8580 + i * 68 + 5c] = w(w[800f5f44 + index * b8 + a8]);
 
-        V0 = w[8016360c + 8 + 14 + 30 + T3 * 10 + c];
+        V0 = w[8016360c + 8 + 14 + 30 + i * 10 + c];
         V0 = V0 & 0000001f;
-        [800f8580 + T3 * 68 + 04] = w(V0);
+        [800f8580 + i * 68 + 04] = w(V0);
 
 
 
-        [800f5cc8 + T3 * 44 + 38] = w(800f5f44 + index * b8);
-        [800f5cc8 + T3 * 44 + 0c] = b(ff);
-        [800f5cc8 + T3 * 44 + 0d] = b(ff);
-        [800f5cc8 + T3 * 44 + 0f] = b(ff);
+        [800f5cc8 + i * 44 + 38] = w(800f5f44 + index * b8);
+        [800f5cc8 + i * 44 + 0c] = b(ff);
+        [800f5cc8 + i * 44 + 0d] = b(ff);
+        [800f5cc8 + i * 44 + 0f] = b(ff);
 
-        [800f5cc8 + T3 * 44 + 34] = w(0 nor w[800f5f44 + index * b8 + b0]); // set status immunities
+        [800f5cc8 + i * 44 + 34] = w(0 nor w[800f5f44 + index * b8 + b0]); // set status immunities
 
         // add bits for inited enemy
-        [800f83a4 + 1a] = h(hu[800f83a4 + 1a] | (1 << (T3 + 4)));
+        [800f83a4 + 1a] = h(hu[800f83a4 + 1a] | (1 << (i + 4)));
 
         // init formation number
-        [800f8580 + T3 * 68 + 0c] = b(0);
-        if( T3 > 0 )
+        [800f8580 + i * 68 + 0c] = b(0);
+        if( i > 0 )
         {
-            A0 = hu[800f8580 + T3 * 68 + 24]; // real enemy id
+            A0 = hu[800f8580 + i * 68 + 24]; // real enemy id
             A2 = 0;
             loop1b211c:	; 801B211C
                 V0 = hu[800f83e0 + 4 * 68 + V1 + 24];
                 if (V0 == A0)
                 {
-                    V0 = bu[800f8580 + T3 * 68 + 0c];
+                    V0 = bu[800f8580 + i * 68 + 0c];
                     V0 = V0 + 1;
-                    [800f8580 + T3 * 68 + 0c] = b(V0);
+                    [800f8580 + i * 68 + 0c] = b(V0);
                 }
 
                 A2 = A2 + 1;
                 V1 = V1 + 68;
 
-                V0 = A2 < T3;
+                V0 = A2 < i;
             801B214C	bne    v0, zero, loop1b211c [$801b211c]
         }
 
@@ -1711,10 +1677,10 @@ L1b1ecc:	; 801B1ECC
         A2 = 0;
         // go through all manipulate
         loop1b2168:	; 801B2168
-            [ + T3 * 60 + A2 * 6 + 00] = b(ff);
-            [80166f78 + T3 * 60 + A2 * 6 + 01] = b(0);
-            [80166f78 + T3 * 60 + A2 * 6 + 02] = b(0);
-            [80166f78 + T3 * 60 + A2 * 6 + 03] = b(3);
+            [ + i * 60 + A2 * 6 + 00] = b(ff);
+            [80166f78 + i * 60 + A2 * 6 + 01] = b(0);
+            [80166f78 + i * 60 + A2 * 6 + 02] = b(0);
+            [80166f78 + i * 60 + A2 * 6 + 03] = b(3);
 
             V1 = hu[800f5f44 + index * b8 + 94 + A2 * 2]; // manipulate attacks id
             if( V1 != ffff )
@@ -1732,9 +1698,9 @@ L1b1ecc:	; 801B1ECC
                             V0 = V0 ^ 2;
                         }
 
-                        [80166F78 + T3 * 60 + A2 * 6 + 00] = b(A1);
-                        [80166F78 + T3 * 60 + A2 * 6 + 02] = b(V0);
-                        [80166F78 + T3 * 60 + A2 * 6 + 03] = b(0);
+                        [80166F78 + i * 60 + A2 * 6 + 00] = b(A1);
+                        [80166F78 + i * 60 + A2 * 6 + 02] = b(V0);
+                        [80166F78 + i * 60 + A2 * 6 + 03] = b(0);
                         break;
                     }
 
@@ -1751,7 +1717,7 @@ L1b1ecc:	; 801B1ECC
 
         A2 = 3;
         loop1b2220:	; 801B2220
-            V0 = 80166f78 + T3 * 60 + A2 * 6;
+            V0 = 80166f78 + i * 60 + A2 * 6;
             [V0 + 00] = b(FF);
             [V0 + 01] = b(0);
             [V0 + 02] = b(0);
@@ -1763,22 +1729,16 @@ L1b1ecc:	; 801B1ECC
 
 
 
-        [800f5cc8 + T3 * 44 + 29] = b(0);
+        [800f5cc8 + i * 44 + 29] = b(0);
     }
-
-    T3 = T3 + 1;
-    V0 = T3 < 6;
-801B2268	bne    v0, zero, L1b1ecc [$801b1ecc]
-
-
-
+}
 
 for( int i = 0; i < 6; ++i )
 {
     V0 = h[8016360c + 4c + i * 10 + 0]; // enemy index
     if( bu[800f7dd4 + V0] >= 2 )
     {
-        [800f5cc8 + T3 * 44 + f] = b(bu[800f83e0 + (4 + i) * 68 + c]);
+        [800f5cc8 + i * 44 + f] = b(bu[800f83e0 + (4 + i) * 68 + c]);
     }
 }
 ////////////////////////////////

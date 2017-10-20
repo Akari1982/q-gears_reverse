@@ -588,11 +588,11 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     + 58 [][][][] gil.
     + 5c [][][][] exp.
 
-800f87f0               temp variable unit data structure. (size 0x80). (address 0x0000).
-800f89f0               enemy part. Init whole structure with 0.
-800f87f0 + 00 []       set to 0 at start of ai cycle
-800f87f0 + 04 []       set to 0 at start of ai cycle
-800f87f0 + 08 []       set to 0 at start of ai cycle
+800f87f0 temp variable unit data structure. (size 0x80). (address 0x0000).
+800f89f0 enemy part. Init whole structure with 0.
+    +00 []       set to 0 at start of ai cycle
+    +04 []       set to 0 at start of ai cycle
+    +08 []       set to 0 at start of ai cycle
 
 800f8cf0 []       set to 0 in 0xf7 action opcode
 
