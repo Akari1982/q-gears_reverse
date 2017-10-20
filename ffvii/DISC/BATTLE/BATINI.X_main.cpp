@@ -90,40 +90,34 @@ initbattle_load_enemy_from_scene();
 
 initbattle_init_unit_datas();
 
-
-
-
-
-
-
-
-
-// init enemy
-S4 = -1;
-S3 = 1;
-
-
-
-// battle speed
-A0 = bu[8009d7bc];
+A0 = bu[8009c6e4 + 10d8]; // battle speed
 func1b085c();
 
 // set atb type from config flags
 [800f7daa] = h((hu[8009d7be] & c000) >> 6);
 
-S0 = 0;
-loop1b0200:	; 801B0200
-    A0 = S0;
+for( int i = 0; i < a; ++i )
+{
+    A0 = i;
     funcae954();
 
-    if (b[800f83e0 + S0 * 68 + 8] != -1)
+    if( b[800f83e0 + i * 68 + 8] != -1 )
     {
         [800f83a4 + a] = h(hu[800f83a4 + a] | (1 << S0));
     }
+}
 
-    S0 = S0 + 1;
-    V0 = S0 < a;
-801B0230	bne    v0, zero, loop1b0200 [$801b0200]
+
+
+
+
+
+
+
+
+
+
+
 
 [800f83a4 + 04] = b(bu[8016360c + 8 + 12]);
 [800f83a4 + 28] = h(battle_id);
@@ -241,7 +235,6 @@ if (V0 & 0004)
             }
         }
 
-        L1b0448:	; 801B0448
         A0 = A0 << 1;
         T0 = T0 + 4;
         S0 = S0 + 1;
@@ -500,8 +493,7 @@ loop1b080c:	; 801B080C
 // func1b085c()
 
 config_speed = A0;
-V0 = 10000 / (((config_speed * 1e0 / 100) + 78) * 2);
-[800f7da6] = h(V0);
+[800f7da6] = h(10000 / (((config_speed * 1e0 / 100) + 78) * 2));
 ////////////////////////////////
 
 
@@ -1577,157 +1569,108 @@ for( int i = 0; i < 6; ++i )
         [800f5cc8 + i * 44 + 20 + j] = b(0);
     }
 
-    enemy_id = A0 = hu[8016360c + 4c + i * 10 + 0];
-    // if enemy exist
+    enemy_id = hu[8016360c + 4c + i * 10 + 0];
     if( enemy_id != -1 )
     {
         [800f8580 + i * 68 + 24] = h(enemy_id);
 
-
-
-        index = 0;
-        loop1b1f64:	; 801B1F64
-            if( h[8016360c + index * 2] == enemy_id )
+        inner_id = 0;
+        for( ; inner_id < 3; ++inner_id )
+        {
+            if( h[8016360c + inner_id * 2] == enemy_id )
             {
                 break;
             }
+        }
 
-            index = index + 1;
-            V0 = index < 3;
-        801B1F7C	bne    v0, zero, loop1b1f64 [$801b1f64]
+        [800f7dd4 + inner_id] = b(bu[800f7dd4 + inner_id] + 1);
 
+        [8016360c + 4c + i * 10 + 00] = h(inner_id); // store inner_id here instead of real enemy id
 
-
-        // increment enemy index
-        V0 = bu[800f7dd4 + index];
-        V0 = V0 + 1;
-        [800f7dd4 + index] = b(V0);
-
-
-
-        [8016360c + 4c + i * 10 + 00] = h(index); // store index here instead of real enemy id
-
-        [800f8580 + i * 68 + 00] = w(0);
-        [800f8580 + i * 68 + 08] = b(index);
-        [800f8580 + i * 68 + 09] = b(bu[800f5f44 + index * b8 + 20]);
-        [800f8580 + i * 68 + 0d] = b(bu[800f5f44 + index * b8 + 24]);
-        [800f8580 + i * 68 + 0e] = b(bu[800f5f44 + index * b8 + 26]);
-        [800f8580 + i * 68 + 0f] = b(bu[800f5f44 + index * b8 + 23]);
-        [800f8580 + i * 68 + 10] = b(0);
-        [800f8580 + i * 68 + 11] = b(1);
-        [800f8580 + i * 68 + 12] = b(bu[800f5f44 + index * b8 + a2]);
-        [800f8580 + i * 68 + 14] = b(bu[800f5f44 + index * b8 + 21]);
-        [800f8580 + i * 68 + 15] = b(bu[800f5f44 + index * b8 + 22]);
-        [800f8580 + i * 68 + 20] = h(bu[800f5f44 + index * b8 + 25] * 2);
-        [800f8580 + i * 68 + 22] = h(bu[800f5f44 + index * b8 + 27] * 2);
-        [800f8580 + i * 68 + 28] = h(hu[800f5f44 + index * b8 + 9c]);
-        [800f8580 + i * 68 + 2a] = h(hu[800f5f44 + index * b8 + 9c]);
-        [800f8580 + i * 68 + 2c] = w(w[800f5f44 + index * b8 + a4]);
-        [800f8580 + i * 68 + 30] = w(w[800f5f44 + index * b8 + a4]);
+        [800f8580 + i * 68 + 0] = w(0); // status
+        [800f8580 + i * 68 + 4] = w(w[8016360c + 4c + i * 10 + c] & 0000001f);
+        [800f8580 + i * 68 + 8] = b(inner_id);
+        [800f8580 + i * 68 + 9] = b(bu[800f5f44 + inner_id * b8 + 20]); // level
+        [800f8580 + i * 68 + d] = b(bu[800f5f44 + inner_id * b8 + 24]); // strength
+        [800f8580 + i * 68 + e] = b(bu[800f5f44 + inner_id * b8 + 26]); // magic
+        [800f8580 + i * 68 + f] = b(bu[800f5f44 + inner_id * b8 + 23]); // evade
+        [800f8580 + i * 68 + 10] = b(0); // idle action
+        [800f8580 + i * 68 + 11] = b(1); // hurt action
+        [800f8580 + i * 68 + 12] = b(bu[800f5f44 + inner_id * b8 + a2]); // multiplier for back damage
+        [800f8580 + i * 68 + 14] = b(bu[800f5f44 + inner_id * b8 + 21]); // dexterity
+        [800f8580 + i * 68 + 15] = b(bu[800f5f44 + inner_id * b8 + 22]); // luck
+        [800f8580 + i * 68 + 20] = h(bu[800f5f44 + inner_id * b8 + 25] * 2); // defense
+        [800f8580 + i * 68 + 22] = h(bu[800f5f44 + inner_id * b8 + 27] * 2); // magic defense
+        [800f8580 + i * 68 + 28] = h(hu[800f5f44 + inner_id * b8 + 9c]); // mp
+        [800f8580 + i * 68 + 2a] = h(hu[800f5f44 + inner_id * b8 + 9c]); // mp
+        [800f8580 + i * 68 + 2c] = w(w[800f5f44 + inner_id * b8 + a4]); // hp
+        [800f8580 + i * 68 + 30] = w(w[800f5f44 + inner_id * b8 + a4]); // hp
         [800f8580 + i * 68 + 44] = w(0);
         [800f8580 + i * 68 + 4c] = b(1);
-        [800f8580 + i * 68 + 4e] = b(hu[8016360C + 8 + 14 + 30 + i * 10 + 8]);
+        [800f8580 + i * 68 + 4e] = b(hu[8016360C + 4c + i * 10 + 8]); // row
         [800f8580 + i * 68 + 50] = h(0);
         [800f8580 + i * 68 + 52] = h(ffff);
         [800f8580 + i * 68 + 56] = b(2);
-        [800f8580 + i * 68 + 58] = w(w[800f5f44 + index * b8 + ac]);
-        [800f8580 + i * 68 + 5c] = w(w[800f5f44 + index * b8 + a8]);
+        [800f8580 + i * 68 + 58] = w(w[800f5f44 + inner_id * b8 + ac]); // gil
+        [800f8580 + i * 68 + 5c] = w(w[800f5f44 + inner_id * b8 + a8]); // exp
 
-        V0 = w[8016360c + 8 + 14 + 30 + i * 10 + c];
-        V0 = V0 & 0000001f;
-        [800f8580 + i * 68 + 04] = w(V0);
-
-
-
-        [800f5cc8 + i * 44 + 38] = w(800f5f44 + index * b8);
-        [800f5cc8 + i * 44 + 0c] = b(ff);
-        [800f5cc8 + i * 44 + 0d] = b(ff);
-        [800f5cc8 + i * 44 + 0f] = b(ff);
-
-        [800f5cc8 + i * 44 + 34] = w(0 nor w[800f5f44 + index * b8 + b0]); // set status immunities
+        [800f5cc8 + i * 44 + c] = b(ff);
+        [800f5cc8 + i * 44 + d] = b(ff);
+        [800f5cc8 + i * 44 + f] = b(ff);
+        [800f5cc8 + i * 44 + 34] = w(0 nor w[800f5f44 + inner_id * b8 + b0]); // set status immunities
+        [800f5cc8 + i * 44 + 38] = w(800f5f44 + inner_id * b8 + 0); // name pointer
 
         // add bits for inited enemy
         [800f83a4 + 1a] = h(hu[800f83a4 + 1a] | (1 << (i + 4)));
 
         // init formation number
-        [800f8580 + i * 68 + 0c] = b(0);
-        if( i > 0 )
+        [800f8580 + i * 68 + c] = b(0);
+        for( int j = 0; j < i; ++j )
         {
-            A0 = hu[800f8580 + i * 68 + 24]; // real enemy id
-            A2 = 0;
-            loop1b211c:	; 801B211C
-                V0 = hu[800f83e0 + 4 * 68 + V1 + 24];
-                if (V0 == A0)
-                {
-                    V0 = bu[800f8580 + i * 68 + 0c];
-                    V0 = V0 + 1;
-                    [800f8580 + i * 68 + 0c] = b(V0);
-                }
-
-                A2 = A2 + 1;
-                V1 = V1 + 68;
-
-                V0 = A2 < i;
-            801B214C	bne    v0, zero, loop1b211c [$801b211c]
+            if( hu[800f83e0 + (4 + j) * 68 + 24] == hu[800f8580 + i * 68 + 24] ) // real enemy id
+            {
+                [800f8580 + i * 68 + c] = b(bu[800f8580 + i * 68 + c] + 1);
+            }
         }
 
 
 
         // add manipulate
-        A2 = 0;
-        // go through all manipulate
-        loop1b2168:	; 801B2168
-            [ + i * 60 + A2 * 6 + 00] = b(ff);
-            [80166f78 + i * 60 + A2 * 6 + 01] = b(0);
-            [80166f78 + i * 60 + A2 * 6 + 02] = b(0);
-            [80166f78 + i * 60 + A2 * 6 + 03] = b(3);
+        for( int j = 0; j < 3; ++ j )
+        {
+            [80166f78 + i * 60 + j * 6 + 0] = b(ff); // attack id
+            [80166f78 + i * 60 + j * 6 + 1] = b(0);
+            [80166f78 + i * 60 + j * 6 + 2] = b(0);
+            [80166f78 + i * 60 + j * 6 + 3] = b(3);
 
-            V1 = hu[800f5f44 + index * b8 + 94 + A2 * 2]; // manipulate attacks id
+            V1 = hu[800f5f44 + inner_id * b8 + 94 + j * 2]; // manipulate attacks id
             if( V1 != ffff )
             {
-                A1 = 0;
-
-                // search for this attack
-                loop1b219c:	; 801B219C
-                    V0 = hu[800f64ec + A1 * 2];
-                    if( V0 == V1 )
+                for( int k = 0; k < 20; ++k ) // search for this attack
+                {
+                    if( hu[800f64ec + k * 2] == V1 )
                     {
-                        V0 = bu[800f616c + A1 * 1c + c]; // target from attack data
+                        V0 = bu[800f616c + k * 1c + c]; // target flags
                         if( V0 != 0 )
                         {
                             V0 = V0 ^ 2;
                         }
-
-                        [80166F78 + i * 60 + A2 * 6 + 00] = b(A1);
-                        [80166F78 + i * 60 + A2 * 6 + 02] = b(V0);
-                        [80166F78 + i * 60 + A2 * 6 + 03] = b(0);
+                        [80166f78 + i * 60 + j * 6 + 00] = b(k); // local attack id
+                        [80166f78 + i * 60 + j * 6 + 02] = b(V0);
+                        [80166f78 + i * 60 + j * 6 + 03] = b(0);
                         break;
                     }
-
-                    A1 = A1 + 1;
-                    V0 = A1 < 20;
-                801B21E4	bne    v0, zero, loop1b219c [$801b219c]
+                }
             }
+        }
 
-            A2 = A2 + 1;
-            V0 = A2 < 3;
-        801B21F8	bne    v0, zero, loop1b2168 [$801b2168]
-
-
-
-        A2 = 3;
-        loop1b2220:	; 801B2220
-            V0 = 80166f78 + i * 60 + A2 * 6;
-            [V0 + 00] = b(FF);
-            [V0 + 01] = b(0);
-            [V0 + 02] = b(0);
-            [V0 + 03] = b(3);
-
-            A2 = A2 + 1;
-            V0 = A2 < 10;
-        801B223C	bne    v0, zero, loop1b2220 [$801b2220]
-
-
+        for( j = 3; j < 10; ++j )
+        {
+            [80166f78 + i * 60 + j * 6 + 0] = b(ff);
+            [80166f78 + i * 60 + j * 6 + 1] = b(0);
+            [80166f78 + i * 60 + j * 6 + 2] = b(0);
+            [80166f78 + i * 60 + j * 6 + 3] = b(3);
+        }
 
         [800f5cc8 + i * 44 + 29] = b(0);
     }
@@ -1735,7 +1678,7 @@ for( int i = 0; i < 6; ++i )
 
 for( int i = 0; i < 6; ++i )
 {
-    V0 = h[8016360c + 4c + i * 10 + 0]; // enemy index
+    V0 = h[8016360c + 4c + i * 10 + 0]; // enemy inner_id
     if( bu[800f7dd4 + V0] >= 2 )
     {
         [800f5cc8 + i * 44 + f] = b(bu[800f83e0 + (4 + i) * 68 + c]);

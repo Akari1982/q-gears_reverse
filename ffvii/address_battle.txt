@@ -575,8 +575,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     + 2a [][]     max MP.
     + 2c [][][][] current HP.
     + 30 [][][][] max HP.
-    + 44 [][][][] Init with 0. Store status of this unit here during initialization.
-    + 4c []       Init with 1.
+    + 44 [][][][] init with 0. Store status of this unit here during initialization.
+    + 4c []       init with 1.
     + 4d []       set magic evade (magic defense% in game) from armor equipped in case of player.
     + 4e []       store row from battle formation here during init.
     + 4f []       init with 0xff.
@@ -1089,9 +1089,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80166f74 []       number of rows in battle item menu. Minimum 3.
 
 80166f78 some structure where we store manipulate attacks from monster (size 0x6, 0x10 per monster (only 0-2 inited as manipulate, others inited with base value0xff 0 0 3))
-    +00 []       init with 0xff. Attack index (from scene file)
+    +00 []       local attack id (global used in whole game but after load we index into loaded array)
     +01 []       init with 0.
-    +02 []       init with 0. +c[] from attack data (XX ^ 2).
+    +02 []       target flags. Switch 0x02 in mamipulate attack.
     +03 []       init with 3. Set 0 here if attack is added.
     +04
     +05
