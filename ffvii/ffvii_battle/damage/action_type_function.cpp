@@ -1073,7 +1073,7 @@ if( w[800f5bf4 + attacker_id * 44 + 0] == 1e61 ) // if lucky 7777 then no status
 address = w[80063014];
 if( w[address + 20] >= 0 )
 {
-    funca2f4c;
+    funca2f4c();
 
     [V0 + 0] = b(w[address + 0]);
     [V0 + 1] = b(w[address + 1c]);
@@ -2140,7 +2140,7 @@ address = w[80063014];
 
 S0 = A0; // target mask
 
-funca2f4c;
+funca2f4c();
 S1 = V0;
 
 A0 = S0;
@@ -2236,7 +2236,7 @@ S1 = A1;
 
 if( ( w[800f83e0 + S0 * 68 + 0] & 00000001 ) == 0 ) // status
 {
-    funca2f4c;
+    funca2f4c();
 
     [V0 + 0] = b(S0);
     [V0 + 1] = b(1);

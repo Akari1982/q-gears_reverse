@@ -163,7 +163,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f5bb8 some unit structure. (size 0x44).
 800f5cc8 some unit structure. enemy starts here. (size 0x44).
-    +00 [][]     looks like unit speed.
+    +00 [][]     unit speed.
     +02 [][]     time value addition (increase with it). Initialized in funcae954 with (battle_speed * unit_dexterity / party_dexterity). We read this in main battle queue function.
     +04 [][]     init with 0. Time value (init in battleinit_init_units_time_value).
     +06 [][]
@@ -387,7 +387,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7dbc [][]     store set bit here before run opcode cycle.
 800f7dbe [][]     store 0051 here if attacker in lucky 7777 in large_function.
 800f7dc0 [][]     store 002F here if attacker in lucky 7777 in large_function.
-800f7dc6 [][]     store here status(from attack param) & 00000003 (if 0x80000000 bit in status mask set).
+800f7dc6 [][]     store here status(from attack param) & 00000003 (if 0x80000000 bit (imprisoned) in status mask set).
 800f7dc8 [][]     store here byte (00 01 02 03 04 03 03 03 05) acording to 8016360c + 1a.
 800f7dce [][]     petrified unit mask.
 800f7dd4 []       number of enemy type 0. Init with 0. Increment for each enemy id 0.
@@ -509,7 +509,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f83a4 battle global structure. (address 0x2000).
     +00 []       store data performed action type id here. (0x20 for example)
     +01 []       store data performed attack index here.
-    +04 []       camera data from battle setup 1 (+12[]).
+    +04 []       formation type id.
     +0a [][]     add bits for every inited unit here. Mask for alive units???
     +0c [][]     self mask for current unit ().
     +0e [][]     attack mask for current unit (2070).
@@ -1042,27 +1042,25 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 80163798 array of some struct to where we store data. Probably action to perform. Every time we tried to receive pointer via "funca2f4c" we move to next struct element. There can be 0x40 actions at once (size 0xc)
-// 2 - string to display
-+00 []       id of unit that init action.
-+01 []       2. Type string.
-+02 []       init with 0.
-+03 []       init with 0.
-+05 []       argument of fucnction battle_add_string_to_display than add this.
-+06 [][]     string index + 0x100.
-+08 [][]     0xffff.
-+0a [][]     0xffff.
-// 5 - ???
-+00 []       init with 0xff. Set attacker id here.
-+01 []       set 5 here. Set 1f80001c from temp attack here.
-+02 []       store 0 here during pointer reciving. Set attack effect id here (1F800024).
-+03 []       store 0 here during pointer reciving. Store 1f800028 (action id) here
-+04 []       set 0 here.
-+05 []       set 0 here. We store animation action id here.
-+06 [][]     set 0 here. Set attack id here (1f800098).
-+08 [][]     set 0xffff here. Set camera movement id here.
-+0a [][]     current index in 800f3948. set 0xffff here.
-
-
+    // 2 - string to display
+    +00 []       id of unit that init action. (sometimes set to 0xa)
+    +01 []       2. Type string.
+    +02 []       init with 0.
+    +03 []       init with 0.
+    +05 []       argument of fucnction battle_add_string_to_display than add this. Sometimes set to 1.
+    +06 [][]     string index + 0x100.
+    +08 [][]     0xffff.
+    +0a [][]     0xffff.
+    // 5 - ???
+    +00 []       init with 0xff. Set attacker id here.
+    +01 []       set 5 here. Set 1f80001c from temp attack here.
+    +02 []       store 0 here during pointer reciving. Set attack effect id here (1F800024).
+    +03 []       store 0 here during pointer reciving. Store 1f800028 (action id) here
+    +04 []       set 0 here.
+    +05 []       set 0 here. We store animation action id here.
+    +06 [][]     set 0 here. Set attack id here (1f800098).
+    +08 [][]     set 0xffff here. Set camera movement id here.
+    +0a [][]     current index in 800f3948. set 0xffff here.
 
 80163b38 []       init with 0.
 80163b3c []       store 0 here during battle init. This is index to battle camera data in battle setup

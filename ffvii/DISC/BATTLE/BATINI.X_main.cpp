@@ -99,30 +99,34 @@ func1b085c();
 for( int i = 0; i < a; ++i )
 {
     A0 = i;
-    funcae954();
+    funcae954(); // calculate speed from status
 
     if( b[800f83e0 + i * 68 + 8] != -1 )
     {
-        [800f83a4 + a] = h(hu[800f83a4 + a] | (1 << S0));
+        [800f83a4 + a] = h(hu[800f83a4 + a] | (1 << i));
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-[800f83a4 + 04] = b(bu[8016360c + 8 + 12]);
+[800f83a4 + 4] = b(bu[8016360c + 1a]);
 [800f83a4 + 28] = h(battle_id);
 
 func1b19ac();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 battle_update_unit_mask();
 
@@ -1309,24 +1313,24 @@ else
 
 
 ////////////////////////////////
-// func1b19ac
+// func1b19ac()
+
 enemy_mask = hu[800f83a4 + 1a];
 player_mask = hu[800f83a4 + 18]; // player mask
 
-S2 = 5;
-if (bu[8016360c + 8 + 12] == 7)
+S2 = 00000005;
+if( bu[8016360c + 1a] == 7 ) // third side attack
 {
-    S2 = fffffffa; // -6
+    S2 = fffffffa;
 }
 
 V0 = hu[800f7dc8];
-A0 = bu[801b003c + V0];
-
-if (A0 != ff) // FF 32 33 34 35 FF
+A0 = bu[801b003c + V0]; // FF 32 33 34 35 FF
+if( A0 != ff )
 {
-    if (hu[800f83a4 + 28] != 03d6) // ruby weapon battle id
+    if( hu[800f83a4 + 28] != 3d6 ) // ruby weapon battle id
     {
-        funcb1060;
+        funcb1060();
     }
 }
 
