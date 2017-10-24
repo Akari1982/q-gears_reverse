@@ -336,30 +336,28 @@ V0 = S0 < 000c;
 800DD02C	nop
 
 Ldd030:	; 800DD030
-800DD030	lui    v0, $800f
-V0 = bu[V0 + 1e4f];
-800DD038	nop
-800DD03C	beq    v0, zero, Ldd07c [$800dd07c]
-A0 = 0008;
-800DD044	lui    a1, $800f
-A1 = hu[A1 + 1e50];
-800DD04C	jal    func15248 [$80015248]
-A2 = 0008;
-A0 = S1;
-A1 = 0019;
-A2 = 0;
-A3 = 0;
-800DD064	lui    at, $800f
-[AT + 55d4] = w(V0);
-800DD06C	jal    funcdc0cc [$800dc0cc]
-[SP + 0010] = w(0);
-800DD074	j      Ldd0b4 [$800dd0b4]
-800DD078	nop
+V0 = bu[800f1e4f];
+if( V0 != 0 )
+{
+    A0 = 8;
+    A1 = hu[800f1e50];
+    A2 = 8;
+    func15248();
 
-Ldd07c:	; 800DD07C
-800DD07C	lui    v0, $800f
-V0 = w[V0 + 3138];
-800DD084	nop
+    [800f55d4] = w(V0);
+
+    A0 = S1;
+    A1 = 19;
+    A2 = 0;
+    A3 = 0;
+    A4 = 0;
+    800DD06C	jal    funcdc0cc [$800dc0cc]
+
+    800DD074	j      Ldd0b4 [$800dd0b4]
+    800DD078	nop
+}
+
+V0 = w[800f3138];
 800DD088	beq    v0, zero, Ldd0b4 [$800dd0b4]
 A0 = S1;
 800DD090	lui    a2, $800f

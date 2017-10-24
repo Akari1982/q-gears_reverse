@@ -498,7 +498,7 @@
 
 80114488 we read something from here during reading unknown data in triggers and check if this != 0. If this != 0 then battle will not be activated during field battle check. (0)
 
-80114490 buffer index for something like arrao or triangles.
+80114490 buffer index for something like array or triangles.
 
 801144CC [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 
