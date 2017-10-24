@@ -38,6 +38,7 @@ const unsigned short unk2[ 0x100 ] =
 
 int main()
 {
+/*
     for( int i = 10000; i < 10300; i += 1 )
     {
         unsigned char temp1 = unk1[ ( i & 0x7fff ) >> 0x8 ];
@@ -47,7 +48,7 @@ int main()
         unsigned short temp4 = unk2[ temp2 ] >> temp3;
         printf( "%d - %d - %d - %d\n", i, temp1, temp2, temp4 );
     }
-
+*/
 /*
     for( __int64 A0 = 0; A0 <= 100; ++A0 )
     {
@@ -132,17 +133,16 @@ int main()
         printf(" - %d\n", T0);
     }
 */
-/*
+
     for (__int64 V1 = 0; V1 <= 100; ++V1)
     {
         printf("%d:", V1);
-        __int64 V0 = V1 * 0xb8;
-        __int64 T3 = V0 * 0x66666667;
+        __int64 T3 = V1 * 0x66666667;
         T3 = T3 >> 0x20;
-        V0 = V0 >> 0x1f;
-        int x = (T3 >> 3) - V0;
+        __int64 V0 = V1 >> 0x1f;
+        int x = (T3 >> 2) - V0;
         printf(" - %d\n", x);
     }
-*/
+
     return 0;
 }

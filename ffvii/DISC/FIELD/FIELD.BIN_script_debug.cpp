@@ -740,11 +740,13 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = hu[V0 + 006c];
-800BD528	jal    field_int2_to_string [$800da444]
 A1 = S0;
+field_int2_to_string();
+
 A0 = S1;
-800BD534	jal    field_concat_string [$800da368]
 A1 = S0;
+field_concat_string();
+
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
 V0 = V0 & 0001;
@@ -2084,30 +2086,22 @@ return 1;
 // funcd9ffc()
 // not used
 
+id1 = A0;
 S1 = A2;
-S2 = A0 * 17a;
-S0 = 800e0758;
 
-A0 = 800e0758 + A0 * 17a + h[800e0754 + S2] * e;
+A0 = 800e0758 + id1 * 17a + h[800e0754 + id1 * 17a] * e;
 A1 = A1;
 field_copy_string();
 
-V0 = S2 + S0 + 150;
-S0 = S0 - 10;
-V0 = h[800e0754 + S2] + V0;
-[V0] = b(S1);
-S0 = S2 + S0;
-[S0 + c] = h(hu[800e0754 + S2] + 1);
-V1 = h[800e074e + S2] - 8;
-A0 = 66666667;
-800DA0BC	mult   v1, a0
-V1 = V1 >> 1f;
-800DA0D4	mfhi   v0
-V0 = V0 >> 02;
-V0 = V0 - V1;
-if( V0 < h[800e0754 + S2] )
+V0 = h[800e0754 + id1 * 17a];
+[800e0758 + id1 * 17a + 150 + V0] = b(S1);
+
+[800e0748 + id1 * 17a + c] = h(hu[800e0754 + id1 * 17a] + 1);
+
+V1 = h[800e074e + id1 * 17a] - 8;
+if( ( V1 / a ) < h[800e0754 + id1 * 17a] )
 {
-    [800e0754 + S2] = h(0);
+    [800e0754 + id1 * 17a] = h(0);
 }
 
 [8009d824] = b(1);
@@ -2120,60 +2114,23 @@ return 1;
 ////////////////////////////////
 // funcd9f00()
 
-A0 = A0 << 10;
-A0 = A0 >> 10;
-V1 = A0 << 01;
-V1 = V1 + A0;
-V0 = V1 << 06;
-V0 = V0 - V1;
-S1 = V0 << 01;
-800D9F28	lui    s0, $800e
-S0 = S0 + 0758;
-800D9F34	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S1;
-V0 = h[AT + 0000];
-V1 = S1 + S0;
-A0 = V0 << 03;
-A0 = A0 - V0;
-A0 = A0 << 01;
-800D9F54	jal    field_copy_string [$800da334]
-A0 = V1 + A0;
-800D9F5C	lui    a0, $6666
-800D9F60	addiu  s0, s0, $fff0 (=-$10)
-800D9F64	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S1;
-V0 = hu[AT + 0000];
-S0 = S1 + S0;
-V0 = V0 + 0001;
-[S0 + 000c] = h(V0);
-800D9F80	lui    at, $800e
-AT = AT + 074e;
-AT = AT + S1;
-V1 = h[AT + 0000];
-A0 = A0 | 6667;
-800D9F94	addiu  v1, v1, $fff8 (=-$8)
-800D9F98	mult   v1, a0
-V1 = V1 >> 1f;
-800D9FA0	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S1;
-A0 = h[AT + 0000];
-800D9FB0	mfhi   v0
-V0 = V0 >> 02;
-V0 = V0 - V1;
-V0 = V0 < A0;
-800D9FC0	beq    v0, zero, Ld9fd8 [$800d9fd8]
-V0 = 0001;
-800D9FC8	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S1;
-[AT + 0000] = h(0);
+id = A0;
+src = A1;
 
-Ld9fd8:	; 800D9FD8
-[8009d824] = b(V0);
-V0 = 0001;
+A0 = 800e0758 + id * 17a + h[800e0754 + id * 17a] * e;
+A1 = src;
+field_copy_string();
+
+[800e0748 + id * 17a + c] = h(hu[800e0754 + id * 17a] + 1);
+
+if( ( ( h[800e074e + id * 17a] - 8 ) / a ) < h[800e0754 + id * 17a] )
+{
+    [800e0754 + id * 17a] = h(0);
+}
+
+[8009d824] = b(1);
+
+return 1;
 ////////////////////////////////
 
 
@@ -2248,18 +2205,12 @@ V0 = 0001;
 
 ////////////////////////////////
 // funcd8710
+
 V0 = h[800e41bc];
-800D8718	addiu  sp, sp, $ff78 (=-$88)
-[SP + 007c] = w(S5);
 S5 = A0;
-[SP + 0080] = w(RA);
-[SP + 0078] = w(S4);
-[SP + 0074] = w(S3);
-[SP + 0070] = w(S2);
-[SP + 006c] = w(S1);
 V0 = V0 < 0018;
 800D873C	beq    v0, zero, Ld9bdc [$800d9bdc]
-[SP + 0068] = w(S0);
+
 A1 = A0 << 10;
 A1 = A1 >> 10;
 V0 = A1 << 01;
@@ -2277,14 +2228,9 @@ V0 = V1 + 0002;
 S2 = V0;
 V0 = V0 << 10;
 A2 = V0 >> 10;
-800D8788	lui    v0, $800e
-V0 = V0 + 0758;
-S3 = S0 + V0;
+S3 = 800e0758 + S0;
 V1 = V1 << 10;
-800D8798	lui    at, $800e
-AT = AT + 074e;
-AT = AT + S0;
-V0 = h[AT + 0000];
+V0 = h[800e074e + S0];
 V1 = V1 >> 10;
 V1 = V1 + V0;
 800D87B0	addiu  v1, v1, $fff8 (=-$8)
@@ -3526,14 +3472,203 @@ V0 = V0 | A2;
 [A0 + 0000] = w(V0);
 
 Ld9bdc:	; 800D9BDC
-RA = w[SP + 0080];
-S5 = w[SP + 007c];
-S4 = w[SP + 0078];
-S3 = w[SP + 0074];
-S2 = w[SP + 0070];
-S1 = w[SP + 006c];
-S0 = w[SP + 0068];
-SP = SP + 0088;
-800D9BFC	jr     ra 
-800D9C00	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd9c04
+
+T2 = A2;
+V0 = bu[T2 + 0000];
+T9 = w[SP + 0018];
+800D9C14	beq    v0, zero, Ld9ef4 [$800d9ef4]
+T3 = A3;
+A0 = A0 << 10;
+A0 = A0 >> 10;
+V1 = A0 << 01;
+V1 = V1 + A0;
+V0 = V1 << 06;
+V0 = V0 - V1;
+T5 = V0 << 01;
+800D9C38	lui    t6, $800e
+T6 = T6 + 1028;
+V0 = A1 << 10;
+T8 = V0 >> 10;
+T7 = A0 << 02;
+800D9C4C	lui    t4, $00ff
+T4 = T4 | ffff;
+
+Ld9c54:	; 800D9C54
+800D9C54	lui    at, $800e
+AT = AT + 0748;
+AT = AT + T5;
+V0 = h[AT + 0000];
+800D9C64	lui    at, $800e
+AT = AT + 074c;
+AT = AT + T5;
+V1 = h[AT + 0000];
+800D9C74	nop
+V0 = V0 + V1;
+800D9C7C	addiu  v0, v0, $fff8 (=-$8)
+V0 = V0 < T3;
+800D9C84	bne    v0, zero, Ld9ef4 [$800d9ef4]
+800D9C88	nop
+V0 = h[800e41b8];
+800D9C94	nop
+V0 = V0 < 0158;
+800D9C9C	beq    v0, zero, Ld9ef4 [$800d9ef4]
+800D9CA0	nop
+V0 = bu[T2 + 0000];
+800D9CA8	nop
+800D9CAC	addiu  v1, v0, $ffe0 (=-$20)
+V0 = V1 < 0020;
+800D9CB4	beq    v0, zero, Ld9d38 [$800d9d38]
+V0 = V1 << 02;
+800D9CBC	lui    at, $800a
+AT = AT + 12e8;
+AT = AT + V0;
+V0 = w[AT + 0000];
+800D9CCC	nop
+800D9CD0	jr     v0 
+800D9CD4	nop
+
+800D9CD8	j      Ld9d78 [$800d9d78]
+A0 = 003f;
+800D9CE0	j      Ld9d78 [$800d9d78]
+A0 = 00d5;
+800D9CE8	j      Ld9d78 [$800d9d78]
+A0 = 00b2;
+800D9CF0	j      Ld9d78 [$800d9d78]
+A0 = 00b3;
+800D9CF8	j      Ld9d78 [$800d9d78]
+A0 = 00d4;
+800D9D00	j      Ld9d78 [$800d9d78]
+A0 = 00d0;
+800D9D08	j      Ld9d78 [$800d9d78]
+A0 = 00cf;
+800D9D10	j      Ld9d78 [$800d9d78]
+A0 = 00ae;
+800D9D18	j      Ld9d78 [$800d9d78]
+A0 = 00af;
+800D9D20	j      Ld9d78 [$800d9d78]
+A0 = 00da;
+800D9D28	j      Ld9d78 [$800d9d78]
+A0 = 00d6;
+800D9D30	j      Ld9d78 [$800d9d78]
+A0 = 00d9;
+
+Ld9d38:	; 800D9D38
+V1 = bu[T2 + 0000];
+800D9D3C	nop
+V0 = V1 < 003a;
+800D9D44	beq    v0, zero, Ld9d58 [$800d9d58]
+V0 = V1 < 0061;
+V0 = bu[T2 + 0000];
+800D9D50	j      Ld9d78 [$800d9d78]
+A0 = V0 + 0003;
+
+Ld9d58:	; 800D9D58
+800D9D58	bne    v0, zero, Ld9d6c [$800d9d6c]
+800D9D5C	nop
+V0 = bu[T2 + 0000];
+800D9D64	j      Ld9d78 [$800d9d78]
+A0 = V0 + 0053;
+
+Ld9d6c:	; 800D9D6C
+V0 = bu[T2 + 0000];
+800D9D70	nop
+A0 = V0 + 0073;
+
+Ld9d78:	; 800D9D78
+V1 = h[800e1024];
+T2 = T2 + 0001;
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 02;
+V0 = V0 - V1;
+V0 = V0 << 02;
+V0 = V0 - V1;
+V1 = h[800e41b8];
+V0 = V0 << 07;
+V1 = V1 << 04;
+V0 = V0 + V1;
+V0 = V0 + T6;
+V1 = A0 & 000f;
+V1 = V1 << 03;
+800D9DBC	addiu  v1, v1, $ff80 (=-$80)
+[V0 + 000c] = b(V1);
+V1 = h[800e1024];
+800D9DCC	lui    a3, $ff00
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 02;
+V0 = V0 - V1;
+V0 = V0 << 02;
+V0 = V0 - V1;
+V1 = h[800e41b8];
+V0 = V0 << 07;
+V1 = V1 << 04;
+V0 = V0 + V1;
+V0 = V0 + T6;
+V1 = A0 >> 01;
+V1 = V1 & 0078;
+800D9E08	addiu  v1, v1, $ff80 (=-$80)
+[V0 + 000d] = b(V1);
+800D9E10	lui    v0, $800e
+V0 = V0 + 08a8;
+V0 = T5 + V0;
+V0 = V0 + T8;
+V1 = h[800e1024];
+T1 = h[800e41b8];
+A1 = V1 << 01;
+A1 = A1 + V1;
+A1 = A1 << 02;
+A1 = A1 - V1;
+A1 = A1 << 02;
+A1 = A1 - V1;
+A1 = A1 << 07;
+T0 = T1 << 04;
+A0 = A1 + T0;
+A2 = A0 + T6;
+T1 = T1 + 0001;
+[A2 + 0008] = h(T3);
+[A2 + 000a] = h(T9);
+V0 = bu[V0 + 0000];
+T0 = T0 + T6;
+V0 = V0 << 01;
+800D9E70	lui    at, $800e
+AT = AT + 4200;
+AT = AT + V0;
+V0 = hu[AT + 0000];
+A1 = A1 + T0;
+800D9E84	lui    at, $800e
+AT = AT + 1036;
+AT = AT + A0;
+[AT + 0000] = h(V0);
+800D9E94	lui    v0, $800e
+V0 = V0 + 41c8;
+A0 = V1 << 03;
+A0 = A0 - V1;
+A0 = A0 << 02;
+A0 = A0 + T7;
+A0 = A0 + V0;
+V1 = w[A2 + 0000];
+V0 = w[A0 + 0000];
+V1 = V1 & A3;
+V0 = V0 & T4;
+V1 = V1 | V0;
+[A2 + 0000] = w(V1);
+V0 = w[A0 + 0000];
+A1 = A1 & T4;
+[800e41b8] = h(T1);
+V0 = V0 & A3;
+V0 = V0 | A1;
+[A0 + 0000] = w(V0);
+V0 = bu[T2 + 0000];
+800D9EE8	nop
+800D9EEC	bne    v0, zero, Ld9c54 [$800d9c54]
+T3 = T3 + 0008;
+
+Ld9ef4:	; 800D9EF4
 ////////////////////////////////
