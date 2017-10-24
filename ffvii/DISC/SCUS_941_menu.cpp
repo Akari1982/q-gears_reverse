@@ -98,7 +98,7 @@ L24b90:	; 80024B90
     A0 = 80069844 + w[GP + 214] * 50;
     [GP + 160] = w(A0);
     A1 = 14;
-    80024BE8	jal    func4418c [$8004418c]
+    80024BE8	jal    system_psyq_clear_o_tag [$8004418c]
 
     [GP + 280] = w(w[GP + 160]);
 

@@ -27,81 +27,35 @@ if( b[80163798 + A0 * c] != -1 )
                     800B73FC	jal    funcbb684 [$800bb684]
 
                     V1 = bu[801590e0];
-                    V0 = bu[80163798 + V1 * c];
-                    [801590cc] = b(V0);
+                    [801590cc] = b(bu[80163798 + V1 * c]);
+
                     A0 = bu[801590cc];
-                    V1 = A0 << 01;
-                    V1 = V1 + A0;
-                    V0 = V1 << 05;
-                    V0 = V0 - V1;
-                    V0 = V0 << 03;
-                    V0 = V0 - A0;
-                    V0 = V0 << 02;
-                    800B7460	lui    at, $8015
-                    AT = AT + 1922;
-                    AT = AT + V0;
-                    V1 = bu[AT + 0000];
-                    800B7470	nop
-                    V1 = V1 | 0001;
-                    800B7478	lui    at, $8015
-                    AT = AT + 1922;
-                    AT = AT + V0;
-                    [AT + 0000] = b(V1);
+                    [80151922 + A0 * b9c] = b(bu[80151922 + A0 * b9c] | 01);
+
                     A0 = bu[801590cc];
-                    800B7490	nop
-                    V1 = A0 << 01;
-                    V1 = V1 + A0;
-                    V0 = V1 << 05;
-                    V0 = V0 - V1;
-                    V0 = V0 << 03;
-                    V0 = V0 - A0;
-                    V0 = V0 << 02;
-                    800B74B0	lui    at, $8015
-                    AT = AT + 190a;
-                    AT = AT + V0;
-                    [AT + 0000] = b(0);
+                    [8015190a + A0 * b9c] = b(0);
+
                     funcb7764; // we call this function where we assign action to enemy unit
 
                     A1 = bu[801590e0];
-                    800B74D0	nop
-                    V0 = A1 << 01;
-                    V0 = V0 + A1;
-                    V0 = V0 << 02;
-                    800B74E0	lui    at, $8016
-                    AT = AT + 37a2;
-                    AT = AT + V0;
-                    V1 = h[AT + 0000];
+                    V1 = h[801637a2 + A1 * c];
                     [800f9774] = b(0);
                     800B74F8	j      Lb7690 [$800b7690]
 
-                    Lb7624:	; 800B7624
-                    [800fa6d4] = b(V0);
-                    [80161eec] = b(V0);
-                    [800f99e8] = b(V0);
-                    [801031f0] = b(1);
-
                     Lb7644:	; 800B7644
                     A1 = bu[801590e0];
-                    800B764C	nop
                     V0 = A1 << 01;
                     V0 = V0 + A1;
                     V0 = V0 << 02;
-                    800B765C	lui    at, $8016
-                    AT = AT + 37a2;
-                    AT = AT + V0;
-                    V1 = hu[AT + 0000];
+                    V1 = hu[801637a2 + V0];
                     A0 = V0 + 80163798;
                     V1 = V1 + 0001;
                     [A0 + 000a] = h(V1);
-                    800B7678	lui    at, $8016
-                    AT = AT + 37a2;
-                    AT = AT + V0;
-                    V1 = h[AT + 0000];
-                    800B7688	nop
+                    V1 = h[801637a2 + V0];
 
                     Lb7690:	; 800B7690
-                    V0 = b[800fa9d0 + V1 * c + 0];
-                    if (V0 != -1)
+                    V0 = b[800fa9d0 + V1 * c];
+                    if( V0 != -1 )
                     {
                         V1 = h[801537a2 + A1 * c];
                         [800fafe0] = b(bu[800fa9d0 + V1 * c + 1]); // attacker id
@@ -110,51 +64,34 @@ if( b[80163798 + A0 * c] != -1 )
 
                         V0 = bu[800f9774];
 
-                        800B7558	bne    v0, 1, Lb7624 [$800b7624]
-                        V0 = 000f;
-                        V0 = bu[801590e0];
-                        800B7568	nop
-                        A0 = V0 << 01;
-                        A0 = A0 + V0;
-                        A0 = A0 << 02;
-                        800B7578	lui    at, $8016
-                        AT = AT + 37a2;
-                        AT = AT + A0;
-                        V1 = h[AT + 0000];
-                        800B7588	nop
-                        V0 = V1 << 01;
-                        V0 = V0 + V1;
-                        V0 = V0 << 02;
-                        V0 = bu[800fa9d0 + V0 + 0];
-                        800B75A8	lui    at, $8016
-                        AT = AT + 37a2;
-                        AT = AT + A0;
-                        V1 = h[AT + 0000];
-                        [800fa6d4] = b(V0);
-                        [800f99e8] = b(V0);
-                        [80161eec] = b(V0);
-                        V0 = V1 << 01;
-                        V0 = V0 + V1;
-                        A0 = V0 << 02;
-                        800B75DC	lui    at, $8010
-                        800B75E0	addiu  at, at, $a9d2 (=-$562e)
-                        AT = AT + A0;
-                        V1 = b[AT + 0000];
-                        V0 = 0009;
-                        if (V1 == V0)
+                        if( V0 != 1 )
                         {
-                            800B75F8	lui    at, $8010
-                            800B75FC	addiu  at, at, $a9d1 (=-$562f)
-                            AT = AT + A0;
-                            V0 = bu[AT + 0000];
-                            800B7608	nop
-                            [800f99e8] = b(V0);
+                            [800fa6d4] = b(f);
+                            [80161eec] = b(f);
+                            [800f99e8] = b(f);
+                            [801031f0] = b(1);
                         }
+                        else
+                        {
+                            A0 = bu[801590e0];
+                            V1 = h[801637a2 + A0 * c];
 
-                        [801031f0] = b(0);
-                        [801031f0] = b(0);
+                            V0 = bu[800fa9d0 + V1 * c];
+                            [800fa6d4] = b(V0);
+                            [800f99e8] = b(V0);
+                            [80161eec] = b(V0);
+
+                            V1 = h[801637a2 + A0 * c];
+
+                            if( b[800fa9d2 + V1 * c] == 9 )
+                            {
+                                [800f99e8] = b(bu[800fa9d1 + V1 * c]);
+                            }
+
+                            [801031f0] = b(0);
+                            [801031f0] = b(0);
+                        }
                         800B761C	j      Lb7644 [$800b7644]
-                        800B7620	nop
                     }
 
                     800B76B4	jal    funcb7db4 [$800b7db4]
@@ -371,19 +308,19 @@ funcb7fdc;
 
 T1 = 0;
 loopc5c40:	; 800C5C40
-    if( h[800f9da8 + T1 * 6] == -1 )
+    if( h[800f9da8 + T1 * 6 + 0] == -1 )
     {
-        [800f9da8 + T1 * 6] = h(A0); // string index in buffer + 0x100
-        [800f9daa + T1 * 6] = h(A3); // 0
-        [800f9dac + T1 * 6] = b(A1 + ff); // string argument
+        [800f9da8 + T1 * 6 + 0] = h(A0); // string index in buffer + 0x100
+        [800f9da8 + T1 * 6 + 2] = h(A3); // 0
+        [800f9da8 + T1 * 6 + 4] = b(A1 + ff); // string argument
 
         if( A2 == 0 ) // 0
         {
-            [800f9dad + T1 * 6] = b(bu[8009d7bd] >> 2 + 4);
+            [800f9da8 + T1 * 6 + 5] = b(bu[8009d7bd] >> 2 + 4);
         }
         else
         {
-            [800f9dad + T1 * 6] = b(A2);
+            [800f9da8 + T1 * 6 + 5] = b(A2);
         }
 
         break;

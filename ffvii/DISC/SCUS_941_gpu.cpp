@@ -107,6 +107,44 @@ else
 
 
 ////////////////////////////////
+// system_psyq_clear_o_tag()
+// Walks the array specified by ot and sets each element to be a pointer to the following element, except the
+// last, which is set to a pointer to a special terminator value which the PlayStation® uses to recognize the
+// end of a primitive list. n specifies the number entries in the array.
+// To execute the OT initialized by ClearOTag(), call DrawOTag(ot).
+
+S0 = A0;
+number_of_entries = A1;
+
+if( bu[80062c02] >= 2 )
+{
+    V0 = w[80062bfc];
+    A0 = 80010df0; // "ClearOTag(%08x,%d)..."
+    A1 = S0;
+    A2 = S1;
+    800441C8	jalr   v0 ra
+}
+
+number_of_entries = number_of_entries - 1;
+if( number_of_entries != 0 )
+{
+    loop441e8:	; 800441E8
+        A0 = S0 + 4;
+        [S0 + 3] = b(0);
+        [S0] = w((w[S0] & ff000000) | ((S0 + 4) & 00ffffff));
+        S0 = S0 + 4;
+        number_of_entries = number_of_entries - 1;
+    80044208	bne    number_of_entries, zero, loop441e8 [$800441e8]
+}
+
+[S0] = w(80062cbc & 00ffffff);
+
+return S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_psyq_clear_o_tag_r()
 // Initialize an array to a linked list for use as an ordering table.
 // Walks the array specified by ot and sets each element to be a pointer to the previous element, except the

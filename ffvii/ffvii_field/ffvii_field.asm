@@ -7007,7 +7007,7 @@ A0 = A0 - V0;
 A0 = A0 << 02;
 800D8644	lui    v0, $800e
 V0 = V0 + 41c8;
-800D864C	jal    func4418c [$8004418c]
+800D864C	jal    system_psyq_clear_o_tag [$8004418c]
 A0 = A0 + V0;
 
 loopd8654:	; 800D8654

@@ -84,7 +84,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f195c here is transformation data for machinegun effect (matrix and vector)
 800f197c 3d data for machinegun fire effect.
 
-800f1e4f []       init with 0.
+800f1e4f []       init with 0. Set 1 togather with 800f1e50.
+800f1e50 [][]     set with string id.
 
 800f38ac [][][][] array of some data. Init in funca283c. Related with 800a0098 data.
 
@@ -611,6 +612,12 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f9d94 []       init with 0.
 800f9d98 []       init with 0.
 800f9d9c []       init with 0.
+
+800f9da8 some array (0x40 items 0x6 size)
+    +0 [][]     string index in buffer + 0x100
+    +2 [][]     ???
+    +4 []       string argument
+    +5 []       ???
 
 800f9f28 [][][][] array of somethinf (0x3 items). All inited with 0.
 
