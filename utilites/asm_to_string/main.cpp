@@ -39,6 +39,13 @@ int main( int argc, char *argv[] )
         e = "^\\s*[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]lui    ([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])$";
         if( std::regex_match( str ,e ) )
         {
+            if( two_row == true )
+            {
+                two_row_str += "\n";
+                out << two_row_str;
+                two_row = false;
+            }
+
             two_row = true;
             two_row_str = str;
             two_row_v1 = std::regex_replace( str, e, "$1" ); std::transform( two_row_v1.begin(), two_row_v1.end(), two_row_v1.begin(), ::toupper );

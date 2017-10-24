@@ -2081,100 +2081,54 @@ return 1;
 
 
 ////////////////////////////////
-// funcd9ffc
-800D9FFC	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+// funcd9ffc()
+// not used
+
 S1 = A2;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-V1 = A0 << 01;
-V1 = V1 + A0;
-V0 = V1 << 06;
-V0 = V0 - V1;
-[SP + 0018] = w(S2);
-S2 = V0 << 01;
-[SP + 0010] = w(S0);
-800DA02C	lui    s0, $800e
-S0 = S0 + 0758;
-[SP + 001c] = w(RA);
-800DA038	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S2;
-V0 = h[AT + 0000];
-V1 = S2 + S0;
-A0 = V0 << 03;
-A0 = A0 - V0;
-A0 = A0 << 01;
-800DA058	jal    field_copy_string [$800da334]
-A0 = V1 + A0;
-V0 = S0 + 0150;
-V0 = S2 + V0;
-800DA06C	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S2;
-V1 = h[AT + 0000];
-800DA07C	addiu  s0, s0, $fff0 (=-$10)
-V0 = V0 + V1;
-[V0 + 0000] = b(S1);
-800DA088	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S2;
-V0 = hu[AT + 0000];
+S2 = A0 * 17a;
+S0 = 800e0758;
+
+A0 = 800e0758 + A0 * 17a + h[800e0754 + S2] * e;
+A1 = A1;
+field_copy_string();
+
+V0 = S2 + S0 + 150;
+S0 = S0 - 10;
+V0 = h[800e0754 + S2] + V0;
+[V0] = b(S1);
 S0 = S2 + S0;
-V0 = V0 + 0001;
-[S0 + 000c] = h(V0);
-800DA0A4	lui    at, $800e
-AT = AT + 074e;
-AT = AT + S2;
-V1 = h[AT + 0000];
-A0 = A0 | 6667;
-800DA0B8	addiu  v1, v1, $fff8 (=-$8)
+[S0 + c] = h(hu[800e0754 + S2] + 1);
+V1 = h[800e074e + S2] - 8;
+A0 = 66666667;
 800DA0BC	mult   v1, a0
 V1 = V1 >> 1f;
-800DA0C4	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S2;
-A0 = h[AT + 0000];
 800DA0D4	mfhi   v0
 V0 = V0 >> 02;
 V0 = V0 - V1;
-V0 = V0 < A0;
-800DA0E4	beq    v0, zero, Lda0fc [$800da0fc]
-V0 = 0001;
-800DA0EC	lui    at, $800e
-AT = AT + 0754;
-AT = AT + S2;
-[AT + 0000] = h(0);
+if( V0 < h[800e0754 + S2] )
+{
+    [800e0754 + S2] = h(0);
+}
 
-Lda0fc:	; 800DA0FC
-[8009d824] = b(V0);
-V0 = 0001;
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800DA11C	jr     ra 
-800DA120	nop
+[8009d824] = b(1);
+
+return 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcd9f00
-800D9F00	addiu  sp, sp, $ffe0 (=-$20)
+// funcd9f00()
+
 A0 = A0 << 10;
 A0 = A0 >> 10;
 V1 = A0 << 01;
 V1 = V1 + A0;
 V0 = V1 << 06;
 V0 = V0 - V1;
-[SP + 0014] = w(S1);
 S1 = V0 << 01;
-[SP + 0010] = w(S0);
 800D9F28	lui    s0, $800e
 S0 = S0 + 0758;
-[SP + 0018] = w(RA);
 800D9F34	lui    at, $800e
 AT = AT + 0754;
 AT = AT + S1;
@@ -2220,12 +2174,6 @@ AT = AT + S1;
 Ld9fd8:	; 800D9FD8
 [8009d824] = b(V0);
 V0 = 0001;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800D9FF4	jr     ra 
-800D9FF8	nop
 ////////////////////////////////
 
 
