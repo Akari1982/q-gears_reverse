@@ -1324,31 +1324,33 @@ if( bu[8016360c + 1a] == 7 ) // third side attack
     S2 = fffffffa;
 }
 
-V0 = hu[800f7dc8];
-A0 = bu[801b003c + V0]; // FF 32 33 34 35 FF
+type = hu[800f7dc8];
+
+A0 = bu[801b003c + type]; // FF 32 33 34 35 FF
+// 32 Pre-emptive Attack!
+// 33 Back Attack
+// 34 Side Attack!
+// 35 Attack from both sides!
 if( A0 != ff )
 {
     if( hu[800f83a4 + 28] != 3d6 ) // ruby weapon battle id
     {
-        funcb1060();
+        funcb1060(); // display text
     }
 }
-
-
 
 A2 = 0;
 [SP + 10] = h(0); // right fighter
 [SP + 12] = h(0); // middle fighter
 [SP + 14] = h(0); // left fighter
 
-V1 = hu[800f7dc8];
-if (V1 == 0)
+if( type == 0 )
 {
     A2 = enemy_mask;
     [SP + 10] = h(player_mask); // right fighter
     [SP + 12] = h(enemy_mask); // middle fighter
 }
-else if (V1 == 1 || V1 == 3 || V1 == 5)
+else if( type == 1 || type == 3 || type == 5 )
 {
     V1 = 0 NOR S2;
     A2 = player_mask & V1;
@@ -1374,13 +1376,13 @@ else if (V1 == 1 || V1 == 3 || V1 == 5)
         V0 = A1 < 6;
     801B1B80	bne    v0, zero, loop1b1b48 [$801b1b48]
 }
-else if (V1 == 2)
+else if( type == 2 )
 {
     A2 = player_mask;
     [SP + 10] = h(enemy_mask);
     [SP + 12] = h(player_mask);
 }
-else if (V1 == 4)
+else if( type == 4 )
 {
     [SP + 12] = h(player_mask);
 
@@ -1636,8 +1638,6 @@ for( int i = 0; i < 6; ++i )
                 [800f8580 + i * 68 + c] = b(bu[800f8580 + i * 68 + c] + 1);
             }
         }
-
-
 
         // add manipulate
         for( int j = 0; j < 3; ++ j )

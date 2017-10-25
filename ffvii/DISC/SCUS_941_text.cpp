@@ -9,18 +9,17 @@ T0 = 80062d50;
 
 if( A0 == 4 )
 {
-    A1 = 0;
     T1 = 8001010e;
     A2 = 8001010e;
 
-    loop15288:	; 80015288
+    for( int i = 0; i < 5; ++i )
+    {
         V0 = V1 < hu[A2];
-        80015294	bne    v0, zero, L15334 [$80015334]
         A3 = A1 << 1;
-        A1 = A1 + 1;
+        80015294	bne    v0, zero, L15334 [$80015334]
+
         A2 = A2 + 2;
-        V0 = A1 < 5;
-    800152A4	bne    v0, zero, loop15288 [$80015288]
+    }
 }
 
 L152ac:	; 800152AC
@@ -32,31 +31,28 @@ L152ac:	; 800152AC
         }
     }
 
-    V0 = 00ff;
-    800152C8	beq    v1, v0, L15580 [$80015580]
-    V0 = A0 < 0004;
-    800152D0	beq    v0, zero, L152fc [$800152fc]
-    800152D4	nop
-    800152D8	lui    at, $8001
-    AT = AT + A0;
-    V0 = bu[AT + 0120];
-    800152E4	nop
-    A1 = V1 + V0;
-    V0 = A1 < 00e0;
-    800152F0	beq    v0, zero, L152fc [$800152fc]
-    800152F4	nop
-    V1 = A1;
+    if( V1 == ff )
+    {
+        return T0;
+    }
 
-    L152fc:	; 800152FC
-    800152FC	lui    at, $8001
-    AT = AT + A0;
-    S2 = bu[AT + 0124];
-    V0 = 00ff;
-    8001530C	beq    s2, v0, L15350 [$80015350]
-    A1 = V1;
+    if( A0 < 4 )
+    {
+        A1 = V1 + bu[80010120 + A0];
+        if( A1 < 00e0 )
+        {
+            V1 = A1;
+        }
+    }
+
+    S2 = bu[80010124 + A0];
+    8001530C	beq    s2, ff, L15350 [$80015350]
+
     A0 = S2 + S0;
-    80015318	jal    system_get_pointer_to_text_in_kernel_with_block_and_text_id [$80014d9c]
+    A1 = V1;
     A2 = 0;
+    system_get_pointer_to_text_in_kernel_with_block_and_text_id();
+
     80015320	bne    s0, zero, L15580 [$80015580]
     T0 = V0;
     A0 = T0;
@@ -205,15 +201,17 @@ T0 = T0 + 3660;
 L15528:	; 80015528
 V0 = V1 < 0100;
 8001552C	bne    v0, zero, L15544 [$80015544]
-80015530	nop
+
+A0 = V1 - 100;
 80015534	jal    $800a5f90
-80015538	addiu  a0, v1, $ff00 (=-$100)
+
 8001553C	j      L15550 [$80015550]
 S0 = V0;
 
 L15544:	; 80015544
-80015544	jal    system_get_pointer_to_battle_text_in_kernel_with_id [$800151f4]
 A0 = V1;
+system_get_pointer_to_battle_text_in_kernel_with_id();
+
 S0 = V0;
 
 L15550:	; 80015550
@@ -682,8 +680,7 @@ return V0;
 ////////////////////////////////
 // system_get_pointer_to_text_in_kernel_with_block_and_text_id()
 
-A0 = A0 + A2;
-V1 = hu[80069490 + A0 * 2]; // 0x52ae
+V1 = hu[80069490 + (A0 + A2) * 2]; // 0x52ae
 V0 = hu[80063690 + V1 + A1 * 2]; // kernel begin
 return 80063690 + V1 + V0;
 ////////////////////////////////

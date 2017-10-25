@@ -12701,26 +12701,6 @@ SP = SP + 0018;
 800BBA3C	nop
 
 
-funcbba40:	; 800BBA40
-800BBA40	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 0020;
-800BBA48	lui    at, $800a
-[AT + a000] = h(V0);
-V0 = 0040;
-A0 = A0 & ffff;
-[SP + 0010] = w(RA);
-800BBA5C	lui    at, $800a
-[AT + a004] = w(V0);
-800BBA64	lui    at, $800a
-[AT + a008] = w(A0);
-800BBA6C	jal    system_execute_AKAO [$8002da7c]
-800BBA70	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BBA7C	jr     ra 
-800BBA80	nop
-
-
 
 ////////////////////////////////
 // funcbba84

@@ -68,25 +68,18 @@ La4668:	; 800A4668
 
     funcb650c(); // play some AKAO commands
 
-    V0 = S0 - 3;
-    V0 = V0 < 2;
-    800A4768	bne    v0, zero, La4784 [$800a4784]
     A0 = 0;
-    V0 = 0006;
-    800A4774	beq    s0, v0, La4784 [$800a4784]
-    V0 = 0008;
-    800A477C	bne    s0, v0, La4788 [$800a4788]
-    800A4780	nop
 
-    La4784:	; 800A4784
-    A0 = 0001;
+    if( ( ( S0 - 3 ) < 2 ) || ( S0 == 6 ) || ( S0 == 8 ) )
+    {
+        A0 = 1;
+    }
 
-    La4788:	; 800A4788
-    800A4788	jal    funcb715c [$800b715c]
-    800A478C	nop
+    [80115a68] = w(A0);
+
     [800e5648] = w(0);
 
-    800A4798	jal    funcbc1cc [$800bc1cc]
+    funcbc1cc(); // prepare some packets
 
     800A47A0	jal    funca7ea4 [$800a7ea4]
 

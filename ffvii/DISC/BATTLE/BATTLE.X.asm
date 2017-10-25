@@ -29494,24 +29494,12 @@ funcbb9fc:	; 800BB9FC
 800BBA3C	nop
 
 
-funcbba40:	; 800BBA40
-800BBA40	addiu  sp, sp, $ffe8 (=-$18)
-800BBA44	ori    v0, zero, $0020
-800BBA48	lui    at, $800a
-800BBA4C	sh     v0, $a000(at)
-800BBA50	ori    v0, zero, $0040
-800BBA54	andi   a0, a0, $ffff
-800BBA58	sw     ra, $0010(sp)
-800BBA5C	lui    at, $800a
-800BBA60	sw     v0, $a004(at)
-800BBA64	lui    at, $800a
-800BBA68	sw     a0, $a008(at)
-800BBA6C	jal    $8002da7c
-800BBA70	nop
-800BBA74	lw     ra, $0010(sp)
-800BBA78	addiu  sp, sp, $0018
-800BBA7C	jr     ra 
-800BBA80	nop
+
+////////////////////////////////
+// funcbba40
+800BBA40-800BBA80
+////////////////////////////////
+
 
 
 funcbba84:	; 800BBA84

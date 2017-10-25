@@ -388,6 +388,7 @@ funca2f4c();
 
 ////////////////////////////////
 // funcb1060()
+// display battle text
 
 A3 = A0; // string
 A0 = a; // unit id
