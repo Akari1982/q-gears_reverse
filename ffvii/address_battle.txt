@@ -541,7 +541,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                 00000010 - units with activates auto script 0x01 (action).
                 00000020 - defend flag. Remove this flag if we add action with priority >= 2.
                 00000040 - set this bit if we in back row.
-                00000080 - set this bit for: enemies in case of battle type 0, player in case of battle 2, left row an player 2 in case of battle 4. func1b19ac.
+                00000080 - set this bit for: enemies in case of battle type 0, player in case of battle 2, left row an player 2 in case of battle 4.
                 00000100 - looks like nullify phisical attack.
                 00000200 - looks like nullify magic attack.
                 00000400 - maybe like immune to statuses?.
@@ -1009,7 +1009,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
         +04 [][]     y
         +06 [][]     z
         +08 [][]     row
-        +0a [][]     
+        +0a [][]     binary "Cover flags"
         +0c [][][][] &0000001f unit states (set to +4 in unit structure). Store status of enemy here from +4 0x68 structure.
 
 801636b8 units structure (size 0x10)
@@ -1019,7 +1019,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     03
     04 []       dead effect. Init from 801518e4+27 & 3f.
     05
-    06 [][]     in case of player store w[800f83e0 + A3 * 68 + 4] & 1 here for battle types 0,1. Store !(w[800f83e0 + A3 * 68 + 4] & 1) for battle 2 and 0 for battle types 3,4,5. Function func1b19ac.
+    06 [][]     backrow? In case of player store w[800f83e0 + A3 * 68 + 4] & 1 here for battle types 0,1. Store !(w[800f83e0 + A3 * 68 + 4] & 1) for battle 2 and 0 for battle types 3,4,5. Function func1b19ac.
     08 [][][][] we copy 0x0fffffff of unit status here during battle every cycle.
     0c
     0d
@@ -1028,13 +1028,13 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80163758 [][]     all enabled units.
 8016375a [][]     unit mask. Seems to init with all posible enabled units in battle_update_unit_mask.
-8016375c [][]     unit mask. Something related with row. Probably reachable units. Set in battle_update_unit_mask.
+8016375c [][]     not covered units mask (short range accessable units). Set in battle_update_unit_mask.
 8016375e [][]     store all enabled units here.
 
 80163762 [][]     unit mask. Add players with limit break.
 
 80163766 [][]     dead units mask.
-80163768 [][]     mask with units with 00000010 flag in +4 unit structure 0x68. There is no units like this at start of battle.
+80163768 [][]     mask with units with 00000010 flag in +4 unit structure 0x68. There is no units like this at start of battle. Autoscript.
 8016376a [][]     store previous battle result here. If this is 0x40 then set battle location to 0x25 (arena battle).
                     0x0004 - maybe escaped from prev battle. If next battle is normal and escape flag 0x0010 then set battle to preemptive.
 

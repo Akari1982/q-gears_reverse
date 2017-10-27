@@ -112,26 +112,21 @@ for( int i = 0; i < a; ++i )
 
 func1b19ac();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 battle_update_unit_mask();
 
 // we run player setup ai if needed here
 func1b1120();
+
+
+
+
+
+
+
+
+
+
+
 
 // we run enemy setup here
 func1b2308();
@@ -871,27 +866,21 @@ SP = SP + 0038;
 
 ////////////////////////////////
 // func1b1120()
+// execute script 0 for players
 
-S0 = 0;
-loop1b1148:	; 801B1148
-    V0 = bu[801636b8 + S0 * 10];
-    if (V0 != -1)
+for( int i = 0; i < 3; ++i )
+{
+    if( bu[801636b8 + i * 10 + 0] != -1 )
     {
-        V0 = w[800f83e0 + S0 * 68 + 0];
-        V0 = V0 & 00000001;
-        if (V0 == 0) // if not dead
+        if( ( w[800f83e0 + i * 68 + 0] & 00000001 ) == 0 ) // if not dead
         {
-            // execute script 0 for players
-            A0 = S0;
+            A0 = i;
             A1 = 0;
             A2 = 0;
-            funca6000;
+            funca6000();
         }
     }
-
-    S0 = S0 + 1;
-    V0 = S0 < 3;
-801B1194	bne    v0, zero, loop1b1148 [$801b1148]
+}
 ////////////////////////////////
 
 
@@ -1340,137 +1329,105 @@ if( A0 != ff )
 }
 
 A2 = 0;
-[SP + 10] = h(0); // right fighter
-[SP + 12] = h(0); // middle fighter
-[SP + 14] = h(0); // left fighter
+mask_right = 0;
+mask_middle = 0;
+mask_left = 0;
 
-if( type == 0 )
+if( type == 0 ) // normal
 {
     A2 = enemy_mask;
-    [SP + 10] = h(player_mask); // right fighter
-    [SP + 12] = h(enemy_mask); // middle fighter
+    mask_right = player_mask;
+    mask_middle = enemy_mask;
 }
-else if( type == 1 || type == 3 || type == 5 )
+else if( type == 1 || type == 3 || type == 5 ) // preemptive || side || normal
 {
-    V1 = 0 NOR S2;
-    A2 = player_mask & V1;
+    A2 = player_mask & (0 NOR S2);
+    mask_right = player_mask & S2;
+    mask_middle = enemy_mask;
+    mask_left = player_mask & (0 NOR S2);
 
-    [SP + 10] = h(player_mask & S2);
-    [SP + 12] = h(enemy_mask);
-    [SP + 14] = h(player_mask & V1);
-
-    A1 = 0;
-    loop1b1b48:	; 801B1B48
-        V0 = enemy_mask >> (A1 + 4);
-        if (V0 & 1)
+    for( int i = 0; i < 6; ++i )
+    {
+        if( ( enemy_mask >> ( i + 4 ) ) & 1 )
         {
-            V0 = h[80163658 + A1 * 10 + 6];
-            if (V0 >= 0)
+            if( h[8016360c + 4c + i * 10 + 6] >= 0 ) // z value
             {
-                V0 = 1 << (A1 + 4);
-                A2 = A2 | V0;
+                A2 = A2 | (1 << (i + 4));
             }
         }
-
-        A1 = A1 + 1;
-        V0 = A1 < 6;
-    801B1B80	bne    v0, zero, loop1b1b48 [$801b1b48]
+    }
 }
-else if( type == 2 )
+else if( type == 2 ) // back
 {
     A2 = player_mask;
-    [SP + 10] = h(enemy_mask);
-    [SP + 12] = h(player_mask);
+    mask_right = enemy_mask;
+    mask_middle = player_mask;
 }
-else if( type == 4 )
+else if( type == 4 ) // both sides
 {
-    [SP + 12] = h(player_mask);
+    mask_middle = player_mask;
 
-    A1 = 0;
-    loop1b1aa8:	; 801B1AA8
-        V0 = enemy_mask >> (A1 + 4);
-        A0 = 1 << (A1 + 4);
-        if (V0 & 1)
+    for( int i = 0; i < 6; ++i )
+    {
+        if( ( enemy_mask >> ( i + 4 ) ) & 1 )
         {
-            V0 = w[800f83e0 + 4 * 68 + A1 * 68 + 4];
-            V0 = V0 & 00000002;
-            V1 = hu[SP + 10 + V0 * 2];
-            V1 = V1 | A0;
-            [SP + 10 + V0 * 2] = h(V1);
+            if( w[800f83e0 + 4 * 68 + i * 68 + 4] & 00000002 )
+            {
+                mask_left = mask_left | (1 << (i + 4));
+            }
+            else
+            {
+                mask_right = mask_right | (1 << (i + 4));
+            }
         }
+    }
 
-        A1 = A1 + 1;
-        V0 = A1 < 6;
-    801B1AF0	bne    v0, zero, loop1b1aa8 [$801b1aa8]
-
-
-
-    V1 = hu[SP + 14];
-    A2 = V1 | (player_mask & 0002);
+    A2 = mask_left | (player_mask & 0002);
     if (hu[800f83a4 + 28] == 3d6) // if battle with ruby weapon
     {
         A2 = A2 & (0 NOR player_mask);
     }
 }
 
-
-
-A1 = 0;
-loop1b1b9c:	; 801B1B9C
-    [800f83e0 + A1 * 68 + 4] = w(w[800f83e0 + A1 * 68 + 4] & ffffff7d); // remove 0x00000080 and 0x00000002 bits
+for( int i = 0; i < a; ++i )
+{
+    [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] & ffffff7d); // remove 0x00000080 and 0x00000002 bits
 
     // if we in left command add 0x00000002 bit
-    V0 = hu[SP + 14] >> A1;
-    if (V0 & 1)
+    if( ( mask_left >> i ) &  1)
     {
-        [800f83e0 + A1 * 68 + 4] = w(w[800f83e0 + A1 * 68 + 4] | 00000002);
+        [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] | 00000002);
     }
 
     // looks like models that looks different direction
-    V0 = A2 & ffff >> A1;
-    if (V0 & 1)
+    if( ( A2 >> i ) & 1 )
     {
-        [800f83e0 + A1 * 68 + 4] = w(w[800f83e0 + A1 * 68 + 4] | 00000080);
+        [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] | 00000080);
+    }
+}
+
+for( int i = 0; i < 3; ++i )
+{
+    A0 = (w[800f83e0 + i * 68 + 4] >> 6) & 1; // back row bit
+
+    if( type == 2 ) // back
+    {
+        A0 = A0 < 1;
+        [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] XOR 00000040);
+    }
+    else if( type > 2 ) // side, both sides, normal
+    {
+        A0 = 0;
+        // remove backrow if this is 3 row battle
+        [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] & ffffffbf);
     }
 
-    A1 = A1 + 1;
-    V0 = A1 < a;
-801B1BF0	bne    v0, zero, loop1b1b9c [$801b1b9c]
+    [801636b8 + i * 10 + 6] = h(A0);
+}
 
-
-
-A3 = 0;
-loop1b1c14:	; 801B1C14
-    A2 = w[800f83e0 + A3 * 68 + 4];
-    V1 = hu[800f7dc8];
-    A0 = A2 >> 6;
-    A0 = A0 & 1;
-
-    if (V1 >= 2)
-    {
-        if (V1 == 2)
-        {
-            A0 = A0 < 1;
-            [800f83e0 + A3 * 68 + 4] = w(w[800f83e0 + A3 * 68 + 4] XOR 0040);
-        }
-        else
-        {
-            A0 = 0;
-            // remove backrow if this is 3 row battle
-            [800f83e0 + A3 * 68 + 4] = w(w[800f83e0 + A3 * 68 + 4] & ffffffbf);
-        }
-    }
-
-    [801636be + A3 * 10] = h(A0);
-    A3 = A3 + 1;
-    V0 = A3 < 3;
-801B1C68	bne    v0, zero, loop1b1c14 [$801b1c14]
-
-
-
-[8016376e] = h(hu[SP + 10]);
-[80163770] = h(hu[SP + 12]);
-[80163772] = h(hu[SP + 14]);
+[8016376e] = h(mask_right);
+[80163770] = h(mask_middle);
+[80163772] = h(mask_left);
 ////////////////////////////////
 
 

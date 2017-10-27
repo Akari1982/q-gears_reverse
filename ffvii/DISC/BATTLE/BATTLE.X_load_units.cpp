@@ -1,179 +1,120 @@
 ////////////////////////////////
-// battle_update_unit_mask
-// we update unit states masks
-S2 = 0;
-mask_enabled_units   = 0;
-S1 = 0;
+// battle_update_unit_mask()
+
+mask_covered_enemy = 0;
+mask_enabled_units = 0;
+mask_auto_script = 0;
 mask_petrified_units = 0;
-mask_dead_units      = 0;
+mask_dead_units = 0;
 
 
 
-A1 = 0;
-loopa4580:	; 800A4580
-    state  = w[800f83e0 + A1 * 68 + 04];
-    status = w[800f83e0 + A1 * 68 + 00];
+for( int i = 0; i < a; ++i )
+{
+    status = w[800f83e0 + i * 68 + 0];
+    state = w[800f83e0 + i * 68 + 4];
 
-    A0 = 1 << A1;
-
-    if (state & 00000008)
+    if( state & 00000008 )
     {
-        mask_enabled_units = mask_enabled_units | A0;
+        mask_enabled_units = mask_enabled_units | (1 << i);
     }
-    if (state & 00000010)
+    if( state & 00000010 )
     {
-        S1 = S1 | A0;
+        mask_auto_script = mask_auto_script | (1 << i);
     }
-    if (status & 00004000) // petrified
+
+    if( status & 00004000 ) // petrified
     {
-        mask_petrified_units = mask_petrified_units | A0;
+        mask_petrified_units = mask_petrified_units | (1 << i);
     }
-    if (status & 00000001) // if unit is dead
+    if( status & 00000001 ) // if unit is dead
     {
-        mask_dead_units = mask_dead_units | A0;
+        mask_dead_units = mask_dead_units | (1 << i);
     }
-    if (status & 80000000) // if unit inprisoned
+
+    if( status & 80000000 ) // if unit inprisoned
     {
-        V0 = hu[800f7dc6];
-        if (V0 == 0 || V0 == 3)
+        if( hu[800f7dc6] == 0 || hu[800f7dc6] == 3 )
         {
-            mask_dead_units = mask_dead_units | A0;
+            mask_dead_units = mask_dead_units | (1 << i);
         }
     }
-
-    A1 = A1 + 1;
-    V0 = A1 < a;
-800A45FC	bne    v0, zero, loopa4580 [$800a4580]
-
-
+}
 
 [800f7dce] = h(mask_petrified_units);
 [80163758] = h(mask_enabled_units);
-[80163768] = h(S1);
+[80163768] = h(mask_auto_script);
 [80163766] = h(mask_dead_units);
 
-
-
-T9 = ffff;
-
-
-
-// loop through enemies
-T6 = 4;
-loopa4640:	; 800A4640
-    enemy_bit = 1 << T6;
-
-    if (mask_enabled_units & enemy_bit) // if this enemy exist
+// set cover for enemies
+// and get first row
+first_row = ffff;
+for( int i = 4; i < a; ++i )
+{
+    if( mask_enabled_units & (1 << i) ) // if this enemy exist
     {
-        A3 = 0;
-        A0 = 4;
+        mask_cover = 0;
 
-        T2 = bu[800f83e0 + T6 * 68 + 4e]; // row from battle formation
+        [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] & fffff7bf); // remove row from battle formation
 
-        // remove backrow and something
-        [800f83e0 + T6 * 68 + 4] = w(w[800f83e0 + T6 * 68 + 4] & fffff7bf); // remove 0x00000800 and 0x00000040
-
-        loopa4688:	; 800A4688
-            V0 = mask_enabled_units >> A0;
-            if (V0 & 0001)
+        // search for units covered this unit
+        for( int j = 4; j < a; ++j )
+        {
+            if( ( mask_enabled_units >> j ) & 1 )
             {
-                V0 = bu[800f83e0 + A0 * 68 + 4e]; // row from battle formation
-                if (V0 < T2)
+                // if "j" unit stand in front of "i" unit
+                if( bu[800f83e0 + j * 68 + 4e] < bu[800f83e0 + i * 68 + 4e] )
                 {
-                    V0 = hu[8016360c + 8 + 14 + 30 + (A0 - 4) * 10 + a];
-                    A3 = A3 | V0;
+                    mask_cover = mask_cover | hu[8016360c + 4c + (j - 4) * 10 + a];
                 }
             }
-
-            A0 = A0 + 1;
-            V0 = A0 < a;
-        800A46D8	bne    v0, zero, loopa4688 [$800a4688]
-
-
-
-        V0 = hu[8016360c + 8 + 14 + 30 + (T6 - 4) * 10 + a]; // 0xa byte from battle formation
-        if (V0 & A3)
-        {
-            S2 = S2 | enemy_bit;
-
-            [800f83e0 + T6 * 68 + 4] = w(w[800f83e0 + T6 * 68 + 4] | 00000800);
         }
 
-
-
-        if (T2 < T9)
+        if( hu[8016360c + 4c + (i - 4) * 10 + a] & mask_cover )
         {
-            T9 = T2;
+            mask_covered_enemy = mask_covered_enemy | (1 << i);
+            [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] | 00000800);
+        }
+
+        if( bu[800f83e0 + i * 68 + 4e] < first_row ) // row from battle formation
+        {
+            first_row = bu[800f83e0 + i * 68 + 4e];
         }
     }
+}
 
-    T6 = T6 + 1;
-    V0 = T6 < a;
-800A4734	bne    v0, zero, loopa4640 [$800a4640]
-
-
-
-A1 = 0;
-A0 = mask_enabled_units & ffff;
-V1 = 1a0;
-
-loopa4748:	; 800A4748
-    V0 = A1 + 4;
-    V0 = A1 >> V0;
-    if (V0 & 1)
+// set back row for all enemies not in front row
+for( int i = 4; i < a; ++i )
+{
+    if( ( mask_enabled_units >> i ) & 1 )
     {
-        V0 = bu[800f842e + V1];
-        if (V0 != T9)
+        if( bu[800f83e0 + i * 68 + 4e] != first_row )
         {
-            V0 = w[800f83e0 + V1 + 4];
-            V0 = V0 | 00000040;
-            [800f83e0 + V1 + 4] = w(V0);
+            [800f83e0 + i * 68 + 4] = w(w[800f83e0 + i * 68 + 4] | 00000040);
         }
     }
+}
 
-    A1 = A1 + 1;
-    V1 = A1 < 6;
-    V1 = V1 + 68;
-800A479C	bne    v0, zero, loopa4748 [$800a4748]
+[8016375c] = h(mask_enabled_units XOR mask_covered_enemy);
 
-
-
-V0 = mask_enabled_units XOR S2;
-[8016375c] = h(V0);
-
-
-
-V1 = 0 NOR mask_dead_units; // alive units
-V1 = V1 & 000f; // leave only player
-V0 = S1 | mask_enabled_units; // all enabled units
-V0 = V0 & 03f0; // leave only enemy
+V1 = (0 NOR mask_dead_units) & 000f; // alive player
+V0 = (mask_auto_script | mask_enabled_units) & 03f0; // enabled enemy
 V1 = V1 | V0;
-A0 = hu[800f83a4 + a];
-A0 = A0 & V1;
+A0 = hu[800f83a4 + a] & V1;
 [8016375a] = h(A0);
 [8016375e] = h(mask_enabled_units);
 
-
-
-V1 = hu[800f7dc8];
-if (V1 == 4)
+if( hu[800f7dc8] == 4 ) // both sides type of battle
 {
-    A0 = A0 & 3f0;
-
-    A1 = 0;
-    loopa4804:	; 800A4804
-        V0 = hu[8016376e + A1 * 4];
-        V0 = A0 & V0;
-        if (V0 == 0)
+    int i = 0;
+    for( ; i < 2; ++i )
+    {
+        if( ( hu[8016376e + i * 4] & ( A0 & 03f0 ) ) == 0 )
         {
             break;
         }
-
-        A1 = A1 + 1;
-        V0 = A1 < 2;
-    800A4820	bne    v0, zero, loopa4804 [$800a4804]
-
-    [80163780] = h(A1);
+    }
+    [80163780] = h(i);
 }
 ////////////////////////////////
 

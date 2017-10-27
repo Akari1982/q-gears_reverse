@@ -1,5 +1,6 @@
 ﻿////////////////////////////////
-// funca6000
+// funca6000()
+
 unit_id       = A0; // unit_id
 script_to_run = A1;
 argument2     = S4 = A2;
