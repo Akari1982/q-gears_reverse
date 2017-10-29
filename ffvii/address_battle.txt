@@ -24,9 +24,9 @@
 
 800a0d98 default matrix for billboards.
 
-800e7a38      [][][][] maybe current unit (during attack queue).
+800e7a38 [][][][] maybe current unit (during attack queue).
 
-800e7a58      []       array of player unit_ids. Used if we want some player unit to execute another player logic.
+800e7a58 []       array of player unit_ids. Used if we want some player unit to execute another player logic.
 
 800e7bbc some values
                 08 00 02 08 01 08 03 08 04 08 05 08 00 02 08 01
@@ -141,7 +141,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f4ac0 [][][][] store offset to ai script here during funtion that handles battle opcode.
 800f4ac4 [][][][] pointer to battle temp structure.
 800f4ac8 [][][][] init with 0. Priority for added action (in script).
-800f4acc [][][][]
+800f4acc [][][][] inited with not defined param (garbage).
 
 800f4b00 []       init with 0.
 
@@ -385,7 +385,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7db6 [][]     store here escape counter.
 800f7db8 [][]     store 0 here at start of attack queue executed parcing
 800f7dba [][]     store currently executed priority in main battle queue here.
-800f7dbc [][]     store set bit here before run opcode cycle.
+800f7dbc [][]     store script bit here before run opcode cycle (1 << script_to_run).
 800f7dbe [][]     store 0051 here if attacker in lucky 7777 in large_function.
 800f7dc0 [][]     store 002F here if attacker in lucky 7777 in large_function.
 800f7dc6 [][]     store here status(from attack param) & 00000003 (if 0x80000000 bit (imprisoned) in status mask set).
@@ -512,21 +512,21 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +01 []       store data performed attack index here.
     +04 []       formation type id.
     +0a [][]     add bits for every inited unit here. Mask for alive units???
-    +0c [][]     self mask for current unit ().
-    +0e [][]     attack mask for current unit (2070).
-    +10 [][]     friends mask for current unit (2080).
-    +12 [][]     0 ().
-    +14 [][]     opponents mask for current unit (0x20A0).
-    +16 [][]     0 ().
+    +0c [][]     current script self unit mask.
+    +0e [][]     current script alived opponent unit mask without petrified (0x2070).
+    +10 [][]     current script alived ally mask (0x2080).
+    +12 [][]     current script dead ally mask.
+    +14 [][]     current script alived opponent mask without petrified (0x20A0).
+    +16 [][]     current script dead opponent mask.
     +18 [][]     init with 0. Add bits for player units.
     +1a [][]     init with 0. Add bits for inited enemy units.
-    +1c [][]     all units mask ().
+    +1c [][]     all units mask.
     +22 [][]     init with 0 at start of battle cycle. Some flags. A0 = (V0 & 25) ? 1 : 7; funca23e0; // battle queue function
     +28 [][]     store battle id here.
     +2c [][]     something flags used during attack queue coping. Used during 8 and A 2bytes copying from attack data. 0x0004 checked in battle cycle.
     +2e [][]     flags. 0x0004 (magical or physical attack)
     +30 [][]
-    +38 [][][][] 
+    +38 [][][][] party gil amount from savemap.
 
 
 800f83e0 unit data structure. (size 0x68). (address 0x4000).
@@ -561,7 +561,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     + 10 []       init with 0. Set 0x10 during player init. Init with 0 in case of enemy. Idle action id.
     + 11 []       init with 5 in case of player. Init with 1 in case of enemy. Hurt action id.
     + 12 []       back damage multiplier. (usually 0x10).
-    13 []       model scale (just changing doesn't work)?. init with 10.
+    + 13 []       model scale (just changing doesn't work)?. init with 10.
     + 14 []       dexterity.
     + 15 []       luck.
     + 16 []       init with 0 in case of player.

@@ -234,6 +234,7 @@
     +10 [][][][] w[8009a008]
 
 80082268 player ai and some data in kernel (3rd file).
+    +61c player ai script.
 
 80083580 we copy here akao sequence data when init music 0x10.
 

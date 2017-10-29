@@ -1,8 +1,188 @@
 ﻿////////////////////////////////
-// battle_opcodes_cycle
-unit_id             = A0;
+// funca6000()
+
+unit_id = A0;
+script_to_run = A1;
+priority = A2;
+
+S3 = -1;
+
+[800f7dbc] = h(hu[800f7dbc] | (1 << script_to_run));
+
+if( unit_id >= 4 ) // enemy
+{
+    script = 800f6da4; // enemy ai scripts from scene file
+    enemy_id = h[8016360c + 4c + (unit_id - 4) * 10];
+}
+else if( unit_id < 3 ) // party
+{
+    S3 = b[801636b8 + unit_id * 10 + 0];
+    if( S3 != -1 )
+    {
+        V1 = bu[800e7a58 + S3];
+        if( V1 != ff )
+        {
+            S3 = V1;
+        }
+    }
+
+    script = 80082268 + 61c;
+    enemy_id = S3;
+}
+else
+{
+    return;
+}
+
+A0 = script;
+A1 = enemy_id;
+A2 = script_to_run;
+get_enemy_ai_script_offset();
+script_ptr = V0;
+
+if( script_ptr != 0 )
+{
+    for( int i = 0; i < a; ++i )
+    {
+        [SP + 10 + i * 5 + 0] = b(bu[800f83e0 + i * 68 + 13]); // model scale
+        [SP + 10 + i * 5 + 1] = b(bu[800f83e0 + i * 68 + 10]); // idle action id
+        [SP + 10 + i * 5 + 2] = b(bu[800f83e0 + i * 68 + 11]); // hurt action id
+    }
+
+    A0 = unit_id;
+    A1 = priority;
+    funcb2a2c(); // update masks for current script
+
+    A0 = unit_id;
+    A1 = script_ptr;
+    A2 = S3;
+    battle_opcodes_cycle();
+
+    for( int i = 0; i < a; ++i )
+    {
+        if( bu[SP + 10 + i * 5 + 0] != bu[800f83e0 + i * 68 + 13] )
+        {
+            A0 = i;
+            A1 = 4;
+            A2 = bu[800f83e0 + i * 68 + 13];
+            A3 = 10;
+            funca31a0;
+        }
+
+        if( bu[SP + 10 + i * 5 + 2] != bu[800f83f1 + i * 68] )
+        {
+            A0 = i;
+            A1 = bu[SP + 10 + i * 5 + 2];
+            A2 = bu[800f83e0 + i * 68 + 11];
+            A3 = 0;
+            funca34cc;
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb2a2c()
+
+unit_id = A0;
+[800f4ac8] = w(A1); // some priority
+[800f4acc] = w(A2); // not defined
+
+if( unit_id >= 0 )
+{
+    mask_player = hu[800f83a4 + 18];
+    mask_enabled = hu[8016375e];
+    mask_dead = hu[80163766];
+    mask_enemy = hu[800f83a4 + 1a];
+
+    mask_opponent_alive = mask_enabled & mask_player & (0 NOR mask_dead);
+    mask_opponent_dead = mask_enabled & mask_player & mask_dead;
+    mask_ally_alive = mask_enabled & mask_enemy & (0 NOR mask_dead);
+    mask_ally_dead = mask_enabled & mask_enemy & mask_dead;
+
+    A0 = unit_id;
+    funcb0eb4(); // get is entity controlled by player
+    if( V0 != 0 )
+    {
+        V0 = mask_opponent_alive;
+        mask_opponent_alive = mask_ally_alive;
+        mask_ally_alive = V0;
+
+        V0 = mask_opponent_dead;
+        mask_opponent_dead = mask_ally_dead;
+        mask_ally_dead = V0;
+    }
+
+    [800f83a4 + c] = h(1 << unit_id);
+    [800f83a4 + e] = h(mask_opponent_alive & (0 NOR hu[800f7dce])); // remove mask petrified
+    [800f83a4 + 10] = h(mask_ally_alive);
+    [800f83a4 + 12] = h(mask_ally_dead);
+    [800f83a4 + 14] = h(mask_opponent_alive & (0 NOR hu[800f7dce])); // remove mask petrified
+    [800f83a4 + 16] = h(mask_opponent_dead);
+    [800f83a4 + 1c] = h(hu[800f83a4 + a] & hu[8016375a]);
+    [800f83a4 + 38] = w(w[8009c6e4 + b7c]);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb0eb4()
+
+unit_id = A0;
+
+is_player = unit_id < 4;
+
+if( w[800f83e0 + unit_id * 68 + 0] & 00000040 ) // confuse
+{
+    is_player = is_player + 1;
+}
+
+if( w[800f83e0 + unit_id * 68 + 0] & 00400000 ) // manipulate
+{
+    is_player = is_player + 1;
+}
+
+return is_player & 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// get_enemy_ai_script_offset()
+
+script = A0;
+unit_id = A1;
+script_id = A2;
+
+ret = 0;
+if( unit_id != -1 )
+{
+    unit_script = hu[script + unit_id * 2];
+    if( unit_script != ffff )
+    {
+        unit_script = unit_script & fffe;
+        offset_to_script = [script + unit_script + script_id * 2];
+        if( offset_to_script != ffff )
+        {
+            ret = script + unit_script + offset_to_script;
+        }
+    }
+}
+return ret;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_opcodes_cycle()
+
+unit_id = A0;
 offset_to_ai_script = A1;
 S5 = A2;
+
 S6 = 0; // flag that indicates end of reading
 S4 = 1;
 address = w[80063014];
@@ -31,9 +211,9 @@ Lb1da0:	; 800B1DA0
     V1 = V1 >> 4;
     [A0 + 14] = w(V1);
 
-    if (V1 < B)
+    if( V1 < b )
     {
-        switch (V1)
+        switch( V1 )
         {
             case 0:
             {
