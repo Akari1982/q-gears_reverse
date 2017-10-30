@@ -2085,39 +2085,12 @@ La34b4:	; 800A34B4
 800A34C8	nop
 
 
-funca34cc:	; 800A34CC
-800A34CC	addu   t0, zero, zero
-800A34D0	ori    t1, zero, $0001
-800A34D4	lui    v1, $8010
-800A34D8	addiu  v1, v1, $a9d0 (=-$5630)
 
-loopa34dc:	; 800A34DC
-800A34DC	lb     v0, $0000(v1)
-800A34E0	nop
-800A34E4	bne    v0, a0, La351c [$800a351c]
-800A34E8	nop
-800A34EC	lb     v0, $0002(v1)
-800A34F0	nop
-800A34F4	bne    v0, a1, La351c [$800a351c]
-800A34F8	nop
-800A34FC	bne    a3, t1, La3518 [$800a3518]
-800A3500	nop
-800A3504	lhu    v0, $0004(v1)
-800A3508	nop
-800A350C	andi   v0, v0, $0004
-800A3510	beq    v0, zero, La351c [$800a351c]
-800A3514	nop
+////////////////////////////////
+// funca34cc
+800A34CC-800A3530
+////////////////////////////////
 
-La3518:	; 800A3518
-800A3518	sb     a2, $0002(v1)
-
-La351c:	; 800A351C
-800A351C	addiu  t0, t0, $0001
-800A3520	slti   v0, t0, $0080
-800A3524	bne    v0, zero, loopa34dc [$800a34dc]
-800A3528	addiu  v1, v1, $000c
-800A352C	jr     ra 
-800A3530	nop
 
 
 funca3534:	; 800A3534
@@ -2747,24 +2720,10 @@ loopa3cec:	; 800A3CEC
 // funca3d4c
 800A3D4C-800A3E94
 ////////////////////////////////
+// battle_add_action_to_battle_queue
+800A3E98-800A3ECC
+////////////////////////////////
 
-
-
-funca3e98:	; 800A3E98
-800A3E98	addiu  sp, sp, $ffe0 (=-$20)
-800A3E9C	lw     v0, $0030(sp)
-800A3EA0	sb     a0, $0012(sp)
-800A3EA4	addiu  a0, sp, $0010
-800A3EA8	sw     ra, $0018(sp)
-800A3EAC	sb     a1, $0010(sp)
-800A3EB0	sb     a2, $0013(sp)
-800A3EB4	sh     a3, $0014(sp)
-800A3EB8	jal    funca3d4c [$800a3d4c]
-800A3EBC	sh     v0, $0016(sp)
-800A3EC0	lw     ra, $0018(sp)
-800A3EC4	addiu  sp, sp, $0020
-800A3EC8	jr     ra 
-800A3ECC	nop
 
 
 funca3ed0:	; 800A3ED0

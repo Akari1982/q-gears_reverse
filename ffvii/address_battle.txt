@@ -201,6 +201,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +28 []
     +29 []       add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
                 0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
+                0x04 - add in case of sneak attack.
+                0x80 - add in case of lucky 7777.
     +2a []       ???
     +2b
     +2c [][][][] some data checked after damage apply in action_type_09 function.
@@ -313,7 +315,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f652c array of attack names from scene file (0x20 items 0x20 size).
 
-800f692c attack stack data (0x200(all) + 0x8(current)).
+800f692c attack stack data (0x41 items 0x8 size). One item for current action.
     +00 []       priority. Init with 0xff (exept current).
     +01 []       order inside priority.
     +02 []       unit_id.
@@ -524,8 +526,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +22 [][]     init with 0 at start of battle cycle. Some flags. A0 = (V0 & 25) ? 1 : 7; funca23e0; // battle queue function
     +28 [][]     store battle id here.
     +2c [][]     something flags used during attack queue coping. Used during 8 and A 2bytes copying from attack data. 0x0004 checked in battle cycle.
+                    0x0008 - if set then we init player woth filled time bat and enemy with 0.
     +2e [][]     flags. 0x0004 (magical or physical attack)
-    +30 [][]
+    +30 [][]     some id.
     +38 [][][][] party gil amount from savemap.
 
 
@@ -567,7 +570,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     + 16 []       init with 0 in case of player.
     17 []       store 0xff here at start of battle_main_damage_calculation. Index of character that we cover.
     18 [][]     attack mask set during run command.
-    1a [][]     - some mask (maybe mask of those who attack this unit)
+    + 1a [][]     - some mask (maybe mask of those who attack this unit)
     + 20 [][]     defense. Multiplied by 2 in case of enemy.
     + 22 [][]     magic defense. Multiplied by 2 in case of enemy.
     + 24 [][]     init with 0xffff. Set enemy id here.
@@ -576,7 +579,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     + 2a [][]     max MP.
     + 2c [][][][] current HP.
     + 30 [][][][] max HP.
-    + 44 [][][][] init with 0. Store status of this unit here during initialization.
+    + 44 [][][][] init with 0. Store status of this unit here during initialization. Copy status from +0 here.
     + 4c []       init with 1.
     + 4d []       set magic evade (magic defense% in game) from armor equipped in case of player.
     + 4e []       store row from battle formation here during init.
@@ -1052,12 +1055,22 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     // 2 - string to display
     +00 []       id of unit that init action. (sometimes set to 0xa)
     +01 []       2. Type string.
-    +02 []       init with 0.
-    +03 []       init with 0.
+    +02 []       0.
+    +03 []       0.
     +05 []       argument of fucnction battle_add_string_to_display than add this. Sometimes set to 1.
     +06 [][]     string index + 0x100.
-    +08 [][]     0xffff.
-    +0a [][]     0xffff.
+    +08 [][]     -1.
+    +0a [][]     -1.
+    // 4 - ???
+    +00 []       init with unit id.
+    +01 []       set 4 here.
+    +02 []       0.
+    +03 []       0.
+    +04 []       0.
+    +05 []       model scale.
+    +06 [][]     0x10.
+    +08 [][]     -1.
+    +0a [][]     -1.
     // 5 - ???
     +00 []       init with 0xff. Set attacker id here.
     +01 []       set 5 here. Set 1f80001c from temp attack here.

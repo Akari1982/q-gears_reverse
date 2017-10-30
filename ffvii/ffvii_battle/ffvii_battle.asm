@@ -517,41 +517,6 @@ V1 = V1 + 000c;
 800A34C8	nop
 
 
-funca34cc:	; 800A34CC
-T0 = 0;
-T1 = 0001;
-800A34D4	lui    v1, $8010
-800A34D8	addiu  v1, v1, $a9d0 (=-$5630)
-
-loopa34dc:	; 800A34DC
-V0 = b[V1 + 0000];
-800A34E0	nop
-800A34E4	bne    v0, a0, La351c [$800a351c]
-800A34E8	nop
-V0 = b[V1 + 0002];
-800A34F0	nop
-800A34F4	bne    v0, a1, La351c [$800a351c]
-800A34F8	nop
-800A34FC	bne    a3, t1, La3518 [$800a3518]
-800A3500	nop
-V0 = hu[V1 + 0004];
-800A3508	nop
-V0 = V0 & 0004;
-800A3510	beq    v0, zero, La351c [$800a351c]
-800A3514	nop
-
-La3518:	; 800A3518
-[V1 + 0002] = b(A2);
-
-La351c:	; 800A351C
-T0 = T0 + 0001;
-V0 = T0 < 0080;
-800A3524	bne    v0, zero, loopa34dc [$800a34dc]
-V1 = V1 + 000c;
-800A352C	jr     ra 
-800A3530	nop
-
-
 funca3534:	; 800A3534
 A1 = A1 << 10;
 A1 = A1 >> 10;
@@ -1163,13 +1128,6 @@ S0 = w[SP + 0010];
 SP = SP + 0030;
 800A3D44	jr     ra 
 800A3D48	nop
-
-
-
-////////////////////////////////
-// battle_add_action_to_battle_queue
-800A3E98-800A3ECC
-////////////////////////////////
 
 
 

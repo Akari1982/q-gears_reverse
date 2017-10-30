@@ -556,7 +556,7 @@
     +024 counter attack structure (0x3 size 0x8 items)
         +0 []     Init with 0. Counter attack set 9. Counter with command set 8. Counter with magic and summon set 7. Sneak command set 5. Sneak magic and summon set 4. Final command set 2. Final magic and summon set 1.
         +1 []     Init with 0. Counter attack set 9. Command set action id. Magic and summon set attack id. Master command set 0xfd. Master magic set 0xfe. Master summon set 0xff.
-        +2 []     Init with 0. Store counter (1e 28 3c 50 64), sneak (14 23 32 41 50), final (01 02 03 04 05) value from materia.
+        +2 []     chance for counter and sneak. Number of use for final.
     +03c [][]     attack element type. Init with 0. Add type from weapon. Add type from elemental materia pairing if materia in weapon.
     +03e [][]     half damage element type mask. Init with 0. Add element half damage from armor. Add type from materia paired with elemental if 1 star activated if materia in armor.
     +040 [][]     no damage element type mask. Init with 0. Add element no damage from armor. Add type from materia paired with elemental if 2 star activated if materia in armor.

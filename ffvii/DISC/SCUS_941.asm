@@ -1668,27 +1668,8 @@ SP = SP + 0018;
 // system_get_random_byte_from_table
 80014B70-80014BA4
 ////////////////////////////////
-
-
-
-80014BA8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
-80014BB4	jal    system_get_random_byte_from_table [$80014b70]
-S0 = A0;
-V0 = V0 & 00ff;
-80014BC0	mult   v0, s0
-80014BC4	mflo   v1
-V0 = V1 >> 08;
-V0 = V0 & 00ff;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80014BDC	jr     ra 
-80014BE0	nop
-
-
-
+// func14ba8
+80014BA8-80014BE0
 ////////////////////////////////
 // system_random_two_bytes
 80014BE4-80014C40

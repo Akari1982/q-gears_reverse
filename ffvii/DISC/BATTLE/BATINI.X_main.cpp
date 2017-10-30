@@ -114,132 +114,80 @@ func1b19ac();
 
 battle_update_unit_mask();
 
-// we run player setup ai if needed here
-func1b1120();
+func1b1120(); // run player setup ai
 
+func1b2308(); // run enemy setup ai
 
-
-
-
-
-
-
-
-
-
-
-// we run enemy setup here
-func1b2308();
-
-// run scripts for unit 3
-funca61d4;
+funca61d4(); // run all 8 formation scripts
 
 battle_update_unit_mask();
 
-// init time values for units
-initbattle_init_units_time_value();
+initbattle_init_units_time_value(); // init time values for units
 
-// copy current hp and mp to 0x44 structure
-funca4480();
+funca4480(); // copy current hp and mp to 0x44 structure
 
-[800f7de8] = h(hu[800f7de8] | 1);
+[800f7de8] = h(hu[800f7de8] | 0001);
 
 // try sneack attacks
-S0 = 0;
-loop1b02ac:	; 801B02AC
-    A0 = S0;
-    A1 = 1;
-    funca5bc8;
-
-    S0 = S0 + 1;
-    V0 = S0 < 3;
-801B02BC	bne    v0, zero, loop1b02ac [$801b02ac]
-
-// if not preemprive battle
-V0 = hu[800f83a4 + 2c];
-if (V0 & 0008 == 0)
+for( int i = 0; i < 3; ++i )
 {
-    funca2894;
+    A0 = i;
+    A1 = 1;
+    funca5bc8();
+}
+
+if( ( hu[800f83a4 + 2c] & 0008 ) == 0 ) // if not preemprive battle
+{
+    funca2894();
 }
 else
 {
-    // set battle speed to 0x80
-    A0 = 0080;
+    A0 = 80; // set battle speed to 0x80
     func1b085c();
 
-    // set atb type to 0
-    [800f7daa] = h(0); // atb type
+    [800f7daa] = h(0); // set atb type to 0
 
-    S0 = 0;
-    L1b02f0:	; 801B02F0
-        A0 = S0;
-        func1b137c();
-
-        S0 = S0 + 1;
-        V0 = S0 < 3;
-    801B0300	beq    v0, zero, L1b0318 [$801b0318]
-    801B0304	nop
-    801B0308	j      L1b02f0 [$801b02f0]
+    for( int i = 0; i < 3; ++i )
+    {
+        A0 = i;
+        func1b137c(); // remove commands for players except attack
+    }
 }
 
-V0 = hu[800f83a4 + 2c];
-if (V0 & 0004)
+if( hu[800f83a4 + 2c] & 0004 )
 {
-    V1 = w[GP + 244];
-    if (V1 & 0004 == 0)
+    if( ( w[GP + 244] & 4 ) == 0 )
     {
-        V0 = V1 | 0004;
-        [GP + 244] = w(V0);
+        [GP + 244] = w(w[GP + 244] | 4);
         [80075d04] = w(-1);
     }
 
-
-
-    A2 = 80075d08;
-    T1 = 80075d04;
-    A3 = 1a0;
     A1 = hu[800f83a4 + 30];
-    V1 = 1;
-    V0 = A1 << 01;
-    V0 = V0 + A1;
-    A0 = V0 << 01;
-    A0 = V1 << A0;
-    V1 = A2 + 0004;
-    V0 = V0 << 03;
-    T0 = V0 + V1;
-    [A2 + 0000] = w(A1);
+    A0 = 1 << (A1 * 6);
+    [80075d08] = w(A1);
 
-    S0 = 0;
-    loop1b03a0:	; 801B03A0
-        V1 = w[T1];
-        if( V1 & A0 )
+    for( int i = 0; i < 6; ++i )
+    {
+        V1 = w[80075d04];
+        if( V1 & ( A0 << i ) )
         {
-            V0 = 0 NOR A0;
-            V0 = V1 & V0;
-            [T1 + 0000] = w(V0);
+            [80075d04] = w(V1 & (0 NOR (A0 << i)));
         }
         else
         {
-            V0 = b[800f83e0 + A3 + 8];
-            if (V0 != -1)
+            if( b[800f83e0 + 1a0 + i * 68 + 8] != -1 ) // if unit exist
             {
-                V0 = w[T0];
-                [800f83e0 + A3 + 2c] = w(V0); // current hp
-                if (V0 == 0)
+                V0 = w[80075d08 + A1 * 18 + 4 + i * 4];
+                [800f83e0 + 1a0 + i * 68 + 2c] = w(V0); // current hp
+                if( V0 == 0 )
                 {
-                    [800f83e0 + A3 +  0] = w(w[800f83e0 + A3 +  0] | 00000001); // current status
-                    [800f83e0 + A3 + 44] = w(w[800f83e0 + A3 + 44] | 00000001); // init status
-                    [800f83e4 + A3] = w(w[800f83e4 + A3] & ffffffe7);
+                    [800f83e0 + 1a0 + i * 68 + 0] = w(w[800f83e0 + 1a0 + i * 68 + 0] | 00000001); // current status
+                    [800f83e0 + 1a0 + i * 68 + 44] = w(w[800f83e0 + 1a0 + i * 68 + 44] | 00000001); // init status
+                    [800f83e0 + 1a0 + i * 68 + 4] = w(w[800f83e0 + 1a0 + i * 68 + 4] & ffffffe7);
                 }
             }
         }
-
-        A0 = A0 << 1;
-        T0 = T0 + 4;
-        S0 = S0 + 1;
-        A3 = A3 + 68;
-        V0 = S0 < 6;
-    801B0458	bne    v0, zero, loop1b03a0 [$801b03a0]
+    }
 
     battle_update_unit_mask();
 }
@@ -251,19 +199,11 @@ if (V0 & 0004)
 // func1b0490()
 // second and next battle init function
 
-801B0490	lui    v0, $8016
-V0 = hu[V0 + 376c];
-801B0498	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0024] = w(S5);
+V0 = hu[8016376c];
 S5 = A0;
-[SP + 0014] = w(S1);
 S1 = 0004;
-[SP + 0028] = w(RA);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
 801B04BC	beq    v0, zero, L1b04f0 [$801b04f0]
-[SP + 0010] = w(S0);
+
 S1 = 0;
 A0 = 0;
 A1 = 0;
@@ -361,30 +301,20 @@ S1 = 0110;
 801B0604	nop
 
 loop1b0608:	; 801B0608
-801B0608	jal    $80014ba8
-A0 = 0040;
-V0 = V0 & 00ff;
-V0 = V0 + 0080;
-V0 = V0 << 08;
-801B061C	lui    at, $800f
-AT = AT + S1;
-[AT + 5bbc] = h(V0);
-801B0628	jal    $800b108c
-A0 = S0;
-S0 = S0 + 0001;
-V0 = S0 < 000a;
+    801B0608	jal    $80014ba8
+    A0 = 0040;
+    V0 = V0 & 00ff;
+    V0 = V0 + 0080;
+    V0 = V0 << 08;
+    801B061C	lui    at, $800f
+    AT = AT + S1;
+    [AT + 5bbc] = h(V0);
+    801B0628	jal    $800b108c
+    A0 = S0;
+    S1 = S1 + 0044;
+    S0 = S0 + 0001;
+    V0 = S0 < 000a;
 801B0638	bne    v0, zero, loop1b0608 [$801b0608]
-S1 = S1 + 0044;
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0030;
-801B0660	jr     ra 
-801B0664	nop
 ////////////////////////////////
 
 
@@ -392,98 +322,76 @@ SP = SP + 0030;
 ////////////////////////////////
 // initbattle_init_units_time_value()
 
-S4 = hu[8016375a];
 S3 = 0;
-S0 = 0;
-loop1b069c:	; 801B069C
-    [800f5bbc + S0 * 44] = h(0);
-    V0 = S4 >> S0;
-    V0 = V0 & 1;
-    V1 = 0;
-    if (V0 != 0)
-    {
-        battle_opcodes_get_random;
-        V0 = V0 & ffff;
+for( int i = 0; i < a; ++i )
+{
+    [800f5bb8 + i * 44 + 4] = h(0);
 
+    V1 = 0;
+    if( ( hu[8016375a] >> i ) & 1 )
+    {
+        battle_opcodes_get_random();
         V1 = V0 / 2;
-        if (S3 < V1)
+        if( S3 < V1 )
         {
             S3 = V1;
         }
     }
+    [SP + 10 + i * 4] = w(V1);
+}
 
-    [SP + 10 + S0 * 4] = w(V1);
-    S0 = S0 + 1;
-    V0 = S0 < a;
-801B06E8	bne    v0, zero, loop1b069c [$801b069c]
-
-
-
-S0 = 0;
-loop1b0700:	; 801B0700
-    V0 = S4 >> S0;
-    V0 = V0 & 1;
-    if (V0 != 0)
+for( int i = 0; i < a; ++i )
+{
+    if( ( hu[8016375a] >> i ) & 1 )
     {
         V1 = hu[800f7dc8];
-        if (V1 == 0 || V1 == 5)
+        if( V1 == 0 || V1 == 5 ) // normal battles
         {
-            [SP + 10 + S0 * 4] = w(w[SP + 10 + S0 * 4] + e000 - S3);
+            [SP + 10 + i * 4] = w(w[SP + 10 + i * 4] + e000 - S3);
         }
-        if (V1 == 1 || V1 == 3)
+        if( V1 == 1 || V1 == 3 ) // preemptive or side
         {
-            if (S0 >= 4)
+            if( i >= 4 ) // enemy
             {
-                V0 = w[SP + 10 + S0 * 4];
-                [SP + 10 + S0 * 4] = w(V0 / 8);
+                [SP + 10 + i * 4] = w(w[SP + 10 + i * 4] / 8);
             }
             else
             {
-                [SP + 10 + S0 * 4] = w(fffe);
+                [SP + 10 + i * 4] = w(fffe);
             }
         }
-        if (V1 == 2 || V1 == 4)
+        if( V1 == 2 || V1 == 4 ) // back or pincer
         {
-            if (S0 >= 4)
+            if( i >= 4 ) // enemy
             {
-                [SP + 10 + S0 * 4] = w(w[SP + 10 + S0 * 4] + f000);
+                [SP + 10 + i * 4] = w(w[SP + 10 + i * 4] + f000);
             }
             else
             {
-                [SP + 10 + S0 * 4] = w(0);
+                [SP + 10 + i * 4] = w(0);
             }
         }
 
-
-
-        V0 = hu[800f83a4 + 2c];
-        if (V0 & 8)
+        if( hu[800f83a4 + 2c] & 0008 )
         {
-            if (S0 < 3)
+            if( i < 3 ) // player
             {
-                [SP + 10 + S0 * 4] = w(fffe);
+                [SP + 10 + i * 4] = w(fffe);
             }
             else
             {
-                [SP + 10 + S0 * 4] = w(0);
+                [SP + 10 + i * 4] = w(0);
             }
         }
 
-        [800f5bb8 + S0 * 44 + 4] = h(w[SP + 10 + S0 * 4]);
+        [800f5bb8 + i * 44 + 4] = h(w[SP + 10 + i * 4]);
     }
+}
 
-    S0 = S0 + 1;
-    V0 = S0 < a;
-801B07F8	bne    v0, zero, loop1b0700 [$801b0700]
-
-
-
-S0 = 0;
-loop1b080c:	; 801B080C
-    [8009d84c + S0 * 440 + 18] = h(hu[800f5bb8 + S0 * 44 + 4]);
-    S0 = S0 + 1;
-    V0 = S0 < 3;
-801B0830	bne    v0, zero, loop1b080c [$801b080c]
+for( int i = 0; i < 3; ++i )
+{
+    [8009d84c + i * 440 + 18] = h(hu[800f5bb8 + i * 44 + 4]);
+}
 ////////////////////////////////
 
 
@@ -968,18 +876,15 @@ for( int i = 0; i < 60; ++i )
 
 [8009d84c + A0 * 440 + 21] = b(1);
 
-A1 = 1;
-loop1b13ac:	; 801B13AC
-    [8009d84c + A0 * 440 + 4c + A1 * 6 + 0] = b(ff);
-    [8009d84c + A0 * 440 + 4c + A1 * 6 + 1] = b(0);
-    [8009d84c + A0 * 440 + 4c + A1 * 6 + 2] = b(0);
-    [8009d84c + A0 * 440 + 4c + A1 * 6 + 3] = b(3);
-    [8009d84c + A0 * 440 + 4c + A1 * 6 + 4] = b(0);
-    [8009d84c + A0 * 440 + 4c + A1 * 6 + 5] = b(0);
-
-    A1 = A1 + 1;
-    V0 = A1 < 4;
-801B13CC	bne    v0, zero, loop1b13ac [$801b13ac]
+for( int i = 1; i < 4; ++i )
+{
+    [8009d84c + A0 * 440 + 4c + i * 6 + 0] = b(ff);
+    [8009d84c + A0 * 440 + 4c + i * 6 + 1] = b(0);
+    [8009d84c + A0 * 440 + 4c + i * 6 + 2] = b(0);
+    [8009d84c + A0 * 440 + 4c + i * 6 + 3] = b(3);
+    [8009d84c + A0 * 440 + 4c + i * 6 + 4] = b(0);
+    [8009d84c + A0 * 440 + 4c + i * 6 + 5] = b(0);
+}
 ////////////////////////////////
 
 
@@ -1652,34 +1557,23 @@ for( int i = 0; i < 6; ++i )
 ////////////////////////////////
 // func1b2308()
 
-S2 = -1;
-
-S0 = 0;
-loop1b2328:	; 801B2328
-    V0 = h[80163658 + S0 * 10 + 0];
-    if (V0 != -1)
+for( int i = 0; i < 6; ++i )
+{
+    if( h[8016360c + 4c + i * 10 + 0] != -1 )
     {
-        A0 = S0 + 4;
-        A1 = 0
+        A0 = i + 4;
+        A1 = 0;
         A2 = 0;
-        funca6000;
+        funca6000();
     }
+}
 
-    S0 = S0 + 1;
-    V0 = S0 < 6;
-801B2354	bne    v0, zero, loop1b2328 [$801b2328]
-
-
-
-S0 = 0;
-loop1b2368:	; 801B2368
-    [80163658 + S0 * 10 + c] = w(w[800f83e0 + (S0 + 4) * 68 + 4]);
-    [801636b9 + (S0 + 4) * 10] = b(bu[800f83e0 + (S0 + 4) * 68 + 10]);
-    [800f83e0 + (S0 + 4) * 68 + 44] = w(w[800f83e0 + (S0 + 4) * 68 + 0]);
-
-    S0 = S0 + 1;
-    V0 = S0 < 6;
-801B23BC	bne    v0, zero, loop1b2368 [$801b2368]
+for( int i = 0; i < 6; ++i )
+{
+    [8016360c + 4c + i * 10 + c] = w(w[800f83e0 + (i + 4) * 68 + 4]);
+    [801636b8 + (i + 4) * 10 + 1] = b(bu[800f83e0 + (i + 4) * 68 + 10]); // idle action id
+    [800f83e0 + (i + 4) * 68 + 44] = w(w[800f83e0 + (i + 4) * 68 + 0]);
+}
 ////////////////////////////////
 
 

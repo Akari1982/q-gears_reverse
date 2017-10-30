@@ -242,7 +242,7 @@ if( b[80163798 + A0 * c] != -1 )
                     [1f800008] = w(h[801518ea + unit_id * b9c]);
 
                     A0 = 800c5694;
-                    funcbbeac;
+                    funcbbeac();
                     data_id = V0;
 
                     if( w[1f800004] < w[1f800008] )

@@ -121,105 +121,57 @@ if( hu[800f7dc8] == 4 ) // both sides type of battle
 
 
 ////////////////////////////////
-// funca61d4
-A0 = -1;
-A1 = 0;
-funcb2a2c;
+// funca4480()
 
-S0 = 0;
-loopa61fc:	; 800A61FC
-    V1 = hu[800f7dbc];
-    V0 = V1 >> S0;
-    if (V0 & 1)
-    {
-        // turn off this script bit.
-        V0 = 1 << S0;
-        V0 = 0 NOR V0;
-        V0 = V1 & V0;
-        [800f7dbc] = h(V0);
-
-        A0 = 800f6ba4;
-        A1 = hu[800f83a4 + 28]; // battle id
-        A1 = A1 & 3;
-        A2 = S0;
-        get_enemy_ai_script_offset;
-
-        if (V0 != 0)
-        {
-            A0 = 3;
-            A1 = V0;
-            A2 = -1;
-            battle_opcodes_cycle;
-        }
-    }
-
-    S0 = S0 + 1;
-    V0 = S0 < 8;
-800A6258	bne    v0, zero, loopa61fc [$800a61fc]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca4480
-A1 = 0;
-loopa448c:	; 800A448C
-    [800f5bb8 + A1 * 44 + 3c] = h(w[800f83e0 + A1 * 68 + 2c]); // current hp
-    [800f5bb8 + A1 * 44 + 3e] = h(hu[800f83e0 + A1 * 68 + 28]); // current mp
-
-    A1 = A1 + 1;
-    V0 = A1 < a;
-800A44C8	bne    v0, zero, loopa448c [$800a448c]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca5bc8
-unit_id = A0;
-S4 = A1; // 2 - counter/1 - sneak/0 - final
-
-if (S4 == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0) // no statuses that remove control or A1 == 0
+for( int i = 0; i < a; ++i )
 {
-    if (unit_id < 3)
-    {
-        V0 = w[800f83e0 + unit_id * 68 + 4];
-        V0 = V0 & 00000010;
-        if (V0 == 0)
-        {
-            S6 = 0;
-            FP = S4 * 3 + 1;
+    [800f5bb8 + i * 44 + 3c] = h(w[800f83e0 + i * 68 + 2c]); // current hp
+    [800f5bb8 + i * 44 + 3e] = h(hu[800f83e0 + i * 68 + 28]); // current mp
+}
+////////////////////////////////
 
-            loopa5c94:	; 800A5C94
-                S1 = 0;
-                loopa5ca4:	; 800A5CA4
-                    V1 = bu[8009d84c + unit_id * 440 + 24 + S6 * 3 + 0];
-                    if (V1 == FP + S1)
+
+
+////////////////////////////////
+// funca5bc8()
+
+unit_id = A0;
+type = S4 = A1; // 2 - counter/1 - sneak/0 - final
+
+if( type == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0 ) // no statuses that remove control or A1 == 0
+{
+    if( unit_id < 3 )
+    {
+        if( ( w[800f83e0 + unit_id * 68 + 4] & 00000010 ) == 0 )
+        {
+            for( int i = 0; i < 8; ++i )
+            {
+                for( int j = 0; j < 3; ++j )
+                {
+                    if( bu[8009d84c + unit_id * 440 + 24 + i * 3 + 0] == type * 3 + 1 + j )
                     {
                         // if there is a chance for this action to work
-                        S0 = bu[8009d84c + unit_id * 440 + 24 + S6 * 3 + 2];
-                        if (S0 != 0)
+                        S0 = bu[8009d84c + unit_id * 440 + 24 + i * 3 + 2];
+                        if( S0 != 0 )
                         {
-                            if (S4 == 0)
+                            if( type == 0 ) // final attack
                             {
-                                [8009d84c + unit_id * 440 + 24 + S6 * 3 + 2] = b(S0 - 1);
+                                [8009d84c + unit_id * 440 + 24 + i * 3 + 2] = b(S0 - 1);
                                 S0 = 64;
                             }
 
-                            // random 0-63
-                            A0 = 64;
-                            func14ba8;
+                            A0 = 64; // random 0-63
+                            func14ba8();
 
-                            // if this action must be played
-                            if (V0 < S0)
+                            if( V0 < S0 ) // if this action must be played
                             {
                                 A0 = unit_id;
-                                A1 = S1;
-                                A2 = bu[8009d84c + unit_id * 440 + 24 + S6 * 3 + 1];
+                                A1 = j;
+                                A2 = bu[8009d84c + unit_id * 440 + 24 + i * 3 + 1];
                                 A3 = SP + 18;
-                                funca5ac8;
+                                funca5ac8();
 
-                                if (V0 & 02) // if second bit in target type
+                                if( V0 & 02 ) // if second bit in target type
                                 {
                                     A1 = hu[800f83e0 + unit_id * 68 + 1a];
                                 }
@@ -228,18 +180,18 @@ if (S4 == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0) // no statuses 
                                     A1 = 1 << unit_id;
                                 }
 
-                                if (S4 == 0) // final
+                                if( type == 0 ) // final
                                 {
                                     priority = 0;
                                     A1 = A1 & f;
                                 }
-                                else if (S4 == 1) // sneak
+                                else if( type == 1 ) // sneak
                                 {
-                                    [800f5bb8 + unit_id * 44 + 29] = b(bu[800f5bb8 + unit_id * 44 + 29] | 4)
+                                    [800f5bb8 + unit_id * 44 + 29] = b(bu[800f5bb8 + unit_id * 44 + 29] | 04)
                                     priority = 1;
                                     A1 = 0;
                                 }
-                                else if (S4 == 2) // counter
+                                else if( type == 2 ) // counter
                                 {
                                     priority = 1;
                                 }
@@ -248,21 +200,14 @@ if (S4 == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0) // no statuses 
                                 A0 = unit_id;
                                 A2 = w[SP + 18]; // action id
                                 A3 = w[SP + 1c]; // attack id
-                                [SP + 10] = w(A1);
+                                A4 = A1; // mask
                                 A1 = priority;
-                                battle_add_action_to_battle_queue;
+                                battle_add_action_to_battle_queue();
+                            }
                         }
                     }
-
-                    S1 = S1 + 1;
-                    V0 = S1 < 3;
-                800A5DC0	bne    v0, zero, loopa5ca4 [$800a5ca4]
-
-
-
-                S6 = S6 + 1;
-                V0 = S6 < 8;
-            800A5DD0	bne    v0, zero, loopa5c94 [$800a5c94]
+                }
+            }
         }
     }
 }
@@ -271,71 +216,65 @@ if (S4 == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0) // no statuses 
 
 
 ////////////////////////////////
-// funca5ac8
+// funca5ac8()
+
 unit_id = A0;
-A1; // 0 - magic/summon, 1 - command, 2 - attack
+type = A1; // 0 - magic/summon, 1 - command, 2 - attack
 action_id = A2;
-// A3 = SP + 18;
+ret = A3;
 
-//02 FF 01
-V0 = bu[800a028c + A1];
-S0 = A3;
-[S0 + 4] = w(-1); // command id
-[S0 + 0] = w(V0);
+[ret + 0] = w(bu[800a028c + type]); //02 FF 01
+[ret + 4] = w(-1); // command id
 
-if (w[S0 + 0] == 1)
+if( w[ret + 0] == 1 )
 {
     return 3;
 }
 
-if (A2 >= fd)
+if( A2 >= fd ) // if master equipped
 {
-    V0 = w[8009fe8c + A2 * 4];
-
-    5C5A0A80 // funca5a5c
-    885A0A80 // funca5a88
-    A85A0A80 // funca5aa8
-    800A5B24	jalr   v0 ra
-
-    [S0 + 4] = w(V0);
-}
-else
-{
-    [S0 + 4] = w(A2);
-}
-
-V1 = w[S0 + 0];
-if (V1 == 2)
-{
-    T0 = bu[800708c4 + w[S0 + 4] * 1c + c];
-
-    if (V1 < 38)
+    switch( A2 )
     {
-        return T0;
+        case fd: funca5a5c(); break;
+        case fe: funca5a88(); break;
+        case ff: funca5aa8(); break;
     }
-
-    [S0 + 0] = w(3);
-    [S0 + 4] = w(w[S0 + 4] - 38);
-    return T0;
+    [ret + 4] = w(V0);
 }
 else
 {
-    [S0 + 0] = w(w[S0 + 4]);
-    [S0 + 4] = w(-1);
-    return bu[800707c4 + w[S0 + 0] * 8 + 1];
+    [ret + 4] = w(A2);
+}
+
+if( w[ret + 0] == 2 ) // magic summon
+{
+    if( w[ret + 0] >= 38 )
+    {
+        [ret + 0] = w(3);
+        [ret + 4] = w(w[ret + 4] - 38);
+    }
+    V0 = w[ret + 4];
+    return bu[800708c4 + V0 * 1c + c];
+}
+else // command
+{
+    [ret + 0] = w(w[ret + 4]);
+    [ret + 4] = w(-1);
+    V0 = w[ret + 4];
+    return bu[800707c4 + V0 * 8 + 1];
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca5a5c
+// funca5a5c()
 // master command counter/sneak/final
-// random 0-6
-A0 = 7;
-func14ba8;
 
-return = bu[800a0278 + V0];
+A0 = 7; // random 0-6
+func14ba8();
+
+return bu[800a0278 + V0];
 ////////////////////////////////
 
 
@@ -343,8 +282,9 @@ return = bu[800a0278 + V0];
 ////////////////////////////////
 // funca5a88
 // master magic counter/sneak/final
+
 A0 = 36;
-func14ba8;
+func14ba8();
 
 return V0;
 ////////////////////////////////
@@ -352,10 +292,11 @@ return V0;
 
 
 ////////////////////////////////
-// funca5aa8
+// funca5aa8()
 // master summon counter/sneak/final
+
 A0 = 10;
-func14ba8;
+func14ba8();
 
 return V0 + 38;
 ////////////////////////////////
@@ -364,35 +305,30 @@ return V0 + 38;
 
 ////////////////////////////////
 // funca2894
-S1 = 0;
-loopa28c0:	; 800A28C0
-    // if lucky 7777
-    V1 = w[800f83e0 + S1 * 68 + 2c];
-    if (V1 == 1e61)
+
+for( int i = 0; i < 3; ++i )
+{
+    if( w[800f83e0 + i * 68 + 2c] == 1e61 ) // if lucky 7777
     {
-        V0 = bu[800f5bb8 + S1 * 44 + 29];
-        if (V0 & 80 == 0)
+        if( ( bu[800f5bb8 + i * 44 + 29] & 80 ) == 0 )
         {
             V1 = hu[800f7de2];
             [800f7de2] = h(V1 + 1);
 
-            if (V1 < 40)
+            if( V1 < 40 )
             {
-                [800f5bb8 + S1 * 44 + 29] = b(bu[800f5bb8 + S1 * 44 + 29] | 80);
+                [800f5bb8 + i * 44 + 29] = b(bu[800f5bb8 + i * 44 + 29] | 80);
 
-                A0 = S1; // unit id
+                A0 = i; // unit id
                 A1 = 1; // priority
                 A2 = 1; // action id
                 A3 = 0; // attack id
-                [SP + 10] = w(0); // target mask
-                battle_add_action_to_battle_queue;
+                A4 = 0; // target mask
+                battle_add_action_to_battle_queue();
             }
         }
     }
-
-    S1 = S1 + 1;
-    V0 = S1 < 3;
-800A294C	bne    v0, zero, loopa28c0 [$800a28c0]
+}
 ////////////////////////////////
 
 

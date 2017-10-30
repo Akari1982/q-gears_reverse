@@ -60,22 +60,76 @@ if( script_ptr != 0 )
 
     for( int i = 0; i < a; ++i )
     {
+        // if model scale changed
         if( bu[SP + 10 + i * 5 + 0] != bu[800f83e0 + i * 68 + 13] )
         {
             A0 = i;
-            A1 = 4;
-            A2 = bu[800f83e0 + i * 68 + 13];
+            A1 = 4; // type
+            A2 = bu[800f83e0 + i * 68 + 13]; // model scale
             A3 = 10;
-            funca31a0;
+            funca31a0();
         }
 
-        if( bu[SP + 10 + i * 5 + 2] != bu[800f83f1 + i * 68] )
+        // if hurt action id changes
+        if( bu[SP + 10 + i * 5 + 2] != bu[800f83e0 + i * 68 + 11] )
         {
             A0 = i;
-            A1 = bu[SP + 10 + i * 5 + 2];
-            A2 = bu[800f83e0 + i * 68 + 11];
+            A1 = bu[SP + 10 + i * 5 + 2]; // hurt action id
+            A2 = bu[800f83e0 + i * 68 + 11]; // hurt action id
             A3 = 0;
-            funca34cc;
+            funca34cc();
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca61d4()
+
+A0 = -1; // unit id
+A1 = 0; // priority
+funcb2a2c(); // update masks for current unit
+
+for( int i = 0; i < 8; ++i )
+{
+    if( ( hu[800f7dbc] >> i ) & 1 )
+    {
+        [800f7dbc] = h(hu[800f7dbc] & (0 NOR (1 << i))); // turn off this script bit.
+
+        A0 = 800f6ba4; // pointer to script block
+        A1 = hu[800f83a4 + 28] & 3; // get current formation id
+        A2 = i; // script id
+        get_enemy_ai_script_offset();
+        script_ptr = V0;
+
+        if( script_ptr != 0 )
+        {
+            A0 = 3;
+            A1 = script_ptr;
+            A2 = -1;
+            battle_opcodes_cycle();
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca34cc()
+
+for( int i = 0; i < 80; ++i )
+{
+    if( b[800fa9d0 + i * c + 0] == A0 ) // target id
+    {
+        if( b[800fa9d0 + i * c + 2] == A1 ) // hurt animation id
+        {
+            if( ( A3 != 1 ) || ( hu[800fa9d0 + i * c + 4] & 0004 ) )
+            {
+                [800fa9d0 + i * c + 2] = b(A2); // replace hurt animation id
+            }
         }
     }
 }
@@ -1553,11 +1607,11 @@ return A3 > 0;
 
 
 ////////////////////////////////
-// battle_opcodes_get_random
-system_random_two_bytes;
+// battle_opcodes_get_random()
 
-V0 = V0 & FFFF;
-return V0
+system_random_two_bytes();
+
+return V0 & ffff;
 ////////////////////////////////
 
 
@@ -1659,48 +1713,53 @@ funca3d4c;
 
 
 ////////////////////////////////
-// funca3d4c
+// battle_add_action_to_battle_queue()
+
+[SP + 10] = b(A1);
+[SP + 12] = b(A0);
+[SP + 13] = b(A2);
+[SP + 14] = h(A3);
+[SP + 16] = h(A4);
+
+A0 = SP + 10;
+funca3d4c();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca3d4c()
+
 T0 = A0;
 
 priority = bu[T0 + 0];
-A3 = 800f692c + 8;
 
-V1 = 0;
-loopa3d6c:	; 800A3D6C
-    if( bu[800f692c + 8 + V1] == ff )
+for( int i = 0; i < 40; ++i )
+{
+    if( bu[800f692c + 8 + i * 8 + 0] == ff )
     {
-        [T0 + 1] = b(bu[800f6b9b + priority]);
+        [T0 + 1] = b(bu[800f6b9b + priority]); // order inside priority
 
-        [A3 + 0] = w(w[T0 + 0]);
-        [A3 + 4] = w(w[T0 + 4]);
-
+        // copy all
+        [800f692c + 8 + i * 8 + 0] = w(w[T0 + 0]);
+        [800f692c + 8 + i * 8 + 4] = w(w[T0 + 4]);
 
         [800f6b9b + priority] = b(bu[800f6b9b + priority] + 1);
+
         [800f7dde] = h(priority);
 
-        if( bu[T0 + 0] < 2 )
+        if( priority >= 2 )
         {
-            return;
+            unit_id = b[T0 + 2];
+            [800f83e0 + unit_id * 68 + 4] = w(w[800f83e0 + unit_id * 68 + 4] & ffffffdf)
+
+            if( ( bu[T0 + 3] & 3f ) == 13 ) // action type is "defend"
+            {
+                [800f83e0 + unit_id * 68 + 4] = w(w[800f83e0 + unit_id * 68 + 4] | 00000020)
+            }
         }
-
-        V0 = b[T0 + 2];
-
-        [800f83e0 + V0 * 68 + 4] = w(w[800f83e0 + V0 * 68 + 4] & ffffffdf)
-
-        if( ( bu[T0 + 3] & 3f ) != 13 )
-        {
-            return;
-        }
-
-        [800f83e0 + V0 * 68 + 4] = w(w[800f83e0 + V0 * 68 + 4] | 00000020)
-
-        return;
     }
-
-    V1 = V1 + 8;
-    A3 = A3 + 8;
-    V0 = V1 < 200;
-800A3E88	bne    v0, zero, loopa3d6c [$800a3d6c]
+}
 ////////////////////////////////
 
 
