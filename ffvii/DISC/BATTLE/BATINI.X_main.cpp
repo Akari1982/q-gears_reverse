@@ -209,13 +209,13 @@ if( hu[8016376c] != 0 )
 
     A0 = 0;
     A1 = 0;
-    A2 = f; // "" empty
+    A2 = f;
     A3 = 0;
     funca7254();
 
     A0 = 0;
     A1 = 0;
-    A2 = e; // "" empty
+    A2 = e;
     A3 = 0;
     funca7254();
 }
@@ -972,7 +972,7 @@ if( bu[800f9da0] & 10 )
 
     A0 = 2;
     A1 = party_id;
-    A2 = 17; // "Gained item(s)."
+    A2 = 17;
     A3 = 0;
     funca7254();
 }
@@ -985,7 +985,7 @@ for( int i = 0; i < 4; ++i )
 
         A0 = 2;
         A1 = party_id;
-        A2 = 17; // "Gained item(s)."
+        A2 = 17;
         A3 = w[801b002c + i * 4];
         funca7254();
 
