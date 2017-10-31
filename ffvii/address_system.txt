@@ -430,7 +430,8 @@
 8009c6e4 savemap start
     +0054          savemap character name data (0x84 size).
         +00 []       character id.
-        +02 []       strength
+        +01 []       level.
+        +02 []       strength.
         +03 []       vitality
         +04 []       magic
         +05 []       spirit

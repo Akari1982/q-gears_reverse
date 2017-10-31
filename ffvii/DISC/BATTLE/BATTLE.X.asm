@@ -5788,52 +5788,18 @@ La71d8:	; 800A71D8
 800A71E4	nop
 
 
-funca71e8:	; 800A71E8
-800A71E8	addiu  v0, a0, $0001
-800A71EC	jr     ra 
-800A71F0	andi   v0, v0, $007f
 
-
-
+////////////////////////////////
+// battle_increment_around_128
+800A71E8-800A71F0
 ////////////////////////////////
 // funca71f4
 800A71F4-800A7250
 ////////////////////////////////
+// funca7254
+800A7254-800A72C4
+////////////////////////////////
 
-
-
-funca7254:	; 800A7254
-800A7254	addiu  sp, sp, $ffe8 (=-$18)
-800A7258	lui    v1, $800f
-800A725C	addiu  v1, v1, $4914
-800A7260	sll    v0, a0, $02
-800A7264	sw     s0, $0010(sp)
-800A7268	addu   s0, v0, v1
-800A726C	sll    a0, a0, $09
-800A7270	sw     ra, $0014(sp)
-800A7274	lw     t0, $0000(s0)
-800A7278	lui    v1, $800f
-800A727C	addiu  v1, v1, $4308
-800A7280	sll    v0, t0, $02
-800A7284	addu   v0, v0, v1
-800A7288	addu   a0, a0, v0
-800A728C	lbu    v1, $0000(a0)
-800A7290	ori    v0, zero, $00ff
-800A7294	bne    v1, v0, La72b4 [$800a72b4]
-800A7298	nop
-800A729C	sh     a3, $0002(a0)
-800A72A0	sb     a2, $0001(a0)
-800A72A4	sb     a1, $0000(a0)
-800A72A8	jal    funca71e8 [$800a71e8]
-800A72AC	addu   a0, t0, zero
-800A72B0	sw     v0, $0000(s0)
-
-La72b4:	; 800A72B4
-800A72B4	lw     ra, $0014(sp)
-800A72B8	lw     s0, $0010(sp)
-800A72BC	addiu  sp, sp, $0018
-800A72C0	jr     ra 
-800A72C4	nop
 
 
 funca72c8:	; 800A72C8
@@ -5876,7 +5842,7 @@ loopa7334:	; 800A7334
 800A7350	jalr   v0 ra
 800A7354	nop
 800A7358	addu   a0, s1, zero
-800A735C	jal    funca71e8 [$800a71e8]
+800A735C	jal    battle_increment_around_128 [$800a71e8]
 800A7360	sb     s3, $0000(s0)
 800A7364	addu   s1, v0, zero
 800A7368	sll    v0, s1, $02

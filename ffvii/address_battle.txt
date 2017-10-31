@@ -202,6 +202,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +29 []       add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
                 0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
                 0x04 - add in case of sneak attack.
+                0x08 - if set we add protect from frog.
                 0x80 - add in case of lucky 7777.
     +2a []       ???
     +2b
@@ -1040,7 +1041,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80163768 [][]     mask with units with 00000010 flag in +4 unit structure 0x68. There is no units like this at start of battle. Autoscript.
 8016376a [][]     store previous battle result here. If this is 0x40 then set battle location to 0x25 (arena battle).
                     0x0004 - maybe escaped from prev battle. If next battle is normal and escape flag 0x0010 then set battle to preemptive.
-
+8016376c [][]     if set then in case of multi battle disable players command as well as enemies and write "" and "".
 8016376e [][]     right fighters mask.
 80163770 [][]     middle fighters mask.
 80163772 [][]     left fighters mask.
