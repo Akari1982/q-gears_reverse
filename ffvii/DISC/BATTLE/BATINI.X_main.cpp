@@ -240,18 +240,8 @@ if( hu[8016376c] != 0 )
 }
 
 A0 = battle_id;
-A1 = 800a3354; // callback for scene load
+A1 = 800a3354; // funca3354() callback for scene load
 initbattle_load_enemy_from_scene();
-
-
-
-
-
-
-
-
-
-
 
 initbattle_init_unit_datas();
 
@@ -273,21 +263,11 @@ for( int i = 0; i < a; ++i )
 
 func1b19ac();
 
-funca4540();
-
-
-
-
-
-
-
-
-
-
+battle_update_unit_mask();
 
 func1b2308(); // run enemy setup ai
 
-funca4540();
+battle_update_unit_mask();
 
 for( int i = 4; i < a; ++i )
 {

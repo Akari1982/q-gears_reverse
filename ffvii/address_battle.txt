@@ -92,8 +92,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f3944 [][][][] index of 80163798 element. Init with 0.
 800f3948 [][][][] index of 800fa9d0 element. Init with 0.
 
-800f3950 [][][][] copy 800f3944 here at start ob battle damage calculation.
-800f3954 [][][][] copy 800f3948 here at start ob battle damage calculation.
+800f3950 [][][][] copy 800f3944 here at start of battle damage calculation.
+800f3954 [][][][] copy 800f3948 here at start of battle damage calculation.
 
 800f39f0 berserk toad action stats for player units. Copy first action command for unit here. (size 0x6).
     +0 []     Init with ff. Copy action id from temp.
@@ -645,7 +645,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +2c [][]     translation Z
 
 800fa69c [][]     mask of units covered with magic barrier.
-800fa6d0 []       store formation type id here. +12[] in battle setup 1.
+800fa6d0 []       formation type id. Used for load camdat (0,1,8 - CAMDAT0.LZS, 2 - CAMDAT1.LZS, 3,4,5,6,7 - CAMDAT2.LZS).
 800fa6d4 []       we store target unit id here during attack. Used in effects animation opcodes. Init with 0.
 
 800fa6d8 some secondary animation unit struct 0x40 size. In this structure can be more than 1 bone (bone data 0x34) but it seems that here will be error in this case. And seems all models has only 1 weapon bone.
@@ -834,9 +834,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80161de8 [][]     some target mask. Looks like dead targets.
 
-80162084      [][]     store 0200 here during battle init.
+80162084 [][]     store 0200 here during battle init.
 
-8016209c      [][][][] store offset to first mesh sector in battle field here.
+8016209c [][][][] store offset to first mesh sector in battle field here.
 
 801620a0 []       init with 0.
 801620a4 []       init with 0.
@@ -845,127 +845,120 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 801620ac array of data for unit movements callbacks. Callback function itself 80163b48. (0x20 size)
-+02 [][]     stage. 0 - init, 1 - inited.
-+04 [][]     steps.
-+06 [][]     Y movement by step.
-+08 [][]     unit id.
-+0a [][]     target id.
-+0c [][]     X movement by step.
-+0e [][]     Z movement by step.
-+10 [][][][] 2nd argument in D1 function.
-+14 [][][][]
-+18 []       store byte from 80166f58 here. We wait this number of frames before start movement.
-+19 []
-+1a []
-
-
+    +02 [][]     stage. 0 - init, 1 - inited.
+    +04 [][]     steps.
+    +06 [][]     Y movement by step.
+    +08 [][]     unit id.
+    +0a [][]     target id.
+    +0c [][]     X movement by step.
+    +0e [][]     Z movement by step.
+    +10 [][][][] 2nd argument in D1 function.
+    +14 [][][][]
+    +18 []       store byte from 80166f58 here. We wait this number of frames before start movement.
+    +19 []
+    +1a []
 
 801621f0 effects callback data table. (0x20 size)
-// 800d061c
-+04 [][]     frames to wait.
-+06 [][]     argument 2
-// 800d3af0 machinegun splash
-+04 [][]     position X.
-+06 [][]     position Y.
-+08 [][]     position Z.
-+0e [][]     some value 200 or 400
-+10 [][]     some value 400 or 800
-// 800d3bf0 foot_dust part
-+00 [][]     id of effect.
-+02 [][]     step (if 7 then we stop play this effect)
-+04 [][]     position X.
-+06 [][]     position Y. Set to 0 because we want it always be on ground.
-+08 [][]     position Z.
-+0e [][]     X scale.
-+10 [][]     Y scale.
-// 800d3d88 foot_dust
-+00 [][]     unit id.
-+02 [][]     counter for effect (4 will end effect)
-+0e [][]     X scale.
-+10 [][]     Y scale.
-// 800d7368 machinegun shell
-+00 [][]     init with 0.
-+06 [][]     attacker id.
-+08 [][]     position X.
-+0a [][]     position Y.
-+0c [][]     position Z.
-+10 [][]     direction vector X.
-+12 [][]     direction vector Y.
-+14 [][]     direction vector Z.
-+18 [][]     attacker Y rotation.
-// 800d751c machinegun fire&light light
-+00 [][]     bool for effect color (808080 or 202020).
-+08 [][]     position X.
-+0a [][]     position Y.
-+0c [][]     position Z.
-// 800d7888 machinegun fire&light
-+02 [][]     current frame.
-+04 [][]     target id (destination of effect)
-+06 [][]     attacker id (source of effect)
-+1a [][]     distance from joint.
-+1c [][][][] attached bone matrix offset.
-// 800d7888 machinegun
-+02 [][]     current frame.
-+04 [][]     target id (destination of effect)
-+06 [][]     attacker id (source of effect)
-+08 [][]     frame at which start effect.
-+0a [][]     frame at which stop effect.
-+1a [][]     distance from joint.
-+1c [][][][] attached bone matrix offset.
-
-
+    // 800d061c
+    +04 [][]     frames to wait.
+    +06 [][]     argument 2
+    // 800d3af0 machinegun splash
+    +04 [][]     position X.
+    +06 [][]     position Y.
+    +08 [][]     position Z.
+    +0e [][]     some value 200 or 400
+    +10 [][]     some value 400 or 800
+    // 800d3bf0 foot_dust part
+    +00 [][]     id of effect.
+    +02 [][]     step (if 7 then we stop play this effect)
+    +04 [][]     position X.
+    +06 [][]     position Y. Set to 0 because we want it always be on ground.
+    +08 [][]     position Z.
+    +0e [][]     X scale.
+    +10 [][]     Y scale.
+    // 800d3d88 foot_dust
+    +00 [][]     unit id.
+    +02 [][]     counter for effect (4 will end effect)
+    +0e [][]     X scale.
+    +10 [][]     Y scale.
+    // 800d7368 machinegun shell
+    +00 [][]     init with 0.
+    +06 [][]     attacker id.
+    +08 [][]     position X.
+    +0a [][]     position Y.
+    +0c [][]     position Z.
+    +10 [][]     direction vector X.
+    +12 [][]     direction vector Y.
+    +14 [][]     direction vector Z.
+    +18 [][]     attacker Y rotation.
+    // 800d751c machinegun fire&light light
+    +00 [][]     bool for effect color (808080 or 202020).
+    +08 [][]     position X.
+    +0a [][]     position Y.
+    +0c [][]     position Z.
+    // 800d7888 machinegun fire&light
+    +02 [][]     current frame.
+    +04 [][]     target id (destination of effect)
+    +06 [][]     attacker id (source of effect)
+    +1a [][]     distance from joint.
+    +1c [][][][] attached bone matrix offset.
+    // 800d7888 machinegun
+    +02 [][]     current frame.
+    +04 [][]     target id (destination of effect)
+    +06 [][]     attacker id (source of effect)
+    +08 [][]     frame at which start effect.
+    +0a [][]     frame at which stop effect.
+    +1a [][]     distance from joint.
+    +1c [][][][] attached bone matrix offset.
 
 80162974 []       init with 0.
 
-
-
 80162978 damage callbacks. (0x20 size)
-// 800ce7e0
-+04 [][]     frames to wait.
-+08 [][]     target id.
-+0a [][]     damage.
-+0c [][]     attacker id.
-+0e [][]     damage flags  (0x0001 - heal, 0x0002 - critical damage, 0x0004 - damage to MP).
-
-// 800ce970
-+04 [][]     store 0 here.
-+06 [][]     hu[800f99f4 + A0 * c]
-+08 [][]     unit id.
-+0a [][]     damage value.
-+0c [][]     attacker id.
-+0e [][]     damage flags  (0x0001 - heal, 0x0002 - critical damage, 0x0004 - damage to MP).
-+10 [][]     impact sound id.
-+14 [][]     impact effect id.
-+18 []       1 if we don't want to display damage. 0 otherwise.
-+19 []       bu[800f99f6 + A0 * c]
-// 800d5350 function seted in additional effect routine.
-+00 [][]     index of current unit. Init with 0.
-+02 [][]     frame counter.
-+04 [][]     target mask.
-+06 [][]     attacker id.
-+08 [][]     time to wait before call function for next unit in mask.
-+0c [][][][] function to call.
-// 800d57c0 function in f7 action opcode.
-+00 [][]     store 0 here if we call F7 animation opcode. Looks like current unit id.
-+02 [][]     current wait time. Increments by one every check.
-+04 [][]     frames to wait.
-+06 [][]     store 1 here.
-+08 [][]     target mask.
-+0a [][]
-+0e [][]
-+10 [][]     store impact sound id here.
-+1a [][]
-+1c [][][][]
-// fire 801b0000
-+08 [][]     position X.
-+0a [][]     position Y.
-+0c [][]     position Z.
-+12 [][]     0 - target collision radius.
-// fire 801b00b8
-+02 [][]     frame counter.
-+04 [][]     target id.
-+06 [][]     init with 0. Bone id we attach fire effect to.
-+12 [][]     0 - target collision radius.
+    // 800ce7e0
+    +04 [][]     frames to wait.
+    +08 [][]     target id.
+    +0a [][]     damage.
+    +0c [][]     attacker id.
+    +0e [][]     damage flags  (0x0001 - heal, 0x0002 - critical damage, 0x0004 - damage to MP).
+    // 800ce970
+    +04 [][]     store 0 here.
+    +06 [][]     hu[800f99f4 + A0 * c]
+    +08 [][]     unit id.
+    +0a [][]     damage value.
+    +0c [][]     attacker id.
+    +0e [][]     damage flags  (0x0001 - heal, 0x0002 - critical damage, 0x0004 - damage to MP).
+    +10 [][]     impact sound id.
+    +14 [][]     impact effect id.
+    +18 []       1 if we don't want to display damage. 0 otherwise.
+    +19 []       bu[800f99f6 + A0 * c]
+    // 800d5350 function seted in additional effect routine.
+    +00 [][]     index of current unit. Init with 0.
+    +02 [][]     frame counter.
+    +04 [][]     target mask.
+    +06 [][]     attacker id.
+    +08 [][]     time to wait before call function for next unit in mask.
+    +0c [][][][] function to call.
+    // 800d57c0 function in f7 action opcode.
+    +00 [][]     store 0 here if we call F7 animation opcode. Looks like current unit id.
+    +02 [][]     current wait time. Increments by one every check.
+    +04 [][]     frames to wait.
+    +06 [][]     store 1 here.
+    +08 [][]     target mask.
+    +0a [][]
+    +0e [][]
+    +10 [][]     store impact sound id here.
+    +1a [][]
+    +1c [][][][]
+    // fire 801b0000
+    +08 [][]     position X.
+    +0a [][]     position Y.
+    +0c [][]     position Z.
+    +12 [][]     0 - target collision radius.
+    // fire 801b00b8
+    +02 [][]     frame counter.
+    +04 [][]     target id.
+    +06 [][]     init with 0. Bone id we attach fire effect to.
+    +12 [][]     0 - target collision radius.
 
 80163608 [][]     mask of units covered with physical barrier.
 
@@ -988,7 +981,6 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                     Make this & fffb if previous battle result &08.
                     Add 0x04 bit to this if previous battle result &40.
     +1a []       formation type id.
-                    Used for load camdat (0,1,8 - CAMDAT0.LZS, 2 - CAMDAT1.LZS, 3,4,5,6,7 - CAMDAT2.LZS).
                     Checked if this ==0 during enemy init and store 1 here if few conditions met.
                     00 - Normal fight
                     01 - Preemptive
@@ -1025,10 +1017,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     05
     06 [][]     backrow? In case of player store w[800f83e0 + A3 * 68 + 4] & 1 here for battle types 0,1. Store !(w[800f83e0 + A3 * 68 + 4] & 1) for battle 2 and 0 for battle types 3,4,5. Function func1b19ac.
     08 [][][][] we copy 0x0fffffff of unit status here during battle every cycle.
-    0c
-    0d
-    0e
-    0f
+    0c [][][][] we copy 0x0fffffff of unit status here.
 
 80163758 [][]     all enabled units.
 8016375a [][]     unit mask. Seems to init with all posible enabled units in battle_update_unit_mask.
@@ -1101,7 +1090,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 +2 [][]     Y.
 +4 [][]     Z.
 
-80163f30 []       Init camera script id. +13[] from battle setup 1.
+80163f30 []       init camera script id.
 
 80166f58 []       init with 0.
 

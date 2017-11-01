@@ -31,13 +31,13 @@ if( battle_id != ffff )
         {
             S0 = 800a3354;
             S2 = 801b0490; // func1b0490()
-            S3 = 800b33a4;
+            S3 = 800b33a4; // funcb33a4()
         }
         else
         {
             S0 = 0;
             S2 = 801b0050; // func1b0050()
-            S3 = 800b30e4;
+            S3 = 800b30e4; // funcb30e4()
         }
 
         A0 = 6;
@@ -56,36 +56,28 @@ if( battle_id != ffff )
         A0 = battle_id;
         800A1270	jalr   s2 ra
 
+        [800f83a4 + 2c] = h(hu[800f83a4 + 2c] & fffd);
 
-
-
-
-
-        [800f83d0] = h(hu[800f83d0] & fffd);
-
-        S0 = 0;
-        A1 = 800f5bc6;
-        A2 = 0;
-        A0 = 0;
-
-        loopa12a0:	; 800A12A0
-            V0 = w[800f83e0 + A2];
-            A2 = A2 + 68;
-            S0 = S0 + 0001;
-            V0 = V0 & 0fffffff;
-            [801636c0 + A0] = w(V0);
-            [801636c4 + A0] = w(V0);
-            V0 = bu[A1 + 0000];
-            A0 = A0 + 0010;
-            V0 = V0 | 000f;
-            [A1 + 0000] = b(V0);
-            V0 = S0 < 000a;
-            A1 = A1 + 0044;
-        800A12E4	bne    v0, zero, loopa12a0 [$800a12a0]
-
-
+        for( int i = 0; i < a; ++i )
+        {
+            [801636b8 + i * 10 + 8] = w(w[800f83e0 + i * 68 + 0] & 0fffffff);
+            [801636b8 + i * 10 + c] = w(w[800f83e0 + i * 68 + 0] & 0fffffff);
+            [800f5bb8 + i * 44 + e] = b(bu[800f5bb8 + i * 44 + e] | 0f);
+        }
 
         800A12EC	jalr   s3 ra // we call function that loads field and camera here (stops when already show start of battle but no anyone take action)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

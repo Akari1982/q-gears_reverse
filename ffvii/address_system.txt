@@ -31,6 +31,7 @@
 
 80062d44 GP
 + 2c []       if 1 then system pad started and inited.
++ 44 [][]     10c?
 + 97 []       ??? some type of text.
 + 98 []       colour of tutorial text window.
 + a0 []       ??? some type of text.
