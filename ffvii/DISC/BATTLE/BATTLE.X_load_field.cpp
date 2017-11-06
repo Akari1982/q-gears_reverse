@@ -532,32 +532,118 @@ return -1;
 
 
 ////////////////////////////////
-// funcbb4f8
+// funcbb4f8()
+
 V0 = w[801b0000];
-V0 = w[801b0000 + V0 * 4];
-
-A0 = 801b0000 + V0; // offset to texture part
+A0 = 801b0000 + w[801b0000 + V0 * 4]; // offset to texture part
 A1 = 0;
-A2 = 0;
-A3 = 0;
-funcd2980;
+A2 = 0; // x add to clut
+A3 = 0; // y add to clut
+funcd2980();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcd2980
-S1 = A0;
+// funcd2980()
+
+texture = A0;
+S0 = A1; // 0
+x_add = A2;
+y_add = A3;
+
+A0 = texture;
+A1 = x_add;
+A2 = y_add;
+funcd2710();
+
+A0 = texture;
+A1 = S0; // 0
+funcd2828();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd2710()
+
+texture = A0;
+x_add = A1; // 0
+y_add = A2; // 0
+
+A0 = texture;
+func46cfc(); // set address
+
+A0 = SP + 10;
+func46d0c();
+
+clut_sizes = w[SP + 14];
+if( ( clut_sizes != 0 ) && ( w[SP + 18] != 0 ) ) // and clut data
+{
+    V0 = w[800f01e0];
+    [800f4b2c + V0 * 8 + 0] = w(w[clut_sizes + 0]); // x y
+    [800f4b2c + V0 * 8 + 4] = w(w[clut_sizes + 4]); // width height
+
+    A0 = w[800f01e0];
+    [800f4b2c + A0 * 8 + 0] = h(hu[800f4b2c + A0 * 8 + 0] + (x_add & fff0)); // x
+    [800f4b2c + A0 * 8 + 2] = h(hu[800f4b2c + A0 * 8 + 2] + y_add); // y
+
+    A0 = 800f4b2c + A0 * 8;
+    A1 = w[SP + 18];
+    funcd2538();
+
+    [800f01e0] = w((w[800f01e0] + 1) & 7);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd2538()
+
+sizes = A0;
+data = A1;
+
+V0 = w[800f01dc];
+[V0 + 0] = w(0);
+[V0 + 4] = w(sizes);
+[V0 + 8] = w(data);
+[800f01dc] = w(V0 + 14);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd2828()
+
 S0 = A1;
 
-A0 = A0; // offset to texture
-A1 = A2;
-A2 = A3;
-funcd2710;
+A0 = A0;
+func46cfc(); // set address
 
-A0 = S1;
-A1 = S0;
-funcd2828;
+A0 = SP + 10;
+func46d0c()
+
+if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) )
+{
+    V0 = w[800f01e4];
+    [800f4b6c + V0 * 8 + 0] = w(w[A3 + 0]);
+    [800f4b6c + V0 * 8 + 4] = w(w[A3 + 4]);
+
+    V0 = w[SP + 1c];
+    A1 = ((hu[V0 + 2] & 0300) >> 04) | ((hu[V0 + 0] & 03ff) >> 06);
+    A2 = A1 + S0;
+
+    A0 = w[800f01e4];
+    [800f4b6c + A0 * 8] = h((hu[800f4b6c + A0 * 8] + ((A2 & 000f) << 06) - ((A1 & 000f) << 06)) & 03ff);
+    [800f4b6e + A0 * 8] = h((hu[800f4b6e + A0 * 8] - ((A1 & 30) << 04) + ((A2 & 30) << 04)) & 01ff);
+
+    A0 = 800f4b6c + A0 * 8;
+    A1 = w[SP + 20];
+    funcd2538();
+
+    [800f01e4] = w((w[800f01e4] + 1) & 7);
+}
 ////////////////////////////////
 
 

@@ -1,4 +1,84 @@
 ////////////////////////////////
+// func46cfc()
+
+[80070690] = w(A0);
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func46d0c()
+
+ret = A0;
+
+A0 = w[80070690]; // texture addr
+A1 = ret;
+func47060();
+
+if( V0 != -1 )
+{
+    [80070690] = w(w[80070690] + V0 * 4); // offset to next tim
+    return ret;
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func47060()
+
+texture = A0;
+ret = A1;
+
+if( w[texture] != 10 )
+{
+    return -1;
+}
+texture = texture + 4;
+[ret + 0] = w(w[texture]); // bpp
+texture = texture + 4;
+
+func43cd0();
+if( V0 == 2 )
+{
+    A0 = 80010f80; // "id  =%08x"
+    A1 = 10;
+    system_bios_printf();
+
+    A0 = 80010f8c; // "mode=%08x"
+    A1 = w[ret + 0];
+    system_bios_printf();
+
+    A0 = 80010f98; // "timaddr=%08x"
+    A1 = texture;
+    system_bios_printf();
+}
+
+if( w[ret + 0] & 8 )
+{
+    [ret + 4] = w(texture + 4); // clut sizes
+    [ret + 8] = w(texture + c); // clut data
+    A0 = w[texture + 0] / 4; // clut length
+    texture = texture + (A0 * 4);
+}
+else
+{
+    A0 = 0;
+    [ret + 4] = w(0);
+    [ret + 8] = w(0);
+}
+
+[ret + c] = w(texture + 4); // image sizes
+[ret + 10] = w(texture + c); // image data
+
+return A0 + (w[texture + 0] / 4) + 2; // tim size in int
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_prepare_draw_env_packets()
 
 S0 = A1; // draw env
