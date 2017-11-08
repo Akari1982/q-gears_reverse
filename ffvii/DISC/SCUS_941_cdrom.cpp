@@ -1726,8 +1726,7 @@ mode = S5 = A0; // If mode is 0, the wait for a data transfer to be completed. I
 result_ptr = S6 = A1;
 
 A0 = -1;
-8003EA08	jal    func3cedc [$8003cedc]
-
+func3cedc();
 [8006e138] = w(V0 + 3c0);
 [8006e13c] = w(0);
 [8006e140] = w(80010834); // "CD_sync"

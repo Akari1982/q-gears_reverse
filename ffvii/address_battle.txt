@@ -76,6 +76,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800ea198 default camera data.
 
+800f01dc pointer to current tex to load. Set sizes and addreses here.
+800f01e0 index into 800f4b2c data for loading texture cluts. 0-7.
+800f01e4 index into 800f4b6c data for loading texture images. 0-7.
+
 800f0218 data for dust cloud effect.
 
 800f10d8 [][][][] add index into hurt struct and array.
@@ -145,7 +149,16 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f4b00 []       init with 0.
 
-
+800f4b2c array of loading texture clut data. (size 0x8, items 0x8)
+    +0 [][]     x.
+    +2 [][]     y.
+    +4 [][]     width.
+    +6 [][]     height.
+800f4b6c array of loading texture image data. (size 0x8, items 0x8)
+    +0 [][]     x.
+    +2 [][]     y.
+    +4 [][]     width.
+    +6 [][]     height.
 
 800f4cec      [][][][] array of 0xf types of hurts
                         0x4 - during 0xF7 action opcode callback. Normal hurt.
@@ -159,7 +172,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f5b70 []       init with 0. Far color R for battle.
 800f5b71 []       init with 0. Far color G for battle.
 800f5b72 []       init with 0. Far color B for battle.
-800f5b73 []       init with 1f.
+800f5b73 []       init with 0x1f.
 800f5b74 [][]     init with 0. Address used during unknown action in funcba360 function. 3d models color related.
 
 800f5bb8 some unit structure. (size 0x44).
@@ -421,73 +434,71 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7ed0 [][][][] init with "A" string (0x21)
 800f7ed4 []       init with 0.
 800f7ed8 struct 0x28 size. 0x10 items. Camera related.
-// for function 800bfda0
-+00 [][]     store here value from 800f8360.
-+02 [][]     
-+04 [][]     number of steps.
-+06 [][]     joint Z offset.
-+08 [][]     store attacker id here.
-+0a [][]     store given joint here.
-+0c [][]     store used camera struct id here.
-+0e [][]     joint X offset.
-+10 [][]     joint Y offset.
-+12 [][]     
-+14 [][]     
-+16 [][]     
-+18 [][]     
-+1a [][]     
-+1e [][]     
-// for function 800c0410
-+00 [][]     store here value from 800f8360.
-+02 [][]     looks like state. (0-init, 1-execute).
-+04 [][]     number of steps left.
-+06 [][]     final position camera X.
-+08 [][]     final position camera Y.
-+0a [][]     final position camera Z.
-+0c [][]     start position camera X.
-+0e [][]     start position camera Y.
-+10 [][]     start position camera Z.
-+12 [][]     camera struct id that we use for this calculation.
-+14 [][]     X value by step.
-+16 [][]     Y value by step.
-+18 [][]     Z value by step.
-+1a [][]     number of steps.
-+1e [][]     current step.
-// for function 800c0900
-+00 [][]     store here value from 800f8360.
-+02 [][]     looks like state. (0-init, 1-execute).
-+04 [][]     number of steps left.
-+06 [][]     final direction camera X.
-+08 [][]     final direction camera Y.
-+0a [][]     final direction camera Z.
-+0c [][]     start direction camera X.
-+0e [][]     start direction camera Y.
-+10 [][]     start direction camera Z.
-+12 [][]     camera struct id that we use for this calculation.
-+14 [][]     X value by step.
-+16 [][]     Y value by step.
-+18 [][]     Z value by step.
-+1a [][]     number of steps.
-+1e [][]     current step.
+    // for function 800bfda0
+    +00 [][]     store here value from 800f8360.
+    +02 [][]     
+    +04 [][]     number of steps.
+    +06 [][]     joint Z offset.
+    +08 [][]     store attacker id here.
+    +0a [][]     store given joint here.
+    +0c [][]     store used camera struct id here.
+    +0e [][]     joint X offset.
+    +10 [][]     joint Y offset.
+    +12 [][]     
+    +14 [][]     
+    +16 [][]     
+    +18 [][]     
+    +1a [][]     
+    +1e [][]     
+    // for function 800c0410
+    +00 [][]     store here value from 800f8360.
+    +02 [][]     looks like state. (0-init, 1-execute).
+    +04 [][]     number of steps left.
+    +06 [][]     final position camera X.
+    +08 [][]     final position camera Y.
+    +0a [][]     final position camera Z.
+    +0c [][]     start position camera X.
+    +0e [][]     start position camera Y.
+    +10 [][]     start position camera Z.
+    +12 [][]     camera struct id that we use for this calculation.
+    +14 [][]     X value by step.
+    +16 [][]     Y value by step.
+    +18 [][]     Z value by step.
+    +1a [][]     number of steps.
+    +1e [][]     current step.
+    // for function 800c0900
+    +00 [][]     store here value from 800f8360.
+    +02 [][]     looks like state. (0-init, 1-execute).
+    +04 [][]     number of steps left.
+    +06 [][]     final direction camera X.
+    +08 [][]     final direction camera Y.
+    +0a [][]     final direction camera Z.
+    +0c [][]     start direction camera X.
+    +0e [][]     start direction camera Y.
+    +10 [][]     start direction camera Z.
+    +12 [][]     camera struct id that we use for this calculation.
+    +14 [][]     X value by step.
+    +16 [][]     Y value by step.
+    +18 [][]     Z value by step.
+    +1a [][]     number of steps.
+    +1e [][]     current step.
 
-
-
-800f8158 0x34 size struct that contain field background position and rotation
-+00 [][][][] final rotation matrix R11R12.
-+04 [][][][] final rotation matrix R13R21.
-+08 [][][][] final rotation matrix R22R23.
-+0c [][][][] final rotation matrix R31R32.
-+10 [][][][] final rotation matrix R33.
-+14 [][][][] final translation X.
-+18 [][][][] final translation Y.
-+1c [][][][] final translation Z.
-+20 [][]     rotation X
-+22 [][]     rotation Y
-+24 [][]     rotation Z
-+28 [][]     translation X.
-+2a [][]     translation Y.
-+2c [][]     translation Z.
-+30 [][][][] store 800fa63c here??? Address to current matrix?
+800f8158 array of matrixes for field background (size 0x34 items 0xa)
+    +00 [][][][] final rotation matrix R11R12.
+    +04 [][][][] final rotation matrix R13R21.
+    +08 [][][][] final rotation matrix R22R23.
+    +0c [][][][] final rotation matrix R31R32.
+    +10 [][][][] final rotation matrix R33.
+    +14 [][][][] final translation X.
+    +18 [][][][] final translation Y.
+    +1c [][][][] final translation Z.
+    +20 [][]     rotation X
+    +22 [][]     rotation Y
+    +24 [][]     rotation Z
+    +28 [][]     translation X.
+    +2a [][]     translation Y.
+    +2c [][]     translation Z.
+    +30 [][][][] store 800fa63c here for first matrix. Address to current matrix?
 
 800f8360 [][]     copy data from here to 800f7ed8 during 0xe8 camera opcode. Looks like 800f7ed8 struct current id.
 
@@ -623,9 +634,11 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +4 []       string argument
     +5 []       ???
 
-800f9f28 [][][][] array of somethinf (0x3 items). All inited with 0.
+800f9f28 [][][][] array of something (0x3 items). All inited with 0.
 
-800f9f3c               temp additional array where we store data for attack impact.
+800f9f34 []       init with 0.
+
+800f9f3c temp additional array where we store data for attack impact.
 +0 [][]     target id.
 +2 [][]     damage.
 +4 [][]     1f800220 damage flags (heal critical damage to mp).
@@ -644,7 +657,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +2a [][]     translation Y
     +2c [][]     translation Z
 
+800fa670 []       init with 0.
+
 800fa69c [][]     mask of units covered with magic barrier.
+800fa6a0 []       init with 0.
 800fa6d0 []       formation type id. Used for load camdat (0,1,8 - CAMDAT0.LZS, 2 - CAMDAT1.LZS, 3,4,5,6,7 - CAMDAT2.LZS).
 800fa6d4 []       we store target unit id here during attack. Used in effects animation opcodes. Init with 0.
 
@@ -830,7 +846,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 801590d8 []       init with 0.
 801590dc []       if this not 0 then we will not call camera script.
 801590e0 []       index in 80163798 struct. Init with 0.
-801590e4      copy 8d04 bytes of field data file here. Battle field file
+
+801590e4-80161de8 copy 8d04 bytes of field data file here. Battle field file.
 
 80161de8 [][]     some target mask. Looks like dead targets.
 

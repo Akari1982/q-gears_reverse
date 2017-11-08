@@ -9,30 +9,33 @@
 
 funcb383c(); // we load camera and battle field here.
 
-
-
-
-
-
-
-
-
-
-funcb430c; // we read first block of battle field here and set scrolling.
+funcb430c(); // we read first block of battle field here and set scrolling.
 
 A0 = 0;
-func3cedc;
+func3cedc(); // wait
 
-A0 = 0;
-system_psyq_set_disp_mask;
+A0 = 0; // not displayed on screen
+system_psyq_set_disp_mask();
 
 [800f9f34] = b(0);
 [800fa670] = b(0);
 [800fa6a0] = b(0);
 
+funcb37a0();
 
 
-funcb37a0;
+
+
+
+
+
+
+
+
+
+
+
+
 
 funcb3e2c; // init some values
 
@@ -367,8 +370,114 @@ Lb353c:	; 800B353C
 
 
 ////////////////////////////////
+// funcb37a0()
+
+A0 = 140;
+A1 = f0;
+A2 = h[80162084];
+A3 = bu[800fa6a0];
+A4 = bu[800fa670];
+A5 = bu[800f9f34];
+funcd91dc();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd91dc();
+
+S6 = A4;
+S7 = A5;
+S3 = A0;
+S4 = A1;
+S0 = A2;
+S5 = A3;
+
+func1cb48(); // ???
+
+S2 = 0001;
+
+func1c980();
+
+system_gte_init_geom();
+
+A0 = S3 >> 1f;
+A0 = S3 + A0;
+A0 = A0 >> 01;
+A1 = S4 >> 1f;
+A1 = S4 + A1;
+A1 = A1 >> 01;
+func3b6bc();
+
+A0 = S0;
+system_set_gte_mac2();
+
+A0 = 800faff4;
+A1 = 0;
+A2 = 0;
+A3 = 0140;
+V0 = 01d8;
+A4 = V0;
+func43814()
+
+[800fb00c] = b(S2);
+[800fb00b] = b(S2);
+A0 = 800faff4;
+system_psyq_put_draw_env();
+
+A0 = 0;
+func3cedc();
+
+A0 = 800faff4;
+A1 = 0;
+A2 = 0;
+A3 = S3;
+A4 = S4 - 4a;
+func43814();
+
+A0 = 800faff4 + 40f4;
+A1 = 0;
+A2 = 00f0;
+A3 = S3;
+A4 = S4 - 4a;
+func43814();
+
+A0 = 800faff4 + 005c;
+A1 = 0;
+A2 = 00f0;
+A3 = S3;
+A4 = S4;
+func438d4()
+
+A0 = 800faff4 + 4150;
+A1 = 0;
+A2 = 0;
+A3 = S3;
+A4 = S4;
+func438d4();
+
+[800faff6] = h(hu[800faff6] + 8);
+[800faffa] = h(hu[800faffa] - 8);
+[800ff100] = b(0);
+[800fb00c] = b(0);
+[800ff0ff] = b(0);
+[800fb00b] = b(0);
+[800ff0fe] = b(S2);
+[800fb00a] = b(S2);
+[800fb00d] = b(S5);
+[800ff101] = b(S5);
+[800fb00e] = b(S6);
+[800fb00f] = b(S7);
+[800ff102] = b(S6);
+[800ff103] = b(S7);
+[800ff0ea] = h(hu[800ff0ea] + 8);
+[800ff0ee] = h(hu[800ff0ee] - 8);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // funcb383c()
-// we load battle field here.
 
 funcb3ffc(); // init some enemy things
 
@@ -388,34 +497,13 @@ A2 = 801b0000;
 A3 = 0;
 load_lzs();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-funcbb4f8; // load battle field texture
-
-
+funcbb4f8(); // set texture to load queue
 
 // copy battle field
-A0 = 801590e4;
-A1 = 801b0000;
-A2 = 8d04;
-func1c3cc;
+A0 = 801590e4; // dst
+A1 = 801b0000; // src
+A2 = 8d04; // size
+func1c3cc();
 
 A0 = 0;
 system_psyq_draw_sync();
@@ -535,7 +623,7 @@ return -1;
 // funcbb4f8()
 
 V0 = w[801b0000];
-A0 = 801b0000 + w[801b0000 + V0 * 4]; // offset to texture part
+A0 = 801b0000 + w[801b0000 + V0 * 4]; // offset to texture part (last file)
 A1 = 0;
 A2 = 0; // x add to clut
 A3 = 0; // y add to clut
@@ -555,11 +643,11 @@ y_add = A3;
 A0 = texture;
 A1 = x_add;
 A2 = y_add;
-funcd2710();
+funcd2710(); // clut
 
 A0 = texture;
 A1 = S0; // 0
-funcd2828();
+funcd2828(); // color
 ////////////////////////////////
 
 
@@ -568,8 +656,8 @@ funcd2828();
 // funcd2710()
 
 texture = A0;
-x_add = A1; // 0
-y_add = A2; // 0
+x_add = A1;
+y_add = A2;
 
 A0 = texture;
 func46cfc(); // set address
@@ -616,27 +704,28 @@ V0 = w[800f01dc];
 ////////////////////////////////
 // funcd2828()
 
+texture = A0;
 S0 = A1;
 
-A0 = A0;
+A0 = texture;
 func46cfc(); // set address
 
 A0 = SP + 10;
 func46d0c()
 
-if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) )
+image_sizes = w[SP + 1c];
+if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) ) // and image data
 {
     V0 = w[800f01e4];
-    [800f4b6c + V0 * 8 + 0] = w(w[A3 + 0]);
-    [800f4b6c + V0 * 8 + 4] = w(w[A3 + 4]);
+    [800f4b6c + V0 * 8 + 0] = w(w[image_sizes + 0]); // x y
+    [800f4b6c + V0 * 8 + 4] = w(w[image_sizes + 4]); // width height
 
-    V0 = w[SP + 1c];
-    A1 = ((hu[V0 + 2] & 0300) >> 04) | ((hu[V0 + 0] & 03ff) >> 06);
+    A1 = ((hu[image_sizes + 2] & 0300) >> 04) | ((hu[image_sizes + 0] & 03ff) >> 06);
     A2 = A1 + S0;
 
     A0 = w[800f01e4];
-    [800f4b6c + A0 * 8] = h((hu[800f4b6c + A0 * 8] + ((A2 & 000f) << 06) - ((A1 & 000f) << 06)) & 03ff);
-    [800f4b6e + A0 * 8] = h((hu[800f4b6e + A0 * 8] - ((A1 & 30) << 04) + ((A2 & 30) << 04)) & 01ff);
+    [800f4b6c + A0 * 8 + 0] = h((hu[800f4b6c + A0 * 8 + 0] + ((A2 & 000f) << 06) - ((A1 & 000f) << 06)) & 03ff);
+    [800f4b6c + A0 * 8 + 2] = h((hu[800f4b6c + A0 * 8 + 2] + ((A2 & 0030) << 04) - ((A1 & 0030) << 04)) & 01ff);
 
     A0 = 800f4b6c + A0 * 8;
     A1 = w[SP + 20];
@@ -656,10 +745,12 @@ if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) )
 
 
 ////////////////////////////////
-// funcb430c
+// funcb430c()
+
 [80163b44] = h(0);
 [80163b46] = h(10);
 
+// reset rotation and translation for camera matrix
 [800fa63c + 20] = h(0);
 [800fa63c + 22] = h(0);
 [800fa63c + 24] = h(0);
@@ -667,34 +758,26 @@ if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) )
 [800fa63c + 2a] = h(0);
 [800fa63c + 2c] = h(0);
 
-
-
-S0 = 0;
-loopb4370:	; 800B4370
-    [800f8158 + S0 * 34 + 20] = h(0)
-    [800f8158 + S0 * 34 + 22] = h(0);
-    [800f8158 + S0 * 34 + 24] = h(0);
-    [800f8158 + S0 * 34 + 28] = h(0)
-    [800f8158 + S0 * 34 + 2a] = h(0);
-    [800f8158 + S0 * 34 + 2c] = h(0);
-    S0 = S0 + 1;
-    V0 = S0 < a;
-800B43AC	bne    v0, zero, loopb4370 [$800b4370]
-
-
-
-[800f8158 + 30] = w(800fa63c);
-
-V1 = w[801590e4 + 4]; // offset to first block
-V1 = bu[801590e4 + V1]; // read data from first block (80159108)
-if (V1 == 0)
+for( int i = 0; i < a; ++i )
 {
-    S0 = 0;
-    Lb446c:	; 800B446C
-        [800f8158 + S0 * 34 + 30] = w(800fa63c);
-        S0 = S0 + 1;
-        V0 = S0 < a;
-    800B4484	bne    v0, zero, Lb446c [$800b446c]
+    // reset rotation and translation for field parts transformation matrixes
+    [800f8158 + i * 34 + 20] = h(0)
+    [800f8158 + i * 34 + 22] = h(0);
+    [800f8158 + i * 34 + 24] = h(0);
+    [800f8158 + i * 34 + 28] = h(0)
+    [800f8158 + i * 34 + 2a] = h(0);
+    [800f8158 + i * 34 + 2c] = h(0);
+}
+[800f8158 + i * 0 + 30] = w(800fa63c);
+
+V1 = w[801590e4 + 4]; // offset to first file (settings)
+V1 = bu[801590e4 + V1 + 0]; // type of field
+if( V1 == 0 ) // mesh with horisontal scrolling parts (field 47 - Corel Train Battle)
+{
+    for( int i = 0; i < a; ++i )
+    {
+        [800f8158 + i * 34 + 30] = w(800fa63c);
+    }
 
     [800f8158 + 2 * 34 + 2c] = h(7530);
     [800f8158 + 3 * 34 + 2c] = h(4e20);
@@ -704,7 +787,7 @@ if (V1 == 0)
     [800f8158 + 7 * 34 + 2c] = h(b1e0);
     [800f8158 + 8 * 34 + 2c] = h(63c0);
 }
-else if (V1 == 2)
+else if( V1 == 2 ) // mesh with vertical scrolling parts (field 12 - Shinra Elevators)
 {
     [800f8158 + 1 * 34 + 30] = w(800fa63c);
     [800f8158 + 2 * 34 + 30] = w(800fa63c);
@@ -713,13 +796,13 @@ else if (V1 == 2)
 
     [800f8158 + 4 * 34 + 2a] = h(30d4);
 }
-else if (V1 == 3)
+else if( V1 == 3 )// mesh with lifestream (field 4e - Final Battle - Sephiroth)
 {
     [800f8158 + 1 * 34 + 30] = w(800fa63c);
     [800f8158 + 2 * 34 + 30] = w(800fa63c);
     [800f8158 + 3 * 34 + 30] = w(800fa63c);
 }
-else if (V1 == 4)
+else if( V1 == 4 ) // mesh with rotating parts (field 39 - Safer Battle)
 {
     [800f8158 + 1 * 34 + 30] = w(800fa63c);
     [800f8158 + 2 * 34 + 30] = w(800fa63c);
@@ -729,33 +812,52 @@ else if (V1 == 4)
     [800f8158 + 6 * 34 + 30] = w(800fa63c);
 }
 
+// reset root translation and ???
+for( int i = 0; i < a; ++i )
+{
+    [801518e4 + i * b9c + 168] = h(0);
+    [801518e4 + i * b9c + 16a] = h(0);
+    [801518e4 + i * b9c + 16c] = h(0);
 
+    [80151200 + i * 74 + 34] = b(0);
+}
 
-S0 = 0;
-loopb4550:	; 800B4550
-    [801518e4 + S0 * b9c + 168] = h(0);
-    [801518e4 + S0 * b9c + 16a] = h(0);
-    [801518e4 + S0 * b9c + 16c] = h(0);
-
-    [80151234 + S0 * 74] = b(0);
-
-    S0 = S0 + 1;
-    V0 = S0 < a;
-800B4588	bne    v0, zero, loopb4550 [$800b4550]
-
-
-
-[800f5b70] = b(0);
-[800f5b71] = b(0);
-[800f5b72] = b(0);
+[800f5b70] = b(0); // R
+[800f5b71] = b(0); // G
+[800f5b72] = b(0); // B
 [800f5b73] = b(1f);
 [800f5b74] = h(0);
 
-
-
-if (hu[8016360c + 8] == 3a) // if battle id == Kalm Flashback (with rain)
+if( hu[8016360c + 8] == 3a ) // if battle id == Kalm Flashback (with rain)
 {
-    funcc57b0;
+    funcc57b0(); // settings for specific scene model mesh for rain
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcc57b0()
+
+for( int i = 0; i < 100; ++i )
+{
+    [8015e1e8 + i * 34 + 20] = h(0);
+    [8015e1e8 + i * 34 + 22] = h(0);
+    [8015e1e8 + i * 34 + 24] = h(0);
+
+    battle_opcodes_get_random();
+    [8015e1e8 + i * 34 + 28] = h((V0 & 3fff) - 2000);
+
+    battle_opcodes_get_random();
+    [8015e1e8 + i * 34 + 2a] = h(-2710 - (V1 / 2));
+
+    battle_opcodes_get_random();
+    [8015e1e8 + i * 34 + 2c] = h((V0 & 3fff) - 2000);
+
+    [8015e1e8 + i * 34 + 30] = w(800fa63c);
+
+    [801619e8 + i * 2 + 0] = b(0);
+    [801619e8 + i * 2 + 1] = b(0);
 }
 ////////////////////////////////
 

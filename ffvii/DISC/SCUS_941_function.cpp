@@ -1,4 +1,36 @@
-﻿////////////////////////////////
+﻿
+////////////////////////////////
+// func1c3cc()
+
+dst = A0;
+src = A1;
+size = A2;
+
+if( A2 >= 10 )
+{
+    loop1c3d8:	; 8001C3D8
+        [dst] = w(w[src]);
+        src = src + 4;
+        dst = dst + 4;
+        size = size - 4;
+        V0 = size < 10;
+    8001C404	beq    v0, zero, loop1c3d8 [$8001c3d8]
+}
+
+if( size != 0 )
+{
+    loop1c410:	; 8001C410
+        [dst] = b(b[src]);
+        src = src + 1;
+        dst = dst + 1;
+        size = size - 1;
+    8001C424	bne    size, zero, loop1c410 [$8001c410]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func155b0()
 
 if( w[GP + 1d0] < 0 )
