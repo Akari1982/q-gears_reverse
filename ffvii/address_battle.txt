@@ -636,7 +636,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f9f28 [][][][] array of something (0x3 items). All inited with 0.
 
-800f9f34 []       init with 0.
+800f9f34 []       background color B for disp env. Init with 0.
 
 800f9f3c temp additional array where we store data for attack impact.
 +0 [][]     target id.
@@ -657,10 +657,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +2a [][]     translation Y
     +2c [][]     translation Z
 
-800fa670 []       init with 0.
+800fa670 []       background color G for disp env. Init with 0.
 
 800fa69c [][]     mask of units covered with magic barrier.
-800fa6a0 []       init with 0.
+800fa6a0 []       background color R for disp env. Init with 0.
 800fa6d0 []       formation type id. Used for load camdat (0,1,8 - CAMDAT0.LZS, 2 - CAMDAT1.LZS, 3,4,5,6,7 - CAMDAT2.LZS).
 800fa6d4 []       we store target unit id here during attack. Used in effects animation opcodes. Init with 0.
 
@@ -701,7 +701,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800fafdc []       init with 0.
 800fafe0 []       store attacker id here.
 
-800faff4          depth queue for packets.
+800faff4 draw env struct 0 0 320 166.
+800fb050 draw env struct 0 240 320 240.
+800ff0e8 draw env struct 0 240 320 166.
+800ff144 draw env struct 0 0 320 240.
 
 801031e0 []       init with 1.
 801031e4 []       bool that indicates that we must transit from current camera to camera from battle setup.
@@ -851,7 +854,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80161de8 [][]     some target mask. Looks like dead targets.
 
-80162084 [][]     store 0200 here during battle init.
+80162084 [][]     Projection plane distance for disp env. Init with 0x200.
 
 8016209c [][][][] store offset to first mesh sector in battle field here.
 

@@ -23540,81 +23540,12 @@ Lbc1d0:	; 800BC1D0
 800BC1DC	nop
 
 
-funcbc1e0:	; 800BC1E0
-800BC1E0	addiu  sp, sp, $ffe8 (=-$18)
-800BC1E4	addu   v1, zero, zero
-800BC1E8	lui    a2, $8016
-800BC1EC	addiu  a2, a2, $2978
-800BC1F0	addu   a1, zero, zero
-800BC1F4	lui    a0, $8016
-800BC1F8	addiu  a0, a0, $1ef0
-800BC1FC	sw     ra, $0010(sp)
-800BC200	lui    at, $8016
-800BC204	sh     zero, $3c78(at)
-800BC208	lui    at, $8016
-800BC20C	sh     zero, $3b7c(at)
-800BC210	lui    at, $8016
-800BC214	sh     zero, $2080(at)
 
-loopbc218:	; 800BC218
-800BC218	sw     zero, $0000(a0)
-800BC21C	sh     zero, $0002(a2)
-800BC220	addiu  a2, a2, $0020
-800BC224	lui    at, $8016
-800BC228	addiu  at, at, $2978
-800BC22C	addu   at, at, a1
-800BC230	sh     zero, $0000(at)
-800BC234	addiu  a1, a1, $0020
-800BC238	addiu  v1, v1, $0001
-800BC23C	slti   v0, v1, $0064
-800BC240	bne    v0, zero, loopbc218 [$800bc218]
-800BC244	addiu  a0, a0, $0004
-800BC248	addu   v1, zero, zero
-800BC24C	lui    a2, $8016
-800BC250	addiu  a2, a2, $20ac
-800BC254	addu   a1, zero, zero
-800BC258	lui    a0, $8016
-800BC25C	addiu  a0, a0, $3b48
+////////////////////////////////
+// funcbc1e0
+800BC1E0-800BC2EC
+////////////////////////////////
 
-loopbc260:	; 800BC260
-800BC260	sw     zero, $0000(a0)
-800BC264	sh     zero, $0002(a2)
-800BC268	addiu  a2, a2, $0020
-800BC26C	lui    at, $8016
-800BC270	addiu  at, at, $20ac
-800BC274	addu   at, at, a1
-800BC278	sh     zero, $0000(at)
-800BC27C	addiu  a1, a1, $0020
-800BC280	addiu  v1, v1, $0001
-800BC284	slti   v0, v1, $000a
-800BC288	bne    v0, zero, loopbc260 [$800bc260]
-800BC28C	addiu  a0, a0, $0004
-800BC290	addu   v1, zero, zero
-800BC294	lui    a2, $8016
-800BC298	addiu  a2, a2, $21f0
-800BC29C	addu   a1, zero, zero
-800BC2A0	lui    a0, $8016
-800BC2A4	addiu  a0, a0, $3b84
-
-loopbc2a8:	; 800BC2A8
-800BC2A8	sw     zero, $0000(a0)
-800BC2AC	sh     zero, $0002(a2)
-800BC2B0	addiu  a2, a2, $0020
-800BC2B4	lui    at, $8016
-800BC2B8	addiu  at, at, $21f0
-800BC2BC	addu   at, at, a1
-800BC2C0	sh     zero, $0000(at)
-800BC2C4	addiu  a1, a1, $0020
-800BC2C8	addiu  v1, v1, $0001
-800BC2CC	slti   v0, v1, $003c
-800BC2D0	bne    v0, zero, loopbc2a8 [$800bc2a8]
-800BC2D4	addiu  a0, a0, $0004
-800BC2D8	jal    funcbc2f0 [$800bc2f0]
-800BC2DC	nop
-800BC2E0	lw     ra, $0010(sp)
-800BC2E4	addiu  sp, sp, $0018
-800BC2E8	jr     ra 
-800BC2EC	nop
 
 
 funcbc2f0:	; 800BC2F0
@@ -34125,23 +34056,10 @@ Lc5b84:	; 800C5B84
 800C5BE8	nop
 
 
-funcc5bec:	; 800C5BEC
-800C5BEC	addiu  v1, zero, $ffff (=-$1)
-800C5BF0	ori    v0, zero, $017a
 
-loopc5bf4:	; 800C5BF4
-800C5BF4	lui    at, $8010
-800C5BF8	addiu  at, at, $9da8 (=-$6258)
-800C5BFC	addu   at, at, v0
-800C5C00	sh     v1, $0000(at)
-800C5C04	addiu  v0, v0, $fffa (=-$6)
-800C5C08	bgez   v0, loopc5bf4 [$800c5bf4]
-800C5C0C	nop
-800C5C10	jr     ra 
-800C5C14	nop
-
-
-
+////////////////////////////////
+// funcc5bec
+800C5BEC-800C5C14
 ////////////////////////////////
 // funcc5c18
 800C5C18-800C5CBC

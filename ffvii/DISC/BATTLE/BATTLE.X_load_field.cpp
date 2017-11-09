@@ -21,23 +21,27 @@ system_psyq_set_disp_mask();
 [800fa670] = b(0);
 [800fa6a0] = b(0);
 
-funcb37a0();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+funcb37a0(); // init draw disp env with settings
 
 funcb3e2c; // init some values
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 funcbb684; // init camera data
 
@@ -372,13 +376,13 @@ Lb353c:	; 800B353C
 ////////////////////////////////
 // funcb37a0()
 
-A0 = 140;
-A1 = f0;
-A2 = h[80162084];
-A3 = bu[800fa6a0];
-A4 = bu[800fa670];
-A5 = bu[800f9f34];
-funcd91dc();
+A0 = 140; // screen size x 320
+A1 = f0; // screen size y 240
+A2 = h[80162084]; // projection plane distance
+A3 = bu[800fa6a0]; // background color r
+A4 = bu[800fa670]; // background color g
+A5 = bu[800f9f34]; // background color b
+funcd91dc(); // set initial disp env and prepare additional
 ////////////////////////////////
 
 
@@ -386,92 +390,87 @@ funcd91dc();
 ////////////////////////////////
 // funcd91dc();
 
-S6 = A4;
-S7 = A5;
-S3 = A0;
-S4 = A1;
-S0 = A2;
-S5 = A3;
+screen_size_x = A0;
+screen_size_y = A1;
+proj_plane_dist = A2;
+background_r = A3;
+background_g = A4;
+background_b = A5;
 
-func1cb48(); // ???
+func1cb48(); // update pressed repeated buttons mask
 
-S2 = 0001;
-
-func1c980();
+func1c980(); // update pressed repeated buttons mask
 
 system_gte_init_geom();
 
-A0 = S3 >> 1f;
-A0 = S3 + A0;
-A0 = A0 >> 01;
-A1 = S4 >> 1f;
-A1 = S4 + A1;
-A1 = A1 >> 01;
-func3b6bc();
+A0 = screen_size_x / 2;
+A1 = screen_size_y / 2;
+system_set_screen_offset_to_GTE();
 
-A0 = S0;
-system_set_gte_mac2();
+A0 = proj_plane_dist;
+system_set_proj_plane_dist_to_GTE();
 
 A0 = 800faff4;
-A1 = 0;
-A2 = 0;
-A3 = 0140;
-V0 = 01d8;
-A4 = V0;
-func43814()
+A1 = 0; // clip rect x
+A2 = 0; // clip rect y
+A3 = 140; // clip rect width 320
+A4 = 1d8; // clip rect height 472
+func43814() // prepare draw env struct
 
-[800fb00c] = b(S2);
-[800fb00b] = b(S2);
+[800fb00b] = b(1); // drawing to display area is enabled
+[800fb00c] = b(1); // clear drawing area when drawing environment is set
+
 A0 = 800faff4;
 system_psyq_put_draw_env();
 
 A0 = 0;
-func3cedc();
+func3cedc(); // wait
 
 A0 = 800faff4;
 A1 = 0;
 A2 = 0;
-A3 = S3;
-A4 = S4 - 4a;
-func43814();
+A3 = screen_size_x;
+A4 = screen_size_y - 4a;
+func43814(); // prepare draw env struct
 
-A0 = 800faff4 + 40f4;
+[800faff6] = h(hu[800faff6] + 8); // move draw env clip rect x
+[800faffa] = h(hu[800faffa] - 8); // shrink draw env clip rect width
+[800fb00a] = b(1);
+[800fb00b] = b(0);
+[800fb00c] = b(0);
+[800fb00d] = b(background_r);
+[800fb00e] = b(background_g);
+[800fb00f] = b(background_b);
+
+A0 = 800ff0e8;
 A1 = 0;
-A2 = 00f0;
-A3 = S3;
-A4 = S4 - 4a;
-func43814();
+A2 = f0;
+A3 = screen_size_x;
+A4 = screen_size_y - 4a;
+func43814(); // prepare draw env struct
 
-A0 = 800faff4 + 005c;
+[800ff0ea] = h(hu[800ff0ea] + 8); // move draw env clip rect x
+[800ff0ee] = h(hu[800ff0ee] - 8); // shrink draw env clip rect width
+[800ff0fe] = b(1); // dithering processing flag (on)
+[800ff0ff] = b(0); // drawing to display area is blocked
+[800ff100] = b(0); // not clear drawing area when drawing environment is set
+[800ff101] = b(background_r);
+[800ff102] = b(background_g);
+[800ff103] = b(background_b);
+
+A0 = 800fb050;
 A1 = 0;
-A2 = 00f0;
-A3 = S3;
-A4 = S4;
-func438d4()
+A2 = f0;
+A3 = screen_size_x;
+A4 = screen_size_y;
+func438d4(); // prepare draw env struct
 
-A0 = 800faff4 + 4150;
+A0 = 800ff144;
 A1 = 0;
 A2 = 0;
-A3 = S3;
-A4 = S4;
-func438d4();
-
-[800faff6] = h(hu[800faff6] + 8);
-[800faffa] = h(hu[800faffa] - 8);
-[800ff100] = b(0);
-[800fb00c] = b(0);
-[800ff0ff] = b(0);
-[800fb00b] = b(0);
-[800ff0fe] = b(S2);
-[800fb00a] = b(S2);
-[800fb00d] = b(S5);
-[800ff101] = b(S5);
-[800fb00e] = b(S6);
-[800fb00f] = b(S7);
-[800ff102] = b(S6);
-[800ff103] = b(S7);
-[800ff0ea] = h(hu[800ff0ea] + 8);
-[800ff0ee] = h(hu[800ff0ee] - 8);
+A3 = screen_size_x;
+A4 = screen_size_y;
+func438d4(); // prepare draw env struct
 ////////////////////////////////
 
 
@@ -864,7 +863,8 @@ for( int i = 0; i < 100; ++i )
 
 
 ////////////////////////////////
-// funcb3e2c
+// funcb3e2c()
+
 [800f7de4] = b(1);
 [800f7ed4] = b(0);
 [800f837c] = b(0); // index in camera start end vector structures.
@@ -891,19 +891,15 @@ for( int i = 0; i < 100; ++i )
 [80163c7c] = b(0);
 [80166f58] = b(0);
 
-V1 = 687c;
-loopb3ee8:	; 800B3EE8
-    [801518e4 + V1 + 26] = b(1);
-    V1 = V1 - b9c;
-800B3EFC	bgez   v1, loopb3ee8 [$800b3ee8]
+for( int i = 0; i < a; ++i )
+{
+    [801518e4 + i * b9c + 26] = b(1);
+}
 
-V1 = 2;
-V0 = 800f9f30;
-loopb3f10:	; 800B3F10
-    [V0] = w(0);
-    V1 = V1 - 1;
-    V0 = V0 - 4;
-800B3F18	bgez   v1, loopb3f10 [$800b3f10]
+for( int i = 0; i < 3; ++i )
+{
+    [800f9f28 + i * 4] = w(0);
+}
 
 A0 = bu[801590cc];
 [801518e4 + A0 * b9c + 22] = b(0);
@@ -913,9 +909,98 @@ A0 = bu[801590cc];
 V1 = bu[801590e0];
 [80163798 + V1 * c + 8] = h(-2); // init camera id
 
-funcbc1e0;
+funcbc1e0();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 funcc5bec;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcc5bec()
+
+V0 = 017a;
+loopc5bf4:	; 800C5BF4
+    [800f9da8 + V0] = h(-1);
+    V0 = V0 - 6;
+800C5C08	bgez   v0, loopc5bf4 [$800c5bf4]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc1e0()
+
+[80163c78] = h(0);
+[80163b7c] = h(0);
+[80162080] = h(0);
+
+V1 = 0;
+A2 = 80162978;
+A1 = 0;
+A0 = 80161ef0;
+
+loopbc218:	; 800BC218
+    [A0 + 0000] = w(0);
+    [A2 + 0002] = h(0);
+    A2 = A2 + 0020;
+    [80162978 + A1] = h(0);
+    A1 = A1 + 0020;
+    A0 = A0 + 0004;
+    V1 = V1 + 0001;
+    V0 = V1 < 0064;
+800BC240	bne    v0, zero, loopbc218 [$800bc218]
+
+V1 = 0;
+A2 = 801620ac;
+A1 = 0;
+A0 = 80163b48;
+
+loopbc260:	; 800BC260
+    [A0 + 0000] = w(0);
+    [A2 + 0002] = h(0);
+    A2 = A2 + 0020;
+    [801620ac + A1] = h(0);
+    A0 = A0 + 0004;
+    A1 = A1 + 0020;
+    V1 = V1 + 0001;
+    V0 = V1 < 000a;
+800BC288	bne    v0, zero, loopbc260 [$800bc260]
+
+V1 = 0;
+A2 = 801621f0;
+A1 = 0;
+A0 = 80163b84;
+
+loopbc2a8:	; 800BC2A8
+    [A0 + 0000] = w(0);
+    [A2 + 0002] = h(0);
+    A2 = A2 + 0020;
+    [801621f0 + A1] = h(0);
+    A1 = A1 + 0020;
+    V1 = V1 + 0001;
+    A0 = A0 + 0004;
+    V0 = V1 < 003c;
+800BC2D0	bne    v0, zero, loopbc2a8 [$800bc2a8]
+
+800BC2D8	jal    funcbc2f0 [$800bc2f0]
+
 ////////////////////////////////
 
 

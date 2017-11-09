@@ -553,7 +553,7 @@ offset_to_camera = w[80071e40];
 [offset_to_triggers + 26] = h((hu[offset_to_triggers + 26] + hu[8009abf4 + ac]) % (h[offset_to_triggers + 1e] * 10)); // add y scroll for 3nd background
 
 A0 = h[offset_to_camera + 24];
-system_set_gte_mac2;
+system_set_proj_plane_dist_to_GTE;
 
 if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 {

@@ -11945,88 +11945,6 @@ SP = SP + 0018;
 // funcbc11c
 800BC11C-800BC1DC
 ////////////////////////////////
-
-
-
-funcbc1e0:	; 800BC1E0
-800BC1E0	addiu  sp, sp, $ffe8 (=-$18)
-V1 = 0;
-800BC1E8	lui    a2, $8016
-A2 = A2 + 2978;
-A1 = 0;
-800BC1F4	lui    a0, $8016
-A0 = A0 + 1ef0;
-[SP + 0010] = w(RA);
-800BC200	lui    at, $8016
-[AT + 3c78] = h(0);
-800BC208	lui    at, $8016
-[AT + 3b7c] = h(0);
-800BC210	lui    at, $8016
-[AT + 2080] = h(0);
-
-loopbc218:	; 800BC218
-[A0 + 0000] = w(0);
-[A2 + 0002] = h(0);
-A2 = A2 + 0020;
-800BC224	lui    at, $8016
-AT = AT + 2978;
-AT = AT + A1;
-[AT + 0000] = h(0);
-A1 = A1 + 0020;
-V1 = V1 + 0001;
-V0 = V1 < 0064;
-800BC240	bne    v0, zero, loopbc218 [$800bc218]
-A0 = A0 + 0004;
-V1 = 0;
-800BC24C	lui    a2, $8016
-A2 = A2 + 20ac;
-A1 = 0;
-800BC258	lui    a0, $8016
-A0 = A0 + 3b48;
-
-loopbc260:	; 800BC260
-[A0 + 0000] = w(0);
-[A2 + 0002] = h(0);
-A2 = A2 + 0020;
-800BC26C	lui    at, $8016
-AT = AT + 20ac;
-AT = AT + A1;
-[AT + 0000] = h(0);
-A1 = A1 + 0020;
-V1 = V1 + 0001;
-V0 = V1 < 000a;
-800BC288	bne    v0, zero, loopbc260 [$800bc260]
-A0 = A0 + 0004;
-V1 = 0;
-800BC294	lui    a2, $8016
-A2 = A2 + 21f0;
-A1 = 0;
-800BC2A0	lui    a0, $8016
-A0 = A0 + 3b84;
-
-loopbc2a8:	; 800BC2A8
-[A0 + 0000] = w(0);
-[A2 + 0002] = h(0);
-A2 = A2 + 0020;
-800BC2B4	lui    at, $8016
-AT = AT + 21f0;
-AT = AT + A1;
-[AT + 0000] = h(0);
-A1 = A1 + 0020;
-V1 = V1 + 0001;
-V0 = V1 < 003c;
-800BC2D0	bne    v0, zero, loopbc2a8 [$800bc2a8]
-A0 = A0 + 0004;
-800BC2D8	jal    funcbc2f0 [$800bc2f0]
-800BC2DC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BC2E8	jr     ra 
-800BC2EC	nop
-
-
-
-////////////////////////////////
 // funcbc2f0
 800BC2F0-800BC344
 ////////////////////////////////
@@ -17084,21 +17002,6 @@ SP = SP + 0030;
 800C5BE4	jr     ra 
 800C5BE8	nop
 
-
-funcc5bec:	; 800C5BEC
-800C5BEC	addiu  v1, zero, $ffff (=-$1)
-V0 = 017a;
-
-loopc5bf4:	; 800C5BF4
-800C5BF4	lui    at, $8010
-800C5BF8	addiu  at, at, $9da8 (=-$6258)
-AT = AT + V0;
-[AT + 0000] = h(V1);
-800C5C04	addiu  v0, v0, $fffa (=-$6)
-800C5C08	bgez   v0, loopc5bf4 [$800c5bf4]
-800C5C0C	nop
-800C5C10	jr     ra 
-800C5C14	nop
 
 
 

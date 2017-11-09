@@ -30,6 +30,14 @@
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
 80062d44 GP
++ 1c [][]     first pad start button delay (0 - delay, 1 - fast)
++ 1e [][]     second pad start button delay (0 - delay, 1 - fast)
++ 20 [][]     first pad repeat button delay time (f/3).
++ 22 [][]     second pad repeat button delay time (f/3).
++ 24 [][]     first pad start button delay (0 - delay, 1 - fast)
++ 26 [][]     second pad start button delay (0 - delay, 1 - fast)
++ 28 [][]     first pad repeat button delay time (7/1).
++ 2a [][]     second pad repeat button delay time (7/1).
 + 2c []       if 1 then system pad started and inited.
 + 44 [][]     10c?
 + 97 []       ??? some type of text.
@@ -79,21 +87,32 @@
 +2b8 []       we store magic number here according to added materia. (0x11 in case Underwater or HP<->MP)
 +2dc []       0 - we load battle, 1 - we load menu.
 
-80062d7c [][]     key data.
-                    0001 - L2
-                    0002 - R2
-                    0004 - L1.
-                    0008 - R1.
-                    0010 - triangle.
-                    0020 - circle.
-                    0040 - cross.
-                    0080 - square.
-                    0100 - select.
-                    0800 - start.
-                    1000 - up button.
-                    2000 - right button
-                    4000 - down button.
-                    8000 - left button
+80062d78 [][]     first pad button mask (remaped if needed)
+80062d7a [][]     first pad previous button mask.
+80062d7c [][]     first pad pressed button mask.
+80062d7e [][]     first pad repeated button mask with pressed mask.
+80062d80 [][]     second pad button mask.
+80062d82 [][]     second pad previous button mask.
+80062d84 [][]     second pad pressed button mask.
+80062d86 [][]     second pad repeated button mask with pressed mask.
+80062d88 [][]     first pad button mask from 80062d78.
+80062d8a [][]     first pad previous button mask.
+80062d8c [][]     first pad pressed button mask.
+80062d8e [][]     first pad repeated (different speed) button mask with pressed mask.
+                    0x0001 - L2
+                    0x0002 - R2
+                    0x0004 - L1.
+                    0x0008 - R1.
+                    0x0010 - triangle.
+                    0x0020 - circle.
+                    0x0040 - cross.
+                    0x0080 - square.
+                    0x0100 - select.
+                    0x0800 - start.
+                    0x1000 - up button.
+                    0x2000 - right button
+                    0x4000 - down button.
+                    0x8000 - left button
 
 80062d98 []       if this is not 0 we will not render effect?
 

@@ -1135,9 +1135,9 @@ A0 = A0 | da80;
 800141D8	jal    system_psyq_put_draw_env [$800443b0]
 A0 = A0 | da24;
 A0 = 009f;
-800141E4	jal    func3b6bc [$8003b6bc]
+800141E4	jal    system_set_screen_offset_to_GTE [$8003b6bc]
 A1 = 0077;
-800141EC	jal    system_set_gte_mac2 [$8003b6dc]
+800141EC	jal    system_set_proj_plane_dist_to_GTE [$8003b6dc]
 A0 = 01e0;
 800141F4	lui    v0, $8007
 V0 = hu[V0 + 5dec];
@@ -23069,23 +23069,10 @@ A2 = A2 << 04;
 // system_set_far_color_to_GTE
 8003B69C-8003B6B8
 ////////////////////////////////
-
-
-
-func3b6bc:	; 8003B6BC
-A0 = A0 << 10;
-A1 = A1 << 10;
-OFX = A0;
-OFY = A1;
-8003B6CC	jr     ra 
-8003B6D0	nop
-
-8003B6D4	nop
-8003B6D8	nop
-
-
+// system_set_screen_offset_to_GTE
+8003B6BC-8003B6D8
 ////////////////////////////////
-// system_set_gte_mac2
+// system_set_proj_plane_dist_to_GTE
 8003B6DC-8003B6E4
 ////////////////////////////////
 

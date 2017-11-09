@@ -244,27 +244,24 @@ return (V0 << 10) | (A0 & ffff);
 // func1c498()
 V1 = bu[800696ac];
 
-8001C4A0	ori    v0, zero, $00ff
+V0 = 00ff;
 8001C4A4	beq    v1, v0, L1c4e0 [$8001c4e0]
-8001C4A8	addu   v0, zero, zero
-8001C4AC	lui    v1, $8007
-8001C4B0	lbu    v1, $96ad(v1)
-8001C4B4	ori    v0, zero, $0041
+V0 = 0;
+V1 = bu[800696ad];
+V0 = 0041;
 8001C4B8	bne    v1, v0, L1c4dc [$8001c4dc]
 8001C4BC	nop
-8001C4C0	lui    v0, $8007
-8001C4C4	lbu    v0, $96ae(v0)
-8001C4C8	lui    v1, $8007
-8001C4CC	lbu    v1, $96af(v1)
-8001C4D0	sll    v0, v0, $08
+V0 = bu[800696ae];
+V1 = bu[800696af];
+V0 = V0 << 08;
 8001C4D4	j      L1c4e0 [$8001c4e0]
-8001C4D8	nor    v0, v1, v0
+V0 = V1 NOR V0;
 
 L1c4dc:	; 8001C4DC
-8001C4DC	addu   v0, zero, zero
+V0 = 0;
 
 L1c4e0:	; 8001C4E0
-8001C4E4	andi   v0, v0, $ffff
+V0 = V0 & ffff;
 ////////////////////////////////
 
 
@@ -298,255 +295,192 @@ system_bios_stop_pad();
 
 
 ////////////////////////////////
-// func1c980
-8001C980	lui    v0, $8006
-V0 = hu[V0 + 2d80];
-8001C988	lui    a0, $8006
-A0 = hu[A0 + 2d78];
-8001C990	lui    v1, $8006
-V1 = hu[V1 + 2d8a];
-8001C998	lui    at, $8006
-[AT + 2d90] = h(V0);
-V0 = A0 ^ V1;
-V0 = V0 & A0;
-8001C9A8	lui    at, $8006
-[AT + 2d88] = h(A0);
-8001C9B0	lui    at, $8006
-[AT + 2d8c] = h(V0);
-8001C9B8	beq    a0, v1, L1c9d0 [$8001c9d0]
-8001C9BC	addiu  sp, sp, $ffe0 (=-$20)
-[GP + 0024] = h(0);
-[GP + 0028] = h(0);
-8001C9C8	j      L1ca40 [$8001ca40]
-8001C9CC	nop
+// func1c980()
 
-L1c9d0:	; 8001C9D0
-V0 = h[GP + 0024];
-8001C9D4	nop
-8001C9D8	beq    v0, zero, L1ca0c [$8001ca0c]
-V0 = 0001;
-V1 = h[GP + 0028];
-8001C9E4	nop
-8001C9E8	bne    v1, v0, L1ca04 [$8001ca04]
-A1 = V1;
-8001C9F0	lui    at, $8006
-[AT + 2d8e] = h(A0);
-[GP + 0028] = h(0);
-8001C9FC	j      L1ca40 [$8001ca40]
-8001CA00	nop
+[80062d88] = h(hu[80062d78]);
+[80062d8c] = h((hu[80062d78] ^ hu[80062d8a]) & hu[80062d78]);
+[80062d8e] = h(0);
 
-L1ca04:	; 8001CA04
-8001CA04	j      L1ca34 [$8001ca34]
-V0 = A1 + 0001;
-
-L1ca0c:	; 8001CA0C
-V1 = h[GP + 0028];
-V0 = 0007;
-8001CA14	bne    v1, v0, L1ca30 [$8001ca30]
-A0 = V1;
-V0 = 0001;
-[GP + 0024] = h(V0);
-[GP + 0028] = h(0);
-8001CA28	j      L1ca38 [$8001ca38]
-8001CA2C	nop
-
-L1ca30:	; 8001CA30
-V0 = A0 + 0001;
-
-L1ca34:	; 8001CA34
-[GP + 0028] = h(V0);
-
-L1ca38:	; 8001CA38
-8001CA38	lui    at, $8006
-[AT + 2d8e] = h(0);
-
-L1ca40:	; 8001CA40
-8001CA40	lui    a1, $8006
-A1 = hu[A1 + 2d90];
-8001CA48	lui    v1, $8006
-V1 = hu[V1 + 2d92];
-8001CA50	nop
-V0 = A1 ^ V1;
-V0 = V0 & A1;
-8001CA5C	lui    at, $8006
-[AT + 2d94] = h(V0);
-8001CA64	beq    a1, v1, L1ca7c [$8001ca7c]
-8001CA68	nop
-[GP + 0026] = h(0);
-[GP + 002a] = h(0);
-8001CA74	j      L1cae4 [$8001cae4]
-8001CA78	nop
-
-L1ca7c:	; 8001CA7C
-V0 = h[GP + 0026];
-8001CA80	nop
-8001CA84	beq    v0, zero, L1cab0 [$8001cab0]
-V0 = 0001;
-V1 = h[GP + 002a];
-8001CA90	nop
-8001CA94	bne    v1, v0, L1cad4 [$8001cad4]
-A0 = V1;
-8001CA9C	lui    at, $8006
-[AT + 2d96] = h(A1);
-[GP + 002a] = h(0);
-8001CAA8	j      L1cae4 [$8001cae4]
-8001CAAC	nop
-
-L1cab0:	; 8001CAB0
-V1 = h[GP + 002a];
-V0 = 0007;
-8001CAB8	bne    v1, v0, L1cad4 [$8001cad4]
-A0 = V1;
-V0 = 0001;
-[GP + 0026] = h(V0);
-[GP + 002a] = h(0);
-8001CACC	j      L1cadc [$8001cadc]
-8001CAD0	nop
-
-L1cad4:	; 8001CAD4
-V0 = A0 + 0001;
-[GP + 002a] = h(V0);
-
-L1cadc:	; 8001CADC
-8001CADC	lui    at, $8006
-[AT + 2d96] = h(0);
-
-L1cae4:	; 8001CAE4
-8001CAE4	lui    v0, $8006
-V0 = hu[V0 + 2d8e];
-8001CAEC	lui    v1, $8006
-V1 = hu[V1 + 2d8c];
-8001CAF4	lui    a0, $8006
-A0 = hu[A0 + 2d88];
-8001CAFC	lui    a1, $8006
-A1 = hu[A1 + 2d90];
-V0 = V0 | V1;
-8001CB08	lui    at, $8006
-[AT + 2d8e] = h(V0);
-8001CB10	lui    v0, $8006
-V0 = hu[V0 + 2d96];
-8001CB18	lui    v1, $8006
-V1 = hu[V1 + 2d94];
-8001CB20	lui    at, $8006
-[AT + 2d8a] = h(A0);
-8001CB28	lui    at, $8006
-[AT + 2d92] = h(A1);
-V0 = V0 | V1;
-8001CB34	lui    at, $8006
-[AT + 2d96] = h(V0);
-SP = SP + 0020;
-8001CB40	jr     ra 
-8001CB44	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func1cb48
-
-system_get_current_pad_buttons();
-
-A1 = V0;
-[80062d80] = h(A1 >> 10); // second pad buttons mask
-
-if( ( ( hu[8009d7be] >> 2 ) & 3 == 0 ) || ( w[80062fa0] == 0 ) )
+if( hu[80062d78] == hu[80062d8a] )
 {
-    [80062d78] = h(0);
-    A0 = 0;
-    loop1cba4:	; 8001CBA4
-        if( A1 & (1 << A0) )
-        {
-            [80062d78] = h(hu[80062d78] | 1 << bu[8009d7c0 + A0]);
-        }
-
-        A0 = A0 + 1;
-        V0 = A0 < 10;
-    8001CBE0	bne    v0, zero, loop1cba4 [$8001cba4]
-}
-else
-{
-    [80062d78] = h(A1);
-}
-
-[80062d7e] = h(0);
-[80062d7c] = h((hu[80062d78] ^ hu[80062d7a]) & hu[80062d78]);
-
-if( hu[80062d78] != hu[80062d7a] )
-{
-    [GP + 20] = h(0);
-    [GP + 1c] = h(0);
-}
-else
-{
-    if( h[GP + 1c] != 0 )
+    if( h[GP + 24] == 0 )
     {
-        V1 = h[GP + 20];
-        if( V1 == 3 )
+        if( h[GP + 28] != 7 )
         {
-            [80062d7e] = h(hu[80062d78]);
-            [GP + 20] = h(0);
+            [GP + 28] = h(h[GP + 28] + 1);
         }
         else
         {
-            [GP + 20] = h(V1 + 1);
+            [GP + 24] = h(1);
+            [GP + 28] = h(0);
         }
     }
     else
     {
-        V1 = h[GP + 20];
-        if( V1 == f )
+        if( h[GP + 28] != 1 )
+        {
+            [GP + 28] = h(h[GP + 28] + 1);
+        }
+        else
+        {
+            [GP + 28] = h(0);
+            [80062d8e] = h(hu[80062d78]);
+        }
+    }
+}
+else
+{
+    [GP + 24] = h(0);
+    [GP + 28] = h(0);
+}
+
+[80062d8a] = h(hu[80062d88]);
+[80062d8e] = h(hu[80062d8e] | hu[80062d8c]);
+
+[80062d90] = h(hu[80062d80]);
+[80062d94] = h((hu[80062d90] ^ hu[80062d92]) & hu[80062d90]);
+[80062d96] = h(0);
+
+if( hu[80062d90] == hu[80062d92] )
+{
+    if( h[GP + 26] == 0 )
+    {
+        if( h[GP + 2a] != 7 )
+        {
+            [GP + 2a] = h(h[GP + 2a] + 1);
+        }
+        else
+        {
+            [GP + 26] = h(1);
+            [GP + 2a] = h(0);
+        }
+    }
+    else
+    {
+        if( h[GP + 2a] != 1 )
+        {
+            [GP + 2a] = h(h[GP + 2a] + 1);
+
+        }
+        else
+        {
+            [GP + 2a] = h(0);
+            [80062d96] = h(hu[80062d90]);
+        }
+    }
+}
+else
+{
+    [GP + 26] = h(0);
+    [GP + 2a] = h(0);
+}
+
+[80062d92] = h(hu[80062d90]);
+[80062d96] = h(hu[80062d96] | hu[80062d94]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1cb48()
+
+system_get_current_pad_buttons();
+buttons = V0;
+
+// not custom or input not enabled
+if( ( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 ) || ( w[80062fa0] != 0 ) )
+{
+    [80062d78] = h(buttons);
+}
+else // remap
+{
+    [80062d78] = h(0);
+
+    for( int i = 0; i < 10; ++i )
+    {
+        if( buttons & ( 1 << i ) )
+        {
+            [80062d78] = h(hu[80062d78] | (1 << bu[8009c6e4 + 10dc + i]));
+        }
+    }
+}
+
+[80062d7c] = h((hu[80062d78] ^ hu[80062d7a]) & hu[80062d78]); // pressed
+[80062d7e] = h(0); // repeated
+
+if( hu[80062d78] == hu[80062d7a] )
+{
+    if( h[GP + 1c] == 0 )
+    {
+        if( h[GP + 20] != f )
+        {
+            [GP + 20] = h(h[GP + 20] + 1);
+        }
+        else
         {
             [GP + 1c] = h(1);
             [GP + 20] = h(0);
         }
-        else
-        {
-            [GP + 20] = h(V1 + 1);
-        }
-    }
-}
-
-
-
-[80062d84] = h((hu[80062d80] ^ hu[80062d82]) & hu[80062d80]);
-
-if( hu[80062d80] != hu[80062d82] )
-{
-    [GP + 1e] = h(0);
-    [GP + 22] = h(0);
-}
-else
-{
-    if( h[GP + 1e] != 0 )
-    {
-        if( h[GP + 22] == 3 )
-        {
-            [80062d86] = h(hu[80062d80]);
-            [GP + 22] = h(0);
-        }
-        else
-        {
-            [GP + 22] = h(h[GP + 22] + 1);
-        }
     }
     else
     {
-        if( h[GP + 22] == f )
+        if( h[GP + 20] != 3 )
+        {
+            [GP + 20] = h(h[GP + 20] + 1);
+        }
+        else
+        {
+            [GP + 20] = h(0);
+            [80062d7e] = h(hu[80062d78]);
+        }
+    }
+}
+else
+{
+    [GP + 20] = h(0);
+    [GP + 1c] = h(0);
+}
+
+[80062d7a] = h(hu[80062d78]); // previous
+[80062d7e] = h(hu[80062d7e] | hu[80062d7c]);
+
+[80062d80] = h(buttons >> 10); // second pad buttons mask
+[80062d84] = h((hu[80062d80] ^ hu[80062d82]) & hu[80062d80]); // pressed
+[80062d86] = h(0); // repeated
+
+if( hu[80062d80] == hu[80062d82] )
+{
+    if( h[GP + 1e] == 0 )
+    {
+        if( h[GP + 22] != f )
+        {
+            [GP + 22] = h(h[GP + 22] + 1);
+        }
+        else
         {
             [GP + 1e] = h(1);
             [GP + 22] = h(0);
         }
-        else
+    }
+    else
+    {
+        if( h[GP + 22] != 3 )
         {
             [GP + 22] = h(h[GP + 22] + 1);
         }
-
-        [80062d86] = h(0);
+        else
+        {
+            [GP + 22] = h(0);
+            [80062d86] = h(hu[80062d80]);
+        }
     }
 }
+else
+{
+    [GP + 1e] = h(0);
+    [GP + 22] = h(0);
+}
 
-[80062d7e] = h(hu[80062d7e] | hu[80062d7c]);
-[80062d7a] = h(hu[80062d78]);
 [80062d82] = h(hu[80062d80]);
 [80062d86] = h(hu[80062d86] | hu[80062d84]);
 ////////////////////////////////

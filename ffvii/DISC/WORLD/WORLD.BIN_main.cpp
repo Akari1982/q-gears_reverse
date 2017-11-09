@@ -406,7 +406,7 @@ La4668:	; 800A4668
         800A4C44	jal    funcb2e90 [$800b2e90]
 
         A0 = w[800c65ec];
-        system_set_gte_mac2();
+        system_set_proj_plane_dist_to_GTE();
 
         V0 = w[800e566c];
         800A4C64	nop

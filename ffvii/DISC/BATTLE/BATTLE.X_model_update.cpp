@@ -124,7 +124,7 @@ funcb7fb4();
 800B81CC	nop
 A0 = h[80162084];
 [80158d08] = w(V0);
-800B81E0	jal    system_set_gte_mac2 [$8003b6dc]
+800B81E0	jal    system_set_proj_plane_dist_to_GTE [$8003b6dc]
 800B81E4	nop
 V0 = bu[801516f4];
 800B81F0	nop

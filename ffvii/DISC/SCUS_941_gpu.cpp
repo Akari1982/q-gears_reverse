@@ -1232,24 +1232,25 @@ return S0;
 
 ////////////////////////////////
 // func43814()
+// prepare draw env struct
 
-[A0 + 00] = h(A1); // x
-[A0 + 02] = h(A2); // y
-[A0 + 04] = h(A3); // width
-[A0 + 06] = h(A4); // height
-[A0 + 08] = h(A1); // x
-[A0 + 0a] = h(A2); // y
-[A0 + 0c] = h(0);
-[A0 + 0e] = h(0);
-[A0 + 10] = h(0);
-[A0 + 12] = h(0);
-[A0 + 14] = h(a);
-[A0 + 16] = b(1);
-[A0 + 17] = b(0);
-[A0 + 18] = b(0);
-[A0 + 19] = b(0);
-[A0 + 1a] = b(0);
-[A0 + 1b] = b(0);
+[A0 + 00] = h(A1); // clip rect x
+[A0 + 02] = h(A2); // clip rect y
+[A0 + 04] = h(A3); // clip rect width
+[A0 + 06] = h(A4); // clip rect height
+[A0 + 08] = h(A1); // offset to primitive x
+[A0 + 0a] = h(A2); // offset to primitive y
+[A0 + 0c] = h(0); // texture window rect x
+[A0 + 0e] = h(0); // texture window rect y
+[A0 + 10] = h(0); // texture window rect width
+[A0 + 12] = h(0); // texture window rect height
+[A0 + 14] = h(a); // tpage
+[A0 + 16] = b(1); // dithering processing flag (on)
+[A0 + 17] = b(0); // drawing to display area is blocked
+[A0 + 18] = b(0); // not clear drawing area when drawing environment is set
+[A0 + 19] = b(0); // background color r
+[A0 + 1a] = b(0); // background color g
+[A0 + 1b] = b(0); // background color b
 
 return A0;
 ////////////////////////////////

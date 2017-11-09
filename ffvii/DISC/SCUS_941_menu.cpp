@@ -91,14 +91,14 @@ L24b18:	; 80024B18
 80024B8C	sw     zero, $0214(gp)
 
 L24b90:	; 80024B90
-    func1cb48; // tutorial check here
+    func1cb48(); // update pressed repeated buttons mask
 
     [80062f24] = w(80077f64 + w[GP + 214] * 3400);
 
     A0 = 80069844 + w[GP + 214] * 50;
     [GP + 160] = w(A0);
     A1 = 14;
-    80024BE8	jal    system_psyq_clear_o_tag [$8004418c]
+    system_psyq_clear_o_tag();
 
     [GP + 280] = w(w[GP + 160]);
 
