@@ -23,7 +23,12 @@ system_psyq_set_disp_mask();
 
 funcb37a0(); // init draw disp env with settings
 
-funcb3e2c; // init some values
+funcb3e2c(); // init some callbacks and data
+
+funcbb684(); // init camera data
+
+A0 = 800c4d10; // funcc4d10()
+funcbc04c(); // add effect callback
 
 
 
@@ -34,31 +39,14 @@ funcb3e2c; // init some values
 
 
 
-
-
-
-
-
-
-
-
-
-funcbb684; // init camera data
-
-800B3170	lui    a0, $800c
-A0 = A0 + 4d10;
-800B3178	jal    funcbc04c [$800bc04c]
-800B317C	nop
 800B3180	jal    funcb7fdc [$800b7fdc]
-800B3184	nop
+
 800B3188	jal    funcb7fdc [$800b7fdc]
-800B318C	nop
 
 loopb3190:	; 800B3190
-V0 = hu[80095dd4];
-800B3198	nop
+    V0 = hu[80095dd4];
 800B319C	bne    v0, zero, loopb3190 [$800b3190]
-800B31A0	nop
+
 800B31A4	jal    funcb37ec [$800b37ec]
 S1 = 0003;
 800B31AC	jal    system_psyq_set_disp_mask [$80043d3c]
@@ -213,7 +201,7 @@ V0 = V0 + V1;
 V0 = V0 << 02;
 [801637a0 + V0] = h(-2);
 
-800B3438	jal    funcbb684 [$800bb684]
+funcbb684();
 
 [SP + 0010] = w(1);
 V0 = w[SP + 0010];
@@ -907,39 +895,11 @@ A0 = bu[801590cc];
 [800f8374] = b(e);
 
 V1 = bu[801590e0];
-[80163798 + V1 * c + 8] = h(-2); // init camera id
+[80163798 + V1 * c + 8] = h(-2); // camera id ( -2 - start battle camera)
 
-funcbc1e0();
+funcbc1e0(); // init damage, unit movement, effect and camera callback arrays
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-funcc5bec;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcc5bec()
-
-V0 = 017a;
-loopc5bf4:	; 800C5BF4
-    [800f9da8 + V0] = h(-1);
-    V0 = V0 - 6;
-800C5C08	bgez   v0, loopc5bf4 [$800c5bf4]
+funcc5bec(); // init 800f9da8 array
 ////////////////////////////////
 
 
@@ -951,56 +911,42 @@ loopc5bf4:	; 800C5BF4
 [80163b7c] = h(0);
 [80162080] = h(0);
 
-V1 = 0;
-A2 = 80162978;
-A1 = 0;
-A0 = 80161ef0;
+// init damage callbacks
+for( int i = 0; i < 64; ++i )
+{
+    [80161ef0 + i * 4] = w(0);
+    [80162978 + i * 20 + 0] = h(0);
+    [80162978 + i * 20 + 2] = h(0);
+}
 
-loopbc218:	; 800BC218
-    [A0 + 0000] = w(0);
-    [A2 + 0002] = h(0);
-    A2 = A2 + 0020;
-    [80162978 + A1] = h(0);
-    A1 = A1 + 0020;
-    A0 = A0 + 0004;
-    V1 = V1 + 0001;
-    V0 = V1 < 0064;
-800BC240	bne    v0, zero, loopbc218 [$800bc218]
+// init unit movements callback
+for( int i = 0; i < a; ++i )
+{
+    [80163b48 + i * 4] = w(0); // unit movements callback
+    [801620ac + i * 20 + 0] = h(0);
+    [801620ac + i * 20 + 2] = h(0);
+}
 
-V1 = 0;
-A2 = 801620ac;
-A1 = 0;
-A0 = 80163b48;
+// init effects callback
+for( int i = 0; i < 3c; ++i )
+{
+    [80163b84 + i * 4] = w(0);
+    [801621f0 + i * 20 + 0] = h(0);
+    [801621f0 + i * 20 + 2] = h(0);
+}
 
-loopbc260:	; 800BC260
-    [A0 + 0000] = w(0);
-    [A2 + 0002] = h(0);
-    A2 = A2 + 0020;
-    [801620ac + A1] = h(0);
-    A0 = A0 + 0004;
-    A1 = A1 + 0020;
-    V1 = V1 + 0001;
-    V0 = V1 < 000a;
-800BC288	bne    v0, zero, loopbc260 [$800bc260]
+funcbc2f0(); // init camera callbacks
+////////////////////////////////
 
-V1 = 0;
-A2 = 801621f0;
-A1 = 0;
-A0 = 80163b84;
 
-loopbc2a8:	; 800BC2A8
-    [A0 + 0000] = w(0);
-    [A2 + 0002] = h(0);
-    A2 = A2 + 0020;
-    [801621f0 + A1] = h(0);
-    A1 = A1 + 0020;
-    V1 = V1 + 0001;
-    A0 = A0 + 0004;
-    V0 = V1 < 003c;
-800BC2D0	bne    v0, zero, loopbc2a8 [$800bc2a8]
 
-800BC2D8	jal    funcbc2f0 [$800bc2f0]
+////////////////////////////////
+// funcc5bec()
 
+for( int i = 0; i < 40; ++i )
+{
+    [800f9da8 + i * 6 + 0] = h(-1);
+}
 ////////////////////////////////
 
 
@@ -1025,4 +971,35 @@ if( bu[80062d99] != 0 )
 [8009a004] = w(A0 & ffff);
 [8009a008] = w(A0 & ffff);
 system_execute_AKAO();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc04c()
+
+T0 = h[801590d4]; // id of effect to render
+
+for( int i = 0; i < 3c; ++i )
+{
+    if( ( w[80163b84 + i * 4] == 0 ) && ( i >= T0 ) )
+    {
+        [80163b84 + i * 4] = w(A0);
+        [801621f0 + i * 20 + 0] = h(T0);
+        [80163c78] = h(hu[80163c78] + 1);
+        return i;
+    }
+}
+
+system_bios_stop_pad();
+
+A0 = 1;
+system_psyq_reset_graph;
+
+func3d1b4; // disable dma, set default exit from exception
+
+A0 = 61;
+A1 = 4;
+system_bios_system_error_boot_or_disk_failure();
+return V0;
 ////////////////////////////////

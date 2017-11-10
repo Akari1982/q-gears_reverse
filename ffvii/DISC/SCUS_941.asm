@@ -28621,14 +28621,11 @@ T1 = 0070;
 // system_bios_set_mem_size
 800429D0-800429DC
 ////////////////////////////////
+// system_bios_system_error_boot_or_disk_failure
+800429E0-800429EC
+////////////////////////////////
 
 
-
-
-T2 = 00a0;
-800429E4	jr     t2 
-T1 = 00a1;
-800429EC	nop
 
 func429f0:	; 800429F0
 T2 = 00b0;

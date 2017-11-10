@@ -4790,7 +4790,7 @@ func3d1b4;
 
 A0 = 61;
 A1 = 1;
-func429e0;
+system_bios_system_error_boot_or_disk_failure();
 ////////////////////////////////
 
 
@@ -4856,42 +4856,6 @@ funcbc04c;
 [801621f0 + V0 * 20 + 0a] = h(w[SP + 14]); // end
 [801621f0 + V0 * 20 + 1a] = h(distance);
 [801621f0 + V0 * 20 + 1c] = w(bone_address);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbc04c
-T0 = h[801590d4];
-
-A2 = 0;
-loopbc070:	; 800BC070
-    V0 = w[80163b84 + A2 * 4];
-    if (V0 == 0 && A2 >= T0)
-    {
-        [80163b84 + A2 * 4] = w(A0);
-        [801621f0 + A2 * 20 + 0] = h(T0);
-        [80163c78] = h(hu[80163c78] + 1);
-
-        return A2;
-    }
-
-    A2 = A2 + 1;
-    V0 = A2 < 3c;
-800BC0E0	bne    v0, zero, loopbc070 [$800bc070]
-
-func3cebc;
-
-A0 = 1;
-system_psyq_reset_graph;
-
-func3d1b4;
-
-A0 = 61;
-A1 = 4;
-func429e0;
-
-return V0;
 ////////////////////////////////
 
 
@@ -5019,7 +4983,7 @@ loopbbfa0:	; 800BBFA0
 800BC028	jal    func3d1b4 [$8003d1b4]
 800BC02C	nop
 800BC030	ori    a0, zero, $0061
-800BC034	jal    func429e0 [$800429e0]
+800BC034	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
 800BC038	ori    a1, zero, $0002
 ////////////////////////////////
 

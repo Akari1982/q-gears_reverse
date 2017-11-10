@@ -1,50 +1,51 @@
 ////////////////////////////////
-// funcbb684
-V1 = bu[801590e0];
-V1 = h[80163798 + V1 * c + 8]; // camera movement id
-if (V1 != -4)
+// funcbc2f0()
+// init camera callback func data and id
+
+[800fa9bc] = h(0);
+
+for( int i = 0; i < 10; ++i )
 {
-    [800f8370] = h(V1);
-    [801590dc] = b(0);
-
-    [80151844 + 0 * e + 8] = b(ff);
-    [80151844 + 1 * e + 8] = b(ff);
-    [80151844 + 2 * e + 8] = b(ff);
-    [80151844 + 3 * e + 8] = b(ff);
-
-    [801518a4 + 0 * e + 8] = b(ff);
-    [801518a4 + 1 * e + 8] = b(ff);
-    [801518a4 + 2 * e + 8] = b(ff);
-    [801518a4 + 3 * e + 8] = b(ff);
-
-    funcbc2f0;
-
-    if (bu[800f837c] != 3)
-    {
-        V0 = bu[801516f4];
-        if ((V0 & 3) != 3)
-        {
-            [800f837c] = b(V0 & 3);
-        }
-    }
+    [800fa978 + i * 4] = w(0);
+    [800f7ed8 + i * 28 + 0] = h(0);
+    [800f7eda + i * 28 + 2] = h(0);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbc2f0
-[800fa9bc] = h(0);
+// funcbb684()
 
-A1 = 0;
-loopbc308:	; 800BC308
-    [800fa978 + A1 * 4] = w(0); // null pointer to some function
-    [800f7ed8 + A1 * 28] = h(0);
-    [800f7eda + A1 * 28] = h(0);
+V1 = bu[801590e0];
+V1 = h[80163798 + V1 * c + 8]; // camera movement id
+if( V1 != -4 )
+{
+    [800f8370] = h(V1); // set current camera
+    [801590dc] = b(0); // set call camera script
 
-    A1 = A1 + 1;
-    V0 = A1 < 10;
-800BC338	bne    v0, zero, loopbc308 [$800bc308]
+    // cam pos vector
+    [80151844 + 0 * e + 8] = b(ff);
+    [80151844 + 1 * e + 8] = b(ff);
+    [80151844 + 2 * e + 8] = b(ff);
+    [80151844 + 3 * e + 8] = b(ff);
+
+    // cam dir vector
+    [801518a4 + 0 * e + 8] = b(ff);
+    [801518a4 + 1 * e + 8] = b(ff);
+    [801518a4 + 2 * e + 8] = b(ff);
+    [801518a4 + 3 * e + 8] = b(ff);
+
+    funcbc2f0(); // reset camera callbacks
+
+    if( bu[800f837c] != 3 ) // not last cam pos and dir vector
+    {
+        if( ( bu[801516f4] & 3 ) != 3 )
+        {
+            [800f837c] = b(bu[801516f4] & 3);
+        }
+    }
+}
 ////////////////////////////////
 
 

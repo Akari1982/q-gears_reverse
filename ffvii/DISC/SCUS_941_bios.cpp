@@ -206,6 +206,19 @@ T1 = 9f;
 
 
 ////////////////////////////////
+// system_bios_system_error_boot_or_disk_failure()
+// A(A1h) - SystemErrorBootOrDiskFailure(type,errorcode) ;type "B"=Boot,"D"=Disk
+// These are used "SystemError" functions. The functions are repeatedly jumping to
+// themselves, causing the system to hang. Possibly useful for debugging software
+// which may hook that functions.
+T2 = 00a0;
+T1 = 00a1;
+800429E4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_open_event()
 // B(08h) - OpenEvent(class, spec, mode, func)
 // Adds an event structure to the event table.

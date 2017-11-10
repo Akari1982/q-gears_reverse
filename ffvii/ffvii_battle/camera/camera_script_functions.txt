@@ -419,5 +419,5 @@ A0 = 1;
 
 A0 = 61;
 A1 = 3;
-800BC1C8	jal    func429e0 [$800429e0]
+800BC1C8	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
 ////////////////////////////////

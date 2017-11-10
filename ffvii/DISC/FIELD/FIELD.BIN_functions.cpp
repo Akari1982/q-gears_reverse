@@ -193,7 +193,7 @@ V0 = bu[V0 + 0001];
 V0 = V0 < 0005;
 800BA6C4	beq    v0, zero, Lba6d4 [$800ba6d4]
 A0 = 004b;
-800BA6CC	jal    func429e0 [$800429e0]
+800BA6CC	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
 A1 = 000b;
 
 Lba6d4:	; 800BA6D4
@@ -205,7 +205,7 @@ V0 = bu[V0 + 0000];
 V0 = V0 < 0002;
 800BA6EC	beq    v0, zero, Lba6fc [$800ba6fc]
 A0 = 004b;
-800BA6F4	jal    func429e0 [$800429e0]
+800BA6F4	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
 A1 = 000a;
 
 Lba6fc:	; 800BA6FC
@@ -224,7 +224,7 @@ V0 = V0 < 0006;
 800BA72C	nop
 
 Lba730:	; 800BA730
-800BA730	jal    func429e0 [$800429e0]
+800BA730	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
 A1 = 000c;
 
 Lba738:	; 800BA738

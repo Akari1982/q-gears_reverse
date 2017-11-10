@@ -95,7 +95,7 @@ if( b[80163798 + A0 * c] != -1 )
             case 0:
             {
                 A0 = 800c494c;
-                800B6F8C	jal    funcbc04c [$800bc04c]
+                funcbc04c();
 
                 funcb7fdc;
                 [801590e0] = b(bu[801590e0] + 1);

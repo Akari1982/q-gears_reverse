@@ -311,8 +311,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +02 []       target hurt action id.
     +04 [][]     mp cost.
     +06 [][]     impact sound id.
-    +08 [][]     camera movement Id for single target.
-    +0a [][]     camera movement Id for multiple targets.
+    +08 [][]     camera movement id for single target.
+    +0a [][]     camera movement id for multiple targets.
     +0c []       target flags.
     +0d []       attack effect id.
     +0e []       formula.
@@ -433,7 +433,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f7ed0 [][][][] init with "A" string (0x21)
 800f7ed4 []       init with 0.
-800f7ed8 struct 0x28 size. 0x10 items. Camera related.
+
+800f7ed8 data for camera callbacks (0x10 items 0x28 size).
     // for function 800bfda0
     +00 [][]     store here value from 800f8360.
     +02 [][]     
@@ -682,8 +683,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800fa958 primary camera matrix (orthonormal). Multiplied with field matrix.
 
-800fa978 some array of 4bytes value. Store 800fa978 here if it == 0 during 0xe8 camera opcode (0x10 slots). Maybe camera function.
-800fa9bc [][]     increment by 1 every time we add element to 800fa978.
+800fa978 array of camera callbacks (0x10 items 0x4 size). Store 800fa978 here if it == 0 during 0xe8 camera opcode.
+800fa9bc [][]     index into 800fa978 and 800f7ed8.
 
 800fa9c0 []       store target id here during executing hurt effect.
 
@@ -854,7 +855,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80161de8 [][]     some target mask. Looks like dead targets.
 
-80162084 [][]     Projection plane distance for disp env. Init with 0x200.
+80161ef0 array of damage callbacks (0x64 items, 0x4 size).
+
+80162080 [][]     init with 0.
+80162084 [][]     projection plane distance for disp env. Init with 0x200.
 
 8016209c [][][][] store offset to first mesh sector in battle field here.
 
@@ -878,7 +882,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +19 []
     +1a []
 
-801621f0 effects callback data table. (0x20 size)
+801621f0 effects callback data table. (0x3c items 0x20 size)
+    // funcc4d10
+    +00 [][]     init with current rendered effect id.
     // 800d061c
     +04 [][]     frames to wait.
     +06 [][]     argument 2
@@ -933,7 +939,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80162974 []       init with 0.
 
-80162978 damage callbacks. (0x20 size)
+80162978 damage callbacks. (0x64 items 0x20 size)
     // 800ce7e0
     +04 [][]     frames to wait.
     +08 [][]     target id.
@@ -1098,11 +1104,15 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80163b44 [][]     state variable for battle field animation structure.
 80163b46 [][]     state variable for battle field animation structure. Init with 0x10.
 
-80163b48 array of callback functions for unit movement.
+80163b48 array of callback functions for unit movement (0xa items 0x4 size).
 
-80163b84 [][][][] array of 4 bytes elements (size 0x20). Looks like offsets to effects to play. Related to 801621f0 struct.
-    value: 800d7888 - mashinegun effect
+80163b7c [][]     init with 0.
 
+80163b84 [][][][] array of effects callbacks (0x3c items 0x20 size).
+                        funcc4d10 - ???
+                        800d7888 - mashinegun effect
+
+80163c78 [][]     number of inited element in 80163b84 and 801621f0.
 80163c7c []       init with 0.
 
 80163c80 array of default positions for units. (0x6 size)
