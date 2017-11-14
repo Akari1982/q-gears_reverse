@@ -646,19 +646,28 @@ return 3;
 
 
 ////////////////////////////////
+// func46910()
+
+[A0 + 0003] = b(8);
+[A0 + 0007] = b(38);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func44a68()
 
 S0 = A0;
 [S0 + 3] = b(2);
 S1 = A4;
 
-A0 = A1;
-A1 = A2;
-A2 = A3;
+A0 = A1; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
+A1 = A2; // dithering processing flag. 0: off; 1: on
+A2 = A3; // initial value of texture page
 func44d64(); // prepare tex page settings packet
 [S0 + 4] = w(V0);
 
-A0 = S1;
+A0 = S1; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
 func44fa0(); // prepare texture window rect packet
 [S0 + 8] = w(V0);
 ////////////////////////////////

@@ -27,9 +27,16 @@ funcb3e2c(); // init some callbacks and data
 
 funcbb684(); // init camera data
 
-A0 = 800c4d10; // funcc4d10()
+A0 = 800c4d10; // funcc4d10() battle fade in effect
 funcbc04c(); // add effect callback
 
+funcb7fdc();
+
+funcb7fdc();
+
+while( hu[80095dd4] != 0 )
+{
+}
 
 
 
@@ -39,13 +46,9 @@ funcbc04c(); // add effect callback
 
 
 
-800B3180	jal    funcb7fdc [$800b7fdc]
 
-800B3188	jal    funcb7fdc [$800b7fdc]
 
-loopb3190:	; 800B3190
-    V0 = hu[80095dd4];
-800B319C	bne    v0, zero, loopb3190 [$800b3190]
+
 
 800B31A4	jal    funcb37ec [$800b37ec]
 S1 = 0003;
