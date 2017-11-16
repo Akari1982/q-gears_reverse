@@ -1405,7 +1405,7 @@ A0 = V0 + scene_pack_id * 4; // sector
 A1 = 2000; // size
 A2 = 801c0000; // buffer
 A3 = 0; // callback
-func33e34(); // load needed scene pack from cd
+system_cdrom_start_load_file(); // load needed scene pack from cd
 
 A0 = callback;
 func145bc(); // load sync

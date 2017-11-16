@@ -333,7 +333,7 @@ A1 = w[80048d84 + 8 * 8 + 4]; // 1E0E0000
 A0 = w[80048d84 + 8 * 8 + 0]; // EA450000 "BATTLE/BATRES.X"
 A3 = 0;
 A2 = 801c0000;
-func33e34();
+system_cdrom_start_load_file();
 
 
 A0 = 800a3354;

@@ -4,7 +4,7 @@
 if( h[800965ec] == 2 )
 {
     loop11308:	; 80011308
-        func34b44();
+        system_cdrom_read_chain();
     80011310	bne    v0, zero, loop11308 [$80011308]
 
     A0 = 801c0000;
@@ -12,17 +12,17 @@ if( h[800965ec] == 2 )
 else
 {
     L11320:	; 80011320
-        func34b44();
+        system_cdrom_read_chain();
     80011328	bne    v0, zero, L11320 [$80011320]
 
     A0 = w[80048d2c]; // 360B0000 "WORLD\WORLD.BIN"
     A1 = w[80048d30]; // 9B040100
     A2 = 80180000;
     A3 = 0;
-    func33e34();
+    system_cdrom_start_load_file();
 
     loop11348:	; 80011348
-        func34b44();
+        system_cdrom_read_chain();
     80011350	bne    v0, zero, loop11348 [$80011348]
 
     A0 = 80180000;
@@ -101,7 +101,7 @@ A0 = w[80048d84 + file_id * 8 + 0]; // sector
 A1 = w[80048d84 + file_id * 8 + 4]; // size
 A2 = buffer;
 A3 = callback;
-func33e34();
+system_cdrom_start_load_file();
 ////////////////////////////////
 
 
@@ -171,7 +171,7 @@ loop146c4:	; 800146C4
 func = A0;
 
 loop145cc:	; 800145CC
-    func34b44();
+    system_cdrom_read_chain();
     if( V0 == 0 )
     {
         return;

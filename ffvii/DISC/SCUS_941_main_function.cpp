@@ -11,10 +11,10 @@ if( h[800965ec] != 5 )
             A1 = w[80048d28];
             A2 = 80180000;
             A3 = 0;
-            800118C8	jal    func33e34 [$80033e34]
+            system_cdrom_start_load_file();
 
             loop118d0:	; 800118D0
-                800118D0	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             800118D8	bne    v0, zero, loop118d0 [$800118d0]
 
             A0 = 80180000;
@@ -22,7 +22,7 @@ if( h[800965ec] != 5 )
         else
         {
             L118e8:	; 800118E8
-                800118E8	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             800118F0	bne    v0, zero, L118e8 [$800118e8]
 
             A0 = 801c0000;
@@ -124,12 +124,11 @@ loop33f6c:	; 80033F6C
     A1 = size;
     A2 = buffer;
     A3 = S3;
-    func33e34();
+    system_cdrom_start_load_file();
 80033F7C	bne    v0, zero, loop33f6c [$80033f6c]
 
 L33f84:	; 80033F84
-    func34b44(); // some callback chain
-
+    system_cdrom_read_chain();
     if( V0 == 0 )
     {
         return 0;
@@ -209,7 +208,7 @@ loop34f64:	; 80034F64
 // func34350()
 
 loop34358:	; 80034358
-    func34b44(); // some callback chain
+    system_cdrom_read_chain();
 80034360	bne    v0, zero, loop34358 [$80034358]
 
 loop34368:	; 80034368

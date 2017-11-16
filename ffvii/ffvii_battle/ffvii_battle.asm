@@ -7801,7 +7801,7 @@ A0 = w[A0 + 0000];
 A1 = w[V1 + 0004];
 800B390C	lui    a3, $800b
 A3 = A3 + 3a04;
-800B3914	jal    func33e74 [$80033e74]
+800B3914	jal    system_cdrom_start_load_lzs [$80033e74]
 800B3918	lui    a2, $801b
 800B391C	jal    funcb7fb4 [$800b7fb4]
 800B3920	nop
@@ -7849,7 +7849,7 @@ A0 = w[V1 + 0000];
 A1 = w[V0 + 0004];
 800B3B44	lui    a3, $800b
 A3 = A3 + 3b84;
-800B3B4C	jal    func33e74 [$80033e74]
+800B3B4C	jal    system_cdrom_start_load_lzs [$80033e74]
 800B3B50	lui    a2, $801b
 800B3B54	jal    funcb7fb4 [$800b7fb4]
 800B3B58	nop
@@ -7905,7 +7905,7 @@ A0 = w[V1 + 0000];
 A1 = w[V0 + 0004];
 800B3C10	lui    a3, $800b
 A3 = A3 + 3c50;
-800B3C18	jal    func33e74 [$80033e74]
+800B3C18	jal    system_cdrom_start_load_lzs [$80033e74]
 800B3C1C	lui    a2, $801b
 800B3C20	jal    funcb7fb4 [$800b7fb4]
 800B3C24	nop
@@ -7975,7 +7975,7 @@ A0 = w[A0 + 0000];
 A1 = w[V1 + 0004];
 800B3D10	lui    a3, $800b
 A3 = A3 + 3ab8;
-800B3D18	jal    func33e74 [$80033e74]
+800B3D18	jal    system_cdrom_start_load_lzs [$80033e74]
 800B3D1C	lui    a2, $801b
 800B3D20	jal    funcb7fb4 [$800b7fb4]
 800B3D24	nop
@@ -7998,7 +7998,7 @@ A1 = a800;
 A3 = A3 + 3cd0;
 800B3D60	lui    at, $8010
 [AT + 839c] = w(V0);
-800B3D68	jal    func33e74 [$80033e74]
+800B3D68	jal    system_cdrom_start_load_lzs [$80033e74]
 800B3D6C	lui    a2, $801b
 800B3D70	jal    funcb7fb4 [$800b7fb4]
 800B3D74	nop
@@ -11513,7 +11513,7 @@ A0 = 77e7;
 A1 = 1000;
 800BB824	lui    a3, $800c
 800BB828	addiu  a3, a3, $b89c (=-$4764)
-800BB82C	jal    func33e34 [$80033e34]
+800BB82C	jal    system_cdrom_start_load_file [$80033e34]
 800BB830	lui    a2, $801d
 800BB834	jal    funcb7fb4 [$800b7fb4]
 800BB838	nop
@@ -11540,7 +11540,7 @@ A0 = 77e6;
 A1 = 0800;
 800BB874	lui    a3, $800c
 800BB878	addiu  a3, a3, $b89c (=-$4764)
-800BB87C	jal    func33e34 [$80033e34]
+800BB87C	jal    system_cdrom_start_load_file [$80033e34]
 800BB880	lui    a2, $801d
 800BB884	jal    funcb7fb4 [$800b7fb4]
 800BB888	nop

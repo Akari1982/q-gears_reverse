@@ -1154,8 +1154,7 @@ A0 = A0 + V0;
 // if field background already loading
 if( h[800965e8] == 1 )
 {
-    800AB32C	jal    func34b44 [$80034b44]
-
+    system_cdrom_read_chain();
     if( V0 == 0 )
     {
         [800965e8] = h(2);
@@ -1176,7 +1175,7 @@ if( V1 == 14 )
     return;
 }
 
-800AB374	jal    func34b44 [$80034b44]
+system_cdrom_read_chain();
 
 V1 = V0;
 

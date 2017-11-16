@@ -365,7 +365,7 @@ if (bu[800f7df4] >= 3) // number of inited enemy
     A1 = w[800e8050 + V0 * 8 + 4];
     A2 = 801b0000;
     A3 = 800b3934;
-    func33e74;
+    system_cdrom_start_load_lzs();
 
     funcb7fb4;
 }
@@ -394,7 +394,7 @@ if (bu[800f7df4] >= 2) // number of inited enemy
     A1 = w[800e8050 + V0 * 8 + 4];
     A2 = 801b0000;
     A3 = 800b3968;
-    func33e74;
+    system_cdrom_start_load_lzs();
 
     funcb7fb4;
 }

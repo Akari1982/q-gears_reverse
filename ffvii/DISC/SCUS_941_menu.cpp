@@ -239,14 +239,15 @@ system_execute_AKAO;
 
 
 ////////////////////////////////
-// func211c4
+// func211c4();
+
 A0 = w[80048f60 + A0 * 8 + 0];
 A1 = w[80048f60 + A0 * 8 + 4];
 A2 = w[GP + a8];
 A3 = 0;
-800211EC	jal    func33e34 [$80033e34]
+system_cdrom_start_load_file();
 
-800211F4	jal    func34b44 [$80034b44]
+system_cdrom_read_chain();
 ////////////////////////////////
 
 
@@ -295,15 +296,16 @@ else if( A0 == 5 )
 
 ////////////////////////////////
 // func26090
+
 loop26098:	; 80026098
-    80026098	jal    func34b44 [$80034b44]
+    system_cdrom_read_chain();
 800260A0	bne    v0, zero, loop26098 [$80026098]
 
 A0 = 7;
 800260A8	jal    func211c4 [$800211c4]
 
 loop260b0:	; 800260B0
-    800260B0	jal    func34b44 [$80034b44]
+    system_cdrom_read_chain();
 800260B8	bne    v0, zero, loop260b0 [$800260b0]
 
 800260C0	jal    func1d11a8 [$801d11a8]
@@ -1327,7 +1329,7 @@ return (A0 / w[80049484]) * a + (A0 % w[80049484]) / w[80049488];
 ////////////////////////////////
 // func230c4
 800230CC	addu   s3, a0, zero
-800230E0	jal    func34b44 [$80034b44]
+system_cdrom_read_chain();
 
 800230E8	sll    a0, s3, $01
 800230EC	addu   a0, a0, s3

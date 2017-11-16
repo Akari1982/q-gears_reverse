@@ -100,9 +100,9 @@ if( w[80115a60] == 0 )
         A1 = w[800c74c4 + S0 * 8 + 4]; // size
         A2 = 8014a600; // buffer
         A3 = 800b6aec; // callback?
-        func33e74();
+        system_cdrom_start_load_lzs();
 
-        func34b44(); // finish load
+        system_cdrom_read_chain();
 
         [80115a60] = w(1);
     }

@@ -399,11 +399,11 @@ L11cf8:	; 80011CF8
             A1 = w[80048d78]; // 5A850000
             A2 = 80180000;
             A3 = 0;
-            func33e34();
+            system_cdrom_start_load_file();
 
 
             loop12524:	; 80012524
-                80012524	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             8001252C	bne    v0, zero, loop12524 [$80012524]
 
             A0 = 80180000;
@@ -424,10 +424,10 @@ L11cf8:	; 80011CF8
             A1 = w[80048d60]; // A98E0000
             A2 = 80180000;
             A3 = 0;
-            func33e34();
+            system_cdrom_start_load_file();
 
             loop12568:	; 80012568
-                80012568	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             80012570	bne    v0, zero, loop12568 [$80012568]
 
             A0 = 80180000;
@@ -448,10 +448,10 @@ L11cf8:	; 80011CF8
             A1 = w[80048d40]; // BB110100
             A2 = 80180000;
             A3 = 0;
-            func33e34();
+            system_cdrom_start_load_file();
 
             loop125ac:	; 800125AC
-                800125AC	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             800125B4	bne    v0, zero, loop125ac [$800125ac]
 
             A0 = 80180000;
@@ -472,10 +472,10 @@ L11cf8:	; 80011CF8
             A1 = w[80048d38]; // B09A0000
             A2 = 80180000;
             A3 = 0;
-            func33e34();
+            system_cdrom_start_load_file();
 
             loop12634:	; 80012634
-                80012634	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             8001263C	bne    v0, zero, loop12634 [$80012634]
 
             A0 = 80180000;
@@ -496,10 +496,10 @@ L11cf8:	; 80011CF8
             A1 = w[80048d70]; // 6D7A0000
             A2 = 80180000;
             A3 = 0;
-            func33e34();
+            system_cdrom_start_load_file();
 
             loop126d8:	; 800126D8
-                800126D8	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             800126E0	bne    v0, zero, loop126d8 [$800126d8]
 
             A0 = 80180000;
@@ -527,10 +527,10 @@ L11cf8:	; 80011CF8
             A1 = w[80048d68]; // F3360000
             A2 = 80180000;
             A3 = 0;
-            func33e34();
+            system_cdrom_start_load_file();
 
             loop12678:	; 80012678
-                80012678	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             80012680	bne    v0, zero, loop12678 [$80012678]
 
             A0 = 80180000;
@@ -653,10 +653,10 @@ L11cf8:	; 80011CF8
             A1 = w[80048d48]; // 213E0100
             A2 = 80180000;
             A3 = 0;
-            func33e34()
+            system_cdrom_start_load_file()
 
             loop125f0:	; 800125F0
-                800125F0	jal    func34b44 [$80034b44]
+                system_cdrom_read_chain();
             800125F8	bne    v0, zero, loop125f0 [$800125f0]
 
             A0 = 80180000;

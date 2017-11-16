@@ -40,7 +40,7 @@ else
 {
     if( w[GP + b4] != 1 )
     {
-        func34b44;
+        system_cdrom_read_chain();
         if( V0 == 0 )
         {
             func1c5bc; // rerurn pressed button

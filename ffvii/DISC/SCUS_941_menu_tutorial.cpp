@@ -189,7 +189,7 @@ else if( V1 == 2 )
 
     if( w[GP + 9c] < 14 )
     {
-        8001F8E0	jal    func34b44 [$80034b44]
+        system_cdrom_read_chain();
 
         if( V0 == 0 )
         {

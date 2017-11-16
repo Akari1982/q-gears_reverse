@@ -4236,7 +4236,7 @@ ECA70C80 67
                     A1 = w[800eea48 + V0 * 8 + 4];
                     A2 = 801b0000;
                     A3 = 0;
-                    func33e74;
+                    system_cdrom_start_load_lzs();
                 }
                 else
                 {
@@ -4249,7 +4249,7 @@ ECA70C80 67
                     // we load something here
                     A2 = 801b0000;
                     A3 = 0;
-                    func33e74;
+                    system_cdrom_start_load_lzs();
                 }
 
                 800CCA6C	j      Lcd208 [$800cd208]
@@ -5183,10 +5183,11 @@ return;
 
 
 ////////////////////////////////
-// funcd088c
+// funcd088c()
+
 A2 = 801b0000;
 A3 = 0;
-func33e34;
+system_cdrom_start_load_file();
 
 funcb7fb4;
 ////////////////////////////////

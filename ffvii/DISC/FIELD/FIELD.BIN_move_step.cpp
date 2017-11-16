@@ -1383,7 +1383,7 @@ else
 
 A2 = 801b0000;
 A3 = 0;
-func33e34(); // set data to load in background
+system_cdrom_start_load_file(); // set data to load in background
 
 [800965e8] = h(1); // field background already loading
 ////////////////////////////////

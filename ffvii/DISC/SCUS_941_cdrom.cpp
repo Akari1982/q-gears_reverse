@@ -28,93 +28,6 @@ return 0;
 
 
 ////////////////////////////////
-// func33e74()
-
-sector = A0;
-size = A1;
-buffer = A2;
-callback = A3;
-
-A0 = b;
-A1 = sector;
-A2 = size;
-A3 = buffer;
-A4 = callback;
-func33cb8();
-
-[800698e8] = w(sector);
-
-A0 = 800698f0
-A1 = buffer;
-80033EB8	jal    func34d2c [$80034d2c]
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func33e34()
-
-sector = A0;
-size = A1;
-buffer = A2;
-callback = A4;
-
-A0 = 3;
-A1 = sector;
-A2 = size;
-A3 = buffer;
-A4 = callback;
-func33cb8();
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func33cb8()
-
-start_chain_type = A0;
-sector = A1;
-size = A2;
-buffer = A3;
-callback = A4;
-
-loop33cf4:	; 80033CF4
-    func34b44(); // some callback chain
-    S0 = V0;
-
-    if( S0 >= 0008 )
-    {
-        if( S0 < b )
-        {
-            80033D24	jal    func35658 [$80035658]
-        }
-        else if( S0 == 12 )
-        {
-            A0 = 9;
-            A1 = 0;
-            A2 = 0;
-            80033D38	jal    func3de9c [$8003de9c]
-        }
-    }
-80033D40	bne    s0, zero, loop33cf4 [$80033cf4]
-
-A0 = sector;
-A1 = 80071a68;
-80033D50	jal    func3e2d0 [$8003e2d0]
-
-[80071a6c] = w((size + 07ff) >> 0b);
-[80071a80] = w(buffer);
-[80071a84] = w(callback);
-[80071a60] = w(start_chain_type);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_psyq_cd_read_sync()
 // Check completion of CdRead() and related functions.
 // Checks the current status of a data read operation initiated by CdRead(), CdReadFile(), and related
@@ -412,20 +325,12 @@ A1 = 0;
 A3 = 0;
 800353BC	jal    func40a40 [$80040a40]
 [SP + 0010] = w(0);
-800353C4	lui    at, $800a
-800353C8	addiu  at, at, $a1f4 (=-$5e0c)
-AT = AT + S0;
-A0 = w[AT + 0000];
-800353D4	lui    at, $800a
-800353D8	addiu  at, at, $a1f8 (=-$5e08)
-AT = AT + S0;
-A1 = w[AT + 0000];
-800353E4	lui    a2, $8007
-A2 = w[A2 + e0fc];
-800353EC	lui    a3, $8003
-A3 = A3 + 5d64;
-800353F4	jal    func33e34 [$80033e34]
-800353F8	nop
+A0 = w[8009a1f4 + S0];
+A1 = w[8009a1f8 + S0];
+A2 = w[8006e0fc];
+A3 = 80035d64;
+system_cdrom_start_load_file();
+
 V0 = 0001;
 80035400	lui    at, $8009
 [AT + 65e4] = w(V0);
@@ -795,37 +700,64 @@ return 0;
 
 
 ////////////////////////////////
-// func345bc()
+// func3de9c()
 
-A0 = 2;
-A1 = 80071a68; // stored params
-func3dfd4();
+cdl_command = A0;
+param_ptr = A1;
+return_ptr = A2;
 
-[80071a60] = w(4);
-[8006e0f4] = w(0);
-[800698ec] = w(0);
-////////////////////////////////
+S5 = w[80051628];
 
+for( int i = 3; i != -1 ; --i )
+{
+    [80051628] = w(0);
 
+    if( cdl_command != 1 )
+    {
+        if( bu[80051638] & 10 )
+        {
+            A0 = 1; // Getstat
+            A1 = 0;
+            A2 = 0;
+            A3 = 0;
+            func3ef30(); // exec command
+        }
+    }
 
-////////////////////////////////
-// func34420()
+    if( param_ptr != 0 )
+    {
+        if( w[800515a8 + cdl_command * 4] != 0 )
+        {
+            A0 = 2; // CdlSetloc Set the seek target position.
+            A1 = param_ptr;
+            A2 = return_ptr;
+            A3 = 0;
+            func3ef30(); // exec command
 
-return;
-////////////////////////////////
+            if( V0 != 0 )
+            {
+                continue;
+            }
+        }
+    }
 
+    [80051628] = w(S5);
 
+    A0 = cdl_command;
+    A1 = param_ptr;
+    A2 = return_ptr;
+    A3 = 0;
+    func3ef30(); // exec command
 
-////////////////////////////////
-// func3447c()
+    if( V0 == 0 )
+    {
+        return 1;
+    }
+}
 
-A0 = 2; // CdlSetloc Set the seek target position.
-A1 = 80071a68; // stored params
-func3dfd4();
+[80051628] = w(S5);
 
-[80071a60] = w(2);
-[8006e0f4] = w(0);
-[800698ec] = w(0);
+return 0;
 ////////////////////////////////
 
 
@@ -1992,362 +1924,69 @@ return S1;
 
 
 ////////////////////////////////
-// func344c0()
-
-A0 = 1; // poll once
-A1 = 0;
-system_psyq_cd_sync();
-
-if( V0 == 2 ) // CdlComplete
-{
-    [80071a60] = w(11);
-}
-else if( V0 == 5 ) // CdlDiskError
-{
-    V0 = w[800698ec] + 1;
-    [800698ec] = w(V0);
-    if( V0 >= 10 )
-    {
-        [800698ec] = w(0);
-
-        8003452C	jal    func34104 [$80034104]
-
-        loop34534:	; 80034534
-            A0 = 3;
-            80034534	jal    func34cac [$80034cac]
-
-            8003453C	jal    func34150 [$80034150]
-        80034544	bne    v0, zero, loop34534 [$80034534]
-    }
-
-    [80071a60] = w(1);
-}
-else
-{
-    A0 = -1;
-    8003455C	jal    func3cedc [$8003cedc]
-
-    if( w[8006e0f0] != V0 )
-    {
-        [8006e0f0] = w(V0);
-
-        V0 = w[8006e0f4] + 1;
-        [8006e0f4] = w(V0);
-        if( V0 == e10 )
-        {
-            [80071a60] = w(1);
-            A0 = 3;
-            800345A4	jal    func34cac [$80034cac]
-        }
-    }
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func34600()
-
-A0 = 1;
-A1 = 0;
-system_psyq_cd_sync()
-V1 = V0;
-
-if( V1 == 2 )
-{
-    [80071a60] = w(5);
-}
-else if( V1 == 5 )
-{
-    V0 = w[800698ec] + 1;
-    [800698ec] = w(V0);
-    if( V0 >= 10 )
-    {
-        [800698ec] = w(0);
-
-        80034668	jal    func34104 [$80034104]
-
-        loop34670:	; 80034670
-            A0 = 3;
-            80034670	jal    func34cac [$80034cac]
-
-            80034678	jal    func34150 [$80034150]
-        80034680	bne    v0, zero, loop34670 [$80034670]
-    }
-    [80071a60] = w(3);
-}
-else
-{
-    A0 = -1;
-    80034698	jal    func3cedc [$8003cedc]
-
-    if( w[8006e0f0] != V0 )
-    {
-        [8006e0f0] = w(V0);
-
-        V0 = w[8006e0f4] + 1;
-        [8006e0f4] = w(V0);
-        if( V0 == e10 )
-        {
-            [80071a60] = w(3);
-            A0 = 3;
-            800346E0	jal    func34cac [$80034cac]
-        }
-    }
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func34430()
-
-[80071a60] = w(10);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func34444()
-
-[80071a60] = w(0);
-
-if( w[80071a84] != 0 )
-{
-    80034464	jalr   w[80071a84] ra
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func346f8()
-
-A0 = w[80071a6c]; // sector
-A1 = w[80071a80]; // buffer
-A2 = 80; // mode
-system_psyq_cd_read();
-
-if( V0 == 0 ) // fail
-{
-    [80071a60] = w(3);
-    A0 = 10;
-    8003472C	jal    func34cac [$80034cac]
-}
-else // success
-{
-    [80071a60] = w(6);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func34754()
-
-A0 = 1; // return current status
-A1 = 0;
-system_psyq_cd_read_sync();
-
-if( V0 == -1 ) // error
-{
-    [80071a60] = w(3);
-    A0 = 0003;
-    8003479C	jal    func34cac [$80034cac]
-}
-else if( V0 == 0 ) // finish read
-{
-    [80071a60] = w(11);
-}
-////////////////////////////////
-
-
-
-
-////////////////////////////////
-// func347b4()
-
-A0 = 2;
-A1 = 80071a68;
-func3dfd4();
-
-[80071a60] = w(c);
-[8006e0f4] = w(0);
-[800698ec] = w(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func347f8()
-
-A0 = 1;
-A1 = 0;
-system_psyq_cd_sync();
-
-if( V0 == 2 )
-{
-    [80071a60] = w(d);
-}
-else if( V0 == 5 )
-{
-    V0 = w[800698ec] + 1;
-    [800698ec] = w(V0);
-    if( V0 >= 10 )
-    {
-        [800698ec] = w(0);
-
-        80034668	jal    func34104 [$80034104]
-
-        loop34670:	; 80034670
-            A0 = 3;
-            80034670	jal    func34cac [$80034cac]
-
-            80034678	jal    func34150 [$80034150]
-        80034680	bne    v0, zero, loop34670 [$80034670]
-    }
-    [80071a60] = w(b);
-}
-else
-{
-    A0 = -1;
-    80034698	jal    func3cedc [$8003cedc]
-
-    if( w[8006e0f0] != V0 )
-    {
-        [8006e0f0] = w(V0);
-
-        V0 = w[8006e0f4] + 1;
-        [8006e0f4] = w(V0);
-        if( V0 == e10 )
-        {
-            [80071a60] = w(b);
-            A0 = 3;
-            800346E0	jal    func34cac [$80034cac]
-        }
-    }
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func348f4()
-
-[8006e0f8] = w(w[80071a6c]); // sector
-
-if( w[80071a6c] >= 9 )
-{
-    [8006e0f8] = w(9);
-}
-
-A0 = w[8006e0f8];
-A1 = 800698f0;
-A2 = 80;
-system_psyq_cd_read();
-
-if( V0 == 0 )
-{
-    [80071a60] = w(b);
-    A0 = 3;
-    8003494C	jal    func34cac [$80034cac]
-}
-else
-{
-    [80071a60] = w(e);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func34974()
-
-A0 = 1;
-A1 = 0;
-system_psyq_cd_read_sync();
-
-V1 = V0;
-80034994	addiu  v0, zero, $ffff (=-$1)
-80034998	beq    v1, v0, L34a14 [$80034a14]
-8003499C	nop
-800349A0	bne    v1, zero, L34a40 [$80034a40]
-800349A4	nop
-800349A8	lui    v0, $8007
-800349AC	addiu  v0, v0, $98f0 (=-$6710)
-800349B0	lui    s1, $8007
-800349B4	addiu  s1, s1, $98e8 (=-$6718)
-800349B8	lui    s0, $8007
-S0 = S0 + 1a60;
-800349C0	lui    at, $8003
-[AT + 4cf0] = w(V0);
-800349C8	lui    v0, $8007
-V0 = w[V0 + 1a6c];
-V1 = w[S1 + 0000];
-800349D4	addiu  v0, v0, $fff7 (=-$9)
-V1 = V1 + 0009;
-800349DC	lui    at, $8007
-[AT + 1a6c] = w(V0);
-800349E4	jal    func34d5c [$80034d5c]
-[S1 + 0000] = w(V1);
-800349EC	bne    v0, zero, L349fc [$800349fc]
-V0 = 0011;
-800349F4	j      L34a40 [$80034a40]
-[S0 + 0000] = w(V0);
-
-L349fc:	; 800349FC
-A0 = w[S1 + 0000];
-80034A00	jal    func3e2d0 [$8003e2d0]
-A1 = S0 + 0008;
-V0 = 000b;
-80034A0C	j      L34a40 [$80034a40]
-[S0 + 0000] = w(V0);
-
-L34a14:	; 80034A14
-A0 = w[800698e8];
-A1 = 80071a68;
-80034A24	jal    func3e2d0 [$8003e2d0]
-
-[80071a60] = w(b);
-80034A38	jal    func34cac [$80034cac]
-A0 = 0003;
-
-L34a40:	; 80034A40
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func34b44()
-
-// infinite loop
-if( w[80071a60] >= 15 )
-{
-    L34b60:	; 80034B60
-    80034B60	j      L34b60 [$80034b60]
-}
-
-V0 = w[80071a60];
-V0 = w[8004a634 + V0 * 4];
-
-// 28440380 7 44570380 8  30540380 9
-// 584A0380 13 904A0380 14
-
-// 0 a f 12 - func34420()
-// 1  func3447c() set cd loc and set status to 2
-// 2  func344c0() check prev command in success then 11, if not retry with 1
-// 3  func345bc() set cd loc and set status to 4
-// 4  func34600() check prev command in success then 5, if not retry with 3
-// 5  func346f8() set cd read and set to 6 if success, if not retry with 3
-// 6  func34754() check if read finished and set to 11 or wait in this status. If error retry with 3.
-// b  func347b4() set cd loc and set status to c
-// c  func347f8() check prev command in success then d, if not retry with b
-// d  func348f4() set cd read from first 9 sectors to 800698f0 and set to e if success, if not retry with b
-// e  func34974()
-// 10 func34444() set to 0 and call calback from 80071a84 if exist
-// 11 func34430() set to 10
-
-80034B90	jalr   v0 ra
-
-V0 = w[80071a60];
+// system_psyq_cd_int_to_pos()
+// Calculate value for minute/second/sector from absolute sector number.
+
+V1 = 1b4e81b5;
+A0 = A0 + 96;
+8003E2DC	mult   a0, v1
+V0 = A1;
+A3 = 66666667;
+V1 = A0 >> 1f;
+8003E2F0	mfhi   a2
+A2 = A2 >> 03;
+A2 = A2 - V1;
+A1 = A2 << 02;
+A1 = A1 + A2;
+V1 = A1 << 04;
+V1 = V1 - A1;
+A0 = A0 - V1;
+8003E310	mult   a0, a3
+8003E314	mfhi   t0
+V1 = 88888889;
+8003E320	mult   a2, v1
+V1 = A2 >> 1f;
+8003E328	mfhi   t1
+T1 = T1 + A2;
+T1 = T1 >> 05;
+T1 = T1 - V1;
+V1 = T1 << 04;
+V1 = V1 - T1;
+V1 = V1 << 02;
+A2 = A2 - V1;
+8003E348	mult   a2, a3
+T0 = T0 >> 02;
+V1 = A0 >> 1f;
+T0 = T0 - V1;
+V1 = T0 << 02;
+V1 = V1 + T0;
+V1 = V1 << 01;
+8003E364	mfhi   a1
+A0 = A0 - V1;
+V1 = A2 >> 1f;
+8003E370	mult   t1, a3
+A3 = T0 << 04;
+A3 = A3 + A0;
+A1 = A1 >> 02;
+A1 = A1 - V1;
+A0 = A1 << 04;
+V1 = A1 << 02;
+V1 = V1 + A1;
+V1 = V1 << 01;
+A2 = A2 - V1;
+A0 = A0 + A2;
+[V0 + 1] = b(A0);
+A0 = T1 >> 1f;
+[V0 + 2] = b(A3);
+8003E3A8	mfhi   v1
+V1 = V1 >> 02;
+V1 = V1 - A0;
+A1 = V1 << 04;
+A0 = V1 << 02;
+A0 = A0 + V1;
+A0 = A0 << 01;
+T1 = T1 - A0;
+A1 = A1 + T1;
+[V0 + 0] = b(A1);
+return V0;
 ////////////////////////////////

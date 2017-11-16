@@ -185,13 +185,13 @@ if (h[800965e8] == 0) // if background start load earlier
     load_lzs_file;
 
     loopa13b8:	; 800A13B8
-        800A13B8	jal    func34b44 [$80034b44]
+        800A13B8	jal    system_cdrom_read_chain [$80034b44]
     800A13C0	bne    v0, zero, loopa13b8 [$800a13b8]
 }
 else
 {
     La13d0:	; 800A13D0
-        800A13D0	jal    func34b44 [$80034b44]
+        800A13D0	jal    system_cdrom_read_chain [$80034b44]
     800A13D8	bne    v0, zero, La13d0 [$800a13d0]
 
     A0 = 801b0000;
@@ -209,7 +209,7 @@ load_lzs_file;
 
 
 loopa1428:	; 800A1428
-    800A1428	jal    func34b44 [$80034b44]
+    800A1428	jal    system_cdrom_read_chain [$80034b44]
 800A1430	bne    v0, zero, loopa1428 [$800a1428]
 
 V0 = w[8009ad28];

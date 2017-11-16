@@ -21,7 +21,7 @@ A3 = 0;
 load_lzs_file;
 
 loopaa9b4:	; 800AA9B4
-    func34b44 [$80034b44]
+    system_cdrom_read_chain();
 800AA9BC	bne    v0, zero, loopaa9b4 [$800aa9b4]
 
 
@@ -229,7 +229,7 @@ if( S6 != 0 )
     load_lzs_file;
 
     loopadd34:	; 800ADD34
-        func34b44;
+        system_cdrom_read_chain;
     800ADD3C	bne    v0, zero, loopadd34 [$800add34]
 }
 
@@ -330,7 +330,7 @@ if (bu[block_7_array + S2 * 8 + 5] != 0) // read is model enabled
             load_lzs_file;
 
             loopade94:	; 800ADE94
-                func34b44;
+                system_cdrom_read_chain;
             800ADE9C	bne    v0, zero, loopade94 [$800ade94]
 
 
@@ -579,7 +579,7 @@ if( bu[A2] != 0 )
     load_lzs_file;
 
     Lac3bc:	; 800AC3BC
-        func34b44;
+        system_cdrom_read_chain;
 
         800AC3C4	beq    v0, zero, Lac484 [$800ac484]
     800AC3CC	j      Lac3bc [$800ac3bc]

@@ -182,7 +182,7 @@ else if (V0 == 6) // reflection
 800B8E0C	addiu  at, at, $8c94 (=-$736c)
 800B8E10	addu   at, at, v0
 800B8E14	lw     a1, $0000(at)
-800B8E18	jal    func33e74 [$80033e74]
+800B8E18	jal    system_cdrom_start_load_lzs [$80033e74]
 800B8E1C	addu   a3, zero, zero
 800B8E20	jal    funcb7fb4 [$800b7fb4]
 800B8E24	nop
