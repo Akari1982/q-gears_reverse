@@ -27,6 +27,7 @@
 +08 [][][][] 80045a24 function. Called when copy data from palette to ram and back.
 +1c [][][][] 80045654 function. Passed as parameter when copy palette to ram.
 +20 [][][][] 80045400 function. Passed as parameter when copy palette from ram.
++2c [][][][]
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
 80062d44 GP

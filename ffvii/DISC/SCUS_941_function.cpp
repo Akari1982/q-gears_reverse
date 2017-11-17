@@ -1,4 +1,99 @@
 ﻿////////////////////////////////
+// func3cedc()
+// wait few times
+
+V0 = w[8005049c];
+V1 = w[800504a0];
+S0 = w[V0];
+S1 = (w[V1] - w[800504a4]) & ffff;
+
+if( A0 < 0 )
+{
+    return w[80051568];
+}
+
+if( A0 == 1 )
+{
+    return S1;
+}
+
+if( A0 > 0 )
+{
+    V0 = w[800504a8] - 1 + A0;
+}
+else
+{
+    V0 = w[800504a8];
+}
+
+A1 = 0;
+if( A0 > 0 )
+{
+    A1 = A0 - 1;
+}
+
+A0 = V0;
+func3d024(); // wait A1
+
+V0 = w[8005049c];
+S0 = w[V0];
+
+A0 = w[80051568] + 1;
+A1 = 1;
+func3d024(); // wait A1
+
+if( S0 & 00080000 )
+{
+    V1 = w[8005049c];
+    if( ( S0 ^ w[V1] ) > 0 )
+    {
+        loop3cfcc:	; 8003CFCC
+            V0 = (S0 ^ w[V1]) & 80000000;
+        8003CFDC	beq    v0, zero, loop3cfcc [$8003cfcc]
+    }
+}
+
+[800504a8] = w(w[80051568]);
+V1 = w[800504a0];
+[800504a4] = w(w[V1]);
+
+return S1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d024()
+
+A1 = A1 << 0f;
+wait = A1;
+if( w[80051568] < A0 )
+{
+    loop3d04c:	; 8003D04C
+        wait = wait - 1;
+        if( wait == -1 )
+        {
+            A0 = 800105a8; // "VSync: timeout"
+            system_bios_std_out_puts();
+
+            A0 = 0;
+            system_bios_change_clear_pad();
+
+            A0 = 3;
+            A1 = 0;
+            system_bios_change_clear_r_cnt();
+
+            return;
+        }
+
+        V0 = w[80051568] < A0;
+    8003D0A8	bne    v0, zero, loop3d04c [$8003d04c]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func1c3cc()
 
 dst = A0;

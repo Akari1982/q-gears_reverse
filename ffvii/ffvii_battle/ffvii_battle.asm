@@ -9558,33 +9558,6 @@ A2 = A2 + 0010;
 800B835C	nop
 
 
-funcb8360:	; 800B8360
-800B8360	addiu  sp, sp, $ffe0 (=-$20)
-A1 = 0001;
-A3 = A0 & 0003;
-A2 = 0001;
-800B8370	lui    v0, $8016
-V0 = w[V0 + 3c74];
-A3 = A3 << 05;
-[SP + 0018] = w(RA);
-[SP + 0010] = w(0);
-800B8384	jal    func44a68 [$80044a68]
-A0 = V0;
-800B838C	lui    a0, $8015
-A0 = w[A0 + 17c0];
-800B8394	lui    a1, $8016
-A1 = w[A1 + 3c74];
-800B839C	nop
-V0 = A1 + 000c;
-800B83A4	lui    at, $8016
-[AT + 3c74] = w(V0);
-800B83AC	jal    system_add_render_packet_to_queue [$80046794]
-A0 = A0 + 4078;
-RA = w[SP + 0018];
-SP = SP + 0020;
-800B83BC	jr     ra 
-800B83C0	nop
-
 
 funcb83c4:	; 800B83C4
 800B83C4	addiu  sp, sp, $ffe8 (=-$18)

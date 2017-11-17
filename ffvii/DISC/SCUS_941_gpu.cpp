@@ -201,7 +201,7 @@ if( bu[80062c02] >= 2 )
     V0 = w[80062bfc];
     A0 = 80010df0; // "ClearOTag(%08x,%d)..."
     A1 = S0;
-    A2 = S1;
+    A2 = number_of_entries;
     800441C8	jalr   v0 ra
 }
 
@@ -235,7 +235,7 @@ return S0;
 head = A0; // head pointer of OT
 number = A1; // number of entries in OT
 
-if( bu[80062c02] >= 0002 )
+if( bu[80062c02] >= 2 )
 {
     A0 = 80010e08; // "ClearOTagR(%08x,%d)..."
     A1 = head;
@@ -243,12 +243,156 @@ if( bu[80062c02] >= 0002 )
     80044284	jalr   w[80062bfc] ra
 }
 
-V0 = w[80062bf8];
+V0 = w[80062bf8]; // 80062bb8
 A0 = head;
 A1 = number;
-800442A0	jalr   w[V0 + 2c] ra
+800442A0	jalr   w[V0 + 2c] ra // func450f8
 
 [head] = w(80062cbc & 00ffffff);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func450f8()
+
+head = A0;
+number = A1;
+
+dma_control = w[80062cf0]; // 1f8010f0
+dma6_channel_control = w[80062cec]; // 1f8010e8
+dma6_block_control = w[80062ce8]; // 1f8010e4
+dma6_base_address = w[80062ce4]; // 1f8010e0
+
+[dma_control] = w(w[dma_control] | 08000000);
+
+[dma6_channel_control] = w(00000000);
+[dma6_base_address] = w(head + (number * 4) - 4);
+[dma6_block_control] = w(number);
+[dma6_channel_control] = w(11000002);
+
+func462b0(); // wait
+
+if( w[dma6_channel_control] & 01000000 )
+{
+    loop45198:	; 80045198
+        V0 = number;
+        80045198	jal    func462e4 [$800462e4]
+
+        if( V0 != 0 )
+        {
+            return -1;
+        }
+
+        V0 = w[dma6_channel_control] & 01000000;
+    800451C0	bne    v0, zero, loop45198 [$80045198]
+}
+
+return number;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func462b0()
+
+A0 = -1;
+func3cedc(); // wait
+
+[80062d18] = w(V0 + f0);
+[80062d1c] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func462e4()
+
+A0 = -1;
+func3cedc(); // wait
+
+V1 = w[80062d18];
+80046300	slt    v1, v1, v0
+80046304	bne    v1, zero, L46334 [$80046334]
+
+V1 = w[80062d1c];
+V0 = V1 + 0001;
+[80062d1c] = w(V0);
+80046324	lui    v0, $000f
+80046328	slt    v0, v0, v1
+8004632C	beq    v0, zero, L4643c [$8004643c]
+80046330	nop
+
+L46334:	; 80046334
+V1 = w[80062cd4];
+A0 = 80010e64; // "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x,"
+V0 = w[V1 + 0000];
+80046348	lui    a1, $8006
+A1 = w[A1 + 2d04];
+80046350	lui    v0, $8006
+V0 = w[V0 + 2cd8];
+80046358	lui    t0, $8006
+T0 = w[T0 + 2d08];
+V0 = w[V0 + 0000];
+A1 = A1 - T0;
+[SP + 0010] = w(V0);
+8004636C	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+A2 = w[V1 + 0000];
+A3 = w[V0 + 0000];
+A1 = A1 & 003f;
+system_bios_printf();
+
+80046384	lui    v0, $8006
+V0 = V0 + 2cf4;
+A1 = w[V0 + 0000];
+80046390	lui    a2, $8006
+A2 = w[A2 + 2cf8];
+80046398	lui    a3, $8006
+A3 = w[A3 + 2cfc];
+A0 = 80010e98; // "func=(%08x)(%08x,%08x)"
+system_bios_printf();
+
+800463B0	jal    func3d23c [$8003d23c]
+A0 = 0;
+800463B8	lui    at, $8006
+[AT + 2d08] = w(0);
+800463C0	lui    v1, $8006
+V1 = w[V1 + 2d08];
+800463C8	lui    at, $8006
+[AT + 2d14] = w(V0);
+800463D0	lui    at, $8006
+[AT + 2d04] = w(V1);
+800463D8	lui    v1, $8006
+V1 = w[V1 + 2ce0];
+V0 = 0401;
+[V1 + 0000] = w(V0);
+800463E8	lui    v1, $8006
+V1 = w[V1 + 2cf0];
+800463F0	nop
+V0 = w[V1 + 0000];
+800463F8	nop
+V0 = V0 | 0800;
+[V1 + 0000] = w(V0);
+80046404	lui    v1, $8006
+V1 = w[V1 + 2cd4];
+8004640C	lui    v0, $0200
+[V1 + 0000] = w(V0);
+80046414	lui    v1, $8006
+V1 = w[V1 + 2cd4];
+8004641C	lui    v0, $0100
+[V1 + 0000] = w(V0);
+80046424	lui    a0, $8006
+A0 = w[A0 + 2d14];
+8004642C	jal    func3d23c [$8003d23c]
+80046430	nop
+80046434	j      L46440 [$80046440]
+80046438	addiu  v0, zero, $ffff (=-$1)
+
+L4643c:	; 8004643C
+V0 = 0;
+
+L46440:	; 80046440
 ////////////////////////////////
 
 
@@ -879,7 +1023,8 @@ V0 = V0 & ffff
 
 
 ////////////////////////////////
-// system_add_render_packet_to_queue
+// system_add_render_packet_to_queue()
+
 [A1] = w((w[A1] & ff000000) | (w[A0] & 00ffffff));
 [A0] = w((w[A0] & ff000000) | (A1 & 00ffffff));
 ////////////////////////////////

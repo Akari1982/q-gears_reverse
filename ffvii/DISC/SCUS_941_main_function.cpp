@@ -247,37 +247,6 @@ return bu[800698f7] - 30;
 
 
 ////////////////////////////////
-// func3d024()
-
-A1 = A1 << 0f;
-wait = A1;
-if( w[80051568] < A0 )
-{
-    loop3d04c:	; 8003D04C
-        wait = wait - 1;
-        if( wait == -1 )
-        {
-            A0 = 800105a8; // "VSync: timeout"
-            system_bios_std_out_puts();
-
-            A0 = 0;
-            system_bios_change_clear_pad();
-
-            A0 = 3;
-            A1 = 0;
-            system_bios_change_clear_r_cnt();
-
-            return;
-        }
-
-        V0 = w[80051568] < A0;
-    8003D0A8	bne    v0, zero, loop3d04c [$8003d04c]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func34f3c()
 
 A0 = 0;

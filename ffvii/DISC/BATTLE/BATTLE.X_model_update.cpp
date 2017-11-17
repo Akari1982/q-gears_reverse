@@ -31,17 +31,15 @@ A0 = w[801517c0] + 40ec;
 A1 = 2;
 system_psyq_clear_o_tag();
 
-
-V0 = w[800f8368];
-V1 = V1 | 4000;
-800B8088	bne    v0, zero, Lb8098 [$800b8098]
-
-V1 = 80168000;
-
-Lb8098:	; 800B8098
+V1 = 80164000;
+if( w[800f8368] == 0 )
+{
+    V1 = 80168000;
+}
 [80163c74] = w(V1);
-800B80A0	jal    funcb8360 [$800b8360]
-A0 = 0001;
+
+A0 = 1;
+funcb8360();
 
 funcc5cc0();
 
@@ -779,4 +777,24 @@ else
 [8009a004] = w(40);
 [8009a008] = w(A0 & ffff);
 system_execute_AKAO();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8360()
+
+type = A0;
+
+A0 = w[80163c74];
+A1 = 1; // drawing to display area is permitted
+A2 = 1; // dithering processing flag on
+A3 = (type & 3) * 20; // initial value of texture page
+func44a68();
+
+A0 = w[801517c0];
+A1 = w[80163c74];
+[80163c74] = w(A1 + c);
+A0 = A0 + 4078;
+system_add_render_packet_to_queue();
 ////////////////////////////////
