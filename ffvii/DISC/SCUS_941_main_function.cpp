@@ -839,16 +839,6 @@ func362b8();
 
 
 ////////////////////////////////
-// func3d23c()
-
-V1 = w[8005153c];
-V0 = hu[V1];
-[V1] = h(A0);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func46530()
 
 if( A2 != 0 )
@@ -922,8 +912,8 @@ if( hu[800504ac] != 0 )
     return 0;
 }
 
-V0 = w[8005153c]; // 1f801074 Interrupt mask register
-[V0] = h(0);
+A0 = 0;
+system_set_interrupt_mask_register();
 
 V1 = w[80051538]; // 1f801070 Interrupt status register
 [V1] = h(0);

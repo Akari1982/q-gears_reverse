@@ -101,7 +101,7 @@ func44f58(); // create packet for offset
 
 A0 = bu[S0 + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = bu[S0 + 16]; // dithering processing flag. 0: off; 1: on
-A2 = hu[S0 + 14]; // initial value of texture page
+A2 = hu[S0 + 14]; // initial values of texture page
 func44d64(); // create packet
 [S1 + 10] = w(V0);
 
@@ -205,16 +205,14 @@ if( bu[80062c02] >= 2 )
     800441C8	jalr   v0 ra
 }
 
-number_of_entries = number_of_entries - 1;
-if( number_of_entries != 0 )
+number = number - 1;
+if( number != 0 )
 {
     loop441e8:	; 800441E8
-        A0 = S0 + 4;
-        [S0 + 3] = b(0);
-        [S0] = w((w[S0] & ff000000) | ((S0 + 4) & 00ffffff));
+        [S0] = w((S0 + 4) & 00ffffff);
         S0 = S0 + 4;
-        number_of_entries = number_of_entries - 1;
-    80044208	bne    number_of_entries, zero, loop441e8 [$800441e8]
+        number = number - 1;
+    80044208	bne    number, zero, loop441e8 [$800441e8]
 }
 
 [S0] = w(80062cbc & 00ffffff);
@@ -264,11 +262,16 @@ dma6_channel_control = w[80062cec]; // 1f8010e8
 dma6_block_control = w[80062ce8]; // 1f8010e4
 dma6_base_address = w[80062ce4]; // 1f8010e0
 
-[dma_control] = w(w[dma_control] | 08000000);
+[dma_control] = w(w[dma_control] | 08000000); // DMA6, OTC Master Enable
 
 [dma6_channel_control] = w(00000000);
-[dma6_base_address] = w(head + (number * 4) - 4);
-[dma6_block_control] = w(number);
+[dma6_base_address] = w(head + (number * 4) - 4); // pointer to the LAST table entry
+[dma6_block_control] = w(number); // number of list entries
+// 0 Transfer Direction To Main RAM
+// 1 Memory Address Step Backward;-4
+// 9-10 SyncMode, Transfer Synchronisation/Mode Start immediately and transfer all at once (used for CDROM, OTC)
+// 24 Start/Busy 1=Start/Enable/Busy)
+// 28 Start/Trigger 1=Manual Start
 [dma6_channel_control] = w(11000002);
 
 func462b0(); // wait
@@ -276,14 +279,11 @@ func462b0(); // wait
 if( w[dma6_channel_control] & 01000000 )
 {
     loop45198:	; 80045198
-        V0 = number;
-        80045198	jal    func462e4 [$800462e4]
-
+        func462e4();
         if( V0 != 0 )
         {
             return -1;
         }
-
         V0 = w[dma6_channel_control] & 01000000;
     800451C0	bne    v0, zero, loop45198 [$80045198]
 }
@@ -308,91 +308,62 @@ func3cedc(); // wait
 ////////////////////////////////
 // func462e4()
 
+// GP1 Send GP1 Commands (Display Control)
+// GPUSTAT Read GPU Status Register
+gpu_1f801814 = w[80062cd4];
+
+dma_control = w[80062cf0]; // 1f8010f0
+dma2_base_address = w[80062cd8]; // 1f8010a0
+dma2_channel_control = w[80062ce0]; // 1f8010a8
+
 A0 = -1;
 func3cedc(); // wait
 
-V1 = w[80062d18];
-80046300	slt    v1, v1, v0
-80046304	bne    v1, zero, L46334 [$80046334]
+if( V0 <= w[80062d18] )
+{
+    V1 = w[80062d1c];
+    [80062d1c] = w(V1 + 1);
+    if( V1 <= f0000 )
+    {
+        return 0;
+    }
+}
 
-V1 = w[80062d1c];
-V0 = V1 + 0001;
-[80062d1c] = w(V0);
-80046324	lui    v0, $000f
-80046328	slt    v0, v0, v1
-8004632C	beq    v0, zero, L4643c [$8004643c]
-80046330	nop
-
-L46334:	; 80046334
-V1 = w[80062cd4];
 A0 = 80010e64; // "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x,"
-V0 = w[V1 + 0000];
-80046348	lui    a1, $8006
-A1 = w[A1 + 2d04];
-80046350	lui    v0, $8006
-V0 = w[V0 + 2cd8];
-80046358	lui    t0, $8006
-T0 = w[T0 + 2d08];
-V0 = w[V0 + 0000];
-A1 = A1 - T0;
-[SP + 0010] = w(V0);
-8004636C	lui    v0, $8006
-V0 = w[V0 + 2ce0];
-A2 = w[V1 + 0000];
-A3 = w[V0 + 0000];
-A1 = A1 & 003f;
+A1 = (w[80062d04] - w[80062d08]) & 003f;
+A2 = w[gpu_1f801814];
+A3 = w[dma2_channel_control];
+A4 = w[dma2_base_address];
 system_bios_printf();
 
-80046384	lui    v0, $8006
-V0 = V0 + 2cf4;
-A1 = w[V0 + 0000];
-80046390	lui    a2, $8006
-A2 = w[A2 + 2cf8];
-80046398	lui    a3, $8006
-A3 = w[A3 + 2cfc];
 A0 = 80010e98; // "func=(%08x)(%08x,%08x)"
+A1 = w[80062cf4];
+A2 = w[80062cf8];
+A3 = w[80062cfc];
 system_bios_printf();
 
-800463B0	jal    func3d23c [$8003d23c]
 A0 = 0;
-800463B8	lui    at, $8006
-[AT + 2d08] = w(0);
-800463C0	lui    v1, $8006
-V1 = w[V1 + 2d08];
-800463C8	lui    at, $8006
-[AT + 2d14] = w(V0);
-800463D0	lui    at, $8006
-[AT + 2d04] = w(V1);
-800463D8	lui    v1, $8006
-V1 = w[V1 + 2ce0];
-V0 = 0401;
-[V1 + 0000] = w(V0);
-800463E8	lui    v1, $8006
-V1 = w[V1 + 2cf0];
-800463F0	nop
-V0 = w[V1 + 0000];
-800463F8	nop
-V0 = V0 | 0800;
-[V1 + 0000] = w(V0);
-80046404	lui    v1, $8006
-V1 = w[V1 + 2cd4];
-8004640C	lui    v0, $0200
-[V1 + 0000] = w(V0);
-80046414	lui    v1, $8006
-V1 = w[V1 + 2cd4];
-8004641C	lui    v0, $0100
-[V1 + 0000] = w(V0);
-80046424	lui    a0, $8006
-A0 = w[A0 + 2d14];
-8004642C	jal    func3d23c [$8003d23c]
-80046430	nop
-80046434	j      L46440 [$80046440]
-80046438	addiu  v0, zero, $ffff (=-$1)
+system_set_interrupt_mask_register();
+[80062d14] = w(V0);
 
-L4643c:	; 8004643C
-V0 = 0;
+[80062d04] = w(0);
+[80062d08] = w(0);
 
-L46440:	; 80046440
+// 0 Transfer Direction From Main RAM
+// 1 Memory Address Step Forward;+4
+// 9-10 SyncMode, Transfer Synchronisation/Mode (0-3):
+//      2  Linked-List mode (used for GPU-command-lists)
+[dma2_channel_control] = w(00000401);
+[dma_control] = w(w[dma_control] | 00000800);
+// GP1(02h) Acknowledge GPU Interrupt
+[gpu_1f801814] = w(02000000);
+// GP1(01h) Resets the command buffer.
+[gpu_1f801814] = w(01000000);
+
+A0 = w[80062d14];
+system_set_interrupt_mask_register();
+
+return -1;
 ////////////////////////////////
 
 
@@ -673,22 +644,25 @@ else
 
 mode = A0;
 
-V1 = w[8005153c];
-V0 = hu[V1];
-[V1] = h(0);
+// GP1 Send GP1 Commands (Display Control)
+// GPUSTAT Read GPU Status Register
+gpu_1f801814 = w[80062cd4];
+
+dma2_channel_control = w[80062ce0]; // 1f8010a8
+dma_control = w[80062cf0]; // 1f8010f0
+
+A0 = 0;
+system_set_interrupt_mask_register();
+[80062d14] = w(V0);
 
 [80062d08] = w(0);
-[80062d14] = w(V0);
-[80062d04] = w(w[80062d08]);
+[80062d04] = w(0);
 
 if( ( mode & 7 ) == 0 )
 {
-    V1 = w[80062ce0];
-    [V1] = w(401);
-    V1 = w[80062cf0];
-    [V1] = w(w[V1] | 00000800);
-    V0 = w[80062cd4];
-    [V0] = w(0);
+    [dma2_channel_control] = w(00000401);
+    [dma_control] = w(w[dma_control] | 00000800);
+    [gpu_1f801814] = w(00000000);
 
     A0 = 80070590;
     V0 = 100 - 1;
@@ -708,20 +682,14 @@ if( ( mode & 7 ) == 0 )
 }
 else if( ( mode & 7 ) == 1 )
 {
-    V1 = w[80062ce0];
-    [V1] = w(401);
-    V1 = w[80062cf0];
-    [V1] = w(w[V1] | 00000800);
-    V1 = w[80062cd4];
-    [V1 + 0000] = w(02000000);
-    V1 = w[80062cd4];
-    [V1] = w(01000000);
-
+    [dma2_channel_control] = w(00000401);
+    [dma_control] = w(w[dma_control] | 00000800);
+    [gpu_1f801814] = w(02000000);
+    [gpu_1f801814] = w(01000000);
 }
 
-V1 = w[8005153c];
-V0 = hu[V1];
-[V1] = h(w[80062d14]);
+A0 = w[80062d14];
+system_set_interrupt_mask_register();
 
 if( mode & 7 )
 {
@@ -801,19 +769,20 @@ return 3;
 ////////////////////////////////
 // func44a68()
 
-S0 = A0;
-[S0 + 3] = b(2);
+buffer = A0;
+
+[buffer + 3] = b(2);
 S1 = A4;
 
 A0 = A1; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = A2; // dithering processing flag. 0: off; 1: on
-A2 = A3; // initial value of texture page
+A2 = A3; // initial values of texture page
 func44d64(); // prepare tex page settings packet
-[S0 + 4] = w(V0);
+[buffer + 4] = w(V0);
 
 A0 = S1; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
 func44fa0(); // prepare texture window rect packet
-[S0 + 8] = w(V0);
+[buffer + 8] = w(V0);
 ////////////////////////////////
 
 
@@ -828,12 +797,11 @@ if( A0 == 0 )
     return 0;
 }
 
-[SP + 0] = w(bu[A0 + 0] >> 03);
-[SP + 4] = w(bu[A0 + 2] >> 03);
-[SP + 8] = w(((0 - h[A0 + 4]) & ff) >> 03);
-[SP + c] = w(((0 - h[A0 + 6]) & ff) >> 03);
-
-return e2000000 | (w[SP + 4] << f) | (w[SP + 0] << a) | (w[SP + c] << 5) | w[SP + 8];
+off_x = bu[A0 + 0] >> 3;
+off_y = bu[A0 + 2] >> 3;
+mask_x = ((0 - h[A0 + 4]) & ff) >> 3;
+mask_y = ((0 - h[A0 + 6]) & ff) >> 3;
+return e2000000 | (off_y << f) | (off_x << a) | (mask_y << 5) | mask_x;
 ////////////////////////////////
 
 
@@ -841,35 +809,41 @@ return e2000000 | (w[SP + 4] << f) | (w[SP + 0] << a) | (w[SP + c] << 5) | w[SP 
 ////////////////////////////////
 // func44d64()
 
-if( ( bu[80062c00] - 1 ) < 2 )
+if( ( bu[80062c00] - 1 ) < 2 ) // old gpu
 {
     if( A1 != 0 )
     {
-        V1 = 0800;
+        V1 = 00000800;
     }
 
     V0 = A2 & 27ff;
 
     if( A0 != 0 )
     {
-        V0 = V0 | 1000;
+        V0 = V0 | 00001000;
     }
 }
 else
 {
     if( A1 != 0 )
     {
-        V1 = 0200;
+        V1 = 00000200; // Dither 24bit to 15bit Dither Enabled
     }
 
+    //  0-3   Texture page X Base   (N*64) (ie. in 64-halfword steps)    ;GPUSTAT.0-3
+    //  4     Texture page Y Base   (N*256) (ie. 0 or 256)               ;GPUSTAT.4
+    //  5-6   Semi Transparency     (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)   ;GPUSTAT.5-6
+    //  7-8   Texture page colors   (0=4bit, 1=8bit, 2=15bit, 3=Reserved);GPUSTAT.7-8
+    //  11    Texture Disable (0=Normal, 1=Disable if GP1(09h).Bit0=1)   ;GPUSTAT.15
     V0 = A2 & 09ff;
 
     if( A0 != 0 )
     {
-        V0 = V0 | 0400;
+        V0 = V0 | 00000400; // Drawing to display area Allowed
     }
 }
 
+// GP0(E1h) - Draw Mode setting (aka "Texpage")
 return e1000000 | V1 | V0;
 ////////////////////////////////
 
@@ -1025,8 +999,13 @@ V0 = V0 & ffff
 ////////////////////////////////
 // system_add_render_packet_to_queue()
 
-[A1] = w((w[A1] & ff000000) | (w[A0] & 00ffffff));
-[A0] = w((w[A0] & ff000000) | (A1 & 00ffffff));
+ot = A0;
+buf = A1;
+
+// left priority in buf and add pointer to first OT
+[buf + 0] = w((w[buf + 0] & ff000000) | (w[ot] & 00ffffff));
+// left priority in OT and add pointer to buf
+[ot] = w((w[ot] & ff000000) | (buf & 00ffffff));
 ////////////////////////////////
 
 

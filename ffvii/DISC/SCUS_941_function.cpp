@@ -1,4 +1,15 @@
 ﻿////////////////////////////////
+// system_set_interrupt_mask_register()
+
+i_mask = w[8005153c]; // 1f801074 I_MASK - Interrupt mask register
+V0 = hu[i_mask];
+[i_mask] = h(A0);
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func3cedc()
 // wait few times
 
@@ -219,7 +230,7 @@ V0 = V0 + 0001;
 V0 = V0 & 003f;
 80045A88	beq    v0, v1, loop45a58 [$80045a58]
 80045A8C	nop
-80045A90	jal    func3d23c [$8003d23c]
+80045A90	jal    system_set_interrupt_mask_register [$8003d23c]
 A0 = 0;
 80045A98	lui    v1, $8006
 V1 = V1 + 2c08;
@@ -275,7 +286,7 @@ V0 = V0 + 2cf4;
 [AT + 2cf8] = w(S0);
 80045B58	lui    at, $8006
 [AT + 2cfc] = w(S2);
-80045B60	jal    func3d23c [$8003d23c]
+80045B60	jal    system_set_interrupt_mask_register [$8003d23c]
 80045B64	nop
 80045B68	j      L45cf8 [$80045cf8]
 V0 = 0;
@@ -378,7 +389,7 @@ V0 = V0 + 0001;
 V0 = V0 & 003f;
 80045CC4	lui    at, $8006
 [AT + 2d04] = w(V0);
-80045CCC	jal    func3d23c [$8003d23c]
+80045CCC	jal    system_set_interrupt_mask_register [$8003d23c]
 80045CD0	nop
 80045CD4	jal    func45d18 [$80045d18]
 80045CD8	nop

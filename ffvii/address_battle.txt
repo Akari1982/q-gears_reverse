@@ -88,7 +88,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f195c here is transformation data for machinegun effect (matrix and vector)
 800f197c 3d data for machinegun fire effect.
 
-800f1e4f []       init with 0. Set 1 togather with 800f1e50.
+800f1e4f []       init with 0. Set 1 together with 800f1e50.
 800f1e50 [][]     set with string id.
 
 800f38ac [][][][] array of some data. Init in funca283c. Related with 800a0098 data.
@@ -618,22 +618,24 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f99e8 []       store target id here (used in animation opcodes).
 
 800f99ec array where we store data for futher use during F7 animation opcode (attack impact). (0xc size)
-+00 [][]     damage.
-+02 [][]     1f800220 damage flags (heal critical damage to mp).
-+04 [][]     impact sound.
-+06 [][]     impact effect id.
-+08 [][]     store 800fa9d0 + 3 index here.
-+0a []       ???
+    +00 [][]     damage.
+    +02 [][]     1f800220 damage flags (heal critical damage to mp).
+    +04 [][]     impact sound.
+    +06 [][]     impact effect id.
+    +08 [][]     store 800fa9d0 + 3 index here.
+    +0a []       ???
 
 800f9d94 []       init with 0.
 800f9d98 []       init with 0.
 800f9d9c []       init with 0.
 
+800f9da4 [][]     some flags related to 800f9da8.
+                    0x0002 - add when exec begins remove when ends.
 800f9da8 some array (0x40 items 0x6 size)
-    +0 [][]     string index in buffer + 0x100
-    +2 [][]     ???
-    +4 []       string argument
-    +5 []       ???
+    +0 [][]     string index in buffer + 0x100. -1 means no command.
+    +2 [][]     if not 0 then add sound 0x2d7.
+    +4 []       wait timer before exec.
+    +5 []       exec timer. How much times we execute.
 
 800f9f28 [][][][] array of something (0x3 items). All inited with 0.
 
@@ -758,7 +760,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80151774 [][]     Target mask.
 
-801517c0 [][][][] store 800faff4 here during battle init. offset to packet depth queue.
+801517c0 [][][][] store 800faff4 here during battle init. offset to packets depth queue.
 801517c4 []       init with 0.
 
 801517f0 [] array of 0x4e elements of some unit id.

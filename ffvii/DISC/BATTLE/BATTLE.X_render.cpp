@@ -3,7 +3,7 @@
 
 funcb7fb4();
 
-A0 = w[801517c0] + 40a4;
+A0 = w[801517c0] + 40a4; // 800faff4 + 40a4 = 800ff098
 A1 = 10;
 system_psyq_clear_o_tag_r();
 
@@ -41,9 +41,16 @@ if( w[800f8368] == 0 )
 A0 = 1;
 funcb8360();
 
-funcc5cc0();
+funcc5cc0(); // add next show string element 800f9da8
 
 funcb8438; // we load field model to packets here
+
+
+
+
+
+
+
 
 A0 = 0;
 A2 = 0001;
@@ -51,38 +58,35 @@ V1 = 0;
 A1 = h[80162080];
 
 loopb80cc:	; 800B80CC
-800B80CC	lui    at, $8015
-AT = AT + 190a;
-AT = AT + V1;
-V0 = bu[AT + 0000];
-800B80DC	nop
-800B80E0	bne    v0, zero, Lb80f8 [$800b80f8]
-800B80E4	nop
-[800f7de4] = b(0);
-800B80F0	j      Lb8128 [$800b8128]
-800B80F4	nop
+    V0 = bu[8015190a + V1];
+    800B80E0	bne    v0, zero, Lb80f8 [$800b80f8]
 
-Lb80f8:	; 800B80F8
-800B80F8	bne    a1, zero, Lb8110 [$800b8110]
-800B80FC	nop
-[800f7de4] = b(A2);
-800B8108	j      Lb811c [$800b811c]
-A0 = A0 + 0001;
+    [800f7de4] = b(0);
+    800B80F0	j      Lb8128 [$800b8128]
+    800B80F4	nop
 
-Lb8110:	; 800B8110
-[800f7de4] = b(0);
-A0 = A0 + 0001;
+    Lb80f8:	; 800B80F8
+    800B80F8	bne    a1, zero, Lb8110 [$800b8110]
+    800B80FC	nop
+    [800f7de4] = b(A2);
+    800B8108	j      Lb811c [$800b811c]
+    A0 = A0 + 0001;
 
-Lb811c:	; 800B811C
-V0 = A0 < 000a;
+    Lb8110:	; 800B8110
+    [800f7de4] = b(0);
+    A0 = A0 + 0001;
+
+    Lb811c:	; 800B811C
+    V1 = V1 + 0b9c;
+    V0 = A0 < 000a;
 800B8120	bne    v0, zero, loopb80cc [$800b80cc]
-V1 = V1 + 0b9c;
 
 Lb8128:	; 800B8128
 800B8128	jal    funca3ed0 [$800a3ed0]
-800B812C	nop
-800B8130	jal    funcb8360 [$800b8360]
-A0 = 0002;
+
+A0 = 2;
+funcb8360();
+
 A0 = w[801517c0];
 800B8140	jal    funcdcfd4 [$800dcfd4]
 A0 = A0 + 40e4;
@@ -260,37 +264,32 @@ if( h[800f9da8 + 0] != -1)
             [800f9da8 + 2] = h(0);
         }
 
-        if( bu[800f9da8 + 5] == 0 )
+        if( bu[800f9da8 + 5] == 0 ) // search for next
         {
             [800f9da8 + 0] = h(-1);
 
-            A2 = 0;
-            Lc5d54:	; 800C5D54
-                if( h[800f9da8] == -1 )
+            for( int i = 0; i < 40; ++i )
+            {
+                if( h[800f9da8 + 0] == -1 )
                 {
-                    for( int i = 0; i < 3f; ++i )
+                    for( int j = 0; j < 3f; ++j )
                     {
-                        [800f9da8 + i * 6 + 0] = h(hu[800f9da8 + (i + 1) * 6 + 0]);
-                        [800f9da8 + i * 6 + 2] = h(hu[800f9da8 + (i + 1) * 6 + 2]);
-                        [800f9da8 + i * 6 + 4] = b(bu[800f9da8 + (i + 1) * 6 + 4]);
-                        [800f9da8 + i * 6 + 5] = b(bu[800f9da8 + (i + 1) * 6 + 5]);
+                        [800f9da8 + j * 6 + 0] = h(hu[800f9da8 + (j + 1) * 6 + 0]);
+                        [800f9da8 + j * 6 + 2] = h(hu[800f9da8 + (j + 1) * 6 + 2]);
+                        [800f9da8 + j * 6 + 4] = b(bu[800f9da8 + (j + 1) * 6 + 4]);
+                        [800f9da8 + j * 6 + 5] = b(bu[800f9da8 + (j + 1) * 6 + 5]);
                     }
-
                     [800f9da8 + 17a] = h(-1);
                 }
-
-                A2 = A2 + 1;
-                if( A2 >= 40 )
-                {
-                    return;
-                }
-            800C5E30	j      Lc5d54 [$800c5d54]
+            }
         }
+        else // execute
+        {
+            A0 = h[800f9da8 + 0];
+            funcdcf94();
 
-        A0 = h[800f9da8 + 0];
-        funcdcf94();
-
-        [800f9da8 + 5] = b(bu[800f9da8 + 5] - 1);
+            [800f9da8 + 5] = b(bu[800f9da8 + 5] - 1);
+        }
         return;
     }
 
@@ -790,11 +789,11 @@ A0 = w[80163c74];
 A1 = 1; // drawing to display area is permitted
 A2 = 1; // dithering processing flag on
 A3 = (type & 3) * 20; // initial value of texture page
-func44a68();
+A4 = 0;
+func44a68(); // create env settings e1 and e2
 
-A0 = w[801517c0];
+A0 = w[801517c0] + 4078; // inited OT for 2 packets
 A1 = w[80163c74];
 [80163c74] = w(A1 + c);
-A0 = A0 + 4078;
 system_add_render_packet_to_queue();
 ////////////////////////////////

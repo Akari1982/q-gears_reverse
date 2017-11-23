@@ -88,6 +88,15 @@
 +2b8 []       we store magic number here according to added materia. (0x11 in case Underwater or HP<->MP)
 +2dc []       0 - we load battle, 1 - we load menu.
 
+80062cd0 [][][][] 1f801810. GP0 Send GP0 Commands/Packets (Rendering and VRAM Access). GPUREAD Read responses to GP0(C0h) and GP1(10h) commands.
+80062cd4 [][][][] 1f801814. GP1 Send GP1 Commands (Display Control). GPUSTAT Read GPU Status Register.
+80062ce0 [][][][] 1f8010a8.
+80062ce4 [][][][] 1f8010e0.
+80062ce8 [][][][] 1f8010e4.
+80062cec [][][][] 1f8010e8.
+80062cf0 [][][][] 1f8010f0.
+
+
 80062d78 [][]     first pad button mask (remaped if needed)
 80062d7a [][]     first pad previous button mask.
 80062d7c [][]     first pad pressed button mask.

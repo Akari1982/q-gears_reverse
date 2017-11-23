@@ -23709,7 +23709,7 @@ V0 = hu[V0 + 0000];
 
 
 ////////////////////////////////
-// func3d23c
+// system_set_interrupt_mask_register
 8003D23C-8003D254
 ////////////////////////////////
 // func3d258
@@ -29894,7 +29894,7 @@ V0 = w[V0 + 0000];
 V0 = V0 & S0;
 80045D38	bne    v0, zero, L46018 [$80046018]
 V0 = 0001;
-80045D40	jal    func3d23c [$8003d23c]
+80045D40	jal    system_set_interrupt_mask_register [$8003d23c]
 A0 = 0;
 80045D48	lui    a0, $8006
 A0 = w[A0 + 2d04];
@@ -30045,7 +30045,7 @@ V0 = V0 & V1;
 L45f6c:	; 80045F6C
 80045F6C	lui    a0, $8006
 A0 = w[A0 + 2d10];
-80045F74	jal    func3d23c [$8003d23c]
+80045F74	jal    system_set_interrupt_mask_register [$8003d23c]
 80045F78	nop
 80045F7C	lui    v1, $8006
 V1 = w[V1 + 2d04];
