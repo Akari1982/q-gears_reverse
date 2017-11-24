@@ -1,1 +1,1 @@
-adisasm FIELD.BIN_u FIELD.BIN.asm -v -b 800a0000 800a16cc -u -a
+adisasm SLPS_011.60 SLPS_011.60.asm -v -b 8000f800 800195b8 -u -a
