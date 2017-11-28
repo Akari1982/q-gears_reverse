@@ -15,6 +15,51 @@
 
 
 ////////////////////////////////
+// system_bios_cd_remove()
+// A(56h) or A(72h) - CdRemove()  ;does NOT work due to SysDeqIntRP bug
+8004BD80	addiu  t2, zero, $00a0
+8004BD84	jr     t2 
+8004BD88	addiu  t1, zero, $0072
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_return_from_exception()
+// B(17h) - ReturnFromException()
+// Restores the CPU registers (R1-R31,HI,LO,SR,PC) (except R26/K0) from the
+// current TCB. This function is usually executed automatically at the end of the
+// ExceptionHandler, however, functions in the exception chain may call
+// ReturnFromException to to return immediately, without processing chain elements
+// of lower priority.
+8004BD98	addiu  t2, zero, $00b0
+8004BD9C	jr     t2 
+8004BDA0	addiu  t1, zero, $0017
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_set_custom_exit_from_exception()
+// B(19h) - SetCustomExitFromException(addr)
+// addr points to a structure (with same format as for the SaveState function):
+//  00h 4    r31/ra,pc ;usually ptr to ReturnFromException function
+//  04h 4    r28/sp    ;usually exception stacktop, minus 4, for whatever reason
+//  08h 4    r30/fp    ;usually 0
+//  0Ch 4x8  r16..r23  ;usually 0
+//  2Ch 4    r28/gp    ;usually 0
+// The hook function is executed only if the ExceptionHandler has been fully executed (after processing an IRQ, many interrupt handlers are calling
+// ReturnFromException to abort further exception handling, and thus do skip the hook function). Once when the hook function has finished, it should execute
+// ReturnFromException. The hook function is called with r2=1 (that is important if the hook address was recorded with SaveState, where it "returns" to the
+// SaveState caller, with r2 as "return value").
+8004BDB8	addiu  t2, zero, $00b0
+8004BDBC	jr     t2 
+8004BDC0	addiu  t1, zero, $0019
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_change_clear_pad()
 // B(5Bh) ChangeClearPad(int)   ;pad AND card (ie. used also for Card)
 8004044C	addiu  t2, zero, $00b0
@@ -43,7 +88,6 @@
 80040330	jr     t2 
 80040334	addiu  t1, zero, $000d
 ////////////////////////////////
-
 
 
 

@@ -111,6 +111,19 @@
 
 800566d0          rotation for angle 0 - 45 (each 2 bytes)
 
+80057fcc [][][][] pointer to some func callbacks (80057fac).
+    + 0 80019468
+    + 4 8004c0c4
+    + 8 func4ba44()
+    + c func4b780()
+    +10 8004bb98
+    +14 8004be98
+    +18 8004bc44
+    +1c 80056f44
+80057fd0 [][][][] 1f801070 interrupt status register.
+80057fd4 [][][][] 1f801074 interrupt mask register
+80057fd8 [][][][] 1f8010f0 dma control register
+
 800584d0 [][][][] shifter for spu address (always 3)
 
 80058810 GP
