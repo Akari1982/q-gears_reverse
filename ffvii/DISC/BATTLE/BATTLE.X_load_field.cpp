@@ -653,7 +653,7 @@ A0 = texture;
 func46cfc(); // set address
 
 A0 = SP + 10;
-func46d0c();
+system_read_tim();
 
 clut_sizes = w[SP + 14];
 if( ( clut_sizes != 0 ) && ( w[SP + 18] != 0 ) ) // and clut data
@@ -701,7 +701,7 @@ A0 = texture;
 func46cfc(); // set address
 
 A0 = SP + 10;
-func46d0c()
+system_read_tim()
 
 image_sizes = w[SP + 1c];
 if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) ) // and image data

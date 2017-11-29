@@ -8,7 +8,7 @@ return 0;
 
 
 ////////////////////////////////
-// func46d0c()
+// system_read_tim()
 
 ret = A0;
 

@@ -91,7 +91,7 @@ T6 = w[800563cc];
 if( T6 >= 280 )
 {
     A0 = 80056650; // "Error: Can't push matrix,stack(max 20) is full!"
-    800494D4	jal    func199e8 [$800199e8]
+    system_bios_printf();
 }
 else
 {
@@ -116,7 +116,7 @@ T6 = w[800563cc];
 if( T6 <= 0 )
 {
     A0 = 80056681; // "Error: Can't pop matrix,stack is empty!"
-    80049570	jal    func199e8 [$800199e8]
+    system_bios_printf();
 }
 else
 {

@@ -24,12 +24,10 @@ L19604:	; 80019604
 // func1960c
 8001960C-800199E4
 ////////////////////////////////
+// system_bios_printf
+800199E8-800199EC
+////////////////////////////////
 
-
-
-func199e8:	; 800199E8
-800199E8	jr     ra 
-800199EC	nop
 
 
 func199f0:	; 800199F0
@@ -45935,7 +45933,7 @@ L40be4:	; 80040BE4
 80040BEC	nop
 80040BF0	lui    a0, $8002
 80040BF4	addiu  a0, a0, $8d60 (=-$72a0)
-80040BF8	jal    func199e8 [$800199e8]
+80040BF8	jal    system_bios_printf [$800199e8]
 80040BFC	nop
 80040C00	addu   v0, zero, zero
 
@@ -46718,7 +46716,7 @@ L415e4:	; 800415E4
 80041608	nop
 8004160C	lui    a0, $8002
 80041610	addiu  a0, a0, $8ee8 (=-$7118)
-80041614	jal    func199e8 [$800199e8]
+80041614	jal    system_bios_printf [$800199e8]
 80041618	nop
 8004161C	lui    v0, $8005
 80041620	lw     v0, $5b54(v0)
@@ -46737,7 +46735,7 @@ L415e4:	; 800415E4
 80041654	lw     a1, $5b70(at)
 80041658	lui    a0, $8002
 8004165C	addiu  a0, a0, $8ef4 (=-$710c)
-80041660	jal    func199e8 [$800199e8]
+80041660	jal    system_bios_printf [$800199e8]
 80041664	nop
 
 L41668:	; 80041668
@@ -46988,7 +46986,7 @@ L41974:	; 80041974
 80041984	lbu    a1, $0010(sp)
 80041988	lui    a0, $8002
 8004198C	addiu  a0, a0, $8f24 (=-$70dc)
-80041990	jal    func199e8 [$800199e8]
+80041990	jal    system_bios_printf [$800199e8]
 80041994	nop
 
 L41998:	; 80041998
@@ -47076,7 +47074,7 @@ L41a68:	; 80041A68
 80041AB8	lw     a3, $0000(a0)
 80041ABC	lui    a0, $8002
 80041AC0	addiu  a0, a0, $8ecc (=-$7134)
-80041AC4	jal    func199e8 [$800199e8]
+80041AC4	jal    system_bios_printf [$800199e8]
 80041AC8	nop
 80041ACC	jal    func423a4 [$800423a4]
 80041AD0	nop
@@ -47269,7 +47267,7 @@ L41cf0:	; 80041CF0
 80041D40	lw     a3, $0000(a0)
 80041D44	lui    a0, $8002
 80041D48	addiu  a0, a0, $8ecc (=-$7134)
-80041D4C	jal    func199e8 [$800199e8]
+80041D4C	jal    system_bios_printf [$800199e8]
 80041D50	nop
 80041D54	jal    func423a4 [$800423a4]
 80041D58	nop
@@ -47430,7 +47428,7 @@ func41f00:	; 80041F00
 80041F50	lw     a1, $5b70(at)
 80041F54	lui    a0, $8002
 80041F58	addiu  a0, a0, $8f58 (=-$70a8)
-80041F5C	jal    func199e8 [$800199e8]
+80041F5C	jal    system_bios_printf [$800199e8]
 80041F60	nop
 
 L41f64:	; 80041F64
@@ -47454,7 +47452,7 @@ L41f64:	; 80041F64
 80041FA8	lw     a1, $5b70(at)
 80041FAC	lui    a0, $8002
 80041FB0	addiu  a0, a0, $8f60 (=-$70a0)
-80041FB4	jal    func199e8 [$800199e8]
+80041FB4	jal    system_bios_printf [$800199e8]
 80041FB8	nop
 80041FBC	j      L422f4 [$800422f4]
 80041FC0	addiu  v0, zero, $fffe (=-$2)
@@ -47602,7 +47600,7 @@ L42160:	; 80042160
 800421B0	lw     a3, $0000(a0)
 800421B4	lui    a0, $8002
 800421B8	addiu  a0, a0, $8ecc (=-$7134)
-800421BC	jal    func199e8 [$800199e8]
+800421BC	jal    system_bios_printf [$800199e8]
 800421C0	nop
 800421C4	jal    func423a4 [$800423a4]
 800421C8	nop
@@ -47916,7 +47914,7 @@ func425c8:	; 800425C8
 800425E4	addiu  a0, a0, $8fb8 (=-$7048)
 800425E8	lui    a1, $8005
 800425EC	addiu  a1, a1, $5e2c
-800425F0	jal    func199e8 [$800199e8]
+800425F0	jal    system_bios_printf [$800199e8]
 800425F4	nop
 800425F8	lui    at, $8005
 800425FC	sb     zero, $5b69(at)
@@ -48108,7 +48106,7 @@ L4285c:	; 8004285C
 800428A8	lw     a3, $0000(a0)
 800428AC	lui    a0, $8002
 800428B0	addiu  a0, a0, $8ecc (=-$7134)
-800428B4	jal    func199e8 [$800199e8]
+800428B4	jal    system_bios_printf [$800199e8]
 800428B8	nop
 800428BC	jal    func423a4 [$800423a4]
 800428C0	nop
@@ -52473,7 +52471,7 @@ L46df8:	; 80046DF8
 80046E34	lw     v0, $6050(v0)
 80046E38	lw     a2, $0000(v1)
 80046E3C	lw     a3, $0000(v0)
-80046E40	jal    func199e8 [$800199e8]
+80046E40	jal    system_bios_printf [$800199e8]
 80046E44	andi   a1, a1, $003f
 80046E48	lui    v0, $8005
 80046E4C	addiu  v0, v0, $6064
@@ -52484,7 +52482,7 @@ L46df8:	; 80046DF8
 80046E60	lw     a3, $606c(a3)
 80046E64	lui    a0, $8002
 80046E68	addiu  a0, a0, $9308 (=-$6cf8)
-80046E6C	jal    func199e8 [$800199e8]
+80046E6C	jal    system_bios_printf [$800199e8]
 80046E70	nop
 80046E74	jal    func4b764 [$8004b764]
 80046E78	addu   a0, zero, zero
@@ -52861,7 +52859,7 @@ func474b0:	; 800474B0
 800474F4	addiu  s2, s0, $000c
 800474F8	lui    a0, $8002
 800474FC	addiu  a0, a0, $9348 (=-$6cb8)
-80047500	jal    func199e8 [$800199e8]
+80047500	jal    system_bios_printf [$800199e8]
 80047504	nop
 
 L47508:	; 80047508
@@ -52875,7 +52873,7 @@ L47508:	; 80047508
 80047524	lw     a3, $0008(s0)
 80047528	lui    a0, $8002
 8004752C	addiu  a0, a0, $935c (=-$6ca4)
-80047530	jal    func199e8 [$800199e8]
+80047530	jal    system_bios_printf [$800199e8]
 80047534	nop
 
 L47538:	; 80047538
@@ -52890,7 +52888,7 @@ L47538:	; 80047538
 80047558	lw     a2, $0004(v0)
 8004755C	lui    a0, $8002
 80047560	addiu  a0, a0, $9384 (=-$6c7c)
-80047564	jal    func199e8 [$800199e8]
+80047564	jal    system_bios_printf [$800199e8]
 80047568	nop
 
 L4756c:	; 8004756C
@@ -52905,7 +52903,7 @@ L4756c:	; 8004756C
 8004758C	lw     a2, $000c(v0)
 80047590	lui    a0, $8002
 80047594	addiu  a0, a0, $939c (=-$6c64)
-80047598	jal    func199e8 [$800199e8]
+80047598	jal    system_bios_printf [$800199e8]
 8004759C	nop
 
 L475a0:	; 800475A0
@@ -52921,7 +52919,7 @@ L475a0:	; 800475A0
 800475C4	lw     a2, $0014(v0)
 800475C8	lui    a0, $8002
 800475CC	addiu  a0, a0, $93b4 (=-$6c4c)
-800475D0	jal    func199e8 [$800199e8]
+800475D0	jal    system_bios_printf [$800199e8]
 800475D4	nop
 800475D8	sll    v1, s1, $03
 
@@ -53184,7 +53182,7 @@ L4793c:	; 8004793C
 8004794C	nop
 80047950	lui    a0, $8002
 80047954	addiu  a0, a0, $93cc (=-$6c34)
-80047958	jal    func199e8 [$800199e8]
+80047958	jal    system_bios_printf [$800199e8]
 8004795C	nop
 
 L47960:	; 80047960
@@ -53243,7 +53241,7 @@ L47a18:	; 80047A18
 80047A28	nop
 80047A2C	lui    a0, $8002
 80047A30	addiu  a0, a0, $93d4 (=-$6c2c)
-80047A34	jal    func199e8 [$800199e8]
+80047A34	jal    system_bios_printf [$800199e8]
 80047A38	nop
 
 L47a3c:	; 80047A3C
@@ -53302,7 +53300,7 @@ L47af4:	; 80047AF4
 80047B04	nop
 80047B08	lui    a0, $8002
 80047B0C	addiu  a0, a0, $93dc (=-$6c24)
-80047B10	jal    func199e8 [$800199e8]
+80047B10	jal    system_bios_printf [$800199e8]
 80047B14	nop
 
 L47b18:	; 80047B18
@@ -53358,7 +53356,7 @@ L47bc4:	; 80047BC4
 80047BD4	nop
 80047BD8	lui    a0, $8002
 80047BDC	addiu  a0, a0, $93e4 (=-$6c1c)
-80047BE0	jal    func199e8 [$800199e8]
+80047BE0	jal    system_bios_printf [$800199e8]
 80047BE4	nop
 
 L47be8:	; 80047BE8
@@ -53414,7 +53412,7 @@ L47c94:	; 80047C94
 80047CA4	nop
 80047CA8	lui    a0, $8002
 80047CAC	addiu  a0, a0, $93ec (=-$6c14)
-80047CB0	jal    func199e8 [$800199e8]
+80047CB0	jal    system_bios_printf [$800199e8]
 80047CB4	nop
 
 L47cb8:	; 80047CB8
@@ -53464,7 +53462,7 @@ L47d4c:	; 80047D4C
 80047D5C	nop
 80047D60	lui    a0, $8002
 80047D64	addiu  a0, a0, $93f0 (=-$6c10)
-80047D68	jal    func199e8 [$800199e8]
+80047D68	jal    system_bios_printf [$800199e8]
 80047D6C	nop
 
 L47d70:	; 80047D70
@@ -53514,7 +53512,7 @@ L47e04:	; 80047E04
 80047E14	nop
 80047E18	lui    a0, $8002
 80047E1C	addiu  a0, a0, $93f4 (=-$6c0c)
-80047E20	jal    func199e8 [$800199e8]
+80047E20	jal    system_bios_printf [$800199e8]
 80047E24	nop
 
 L47e28:	; 80047E28
@@ -53588,7 +53586,7 @@ L47f1c:	; 80047F1C
 80047F2C	nop
 80047F30	lui    a0, $8002
 80047F34	addiu  a0, a0, $93fc (=-$6c04)
-80047F38	jal    func199e8 [$800199e8]
+80047F38	jal    system_bios_printf [$800199e8]
 80047F3C	nop
 
 L47f40:	; 80047F40
@@ -53662,7 +53660,7 @@ L48034:	; 80048034
 80048044	nop
 80048048	lui    a0, $8002
 8004804C	addiu  a0, a0, $9404 (=-$6bfc)
-80048050	jal    func199e8 [$800199e8]
+80048050	jal    system_bios_printf [$800199e8]
 80048054	nop
 
 L48058:	; 80048058
@@ -53736,7 +53734,7 @@ L4814c:	; 8004814C
 8004815C	nop
 80048160	lui    a0, $8002
 80048164	addiu  a0, a0, $940c (=-$6bf4)
-80048168	jal    func199e8 [$800199e8]
+80048168	jal    system_bios_printf [$800199e8]
 8004816C	nop
 
 L48170:	; 80048170
@@ -53810,7 +53808,7 @@ L48264:	; 80048264
 80048274	nop
 80048278	lui    a0, $8002
 8004827C	addiu  a0, a0, $9414 (=-$6bec)
-80048280	jal    func199e8 [$800199e8]
+80048280	jal    system_bios_printf [$800199e8]
 80048284	nop
 
 L48288:	; 80048288
@@ -53878,7 +53876,7 @@ L48364:	; 80048364
 80048374	nop
 80048378	lui    a0, $8002
 8004837C	addiu  a0, a0, $941c (=-$6be4)
-80048380	jal    func199e8 [$800199e8]
+80048380	jal    system_bios_printf [$800199e8]
 80048384	nop
 
 L48388:	; 80048388
@@ -53946,7 +53944,7 @@ L48464:	; 80048464
 80048474	nop
 80048478	lui    a0, $8002
 8004847C	addiu  a0, a0, $9424 (=-$6bdc)
-80048480	jal    func199e8 [$800199e8]
+80048480	jal    system_bios_printf [$800199e8]
 80048484	nop
 
 L48488:	; 80048488
@@ -54008,7 +54006,7 @@ L4854c:	; 8004854C
 8004855C	nop
 80048560	lui    a0, $8002
 80048564	addiu  a0, a0, $9428 (=-$6bd8)
-80048568	jal    func199e8 [$800199e8]
+80048568	jal    system_bios_printf [$800199e8]
 8004856C	nop
 
 L48570:	; 80048570
@@ -54070,7 +54068,7 @@ L48634:	; 80048634
 80048644	nop
 80048648	lui    a0, $8002
 8004864C	addiu  a0, a0, $942c (=-$6bd4)
-80048650	jal    func199e8 [$800199e8]
+80048650	jal    system_bios_printf [$800199e8]
 80048654	nop
 
 L48658:	; 80048658
@@ -54162,7 +54160,7 @@ L48794:	; 80048794
 800487A4	nop
 800487A8	lui    a0, $8002
 800487AC	addiu  a0, a0, $9434 (=-$6bcc)
-800487B0	jal    func199e8 [$800199e8]
+800487B0	jal    system_bios_printf [$800199e8]
 800487B4	nop
 
 L487b8:	; 800487B8
@@ -54251,7 +54249,7 @@ L488f4:	; 800488F4
 800488F8	lw     a1, $0000(s1)
 800488FC	lui    a0, $8002
 80048900	addiu  a0, a0, $943c (=-$6bc4)
-80048904	jal    func199e8 [$800199e8]
+80048904	jal    system_bios_printf [$800199e8]
 80048908	and    a1, a1, v0
 8004890C	addiu  v0, zero, $ffff (=-$1)
 
@@ -55117,7 +55115,7 @@ func494b4:	; 800494B4
 800494C8	lui    at, $8005
 800494CC	sw     ra, $63c0(at)
 800494D0	lui    a0, $8005
-800494D4	jal    func199e8 [$800199e8]
+800494D4	jal    system_bios_printf [$800199e8]
 800494D8	addiu  a0, a0, $6650
 800494DC	lui    ra, $8005
 800494E0	lw     ra, $63c0(ra)
@@ -55162,7 +55160,7 @@ func49554:	; 80049554
 80049564	lui    at, $8005
 80049568	sw     ra, $63c0(at)
 8004956C	lui    a0, $8005
-80049570	jal    func199e8 [$800199e8]
+80049570	jal    system_bios_printf [$800199e8]
 80049574	addiu  a0, a0, $6681
 80049578	lui    ra, $8005
 8004957C	lw     ra, $63c0(ra)
@@ -58310,7 +58308,7 @@ loop4c610:	; 8004C610
 8004C620	addiu  a0, a0, $9500 (=-$6b00)
 8004C624	lui    a1, $8002
 8004C628	addiu  a1, a1, $9510 (=-$6af0)
-8004C62C	jal    func199e8 [$800199e8]
+8004C62C	jal    system_bios_printf [$800199e8]
 8004C630	nop
 8004C634	j      L4c660 [$8004c660]
 8004C638	addu   a0, zero, zero
@@ -58516,7 +58514,7 @@ loop4c8e4:	; 8004C8E4
 8004C8F4	addiu  a0, a0, $9500 (=-$6b00)
 8004C8F8	lui    a1, $8002
 8004C8FC	addiu  a1, a1, $9520 (=-$6ae0)
-8004C900	jal    func199e8 [$800199e8]
+8004C900	jal    system_bios_printf [$800199e8]
 8004C904	nop
 8004C908	j      L4c930 [$8004c930]
 8004C90C	nop
@@ -58561,7 +58559,7 @@ loop4c978:	; 8004C978
 8004C988	addiu  a0, a0, $9500 (=-$6b00)
 8004C98C	lui    a1, $8002
 8004C990	addiu  a1, a1, $9534 (=-$6acc)
-8004C994	jal    func199e8 [$800199e8]
+8004C994	jal    system_bios_printf [$800199e8]
 8004C998	nop
 8004C99C	j      L4c9c4 [$8004c9c4]
 8004C9A0	nop
@@ -59527,7 +59525,7 @@ loop4d584:	; 8004D584
 8004D59C	addiu  a1, a1, $9568 (=-$6a98)
 
 L4d5a0:	; 8004D5A0
-8004D5A0	jal    func199e8 [$800199e8]
+8004D5A0	jal    system_bios_printf [$800199e8]
 8004D5A4	nop
 8004D5A8	j      L4d5d8 [$8004d5d8]
 8004D5AC	addiu  v0, zero, $ffff (=-$1)

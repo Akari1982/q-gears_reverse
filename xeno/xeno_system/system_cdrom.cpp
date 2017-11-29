@@ -98,7 +98,7 @@ loop42814:	; 80042814
         A3 = w[80055bf0 + V0 * 4];
         V0 = bu[80055e29];
         A4 = w[80055bf0 + V0 * 4];
-        80041AC4	jal    func199e8 [$800199e8]
+        system_bios_printf();
 
         func423a4();
 
@@ -165,7 +165,7 @@ if( w[80055b54] >= 2 )
 {
     A0 = 80018f58; // "%s..."
     A1 = w[80055b70 + cdl_command * 4];
-    80041F5C	jal    func199e8 [$800199e8]
+    system_bios_printf();
 }
 
 
@@ -177,7 +177,7 @@ if( ( w[80055d90 + cdl_command * 4] != 0 ) && ( param_ptr == 0 ) )
     {
         A0 = 80018f60; // "%s: no param"
         A1 = w[80055b70 + cdl_command * 4];
-        80041FB4	jal    func199e8 [$800199e8]
+        system_bios_printf();
     }
     return -2;
 }
@@ -283,7 +283,7 @@ if( bu[80055e28] == 0 )
             A3 = w[80055bf0 + V0 * 4];
             V0 = bu[80055e29];
             A4 = w[80055bf0 + V0 * 4];
-            800421BC	jal    func199e8 [$800199e8]
+            system_bios_printf();
 
             func423a4();
 
@@ -417,8 +417,8 @@ A0 = 80018ebc; // "CD timeout: "
 80041D40	lw     a3, $0000(a0)
 
 A0 = 80018ecc; // "%s:(%s) Sync=%s, Ready=%s"
-80041D4C	jal    func199e8 [$800199e8]
-80041D50	nop
+system_bios_printf();
+
 80041D54	jal    func423a4 [$800423a4]
 80041D58	nop
 80041D5C	j      L41d68 [$80041d68]
@@ -566,7 +566,7 @@ L41a20:	; 80041A20
         A3 = w[80055bf0 + V0 * 4];
         V0 = bu[80055e29];
         A4 = w[80055bf0 + V0 * 4];
-        80041AC4	jal    func199e8 [$800199e8]
+        system_bios_printf();
 
         func423a4();
 
@@ -723,14 +723,14 @@ if( bu[SP + 10] == 5 )
     if( w[80055b54] > 0 )
     {
         A0 = 80018ee8; // "DiskError:"
-        80041614	jal    func199e8 [$800199e8]
+        system_bios_printf();
 
         A0 = 80018ef4; // "com=%s,code=(%02x:%02x)"
         V0 = bu[80055b69];
         A1 = w[80055b70 + V0 * 4];
         A2 = w[80055b58];
         A3 = w[80055b5c];
-        80041660	jal    func199e8 [$800199e8]
+        system_bios_printf();
     }
 }
 
@@ -905,7 +905,7 @@ switch( bu[SP + 10] )
 
         A0 = 80018f24; // "(%d)"
         A1 = bu[SP + 10];
-        80041990	jal    func199e8 [$800199e8]
+        system_bios_printf();
 
         return 0;
     }

@@ -16644,7 +16644,7 @@ V0 = V0 << 05;
 [SP + 002c] = w(RA);
 800C6170	jal    func46cfc [$80046cfc]
 S0 = V0 + V1;
-800C6178	jal    func46d0c [$80046d0c]
+800C6178	jal    system_read_tim [$80046d0c]
 A0 = SP + 0010;
 A0 = 0;
 
