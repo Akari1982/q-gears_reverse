@@ -103,6 +103,13 @@
 80055e28 []       cd sync interrupt result.
 80055e29 []       cd ready interrupt result.
 
+80055f70 []       gpu type (old commands or new commands).
+80055f72 []       graph debug level.
+                    0 No checks are performed. (Highest speed mode)
+                    1 Checks coordinating registered and drawn primitives.
+                    2 Registered and drawn primitives are dumped.
+80055f73 []       graph debug reverse.
+
 80055f7c [][][][] draw sync callback pointer.
 
 800560a0 square root data (0x2 each). 12bit fixed point.
@@ -123,6 +130,8 @@
 80057fd0 [][][][] 1f801070 interrupt status register.
 80057fd4 [][][][] 1f801074 interrupt mask register
 80057fd8 [][][][] 1f8010f0 dma control register
+
+80058030 [][][][] set to 0 during game init.
 
 800584d0 [][][][] shifter for spu address (always 3)
 

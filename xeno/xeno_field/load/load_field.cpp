@@ -2902,7 +2902,7 @@ system_clear_otagr();
 // func6f740()
 
 A0 = 1; // cancels the current drawing and flushes the command buffer.
-system_reset_graph();
+system_psyq_reset_graph();
 
 func1c768();
 

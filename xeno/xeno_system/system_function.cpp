@@ -233,7 +233,7 @@ if( A0 != 0 )
 S1 = 8001808c + w[80018088] * 10;
 
 A0 = 1; // cancels the current drawing and flushes the command buffer.
-system_reset_graph();
+system_psyq_reset_graph();
 
 A0 = 0;
 system_set_draw_sync_callback();
@@ -401,7 +401,7 @@ system_set_draw_sync_callback();
 80019F34	addiu  v1, v1, $0001
 80019F38	lui    at, $8005
 80019F3C	sw     v1, $e964(at)
-80019F40	jal    func443ac [$800443ac]
+80019F40	jal    system_psyq_set_disp_mask [$800443ac]
 80019F44	ori    a0, zero, $0001
 
 L19f48:	; 80019F48
@@ -498,7 +498,7 @@ if( hu[80058c0c] == 090c ) // pressed buttons start select L1 R1
 // func19d54()
 80019D5C	jal    func4038c [$8004038c]
 80019D60	nop
-80019D64	jal    system_reset_graph [$80043f88]
+80019D64	jal    system_psyq_reset_graph [$80043f88]
 80019D68	addu   a0, zero, zero
 80019D6C	jal    func281e4 [$800281e4]
 80019D70	nop

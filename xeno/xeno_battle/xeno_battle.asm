@@ -78424,7 +78424,7 @@ Lb713c:	; 800B713C
 800B7148	nop
 800B714C	jal    funcb6850 [$800b6850]
 800B7150	addu   a0, s2, zero
-800B7154	jal    func443ac [$800443ac]
+800B7154	jal    system_psyq_set_disp_mask [$800443ac]
 800B7158	addu   a0, zero, zero
 800B715C	jal    func28870 [$80028870]
 800B7160	addu   a0, zero, zero
@@ -78820,7 +78820,7 @@ funcb7748:	; 800B7748
 800B7804	addiu  a0, a0, $2a7c
 800B7808	jal    func2194c [$8002194c]
 800B780C	nop
-800B7810	jal    func443ac [$800443ac]
+800B7810	jal    system_psyq_set_disp_mask [$800443ac]
 800B7814	ori    a0, zero, $0001
 800B7818	lw     ra, $0014(sp)
 800B781C	lw     s0, $0010(sp)
@@ -94207,7 +94207,7 @@ L1e8950:	; 801E8950
 801E895C	nop
 801E8960	jal    func1e828c [$801e828c]
 801E8964	addu   a0, s2, zero
-801E8968	jal    func443ac [$800443ac]
+801E8968	jal    system_psyq_set_disp_mask [$800443ac]
 801E896C	addu   a0, zero, zero
 801E8970	jal    func28870 [$80028870]
 801E8974	addu   a0, zero, zero
@@ -95193,7 +95193,7 @@ L1e95e4:	; 801E95E4
 801E95F0	nop
 801E95F4	jal    func1e8dac [$801e8dac]
 801E95F8	addu   a0, s2, zero
-801E95FC	jal    func443ac [$800443ac]
+801E95FC	jal    system_psyq_set_disp_mask [$800443ac]
 801E9600	addu   a0, zero, zero
 801E9604	jal    func28870 [$80028870]
 801E9608	addu   a0, zero, zero

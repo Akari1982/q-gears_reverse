@@ -452,102 +452,79 @@ if( bu[80055f72] >= 2 )
 }
 
 V0 = w[80055f68];
-V0 = w[V0 + 3c];
 A0 = mode;
-80044498	jalr   v0 ra
+80044498	jalr   w[V0 + 3c] ra
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_reset_graph()
+// system_psyq_reset_graph()
 // Initialize drawing engine.
+// Resets the graphic system according to mode:
+// 0 Complete reset. The drawing environment and display environment are initialized.
+// 1 Cancels the current drawing and flushes the command buffer.
+// 3 Initializes the drawing engine while preserving the current display environment (i.e. the screen is not cleared or the screen mode changed).
+// This function does not actually change the display environment. It merely sets the members of the specified
+// structure as desired. Use PutDispEnv() with this structure to change the actual environment.
+// Note: While the screen width and height are set to (0, 0), internally they are processed as (256, 240).
+// Return value: Pointer to the display environment set.
 
-S1 = A0;
+mode = A0;
 
-V1 = S1 & 0007;
-V0 = 0003;
-80043FA0	beq    v1, v0, L43fd8 [$80043fd8]
+if(  mode == 0 || mode == 3 || mode == 5 )
+{
+    if(  mode == 0 || mode == 3 )
+    {
+        A0 = 80019120; // "ResetGraph:jtb=%08x,env=%08x"
+        A1 = 80055f28;
+        A2 = 80055f70;
+        system_bios_printf();
+    }
 
-V0 = V1 < 0004;
-80043FAC	beq    v0, zero, L43fc4 [$80043fc4]
-80043FB0	nop
-80043FB4	beq    v1, zero, L43fd8 [$80043fd8]
-80043FB8	nop
-80043FBC	j      L440a4 [$800440a4]
-80043FC0	nop
+    A0 = 80055f70;
+    A1 = 0;
+    A2 = 80;
+    80044008	jal    func46ff0 [$80046ff0]
 
-L43fc4:	; 80043FC4
-V0 = 0005;
-80043FC8	beq    v1, v0, L43ff8 [$80043ff8]
-80043FCC	nop
-80043FD0	j      L440a4 [$800440a4]
-80043FD4	nop
+    func4b5e8();
 
-L43fd8:	; 80043FD8
-A0 = 80019120; // "ResetGraph:jtb=%08x,env=%08x"
-A1 = 80055f28;
-A2 = 80055f70;
-system_bios_printf();
+    A0 = w[80055f68] & 00ffffff;
+    80044028	jal    func4701c [$8004701c]
 
-L43ff8:	; 80043FF8
-80043FF8	lui    s0, $8005
-S0 = S0 + 5f70;
-A0 = S0;
-A1 = 0;
-80044008	jal    func46ff0 [$80046ff0]
-A2 = 0080;
-80044010	jal    func4b5e8 [$8004b5e8]
-80044014	nop
-80044018	lui    v0, $00ff
-A0 = w[80055f68];
-V0 = V0 | ffff;
-80044028	jal    func4701c [$8004701c]
-A0 = A0 & V0;
-80044030	jal    func46ad0 [$80046ad0]
-A0 = S1;
-A0 = S0 + 0010;
-V1 = 0001;
-[S0 + 0000] = b(V0);
-V0 = V0 & 00ff;
-V0 = V0 << 02;
-[80055f71] = b(V1);
-80044054	lui    at, $8005
-AT = AT + V0;
-V1 = w[AT + 5ff0];
-80044060	addiu  a1, zero, $ffff (=-$1)
-[80055f74] = h(V1);
-8004406C	lui    at, $8005
-AT = AT + V0;
-V0 = w[AT + 6004];
-[80055f76] = h(V0);
-80044080	jal    func46ff0 [$80046ff0]
-A2 = 005c;
-A0 = S0 + 006c;
-8004408C	addiu  a1, zero, $ffff (=-$1)
-80044090	jal    func46ff0 [$80046ff0]
-A2 = 0014;
-V0 = bu[S0 + 0000];
-8004409C	j      L440f4 [$800440f4]
-800440A0	nop
+    A0 = mode;
+    80044030	jal    func46ad0 [$80046ad0]
 
-L440a4:	; 800440A4
-V0 = bu[80055f72];
-800440AC	nop
-V0 = V0 < 0002;
-800440B4	bne    v0, zero, L440d8 [$800440d8]
+    [80055f70] = b(V0); // gpu type
+    [80055f71] = b(1);
+    [80055f74] = h(w[80055ff0 + V0 * 4]);
+    [80055f76] = h(w[80056004 + V0 * 4]);
 
-A0 = 80019140; // "ResetGraph(%d)..."
-A1 = S1;
-800440D0	jalr   w[80055f6c] ra // system_bios_printf()
+    A0 = 80055f80;
+    A1 = -1;
+    A2 = 5c;
+    80044080	jal    func46ff0 [$80046ff0]
 
-L440d8:	; 800440D8
-V0 = w[80055f68];
-V0 = w[V0 + 0034];
-A0 = 0001;
-800440EC	jalr   v0 ra
+    A0 = 80055fdc;
+    A1 = -1;
+    A2 = 14;
+    80044090	jal    func46ff0 [$80046ff0]
 
-L440f4:	; 800440F4
+    return bu[80055f70];
+}
+else
+{
+    if( bu[80055f72] >= 2 )
+    {
+        A0 = 80019140; // "ResetGraph(%d)..."
+        A1 = mode;
+        800440D0	jalr   w[80055f6c] ra // system_bios_printf()
+    }
+
+    V0 = w[80055f68];
+    A0 = 1;
+    800440EC	jalr   w[V0 + 34] ra
+}
 ////////////////////////////////
 
 
@@ -865,4 +842,67 @@ if( bu[80055f72] == 2 )
     A4 = h[rect + 6];
     800445C0	jalr   w[80055f6c] ra // system_bios_printf()
 }
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_graph_debug()
+// Sets a debugging level for the graphics system. level can be one of the following:
+// 0 No checks are performed. (Highest speed mode)
+// 1 Checks coordinating registered and drawn primitives.
+// 2 Registered and drawn primitives are dumped.
+// Return value the previously set debug level.
+
+level = A0;
+
+S0 = bu[80055f72];
+[80055f72] = b(level);
+
+if( level != 0 )
+{
+    A0 = 8001916c; // SetGraphDebug:level:%d,type:%d reverse:%d
+    A1 = level;
+    A2 = bu[80055f70];
+    A3 = bu[80055f73];
+    80044264	jalr   w[80055f6c] ra
+}
+
+return S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_disp_mask()
+// Puts display mask into the status specified by mask. mask =0: not displayed on screen; mask = 1: displayed on screen.
+
+mask = A0;
+
+if( bu[80055f72] >= 2 )
+{
+    A0 = 800191c8; // "SetDispMask(%d)..."
+    A1 = mask;
+    800443EC	jalr   w[80055f6c] ra
+}
+
+if( mask == 0 )
+{
+    A0 = 80055fdc;
+    A1 = -1;
+    A2 = 14;
+    80044400	jal    func46ff0 [$80046ff0]
+}
+
+if( mask == 0 )
+{
+    A0 = 03000001; // not display
+}
+else
+{
+    A0 = 03000000; // display
+}
+
+V0 = w[80055f68];
+80044428	jalr   w[V0 + 10] ra
 ////////////////////////////////

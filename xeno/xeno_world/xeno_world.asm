@@ -862,7 +862,7 @@ L70fac:	; 80070FAC
 80070FEC	nop
 80070FF0	bne    v0, zero, L7099c [$8007099c]
 80070FF4	nop
-80070FF8	jal    system_reset_graph [$80043f88]
+80070FF8	jal    system_psyq_reset_graph [$80043f88]
 80070FFC	addiu  a0, zero, $0001
 80071000	lui    v0, $800a
 80071004	lw     v0, $cbd8(v0)
@@ -2136,7 +2136,7 @@ func721d8:	; 800721D8
 800721DC	addiu  a0, zero, $0001
 800721E0	sw     ra, $0020(sp)
 800721E4	sw     s1, $001c(sp)
-800721E8	jal    system_reset_graph [$80043f88]
+800721E8	jal    system_psyq_reset_graph [$80043f88]
 800721EC	sw     s0, $0018(sp)
 800721F0	addiu  v0, zero, $0100
 800721F4	lui    at, $800a

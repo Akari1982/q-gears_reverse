@@ -8975,7 +8975,7 @@ func1b6d0:	; 8001B6D0
 8001B6D8	sw     ra, $0024(sp)
 8001B6DC	sw     s2, $0020(sp)
 8001B6E0	sw     s1, $001c(sp)
-8001B6E4	jal    system_reset_graph [$80043f88]
+8001B6E4	jal    system_psyq_reset_graph [$80043f88]
 8001B6E8	sw     s0, $0018(sp)
 8001B6EC	ori    a0, zero, $0300
 8001B6F0	jal    func37878 [$80037878]
@@ -9746,13 +9746,13 @@ L1c1b4:	; 8001C1B4
 8001C1E0	sb     zero, $0084(v0)
 8001C1E4	lui    v0, $8006
 8001C1E8	lw     v0, $1c30(v0)
-8001C1EC	jal    func443ac [$800443ac]
+8001C1EC	jal    system_psyq_set_disp_mask [$800443ac]
 8001C1F0	sb     zero, $0138(v0)
 8001C1F4	lui    v1, $8006
 8001C1F8	lw     v1, $1c30(v1)
 8001C1FC	ori    a0, zero, $0001
 8001C200	addiu  v0, v1, $0120
-8001C204	jal    func443ac [$800443ac]
+8001C204	jal    system_psyq_set_disp_mask [$800443ac]
 8001C208	sw     v0, $01d4(v1)
 
 L1c20c:	; 8001C20C
@@ -10014,7 +10014,7 @@ L1c57c:	; 8001C57C
 8001C5C0	lw     a0, $1c30(a0)
 8001C5C4	jal    func44d14 [$80044d14]
 8001C5C8	addiu  a0, a0, $017c
-8001C5CC	jal    func443ac [$800443ac]
+8001C5CC	jal    system_psyq_set_disp_mask [$800443ac]
 8001C5D0	ori    a0, zero, $0001
 8001C5D4	jal    func1c034 [$8001c034]
 8001C5D8	nop
@@ -16902,7 +16902,7 @@ L27eb0:	; 80027EB0
 80027EC8	addu   a0, zero, zero
 80027ECC	bne    s0, zero, L28024 [$80028024]
 80027ED0	nop
-80027ED4	jal    system_reset_graph [$80043f88]
+80027ED4	jal    system_psyq_reset_graph [$80043f88]
 80027ED8	addu   a0, zero, zero
 80027EDC	jal    func48a6c [$80048a6c]
 80027EE0	ori    s2, zero, $0100
@@ -16944,7 +16944,7 @@ L27eb0:	; 80027EB0
 80027F70	sw     s2, $0024(sp)
 80027F74	jal    func37390 [$80037390]
 80027F78	sw     zero, $0028(sp)
-80027F7C	jal    func443ac [$800443ac]
+80027F7C	jal    system_psyq_set_disp_mask [$800443ac]
 80027F80	ori    a0, zero, $0001
 80027F84	addiu  a0, sp, $0030
 80027F88	addu   a1, zero, zero
@@ -37591,34 +37591,6 @@ L44204:	; 80044204
 8004421C	nop
 
 
-func44220:	; 80044220
-80044220	addiu  sp, sp, $ffe8 (=-$18)
-80044224	lui    v0, $8005
-80044228	addiu  v0, v0, $5f72
-8004422C	sw     ra, $0014(sp)
-80044230	sw     s0, $0010(sp)
-80044234	lbu    s0, $0000(v0)
-80044238	andi   a1, a0, $00ff
-8004423C	beq    a1, zero, L4426c [$8004426c]
-80044240	sb     a0, $0000(v0)
-80044244	lui    v0, $8005
-80044248	lw     v0, $5f6c(v0)
-8004424C	lui    a2, $8005
-80044250	lbu    a2, $5f70(a2)
-80044254	lui    a3, $8005
-80044258	lbu    a3, $5f73(a3)
-8004425C	lui    a0, $8002
-80044260	addiu  a0, a0, $916c (=-$6e94)
-80044264	jalr   v0 ra
-80044268	nop
-
-L4426c:	; 8004426C
-8004426C	addu   v0, s0, zero
-80044270	lw     ra, $0014(sp)
-80044274	lw     s0, $0010(sp)
-80044278	addiu  sp, sp, $0018
-8004427C	jr     ra 
-80044280	nop
 
 80044284	lui    v0, $8005
 80044288	lbu    v0, $5f72(v0)
@@ -37686,55 +37658,6 @@ func44340:	; 80044340
 // system_set_draw_sync_callback
 80044350-800443A8
 ////////////////////////////////
-
-
-
-func443ac:	; 800443AC
-800443AC	addiu  sp, sp, $ffe0 (=-$20)
-800443B0	sw     s1, $0014(sp)
-800443B4	lui    s1, $8005
-800443B8	addiu  s1, s1, $5f72
-800443BC	sw     ra, $0018(sp)
-800443C0	sw     s0, $0010(sp)
-800443C4	lbu    v0, $0000(s1)
-800443C8	nop
-800443CC	sltiu  v0, v0, $0002
-800443D0	bne    v0, zero, L443f4 [$800443f4]
-800443D4	addu   s0, a0, zero
-800443D8	lui    a0, $8002
-800443DC	addiu  a0, a0, $91c8 (=-$6e38)
-800443E0	lui    v0, $8005
-800443E4	lw     v0, $5f6c(v0)
-800443E8	nop
-800443EC	jalr   v0 ra
-800443F0	addu   a1, s0, zero
-
-L443f4:	; 800443F4
-800443F4	bne    s0, zero, L44408 [$80044408]
-800443F8	addiu  a0, s1, $006a
-800443FC	addiu  a1, zero, $ffff (=-$1)
-80044400	jal    func46ff0 [$80046ff0]
-80044404	addiu  a2, zero, $0014
-
-L44408:	; 80044408
-80044408	lui    a0, $0300
-8004440C	lui    v0, $8005
-80044410	lw     v0, $5f68(v0)
-80044414	beq    s0, zero, L44420 [$80044420]
-80044418	ori    a0, a0, $0001
-8004441C	lui    a0, $0300
-
-L44420:	; 80044420
-80044420	lw     v0, $0010(v0)
-80044424	nop
-80044428	jalr   v0 ra
-8004442C	nop
-80044430	lw     ra, $0018(sp)
-80044434	lw     s1, $0014(sp)
-80044438	lw     s0, $0010(sp)
-8004443C	addiu  sp, sp, $0020
-80044440	jr     ra 
-80044444	nop
 
 
 
@@ -44420,15 +44343,6 @@ L4c164:	; 8004C164
 8004C16C-8004C194
 ////////////////////////////////
 
-
-
-func4c198:	; 8004C198
-8004C198	lui    v0, $8006
-8004C19C	lw     v0, $8030(v0)
-8004C1A0	lui    at, $8006
-8004C1A4	sw     a0, $8030(at)
-8004C1A8	jr     ra 
-8004C1AC	nop
 
 
 func4c1b0:	; 8004C1B0

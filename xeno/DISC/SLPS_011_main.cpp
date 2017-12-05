@@ -25,31 +25,31 @@ RA = 8001960c; // func1960c()
 
 func4b5e8();
 
-80019630	jal    func44220 [$80044220]
 A0 = 0;
-80019638	jal    func4c198 [$8004c198]
-A0 = 0;
+system_psyq_set_graph_debug();
 
 A0 = 0;
-system_reset_graph();
+func4c198();
 
-A0 = SP + 0010;
+A0 = 0;
+system_psyq_reset_graph();
+
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(180);
+[SP + 16] = h(1e0);
+
+A0 = SP + 10;
 A1 = 0;
 A2 = 0;
 A3 = 0;
-V0 = 0180;
-[SP + 0014] = h(V0);
-V0 = 01e0;
-[SP + 0010] = h(0);
-[SP + 0012] = h(0);
-[SP + 0016] = h(V0);
 system_clear_image();
 
 A0 = 0;
 system_draw_sync();
 
-A0 = 0001;
-8001967C	jal    func443ac [$800443ac]
+A0 = 1;
+system_psyq_set_disp_mask();
 
 80019684	jal    func48a6c [$80048a6c]
 
