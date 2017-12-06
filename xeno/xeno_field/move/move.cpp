@@ -257,7 +257,7 @@ if( ( w[struct_138 + 0] & 00041800 ) == 0 )
 
         A0 = SP + 20;
         A1 = SP + 30;
-        system_normalize_word_vector_T0_T1_T2_to_word();
+        system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
         if( w[SP + 30] == 0 )
         {
@@ -800,7 +800,7 @@ if( V0 != -1 ) // can move
 
         A0 = SP + 50;
         A1 = SP + 60;
-        system_normalize_word_vector_T0_T1_T2_to_word();
+        system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
         A0 = w[SP + 20] >> 8;
         A1 = w[SP + 28] >> 8;

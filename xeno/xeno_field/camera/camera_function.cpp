@@ -520,14 +520,14 @@ ret_addr = A2;
 [SP + 38] = w(h[intersect_line + 6] - h[intersect_line + 2]);
 A0 = SP + 30;
 A1 = SP + 10;
-system_normalize_word_vector_T0_T1_T2_to_word();
+system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
 [SP + 30] = w(h[change_line + 4] - h[change_line + 0]);
 [SP + 34] = w(0);
 [SP + 38] = w(h[change_line + 6] - h[change_line + 2]);
 A0 = SP + 30;
 A1 = SP + 20;
-system_normalize_word_vector_T0_T1_T2_to_word();
+system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
 A0 = ( ( w[SP + 20] * w[SP + 18] ) - ( w[SP + 28] * w[SP + 10] ) ) >> c;
 

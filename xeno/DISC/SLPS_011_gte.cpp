@@ -1,5 +1,25 @@
 ////////////////////////////////
+// func48a6c()
+
+[80056090] = w(RA);
+system_patch_bios_exception_handler();
+RA = w[80056090];
+
+SR = SR | 40000000;
+ZSF3 = 155;
+ZSF4 = 100;
+H = 3e8;
+DQA = -1062;
+DQB = 1400000;
+OFX = 0;
+OFY = 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_gte_apply_matrix_lv()
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -87,6 +107,7 @@ return A2;
 ////////////////////////////////
 // system_gte_push_matrix()
 // Saves a constant rotation matrix on a stack. The stack has 20 slots.
+
 T6 = w[800563cc];
 if( T6 >= 280 )
 {
@@ -112,6 +133,7 @@ else
 ////////////////////////////////
 // system_gte_pop_matrix()
 // Resets a constant rotation matrix from a stack.
+
 T6 = w[800563cc];
 if( T6 <= 0 )
 {
@@ -137,6 +159,7 @@ else
 
 ////////////////////////////////
 // system_gte_set_projection_plane_distance()
+
 H = A0;
 ////////////////////////////////
 
@@ -144,6 +167,7 @@ H = A0;
 
 ////////////////////////////////
 // system_gte_vector_perspective_transform()
+
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
 gte_RTPS(); // Perspective transform
@@ -157,6 +181,7 @@ return SZ3 / 4;
 
 ////////////////////////////////
 // system_gte_square_of_vector()
+
 IR1 = w[A0 + 0];
 IR2 = w[A0 + 4];
 IR3 = w[A0 + 8];
@@ -171,6 +196,7 @@ return A1;
 
 ////////////////////////////////
 // system_gte_matrix_mult_and_trans()
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -217,6 +243,7 @@ return A2;
 
 ////////////////////////////////
 // system_gte_matrix_multiplication_to_A2()
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -250,6 +277,7 @@ return A2;
 
 ////////////////////////////////
 // system_gte_matrix_multiplication_to_A1()
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -288,7 +316,8 @@ return A1;
 
 
 ////////////////////////////////
-// system_gte_calculate_normals_color_by_3vectors_only
+// system_gte_calculate_normals_color_by_3vectors_only()
+
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
 VXY1 = w[A1 + 0];
@@ -304,7 +333,8 @@ gte_NCCT(); // Normal color col.v0, v1, v2
 
 
 ////////////////////////////////
-// system_gte_calculate_normals_color_by_3vectors_and_color
+// system_gte_calculate_normals_color_by_3vectors_and_color()
+
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
 VXY1 = w[A1 + 0];
@@ -321,7 +351,8 @@ gte_NCCT(); // Normal color col.v0, v1, v2
 
 
 ////////////////////////////////
-// system_gte_calculate_normal_color_by_vector_and_color
+// system_gte_calculate_normal_color_by_vector_and_color()
+
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
 RGB = w[A1 + 0];
@@ -332,7 +363,8 @@ gte_NCCS(); // Normal color col. v0.
 
 
 ////////////////////////////////
-// system_gte_calculate_normal_color_by_vector_only
+// system_gte_calculate_normal_color_by_vector_only()
+
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
 gte_NCS(); // Normal color v0.
@@ -342,7 +374,8 @@ gte_NCS(); // Normal color v0.
 
 
 ////////////////////////////////
-// system_gte_calculate_and_set_lighting_matrix
+// system_gte_calculate_and_set_lighting_matrix()
+
 V1 = 80059600;
 
 R11R12 = w[V1 + 0];
@@ -386,6 +419,7 @@ L33 = w[SP + 10];
 
 ////////////////////////////////
 // func49724
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -423,6 +457,7 @@ return A0;
 
 ////////////////////////////////
 // func4a5e4()
+
 VXY0 = w[A0 + 0];
 VZ0  = w[A0 + 4];
 VXY1 = w[A1 + 0];
@@ -452,6 +487,7 @@ return SZ3 >> 2;
 
 ////////////////////////////////
 // system_gte_set_rotation_matrix()
+
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
 R22R23 = w[A0 + 8];
@@ -463,6 +499,7 @@ R33 = w[A0 + 10];
 
 ////////////////////////////////
 // system_gte_set_translation_vector()
+
 TRX = w[A0 + 14];
 TRY = w[A0 + 18];
 TRZ = w[A0 + 1c];
@@ -471,7 +508,7 @@ TRZ = w[A0 + 1c];
 
 
 ////////////////////////////////
-// system_outer_product2_A0_A1_to_A2()
+// system_gte_outer_product2_A0_A1_to_A2()
 T5 = R11R12;
 T6 = R22R23;
 T7 = R33;
@@ -501,11 +538,11 @@ R33 = T7;
 
 
 ////////////////////////////////
-// system_normalize_word_vector_T0_T1_T2_to_half()
+// system_gte_normalize_word_vector_T0_T1_T2_to_half()
 T0 = w[A0 + 0];
 T1 = w[A0 + 4];
 T2 = w[A0 + 8];
-system_normalize_vector_T0_T1_T2();
+system_gte_normalize_vector_T0_T1_T2();
 [A1 + 0] = h(T0);
 [A1 + 2] = h(T1);
 [A1 + 4] = h(T2);
@@ -514,11 +551,12 @@ system_normalize_vector_T0_T1_T2();
 
 
 ////////////////////////////////
-// system_normalize_word_vector_T0_T1_T2_to_word()
+// system_gte_normalize_word_vector_T0_T1_T2_to_word()
+
 T0 = w[A0 + 0];
 T1 = w[A0 + 4];
 T2 = w[A0 + 8];
-system_normalize_vector_T0_T1_T2();
+system_gte_normalize_vector_T0_T1_T2();
 [A1 + 0] = w(T0);
 [A1 + 4] = w(T1);
 [A1 + 8] = w(T2);
@@ -527,11 +565,12 @@ system_normalize_vector_T0_T1_T2();
 
 
 ////////////////////////////////
-// system_normalize_half_vector_T0_T1_T2_to_half()
+// system_gte_normalize_half_vector_T0_T1_T2_to_half()
+
 T0 = h[A0 + 0];
 T1 = h[A0 + 2];
 T2 = h[A0 + 4];
-system_normalize_vector_T0_T1_T2();
+system_gte_normalize_vector_T0_T1_T2();
 [A1 + 0] = h(T0);
 [A1 + 2] = h(T1);
 [A1 + 4] = h(T2);
@@ -540,7 +579,8 @@ system_normalize_vector_T0_T1_T2();
 
 
 ////////////////////////////////
-// system_normalize_vector_T0_T1_T2()
+// system_gte_normalize_vector_T0_T1_T2()
+
 VXY0 = T0;
 VXY1 = T1;
 VXY2 = T2;
@@ -580,7 +620,8 @@ T2 = MAC2 >> T6;
 
 
 ////////////////////////////////
-// system_outer_product_A0_A1_to_A2()
+// system_gte_outer_product_A0_A1_to_A2()
+
 T5 = R11R12;
 T6 = R22R23;
 T7 = R33;

@@ -784,7 +784,7 @@ if( S4 == walkmesh_blocks )
     // store normalized normal
     A0 = SP + 50 + h[data_138 + 10] * 10;
     A1 = data_138 + 50;
-    system_normalize_word_vector_T0_T1_T2_to_word();
+    system_gte_normalize_word_vector_T0_T1_T2_to_word();
 }
 else
 {
@@ -1784,19 +1784,19 @@ S4 = A4; // address for normal
 [SP + 38] = w(h[B_vec + 4] - h[A_vec + 4]);
 A0 = SP + 30;
 A1 = SP + 10;
-system_normalize_word_vector_T0_T1_T2_to_word();
+system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
 [SP + 30] = w(h[C_vec + 0] - h[A_vec + 0]);
 [SP + 34] = w(h[C_vec + 2] - h[A_vec + 2]);
 [SP + 38] = w(h[C_vec + 4] - h[A_vec + 4]);
 A0 = SP + 30;
 A1 = SP + 20;
-system_normalize_word_vector_T0_T1_T2_to_word();
+system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
 A0 = SP + 10;
 A1 = SP + 20;
 A2 = S4; // normal
-system_outer_product2_A0_A1_to_A2();
+system_gte_outer_product2_A0_A1_to_A2();
 
 if (w[S4 + 4] == 0)
 {
@@ -1852,7 +1852,7 @@ else
 
     A0 = SP + 10;
     A1 = SP + 20;
-    system_normalize_word_vector_T0_T1_T2_to_word();
+    system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
     A0 = w[move_vector + 0] >> c;
     A1 = w[move_vector + 8] >> c;

@@ -641,7 +641,7 @@ func75c60:	; 80075C60
 80075CBC	swc2   k1, $0008(s4)
 80075CC0	addu   a0, s4, zero
 80075CC4	addiu  s0, sp, $0038
-80075CC8	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80075CC8	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80075CCC	addu   a1, s0, zero
 80075CD0	lw     t4, $0000(s0)
 80075CD4	lw     t5, $0004(s0)
@@ -662,7 +662,7 @@ func75c60:	; 80075C60
 80075D10	swc2   k0, $0004(s4)
 80075D14	swc2   k1, $0008(s4)
 80075D18	addu   a0, s4, zero
-80075D1C	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80075D1C	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80075D20	addu   a1, fp, zero
 80075D24	lw     v0, $0038(sp)
 80075D28	lw     v1, $003c(sp)

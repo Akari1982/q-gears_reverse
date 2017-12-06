@@ -373,7 +373,7 @@ La9768:	; 800A9768
 800A97A4	jal    func49484 [$80049484]
 800A97A8	sh     v0, $002c(sp)
 800A97AC	addiu  a0, sp, $0018
-800A97B0	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+800A97B0	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 800A97B4	addiu  a1, s1, $0018
 800A97B8	lw     v1, $0018(s1)
 800A97BC	lw     v0, $0008(s2)

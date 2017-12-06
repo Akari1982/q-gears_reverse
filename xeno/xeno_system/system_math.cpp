@@ -42,7 +42,7 @@ S1 = A3;
 A0 = SP + 20;
 A1 = SP + 10;
 A2 = SP + 30;
-system_outer_product_A0_A1_to_A2;
+system_gte_outer_product_A0_A1_to_A2;
 
 A0 = w[SP + 30];
 A1 = w[SP + 34];
@@ -61,7 +61,7 @@ system_square_root;
 [SP + 38] = w(w[SP + 38] / V0);
 A0 = SP + 30;
 A1 = S1;
-system_normalize_word_vector_T0_T1_T2_to_half;
+system_gte_normalize_word_vector_T0_T1_T2_to_half;
 ////////////////////////////////
 
 

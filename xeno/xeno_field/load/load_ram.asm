@@ -5291,7 +5291,7 @@ L1e2c00:	; 801E2C00
 801E2C08	addu   a1, s6, zero
 
 L1e2c0c:	; 801E2C0C
-801E2C0C	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+801E2C0C	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 801E2C10	sw     v0, $0050(sp)
 
 L1e2c14:	; 801E2C14
@@ -7262,7 +7262,7 @@ func1e66bc:	; 801E66BC
 801E66D4	addu   a1, a2, zero
 801E66D8	addiu  a2, sp, $0010
 801E66DC	sw     ra, $002c(sp)
-801E66E0	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+801E66E0	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 801E66E4	sw     s0, $0020(sp)
 801E66E8	lw     a1, $0010(sp)
 801E66EC	lw     v0, $0000(s1)

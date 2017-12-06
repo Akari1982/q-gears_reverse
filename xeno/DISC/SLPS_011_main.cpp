@@ -51,7 +51,7 @@ system_draw_sync();
 A0 = 1;
 system_psyq_set_disp_mask();
 
-80019684	jal    func48a6c [$80048a6c]
+func48a6c(); // init gte and patch exception handler.
 
 8001968C	jal    func3615c [$8003615c]
 

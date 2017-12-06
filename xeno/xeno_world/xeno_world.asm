@@ -4209,18 +4209,18 @@ L73fa4:	; 80073FA4
 80073FD8	sw     v0, $0074(s1)
 80073FDC	addiu  a0, s1, $0040
 80073FE0	lw     a1, $0028(sp)
-80073FE4	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+80073FE4	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 80073FE8	addu   a2, fp, zero
 80073FEC	addu   a0, fp, zero
 80073FF0	addiu  s0, s1, $0060
-80073FF4	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80073FF4	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80073FF8	addu   a1, s0, zero
 80073FFC	addu   a1, s0, zero
 80074000	lw     a0, $0028(sp)
-80074004	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+80074004	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 80074008	addu   a2, s3, zero
 8007400C	addu   a0, s3, zero
-80074010	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80074010	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80074014	addu   a1, fp, zero
 80074018	lw     v0, $0060(s1)
 8007401C	lw     v1, $0064(s1)
@@ -11939,7 +11939,7 @@ L7b120:	; 8007B120
 8007B1B0	subu   v0, v0, a2
 8007B1B4	sra    v0, v0, $0c
 8007B1B8	subu   v0, zero, v0
-8007B1BC	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+8007B1BC	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 8007B1C0	sw     v0, $0018(s4)
 8007B1C4	lw     a0, $0000(s4)
 8007B1C8	lw     a1, $0008(s4)
@@ -11965,18 +11965,18 @@ L7b120:	; 8007B120
 8007B218	addu   a0, s4, zero
 8007B21C	addu   a1, s3, zero
 8007B220	addiu  s0, s4, $0030
-8007B224	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+8007B224	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 8007B228	addu   a2, s0, zero
 8007B22C	addu   a0, s0, zero
 8007B230	addiu  s1, s4, $0020
-8007B234	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+8007B234	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 8007B238	addu   a1, s1, zero
 8007B23C	addu   a0, s4, zero
 8007B240	addu   a1, s1, zero
-8007B244	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+8007B244	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 8007B248	addu   a2, s0, zero
 8007B24C	addu   a0, s0, zero
-8007B250	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+8007B250	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 8007B254	addu   a1, s3, zero
 8007B258	addu   a0, s2, zero
 8007B25C	lw     v0, $0020(s4)
@@ -15817,17 +15817,17 @@ L7e9b4:	; 8007E9B4
 8007EB30	addiu  v0, zero, $1000
 8007EB34	sw     zero, $0018(s4)
 8007EB38	sw     zero, $0010(s4)
-8007EB3C	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+8007EB3C	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 8007EB40	sw     v0, $0014(s4)
 8007EB44	addu   a0, s0, zero
-8007EB48	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+8007EB48	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 8007EB4C	addu   a1, s0, zero
 8007EB50	addu   a0, s4, zero
 8007EB54	addu   a1, s0, zero
-8007EB58	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+8007EB58	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 8007EB5C	addu   a2, s1, zero
 8007EB60	addu   a0, s1, zero
-8007EB64	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+8007EB64	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 8007EB68	addu   a1, a0, zero
 8007EB6C	addiu  s0, s4, $0150
 8007EB70	addu   a0, s0, zero
@@ -22210,7 +22210,7 @@ func84540:	; 80084540
 8008476C	sw     v0, $0024(at)
 80084770	lui    at, $1f80
 80084774	sw     v1, $0028(at)
-80084778	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+80084778	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 8008477C	ori    a2, a2, $0020
 80084780	lui    a0, $1f80
 80084784	ori    a0, a0, $0020
@@ -22228,7 +22228,7 @@ func84540:	; 80084540
 800847B4	sw     v0, $0024(at)
 800847B8	lui    at, $1f80
 800847BC	sw     v1, $0028(at)
-800847C0	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+800847C0	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 800847C4	addu   a1, s5, zero
 800847C8	addu   a0, s3, zero
 800847CC	lui    a1, $1f80
@@ -22382,7 +22382,7 @@ L848f8:	; 800848F8
 80084A08	sw     v0, $0024(at)
 80084A0C	lui    at, $1f80
 80084A10	sw     v1, $0028(at)
-80084A14	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+80084A14	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 80084A18	ori    a2, a2, $0020
 80084A1C	lui    a0, $1f80
 80084A20	ori    a0, a0, $0020
@@ -22401,7 +22401,7 @@ L848f8:	; 800848F8
 80084A54	sw     v0, $0024(at)
 80084A58	lui    at, $1f80
 80084A5C	sw     v1, $0028(at)
-80084A60	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80084A60	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80084A64	ori    a1, a1, $0030
 80084A68	lui    a0, $1f80
 80084A6C	ori    a0, a0, $0110
@@ -22795,7 +22795,7 @@ L85010:	; 80085010
 80085028	subu   v0, v0, a2
 8008502C	subu   v1, v1, a3
 80085030	sw     v0, $0030(s1)
-80085034	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80085034	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80085038	sw     v1, $0038(s1)
 8008503C	addiu  a0, s1, $0040
 80085040	lw     v0, $0020(s1)
@@ -22807,7 +22807,7 @@ L85010:	; 80085010
 80085058	subu   v0, v0, a2
 8008505C	subu   v1, v1, a3
 80085060	sw     v0, $0040(s1)
-80085064	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80085064	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80085068	sw     v1, $0048(s1)
 8008506C	addiu  a0, s1, $0050
 80085070	lw     v0, $0000(s1)
@@ -22819,7 +22819,7 @@ L85010:	; 80085010
 80085088	subu   v0, v0, a2
 8008508C	subu   v1, v1, a3
 80085090	sw     v0, $0050(s1)
-80085094	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80085094	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80085098	sw     v1, $0058(s1)
 8008509C	lw     v0, $0010(sp)
 800850A0	lw     ra, $002c(sp)
@@ -25003,10 +25003,10 @@ func86f6c:	; 80086F6C
 80086F98	sw     ra, $001c(sp)
 80086F9C	sw     zero, $0008(s0)
 80086FA0	sw     zero, $0000(s0)
-80086FA4	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+80086FA4	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 80086FA8	sw     v0, $0004(s0)
 80086FAC	addu   a0, s0, zero
-80086FB0	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80086FB0	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80086FB4	addu   a1, s0, zero
 80086FB8	lw     v0, $0000(s0)
 80086FBC	addu   a0, s2, zero
@@ -25016,10 +25016,10 @@ func86f6c:	; 80086F6C
 80086FCC	sh     v0, $0002(s1)
 80086FD0	lw     v0, $0008(s0)
 80086FD4	addu   a2, s0, zero
-80086FD8	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+80086FD8	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 80086FDC	sh     v0, $0004(s1)
 80086FE0	addu   a0, s0, zero
-80086FE4	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80086FE4	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80086FE8	addu   a1, s0, zero
 80086FEC	lw     v0, $0000(s0)
 80086FF0	nop
@@ -25211,7 +25211,7 @@ L87264:	; 80087264
 800872AC	jal    func9291c [$8009291c]
 800872B0	sw     v1, $0008(s2)
 800872B4	addu   a0, s2, zero
-800872B8	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+800872B8	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 800872BC	addu   a1, s2, zero
 800872C0	addu   v1, zero, zero
 
@@ -25401,7 +25401,7 @@ L87514:	; 80087514
 80087564	jal    func9291c [$8009291c]
 80087568	lui    a0, $1f80
 8008756C	lui    a0, $1f80
-80087570	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80087570	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80087574	lui    a1, $1f80
 80087578	addiu  a0, s1, $0038
 8008757C	addu   a1, a0, zero
@@ -25421,7 +25421,7 @@ L87514:	; 80087514
 800875B4	addu   v0, v0, v1
 800875B8	sll    v0, v0, $06
 800875BC	sra    v0, v0, $0c
-800875C0	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+800875C0	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 800875C4	sw     v0, $0040(s1)
 800875C8	lui    a0, $1f80
 800875CC	lui    a1, $1f80
@@ -27071,7 +27071,7 @@ L88c80:	; 80088C80
 80088C9C	addu   a1, s3, zero
 80088CA0	andi   v0, v0, $0fff
 80088CA4	addiu  v0, v0, $f800 (=-$800)
-80088CA8	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80088CA8	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80088CAC	sw     v0, $0018(s3)
 80088CB0	andi   v0, s4, $0004
 80088CB4	beq    v0, zero, L88cc8 [$80088cc8]
@@ -27165,7 +27165,7 @@ L88dc0:	; 80088DC0
 80088DDC	addu   a1, s3, zero
 80088DE0	andi   v0, v0, $0fff
 80088DE4	addiu  v0, v0, $f800 (=-$800)
-80088DE8	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80088DE8	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80088DEC	sw     v0, $0018(s3)
 80088DF0	andi   v0, s4, $0008
 80088DF4	beq    v0, zero, L88e08 [$80088e08]
@@ -27245,7 +27245,7 @@ L88e44:	; 80088E44
 80088EFC	addu   a0, s3, zero
 80088F00	subu   v0, v0, v1
 80088F04	sra    v0, v0, $0c
-80088F08	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80088F08	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80088F0C	sw     v0, $0008(s3)
 80088F10	lw     v1, $0010(s3)
 80088F14	lw     v0, $0030(s1)
@@ -35754,7 +35754,7 @@ L90704:	; 80090704
 80090738	addiu  a0, s1, $0038
 8009073C	subu   v0, zero, v0
 80090740	addu   a1, a0, zero
-80090744	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80090744	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80090748	sw     v0, $0040(s1)
 8009074C	lui    v0, $800a
 80090750	lhu    v0, $b0f8(v0)
@@ -38517,10 +38517,10 @@ L92d18:	; 80092D18
 80092D20	ori    a0, s2, $0010
 80092D24	addu   a1, s2, zero
 80092D28	addiu  s0, a1, $0020
-80092D2C	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+80092D2C	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 80092D30	addu   a2, s0, zero
 80092D34	addu   a0, s0, zero
-80092D38	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80092D38	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80092D3C	addu   a1, s3, zero
 80092D40	lw     ra, $0020(sp)
 80092D44	lw     s3, $001c(sp)
@@ -38837,10 +38837,10 @@ L9319c:	; 8009319C
 L931b4:	; 800931B4
 800931B4	addu   a1, s1, zero
 800931B8	addiu  s0, s1, $0020
-800931BC	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+800931BC	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 800931C0	addu   a2, s0, zero
 800931C4	addu   a0, s0, zero
-800931C8	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+800931C8	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 800931CC	addu   a1, s1, zero
 800931D0	sra    v0, s7, $0c
 800931D4	andi   v0, v0, $007f
@@ -40414,11 +40414,11 @@ func9470c:	; 8009470C
 80094740	sw     zero, $0010(at)
 80094744	lui    at, $1f80
 80094748	sw     v0, $0014(at)
-8009474C	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+8009474C	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 80094750	ori    a2, a2, $0020
 80094754	lui    a0, $1f80
 80094758	ori    a0, a0, $0020
-8009475C	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+8009475C	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 80094760	lui    a1, $1f80
 80094764	lui    a0, $1f80
 80094768	lw     a0, $0000(a0)
@@ -42758,16 +42758,16 @@ L96664:	; 80096664
 8009667C	subu   v0, v0, v1
 80096680	lui    at, $1f80
 80096684	sw     v0, $0008(at)
-80096688	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+80096688	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 8009668C	ori    a1, a1, $0030
 80096690	lui    a0, $1f80
 80096694	ori    a0, a0, $0030
 80096698	addiu  a1, s0, $0010
-8009669C	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+8009669C	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 800966A0	lui    a2, $1f80
 800966A4	lui    a0, $1f80
 800966A8	lui    a1, $1f80
-800966AC	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+800966AC	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 800966B0	ori    a1, a1, $0010
 800966B4	lui    a0, $1f80
 
@@ -42775,11 +42775,11 @@ L966b8:	; 800966B8
 800966B8	ori    a0, a0, $0030
 800966BC	lui    a1, $1f80
 800966C0	ori    a1, a1, $0010
-800966C4	jal    system_outer_product2_A0_A1_to_A2 [$8004a328]
+800966C4	jal    system_gte_outer_product2_A0_A1_to_A2 [$8004a328]
 800966C8	lui    a2, $1f80
 800966CC	lui    a0, $1f80
 800966D0	lui    a1, $1f80
-800966D4	jal    system_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
+800966D4	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
 800966D8	ori    a1, a1, $0020
 800966DC	lui    a0, $1f80
 800966E0	ori    a0, a0, $0048
@@ -43795,13 +43795,13 @@ func9742c:	; 8009742C
 80097444	lui    a2, $800a
 80097448	addiu  a2, a2, $bc10 (=-$43f0)
 8009744C	sw     ra, $0014(sp)
-80097450	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+80097450	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 80097454	addu   a1, s0, zero
 80097458	lui    a1, $800a
 8009745C	addiu  a1, a1, $af64 (=-$509c)
 80097460	lui    a2, $800a
 80097464	addiu  a2, a2, $bc2c (=-$43d4)
-80097468	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+80097468	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 8009746C	addu   a0, s0, zero
 80097470	lui    a0, $800a
 80097474	addiu  a0, a0, $af74 (=-$508c)
@@ -43809,13 +43809,13 @@ func9742c:	; 8009742C
 8009747C	addiu  s0, s0, $af44 (=-$50bc)
 80097480	lui    a2, $800a
 80097484	addiu  a2, a2, $bc5c (=-$43a4)
-80097488	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+80097488	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 8009748C	addu   a1, s0, zero
 80097490	lui    a1, $800a
 80097494	addiu  a1, a1, $af84 (=-$507c)
 80097498	lui    a2, $800a
 8009749C	addiu  a2, a2, $bbd8 (=-$4428)
-800974A0	jal    system_outer_product_A0_A1_to_A2 [$8004a380]
+800974A0	jal    system_gte_outer_product_A0_A1_to_A2 [$8004a380]
 800974A4	addu   a0, s0, zero
 800974A8	lw     ra, $0014(sp)
 800974AC	lw     s0, $0010(sp)
