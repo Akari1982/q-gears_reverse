@@ -26485,13 +26485,6 @@ func34dbc
 
 
 
-////////////////////////////////
-// func354c0
-800354C0-80035554
-////////////////////////////////
-
-
-
 func35558:	; 80035558
 80035558	sll    v0, a0, $04
 8003555C	addu   v0, v0, a0
@@ -26539,27 +26532,6 @@ L355dc:	; 800355DC
 
 
 
-////////////////////////////////
-// func355e4
-800355E4-8003564C
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func35650
-80035650-800356F4
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func356f8
-800356F8-8003574C
-////////////////////////////////
-
-
-
 80035750	sra    a0, a0, $0c
 80035754	andi   a0, a0, $000f
 80035758	lui    at, $8005
@@ -26578,38 +26550,10 @@ L355dc:	; 800355DC
 
 
 
-////////////////////////////////
-// func35788
-80035788-80035AB4
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func35ab8
-80035AB8-80035B84
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func35b88
-80035B88-80035C70
-////////////////////////////////
-
-
-
 80035C74	lui    v0, $8006
 80035C78	lw     v0, $8a18(v0)
 80035C7C	jr     ra 
 80035C80	nop
-
-
-
-////////////////////////////////
-// func35c84
-80035C84-80035D14
-////////////////////////////////
 
 
 
@@ -26815,35 +26759,6 @@ L35fd4:	; 80035FD4
 80035FEC	nop
 
 
-func35ff0:	; 80035FF0
-80035FF0	addiu  sp, sp, $ffe8 (=-$18)
-80035FF4	lui    a0, $8006
-80035FF8	addiu  a0, a0, $9858 (=-$67a8)
-80035FFC	sw     ra, $0010(sp)
-80036000	sb     zero, $0000(a0)
-80036004	lui    at, $8006
-80036008	sh     zero, $985c(at)
-8003600C	lui    at, $8006
-80036010	sb     zero, $985e(at)
-80036014	lui    at, $8006
-80036018	sb     zero, $985f(at)
-8003601C	lwl    v0, $0003(a0)
-80036020	lwr    v0, $0000(a0)
-80036024	lwl    v1, $0007(a0)
-80036028	lwr    v1, $0004(a0)
-8003602C	swl    v0, $000b(a0)
-80036030	swr    v0, $0008(a0)
-80036034	swl    v1, $000f(a0)
-80036038	swr    v1, $000c(a0)
-8003603C	ori    a1, zero, $0004
-80036040	addiu  a2, a0, $0008
-80036044	jal    func40ab4 [$80040ab4]
-80036048	ori    a3, zero, $0004
-8003604C	lw     ra, $0010(sp)
-80036050	addiu  sp, sp, $0018
-80036054	jr     ra 
-80036058	nop
-
 
 func3605c:	; 8003605C
 8003605C	addu   a1, a0, zero
@@ -26924,44 +26839,6 @@ func360f4:	; 800360F4
 80036154	jr     ra 
 80036158	nop
 
-
-func3615c:	; 8003615C
-8003615C	addiu  sp, sp, $ffe8 (=-$18)
-80036160	lui    a0, $8006
-80036164	addiu  a0, a0, $1c8c
-80036168	ori    a1, zero, $0022
-8003616C	addiu  a2, a0, $0022
-80036170	sw     ra, $0010(sp)
-80036174	jal    func406a0 [$800406a0]
-80036178	ori    a3, zero, $0022
-8003617C	jal    func4073c [$8004073c]
-80036180	nop
-80036184	jal    system_bios_change_clear_pad [$8004044c]
-80036188	addu   a0, zero, zero
-8003618C	jal    func35c84 [$80035c84]
-80036190	nop
-80036194	jal    func35ff0 [$80035ff0]
-80036198	nop
-8003619C	ori    v1, zero, $0007
-800361A0	lui    a0, $8005
-800361A4	addiu  a0, a0, $f8df (=-$721)
-800361A8	ori    v0, zero, $0001
-800361AC	lui    at, $8005
-800361B0	sw     zero, $f8a8(at)
-800361B4	lui    at, $8006
-800361B8	sb     v0, $8a28(at)
-800361BC	lui    at, $8006
-800361C0	sw     zero, $8a2c(at)
-
-loop361c4:	; 800361C4
-800361C4	sb     v1, $0000(a0)
-800361C8	addiu  v1, v1, $ffff (=-$1)
-800361CC	bgez   v1, loop361c4 [$800361c4]
-800361D0	addiu  a0, a0, $ffff (=-$1)
-800361D4	lw     ra, $0010(sp)
-800361D8	addiu  sp, sp, $0018
-800361DC	jr     ra 
-800361E0	nop
 
 
 func361e4:	; 800361E4
@@ -34734,11 +34611,11 @@ L405dc:	; 800405DC
 8004061C	addu   s2, a2, zero
 80040620	sw     s3, $001c(sp)
 80040624	sw     ra, $0020(sp)
-80040628	jal    func40ad4 [$80040ad4]
+80040628	jal    system_patch_bios_change_clear_pad [$80040ad4]
 8004062C	addu   s3, a3, zero
 80040630	jal    system_enter_critical_section [$8004034c]
 80040634	nop
-80040638	jal    func4098c [$8004098c]
+80040638	jal    system_patch3_bios_change_clear_pad [$8004098c]
 8004063C	nop
 80040640	jal    system_exit_critical_section [$8004035c]
 80040644	nop
@@ -34750,9 +34627,9 @@ L405dc:	; 800405DC
 8004065C	addu   a1, s1, zero
 80040660	addu   a2, s2, zero
 80040668	addu   a3, s3, zero
-func40934(); // bios B(15h) - OutdatedPadInitAndStart( type, button_dest, unused, unused )
+system_bios_outdated_pad_init_and_start(); // bios B(15h) - OutdatedPadInitAndStart( type, button_dest, unused, unused )
 
-8004066C	jal    func40a1c [$80040a1c]
+8004066C	jal    system_patch2_bios_change_clear_pad [$80040a1c]
 80040670	nop
 80040674	addiu  v0, zero, $0001
 80040678	lui    at, $8005
@@ -34767,70 +34644,13 @@ func40934(); // bios B(15h) - OutdatedPadInitAndStart( type, button_dest, unused
 8004069C	nop
 
 
-func406a0:	; 800406A0
-800406A0	addiu  sp, sp, $ffd8 (=-$28)
-800406A4	sw     s0, $0010(sp)
-800406A8	addu   s0, a0, zero
-800406AC	sw     s1, $0014(sp)
-800406B0	addu   s1, a1, zero
-800406B4	sw     s2, $0018(sp)
-800406B8	addu   s2, a2, zero
-800406BC	sw     s3, $001c(sp)
-800406C0	sw     ra, $0020(sp)
-800406C4	jal    func40ad4 [$80040ad4]
-800406C8	addu   s3, a3, zero
-800406CC	jal    system_enter_critical_section [$8004034c]
-800406D0	nop
-800406D4	jal    func4098c [$8004098c]
-800406D8	nop
-800406DC	jal    system_exit_critical_section [$8004035c]
-800406E0	nop
-800406E4	jal    system_bios_change_clear_pad [$8004044c]
-800406E8	addu   a0, zero, zero
-800406EC	jal    func407a4 [$800407a4]
-800406F0	nop
-800406F4	addu   a0, s0, zero
-800406F8	addu   a1, s1, zero
-800406FC	addu   a2, s2, zero
-80040704	addu   a3, s3, zero
-func40904(); // bios B(12h) - InitPad( buf1, siz1, buf2, siz2 )
-
-80040708	jal    func40a1c [$80040a1c]
-8004070C	nop
-80040710	addiu  v0, zero, $0001
-80040714	lui    at, $8005
-80040718	sw     v0, $5ab4(at)
-8004071C	lw     ra, $0020(sp)
-80040720	lw     s3, $001c(sp)
-80040724	lw     s2, $0018(sp)
-80040728	lw     s1, $0014(sp)
-8004072C	lw     s0, $0010(sp)
-80040730	addiu  sp, sp, $0028
-80040734	jr     ra 
-80040738	nop
-
-
-func4073c:	; 8004073C
-8004073C	addiu  sp, sp, $ffe8 (=-$18)
-80040740	sw     ra, $0010(sp)
-func40914(); // bios B(13h) - StartPad()
-
-8004074C	jal    system_bios_change_clear_pad [$8004044c]
-80040750	addu   a0, zero, zero
-80040754	jal    func40964 [$80040964]
-80040758	nop
-8004075C	lw     ra, $0010(sp)
-80040760	addiu  sp, sp, $0018
-80040764	jr     ra 
-80040768	nop
-
 
 func4076c:	; 8004076C
 8004076C	addiu  sp, sp, $ffe8 (=-$18)
 80040770	sw     ra, $0010(sp)
 80040774	jal    func40978 [$80040978]
 
-func40924(); // bios B(14h) - StopPad()
+system_bios_stop_pad();
 
 80040784	jal    func40824 [$80040824]
 80040788	nop
@@ -34842,41 +34662,6 @@ func40924(); // bios B(14h) - StopPad()
 800407A0	nop
 
 
-func407a4:	; 800407A4
-800407A4	addiu  sp, sp, $ffe8 (=-$18)
-800407A8	sw     ra, $0014(sp)
-800407AC	jal    system_enter_critical_section [$8004034c]
-800407B0	sw     s0, $0010(sp)
-800407B4	addiu  a0, zero, $0001
-800407B8	lui    v1, $8006
-800407BC	addiu  v1, v1, $98a0 (=-$6760)
-800407C0	addiu  s0, v1, $fffc (=-$4)
-800407C4	lui    v0, $8004
-800407C8	addiu  v0, v0, $085c
-800407CC	sw     v0, $0000(v1)
-800407D0	lui    v0, $8004
-800407D4	addiu  v0, v0, $08c4
-800407D8	lui    at, $8006
-800407DC	sw     v0, $98a4(at)
-800407E0	lui    at, $8006
-800407E4	sw     zero, $989c(at)
-800407E8	lui    at, $8006
-800407EC	sw     zero, $98a8(at)
-800407F0	jal    func40954 [$80040954]
-800407F4	addu   a1, s0, zero
-800407F8	addiu  a0, zero, $0001
-800407FC	jal    func40944 [$80040944]
-80040800	addu   a1, s0, zero
-80040804	jal    system_exit_critical_section [$8004035c]
-80040808	nop
-8004080C	addiu  v0, zero, $0001
-80040810	lw     ra, $0014(sp)
-80040814	lw     s0, $0010(sp)
-80040818	addiu  sp, sp, $0018
-8004081C	jr     ra 
-80040820	nop
-
-
 func40824:	; 80040824
 80040824	addiu  sp, sp, $ffe8 (=-$18)
 80040828	sw     ra, $0010(sp)
@@ -34884,7 +34669,7 @@ func40824:	; 80040824
 80040830	nop
 80040834	lui    a1, $8006
 80040838	addiu  a1, a1, $989c (=-$6764)
-8004083C	jal    func40954 [$80040954]
+8004083C	jal    system_bios_sys_deq_int_rp [$80040954]
 80040840	addiu  a0, zero, $0001
 80040844	jal    system_exit_critical_section [$8004035c]
 80040848	nop
@@ -34942,190 +34727,6 @@ L408b8:	; 800408B8
 L408fc:	; 800408FC
 800408FC	jr     ra 
 80040900	nop
-
-
-func40904:	; 80040904
-80040904	addiu  t2, zero, $00b0
-80040908	jr     t2 
-8004090C	addiu  t1, zero, $0012
-
-80040910	nop
-
-func40914:	; 80040914
-80040914	addiu  t2, zero, $00b0
-80040918	jr     t2 
-8004091C	addiu  t1, zero, $0013
-
-80040920	nop
-
-func40924:	; 80040924
-80040924	addiu  t2, zero, $00b0
-80040928	jr     t2 
-8004092C	addiu  t1, zero, $0014
-
-80040930	nop
-
-func40934:	; 80040934
-80040934	addiu  t2, zero, $00b0
-80040938	jr     t2 
-8004093C	addiu  t1, zero, $0015
-
-80040940	nop
-
-func40944:	; 80040944
-80040944	addiu  t2, zero, $00c0
-80040948	jr     t2 
-8004094C	addiu  t1, zero, $0002
-
-80040950	nop
-
-func40954:	; 80040954
-80040954	addiu  t2, zero, $00c0
-80040958	jr     t2 
-8004095C	addiu  t1, zero, $0003
-
-80040960	nop
-
-func40964:	; 80040964
-80040964	lui    t1, $8006
-80040968	lw     t1, $8a48(t1)
-8004096C	nop
-80040970	jr     t1 
-80040974	nop
-
-
-func40978:	; 80040978
-80040978	lui    t1, $8006
-8004097C	lw     t1, $8a4c(t1)
-80040980	nop
-80040984	jr     t1 
-80040988	nop
-
-
-func4098c:	; 8004098C
-8004098C	lui    at, $8006
-80040990	sw     ra, $8a40(at)
-80040994	jal    system_enter_critical_section [$8004034c]
-80040998	nop
-8004099C	addiu  t2, zero, $00b0
-800409A0	jalr   t2 ra
-800409A4	addiu  t1, zero, $0057
-800409A8	lw     v0, $016c(v0)
-800409AC	lui    at, $8006
-800409B0	addi   v1, v0, $0884
-800409B4	sw     v1, $8a48(at)
-800409B8	lui    at, $8006
-800409BC	addi   v1, v0, $0894
-800409C0	addiu  t1, zero, $000b
-800409C4	sw     v1, $8a4c(at)
-
-loop409c8:	; 800409C8
-800409C8	addiu  t1, t1, $ffff (=-$1)
-800409CC	sw     zero, $0594(v0)
-800409D0	bne    t1, zero, loop409c8 [$800409c8]
-800409D4	addiu  v0, v0, $0004
-800409D8	jal    system_bios_flush_cache [$800402cc]
-800409DC	nop
-800409E0	lui    ra, $8006
-800409E4	lw     ra, $8a40(ra)
-800409E8	nop
-800409EC	jr     ra 
-800409F0	nop
-
-
-func409f4:	; 800409F4
-800409F4	lui    t1, $8006
-800409F8	lw     t1, $8a54(t1)
-800409FC	addiu  sp, sp, $ffe8 (=-$18)
-80040A00	sw     ra, $0014(sp)
-80040A04	jalr   t1 ra
-80040A08	nop
-80040A0C	lw     ra, $0014(sp)
-80040A10	addiu  sp, sp, $0018
-80040A14	jr     ra 
-80040A18	nop
-
-
-func40a1c:	; 80040A1C
-80040A1C	lui    at, $8006
-80040A20	sw     ra, $8a50(at)
-80040A24	jal    system_enter_critical_section [$8004034c]
-80040A28	nop
-80040A2C	addiu  t2, zero, $00b0
-80040A30	jalr   t2 ra
-80040A34	addiu  t1, zero, $0057
-80040A38	lw     v0, $016c(v0)
-80040A3C	lui    t2, $8004
-80040A40	lui    t1, $8004
-80040A44	lui    at, $8006
-80040A48	addi   v1, v0, $07a0
-80040A4C	addiu  t2, t2, $0a98
-80040A50	addiu  t1, t1, $0aa8
-80040A54	sw     v1, $8a54(at)
-
-loop40a58:	; 80040A58
-80040A58	lw     v1, $0000(t2)
-80040A5C	addiu  t2, t2, $0004
-80040A60	sw     v1, $03d8(v0)
-80040A64	addiu  v0, v0, $0004
-80040A68	bne    t2, t1, loop40a58 [$80040a58]
-80040A6C	sw     v1, $04dc(v0)
-80040A70	jal    system_bios_flush_cache [$800402cc]
-80040A74	nop
-80040A78	jal    system_exit_critical_section [$8004035c]
-80040A7C	nop
-80040A80	lui    ra, $8006
-80040A84	lw     ra, $8a50(ra)
-80040A88	lui    v0, $8006
-80040A8C	lw     v0, $8a54(v0)
-80040A90	jr     ra 
-80040A94	nop
-
-80040A98	and    v0, v0, s5
-80040A9C	nop
-80040AA0	nop
-80040AA4	nop
-80040AA8	nop
-80040AAC	nop
-80040AB0	nop
-
-func40ab4:	; 80040AB4
-80040AB4	addiu  sp, sp, $ffe8 (=-$18)
-80040AB8	sw     ra, $0010(sp)
-80040ABC	jal    func409f4 [$800409f4]
-80040AC0	nop
-80040AC4	lw     ra, $0010(sp)
-80040AC8	addiu  sp, sp, $0018
-80040ACC	jr     ra 
-80040AD0	nop
-
-
-func40ad4:	; 80040AD4
-80040AD4	lui    at, $8006
-80040AD8	sw     ra, $8a60(at)
-80040ADC	jal    system_enter_critical_section [$8004034c]
-80040AE0	nop
-80040AE4	addiu  t2, zero, $00b0
-80040AE8	jalr   t2 ra
-80040AEC	addiu  t1, zero, $0057
-80040AF0	lw     v0, $016c(v0)
-80040AF4	addiu  t2, zero, $0009
-80040AF8	addi   v1, v0, $062c
-
-loop40afc:	; 80040AFC
-80040AFC	addiu  t2, t2, $ffff (=-$1)
-80040B00	sw     zero, $0000(v1)
-80040B04	bne    t2, zero, loop40afc [$80040afc]
-80040B08	addiu  v1, v1, $0004
-80040B0C	jal    system_bios_flush_cache [$800402cc]
-80040B10	nop
-80040B14	jal    system_exit_critical_section [$8004035c]
-80040B18	nop
-80040B1C	lui    ra, $8006
-80040B20	lw     ra, $8a60(ra)
-80040B24	nop
-80040B28	jr     ra 
-80040B2C	nop
 
 80040B30	nop
 80040B34	lui    v1, $8006
