@@ -34611,17 +34611,17 @@ L405dc:	; 800405DC
 8004061C	addu   s2, a2, zero
 80040620	sw     s3, $001c(sp)
 80040624	sw     ra, $0020(sp)
-80040628	jal    system_patch_bios_change_clear_pad [$80040ad4]
+80040628	jal    system_patch_no_pad_card_auto_ack [$80040ad4]
 8004062C	addu   s3, a3, zero
 80040630	jal    system_enter_critical_section [$8004034c]
 80040634	nop
-80040638	jal    system_patch3_bios_change_clear_pad [$8004098c]
+80040638	jal    system_patch_pad_error_handling_and_get_pad_enable_functions [$8004098c]
 8004063C	nop
 80040640	jal    system_exit_critical_section [$8004035c]
 80040644	nop
 80040648	jal    system_bios_change_clear_pad [$8004044c]
 8004064C	addu   a0, zero, zero
-80040650	jal    func407a4 [$800407a4]
+80040650	jal    system_add_interrupt_priority1_handler [$800407a4]
 80040654	nop
 80040658	addu   a0, s0, zero
 8004065C	addu   a1, s1, zero
@@ -34629,7 +34629,7 @@ L405dc:	; 800405DC
 80040668	addu   a3, s3, zero
 system_bios_outdated_pad_init_and_start(); // bios B(15h) - OutdatedPadInitAndStart( type, button_dest, unused, unused )
 
-8004066C	jal    system_patch2_bios_change_clear_pad [$80040a1c]
+8004066C	jal    system_patch_optional_pad_output [$80040a1c]
 80040670	nop
 80040674	addiu  v0, zero, $0001
 80040678	lui    at, $8005
@@ -34648,7 +34648,7 @@ system_bios_outdated_pad_init_and_start(); // bios B(15h) - OutdatedPadInitAndSt
 func4076c:	; 8004076C
 8004076C	addiu  sp, sp, $ffe8 (=-$18)
 80040770	sw     ra, $0010(sp)
-80040774	jal    func40978 [$80040978]
+80040774	jal    system_clear_pad_enable_flag [$80040978]
 
 system_bios_stop_pad();
 
@@ -34678,55 +34678,6 @@ func40824:	; 80040824
 80040854	jr     ra 
 80040858	addiu  sp, sp, $0018
 
-8004085C	lui    v0, $8005
-80040860	lw     v0, $5ab8(v0)
-80040864	addiu  sp, sp, $fff0 (=-$10)
-80040868	sh     zero, $000a(v0)
-8004086C	addiu  v0, zero, $000a
-80040870	sw     v0, $0000(sp)
-80040874	lw     v0, $0000(sp)
-80040878	nop
-8004087C	addiu  v0, v0, $ffff (=-$1)
-80040880	sw     v0, $0000(sp)
-80040884	lw     v1, $0000(sp)
-80040888	addiu  v0, zero, $ffff (=-$1)
-8004088C	beq    v1, v0, L408b8 [$800408b8]
-80040890	addu   v0, zero, zero
-80040894	addiu  v1, zero, $ffff (=-$1)
-
-loop40898:	; 80040898
-80040898	lw     v0, $0000(sp)
-8004089C	nop
-800408A0	addiu  v0, v0, $ffff (=-$1)
-800408A4	sw     v0, $0000(sp)
-800408A8	lw     v0, $0000(sp)
-800408AC	nop
-800408B0	bne    v0, v1, loop40898 [$80040898]
-800408B4	addu   v0, zero, zero
-
-L408b8:	; 800408B8
-800408B8	addiu  sp, sp, $0010
-800408BC	jr     ra 
-800408C0	nop
-
-800408C4	lui    v1, $8005
-800408C8	lw     v1, $5abc(v1)
-800408CC	nop
-800408D0	lw     v0, $0004(v1)
-800408D4	nop
-800408D8	andi   v0, v0, $0001
-800408DC	beq    v0, zero, L408fc [$800408fc]
-800408E0	addu   v0, zero, zero
-800408E4	lw     v0, $0000(v1)
-800408E8	nop
-800408EC	andi   v0, v0, $0001
-800408F0	bne    v0, zero, L408fc [$800408fc]
-800408F4	addiu  v0, zero, $0001
-800408F8	addu   v0, zero, zero
-
-L408fc:	; 800408FC
-800408FC	jr     ra 
-80040900	nop
 
 80040B30	nop
 80040B34	lui    v1, $8006

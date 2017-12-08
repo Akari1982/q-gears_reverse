@@ -76,6 +76,8 @@
 
 8004ff84 [][][][] address of SPU registers 0x1f801c00.
 
+80055ab4 [][][][] set to 1 after gamepad init.
+
 80055b54 [][][][] cd debug level.
                   0: no checks performed
                   1: check primitive commands
@@ -162,10 +164,14 @@
 80058a10 [][]     previously pressed button mask for controller 1 (details in 80058c0c).
 80058a14 [][]     previously pressed button mask for controller 2 (details in 80058c0c).
 80058a18 [][][][] number of button mask received since last update.
-80058a1c [][][][] current store index of buffer for received button masks
+80058a1c [][][][] current store index of buffer for received button masks.
 80058a20 [][][][] current receive index of buffer for received button masks.
 
 80058a24 []       ID1 of last reveived controller input.
+
+80058a48 [][][][] pointer to bios SetPadEnableFlag().
+80058a4c [][][][] pointer to bios ClearPadEnableFlag().
+80058a54 [][][][] pointer to bios SetPadOutput(src1,blah1,src2,blah2).
 
 80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
 
@@ -186,7 +192,7 @@
 
 80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40.
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
-80058b28 [][]     mask of buttons that was pressed in last update for controller 2 (details in 80058c0c).
+80058b2c [][]     mask of buttons that was pressed in last update for controller 2 (details in 80058c0c).
 
 80058b34 [][][][] store here pointer to precalculated normal for polygon lighting. Allocated memory from +18 in model data file.
 
@@ -270,6 +276,11 @@
 80059766 temp array with decimal numbers generated from number to render as text (0x2 size 0xa items).
 8005977a [][]     store -1 here when translate number to letters for text.
 80059780 temp array with letters generated from numbers to insert number in text (in usual text format).
+
+800598a0 [][][][] init with callback to 8004085c.
+800598a4 [][][][] init with callback to 800408c4.
+8005989c [][][][] init with 0.
+800598a8 [][][][] init with 0.
 
 80059b50 [][][][] file size for loading field file.
 80059b70 [][][][] pointer to allocated memory for loading field file.

@@ -53,7 +53,7 @@ system_psyq_set_disp_mask();
 
 func48a6c(); // init gte and patch exception handler.
 
-8001968C	jal    func3615c [$8003615c]
+func3615c();
 
 A0 = 0001;
 80019694	jal    func4e63c [$8004e63c]
