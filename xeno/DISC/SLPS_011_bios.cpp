@@ -15,6 +15,16 @@
 
 
 ////////////////////////////////
+// system_bios_bu_init()
+// A(55h) or A(70h) - _bu_init()
+800402DC	addiu  t2, zero, $00a0
+800402E0	jr     t2 
+800402E4	addiu  t1, zero, $0070
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_cd_remove()
 // A(56h) or A(72h) - CdRemove()  ;does NOT work due to SysDeqIntRP bug
 8004BD80	addiu  t2, zero, $00a0
@@ -25,46 +35,50 @@
 
 
 ////////////////////////////////
-// system_bios_return_from_exception()
-// B(17h) - ReturnFromException()
-// Restores the CPU registers (R1-R31,HI,LO,SR,PC) (except R26/K0) from the
-// current TCB. This function is usually executed automatically at the end of the
-// ExceptionHandler, however, functions in the exception chain may call
-// ReturnFromException to to return immediately, without processing chain elements
-// of lower priority.
-8004BD98	addiu  t2, zero, $00b0
-8004BD9C	jr     t2 
-8004BDA0	addiu  t1, zero, $0017
+// system_bios_open_event()
+// B(08h) - OpenEvent(class, spec, mode, func)
+// Adds an event structure to the event table.
+//      class,spec - triggers if BOTH values match
+//      mode - (1000h=execute function/stay busy, 2000h=no func/mark ready)
+//      func - Address of callback function (0=None) (used only when mode=1000h)
+//   out: R2 = Event descriptor (F1000000h and up), or FFFFFFFFh if failed
+// Opens an event, should be called within a critical section. The return value is
+// used to identify the event to the other event functions. A list of event
+// classes, specs and modes is at the end of this section. Initially, the event is
+// disabled.
+// Note: The desired max number of events can be specified in the SYSTEM.CNF boot
+// file (the default is "EVENT = 10" (which is a HEX number, ie. 16 decimal; of
+// which 5 events are internally used by the BIOS for CDROM functions, so, of the
+// 16 events, only 11 events are available to the game). A bigger amount of events
+// will slowdown the DeliverEvent function (which always scans all EvCBs, even if
+// all events are disabled).
+800402EC	addiu  t2, zero, $00b0
+800402F0	jr     t2 
+800402F4	addiu  t1, zero, $0008
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_bios_set_custom_exit_from_exception()
-// B(19h) - SetCustomExitFromException(addr)
-// addr points to a structure (with same format as for the SaveState function):
-//  00h 4    r31/ra,pc ;usually ptr to ReturnFromException function
-//  04h 4    r28/sp    ;usually exception stacktop, minus 4, for whatever reason
-//  08h 4    r30/fp    ;usually 0
-//  0Ch 4x8  r16..r23  ;usually 0
-//  2Ch 4    r28/gp    ;usually 0
-// The hook function is executed only if the ExceptionHandler has been fully executed (after processing an IRQ, many interrupt handlers are calling
-// ReturnFromException to abort further exception handling, and thus do skip the hook function). Once when the hook function has finished, it should execute
-// ReturnFromException. The hook function is called with r2=1 (that is important if the hook address was recorded with SaveState, where it "returns" to the
-// SaveState caller, with r2 as "return value").
-8004BDB8	addiu  t2, zero, $00b0
-8004BDBC	jr     t2 
-8004BDC0	addiu  t1, zero, $0019
+// system_bios_close_event()
+// B(09h) - CloseEvent(event) - releases event from the event table
+// Always returns 1 (even if the event handle is unused or invalid).
+800402FC	addiu  t2, zero, $00b0
+80040300	jr     t2 
+80040304	addiu  t1, zero, $0009
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_bios_change_clear_pad()
-// B(5Bh) ChangeClearPad(int)   ;pad AND card (ie. used also for Card)
-8004044C	addiu  t2, zero, $00b0
-80040450	jr     t2 
-80040454	addiu  t1, zero, $005b
+// system_bios_test_event()
+// B(0Bh) TestEvent(event)
+// Returns 0 if the event is busy or disabled. Otherwise, when it is ready,
+// returns 1 (and automatically switches the event back to busy status). Callback
+// events (mode=1000h) do never set the ready flag.
+8004030C	addiu  t2, zero, $00b0
+80040310	jr     t2 
+80040314	addiu  t1, zero, $000b
 ////////////////////////////////
 
 
@@ -164,6 +178,94 @@
 80040934	addiu  t2, zero, $00b0
 80040938	jr     t2 
 8004093C	addiu  t1, zero, $0015
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_return_from_exception()
+// B(17h) - ReturnFromException()
+// Restores the CPU registers (R1-R31,HI,LO,SR,PC) (except R26/K0) from the
+// current TCB. This function is usually executed automatically at the end of the
+// ExceptionHandler, however, functions in the exception chain may call
+// ReturnFromException to to return immediately, without processing chain elements
+// of lower priority.
+8004BD98	addiu  t2, zero, $00b0
+8004BD9C	jr     t2 
+8004BDA0	addiu  t1, zero, $0017
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_set_custom_exit_from_exception()
+// B(19h) - SetCustomExitFromException(addr)
+// addr points to a structure (with same format as for the SaveState function):
+//  00h 4    r31/ra,pc ;usually ptr to ReturnFromException function
+//  04h 4    r28/sp    ;usually exception stacktop, minus 4, for whatever reason
+//  08h 4    r30/fp    ;usually 0
+//  0Ch 4x8  r16..r23  ;usually 0
+//  2Ch 4    r28/gp    ;usually 0
+// The hook function is executed only if the ExceptionHandler has been fully executed (after processing an IRQ, many interrupt handlers are calling
+// ReturnFromException to abort further exception handling, and thus do skip the hook function). Once when the hook function has finished, it should execute
+// ReturnFromException. The hook function is called with r2=1 (that is important if the hook address was recorded with SaveState, where it "returns" to the
+// SaveState caller, with r2 as "return value").
+8004BDB8	addiu  t2, zero, $00b0
+8004BDBC	jr     t2 
+8004BDC0	addiu  t1, zero, $0019
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_undeliver_event()
+// B(20h) UnDeliverEvent(class, spec)
+// This function is usually called by the kernel, undelivers all events that are
+// enabled/ready, and that have mode=2000h, and that have the specified class and
+// spec values. Undeliver means that the events are marked as enabled/busy.
+8004033C	addiu  t2, zero, $00b0
+80040340	jr     t2 
+80040344	addiu  t1, zero, $0020
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_init_card()
+// B(4Ah) - InitCard(pad_enable)  ;uses/destroys k0/k1 !!!
+8004E6F8	addiu  t2, zero, $00b0
+8004E6FC	jr     t2 
+8004E700	addiu  t1, zero, $004a
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_start_card()
+// B(4Bh) - StartCard()
+8004E708	addiu  t2, zero, $00b0
+8004E70C	jr     t2 
+8004E710	addiu  t1, zero, $004b
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_stop_card()
+// B(4Ch) - StopCard()
+8004E718	addiu  t2, zero, $00b0
+8004E71C	jr     t2 
+8004E720	addiu  t1, zero, $004c
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_change_clear_pad()
+// B(5Bh) ChangeClearPad(int)   ;pad AND card (ie. used also for Card)
+8004044C	addiu  t2, zero, $00b0
+80040450	jr     t2 
+80040454	addiu  t1, zero, $005b
 ////////////////////////////////
 
 

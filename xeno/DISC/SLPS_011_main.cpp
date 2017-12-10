@@ -53,23 +53,21 @@ system_psyq_set_disp_mask();
 
 func48a6c(); // init gte and patch exception handler.
 
-func3615c();
+func3615c(); // init gamepad and related functions and data.
 
-A0 = 0001;
-80019694	jal    func4e63c [$8004e63c]
+A0 = 1;
+func4e63c(); // init memory card and patch related exception.
 
-8001969C	jal    func4e690 [$8004e690]
+func4e690(); // start memory card
 
-800196A4	jal    func402dc [$800402dc]
+system_bios_bu_init(); // to start memory card
 
 A0 = 800361f4;
-800196B4	jal    func4b678 [$8004b678]
+func4b678(); // set 4th callback
 
-800196BC	jal    func2ddf0 [$8002ddf0]
-
-A0 = V0;
-A1 = 801fc000;
-800196CC	jal    func31878 [$80031878]
+A0 = 8006f180; // pointer to start of allocated memory
+A1 = 801fc000; // pointer to end of allocated memory
+func31878(); // init heap
 
 800196D4	jal    func4c3f0 [$8004c3f0]
 

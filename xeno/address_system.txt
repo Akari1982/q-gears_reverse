@@ -71,8 +71,21 @@
 8004f7ac [][][][] some tex page global setting. If 1 or 2 we use some default values.
 8004f7b0 [][][][] some clut global setting. If 0 then we use some default values.
 
+8004f8a4 [][][][] init with 1. Buttons related.
+8004f8a8 [][][][] init with 0. Buttons related.
+8004f8ac [][][][] init with 0. Buttons related.
+
 8004f8d0 [][][][] timer for repeated buttons for controller 1 (80058b40).
 8004f8d4 [][][][] timer for repeated buttons for controller 2 (80058b44).
+
+8004f8d8 []       init with 0. Button related.
+8004f8d9 []       init with 1. Button related.
+8004f8da []       init with 2. Button related.
+8004f8db []       init with 3. Button related.
+8004f8dc []       init with 4. Button related.
+8004f8dd []       init with 5. Button related.
+8004f8de []       init with 6. Button related.
+8004f8df []       init with 7. Button related.
 
 8004ff84 [][][][] address of SPU registers 0x1f801c00.
 
@@ -133,6 +146,9 @@
 80057fd4 [][][][] 1f801074 interrupt mask register
 80057fd8 [][][][] 1f8010f0 dma control register
 
+80057fe0 array of callbacks (0x4 size).
+            4 - set with func4b678();
+
 80058030 [][][][] set to 0 during game init.
 
 800584d0 [][][][] shifter for spu address (always 3)
@@ -144,9 +160,13 @@
     + 28 [][][][] ???
     + 38 [][][][] rotation dta for some sprite animation if flag 0x2000 in sprite animation data not set.
     + 3d []       if this != 0 then we use +38 to calculate rotation matrix for sprite animation (if flag 0x2000 not set).
-    +1ac [][]     store 4 here when we start parse model and animation.
+    +1a8 [][]     init with 0x20.
+    +1ac [][]     init with 0xa. Store 4 here when we start parse model and animation.
     +1b0 [][][][] pointer to start of allocated memory.
+    +1bc [][][][] init with 0.
     +1c0 [][][][] store 0 here when we start parse model and animation.
+    +1c4 [][][][] init with 0.
+    +1c8 [][][][] init with 0.
     +1cc [][][][] store size of allocated data here.
     +1d0 [][][][] place in code from where we call current function.
 
@@ -168,6 +188,10 @@
 80058a20 [][][][] current receive index of buffer for received button masks.
 
 80058a24 []       ID1 of last reveived controller input.
+80058a28 []       init with 1.
+80058a2c [][][][] init with 0.
+
+80058a3c [][][][] init with 0.
 
 80058a48 [][][][] pointer to bios SetPadEnableFlag().
 80058a4c [][][][] pointer to bios ClearPadEnableFlag().
@@ -268,6 +292,8 @@
          during model initialization if flaf 0x2000 i  +58 in model struct exist we store [80059640 + 3 * 4] = w(0) before +1c initialization
          after +1c init we store [80059640 + 8 * 4] = w(0)
          looks like we store in GP + 0x1ac index of this struct. GP + 1c0 set to 0 in both cases.
+
+80059668 [][][][] init with 0.
 
 80059674 struct with data for text.
     +1c [][][][] pointer to next character.
@@ -465,8 +491,15 @@
 
 
 8006f08c array of structs with size 0x10. 0xc items.
-+00 []       store 0x80 here.
-+01 []       store 0x00 here.
-+02 [][]     store
-+04 [][][][] store w[src + 28] of snd file here.
-+08 [][][][] store size of snd instruments adpcm (w[src + 14]) here.
+    +00 []       store 0x80 here.
+    +01 []       store 0x00 here.
+    +02 [][]     store
+    +04 [][][][] store w[src + 28] of snd file here.
+    +08 [][][][] store size of snd instruments adpcm (w[src + 14]) here.
+
+8006f180 start of heap region.
+    +00 [][][][] pointer to end of heap.
+    +04 [][][][] some flags.
+801fc000 end of heap region.
+    -08 [][][][] pointer to end of heap.
+    -04 [][][][] some flags.

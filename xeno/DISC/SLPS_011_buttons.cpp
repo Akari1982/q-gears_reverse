@@ -298,9 +298,8 @@ return V1;
 [80058a1c] = w(0); // current store index of buffer for received button masks
 [80058a20] = w(0); // current receive index of buffer for received button masks
 
-[8004f8ac] = w(0);
-
 [8004f8a4] = w(1);
+[8004f8ac] = w(0);
 
 [80058c0c] = h(0); // pressed buttons controller 1
 [80058c10] = h(0); // pressed buttons controller 2
@@ -341,13 +340,10 @@ func35ff0(); // send base pad output
 [80058a28] = b(1);
 [80058a2c] = w(0);
 
-V1 = 7;
-A0 = 8004f8df;
-loop361c4:	; 800361C4
-    [A0] = b(V1);
-    V1 = V1 - 1;
-    A0 = A0 - 1;
-800361CC	bgez   v1, loop361c4 [$800361c4]
+for( int i = 0; i < 8; ++i )
+{
+    [8004f8d8 + i] = b(i);
+}
 ////////////////////////////////
 
 
