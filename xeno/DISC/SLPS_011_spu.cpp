@@ -64,138 +64,109 @@ A2 = 0;
 // func4c584()
 
 S0 = A0;
+
 A0 = w[800584b8];
-V0 = w[A0 + 0000];
-8004C5A4	lui    v1, $000b
-V0 = V0 | V1;
-[A0 + 0000] = w(V0);
-V0 = w[800584a8];
+[A0] = w(w[A0] | 000b0000);
+
 [800584c4] = w(0);
 [800584c8] = w(0);
 [800584c0] = h(0);
-[V0 + 0180] = h(0);
-[V0 + 0182] = h(0);
-[V0 + 01aa] = h(0);
+
+spu_reg = w[800584a8];
+[spu_reg + 180] = h(0);
+[spu_reg + 182] = h(0);
+[spu_reg + 1aa] = h(0);
 
 func4d0b0();
 
-V0 = w[800584a8];
-8004C5EC	nop
-[V0 + 0180] = h(0);
-[V0 + 0182] = h(0);
-V0 = hu[V0 + 01ae];
-8004C5FC	nop
-V0 = V0 & 07ff;
-8004C604	beq    v0, zero, L4c65c [$8004c65c]
-V1 = 0;
-V1 = V1 + 0001;
+[spu_reg + 180] = h(0);
+[spu_reg + 182] = h(0);
 
-loop4c610:	; 8004C610
-V0 = V1 < 0f01;
-8004C614	bne    v0, zero, L4c63c [$8004c63c]
-8004C618	nop
-8004C61C	lui    a0, $8002
-8004C620	addiu  a0, a0, $9500 (=-$6b00)
-8004C624	lui    a1, $8002
-8004C628	addiu  a1, a1, $9510 (=-$6af0)
-8004C62C	jal    func199e8 [$800199e8]
-8004C630	nop
-8004C634	j      L4c660 [$8004c660]
-A0 = 0;
+if( hu[spu_reg + 1ae] & 07ff )
+{
+    loop4c610:	; 8004C610
+        V1 = V1 + 1;
+        if( V1 >= f01 )
+        {
+            A0 = 80019500;
+            A1 = 80019510;
+            func199e8();
 
-L4c63c:	; 8004C63C
-V0 = w[800584a8];
-8004C644	nop
-V0 = hu[V0 + 01ae];
-8004C64C	nop
-V0 = V0 & 07ff;
-8004C654	bne    v0, zero, loop4c610 [$8004c610]
-V1 = V1 + 0001;
+            break;
+        }
+        V0 = hu[spu_reg + 1ae] & 07ff;
+    8004C654	bne    v0, zero, loop4c610 [$8004c610]
+}
 
-L4c65c:	; 8004C65C
-A0 = 0;
-
-L4c660:	; 8004C660
-A1 = 80059b58;
 [800584cc] = w(2);
 [800584d0] = w(3);
 [800584d4] = w(8);
 [800584d8] = w(7);
 
-V0 = w[800584a8];
-[V0 + 1ac] = h(0004);
-[V0 + 184] = h(0);
-[V0 + 186] = h(0);
-[V0 + 18c] = h(ffff);
-[V0 + 18e] = h(ffff);
-[V0 + 198] = h(0);
-[V0 + 19a] = h(0);
+[spu_reg + 1ac] = h(0004);
+[spu_reg + 184] = h(0);
+[spu_reg + 186] = h(0);
+[spu_reg + 18c] = h(ffff);
+[spu_reg + 18e] = h(ffff);
+[spu_reg + 198] = h(0);
+[spu_reg + 19a] = h(0);
 
-loop4c6c4:	; 8004C6C4
-    [A1 + 0000] = h(0);
-    A0 = A0 + 0001;
-    V0 = A0 < 000a;
-    A1 = A1 + 0002;
-8004C6D0	bne    v0, zero, loop4c6c4 [$8004c6c4]
-
-8004C6D8	bne    s0, zero, L4c7d4 [$8004c7d4]
-V0 = 0;
-
-A0 = 800584e8;
-
-[800584c0] = h(0200);
-
-V0 = w[800584a8];
-[V0 + 190] = h(0);
-[V0 + 192] = h(0);
-[V0 + 194] = h(0);
-[V0 + 196] = h(0);
-[V0 + 1b0] = h(0);
-[V0 + 1b2] = h(0);
-[V0 + 1b4] = h(0);
-[V0 + 1b6] = h(0);
-
-A1 = 10;
-8004C71C	jal    func4c818 [$8004c818]
-
-V1 = w[800584a8];
-for( int i = 0; i < 18; ++i )
+for( int i = 0; i < a; ++i )
 {
-    [V1 + 0] = h(0);
-    [V1 + 2] = h(0);
-    [V1 + 4] = h(3fff);
-    [V1 + 6] = h(0200);
-    [V1 + 8] = h(0);
-    [V1 + a] = h(0);
-    V1 = V1 + 10;
+    [80059b58 + i * 2] = h(0);
 }
 
-V0 = w[800584a8];
-[V0 + 188] = h(ffff);
-[V0 + 18a] = h(00ff);
+if( S0 == 0 )
+{
+    [800584c0] = h(0200);
 
-func4d0b0();
-func4d0b0();
-func4d0b0();
-func4d0b0();
+    [spu_reg + 190] = h(0);
+    [spu_reg + 192] = h(0);
+    [spu_reg + 194] = h(0);
+    [spu_reg + 196] = h(0);
+    [spu_reg + 1b0] = h(0);
+    [spu_reg + 1b2] = h(0);
+    [spu_reg + 1b4] = h(0);
+    [spu_reg + 1b6] = h(0);
 
-V0 = w[800584a8];
-[V0 + 18c] = h(ffff);
-[V0 + 18e] = h(00ff);
+    A0 = 800584e8;
+    A1 = 10;
+    8004C71C	jal    func4c818 [$8004c818]
 
-func4d0b0();
-func4d0b0();
-func4d0b0();
-func4d0b0();
+    for( int i = 0; i < 18; ++i )
+    {
+        [spu_reg + i * 10 + 0] = h(0);
+        [spu_reg + i * 10 + 2] = h(0);
+        [spu_reg + i * 10 + 4] = h(3fff);
+        [spu_reg + i * 10 + 6] = h(0200);
+        [spu_reg + i * 10 + 8] = h(0);
+        [spu_reg + i * 10 + a] = h(0);
+    }
 
-V0 = 0;
+    [spu_reg + 188] = h(ffff);
+    [spu_reg + 18a] = h(00ff);
 
-L4c7d4:	; 8004C7D4
-A0 = w[800584a8];
+    func4d0b0();
+    func4d0b0();
+    func4d0b0();
+    func4d0b0();
+
+    [spu_reg + 18c] = h(ffff);
+    [spu_reg + 18e] = h(00ff);
+
+    func4d0b0();
+    func4d0b0();
+    func4d0b0();
+    func4d0b0();
+}
+
+[spu_reg + i * 10 + 1aa] = h(c000);
+
 [800584dc] = w(1);
-[A0 + 1aa] = h(c000);
 [800584e0] = w(0);
 [800584e4] = w(0);
+
+return 0;
 ////////////////////////////////
 
 
