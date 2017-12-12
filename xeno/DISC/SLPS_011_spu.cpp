@@ -12,25 +12,23 @@ func4c410();
 
 S0 = A0;
 
-8004C41C	jal    func4b5e8 [$8004b5e8]
+func4b5e8();
 
 A0 = S0;
-8004C424	jal    func4c584 [$8004c584]
+func4c584();
 
-A0 = c000;
-8004C42C	bne    s0, zero, L4c450 [$8004c450]
+if( S0 == 0 )
+{
+    V1 = 17;
+    V0 = 8005809e;
 
-V1 = 0017;
-8004C438	lui    v0, $8006
-8004C43C	addiu  v0, v0, $809e (=-$7f62)
+    loop4c440:	; 8004C440
+        [V0 + 0000] = h(c000);
+        V1 = V1 - 1;
+        V0 = V0 - 2;
+    8004C448	bgez   v1, loop4c440 [$8004c440]
+}
 
-loop4c440:	; 8004C440
-[V0 + 0000] = h(A0);
-8004C444	addiu  v1, v1, $ffff (=-$1)
-8004C448	bgez   v1, loop4c440 [$8004c440]
-8004C44C	addiu  v0, v0, $fffe (=-$2)
-
-L4c450:	; 8004C450
 8004C450	jal    func4c508 [$8004c508]
 
 [80058048] = w(0);
@@ -65,37 +63,36 @@ A2 = 0;
 
 S0 = A0;
 
-A0 = w[800584b8];
+A0 = w[800584b8]; // 1f8010f0 dma control register
 [A0] = w(w[A0] | 000b0000);
 
+[800584c0] = h(0);
 [800584c4] = w(0);
 [800584c8] = w(0);
-[800584c0] = h(0);
 
-spu_reg = w[800584a8];
-[spu_reg + 180] = h(0);
-[spu_reg + 182] = h(0);
-[spu_reg + 1aa] = h(0);
+spu_reg = w[800584a8]; // 1f801c00 start of spu registers
+
+[spu_reg + 180] = h(0); // mainvolume left
+[spu_reg + 182] = h(0); // mainvolume right
+[spu_reg + 1aa] = h(0); // spu control register (SPUCNT) disable everything
 
 func4d0b0();
 
-[spu_reg + 180] = h(0);
-[spu_reg + 182] = h(0);
+[spu_reg + 180] = h(0); // mainvolume left
+[spu_reg + 182] = h(0); // mainvolume right
 
-if( hu[spu_reg + 1ae] & 07ff )
+V1 = 0;
+while( hu[spu_reg + 1ae] & 07ff )
 {
-    loop4c610:	; 8004C610
-        V1 = V1 + 1;
-        if( V1 >= f01 )
-        {
-            A0 = 80019500;
-            A1 = 80019510;
-            func199e8();
+    V1 = V1 + 1;
+    if( V1 >= f01 )
+    {
+        A0 = 80019500; // "SPU:T/O [%s]"
+        A1 = 80019510; // "wait (reset)"
+        system_bios_printf();
 
-            break;
-        }
-        V0 = hu[spu_reg + 1ae] & 07ff;
-    8004C654	bne    v0, zero, loop4c610 [$8004c610]
+        break;
+    }
 }
 
 [800584cc] = w(2);
@@ -103,13 +100,13 @@ if( hu[spu_reg + 1ae] & 07ff )
 [800584d4] = w(8);
 [800584d8] = w(7);
 
-[spu_reg + 1ac] = h(0004);
 [spu_reg + 184] = h(0);
 [spu_reg + 186] = h(0);
 [spu_reg + 18c] = h(ffff);
 [spu_reg + 18e] = h(ffff);
 [spu_reg + 198] = h(0);
 [spu_reg + 19a] = h(0);
+[spu_reg + 1ac] = h(0004);
 
 for( int i = 0; i < a; ++i )
 {
@@ -135,24 +132,24 @@ if( S0 == 0 )
 
     for( int i = 0; i < 18; ++i )
     {
-        [spu_reg + i * 10 + 0] = h(0);
-        [spu_reg + i * 10 + 2] = h(0);
-        [spu_reg + i * 10 + 4] = h(3fff);
-        [spu_reg + i * 10 + 6] = h(0200);
-        [spu_reg + i * 10 + 8] = h(0);
-        [spu_reg + i * 10 + a] = h(0);
+        [spu_reg + i * 10 + 0] = h(0); // volume left
+        [spu_reg + i * 10 + 2] = h(0); // volume right
+        [spu_reg + i * 10 + 4] = h(3fff); // sample rate
+        [spu_reg + i * 10 + 6] = h(0200); // start address
+        [spu_reg + i * 10 + 8] = h(0); // attack/decay
+        [spu_reg + i * 10 + a] = h(0); // sustain/release
     }
 
-    [spu_reg + 188] = h(ffff);
-    [spu_reg + 18a] = h(00ff);
+    [spu_reg + 188] = h(ffff); // voice 0-15 key on
+    [spu_reg + 18a] = h(00ff); // voice 16-23 key on
 
     func4d0b0();
     func4d0b0();
     func4d0b0();
     func4d0b0();
 
-    [spu_reg + 18c] = h(ffff);
-    [spu_reg + 18e] = h(00ff);
+    [spu_reg + 18c] = h(ffff); // voice 0-15 key off
+    [spu_reg + 18e] = h(00ff); // voice 16-23 key off
 
     func4d0b0();
     func4d0b0();
@@ -160,7 +157,7 @@ if( S0 == 0 )
     func4d0b0();
 }
 
-[spu_reg + i * 10 + 1aa] = h(c000);
+[spu_reg + 1aa] = h(c000); // spu control register (SPUCNT) enable and unmute spu
 
 [800584dc] = w(1);
 [800584e0] = w(0);
