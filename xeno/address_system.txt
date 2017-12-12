@@ -8,24 +8,22 @@
 8004e9f0 [][][][] field id to load.
 
 8004f23c store 4 points xyz for sprite tile during calculation in func1e264
-+00 [][] x0
-+02 [][] y0
-+04 [][] z0
-+06 [][]
-+08 [][] x1
-+0a [][] y1
-+0c [][] z1
-+0e [][]
-+10 [][] x3
-+12 [][] y3
-+14 [][] z3
-+16 [][]
-+18 [][] x2
-+1a [][] y2
-+1c [][] z2
-+1e [][]
-
-
+    +00 [][] x0
+    +02 [][] y0
+    +04 [][] z0
+    +06 [][]
+    +08 [][] x1
+    +0a [][] y1
+    +0c [][] z1
+    +0e [][]
+    +10 [][] x3
+    +12 [][] y3
+    +14 [][] z3
+    +16 [][]
+    +18 [][] x2
+    +1a [][] y2
+    +1c [][] z2
+    +1e [][]
 
 8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
 8004f498 [][][][] ???
@@ -143,14 +141,19 @@
     +18 8004bc44
     +1c 80056f44
 80057fd0 [][][][] 1f801070 interrupt status register.
-80057fd4 [][][][] 1f801074 interrupt mask register
-80057fd8 [][][][] 1f8010f0 dma control register
+80057fd4 [][][][] 1f801074 interrupt mask register.
+80057fd8 [][][][] 1f8010f0 dma control register.
 
 80057fe0 array of callbacks (0x4 size).
             4 - set with func4b678();
 
 80058030 [][][][] set to 0 during game init.
 
+800584a8 [][][][] 1f801c00 start of spu registers.
+800584b8 [][][][] 1f8010f0 dma control register.
+800584c0 [][]     init with 0.
+800584c4 [][][][] init with 0.
+800584c8 [][][][] init with 0.
 800584d0 [][][][] shifter for spu address (always 3)
 
 80058810 GP
