@@ -151,10 +151,16 @@
 
 800584a8 [][][][] 1f801c00 start of spu registers.
 800584b8 [][][][] 1f8010f0 dma control register.
-800584c0 [][]     init with 0.
+800584c0 [][]     sound ram data transfer address. Set to 0x0200 during spu init.
 800584c4 [][][][] init with 0.
 800584c8 [][][][] init with 0.
-800584d0 [][][][] shifter for spu address (always 3)
+800584cc [][][][] init with 2.
+800584d0 [][][][] shifter for spu address. Init with 3.
+800584d4 [][][][] init with 8.
+800584d8 [][][][] init with 7.
+800584dc [][][][] init with 1.
+800584e0 [][][][] init with 0.
+800584e4 [][][][] init with 0.
 
 80058810 GP
     + 20 [][][][] pointer to last struct_164 (used to create list of render sprites).
@@ -312,9 +318,10 @@
 800598a8 [][][][] init with 0.
 
 80059b50 [][][][] file size for loading field file.
+80059b58 array of something spu related. Init with 0. (size 0x2 items 0xa)
 80059b70 [][][][] pointer to allocated memory for loading field file.
 
-80061c8c controller input buffers (size 0x22 2 items).
+80061c8c controller input buffers (size 0x22 items 0x2).
     +02 [][]     button mask. (0=Pressed, 1=Released)
                     0x0001 Select
                     0x0002 L3
@@ -379,7 +386,7 @@
 +7e [][]     pitch related.
 +8a [][]     volume distribution addition.
 
-// SPU channel structure (0x158 size)
+// SPU channel structure (size 0x158)
 +000 [][]     control flags.
                 0x0002 - disable reverb.
                 0x0008 - if set then we will not update volume.

@@ -843,9 +843,10 @@ if( w[800584c4] == 0 )
 }
 
 L4ce40:	; 8004CE40
-8004CE40	addu   a0, s1, zero
-8004CE44	jal    func4c818 [$8004c818]
-8004CE48	addu   a1, s0, zero
+A0 = S1;
+A1 = S0;
+system_spu_ram_manual_write();
+
 8004CE4C	addu   v0, s0, zero
 
 L4ce50:	; 8004CE50
