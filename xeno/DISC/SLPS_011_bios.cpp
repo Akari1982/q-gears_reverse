@@ -35,6 +35,20 @@
 
 
 ////////////////////////////////
+// system_bios_deliver_event()
+// B(07h) DeliverEvent(class, spec)
+// This function is usually called by the kernel, it triggers all events that are
+// enabled/busy, and that have the specified class and spec values. Depending on
+// the mode, either the callback function is called (mode=1000h), or the event is
+// marked as enabled/ready (mode=2000h).
+80040C90	addiu  t2, zero, $00b0
+80040C94	jr     t2 
+80040C98	addiu  t1, zero, $0007
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_open_event()
 // B(08h) - OpenEvent(class, spec, mode, func)
 // Adds an event structure to the event table.

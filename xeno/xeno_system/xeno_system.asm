@@ -17001,126 +17001,6 @@ L2803c:	; 8002803C
 8002803C	nop
 
 
-func28040:	; 80028040
-80028040	addiu  sp, sp, $ffd8 (=-$28)
-80028044	sw     s1, $001c(sp)
-80028048	addu   s1, a0, zero
-8002804C	sw     s2, $0020(sp)
-80028050	sw     s0, $0018(sp)
-80028054	addu   s0, a2, zero
-80028058	sw     ra, $0024(sp)
-8002805C	lui    at, $8006
-80028060	sw     zero, $9b18(at)
-80028064	lui    at, $8006
-80028068	sw     zero, $9b1c(at)
-8002806C	lui    at, $8006
-80028070	sw     zero, $9b20(at)
-80028074	lui    at, $8006
-80028078	sw     zero, $9b24(at)
-8002807C	lui    at, $8006
-80028080	sw     zero, $9b28(at)
-80028084	lui    at, $8006
-80028088	sw     zero, $9b2c(at)
-8002808C	lui    at, $8006
-80028090	sw     zero, $9b34(at)
-80028094	lui    at, $8006
-80028098	sw     zero, $9b38(at)
-8002809C	lui    at, $8006
-800280A0	sw     zero, $9b44(at)
-800280A4	beq    s0, zero, L280b8 [$800280b8]
-800280A8	addu   s2, a1, zero
-800280AC	addiu  v0, zero, $ffff (=-$1)
-800280B0	bne    s0, v0, L2811c [$8002811c]
-800280B4	nop
-
-L280b8:	; 800280B8
-800280B8	jal    func40b80 [$80040b80]
-800280BC	nop
-
-func280c0:	; 800280C0
-800280C0	beq    v0, zero, L280b8 [$800280b8]
-800280C4	nop
-800280C8	jal    func40d6c [$80040d6c]
-800280CC	addu   a0, zero, zero
-800280D0	jal    func41264 [$80041264]
-800280D4	addu   a0, zero, zero
-800280D8	jal    func40e2c [$80040e2c]
-800280DC	addu   a0, zero, zero
-800280E0	jal    func40e44 [$80040e44]
-800280E4	addu   a0, zero, zero
-800280E8	ori    a0, zero, $0007
-800280EC	lui    a2, $8006
-800280F0	addiu  a2, a2, $95b8 (=-$6a48)
-800280F4	jal    func40e5c [$80040e5c]
-800280F8	addu   a1, zero, zero
-800280FC	jal    func2a238 [$8002a238]
-80028100	ori    a0, zero, $00a0
-80028104	jal    func28870 [$80028870]
-80028108	addu   a0, zero, zero
-8002810C	jal    func4b3f4 [$8004b3f4]
-80028110	ori    a0, zero, $0003
-80028114	j      L28128 [$80028128]
-80028118	addiu  v0, zero, $ffff (=-$1)
-
-L2811c:	; 8002811C
-8002811C	jal    system_devkit_pc_init [$8004c234]
-80028120	nop
-80028124	addiu  v0, zero, $ffff (=-$1)
-
-L28128:	; 80028128
-80028128	beq    s0, v0, L28140 [$80028140]
-8002812C	addiu  v0, zero, $ffff (=-$1)
-80028130	lui    at, $8005
-80028134	sw     s0, $f4ec(at)
-80028138	j      L28148 [$80028148]
-8002813C	nop
-
-L28140:	; 80028140
-80028140	lui    at, $8005
-80028144	sw     zero, $f4ec(at)
-
-L28148:	; 80028148
-80028148	lui    at, $8005
-8002814C	sw     s1, $f494(at)
-80028150	lui    at, $8005
-80028154	sw     s2, $f498(at)
-80028158	lui    at, $8005
-8002815C	sw     zero, $f4b8(at)
-80028160	lui    at, $8005
-80028164	sw     zero, $f4a0(at)
-80028168	lui    at, $8005
-8002816C	sw     zero, $f49c(at)
-80028170	lui    at, $8005
-80028174	sw     zero, $f4c0(at)
-80028178	lui    at, $8005
-8002817C	sw     v0, $f4f0(at)
-80028180	bne    s0, zero, L281c8 [$800281c8]
-80028184	ori    a0, zero, $0018
-80028188	addu   a1, s1, zero
-8002818C	ori    a2, zero, $8000
-80028190	addu   a3, zero, zero
-80028194	jal    func2935c [$8002935c]
-80028198	sw     zero, $0010(sp)
-8002819C	jal    func28870 [$80028870]
-800281A0	addu   a0, zero, zero
-800281A4	ori    a0, zero, $0028
-800281A8	ori    a2, zero, $007a
-800281AC	lui    a1, $8005
-800281B0	lw     a1, $f498(a1)
-800281B4	addu   a3, zero, zero
-800281B8	jal    func2935c [$8002935c]
-800281BC	sw     zero, $0010(sp)
-800281C0	jal    func28870 [$80028870]
-800281C4	addu   a0, zero, zero
-
-L281c8:	; 800281C8
-800281C8	lw     ra, $0024(sp)
-800281CC	lw     s2, $0020(sp)
-800281D0	lw     s1, $001c(sp)
-800281D4	lw     s0, $0018(sp)
-800281D8	addiu  sp, sp, $0028
-800281DC	jr     ra 
-800281E0	nop
 
 
 func281e4:	; 800281E4
@@ -34643,7 +34523,7 @@ L40c04:	; 80040C04
 80040C1C	sw     ra, $0010(sp)
 80040C20	lui    a0, $f000
 80040C24	ori    a0, a0, $0003
-80040C28	jal    func40c90 [$80040c90]
+80040C28	jal    system_bios_deliver_event [$80040c90]
 80040C2C	addiu  a1, zero, $0020
 80040C30	lw     ra, $0010(sp)
 80040C34	addiu  sp, sp, $0018
@@ -34654,7 +34534,7 @@ L40c04:	; 80040C04
 80040C44	sw     ra, $0010(sp)
 80040C48	lui    a0, $f000
 80040C4C	ori    a0, a0, $0003
-80040C50	jal    func40c90 [$80040c90]
+80040C50	jal    system_bios_deliver_event [$80040c90]
 80040C54	addiu  a1, zero, $0040
 80040C58	lw     ra, $0010(sp)
 80040C5C	addiu  sp, sp, $0018
@@ -34665,20 +34545,13 @@ L40c04:	; 80040C04
 80040C6C	sw     ra, $0010(sp)
 80040C70	lui    a0, $f000
 80040C74	ori    a0, a0, $0003
-80040C78	jal    func40c90 [$80040c90]
+80040C78	jal    system_bios_deliver_event [$80040c90]
 80040C7C	addiu  a1, zero, $0040
 80040C80	lw     ra, $0010(sp)
 80040C84	addiu  sp, sp, $0018
 80040C88	jr     ra 
 80040C8C	nop
 
-
-func40c90:	; 80040C90
-80040C90	addiu  t2, zero, $00b0
-80040C94	jr     t2 
-80040C98	addiu  t1, zero, $0007
-
-80040C9C	nop
 
 func40ca0:	; 80040CA0
 80040CA0	lui    v0, $8005

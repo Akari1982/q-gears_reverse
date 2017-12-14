@@ -193,94 +193,90 @@ system_bios_return_from_exception();
 
 
 ////////////////////////////////
-// func4bf40
-V0 = w[80058008];
-V0 = w[V0 + 0000];
-8004BF6C	nop
-V0 = V0 >> 18;
-S1 = V0 & 007f;
-8004BF78	beq    s1, zero, L4c01c [$8004c01c]
-8004BF7C	nop
-S4 = 0001;
-8004BF84	lui    s3, $00ff
-S3 = S3 | ffff;
-8004BF8C	lui    s5, $8006
-8004BF90	addiu  s5, s5, $800c (=-$7ff4)
+// func4bf40()
 
-loop4bf94:	; 8004BF94
-8004BF94	beq    s1, zero, L4bff8 [$8004bff8]
-S0 = 0;
-S2 = S5;
+flags = w[80058008];
 
-loop4bfa0:	; 8004BFA0
-V0 = S0 < 0007;
-8004BFA4	beq    v0, zero, L4bff8 [$8004bff8]
-V0 = S1 & 0001;
-8004BFAC	beq    v0, zero, L4bfe8 [$8004bfe8]
-V0 = S0 + 0018;
-A0 = w[80058008];
-V0 = S4 << V0;
-V1 = w[A0 + 0000];
-V0 = V0 | S3;
-V1 = V1 & V0;
-[A0 + 0000] = w(V1);
-V0 = w[S2 + 0000];
-8004BFD4	nop
-8004BFD8	beq    v0, zero, L4bfe8 [$8004bfe8]
-8004BFDC	nop
-8004BFE0	jalr   v0 ra
-8004BFE4	nop
+while( (w[flags] >> 18) & 7f )
+{
+    S1 = (w[flags] >> 18) & 7f;
 
-L4bfe8:	; 8004BFE8
-S2 = S2 + 0004;
-S1 = S1 >> 01;
-8004BFF0	bne    s1, zero, loop4bfa0 [$8004bfa0]
-S0 = S0 + 0001;
+    for( int i = 0; i < 8; ++i )
+    {
+        if( S1 & 1 )
+        {
+            [flags] = w(w[flags] & ((1 << (i + 18)) | 00ffffff));
 
-L4bff8:	; 8004BFF8
-V0 = w[80058008];
-8004C000	nop
-V0 = w[V0 + 0000];
-8004C008	nop
-V0 = V0 >> 18;
-S1 = V0 & 007f;
-8004C014	bne    s1, zero, loop4bf94 [$8004bf94]
-8004C018	nop
+            if( w[8005800c + i * 4] != 0 )
+            {
+                8004BFE0	jalr   w[8005800c + i * 4] ra
+            }
+        }
 
-L4c01c:	; 8004C01C
-A1 = w[80058008];
-8004C024	nop
-V0 = w[A1 + 0000];
-8004C02C	lui    v1, $ff00
-V0 = V0 & V1;
-8004C034	lui    v1, $8000
-8004C038	beq    v0, v1, L4c054 [$8004c054]
-8004C03C	nop
-V0 = w[A1 + 0000];
-8004C044	nop
-V0 = V0 & 8000;
-8004C04C	beq    v0, zero, L4c09c [$8004c09c]
-8004C050	nop
+        S1 = S1 >> 1;
+        if( S1 == 0 )
+        {
+            break;
+        }
+    }
+}
 
-L4c054:	; 8004C054
-S0 = 0;
+if( ( w[flags] & ff000000 ) != 80000000 )
+{
+    if( ( w[flags] & 00008000 ) == 0 )
+    {
+        return;
+    }
+}
 
 A0 = 800194d4; // "DMA bus error: code=%08x"
-A1 = w[A1];
+A1 = w[flags];
 system_bios_printf();
 
-loop4c068:	; 8004C068
+for( int i = 0; i < 7; ++i )
+{
     A0 = 800194f0; // "MADR[%d]=%08x"
-    A1 = S0;
+    A1 = i;
     V0 = w[8005802c];
-    A2 = w[V0 + S0 * 10];
+    A2 = w[V0 + i * 10];
     system_bios_printf();
+}
+////////////////////////////////
 
-    S0 = S0 + 1;
-    V0 = S0 < 7;
-8004C094	bne    v0, zero, loop4c068 [$8004c068]
 
-L4c09c:	; 8004C09C
+
+////////////////////////////////
+// func4c0c4()
+
+slot = A0;
+func = A1;
+
+if( func != w[8005800c + slot * 4] )
+{
+    if( func != 0 )
+    {
+        [8005800c + slot * 4] = w(func);
+        A1 = w[80058008];
+        [A1] = w((w[A1] & 00ffffff) | ((1 << (slot + 10)) | 00800000));
+    }
+    else
+    {
+        [8005800c + slot * 4] = w(0);
+        A1 = w[80058008];
+        [A1] = w(((w[A1] & (00ffffff)) | 00800000) & (0 NOR (1 << (slot + 10))));
+    }
+}
+
+return w[8005800c + slot * 4];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4b648()
+
+V0 = w[80057fcc]; // 80057fac
+8004B660	jalr   w[V0 + 4] ra // func4c0c4()
 ////////////////////////////////
 
 

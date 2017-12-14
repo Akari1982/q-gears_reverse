@@ -147,11 +147,24 @@
 80057fe0 array of callbacks (0x4 size).
             4 - set with func4b678();
 
-80058008 [][][][] flags for enabling some callbacks.
+80058008 [][][][] address for flags for enabling some callbacks.
 8005800c array of callbacks.
 80058030 [][][][] set to 0 during game init.
 8005803c [][][][] store irq9 spu command completed event here.
+80058040 [][][][] init with 0.
+80058044 [][][][] init with 0.
+80058048 [][][][] init with 0.
+8005804c [][][][] init with 0.
+80058050 [][][][] sound ram reverb work area start address.
+80058058 [][][][] init with 0.
+8005805c [][]     init with 0.
+8005805e [][]     init with 0.
+80058060 [][][][] init with 0.
+80058064 [][][][] init with 0.
+80058068 [][][][] init with 0.
+8005806c [][][][] init with 0.
 
+800584a0 [][][][] init with 0.
 800584a4 [][][][] spu event registered. Store 1 when register.
 800584a8 [][][][] 1f801c00 start of spu registers.
 800584b8 [][][][] 1f8010f0 dma control register.
@@ -165,6 +178,10 @@
 800584dc [][][][] init with 1.
 800584e0 [][][][] init with 0.
 800584e4 [][][][] init with 0.
+
+80058504 [][][][] init with 0.
+80058508 [][][][] init with 0.
+8005850c [][][][] init with 0.
 
 80058810 GP
     + 20 [][][][] pointer to last struct_164 (used to create list of render sprites).
