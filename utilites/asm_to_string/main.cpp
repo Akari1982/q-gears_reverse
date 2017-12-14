@@ -148,7 +148,7 @@ int main( int argc, char *argv[] )
             two_row = false;
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|slt|sltu|sltiu|slti|subu|sll|sra|srl|sllv|srav)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]|zero)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|slt|sltu|sltiu|slti|subu|sll|sra|srl|srlv|sllv|srav)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]|zero)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -186,7 +186,7 @@ int main( int argc, char *argv[] )
             }
             else
             {
-                if( m1 == "sllv" || m1 == "srav" )
+                if( m1 == "sllv" || m1 == "srav" || m1 == "srlv" )
                 {
                     ss << m4;
                 }
@@ -203,9 +203,9 @@ int main( int argc, char *argv[] )
                 else if( m1 == "sltu" || m1 == "sltiu" || m1 == "slti" || m1 == "slt" ) ss << " < ";
                 else if( m1 == "subu" ) ss << " - ";
                 else if( m1 == "sll" || m1 == "sllv" ) ss << " << ";
-                else if( m1 == "sra" || m1 == "srl" || m1 == "srav" ) ss << " >> ";
+                else if( m1 == "sra" || m1 == "srl" || m1 == "srav" || m1 == "srlv" ) ss << " >> ";
 
-                if( m1 == "sllv" || m1 == "srav" )
+                if( m1 == "sllv" || m1 == "srav" || m1 == "srlv" )
                 {
                     ss << m3 << ";";
                 }

@@ -147,8 +147,12 @@
 80057fe0 array of callbacks (0x4 size).
             4 - set with func4b678();
 
+80058008 [][][][] flags for enabling some callbacks.
+8005800c array of callbacks.
 80058030 [][][][] set to 0 during game init.
+8005803c [][][][] store irq9 spu command completed event here.
 
+800584a4 [][][][] spu event registered. Store 1 when register.
 800584a8 [][][][] 1f801c00 start of spu registers.
 800584b8 [][][][] 1f8010f0 dma control register.
 800584c0 [][]     sound ram data transfer address. Set to 0x0200 during spu init.

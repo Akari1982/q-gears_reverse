@@ -14,8 +14,8 @@ S0 = A0;
 
 func4b5e8();
 
-A0 = S0;
-func4c584();
+A0 = S0; // without_data
+func4c584(); // init spu registers and ram
 
 if( S0 == 0 )
 {
@@ -23,13 +23,13 @@ if( S0 == 0 )
     V0 = 8005809e;
 
     loop4c440:	; 8004C440
-        [V0 + 0000] = h(c000);
+        [V0] = h(c000);
         V1 = V1 - 1;
         V0 = V0 - 2;
     8004C448	bgez   v1, loop4c440 [$8004c440]
 }
 
-8004C450	jal    func4c508 [$8004c508]
+func4c508();
 
 [80058048] = w(0);
 [8005804c] = w(0);
@@ -38,12 +38,12 @@ if( S0 == 0 )
 [8005805e] = h(0);
 [80058060] = w(0);
 [80058064] = w(0);
-[80058050] = w(w[80058510]);
+[80058050] = w(w[80058510]); // 0000fffe
 
-A0 = d1;
-A1 = w[80058510];
-A2 = 0;
-8004C4A4	jal    func4ced0 [$8004ced0]
+A0 = d1; // 1a2 sound ram reverb work area start address
+A1 = w[80058510]; // fffe
+A2 = 0; // dont use shifter
+func4ced0();
 
 [80058504] = w(0);
 [80058508] = w(0);
@@ -61,7 +61,7 @@ A2 = 0;
 ////////////////////////////////
 // func4c584()
 
-S0 = A0;
+without_data = A0;
 
 A0 = w[800584b8]; // 1f8010f0 dma control register
 [A0] = w(w[A0] | 000b0000); // spu dma enable and set priority to 3
@@ -113,7 +113,7 @@ for( int i = 0; i < a; ++i )
     [80059b58 + i * 2] = h(0);
 }
 
-if( S0 == 0 )
+if( without_data == 0 )
 {
     [800584c0] = h(0200);
 
@@ -257,4 +257,150 @@ while( ( hu[spu_reg + 1ae] & 07ff ) != S3 ) // wait for finish
         break;
     }
 }
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4c508()
+
+if( w[800584a4] == 0 )
+{
+    [800584a4] = w(1);
+
+    system_enter_critical_section();
+
+    A0 = 8004c9e4;
+    func4d118();
+
+    A0 = f0000009; // IRQ9 SPU
+    A1 = 20; // command completed
+    A2 = 2000; // do not execute callback function, and mark event as ready
+    A3 = 0; // callback
+    system_bios_open_event();
+    [8005803c] = w(V0);
+
+    A0 = V0;
+    system_bios_enable_event();
+
+    system_exit_critical_section();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4d118()
+
+A1 = A0;
+A0 = 4;
+func4b648();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4ced0()
+
+spu_reg = w[800584a8]; // 1f801c00 start of spu registers
+
+if( A2 == 0 )
+{
+    [spu_reg + A0 * 2] = h(A1);
+}
+else
+{
+    [spu_reg + A0 * 2] = h(A1 >> w[800584d0]);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4c0c4()
+
+slot = A0;
+func = A1;
+
+if( func != w[8005800c + slot * 4] )
+{
+    if( func != 0 )
+    {
+        [8005800c + slot * 4] = w(func);
+        A1 = w[80058008];
+        [A1] = w((w[A1] & 00ffffff) | ((1 << (slot + 10)) | 00800000));
+    }
+    else
+    {
+        [8005800c + slot * 4] = w(0);
+        A1 = w[80058008];
+        [A1] = w(((w[A1] & (00ffffff)) | 00800000) & (0 NOR (1 << (slot + 10))));
+    }
+}
+
+return w[8005800c + slot * 4];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4b648()
+
+V0 = w[80057fcc]; // 80057fac
+8004B660	jalr   w[V0 + 4] ra // func4c0c4()
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4c9e4()
+
+V0 = w[800584f8];
+8004C9F0	bne    v0, zero, L4ca00 [$8004ca00]
+8004C9F8	jal    func4d0b0 [$8004d0b0]
+8004C9FC	nop
+
+L4ca00:	; 8004CA00
+A0 = w[800584a8];
+8004CA08	nop
+V0 = hu[A0 + 01aa];
+8004CA10	nop
+V0 = V0 & ffcf;
+[A0 + 01aa] = h(V0);
+V0 = hu[A0 + 01aa];
+8004CA20	nop
+V0 = V0 & 0030;
+8004CA28	beq    v0, zero, L4ca58 [$8004ca58]
+V1 = 0;
+V1 = V1 + 0001;
+
+loop4ca34:	; 8004CA34
+V0 = V1 < 0f01;
+8004CA38	beq    v0, zero, L4ca58 [$8004ca58]
+8004CA3C	nop
+V0 = hu[A0 + 01aa];
+8004CA44	nop
+V0 = V0 & 0030;
+8004CA4C	bne    v0, zero, loop4ca34 [$8004ca34]
+V1 = V1 + 0001;
+8004CA54	addiu  v1, v1, $ffff (=-$1)
+
+L4ca58:	; 8004CA58
+V0 = w[800584e0];
+8004CA60	nop
+8004CA64	beq    v0, zero, L4ca88 [$8004ca88]
+8004CA68	lui    a0, $f000
+V0 = w[800584e0];
+8004CA74	nop
+8004CA78	jalr   v0 ra
+8004CA7C	nop
+8004CA80	j      L4ca94 [$8004ca94]
+8004CA84	nop
+
+L4ca88:	; 8004CA88
+A0 = A0 | 0009;
+8004CA8C	jal    func40c90 [$80040c90]
+A1 = 0020;
+
+L4ca94:	; 8004CA94
 ////////////////////////////////

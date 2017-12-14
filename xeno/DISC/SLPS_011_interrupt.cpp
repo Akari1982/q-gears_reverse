@@ -514,10 +514,10 @@ return 8004be98;
 
 A0 = 8005800c;
 A1 = 8;
-func4c16c(); // set mem to zero
+func4c16c(); // remove all callbacks
 
 V0 = w[80058008];
-[V0] = w(0);
+[V0] = w(0); // remove callback flags
 
 A0 = 3;
 A1 = 8004bf40;

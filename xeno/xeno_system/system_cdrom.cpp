@@ -1108,15 +1108,6 @@ func4b648();
 
 
 ////////////////////////////////
-// func4b648()
-
-V0 = w[80057fcc]; // 80057fac
-8004B660	jalr   w[V0 + 4] ra // 8004c0c4
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_psyq_CdIntToPos()
 // Calculate value for minute/second/sector from absolute sector number.
 A0 = A0 + 96;
