@@ -245,6 +245,19 @@
 
 
 ////////////////////////////////
+// system_bios_file_write()
+// A(03h) or B(35h) - FileWrite(fd, src, length) - Write data to an open file
+//  out: V0  Number of bytes written.
+// Writes the number of bytes to the specified open file. Write to the memory card
+// per $0080 bytes. Writing to the cdrom returns 0.
+800403CC	addiu  t2, zero, $00b0
+800403D0	jr     t2 
+800403D4	addiu  t1, zero, $0035
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_init_card()
 // B(4Ah) - InitCard(pad_enable)  ;uses/destroys k0/k1 !!!
 8004E6F8	addiu  t2, zero, $00b0

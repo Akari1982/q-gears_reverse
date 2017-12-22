@@ -44449,12 +44449,15 @@ func4038c:	; 8004038C
 
 800403C8	nop
 
-func403cc:	; 800403CC
-800403CC	addiu  t2, zero, $00b0
-800403D0	jr     t2 
-800403D4	addiu  t1, zero, $0035
 
-800403D8	nop
+
+////////////////////////////////
+// system_bios_file_write
+800403CC-800403D8
+////////////////////////////////
+
+
+
 800403DC	addiu  t2, zero, $00b0
 800403E0	jr     t2 
 800403E4	addiu  t1, zero, $0036
@@ -46849,90 +46852,14 @@ L42ad4:	; 80042AD4
 // func42b20
 80042B20-80042C00
 ////////////////////////////////
+// func42c04
+80042C04-80042C50
+////////////////////////////////
+// func42c54
+80042C54-80042D04
+////////////////////////////////
 
 
-
-func42c04:	; 80042C04
-80042C04	addiu  sp, sp, $ffe8 (=-$18)
-80042C08	sw     s0, $0010(sp)
-80042C0C	addu   s0, a0, zero
-80042C10	bne    s0, zero, L42c30 [$80042c30]
-80042C14	sw     ra, $0014(sp)
-80042C18	lui    s0, $8002
-80042C1C	addiu  s0, s0, $8fd0 (=-$7030)
-80042C20	j      L42c30 [$80042c30]
-80042C24	nop
-
-loop42c28:	; 80042C28
-80042C28	jal    func42c54 [$80042c54]
-80042C2C	nop
-
-L42c30:	; 80042C30
-80042C30	lbu    a0, $0000(s0)
-80042C34	nop
-80042C38	bne    a0, zero, loop42c28 [$80042c28]
-80042C3C	addiu  s0, s0, $0001
-80042C40	lw     ra, $0014(sp)
-80042C44	lw     s0, $0010(sp)
-80042C48	addiu  sp, sp, $0018
-80042C4C	jr     ra 
-80042C50	nop
-
-
-func42c54:	; 80042C54
-80042C54	addiu  sp, sp, $ffe0 (=-$20)
-80042C58	sb     a0, $0010(sp)
-80042C5C	andi   a0, a0, $00ff
-80042C60	addiu  v0, zero, $0009
-80042C64	beq    a0, v0, L42c90 [$80042c90]
-80042C68	sw     ra, $0018(sp)
-80042C6C	addiu  v0, zero, $000a
-80042C70	bne    a0, v0, L42cb8 [$80042cb8]
-80042C74	nop
-80042C78	jal    func42c54 [$80042c54]
-80042C7C	addiu  a0, zero, $000d
-80042C80	lui    at, $8006
-80042C84	sw     zero, $98d0(at)
-80042C88	j      L42cec [$80042cec]
-80042C8C	addiu  a0, zero, $0001
-
-L42c90:	; 80042C90
-80042C90	jal    func42c54 [$80042c54]
-80042C94	addiu  a0, zero, $0020
-80042C98	lui    v0, $8006
-80042C9C	lw     v0, $98d0(v0)
-80042CA0	nop
-80042CA4	andi   v0, v0, $0007
-80042CA8	beq    v0, zero, L42cf8 [$80042cf8]
-80042CAC	nop
-80042CB0	j      L42c90 [$80042c90]
-80042CB4	nop
-
-L42cb8:	; 80042CB8
-80042CB8	lui    at, $8005
-80042CBC	addu   at, at, a0
-80042CC0	lbu    v0, $5e61(at)
-80042CC4	nop
-80042CC8	andi   v0, v0, $0097
-80042CCC	beq    v0, zero, L42cec [$80042cec]
-80042CD0	addiu  a0, zero, $0001
-80042CD4	lui    v0, $8006
-80042CD8	lw     v0, $98d0(v0)
-80042CDC	nop
-80042CE0	addiu  v0, v0, $0001
-80042CE4	lui    at, $8006
-80042CE8	sw     v0, $98d0(at)
-
-L42cec:	; 80042CEC
-80042CEC	addiu  a1, sp, $0010
-80042CF0	jal    func403cc [$800403cc]
-80042CF4	addiu  a2, zero, $0001
-
-L42cf8:	; 80042CF8
-80042CF8	lw     ra, $0018(sp)
-80042CFC	addiu  sp, sp, $0020
-80042D00	jr     ra 
-80042D04	nop
 
 80042D08	addu   v1, a0, zero
 80042D0C	andi   v0, v1, $00ff
