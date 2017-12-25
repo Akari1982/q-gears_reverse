@@ -73,7 +73,7 @@ func4c3f0(); // spu init
 
 A0 = 80010004;
 A1 = 80018004;
-A2 = w[80010000]; // FFFFFFFF
+A2 = w[80010000]; // ffffffff
 func28040();
 
 A0 = 0;

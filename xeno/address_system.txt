@@ -338,6 +338,18 @@
 8005989c [][][][] init with 0.
 800598a8 [][][][] init with 0.
 
+80059b18 [][][][] init with 0.
+80059b1c [][][][] init with 0.
+80059b20 [][][][] init with 0.
+80059b24 [][][][] init with 0.
+80059b28 [][][][] init with 0.
+80059b2c [][][][] init with 0.
+
+80059b34 [][][][] init with 0.
+80059b38 [][][][] init with 0.
+
+80059b44 [][][][] init with 0.
+
 80059b50 [][][][] file size for loading field file.
 80059b58 array of something spu related. Init with 0. (size 0x2 items 0xa)
 80059b70 [][][][] pointer to allocated memory for loading field file.
