@@ -1,4 +1,101 @@
 ////////////////////////////////
+// func28040()
+
+S1 = A0;
+S2 = A1;
+S0 = A2; // ffffffff -1
+
+[80059b18] = w(0);
+[80059b1c] = w(0);
+[80059b20] = w(0);
+[80059b24] = w(0);
+[80059b28] = w(0);
+[80059b2c] = w(0);
+[80059b34] = w(0);
+[80059b38] = w(0);
+[80059b44] = w(0);
+
+if( S0 == 0 || S0 == -1 )
+{
+    L280b8:	; 800280B8
+        func40b80();
+    800280C0	beq    v0, zero, L280b8 [$800280b8]
+
+    A0 = 0;
+    800280C8	jal    func40d6c [$80040d6c]
+
+    A0 = 0;
+    800280D0	jal    func41264 [$80041264]
+
+    A0 = 0;
+    func40e2c();
+
+    A0 = 0;
+    800280E0	jal    func40e44 [$80040e44]
+
+    A0 = 7;
+    A1 = 0;
+    A2 = 800595b8;
+    800280F4	jal    func40e5c [$80040e5c]
+
+    A0 = a0;
+    800280FC	jal    func2a238 [$8002a238]
+
+    A0 = 0;
+    80028104	jal    func28870 [$80028870]
+
+    A0 = 3;
+    system_psyq_wait_frames();
+}
+else
+{
+    8002811C	jal    func4c234 [$8004c234]
+}
+
+if( S0 != -1 )
+{
+    [8004f4ec] = w(S0);
+}
+else
+{
+    [8004f4ec] = w(0);
+}
+
+[8004f494] = w(S1);
+[8004f498] = w(S2);
+[8004f4b8] = w(0);
+[8004f4a0] = w(0);
+[8004f49c] = w(0);
+[8004f4c0] = w(0);
+[8004f4f0] = w(-1);
+
+if( S0 == 0 )
+{
+    A0 = 18;
+    A1 = S1;
+    A2 = 8000;
+    A3 = 0;
+    A4 = 0;
+    80028194	jal    func2935c [$8002935c]
+
+    A0 = 0;
+    8002819C	jal    func28870 [$80028870]
+
+    A0 = 28;
+    A1 = w[8004f498];
+    A2 = 7a;
+    A3 = 0;
+    A4 = 0;
+    800281B8	jal    func2935c [$8002935c]
+
+    A0 = 0;
+    800281C0	jal    func28870 [$80028870]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func293e8()
 dir_file_id = A0;
 allocated_memory = A1;
@@ -341,4 +438,172 @@ else
         return 0;
     }
 }
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func282c4()
+
+A3 = w[8004f498];
+
+A2 = 0;
+loop282d0:	; 800282D0
+    // if ??? == id of first file in dir 7
+    if( hu[A3 + A2 * 2] == ( w[8004f4b8] + 1 ) )
+    {
+        [A0] = w((A2 >> 2) << 2);
+        [A1] = w(A2 % 4);
+        break;
+    }
+    A2 = A2 + 1;
+    V0 = A2 < 40;
+80028314	bne    v0, zero, loop282d0 [$800282d0]
+
+if( A2 == 40 )
+{
+    [A0] = w(0);
+    [A1] = w(0);
+}
+
+return w[8004f4b8];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func28280()
+
+V0 = w[8004f498];
+// 16001800FFFFFFFF
+// A801FFFFFFFFFFFF
+// FFFFFFFFFFFFFFFF
+// 350A3A0A350DD30A
+// 220A2E0A2F0AFFFF
+// FFFFFFFFFFFFFFFF
+// 140001001300FFFF
+// 7500FFFFFFFFFFFF
+// 100C140C150C190C
+// 520FFFFFFFFFFFFF
+// 4C0F6E0B4D0C3710
+// 090CAD0BFFFFFFFF
+// 2E003400FFFFFFFF
+// FFFFFFFFFFFFFFFF
+// FFFFFFFFFFFFFFFF
+V0 = hu[V0 + (A0 + A1) * 2] - 1;
+[8004f4b8] = w(V0);
+if( V0 < 0 )
+{
+    [8004f4b8] = w(0);
+    return -1;
+}
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func28548()
+
+dir_file_id = A0;
+
+if( w[8004f4ec] != 0 )
+{
+    A0 = dir_file_id;
+    func287a8();
+
+    A0 = V0; // filename
+    A1 = 0; // accessmode
+    A2 = 0;
+    system_devkit_pc_open();
+    S0 = V0;
+
+    A0 = S0; // filehandle
+    A1 = 0; // file_offset
+    A2 = 2; // seekmode  2 = end of file.
+    system_devkit_pc_seek();
+    S1 = V0; // file pointer
+
+    A0 = S0; // filehandle
+    system_devkit_pc_close();
+
+    if( S1 > 0 )
+    {
+        return S1;
+    }
+}
+
+A0 = w[8004f494]; // pointer to 0x80010004
+V0 = w[8004f4b8] + dir_file_id - 1;
+
+return w[A0 + V0 * 7 + 3]; // size of file
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func287e0()
+V0 = w[8004f494]; // pointer to 0x80010004
+A0 = w[8004f4b8] + A0 - 1;
+return (bu[V0 + A0 * 7 + 2] << 10) | (bu[V0 + A0 * 7 + 1] << 8) | bu[V0 + A0 * 7 + 0];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func287a8()
+if( w[8004f4ec] != 0 )
+{
+    return w[8004f4ec] + (w[8004f4b8] + A0 - 1) * 40;
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func286fc()
+A0 = A0;
+func28548(); // get filesize by dir file id
+
+return (V1 / 4) * 4; // make it aligned
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func28870()
+
+if( A0 == 0 )
+{
+    loop2887c:	; 8002887C
+        func284dc();
+    80028884	bgtz   v0, loop2887c [$8002887c]
+}
+func284dc();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func284dc()
+
+S0 = w[8004f4a0];
+if( S0 == 0 )
+{
+    if( w[8004f4ec] == 0 )
+    {
+        A0 = 1;
+        system_psyq_CdDataSync();
+        if( V0 != 0 )
+        {
+            return 1; // error or transfer still being performed
+        }
+    }
+    if( w[8004f4c0] != 0 )
+    {
+        return 1;
+    }
+}
+return S0;
 ////////////////////////////////

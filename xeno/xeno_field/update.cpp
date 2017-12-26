@@ -329,12 +329,12 @@ L73010:	; 80073010
 ////////////////////////////////
 // func74bdc()
 A0 = 1;
-80074BEC	jal    func4b3f4 [$8004b3f4]
+80074BEC	jal    system_psyq_wait_frames [$8004b3f4]
 
 [800ad074] = w(0);
 
 A0 = -1;
-80074BFC	jal    func4b3f4 [$8004b3f4]
+80074BFC	jal    system_psyq_wait_frames [$8004b3f4]
 
 S1 = V0;
 
@@ -404,7 +404,7 @@ if( w[800c1b60] == 0 )
     80074D1C	0C0A06C6	Ж...
 }
 
-80074D24	jal    func4b3f4 [$8004b3f4]
+80074D24	jal    system_psyq_wait_frames [$8004b3f4]
 80074D28	ori    a0, zero, $0001
 80074D2C	lui    at, $800b
 80074D30	sw     v0, $d078(at)
@@ -418,7 +418,7 @@ A0 = w[800c3740] + S0;
 A1 = w[800acfe0];
 func7f660(); // dialog function
 
-80074D5C	jal    func4b3f4 [$8004b3f4]
+80074D5C	jal    system_psyq_wait_frames [$8004b3f4]
 80074D60	addu   a0, zero, zero
 80074D64	jal    func32adc [$80032adc]
 80074D68	nop
@@ -485,7 +485,7 @@ L74e10:	; 80074E10
 80074E38	nop
 80074E3C	bne    v0, zero, L74e54 [$80074e54]
 80074E40	nop
-80074E44	jal    func4b3f4 [$8004b3f4]
+80074E44	jal    system_psyq_wait_frames [$8004b3f4]
 80074E48	ori    a0, zero, $0001
 80074E4C	lui    at, $800b
 80074E50	sw     v0, $d074(at)
@@ -560,7 +560,7 @@ L74f4c:	; 80074F4C
 80074F5C	addu   a0, v0, a0
 
 loop74f60:	; 80074F60
-80074F60	jal    func4b3f4 [$8004b3f4]
+80074F60	jal    system_psyq_wait_frames [$8004b3f4]
 80074F64	addiu  a0, zero, $ffff (=-$1)
 80074F68	lui    v1, $800b
 80074F6C	lw     v1, $1650(v1)

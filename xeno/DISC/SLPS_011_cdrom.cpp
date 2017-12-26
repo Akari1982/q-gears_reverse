@@ -1,101 +1,4 @@
 ////////////////////////////////
-// func28040()
-
-S1 = A0;
-S2 = A1;
-S0 = A2; // ffffffff -1
-
-[80059b18] = w(0);
-[80059b1c] = w(0);
-[80059b20] = w(0);
-[80059b24] = w(0);
-[80059b28] = w(0);
-[80059b2c] = w(0);
-[80059b34] = w(0);
-[80059b38] = w(0);
-[80059b44] = w(0);
-
-if( S0 == 0 || S0 == -1 )
-{
-    L280b8:	; 800280B8
-        func40b80();
-    800280C0	beq    v0, zero, L280b8 [$800280b8]
-
-    A0 = 0;
-    800280C8	jal    func40d6c [$80040d6c]
-
-    A0 = 0;
-    800280D0	jal    func41264 [$80041264]
-
-    A0 = 0;
-    func40e2c();
-
-    A0 = 0;
-    800280E0	jal    func40e44 [$80040e44]
-
-    A0 = 7;
-    A1 = 0;
-    A2 = 800595b8;
-    800280F4	jal    func40e5c [$80040e5c]
-
-    A0 = a0;
-    800280FC	jal    func2a238 [$8002a238]
-
-    A0 = 0;
-    80028104	jal    func28870 [$80028870]
-
-    A0 = 3;
-    8002810C	jal    func4b3f4 [$8004b3f4]
-}
-else
-{
-    8002811C	jal    func4c234 [$8004c234]
-}
-
-if( S0 != -1 )
-{
-    [8004f4ec] = w(S0);
-}
-else
-{
-    [8004f4ec] = w(0);
-}
-
-[8004f494] = w(S1);
-[8004f498] = w(S2);
-[8004f4b8] = w(0);
-[8004f4a0] = w(0);
-[8004f49c] = w(0);
-[8004f4c0] = w(0);
-[8004f4f0] = w(-1);
-
-if( S0 == 0 )
-{
-    A0 = 18;
-    A1 = S1;
-    A2 = 8000;
-    A3 = 0;
-    A4 = 0;
-    80028194	jal    func2935c [$8002935c]
-
-    A0 = 0;
-    8002819C	jal    func28870 [$80028870]
-
-    A0 = 28;
-    A1 = w[8004f498];
-    A2 = 7a;
-    A3 = 0;
-    A4 = 0;
-    800281B8	jal    func2935c [$8002935c]
-
-    A0 = 0;
-    800281C0	jal    func28870 [$80028870]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func40d6c()
 
 V0 = w[80055b54];
@@ -119,13 +22,13 @@ loop40b90:	; 80040B90
         func40e2c();
 
         A0 = 80040c40;
-        80040BBC	jal    func40e44 [$80040e44]
+        func40e44();
 
         A0 = 80040c68;
-        80040BCC	jal    func435b4 [$800435b4]
+        func435b4();
 
         A0 = 0;
-        80040BD4	jal    func435cc [$800435cc]
+        func435cc();
 
         return 1;
     }
@@ -142,6 +45,36 @@ return 0;
 
 
 ////////////////////////////////
+// func40e44()
+
+V0 = w[80055b4c];
+[80055b4c] = w(A0);
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func435b4()
+
+V0 = w[80055ee4];
+[80055ee4] = w(A0);
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func435cc()
+
+V0 = w[80055f18];
+[80055f18] = w(A0);
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func40ce0()
 
 S0 = A0;
@@ -149,27 +82,20 @@ S0 = A0;
 if( S0 == 2 )
 {
     func42578();
-
-    return 1;
 }
-
-func425c8();
-if( V0 != 0 )
+else
 {
-    return 0;
-}
+    func425c8();
+    if( V0 != 0 )
+    {
+        return 0;
+    }
 
-if( S0 != 1 )
-{
-    return 1;
+    if( S0 == 1 )
+    {
+        func42484(); // set base cd audio volume
+    }
 }
-
-func42484();
-if( V0 != 0 )
-{
-    return 0;
-}
-
 return 1;
 ////////////////////////////////
 
@@ -179,39 +105,30 @@ return 1;
 // func42484()
 
 cd_1800 = w[80055e10]; // 1f801800
+cd_1801 = w[80055e14]; // 1f801801
 cd_1802 = w[80055e18]; // 1f801802
+cd_1803 = w[80055e1c]; // 1f801803
+spu_reg = w[80055e24]; // 1f801c00
 
-V1 = w[80055e24];
-V0 = hu[V1 + 1b8];
+// current main volume left/right
+if( ( hu[spu_reg + 1b8] == 0 ) && ( hu[spu_reg + 1ba] == 0 ) )
+{
+    [spu_reg + 180] = h(0); // mainvolume left
+    [spu_reg + 182] = h(0); // mainvolume right
+}
 
-80042498	bne    v0, zero, L424c0 [$800424c0]
+[spu_reg + 1b0] = h(3fff); // cd volume left
+[spu_reg + 1b2] = h(3fff); // cd volume right
+[spu_reg + 1aa] = h(c001); // spu control register (SPUCNT)
 
-V0 = hu[V1 + 1ba];
-800424A8	bne    v0, zero, L424c4 [$800424c4]
-
-[V1 + 180] = h(V0);
-[V1 + 182] = h(V0);
-V1 = w[80055e24];
-
-L424c0:	; 800424C0
-L424c4:	; 800424C4
-[V1 + 1b0] = h(3fff);
-[V1 + 1b2] = h(3fff);
-[V1 + 1aa] = h(c001);
-[SP + 2] = b(80);
-[SP + 0] = b(80);
-[SP + 3] = b(0);
-[SP + 1] = b(0);
-[cd_1800] = b(2);
-[cd_1802] = b(bu[SP + 0]);
-V1 = w[80055e1c];
-[V1] = b(bu[SP + 1]);
-[cd_1800] = b(3);
-V1 = w[80055e14];
-[V1] = b(bu[SP + 2]);
-[cd_1802] = b(bu[SP + 3]);
-V1 = w[80055e1c];
-[V1] = b(20);
+// set stereo cd volume output
+[cd_1800] = b(02); // set port
+[cd_1802] = b(80); // Audio Volume for Left-CD-Out to Left-SPU-Input
+[cd_1803] = b(00); // Audio Volume for Left-CD-Out to Right-SPU-Input
+[cd_1800] = b(03); // set port
+[cd_1801] = b(80); // Audio Volume for Right-CD-Out to Right-SPU-Input
+[cd_1802] = b(00); // Audio Volume for Right-CD-Out to Left-SPU-Input
+[cd_1803] = b(20); // Audio Volume Apply Changes (by writing bit5=1)
 
 return 0;
 ////////////////////////////////
@@ -250,34 +167,34 @@ A0 = 80018fb8; // "addr=%08x"
 A1 = 80055e2c;
 system_bios_printf();
 
-[80055b69] = b(0);
-[80055b68] = b(0);
-[80055b4c] = w(0);
+[80055b68] = b(0); // stored param of CdlSetmode command
+[80055b69] = b(0); // stored cdl command
 [80055b48] = w(0);
-[80055b5c] = w(0);
+[80055b4c] = w(0);
 [80055b58] = w(0);
+[80055b5c] = w(0);
 
-func4b5e8();
+func4b5e8(); // reset interrupts
 
 A0 = 2;
 A1 = 80042b20; // func42b20()
 func4b618();
 
-[cd_1800] = b(1);
-
-while( bu[cd_1803] & 7 )
+[cd_1800] = b(01);
+while( bu[cd_1803] & 7 ) // interupt response received
 {
-    [cd_1800] = b(1);
-    [cd_1803] = b(7);
-    [cd_1802] = b(7);
+    [cd_1800] = b(01);
+    [cd_1803] = b(07); // reset response bit
+    [cd_1802] = b(07); // enable interrupts
 }
 
-[80055e2a] = b(0);
-[80055e29] = b(bu[80055e2a]);
 [80055e28] = b(2);
-[cd_1800] = b(0);
-[cd_1803] = b(0);
-[com_delay] = w(1325);
+[80055e29] = b(0);
+[80055e2a] = b(0);
+
+[cd_1800] = b(00);
+[cd_1803] = b(00); // reset fifo
+[com_delay] = w(1325); // set delay
 
 A0 = 1;
 A1 = 0;
@@ -312,7 +229,7 @@ if( V0 == 0 )
     {
         A0 = 0;
         A1 = 0;
-        80042790	jal    func419b4 [$800419b4]
+        system_psyq_cd_sync();
 
         V0 = V0 ^ 2;
         V0 = 0 < V0;

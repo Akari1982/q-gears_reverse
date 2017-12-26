@@ -197,7 +197,7 @@ L77810:	; 80077810
                     system_draw_sync();
 
                     A0 = 2;
-                    func4b3f4(); // get time
+                    system_psyq_wait_frames(); // get time
 
                     func73d90(); // update buttons
 
@@ -600,7 +600,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-func4b3f4(); // get time
+system_psyq_wait_frames(); // get time
 
 8007810C	jal    func6f740 [$8006f740]
 

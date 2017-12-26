@@ -244,7 +244,7 @@ system_set_draw_sync_callback();
 A0 = 0;
 system_draw_sync();
 
-80019BB4	jal    func4b3f4 [$8004b3f4]
+80019BB4	jal    system_psyq_wait_frames [$8004b3f4]
 80019BB8	ori    a0, zero, $0002
 80019BBC	lw     a0, $0008(s1)
 80019BC0	jal    func31920 [$80031920]
@@ -273,7 +273,7 @@ if( w[S1 + c] != 0 )
     system_draw_sync();
 
     80019C28	addu   a0, zero, zero
-    80019C24	jal    func4b3f4 [$8004b3f4]
+    80019C24	jal    system_psyq_wait_frames [$8004b3f4]
 
     system_enter_critical_section();
 
@@ -281,7 +281,7 @@ if( w[S1 + c] != 0 )
     system_draw_sync();
 
     80019C40	addu   a0, zero, zero
-    80019C3C	jal    func4b3f4 [$8004b3f4]
+    80019C3C	jal    system_psyq_wait_frames [$8004b3f4]
 
     system_bios_flush_cache();
 
@@ -476,7 +476,7 @@ A1 = S2;
 8001A044	addu   a2, a1, zero
 
 L1a048:	; 8001A048
-8001A048	jal    func4b3f4 [$8004b3f4]
+8001A048	jal    system_psyq_wait_frames [$8004b3f4]
 8001A04C	addu   a0, zero, zero
 8001A050	j      L19f48 [$80019f48]
 8001A054	addiu  s1, s1, $0001

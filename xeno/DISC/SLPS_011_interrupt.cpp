@@ -31,7 +31,7 @@ system_bios_set_custom_exit_from_exception();
 
 [80056f44] = h(1);
 
-func4bdc8();
+func4bdc8(); // wait timer init
 V1 = w[80057fcc];
 [V1 + 14] = w(V0);
 
@@ -53,58 +53,57 @@ return 80056f44;
 
 int_mask = w[80057fd4]; // 1f801074 interrupt mask register
 
-S1 = A0; // type
-S2 = A1; // func
+type = A0;
+func = A1;
 
-S4 = w[80056f48 + S1 * 4];
+S4 = w[80056f48 + type * 4];
 
-if( S2 != S4 )
+if( func != S4 )
 {
     if( hu[80056f44] != 0 )
     {
         S3 = hu[int_mask];
         [int_mask] = h(0);
 
-        if( S2 != 0 )
+        if( func != 0 )
         {
-            V1 = 1 << S1;
-            [80056f48 + S1 * 4] = w(S2);
-            S3 = S3 | V1;
-            [80056f74] = h(hu[80056f74] | V1);
+            [80056f48 + type * 4] = w(func);
+            S3 = S3 | (1 << type);
+            [80056f74] = h(hu[80056f74] | (1 << type));
         }
         else
         {
-            V0 = 0 NOR (1 << S1);
-            [80056f48 + S1 * 4] = w(0);
+            V0 = 0 NOR (1 << type);
+            [80056f48 + type * 4] = w(0);
             S3 = S3 & V0;
             [80056f74] = h(hu[80056f74] & V0);
         }
 
-        if( S1 == 0 )
+        if( type == 0 )
         {
-            A0 = S2 < 1;
+            A0 = func < 1;
             system_bios_change_clear_pad();
 
             A0 = 3;
-            A1 = S2 < 1;
+            A1 = func < 1;
             system_bios_change_clear_rcnt();
         }
-        if( S1 == 4 )
+        if( type == 4 )
         {
             A0 = 0;
-            A1 = S2 < 1;
+            A1 = func < 1;
             system_bios_change_clear_rcnt();
         }
-        if( S1 == 5 )
+        if( type == 5 )
         {
             A0 = 1;
-            A1 = S2 < 1;
+            A1 = func < 1;
             system_bios_change_clear_rcnt();
         }
-        if( S1 == 6 )
+        if( type == 6 )
         {
             A0 = 2;
-            A1 = S2 < 1;
+            A1 = func < 1;
             system_bios_change_clear_rcnt();
         }
 
@@ -481,31 +480,6 @@ return 0;
 
 
 ////////////////////////////////
-// func4bdc8()
-
-V1 = w[80058004]; // 1f801114 Timer 1 Counter Mode (R/W)
-// 0 Synchronization Enable 1=Synchronize via Bit1-2)
-// 1-2 Synchronization Mode
-//     3 = Pause until Vblank occurs once, then switch to Free Run
-// 8-9 Clock Source (0-3, see list below)
-//     Counter 1:  1 or 3 = Hblank
-[V1] = w(00000107);
-[80058000] = w(0);
-
-A0 = 80057fe0;
-A1 = 8;
-func4bec4(); // set mem to zero
-
-A0 = 0;
-A1 = 8004be20;
-func4b618();
-
-return 8004be98;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func4bef0()
 
 A0 = 8005800c;
@@ -596,4 +570,138 @@ V0 = w[80057fcc];
 V0 = w[80058030];
 [80058030] = w(A0);
 return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4bdc8()
+
+V1 = w[80058004]; // 1f801114 Timer 1 Counter Mode (R/W)
+// 0 Synchronization Enable 1=Synchronize via Bit1-2)
+// 1-2 Synchronization Mode
+//     3 = Pause until Vblank occurs once, then switch to Free Run
+// 8-9 Clock Source (0-3, see list below)
+//     Counter 1:  1 or 3 = Hblank
+[V1] = w(00000107);
+[80058000] = w(0);
+
+A0 = 80057fe0;
+A1 = 8;
+func4bec4(); // set mem to zero
+
+A0 = 0;
+A1 = 8004be20; // func4be20()
+func4b618();
+
+return 8004be98;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_wait_frames()
+
+// if A0 == -1 - return value from 80058000
+// if A0 == 1 - return delta time from prev update
+// if A0 = 0 o2 and greater - wait number of frames
+
+gpustat = w[80056edc]; // 1f801814 GPUSTAT Read GPU Status Register
+timer1_value = w[80056ee0]; // 1f801110 Timer 1 Current Counter Value
+
+S0 = w[gpustat];
+
+delta = w[timer1_value] - w[80056ee4];
+
+if( A0 < 0 )
+{
+    return w[80058000];
+}
+else if( A0 != 1 )
+{
+    if( A0 > 0 )
+    {
+        V0 = w[80056ee8] - 1 + A0;
+    }
+    else
+    {
+        V0 = w[80056ee8];
+    }
+
+    A1 = 0;
+    if( A0 > 0 )
+    {
+        A1 = A0 - 1;
+    }
+
+    A0 = V0;
+    A1 = A1; // wait timer
+    func4b53c();
+
+    S0 = w[gpustat];
+
+    // wait one cycle
+    A0 = w[80058000] + 1;
+    A1 = 1;
+    func4b53c();
+
+    if( S0 & 00400000 ) // 22 Vertical Interlace (0=Off, 1=On)
+    {
+        V0 = S0 ^ w[gpustat];
+        if( V0 >= 0 )
+        {
+            loop4b4e4:	; 8004B4E4
+                V0 = (S0 ^ w[gpustat]) & 80000000; // 31 Drawing even/odd lines in interlace mode (0=Even or Vblank, 1=Odd)
+            8004B4F4	beq    v0, zero, loop4b4e4 [$8004b4e4]
+        }
+    }
+
+    [80056ee8] = w(w[80058000]);
+    [80056ee4] = w(w[timer1_value]);
+}
+
+return delta;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4b53c()
+
+wait = A1 << f;
+
+while( w[80058000] < A0 )
+{
+    wait = wait - 1;
+    if( wait == -1 )
+    {
+        A0 = 80019458; // "VSync: timeout"
+        func42c04();
+
+        A0 = 0;
+        system_bios_change_clear_pad();
+
+        A0 = 3; // vblank
+        A1 = 0; // do nothing
+        system_bios_change_clear_rcnt();
+
+        break;
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4be20()
+
+[80058000] = w(w[80058000] + 1);
+
+for( int i = 0; i < 8; ++i )
+{
+    if( w[80057fe0 + i * 4] != 0 )
+    {
+        8004BE68	jalr   w[80057fe0 + i * 4] ra
+    }
+}
 ////////////////////////////////

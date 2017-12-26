@@ -89,11 +89,16 @@
 
 80055ab4 [][][][] set to 1 after gamepad init.
 
+80055b48 [][][][] init with 0.
+80055b4c [][][][] some callback cd related.
+
 80055b54 [][][][] cd debug level.
                   0: no checks performed
                   1: check primitive commands
                   2: print execution status of primitive commands
                   3: print issued command error
+80055b58 [][][][] init with 0.
+80055b5c [][][][] init with 0.
 
 80055b64 array of stored params of CdlSetloc command (size 0x01 items 0x04).
 80055b68 []       stored param of CdlSetmode command.
@@ -113,8 +118,12 @@
         00000000        00000000        00000000        01000000        00000000        00000000        00000000        00000000
 80055d90 array of number of arguments in Cdl commands (size 0x04 items 0x20).
 
+80055ee4 [][][][] some callback cd related.
+80055f18 [][][][] some callback cd related.
+
 80055e28 []       cd sync interrupt result.
 80055e29 []       cd ready interrupt result.
+80055e2a []       init with 0.
 
 80055f70 []       gpu type (old commands or new commands).
 80055f72 []       graph debug level.
@@ -131,6 +140,9 @@
 
 800566d0          rotation for angle 0 - 45 (each 2 bytes)
 
+80056ee4 [][][][] previous timer1 value.
+80056ee8 [][][][] store previous 80058000.
+
 80057fcc [][][][] pointer to some func callbacks (80057fac).
     + 0 80019468
     + 4 8004c0c4
@@ -144,9 +156,11 @@
 80057fd4 [][][][] 1f801074 interrupt mask register.
 80057fd8 [][][][] 1f8010f0 dma control register.
 
-80057fe0 array of callbacks (0x4 size).
+80057fe0 array of callbacks called everytime when wait timer updates (0x4 size).
             4 - set with func4b678();
 
+80058000 [][][][] frame timer.
+80058004 [][][][] 1f801114 Timer 1 Counter Mode (R/W)
 80058008 [][][][] address for flags for enabling some callbacks.
 8005800c array of callbacks.
 80058030 [][][][] set to 0 during game init.

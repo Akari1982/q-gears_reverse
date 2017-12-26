@@ -68,7 +68,7 @@ return 0;
 mode = A0;
 
 A0 = -1;
-func4b3f4();
+system_psyq_wait_frames();
 [800598c4] = w(V0 + 3c0);
 [800598c8] = w(0);
 [800598cc] = w(80018fc4); // "CD_datasync"
@@ -77,7 +77,7 @@ func4b3f4();
 
 loop42814:	; 80042814
     A0 = -1;
-    func4b3f4();
+    system_psyq_wait_frames();
 
     V1 = w[800598c4] < V0;
     80041A38	bne    v1, zero, L41a68 [$80041a68]
@@ -119,212 +119,11 @@ return 1; // transfer still being performed
 
 
 ////////////////////////////////
-// func41f00()
-
-cdl_command = A0;
-param_ptr = S1 = A1;
-return_ptr = A2;
-S2 = A3;
-
-
-
-// log debug text
-if( w[80055b54] >= 2 )
-{
-    A0 = 80018f58; // "%s..."
-    A1 = w[80055b70 + cdl_command * 4];
-    system_bios_printf();
-}
-
-
-
-// check number of arguments for cdl command
-if( ( w[80055d90 + cdl_command * 4] != 0 ) && ( param_ptr == 0 ) )
-{
-    if( w[80055b54] > 0 )
-    {
-        A0 = 80018f60; // "%s: no param"
-        A1 = w[80055b70 + cdl_command * 4];
-        system_bios_printf();
-    }
-    return -2;
-}
-
-
-
-A0 = 0;
-A1 = 0;
-func419b4();
-
-
-
-if( cdl_command == 2 ) // CdlSetloc
-{
-    A0 = 0;
-    loop41fe4:	; 80041FE4
-        [80055b64 + A0] = b(bu[param_ptr + A0]);
-        A0 = A0 + 1;
-        V0 = A0 < 4;
-    80041FFC	bne    v0, zero, loop41fe4 [$80041fe4]
-}
-
-if( cdl_command == e ) // CdlSetmode
-{
-    [80055b68] = b(bu[param_ptr]);
-}
-
-
-
-// resets interrupt
-[80055e28] = b(0);
-if( w[80055c90 + cdl_command * 4] != 0 )
-{
-    [80055e29] = b(0);
-}
-
-
-
-// set index 0
-cd_1800 = w[80055e10];
-[cd_1800] = b(0)
-
-
-
-// write all params to fifo
-if( w[80055d90 + cdl_command * 4] > 0 )
-{
-    A0 = 0;
-    loop42084:	; 80042084
-        cd_1802 = w[80055e18];
-        [cd_1802] = b(bu[param_ptr + A0]);
-        A0 = A0 + 1;
-        V0 = A0 < w[80055d90 + cdl_command * 4];
-    800420A4	bne    v0, zero, loop42084 [$80042084]
-}
-
-
-
-cd_1801 = w[80055e14];
-[cd_1801] = b(cdl_command);
-[80055b69] = b(cdl_command);
-
-
-
-if( S2 != 0 )
-{
-    return 0;
-}
-
-
-
-A0 = -1;
-func4b3f4();
-[800598c4] = w(V0 + 3c0);
-[800598c8] = w(0);
-[800598cc] = w(80018f70); // "CD_cw"
-
-
-
-if( bu[80055e28] == 0 )
-{
-    loop42118:	; 80042118
-        A0 = -1;
-        func4b3f4();
-
-        V1 = w[800598c4] < V0;
-        80042130	bne    v1, zero, L42160 [$80042160]
-
-        V1 = w[800598c8];
-        [800598c8] = w(V1 + 1);
-
-        if( V1 > 003c0000 )
-        {
-            L42160:	; 80042160
-            A0 = 80018ebc; // "CD timeout: "
-            80042168	jal    func42c04 [$80042c04]
-
-            A0 = 80018ecc; // "%s:(%s) Sync=%s, Ready=%s"
-            A1 = w[800598cc]; // "CD_cw"
-            V0 = bu[80055b69];
-            A2 = w[80055b70 + V0 * 4];
-            V0 = bu[80055e28];
-            A3 = w[80055bf0 + V0 * 4];
-            V0 = bu[80055e29];
-            A4 = w[80055bf0 + V0 * 4];
-            system_bios_printf();
-
-            func423a4();
-
-            return -1;
-        }
-
-
-
-        if( hu[80056f46] != 0 )
-        {
-            V0 = w[80055e10];
-            S1 = bu[V0] & 03;
-
-            loop42208:	; 80042208
-                func4142c();
-                S0 = V0;
-
-                if( S0 == 0 )
-                {
-                    break;
-                }
-                if( ( S0 & 4 ) && ( w[80055b4c] != 0 ) )
-                {
-                    A0 = bu[80055e29];
-                    A1 = 800598b4;
-                    80042244	jalr   w[80055b4c] ra
-                }
-                if( ( S0 & 2 ) && ( w[80055b48] != 0 ) )
-                {
-                    A0 = bu[80055e28];
-                    A1 = 800598ac;
-                    80042278	jalr   w[80055b48] ra
-                }
-            80042280	j      loop42208 [$80042208]
-
-            V0 = w[80055e10];
-            [V0] = b(S1);
-        }
-
-        V0 = bu[80055e28];
-    800422A0	beq    v0, zero, loop42118 [$80042118]
-}
-
-
-
-if( return_ptr != 0 )
-{
-    A0 = 0;
-    V1 = 7;
-    loop422c0:	; 800422C0
-        [return_ptr + A0] = b(bu[800598ac + A0]);
-        A0 = A0 + 1;
-        V1 = V1 - 1;
-    800422D0	bne    v1, -1, loop422c0 [$800422c0]
-}
-
-
-
-if( bu[80055e28] == 5 )
-{
-    return -1;
-}
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func41c34
 80041C3C	addu   s7, a0, zero
 80041C44	addu   s4, a1, zero
 80041C48	addiu  a0, zero, $ffff (=-$1)
-80041C64	jal    func4b3f4 [$8004b3f4]
+80041C64	jal    system_psyq_wait_frames [$8004b3f4]
 
 80041C6C	lui    s5, $8005
 80041C70	addiu  s5, s5, $5bf0
@@ -343,7 +142,7 @@ V0 = 80018f4c; // "CD_ready"
 80041CA4	sw     v0, $98cc(at)
 
 L41ca8:	; 80041CA8
-80041CA8	jal    func4b3f4 [$8004b3f4]
+80041CA8	jal    system_psyq_wait_frames [$8004b3f4]
 80041CAC	addiu  a0, zero, $ffff (=-$1)
 80041CB0	lui    v1, $8006
 80041CB4	lw     v1, $98c4(v1)
@@ -491,109 +290,6 @@ L41ec8:	; 80041EC8
 80041ECC	addu   v0, zero, zero
 
 L41ed0:	; 80041ED0
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func419b4()
-// system_psyq_CdSync()
-
-mode = A0; // If mode is 0, the wait for a data transfer to be completed. If mode is 1, the function polls once
-result_ptr = A1;
-
-A0 = -1;
-func4b3f4();
-[800598c4] = w(V0 + 3c0);
-[800598c8] = w(0);
-[800598cc] = w(80018f44); // "CD_sync"
-
-
-
-L41a20:	; 80041A20
-    A0 = -1;
-    func4b3f4();
-
-    V1 = w[800598c4] < V0;
-    80041A38	bne    v1, zero, L41a68 [$80041a68]
-
-    V1 = w[800598c8];
-    [800598c8] = w(V1 + 1);
-
-    if( V1 > 003c0000 )
-    {
-        L41a68:	; 80041A68
-        A0 = 80018ebc; // "CD timeout: "
-        80041A70	jal    func42c04 [$80042c04]
-
-        A0 = 80018ecc; // "%s:(%s) Sync=%s, Ready=%s"
-        A1 = w[800598cc]; // "CD_sync"
-        V0 = bu[80055b69];
-        A2 = w[80055b70 + V0 * 4];
-        V0 = bu[80055e28];
-        A3 = w[80055bf0 + V0 * 4];
-        V0 = bu[80055e29];
-        A4 = w[80055bf0 + V0 * 4];
-        system_bios_printf();
-
-        func423a4();
-
-        return -1;
-    }
-
-
-
-    if( hu[80056f46] != 0 )
-    {
-        V0 = w[80055e10];
-        S1 = bu[V0] & 03;
-
-        loop41b10:	; 80041B10
-            func4142c();
-            S0 = V0;
-
-            if( S0 == 0 )
-            {
-                break;
-            }
-            if( ( S0 & 4 ) && ( w[80055b4c] != 0 ) )
-            {
-                A0 = bu[80055e29];
-                A1 = 800598b4;
-                80041B4C	jalr   w[80055b4c] ra
-            }
-            if( ( S0 & 2 ) && ( w[80055b48] != 0 ) )
-            {
-                A0 = bu[80055e28];
-                A1 = 800598ac;
-                80041B80	jalr   w[80055b48] ra
-            }
-        80041B88	j      loop41b10 [$80041b10]
-
-        V0 = w[80055e10];
-        [V0] = b(S1);
-    }
-
-    if( ( bu[80055e28] == 2 ) || ( bu[80055e28] == 5 ) )
-    {
-        [80055e28] = b(2);
-
-        if( result_ptr != 0 )
-        {
-            V1 = 7;
-            A0 = 0;
-            loop41be0:	; 80041BE0
-                [result_ptr + A0] = b(bu[800598ac + A0]);
-                A0 = A0 + 1;
-                V1 = V1 - 1;
-            80041BF0	bne    v1, -1, loop41be0 [$80041be0]
-        }
-
-        return bu[80055e28];
-    }
-80041C00	beq    mode, zero, L41a20 [$80041a20]
-
-return 0;
 ////////////////////////////////
 
 
@@ -883,105 +579,6 @@ switch( bu[SP + 10] )
 
 
 ////////////////////////////////
-// func4b3f4()
-
-V0 = w[80056edc];
-V1 = w[80056ee0];
-S0 = w[V0];
-V0 = w[V1];
-
-S1 = V0 - w[80056ee4];
-
-if( A0 < 0 )
-{
-    return w[80058000];
-}
-if( A0 == 1 )
-{
-    return S1;
-}
-
-if( A0 > 0 )
-{
-    V0 = w[80056ee8] - 1 + A0;
-}
-else
-{
-    V0 = w[80056ee8];
-}
-
-A1 = 0;
-if( A0 > 0 )
-{
-    A1 = A0 - 1;
-}
-
-A0 = V0;
-func4b53c();
-
-V0 = w[80056edc];
-S0 = w[V0];
-
-A0 = w[80058000] + 1;
-A1 = 1;
-func4b53c();
-
-if( S0 & 00400000 )
-{
-    V1 = w[80056edc];
-    V0 = w[V1];
-    V0 = S0 XOR V0;
-    if( V0 >= 0 )
-    {
-        loop4b4e4:	; 8004B4E4
-            8004B4E4	lw     v0, $0000(v1)
-            8004B4EC	xor    v0, s0, v0
-            V0 = V0 & 80000000;
-        8004B4F4	beq    v0, zero, loop4b4e4 [$8004b4e4]
-    }
-}
-
-V1 = w[80056ee0];
-[80056ee8] = w(w[80058000]);
-[80056ee4] = w(w[V1]);
-
-return S1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func4b53c()
-
-wait = A1 << f;
-
-if( w[80058000] < A0 )
-{
-    loop4b564:	; 8004B564
-        wait = wait - 1;
-        if( wait == -1 )
-        {
-            A0 = 80019458; // "VSync: timeout"
-            8004B58C	jal    func42c04 [$80042c04]
-
-            A0 = 0;
-            system_bios_change_clear_pad();
-
-            A0 = 3; // vblank
-            A1 = 0; // do nothing
-            system_bios_change_clear_rcnt();
-
-            break;
-        }
-
-        V0 = w[80058000] < A0;
-    8004B5C0	bne    v0, zero, loop4b564 [$8004b564]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func423a4()
 800423A4	lui    v1, $8005
 800423A8	lw     v1, $5e10(v1)
@@ -1043,15 +640,6 @@ L42428:	; 80042428
 80042478	sw     v0, $0000(v1)
 8004247C	jr     ra 
 80042480	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func40e44()
-V0 = w[80055b4c];
-[80055b4c] = w(A0);
-return V0;
 ////////////////////////////////
 
 

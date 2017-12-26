@@ -2253,7 +2253,7 @@ A0 = 0; // wait for termination
 system_draw_sync();
 
 A0 = 0;
-func4b3f4(); // get time and sync
+system_psyq_wait_frames(); // get time and sync
 ////////////////////////////////
 
 

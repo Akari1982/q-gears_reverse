@@ -5,7 +5,7 @@
 8007039C	sw     s0, $0018(sp)
 800703A0	jal    system_draw_sync [$80044448]
 800703A4	addu   a0, zero, zero
-800703A8	jal    func4b3f4 [$8004b3f4]
+800703A8	jal    system_psyq_wait_frames [$8004b3f4]
 800703AC	addu   a0, zero, zero
 800703B0	lui    a0, $8003
 800703B4	addiu  a0, a0, $61f4
@@ -230,7 +230,7 @@ loop706c4:	; 800706C4
 800706F8	nop
 800706FC	jal    system_draw_sync [$80044448]
 80070700	addu   a0, zero, zero
-80070704	jal    func4b3f4 [$8004b3f4]
+80070704	jal    system_psyq_wait_frames [$8004b3f4]
 80070708	addu   a0, zero, zero
 8007070C	jal    func35c84 [$80035c84]
 80070710	nop
@@ -487,7 +487,7 @@ L70a8c:	; 80070A8C
 80070A90	nop
 80070A94	bne    v0, s0, L70aac [$80070aac]
 80070A98	nop
-80070A9C	jal    func4b3f4 [$8004b3f4]
+80070A9C	jal    system_psyq_wait_frames [$8004b3f4]
 80070AA0	addu   a0, zero, zero
 80070AA4	j      L70a8c [$80070a8c]
 80070AA8	nop
@@ -526,7 +526,7 @@ L70ad8:	; 80070AD8
 80070B1C	nop
 80070B20	jal    system_draw_sync [$80044448]
 80070B24	addu   a0, zero, zero
-80070B28	jal    func4b3f4 [$8004b3f4]
+80070B28	jal    system_psyq_wait_frames [$8004b3f4]
 80070B2C	addiu  a0, zero, $0002
 80070B30	jal    func19d24 [$80019d24]
 80070B34	nop
@@ -884,7 +884,7 @@ L71038:	; 80071038
 8007103C	nop
 80071040	jal    system_draw_sync [$80044448]
 80071044	addu   a0, zero, zero
-80071048	jal    func4b3f4 [$8004b3f4]
+80071048	jal    system_psyq_wait_frames [$8004b3f4]
 8007104C	addu   a0, zero, zero
 80071050	lui    a0, $800a
 80071054	addiu  a0, a0, $b084 (=-$4f7c)
@@ -1654,7 +1654,7 @@ L71b10:	; 80071B10
 loop71b3c:	; 80071B3C
 80071B3C	jal    func95bcc [$80095bcc]
 80071B40	nop
-80071B44	jal    func4b3f4 [$8004b3f4]
+80071B44	jal    system_psyq_wait_frames [$8004b3f4]
 80071B48	addu   a0, zero, zero
 80071B4C	jal    func95a50 [$80095a50]
 80071B50	nop
@@ -2451,7 +2451,7 @@ loop72660:	; 80072660
 80072694	sw     v0, $0000(a3)
 80072698	jal    system_draw_sync [$80044448]
 8007269C	addu   a0, zero, zero
-800726A0	jal    func4b3f4 [$8004b3f4]
+800726A0	jal    system_psyq_wait_frames [$8004b3f4]
 800726A4	addu   a0, zero, zero
 800726A8	lui    s0, $800a
 800726AC	addiu  s0, s0, $b084 (=-$4f7c)
@@ -2580,7 +2580,7 @@ L72814:	; 80072814
 80072880	sw     v0, $0000(v1)
 
 L72884:	; 80072884
-80072884	jal    func4b3f4 [$8004b3f4]
+80072884	jal    system_psyq_wait_frames [$8004b3f4]
 80072888	addu   a0, zero, zero
 8007288C	jal    func44d14 [$80044d14]
 80072890	addiu  a0, s0, $005c
@@ -2598,7 +2598,7 @@ L72884:	; 80072884
 L728bc:	; 800728BC
 800728BC	jal    system_draw_sync [$80044448]
 800728C0	addu   a0, zero, zero
-800728C4	jal    func4b3f4 [$8004b3f4]
+800728C4	jal    system_psyq_wait_frames [$8004b3f4]
 800728C8	addu   a0, zero, zero
 800728CC	lui    a0, $800a
 800728D0	addiu  a0, a0, $b084 (=-$4f7c)
@@ -5601,7 +5601,7 @@ func75180:	; 80075180
 80075318	addiu  a0, zero, $0130
 8007531C	jal    func334bc [$800334bc]
 80075320	addiu  a1, zero, $01e0
-80075324	jal    func4b3f4 [$8004b3f4]
+80075324	jal    system_psyq_wait_frames [$8004b3f4]
 80075328	addu   a0, zero, zero
 8007532C	jal    func35c84 [$80035c84]
 80075330	nop
@@ -5886,13 +5886,13 @@ func75924:	; 80075924
 80075928	sw     ra, $0010(sp)
 8007592C	jal    system_draw_sync [$80044448]
 80075930	addu   a0, zero, zero
-80075934	jal    func4b3f4 [$8004b3f4]
+80075934	jal    system_psyq_wait_frames [$8004b3f4]
 80075938	addu   a0, zero, zero
 8007593C	jal    system_enter_critical_section [$8004034c]
 80075940	nop
 80075944	jal    system_draw_sync [$80044448]
 80075948	addu   a0, zero, zero
-8007594C	jal    func4b3f4 [$8004b3f4]
+8007594C	jal    system_psyq_wait_frames [$8004b3f4]
 80075950	addu   a0, zero, zero
 80075954	jal    system_bios_flush_cache [$800402cc]
 80075958	nop
@@ -5913,7 +5913,7 @@ func75974:	; 80075974
 80075988	sw     ra, $0020(sp)
 8007598C	jal    system_draw_sync [$80044448]
 80075990	sw     s0, $0018(sp)
-80075994	jal    func4b3f4 [$8004b3f4]
+80075994	jal    system_psyq_wait_frames [$8004b3f4]
 80075998	addu   a0, zero, zero
 8007599C	lui    v0, $800a
 800759A0	lw     v0, $cbd8(v0)
@@ -5943,7 +5943,7 @@ L759d4:	; 800759D4
 loop759f4:	; 800759F4
 800759F4	jal    system_draw_sync [$80044448]
 800759F8	addu   a0, zero, zero
-800759FC	jal    func4b3f4 [$8004b3f4]
+800759FC	jal    system_psyq_wait_frames [$8004b3f4]
 80075A00	addu   a0, zero, zero
 80075A04	addiu  a0, zero, $0088
 80075A08	jal    func1f92c [$8001f92c]
@@ -6022,7 +6022,7 @@ L75b00:	; 80075B00
 80075B1C	nop
 80075B20	jal    system_draw_sync [$80044448]
 80075B24	addu   a0, zero, zero
-80075B28	jal    func4b3f4 [$8004b3f4]
+80075B28	jal    system_psyq_wait_frames [$8004b3f4]
 80075B2C	addu   a0, zero, zero
 80075B30	addiu  a0, sp, $0010
 80075B34	addu   a1, zero, zero
@@ -6940,7 +6940,7 @@ L76664:	; 80076664
 loop7679c:	; 8007679C
 8007679C	jal    func95bcc [$80095bcc]
 800767A0	nop
-800767A4	jal    func4b3f4 [$8004b3f4]
+800767A4	jal    system_psyq_wait_frames [$8004b3f4]
 800767A8	addu   a0, zero, zero
 800767AC	jal    func95a50 [$80095a50]
 800767B0	nop
@@ -7514,7 +7514,7 @@ L76fe4:	; 80076FE4
 loop76ffc:	; 80076FFC
 80076FFC	jal    func95bcc [$80095bcc]
 80077000	nop
-80077004	jal    func4b3f4 [$8004b3f4]
+80077004	jal    system_psyq_wait_frames [$8004b3f4]
 80077008	addu   a0, zero, zero
 8007700C	jal    func95a50 [$80095a50]
 80077010	nop
@@ -8596,7 +8596,7 @@ loop77e9c:	; 80077E9C
 loop77ff8:	; 80077FF8
 80077FF8	jal    func95bcc [$80095bcc]
 80077FFC	nop
-80078000	jal    func4b3f4 [$8004b3f4]
+80078000	jal    system_psyq_wait_frames [$8004b3f4]
 80078004	addu   a0, zero, zero
 80078008	jal    func95a50 [$80095a50]
 8007800C	nop
@@ -10431,7 +10431,7 @@ loop79a18:	; 80079A18
 loop79b80:	; 80079B80
 80079B80	jal    func95bcc [$80095bcc]
 80079B84	nop
-80079B88	jal    func4b3f4 [$8004b3f4]
+80079B88	jal    system_psyq_wait_frames [$8004b3f4]
 80079B8C	addu   a0, zero, zero
 80079B90	jal    func95a50 [$80095a50]
 80079B94	nop
@@ -12152,7 +12152,7 @@ loop7b38c:	; 8007B38C
 loop7b4ec:	; 8007B4EC
 8007B4EC	jal    func95bcc [$80095bcc]
 8007B4F0	nop
-8007B4F4	jal    func4b3f4 [$8004b3f4]
+8007B4F4	jal    system_psyq_wait_frames [$8004b3f4]
 8007B4F8	addu   a0, zero, zero
 8007B4FC	jal    func95a50 [$80095a50]
 8007B500	nop
@@ -13929,7 +13929,7 @@ loop7cd58:	; 8007CD58
 loop7cf04:	; 8007CF04
 8007CF04	jal    func95bcc [$80095bcc]
 8007CF08	nop
-8007CF0C	jal    func4b3f4 [$8004b3f4]
+8007CF0C	jal    system_psyq_wait_frames [$8004b3f4]
 8007CF10	addu   a0, zero, zero
 8007CF14	jal    func95a50 [$80095a50]
 8007CF18	nop
@@ -16495,7 +16495,7 @@ loop7f3ac:	; 8007F3AC
 loop7f514:	; 8007F514
 8007F514	jal    func95bcc [$80095bcc]
 8007F518	nop
-8007F51C	jal    func4b3f4 [$8004b3f4]
+8007F51C	jal    system_psyq_wait_frames [$8004b3f4]
 8007F520	addu   a0, zero, zero
 8007F524	jal    func95a50 [$80095a50]
 8007F528	nop
@@ -17445,7 +17445,7 @@ loop80140:	; 80080140
 loop802ac:	; 800802AC
 800802AC	jal    func95bcc [$80095bcc]
 800802B0	nop
-800802B4	jal    func4b3f4 [$8004b3f4]
+800802B4	jal    system_psyq_wait_frames [$8004b3f4]
 800802B8	addu   a0, zero, zero
 800802BC	jal    func95a50 [$80095a50]
 800802C0	nop
@@ -19014,7 +19014,7 @@ loop81764:	; 80081764
 loop818e8:	; 800818E8
 800818E8	jal    func95bcc [$80095bcc]
 800818EC	nop
-800818F0	jal    func4b3f4 [$8004b3f4]
+800818F0	jal    system_psyq_wait_frames [$8004b3f4]
 800818F4	addu   a0, zero, zero
 800818F8	jal    func95a50 [$80095a50]
 800818FC	nop
@@ -20129,7 +20129,7 @@ L8285c:	; 8008285C
 800828E8	sh     zero, $0004(a0)
 800828EC	jal    system_draw_sync [$80044448]
 800828F0	addu   a0, zero, zero
-800828F4	jal    func4b3f4 [$8004b3f4]
+800828F4	jal    system_psyq_wait_frames [$8004b3f4]
 800828F8	addu   a0, zero, zero
 800828FC	jal    func9714c [$8009714c]
 80082900	nop
@@ -20141,7 +20141,7 @@ L8285c:	; 8008285C
 loop82914:	; 80082914
 80082914	jal    func95bcc [$80095bcc]
 80082918	nop
-8008291C	jal    func4b3f4 [$8004b3f4]
+8008291C	jal    system_psyq_wait_frames [$8004b3f4]
 80082920	addu   a0, zero, zero
 80082924	jal    func95a50 [$80095a50]
 80082928	nop
@@ -20269,7 +20269,7 @@ loop82998:	; 80082998
 loop82af8:	; 80082AF8
 80082AF8	jal    func95bcc [$80095bcc]
 80082AFC	nop
-80082B00	jal    func4b3f4 [$8004b3f4]
+80082B00	jal    system_psyq_wait_frames [$8004b3f4]
 80082B04	addu   a0, zero, zero
 80082B08	jal    func95a50 [$80095a50]
 80082B0C	nop
@@ -41464,7 +41464,7 @@ func95518:	; 80095518
 80095570	addu   s0, v1, zero
 
 L95574:	; 80095574
-80095574	jal    func4b3f4 [$8004b3f4]
+80095574	jal    system_psyq_wait_frames [$8004b3f4]
 80095578	addu   a0, zero, zero
 8009557C	jal    func95bcc [$80095bcc]
 80095580	nop
@@ -41494,7 +41494,7 @@ L955b0:	; 800955B0
 800955D8	addu   s0, v1, zero
 
 loop955dc:	; 800955DC
-800955DC	jal    func4b3f4 [$8004b3f4]
+800955DC	jal    system_psyq_wait_frames [$8004b3f4]
 800955E0	addu   a0, zero, zero
 800955E4	jal    func95bcc [$80095bcc]
 800955E8	nop
@@ -41862,7 +41862,7 @@ func95a7c:	; 80095A7C
 80095A80	sw     ra, $0010(sp)
 
 loop95a84:	; 80095A84
-80095A84	jal    func4b3f4 [$8004b3f4]
+80095A84	jal    system_psyq_wait_frames [$8004b3f4]
 80095A88	addu   a0, zero, zero
 80095A8C	jal    func95bcc [$80095bcc]
 80095A90	nop
