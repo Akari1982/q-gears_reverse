@@ -97,9 +97,9 @@
                   1: check primitive commands
                   2: print execution status of primitive commands
                   3: print issued command error
-80055b58 [][][][] init with 0.
-80055b5c [][][][] init with 0.
-
+80055b58 [][][][] stored cdrom status code (stat).
+80055b5c [][][][] stored second response fifo. Init with 0.
+80055b60 [][][][] increment by 1 when shell opened.
 80055b64 array of stored params of CdlSetloc command (size 0x01 items 0x04).
 80055b68 []       stored param of CdlSetmode command.
 80055b69 []       stored cdl command.
@@ -347,10 +347,13 @@
 8005977a [][]     store -1 here when translate number to letters for text.
 80059780 temp array with letters generated from numbers to insert number in text (in usual text format).
 
+8005989c [][][][] init with 0.
 800598a0 [][][][] init with callback to 8004085c.
 800598a4 [][][][] init with callback to 800408c4.
-8005989c [][][][] init with 0.
 800598a8 [][][][] init with 0.
+800598ac array of stored cdl command response fifo (0x1 size 0x8 items).
+800598b4 array of stored cdl command response fifo (0x1 size 0x8 items).
+800598bc array of stored cdl command response fifo (0x1 size 0x8 items).
 
 80059b18 [][][][] init with 0.
 80059b1c [][][][] init with 0.
