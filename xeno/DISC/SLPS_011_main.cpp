@@ -71,8 +71,8 @@ func31878(); // init heap
 
 func4c3f0(); // spu init
 
-A0 = 80010004;
-A1 = 80018004;
+A0 = 80010004; // file1 allocated memory
+A1 = 80018004; // file2 allocated memory
 A2 = w[80010000]; // ffffffff
 func28040();
 

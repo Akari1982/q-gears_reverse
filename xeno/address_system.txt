@@ -112,10 +112,10 @@
 80055bf0 array of pointers to CD interupts result strings (size 0x04 items 0x8).
          00 NoIntr       01 DataReady    02 Complete     03 Acknowledge  04 DataEnd      05 DiskError    06 ?            07 ?
 80055c90 array of something related with Cdl commands (size 0x04 items 0x20).
-        00000000        00000000        00000000        01000000        01000000        01000000        01000000        00000000
-        00000000        00000000        00000000        00000000        00000000        00000000        00000000        00000000
-        00000000        00000000        00000000        00000000        00000000        01000000        01000000        00000000
-        00000000        00000000        00000000        01000000        00000000        00000000        00000000        00000000
+        0 0 0 1 1 1 1 0
+        0 0 0 0 0 0 0 0
+        0 0 0 0 0 1 1 0
+        0 0 0 1 0 0 0 0
 80055d90 array of number of arguments in Cdl commands (size 0x04 items 0x20).
 
 80055ee4 [][][][] some callback cd related.

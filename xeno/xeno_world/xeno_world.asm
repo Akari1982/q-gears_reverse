@@ -42145,7 +42145,7 @@ func95d84:	; 80095D84
 80095E10	sw     a2, $c2a0(at)
 80095E14	lui    at, $800a
 80095E18	sw     v1, $b978(at)
-80095E1C	jal    system_psyq_CdIntToPos [$800412a8]
+80095E1C	jal    system_psyq_cd_int_to_pos [$800412a8]
 80095E20	addu   a1, s0, zero
 80095E24	lui    a0, $8009
 80095E28	addiu  a0, a0, $5e54
@@ -42233,7 +42233,7 @@ func95d84:	; 80095D84
 80095F68	addiu  v0, zero, $0001
 80095F6C	lui    at, $800a
 80095F70	sw     v0, $c12c(at)
-80095F74	jal    system_psyq_CdIntToPos [$800412a8]
+80095F74	jal    system_psyq_cd_int_to_pos [$800412a8]
 80095F78	addu   a1, s0, zero
 80095F7C	addiu  a0, zero, $0002
 80095F80	j      L95fd8 [$80095fd8]
@@ -42288,7 +42288,7 @@ L95fe0:	; 80095FE0
 80096018	addu   a0, s0, zero
 8009601C	jal    func41224 [$80041224]
 80096020	addiu  a1, zero, $0003
-80096024	jal    system_psyq_CdPosToInt [$800413ac]
+80096024	jal    system_psyq_cd_pos_to_int [$800413ac]
 
 L96028:	; 80096028
 80096028	addu   a0, s0, zero
@@ -42412,7 +42412,7 @@ L96178:	; 80096178
 800961B8	sw     a0, $cbdc(at)
 800961BC	lui    at, $800a
 800961C0	sw     v0, $c12c(at)
-800961C4	jal    system_psyq_CdIntToPos [$800412a8]
+800961C4	jal    system_psyq_cd_int_to_pos [$800412a8]
 800961C8	addu   a1, s0, zero
 800961CC	addiu  a0, zero, $0002
 800961D0	j      L962e0 [$800962e0]

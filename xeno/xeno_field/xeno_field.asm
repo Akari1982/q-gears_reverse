@@ -36993,7 +36993,7 @@ loopa6874:	; 800A6874
 800A689C	nop
 800A68A0	bne    v0, zero, loopa6874 [$800a6874]
 800A68A4	nop
-800A68A8	jal    system_psyq_CdDataSync [$80041288]
+800A68A8	jal    system_psyq_cd_data_sync [$80041288]
 800A68AC	addu   a0, zero, zero
 800A68B0	lw     ra, $0010(sp)
 800A68B4	addiu  sp, sp, $0018
