@@ -89,7 +89,7 @@
 
 80055ab4 [][][][] set to 1 after gamepad init.
 
-80055b48 [][][][] init with 0.
+80055b48 [][][][] init with 0. some callback cd related.
 80055b4c [][][][] some callback cd related.
 
 80055b54 [][][][] cd debug level.
@@ -123,7 +123,7 @@
 
 80055e28 []       cd sync interrupt result.
 80055e29 []       cd ready interrupt result.
-80055e2a []       init with 0.
+80055e2a []       init with 0. cd read interrupt result?
 
 80055f70 []       gpu type (old commands or new commands).
 80055f72 []       graph debug level.
