@@ -206,7 +206,8 @@ if( i < 8 )
 
 cdl_command = bu[80055b69];
 
-S1 = 0;
+error = 0;
+
 // 00 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
 // 08 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
 // 10 00000000 00000000 01000000 01000000 01000000 01000000 01000000 01000000
@@ -223,13 +224,12 @@ if( ( last_int != 3 ) || ( w[80055d10 + cdl_command * 4] != 0 ) )
         [80055b60] = w(w[80055b60] + 1);
     }
 
-    S1 = bu[SP + 18] & 1d;
+    error = bu[SP + 18] & 1d;
     [80055b58] = w(bu[SP + 18]);
     [80055b5c] = w(bu[SP + 19]);
 }
 
-// CdlDiskError
-if( last_int == 5 )
+if( last_int == 5 ) // CdlDiskError
 {
     if( w[80055b54] > 0 )
     {
@@ -248,7 +248,7 @@ switch( last_int )
 {
     case 1: // CdlDataReady
     {
-        if( S1 == 0 )
+        if( error == 0 )
         {
             [80055e29] = b(1); // CdlDataReady
         }
@@ -256,9 +256,9 @@ switch( last_int )
         {
             if( i == 1 )
             {
-                S1 = 0;
+                error = 0;
             }
-            if( S1 == 0 )
+            if( error == 0 )
             {
                 [80055e29] = b(1); // CdlDataReady
             }
@@ -279,7 +279,7 @@ switch( last_int )
 
     case 2: // CdlComplete
     {
-        if( S1 == 0 )
+        if( error == 0 )
         {
             [80055e29] = b(2); // CdlComplete
         }
@@ -297,7 +297,7 @@ switch( last_int )
 
     case 3: // CdlAcknowledge
     {
-        if( S1 == 0 )
+        if( error == 0 )
         {
             if( w[80055c10 + cdl_command * 4] == 0 )
             {
