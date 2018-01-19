@@ -1,0 +1,207 @@
+// REGISTERS
+0x000 PORT A (MCD - data)
+
+0x001 PORT B
+        0x08 (pin 19) - shell open (0-closed, 1-open)
+
+0x003 PORT D
+        0x02 (pin 43 DATA) - serial data input (DATA, XLT и CLK работают вместе).
+        0x04 (pin 44 XLT) - latch input (DATA, XLT и CLK работают вместе).
+        0x08 (pin 45 CLK) - serial data transfer clock input (DATA, XLT и CLK работают вместе). 
+        0x10 (pin 46 DECCS) - устанавливает CD-контроллер для работы с MCA и MCD.
+        0x20 (pin 47 DECWA) - устанавливает направление шины MCD на запись.
+        0x40 (pin 48 DECRD) - устанавливает направление шины MCD на чтение.
+        0x80 (pin 49 LDON) - включение лазера.
+
+0x004 PORT E (MCA) CD Controller read and write registers.
+        READ
+        0x01 - DECSTS (decoder status) register
+            0x01 NOSYNC Indicates that the sync mark was inserted because one was not detected at the prescribed position.
+            0x02 SHRTSCT (short sector) Indicates that the sync mark interval was less than 2351 bytes. This sector does not remain in the buffer memory.
+            0x20 RTADPBSY (real-time ADPCM busy) This is high for real-time ADPCM playback.
+        0x07 - INTSTS (interrupt status) register. The value of each bit in this register indicates that of the corresponding interrupt status. These bits are not affected by the values of the INTMSK register bits.
+            0x01 HCRISD (host chip reset issued).
+            0x02 HSTCMND (host command). The HSTCMND status is established when the host writes a command in the command register.
+            0x04 DECINT (decoder interrupt).
+            0x08 HDMACMP (host DMA complete).
+            0x10 RTADPEND (real-time ADPCM end).
+            0x20 RSLTEMPT (RESULT empty).
+            0x40 DECTOUT (decoder time out). The DECTOUT status is established when the sync mark is not detected even after 3 sectors (40.6 ms at normal speed playback) have elapsed after the decoder has been set to the monitor-only, write-only or real-time correction mode.
+            0x80 DRVOVRN (drive overrun). The DRVOVRN status is established when the ENDLADR bit (bit 7) of the DECCTL register is set high and DADRC and DLADR become equal while the decoder is in the write-only or real-time correction mode. It is also established when they become equal while the decoder is in the CD-DA mode regardless of the ENDLADR bit value.
+        0x11 - HIFSTS (host interface status) register.
+            0x80 BUSYSTS (busy status) This has the same value as BUSYSTS (bit 7) of the host HSTS register. It is set high when the host writes a command into the command register and low when the sub CPU sets CLRBUSY of the CLRCTL register.
+            0x40 RSLWRDY (result write ready) The result register is not full when this bit is high. The sub CPU can write the result of the command execution into this register.
+            0x20 RSLEMPT (result empty) The result register is empty when this bit is high. It indicates that all the status sent from the sub CPU to the host (result register) have been read out by the host.
+            0x10 PRMRRDY (parameter read ready) The HSTPRM register is not empty when this bit is high. The sub CPU can read out the command parameters from the HSTPRM register.
+            0x08 DMABUSY (DMA busy) This is high when data is being transferred between the buffer memory and the host. It is high when the host sets BFRD (bit 7) or BFWR (bit 6) of the HCHPCTL register high. It is low in the case below: When the data transfer FIFO (WRDATA, RDDATA registers) is empty after the level of HXFRC has dropped to 00HEX.
+            0x04 HINTSTS#2 (host interrupt status #2) This is high when the sub CPU writes data into HINT#2 (HIFCTL register bit 2) and low when the host writes “high” into CLRINT#2 (HCLRCTL register bit 2). It is used to monitor interrupts for the host.
+            0x02 HINTSTS#1 (host interrupt status #1) This is high when the sub CPU writes data into HINT#1 (HIFCTL register bit 1) and low when the host writes “high” into CLRINT#1 (HCLRCTL register bit 1). It is used to monitor interrupts for the host.
+            0x01 HINTSTS#0 (host interrupt status #0) This is high when the sub CPU writes data into HINT#0 (HIFCTL register bit 0) and low when the host writes “high” into CLRINT#0 (HCLRCTL register bit 0). It is used to monitor interrupts for the host.
+        WRITE
+        0x03 - DECCTL (decoder control) register.
+            0x07 DECMD2 to 0 (decoder mode 2 to 0).
+                00X - Decoder disable
+                01X - Monitor-only mode
+                100 - Write-only mode
+                101 - Real-time correction mode
+                110 - Repeat correction mode
+                111 - CD-DA mode
+            0x08 AUTODIST (auto distinction)
+                1 : Errors are corrected according to the MODE byte and FORM bit read from the drive.
+                0 : Errors are corrected according to the MODESEL and FORMSEL bits (bits 5 and 4).
+        0x04 - DLADR-L While the decoder is in the write-only, real-time correction or CD-DA mode, the last address is set for the buffer write data from the drive. When the ENDLADR bit (bit 7) of the DECCTL register is high and the data from the drive is written into the address assigned by DLADR while the decoder is in any of the above modes, all subsequent writing in the buffer is prohibited.
+        0x05 - DLADR-M same as above.
+        0x06 - DLADR-H same as above.
+        0x07 - CHPCTL (chip control) register
+            0x10 CD-DA
+                1 : Set high for playing back the audio signals of a CD-DA (digital audio) disc. Setting this bit high is prohibited for ADPCM decoding playback.
+                0 : Set low for not playing back the audio signals of a CD-DA (digital audio) disc.
+            0x20 CD-DA MUTE (When bit 4 is high and this bit is also set high for CD-DA (digital audio) disc playback, the audio output is muted.
+            When bit 4 is low, this bit has no effect on the audio output.)
+            add 0E0h if we mute.
+            remove 01Fh if we unmute.
+        0x0A - CLRCTL (clear control) register. When each bit of the register is set high, the corresponding chip, status, register, interrupt status and ADPCM playback are cleared. After clearing, the bit concerned is automatically set low. There is therefore no need for the sub CPU to reset low.
+            0x20 CLRRSLT (clear result) The RESULT register is cleared when this bit is set high.
+            0x40 CLRBUSY (clear busy) The BUSYSTS bit of the HIFSTS register is cleared when this bit is set high.
+        0x0B - CLRINT (clear interrupt status) register. When each bit of this register is set high, the corresponding interrupt status is cleared. The bit concerned is automatically set low after its interrupt status has been cleared. There is therefore no need for the sub CPU to reset low.
+            0x01 HCRISD (host chip reset issued).
+            0x02 HSTCMND (host command).
+            0x04 DECINT (decoder interrupt).
+            0x08 HDMACMP (host DMA complete).
+            0x10 RTADPEND (real-time ADPCM end).
+            0x20 RSLTEMP (reset empty).
+            0x40 DECTOUT (decoder time out).
+            0x80 DRVOVRN (drive overrun).
+        0x16 - HIFCTL (host interface control) register.
+            0x01 : HINT#0 The value of this bit becomes that of HINTSTS#0 in the HINTSTS register on the host side.
+            0x02 : HINT#1 The value of this bit becomes that of HINTSTS#1 in the HINTSTS register on the host side.
+            0x04 : HINT#2 The value of this bit becomes that of HINTSTS#2 in the HINTSTS register on the host side.
+        0x17 - RESULT register The host reads the results of the command execution through this register. The register has ah 8-byte FIFO configuration.
+
+0x00a SPCR1 register.
+        0x01 SPR1 SPIx clock rate select
+            This serial peripheral clock rate bit selects one of two bit rates of SCKx. This bit is cleared at reset.
+                0 - Internal processor clock divided by 2
+                1 - Internal processor clock divided by 16
+        0x10 MSTR1 MaSTeR mode select
+            The MSTRx bit determines whether the device is in master mode or slave mode.
+            In the master mode (MSTRx = 1), SCKx pin is configured as the output pin and
+            the serial clock is generated by the internal clock generator when the CPU writes to the SPDR.
+            In the slave mode (MSTRx = 0), SCKx pin is configured as the input pin and the serial clock is applied externally.
+                0 - slave mode
+                1 - master mode
+        0x20 DORD1 Data transmission ORDer
+            When this bit is set, the data in the 8-bit shift register (SPDRx) is shifted in/out
+            from the LSB. When this bit is cleared, the data in the SPDRx is shifted in/out from MSB.
+                0 - MSB first
+                1 - LSB first
+        0x40 SPE1 SPI Enable
+            When the serial peripheral interface enable (SPEx) bit is set, the SPI system is enabled and connected to the port C/port G pins.
+            Clearing SPEx bit initializes all control logic in the SPIx modules and disconnects the SPIx from port C/port G pins.
+                0 - disable SPI
+                1 - enable SPI
+
+0x020 LCD Control register. Used 1x, set to 0x2e (MC68HC05L16 only, not 68HC705G4).
+
+0x03e MISC register.
+        0x01 add flag before writing to 000h and remove right after that.
+        0x02 FOSCE Fast (Main) Oscillator Enable.
+            The FOSCE bit controls main oscillator activity. This bit should not be cleared by
+            the CPU when the main oscillator is selected as the system clock source.
+            When this bit is cleared:
+                1. OSC is shut down.
+                2. 7-bit divider at the OSC input plus 6-bit POD counter are initialized to $0078.
+                3. FTUP flag is cleared.
+            When this bit is set:
+                1. Main oscillator starts again.
+                2. FTUP flag is set by the POD counter overflow (8072 clocks).
+        0x80 FTUP OSC Time Up Flag
+            Power-on detection and clearing FOSCE bit clears this bit. This bit is set by the
+            overflow of the POD counter. The external reset does not affect this bit.
+            READ:
+                0 during POD or OSC shut down
+                1 OSC clock is available for the system clock
+
+
+// MEMORY
+0x040 looks like inner cd subsystem state.
+        0x02 - add flag if we mute CDDA streaming to SPU. Remove when we demute.
+        0x08 - add this flag when we set CD-DA MUTE to CHPCTL CD Controller register.
+        0x80 - set to 1 when TOC loaded.
+
+0x042 add flag 0x04 during 0x15 SeekL.
+0x043 remove flag 0x02 and 0x04 during 0x15 SeekL.
+
+046h        some flags.
+            0x40 - add flag when we set minutes seconds and sector with 0x02 Setloc.
+
+049h        remove flag 0x01 during 0x15 SeekL.
+
+04Dh        store here minutes set in 0x02 Setloc during 0x15 SeekL.
+04Eh        store here seconds set in 0x02 Setloc during 0x15 SeekL.
+04Fh        store here sector set in 0x02 Setloc during 0x15 SeekL.
+050h        if bit 0x40 not set during DECTOUT interrupt then we enable CD-DA mode.
+
+05Dh        store here minutes set in 0x02 Setloc during 0x15 SeekL.
+05Eh        store here seconds set in 0x02 Setloc during 0x15 SeekL.
+05Fh        store here sector set in 0x02 Setloc during 0x15 SeekL.
+
+06Ah        add flag 0x01 during 0x15 SeekL. Set this to 0 when we clear TOC.
+06Bh        store here 001h during 0x15 SeekL.
+
+06Dh        state of cdrom??
+            0x01 - set during initialization.
+            0x20 - set during 0x15 SeekL.
+
+070h        store here 07Dh during 0x15 SeekL.
+
+088h        temporary storage for many things.
+08Bh        counter for command params length.
+
+093h        error check flags.
+            0x80 - if this flag is set we not add new error on following addreses.
+094h        store error code here.
+
+0A0h        store value set to DLADR-L of CD Controller register here.
+0A1h        store value set to DLADR-M of CD Controller register here.
+0A2h        store value set to DLADR-H of CD Controller register here.
+
+0B1h        data from 0x01 DECSTS (decoder status) CD Controller register.
+0B3h        data from 0x07 INTSTS (interrupt status) CD Controller register.
+0B5h        data from 0x11 HIFSTS (host interface status) CD Controller register.
+
+0B7h        data for 0x07 CHPCTL (chip control) CD Controller register.
+0B9h        data for 0x16 HIFCTL (host interface control) CD Controller register.
+0BAh        data for 0x0A CLRCTL (clear control) CD Controller register.
+
+0BCh        cdrom status
+            0x01 - invalid command/parameters/state of cdrom
+            0x02 - spindle motor (0=motor off, or in spin-up phase, 1=motor on)
+            0x04 - seek error (0=okay, 1=seek error)
+            0x08 - id error (0=okay, 1=GetID denied)
+            0x10 - shell open (0-closed, 1-is/was open).
+            0x20 - reading data sectors.
+            0x40 - seeking.
+            0x80 - playing CD-DA.
+
+0BFh        store error code here.
+
+100h        TOC entries for Start of Tracks 1-99 (size 0x02 [MM][SS]).
+1C6h        TOC first track number (usually 01h)
+1C7h        TOC last track number (usually 01h or higher)
+1C8h        TOC entry for start of Lead-Out minutes.
+1C9h        TOC entry for start of Lead-Out seconds.
+1CAh        TOC entry for start of Lead-Out sector.
+
+0x1e0 store command here.
+0x1e1 store params for command from here til end flag.
+
+0x1ed store here minutes set in 0x02 Setloc.
+0x1ee store here seconds set in 0x02 Setloc.
+0x1ef store here sector set in 0x02 Setloc.
+
+0x1f0 store first return value here.
+0x1f1 store second return value here.
+0x1f2 store third return value here.
+
+0x20c store here strange byte in command execution.

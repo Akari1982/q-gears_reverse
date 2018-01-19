@@ -1,51 +1,3 @@
-0000.0-7 i/o  ;[io_porta_dta].0-7 data (indexed via [io_porte_idx])
-0000.0   in   ;[io_porta_dta].0   dta.serial.in       ;\
-0000.1   out  ;[io_porta_dta].1   dta.serial.out      ; for debug_status
-0000.2   out  ;[io_porta_dta].2   clk.serial.out      ;/
-
-0001 io_portb.
-        0x01 F-BIAS (unused).
-        0x02 SCEx input (serial 250 baud).
-        0x04 LMTSW aka /POS0.
-        0x08 DOOR aka SHELL_OPEN.
-        0x10 TEST2 (usually 1).
-        0x20 TEST1 (usually 1) (CL316) enter test mode (instead of mainloop)
-        0x40 COUT <-- extra pin, not "SENSE=COUT".
-        0x80 SENSE.
-0002.0   in   ;[io_portc].0       SUBQ  ;\  ... used via [io_spdr1]
-0002.1   in   ;[io_portc].1       NC    ;  ;<-- configured as "input", although in SPI mode, it would be "subq output" (always 0) (ie. "subq" data transferred in opposite direction)
-0002.2   out  ;[io_portc].2       SQCK  ;/
-0002.3   out  ;[io_portc].3       SPEED
-0002.4   out  ;[io_portc].4         ="SPEED XOR 1"  ... AL/TE ... or CG ... or MIRR ?
-0002.5   out  ;[io_portc].5       ROMSEL  debug_status ??? aka "SCLK" ???
-0002.6   in   ;[io_portc].6       XINT/IRQ2  (unused) (though acknowledged in [io_intsr].2 for some reason?)
-0002.7   in   ;[io_portc].7       SCOR/IRQ1  (used via [io_intsr].7, this isn't used to EXECUTE an interrupt, only to poll the latched IRQ1/SCOR flag)
-
-0003.0   out  ;[io_portd].0       NC           ;-unused (always 1)
-0003.1   out  ;[io_portd].1       DATA         ;\serial bus for
-0003.2   out  ;[io_portd].2       XLT aka XLAT ; cxd2510q and cxa1782br
-0003.3   out  ;[io_portd].3       CLK aka CLOK ;/
-0003.4   out  ;[io_portd].4       DECCS        ;\
-0003.5   out  ;[io_portd].5       DECWR        ; control for [io_porta_dta]
-0003.6   out  ;[io_portd].6       DECRD        ;/
-0003.7   out  ;[io_portd].7       LDON  ... IC723.Pin11 ... maybe "laser on" ?
-
-0004.0-4 out  ;[io_porte_idx].0-4 index for [io_porta_dta]
-0004.5   out  ;[io_porte_idx].5   NC, not used
-0004.6   out  ;[io_porte_idx].6   NC, see "idx_4xh" maybe test signal ???
-0004.7   out? ;[io_porte_idx].7   NC, see "idx_8xh" used as INPUT? (although: port is configured as OUTPUT)
-
-0010 io_tbcr1.
-0011 io_tbcr2.
-0012 io_tcr.
-001c io_tcr2.
-001e io_oc2.
-001f io_tcnt2.
-0020 io_lcdcr. LCD Control register    ;used 1x, set to 2Eh (!!?!!)  ;(MC68HC05L16 only, not 68HC705G4)
-003e io_misc.
-
-
-
 ////////////////////////////////
 // mot1000()
 
@@ -65,9 +17,9 @@ init_onchip_port_directions();
 
 zerofill_all_ram_except_stack();
 
-[ 0x0a ] = 0x71;
+[ 0x0a ] = 0x71; // SPCR1 enable SPE1, DORD1, MSTR1, SPR1.
 
-CCR(I) = 0; // Очищается бит маски прерывания регистра кодов признаков (CCR). Если бит I очищен, то прерывания разрешены. В механизме очистки бита I организована задержка еще на один цикл, так что, если прерывания были предварительно заблокированы, то следующая после CLI команда будет всегда выполняться, даже если имелось прерывание, отложенное до выполнения команды CLI.
+CCR(I) = 0; // enable interrupts.
 
 X = 0x64; // delay 100ms
 delay_x_timer2_steps();
