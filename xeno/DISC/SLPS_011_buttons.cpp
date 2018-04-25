@@ -188,6 +188,37 @@ else
 
 
 ////////////////////////////////
+// func35558()
+
+// status ( 00 = okay, ff = timeout/wrong ID2)
+if( bu[80061c8c + A0 * 22 + 0] == ff ) // controller input buffers
+{
+    return 0;
+}
+
+V1 = bu[80061c8c + A0 * 22 + 1] & f0;
+if( V1 == 40 ) // digital pad
+{
+    return 1;
+}
+if( V1 == 10 ) // mouse
+{
+    return 2;
+}
+if( V1 == 50 ) // analog pad
+{
+    return 3;
+}
+if( V1 == 70 ) // analog stick
+{
+    return 4;
+}
+return -1;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func35650()
 A0 = h[80058c0c];
 func355e4();

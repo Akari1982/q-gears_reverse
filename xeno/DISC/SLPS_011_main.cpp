@@ -77,7 +77,7 @@ A2 = w[80010000]; // ffffffff
 func28040();
 
 A0 = 0;
-800196FC	jal    func37a30 [$80037a30]
+func37a30();
 
 A0 = 0;
 A1 = 1;
@@ -280,25 +280,132 @@ else
 }
 
 A0 = 0;
-8001996C	jal    func35558 [$80035558]
+func35558(); // get input device
 
-if( V0 != 0 )
+if( V0 != 0 ) // if status is OK
 {
-    if( hu[80058c0c] == 90c )
+    while( hu[80058c0c] == 90c ) // Start Select R1 L1 pressed
     {
-        S0 = 090c;
-
-        loop19994:	; 80019994
-            80019994	jal    func35b88 [$80035b88]
-
-            V0 = hu[80058c0c];
-        800199A8	beq    v0, s0, loop19994 [$80019994]
+        func35b88(); // get buttons
     }
 }
 
 A0 = 6;
-800199B0	jal    func199f0 [$800199f0]
+func199f0();
 
 A0 = 0;
-800199B8	jal    func19b50 [$80019b50]
+func19b50();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func199f0()
+
+[80018088] = w(A0); // file id
+
+if( A0 == w[8005895c] ) // check with loading file id
+{
+    return;
+}
+
+A0 = w[80058958]; // pointer to place for file load
+if( A0 != 0 )
+{
+    func31f0c();
+
+    [80058958] = w(0); // reset file pointer
+}
+[8005895c] = w(-1); // reset file id
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func19b50()
+
+if( A0 != 0 )
+{
+    [SP + 10] = w(RA);
+    A1 = w[SP + 10];
+    80019B74	jal    func19dcc [$80019dcc]
+}
+
+S1 = 8001808c + w[80018088] * 10;
+
+A0 = 1;
+system_psyq_reset_graph();
+
+A0 = 0;
+80019B9C	jal    func44350 [$80044350]
+
+A0 = 0;
+80019BA4	jal    func36298 [$80036298]
+
+A0 = 0;
+system_draw_sync();
+
+A0 = 2;
+system_psyq_wait_frames();
+
+A0 = w[S1 + 8] + 800;
+80019BC0	jal    func31920 [$80031920]
+
+80019BC8	jal    func19d00 [$80019d00]
+
+V0 = w[S1 + c];
+
+80019BD8	beq    v0, zero, L19c54 [$80019c54]
+
+A0 = w[S1 + 4];
+A1 = w[S1 + 8];
+80019BE8	jal    func195f4 [$800195f4]
+
+A0 = w[80018088];
+80019BF8	jal    func19a50 [$80019a50]
+
+A0 = 0;
+S0 = V0;
+80019C04	jal    func28870 [$80028870]
+
+A1 = w[80018084];
+A0 = S0;
+80019C14	jal    func32cd8 [$80032cd8]
+
+A0 = 0;
+system_draw_sync();
+
+A0 = 0;
+system_psyq_wait_frames();
+
+system_enter_critical_section();
+
+A0 = 0;
+system_draw_sync();
+
+A0 = 0;
+system_psyq_wait_frames();
+
+system_bios_flush_cache();
+
+system_exit_critical_section();
+
+
+L19c54:	; 80019C54
+80019C54	jal    func195dc [$800195dc]
+
+A0 = w[S1 + 8] + 4;
+80019C60	jal    func31920 [$80031920]
+
+80019C68	jal    func31840 [$80031840]
+
+func35c84(); // clear button input
+
+A0 = 0;
+80019C78	jal    func199f0 [$800199f0]
+
+80019C88	jalr   w[S1 + 0] ra
+
+A0 = 0;
+func19b50();
 ////////////////////////////////

@@ -1,3 +1,5 @@
+80018088 [][][][] init with 6. Looks like game mod (battle map ie).
+
 8004e948 array if file indexes in dir 0_1.
 8004e9ac [][][][] -1 during battle load.
 8004e9c8 [][][][] store here value from 800b1774 + encounter * 2.
