@@ -81,122 +81,105 @@ func37a30();
 
 A0 = 0;
 A1 = 1;
-80019708	jal    func28280 [$80028280]
+func28280(); // set dir
+
+A0 = 2; // STRIPCD1\1\0024.snd
+func28548(); // get filesize by dir file id
+A0 = V0;
+A1 = 0;
+system_memory_allocate();
+snd24_mem = V0;
+
+A0 = 3; // STRIPCD1\1\0025.snd
+func28548(); // get filesize by dir file id
+A0 = V0;
+A1 = 0;
+system_memory_allocate();
+snd25_mem = V0;
+
+A0 = 4; // STRIPCD1\1\0026.snd
+func28548(); // get filesize by dir file id
+A0 = V0;
+A1 = 0;
+system_memory_allocate();
+snd26_mem = V0;
+
+A0 = 5; // STRIPCD1\1\0027.snd
+func28548(); // get filesize by dir file id
+A0 = V0;
+A1 = 0;
+system_memory_allocate();
+snd27_mem = V0;
 
 A0 = 2;
-80019710	jal    func28548 [$80028548]
-
-A0 = V0;
-A1 = 0;
-system_memory_allocate();
-
-S3 = V0;
+A1 = snd24_mem;
+A2 = 0;
+A3 = 0;
+func293e8(); // load file by dir file id
 
 A0 = 3;
-80019728	jal    func28548 [$80028548]
-
-A0 = V0;
-A1 = 0;
-system_memory_allocate();
-
-S2 = V0;
+A1 = snd25_mem;
+A2 = 0;
+A3 = 0;
+func293e8(); // load file by dir file id
 
 A0 = 4;
-80019740	jal    func28548 [$80028548]
-
-A0 = V0;
-A1 = 0;
-system_memory_allocate();
-
-S1 = V0;
-
-A0 = 5;
-80019758	jal    func28548 [$80028548]
-
-A0 = V0;
-A1 = 0;
-system_memory_allocate();
-
-S0 = V0;
-
-A0 = 2;
-A1 = S3;
+A1 = snd26_mem;
 A2 = 0;
 A3 = 0;
-8001977C	jal    func293e8 [$800293e8]
+func293e8(); // load file by dir file id
 
-A0 = 3;
-A1 = S2;
+A0 = 5; // dir file id
+A1 = snd27_mem;
 A2 = 0;
 A3 = 0;
-80019790	jal    func293e8 [$800293e8]
-
-A0 = 4;
-A1 = S1;
-A2 = 0;
-A3 = 0;
-800197A4	jal    func293e8 [$800293e8]
-
-A0 = 5;
-A1 = S0;
-A2 = 0;
-A3 = 0;
-800197B8	jal    func293e8 [$800293e8]
+func293e8(); // load file by dir file id
 
 A0 = 0;
-800197C0	jal    func28870 [$80028870]
+func28870(); // ececute till cd sync
 
-A0 = S3;
+A0 = snd24_mem;
 A1 = 0;
-800197CC	jal    func37e80 [$80037e80]
+func37e80();
 
-A0 = S2;
+A0 = snd25_mem;
 A1 = 0;
-800197D8	jal    func37e80 [$80037e80]
-
+func37e80();
 [80058bfc] = w(V0);
 
-A0 = S1;
+A0 = snd26_mem;
 A1 = 0;
-800197EC	jal    func37e80 [$80037e80]
+func37e80();
 
-A0 = S0;
+A0 = snd27_mem;
 A1 = 0;
-800197F8	jal    func37e80 [$80037e80]
-
+func37e80();
 [80058c48] = w(V0);
 
-80019808	jal    func319ac [$800319ac]
-
-S4 = V0;
-
-A0 = 6;
-80019814	jal    func319b8 [$800319b8]
+S4 = hu[GP + 1ac];
+[GP +1ac] = h(6);
 
 A0 = 6;
-8001981C	jal    func28548 [$80028548]
-
+func28548(); // get filesize by dir file id
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
-
 S5 = V0;
 
 A0 = 6;
 A1 = S5;
 A2 = 0;
 A3 = 0;
-80019840	jal    func293e8 [$800293e8]
+func293e8(); // load file by dir file id
 
 A0 = 0;
-80019848	jal    func28870 [$80028870]
+func28870(); // ececute till cd sync
 
-A0 = 30;
-80019850	jal    func322dc [$800322dc]
+[GP + 1a8] = h(30);
 
 A0 = S5;
 A1 = 1;
-8001985C	jal    func32cac [$80032cac]
+func32cac(); // extract archive to any free space
 
 A0 = V0;
 80019864	jal    func3337c [$8003337c]
@@ -205,7 +188,7 @@ A0 = S5;
 system_memory_free();
 
 A0 = 7;
-80019874	jal    func28548 [$80028548]
+func28548(); // get filesize by dir file id
 
 A0 = V0;
 A1 = 0;
@@ -217,17 +200,17 @@ A0 = 7;
 A1 = S5;
 A2 = 0;
 A3 = 0;
-80019898	jal    func293e8 [$800293e8]
+func293e8(); // load file by dir file id
 
 A0 = 0;
-800198A0	jal    func28870 [$80028870]
+func28870(); // ececute till cd sync
 
 A0 = 31;
 800198A8	jal    func322dc [$800322dc]
 
 A0 = S5;
 A1 = 1;
-800198B4	jal    func32cac [$80032cac]
+func32cac(); // extract archive to any free space
 
 A0 = V0;
 800198BC	jal    func33418 [$80033418]
@@ -241,16 +224,16 @@ A0 = S4;
 A0 = 10;
 800198D4	jal    func3bca4 [$8003bca4]
 
-A0 = S3;
+A0 = snd24_mem;
 system_memory_free();
 
-A0 = S2;
+A0 = snd25_mem;
 system_memory_free();
 
-A0 = S1;
+A0 = snd26_mem;
 system_memory_free();
 
-A0 = S0;
+A0 = snd27_mem;
 system_memory_free();
 
 800198FC	jal    func1a970 [$8001a970]
@@ -333,14 +316,13 @@ if( A0 != 0 )
 
 S1 = 8001808c + w[80018088] * 10;
 
-A0 = 1;
+A0 = 1; // cancels the current drawing and flushes the command buffer.
 system_psyq_reset_graph();
 
 A0 = 0;
-80019B9C	jal    func44350 [$80044350]
+system_psyq_draw_sync_callback();
 
-A0 = 0;
-80019BA4	jal    func36298 [$80036298]
+[8004f8a0] = w(0);
 
 A0 = 0;
 system_draw_sync();
@@ -351,47 +333,46 @@ system_psyq_wait_frames();
 A0 = w[S1 + 8] + 800;
 80019BC0	jal    func31920 [$80031920]
 
-80019BC8	jal    func19d00 [$80019d00]
+A0 = a;
+A1 = 0;
+80019D0C	jal    func322bc [$800322bc]
 
-V0 = w[S1 + c];
+if( w[S1 + c] != 0 )
+{
+    A0 = w[S1 + 4];
+    A1 = w[S1 + 8];
+    80019BE8	jal    func195f4 [$800195f4]
 
-80019BD8	beq    v0, zero, L19c54 [$80019c54]
+    A0 = w[80018088];
+    func19a50(); // load some exe
+    S0 = V0;
 
-A0 = w[S1 + 4];
-A1 = w[S1 + 8];
-80019BE8	jal    func195f4 [$800195f4]
+    A0 = 0;
+    func28870(); // ececute till cd sync
 
-A0 = w[80018088];
-80019BF8	jal    func19a50 [$80019a50]
+    A1 = w[80018084];
+    A0 = S0;
+    system_extract_archive();
 
-A0 = 0;
-S0 = V0;
-80019C04	jal    func28870 [$80028870]
+    A0 = 0;
+    system_draw_sync();
 
-A1 = w[80018084];
-A0 = S0;
-80019C14	jal    func32cd8 [$80032cd8]
+    A0 = 0;
+    system_psyq_wait_frames();
 
-A0 = 0;
-system_draw_sync();
+    system_enter_critical_section();
 
-A0 = 0;
-system_psyq_wait_frames();
+    A0 = 0;
+    system_draw_sync();
 
-system_enter_critical_section();
+    A0 = 0;
+    system_psyq_wait_frames();
 
-A0 = 0;
-system_draw_sync();
+    system_bios_flush_cache();
 
-A0 = 0;
-system_psyq_wait_frames();
+    system_exit_critical_section();
+}
 
-system_bios_flush_cache();
-
-system_exit_critical_section();
-
-
-L19c54:	; 80019C54
 80019C54	jal    func195dc [$800195dc]
 
 A0 = w[S1 + 8] + 4;

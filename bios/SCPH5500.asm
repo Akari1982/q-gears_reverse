@@ -1743,20 +1743,13 @@ BFC01A58	jr     ra
 BFC01A5C	nop
 
 
-bfunc1a60:	; BFC01A60
-BFC01A60	addiu  sp, sp, $ffe8 (=-$18)
-BFC01A64	sw     ra, $0014(sp)
-BFC01A68	andi   a0, a0, $00ff
-BFC01A6C	lui    t6, $1f80
-BFC01A70	jal    bfunc3990 [$bfc03990]
-BFC01A74	sb     a0, $2041(t6)
-BFC01A78	lw     ra, $0014(sp)
-BFC01A7C	addiu  sp, sp, $0018
-BFC01A80	jr     ra 
-BFC01A84	nop
 
-BFC01A88	nop
-BFC01A8C	nop
+////////////////////////////////
+// bios_set_post_status
+BFC01A60-BFC01A8C
+////////////////////////////////
+
+
 
 bfunc1a90:	; BFC01A90
 BFC01A90	bne    a0, zero, bL1aa0 [$bfc01aa0]
@@ -4426,16 +4419,14 @@ BFC03988	jr     ra
 BFC0398C	rfex   zero,index
 
 
-bfunc3990:	; BFC03990
-BFC03990	lui    v0, $a001
-BFC03994	addiu  v0, v0, $b068 (=-$4f98)
-BFC03998	sw     zero, $0000(v0)
-BFC0399C	sw     zero, $0000(v0)
-BFC039A0	sw     zero, $0000(v0)
-BFC039A4	jr     ra 
-BFC039A8	sw     zero, $0000(v0)
 
-BFC039AC	nop
+////////////////////////////////
+// bfunc3990
+BFC03990-BFC039AC
+////////////////////////////////
+
+
+
 BFC039B0	addiu  sp, sp, $ffd8 (=-$28)
 BFC039B4	sw     ra, $001c(sp)
 BFC039B8	sw     a1, $002c(sp)
@@ -7780,32 +7771,12 @@ BFC0677C	jr     ra
 BFC06780	nop
 
 
-bfunc6784:	; BFC06784
-BFC06784	addiu  sp, sp, $ff48 (=-$b8)
-BFC06788	sw     ra, $0014(sp)
-BFC0678C	lui    a1, $bfc1
-BFC06790	addiu  a1, a1, $e1a8 (=-$1e58)
-BFC06794	jal    bfunc33c8 [$bfc033c8]
-BFC06798	addiu  a0, sp, $0068
-BFC0679C	lui    a1, $bfc1
-BFC067A0	addiu  a1, a1, $e130 (=-$1ed0)
-BFC067A4	jal    bfunc3190 [$bfc03190]
-BFC067A8	addiu  a0, sp, $0068
-BFC067AC	lui    a1, $bfc1
-BFC067B0	addiu  a1, a1, $e1b0 (=-$1e50)
-BFC067B4	jal    bfunc33c8 [$bfc033c8]
-BFC067B8	addiu  a0, sp, $0018
-BFC067BC	lui    a1, $bfc1
-BFC067C0	addiu  a1, a1, $e140 (=-$1ec0)
-BFC067C4	jal    bfunc3190 [$bfc03190]
-BFC067C8	addiu  a0, sp, $0018
-BFC067CC	addiu  a0, sp, $0068
-BFC067D0	jal    bfunc67e8 [$bfc067e8]
-BFC067D4	addiu  a1, sp, $0018
-BFC067D8	lw     ra, $0014(sp)
-BFC067DC	addiu  sp, sp, $00b8
-BFC067E0	jr     ra 
-BFC067E4	nop
+
+////////////////////////////////
+// bfunc6784
+BFC06784-BFC067E4
+////////////////////////////////
+
 
 
 bfunc67e8:	; BFC067E8
@@ -7813,7 +7784,7 @@ BFC067E8	addiu  sp, sp, $ffd0 (=-$30)
 BFC067EC	sw     ra, $0024(sp)
 BFC067F0	sw     a0, $0030(sp)
 BFC067F4	sw     a1, $0034(sp)
-BFC067F8	jal    bfunc1a60 [$bfc01a60]
+BFC067F8	jal    bios_set_post_status [$bfc01a60]
 BFC067FC	addiu  a0, zero, $0001
 BFC06800	jal    bfunc3968 [$bfc03968]
 BFC06804	nop
@@ -7826,11 +7797,11 @@ BFC0681C	sh     zero, $0186(v0)
 BFC06820	sh     zero, $0184(v0)
 BFC06824	sh     zero, $0182(v0)
 BFC06828	sh     zero, $0180(v0)
-BFC0682C	jal    bfunc1a60 [$bfc01a60]
+BFC0682C	jal    bios_set_post_status [$bfc01a60]
 BFC06830	addiu  a0, zero, $0002
 BFC06834	jal    bfunc0420 [$bfc00420]
 BFC06838	nop
-BFC0683C	jal    bfunc1a60 [$bfc01a60]
+BFC0683C	jal    bios_set_post_status [$bfc01a60]
 BFC06840	addiu  a0, zero, $0003
 BFC06844	jal    bfunc42d0 [$bfc042d0]
 BFC06848	nop
@@ -7842,7 +7813,7 @@ BFC0685C	jal    bfuncdb20 [$bfc0db20]
 BFC06860	nop
 BFC06864	jal    bfuncd9a0 [$bfc0d9a0]
 BFC06868	nop
-BFC0686C	jal    bfunc1a60 [$bfc01a60]
+BFC0686C	jal    bios_set_post_status [$bfc01a60]
 BFC06870	addiu  a0, zero, $0004
 BFC06874	lui    v0, $1f80
 BFC06878	ori    v0, v0, $1c00
@@ -7858,12 +7829,12 @@ BFC0689C	lui    a0, $a001
 BFC068A0	lw     a0, $b9b0(a0)
 BFC068A4	jal    bfuncdb30 [$bfc0db30]
 BFC068A8	nop
-BFC068AC	jal    bfunc1a60 [$bfc01a60]
+BFC068AC	jal    bios_set_post_status [$bfc01a60]
 BFC068B0	addiu  a0, zero, $0005
 BFC068B4	lui    a0, $bfc1
 BFC068B8	jal    bfunc18e0 [$bfc018e0]
 BFC068BC	addiu  a0, a0, $dfb0 (=-$2050)
-BFC068C0	jal    bfunc1a60 [$bfc01a60]
+BFC068C0	jal    bios_set_post_status [$bfc01a60]
 BFC068C4	addiu  a0, zero, $0006
 BFC068C8	lui    v0, $1f80
 BFC068CC	ori    v0, v0, $1c00
@@ -7915,11 +7886,11 @@ BFC06980	jal    bfunc6fa4 [$bfc06fa4]
 BFC06984	addiu  a0, zero, $0385
 
 bL6988:	; BFC06988
-BFC06988	jal    bfunc1a60 [$bfc01a60]
+BFC06988	jal    bios_set_post_status [$bfc01a60]
 BFC0698C	addiu  a0, zero, $0007
 BFC06990	jal    bfunc6ff0 [$bfc06ff0]
 BFC06994	nop
-BFC06998	jal    bfunc1a60 [$bfc01a60]
+BFC06998	jal    bios_set_post_status [$bfc01a60]
 BFC0699C	addiu  a0, zero, $0008
 BFC069A0	lui    v0, $1f80
 BFC069A4	ori    v0, v0, $1070
@@ -7956,7 +7927,7 @@ BFC06A0C	jal    bfunc6fa4 [$bfc06fa4]
 BFC06A10	addiu  a0, zero, $0386
 
 bL6a14:	; BFC06A14
-BFC06A14	jal    bfunc1a60 [$bfc01a60]
+BFC06A14	jal    bios_set_post_status [$bfc01a60]
 BFC06A18	addiu  a0, zero, $0009
 BFC06A1C	lui    a0, $a001
 BFC06A20	jal    bfunc2240 [$bfc02240]
@@ -8176,7 +8147,7 @@ BFC06D18	nop
 BFC06D1C	lui    a0, $bfc1
 BFC06D20	jal    bfunc18e0 [$bfc018e0]
 BFC06D24	addiu  a0, a0, $dfb0 (=-$2050)
-BFC06D28	jal    bfunc1a60 [$bfc01a60]
+BFC06D28	jal    bios_set_post_status [$bfc01a60]
 BFC06D2C	addiu  a0, zero, $0006
 BFC06D30	lui    a0, $a000
 BFC06D34	ori    a0, a0, $e000
@@ -8335,7 +8306,7 @@ bfunc6fa4:	; BFC06FA4
 BFC06FA4	addiu  sp, sp, $ffe0 (=-$20)
 BFC06FA8	sw     ra, $001c(sp)
 BFC06FAC	sw     a0, $0020(sp)
-BFC06FB0	jal    bfunc1a60 [$bfc01a60]
+BFC06FB0	jal    bios_set_post_status [$bfc01a60]
 BFC06FB4	addiu  a0, zero, $000f
 BFC06FB8	lw     a1, $0020(sp)
 BFC06FBC	jal    bfuncd950 [$bfc0d950]
@@ -8378,42 +8349,12 @@ BFC07034	jr     ra
 BFC07038	nop
 
 
-bfunc703c:	; BFC0703C
-BFC0703C	lui    t7, $bfc1
-BFC07040	lb     t7, $e288(t7)
-BFC07044	lui    t6, $bfc1
-BFC07048	lui    v0, $1f00
-BFC0704C	addiu  t6, t6, $e288 (=-$1d78)
-BFC07050	ori    v0, v0, $0084
-BFC07054	beq    t7, zero, bL7088 [$bfc07088]
-BFC07058	addu   v1, t6, zero
-BFC0705C	lb     a2, $0000(t6)
-BFC07060	nop
 
-bloop7064:	; BFC07064
-BFC07064	lb     a0, $0000(v0)
-BFC07068	addu   a1, a2, zero
-BFC0706C	addiu  v0, v0, $0001
-BFC07070	bne    a1, a0, bL7088 [$bfc07088]
-BFC07074	addiu  v1, v1, $0001
-BFC07078	lb     a2, $0000(v1)
-BFC0707C	nop
-BFC07080	bne    a2, zero, bloop7064 [$bfc07064]
-BFC07084	nop
+////////////////////////////////
+// bios_check_pio
+BFC0703C-BFC070A8
+////////////////////////////////
 
-bL7088:	; BFC07088
-BFC07088	lb     t8, $0000(v1)
-BFC0708C	nop
-BFC07090	bne    t8, zero, bL70a4 [$bfc070a4]
-BFC07094	addu   v0, zero, zero
-BFC07098	jr     ra 
-BFC0709C	addiu  v0, zero, $0001
-
-BFC070A0	addu   v0, zero, zero
-
-bL70a4:	; BFC070A4
-BFC070A4	jr     ra 
-BFC070A8	nop
 
 
 bfunc70ac:	; BFC070AC
@@ -8454,18 +8395,12 @@ BFC07114	jr     ra
 BFC07118	nop
 
 
-bfunc711c:	; BFC0711C
-BFC0711C	addiu  sp, sp, $ffe8 (=-$18)
-BFC07120	sw     ra, $0014(sp)
-BFC07124	lui    t6, $1f00
-BFC07128	lw     v0, $0080(t6)
-BFC0712C	nop
-BFC07130	jalr   v0 ra
-BFC07134	nop
-BFC07138	lw     ra, $0014(sp)
-BFC0713C	addiu  sp, sp, $0018
-BFC07140	jr     ra 
-BFC07144	nop
+
+////////////////////////////////
+// bios_run_pre_pio
+BFC0711C-BFC07144
+////////////////////////////////
+
 
 
 bfunc7148:	; BFC07148
@@ -15211,7 +15146,7 @@ BFC0C9D4	sw     s1, $0018(sp)
 BFC0C9D8	addu   v1, a0, zero
 BFC0C9DC	lw     s1, $0004(v1)
 BFC0C9E0	sw     v1, $0030(sp)
-BFC0C9E4	jal    bfunc1a60 [$bfc01a60]
+BFC0C9E4	jal    bios_set_post_status [$bfc01a60]
 BFC0C9E8	addiu  a0, zero, $000c
 BFC0C9EC	lw     v1, $0030(sp)
 BFC0C9F0	sltiu  at, s1, $0002
@@ -15550,7 +15485,7 @@ BFC0CE34	addiu  t9, zero, $0001
 BFC0CE38	jal    bfunc3990 [$bfc03990]
 BFC0CE3C	sb     t9, $000e(t0)
 BFC0CE40	lw     a0, $0058(sp)
-BFC0CE44	jal    bfunc1a60 [$bfc01a60]
+BFC0CE44	jal    bios_set_post_status [$bfc01a60]
 BFC0CE48	addiu  a0, a0, $000a
 BFC0CE4C	addiu  t1, zero, $7530
 BFC0CE50	sw     t1, $003c(sp)
@@ -15634,7 +15569,7 @@ BFC0CF54	addu   v1, t0, t1
 BFC0CF58	addu   v0, t0, t2
 BFC0CF5C	sw     v0, $0008(v1)
 BFC0CF60	sw     v0, $0004(v1)
-BFC0CF64	jal    bfunc1a60 [$bfc01a60]
+BFC0CF64	jal    bios_set_post_status [$bfc01a60]
 BFC0CF68	addiu  a0, zero, $000b
 BFC0CF6C	lw     s0, $002c(sp)
 BFC0CF70	nop

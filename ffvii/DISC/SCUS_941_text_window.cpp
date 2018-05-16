@@ -95,7 +95,7 @@ S0 = window_data + current_messege * 30;
 A3 = h[S0 + 0008];
 V0 = h[S0 + 000a];
 A0 = SP + 0018;
-8001F3F4	jal    func43814 [$80043814]
+8001F3F4	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 [SP + 0030] = b(0);
 [SP + 002f] = b(S4);
@@ -209,7 +209,7 @@ L1f4f8:	; 8001F4F8
 
         A3 = h[window_data + current_messege * 30 + 08]; // WINDOW width
         A4 = h[window_data + current_messege * 30 + 0a]; // WINDOW height
-        func43814();
+        system_prepare_draw_env_struct();
 
         A0 = w[80062f24];
         A1 = SP + 18;

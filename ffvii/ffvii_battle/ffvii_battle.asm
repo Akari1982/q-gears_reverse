@@ -26056,7 +26056,7 @@ A0 = S2;
 A1 = 0;
 A3 = 0140;
 V0 = 004a;
-800D900C	jal    func43814 [$80043814]
+800D900C	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 800D9014	lui    s0, $800f
 S0 = S0 + 50ac;
@@ -26270,7 +26270,7 @@ A0 = S1;
 A1 = 0;
 A3 = 0140;
 V0 = 004a;
-800D950C	jal    func43814 [$80043814]
+800D950C	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 A0 = w[S0 + 0000];
 V0 = 0001;
@@ -26697,7 +26697,7 @@ A0 = S1;
 A1 = 0;
 A3 = 0140;
 V0 = 004a;
-800D9B84	jal    func43814 [$80043814]
+800D9B84	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 A0 = w[S0 + 0000];
 V0 = 0001;
@@ -26778,7 +26778,7 @@ AT = AT + S0;
 V0 = h[AT + 0000];
 800D9C9C	lui    a0, $800f
 A0 = A0 + 57d8;
-800D9CA4	jal    func43814 [$80043814]
+800D9CA4	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 800D9CAC	lui    a0, $800f
 A0 = A0 + 57f0;
@@ -27164,7 +27164,7 @@ V0 = 00a6;
 [SP + 0010] = w(V0);
 A2 = A2 < 0001;
 A2 = 0 - A2;
-800DA228	jal    func43814 [$80043814]
+800DA228	jal    system_prepare_draw_env_struct [$80043814]
 A2 = A2 & 00f0;
 800DA230	lui    v1, $800f
 V1 = w[V1 + 1994];
@@ -27376,7 +27376,7 @@ V0 = V0 & S3;
 V0 = V0 | T0;
 [FP + 0000] = w(V0);
 T2 = 0010;
-800DA56C	jal    func43814 [$80043814]
+800DA56C	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(T2);
 A0 = 0002;
 A1 = 0;
@@ -27592,7 +27592,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
-800DA8C4	jal    func43814 [$80043814]
+800DA8C4	jal    system_prepare_draw_env_struct [$80043814]
 A0 = A0 + T2;
 A0 = 0002;
 A1 = 0;
@@ -27838,7 +27838,7 @@ Ldac78:	; 800DAC78
 A1 = 0002;
 A3 = 0018;
 V0 = 0010;
-800DAC84	jal    func43814 [$80043814]
+800DAC84	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 A0 = 0002;
 A1 = 0;
@@ -28015,7 +28015,7 @@ V0 = V0 & S3;
 V0 = V0 | T0;
 [FP + 0000] = w(V0);
 T2 = 0010;
-800DAF38	jal    func43814 [$80043814]
+800DAF38	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(T2);
 A0 = 0002;
 A1 = 0;
@@ -28231,7 +28231,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
-800DB298	jal    func43814 [$80043814]
+800DB298	jal    system_prepare_draw_env_struct [$80043814]
 A0 = A0 + T2;
 A0 = 0002;
 A1 = 0;
@@ -28508,7 +28508,7 @@ A0 = A0 + V1;
 A0 = A0 << 03;
 A0 = A0 - V1;
 A0 = A0 << 02;
-800DB6DC	jal    func43814 [$80043814]
+800DB6DC	jal    system_prepare_draw_env_struct [$80043814]
 A0 = A0 + S1;
 A0 = 0002;
 A1 = 0;
@@ -28779,7 +28779,7 @@ A2 = A2 + 00f0;
 Ldbae4:	; 800DBAE4
 A3 = 0018;
 V0 = 0010;
-800DBAEC	jal    func43814 [$80043814]
+800DBAEC	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 800DBAF4	lui    v1, $800f
 V1 = w[V1 + 1994];
@@ -30425,7 +30425,7 @@ AT = AT + S0;
 V0 = h[AT + 0000];
 800DD908	lui    a0, $800f
 A0 = A0 + 57d8;
-800DD910	jal    func43814 [$80043814]
+800DD910	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 800DD918	lui    a0, $800f
 A0 = A0 + 57f0;
@@ -30719,7 +30719,7 @@ A0 = S6;
 A1 = 0;
 A3 = 0140;
 V0 = 004a;
-800DDD44	jal    func43814 [$80043814]
+800DDD44	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 800DDD4C	lui    s1, $8006
 S1 = S1 + 2f24;
@@ -30775,7 +30775,7 @@ V0 = 00a6;
 [SP + 0010] = w(V0);
 A2 = A2 < 0001;
 A2 = 0 - A2;
-800DDE24	jal    func43814 [$80043814]
+800DDE24	jal    system_prepare_draw_env_struct [$80043814]
 A2 = A2 & 00f0;
 A0 = w[S1 + 0000];
 800DDE30	lui    at, $800f

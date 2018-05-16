@@ -137,7 +137,7 @@ bfunc6ec4();
 // bfunc6ec4()
 
 A0 = f;
-BFC06ECC	jal    bfunc1a60 [$bfc01a60]
+bios_set_post_status();
 
 // Mute SPU
 [1f801c00 + 180] = h(0); // Mainvolume Left
@@ -145,17 +145,98 @@ BFC06ECC	jal    bfunc1a60 [$bfc01a60]
 [1f801c00 + 184] = h(0); // Reverb depth left
 [1f801c00 + 186] = h(0); // Reverb depth right
 
-BFC06EE8	jal    bfunc703c [$bfc0703c]
-
+bios_check_pio();
 if( V0 == 1 )
 {
-    BFC06EFC	jal    bfunc711c [$bfc0711c]
+    bios_run_pre_pio();
 }
 
 A0 = e;
-BFC06F04	jal    bfunc1a60 [$bfc01a60]
+bios_set_post_status();
 
 [a000b9b0] = w(0);
 
-BFC06F10	jal    bfunc6784 [$bfc06784]
+bfunc6784();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// bios_check_pio()
+
+src = bfc0e288;
+dest = 1f000084;
+
+while( b[src] != 0 )
+{
+    A2 = b[src];
+    A0 = b[dest];
+    dest = dest + 1;
+    src = src + 1;
+    if( A2 != A0 )
+    {
+        break;
+    }
+}
+
+if( b[src] != 0 )
+{
+    return 0;
+}
+return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// bios_run_pre_pio()
+
+BFC07130	jalr   w[1f000080] ra
+////////////////////////////////
+
+
+
+////////////////////////////////
+// bios_set_post_status()
+
+[1f802041] = b(A0);
+
+bfunc3990();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// bfunc3990()
+
+[a000b068] = w(0);
+[a000b068] = w(0);
+[a000b068] = w(0);
+[a000b068] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// bfunc6784()
+
+A0 = SP + 68;
+A1 = bfc0e1a8;
+BFC06794	jal    bfunc33c8 [$bfc033c8]
+
+A0 = SP + 68;
+A1 = bfc0e130;
+BFC067A4	jal    bfunc3190 [$bfc03190]
+
+A0 = SP + 18;
+A1 = bfc0e1b0;
+BFC067B4	jal    bfunc33c8 [$bfc033c8]
+
+A0 = SP + 18;
+A1 = bfc0e140;
+BFC067C4	jal    bfunc3190 [$bfc03190]
+
+A0 = SP + 68;
+A1 = SP + 18;
+BFC067D0	jal    bfunc67e8 [$bfc067e8]
 ////////////////////////////////

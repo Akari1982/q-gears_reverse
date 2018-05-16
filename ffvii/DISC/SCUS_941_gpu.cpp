@@ -1364,8 +1364,7 @@ return S0;
 
 
 ////////////////////////////////
-// func43814()
-// prepare draw env struct
+// system_prepare_draw_env_struct()
 
 [A0 + 00] = h(A1); // clip rect x
 [A0 + 02] = h(A2); // clip rect y

@@ -171,6 +171,7 @@ return -1;
 
 ////////////////////////////////
 // func293e8()
+
 dir_file_id = A0;
 allocated_memory = A1;
 S2 = A2;

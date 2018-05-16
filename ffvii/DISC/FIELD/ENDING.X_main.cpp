@@ -377,7 +377,7 @@ A1 = 0;
 A2 = 0;
 A3 = S3;
 A4 = S2;
-func43814();
+system_prepare_draw_env_struct();
 
 S0 = 800af398;
 
@@ -393,7 +393,7 @@ A1 = 0;
 A2 = S4;
 A3 = S3;
 A4 = S2;
-func43814();
+system_prepare_draw_env_struct();
 
 A0 = S0 + 0014;
 A1 = 0;

@@ -5,7 +5,7 @@ V1 = A0;
 if( h[80058c18] < 0 )
 {
     A0 = 28;
-    80037A48	jal    func3f558 [$8003f558]
+    func3f558(); // error
 
     return;
 }
@@ -152,111 +152,145 @@ A0 = (hu[8004ffc4] << 10) | 1;
 
 
 ////////////////////////////////
-// func39588()
+// func36298()
 
+[8004f8a0] = w(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func19d00()
+
+A0 = a;
 A1 = 0;
-V0 = 0;
-
-L39598:	; 80039598
-    A2 = A1;
-    A1 = 8006f08c + V0 * 10;
-
-    if( w[A1 + 4] == A0 )
-    {
-        [A2 + 2] = h(hu[A1 + 2]);
-
-        [A1 + 0] = b(0);
-        [A1 + 1] = b(0);
-        [A1 + 2] = h(0);
-        [A1 + 4] = w(0);
-        return A0;
-    }
-
-    V0 = h[A1 + 2];
-    if( V0 == 0 )
-    {
-        return 0;
-    }
-800395DC	j      L39598 [$80039598]
+80019D0C	jal    func322bc [$800322bc]
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func37e80()
+// func195f4
+800195F4	beq    a0, a1, L19604 [$80019604]
 
-80037E80	addiu  sp, sp, $ffe0 (=-$20)
-80037E84	sw     s0, $0010(sp)
-80037E88	addu   s0, a0, zero
-80037E8C	sw     ra, $001c(sp)
-80037E90	sw     s2, $0018(sp)
-80037E94	jal    func3809c [$8003809c]
-80037E98	sw     s1, $0014(sp)
-80037E9C	addu   s2, v0, zero
-80037EA0	bne    s2, zero, L37eb0 [$80037eb0]
-80037EA4	addu   a0, s2, zero
-80037EA8	j      L37ee8 [$80037ee8]
-80037EAC	ori    a0, zero, $001f
+loop195f8:	; 800195F8
+A0 = A0 + 0004;
+800195FC	bne    a0, a1, loop195f8 [$800195f8]
+[A0 + 0000] = w(0);
 
-L37eb0:	; 80037EB0
-80037EB0	addu   a3, zero, zero
-80037EB4	lw     a1, $0018(s0)
-80037EB8	lw     a2, $0014(s0)
-80037EBC	jal    func3bab8 [$8003bab8]
-80037EC0	addu   a1, s0, a1
-80037EC4	lw     a0, $0010(s0)
-80037EC8	jal    func38ecc [$80038ecc]
-80037ECC	nop
-80037ED0	addu   s1, v0, zero
-80037ED4	bne    s1, zero, L37ef8 [$80037ef8]
-80037ED8	addu   a0, s1, zero
-80037EDC	jal    func39588 [$80039588]
-80037EE0	addu   a0, s2, zero
-80037EE4	ori    a0, zero, $001e
+L19604:	; 80019604
+////////////////////////////////
 
-L37ee8:	; 80037EE8
-80037EE8	jal    func3f558 [$8003f558]
-80037EEC	nop
-80037EF0	j      L37f5c [$80037f5c]
-80037EF4	addu   v0, zero, zero
 
-L37ef8:	; 80037EF8
-80037EF8	lw     a2, $0010(s0)
-80037EFC	jal    func390f0 [$800390f0]
-80037F00	addu   a1, s0, zero
-80037F04	lui    a0, $8006
-80037F08	lw     a0, $8c58(a0)
-80037F0C	jal    system_bios_disable_event [$8004032c]
-80037F10	sw     s2, $0028(s1)
-80037F14	lui    v0, $8006
-80037F18	lw     v0, $8bf4(v0)
-80037F1C	lui    a0, $8006
-80037F20	addiu  a0, a0, $8bf4 (=-$740c)
-80037F24	beq    v0, zero, L37f44 [$80037f44]
-80037F28	nop
 
-loop37f2c:	; 80037F2C
-80037F2C	lw     v0, $0000(a0)
-80037F30	nop
-80037F34	lw     v1, $002c(v0)
-80037F38	nop
-80037F3C	bne    v1, zero, loop37f2c [$80037f2c]
-80037F40	addiu  a0, v0, $002c
+////////////////////////////////
+// system_extract_archive()
 
-L37f44:	; 80037F44
-80037F44	sw     s1, $0000(a0)
-80037F48	lui    a0, $8006
-80037F4C	lw     a0, $8c58(a0)
-80037F50	jal    system_bios_enable_event [$8004031c]
-80037F54	sw     zero, $002c(s1)
-80037F58	addu   v0, s1, zero
+comp_position = A0;
+decomp_length = w[comp_position];
+comp_position = comp_position + 4;
+T7 = A1 + decomp_length;
 
-L37f5c:	; 80037F5C
-80037F5C	lw     ra, $001c(sp)
-80037F60	lw     s2, $0018(sp)
-80037F64	lw     s1, $0014(sp)
-80037F68	lw     s0, $0010(sp)
-80037F6C	addiu  sp, sp, $0020
-80037F70	jr     ra 
-80037F74	nop
+T6 = A1;
+T8 = bu[comp_position];
+
+L32cec:	; 80032CEC
+    if( A1 == T7 )
+    {
+        return T6;
+    }
+
+    comp_position = comp_position + 1;
+    T1 = T8 & 0001;
+    T9 = 0008;
+
+    loop32cfc:	; 80032CFC
+        T0 = bu[A0];
+
+        T8 = T8 >> 01;
+        80032D04	addiu  t9, t9, $ffff (=-$1)
+        comp_position = comp_position + 1;
+        80032D08	bne    t1, zero, L32d28 [$80032d28]
+
+        [A1 + 0000] = b(T0);
+        A1 = A1 + 0001;
+        T1 = T8 & 0001;
+    80032D18	bne    t9, zero, loop32cfc [$80032cfc]
+
+    T8 = bu[comp_position];
+    80032D20	j      L32cec [$80032cec]
+
+    L32d28:	; 80032D28
+    T4 = bu[comp_position];
+    comp_position = comp_position + 1;
+
+    T1 = T4 & 000f;
+    T1 = T1 << 08;
+    T0 = T0 | T1;
+    T1 = A1 - T0;
+    T3 = T4 >> 04;
+    T3 = T3 + 0003;
+    T3 = T3 + T1;
+
+    loop32d4c:	; 80032D4C
+        T0 = b[T1];
+        [A1] = b(T0);
+        T1 = T1 + 1;
+        A1 = A1 + 1;
+    80032D58	bne    t1, t3, loop32d4c [$80032d4c]
+
+    80032D60	bne    t9, zero, loop32cfc [$80032cfc]
+    T1 = T8 & 0001;
+    T8 = bu[comp_position];
+80032D68	j      L32cec [$80032cec]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func32cac()
+
+src = A0;
+
+A0 = w[A0];
+A1 = A1;
+80032CB8	jal    func319ec [$800319ec]
+
+if( V0 == 0 )
+{
+    return 0;
+}
+
+A0 = src;
+A1 = V0;
+system_extract_archive();
+
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3337c()
+
+S0 = A0;
+if( S0 == 0 )
+{
+    A0 = 0020;
+    80033390	jal    func322dc [$800322dc]
+
+    return;
+}
+
+A0 = S0;
+800333A0	jal    func31ec8 [$80031ec8]
+
+[80058a08] = w(S0);
+[800589f8] = w(S0);
+[800589e8] = w(hu[S0 + 0004]);
+[800589ec] = w(hu[S0 + 0006]);
+[800589f0] = w(hu[S0 + 0008]);
+[800589f4] = w(hu[S0 + 000a]);
+[800589f8] = w(S0 + hu[S0 + 0002]);
+[80058a00] = w(hu[S0 + 000c]);
 ////////////////////////////////

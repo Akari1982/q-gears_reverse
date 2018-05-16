@@ -160,7 +160,7 @@ A1 = 0; // x
 A2 = 0008; // y
 A3 = 0140; // width
 A4 = e0; // height
-func43814();
+system_prepare_draw_env_struct();
 [800c84f4 + 18] = b(1);
 [800c84f4 + 19] = b(0);
 [800c84f4 + 1a] = b(0);
@@ -172,7 +172,7 @@ A1 = 0;
 A2 = 00f0;
 A3 = 0140;
 A4 = e0;
-func43814();
+system_prepare_draw_env_struct();
 [800cc568 + 18] = b(1);
 [800cc568 + 19] = b(0);
 [800cc568 + 1a] = b(0);

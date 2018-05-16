@@ -148,168 +148,6 @@ A0 = (hu[8004ffc4] << 10) | 0001;
 
 
 ////////////////////////////////
-// func37e80()
-80037E88	addu   s0, a0, zero
-80037E94	jal    func3809c [$8003809c]
-
-80037E9C	addu   s2, v0, zero
-80037EA0	bne    s2, zero, L37eb0 [$80037eb0]
-80037EA4	addu   a0, s2, zero
-80037EA8	j      L37ee8 [$80037ee8]
-80037EAC	ori    a0, zero, $001f
-
-L37eb0:	; 80037EB0
-80037EB0	addu   a3, zero, zero
-80037EB4	lw     a1, $0018(s0)
-80037EB8	lw     a2, $0014(s0)
-80037EBC	jal    func3bab8 [$8003bab8]
-80037EC0	addu   a1, s0, a1
-80037EC4	lw     a0, $0010(s0)
-80037EC8	jal    func38ecc [$80038ecc]
-80037ECC	nop
-80037ED0	addu   s1, v0, zero
-80037ED4	bne    s1, zero, L37ef8 [$80037ef8]
-80037ED8	addu   a0, s1, zero
-80037EDC	jal    func39588 [$80039588]
-80037EE0	addu   a0, s2, zero
-80037EE4	ori    a0, zero, $001e
-
-L37ee8:	; 80037EE8
-80037EE8	jal    func3f558 [$8003f558]
-80037EEC	nop
-80037EF0	j      L37f5c [$80037f5c]
-80037EF4	addu   v0, zero, zero
-
-L37ef8:	; 80037EF8
-80037EF8	lw     a2, $0010(s0)
-80037EFC	jal    func390f0 [$800390f0]
-80037F00	addu   a1, s0, zero
-80037F04	lui    a0, $8006
-80037F08	lw     a0, $8c58(a0)
-80037F10	sw     s2, $0028(s1)
-system_bios_disable_event();
-
-80037F14	lui    v0, $8006
-80037F18	lw     v0, $8bf4(v0)
-80037F1C	lui    a0, $8006
-80037F20	addiu  a0, a0, $8bf4 (=-$740c)
-80037F24	beq    v0, zero, L37f44 [$80037f44]
-80037F28	nop
-
-loop37f2c:	; 80037F2C
-80037F2C	lw     v0, $0000(a0)
-80037F30	nop
-80037F34	lw     v1, $002c(v0)
-80037F38	nop
-80037F3C	bne    v1, zero, loop37f2c [$80037f2c]
-80037F40	addiu  a0, v0, $002c
-
-L37f44:	; 80037F44
-80037F44	sw     s1, $0000(a0)
-80037F54	sw     zero, $002c(s1)
-80037F48	lui    a0, $8006
-80037F4C	lw     a0, $8c58(a0)
-system_bios_enable_event();
-
-80037F58	addu   v0, s1, zero
-
-L37f5c:	; 80037F5C
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func19b50()
-if( A0 != 0 )
-{
-    V0 = SP + 10;
-    80019B68	addu   t7, v0, zero
-    80019B6C	sw     ra, $0000(t7)
-
-    A1 = w[SP + 10];
-    func19dcc();
-}
-
-S1 = 8001808c + w[80018088] * 10;
-
-A0 = 1; // cancels the current drawing and flushes the command buffer.
-system_psyq_reset_graph();
-
-A0 = 0;
-system_set_draw_sync_callback();
-
-80019BA4	jal    func36298 [$80036298]
-80019BA8	addu   a0, zero, zero
-
-A0 = 0;
-system_draw_sync();
-
-80019BB4	jal    system_psyq_wait_frames [$8004b3f4]
-80019BB8	ori    a0, zero, $0002
-80019BBC	lw     a0, $0008(s1)
-80019BC0	jal    func31920 [$80031920]
-80019BC4	addiu  a0, a0, $0800
-80019BC8	jal    func19d00 [$80019d00]
-
-if( w[S1 + c] != 0 )
-{
-    80019BE0	lw     a0, $0004(s1)
-    80019BE4	lw     a1, $0008(s1)
-    80019BE8	jal    func195f4 [$800195f4]
-    80019BEC	nop
-
-    A0 = w[80018088];
-    func19a50(); // load some exe
-    S0 = V0;
-
-    A0 = 0;
-    func28870();
-
-    A0 = S0; // from
-    A1 = w[80018084]; // where
-    system_extract_archive();
-
-    A0 = 0;
-    system_draw_sync();
-
-    80019C28	addu   a0, zero, zero
-    80019C24	jal    system_psyq_wait_frames [$8004b3f4]
-
-    system_enter_critical_section();
-
-    A0 = 0;
-    system_draw_sync();
-
-    80019C40	addu   a0, zero, zero
-    80019C3C	jal    system_psyq_wait_frames [$8004b3f4]
-
-    system_bios_flush_cache();
-
-    system_exit_critical_section();
-}
-
-80019C54	jal    func195dc [$800195dc]
-80019C58	nop
-80019C5C	lw     a0, $0008(s1)
-80019C60	jal    func31920 [$80031920]
-80019C64	addiu  a0, a0, $0004
-80019C68	jal    func31840 [$80031840]
-80019C6C	nop
-80019C70	jal    func35c84 [$80035c84]
-80019C74	nop
-80019C78	jal    func199f0 [$800199f0]
-80019C7C	addu   a0, zero, zero
-80019C80	lw     v0, $0000(s1)
-
-80019C88	jalr   v0 ra
-
-A0 = 0;
-func19b50();
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func19dcc()
 S2 = A0; // file?
 S3 = A1;
@@ -367,7 +205,7 @@ L19e50:	; 80019E50
 80019EB0	jal    func43858 [$80043858]
 80019EB4	sw     s0, $0010(sp)
 A0 = 0;
-system_set_draw_sync_callback();
+system_psyq_draw_sync_callback();
 
 80019EC0	jal    func36298 [$80036298]
 80019EC4	addu   a0, zero, zero
@@ -510,7 +348,7 @@ if( hu[80058c0c] == 090c ) // pressed buttons start select L1 R1
 80019D88	addu   a0, zero, zero
 
 A0 = 0;
-system_set_draw_sync_callback();
+system_psyq_draw_sync_callback();
 
 80019D94	jal    func4b678 [$8004b678]
 80019D98	addu   a0, zero, zero
@@ -1369,69 +1207,6 @@ L3715c:	; 8003715C
 80037168	sh     v0, $0030(a2)
 
 L3716c:	; 8003716C
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_extract_archive
-comp_position = A0;
-decomp_length = w[comp_position];
-comp_position = comp_position + 4;
-T7 = A1 + decomp_length;
-
-80032CE4	addu   t6, a1, zero
-T8 = bu[comp_position];
-
-L32cec:	; 80032CEC
-    if( A1 == T7 )
-    {
-        return T6;
-    }
-
-    comp_position = comp_position + 1;
-    80032CF4	andi   t1, t8, $0001
-    80032CF8	ori    t9, zero, $0008
-
-    loop32cfc:	; 80032CFC
-        T0 = bu[A0];
-
-        80032D00	srl    t8, t8, $01
-        80032D04	addiu  t9, t9, $ffff (=-$1)
-        comp_position = comp_position + 1;
-        80032D08	bne    t1, zero, L32d28 [$80032d28]
-
-        80032D10	sb     t0, $0000(a1)
-        80032D14	addiu  a1, a1, $0001
-        80032D1C	andi   t1, t8, $0001
-    80032D18	bne    t9, zero, loop32cfc [$80032cfc]
-
-    T8 = bu[comp_position];
-    80032D20	j      L32cec [$80032cec]
-
-    L32d28:	; 80032D28
-    T4 = bu[comp_position];
-    comp_position = comp_position + 1;
-
-    80032D30	andi   t1, t4, $000f
-    80032D34	sll    t1, t1, $08
-    80032D38	or     t0, t0, t1
-    80032D3C	subu   t1, a1, t0
-    80032D40	srl    t3, t4, $04
-    80032D44	addiu  t3, t3, $0003
-    80032D48	addu   t3, t3, t1
-
-    loop32d4c:	; 80032D4C
-        T0 = b[T1];
-        [A1] = b(T0);
-        T1 = T1 + 1;
-        A1 = A1 + 1;
-    80032D58	bne    t1, t3, loop32d4c [$80032d4c]
-
-    80032D60	bne    t9, zero, loop32cfc [$80032cfc]
-    80032D64	andi   t1, t8, $0001
-    T8 = bu[comp_position];
-80032D68	j      L32cec [$80032cec]
 ////////////////////////////////
 
 

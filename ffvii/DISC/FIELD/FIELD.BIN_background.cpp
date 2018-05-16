@@ -666,7 +666,7 @@ else
 
         A0 = offset_to_triggers;
         A1 = SP + 18;
-        800A5044	jal    funca45d4 [$800a45d4]
+        funca45d4();
 
         S5 = (((((h[SP + 18] * h[offset_to_triggers + 28]) >> 8) + (h[offset_to_triggers + 20] >> 4)) << 10) >> 10) % h[offset_to_triggers + 18];
         S4 = (((((h[SP + 1a] * h[offset_to_triggers + 2a]) >> 8) + (h[offset_to_triggers + 22] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1a];
@@ -1868,4 +1868,275 @@ La34ac:	; 800A34AC
 
     block1 = block1 + 6;
 800A3610	j      La34ac [$800a34ac]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca45d4
+800A45D4	addiu  sp, sp, $fff0 (=-$10)
+T3 = A0;
+V1 = bu[T3 + 0014];
+V0 = 0001;
+800A45E4	bne    v1, v0, La46e4 [$800a46e4]
+T4 = A1;
+V1 = h[T4 + 0000];
+T0 = h[T3 + 000c];
+A2 = h[T3 + 0010];
+800A45F8	addiu  v1, v1, $ff60 (=-$a0)
+V1 = T0 - V1;
+V0 = T0 + 0140;
+A2 = A2 - V0;
+800A4608	mult   v1, a2
+A0 = h[T3 + 0012];
+V1 = h[T4 + 0002];
+V0 = h[T3 + 000e];
+800A4618	addiu  v1, v1, $ff88 (=-$78)
+V1 = V0 - V1;
+800A4620	mflo   a1
+V0 = V0 + 00f0;
+A0 = A0 - V0;
+800A462C	mult   v1, a0
+800A4630	mflo   v0
+800A4634	mult   a2, a2
+800A4638	mflo   v1
+800A463C	mult   a0, a0
+800A4640	mflo   a3
+A1 = A1 + V0;
+T2 = 0 - A1;
+800A464C	mult   t2, a2
+800A4650	mflo   v0
+V1 = V1 + A3;
+A2 = V1 >> 08;
+800A465C	div    v0, a2
+800A4660	bne    a2, zero, La466c [$800a466c]
+800A4664	nop
+800A4668	break   $01c00
+
+La466c:	; 800A466C
+800A466C	addiu  at, zero, $ffff (=-$1)
+800A4670	bne    a2, at, La4684 [$800a4684]
+800A4674	lui    at, $8000
+800A4678	bne    v0, at, La4684 [$800a4684]
+800A467C	nop
+800A4680	break   $01800
+
+La4684:	; 800A4684
+800A4684	mflo   v0
+800A4688	mult   t2, a0
+800A468C	mflo   v1
+800A4690	div    v1, a2
+800A4694	bne    a2, zero, La46a0 [$800a46a0]
+800A4698	nop
+800A469C	break   $01c00
+
+La46a0:	; 800A46A0
+800A46A0	addiu  at, zero, $ffff (=-$1)
+800A46A4	bne    a2, at, La46b8 [$800a46b8]
+800A46A8	lui    at, $8000
+800A46AC	bne    v1, at, La46b8 [$800a46b8]
+800A46B0	nop
+800A46B4	break   $01800
+
+La46b8:	; 800A46B8
+800A46B8	mflo   v1
+V0 = V0 >> 08;
+V0 = V0 + 00a0;
+V0 = V0 + T0;
+[T4 + 0000] = h(V0);
+V0 = hu[T3 + 000e];
+V1 = V1 >> 08;
+V1 = V1 + 0078;
+V1 = V1 + V0;
+[T4 + 0002] = h(V1);
+V1 = bu[T3 + 0014];
+
+La46e4:	; 800A46E4
+V0 = 0002;
+800A46E8	bne    v1, v0, La47ec [$800a47ec]
+800A46EC	nop
+V1 = h[T4 + 0000];
+T1 = h[T3 + 000c];
+T0 = h[T3 + 0010];
+800A46FC	addiu  v1, v1, $ff60 (=-$a0)
+V1 = T1 - V1;
+V0 = T1 + 0140;
+T0 = T0 - V0;
+800A470C	mult   v1, t0
+A2 = h[T3 + 0012];
+800A4714	nop
+800A4718	addiu  a1, a2, $ff10 (=-$f0)
+V0 = h[T4 + 0002];
+V1 = h[T3 + 000e];
+V0 = V0 + 0078;
+800A4728	mflo   a3
+V0 = A2 - V0;
+A1 = V1 - A1;
+800A4734	mult   v0, a1
+800A4738	mflo   v0
+800A473C	mult   t0, t0
+800A4740	mflo   a0
+V1 = V1 - A2;
+800A4748	mult   v1, a1
+800A474C	mflo   v1
+A3 = A3 + V0;
+T2 = 0 - A3;
+800A4758	mult   t2, t0
+800A475C	mflo   v0
+A0 = A0 + V1;
+A2 = A0 >> 08;
+800A4768	div    v0, a2
+800A476C	bne    a2, zero, La4778 [$800a4778]
+800A4770	nop
+800A4774	break   $01c00
+
+La4778:	; 800A4778
+800A4778	addiu  at, zero, $ffff (=-$1)
+800A477C	bne    a2, at, La4790 [$800a4790]
+800A4780	lui    at, $8000
+800A4784	bne    v0, at, La4790 [$800a4790]
+800A4788	nop
+800A478C	break   $01800
+
+La4790:	; 800A4790
+800A4790	mflo   v0
+800A4794	mult   t2, a1
+800A4798	mflo   v1
+800A479C	div    v1, a2
+800A47A0	bne    a2, zero, La47ac [$800a47ac]
+800A47A4	nop
+800A47A8	break   $01c00
+
+La47ac:	; 800A47AC
+800A47AC	addiu  at, zero, $ffff (=-$1)
+800A47B0	bne    a2, at, La47c4 [$800a47c4]
+800A47B4	lui    at, $8000
+800A47B8	bne    v1, at, La47c4 [$800a47c4]
+800A47BC	nop
+800A47C0	break   $01800
+
+La47c4:	; 800A47C4
+800A47C4	mflo   v1
+V0 = V0 >> 08;
+V0 = V0 + 00a0;
+V0 = V0 + T1;
+[T4 + 0000] = h(V0);
+V0 = hu[T3 + 0012];
+V1 = V1 >> 08;
+800A47E0	addiu  v1, v1, $ff88 (=-$78)
+V1 = V1 + V0;
+[T4 + 0002] = h(V1);
+
+La47ec:	; 800A47EC
+SP = SP + 0010;
+800A47F0	jr     ra 
+800A47F4	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca47f8
+V0 = w[800716c4];
+800A4800	nop
+V0 = h[V0 + 0010];
+V1 = h[A0 + 0000];
+A1 = V0;
+800A4810	addiu  v0, v0, $ff60 (=-$a0)
+V0 = V0 < V1;
+800A4818	beq    v0, zero, La4828 [$800a4828]
+800A481C	addiu  sp, sp, $ffe0 (=-$20)
+800A4820	addiu  v0, a1, $ff60 (=-$a0)
+[A0 + 0000] = h(V0);
+
+La4828:	; 800A4828
+V0 = w[800716c4];
+800A4830	nop
+V1 = h[V0 + 000c];
+V0 = h[A0 + 0000];
+A1 = V1;
+V1 = V1 + 00a0;
+V0 = V0 < V1;
+800A4848	beq    v0, zero, La4854 [$800a4854]
+V0 = A1 + 00a0;
+[A0 + 0000] = h(V0);
+
+La4854:	; 800A4854
+V0 = w[800716c4];
+800A485C	nop
+V0 = h[V0 + 0012];
+V1 = h[A0 + 0002];
+A1 = V0;
+800A486C	addiu  v0, v0, $ff88 (=-$78)
+V0 = V0 < V1;
+800A4874	beq    v0, zero, La4880 [$800a4880]
+800A4878	addiu  v0, a1, $ff88 (=-$78)
+[A0 + 0002] = h(V0);
+
+La4880:	; 800A4880
+V0 = w[800716c4];
+800A4888	nop
+V1 = h[V0 + 000e];
+V0 = h[A0 + 0002];
+A1 = V1;
+V1 = V1 + 0078;
+V0 = V0 < V1;
+800A48A0	beq    v0, zero, La48ac [$800a48ac]
+V0 = A1 + 0078;
+[A0 + 0002] = h(V0);
+
+La48ac:	; 800A48AC
+SP = SP + 0020;
+800A48B0	jr     ra 
+800A48B4	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca48b8
+800A48B8	addiu  sp, sp, $ffe0 (=-$20)
+A1 = A0;
+800A48C0	lui    a0, $800a
+800A48C4	addiu  a0, a0, $ac12 (=-$53ee)
+[SP + 0018] = w(RA);
+V1 = bu[A0 + 0000];
+800A48D0	nop
+V0 = V1 << 05;
+V0 = V0 + V1;
+V0 = V0 << 02;
+800A48E0	lui    at, $8007
+AT = AT + 4eb0;
+AT = AT + V0;
+V0 = w[AT + 0000];
+V1 = bu[A0 + 0000];
+V0 = V0 >> 0c;
+[SP + 0010] = h(V0);
+V0 = V1 << 05;
+V0 = V0 + V1;
+V0 = V0 << 02;
+800A4908	lui    at, $8007
+AT = AT + 4eb4;
+AT = AT + V0;
+V0 = w[AT + 0000];
+V1 = bu[A0 + 0000];
+A0 = SP + 0010;
+V0 = V0 >> 0c;
+[SP + 0012] = h(V0);
+V0 = V1 << 05;
+V0 = V0 + V1;
+V0 = V0 << 02;
+800A4934	lui    at, $8007
+AT = AT + 4eb8;
+AT = AT + V0;
+V0 = w[AT + 0000];
+V1 = hu[8009ac0a];
+V0 = V0 >> 0c;
+V0 = V0 + V1;
+800A4954	jal    field_calculate_distance_to_screen [$800a41cc]
+[SP + 0014] = h(V0);
+RA = w[SP + 0018];
+SP = SP + 0020;
+800A4964	jr     ra 
+800A4968	nop
 ////////////////////////////////

@@ -303,7 +303,7 @@ if( bu[80071e24] & 3 )
 {
     A0 = 4;
     A1 = bu[800722c4]; // current entity
-    funcbc9fc;
+    funcbc9fc();
 }
 
 800BB890	lui    v1, $8007
@@ -413,7 +413,7 @@ loopbb940:	; 800BB940
 800BB940	sll    a1, s1, $10
 800BB944	lui    a2, $800a
 800BB948	addiu  a2, a2, $013c
-800BB94C	jal    funcda124 [$800da124]
+800BB94C	jal    field_copy_into_debug_by_id [$800da124]
 800BB950	sra    a1, a1, $10
 800BB954	addiu  s1, s1, $0001
 800BB958	slti   v0, s1, $0009

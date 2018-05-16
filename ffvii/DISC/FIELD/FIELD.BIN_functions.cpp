@@ -166,91 +166,7 @@ T1 = T1 + 0018;
 
 
 ////////////////////////////////
-// funcba65c
-S0 = A0;
-800BA65C	lui    v0, $8008
-V0 = bu[V0 + ebe0];
-800BA670	beq    v0, zero, Lba738 [$800ba738]
-
-800BA678	jal    funcd4bfc [$800d4bfc]
-800BA67C	nop
-800BA680	jal    funcbc338 [$800bc338]
-800BA684	nop
-800BA688	jal    funcd7d6c [$800d7d6c]
-800BA68C	nop
-800BA690	jal    funcd7f9c [$800d7f9c]
-800BA694	nop
-800BA698	lui    v0, $800a
-V0 = w[V0 + c6dc];
-800BA6A0	lui    at, $8009
-[AT + 5dcc] = b(0);
-800BA6A8	lui    at, $800a
-[AT + fe8c] = b(0);
-800BA6B0	lui    at, $8008
-[AT + ebe0] = b(0);
-V0 = bu[V0 + 0001];
-800BA6BC	nop
-V0 = V0 < 0005;
-800BA6C4	beq    v0, zero, Lba6d4 [$800ba6d4]
-A0 = 004b;
-800BA6CC	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
-A1 = 000b;
-
-Lba6d4:	; 800BA6D4
-800BA6D4	lui    v0, $800a
-V0 = w[V0 + c6dc];
-800BA6DC	nop
-V0 = bu[V0 + 0000];
-800BA6E4	nop
-V0 = V0 < 0002;
-800BA6EC	beq    v0, zero, Lba6fc [$800ba6fc]
-A0 = 004b;
-800BA6F4	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
-A1 = 000a;
-
-Lba6fc:	; 800BA6FC
-800BA6FC	lui    v1, $800a
-V1 = w[V1 + c6dc];
-800BA704	nop
-V0 = bu[V1 + 0000];
-800BA70C	nop
-V0 = V0 < 0003;
-800BA714	beq    v0, zero, Lba730 [$800ba730]
-A0 = 004b;
-V0 = bu[V1 + 0001];
-800BA720	nop
-V0 = V0 < 0006;
-800BA728	bne    v0, zero, Lba738 [$800ba738]
-800BA72C	nop
-
-Lba730:	; 800BA730
-800BA730	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
-A1 = 000c;
-
-Lba738:	; 800BA738
-if (bu[80099ffc] != 4 || bu[80099ffc] != 5 || bu[80070788] != 0)
-{
-    opcode_cycle();
-}
-
-if( bu[80071e2c] ) // if at least 1 window is opened
-{
-    A0 = 80083274;
-    A1 = 4; // render max 4 dialogs
-    A2 = S0;
-    V0 = w[8009c6e0]; // 8009abf4 start of game data
-    A3 = bu[V0 + 0] XOR 1;
-    func1f1bc(); // render dialog
-}
-
-A0 = S0;
-800BA7A8	jal    funcbc438 [$800bc438]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbc438
+// funcbc438()
 // enable disable pointer and triangles?
 
 struct = w[8009c6e0];
@@ -354,4 +270,158 @@ V1 = 800e48f4 + V0 * 28;
 
 [V1] = w((w[V1] & ff000000) | (w[T0] & 00ffffff));
 [T0] = w((w[T0] & ff000000) | (V1 & 00ffffff));
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab5e8
+800AB5E8	addiu  sp, sp, $ffc0 (=-$40)
+[SP + 0030] = w(S6);
+S6 = A0;
+[SP + 001c] = w(S1);
+S1 = A1;
+[SP + 0018] = w(S0);
+S0 = A2;
+[SP + 0034] = w(S7);
+S7 = A3;
+[SP + 0038] = w(RA);
+[SP + 002c] = w(S5);
+[SP + 0028] = w(S4);
+[SP + 0024] = w(S3);
+800AB61C	jal    $8003ae38
+[SP + 0020] = w(S2);
+800AB624	jal    $8003b48c
+A0 = S0;
+800AB62C	jal    $8003b51c
+A0 = S0;
+S4 = 0;
+S5 = SP + 0014;
+800AB63C	lui    v0, $800e
+V0 = V0 + 42d8;
+S3 = V0 + 0008;
+S2 = V0;
+S0 = 0;
+
+loopab650:	; 800AB650
+800AB650	lui    at, $800e
+AT = AT + 42ee;
+AT = AT + S0;
+V1 = h[AT + 0000];
+V0 = 0001;
+800AB664	bne    v1, v0, Lab6a0 [$800ab6a0]
+S0 = S0 + 0018;
+A0 = S2;
+A1 = S1 + 0008;
+A2 = SP + 0010;
+800AB678	jal    $8003bbdc
+A3 = S5;
+A0 = S3;
+A1 = S1 + 000c;
+A2 = SP + 0010;
+800AB68C	jal    $8003bbdc
+A3 = S5;
+A0 = S6;
+800AB698	jal    $80046794
+A1 = S1;
+
+Lab6a0:	; 800AB6A0
+S1 = S1 + 0010;
+S3 = S3 + 0018;
+S4 = S4 + 0001;
+V0 = S4 < 0040;
+800AB6B0	bne    v0, zero, loopab650 [$800ab650]
+S2 = S2 + 0018;
+800AB6B8	jal    $8003aed8
+800AB6BC	nop
+800AB6C0	lui    a0, $00ff
+A0 = A0 | ffff;
+800AB6C8	lui    a1, $ff00
+V1 = w[S7 + 0000];
+V0 = w[S6 + 0000];
+V1 = V1 & A1;
+V0 = V0 & A0;
+V1 = V1 | V0;
+[S7 + 0000] = w(V1);
+V0 = w[S6 + 0000];
+A0 = S7 & A0;
+V0 = V0 & A1;
+V0 = V0 | A0;
+[S6 + 0000] = w(V0);
+RA = w[SP + 0038];
+S7 = w[SP + 0034];
+S6 = w[SP + 0030];
+S5 = w[SP + 002c];
+S4 = w[SP + 0028];
+S3 = w[SP + 0024];
+S2 = w[SP + 0020];
+S1 = w[SP + 001c];
+S0 = w[SP + 0018];
+SP = SP + 0040;
+800AB720	jr     ra 
+800AB724	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcba65c()
+
+S0 = A0;
+
+V0 = bu[8007ebe0];
+800BA670	beq    v0, zero, Lba738 [$800ba738]
+
+800BA678	jal    funcd4bfc [$800d4bfc]
+800BA67C	nop
+800BA680	jal    funcbc338 [$800bc338]
+800BA684	nop
+800BA688	jal    funcd7d6c [$800d7d6c]
+
+field_init_debug_with_default();
+
+field_file_offset = w[8009c6dc];
+
+[80095dcc] = b(0);
+[8009fe8c] = b(0);
+[8007ebe0] = b(0);
+
+if( bu[field_file_offset + 1] < 5 )
+{
+    A0 = 4b;
+    A1 = b;
+    system_bios_system_error_boot_or_disk_failure();
+}
+
+if( bu[field_file_offset + 0] < 2 )
+{
+    A0 = 4b;
+    A1 = a;
+    system_bios_system_error_boot_or_disk_failure();
+}
+
+if( bu[field_file_offset + 1] >= 6 || bu[field_file_offset + 0] >= 3 )
+{
+    A0 = 4b;
+    A1 = c;
+    system_bios_system_error_boot_or_disk_failure();
+}
+
+if( bu[80099ffc] != 4 || bu[80099ffc] != 5 || bu[80070788] != 0 )
+{
+    opcode_cycle();
+}
+
+if( bu[80071e2c] ) // if at least 1 window is opened
+{
+    A0 = 80083274;
+    A1 = 4; // render max 4 dialogs
+    A2 = S0;
+    V0 = w[8009c6e0]; // 8009abf4 start of game data
+    A3 = bu[V0 + 0] XOR 1;
+    func1f1bc(); // render dialog
+}
+
+A0 = S0;
+funcbc438();
 ////////////////////////////////

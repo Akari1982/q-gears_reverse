@@ -21,13 +21,15 @@
 + 38 [][][][] triggers data.
 +158 [][][][] offset to background triggers.
 
-800716d0 [] store 0 or 4 here during random encounter.
+800716c8 []       store here entity id for which we calculate debug draw.
 
-800716d4 [] store music lock here. MULCK opcode.
+800716d0 []       store 0 or 4 here during random encounter.
 
-800716dc [][] entity array (set to 0 during script initing)
+800716d4 []       store music lock here. MULCK opcode.
 
-8007173c [][] danger counter.
+800716dc [][]     entity array (set to 0 during script initing)
+
+8007173c [][]     danger counter.
 
 80071748 array of priority script offsets. (size 0x10 0x2).
 
@@ -37,6 +39,8 @@
 80071A88 array if priority data. Entity id that request this priority with REQ-type opcodes. (size 0x08 0x01).
 
 80071c0c store that we in line and SLIP byte in line == 1 during move_line_check.
+
+80071e24 []       some value used in debug draw.
 
 80071e2c number of opened windows. Increment this during window initialization. Decrement during closing.
 80071e38 current screen scroll X.
@@ -139,7 +143,7 @@
 8007e770 [][][][] offset to block 7 in dat file.
 
 8007e7a0          array of some fade data. (size 0x4).
-8007E7A8 [][][][] offset to dialog block.
+8007e7a8 [][][][] offset to dialog block.
 
 8007e7ac         array of LINE data. (size 0x18).
 + 00 [][] x1.
@@ -159,6 +163,9 @@
 + 14 []   store direction of moving between move vector and line if we move in line.
 + 15 []   entity move to line (for talk check).
 + 16 []   store SLIP byte here.
+
+8007eaac packet settings for 800e8f84.
+8007eb08 packet settings for 80100820.
 
 8007eb90 [][]     some data.
 8007eb94 [][]     some data.
@@ -438,6 +445,9 @@
 
 800e0738 digit->letter assosiation array (10-26 letters from character table)
 
+800e0748 debug array (size 0x17a).
+    +00c [][]     index into 0xe. Increment each call of field_add_string_to_debug_by_id (debug insertion).
+
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
 800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
@@ -477,7 +487,11 @@
 800e4de2 [][]     2nd image height.
 800e4de4 [][]     texpage settings for 2nd image.
 
+800e8f7c render ordet table for some 1 element. Inited when start of field.
+
 800fc68c some data related to model rendering packet. Depth sorted polygons addreses.
+
+80100818 render ordet table for some 1 element. Inited when start of field (second budder of 800e8f7c).
 
 8011016C        [8008357C]  some model related data (size 0x08)
 8011016C + 04 []
@@ -499,6 +513,8 @@
 80114488 we read something from here during reading unknown data in triggers and check if this != 0. If this != 0 then battle will not be activated during field battle check. (0)
 
 80114490 buffer index for something like array or triangles.
+
+80114498 arrray of something entity related (size 0x1).
 
 801144CC [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 

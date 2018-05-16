@@ -319,13 +319,13 @@ A1 = 0;
 A2 = 0008;
 A3 = 0140;
 S0 = 00e0;
-800117F0	jal    func43814 [$80043814]
+800117F0	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(S0);
 A0 = S1 + 005c;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
-80011808	jal    func43814 [$80043814]
+80011808	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(S0);
 V0 = 0001;
 80011814	lui    at, $8008
@@ -531,83 +531,11 @@ V0 = 0074;
 // func12840
 80012840-800128B4
 ////////////////////////////////
+// func128b8
+800128B8-800129CC
+////////////////////////////////
 
 
-
-800128B8	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0024] = w(S5);
-S5 = 0;
-[SP + 001c] = w(S3);
-800128C8	lui    s3, $800a
-800128CC	addiu  s3, s3, $a074 (=-$5f8c)
-[SP + 0028] = w(S6);
-S6 = S3;
-[SP + 0020] = w(S4);
-S4 = 0;
-[SP + 002c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-
-loop128f0:	; 800128F0
-S2 = 0;
-S1 = S4;
-S0 = S3;
-
-loop128fc:	; 800128FC
-800128FC	jal    func469b0 [$800469b0]
-A0 = S0;
-A0 = S0;
-80012908	jal    system_change_semi_transparency_in_packet [$80046848]
-A1 = 0001;
-A0 = S0;
-80012914	jal    system_change_brightness_calculation_in_packet [$80046870]
-A1 = 0001;
-V0 = S1 + S6;
-S1 = S1 + 0010;
-S2 = S2 + 0001;
-A0 = 00a0;
-V1 = 00e0;
-[V0 + 0004] = b(0);
-[V0 + 0005] = b(0);
-[V0 + 0006] = b(0);
-[V0 + 000c] = h(A0);
-[V0 + 000e] = h(V1);
-V0 = S2 < 0002;
-80012948	bne    v0, zero, loop128fc [$800128fc]
-S0 = S0 + 0010;
-S3 = S3 + 0030;
-S5 = S5 + 0001;
-V0 = S5 < 0002;
-8001295C	bne    v0, zero, loop128f0 [$800128f0]
-S4 = S4 + 0030;
-80012964	lui    at, $800a
-[AT + a07c] = h(0);
-8001296C	lui    at, $800a
-[AT + a07e] = h(0);
-80012974	lui    at, $800a
-[AT + a08c] = h(A0);
-8001297C	lui    at, $800a
-[AT + a08e] = h(0);
-80012984	lui    at, $800a
-[AT + a0ac] = h(0);
-8001298C	lui    at, $800a
-[AT + a0ae] = h(0);
-80012994	lui    at, $800a
-[AT + a0bc] = h(A0);
-8001299C	lui    at, $800a
-[AT + a0be] = h(0);
-RA = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0030;
-800129C8	jr     ra 
-800129CC	nop
 
 800129D0	addiu  sp, sp, $ffe8 (=-$18)
 800129D4	lui    v0, $8007
@@ -1113,7 +1041,7 @@ A1 = 0;
 A2 = 00f0;
 A3 = 0140;
 V0 = 00e0;
-8001418C	jal    func43814 [$80043814]
+8001418C	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 80014194	lui    a0, $8019
 V0 = 0001;
@@ -4613,7 +4541,7 @@ A1 = 0;
 A2 = 0;
 A3 = 0180;
 V0 = 01d8;
-80021084	jal    func43814 [$80043814]
+80021084	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 A0 = S3;
 S0 = 0001;
@@ -4627,14 +4555,14 @@ A1 = 0;
 A2 = 0008;
 A3 = 0180;
 S1 = 00e0;
-800210BC	jal    func43814 [$80043814]
+800210BC	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(S1);
 S2 = S3 + 005c;
 A0 = S2;
 A1 = 0;
 A2 = 00f0;
 A3 = 0180;
-800210D8	jal    func43814 [$80043814]
+800210D8	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(S1);
 A0 = S4;
 A1 = 0;
@@ -8673,7 +8601,7 @@ A2 = h[V0 + 000a];
 A3 = h[V0 + 0004];
 V0 = h[V0 + 0006];
 A0 = SP + 0018;
-80026ABC	jal    func43814 [$80043814]
+80026ABC	jal    system_prepare_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 V0 = 0001;
 [SP + 002f] = b(V0);
@@ -28589,7 +28517,7 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// func43814
+// system_prepare_draw_env_struct
 80043814-800438D0
 ////////////////////////////////
 // func438d4

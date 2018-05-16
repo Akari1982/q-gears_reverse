@@ -19,7 +19,7 @@ func78fb0(); // sync and flush cache
 if( w[800c1b60] == 0 ) // debug
 {
     A0 = 80076eac;
-    system_set_draw_sync_callback();
+    system_psyq_draw_sync_callback();
 }
 
 [80061bac] = w(w[80058bfc]);
