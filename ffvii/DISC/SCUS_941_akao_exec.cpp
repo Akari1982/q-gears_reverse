@@ -1,5 +1,6 @@
 ﻿////////////////////////////////
-// system_execute_AKAO
+// system_execute_AKAO()
+
 S3 = 0;
 V1 = hu[8009a000];
 

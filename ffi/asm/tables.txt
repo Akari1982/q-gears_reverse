@@ -1,0 +1,5 @@
+00    = string termination character
+01-19 = format characters
+1A-69 = DTE characters  ($50 count)
+6A-79 = invalid (will be treated as junk DTE)
+7A-FF = single digit characters

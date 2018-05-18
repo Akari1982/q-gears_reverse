@@ -295,7 +295,7 @@ if( A0 == w[8005895c] ) // check with loading file id
 A0 = w[80058958]; // pointer to place for file load
 if( A0 != 0 )
 {
-    func31f0c();
+    system_memory_free();
 
     [80058958] = w(0); // reset file pointer
 }

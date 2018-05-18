@@ -1,0 +1,15 @@
+E89C  <--- ending scene?
+
+F200  <--- entering battle
+F28D
+B:9A00
+99B8
+9A2A, A12A, 99A8
+9AA6, 99E8
+
+---------------------
+C0AC (new game)
+E:9C54, C76D
+9D15
+
+9F35

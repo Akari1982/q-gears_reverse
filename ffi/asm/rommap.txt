@@ -1,0 +1,88 @@
+
+PAGE 0
+------------------------
+$AE00        graphic IDs for each standard map object (arranged by object ID)
+
+$AF00-B0FF   startup values copied to $6000-61FF
+
+$B200-B23F   battle backdrop palettes
+$B240-B25F   shop backdrop palettes
+
+$B300-B37F   battle backdrop assignments for overworld tiles
+
+$B400-????   object information
+               1 byte for object ID
+               1 byte for X coord (and flags?)
+               1 byte for Y coord (and flags?)
+             3 bytes per object.  15 objects per map
+                48 bytes per map.  (last 3 bytes unused?)
+
+PAGE 1
+------------------------
+Starts with 256 pointers, one for each row of the overworld map.  Compressed OW map
+data follows
+
+
+PAGE 2
+------------------------
+$8000-8FFF   CHR:  overworld
+$9000-9BFF   CHR:  class mapman
+$9C00-A1FF   CHR:  overworld objects
+$A200-BFFF   CHR:  NPC mapman
+
+
+PAGE 3
+------------------------
+$8000-BFFF   CHR:  tilesets
+
+
+PAGE 4-5+
+------------------------
+Starts with pointer tables for standard maps.  Compressed standard map data follows
+
+
+PAGES 7-8
+------------------------
+ALL          CHR:  battle backdrops and enemy groups
+
+
+PAGE 9
+------------------------
+$8000-87FF   CHR:  shop stuff
+$8800-8FFF   CHR:  menu stuff (font, etc)
+$9000-A7FF   CHR:  class battle
+$A800-AFFF   CHR:  weapons / magic / cursor
+
+$B000-B3FF   ???? (almost looks like CHR, but not quite)
+
+$B400-B9FF   CHR:  ?map subscreen?
+
+$BA00-BFFF   ???? (code/data)
+
+
+PAGE A
+------------------------
+$B700-B8FF   Pointer table for item text
+$B900-BFB2   Item Text
+
+PAGE B
+------------------------
+$8400-8BFF   Battle Formation data ($10 bytes per battle formation)
+$A800-BBFF   CHR:  ?crossing the bridge scene?
+
+
+PAGE C
+------------------------
+
+
+PAGE D
+------------------------
+
+$B600-B7FF   CHR:  orb graphics
+
+$BC00-BDFF   Item prices (2 bytes per item)
+
+
+
+PAGE E
+------------------------

@@ -53,7 +53,7 @@ param2 = bu[address + 2];
 
 A0 = 0;
 A1 = param2;
-battle_get_random_value_from_to();
+system_get_random_value_from_to();
 [800D2B40 + unit_id * 40 + 10 + param1] = b(V0);
 ////////////////////////////////
 
@@ -82,7 +82,7 @@ if (V0 == 0)
     loop7c5a8:	; 8007C5A8
     A0 = 0;
     A1 = 2;
-    battle_get_random_value_from_to;
+    system_get_random_value_from_to;
     random = V0;
 
     V0 = bu[SP + 10 + random];
@@ -142,7 +142,7 @@ if (V0 == 0)
     loop7c5a8:	; 8007C5A8
     A0 = 0;
     A1 = 2;
-    battle_get_random_value_from_to;
+    system_get_random_value_from_to;
     random = V0;
 
     V0 = bu[SP + 10 + random];
@@ -203,7 +203,7 @@ if (V0 == 0)
     loop7c5a8:	; 8007C5A8
     A0 = 0;
     A1 = 2;
-    battle_get_random_value_from_to;
+    system_get_random_value_from_to;
     random = V0;
 
     V0 = bu[SP + 10 + random];

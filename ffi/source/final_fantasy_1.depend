@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1382530775 source:c:\users\andrei_antonov\google диск\nes\ffi\source\source\main.cpp
+	<SDL2/SDL.h>
+	<iostream>
+

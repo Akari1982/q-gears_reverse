@@ -12567,7 +12567,7 @@ L7c78c:	; 8007C78C
 8007C79C	beq    s2, zero, L7c7ec [$8007c7ec]
 8007C7A0	addiu  a1, s2, $ffff (=-$1)
 8007C7A4	addu   a0, zero, zero
-8007C7A8	jal    battle_get_random_value_from_to [$8001bbcc]
+8007C7A8	jal    system_get_random_value_from_to [$8001bbcc]
 8007C7AC	andi   a1, a1, $00ff
 8007C7B0	andi   v0, v0, $00ff
 8007C7B4	addu   v0, sp, v0
@@ -12641,7 +12641,7 @@ func7c818:	; 8007C818
 8007C8A0	addu   a0, zero, zero
 
 loop7c8a4:	; 8007C8A4
-8007C8A4	jal    battle_get_random_value_from_to [$8001bbcc]
+8007C8A4	jal    system_get_random_value_from_to [$8001bbcc]
 8007C8A8	ori    a1, zero, $0002
 8007C8AC	addu   s1, v0, zero
 8007C8B0	andi   s0, s1, $00ff
@@ -12784,7 +12784,7 @@ L7ca88:	; 8007CA88
 8007CA98	beq    s2, zero, L7cae8 [$8007cae8]
 8007CA9C	addiu  a1, s2, $ffff (=-$1)
 8007CAA0	addu   a0, zero, zero
-8007CAA4	jal    battle_get_random_value_from_to [$8001bbcc]
+8007CAA4	jal    system_get_random_value_from_to [$8001bbcc]
 8007CAA8	andi   a1, a1, $00ff
 8007CAAC	andi   v0, v0, $00ff
 8007CAB0	addu   v0, sp, v0
@@ -13120,7 +13120,7 @@ L7cf28:	; 8007CF28
 8007CF3C	addu   a0, zero, zero
 
 loop7cf40:	; 8007CF40
-8007CF40	jal    battle_get_random_value_from_to [$8001bbcc]
+8007CF40	jal    system_get_random_value_from_to [$8001bbcc]
 8007CF44	ori    a1, zero, $0002
 8007CF48	addu   s1, v0, zero
 8007CF4C	andi   s0, s1, $00ff
@@ -13262,7 +13262,7 @@ L7d240:	; 8007D240
 8007D248	beq    s4, zero, L7d298 [$8007d298]
 8007D24C	addiu  a1, s4, $ffff (=-$1)
 8007D250	addu   a0, zero, zero
-8007D254	jal    battle_get_random_value_from_to [$8001bbcc]
+8007D254	jal    system_get_random_value_from_to [$8001bbcc]
 8007D258	andi   a1, a1, $00ff
 8007D25C	andi   v0, v0, $00ff
 8007D260	addu   v0, sp, v0
@@ -13678,7 +13678,7 @@ L7d8fc:	; 8007D8FC
 8007D904	beq    s4, zero, L7d954 [$8007d954]
 8007D908	addiu  a1, s4, $ffff (=-$1)
 8007D90C	addu   a0, zero, zero
-8007D910	jal    battle_get_random_value_from_to [$8001bbcc]
+8007D910	jal    system_get_random_value_from_to [$8001bbcc]
 8007D914	andi   a1, a1, $00ff
 8007D918	andi   v0, v0, $00ff
 8007D91C	addu   v0, sp, v0
@@ -13783,7 +13783,7 @@ L7da68:	; 8007DA68
 8007DA70	beq    s4, zero, L7dac0 [$8007dac0]
 8007DA74	addiu  a1, s4, $ffff (=-$1)
 8007DA78	addu   a0, zero, zero
-8007DA7C	jal    battle_get_random_value_from_to [$8001bbcc]
+8007DA7C	jal    system_get_random_value_from_to [$8001bbcc]
 8007DA80	andi   a1, a1, $00ff
 8007DA84	andi   v0, v0, $00ff
 8007DA88	addu   v0, sp, v0
@@ -13846,7 +13846,7 @@ func7daec:	; 8007DAEC
 8007DB58	addu   a0, zero, zero
 
 loop7db5c:	; 8007DB5C
-8007DB5C	jal    battle_get_random_value_from_to [$8001bbcc]
+8007DB5C	jal    system_get_random_value_from_to [$8001bbcc]
 8007DB60	ori    a1, zero, $0002
 8007DB64	addu   a1, v0, zero
 8007DB68	andi   a0, a1, $00ff
@@ -14196,7 +14196,7 @@ L7e00c:	; 8007E00C
 8007E014	beq    s2, zero, L7e064 [$8007e064]
 8007E018	addiu  a1, s2, $ffff (=-$1)
 8007E01C	addu   a0, zero, zero
-8007E020	jal    battle_get_random_value_from_to [$8001bbcc]
+8007E020	jal    system_get_random_value_from_to [$8001bbcc]
 8007E024	andi   a1, a1, $00ff
 8007E028	andi   v0, v0, $00ff
 8007E02C	addu   v0, sp, v0
@@ -14294,7 +14294,7 @@ L7e168:	; 8007E168
 8007E170	beq    s2, zero, L7e1c0 [$8007e1c0]
 8007E174	addiu  a1, s2, $ffff (=-$1)
 8007E178	addu   a0, zero, zero
-8007E17C	jal    battle_get_random_value_from_to [$8001bbcc]
+8007E17C	jal    system_get_random_value_from_to [$8001bbcc]
 8007E180	andi   a1, a1, $00ff
 8007E184	andi   v0, v0, $00ff
 8007E188	addu   v0, sp, v0
@@ -14400,7 +14400,7 @@ L7e2e4:	; 8007E2E4
 8007E2EC	beq    s2, zero, L7e33c [$8007e33c]
 8007E2F0	addiu  a1, s2, $ffff (=-$1)
 8007E2F4	addu   a0, zero, zero
-8007E2F8	jal    battle_get_random_value_from_to [$8001bbcc]
+8007E2F8	jal    system_get_random_value_from_to [$8001bbcc]
 8007E2FC	andi   a1, a1, $00ff
 8007E300	andi   v0, v0, $00ff
 8007E304	addu   v0, sp, v0
@@ -14507,7 +14507,7 @@ L7e464:	; 8007E464
 8007E46C	beq    s2, zero, L7e4bc [$8007e4bc]
 8007E470	addiu  a1, s2, $ffff (=-$1)
 8007E474	addu   a0, zero, zero
-8007E478	jal    battle_get_random_value_from_to [$8001bbcc]
+8007E478	jal    system_get_random_value_from_to [$8001bbcc]
 8007E47C	andi   a1, a1, $00ff
 8007E480	andi   v0, v0, $00ff
 8007E484	addu   v0, sp, v0
@@ -14606,7 +14606,7 @@ L7e5c4:	; 8007E5C4
 8007E5CC	beq    s2, zero, L7e61c [$8007e61c]
 8007E5D0	addiu  a1, s2, $ffff (=-$1)
 8007E5D4	addu   a0, zero, zero
-8007E5D8	jal    battle_get_random_value_from_to [$8001bbcc]
+8007E5D8	jal    system_get_random_value_from_to [$8001bbcc]
 8007E5DC	andi   a1, a1, $00ff
 8007E5E0	andi   v0, v0, $00ff
 8007E5E4	addu   v0, sp, v0
@@ -14712,7 +14712,7 @@ L7e740:	; 8007E740
 8007E748	beq    s2, zero, L7e798 [$8007e798]
 8007E74C	addiu  a1, s2, $ffff (=-$1)
 8007E750	addu   a0, zero, zero
-8007E754	jal    battle_get_random_value_from_to [$8001bbcc]
+8007E754	jal    system_get_random_value_from_to [$8001bbcc]
 8007E758	andi   a1, a1, $00ff
 8007E75C	andi   v0, v0, $00ff
 8007E760	addu   v0, sp, v0
@@ -17096,7 +17096,7 @@ loop813ec:	; 800813EC
 800813EC	addu   a0, zero, zero
 
 loop813f0:	; 800813F0
-800813F0	jal    battle_get_random_value_from_to [$8001bbcc]
+800813F0	jal    system_get_random_value_from_to [$8001bbcc]
 800813F4	ori    a1, zero, $000a
 800813F8	andi   v0, v0, $00ff
 800813FC	addu   v0, s1, v0
@@ -34407,7 +34407,7 @@ L91104:	; 80091104
 80091108	sw     zero, $1800(at)
 8009110C	lui    at, $800c
 80091110	sw     zero, $1804(at)
-80091114	jal    battle_get_random_value_from_to [$8001bbcc]
+80091114	jal    system_get_random_value_from_to [$8001bbcc]
 80091118	ori    a1, zero, $0008
 8009111C	andi   v0, v0, $00ff
 80091120	lui    at, $800c
@@ -34601,13 +34601,13 @@ func91330:	; 80091330
 80091370	nop
 80091374	beq    v0, zero, L913fc [$800913fc]
 80091378	addu   a0, zero, zero
-8009137C	jal    battle_get_random_value_from_to [$8001bbcc]
+8009137C	jal    system_get_random_value_from_to [$8001bbcc]
 80091380	ori    a1, zero, $0063
 80091384	andi   v0, v0, $00ff
 80091388	sltiu  v0, v0, $0060
 8009138C	bne    v0, zero, L913e8 [$800913e8]
 80091390	addu   a0, zero, zero
-80091394	jal    battle_get_random_value_from_to [$8001bbcc]
+80091394	jal    system_get_random_value_from_to [$8001bbcc]
 80091398	ori    a1, zero, $0004
 8009139C	addu   a0, zero, zero
 800913A0	ori    a1, zero, $0004
@@ -34615,7 +34615,7 @@ func91330:	; 80091330
 800913A8	lui    s1, $800c
 800913AC	addiu  s1, s1, $17d4
 800913B0	sll    s0, s0, $02
-800913B4	jal    battle_get_random_value_from_to [$8001bbcc]
+800913B4	jal    system_get_random_value_from_to [$8001bbcc]
 800913B8	addu   s0, s0, s1
 800913BC	andi   v0, v0, $00ff
 800913C0	sll    v0, v0, $02
@@ -34860,7 +34860,7 @@ loop91704:	; 80091704
 
 loop9170c:	; 8009170C
 8009170C	addu   a0, zero, zero
-80091710	jal    battle_get_random_value_from_to [$8001bbcc]
+80091710	jal    system_get_random_value_from_to [$8001bbcc]
 80091714	ori    a1, zero, $0009
 80091718	andi   v0, v0, $00ff
 8009171C	addiu  a0, v0, $00ba
@@ -89791,7 +89791,7 @@ func1e4e7c:	; 801E4E7C
 801E4EAC	addu   a0, zero, zero
 
 loop1e4eb0:	; 801E4EB0
-801E4EB0	jal    battle_get_random_value_from_to [$8001bbcc]
+801E4EB0	jal    system_get_random_value_from_to [$8001bbcc]
 801E4EB4	ori    a1, zero, $000a
 801E4EB8	addu   a0, v0, zero
 801E4EBC	andi   v0, a0, $00ff
