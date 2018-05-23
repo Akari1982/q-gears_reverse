@@ -647,7 +647,8 @@ func24fac(); // add vram rect clean to queue
 
 
 ////////////////////////////////
-// func1dfe8
+// func1dfe8()
+
 struct_164 = S1 = A0;
 V0 = bu[8005884d];
 
@@ -704,7 +705,7 @@ A1 = SP + 0010;
 V0 = h[S1 + 000a];
 A2 = SP + 0018;
 [SP + 0014] = h(V0);
-system_gte_apply_matrix;
+system_gte_apply_matrix();
 
 V0 = w[8004f270];
 
@@ -725,7 +726,7 @@ V1 = w[SP + 0020];
 A0 = S0;
 V0 = V0 + V1;
 [A1 + 0028] = w(V0);
-system_gte_set_rotation_matrix;
+system_gte_set_rotation_matrix();
 
 A0 = S0;
 system_gte_set_translation_vector;
@@ -740,7 +741,7 @@ struct_164 = A0;
 packet_addr = A1;
 
 A0 = struct_164;
-func1dfe8;
+func1dfe8();
 
 A0 = struct_164;
 A1 = packet_addr;
@@ -792,36 +793,26 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// func1e18
-8001E1F8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-S1 = A0;
-[SP + 0018] = w(S2);
-S2 = A1;
-[SP + 0010] = w(S0);
-[SP + 001c] = w(RA);
-8001E214	jal    func1dfe8 [$8001dfe8]
-S0 = A2;
-A0 = S1;
-A1 = S2;
-8001E224	jal    func1f048 [$8001f048]
-A2 = S0;
-V0 = w[S1 + 003c];
-8001E230	nop
-V0 = V0 & 0004;
-8001E238	beq    v0, zero, L1e248 [$8001e248]
-A0 = S1;
-8001E240	jal    func1e834 [$8001e834]
-A1 = S2;
+// func1e1f8()
 
-L1e248:	; 8001E248
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8001E25C	jr     ra 
-8001E260	nop
+struct_164 = A0;
+packet_addr = A1;
+S0 = A2;
+
+A0 = struct_164;
+func1dfe8();
+
+A0 = struct_164;
+A1 = packet_addr;
+A2 = S0;
+8001E224	jal    func1f048 [$8001f048]
+
+if( w[struct_164 + 3c] & 00000004 )
+{
+    A0 = struct_164;
+    A1 = packet_addr;
+    func1e834();
+}
 ////////////////////////////////
 
 
@@ -3636,8 +3627,9 @@ D4100280 // f7
     V0 = V0 & 0003;
     80020E0C	bne    v0, v1, L21900 [$80021900]
     80020E10	nop
-    80020E14	jal    func1f524 [$8001f524]
     A0 = S3;
+    func1f524();
+
     80020E1C	j      L21900 [$80021900]
     80020E20	nop
     A0 = bu[S3 + 0028];
@@ -3688,8 +3680,9 @@ D4100280 // f7
     V0 = V0 & 0003;
     80020ECC	bne    v0, v1, L20ee0 [$80020ee0]
     80020ED0	lui    v1, $0001
-    80020ED4	jal    func1f524 [$8001f524]
     A0 = S3;
+    func1f524();
+
     80020EDC	lui    v1, $0001
 
     L20ee0:	; 80020EE0
@@ -4405,48 +4398,30 @@ V0 = w[A1 + 0008];
 
 
 ////////////////////////////////
-// func219b4
-800219B4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = bu[A0 + 002b];
-800219C0	nop
-V0 = V0 | 0001;
-800219C8	jal    func1f524 [$8001f524]
-[A0 + 002b] = b(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800219D8	jr     ra 
-800219DC	nop
+// func219b4()
+
+[A0 + 2b] = b(bu[A0 + 2b] | 01);
+func1f524();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func219e0
+// func219e0()
 
-V0 = bu[A0 + 002b];
-[A0 + 0028] = b(A1);
-[A0 + 0029] = b(A2);
-[A0 + 002a] = b(A3);
-V0 = V0 & 00fe;
-[A0 + 002b] = b(V0);
-800219FC	jal    func1f524 [$8001f524]
-
+[A0 + 28] = b(A1);
+[A0 + 29] = b(A2);
+[A0 + 2a] = b(A3);
+[A0 + 2b] = b(bu[A0 + 2b] & fe);
+func1f524();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func21a14
-80021A14	lui    v1, $ffe0
-V1 = V1 | 01ff;
-A1 = A1 & 0fff;
-V0 = w[A0 + 00ac];
-A1 = A1 << 09;
-V0 = V0 & V1;
-V0 = V0 | A1;
-80021A30	jr     ra 
-[A0 + 00ac] = w(V0);
+// func21a14()
+
+[A0 + ac] = w((w[A0 + ac] & ffe001ff) | ((A1 & 0fff) << 09));
 ////////////////////////////////
 
 
@@ -5814,8 +5789,7 @@ V1 = V1 | V0;
 [A0 + 003c] = w(V1);
 
 L231b4:	; 800231B4
-800231B4	jal    func1f524 [$8001f524]
-800231B8	nop
+func1f524();
 
 L231bc:	; 800231BC
 RA = w[SP + 0010];

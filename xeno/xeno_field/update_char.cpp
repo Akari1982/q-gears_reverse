@@ -71,6 +71,7 @@ if( w[800c1b60] == 0 )
 
 ////////////////////////////////
 // func751d4()
+
 S5 = A0;
 
 scruct_5c_p = w[800aefe4];
@@ -112,8 +113,8 @@ if( number_of_entity > 0 )
         // model or sprite loaded
         if( hu[struct_5c + 58] & 0040 )
         {
-            S1 = w[struct_5c + 4c];
-            S2 = w[struct_5c + 4];
+            struct_138 = w[struct_5c + 4c];
+            struct_164 = w[struct_5c + 4];
 
             [struct_5c + 2c] = w(w[struct_5c + c]);
             [struct_5c + 30] = w(w[struct_5c + 10]);
@@ -124,7 +125,7 @@ if( number_of_entity > 0 )
             [struct_5c + 44] = w(w[struct_5c + 24]);
             [struct_5c + 48] = w(w[struct_5c + 28]);
 
-            if( ( w[S1 + 4] & 00002000 ) == 0 )
+            if( ( w[struct_138 + 4] & 00002000 ) == 0 )
             {
                 R11R12 = w[800aef38 + 0];
                 R13R21 = w[800aef38 + 4];
@@ -186,342 +187,338 @@ if( number_of_entity > 0 )
 
                 if( ( V1 >= 143 ) || ( V0 >= 18f ) )
                 {
-                    [S1 + 4] = w(w[S1 + 4] | 00000200);
+                    [struct_138 + 4] = w(w[struct_138 + 4] | 00000200);
                 }
                 else
                 {
-                    [S1 + 4] = w(w[S1 + 4] & fffffdff);
+                    [struct_138 + 4] = w(w[struct_138 + 4] & fffffdff);
                 }
 
                 V0 = w[8004ea20];
-                8007556C	bne    v0, zero, L75af8 [$80075af8]
-                V0 = T0 & 0020;
-                80075574	bne    v0, zero, L75af8 [$80075af8]
-                80075578	nop
-                V0 = w[SP + 00a0];
-                80075580	nop
-                80075584	bltz   v0, L75af8 [$80075af8]
-
-                A2 = (h[S1 + f4] * 3) / 4;
-                [SP + 20] = w(A2);
-
-                A1 = (h[S1 + f6] * 3) / 4;
-                [SP + 24] = w(A1);
-
-                A0 = (h[S1 + f8] * 3) / 4;
-                [SP + 28] = w(A0);
-
-                if( h[S1 + e4] == 7 )
-                {
-                    if( w[800b173c] != 0 )
-                    {
-                        [SP + 20] = w((A2 * 5) / 4);
-                        [SP + 24] = w((A1 * 5) / 4);
-                        [SP + 28] = w((A0 * 5) / 4);
-                    }
-                }
-
-                V0 = w[S2 + 20];
-                [V0 + c] = w(w[SP + 70]);
-                [V0 + 10] = w(w[SP + 74]);
-                [V0 + 14] = w(w[SP + 78]);
-                [V0 + 18] = w(w[SP + 7c]);
-                [V0 + 1c] = w(w[SP + 80]);
-                [V0 + 20] = w(w[SP + 84]);
-                [V0 + 24] = w(w[SP + 88]);
-                [V0 + 28] = w(w[SP + 8c]);
-
-                A0 = w[S2 + 20] + c;
-                A1 = SP + 20;
-                80075670	jal    func49c74 [$80049c74]
-
-                V0 = w[scruct_5c_p + S6 * 5c + 4c];
-                V1 = w[V0 + 0014];
-                80075694	lui    v0, $0020
-                V0 = V1 & V0;
-                if( V0 != 0 )
-                {
-                    V0 = V1 >> 0b;
-                    800756A4	addiu  v0, v0, $fffe (=-$2)
-                    T1 = w[SP + 00b0];
-                    V0 = V0 & 0007;
-                    V0 = T1 - V0;
-                    V1 = V0 & 0007;
-                    if( V1 != 0 )
-                    {
-                        if( V1 < 4 )
-                        {
-                            [SP + 10] = h(0);
-                            [SP + 12] = h(-80);
-                            [SP + 14] = h(0);
-
-                            A0 = SP + 10;
-                            A1 = SP + 98;
-                            A2 = SP + 9c;
-                            A3 = SP + a0;
-                            system_gte_vector_perspective_transform();
-                            [SP + a4] = w(V0);
-                        }
-                        else if( ( V1 >= 5 ) && ( V1 < 8 ) )
-                        {
-                            [SP + 10] = h(0);
-                            [SP + 12] = h(80);
-                            [SP + 14] = h(0);
-
-                            A0 = SP + 10;
-                            A1 = SP + 98;
-                            A2 = SP + 9c;
-                            A3 = SP + a0;
-                            system_gte_vector_perspective_transform();
-                            [SP + a4] = w(V0);
-                        }
-                    }
-                }
-
-
-
-                if( bu[800b182b] == 0 )
-                {
-                    if( h[800b1662] != 0 )
-                    {
-                        RGB = w[80058c34];
-                        gte_DPCS(); // Depth Cueing.
-                        [SP + 90] = w(RGB2);
-
-                        A0 = w[scruct_5c_p + S6 * 5c + 4];
-                        A1 = bu[SP + 90];
-                        A2 = bu[SP + 91];
-                        A3 = bu[SP + 92];
-                        80075778	jal    func219e0 [$800219e0]
-                    }
-                }
-
-                V1 = w[SP + a4] >> w[8004f7a4];
-                [SP + 00a4] = w(V1);
-                if( V1 >= 2 )
-                {
-                    [SP + a4] = w(V1 - 2);
-                }
-
-                V0 = (hu[S1 + e8] + 22) & ffff;
-
-                if( V0 < 2 )
-                {
-                    if( ( w[S1 + 4] & 02000000 ) == 0 )
-                    {
-                        A1 = bu[S1 + fc];
-                        A2 = bu[S1 + fd];
-                        A3 = bu[S1 + fe];
-                        A0 = S2;
-                        800757E4	jal    func219e0 [$800219e0]
-
-                        [S2 + 3d] = b(ef);
-
-                        A0 = S2; // struct_164
-                        A1 = S5 + w[SP + a4] * 4 - 40; // packet_addr
-                        func1e130(); // update sprite packet
-
-                        A0 = SP + 10;
-                        A1 = SP + 98;
-                        A2 = SP + 9c;
-                        A3 = SP + a0;
-
-                        [SP + 10] = h(0);
-                        [SP + 12] = h(12c);
-                        [SP + 14] = h(0);
-                        system_gte_vector_perspective_transform();
-
-                        A0 = S2;
-                        A1 = bu[S1 + ff];
-                        A2 = bu[S1 + 100];
-                        V1 = w[8004f7a4];
-                        A3 = bu[S1 + 101];
-                        S0 = V0 >> V1;
-                        80075848	jal    func219e0 [$800219e0]
-
-                        A0 = S2; // struct_164
-                        A1 = S5 + S0 * 4; // packet_addr
-                        [A0 + 003d] = b(f7);
-                        func1e130(); // update sprite packet
-                    }
-
-                    80075868	j      L75af8 [$80075af8]
-                }
-
-                [S2 + 003d] = b(0);
-                V0 = w[S1 + 0004];
-
-                V0 = V0 & 02000000;
-                80075880	bne    v0, zero, L75af8 [$80075af8]
-                80075884	nop
-                V1 = w[S1 + 134];
-                V0 = V1 & 0060;
                 if( V0 == 0 )
                 {
-                    A0 = S2;
-                    A1 = S1 + fc;
-                    800758A0	jal    func75198 [$80075198]
+                    V0 = T0 & 0020;
+                    if( V0 == 0 )
+                    {
+                        V0 = w[SP + 00a0];
+                        if( V0 > 0 )
+                        {
+                            A2 = (h[struct_138 + f4] * 3) / 4;
+                            [SP + 20] = w(A2);
 
-                    A1 = w[SP + a4];
-                    A0 = S2; // struct_164
-                    A1 = A1 << 02;
-                    A1 = S5 + A1; // packet_addr
-                    func1e130(); // update sprite packet
+                            A1 = (h[struct_138 + f6] * 3) / 4;
+                            [SP + 24] = w(A1);
 
-                    800758BC	j      L75af8 [$80075af8]
+                            A0 = (h[struct_138 + f8] * 3) / 4;
+                            [SP + 28] = w(A0);
+
+                            if( h[struct_138 + e4] == 7 )
+                            {
+                                if( w[800b173c] != 0 )
+                                {
+                                    [SP + 20] = w((A2 * 5) / 4);
+                                    [SP + 24] = w((A1 * 5) / 4);
+                                    [SP + 28] = w((A0 * 5) / 4);
+                                }
+                            }
+
+                            V0 = w[struct_164 + 20];
+                            [V0 + c] = w(w[SP + 70]);
+                            [V0 + 10] = w(w[SP + 74]);
+                            [V0 + 14] = w(w[SP + 78]);
+                            [V0 + 18] = w(w[SP + 7c]);
+                            [V0 + 1c] = w(w[SP + 80]);
+                            [V0 + 20] = w(w[SP + 84]);
+                            [V0 + 24] = w(w[SP + 88]);
+                            [V0 + 28] = w(w[SP + 8c]);
+
+                            A0 = w[struct_164 + 20] + c;
+                            A1 = SP + 20;
+                            80075670	jal    func49c74 [$80049c74]
+
+                            V0 = w[scruct_5c_p + S6 * 5c + 4c];
+
+                            V1 = w[V0 + 14];
+                            if( V1 & 00200000 )
+                            {
+                                V0 = V1 >> 0b;
+                                800756A4	addiu  v0, v0, $fffe (=-$2)
+                                T1 = w[SP + 00b0];
+                                V0 = V0 & 0007;
+                                V0 = T1 - V0;
+                                V1 = V0 & 0007;
+                                if( V1 != 0 )
+                                {
+                                    if( V1 < 4 )
+                                    {
+                                        [SP + 10] = h(0);
+                                        [SP + 12] = h(-80);
+                                        [SP + 14] = h(0);
+
+                                        A0 = SP + 10;
+                                        A1 = SP + 98;
+                                        A2 = SP + 9c;
+                                        A3 = SP + a0;
+                                        system_gte_vector_perspective_transform();
+                                        [SP + a4] = w(V0);
+                                    }
+                                    else if( ( V1 >= 5 ) && ( V1 < 8 ) )
+                                    {
+                                        [SP + 10] = h(0);
+                                        [SP + 12] = h(80);
+                                        [SP + 14] = h(0);
+
+                                        A0 = SP + 10;
+                                        A1 = SP + 98;
+                                        A2 = SP + 9c;
+                                        A3 = SP + a0;
+                                        system_gte_vector_perspective_transform();
+                                        [SP + a4] = w(V0);
+                                    }
+                                }
+                            }
+
+                            if( bu[800b182b] == 0 )
+                            {
+                                if( h[800b1662] != 0 )
+                                {
+                                    RGB = w[80058c34];
+                                    gte_DPCS(); // Depth Cueing.
+                                    [SP + 90] = w(RGB2);
+
+                                    A0 = w[scruct_5c_p + S6 * 5c + 4];
+                                    A1 = bu[SP + 90];
+                                    A2 = bu[SP + 91];
+                                    A3 = bu[SP + 92];
+                                    func219e0();
+                                }
+                            }
+
+                            V1 = w[SP + a4] >> w[8004f7a4];
+                            [SP + a4] = w(V1);
+                            if( V1 >= 2 )
+                            {
+                                [SP + a4] = w(V1 - 2);
+                            }
+
+                            V0 = (hu[struct_138 + e8] + 22) & ffff;
+
+                            if( V0 < 2 )
+                            {
+                                if( ( w[struct_138 + 4] & 02000000 ) == 0 )
+                                {
+                                    A0 = struct_164;
+                                    A1 = bu[struct_138 + fc];
+                                    A2 = bu[struct_138 + fd];
+                                    A3 = bu[struct_138 + fe];
+                                    func219e0();
+
+                                    [struct_164 + 3d] = b(ef);
+
+                                    A0 = struct_164; // struct_164
+                                    A1 = S5 + w[SP + a4] * 4 - 40; // packet_addr
+                                    func1e130(); // update sprite packet
+
+                                    A0 = SP + 10;
+                                    A1 = SP + 98;
+                                    A2 = SP + 9c;
+                                    A3 = SP + a0;
+
+                                    [SP + 10] = h(0);
+                                    [SP + 12] = h(12c);
+                                    [SP + 14] = h(0);
+                                    system_gte_vector_perspective_transform();
+                                    S0 = V0 >> w[8004f7a4];
+
+                                    A0 = struct_164;
+                                    A1 = bu[struct_138 + ff];
+                                    A2 = bu[struct_138 + 100];
+                                    A3 = bu[struct_138 + 101];
+                                    func219e0();
+
+                                    A0 = struct_164; // struct_164
+                                    A1 = S5 + S0 * 4; // packet_addr
+                                    [A0 + 3d] = b(f7);
+                                    func1e130(); // update sprite packet
+                                }
+                            }
+                            else
+                            {
+                                [struct_164 + 3d] = b(0);
+
+                                V0 = w[struct_138 + 0004] & 02000000;
+                                if( V0 == 0 )
+                                {
+                                    V1 = w[struct_138 + 134];
+                                    if( ( V1 & 0060 ) == 0 )
+                                    {
+                                        A0 = struct_164;
+                                        A1 = struct_138 + fc;
+                                        800758A0	jal    func75198 [$80075198]
+
+                                        A0 = struct_164; // struct_164
+                                        A1 = S5 + w[SP + a4] * 4; // packet_addr
+                                        func1e130(); // update sprite packet
+                                    }
+                                    else
+                                    {
+                                        V0 = V1 >> 05;
+                                        V0 = V0 & 0001;
+                                        if( V0 != 0 )
+                                        {
+                                            A0 = struct_164;
+                                            A1 = struct_138 + fc;
+                                            800758D0	jal    func75198 [$80075198]
+
+                                            T1 = w[SP + a8];
+                                            V0 = 55555556;
+                                            800758E4	mult   t1, v0
+                                            A0 = SP + 10;
+                                            A1 = SP + 98;
+                                            A2 = SP + 9c;
+                                            [SP + 0010] = h(0);
+                                            V1 = h[struct_138 + ee];
+                                            A3 = SP + a0;
+                                            [SP + 0014] = h(0);
+                                            V0 = T1 >> 1f;
+                                            80075908	mfhi   t1
+                                            V0 = T1 - V0;
+                                            V1 = V1 - V0;
+                                            V1 = V1 << 01;
+                                            [SP + 0012] = h(V1);
+                                            system_gte_vector_perspective_transform();
+
+                                            V1 = w[8004f7a4];
+                                            S0 = V0 >> V1;
+                                            V0 = S0 < 2;
+                                            if( V0 == 0 )
+                                            {
+                                                8007593C	addiu  s0, s0, $fffe (=-$2)
+                                            }
+
+                                            A0 = struct_164;
+                                            A2 = h[struct_138 + ee];
+                                            A1 = S5 + S0 * 4;
+                                            80075948	jal    func1e18c [$8001e18c]
+                                        }
+
+                                        V0 = w[struct_138 + 134];
+                                        V0 = V0 >> 5;
+                                        V0 = V0 & 2;
+                                        if( V0 != 0 )
+                                        {
+                                            A0 = struct_164;
+                                            A1 = struct_138 + ff;
+                                            80075968	jal    func75198 [$80075198]
+
+                                            A0 = struct_164;
+                                            A1 = S5 + w[SP + a4] * 4;
+                                            A2 = h[struct_138 + ee];
+                                            func1e1f8();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-
-                V0 = V1 >> 05;
-                V0 = V0 & 0001;
-                800758C8	beq    v0, zero, L75950 [$80075950]
-                A0 = S2;
-                800758D0	jal    func75198 [$80075198]
-                A1 = S1 + 00fc;
-                800758D8	lui    v0, $5555
-                T1 = w[SP + 00a8];
-                V0 = V0 | 5556;
-                800758E4	mult   t1, v0
-                A0 = SP + 0010;
-                A1 = SP + 0098;
-                A2 = SP + 009c;
-                [SP + 0010] = h(0);
-                V1 = h[S1 + 00ee];
-                A3 = SP + 00a0;
-                [SP + 0014] = h(0);
-                V0 = T1 >> 1f;
-                80075908	mfhi   t1
-                V0 = T1 - V0;
-                V1 = V1 - V0;
-                V1 = V1 << 01;
-                [SP + 0012] = h(V1);
-                system_gte_vector_perspective_transform();
-
-                V1 = w[8004f7a4];
-                80075928	nop
-                S0 = V0 >> V1;
-                V0 = S0 < 0002;
-                80075934	bne    v0, zero, L75940 [$80075940]
-                A0 = S2;
-                8007593C	addiu  s0, s0, $fffe (=-$2)
-
-                L75940:	; 80075940
-                A2 = h[S1 + 00ee];
-                A1 = S0 << 02;
-                80075948	jal    func1e18c [$8001e18c]
-                A1 = S5 + A1;
-
-                L75950:	; 80075950
-                V0 = w[S1 + 0134];
-                80075954	nop
-                V0 = V0 >> 05;
-                V0 = V0 & 0002;
-                80075960	beq    v0, zero, L75af8 [$80075af8]
-                A0 = S2;
-                80075968	jal    func75198 [$80075198]
-                A1 = S1 + 00ff;
-                A0 = S2;
-                A1 = w[SP + 00a4];
-                A2 = h[S1 + 00ee];
-                A1 = A1 << 02;
-                80075980	jal    func1e1f8 [$8001e1f8]
-                A1 = S5 + A1;
-                80075988	j      L75af8 [$80075af8]
-                8007598C	nop
-            }
-
-            V0 = w[8004ea24];
-            80075998	nop
-            8007599C	bne    v0, zero, L75af8 [$80075af8]
-            800759A0	lui    v1, $0001
-            V0 = w[S1 + 0000];
-            800759A8	nop
-            V0 = V0 & V1;
-            800759B0	bne    v0, zero, L759f4 [$800759f4]
-            800759B4	lui    v1, $0020
-            V0 = w[S1 + 0014];
-            V1 = V1 | 0002;
-            V0 = V0 & V1;
-            800759C4	bne    v0, zero, L759f4 [$800759f4]
-            800759C8	nop
-            V0 = w[S1 + 0004];
-            800759D0	nop
-            V0 = V0 & 0800;
-            800759D8	bne    v0, zero, L759f4 [$800759f4]
-            800759DC	nop
-            V1 = w[S3 + 0000];
-            800759E4	nop
-            V0 = hu[V1 + 004a];
-            800759EC	j      L75a08 [$80075a08]
-            V0 = V0 & fffe;
-
-            L759f4:	; 800759F4
-            V1 = w[S3 + 0000];
-            800759F8	nop
-            V0 = hu[V1 + 004a];
-            80075A00	nop
-            V0 = V0 | 0001;
-
-            L75a08:	; 80075A08
-            [V1 + 004a] = h(V0);
-            V0 = T0 & 0020;
-            80075A10	bne    v0, zero, L75a24 [$80075a24]
-            V0 = 0001;
-            V1 = w[S3 + 0000];
-            80075A1C	j      L75a30 [$80075a30]
-            [V1 + 0034] = b(V0);
-
-            L75a24:	; 80075A24
-            V0 = w[S3 + 0000];
-            80075A28	nop
-            [V0 + 0034] = b(0);
-
-            L75a30:	; 80075A30
-            V0 = w[S1 + 0004];
-            80075A34	lui    v1, $0002
-            V0 = V0 & V1;
-            if( V0 == 0 )
-            {
-                V0 = w[S3 + 0000];
-                V1 = hu[S1 + 0108];
-                V0 = w[V0 + 0004];
-                V1 = V1 + 0c00;
-                [V0 + 0056] = h(V1);
             }
             else
             {
-                V0 = w[S3];
-                V0 = w[V0 + 4];
-                V0 = hu[V0 + 56] - c00;
-                [S1 + 106] = h(V0);
-                [S1 + 108] = h(V0);
-            }
+                V0 = w[8004ea24];
+                if( V0 == 0 )
+                {
+                    800759A0	lui    v1, $0001
+                    V0 = w[struct_138 + 0];
+                    V0 = V0 & V1;
+                    800759B0	bne    v0, zero, L759f4 [$800759f4]
+                    800759B4	lui    v1, $0020
+                    V0 = w[struct_138 + 0014];
+                    V1 = V1 | 0002;
+                    V0 = V0 & V1;
+                    800759C4	bne    v0, zero, L759f4 [$800759f4]
+                    800759C8	nop
+                    V0 = w[struct_138 + 0004];
+                    800759D0	nop
+                    V0 = V0 & 0800;
+                    800759D8	bne    v0, zero, L759f4 [$800759f4]
+                    800759DC	nop
+                    V1 = w[S3 + 0000];
+                    800759E4	nop
+                    V0 = hu[V1 + 004a];
+                    800759EC	j      L75a08 [$80075a08]
+                    V0 = V0 & fffe;
 
-            V1 = h[S1 + f4];
-            V0 = w[800b16e0 + S7];
-            T1 = V1 * V0;
-            V1 = w[S3 + 0000];
-            V0 = T1 >> 0c;
-            [V1 + 001c] = h(V0);
-            V1 = w[S3 + 0000];
-            V0 = h[S1 + 0026];
-            80075AB0	nop
-            [V1 + 0060] = h(V0);
-            V0 = w[S3 + 0000];
-            80075ABC	nop
-            V1 = w[V0 + 0004];
-            V0 = h[S1 + 0022];
-            80075AC8	nop
-            [V1 + 005c] = w(V0);
-            V0 = w[S3 + 0000];
-            S7 = S7 + 0004;
-            V1 = w[V0 + 0004];
-            V0 = h[S1 + 002a];
-            S3 = S3 + 0004;
-            [V1 + 0064] = w(V0);
-            V0 = w[S1 + 0004];
-            80075AEC	addiu  v1, zero, $fdff (=-$201)
-            V0 = V0 & V1;
-            [S1 + 0004] = w(V0);
+                    L759f4:	; 800759F4
+                    V1 = w[S3 + 0000];
+                    800759F8	nop
+                    V0 = hu[V1 + 004a];
+                    80075A00	nop
+                    V0 = V0 | 0001;
+
+                    L75a08:	; 80075A08
+                    [V1 + 004a] = h(V0);
+                    V0 = T0 & 0020;
+                    80075A10	bne    v0, zero, L75a24 [$80075a24]
+                    V0 = 0001;
+                    V1 = w[S3 + 0000];
+                    80075A1C	j      L75a30 [$80075a30]
+                    [V1 + 0034] = b(V0);
+
+                    L75a24:	; 80075A24
+                    V0 = w[S3 + 0000];
+                    80075A28	nop
+                    [V0 + 0034] = b(0);
+
+                    L75a30:	; 80075A30
+                    V0 = w[struct_138 + 0004];
+                    80075A34	lui    v1, $0002
+                    V0 = V0 & V1;
+                    if( V0 == 0 )
+                    {
+                        V0 = w[S3 + 0000];
+                        V1 = hu[struct_138 + 0108];
+                        V0 = w[V0 + 0004];
+                        V1 = V1 + 0c00;
+                        [V0 + 0056] = h(V1);
+                    }
+                    else
+                    {
+                        V0 = w[S3];
+                        V0 = w[V0 + 4];
+                        V0 = hu[V0 + 56] - c00;
+                        [struct_138 + 106] = h(V0);
+                        [struct_138 + 108] = h(V0);
+                    }
+
+                    V1 = h[struct_138 + f4];
+                    V0 = w[800b16e0 + S7];
+                    T1 = V1 * V0;
+                    V1 = w[S3 + 0000];
+                    V0 = T1 >> 0c;
+                    [V1 + 001c] = h(V0);
+                    V1 = w[S3 + 0000];
+                    V0 = h[struct_138 + 0026];
+                    80075AB0	nop
+                    [V1 + 0060] = h(V0);
+                    V0 = w[S3 + 0000];
+                    80075ABC	nop
+                    V1 = w[V0 + 0004];
+                    V0 = h[struct_138 + 0022];
+                    80075AC8	nop
+                    [V1 + 005c] = w(V0);
+                    V0 = w[S3 + 0000];
+                    S7 = S7 + 0004;
+                    V1 = w[V0 + 0004];
+                    V0 = h[struct_138 + 002a];
+                    S3 = S3 + 0004;
+                    [V1 + 0064] = w(V0);
+                    V0 = w[struct_138 + 0004];
+                    80075AEC	addiu  v1, zero, $fdff (=-$201)
+                    V0 = V0 & V1;
+                    [struct_138 + 0004] = w(V0);
+                }
+            }
         }
 
         L75af8:	; 80075AF8
