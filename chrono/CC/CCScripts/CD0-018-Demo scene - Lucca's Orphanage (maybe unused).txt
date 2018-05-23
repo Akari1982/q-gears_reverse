@@ -1,0 +1,409 @@
+0x0000: 0xFF
+0x0001: 0x39
+0x0002: 0xFA
+0x0003: 0x1E
+0x0004: 0xFF
+0x0005: 0x00
+0x0006: 0x00
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0xCB
+0x000A: 0x02
+0x000B: 0xD8
+0x000C: 0x04
+0x000D: 0x00
+0x000E: 0x04
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0x48
+0x0012: 0xFF
+0x0013: 0x7D
+0x0014: 0xFF
+0x0015: 0x00
+0x0016: 0x04
+0x0017: 0x00
+0x0018: 0x00
+0x0019: 0xD6
+0x001A: 0xFC
+0x001B: 0x1B
+0x001C: 0xFF
+0x001D: 0x00
+0x001E: 0x04
+0x001F: 0x00
+0x0020: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0021: IF_JUMP(PREVIOUS_MAP_ID == 497, 0x0036)
+0x0029: op83(91, -91, 20, -20)
+0x0033: JUMP(0x0040)
+0x0036: op83(0, -91, 20, -20)
+0x0040: DISABLE_BACKGROUND_LAYER(1)
+0x0043: DISABLE_BACKGROUND_LAYER(2)
+0x0046: DISABLE_BACKGROUND_LAYER(3)
+0x0049: DISABLE_BACKGROUND_LAYER(4)
+0x004C: DISABLE_BACKGROUND_LAYER(5)
+0x004F: DISABLE_BACKGROUND_LAYER(6)
+0x0052: DISABLE_BACKGROUND_LAYER(7)
+0x0055: DISABLE_BACKGROUND_LAYER(8)
+0x0058: DISABLE_BACKGROUND_LAYER(9)
+0x005B: DISABLE_BACKGROUND_LAYER(10)
+0x005E: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x005F: BG_WAVE_ON(2, 1, 3900, 3900, 3800, 3800, 30, 1)
+0x0070: SET_SCREEN_RGB(1, 60, 0, 0, 3)
+0x007B: WAIT(30)
+0x007E: IF_JUMP(1 == 1, 0x00A5)
+0x0086: SET_SCREEN_RGB(1, 60, 0, 0, 90)
+0x0091: WAIT(90)
+0x0094: SET_SCREEN_RGB(1, 30, 0, 0, 90)
+0x009F: WAIT(150)
+0x00A2: JUMP(0x007E)
+0x00A5: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x00A6: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x00A7: STOP()
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x00A8: SETUP_PC(PC2)
+0x00AB: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x00AC: IF_JUMP(var[0x00C8] == 1, 0x00B5)
+0x00B4: STOP_SCRIPT_EXEC()
+0x00B5: UPDATE_CHARACTER()
+0x00B6: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x00B7: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x00B8: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x00B9: SET_POSITION_UNSIGNED(206, 14, 0)
+0x00C1: WALK_TO_POSITION(0x00, 215, -120)
+0x00CA: WALK_TO_POSITION(0x01)
+0x00CC: WALK_TO_POSITION(0x00, 33, -301)
+0x00D5: WALK_TO_POSITION(0x01)
+0x00D7: WALK_TO_POSITION(0x00, -406, -302)
+0x00E0: WALK_TO_POSITION(0x01)
+0x00E2: WALK_TO_POSITION(0x00, -577, -232)
+0x00EB: WALK_TO_POSITION(0x01)
+0x00ED: WALK_TO_POSITION(0x00, -479, -112)
+0x00F6: WALK_TO_POSITION(0x01)
+0x00F8: SET_MOVEMENT_SPEED(10)
+0x00FB: SET_WALK_ANIMATION(0x01, 2)
+0x00FF: SET_ANIMATION(2)
+0x0102: WALK_TO_POSITION(0x00, -193, -111)
+0x010B: WALK_TO_POSITION(0x01)
+0x010D: WAIT(15)
+0x0110: SET_ROTATION(3072)
+0x0113: STOP()
+---------------------------
+| Entity 1 script 5
+---------------------------
+0x0114: SET_ROTATION(0)
+0x0117: WAIT(15)
+0x011A: SET_MOVEMENT_SPEED(12)
+0x011D: SET_WALK_ANIMATION(0x01, 2)
+0x0121: SET_ANIMATION(2)
+0x0124: WALK_TO_POSITION(0x00, -193, -111)
+0x012D: WALK_TO_POSITION(0x01)
+0x012F: WAIT(15)
+0x0132: SET_ROTATION(3072)
+0x0135: STOP()
+---------------------------
+| Entity 1 script 6
+---------------------------
+0x0136: WAIT(5)
+0x0139: WALK_TO(0x00, -193, 0, 0)
+0x0142: WALK_TO(0x01) // wait walk
+0x0144: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x0145: SET_POSITION_UNSIGNED(-400, -110, 0)
+0x014D: RECT_SIZE(425, 8)
+0x0152: op8D(0x00)
+0x0154: IF_JUMP(var[0x00C8] == 1, 0x0161)
+0x015C: TOGGLE_COLLISION(0x01)
+0x015E: SET_CHARACTER_VIEWABLE(0x00, ENTITY 2)
+0x0161: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x0162: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x0163: GET_ROTATION(ENTITY 1, roomVar[0x03])
+0x0167: IF_JUMP(roomVar[0x03] > 2600, 0x022B)
+0x016F: IF_JUMP(roomVar[0x03] < 3600, 0x022B)
+0x0177: DISABLE_CHARACTER_CONTROLS()
+0x0178: SETUP_DIALOG_WINDOW( X:160, Y:80, LettersHigh:0, LettersWide:0, Flag:0)
+0x0183: DIALOG(0x0000, 0x00)
+
+	+-------------------------
+	|A child's drawing
+	|  hangs here...<Close>
+	+-------------------------
+
+0x0187: WAIT_DIALOG()
+0x0188: SETUP_DIALOG_WINDOW( X:160, Y:208, LettersHigh:0, LettersWide:0, Flag:12)
+0x0193: GET_POSITION(ENTITY 1, roomVar[0x00], roomVar[0x02], roomVar[0x01])
+0x019B: IF_JUMP(roomVar[0x00] < -800, 0x01B1)
+0x01A3: ENABLE_BACKGROUND_LAYER(9)
+0x01A6: DIALOG(0x0001, 0x00)
+
+	+-------------------------
+	|">robo made the desert green"><Close>
+	+-------------------------
+
+0x01AA: WAIT_DIALOG()
+0x01AB: DISABLE_BACKGROUND_LAYER(9)
+0x01AE: JUMP(0x0229)
+0x01B1: IF_JUMP(roomVar[0x00] < -600, 0x01C7)
+0x01B9: ENABLE_BACKGROUND_LAYER(5)
+0x01BC: DIALOG(0x0002, 0x00)
+
+	+-------------------------
+	|">kid and auntie lucca...
+	|oops, I mean 'sis', hehe"><Close>
+	+-------------------------
+
+0x01C0: WAIT_DIALOG()
+0x01C1: DISABLE_BACKGROUND_LAYER(5)
+0x01C4: JUMP(0x0229)
+0x01C7: IF_JUMP(roomVar[0x00] < -480, 0x01DD)
+0x01CF: ENABLE_BACKGROUND_LAYER(10)
+0x01D2: DIALOG(0x0003, 0x00)
+
+	+-------------------------
+	|">ayla strong, grrr!"><Close>
+	+-------------------------
+
+0x01D6: WAIT_DIALOG()
+0x01D7: DISABLE_BACKGROUND_LAYER(10)
+0x01DA: JUMP(0x0229)
+0x01DD: IF_JUMP(roomVar[0x00] < -315, 0x01F3)
+0x01E5: ENABLE_BACKGROUND_LAYER(6)
+0x01E8: DIALOG(0x0004, 0x00)
+
+	+-------------------------
+	|">crono is coool"><Close>
+	+-------------------------
+
+0x01EC: WAIT_DIALOG()
+0x01ED: DISABLE_BACKGROUND_LAYER(6)
+0x01F0: JUMP(0x0229)
+0x01F3: IF_JUMP(roomVar[0x00] < -125, 0x021E)
+0x01FB: ENABLE_BACKGROUND_LAYER(7)
+0x01FE: DIALOG(0x0005, 0x00)
+
+	+-------------------------
+	|">call me 'sis'!"><Close>
+	+-------------------------
+
+0x0202: WAIT_DIALOG()
+0x0203: DISABLE_BACKGROUND_LAYER(7)
+0x0206: ENABLE_BACKGROUND_LAYER(1)
+0x0209: WAIT(4)
+0x020C: DISABLE_BACKGROUND_LAYER(1)
+0x020F: ENABLE_BACKGROUND_LAYER(2)
+0x0212: WAIT(5)
+0x0215: SET_NEXT_ROOM("CD0-498-SCENE - The True Hero ending (Fort Dragonia - Second Story Elevator Lobby)", 1)
+0x021A: STOP_SCRIPT_EXEC()
+0x021B: JUMP(0x0229)
+0x021E: ENABLE_BACKGROUND_LAYER(8)
+0x0221: DIALOG(0x0006, 0x00)
+
+	+-------------------------
+	|">princess marle to the rescue!"><Close>
+	+-------------------------
+
+0x0225: WAIT_DIALOG()
+0x0226: DISABLE_BACKGROUND_LAYER(8)
+0x0229: ENABLE_CHARACTER_CONTROLS(0x00)
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x022B: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x022C: SET_POSITION_UNSIGNED(-992, -210, 0)
+0x0234: RECT_SIZE(140, 160)
+0x0239: op8D(0x00)
+0x023B: TOGGLE_RECT_COLLISION(0x00)
+0x023D: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x023E: STOP_SCRIPT_EXEC()
+0x023F: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x0240: STOP()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x0241: SET_POSITION_UNSIGNED(-1649, -216, 0)
+0x0249: RECT_SIZE(50, 95)
+0x024E: op8D(0x00)
+0x0250: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x0251: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x0252: STOP()
+---------------------------
+| Entity 4 ON_COLLISION
+---------------------------
+0x0253: DISABLE_CHARACTER_CONTROLS()
+0x0254: SET_NEXT_ROOM("CD0-497-Crash", 1)
+0x0259: STOP()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x025A: SET_POSITION_UNSIGNED(715, 1430, 0)
+0x0262: RECT_SIZE(35, 70)
+0x0267: op8D(0x00)
+0x0269: TOGGLE_RECT_COLLISION(0x00)
+0x026B: DISABLE_BACKGROUND_LAYER(1)
+0x026E: DISABLE_BACKGROUND_LAYER(2)
+0x0271: DISABLE_BACKGROUND_LAYER(3)
+0x0274: DISABLE_BACKGROUND_LAYER(4)
+0x0277: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x0278: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x0279: GET_ROTATION(ENTITY 1, roomVar[0x04])
+0x027D: IF_JUMP(roomVar[0x04] > 2700, 0x02A3)
+0x0285: IF_JUMP(roomVar[0x04] < 3400, 0x02A3)
+0x028D: DISABLE_CHARACTER_CONTROLS()
+0x028E: ENABLE_BACKGROUND_LAYER(3)
+0x0291: WAIT(4)
+0x0294: DISABLE_BACKGROUND_LAYER(3)
+0x0297: ENABLE_BACKGROUND_LAYER(4)
+0x029A: WAIT(5)
+0x029D: SET_NEXT_ROOM("CD0-501-SCENE - Onward, Dragoons! ending (S.S. Invincible First Level)", 0)
+0x02A2: STOP_SCRIPT_EXEC()
+0x02A3: STOP()
+---------------------------
+| Entity 5 ON_COLLISION
+---------------------------
+0x02A4: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x02A5: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x02A6: DISABLE_CHARACTER_CONTROLS()
+0x02A7: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 1, script 4, 0xA0)
+0x02AA: WAIT(30)
+0x02AD: GET_POSITION(ENTITY 1, roomVar[0x05], roomVar[0x07], roomVar[0x06])
+0x02B5: SET_POSITION_UNSIGNED(roomVar[0x05], roomVar[0x07], 0)
+0x02BD: SETUP_DIALOG_WINDOW( X:160, Y:80, LettersHigh:0, LettersWide:0, Flag:0)
+0x02C8: DIALOG(0x0007, 0x00)
+
+	+-------------------------
+	|A child's drawing
+	|  hangs here...<Auto close 90>
+	+-------------------------
+
+0x02CC: WAIT_DIALOG()
+0x02CD: WAIT(30)
+0x02D0: SETUP_DIALOG_WINDOW( X:160, Y:208, LettersHigh:0, LettersWide:0, Flag:12)
+0x02DB: ENABLE_BACKGROUND_LAYER(7)
+0x02DE: DIALOG(0x0008, 0x00)
+
+	+-------------------------
+	|">call me 'sis'!"><Auto close 150>
+	+-------------------------
+
+0x02E2: WAIT_DIALOG()
+0x02E3: DISABLE_BACKGROUND_LAYER(7)
+0x02E6: WAIT(30)
+0x02E9: ENABLE_BACKGROUND_LAYER(1)
+0x02EC: WAIT(4)
+0x02EF: DISABLE_BACKGROUND_LAYER(1)
+0x02F2: ENABLE_BACKGROUND_LAYER(2)
+0x02F5: WAIT(30)
+0x02F8: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 1, script 6, 0xA0)
+0x02FB: SET_NEXT_ROOM("CD0-019-Demo scene - S.S. Invincible", 1)
+0x0300: STOP_SCRIPT_EXEC()
+0x0301: DIALOG(0x0009, 0x00)
+
+	+-------------------------
+	|Riki was here!<Close>
+	+-------------------------
+
+0x0305: WAIT_DIALOG()
+0x0306: ENABLE_CHARACTER_CONTROLS(0x01)
+0x0308: STOP_SCRIPT_EXEC()
+0x0309: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x030A: STOP()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x030B: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x030C: op59()
+0x030D: JUMP 0x0314 IF VAR_BIT[1248] CLEAR
+0x0313: STOP()
+0x0314: JUMP 0x031B IF VAR_BIT[1249] CLEAR
+0x031A: STOP()
+0x031B: if (INPUT_KEY && 0xFFFF) == 0 jump 0x32D
+0x0320: DISABLE_CHARACTER_CONTROLS()
+0x0321: opFE1D(20, 0)
+0x0327: SET_NEXT_ROOM("CD0-008-Title screen", 1)
+0x032C: STOP_SCRIPT_EXEC()
+0x032D: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x032E: STOP()

@@ -1,0 +1,504 @@
+0x0000: 0xFF
+0x0001: 0x67
+0x0002: 0x00
+0x0003: 0x3F
+0x0004: 0x00
+0x0005: 0x00
+0x0006: 0x04
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0x70
+0x000A: 0xFC
+0x000B: 0x41
+0x000C: 0x07
+0x000D: 0x3A
+0x000E: 0x02
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0x70
+0x0012: 0xFC
+0x0013: 0x41
+0x0014: 0x07
+0x0015: 0x3A
+0x0016: 0x02
+0x0017: 0x00
+0x0018: 0x00
+0x0019: 0x70
+0x001A: 0xFC
+0x001B: 0x41
+0x001C: 0x07
+0x001D: 0x3A
+0x001E: 0x02
+0x001F: 0x00
+0x0020: 0x00
+0x0021: 0x05
+0x0022: 0xEE
+0x0023: 0x05
+0x0024: 0xEF
+0x0025: 0x52
+0x0026: 0x0F
+0x0027: 0x00
+0x0028: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0029: PLAY_SONG(25)
+0x002C: var[0x0046] = 1
+0x002F: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x0030: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x0031: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x0032: STOP()
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x0033: SETUP_PC(PC2)
+0x0036: CALL(0xB1)
+0x0039: JUMP 0x0085 IF VAR_BIT[Metamorph] CLEAR
+0x003F: opAD(0x00)
+0x0041: op27(4096)
+0x0044: SETUP_NPC(var[0x01BE])
+0x0047: IF_JUMP(var[0x01BE] == 0, 0x0069)
+0x004F: CHARACTER_RGB(THIS, 180, 180, 180)
+0x0057: AXIS_CHARACTER_SCALE(0x0F, THIS, 280)
+0x005C: AXIS_CHARACTER_SCALE(0x01, THIS, 215)
+0x0061: AXIS_CHARACTER_SCALE(0x04, THIS, 185)
+0x0066: JUMP(0x0085)
+0x0069: IF_JUMP(var[0x01BE] == 1, 0x0085)
+0x0071: AXIS_CHARACTER_SCALE(0x0F, THIS, 1024)
+0x0076: SET_WALK_ANIMATION(0x00, 0)
+0x007A: SET_WALK_ANIMATION(0x02, 0)
+0x007E: SET_WALK_ANIMATION(0x01, 0)
+0x0082: JUMP(0x0085)
+0x0085: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x0086: JUMP(0x00A6)
+0x0089: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x008A: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x008B: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x008C: SETUP_PC(PC1)
+0x008F: CALL(0xB1)
+0x0092: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x0093: JUMP(0x00A6)
+0x0096: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x0097: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x0098: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x0099: SETUP_PC(PARTY_LEADER)
+0x009C: CALL(0xB1)
+0x009F: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x00A0: JUMP(0x00A6)
+0x00A3: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x00A4: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x00A5: STOP()
+0x00A6: JUMP 0x00AF IF VAR_BIT[Dead Sea Ruins - Boat] CLEAR
+0x00AC: JUMP(0x00B0)
+0x00AF: UPDATE_CHARACTER()
+0x00B0: STOP()
+---------------------------
+| Sub function 0x00B1
+---------------------------
+0x00B1: AXIS_CHARACTER_SCALE(0x0F, THIS, 384)
+0x00B6: opAD(0x01)
+0x00B8: op27(3584)
+0x00BB: SET_MOVEMENT_SPEED(8)
+0x00BE: JUMP 0x00C6 IF VAR_BIT[Dead Sea Ruins - Boat] CLEAR
+0x00C4: TOGGLE_COLLISION(0x01)
+0x00C6: OP_RETURN()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x00C7: SETUP_NPC(0)
+0x00CA: IF_JUMP(ROOM_PARAM == 1, 0x00E0)
+0x00D2: SET_POSITION_UNSIGNED(1044, 2446, 0)
+0x00DA: SET_ROTATION(1536)
+0x00DD: JUMP(0x0117)
+0x00E0: IF_JUMP(ROOM_PARAM == 2, 0x00F6)
+0x00E8: SET_POSITION_UNSIGNED(545, -1384, 0)
+0x00F0: SET_ROTATION(1830)
+0x00F3: JUMP(0x0117)
+0x00F6: IF_JUMP(ROOM_PARAM == 3, 0x010C)
+0x00FE: SET_POSITION_UNSIGNED(-1636, 512, 0)
+0x0106: SET_ROTATION(530)
+0x0109: JUMP(0x0117)
+0x010C: SET_POSITION_UNSIGNED(-356, -2326, 0)
+0x0114: SET_ROTATION(3072)
+0x0117: op37(0x00)
+0x0119: SET_MOVEMENT_SPEED(8)
+0x011C: op9B("nam1", THIS)
+0x0122: CHARACTER_RGB(THIS, 180, 180, 180)
+0x012A: AXIS_CHARACTER_SCALE(0x0F, THIS, 280)
+0x012F: AXIS_CHARACTER_SCALE(0x01, THIS, 215)
+0x0134: AXIS_CHARACTER_SCALE(0x04, THIS, 185)
+0x0139: TOGGLE_RECT_COLLISION(0x01)
+0x013B: JUMP 0x0144 IF VAR_BIT[Dead Sea Ruins - Boat] CLEAR
+0x0141: opFE4C(ENTITY 4)
+0x0144: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x0145: op59()
+0x0146: JUMP 0x014D IF VAR_BIT[Dead Sea Ruins - Boat] CLEAR
+0x014C: UPDATE_CHARACTER()
+0x014D: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x014E: STOP()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x014F: op37(0x00)
+0x0151: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x0152: roomVar[0x00] = sin(roomVar[0x01], 10)
+0x015A: SET_AXIS_ROTATION(0x00, ENTITY 4, roomVar[0x00])
+0x015F: roomVar[0x01] += 16
+0x0165: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x0166: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x0167: SET_POSITION_UNSIGNED(-349, -2609, 0)
+0x016F: op37(0x00)
+0x0171: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x0172: op59()
+0x0173: WAIT(0)
+0x0176: roomVar[0x03] = COMPUTE_CHARACTER_DISTANCE(THIS, ENTITY 4)
+0x017B: IF_JUMP(roomVar[0x03] < 200, 0x01BF)
+0x0183: IF_JUMP(roomVar[0x04] == 0, 0x019D)
+0x018B: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:56)
+0x0196: DIALOG(0x0000, 0x00)
+
+	+-------------------------
+	|World Map<Auto close 255>
+	+-------------------------
+
+0x019A: roomVar[0x04] = 1
+0x019D: if (INPUT_KEY && 0x20) == 0 jump 0x1B1
+0x01A2: DISABLE_CHARACTER_CONTROLS()
+0x01A3: WAIT_ONE_FRAME()
+0x01A4: opFE02(0)
+0x01A8: SET_NEXT_ROOM("CD0-250-El Nido (Home)", 8)
+0x01AD: STOP_SCRIPT_EXEC()
+0x01AE: JUMP(0x01BC)
+0x01B1: if (INPUT_KEY && 0x80) == 0 jump 0x1BC
+0x01B6: op9D(THIS)
+0x01B8: WAIT_ONE_FRAME()
+0x01B9: roomVar[0x04] = 0
+0x01BC: JUMP(0x01C4)
+0x01BF: roomVar[0x04] = 0
+0x01C2: op9D(THIS)
+0x01C4: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x01C5: STOP()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x01C6: SET_POSITION_UNSIGNED(1596, 2136, 0)
+0x01CE: op37(0x00)
+0x01D0: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x01D1: op59()
+0x01D2: WAIT(0)
+0x01D5: roomVar[0x05] = COMPUTE_CHARACTER_DISTANCE(THIS, ENTITY 4)
+0x01DA: IF_JUMP(roomVar[0x05] < 250, 0x0238)
+0x01E2: IF_JUMP(roomVar[0x06] == 0, 0x01FC)
+0x01EA: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:56)
+0x01F5: DIALOG(0x0001, 0x00)
+
+	+-------------------------
+	|Fate Distortion<Auto close 255>
+	+-------------------------
+
+0x01F9: roomVar[0x06] = 1
+0x01FC: if (INPUT_KEY && 0x20) == 0 jump 0x22A
+0x0201: DISABLE_CHARACTER_CONTROLS()
+0x0202: WAIT_ONE_FRAME()
+0x0203: opFE02(0)
+0x0207: if( SCENARIO_FLAG < 184 ) jump 0x0221
+0x020C: if( SCENARIO_FLAG < 188 ) jump 0x0219
+0x0211: SET_NEXT_ROOM("CD0-259-Sea of Eden (Chronopolis Exposed) (Another)", 5)
+0x0216: JUMP(0x021E)
+0x0219: SET_NEXT_ROOM("CD0-255-Sea of Eden (Defense Activated)", 5)
+0x021E: JUMP(0x0226)
+0x0221: SET_NEXT_ROOM("CD0-471-Fate Distortion", 1)
+0x0226: STOP_SCRIPT_EXEC()
+0x0227: JUMP(0x0235)
+0x022A: if (INPUT_KEY && 0x80) == 0 jump 0x235
+0x022F: op9D(THIS)
+0x0231: WAIT_ONE_FRAME()
+0x0232: roomVar[0x06] = 0
+0x0235: JUMP(0x023D)
+0x0238: roomVar[0x06] = 0
+0x023B: op9D(THIS)
+0x023D: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x023E: STOP()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x023F: SET_POSITION_UNSIGNED(676, -1737, 0)
+0x0247: op37(0x00)
+0x0249: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x024A: op59()
+0x024B: WAIT(0)
+0x024E: roomVar[0x07] = COMPUTE_CHARACTER_DISTANCE(THIS, ENTITY 4)
+0x0253: IF_JUMP(roomVar[0x07] < 250, 0x02B1)
+0x025B: IF_JUMP(roomVar[0x08] == 0, 0x0275)
+0x0263: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:56)
+0x026E: DIALOG(0x0002, 0x00)
+
+	+-------------------------
+	|Fate Distortion<Auto close 255>
+	+-------------------------
+
+0x0272: roomVar[0x08] = 1
+0x0275: if (INPUT_KEY && 0x20) == 0 jump 0x2A3
+0x027A: DISABLE_CHARACTER_CONTROLS()
+0x027B: WAIT_ONE_FRAME()
+0x027C: opFE02(0)
+0x0280: if( SCENARIO_FLAG < 184 ) jump 0x029A
+0x0285: if( SCENARIO_FLAG < 188 ) jump 0x0292
+0x028A: SET_NEXT_ROOM("CD0-259-Sea of Eden (Chronopolis Exposed) (Another)", 6)
+0x028F: JUMP(0x0297)
+0x0292: SET_NEXT_ROOM("CD0-255-Sea of Eden (Defense Activated)", 6)
+0x0297: JUMP(0x029F)
+0x029A: SET_NEXT_ROOM("CD0-471-Fate Distortion", 2)
+0x029F: STOP_SCRIPT_EXEC()
+0x02A0: JUMP(0x02AE)
+0x02A3: if (INPUT_KEY && 0x80) == 0 jump 0x2AE
+0x02A8: op9D(THIS)
+0x02AA: WAIT_ONE_FRAME()
+0x02AB: roomVar[0x08] = 0
+0x02AE: JUMP(0x02B6)
+0x02B1: roomVar[0x08] = 0
+0x02B4: op9D(THIS)
+0x02B6: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x02B7: STOP()
+
+
+---------------------------
+| Entity 9 INIT
+---------------------------
+0x02B8: SET_POSITION_UNSIGNED(-2126, 500, 0)
+0x02C0: op37(0x00)
+0x02C2: STOP()
+---------------------------
+| Entity 9 UPDATE
+---------------------------
+0x02C3: op59()
+0x02C4: WAIT(0)
+0x02C7: roomVar[0x09] = COMPUTE_CHARACTER_DISTANCE(THIS, ENTITY 4)
+0x02CC: IF_JUMP(roomVar[0x09] < 250, 0x032A)
+0x02D4: IF_JUMP(roomVar[0x0A] == 0, 0x02EE)
+0x02DC: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:56)
+0x02E7: DIALOG(0x0003, 0x00)
+
+	+-------------------------
+	|Fate Distortion<Auto close 255>
+	+-------------------------
+
+0x02EB: roomVar[0x0A] = 1
+0x02EE: if (INPUT_KEY && 0x20) == 0 jump 0x31C
+0x02F3: DISABLE_CHARACTER_CONTROLS()
+0x02F4: WAIT_ONE_FRAME()
+0x02F5: opFE02(0)
+0x02F9: if( SCENARIO_FLAG < 184 ) jump 0x0313
+0x02FE: if( SCENARIO_FLAG < 188 ) jump 0x030B
+0x0303: SET_NEXT_ROOM("CD0-259-Sea of Eden (Chronopolis Exposed) (Another)", 7)
+0x0308: JUMP(0x0310)
+0x030B: SET_NEXT_ROOM("CD0-255-Sea of Eden (Defense Activated)", 7)
+0x0310: JUMP(0x0318)
+0x0313: SET_NEXT_ROOM("CD0-471-Fate Distortion", 3)
+0x0318: STOP_SCRIPT_EXEC()
+0x0319: JUMP(0x0327)
+0x031C: if (INPUT_KEY && 0x80) == 0 jump 0x327
+0x0321: op9D(THIS)
+0x0323: WAIT_ONE_FRAME()
+0x0324: roomVar[0x0A] = 0
+0x0327: JUMP(0x032F)
+0x032A: roomVar[0x0A] = 0
+0x032D: op9D(THIS)
+0x032F: STOP()
+---------------------------
+| Entity 9 ON_ACTION
+---------------------------
+0x0330: STOP()
+
+
+---------------------------
+| Entity 10 INIT
+---------------------------
+0x0331: op37(0x00)
+0x0333: STOP()
+---------------------------
+| Entity 10 UPDATE
+---------------------------
+0x0334: op59()
+0x0335: JUMP 0x0344 IF VAR_BIT[Dead Sea Ruins - Boat] CLEAR
+0x033B: Unk opcode 0xFE 0x4E
+0x033D: 0x01
+0x033E: 0xFE
+0x033F: 0x17
+0x0340: 0x01
+0x0341: 0x01
+0x0342: 0x4A
+0x0343: 0x03
+0x0344: Unk opcode 0xFE 0x4E
+0x0346: 0x00
+0x0347: 0xFE
+0x0348: 0x17
+0x0349: 0x00
+0x034A: 0x00
+---------------------------
+| Entity 10 ON_ACTION
+---------------------------
+0x034B: STOP()
+
+
+---------------------------
+| Entity 11 INIT
+---------------------------
+0x034C: var[0x0050] = 1
+0x034F: op37(0x00)
+0x0351: STOP()
+---------------------------
+| Entity 11 UPDATE
+---------------------------
+0x0352: op59()
+0x0353: IF_JUMP(var[0x0052] == 0, 0x0361)
+0x035B: DISABLE_BACKGROUND_LAYER(1)
+0x035E: JUMP(0x0364)
+0x0361: ENABLE_BACKGROUND_LAYER(1)
+0x0364: STOP()
+---------------------------
+| Entity 11 ON_ACTION
+---------------------------
+0x0365: STOP()
+
+
+---------------------------
+| Entity 12 INIT
+---------------------------
+0x0366: op37(0x00)
+0x0368: var[0x003C] = 1
+0x036B: var[0x003A] = 4
+0x0371: Unk opcode 0xFE 0x4F
+0x0373: 0x01
+0x0374: 0x00
+0x0375: 0x80
+0x0376: 0xFE
+0x0377: 0x4F
+0x0378: 0x02
+0x0379: 0x01
+0x037A: 0x80
+0x037B: 0xFE
+0x037C: 0x4F
+0x037D: 0x03
+0x037E: 0x02
+0x037F: 0x80
+0x0380: 0xFE
+0x0381: 0x4F
+0x0382: 0x04
+0x0383: 0x03
+0x0384: 0x80
+0x0385: 0x02
+0x0386: 0x02
+0x0387: 0x00
+0x0388: 0x04
+0x0389: 0x00
+0x038A: 0x40
+0x038B: 0x8F
+0x038C: 0x03
+0x038D: 0xFE
+0x038E: 0x50
+0x038F: 0x36
+0x0390: 0x00
+0x0391: 0xFB
+0x0392: 0x00
+---------------------------
+| Entity 12 UPDATE
+---------------------------
+0x0393: STOP()
+---------------------------
+| Entity 12 ON_ACTION
+---------------------------
+0x0394: STOP()

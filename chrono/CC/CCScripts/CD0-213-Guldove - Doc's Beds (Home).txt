@@ -1,0 +1,1021 @@
+0x0000: 0xFF
+0x0001: 0x7B
+0x0002: 0xFD
+0x0003: 0x37
+0x0004: 0x00
+0x0005: 0x00
+0x0006: 0x00
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0x7B
+0x000A: 0xFD
+0x000B: 0x37
+0x000C: 0x00
+0x000D: 0x00
+0x000E: 0x00
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0x7B
+0x0012: 0xFD
+0x0013: 0x37
+0x0014: 0x00
+0x0015: 0x00
+0x0016: 0x00
+0x0017: 0x00
+0x0018: 0x00
+0x0019: 0x7B
+0x001A: 0xFD
+0x001B: 0x37
+0x001C: 0x00
+0x001D: 0x00
+0x001E: 0x00
+0x001F: 0x00
+0x0020: 0x00
+0x0021: 0x7B
+0x0022: 0xFD
+0x0023: 0x37
+0x0024: 0x00
+0x0025: 0x00
+0x0026: 0x00
+0x0027: 0x00
+0x0028: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0029: IF_JUMP(ROOM_PARAM == 0, 0x0037)
+0x0031: PLAY_SONG(6)
+0x0034: JUMP(0x0074)
+0x0037: IF_JUMP(ROOM_PARAM == 2, 0x004A)
+0x003F: opFE63() // stop script if some variable has been set
+0x0041: opFE78(7, 0) // this will stall the script until some condition is met
+0x0047: JUMP(0x0074)
+0x004A: IF_JUMP(ROOM_PARAM == 3, 0x0058)
+0x0052: PLAY_SONG(255)
+0x0055: JUMP(0x0074)
+0x0058: IF_JUMP(ROOM_PARAM == 4, 0x0071)
+0x0060: PLAY_SONG(40)
+0x0063: SET_SCREEN_RGB(2, 95, 45, 30, 1)
+0x006E: JUMP(0x0074)
+0x0071: PLAY_SONG(7)
+0x0074: op64(-200)
+0x0078: opFE2B(17, 3)
+0x007D: opFE2B(16, 119)
+0x0082: PLAY_SOUNDFX(333, 128, 36, 7)
+0x008C: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x008D: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x008E: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x008F: STOP()
+---------------------------
+| Sub function 0x0090
+---------------------------
+0x0090: IF_JUMP(ROOM_PARAM == 1, 0x009B)
+0x0098: JUMP(0x00AB)
+0x009B: IF_JUMP(ROOM_PARAM == 2, 0x00A6)
+0x00A3: JUMP(0x00AB)
+0x00A6: TOGGLE_COLLISION(0x01)
+0x00A8: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x00AB: OP_RETURN()
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x00AC: SETUP_PC(PC2)
+0x00AF: JUMP 0x00B8 IF VAR_BIT[Metamorph] CLEAR
+0x00B5: SETUP_NPC(var[0x01BE])
+0x00B8: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x00B9: IF_JUMP(roomVar[0x00] == 0, 0x00C2)
+0x00C1: UPDATE_CHARACTER()
+0x00C2: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x00C3: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x00C4: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x00C5: roomVar[0x00] = 1
+0x00C8: STOP()
+---------------------------
+| Entity 1 script 5
+---------------------------
+0x00C9: roomVar[0x00] = 0
+0x00CC: STOP()
+---------------------------
+| Entity 1 script 6
+---------------------------
+0x00CD: CALL(0x143)
+0x00D0: STOP()
+---------------------------
+| Entity 1 script 7
+---------------------------
+0x00D1: CALL(0x159)
+0x00D4: STOP()
+---------------------------
+| Entity 1 script 8
+---------------------------
+0x00D5: CALL(0x12D)
+0x00D8: STOP()
+---------------------------
+| Entity 1 script 9
+---------------------------
+0x00D9: CALL(0x16F)
+0x00DC: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x00DD: SETUP_PC(PC1)
+0x00E0: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x00E1: IF_JUMP(roomVar[0x01] == 0, 0x00EA)
+0x00E9: UPDATE_CHARACTER()
+0x00EA: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x00EB: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x00EC: STOP()
+---------------------------
+| Entity 2 script 4
+---------------------------
+0x00ED: roomVar[0x01] = 1
+0x00F0: STOP()
+---------------------------
+| Entity 2 script 5
+---------------------------
+0x00F1: roomVar[0x01] = 0
+0x00F4: STOP()
+---------------------------
+| Entity 2 script 6
+---------------------------
+0x00F5: CALL(0x143)
+0x00F8: STOP()
+---------------------------
+| Entity 2 script 7
+---------------------------
+0x00F9: CALL(0x159)
+0x00FC: STOP()
+---------------------------
+| Entity 2 script 8
+---------------------------
+0x00FD: CALL(0x12D)
+0x0100: STOP()
+---------------------------
+| Entity 2 script 9
+---------------------------
+0x0101: CALL(0x16F)
+0x0104: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x0105: SETUP_PC(PARTY_LEADER)
+0x0108: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x0109: IF_JUMP(roomVar[0x02] == 0, 0x0112)
+0x0111: UPDATE_CHARACTER()
+0x0112: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x0113: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x0114: STOP()
+---------------------------
+| Entity 3 script 4
+---------------------------
+0x0115: roomVar[0x02] = 1
+0x0118: STOP()
+---------------------------
+| Entity 3 script 5
+---------------------------
+0x0119: roomVar[0x02] = 0
+0x011C: STOP()
+---------------------------
+| Entity 3 script 6
+---------------------------
+0x011D: CALL(0x143)
+0x0120: STOP()
+---------------------------
+| Entity 3 script 7
+---------------------------
+0x0121: CALL(0x159)
+0x0124: STOP()
+---------------------------
+| Entity 3 script 8
+---------------------------
+0x0125: CALL(0x12D)
+0x0128: STOP()
+---------------------------
+| Entity 3 script 9
+---------------------------
+0x0129: CALL(0x16F)
+0x012C: STOP()
+---------------------------
+| Sub function 0x012D
+---------------------------
+0x012D: SET_POSITION_UNSIGNED(19, -258, 0)
+0x0135: SET_ROTATION(1335)
+0x0138: opBF(THIS) // missing stuff, can't decode properly yet
+0x013D: SET_ANIMATION(130)
+0x0140: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0142: OP_RETURN()
+---------------------------
+| Sub function 0x0143
+---------------------------
+0x0143: SET_POSITION_UNSIGNED(512, 83, 0)
+0x014B: SET_ROTATION(3334)
+0x014E: opBF(THIS) // missing stuff, can't decode properly yet
+0x0153: SET_ANIMATION(132)
+0x0156: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0158: OP_RETURN()
+---------------------------
+| Sub function 0x0159
+---------------------------
+0x0159: SET_POSITION_UNSIGNED(400, 104, 0)
+0x0161: SET_ROTATION(879)
+0x0164: opFE07(1)
+0x0167: op49(200, -600)
+0x016E: OP_RETURN()
+---------------------------
+| Sub function 0x016F
+---------------------------
+0x016F: SET_POSITION_UNSIGNED(-131, 17, 0)
+0x0177: SET_ROTATION(1590)
+0x017A: OP_RETURN()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x017B: SETUP_NPC(0)
+0x017E: SETUP_CURRENT_DIALOG_FACE(39)
+0x0181: SET_POSITION_UNSIGNED(215, 5, 0)
+0x0189: SET_ROTATION(845)
+0x018C: SET_ANIMATION(4)
+0x018F: opFE07(1)
+0x0192: opFE40(0)
+0x0196: op37(0x00)
+0x0198: CALL(0x90)
+0x019B: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x019C: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x019D: STOP()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x019E: SETUP_NPC(1)
+0x01A1: SET_POSITION_UNSIGNED(-2, 236, 0)
+0x01A9: SET_ROTATION(735)
+0x01AC: SET_ANIMATION(4)
+0x01AF: opFE07(1)
+0x01B2: opFE40(0)
+0x01B6: AXIS_CHARACTER_SCALE(0x0F, THIS, 488)
+0x01BB: op37(0x00)
+0x01BD: CALL(0x90)
+0x01C0: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x01C1: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x01C2: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x01C3: SETUP_NPC(2)
+0x01C6: SETUP_CURRENT_DIALOG_FACE(73)
+0x01C9: op37(0x00)
+0x01CB: TOGGLE_RECT_COLLISION(0x01)
+0x01CD: IF_JUMP(ROOM_PARAM == 3, 0x01F2)
+0x01D5: SET_POSITION_UNSIGNED(-18, 109, 0)
+0x01DD: SET_ROTATION(645)
+0x01E0: opAC(THIS, 2)
+0x01E4: SET_ANIMATION(4)
+0x01E7: CHARACTER_RGB(THIS, roomVar[0x03], roomVar[0x03], roomVar[0x03])
+0x01EF: JUMP(0x0221)
+0x01F2: IF_JUMP(ROOM_PARAM == 4, 0x020F)
+0x01FA: SET_POSITION_UNSIGNED(-18, 109, 0)
+0x0202: SET_ROTATION(645)
+0x0205: opAC(THIS, var[0x01BA])
+0x0209: SET_ANIMATION(4)
+0x020C: JUMP(0x0221)
+0x020F: SET_POSITION_SIGNED(403, 421, -70)
+0x0217: op27(3072)
+0x021A: SET_ROTATION(2048)
+0x021D: op2A(100)
+0x0221: JUMP 0x022C IF VAR_BIT[End of Twin's Story] CLEAR
+0x0227: TOGGLE_COLLISION(0x01)
+0x0229: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x022C: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x022D: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x022E: STOP()
+---------------------------
+| Entity 6 script 4
+---------------------------
+0x022F: roomVar[0x03] = 0
+0x0232: IF_JUMP(roomVar[0x03] < 128, 0x024C)
+0x023A: op59()
+0x023B: CHARACTER_RGB(THIS, roomVar[0x03], roomVar[0x03], roomVar[0x03])
+0x0243: roomVar[0x03] ++
+0x0246: WAIT(0)
+0x0249: JUMP(0x0232)
+0x024C: STOP()
+---------------------------
+| Entity 6 script 5
+---------------------------
+0x024D: roomVar[0x03] = 128
+0x0253: IF_JUMP(roomVar[0x03] > 0, 0x026D)
+0x025B: op59()
+0x025C: CHARACTER_RGB(THIS, roomVar[0x03], roomVar[0x03], roomVar[0x03])
+0x0264: roomVar[0x03] --
+0x0267: WAIT(0)
+0x026A: JUMP(0x0253)
+0x026D: STOP()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x026E: SET_POSITION_UNSIGNED(-866, 55, 0)
+0x0276: op8D(0x00)
+0x0278: RECT_SIZE(30, 100)
+0x027D: SET_ROTATION(2048)
+0x0280: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x0281: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x0282: STOP()
+---------------------------
+| Entity 7 ON_COLLISION
+---------------------------
+0x0283: DISABLE_CHARACTER_CONTROLS()
+0x0284: opFE29(7)
+0x0288: SET_NEXT_ROOM("CD0-211-Guldove - Doc's House (Home)", 1)
+0x028D: STOP_SCRIPT_EXEC()
+0x028E: STOP()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x028F: op37(0x00)
+0x0291: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x0292: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x0293: STOP()
+---------------------------
+| Entity 8 script 4
+---------------------------
+0x0294: opFE11(1)
+0x0298: SET_CAMERA_POSITION( 0x00, -90, -30, 1)
+0x02A3: STOP()
+---------------------------
+| Entity 8 script 5
+---------------------------
+0x02A4: opFE11(1)
+0x02A8: SET_CAMERA_POSITION( 0x00, 80, -25, 1)
+0x02B3: STOP()
+---------------------------
+| Entity 8 script 6
+---------------------------
+0x02B4: SET_CAMERA_POSITION( 0x00, -90, -25, 240)
+0x02BF: STOP()
+
+
+---------------------------
+| Entity 9 INIT
+---------------------------
+0x02C0: op37(0x00)
+0x02C2: IF_JUMP(ROOM_PARAM == 3, 0x02D0)
+0x02CA: DISABLE_BACKGROUND_LAYER(1)
+0x02CD: JUMP(0x02DE)
+0x02D0: IF_JUMP(ROOM_PARAM == 4, 0x02DE)
+0x02D8: DISABLE_BACKGROUND_LAYER(1)
+0x02DB: JUMP(0x02DE)
+0x02DE: JUMP 0x02E7 IF VAR_BIT[End of Twin's Story] CLEAR
+0x02E4: DISABLE_BACKGROUND_LAYER(1)
+0x02E7: STOP()
+---------------------------
+| Entity 9 UPDATE
+---------------------------
+0x02E8: STOP()
+---------------------------
+| Entity 9 ON_ACTION
+---------------------------
+0x02E9: STOP()
+
+
+---------------------------
+| Entity 10 INIT
+---------------------------
+0x02EA: op37(0x00)
+0x02EC: STOP()
+---------------------------
+| Entity 10 UPDATE
+---------------------------
+0x02ED: IF_JUMP(ROOM_PARAM == 1, 0x02FB)
+0x02F5: CALL(0x351)
+0x02F8: JUMP(0x032D)
+0x02FB: IF_JUMP(ROOM_PARAM == 2, 0x0309)
+0x0303: CALL(0x382)
+0x0306: JUMP(0x032D)
+0x0309: IF_JUMP(ROOM_PARAM == 3, 0x0317)
+0x0311: CALL(0x495)
+0x0314: JUMP(0x032D)
+0x0317: IF_JUMP(ROOM_PARAM == 4, 0x0325)
+0x031F: CALL(0x617)
+0x0322: JUMP(0x032D)
+0x0325: SET_CHARACTER_HEAD_ANGLE(0, 300, ENTITY 6)
+0x032D: STOP_SCRIPT_EXEC()
+---------------------------
+| Entity 10 ON_ACTION
+---------------------------
+0x032E: STOP()
+---------------------------
+| Sub function 0x032F
+---------------------------
+0x032F: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 4, 0x20)
+0x0332: WAIT(8)
+0x0335: OVERRIDE_FOLLOW(0x01, 42)
+0x0339: WAIT_ONE_FRAME()
+0x033A: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 8, 0x20)
+0x033D: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 9, 0x20)
+0x0340: SET_CHARACTER_HEAD_ANGLE(1200, -400, ENTITY 4)
+0x0348: SET_CHARACTER_HEAD_ANGLE(1200, 450, ENTITY 5)
+0x0350: OP_RETURN()
+---------------------------
+| Sub function 0x0351
+---------------------------
+0x0351: DISABLE_CHARACTER_CONTROLS()
+0x0352: opBE()
+0x0353: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x035E: SET_CHARACTER_HEAD_ANGLE(0, -1000, ENTITY 6)
+0x0366: CALL(0x32F)
+0x0369: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 7, 0x20)
+0x036C: op49(400, 200)
+0x0373: SET_SCREEN_RGB(2, 0, 0, 0, 30)
+0x037E: WAIT(45)
+0x0381: OP_RETURN()
+---------------------------
+| Sub function 0x0382
+---------------------------
+0x0382: DISABLE_CHARACTER_CONTROLS()
+0x0383: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x038E: op59()
+0x038F: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 4, 0x20)
+0x0392: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 4, 0x20)
+0x0395: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 4, 0x20)
+0x0398: SET_CHARACTER_HEAD_ANGLE(0, 300, ENTITY 6)
+0x03A0: CALL(0x32F)
+0x03A3: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 6, 0x20)
+0x03A6: op49(400, 200)
+0x03AD: WAIT_PLAY_SONG_DONE()
+0x03AE: opFE1D(150, 127)
+0x03B4: SET_SCREEN_RGB(2, 0, 0, 0, 30)
+0x03BF: WAIT(45)
+0x03C2: CHARACTER_DIALOG(ENTITY 4, 0x0000, 0x08)
+
+	+-------------------------
+	|Doc:
+	|As you can ascertain, dude...
+	|Our voices cannot reach her,
+	|no matter how hard we try...
+	+-------------------------
+	|We do not even have a firm
+	|diagnosis of what caused her
+	|to become unconscious and
+	|collapse...
+	+-------------------------
+	|Time has mercilessly passed by,
+	|while she continues to slumber.<Close>
+	+-------------------------
+
+0x03C7: WAIT_DIALOG()
+0x03C8: WAIT(15)
+0x03CB: CHARACTER_DIALOG(Orlha, 0x0001, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|Tia, can you hear
+	|my voice...
+	+-------------------------
+	|Your big sister is here
+	|by your side...<Close>
+	+-------------------------
+
+0x03D0: WAIT_DIALOG()
+0x03D1: WAIT(120)
+0x03D4: SETUP_DIALOG_WINDOW( X:260, Y:75, LettersHigh:0, LettersWide:0, Flag:856)
+0x03DF: CHARACTER_DIALOG(ENTITY 6, 0x0002, 0x00)
+
+	+-------------------------
+	|Sis...
+	|Orlha...<Close>
+	+-------------------------
+
+0x03E4: WAIT_DIALOG()
+0x03E5: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x03F0: WAIT(15)
+0x03F3: CHARACTER_DIALOG(Orlha, 0x0003, 0x48)
+
+	+-------------------------
+	|  !?  <Auto close 15>
+	+-------------------------
+
+0x03F8: WAIT_DIALOG()
+0x03F9: CHARACTER_DIALOG(Orlha, 0x0004, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|Ti...Tia?<Close>
+	+-------------------------
+
+0x03FE: WAIT_DIALOG()
+0x03FF: SET_CHARACTER_HEAD_ANGLE(0, -1000, ENTITY 6)
+0x0407: WAIT(120)
+0x040A: CHARACTER_DIALOG(ENTITY 6, 0x0005, 0x08)
+
+	+-------------------------
+	|Tia:
+	|I was having a long dream...
+	|Orlha...
+	|I finally meet you...
+	+-------------------------
+	|Your hair, your eyes,
+	|we are both really alike...
+	|For we are twin sisters,
+	|born on the same planet...<Close>
+	+-------------------------
+
+0x040F: WAIT_DIALOG()
+0x0410: WAIT(15)
+0x0413: CHARACTER_DIALOG(Orlha, 0x0006, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|Oh, Tia,
+	|how could this be...
+	|But I...<Close>
+	+-------------------------
+
+0x0418: WAIT_DIALOG()
+0x0419: SET_CHARACTER_HEAD_DEFAULT(ENTITY 6)
+0x041C: WAIT(15)
+0x041F: CHARACTER_DIALOG(ENTITY 6, 0x0007, 0x08)
+
+	+-------------------------
+	|Tia:
+	|No, it's alright, sis...
+	|I know. I've been watching
+	|everything from my dreams...
+	+-------------------------
+	|Yes, the world is not one.
+	|...Just like our dreams,
+	|the possibilities are infinite.<Close>
+	+-------------------------
+
+0x0424: WAIT_DIALOG()
+0x0425: SET_CHARACTER_HEAD_ANGLE(0, -1000, ENTITY 6)
+0x042D: WAIT(45)
+0x0430: CHARACTER_DIALOG(ENTITY 6, 0x0008, 0x08)
+
+	+-------------------------
+	|Tia:
+	|My long dream has ended...
+	|I am so glad...
+	|that I was able to meet you...<Close>
+	+-------------------------
+
+0x0435: WAIT_DIALOG()
+0x0436: CHARACTER_DIALOG(Orlha, 0x0009, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|No Tia, it's not the end!
+	|No Tia......
+	|I...I won't...
+	+-------------------------
+	|I won't let it end like this!
+	|We're going to start over
+	|from the very beginning...
+	|So please...Tia. Don't go!<Close>
+	+-------------------------
+
+0x043B: WAIT_DIALOG()
+0x043C: WAIT(30)
+0x043F: CHARACTER_DIALOG(ENTITY 6, 0x000A, 0x08)
+
+	+-------------------------
+	|Tia:
+	|My spirit will
+	|always be with you, sis...
+	|I will always be with...you.<Close>
+	+-------------------------
+
+0x0444: WAIT_DIALOG()
+0x0445: op74(2048, ENTITY 6)
+0x044A: SET_CHARACTER_HEAD_ANGLE(0, 300, ENTITY 6)
+0x0452: WAIT(120)
+0x0455: CHARACTER_PLAY_ANIM(ENTITY 6, 0)
+0x0459: CHARACTER_DIALOG(Orlha, 0x000B, 0x48)
+
+	+-------------------------
+	|  !!!  <Auto close 15>
+	+-------------------------
+
+0x045E: WAIT_DIALOG()
+0x045F: WAIT(15)
+0x0462: CHARACTER_DIALOG(Orlha, 0x000C, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|...Wait, Tia.
+	|Please...
+	|just once more...
+	+-------------------------
+	|...your eyes.
+	|Open your eyes and...and show
+	|me your smile once more...
+	|I beg...of you...<Close>
+	+-------------------------
+
+0x0467: WAIT_DIALOG()
+0x0468: SET_SCREEN_RGB(2, 255, 255, 255, 120)
+0x0473: WAIT(135)
+0x0476: OVERRIDE_FOLLOW?(0x00)
+0x0478: CHARACTER_PLAY_ANIM(Serge, 1)
+0x047C: WAIT(8)
+0x047F: FREE_EXTRA_ANIMATION(Serge)
+0x0481: CHARACTER_PLAY_ANIM(Orlha, 1)
+0x0485: WAIT(8)
+0x0488: FREE_EXTRA_ANIMATION(Orlha)
+0x048A: WAIT_ONE_FRAME()
+0x048B: opFE29(7)
+0x048F: SET_NEXT_ROOM("CD0-211-Guldove - Doc's House (Home)", 2)
+0x0494: OP_RETURN()
+---------------------------
+| Sub function 0x0495
+---------------------------
+0x0495: DISABLE_CHARACTER_CONTROLS()
+0x0496: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x04A1: WAIT_PLAY_SONG_DONE()
+0x04A2: op59()
+0x04A3: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 4, 0x20)
+0x04A6: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 4, 0x20)
+0x04A9: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 4, 0x20)
+0x04AC: LOAD_ANIMATION( 0x00, Orlha, 42)
+0x04B1: LOAD_ANIMATION( 0x01 )
+0x04B3: SET_CHARACTER_HIDDEN(0x01, PC1)
+0x04B6: SET_CHARACTER_HIDDEN(0x01, PC2)
+0x04B9: RUN_ENTITY_SCRIPT_BLOCKING(Orlha, script 7, 0x20)
+0x04BC: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 5, 0x20)
+0x04BF: SET_CHARACTER_HEAD_ANGLE(0, -300, ENTITY 6)
+0x04C7: CHARACTER_PLAY_ANIM(Orlha, 130)
+0x04CB: WAIT_ANIMATION_COMPLETED?(Orlha)
+0x04CD: SET_SCREEN_RGB(2, 95, 45, 30, 120)
+0x04D8: WAIT(150)
+0x04DB: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 6, 0x20)
+0x04DE: CHARACTER_DIALOG(Orlha, 0x000D, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|Tia...
+	|Just when I finally found you...<Close>
+	+-------------------------
+
+0x04E3: WAIT_DIALOG()
+0x04E4: WAIT(60)
+0x04E7: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:861)
+0x04F2: DIALOG(0x000E, 0x00)
+
+	+-------------------------
+	|...Sis.<Close>
+	+-------------------------
+
+0x04F6: WAIT_DIALOG()
+0x04F7: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x0502: SET_CHARACTER_HEAD_DEFAULT(Orlha)
+0x0505: WAIT(45)
+0x0508: CHARACTER_DIALOG(Orlha, 0x000F, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|...Tia?<Close>
+	+-------------------------
+
+0x050D: WAIT_DIALOG()
+0x050E: WAIT(15)
+0x0511: SET_CHARACTER_HEAD_ANGLE(0, 300, Orlha)
+0x0519: WAIT(75)
+0x051C: SET_CHARACTER_HEAD_ANGLE(0, -300, Orlha)
+0x0524: WAIT(60)
+0x0527: SET_CHARACTER_HEAD_DEFAULT(Orlha)
+0x052A: WAIT(30)
+0x052D: CHARACTER_DIALOG(Orlha, 0x0010, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|Oh...
+	|it can't be.<Close>
+	+-------------------------
+
+0x0532: WAIT_DIALOG()
+0x0533: WAIT(15)
+0x0536: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 4, 0x20)
+0x0539: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:861)
+0x0544: DIALOG(0x0011, 0x00)
+
+	+-------------------------
+	|...Orlha.<Close>
+	+-------------------------
+
+0x0548: WAIT_DIALOG()
+0x0549: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x0554: SET_CHARACTER_HEAD_ANGLE(0, 300, Orlha)
+0x055C: WAIT(45)
+0x055F: CHARACTER_PLAY_ANIM(Orlha, 131)
+0x0563: WAIT_ANIMATION_COMPLETED?(Orlha)
+0x0565: WAIT_ONE_FRAME()
+0x0566: CHARACTER_PLAY_ANIM(Orlha, 1)
+0x056A: WAIT(8)
+0x056D: FREE_EXTRA_ANIMATION(Orlha)
+0x056F: CHARACTER_DIALOG(Orlha, 0x0012, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|Tia!!!<Close>
+	+-------------------------
+
+0x0574: WAIT_DIALOG()
+0x0575: SET_CHARACTER_HEAD_DEFAULT(Orlha)
+0x0578: WAIT(45)
+0x057B: TURN_TO_CHARACTER_2(Orlha, ENTITY 6)
+0x057E: WAIT_ROTATION(Orlha)
+0x0580: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:88)
+0x058B: CHARACTER_DIALOG(ENTITY 6, 0x0013, 0x00)
+
+	+-------------------------
+	|Tia:
+	|The blue gem binds us as sisters,
+	|and also contains the prayers of
+	|mother and father...
+	+-------------------------
+	|The split gem has crossed the
+	|worlds and become one.
+	|And now, it has been passed
+	|into your hands...<Close>
+	+-------------------------
+
+0x0590: WAIT_DIALOG()
+0x0591: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x059C: WAIT(15)
+0x059F: CHARACTER_DIALOG(Orlha, 0x0014, 0x08)
+
+	+-------------------------
+	|Orlha:
+	|Mother and father's prayers
+	|are...within this gem...<Close>
+	+-------------------------
+
+0x05A4: WAIT_DIALOG()
+0x05A5: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:88)
+0x05B0: CHARACTER_DIALOG(ENTITY 6, 0x0015, 0x00)
+
+	+-------------------------
+	|Tia:
+	|And my spirit,
+	|will be with you, sis...
+	|Please don't forget...<Close>
+	+-------------------------
+
+0x05B5: WAIT_DIALOG()
+0x05B6: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x05C1: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 6, script 5, 0x20)
+0x05C4: WAIT(45)
+0x05C7: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:861)
+0x05D2: DIALOG(0x0016, 0x00)
+
+	+-------------------------
+	|And live strong for the both of us...<Close>
+	+-------------------------
+
+0x05D6: WAIT_DIALOG()
+0x05D7: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x05E2: RECEIVE_ITEM(0, "(Tech)SisterHoods")
+0x05E6: var[0x0020] = 798
+0x05EC: DIALOG(0x0017, 0x0D)
+
+	+-------------------------
+	|Orlha has learned
+	|<Color 3><Object 3><Color 0>!<Close>
+	+-------------------------
+
+0x05F0: WAIT_DIALOG()
+0x05F1: SET_SCREEN_RGB(2, 255, 255, 255, 120)
+0x05FC: WAIT(135)
+0x05FF: SET_VAR_BIT(6345:End of Twin's Story)
+0x0603: CHARACTER_PLAY_ANIM(Orlha, 1)
+0x0607: WAIT(8)
+0x060A: FREE_EXTRA_ANIMATION(Orlha)
+0x060C: WAIT_ONE_FRAME()
+0x060D: opFE29(7)
+0x0611: SET_NEXT_ROOM("CD0-211-Guldove - Doc's House (Home)", 1)
+0x0616: OP_RETURN()
+---------------------------
+| Sub function 0x0617
+---------------------------
+0x0617: DISABLE_CHARACTER_CONTROLS()
+0x0618: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x0623: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 5, 0x20)
+0x0626: SET_SCREEN_RGB(2, 95, 45, 30, 120)
+0x0631: WAIT(150)
+0x0634: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 6, 0x20)
+0x0637: SET_CHARACTER_HEAD_ANGLE(0, -300, ENTITY 6)
+0x063F: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0641: OP_RETURN()
+0x0642: 0xE0
+0x0643: 0x18
+0x0644: 0x00
+0x0645: 0x00
+0x0646: 0xE2
+
+
+---------------------------
+| Entity 11 INIT
+---------------------------
+0x0647: SET_POSITION_UNSIGNED(-475, -346, 0)
+0x064F: op8D(0x00)
+0x0651: RECT_SIZE(75, 75)
+0x0656: JUMP 0x065F IF VAR_BIT[Ind. Menu Start] CLEAR
+0x065C: JUMP(0x0662)
+0x065F: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0662: STOP()
+---------------------------
+| Entity 11 UPDATE
+---------------------------
+0x0663: STOP()
+---------------------------
+| Entity 11 ON_ACTION
+---------------------------
+0x0664: DIALOG(0x0019, 0x08)
+
+	+-------------------------
+	|* DEBUG MENU
+	|      Quit
+	|      Rect
+	|      Orlha<Close>
+	+-------------------------
+
+0x0668: MULTI_CHOICE( range:1 to 3 )
+0x066A: WAIT_DIALOG()
+0x066B: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0676)
+0x0673: JUMP(0x0692)
+0x0676: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x0684)
+0x067E: CALL(0x694)
+0x0681: JUMP(0x0692)
+0x0684: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x0692)
+0x068C: CALL(0x6B6)
+0x068F: JUMP(0x0692)
+0x0692: STOP()
+---------------------------
+| Entity 11 ON_COLLISION
+---------------------------
+0x0693: STOP()
+---------------------------
+| Sub function 0x0694
+---------------------------
+0x0694: IF_JUMP(roomVar[0x05] == 0, 0x06AA)
+0x069C: roomVar[0x05] = 1
+0x069F: SET_CHARACTER_VIEWABLE(0x00, ENTITY 7)
+0x06A2: DIALOG(0x001A, 0x0D)
+
+	+-------------------------
+	|* Rect Off<Close>
+	+-------------------------
+
+0x06A6: WAIT_DIALOG()
+0x06A7: JUMP(0x06B5)
+0x06AA: roomVar[0x05] = 0
+0x06AD: SET_CHARACTER_VIEWABLE(0x01, ENTITY 7)
+0x06B0: DIALOG(0x001B, 0x0D)
+
+	+-------------------------
+	|* Rect On<Close>
+	+-------------------------
+
+0x06B4: WAIT_DIALOG()
+0x06B5: OP_RETURN()
+---------------------------
+| Sub function 0x06B6
+---------------------------
+0x06B6: IF_JUMP(roomVar[0x04] == 0, 0x06D3)
+0x06BE: roomVar[0x04] = 1
+0x06C1: SET_CHARACTER_HIDDEN(0x00, ENTITY 12)
+0x06C4: SET_CHARACTER_VIEWABLE(0x01, ENTITY 12)
+0x06C7: CHARACTER_PLAY_ANIM(ENTITY 12, 11)
+0x06CB: DIALOG(0x001C, 0x0D)
+
+	+-------------------------
+	|* Orlha On<Close>
+	+-------------------------
+
+0x06CF: WAIT_DIALOG()
+0x06D0: JUMP(0x06E5)
+0x06D3: roomVar[0x04] = 0
+0x06D6: CHARACTER_PLAY_ANIM(ENTITY 12, 1)
+0x06DA: SET_CHARACTER_HIDDEN(0x01, ENTITY 12)
+0x06DD: SET_CHARACTER_VIEWABLE(0x00, ENTITY 12)
+0x06E0: DIALOG(0x001D, 0x0D)
+
+	+-------------------------
+	|* Orlha Off<Close>
+	+-------------------------
+
+0x06E4: WAIT_DIALOG()
+0x06E5: OP_RETURN()
+0x06E6: 0xE0
+0x06E7: 0x1E
+0x06E8: 0x00
+0x06E9: 0x00
+0x06EA: 0xE2
+
+
+---------------------------
+| Entity 12 INIT
+---------------------------
+0x06EB: SETUP_NPC(3)
+0x06EE: SETUP_CURRENT_DIALOG_FACE(42)
+0x06F1: opFE40(0)
+0x06F5: SET_POSITION_UNSIGNED(410, 104, 0)
+0x06FD: SET_ROTATION(879)
+0x0700: op49(200, -600)
+0x0707: TOGGLE_RECT_COLLISION(0x01)
+0x0709: op37(0x00)
+0x070B: TOGGLE_COLLISION(0x01)
+0x070D: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0710: STOP()
+---------------------------
+| Entity 12 UPDATE
+---------------------------
+0x0711: STOP()
+---------------------------
+| Entity 12 ON_ACTION
+---------------------------
+0x0712: STOP()

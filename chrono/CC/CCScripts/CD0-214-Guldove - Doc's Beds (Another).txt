@@ -1,0 +1,3553 @@
+0x0000: 0xFF
+0x0001: 0x7B
+0x0002: 0xFD
+0x0003: 0x37
+0x0004: 0x00
+0x0005: 0x00
+0x0006: 0x00
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0x7A
+0x000A: 0x00
+0x000B: 0xFC
+0x000C: 0xFE
+0x000D: 0xE4
+0x000E: 0x0C
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0xC2
+0x0012: 0xFE
+0x0013: 0xD8
+0x0014: 0xFF
+0x0015: 0x00
+0x0016: 0x08
+0x0017: 0x00
+0x0018: 0x00
+0x0019: 0x21
+0x001A: 0x01
+0x001B: 0xC4
+0x001C: 0xFF
+0x001D: 0x00
+0x001E: 0x05
+0x001F: 0x00
+0x0020: 0x00
+0x0021: 0x7B
+0x0022: 0xFD
+0x0023: 0x37
+0x0024: 0x00
+0x0025: 0x00
+0x0026: 0x00
+0x0027: 0x00
+0x0028: 0x00
+0x0029: 0x92
+0x002A: 0x00
+0x002B: 0xBF
+0x002C: 0xFF
+0x002D: 0x05
+0x002E: 0x0F
+0x002F: 0x00
+0x0030: 0x00
+0x0031: 0x93
+0x0032: 0x01
+0x0033: 0xA5
+0x0034: 0x01
+0x0035: 0x00
+0x0036: 0x08
+0x0037: 0x00
+0x0038: 0x00
+0x0039: 0xCE
+0x003A: 0xFF
+0x003B: 0x90
+0x003C: 0x01
+0x003D: 0x00
+0x003E: 0x08
+0x003F: 0x00
+0x0040: 0x00
+0x0041: 0xCB
+0x0042: 0x02
+0x0043: 0x6F
+0x0044: 0xFF
+0x0045: 0x00
+0x0046: 0x08
+0x0047: 0x00
+0x0048: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0049: JUMP 0x0052 IF VAR_BIT[MidwayInMel'sEvent] CLEAR
+0x004F: opFE17(1)
+0x0052: IF_JUMP(ROOM_PARAM == 1, 0x0062)
+0x005A: opFE63() // stop script if some variable has been set
+0x005C: PLAY_SONG(43)
+0x005F: JUMP(0x00CA)
+0x0062: IF_JUMP(ROOM_PARAM == 2, 0x0086)
+0x006A: roomVar[0x00] = FIND_CHARACTER_SLOT_IN_PARTY(0)
+0x006F: IF_JUMP(roomVar[0x00] == 0, 0x007A)
+0x0077: JUMP(0x007E)
+0x007A: opFE52(0)
+0x007E: opFE63() // stop script if some variable has been set
+0x0080: PLAY_SONG(56)
+0x0083: JUMP(0x00CA)
+0x0086: IF_JUMP(ROOM_PARAM == 4, 0x00A4)
+0x008E: JUMP 0x009C IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x0094: opFE63() // stop script if some variable has been set
+0x0096: PLAY_SONG(15)
+0x0099: JUMP(0x00A1)
+0x009C: opFE63() // stop script if some variable has been set
+0x009E: PLAY_SONG(56)
+0x00A1: JUMP(0x00CA)
+0x00A4: IF_JUMP(ROOM_PARAM == 5, 0x00C5)
+0x00AC: JUMP 0x00BD IF VAR_BIT[Guldove Recall] CLEAR
+0x00B2: opFE63() // stop script if some variable has been set
+0x00B4: opFE78(56, 0) // this will stall the script until some condition is met
+0x00BA: JUMP(0x00C2)
+0x00BD: opFE63() // stop script if some variable has been set
+0x00BF: PLAY_SONG(56)
+0x00C2: JUMP(0x00CA)
+0x00C5: opFE63() // stop script if some variable has been set
+0x00C7: PLAY_SONG(56)
+0x00CA: op64(-200)
+0x00CE: opFE2B(17, 3)
+0x00D3: opFE2B(16, 119)
+0x00D8: PLAY_SOUNDFX(357, 128, 36, 7)
+0x00E2: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x00E3: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x00E4: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x00E5: STOP()
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x00E6: SETUP_PC(PC2)
+0x00E9: JUMP 0x00F2 IF VAR_BIT[Metamorph] CLEAR
+0x00EF: SETUP_NPC(var[0x01BE])
+0x00F2: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x00F3: IF_JUMP(roomVar[0x02] == 0, 0x00FC)
+0x00FB: UPDATE_CHARACTER()
+0x00FC: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x00FD: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x00FE: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x00FF: roomVar[0x02] = 1
+0x0102: STOP()
+---------------------------
+| Entity 1 script 5
+---------------------------
+0x0103: roomVar[0x02] = 0
+0x0106: STOP()
+---------------------------
+| Entity 1 script 6
+---------------------------
+0x0107: STOP()
+---------------------------
+| Entity 1 script 7
+---------------------------
+0x0108: SET_MOVEMENT_SPEED(2)
+0x010B: roomVar[0x02] = 1
+0x010E: opFE07(1)
+0x0111: LOAD_ANIMATION( 0x00, THIS, 0)
+0x0116: LOAD_ANIMATION( 0x01 )
+0x0118: SET_ROTATION(3379)
+0x011B: opFE07(0)
+0x011E: op47(0x01)
+0x0120: WALK_TO(0x00, 524, 114, 0)
+0x0129: WALK_TO(0x01) // wait walk
+0x012B: SET_POSITION_UNSIGNED(524, 114, 0)
+0x0133: op47(0x00)
+0x0135: SET_ANIMATION(139)
+0x0138: WAIT(30)
+0x013B: SET_MOVEMENT_SPEED(5)
+0x013E: STOP()
+---------------------------
+| Entity 1 script 8
+---------------------------
+0x013F: STOP()
+---------------------------
+| Entity 1 script 9
+---------------------------
+0x0140: STOP()
+---------------------------
+| Entity 1 script 10
+---------------------------
+0x0141: STOP()
+---------------------------
+| Entity 1 script 11
+---------------------------
+0x0142: STOP()
+---------------------------
+| Entity 1 script 12
+---------------------------
+0x0143: STOP()
+---------------------------
+| Entity 1 script 13
+---------------------------
+0x0144: SET_MOVEMENT_SPEED(3)
+0x0147: opB7(3584)
+0x014B: WALK_TO(0x00, 378, 105, 0)
+0x0154: WALK_TO(0x01) // wait walk
+0x0156: WAIT(5)
+0x0159: SET_POSITION_UNSIGNED(378, 105, 0)
+0x0161: SET_MOVEMENT_SPEED(5)
+0x0164: opB7(4096)
+0x0168: STOP()
+---------------------------
+| Entity 1 script 14
+---------------------------
+0x0169: STOP()
+---------------------------
+| Entity 1 script 15
+---------------------------
+0x016A: opBF(THIS) // missing stuff, can't decode properly yet
+0x016F: opFE07(1)
+0x0172: STOP()
+---------------------------
+| Entity 1 script 16
+---------------------------
+0x0173: WAIT(8)
+0x0176: FREE_EXTRA_ANIMATION(THIS)
+0x0178: opFE07(0)
+0x017B: STOP()
+---------------------------
+| Entity 1 script 17
+---------------------------
+0x017C: opFE07(1)
+0x017F: WALK_TO(0x00, 336, -89, 0)
+0x0188: WALK_TO(0x01) // wait walk
+0x018A: SET_POSITION_UNSIGNED(336, -89, 0)
+0x0192: SET_ROTATION(3415)
+0x0195: WAIT_ROTATION()
+0x0196: opFE07(0)
+0x0199: STOP()
+---------------------------
+| Entity 1 script 18
+---------------------------
+0x019A: opFE07(1)
+0x019D: WALK_TO(0x00, 305, -106, 0)
+0x01A6: WALK_TO(0x01) // wait walk
+0x01A8: SET_POSITION_UNSIGNED(305, -106, 0)
+0x01B0: SET_ROTATION(3275)
+0x01B3: WAIT_ROTATION()
+0x01B4: opFE07(0)
+0x01B7: STOP()
+---------------------------
+| Entity 1 script 19
+---------------------------
+0x01B8: SET_POSITION_UNSIGNED(-846, -3, 0)
+0x01C0: SET_ROTATION(0)
+0x01C3: STOP()
+---------------------------
+| Entity 1 script 20
+---------------------------
+0x01C4: WALK_TO_POSITION(0x00, -400, -3)
+0x01CD: WALK_TO_POSITION(0x01)
+0x01CF: WAIT(15)
+0x01D2: opFE07(1)
+0x01D5: SET_ROTATION(1345)
+0x01D8: WAIT_ROTATION()
+0x01D9: op49(-500, 230)
+0x01E0: WAIT(15)
+0x01E3: var[0x0022] = 1
+0x01E6: STOP()
+---------------------------
+| Entity 1 script 21
+---------------------------
+0x01E7: opCA()
+0x01E8: WAIT_ROTATION()
+0x01E9: WALK_TO_POSITION(0x00, -570, 6)
+0x01F2: WALK_TO_POSITION(0x01)
+0x01F4: STOP()
+---------------------------
+| Entity 1 script 22
+---------------------------
+0x01F5: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x01F6: SETUP_PC(PC1)
+0x01F9: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x01FA: IF_JUMP(roomVar[0x03] == 0, 0x0203)
+0x0202: UPDATE_CHARACTER()
+0x0203: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x0204: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x0205: STOP()
+---------------------------
+| Entity 2 script 4
+---------------------------
+0x0206: roomVar[0x03] = 1
+0x0209: STOP()
+---------------------------
+| Entity 2 script 5
+---------------------------
+0x020A: roomVar[0x03] = 0
+0x020D: STOP()
+---------------------------
+| Entity 2 script 6
+---------------------------
+0x020E: SET_POSITION_UNSIGNED(-257, -7, 0)
+0x0216: SET_ROTATION(270)
+0x0219: STOP()
+---------------------------
+| Entity 2 script 7
+---------------------------
+0x021A: STOP()
+---------------------------
+| Entity 2 script 8
+---------------------------
+0x021B: STOP()
+---------------------------
+| Entity 2 script 9
+---------------------------
+0x021C: SET_MOVEMENT_SPEED(6)
+0x021F: opFE07(1)
+0x0222: WALK_TO_POSITION(0x00, -213, -259)
+0x022B: WALK_TO_POSITION(0x01)
+0x022D: TURN_TO_CHARACTER(ENTITY 5)
+0x022F: WAIT_ROTATION()
+0x0230: SET_MOVEMENT_SPEED(5)
+0x0233: STOP()
+---------------------------
+| Entity 2 script 10
+---------------------------
+0x0234: DISABLE_CHARACTER_CONTROLS()
+0x0235: opFE07(1)
+0x0238: TURN_TO_CHARACTER(PARTY_LEADER)
+0x023A: WAIT_ROTATION()
+0x023B: DIALOG(0x0000, 0x08)
+
+	+-------------------------
+	|<Member 1>:
+	|Serge, 
+	|aren't you going 
+	|to see Kid?<Close>
+	+-------------------------
+
+0x023F: WAIT_DIALOG()
+0x0240: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0242: TURN_TO_CHARACTER(ENTITY 7)
+0x0244: WAIT_ROTATION()
+0x0245: opFE07(0)
+0x0248: STOP()
+---------------------------
+| Entity 2 script 11
+---------------------------
+0x0249: STOP()
+---------------------------
+| Entity 2 script 12
+---------------------------
+0x024A: SET_POSITION_UNSIGNED(-141, -277, 0)
+0x0252: SET_ROTATION(2335)
+0x0255: STOP()
+---------------------------
+| Entity 2 script 13
+---------------------------
+0x0256: STOP()
+---------------------------
+| Entity 2 script 14
+---------------------------
+0x0257: STOP()
+---------------------------
+| Entity 2 script 15
+---------------------------
+0x0258: opBF(THIS) // missing stuff, can't decode properly yet
+0x025D: opFE07(1)
+0x0260: STOP()
+---------------------------
+| Entity 2 script 16
+---------------------------
+0x0261: WAIT(8)
+0x0264: FREE_EXTRA_ANIMATION(THIS)
+0x0266: opFE07(0)
+0x0269: STOP()
+---------------------------
+| Entity 2 script 17
+---------------------------
+0x026A: opFE07(1)
+0x026D: WALK_TO(0x00, 91, -128, 0)
+0x0276: WALK_TO(0x01) // wait walk
+0x0278: SET_POSITION_UNSIGNED(91, -128, 0)
+0x0280: SET_ROTATION(3894)
+0x0283: WAIT_ROTATION()
+0x0284: opFE07(0)
+0x0287: STOP()
+---------------------------
+| Entity 2 script 18
+---------------------------
+0x0288: opFE07(1)
+0x028B: WALK_TO(0x00, 51, -46, 0)
+0x0294: WALK_TO(0x01) // wait walk
+0x0296: SET_POSITION_UNSIGNED(51, -46, 0)
+0x029E: SET_ROTATION(245)
+0x02A1: WAIT_ROTATION()
+0x02A2: opFE07(0)
+0x02A5: STOP()
+---------------------------
+| Entity 2 script 19
+---------------------------
+0x02A6: STOP()
+---------------------------
+| Entity 2 script 20
+---------------------------
+0x02A7: STOP()
+---------------------------
+| Entity 2 script 21
+---------------------------
+0x02A8: STOP()
+---------------------------
+| Entity 2 script 22
+---------------------------
+0x02A9: SET_POSITION_UNSIGNED(-54, 60, 0)
+0x02B1: SET_ROTATION(325)
+0x02B4: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x02B5: SETUP_PC(PARTY_LEADER)
+0x02B8: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x02B9: IF_JUMP(roomVar[0x04] == 0, 0x02C2)
+0x02C1: UPDATE_CHARACTER()
+0x02C2: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x02C3: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x02C4: STOP()
+---------------------------
+| Entity 3 script 4
+---------------------------
+0x02C5: roomVar[0x04] = 1
+0x02C8: STOP()
+---------------------------
+| Entity 3 script 5
+---------------------------
+0x02C9: roomVar[0x04] = 0
+0x02CC: STOP()
+---------------------------
+| Entity 3 script 6
+---------------------------
+0x02CD: SET_POSITION_UNSIGNED(450, -298, 0)
+0x02D5: SET_ROTATION(2560)
+0x02D8: STOP()
+---------------------------
+| Entity 3 script 7
+---------------------------
+0x02D9: STOP()
+---------------------------
+| Entity 3 script 8
+---------------------------
+0x02DA: opFE07(1)
+0x02DD: WALK_TO_POSITION(0x00, 301, -131)
+0x02E6: WALK_TO_POSITION(0x01)
+0x02E8: TURN_TO_CHARACTER(PARTY_LEADER)
+0x02EA: WAIT_ROTATION()
+0x02EB: opFE07(0)
+0x02EE: STOP()
+---------------------------
+| Entity 3 script 9
+---------------------------
+0x02EF: STOP()
+---------------------------
+| Entity 3 script 10
+---------------------------
+0x02F0: STOP()
+---------------------------
+| Entity 3 script 11
+---------------------------
+0x02F1: DISABLE_CHARACTER_CONTROLS()
+0x02F2: opBF(THIS) // missing stuff, can't decode properly yet
+0x02F7: SET_ANIMATION(130)
+0x02FA: DIALOG(0x0001, 0x08)
+
+	+-------------------------
+	|<Member 2>:
+	|......
+	|Is there no other
+	|way to save her?<Close>
+	+-------------------------
+
+0x02FE: WAIT_DIALOG()
+0x02FF: SET_ANIMATION(1)
+0x0302: WAIT(8)
+0x0305: FREE_EXTRA_ANIMATION(THIS)
+0x0307: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0309: STOP()
+---------------------------
+| Entity 3 script 12
+---------------------------
+0x030A: SET_POSITION_UNSIGNED(-170, 167, 0)
+0x0312: SET_ROTATION(1435)
+0x0315: STOP()
+---------------------------
+| Entity 3 script 13
+---------------------------
+0x0316: STOP()
+---------------------------
+| Entity 3 script 14
+---------------------------
+0x0317: op49(0, -700)
+0x031E: opFE07(1)
+0x0321: SET_ROTATION(2670)
+0x0324: WAIT_ROTATION()
+0x0325: op47(0x01)
+0x0327: WALK_TO_POSITION(0x00, 265, -298)
+0x0330: WALK_TO_POSITION(0x01)
+0x0332: op47(0x00)
+0x0334: opFE32()
+0x0336: WAIT(15)
+0x0339: WALK_TO_POSITION(0x00, 99, -340)
+0x0342: WALK_TO_POSITION(0x01)
+0x0344: SET_ROTATION(3275)
+0x0347: WAIT_ROTATION()
+0x0348: opFE07(0)
+0x034B: STOP()
+---------------------------
+| Entity 3 script 15
+---------------------------
+0x034C: opBF(THIS) // missing stuff, can't decode properly yet
+0x0351: opFE07(1)
+0x0354: STOP()
+---------------------------
+| Entity 3 script 16
+---------------------------
+0x0355: WAIT(8)
+0x0358: FREE_EXTRA_ANIMATION(THIS)
+0x035A: opFE07(0)
+0x035D: STOP()
+---------------------------
+| Entity 3 script 17
+---------------------------
+0x035E: opFE07(1)
+0x0361: WALK_TO(0x00, 228, -324, 0)
+0x036A: WALK_TO(0x01) // wait walk
+0x036C: SET_POSITION_UNSIGNED(228, -324, 0)
+0x0374: SET_ROTATION(3285)
+0x0377: WAIT_ROTATION()
+0x0378: opFE07(0)
+0x037B: STOP()
+---------------------------
+| Entity 3 script 18
+---------------------------
+0x037C: opFE07(1)
+0x037F: WALK_TO(0x00, -85, -280, 0)
+0x0388: WALK_TO(0x01) // wait walk
+0x038A: SET_POSITION_UNSIGNED(-85, -280, 0)
+0x0392: SET_ROTATION(3545)
+0x0395: WAIT_ROTATION()
+0x0396: opFE07(0)
+0x0399: STOP()
+---------------------------
+| Entity 3 script 19
+---------------------------
+0x039A: STOP()
+---------------------------
+| Entity 3 script 20
+---------------------------
+0x039B: STOP()
+---------------------------
+| Entity 3 script 21
+---------------------------
+0x039C: STOP()
+---------------------------
+| Entity 3 script 22
+---------------------------
+0x039D: SET_POSITION_UNSIGNED(-100, -208, 0)
+0x03A5: SET_ROTATION(3725)
+0x03A8: STOP()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x03A9: SETUP_NPC(0)
+0x03AC: SET_POSITION_UNSIGNED(526, 103, 0)
+0x03B4: SETUP_CURRENT_DIALOG_FACE(39)
+0x03B7: SET_ROTATION(3400)
+0x03BA: opFE40(39)
+0x03BE: IF_JUMP(ROOM_PARAM == 1, 0x03C9)
+0x03C6: JUMP(0x043D)
+0x03C9: IF_JUMP(ROOM_PARAM == 4, 0x03FF)
+0x03D1: JUMP 0x03E7 IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x03D7: SET_POSITION_UNSIGNED(-846, -30, 0)
+0x03DF: SET_ROTATION(0)
+0x03E2: TOGGLE_RECT_COLLISION(0x01)
+0x03E4: JUMP(0x03FC)
+0x03E7: SET_POSITION_UNSIGNED(498, 61, 0)
+0x03EF: SET_ROTATION(3165)
+0x03F2: op8B(100, 300)
+0x03F7: SET_ANIMATION(9)
+0x03FA: opAE(0x01)
+0x03FC: JUMP(0x043D)
+0x03FF: IF_JUMP(ROOM_PARAM == 5, 0x040F)
+0x0407: TOGGLE_COLLISION(0x01)
+0x0409: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x040C: JUMP(0x043D)
+0x040F: JUMP 0x041D IF VAR_BIT[BRANCH1:Kid Revived] CLEAR
+0x0415: TOGGLE_COLLISION(0x01)
+0x0417: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x041A: JUMP(0x043D)
+0x041D: JUMP 0x0426 IF VAR_BIT[Returned to Doc's] CLEAR
+0x0423: JUMP(0x043D)
+0x0426: JUMP 0x042F IF VAR_BIT[Macha's Lecture] CLEAR
+0x042C: JUMP(0x043D)
+0x042F: JUMP 0x0438 IF VAR_BIT[Departed Guldove] CLEAR
+0x0435: JUMP(0x043D)
+0x0438: TOGGLE_COLLISION(0x01)
+0x043A: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x043D: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x043E: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x043F: JUMP 0x046C IF VAR_BIT[BRANCH1:Went to HydraM] CLEAR
+0x0445: DISABLE_CHARACTER_CONTROLS()
+0x0446: SET_ANIMATION(8)
+0x0449: WAIT_ANIMATION_COMPLETED?(THIS)
+0x044B: WAIT(15)
+0x044E: op49(0, -1000)
+0x0455: WAIT(30)
+0x0458: DIALOG(0x0002, 0x08)
+
+	+-------------------------
+	|Doc:
+	|...Oh, it's you dudes.
+	|The patient's strength is at
+	|its limit. Without the antidote...<Close>
+	+-------------------------
+
+0x045C: WAIT_DIALOG()
+0x045D: opFE32()
+0x045F: WAIT(45)
+0x0462: SET_ANIMATION(9)
+0x0465: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0467: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0469: JUMP(0x0484)
+0x046C: IF_JUMP(roomVar[0x06] == 0, 0x047F)
+0x0474: roomVar[0x06] = 1
+0x0477: DIALOG(0x0003, 0x08)
+
+	+-------------------------
+	|Doc:
+	|I will do what I can.
+	|You dudes go do whatever
+	|you can for her.
+	+-------------------------
+	|To be perfectly honest, without
+	|the antidote, her chances of
+	|survival are close to zilch.
+	+-------------------------
+	|But we cannot give up hope
+	|without a fight.<Close>
+	+-------------------------
+
+0x047B: WAIT_DIALOG()
+0x047C: JUMP(0x0484)
+0x047F: DIALOG(0x0004, 0x08)
+
+	+-------------------------
+	|Doc:
+	|I cannot promise you
+	|anything more than that.
+	|...Forgive me.<Close>
+	+-------------------------
+
+0x0483: WAIT_DIALOG()
+0x0484: STOP()
+---------------------------
+| Entity 4 ON_COLLISION
+---------------------------
+0x0485: STOP()
+---------------------------
+| Entity 4 script 4
+---------------------------
+0x0486: DISABLE_CHARACTER_CONTROLS()
+0x0487: var[0x001A] = USED_KEY_ITEM
+0x048D: IF_JUMP(USED_KEY_ITEM == "Hydra Humour", 0x04B2)
+0x0495: LOAD_ANIMATION( 0x00, THIS, 39)
+0x049A: LOAD_ANIMATION( 0x01 )
+0x049C: op8D(0x01)
+0x049E: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 4)
+0x04A1: WAIT_ROTATION(ENTITY 8)
+0x04A3: SET_ANIMATION(8)
+0x04A6: WAIT_ANIMATION_COMPLETED?(THIS)
+0x04A8: op49(0, -1000)
+0x04AF: CALL(0x16FD)
+0x04B2: ENABLE_CHARACTER_CONTROLS(0x00)
+0x04B4: STOP()
+---------------------------
+| Entity 4 script 5
+---------------------------
+0x04B5: SET_WALK_ANIMATION(0x01, 2)
+0x04B9: SET_MOVEMENT_SPEED(8)
+0x04BC: WALK_TO_POSITION(0x00, -864, -53)
+0x04C5: WALK_TO_POSITION(0x01)
+0x04C7: TOGGLE_COLLISION(0x01)
+0x04C9: SET_ANIMATION(1)
+0x04CC: WAIT(8)
+0x04CF: FREE_EXTRA_ANIMATION(THIS)
+0x04D1: STOP()
+---------------------------
+| Entity 4 script 6
+---------------------------
+0x04D2: LOAD_ANIMATION( 0x00, THIS, 295)
+0x04D7: LOAD_ANIMATION( 0x01 )
+0x04D9: opFE07(1)
+0x04DC: opB7(3584)
+0x04E0: WALK_TO_POSITION(0x00, 403, 83)
+0x04E9: WALK_TO_POSITION(0x01)
+0x04EB: SET_ROTATION(1245)
+0x04EE: WAIT_ROTATION()
+0x04EF: WAIT(5)
+0x04F2: SET_ANIMATION(129)
+0x04F5: WAIT_ANIMATION_COMPLETED?(THIS)
+0x04F7: opFE07(0)
+0x04FA: opB7(4096)
+0x04FE: STOP()
+---------------------------
+| Entity 4 script 7
+---------------------------
+0x04FF: SET_MOVEMENT_SPEED(3)
+0x0502: opFE07(1)
+0x0505: WALK_TO_POSITION(0x00, 416, 103)
+0x050E: WALK_TO_POSITION(0x01)
+0x0510: WALK_TO_POSITION(0x00, 342, -1)
+0x0519: WALK_TO_POSITION(0x01)
+0x051B: SET_ROTATION(1300)
+0x051E: opFE07(0)
+0x0521: STOP()
+---------------------------
+| Entity 4 script 8
+---------------------------
+0x0522: SET_MOVEMENT_SPEED(2)
+0x0525: opCA()
+0x0526: WAIT_ROTATION()
+0x0527: WALK_TO_POSITION(0x00, 374, 105)
+0x0530: WALK_TO_POSITION(0x01)
+0x0532: SET_ROTATION(3400)
+0x0535: WAIT(5)
+0x0538: SET_ANIMATION(4)
+0x053B: STOP()
+---------------------------
+| Entity 4 script 9
+---------------------------
+0x053C: SET_MOVEMENT_SPEED(3)
+0x053F: roomVar[0x01] = 1
+0x0542: opCA()
+0x0543: WAIT_ROTATION()
+0x0544: WALK_TO_POSITION(0x00, 161, -39)
+0x054D: WALK_TO_POSITION(0x01)
+0x054F: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 5, script 13, 0x20)
+0x0552: WALK_TO_POSITION(0x00, -132, -176)
+0x055B: WALK_TO_POSITION(0x01)
+0x055D: SET_ROTATION(1830)
+0x0560: STOP()
+---------------------------
+| Entity 4 script 10
+---------------------------
+0x0561: WALK_TO_POSITION(0x00, -865, 8)
+0x056A: WALK_TO_POSITION(0x01)
+0x056C: TOGGLE_COLLISION(0x01)
+0x056E: SET_ANIMATION(1)
+0x0571: WAIT(8)
+0x0574: FREE_EXTRA_ANIMATION(THIS)
+0x0576: STOP()
+---------------------------
+| Entity 4 script 11
+---------------------------
+0x0577: WAIT(30)
+0x057A: WALK_TO_POSITION(0x00, -612, -30)
+0x0583: WALK_TO_POSITION(0x01)
+0x0585: STOP()
+---------------------------
+| Entity 4 script 12
+---------------------------
+0x0586: opCA()
+0x0587: WAIT_ROTATION()
+0x0588: WALK_TO_POSITION(0x00, -853, -43)
+0x0591: WALK_TO_POSITION(0x01)
+0x0593: TOGGLE_COLLISION(0x01)
+0x0595: SET_ANIMATION(1)
+0x0598: WAIT(8)
+0x059B: FREE_EXTRA_ANIMATION(THIS)
+0x059D: STOP()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x059E: SETUP_NPC(2)
+0x05A1: SETUP_CURRENT_DIALOG_FACE(10)
+0x05A4: opFE40(10)
+0x05A8: IF_JUMP(ROOM_PARAM == 1, 0x05BE)
+0x05B0: SET_POSITION_UNSIGNED(-236, 254, 0)
+0x05B8: SET_ROTATION(582)
+0x05BB: JUMP(0x0616)
+0x05BE: IF_JUMP(ROOM_PARAM == 2, 0x05D4)
+0x05C6: SET_POSITION_UNSIGNED(-566, -22, 0)
+0x05CE: SET_ROTATION(450)
+0x05D1: JUMP(0x0616)
+0x05D4: IF_JUMP(ROOM_PARAM == 4, 0x05F8)
+0x05DC: JUMP 0x05EA IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x05E2: TOGGLE_COLLISION(0x01)
+0x05E4: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x05E7: JUMP(0x05F5)
+0x05EA: SET_POSITION_UNSIGNED(-482, 27, 0)
+0x05F2: SET_ROTATION(0)
+0x05F5: JUMP(0x0616)
+0x05F8: IF_JUMP(ROOM_PARAM == 5, 0x0611)
+0x0600: SET_POSITION_UNSIGNED(562, -239, 0)
+0x0608: SET_ROTATION(2435)
+0x060B: SET_ANIMATION(5)
+0x060E: JUMP(0x0616)
+0x0611: TOGGLE_COLLISION(0x01)
+0x0613: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0616: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x0617: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x0618: DISABLE_CHARACTER_CONTROLS()
+0x0619: opFE07(1)
+0x061C: TURN_TO_CHARACTER(PARTY_LEADER)
+0x061E: WAIT_ROTATION()
+0x061F: IF_JUMP(ROOM_PARAM == 4, 0x062F)
+0x0627: DIALOG(0x0005, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Hey, Serge.
+	|Let's hurry up and get that
+	|to the doctor right away!<Close>
+	+-------------------------
+
+0x062B: WAIT_DIALOG()
+0x062C: JUMP(0x063A)
+0x062F: SET_ANIMATION(4)
+0x0632: WAIT(15)
+0x0635: DIALOG(0x0006, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|...WhatCHA doin'?
+	|Hurry up and go show
+	|her your face.<Close>
+	+-------------------------
+
+0x0639: WAIT_DIALOG()
+0x063A: ENABLE_CHARACTER_CONTROLS(0x00)
+0x063C: TURN_TO_CHARACTER(ENTITY 7)
+0x063E: WAIT_ROTATION()
+0x063F: opFE07(0)
+0x0642: STOP()
+---------------------------
+| Entity 5 ON_COLLISION
+---------------------------
+0x0643: STOP()
+---------------------------
+| Entity 5 script 4
+---------------------------
+0x0644: WAIT(15)
+0x0647: CHARACTER_PLAY_ANIM(ENTITY 5, 137)
+0x064B: WAIT_ANIMATION_COMPLETED?(ENTITY 5)
+0x064D: STOP()
+---------------------------
+| Entity 5 script 5
+---------------------------
+0x064E: TURN_TO_CHARACTER_2(ENTITY 8, THIS)
+0x0651: opFE07(1)
+0x0654: WALK_TO_POSITION(0x00, -190, -251)
+0x065D: WALK_TO_POSITION(0x01)
+0x065F: WALK_TO_POSITION(0x00, -55, -302)
+0x0668: WALK_TO_POSITION(0x01)
+0x066A: SET_ROTATION(3465)
+0x066D: WAIT_ROTATION()
+0x066E: opFE07(0)
+0x0671: STOP()
+---------------------------
+| Entity 5 script 6
+---------------------------
+0x0672: DIALOG(0x0007, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Don'tCHA be sayin' you
+	|have no idea!
+	+-------------------------
+	|What are we gonna do...
+	|Uh,<Unknow17 2> there's no point
+	|blaming it on you, I guess.<Unknow03><Unknow17 3><Unknow16 1><Auto close 1>
+	+-------------------------
+
+0x0676: WAIT_DIALOG()
+0x0677: STOP()
+---------------------------
+| Entity 5 script 7
+---------------------------
+0x0678: opFE07(1)
+0x067B: WALK_TO_POSITION(0x00, 82, -46)
+0x0684: WALK_TO_POSITION(0x01)
+0x0686: TURN_TO_CHARACTER(PARTY_LEADER)
+0x0688: WAIT_ROTATION()
+0x0689: STOP()
+---------------------------
+| Entity 5 script 8
+---------------------------
+0x068A: LOAD_ANIMATION( 0x00, ENTITY 5, 266)
+0x068F: LOAD_ANIMATION( 0x01 )
+0x0691: SET_WALK_ANIMATION(0x01, 2)
+0x0695: SET_MOVEMENT_SPEED(8)
+0x0698: WALK_TO_POSITION(0x00, -354, 26)
+0x06A1: WALK_TO_POSITION(0x01)
+0x06A3: SET_MOVEMENT_SPEED(10)
+0x06A6: WALK_TO_POSITION(0x00, -863, 66)
+0x06AF: WALK_TO_POSITION(0x01)
+0x06B1: SET_WALK_ANIMATION(0x01, 3)
+0x06B5: WAIT(15)
+0x06B8: PLAY_SOUNDFX(325, 128, 80, 0)
+0x06C2: FORCE_CHARACTER_DIRECTION(1, PC1)
+0x06C6: DIALOG(0x0008, 0x48)
+
+	+-------------------------
+	|Whoa!<Auto close 10>
+	+-------------------------
+
+0x06CA: WAIT_DIALOG()
+0x06CB: TURN_TO_CHARACTER_2(PC1, ENTITY 5)
+0x06CE: JUMP 0x06D7 IF VAR_BIT[Kid is Befriended] CLEAR
+0x06D4: JUMP(0x06DD)
+0x06D7: WAIT(5)
+0x06DA: TURN_TO_CHARACTER_2(PC2, ENTITY 5)
+0x06DD: op47(0x01)
+0x06DF: SET_WALK_ANIMATION(0x03, 136)
+0x06E3: SET_ANIMATION(135)
+0x06E6: op93(0x01)
+0x06E8: JUMP_MOVE(0, -549, 30, 18, 0)
+0x06F3: JUMP_MOVE(3)
+0x06F5: PLAY_SOUNDFX(288, 0)
+0x06FB: SET_POSITION_UNSIGNED(-549, 30, 0)
+0x0703: op93(0x00)
+0x0705: SET_ANIMATION(137)
+0x0708: WAIT_ANIMATION_COMPLETED?(THIS)
+0x070A: SET_ANIMATION(1)
+0x070D: WAIT(8)
+0x0710: FREE_EXTRA_ANIMATION(THIS)
+0x0712: SET_MOVEMENT_SPEED(5)
+0x0715: WAIT(15)
+0x0718: DIALOG(0x0009, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Who the hell are you!?<Close>
+	+-------------------------
+
+0x071C: WAIT_DIALOG()
+0x071D: STOP()
+---------------------------
+| Entity 5 script 9
+---------------------------
+0x071E: SET_MOVEMENT_SPEED(4)
+0x0721: opB7(-3584)
+0x0725: WALK_TO_POSITION(0x00, -391, 52)
+0x072E: WALK_TO_POSITION(0x01)
+0x0730: op47(0x00)
+0x0732: SET_ROTATION(1346)
+0x0735: op47(0x01)
+0x0737: WALK_TO_POSITION(0x00, -320, 161)
+0x0740: WALK_TO_POSITION(0x01)
+0x0742: op47(0x00)
+0x0744: opB7(4096)
+0x0748: SET_MOVEMENT_SPEED(5)
+0x074B: STOP()
+---------------------------
+| Entity 5 script 10
+---------------------------
+0x074C: SET_MOVEMENT_SPEED(3)
+0x074F: opFE07(1)
+0x0752: opB7(3072)
+0x0756: WALK_TO_POSITION(0x00, 244, -40)
+0x075F: WALK_TO_POSITION(0x01)
+0x0761: TURN_TO_CHARACTER(PARTY_LEADER)
+0x0763: WAIT_ROTATION()
+0x0764: opB7(4096)
+0x0768: STOP()
+---------------------------
+| Entity 5 script 11
+---------------------------
+0x0769: SET_MOVEMENT_SPEED(3)
+0x076C: opB7(3584)
+0x0770: opCA()
+0x0771: WAIT_ROTATION()
+0x0772: WALK_TO_POSITION(0x00, 553, -205)
+0x077B: WALK_TO_POSITION(0x01)
+0x077D: TURN_TO_CHARACTER_2(Serge, THIS)
+0x0780: WAIT(15)
+0x0783: SET_ANIMATION(137)
+0x0786: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0788: WAIT(15)
+0x078B: SET_CHARACTER_HIDDEN(0x00, ENTITY 11)
+0x078E: op49(1000, -1000)
+0x0795: WAIT(120)
+0x0798: opFE32()
+0x079A: WAIT(30)
+0x079D: SET_ANIMATION(1)
+0x07A0: WAIT(15)
+0x07A3: SET_ANIMATION(4)
+0x07A6: CHARACTER_DIALOG(ENTITY 5, 0x000A, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Tsk, this is disgustin'.
+	|...It's turnin' out to be a
+	|baaad day.<Close>
+	+-------------------------
+
+0x07AB: WAIT_DIALOG()
+0x07AC: SET_MOVEMENT_SPEED(5)
+0x07AF: opCA()
+0x07B0: WAIT_ROTATION()
+0x07B1: WALK_TO_POSITION(0x00, -865, 8)
+0x07BA: WALK_TO_POSITION(0x01)
+0x07BC: TOGGLE_COLLISION(0x01)
+0x07BE: SET_ANIMATION(1)
+0x07C1: WAIT(8)
+0x07C4: FREE_EXTRA_ANIMATION(THIS)
+0x07C6: STOP()
+---------------------------
+| Entity 5 script 12
+---------------------------
+0x07C7: WALK_TO_POSITION(0x00, -49, -42)
+0x07D0: WALK_TO_POSITION(0x01)
+0x07D2: opFE07(1)
+0x07D5: TURN_TO_CHARACTER(ENTITY 4)
+0x07D7: WAIT_ROTATION()
+0x07D8: STOP()
+---------------------------
+| Entity 5 script 13
+---------------------------
+0x07D9: SET_ROTATION(500)
+0x07DC: WAIT_ROTATION()
+0x07DD: op47(0x01)
+0x07DF: WALK_TO_POSITION(0x00, -115, 67)
+0x07E8: WALK_TO_POSITION(0x01)
+0x07EA: op47(0x00)
+0x07EC: STOP()
+---------------------------
+| Entity 5 script 14
+---------------------------
+0x07ED: SET_WALK_ANIMATION(0x01, 2)
+0x07F1: SET_MOVEMENT_SPEED(7)
+0x07F4: WALK_TO_POSITION(0x00, -80, -9)
+0x07FD: WALK_TO_POSITION(0x01)
+0x07FF: SET_MOVEMENT_SPEED(5)
+0x0802: SET_WALK_ANIMATION(0x01, 3)
+0x0806: STOP()
+---------------------------
+| Entity 5 script 15
+---------------------------
+0x0807: opFE07(1)
+0x080A: TURN_TO_CHARACTER(PARTY_LEADER)
+0x080C: WAIT_ROTATION()
+0x080D: DIALOG(0x000B, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Hey, wait a minute!
+	|Where do ya think you're goin',
+	|leavin' a poor girl behind!?<Close>
+	+-------------------------
+
+0x0811: WAIT_DIALOG()
+0x0812: TURN_TO_CHARACTER(ENTITY 7)
+0x0814: WAIT_ROTATION()
+0x0815: opFE07(0)
+0x0818: STOP()
+---------------------------
+| Entity 5 script 16
+---------------------------
+0x0819: opFE07(1)
+0x081C: TURN_TO_CHARACTER(PARTY_LEADER)
+0x081E: WAIT_ROTATION()
+0x081F: DIALOG(0x000C, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Hey, Serge.
+	|The doctor's over here.
+	|Where ya tryin' to go?<Close>
+	+-------------------------
+
+0x0823: WAIT_DIALOG()
+0x0824: TURN_TO_CHARACTER(ENTITY 7)
+0x0826: WAIT_ROTATION()
+0x0827: opFE07(0)
+0x082A: STOP()
+---------------------------
+| Entity 5 script 17
+---------------------------
+0x082B: SET_MOVEMENT_SPEED(3)
+0x082E: opFE07(1)
+0x0831: opB7(3584)
+0x0835: WALK_TO_POSITION(0x00, 342, -193)
+0x083E: WALK_TO_POSITION(0x01)
+0x0840: TURN_TO_CHARACTER(ENTITY 7)
+0x0842: WAIT_ROTATION()
+0x0843: SET_MOVEMENT_SPEED(5)
+0x0846: opB7(4096)
+0x084A: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x084B: SETUP_NPC(4)
+0x084E: SET_POSITION_UNSIGNED(-867, -20, 0)
+0x0856: SETUP_CURRENT_DIALOG_FACE(22)
+0x0859: TOGGLE_RECT_COLLISION(0x01)
+0x085B: opFE40(22)
+0x085F: op37(0x00)
+0x0861: TOGGLE_COLLISION(0x01)
+0x0863: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0866: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x0867: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x0868: STOP()
+---------------------------
+| Entity 6 script 4
+---------------------------
+0x0869: SET_MOVEMENT_SPEED(3)
+0x086C: WALK_TO_POSITION(0x00, -678, 35)
+0x0875: WALK_TO_POSITION(0x01)
+0x0877: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 5, script 9, 0x20)
+0x087A: WALK_TO_POSITION(0x00, -455, 35)
+0x0883: WALK_TO_POSITION(0x01)
+0x0885: op49(0, 300)
+0x088C: WAIT(30)
+0x088F: op49(0, -300)
+0x0896: WAIT(30)
+0x0899: opFE32()
+0x089B: WAIT(45)
+0x089E: STOP()
+---------------------------
+| Entity 6 script 5
+---------------------------
+0x089F: opFE07(1)
+0x08A2: WALK_TO_POSITION(0x00, -75, 35)
+0x08AB: WALK_TO_POSITION(0x01)
+0x08AD: TURN_TO_CHARACTER(PARTY_LEADER)
+0x08AF: WAIT_ROTATION()
+0x08B0: STOP()
+---------------------------
+| Entity 6 script 6
+---------------------------
+0x08B1: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 5, script 14, 0x20)
+0x08B4: PLAY_SOUNDFX(2, 0)
+0x08BA: opFE45(0x01, THIS, 0x00, 0x80)
+0x08C0: roomVar[0x07] = 128
+0x08C6: IF_JUMP(roomVar[0x07] > 0, 0x08E3)
+0x08CE: op59()
+0x08CF: CHARACTER_RGB(THIS, roomVar[0x07], roomVar[0x07], roomVar[0x07])
+0x08D7: roomVar[0x07] -= 4
+0x08DD: WAIT(0)
+0x08E0: JUMP(0x08C6)
+0x08E3: SET_POSITION_UNSIGNED(461, 106, 0)
+0x08EB: SET_ROTATION(3400)
+0x08EE: SET_ANIMATION(1)
+0x08F1: STOP()
+---------------------------
+| Entity 6 script 7
+---------------------------
+0x08F2: PLAY_SOUNDFX(3, 0)
+0x08F8: opFE45(0x01, THIS, 0x00, 0x80)
+0x08FE: roomVar[0x07] = 0
+0x0901: IF_JUMP(roomVar[0x07] < 128, 0x091B)
+0x0909: op59()
+0x090A: CHARACTER_RGB(THIS, roomVar[0x07], roomVar[0x07], roomVar[0x07])
+0x0912: roomVar[0x07] ++
+0x0915: WAIT(0)
+0x0918: JUMP(0x0901)
+0x091B: opFE45(0x00, THIS)
+0x091F: opFE07(1)
+0x0922: SET_ROTATION(1500)
+0x0925: WAIT_ROTATION()
+0x0926: SET_ANIMATION(4)
+0x0929: STOP()
+---------------------------
+| Entity 6 script 8
+---------------------------
+0x092A: PLAY_SOUNDFX(2, 0)
+0x0930: opFE45(0x01, THIS, 0x00, 0x80)
+0x0936: roomVar[0x07] = 128
+0x093C: IF_JUMP(roomVar[0x07] > 0, 0x0959)
+0x0944: op59()
+0x0945: CHARACTER_RGB(THIS, roomVar[0x07], roomVar[0x07], roomVar[0x07])
+0x094D: roomVar[0x07] -= 2
+0x0953: WAIT(0)
+0x0956: JUMP(0x093C)
+0x0959: SET_ANIMATION(1)
+0x095C: WAIT(8)
+0x095F: FREE_EXTRA_ANIMATION(THIS)
+0x0961: STOP()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x0962: IF_JUMP(ROOM_PARAM == 5, 0x097B)
+0x096A: SETUP_NPC(1)
+0x096D: SET_POSITION_UNSIGNED(360, 106, 0)
+0x0975: SET_ROTATION(1475)
+0x0978: JUMP(0x0994)
+0x097B: SETUP_NPC(6)
+0x097E: SET_POSITION_SIGNED(403, 421, -70)
+0x0986: op27(3072)
+0x0989: SET_ROTATION(2048)
+0x098C: op2A(100)
+0x0990: opB7(3072)
+0x0994: SETUP_CURRENT_DIALOG_FACE(1)
+0x0997: opFE40(3)
+0x099B: op37(0x00)
+0x099D: JUMP 0x09A8 IF VAR_BIT[BRANCH1:Kid Revived] CLEAR
+0x09A3: TOGGLE_COLLISION(0x01)
+0x09A5: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x09A8: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x09A9: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x09AA: STOP()
+---------------------------
+| Entity 7 script 4
+---------------------------
+0x09AB: op49(0, 400)
+0x09B2: WAIT(60)
+0x09B5: opFE32()
+0x09B7: WAIT(75)
+0x09BA: SET_MOVEMENT_SPEED(3)
+0x09BD: opB7(3584)
+0x09C1: opCA()
+0x09C2: WAIT_ROTATION()
+0x09C3: WALK_TO_POSITION(0x00, 120, 90)
+0x09CC: WALK_TO_POSITION(0x01)
+0x09CE: WALK_TO_POSITION(0x00, -7, 223)
+0x09D7: WALK_TO_POSITION(0x01)
+0x09D9: TURN_TO_CHARACTER_2(PARTY_LEADER, THIS)
+0x09DC: WAIT(5)
+0x09DF: TURN_TO_CHARACTER_2(PC1, THIS)
+0x09E2: WAIT_ONE_FRAME()
+0x09E3: TURN_TO_CHARACTER_2(PC2, THIS)
+0x09E6: WAIT(10)
+0x09E9: SET_ROTATION(2975)
+0x09EC: WAIT_ROTATION()
+0x09ED: SET_MOVEMENT_SPEED(5)
+0x09F0: opB7(4096)
+0x09F4: LOAD_ANIMATION( 0x00, THIS, 59)
+0x09F9: LOAD_ANIMATION( 0x01 )
+0x09FB: SET_ANIMATION(135)
+0x09FE: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0A00: WAIT(75)
+0x0A03: SET_ANIMATION(137)
+0x0A06: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0A08: WAIT(20)
+0x0A0B: SET_ANIMATION(4)
+0x0A0E: WAIT(8)
+0x0A11: FREE_EXTRA_ANIMATION(THIS)
+0x0A13: WAIT(60)
+0x0A16: LOAD_ANIMATION( 0x00, THIS, 257)
+0x0A1B: LOAD_ANIMATION( 0x01 )
+0x0A1D: SET_ANIMATION(132)
+0x0A20: STOP()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x0A21: SETUP_NPC(3)
+0x0A24: SET_POSITION_UNSIGNED(101, 225, 0)
+0x0A2C: SET_ROTATION(512)
+0x0A2F: opFE40(0)
+0x0A33: AXIS_CHARACTER_SCALE(0x0F, THIS, 488)
+0x0A38: IF_JUMP(ROOM_PARAM == 2, 0x0A43)
+0x0A40: SET_ROTATION(1400)
+0x0A43: opFE07(1)
+0x0A46: JUMP 0x0A51 IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x0A4C: TOGGLE_COLLISION(0x01)
+0x0A4E: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0A51: JUMP 0x0A5C IF VAR_BIT[BRANCH1:Kid Revived] CLEAR
+0x0A57: TOGGLE_COLLISION(0x01)
+0x0A59: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0A5C: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x0A5D: IF_JUMP(roomVar[0x01] == 0, 0x0A68)
+0x0A65: JUMP(0x0A6A)
+0x0A68: TURN_TO_CHARACTER(ENTITY 4)
+0x0A6A: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x0A6B: TURN_TO_CHARACTER(PARTY_LEADER)
+0x0A6D: WAIT_ROTATION()
+0x0A6E: if( SCENARIO_FLAG < 56 ) jump 0x0A79
+0x0A73: DIALOG(0x000D, 0x08)
+
+	+-------------------------
+	|Don't give up hope.
+	|We will do our best
+	|to save her...<Close>
+	+-------------------------
+
+0x0A77: WAIT_DIALOG()
+0x0A78: STOP()
+0x0A79: DIALOG(0x000E, 0x08)
+
+	+-------------------------
+	|Even when she is suffering
+	|from a high fever, she is
+	|worrying about you, Serge...<Close>
+	+-------------------------
+
+0x0A7D: WAIT_DIALOG()
+0x0A7E: STOP()
+---------------------------
+| Entity 8 ON_COLLISION
+---------------------------
+0x0A7F: STOP()
+---------------------------
+| Entity 8 script 4
+---------------------------
+0x0A80: SET_MOVEMENT_SPEED(3)
+0x0A83: WALK_TO_POSITION(0x00, 30, 70)
+0x0A8C: WALK_TO_POSITION(0x01)
+0x0A8E: SET_ROTATION(1600)
+0x0A91: WAIT_ROTATION()
+0x0A92: STOP()
+---------------------------
+| Entity 8 script 5
+---------------------------
+0x0A93: SET_MOVEMENT_SPEED(7)
+0x0A96: SET_WALK_ANIMATION(0x01, 2)
+0x0A9A: WALK_TO_POSITION(0x00, -239, 88)
+0x0AA3: WALK_TO_POSITION(0x01)
+0x0AA5: WALK_TO_POSITION(0x00, -865, 14)
+0x0AAE: WALK_TO_POSITION(0x01)
+0x0AB0: TOGGLE_COLLISION(0x01)
+0x0AB2: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0AB5: STOP()
+
+
+---------------------------
+| Entity 9 INIT
+---------------------------
+0x0AB6: SET_POSITION_UNSIGNED(-257, -7, 0)
+0x0ABE: TOGGLE_RECT_COLLISION(0x00)
+0x0AC0: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0AC3: STOP()
+---------------------------
+| Entity 9 UPDATE
+---------------------------
+0x0AC4: STOP()
+---------------------------
+| Entity 9 ON_ACTION
+---------------------------
+0x0AC5: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 10, 0x20)
+0x0AC8: STOP()
+---------------------------
+| Entity 9 ON_COLLISION
+---------------------------
+0x0AC9: STOP()
+---------------------------
+| Entity 9 script 4
+---------------------------
+0x0ACA: SET_POSITION_UNSIGNED(-213, -259, 0)
+0x0AD2: STOP()
+
+
+---------------------------
+| Entity 10 INIT
+---------------------------
+0x0AD3: SET_POSITION_UNSIGNED(450, -298, 0)
+0x0ADB: TOGGLE_RECT_COLLISION(0x00)
+0x0ADD: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0AE0: STOP()
+---------------------------
+| Entity 10 UPDATE
+---------------------------
+0x0AE1: STOP()
+---------------------------
+| Entity 10 ON_ACTION
+---------------------------
+0x0AE2: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 11, 0x20)
+0x0AE5: STOP()
+---------------------------
+| Entity 10 ON_COLLISION
+---------------------------
+0x0AE6: STOP()
+---------------------------
+| Entity 10 script 4
+---------------------------
+0x0AE7: SET_POSITION_UNSIGNED(301, -131, 0)
+0x0AEF: STOP()
+
+
+---------------------------
+| Entity 11 INIT
+---------------------------
+0x0AF0: SETUP_NPC(5)
+0x0AF3: SET_POSITION_UNSIGNED(671, -307, 0)
+0x0AFB: SET_ROTATION(1024)
+0x0AFE: op37(0x00)
+0x0B00: JUMP 0x0B09 IF VAR_BIT[BRANCH1:Ditched Kid] CLEAR
+0x0B06: JUMP(0x0B0E)
+0x0B09: TOGGLE_COLLISION(0x01)
+0x0B0B: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0B0E: STOP()
+---------------------------
+| Entity 11 UPDATE
+---------------------------
+0x0B0F: STOP()
+---------------------------
+| Entity 11 ON_ACTION
+---------------------------
+0x0B10: STOP()
+
+
+---------------------------
+| Entity 12 INIT
+---------------------------
+0x0B11: op37(0x00)
+0x0B13: STOP()
+---------------------------
+| Entity 12 UPDATE
+---------------------------
+0x0B14: if 56 == SCENARIO_FLAG jump 0x0B1D
+0x0B19: opFE17(1)
+0x0B1C: STOP_SCRIPT_EXEC()
+0x0B1D: STOP()
+---------------------------
+| Entity 12 ON_ACTION
+---------------------------
+0x0B1E: STOP()
+---------------------------
+| Entity 12 script 4
+---------------------------
+0x0B1F: roomVar[0x08] = 0
+0x0B22: IF_JUMP(roomVar[0x08] < 100, 0x0B30)
+0x0B2A: roomVar[0x08] ++
+0x0B2D: JUMP(0x0B22)
+0x0B30: PLAY_SOUNDFX(5, 0)
+0x0B36: STOP()
+
+
+---------------------------
+| Entity 13 INIT
+---------------------------
+0x0B37: op37(0x00)
+0x0B39: STOP()
+---------------------------
+| Entity 13 UPDATE
+---------------------------
+0x0B3A: STOP()
+---------------------------
+| Entity 13 ON_ACTION
+---------------------------
+0x0B3B: STOP()
+---------------------------
+| Entity 13 script 4
+---------------------------
+0x0B3C: SET_CAMERA_POSITION( 0x00, 45, -36, 100)
+0x0B47: STOP()
+---------------------------
+| Entity 13 script 5
+---------------------------
+0x0B48: SET_CAMERA_POSITION( 0x00, -90, -36, 150)
+0x0B53: STOP()
+---------------------------
+| Entity 13 script 6
+---------------------------
+0x0B54: SET_CAMERA_POSITION( 0x00, 15, -36, 90)
+0x0B5F: STOP()
+---------------------------
+| Entity 13 script 7
+---------------------------
+0x0B60: SET_CAMERA_POSITION( 0x00, -60, -36, 120)
+0x0B6B: STOP()
+---------------------------
+| Entity 13 script 8
+---------------------------
+0x0B6C: SET_CAMERA_POSITION( 0x00, 60, -36, 0)
+0x0B77: STOP()
+---------------------------
+| Entity 13 script 9
+---------------------------
+0x0B78: SET_CAMERA_POSITION( 0x00, -70, -30, 60)
+0x0B83: STOP()
+---------------------------
+| Entity 13 script 10
+---------------------------
+0x0B84: SET_CAMERA_POSITION( 0x00, -70, 105, 120)
+0x0B8F: STOP()
+
+
+---------------------------
+| Entity 14 INIT
+---------------------------
+0x0B90: SET_POSITION_UNSIGNED(-866, 55, 0)
+0x0B98: op8D(0x00)
+0x0B9A: RECT_SIZE(30, 100)
+0x0B9F: SET_ROTATION(2048)
+0x0BA2: IF_JUMP(ROOM_PARAM == 4, 0x0BB3)
+0x0BAA: JUMP 0x0BB3 IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x0BB0: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0BB3: STOP()
+---------------------------
+| Entity 14 UPDATE
+---------------------------
+0x0BB4: roomVar[0x09] = 0
+0x0BB7: STOP()
+---------------------------
+| Entity 14 ON_ACTION
+---------------------------
+0x0BB8: STOP()
+---------------------------
+| Entity 14 ON_COLLISION
+---------------------------
+0x0BB9: IF_JUMP(ROOM_PARAM == 4, 0x0BF1)
+0x0BC1: JUMP 0x0BE0 IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x0BC7: IF_JUMP(roomVar[0x09] == 0, 0x0BDD)
+0x0BCF: DISABLE_CHARACTER_CONTROLS()
+0x0BD0: roomVar[0x09] = 1
+0x0BD3: DIALOG(0x000F, 0x0D)
+
+	+-------------------------
+	|You haven't talked
+	|to Kid yet.
+	|There's no way you
+	|can leave the room!<Close>
+	+-------------------------
+
+0x0BD7: WAIT_DIALOG()
+0x0BD8: RUN_ENTITY_SCRIPT_BLOCKING(Serge, script 5, 0x30)
+0x0BDB: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0BDD: JUMP(0x0BEE)
+0x0BE0: IF_JUMP(roomVar[0x09] == 0, 0x0BEE)
+0x0BE8: roomVar[0x09] = 1
+0x0BEB: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 0, 0x30)
+0x0BEE: JUMP(0x0C12)
+0x0BF1: if( SCENARIO_FLAG < 56 ) jump 0x0C04
+0x0BF6: DISABLE_CHARACTER_CONTROLS()
+0x0BF7: opFE29(7)
+0x0BFB: SET_NEXT_ROOM("CD0-212-Guldove - Doc's House (Another)", 1)
+0x0C00: STOP_SCRIPT_EXEC()
+0x0C01: JUMP(0x0C12)
+0x0C04: IF_JUMP(roomVar[0x09] == 0, 0x0C12)
+0x0C0C: roomVar[0x09] = 1
+0x0C0F: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 15, 0x20)
+0x0C12: STOP()
+
+
+---------------------------
+| Entity 15 INIT
+---------------------------
+0x0C13: SET_POSITION_SIGNED(530, 421, -70)
+0x0C1B: op8D(0x00)
+0x0C1D: RECT_SIZE(30, 350)
+0x0C22: SET_ROTATION(2048)
+0x0C25: JUMP 0x0C30 IF VAR_BIT[BRANCH1:Kid Revived] CLEAR
+0x0C2B: op8D(0x01)
+0x0C2D: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0C30: STOP()
+---------------------------
+| Entity 15 UPDATE
+---------------------------
+0x0C31: STOP()
+---------------------------
+| Entity 15 ON_ACTION
+---------------------------
+0x0C32: JUMP 0x0CDF IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x0C38: DISABLE_CHARACTER_CONTROLS()
+0x0C39: RUN_ENTITY_SCRIPT_BLOCKING(Serge, script 7, 0x20)
+0x0C3C: WAIT(15)
+0x0C3F: SET_CHARACTER_HEAD_ANGLE(0, -1000, ENTITY 7)
+0x0C47: WAIT(60)
+0x0C4A: CHARACTER_DIALOG(ENTITY 7, 0x0010, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Hehe, you've become
+	|bloody handsome while
+	|I was out of it.<Close>
+	+-------------------------
+
+0x0C4F: WAIT_DIALOG()
+0x0C50: WAIT(15)
+0x0C53: var[0x0022] = 0
+0x0C56: SET_CHARACTER_HEAD_DEFAULT(ENTITY 7)
+0x0C59: WAIT(45)
+0x0C5C: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 16, script 6, 0x20)
+0x0C5F: IF_JUMP(var[0x0022] == 0, 0x0C6A)
+0x0C67: JUMP(0x0C5F)
+0x0C6A: SET_CHARACTER_HEAD_ANGLE(0, -1000, ENTITY 7)
+0x0C72: IF_JUMP(var[0x0022] <= 2, 0x0C7D)
+0x0C7A: JUMP(0x0C72)
+0x0C7D: var[0x0022] = 1
+0x0C80: WAIT(75)
+0x0C83: CHARACTER_DIALOG(ENTITY 7, 0x0011, 0x08)
+
+	+-------------------------
+	|Kid:
+	|...Oi, Serge.
+	|Ya did good, mate. Why don't ya
+	|look cheerful for a change?<Close>
+	+-------------------------
+
+0x0C88: WAIT_DIALOG()
+0x0C89: WAIT(15)
+0x0C8C: CHARACTER_DIALOG(ENTITY 7, 0x0012, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Ha, I would've been alright
+	|without any antidote at all!
+	+-------------------------
+	|Struth...
+	|Now I owe ya one...<Close>
+	+-------------------------
+
+0x0C91: WAIT_DIALOG()
+0x0C92: SET_CHARACTER_HEAD_ANGLE(0, 300, ENTITY 7)
+0x0C9A: WAIT(90)
+0x0C9D: SETUP_DIALOG_WINDOW( X:260, Y:75, LettersHigh:0, LettersWide:0, Flag:856)
+0x0CA8: CHARACTER_DIALOG(ENTITY 7, 0x0013, 0x00)
+
+	+-------------------------
+	|Kid:
+	|Serge...
+	|Thanks.<Close>
+	+-------------------------
+
+0x0CAD: WAIT_DIALOG()
+0x0CAE: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x0CB9: SET_SCREEN_RGB(2, 255, 255, 255, 45)
+0x0CC4: WAIT(60)
+0x0CC7: CHARACTER_PLAY_ANIM(Serge, 1)
+0x0CCB: WAIT(8)
+0x0CCE: FREE_EXTRA_ANIMATION(Serge)
+0x0CD0: WAIT_ONE_FRAME()
+0x0CD1: opFE29(7)
+0x0CD5: opFE02(0)
+0x0CD9: SET_NEXT_ROOM("CD0-212-Guldove - Doc's House (Another)", 5)
+0x0CDE: STOP_SCRIPT_EXEC()
+0x0CDF: JUMP 0x0CE8 IF VAR_BIT[Took Astral Charm] CLEAR
+0x0CE5: JUMP(0x0CF0)
+0x0CE8: CALL(0x1304)
+0x0CEB: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 5, 0x20)
+0x0CEE: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0CF0: STOP()
+---------------------------
+| Entity 15 ON_COLLISION
+---------------------------
+0x0CF1: STOP()
+
+
+---------------------------
+| Entity 16 INIT
+---------------------------
+0x0CF2: op37(0x00)
+0x0CF4: STOP()
+---------------------------
+| Entity 16 UPDATE
+---------------------------
+0x0CF5: STOP()
+---------------------------
+| Entity 16 ON_ACTION
+---------------------------
+0x0CF6: STOP()
+---------------------------
+| Entity 16 script 4
+---------------------------
+0x0CF7: CHARACTER_DIALOG(ENTITY 4, 0x0014, 0x08)
+
+	+-------------------------
+	|Doc:
+	|I have no idea where in the
+	|world you found this...nor do
+	|I know who you really are...
+	+-------------------------
+	|But now is not the time to
+	|ask such questions.
+	|You have done your part, now
+	|you can leave the rest to me.<Unknow03><Unknow17 3><Unknow16 1><Auto close 1>
+	+-------------------------
+
+0x0CFC: WAIT_DIALOG()
+0x0CFD: STOP()
+---------------------------
+| Entity 16 script 5
+---------------------------
+0x0CFE: CHARACTER_DIALOG(ENTITY 5, 0x0015, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|All we have left is that
+	|girl's amulet...
+	+-------------------------
+	|<Unknow17 2>Damn, what are we gonna do!?<Unknow17 3>
+	|If only we had some kinda clue!<Unknow03><Unknow17 4><Unknow16 1><Auto close 1>
+	+-------------------------
+
+0x0D03: WAIT_DIALOG()
+0x0D04: STOP()
+---------------------------
+| Entity 16 script 6
+---------------------------
+0x0D05: CHARACTER_DIALOG(ENTITY 7, 0x0016, 0x08)
+
+	+-------------------------
+	|Kid:
+	|I don't know all the details,
+	|but I heard what happened
+	|from the doc.
+	+-------------------------
+	|Looks like there's been a lot
+	|goin' on while I was asleep...<Unknow17 2>
+	|I guess it proves that you can
+	|take care of yerself now, eh?<Unknow03><Unknow17 3><Unknow16 1><Auto close 1>
+	+-------------------------
+
+0x0D0A: WAIT_DIALOG()
+0x0D0B: STOP()
+---------------------------
+| Entity 16 script 7
+---------------------------
+0x0D0C: roomVar[0x0A] = 0
+0x0D0F: IF_JUMP(roomVar[0x0A] < 145, 0x0D1D)
+0x0D17: roomVar[0x0A] ++
+0x0D1A: JUMP(0x0D0F)
+0x0D1D: PLAY_SOUNDFX(4, 0)
+0x0D23: STOP()
+
+
+---------------------------
+| Entity 17 INIT
+---------------------------
+0x0D24: op37(0x00)
+0x0D26: STOP()
+---------------------------
+| Entity 17 UPDATE
+---------------------------
+0x0D27: JUMP 0x0D30 IF VAR_BIT[BRANCH1:Kid Revived] CLEAR
+0x0D2D: JUMP(0x0D40)
+0x0D30: IF_JUMP(ROOM_PARAM != 5, 0x0D40)
+0x0D38: SET_CHARACTER_HEAD_ANGLE(0, 300, ENTITY 7)
+0x0D40: IF_JUMP(ROOM_PARAM == 1, 0x0D4E)
+0x0D48: CALL(0xD7A)
+0x0D4B: JUMP(0x0D78)
+0x0D4E: IF_JUMP(ROOM_PARAM == 2, 0x0D5C)
+0x0D56: CALL(0xDDC)
+0x0D59: JUMP(0x0D78)
+0x0D5C: IF_JUMP(ROOM_PARAM == 4, 0x0D6A)
+0x0D64: CALL(0xE10)
+0x0D67: JUMP(0x0D78)
+0x0D6A: IF_JUMP(ROOM_PARAM == 5, 0x0D78)
+0x0D72: CALL(0xE8A)
+0x0D75: JUMP(0x0D78)
+0x0D78: STOP_SCRIPT_EXEC()
+---------------------------
+| Entity 17 ON_ACTION
+---------------------------
+0x0D79: STOP()
+---------------------------
+| Sub function 0x0D7A
+---------------------------
+0x0D7A: DISABLE_CHARACTER_CONTROLS()
+0x0D7B: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x0D86: opFE18(1)
+0x0D89: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 4, 0x20)
+0x0D8C: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 4, 0x20)
+0x0D8F: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 4, 0x20)
+0x0D92: op59()
+0x0D93: JUMP 0x0DA9 IF VAR_BIT[Kid is Befriended] CLEAR
+0x0D99: REMOVE_FROM_PARTY(ENTITY 1)
+0x0D9B: Unk opcode 0xFE 0x60
+0x0D9D: 0x00
+0x0D9E: 0x01
+0x0D9F: 0x80
+0x0DA0: 0x09
+0x0DA1: 0xFE
+0x0DA2: 0x26
+0x0DA3: 0x36
+0x0DA4: 0x01
+0x0DA5: 0x09
+0x0DA6: 0x01
+0x0DA7: 0xBF
+0x0DA8: 0x0D
+0x0DA9: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 6, 0x20)
+0x0DAC: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 6, 0x20)
+0x0DAF: SET_CHARACTER_VIEWABLE(0x01, ENTITY 9)
+0x0DB2: SET_CHARACTER_VIEWABLE(0x01, ENTITY 10)
+0x0DB5: op95(1, 0x0DBF)
+0x0DBA: Unk opcode 0xFE 0x60
+0x0DBC: 0x00
+0x0DBD: 0x01
+0x0DBE: 0x80
+0x0DBF: SET_SCREEN_RGB(2, 0, 0, 0, 90)
+0x0DCA: WAIT(75)
+0x0DCD: CALL(0xF95)
+0x0DD0: SET_CAMERA_TO_ACTOR(0x00, 45)
+0x0DD4: SET_CAMERA_TO_ACTOR(0x01)
+0x0DD6: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 5, 0x20)
+0x0DD9: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0DDB: OP_RETURN()
+---------------------------
+| Sub function 0x0DDC
+---------------------------
+0x0DDC: DISABLE_CHARACTER_CONTROLS()
+0x0DDD: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x0DE8: opFE18(1)
+0x0DEB: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 13, script 8, 0x20)
+0x0DEE: op59()
+0x0DEF: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 4, 0x20)
+0x0DF2: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 4, 0x20)
+0x0DF5: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 4, 0x20)
+0x0DF8: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 12, 0x20)
+0x0DFB: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 12, 0x20)
+0x0DFE: SET_SCREEN_RGB(2, 0, 0, 0, 60)
+0x0E09: WAIT(45)
+0x0E0C: CALL(0x15CC)
+0x0E0F: OP_RETURN()
+---------------------------
+| Sub function 0x0E10
+---------------------------
+0x0E10: JUMP 0x0E80 IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x0E16: DISABLE_CHARACTER_CONTROLS()
+0x0E17: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x0E22: opFE18(1)
+0x0E25: op59()
+0x0E26: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 4, 0x20)
+0x0E29: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 4, 0x20)
+0x0E2C: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 4, 0x20)
+0x0E2F: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 3, 0x30)
+0x0E32: SET_CHARACTER_HIDDEN(0x01, PC1)
+0x0E35: SET_CHARACTER_HIDDEN(0x01, PC2)
+0x0E38: SET_SCREEN_RGB(2, 15, 10, 35, 90)
+0x0E43: var[0x0022] = 0
+0x0E46: RUN_ENTITY_SCRIPT_ASYNC(PARTY_LEADER, script 4, 0x30)
+0x0E49: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 11, 0x20)
+0x0E4C: IF_JUMP(var[0x0022] == 0, 0x0E57)
+0x0E54: JUMP(0x0E4C)
+0x0E57: WAIT(30)
+0x0E5A: CHARACTER_DIALOG(ENTITY 4, 0x0017, 0x08)
+
+	+-------------------------
+	|Doc:
+	|I will be in the room next door,
+	|so call me when you need me.
+	+-------------------------
+	|And do not forget that even
+	|though the poison is gone, she
+	|has not completely recovered.
+	+-------------------------
+	|...Well then,
+	|catch you later, dude.<Close>
+	+-------------------------
+
+0x0E5F: WAIT_DIALOG()
+0x0E60: WAIT_ONE_FRAME()
+0x0E61: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 12, 0x20)
+0x0E64: SET_CHARACTER_VIEWABLE(0x00, ENTITY 4)
+0x0E67: SET_CHARACTER_HEAD_DEFAULT(Serge)
+0x0E6A: WAIT(30)
+0x0E6D: TURN_TO_CHARACTER_2(Serge, ENTITY 7)
+0x0E70: WAIT_ROTATION(Serge)
+0x0E72: SET_CHARACTER_VIEWABLE(0x01, ENTITY 14)
+0x0E75: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 5, 0x20)
+0x0E78: opFE17(1)
+0x0E7B: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0E7D: JUMP(0x0E89)
+0x0E80: DISABLE_CHARACTER_CONTROLS()
+0x0E81: opFE18(1)
+0x0E84: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 5, 0x20)
+0x0E87: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0E89: OP_RETURN()
+---------------------------
+| Sub function 0x0E8A
+---------------------------
+0x0E8A: DISABLE_CHARACTER_CONTROLS()
+0x0E8B: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x0E96: op59()
+0x0E97: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 4, 0x20)
+0x0E9A: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 4, 0x20)
+0x0E9D: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 4, 0x20)
+0x0EA0: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 6, 0x30)
+0x0EA3: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 6, 0x30)
+0x0EA6: JUMP 0x0ECB IF VAR_BIT[Guldove Recall] CLEAR
+0x0EAC: LOAD_ANIMATION( 0x00, ENTITY 7, 58)
+0x0EB1: LOAD_ANIMATION( 0x01 )
+0x0EB3: opBF(Serge) // missing stuff, can't decode properly yet
+0x0EB8: CHARACTER_PLAY_ANIM(Serge, 130)
+0x0EBC: WAIT_ANIMATION_COMPLETED?(Serge)
+0x0EBE: FORCE_CHARACTER_DIRECTION(1, PARTY_LEADER)
+0x0EC2: FORCE_CHARACTER_DIRECTION(1, PC1)
+0x0EC6: FORCE_CHARACTER_DIRECTION(1, PC2)
+0x0ECA: WAIT_PLAY_SONG_DONE()
+0x0ECB: opFE1D(180, 127)
+0x0ED1: SET_SCREEN_RGB(2, 0, 0, 0, 60)
+0x0EDC: WAIT(45)
+0x0EDF: JUMP 0x0F22 IF VAR_BIT[Guldove Recall] CLEAR
+0x0EE5: CALL(0x1884)
+0x0EE8: SET_SCREEN_RGB(2, 255, 255, 255, 60)
+0x0EF3: WAIT(75)
+0x0EF6: IF_JUMP(PARTY_MEMBER_2 != 255, 0x0F00)
+0x0EFE: REMOVE_FROM_PARTY(PARTY_LEADER)
+0x0F00: Unk opcode 0xFE 0x60
+0x0F02: 0x01
+0x0F03: 0x01
+0x0F04: 0x80
+0x0F05: 0x7B
+0x0F06: 0x01
+0x0F07: 0x80
+0x0F08: 0x7C
+0x0F09: 0x71
+0x0F0A: 0x29
+0x0F0B: 0x1C
+0x0F0C: 0x80
+0x0F0D: 0x71
+0x0F0E: 0xA6
+0x0F0F: 0x18
+0x0F10: 0x80
+0x0F11: 0xFE
+0x0F12: 0x69
+0x0F13: 0x00
+0x0F14: 0x3A
+0x0F15: 0xFE
+0x0F16: 0x29
+0x0F17: 0x07
+0x0F18: 0x80
+0x0F19: 0x5A
+0x0F1A: 0xD4
+0x0F1B: 0x80
+0x0F1C: 0x03
+0x0F1D: 0x80
+0x0F1E: 0x3B
+0x0F1F: 0x01
+0x0F20: 0x51
+0x0F21: 0x0F
+0x0F22: CHARACTER_DIALOG(ENTITY 7, 0x0018, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Whatcha gonna do, Serge?
+	|You've already found a way
+	|back to your own world, right?
+	+-------------------------
+	|You could just go back home
+	|and live a peaceful life,
+	|pretending that nothin' ever
+	|happened.
+	+-------------------------
+	|But can ya really forget
+	|everything you've seen here?
+	|And can ya live with yerself
+	|after ya turned yer back on us?<Close>
+	+-------------------------
+
+0x0F27: WAIT_DIALOG()
+0x0F28: SET_VAR_BIT(6308:Guldove Recall)
+0x0F2C: CHANGE_FX_VOLUME( 7, 60, 0)
+0x0F34: opFE1D(60, 0)
+0x0F3A: WAIT(75)
+0x0F3D: PLAY_SONG(255)
+0x0F40: WAIT_PLAY_SONG_DONE()
+0x0F41: opFE1D(60, 127)
+0x0F47: opDC(186, 2)
+0x0F4C: PLAY_MOVIE(20)
+0x0F4F: WAIT_MOVIE()
+0x0F50: STOP_SCRIPT_EXEC()
+0x0F51: OP_RETURN()
+
+
+---------------------------
+| Entity 18 INIT
+---------------------------
+0x0F52: op37(0x00)
+0x0F54: JUMP 0x0F5D IF VAR_BIT[BRANCH1:Kid Revived] CLEAR
+0x0F5A: CALL(0xF8B)
+0x0F5D: IF_JUMP(ROOM_PARAM == 4, 0x0F77)
+0x0F65: JUMP 0x0F71 IF VAR_BIT[Handed Hydra Humor] CLEAR
+0x0F6B: DISABLE_BACKGROUND_LAYER(4)
+0x0F6E: JUMP(0x0F74)
+0x0F71: DISABLE_BACKGROUND_LAYER(3)
+0x0F74: JUMP(0x0F88)
+0x0F77: IF_JUMP(ROOM_PARAM == 5, 0x0F85)
+0x0F7F: CALL(0xF8B)
+0x0F82: JUMP(0x0F88)
+0x0F85: DISABLE_BACKGROUND_LAYER(4)
+0x0F88: STOP()
+---------------------------
+| Entity 18 UPDATE
+---------------------------
+0x0F89: STOP()
+---------------------------
+| Entity 18 ON_ACTION
+---------------------------
+0x0F8A: STOP()
+---------------------------
+| Sub function 0x0F8B
+---------------------------
+0x0F8B: DISABLE_BACKGROUND_LAYER(1)
+0x0F8E: DISABLE_BACKGROUND_LAYER(2)
+0x0F91: DISABLE_BACKGROUND_LAYER(4)
+0x0F94: OP_RETURN()
+---------------------------
+| Sub function 0x0F95
+---------------------------
+0x0F95: opFE41(0x01)
+0x0F98: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 7, 0x20)
+0x0F9B: SET_CHARACTER_HEAD_ANGLE(1000, 300, ENTITY 4)
+0x0FA3: WAIT(20)
+0x0FA6: CHARACTER_DIALOG(ENTITY 4, 0x0019, 0x08)
+
+	+-------------------------
+	|Doctor:
+	|It seems the patient has been
+	|poisoned with Hydra venom.
+	+-------------------------
+	|I would say the most she has
+	|to live is about two days...
+	+-------------------------
+	|If we had some Hydra Humour
+	|we would be able to
+	|neutralize the poison...<Close>
+	+-------------------------
+
+0x0FAB: WAIT_DIALOG()
+0x0FAC: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 12, 0x20)
+0x0FAF: CHARACTER_DIALOG(ENTITY 5, 0x001A, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Doc, if we find this
+	|Hydra Humour, we
+	|can save this girl?<Close>
+	+-------------------------
+
+0x0FB4: WAIT_DIALOG()
+0x0FB5: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 5)
+0x0FB8: WAIT_ROTATION(ENTITY 8)
+0x0FBA: CHARACTER_DIALOG(ENTITY 8, 0x001B, 0x08)
+
+	+-------------------------
+	|Yes, but that's impossible now.
+	|Hydras are now extinct on
+	|El Nido...<Close>
+	+-------------------------
+
+0x0FBF: WAIT_DIALOG()
+0x0FC0: TURN_TO_CHARACTER_2(ENTITY 5, ENTITY 8)
+0x0FC3: WAIT_ROTATION(ENTITY 5)
+0x0FC5: CHARACTER_DIALOG(ENTITY 5, 0x001C, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|What do you mean, <"extinct?">
+	|What's goin' on!?<Close>
+	+-------------------------
+
+0x0FCA: WAIT_DIALOG()
+0x0FCB: SET_CHARACTER_HEAD_DEFAULT(ENTITY 4)
+0x0FCE: WAIT(15)
+0x0FD1: TURN_TO_CHARACTER_2(ENTITY 5, ENTITY 4)
+0x0FD4: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 4)
+0x0FD7: CHARACTER_DIALOG(ENTITY 4, 0x001D, 0x08)
+
+	+-------------------------
+	|Doc:
+	|Hydras are very rare
+	|and valuable creatures.<Close>
+	+-------------------------
+
+0x0FDC: WAIT_DIALOG()
+0x0FDD: CHARACTER_DIALOG(ENTITY 4, 0x001E, 0x08)
+
+	+-------------------------
+	|Doc:
+	|The blood, bones, meat...
+	|Every part is valuable.
+	+-------------------------
+	|It's considered to be a
+	|panacea for various illnesses.
+	+-------------------------
+	|That is the reason Hydras
+	|were hunted to extinction
+	|in El Nido.<Close>
+	+-------------------------
+
+0x0FE2: WAIT_DIALOG()
+0x0FE3: WAIT(5)
+0x0FE6: TURN_TO_DIRECTION(ENTITY 8, 1100)
+0x0FEA: WAIT_ROTATION(ENTITY 8)
+0x0FEC: CHARACTER_DIALOG(ENTITY 8, 0x001F, 0x08)
+
+	+-------------------------
+	|As a result, a whole species
+	|has been made extinct.
+	|Just to make a quick fortune.<Close>
+	+-------------------------
+
+0x0FF1: WAIT_DIALOG()
+0x0FF2: JUMP 0x1005 IF VAR_BIT[Kid is Befriended] CLEAR
+0x0FF8: CHARACTER_LOOK_AT_CHARACTER(ENTITY 4, PC1)
+0x0FFC: CHARACTER_DIALOG(PC1, 0x0020, 0x08)
+
+	+-------------------------
+	|<Member 1>:
+	|Is there no way to
+	|find this humour?
+	+-------------------------
+	|If we could cross the 
+	|sea to the mainland,
+	|there might be
+	|a chance, right...?<Close>
+	+-------------------------
+
+0x1001: WAIT_DIALOG()
+0x1002: JUMP(0x100F)
+0x1005: CHARACTER_LOOK_AT_CHARACTER(ENTITY 4, PC2)
+0x1009: CHARACTER_DIALOG(PC2, 0x0021, 0x08)
+
+	+-------------------------
+	|<Member 2>:
+	|Is there no way to
+	|find this humour?
+	+-------------------------
+	|If we could cross the 
+	|sea to the mainland,
+	|there might be
+	|a chance, right...?<Close>
+	+-------------------------
+
+0x100E: WAIT_DIALOG()
+0x100F: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 8, 0x20)
+0x1012: CHARACTER_DIALOG(ENTITY 4, 0x0022, 0x08)
+
+	+-------------------------
+	|Doc:
+	|...That is not possible.
+	+-------------------------
+	|The currents of El Nido are
+	|extremely dangerous, this
+	|time of year.
+	+-------------------------
+	|It is highly improbable
+	|to cross the sea unless you
+	|are on a large vessel...<Close>
+	+-------------------------
+
+0x1017: WAIT_DIALOG()
+0x1018: LOAD_ANIMATION( 0x00, ENTITY 4, 295)
+0x101D: LOAD_ANIMATION( 0x01 )
+0x101F: CHARACTER_PLAY_ANIM(ENTITY 4, 1)
+0x1023: FORCE_CHARACTER_DIRECTION(1, ENTITY 4)
+0x1027: WAIT(15)
+0x102A: TURN_TO_DIRECTION(ENTITY 4, 1235)
+0x102E: WAIT_ROTATION(ENTITY 4)
+0x1030: CHARACTER_PLAY_ANIM(ENTITY 4, 129)
+0x1034: CHARACTER_DIALOG(ENTITY 4, 0x0023, 0x08)
+
+	+-------------------------
+	|Doc:
+	|Even if you manage to get
+	|there, your chances of finding
+	|Hydra Humour are bleak...
+	+-------------------------
+	|We do not have much time.<Close>
+	+-------------------------
+
+0x1039: WAIT_DIALOG()
+0x103A: SET_CHARACTER_HEAD_ANGLE(2100, 200, ENTITY 4)
+0x1042: WAIT(150)
+0x1045: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 4)
+0x1048: WAIT_ROTATION(ENTITY 8)
+0x104A: CHARACTER_DIALOG(ENTITY 8, 0x0024, 0x08)
+
+	+-------------------------
+	|...Doctor?<Close>
+	+-------------------------
+
+0x104F: WAIT_DIALOG()
+0x1050: FORCE_CHARACTER_DIRECTION(1, Serge)
+0x1054: FORCE_CHARACTER_DIRECTION(1, PC1)
+0x1058: SET_CHARACTER_HEAD_DEFAULT(ENTITY 4)
+0x105B: WAIT(45)
+0x105E: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 9, 0x20)
+0x1061: TURN_TO_CHARACTER_2(ENTITY 5, ENTITY 4)
+0x1064: WAIT(5)
+0x1067: TURN_TO_CHARACTER_2(Serge, ENTITY 4)
+0x106A: TURN_TO_CHARACTER_2(PC1, ENTITY 4)
+0x106D: CHARACTER_DIALOG(ENTITY 5, 0x0025, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|H-Hey, Doc!
+	|Where are you going!?
+	|Nothing's been resolved yet!<Close>
+	+-------------------------
+
+0x1072: WAIT_DIALOG()
+0x1073: WAIT(30)
+0x1076: CHARACTER_DIALOG(ENTITY 4, 0x0026, 0x08)
+
+	+-------------------------
+	|Doc:
+	|...Excuse me.
+	|I need to be alone
+	|for a while.<Close>
+	+-------------------------
+
+0x107B: WAIT_DIALOG()
+0x107C: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 10, 0x20)
+0x107F: SET_CHARACTER_VIEWABLE(0x00, ENTITY 4)
+0x1082: roomVar[0x01] = 0
+0x1085: opBF(Serge) // missing stuff, can't decode properly yet
+0x108A: roomVar[0x0B] = 0
+0x108D: IF_JUMP(roomVar[0x0B] < 150, 0x109B)
+0x1095: roomVar[0x0B] ++
+0x1098: JUMP(0x108D)
+0x109B: JUMP 0x10AD IF VAR_BIT[Kid is Befriended] CLEAR
+0x10A1: SET_CHARACTER_HEAD_DEFAULT(PC1)
+0x10A4: CHARACTER_DIALOG(PC1, 0x0027, 0x08)
+
+	+-------------------------
+	|<Member 1>:
+	|Serge,
+	|what are we
+	|going to do?
+	+-------------------------
+	|Kid is
+	|going to die
+	|if we leave
+	|her like this.<Close>
+	+-------------------------
+
+0x10A9: WAIT_DIALOG()
+0x10AA: JUMP(0x10BC)
+0x10AD: SET_CHARACTER_HEAD_DEFAULT(PC2)
+0x10B0: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 8, 0x20)
+0x10B3: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 10, script 4, 0x20)
+0x10B6: CHARACTER_DIALOG(PC2, 0x0028, 0x08)
+
+	+-------------------------
+	|<Member 2>:
+	|Serge,
+	|what are we
+	|going to do?
+	+-------------------------
+	|Kid is
+	|going to die
+	|if we leave
+	|her like this.<Close>
+	+-------------------------
+
+0x10BB: WAIT_DIALOG()
+0x10BC: CHARACTER_PLAY_ANIM(Serge, 130)
+0x10C0: roomVar[0x0B] = 0
+0x10C3: IF_JUMP(roomVar[0x0B] < 270, 0x10D1)
+0x10CB: roomVar[0x0B] ++
+0x10CE: JUMP(0x10C3)
+0x10D1: TURN_TO_DIRECTION(ENTITY 5, 2000)
+0x10D5: WAIT_ROTATION(ENTITY 5)
+0x10D7: SET_CHARACTER_HEAD_ANGLE(0, 0, Serge)
+0x10DF: CHARACTER_PLAY_ANIM(ENTITY 5, 4)
+0x10E3: CHARACTER_DIALOG(ENTITY 5, 0x0029, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|I-Is this some kinda joke?
+	|Wait right here.
+	|I'll go get the doctor back!<Close>
+	+-------------------------
+
+0x10E8: WAIT_DIALOG()
+0x10E9: SET_CHARACTER_HEAD_DEFAULT(Serge)
+0x10EC: CHARACTER_PLAY_ANIM(Serge, 1)
+0x10F0: WAIT(8)
+0x10F3: FREE_EXTRA_ANIMATION(Serge)
+0x10F5: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 9, 0x20)
+0x10F8: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 9, script 4, 0x20)
+0x10FB: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 13, script 4, 0x20)
+0x10FE: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 8, 0x20)
+0x1101: SET_CHARACTER_HIDDEN(0x00, ENTITY 6)
+0x1104: SET_CHARACTER_VIEWABLE(0x01, ENTITY 6)
+0x1107: LOAD_ANIMATION( 0x00, ENTITY 6, 278)
+0x110C: LOAD_ANIMATION( 0x01 )
+0x110E: CHARACTER_DIALOG(ENTITY 6, 0x002A, 0x48)
+
+	+-------------------------
+	|What'z this? Non apologies
+	|for bumping into moi?
+	|Ooh la lah, don't you
+	|know any manners?<Close>
+	+-------------------------
+
+0x1113: WAIT_DIALOG()
+0x1114: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 4, 0x20)
+0x1117: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 13, script 5, 0x20)
+0x111A: roomVar[0x0B] = 0
+0x111D: IF_JUMP(roomVar[0x0B] < 150, 0x112B)
+0x1125: roomVar[0x0B] ++
+0x1128: JUMP(0x111D)
+0x112B: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 13, script 6, 0x20)
+0x112E: CHARACTER_DIALOG(ENTITY 6, 0x002B, 0x08)
+
+	+-------------------------
+	|Harle:
+	|Ha haa, she is down
+	|for the count, just
+	|as I t'ought.<Close>
+	+-------------------------
+
+0x1133: WAIT_DIALOG()
+0x1134: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 5, 0x20)
+0x1137: TURN_TO_CHARACTER_2(ENTITY 5, ENTITY 6)
+0x113A: WAIT(5)
+0x113D: TURN_TO_CHARACTER_2(PC1, ENTITY 6)
+0x1140: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 6)
+0x1143: CHARACTER_DIALOG(ENTITY 6, 0x002C, 0x08)
+
+	+-------------------------
+	|Harle:
+	|Serge, mon ami,
+	|why don't we just 
+	|leave her be?<Close>
+	+-------------------------
+
+0x1148: WAIT_DIALOG()
+0x1149: WAIT(45)
+0x114C: CHARACTER_DIALOG(ENTITY 5, 0x002D, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Who are you, and what's
+	|with that strange costume!?<Close>
+	+-------------------------
+
+0x1151: WAIT_DIALOG()
+0x1152: FORCE_CHARACTER_DIRECTION(1, ENTITY 6)
+0x1156: TURN_TO_CHARACTER_2(ENTITY 6, ENTITY 5)
+0x1159: WAIT_ROTATION(ENTITY 6)
+0x115B: CHARACTER_PLAY_ANIM(ENTITY 6, 130)
+0x115F: LOAD_ANIMATION( 0x00, ENTITY 5, 266)
+0x1164: LOAD_ANIMATION( 0x01 )
+0x1166: CHARACTER_DIALOG(ENTITY 6, 0x002E, 0x08)
+
+	+-------------------------
+	|Harle:
+	|Se taire!
+	|I have no buziness with
+	|no chicken-hawk.
+	+-------------------------
+	|I am having a conversation
+	|with Serge.
+	|You're bothering moi, so
+	|keep your mouth shut.<Close>
+	+-------------------------
+
+0x116B: WAIT_DIALOG()
+0x116C: CHARACTER_DIALOG(ENTITY 5, 0x002F, 0x48)
+
+	+-------------------------
+	|Why you...<Auto close 20>
+	+-------------------------
+
+0x1171: WAIT_DIALOG()
+0x1172: CHARACTER_PLAY_ANIM(ENTITY 5, 133)
+0x1176: CHARACTER_DIALOG(ENTITY 5, 0x0030, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|I ain't gonna letCHA barge
+	|into this room and get away
+	|with all the stuff you've said!
+	+-------------------------
+	|You've made me mad.
+	|I'll show ya some manners!
+	|I'm not gonna cutCHA any slack
+	|just because you're a girl!<Close>
+	+-------------------------
+
+0x117B: WAIT_DIALOG()
+0x117C: WAIT(15)
+0x117F: LOAD_ANIMATION( 0x00, ENTITY 6, 22)
+0x1184: LOAD_ANIMATION( 0x01 )
+0x1186: CHARACTER_PLAY_ANIM(ENTITY 6, 128)
+0x118A: WAIT_ANIMATION_COMPLETED?(ENTITY 6)
+0x118C: CHARACTER_DIALOG(ENTITY 6, 0x0031, 0x08)
+
+	+-------------------------
+	|Harle:
+	|Try if you dare.
+	|I am not so weak as to
+	|be caught by a chicken-hawk!<Close>
+	+-------------------------
+
+0x1191: WAIT_DIALOG()
+0x1192: CHARACTER_DIALOG(ENTITY 5, 0x0032, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Heh, you've got some nerve.
+	|You're gonna regret it!
+	|Charge!!!<Close>
+	+-------------------------
+
+0x1197: WAIT_DIALOG()
+0x1198: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 6, 0x20)
+0x119B: CHARACTER_DIALOG(ENTITY 5, 0x0033, 0x48)
+
+	+-------------------------
+	|Oops<Auto close 20>
+	+-------------------------
+
+0x11A0: WAIT_DIALOG()
+0x11A1: TURN_TO_DIRECTION(ENTITY 5, 3560)
+0x11A5: WAIT_ROTATION(ENTITY 5)
+0x11A7: WAIT(5)
+0x11AA: TURN_TO_DIRECTION(ENTITY 5, 1260)
+0x11AE: WAIT_ROTATION(ENTITY 5)
+0x11B0: WAIT(15)
+0x11B3: TURN_TO_CHARACTER_2(ENTITY 5, PARTY_LEADER)
+0x11B6: WAIT_ROTATION(ENTITY 5)
+0x11B8: CHARACTER_DIALOG(ENTITY 5, 0x0034, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Dammit,
+	|where'd she go?<Close>
+	+-------------------------
+
+0x11BD: WAIT_DIALOG()
+0x11BE: WAIT(8)
+0x11C1: FREE_EXTRA_ANIMATION(ENTITY 5)
+0x11C3: WAIT(15)
+0x11C6: SETUP_DIALOG_WINDOW( X:160, Y:60, LettersHigh:13, LettersWide:1, Flag:32)
+0x11D1: DIALOG(0x0035, 0x00)
+
+	+-------------------------
+	|Ahahaha! You're amuzing.<Close>
+	+-------------------------
+
+0x11D5: WAIT_DIALOG()
+0x11D6: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x11E1: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 13, script 7, 0x20)
+0x11E4: WAIT(20)
+0x11E7: JUMP 0x11FF IF VAR_BIT[Kid is Befriended] CLEAR
+0x11ED: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 6)
+0x11F0: WAIT(10)
+0x11F3: TURN_TO_CHARACTER_2(PC1, ENTITY 6)
+0x11F6: WAIT(5)
+0x11F9: TURN_TO_CHARACTER_2(PARTY_LEADER, ENTITY 6)
+0x11FC: JUMP(0x1218)
+0x11FF: FORCE_CHARACTER_DIRECTION(1, PC2)
+0x1203: TURN_TO_CHARACTER_2(PC2, ENTITY 6)
+0x1206: WAIT(5)
+0x1209: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 6)
+0x120C: WAIT(15)
+0x120F: TURN_TO_CHARACTER_2(PC1, ENTITY 6)
+0x1212: WAIT(5)
+0x1215: TURN_TO_CHARACTER_2(PARTY_LEADER, ENTITY 6)
+0x1218: TURN_TO_CHARACTER_2(ENTITY 5, ENTITY 6)
+0x121B: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 7, 0x20)
+0x121E: CHARACTER_DIALOG(ENTITY 6, 0x0036, 0x08)
+
+	+-------------------------
+	|Harle:
+	|Ahaha, such a simpleton.
+	|It's so much fun playing
+	|jokes on you.
+	+-------------------------
+	|I was only here to see how
+	|she was doing, but I had
+	|fun while I was at it.<Close>
+	+-------------------------
+
+0x1223: WAIT_DIALOG()
+0x1224: WAIT(5)
+0x1227: CHARACTER_DIALOG(ENTITY 6, 0x0037, 0x08)
+
+	+-------------------------
+	|Harle:
+	|So long, Serge,
+	|au revoir, mon ami!
+	+-------------------------
+	|Please dream of moi
+	|every night!
+	|Oui!<Close>
+	+-------------------------
+
+0x122C: WAIT_DIALOG()
+0x122D: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 16, script 7, 0x20)
+0x1230: CHARACTER_PLAY_ANIM(ENTITY 6, 132)
+0x1234: roomVar[0x0B] = 0
+0x1237: IF_JUMP(roomVar[0x0B] < 210, 0x1245)
+0x123F: roomVar[0x0B] ++
+0x1242: JUMP(0x1237)
+0x1245: CHARACTER_PLAY_ANIM(ENTITY 6, 129)
+0x1249: roomVar[0x0B] = 0
+0x124C: IF_JUMP(roomVar[0x0B] < 40, 0x125A)
+0x1254: roomVar[0x0B] ++
+0x1257: JUMP(0x124C)
+0x125A: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 8, 0x20)
+0x125D: SET_CHARACTER_VIEWABLE(0x00, ENTITY 6)
+0x1260: WAIT(30)
+0x1263: CHARACTER_PLAY_ANIM(ENTITY 5, 4)
+0x1267: CHARACTER_DIALOG(ENTITY 5, 0x0038, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|...Tsk, she's a loon.
+	|What's her deal?
+	|I just don't get it.<Close>
+	+-------------------------
+
+0x126C: WAIT_DIALOG()
+0x126D: WAIT(15)
+0x1270: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x1274: roomVar[0x0B] = 0
+0x1277: IF_JUMP(roomVar[0x0B] < 120, 0x1285)
+0x127F: roomVar[0x0B] ++
+0x1282: JUMP(0x1277)
+0x1285: SET_CHARACTER_HEAD_ANGLE(900, 1200, ENTITY 5)
+0x128D: WAIT(45)
+0x1290: JUMP 0x1299 IF VAR_BIT[Kid is Befriended] CLEAR
+0x1296: TURN_TO_CHARACTER_2(PC2, PARTY_LEADER)
+0x1299: CHARACTER_DIALOG(ENTITY 5, 0x0039, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Yo, Serge, are all of
+	|your friends like that?<Close>
+	+-------------------------
+
+0x129E: WAIT_DIALOG()
+0x129F: CHARACTER_PLAY_ANIM(Serge, 4)
+0x12A3: WAIT(15)
+0x12A6: SET_CHARACTER_HEAD_ANGLE(300, -330, Serge)
+0x12AE: WAIT(75)
+0x12B1: JUMP 0x12BA IF VAR_BIT[Kid is Befriended] CLEAR
+0x12B7: TURN_TO_CHARACTER_2(PC2, ENTITY 7)
+0x12BA: SET_CHARACTER_HEAD_DEFAULT(ENTITY 5)
+0x12BD: WAIT(5)
+0x12C0: SET_CHARACTER_HEAD_DEFAULT(Serge)
+0x12C3: CHARACTER_PLAY_ANIM(Serge, 1)
+0x12C7: SETUP_DIALOG_WINDOW( X:260, Y:50, LettersHigh:0, LettersWide:0, Flag:856)
+0x12D2: CHARACTER_DIALOG(ENTITY 7, 0x003A, 0x00)
+
+	+-------------------------
+	|Kid:
+	|Oooo......
+	|Serge......<Close>
+	+-------------------------
+
+0x12D7: WAIT_DIALOG()
+0x12D8: opFE1D(120, 72)
+0x12DE: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x12E9: WAIT(30)
+0x12EC: SET_CHARACTER_HEAD_ANGLE(900, 1200, ENTITY 5)
+0x12F4: WAIT(45)
+0x12F7: CHARACTER_DIALOG(ENTITY 5, 0x003B, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|...C'mon, go talk to her.<Close>
+	+-------------------------
+
+0x12FC: WAIT_DIALOG()
+0x12FD: SET_CHARACTER_HEAD_DEFAULT(ENTITY 5)
+0x1300: WAIT(15)
+0x1303: OP_RETURN()
+---------------------------
+| Sub function 0x1304
+---------------------------
+0x1304: DISABLE_CHARACTER_CONTROLS()
+0x1305: RUN_ENTITY_SCRIPT_BLOCKING(Serge, script 7, 0x20)
+0x1308: WAIT(15)
+0x130B: SET_CHARACTER_HEAD_ANGLE(0, -1000, ENTITY 7)
+0x1313: WAIT(60)
+0x1316: USE_ALTERNATE_PORTRAIT(1)
+0x1319: CHARACTER_DIALOG(ENTITY 7, 0x003C, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Serge,
+	|I'll leave this...with you.
+	|It's my favorite amulet.<Close>
+	+-------------------------
+
+0x131E: WAIT_DIALOG()
+0x131F: SET_VAR_BIT(6278:Took Astral Charm)
+0x1323: RECEIVE_ITEM(0, "Astral Amulet")
+0x1327: var[0x0020] = 1027
+0x132D: SETUP_DIALOG_WINDOW( X:0, Y:45, LettersHigh:0, LettersWide:0, Flag:65)
+0x1338: CHARACTER_DIALOG(ENTITY 7, 0x003D, 0x00)
+
+	+-------------------------
+	|<Member 0> received
+	|<Color 4><Object 3><Color 0>.<Close>
+	+-------------------------
+
+0x133D: WAIT_DIALOG()
+0x133E: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x1349: PLAY_SOUNDFX(283, 0)
+0x134F: WAIT(15)
+0x1352: JUMP 0x1361 IF VAR_BIT[BRANCH1:Heard Prophet] CLEAR
+0x1358: CHARACTER_DIALOG(ENTITY 7, 0x003E, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Remember what the...
+	|prophet said...
+	|Serge...
+	+-------------------------
+	|Where did...it all start?
+	|Where...do angels...lose
+	|their way...?
+	|...Try to...remember...Serge.<Close>
+	+-------------------------
+
+0x135D: WAIT_DIALOG()
+0x135E: WAIT(45)
+0x1361: CHARACTER_DIALOG(ENTITY 7, 0x003F, 0x08)
+
+	+-------------------------
+	|Kid:
+	|I'm feelin' a bit tired...
+	|I'm gonna rest up...
+	|for a while...<Close>
+	+-------------------------
+
+0x1366: WAIT_DIALOG()
+0x1367: SET_CHARACTER_HEAD_ANGLE(0, 300, ENTITY 7)
+0x136F: roomVar[0x0B] = 0
+0x1372: IF_JUMP(roomVar[0x0B] < 150, 0x1380)
+0x137A: roomVar[0x0B] ++
+0x137D: JUMP(0x1372)
+0x1380: CHARACTER_PLAY_ANIM(Serge, 138)
+0x1384: WAIT_ANIMATION_COMPLETED?(Serge)
+0x1386: WAIT(45)
+0x1389: CHARACTER_PLAY_ANIM(Serge, 141)
+0x138D: WAIT_ANIMATION_COMPLETED?(Serge)
+0x138F: roomVar[0x0B] = 0
+0x1392: IF_JUMP(roomVar[0x0B] < 240, 0x13A0)
+0x139A: roomVar[0x0B] ++
+0x139D: JUMP(0x1392)
+0x13A0: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 7, 0x20)
+0x13A3: FORCE_CHARACTER_DIRECTION(1, Serge)
+0x13A7: TURN_TO_CHARACTER_2(Serge, ENTITY 5)
+0x13AA: CHARACTER_DIALOG(ENTITY 5, 0x0040, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|You heard what the doc said.
+	|There are no more Hydras
+	|in this world.
+	+-------------------------
+	|On top of that, there's no way
+	|to get to the mainland, and El
+	|Nido isn't that small a place.
+	+-------------------------
+	|Are you gonna take a one-in-
+	|a-million chance to search for
+	|this thing, just to save a girl
+	|you barely even know?<Close>
+	+-------------------------
+
+0x13AF: WAIT_DIALOG()
+0x13B0: opBF(Serge) // missing stuff, can't decode properly yet
+0x13B5: opBF(ENTITY 5) // missing stuff, can't decode properly yet
+0x13BA: SET_CHARACTER_HEAD_ANGLE(400, 400, Serge)
+0x13C2: WAIT(75)
+0x13C5: opE4(ENTITY 5, 0x0041, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Hey, whatCHA gonna do?
+	|      ...I don't know
+	|      Find a way to save her<Close>
+	+-------------------------
+
+0x13CA: MULTI_CHOICE( range:2 to 3 )
+0x13CC: WAIT_DIALOG()
+0x13CD: SET_CHARACTER_HEAD_DEFAULT(Serge)
+0x13D0: WAIT(45)
+0x13D3: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x13E7)
+0x13DB: CHARACTER_PLAY_ANIM(Serge, 129)
+0x13DF: WAIT_ANIMATION_COMPLETED?(Serge)
+0x13E1: JUMP(0x147F)
+0x13E4: JUMP(0x13F8)
+0x13E7: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x13F8)
+0x13EF: CHARACTER_PLAY_ANIM(Serge, 128)
+0x13F3: WAIT_ANIMATION_COMPLETED?(Serge)
+0x13F5: JUMP(0x13F8)
+0x13F8: CHARACTER_PLAY_ANIM(ENTITY 5, 128)
+0x13FC: CHARACTER_DIALOG(ENTITY 5, 0x0042, 0x08)
+
+	+-------------------------
+	|Korcha
+	|Alrighty then!
+	|I'll come along with ya.<Close>
+	+-------------------------
+
+0x1401: WAIT_DIALOG()
+0x1402: SCENARIO_FLAG = 56
+0x1405: SET_VAR_BIT(6279:PermittedToUseBoat)
+0x1409: SET_VAR_BIT(6280:Korcha Befriended)
+0x140D: SET_SCREEN_RGB(2, 255, 255, 255, 30)
+0x1418: WAIT(45)
+0x141B: CHARACTER_PLAY_ANIM(Serge, 1)
+0x141F: WAIT(8)
+0x1422: FREE_EXTRA_ANIMATION(Serge)
+0x1424: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x1428: WAIT(8)
+0x142B: FREE_EXTRA_ANIMATION(ENTITY 5)
+0x142D: op59()
+0x142E: roomVar[0x0C] = 0
+0x1431: JUMP 0x1473 IF VAR_BIT[Kid is Befriended] CLEAR
+0x1437: op95(2, 0x143F)
+0x143C: roomVar[0x0C] ++
+0x143F: op95(4, 0x1447)
+0x1444: roomVar[0x0C] ++
+0x1447: op95(12, 0x144F)
+0x144C: roomVar[0x0C] ++
+0x144F: op95(20, 0x1457)
+0x1454: roomVar[0x0C] ++
+0x1457: op95(27, 0x145F)
+0x145C: roomVar[0x0C] ++
+0x145F: op95(41, 0x1467)
+0x1464: roomVar[0x0C] ++
+0x1467: IF_JUMP(roomVar[0x0C] >= 2, 0x1473)
+0x146F: SETUP_PARTY_SCREEN()
+0x1471: OPEN_MENU()
+0x1473: WAIT_ONE_FRAME()
+0x1474: opFE29(7)
+0x1478: SET_NEXT_ROOM("CD0-533-Chrono Cross logo", 1)
+0x147D: STOP_SCRIPT_EXEC()
+0x147E: OP_RETURN()
+0x147F: CHARACTER_DIALOG(ENTITY 5, 0x0043, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Hey, wait a minute!
+	|She's your partner, ain't she?
+	|Aren'tCHA gonna do anything?<Close>
+	+-------------------------
+
+0x1484: WAIT_DIALOG()
+0x1485: WAIT(45)
+0x1488: DIALOG(0x0044, 0x4D)
+
+	+-------------------------
+	|      ...There's nothing we can do
+	|      I'll find a way to save her<Close>
+	+-------------------------
+
+0x148C: MULTI_CHOICE( range:0 to 1 )
+0x148E: WAIT_DIALOG()
+0x148F: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x149A)
+0x1497: JUMP(0x14B9)
+0x149A: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x14B9)
+0x14A2: CHARACTER_PLAY_ANIM(ENTITY 5, 4)
+0x14A6: CHARACTER_DIALOG(ENTITY 5, 0x0045, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|You scared me for a second...
+	|Heh, I've come this far,
+	|I'll tag along with ya!<Close>
+	+-------------------------
+
+0x14AB: WAIT_DIALOG()
+0x14AC: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x14B0: WAIT(15)
+0x14B3: JUMP(0x1402)
+0x14B6: JUMP(0x14B9)
+0x14B9: RUN_ENTITY_SCRIPT_BLOCKING(Serge, script 13, 0x20)
+0x14BC: LOAD_ANIMATION( 0x00, Serge, 0)
+0x14C1: LOAD_ANIMATION( 0x01 )
+0x14C3: LOAD_ANIMATION( 0x00, ENTITY 5, 10)
+0x14C8: LOAD_ANIMATION( 0x01 )
+0x14CA: CHARACTER_DIALOG(ENTITY 5, 0x0046, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|...Hold it right there.<Close>
+	+-------------------------
+
+0x14CF: WAIT_DIALOG()
+0x14D0: JUMP 0x14D9 IF VAR_BIT[Kid is Befriended] CLEAR
+0x14D6: JUMP(0x14DC)
+0x14D9: RUN_ENTITY_SCRIPT_ASYNC(PC2, script 14, 0x20)
+0x14DC: FORCE_CHARACTER_DIRECTION(1, Serge)
+0x14E0: TURN_TO_DIRECTION(Serge, 1450)
+0x14E4: WAIT_ROTATION(Serge)
+0x14E6: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 10, 0x20)
+0x14E9: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 5)
+0x14EC: CHARACTER_DIALOG(ENTITY 5, 0x0047, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|You've got no right to keep
+	|that girl's amulet.
+	|Leave that thing here.<Close>
+	+-------------------------
+
+0x14F1: WAIT_DIALOG()
+0x14F2: WAIT(15)
+0x14F5: CHARACTER_PLAY_ANIM(Serge, 141)
+0x14F9: WAIT_ANIMATION_COMPLETED?(Serge)
+0x14FB: roomVar[0x0B] = 0
+0x14FE: IF_JUMP(roomVar[0x0B] < 240, 0x150C)
+0x1506: roomVar[0x0B] ++
+0x1509: JUMP(0x14FE)
+0x150C: CHARACTER_DIALOG(ENTITY 5, 0x0048, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|What's wrong?
+	|Hurry it up.<Close>
+	+-------------------------
+
+0x1511: WAIT_DIALOG()
+0x1512: WAIT(45)
+0x1515: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 5, script 4, 0x20)
+0x1518: CHARACTER_PLAY_ANIM(Serge, 132)
+0x151C: WAIT_ANIMATION_COMPLETED?(Serge)
+0x151E: WAIT(15)
+0x1521: RECEIVE_ITEM(1, "Astral Amulet")
+0x1525: var[0x0020] = 1027
+0x152B: SETUP_DIALOG_WINDOW( X:0, Y:30, LettersHigh:0, LettersWide:0, Flag:65)
+0x1536: CHARACTER_DIALOG(Serge, 0x0049, 0x00)
+
+	+-------------------------
+	|Serge handed over the
+	|<Color 4><Object 3><Color 0>.<Close>
+	+-------------------------
+
+0x153B: WAIT_DIALOG()
+0x153C: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x1547: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x154B: WAIT(15)
+0x154E: CHARACTER_PLAY_ANIM(Serge, 1)
+0x1552: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x1556: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 11, 0x20)
+0x1559: TURN_TO_CHARACTER_2(ENTITY 8, ENTITY 5)
+0x155C: SET_VAR_BIT(7206:BRANCH1:Ditched Kid)
+0x1560: SCENARIO_FLAG = 56
+0x1563: SET_SCREEN_RGB(2, 255, 255, 255, 30)
+0x156E: WAIT(45)
+0x1571: CHARACTER_PLAY_ANIM(Serge, 1)
+0x1575: WAIT(8)
+0x1578: FREE_EXTRA_ANIMATION(Serge)
+0x157A: op59()
+0x157B: roomVar[0x0C] = 0
+0x157E: JUMP 0x15C0 IF VAR_BIT[Kid is Befriended] CLEAR
+0x1584: op95(2, 0x158C)
+0x1589: roomVar[0x0C] ++
+0x158C: op95(4, 0x1594)
+0x1591: roomVar[0x0C] ++
+0x1594: op95(12, 0x159C)
+0x1599: roomVar[0x0C] ++
+0x159C: op95(20, 0x15A4)
+0x15A1: roomVar[0x0C] ++
+0x15A4: op95(27, 0x15AC)
+0x15A9: roomVar[0x0C] ++
+0x15AC: op95(41, 0x15B4)
+0x15B1: roomVar[0x0C] ++
+0x15B4: IF_JUMP(roomVar[0x0C] >= 2, 0x15C0)
+0x15BC: SETUP_PARTY_SCREEN()
+0x15BE: OPEN_MENU()
+0x15C0: WAIT_ONE_FRAME()
+0x15C1: opFE29(7)
+0x15C5: SET_NEXT_ROOM("CD0-533-Chrono Cross logo", 2)
+0x15CA: STOP_SCRIPT_EXEC()
+0x15CB: OP_RETURN()
+---------------------------
+| Sub function 0x15CC
+---------------------------
+0x15CC: opBF(Serge) // missing stuff, can't decode properly yet
+0x15D1: LOAD_ANIMATION( 0x00, ENTITY 5, 266)
+0x15D6: LOAD_ANIMATION( 0x01 )
+0x15D8: CHARACTER_PLAY_ANIM(ENTITY 5, 4)
+0x15DC: CHARACTER_DIALOG(ENTITY 5, 0x004A, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|...By the way, do you even
+	|have a clue where to start
+	|lookin'?<Close>
+	+-------------------------
+
+0x15E1: WAIT_DIALOG()
+0x15E2: CHARACTER_PLAY_ANIM(Serge, 130)
+0x15E6: WAIT(45)
+0x15E9: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x15ED: CHARACTER_DIALOG(ENTITY 5, 0x004B, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Hey, do ya?<Close>
+	+-------------------------
+
+0x15F2: WAIT_DIALOG()
+0x15F3: CHARACTER_PLAY_ANIM(Serge, 1)
+0x15F7: WAIT(15)
+0x15FA: CHARACTER_PLAY_ANIM(Serge, 129)
+0x15FE: WAIT_ANIMATION_COMPLETED?(Serge)
+0x1600: WAIT(20)
+0x1603: CHARACTER_PLAY_ANIM(ENTITY 5, 4)
+0x1607: CHARACTER_DIALOG(ENTITY 5, 0x004C, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Tsk, that's what I thought.
+	|Where in the world should
+	|we start...<Close>
+	+-------------------------
+
+0x160C: WAIT_DIALOG()
+0x160D: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x1611: WAIT(15)
+0x1614: LOAD_ANIMATION( 0x00, ENTITY 5, 10)
+0x1619: LOAD_ANIMATION( 0x01 )
+0x161B: CHARACTER_PLAY_ANIM(ENTITY 5, 136)
+0x161F: LOAD_ANIMATION( 0x00, ENTITY 5, 10)
+0x1624: LOAD_ANIMATION( 0x01 )
+0x1626: var[0x0022] = 0
+0x1629: WAIT_ONE_FRAME()
+0x162A: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 16, script 5, 0x20)
+0x162D: IF_JUMP(var[0x0022] == 0, 0x1638)
+0x1635: JUMP(0x162D)
+0x1638: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 12, script 4, 0x20)
+0x163B: CHARACTER_PLAY_ANIM(ENTITY 5, 130)
+0x163F: WAIT_ANIMATION_COMPLETED?(ENTITY 5)
+0x1641: IF_JUMP(var[0x0022] <= 2, 0x164C)
+0x1649: JUMP(0x1641)
+0x164C: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x1650: IF_JUMP(var[0x0022] <= 3, 0x165B)
+0x1658: JUMP(0x1650)
+0x165B: var[0x0022] = 1
+0x165E: WAIT(15)
+0x1661: CHARACTER_DIALOG(ENTITY 8, 0x004D, 0x08)
+
+	+-------------------------
+	|...Um.<Auto close 20>
+	+-------------------------
+
+0x1666: WAIT_DIALOG()
+0x1667: SET_CHARACTER_HEAD_ANGLE(0, -200, ENTITY 5)
+0x166F: FORCE_CHARACTER_DIRECTION(1, PARTY_LEADER)
+0x1673: FORCE_CHARACTER_DIRECTION(1, PC1)
+0x1677: FORCE_CHARACTER_DIRECTION(1, PC2)
+0x167B: TURN_TO_CHARACTER_2(PC2, ENTITY 8)
+0x167E: WAIT(5)
+0x1681: TURN_TO_CHARACTER_2(PC1, ENTITY 8)
+0x1684: WAIT(10)
+0x1687: TURN_TO_CHARACTER_2(PARTY_LEADER, ENTITY 8)
+0x168A: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 4, 0x20)
+0x168D: CHARACTER_DIALOG(ENTITY 8, 0x004E, 0x08)
+
+	+-------------------------
+	|Maybe you should go see
+	|the shaman?
+	|The shaman might be able to give
+	|you some clues from that amulet.<Close>
+	+-------------------------
+
+0x1692: WAIT_DIALOG()
+0x1693: SET_CHARACTER_HEAD_DEFAULT(ENTITY 5)
+0x1696: WAIT(45)
+0x1699: CHARACTER_PLAY_ANIM(ENTITY 5, 136)
+0x169D: WAIT_ANIMATION_COMPLETED?(ENTITY 5)
+0x169F: CHARACTER_DIALOG(ENTITY 5, 0x004F, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|......
+	|That's right.
+	|The shaman...<Close>
+	+-------------------------
+
+0x16A4: WAIT_DIALOG()
+0x16A5: TURN_TO_CHARACTER_2(PC1, ENTITY 5)
+0x16A8: WAIT(10)
+0x16AB: TURN_TO_CHARACTER_2(PC2, ENTITY 5)
+0x16AE: WAIT(5)
+0x16B1: TURN_TO_CHARACTER_2(PARTY_LEADER, ENTITY 5)
+0x16B4: CHARACTER_DIALOG(PC1, 0x0050, 0x08)
+
+	+-------------------------
+	|<Member 1>:
+	|...a shaman?
+	|that's an unfamiliar word.<Close>
+	+-------------------------
+
+0x16B9: WAIT_DIALOG()
+0x16BA: WAIT(15)
+0x16BD: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x16C1: CHARACTER_DIALOG(ENTITY 5, 0x0051, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|The shaman inherits the power
+	|of the Dragon God and governs
+	|the village.
+	+-------------------------
+	|They're like a mayor or chief.
+	|The shaman might know
+	|something, although I can't say
+	|for sure. It's worth a try.<Close>
+	+-------------------------
+
+0x16C6: WAIT_DIALOG()
+0x16C7: CHARACTER_DIALOG(ENTITY 5, 0x0052, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|We'll continue this outside.
+	|Let's decide what to do
+	|at the boat.<Close>
+	+-------------------------
+
+0x16CC: WAIT_DIALOG()
+0x16CD: SET_SCREEN_RGB(2, 255, 255, 255, 45)
+0x16D8: WAIT(60)
+0x16DB: op59()
+0x16DC: CHARACTER_PLAY_ANIM(Serge, 1)
+0x16E0: WAIT(8)
+0x16E3: FREE_EXTRA_ANIMATION(Serge)
+0x16E5: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x16E9: WAIT(8)
+0x16EC: FREE_EXTRA_ANIMATION(ENTITY 5)
+0x16EE: SET_VAR_BIT(6287:Heard ShrineMaiden)
+0x16F2: opFE29(7)
+0x16F6: SET_NEXT_ROOM("CD0-212-Guldove - Doc's House (Another)", 2)
+0x16FB: STOP_SCRIPT_EXEC()
+0x16FC: OP_RETURN()
+---------------------------
+| Sub function 0x16FD
+---------------------------
+0x16FD: op59()
+0x16FE: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 13, script 9, 0x20)
+0x1701: opA2(PARTY_LEADER, 3)
+0x1705: opA2(PC1, 3)
+0x1709: opA2(PC2, 3)
+0x170D: roomVar[0x0E] = FIND_CHARACTER_SLOT_IN_PARTY(0)
+0x1712: opFE41(0x01)
+0x1715: IF_JUMP(roomVar[0x0E] == 0, 0x173B)
+0x171D: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 15, 0x20)
+0x1720: SETUP_FORMATION(336, -89, 91, -128, 228, -324, 3415, 3894, 3285, 0x00, 0x00, 0x00)
+0x1737: GO_TO_FORMATION()
+0x1738: JUMP(0x1787)
+0x173B: IF_JUMP(roomVar[0x0E] == 1, 0x1761)
+0x1743: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 15, 0x20)
+0x1746: SETUP_FORMATION(91, -128, 336, -89, 228, -324, 3894, 3415, 3285, 0x00, 0x00, 0x00)
+0x175D: GO_TO_FORMATION()
+0x175E: JUMP(0x1787)
+0x1761: IF_JUMP(roomVar[0x0E] == 2, 0x1787)
+0x1769: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 15, 0x20)
+0x176C: SETUP_FORMATION(91, -128, 228, -324, 336, -89, 3894, 3285, 3415, 0x00, 0x00, 0x00)
+0x1783: GO_TO_FORMATION()
+0x1784: JUMP(0x1787)
+0x1787: opFE41(0x00)
+0x178A: SET_CHARACTER_HEAD_DEFAULT(ENTITY 4)
+0x178D: ENABLE_BACKGROUND_LAYER(3)
+0x1790: DISABLE_BACKGROUND_LAYER(4)
+0x1793: CHARACTER_PLAY_ANIM(ENTITY 4, 130)
+0x1797: WAIT_ANIMATION_COMPLETED?(ENTITY 4)
+0x1799: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 6, 0x20)
+0x179C: CHARACTER_DIALOG(ENTITY 4, 0x0053, 0x08)
+
+	+-------------------------
+	|Doc:
+	|Can this be!?
+	|Hydra Humour...but how?
+	|We will discuss that later.
+	+-------------------------
+	|As long as we have this, making
+	|an antidote will be easier than
+	|catching a wave!
+	|We can save the girl with this!!!<Close>
+	+-------------------------
+
+0x17A1: WAIT_DIALOG()
+0x17A2: SET_CHARACTER_HEAD_ANGLE(0, 400, ENTITY 4)
+0x17AA: WAIT(30)
+0x17AD: CHARACTER_DIALOG(ENTITY 4, 0x0054, 0x08)
+
+	+-------------------------
+	|Doc:
+	|We will prepare an antidote
+	|right away. Nurse, help me with
+	|the preparations! Stat!<Close>
+	+-------------------------
+
+0x17B2: WAIT_DIALOG()
+0x17B3: CHARACTER_DIALOG(ENTITY 8, 0x0055, 0x08)
+
+	+-------------------------
+	|Y-Yes!<Auto close 15>
+	+-------------------------
+
+0x17B8: WAIT_DIALOG()
+0x17B9: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 8, script 5, 0x20)
+0x17BC: SET_CHARACTER_HEAD_DEFAULT(ENTITY 4)
+0x17BF: WAIT(30)
+0x17C2: var[0x0022] = 0
+0x17C5: CHARACTER_PLAY_ANIM(ENTITY 4, 130)
+0x17C9: WAIT_ANIMATION_COMPLETED?(ENTITY 4)
+0x17CB: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 16, script 4, 0x20)
+0x17CE: IF_JUMP(var[0x0022] == 0, 0x17D9)
+0x17D6: JUMP(0x17CE)
+0x17D9: CHARACTER_PLAY_ANIM(ENTITY 4, 1)
+0x17DD: IF_JUMP(var[0x0022] <= 2, 0x17E8)
+0x17E5: JUMP(0x17DD)
+0x17E8: var[0x0022] = 1
+0x17EB: WAIT(5)
+0x17EE: CHARACTER_PLAY_ANIM(Serge, 128)
+0x17F2: WAIT_ANIMATION_COMPLETED?(Serge)
+0x17F4: WAIT(15)
+0x17F7: CHARACTER_PLAY_ANIM(ENTITY 4, 128)
+0x17FB: WAIT_ANIMATION_COMPLETED?(ENTITY 4)
+0x17FD: WAIT(5)
+0x1800: TURN_TO_DIRECTION(Serge, 1745)
+0x1804: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 4, script 5, 0x20)
+0x1807: WAIT(45)
+0x180A: SET_CHARACTER_HEAD_ANGLE(0, -250, Serge)
+0x1812: LOAD_ANIMATION( 0x00, ENTITY 5, 266)
+0x1817: LOAD_ANIMATION( 0x01 )
+0x1819: CHARACTER_PLAY_ANIM(ENTITY 5, 128)
+0x181D: WAIT_ANIMATION_COMPLETED?(ENTITY 5)
+0x181F: CHARACTER_DIALOG(ENTITY 5, 0x0056, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|You heard the doc<UnknowDC>
+	|we've done all we can.
+	|Just trust him and wait.<Close>
+	+-------------------------
+
+0x1824: WAIT_DIALOG()
+0x1825: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x1829: WAIT(8)
+0x182C: FREE_EXTRA_ANIMATION(ENTITY 5)
+0x182E: SET_CHARACTER_HEAD_DEFAULT(Serge)
+0x1831: WAIT(45)
+0x1834: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 13, script 10, 0x20)
+0x1837: opFE1D(120, 0)
+0x183D: SET_SCREEN_RGB(2, 255, 255, 255, 90)
+0x1848: WAIT(105)
+0x184B: IF_JUMP(roomVar[0x0E] == 0, 0x1859)
+0x1853: RUN_ENTITY_SCRIPT_BLOCKING(PARTY_LEADER, script 0, 0x30)
+0x1856: JUMP(0x1875)
+0x1859: IF_JUMP(roomVar[0x0E] == 1, 0x1867)
+0x1861: RUN_ENTITY_SCRIPT_BLOCKING(PC1, script 0, 0x30)
+0x1864: JUMP(0x1875)
+0x1867: IF_JUMP(roomVar[0x0E] == 2, 0x1875)
+0x186F: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 0, 0x30)
+0x1872: JUMP(0x1875)
+0x1875: SET_VAR_BIT(6305:Handed Hydra Humor)
+0x1879: opFE29(7)
+0x187D: SET_NEXT_ROOM("CD0-212-Guldove - Doc's House (Another)", 4)
+0x1882: STOP_SCRIPT_EXEC()
+0x1883: OP_RETURN()
+---------------------------
+| Sub function 0x1884
+---------------------------
+0x1884: opE4(ENTITY 7, 0x0057, 0x08)
+
+	+-------------------------
+	|Kid:
+	|What are ya gonna do, Serge?
+	|      Go back home
+	|      I won't go back yet<Close>
+	+-------------------------
+
+0x1889: MULTI_CHOICE( range:2 to 3 )
+0x188B: WAIT_DIALOG()
+0x188C: CHARACTER_PLAY_ANIM(Serge, 1)
+0x1890: WAIT(20)
+0x1893: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x18DB)
+0x189B: CHARACTER_PLAY_ANIM(Serge, 128)
+0x189F: WAIT_ANIMATION_COMPLETED?(Serge)
+0x18A1: WAIT(15)
+0x18A4: opBF(PC1) // missing stuff, can't decode properly yet
+0x18A9: TURN_TO_CHARACTER_2(Serge, PC1)
+0x18AC: CHARACTER_PLAY_ANIM(PC1, 129)
+0x18B0: CHARACTER_DIALOG(PC1, 0x0058, 0x08)
+
+	+-------------------------
+	|<Member 1>:
+	|Serge,
+	|are you sure you're going
+	|to be satisfied with that?<Close>
+	+-------------------------
+
+0x18B5: WAIT_DIALOG()
+0x18B6: WAIT(20)
+0x18B9: CALL(0x1A32)
+0x18BC: CHARACTER_PLAY_ANIM(PC1, 1)
+0x18C0: WAIT(8)
+0x18C3: FREE_EXTRA_ANIMATION(PC1)
+0x18C5: WAIT_ONE_FRAME()
+0x18C6: CHARACTER_PLAY_ANIM(Serge, 130)
+0x18CA: WAIT_ANIMATION_COMPLETED?(Serge)
+0x18CC: WAIT(75)
+0x18CF: TURN_TO_DIRECTION(Serge, 3845)
+0x18D3: WAIT_ROTATION(Serge)
+0x18D5: WAIT(15)
+0x18D8: JUMP(0x18E6)
+0x18DB: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x18E6)
+0x18E3: JUMP(0x18E6)
+0x18E6: CHARACTER_PLAY_ANIM(Serge, 129)
+0x18EA: WAIT_ANIMATION_COMPLETED?(Serge)
+0x18EC: WAIT(15)
+0x18EF: CHARACTER_DIALOG(ENTITY 7, 0x0059, 0x08)
+
+	+-------------------------
+	|Kid:
+	|I see...
+	|Then I'll stick around with
+	|ya a little longer.
+	+-------------------------
+	|But just don't slow me
+	|down, ya hear?<Close>
+	+-------------------------
+
+0x18F4: WAIT_DIALOG()
+0x18F5: WAIT(45)
+0x18F8: CHARACTER_PLAY_ANIM(ENTITY 7, 4)
+0x18FC: CHARACTER_DIALOG(ENTITY 7, 0x005A, 0x08)
+
+	+-------------------------
+	|Kid:
+	|I don't know what happened
+	|10 years ago...
+	+-------------------------
+	|But it looks like Viper's mob
+	|has got something to do with it.
+	+-------------------------
+	|Let's go after 'em.
+	|I need to go bash up that Lynx
+	|character and get me hands on
+	|the Frozen Flame!<Close>
+	+-------------------------
+
+0x1901: WAIT_DIALOG()
+0x1902: CHARACTER_PLAY_ANIM(ENTITY 7, 1)
+0x1906: WAIT(5)
+0x1909: CHARACTER_PLAY_ANIM(ENTITY 7, 131)
+0x190D: CHARACTER_DIALOG(ENTITY 7, 0x005B, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Lynx...
+	+-------------------------
+	|He stole something
+	|precious from me...
+	|He's taken away my future...!
+	+-------------------------
+	|I'll find him!
+	|No matter what it takes!<Close>
+	+-------------------------
+
+0x1912: WAIT_DIALOG()
+0x1913: CHARACTER_PLAY_ANIM(ENTITY 7, 1)
+0x1917: WAIT(8)
+0x191A: FREE_EXTRA_ANIMATION(ENTITY 7)
+0x191C: WAIT(20)
+0x191F: FORCE_CHARACTER_DIRECTION(1, ENTITY 7)
+0x1923: TURN_TO_CHARACTER_2(ENTITY 7, ENTITY 5)
+0x1926: WAIT_ROTATION(ENTITY 7)
+0x1928: WAIT_ONE_FRAME()
+0x1929: CHARACTER_DIALOG(ENTITY 7, 0x005C, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Korcha,
+	|I heard that ya helped
+	|in the search, too.<Close>
+	+-------------------------
+
+0x192E: WAIT_DIALOG()
+0x192F: WAIT(20)
+0x1932: CHARACTER_DIALOG(ENTITY 5, 0x005D, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|Hmph.
+	|It was nothing.<Close>
+	+-------------------------
+
+0x1937: WAIT_DIALOG()
+0x1938: LOAD_ANIMATION( 0x00, ENTITY 7, 257)
+0x193D: LOAD_ANIMATION( 0x01 )
+0x193F: CHARACTER_PLAY_ANIM(ENTITY 7, 128)
+0x1943: WAIT_ANIMATION_COMPLETED?(ENTITY 7)
+0x1945: WAIT(15)
+0x1948: CHARACTER_DIALOG(ENTITY 7, 0x005E, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Yeah?
+	|Well, thanks for
+	|nothin' then...<Close>
+	+-------------------------
+
+0x194D: WAIT_DIALOG()
+0x194E: WAIT(15)
+0x1951: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x1955: CHARACTER_DIALOG(ENTITY 5, 0x005F, 0x48)
+
+	+-------------------------
+	|...Now then.<Auto close 30>
+	+-------------------------
+
+0x195A: WAIT_DIALOG()
+0x195B: TURN_TO_CHARACTER_2(PARTY_LEADER, ENTITY 5)
+0x195E: WAIT(5)
+0x1961: TURN_TO_CHARACTER_2(PC1, ENTITY 5)
+0x1964: WAIT_ONE_FRAME()
+0x1965: TURN_TO_CHARACTER_2(PC2, ENTITY 5)
+0x1968: WAIT(15)
+0x196B: LOAD_ANIMATION( 0x00, ENTITY 5, 266)
+0x1970: LOAD_ANIMATION( 0x01 )
+0x1972: CHARACTER_PLAY_ANIM(ENTITY 5, 128)
+0x1976: WAIT_ANIMATION_COMPLETED?(ENTITY 5)
+0x1978: CHARACTER_DIALOG(ENTITY 5, 0x0060, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|At one point I thought we were
+	|doomed for sure, but it looks
+	|like it's all settled now.<Close>
+	+-------------------------
+
+0x197D: WAIT_DIALOG()
+0x197E: CHARACTER_PLAY_ANIM(Serge, 128)
+0x1982: WAIT_ANIMATION_COMPLETED?(Serge)
+0x1984: WAIT(30)
+0x1987: CHARACTER_DIALOG(ENTITY 5, 0x0061, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|All that's left is to take you
+	|guys back to Termina, right?
+	|My job ends there.
+	+-------------------------
+	|You get a special discount price
+	|of 300G for the round trip.
+	|Sorry, but I need to make
+	|a livin' too.<Close>
+	+-------------------------
+
+0x198C: WAIT_DIALOG()
+0x198D: CHARACTER_PLAY_ANIM(ENTITY 5, 4)
+0x1991: WAIT(8)
+0x1994: FREE_EXTRA_ANIMATION(ENTITY 5)
+0x1996: MONEY(1, 300)
+0x199A: CHARACTER_PLAY_ANIM(ENTITY 7, 1)
+0x199E: WAIT(8)
+0x19A1: FREE_EXTRA_ANIMATION(ENTITY 7)
+0x19A3: WAIT(5)
+0x19A6: LOAD_ANIMATION( 0x00, ENTITY 7, 1)
+0x19AB: LOAD_ANIMATION( 0x01 )
+0x19AD: CHARACTER_PLAY_ANIM(ENTITY 7, 143)
+0x19B1: WAIT_ANIMATION_COMPLETED?(ENTITY 7)
+0x19B3: CHARACTER_DIALOG(ENTITY 7, 0x0062, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Haha, you're pretty
+	|damn shrewd, eh?
+	+-------------------------
+	|I shouldn't have
+	|thanked ya earlier.<Close>
+	+-------------------------
+
+0x19B8: WAIT_DIALOG()
+0x19B9: WAIT(15)
+0x19BC: CHARACTER_DIALOG(ENTITY 7, 0x0063, 0x48)
+
+	+-------------------------
+	|Hmm?<Auto close 45>
+	+-------------------------
+
+0x19C1: WAIT_DIALOG()
+0x19C2: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x19C6: TURN_TO_CHARACTER_2(PARTY_LEADER, ENTITY 7)
+0x19C9: CHARACTER_PLAY_ANIM(ENTITY 7, 1)
+0x19CD: WAIT(8)
+0x19D0: FREE_EXTRA_ANIMATION(ENTITY 7)
+0x19D2: WAIT(5)
+0x19D5: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 7, script 4, 0x20)
+0x19D8: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 1, 0x30)
+0x19DB: CHARACTER_DIALOG(ENTITY 5, 0x0064, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|What is it?
+	|Ya lookin' for
+	|something?<Close>
+	+-------------------------
+
+0x19E0: WAIT_DIALOG()
+0x19E1: WAIT(15)
+0x19E4: CHARACTER_DIALOG(ENTITY 7, 0x0065, 0x08)
+
+	+-------------------------
+	|Kid:
+	|...Hmm, yeah.
+	|Well, the Elements I had on
+	|me Grid are gone.<Close>
+	+-------------------------
+
+0x19E9: WAIT_DIALOG()
+0x19EA: CHARACTER_PLAY_ANIM(ENTITY 7, 1)
+0x19EE: WAIT(8)
+0x19F1: FREE_EXTRA_ANIMATION(ENTITY 7)
+0x19F3: WAIT_ONE_FRAME()
+0x19F4: TURN_TO_CHARACTER_2(ENTITY 7, Serge)
+0x19F7: WAIT_ROTATION(ENTITY 7)
+0x19F9: WAIT(5)
+0x19FC: CHARACTER_DIALOG(ENTITY 7, 0x0066, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Oi, Serge.
+	|Didja remove the
+	|Elements from me Grid?<Close>
+	+-------------------------
+
+0x1A01: WAIT_DIALOG()
+0x1A02: CHARACTER_PLAY_ANIM(Serge, 129)
+0x1A06: WAIT_ANIMATION_COMPLETED?(Serge)
+0x1A08: WAIT(20)
+0x1A0B: CHARACTER_PLAY_ANIM(ENTITY 7, 4)
+0x1A0F: CHARACTER_DIALOG(ENTITY 7, 0x0067, 0x08)
+
+	+-------------------------
+	|Kid:
+	|Hmm, if it wasn't you...
+	|then who did?<Close>
+	+-------------------------
+
+0x1A14: WAIT_DIALOG()
+0x1A15: CHARACTER_PLAY_ANIM(Serge, 1)
+0x1A19: WAIT(8)
+0x1A1C: FREE_EXTRA_ANIMATION(Serge)
+0x1A1E: WAIT_ONE_FRAME()
+0x1A1F: CHARACTER_DIALOG(ENTITY 5, 0x0068, 0x08)
+
+	+-------------------------
+	|Korcha:
+	|The only ones looking over
+	|you while we were gone were
+	|the doc and the nurse.
+	+-------------------------
+	|They should be in the room next
+	|door, so let's ask them when we
+	|head out.
+	|The doc should know something.<Close>
+	+-------------------------
+
+0x1A24: WAIT_DIALOG()
+0x1A25: TURN_TO_CHARACTER_2(ENTITY 7, ENTITY 5)
+0x1A28: WAIT_ROTATION(ENTITY 7)
+0x1A2A: WAIT_ONE_FRAME()
+0x1A2B: CHARACTER_DIALOG(ENTITY 7, 0x0069, 0x08)
+
+	+-------------------------
+	|Kid:
+	|......
+	|I hope you're right.<Close>
+	+-------------------------
+
+0x1A30: WAIT_DIALOG()
+0x1A31: OP_RETURN()
+---------------------------
+| Sub function 0x1A32
+---------------------------
+0x1A32: CHARACTER_DIALOG(PC2, 0x006A, 0x08)
+
+	+-------------------------
+	|<Member 2>:
+	|think about it, Serge!
+	+-------------------------
+	|why did you take the 
+	|trouble to cross the 
+	|worlds to help Kid?
+	+-------------------------
+	|It wasn't just because you
+	|wanted to go back to your
+	|world, right?
+	+-------------------------
+	|you had other reasons to
+	|come back to this world!<Close>
+	+-------------------------
+
+0x1A37: WAIT_DIALOG()
+0x1A38: OP_RETURN()

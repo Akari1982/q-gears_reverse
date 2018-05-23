@@ -1,0 +1,1882 @@
+0x0000: 0xFF
+0x0001: 0x03
+0x0002: 0x00
+0x0003: 0x6A
+0x0004: 0xFC
+0x0005: 0x00
+0x0006: 0x0C
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0xAC
+0x000A: 0xFD
+0x000B: 0x5F
+0x000C: 0xFE
+0x000D: 0x00
+0x000E: 0x04
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0x03
+0x0012: 0x00
+0x0013: 0x6A
+0x0014: 0xFC
+0x0015: 0x00
+0x0016: 0x0C
+0x0017: 0x00
+0x0018: 0x00
+0x0019: 0x03
+0x001A: 0x00
+0x001B: 0x6A
+0x001C: 0xFC
+0x001D: 0x00
+0x001E: 0x0C
+0x001F: 0x00
+0x0020: 0x00
+0x0021: 0x00
+0x0022: 0x00
+0x0023: 0x49
+0x0024: 0x02
+0x0025: 0x00
+0x0026: 0x04
+0x0027: 0x00
+0x0028: 0x00
+0x0029: 0x00
+0x002A: 0x00
+0x002B: 0x48
+0x002C: 0xFE
+0x002D: 0x00
+0x002E: 0x04
+0x002F: 0x00
+0x0030: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0031: opFE63() // stop script if some variable has been set
+0x0033: opFE78(58, 0) // this will stall the script until some condition is met
+0x0039: op64(-300)
+0x003D: SET_SHADOW_COLOR(color_0x0095)
+0x0040: opFE2B(17, 3)
+0x0045: opFE2B(16, 111)
+0x004A: opFE34(0, -970, 0, 512, 2048)
+0x0057: IF_JUMP(ROOM_PARAM == 2, 0x0073)
+0x005F: roomVar[0x00] = FIND_CHARACTER_SLOT_IN_PARTY(0)
+0x0064: IF_JUMP(roomVar[0x00] == 0, 0x006F)
+0x006C: JUMP(0x0073)
+0x006F: opFE52(0)
+0x0073: roomVar[0x0B] = 2
+0x0079: roomVar[0x0C] = -605
+0x007F: roomVar[0x0D] = -136
+0x0085: roomVar[0x0F] = 0
+0x008B: var[0x003A] = 1
+0x0091: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x0092: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x0093: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x0094: STOP()
+---------------------------
+| Shading palette color_0x0095
+---------------------------
+0x80 0x80 0x80 0x00 
+0x5A 0x5A 0x5A 0x00 
+0x50 0x50 0x50 0x00 
+0x46 0x46 0x46 0x00 
+0x00A5: 0x5A
+0x00A6: 0x50
+0x00A7: 0x3C
+0x00A8: 0x00
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x00A9: SETUP_PC(PC2)
+0x00AC: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x00AD: IF_JUMP(roomVar[0x02] == 0, 0x00B6)
+0x00B5: UPDATE_CHARACTER()
+0x00B6: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x00B7: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x00B8: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x00B9: roomVar[0x02] = 1
+0x00BC: STOP()
+---------------------------
+| Entity 1 script 5
+---------------------------
+0x00BD: roomVar[0x02] = 0
+0x00C0: STOP()
+---------------------------
+| Entity 1 script 6
+---------------------------
+0x00C1: SET_MOVEMENT_SPEED(2)
+0x00C4: opB7(3584)
+0x00C8: WALK_TO_POSITION(0x00, 3, -570)
+0x00D1: WALK_TO_POSITION(0x01)
+0x00D3: WAIT(15)
+0x00D6: SET_MOVEMENT_SPEED(5)
+0x00D9: opB7(4096)
+0x00DD: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x00DE: SETUP_PC(PC1)
+0x00E1: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x00E2: IF_JUMP(roomVar[0x03] == 0, 0x00EB)
+0x00EA: UPDATE_CHARACTER()
+0x00EB: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x00EC: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x00ED: STOP()
+---------------------------
+| Entity 2 script 4
+---------------------------
+0x00EE: roomVar[0x03] = 1
+0x00F1: STOP()
+---------------------------
+| Entity 2 script 5
+---------------------------
+0x00F2: roomVar[0x03] = 0
+0x00F5: STOP()
+---------------------------
+| Entity 2 script 6
+---------------------------
+0x00F6: SET_MOVEMENT_SPEED(2)
+0x00F9: opFE07(1)
+0x00FC: opB7(3584)
+0x0100: WALK_TO_POSITION(0x00, -109, -788)
+0x0109: WALK_TO_POSITION(0x01)
+0x010B: SET_ROTATION(3215)
+0x010E: WAIT_ROTATION()
+0x010F: SET_MOVEMENT_SPEED(5)
+0x0112: opB7(4096)
+0x0116: opFE07(0)
+0x0119: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x011A: SETUP_PC(PARTY_LEADER)
+0x011D: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x011E: IF_JUMP(roomVar[0x04] == 0, 0x0127)
+0x0126: UPDATE_CHARACTER()
+0x0127: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x0128: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x0129: STOP()
+---------------------------
+| Entity 3 script 4
+---------------------------
+0x012A: roomVar[0x04] = 1
+0x012D: STOP()
+---------------------------
+| Entity 3 script 5
+---------------------------
+0x012E: roomVar[0x04] = 0
+0x0131: STOP()
+---------------------------
+| Entity 3 script 6
+---------------------------
+0x0132: SET_MOVEMENT_SPEED(2)
+0x0135: opFE07(1)
+0x0138: opB7(3584)
+0x013C: WALK_TO_POSITION(0x00, 106, -829)
+0x0145: WALK_TO_POSITION(0x01)
+0x0147: SET_ROTATION(2945)
+0x014A: WAIT_ROTATION()
+0x014B: SET_MOVEMENT_SPEED(5)
+0x014E: opB7(4096)
+0x0152: opFE07(0)
+0x0155: STOP()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x0156: SETUP_NPC(1)
+0x0159: SETUP_CURRENT_DIALOG_FACE(78)
+0x015C: SET_POSITION_UNSIGNED(0, -287, 0)
+0x0164: SET_ROTATION(1024)
+0x0167: op8B(75, 300)
+0x016C: opAE(0x01)
+0x016E: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x016F: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x0170: DISABLE_CHARACTER_CONTROLS()
+0x0171: CALL(0x1B2)
+0x0174: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0176: STOP()
+---------------------------
+| Entity 4 ON_COLLISION
+---------------------------
+0x0177: STOP()
+---------------------------
+| Entity 4 script 4
+---------------------------
+0x0178: DISABLE_CHARACTER_CONTROLS()
+0x0179: roomVar[0x01] = 0
+0x017C: var[0x0020] = USED_KEY_ITEM
+0x0182: IF_JUMP(USED_KEY_ITEM == "Astral Amulet", 0x0190)
+0x018A: roomVar[0x01] = 1
+0x0190: IF_JUMP(USED_KEY_ITEM == "Tear of Hate", 0x019E)
+0x0198: roomVar[0x01] = 2
+0x019E: IF_JUMP(USED_KEY_ITEM == "Dragon Emblem", 0x01AC)
+0x01A6: roomVar[0x01] = 3
+0x01AC: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 4, 0x20)
+0x01AF: ENABLE_CHARACTER_CONTROLS(0x00)
+0x01B1: STOP()
+---------------------------
+| Sub function 0x01B2
+---------------------------
+0x01B2: IF_CHARACTER_NOT_IN_PARTY_JUMP(38, 0x020F)
+0x01B7: JUMP 0x01C6 IF VAR_BIT[Steena & Direa] CLEAR
+0x01BD: CHARACTER_DIALOG(ENTITY 4, 0x0000, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The end of your battle
+	|will welcome a huge change
+	|to this planet.<Close>
+	+-------------------------
+
+0x01C2: WAIT_DIALOG()
+0x01C3: JUMP(0x020E)
+0x01C6: RUN_ENTITY_SCRIPT_BLOCKING(Steena, script 4, 0x20)
+0x01C9: CHARACTER_PLAY_ANIM(Steena, 1)
+0x01CD: WAIT_ONE_FRAME()
+0x01CE: FORCE_CHARACTER_DIRECTION(1, Steena)
+0x01D2: TURN_TO_CHARACTER_2(Steena, ENTITY 4)
+0x01D5: WAIT_ROTATION(Steena)
+0x01D7: opBF(Steena) // missing stuff, can't decode properly yet
+0x01DC: CHARACTER_PLAY_ANIM(Steena, 128)
+0x01E0: WAIT_ANIMATION_COMPLETED?(Steena)
+0x01E2: WAIT(15)
+0x01E5: CHARACTER_PLAY_ANIM(Steena, 1)
+0x01E9: WAIT(8)
+0x01EC: FREE_EXTRA_ANIMATION(Steena)
+0x01EE: CHARACTER_DIALOG(Steena, 0x0001, 0x08)
+
+	+-------------------------
+	|Steena:
+	|...Chief Direa,
+	|it is a pleasure
+	|to see you again.<Close>
+	+-------------------------
+
+0x01F3: WAIT_DIALOG()
+0x01F4: WAIT(15)
+0x01F7: CHARACTER_DIALOG(ENTITY 4, 0x0002, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Why, if it isn't Steena.
+	+-------------------------
+	|...I see, you have already
+	|succeeded me as chief in
+	|the alternate world...
+	+-------------------------
+	|Things are indeed proceeding
+	|differently in the other world.
+	|I have no idea what that implies,
+	|though.<Close>
+	+-------------------------
+
+0x01FC: WAIT_DIALOG()
+0x01FD: WAIT(20)
+0x0200: CHARACTER_DIALOG(ENTITY 4, 0x0003, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The only thing certain,
+	|is that the fate of both
+	|worlds depends on you all...
+	+-------------------------
+	|The fate of men and Dragons...
+	|It will be a trying battle.
+	|Proceed with care,
+	|young shaman...<Close>
+	+-------------------------
+
+0x0205: WAIT_DIALOG()
+0x0206: SET_VAR_BIT(6625:Steena & Direa)
+0x020A: RUN_ENTITY_SCRIPT_BLOCKING(Steena, script 5, 0x20)
+0x020D: WAIT_ONE_FRAME()
+0x020E: OP_RETURN()
+0x020F: if( SCENARIO_FLAG < 195 ) jump 0x021B
+0x0214: CHARACTER_DIALOG(ENTITY 4, 0x0004, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Ancient teachings fade with time
+	|and new orders are born...
+	|We humans follow time's flow.
+	+-------------------------
+	|Where will we be when the
+	|planet's dream ends...
+	|That is the question being
+	|asked of us now.<Close>
+	+-------------------------
+
+0x0219: WAIT_DIALOG()
+0x021A: OP_RETURN()
+0x021B: CHARACTER_DIALOG(ENTITY 4, 0x0005, 0x08)
+
+	+-------------------------
+	|Direa:
+	|One must choose their own path.
+	|But as long as we are human,
+	|one will sometimes become lost.
+	+-------------------------
+	|I pray that your journey be
+	|blessed by the guidance of the
+	|great 6 Dragon Gods...<Close>
+	+-------------------------
+
+0x0220: WAIT_DIALOG()
+0x0221: OP_RETURN()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x0222: SET_POSITION_UNSIGNED(0, -485, 0)
+0x022A: SET_ROTATION(1024)
+0x022D: op8D(0x00)
+0x022F: RECT_SIZE(100, 30)
+0x0234: opAE(0x01)
+0x0236: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x0237: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x0238: DISABLE_CHARACTER_CONTROLS()
+0x0239: FORCE_CHARACTER_DIRECTION(1, PARTY_LEADER)
+0x023D: TURN_TO_CHARACTER_2(PARTY_LEADER, ENTITY 4)
+0x0240: WAIT_ROTATION(PARTY_LEADER)
+0x0242: CALL(0x1B2)
+0x0245: FORCE_CHARACTER_DIRECTION(0, PARTY_LEADER)
+0x0249: ENABLE_CHARACTER_CONTROLS(0x00)
+0x024B: STOP()
+---------------------------
+| Entity 5 ON_COLLISION
+---------------------------
+0x024C: STOP()
+---------------------------
+| Entity 5 script 4
+---------------------------
+0x024D: DISABLE_CHARACTER_CONTROLS()
+0x024E: roomVar[0x01] = 0
+0x0251: var[0x0020] = USED_KEY_ITEM
+0x0257: IF_JUMP(USED_KEY_ITEM == "Astral Amulet", 0x0265)
+0x025F: roomVar[0x01] = 1
+0x0265: IF_JUMP(USED_KEY_ITEM == "Tear of Hate", 0x0273)
+0x026D: roomVar[0x01] = 2
+0x0273: IF_JUMP(USED_KEY_ITEM == "Dragon Emblem", 0x0281)
+0x027B: roomVar[0x01] = 3
+0x0281: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 6, script 4, 0x20)
+0x0284: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0286: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x0287: op37(0x00)
+0x0289: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x028A: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x028B: STOP()
+---------------------------
+| Entity 6 script 4
+---------------------------
+0x028C: opFE6B(0x01)
+0x028F: IF_JUMP(roomVar[0x01] == 1, 0x029D)
+0x0297: CALL(0x2BA)
+0x029A: JUMP(0x02B9)
+0x029D: IF_JUMP(roomVar[0x01] == 2, 0x02AB)
+0x02A5: CALL(0x2C1)
+0x02A8: JUMP(0x02B9)
+0x02AB: IF_JUMP(roomVar[0x01] == 3, 0x02B9)
+0x02B3: CALL(0x2F7)
+0x02B6: JUMP(0x02B9)
+0x02B9: STOP()
+---------------------------
+| Sub function 0x02BA
+---------------------------
+0x02BA: CHARACTER_DIALOG(ENTITY 4, 0x0006, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Hmm...this amulet seems
+	|to have extraordinary power
+	|within it.
+	+-------------------------
+	|Be careful young one, such
+	|powers can bring about
+	|mysterious phenomenon, opening
+	|doors to unknown worlds.<Close>
+	+-------------------------
+
+0x02BF: WAIT_DIALOG()
+0x02C0: OP_RETURN()
+---------------------------
+| Sub function 0x02C1
+---------------------------
+0x02C1: JUMP 0x02CE IF VAR_BIT[Got Dragon Emblem] CLEAR
+0x02C7: CHARACTER_DIALOG(ENTITY 4, 0x0007, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Hold on to that
+	|Dragon Tear piece.
+	+-------------------------
+	|Though it may be shattered,
+	|all is not lost, as long
+	|as its sparkle does not fade...<Close>
+	+-------------------------
+
+0x02CC: WAIT_DIALOG()
+0x02CD: OP_RETURN()
+0x02CE: CHARACTER_DIALOG(ENTITY 4, 0x0008, 0x08)
+
+	+-------------------------
+	|Direa:
+	|How can this be?
+	|This is without doubt, a
+	|piece of the Dragon Tear...
+	+-------------------------
+	|Serge, I shall bestow upon
+	|you the Dragon Emblem.
+	|It is the symbol of a
+	|Dragon shaman.<Close>
+	+-------------------------
+
+0x02D3: WAIT_DIALOG()
+0x02D4: SET_VAR_BIT(6319:Got Dragon Emblem)
+0x02D8: RECEIVE_ITEM(0, "Dragon Emblem")
+0x02DC: var[0x0020] = 1073
+0x02E2: DIALOG(0x0009, 0x0D)
+
+	+-------------------------
+	|<Member 0> has been bestowed the
+	|<Color 4><Object 3><Color 0>.<Close>
+	+-------------------------
+
+0x02E6: WAIT_DIALOG()
+0x02E7: PLAY_SOUNDFX(283, 0)
+0x02ED: WAIT(45)
+0x02F0: CHARACTER_DIALOG(ENTITY 4, 0x000A, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The emblem and the Dragon Tear
+	|have been handed down by
+	|Dragon shamans for generations.
+	+-------------------------
+	|Although the worlds are
+	|different, you should be able
+	|to receive aid from the other
+	|shaman with this emblem.
+	+-------------------------
+	|Make haste to the
+	|alternate world.<Close>
+	+-------------------------
+
+0x02F5: WAIT_DIALOG()
+0x02F6: OP_RETURN()
+---------------------------
+| Sub function 0x02F7
+---------------------------
+0x02F7: CHARACTER_DIALOG(ENTITY 4, 0x000B, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The emblem and the Dragon Tear
+	|have been handed down by
+	|Dragon shamans for generations.
+	+-------------------------
+	|Although the worlds are
+	|different, you should be able
+	|to receive aid from the other
+	|shaman with this emblem.
+	+-------------------------
+	|Make haste to the
+	|alternate world.<Close>
+	+-------------------------
+
+0x02FC: WAIT_DIALOG()
+0x02FD: OP_RETURN()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x02FE: SETUP_NPC(0)
+0x0301: SETUP_CURRENT_DIALOG_FACE(38)
+0x0304: SET_POSITION_UNSIGNED(121, -308, 0)
+0x030C: SET_ROTATION(1024)
+0x030F: opFE40(0)
+0x0313: opFE07(1)
+0x0316: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x0317: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x0318: DISABLE_CHARACTER_CONTROLS()
+0x0319: TURN_TO_CHARACTER(PARTY_LEADER)
+0x031B: WAIT_ROTATION()
+0x031C: CALL(0x327)
+0x031F: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0321: SET_ROTATION(1024)
+0x0324: WAIT_ROTATION()
+0x0325: STOP()
+---------------------------
+| Entity 7 ON_COLLISION
+---------------------------
+0x0326: STOP()
+---------------------------
+| Sub function 0x0327
+---------------------------
+0x0327: opFE6B(0x01)
+0x032A: IF_CHARACTER_NOT_IN_PARTY_JUMP(38, 0x035D)
+0x032F: JUMP 0x033D IF VAR_BIT[Steena & Steena] CLEAR
+0x0335: DIALOG(0x000C, 0x08)
+
+	+-------------------------
+	|Steena:
+	|...All creation is guided by fate.<Close>
+	+-------------------------
+
+0x0339: WAIT_DIALOG()
+0x033A: JUMP(0x035C)
+0x033D: DISABLE_CHARACTER_CONTROLS()
+0x033E: DIALOG(0x000D, 0x08)
+
+	+-------------------------
+	|Steena:
+	|It is a strange feeling to
+	|be facing myself.
+	|An alternate world...
+	+-------------------------
+	|Whether you will discover the
+	|future of mankind at the end
+	|of your journey is uncertain,
+	|but I will pray for your success.<Close>
+	+-------------------------
+
+0x0342: WAIT_DIALOG()
+0x0343: WAIT(15)
+0x0346: FORCE_CHARACTER_DIRECTION(1, Steena)
+0x034A: TURN_TO_CHARACTER_2(Steena, THIS)
+0x034D: WAIT_ROTATION(Steena)
+0x034F: CHARACTER_DIALOG(Steena, 0x000E, 0x08)
+
+	+-------------------------
+	|Steena:
+	|There is no one here
+	|who can foresee the future of
+	|the battle...
+	+-------------------------
+	|The battle between
+	|Dragons, humans, and fate...
+	+-------------------------
+	|Will humans change the world, or
+	|is the world fated to change...<Close>
+	+-------------------------
+
+0x0354: WAIT_DIALOG()
+0x0355: SET_VAR_BIT(6624:Steena & Steena)
+0x0359: WAIT_ONE_FRAME()
+0x035A: ENABLE_CHARACTER_CONTROLS(0x00)
+0x035C: OP_RETURN()
+0x035D: if( SCENARIO_FLAG < 195 ) jump 0x0368
+0x0362: DIALOG(0x000F, 0x08)
+
+	+-------------------------
+	|Steena:
+	|May the blessing of the
+	|Goddess of Fate be upon we
+	|children of the planet...<Close>
+	+-------------------------
+
+0x0366: WAIT_DIALOG()
+0x0367: OP_RETURN()
+0x0368: JUMP 0x0372 IF VAR_BIT[Dragon Tear Story] CLEAR
+0x036E: CALL(0x376)
+0x0371: OP_RETURN()
+0x0372: CALL(0x5B5)
+0x0375: OP_RETURN()
+---------------------------
+| Sub function 0x0376
+---------------------------
+0x0376: LOAD_ANIMATION( 0x00, THIS, 294)
+0x037B: LOAD_ANIMATION( 0x01 )
+0x037D: DIALOG(0x0010, 0x08)
+
+	+-------------------------
+	|Steena:
+	|I will answer your questions 
+	|to the best of my knowledge.<Close>
+	+-------------------------
+
+0x0381: WAIT_DIALOG()
+0x0382: WAIT(15)
+0x0385: JUMP 0x0391 IF VAR_BIT[Found DivDragFalls] CLEAR
+0x038B: JUMP(0x0402)
+0x038E: JUMP(0x0394)
+0x0391: JUMP(0x03A0)
+0x0394: CALL(0x5AF)
+0x0397: SET_ANIMATION(1)
+0x039A: WAIT(8)
+0x039D: FREE_EXTRA_ANIMATION(THIS)
+0x039F: OP_RETURN()
+0x03A0: DIALOG(0x0011, 0x4D)
+
+	+-------------------------
+	|Steena:
+	|What would you like to know?
+	|      That's all I need for now
+	|      The Land of Genesis
+	|      The Dragon Tear
+	|      The Dragonian Ruins
+	|      The 6 Dragon Gods
+	|      The Frozen Flame<Close>
+	+-------------------------
+
+0x03A4: MULTI_CHOICE( range:2 to 7 )
+0x03A6: WAIT_DIALOG()
+0x03A7: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x03B5)
+0x03AF: JUMP(0x0394)
+0x03B2: JUMP(0x03FB)
+0x03B5: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x03C3)
+0x03BD: CALL(0x472)
+0x03C0: JUMP(0x03FB)
+0x03C3: IF_JUMP(MULTI_CHOICE_RESULT == 4, 0x03D1)
+0x03CB: CALL(0x4B6)
+0x03CE: JUMP(0x03FB)
+0x03D1: IF_JUMP(MULTI_CHOICE_RESULT == 5, 0x03DF)
+0x03D9: CALL(0x4ED)
+0x03DC: JUMP(0x03FB)
+0x03DF: IF_JUMP(MULTI_CHOICE_RESULT == 6, 0x03ED)
+0x03E7: CALL(0x518)
+0x03EA: JUMP(0x03FB)
+0x03ED: IF_JUMP(MULTI_CHOICE_RESULT == 7, 0x03FB)
+0x03F5: CALL(0x553)
+0x03F8: JUMP(0x03FB)
+0x03FB: SET_ANIMATION(1)
+0x03FE: JUMP(0x0385)
+0x0401: STOP()
+0x0402: DIALOG(0x0012, 0x4D)
+
+	+-------------------------
+	|Steena:
+	|What would you like to know?
+	|      That's all I need for now
+	|      The Land of Genesis
+	|      The Dragon Tear
+	|      The Dragonian Ruins
+	|      The 6 Dragon Gods
+	|      The Frozen Flame
+	|      The Divine Dragon Falls<Close>
+	+-------------------------
+
+0x0406: MULTI_CHOICE( range:2 to 8 )
+0x0408: WAIT_DIALOG()
+0x0409: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x0417)
+0x0411: JUMP(0x0394)
+0x0414: JUMP(0x046B)
+0x0417: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x0425)
+0x041F: CALL(0x472)
+0x0422: JUMP(0x046B)
+0x0425: IF_JUMP(MULTI_CHOICE_RESULT == 4, 0x0433)
+0x042D: CALL(0x4B6)
+0x0430: JUMP(0x046B)
+0x0433: IF_JUMP(MULTI_CHOICE_RESULT == 5, 0x0441)
+0x043B: CALL(0x4ED)
+0x043E: JUMP(0x046B)
+0x0441: IF_JUMP(MULTI_CHOICE_RESULT == 6, 0x044F)
+0x0449: CALL(0x518)
+0x044C: JUMP(0x046B)
+0x044F: IF_JUMP(MULTI_CHOICE_RESULT == 7, 0x045D)
+0x0457: CALL(0x553)
+0x045A: JUMP(0x046B)
+0x045D: IF_JUMP(MULTI_CHOICE_RESULT == 8, 0x046B)
+0x0465: CALL(0x584)
+0x0468: JUMP(0x046B)
+0x046B: SET_ANIMATION(1)
+0x046E: JUMP(0x0385)
+0x0471: STOP()
+---------------------------
+| Sub function 0x0472
+---------------------------
+0x0472: SET_ANIMATION(130)
+0x0475: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0477: IF_JUMP(roomVar[0x05] == 0, 0x049A)
+0x047F: roomVar[0x05] = 1
+0x0482: DIALOG(0x0013, 0x08)
+
+	+-------------------------
+	|Steena:
+	|The Land of Genesis...
+	|I have no idea where it
+	|may lie...<Close>
+	+-------------------------
+
+0x0486: WAIT_DIALOG()
+0x0487: SET_ANIMATION(1)
+0x048A: WAIT(20)
+0x048D: SET_ANIMATION(128)
+0x0490: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0492: DIALOG(0x0014, 0x08)
+
+	+-------------------------
+	|Steena:
+	|But...all phenomena
+	|have their reasons...
+	+-------------------------
+	|I feel that there is some
+	|other will acting behind this<UnknowDC>
+	|something other than the fact
+	|that you are dead in this world.<Close>
+	+-------------------------
+
+0x0496: WAIT_DIALOG()
+0x0497: JUMP(0x04B2)
+0x049A: roomVar[0x05] = 0
+0x049D: DIALOG(0x0015, 0x08)
+
+	+-------------------------
+	|Steena:
+	|The dimensional distortion that
+	|Chief Direa mentioned earlier...
+	+-------------------------
+	|Assuming that this exists in the
+	|Land of Genesis, why could you
+	|not return to your real world?
+	|I find that truly puzzling...<Close>
+	+-------------------------
+
+0x04A1: WAIT_DIALOG()
+0x04A2: SET_ANIMATION(1)
+0x04A5: WAIT(20)
+0x04A8: SET_ANIMATION(128)
+0x04AB: WAIT_ANIMATION_COMPLETED?(THIS)
+0x04AD: DIALOG(0x0016, 0x08)
+
+	+-------------------------
+	|Steena:
+	|I believe that there is a <"key
+	|item"> that you need to make
+	|the jump between worlds.
+	+-------------------------
+	|Something that matches the
+	|missing piece of the puzzle.
+	+-------------------------
+	|Something powerful enough to
+	|send Serge back, who is
+	|a missing piece of this world...<Close>
+	+-------------------------
+
+0x04B1: WAIT_DIALOG()
+0x04B2: SET_ANIMATION(1)
+0x04B5: OP_RETURN()
+---------------------------
+| Sub function 0x04B6
+---------------------------
+0x04B6: IF_JUMP(roomVar[0x06] == 0, 0x04CE)
+0x04BE: if 100 == SCENARIO_FLAG jump 0x04C6
+0x04C3: roomVar[0x06] = 1
+0x04C6: DIALOG(0x0017, 0x08)
+
+	+-------------------------
+	|Steena:
+	|It is a one-of-a-kind orb that
+	|our ancestors received from
+	|the now extinct Dragonians.
+	+-------------------------
+	|Traditionally, it was passed
+	|down to each successive
+	|shaman, but someone has
+	|taken it away from Guldove.<Close>
+	+-------------------------
+
+0x04CA: WAIT_DIALOG()
+0x04CB: JUMP(0x04EC)
+0x04CE: roomVar[0x06] = 0
+0x04D1: DIALOG(0x0018, 0x08)
+
+	+-------------------------
+	|Steena:
+	|According to legend, the Dragon
+	|Tear is required to activate the
+	|ruin of Fort Dragonia...
+	+-------------------------
+	|It is a tough and steep trail
+	|to the top, not even the locals
+	|venture up there.
+	|But even so...
+	+-------------------------
+	|If the assailant's goal is to
+	|activate the fort, it will
+	|certainly bring disaster
+	|to this world...<Close>
+	+-------------------------
+
+0x04D5: WAIT_DIALOG()
+0x04D6: WAIT(20)
+0x04D9: CHARACTER_DIALOG(ENTITY 4, 0x0019, 0x08)
+
+	+-------------------------
+	|Direa:
+	|<Color 8>Nod...<Color 0> That is correct.
+	|This Dragonian ruin is a product
+	|of their <"crystal of wisdom.">
+	+-------------------------
+	|Its power is unknown, yet much
+	|too powerful for any human.
+	+-------------------------
+	|If the ruin were to be
+	|activated by chance, it would
+	|emit uncontrollable power...
+	|All would surely end in disaster.<Close>
+	+-------------------------
+
+0x04DE: WAIT_DIALOG()
+0x04DF: SET_ANIMATION(129)
+0x04E2: WAIT_ANIMATION_COMPLETED?(THIS)
+0x04E4: WAIT(15)
+0x04E7: DIALOG(0x001A, 0x08)
+
+	+-------------------------
+	|Steena:
+	|But since the Dragon Tear was
+	|stolen, we cannot deny that this
+	|threat may become a reality.<Close>
+	+-------------------------
+
+0x04EB: WAIT_DIALOG()
+0x04EC: OP_RETURN()
+---------------------------
+| Sub function 0x04ED
+---------------------------
+0x04ED: IF_JUMP(roomVar[0x07] == 0, 0x0500)
+0x04F5: roomVar[0x07] = 1
+0x04F8: DIALOG(0x001B, 0x08)
+
+	+-------------------------
+	|Steena:
+	|The Dragonian artifacts are the
+	|many buildings and sculptures
+	|still found on El Nido today.
+	+-------------------------
+	|But most of these have
+	|weathered away, and only
+	|a small portion of them
+	|remain intact.
+	+-------------------------
+	|The only one that retains
+	|its complete form is
+	|Fort Dragonia, which we
+	|have discussed before.
+	+-------------------------
+	|It stands at the peak of
+	|Mount Pyre.<Close>
+	+-------------------------
+
+0x04FC: WAIT_DIALOG()
+0x04FD: JUMP(0x0517)
+0x0500: roomVar[0x07] = 0
+0x0503: DIALOG(0x001C, 0x08)
+
+	+-------------------------
+	|Steena:
+	|Have you noticed that many
+	|of the islands were named
+	|after dragons?
+	+-------------------------
+	|This is because those islands
+	|were where the Dragon Gods
+	|resided.
+	+-------------------------
+	|But as human society grew less
+	|concerned for nature, the
+	|Dragon Gods chose to hide
+	|from the world's eyes...<Close>
+	+-------------------------
+
+0x0507: WAIT_DIALOG()
+0x0508: CHARACTER_DIALOG(ENTITY 4, 0x001D, 0x08)
+
+	+-------------------------
+	|Direa:
+	|'Tis sad...
+	+-------------------------
+	|The mainland teachings state
+	|that humans and demi-humans
+	|are incompatible species.
+	+-------------------------
+	|Is society moving farther and
+	|farther from living in harmony
+	|with nature?
+	+-------------------------
+	|To consider separate
+	|even though the two
+	|are inseparable...?<Close>
+	+-------------------------
+
+0x050D: WAIT_DIALOG()
+0x050E: WAIT(15)
+0x0511: CHARACTER_DIALOG(ENTITY 4, 0x001E, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Yet there is still one Dragon
+	|God that watches over us...
+	|The four-winged white dragon.
+	+-------------------------
+	|His name, <"Sky Dragon">...
+	|The pillar of the 6 Dragon Gods
+	|who has watched over El Nido
+	|through the ages.<Close>
+	+-------------------------
+
+0x0516: WAIT_DIALOG()
+0x0517: OP_RETURN()
+---------------------------
+| Sub function 0x0518
+---------------------------
+0x0518: IF_JUMP(roomVar[0x08] == 0, 0x0536)
+0x0520: roomVar[0x08] = 1
+0x0523: DIALOG(0x001F, 0x08)
+
+	+-------------------------
+	|Steena:
+	|As you may well know, the
+	|natural world is composed of
+	|a balance of the 6 Elements.
+	+-------------------------
+	|These Elements are...
+	|White, black, red, blue,
+	|green, and yellow.
+	+-------------------------
+	|Each one pairs up with another
+	|to maintain the balance which
+	|the natural world relies upon.<Close>
+	+-------------------------
+
+0x0527: WAIT_DIALOG()
+0x0528: CHARACTER_DIALOG(ENTITY 4, 0x0020, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The gods that represent
+	|each Element are called the
+	|<"Dragon Gods.">
+	+-------------------------
+	|Since they symbolize the
+	|powers of nature, they are
+	|also commonly referred to
+	|as the <"Gods of Nature."><Close>
+	+-------------------------
+
+0x052D: WAIT_DIALOG()
+0x052E: DIALOG(0x0021, 0x08)
+
+	+-------------------------
+	|Steena:
+	|If the sun is white,
+	|the shadow is black...
+	+-------------------------
+	|The flame red and
+	|the water blue...
+	+-------------------------
+	|Green are the leaves of the
+	|forest and the blowing winds.
+	|Yellow are the forces of
+	|mother earth.<Close>
+	+-------------------------
+
+0x0532: WAIT_DIALOG()
+0x0533: JUMP(0x0552)
+0x0536: roomVar[0x08] = 0
+0x0539: DIALOG(0x0022, 0x08)
+
+	+-------------------------
+	|Steena:
+	|Long before man inhabited
+	|El Nido, the Dragon Gods have
+	|protected the lands.
+	+-------------------------
+	|The islands are named after the
+	|Dragon Gods: Sky Dragon,
+	|Water Dragon, Earth Dragon...
+	+-------------------------
+	|It is said that these Dragons
+	|once dwelled upon those isles.<Close>
+	+-------------------------
+
+0x053D: WAIT_DIALOG()
+0x053E: DIALOG(0x0023, 0x08)
+
+	+-------------------------
+	|Steena:
+	|But several hundred years have
+	|passed since settlers from the
+	|mainland came to El Nido.
+	+-------------------------
+	|The only Dragons that can
+	|be seen today are the
+	|White and Black Dragons.
+	+-------------------------
+	|No one knows the location
+	|of the other Dragon Gods...<Close>
+	+-------------------------
+
+0x0542: WAIT_DIALOG()
+0x0543: CHARACTER_DIALOG(ENTITY 4, 0x0024, 0x08)
+
+	+-------------------------
+	|Direa:
+	|...It may be that they have
+	|withdrawn from the world to
+	|slumber away the aeons.<Close>
+	+-------------------------
+
+0x0548: WAIT_DIALOG()
+0x0549: WAIT(45)
+0x054C: CHARACTER_DIALOG(ENTITY 4, 0x0025, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The number of outsiders seeking
+	|dragon lore and artifacts has
+	|been increasing in recent years.
+	+-------------------------
+	|You may find it more beneficial
+	|to ask them about the Dragons,
+	|as we are bound by the ancient
+	|traditions...<Close>
+	+-------------------------
+
+0x0551: WAIT_DIALOG()
+0x0552: OP_RETURN()
+---------------------------
+| Sub function 0x0553
+---------------------------
+0x0553: SET_ANIMATION(130)
+0x0556: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0558: DIALOG(0x0026, 0x08)
+
+	+-------------------------
+	|Steena:
+	|...A Frozen Flame?
+	|That is something we have not
+	|heard of in these parts.
+	+-------------------------
+	|But, there is something
+	|about flames in the oral
+	|lore of our tribe.
+	+-------------------------
+	|I do not know if this is
+	|related to the flame you
+	|speak of, but allow me to
+	|share it with you.<Close>
+	+-------------------------
+
+0x055C: WAIT_DIALOG()
+0x055D: SET_ANIMATION(1)
+0x0560: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 12, script 4, 0x20)
+0x0563: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x056E: WAIT(30)
+0x0571: DIALOG(0x0027, 0x08)
+
+	+-------------------------
+	|Steena:
+	|In an old poem of El Nido there is
+	|a phrase that refers to the evil
+	|sealed away by the 6 Dragons.
+	+-------------------------
+	|This phrase follows after it:
+	|<"...the evil flame that sought to
+	|engulf the world..."><Close>
+	+-------------------------
+
+0x0575: WAIT_DIALOG()
+0x0576: SET_ANIMATION(128)
+0x0579: WAIT_ANIMATION_COMPLETED?(THIS)
+0x057B: WAIT(15)
+0x057E: DIALOG(0x0028, 0x08)
+
+	+-------------------------
+	|Steena:
+	|...An evil flame.
+	|If this refers to the
+	|Frozen Flame...
+	+-------------------------
+	|It should not be in
+	|the hands of humans...
+	|Yet the truth about this
+	|story is unknown.<Close>
+	+-------------------------
+
+0x0582: WAIT_DIALOG()
+0x0583: OP_RETURN()
+---------------------------
+| Sub function 0x0584
+---------------------------
+0x0584: IF_JUMP(roomVar[0x09] == 0, 0x05A6)
+0x058C: roomVar[0x09] = 1
+0x058F: DIALOG(0x0029, 0x08)
+
+	+-------------------------
+	|Steena:
+	|This was about a hundred years
+	|ago, before immigrants from the
+	|mainland came to El Nido.
+	+-------------------------
+	|The now extinct Dragonians,
+	|demi-humans, and our ancestors
+	|lived on the main island and not
+	|on the outlying islands.<Close>
+	+-------------------------
+
+0x0593: WAIT_DIALOG()
+0x0594: WAIT(20)
+0x0597: CHARACTER_DIALOG(ENTITY 4, 0x002A, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Yes, it was a time when dragon
+	|worship was still common...
+	+-------------------------
+	|Humans and demi-humans lived
+	|together in the same community.
+	|It must be a little hard to
+	|imagine today, but it is true...
+	+-------------------------
+	|The planet's power collects
+	|at certain points on the
+	|main island.<Close>
+	+-------------------------
+
+0x059C: WAIT_DIALOG()
+0x059D: CHARACTER_DIALOG(ENTITY 4, 0x002B, 0x08)
+
+	+-------------------------
+	|Direa:
+	|One such point is the
+	|place we call the
+	|<"Divine Dragon Falls.">
+	+-------------------------
+	|But its name has been
+	|all but forgotten on
+	|the main island.
+	+-------------------------
+	|Our tribe and the
+	|demi-humans are the
+	|only ones that know
+	|this name.<Close>
+	+-------------------------
+
+0x05A2: WAIT_DIALOG()
+0x05A3: JUMP(0x05AE)
+0x05A6: roomVar[0x09] = 0
+0x05A9: DIALOG(0x002C, 0x08)
+
+	+-------------------------
+	|Steena:
+	|It is a sacred land that is
+	|dedicated to the worship of
+	|the sleeping Dragon Gods...
+	+-------------------------
+	|For you to have accidently
+	|found this holy ground,
+	|means the planet might
+	|have guided you there...<Close>
+	+-------------------------
+
+0x05AD: WAIT_DIALOG()
+0x05AE: OP_RETURN()
+---------------------------
+| Sub function 0x05AF
+---------------------------
+0x05AF: DIALOG(0x002D, 0x08)
+
+	+-------------------------
+	|Steena:
+	|May your journey be blessed
+	|with the guidance of the 6 great
+	|Dragon Gods...<Close>
+	+-------------------------
+
+0x05B3: WAIT_DIALOG()
+0x05B4: OP_RETURN()
+---------------------------
+| Sub function 0x05B5
+---------------------------
+0x05B5: LOAD_ANIMATION( 0x00, THIS, 294)
+0x05BA: LOAD_ANIMATION( 0x01 )
+0x05BC: DIALOG(0x002E, 0x08)
+
+	+-------------------------
+	|Steena:
+	|El Nido has long been called
+	|">The Land Where the Dragons
+	|Sleep.">
+	+-------------------------
+	|There are islands named
+	|after Dragons...and numerous
+	|Dragonian ruins and artifacts.
+	+-------------------------
+	|You may have encountered
+	|some of these already.
+	+-------------------------
+	|The most famous are the islands
+	|of the Sky Dragon, the Earth
+	|Dragon, and the Water Dragon.
+	+-------------------------
+	|And the ancient ruin,
+	|<"Fort Dragonia,">
+	|that lies to the east.
+	+-------------------------
+	|Of the many Dragonian ruins,
+	|Fort Dragonia is one of the few
+	|that is still fully functional.<Close>
+	+-------------------------
+
+0x05C0: WAIT_DIALOG()
+0x05C1: if 100 == SCENARIO_FLAG jump 0x05C9
+0x05C6: CALL(0x5CE)
+0x05C9: SET_VAR_BIT(6318:Dragon Tear Story)
+0x05CD: OP_RETURN()
+---------------------------
+| Sub function 0x05CE
+---------------------------
+0x05CE: WAIT(15)
+0x05D1: CHARACTER_DIALOG(ENTITY 4, 0x002F, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The key to activate
+	|this ruin is the
+	|<"Dragon Tear">...
+	+-------------------------
+	|It was given to our ancestors
+	|by the extinct Dragonians as a
+	|symbol of our friendship.
+	+-------------------------
+	|It has been passed down
+	|through successive shamans,
+	|but...<Close>
+	+-------------------------
+
+0x05D6: WAIT_DIALOG()
+0x05D7: SET_ANIMATION(129)
+0x05DA: WAIT_ANIMATION_COMPLETED?(THIS)
+0x05DC: DIALOG(0x0030, 0x08)
+
+	+-------------------------
+	|Steena:
+	|It was stolen and taken away
+	|from Guldove by an unknown
+	|assailant.
+	+-------------------------
+	|Their intent is unknown, but
+	|if they plan to activate the
+	|ancient ruin, a great
+	|disaster shall come about.<Close>
+	+-------------------------
+
+0x05E0: WAIT_DIALOG()
+0x05E1: CHARACTER_DIALOG(ENTITY 4, 0x0031, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Our people have been
+	|searching for it, but...
+	|we have found no trace of it.<Close>
+	+-------------------------
+
+0x05E6: WAIT_DIALOG()
+0x05E7: OP_RETURN()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x05E8: op37(0x00)
+0x05EA: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x05EB: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x05EC: STOP()
+---------------------------
+| Entity 8 script 4
+---------------------------
+0x05ED: opFE11(1)
+0x05F1: SET_CAMERA_POSITION( 0x00, -5, 5, 180)
+0x05FC: STOP()
+
+
+---------------------------
+| Entity 9 INIT
+---------------------------
+0x05FD: SET_POSITION_UNSIGNED(3, -1088, 0)
+0x0605: op8D(0x00)
+0x0607: RECT_SIZE(30, 150)
+0x060C: SET_ROTATION(1024)
+0x060F: STOP()
+---------------------------
+| Entity 9 UPDATE
+---------------------------
+0x0610: STOP()
+---------------------------
+| Entity 9 ON_ACTION
+---------------------------
+0x0611: STOP()
+---------------------------
+| Entity 9 ON_COLLISION
+---------------------------
+0x0612: DISABLE_CHARACTER_CONTROLS()
+0x0613: opFE1D(60, 0)
+0x0619: SET_NEXT_ROOM("CD0-210-Guldove - Chief's Tent Exterior (Another)", 1)
+0x061E: STOP_SCRIPT_EXEC()
+0x061F: STOP()
+
+
+---------------------------
+| Entity 10 INIT
+---------------------------
+0x0620: SET_POSITION_UNSIGNED(-340, -125, 0)
+0x0628: opC5(2, 36, 0)
+0x062F: op37(0x00)
+0x0631: STOP()
+---------------------------
+| Entity 10 UPDATE
+---------------------------
+0x0632: STOP()
+---------------------------
+| Entity 10 ON_ACTION
+---------------------------
+0x0633: STOP()
+
+
+---------------------------
+| Entity 11 INIT
+---------------------------
+0x0634: SET_POSITION_UNSIGNED(350, -125, 0)
+0x063C: opC5(2, 36, 0)
+0x0643: op37(0x00)
+0x0645: STOP()
+---------------------------
+| Entity 11 UPDATE
+---------------------------
+0x0646: STOP()
+---------------------------
+| Entity 11 ON_ACTION
+---------------------------
+0x0647: STOP()
+
+
+---------------------------
+| Entity 12 INIT
+---------------------------
+0x0648: op37(0x00)
+0x064A: STOP()
+---------------------------
+| Entity 12 UPDATE
+---------------------------
+0x064B: STOP()
+---------------------------
+| Entity 12 ON_ACTION
+---------------------------
+0x064C: STOP()
+---------------------------
+| Entity 12 script 4
+---------------------------
+0x064D: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 13, script 4, 0x20)
+0x0650: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:10, Flag:861)
+0x065B: DIALOG(0x0032, 0x00)
+
+	+-------------------------
+	|<Unknow17 0>  
+	|Be very careful when
+	|you stare into the flame...<Unknow16 3><Auto close 1>
+	+-------------------------
+
+0x065F: WAIT_DIALOG()
+0x0660: STOP()
+
+
+---------------------------
+| Entity 13 INIT
+---------------------------
+0x0661: op37(0x00)
+0x0663: STOP()
+---------------------------
+| Entity 13 UPDATE
+---------------------------
+0x0664: STOP()
+---------------------------
+| Entity 13 ON_ACTION
+---------------------------
+0x0665: STOP()
+---------------------------
+| Entity 13 script 4
+---------------------------
+0x0666: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 14, script 4, 0x20)
+0x0669: WAIT(75)
+0x066C: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:10, Flag:861)
+0x0677: DIALOG(0x0033, 0x00)
+
+	+-------------------------
+	|  
+	|  
+	|  
+	|For the flame will also
+	|stare back at you...<Unknow16 3><Auto close 1>
+	+-------------------------
+
+0x067B: WAIT_DIALOG()
+0x067C: STOP()
+
+
+---------------------------
+| Entity 14 INIT
+---------------------------
+0x067D: op37(0x00)
+0x067F: STOP()
+---------------------------
+| Entity 14 UPDATE
+---------------------------
+0x0680: STOP()
+---------------------------
+| Entity 14 ON_ACTION
+---------------------------
+0x0681: STOP()
+---------------------------
+| Entity 14 script 4
+---------------------------
+0x0682: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 15, script 4, 0x20)
+0x0685: WAIT(210)
+0x0688: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:10, Flag:861)
+0x0693: DIALOG(0x0034, 0x00)
+
+	+-------------------------
+	|  
+	|  
+	|  
+	|  
+	|  
+	|  
+	|It will either transform you
+	|into a different being...<Unknow16 3><Auto close 1>
+	+-------------------------
+
+0x0697: WAIT_DIALOG()
+0x0698: STOP()
+
+
+---------------------------
+| Entity 15 INIT
+---------------------------
+0x0699: op37(0x00)
+0x069B: STOP()
+---------------------------
+| Entity 15 UPDATE
+---------------------------
+0x069C: STOP()
+---------------------------
+| Entity 15 ON_ACTION
+---------------------------
+0x069D: STOP()
+---------------------------
+| Entity 15 script 4
+---------------------------
+0x069E: WAIT(300)
+0x06A1: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:10, Flag:861)
+0x06AC: DIALOG(0x0035, 0x00)
+
+	+-------------------------
+	|  
+	|  
+	|  
+	|  
+	|  
+	|  
+	|  
+	|  
+	|Or burn you into ashes.<Unknow03><Unknow17 3><Auto close 1>
+	+-------------------------
+
+0x06B0: WAIT_DIALOG()
+0x06B1: STOP()
+
+
+---------------------------
+| Entity 16 INIT
+---------------------------
+0x06B2: op37(0x00)
+0x06B4: STOP()
+---------------------------
+| Entity 16 UPDATE
+---------------------------
+0x06B5: op59()
+0x06B6: IF_JUMP(ROOM_PARAM == 2, 0x06C4)
+0x06BE: CALL(0x6CD)
+0x06C1: JUMP(0x06CB)
+0x06C4: WAIT_PLAY_SONG_DONE()
+0x06C5: opFE1D(210, 96)
+0x06CB: STOP_SCRIPT_EXEC()
+---------------------------
+| Entity 16 ON_ACTION
+---------------------------
+0x06CC: STOP()
+---------------------------
+| Sub function 0x06CD
+---------------------------
+0x06CD: DISABLE_CHARACTER_CONTROLS()
+0x06CE: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x06D9: RUN_ENTITY_SCRIPT_ASYNC(PARTY_LEADER, script 4, 0x20)
+0x06DC: RUN_ENTITY_SCRIPT_ASYNC(PC1, script 4, 0x20)
+0x06DF: RUN_ENTITY_SCRIPT_ASYNC(PC2, script 4, 0x20)
+0x06E2: opFE11(1)
+0x06E6: SET_CAMERA_POSITION( 0x00, 0, -125, 1)
+0x06F1: LOAD_ANIMATION( 0x00, ENTITY 7, 294)
+0x06F6: LOAD_ANIMATION( 0x01 )
+0x06F8: WAIT_ONE_FRAME()
+0x06F9: WAIT_PLAY_SONG_DONE()
+0x06FA: opFE1D(210, 96)
+0x0700: SET_SCREEN_RGB(2, 0, 0, 0, 30)
+0x070B: WAIT(45)
+0x070E: CHARACTER_PLAY_ANIM(ENTITY 7, 128)
+0x0712: WAIT_ANIMATION_COMPLETED?(ENTITY 7)
+0x0714: WAIT(15)
+0x0717: CHARACTER_DIALOG(ENTITY 7, 0x0036, 0x08)
+
+	+-------------------------
+	|Shrine Maiden:
+	|Welcome to the Dragon Shrine.
+	+-------------------------
+	|I am Steena, a shaman
+	|serving Village Chief and
+	|High Priestess Direa.
+	+-------------------------
+	|I presume that you have come to
+	|this shrine seeking assistance?
+	|Please don't hesitate to ask
+	|Chief Direa for guidance...<Close>
+	+-------------------------
+
+0x071C: WAIT_DIALOG()
+0x071D: RUN_ENTITY_SCRIPT_BLOCKING(Serge, script 6, 0x20)
+0x0720: RUN_ENTITY_SCRIPT_ASYNC(PC1, script 6, 0x20)
+0x0723: WAIT(5)
+0x0726: RUN_ENTITY_SCRIPT_ASYNC(PC2, script 6, 0x20)
+0x0729: WAIT(20)
+0x072C: CHARACTER_DIALOG(ENTITY 4, 0x0037, 0x08)
+
+	+-------------------------
+	|Direa:
+	|...You possess a young but
+	|gentle air about you...
+	+-------------------------
+	|Hmm? There is an odd
+	|wind that is whirling about.
+	|I have heard that such wind-
+	|bearers appear at times, but...<Close>
+	+-------------------------
+
+0x0731: WAIT_DIALOG()
+0x0732: opBF(Serge) // missing stuff, can't decode properly yet
+0x0737: CHARACTER_PLAY_ANIM(Serge, 128)
+0x073B: WAIT_ANIMATION_COMPLETED?(Serge)
+0x073D: WAIT(20)
+0x0740: CHARACTER_PLAY_ANIM(Serge, 4)
+0x0744: WAIT(45)
+0x0747: CHARACTER_PLAY_ANIM(Serge, 1)
+0x074B: WAIT(8)
+0x074E: FREE_EXTRA_ANIMATION(Serge)
+0x0750: WAIT(15)
+0x0753: LOAD_ANIMATION( 0x00, Serge, 0)
+0x0758: LOAD_ANIMATION( 0x01 )
+0x075A: CHARACTER_DIALOG(ENTITY 4, 0x0038, 0x08)
+
+	+-------------------------
+	|Direa:
+	|...Do you speak the truth?
+	|That you are already dead
+	|in this world...?<Close>
+	+-------------------------
+
+0x075F: WAIT_DIALOG()
+0x0760: CHARACTER_PLAY_ANIM(Serge, 139)
+0x0764: WAIT_ANIMATION_COMPLETED?(Serge)
+0x0766: WAIT(20)
+0x0769: CHARACTER_DIALOG(ENTITY 4, 0x0039, 0x08)
+
+	+-------------------------
+	|Direa:
+	|Hmm, I see...
+	|So that's why you have an
+	|odd air about you.
+	+-------------------------
+	|As for a way to return to your
+	|original world, I do not know.
+	|But there are always reasons
+	|why such phenomena occur...<Close>
+	+-------------------------
+
+0x076E: WAIT_DIALOG()
+0x076F: WAIT(45)
+0x0772: CHARACTER_DIALOG(ENTITY 4, 0x003A, 0x08)
+
+	+-------------------------
+	|Direa:
+	|The Land of Genesis.
+	|Your only key may lie there...
+	+-------------------------
+	|The key that connects
+	|your world, to this one.
+	+-------------------------
+	|...Shall we say, it is a
+	|<"Dimensional Distortion">
+	|of sorts?<Close>
+	+-------------------------
+
+0x0777: WAIT_DIALOG()
+0x0778: CHARACTER_PLAY_ANIM(Serge, 138)
+0x077C: WAIT_ANIMATION_COMPLETED?(Serge)
+0x077E: WAIT(20)
+0x0781: JUMP 0x078A IF VAR_BIT[BRANCH1:Ditched Kid] CLEAR
+0x0787: JUMP(0x0790)
+0x078A: CHARACTER_DIALOG(ENTITY 7, 0x003B, 0x08)
+
+	+-------------------------
+	|Steena:
+	|If events in your
+	|world are different
+	|from events here...
+	+-------------------------
+	|It may be possible to
+	|save the girl, stricken
+	|with the Hydra poison.
+	+-------------------------
+	|That is if the extinct Hydra
+	|still exists in your world...<Close>
+	+-------------------------
+
+0x078F: WAIT_DIALOG()
+0x0790: CHARACTER_PLAY_ANIM(Serge, 1)
+0x0794: WAIT(8)
+0x0797: FREE_EXTRA_ANIMATION(Serge)
+0x0799: SET_VAR_BIT(6338:SpokeToShrineMaiden)
+0x079D: CAMERA_AUTO_FOLLOW?(0x00)
+0x079F: CAMERA_AUTO_FOLLOW?(0x01)
+0x07A1: RUN_ENTITY_SCRIPT_ASYNC(PARTY_LEADER, script 5, 0x20)
+0x07A4: RUN_ENTITY_SCRIPT_ASYNC(PC1, script 5, 0x20)
+0x07A7: RUN_ENTITY_SCRIPT_ASYNC(PC2, script 5, 0x20)
+0x07AA: WAIT_ONE_FRAME()
+0x07AB: opFE11(0)
+0x07AF: SET_CAMERA_TO_ACTOR(0x00, 45)
+0x07B3: SET_CAMERA_TO_ACTOR(0x01)
+0x07B5: ENABLE_CHARACTER_CONTROLS(0x00)
+0x07B7: OP_RETURN()
+0x07B8: 0xE0
+0x07B9: 0x3C
+0x07BA: 0x00
+0x07BB: 0x00
+0x07BC: 0xE2
+
+
+---------------------------
+| Entity 17 INIT
+---------------------------
+0x07BD: SET_POSITION_UNSIGNED(651, -153, 0)
+0x07C5: op8D(0x00)
+0x07C7: RECT_SIZE(75, 75)
+0x07CC: JUMP 0x07D5 IF VAR_BIT[Ind. Menu Start] CLEAR
+0x07D2: JUMP(0x07D8)
+0x07D5: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x07D8: STOP()
+---------------------------
+| Entity 17 UPDATE
+---------------------------
+0x07D9: STOP()
+---------------------------
+| Entity 17 ON_ACTION
+---------------------------
+0x07DA: DIALOG(0x003D, 0x0D)
+
+	+-------------------------
+	|* DEBUG MENU
+	|      Quit
+	|      Rect<Close>
+	+-------------------------
+
+0x07DE: MULTI_CHOICE( range:1 to 2 )
+0x07E0: WAIT_DIALOG()
+0x07E1: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x07EC)
+0x07E9: JUMP(0x07FA)
+0x07EC: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x07FA)
+0x07F4: CALL(0x7FC)
+0x07F7: JUMP(0x07FA)
+0x07FA: STOP()
+---------------------------
+| Entity 17 ON_COLLISION
+---------------------------
+0x07FB: STOP()
+---------------------------
+| Sub function 0x07FC
+---------------------------
+0x07FC: IF_JUMP(roomVar[0x0A] == 0, 0x0812)
+0x0804: roomVar[0x0A] = 1
+0x0807: SET_CHARACTER_VIEWABLE(0x00, ENTITY 9)
+0x080A: DIALOG(0x003E, 0x0D)
+
+	+-------------------------
+	|* Rect Off<Close>
+	+-------------------------
+
+0x080E: WAIT_DIALOG()
+0x080F: JUMP(0x081D)
+0x0812: roomVar[0x0A] = 0
+0x0815: SET_CHARACTER_VIEWABLE(0x01, ENTITY 9)
+0x0818: DIALOG(0x003F, 0x0D)
+
+	+-------------------------
+	|* Rect On<Close>
+	+-------------------------
+
+0x081C: WAIT_DIALOG()
+0x081D: OP_RETURN()
+0x081E: 0xE0
+0x081F: 0x40
+0x0820: 0x00
+0x0821: 0x00
+0x0822: 0xE2
+
+
+---------------------------
+| Entity 18 INIT
+---------------------------
+0x0823: SETUP_NPC(roomVar[0x0B])
+0x0826: opFE5A(0x01)
+0x0829: SET_POSITION_UNSIGNED(roomVar[0x0C], roomVar[0x0D], roomVar[0x0F])
+0x0831: TOGGLE_RECT_COLLISION(0x01)
+0x0833: op8D(0x00)
+0x0835: RECT_SIZE(75, 75)
+0x083A: op93(0x01)
+0x083C: SET_WALK_ANIMATION(0x01, 1)
+0x0840: STOP()
+---------------------------
+| Entity 18 UPDATE
+---------------------------
+0x0841: roomVar[0x12] = 0
+0x0844: var[0x003C] = 0
+0x0847: SET_ROTATION?(roomVar[0x10])
+0x084B: roomVar[0x10] = sin(roomVar[0x11], 50)
+0x0853: roomVar[0x10] *= -1
+0x0859: roomVar[0x10] += -100
+0x085F: roomVar[0x11] += 16
+0x0865: STOP()
+---------------------------
+| Entity 18 ON_ACTION
+---------------------------
+0x0866: roomVar[0x12] = 1
+0x0869: var[0x003C] = 1
+0x086C: PLAY_SOUNDFX(281, 0)
+0x0872: Unk opcode 0xFE 0x72
+0x0874: 0xFE
+0x0875: 0x61
+0x0876: 0x00
+---------------------------
+| Entity 18 ON_COLLISION
+---------------------------
+0x0877: IF_JUMP(roomVar[0x12] == 0, 0x088B)
+0x087F: roomVar[0x12] = 1
+0x0882: var[0x003C] = 1
+0x0885: PLAY_SOUNDFX(332, 0)
+0x088B: STOP()
+
+
+---------------------------
+| Entity 19 INIT
+---------------------------
+0x088C: op37(0x00)
+0x088E: STOP()
+---------------------------
+| Entity 19 UPDATE
+---------------------------
+0x088F: IF_JUMP(roomVar[0x13] > 4096, 0x089A)
+0x0897: roomVar[0x13] = 0
+0x089A: op59()
+0x089B: SET_AXIS_ROTATION(0x01, ENTITY 18, roomVar[0x13])
+0x08A0: roomVar[0x13] += 16
+0x08A6: WAIT(0)
+0x08A9: STOP()
+---------------------------
+| Entity 19 ON_ACTION
+---------------------------
+0x08AA: STOP()
+---------------------------
+| Entity 19 ON_COLLISION
+---------------------------
+0x08AB: STOP()

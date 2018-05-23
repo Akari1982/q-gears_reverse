@@ -200,6 +200,9 @@
 8005850c [][][][] init with 0.
 
 80058810 GP
+    + 14 [][][][] some id for GP + 420 or GP + 418 struct. Increment after inserting new.
+    + 18 [][][][] increment after inserting new to GP + 418.
+    + 1c [][][][] increment after inserting new to GP + 420.
     + 20 [][][][] pointer to last struct_164 (used to create list of render sprites).
     + 24 [][]     some y of texture (used as * 0x40 + 140). Increment by 1 when +26 >= 0x41 each func call limited by 3.
     + 26 [][]     some x of texture (used as + 300). Increment by A1 each func call limited by 41.
@@ -215,6 +218,19 @@
     +1c8 [][][][] init with 0.
     +1cc [][][][] store size of allocated data here.
     +1d0 [][][][] place in code from where we call current function.
+    +418 [][][][] last inserted struct (size 0x1c)
+    +41c [][][][] current struct.
+    +420 [][][][] last inserted struct (size 0x1c)
+                    +00 [][][][] struct_164.
+                    +08 [][][][] init with 0.
+                    +0c [][][][] ptr to func1c9d4() for +420 and func1cc20() for +418. Looks like destructor.
+                    +10 [][][][] some flags.
+                                    0x1fffffff id from GP + 14
+                                    0xe0000000 ???
+                    +14 [][][][] some flags.
+                                    0x1fffffff id from prev struct
+                                    0xe0000000 ???
+                    +18 [][][][] prev struct.
 
 80058958 [][][][] pointer to file loaded via func19a50() (we allocate place for file here).
 8005895c [][][][] store here id of file to load via func19a50().
@@ -264,6 +280,7 @@
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
 80058b2c [][]     mask of buttons that was pressed in last update for controller 2 (details in 80058c0c).
 
+80058b30 [][]     store here 0 when sprite update wait is over.
 80058b34 [][][][] store here pointer to precalculated normal for polygon lighting. Allocated memory from +18 in model data file.
 
 80058b40 [][]     repeated buttons for controller 1 (details in 80058c0c). 0x20 timer to repeat.
@@ -569,3 +586,156 @@
 801fc000 end of heap region.
     -08 [][][][] pointer to end of heap.
     -04 [][][][] some flags.
+
+
+
+Sprite struct 164. Can be allocated anywhere.
+    +  0 [][][][] store x here from struct_138 + 20.
+    +  4 [][][][] store y here from struct_138 + 24.
+    +  8 [][][][] store z here from struct_138 + 28.
+    +  c [][][][] animation move x. init with 0 in some cases.
+    + 10 [][][][] animation move y. init with 0 in some cases. When move set as [struct_138 + f0] >> 1.
+    + 14 [][][][] animation move z. init with 0 in some cases.
+    + 18 [][][][] move speed. Set to 0 if +6 == 84. If animation id == 2 (run) set as +82 * 60 else +82 * 30.
+    + 1c [][][][] some multiplication of +82 with w[80058810 + 28] + 1 and +ac (0x001ffe00) and data from flags in animation data.
+    + 20 [][][][] pointer to +b4.
+    + 24 [][][][] pointer to +110.
+    + 28 [][][][] packet header 0x2c808080 or 0x2b during init.
+    + 2b []       init with 0x2d.
+    + 2c [][]     scale of sprite. Init with 0x1000.
+    + 30 [][]     init with 0.
+    + 32 [][]     store rotation here. Init with 0.
+    + 34 [][]     frame id to render. Init with 0.
+    + 36 [][]     some data from frame_data + 3 * sprite scale. Maybe frame offset.
+    + 38 [][]     some data from frame_data + 1 * sprite scale. Maybe frame offset.
+    + 3a [][]     init with 0. Some scale. Multiplied with rotation matrix.
+    + 3c [][][][] init with 0. Some flags.
+                    0x00000003 - set to 1 during init. If 1 then remove sprite offset in b4+3c and b4+3d.
+                                    0x1 - init animation.
+                    0x00000004 - call some other function after packet creation.
+                    0x00000008 - invert tile x and width.
+                    0x00000010 - invert tile y and height.
+                    0x000000e0 - semi transparency mode?
+                    0x0000ff00 - mask of add tiles.
+                    0x00000800 - different queue inserting.
+                    0x10000000 - add if we set scale.
+                    0x40000000 - if set then we ??? during sprite update and remove flag.
+    + 3e [][]     hu[S3 + 3e] & 00f0 palette id to load.
+    + 40 [][][][] init with 0. Some flags.
+                    0x00000001 - if set we calculate rotation matrix and multiply it with matrix stored in 0x80018614 (maybe for debug or for some special effect).
+                    0x000000fc - number_of_tiles in current render.
+                    0x00001f00 - scale
+                    0x0001e000 - removed during init.
+                    0x00020000 - this struct was added to sprite struct list.
+                    0x00040000 - set when init sprite if h[800b1662] != 0 (move length).
+                    0x00080000 - if set we init frame.
+                    0x00100000 - add when we starting animation. If 0 and +3c 0x00000003 == 1 and b4+34 != 0 then reset all data in +124 (add rot and trans).
+    + 44 [][][][] pointer to loaded sprite pack.
+    + 48 [][][][] pointer to sprite pack.
+    + 4c [][][][] pointer to some sprite pack (used if animation id < 0).
+    + 50 [][][][] init with 0.
+    + 54 [][][][] pointer to some start frame id for different directions in sprite data file 0. Pointer to first direction start frame.
+    + 58 [][][][] pointer to animation data in sprite data file 0.
+    + 5c [][][][] pointer to animation data in sprite data file 0 + 6, set when sprite has only two directions (one animation sequence).
+    + 60 [][][][] pointer to 1st animation data in sprite data file 0.
+    + 64 [][][][] current pointer to sprite sequence data from file 0. Init with 0.
+    + 68 [][][][] init with 0. Pointer to callback func func76104. This callback adds flag 0x00010000 to +4 in struct_138.
+    + 6c [][][][] init with 0. Pointer to itself (allocated struct start).
+    + 70 [][][][] init with 0.
+    + 74 [][][][] pointer to some other entity struct_168.
+    + 7c [][][][] pointer to +f4.
+    + 80 [][]     init with 0. Maybe direction.
+    + 82 [][]     init as 0x2000 when init PC entity. Used co calculate +1c. Set to +18 as * 30 or * 60.
+    + 84 [][]     init with 0. Checked with +6. Store triangle Y here during move.
+    + 86 [][]     size of allocated data (0x164).
+    + 88 [][][][] some script pointer here.
+    + 8c []       pointer to item in stack +8e. Init with 0x10.
+    + 8d []       ??? something related with +af in pointer from +70.
+    + 8e start of stack for positions in script for function calls.
+        + 0 []       1st byte.
+        + 1 []       2nd byte.
+        + 2 []       3rd byte.
+    + 9e [][]     animation script wait timer. Init with 0x0001.
+    + a8 [][][][] init with 0. Some flags.
+                    0x00000001 - set if bu[80058810 + 3d] == 0, removed otherwise. Reset f4+0, f4+4, f4+c if set.
+                    0x000007fe - removed when start animation.
+                    0x0001f800 - next frame in direction frame id array (real frames differ for different direction). Usually there id only 1 frame.
+                    0x000e0000 - direction id.
+                    0x00300000 - store here flags from animation data 0x0003. Looks like this types of direction behaviour in animation.
+                                    0x00 - 2 direction sprite.
+                                    0x01 - 4 direction sprite.
+                                    0x02 - 8 direction sprite.
+                    0x0fc00000 - removed when start animation.
+                    0x30000000 - init with 2 when start animation.
+    + ac [][][][] init with 0x00020000.
+                    0x00000010 - invert offset x.
+                    0x00000020 - invert offset y.
+                    0x001ffe00 - something multiplied and stored to +1c.
+                    0xff000000 - animation id to play.
+    + b0 [][][][] some flags. Init with 0.
+                    0x000000ff - animation to play when we end animation script with 0x81 opcode. Maybe default animation id.
+                    0x00000400 - remove this if we restarting animation. Add otherwise.
+    + b4 start of some data (+20 points here)
+        +  0 [][]     rotation x.
+        +  2 [][]     rotation y.
+        +  4 [][]     rotation z.
+        +  6 [][]     scale x. Init with 0x1000.
+        +  8 [][]     scale y. Init with 0x1000.
+        +  a [][]     scale z. Init with 0x1000.
+        +  c [][]     rot matrix 00.
+        +  e [][]     rot matrix 01.
+        + 10 [][]     rot matrix 02.
+        + 12 [][]     rot matrix 10.
+        + 14 [][]     rot matrix 11.
+        + 16 [][]     rot matrix 12.
+        + 18 [][]     rot matrix 20.
+        + 1a [][]     rot matrix 21.
+        + 1c [][]     rot matrix 22.
+        + 20 [][][][] translation x.
+        + 24 [][][][] translation y.
+        + 28 [][][][] translation z.
+        + 2c [][][][] pointer to allocated data for tiles data.
+        + 30 [][][][] pointer to allocated current render tile data ( for all tiles size 0x18).
+            + 0 [][]     x tile pos
+            + 2 [][]     y tile pos
+            + 4 []       texture x
+            + 5 []       texture y
+            + 6 []       width
+            + 7 []       height
+            + 8 []       width increase
+            + 9 []       height inscease
+            + a [][]     tpage
+            + c [][]     clut id
+            +10 [][][][] 2c808080 - command + color vertex 0
+            +14 [][][][] flags
+                            0x00000007 - additional tile data id
+                            0x00000008 - ???
+                            0x00000010 - flip horizontal
+                            0x00000020 - flip vertical
+        + 34 [][][][] pointer to +124.
+        + 38 [][][][] pointer to previous sprite structure (struct_164). Init with 0.
+        + 3c []       offset x.
+        + 3d []       offset y.
+    + f4 start of some data (+7c points here)
+        +  0 [][][][] init with 0.
+        +  4 [][][][] init with 0.
+        +  8 [][][][] init with 0.
+        +  c [][]     init with 0. If this is 0xff then do something during initialization.
+        +  e [][][][] some tx.
+        + 14 [][]     this entity id (used to get access to whole struct from 0x164 struct).
+        + 18 [][][][] init with 0. Some pointer.
+        + 38 [][][][] init with 0.
+    +110 start of texture data for sprite
+        +  0 [][][][] pointer to sprite file 1.
+        +  4 [][]     texture x.
+        +  6 [][]     texture y.
+        +  8 [][]     clut x
+        +  a [][]     clut y
+        +  c [][][][] pointer to sprite data 2.
+        + 10 [][][][] pointer to sprite data 0.
+    +124 additional tile data (0x08 size 0x08 items)
+        +  0 []       translation x
+        +  1 []       translation y
+        +  2 [][]     rotation x
+        +  4 [][]     rotation y
+        +  6 [][]     rotation z

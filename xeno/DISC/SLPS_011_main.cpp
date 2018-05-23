@@ -314,6 +314,14 @@ if( A0 != 0 )
     80019B74	jal    func19dcc [$80019dcc]
 }
 
+//   main     
+// 0 48A30180 54890580 7CF10680 00000000
+// 1 18750780 B8EA0A80 40370C80 01000000 // field
+// 2 50B50180 A4310C80 10310D80 01000000 // battle
+// 3 8C030780 98AF0980 F4CB0980 01000000
+// 4 D4840880 0C1C0980 90AB0980 01000000
+// 5 C0C40180 54890580 7CF10680 00000000
+// 6 7C2E0780 C8650780 E46A0780 01000000 // movie
 S1 = 8001808c + w[80018088] * 10;
 
 A0 = 1; // cancels the current drawing and flushes the command buffer.
@@ -331,7 +339,7 @@ A0 = 2;
 system_psyq_wait_frames();
 
 A0 = w[S1 + 8] + 800;
-80019BC0	jal    func31920 [$80031920]
+func31920();
 
 A0 = a;
 A1 = 0;
@@ -350,8 +358,8 @@ if( w[S1 + c] != 0 )
     A0 = 0;
     func28870(); // ececute till cd sync
 
-    A1 = w[80018084];
-    A0 = S0;
+    A0 = S0; // src
+    A1 = w[80018084]; // dst
     system_extract_archive();
 
     A0 = 0;
@@ -383,7 +391,7 @@ A0 = w[S1 + 8] + 4;
 func35c84(); // clear button input
 
 A0 = 0;
-80019C78	jal    func199f0 [$800199f0]
+func199f0();
 
 80019C88	jalr   w[S1 + 0] ra
 

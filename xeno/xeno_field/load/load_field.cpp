@@ -2904,7 +2904,7 @@ system_clear_otagr();
 A0 = 1; // cancels the current drawing and flushes the command buffer.
 system_psyq_reset_graph();
 
-func1c768();
+func1c768(); // clear GP + 418 and GP + 420
 
 S1 = 0;
 loop6f768:	; 8006F768
@@ -3069,6 +3069,7 @@ if( w[800ae74c] != 0 )
 
 ////////////////////////////////
 // func7fe50()
+
 entity_id = A0;
 
 if( entity_id < w[800ad0d4] ) // number of entity

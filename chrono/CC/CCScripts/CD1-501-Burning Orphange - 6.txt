@@ -1,0 +1,1267 @@
+0x0000: 0xFF
+0x0001: 0x00
+0x0002: 0x00
+0x0003: 0x56
+0x0004: 0xFE
+0x0005: 0x00
+0x0006: 0x0C
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0x00
+0x000A: 0x00
+0x000B: 0x56
+0x000C: 0xFE
+0x000D: 0x00
+0x000E: 0x0C
+0x000F: 0x00
+0x0010: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0011: op83(25, -25, 15, -90)
+0x001B: PLAY_SOUNDFX(307, 2)
+0x0021: CHANGE_FX_VOLUME( 2, 90, 127)
+0x0029: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x002A: BG_WAVE_ON(2, 1, 3900, 3900, 3800, 3800, 30, 200)
+0x003B: SET_SCREEN_RGB(1, 64, 0, 0, 3)
+0x0046: WAIT(30)
+0x0049: IF_JUMP(1 == 1, 0x0070)
+0x0051: SET_SCREEN_RGB(1, 60, 0, 0, 90)
+0x005C: WAIT(90)
+0x005F: SET_SCREEN_RGB(1, 30, 0, 0, 90)
+0x006A: WAIT(150)
+0x006D: JUMP(0x0049)
+0x0070: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x0071: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x0072: STOP()
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x0073: SETUP_PC(PC2)
+0x0076: opBF(PARTY_LEADER) // missing stuff, can't decode properly yet
+0x007B: op93(0x01)
+0x007D: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x007E: UPDATE_CHARACTER()
+0x007F: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x0080: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x0081: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x0082: SET_MOVEMENT_SPEED(10)
+0x0085: SET_WALK_ANIMATION(0x01, 2)
+0x0089: WALK_TO_POSITION(0x00, 0, 63)
+0x0092: WALK_TO_POSITION(0x01)
+0x0094: WALK_TO_POSITION(0x00, 39, 163)
+0x009D: WALK_TO_POSITION(0x01)
+0x009F: TURN_TO_CHARACTER(ENTITY 4)
+0x00A1: WAIT_ROTATION()
+0x00A2: SET_ANIMATION(132)
+0x00A5: WAIT(90)
+0x00A8: SET_ANIMATION(1)
+0x00AB: WAIT(8)
+0x00AE: FREE_EXTRA_ANIMATION(THIS)
+0x00B0: TURN_TO_CHARACTER(ENTITY 2)
+0x00B2: STOP()
+---------------------------
+| Entity 1 script 5
+---------------------------
+0x00B3: SET_ANIMATION(137)
+0x00B6: WAIT_ANIMATION_COMPLETED?(THIS)
+0x00B8: STOP()
+---------------------------
+| Entity 1 script 6
+---------------------------
+0x00B9: SET_POSITION_UNSIGNED(64, 11, 0)
+0x00C1: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x00C2: SETUP_NPC(0)
+0x00C5: SET_POSITION_UNSIGNED(66, 751, 0)
+0x00CD: SET_ROTATION(3000)
+0x00D0: SET_ANIMATION(1)
+0x00D3: TOGGLE_RECT_COLLISION(0x01)
+0x00D5: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x00D6: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x00D7: opD4(5, 8)
+0x00DC: WAIT_MOVIE()
+0x00DD: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x00DE: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x00DF: SETUP_NPC(1)
+0x00E2: SET_POSITION_UNSIGNED(51, 909, 0)
+0x00EA: SET_ROTATION(1024)
+0x00ED: SET_ANIMATION(1)
+0x00F0: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x00F1: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x00F2: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x00F3: STOP()
+---------------------------
+| Entity 3 script 4
+---------------------------
+0x00F4: WAIT(90)
+0x00F7: FADE(0x01, 120)
+0x00FB: STOP()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x00FC: SETUP_NPC(2)
+0x00FF: SET_POSITION_UNSIGNED(116, 67, 0)
+0x0107: SET_ROTATION(3072)
+0x010A: SET_ANIMATION(4)
+0x010D: op47(0x01)
+0x010F: op93(0x01)
+0x0111: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x0112: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x0113: STOP()
+---------------------------
+| Entity 4 ON_COLLISION
+---------------------------
+0x0114: STOP()
+---------------------------
+| Entity 4 script 4
+---------------------------
+0x0115: SET_ANIMATION(6)
+0x0118: WAIT_ANIMATION_COMPLETED?(THIS)
+0x011A: SET_WALK_ANIMATION(0x01, 2)
+0x011E: SET_WALK_ANIMATION(0x02, 2)
+0x0122: WALK_TO(0x00, 60, 180, 0)
+0x012B: WALK_TO(0x01) // wait walk
+0x012D: RUN_ENTITY_SCRIPT_UNKMODE(ENTITY 1, script 5, 0xA0)
+0x0130: SET_ANIMATION(13)
+0x0133: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0135: STOP()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x0136: SET_POSITION_UNSIGNED(0, -548, 0)
+0x013E: RECT_SIZE(80, 15)
+0x0143: op8D(0x00)
+0x0145: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x0146: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x0147: STOP()
+---------------------------
+| Entity 5 ON_COLLISION
+---------------------------
+0x0148: DISABLE_CHARACTER_CONTROLS()
+0x0149: SET_NEXT_ROOM("CD1-500-Burning Orphange - 5", 1)
+0x014E: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x014F: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x0150: IF_JUMP(ROOM_PARAM != 1, 0x01CD)
+0x0158: DISABLE_CHARACTER_CONTROLS()
+0x0159: opBE()
+0x015A: opFE02(1)
+0x015E: WAIT(60)
+0x0161: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 1, script 4, 0xA0)
+0x0164: opFE11(1)
+0x0168: RUN_ENTITY_SCRIPT_UNKMODE(ENTITY 3, script 4, 0xA0)
+0x016B: opFE1D(90, 0)
+0x0171: SET_CAMERA_POSITION( 0x00, 0, -40, 120)
+0x017C: WAIT(90)
+0x017F: PLAY_SONG(255)
+0x0182: BG_WAVE_OFF( 0x00, 0 )
+0x0186: BG_WAVE_OFF( 0x01 )
+0x0188: BG_WAVE_OFF( 0x02 )
+0x018A: BG_WAVE_OFF( 0x03 )
+0x018C: opD4(5, 8)
+0x0191: WAIT_MOVIE()
+0x0192: LOAD_ANIMATION( 0x00, ENTITY 1, 62)
+0x0197: LOAD_ANIMATION( 0x01 )
+0x0199: WAIT(60)
+0x019C: WAIT(60)
+0x019F: PLAY_SOUNDFX(3, 0)
+0x01A5: PLAY_EFFECT("hon0")
+0x01AA: WAIT(30)
+0x01AD: SET_CHARACTER_HIDDEN(0x01, ENTITY 2)
+0x01B0: SET_CHARACTER_HIDDEN(0x01, ENTITY 3)
+0x01B3: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 4, 0xA0)
+0x01B6: WAIT(60)
+0x01B9: opFE29(2)
+0x01BD: BG_WAVE_OFF( 0x00, 0 )
+0x01C1: BG_WAVE_OFF( 0x01 )
+0x01C3: BG_WAVE_OFF( 0x02 )
+0x01C5: BG_WAVE_OFF( 0x03 )
+0x01C7: SET_NEXT_ROOM("CD1-504-Burning Orphange - SCENE Kid saved", 0)
+0x01CC: STOP_SCRIPT_EXEC()
+0x01CD: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x01CE: STOP()
+---------------------------
+| Entity 6 ON_COLLISION
+---------------------------
+0x01CF: STOP()
+0x01D0: 0xE0
+0x01D1: 0x00
+0x01D2: 0x00
+0x01D3: 0x00
+0x01D4: 0xE2
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x01D5: roomVar[0x1B] = 10
+0x01DB: roomVar[0x1C] = 10
+0x01E1: roomVar[0x1D] = 10
+0x01E7: roomVar[0x1E] = 10
+0x01ED: IF_JUMP(DEBUG_MODE == 1, 0x01FA)
+0x01F5: TOGGLE_COLLISION(0x01)
+0x01F7: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x01FA: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x01FB: if (INPUT_KEY && 0x08) == 0 jump 0x325
+0x0200: IF_JUMP(roomVar[0x13] == 0, 0x0223)
+0x0208: roomVar[0x13] = 1
+0x020B: roomVar[0x03] = var[0x001A]
+0x0211: roomVar[0x04] = var[0x001C]
+0x0217: roomVar[0x05] = var[0x001E]
+0x021D: roomVar[0x06] = var[0x0020]
+0x0223: var[0x001A] = MAP_ID
+0x0229: DISABLE_CHARACTER_CONTROLS()
+0x022A: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:45)
+0x0235: DIALOG(0x0001, 0x00)
+
+	+-------------------------
+	|YOU'RE AT MAP NO. <Value 0>!
+	|      Map Jump
+	|      This Map
+	|      Before Jump
+	|      Next Map
+	|      Previous Map
+	|      Planners' Rooms
+	|      Special
+	|      Exit Menu/Return<Close>
+	+-------------------------
+
+0x0239: MULTI_CHOICE( range:1 to 8 )
+0x023B: WAIT_DIALOG()
+0x023C: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:45)
+0x0247: DIGIT_ENTRY_RESULT = 0
+0x024A: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x026F)
+0x0252: DIALOG(0x0002, 0x00)
+
+	+-------------------------
+	|Map no. <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x0256: WAIT_DIALOG()
+0x0257: op59()
+0x0258: roomVar[0x01] = DIGIT_ENTRY_RESULT
+0x025E: DIGIT_ENTRY_RESULT = 0
+0x0261: DIALOG(0x0003, 0x00)
+
+	+-------------------------
+	|Map parameter <Choose 2>012345678900<Close>
+	+-------------------------
+
+0x0265: WAIT_DIALOG()
+0x0266: SET_NEXT_ROOM(roomVar[0x01], DIGIT_ENTRY_RESULT)
+0x026B: STOP_SCRIPT_EXEC()
+0x026C: JUMP(0x0325)
+0x026F: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x0283)
+0x0277: roomVar[0x01] = MAP_ID
+0x027D: JUMP(0x025E)
+0x0280: JUMP(0x0325)
+0x0283: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x0297)
+0x028B: roomVar[0x01] = PREVIOUS_MAP_ID
+0x0291: JUMP(0x025E)
+0x0294: JUMP(0x0325)
+0x0297: IF_JUMP(MULTI_CHOICE_RESULT == 4, 0x02B1)
+0x029F: roomVar[0x01] = MAP_ID
+0x02A5: roomVar[0x01] += 1
+0x02AB: JUMP(0x025E)
+0x02AE: JUMP(0x0325)
+0x02B1: IF_JUMP(MULTI_CHOICE_RESULT == 5, 0x02E6)
+0x02B9: roomVar[0x01] = MAP_ID
+0x02BF: roomVar[0x01] -= 1
+0x02C5: IF_JUMP(roomVar[0x01] < 0, 0x02E0)
+0x02CD: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:45)
+0x02D8: DIALOG(0x0004, 0x00)
+
+	+-------------------------
+	|        NO ENTRY!
+	|Nothing beyond here!<Close>
+	+-------------------------
+
+0x02DC: WAIT_DIALOG()
+0x02DD: JUMP(0x02E3)
+0x02E0: JUMP(0x025E)
+0x02E3: JUMP(0x0325)
+0x02E6: IF_JUMP(MULTI_CHOICE_RESULT == 6, 0x02F4)
+0x02EE: JUMP(0x032A)
+0x02F1: JUMP(0x0325)
+0x02F4: IF_JUMP(MULTI_CHOICE_RESULT == 7, 0x0302)
+0x02FC: JUMP(0x03E4)
+0x02FF: JUMP(0x0325)
+0x0302: IF_JUMP(MULTI_CHOICE_RESULT == 8, 0x0325)
+0x030A: var[0x001A] = roomVar[0x03]
+0x0310: var[0x001C] = roomVar[0x04]
+0x0316: var[0x001E] = roomVar[0x05]
+0x031C: var[0x0020] = roomVar[0x06]
+0x0322: JUMP(0x0325)
+0x0325: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0327: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x0328: STOP()
+---------------------------
+| Entity 7 ON_COLLISION
+---------------------------
+0x0329: STOP()
+0x032A: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:8, Flag:45)
+0x0335: DIALOG(0x0005, 0x00)
+
+	+-------------------------
+	|      On second thoughts...
+	|      Kato's room
+	|      Yoshii's room
+	|      Kigoshi's room
+	|      Uchimichi's room
+	|      Saito's room
+	|      Miyakawa's room
+	|      Chiba's room<Close>
+	+-------------------------
+
+0x0339: MULTI_CHOICE( range:0 to 7 )
+0x033B: WAIT_DIALOG()
+0x033C: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x0347: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x036A)
+0x034F: var[0x001A] = roomVar[0x03]
+0x0355: var[0x001C] = roomVar[0x04]
+0x035B: var[0x001E] = roomVar[0x05]
+0x0361: var[0x0020] = roomVar[0x06]
+0x0367: JUMP(0x03E1)
+0x036A: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x037B)
+0x0372: SET_NEXT_ROOM("CD1-001-Crash", 0)
+0x0377: STOP_SCRIPT_EXEC()
+0x0378: JUMP(0x03E1)
+0x037B: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x038C)
+0x0383: SET_NEXT_ROOM("CD1-006-Crash", 0)
+0x0388: STOP_SCRIPT_EXEC()
+0x0389: JUMP(0x03E1)
+0x038C: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x039D)
+0x0394: SET_NEXT_ROOM("CD1-003-Crash", 0)
+0x0399: STOP_SCRIPT_EXEC()
+0x039A: JUMP(0x03E1)
+0x039D: IF_JUMP(MULTI_CHOICE_RESULT == 4, 0x03AE)
+0x03A5: SET_NEXT_ROOM("CD1-005-Black screen", 0)
+0x03AA: STOP_SCRIPT_EXEC()
+0x03AB: JUMP(0x03E1)
+0x03AE: IF_JUMP(MULTI_CHOICE_RESULT == 5, 0x03BF)
+0x03B6: SET_NEXT_ROOM("CD1-004-Crash", 0)
+0x03BB: STOP_SCRIPT_EXEC()
+0x03BC: JUMP(0x03E1)
+0x03BF: IF_JUMP(MULTI_CHOICE_RESULT == 6, 0x03D0)
+0x03C7: SET_NEXT_ROOM("CD1-002-Crash", 0)
+0x03CC: STOP_SCRIPT_EXEC()
+0x03CD: JUMP(0x03E1)
+0x03D0: IF_JUMP(MULTI_CHOICE_RESULT == 7, 0x03E1)
+0x03D8: SET_NEXT_ROOM("CD1-007-Crash", 0)
+0x03DD: STOP_SCRIPT_EXEC()
+0x03DE: JUMP(0x03E1)
+0x03E1: ENABLE_CHARACTER_CONTROLS(0x00)
+0x03E3: STOP()
+0x03E4: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:8, Flag:45)
+0x03EF: DIALOG(0x0006, 0x00)
+
+	+-------------------------
+	|      Adjust Screen's RGB
+	|      Adjust Underwater RGB
+	|      Adjust Chara.'s RGB
+	|      Adjust Chara.'s rot
+	|      Adjust Chara.'s scale
+	|      Set Rect.
+	|      Return
+	|      Quit<Close>
+	+-------------------------
+
+0x03F3: MULTI_CHOICE( range:0 to 7 )
+0x03F5: WAIT_DIALOG()
+0x03F6: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:45)
+0x0401: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x040F)
+0x0409: JUMP(0x0489)
+0x040C: JUMP(0x0486)
+0x040F: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x041D)
+0x0417: JUMP(0x067F)
+0x041A: JUMP(0x0486)
+0x041D: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x042B)
+0x0425: JUMP(0x0789)
+0x0428: JUMP(0x0486)
+0x042B: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x0439)
+0x0433: JUMP(0x08DE)
+0x0436: JUMP(0x0486)
+0x0439: IF_JUMP(MULTI_CHOICE_RESULT == 4, 0x0447)
+0x0441: JUMP(0x0A63)
+0x0444: JUMP(0x0486)
+0x0447: IF_JUMP(MULTI_CHOICE_RESULT == 5, 0x0455)
+0x044F: JUMP(0x0BD0)
+0x0452: JUMP(0x0486)
+0x0455: IF_JUMP(MULTI_CHOICE_RESULT == 6, 0x0463)
+0x045D: JUMP(0x022A)
+0x0460: JUMP(0x0486)
+0x0463: IF_JUMP(MULTI_CHOICE_RESULT == 7, 0x0486)
+0x046B: var[0x001A] = roomVar[0x03]
+0x0471: var[0x001C] = roomVar[0x04]
+0x0477: var[0x001E] = roomVar[0x05]
+0x047D: var[0x0020] = roomVar[0x06]
+0x0483: JUMP(0x0486)
+0x0486: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0488: STOP()
+0x0489: DIALOG(0x0007, 0x00)
+
+	+-------------------------
+	|      Start Changes
+	|      Default
+	|      Return
+	|      Quit<Close>
+	+-------------------------
+
+0x048D: MULTI_CHOICE( range:0 to 3 )
+0x048F: WAIT_DIALOG()
+0x0490: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x049B)
+0x0498: JUMP(0x04EB)
+0x049B: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x04CF)
+0x04A3: roomVar[0x07] = 0
+0x04A9: roomVar[0x08] = 0
+0x04AF: roomVar[0x09] = 0
+0x04B5: roomVar[0x0A] = 0
+0x04BB: SET_SCREEN_RGB(0, 0, 0, 0, 10)
+0x04C6: WAIT(10)
+0x04C9: JUMP(0x0489)
+0x04CC: JUMP(0x04EB)
+0x04CF: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x04DD)
+0x04D7: JUMP(0x03E4)
+0x04DA: JUMP(0x04EB)
+0x04DD: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x04EB)
+0x04E5: JUMP(0x0A48)
+0x04E8: JUMP(0x04EB)
+0x04EB: var[0x001A] = roomVar[0x07]
+0x04F1: var[0x001C] = roomVar[0x08]
+0x04F7: var[0x001E] = roomVar[0x09]
+0x04FD: var[0x0020] = roomVar[0x0A]
+0x0503: DIGIT_ENTRY_RESULT = roomVar[0x07]
+0x0509: DIALOG(0x0008, 0x00)
+
+	+-------------------------
+	|Mode: <Value 3>
+	|   R: <Value 0>
+	|   G: <Value 1>
+	|   B: <Value 2>
+	|Input Red: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x050D: WAIT_DIALOG()
+0x050E: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x051E)
+0x0516: DIALOG(0x0009, 0x00)
+
+	+-------------------------
+	|Max is 255, stupid!<Close>
+	+-------------------------
+
+0x051A: WAIT_DIALOG()
+0x051B: JUMP(0x04EB)
+0x051E: roomVar[0x07] = DIGIT_ENTRY_RESULT
+0x0524: SET_SCREEN_RGB(roomVar[0x0A], roomVar[0x07], roomVar[0x08], roomVar[0x09], 10)
+0x052F: WAIT(10)
+0x0532: DIALOG(0x000A, 0x00)
+
+	+-------------------------
+	|      Next
+	|      Input Red again!<Close>
+	+-------------------------
+
+0x0536: MULTI_CHOICE( range:0 to 1 )
+0x0538: WAIT_DIALOG()
+0x0539: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x0544)
+0x0541: JUMP(0x0552)
+0x0544: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0552)
+0x054C: JUMP(0x04EB)
+0x054F: JUMP(0x0552)
+0x0552: var[0x001A] = roomVar[0x07]
+0x0558: var[0x001C] = roomVar[0x08]
+0x055E: var[0x001E] = roomVar[0x09]
+0x0564: DIGIT_ENTRY_RESULT = roomVar[0x08]
+0x056A: DIALOG(0x000B, 0x00)
+
+	+-------------------------
+	|Mode: <Value 3>
+	|   R: <Value 0>
+	|   G: <Value 1>
+	|   B: <Value 2>
+	|Input Green: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x056E: WAIT_DIALOG()
+0x056F: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x057F)
+0x0577: DIALOG(0x000C, 0x00)
+
+	+-------------------------
+	|Max is 255, silly!<Close>
+	+-------------------------
+
+0x057B: WAIT_DIALOG()
+0x057C: JUMP(0x0552)
+0x057F: roomVar[0x08] = DIGIT_ENTRY_RESULT
+0x0585: SET_SCREEN_RGB(roomVar[0x0A], roomVar[0x07], roomVar[0x08], roomVar[0x09], 10)
+0x0590: WAIT(10)
+0x0593: DIALOG(0x000D, 0x00)
+
+	+-------------------------
+	|      Next
+	|      Input Green again!<Close>
+	+-------------------------
+
+0x0597: MULTI_CHOICE( range:0 to 1 )
+0x0599: WAIT_DIALOG()
+0x059A: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x05A5)
+0x05A2: JUMP(0x05B3)
+0x05A5: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x05B3)
+0x05AD: JUMP(0x0552)
+0x05B0: JUMP(0x05B3)
+0x05B3: var[0x001A] = roomVar[0x07]
+0x05B9: var[0x001C] = roomVar[0x08]
+0x05BF: var[0x001E] = roomVar[0x09]
+0x05C5: DIGIT_ENTRY_RESULT = roomVar[0x09]
+0x05CB: DIALOG(0x000E, 0x00)
+
+	+-------------------------
+	|Mode: <Value 3>
+	|   R: <Value 0>
+	|   G: <Value 1>
+	|   B: <Value 2>
+	|Input Blue: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x05CF: WAIT_DIALOG()
+0x05D0: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x05E0)
+0x05D8: DIALOG(0x000F, 0x00)
+
+	+-------------------------
+	|Max is 255, dope!<Close>
+	+-------------------------
+
+0x05DC: WAIT_DIALOG()
+0x05DD: JUMP(0x05B3)
+0x05E0: roomVar[0x09] = DIGIT_ENTRY_RESULT
+0x05E6: SET_SCREEN_RGB(roomVar[0x0A], roomVar[0x07], roomVar[0x08], roomVar[0x09], 10)
+0x05F1: WAIT(10)
+0x05F4: DIALOG(0x0010, 0x00)
+
+	+-------------------------
+	|      Next
+	|      Input Blue again!<Close>
+	+-------------------------
+
+0x05F8: MULTI_CHOICE( range:0 to 1 )
+0x05FA: WAIT_DIALOG()
+0x05FB: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x0606)
+0x0603: JUMP(0x0614)
+0x0606: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0614)
+0x060E: JUMP(0x05B3)
+0x0611: JUMP(0x0614)
+0x0614: var[0x001A] = roomVar[0x07]
+0x061A: var[0x001C] = roomVar[0x08]
+0x0620: var[0x001E] = roomVar[0x09]
+0x0626: var[0x0020] = roomVar[0x0A]
+0x062C: DIGIT_ENTRY_RESULT = roomVar[0x0A]
+0x0632: DIALOG(0x0011, 0x00)
+
+	+-------------------------
+	|Mode: <Value 3>
+	|   R: <Value 0>
+	|   G: <Value 1>
+	|   B: <Value 2>
+	|Select Mode: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x0636: WAIT_DIALOG()
+0x0637: IF_JUMP(DIGIT_ENTRY_RESULT > 3, 0x0647)
+0x063F: DIALOG(0x0012, 0x00)
+
+	+-------------------------
+	|Range is 0 to 3!<Close>
+	+-------------------------
+
+0x0643: WAIT_DIALOG()
+0x0644: JUMP(0x0614)
+0x0647: roomVar[0x0A] = DIGIT_ENTRY_RESULT
+0x064D: SET_SCREEN_RGB(roomVar[0x0A], roomVar[0x07], roomVar[0x08], roomVar[0x09], 10)
+0x0658: WAIT(10)
+0x065B: DIALOG(0x0013, 0x00)
+
+	+-------------------------
+	|      End
+	|      Select Mode again!<Close>
+	+-------------------------
+
+0x065F: MULTI_CHOICE( range:0 to 1 )
+0x0661: WAIT_DIALOG()
+0x0662: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x066D)
+0x066A: JUMP(0x067B)
+0x066D: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x067B)
+0x0675: JUMP(0x0614)
+0x0678: JUMP(0x067B)
+0x067B: JUMP(0x0489)
+0x067E: STOP()
+0x067F: DIALOG(0x0014, 0x00)
+
+	+-------------------------
+	|      Start changes
+	|      Default
+	|      Return
+	|      Quit<Close>
+	+-------------------------
+
+0x0683: MULTI_CHOICE( range:0 to 3 )
+0x0685: WAIT_DIALOG()
+0x0686: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x0691)
+0x068E: JUMP(0x06D5)
+0x0691: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x06B9)
+0x0699: roomVar[0x0B] = 32
+0x069F: roomVar[0x0C] = 32
+0x06A5: roomVar[0x0D] = 180
+0x06AB: SET_UNDERWATER_RGB(32, 32, 180)
+0x06B2: WAIT_ONE_FRAME()
+0x06B3: JUMP(0x067F)
+0x06B6: JUMP(0x06D5)
+0x06B9: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x06C7)
+0x06C1: JUMP(0x03E4)
+0x06C4: JUMP(0x06D5)
+0x06C7: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x06D5)
+0x06CF: JUMP(0x0A48)
+0x06D2: JUMP(0x06D5)
+0x06D5: var[0x001A] = roomVar[0x0B]
+0x06DB: var[0x001C] = roomVar[0x0C]
+0x06E1: var[0x001E] = roomVar[0x0D]
+0x06E7: DIGIT_ENTRY_RESULT = roomVar[0x0B]
+0x06ED: DIALOG(0x0015, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      R : <Value 0>
+	|      G : <Value 1>
+	|      B : <Value 2>
+	|Input Red: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x06F1: WAIT_DIALOG()
+0x06F2: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x0702)
+0x06FA: DIALOG(0x0016, 0x00)
+
+	+-------------------------
+	|Max is 255, stupid!<Close>
+	+-------------------------
+
+0x06FE: WAIT_DIALOG()
+0x06FF: JUMP(0x06D5)
+0x0702: roomVar[0x0B] = DIGIT_ENTRY_RESULT
+0x0708: SET_UNDERWATER_RGB(roomVar[0x0B], roomVar[0x0C], roomVar[0x0D])
+0x070F: WAIT_ONE_FRAME()
+0x0710: var[0x001A] = roomVar[0x0B]
+0x0716: var[0x001C] = roomVar[0x0C]
+0x071C: var[0x001E] = roomVar[0x0D]
+0x0722: DIGIT_ENTRY_RESULT = roomVar[0x0C]
+0x0728: DIALOG(0x0017, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      R : <Value 0>
+	|      G : <Value 1>
+	|      B : <Value 2>
+	|Input Green: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x072C: WAIT_DIALOG()
+0x072D: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x073D)
+0x0735: DIALOG(0x0018, 0x00)
+
+	+-------------------------
+	|Max is 255, silly!<Close>
+	+-------------------------
+
+0x0739: WAIT_DIALOG()
+0x073A: JUMP(0x0710)
+0x073D: roomVar[0x0C] = DIGIT_ENTRY_RESULT
+0x0743: SET_UNDERWATER_RGB(roomVar[0x0B], roomVar[0x0C], roomVar[0x0D])
+0x074A: WAIT_ONE_FRAME()
+0x074B: var[0x001A] = roomVar[0x0B]
+0x0751: var[0x001C] = roomVar[0x0C]
+0x0757: var[0x001E] = roomVar[0x0D]
+0x075D: DIGIT_ENTRY_RESULT = roomVar[0x0D]
+0x0763: DIALOG(0x0019, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      R : <Value 0>
+	|      G : <Value 1>
+	|      B : <Value 2>
+	|Input Blue: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x0767: WAIT_DIALOG()
+0x0768: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x0778)
+0x0770: DIALOG(0x001A, 0x00)
+
+	+-------------------------
+	|Max is 255, dope!<Close>
+	+-------------------------
+
+0x0774: WAIT_DIALOG()
+0x0775: JUMP(0x074B)
+0x0778: roomVar[0x0D] = DIGIT_ENTRY_RESULT
+0x077E: SET_UNDERWATER_RGB(roomVar[0x0B], roomVar[0x0C], roomVar[0x0D])
+0x0785: JUMP(0x067F)
+0x0788: STOP()
+0x0789: DIALOG(0x001B, 0x00)
+
+	+-------------------------
+	|      Start changes
+	|      Default
+	|      Return
+	|      Quit<Close>
+	+-------------------------
+
+0x078D: MULTI_CHOICE( range:0 to 3 )
+0x078F: WAIT_DIALOG()
+0x0790: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x079E)
+0x0798: roomVar[0x02] = 1
+0x079B: JUMP(0x07F4)
+0x079E: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x07D8)
+0x07A6: roomVar[0x0E] = 128
+0x07AC: roomVar[0x0F] = 128
+0x07B2: roomVar[0x10] = 128
+0x07B8: op59()
+0x07B9: CHARACTER_RGB(PARTY_LEADER, 128, 128, 128)
+0x07C1: CHARACTER_RGB(PC1, 128, 128, 128)
+0x07C9: CHARACTER_RGB(PC2, 128, 128, 128)
+0x07D1: WAIT_ONE_FRAME()
+0x07D2: JUMP(0x0789)
+0x07D5: JUMP(0x07F4)
+0x07D8: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x07E6)
+0x07E0: JUMP(0x03E4)
+0x07E3: JUMP(0x07F4)
+0x07E6: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x07F4)
+0x07EE: JUMP(0x0A48)
+0x07F1: JUMP(0x07F4)
+0x07F4: var[0x001A] = roomVar[0x0E]
+0x07FA: var[0x001C] = roomVar[0x0F]
+0x0800: var[0x001E] = roomVar[0x10]
+0x0806: DIGIT_ENTRY_RESULT = roomVar[0x0E]
+0x080C: DIALOG(0x001C, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      R : <Value 0>
+	|      G : <Value 1>
+	|      B : <Value 2>
+	|Input Red: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x0810: WAIT_DIALOG()
+0x0811: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x0821)
+0x0819: DIALOG(0x001D, 0x00)
+
+	+-------------------------
+	|Max is 255, stupid!<Close>
+	+-------------------------
+
+0x081D: WAIT_DIALOG()
+0x081E: JUMP(0x07F4)
+0x0821: roomVar[0x0E] = DIGIT_ENTRY_RESULT
+0x0827: op59()
+0x0828: CHARACTER_RGB(PARTY_LEADER, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x0830: CHARACTER_RGB(PC1, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x0838: CHARACTER_RGB(PC2, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x0840: WAIT_ONE_FRAME()
+0x0841: var[0x001A] = roomVar[0x0E]
+0x0847: var[0x001C] = roomVar[0x0F]
+0x084D: var[0x001E] = roomVar[0x10]
+0x0853: DIGIT_ENTRY_RESULT = roomVar[0x0F]
+0x0859: DIALOG(0x001E, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      R : <Value 0>
+	|      G : <Value 1>
+	|      B : <Value 2>
+	|Input Green: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x085D: WAIT_DIALOG()
+0x085E: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x086E)
+0x0866: DIALOG(0x001F, 0x00)
+
+	+-------------------------
+	|Max is 255, silly!<Close>
+	+-------------------------
+
+0x086A: WAIT_DIALOG()
+0x086B: JUMP(0x0841)
+0x086E: roomVar[0x0F] = DIGIT_ENTRY_RESULT
+0x0874: op59()
+0x0875: CHARACTER_RGB(PARTY_LEADER, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x087D: CHARACTER_RGB(PC1, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x0885: CHARACTER_RGB(PC2, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x088D: WAIT_ONE_FRAME()
+0x088E: var[0x001A] = roomVar[0x0E]
+0x0894: var[0x001C] = roomVar[0x0F]
+0x089A: var[0x001E] = roomVar[0x10]
+0x08A0: DIGIT_ENTRY_RESULT = roomVar[0x10]
+0x08A6: DIALOG(0x0020, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      R : <Value 0>
+	|      G : <Value 1>
+	|      B : <Value 2>
+	|Input Blue: <Choose 3>0123456789000<Close>
+	+-------------------------
+
+0x08AA: WAIT_DIALOG()
+0x08AB: IF_JUMP(DIGIT_ENTRY_RESULT > 255, 0x08BB)
+0x08B3: DIALOG(0x0021, 0x00)
+
+	+-------------------------
+	|Max is 255, dope!<Close>
+	+-------------------------
+
+0x08B7: WAIT_DIALOG()
+0x08B8: JUMP(0x088E)
+0x08BB: roomVar[0x10] = DIGIT_ENTRY_RESULT
+0x08C1: op59()
+0x08C2: CHARACTER_RGB(PARTY_LEADER, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x08CA: CHARACTER_RGB(PC1, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x08D2: CHARACTER_RGB(PC2, roomVar[0x0E], roomVar[0x0F], roomVar[0x10])
+0x08DA: JUMP(0x0789)
+0x08DD: STOP()
+0x08DE: DIALOG(0x0022, 0x00)
+
+	+-------------------------
+	|      Start changes
+	|      Default
+	|      Return
+	|      Quit<Close>
+	+-------------------------
+
+0x08E2: MULTI_CHOICE( range:0 to 3 )
+0x08E4: WAIT_DIALOG()
+0x08E5: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x08F0)
+0x08ED: JUMP(0x093C)
+0x08F0: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0920)
+0x08F8: roomVar[0x14] = 0
+0x08FE: roomVar[0x15] = 0
+0x0904: roomVar[0x16] = 0
+0x090A: SET_AXIS_ROTATION(0x00, PARTY_LEADER, roomVar[0x14])
+0x090F: SET_AXIS_ROTATION(0x02, PARTY_LEADER, roomVar[0x15])
+0x0914: SET_AXIS_ROTATION(0x01, PARTY_LEADER, roomVar[0x16])
+0x0919: WAIT_ONE_FRAME()
+0x091A: JUMP(0x08DE)
+0x091D: JUMP(0x093C)
+0x0920: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x092E)
+0x0928: JUMP(0x03E4)
+0x092B: JUMP(0x093C)
+0x092E: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x093C)
+0x0936: JUMP(0x0A48)
+0x0939: JUMP(0x093C)
+0x093C: var[0x001A] = roomVar[0x14]
+0x0942: var[0x001C] = roomVar[0x15]
+0x0948: var[0x001E] = roomVar[0x16]
+0x094E: DIGIT_ENTRY_RESULT = roomVar[0x14]
+0x0954: DIALOG(0x0023, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      X : <Value 0>
+	|      Z : <Value 1>
+	|      Y : <Value 2>
+	|Set rotx = <Choose 4>01234567890000<Close>
+	+-------------------------
+
+0x0958: WAIT_DIALOG()
+0x0959: IF_JUMP(DIGIT_ENTRY_RESULT > 4096, 0x0969)
+0x0961: DIALOG(0x0024, 0x00)
+
+	+-------------------------
+	|Max is 4096!<Close>
+	+-------------------------
+
+0x0965: WAIT_DIALOG()
+0x0966: JUMP(0x093C)
+0x0969: roomVar[0x14] = DIGIT_ENTRY_RESULT
+0x096F: SET_AXIS_ROTATION(0x00, PARTY_LEADER, roomVar[0x14])
+0x0974: DIALOG(0x0025, 0x00)
+
+	+-------------------------
+	|      Next
+	|      Set rotx again<Close>
+	+-------------------------
+
+0x0978: MULTI_CHOICE( range:0 to 1 )
+0x097A: WAIT_DIALOG()
+0x097B: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x0986)
+0x0983: JUMP(0x0994)
+0x0986: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0994)
+0x098E: JUMP(0x093C)
+0x0991: JUMP(0x0994)
+0x0994: var[0x001A] = roomVar[0x14]
+0x099A: var[0x001C] = roomVar[0x15]
+0x09A0: var[0x001E] = roomVar[0x16]
+0x09A6: DIGIT_ENTRY_RESULT = roomVar[0x15]
+0x09AC: DIALOG(0x0026, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      X : <Value 0>
+	|      Z : <Value 1>
+	|      Y : <Value 2>
+	|Set rotz = <Choose 4>01234567890000<Close>
+	+-------------------------
+
+0x09B0: WAIT_DIALOG()
+0x09B1: IF_JUMP(DIGIT_ENTRY_RESULT > 4096, 0x09C1)
+0x09B9: DIALOG(0x0027, 0x00)
+
+	+-------------------------
+	|Max is 4096!<Close>
+	+-------------------------
+
+0x09BD: WAIT_DIALOG()
+0x09BE: JUMP(0x0994)
+0x09C1: roomVar[0x15] = DIGIT_ENTRY_RESULT
+0x09C7: SET_AXIS_ROTATION(0x02, PARTY_LEADER, roomVar[0x15])
+0x09CC: DIALOG(0x0028, 0x00)
+
+	+-------------------------
+	|      Next
+	|      Set rotz again<Close>
+	+-------------------------
+
+0x09D0: MULTI_CHOICE( range:0 to 1 )
+0x09D2: WAIT_DIALOG()
+0x09D3: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x09DE)
+0x09DB: JUMP(0x09EC)
+0x09DE: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x09EC)
+0x09E6: JUMP(0x0994)
+0x09E9: JUMP(0x09EC)
+0x09EC: var[0x001A] = roomVar[0x14]
+0x09F2: var[0x001C] = roomVar[0x15]
+0x09F8: var[0x001E] = roomVar[0x16]
+0x09FE: DIGIT_ENTRY_RESULT = roomVar[0x16]
+0x0A04: DIALOG(0x0029, 0x00)
+
+	+-------------------------
+	|Current values...
+	|      X : <Value 0>
+	|      Z : <Value 1>
+	|      Y : <Value 2>
+	|Set roty = <Choose 4>01234567890000<Close>
+	+-------------------------
+
+0x0A08: WAIT_DIALOG()
+0x0A09: IF_JUMP(DIGIT_ENTRY_RESULT > 4096, 0x0A19)
+0x0A11: DIALOG(0x002A, 0x00)
+
+	+-------------------------
+	|Max is 4096!<Close>
+	+-------------------------
+
+0x0A15: WAIT_DIALOG()
+0x0A16: JUMP(0x09EC)
+0x0A19: roomVar[0x16] = DIGIT_ENTRY_RESULT
+0x0A1F: SET_AXIS_ROTATION(0x01, PARTY_LEADER, roomVar[0x16])
+0x0A24: DIALOG(0x002B, 0x00)
+
+	+-------------------------
+	|      Next
+	|      Set roty again<Close>
+	+-------------------------
+
+0x0A28: MULTI_CHOICE( range:0 to 1 )
+0x0A2A: WAIT_DIALOG()
+0x0A2B: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x0A36)
+0x0A33: JUMP(0x0A44)
+0x0A36: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0A44)
+0x0A3E: JUMP(0x09EC)
+0x0A41: JUMP(0x0A44)
+0x0A44: JUMP(0x08DE)
+0x0A47: STOP()
+0x0A48: var[0x001A] = roomVar[0x03]
+0x0A4E: var[0x001C] = roomVar[0x04]
+0x0A54: var[0x001E] = roomVar[0x05]
+0x0A5A: var[0x0020] = roomVar[0x06]
+0x0A60: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0A62: STOP()
+0x0A63: DIALOG(0x002C, 0x00)
+
+	+-------------------------
+	|Scale what?
+	|      All
+	|      X
+	|      Z
+	|      Y
+	|      Cancel<Close>
+	+-------------------------
+
+0x0A67: MULTI_CHOICE( range:1 to 5 )
+0x0A69: WAIT_DIALOG()
+0x0A6A: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0AB6)
+0x0A72: roomVar[0x1F] = 1
+0x0A78: CALL(0xB02)
+0x0A7B: roomVar[0x18] = 512
+0x0A81: roomVar[0x19] = 512
+0x0A87: roomVar[0x1A] = 512
+0x0A8D: roomVar[0x1C] = 10
+0x0A93: roomVar[0x1D] = 10
+0x0A99: roomVar[0x1E] = 10
+0x0A9F: AXIS_CHARACTER_SCALE(0x01, PARTY_LEADER, roomVar[0x18])
+0x0AA4: AXIS_CHARACTER_SCALE(0x04, PARTY_LEADER, roomVar[0x19])
+0x0AA9: AXIS_CHARACTER_SCALE(0x02, PARTY_LEADER, roomVar[0x1A])
+0x0AAE: AXIS_CHARACTER_SCALE(0x0F, PARTY_LEADER, roomVar[0x17])
+0x0AB3: JUMP(0x0B01)
+0x0AB6: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x0ACF)
+0x0ABE: roomVar[0x1F] = 2
+0x0AC4: CALL(0xB02)
+0x0AC7: AXIS_CHARACTER_SCALE(0x01, PARTY_LEADER, roomVar[0x18])
+0x0ACC: JUMP(0x0B01)
+0x0ACF: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x0AE8)
+0x0AD7: roomVar[0x1F] = 3
+0x0ADD: CALL(0xB02)
+0x0AE0: AXIS_CHARACTER_SCALE(0x04, PARTY_LEADER, roomVar[0x19])
+0x0AE5: JUMP(0x0B01)
+0x0AE8: IF_JUMP(MULTI_CHOICE_RESULT == 4, 0x0B01)
+0x0AF0: roomVar[0x1F] = 4
+0x0AF6: CALL(0xB02)
+0x0AF9: AXIS_CHARACTER_SCALE(0x02, PARTY_LEADER, roomVar[0x1A])
+0x0AFE: JUMP(0x0B01)
+0x0B01: STOP()
+---------------------------
+| Sub function 0x0B02
+---------------------------
+0x0B02: IF_JUMP(roomVar[0x1F] == 1, 0x0B13)
+0x0B0A: roomVar[0x20] = roomVar[0x1B]
+0x0B10: JUMP(0x0B46)
+0x0B13: IF_JUMP(roomVar[0x1F] == 2, 0x0B24)
+0x0B1B: roomVar[0x20] = roomVar[0x1C]
+0x0B21: JUMP(0x0B46)
+0x0B24: IF_JUMP(roomVar[0x1F] == 3, 0x0B35)
+0x0B2C: roomVar[0x20] = roomVar[0x1D]
+0x0B32: JUMP(0x0B46)
+0x0B35: IF_JUMP(roomVar[0x1F] == 4, 0x0B46)
+0x0B3D: roomVar[0x20] = roomVar[0x1E]
+0x0B43: JUMP(0x0B46)
+0x0B46: DIGIT_ENTRY_RESULT = roomVar[0x20]
+0x0B4C: DIALOG(0x002D, 0x4D)
+
+	+-------------------------
+	|<Choose 2>012345678900/10<Close>
+	+-------------------------
+
+0x0B50: WAIT_DIALOG()
+0x0B51: IF_JUMP(DIGIT_ENTRY_RESULT == 0, 0x0B61)
+0x0B59: DIALOG(0x002E, 0x4D)
+
+	+-------------------------
+	|A number other than 0!<Close>
+	+-------------------------
+
+0x0B5D: WAIT_DIALOG()
+0x0B5E: JUMP(0x0B02)
+0x0B61: roomVar[0x20] = DIGIT_ENTRY_RESULT
+0x0B67: roomVar[0x20] *= 512
+0x0B6D: roomVar[0x20] /= 10
+0x0B73: IF_JUMP(roomVar[0x1F] == 1, 0x0B8A)
+0x0B7B: roomVar[0x1B] = DIGIT_ENTRY_RESULT
+0x0B81: roomVar[0x17] = roomVar[0x20]
+0x0B87: JUMP(0x0BCF)
+0x0B8A: IF_JUMP(roomVar[0x1F] == 2, 0x0BA1)
+0x0B92: roomVar[0x1C] = DIGIT_ENTRY_RESULT
+0x0B98: roomVar[0x18] = roomVar[0x20]
+0x0B9E: JUMP(0x0BCF)
+0x0BA1: IF_JUMP(roomVar[0x1F] == 3, 0x0BB8)
+0x0BA9: roomVar[0x1D] = DIGIT_ENTRY_RESULT
+0x0BAF: roomVar[0x19] = roomVar[0x20]
+0x0BB5: JUMP(0x0BCF)
+0x0BB8: IF_JUMP(roomVar[0x1F] == 4, 0x0BCF)
+0x0BC0: roomVar[0x1E] = DIGIT_ENTRY_RESULT
+0x0BC6: roomVar[0x1A] = roomVar[0x20]
+0x0BCC: JUMP(0x0BCF)
+0x0BCF: OP_RETURN()
+0x0BD0: DIALOG(0x002F, 0x00)
+
+	+-------------------------
+	|      Rect. Size
+	|      Go away!<Close>
+	+-------------------------
+
+0x0BD4: MULTI_CHOICE( range:0 to 1 )
+0x0BD6: WAIT_DIALOG()
+0x0BD7: IF_JUMP(MULTI_CHOICE_RESULT == 0, 0x0C0C)
+0x0BDF: DIGIT_ENTRY_RESULT = roomVar[0x11]
+0x0BE5: DIALOG(0x0030, 0x00)
+
+	+-------------------------
+	|rectsizeX <Choose 4>01234567890000<Close>
+	+-------------------------
+
+0x0BE9: WAIT_DIALOG()
+0x0BEA: roomVar[0x11] = DIGIT_ENTRY_RESULT
+0x0BF0: DIGIT_ENTRY_RESULT = roomVar[0x12]
+0x0BF6: DIALOG(0x0031, 0x00)
+
+	+-------------------------
+	|rectsizeZ <Choose 4>01234567890000<Close>
+	+-------------------------
+
+0x0BFA: WAIT_DIALOG()
+0x0BFB: roomVar[0x12] = DIGIT_ENTRY_RESULT
+0x0C01: SET_CHARACTER_VIEWABLE(0x01, ENTITY 8)
+0x0C04: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 4, 0x20)
+0x0C07: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0C09: JUMP(0x0C32)
+0x0C0C: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0C32)
+0x0C14: var[0x001A] = roomVar[0x03]
+0x0C1A: var[0x001C] = roomVar[0x04]
+0x0C20: var[0x001E] = roomVar[0x05]
+0x0C26: var[0x0020] = roomVar[0x06]
+0x0C2C: SET_CHARACTER_VIEWABLE(0x00, ENTITY 8)
+0x0C2F: JUMP(0x0C32)
+0x0C32: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0C34: STOP()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x0C35: IF_JUMP(DEBUG_MODE == 1, 0x0C43)
+0x0C3D: TOGGLE_COLLISION(0x01)
+0x0C3F: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0C42: STOP()
+0x0C43: TOGGLE_RECT_COLLISION(0x01)
+0x0C45: SET_MOVEMENT_SPEED(20)
+0x0C48: SET_CHARACTER_VIEWABLE(0x00, ENTITY 8)
+0x0C4B: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x0C4C: op59()
+0x0C4D: GET_POSITION(PARTY_LEADER, roomVar[0x21], roomVar[0x22], roomVar[0x23])
+0x0C55: GET_ROTATION(PARTY_LEADER, roomVar[0x24])
+0x0C59: SET_POSITION_SIGNED(roomVar[0x21], roomVar[0x22], roomVar[0x23])
+0x0C61: SET_ROTATION(roomVar[0x24])
+0x0C64: WAIT_ONE_FRAME()
+0x0C65: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x0C66: op59()
+0x0C67: var[0x001A] = roomVar[0x21]
+0x0C6D: var[0x001C] = roomVar[0x22]
+0x0C73: var[0x001E] = roomVar[0x24]
+0x0C79: WAIT_ONE_FRAME()
+0x0C7A: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:45)
+0x0C85: DIALOG(0x0032, 0x00)
+
+	+-------------------------
+	|XZ <Value 0> <Value 1>
+	|turn <Value 2><Close>
+	+-------------------------
+
+0x0C89: WAIT_DIALOG()
+0x0C8A: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x0C95: var[0x001A] = roomVar[0x03]
+0x0C9B: var[0x001C] = roomVar[0x04]
+0x0CA1: var[0x001E] = roomVar[0x05]
+0x0CA7: var[0x0020] = roomVar[0x06]
+0x0CAD: STOP()
+---------------------------
+| Entity 8 ON_COLLISION
+---------------------------
+0x0CAE: STOP()
+---------------------------
+| Entity 8 script 4
+---------------------------
+0x0CAF: op8D(0x00)
+0x0CB1: RECT_SIZE(roomVar[0x11], roomVar[0x12])
+0x0CB6: WAIT_ONE_FRAME()
+0x0CB7: STOP()
+0x0CB8: 0xE0
+0x0CB9: 0x33
+0x0CBA: 0x00
+0x0CBB: 0x00
+0x0CBC: 0xE2

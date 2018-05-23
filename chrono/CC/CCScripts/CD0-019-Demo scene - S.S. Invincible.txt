@@ -1,0 +1,960 @@
+0x0000: 0xFF
+0x0001: 0x00
+0x0002: 0x00
+0x0003: 0x00
+0x0004: 0x00
+0x0005: 0x00
+0x0006: 0x00
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0x8F
+0x000A: 0x08
+0x000B: 0x28
+0x000C: 0xFB
+0x000D: 0x00
+0x000E: 0x0C
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0x24
+0x0012: 0xFA
+0x0013: 0xA9
+0x0014: 0x01
+0x0015: 0x00
+0x0016: 0x08
+0x0017: 0x01
+0x0018: 0x00
+0x0019: 0xE6
+0x001A: 0x00
+0x001B: 0x2B
+0x001C: 0x04
+0x001D: 0x00
+0x001E: 0x04
+0x001F: 0x01
+0x0020: 0x00
+0x0021: 0xFB
+0x0022: 0x08
+0x0023: 0x99
+0x0024: 0x01
+0x0025: 0x00
+0x0026: 0x04
+0x0027: 0x01
+0x0028: 0x00
+0x0029: 0xE7
+0x002A: 0x06
+0x002B: 0x56
+0x002C: 0x04
+0x002D: 0x00
+0x002E: 0x04
+0x002F: 0x01
+0x0030: 0x00
+0x0031: 0xC3
+0x0032: 0xFE
+0x0033: 0x20
+0x0034: 0x04
+0x0035: 0x00
+0x0036: 0x00
+0x0037: 0x01
+0x0038: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0039: op64(-500)
+0x003D: op66(0x00, 400)
+0x0042: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x0043: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x0044: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x0045: STOP()
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x0046: SETUP_PC(PC2)
+0x0049: SET_ROTATION?(-650)
+0x004D: op47(0x01)
+0x004F: SET_WALK_ANIMATION(0x01, 1)
+0x0053: op93(0x01)
+0x0055: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x0056: IF_JUMP(ROOM_PARAM == 1, 0x0081)
+0x005E: IF_JUMP(roomVar[0x38] == 1, 0x007E)
+0x0066: roomVar[0x01] = sin(roomVar[0x00], 30)
+0x006E: roomVar[0x01] += -650
+0x0074: SET_ROTATION?(roomVar[0x01])
+0x0078: roomVar[0x00] += 32
+0x007E: JUMP(0x0082)
+0x0081: UPDATE_CHARACTER()
+0x0082: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x0083: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x0084: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x0085: SET_POSITION_UNSIGNED(2192, -1500, 0)
+0x008D: SET_MOVEMENT_SPEED(4)
+0x0090: WALK_TO_POSITION(0x00, -1500, -1500)
+0x0099: WALK_TO_POSITION(0x01)
+0x009B: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x009C: SETUP_PC(PC1)
+0x009F: SET_ROTATION?(-730)
+0x00A3: op47(0x01)
+0x00A5: SET_WALK_ANIMATION(0x01, 1)
+0x00A9: op93(0x01)
+0x00AB: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x00AC: IF_JUMP(ROOM_PARAM == 1, 0x00D7)
+0x00B4: IF_JUMP(roomVar[0x38] == 1, 0x00D4)
+0x00BC: roomVar[0x03] = sin(roomVar[0x02], 35)
+0x00C4: roomVar[0x03] += -730
+0x00CA: SET_ROTATION?(roomVar[0x03])
+0x00CE: roomVar[0x02] += 32
+0x00D4: JUMP(0x00D8)
+0x00D7: UPDATE_CHARACTER()
+0x00D8: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x00D9: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x00DA: STOP()
+---------------------------
+| Entity 2 script 4
+---------------------------
+0x00DB: SET_POSITION_UNSIGNED(2452, -1350, 0)
+0x00E3: SET_MOVEMENT_SPEED(4)
+0x00E6: WALK_TO_POSITION(0x00, -1260, -1350)
+0x00EF: WALK_TO_POSITION(0x01)
+0x00F1: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x00F2: SETUP_PC(PARTY_LEADER)
+0x00F5: SET_ROTATION?(-700)
+0x00F9: op47(0x01)
+0x00FB: SET_WALK_ANIMATION(0x01, 1)
+0x00FF: op93(0x01)
+0x0101: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x0102: IF_JUMP(ROOM_PARAM == 1, 0x012D)
+0x010A: IF_JUMP(roomVar[0x38] == 1, 0x012A)
+0x0112: roomVar[0x06] = sin(roomVar[0x05], 40)
+0x011A: roomVar[0x06] += -700
+0x0120: SET_ROTATION?(roomVar[0x06])
+0x0124: roomVar[0x05] += 32
+0x012A: JUMP(0x012E)
+0x012D: UPDATE_CHARACTER()
+0x012E: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x012F: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x0130: STOP()
+---------------------------
+| Entity 3 script 4
+---------------------------
+0x0131: SET_POSITION_UNSIGNED(2632, -1500, 0)
+0x0139: SET_MOVEMENT_SPEED(4)
+0x013C: WALK_TO_POSITION(0x00, -1080, -1500)
+0x0145: WALK_TO_POSITION(0x01)
+0x0147: STOP()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x0148: SETUP_NPC(2)
+0x014B: SET_POSITION_UNSIGNED(2190, -1500, 0)
+0x0153: SET_ROTATION_SIMPLE(0x04)
+0x0155: SET_WALK_ANIMATION(0x01, 0)
+0x0159: SET_WALK_ANIMATION(0x00, 0)
+0x015D: SET_WALK_ANIMATION(0x02, 0)
+0x0161: SET_WALK_ANIMATION(0x05, 0)
+0x0165: opFE01(0x01)
+0x0168: SET_ROTATION?(-645)
+0x016C: TOGGLE_RECT_COLLISION(0x01)
+0x016E: op37(0x00)
+0x0170: op47(0x01)
+0x0172: op93(0x01)
+0x0174: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x0175: IF_JUMP(ROOM_PARAM == 1, 0x01A0)
+0x017D: IF_JUMP(roomVar[0x38] == 1, 0x019D)
+0x0185: roomVar[0x09] = sin(roomVar[0x08], 40)
+0x018D: roomVar[0x09] += -645
+0x0193: SET_ROTATION?(roomVar[0x09])
+0x0197: roomVar[0x08] += 32
+0x019D: JUMP(0x01A9)
+0x01A0: SET_MOVEMENT_SPEED(20)
+0x01A3: op44(0x00, PARTY_LEADER) //? 
+0x01A9: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x01AA: STOP()
+---------------------------
+| Entity 4 ON_COLLISION
+---------------------------
+0x01AB: STOP()
+---------------------------
+| Entity 4 script 4
+---------------------------
+0x01AC: SET_MOVEMENT_SPEED(4)
+0x01AF: WALK_TO_POSITION(0x00, -1500, -1500)
+0x01B8: WALK_TO_POSITION(0x01)
+0x01BA: STOP()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x01BB: op37(0x00)
+0x01BD: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x01BE: roomVar[0x0B] = sin(roomVar[0x0A], 30)
+0x01C6: SET_AXIS_ROTATION(0x00, ENTITY 4, roomVar[0x0B])
+0x01CB: roomVar[0x0A] += 32
+0x01D1: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x01D2: STOP()
+---------------------------
+| Entity 5 ON_COLLISION
+---------------------------
+0x01D3: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x01D4: op37(0x00)
+0x01D6: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x01D7: roomVar[0x0D] = sin(roomVar[0x0C], 30)
+0x01DF: SET_AXIS_ROTATION(0x00, ENTITY 1, roomVar[0x0D])
+0x01E4: roomVar[0x0C] += 32
+0x01EA: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x01EB: STOP()
+---------------------------
+| Entity 6 ON_COLLISION
+---------------------------
+0x01EC: STOP()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x01ED: op37(0x00)
+0x01EF: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x01F0: roomVar[0x0F] = sin(roomVar[0x0E], 30)
+0x01F8: SET_AXIS_ROTATION(0x00, ENTITY 2, roomVar[0x0F])
+0x01FD: roomVar[0x0E] += 32
+0x0203: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x0204: STOP()
+---------------------------
+| Entity 7 ON_COLLISION
+---------------------------
+0x0205: STOP()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x0206: op37(0x00)
+0x0208: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x0209: roomVar[0x11] = sin(roomVar[0x10], 30)
+0x0211: SET_AXIS_ROTATION(0x00, ENTITY 3, roomVar[0x11])
+0x0216: roomVar[0x10] += 32
+0x021C: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x021D: STOP()
+---------------------------
+| Entity 8 ON_COLLISION
+---------------------------
+0x021E: STOP()
+
+
+---------------------------
+| Entity 9 INIT
+---------------------------
+0x021F: SETUP_NPC(0)
+0x0222: SET_POSITION_SIGNED(-570, -1040, 1005)
+0x022A: op37(0x00)
+0x022C: SET_ROTATION?(-730)
+0x0230: TOGGLE_RECT_COLLISION(0x01)
+0x0232: AXIS_CHARACTER_SCALE(0x0F, ENTITY 9, 1)
+0x0237: STOP()
+---------------------------
+| Entity 9 UPDATE
+---------------------------
+0x0238: IF_JUMP(roomVar[0x39] == 1, 0x0285)
+0x0240: op59()
+0x0241: IF_JUMP(roomVar[0x15] == 0, 0x025E)
+0x0249: WAIT(45)
+0x024C: op9B("sibg", ENTITY 9)
+0x0252: op9B("sibh", ENTITY 9)
+0x0258: WAIT(15)
+0x025B: roomVar[0x15] = 1
+0x025E: roomVar[0x13] = sin(roomVar[0x12], 70)
+0x0266: roomVar[0x14] += 1005
+0x026C: roomVar[0x13] += -1040
+0x0272: WALK_TO_2(0x00, -570, roomVar[0x13], 1005, 10)
+0x027D: WALK_TO_2(0x01) // wait walk
+0x027F: roomVar[0x12] -= 16
+0x0285: STOP()
+---------------------------
+| Entity 9 ON_ACTION
+---------------------------
+0x0286: STOP()
+---------------------------
+| Entity 9 ON_COLLISION
+---------------------------
+0x0287: STOP()
+---------------------------
+| Entity 9 script 4
+---------------------------
+0x0288: WAIT(30)
+0x028B: opB6(siba)
+0x0290: opB6(sibb)
+0x0295: opB6(sibc)
+0x029A: STOP()
+---------------------------
+| Entity 9 script 5
+---------------------------
+0x029B: op9C("sb01")
+0x02A0: op9C("sb02")
+0x02A5: op9C("sb03")
+0x02AA: op9C("sb04")
+0x02AF: op9C("sb05")
+0x02B4: op9C("sb06")
+0x02B9: op9C("sb07")
+0x02BE: op9C("sb08")
+0x02C3: op9C("sb09")
+0x02C8: op9C("sb0a")
+0x02CD: opB6(sb11)
+0x02D2: opB6(sb12)
+0x02D7: opB6(sb13)
+0x02DC: opB6(sb14)
+0x02E1: opB6(sb15)
+0x02E6: opB6(sb16)
+0x02EB: opB6(sb17)
+0x02F0: opB6(sb18)
+0x02F5: opB6(sb19)
+0x02FA: STOP()
+
+
+---------------------------
+| Entity 10 INIT
+---------------------------
+0x02FB: SETUP_NPC(0)
+0x02FE: SET_POSITION_SIGNED(0, -1040, 1005)
+0x0306: op37(0x00)
+0x0308: SET_ROTATION?(-730)
+0x030C: TOGGLE_RECT_COLLISION(0x01)
+0x030E: AXIS_CHARACTER_SCALE(0x0F, ENTITY 10, 1)
+0x0313: STOP()
+---------------------------
+| Entity 10 UPDATE
+---------------------------
+0x0314: IF_JUMP(roomVar[0x39] == 1, 0x0361)
+0x031C: op59()
+0x031D: IF_JUMP(roomVar[0x19] == 0, 0x033A)
+0x0325: WAIT(45)
+0x0328: op9B("sibi", ENTITY 10)
+0x032E: op9B("sibj", ENTITY 10)
+0x0334: WAIT(15)
+0x0337: roomVar[0x19] = 1
+0x033A: roomVar[0x17] = sin(roomVar[0x16], 90)
+0x0342: roomVar[0x18] += 1005
+0x0348: roomVar[0x17] += -1040
+0x034E: WALK_TO_2(0x00, 0, roomVar[0x17], 1005, 10)
+0x0359: WALK_TO_2(0x01) // wait walk
+0x035B: roomVar[0x16] -= 16
+0x0361: STOP()
+---------------------------
+| Entity 10 ON_ACTION
+---------------------------
+0x0362: STOP()
+---------------------------
+| Entity 10 ON_COLLISION
+---------------------------
+0x0363: STOP()
+---------------------------
+| Entity 10 script 4
+---------------------------
+0x0364: WAIT(30)
+0x0367: opB6(sib7)
+0x036C: opB6(sib8)
+0x0371: opB6(sib9)
+0x0376: STOP()
+
+
+---------------------------
+| Entity 11 INIT
+---------------------------
+0x0377: SETUP_NPC(0)
+0x037A: SET_POSITION_SIGNED(570, -1040, 1005)
+0x0382: op37(0x00)
+0x0384: SET_ROTATION?(-730)
+0x0388: TOGGLE_RECT_COLLISION(0x01)
+0x038A: AXIS_CHARACTER_SCALE(0x0F, ENTITY 11, 1)
+0x038F: STOP()
+---------------------------
+| Entity 11 UPDATE
+---------------------------
+0x0390: IF_JUMP(roomVar[0x39] == 1, 0x03DD)
+0x0398: op59()
+0x0399: IF_JUMP(roomVar[0x1D] == 0, 0x03B6)
+0x03A1: WAIT(40)
+0x03A4: op9B("sib5", ENTITY 11)
+0x03AA: op9B("sib6", ENTITY 11)
+0x03B0: WAIT(20)
+0x03B3: roomVar[0x1D] = 1
+0x03B6: roomVar[0x1B] = sin(roomVar[0x1A], 90)
+0x03BE: roomVar[0x1C] += 1005
+0x03C4: roomVar[0x1B] += -1040
+0x03CA: WALK_TO_2(0x00, 570, roomVar[0x1B], 1005, 10)
+0x03D5: WALK_TO_2(0x01) // wait walk
+0x03D7: roomVar[0x1A] -= 16
+0x03DD: STOP()
+---------------------------
+| Entity 11 ON_ACTION
+---------------------------
+0x03DE: STOP()
+---------------------------
+| Entity 11 ON_COLLISION
+---------------------------
+0x03DF: STOP()
+---------------------------
+| Entity 11 script 4
+---------------------------
+0x03E0: WAIT(30)
+0x03E3: opB6(sib1)
+0x03E8: opB6(sib2)
+0x03ED: opB6(sib3)
+0x03F2: STOP()
+
+
+---------------------------
+| Entity 12 INIT
+---------------------------
+0x03F3: SETUP_NPC(0)
+0x03F6: SET_POSITION_SIGNED(1140, -1040, 1005)
+0x03FE: op37(0x00)
+0x0400: SET_ROTATION?(-730)
+0x0404: TOGGLE_RECT_COLLISION(0x01)
+0x0406: AXIS_CHARACTER_SCALE(0x0F, ENTITY 12, 1)
+0x040B: op37(0x00)
+0x040D: STOP()
+---------------------------
+| Entity 12 UPDATE
+---------------------------
+0x040E: IF_JUMP(roomVar[0x39] == 1, 0x045B)
+0x0416: op59()
+0x0417: IF_JUMP(roomVar[0x21] == 0, 0x0434)
+0x041F: WAIT(35)
+0x0422: op9B("sibk", ENTITY 12)
+0x0428: op9B("sibl", ENTITY 12)
+0x042E: WAIT(25)
+0x0431: roomVar[0x21] = 1
+0x0434: roomVar[0x1F] = sin(roomVar[0x1E], 90)
+0x043C: roomVar[0x20] += 1005
+0x0442: roomVar[0x1F] += -1040
+0x0448: WALK_TO_2(0x00, 1140, roomVar[0x1F], 1005, 10)
+0x0453: WALK_TO_2(0x01) // wait walk
+0x0455: roomVar[0x1E] -= 16
+0x045B: STOP()
+---------------------------
+| Entity 12 ON_ACTION
+---------------------------
+0x045C: STOP()
+---------------------------
+| Entity 12 ON_COLLISION
+---------------------------
+0x045D: STOP()
+---------------------------
+| Entity 12 script 4
+---------------------------
+0x045E: WAIT(30)
+0x0461: opB6(sibd)
+0x0466: opB6(sibe)
+0x046B: opB6(sibf)
+0x0470: STOP()
+
+
+---------------------------
+| Entity 13 INIT
+---------------------------
+0x0471: SETUP_NPC(1)
+0x0474: opFE19(1)
+0x0477: SET_POSITION_SIGNED(-525, 507, 18)
+0x047F: SET_ROTATION_SIMPLE(0x02)
+0x0481: SET_WALK_ANIMATION(0x01, 0)
+0x0485: SET_WALK_ANIMATION(0x00, 0)
+0x0489: SET_WALK_ANIMATION(0x02, 0)
+0x048D: opFE01(0x01)
+0x0490: op37(0x00)
+0x0492: op47(0x01)
+0x0494: op2A(300)
+0x0498: AXIS_CHARACTER_SCALE(0x0F, ENTITY 13, 2048)
+0x049D: STOP()
+---------------------------
+| Entity 13 UPDATE
+---------------------------
+0x049E: roomVar[0x23] = sin(roomVar[0x22], 37)
+0x04A6: roomVar[0x23] += 16
+0x04AC: SET_ROTATION?(roomVar[0x23])
+0x04B0: roomVar[0x22] += 16
+0x04B6: STOP()
+---------------------------
+| Entity 13 ON_ACTION
+---------------------------
+0x04B7: STOP()
+---------------------------
+| Entity 13 ON_COLLISION
+---------------------------
+0x04B8: STOP()
+
+
+---------------------------
+| Entity 14 INIT
+---------------------------
+0x04B9: roomVar[0x24] = 4096
+0x04BF: op37(0x00)
+0x04C1: STOP()
+---------------------------
+| Entity 14 UPDATE
+---------------------------
+0x04C2: IF_JUMP(roomVar[0x24] > 3072, 0x04D9)
+0x04CA: SET_AXIS_ROTATION(0x02, ENTITY 13, roomVar[0x24])
+0x04CF: roomVar[0x24] -= 16
+0x04D5: WAIT_ONE_FRAME()
+0x04D6: JUMP(0x04C2)
+0x04D9: IF_JUMP(roomVar[0x37] == 1, 0x04F9)
+0x04E1: IF_JUMP(roomVar[0x24] < 4096, 0x04F8)
+0x04E9: SET_AXIS_ROTATION(0x02, ENTITY 13, roomVar[0x24])
+0x04EE: roomVar[0x24] += 8
+0x04F4: WAIT_ONE_FRAME()
+0x04F5: JUMP(0x04E1)
+0x04F8: STOP_SCRIPT_EXEC()
+0x04F9: IF_JUMP(roomVar[0x24] > 1024, 0x0510)
+0x0501: SET_AXIS_ROTATION(0x02, ENTITY 13, roomVar[0x24])
+0x0506: roomVar[0x24] -= 32
+0x050C: WAIT_ONE_FRAME()
+0x050D: JUMP(0x04F9)
+0x0510: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 9, script 4, 0x20)
+0x0513: IF_JUMP(roomVar[0x24] > 0, 0x052A)
+0x051B: SET_AXIS_ROTATION(0x02, ENTITY 13, roomVar[0x24])
+0x0520: roomVar[0x24] -= 16
+0x0526: WAIT_ONE_FRAME()
+0x0527: JUMP(0x0513)
+0x052A: roomVar[0x24] = 4096
+0x0530: STOP()
+---------------------------
+| Entity 14 ON_ACTION
+---------------------------
+0x0531: STOP()
+---------------------------
+| Entity 14 ON_COLLISION
+---------------------------
+0x0532: STOP()
+
+
+---------------------------
+| Entity 15 INIT
+---------------------------
+0x0533: SETUP_NPC(1)
+0x0536: opFE19(1)
+0x0539: SET_POSITION_SIGNED(75, 507, 16)
+0x0541: SET_ROTATION_SIMPLE(0x02)
+0x0543: SET_WALK_ANIMATION(0x01, 0)
+0x0547: SET_WALK_ANIMATION(0x00, 0)
+0x054B: SET_WALK_ANIMATION(0x02, 0)
+0x054F: opFE01(0x01)
+0x0552: op37(0x00)
+0x0554: op47(0x01)
+0x0556: op2A(300)
+0x055A: AXIS_CHARACTER_SCALE(0x0F, ENTITY 15, 2048)
+0x055F: STOP()
+---------------------------
+| Entity 15 UPDATE
+---------------------------
+0x0560: roomVar[0x27] = sin(roomVar[0x26], 37)
+0x0568: roomVar[0x27] += 16
+0x056E: SET_ROTATION?(roomVar[0x27])
+0x0572: roomVar[0x26] += 16
+0x0578: STOP()
+---------------------------
+| Entity 15 ON_ACTION
+---------------------------
+0x0579: STOP()
+---------------------------
+| Entity 15 ON_COLLISION
+---------------------------
+0x057A: STOP()
+
+
+---------------------------
+| Entity 16 INIT
+---------------------------
+0x057B: roomVar[0x28] = 4096
+0x0581: op37(0x00)
+0x0583: STOP()
+---------------------------
+| Entity 16 UPDATE
+---------------------------
+0x0584: IF_JUMP(roomVar[0x2A] == 0, 0x0592)
+0x058C: WAIT(15)
+0x058F: roomVar[0x2A] = 1
+0x0592: IF_JUMP(roomVar[0x28] > 3072, 0x05A9)
+0x059A: SET_AXIS_ROTATION(0x02, ENTITY 15, roomVar[0x28])
+0x059F: roomVar[0x28] -= 16
+0x05A5: WAIT_ONE_FRAME()
+0x05A6: JUMP(0x0592)
+0x05A9: IF_JUMP(roomVar[0x28] > 1024, 0x05C0)
+0x05B1: SET_AXIS_ROTATION(0x02, ENTITY 15, roomVar[0x28])
+0x05B6: roomVar[0x28] -= 32
+0x05BC: WAIT_ONE_FRAME()
+0x05BD: JUMP(0x05A9)
+0x05C0: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 10, script 4, 0x20)
+0x05C3: IF_JUMP(roomVar[0x28] > 0, 0x05DA)
+0x05CB: SET_AXIS_ROTATION(0x02, ENTITY 15, roomVar[0x28])
+0x05D0: roomVar[0x28] -= 16
+0x05D6: WAIT_ONE_FRAME()
+0x05D7: JUMP(0x05C3)
+0x05DA: roomVar[0x28] = 4096
+0x05E0: IF_JUMP(roomVar[0x37] == 1, 0x0617)
+0x05E8: IF_JUMP(roomVar[0x28] > 3072, 0x05FF)
+0x05F0: SET_AXIS_ROTATION(0x02, ENTITY 15, roomVar[0x28])
+0x05F5: roomVar[0x28] -= 16
+0x05FB: WAIT_ONE_FRAME()
+0x05FC: JUMP(0x05E8)
+0x05FF: IF_JUMP(roomVar[0x28] < 4096, 0x0616)
+0x0607: SET_AXIS_ROTATION(0x02, ENTITY 15, roomVar[0x28])
+0x060C: roomVar[0x28] += 8
+0x0612: WAIT_ONE_FRAME()
+0x0613: JUMP(0x05FF)
+0x0616: STOP_SCRIPT_EXEC()
+0x0617: STOP()
+---------------------------
+| Entity 16 ON_ACTION
+---------------------------
+0x0618: STOP()
+---------------------------
+| Entity 16 ON_COLLISION
+---------------------------
+0x0619: STOP()
+
+
+---------------------------
+| Entity 17 INIT
+---------------------------
+0x061A: SETUP_NPC(1)
+0x061D: opFE19(1)
+0x0620: SET_POSITION_SIGNED(675, 507, 14)
+0x0628: SET_ROTATION_SIMPLE(0x02)
+0x062A: SET_WALK_ANIMATION(0x01, 0)
+0x062E: SET_WALK_ANIMATION(0x00, 0)
+0x0632: SET_WALK_ANIMATION(0x02, 0)
+0x0636: opFE01(0x01)
+0x0639: op37(0x00)
+0x063B: op47(0x01)
+0x063D: op2A(300)
+0x0641: AXIS_CHARACTER_SCALE(0x0F, ENTITY 17, 2048)
+0x0646: STOP()
+---------------------------
+| Entity 17 UPDATE
+---------------------------
+0x0647: roomVar[0x2C] = sin(roomVar[0x2B], 37)
+0x064F: roomVar[0x2C] += 14
+0x0655: SET_ROTATION?(roomVar[0x2C])
+0x0659: roomVar[0x2B] += 16
+0x065F: STOP()
+---------------------------
+| Entity 17 ON_ACTION
+---------------------------
+0x0660: STOP()
+---------------------------
+| Entity 17 ON_COLLISION
+---------------------------
+0x0661: STOP()
+
+
+---------------------------
+| Entity 18 INIT
+---------------------------
+0x0662: roomVar[0x2D] = 4096
+0x0668: op37(0x00)
+0x066A: STOP()
+---------------------------
+| Entity 18 UPDATE
+---------------------------
+0x066B: IF_JUMP(roomVar[0x2F] == 0, 0x0679)
+0x0673: WAIT(25)
+0x0676: roomVar[0x2F] = 1
+0x0679: IF_JUMP(roomVar[0x2D] > 3072, 0x0690)
+0x0681: SET_AXIS_ROTATION(0x02, ENTITY 17, roomVar[0x2D])
+0x0686: roomVar[0x2D] -= 16
+0x068C: WAIT_ONE_FRAME()
+0x068D: JUMP(0x0679)
+0x0690: IF_JUMP(roomVar[0x2D] > 1024, 0x06A7)
+0x0698: SET_AXIS_ROTATION(0x02, ENTITY 17, roomVar[0x2D])
+0x069D: roomVar[0x2D] -= 32
+0x06A3: WAIT_ONE_FRAME()
+0x06A4: JUMP(0x0690)
+0x06A7: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 11, script 4, 0x20)
+0x06AA: IF_JUMP(roomVar[0x2D] > 0, 0x06C1)
+0x06B2: SET_AXIS_ROTATION(0x02, ENTITY 17, roomVar[0x2D])
+0x06B7: roomVar[0x2D] -= 16
+0x06BD: WAIT_ONE_FRAME()
+0x06BE: JUMP(0x06AA)
+0x06C1: roomVar[0x2D] = 4096
+0x06C7: IF_JUMP(roomVar[0x37] == 1, 0x06FE)
+0x06CF: IF_JUMP(roomVar[0x2D] > 3072, 0x06E6)
+0x06D7: SET_AXIS_ROTATION(0x02, ENTITY 17, roomVar[0x2D])
+0x06DC: roomVar[0x2D] -= 16
+0x06E2: WAIT_ONE_FRAME()
+0x06E3: JUMP(0x06CF)
+0x06E6: IF_JUMP(roomVar[0x2D] < 4096, 0x06FD)
+0x06EE: SET_AXIS_ROTATION(0x02, ENTITY 17, roomVar[0x2D])
+0x06F3: roomVar[0x2D] += 8
+0x06F9: WAIT_ONE_FRAME()
+0x06FA: JUMP(0x06E6)
+0x06FD: STOP_SCRIPT_EXEC()
+0x06FE: STOP()
+---------------------------
+| Entity 18 ON_ACTION
+---------------------------
+0x06FF: STOP()
+---------------------------
+| Entity 18 ON_COLLISION
+---------------------------
+0x0700: STOP()
+
+
+---------------------------
+| Entity 19 INIT
+---------------------------
+0x0701: SETUP_NPC(1)
+0x0704: opFE19(1)
+0x0707: SET_POSITION_SIGNED(1275, 507, 12)
+0x070F: SET_ROTATION_SIMPLE(0x02)
+0x0711: SET_WALK_ANIMATION(0x01, 0)
+0x0715: SET_WALK_ANIMATION(0x00, 0)
+0x0719: SET_WALK_ANIMATION(0x02, 0)
+0x071D: opFE01(0x01)
+0x0720: op37(0x00)
+0x0722: op47(0x01)
+0x0724: op2A(300)
+0x0728: AXIS_CHARACTER_SCALE(0x0F, ENTITY 19, 2048)
+0x072D: STOP()
+---------------------------
+| Entity 19 UPDATE
+---------------------------
+0x072E: roomVar[0x31] = sin(roomVar[0x30], 37)
+0x0736: roomVar[0x31] += 12
+0x073C: SET_ROTATION?(roomVar[0x31])
+0x0740: roomVar[0x30] += 16
+0x0746: STOP()
+---------------------------
+| Entity 19 ON_ACTION
+---------------------------
+0x0747: STOP()
+---------------------------
+| Entity 19 ON_COLLISION
+---------------------------
+0x0748: STOP()
+
+
+---------------------------
+| Entity 20 INIT
+---------------------------
+0x0749: roomVar[0x32] = 4096
+0x074F: op37(0x00)
+0x0751: STOP()
+---------------------------
+| Entity 20 UPDATE
+---------------------------
+0x0752: IF_JUMP(roomVar[0x34] == 0, 0x0760)
+0x075A: WAIT(35)
+0x075D: roomVar[0x34] = 1
+0x0760: IF_JUMP(roomVar[0x32] > 3072, 0x0777)
+0x0768: SET_AXIS_ROTATION(0x02, ENTITY 19, roomVar[0x32])
+0x076D: roomVar[0x32] -= 16
+0x0773: WAIT_ONE_FRAME()
+0x0774: JUMP(0x0760)
+0x0777: IF_JUMP(roomVar[0x32] > 1024, 0x078E)
+0x077F: SET_AXIS_ROTATION(0x02, ENTITY 19, roomVar[0x32])
+0x0784: roomVar[0x32] -= 32
+0x078A: WAIT_ONE_FRAME()
+0x078B: JUMP(0x0777)
+0x078E: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 12, script 4, 0x20)
+0x0791: IF_JUMP(roomVar[0x32] > 0, 0x07A8)
+0x0799: SET_AXIS_ROTATION(0x02, ENTITY 19, roomVar[0x32])
+0x079E: roomVar[0x32] -= 16
+0x07A4: WAIT_ONE_FRAME()
+0x07A5: JUMP(0x0791)
+0x07A8: roomVar[0x32] = 4096
+0x07AE: IF_JUMP(roomVar[0x37] == 1, 0x07E5)
+0x07B6: IF_JUMP(roomVar[0x32] > 3072, 0x07CD)
+0x07BE: SET_AXIS_ROTATION(0x02, ENTITY 19, roomVar[0x32])
+0x07C3: roomVar[0x32] -= 16
+0x07C9: WAIT_ONE_FRAME()
+0x07CA: JUMP(0x07B6)
+0x07CD: IF_JUMP(roomVar[0x32] < 4096, 0x07E4)
+0x07D5: SET_AXIS_ROTATION(0x02, ENTITY 19, roomVar[0x32])
+0x07DA: roomVar[0x32] += 8
+0x07E0: WAIT_ONE_FRAME()
+0x07E1: JUMP(0x07CD)
+0x07E4: STOP_SCRIPT_EXEC()
+0x07E5: STOP()
+---------------------------
+| Entity 20 ON_ACTION
+---------------------------
+0x07E6: STOP()
+---------------------------
+| Entity 20 ON_COLLISION
+---------------------------
+0x07E7: STOP()
+
+
+---------------------------
+| Entity 21 INIT
+---------------------------
+0x07E8: op37(0x00)
+0x07EA: STOP()
+---------------------------
+| Entity 21 UPDATE
+---------------------------
+0x07EB: roomVar[0x36] = sin(roomVar[0x35], 5)
+0x07F3: opAF(0, roomVar[0x36], 1)
+0x07FB: roomVar[0x35] += 16
+0x0801: STOP()
+---------------------------
+| Entity 21 ON_ACTION
+---------------------------
+0x0802: STOP()
+---------------------------
+| Entity 21 ON_COLLISION
+---------------------------
+0x0803: STOP()
+
+
+---------------------------
+| Entity 22 INIT
+---------------------------
+0x0804: op37(0x00)
+0x0806: STOP()
+---------------------------
+| Entity 22 UPDATE
+---------------------------
+0x0807: IF_JUMP(ROOM_PARAM == 1, 0x0863)
+0x080F: DISABLE_CHARACTER_CONTROLS()
+0x0810: opBE()
+0x0811: SET_SCREEN_RGB(0, 255, 255, 255, 0)
+0x081C: SET_CAMERA_POSITION( 0x00, -112, 92, 0)
+0x0827: WAIT(240)
+0x082A: SET_CAMERA_POSITION( 0x00, -112, -128, 360)
+0x0835: WAIT(240)
+0x0838: roomVar[0x37] = 1
+0x083B: WAIT(240)
+0x083E: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 9, script 5, 0x20)
+0x0841: roomVar[0x39] = 1
+0x0844: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 4, script 4, 0x20)
+0x0847: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 1, script 4, 0x20)
+0x084A: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 2, script 4, 0x20)
+0x084D: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 3, script 4, 0x20)
+0x0850: WAIT(480)
+0x0853: WAIT(240)
+0x0856: FADE(0x01, 60)
+0x085A: WAIT(60)
+0x085D: SET_NEXT_ROOM("CD0-020-Demo scene - Cape Howl Sunset", 6)
+0x0862: STOP_SCRIPT_EXEC()
+0x0863: STOP()
+---------------------------
+| Entity 22 ON_ACTION
+---------------------------
+0x0864: STOP()
+---------------------------
+| Entity 22 ON_COLLISION
+---------------------------
+0x0865: STOP()
+
+
+---------------------------
+| Entity 23 INIT
+---------------------------
+0x0866: STOP()
+---------------------------
+| Entity 23 UPDATE
+---------------------------
+0x0867: op59()
+0x0868: JUMP 0x086F IF VAR_BIT[1248] CLEAR
+0x086E: STOP()
+0x086F: JUMP 0x0876 IF VAR_BIT[1249] CLEAR
+0x0875: STOP()
+0x0876: if (INPUT_KEY && 0xFFFF) == 0 jump 0x888
+0x087B: DISABLE_CHARACTER_CONTROLS()
+0x087C: opFE1D(20, 0)
+0x0882: SET_NEXT_ROOM("CD0-008-Title screen", 1)
+0x0887: STOP_SCRIPT_EXEC()
+0x0888: STOP()
+---------------------------
+| Entity 23 ON_ACTION
+---------------------------
+0x0889: STOP()

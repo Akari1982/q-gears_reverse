@@ -1,0 +1,623 @@
+0x0000: 0xFF
+0x0001: 0x03
+0x0002: 0x00
+0x0003: 0x6A
+0x0004: 0xFC
+0x0005: 0x00
+0x0006: 0x0C
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0xAC
+0x000A: 0xFD
+0x000B: 0x5F
+0x000C: 0xFE
+0x000D: 0x00
+0x000E: 0x04
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0x00
+0x0012: 0x00
+0x0013: 0x49
+0x0014: 0x02
+0x0015: 0x00
+0x0016: 0x04
+0x0017: 0x00
+0x0018: 0x00
+0x0019: 0x00
+0x001A: 0x00
+0x001B: 0x48
+0x001C: 0xFE
+0x001D: 0x00
+0x001E: 0x04
+0x001F: 0x00
+0x0020: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0021: opFE63() // stop script if some variable has been set
+0x0023: opFE78(58, 0) // this will stall the script until some condition is met
+0x0029: op64(-300)
+0x002D: SET_SHADOW_COLOR(color_0x0085)
+0x0030: opFE2B(17, 3)
+0x0035: opFE2B(16, 111)
+0x003A: opFE34(0, -970, 0, 512, 2048)
+0x0047: roomVar[0x06] = 2
+0x004D: roomVar[0x07] = -605
+0x0053: roomVar[0x08] = -136
+0x0059: roomVar[0x0A] = 0
+0x005F: var[0x003A] = 1
+0x0065: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x0066: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x0067: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x0068: IF_JUMP(roomVar[0x00] == 0, 0x0084)
+0x0070: IF_CHARACTER_NOT_IN_PARTY_JUMP(38, 0x007E)
+0x0075: SET_CHARACTER_HIDDEN(0x01, ENTITY 4)
+0x0078: SET_CHARACTER_VIEWABLE(0x00, ENTITY 4)
+0x007B: JUMP(0x0084)
+0x007E: SET_CHARACTER_HIDDEN(0x00, ENTITY 4)
+0x0081: SET_CHARACTER_VIEWABLE(0x01, ENTITY 4)
+0x0084: STOP()
+---------------------------
+| Shading palette color_0x0085
+---------------------------
+0x80 0x80 0x80 0x00 
+0x5A 0x5A 0x5A 0x00 
+0x50 0x50 0x50 0x00 
+0x46 0x46 0x46 0x00 
+0x0095: 0x5A
+0x0096: 0x50
+0x0097: 0x3C
+0x0098: 0x00
+
+
+---------------------------
+| Entity 1 INIT
+---------------------------
+0x0099: SETUP_PC(PC2)
+0x009C: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x009D: IF_JUMP(roomVar[0x02] == 0, 0x00A6)
+0x00A5: UPDATE_CHARACTER()
+0x00A6: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x00A7: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x00A8: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x00A9: roomVar[0x02] = 1
+0x00AC: STOP()
+---------------------------
+| Entity 1 script 5
+---------------------------
+0x00AD: roomVar[0x02] = 0
+0x00B0: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x00B1: SETUP_PC(PC1)
+0x00B4: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x00B5: IF_JUMP(roomVar[0x03] == 0, 0x00BE)
+0x00BD: UPDATE_CHARACTER()
+0x00BE: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x00BF: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x00C0: STOP()
+---------------------------
+| Entity 2 script 4
+---------------------------
+0x00C1: roomVar[0x03] = 1
+0x00C4: STOP()
+---------------------------
+| Entity 2 script 5
+---------------------------
+0x00C5: roomVar[0x03] = 0
+0x00C8: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x00C9: SETUP_PC(PARTY_LEADER)
+0x00CC: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x00CD: IF_JUMP(roomVar[0x04] == 0, 0x00D6)
+0x00D5: UPDATE_CHARACTER()
+0x00D6: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x00D7: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x00D8: STOP()
+---------------------------
+| Entity 3 script 4
+---------------------------
+0x00D9: roomVar[0x04] = 1
+0x00DC: STOP()
+---------------------------
+| Entity 3 script 5
+---------------------------
+0x00DD: roomVar[0x04] = 0
+0x00E0: STOP()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x00E1: SETUP_NPC(0)
+0x00E4: SETUP_CURRENT_DIALOG_FACE(38)
+0x00E7: SET_POSITION_UNSIGNED(0, 100, 0)
+0x00EF: SET_ROTATION(3072)
+0x00F2: opFE07(1)
+0x00F5: op8B(75, 300)
+0x00FA: opFE40(0)
+0x00FE: IF_CHARACTER_NOT_IN_PARTY_JUMP(38, 0x0108)
+0x0103: TOGGLE_COLLISION(0x01)
+0x0105: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0108: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x0109: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x010A: DISABLE_CHARACTER_CONTROLS()
+0x010B: TURN_TO_CHARACTER(PARTY_LEADER)
+0x010D: WAIT_ROTATION()
+0x010E: CALL(0x115)
+0x0111: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0113: STOP()
+---------------------------
+| Entity 4 ON_COLLISION
+---------------------------
+0x0114: STOP()
+---------------------------
+| Sub function 0x0115
+---------------------------
+0x0115: opFE6B(0x01)
+0x0118: if( SCENARIO_FLAG < 195 ) jump 0x0123
+0x011D: DIALOG(0x0000, 0x08)
+
+	+-------------------------
+	|Steena:
+	|Liberation from the
+	|chains of fate...
+	+-------------------------
+	|As with humans, the Dragon Gods
+	|were also bound by fate.
+	|This will be the last battle...
+	+-------------------------
+	|The battle between the
+	|planet's guardian,
+	|the <"Devourer of Time,">
+	|and we children of the planet...<Close>
+	+-------------------------
+
+0x0121: WAIT_DIALOG()
+0x0122: OP_RETURN()
+0x0123: JUMP 0x0130 IF VAR_BIT[GLOBAL1:Serge Revived] CLEAR
+0x0129: CHARACTER_DIALOG(ENTITY 4, 0x0001, 0x08)
+
+	+-------------------------
+	|Steena:
+	|The power of the ancient
+	|Dragon Gods shall guide
+	|you to the Sea of Eden...<Close>
+	+-------------------------
+
+0x012E: WAIT_DIALOG()
+0x012F: OP_RETURN()
+0x0130: JUMP 0x0143 IF VAR_BIT[Steena Befriended] CLEAR
+0x0136: var[0x0020] = 1048
+0x013C: CHARACTER_DIALOG(ENTITY 4, 0x0002, 0x08)
+
+	+-------------------------
+	|Steena:
+	|Now, take the <Color 4><Object 3><Color 0>
+	|with you...to the <"Room of
+	|Rituals"> in Fort Dragonia.<Close>
+	+-------------------------
+
+0x0141: WAIT_DIALOG()
+0x0142: OP_RETURN()
+0x0143: CALL(0x222)
+0x0146: var[0x0020] = 1048
+0x014C: JUMP 0x0169 IF VAR_BIT[Got 6DragRelics] CLEAR
+0x0152: CHARACTER_DIALOG(ENTITY 4, 0x0003, 0x08)
+
+	+-------------------------
+	|Steena:
+	|As promised, I will lend you the
+	|<Color 4><Object 3><Color 0>.
+	+-------------------------
+	|I shall accompany you
+	|to the fort as well.<Close>
+	+-------------------------
+
+0x0157: WAIT_DIALOG()
+0x0158: RECEIVE_ITEM(0, "Dragon Tear")
+0x015C: SET_VAR_BIT(7265:GLOBAL1:Got Dragon Tear)
+0x0160: CALL(0x170)
+0x0163: CALL(0x1BC)
+0x0166: JUMP(0x016F)
+0x0169: CHARACTER_DIALOG(ENTITY 4, 0x0004, 0x08)
+
+	+-------------------------
+	|Steena:
+	|Let me make this
+	|clear, Serge.
+	+-------------------------
+	|Seek the eldest beings on
+	|El Nido: the Dragon Gods.
+	+-------------------------
+	|During your travels,
+	|you have seen the Dragon
+	|Gods with your own eyes.
+	|I can sense that...
+	+-------------------------
+	|I shall lend the Dragonian
+	|artifact <"<Color 4><Object 3><Color 0>">
+	|to the one chosen by the 
+	|Dragon Gods...<Close>
+	+-------------------------
+
+0x016E: WAIT_DIALOG()
+0x016F: OP_RETURN()
+---------------------------
+| Sub function 0x0170
+---------------------------
+0x0170: roomVar[0x00] = 1
+0x0173: opFE1D(10, 0)
+0x0179: WAIT(20)
+0x017C: PLAY_SONG(23)
+0x017F: WAIT(30)
+0x0182: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:77)
+0x018D: DIALOG(0x0005, 0x00)
+
+	+-------------------------
+	|Steena joined your party!<Close>
+	+-------------------------
+
+0x0191: WAIT_DIALOG()
+0x0192: SETUP_DIALOG_WINDOW( X:0, Y:0, LettersHigh:0, LettersWide:0, Flag:0)
+0x019D: SET_VAR_BIT(6312:Steena Befriended)
+0x01A1: ADD_CHARACTER_TO_ROSTER(38)
+0x01A4: SET_SCREEN_RGB(2, 255, 255, 255, 10)
+0x01AF: WAIT(15)
+0x01B2: SET_CHARACTER_HIDDEN(0x01, ENTITY 5)
+0x01B5: RENAME_CHARACTER(38)
+0x01B9: OPEN_MENU()
+0x01BB: OP_RETURN()
+---------------------------
+| Sub function 0x01BC
+---------------------------
+0x01BC: SETUP_PARTY_SCREEN()
+0x01BE: OPEN_MENU()
+0x01C0: IF_CHARACTER_NOT_IN_PARTY_JUMP(38, 0x01E4)
+0x01C5: SET_CHARACTER_HIDDEN(0x01, ENTITY 4)
+0x01C8: CALL(0x1FC)
+0x01CB: SET_SCREEN_RGB(2, 0, 0, 0, 10)
+0x01D6: WAIT(15)
+0x01D9: ENABLE_CHARACTER_CONTROLS(0x00)
+0x01DB: roomVar[0x00] = 0
+0x01DE: SET_CHARACTER_VIEWABLE(0x00, ENTITY 4)
+0x01E1: JUMP(0x01FB)
+0x01E4: CALL(0x1FC)
+0x01E7: SET_SCREEN_RGB(2, 0, 0, 0, 10)
+0x01F2: WAIT(20)
+0x01F5: CALL(0x20F)
+0x01F8: roomVar[0x00] = 0
+0x01FB: OP_RETURN()
+---------------------------
+| Sub function 0x01FC
+---------------------------
+0x01FC: WAIT(30)
+0x01FF: opFE1D(30, 0)
+0x0205: WAIT(45)
+0x0208: PLAY_SONG(58)
+0x020B: WAIT(30)
+0x020E: OP_RETURN()
+---------------------------
+| Sub function 0x020F
+---------------------------
+0x020F: if( SCENARIO_FLAG < 195 ) jump 0x021C
+0x0214: DIALOG(0x0006, 0x08)
+
+	+-------------------------
+	|Steena:
+	|May the lost Goddess of Fate
+	|bless the children of the
+	|planet...<Close>
+	+-------------------------
+
+0x0218: WAIT_DIALOG()
+0x0219: JUMP(0x0221)
+0x021C: DIALOG(0x0007, 0x08)
+
+	+-------------------------
+	|Steena:
+	|May the 6 Dragon Gods
+	|bestow protection upon we
+	|children of the planet...<Close>
+	+-------------------------
+
+0x0220: WAIT_DIALOG()
+0x0221: OP_RETURN()
+---------------------------
+| Sub function 0x0222
+---------------------------
+0x0222: roomVar[0x01] = 0
+0x0225: IF_HAVE_ITEM(White Relic) ELSE JUMP 0x022D
+0x022A: roomVar[0x01] ++
+0x022D: IF_HAVE_ITEM(Black Relic) ELSE JUMP 0x0235
+0x0232: roomVar[0x01] ++
+0x0235: IF_HAVE_ITEM(Red Relic) ELSE JUMP 0x023D
+0x023A: roomVar[0x01] ++
+0x023D: IF_HAVE_ITEM(Blue Relic) ELSE JUMP 0x0245
+0x0242: roomVar[0x01] ++
+0x0245: IF_HAVE_ITEM(Yellow Relic) ELSE JUMP 0x024D
+0x024A: roomVar[0x01] ++
+0x024D: IF_HAVE_ITEM(Green Relic) ELSE JUMP 0x0255
+0x0252: roomVar[0x01] ++
+0x0255: IF_JUMP(roomVar[0x01] == 6, 0x0261)
+0x025D: SET_VAR_BIT(6315:Got 6DragRelics)
+0x0261: OP_RETURN()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x0262: SETUP_NPC(1)
+0x0265: SET_POSITION_UNSIGNED(0, 555, 0)
+0x026D: SET_ROTATION(1024)
+0x0270: op37(0x00)
+0x0272: op93(0x01)
+0x0274: JUMP 0x027F IF VAR_BIT[GLOBAL1:Got Dragon Tear] CLEAR
+0x027A: TOGGLE_COLLISION(0x01)
+0x027C: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x027F: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x0280: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x0281: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x0282: SET_POSITION_UNSIGNED(3, -1088, 0)
+0x028A: op8D(0x00)
+0x028C: RECT_SIZE(30, 150)
+0x0291: SET_ROTATION(1024)
+0x0294: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x0295: WAIT_PLAY_SONG_DONE()
+0x0296: opFE1D(210, 96)
+0x029C: STOP_SCRIPT_EXEC()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x029D: STOP()
+---------------------------
+| Entity 6 ON_COLLISION
+---------------------------
+0x029E: DISABLE_CHARACTER_CONTROLS()
+0x029F: opFE1D(60, 0)
+0x02A5: SET_NEXT_ROOM("CD0-209-Guldove - Chief's Tent Exterior (Home)", 1)
+0x02AA: STOP_SCRIPT_EXEC()
+0x02AB: STOP()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x02AC: SET_POSITION_UNSIGNED(-340, -125, 0)
+0x02B4: opC5(2, 36, 0)
+0x02BB: op37(0x00)
+0x02BD: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x02BE: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x02BF: STOP()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x02C0: SET_POSITION_UNSIGNED(350, -125, 0)
+0x02C8: opC5(2, 36, 0)
+0x02CF: op37(0x00)
+0x02D1: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x02D2: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x02D3: STOP()
+0x02D4: 0xE0
+0x02D5: 0x08
+0x02D6: 0x00
+0x02D7: 0x00
+0x02D8: 0xE2
+
+
+---------------------------
+| Entity 9 INIT
+---------------------------
+0x02D9: SET_POSITION_UNSIGNED(651, -153, 0)
+0x02E1: op8D(0x00)
+0x02E3: RECT_SIZE(75, 75)
+0x02E8: JUMP 0x02F1 IF VAR_BIT[Ind. Menu Start] CLEAR
+0x02EE: JUMP(0x02F4)
+0x02F1: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x02F4: STOP()
+---------------------------
+| Entity 9 UPDATE
+---------------------------
+0x02F5: STOP()
+---------------------------
+| Entity 9 ON_ACTION
+---------------------------
+0x02F6: DIALOG(0x0009, 0x0D)
+
+	+-------------------------
+	|* DEBUG MENU
+	|      Quit
+	|      Rect<Close>
+	+-------------------------
+
+0x02FA: MULTI_CHOICE( range:1 to 2 )
+0x02FC: WAIT_DIALOG()
+0x02FD: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0308)
+0x0305: JUMP(0x0316)
+0x0308: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x0316)
+0x0310: CALL(0x318)
+0x0313: JUMP(0x0316)
+0x0316: STOP()
+---------------------------
+| Entity 9 ON_COLLISION
+---------------------------
+0x0317: STOP()
+---------------------------
+| Sub function 0x0318
+---------------------------
+0x0318: IF_JUMP(roomVar[0x05] == 0, 0x032E)
+0x0320: roomVar[0x05] = 1
+0x0323: SET_CHARACTER_VIEWABLE(0x00, ENTITY 6)
+0x0326: DIALOG(0x000A, 0x0D)
+
+	+-------------------------
+	|* Rect Off<Close>
+	+-------------------------
+
+0x032A: WAIT_DIALOG()
+0x032B: JUMP(0x0339)
+0x032E: roomVar[0x05] = 0
+0x0331: SET_CHARACTER_VIEWABLE(0x01, ENTITY 6)
+0x0334: DIALOG(0x000B, 0x0D)
+
+	+-------------------------
+	|* Rect On<Close>
+	+-------------------------
+
+0x0338: WAIT_DIALOG()
+0x0339: OP_RETURN()
+0x033A: 0xE0
+0x033B: 0x0C
+0x033C: 0x00
+0x033D: 0x00
+0x033E: 0xE2
+
+
+---------------------------
+| Entity 10 INIT
+---------------------------
+0x033F: SETUP_NPC(roomVar[0x06])
+0x0342: opFE5A(0x01)
+0x0345: SET_POSITION_UNSIGNED(roomVar[0x07], roomVar[0x08], roomVar[0x0A])
+0x034D: TOGGLE_RECT_COLLISION(0x01)
+0x034F: op8D(0x00)
+0x0351: RECT_SIZE(75, 75)
+0x0356: op93(0x01)
+0x0358: SET_WALK_ANIMATION(0x01, 1)
+0x035C: STOP()
+---------------------------
+| Entity 10 UPDATE
+---------------------------
+0x035D: roomVar[0x0D] = 0
+0x0360: var[0x003C] = 0
+0x0363: SET_ROTATION?(roomVar[0x0B])
+0x0367: roomVar[0x0B] = sin(roomVar[0x0C], 50)
+0x036F: roomVar[0x0B] *= -1
+0x0375: roomVar[0x0B] += -100
+0x037B: roomVar[0x0C] += 16
+0x0381: STOP()
+---------------------------
+| Entity 10 ON_ACTION
+---------------------------
+0x0382: roomVar[0x0D] = 1
+0x0385: var[0x003C] = 1
+0x0388: PLAY_SOUNDFX(281, 0)
+0x038E: Unk opcode 0xFE 0x72
+0x0390: 0xFE
+0x0391: 0x61
+0x0392: 0x00
+---------------------------
+| Entity 10 ON_COLLISION
+---------------------------
+0x0393: IF_JUMP(roomVar[0x0D] == 0, 0x03A7)
+0x039B: roomVar[0x0D] = 1
+0x039E: var[0x003C] = 1
+0x03A1: PLAY_SOUNDFX(332, 0)
+0x03A7: STOP()
+
+
+---------------------------
+| Entity 11 INIT
+---------------------------
+0x03A8: op37(0x00)
+0x03AA: STOP()
+---------------------------
+| Entity 11 UPDATE
+---------------------------
+0x03AB: IF_JUMP(roomVar[0x0E] > 4096, 0x03B6)
+0x03B3: roomVar[0x0E] = 0
+0x03B6: op59()
+0x03B7: SET_AXIS_ROTATION(0x01, ENTITY 10, roomVar[0x0E])
+0x03BC: roomVar[0x0E] += 16
+0x03C2: WAIT(0)
+0x03C5: STOP()
+---------------------------
+| Entity 11 ON_ACTION
+---------------------------
+0x03C6: STOP()
+---------------------------
+| Entity 11 ON_COLLISION
+---------------------------
+0x03C7: STOP()

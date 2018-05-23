@@ -1,0 +1,1176 @@
+0x0000: 0xFF
+0x0001: 0x7D
+0x0002: 0xFD
+0x0003: 0x1E
+0x0004: 0xF6
+0x0005: 0x00
+0x0006: 0x0C
+0x0007: 0x00
+0x0008: 0x00
+0x0009: 0x8A
+0x000A: 0xFD
+0x000B: 0xF4
+0x000C: 0xF7
+0x000D: 0x80
+0x000E: 0x0C
+0x000F: 0x00
+0x0010: 0x00
+0x0011: 0x8A
+0x0012: 0xFD
+0x0013: 0xF4
+0x0014: 0xF7
+0x0015: 0x80
+0x0016: 0x0C
+0x0017: 0x00
+0x0018: 0x00
+
+
+---------------------------
+| Entity 0 INIT
+---------------------------
+0x0019: IF_JUMP(ROOM_PARAM == 1, 0x0029)
+0x0021: opFE63() // stop script if some variable has been set
+0x0023: PLAY_SONG(48)
+0x0026: JUMP(0x002E)
+0x0029: opFE63() // stop script if some variable has been set
+0x002B: PLAY_SONG(40)
+0x002E: JUMP 0x003A IF VAR_BIT[Sis.Rosetta Life Lost] CLEAR
+0x0034: DISABLE_BACKGROUND_LAYER(4)
+0x0037: JUMP(0x003D)
+0x003A: DISABLE_BACKGROUND_LAYER(3)
+0x003D: opFE2B(17, 0)
+0x0042: opFE2B(18, 3)
+0x0047: opFE2B(16, 95)
+0x004C: opFE34(-630, -2700, 0, 512, 9000)
+0x0059: op66(0x00, 20)
+0x005E: PLAY_SOUNDFX(346, 128, 64, 6)
+0x0068: PLAY_SOUNDFX(347, 128, 80, 7)
+0x0072: SET_SHADOW_COLOR(color_0x0079)
+0x0075: STOP()
+---------------------------
+| Entity 0 UPDATE
+---------------------------
+0x0076: STOP()
+---------------------------
+| Entity 0 ON_ACTION
+---------------------------
+0x0077: STOP()
+---------------------------
+| Entity 0 ON_COLLISION
+---------------------------
+0x0078: STOP()
+---------------------------
+| Shading palette color_0x0079
+---------------------------
+0x80 0x80 0x80 0x00 
+0x50 0x50 0x50 0x00 
+0x32 0x32 0x32 0x00 
+0x0E 0xFD 0x80 0x73 
+0x0089: 0x0A
+0x008A: 0x18
+0x008B: 0x80
+0x008C: 0x95
+0x008D: 0x00
+0x008E: SETUP_NPC(var[0x01BE])
+0x0091: SET_WALK_ANIMATION(0x00, var[0x01BA])
+0x0095: STOP()
+---------------------------
+| Entity 1 UPDATE
+---------------------------
+0x0096: IF_JUMP(roomVar[0x00] == 0, 0x009F)
+0x009E: UPDATE_CHARACTER()
+0x009F: STOP()
+---------------------------
+| Entity 1 ON_ACTION
+---------------------------
+0x00A0: STOP()
+---------------------------
+| Entity 1 ON_COLLISION
+---------------------------
+0x00A1: STOP()
+---------------------------
+| Entity 1 script 4
+---------------------------
+0x00A2: roomVar[0x00] = 1
+0x00A5: STOP()
+---------------------------
+| Entity 1 script 5
+---------------------------
+0x00A6: roomVar[0x00] = 0
+0x00A9: STOP()
+---------------------------
+| Entity 1 script 6
+---------------------------
+0x00AA: STOP()
+---------------------------
+| Entity 1 script 7
+---------------------------
+0x00AB: CALL(0x14A)
+0x00AE: STOP()
+---------------------------
+| Entity 1 script 8
+---------------------------
+0x00AF: CALL(0x156)
+0x00B2: STOP()
+---------------------------
+| Entity 1 script 9
+---------------------------
+0x00B3: CALL(0x162)
+0x00B6: STOP()
+---------------------------
+| Entity 1 script 10
+---------------------------
+0x00B7: CALL(0x194)
+0x00BA: STOP()
+---------------------------
+| Entity 1 script 11
+---------------------------
+0x00BB: LOAD_ANIMATION( 0x00, THIS, 1)
+0x00C0: LOAD_ANIMATION( 0x01 )
+0x00C2: SET_ANIMATION(138)
+0x00C5: WAIT_ANIMATION_COMPLETED?(THIS)
+0x00C7: STOP()
+
+
+---------------------------
+| Entity 2 INIT
+---------------------------
+0x00C8: SETUP_PC(PC1)
+0x00CB: STOP()
+---------------------------
+| Entity 2 UPDATE
+---------------------------
+0x00CC: IF_JUMP(roomVar[0x01] == 0, 0x00D5)
+0x00D4: UPDATE_CHARACTER()
+0x00D5: STOP()
+---------------------------
+| Entity 2 ON_ACTION
+---------------------------
+0x00D6: STOP()
+---------------------------
+| Entity 2 ON_COLLISION
+---------------------------
+0x00D7: STOP()
+---------------------------
+| Entity 2 script 4
+---------------------------
+0x00D8: roomVar[0x01] = 1
+0x00DB: STOP()
+---------------------------
+| Entity 2 script 5
+---------------------------
+0x00DC: roomVar[0x01] = 0
+0x00DF: STOP()
+---------------------------
+| Entity 2 script 6
+---------------------------
+0x00E0: SET_POSITION_UNSIGNED(-746, -2324, 0)
+0x00E8: SET_ROTATION(3310)
+0x00EB: STOP()
+---------------------------
+| Entity 2 script 7
+---------------------------
+0x00EC: CALL(0x14A)
+0x00EF: STOP()
+---------------------------
+| Entity 2 script 8
+---------------------------
+0x00F0: CALL(0x156)
+0x00F3: STOP()
+---------------------------
+| Entity 2 script 9
+---------------------------
+0x00F4: CALL(0x162)
+0x00F7: STOP()
+---------------------------
+| Entity 2 script 10
+---------------------------
+0x00F8: CALL(0x194)
+0x00FB: STOP()
+---------------------------
+| Entity 2 script 11
+---------------------------
+0x00FC: LOAD_ANIMATION( 0x00, THIS, 1)
+0x0101: LOAD_ANIMATION( 0x01 )
+0x0103: SET_ANIMATION(138)
+0x0106: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0108: STOP()
+
+
+---------------------------
+| Entity 3 INIT
+---------------------------
+0x0109: SETUP_PC(PARTY_LEADER)
+0x010C: STOP()
+---------------------------
+| Entity 3 UPDATE
+---------------------------
+0x010D: IF_JUMP(roomVar[0x02] == 0, 0x0116)
+0x0115: UPDATE_CHARACTER()
+0x0116: STOP()
+---------------------------
+| Entity 3 ON_ACTION
+---------------------------
+0x0117: STOP()
+---------------------------
+| Entity 3 ON_COLLISION
+---------------------------
+0x0118: STOP()
+---------------------------
+| Entity 3 script 4
+---------------------------
+0x0119: roomVar[0x02] = 1
+0x011C: STOP()
+---------------------------
+| Entity 3 script 5
+---------------------------
+0x011D: roomVar[0x02] = 0
+0x0120: STOP()
+---------------------------
+| Entity 3 script 6
+---------------------------
+0x0121: SET_POSITION_UNSIGNED(-644, -2600, 0)
+0x0129: SET_ROTATION(3195)
+0x012C: STOP()
+---------------------------
+| Entity 3 script 7
+---------------------------
+0x012D: CALL(0x14A)
+0x0130: STOP()
+---------------------------
+| Entity 3 script 8
+---------------------------
+0x0131: CALL(0x156)
+0x0134: STOP()
+---------------------------
+| Entity 3 script 9
+---------------------------
+0x0135: CALL(0x162)
+0x0138: STOP()
+---------------------------
+| Entity 3 script 10
+---------------------------
+0x0139: CALL(0x194)
+0x013C: STOP()
+---------------------------
+| Entity 3 script 11
+---------------------------
+0x013D: LOAD_ANIMATION( 0x00, THIS, 1)
+0x0142: LOAD_ANIMATION( 0x01 )
+0x0144: SET_ANIMATION(138)
+0x0147: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0149: STOP()
+---------------------------
+| Sub function 0x014A
+---------------------------
+0x014A: SET_POSITION_UNSIGNED(-499, -2137, 0)
+0x0152: SET_ROTATION(3185)
+0x0155: OP_RETURN()
+---------------------------
+| Sub function 0x0156
+---------------------------
+0x0156: SET_POSITION_UNSIGNED(-735, -1907, 0)
+0x015E: SET_ROTATION(3470)
+0x0161: OP_RETURN()
+---------------------------
+| Sub function 0x0162
+---------------------------
+0x0162: opBF(THIS) // missing stuff, can't decode properly yet
+0x0167: op47(0x01)
+0x0169: SET_MOVEMENT_SPEED(2)
+0x016C: opB7(-3584)
+0x0170: WALK_TO_POSITION(0x00, -529, -2257)
+0x0179: WALK_TO_POSITION(0x01)
+0x017B: WAIT_ONE_FRAME()
+0x017C: opB7(4096)
+0x0180: WAIT(15)
+0x0183: SET_ANIMATION(129)
+0x0186: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0188: WAIT(30)
+0x018B: SET_ANIMATION(1)
+0x018E: WAIT(8)
+0x0191: FREE_EXTRA_ANIMATION(THIS)
+0x0193: OP_RETURN()
+---------------------------
+| Sub function 0x0194
+---------------------------
+0x0194: SET_MOVEMENT_SPEED(3)
+0x0197: opB7(3584)
+0x019B: WALK_TO_POSITION(0x00, -576, -1458)
+0x01A4: WALK_TO_POSITION(0x01)
+0x01A6: OP_RETURN()
+
+
+---------------------------
+| Entity 4 INIT
+---------------------------
+0x01A7: SETUP_NPC(3)
+0x01AA: SETUP_CURRENT_DIALOG_FACE(1)
+0x01AD: SET_POSITION_UNSIGNED(-499, -2137, 0)
+0x01B5: SET_ROTATION(3185)
+0x01B8: opFE07(1)
+0x01BB: TOGGLE_RECT_COLLISION(0x01)
+0x01BD: opFE40(0)
+0x01C1: op37(0x00)
+0x01C3: JUMP 0x01D1 IF VAR_BIT[Razzly befriended] CLEAR
+0x01C9: TOGGLE_COLLISION(0x01)
+0x01CB: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x01CE: JUMP(0x01DB)
+0x01D1: IF_CHARACTER_NOT_IN_PARTY_JUMP(1, 0x01DB)
+0x01D6: TOGGLE_COLLISION(0x01)
+0x01D8: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x01DB: IF_JUMP(ROOM_PARAM == 2, 0x01E8)
+0x01E3: TOGGLE_COLLISION(0x01)
+0x01E5: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x01E8: STOP()
+---------------------------
+| Entity 4 UPDATE
+---------------------------
+0x01E9: STOP()
+---------------------------
+| Entity 4 ON_ACTION
+---------------------------
+0x01EA: STOP()
+---------------------------
+| Entity 4 script 4
+---------------------------
+0x01EB: LOAD_ANIMATION( 0x00, THIS, 257)
+0x01F0: LOAD_ANIMATION( 0x01 )
+0x01F2: op47(0x01)
+0x01F4: SET_MOVEMENT_SPEED(2)
+0x01F7: opB7(-3584)
+0x01FB: WALK_TO_POSITION(0x00, -529, -2257)
+0x0204: WALK_TO_POSITION(0x01)
+0x0206: WAIT_ONE_FRAME()
+0x0207: opB7(4096)
+0x020B: WAIT(15)
+0x020E: SET_ANIMATION(129)
+0x0211: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0213: WAIT(30)
+0x0216: SET_ANIMATION(1)
+0x0219: WAIT(8)
+0x021C: FREE_EXTRA_ANIMATION(THIS)
+0x021E: STOP()
+---------------------------
+| Entity 4 script 5
+---------------------------
+0x021F: LOAD_ANIMATION( 0x00, THIS, 1)
+0x0224: LOAD_ANIMATION( 0x01 )
+0x0226: SET_ANIMATION(138)
+0x0229: WAIT_ANIMATION_COMPLETED?(THIS)
+0x022B: STOP()
+
+
+---------------------------
+| Entity 5 INIT
+---------------------------
+0x022C: SETUP_NPC(4)
+0x022F: SETUP_CURRENT_DIALOG_FACE(13)
+0x0232: SET_POSITION_UNSIGNED(-735, -1907, 0)
+0x023A: SET_ROTATION(3470)
+0x023D: opFE07(1)
+0x0240: TOGGLE_RECT_COLLISION(0x01)
+0x0242: op37(0x00)
+0x0244: JUMP 0x0257 IF VAR_BIT[Razzly befriended] CLEAR
+0x024A: IF_CHARACTER_NOT_IN_PARTY_JUMP(13, 0x0254)
+0x024F: TOGGLE_COLLISION(0x01)
+0x0251: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0254: JUMP(0x025C)
+0x0257: TOGGLE_COLLISION(0x01)
+0x0259: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x025C: IF_JUMP(ROOM_PARAM == 2, 0x0269)
+0x0264: TOGGLE_COLLISION(0x01)
+0x0266: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0269: STOP()
+---------------------------
+| Entity 5 UPDATE
+---------------------------
+0x026A: STOP()
+---------------------------
+| Entity 5 ON_ACTION
+---------------------------
+0x026B: STOP()
+---------------------------
+| Entity 5 script 4
+---------------------------
+0x026C: SET_MOVEMENT_SPEED(3)
+0x026F: opB7(3584)
+0x0273: WALK_TO_POSITION(0x00, -576, -1458)
+0x027C: WALK_TO_POSITION(0x01)
+0x027E: STOP()
+
+
+---------------------------
+| Entity 6 INIT
+---------------------------
+0x027F: SET_POSITION_UNSIGNED(-2, -553, 0)
+0x0287: SETUP_CURRENT_DIALOG_FACE(74)
+0x028A: op37(0x00)
+0x028C: STOP()
+---------------------------
+| Entity 6 UPDATE
+---------------------------
+0x028D: STOP()
+---------------------------
+| Entity 6 ON_ACTION
+---------------------------
+0x028E: STOP()
+
+
+---------------------------
+| Entity 7 INIT
+---------------------------
+0x028F: SET_POSITION_UNSIGNED(29, -1132, 0)
+0x0297: op37(0x00)
+0x0299: STOP()
+---------------------------
+| Entity 7 UPDATE
+---------------------------
+0x029A: STOP()
+---------------------------
+| Entity 7 ON_ACTION
+---------------------------
+0x029B: STOP()
+
+
+---------------------------
+| Entity 8 INIT
+---------------------------
+0x029C: SETUP_NPC(0)
+0x029F: SET_POSITION_UNSIGNED(-75, -484, 0)
+0x02A7: SET_ROTATION(945)
+0x02AA: opA5(32)
+0x02AD: SET_ANIMATION(10)
+0x02B0: op37(0x00)
+0x02B2: TOGGLE_RECT_COLLISION(0x01)
+0x02B4: STOP()
+---------------------------
+| Entity 8 UPDATE
+---------------------------
+0x02B5: STOP()
+---------------------------
+| Entity 8 ON_ACTION
+---------------------------
+0x02B6: STOP()
+---------------------------
+| Entity 8 script 4
+---------------------------
+0x02B7: SET_ANIMATION(1)
+0x02BA: WAIT(15)
+0x02BD: SET_ROTATION(1175)
+0x02C0: SET_MOVEMENT_SPEED(3)
+0x02C3: op47(0x01)
+0x02C5: WALK_TO_POSITION(0x00, -415, -1299)
+0x02CE: WALK_TO_POSITION(0x01)
+0x02D0: STOP()
+
+
+---------------------------
+| Entity 9 INIT
+---------------------------
+0x02D1: SETUP_NPC(1)
+0x02D4: SET_POSITION_UNSIGNED(-618, -871, 0)
+0x02DC: SET_ROTATION(1075)
+0x02DF: op37(0x00)
+0x02E1: TOGGLE_RECT_COLLISION(0x01)
+0x02E3: STOP()
+---------------------------
+| Entity 9 UPDATE
+---------------------------
+0x02E4: STOP()
+---------------------------
+| Entity 9 ON_ACTION
+---------------------------
+0x02E5: STOP()
+---------------------------
+| Entity 9 script 4
+---------------------------
+0x02E6: SET_MOVEMENT_SPEED(3)
+0x02E9: op47(0x01)
+0x02EB: WALK_TO_POSITION(0x00, -585, -1090)
+0x02F4: WALK_TO_POSITION(0x01)
+0x02F6: WAIT(10)
+0x02F9: op47(0x00)
+0x02FB: SET_ANIMATION(11)
+0x02FE: WAIT_ANIMATION_COMPLETED?(THIS)
+0x0300: STOP()
+
+
+---------------------------
+| Entity 10 INIT
+---------------------------
+0x0301: SETUP_NPC(2)
+0x0304: SET_POSITION_UNSIGNED(-233, -1122, 0)
+0x030C: SET_ROTATION(1125)
+0x030F: opA5(48)
+0x0312: op37(0x00)
+0x0314: TOGGLE_RECT_COLLISION(0x01)
+0x0316: STOP()
+---------------------------
+| Entity 10 UPDATE
+---------------------------
+0x0317: STOP()
+---------------------------
+| Entity 10 ON_ACTION
+---------------------------
+0x0318: STOP()
+---------------------------
+| Entity 10 script 4
+---------------------------
+0x0319: SET_MOVEMENT_SPEED(2)
+0x031C: op47(0x01)
+0x031E: WALK_TO_POSITION(0x00, -294, -1358)
+0x0327: WALK_TO_POSITION(0x01)
+0x0329: WAIT(5)
+0x032C: op47(0x00)
+0x032E: SET_ANIMATION(10)
+0x0331: STOP()
+---------------------------
+| Entity 10 script 5
+---------------------------
+0x0332: WALK_TO_POSITION(0x00, -96, -1304)
+0x033B: WALK_TO_POSITION(0x01)
+0x033D: SET_ROTATION(1560)
+0x0340: STOP()
+
+
+---------------------------
+| Entity 11 INIT
+---------------------------
+0x0341: op37(0x00)
+0x0343: STOP()
+---------------------------
+| Entity 11 UPDATE
+---------------------------
+0x0344: op59()
+0x0345: IF_JUMP(ROOM_PARAM == 1, 0x0353)
+0x034D: CALL(0x358)
+0x0350: JUMP(0x0356)
+0x0353: CALL(0x5EA)
+0x0356: STOP_SCRIPT_EXEC()
+---------------------------
+| Entity 11 ON_ACTION
+---------------------------
+0x0357: STOP()
+---------------------------
+| Sub function 0x0358
+---------------------------
+0x0358: DISABLE_CHARACTER_CONTROLS()
+0x0359: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x0364: opFE11(1)
+0x0368: SET_CAMERA_POSITION( 0x00, 80, -115, 1)
+0x0373: RUN_ENTITY_SCRIPT_ASYNC(PARTY_LEADER, script 4, 0x20)
+0x0376: RUN_ENTITY_SCRIPT_ASYNC(PC1, script 4, 0x20)
+0x0379: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 4, 0x20)
+0x037C: WAIT_ONE_FRAME()
+0x037D: RUN_ENTITY_SCRIPT_ASYNC(PC1, script 6, 0x20)
+0x0380: RUN_ENTITY_SCRIPT_BLOCKING(PC2, script 6, 0x20)
+0x0383: JUMP 0x03A3 IF VAR_BIT[Razzly befriended] CLEAR
+0x0389: IF_CHARACTER_NOT_IN_PARTY_JUMP(13, 0x0399)
+0x038E: opBF(Razzly) // missing stuff, can't decode properly yet
+0x0393: RUN_ENTITY_SCRIPT_BLOCKING(Razzly, script 8, 0x20)
+0x0396: JUMP(0x03A0)
+0x0399: LOAD_ANIMATION( 0x00, ENTITY 5, 269)
+0x039E: LOAD_ANIMATION( 0x01 )
+0x03A0: JUMP(0x03AB)
+0x03A3: IF_CHARACTER_NOT_IN_PARTY_JUMP(1, 0x03AB)
+0x03A8: RUN_ENTITY_SCRIPT_BLOCKING(Kid, script 7, 0x20)
+0x03AB: SET_SCREEN_RGB(2, 10, 45, 65, 45)
+0x03B6: WAIT(60)
+0x03B9: CHARACTER_DIALOG(ENTITY 7, 0x0000, 0x08)
+
+	+-------------------------
+	|They said that they
+	|<"were chased out of the
+	|forest by the humans.">
+	+-------------------------
+	|And they drifted
+	|down to our island...
+	|so the humans are to blame!!!<Close>
+	+-------------------------
+
+0x03BE: WAIT_DIALOG()
+0x03BF: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 9, script 4, 0x20)
+0x03C2: WAIT(15)
+0x03C5: CHARACTER_PLAY_ANIM(ENTITY 9, 12)
+0x03C9: CHARACTER_DIALOG(ENTITY 9, 0x0001, 0x08)
+
+	+-------------------------
+	|Because of you humans, our village,
+	|our friends have been made victims!!!
+	+-------------------------
+	|Why can't humans live in harmony
+	|with nature? Why do you continue
+	|to act the way you do?
+	+-------------------------
+	|Don't you see what the outcome of
+	|your choices will be in the future!?
+	|Why, why...<Close>
+	+-------------------------
+
+0x03CE: WAIT_DIALOG()
+0x03CF: WAIT(45)
+0x03D2: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 10, script 4, 0x20)
+0x03D5: JUMP 0x0567 IF VAR_BIT[Razzly befriended] CLEAR
+0x03DB: opFE6B(0x01)
+0x03DE: CHARACTER_PLAY_ANIM(ENTITY 10, 11)
+0x03E2: CHARACTER_DIALOG(ENTITY 10, 0x0002, 0x08)
+
+	+-------------------------
+	|Razzly, you're a fairy,
+	|so come back to us!
+	|You don't have to be with
+	|those humans!<Close>
+	+-------------------------
+
+0x03E7: WAIT_DIALOG()
+0x03E8: IF_CHARACTER_NOT_IN_PARTY_JUMP(13, 0x048D)
+0x03ED: CHARACTER_PLAY_ANIM(Razzly, 129)
+0x03F1: WAIT_ANIMATION_COMPLETED?(Razzly)
+0x03F3: WAIT(15)
+0x03F6: CHARACTER_DIALOG(Razzly, 0x0003, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sorry...
+	|I can't return to the village.
+	|I'm still a part of the fairies...
+	+-------------------------
+	|But...but...
+	|I'm also friends with Serge
+	|and the others, too. I can't
+	|betray them and go back yet!<Close>
+	+-------------------------
+
+0x03FB: WAIT_DIALOG()
+0x03FC: WAIT(15)
+0x03FF: RUN_ENTITY_SCRIPT_BLOCKING(Razzly, script 10, 0x20)
+0x0402: JUMP 0x042C IF VAR_BIT[Sis.Rosetta Life Lost] CLEAR
+0x0408: CHARACTER_DIALOG(Razzly, 0x0004, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sis...everybody...
+	|I'm sorry all this happened
+	|because of us...<Close>
+	+-------------------------
+
+0x040D: WAIT_DIALOG()
+0x040E: WAIT(15)
+0x0411: CHARACTER_DIALOG(ENTITY 8, 0x0005, 0x04)
+
+	+-------------------------
+	|Razzly...
+	|are you really going?<Close>
+	+-------------------------
+
+0x0416: WAIT_DIALOG()
+0x0417: WAIT(15)
+0x041A: CHARACTER_PLAY_ANIM(Razzly, 128)
+0x041E: WAIT_ANIMATION_COMPLETED?(Razzly)
+0x0420: WAIT(20)
+0x0423: CHARACTER_DIALOG(Razzly, 0x0006, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|...Yes.
+	|Please take care of
+	|Rosetta...
+	+-------------------------
+	|Please bury her on Moon Isle...
+	|so that she may forever watch
+	|over us from above...
+	+-------------------------
+	|I am leaving this
+	|island for a while.
+	|But I will return some day.
+	|Until then, goodbye...<Close>
+	+-------------------------
+
+0x0428: WAIT_DIALOG()
+0x0429: JUMP(0x048A)
+0x042C: CHARACTER_DIALOG(Razzly, 0x0007, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sis, forgive me.
+	|I'm leaving this island...
+	+-------------------------
+	|We've caused so much trouble
+	|for everybody... There's no
+	|way I can stay here now.<Close>
+	+-------------------------
+
+0x0431: WAIT_DIALOG()
+0x0432: CHARACTER_DIALOG(ENTITY 6, 0x0008, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|Wait...<Close>
+	+-------------------------
+
+0x0437: WAIT_DIALOG()
+0x0438: WAIT(15)
+0x043B: CHARACTER_DIALOG(ENTITY 6, 0x0009, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|Give this to Razzly...<Close>
+	+-------------------------
+
+0x0440: WAIT_DIALOG()
+0x0441: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 10, script 5, 0x20)
+0x0444: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 4, 0x20)
+0x0447: CHARACTER_DIALOG(ENTITY 8, 0x000A, 0x08)
+
+	+-------------------------
+	|This is from Rosetta to you...
+	|Take it with you...<Close>
+	+-------------------------
+
+0x044C: WAIT_DIALOG()
+0x044D: SET_VAR_BIT(6178:SisMemo=WindProtection)
+0x0451: RECEIVE_ITEM(0, "Wisp Cape")
+0x0455: var[0x0020] = 173
+0x045B: DIALOG(0x000B, 0x0D)
+
+	+-------------------------
+	|Razzly received
+	|<Color 2><Object 3><Color 0>.<Close>
+	+-------------------------
+
+0x045F: WAIT_DIALOG()
+0x0460: PLAY_SOUNDFX(283, 0)
+0x0466: WAIT(15)
+0x0469: CHARACTER_DIALOG(ENTITY 6, 0x000C, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|This island is your home,
+	|now and forever.
+	+-------------------------
+	|When you have sorted out your
+	|feelings, come back to us.
+	|Your big sis will always be
+	|waiting for you on this island...<Close>
+	+-------------------------
+
+0x046E: WAIT_DIALOG()
+0x046F: WAIT(15)
+0x0472: CHARACTER_DIALOG(Razzly, 0x000D, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sis...<Close>
+	+-------------------------
+
+0x0477: WAIT_DIALOG()
+0x0478: WAIT(30)
+0x047B: CHARACTER_DIALOG(ENTITY 6, 0x000E, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|Dear sirs, please look after
+	|my sister...
+	+-------------------------
+	|Although it is a hard farewell
+	|now, time shall heal the pains
+	|of our wounded hearts.<Close>
+	+-------------------------
+
+0x0480: WAIT_DIALOG()
+0x0481: CHARACTER_PLAY_ANIM(Razzly, 1)
+0x0485: WAIT(8)
+0x0488: FREE_EXTRA_ANIMATION(Razzly)
+0x048A: JUMP(0x052A)
+0x048D: CHARACTER_PLAY_ANIM(ENTITY 5, 129)
+0x0491: WAIT_ANIMATION_COMPLETED?(ENTITY 5)
+0x0493: WAIT(15)
+0x0496: CHARACTER_DIALOG(ENTITY 5, 0x000F, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sorry...
+	|I can't return to the village.
+	|I'm still a part of the fairies...
+	+-------------------------
+	|But...but...
+	|I'm also friends with Serge
+	|and all the others, too. I can't
+	|betray them and go back yet!<Close>
+	+-------------------------
+
+0x049B: WAIT_DIALOG()
+0x049C: WAIT(15)
+0x049F: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 5, script 4, 0x20)
+0x04A2: JUMP 0x04CC IF VAR_BIT[Sis.Rosetta Life Lost] CLEAR
+0x04A8: CHARACTER_DIALOG(ENTITY 5, 0x0010, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sis...everybody...
+	|I'm sorry all this happened
+	|because of us...<Close>
+	+-------------------------
+
+0x04AD: WAIT_DIALOG()
+0x04AE: WAIT(15)
+0x04B1: CHARACTER_DIALOG(ENTITY 8, 0x0011, 0x04)
+
+	+-------------------------
+	|Razzly...
+	|are you really going?<Close>
+	+-------------------------
+
+0x04B6: WAIT_DIALOG()
+0x04B7: WAIT(15)
+0x04BA: CHARACTER_PLAY_ANIM(ENTITY 5, 128)
+0x04BE: WAIT_ANIMATION_COMPLETED?(ENTITY 5)
+0x04C0: WAIT(20)
+0x04C3: CHARACTER_DIALOG(ENTITY 5, 0x0012, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|...Yes.
+	|Please take care of
+	|Rosetta...
+	+-------------------------
+	|Please bury her on Moon Isle...
+	|so that she may forever watch
+	|over us from above...
+	+-------------------------
+	|I am leaving this
+	|island for a while.
+	|But I will return some day.
+	|Until then, goodbye...<Close>
+	+-------------------------
+
+0x04C8: WAIT_DIALOG()
+0x04C9: JUMP(0x052A)
+0x04CC: CHARACTER_DIALOG(ENTITY 5, 0x0013, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sis, forgive me.
+	|I'm leaving this island...
+	+-------------------------
+	|We've caused so much trouble
+	|for everybody... There's no
+	|way I can stay here now.<Close>
+	+-------------------------
+
+0x04D1: WAIT_DIALOG()
+0x04D2: CHARACTER_DIALOG(ENTITY 6, 0x0014, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|Wait...<Close>
+	+-------------------------
+
+0x04D7: WAIT_DIALOG()
+0x04D8: WAIT(15)
+0x04DB: CHARACTER_DIALOG(ENTITY 6, 0x0015, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|Give this to Razzly...<Close>
+	+-------------------------
+
+0x04E0: WAIT_DIALOG()
+0x04E1: RUN_ENTITY_SCRIPT_ASYNC(ENTITY 10, script 5, 0x20)
+0x04E4: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 8, script 4, 0x20)
+0x04E7: CHARACTER_DIALOG(ENTITY 8, 0x0016, 0x08)
+
+	+-------------------------
+	|This is from Rosetta to you...
+	|Take it with you...<Close>
+	+-------------------------
+
+0x04EC: WAIT_DIALOG()
+0x04ED: SET_VAR_BIT(6178:SisMemo=WindProtection)
+0x04F1: RECEIVE_ITEM(0, "Wisp Cape")
+0x04F5: var[0x0020] = 173
+0x04FB: DIALOG(0x0017, 0x0D)
+
+	+-------------------------
+	|Razzly received
+	|<Color 2><Object 3><Color 0>.<Close>
+	+-------------------------
+
+0x04FF: WAIT_DIALOG()
+0x0500: PLAY_SOUNDFX(283, 0)
+0x0506: WAIT(15)
+0x0509: CHARACTER_DIALOG(ENTITY 6, 0x0018, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|This island is your home,
+	|now and forever.
+	+-------------------------
+	|When you have settled your
+	|feelings, come back to us.
+	|Your big sis will always be
+	|waiting for you on this island...<Close>
+	+-------------------------
+
+0x050E: WAIT_DIALOG()
+0x050F: WAIT(15)
+0x0512: CHARACTER_DIALOG(ENTITY 5, 0x0019, 0x08)
+
+	+-------------------------
+	|Razzly:
+	|Sis...<Close>
+	+-------------------------
+
+0x0517: WAIT_DIALOG()
+0x0518: WAIT(30)
+0x051B: CHARACTER_DIALOG(ENTITY 6, 0x001A, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|Dear sirs, please look after
+	|my sister...
+	+-------------------------
+	|Although it is a hard farewell
+	|now, time shall heal the pain
+	|of our wounded hearts.<Close>
+	+-------------------------
+
+0x0520: WAIT_DIALOG()
+0x0521: CHARACTER_PLAY_ANIM(ENTITY 5, 1)
+0x0525: WAIT(8)
+0x0528: FREE_EXTRA_ANIMATION(ENTITY 5)
+0x052A: SET_VAR_BIT(6793:Night at BlueWaterIs.)
+0x052E: WAIT_ONE_FRAME()
+0x052F: CHANGE_FX_VOLUME( 6, 180, 16)
+0x0537: CHANGE_FX_VOLUME( 7, 180, 20)
+0x053F: opFE1D(180, 72)
+0x0545: SET_SCREEN_RGB(2, 255, 255, 255, 135)
+0x0550: WAIT(150)
+0x0553: opFE29(6)
+0x0557: opFE29(7)
+0x055B: opFE02(0)
+0x055F: SET_NEXT_ROOM("CD0-285-Water Dragon Isle (Home)", 6)
+0x0564: JUMP(0x0588)
+0x0567: CHARACTER_PLAY_ANIM(ENTITY 10, 11)
+0x056B: CHARACTER_DIALOG(ENTITY 10, 0x001B, 0x08)
+
+	+-------------------------
+	|You crooks, I hate all you
+	|wicked humans!! Hurry up and
+	|get off this island!<Close>
+	+-------------------------
+
+0x0570: WAIT_DIALOG()
+0x0571: WAIT(15)
+0x0574: IF_CHARACTER_NOT_IN_PARTY_JUMP(1, 0x057F)
+0x0579: RUN_ENTITY_SCRIPT_BLOCKING(Kid, script 9, 0x20)
+0x057C: JUMP(0x0582)
+0x057F: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 4, 0x20)
+0x0582: CHARACTER_DIALOG(ENTITY 6, 0x001C, 0x04)
+
+	+-------------------------
+	|Rosetta:
+	|A very sad tragedy, triggered
+	|by the acts of humans.
+	+-------------------------
+	|We have lost so many of our
+	|people and loved ones.
+	+-------------------------
+	|Although our village has been
+	|saved, no one here thinks
+	|kindly of man...
+	+-------------------------
+	|I am extremely sorry,
+	|but please leave the island
+	|as soon as you can...<Close>
+	+-------------------------
+
+0x0587: WAIT_DIALOG()
+0x0588: FORCE_CHARACTER_DIRECTION(1, Serge)
+0x058C: WAIT(15)
+0x058F: IF_CHARACTER_NOT_IN_PARTY_JUMP(1, 0x059D)
+0x0594: RUN_ENTITY_SCRIPT_BLOCKING(Kid, script 11, 0x20)
+0x0597: TURN_TO_CHARACTER_2(Serge, Kid)
+0x059A: JUMP(0x05A3)
+0x059D: RUN_ENTITY_SCRIPT_BLOCKING(ENTITY 4, script 5, 0x20)
+0x05A0: TURN_TO_CHARACTER_2(Serge, ENTITY 4)
+0x05A3: opFE1D(240, 0)
+0x05A9: CHANGE_FX_VOLUME( 6, 210, 0)
+0x05B1: CHANGE_FX_VOLUME( 7, 210, 0)
+0x05B9: SET_SCREEN_RGB(2, 255, 255, 255, 90)
+0x05C4: WAIT(105)
+0x05C7: IF_CHARACTER_NOT_IN_PARTY_JUMP(1, 0x05D8)
+0x05CC: CHARACTER_PLAY_ANIM(Kid, 1)
+0x05D0: WAIT(8)
+0x05D3: FREE_EXTRA_ANIMATION(Kid)
+0x05D5: JUMP(0x05E1)
+0x05D8: CHARACTER_PLAY_ANIM(ENTITY 4, 1)
+0x05DC: WAIT(8)
+0x05DF: FREE_EXTRA_ANIMATION(ENTITY 4)
+0x05E1: WAIT(60)
+0x05E4: SET_NEXT_ROOM("CD0-295-Water Dragon Isle Campfire SCENE - Kid talks to Serge", 1)
+0x05E9: OP_RETURN()
+---------------------------
+| Sub function 0x05EA
+---------------------------
+0x05EA: DISABLE_CHARACTER_CONTROLS()
+0x05EB: SET_SCREEN_RGB(2, 255, 255, 255, 1)
+0x05F6: opFE11(1)
+0x05FA: SET_CAMERA_POSITION( 0x00, 80, -115, 1)
+0x0605: SET_SCREEN_RGB(2, 0, 0, 0, 30)
+0x0610: WAIT(15)
+0x0613: ENABLE_CHARACTER_CONTROLS(0x00)
+0x0615: OP_RETURN()
+0x0616: 0xE0
+0x0617: 0x1D
+0x0618: 0x00
+0x0619: 0x00
+0x061A: 0xE2
+
+
+---------------------------
+| Entity 12 INIT
+---------------------------
+0x061B: SET_POSITION_UNSIGNED(67, -494, 0)
+0x0623: op8B(75, 300)
+0x0628: JUMP 0x0631 IF VAR_BIT[Ind. Menu Start] CLEAR
+0x062E: JUMP(0x0634)
+0x0631: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x0634: STOP()
+---------------------------
+| Entity 12 UPDATE
+---------------------------
+0x0635: STOP()
+---------------------------
+| Entity 12 ON_ACTION
+---------------------------
+0x0636: DIALOG(0x001E, 0x0D)
+
+	+-------------------------
+	|* DEBUG MENU
+	|      Quit
+	|      Black Wing
+	|      Pos<Close>
+	+-------------------------
+
+0x063A: MULTI_CHOICE( range:1 to 3 )
+0x063C: WAIT_DIALOG()
+0x063D: IF_JUMP(MULTI_CHOICE_RESULT == 1, 0x0648)
+0x0645: JUMP(0x0664)
+0x0648: IF_JUMP(MULTI_CHOICE_RESULT == 2, 0x0656)
+0x0650: CALL(0x679)
+0x0653: JUMP(0x0664)
+0x0656: IF_JUMP(MULTI_CHOICE_RESULT == 3, 0x0664)
+0x065E: CALL(0x666)
+0x0661: JUMP(0x0664)
+0x0664: STOP()
+---------------------------
+| Entity 12 ON_COLLISION
+---------------------------
+0x0665: STOP()
+---------------------------
+| Sub function 0x0666
+---------------------------
+0x0666: SET_CHARACTER_HIDDEN(0x00, ENTITY 13)
+0x0669: SET_CHARACTER_HIDDEN(0x00, ENTITY 14)
+0x066C: SET_CHARACTER_HIDDEN(0x00, ENTITY 15)
+0x066F: SET_CHARACTER_VIEWABLE(0x01, ENTITY 13)
+0x0672: SET_CHARACTER_VIEWABLE(0x01, ENTITY 14)
+0x0675: SET_CHARACTER_VIEWABLE(0x01, ENTITY 15)
+0x0678: OP_RETURN()
+---------------------------
+| Sub function 0x0679
+---------------------------
+0x0679: IF_JUMP(roomVar[0x03] == 0, 0x0695)
+0x0681: roomVar[0x03] = 1
+0x0684: DISABLE_BACKGROUND_LAYER(0)
+0x0687: DISABLE_BACKGROUND_LAYER(1)
+0x068A: DISABLE_BACKGROUND_LAYER(2)
+0x068D: DIALOG(0x001F, 0x0D)
+
+	+-------------------------
+	|* Panel Off<Close>
+	+-------------------------
+
+0x0691: WAIT_DIALOG()
+0x0692: JUMP(0x06A6)
+0x0695: roomVar[0x03] = 0
+0x0698: ENABLE_BACKGROUND_LAYER(0)
+0x069B: ENABLE_BACKGROUND_LAYER(1)
+0x069E: ENABLE_BACKGROUND_LAYER(2)
+0x06A1: DIALOG(0x0020, 0x0D)
+
+	+-------------------------
+	|* Panel On<Close>
+	+-------------------------
+
+0x06A5: WAIT_DIALOG()
+0x06A6: OP_RETURN()
+0x06A7: 0xE0
+0x06A8: 0x21
+0x06A9: 0x00
+0x06AA: 0x00
+0x06AB: 0xE2
+
+
+---------------------------
+| Entity 13 INIT
+---------------------------
+0x06AC: SETUP_NPC(3)
+0x06AF: SET_POSITION_UNSIGNED(-630, -2060, 0)
+0x06B7: SET_ROTATION(3200)
+0x06BA: CALL(0x6E8)
+0x06BD: STOP()
+---------------------------
+| Entity 13 UPDATE
+---------------------------
+0x06BE: STOP()
+---------------------------
+| Entity 13 ON_ACTION
+---------------------------
+0x06BF: STOP()
+
+
+---------------------------
+| Entity 14 INIT
+---------------------------
+0x06C0: SETUP_NPC(3)
+0x06C3: SET_POSITION_UNSIGNED(-746, -2324, 0)
+0x06CB: SET_ROTATION(3310)
+0x06CE: CALL(0x6E8)
+0x06D1: STOP()
+---------------------------
+| Entity 14 UPDATE
+---------------------------
+0x06D2: STOP()
+---------------------------
+| Entity 14 ON_ACTION
+---------------------------
+0x06D3: STOP()
+
+
+---------------------------
+| Entity 15 INIT
+---------------------------
+0x06D4: SETUP_NPC(3)
+0x06D7: SET_POSITION_UNSIGNED(-580, -2561, 0)
+0x06DF: SET_ROTATION(3195)
+0x06E2: CALL(0x6E8)
+0x06E5: STOP()
+---------------------------
+| Entity 15 UPDATE
+---------------------------
+0x06E6: STOP()
+---------------------------
+| Entity 15 ON_ACTION
+---------------------------
+0x06E7: STOP()
+---------------------------
+| Sub function 0x06E8
+---------------------------
+0x06E8: TOGGLE_RECT_COLLISION(0x01)
+0x06EA: op37(0x00)
+0x06EC: TOGGLE_COLLISION(0x01)
+0x06EE: SET_CHARACTER_VIEWABLE(0x00, THIS)
+0x06F1: OP_RETURN()
