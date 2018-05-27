@@ -301,9 +301,7 @@ if( number_of_entity > 0 )
                                 [SP + a4] = w(V1 - 2);
                             }
 
-                            V0 = (hu[struct_138 + e8] + 22) & ffff;
-
-                            if( V0 < 2 )
+                            if( ( (hu[struct_138 + e8] + 22) & ffff ) < 2 )
                             {
                                 if( ( w[struct_138 + 4] & 02000000 ) == 0 )
                                 {
@@ -317,7 +315,7 @@ if( number_of_entity > 0 )
 
                                     A0 = struct_164; // struct_164
                                     A1 = S5 + w[SP + a4] * 4 - 40; // packet_addr
-                                    func1e130(); // update sprite packet
+                                    func1e130(); // update sprite packet 1
 
                                     A0 = SP + 10;
                                     A1 = SP + 98;
@@ -339,82 +337,65 @@ if( number_of_entity > 0 )
                                     A0 = struct_164; // struct_164
                                     A1 = S5 + S0 * 4; // packet_addr
                                     [A0 + 3d] = b(f7);
-                                    func1e130(); // update sprite packet
+                                    func1e130(); // update sprite packet 1
                                 }
                             }
                             else
                             {
                                 [struct_164 + 3d] = b(0);
 
-                                V0 = w[struct_138 + 0004] & 02000000;
-                                if( V0 == 0 )
+                                if( ( w[struct_138 + 4] & 02000000 ) == 0 )
                                 {
-                                    V1 = w[struct_138 + 134];
-                                    if( ( V1 & 0060 ) == 0 )
+                                    if( ( w[struct_138 + 134] & 00000060 ) == 0 )
                                     {
                                         A0 = struct_164;
                                         A1 = struct_138 + fc;
-                                        800758A0	jal    func75198 [$80075198]
+                                        func75198();
 
                                         A0 = struct_164; // struct_164
                                         A1 = S5 + w[SP + a4] * 4; // packet_addr
-                                        func1e130(); // update sprite packet
+                                        func1e130(); // update sprite packet 1
                                     }
                                     else
                                     {
-                                        V0 = V1 >> 05;
-                                        V0 = V0 & 0001;
-                                        if( V0 != 0 )
+                                        if( ( w[struct_138 + 134] >> 5 ) & 1 )
                                         {
                                             A0 = struct_164;
                                             A1 = struct_138 + fc;
-                                            800758D0	jal    func75198 [$80075198]
+                                            func75198();
 
-                                            T1 = w[SP + a8];
-                                            V0 = 55555556;
-                                            800758E4	mult   t1, v0
+                                            [SP + 10] = h(0);
+                                            [SP + 12] = h((h[struct_138 + ee] - (w[SP + a8] / 3) + V0) * 2);
+                                            [SP + 14] = h(0);
+
                                             A0 = SP + 10;
                                             A1 = SP + 98;
                                             A2 = SP + 9c;
-                                            [SP + 0010] = h(0);
-                                            V1 = h[struct_138 + ee];
                                             A3 = SP + a0;
-                                            [SP + 0014] = h(0);
-                                            V0 = T1 >> 1f;
-                                            80075908	mfhi   t1
-                                            V0 = T1 - V0;
-                                            V1 = V1 - V0;
-                                            V1 = V1 << 01;
-                                            [SP + 0012] = h(V1);
                                             system_gte_vector_perspective_transform();
 
-                                            V1 = w[8004f7a4];
-                                            S0 = V0 >> V1;
-                                            V0 = S0 < 2;
-                                            if( V0 == 0 )
+                                            S0 = V0 >> w[8004f7a4];
+                                            if( S0 >= 2 )
                                             {
-                                                8007593C	addiu  s0, s0, $fffe (=-$2)
+                                                S0 = S0 - 2;
                                             }
 
                                             A0 = struct_164;
                                             A2 = h[struct_138 + ee];
                                             A1 = S5 + S0 * 4;
-                                            80075948	jal    func1e18c [$8001e18c]
+                                            func1e18c(); // update sprite packet 3
                                         }
 
-                                        V0 = w[struct_138 + 134];
-                                        V0 = V0 >> 5;
-                                        V0 = V0 & 2;
-                                        if( V0 != 0 )
+                                        if( ( w[struct_138 + 134] >> 5 ) & 2 )
                                         {
                                             A0 = struct_164;
                                             A1 = struct_138 + ff;
-                                            80075968	jal    func75198 [$80075198]
+                                            func75198();
 
                                             A0 = struct_164;
                                             A1 = S5 + w[SP + a4] * 4;
-                                            A2 = h[struct_138 + ee];
-                                            func1e1f8();
+                                            A2 = h[struct_138 + ee]; // z depth?
+                                            func1e1f8(); // update sprite packet 4
                                         }
                                     }
                                 }
@@ -895,4 +876,22 @@ L760d0:	; 800760D0
 [A0 + c] = h(hu[A1 + c]);
 [A0 + e] = h(hu[A1 + e]);
 [A0 + 10] = h(hu[A1 + 10]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func75198()
+
+struct_164 = A0;
+struct_138_fc = A1;
+
+if( h[800b1662] == 0 )
+{
+    A0 = struct_164;
+    A1 = bu[struct_138_fc + 0]; // fc
+    A2 = bu[struct_138_fc + 1]; // fd
+    A3 = bu[struct_138_fc + 2]; // fe
+    func219e0();
+}
 ////////////////////////////////

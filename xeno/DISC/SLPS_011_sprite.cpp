@@ -745,49 +745,39 @@ func1dfe8();
 
 A0 = struct_164;
 A1 = packet_addr;
-func1e264();
+system_sprite_prepare_packet_1();
 
 if( w[struct_164 + 3c] & 00000004 )
 {
     A0 = struct_164;
     A1 = packet_addr;
-    func1e834;
+    system_sprite_prepare_packet_2();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1e18c
-8001E18C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-S1 = A0;
-[SP + 0018] = w(S2);
-S2 = A1;
-[SP + 0010] = w(S0);
-[SP + 001c] = w(RA);
-8001E1A8	jal    func1dfe8 [$8001dfe8]
-S0 = A2;
-A0 = S1;
-A1 = S2;
-8001E1B8	jal    func1ecf8 [$8001ecf8]
-A2 = S0;
-V0 = w[S1 + 003c];
-8001E1C4	nop
-V0 = V0 & 0004;
-8001E1CC	beq    v0, zero, L1e1dc [$8001e1dc]
-A0 = S1;
-8001E1D4	jal    func1e834 [$8001e834]
-A1 = S2;
+// func1e18c()
 
-L1e1dc:	; 8001E1DC
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8001E1F0	jr     ra 
-8001E1F4	nop
+struct_164 = A0;
+packet_addr = A1;
+S0 = A2;
+
+A0 = struct_164;
+func1dfe8();
+
+A0 = struct_164;
+A1 = packet_addr;
+A2 = S0;
+system_sprite_prepare_packet_3();
+
+if( w[struct_164 + 3c] & 00000004 )
+{
+    A0 = struct_164;
+    A1 = packet_addr;
+    system_sprite_prepare_packet_2();
+}
 ////////////////////////////////
 
 
@@ -805,20 +795,20 @@ func1dfe8();
 A0 = struct_164;
 A1 = packet_addr;
 A2 = S0;
-func1f048();
+system_sprite_prepare_packet_4();
 
 if( w[struct_164 + 3c] & 00000004 )
 {
     A0 = struct_164;
     A1 = packet_addr;
-    func1e834();
+    system_sprite_prepare_packet_2();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1e264()
+// system_sprite_prepare_packet_1()
 
 struct_164 = A0;
 packet_addr = A1;
@@ -841,275 +831,242 @@ if( w[struct_164 + ac] & 00000010 )
 
 
 
-if( w[80058c1c] + number_of_tiles * 28 >= w[80058bd0] || number_of_tiles == 0 )
+if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
-    return;
+    if( number_of_tiles != 0 )
+    }
+        tile = 0;
+        add_id = -1;
+
+        L1e324:	; 8001E324
+            V0 = w[tile_data + 14] & 00000007;
+            if( add_id != V0 )
+            {
+                add_id = V0;
+                [SP + 78] = b((hu[8004f19c + add_id * 2] & bu[struct_164 + 3d]) < 1);
+
+                if( ( struct_124 != 0 && ( ( hu[struct_124 + add_id * 8 + 0] == 0 ) || ( h[struct_124 + add_id * 8 + 6] != 0 ) )
+                {
+                    S0 = b[struct_124 + add_id * 8 + 0] << scale;
+                    S1 = b[struct_124 + add_id * 8 + 1] << scale;
+                    if( w[struct_164 + 3c] & 00000008 )
+                    {
+                        S0 = 0 - b[struct_124 + add_id * 8 + 0] << scale;
+                    }
+
+                    S1 = (S1 * h[struct_164 + 2c]) >> c;
+                    S0 = (S0 * h[struct_164 + 2c]) >> c;
+
+                    [SP + 48] = h(hu[struct_124 + add_id * 8 + 2]); // rotation x
+                    [SP + 4a] = h(hu[struct_124 + add_id * 8 + 4]); // rotation y
+                    [SP + 4c] = h(hu[struct_124 + add_id * 8 + 6]); // rotation z
+                    if( w[struct_164 + 3c] & 00000008 )
+                    {
+                        [SP + 4c] = h(0 - hu[struct_124 + add_id * 8 + 6]);
+                    }
+
+                    A0 = SP + 48;
+                    A1 = SP + 28;
+                    system_calculate_rotation_matrix(); // rotaion matrix from rotation angles
+
+                    // translation vector
+                    [SP + 3c] = w(w[struct_b4 + 20] + S0);
+                    [SP + 40] = w(w[struct_b4 + 24] + S1);
+                    [SP + 44] = w(w[struct_b4 + 28]);
+
+                    A0 = struct_b4 + c;
+                    A1 = SP + 28;
+                    func49724();  // multiply 2 matrix and set result as rotation matrix
+
+                    A0 = SP + 28;
+                    system_gte_set_translation_vector();
+                }
+                else
+                {
+                    A0 = struct_b4 + c;
+                    system_gte_set_rotation_matrix();
+
+                    A0 = struct_b4 + c;
+                    system_gte_set_translation_vector();
+                }
+            }
+
+
+
+            if( bu[SP + 78] != 0 )
+            {
+                S0 = w[80058c1c];
+                [80058c1c] = w(S0 + 28);
+
+                [S0 + 3] = b(09);
+                [S0 + 4] = w(w[tile_data + 10]); // 2c808080 - Command + Color Vertex 0
+                [S0 + e] = h(h[tile_data + c]); // clut id
+                [S0 + 16] = h(h[tile_data + a]); // tpage
+
+                x0 = h[tile_data + 0] << scale;
+                y0 = h[tile_data + 2] << scale;
+                width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
+                height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
+
+                if( w[struct_164 + 3c] & 00000008 )
+                {
+                    x0 = 0 - x0;
+                    width = 0 - width;
+                }
+                if( w[struct_164 + 3c] & 00000010 )
+                {
+                    y0 = 0 - y0;
+                    height = 0 - height;
+                }
+
+                if( w[tile_data + 14] & 00000010 ) // flip horizontal <>
+                {
+                    [8004f23c + 00] = h(x0 + width);
+                    [8004f23c + 08] = h(x0);
+                    [8004f23c + 10] = h(x0);
+                    [8004f23c + 18] = h(x0 + width);
+                }
+                else
+                {
+                    [8004f23c + 00] = h(x0);
+                    [8004f23c + 08] = h(x0 + width);
+                    [8004f23c + 10] = h(x0 + width);
+                    [8004f23c + 18] = h(x0);
+                }
+
+                if( w[tile_data + 14] & 00000020 ) // flip vertical
+                {
+                    [8004f23c + 02] = h(y0 + height);
+                    [8004f23c + 0a] = h(y0 + height);
+                    [8004f23c + 12] = h(y0);
+                    [8004f23c + 1a] = h(y0);
+                }
+                else
+                {
+                    [8004f23c + 02] = h(y0);
+                    [8004f23c + 0a] = h(y0);
+                    [8004f23c + 12] = h(y0 + height);
+                    [8004f23c + 1a] = h(y0 + height);
+                }
+
+                [8004f23c + 00] = h(hu[8004f23c + 00] - offset_x);
+                [8004f23c + 08] = h(hu[8004f23c + 08] - offset_x);
+                [8004f23c + 10] = h(hu[8004f23c + 10] - offset_x);
+                [8004f23c + 18] = h(hu[8004f23c + 18] - offset_x);
+                [8004f23c + 02] = h(hu[8004f23c + 02] - offset_y);
+                [8004f23c + 0a] = h(hu[8004f23c + 0a] - offset_y);
+                [8004f23c + 12] = h(hu[8004f23c + 12] - offset_y);
+                [8004f23c + 1a] = h(hu[8004f23c + 1a] - offset_y);
+
+                A0 = 8004f23c + 00; // xyz0
+                A1 = 8004f23c + 08; // xyz1
+                A2 = 8004f23c + 10; // xyz3
+                A3 = 8004f23c + 18; // xyz2
+                A4 = S0 + 08; // xy0
+                A5 = S0 + 10; // xy1
+                A6 = S0 + 20; // xy3
+                A7 = S0 + 18; // xy2
+                A8 = SP + 5c; // Interpolation value for depth queing. (not used)
+                A9 = SP + 60; // return flags (not used)
+                func4a5e4(); // transform 4 points by rotation matrix
+
+
+
+                // set up texture coordinates
+                u0 = bu[tile_data + 4];
+                v0 = bu[tile_data + 5];
+                width = bu[tile_data + 6] - 1;
+                height = bu[tile_data + 7] - 1;
+                if( h[S0 + 20] < h[S0 + 8] ) // x3 < x0
+                {
+                    u0 = u0 - 1;
+                    if( u0 < 0 )
+                    {
+                        u0 = 0;
+                        width = width - 1;
+                    }
+                }
+                [S0 + 0c] = b(u0); // u0
+                [S0 + 0d] = b(v0); // v0
+                [S0 + 14] = b(u0 + width); // u1
+                [S0 + 15] = b(v0); // v1
+                [S0 + 1c] = b(u0); // u2
+                [S0 + 1d] = b(v0 + height); // v2
+                [S0 + 24] = b(u0 + width); // u3
+                [S0 + 25] = b(v0 + height); // v3
+
+
+
+                if( w[struct_164 + 3c] & 00000800 )
+                {
+                    [S0 + 0] = w((w[S0] & ff000000) | (w[packet_addr - add_id * 4] & 00ffffff));
+                    [packet_addr - add_id * 4] = w((w[packet_addr - add_id * 4] & ff000000) | (S0 & 00ffffff));
+                }
+                else
+                {
+                    [S0 + 0] = w((w[S0] & ff000000) | (w[packet_addr] & 00ffffff));
+                    [packet_addr] = w((w[packet_addr] & ff000000) | (S0 & 00ffffff));
+                }
+            }
+
+
+
+            tile_data = tile_data + 18;
+            tile = tile + 1;
+        8001E7F8	bne    tile, number_of_tiles, L1e324 [$8001e324]
+    }
 }
-
-
-
-tile = 0;
-add_id = -1;
-
-L1e324:	; 8001E324
-    V0 = w[tile_data + 14] & 00000007;
-    if( add_id != V0 )
-    {
-        add_id = V0;
-        [SP + 78] = b((hu[8004f19c + add_id * 2] & bu[struct_164 + 3d]) < 1);
-
-        if( ( struct_124 != 0 && ( ( hu[struct_124 + add_id * 8 + 0] == 0 ) || ( h[struct_124 + add_id * 8 + 6] != 0 ) )
-        {
-            S0 = b[struct_124 + add_id * 8 + 0] << scale;
-            S1 = b[struct_124 + add_id * 8 + 1] << scale;
-            if( w[struct_164 + 3c] & 00000008 )
-            {
-                S0 = 0 - b[struct_124 + add_id * 8 + 0] << scale;
-            }
-
-            S1 = (S1 * h[struct_164 + 2c]) >> c;
-            S0 = (S0 * h[struct_164 + 2c]) >> c;
-
-            [SP + 48] = h(hu[struct_124 + add_id * 8 + 2]); // rotation x
-            [SP + 4a] = h(hu[struct_124 + add_id * 8 + 4]); // rotation y
-            [SP + 4c] = h(hu[struct_124 + add_id * 8 + 6]); // rotation z
-            if( w[struct_164 + 3c] & 00000008 )
-            {
-                [SP + 4c] = h(0 - hu[struct_124 + add_id * 8 + 6]);
-            }
-
-            A0 = SP + 48;
-            A1 = SP + 28;
-            system_calculate_rotation_matrix(); // rotaion matrix from rotation angles
-
-            // translation vector
-            [SP + 3c] = w(w[struct_b4 + 20] + S0);
-            [SP + 40] = w(w[struct_b4 + 24] + S1);
-            [SP + 44] = w(w[struct_b4 + 28]);
-
-            A0 = struct_b4 + c;
-            A1 = SP + 28;
-            func49724();  // multiply 2 matrix and set result as rotation matrix
-
-            A0 = SP + 28;
-            system_gte_set_translation_vector();
-        }
-        else
-        {
-            A0 = struct_b4 + c;
-            system_gte_set_rotation_matrix();
-
-            A0 = struct_b4 + c;
-            system_gte_set_translation_vector();
-        }
-    }
-
-
-
-    if( bu[SP + 78] != 0 )
-    {
-        S0 = w[80058c1c];
-        [80058c1c] = w(S0 + 28);
-
-        [S0 + 3] = b(09);
-        [S0 + 4] = w(w[tile_data + 10]); // 2c808080 - Command + Color Vertex 0
-        [S0 + e] = h(h[tile_data + c]); // clut id
-        [S0 + 16] = h(h[tile_data + a]); // tpage
-
-        x0 = h[tile_data + 0] << scale;
-        y0 = h[tile_data + 2] << scale;
-        width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
-        height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
-
-        if( w[struct_164 + 3c] & 00000008 )
-        {
-            x0 = 0 - x0;
-            width = 0 - width;
-        }
-        if( w[struct_164 + 3c] & 00000010 )
-        {
-            y0 = 0 - y0;
-            height = 0 - height;
-        }
-
-        if( ( w[tile_data + 14] & 00000010 ) == 0 ) // flip horizontal <>
-        {
-            [8004f23c + 00] = h(x0);
-            [8004f23c + 08] = h(x0 + width);
-            [8004f23c + 10] = h(x0 + width);
-            [8004f23c + 18] = h(x0);
-        }
-        else
-        {
-            [8004f23c + 00] = h(x0 + width);
-            [8004f23c + 08] = h(x0);
-            [8004f23c + 10] = h(x0);
-            [8004f23c + 18] = h(x0 + width);
-        }
-
-        if( ( w[tile_data + 14] & 00000020 ) == 0 ) // flip vertical
-        {
-            [8004f23c + 02] = h(y0);
-            [8004f23c + 0a] = h(y0);
-            [8004f23c + 12] = h(y0 + height);
-            [8004f23c + 1a] = h(y0 + height);
-        }
-        else
-        {
-            [8004f23c + 02] = h(y0 + height);
-            [8004f23c + 0a] = h(y0 + height);
-            [8004f23c + 12] = h(y0);
-            [8004f23c + 1a] = h(y0);
-        }
-
-        [8004f23c + 00] = h(hu[8004f23c + 00] - offset_x);
-        [8004f23c + 08] = h(hu[8004f23c + 08] - offset_x);
-        [8004f23c + 10] = h(hu[8004f23c + 10] - offset_x);
-        [8004f23c + 18] = h(hu[8004f23c + 18] - offset_x);
-        [8004f23c + 02] = h(hu[8004f23c + 02] - offset_y);
-        [8004f23c + 0a] = h(hu[8004f23c + 0a] - offset_y);
-        [8004f23c + 12] = h(hu[8004f23c + 12] - offset_y);
-        [8004f23c + 1a] = h(hu[8004f23c + 1a] - offset_y);
-
-        A0 = 8004f23c + 00; // xyz0
-        A1 = 8004f23c + 08; // xyz1
-        A2 = 8004f23c + 10; // xyz3
-        A3 = 8004f23c + 18; // xyz2
-        A4 = S0 + 08; // xy0
-        A5 = S0 + 10; // xy1
-        A6 = S0 + 20; // xy3
-        A7 = S0 + 18; // xy2
-        A8 = SP + 5c; // Interpolation value for depth queing. (not used)
-        A9 = SP + 60; // return flags (not used)
-        func4a5e4(); // transform 4 points by rotation matrix
-
-
-
-        // set up texture coordinates
-        u0 = bu[tile_data + 4];
-        v0 = bu[tile_data + 5];
-        width = bu[tile_data + 6] - 1;
-        height = bu[tile_data + 7] - 1;
-        if( h[S0 + 20] < h[S0 + 8] ) // x3 < x0
-        {
-            u0 = u0 - 1;
-            if( u0 < 0 )
-            {
-                u0 = 0;
-                width = width - 1;
-            }
-        }
-        [S0 + 0c] = b(u0); // u0
-        [S0 + 0d] = b(v0); // v0
-        [S0 + 14] = b(u0 + width); // u1
-        [S0 + 15] = b(v0); // v1
-        [S0 + 1c] = b(u0); // u2
-        [S0 + 1d] = b(v0 + height); // v2
-        [S0 + 24] = b(u0 + width); // u3
-        [S0 + 25] = b(v0 + height); // v3
-
-
-
-        if( w[struct_164 + 3c] & 00000800 )
-        {
-            [S0 + 0] = w((w[S0] & ff000000) | (w[packet_addr - add_id * 4] & 00ffffff));
-            [packet_addr - add_id * 4] = w((w[packet_addr - add_id * 4] & ff000000) | (S0 & 00ffffff));
-        }
-        else
-        {
-            [S0 + 0] = w((w[S0] & ff000000) | (w[packet_addr] & 00ffffff));
-            [packet_addr] = w((w[packet_addr] & ff000000) | (S0 & 00ffffff));
-        }
-    }
-
-
-
-    tile_data = tile_data + 18;
-    tile = tile + 1;
-8001E7F8	bne    tile, number_of_tiles, L1e324 [$8001e324]
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1e834
-8001E834	addiu  sp, sp, $ff60 (=-$a0)
-[SP + 0084] = w(S3);
+// system_sprite_prepare_packet_2()
+
 S3 = A0;
-[SP + 0094] = w(S7);
 S7 = A1;
-[SP + 007c] = w(S1);
-8001E84C	lui    s1, $8005
-8001E850	addiu  s1, s1, $f25c (=-$da4)
-[SP + 009c] = w(RA);
-[SP + 0098] = w(FP);
-[SP + 0090] = w(S6);
-[SP + 008c] = w(S5);
-[SP + 0088] = w(S4);
-[SP + 0080] = w(S2);
-[SP + 0078] = w(S0);
-V0 = w[S1 + 0000];
-V1 = w[S1 + 0004];
-A0 = w[S1 + 0008];
-A1 = w[S1 + 000c];
-[SP + 0028] = w(V0);
-[SP + 002c] = w(V1);
-[SP + 0030] = w(A0);
-[SP + 0034] = w(A1);
-V0 = w[S1 + 0010];
-V1 = w[S1 + 0014];
-A0 = w[S1 + 0018];
-A1 = w[S1 + 001c];
-[SP + 0038] = w(V0);
-[SP + 003c] = w(V1);
-[SP + 0040] = w(A0);
-[SP + 0044] = w(A1);
-V0 = h[S3 + 0002];
-8001E8B4	nop
-[SP + 0048] = h(V0);
-V0 = h[S3 + 0006];
-8001E8C0	nop
-[SP + 004a] = h(V0);
-V0 = h[S3 + 000a];
-S0 = SP + 0028;
-[SP + 004c] = h(V0);
-V0 = h[S3 + 002c];
-A0 = S0;
 
-L1e8dc:	; 8001E8DC
-[SP + 0060] = w(V0);
-V1 = hu[S3 + 002c];
-A1 = SP + 0060;
-[SP + 0068] = w(0);
-V1 = V1 << 10;
-V0 = V1 >> 10;
-V1 = V1 >> 1f;
-V0 = V0 + V1;
-V0 = V0 >> 01;
+S1 = 8004f25c;
+
+[SP + 28] = w(w[S1 + 0]);
+[SP + 2c] = w(w[S1 + 4]);
+[SP + 30] = w(w[S1 + 8]);
+[SP + 34] = w(w[S1 + c]);
+[SP + 38] = w(w[S1 + 10]);
+[SP + 3c] = w(w[S1 + 14]);
+[SP + 40] = w(w[S1 + 18]);
+[SP + 44] = w(w[S1 + 1c]);
+
+[SP + 48] = h(h[S3 + 2]);
+[SP + 4a] = h(h[S3 + 6]);
+[SP + 4c] = h(h[S3 + a]);
+
+[SP + 60] = w(h[S3 + 2c]);
+[SP + 64] = w(h[S3 + 2c] / 2);
+[SP + 68] = w(0);
+
+A0 = SP + 28;
+A1 = SP + 60;
 8001E900	jal    func495f4 [$800495f4]
-[SP + 0064] = w(V0);
+
+[SP + 4a] = h(hu[S3 + 84]);
+
 A0 = S1;
-A1 = SP + 0048;
-V0 = hu[S3 + 0084];
-A2 = SP + 0050;
-8001E918	jal    system_gte_apply_matrix [$80049b94]
-[SP + 004a] = h(V0);
-A0 = S0;
-V0 = w[SP + 003c];
-V1 = w[SP + 0050];
-A1 = w[SP + 0054];
-A2 = w[SP + 0058];
-V0 = V0 + V1;
-[SP + 003c] = w(V0);
-V0 = w[SP + 0040];
-V1 = w[SP + 0044];
-V0 = V0 + A1;
-V1 = V1 + A2;
-[SP + 0040] = w(V0);
-8001E950	jal    system_gte_set_rotation_matrix [$80049da4]
-[SP + 0044] = w(V1);
-8001E958	jal    system_gte_set_translation_vector [$80049e34]
-A0 = S0;
+A1 = SP + 48;
+A2 = SP + 50;
+system_gte_apply_matrix();
+
+[SP + 3c] = w(w[SP + 3c] + w[SP + 50]);
+[SP + 40] = w(w[SP + 40] + w[SP + 54]);
+[SP + 44] = w(w[SP + 44] + w[SP + 58]);
+
+A0 = SP + 28;
+system_gte_set_rotation_matrix();
+
+A0 = SP + 28;
+system_gte_set_translation_vector();
+
+
 V0 = w[S3 + 0040];
 V1 = w[80058c1c];
 V0 = V0 >> 02;
@@ -1120,247 +1077,179 @@ V0 = V0 << 03;
 V0 = V0 + V1;
 V1 = w[80058bd0];
 A0 = w[S3 + 0020];
-V0 = V0 < V1;
-V1 = w[A0 + 0030];
-8001E998	beq    v0, zero, L1eca4 [$8001eca4]
-8001E99C	addiu  s6, zero, $ffff (=-$1)
-8001E9A0	beq    a1, zero, L1eca4 [$8001eca4]
-S5 = 0;
-8001E9A8	lui    s2, $8005
-8001E9AC	addiu  s2, s2, $f17c (=-$e84)
-S4 = S2 + 0014;
-S1 = V1;
 
-L1e9b8:	; 8001E9B8
-T4 = w[S1 + 0014];
-8001E9BC	nop
-V0 = T4 & 0007;
-8001E9C4	beq    s6, v0, L1e9f4 [$8001e9f4]
-8001E9C8	nop
-S6 = V0;
-V0 = S6 << 01;
-8001E9D4	lui    at, $8005
-AT = AT + V0;
-V0 = hu[AT + f19c];
-V1 = bu[S3 + 003d];
-8001E9E4	nop
-V0 = V0 & V1;
-V0 = V0 < 0001;
-FP = V0;
+if( V0 < V1 )
+{
+    if( A1 != 0 )
+    {
+        V1 = w[A0 + 30];
+        S6 = -1;
+        S5 = 0;
+        S2 = 8004f17c;
+        S4 = S2 + 14;
+        S1 = V1;
 
-L1e9f4:	; 8001E9F4
-V0 = FP & 00ff;
-8001E9F8	beq    v0, zero, L1ec8c [$8001ec8c]
-8001E9FC	nop
-V0 = bu[S1 + 0008];
-A1 = bu[S1 + 0009];
-A0 = bu[S1 + 0006];
-V1 = w[S3 + 0040];
-V0 = V0 << 18;
-V0 = V0 >> 18;
-A1 = A1 << 18;
-A1 = A1 >> 18;
-V0 = V0 + A0;
-V1 = V1 >> 08;
-V1 = V1 & 001f;
-T1 = V0 << V1;
-V0 = bu[S1 + 0007];
-T0 = T1;
-V0 = V0 + A1;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-T3 = V0 << V1;
-V0 = h[S1 + 0000];
-T2 = T3;
-A2 = V0 << V1;
-V0 = h[S1 + 0002];
-A0 = A2;
-A3 = V0 << V1;
-V1 = w[S3 + 003c];
-8001EA64	nop
-V0 = V1 & 0008;
-8001EA6C	beq    v0, zero, L1ea7c [$8001ea7c]
-A1 = A3;
-T0 = 0 - T1;
-A0 = 0 - A2;
+        L1e9b8:	; 8001E9B8
+            T4 = w[S1 + 14];
+            V0 = T4 & 0007;
+            8001E9C4	beq    s6, v0, L1e9f4 [$8001e9f4]
 
-L1ea7c:	; 8001EA7C
-V1 = V1 >> 04;
-V1 = V1 & 0001;
-V0 = T4 >> 05;
-V0 = V0 & 0001;
-8001EA8C	beq    v1, v0, L1ea9c [$8001ea9c]
-V0 = T4 & 0010;
-T2 = 0 - T3;
-A1 = 0 - A3;
+            S6 = V0;
+            V0 = hu[8004f19c + S6 * 2];
+            V1 = bu[S3 + 003d];
+            8001E9E4	nop
+            V0 = V0 & V1;
+            V0 = V0 < 0001;
+            FP = V0;
 
-L1ea9c:	; 8001EA9C
-8001EA9C	bne    v0, zero, L1eab8 [$8001eab8]
-V0 = A0 + T0;
-[S2 + 0000] = h(A0);
-[S2 + 0008] = h(V0);
-[S2 + 0010] = h(V0);
-8001EAB0	j      L1eac8 [$8001eac8]
-[S2 + 0018] = h(A0);
+            L1e9f4:	; 8001E9F4
+            V0 = FP & 00ff;
+            8001E9F8	beq    v0, zero, L1ec8c [$8001ec8c]
+            8001E9FC	nop
+            V0 = bu[S1 + 0008];
+            A1 = bu[S1 + 0009];
+            A0 = bu[S1 + 0006];
+            V1 = w[S3 + 0040];
+            V0 = V0 << 18;
+            V0 = V0 >> 18;
+            A1 = A1 << 18;
+            A1 = A1 >> 18;
+            V0 = V0 + A0;
+            V1 = V1 >> 08;
+            V1 = V1 & 001f;
+            T1 = V0 << V1;
+            V0 = bu[S1 + 0007];
+            T0 = T1;
+            V0 = V0 + A1;
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
+            T3 = V0 << V1;
+            V0 = h[S1 + 0000];
+            T2 = T3;
+            A2 = V0 << V1;
+            V0 = h[S1 + 0002];
+            A0 = A2;
+            A3 = V0 << V1;
+            V1 = w[S3 + 003c];
+            8001EA64	nop
+            V0 = V1 & 0008;
+            8001EA6C	beq    v0, zero, L1ea7c [$8001ea7c]
+            A1 = A3;
+            T0 = 0 - T1;
+            A0 = 0 - A2;
 
-L1eab8:	; 8001EAB8
-[S2 + 0000] = h(V0);
-[S2 + 0008] = h(A0);
-[S2 + 0010] = h(A0);
-[S2 + 0018] = h(V0);
+            L1ea7c:	; 8001EA7C
+            V1 = V1 >> 04;
+            V1 = V1 & 0001;
+            V0 = T4 >> 05;
+            V0 = V0 & 0001;
+            8001EA8C	beq    v1, v0, L1ea9c [$8001ea9c]
+            V0 = T4 & 0010;
+            T2 = 0 - T3;
+            A1 = 0 - A3;
 
-L1eac8:	; 8001EAC8
-V0 = w[S1 + 0014];
-8001EACC	nop
-V0 = V0 & 0020;
-8001EAD4	bne    v0, zero, L1eaf0 [$8001eaf0]
-V0 = A1 + T2;
-[S4 + 0000] = h(V0);
-[S4 + 0008] = h(V0);
-[S4 + fff0] = h(A1);
-8001EAE8	j      L1eb00 [$8001eb00]
-[S4 + fff8] = h(A1);
+            L1ea9c:	; 8001EA9C
+            8001EA9C	bne    v0, zero, L1eab8 [$8001eab8]
+            V0 = A0 + T0;
+            [S2 + 0000] = h(A0);
+            [S2 + 0008] = h(V0);
+            [S2 + 0010] = h(V0);
+            8001EAB0	j      L1eac8 [$8001eac8]
+            [S2 + 0018] = h(A0);
 
-L1eaf0:	; 8001EAF0
-[S4 + 0000] = h(A1);
-[S4 + 0008] = h(A1);
-[S4 + fff0] = h(V0);
-[S4 + fff8] = h(V0);
+            L1eab8:	; 8001EAB8
+            [S2 + 0000] = h(V0);
+            [S2 + 0008] = h(A0);
+            [S2 + 0010] = h(A0);
+            [S2 + 0018] = h(V0);
 
-L1eb00:	; 8001EB00
-A0 = S2;
-A1 = S2 + 0008;
-A2 = S2 + 0010;
-S0 = w[80058c1c];
-A3 = S2 + 0018;
-V0 = S0 + 0028;
-[80058c1c] = w(V0);
-V0 = 0009;
-[S0 + 0003] = b(V0);
-V0 = 002c;
-[S0 + 0007] = b(V0);
-V0 = S0 + 0008;
-[S0 + 0004] = b(0);
-[S0 + 0005] = b(0);
-[S0 + 0006] = b(0);
-[SP + 0010] = w(V0);
-V0 = S0 + 0010;
-[SP + 0014] = w(V0);
-V0 = S0 + 0020;
-[SP + 0018] = w(V0);
-V0 = S0 + 0018;
-[SP + 001c] = w(V0);
-V0 = SP + 0070;
-[SP + 0020] = w(V0);
-V0 = SP + 0074;
-8001EB6C	jal    func4a664 [$8004a664]
-[SP + 0024] = w(V0);
-V0 = hu[S0 + 000a];
-V1 = hu[S0 + 0012];
-A0 = hu[S0 + 0022];
-V0 = V0 + V1;
-V0 = V0 << 10;
-V1 = V0 >> 10;
-V0 = V0 >> 1f;
-V1 = V1 + V0;
-V0 = hu[S0 + 001a];
-A1 = V1 >> 01;
-[S0 + 0012] = h(A1);
-[S0 + 000a] = h(A1);
-V0 = V0 + A0;
-V0 = V0 << 10;
-V1 = V0 >> 10;
-V0 = V0 >> 1f;
-V1 = V1 + V0;
-A1 = V1 >> 01;
-[S0 + 0022] = h(A1);
-[S0 + 001a] = h(A1);
-V0 = hu[S1 + 000a];
-8001EBC8	nop
-[S0 + 0016] = h(V0);
-V0 = hu[S1 + 000c];
-8001EBD4	nop
-[S0 + 000e] = h(V0);
-V0 = bu[S1 + 0004];
-8001EBE0	nop
-[S0 + 000c] = b(V0);
-V0 = bu[S1 + 0005];
-8001EBEC	nop
-[S0 + 000d] = b(V0);
-V0 = bu[S1 + 0004];
-V1 = bu[S1 + 0006];
-V0 = V0 + 00ff;
-V0 = V0 + V1;
-[S0 + 0014] = b(V0);
-V0 = bu[S1 + 0005];
-8001EC0C	lui    a1, $00ff
-[S0 + 0015] = b(V0);
-V0 = bu[S1 + 0004];
+            L1eac8:	; 8001EAC8
+            V0 = ;
+            V0 = w[S1 + 14] & 00000020;
+            8001EAD4	bne    v0, zero, L1eaf0 [$8001eaf0]
+            V0 = A1 + T2;
+            [S4 + 0000] = h(V0);
+            [S4 + 0008] = h(V0);
+            [S4 - 10] = h(A1);
+            [S4 - 8] = h(A1);
+            8001EAE8	j      L1eb00 [$8001eb00]
 
-L1ec18:	; 8001EC18
-A1 = A1 | ffff;
-[S0 + 001c] = b(V0);
-V0 = bu[S1 + 0005];
-V1 = bu[S1 + 0007];
-V0 = V0 + 00ff;
-V0 = V0 + V1;
-[S0 + 001d] = b(V0);
-V0 = bu[S1 + 0004];
-V1 = bu[S1 + 0006];
-V0 = V0 + 00ff;
+            L1eaf0:	; 8001EAF0
+            [S4 + 0000] = h(A1);
+            [S4 + 0008] = h(A1);
+            [S4 - 10] = h(V0);
+            [S4 - 8] = h(V0);
 
-L1ec40:	; 8001EC40
-V0 = V0 + V1;
-[S0 + 0024] = b(V0);
-V0 = bu[S1 + 0005];
-V1 = bu[S1 + 0007];
-V0 = V0 + 00ff;
-V0 = V0 + V1;
-V1 = w[S0 + 0000];
-8001EC5C	lui    a0, $ff00
-[S0 + 0025] = b(V0);
-V0 = w[S7 + 0000];
-V1 = V1 & A0;
-V0 = V0 & A1;
-V1 = V1 | V0;
-[S0 + 0000] = w(V1);
-V0 = w[S7 + 0000];
-S0 = S0 & A1;
-V0 = V0 & A0;
-V0 = V0 | S0;
-[S7 + 0000] = w(V0);
+            L1eb00:	; 8001EB00
+            A0 = S2;
+            A1 = S2 + 0008;
+            A2 = S2 + 0010;
+            S0 = w[80058c1c];
+            A3 = S2 + 0018;
+            [80058c1c] = w(S0 + 0028);
+            [S0 + 0003] = b(09);
+            [S0 + 0007] = b(2с);
+            [S0 + 0004] = b(0);
+            [S0 + 0005] = b(0);
+            [S0 + 0006] = b(0);
+            [SP + 0010] = w(S0 + 0008);
+            [SP + 0014] = w(S0 + 0010);
+            [SP + 0018] = w(S0 + 0020);
+            [SP + 001c] = w(S0 + 0018);
+            [SP + 0020] = w(SP + 0070);
+            [SP + 0024] = w(SP + 0074);
+            8001EB6C	jal    func4a664 [$8004a664]
 
-L1ec8c:	; 8001EC8C
-V0 = w[S3 + 0040];
-S5 = S5 + 0001;
-V0 = V0 >> 02;
-V0 = V0 & 003f;
-8001EC9C	bne    s5, v0, L1e9b8 [$8001e9b8]
-S1 = S1 + 0018;
+            V0 = hu[S0 + 000a];
+            V1 = hu[S0 + 0012];
+            A0 = hu[S0 + 0022];
+            V0 = V0 + V1;
+            V0 = V0 << 10;
+            V1 = V0 >> 10;
+            V0 = V0 >> 1f;
+            V1 = V1 + V0;
+            V0 = hu[S0 + 001a];
+            A1 = V1 >> 01;
+            [S0 + 0012] = h(A1);
+            [S0 + 000a] = h(A1);
+            V0 = V0 + A0;
+            V0 = V0 << 10;
+            V1 = V0 >> 10;
+            V0 = V0 >> 1f;
+            V1 = V1 + V0;
+            A1 = V1 >> 01;
+            [S0 + 22] = h(A1);
+            [S0 + 1a] = h(A1);
 
-L1eca4:	; 8001ECA4
-RA = w[SP + 009c];
-FP = w[SP + 0098];
-S7 = w[SP + 0094];
-S6 = w[SP + 0090];
-S5 = w[SP + 008c];
-S4 = w[SP + 0088];
-S3 = w[SP + 0084];
-S2 = w[SP + 0080];
-S1 = w[SP + 007c];
-S0 = w[SP + 0078];
-SP = SP + 00a0;
-8001ECD0	jr     ra 
-8001ECD4	nop
+            [S0 + e] = h(hu[S1 + c]);
+            [S0 + c] = b(bu[S1 + 4]);
+            [S0 + d] = b(bu[S1 + 5]);
+            [S0 + 14] = b(bu[S1 + 4] + ff + bu[S1 + 6]);
+            [S0 + 15] = b(bu[S1 + 5]);
+            [S0 + 16] = h(hu[S1 + a]);
+            [S0 + 1c] = b(bu[S1 + 4]);
+            [S0 + 1d] = b(bu[S1 + 5] + ff + bu[S1 + 7]);
+            [S0 + 24] = b(bu[S1 + 4] + ff + bu[S1 + 6]);
+            [S0 + 25] = b(bu[S1 + 5] + ff + bu[S1 + 7]);
+
+            [S0 + 0] = w((w[S0 + 0] & ff000000) | (w[S7 + 0] & 00ffffff));
+            [S7 + 0] = w((w[S7 + 0] & ff000000) | (S0 & 00ffffff));
+
+            L1ec8c:	; 8001EC8C
+            S5 = S5 + 0001;
+            V0 = (w[S3 + 40] >> 2) & 003f;
+            S1 = S1 + 0018;
+        8001EC9C	bne    s5, v0, L1e9b8 [$8001e9b8]
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1ecd8
-V0 = hu[A0 + 0000];
-8001ECDC	jr     ra 
-V0 = V0 >> 0f;
+// func1ecd8()
+
+return hu[A0 + 0000] >> f;
 ////////////////////////////////
 
 
@@ -1374,7 +1263,7 @@ return (hu[A0 + 3] >> 9) & 3f;
 
 
 ////////////////////////////////
-// func1ecf8()
+// system_sprite_prepare_packet_3()
 
 S6 = A0;
 V1 = w[S6 + 0040];
@@ -1597,196 +1486,170 @@ L1f014:	; 8001F014
 
 
 ////////////////////////////////
-// func1f048()
+// system_sprite_prepare_packet_4()
 
-S6 = A0;
-V1 = w[struct_164 + 40];
-packet_addr = T1 = A1;
-V0 = V1 >> 8;
-V0 = V0 & 1f;
-S7 = A2 << V0;
-V1 = V1 >> 2;
-A1 = V1 & 3f;
-V0 = A1 << 2;
-V0 = V0 + A1;
-A0 = w[struct_164 + 20];
+struct_164 = A0;
+packet_addr = A1;
 
-if( ( w[80058c1c] + V0 * 8 ) < w[80058bd0] )
+number_of_tiles = (w[struct_164 + 40] >> 2) & 3f;
+scale = (w[struct_164 + 40] >> 8) & 1f;
+S7 = A2 << scale;
+
+if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
-    if( A1 != 0 )
+    if( number_of_tiles != 0 )
     {
-        V1 = w[A0 + 30];
-        FP = 0;
-        S4 = 8004f23c;
-        S5 = S4 + 2;
-        S3 = V1;
+        A0 = w[struct_164 + 20];
+        tile = 0;
+        tile_data = w[A0 + 30];
 
         L1f0e0:	; 8001F0E0
             S2 = w[80058c1c];
             [80058c1c] = w(S2 + 28);
 
             [S2 + 3] = b(09);
-            [S2 + 4] = w(w[S3 + 10]);
-            [S2 + 16] = h(hu[S3 + a]);
-            [S2 + e] = h(hu[S3 + c]);
+            [S2 + 4] = w(w[tile_data + 10]); // 2c808080 - Command + Color Vertex 0
+            [S2 + e] = h(hu[tile_data + c]); // clut id
+            [S2 + 16] = h(hu[tile_data + a]); // tpage
 
-            A2 = h[S3 + 0];
-            V1 = bu[S3 + 6];
-            A1 = h[S3 + 2];
-            A0 = bu[S3 + 7];
-            A3 = V1 + b[S3 + 8];
-            V1 = b[S3 + 9];
-            S0 = A0 + V1;
-            V0 = w[struct_164 + 40] >> 8;
-            V0 = V0 & 1f;
-            A3 = A3 << V0;
-            S0 = S0 << V0;
-            A2 = A2 << V0;
-            A1 = A1 << V0;
+            x0 = h[tile_data + 0] << scale;
+            y0 = h[tile_data + 2] << scale;
+            width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
+            height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
 
-            V1 = w[struct_164 + 3c];
-            if( V1 & 8 )
+            if( w[struct_164 + 3c] & 00000008 )
             {
-                A3 = 0 - A3;
-                A2 = 0 - A2;
+                x0 = 0 - x0;
+                width = 0 - width;
             }
-            if( V1 & 10 )
+            if( w[struct_164 + 3c] & 00000010 )
             {
-                S0 = 0 - S0;
-                A1 = 0 - A1;
+                y0 = 0 - y0;
+                height = 0 - height;
             }
 
-            if( w[S3 + 14] & 10 )
+            if( w[tile_data + 14] & 00000010 )
             {
-                [S4 + 0] = h(A2 + A3);
-                [S4 + 8] = h(A2);
-                [S4 + 10] = h(A2);
-                [S4 + 18] = h(A2 + A3);
+                [8004f23c + 00] = h(x0 + width);
+                [8004f23c + 08] = h(x0);
+                [8004f23c + 10] = h(x0);
+                [8004f23c + 18] = h(x0 + width);
             }
             else
             {
-                [S4 + 0] = h(A2);
-                [S4 + 8] = h(A2 + A3);
-                [S4 + 10] = h(A2 + A3);
-                [S4 + 18] = h(A2);
+                [8004f23c + 00] = h(x0);
+                [8004f23c + 08] = h(x0 + width);
+                [8004f23c + 10] = h(x0 + width);
+                [8004f23c + 18] = h(x0);
             }
 
-            if( S0 > 0 )
+            if( height > 0 )
             {
-                V1 = A1;
-                V0 = A1 + S0;
+                V1 = y0;
+                V0 = y0 + height;
             }
             else
             {
-                V1 = A1 + S0;
-                V0 = A1;
+                V1 = y0 + height;
+                V0 = y0;
             }
 
             if( V0 >= S7 )
             {
-                S1 = 0;
-                V0 = V1 < S7;
-                if( V0 != 0 )
+                if( V1 < S7 )
                 {
                     S1 = S7 - V1;
                 }
-
-                if( S0 > 0 )
+                else
                 {
-                    A1 = A1 + S1;
-                    S0 = S0 - S1;
+                    S1 = 0;
+                }
+
+                if( height > 0 )
+                {
+                    y0 = y0 + S1;
+                    height = height - S1;
                 }
                 else
                 {
-                    A1 = A1 + S1;
-                    S0 = S0 + S1;
+                    y0 = y0 + S1;
+                    height = height + S1;
                 }
 
-                if( w[S3 + 14] & 20 )
+                if( w[tile_data + 14] & 00000020 )
                 {
-                    [S5 + 0] = h(A1 + S0);
-                    [S5 + 8] = h(A1 + S0);
-                    [S5 + 10] = h(A1);
-                    [S5 + 18] = h(A1);
+                    [8004f23c + 2] = h(y0 + height);
+                    [8004f23c + a] = h(y0 + height);
+                    [8004f23c + 12] = h(y0);
+                    [8004f23c + 1a] = h(y0);
                 }
                 else
                 {
-                    [S5 + 0] = h(A1);
-                    [S5 + 8] = h(A1);
-                    [S5 + 10] = h(A1 + S0);
-                    [S5 + 18] = h(A1 + S0);
+                    [8004f23c + 2] = h(y0);
+                    [8004f23c + a] = h(y0);
+                    [8004f23c + 12] = h(y0 + height);
+                    [8004f23c + 1a] = h(y0 + height);
                 }
 
-                A0 = S4;
-                A1 = S4 + 8;
-                A2 = S4 + 10;
-                A3 = S4 + 18;
-                [SP + 10] = w(S2 + 8);
-                [SP + 14] = w(S2 + 10);
-                [SP + 18] = w(S2 + 20);
-                [SP + 1c] = w(S2 + 18);
-                [SP + 20] = w(SP + 28);
-                [SP + 24] = w(SP + 2c);
-                [SP + 30] = w(T1);
+                A0 = 8004f23c + 00; // xyz0
+                A1 = 8004f23c + 08; // xyz1
+                A2 = 8004f23c + 10; // xyz3
+                A3 = 8004f23c + 18; // xyz2
+                A4 = S2 + 08; // xy0
+                A5 = S2 + 10; // xy1
+                A6 = S2 + 20; // xy3
+                A7 = S2 + 18; // xy2
+                A8 = SP + 28; // Interpolation value for depth queing. (not used)
+                A9 = SP + 2c; // return flags (not used)
+                // transform 4 points by rotation matrix
                 8001F288	jal    func4a664 [$8004a664]
 
-                T1 = w[SP + 30];
-                V0 = (w[struct_164 + 40] >> 8) & 1f;
-                S1 = S1 >> V0;
+                S1 = S1 >> scale;
 
-                if( S0 > 0 )
+                if( height > 0 )
                 {
-                    T0 = bu[S3 + 7];
-                    A1 = bu[S3 + 5] + S1;
+                    height = bu[tile_data + 7];
+                    v0 = bu[tile_data + 5] + S1;
                 }
                 else
                 {
-                    T0 = bu[S3 + 7];
-                    A1 = bu[S3 + 5] - S1;
+                    height = bu[tile_data + 7];
+                    v0 = bu[tile_data + 5] - S1;
                 }
 
-                u0 = bu[S3 + 4];
+
+                // set up texture coordinates
+                u0 = bu[tile_data + 4];
                 V0 = h[S2 + 20];
-                V1 = h[S2 + 8];
-                A3 = bu[S3 + 6];
-                T0 = T0 - S1;
-                if( V0 < V1 )
+                width = bu[tile_data + 6];
+                height = height - S1;
+                if( V0 < h[S2 + 8] )
                 {
                     u0 = u0 - 1;
                     if( u0 < 0 )
                     {
                         u0 = 0;
-                        A3 = A3 - 1;
+                        width = width - 1;
                     }
                 }
 
                 [S2 + c] = b(u0); // u0
-                [S2 + d] = b(A1); // v0
-                [S2 + 14] = b(A3 + V0); // u1
-                [S2 + 15] = b(A1); // v1
+                [S2 + d] = b(v0); // v0
+                [S2 + 14] = b(V0 + width); // u1
+                [S2 + 15] = b(v0); // v1
                 [S2 + 1c] = b(u0); // u2
-                [S2 + 1d] = b(T0 + A1); // v2
-                [S2 + 24] = b(A3 + V0); // u3
-                [S2 + 25] = b(T0 + A1); // v3
+                [S2 + 1d] = b(v0 + height); // v2
+                [S2 + 24] = b(V0 + width); // u3
+                [S2 + 25] = b(v0 + height); // v3
 
-        [S0 + 0c] = b(u0); // u0
-        [S0 + 0d] = b(v0); // v0
-        [S0 + 14] = b(u0 + width); // u1
-        [S0 + 15] = b(v0); // v1
-        [S0 + 1c] = b(u0); // u2
-        [S0 + 1d] = b(v0 + height); // v2
-        [S0 + 24] = b(u0 + width); // u3
-        [S0 + 25] = b(v0 + height); // v3
-
-
-                [S2 + 0] = w((w[S2 + 0] & ff000000) | (w[T1 + 0] & 00ffffff));
-                [T1 + 0] = w((w[T1 + 0] & ff000000) | (S2 & 00ffffff));
+                [S2 + 0] = w((w[S2 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
+                [packet_addr + 0] = w((w[packet_addr + 0] & ff000000) | (S2 & 00ffffff));
             }
 
-            FP = FP + 1;
-            S3 = S3 + 18;
+            tile = tile + 1;
+            tile_data = tile_data + 18;
             V0 = (w[struct_164 + 40] >> 2) & 3f;
-        8001F36C	bne    fp, v0, L1f0e0 [$8001f0e0]
+        8001F36C	bne    tile, v0, L1f0e0 [$8001f0e0]
     }
 }
 ////////////////////////////////
@@ -4367,10 +4230,12 @@ func1f524();
 ////////////////////////////////
 // func219e0()
 
-[A0 + 28] = b(A1);
-[A0 + 29] = b(A2);
-[A0 + 2a] = b(A3);
-[A0 + 2b] = b(bu[A0 + 2b] & fe);
+struct_164 = A0;
+
+[struct_164 + 28] = b(A1);
+[struct_164 + 29] = b(A2);
+[struct_164 + 2a] = b(A3);
+[struct_164 + 2b] = b(bu[struct_164 + 2b] & fe);
 func1f524();
 ////////////////////////////////
 

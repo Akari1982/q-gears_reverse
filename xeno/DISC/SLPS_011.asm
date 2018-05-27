@@ -2699,10 +2699,10 @@ L1c57c:	; 8001C57C
 // func1e18
 8001E1F8-8001E260
 ////////////////////////////////
-// func1e264
+// system_sprite_prepare_packet_1
 8001E264-8001E830
 ////////////////////////////////
-// func1e834
+// system_sprite_prepare_packet_2
 8001E834-8001ECD4
 ////////////////////////////////
 // func1ecd8
@@ -2711,10 +2711,10 @@ L1c57c:	; 8001C57C
 // func1ece4
 8001ECE4-8001ECF4
 ////////////////////////////////
-// func1ecf8
+// system_sprite_prepare_packet_3
 8001ECF8-8001F044
 ////////////////////////////////
-// func1f048
+// system_sprite_prepare_packet_4
 8001F048-8001F3A4
 ////////////////////////////////
 // func1f3a8
@@ -3094,7 +3094,7 @@ L25168:	; 80025168
 8002517C	lui    v0, $8006
 80025180	lw     v0, $8c08(v0)
 80025184	sll    a1, a1, $02
-80025188	jal    func1e264 [$8001e264]
+80025188	jal    system_sprite_prepare_packet_1 [$8001e264]
 8002518C	addu   a1, a1, v0
 80025190	j      L251dc [$800251dc]
 80025194	nop
