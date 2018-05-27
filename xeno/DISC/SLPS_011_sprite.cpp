@@ -819,8 +819,6 @@ tile_data = w[struct_b4 + 30];
 scale = (w[struct_164 + 40] >> 8) & 1f;
 number_of_tiles = (w[struct_164 + 40] >> 2) & 3f;
 
-
-
 // offset for sprite
 offset_x = b[struct_b4 + 3c] << scale;
 offset_y = b[struct_b4 + 3d] << scale;
@@ -829,12 +827,10 @@ if( w[struct_164 + ac] & 00000010 )
     offset_x = 0 - offset_x;
 }
 
-
-
 if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
     if( number_of_tiles != 0 )
-    }
+    {
         tile = 0;
         add_id = -1;
 
@@ -1009,10 +1005,8 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                 }
             }
 
-
-
-            tile_data = tile_data + 18;
             tile = tile + 1;
+            tile_data = tile_data + 18;
         8001E7F8	bne    tile, number_of_tiles, L1e324 [$8001e324]
     }
 }
@@ -1069,9 +1063,6 @@ system_gte_set_translation_vector();
 scale = (w[S3 + 40] >> 8) & 1f;
 number_of_tiles = (w[S3 + 40] >> 2) & 3f;
 
-
-A0 = w[S3 + 20];
-
 if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
     if( number_of_tiles != 0 )
@@ -1079,6 +1070,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
         tile = 0;
         add_id = -1;
 
+        A0 = w[S3 + 20];
         S1 = w[A0 + 30];
 
         L1e9b8:	; 8001E9B8
@@ -1150,11 +1142,11 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                 [S0 + 5] = b(0);
                 [S0 + 6] = b(0);
 
-                A0 = 8004f17c;
-                A1 = 8004f17c + 8;
+                A0 = 8004f17c + 00;
+                A1 = 8004f17c + 08;
                 A2 = 8004f17c + 10;
                 A3 = 8004f17c + 18;
-                A4 = S0 + 8;
+                A4 = S0 + 08;
                 A5 = S0 + 10;
                 A6 = S0 + 20;
                 A7 = S0 + 18;
@@ -1169,9 +1161,9 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                 [S0 + 22] = h(A1);
                 [S0 + 1a] = h(A1);
 
-                [S0 + e] = h(hu[S1 + c]);
-                [S0 + c] = b(bu[S1 + 4]);
-                [S0 + d] = b(bu[S1 + 5]);
+                [S0 + 0e] = h(hu[S1 + c]);
+                [S0 + 0c] = b(bu[S1 + 4]);
+                [S0 + 0d] = b(bu[S1 + 5]);
                 [S0 + 14] = b(bu[S1 + 4] + ff + bu[S1 + 6]);
                 [S0 + 15] = b(bu[S1 + 5]);
                 [S0 + 16] = h(hu[S1 + a]);
@@ -1212,205 +1204,161 @@ return (hu[A0 + 3] >> 9) & 3f;
 ////////////////////////////////
 // system_sprite_prepare_packet_3()
 
-struct_164 = S6 = A0;
+struct_164 = A0;
 T1 = A1;
 S7 = A2 << scale;
 
 number_of_tiles = (w[struct_164 + 40] >> 2) & 3f;
 scale = (w[struct_164 + 40] >> 8) & 1f;
 
-A1 = number_of_tiles;
-V0 = A1 << 02;
-V0 = V0 + A1;
-V1 = w[80058c1c];
-V0 = V0 << 03;
-V0 = V0 + V1;
-V1 = w[80058bd0];
-A0 = w[S6 + 0020];
-V0 = V0 < V1;
-V1 = w[A0 + 0030];
-
-if( V0 != 0 )
+if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
-    if( A1 != 0 )
+    if( number_of_tiles != 0 )
     {
+        A0 = w[struct_164 + 20];
+        S3 = w[A0 + 30];
         FP = 0;
-        S4 = 8004f23c;
-        S5 = S4 + 2;
-        S3 = V1;
 
         L1ed90:	; 8001ED90
             S0 = w[80058c1c];
-            V0 = S0 + 0028;
-            [80058c1c] = w(V0);
+            [80058c1c] = w(S0 + 28);
 
-            [S0 + 0003] = b(09);
-            [S0 + 0004] = w(w[S3 + 0010]);
-            [S0 + 0016] = h(hu[S3 + 000a]);
-            [S0 + 000e] = h(hu[S3 + 000c]);
+            [S0 + 3] = b(09);
+            [S0 + 4] = w(w[S3 + 10]);
+            [S0 + e] = h(hu[S3 + c]);
+            [S0 + 16] = h(hu[S3 + a]);
 
-            A3 = (bu[S3 + 0006] + b[S3 + 0008]) << scale;
-            S2 = (bu[S3 + 0007] + b[S3 + 0009]) << scale;
-            A2 = h[S3 + 0000] << scale;
-            V1 = ;
-            A1 = h[S3 + 0002] << scale;
-            V0 = w[S6 + 003c] & 0008;
-            8001EE18	beq    v0, zero, L1ee28 [$8001ee28]
+            A3 = (bu[S3 + 6] + b[S3 + 8]) << scale;
+            S2 = (bu[S3 + 7] + b[S3 + 9]) << scale;
+            A2 = h[S3 + 0] << scale;
+            A1 = h[S3 + 2] << scale;
 
-            A3 = 0 - A3;
-            A2 = 0 - A2;
+            if( w[struct_164 + 3c] & 00000008 )
+            {
+                A3 = 0 - A3;
+                A2 = 0 - A2;
+            }
 
-            L1ee28:	; 8001EE28
-            V0 = w[S6 + 003c] & 0010;
-            8001EE28	beq    v0, zero, L1ee38 [$8001ee38]
-            8001EE2C	nop
-            S2 = 0 - S2;
-            A1 = 0 - A1;
+            if( w[struct_164 + 3c] & 00000010 )
+            {
+                S2 = 0 - S2;
+                A1 = 0 - A1;
+            }
 
-            L1ee38:	; 8001EE38
-            V0 = w[S3 + 0014];
-            8001EE3C	nop
-            V0 = V0 & 0010;
-            8001EE44	bne    v0, zero, L1ee64 [$8001ee64]
-            V1 = A2 + A3;
-            V0 = A2 + A3;
-            [S4 + 0000] = h(A2);
-            [S4 + 0008] = h(V0);
-            [S4 + 0010] = h(V0);
-            8001EE5C	j      L1ee78 [$8001ee78]
-            [S4 + 0018] = h(A2);
+            if( w[S3 + 0014] & 00000010 )
+            {
+                [8004f23c + 00] = h(A2 + A3);
+                [8004f23c + 08] = h(A2);
+                [8004f23c + 10] = h(A2);
+                [8004f23c + 18] = h(A2 + A3);
+            }
+            else
+            {
+                [8004f23c + 00] = h(A2);
+                [8004f23c + 08] = h(A2 + A3);
+                [8004f23c + 10] = h(A2 + A3);
+                [8004f23c + 18] = h(A2);
+            }
 
-            L1ee64:	; 8001EE64
-            V0 = A2;
-            [S4 + 0000] = h(V1);
-            [S4 + 0008] = h(V0);
-            [S4 + 0010] = h(V0);
-            [S4 + 0018] = h(V1);
+            if( S2 > 0 )
+            {
+                V0 = A1;
+                V1 = A1 + S2;
+            }
+            else
+            {
+                V0 = A1 + S2;
+                V1 = A1;
+            }
 
-            L1ee78:	; 8001EE78
-            8001EE78	blez   s2, L1ee88 [$8001ee88]
-            V0 = A1;
-            8001EE80	j      L1ee90 [$8001ee90]
-            V1 = A1 + S2;
+            if( S7 >= V0 )
+            {
+                if( S7 < V1 )
+                {
+                    S1 = V1 - S7;
+                }
+                else
+                {
+                    S1 = 0;
+                }
 
-            L1ee88:	; 8001EE88
-            V0 = A1 + S2;
-            V1 = A1;
+                S2 = S2 - S1;
+                if( S2 < 0 )
+                {
+                    A1 = A1 - S1;
+                }
 
-            L1ee90:	; 8001EE90
-            V0 = S7 < V0;
-            8001EE94	bne    v0, zero, L1effc [$8001effc]
-            V0 = S7 < V1;
-            8001EE9C	beq    v0, zero, L1eea8 [$8001eea8]
-            S1 = 0;
-            S1 = V1 - S7;
+                if( w[S3 + 14] & 00000020 )
+                {
+                    [8004f23c + 02] = h(A1 + S2);
+                    [8004f23c + 0a] = h(A1 + S2);
+                    [8004f23c + 12] = h(A1);
+                    [8004f23c + 1a] = h(A1);
+                }
+                else
+                {
+                    [8004f23c + 02] = h(A1);
+                    [8004f23c + 0a] = h(A1);
+                    [8004f23c + 12] = h(A1 + S2);
+                    [8004f23c + 1a] = h(A1 + S2);
+                }
 
-            L1eea8:	; 8001EEA8
-            S2 = S2 - S1;
-            8001EEAC	bgez   s2, L1eeb8 [$8001eeb8]
-            8001EEB0	nop
-            A1 = A1 - S1;
+                A0 = 8004f23c + 00;
+                A1 = 8004f23c + 08;
+                A2 = 8004f23c + 10;
+                A3 = 8004f23c + 18;
+                A4 = S0 + 08;
+                A5 = S0 + 10;
+                A6 = S0 + 20;
+                A7 = S0 + 18;
+                A8 = SP + 28;
+                A9 = SP + 2c;
+                8001EF2C	jal    func4a664 [$8004a664]
 
-            L1eeb8:	; 8001EEB8
-            V0 = w[S3 + 0014];
-            8001EEBC	nop
-            V0 = V0 & 0020;
-            8001EEC4	bne    v0, zero, L1eed8 [$8001eed8]
-            V0 = A1 + S2;
-            [S5 + 0000] = h(A1);
-            8001EED0	j      L1eee4 [$8001eee4]
-            [S5 + 0008] = h(A1);
+                T0 = bu[S3 + 0005];
+                S1 = S1 >> scale;
+                if( S2 > 0 )
+                {
+                    A3 = bu[S3 + 7];
+                }
+                else
+                {
+                    A3 = bu[S3 + 7];
+                    T0 = T0 - S1;
+                }
 
-            L1eed8:	; 8001EED8
-            [S5 + 0000] = h(V0);
-            [S5 + 0008] = h(V0);
-            V0 = A1;
+                A1 = bu[S3 + 4];
+                V0 = h[S0 + 20];
+                V1 = h[S0 + 8];
+                A2 = bu[S3 + 6];
+                A3 = A3 - S1;
+                if( V0 < V1 )
+                {
+                    V0 = A1 - 1;
+                    A1 = V0;
+                    if( V0 < 0 )
+                    {
+                        A1 = 0;
+                        A2 = A2 - 1;
+                    }
+                }
 
-            L1eee4:	; 8001EEE4
-            [S5 + 0010] = h(V0);
-            [S5 + 0018] = h(V0);
-            V0 = S0 + 0008;
-            [SP + 0010] = w(V0);
-            V0 = S0 + 0010;
-            [SP + 0014] = w(V0);
-            V0 = S0 + 0020;
-            [SP + 0018] = w(V0);
-            V0 = S0 + 0018;
-            [SP + 001c] = w(V0);
-            V0 = SP + 0028;
-            [SP + 0020] = w(V0);
-            V0 = SP + 002c;
-            A0 = S4;
-            A1 = S4 + 0008;
-            A2 = S4 + 0010;
-            A3 = S4 + 0018;
-            [SP + 0024] = w(V0);
-            8001EF2C	jal    func4a664 [$8004a664]
-            [SP + 0030] = w(T1);
-            V0 = w[S6 + 0040];
-            T0 = bu[S3 + 0005];
-            T1 = w[SP + 0030];
-            V0 = V0 >> 08;
-            V0 = V0 & 001f;
-            8001EF48	blez   s2, L1ef5c [$8001ef5c]
-            S1 = S1 >> V0;
-            A3 = bu[S3 + 0007];
-            8001EF54	j      L1ef64 [$8001ef64]
-            8001EF58	nop
+                [S0 + 0c] = b(A1);
+                [S0 + 0d] = b(T0);
+                [S0 + 14] = b(A2 + A1);
+                [S0 + 15] = b(T0);
+                [S0 + 1c] = b(V0);
+                [S0 + 1d] = b(A3 + T0);
+                [S0 + 24] = b(A2 + A1);
+                [S0 + 25] = b(A3 + T0);
 
-            L1ef5c:	; 8001EF5C
-            A3 = bu[S3 + 0007];
-            T0 = T0 - S1;
+                [S0 + 0] = w((w[S0 + 0] & ff000000) | (w[T1 + 0] & 00ffffff));
+                [T1 + 0] = w((w[T1 + 0] & ff000000) | (S0 & 00ffffff));
+            }
 
-            L1ef64:	; 8001EF64
-            A1 = bu[S3 + 0004];
-            V0 = h[S0 + 0020];
-            V1 = h[S0 + 0008];
-            A2 = bu[S3 + 0006];
-            V0 = V0 < V1;
-            8001EF78	beq    v0, zero, L1ef94 [$8001ef94]
-            A3 = A3 - S1;
-            8001EF80	addiu  v0, a1, $ffff (=-$1)
-            8001EF84	bgez   v0, L1ef94 [$8001ef94]
-            A1 = V0;
-            A1 = 0;
-            8001EF90	addiu  a2, a2, $ffff (=-$1)
-
-            L1ef94:	; 8001EF94
-            8001EF94	lui    a0, $00ff
-            A0 = A0 | ffff;
-            V0 = A1;
-            V1 = A2 + V0;
-            [S0 + 001c] = b(V0);
-            V0 = A3;
-            [S0 + 0014] = b(V1);
-            [S0 + 0024] = b(V1);
-            V1 = w[S0 + 0000];
-            V0 = V0 + T0;
-            [S0 + 000c] = b(A1);
-            8001EFC0	lui    a1, $ff00
-            [S0 + 000d] = b(T0);
-            [S0 + 0015] = b(T0);
-            [S0 + 001d] = b(V0);
-            [S0 + 0025] = b(V0);
-            V0 = w[T1 + 0000];
-            V1 = V1 & A1;
-            V0 = V0 & A0;
-            V1 = V1 | V0;
-            [S0 + 0000] = w(V1);
-            V0 = w[T1 + 0000];
-            A0 = S0 & A0;
-            V0 = V0 & A1;
-            V0 = V0 | A0;
-            [T1 + 0000] = w(V0);
-
-            L1effc:	; 8001EFFC
-            V0 = w[S6 + 0040];
-            FP = FP + 0001;
-            V0 = V0 >> 02;
-            V0 = V0 & 003f;
-            S3 = S3 + 0018;
-        8001F00C	bne    fp, v0, L1ed90 [$8001ed90]
+            FP = FP + 1;
+            S3 = S3 + 18;
+        8001F00C	bne    fp, number_of_tiles, L1ed90 [$8001ed90]
     }
 }
 ////////////////////////////////
@@ -1510,15 +1458,15 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 
                 if( w[tile_data + 14] & 00000020 )
                 {
-                    [8004f23c + 2] = h(y0 + height);
-                    [8004f23c + a] = h(y0 + height);
+                    [8004f23c + 02] = h(y0 + height);
+                    [8004f23c + 0a] = h(y0 + height);
                     [8004f23c + 12] = h(y0);
                     [8004f23c + 1a] = h(y0);
                 }
                 else
                 {
-                    [8004f23c + 2] = h(y0);
-                    [8004f23c + a] = h(y0);
+                    [8004f23c + 02] = h(y0);
+                    [8004f23c + 0a] = h(y0);
                     [8004f23c + 12] = h(y0 + height);
                     [8004f23c + 1a] = h(y0 + height);
                 }
@@ -1552,10 +1500,9 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 
                 // set up texture coordinates
                 u0 = bu[tile_data + 4];
-                V0 = h[S2 + 20];
                 width = bu[tile_data + 6];
                 height = height - S1;
-                if( V0 < h[S2 + 8] )
+                if( h[S2 + 20] < h[S2 + 8] )
                 {
                     u0 = u0 - 1;
                     if( u0 < 0 )
@@ -1565,13 +1512,13 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                     }
                 }
 
-                [S2 + c] = b(u0); // u0
-                [S2 + d] = b(v0); // v0
-                [S2 + 14] = b(V0 + width); // u1
+                [S2 + 0c] = b(u0); // u0
+                [S2 + 0d] = b(v0); // v0
+                [S2 + 14] = b(h[S2 + 20] + width); // u1
                 [S2 + 15] = b(v0); // v1
                 [S2 + 1c] = b(u0); // u2
                 [S2 + 1d] = b(v0 + height); // v2
-                [S2 + 24] = b(V0 + width); // u3
+                [S2 + 24] = b(h[S2 + 20] + width); // u3
                 [S2 + 25] = b(v0 + height); // v3
 
                 [S2 + 0] = w((w[S2 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
@@ -1580,8 +1527,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 
             tile = tile + 1;
             tile_data = tile_data + 18;
-            V0 = (w[struct_164 + 40] >> 2) & 3f;
-        8001F36C	bne    tile, v0, L1f0e0 [$8001f0e0]
+        8001F36C	bne    tile, number_of_tiles, L1f0e0 [$8001f0e0]
     }
 }
 ////////////////////////////////
