@@ -434,7 +434,6 @@ if( number_of_entity > 0 )
                     V1 = w[S3 + 0000];
                     800759F8	nop
                     V0 = hu[V1 + 004a];
-                    80075A00	nop
                     V0 = V0 | 0001;
 
                     L75a08:	; 80075A08

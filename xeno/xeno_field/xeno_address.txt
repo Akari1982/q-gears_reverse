@@ -254,6 +254,8 @@
     +  24 [][][][] some Y data.
     +  28 [][][][] some Z data.
     +  2c some matrix.
+    +  3c [][][][] some flags.
+                    0x10000000 - update render matrix.
     +  40 [][][][] some X data.
     +  44 [][][][] some Y data.
     +  48 [][][][] some Z data.

@@ -209,6 +209,7 @@
     + 28 [][][][] ???
     + 38 [][][][] rotation dta for some sprite animation if flag 0x2000 in sprite animation data not set.
     + 3d []       if this != 0 then we use +38 to calculate rotation matrix for sprite animation (if flag 0x2000 not set).
+    + 3e []       
     +1a8 [][]     init with 0x20.
     +1ac [][]     init with 0xa. Store 4 here when we start parse model and animation.
     +1b0 [][][][] pointer to start of allocated memory.
@@ -612,7 +613,7 @@ Sprite struct 164. Can be allocated anywhere.
     + 3c [][][][] init with 0. Some flags.
                     0x00000003 - set to 1 during init. If 1 then remove sprite offset in b4+3c and b4+3d.
                                     0x1 - init animation.
-                    0x00000004 - call some other function after packet creation.
+                    0x00000004 - add some packets after normal packet creation.
                     0x00000008 - invert tile x and width.
                     0x00000010 - invert tile y and height.
                     0x000000e0 - semi transparency mode?
@@ -622,7 +623,7 @@ Sprite struct 164. Can be allocated anywhere.
                     0x40000000 - if set then we ??? during sprite update and remove flag.
     + 3e [][]     hu[S3 + 3e] & 00f0 palette id to load.
     + 40 [][][][] init with 0. Some flags.
-                    0x00000001 - if set we calculate rotation matrix and multiply it with matrix stored in 0x80018614 (maybe for debug or for some special effect).
+                    0x00000001 - use identity matrix for render.
                     0x000000fc - number_of_tiles in current render.
                     0x00001f00 - scale
                     0x0001e000 - removed during init.
