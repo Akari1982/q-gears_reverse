@@ -650,36 +650,30 @@ R33 = T7;
 ////////////////////////////////
 // func4a664()
 
+VXY0 = w[A0 + 0];
+VZ0 = w[A0 + 4];
+VXY1 = w[A1 + 0];
+VZ1 = w[A1 + 4];
+VXY2 = w[A2 + 0];
+VZ2 = w[A2 + 4];
 
-8004A664	lwc2   zero, $0000(a0)
-8004A668	lwc2   at, $0004(a0)
-8004A66C	lwc2   v0, $0000(a1)
-8004A670	lwc2   v1, $0004(a1)
-8004A674	lwc2   a0, $0000(a2)
-8004A678	lwc2   a1, $0004(a2)
-8004A67C	nop
-8004A680	gte_func17t0,r11r12
-T0 = w[SP + 0010];
-T1 = w[SP + 0014];
-T2 = w[SP + 0018];
-8004A690	swc2   t4, $0000(t0)
-8004A694	swc2   t5, $0000(t1)
-8004A698	swc2   t6, $0000(t2)
-8004A69C	cfc2   v1,lzcr
-8004A6A0	lwc2   zero, $0000(a3)
-8004A6A4	lwc2   at, $0004(a3)
-8004A6A8	nop
-8004A6AC	gte_func16t8,r11r12
-T0 = w[SP + 001c];
-T1 = w[SP + 0020];
-T2 = w[SP + 0024];
-8004A6BC	swc2   t6, $0000(t0)
-8004A6C0	cfc2   t0,lzcr
-8004A6C4	swc2   t0, $0000(t1)
-T0 = T0 | V1;
-[T2 + 0000] = w(T0);
-8004A6D0	gte_func27t0,r11r12
-8004A6D4	mfc2   v0,trz
-8004A6D8	jr     ra 
-8004A6DC	nop
+gte_RTPT(); // Perspective transform on 3 points
+
+[A4] = w(SXY0);
+[A5] = w(SXY1);
+[A6] = w(SXY2);
+V1 = FLAG;
+
+VXY0 = w[A3 + 0];
+VZ0 = w[A3 + 4];
+
+gte_RTPS(); // Perspective transform
+
+[A7] = w(SXY2);
+[A8] = w(IR0);
+[A9] = w(FLAG | V1);
+
+AVSZ4(); // Average of four Z values
+
+return OTZ;
 ////////////////////////////////

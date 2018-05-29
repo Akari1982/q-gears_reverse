@@ -1088,37 +1088,37 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                 S0 = w[80058c1c];
                 [80058c1c] = w(S0 + 28);
 
-                [S0 + 3] = b(09);
-                [S0 + 7] = b(2с);
-                [S0 + 4] = b(00);
-                [S0 + 5] = b(00);
-                [S0 + 6] = b(00);
+                [S0 + 03] = b(09);
+                [S0 + 07] = b(2с);
+                [S0 + 04] = b(00);
+                [S0 + 05] = b(00);
+                [S0 + 06] = b(00);
+                [S0 + 0e] = h(hu[tile_data + c]); // clut
+                [S0 + 16] = h(hu[tile_data + a]); // tex page info
 
-                A0 = 8004f17c + 00;
-                A1 = 8004f17c + 08;
-                A2 = 8004f17c + 10;
-                A3 = 8004f17c + 18;
-                A4 = S0 + 08;
-                A5 = S0 + 10;
-                A6 = S0 + 20;
-                A7 = S0 + 18;
-                A8 = SP + 70;
-                A9 = SP + 74;
-                8001EB6C	jal    func4a664 [$8004a664]
+                A0 = 8004f17c + 00; // xyz0
+                A1 = 8004f17c + 08; // xyz1
+                A2 = 8004f17c + 10; // xyz3
+                A3 = 8004f17c + 18; // xyz2
+                A4 = S0 + 08; // xy0
+                A5 = S0 + 10; // xy1
+                A6 = S0 + 20; // xy3
+                A7 = S0 + 18; // xy2
+                A8 = SP + 70; // Interpolation value for depth queing. (not used)
+                A9 = SP + 74; // return flags (not used)
+                func4a664(); // transform 4 points by rotation matrix
 
-                A1 = (hu[S0 + a] + hu[S0 + 12]) / 2;
+                A1 = (hu[S0 + a] + hu[S0 + 12]) / 2; // average y
                 [S0 + 12] = h(A1); // vy1
                 [S0 + a] = h(A1); // vy0
-                A1 = (hu[S0 + 1a] + hu[S0 + 22]) / 2;
+                A1 = (hu[S0 + 1a] + hu[S0 + 22]) / 2; // average y
                 [S0 + 22] = h(A1); // vy3
                 [S0 + 1a] = h(A1); // vy2
 
                 [S0 + 0c] = b(bu[tile_data + 4]); // u0
                 [S0 + 0d] = b(bu[tile_data + 5]); // v0
-                [S0 + 0e] = h(hu[tile_data + c]); // clut
                 [S0 + 14] = b(bu[tile_data + 4] + bu[tile_data + 6] + ff); // u1
                 [S0 + 15] = b(bu[tile_data + 5]); // v1
-                [S0 + 16] = h(hu[tile_data + a]); // tex page info
                 [S0 + 1c] = b(bu[tile_data + 4]); // u2
                 [S0 + 1d] = b(bu[tile_data + 5] + bu[tile_data + 7] + ff); // v2
                 [S0 + 24] = b(bu[tile_data + 4] + bu[tile_data + 6] + ff); // u3
@@ -1265,7 +1265,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                 A7 = S0 + 18;
                 A8 = SP + 28;
                 A9 = SP + 2c;
-                8001EF2C	jal    func4a664 [$8004a664]
+                func4a664(); // transform 4 points by rotation matrix
 
                 v0 = bu[tile_data + 5];
                 S1 = S1 >> scale;
@@ -1428,8 +1428,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                 A7 = S2 + 18; // xy2
                 A8 = SP + 28; // Interpolation value for depth queing. (not used)
                 A9 = SP + 2c; // return flags (not used)
-                // transform 4 points by rotation matrix
-                8001F288	jal    func4a664 [$8004a664]
+                func4a664(); // transform 4 points by rotation matrix
 
                 S1 = S1 >> scale;
 

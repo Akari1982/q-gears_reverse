@@ -290,7 +290,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(zero|at|v0|v1|a0|a1|t1|t2|t3|t4|t5|t6|t9|k0|k1), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(zero|at|v0|v1|a0|a1|t0|t1|t2|t3|t4|t5|t6|t9|k0|k1), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -330,6 +330,16 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func16t8,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_RTPS(); // Perspective transform";
+            str = ss.str();
+        }
+
         e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func17t0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
@@ -347,6 +357,16 @@ int main( int argc, char *argv[] )
 
             std::stringstream ss;
             ss << m0 << "gte_OP(); // Outer Product";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27t0,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "AVSZ4(); // Average of four Z values";
             str = ss.str();
         }
 
