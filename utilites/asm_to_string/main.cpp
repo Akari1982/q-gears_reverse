@@ -239,7 +239,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2)\\s*$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2|lzcr|trz)\\s*$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -253,6 +253,7 @@ int main( int argc, char *argv[] )
             if( m3 == "R11R12" ) m3 = "VXY0"; // 0
             else if( m3 == "R13R21" ) m3 = "VZ0"; // 1
             else if( m3 == "R22R23" ) m3 = "VXY1"; // 2
+            else if( m3 == "TRZ" ) m3 = "OTZ"; // 7
             else if( m3 == "L11L12" ) m3 = "IR0"; // 8
             else if( m3 == "L13L21" ) m3 = "IR1"; // 9
             else if( m3 == "L22L23" ) m3 = "IR2"; // 10
@@ -273,6 +274,7 @@ int main( int argc, char *argv[] )
             else if( m3 == "IRGB" ) m3 = "DQB"; // 28
             else if( m3 == "ORGB" ) m3 = "ZSF3"; // 29
             else if( m3 == "LZCS" ) m3 = "ZSF4"; // 30
+            else if( m3 == "LZCR" ) m3 = "FLAG"; // 31
 
             std::stringstream ss;
             ss << m0;
@@ -288,7 +290,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(t1|t2|t3|t9|k0|k1), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(zero|at|v0|v1|a0|a1|t1|t2|t3|t4|t5|t6|t9|k0|k1), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -297,9 +299,19 @@ int main( int argc, char *argv[] )
             std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
             std::string m4 = std::regex_replace( str, e, "$5" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
 
+            if( m2 == "ZERO" ) m2 = "VXY0"; // 0
+            if( m2 == "AT" ) m2 = "VZ0"; // 1
+            if( m2 == "V0" ) m2 = "VXY1"; // 2
+            if( m2 == "V1" ) m2 = "VZ1"; // 3
+            if( m2 == "A0" ) m2 = "VXY2"; // 4
+            if( m2 == "A1" ) m2 = "VZ2"; // 5
+            if( m2 == "T0" ) m2 = "IR0"; // 8
             if( m2 == "T1" ) m2 = "IR1"; // 9
             if( m2 == "T2" ) m2 = "IR2"; // 10
             if( m2 == "T3" ) m2 = "IR3"; // 11
+            if( m2 == "T4" ) m2 = "SXY0"; // 12
+            if( m2 == "T5" ) m2 = "SXY1"; // 13
+            if( m2 == "T6" ) m2 = "SXY2"; // 14
             if( m2 == "T9" ) m2 = "MAC1"; // 25
             if( m2 == "K0" ) m2 = "MAC2"; // 26
             if( m2 == "K1" ) m2 = "MAC3"; // 27
@@ -315,6 +327,16 @@ int main( int argc, char *argv[] )
             {
                 ss << "[" << m4 << " + " << m3 << "] = w(" << m2 << ");";
             }
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func17t0,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_RTPT(); // Perspective transform on 3 points";
             str = ss.str();
         }
 

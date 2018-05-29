@@ -11,7 +11,7 @@ func24ed4(); // clear some set of images
 [80058c08] = w(w[800c3740] + cc);
 
 A0 = 800aef38;
-func24dec(); // copy 0x20 bytes of data from gere to 8004f25c (matrix copy?)
+func24dec(); // set sprite matrix.
 
 func1d2e4(); // sprites texture and tile update by frame id.
 
@@ -127,11 +127,11 @@ if( number_of_entity > 0 )
 
             if( ( w[struct_138 + 4] & 00002000 ) == 0 )
             {
-                R11R12 = w[800aef38 + 0];
-                R13R21 = w[800aef38 + 4];
-                R22R23 = w[800aef38 + 8];
-                R31R32 = w[800aef38 + c];
-                R33 = w[800aef38 + 10];
+                R11R12 = w[800aef38 + 00];
+                R13R21 = w[800aef38 + 04];
+                R22R23 = w[800aef38 + 08];
+                R31R32 = w[800aef38 + 0c];
+                R33    = w[800aef38 + 10];
                 IR1 = hu[scruct_5c_p + S6 * 5c + c];
                 IR2 = hu[scruct_5c_p + S6 * 5c + 12];
                 IR3 = hu[scruct_5c_p + S6 * 5c + 18];

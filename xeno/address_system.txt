@@ -27,6 +27,8 @@
     +1c [][] z2
     +1e [][]
 
+8004f25c matrix used to render sprite.
+
 8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
 8004f498 [][][][] ???
 8004f49c [][][][] file size to load.

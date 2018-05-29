@@ -677,7 +677,7 @@ offset_x = (offset_x * h[struct_164 + 2c]) >> c;
 [SP + 12] = h(h[struct_164 + 6]);
 [SP + 14] = h(h[struct_164 + a]);
 
-A0 = 8004f25c;
+A0 = 8004f25c; // world matrix
 A1 = SP + 10;
 A2 = SP + 18;
 system_gte_apply_matrix();
@@ -710,6 +710,7 @@ A0 = struct_164;
 A1 = packet_addr;
 system_sprite_prepare_packet_1();
 
+// render shadow
 if( w[struct_164 + 3c] & 00000004 )
 {
     A0 = struct_164;
@@ -735,6 +736,7 @@ A1 = packet_addr;
 A2 = S0;
 system_sprite_prepare_packet_3();
 
+// render shadow
 if( w[struct_164 + 3c] & 00000004 )
 {
     A0 = struct_164;
@@ -760,6 +762,7 @@ A1 = packet_addr;
 A2 = S0;
 system_sprite_prepare_packet_4();
 
+// render shadow
 if( w[struct_164 + 3c] & 00000004 )
 {
     A0 = struct_164;
@@ -971,6 +974,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 
 ////////////////////////////////
 // system_sprite_prepare_packet_2()
+// render shadow
 
 struct_164 = A0;
 packet_addr = A1;
@@ -980,43 +984,42 @@ tile_data = w[struct_b4 + 30];
 scale = (w[struct_164 + 40] >> 8) & 1f;
 number_of_tiles = (w[struct_164 + 40] >> 2) & 3f;
 
-S1 = 8004f25c;
-[SP + 28] = w(w[S1 + 0]);
-[SP + 2c] = w(w[S1 + 4]);
-[SP + 30] = w(w[S1 + 8]);
-[SP + 34] = w(w[S1 + c]);
-[SP + 38] = w(w[S1 + 10]);
-[SP + 3c] = w(w[S1 + 14]);
-[SP + 40] = w(w[S1 + 18]);
-[SP + 44] = w(w[S1 + 1c]);
+// world matrix
+[SP + 28] = w(w[8004f25c + 00]);
+[SP + 2c] = w(w[8004f25c + 04]);
+[SP + 30] = w(w[8004f25c + 08]);
+[SP + 34] = w(w[8004f25c + 0c]);
+[SP + 38] = w(w[8004f25c + 10]);
+[SP + 3c] = w(w[8004f25c + 14]);
+[SP + 40] = w(w[8004f25c + 18]);
+[SP + 44] = w(w[8004f25c + 1c]);
 
-[SP + 48] = h(h[struct_164 + 2]);
-[SP + 4a] = h(h[struct_164 + 6]);
-[SP + 4c] = h(h[struct_164 + a]);
-
-[SP + 60] = w(h[struct_164 + 2c]);
-[SP + 64] = w(h[struct_164 + 2c] / 2);
+[SP + 60] = w(h[struct_164 + 2c]); // scale
+[SP + 64] = w(h[struct_164 + 2c] / 2); // shrink
 [SP + 68] = w(0);
 
-A0 = SP + 28;
-A1 = SP + 60;
-8001E900	jal    func495f4 [$800495f4]
+A0 = SP + 28; // world matrix
+A1 = SP + 60; // scale vector
+func495f4(); // scaled matrix (column)
 
+[SP + 48] = h(h[struct_164 + 2]);
 [SP + 4a] = h(hu[struct_164 + 84]);
+[SP + 4c] = h(h[struct_164 + a]);
 
-A0 = S1;
-A1 = SP + 48;
+A0 = 8004f25c; // world matrix
+A1 = SP + 48; // pos vector
 A2 = SP + 50;
 system_gte_apply_matrix();
 
+// add new scaled translation to world matrix
 [SP + 3c] = w(w[SP + 3c] + w[SP + 50]);
 [SP + 40] = w(w[SP + 40] + w[SP + 54]);
 [SP + 44] = w(w[SP + 44] + w[SP + 58]);
 
-A0 = SP + 28;
+A0 = SP + 28; // world matrix
 system_gte_set_rotation_matrix();
 
-A0 = SP + 28;
+A0 = SP + 28; // new translation
 system_gte_set_translation_vector();
 
 if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
@@ -1035,55 +1038,51 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 
             if( FP & ff )
             {
-                T1 = (b[tile_data + 8] + bu[tile_data + 6]) << scale;
-                T0 = T1;
-                T3 = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
-                T2 = T3;
-                A2 = h[tile_data + 0] << scale;
-                A0 = A2;
-                A3 = h[tile_data + 2] << scale;
-                A1 = A3;
+                x0 = h[tile_data + 0] << scale;
+                y0 = h[tile_data + 2] << scale;
+                width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
+                height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
 
                 if( w[struct_164 + 3c] & 00000008 )
                 {
-                    T0 = 0 - T1;
-                    A0 = 0 - A2;
+                    x0 = 0 - x0;
+                    width = 0 - width;
                 }
 
                 if( ( ( w[struct_164 + 3c] >> 4 ) & 1 ) != ( ( w[tile_data + 14] >> 5 ) & 1 ) )
                 {
-                    T2 = 0 - T3;
-                    A1 = 0 - A3;
+                    y0 = 0 - y0;
+                    height = 0 - height;
                 }
 
                 if( w[tile_data + 14] & 00000010 )
                 {
-                    [8004f17c + 00] = h(A0 + T0);
-                    [8004f17c + 08] = h(A0);
-                    [8004f17c + 10] = h(A0);
-                    [8004f17c + 18] = h(A0 + T0);
+                    [8004f17c + 00] = h(x0 + width);
+                    [8004f17c + 08] = h(x0);
+                    [8004f17c + 10] = h(x0);
+                    [8004f17c + 18] = h(x0 + width);
                 }
                 else
                 {
-                    [8004f17c + 00] = h(A0);
-                    [8004f17c + 08] = h(A0 + T0);
-                    [8004f17c + 10] = h(A0 + T0);
-                    [8004f17c + 18] = h(A0);
+                    [8004f17c + 00] = h(x0);
+                    [8004f17c + 08] = h(x0 + width);
+                    [8004f17c + 10] = h(x0 + width);
+                    [8004f17c + 18] = h(x0);
                 }
 
                 if( w[tile_data + 14] & 00000020 )
                 {
-                    [8004f17c + 04] = h(A1 + T2);
-                    [8004f17c + 0c] = h(A1 + T2);
-                    [8004f17c + 14] = h(A1);
-                    [8004f17c + 1c] = h(A1);
+                    [8004f17c + 04] = h(y0 + height);
+                    [8004f17c + 0c] = h(y0 + height);
+                    [8004f17c + 14] = h(y0);
+                    [8004f17c + 1c] = h(y0);
                 }
                 else
                 {
-                    [8004f17c + 04] = h(A1);
-                    [8004f17c + 0c] = h(A1);
-                    [8004f17c + 14] = h(A1 + T2);
-                    [8004f17c + 1c] = h(A1 + T2);
+                    [8004f17c + 04] = h(y0);
+                    [8004f17c + 0c] = h(y0);
+                    [8004f17c + 14] = h(y0 + height);
+                    [8004f17c + 1c] = h(y0 + height);
                 }
 
                 S0 = w[80058c1c];
@@ -1091,9 +1090,9 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 
                 [S0 + 3] = b(09);
                 [S0 + 7] = b(2с);
-                [S0 + 4] = b(0);
-                [S0 + 5] = b(0);
-                [S0 + 6] = b(0);
+                [S0 + 4] = b(00);
+                [S0 + 5] = b(00);
+                [S0 + 6] = b(00);
 
                 A0 = 8004f17c + 00;
                 A1 = 8004f17c + 08;
@@ -1349,6 +1348,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
                 x0 = 0 - x0;
                 width = 0 - width;
             }
+
             if( w[struct_164 + 3c] & 00000010 )
             {
                 y0 = 0 - y0;
@@ -6976,15 +6976,14 @@ func1d128(); // reset render sprites list
 ////////////////////////////////
 // func24dec()
 
-A2 = 8004f25c;
-[A2 + 0] = w(w[A0 + 0]);
-[A2 + 4] = w(w[A0 + 4]);
-[A2 + 8] = w(w[A0 + 8]);
-[A2 + c] = w(w[A0 + c]);
-[A2 + 10] = w(w[A0 + 10]);
-[A2 + 14] = w(w[A0 + 14]);
-[A2 + 18] = w(w[A0 + 18]);
-[A2 + 1c] = w(w[A0 + 1c]);
+[8004f25c + 00] = w(w[A0 + 00]);
+[8004f25c + 04] = w(w[A0 + 04]);
+[8004f25c + 08] = w(w[A0 + 08]);
+[8004f25c + 0c] = w(w[A0 + 0c]);
+[8004f25c + 10] = w(w[A0 + 10]);
+[8004f25c + 14] = w(w[A0 + 14]);
+[8004f25c + 18] = w(w[A0 + 18]);
+[8004f25c + 1c] = w(w[A0 + 1c]);
 ////////////////////////////////
 
 
