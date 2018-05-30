@@ -115,25 +115,23 @@ if( sprite_list != 0 )
 // func1d2e4()
 
 struct_164 = w[GP + 20];
-if( struct_164 != 0 )
+while( struct_164 != 0 )
 {
-    loop1d300:	; 8001D300
-        frame_id = hu[struct_164 + 34];
-        if( frame_id == 0 )
-        {
-            [struct_164 + 40] = w(w[struct_164 + 40] & ffffff03); // set number of tiles to 0
-        }
-        else
-        {
-            A0 = struct_164;
-            A1 = frame_id;
-            A2 = w[struct_164 + 24];
-            func1d968();
-        }
+    frame_id = hu[struct_164 + 34];
+    if( frame_id == 0 )
+    {
+        [struct_164 + 40] = w(w[struct_164 + 40] & ffffff03); // set number of tiles to 0
+    }
+    else
+    {
+        A0 = struct_164;
+        A1 = frame_id;
+        A2 = w[struct_164 + 24];
+        func1d968();
+    }
 
-        V0 = w[struct_164 + 20];
-        struct_164 = w[V0 + 38];
-    8001D340	bne    struct_164, zero, loop1d300 [$8001d300]
+    V0 = w[struct_164 + 20];
+    struct_164 = w[V0 + 38];
 }
 [GP + 20] = w(0);
 ////////////////////////////////
@@ -394,20 +392,14 @@ sprite_file_1 = w[struct_110 + 0];
 sprite_file_2 = w[struct_110 + c];
 frame_data = sprite_file_1 + hu[sprite_file_1 + frame_id * 2];
 
-
-
 [struct_164 + 40] = w(w[struct_164 + 40] & fff7ffff); // remove 0x00080000
 [struct_164 + 40] = w(w[struct_164 + 40] & fffdffff); // remove 0x00020000
-
-
 
 // if render frame greater than numbers of frames
 if( frame_id >= ( hu[sprite_file_1 + 0] & 01ff ) + 1 )
 {
     return;
 }
-
-
 
 // load palettes if needed
 if( w[struct_164 + 3c] & 40000000 )
@@ -431,8 +423,6 @@ if( w[struct_164 + 3c] & 40000000 )
     }
 }
 
-
-
 // set up tile packets
 if( hu[sprite_file_1 + 0] & 8000 )
 {
@@ -444,11 +434,7 @@ if( hu[sprite_file_1 + 0] & 8000 )
     return;
 }
 
-
-
 [SP + 18] = w(w[struct_110 + 4]); // texture x and y
-
-
 
 if( ( w[struct_164 + 40] & 0001e000 ) == 0001c000 )
 {
@@ -457,29 +443,19 @@ if( ( w[struct_164 + 40] & 0001e000 ) == 0001c000 )
     func1f3a8();
 }
 
-
-
 [struct_164 + 36] = h((b[frame_data + 3] * h[struct_164 + 2c]) >> c);
 [struct_164 + 38] = h((bu[frame_data + 1] * h[struct_164 + 2c]) >> c);
 
-
-
 number_of_tiles = bu[frame_data + 0] & 3f;
 two_bytes = bu[frame_data + 0] & 80;
-
-
 
 [SP + 38] = w((w[struct_164 + 3c] >> 5) & 7);
 [SP + 48] = w((hu[SP + 18] & 3f) << 2);
 [SP + 50] = w((hu[SP + 18] & 3f) << 1);
 [SP + 58] = w(bu[SP + 1a]);
 
-
-
 S5 = 4;
 tile_pos_setting = frame_data + 6 + number_of_tiles * 4;
-
-
 
 tile_id = 0;
 
@@ -623,8 +599,6 @@ if( number_of_tiles != 0 )
             [tile_data + tile_id * 18 + 0] = h(b[tile_pos_setting + 1]);
             [tile_data + tile_id * 18 + 2] = h(b[tile_pos_setting + 2]);
         }
-
-
 
         tile_pos_setting = tile_pos_setting + 3;
         tile_id = tile_id + 1;
@@ -857,9 +831,9 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
             S0 = w[80058c1c];
             [80058c1c] = w(S0 + 28);
 
-            [S0 + 3] = b(09);
-            [S0 + 4] = w(w[tile_data + 10]); // 2c808080 - Command + Color Vertex 0
-            [S0 + e] = h(h[tile_data + c]); // clut id
+            [S0 + 03] = b(09);
+            [S0 + 04] = w(w[tile_data + 10]); // 2c808080 - Command + Color Vertex 0
+            [S0 + 0e] = h(h[tile_data + c]); // clut id
             [S0 + 16] = h(h[tile_data + a]); // tpage
 
             x0 = h[tile_data + 0] << scale;
@@ -1024,113 +998,109 @@ system_gte_set_translation_vector();
 
 if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
-    if( number_of_tiles != 0 )
+    add_id = -1;
+
+    for( int tile = 0; tile < number_of_tiles; ++tile )
     {
-        tile = 0;
-        add_id = -1;
+        if( add_id != ( w[tile_data + 14] & 00000007 ) )
+        {
+            add_id = w[tile_data + 14] & 00000007;
+            FP = (hu[8004f19c + add_id * 2] & bu[struct_164 + 3d]) < 1;
+        }
 
-        L1e9b8:	; 8001E9B8
-            if( add_id != ( w[tile_data + 14] & 00000007 ) )
+        if( FP & ff )
+        {
+            x0 = h[tile_data + 0] << scale;
+            y0 = h[tile_data + 2] << scale;
+            width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
+            height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
+
+            if( w[struct_164 + 3c] & 00000008 )
             {
-                add_id = w[tile_data + 14] & 00000007;
-                FP = (hu[8004f19c + add_id * 2] & bu[struct_164 + 3d]) < 1;
+                x0 = 0 - x0;
+                width = 0 - width;
             }
 
-            if( FP & ff )
+            if( ( ( w[struct_164 + 3c] >> 4 ) & 1 ) != ( ( w[tile_data + 14] >> 5 ) & 1 ) )
             {
-                x0 = h[tile_data + 0] << scale;
-                y0 = h[tile_data + 2] << scale;
-                width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
-                height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
-
-                if( w[struct_164 + 3c] & 00000008 )
-                {
-                    x0 = 0 - x0;
-                    width = 0 - width;
-                }
-
-                if( ( ( w[struct_164 + 3c] >> 4 ) & 1 ) != ( ( w[tile_data + 14] >> 5 ) & 1 ) )
-                {
-                    y0 = 0 - y0;
-                    height = 0 - height;
-                }
-
-                if( w[tile_data + 14] & 00000010 )
-                {
-                    [8004f17c + 00] = h(x0 + width);
-                    [8004f17c + 08] = h(x0);
-                    [8004f17c + 10] = h(x0);
-                    [8004f17c + 18] = h(x0 + width);
-                }
-                else
-                {
-                    [8004f17c + 00] = h(x0);
-                    [8004f17c + 08] = h(x0 + width);
-                    [8004f17c + 10] = h(x0 + width);
-                    [8004f17c + 18] = h(x0);
-                }
-
-                if( w[tile_data + 14] & 00000020 )
-                {
-                    [8004f17c + 04] = h(y0 + height);
-                    [8004f17c + 0c] = h(y0 + height);
-                    [8004f17c + 14] = h(y0);
-                    [8004f17c + 1c] = h(y0);
-                }
-                else
-                {
-                    [8004f17c + 04] = h(y0);
-                    [8004f17c + 0c] = h(y0);
-                    [8004f17c + 14] = h(y0 + height);
-                    [8004f17c + 1c] = h(y0 + height);
-                }
-
-                S0 = w[80058c1c];
-                [80058c1c] = w(S0 + 28);
-
-                [S0 + 03] = b(09);
-                [S0 + 07] = b(2с);
-                [S0 + 04] = b(00);
-                [S0 + 05] = b(00);
-                [S0 + 06] = b(00);
-                [S0 + 0e] = h(hu[tile_data + c]); // clut
-                [S0 + 16] = h(hu[tile_data + a]); // tex page info
-
-                A0 = 8004f17c + 00; // xyz0
-                A1 = 8004f17c + 08; // xyz1
-                A2 = 8004f17c + 10; // xyz3
-                A3 = 8004f17c + 18; // xyz2
-                A4 = S0 + 08; // xy0
-                A5 = S0 + 10; // xy1
-                A6 = S0 + 20; // xy3
-                A7 = S0 + 18; // xy2
-                A8 = SP + 70; // Interpolation value for depth queing. (not used)
-                A9 = SP + 74; // return flags (not used)
-                func4a664(); // transform 4 points by rotation matrix
-
-                A1 = (hu[S0 + a] + hu[S0 + 12]) / 2; // average y
-                [S0 + 12] = h(A1); // vy1
-                [S0 + a] = h(A1); // vy0
-                A1 = (hu[S0 + 1a] + hu[S0 + 22]) / 2; // average y
-                [S0 + 22] = h(A1); // vy3
-                [S0 + 1a] = h(A1); // vy2
-
-                [S0 + 0c] = b(bu[tile_data + 4]); // u0
-                [S0 + 0d] = b(bu[tile_data + 5]); // v0
-                [S0 + 14] = b(bu[tile_data + 4] + bu[tile_data + 6] + ff); // u1
-                [S0 + 15] = b(bu[tile_data + 5]); // v1
-                [S0 + 1c] = b(bu[tile_data + 4]); // u2
-                [S0 + 1d] = b(bu[tile_data + 5] + bu[tile_data + 7] + ff); // v2
-                [S0 + 24] = b(bu[tile_data + 4] + bu[tile_data + 6] + ff); // u3
-                [S0 + 25] = b(bu[tile_data + 5] + bu[tile_data + 7] + ff); // v3
-
-                [S0 + 0] = w((w[S0 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
-                [packet_addr + 0] = w((w[packet_addr + 0] & ff000000) | (S0 & 00ffffff));
+                y0 = 0 - y0;
+                height = 0 - height;
             }
 
-            tile = tile + 1;
-            tile_data = tile_data + 18;
-        8001EC9C	bne    tile, number_of_tiles, L1e9b8 [$8001e9b8]
+            if( w[tile_data + 14] & 00000010 )
+            {
+                [8004f17c + 00] = h(x0 + width);
+                [8004f17c + 08] = h(x0);
+                [8004f17c + 10] = h(x0);
+                [8004f17c + 18] = h(x0 + width);
+            }
+            else
+            {
+                [8004f17c + 00] = h(x0);
+                [8004f17c + 08] = h(x0 + width);
+                [8004f17c + 10] = h(x0 + width);
+                [8004f17c + 18] = h(x0);
+            }
+
+            if( w[tile_data + 14] & 00000020 )
+            {
+                [8004f17c + 04] = h(y0 + height);
+                [8004f17c + 0c] = h(y0 + height);
+                [8004f17c + 14] = h(y0);
+                [8004f17c + 1c] = h(y0);
+            }
+            else
+            {
+                [8004f17c + 04] = h(y0);
+                [8004f17c + 0c] = h(y0);
+                [8004f17c + 14] = h(y0 + height);
+                [8004f17c + 1c] = h(y0 + height);
+            }
+
+            S0 = w[80058c1c];
+            [80058c1c] = w(S0 + 28);
+
+            [S0 + 03] = b(09);
+            [S0 + 07] = b(2с);
+            [S0 + 04] = b(00);
+            [S0 + 05] = b(00);
+            [S0 + 06] = b(00);
+            [S0 + 0e] = h(hu[tile_data + c]); // clut
+            [S0 + 16] = h(hu[tile_data + a]); // tex page info
+
+            A0 = 8004f17c + 00; // xyz0
+            A1 = 8004f17c + 08; // xyz1
+            A2 = 8004f17c + 10; // xyz3
+            A3 = 8004f17c + 18; // xyz2
+            A4 = S0 + 08; // xy0
+            A5 = S0 + 10; // xy1
+            A6 = S0 + 20; // xy3
+            A7 = S0 + 18; // xy2
+            A8 = SP + 70; // Interpolation value for depth queing. (not used)
+            A9 = SP + 74; // return flags (not used)
+            func4a664(); // transform 4 points by rotation matrix
+
+            A1 = (hu[S0 + a] + hu[S0 + 12]) / 2; // average y
+            [S0 + 12] = h(A1); // vy1
+            [S0 + a] = h(A1); // vy0
+            A1 = (hu[S0 + 1a] + hu[S0 + 22]) / 2; // average y
+            [S0 + 22] = h(A1); // vy3
+            [S0 + 1a] = h(A1); // vy2
+
+            [S0 + 0c] = b(bu[tile_data + 4]); // u0
+            [S0 + 0d] = b(bu[tile_data + 5]); // v0
+            [S0 + 14] = b(bu[tile_data + 4] + bu[tile_data + 6] + ff); // u1
+            [S0 + 15] = b(bu[tile_data + 5]); // v1
+            [S0 + 1c] = b(bu[tile_data + 4]); // u2
+            [S0 + 1d] = b(bu[tile_data + 5] + bu[tile_data + 7] + ff); // v2
+            [S0 + 24] = b(bu[tile_data + 4] + bu[tile_data + 6] + ff); // u3
+            [S0 + 25] = b(bu[tile_data + 5] + bu[tile_data + 7] + ff); // v3
+
+            [S0 + 0] = w((w[S0 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
+            [packet_addr + 0] = w((w[packet_addr + 0] & ff000000) | (S0 & 00ffffff));
+        }
+
+        tile_data = tile_data + 18;
     }
 }
 ////////////////////////////////
@@ -1167,144 +1137,139 @@ S7 = A2 << scale;
 
 if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
-    if( number_of_tiles != 0 )
+    for( int tile = 0; tile < number_of_tiles; ++tile )
     {
-        tile = 0;
+        S0 = w[80058c1c];
+        [80058c1c] = w(S0 + 28);
 
-        L1ed90:	; 8001ED90
-            S0 = w[80058c1c];
-            [80058c1c] = w(S0 + 28);
+        [S0 + 03] = b(09);
+        [S0 + 04] = w(w[tile_data + 10]);
+        [S0 + 0e] = h(hu[tile_data + c]);
+        [S0 + 16] = h(hu[tile_data + a]);
 
-            [S0 + 03] = b(09);
-            [S0 + 04] = w(w[tile_data + 10]);
-            [S0 + 0e] = h(hu[tile_data + c]);
-            [S0 + 16] = h(hu[tile_data + a]);
+        x0 = h[tile_data + 0] << scale;
+        y0 = h[tile_data + 2] << scale;
+        width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
+        height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
 
-            A3 = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
-            S2 = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
-            A2 = h[tile_data + 0] << scale;
-            A1 = h[tile_data + 2] << scale;
+        if( w[struct_164 + 3c] & 00000008 )
+        {
+            x0 = 0 - x0;
+            width = 0 - width;
+        }
 
-            if( w[struct_164 + 3c] & 00000008 )
+        if( w[struct_164 + 3c] & 00000010 )
+        {
+            y0 = 0 - y0;
+            height = 0 - height;
+        }
+
+        if( w[tile_data + 14] & 00000010 )
+        {
+            [8004f23c + 00] = h(x0 + width);
+            [8004f23c + 08] = h(x0);
+            [8004f23c + 10] = h(x0);
+            [8004f23c + 18] = h(x0 + width);
+        }
+        else
+        {
+            [8004f23c + 00] = h(x0);
+            [8004f23c + 08] = h(x0 + width);
+            [8004f23c + 10] = h(x0 + width);
+            [8004f23c + 18] = h(x0);
+        }
+
+        if( height > 0 )
+        {
+            V0 = y0;
+            V1 = y0 + height;
+        }
+        else
+        {
+            V1 = y0;
+            V0 = y0 + height;
+        }
+
+        if( S7 >= V0 )
+        {
+            if( S7 < V1 )
             {
-                A3 = 0 - A3;
-                A2 = 0 - A2;
-            }
-
-            if( w[struct_164 + 3c] & 00000010 )
-            {
-                S2 = 0 - S2;
-                A1 = 0 - A1;
-            }
-
-            if( w[tile_data + 14] & 00000010 )
-            {
-                [8004f23c + 00] = h(A2 + A3);
-                [8004f23c + 08] = h(A2);
-                [8004f23c + 10] = h(A2);
-                [8004f23c + 18] = h(A2 + A3);
+                S1 = V1 - S7;
             }
             else
             {
-                [8004f23c + 00] = h(A2);
-                [8004f23c + 08] = h(A2 + A3);
-                [8004f23c + 10] = h(A2 + A3);
-                [8004f23c + 18] = h(A2);
+                S1 = 0;
             }
 
-            if( S2 > 0 )
+            height = height - S1;
+            if( height < 0 )
             {
-                V0 = A1;
-                V1 = A1 + S2;
+                y0 = y0 - S1;
+            }
+
+            if( w[tile_data + 14] & 00000020 )
+            {
+                [8004f23c + 02] = h(y0 + height);
+                [8004f23c + 0a] = h(y0 + height);
+                [8004f23c + 12] = h(y0);
+                [8004f23c + 1a] = h(y0);
             }
             else
             {
-                V0 = A1 + S2;
-                V1 = A1;
+                [8004f23c + 02] = h(y0);
+                [8004f23c + 0a] = h(y0);
+                [8004f23c + 12] = h(y0 + height);
+                [8004f23c + 1a] = h(y0 + height);
             }
 
-            if( S7 >= V0 )
+            A0 = 8004f23c + 00; // xyz0
+            A1 = 8004f23c + 08; // xyz1
+            A2 = 8004f23c + 10; // xyz3
+            A3 = 8004f23c + 18; // xyz2
+            A4 = S0 + 08; // xy0
+            A5 = S0 + 10; // xy1
+            A6 = S0 + 20; // xy3
+            A7 = S0 + 18; // xy2
+            A8 = SP + 28; // Interpolation value for depth queing. (not used)
+            A9 = SP + 2c; // return flags (not used)
+            func4a664(); // transform 4 points by rotation matrix
+
+            v0 = bu[tile_data + 5];
+            S1 = S1 >> scale;
+            height = bu[tile_data + 7];
+
+            if( height <= 0 )
             {
-                if( S7 < V1 )
-                {
-                    S1 = V1 - S7;
-                }
-                else
-                {
-                    S1 = 0;
-                }
-
-                S2 = S2 - S1;
-                if( S2 < 0 )
-                {
-                    A1 = A1 - S1;
-                }
-
-                if( w[tile_data + 14] & 00000020 )
-                {
-                    [8004f23c + 02] = h(A1 + S2);
-                    [8004f23c + 0a] = h(A1 + S2);
-                    [8004f23c + 12] = h(A1);
-                    [8004f23c + 1a] = h(A1);
-                }
-                else
-                {
-                    [8004f23c + 02] = h(A1);
-                    [8004f23c + 0a] = h(A1);
-                    [8004f23c + 12] = h(A1 + S2);
-                    [8004f23c + 1a] = h(A1 + S2);
-                }
-
-                A0 = 8004f23c + 00;
-                A1 = 8004f23c + 08;
-                A2 = 8004f23c + 10;
-                A3 = 8004f23c + 18;
-                A4 = S0 + 08;
-                A5 = S0 + 10;
-                A6 = S0 + 20;
-                A7 = S0 + 18;
-                A8 = SP + 28;
-                A9 = SP + 2c;
-                func4a664(); // transform 4 points by rotation matrix
-
-                v0 = bu[tile_data + 5];
-                S1 = S1 >> scale;
-                height = bu[tile_data + 7];
-
-                if( S2 <= 0 )
-                {
-                    v0 = v0 - S1;
-                }
-
-                u0 = bu[tile_data + 4];
-                width = bu[tile_data + 6];
-                height = height - S1;
-                if( h[S0 + 20] < h[S0 + 8] )
-                {
-                    u0 = u0 - 1;
-                    if( u0 < 0 )
-                    {
-                        u0 = 0;
-                        width = width - 1;
-                    }
-                }
-
-                [S0 + 0c] = b(u0); // u0
-                [S0 + 0d] = b(v0); // v0
-                [S0 + 14] = b(u0 + width); // u1
-                [S0 + 15] = b(v0); // v1
-                [S0 + 1c] = b(h[S0 + 20]); // u2
-                [S0 + 1d] = b(v0 + height); // v2
-                [S0 + 24] = b(u0 + width); // u3
-                [S0 + 25] = b(v0 + height); // v3
-
-                [S0 + 0] = w((w[S0 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
-                [packet_addr + 0] = w((w[packet_addr + 0] & ff000000) | (S0 & 00ffffff));
+                v0 = v0 - S1;
             }
 
-            tile = tile + 1;
-            tile_data = tile_data + 18;
-        8001F00C	bne    fp, number_of_tiles, L1ed90 [$8001ed90]
+            u0 = bu[tile_data + 4];
+            width = bu[tile_data + 6];
+            height = height - S1;
+            if( h[S0 + 20] < h[S0 + 8] )
+            {
+                u0 = u0 - 1;
+                if( u0 < 0 )
+                {
+                    u0 = 0;
+                    width = width - 1;
+                }
+            }
+
+            [S0 + 0c] = b(u0); // u0
+            [S0 + 0d] = b(v0); // v0
+            [S0 + 14] = b(u0 + width); // u1
+            [S0 + 15] = b(v0); // v1
+            [S0 + 1c] = b(h[S0 + 20]); // u2
+            [S0 + 1d] = b(v0 + height); // v2
+            [S0 + 24] = b(u0 + width); // u3
+            [S0 + 25] = b(v0 + height); // v3
+
+            [S0 + 0] = w((w[S0 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
+            [packet_addr + 0] = w((w[packet_addr + 0] & ff000000) | (S0 & 00ffffff));
+        }
+
+        tile_data = tile_data + 18;
     }
 }
 ////////////////////////////////
@@ -1325,155 +1290,150 @@ S7 = A2 << scale;
 
 if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 {
-    if( number_of_tiles != 0 )
+    for( int tile = 0; tile < number_of_tiles; ++tile )
     {
-        tile = 0;
+        S2 = w[80058c1c];
+        [80058c1c] = w(S2 + 28);
 
-        L1f0e0:	; 8001F0E0
-            S2 = w[80058c1c];
-            [80058c1c] = w(S2 + 28);
+        [S2 + 03] = b(09);
+        [S2 + 04] = w(w[tile_data + 10]); // 2c808080 - Command + Color Vertex 0
+        [S2 + 0e] = h(hu[tile_data + c]); // clut id
+        [S2 + 16] = h(hu[tile_data + a]); // tpage
 
-            [S2 + 03] = b(09);
-            [S2 + 04] = w(w[tile_data + 10]); // 2c808080 - Command + Color Vertex 0
-            [S2 + 0e] = h(hu[tile_data + c]); // clut id
-            [S2 + 16] = h(hu[tile_data + a]); // tpage
+        x0 = h[tile_data + 0] << scale;
+        y0 = h[tile_data + 2] << scale;
+        width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
+        height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
 
-            x0 = h[tile_data + 0] << scale;
-            y0 = h[tile_data + 2] << scale;
-            width = (bu[tile_data + 6] + b[tile_data + 8]) << scale;
-            height = (bu[tile_data + 7] + b[tile_data + 9]) << scale;
+        if( w[struct_164 + 3c] & 00000008 )
+        {
+            x0 = 0 - x0;
+            width = 0 - width;
+        }
 
-            if( w[struct_164 + 3c] & 00000008 )
+        if( w[struct_164 + 3c] & 00000010 )
+        {
+            y0 = 0 - y0;
+            height = 0 - height;
+        }
+
+        if( w[tile_data + 14] & 00000010 )
+        {
+            [8004f23c + 00] = h(x0 + width);
+            [8004f23c + 08] = h(x0);
+            [8004f23c + 10] = h(x0);
+            [8004f23c + 18] = h(x0 + width);
+        }
+        else
+        {
+            [8004f23c + 00] = h(x0);
+            [8004f23c + 08] = h(x0 + width);
+            [8004f23c + 10] = h(x0 + width);
+            [8004f23c + 18] = h(x0);
+        }
+
+        if( height > 0 )
+        {
+            V1 = y0;
+            V0 = y0 + height;
+        }
+        else
+        {
+            V1 = y0 + height;
+            V0 = y0;
+        }
+
+        if( V0 >= S7 )
+        {
+            if( V1 < S7 )
             {
-                x0 = 0 - x0;
-                width = 0 - width;
-            }
-
-            if( w[struct_164 + 3c] & 00000010 )
-            {
-                y0 = 0 - y0;
-                height = 0 - height;
-            }
-
-            if( w[tile_data + 14] & 00000010 )
-            {
-                [8004f23c + 00] = h(x0 + width);
-                [8004f23c + 08] = h(x0);
-                [8004f23c + 10] = h(x0);
-                [8004f23c + 18] = h(x0 + width);
+                S1 = S7 - V1;
             }
             else
             {
-                [8004f23c + 00] = h(x0);
-                [8004f23c + 08] = h(x0 + width);
-                [8004f23c + 10] = h(x0 + width);
-                [8004f23c + 18] = h(x0);
+                S1 = 0;
             }
 
             if( height > 0 )
             {
-                V1 = y0;
-                V0 = y0 + height;
+                y0 = y0 + S1;
+                height = height - S1;
             }
             else
             {
-                V1 = y0 + height;
-                V0 = y0;
+                y0 = y0 + S1;
+                height = height + S1;
             }
 
-            if( V0 >= S7 )
+            if( w[tile_data + 14] & 00000020 )
             {
-                if( V1 < S7 )
-                {
-                    S1 = S7 - V1;
-                }
-                else
-                {
-                    S1 = 0;
-                }
-
-                if( height > 0 )
-                {
-                    y0 = y0 + S1;
-                    height = height - S1;
-                }
-                else
-                {
-                    y0 = y0 + S1;
-                    height = height + S1;
-                }
-
-                if( w[tile_data + 14] & 00000020 )
-                {
-                    [8004f23c + 02] = h(y0 + height);
-                    [8004f23c + 0a] = h(y0 + height);
-                    [8004f23c + 12] = h(y0);
-                    [8004f23c + 1a] = h(y0);
-                }
-                else
-                {
-                    [8004f23c + 02] = h(y0);
-                    [8004f23c + 0a] = h(y0);
-                    [8004f23c + 12] = h(y0 + height);
-                    [8004f23c + 1a] = h(y0 + height);
-                }
-
-                A0 = 8004f23c + 00; // xyz0
-                A1 = 8004f23c + 08; // xyz1
-                A2 = 8004f23c + 10; // xyz3
-                A3 = 8004f23c + 18; // xyz2
-                A4 = S2 + 08; // xy0
-                A5 = S2 + 10; // xy1
-                A6 = S2 + 20; // xy3
-                A7 = S2 + 18; // xy2
-                A8 = SP + 28; // Interpolation value for depth queing. (not used)
-                A9 = SP + 2c; // return flags (not used)
-                func4a664(); // transform 4 points by rotation matrix
-
-                S1 = S1 >> scale;
-
-                if( height > 0 )
-                {
-                    height = bu[tile_data + 7];
-                    v0 = bu[tile_data + 5] + S1;
-                }
-                else
-                {
-                    height = bu[tile_data + 7];
-                    v0 = bu[tile_data + 5] - S1;
-                }
-
-
-                // set up texture coordinates
-                u0 = bu[tile_data + 4];
-                width = bu[tile_data + 6];
-                height = height - S1;
-                if( h[S2 + 20] < h[S2 + 8] )
-                {
-                    u0 = u0 - 1;
-                    if( u0 < 0 )
-                    {
-                        u0 = 0;
-                        width = width - 1;
-                    }
-                }
-
-                [S2 + 0c] = b(u0); // u0
-                [S2 + 0d] = b(v0); // v0
-                [S2 + 14] = b(h[S2 + 20] + width); // u1
-                [S2 + 15] = b(v0); // v1
-                [S2 + 1c] = b(u0); // u2
-                [S2 + 1d] = b(v0 + height); // v2
-                [S2 + 24] = b(h[S2 + 20] + width); // u3
-                [S2 + 25] = b(v0 + height); // v3
-
-                [S2 + 0] = w((w[S2 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
-                [packet_addr + 0] = w((w[packet_addr + 0] & ff000000) | (S2 & 00ffffff));
+                [8004f23c + 02] = h(y0 + height);
+                [8004f23c + 0a] = h(y0 + height);
+                [8004f23c + 12] = h(y0);
+                [8004f23c + 1a] = h(y0);
+            }
+            else
+            {
+                [8004f23c + 02] = h(y0);
+                [8004f23c + 0a] = h(y0);
+                [8004f23c + 12] = h(y0 + height);
+                [8004f23c + 1a] = h(y0 + height);
             }
 
-            tile = tile + 1;
-            tile_data = tile_data + 18;
-        8001F36C	bne    tile, number_of_tiles, L1f0e0 [$8001f0e0]
+            A0 = 8004f23c + 00; // xyz0
+            A1 = 8004f23c + 08; // xyz1
+            A2 = 8004f23c + 10; // xyz3
+            A3 = 8004f23c + 18; // xyz2
+            A4 = S2 + 08; // xy0
+            A5 = S2 + 10; // xy1
+            A6 = S2 + 20; // xy3
+            A7 = S2 + 18; // xy2
+            A8 = SP + 28; // Interpolation value for depth queing. (not used)
+            A9 = SP + 2c; // return flags (not used)
+            func4a664(); // transform 4 points by rotation matrix
+
+            S1 = S1 >> scale;
+
+            if( height > 0 )
+            {
+                height = bu[tile_data + 7];
+                v0 = bu[tile_data + 5] + S1;
+            }
+            else
+            {
+                height = bu[tile_data + 7];
+                v0 = bu[tile_data + 5] - S1;
+            }
+
+
+            // set up texture coordinates
+            u0 = bu[tile_data + 4];
+            width = bu[tile_data + 6];
+            height = height - S1;
+            if( h[S2 + 20] < h[S2 + 8] )
+            {
+                u0 = u0 - 1;
+                if( u0 < 0 )
+                {
+                    u0 = 0;
+                    width = width - 1;
+                }
+            }
+
+            [S2 + 0c] = b(u0); // u0
+            [S2 + 0d] = b(v0); // v0
+            [S2 + 14] = b(h[S2 + 20] + width); // u1
+            [S2 + 15] = b(v0); // v1
+            [S2 + 1c] = b(u0); // u2
+            [S2 + 1d] = b(v0 + height); // v2
+            [S2 + 24] = b(h[S2 + 20] + width); // u3
+            [S2 + 25] = b(v0 + height); // v3
+
+            [S2 + 0] = w((w[S2 + 0] & ff000000) | (w[packet_addr + 0] & 00ffffff));
+            [packet_addr + 0] = w((w[packet_addr + 0] & ff000000) | (S2 & 00ffffff));
+        }
+
+        tile_data = tile_data + 18;
     }
 }
 ////////////////////////////////
@@ -1482,6 +1442,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 
 ////////////////////////////////
 // func1f3a8()
+
 ret = A0;
 if( ( h[GP + 26] + A1 ) >= 41 )
 {
