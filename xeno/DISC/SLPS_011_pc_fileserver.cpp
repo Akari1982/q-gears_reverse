@@ -43,6 +43,7 @@ A1 = A0; // filehandle
 
 ////////////////////////////////
 // func4c240()
+
 8004C248	addu   s4, a0, zero
 8004C250	addu   s3, a1, zero
 8004C258	addu   s0, a2, zero
@@ -101,6 +102,7 @@ return V1;
 
 ////////////////////////////////
 // func4c318()
+
 8004C320	addu   s4, a0, zero
 8004C328	addu   s3, a1, zero
 8004C330	addu   s0, a2, zero

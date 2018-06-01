@@ -1,29 +1,4 @@
 ﻿////////////////////////////////
-// spu_opcode_80
-sequence_current = A0;
-channel_struct = A2;
-
-[channel_struct + 0] = h(hu[channel_struct + 0] | 0400);
-[channel_struct + 2] = h(hu[channel_struct + 2] | 0002);
-[channel_struct + 5c] = h(bu[sequence_current]);
-return sequence_current + 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// spu_opcode_81
-sequence_current = A0;
-channel_struct = A2;
-
-[channel_struct + 0] = h(hu[channel_struct + 0] | 0100);
-[channel_struct + 5c] = h(bu[sequence_current]);
-return sequence_current + 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // spu_opcode_90
 sequence_current = A0;
 channel_struct = A2;

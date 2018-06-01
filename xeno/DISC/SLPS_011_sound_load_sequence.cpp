@@ -47,139 +47,6 @@ return S0;
 
 
 ////////////////////////////////
-// func3b88c
-S0 = A0;
-
-// syscall
-A0 = w[80058c58];
-long DisableEvent( A0 ); // Turns off event handling for specified event.
-
-[S0 + 0] = w(w[80058c00]);
-[80058c00] = w(S0);
-
-// syscall
-A0 = w[80058c58]; // some sys event id. Maybe sound event callback.
-long EnableEvent( A0 );
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3b2cc
-main_struct = A0;
-number_of_channels = bu[main_struct + 14];
-channel_struct = main_struct + 94;
-
-if( number_of_channels == 0 )
-{
-    return;
-}
-
-S5 = 0;
-S4 = -1;
-mask = 0;
-
-smd = w[main_struct + 8];
-S3 = 0;
-
-A0 = h[main_struct + 16];
-func38294; // get snd instruments
-S7 = V0;
-
-if( S7 == 0 )
-{
-    S7 = w[80058bf4];
-}
-
-L3b33c:	; 8003B33C
-    if( hu[smd + 22 + S3] != 0 )
-    {
-        mask = mask | (1 << S5);
-
-        if( (1 << S5) & w[main_struct + 4c] )
-        {
-            V0 = 421;
-        }
-        else
-        {
-            V0 = 401;
-        }
-        [channel_struct + 0] = h(V0);
-
-        if( hu[main_struct + 10] & 0004 )
-        {
-            [channel_struct + 0] = h(hu[channel_struct + 0] | 0004);
-        }
-
-        [channel_struct + 02] = h(0170);
-        [channel_struct + 04] = h(0010);
-        [channel_struct + 06] = b(S5);
-        [channel_struct + 07] = b(10);
-        [channel_struct + 08] = w(hu[smd + 10]);
-        [channel_struct + 10] = w(smd + hu[smd + 22 + S3]);
-        [channel_struct + 14] = w(smd + hu[smd + 22 + S3]);
-        [channel_struct + 18] = w(0);
-        [channel_struct + 1c] = w(0);
-        [channel_struct + 20] = h(0);
-        [channel_struct + 22] = b(0);
-        [channel_struct + 25] = b(bu[main_struct + 16]);
-        [channel_struct + 2c] = w(S7);
-        [channel_struct + 3c] = h(0);
-        [channel_struct + 3e] = h(0);
-        [channel_struct + 5c] = h(0);
-        [channel_struct + 60] = b(0);
-        [channel_struct + 62] = h(000f);
-        [channel_struct + 64] = b(0);
-        [channel_struct + 66] = h(003c);
-        [channel_struct + 6e] = h(0);
-        [channel_struct + 70] = h(0);
-        [channel_struct + 72] = h(ffff);
-        [channel_struct + 74] = h(4000);
-        [channel_struct + 76] = h(6000);
-        [channel_struct + 78] = w(7f000000);
-        [channel_struct + ce] = h(0);
-        [channel_struct + d0] = h(0);
-        [channel_struct + d2] = h(0);
-        [channel_struct + d4] = h(0);
-
-        [channel_struct + f6] = h(0)
-        [channel_struct + 116] = h(0)
-        [channel_struct + 136] = h(0)
-        [channel_struct + 156] = h(0)
-
-        if( S7 != 0 )
-        {
-            A0 = 0;
-            A1 = channel_struct;
-            func3e464; // InitChannelInstrument
-        }
-
-        [channel_struct + 27] = b(S4);
-        [channel_struct + 32] = h(0);
-        [channel_struct + 34] = h(0100);
-
-        A0 = channel_struct + 30;
-        A1 = S4;
-        func3e5cc;
-    }
-    else
-    {
-        [channel_struct + 0] = h(0);
-    }
-
-    S3 = S3 + 2;
-    S5 = S5 + 1;
-    S4 = S4 + 1;
-    channel_struct = channel_struct + 158;
-    number_of_channels = number_of_channels - 1;
-8003B4A4	bne    number_of_channels, zero, L3b33c [$8003b33c]
-
-[main_struct + 48] = w(mask);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func3e5cc
 channel_struct30 = A0;
 channel_id = A1;
@@ -209,36 +76,6 @@ if( channel_id < 18 )
     [80058bf0] = w(w[80058bf0] | (1 << channel_id));
     [80058b98] = w(w[80058b98] | (0 nor (1 << channel_id)));
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3b0d4
-main_struct = A0;
-smd = w[main_struct + 8];
-
-[main_struct + 10] = h(hu[main_struct + 10] | 0001);
-[main_struct + 12] = h(hu[smd + 10]);
-[main_struct + 14] = b(bu[smd + 14]); // number of channels
-[main_struct + 16] = h(hu[smd + 16]);
-[main_struct + 18] = h(hu[smd + 18]);
-[main_struct + 41] = b(bu[smd + 1a]);
-[main_struct + 42] = b(bu[smd + 1c]);
-[main_struct + 43] = b(bu[smd + 1d]);
-[main_struct + 44] = h(bu[smd + 1b] << 8);
-
-if( hu[80058c18] & 1000 )
-{
-    A0 = b[main_struct + 41];
-    A1 = h[main_struct + 44];
-    A2 = bu[main_struct + 42];
-    A3 = bu[main_struct + 43];
-    func387dc;
-}
-
-A0 = main_struct;
-func3b218;
 ////////////////////////////////
 
 
@@ -347,63 +184,6 @@ L38950:	; 80038950
 
 
 ////////////////////////////////
-// func3b218
-main_struct = A0;
-
-func3b7d8; // insert links to this packs of structures
-
-[main_struct + 1a] = b(0);
-[main_struct + 1b] = b(0);
-[main_struct + 20] = w(0);
-[main_struct + 24] = w(0);
-[main_struct + 28] = w(0);
-[main_struct + 30] = h(0);
-[main_struct + 32] = h(0001);
-[main_struct + 34] = h(0);
-[main_struct + 36] = h(0001);
-[main_struct + 38] = h(0004);
-[main_struct + 3a] = h(0030);
-[main_struct + 3c] = h(0004);
-[main_struct + 3e] = h(0004);
-[main_struct + 48] = w(0); // channel mask  
-[main_struct + 50] = w(00010000);
-[main_struct + 54] = w(00006600);
-[main_struct + 58] = w(00660000);
-[main_struct + 5c] = w(0);
-[main_struct + 60] = h(0);
-[main_struct + 64] = w(01000000);
-[main_struct + 6c] = h(0);
-[main_struct + 70] = w(7f000000);
-[main_struct + 78] = h(0);
-[main_struct + 7c] = w(0);
-[main_struct + 84] = h(0);
-[main_struct + 88] = w(0);
-[main_struct + 90] = h(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3b7d8
-main_struct = A0;
-A0 = w[main_struct + 4];
-
-if( A0 != 0 )
-{
-    [main_struct + 4] = w(0);
-
-    loop3b7fc:	; 8003B7FC
-        S0 = w[A0 + 4];
-        func38fec;
-
-        A0 = S0;
-    8003B808	bne    s0, zero, loop3b7fc [$8003b7fc]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func38fec()
 main_struct = A0;
 
@@ -430,34 +210,6 @@ if( V1 != 0 )
 // syscall
 A0 = w[80058c58]; // some sys event id. Maybe sound event callback.
 long EnableEvent( A0 );
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3af54
-S0 = A0;
-smd = A1;
-A0 = bu[smd + 14];
-add_data = S0 + A0 * 158 + 94;
-[S0 + c] = w(T1);
-number = bu[smd + 15];
-S1 = smd + hu[smd + 20];
-
-
-loop3af90:	; 8003AF90
-    id = bu[S1 + 0];
-    [add_data + id * 4] = w((bu[S1 + 4] << 18) | (bu[S1 + 3] << 10) | (bu[S1 + 2] << 8) | bu[S1 + 1]);
-    S1 = S1 + 5;
-    number = number - 1;
-8003AFD0	bne    number, zero, loop3af90 [$8003af90]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3b9e8
-return A0 * 158 + 94;
 ////////////////////////////////
 
 
