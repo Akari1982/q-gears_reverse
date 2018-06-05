@@ -3389,6 +3389,735 @@ return sequence_current + 1;
 
 
 
+////////////////////////////////
+// func3cbf4
+8003CBF4	jr     ra 
+8003CBF8	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cbfc
+8003CBFC	lbu    v1, $0000(a0)
+8003CC00	lbu    v0, $001b(a1)
+8003CC04	nop
+8003CC08	bne    v1, v0, L3cc1c [$8003cc1c]
+8003CC0C	addiu  a0, a0, $0001
+8003CC10	lbu    v0, $0066(a2)
+8003CC14	sw     a0, $0018(a2)
+8003CC18	sb     v0, $0023(a2)
+
+L3cc1c:	; 8003CC1C
+8003CC1C	jr     ra 
+8003CC20	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cc24
+8003CC24	jr     ra 
+8003CC28	addiu  v0, a0, $0003
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cc2c
+8003CC2C	jr     ra 
+8003CC30	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_90
+sequence_current = A0;
+channel_struct = A2;
+
+if( w[channel_struct + 18] != 0 )
+{
+    sequence_current = w[channel_struct + 18];
+    [channel_struct + 66] = h(bu[channel_struct + 23]);
+    [channel_struct + 20] = h(hu[channel_struct + 20] + 1);
+}
+else
+{
+    A1 = bu[channel_struct + 27];
+    if( A1 < 18 && w[80061bbc + A1 * 4] == channel_struct + 30 )
+    {
+        [80061bbc + A1 * 4] = w(0);
+        [80058b98] = w(w[80058b98] & (0 NOR (1 << A1))); // remove channel bit from SPU Voice ON mask
+        [80058bf0] = w(w[80058bf0] | (1 << A1)); // add channel bit
+    }
+
+    [channel_struct + 0] = h(0);
+    [channel_struct + 2] = h(hu[channel_struct + 2] & fffc);
+}
+return sequence_current;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_91
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 18] = w[sequence_current];
+[channel_struct + 23] = b(bu[channel_struct + 66]);
+return sequence_current;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_94
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 66] = h(bu[sequence_current] * c);
+return sequence_current + 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_95
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 66] = h(hu[channel_struct + 66] + c);
+return sequence_current;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_96
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 66] = h(hu[channel_struct + 66] - c);
+return sequence_current;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_97
+sequence_current = A0;
+main_struct = A1;
+
+[main_struct + 36] = h(c0 / bu[sequence_current + 1]);
+[main_struct + 38] = h(bu[sequence_current + 0]);
+[main_struct + 3a] = h(c0 / bu[sequence_current + 1]);
+[main_struct + 3c] = h(bu[sequence_current + 1]);
+[main_struct + 3e] = h(bu[sequence_current + 0]);
+return sequence_current + 2;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cd44
+8003CD44	lbu    v0, $0000(a0)
+8003CD48	nop
+8003CD4C	sh     v0, $0032(a1)
+8003CD50	lhu    v0, $003a(a1)
+8003CD54	lbu    v1, $0001(a0)
+8003CD58	sh     v0, $0036(a1)
+8003CD5C	addiu  v0, a0, $0002
+8003CD60	jr     ra 
+8003CD64	sh     v1, $0034(a1)
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cd68
+8003CD68	lbu    v0, $0000(a0)
+8003CD6C	nop
+8003CD70	sb     v0, $001a(a1)
+8003CD74	jr     ra 
+8003CD78	addiu  v0, a0, $0001
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cd7c
+8003CD7C	lbu    v0, $001a(a1)
+8003CD80	lbu    v1, $0000(a0)
+8003CD84	nop
+8003CD88	addu   v0, v0, v1
+8003CD8C	sb     v0, $001a(a1)
+8003CD90	jr     ra 
+8003CD94	addiu  v0, a0, $0001
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_98
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 72] = h(hu[channel_struct + 72] + 1);
+
+A1 = hu[channel_struct + 72];
+[channel_struct + 9c + A1 * c + 0] = b(bu[sequence_current] - 1);
+[channel_struct + 9c + A1 * c + 4] = w(sequence_current + 1);
+[channel_struct + 9c + A1 * c + 2] = b(bu[channel_struct + 66]);
+return sequence_current + 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_99
+sequence_current = A0;
+channel_struct = A2;
+
+V1 = hu[channel_struct + 72];
+[channel_struct + 9c + V1 * c + 0] = b(bu[channel_struct + 9c + V1 * c + 0] - 1);
+
+if( bu[channel_struct + 9c + V1 * c + 0] != ff )
+{
+    // store for break
+    [channel_struct + 9c + V1 * c + 3] = b(bu[channel_struct + 66]);
+    [channel_struct + 9c + V1 * c + 8] = w(sequence_current);
+
+    // restore previous
+    sequence_current = w[channel_struct + 9c + V1 * c + 4];
+    [channel_struct + 66] = h(bu[channel_struct + 9c + V1 * c + 2]);
+}
+else
+{
+    [channel_struct + 72] = h(hu[channel_struct + 72] - 1);
+}
+
+return sequence_current;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_9a
+sequence_current = A0;
+channel_struct = A2;
+
+V1 = hu[channel_struct + 72];
+
+if( bu[channel_struct + 9c + V1 * c + 0] == 0 )
+{
+    sequence_current = w[channel_struct + 9c + V1 * c + 8];
+    [channel_struct + 66] = h(bu[channel_struct + 9c + V1 * c + 3]);
+
+    [channel_struct + 72] = h(hu[channel_struct + 72] - 1);
+}
+return A0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3ce98
+8003CE98	addiu  sp, sp, $ffe8 (=-$18)
+8003CE9C	sw     s0, $0010(sp)
+8003CEA0	addu   s0, a0, zero
+8003CEA4	ori    a1, zero, $007f
+8003CEA8	ori    a2, zero, $0040
+8003CEAC	sw     ra, $0014(sp)
+8003CEB0	lbu    a0, $0001(s0)
+8003CEB4	lbu    v0, $0000(s0)
+8003CEB8	sll    a0, a0, $08
+8003CEBC	jal    func39dc0 [$80039dc0]
+8003CEC0	or     a0, v0, a0
+8003CEC4	addiu  v0, s0, $0003
+8003CEC8	lw     ra, $0014(sp)
+8003CECC	lw     s0, $0010(sp)
+8003CED0	addiu  sp, sp, $0018
+8003CED4	jr     ra 
+8003CED8	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cedc
+8003CEDC	addiu  sp, sp, $ffe8 (=-$18)
+8003CEE0	sw     s0, $0010(sp)
+8003CEE4	addu   s0, a0, zero
+8003CEE8	sw     ra, $0014(sp)
+8003CEEC	lbu    a0, $0001(s0)
+8003CEF0	lbu    v0, $0000(s0)
+8003CEF4	sll    a0, a0, $08
+8003CEF8	jal    func39ff4 [$80039ff4]
+8003CEFC	or     a0, v0, a0
+8003CF00	addiu  v0, s0, $0002
+8003CF04	lw     ra, $0014(sp)
+8003CF08	lw     s0, $0010(sp)
+8003CF0C	addiu  sp, sp, $0018
+8003CF10	jr     ra 
+8003CF14	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cf18
+8003CF18	lui    a1, $8006
+8003CF1C	lw     a1, $8adc(a1)
+8003CF20	lbu    v0, $0001(a0)
+8003CF24	lbu    v1, $0000(a0)
+8003CF28	lh     a2, $000a(a2)
+8003CF2C	lbu    a3, $0002(a0)
+8003CF30	sll    v0, v0, $08
+8003CF34	beq    a2, zero, L3cf64 [$8003cf64]
+8003CF38	or     v1, v1, v0
+
+loop3cf3c:	; 8003CF3C
+8003CF3C	lhu    v0, $0014(a1)
+8003CF40	nop
+8003CF44	beq    v0, a2, L3cf64 [$8003cf64]
+8003CF48	nop
+8003CF4C	lw     a1, $001c(a1)
+8003CF50	nop
+8003CF54	bne    a1, zero, loop3cf3c [$8003cf3c]
+8003CF58	addu   v0, a0, zero
+8003CF5C	j      L3cf88 [$8003cf88]
+8003CF60	nop
+
+L3cf64:	; 8003CF64
+8003CF64	sll    v0, v1, $10
+8003CF68	sra    v0, v0, $0f
+8003CF6C	addu   v0, a3, v0
+8003CF70	sll    v0, v0, $01
+8003CF74	addu   v0, v0, a1
+8003CF78	lhu    v0, $0020(v0)
+8003CF7C	nop
+8003CF80	addu   a0, a1, v0
+8003CF84	addiu  v0, a0, $0003
+
+L3cf88:	; 8003CF88
+8003CF88	jr     ra 
+8003CF8C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_a0
+sequence_current = A0;
+main_struct = A1;
+
+V0 = bu[sequence_current];
+[main_struct + 58] = w(V0 << 10);
+[main_struct + 54] = w[h[main_struct + 66] * V0];
+return sequence_current + 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cfb8
+8003CFB8	lb     v0, $0000(a0)
+8003CFBC	lw     v1, $0058(a1)
+8003CFC0	addiu  sp, sp, $fff8 (=-$8)
+8003CFC4	sw     zero, $0054(a1)
+8003CFC8	sll    v0, v0, $10
+8003CFCC	addu   v0, v0, v1
+8003CFD0	sw     v0, $0058(a1)
+8003CFD4	addiu  v0, a0, $0001
+8003CFD8	addiu  sp, sp, $0008
+8003CFDC	jr     ra 
+8003CFE0	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_a2
+sequence_current = A0;
+main_struct = A1;
+
+V0 = bu[sequence_current + 1] << 10;
+A3 = bu[sequence_current + 0];
+[main_struct + 62] = h(V0);
+diff = V0 - w[main_struct + 58];
+if( A3 != 0 && diff != 0 )
+{
+    [main_struct + 60] = h(A3);
+    [main_struct + 5c] = w(diff / A3);
+}
+return sequence_current + 2;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d024
+8003D024	addiu  sp, sp, $ffe8 (=-$18)
+8003D028	sw     s0, $0010(sp)
+8003D02C	addu   s0, a0, zero
+8003D030	sw     ra, $0014(sp)
+8003D034	lbu    v0, $0000(s0)
+8003D038	addiu  s0, s0, $0001
+8003D03C	ori    a0, zero, $0100
+8003D040	sll    v0, v0, $18
+8003D044	jal    func3e528 [$8003e528]
+8003D048	sw     v0, $0070(a1)
+8003D04C	addu   v0, s0, zero
+8003D050	lw     ra, $0014(sp)
+8003D054	lw     s0, $0010(sp)
+8003D058	addiu  sp, sp, $0018
+8003D05C	jr     ra 
+8003D060	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d064
+8003D064	addu   a2, a0, zero
+8003D068	lbu    a0, $0000(a2)
+8003D06C	lbu    a3, $0001(a2)
+8003D070	lw     v1, $0070(a1)
+8003D074	sll    t0, a0, $05
+8003D078	sll    v0, a3, $18
+8003D07C	sll    a0, a0, $05
+8003D080	beq    a0, zero, L3d0a8 [$8003d0a8]
+8003D084	subu   v0, v0, v1
+8003D088	beq    v0, zero, L3d0a8 [$8003d0a8]
+8003D08C	nop
+8003D090	div    v0, a0
+8003D094	mflo   v1
+8003D098	sll    v0, a3, $08
+8003D09C	sh     t0, $0078(a1)
+8003D0A0	sh     v0, $007a(a1)
+8003D0A4	sw     v1, $0074(a1)
+
+L3d0a8:	; 8003D0A8
+8003D0A8	jr     ra 
+8003D0AC	addiu  v0, a2, $0002
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_a9
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 62] = h(bu[sequence_current]);
+return sequence_current + 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d0c4
+8003D0C4	addiu  sp, sp, $ffd8 (=-$28)
+8003D0C8	sw     s1, $0014(sp)
+8003D0CC	addu   s1, a0, zero
+8003D0D0	sw     s2, $0018(sp)
+8003D0D4	addu   s2, a2, zero
+8003D0D8	sw     ra, $0020(sp)
+8003D0DC	sw     s3, $001c(sp)
+8003D0E0	sw     s0, $0010(sp)
+8003D0E4	lbu    s3, $0000(s1)
+8003D0E8	nop
+8003D0EC	slti   v0, s3, $0019
+8003D0F0	beq    v0, zero, L3d11c [$8003d11c]
+8003D0F4	addiu  s1, s1, $0001
+8003D0F8	addiu  s0, s2, $0030
+8003D0FC	lbu    a1, $0027(s2)
+8003D100	jal    func3e6e4 [$8003e6e4]
+8003D104	addu   a0, s0, zero
+8003D108	addu   a0, s0, zero
+8003D10C	addu   v0, s3, zero
+8003D110	addu   a1, v0, zero
+8003D114	jal    3 [$8003e5cc]
+8003D118	sb     v0, $0027(s2)
+
+L3d11c:	; 8003D11C
+8003D11C	addu   v0, s1, zero
+8003D120	lw     ra, $0020(sp)
+8003D124	lw     s3, $001c(sp)
+8003D128	lw     s2, $0018(sp)
+8003D12C	lw     s1, $0014(sp)
+8003D130	lw     s0, $0010(sp)
+8003D134	addiu  sp, sp, $0028
+8003D138	jr     ra 
+8003D13C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_ac
+sequence_current = A0;
+channel_struct = A2;
+
+A0 = bu[sequence_current];
+A1 = channel_struct;
+func3e464; // InitChannelInstrument
+return sequence_current + 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d178
+8003D178	lbu    v1, $0000(a0)
+8003D17C	nop
+8003D180	beq    v1, zero, L3d19c [$8003d19c]
+8003D184	addiu  a0, a0, $0001
+8003D188	lbu    v0, $0060(a2)
+8003D18C	nop
+8003D190	addu   v0, v1, v0
+8003D194	j      L3d1a0 [$8003d1a0]
+8003D198	sb     v0, $0060(a2)
+
+L3d19c:	; 8003D19C
+8003D19C	sb     zero, $0060(a2)
+
+L3d1a0:	; 8003D1A0
+8003D1A0	jr     ra 
+8003D1A4	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_ae
+sequence_current = A0;
+main_struct = A1;
+channel_struct = A2;
+
+if( w[main_struct + c] != 0 )
+{
+    [channel_struct + 0] = h(hu[channel_struct + 0]) | 0010;
+}
+return sequence_current;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d1d0
+8003D1D0	lhu    v0, $0000(a2)
+8003D1D4	nop
+8003D1D8	andi   v0, v0, $ffef
+8003D1DC	sh     v0, $0000(a2)
+8003D1E0	jr     ra 
+8003D1E4	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_b0
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 0] = h(hu[channel_struct + 0]) | 0800;
+return sequence_current;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d200
+8003D200	lhu    v0, $0000(a2)
+8003D204	nop
+8003D208	andi   v0, v0, $f7ff
+8003D20C	sh     v0, $0000(a2)
+8003D210	jr     ra 
+8003D214	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d218
+8003D218	lbu    v0, $0027(a2)
+8003D21C	nop
+8003D220	andi   v0, v0, $0001
+8003D224	beq    v0, zero, L3d244 [$8003d244]
+8003D228	nop
+8003D22C	lhu    v0, $0036(a2)
+8003D230	lhu    v1, $0032(a2)
+8003D234	ori    v0, v0, $1000
+8003D238	ori    v1, v1, $0010
+8003D23C	sh     v0, $0036(a2)
+8003D240	sh     v1, $0032(a2)
+
+L3d244:	; 8003D244
+8003D244	jr     ra 
+8003D248	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d24c
+8003D24C	lbu    v0, $0027(a2)
+8003D250	nop
+8003D254	andi   v0, v0, $0001
+8003D258	beq    v0, zero, L3d278 [$8003d278]
+8003D25C	nop
+8003D260	lhu    v0, $0036(a2)
+8003D264	lhu    v1, $0032(a2)
+8003D268	ori    v0, v0, $1000
+8003D26C	andi   v1, v1, $ffef
+8003D270	sh     v0, $0036(a2)
+8003D274	sh     v1, $0032(a2)
+
+L3d278:	; 8003D278
+8003D278	jr     ra 
+8003D27C	addu   v0, a0, zero
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d280
+8003D280	addiu  sp, sp, $ffe0 (=-$20)
+8003D284	sw     s0, $0010(sp)
+8003D288	addu   s0, a0, zero
+8003D28C	sw     ra, $0018(sp)
+8003D290	sw     s1, $0014(sp)
+8003D294	lbu    v0, $0000(s0)
+8003D298	addu   s1, a2, zero
+8003D29C	sh     v0, $001c(a1)
+8003D2A0	lhu    a0, $001c(a1)
+8003D2A4	jal    func4d20c [$8004d20c]
+8003D2A8	addiu  s0, s0, $0001
+8003D2AC	addu   v0, s0, zero
+8003D2B0	lhu    v1, $0036(s1)
+8003D2B4	lhu    a0, $0032(s1)
+8003D2B8	ori    v1, v1, $2000
+8003D2BC	ori    a0, a0, $0020
+8003D2C0	sh     v1, $0036(s1)
+8003D2C4	sh     a0, $0032(s1)
+8003D2C8	lw     ra, $0018(sp)
+8003D2CC	lw     s1, $0014(sp)
+8003D2D0	lw     s0, $0010(sp)
+8003D2D4	addiu  sp, sp, $0020
+8003D2D8	jr     ra 
+8003D2DC	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d2e0
+8003D2E0	addiu  sp, sp, $ffe0 (=-$20)
+8003D2E4	sw     s0, $0010(sp)
+8003D2E8	addu   s0, a0, zero
+8003D2EC	sw     ra, $0018(sp)
+8003D2F0	sw     s1, $0014(sp)
+8003D2F4	lbu    v0, $0000(s0)
+8003D2F8	lhu    v1, $001c(a1)
+8003D2FC	addu   s1, a2, zero
+8003D300	addu   v0, v0, v1
+8003D304	andi   v0, v0, $003f
+8003D308	sh     v0, $001c(a1)
+8003D30C	lhu    a0, $001c(a1)
+8003D310	jal    func4d20c [$8004d20c]
+8003D314	addiu  s0, s0, $0001
+8003D318	addu   v0, s0, zero
+8003D31C	lhu    v1, $0036(s1)
+8003D320	lhu    a0, $0032(s1)
+8003D324	ori    v1, v1, $2000
+8003D328	ori    a0, a0, $0020
+8003D32C	sh     v1, $0036(s1)
+8003D330	sh     a0, $0032(s1)
+8003D334	lw     ra, $0018(sp)
+8003D338	lw     s1, $0014(sp)
+8003D33C	lw     s0, $0010(sp)
+8003D340	addiu  sp, sp, $0020
+8003D344	jr     ra 
+8003D348	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d34c
+8003D34C	lhu    v0, $0036(a2)
+8003D350	lhu    v1, $0032(a2)
+8003D354	ori    v0, v0, $2000
+8003D358	ori    v1, v1, $0020
+8003D35C	sh     v0, $0036(a2)
+8003D360	addu   v0, a0, zero
+8003D364	jr     ra 
+8003D368	sh     v1, $0032(a2)
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d36c
+8003D36C	lhu    v0, $0036(a2)
+8003D370	lhu    v1, $0032(a2)
+8003D374	ori    v0, v0, $2000
+8003D378	andi   v1, v1, $ffdf
+8003D37C	sh     v0, $0036(a2)
+8003D380	addu   v0, a0, zero
+8003D384	jr     ra 
+8003D388	sh     v1, $0032(a2)
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3d38c
+8003D38C	addiu  sp, sp, $ffe8 (=-$18)
+8003D390	sw     s0, $0010(sp)
+8003D394	addu   s0, a0, zero
+8003D398	sw     ra, $0014(sp)
+8003D39C	lbu    v1, $0000(s0)
+8003D3A0	nop
+8003D3A4	sll    v0, v1, $08
+8003D3A8	sh     v0, $0044(a1)
+8003D3AC	lb     a2, $0001(s0)
+8003D3B0	addiu  a0, zero, $ffff (=-$1)
+8003D3B4	sb     a2, $0042(a1)
+8003D3B8	lb     a3, $0002(s0)
+8003D3BC	sll    v1, v1, $18
+8003D3C0	sb     a3, $0043(a1)
+8003D3C4	jal    func387dc [$800387dc]
+8003D3C8	sra    a1, v1, $10
+8003D3CC	addiu  v0, s0, $0003
+8003D3D0	lw     ra, $0014(sp)
+8003D3D4	lw     s0, $0010(sp)
+8003D3D8	addiu  sp, sp, $0018
+8003D3DC	jr     ra 
+8003D3E0	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// spu_opcode_ba
+sequence_current = A0;
+main_struct = A1;
+channel_struct = A2;
+
+if( ( ( hu[main_struct + 10] & 0006 ) == 0 ) || ( ( hu[80058c18] & 2000 ) && ( (hu[channel_struct + 0] & 0002) == 0 ) ) )
+{
+    [channel_struct + 36] = h(hu[channel_struct + 36] | 4000);
+    [channel_struct + 32] = h(hu[channel_struct + 32] | 0040);
+}
+return sequence_current;
+////////////////////////////////
+
+
+
 
 
 
