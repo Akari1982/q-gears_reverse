@@ -1632,7 +1632,7 @@ L71aac:	; 80071AAC
 80071AF0	addiu  a0, zero, $0024
 80071AF4	lui    a0, $800a
 80071AF8	lw     a0, $bc74(a0)
-80071AFC	jal    func37e80 [$80037e80]
+80071AFC	jal    system_sound_load_snd_file [$80037e80]
 80071B00	addu   a1, zero, zero
 80071B04	lui    at, $8006
 80071B08	sw     v0, $1c1c(at)
@@ -13916,7 +13916,7 @@ loop7cd58:	; 8007CD58
 8007CED4	addu   a0, zero, zero
 8007CED8	lui    a0, $800a
 8007CEDC	lw     a0, $bc74(a0)
-8007CEE0	jal    func37e80 [$80037e80]
+8007CEE0	jal    system_sound_load_snd_file [$80037e80]
 8007CEE4	addu   a1, zero, zero
 8007CEE8	addiu  a0, zero, $0024
 8007CEEC	lui    at, $8006
@@ -17432,7 +17432,7 @@ loop80140:	; 80080140
 8008027C	addu   a0, zero, zero
 80080280	lui    a0, $800a
 80080284	lw     a0, $bc74(a0)
-80080288	jal    func37e80 [$80037e80]
+80080288	jal    system_sound_load_snd_file [$80037e80]
 8008028C	addu   a1, zero, zero
 80080290	addiu  a0, zero, $0024
 80080294	lui    at, $8006
@@ -19001,7 +19001,7 @@ loop81764:	; 80081764
 800818B8	addu   a0, zero, zero
 800818BC	lui    a0, $800a
 800818C0	lw     a0, $bc74(a0)
-800818C4	jal    func37e80 [$80037e80]
+800818C4	jal    system_sound_load_snd_file [$80037e80]
 800818C8	addu   a1, zero, zero
 800818CC	addiu  a0, zero, $0024
 800818D0	lui    at, $8006

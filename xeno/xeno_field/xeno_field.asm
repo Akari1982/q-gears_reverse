@@ -8038,7 +8038,7 @@ func85544:	; 80085544
 80085558	nop
 8008555C	lui    a0, $800b
 80085560	lw     a0, $f5b4(a0)
-80085564	jal    func37e80 [$80037e80]
+80085564	jal    system_sound_load_snd_file [$80037e80]
 80085568	addu   a1, zero, zero
 8008556C	lui    at, $8006
 80085570	sw     v0, $1bac(at)
@@ -13260,7 +13260,7 @@ L8a070:	; 8008A070
 8008A0E0	nop
 8008A0E4	lui    a0, $800b
 8008A0E8	lw     a0, $f1dc(a0)
-8008A0EC	jal    func37e80 [$80037e80]
+8008A0EC	jal    system_sound_load_snd_file [$80037e80]
 8008A0F0	addu   a1, zero, zero
 8008A0F4	lui    v1, $800b
 8008A0F8	lw     v1, $f1ec(v1)

@@ -78976,7 +78976,7 @@ Lb79f4:	; 800B79F4
 800B7A38	jal    func382d0 [$800382d0]
 800B7A3C	addu   a0, s2, zero
 800B7A40	addu   a0, s1, zero
-800B7A44	jal    func37e80 [$80037e80]
+800B7A44	jal    system_sound_load_snd_file [$80037e80]
 800B7A48	addu   a1, zero, zero
 800B7A4C	addu   s4, v0, zero
 
@@ -79165,7 +79165,7 @@ loopb7c44:	; 800B7C44
 800B7CA8	jal    funcb7918 [$800b7918]
 800B7CAC	nop
 800B7CB0	addu   a0, s0, zero
-800B7CB4	jal    func37e80 [$80037e80]
+800B7CB4	jal    system_sound_load_snd_file [$80037e80]
 800B7CB8	addu   a1, zero, zero
 800B7CBC	lui    at, $8006
 800B7CC0	sw     v0, $8c48(at)
@@ -79519,7 +79519,7 @@ Lb8140:	; 800B8140
 800B819C	jal    funcc06dc [$800c06dc]
 800B81A0	nop
 800B81A4	addu   a0, s0, zero
-800B81A8	jal    func37e80 [$80037e80]
+800B81A8	jal    system_sound_load_snd_file [$80037e80]
 800B81AC	addu   a1, zero, zero
 800B81B0	lui    at, $800c
 800B81B4	sw     v0, $31a4(at)
@@ -87765,7 +87765,7 @@ funcbf378:	; 800BF378
 800BF3EC	jal    funcc06dc [$800c06dc]
 800BF3F0	nop
 800BF3F4	addu   a0, s0, zero
-800BF3F8	jal    func37e80 [$80037e80]
+800BF3F8	jal    system_sound_load_snd_file [$80037e80]
 800BF3FC	addu   a1, zero, zero
 800BF400	lui    at, $800c
 800BF404	sw     v0, $31a4(at)
@@ -89234,7 +89234,7 @@ Lc0790:	; 800C0790
 800C07A0	sb     zero, $2d58(at)
 800C07A4	lui    at, $800c
 800C07A8	sb     zero, $2d5a(at)
-800C07AC	jal    func37e80 [$80037e80]
+800C07AC	jal    system_sound_load_snd_file [$80037e80]
 800C07B0	addu   a1, zero, zero
 800C07B4	lui    at, $800c
 800C07B8	sw     v0, $31a4(at)

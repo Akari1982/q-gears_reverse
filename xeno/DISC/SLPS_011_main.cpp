@@ -77,7 +77,7 @@ A2 = w[80010000]; // ffffffff
 func28040();
 
 A0 = 0;
-func37a30();
+system_sound_initialize();
 
 A0 = 0;
 A1 = 1;
@@ -140,20 +140,20 @@ func28870(); // ececute till cd sync
 
 A0 = snd24_mem;
 A1 = 0;
-func37e80();
+system_sound_load_snd_file();
 
 A0 = snd25_mem;
 A1 = 0;
-func37e80();
+system_sound_load_snd_file();
 [80058bfc] = w(V0);
 
 A0 = snd26_mem;
 A1 = 0;
-func37e80();
+system_sound_load_snd_file();
 
 A0 = snd27_mem;
 A1 = 0;
-func37e80();
+system_sound_load_snd_file();
 [80058c48] = w(V0);
 
 S4 = hu[GP + 1ac];
