@@ -340,7 +340,7 @@ loop70864:	; 80070864
 80070878	slti   v0, v1, $0003
 8007087C	bne    v0, zero, loop70864 [$80070864]
 80070880	addiu  a0, a0, $0002
-80070884	jal    func39b6c [$80039b6c]
+80070884	jal    system_sound_stop_all_channels_in_all_main [$80039b6c]
 80070888	nop
 8007088C	lui    a0, $800a
 80070890	lw     a0, $b0b0(a0)
@@ -1546,7 +1546,7 @@ loop718c8:	; 800718C8
 800719C8	nop
 
 L719cc:	; 800719CC
-800719CC	jal    func39b6c [$80039b6c]
+800719CC	jal    system_sound_stop_all_channels_in_all_main [$80039b6c]
 800719D0	nop
 800719D4	lui    a0, $8006
 800719D8	lw     a0, $1bb8(a0)
@@ -6067,7 +6067,7 @@ func75bbc:	; 80075BBC
 80075BC4	addu   s1, a0, zero
 80075BC8	sw     s0, $0010(sp)
 80075BCC	sw     ra, $0018(sp)
-80075BD0	jal    func39b6c [$80039b6c]
+80075BD0	jal    system_sound_stop_all_channels_in_all_main [$80039b6c]
 80075BD4	addu   s0, a1, zero
 80075BD8	lui    a0, $8006
 80075BDC	lw     a0, $1bb8(a0)
