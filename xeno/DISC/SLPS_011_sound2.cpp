@@ -65,7 +65,7 @@ A0 = 8003be48; // func3be48()
 func4d5e8(); // set some callback
 
 A0 = 0;
-80037B7C	jal    func4d4a8 [$8004d4a8]
+system_sound_spu_irq9();
 
 [80058ba0] = w(0);
 [80058bb0] = w(0);
@@ -134,7 +134,7 @@ system_enter_critical_section();
 [80058c18] = h(0);
 
 A0 = 0;
-80037CA0	jal    func4d4a8 [$8004d4a8]
+system_sound_spu_irq9();
 
 A0 = 0;
 80037CA8	jal    func4d80c [$8004d80c]
@@ -4730,8 +4730,8 @@ if( hu[80058bf8] & 0001 )
 {
     [80058bf8] = h(hu[80058bf8] & fffe);
 
-    A0 = 1;
-    8003C2B8	jal    func4d4a8 [$8004d4a8]
+    A0 = 1; // off
+    system_sound_spu_irq9();
 }
 
 V0 = w[80055aa0];

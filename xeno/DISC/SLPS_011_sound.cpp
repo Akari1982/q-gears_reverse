@@ -942,98 +942,52 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func4d4a8()
+// system_sound_spu_irq9()
 
-8004D4AC	beq    a0, zero, L4d4c0 [$8004d4c0]
+spu = w[800584a8];
 
-V0 = 0003;
-8004D4B8	bne    a0, v0, L4d540 [$8004d540]
-V0 = 0001;
+if( ( A0 == 0 ) || ( A0 == 3 ) )
+{
+    [spu + 1aa] = h(hu[spu + 1aa] & ffbf);
 
-L4d4c0:	; 8004D4C0
-V0 = w[800584a8];
-8004D4C8	nop
-V1 = hu[V0 + 01aa];
-8004D4D0	nop
-V1 = V1 & ffbf;
-[V0 + 01aa] = h(V1);
-V0 = hu[V0 + 01aa];
-8004D4E0	nop
-V0 = V0 & 0040;
-8004D4E8	beq    v0, zero, L4d53c [$8004d53c]
+    V1 = 0;
+    while( hu[spu + 1aa] & 0040 )
+    {
+        V1 = V1 + 1;
+        if( V1 >= f01 )
+        {
+            A0 = 80019548; // "SPU:T/O [%s]"
+            A1 = 80019558; // "wait (IRQ/ON)"
+            system_bios_printf();
+            return -1;
+        }
+    }
+}
+
+if( A0 != 1 )
+{
+    if( A0 != 3 )
+    {
+        return A0;
+    }
+}
+
+[spu + 1aa] = h(hu[spu + 1aa] | 0040);
+
 V1 = 0;
-V1 = V1 + 0001;
+while( ( hu[spu + 1aa] & 0040 ) == 0 )
+{
+    V1 = V1 + 1;
+    if( V1 >= f01 )
+    {
+        A0 = 80019548; // "SPU:T/O [%s]"
+        A1 = 80019568; // "wait (IRQ/OFF)"
+        system_bios_printf();
+        return -1;
+    }
+}
 
-loop4d4f4:	; 8004D4F4
-V0 = V1 < 0f01;
-8004D4F8	bne    v0, zero, L4d518 [$8004d518]
-8004D4FC	nop
-8004D500	lui    a0, $8002
-8004D504	addiu  a0, a0, $9548 (=-$6ab8)
-8004D508	lui    a1, $8002
-8004D50C	addiu  a1, a1, $9558 (=-$6aa8)
-8004D510	j      L4d5a0 [$8004d5a0]
-8004D514	nop
-
-L4d518:	; 8004D518
-V0 = w[800584a8];
-8004D520	nop
-V0 = hu[V0 + 01aa];
-8004D528	nop
-V0 = V0 & 0040;
-8004D530	bne    v0, zero, loop4d4f4 [$8004d4f4]
-V1 = V1 + 0001;
-8004D538	addiu  v1, v1, $ffff (=-$1)
-
-L4d53c:	; 8004D53C
-V0 = 0001;
-
-L4d540:	; 8004D540
-8004D540	beq    a0, v0, L4d550 [$8004d550]
-V0 = 0003;
-8004D548	bne    a0, v0, L4d5d8 [$8004d5d8]
-V0 = A0;
-
-L4d550:	; 8004D550
-V0 = w[800584a8];
-8004D558	nop
-V1 = hu[V0 + 01aa];
-8004D560	nop
-V1 = V1 | 0040;
-[V0 + 01aa] = h(V1);
-
-V0 = hu[V0 + 1aa] & 0040;
-8004D578	bne    v0, zero, L4d5d4 [$8004d5d4]
-V1 = 0;
-V1 = V1 + 0001;
-
-loop4d584:	; 8004D584
-V0 = V1 < 0f01;
-8004D588	bne    v0, zero, L4d5b0 [$8004d5b0]
-
-A0 = 80019548; // "SPU:T/O [%s]"
-A1 = 80019568; // "wait (IRQ/OFF)"
-
-L4d5a0:	; 8004D5A0
-system_bios_printf();
-
-8004D5A8	j      L4d5d8 [$8004d5d8]
-8004D5AC	addiu  v0, zero, $ffff (=-$1)
-
-L4d5b0:	; 8004D5B0
-V0 = w[800584a8];
-8004D5B8	nop
-V0 = hu[V0 + 01aa];
-8004D5C0	nop
-V0 = V0 & 0040;
-8004D5C8	beq    v0, zero, loop4d584 [$8004d584]
-V1 = V1 + 0001;
-8004D5D0	addiu  v1, v1, $ffff (=-$1)
-
-L4d5d4:	; 8004D5D4
-V0 = A0;
-
-L4d5d8:	; 8004D5D8
+return A0;
 ////////////////////////////////
 
 
