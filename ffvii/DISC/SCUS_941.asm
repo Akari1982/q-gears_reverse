@@ -10675,7 +10675,7 @@ A1 = A1 + 0004;
 // func2e1a8
 8002E1A8-8002E238
 ////////////////////////////////
-// func2e23c
+// system_sound_update_params_to_spu
 8002E23C-8002E424
 ////////////////////////////////
 // func2e428
@@ -12442,34 +12442,34 @@ A3 = A3 + 0004;
 // func39034
 80039034-800393C4
 ////////////////////////////////
-// func393c8
+// system_sound_spu_set_volume_left_right_sync
 800393C8-8003944C
 ////////////////////////////////
 // func39450
 80039450-800395C4
 ////////////////////////////////
-// func395c8
+// system_sound_spu_set_pitch_sync
 800395C8-80039640
 ////////////////////////////////
-// func39644
+// system_sound_spu_set_start_address_sync
 80039644-800396BC
 ////////////////////////////////
-// func396c0
+// system_sound_spu_set_loop_address_sync
 800396C0-80039738
 ////////////////////////////////
-// func3973c
+// system_sound_spu_set_decay_shift_sync
 8003973C-800397C4
 ////////////////////////////////
-// func397c8
+// system_sound_spu_set_sustain_level_sync
 800397C8-8003984C
 ////////////////////////////////
-// func39850
+// system_sound_spu_set_attack_rate_mode_sync
 80039850-800398E8
 ////////////////////////////////
-// func398ec
+// system_sound_spu_set_sustain_rate_mode_sync
 800398EC-800399CC
 ////////////////////////////////
-// func399d0
+// system_sound_spu_set_release_rate_mode_sync
 800399D0-80039A70
 ////////////////////////////////
 // system_get_sin
@@ -19338,43 +19338,20 @@ T1 = 0007;
 // system_bios_open_event
 80042A00-80042A0C
 ////////////////////////////////
-
-
-
-func42a10:	; 80042A10
-T2 = 00b0;
-80042A14	jr     t2 
-T1 = 0009;
-80042A1C	nop
-
-func42a20:	; 80042A20
-T2 = 00b0;
-80042A24	jr     t2 
-T1 = 000a;
-80042A2C	nop
-
-T2 = 00b0;
-80042A34	jr     t2 
-T1 = 000b;
-80042A3C	nop
-
-
-
+// system_bios_close_event
+80042A10-80042A1C
+////////////////////////////////
+// system_bios_wait_event
+80042A20-80042A2C
+////////////////////////////////
+// system_bios_test_event
+80042A30-80042A3C
 ////////////////////////////////
 // system_bios_enable_event
 80042A40-80042A4C
 ////////////////////////////////
-
-
-
-func42a50:	; 80042A50
-T2 = 00b0;
-80042A54	jr     t2 
-T1 = 000d;
-80042A5C	nop
-
-
-
+// system_bios_disable_event
+80042A50-80042A5C
 ////////////////////////////////
 // system_bios_init_pad
 80042A60-80042A6C
@@ -19400,17 +19377,8 @@ T1 = 000d;
 // system_bios_set_custom_exit_from_exception
 80042AD0-80042ADC
 ////////////////////////////////
-
-
-
-func42ae0:	; 80042AE0
-T2 = 00b0;
-80042AE4	jr     t2 
-T1 = 0020;
-80042AEC	nop
-
-
-
+// system_bios_undeliver_event
+80042AE0-80042AEC
 ////////////////////////////////
 // system_bios_enter_critical_section
 80042AF0-80042AFC
@@ -19570,21 +19538,15 @@ V1 = V1 | A0;
 80042CC8	nop
 
 
-func42ccc:	; 80042CCC
-A0 = A0 & ffff;
-A0 = A0 << 02;
-80042CD4	lui    a1, $8006
-A1 = w[A1 + 2b90];
-80042CDC	lui    at, $8006
-AT = AT + A0;
-V0 = w[AT + 2b98];
-V1 = w[A1 + 0004];
-V0 = 0 NOR V0;
-V0 = V0 & V1;
-[A1 + 0004] = w(V0);
-80042CF8	jr     ra 
-V0 = 0001;
 
+////////////////////////////////
+// func42ccc
+80042CCC-80042CFC
+////////////////////////////////
+
+
+
+// func42d00
 V1 = A0 & ffff;
 V0 = V1 < 0003;
 80042D08	beq    v0, zero, L42d2c [$80042d2c]

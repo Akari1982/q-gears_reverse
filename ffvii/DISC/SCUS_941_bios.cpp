@@ -243,6 +243,49 @@ T1 = 0008;
 
 
 
+////////////////////////////////
+// system_bios_close_event()
+// B(09h) - CloseEvent(event) - releases event from the event table
+// Always returns 1 (even if the event handle is unused or invalid).
+T2 = b0;
+T1 = 9;
+80042A14	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_wait_event()
+// B(0Ah) WaitEvent(event)
+// Returns 0 if the event is disabled. Otherwise hangs in a loop until the event
+// becomes ready, and returns 1 once when it is ready (and automatically switches
+// the event back to busy status). Callback events (mode=1000h) do never set the
+// ready flag (and thus WaitEvent would hang forever).
+// The main program simply hangs during the wait, so when using multiple threads,
+// it may be more recommended to create an own waitloop that checks TestEvent, and
+// to call ChangeThread when the event is busy.
+// BUG: The return value is unstable (sometimes accidently returns 0=disabled if
+// the event status changes from not-ready to ready shortly after the function
+// call).
+T2 = 00b0;
+T1 = 000a;
+80042A24	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_test_event()
+// B(0Bh) TestEvent(event)
+// Returns 0 if the event is busy or disabled. Otherwise, when it is ready,
+// returns 1 (and automatically switches the event back to busy status). Callback
+// events (mode=1000h) do never set the ready flag.
+T2 = 00b0;
+T1 = 000b;
+80042A34	jr     t2 
+////////////////////////////////
+
+
 
 ////////////////////////////////
 // system_bios_enable_event()
@@ -251,6 +294,17 @@ T1 = 0008;
 T2 = 00b0;
 T1 = 000c;
 80042A44	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_disable_event()
+// B(0Dh) - DisableEvent(event) - Turns off event handling for specified event
+// Always returns 1 (even if the event handle is unused or invalid).
+T2 = 00b0;
+T1 = 000d;
+80042A54	jr     t2 
 ////////////////////////////////
 
 
@@ -409,6 +463,19 @@ T1 = 0018;
 T2 = 00b0;
 T1 = 0019;
 80042AD4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_undeliver_event()
+// B(20h) UnDeliverEvent(class, spec)
+// This function is usually called by the kernel, undelivers all events that are
+// enabled/ready, and that have mode=2000h, and that have the specified class and
+// spec values. Undeliver means that the events are marked as enabled/busy.
+T2 = 00b0;
+80042AE4	jr     t2 
+T1 = 0020;
 ////////////////////////////////
 
 

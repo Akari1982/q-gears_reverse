@@ -8,9 +8,11 @@
 80049c44 AKAO left volume table (0x100 items 0x2 bytes each)
 80049e44 AKAO right volume table (0x100 items 0x2 bytes each)
 
-8004a68c [][][][] some channel flags. We add here channel we set to play.
+8004a68c [][][][] mask of channels with voice on (manual spu).
 8004a6a8 [][]     store reverberation depth left here.
 8004a6aa [][]     store reverberation depth right here.
+8004a6b4 [][][][] mask of channels with voice on (auto spu).
+8004a6b8 [][][][] add flag 0x00000001 if we turn voices on or off in auto spu.
 8004aaec [][][][] some flags SPU related. if this &1 == 0 then we write data to SPU directly
 8004aaf4 [][][][] pointer to SPU addreses (0x1f801c00)
 8004ab2c [][][][] store 0 here when setting new reverb mode.
@@ -126,11 +128,13 @@
 
 80062d98 []       if this is not 0 we will not render effect?
 
+80062f00 [][][][] 
+
 80062f70 [][]     looks like global left right reverberation pan.
 80062f74 [][][][] pointer to 80089580. AKAO scripts. EFFECT.ALL offsets.
 80062f84 [][][][] pointer to 8008a580. AKAO scripts. EFFECT.ALL data.
 
-80062f8c [][][][] store 1 here at start of system_execute_AKAO. We will not add AKAO commands untill this is 0.
+80062f8c [][][][] store 1 here at start of system_execute_AKAO. We will not add AKAO commands until this is 0.
 
 80062fa0 [][][][] set to 0 in pad start and init sequence. Input enabled.
 
@@ -138,6 +142,7 @@
 
 80062fea [][][][] used as some tempo modificator for AKAO sequenser.
 
+80063010 [][][][] index in 80081dc8 array.
 80063014 [][][][] pointer to temp array for action calculation.
 
 80063560 we copy kernel string here to display.
@@ -254,6 +259,9 @@
     +34 [][][][] pitch 9.
     +38 [][][][] pitch a.
     +3c [][][][] pitch b.
+
+80077f28 [][][][] mask of channels we put voice on (auto spu).
+80077f2c [][][][] mask of channels we put voice off (auto spu).
 
 80081dc8 struct with size 0x24 where we store data for AKAO parser. Store here data from 8009a000.
     // for 0x10, 0x14, 0x15, 0x18, 0x19
@@ -379,7 +387,7 @@
     +0f4 [][][][] release mode.
                     0x7 - exponential descrease.
                     else linear discrease.
-    +0f8 [][]     pitch. Pitch here can be changes somewhere and set to SPU again.
+    +0f8 [][]     pitch.
     +0fa [][]     attack rate.
     +0fc [][]     decay rate.
     +0fe [][]     sustain level.
@@ -431,8 +439,6 @@
 8009a0c8 array of menu cursor data (0x12 size).
     +0b []       vertical cursor position.
     +0d []       total number of vertical positions.
-
-
 
 8009a104 start of music channels config
     +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono)
