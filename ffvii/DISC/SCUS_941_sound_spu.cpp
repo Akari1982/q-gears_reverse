@@ -1641,20 +1641,21 @@ return T2 & 00ffffff;
 
 
 ////////////////////////////////
-// func37b90
-// set noise clock frequency
+// system_sound_spu_set_noise_frequency()
+
 A1 = A0;
-if (A1 < 0)
+if( A1 < 0 )
 {
     A1 = 0;
 }
-else if (A1 >= 40)
+else if( A1 >= 40 )
 {
     A1 = 3f;
 }
 
-A0 = w[8004aaf4];
-[A0 + 1aa] = h((hu[A0 + 1aa] & c0ff) | ((A1 & 3f) << 8));
+spu = w[8004aaf4]; // 1f801c00
+[spu + 1aa] = h((hu[spu + 1aa] & c0ff) | ((A1 & 3f) << 8));
+
 return A1;
 ////////////////////////////////
 
@@ -1662,34 +1663,25 @@ return A1;
 
 ////////////////////////////////
 // func37be0
-80037BE0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
 S0 = A1;
-80037BEC	lui    v0, $0007
-V0 = V0 | eff0;
-V0 = V0 < S0;
+
+V0 = 0007eff0 < S0;
 80037BF8	beq    v0, zero, L37c08 [$80037c08]
-[SP + 0014] = w(RA);
-80037C00	lui    s0, $0007
-S0 = S0 | eff0;
+
+S0 = 0007eff0;
 
 L37c08:	; 80037C08
 80037C08	jal    func36d30 [$80036d30]
 A1 = S0;
-80037C10	lui    v0, $8005
-V0 = w[V0 + ab2c];
-80037C18	nop
+V0 = w[8004ab2c];
+
 80037C1C	bne    v0, zero, L37c2c [$80037c2c]
-V0 = S0;
-80037C24	lui    at, $8005
-[AT + ab28] = w(0);
+
+[8004ab28] = w(0);
 
 L37c2c:	; 80037C2C
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80037C38	jr     ra 
-80037C3C	nop
+return S0;
 ////////////////////////////////
 
 
@@ -2667,10 +2659,10 @@ L387f4:	; 800387F4
 
 ////////////////////////////////
 // func387fc
-// copy loop points
+// copy reverb
 
 [A0 + 4] = w(w[8004a6a4]);
-[A0 + 8] = w(w[8004a6a8]);
+[A0 + 8] = w(w[8004a6a8]); // reverb depth left and right
 [A0 + c] = w(w[8004a6ac]);
 [A0 + 10] = w(w[8004a6b0]);
 ////////////////////////////////
@@ -2678,22 +2670,22 @@ L387f4:	; 800387F4
 
 
 ////////////////////////////////
-// func3884c
-A1 = w[A0];
-V0 = w[8004aaf4];
-if (A1 < 1 || A1 & 2)
+// system_sound_spu_set_reverb_depth_left_right()
+
+spu = w[8004aaf4]; // 1f801c00
+
+A1 = w[A0 + 0];
+if( ( A1 < 1 ) || ( A1 & 2 ) )
 {
-    [V0 + 184] = h(hu[A0 + 8]); // Reverberation depth left
+    [spu + 184] = h(hu[A0 + 8]); // reverberation depth left
     [8004a6a8] = h(hu[A0 + 8]);
 }
 
-if (A1 < 1 || A1 & 4)
+if( ( A1 < 1 ) || ( A1 & 4 ))
 {
-    [V0 + 186] = h(hu[A0 + a]); // Reverberation depth right
+    [spu + 186] = h(hu[A0 + a]); // reverberation depth right
     [8004a6aa] = h(hu[A0 + a]);
 }
-
-return 0;
 ////////////////////////////////
 
 
@@ -2842,7 +2834,7 @@ SP = SP + 0038;
 ////////////////////////////////
 // system_sound_spu_irq9()
 
-spu = w[8004aaf4];
+spu = w[8004aaf4]; // 1f801c00
 
 if( ( A0 == 0 ) || ( A0 == 3 ) )
 {
@@ -2935,12 +2927,12 @@ A0 = 9;
 
 
 ////////////////////////////////
-// func38c6c()
+// system_sound_spu_turn_voice_on_channels()
 
 type = A0;
 channel_mask = A1;
 
-spu = w[8004aaf4];
+spu = w[8004aaf4]; // 1f801c00
 
 if( type == 0 )
 {
@@ -3443,7 +3435,7 @@ SP = SP + 0010;
 
 
 ////////////////////////////////
-// system_sound_spu_set_volume_left_right_sync()
+// system_sound_spu_set_fixed_volume_left_right_sync()
 
 spu = w[8004aaf4]; // 1f801c00
 [spu + A0 * 10 + 0] = h(A1 & 7fff); // volume left
@@ -3462,82 +3454,35 @@ while( w[SP + 0] < 2 )
 
 
 ////////////////////////////////
-// func39450
+// system_sound_spu_set_sweep_volume_left_right_sync()
 
-A1 = A1 & 7fff;
+spu = w[8004aaf4]; // 1f801c00
+
 T0 = 0;
-T1 = hu[SP + 0018];
-80039460	addiu  a3, a3, $ffff (=-$1)
-A3 = A3 << 10;
-A3 = A3 >> 10;
-V0 = A3 < 0007;
-80039470	beq    v0, zero, L394c8 [$800394c8]
-A0 = A0 << 03;
-V0 = A3 << 02;
-8003947C	lui    at, $8001
-AT = AT + V0;
-V0 = w[AT + 056c];
-80039488	nop
-8003948C	jr     v0 
-80039490	nop
+switch( A3 )
+{
+    case 1: T0 = 8000;
+    case 2: T0 = 9000;
+    case 3: T0 = a000;
+    case 4: T0 = b000;
+    case 5: T0 = c000;
+    case 6: T0 = d000;
+    case 7: T0 = e000;
+}
+[spu + A0 * 10 + 0] = h(T0 | (A1 & 7fff));
 
-80039494	j      L394c8 [$800394c8]
-T0 = 8000;
-8003949C	j      L394c8 [$800394c8]
-T0 = 9000;
-800394A4	j      L394c8 [$800394c8]
-T0 = a000;
-800394AC	j      L394c8 [$800394c8]
-T0 = b000;
-800394B4	j      L394c8 [$800394c8]
-T0 = c000;
-800394BC	j      L394c8 [$800394c8]
-T0 = d000;
-T0 = e000;
-
-L394c8:	; 800394C8
-A3 = A2 & 7fff;
-A2 = 0;
-800394D0	lui    v1, $8005
-V1 = w[V1 + aaf4];
-V0 = A0 << 01;
-V0 = V0 + V1;
-V1 = A1 | T0;
-[V0 + 0000] = h(V1);
-800394E8	addiu  v0, t1, $ffff (=-$1)
-V0 = V0 << 10;
-V1 = V0 >> 10;
-V0 = V1 < 0007;
-800394F8	beq    v0, zero, L3954c [$8003954c]
-V0 = V1 << 02;
-80039500	lui    at, $8001
-AT = AT + V0;
-V0 = w[AT + 058c];
-8003950C	nop
-80039510	jr     v0 
-80039514	nop
-
-80039518	j      L3954c [$8003954c]
-A2 = 8000;
-80039520	j      L3954c [$8003954c]
-A2 = 9000;
-80039528	j      L3954c [$8003954c]
-A2 = a000;
-80039530	j      L3954c [$8003954c]
-A2 = b000;
-80039538	j      L3954c [$8003954c]
-A2 = c000;
-80039540	j      L3954c [$8003954c]
-A2 = d000;
-A2 = e000;
-
-L3954c:	; 8003954C
-8003954C	lui    v1, $8005
-V1 = w[V1 + aaf4];
-V0 = A0 << 01;
-V0 = V0 + V1;
-V1 = A3 | A2;
-[V0 + 0002] = h(V1);
+T1 = 0;
+switch( A4 )
+{
+    case 1: T1 = 8000;
+    case 2: T1 = 9000;
+    case 3: T1 = a000;
+    case 4: T1 = b000;
+    case 5: T1 = c000;
+    case 6: T1 = d000;
+    case 7: T1 = e000;
+}
+[spu + A0 * 10 + 2] = h(T1 | (A2 & 7fff));
 
 [SP + 4] = w(1);
 [SP + 0] = w(0);
