@@ -69,7 +69,7 @@ A0 = 8006f180; // pointer to start of allocated memory
 A1 = 801fc000; // pointer to end of allocated memory
 func31878(); // init heap
 
-func4c3f0(); // spu init
+system_psyq_spu_init();
 
 A0 = 80010004; // file1 allocated memory
 A1 = 80018004; // file2 allocated memory

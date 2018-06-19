@@ -171,8 +171,8 @@
 8005803c [][][][] store irq9 spu command completed event here.
 80058040 [][][][] init with 0.
 80058044 [][][][] init with 0.
-80058048 [][][][] init with 0.
-8005804c [][][][] init with 0.
+80058048 [][][][] reverb master enable(1)/disable(0).
+8005804c [][][][] if this 1 when we enable reverb master else check whether the reverb area is available.
 80058050 [][][][] sound ram reverb work area start address.
 80058058 [][][][] init with 0.
 8005805c [][]     init with 0.
