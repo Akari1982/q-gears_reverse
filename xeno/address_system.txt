@@ -279,6 +279,8 @@
 80058ad0 []       state of LeftJoyX for controller 2 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ad8 []       state of LeftJoyY for controller 2 (0x00=Up, 0x80=Center, 0xFF=Down).
 
+80058af4 [][][][] ???
+
 80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40.
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
 80058b2c [][]     mask of buttons that was pressed in last update for controller 2 (details in 80058c0c).
@@ -293,6 +295,7 @@
 80058b98 [][][][] flags for turning SPU Voice ON.
 
 80058ba4 [][][][] store here id of encounter in field.
+80058bac [][]     ???
 
 80058bc4 [][][][] store here pointer to polygons data block in 3d model file.
 80058bc8 [][][][] we store here +0c [][][][] from model parts header. Maybe for futher use in inner functions.
@@ -328,13 +331,15 @@
 80058c18 [][]     some sound control flags.
                     0x0001 sound event in 80058c58 enabled.
                     0x0008 add if we genegate sound error.
+                    0x0010 ???
                     0x0040 we don't play sound thread if this is set.
                     0x0100 if this flag is set then we use mono sound without separation on different channels.
                     0x0800 we start new sound.
                     0x1000 ???
                     0x2000 enable reverb.
 
-80058c20 
+80058c20 [][][][] allocated spu pointer for pcm data.
+80058c24 [][][][] size of pcm data.
 
 80058c48 [][][][] pointer to struct from STRIPCD1\1\0027.snd file.
 
@@ -397,6 +402,8 @@
 80059b50 [][][][] file size for loading field file.
 80059b58 array of something spu related. Init with 0. (size 0x2 items 0xa)
 80059b70 [][][][] pointer to allocated memory for loading field file.
+
+80061c1c
 
 80061c8c controller input buffers (size 0x22 items 0x2).
     +02 [][]     button mask. (0=Pressed, 1=Released)

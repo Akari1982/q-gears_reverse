@@ -16879,7 +16879,7 @@ L379e8:	; 800379E8
 // system_sound_load_snd_file
 80037E80-80037F74
 ////////////////////////////////
-// func37f78
+// system_sound_load_snd_file_2
 80037F78-80038098
 ////////////////////////////////
 // system_sound_spu_snd_file_malloc

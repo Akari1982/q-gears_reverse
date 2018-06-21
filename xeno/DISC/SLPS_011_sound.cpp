@@ -43,7 +43,7 @@ system_sound_channel_structures_offset_init();
 
 system_enter_critical_section();
 
-A0 = f2000002;
+A0 = f2000002; // 4mhz / 8
 A1 = 2;
 A2 = 1000;
 A3 = 8003bec8; // system_sound_main()
@@ -252,14 +252,7 @@ A1 = A1; // start spu address, 0 if we want set it from file, -1 if automatic al
 system_sound_spu_snd_file_malloc(); // allocate spu memory for sound file
 spu_mem = V0;
 
-if( spu_mem == 0 ) // spu mem allocation failed
-{
-    A0 = 1f;
-    system_sound_error();
-
-    return 0;
-}
-else
+if( spu_mem != 0 )
 {
     A0 = spu_mem;
     A1 = sound_file + w[sound_file + 18]; // start of data
@@ -307,46 +300,51 @@ else
 
     A0 = 1e;
     system_sound_error();
-
-    return 0;
 }
+else
+{
+    A0 = 1f;
+    system_sound_error();
+}
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func37f78
+// system_sound_load_snd_file_2()
 
-S0 = A0; // src
+sound_file = A0; // src
 S3 = A1;
 start_spu = A2; // start spu address, 0 if we want set it from file, -1 if something else
 
-A0 = hu[S0 + 20];       
+A0 = hu[sound_file + 20];
 func38294; // get pointer to current (same?) snd
 
 if( V0 == 0 )
 {
-    A0 = S0; // src
+    A0 = sound_file; // src
     A1 = start_spu; // start spu address, 0 if we want set it from file, -1 if automatic alloc
     system_sound_spu_snd_file_malloc(); // allocate spu memory for sound file
-    S2 = V0;
+    spu_mem = V0;
 
-    if( S2 != 0 )
+    if( spu_mem != 0 )
     {
-        [80058c20] = w(S2);
-        [80058c24] = w(w[S0 + 14]);
+        [80058c20] = w(spu_mem);
+        [80058c24] = w(w[sound_file + 14]); // size of pcm data
 
-        A0 = S0 + w[S0 + 18];
-        A1 = S3 + w[S0 + 10];
+        A0 = sound_file + w[sound_file + 18];
+        A1 = S3 + w[sound_file + 10];
         func38124; // spu dma transfer here
 
-        A0 = w[S0 + 10];
-        func38ecc();
-        S1 = V0;
+        A0 = w[sound_file + 10];
+        func38ecc(); // allocate new spu struct
+        spu_struct = V0;
 
-        if( S1 == 0 )
+        if( spu_struct == 0 )
         {
-            A0 = S2;
+            A0 = spu_mem;
             system_sound_spu_memfree();
 
             A0 = 1e;
@@ -357,12 +355,12 @@ if( V0 == 0 )
         else
         {
             // we copy top part of snd file
-            A0 = S1; // dst
-            A1 = S0; // src
-            A2 = w[S0 + 10]; // size
+            A0 = spu_struct; // dst
+            A1 = sound_file; // src
+            A2 = w[sound_file + 10]; // size
             system_sound_memcpy();
 
-            [S1 + 28] = w(S2); // set pointer to 8006f08c element related to this snd
+            [spu_struct + 28] = w(spu_mem); // set pointer to 8006f08c element related to this snd
 
             A0 = w[80058c58];
             system_bios_disable_event(); // Turns off event handling for specified event.
@@ -376,13 +374,13 @@ if( V0 == 0 )
                     A0 = V0 + 2c;
                 8003805C	bne    v1, zero, loop3804c [$8003804c]
             }
-            [A0] = w(S1); // write new pointer to snd file
-            [S1 + 2c] = w(0); // set next pointer to 0 - this is last loaded snd.
+            [A0] = w(spu_struct); // write new pointer to snd file
+            [spu_struct + 2c] = w(0); // set next pointer to 0 - this is last loaded snd.
 
             A0 = w[80058c58];
             system_bios_enable_event();
 
-            return S1;
+            return spu_struct;
         }
     }
     else
@@ -437,9 +435,10 @@ return V0;
 
 
 ////////////////////////////////
-// func3810c
+// func3810c()
+
 [80058c20] = w(A0);
-[80058c24] = w(A1);
+[80058c24] = w(A1); // size of pcm data
 ////////////////////////////////
 
 
@@ -448,7 +447,7 @@ return V0;
 // func38124
 A2 = A0; // src
 S1 = A1;
-S2 = w[80058c24];
+S2 = w[80058c24]; // size of pcm data
 
 if( S2 != 0 )
 {
@@ -462,7 +461,7 @@ if( S2 != 0 )
     func3bab8();
 
     [80058c20] = w(S0 + S1);
-    [80058c24] = w(S2 - S1);
+    [80058c24] = w(S2 - S1); // size of pcm data
 
     return w[[80058c24]];
 }
@@ -474,52 +473,57 @@ return 0;
 
 ////////////////////////////////
 // func381b8()
-V0 = w[80058bf4];
+
 S1 = A0;
+
+V0 = w[80058bf4];
+
 S0 = 0;
-800381D4	beq    v0, zero, L38200 [$80038200]
+if( V0 != 0 )
+{
+    loop381dc:	; 800381DC
+        if( V0 == S1 )
+        {
+            break;
+        }
+        S0 = V0;
+        V0 = w[S0 + 2c];
+    800381F0	bne    v0, zero, loop381dc [$800381dc]
 
-loop381dc:	; 800381DC
-    if( V0 == S1 )
+    if( V0 == 0 )
     {
-        break;
+        A0 = 11;
+        system_sound_error();
+        return;
+
     }
-    S0 = V0;
-    V0 = w[S0 + 002c];
-800381F0	bne    v0, zero, loop381dc [$800381dc]
+}
+else
+{
+    A0 = 11;
+    system_sound_error();
+    return;
+}
 
-800381F8	bne    v0, zero, L38210 [$80038210]
-800381FC	nop
-
-L38200:	; 80038200
-A0 = 11;
-system_sound_error();
-
-return;
-
-L38210:	; 80038210
 A0 = w[80058c58];
 system_bios_disable_event();
 
-80038220	beq    s0, zero, L38234 [$80038234]
-80038224	nop
-V0 = w[S1 + 002c];
-8003822C	j      L38240 [$80038240]
-[S0 + 002c] = w(V0);
+if( S0 != 0 )
+{
+    [S0 + 002c] = w(w[S1 + 2c]);
+}
+else
+{
+    [80058bf4] = w(w[S1 + 2c]);
+}
 
-L38234:	; 80038234
-V0 = w[S1 + 002c];
-[80058bf4] = w(V0);
-
-L38240:	; 80038240
 A0 = w[80058c58];
 system_bios_enable_event();
 
 A0 = w[S1 + 28];
 system_sound_spu_memfree();
 
-V1 = w[S1 + 0028];
-if( V1 != V0 )
+if( w[S1 + 28] != V0 )
 {
     A0 = 24;
     system_sound_error();
@@ -534,18 +538,16 @@ func38fec(); // sound related
 ////////////////////////////////
 // func38294
 // get pointer to currently load snd file (maybe we check in instruments for this snd already loaded)
-V1 = w[80058bf4]; // pointer to SND file
-if( V1 != 0 )
-{
-    loop382a8:	; 800382A8
-        if( hu[V1 + 20] == A0 )
-        {
-            break;
-        }
-        V1 = w[V1 + 2c];
-    800382C0	bne    v1, zero, loop382a8 [$800382a8]
-}
 
+V1 = w[80058bf4]; // pointer to SND file
+while( V1 != 0 )
+{
+    if( hu[V1 + 20] == A0 )
+    {
+        break;
+    }
+    V1 = w[V1 + 2c];
+}
 return V1;
 ////////////////////////////////
 
@@ -1340,7 +1342,8 @@ last_struct = w[80058c80]; // end of spu struct
 A2 = 0;
 A1 = 0;
 
-L38f14:	; 80038F14
+while( true )
+{
     next_struct = w[spu_struct + c];
     if( next_struct == 0 )
     {
@@ -1381,7 +1384,7 @@ L38f14:	; 80038F14
         A1 = next_struct;
     }
     spu_struct = next_struct;
-80038F68	j      L38f14 [$80038f14]
+}
 ////////////////////////////////
 
 
@@ -3729,7 +3732,7 @@ S0 = A0;
 8003B0B0	jal    func3b8e0 [$8003b8e0]
 
 A0 = S0;
-8003B0B8	jal    func38fec [$80038fec]
+func38fec();
 ////////////////////////////////
 
 
@@ -3939,7 +3942,8 @@ L3b33c:	; 8003B33C
 
 
 ////////////////////////////////
-// func3b4ec
+// func3b4ec()
+
 S2 = w[80058adc]; // pointer to 0391.sed file.
 
 FP = A2;
@@ -3988,8 +3992,6 @@ channel = S4 + S0 * 158;
 
 A0 = w[80058c58];
 system_bios_disable_event();
-
-
 
 S6 = w[80058aa0];
 loop3b614:	; 8003B614
@@ -4069,7 +4071,7 @@ loop3b614:	; 8003B614
 [S4 + 10] = h(hu[S4 + 10] | 8000);
 
 A0 = w[80058c58];
-8003B79C	jal    system_bios_enable_event [$8004031c]
+system_bios_enable_event();
 ////////////////////////////////
 
 
@@ -4159,16 +4161,14 @@ L3b928:	; 8003B928
 A0 = f;
 system_sound_error();
 
-8003B930	j      L3b998 [$8003b998]
-8003B934	addiu  v0, zero, $ffff (=-$1)
+return -1;
 
 L3b938:	; 8003B938
 V0 = h[S0 + 0010];
-8003B93C	nop
 V1 = V0;
 V0 = V0 & 8000;
 8003B948	beq    v0, zero, L3b974 [$8003b974]
-8003B94C	nop
+
 8003B950	bne    s0, zero, L3b968 [$8003b968]
 V0 = V1 & 7fff;
 A0 = 0005;
@@ -4183,20 +4183,16 @@ A0 = S0;
 system_sound_stop_all_channels_in_main()
 
 L3b974:	; 8003B974
-8003B974	beq    s1, zero, L3b988 [$8003b988]
-8003B978	nop
-V0 = w[S0 + 0000];
-8003B980	j      L3b994 [$8003b994]
-[S1 + 0000] = w(V0);
+if( S1 != 0 )
+{
+    [S1 + 0] = w(w[S0 + 0]);
+}
+else
+{
+    [80058c00] = w(w[S0 + 0]);
+}
 
-L3b988:	; 8003B988
-V0 = w[S0 + 0000];
-[80058c00] = w(V0);
-
-L3b994:	; 8003B994
-V0 = 0;
-
-L3b998:	; 8003B998
+return 0;
 ////////////////////////////////
 
 
@@ -5300,9 +5296,9 @@ V0 = A0 + 0003;
 
 
 ////////////////////////////////
-// func3cc2c
-8003CC2C	jr     ra 
-V0 = A0;
+// func3cc2c()
+
+return A0;
 ////////////////////////////////
 
 
