@@ -1389,13 +1389,81 @@ return A0;
 
 
 ////////////////////////////////
-// func40508
-V1 = A0 & ffff;
-if( V1 < 3 )
+// system_get_root_counter_value()
+
+A0 = A0 & ffff;
+
+if( A0 < 3 )
 {
-    V0 = w[80055aa0];
-    return hu[V0 + V1 * 10];
+    V0 = w[80055aa0]; // 1f801100
+    return hu[V0 + A0 * 10]; // current root counter X value
 }
 
 return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_root_counter_setup()
+
+T0 = A0 & ffff;
+
+if( T0 >= 3 )
+{
+    return 0;
+}
+
+root = w[80055aa0]; // 1f801100
+
+// 6 IRQ Once/Repeat Mode    (0=One-shot, 1=Repeatedly)
+// 3 Reset counter to 0000h  (0=After Counter=FFFFh, 1=After Counter=Target)
+counter_mode = 0048;
+
+[root + T0 * 10 + 4] = h(0); // Timer 0..2 Counter Mode
+[root + T0 * 10 + 8] = h(A1); // Timer 0..2 Counter Target Value
+
+if( T0 < 2 )
+{
+    if( A2 & 0010 )
+    {
+        counter_mode = 0049;
+    }
+
+    if( ( A2 & 0001 ) == 0 )
+    {
+        counter_mode = counter_mode | 0100;
+    }
+}
+else if( T0 == 2 )
+{
+    if( ( A2 & 0001 ) == 0 )
+    {
+        // 10 Interrupt Request       (0=Yes, 1=No) (Set after Writing)    (W=1) (R)
+        counter_mode = 0248;
+    }
+}
+
+if( A2 & 1000 )
+{
+    // 4 IRQ when Counter=Target (0=Disable, 1=Enable)
+    counter_mode = counter_mode | 0010;
+}
+
+[root + T0 * 10 + 4] = h(counter_mode); // Timer 0..2 Counter Mode
+
+return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_root_counter_enable()
+
+A0 = A0 & ffff;
+
+A1 = w[80055a9c]; // 1f801070
+[A1 + 4] = w(w[A1 + 4] | w[80055aa4 + A0 * 4]); // I_MASK - Interrupt mask register
+
+return A0 < 3;
 ////////////////////////////////

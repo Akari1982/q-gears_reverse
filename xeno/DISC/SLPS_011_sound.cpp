@@ -6,7 +6,6 @@ if( h[80058c18] < 0 )
 {
     A0 = 28;
     system_sound_error(); // error
-
     return;
 }
 
@@ -18,25 +17,25 @@ func4d1b8();
 
 A0 = 8006519c;
 A1 = 6300;
-func38d68();
+system_sound_structs_meminit();
 
 system_sound_spu_meminit();
 
 A0 = a0;
 system_sound_structs_malloc();
-[80058af4] = w(V0);
+[80058af4] = w(V0); // spu dma transfer structs
 
 system_sound_channel_structures_offset_init();
 
 [80058b80] = w(12345678);
-[80058c00] = w(0);
-[80058c74] = w(0);
-[80058adc] = w(0);
-[80058bf4] = w(0);
+[80058c00] = w(0); // pointer to snd music structs data after header
+[80058c74] = w(0); // offset to 80061bbc SPU channel structures + 30
+[80058adc] = w(0); // pointer to SED file
+[80058bf4] = w(0); // pointer to SND file (with wds signature)
 [80058bb4] = w(0);
-[80058b98] = w(0);
+[80058b98] = w(0); // flags for turning SPU Voice ON
 [80058bec] = w(0);
-[80058bf0] = w(0);
+[80058bf0] = w(0); // flags for turning SPU Voice OFF
 [80059a64] = h(0);
 [80059a66] = h(0);
 [80059a5c] = w(c);
@@ -51,12 +50,12 @@ system_bios_open_event();
 [80058c58] = w(V0);
 
 A0 = f2000002;
-A1 = 44e8;
-A2 = 1000;
-80037B48	jal    func4046c [$8004046c]
+A1 = 44e8; // target value (we call system_sound_main() each two cycle)
+A2 = 1000; // set irq bit
+system_root_counter_setup()
 
 A0 = f2000002;
-80037B54	jal    func40540 [$80040540]
+system_root_counter_enable();
 
 A0 = 8003ba0c; // func3ba0c()
 func4d80c(); // set some callback
@@ -1018,7 +1017,7 @@ if( w[80058c40] == 0 )
     if( w[80058c40] == 0 )
     {
         A0 = 1e;
-        800389BC	jal    system_sound_error [$8003f558]
+        system_sound_error();
     }
 }
 
@@ -1249,8 +1248,9 @@ L38d60:	; 80038D60
 
 
 ////////////////////////////////
-// func38d68()
+// system_sound_structs_meminit()
 
+// align memory
 A1 = A1 & fffffff0;
 if( A0 & f )
 {
@@ -1259,15 +1259,15 @@ if( A0 & f )
     A0 = V0 & fffffff0;
 }
 
-[80058aac] = w(A0);
-[80058bb8] = w(A1);
-[80058c80] = w(A0 + A1);
+[80058aac] = w(A0); // start of sound structs
+[80058bb8] = w(A1); // size of sound structs
+[80058c80] = w(A0 + A1); // end of sound structs
 
 [A0 + 0] = h(8000);
-[A0 + 2] = h(0000);
+[A0 + 2] = h(0);
 [A0 + 4] = w(0);
-[A0 + 8] = w(A0 + 10);
-[A0 + c] = w(0);
+[A0 + 8] = w(A0 + 10); // end of data
+[A0 + c] = w(0); // link to next struct
 ////////////////////////////////
 
 
@@ -1275,46 +1275,41 @@ if( A0 & f )
 ////////////////////////////////
 // system_sound_structs_malloc()
 
-size = A0;
+size = A0; // size without header
+size_aligned = ((size + f) & fffffff0) + 10;
 
 A0 = w[80058c58];
 system_bios_disable_event();
 
-A0 = ((size + f) & fffffff0) + 10; // ceil and add 10
-
-A1 = w[80058aac];
-if( w[A1 + c] != 0 ) // if next element exist
+curr = w[80058aac];
+while( w[curr + c] != 0 ) // if next element exist
 {
-    loop38e04:	; 80038E04
-        next = w[A1 + c];
-        if( next - w[A1 + 8] >= A0 )
-        {
-            // in there is space between end of this element and next one insert new
-            80038E18	j      L38e50 [$80038e50]
-        }
-
-        V0 = w[next + c];
-        A1 = next;
-    80038E28	bne    v0, zero, loop38e04 [$80038e04]
+    next = w[curr + c];
+    // in there is space between end of this element and next one insert new
+    if( next - w[curr + 8] >= size_aligned )
+    {
+        80038E18	j      L38e50 [$80038e50]
+    }
+    curr = next;
 }
 
-if( w[80058c80] - w[A1 + 8] < A0 )
+// if space for new struct less than it has left
+if( w[80058c80] - w[curr + 8] < size_aligned )
 {
-    // if space for new struct less than it has left
     return 0;
 }
 
 L38e50:	; 80038E50
 // insert new element
-V0 = (w[A1 + 8] + f) & fffffff0; // ceil
+V0 = (w[curr + 8] + f) & fffffff0; // ceil
 S0 = V0 + 10;
 
 [V0 + 0] = h(2);
 [V0 + 2] = h(0);
 [V0 + 4] = w(0);
 [V0 + 8] = w(S0 + size); // end
-[V0 + c] = w(w[A1 + c]); // new links to previous next
-[A1 + c] = w(V0); // previous links to new
+[V0 + c] = w(w[curr + c]); // new links to previous next
+[curr + c] = w(V0); // previous links to new
 
 A0 = w[80058c58];
 system_bios_enable_event();
@@ -1821,7 +1816,7 @@ S0 = V0;
 if( S0 == 0 )
 {
     A0 = 1e;
-    system_sound_error;
+    system_sound_error();
     return 0;
 }
 
@@ -2227,24 +2222,19 @@ SP = SP + 0018;
 ////////////////////////////////
 // func39cc0
 
-80039CC0	addiu  sp, sp, $ffe8 (=-$18)
 V0 = hu[80058c18];
 A1 = A0;
 V0 = V0 & 0800;
 80039CD4	beq    v0, zero, L39cf8 [$80039cf8]
-[SP + 0010] = w(RA);
+
 V0 = 0002;
 [80058aa0] = w(V0);
 A0 = 600c;
 A2 = 6000;
-80039CF0	jal    func3b4ec [$8003b4ec]
 A3 = 4000;
+80039CF0	jal    func3b4ec [$8003b4ec]
 
 L39cf8:	; 80039CF8
-RA = w[SP + 0010];
-SP = SP + 0018;
-80039D00	jr     ra 
-80039D04	nop
 ////////////////////////////////
 
 
@@ -3179,17 +3169,11 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func3a96c
-8003A96C	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0014] = w(S1);
+
 S1 = A0;
-[SP + 0020] = w(S4);
 S4 = A1;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S5);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
 8003A990	beq    s1, zero, L3aa68 [$8003aa68]
-[SP + 0010] = w(S0);
+
 S0 = S1 + 0094;
 S3 = S1 + 00bb;
 S5 = bu[S1 + 0014];
@@ -3252,24 +3236,14 @@ S0 = S0 + 0158;
 S4 = S4 >> 01;
 
 L3aa68:	; 8003AA68
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0030;
-8003AA88	jr     ra 
-8003AA8C	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3aa90
-8003AA90	jr     ra 
-[A0 + 001b] = b(A1);
+// func3aa90()
+
+[A0 + 1b] = b(A1);
 ////////////////////////////////
 
 
@@ -3383,10 +3357,10 @@ L3abc0:	; 8003ABC0
 
 ////////////////////////////////
 // func3abc8
-8003ABC8	addiu  sp, sp, $ffe8 (=-$18)
+
 V0 = 0001;
 8003ABD0	beq    a1, v0, L3ac18 [$8003ac18]
-[SP + 0010] = w(RA);
+
 V0 = A1 < 0002;
 8003ABDC	beq    v0, zero, L3abf4 [$8003abf4]
 8003ABE0	nop
@@ -3415,14 +3389,9 @@ L3ac18:	; 8003AC18
 8003AC24	nop
 
 L3ac28:	; 8003AC28
-8003AC28	jal    func3ad2c [$8003ad2c]
-8003AC2C	nop
+func3ad2c();
 
 L3ac30:	; 8003AC30
-RA = w[SP + 0010];
-SP = SP + 0018;
-8003AC38	jr     ra 
-8003AC3C	nop
 ////////////////////////////////
 
 
@@ -3497,19 +3466,19 @@ if( w[main_struct + 4] != 0 )
 {
     if( hu[main_struct + 10] & 0010 )
     {
-        // syscall
         A0 = w[80058c58];
         system_bios_disable_event();
 
         A0 = main_struct;
         system_sound_stop_all_channels_in_main();
 
+        S0 = w[main_struct + 24];
+
         A0 = main_struct;
         A1 = w[main_struct + 4];
-        S0 = w[main_struct + 24];
         func3b824();
 
-        [main_struct + 002c] = w(S0);
+        [main_struct + 2c] = w(S0);
         A0 = main_struct;
         A1 = ffff;
         8003AD94	jal    func3e568 [$8003e568]
@@ -3517,8 +3486,7 @@ if( w[main_struct + 4] != 0 )
         A0 = main_struct;
         8003AD9C	jal    func3ae48 [$8003ae48]
 
-        // syscall
-        A0 = w[80058c58]; // some sys event id. Maybe sound event callback.
+        A0 = w[80058c58];
         system_bios_enable_event();
     }
 }
@@ -3637,8 +3605,8 @@ main_struct = A0;
 channel_struct = main_struct + 94;
 number_of_channels = bu[main_struct + 14];
 
-// stop all channels
-loop3af24:	; 8003AF24
+for( ; number_of_channels != 0; --number_of_channels )
+{
     spu_channel_id = bu[channel_struct + 27];
     if( spu_channel_id < 18 && w[80061bbc + spu_channel_id * 4] == channel_struct + 30 )
     {
@@ -3646,10 +3614,8 @@ loop3af24:	; 8003AF24
         [80058b98] = w(w[80058b98] & (0 NOR (1 << spu_channel_id))); // remove channel bit from SPU Voice ON mask
         [80058bf0] = w(w[80058bf0] | (1 << spu_channel_id)); // add channel bit
     }
-
     channel_struct = channel_struct + 158;
-    number_of_channels = number_of_channels - 1;
-8003AF34	bne    number_of_channels, zero, loop3af24 [$8003af24]
+}
 ////////////////////////////////
 
 
@@ -3690,9 +3656,10 @@ system_sound_structs_malloc();
 
 S1 = V0;
 8003B024	bne    s1, zero, L3b03c [$8003b03c]
-8003B028	nop
-8003B02C	jal    system_sound_error [$8003f558]
-A0 = 001e;
+
+A0 = 1e;
+system_sound_error();
+
 8003B034	j      L3b08c [$8003b08c]
 V0 = 0;
 
@@ -3707,17 +3674,19 @@ A1 = 0;
 V1 = S1 + 00bb;
 
 loop3b05c:	; 8003B05C
-[A2 + 0000] = h(0);
-[V1 + ffdf] = b(A1);
-A1 = A1 + 0001;
-[V1 + 0000] = b(V0);
-V1 = V1 + 0158;
-A2 = A2 + 0158;
-8003B074	addiu  a0, a0, $ffff (=-$1)
+    [A2 + 0000] = h(0);
+    [V1 + ffdf] = b(A1);
+    A1 = A1 + 0001;
+    [V1 + 0000] = b(V0);
+    V1 = V1 + 0158;
+    A2 = A2 + 0158;
+    8003B074	addiu  a0, a0, $ffff (=-$1)
+    V0 = V0 + 0001;
 8003B078	bne    a0, zero, loop3b05c [$8003b05c]
-V0 = V0 + 0001;
-8003B080	jal    func3b88c [$8003b88c]
+
 A0 = S1;
+8003B080	jal    func3b88c [$8003b88c]
+
 V0 = S1;
 
 L3b08c:	; 8003B08C
@@ -3739,6 +3708,7 @@ func38fec();
 
 ////////////////////////////////
 // func3b0d4
+
 main_struct = A0;
 smd = w[main_struct + 8];
 
@@ -3791,6 +3761,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func3b218
+
 main_struct = A0;
 
 func3b7d8; // insert links to this packs of structures
@@ -3828,6 +3799,7 @@ func3b7d8; // insert links to this packs of structures
 
 ////////////////////////////////
 // func3b2cc
+
 main_struct = A0;
 number_of_channels = bu[main_struct + 14];
 channel_struct = main_struct + 94;
@@ -4078,6 +4050,7 @@ system_bios_enable_event();
 
 ////////////////////////////////
 // func3b7d8
+
 main_struct = A0;
 A0 = w[main_struct + 4];
 
@@ -4100,19 +4073,21 @@ if( A0 != 0 )
 // func3b824()
 
 main_struct = A0;
-S2 = w[main_struct + 0];
+main_prev = w[main_struct + 0];
 S3 = w[main_struct + 4];
-S1 = A1;
+main_src = A1;
 
 A0 = bu[main_struct + 14]; // number of channels
 system_sound_get_sizeof_channel_and_main_struct();
 
+// copy src main struct into given main
 A0 = main_struct; // dst
-A1 = S1; // src
+A1 = main_src; // src
 A2 = V0; // size
 system_sound_memcpy();
 
-[main_struct + 0] = w(S2);
+// restore main ordering
+[main_struct + 0] = w(main_prev);
 [main_struct + 4] = w(S3);
 ////////////////////////////////
 
@@ -4372,7 +4347,7 @@ if( hu[80058c18] & 0010 )
 {
     V1 = hu[80058bac];
     V0 = w[80058af4];
-    return h[V0 + V1 * c];
+    return h[V0 + V1 * 14];
 }
 return 0;
 ////////////////////////////////
@@ -4488,18 +4463,15 @@ if( V1 != 0 )
 
 ////////////////////////////////
 // system_sound_main()
-// f2000002h Root counter 2 (one-eighth of system clock)  (hardware timer)
-// interrupted
+// calls 14.1723356 times per second
 
 if( hu[80058c18] & 0040 )
 {
     return 0;
 }
 
-V0 = w[80055aa0];
-S3 = hu[V0 + 20];
-
-
+V0 = w[80055aa0]; // 1f801100
+rcounter_2_stored = hu[V0 + 20]; // current root counter 2 value
 
 V1 = w[80058ba0] & 1;
 [80058ba0] = w(w[80058ba0] + 1);
@@ -4509,7 +4481,7 @@ if( V1 != 0 )
     if( h[80059a94] != 0 )
     {
         A0 = 80059a8c;
-        func3c32c;
+        func3c32c();
 
         A0 = h[80059a8e];
         [80059a84] = h(A0);
@@ -4523,7 +4495,7 @@ if( V1 != 0 )
     if( h[80059aa0] != 0 )
     {
         A0 = 80059a98;
-        func3c32c;
+        func3c32c();
 
         [80059a86] = h(hu[80059a9a]);
         [80059a6e] = h(hu[80059a9a]);
@@ -4540,136 +4512,130 @@ if( V1 != 0 )
     }
 }
 
-
-
-func3e7a8; // update spu registers and enable reverb, voice and other
-
-
+system_sound_update_spu();
 
 main_struct = w[80058c00];
-if( main_struct != 0 )
+while( main_struct != 0 ) // cycle over all main structs that exist
 {
-    // cycle over all main structs that exist
-    L3bff4:	; 8003BFF4
-        if( h[main_struct + 10] < 0 )
+    if( h[main_struct + 10] & 8000 )
+    {
+        if( ( w[main_struct + 2c] != 0 ) && ( w[main_struct + 24] >= w[main_struct + 2c] ) )
         {
-            if( ( w[main_struct + 2c] != 0 ) && ( w[main_struct + 24] >= w[main_struct + 2c] ) )
-            {
-                A0 = main_struct;
-                func3ad2c;
-            }
+            A0 = main_struct;
+            func3ad2c();
+        }
 
-            if( h[main_struct + 6c] != 0 )
-            {
-                A0 = main_struct + 64;
-                func3c32c;
+        if( h[main_struct + 6c] != 0 )
+        {
+            A0 = main_struct + 64;
+            func3c32c();
 
-                [main_struct + 54] = w(h[main_struct + 5a] * h[main_struct + 66]);
-            }
+            [main_struct + 54] = w(h[main_struct + 5a] * h[main_struct + 66]);
+        }
 
-            if( h[main_struct + 78] != 0 )
-            {
-                A0 = main_struct + 70;
-                func3c32c;
+        if( h[main_struct + 78] != 0 )
+        {
+            A0 = main_struct + 70;
+            func3c32c();
 
-                A0 = 0100; // calculate volume
-                A1 = main_struct;
-                func3e528; // add flag to all playing struct
-            }
+            A0 = 0100; // calculate volume
+            A1 = main_struct;
+            func3e528; // add flag to all playing struct
+        }
 
-            if( h[main_struct + 84] != 0 )
-            {
-                A0 = main_struct + 7c;
-                func3c32c;
+        if( h[main_struct + 84] != 0 )
+        {
+            A0 = main_struct + 7c;
+            func3c32c();
 
-                A0 = 0200; // calculate pitch
-                A1 = main_struct;
-                func3e528; // add flag to all playing struct
-            }
+            A0 = 0200; // calculate pitch
+            A1 = main_struct;
+            func3e528; // add flag to all playing struct
+        }
 
-            if( h[main_struct + 90] != 0 )
-            {
-                A0 = main_struct + 88;
-                func3c32c;
+        if( h[main_struct + 90] != 0 )
+        {
+            A0 = main_struct + 88;
+            func3c32c();
 
-                A0 = 0100; // calculate volume
-                A1 = main_struct;
-                func3e528; // add flag to all playing struct
-            }
+            A0 = 0100; // calculate volume
+            A1 = main_struct;
+            func3e528; // add flag to all playing struct
+        }
 
-            [main_struct + 20] = w(w[main_struct + 20] + 1);
-            [main_struct + 28] = w(w[main_struct + 28] + h[main_struct + 66]);
-            [main_struct + 50] = w(w[main_struct + 50] - w[main_struct + 54]);
+        [main_struct + 20] = w(w[main_struct + 20] + 1);
+        [main_struct + 28] = w(w[main_struct + 28] + h[main_struct + 66]);
+        [main_struct + 50] = w(w[main_struct + 50] - w[main_struct + 54]);
 
-            if( w[main_struct + 50] < 0 )
-            {
-                loop3c100:	; 8003C100
-                    [main_struct + 36] = h(hu[main_struct + 36] - 1);
-                    [main_struct + 50] = w(w[main_struct + 50] + 10000);
+        if( w[main_struct + 50] < 0 )
+        {
+            loop3c100:	; 8003C100
+                [main_struct + 36] = h(hu[main_struct + 36] - 1);
+                [main_struct + 50] = w(w[main_struct + 50] + 10000);
 
-                    if( hu[main_struct + 36] == 0 )
+                if( hu[main_struct + 36] == 0 )
+                {
+                    [main_struct + 36] = h(hu[main_struct + 3a]);
+                    [main_struct + 34] = h(hu[main_struct + 34] + 1);
+
+                    if( hu[main_struct + 38] < hu[main_struct + 34] )
                     {
-                        [main_struct + 36] = h(hu[main_struct + 3a]);
-                        [main_struct + 34] = h(hu[main_struct + 34] + 1);
-
-                        if( hu[main_struct + 38] < hu[main_struct + 34] )
-                        {
-                            [main_struct + 34] = h(1);
-                            [main_struct + 32] = h(hu[main_struct + 32] + 1);
-                        }
+                        [main_struct + 34] = h(1);
+                        [main_struct + 32] = h(hu[main_struct + 32] + 1);
                     }
+                }
 
-                    number_of_channels = bu[main_struct + 14];
-                    channel_struct = main_struct + 94;
-                    if( number_of_channels != 0 )
-                    {
-                        A0 = main_struct;
-                        A1 = channel_struct;
-                        A2 = number_of_channels;
-                        func3c36c; // update timers
+                number_of_channels = bu[main_struct + 14];
+                channel_struct = main_struct + 94;
+                if( number_of_channels != 0 )
+                {
+                    A0 = main_struct;
+                    A1 = channel_struct;
+                    A2 = number_of_channels;
+                    func3c36c; // update timers
 
-                        A0 = main_struct;
-                        A1 = channel_struct;
-                        A2 = number_of_channels;
-                        func3c590(); // read sequence here
-                    }
+                    A0 = main_struct;
+                    A1 = channel_struct;
+                    A2 = number_of_channels;
+                    func3c590(); // read sequence here
+                }
 
-                    if( w[main_struct + 48] == 0 )
-                    {
-                        [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
-                        8003C204	j      L3c21c [$8003c21c]
-                    }
+                if( w[main_struct + 48] == 0 )
+                {
+                    [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
+                    8003C204	j      L3c21c [$8003c21c]
+                }
 
-                    [main_struct + 24] = w(w[main_struct + 24] + 1);
+                [main_struct + 24] = w(w[main_struct + 24] + 1);
 
-                    if( w[main_struct + 70] == 0 )
-                    {
-                        [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
+                if( w[main_struct + 70] == 0 )
+                {
+                    [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
 
-                        A0 = main_struct;
-                        system_sound_stop_all_channels_in_main();
+                    A0 = main_struct;
+                    system_sound_stop_all_channels_in_main();
 
-                        [main_struct + 10] = h(hu[main_struct + 10] | 0100);
-                    }
+                    [main_struct + 10] = h(hu[main_struct + 10] | 0100);
+                }
 
-                    if( hu[main_struct + 32] == hu[main_struct + 1e] )
-                    {
-                        [main_struct + 10] = h(hu[main_struct + 10] & ffdf);
-                        [main_struct + 1e] = h(0);
+                if( hu[main_struct + 32] == hu[main_struct + 1e] )
+                {
+                    [main_struct + 10] = h(hu[main_struct + 10] & ffdf);
+                    [main_struct + 1e] = h(0);
 
-                        A0 = main_struct;
-                        A1 = 0;
-                        A2 = 0;
-                        func3a6e0;
-                    }
+                    A0 = main_struct;
+                    A1 = 0;
+                    A2 = 0;
+                    func3a6e0;
+                }
 
-                    V0 = w[main_struct + 50];
-                8003C214	bltz   v0, loop3c100 [$8003c100]
-            }
+                V0 = w[main_struct + 50];
+            8003C214	bltz   v0, loop3c100 [$8003c100]
+        }
+    }
 
-        L3c21c:	; 8003C21C
-        main_struct = w[main_struct + 0];
-    8003C224	bne    main_struct, zero, L3bff4 [$8003bff4]
+    L3c21c:	; 8003C21C
+    main_struct = w[main_struct + 0];
 }
 
 
@@ -4700,11 +4666,7 @@ if( main_struct != 0 )
     8003C288	bne    main_struct, zero, loop3c240 [$8003c240]
 }
 
-
-
 func3ea04; // update spu registers and turn voice off
-
-
 
 if( hu[80058bf8] & 0001 )
 {
@@ -4714,10 +4676,12 @@ if( hu[80058bf8] & 0001 )
     system_sound_spu_irq9();
 }
 
-V0 = w[80055aa0];
-if( hu[V0 + 20] >= S3 )
+// update timers
+V0 = w[80055aa0]; // 1f801100
+rcounter_2 = hu[V0 + 20];
+if( rcounter_2 >= rcounter_2_stored ) // current root counter 2 value
 {
-    [80058c60] = w(w[80058c60] + hu[V0 + 20] - S3);
+    [80058c60] = w(w[80058c60] + rcounter_2 - rcounter_2_stored);
     [80058bdc] = w(w[80058bdc] + 1);
 }
 
@@ -4727,7 +4691,8 @@ return 0;
 
 
 ////////////////////////////////
-// func3c32c
+// func3c32c()
+
 [A0 + 8] = h(hu[A0 + 8] - 1);
 
 if( hu[A0 + 8] != 0 )
@@ -7309,7 +7274,7 @@ A0 = A0 + 0158;
 ////////////////////////////////
 // system_sound_channel_structures_offset_init()
 
-V0 = 005c;
+V0 = 5c;
 loop3e5ac:	; 8003E5AC
     [80061bbc + V0] = w(0);
     V0 = V0 - 4;
@@ -7320,6 +7285,7 @@ loop3e5ac:	; 8003E5AC
 
 ////////////////////////////////
 // func3e5cc
+
 channel_struct30 = A0;
 channel_id = A1;
 
@@ -7429,119 +7395,108 @@ L3e7a0:	; 8003E7A0
 
 
 ////////////////////////////////
-// func3e7a8
+// system_sound_update_spu()
 
 spu = w[8004ff84];
 
-T2 = 0;
+flags = 0;
+mask_fm = 0;
+mask_noise = 0;
+mask_reverb = 0;
 
-T6 = 0;
-T5 = 0;
-T4 = 0;
-
-channel_id = 0;
-L3e7d0:	; 8003E7D0
-    channel_data = w[80061bbc + channel_id * 4];
-    if( channel_data != 0 )
+for( int channel_id = 0; channel_id < 18; ++channel_id )
+{
+    channel_struct_30 = w[80061bbc + channel_id * 4];
+    if( channel_struct_30 != 0 )
     {
-        A3 = hu[channel_data + 6]; // 36
-8003E7E4
+        A3 = hu[channel_struct_30 + 6]; // 36
         if( A3 != 0 )
         {
             if( A3 & 0001 )
             {
-                [spu + channel_id * 10 + 0] = h(hu[channel_data + 8]); // 38 left volume
-                [spu + channel_id * 10 + 2] = h(hu[channel_data + a]); // 3a right volume
+                [spu + channel_id * 10 + 0] = h(hu[channel_struct_30 + 8]); // 38 left volume
+                [spu + channel_id * 10 + 2] = h(hu[channel_struct_30 + a]); // 3a right volume
             }
 
             if( A3 & 0004 )
             {
-1F801C54
-
-8003e824 : SH      00000000 (v0), fffc (1f801c58 (a2)) [1f801c54]
-8003e824 : SH      00000a1e (v0), fffc (1f801c58 (a2)) [1f801c54]
-                [spu + channel_id * 10 + 4] = h(hu[channel_data + 14]); // 44 pitch
+                [spu + channel_id * 10 + 4] = h(hu[channel_struct_30 + 14]); // 44 pitch
             }
 
             if( A3 & 0008 )
             {
-                [spu + channel_id * 10 + 6] = h(w[channel_data + 1c] >>> 3); // 4c start address of sound / 8
-                [spu + channel_id * 10 + e] = h(w[channel_data + 20] >>> 3); // 50 loop address of sound / 8
+                [spu + channel_id * 10 + 6] = h(w[channel_struct_30 + 1c] >>> 3); // 4c start address of sound / 8
+                [spu + channel_id * 10 + e] = h(w[channel_struct_30 + 20] >>> 3); // 50 loop address of sound / 8
             }
 
             if( A3 & 0010 )
             {
                 // +54 >> 2 attack mode
                 // +57 attack rate
-                [spu + channel_id * 10 + 8] = h(bu[spu + channel_id * 10 + 8] + (bu[channel_data + 27] << 8) + ((bu[channel_data + 24] >> 2) << f)); // attack mode and rate
+                [spu + channel_id * 10 + 8] = h(bu[spu + channel_id * 10 + 8] + (bu[channel_struct_30 + 27] << 8) + ((bu[channel_struct_30 + 24] >> 2) << f)); // attack mode and rate
             }
 
             if( A3 & 0020 )
             {
-                [spu + channel_id * 10 + 8] = h((hu[spu + channel_id * 10 + 8] & ff0f) + (bu[channel_data + 28] << 4)); // 58 decay rate
+                [spu + channel_id * 10 + 8] = h((hu[spu + channel_id * 10 + 8] & ff0f) + (bu[channel_struct_30 + 28] << 4)); // 58 decay rate
             }
 
             if( A3 & 0040 )
             {
                 // +55 >> 1 sustain mode
                 // +59 sustain rate
-                [spu + channel_id * 10 + a] = h((hu[spu + channel_id * 10 + a] & 003f) + (bu[channel_data + 29] << 6) + ((bu[channel_data + 25] >> 1) << e)); // sustain mode and rate
+                [spu + channel_id * 10 + a] = h((hu[spu + channel_id * 10 + a] & 003f) + (bu[channel_struct_30 + 29] << 6) + ((bu[channel_struct_30 + 25] >> 1) << e)); // sustain mode and rate
             }
 
             if( A3 & 0080 )
             {
                 // +56 >> 2 release mode
                 // +5a release rate
-                [spu + channel_id * 10 + a] = h((hu[spu + channel_id * 10 + a] & ffc0) + bu[channel_data + 2a] + ((bu[channel_data + 26] >> 2) << 5)); // release mode and rate
+                [spu + channel_id * 10 + a] = h((hu[spu + channel_id * 10 + a] & ffc0) + bu[channel_struct_30 + 2a] + ((bu[channel_struct_30 + 26] >> 2) << 5)); // release mode and rate
             }
 
             if( A3 & 0100 )
             {
-                [spu + channel_id * 10 + 8] = h((hu[spu + channel_id * 10 + 8] & fff0) + bu[channel_data + 2b]); // 5b sustain level
+                [spu + channel_id * 10 + 8] = h((hu[spu + channel_id * 10 + 8] & fff0) + bu[channel_struct_30 + 2b]); // 5b sustain level
             }
 
-            T2 = T2 | A3 & 7000;
-            [channel_data + 6] = h(0);
+            flags = flags | A3 & 7000;
+            [channel_struct_30 + 6] = h(0);
         }
 
-        V0 = hu[channel_data + 2];
-        T4 = T4 | (((V0 >> 4) & 1) << channel_id);
-        T5 = T5 | (((V0 >> 5) & 1) << channel_id);
-        T6 = T6 | (((V0 >> 6) & 1) << channel_id);
-    }
-
-    channel_id = channel_id + 1;
-    V0 = channel_id < 18;
-8003E980	bne    v0, zero, L3e7d0 [$8003e7d0]
-
-
-
-if( T2 & ffff )
-{
-    if( T2 & 1000 )
-    {
-        [spu + 190] = h(T4);       // Channel FM (pitch lfo) mode (0-15)
-        [spu + 192] = h(T4 >> 10); // Channel FM (pitch lfo) mode (16-23)
-    }
-
-    if( T2 & 2000 )
-    {
-        [spu + 194] = h(T5);       // Channel Noise mode (0-15)
-        [spu + 196] = h(T5 >> 10); // Channel Noise mode (16-23)
-    }
-
-    if( T2 & 4000 )
-    {
-        [spu + 198] = h(T6);       // Channel Reverb mode (0-15)
-        [spu + 19a] = h(T6 >> 10); // Channel Reverb mode (16-23)
+        V0 = hu[channel_struct_30 + 2];
+        mask_fm     = mask_fm     | (((V0 >> 4) & 1) << channel_id);
+        mask_noise  = mask_noise  | (((V0 >> 5) & 1) << channel_id);
+        mask_reverb = mask_reverb | (((V0 >> 6) & 1) << channel_id);
     }
 }
 
-V0 = w[80058b98];
-if( V0 != 0 )
+if( flags & ffff )
 {
-    [spu + 188] = h(V0);       // Voice ON (0-15)
-    [spu + 18a] = h(V0 >> 10); // Voice ON (16-23)
+    if( flags & 1000 )
+    {
+        [spu + 190] = h(mask_fm);       // Channel FM (pitch lfo) mode (0-15)
+        [spu + 192] = h(mask_fm >> 10); // Channel FM (pitch lfo) mode (16-23)
+    }
+
+    if( flags & 2000 )
+    {
+        [spu + 194] = h(mask_noise);       // Channel Noise mode (0-15)
+        [spu + 196] = h(mask_noise >> 10); // Channel Noise mode (16-23)
+    }
+
+    if( flags & 4000 )
+    {
+        [spu + 198] = h(mask_reverb);       // Channel Reverb mode (0-15)
+        [spu + 19a] = h(mask_reverb >> 10); // Channel Reverb mode (16-23)
+    }
+}
+
+mask_voice_on = w[80058b98];
+if( mask_voice_on != 0 )
+{
+    [spu + 188] = h(mask_voice_on);       // Voice ON (0-15)
+    [spu + 18a] = h(mask_voice_on >> 10); // Voice ON (16-23)
     [80058b98] = w(0);
 }
 ////////////////////////////////

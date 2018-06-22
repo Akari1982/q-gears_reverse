@@ -91,6 +91,8 @@
 
 8004ff84 [][][][] address of SPU registers 0x1f801c00.
 
+80055aa0 [][][][] 0x1f801100.
+
 80055ab4 [][][][] set to 1 after gamepad init.
 
 80055b48 [][][][] init with 0. some callback cd related.
@@ -197,9 +199,9 @@
 800584e0 [][][][] init with 0.
 800584e4 [][][][] init with 0.
 
-80058504 [][][][] init with 0.
+80058504 [][][][] init with 0. Set to 4 during sound init.
 80058508 [][][][] init with 0.
-8005850c [][][][] init with 0.
+8005850c [][][][] init with 0. Set to 8006f158 during sound init.
 
 80058810 GP
     + 14 [][][][] some id for GP + 420 or GP + 418 struct. Increment after inserting new.
@@ -264,7 +266,7 @@
 
 80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
 
-80058aac [][][][] pointer to first element in channel struct (800651a0). Struct is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
+80058aac [][][][] pointer to start of all sound structs memory (800651a0). Structs is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
 
 80058adc [][][][] pointer to some SED file (0391.sed).
 80058ac0 [][][][] store here pointer to place for packets.
@@ -279,7 +281,10 @@
 80058ad0 []       state of LeftJoyX for controller 2 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ad8 []       state of LeftJoyY for controller 2 (0x00=Up, 0x80=Center, 0xFF=Down).
 
-80058af4 [][][][] ???
+80058af4 [][][][] pointer to sound spu dma transfer struct (0x14 size 0x8 items).
+    +08 [][][][] start address.
+    +0c [][][][] size.
+    +10 [][][][] some callback.
 
 80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40.
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
@@ -291,17 +296,25 @@
 80058b40 [][]     repeated buttons for controller 1 (details in 80058c0c). 0x20 timer to repeat.
 80058b44 [][]     repeated buttons for controller 2 (details in 80058c0c). 0x20 timer to repeat.
 
+80058b80 [][][][] init with 0x12345678.
+
 80058b94 [][][][] store here 0 when start load battle exe.
 80058b98 [][][][] flags for turning SPU Voice ON.
 
+80058ba0 [][][][] increment each system_sound_main() call.
 80058ba4 [][][][] store here id of encounter in field.
 80058bac [][]     ???
+
+80058bb4 [][][][] init with 0.
+80058bb8 [][][][] size of sound structs memory.
 
 80058bc4 [][][][] store here pointer to polygons data block in 3d model file.
 80058bc8 [][][][] we store here +0c [][][][] from model parts header. Maybe for futher use in inner functions.
 
 80058bd4 [][][][] store here pointer to texture data block in 3d model file.
 80058bd8 [][][][] pointer to vertex block in model data file during packet init.
+
+80058bec [][][][] init with 0.
 
 80058bf0 [][][][] flags for turning SPU Voice OFF.
 80058bf4 [][][][] pointer to SND file (with wds signature).
@@ -328,27 +341,28 @@
                     0x8000 Left
 80058c10 [][]     pressed buttons in Xeno format for controller 2.
 
-80058c18 [][]     some sound control flags.
+80058c18 [][]     some sound control flags. Init with 0xb801
                     0x0001 sound event in 80058c58 enabled.
                     0x0008 add if we genegate sound error.
                     0x0010 ???
-                    0x0040 we don't play sound thread if this is set.
+                    0x0040 we don't play system_sound_main() if this is set. Maybe pause sound.
                     0x0100 if this flag is set then we use mono sound without separation on different channels.
                     0x0800 we start new sound.
                     0x1000 ???
                     0x2000 enable reverb.
+                    0x8000 ???
 
 80058c20 [][][][] allocated spu pointer for pcm data.
 80058c24 [][][][] size of pcm data.
 
 80058c48 [][][][] pointer to struct from STRIPCD1\1\0027.snd file.
 
-80058c58 [][][][] some sys event id. Maybe sound event callback.
+80058c58 [][][][] sound event id.
 80058c5c [][][][] we add here number of polygons for which we create packets.
 
-80058c74 [][][][] offset to 80061bbc SPU channel structures.
+80058c74 [][][][] offset to 80061bbc SPU channel structures + 30.
 
-80058c80 [][][][] last address in spu struct data (8006b490).
+80058c80 [][][][] end of memory for sound structs (8006b490).
 
 80059594 [][][][] 0
 80059598 [][][][] 0
@@ -387,6 +401,10 @@
 800598b4 array of stored cdl command response fifo (0x1 size 0x8 items).
 800598bc array of stored cdl command response fifo (0x1 size 0x8 items).
 
+80059a5c [][][][] init with 0xc.
+80059a64 [][]     init with 0.
+80059a66 [][]     init with 0.
+
 80059b18 [][][][] init with 0.
 80059b1c [][][][] init with 0.
 80059b20 [][][][] init with 0.
@@ -424,13 +442,13 @@
                     0x4000 Cross
                     0x8000 Square
 
-80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4.
+80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4 (+30).
 
 
 
 800651a0-8006b490. Spu data structures. Can be anywhere because allocate dynamicly. Located via struct header.
 // header (0x10 size)
-    +00 [][]     some id. In music set to 2;
+    +00 [][]     some id. In music set to 2; Init with 0x8000.
     +02 [][]     0.
     +04 [][][][] 0.
     +06 [][]     add 0x01f5 when we enable channel.
@@ -443,7 +461,7 @@
     +08 [][][][] pointer to smd file.
     +10 [][]     some flags.
                     0x0001 add on init.
-                    0x8000 remove when stops all channels.
+                    0x8000 if set then we update main struct. Remove when stops all channels.
     +12 [][]     smd + 10.
     +14 []       number of channels.
     +16 [][]     smd + 16.
@@ -468,7 +486,16 @@
     +44 [][]     smd + 1b << 8.
     +48 [][][][] mask of channels.
     +4c [][][][] init with 0.
-    +60 [][]     ??? something that we count down.
+    +54 
+    +58
+    +64
+    +70
+    +7c
+    +88
+        +0 [][][][] value.
+        +4 [][][][] increase value.
+        +8 [][]     current counter value.
+        +a [][]     value set when counter reach 0.
     +7e [][]     pitch related.
     +8a [][]     volume distribution addition.
 
@@ -511,9 +538,9 @@
     +02c [][][][] pointer to snd file (instruments data).
     +030 [][]     store here channel id.
     +032 [][]     enable flags.
-                    0x0010 - enable channel FM (pitch lfo) mode.
-                    0x0020 - enable channel Noise mode.
-                    0x0040 - enable channel Reverb mode.
+                    0x0010 - enable channel fm (pitch lfo) mode.
+                    0x0020 - enable channel noise mode.
+                    0x0040 - enable channel reverb mode.
     +034 [][]     init with 0x0100.
     +036 [][]     update flags.
                     0x0001 - update left and right volume.
@@ -524,9 +551,9 @@
                     0x0040 - update sustain mode and sustain rate.
                     0x0080 - update release mode and release rate.
                     0x0100 - update sustain level.
-                    0x1000 - update Channel FM (pitch lfo) mode.
-                    0x2000 - update Channel Noise mode.
-                    0x4000 - update Channel Reverb mode.
+                    0x1000 - update channel fm (pitch lfo) mode.
+                    0x2000 - update channel noise mode.
+                    0x4000 - update channel reverb mode.
     +038 [][]     left volume.
     +03a [][]     right volume.
     +03c [][]     init with 0.
@@ -593,12 +620,16 @@
     +04 [][][][] start of allocated memory.
     +08 [][][][] size of allocated memory.
 
+8006f158 some struct spu memory related. Store pointer to 8005850c.
+    +0 [][][][] 40001010.
+    +4 [][][][] (10000 << shifter) - 1010.
+
 8006f180 start of heap region.
-    +00 [][][][] pointer to end of heap.
-    +04 [][][][] some flags.
+    +0 [][][][] pointer to end of heap.
+    +4 [][][][] some flags.
 801fc000 end of heap region.
-    -08 [][][][] pointer to end of heap.
-    -04 [][][][] some flags.
+    -8 [][][][] pointer to end of heap.
+    -4 [][][][] some flags.
 
 
 
