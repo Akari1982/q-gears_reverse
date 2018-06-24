@@ -42,7 +42,7 @@ system_sound_channel_structures_offset_init();
 
 system_enter_critical_section();
 
-A0 = f2000002; // 4mhz / 8
+A0 = f2000002;
 A1 = 2;
 A2 = 1000;
 A3 = 8003bec8; // system_sound_main()
@@ -137,7 +137,7 @@ A0 = 0;
 system_sound_spu_irq9();
 
 A0 = 0;
-80037CA8	jal    func4d80c [$8004d80c]
+func4d80c(); // set some callback
 
 A0 = 0;
 80037CB0	jal    func4d5e8 [$8004d5e8]
@@ -535,7 +535,7 @@ func38fec(); // sound related
 
 
 ////////////////////////////////
-// func38294
+// func38294()
 // get pointer to currently load snd file (maybe we check in instruments for this snd already loaded)
 
 V1 = w[80058bf4]; // pointer to SND file
@@ -2955,35 +2955,31 @@ V0 = V0 >> 0f;
 
 ////////////////////////////////
 // func3a6e0
+
+main_struct = A0;
+
 if( A1 == 0 )
 {
-    A1 = 0100;
+    A1 = 100;
 }
 
-[A0 + 6e] = h(A1);
+[main_struct + 6e] = h(A1);
 
 if( A2 == 0 )
 {
-    V0 = h[A0 + 5a];
-    [A0 + 6c] = h(0);
-
-    8003A6FC	mult   v0, a1
-    V0 = A1 << 10;
-    [A0 + 0064] = w(V0);
-    8003A70C	mflo   v0
-    [A0 + 0054] = w(V0);
+    [main_struct + 6c] = h(0);
+    [main_struct + 64] = w(A1 << 10);
+    [main_struct + 54] = w(h[main_struct + 5a] / A1);
 }
 else
 {
-    V1 = w[A0 + 0064];
+    V1 = w[main_struct + 64];
     V0 = A1 << 10;
     V0 = V0 - V1;
     if( V0 != 0 )
     {
-        8003A72C	div    v0, a2
-        8003A730	mflo   v0
-        [A0 + 006c] = h(A2);
-        [A0 + 0068] = w(V0);
+        [main_struct + 6c] = h(A2);
+        [main_struct + 68] = w(V0 / A2);
     }
 }
 ////////////////////////////////
@@ -4305,8 +4301,7 @@ V0 = w[80058af4] + V0 * 14;
 
 if( ( hu[80058c18] & 0010 ) == 0 )
 {
-    // spu dma transfer
-    func3bd10();
+    func3bd10(); // spu dma transfer
 }
 
 if( ( S1 & 0004 ) == 0 )
@@ -4361,19 +4356,19 @@ V0 = hu[80058bac];
 V1 = V0 + 0001;
 V0 = V1 & ffff;
 V0 = V0 < 0008;
-8003BD30	bne    v0, zero, L3bd3c [$8003bd3c]
+if( V0 == 0 )
+{
+    V1 = 0;
+}
 
-V1 = 0;
-
-L3bd3c:	; 8003BD3C
 V0 = hu[80058c18];
-8003BD44	lui    a0, $8004
-8003BD48	addiu  a0, a0, $ba0c (=-$45f4)
 [80058bac] = h(V1);
 V1 = V1 & ffff;
 V0 = V0 | 0010;
 [80058c18] = h(V0);
-8003BD78	jal    func4d80c [$8004d80c]
+
+A0 = 8003ba0c; // func3ba0c()
+func4d80c(); // set some callback
 
 A0 = 0;
 8003BD84	jal    func4d7d8 [$8004d7d8]
@@ -4424,14 +4419,11 @@ switch( V1 )
     break;
 }
 
-8003BE18	lui    v0, $8004
-8003BE1C	addiu  v0, v0, $ba0c (=-$45f4)
-8003BE20	beq    s1, v0, L3be30 [$8003be30]
-
-A0 = 26;
-system_sound_error();
-
-L3be30:	; 8003BE30
+if( S1 != 8003ba0c )
+{
+    A0 = 26;
+    system_sound_error();
+}
 ////////////////////////////////
 
 
@@ -6876,7 +6868,6 @@ V0 = A0;
 ////////////////////////////////
 // func3e028
 V0 = bu[A0 + 0000];
-8003E02C	nop
 [A2 + 00cc] = h(V0);
 V0 = hu[A2 + 00cc];
 V1 = bu[A0 + 0001];
@@ -6886,7 +6877,6 @@ A2 = A2 + V0;
 V0 = V1 & 000f;
 [A2 + 001d] = b(V0);
 V0 = bu[A2 + 001d];
-8003E054	nop
 V0 = V0 << 02;
 8003E05C	lui    at, $8005
 AT = AT + V0;
@@ -6915,17 +6905,10 @@ V0 = A0 + 0003;
 
 ////////////////////////////////
 // func3e0a0
-8003E0A0	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
 S1 = A0;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0010] = w(S0);
 V0 = bu[S1 + 0000];
-8003E0BC	nop
 8003E0C0	mult   v0, v0
 V0 = hu[A2 + 00cc];
-8003E0C8	nop
 V0 = V0 << 05;
 V0 = V0 + 00d8;
 8003E0D4	mflo   v1
@@ -6948,13 +6931,6 @@ A0 = V0 | A0;
 [S2 + 000c] = w(V0);
 V0 = S1 + 0003;
 [S2 + 0012] = h(S0);
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8003E130	jr     ra 
-8003E134	nop
 ////////////////////////////////
 
 
@@ -6989,14 +6965,11 @@ L3e180:	; 8003E180
 L3e190:	; 8003E190
 V0 = 0001;
 8003E194	beq    a1, v0, L3e1a8 [$8003e1a8]
-8003E198	nop
-8003E19C	addiu  v0, a1, $ffff (=-$1)
-8003E1A0	div    a0, v0
-8003E1A4	mflo   a0
+
+A0 = A0 / (A1 - 1);
 
 L3e1a8:	; 8003E1A8
-8003E1A8	jr     ra 
-V0 = A0;
+return A0;
 ////////////////////////////////
 
 
@@ -7023,8 +6996,7 @@ V0 = V0 << 02;
 [A2 + 0018] = h(V1);
 
 L3e1f8:	; 8003E1F8
-8003E1F8	jr     ra 
-V0 = A0 + 0002;
+return A0 + 2;
 ////////////////////////////////
 
 
@@ -7105,6 +7077,7 @@ channel_struct = A2;
 
 A0 = bu[sequence_current + 0];
 [channel_struct + 25] = b(A0);
+
 func38294; // get pointer to current snd
 if( V0 == 0 )
 {

@@ -196,7 +196,7 @@
 800584d4 [][][][] init with 8.
 800584d8 [][][][] init with 7.
 800584dc [][][][] init with 1.
-800584e0 [][][][] init with 0.
+800584e0 [][][][] some callback functions.
 800584e4 [][][][] init with 0.
 
 80058504 [][][][] init with 0. Set to 4 during sound init.
@@ -298,12 +298,13 @@
 
 80058b80 [][][][] init with 0x12345678.
 
+80058b90 [][]     id of loaded spu dma transfer.
 80058b94 [][][][] store here 0 when start load battle exe.
 80058b98 [][][][] flags for turning SPU Voice ON.
 
 80058ba0 [][][][] increment each system_sound_main() call.
 80058ba4 [][][][] store here id of encounter in field.
-80058bac [][]     ???
+80058bac [][]     current load spu dma transfer.
 
 80058bb4 [][][][] init with 0.
 80058bb8 [][][][] size of sound structs memory.
@@ -486,6 +487,7 @@
     +44 [][]     smd + 1b << 8.
     +48 [][][][] mask of channels.
     +4c [][][][] init with 0.
+    +50 [][][][] ???
     +54 
     +58
     +64
