@@ -58,20 +58,21 @@ A0 = f2000002;
 system_root_counter_enable();
 
 A0 = 8003ba0c; // func3ba0c()
-func4d80c(); // set some callback
+system_sound_spu_dma_stop_callback();
 
 A0 = 8003be48; // func3be48()
-func4d5e8(); // set some callback
+system_sound_spu_irq9_callback();
 
-A0 = 0;
+A0 = 0; // on
 system_sound_spu_irq9();
 
 [80058ba0] = w(0);
 [80058bb0] = w(0);
+
 system_exit_critical_section();
 
-A0 = 2000;
-A1 = 10000;
+A0 = 2000; // size of spu alloc
+A1 = 10000; // address of spu mem alloc
 system_sound_spu_malloc_place();
 
 A0 = 1;
@@ -133,14 +134,14 @@ system_enter_critical_section();
 
 [80058c18] = h(0);
 
-A0 = 0;
+A0 = 0; // on
 system_sound_spu_irq9();
 
 A0 = 0;
-func4d80c(); // set some callback
+system_sound_spu_dma_stop_callback();
 
 A0 = 0;
-80037CB0	jal    func4d5e8 [$8004d5e8]
+system_sound_spu_irq9_callback();
 
 A0 = f2000002;
 80037CBC	jal    func40574 [$80040574]
@@ -743,49 +744,35 @@ func39ea0();
 ////////////////////////////////
 // func3856c()
 
-V0 = hu[80058c18];
-V1 = V0 & f8ff;
-V0 = 0001;
-[80058c18] = h(V1);
-80038594	beq    a0, v0, L385bc [$800385bc]
-V0 = A0 < 0002;
-8003859C	bne    v0, zero, L385d0 [$800385d0]
-V0 = 0002;
-800385A4	beq    a0, v0, L385c4 [$800385c4]
-V0 = 0003;
-800385AC	beq    a0, v0, L385c8 [$800385c8]
-V0 = V1 | 0500;
-800385B4	j      L385d0 [$800385d0]
-800385B8	nop
+[80058c18] = h(hu[80058c18] & f8ff);
 
-L385bc:	; 800385BC
-800385BC	j      L385c8 [$800385c8]
-V0 = V1 | 0100;
+if( A0 == 1 )
+{
+    [80058c18] = h(hu[80058c18] | 0100);
+}
+else if( A0 == 2 )
+{
+    [80058c18] = h(hu[80058c18] | 0300);
+}
+else if( A0 == 3 )
+{
+    [80058c18] = h(hu[80058c18] | 0500);
+}
 
-L385c4:	; 800385C4
-V0 = V1 | 0300;
-
-L385c8:	; 800385C8
-[80058c18] = h(V0);
-
-L385d0:	; 800385D0
 800385D0	jal    func38c9c [$80038c9c]
-800385D4	nop
+
 A0 = h[80058aa8];
 A1 = h[80058aaa];
 800385E8	jal    func4e41c [$8004e41c]
-800385EC	nop
+
 S0 = w[80058c00];
-800385F8	nop
-if( S0 != 0 )
+while( S0 != 0 )
 {
-    loop38604:	; 80038604
-        A0 = 0100;
-        80038604	jal    func3e528 [$8003e528]
-        A1 = S0;
-        S0 = w[S0 + 0000];
-        80038610	nop
-    80038614	bne    s0, zero, loop38604 [$80038604]
+    A0 = 0100;
+    A1 = S0;
+    80038604	jal    func3e528 [$8003e528]
+
+    S0 = w[S0 + 0000];
 }
 
 if( hu[80058c18] & 4000 )
@@ -828,8 +815,6 @@ else
 [S1 + 66] = h(S0);
 [S1 + 36] = h(1);
 [S1 + 62] = h(1);
-
-L386b4:	; 800386B4
 ////////////////////////////////
 
 
@@ -1104,8 +1089,9 @@ A0 = A0 >> 10;
 80038B3C	addiu  a1, v0, $ffca (=-$36)
 [80059a94] = h(0);
 [80059a84] = h(V1);
-80038B50	jal    func38d14 [$80038d14]
 A2 = 0;
+func38d14();
+
 V0 = w[80059a5c];
 80038B60	nop
 V0 = V0 | 0003;
@@ -1163,86 +1149,73 @@ else
 
 
 ////////////////////////////////
-// func38c5c
-80038C5C	addiu  sp, sp, $ffe8 (=-$18)
-80038C60	lui    v1, $8006
-80038C64	addiu  v1, v1, $9a70 (=-$6590)
-[SP + 0010] = w(RA);
-V0 = w[V1 + ffec];
-[V1 + 0000] = w(A0);
-80038C74	addiu  a0, v1, $ffec (=-$14)
+// func38c5c()
+
+[80059a70] = w(A0);
 [80059a74] = w(A1);
-V0 = V0 | 0300;
-80038C84	jal    func4d830 [$8004d830]
-[V1 + ffec] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80038C94	jr     ra 
-80038C98	nop
+
+[80059a5c] = w(w[80059a5c] | 0300);
+
+A0 = 80059a5c;
+func4d830();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func38c9c
-80038C9C	addiu  sp, sp, $ffe8 (=-$18)
-80038CA0	lui    v0, $8006
-80038CA4	addiu  v0, v0, $9a84 (=-$657c)
-80038CA8	addiu  a1, v0, $ffdc (=-$24)
-[SP + 0010] = w(RA);
-A0 = h[V0 + 0000];
-80038CB4	jal    func38d14 [$80038d14]
+
+A0 = h[80059a84];
+A1 = 80059a60;
 A2 = 0;
-80038CBC	lui    a1, $8006
-80038CC0	addiu  a1, a1, $8aa8 (=-$7558)
-A0 = h[80059a88];
+func38d14();
+
 V0 = hu[80059a86];
 [80059a6e] = h(V0);
 [80059a6c] = h(V0);
-80038CE4	jal    func38d14 [$80038d14]
-A2 = 0001;
-V0 = w[80059a5c];
-80038CF4	nop
-V0 = V0 | 00c3;
-[80059a5c] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80038D0C	jr     ra 
-80038D10	nop
+
+A0 = h[80059a88];
+A1 = 80058aa8;
+A2 = 1;
+func38d14();
+
+[80059a5c] = w(w[80059a5c] | 000000c3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func38d14
-V1 = hu[80058c18];
-[A1 + 0002] = h(A0);
-V0 = V1 & 0600;
-80038D24	beq    v0, zero, L38d60 [$80038d60]
-[A1 + 0000] = h(A0);
-V0 = V1 & 0200;
-80038D30	bne    v0, zero, L38d4c [$80038d4c]
-A2 = A2 & 00ff;
-V0 = A2 ^ 0001;
-80038D3C	bne    v0, zero, L38d54 [$80038d54]
-V0 = 0 - A0;
-80038D44	j      L38d60 [$80038d60]
-[A1 + 0002] = h(V0);
+// func38d14()
 
-L38d4c:	; 80038D4C
-80038D4C	beq    a2, zero, L38d5c [$80038d5c]
-V0 = 0 - A0;
+[A1 + 0] = h(A0);
+[A1 + 2] = h(A0);
 
-L38d54:	; 80038D54
-80038D54	j      L38d60 [$80038d60]
-[A1 + 0000] = h(V0);
-
-L38d5c:	; 80038D5C
-[A1 + 0002] = h(V0);
-
-L38d60:	; 80038D60
-80038D60	jr     ra 
-80038D64	nop
+if( hu[80058c18] & 0600 )
+{
+    A2 = A2 & 00ff;
+    if( hu[80058c18] & 0200 )
+    {
+        if( A2 == 0 )
+        {
+           [A1 + 0002] = h(0 - A0);
+        }
+        else
+        {
+            [A1 + 0000] = h(0 - A0);
+        }
+    }
+    else
+    {
+        if( A2 ^ 0001 )
+        {
+            [A1 + 0000] = h(0 - A0);
+        }
+        else
+        {
+            [A1 + 0002] = h(0 - A0);
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -4368,7 +4341,7 @@ V0 = V0 | 0010;
 [80058c18] = h(V0);
 
 A0 = 8003ba0c; // func3ba0c()
-func4d80c(); // set some callback
+system_sound_spu_dma_stop_callback();
 
 A0 = 0;
 8003BD84	jal    func4d7d8 [$8004d7d8]
@@ -4455,7 +4428,6 @@ if( V1 != 0 )
 
 ////////////////////////////////
 // system_sound_main()
-// calls 14.1723356 times per second
 
 if( hu[80058c18] & 0040 )
 {
@@ -4479,7 +4451,7 @@ if( V1 != 0 )
         [80059a84] = h(A0);
         A1 = 80059a8c;
         A2 = 0;
-        func38d14;
+        func38d14();
 
         [80059a5c] = w(w[80059a5c] | 00000003);
     }
@@ -4498,7 +4470,7 @@ if( V1 != 0 )
     if( w[80059a5c] != 0 )
     {
         A0 = 80059a5c;
-        func4d830;
+        func4d830();
 
         [80059a5c] = w(0);
     }
@@ -4559,70 +4531,66 @@ while( main_struct != 0 ) // cycle over all main structs that exist
         [main_struct + 28] = w(w[main_struct + 28] + h[main_struct + 66]);
         [main_struct + 50] = w(w[main_struct + 50] - w[main_struct + 54]);
 
-        if( w[main_struct + 50] < 0 )
+        while( w[main_struct + 50] < 0 )
         {
-            loop3c100:	; 8003C100
-                [main_struct + 36] = h(hu[main_struct + 36] - 1);
-                [main_struct + 50] = w(w[main_struct + 50] + 10000);
+            [main_struct + 36] = h(hu[main_struct + 36] - 1);
+            [main_struct + 50] = w(w[main_struct + 50] + 10000);
 
-                if( hu[main_struct + 36] == 0 )
+            if( hu[main_struct + 36] == 0 )
+            {
+                [main_struct + 36] = h(hu[main_struct + 3a]);
+                [main_struct + 34] = h(hu[main_struct + 34] + 1);
+
+                if( hu[main_struct + 38] < hu[main_struct + 34] )
                 {
-                    [main_struct + 36] = h(hu[main_struct + 3a]);
-                    [main_struct + 34] = h(hu[main_struct + 34] + 1);
-
-                    if( hu[main_struct + 38] < hu[main_struct + 34] )
-                    {
-                        [main_struct + 34] = h(1);
-                        [main_struct + 32] = h(hu[main_struct + 32] + 1);
-                    }
+                    [main_struct + 34] = h(1);
+                    [main_struct + 32] = h(hu[main_struct + 32] + 1);
                 }
+            }
 
-                number_of_channels = bu[main_struct + 14];
-                channel_struct = main_struct + 94;
-                if( number_of_channels != 0 )
-                {
-                    A0 = main_struct;
-                    A1 = channel_struct;
-                    A2 = number_of_channels;
-                    func3c36c; // update timers
+            number_of_channels = bu[main_struct + 14];
+            channel_struct = main_struct + 94;
+            if( number_of_channels != 0 )
+            {
+                A0 = main_struct;
+                A1 = channel_struct;
+                A2 = number_of_channels;
+                func3c36c; // update timers
 
-                    A0 = main_struct;
-                    A1 = channel_struct;
-                    A2 = number_of_channels;
-                    func3c590(); // read sequence here
-                }
+                A0 = main_struct;
+                A1 = channel_struct;
+                A2 = number_of_channels;
+                func3c590(); // read sequence here
+            }
 
-                if( w[main_struct + 48] == 0 )
-                {
-                    [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
-                    8003C204	j      L3c21c [$8003c21c]
-                }
+            if( w[main_struct + 48] == 0 )
+            {
+                [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
+                8003C204	j      L3c21c [$8003c21c]
+            }
 
-                [main_struct + 24] = w(w[main_struct + 24] + 1);
+            [main_struct + 24] = w(w[main_struct + 24] + 1);
 
-                if( w[main_struct + 70] == 0 )
-                {
-                    [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
+            if( w[main_struct + 70] == 0 )
+            {
+                [main_struct + 10] = h(hu[main_struct + 10] & 7fff);
 
-                    A0 = main_struct;
-                    system_sound_stop_all_channels_in_main();
+                A0 = main_struct;
+                system_sound_stop_all_channels_in_main();
 
-                    [main_struct + 10] = h(hu[main_struct + 10] | 0100);
-                }
+                [main_struct + 10] = h(hu[main_struct + 10] | 0100);
+            }
 
-                if( hu[main_struct + 32] == hu[main_struct + 1e] )
-                {
-                    [main_struct + 10] = h(hu[main_struct + 10] & ffdf);
-                    [main_struct + 1e] = h(0);
+            if( hu[main_struct + 32] == hu[main_struct + 1e] )
+            {
+                [main_struct + 10] = h(hu[main_struct + 10] & ffdf);
+                [main_struct + 1e] = h(0);
 
-                    A0 = main_struct;
-                    A1 = 0;
-                    A2 = 0;
-                    func3a6e0;
-                }
-
-                V0 = w[main_struct + 50];
-            8003C214	bltz   v0, loop3c100 [$8003c100]
+                A0 = main_struct;
+                A1 = 0;
+                A2 = 0;
+                func3a6e0;
+            }
         }
     }
 
@@ -5598,22 +5566,16 @@ return sequence_current + 2;
 
 ////////////////////////////////
 // func3d024
-8003D024	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
 S0 = A0;
-[SP + 0014] = w(RA);
 V0 = bu[S0 + 0000];
 S0 = S0 + 0001;
 A0 = 0100;
 V0 = V0 << 18;
-8003D044	jal    func3e528 [$8003e528]
 [A1 + 0070] = w(V0);
-V0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8003D05C	jr     ra 
-8003D060	nop
+8003D044	jal    func3e528 [$8003e528]
+
+return S0;
 ////////////////////////////////
 
 
@@ -7201,7 +7163,8 @@ A2 = w[instrument_data + 8];
 
 
 ////////////////////////////////
-// func3e528
+// func3e528()
+
 channel_struct = A1 + 94;
 number_of_channels = bu[A1 + 14];
 

@@ -27600,7 +27600,7 @@ func4c1b0:	; 8004C1B0
 // system_sound_spu_irq9
 8004D4A8-8004D5E4
 ////////////////////////////////
-// func4d5e8
+// system_sound_spu_irq9_callback
 8004D5E8-8004D628
 ////////////////////////////////
 // func4d62c
@@ -27621,7 +27621,7 @@ func4c1b0:	; 8004C1B0
 // func4d7d8
 8004D7D8-8004D808
 ////////////////////////////////
-// func4d80c
+// system_sound_spu_dma_stop_callback
 8004D80C-8004D82C
 ////////////////////////////////
 // func4d830

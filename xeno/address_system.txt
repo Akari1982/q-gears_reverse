@@ -196,8 +196,8 @@
 800584d4 [][][][] init with 8.
 800584d8 [][][][] init with 7.
 800584dc [][][][] init with 1.
-800584e0 [][][][] some callback functions.
-800584e4 [][][][] init with 0.
+800584e0 [][][][] spu dma transfer stop callback.
+800584e4 [][][][] spu irq9 callback.
 
 80058504 [][][][] init with 0. Set to 4 during sound init.
 80058508 [][][][] init with 0.
@@ -264,8 +264,11 @@
 80058a4c [][][][] pointer to bios ClearPadEnableFlag().
 80058a54 [][][][] pointer to bios SetPadOutput(src1,blah1,src2,blah2).
 
+80058a88
+
 80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
 
+80058aa8
 80058aac [][][][] pointer to start of all sound structs memory (800651a0). Structs is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
 
 80058adc [][][][] pointer to some SED file (0391.sed).
@@ -305,7 +308,7 @@
 80058ba0 [][][][] increment each system_sound_main() call.
 80058ba4 [][][][] store here id of encounter in field.
 80058bac [][]     current load spu dma transfer.
-
+80058bb0 [][][][] init with 0.
 80058bb4 [][][][] init with 0.
 80058bb8 [][][][] size of sound structs memory.
 
@@ -348,6 +351,8 @@
                     0x0010 ???
                     0x0040 we don't play system_sound_main() if this is set. Maybe pause sound.
                     0x0100 if this flag is set then we use mono sound without separation on different channels.
+                    0x0200 ???
+                    0x0400 ???
                     0x0800 we start new sound.
                     0x1000 ???
                     0x2000 enable reverb.

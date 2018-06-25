@@ -961,14 +961,14 @@ return A0;
 
 
 ////////////////////////////////
-// func4d5e8()
+// system_sound_spu_irq9_callback()
 
 S0 = w[800584e4];
 
 if( A0 != S0 )
 {
     [800584e4] = w(A0);
-    8004D60C	jal    func4d62c [$8004d62c]
+    func4d62c(); // set irq9 callback
 }
 
 return S0;
@@ -981,7 +981,7 @@ return S0;
 
 A1 = A0;
 A0 = 9;
-8004D638	jal    func4b618 [$8004b618]
+func4b618();
 ////////////////////////////////
 
 
@@ -1030,9 +1030,7 @@ L4d6b8:	; 8004D6B8
 // func4d6c0
 
 S0 = A1;
-8004D6CC	lui    v0, $0007
-V0 = V0 | eff0;
-V0 = V0 < S0;
+V0 = 7eff0 < S0;
 8004D6D8	beq    v0, zero, L4d6e8 [$8004d6e8]
 
 S0 = 0007eff0;
@@ -1041,7 +1039,7 @@ L4d6e8:	; 8004D6E8
 8004D6E8	jal    func4ce68 [$8004ce68]
 A1 = S0;
 V0 = w[800584e0];
-8004D6F8	nop
+
 8004D6FC	bne    v0, zero, L4d70c [$8004d70c]
 V0 = S0;
 [800584dc] = w(0);
@@ -1110,7 +1108,7 @@ else
 
 
 ////////////////////////////////
-// func4d80c()
+// system_sound_spu_dma_stop_callback()
 
 V0 = w[800584e0];
 if( A0 != V0 )
@@ -1123,31 +1121,26 @@ return V0;
 
 
 ////////////////////////////////
-// func4d830
+// func4d830()
 
 A2 = 0;
-T1 = w[A0 + 0000];
-T2 = T1 < 0001;
+T1 = w[A0 + 0];
+T2 = T1 < 1;
 8004D844	bne    t2, zero, L4d860 [$8004d860]
 T0 = 0;
-V0 = T1 & 0001;
+V0 = T1 & 1;
 8004D850	beq    v0, zero, L4d910 [$8004d910]
 V0 = T1 & 0004;
 8004D858	beq    v0, zero, L4d8c4 [$8004d8c4]
 8004D85C	nop
 
 L4d860:	; 8004D860
-V1 = h[A0 + 0008];
-8004D864	nop
-V0 = V1 < 0008;
+V1 = h[A0 + 8];
+V0 = V1 < 8;
 8004D86C	beq    v0, zero, L4d8c4 [$8004d8c4]
-V0 = V1 << 02;
-8004D874	lui    at, $8002
-AT = AT + V0;
-V0 = w[AT + 9578];
-8004D880	nop
+
+V0 = w[80019578 + V1 * 4];
 8004D884	jr     v0 
-8004D888	nop
 
 8004D88C	j      L4d8cc [$8004d8cc]
 A1 = 8000;
@@ -1190,7 +1183,7 @@ V0 = A2 & 7fff;
 L4d900:	; 8004D900
 V1 = w[800584a8];
 V0 = V0 | A1;
-[V1 + 0180] = h(V0);
+[V1 + 180] = h(V0);
 
 L4d910:	; 8004D910
 8004D910	bne    t2, zero, L4d928 [$8004d928]
@@ -1201,17 +1194,12 @@ V0 = T1 & 0008;
 8004D924	nop
 
 L4d928:	; 8004D928
-V1 = h[A0 + 000a];
-8004D92C	nop
-V0 = V1 < 0008;
+V1 = h[A0 + a];
+V0 = V1 < 8;
 8004D934	beq    v0, zero, L4d98c [$8004d98c]
-V0 = V1 << 02;
-8004D93C	lui    at, $8002
-AT = AT + V0;
-V0 = w[AT + 9598];
-8004D948	nop
-8004D94C	jr     v0 
-8004D950	nop
+
+V0 = w[80019598 + V1 * 4];
+8004D94C	jr     v0
 
 8004D954	j      L4d994 [$8004d994]
 A1 = 8000;
@@ -1233,167 +1221,100 @@ T0 = hu[A0 + 0006];
 A1 = 0;
 
 L4d994:	; 8004D994
-8004D994	beq    a1, zero, L4d9c8 [$8004d9c8]
-V0 = T0 & 7fff;
-A2 = h[A0 + 0006];
-8004D9A0	nop
-V0 = A2 < 0080;
-8004D9A8	bne    v0, zero, L4d9b8 [$8004d9b8]
-V1 = A2;
-8004D9B0	j      L4d9c4 [$8004d9c4]
-T0 = 007f;
+if( A1 != 0 )
+{
+    A2 = h[A0 + 6];
 
-L4d9b8:	; 8004D9B8
-8004D9B8	bgez   a2, L4d9c4 [$8004d9c4]
-T0 = V1;
-T0 = 0;
+    if( A2 >= 80 )
+    {
+        T0 = 7f;
+    }
+    else if( A2 < 0 )
+    {
+        T0 = 0;
+    }
+    else
+    {
+        T0 = A2;
+    }
 
-L4d9c4:	; 8004D9C4
-V0 = T0 & 7fff;
+    V0 = T0 & 7fff;
+}
+else
+{
+    V0 = T0 & 7fff;
+}
 
-L4d9c8:	; 8004D9C8
 V1 = w[800584a8];
-V0 = V0 | A1;
-[V1 + 0182] = h(V0);
+[V0 + 182] = h(V0 | A1);
 
 L4d9d8:	; 8004D9D8
-8004D9D8	bne    t2, zero, L4d9e8 [$8004d9e8]
-V0 = T1 & 0040;
-8004D9E0	beq    v0, zero, L4d9fc [$8004d9fc]
-8004D9E4	nop
 
-L4d9e8:	; 8004D9E8
-V1 = w[800584a8];
-V0 = hu[A0 + 0010];
-[V1 + 01b0] = h(V0);
+if( ( T1 & 0040 ) || ( T2 != 0 ) )
+{
+    [V0 + 1b0] = h(hu[A0 + 10]);
+}
 
-L4d9fc:	; 8004D9FC
-8004D9FC	bne    t2, zero, L4da0c [$8004da0c]
-V0 = T1 & 0080;
-8004DA04	beq    v0, zero, L4da20 [$8004da20]
-8004DA08	nop
+if( ( T1 & 0080 ) || ( T2 != 0 ) )
+{
+    [V0 + 1b2] = h(hu[A0 + 12]);
+}
 
-L4da0c:	; 8004DA0C
-V1 = w[800584a8];
-V0 = hu[A0 + 0012];
-8004DA18	nop
-[V1 + 01b2] = h(V0);
+if( ( T1 & 0400 ) || ( T2 != 0 ) )
+{
+    [V0 + 1b4] = h(hu[A0 + 1c]);
+}
 
-L4da20:	; 8004DA20
-8004DA20	bne    t2, zero, L4da30 [$8004da30]
-V0 = T1 & 0400;
-8004DA28	beq    v0, zero, L4da44 [$8004da44]
-8004DA2C	nop
+if( ( T1 & 0800 ) || ( T2 != 0 ) )
+{
+    [V0 + 1b6] = h(hu[A0 + 1e]);
+}
 
-L4da30:	; 8004DA30
-V1 = w[800584a8];
-V0 = hu[A0 + 001c];
-8004DA3C	nop
-[V1 + 01b4] = h(V0);
+if( ( T1 & 0100 ) || ( T2 != 0 ))
+{
+    if( w[A0 + 14] == 0 )
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] & fffb);
+    }
+    else
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] | 0004);
+    }
+}
 
-L4da44:	; 8004DA44
-8004DA44	bne    t2, zero, L4da54 [$8004da54]
-V0 = T1 & 0800;
-8004DA4C	beq    v0, zero, L4da68 [$8004da68]
-8004DA50	nop
+if( ( T1 & 0200 ) || ( T2 != 0 ) )
+{
+    if( w[A0 + 18] == 0 )
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] & fffe);
+    }
+    else
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] | 0001);
+    }
+}
 
-L4da54:	; 8004DA54
-V1 = w[800584a8];
-V0 = hu[A0 + 001e];
-8004DA60	nop
-[V1 + 01b6] = h(V0);
+if( ( T1 & 1000 ) || ( T2 != 0 ) )
+{
+    if( w[A0 + 20] == 0 )
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] & fff7);
+    }
+    else
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] | 0008);
+    }
+}
 
-L4da68:	; 8004DA68
-8004DA68	bne    t2, zero, L4da78 [$8004da78]
-V0 = T1 & 0100;
-
-func4da70:	; 8004DA70
-8004DA70	beq    v0, zero, L4dabc [$8004dabc]
-8004DA74	nop
-
-L4da78:	; 8004DA78
-V0 = w[A0 + 0014];
-8004DA7C	nop
-8004DA80	bne    v0, zero, L4daa0 [$8004daa0]
-8004DA84	nop
-V0 = w[800584a8];
-8004DA90	nop
-V1 = hu[V0 + 01aa];
-V1 = V1 & fffb;
-8004DA98	j      L4dab8 [$8004dab8]
-
-L4daa0:	; 8004DAA0
-V0 = w[800584a8];
-V1 = hu[V0 + 1aa] | 0004;
-
-L4dab8:	; 8004DAB8
-[V0 + 01aa] = h(V1);
-
-L4dabc:	; 8004DABC
-8004DABC	bne    t2, zero, L4dacc [$8004dacc]
-V0 = T1 & 0200;
-8004DAC4	beq    v0, zero, L4db10 [$8004db10]
-8004DAC8	nop
-
-L4dacc:	; 8004DACC
-V0 = w[A0 + 18];
-8004DAD4	bne    v0, zero, L4daf4 [$8004daf4]
-
-V0 = w[800584a8];
-V1 = hu[V0 + 1aa];
-V1 = V1 & fffe;
-8004DAEC	j      L4db0c [$8004db0c]
-
-L4daf4:	; 8004DAF4
-V0 = w[800584a8];
-V1 = hu[V0 + 1aa] | 0001;
-
-L4db0c:	; 8004DB0C
-[V0 + 01aa] = h(V1);
-
-L4db10:	; 8004DB10
-8004DB10	bne    t2, zero, L4db20 [$8004db20]
-V0 = T1 & 1000;
-8004DB18	beq    v0, zero, L4db64 [$8004db64]
-8004DB1C	nop
-
-L4db20:	; 8004DB20
-V0 = w[A0 + 0020];
-8004DB28	bne    v0, zero, L4db48 [$8004db48]
-
-V0 = w[800584a8];
-V1 = hu[V0 + 1aa];
-V1 = V1 & fff7;
-8004DB40	j      L4db60 [$8004db60]
-
-L4db48:	; 8004DB48
-V0 = w[800584a8];
-V1 = hu[V0 + 1aa];
-V1 = V1 | 0008;
-
-L4db60:	; 8004DB60
-[V0 + 1aa] = h(V1);
-
-L4db64:	; 8004DB64
-8004DB64	bne    t2, zero, L4db74 [$8004db74]
-V0 = T1 & 2000;
-8004DB6C	beq    v0, zero, L4dbb8 [$8004dbb8]
-
-L4db74:	; 8004DB74
-V0 = w[A0 + 24];
-8004DB7C	bne    v0, zero, L4db9c [$8004db9c]
-
-V0 = w[800584a8];
-V1 = hu[V0 + 1aa];
-V1 = V1 & fffd;
-8004DB94	j      L4dbb4 [$8004dbb4]
-
-L4db9c:	; 8004DB9C
-V0 = w[800584a8];
-V1 = hu[V0 + 1aa] | 0002;
-
-L4dbb4:	; 8004DBB4
-[V0 + 1aa] = h(V1);
-
-L4dbb8:	; 8004DBB8
+if( ( T1 & 2000 ) || ( T2 != 0 ) )
+{
+    if( w[A0 + 24] == 0 )
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] & fffd);
+    }
+    else
+    {
+        [V0 + 1aa] = h(hu[V0 + 1aa] | 0002);
+    }
+}
 ////////////////////////////////
