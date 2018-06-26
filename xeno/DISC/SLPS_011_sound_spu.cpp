@@ -99,19 +99,19 @@ A0 = w[800584b8]; // 1f8010f0 dma control register
 [800584c4] = w(0);
 [800584c8] = w(0);
 
-spu_reg = w[800584a8]; // 1f801c00 start of spu registers
+spu = w[800584a8]; // 1f801c00 start of spu registers
 
-[spu_reg + 180] = h(0); // mainvolume left
-[spu_reg + 182] = h(0); // mainvolume right
-[spu_reg + 1aa] = h(0); // spu control register (SPUCNT) disable everything
+[spu + 180] = h(0); // mainvolume left
+[spu + 182] = h(0); // mainvolume right
+[spu + 1aa] = h(0); // spu control register (SPUCNT) disable everything
 
 system_sound_wait_sync();
 
-[spu_reg + 180] = h(0); // mainvolume left
-[spu_reg + 182] = h(0); // mainvolume right
+[spu + 180] = h(0); // mainvolume left
+[spu + 182] = h(0); // mainvolume right
 
 V1 = 0;
-while( hu[spu_reg + 1ae] & 07ff ) // spu status register (SPUSTAT)
+while( hu[spu + 1ae] & 07ff ) // spu status register (SPUSTAT)
 {
     V1 = V1 + 1;
     if( V1 >= f01 )
@@ -129,13 +129,13 @@ while( hu[spu_reg + 1ae] & 07ff ) // spu status register (SPUSTAT)
 [800584d4] = w(8);
 [800584d8] = w(7);
 
-[spu_reg + 184] = h(0); // reverb output volume left.
-[spu_reg + 186] = h(0); // reverb output volume right.
-[spu_reg + 18c] = h(ffff); // voice 0-15 key off
-[spu_reg + 18e] = h(ffff); // voice 16-23 key off
-[spu_reg + 198] = h(0); // voice 0-15 channel reverb mode
-[spu_reg + 19a] = h(0); // voice 16-23 channel reverb mode
-[spu_reg + 1ac] = h(0004); // sound ram data transfer control (transfet type - normal)
+[spu + 184] = h(0); // reverb output volume left.
+[spu + 186] = h(0); // reverb output volume right.
+[spu + 18c] = h(ffff); // voice 0-15 key off
+[spu + 18e] = h(ffff); // voice 16-23 key off
+[spu + 198] = h(0); // voice 0-15 channel reverb mode
+[spu + 19a] = h(0); // voice 16-23 channel reverb mode
+[spu + 1ac] = h(0004); // sound ram data transfer control (transfet type - normal)
 
 for( int i = 0; i < a; ++i )
 {
@@ -146,14 +146,14 @@ if( without_data == 0 )
 {
     [800584c0] = h(0200);
 
-    [spu_reg + 190] = h(0); // voice 0-15 pitch modulation enable
-    [spu_reg + 192] = h(0); // voice 16-23 pitch modulation enable
-    [spu_reg + 194] = h(0); // voice 0-15 noise mode enable
-    [spu_reg + 196] = h(0); // voice 16-23 noise mode enable
-    [spu_reg + 1b0] = h(0); // cd volume left
-    [spu_reg + 1b2] = h(0); // cd volume right
-    [spu_reg + 1b4] = h(0); // extern volume left
-    [spu_reg + 1b6] = h(0); // extern volume right
+    [spu + 190] = h(0); // voice 0-15 pitch modulation enable
+    [spu + 192] = h(0); // voice 16-23 pitch modulation enable
+    [spu + 194] = h(0); // voice 0-15 noise mode enable
+    [spu + 196] = h(0); // voice 16-23 noise mode enable
+    [spu + 1b0] = h(0); // cd volume left
+    [spu + 1b2] = h(0); // cd volume right
+    [spu + 1b4] = h(0); // extern volume left
+    [spu + 1b6] = h(0); // extern volume right
 
     A0 = 800584e8; // transfer data to spu from here
     A1 = 10; // size
@@ -161,24 +161,24 @@ if( without_data == 0 )
 
     for( int i = 0; i < 18; ++i )
     {
-        [spu_reg + i * 10 + 0] = h(0); // volume left
-        [spu_reg + i * 10 + 2] = h(0); // volume right
-        [spu_reg + i * 10 + 4] = h(3fff); // sample rate
-        [spu_reg + i * 10 + 6] = h(0200); // start address
-        [spu_reg + i * 10 + 8] = h(0); // attack/decay
-        [spu_reg + i * 10 + a] = h(0); // sustain/release
+        [spu + i * 10 + 0] = h(0); // volume left
+        [spu + i * 10 + 2] = h(0); // volume right
+        [spu + i * 10 + 4] = h(3fff); // sample rate
+        [spu + i * 10 + 6] = h(0200); // start address
+        [spu + i * 10 + 8] = h(0); // attack/decay
+        [spu + i * 10 + a] = h(0); // sustain/release
     }
 
-    [spu_reg + 188] = h(ffff); // voice 0-15 key on
-    [spu_reg + 18a] = h(00ff); // voice 16-23 key on
+    [spu + 188] = h(ffff); // voice 0-15 key on
+    [spu + 18a] = h(00ff); // voice 16-23 key on
 
     system_sound_wait_sync();
     system_sound_wait_sync();
     system_sound_wait_sync();
     system_sound_wait_sync();
 
-    [spu_reg + 18c] = h(ffff); // voice 0-15 key off
-    [spu_reg + 18e] = h(00ff); // voice 16-23 key off
+    [spu + 18c] = h(ffff); // voice 0-15 key off
+    [spu + 18e] = h(00ff); // voice 16-23 key off
 
     system_sound_wait_sync();
     system_sound_wait_sync();
@@ -186,7 +186,7 @@ if( without_data == 0 )
     system_sound_wait_sync();
 }
 
-[spu_reg + 1aa] = h(c000); // spu control register (SPUCNT) enable and unmute spu
+[spu + 1aa] = h(c000); // spu control register (SPUCNT) enable and unmute spu
 
 [800584dc] = w(1);
 [800584e0] = w(0);
@@ -316,13 +316,13 @@ S0 = A2;
 S0 = S0 << 10;
 S0 = S0 | 0010;
 
-spu_reg = w[800584a8];
+spu = w[800584a8];
 
-[spu_reg + 1a6] = h(A1);
+[spu + 1a6] = h(A1);
 
 system_sound_wait_sync();
 
-[spu_reg + 1aa] = h(hu[spu_reg + 1aa] | 0030);
+[spu + 1aa] = h(hu[spu + 1aa] | 0030);
 
 system_sound_wait_sync();
 
@@ -1121,200 +1121,162 @@ return V0;
 
 
 ////////////////////////////////
-// func4d830()
+// system_sound_spu_main_and_cd_volume()
 
-A2 = 0;
+spu = w[800584a8]; // 1f801c00 start of spu registers
+
 T1 = w[A0 + 0];
-T2 = T1 < 1;
-8004D844	bne    t2, zero, L4d860 [$8004d860]
-T0 = 0;
-V0 = T1 & 1;
-8004D850	beq    v0, zero, L4d910 [$8004d910]
-V0 = T1 & 0004;
-8004D858	beq    v0, zero, L4d8c4 [$8004d8c4]
-8004D85C	nop
 
-L4d860:	; 8004D860
-V1 = h[A0 + 8];
-V0 = V1 < 8;
-8004D86C	beq    v0, zero, L4d8c4 [$8004d8c4]
-
-V0 = w[80019578 + V1 * 4];
-8004D884	jr     v0 
-
-8004D88C	j      L4d8cc [$8004d8cc]
-A1 = 8000;
-8004D894	j      L4d8cc [$8004d8cc]
-A1 = 9000;
-8004D89C	j      L4d8cc [$8004d8cc]
-A1 = a000;
-8004D8A4	j      L4d8cc [$8004d8cc]
-A1 = b000;
-8004D8AC	j      L4d8cc [$8004d8cc]
-A1 = c000;
-8004D8B4	j      L4d8cc [$8004d8cc]
-A1 = d000;
-8004D8BC	j      L4d8cc [$8004d8cc]
-A1 = e000;
-
-L4d8c4:	; 8004D8C4
-A2 = hu[A0 + 0004];
-A1 = 0;
-
-L4d8cc:	; 8004D8CC
-8004D8CC	beq    a1, zero, L4d900 [$8004d900]
-V0 = A2 & 7fff;
-A3 = h[A0 + 0004];
-8004D8D8	nop
-V0 = A3 < 0080;
-8004D8E0	bne    v0, zero, L4d8f0 [$8004d8f0]
-V1 = A3;
-8004D8E8	j      L4d8fc [$8004d8fc]
-A2 = 007f;
-
-L4d8f0:	; 8004D8F0
-8004D8F0	bgez   a3, L4d8fc [$8004d8fc]
-A2 = V1;
-A2 = 0;
-
-L4d8fc:	; 8004D8FC
-V0 = A2 & 7fff;
-
-L4d900:	; 8004D900
-V1 = w[800584a8];
-V0 = V0 | A1;
-[V1 + 180] = h(V0);
-
-L4d910:	; 8004D910
-8004D910	bne    t2, zero, L4d928 [$8004d928]
-V0 = T1 & 0002;
-8004D918	beq    v0, zero, L4d9d8 [$8004d9d8]
-V0 = T1 & 0008;
-8004D920	beq    v0, zero, L4d98c [$8004d98c]
-8004D924	nop
-
-L4d928:	; 8004D928
-V1 = h[A0 + a];
-V0 = V1 < 8;
-8004D934	beq    v0, zero, L4d98c [$8004d98c]
-
-V0 = w[80019598 + V1 * 4];
-8004D94C	jr     v0
-
-8004D954	j      L4d994 [$8004d994]
-A1 = 8000;
-8004D95C	j      L4d994 [$8004d994]
-A1 = 9000;
-8004D964	j      L4d994 [$8004d994]
-A1 = a000;
-8004D96C	j      L4d994 [$8004d994]
-A1 = b000;
-8004D974	j      L4d994 [$8004d994]
-A1 = c000;
-8004D97C	j      L4d994 [$8004d994]
-A1 = d000;
-8004D984	j      L4d994 [$8004d994]
-A1 = e000;
-
-L4d98c:	; 8004D98C
-T0 = hu[A0 + 0006];
-A1 = 0;
-
-L4d994:	; 8004D994
-if( A1 != 0 )
+if( ( T1 < 1 ) || ( T1 & 0001 ) )
 {
-    A2 = h[A0 + 6];
-
-    if( A2 >= 80 )
+    A1 = 0;
+    A2 = 0;
+    if( ( T1 < 1 ) || ( T1 & 0004 ) )
     {
-        T0 = 7f;
+        switch( h[A0 + 8] )
+        {
+            case 1: A1 = 8000; break;
+            case 2: A1 = 9000; break;
+            case 3: A1 = a000; break;
+            case 4: A1 = b000; break;
+            case 5: A1 = c000; break;
+            case 6: A1 = d000; break;
+            case 7: A1 = e000; break;
+        }
     }
-    else if( A2 < 0 )
+
+    if( A1 != 0 )
     {
-        T0 = 0;
+        A3 = h[A0 + 4];
+        if( A3 >= 80 )
+        {
+            A2 = 7f;
+        }
+        else if( A3 < 3 )
+        {
+            A2 = 0;
+        }
+        else
+        {
+            A2 = A3;
+        }
     }
     else
     {
-        T0 = A2;
+        A2 = hu[A0 + 4];
     }
 
-    V0 = T0 & 7fff;
+    [spu + 180] = h((A2 & 7fff) | A1); // main volume left
 }
-else
+
+if( ( T1 < 1 ) || ( T1 & 0002 ) )
 {
-    V0 = T0 & 7fff;
+    A1 = 0;
+    T0 = 0;
+    if( ( T1 != 0 ) || ( T1 & 0008 ) )
+    {
+        switch( h[A0 + a] )
+        {
+            case 1: A1 = 8000; break;
+            case 2: A1 = 9000; break;
+            case 3: A1 = a000; break;
+            case 4: A1 = b000; break;
+            case 5: A1 = c000; break;
+            case 6: A1 = d000; break;
+            case 7: A1 = e000; break;
+        }
+    }
+
+    if( A1 != 0 )
+    {
+        A2 = h[A0 + 6];
+
+        if( A2 >= 80 )
+        {
+            T0 = 7f;
+        }
+        else if( A2 < 0 )
+        {
+            T0 = 0;
+        }
+        else
+        {
+            T0 = A2;
+        }
+    }
+    else
+    {
+        T0 = hu[A0 + 6];
+    }
+
+    [spu + 182] = h((T0 & 7fff) | A1); // main volume right
 }
 
-V1 = w[800584a8];
-[V0 + 182] = h(V0 | A1);
-
-L4d9d8:	; 8004D9D8
-
-if( ( T1 & 0040 ) || ( T2 != 0 ) )
+if( ( T1 < 1 ) || ( T1 & 0040 ) )
 {
-    [V0 + 1b0] = h(hu[A0 + 10]);
+    [spu + 1b0] = h(hu[A0 + 10]); // cd volume left
 }
 
-if( ( T1 & 0080 ) || ( T2 != 0 ) )
+if( ( T1 < 1 ) || ( T1 & 0080 ) )
 {
-    [V0 + 1b2] = h(hu[A0 + 12]);
+    [spu + 1b2] = h(hu[A0 + 12]); // cd volume right
 }
 
-if( ( T1 & 0400 ) || ( T2 != 0 ) )
+if( ( T1 < 1 ) || ( T1 & 0400 ) )
 {
-    [V0 + 1b4] = h(hu[A0 + 1c]);
+    [spu + 1b4] = h(hu[A0 + 1c]); // extern volume left
 }
 
-if( ( T1 & 0800 ) || ( T2 != 0 ) )
+if( ( T1 < 1 ) || ( T1 & 0800 ) )
 {
-    [V0 + 1b6] = h(hu[A0 + 1e]);
+    [spu + 1b6] = h(hu[A0 + 1e]); // extern volume right
 }
 
-if( ( T1 & 0100 ) || ( T2 != 0 ))
+if( ( T1 < 1 ) || ( T1 & 0100 ) )
 {
     if( w[A0 + 14] == 0 )
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] & fffb);
+        [spu + 1aa] = h(hu[V0 + 1aa] & fffb); // cd audio reverb (0=off)
     }
     else
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] | 0004);
+        [spu + 1aa] = h(hu[V0 + 1aa] | 0004); // cd audio reverb (1=on)
     }
 }
 
-if( ( T1 & 0200 ) || ( T2 != 0 ) )
+if( ( T1 < 1 ) || ( T1 & 0200 ) )
 {
     if( w[A0 + 18] == 0 )
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] & fffe);
+        [spu + 1aa] = h(hu[V0 + 1aa] & fffe); // cd audio enable (0=off)
     }
     else
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] | 0001);
+        [spu + 1aa] = h(hu[V0 + 1aa] | 0001); // cd audio enable (1=on)
     }
 }
 
-if( ( T1 & 1000 ) || ( T2 != 0 ) )
+if( ( T1 < 1 ) || ( T1 & 1000 ) )
 {
     if( w[A0 + 20] == 0 )
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] & fff7);
+        [spu + 1aa] = h(hu[V0 + 1aa] & fff7); // external audio reverb (0=off)
     }
     else
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] | 0008);
+        [spu + 1aa] = h(hu[V0 + 1aa] | 0008); // external audio reverb (1=on)
     }
 }
 
-if( ( T1 & 2000 ) || ( T2 != 0 ) )
+if( ( T1 < 1 ) || ( T1 & 2000 ) )
 {
     if( w[A0 + 24] == 0 )
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] & fffd);
+        [spu + 1aa] = h(hu[V0 + 1aa] & fffd); // cd audio reverb (0=off)
     }
     else
     {
-        [V0 + 1aa] = h(hu[V0 + 1aa] | 0002);
+        [spu + 1aa] = h(hu[V0 + 1aa] | 0002); // cd audio reverb (1=on)
     }
 }
 ////////////////////////////////

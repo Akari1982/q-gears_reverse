@@ -408,8 +408,44 @@
 800598bc array of stored cdl command response fifo (0x1 size 0x8 items).
 
 80059a5c [][][][] init with 0xc.
-80059a64 [][]     init with 0.
-80059a66 [][]     init with 0.
+    +00 [][][][] flags.
+                    0x00000001 main volume left.
+                    0x00000002 main volume right.
+                    0x00000004 predefined main volume left.
+                    0x00000008 predefined main volume right.
+                    0x00000040 cd volume left.
+                    0x00000080 cd volume right.
+                    0x00000100 cd audio reverb.
+                    0x00000200 cd audio enable.
+                    0x00000400 extern volume left.
+                    0x00000800 extern volume right.
+                    0x00001000 external audio reverb.
+                    0x00002000 cd audio reverb.
+    +04 [][]     main volume left.
+    +06 [][]     main volume right.
+    +08 [][]     predefined main volume left id.
+    +0a [][]     predefined main volume right id.
+    +10 [][]     cd volume left.
+    +12 [][]     cd volume right.
+    +14 [][][][] cd audio reverb (0-off else on).
+    +18 [][][][] cd audio enable (0-off else on).
+    +1c [][]     extern volume left.
+    +1e [][]     extern volume right.
+    +20 [][][][] external audio reverb (0-off else on).
+    +24 [][][][] cd audio reverb (0-off else on).
+
+80059a84 [][]     stored main volume.
+80059a86 [][]     stored cd volume.
+80059a88 [][]     ???
+
+80059a8c main volume left/right increase struct.
+80059a98 cd volume left/right increase struct.
+    +00 [][][][] value
+    +04 [][][][] increment value with this if +08 != 0.
+    +08 [][]     discrease until == 0.
+    +0a [][]     if +08 == 0 then set value with this << 10.
+
+80058aa8 some struct +0 and +2 set as 80059a88.
 
 80059b18 [][][][] init with 0.
 80059b1c [][][][] init with 0.

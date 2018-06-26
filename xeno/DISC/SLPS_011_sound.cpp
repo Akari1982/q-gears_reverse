@@ -78,9 +78,9 @@ system_sound_spu_malloc_place();
 A0 = 1;
 func3856c();
 
-A0 = 0;
-A1 = 1;
-80037BB8	jal    func38c5c [$80038c5c]
+A0 = 0; // cd audio reverb off
+A1 = 1; // cd audio enable on
+system_sound_cd_audio_enable();
 
 A0 = 3fff;
 A1 = 0;
@@ -759,7 +759,7 @@ else if( A0 == 3 )
     [80058c18] = h(hu[80058c18] | 0500);
 }
 
-800385D0	jal    func38c9c [$80038c9c]
+func38c9c();
 
 A0 = h[80058aa8];
 A1 = h[80058aaa];
@@ -956,7 +956,8 @@ if( V0 == 0 )
 [80059a88] = h(S1);
 [80058aa6] = b(S2);
 [80058aa7] = b(S3);
-800388F0	jal    func38c9c [$80038c9c]
+
+func38c9c();
 
 if( S5 != 0 )
 {
@@ -1149,37 +1150,36 @@ else
 
 
 ////////////////////////////////
-// func38c5c()
+// system_sound_cd_audio_enable()
 
-[80059a70] = w(A0);
-[80059a74] = w(A1);
-
-[80059a5c] = w(w[80059a5c] | 0300);
+[80059a5c + 0] = w(w[80059a5c + 0] | 00000300);
+[80059a5c + 14] = w(A0); // cd audio reverb
+[80059a5c + 18] = w(A1); // cd audio enable
 
 A0 = 80059a5c;
-func4d830();
+system_sound_spu_main_and_cd_volume();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func38c9c
+// func38c9c()
 
-A0 = h[80059a84];
-A1 = 80059a60;
+A0 = h[80059a84]; // stored main volume
+A1 = 80059a5c + 4; // main volume left/right
 A2 = 0;
 func38d14();
 
-V0 = hu[80059a86];
-[80059a6e] = h(V0);
-[80059a6c] = h(V0);
+// restore cd volume
+[80059a5c + 10] = h(hu[80059a86]); // cd volume left
+[80059a5c + 12] = h(hu[80059a86]); // cd volume right
 
 A0 = h[80059a88];
 A1 = 80058aa8;
 A2 = 1;
 func38d14();
 
-[80059a5c] = w(w[80059a5c] | 000000c3);
+[80059a5c + 0] = w(w[80059a5c + 0] | 000000c3); // cd/main volume left/right
 ////////////////////////////////
 
 
@@ -1197,22 +1197,22 @@ if( hu[80058c18] & 0600 )
     {
         if( A2 == 0 )
         {
-           [A1 + 0002] = h(0 - A0);
+           [A1 + 2] = h(0 - A0);
         }
         else
         {
-            [A1 + 0000] = h(0 - A0);
+            [A1 + 0] = h(0 - A0);
         }
     }
     else
     {
         if( A2 ^ 0001 )
         {
-            [A1 + 0000] = h(0 - A0);
+            [A1 + 0] = h(0 - A0);
         }
         else
         {
-            [A1 + 0002] = h(0 - A0);
+            [A1 + 2] = h(0 - A0);
         }
     }
 }
@@ -4442,37 +4442,38 @@ V1 = w[80058ba0] & 1;
 
 if( V1 != 0 )
 {
-    if( h[80059a94] != 0 )
+    if( h[80059a8c + 8] != 0 )
     {
         A0 = 80059a8c;
-        func3c32c();
+        system_sound_update_incremented_values();
 
-        A0 = h[80059a8e];
-        [80059a84] = h(A0);
-        A1 = 80059a8c;
+        [80059a84] = h(h[80059a8c + 2]);
+
+        A0 = h[80059a8c + 2];
+        A1 = 80059a5c + 4; // main volume left/right
         A2 = 0;
         func38d14();
 
-        [80059a5c] = w(w[80059a5c] | 00000003);
+        [80059a5c + 0] = w(w[80059a5c + 0] | 00000003); // main volume left/right
     }
 
-    if( h[80059aa0] != 0 )
+    if( h[80059a98 + 8] != 0 )
     {
         A0 = 80059a98;
-        func3c32c();
+        system_sound_update_incremented_values();
 
-        [80059a86] = h(hu[80059a9a]);
-        [80059a6e] = h(hu[80059a9a]);
-        [80059a6c] = h(hu[80059a9a]);
-        [80059a5c] = w(w[80059a5c] | 000000c0);
+        [80059a5c + 0] = w(w[80059a5c + 0] | 000000c0); // cd volume left/right
+        [80059a5c + 10] = h(hu[80059a98 + 2]); // cd volume left
+        [80059a5c + 12] = h(hu[80059a98 + 2]); // cd volume right
+        [80059a86] = h(hu[80059a98 + 2]);
     }
 
-    if( w[80059a5c] != 0 )
+    if( w[80059a5c + 0] != 0 )
     {
         A0 = 80059a5c;
-        func4d830();
+        system_sound_spu_main_and_cd_volume();
 
-        [80059a5c] = w(0);
+        [80059a5c + 0] = w(0);
     }
 }
 
@@ -4492,7 +4493,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
         if( h[main_struct + 6c] != 0 )
         {
             A0 = main_struct + 64;
-            func3c32c();
+            system_sound_update_incremented_values();
 
             [main_struct + 54] = w(h[main_struct + 5a] * h[main_struct + 66]);
         }
@@ -4500,7 +4501,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
         if( h[main_struct + 78] != 0 )
         {
             A0 = main_struct + 70;
-            func3c32c();
+            system_sound_update_incremented_values();
 
             A0 = 0100; // calculate volume
             A1 = main_struct;
@@ -4510,7 +4511,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
         if( h[main_struct + 84] != 0 )
         {
             A0 = main_struct + 7c;
-            func3c32c();
+            system_sound_update_incremented_values();
 
             A0 = 0200; // calculate pitch
             A1 = main_struct;
@@ -4520,7 +4521,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
         if( h[main_struct + 90] != 0 )
         {
             A0 = main_struct + 88;
-            func3c32c();
+            system_sound_update_incremented_values();
 
             A0 = 0100; // calculate volume
             A1 = main_struct;
@@ -4651,7 +4652,7 @@ return 0;
 
 
 ////////////////////////////////
-// func3c32c()
+// system_sound_update_incremented_values()
 
 [A0 + 8] = h(hu[A0 + 8] - 1);
 

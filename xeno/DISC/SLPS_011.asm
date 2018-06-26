@@ -16942,7 +16942,7 @@ L379e8:	; 800379E8
 // func38bc0
 80038BC0-80038C58
 ////////////////////////////////
-// func38c5c
+// system_sound_cd_audio_enable
 80038C5C-80038C98
 ////////////////////////////////
 // func38c9c
@@ -17247,7 +17247,7 @@ L379e8:	; 800379E8
 // system_sound_main
 8003BEC8-8003C328
 ////////////////////////////////
-// func3c32c
+// system_sound_update_incremented_values
 8003C32C-8003C368
 ////////////////////////////////
 // func3c36c
@@ -27624,7 +27624,7 @@ func4c1b0:	; 8004C1B0
 // system_sound_spu_dma_stop_callback
 8004D80C-8004D82C
 ////////////////////////////////
-// func4d830
+// system_sound_spu_main_and_cd_volume
 8004D830-8004DBC0
 ////////////////////////////////
 

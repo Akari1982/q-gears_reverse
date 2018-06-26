@@ -3461,26 +3461,26 @@ spu = w[8004aaf4]; // 1f801c00
 T0 = 0;
 switch( A3 )
 {
-    case 1: T0 = 8000;
-    case 2: T0 = 9000;
-    case 3: T0 = a000;
-    case 4: T0 = b000;
-    case 5: T0 = c000;
-    case 6: T0 = d000;
-    case 7: T0 = e000;
+    case 1: T0 = 8000; break;
+    case 2: T0 = 9000; break;
+    case 3: T0 = a000; break;
+    case 4: T0 = b000; break;
+    case 5: T0 = c000; break;
+    case 6: T0 = d000; break;
+    case 7: T0 = e000; break;
 }
 [spu + A0 * 10 + 0] = h(T0 | (A1 & 7fff));
 
 T1 = 0;
 switch( A4 )
 {
-    case 1: T1 = 8000;
-    case 2: T1 = 9000;
-    case 3: T1 = a000;
-    case 4: T1 = b000;
-    case 5: T1 = c000;
-    case 6: T1 = d000;
-    case 7: T1 = e000;
+    case 1: T1 = 8000; break;
+    case 2: T1 = 9000; break;
+    case 3: T1 = a000; break;
+    case 4: T1 = b000; break;
+    case 5: T1 = c000; break;
+    case 6: T1 = d000; break;
+    case 7: T1 = e000; break;
 }
 [spu + A0 * 10 + 2] = h(T1 | (A2 & 7fff));
 
