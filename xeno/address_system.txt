@@ -177,8 +177,8 @@
 8005804c [][][][] if this 1 when we enable reverb master else check whether the reverb area is available.
 80058050 [][][][] sound ram reverb work area start address.
 80058058 [][][][] init with 0.
-8005805c [][]     init with 0.
-8005805e [][]     init with 0.
+8005805c [][]     stored reverb output volume left.
+8005805e [][]     stored reverb output volume right.
 80058060 [][][][] init with 0.
 80058064 [][][][] init with 0.
 80058068 [][][][] init with 0.
@@ -268,7 +268,8 @@
 
 80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
 
-80058aa8
+80058aa8 [][]     reverb output volume left.
+80058aaa [][]     reverb output volume right.
 80058aac [][][][] pointer to start of all sound structs memory (800651a0). Structs is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
 
 80058adc [][][][] pointer to some SED file (0391.sed).
@@ -288,6 +289,8 @@
     +08 [][][][] start address.
     +0c [][][][] size.
     +10 [][][][] some callback.
+
+80058b14 [][][][] number of initing channels.
 
 80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40.
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
@@ -324,7 +327,7 @@
 80058bf4 [][][][] pointer to SND file (with wds signature).
 80058bfc [][][][] pointer to struct from STRIPCD1\1\0025.snd file.
 
-80058c00 [][][][] pointer to snd music structs data after header.
+80058c00 [][][][] pointer to main sound structs data after header.
 
 80058c0c [][]     pressed buttons in Xeno format for controller 1. (1=Pressed, 0=Released)
                     0x0001 L2
@@ -350,12 +353,13 @@
                     0x0008 add if we genegate sound error.
                     0x0010 ???
                     0x0040 we don't play system_sound_main() if this is set. Maybe pause sound.
-                    0x0100 if this flag is set then we use mono sound without separation on different channels.
-                    0x0200 ???
-                    0x0400 ???
+                    0x0100 if this flag is set then we use mono sound without separation on different channels. Set during init.
+                    0x0200 removed during init.
+                    0x0400 removed during init.
                     0x0800 we start new sound.
                     0x1000 ???
                     0x2000 enable reverb.
+                    0x4000 set cd out volume to spu.
                     0x8000 ???
 
 80058c20 [][][][] allocated spu pointer for pcm data.
@@ -434,9 +438,10 @@
     +20 [][][][] external audio reverb (0-off else on).
     +24 [][][][] cd audio reverb (0-off else on).
 
-80059a84 [][]     stored main volume.
-80059a86 [][]     stored cd volume.
-80059a88 [][]     ???
+80059a84 [][]     stored spu main volume.
+80059a86 [][]     stored spu cd volume.
+80059a88 [][]     stored reverb output volume.
+80059a8a [][]     stored cd to spu volume.
 
 80059a8c main volume left/right increase struct.
 80059a98 cd volume left/right increase struct.
@@ -444,8 +449,6 @@
     +04 [][][][] increment value with this if +08 != 0.
     +08 [][]     discrease until == 0.
     +0a [][]     if +08 == 0 then set value with this << 10.
-
-80058aa8 some struct +0 and +2 set as 80059a88.
 
 80059b18 [][][][] init with 0.
 80059b1c [][][][] init with 0.
@@ -502,12 +505,13 @@
     +04 [][][][] ???
     +08 [][][][] pointer to smd file.
     +10 [][]     some flags.
-                    0x0001 add on init.
+                    0x0001 add during init.
+                    0x0002 add during init.
                     0x8000 if set then we update main struct. Remove when stops all channels.
-    +12 [][]     smd + 10.
+    +12 [][]     smd + 10. init with 0x7fff.
     +14 []       number of channels.
-    +16 [][]     smd + 16.
-    +18 [][]     smd + 18.
+    +16 [][]     smd + 16. init with 0.
+    +18 [][]     smd + 18. init with 0x7f.
     +1a []       init with 0.
     +1b []       init with 0.
     +20 [][][][] init with 0. Maybe number of cycles.
@@ -529,7 +533,7 @@
     +48 [][][][] mask of channels.
     +4c [][][][] init with 0.
     +50 [][][][] ???
-    +54 
+    +54 [][][][]
     +58
     +64
     +70
@@ -541,118 +545,117 @@
         +a [][]     value set when counter reach 0.
     +7e [][]     pitch related.
     +8a [][]     volume distribution addition.
-
-// SPU channel structure (size 0x158)
-    +000 [][]     control flags.
-                    0x0002 - disable reverb.
-                    0x0008 - if set then we will not update volume.
-                    0x0100 - stops sequence.
-                    0x0200 = this flag is set f 0x0800 flag set at the end of sequence parsing.
-                    0x0400 - stops sequence. And stop channel.
-                    0x0800 = if this flag set at the end of sequence parsing - we will add 0x0200 flag.
-                    0x1000 - set if in sequence next pause will be note. Remove othewise. This will set new release just before next note.
-                    0x8000 - instrument for channel was set but not updated yet.
-    +002 [][]     calculate flags.
-                    0x0001 - calculate enable
-                    0x0002 - calculate disable
-                    0x0100 - calculate volume.
-                    0x0200 - calculate pitch.
-    +004 [][]     update timers flags.
-                    0x0001 - base pitch update.
-                    0x0002 - if set then update base pitch without timer.
-                    0x0008 - base volume update.
-                    0x0010 - base volume distribution update.
-                    0x0020 - note volume update.
-                    0x0100 - 
-    +006 []       channel id.
-    +007 []       init with 0x10.
-    +008 [][][][] init with smd + 10.
-    +010 [][][][] sequence start pointer.
-    +014 [][][][] sequence current pointer.
-    +018 [][][][] stored sequence pointer (opcode 0x91).
-    +01c [][][][] init with 0.
-    +020 [][]     init with 0.
-    +022 []       init with 0.
-    +023 []       we store here +066 during opcode 91. Restore +066 from here during opcode 90.
-    +025 []       init with 0.
-    +026 []       instrument id.
-    +027 []       spu channel id.
-    +028 []       store base release rate here.
-    +02c [][][][] pointer to snd file (instruments data).
-    +030 [][]     store here channel id.
-    +032 [][]     enable flags.
-                    0x0010 - enable channel fm (pitch lfo) mode.
-                    0x0020 - enable channel noise mode.
-                    0x0040 - enable channel reverb mode.
-    +034 [][]     init with 0x0100.
-    +036 [][]     update flags.
-                    0x0001 - update left and right volume.
-                    0x0004 - update pitch.
-                    0x0008 - update start and loop sound address.
-                    0x0010 - update attack mode and attack rate.
-                    0x0020 - update decay rate.
-                    0x0040 - update sustain mode and sustain rate.
-                    0x0080 - update release mode and release rate.
-                    0x0100 - update sustain level.
-                    0x1000 - update channel fm (pitch lfo) mode.
-                    0x2000 - update channel noise mode.
-                    0x4000 - update channel reverb mode.
-    +038 [][]     left volume.
-    +03a [][]     right volume.
-    +03c [][]     init with 0.
-    +03e [][]     init with 0.
-    +044 [][]     pitch.
-    +04c [][][][] start address.
-    +050 [][][][] loop address.
-    +054 []       0x04 - attack mode.
-    +055 []       this >> 1 - sustain mode.
-    +056 []       this >> 2 - release mode.
-    +057 []       attack rate.
-    +058 []       decay rate.
-    +059 []       sustain rate.
-    +05a []       release rate.
-    +05b []       sustain level.
-    +05c [][]     script wait timer.
-    +05e [][]     timer to stop playing note.
-    +060 []       init with 0.
-    +062 [][]     init with 0x000f.
-    +064 []       init with 0.
-    +066 []       init with 0x003c.
-    +068 [][][][] base pitch.
-    +06c [][]     instrument pitch.
-    +06e [][]     pitch add. Init with 0.
-    +070 [][]     init with 0.
-    +072 [][]     stack id for cycles data in +09c. Init with -1.
-    +074 [][]     volume distribution (left/right). Init with 0x4000 (center).
-    +076 [][]     note volume
-    +078 [][][][] base volume.
-    +07c [][][][] stored base volume add for timer.
-    +080 [][]     timer
-    +082 [][]     stored final
-    +084 [][][][] base pitch add for timer.
-    +088 [][][][] base volume add for timer.
-    +08c [][]     note volume add for timer.
-    +08e [][]     note volume final value for the timer.
-    +090 [][]     volume distribution add for timer.
-    +092 [][]     volume distribution final value for the timer.
-    +094 [][]     base pitch update timer.
-    +096 [][]     base volume update timer.
-    +098 [][]     volume distribution update timer.
-    +09с stack structs (0xc size)
-        +0 []       number of cycles left
-        +2 []       stored base pitch.
-        +3 []       stored base pitch before jump back.
-        +4 [][][][] sequence position.
-        +8 [][][][] sequence position before jump back.
-    +0ce [][]     init with 0.
-    +0d0 [][]     pitch related. Init with 0.
-    +0d2 [][]     volume mod
-    +0d4 [][]     volume distribution add.
-    +0d8 start of some data.
-    +0d8 [][][][] function to call.
-    +0ec [][]     some wait timers.
-    +0f6 [][]     init with 0.
-    // some additional data related with bu[smd + 15]
+    +94 start of SPU channel structure (size 0x158)
+        +000 [][]     control flags.
+                        0x0002 - disable reverb.
+                        0x0008 - if set then we will not update volume.
+                        0x0100 - stops sequence.
+                        0x0200 = this flag is set f 0x0800 flag set at the end of sequence parsing.
+                        0x0400 - stops sequence. And stop channel.
+                        0x0800 = if this flag set at the end of sequence parsing - we will add 0x0200 flag.
+                        0x1000 - set if in sequence next pause will be note. Remove othewise. This will set new release just before next note.
+                        0x8000 - instrument for channel was set but not updated yet.
+        +002 [][]     calculate flags.
+                        0x0001 - calculate enable
+                        0x0002 - calculate disable
+                        0x0100 - calculate volume.
+                        0x0200 - calculate pitch.
+        +004 [][]     update timers flags.
+                        0x0001 - base pitch update.
+                        0x0002 - if set then update base pitch without timer.
+                        0x0008 - base volume update.
+                        0x0010 - base volume distribution update.
+                        0x0020 - note volume update.
+                        0x0100 - 
+        +006 []       channel id.
+        +007 []       init with 0x10.
+        +008 [][][][] init with smd + 10.
+        +010 [][][][] sequence start pointer.
+        +014 [][][][] sequence current pointer.
+        +018 [][][][] stored sequence pointer (opcode 0x91).
+        +01c [][][][] init with 0.
+        +020 [][]     init with 0.
+        +022 []       init with 0.
+        +023 []       we store here +066 during opcode 91. Restore +066 from here during opcode 90.
+        +025 []       init with 0.
+        +026 []       instrument id.
+        +027 []       spu channel id.
+        +028 []       store base release rate here.
+        +02c [][][][] pointer to snd file (instruments data).
+        +030 [][]     store here channel id.
+        +032 [][]     enable flags.
+                        0x0010 - enable channel fm (pitch lfo) mode.
+                        0x0020 - enable channel noise mode.
+                        0x0040 - enable channel reverb mode.
+        +034 [][]     init with 0x0100.
+        +036 [][]     update flags.
+                        0x0001 - update left and right volume.
+                        0x0004 - update pitch.
+                        0x0008 - update start and loop sound address.
+                        0x0010 - update attack mode and attack rate.
+                        0x0020 - update decay rate.
+                        0x0040 - update sustain mode and sustain rate.
+                        0x0080 - update release mode and release rate.
+                        0x0100 - update sustain level.
+                        0x1000 - update channel fm (pitch lfo) mode.
+                        0x2000 - update channel noise mode.
+                        0x4000 - update channel reverb mode.
+        +038 [][]     left volume.
+        +03a [][]     right volume.
+        +03c [][]     init with 0.
+        +03e [][]     init with 0.
+        +044 [][]     pitch.
+        +04c [][][][] start address.
+        +050 [][][][] loop address.
+        +054 []       0x04 - attack mode.
+        +055 []       this >> 1 - sustain mode.
+        +056 []       this >> 2 - release mode.
+        +057 []       attack rate.
+        +058 []       decay rate.
+        +059 []       sustain rate.
+        +05a []       release rate.
+        +05b []       sustain level.
+        +05c [][]     script wait timer.
+        +05e [][]     timer to stop playing note.
+        +060 []       init with 0.
+        +062 [][]     init with 0x000f.
+        +064 []       init with 0.
+        +066 []       init with 0x003c.
+        +068 [][][][] base pitch.
+        +06c [][]     instrument pitch.
+        +06e [][]     pitch add. Init with 0.
+        +070 [][]     init with 0.
+        +072 [][]     stack id for cycles data in +09c. Init with -1.
+        +074 [][]     volume distribution (left/right). Init with 0x4000 (center).
+        +076 [][]     note volume
+        +078 [][][][] base volume.
+        +07c [][][][] stored base volume add for timer.
+        +080 [][]     timer
+        +082 [][]     stored final
+        +084 [][][][] base pitch add for timer.
+        +088 [][][][] base volume add for timer.
+        +08c [][]     note volume add for timer.
+        +08e [][]     note volume final value for the timer.
+        +090 [][]     volume distribution add for timer.
+        +092 [][]     volume distribution final value for the timer.
+        +094 [][]     base pitch update timer.
+        +096 [][]     base volume update timer.
+        +098 [][]     volume distribution update timer.
+        +09с stack structs (0xc size)
+            +0 []       number of cycles left
+            +2 []       stored base pitch.
+            +3 []       stored base pitch before jump back.
+            +4 [][][][] sequence position.
+            +8 [][][][] sequence position before jump back.
+        +0ce [][]     init with 0.
+        +0d0 [][]     pitch related. Init with 0.
+        +0d2 [][]     volume mod
+        +0d4 [][]     volume distribution add.
+        +0d8 start of some data.
+        +0d8 [][][][] function to call.
+        +0ec [][]     some wait timers.
+        +0f6 [][]     init with 0.
+        // some additional data related with bu[smd + 15]
 
 
 
