@@ -96,10 +96,10 @@ if( hu[80058c18] & 4000 )
     system_sound_cdout_to_spu();
 }
 
-A0 = 10;
-func3aff0();
-
+A0 = 10; // channels for music
+system_sound_add_new_main_with_number_of_channels();
 [80058c74] = w(V0);
+
 [80058be0] = w(8);
 [80058b74] = w(-1);
 [80058c40] = w(0);
@@ -109,7 +109,7 @@ A0 = 4;
 A1 = 0;
 A2 = 0;
 A3 = 0;
-80037C40	jal    func387dc [$800387dc]
+func387dc();
 
 A0 = 1; // on
 system_psyq_spu_set_reverb();
@@ -913,7 +913,7 @@ else if( S0 == -1 )
 }
 
 A0 = SP + 28;
-80038844	jal    func4e61c [$8004e61c]
+func4e61c();
 
 V0 = w[SP + 28];
 if( V0 == S0 )
@@ -1355,17 +1355,17 @@ main_struct = A0;
 A0 = w[80058c58];
 system_bios_disable_event();
 
-current_header = 0;
-header = 80058aac;
-while( header != main_struct - 10 ) // search for current main struct header
+founded = 0;
+header = w[80058aac];
+while( header != ( main_struct - 10 ) ) // search for current main struct header
 {
-    current_header = header;
-    header = w[header + c]; // next struct
+    founded = header;
+    header = w[header + c];
 }
 
-if( current_header != 0 )
+if( founded != 0 )
 {
-    [current_header + c] = w(w[main_struct - 10 + c]);
+    [founded + c] = w(w[main_struct - 10 + c]);
 }
 
 A0 = w[80058c58];
@@ -1798,7 +1798,7 @@ func3b2cc; // init channels struct
 [S0 + 4c] = w(0);
 
 A0 = S0;
-func3b88c; // set new struct as main
+system_sound_insert_main_struct_into_main_list();
 
 return S0;
 ////////////////////////////////
@@ -1807,21 +1807,18 @@ return S0;
 
 ////////////////////////////////
 // func397b8
-800397B8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = A0;
-[SP + 0010] = w(S0);
-[SP + 0018] = w(RA);
+
 800397CC	jal    func3f524 [$8003f524]
 S0 = A1;
 V0 = V0 << 10;
 A0 = V0 >> 10;
 800397DC	beq    a0, zero, L397f4 [$800397f4]
-800397E0	nop
-800397E4	jal    system_sound_error [$8003f558]
-800397E8	nop
-800397EC	j      L39864 [$80039864]
-V0 = 0;
+
+system_sound_error();
+
+return 0;
 
 L397f4:	; 800397F4
 A0 = bu[S1 + 14]; // number of channels
@@ -1850,21 +1847,14 @@ L39838:	; 80039838
 A0 = S0;
 80039840	jal    func3b2cc [$8003b2cc]
 A0 = S0;
-A0 = S0;
-8003984C	jal    func3b88c [$8003b88c]
 [S0 + 004c] = w(0);
-V1 = hu[S0 + 0010];
-V0 = S0;
-V1 = V1 | 4000;
-[V0 + 0010] = h(V1);
 
-L39864:	; 80039864
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80039874	jr     ra 
-80039878	nop
+A0 = S0;
+system_sound_insert_main_struct_into_main_list();
+
+[S0 + 10] = h(hu[S0 + 10] | 4000);
+
+return S0;
 ////////////////////////////////
 
 
@@ -3430,37 +3420,26 @@ if( w[main_struct + 4] != 0 )
 
 
 ////////////////////////////////
-// func3adcc
-8003ADCC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+// func3adcc()
+
 S0 = A0;
+
+[S0 + 1e] = h(A1);
+[S0 + 10] = h(hu[S0 + 10] | 0020);
+
 A0 = w[80058c58];
-[SP + 0014] = w(RA);
-V0 = hu[S0 + 0010];
-[S0 + 001e] = h(A1);
-V0 = V0 | 0020;
-8003ADF0	jal    system_bios_disable_event [$8004032c]
-[S0 + 0010] = h(V0);
+system_bios_disable_event();
+
 A0 = S0;
 system_sound_stop_all_channels_in_main();
 
 A0 = w[80058c58];
-8003AE08	jal    system_bios_enable_event [$8004031c]
-8003AE0C	nop
-V1 = h[S0 + 005a];
-V0 = 7f00;
-8003AE18	mult   v1, v0
-[S0 + 006e] = h(V0);
-[S0 + 006c] = h(0);
-8003AE24	lui    v0, $7f00
-[S0 + 0064] = w(V0);
-8003AE2C	mflo   v0
-[S0 + 0054] = w(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8003AE40	jr     ra 
-8003AE44	nop
+system_bios_enable_event();
+
+[S0 + 6e] = h(7f00);
+[S0 + 6c] = h(0);
+[S0 + 64] = w(7f000000);
+[S0 + 54] = w(h[S0 + 5a] * 7f00);
 ////////////////////////////////
 
 
@@ -3577,7 +3556,7 @@ loop3af90:	; 8003AF90
 
 
 ////////////////////////////////
-// func3aff0()
+// system_sound_add_new_main_with_number_of_channels()
 
 number_of_channels = A0 & fffffffe; // only even number of channels
 
@@ -3601,23 +3580,19 @@ if( alloc == 0 )
 A0 = alloc;
 func3b1d4();
 
-V0 = 18 - number_of_channels;
-A0 = number_of_channels;
 A1 = 0;
 V1 = 0;
-
-loop3b05c:	; 8003B05C
-    [alloc + V1 + 94] = h(0);
-    [alloc + V1 + 9a] = b(A1);
-    [alloc + V1 + bb] = b(V0);
+while( number_of_channels != 0 )
+{
+    [alloc + 94 + A1 * 158 + 0] = h(0); // control flags
+    [alloc + 94 + A1 * 158 + 6] = b(A1); // struct id
+    [alloc + 94 + A1 * 158 + 27] = b(18 - number_of_channels); // spu channel id
     A1 = A1 + 1;
-    V1 = V1 + 158;
-    A0 = A0 - 1;
-    V0 = V0 + 1;
-8003B078	bne    a0, zero, loop3b05c [$8003b05c]
+    number_of_channels = number_of_channels - 1;
+}
 
 A0 = alloc;
-8003B080	jal    func3b88c [$8003b88c]
+system_sound_insert_main_struct_into_main_list();
 
 return alloc;
 ////////////////////////////////
@@ -3672,7 +3647,7 @@ func3b218();
 
 main_struct = A0;
 
-[main_struct + 10] = h(0002);
+[main_struct + 10] = h(0002); // some flags
 [main_struct + 12] = h(7fff);
 [main_struct + 14] = b(bu[80058b14]); // number of channels
 [main_struct + 16] = h(0);
@@ -3990,7 +3965,7 @@ if( A0 != 0 )
 
     loop3b7fc:	; 8003B7FC
         S0 = w[A0 + 4];
-        func38fec;
+        func38fec();
 
         A0 = S0;
     8003B808	bne    s0, zero, loop3b7fc [$8003b7fc]
@@ -4024,19 +3999,18 @@ system_sound_memcpy();
 
 
 ////////////////////////////////
-// func3b88c
-S0 = A0;
+// system_sound_insert_main_struct_into_main_list()
 
-// syscall
+main_struct = A0;
+
 A0 = w[80058c58];
-long DisableEvent( A0 ); // Turns off event handling for specified event.
+system_bios_disable_event();
 
-[S0 + 0] = w(w[80058c00]);
-[80058c00] = w(S0);
+[main_struct + 0] = w(w[80058c00]);
+[80058c00] = w(main_struct);
 
-// syscall
-A0 = w[80058c58]; // some sys event id. Maybe sound event callback.
-long EnableEvent( A0 );
+A0 = w[80058c58];
+system_bios_enable_event();
 ////////////////////////////////
 
 
