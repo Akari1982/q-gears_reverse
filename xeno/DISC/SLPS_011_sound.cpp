@@ -2885,32 +2885,32 @@ V0 = V0 >> 0f;
 
 
 ////////////////////////////////
-// func3a6e0
+// func3a6e0()
 
 main_struct = A0;
+value = A1;
+steps = A2;
 
-if( A1 == 0 )
+if( value == 0 )
 {
-    A1 = 100;
+    value = 100;
 }
 
-[main_struct + 6e] = h(A1);
+[main_struct + 64 + a] = h(value); // value set when counter reach 0
 
-if( A2 == 0 )
+if( steps == 0 ) // immediate set
 {
-    [main_struct + 6c] = h(0);
-    [main_struct + 64] = w(A1 << 10);
-    [main_struct + 54] = w(h[main_struct + 5a] / A1);
+    [main_struct + 64 + 8] = h(0); // current counter value
+    [main_struct + 64 + 0] = w(value << 10);
+    [main_struct + 54] = w(h[main_struct + 5a] / value);
 }
 else
 {
-    V1 = w[main_struct + 64];
-    V0 = A1 << 10;
-    V0 = V0 - V1;
-    if( V0 != 0 )
+    change = (value << 10) - w[main_struct + 64 + 0];
+    if( change != 0 )
     {
-        [main_struct + 6c] = h(A2);
-        [main_struct + 68] = w(V0 / A2);
+        [main_struct + 64 + 8] = h(steps); // current counter value
+        [main_struct + 68] = w(change / steps);
     }
 }
 ////////////////////////////////
@@ -4425,15 +4425,15 @@ while( main_struct != 0 ) // cycle over all main structs that exist
             func3ad2c();
         }
 
-        if( h[main_struct + 6c] != 0 )
+        if( h[main_struct + 64 + 8] != 0 )
         {
             A0 = main_struct + 64;
             system_sound_update_incremented_values();
 
-            [main_struct + 54] = w(h[main_struct + 5a] * h[main_struct + 66]);
+            [main_struct + 54] = w(h[main_struct + 5a] * h[main_struct + 64 + 2]);
         }
 
-        if( h[main_struct + 78] != 0 )
+        if( h[main_struct + 70 + 8] != 0 )
         {
             A0 = main_struct + 70;
             system_sound_update_incremented_values();
@@ -4443,7 +4443,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
             system_sound_set_calculate_flags_to_all_channels();
         }
 
-        if( h[main_struct + 84] != 0 )
+        if( h[main_struct + 7c + 8] != 0 )
         {
             A0 = main_struct + 7c;
             system_sound_update_incremented_values();
@@ -4453,7 +4453,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
             system_sound_set_calculate_flags_to_all_channels();
         }
 
-        if( h[main_struct + 90] != 0 )
+        if( h[main_struct + 88 + 8] != 0 )
         {
             A0 = main_struct + 88;
             system_sound_update_incremented_values();
@@ -4464,7 +4464,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
         }
 
         [main_struct + 20] = w(w[main_struct + 20] + 1);
-        [main_struct + 28] = w(w[main_struct + 28] + h[main_struct + 66]);
+        [main_struct + 28] = w(w[main_struct + 28] + h[main_struct + 64 + 2]);
         [main_struct + 50] = w(w[main_struct + 50] - w[main_struct + 54]);
 
         while( w[main_struct + 50] < 0 )
@@ -4477,7 +4477,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
                 [main_struct + 36] = h(hu[main_struct + 3a]);
                 [main_struct + 34] = h(hu[main_struct + 34] + 1);
 
-                if( hu[main_struct + 38] < hu[main_struct + 34] )
+                if( hu[main_struct + 34] > hu[main_struct + 38] )
                 {
                     [main_struct + 34] = h(1);
                     [main_struct + 32] = h(hu[main_struct + 32] + 1);
@@ -4491,7 +4491,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
                 A0 = main_struct;
                 A1 = channel_struct;
                 A2 = number_of_channels;
-                func3c36c; // update timers
+                func3c36c(); // update timers
 
                 A0 = main_struct;
                 A1 = channel_struct;
@@ -4525,7 +4525,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
                 A0 = main_struct;
                 A1 = 0;
                 A2 = 0;
-                func3a6e0;
+                func3a6e0();
             }
         }
     }
@@ -4546,15 +4546,15 @@ if( main_struct != 0 )
             channel_struct = main_struct + 94;
             if( number_of_channels != 0 )
             {
-                A0 = S0;
+                A0 = main_struct;
                 A1 = channel_struct;
                 A2 = number_of_channels;
-                func3ee8c; // update unknown things
+                func3ee8c(); // update unknown things
 
-                A0 = S0;
+                A0 = main_struct;
                 A1 = channel_struct;
                 A2 = number_of_channels;
-                func3ea98; // calculate volume pitch enable disable
+                func3ea98(); // calculate volume pitch enable disable
             }
         }
 
@@ -4562,7 +4562,7 @@ if( main_struct != 0 )
     8003C288	bne    main_struct, zero, loop3c240 [$8003c240]
 }
 
-func3ea04; // update spu registers and turn voice off
+func3ea04(); // update spu registers and turn voice off
 
 if( hu[80058bf8] & 0001 )
 {
@@ -7382,7 +7382,7 @@ if( mask_voice_on != 0 )
 
 
 ////////////////////////////////
-// func3ea04
+// func3ea04()
 
 spu = w[8004ff84];
 
@@ -7412,8 +7412,8 @@ if( mask != 0 )
 
 
 ////////////////////////////////
-// func3ea98
-// UpdateByFlags2Data
+// func3ea98()
+
 main_struct = A0; // main struct
 channel_struct = A1; // channel structs
 S5 = A2;
@@ -7458,8 +7458,7 @@ L3eadc:	; 8003EADC
                     A1 = A0 * 3a00;
                     A1 = A1 >> e;
                     A2 = A0 * 2500;
-                    A2 = A2 >> e;
-                    A2 = 7f00 - A2;
+                    A2 = 7f00 - (A2 >> e);
                 }
                 else
                 {
@@ -7583,7 +7582,8 @@ if( A1 < 18 )
 
 
 ////////////////////////////////
-// func3ee8c
+// func3ee8c()
+
 channel_struct = A1;
 number_of_channels = A2;
 

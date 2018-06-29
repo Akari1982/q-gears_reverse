@@ -513,6 +513,9 @@
     +10 [][]     some flags.
                     0x0001 add during init.
                     0x0002 add during init.
+                    0x0010 ???
+                    0x0040 ???
+                    0x0080 ???
                     0x8000 if set then we update main struct. Remove when stops all channels.
     +12 [][]     smd + 10. init with 0x7fff.
     +14 []       number of channels.
@@ -520,16 +523,17 @@
     +18 [][]     smd + 18. init with 0x7f.
     +1a []       init with 0.
     +1b []       init with 0.
+    +1e [][]     check if this == +32 and (reset this to 0.)
     +20 [][][][] init with 0. Maybe number of cycles.
     +24 [][][][] init with 0.
-    +28 [][][][] init with 0.
+    +28 [][][][] init with 0. Increase by +64+2[][] each cycle.
     +2c [][][][] ???
     +30 [][]     init with 0.
-    +32 [][]     init with 0x0001.
-    +34 [][]     init with 0.
-    +36 [][]     init with 0x0001.
-    +38 [][]     init with 0x0004.
-    +3a [][]     init with 0x0030.
+    +32 [][]     Incremented each time +34 become greater than +38. Init with 0x1.
+    +34 [][]     incremented each time +36 reach 0. If greater than +38 then reset to 1 and increment +32. Init with 0.
+    +36 [][]     counter value. Init with 0x1.
+    +38 [][]     board value for +34. Init with 0x0004.
+    +3a [][]     base value for +36 counter. Init with 0x30.
     +3c [][]     init with 0x0004.
     +3e [][]     init with 0x0004.
     +41 []       smd + 1a.
@@ -538,13 +542,14 @@
     +44 [][]     smd + 1b << 8.
     +48 [][][][] mask of channels.
     +4c [][][][] init with 0.
-    +50 [][][][] ???
-    +54 [][][][]
+    +50 [][][][] main struct update wait. Set to 0x10000 and discrease by +54 each update call. If less than 0 then update.
+    +54 [][][][] +50 wait discrease speed. Set as +5a / value from +64.
     +58
-    +64
-    +70
-    +7c
-    +88
+    +5a [][]     base main struct wait speed.
+    +64 main update speed increase.
+    +70 global volume increase?
+    +7c global pitch increase?
+    +88 global volume increase?
         +0 [][][][] value.
         +4 [][][][] increase value.
         +8 [][]     current counter value.
