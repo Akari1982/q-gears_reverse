@@ -4469,9 +4469,9 @@ while( main_struct != 0 ) // cycle over all main structs that exist
 
         while( w[main_struct + 50] < 0 )
         {
-            [main_struct + 36] = h(hu[main_struct + 36] - 1);
             [main_struct + 50] = w(w[main_struct + 50] + 10000);
 
+            [main_struct + 36] = h(hu[main_struct + 36] - 1);
             if( hu[main_struct + 36] == 0 )
             {
                 [main_struct + 36] = h(hu[main_struct + 3a]);
