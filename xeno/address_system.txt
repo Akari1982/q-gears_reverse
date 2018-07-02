@@ -510,9 +510,12 @@
     +00 [][][][] store here previous music data pointer from 80058c00.
     +04 [][][][] ???
     +08 [][][][] pointer to smd file.
+    +0c [][][][] ???
     +10 [][]     some flags.
                     0x0001 add during init.
                     0x0002 add during init.
+                    0x0004 ???
+                    0x0006 check if global reverb not disabled.
                     0x0010 ???
                     0x0040 ???
                     0x0080 ???
@@ -560,8 +563,9 @@
         +000 [][]     control flags.
                         0x0002 - disable reverb.
                         0x0008 - if set then we will not update volume.
+                        0x0010 - ???
                         0x0100 - stops sequence.
-                        0x0200 = this flag is set f 0x0800 flag set at the end of sequence parsing.
+                        0x0200 = this flag is set if 0x0800 flag set at the end of sequence parsing.
                         0x0400 - stops sequence. And stop channel.
                         0x0800 = if this flag set at the end of sequence parsing - we will add 0x0200 flag.
                         0x1000 - set if in sequence next pause will be note. Remove othewise. This will set new release just before next note.
@@ -577,7 +581,7 @@
                         0x0008 - base volume update.
                         0x0010 - base volume distribution update.
                         0x0020 - note volume update.
-                        0x0100 - 
+                        0x0100 - ???
         +006 []       struct id.
         +007 []       init with 0x10.
         +008 [][][][] init with smd + 10.

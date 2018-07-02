@@ -510,7 +510,7 @@ system_bios_disable_event();
 
 if( S0 != 0 )
 {
-    [S0 + 002c] = w(w[S1 + 2c]);
+    [S0 + 2c] = w(w[S1 + 2c]);
 }
 else
 {
@@ -4834,9 +4834,7 @@ L3c5d4:	; 8003C5D4
                     24D00380 a6
                     64D00380 a7
                     C4D00380 aa
-                    78D10380 ad
                     D0D10380 af
-                    00D20380 b1
                     18D20380 b2
                     4CD20380 b3
                     80D20380 b4
@@ -4844,28 +4842,21 @@ L3c5d4:	; 8003C5D4
                     4CD30380 b6
                     6CD30380 b7
                     8CD30380 b8
-                    44D40380 bb
                     64D40380 bc
                     6CD40380 bd
                     74D40380 be
                     B4D40380 c1
                     04D50380 c3
-                    3CD50380 c5
                     5CD50380 c6
                     78D50380 c7
                     A0D50380 c8
-                    D8D50380 ca
                     44D60380 d2
                     70D60380 d3
-                    A4D60380 d4
                     FCD60380 d5
                     2CD70380 d6
-                    4CD80380 d9
                     94D90380 da
                     14D70380 dc
-                    00DA0380 e1
                     C0DC0380 e3
-                    CCDB0380 e5
                     FCDC0380 e6
                     1CDD0380 e7
                     5CDD0380 e9
@@ -5615,23 +5606,22 @@ return sequence_current + 1;
 
 
 ////////////////////////////////
-// func3d178
-V1 = bu[A0 + 0000];
-8003D17C	nop
-8003D180	beq    v1, zero, L3d19c [$8003d19c]
-A0 = A0 + 0001;
-V0 = bu[A2 + 0060];
-8003D18C	nop
-V0 = V1 + V0;
-8003D194	j      L3d1a0 [$8003d1a0]
-[A2 + 0060] = b(V0);
+// spu_opcode_ad()
 
-L3d19c:	; 8003D19C
-[A2 + 0060] = b(0);
+sequence_current = A0;
+channel_struct = A2;
 
-L3d1a0:	; 8003D1A0
-8003D1A0	jr     ra 
-V0 = A0;
+V1 = bu[sequence_current + 0];
+if( V1 != 0 )
+{
+    [channel_struct + 60] = b(V1 + bu[channel_struct + 60]);
+}
+else
+{
+    [channel_struct + 60] = b(0);
+}
+
+return sequence_current + 1;
 ////////////////////////////////
 
 
@@ -5677,13 +5667,13 @@ return sequence_current;
 
 
 ////////////////////////////////
-// func3d200
-V0 = hu[A2 + 0000];
-8003D204	nop
-V0 = V0 & f7ff;
-[A2 + 0000] = h(V0);
-8003D210	jr     ra 
-V0 = A0;
+// spu_opcode_b1()
+
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 0] = h(hu[channel_struct + 0] & f7ff);
+return sequence_current;
 ////////////////////////////////
 
 
@@ -5847,15 +5837,17 @@ return S0 + 3;
 
 ////////////////////////////////
 // spu_opcode_ba()
+// enable channel reverb if not disabled in settings
 
 sequence_current = A0;
 main_struct = A1;
 channel_struct = A2;
 
+// if something or (enable reverb flag and channel reverb not disabled)
 if( ( ( hu[main_struct + 10] & 0006 ) == 0 ) || ( ( hu[80058c18] & 2000 ) && ( (hu[channel_struct + 0] & 0002) == 0 ) ) )
 {
-    [channel_struct + 36] = h(hu[channel_struct + 36] | 4000);
-    [channel_struct + 32] = h(hu[channel_struct + 32] | 0040);
+    [channel_struct + 36] = h(hu[channel_struct + 36] | 4000); // update channel reverb mode
+    [channel_struct + 32] = h(hu[channel_struct + 32] | 0040); // enable channel reverb mode
 }
 return sequence_current;
 ////////////////////////////////
@@ -5863,15 +5855,14 @@ return sequence_current;
 
 
 ////////////////////////////////
-// func3d444
-V0 = hu[A2 + 0036];
-V1 = hu[A2 + 0032];
-V0 = V0 | 4000;
-V1 = V1 & ffbf;
-[A2 + 0036] = h(V0);
-V0 = A0;
-8003D45C	jr     ra 
-[A2 + 0032] = h(V1);
+// spu_opcode_bb()
+
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 32] = h(hu[channel_struct + 32] & ffbf); // disable channel reverb mode
+[channel_struct + 36] = h(hu[channel_struct + 36] | 4000); // update channel reverb mode
+return sequence_current;
 ////////////////////////////////
 
 
@@ -5974,15 +5965,15 @@ return sequence_current + 1;
 
 
 ////////////////////////////////
-// func3d53c
-V0 = hu[A2 + 0036];
-V1 = bu[A0 + 0000];
-V0 = V0 | 0080;
-[A2 + 0036] = h(V0);
-V0 = A0 + 0001;
-[A2 + 0028] = b(V1);
-8003D554	jr     ra 
-[A2 + 005a] = b(V1);
+// spu_opcode_c5()
+
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 36] = h(hu[channel_struct + 36] | 0080);
+[channel_struct + 28] = b(bu[sequence_current + 0]);
+[channel_struct + 5a] = b(bu[sequence_current + 0]);
+return sequence_current + 1;
 ////////////////////////////////
 
 
@@ -6036,21 +6027,21 @@ sequence_current = A0;
 channel_struct = A2;
 
 [channel_struct + 36] = h(hu[channel_struct + 36] | 0040);
-[channel_struct + 55] = w(bu[sequence_current]);
+[channel_struct + 55] = w(bu[sequence_current + 0]);
 return sequence_current + 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// fucn3d5d8
-V0 = hu[A2 + 0036];
-V1 = bu[A0 + 0000];
-V0 = V0 | 0080;
-[A2 + 0036] = h(V0);
-V0 = A0 + 0001;
-8003D5EC	jr     ra 
-[A2 + 0056] = b(V1);
+// spu_opcode_ca()
+
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 36] = h(hu[channel_struct + 36] | 0080);
+[channel_struct + 56] = b(bu[sequence_current + 0]);
+return sequence_current + 1;
 ////////////////////////////////
 
 
@@ -6118,45 +6109,33 @@ V0 = A0 + 0002;
 
 
 ////////////////////////////////
-// func3d6a4
-V0 = b[A0 + 0001];
-A3 = bu[A0 + 0000];
-8003D6AC	nop
-A1 = A3 & ffff;
-8003D6B4	beq    a1, zero, L3d6e4 [$8003d6e4]
-V0 = V0 << 18;
-8003D6BC	beq    v0, zero, L3d6e4 [$8003d6e4]
-8003D6C0	nop
-8003D6C4	div    v0, a1
-8003D6C8	mflo   v1
-V0 = hu[A2 + 0004];
-[A2 + 0094] = h(A3);
-V0 = V0 | 0001;
-[A2 + 0004] = h(V0);
-8003D6DC	j      L3d6f4 [$8003d6f4]
-[A2 + 0084] = w(V1);
+// spu_opcode_d4()
 
-L3d6e4:	; 8003D6E4
-V0 = hu[A2 + 0004];
-8003D6E8	nop
-V0 = V0 & fffe;
-[A2 + 0004] = h(V0);
+sequence_current = A0;
+channel_struct = A2;
 
-L3d6f4:	; 8003D6F4
-8003D6F4	jr     ra 
-V0 = A0 + 0002;
+A1 = bu[sequence_current + 0];
+V0 = b[sequence_current + 1] << 18;
+if( ( A1 != 0 ) && ( V0 != 0 ) )
+{
+    [channel_struct + 4] = h(hu[channel_struct + 4] | 0001); // base pitch update
+    [channel_struct + 84] = w(V0 / A1); // base pitch add
+    [channel_struct + 94] = h(A1); // base pitch update timer
+}
+else
+{
+    [A2 + 4] = h(hu[A2 + 4] & fffe);
+}
+return sequence_current + 2;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func3d6fc
-V0 = hu[A2 + 0004];
-8003D700	nop
-V0 = V0 ^ 0002;
-[A2 + 0004] = h(V0);
-8003D70C	jr     ra 
-V0 = A0;
+
+[A2 + 4] = h(hu[A2 + 4] ^ 0002);
+return A0;
 ////////////////////////////////
 
 
@@ -6214,7 +6193,7 @@ if( A0 != 0 && S1 != 0 )
     A0 = (A0 * V0) << e;
     A1 = S1;
     A2 = 3;
-    8003D7D4	jal    func3e138 [$8003e138]
+    func3e138();
 
     [channel_struct + ce] = h(hu[channel_struct + ce] | 0001);
     [channel_struct + d8] = w(8003f148);
@@ -6236,82 +6215,66 @@ return sequence_current + 3;
 
 
 ////////////////////////////////
-// func3d84c
-8003D84C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S4);
+// spu_opcode_d9()
+
+sequence_current = A0;
+
 S4 = A0;
-[SP + 0014] = w(S1);
-[SP + 0024] = w(RA);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0010] = w(S0);
-S2 = bu[S4 + 0000];
-A0 = b[S4 + 0001];
-S3 = bu[S4 + 0002];
-8003D878	beq    a0, zero, L3d930 [$8003d930]
-S1 = A2;
-8003D880	beq    s2, zero, L3d934 [$8003d934]
-V0 = S4 + 0003;
-8003D888	bgez   a0, L3d898 [$8003d898]
-8003D88C	mult   a0, a0
-V0 = 0 - A0;
-8003D894	mult   a0, v0
+S2 = bu[sequence_current + 0];
+A0 = b[sequence_current + 1];
+S3 = bu[sequence_current + 2];
 
-L3d898:	; 8003D898
-8003D898	mflo   a0
-V0 = S2 << 10;
-V0 = V0 >> 10;
-8003D8A4	mult   v0, v0
-8003D8A8	mflo   a1
-8003D8AC	bgez   a1, L3d8b8 [$8003d8b8]
-A0 = A0 << 0e;
-A1 = A1 + 003f;
+if( A0 != 0 )
+{
+    S1 = A2;
 
-L3d8b8:	; 8003D8B8
-A1 = A1 >> 06;
-A1 = S2 + A1;
-S2 = A1;
-S0 = S3 & 0010;
-A2 = S3 & 000f;
-S3 = A2;
-S0 = S0 < 0001;
-S0 = S0 << 01;
-A1 = A1 << 10;
-8003D8DC	jal    func3e138 [$8003e138]
-A1 = A1 >> 10;
-[S1 + 00e4] = w(V0);
-V0 = 0400;
-A0 = S1 + 00d8;
-[S1 + 00f2] = h(V0);
-V0 = S3 << 02;
-[S1 + 00ea] = h(S2);
-[S1 + 00ee] = h(0);
-8003D900	lui    at, $8005
-AT = AT + V0;
-V1 = w[AT + ff44];
-V0 = hu[S1 + 00ce];
-S0 = S0 + 0001;
-[S1 + 00f5] = b(S3);
-[S1 + 00f4] = b(0);
-[S1 + 00f6] = h(S0);
-V0 = V0 | 0001;
-[S1 + 00d8] = w(V1);
-8003D928	jal    func3e288 [$8003e288]
-[S1 + 00ce] = h(V0);
+    if( S2 != 0 )
+    {
+        if( A0 < 0 )
+        {
+            A0 = A0 * -A0;
+        }
+        else
+        {
+            A0 = A0 * A0;
+        }
 
-L3d930:	; 8003D930
-V0 = S4 + 0003;
+        V0 = S2 << 10;
+        V0 = V0 >> 10;
+        A1 = V0 * V0;
+        8003D8AC	bgez   a1, L3d8b8 [$8003d8b8]
+        A0 = A0 << 0e;
+        A1 = A1 + 003f;
 
-L3d934:	; 8003D934
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-8003D950	jr     ra 
-8003D954	nop
+        L3d8b8:	; 8003D8B8
+        A1 = A1 >> 06;
+        A1 = S2 + A1;
+        S2 = A1;
+        S0 = S3 & 0010;
+        A2 = S3 & 000f;
+        S3 = A2;
+        S0 = S0 < 0001;
+        S0 = S0 << 01;
+        A1 = A1 << 10;
+        A1 = A1 >> 10;
+        func3e138();
+
+        [S1 + e4] = w(V0);
+        [S1 + f2] = h(0400);
+        [S1 + ea] = h(S2);
+        [S1 + ee] = h(0);
+        [S1 + f5] = b(S3);
+        [S1 + f4] = b(0);
+        [S1 + f6] = h(S0 + 1);
+        [S1 + d8] = w(w[8004ff44 + Ы3 * 4]);
+        [S1 + ce] = h(hu[S1 + ce] | 0001);
+
+        A0 = S1 + d8;
+        8003D928	jal    func3e288 [$8003e288]
+    }
+}
+
+return sequence_current + 3;
 ////////////////////////////////
 
 
@@ -6337,14 +6300,11 @@ return sequence_current + 1;
 
 ////////////////////////////////
 // func3d994
-V0 = hu[A2 + 00ce];
-V1 = hu[A2 + 00f6];
-V0 = V0 | 0001;
-V1 = V1 | 0001;
-[A2 + 00ce] = h(V0);
-V0 = A0;
-8003D9AC	jr     ra 
-[A2 + 00f6] = h(V1);
+
+[A2 + ce] = h(hu[A2 + ce] | 0001);
+[A2 + f6] = h(hu[A2 + f6] | 0001);
+
+return A0;
 ////////////////////////////////
 
 
@@ -6355,8 +6315,8 @@ V0 = A0;
 sequence_current = A0;
 channel_struct = A2;
 
-[A2 + ce] = h(hu[A2 + ce] & fffe);
-[A2 + f6] = h(hu[A2 + f6] & fffe);
+[channel_struct + ce] = h(hu[channel_struct + ce] & fffe);
+[channel_struct + f6] = h(hu[channel_struct + f6] & fffe);
 return sequence_current;
 ////////////////////////////////
 
@@ -6377,23 +6337,15 @@ return sequence_current + 1;
 
 
 ////////////////////////////////
-// func3da00
-8003DA00	lui    a1, $7fff
-A1 = A1 | ffff;
-V0 = b[A0 + 0000];
-V1 = w[A2 + 0078];
-V0 = V0 << 18;
-V0 = V0 + V1;
-V0 = V0 & A1;
-[A2 + 0078] = w(V0);
-V0 = hu[A2 + 0002];
-V1 = hu[A2 + 0004];
-V0 = V0 | 0100;
-V1 = V1 & fef7;
-[A2 + 0002] = h(V0);
-V0 = A0 + 0001;
-8003DA38	jr     ra 
-[A2 + 0004] = h(V1);
+// spu_opcode_e1()
+
+sequence_current = A0;
+channel_struct = A2;
+
+[channel_struct + 2] = h(hu[channel_struct + 2] | 0100); // calculate volume
+[channel_struct + 4] = h(hu[channel_struct + 4] & fef7); // remove base volume update, 0x100
+[channel_struct + 78] = w((w[channel_struct + 78] + (b[sequence_current + 0] << 18)) & 7fffffff); // base volume
+return sequence_current + 1;
 ////////////////////////////////
 
 
@@ -6447,39 +6399,32 @@ return sequence_current + 3;
 ////////////////////////////////
 // spu_opcode_e4()
 
-S2 = A0;
-A0 = b[S2 + 0001];
-S1 = bu[S2 + 0000];
-S0 = A2;
-    V0 = S1;
+sequence_current = A0;
+channel_struct = A2;
 
-if( A0 != 0 && V0 != 0 )
+A0 = b[sequence_current + 1];
+S1 = bu[sequence_current + 0];
+
+if( A0 != 0 && S1 != 0 )
 {
-    A1 = S1 + ((V0 * V0) >> 6);
+    S1 = S1 + ((S1 * S1) >> 6);
+
     A0 = A0 << 18;
-    S1 = A1;
-    A1 = (A1 << 10) >> 10;
+    A1 = (S1 << 10) >> 10;
     A2 = 2;
-    8003DB50	jal    func3e138 [$8003e138]
+    func3e138();
 
-    A0 = S0 + 00f8;
-    [S0 + 0104] = w(V0);
-    [S0 + 010a] = h(S1);
-    V1 = bu[S2 + 0002];
-    V0 = 0400;
-    [S0 + 0112] = h(V0);
-    8003DB70	lui    v0, $8004
-    8003DB74	addiu  v0, v0, $f0e8 (=-$f18)
-    [S0 + 00f8] = w(V0);
-    V0 = 0002;
-    [S0 + 0115] = b(V0);
-    V0 = 0001;
-    [S0 + 0114] = b(V0);
-    [S0 + f6 + 1 * 20] = h(0003);
-    V1 = V1 << 02;
-    [S0 + 010e] = h(V1);
-    [S0 + ce] = h(hu[S0 + ce] | 0002);
+    [channel_struct + 104] = w(V0);
+    [channel_struct + 10a] = h(S1);
+    [channel_struct + 112] = h(0400);
+    [channel_struct + f8] = w(8003f0e8);
+    [channel_struct + 115] = b(02);
+    [channel_struct + 114] = b(01);
+    [channel_struct + f6 + 1 * 20] = h(0003);
+    [channel_struct + 10e] = h(bu[sequence_current + 2] << 2);
+    [channel_struct + ce] = h(hu[channel_struct + ce] | 0002);
 
+    A0 = channel_struct + f8;
     8003DBA4	jal    func3e288 [$8003e288]
 }
 return sequence_current + 3;
@@ -6488,7 +6433,7 @@ return sequence_current + 3;
 
 
 ////////////////////////////////
-// func3dbcc
+// spu_opcode_e5()
 
 S4 = A0;
 S2 = bu[S4 + 0000];
@@ -6514,8 +6459,9 @@ S3 = A2;
 S0 = S0 < 0001;
 S0 = S0 << 01;
 A1 = A1 << 10;
-8003DC40	jal    func3e138 [$8003e138]
 A1 = A1 >> 10;
+func3e138();
+
 [S1 + 0104] = w(V0);
 V0 = 0400;
 A0 = S1 + 00f8;
@@ -6680,7 +6626,7 @@ if( A0 != 0 && S1 != 0 )
     A0 = A0 << 18;
     A1 = (S1 << 10) >> 10;
     A2 = 3;
-    8003DE78	jal    func3e138 [$8003e138]
+    func3e138();
 
     [channel_struct + ce] = h(hu[channel_struct + ce] | 0004);
     [channel_struct + 118] = w(8003f148);
@@ -6718,7 +6664,7 @@ if( A0 != 0 && S2 != 0 )
     A0 = A0 << 18;
     A2 = S3 & f;
     A1 = (S2 << 10) >> 10;
-    8003DF68	jal    func3e138 [$8003e138]
+    func3e138();
 
     [channel_struct + ce] = h(hu[channel_struct + ce] | 0004);
     [channel_struct + 118] = w(w[8004ff44 + (S3 & f) * 4);
@@ -6828,8 +6774,9 @@ S0 = A1;
 V0 = b[S1 + 0001];
 A0 = A0 << 10;
 V0 = V0 << 18;
-8003E108	jal    func3e138 [$8003e138]
 A0 = V0 | A0;
+func3e138();
+
 [S2 + 000c] = w(V0);
 V0 = S1 + 0003;
 [S2 + 0012] = h(S0);
@@ -6838,39 +6785,33 @@ V0 = S1 + 0003;
 
 
 ////////////////////////////////
-// func3e138
-8003E138	beq    a0, zero, L3e1a8 [$8003e1a8]
-8003E13C	nop
-V0 = A1 << 10;
-A1 = V0 >> 10;
-8003E148	beq    a1, zero, L3e1a8 [$8003e1a8]
-8003E14C	nop
-V0 = A2 << 10;
-V1 = V0 >> 10;
-V0 = V1 < 0002;
-8003E15C	bne    v0, zero, L3e1a8 [$8003e1a8]
-8003E160	nop
-V0 = V1 < 0004;
-8003E168	bne    v0, zero, L3e180 [$8003e180]
-V0 = 0004;
-8003E170	beq    v1, v0, L3e190 [$8003e190]
-8003E174	nop
-8003E178	j      L3e1a8 [$8003e1a8]
-8003E17C	nop
+// func3e138()
 
-L3e180:	; 8003E180
-8003E180	div    a0, a1
-8003E184	mflo   a0
-8003E188	j      L3e1a8 [$8003e1a8]
-8003E18C	nop
+if( A0 != 0 )
+{
+    V0 = A1 << 10;
+    A1 = V0 >> 10;
+    if( A1 != 0 )
+    {
+        V0 = A2 << 10;
+        V1 = V0 >> 10;
+        if( V1 >= 2 )
+        {
+            if( V1 < 4 )
+            {
+                A0 = A0 / A1;
+            }
+            else if( V1 == 4 )
+            {
+                if( A1 != 1 )
+                {
+                    A0 = A0 / (A1 - 1);
+                }
+            }
+        }
+    }
+}
 
-L3e190:	; 8003E190
-V0 = 0001;
-8003E194	beq    a1, v0, L3e1a8 [$8003e1a8]
-
-A0 = A0 / (A1 - 1);
-
-L3e1a8:	; 8003E1A8
 return A0;
 ////////////////////////////////
 
