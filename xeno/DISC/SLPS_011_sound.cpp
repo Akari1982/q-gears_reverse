@@ -2910,7 +2910,7 @@ else
     if( change != 0 )
     {
         [main_struct + 64 + 8] = h(steps); // current counter value
-        [main_struct + 68] = w(change / steps);
+        [main_struct + 64 + 4] = w(change / steps);
     }
 }
 ////////////////////////////////
@@ -3688,7 +3688,7 @@ func3b7d8(); // insert links to this packs of structures
 [main_struct + 60] = h(0);
 
 [main_struct + 64] = w(01000000);
-[main_struct + 6c] = h(0);
+[main_struct + 64 + 8] = h(0);
 
 [main_struct + 70] = w(7f000000);
 [main_struct + 78] = h(0);
@@ -4615,15 +4615,13 @@ if( A3 != 0 )
     A3 = A3 - 1;
     if( A3 & ffff )
     {
-        V0 = w[main_struct + 58] + w[main_struct + 5c];
+        [main_struct + 58] = w(w[main_struct + 58] + w[main_struct + 5c]);
     }
     else
     {
-        V0 = hu[main_struct + 62] << 10;
+        [main_struct + 58] = w(hu[main_struct + 62] << 10);
     }
-
-    [main_struct + 54] = w(h[main_struct + 5a] * h[main_struct + 66]);
-    [main_struct + 58] = w(V0);
+    [main_struct + 54] = w(h[main_struct + 5a] * h[main_struct + 64 + 2]);
     [main_struct + 60] = h(A3);
 }
 
@@ -4828,8 +4826,6 @@ L3c5d4:	; 8003C5D4
                     98CE0380 9c
                     DCCE0380 9d
                     18CF0380 9e
-                    B8CF0380 a1
-                    68CD0380 a4
                     7CCD0380 a5
                     24D00380 a6
                     64D00380 a7
@@ -4869,7 +4865,6 @@ L3c5d4:	; 8003C5D4
                     00E20380 f5
                     08E20380 f6
                     B4E20380 f7
-                    44CD0380 f9
                     64E30380 fd
                     F4E30380 ff
 
@@ -5115,8 +5110,8 @@ return sequence_current + 1;
 
 ////////////////////////////////
 // func3cbf4
-8003CBF4	jr     ra 
-V0 = A0;
+
+return A0;
 ////////////////////////////////
 
 
@@ -5133,8 +5128,7 @@ V0 = bu[A2 + 0066];
 [A2 + 0023] = b(V0);
 
 L3cc1c:	; 8003CC1C
-8003CC1C	jr     ra 
-V0 = A0;
+return A0;
 ////////////////////////////////
 
 
@@ -5251,40 +5245,39 @@ return sequence_current + 2;
 
 
 ////////////////////////////////
-// func3cd44
-V0 = bu[A0 + 0000];
-8003CD48	nop
-[A1 + 0032] = h(V0);
-V0 = hu[A1 + 003a];
-V1 = bu[A0 + 0001];
-[A1 + 0036] = h(V0);
-V0 = A0 + 0002;
-8003CD60	jr     ra 
-[A1 + 0034] = h(V1);
+// spu_opcode_f9()
+
+sequence_current = A0;
+main_struct = A1;
+
+[main_struct + 32] = h(bu[sequence_current + 0]);
+[main_struct + 34] = h(bu[sequence_current + 1]);
+[main_struct + 36] = h(hu[main_struct + 3a]);
+return sequence_current + 2;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3cd68
-V0 = bu[A0 + 0000];
-8003CD6C	nop
-[A1 + 001a] = b(V0);
-8003CD74	jr     ra 
-V0 = A0 + 0001;
+// spu_opcode_a4()
+
+sequence_current = A0;
+main_struct = A1;
+
+[main_struct + 1a] = b(bu[sequence_current + 0]);
+return sequence_current + 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func3cd7c
-V0 = bu[A1 + 001a];
-V1 = bu[A0 + 0000];
-8003CD84	nop
-V0 = V0 + V1;
-[A1 + 001a] = b(V0);
-8003CD90	jr     ra 
-V0 = A0 + 0001;
+
+sequence_current = A0;
+main_struct = A1;
+
+[main_struct + 1a] = b(bu[main_struct + 1a] + bu[sequence_current + 0]);
+return sequence_current + 1;
 ////////////////////////////////
 
 
@@ -5446,27 +5439,23 @@ L3cf88:	; 8003CF88
 sequence_current = A0;
 main_struct = A1;
 
-V0 = bu[sequence_current];
+V0 = bu[sequence_current + 0];
+[main_struct + 54] = w[V0 * h[main_struct + 64 + 2]];
 [main_struct + 58] = w(V0 << 10);
-[main_struct + 54] = w[h[main_struct + 66] * V0];
 return sequence_current + 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3cfb8
-V0 = b[A0 + 0000];
-V1 = w[A1 + 0058];
-8003CFC0	addiu  sp, sp, $fff8 (=-$8)
-[A1 + 0054] = w(0);
-V0 = V0 << 10;
-V0 = V0 + V1;
-[A1 + 0058] = w(V0);
-V0 = A0 + 0001;
-SP = SP + 0008;
-8003CFDC	jr     ra 
-8003CFE0	nop
+// spu_opcode_a1()
+
+sequence_current = A0;
+main_struct = A1;
+
+[main_struct + 54] = w(0);
+[main_struct + 58] = w(w[main_struct + 58] + (b[sequence_current + 0] << 10));
+return sequence_current + 1;
 ////////////////////////////////
 
 
@@ -5477,9 +5466,10 @@ SP = SP + 0008;
 sequence_current = A0;
 main_struct = A1;
 
-V0 = bu[sequence_current + 1] << 10;
+V0 = bu[sequence_current + 1];
 A3 = bu[sequence_current + 0];
 [main_struct + 62] = h(V0);
+V0 = V0 << 10;
 diff = V0 - w[main_struct + 58];
 if( A3 != 0 && diff != 0 )
 {

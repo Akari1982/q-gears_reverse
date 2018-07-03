@@ -546,10 +546,12 @@
     +48 [][][][] mask of channels.
     +4c [][][][] init with 0.
     +50 [][][][] main struct update wait. Set to 0x10000 and discrease by +54 each update call. If less than 0 then update.
-    +54 [][][][] +50 wait discrease speed. Set as +5a / value from +64.
-    +58
-    +5a [][]     base main struct wait speed.
-    +64 main update speed increase.
+    +54 [][][][] update real speed.
+    +58 [][][][] update base speed (<< 0x10).
+    +5c [][][][] base speed increase add.
+    +60 [][]     steps in update base speed increase.
+    +62 [][]     base speed increase final value.
+    +64 update speed mod increase.
     +70 global volume increase?
     +7c global pitch increase?
     +88 global volume increase?
