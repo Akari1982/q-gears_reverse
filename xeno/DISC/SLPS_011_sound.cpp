@@ -167,7 +167,7 @@ A1 = 0;
 system_sound_set_reverb_output_volume();
 
 A0 = 0;
-80037D10	jal    func4dbc4 [$8004dbc4]
+func4dbc4();
 
 [80058b9c] = h(0);
 
@@ -770,7 +770,7 @@ while( main_struct != 0 )
 {
     A0 = 0100; // calculate volume
     A1 = main_struct;
-    system_sound_set_calculate_flags_to_all_channels();
+    system_sound_set_calculate_flags_to_all_channels_in_main();
 
     main_struct = w[main_struct + 0];
 }
@@ -915,36 +915,33 @@ else if( S0 == -1 )
 A0 = SP + 28;
 func4e61c();
 
-V0 = w[SP + 28];
-if( V0 == S0 )
+if( ( w[SP + 28] != S0 ) && ( S0 == 0 ) )
 {
-    8003885C	bne    s0, zero, L388d0 [$800388d0]
-}
+    A0 = w[80058b74];
+    if( A0 != -1 )
+    {
+        system_sound_spu_memfree();
+    }
 
-A0 = w[80058b74];
-if( A0 != -1 )
-{
-    system_sound_spu_memfree();
-}
+    S4 = w[8004ff88 + S0 * 4];
+    A0 = S4;
+    S6 = 80000 - S4;
+    A1 = S6;
+    system_sound_spu_malloc_place();
 
-S4 = w[8004ff88 + S0 * 4];
-A0 = S4;
-S6 = 80000 - S4;
-A1 = S6;
-system_sound_spu_malloc_place();
+    [80058b74] = w(V0);
+    S5 = 0001;
 
-[80058b74] = w(V0);
-S5 = 0001;
+    if( V0 == 0 )
+    {
+        A0 = 20;
+        system_sound_error();
 
-if( V0 == 0 )
-{
-    A0 = 20;
-    system_sound_error();
-
-    S0 = 0;
-    S3 = 0;
-    S2 = 0;
-    S1 = 0;
+        S0 = 0;
+        S3 = 0;
+        S2 = 0;
+        S1 = 0;
+    }
 }
 
 [80058aa5] = b(S0);
@@ -961,7 +958,7 @@ if( S5 != 0 )
     system_sound_set_reverb_output_volume();
 
     A0 = S0;
-    8003890C	jal    func4dbc4 [$8004dbc4]
+    func4dbc4();
 
     A0 = S6;
     A1 = S4;
@@ -1952,8 +1949,9 @@ A0 = S0;
 A0 = S0;
 A1 = S1;
 A2 = S2;
-800399D4	jal    func3a744 [$8003a744]
 [S0 + 0070] = w(0);
+func3a744();
+
 V0 = hu[S0 + 0010];
 V0 = V0 | 8000;
 [S0 + 0010] = h(V0);
@@ -2011,8 +2009,8 @@ V0 = hu[S2 + 0010];
 A2 = S5;
 [A0 + 0070] = w(0);
 V0 = V0 | 0100;
-80039AC4	jal    func3a744 [$8003a744]
 [A0 + 0010] = h(V0);
+func3a744();
 
 L39acc:	; 80039ACC
 ////////////////////////////////
@@ -2051,7 +2049,7 @@ else
 {
     A2 = A1;
     A1 = 0;
-    80039B54	jal    func3a744 [$8003a744]
+    func3a744();
 }
 ////////////////////////////////
 
@@ -2918,58 +2916,41 @@ else
 
 
 ////////////////////////////////
-// func3a744
+// func3a744()
 
-8003A744	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(S1);
+main_struct = A0;
 S1 = A1;
-V0 = S1 << 08;
-[SP + 0018] = w(RA);
-8003A760	bne    a2, zero, L3a788 [$8003a788]
-[S0 + 007a] = h(V0);
-V0 = S1 << 18;
-[S0 + 0070] = w(V0);
-[S0 + 0078] = h(0);
 
-A0 = 0100; // calculate volume
-A1 = S0; // main_struct
-system_sound_set_calculate_flags_to_all_channels();
+[main_struct + 7a] = h(S1 << 8);
 
-8003A780	j      L3a7b4 [$8003a7b4]
+if( A2 == 0 )
+{
+    [main_struct + 70] = w(S1 << 18);
+    [main_struct + 78] = h(0);
 
-L3a788:	; 8003A788
-V0 = w[S0 + 0070];
-V1 = S1 << 10;
-V0 = V0 >> 08;
-V0 = V1 - V0;
-8003A798	beq    v0, zero, L3a7d8 [$8003a7d8]
-8003A79C	nop
-8003A7A0	div    v0, a2
-8003A7A4	mflo   v0
-[S0 + 0078] = h(A2);
-V0 = V0 << 08;
-[S0 + 0074] = w(V0);
+    A0 = 0100; // calculate volume
+    A1 = main_struct;
+    system_sound_set_calculate_flags_to_all_channels_in_main();
+}
+else
+{
+    V0 = (S1 << 10) - (w[main_struct + 70] >> 8);
+    if( V0 == 0 )
+    {
+        return;
+    }
+    [main_struct + 78] = h(A2);
+    [main_struct + 74] = w((V0 / A2) << 8);
+}
 
-L3a7b4:	; 8003A7B4
-V0 = hu[S0 + 0010];
-8003A7B8	nop
-V0 = V0 & 0100;
-8003A7C0	beq    v0, zero, L3a7d8 [$8003a7d8]
-8003A7C4	nop
-8003A7C8	beq    s1, zero, L3a7d8 [$8003a7d8]
-8003A7CC	nop
-8003A7D0	jal    func3a8d8 [$8003a8d8]
-A0 = S0;
-
-L3a7d8:	; 8003A7D8
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8003A7E8	jr     ra 
-8003A7EC	nop
+if( hu[main_struct + 10] & 0100 )
+{
+    if( S1 != 0 )
+    {
+        A0 = main_struct;
+        func3a8d8();
+    }
+}
 ////////////////////////////////
 
 
@@ -2989,7 +2970,7 @@ V0 = A1 << 18;
 
 A0 = 0200; // calculate pitch
 A1 = A3; // main_struct
-system_sound_set_calculate_flags_to_all_channels();
+system_sound_set_calculate_flags_to_all_channels_in_main();
 
 8003A820	j      L3a854 [$8003a854]
 
@@ -3030,7 +3011,7 @@ V0 = A1 << 18;
 
 A0 = 0100; // calculate volume
 A1 = A3; // main_struct
-system_sound_set_calculate_flags_to_all_channels();
+system_sound_set_calculate_flags_to_all_channels_in_main();
 
 8003A894	j      L3a8c8 [$8003a8c8]
 
@@ -3057,42 +3038,33 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func3a8d8
-8003A8D8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-A0 = w[80058c58];
-[SP + 0014] = w(RA);
-8003A8F0	jal    system_bios_disable_event [$8004032c]
-8003A8F4	nop
-V0 = hu[80058c18];
-8003A900	nop
-V0 = V0 & 1000;
-8003A908	beq    v0, zero, L3a928 [$8003a928]
-8003A90C	nop
-A0 = bu[S0 + 0041];
-A1 = h[S0 + 0044];
-A2 = bu[S0 + 0042];
-A3 = bu[S0 + 0043];
-func387dc();
+// func3a8d8()
 
-L3a928:	; 8003A928
-A0 = S0;
-8003A92C	jal    func3e568 [$8003e568]
-A1 = ffff;
-8003A934	jal    func3ae48 [$8003ae48]
-A0 = S0;
-V0 = hu[S0 + 0010];
+main_struct = A0;
+
 A0 = w[80058c58];
-V0 = V0 & feff;
-V0 = V0 | 8000;
-8003A950	jal    system_bios_enable_event [$8004031c]
-[S0 + 0010] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8003A964	jr     ra 
-8003A968	nop
+system_bios_disable_event();
+
+if( hu[80058c18] & 1000 )
+{
+    A0 = bu[main_struct + 41];
+    A1 = h[main_struct + 44];
+    A2 = bu[main_struct + 42];
+    A3 = bu[main_struct + 43];
+    func387dc();
+}
+
+A0 = main_struct;
+A1 = ffff; // update all
+system_sound_set_update_flags_to_all_channels_in_main();
+
+A0 = main_struct;
+system_sound_enable_update_to_all_channels_in_main();
+
+[main_struct + 10] = h((hu[main_struct + 10] & feff) | 8000);
+
+A0 = w[80058c58];
+system_bios_enable_event();
 ////////////////////////////////
 
 
@@ -3404,12 +3376,13 @@ if( w[main_struct + 4] != 0 )
         func3b824();
 
         [main_struct + 2c] = w(S0);
-        A0 = main_struct;
-        A1 = ffff;
-        8003AD94	jal    func3e568 [$8003e568]
 
         A0 = main_struct;
-        8003AD9C	jal    func3ae48 [$8003ae48]
+        A1 = ffff; // update all
+        system_sound_set_update_flags_to_all_channels_in_main();
+
+        A0 = main_struct;
+        system_sound_enable_update_to_all_channels_in_main();
 
         A0 = w[80058c58];
         system_bios_enable_event();
@@ -3445,34 +3418,24 @@ system_bios_enable_event();
 
 
 ////////////////////////////////
-// func3ae48
-A1 = bu[A0 + 0014];
-V1 = A0 + 0094;
-A2 = 0101;
-A0 = A0 + 0096;
+// system_sound_enable_update_to_all_channels_in_main()
 
-loop3ae58:	; 8003AE58
-V0 = w[V1 + 0000];
-8003AE5C	nop
-V0 = V0 & 0101;
-8003AE64	bne    v0, a2, L3ae90 [$8003ae90]
-8003AE68	addiu  a1, a1, $ffff (=-$1)
-V0 = hu[V1 + 0000];
-8003AE70	nop
-V0 = V0 & 0030;
-8003AE78	bne    v0, zero, L3ae90 [$8003ae90]
-8003AE7C	nop
-V0 = hu[A0 + 0000];
-8003AE84	nop
-V0 = V0 | 0001;
-[A0 + 0000] = h(V0);
+main_struct = A0;
+channel_struct = main_struct + 94;
+number_of_channels = bu[main_struct + 14];
 
-L3ae90:	; 8003AE90
-A0 = A0 + 0158;
-8003AE94	bne    a1, zero, loop3ae58 [$8003ae58]
-V1 = V1 + 0158;
-8003AE9C	jr     ra 
-8003AEA0	nop
+while( number_of_channels != 0 )
+{
+    if( ( w[channel_struct + 0] & 0101 ) == 0101 )
+    {
+        if( ( hu[channel_struct + 0] & 0030 ) == 0 )
+        {
+            [channel_struct + 2] = h(hu[channel_struct + 2] | 0001); // calculate enable
+        }
+    }
+    channel_struct = channel_struct + 158;
+    number_of_channels = number_of_channels - 1;
+}
 ////////////////////////////////
 
 
@@ -3519,7 +3482,7 @@ main_struct = A0;
 channel_struct = main_struct + 94;
 number_of_channels = bu[main_struct + 14];
 
-for( ; number_of_channels != 0; --number_of_channels )
+while( number_of_channels != 0 )
 {
     spu_channel_id = bu[channel_struct + 27];
     if( spu_channel_id < 18 && w[80061bbc + spu_channel_id * 4] == channel_struct + 30 )
@@ -3529,6 +3492,7 @@ for( ; number_of_channels != 0; --number_of_channels )
         [80058bf0] = w(w[80058bf0] | (1 << spu_channel_id)); // add channel bit
     }
     channel_struct = channel_struct + 158;
+    number_of_channels = number_of_channels - 1;
 }
 ////////////////////////////////
 
@@ -4440,7 +4404,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
 
             A0 = 0100; // calculate volume
             A1 = main_struct;
-            system_sound_set_calculate_flags_to_all_channels();
+            system_sound_set_calculate_flags_to_all_channels_in_main();
         }
 
         if( h[main_struct + 7c + 8] != 0 )
@@ -4450,7 +4414,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
 
             A0 = 0200; // calculate pitch
             A1 = main_struct;
-            system_sound_set_calculate_flags_to_all_channels();
+            system_sound_set_calculate_flags_to_all_channels_in_main();
         }
 
         if( h[main_struct + 88 + 8] != 0 )
@@ -4460,7 +4424,7 @@ while( main_struct != 0 ) // cycle over all main structs that exist
 
             A0 = 0100; // calculate volume
             A1 = main_struct;
-            system_sound_set_calculate_flags_to_all_channels();
+            system_sound_set_calculate_flags_to_all_channels_in_main();
         }
 
         [main_struct + 20] = w(w[main_struct + 20] + 1);
@@ -5494,7 +5458,7 @@ V0 = V0 << 18;
 
 A0 = 0100; // calculate volume
 A1 = main_struct;
-system_sound_set_calculate_flags_to_all_channels();
+system_sound_set_calculate_flags_to_all_channels_in_main();
 
 return S0;
 ////////////////////////////////
@@ -6929,6 +6893,7 @@ return sequence_current + 2;
 
 ////////////////////////////////
 // func3e364
+
 A2 = bu[A0 + 0000];
 8003E368	nop
 8003E36C	beq    a2, zero, L3e390 [$8003e390]
@@ -6942,7 +6907,6 @@ V0 = A2 << 18;
 [A1 + 0054] = w(V0);
 
 L3e390:	; 8003E390
-8003E390	jr     ra 
 V0 = A0;
 ////////////////////////////////
 
@@ -6969,16 +6933,14 @@ return sequence_current + 1;
 
 ////////////////////////////////
 // func3e3f4
-8003E3F4	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S1);
+
 S1 = A0;
-[SP + 0018] = w(S0);
 S0 = A2;
 A1 = SP + 0010;
-[SP + 0020] = w(RA);
 A0 = bu[S0 + 0027];
-8003E414	jal    func4d650 [$8004d650]
 A2 = SP + 0014;
+8003E414	jal    func4d650 [$8004d650]
+
 V0 = h[SP + 0014];
 8003E420	nop
 8003E424	bne    v0, zero, L3e44c [$8003e44c]
@@ -6994,12 +6956,6 @@ system_sound_channel_voice_off();
 V0 = S1;
 
 L3e44c:	; 8003E44C
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-8003E45C	jr     ra 
-8003E460	nop
 ////////////////////////////////
 
 
@@ -7034,7 +6990,7 @@ A2 = w[instrument_data + 8];
 
 
 ////////////////////////////////
-// system_sound_set_calculate_flags_to_all_channels()
+// system_sound_set_calculate_flags_to_all_channels_in_main()
 
 main_struct = A1;
 channel_struct = main_struct + 94;
@@ -7046,7 +7002,6 @@ while( number_of_channels != 0 )
     {
         [channel_struct + 2] = h(hu[channel_struct + 2] | A0);
     }
-
     channel_struct = channel_struct + 158;
     number_of_channels = number_of_channels - 1;
 }
@@ -7055,27 +7010,21 @@ while( number_of_channels != 0 )
 
 
 ////////////////////////////////
-// func3e568
-A2 = A0 + 0094;
-V1 = bu[A0 + 0014];
-A0 = A0 + 00ca;
+// system_sound_set_update_flags_to_all_channels_in_main()
 
-loop3e574:	; 8003E574
-V0 = hu[A2 + 0000];
-8003E578	nop
-8003E57C	beq    v0, zero, L3e594 [$8003e594]
-A2 = A2 + 0158;
-V0 = hu[A0 + 0000];
-8003E588	nop
-V0 = V0 | A1;
-[A0 + 0000] = h(V0);
+main_struct = A0;
+channel_struct = main_struct + 94;
+number_of_channels = bu[main_struct + 14];
 
-L3e594:	; 8003E594
-8003E594	addiu  v1, v1, $ffff (=-$1)
-8003E598	bne    v1, zero, loop3e574 [$8003e574]
-A0 = A0 + 0158;
-8003E5A0	jr     ra 
-8003E5A4	nop
+while( number_of_channels != 0 )
+{
+    if( hu[channel_struct + 0] != 0 )
+    {
+        [channel_struct + 36] = h(hu[channel_struct + 36] | A1);
+    }
+    channel_struct = channel_struct + 158;
+    number_of_channels = number_of_channels - 1;
+}
 ////////////////////////////////
 
 

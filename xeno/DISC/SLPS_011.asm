@@ -17155,7 +17155,7 @@ L379e8:	; 800379E8
 // func3adcc
 8003ADCC-8003AE44
 ////////////////////////////////
-// func3ae48
+// system_sound_enable_update_to_all_channels_in_main
 8003AE48-8003AEA0
 ////////////////////////////////
 // func3aea4
@@ -17562,10 +17562,10 @@ L379e8:	; 800379E8
 // system_sound_init_channel_instrument
 8003E464-8003E524
 ////////////////////////////////
-// system_sound_set_calculate_flags_to_all_channels
+// system_sound_set_calculate_flags_to_all_channels_in_main
 8003E528-8003E564
 ////////////////////////////////
-// func3e568
+// system_sound_set_update_flags_to_all_channels_in_main
 8003E568-8003E5A4
 ////////////////////////////////
 // system_sound_channel_structures_offset_init
@@ -17584,7 +17584,6 @@ L379e8:	; 800379E8
 8003E74C-8003E7A4
 ////////////////////////////////
 // system_sound_update_spu
-// update spu registers
 8003E7A8-8003EA00
 ////////////////////////////////
 // func3ea04
@@ -27568,7 +27567,7 @@ func4c1b0:	; 8004C1B0
 // func4dbc4
 8004DBC4-8004DD9C
 ////////////////////////////////
-// func4dda0
+// system_sound_spu_update_settings
 8004DDA0-8004E26C
 ////////////////////////////////
 // func4e270
