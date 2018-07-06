@@ -120,7 +120,7 @@ system_psyq_spu_set_reverb();
 
 
 ////////////////////////////////
-// func37c68()
+// system_sound_deinitialize()
 
 if( h[80058c18] == 0 )
 {
@@ -144,7 +144,7 @@ A0 = 0;
 system_sound_spu_irq9_callback();
 
 A0 = f2000002;
-80037CBC	jal    func40574 [$80040574]
+system_root_counter_disable();
 
 A0 = w[80058c58];
 system_bios_close_event();
@@ -160,7 +160,7 @@ for( int i = 0; i < 18; ++i )
 }
 
 A0 = 00ffffff;
-80037CFC	jal    func3f32c [$8003f32c]
+system_sound_set_key_off();
 
 A0 = 0;
 A1 = 0;
@@ -170,8 +170,6 @@ A0 = 0;
 func4dbc4();
 
 [80058b9c] = h(0);
-
-L37d20:	; 80037D20
 ////////////////////////////////
 
 
@@ -1042,8 +1040,7 @@ S1 = V1;
 
 L38a90:	; 80038A90
 A2 = S1;
-80038A94	lui    a3, $8004
-80038A98	addiu  a3, a3, $89f4 (=-$760c)
+A3 = 800389f4;
 A1 = w[80058c40];
 S0 = w[80058c78];
 V0 = V1 - S1;
@@ -1053,15 +1050,14 @@ V0 = S0 + S1;
 A0 = S0;
 func3bab8();
 
-V0 = hu[80058c18];
-80038AD4	nop
-V0 = V0 & 0010;
-80038ADC	bne    v0, zero, L38af8 [$80038af8]
-A0 = S0;
-A1 = w[80058c40];
-A2 = S1;
-A3 = 0;
-func3bab8();
+if( ( hu[80058c18] & 0010 ) == 0 )
+{
+    A0 = S0;
+    A1 = w[80058c40];
+    A2 = S1;
+    A3 = 0;
+    func3bab8();
+}
 
 L38af8:	; 80038AF8
 ////////////////////////////////
@@ -4137,7 +4133,7 @@ func3bb48();
 // func3bb48()
 
 start = A0; // start spu memory address
-S2 = A1; // src of data
+src = A1; // src of data
 size = A2; // size of spu data
 S5 = A3;
 S0 = A4;
@@ -4159,14 +4155,12 @@ if( V0 >= 8 )
 {
     V1 = 0;
 }
-
 [80058b90] = h(V1);
-V1 = V1 & ffff;
 
 V0 = w[80058af4] + V0 * 14;
 [V0 + 00] = h(S0 & f);
 [V0 + 02] = h(0);
-[V0 + 04] = w(S2);
+[V0 + 04] = w(src);
 [V0 + 08] = w(start & 0007fff8); // set start address
 [V0 + 0c] = w(size);
 [V0 + 10] = w(S5);
@@ -7802,45 +7796,37 @@ V0 = V0 & 7fff;
 
 
 ////////////////////////////////
-// func3f310
-V0 = w[8004ff84];
-8003F318	nop
-[V0 + 0188] = h(A0);
-A0 = A0 >> 10;
-8003F324	jr     ra 
-[V0 + 018a] = h(A0);
+// system_sound_set_key_on()
+
+spu = w[8004ff84]; // SPU registers 0x1f801c00
+[spu + 188] = h(A0);
+[spu + 18a] = h(A0 >> 10);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f32c
-V0 = w[8004ff84];
-8003F334	nop
-[V0 + 018c] = h(A0);
-A0 = A0 >> 10;
-8003F340	jr     ra 
-[V0 + 018e] = h(A0);
+// system_sound_set_key_off()
+
+spu = w[8004ff84]; // SPU registers 0x1f801c00
+[spu + 18c] = h(A0);
+[spu + 18e] = h(A0 >> 10);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f348
-V0 = w[8004ff84];
-8003F350	nop
-[V0 + 0198] = h(A0);
-A0 = A0 >> 10;
-8003F35C	jr     ra 
-[V0 + 019a] = h(A0);
+// system_sound_set_channel_reverb()
+
+spu = w[8004ff84]; // SPU registers 0x1f801c00
+[spu + 198] = h(A0);
+[spu + 19a] = h(A0 >> 10);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func3f364
-
-return;
 ////////////////////////////////
 
 

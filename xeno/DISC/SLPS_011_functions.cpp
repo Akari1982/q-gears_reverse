@@ -384,28 +384,30 @@ if( hu[80058c0c] == 090c ) // pressed buttons start select L1 R1
 // func19d54()
 80019D5C	jal    func4038c [$8004038c]
 80019D60	nop
-80019D64	jal    system_psyq_reset_graph [$80043f88]
 A0 = 0;
+system_psyq_reset_graph();
+
 80019D6C	jal    func281e4 [$800281e4]
-80019D70	nop
-80019D74	jal    func37c68 [$80037c68]
-80019D78	nop
+
+system_sound_deinitialize();
+
 80019D7C	jal    func4d13c [$8004d13c]
-80019D80	nop
-80019D84	jal    func36298 [$80036298]
+
 A0 = 0;
+80019D84	jal    func36298 [$80036298]
 
 A0 = 0;
 system_psyq_draw_sync_callback();
 
-80019D94	jal    func4b678 [$8004b678]
 A0 = 0;
+80019D94	jal    func4b678 [$8004b678]
+
 80019D9C	jal    func40d4c [$80040d4c]
-80019DA0	nop
+
 80019DA4	jal    func4076c [$8004076c]
-80019DA8	nop
+
 80019DAC	jal    func4036c [$8004036c]
-80019DB0	nop
+
 80019DB4	jal    func195b8 [$800195b8]
 ////////////////////////////////
 
@@ -1461,9 +1463,18 @@ return 1;
 // system_root_counter_enable()
 
 A0 = A0 & ffff;
-
 A1 = w[80055a9c]; // 1f801070
 [A1 + 4] = w(w[A1 + 4] | w[80055aa4 + A0 * 4]); // I_MASK - Interrupt mask register
-
 return A0 < 3;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_root_counter_disable()
+
+A0 = A0 & ffff;
+A1 = w[80055a9c];
+[A1 + 4] = w(w[A1 + 4] & (0 NOR w[80055aa4 + A0 * 4]));
+return 1;
 ////////////////////////////////
