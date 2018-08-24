@@ -142,6 +142,8 @@
 04Fh        store here sector set in 0x02 Setloc during 0x15 SeekL.
 050h        if bit 0x40 not set during DECTOUT interrupt then we enable CD-DA mode.
 
+0x59 
+
 05Dh        store here minutes set in 0x02 Setloc during 0x15 SeekL.
 05Eh        store here seconds set in 0x02 Setloc during 0x15 SeekL.
 05Fh        store here sector set in 0x02 Setloc during 0x15 SeekL.
@@ -174,7 +176,7 @@
 0B9h        data for 0x16 HIFCTL (host interface control) CD Controller register.
 0BAh        data for 0x0A CLRCTL (clear control) CD Controller register.
 
-0BCh        cdrom status
+0xbc cdrom status
             0x01 - invalid command/parameters/state of cdrom
             0x02 - spindle motor (0=motor off, or in spin-up phase, 1=motor on)
             0x04 - seek error (0=okay, 1=seek error)
@@ -200,8 +202,6 @@
 0x1ee store here seconds set in 0x02 Setloc.
 0x1ef store here sector set in 0x02 Setloc.
 
-0x1f0 store first return value here.
-0x1f1 store second return value here.
-0x1f2 store third return value here.
+0x1f0-0x1f7 drv_response: defs 8 ;response buffer (some response are sent 'on-the-fly', but others are first stored temporarily in this buffer)
 
 0x20c store here strange byte in command execution.

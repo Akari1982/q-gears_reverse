@@ -38,7 +38,7 @@ CCR(I) = 1;
 //     (1) After the DRVIF register has been set
 //     (2) After the DBLSPD bit (bit 1 of the CHPCTL register) has been set low. This bit is automatically set low when the CD DSP and this IC are synchronized.
 A = 0x71;
-write_data_bus();
+send_8bit_to_cd_controller_mcd();
 
 A = 0x0c;
           sta     008h              ; 102F  B7 08    (4)   ∑.
@@ -187,11 +187,11 @@ mot1139:  brset0  040h, mot113D     ; 1139  00 40 01 (5)   .@.
           rts                       ; 113C  81       (6)   Å
 mot113D:
 A = 0x12;
-          jsr     mot4333           ; 113F  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 113F  CD 43 33 (6)   ÕC3
           brset2  001h, mot115F     ; 1142  04 01 1A (5)   ...
           bclr0   040h              ; 1145  11 40    (5)   .@
 A = 0x20;
-          jsr     mot4333           ; 1149  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 1149  CD 43 33 (6)   ÕC3
           brset0  06Dh, mot115E     ; 114C  00 6D 0F (5)   .m.
           brclr1  06Dh, mot115B     ; 114F  03 6D 09 (5)   .m.
           brset7  040h, mot115E     ; 1152  0E 40 09 (5)   .@.
@@ -201,11 +201,13 @@ mot115B:  jmp     mot4298           ; 115B  CC 42 98 (3)   ÃBò
 mot115E:  rts                       ; 115E  81       (6)   Å
 mot115F:  bset0   040h              ; 115F  10 40    (5)   .@
 A = 0x23;
-          jmp     mot4333           ; 1163  CC 43 33 (3)   ÃC3
+          jmp     send_8bit_to_cddsp           ; 1163  CC 43 33 (3)   ÃC3
 mot1166:  lda     06Ch              ; 1166  B6 6C    (3)   ∂l
            beq    mot1191           ; 1168  27 27    (3)   ''
+
 A = 0xa0;
-          jsr     mot4341           ; 116C  CD 43 41 (6)   ÕCA
+write_8bit_to_cddsp_data();
+
           bset0   041h              ; 116F  10 41    (5)   .A
           brset7  001h, mot1176     ; 1171  0E 01 02 (5)   ...
           bclr0   041h              ; 1174  11 41    (5)   .A
@@ -275,89 +277,75 @@ bcd_addition_msf_plus_msf();
 
 
 
-mot1202:  lda     06Bh              ; 1202  B6 6B    (3)   ∂k
+////////////////////////////////
+// mot1202()
+
+A = [ 0x6b ];
            bne    mot121C           ; 1204  26 16    (3)   &.
           brset3  041h, mot121C     ; 1206  06 41 13 (5)   .A.
-          lda     06Dh              ; 1209  B6 6D    (3)   ∂m
+A = [ 0x6d ];
           cmp     #004h             ; 120B  A1 04    (2)   °.
            bne    mot121C           ; 120D  26 0D    (3)   &.
           brset4  042h, mot121C     ; 120F  08 42 0A (5)   .B.
-          lda     06Ch              ; 1212  B6 6C    (3)   ∂l
+A = [ 0x6c ];
           cmp     #00Ah             ; 1214  A1 0A    (2)   °.
            beq    mot121F           ; 1216  27 07    (3)   '.
           cmp     #00Ch             ; 1218  A1 0C    (2)   °.
            beq    mot121F           ; 121A  27 03    (3)   '.
-mot121C:  jmp     mot12BB           ; 121C  CC 12 BB (3)   Ã.ª
-mot121F:  lda     057h              ; 121F  B6 57    (3)   ∂W
-          sta     088h              ; 1221  B7 88    (4)   ∑à
-          lda     058h              ; 1223  B6 58    (3)   ∂X
-          sta     089h              ; 1225  B7 89    (4)   ∑â
-          lda     059h              ; 1227  B6 59    (3)   ∂Y
-          sta     08Ah              ; 1229  B7 8A    (4)   ∑ä
-          lda     mot0217           ; 122B  C6 02 17 (4)   ∆..
-          sta     08Bh              ; 122E  B7 8B    (4)   ∑ã
-          lda     mot0218           ; 1230  C6 02 18 (4)   ∆..
-          sta     08Ch              ; 1233  B7 8C    (4)   ∑å
-          lda     mot0219           ; 1235  C6 02 19 (4)   ∆..
-          sta     08Dh              ; 1238  B7 8D    (4)   ∑ç
+mot121C:
+          jmp     mot12BB           ; 121C  CC 12 BB (3)   Ã.ª
+
+mot121F:
+[ 0x88 ] = [ 0x57 ];
+[ 0x89 ] = [ 0x58 ];
+[ 0x8a ] = [ 0x59 ];
+[ 0x8b ] = [ 0x217 ];
+[ 0x8c ] = [ 0x218 ];
+[ 0x8d ] = [ 0x219 ];
           jsr     mot4445           ; 123A  CD 44 45 (6)   ÕDE
            bcs    mot1254           ; 123D  25 15    (3)   %.
           clc                       ; 123F  98       (2)   ò
           jsr     mot4354           ; 1240  CD 43 54 (6)   ÕCT
-          lda     mot01FD           ; 1243  C6 01 FD (4)   ∆.˝
+A = [ 0x1fd ];
            bne    mot1254           ; 1246  26 0C    (3)   &.
-          lda     mot01FE           ; 1248  C6 01 FE (4)   ∆.˛
+A = [ 0x1fe ]
            bne    mot1254           ; 124B  26 07    (3)   &.
-          lda     mot01FF           ; 124D  C6 01 FF (4)   ∆.ˇ
+A = [ 0x1ff ]
           cmp     #030h             ; 1250  A1 30    (2)   °0
            bcs    mot12BB           ; 1252  25 67    (3)   %g
-mot1254:  lda     #001h             ; 1254  A6 01    (2)   ¶.
-          sta     06Bh              ; 1256  B7 6B    (4)   ∑k
+mot1254:
+A = 0x01;
+[ 0x6b ] = A;
           bset2   042h              ; 1258  14 42    (5)   .B
-          lda     #020h             ; 125A  A6 20    (2)   ¶
-          sta     06Dh              ; 125C  B7 6D    (4)   ∑m
-          lda     #07Dh             ; 125E  A6 7D    (2)   ¶}
-          sta     070h              ; 1260  B7 70    (4)   ∑p
-          clra                      ; 1262  4F       (3)   O
-          sta     088h              ; 1263  B7 88    (4)   ∑à
-          sta     089h              ; 1265  B7 89    (4)   ∑â
-          lda     #030h             ; 1267  A6 30    (2)   ¶0
-          sta     08Ah              ; 1269  B7 8A    (4)   ∑ä
-          lda     mot0217           ; 126B  C6 02 17 (4)   ∆..
-          sta     08Bh              ; 126E  B7 8B    (4)   ∑ã
-          lda     mot0218           ; 1270  C6 02 18 (4)   ∆..
-          sta     08Ch              ; 1273  B7 8C    (4)   ∑å
-          lda     mot0219           ; 1275  C6 02 19 (4)   ∆..
-          sta     08Dh              ; 1278  B7 8D    (4)   ∑ç
+[ 0x6d ] = 0x20;
+[ 0x70 ] = 0x7d;
+[ 0x88 ] = 0x00;
+[ 0x89 ] = 0x00;
+[ 0x8a ] = 0x30;
+[ 0x8b ] = [ 0x217 ];
+[ 0x8c ] = [ 0x218 ];
+[ 0x8d ] = [ 0x219 ];
           clc                       ; 127A  98       (2)   ò
 bcd_addition_msf_plus_msf();
-          lda     mot01FD           ; 127E  C6 01 FD (4)   ∆.˝
-          sta     05Dh              ; 1281  B7 5D    (4)   ∑]
-          lda     mot01FE           ; 1283  C6 01 FE (4)   ∆.˛
-          sta     05Eh              ; 1286  B7 5E    (4)   ∑^
-          lda     mot01FF           ; 1288  C6 01 FF (4)   ∆.ˇ
-          sta     05Fh              ; 128B  B7 5F    (4)   ∑_
-          clra                      ; 128D  4F       (3)   O
-          sta     088h              ; 128E  B7 88    (4)   ∑à
-          sta     089h              ; 1290  B7 89    (4)   ∑â
-          lda     #030h             ; 1292  A6 30    (2)   ¶0
-          sta     08Ah              ; 1294  B7 8A    (4)   ∑ä
-          lda     mot0220           ; 1296  C6 02 20 (4)   ∆.
-          sta     08Bh              ; 1299  B7 8B    (4)   ∑ã
-          lda     mot0221           ; 129B  C6 02 21 (4)   ∆.!
-          sta     08Ch              ; 129E  B7 8C    (4)   ∑å
-          lda     mot0222           ; 12A0  C6 02 22 (4)   ∆."
-          sta     08Dh              ; 12A3  B7 8D    (4)   ∑ç
+
+[ 0x5d ] = [ 0x1fd ];
+[ 0x5e ] = [ 0x1fe ];
+[ 0x5f ] = [ 0x1ff ];
+[ 0x88 ] = 0x00;
+[ 0x89 ] = 0x00;
+[ 0x8a ] = 0x30;
+[ 0x8b ] = [ 0x220 ];
+[ 0x8c ] = [ 0x221 ];
+[ 0x8d ] = [ 0x222 ];
           clc                       ; 12A5  98       (2)   ò
 bcd_addition_msf_plus_msf()
-          lda     mot01FD           ; 12A9  C6 01 FD (4)   ∆.˝
-          sta     04Dh              ; 12AC  B7 4D    (4)   ∑M
-          lda     mot01FE           ; 12AE  C6 01 FE (4)   ∆.˛
-          sta     04Eh              ; 12B1  B7 4E    (4)   ∑N
-          lda     mot01FF           ; 12B3  C6 01 FF (4)   ∆.ˇ
-          sta     04Fh              ; 12B6  B7 4F    (4)   ∑O
+
+[ 0x4d ] = A;[ 0x1fd ];
+[ 0x4e ] = [ 0x1fe ];
+[ 0x4f ] = [ 0x1ff ];
           jsr     mot4222           ; 12B8  CD 42 22 (6)   ÕB"
-mot12BB:  lda     mot0211           ; 12BB  C6 02 11 (4)   ∆..
+mot12BB:
+          lda     mot0211           ; 12BB  C6 02 11 (4)   ∆..
           cmp     051h              ; 12BE  B1 51    (3)   ±Q
            beq    mot12CA           ; 12C0  27 08    (3)   '.
           jsr     mot12FD           ; 12C2  CD 12 FD (6)   Õ.˝
@@ -365,24 +353,28 @@ mot12BB:  lda     mot0211           ; 12BB  C6 02 11 (4)   ∆..
 mot12F2();
 
           bra     mot12F1           ; 12C8  20 27    (3)    '
-mot12CA:  lda     mot0211           ; 12CA  C6 02 11 (4)   ∆..
+mot12CA:
+A = [ 0x211 ];
           cmp     051h              ; 12CD  B1 51    (3)   ±Q
            bne    mot12EE           ; 12CF  26 1D    (3)   &
-          lda     mot0212           ; 12D1  C6 02 12 (4)   ∆..
+A = [ 0x212 ];
           cmp     052h              ; 12D4  B1 52    (3)   ±R
            bne    mot12EE           ; 12D6  26 16    (3)   &.
-          lda     mot0213           ; 12D8  C6 02 13 (4)   ∆..
+A = [ 0x213 ];
           cmp     053h              ; 12DB  B1 53    (3)   ±S
            bne    mot12EE           ; 12DD  26 0F    (3)   &.
-          lda     mot0214           ; 12DF  C6 02 14 (4)   ∆..
+A = [ 0x214 ];
           cmp     054h              ; 12E2  B1 54    (3)   ±T
            bne    mot12EE           ; 12E4  26 08    (3)   &.
-          lda     mot0215           ; 12E6  C6 02 15 (4)   ∆..
+A = [ 0x215 ];
           cmp     055h              ; 12E9  B1 55    (3)   ±U
            bne    mot12EE           ; 12EB  26 01    (3)   &.
-          rts                       ; 12ED  81       (6)   Å
+return;
+
 mot12EE:  jsr     mot12F2           ; 12EE  CD 12 F2 (6)   Õ.Ú
-mot12F1:  rts                       ; 12F1  81       (6)   Å
+mot12F1:
+
+return;
 ////////////////////////////////
 
 
@@ -564,7 +556,10 @@ mot143D:  ldx     #011h             ; 143D  AE 11    (2)   Æ.
            bne    mot1455           ; 144E  26 05    (3)   &.
           jsr     mot1524           ; 1450  CD 15 24 (6)   Õ.$
           bra     mot1458           ; 1453  20 03    (3)    .
-mot1455:  jsr     mot14F5           ; 1455  CD 14 F5 (6)   Õ.ı
+
+mot1455:
+generate_report_for_play_report();
+
 mot1458:  lda     05Ah              ; 1458  B6 5A    (3)   ∂Z
           sta     mot01F6           ; 145A  C7 01 F6 (5)   «.ˆ
           lda     05Bh              ; 145D  B6 5B    (3)   ∂[
@@ -574,7 +569,7 @@ mot1458:  lda     05Ah              ; 1458  B6 5A    (3)   ∂Z
           stx     004h              ; 1467  BF 04    (4)   ø.
           ldx     #000h             ; 1469  AE 00    (2)   Æ.
 mot146B:  lda     001F0h, X         ; 146B  D6 01 F0 (5)   ÷.
-          jsr     write_data_bus           ; 146E  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 146E  CD 40 FB (6)   Õ@˚
           incx                      ; 1471  5C       (3)   \
           cpx     #008h             ; 1472  A3 08    (2)   £.
            bcs    mot146B           ; 1474  25 F5    (3)   %ı
@@ -632,27 +627,38 @@ mot14EB:  brset1  090h, mot14F1     ; 14EB  02 90 03 (5)   .ê.
           jmp     mot212B           ; 14EE  CC 21 2B (3)   Ã!+
 mot14F1:  rts                       ; 14F1  81       (6)   Å
 mot14F2:  jmp     mot1E98           ; 14F2  CC 1E 98 (3)   Ãò
-mot14F5:  lda     0BCh              ; 14F5  B6 BC    (3)   ∂º
-          sta     mot01F0           ; 14F7  C7 01 F0 (5)   «.
-          lda     051h              ; 14FA  B6 51    (3)   ∂Q
-          sta     mot01F1           ; 14FC  C7 01 F1 (5)   «.Ò
-          lda     052h              ; 14FF  B6 52    (3)   ∂R
-          sta     mot01F2           ; 1501  C7 01 F2 (5)   «.Ú
-          ldx     #002h             ; 1504  AE 02    (2)   Æ.
-          brset4  059h, mot1513     ; 1506  08 59 0A (5)   .Y.
-mot1509:  lda     057h, X           ; 1509  E6 57    (4)   ÊW
-          sta     001F3h, X         ; 150B  D7 01 F3 (6)   ◊.Û
-          decx                      ; 150E  5A       (3)   Z
-           bpl    mot1509           ; 150F  2A F8    (3)   *¯
-          bra     mot1523           ; 1511  20 10    (3)    .
-mot1513:  lda     053h, X           ; 1513  E6 53    (4)   ÊS
-          sta     001F3h, X         ; 1515  D7 01 F3 (6)   ◊.Û
-          decx                      ; 1518  5A       (3)   Z
-           bpl    mot1513           ; 1519  2A F8    (3)   *¯
-          lda     mot01F4           ; 151B  C6 01 F4 (4)   ∆.Ù
-          ora     #080h             ; 151E  AA 80    (2)   ™Ä
-          sta     mot01F4           ; 1520  C7 01 F4 (5)   «.Ù
-mot1523:  rts                       ; 1523  81       (6)   Å
+
+
+
+////////////////////////////////
+// generate_report_for_play_report()
+
+[ 0x1f0 ] = [ 0xbc ]; // stat
+[ 0x1f1 ] = [ 0x51 ]; // track
+[ 0x1f2 ] = [ 0x52 ]; // index
+
+X = 0x02;
+if( [ 0x59 ] & 0x10 ) // use relative time
+{
+    while( X > 0 )
+    {
+        [ 0x1f3 + X ] = [ 0x53 + X ]; // relative MM:SS:FF
+        X = X - 1;
+    }
+    [ 0x1f4 ] = [ 0x1f4 ] | 0x80; // make MM:(SS+80h):FF (seconds.bit7 = relative time)
+}
+else
+{
+    while( X > 0 )
+    {
+        [ 0x1f3 + X ] = [ 0x57 + X ]; // absolute MM:SS:FF
+        X = X - 1;
+    }
+}
+////////////////////////////////
+
+
+
 mot1524:  lda     0BCh              ; 1524  B6 BC    (3)   ∂º
           sta     mot01F0           ; 1526  C7 01 F0 (5)   «.
           lda     051h              ; 1529  B6 51    (3)   ∂Q
@@ -1132,6 +1138,7 @@ mot1931:  clr     07Bh              ; 1931  3F 7B    (5)   ?{
           clr     07Ch              ; 1933  3F 7C    (5)   ?|
           jsr     mot43E9           ; 1935  CD 43 E9 (6)   ÕCÈ
           tax                       ; 1938  97       (2)   ó
+
           lda     07Dh              ; 1939  B6 7D    (3)   ∂}
            beq    mot1956           ; 193B  27 19    (3)   '.
           jsr     mot43E9           ; 193D  CD 43 E9 (6)   ÕCÈ
@@ -1490,21 +1497,21 @@ mot1B4E:  bset4   042h              ; 1B4E  18 42    (5)   .B
           lsr     07Ch              ; 1B56  34 7C    (5)   4|
           lsr     07Ch              ; 1B58  34 7C    (5)   4|
           lda     #01Eh             ; 1B5A  A6 1E    (2)   ¶
-          jsr     mot4333           ; 1B5C  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 1B5C  CD 43 33 (6)   ÕC3
           lda     #022h             ; 1B5F  A6 22    (2)   ¶"
           brset3  042h, mot1B65     ; 1B61  06 42 01 (5)   .B.
           inca                      ; 1B64  4C       (3)   L
-mot1B65:  jsr     mot4333           ; 1B65  CD 43 33 (6)   ÕC3
+mot1B65:  jsr     send_8bit_to_cddsp           ; 1B65  CD 43 33 (6)   ÕC3
           lda     #032h             ; 1B68  A6 32    (2)   ¶2
           sta     062h              ; 1B6A  B7 62    (4)   ∑b
           lda     #0E8h             ; 1B6C  A6 E8    (2)   ¶Ë
           brclr3  042h, mot1B73     ; 1B6E  07 42 02 (5)   .B.
           lda     #0EAh             ; 1B71  A6 EA    (2)   ¶Í
-mot1B73:  jsr     mot4333           ; 1B73  CD 43 33 (6)   ÕC3
+mot1B73:  jsr     send_8bit_to_cddsp           ; 1B73  CD 43 33 (6)   ÕC3
           jsr     mot44AC           ; 1B76  CD 44 AC (6)   ÕD¨
           sta     068h              ; 1B79  B7 68    (4)   ∑h
           lda     #008h             ; 1B7B  A6 08    (2)   ¶.
-          jsr     mot4333           ; 1B7D  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 1B7D  CD 43 33 (6)   ÕC3
           lda     #0B0h             ; 1B80  A6 B0    (2)   ¶∞
           ldx     #010h             ; 1B82  AE 10    (2)   Æ.
           stx     088h              ; 1B84  BF 88    (4)   øà
@@ -1568,14 +1575,14 @@ mot1BCF:  lda     #061h             ; 1BCF  A6 61    (2)   ¶a
           cmp     #020h             ; 1BEB  A1 20    (2)   °
            bcs    mot1BEF           ; 1BED  25 00    (3)   %.
 mot1BEF:  lda     #05Ah             ; 1BEF  A6 5A    (2)   ¶Z
-          jsr     mot4333           ; 1BF1  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 1BF1  CD 43 33 (6)   ÕC3
           bclr3   043h              ; 1BF4  17 43    (5)   .C
           lda     #04Ch             ; 1BF6  A6 4C    (2)   ¶L
 mot1BF8:  brset3  042h, mot1BFC     ; 1BF8  06 42 01 (5)   .B.
           inca                      ; 1BFB  4C       (3)   L
 mot1BFC:  sta     08Fh              ; 1BFC  B7 8F    (4)   ∑è
           lda     #01Dh             ; 1BFE  A6 1D    (2)   ¶
-          jsr     mot4333           ; 1C00  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 1C00  CD 43 33 (6)   ÕC3
           lda     08Fh              ; 1C03  B6 8F    (3)   ∂è
           clr     088h              ; 1C05  3F 88    (5)   ?à
           jsr     mot432B           ; 1C07  CD 43 2B (6)   ÕC+
@@ -1598,35 +1605,35 @@ mot1C23:  jsr     mot432B           ; 1C23  CD 43 2B (6)   ÕC+
 mot1C2D:  ldx     #003h             ; 1C2D  AE 03    (2)   Æ.
           stx     004h              ; 1C2F  BF 04    (4)   ø.
           lda     #008h             ; 1C31  A6 08    (2)   ¶.
-          jsr     write_data_bus           ; 1C33  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1C33  CD 40 FB (6)   Õ@˚
           lda     #000h             ; 1C36  A6 00    (2)   ¶.
           ldx     #010h             ; 1C38  AE 10    (2)   Æ.
           stx     004h              ; 1C3A  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 1C3C  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1C3C  CD 40 FB (6)   Õ@˚
           inc     004h              ; 1C3F  3C 04    (5)   <.
-          jsr     write_data_bus           ; 1C41  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1C41  CD 40 FB (6)   Õ@˚
           inc     004h              ; 1C44  3C 04    (5)   <.
-          jsr     write_data_bus           ; 1C46  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1C46  CD 40 FB (6)   Õ@˚
           ldx     #007h             ; 1C49  AE 07    (2)   Æ.
           stx     004h              ; 1C4B  BF 04    (4)   ø.
           lda     0B7h              ; 1C4D  B6 B7    (3)   ∂∑
-          jsr     write_data_bus           ; 1C4F  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1C4F  CD 40 FB (6)   Õ@˚
           ldx     #003h             ; 1C52  AE 03    (2)   Æ.
           stx     004h              ; 1C54  BF 04    (4)   ø.
           lda     0B6h              ; 1C56  B6 B6    (3)   ∂∂
-          jsr     write_data_bus           ; 1C58  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1C58  CD 40 FB (6)   Õ@˚
           bset0   0BAh              ; 1C5B  10 BA    (5)   .∫
           ldx     #00Ah             ; 1C5D  AE 0A    (2)   Æ.
           stx     004h              ; 1C5F  BF 04    (4)   ø.
           lda     0BAh              ; 1C61  B6 BA    (3)   ∂∫
-          jsr     write_data_bus           ; 1C63  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1C63  CD 40 FB (6)   Õ@˚
           bclr0   0BAh              ; 1C66  11 BA    (5)   .∫
           rts                       ; 1C68  81       (6)   Å
 mot1C69:  lda     #080h             ; 1C69  A6 80    (2)   ¶Ä
           jmp     mot1BA2           ; 1C6B  CC 1B A2 (3)   Ã.¢
 mot1C6E:  sta     07Ah              ; 1C6E  B7 7A    (4)   ∑z
 mot1C70:  lda     #054h             ; 1C70  A6 54    (2)   ¶T
-          jsr     mot4333           ; 1C72  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 1C72  CD 43 33 (6)   ÕC3
           bset3   043h              ; 1C75  16 43    (5)   .C
           lda     #048h             ; 1C77  A6 48    (2)   ¶H
           jmp     mot1BF8           ; 1C79  CC 1B F8 (3)   Ã.¯
@@ -1890,7 +1897,7 @@ mot1EBF:  bclr4   045h              ; 1EBF  19 45    (5)   .E
           stx     004h              ; 1EC3  BF 04    (4)   ø.
           clrx                      ; 1EC5  5F       (3)   _
 mot1EC6:  lda     00200h, X         ; 1EC6  D6 02 00 (5)   ÷..
-          jsr     write_data_bus           ; 1EC9  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 1EC9  CD 40 FB (6)   Õ@˚
           incx                      ; 1ECC  5C       (3)   \
           cpx     #00Bh             ; 1ECD  A3 0B    (2)   £.
            bne    mot1EC6           ; 1ECF  26 F5    (3)   &ı
@@ -1918,7 +1925,7 @@ mot1EEB:  jmp     mot1F88           ; 1EEB  CC 1F 88 (3)   Ãà
           jmp     mot20CA           ; 1F00  CC 20 CA (3)   Ã  
           jmp     mot212B           ; 1F03  CC 21 2B (3)   Ã!+
           jmp     mot1F21           ; 1F06  CC 1F 21 (3)   Ã!
-          jmp     mot222A           ; 1F09  CC 22 2A (3)   Ã"*
+          jmp     select_double_speed_mode           ; 1F09  CC 22 2A (3)   Ã"*
           jmp     mot1F21           ; 1F0C  CC 1F 21 (3)   Ã!
           jmp     mot2273           ; 1F0F  CC 22 73 (3)   Ã"s
           jmp     mot1F21           ; 1F12  CC 1F 21 (3)   Ã!
@@ -1975,13 +1982,13 @@ mot1F88:  lda     #096h             ; 1F88  A6 96    (2)   ¶ñ
           inc     06Ch              ; 1F96  3C 6C    (5)   <l
           rts                       ; 1F98  81       (6)   Å
 mot1F99:  lda     #040h             ; 1F99  A6 40    (2)   ¶@
-          jsr     mot4341           ; 1F9B  CD 43 41 (6)   ÕCA
+          jsr     write_8bit_to_cddsp_data           ; 1F9B  CD 43 41 (6)   ÕCA
           lda     #07Dh             ; 1F9E  A6 7D    (2)   ¶}
           jsr     mot46E6           ; 1FA0  CD 46 E6 (6)   ÕFÊ
           brclr7  001h, mot1FC2     ; 1FA3  0F 01 1C (5)   ..
           jsr     mot421D           ; 1FA6  CD 42 1D (6)   ÕB
           lda     #0E8h             ; 1FA9  A6 E8    (2)   ¶Ë
-          jsr     mot4333           ; 1FAB  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 1FAB  CD 43 33 (6)   ÕC3
           lda     #020h             ; 1FAE  A6 20    (2)   ¶
           sta     073h              ; 1FB0  B7 73    (4)   ∑s
           lda     #014h             ; 1FB2  A6 14    (2)   ¶.
@@ -1994,12 +2001,14 @@ mot1F99:  lda     #040h             ; 1F99  A6 40    (2)   ¶@
           sta     06Ch              ; 1FC0  B7 6C    (4)   ∑l
 mot1FC2:  rts                       ; 1FC2  81       (6)   Å
 mot1FC3:  jsr     mot41D0           ; 1FC3  CD 41 D0 (6)   ÕA–
-          lda     #050h             ; 1FC6  A6 50    (2)   ¶P
-          sta     061h              ; 1FC8  B7 61    (4)   ∑a
-          lda     #002h             ; 1FCA  A6 02    (2)   ¶.
-          jsr     mot4333           ; 1FCC  CD 43 33 (6)   ÕC3
+
+[ 0x61 ] = 0x50;
+A = 0x02;
+send_8bit_to_cddsp();
+
           inc     06Ch              ; 1FCF  3C 6C    (5)   <l
-          rts                       ; 1FD1  81       (6)   Å
+return;
+
 mot1FD2:  brset2  048h, mot1FD8     ; 1FD2  04 48 03 (5)   .H.
           brclr1  0BCh, mot1FDE     ; 1FD5  03 BC 06 (5)   .º.
 mot1FD8:  jsr     mot44A7           ; 1FD8  CD 44 A7 (6)   ÕDß
@@ -2018,12 +2027,16 @@ mot1FF2:  lda     #020h             ; 1FF2  A6 20    (2)   ¶
           jsr     mot4218           ; 1FF6  CD 42 18 (6)   ÕB.
           brset2  04Ah, mot2021     ; 1FF9  04 4A 25 (5)   .J%
           jsr     mot421D           ; 1FFC  CD 42 1D (6)   ÕB
-          lda     #0EEh             ; 1FFF  A6 EE    (2)   ¶Ó
-          jsr     mot4333           ; 2001  CD 43 33 (6)   ÕC3
-          lda     #020h             ; 2004  A6 20    (2)   ¶
-          jsr     mot4333           ; 2006  CD 43 33 (6)   ÕC3
-          lda     #019h             ; 2009  A6 19    (2)   ¶.
-          jsr     mot4333           ; 200B  CD 43 33 (6)   ÕC3
+
+A = 0xee
+send_8bit_to_cddsp();
+
+A = 0x20;
+send_8bit_to_cddsp();
+
+A = 0x19;
+send_8bit_to_cddsp();
+
           jsr     mot41E2           ; 200E  CD 41 E2 (6)   ÕA‚
           lda     #001h             ; 2011  A6 01    (2)   ¶.
           sta     mot01EB           ; 2013  C7 01 EB (5)   «.Î
@@ -2033,7 +2046,9 @@ mot1FF2:  lda     #020h             ; 1FF2  A6 20    (2)   ¶
           sta     061h              ; 201D  B7 61    (4)   ∑a
           inc     06Ch              ; 201F  3C 6C    (5)   <l
 mot2021:  inc     06Ch              ; 2021  3C 6C    (5)   <l
-          rts                       ; 2023  81       (6)   Å
+
+return;
+
 mot2024:  bclr6   041h              ; 2024  1D 41    (5)   A
 mot2026:  brset2  04Ah, mot202A     ; 2026  04 4A 01 (5)   .J.
           rts                       ; 2029  81       (6)   Å
@@ -2048,31 +2063,33 @@ mot2039:  lda     #00Ah             ; 2039  A6 0A    (2)   ¶.
           brset6  042h, mot207D     ; 203E  0C 42 3C (5)   .B<
           brset5  042h, mot207D     ; 2041  0A 42 39 (5)   .B9
           brclr0  090h, mot207D     ; 2044  01 90 36 (5)   .ê6
-          jsr     mot222A           ; 2047  CD 22 2A (6)   Õ"*
+          jsr     select_double_speed_mode           ; 2047  CD 22 2A (6)   Õ"*
           lda     #00Bh             ; 204A  A6 0B    (2)   ¶.
 mot204C:  sta     06Ch              ; 204C  B7 6C    (4)   ∑l
-          lda     mot01E9           ; 204E  C6 01 E9 (4)   ∆.È
-          add     #030h             ; 2051  AB 30    (2)   ´0
-          jsr     mot4333           ; 2053  CD 43 33 (6)   ÕC3
-          lda     mot01EA           ; 2056  C6 01 EA (4)   ∆.Í
-          add     #038h             ; 2059  AB 38    (2)   ´8
-          jsr     mot4333           ; 205B  CD 43 33 (6)   ÕC3
-          lda     #01Dh             ; 205E  A6 1D    (2)   ¶
-          jsr     mot4333           ; 2060  CD 43 33 (6)   ÕC3
+
+A = 0x30 + [ 0x1e9 ];
+send_8bit_to_cddsp();
+
+A = 0x38 + [ 0x1ea ];
+send_8bit_to_cddsp();
+
+A = 0x1d; // CXA1782BR Servo Amplifier // TrackingGainBrakeAndSledKickHeight2
+send_8bit_to_cddsp();
+
           bset5   043h              ; 2063  1A 43    (5)   .C
           lda     #064h             ; 2065  A6 64    (2)   ¶d
           sta     069h              ; 2067  B7 69    (4)   ∑i
           jsr     mot4312           ; 2069  CD 43 12 (6)   ÕC.
-          jsr     mot4333           ; 206C  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 206C  CD 43 33 (6)   ÕC3
           lda     #025h             ; 206F  A6 25    (2)   ¶%
-          jsr     mot4333           ; 2071  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2071  CD 43 33 (6)   ÕC3
           brclr3  041h, mot207D     ; 2074  07 41 06 (5)   .A.
           brclr6  044h, mot207D     ; 2077  0D 44 03 (5)   .D.
           jsr     mot4840           ; 207A  CD 48 40 (6)   ÕH@
 mot207D:  rts                       ; 207D  81       (6)   Å
 mot207E:  jsr     mot421D           ; 207E  CD 42 1D (6)   ÕB
           lda     #019h             ; 2081  A6 19    (2)   ¶.
-          jsr     mot4333           ; 2083  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2083  CD 43 33 (6)   ÕC3
 mot2086:  jsr     mot21AA           ; 2086  CD 21 AA (6)   Õ!™
           jsr     mot279F           ; 2089  CD 27 9F (6)   Õ'ü
           brset4  040h, mot2098     ; 208C  08 40 09 (5)   .@.
@@ -2092,7 +2109,7 @@ mot20A3:  lda     mot01E9           ; 20A3  C6 01 E9 (4)   ∆.È
           inca                      ; 20AD  4C       (3)   L
           sta     mot01E9           ; 20AE  C7 01 E9 (5)   «.È
           add     #030h             ; 20B1  AB 30    (2)   ´0
-          jsr     mot4333           ; 20B3  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 20B3  CD 43 33 (6)   ÕC3
           lda     #001h             ; 20B6  A6 01    (2)   ¶.
           sta     mot01EB           ; 20B8  C7 01 EB (5)   «.Î
           lda     #001h             ; 20BB  A6 01    (2)   ¶.
@@ -2103,22 +2120,23 @@ mot20C1:  lda     mot01E9           ; 20C1  C6 01 E9 (4)   ∆.È
           deca                      ; 20C6  4A       (3)   J
           sta     mot01E9           ; 20C7  C7 01 E9 (5)   «.È
 mot20CA:  jsr     mot421D           ; 20CA  CD 42 1D (6)   ÕB
-          lda     mot01E9           ; 20CD  C6 01 E9 (4)   ∆.È
-          add     #030h             ; 20D0  AB 30    (2)   ´0
-          jsr     mot4333           ; 20D2  CD 43 33 (6)   ÕC3
+
+A = 0x30 + [ 0x1e9 ];
+send_8bit_to_cddsp();
+
           inc     06Ch              ; 20D5  3C 6C    (5)   <l
-          lda     #096h             ; 20D7  A6 96    (2)   ¶ñ
-          sta     061h              ; 20D9  B7 61    (4)   ∑a
-          lda     #000h             ; 20DB  A6 00    (2)   ¶.
-          sta     mot01EA           ; 20DD  C7 01 EA (5)   «.Í
-          lda     #001h             ; 20E0  A6 01    (2)   ¶.
-          sta     mot01EB           ; 20E2  C7 01 EB (5)   «.Î
-          lda     #001h             ; 20E5  A6 01    (2)   ¶.
-          sta     mot01EC           ; 20E7  C7 01 EC (5)   «.Ï
-          rts                       ; 20EA  81       (6)   Å
+[ 0x61 ] = 0x96;
+[ 0x1ea ] = 0x00;
+[ 0x1eb ] = 0x01;
+[ 0x1ec ] = 0x01;
+return;
+
+
+
 mot20EB:  jsr     mot421D           ; 20EB  CD 42 1D (6)   ÕB
 A = 0x19;
-          jsr     mot4333           ; 20F0  CD 43 33 (6)   ÕC3
+send_8bit_to_cddsp();
+
 mot20F3:  jsr     mot21E8           ; 20F3  CD 21 E8 (6)   Õ!Ë
           brclr4  040h, mot2102     ; 20F6  09 40 09 (5)   .@.
           lda     mot01EB           ; 20F9  C6 01 EB (4)   ∆.Î
@@ -2137,7 +2155,7 @@ mot210D:  lda     mot01EA           ; 210D  C6 01 EA (4)   ∆.Í
           inca                      ; 2117  4C       (3)   L
           sta     mot01EA           ; 2118  C7 01 EA (5)   «.Í
           add     #038h             ; 211B  AB 38    (2)   ´8
-          jsr     mot4333           ; 211D  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 211D  CD 43 33 (6)   ÕC3
           lda     #001h             ; 2120  A6 01    (2)   ¶.
           sta     mot01EB           ; 2122  C7 01 EB (5)   «.Î
           lda     #001h             ; 2125  A6 01    (2)   ¶.
@@ -2145,17 +2163,17 @@ mot210D:  lda     mot01EA           ; 210D  C6 01 EA (4)   ∆.Í
           rts                       ; 212A  81       (6)   Å
 mot212B:  lda     mot01EA           ; 212B  C6 01 EA (4)   ∆.Í
           add     #038h             ; 212E  AB 38    (2)   ´8
-          jsr     mot4333           ; 2130  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2130  CD 43 33 (6)   ÕC3
           bset2   04Ah              ; 2133  14 4A    (5)   .J
           jsr     mot4312           ; 2135  CD 43 12 (6)   ÕC.
-          jsr     mot4333           ; 2138  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2138  CD 43 33 (6)   ÕC3
           lda     #01Dh             ; 213B  A6 1D    (2)   ¶
-          jsr     mot4333           ; 213D  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 213D  CD 43 33 (6)   ÕC3
           bset5   043h              ; 2140  1A 43    (5)   .C
           lda     #064h             ; 2142  A6 64    (2)   ¶d
           sta     069h              ; 2144  B7 69    (4)   ∑i
           lda     #025h             ; 2146  A6 25    (2)   ¶%
-          jsr     mot4333           ; 2148  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2148  CD 43 33 (6)   ÕC3
           jsr     mot4218           ; 214B  CD 42 18 (6)   ÕB.
           lda     #00Ah             ; 214E  A6 0A    (2)   ¶.
           sta     06Ch              ; 2150  B7 6C    (4)   ∑l
@@ -2196,20 +2214,20 @@ mot2199:  lda     061h              ; 2199  B6 61    (3)   ∂a
           cmp     #001h             ; 219B  A1 01    (2)   °.
            bne    mot2198           ; 219D  26 F9    (3)   &˘
 
-A = 0x04;
-          sta     mot01E9           ; 21A1  C7 01 E9 (5)   «.È
-          sta     mot01EA           ; 21A4  C7 01 EA (5)   «.Í
+[ 0x1e9 ] = 0x04;
+[ 0x1ea ] = 0x04;
           jmp     mot212B           ; 21A7  CC 21 2B (3)   Ã!+
+
 mot21AA:  bclr4   040h              ; 21AA  19 40    (5)   .@
-A = 0x40;
-          sta     088h              ; 21AE  B7 88    (4)   ∑à
-          clr     089h              ; 21B0  3F 89    (5)   ?â
-A = 0x20;
-          sta     08Ah              ; 21B4  B7 8A    (4)   ∑ä
-          clr     08Bh              ; 21B6  3F 8B    (5)   ?ã
-          lda     mot01E9           ; 21B8  C6 01 E9 (4)   ∆.È
-          add     #030h             ; 21BB  AB 30    (2)   ´0
-          jsr     mot4333           ; 21BD  CD 43 33 (6)   ÕC3
+
+[ 0x88 ] = 0x40;
+[ 0x89 ] = 0x00;
+[ 0x8a ] = 0x20;
+[ 0x8b ] = 0x00;
+
+A = 0x30 + [ 0x1e9 ];
+send_8bit_to_cddsp();
+
 mot21C0:  brclr7  001h, mot21D3     ; 21C0  0F 01 10 (5)   ...
           lda     08Bh              ; 21C3  B6 8B    (3)   ∂ã
            bne    mot21D1           ; 21C5  26 0A    (3)   &.
@@ -2229,19 +2247,18 @@ mot21D3:  lda     089h              ; 21D3  B6 89    (3)   ∂â
 mot21E1:  dec     089h              ; 21E1  3A 89    (5)   :â
           bra     mot21C0           ; 21E3  20 DB    (3)    €
 mot21E5:  bset4   040h              ; 21E5  18 40    (5)   .@
-mot21E7:  rts                       ; 21E7  81       (6)   Å
+mot21E7:
+return;
 mot21E8:  bclr4   040h              ; 21E8  19 40    (5)   .@
-A = 0x08;
-          sta     088h              ; 21EC  B7 88    (4)   ∑à
-A = 0x00;
-          sta     089h              ; 21F0  B7 89    (4)   ∑â
-A = 0x00;
-          sta     08Ah              ; 21F4  B7 8A    (4)   ∑ä
-A = 0x80;
-          sta     08Bh              ; 21F8  B7 8B    (4)   ∑ã
-          lda     mot01EA           ; 21FA  C6 01 EA (4)   ∆.Í
-          add     #038h             ; 21FD  AB 38    (2)   ´8
-          jsr     mot4333           ; 21FF  CD 43 33 (6)   ÕC3
+
+[ 0x88 ] = 0x08;
+[ 0x89 ] = 0x00;
+[ 0x8a ] = 0x00;
+[ 0x8b ] = 0x80;
+
+A = 0x38 + [ 0x1ea ];
+send_8bit_to_cddsp();
+
 mot2202:  brclr7  001h, mot2215     ; 2202  0F 01 10 (5)   ...
           lda     08Bh              ; 2205  B6 8B    (3)   ∂ã
            bne    mot2213           ; 2207  26 0A    (3)   &.
@@ -2261,96 +2278,117 @@ mot2215:  lda     089h              ; 2215  B6 89    (3)   ∂â
 mot2223:  dec     089h              ; 2223  3A 89    (5)   :â
           bra     mot2202           ; 2225  20 DB    (3)    €
 mot2227:  bset4   040h              ; 2227  18 40    (5)   .@
-mot2229:  rts                       ; 2229  81       (6)   Å
-mot222A:
+mot2229:
+return;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// select_double_speed_mode()
+
 A = 0x9f;
-X = 0x00;
-          stx     088h              ; 222E  BF 88    (4)   øà
+[ 0x88 ] = 0x00;
           jsr     mot432B           ; 2230  CD 43 2B (6)   ÕC+
-X = 0x03;
-          stx     004h              ; 2235  BF 04    (4)   ø.
+
+[ 0x04 ] = 0x03;
 A = 0x08;
-          jsr     write_data_bus           ; 2239  CD 40 FB (6)   Õ@˚
-X = 0x10;
-          stx     004h              ; 223E  BF 04    (4)   ø.
+send_8bit_to_cd_controller_mcd();
+
+[ 0x04 ] = 0x10;
 A = 0x00;
-          jsr     write_data_bus           ; 2242  CD 40 FB (6)   Õ@˚
-          inc     004h              ; 2245  3C 04    (5)   <.
-          jsr     write_data_bus           ; 2247  CD 40 FB (6)   Õ@˚
-          inc     004h              ; 224A  3C 04    (5)   <.
-          jsr     write_data_bus           ; 224C  CD 40 FB (6)   Õ@˚
-          bset1   0B7h              ; 224F  12 B7    (5)   .∑
-X = 0x07;
-          stx     004h              ; 2253  BF 04    (4)   ø.
-          lda     0B7h              ; 2255  B6 B7    (3)   ∂∑
-          jsr     write_data_bus           ; 2257  CD 40 FB (6)   Õ@˚
-X = 0x03;
-          stx     004h              ; 225C  BF 04    (4)   ø.
-          lda     0B6h              ; 225E  B6 B6    (3)   ∂∂
-          jsr     write_data_bus           ; 2260  CD 40 FB (6)   Õ@˚
-          bset0   0BAh              ; 2263  10 BA    (5)   .∫
-X = 0x0a;
-          stx     004h              ; 2267  BF 04    (4)   ø.
-          lda     0BAh              ; 2269  B6 BA    (3)   ∂∫
-          jsr     write_data_bus           ; 226B  CD 40 FB (6)   Õ@˚
-          bclr0   0BAh              ; 226E  11 BA    (5)   .∫
-          bclr4   002h              ; 2270  19 02    (5)   ..
-          rts                       ; 2272  81       (6)   Å
+send_8bit_to_cd_controller_mcd();
+
+[ 0x04 ] = 0x11;
+A = 0x00;
+send_8bit_to_cd_controller_mcd();
+
+[ 0x04 ] = 0x12;
+A = 0x00;
+send_8bit_to_cd_controller_mcd();
+
+[ 0xb7 ] = [ 0xb7 ] | 0x02;
+
+[ 0x04 ] = 0x07;
+A = [ 0xb7 ];
+send_8bit_to_cd_controller_mcd();
+
+[ 0x04 ] = 0x03;
+A = [ 0xb6 ];
+send_8bit_to_cd_controller_mcd();
+
+[ 0xba ] = [ 0xba ] | 0x01;
+
+[ 0x04 ] = 0x0a;
+A = [ 0xba ];
+send_8bit_to_cd_controller_mcd();
+
+[ 0xba ] = [ 0xba ] & 0xfe;
+[ 0x02 ] = [ 0x02 ] & 0xf7;
+////////////////////////////////
+
+
+
+////////////////////////////////
 mot2273:
 A = 0x9b;
 X = 0x00;
           stx     088h              ; 2277  BF 88    (4)   øà
           jsr     mot432B           ; 2279  CD 43 2B (6)   ÕC+
-X = 0x03;
-          stx     004h              ; 227E  BF 04    (4)   ø.
+
+[ 0x04 ] = 0x03;
 X = 0x08;
-          jsr     write_data_bus           ; 2282  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2282  CD 40 FB (6)   Õ@˚
           bclr3   002h              ; 2285  17 02    (5)   ..
 X = 0x10;
           stx     004h              ; 2289  BF 04    (4)   ø.
 A = 0x00;
-          jsr     write_data_bus           ; 228D  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           inc     004h              ; 2290  3C 04    (5)   <.
-          jsr     write_data_bus           ; 2292  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           inc     004h              ; 2295  3C 04    (5)   <.
-          jsr     write_data_bus           ; 2297  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           bclr1   0B7h              ; 229A  13 B7    (5)   .∑
           ldx     #007h             ; 229C  AE 07    (2)   Æ.
           stx     004h              ; 229E  BF 04    (4)   ø.
           lda     0B7h              ; 22A0  B6 B7    (3)   ∂∑
-          jsr     write_data_bus           ; 22A2  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           ldx     #003h             ; 22A5  AE 03    (2)   Æ.
           stx     004h              ; 22A7  BF 04    (4)   ø.
           lda     #0B6h             ; 22A9  A6 B6    (2)   ¶∂
-          jsr     write_data_bus           ; 22AB  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           bset0   0BAh              ; 22AE  10 BA    (5)   .∫
           ldx     #00Ah             ; 22B0  AE 0A    (2)   Æ.
           stx     004h              ; 22B2  BF 04    (4)   ø.
           lda     0BAh              ; 22B4  B6 BA    (3)   ∂∫
-          jsr     write_data_bus           ; 22B6  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           bclr0   0BAh              ; 22B9  11 BA    (5)   .∫
           bset4   002h              ; 22BB  18 02    (5)   ..
           rts                       ; 22BD  81       (6)   Å
 mot22BE:  brset7  0BBh, mot22D2     ; 22BE  0E BB 11 (5)   .ª.
           brset6  042h, mot22D2     ; 22C1  0C 42 0E (5)   .B.
           brset5  042h, mot22D2     ; 22C4  0A 42 0B (5)   .B.
-          lda     #00Dh             ; 22C7  A6 0D    (2)   ¶.
-          sta     06Ch              ; 22C9  B7 6C    (4)   ∑l
-          lda     #096h             ; 22CB  A6 96    (2)   ¶ñ
-          sta     061h              ; 22CD  B7 61    (4)   ∑a
+
+[ 0x6c ] = 0x0d;
+[ 0x61 ] = 0x96;
+
           jsr     mot2273           ; 22CF  CD 22 73 (6)   Õ"s
-mot22D2:  rts                       ; 22D2  81       (6)   Å
+mot22D2:
+return;
 mot22D3:  brclr7  0BBh, mot22E7     ; 22D3  0F BB 11 (5)   .ª.
           brset6  042h, mot22E7     ; 22D6  0C 42 0E (5)   .B.
           brset5  042h, mot22E7     ; 22D9  0A 42 0B (5)   .B.
-          lda     #00Bh             ; 22DC  A6 0B    (2)   ¶.
-          sta     06Ch              ; 22DE  B7 6C    (4)   ∑l
-          lda     #096h             ; 22E0  A6 96    (2)   ¶ñ
-          sta     061h              ; 22E2  B7 61    (4)   ∑a
-          jsr     mot222A           ; 22E4  CD 22 2A (6)   Õ"*
-mot22E7:  rts                       ; 22E7  81       (6)   Å
-mot22E8:  lda     #0A0h             ; 22E8  A6 A0    (2)   ¶†
-          jsr     mot4341           ; 22EA  CD 43 41 (6)   ÕCA
+[ 0x6c ] = 0x0b;
+[ 0x61 ] = 0x96;
+          jsr     select_double_speed_mode           ; 22E4  CD 22 2A (6)   Õ"*
+mot22E7:
+return;
+
+
+
+mot22E8:
+A = 0xa0;
+write_8bit_to_cddsp_data();
           brclr7  001h, mot2305     ; 22ED  0F 01 15 (5)   ...
           brclr0  06Ah, mot22FA     ; 22F0  01 6A 07 (5)   .j.
           bset4   0B7h              ; 22F3  18 B7    (5)   .∑
@@ -2358,12 +2396,17 @@ mot22E8:  lda     #0A0h             ; 22E8  A6 A0    (2)   ¶†
           bra     mot22FF           ; 22F8  20 05    (3)    .
 mot22FA:  bclr4   0B7h              ; 22FA  19 B7    (5)   .∑
           jsr     mot4073           ; 22FC  CD 40 73 (6)   Õ@s
-mot22FF:  lda     #00Ah             ; 22FF  A6 0A    (2)   ¶.
-          sta     06Ch              ; 2301  B7 6C    (4)   ∑l
-          clr     061h              ; 2303  3F 61    (5)   ?a
-mot2305:  rts                       ; 2305  81       (6)   Å
+mot22FF:
+[ 0x6c ] = 0x0a;
+[ 0x61 ] = 0x00;
+
+mot2305:
+return;
+
+
+
 mot2306:  lda     #0A0h             ; 2306  A6 A0    (2)   ¶†
-          jsr     mot4341           ; 2308  CD 43 41 (6)   ÕCA
+          jsr     write_8bit_to_cddsp_data           ; 2308  CD 43 41 (6)   ÕCA
           brclr7  001h, mot2325     ; 230B  0F 01 17 (5)   ...
           bset3   002h              ; 230E  16 02    (5)   ..
           brclr0  06Ah, mot231A     ; 2310  01 6A 07 (5)   .j.
@@ -2383,7 +2426,7 @@ mot2326:  bclr3   002h              ; 2326  17 02    (5)   ..
           inc     06Ch              ; 232F  3C 6C    (5)   <l
 mot2331:  rts                       ; 2331  81       (6)   Å
 mot2332:  lda     #0EAh             ; 2332  A6 EA    (2)   ¶Í
-          jsr     mot4333           ; 2334  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2334  CD 43 33 (6)   ÕC3
           brclr7  001h, mot233B     ; 2337  0F 01 01 (5)   ...
           rts                       ; 233A  81       (6)   Å
 mot233B:  lda     061h              ; 233B  B6 61    (3)   ∂a
@@ -2427,7 +2470,7 @@ mot2378:  rts                       ; 2378  81       (6)   Å
           ldx     #00Ah             ; 238D  AE 0A    (2)   Æ.
           stx     004h              ; 238F  BF 04    (4)   ø.
           lda     #001h             ; 2391  A6 01    (2)   ¶.
-          jsr     write_data_bus           ; 2393  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2393  CD 40 FB (6)   Õ@˚
 mot2396:  rts                       ; 2396  81       (6)   Å
 mot2397:  lda     06Ch              ; 2397  B6 6C    (3)   ∂l
           cmp     #00Ah             ; 2399  A1 0A    (2)   °.
@@ -2480,7 +2523,7 @@ mot2405:  lda     06Ch              ; 2405  B6 6C    (3)   ∂l
           cmp     #006h             ; 2407  A1 06    (2)   °.
            bcs    mot2462           ; 2409  25 57    (3)   %W
           lda     #050h             ; 240B  A6 50    (2)   ¶P
-          jsr     mot4341           ; 240D  CD 43 41 (6)   ÕCA
+          jsr     write_8bit_to_cddsp_data           ; 240D  CD 43 41 (6)   ÕCA
           brset7  001h, mot245A     ; 2410  0E 01 47 (5)   ..G
           lda     073h              ; 2413  B6 73    (3)   ∂s
            beq    mot2462           ; 2415  27 4B    (3)   'K
@@ -2546,16 +2589,16 @@ mot2486:  lda     062h              ; 2486  B6 62    (3)   ∂b
           brset6  042h, mot24F7     ; 2494  0C 42 60 (5)   .B`
           bclr4   042h              ; 2497  19 42    (5)   .B
           lda     #011h             ; 2499  A6 11    (2)   ¶.
-          jmp     mot4333           ; 249B  CC 43 33 (3)   ÃC3
+          jmp     send_8bit_to_cddsp           ; 249B  CC 43 33 (3)   ÃC3
 mot249E:  brset5  042h, mot24B0     ; 249E  0A 42 0F (5)   .B.
           brset6  042h, mot24AD     ; 24A1  0C 42 09 (5)   .B.
           brclr2  041h, mot24AC     ; 24A4  05 41 05 (5)   .A.
           lda     #019h             ; 24A7  A6 19    (2)   ¶.
-          jmp     mot4333           ; 24A9  CC 43 33 (3)   ÃC3
+          jmp     send_8bit_to_cddsp           ; 24A9  CC 43 33 (3)   ÃC3
 mot24AC:  rts                       ; 24AC  81       (6)   Å
 mot24AD:  jmp     mot251F           ; 24AD  CC 25 1F (3)   Ã%
 mot24B0:  lda     #040h             ; 24B0  A6 40    (2)   ¶@
-          jsr     mot4341           ; 24B2  CD 43 41 (6)   ÕCA
+          jsr     write_8bit_to_cddsp_data           ; 24B2  CD 43 41 (6)   ÕCA
           lda     #07Dh             ; 24B5  A6 7D    (2)   ¶}
           jsr     mot46E6           ; 24B7  CD 46 E6 (6)   ÕFÊ
           brset7  001h, mot24BE     ; 24BA  0E 01 01 (5)   ...
@@ -2569,7 +2612,7 @@ mot24BE:  jsr     mot41D0           ; 24BE  CD 41 D0 (6)   ÕA–
 mot24CE:  bclr4   0B7h              ; 24CE  19 B7    (5)   .∑
           jsr     mot4073           ; 24D0  CD 40 73 (6)   Õ@s
 mot24D3:  jsr     mot4312           ; 24D3  CD 43 12 (6)   ÕC.
-          jsr     mot4333           ; 24D6  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 24D6  CD 43 33 (6)   ÕC3
           bclr2   041h              ; 24D9  15 41    (5)   .A
           bclr5   042h              ; 24DB  1B 42    (5)   .B
           lda     07Ah              ; 24DD  B6 7A    (3)   ∂z
@@ -2587,11 +2630,11 @@ mot24F4:  jmp     mot255D           ; 24F4  CC 25 5D (3)   Ã%]
 mot24F7:  lda     07Bh              ; 24F7  B6 7B    (3)   ∂{
            bne    mot24F4           ; 24F9  26 F9    (3)   &˘
           lda     #01Dh             ; 24FB  A6 1D    (2)   ¶
-          jsr     mot4333           ; 24FD  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 24FD  CD 43 33 (6)   ÕC3
           lda     #025h             ; 2500  A6 25    (2)   ¶%
-          jsr     mot4333           ; 2502  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2502  CD 43 33 (6)   ÕC3
           jsr     mot4312           ; 2505  CD 43 12 (6)   ÕC.
-          jsr     mot4333           ; 2508  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2508  CD 43 33 (6)   ÕC3
           clr     068h              ; 250B  3F 68    (5)   ?h
           lda     #040h             ; 250D  A6 40    (2)   ¶@
           sta     062h              ; 250F  B7 62    (4)   ∑b
@@ -2604,7 +2647,7 @@ mot251E:  rts                       ; 251E  81       (6)   Å
 mot251F:  ldx     07Bh              ; 251F  BE 7B    (3)   æ{
            beq    mot2544           ; 2521  27 21    (3)   '!
           lda     #0C5h             ; 2523  A6 C5    (2)   ¶≈
-          jsr     mot4341           ; 2525  CD 43 41 (6)   ÕCA
+          jsr     write_8bit_to_cddsp_data           ; 2525  CD 43 41 (6)   ÕCA
           lda     #07Dh             ; 2528  A6 7D    (2)   ¶}
           jsr     mot46E6           ; 252A  CD 46 E6 (6)   ÕFÊ
           brset7  042h, mot2537     ; 252D  0E 42 07 (5)   .B.
@@ -2619,13 +2662,13 @@ mot253C:  dec     07Bh              ; 253C  3A 7B    (5)   :{
           sta     062h              ; 2542  B7 62    (4)   ∑b
 mot2544:  rts                       ; 2544  81       (6)   Å
 mot2545:  lda     #020h             ; 2545  A6 20    (2)   ¶
-          jsr     mot4333           ; 2547  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2547  CD 43 33 (6)   ÕC3
           lda     #01Dh             ; 254A  A6 1D    (2)   ¶
-          jsr     mot4333           ; 254C  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 254C  CD 43 33 (6)   ÕC3
           lda     #022h             ; 254F  A6 22    (2)   ¶"
           brclr3  042h, mot2555     ; 2551  07 42 01 (5)   .B.
           inca                      ; 2554  4C       (3)   L
-mot2555:  jsr     mot4333           ; 2555  CD 43 33 (6)   ÕC3
+mot2555:  jsr     send_8bit_to_cddsp           ; 2555  CD 43 33 (6)   ÕC3
           lda     #006h             ; 2558  A6 06    (2)   ¶.
           sta     062h              ; 255A  B7 62    (4)   ∑b
           rts                       ; 255C  81       (6)   Å
@@ -2739,7 +2782,7 @@ mot2622:  lda     093h              ; 2622  B6 93    (3)   ∂ì
           rts                       ; 263C  81       (6)   Å
 mot263D:  brset3  041h, mot2685     ; 263D  06 41 45 (5)   .AE
           lda     #0A0h             ; 2640  A6 A0    (2)   ¶†
-          jsr     mot4341           ; 2642  CD 43 41 (6)   ÕCA
+          jsr     write_8bit_to_cddsp_data           ; 2642  CD 43 41 (6)   ÕCA
           lda     06Ch              ; 2645  B6 6C    (3)   ∂l
           cmp     #00Ah             ; 2647  A1 0A    (2)   °.
            beq    mot2650           ; 2649  27 05    (3)   '.
@@ -2763,9 +2806,9 @@ mot2658:  rola                      ; 2658  49       (3)   I
           lda     #078h             ; 2671  A6 78    (2)   ¶x
           sta     09Eh              ; 2673  B7 9E    (4)   ∑û
           lda     #01Dh             ; 2675  A6 1D    (2)   ¶
-          jsr     mot4333           ; 2677  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2677  CD 43 33 (6)   ÕC3
           lda     #024h             ; 267A  A6 24    (2)   ¶$
-          jsr     mot4333           ; 267C  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 267C  CD 43 33 (6)   ÕC3
           bset5   043h              ; 267F  1A 43    (5)   .C
           lda     #064h             ; 2681  A6 64    (2)   ¶d
           sta     069h              ; 2683  B7 69    (4)   ∑i
@@ -2777,13 +2820,13 @@ mot2686:  brclr7  001h, mot269D     ; 2686  0F 01 14 (5)   ...
           lda     #078h             ; 268F  A6 78    (2)   ¶x
           sta     09Eh              ; 2691  B7 9E    (4)   ∑û
           lda     #011h             ; 2693  A6 11    (2)   ¶.
-          jsr     mot4333           ; 2695  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 2695  CD 43 33 (6)   ÕC3
           lda     #025h             ; 2698  A6 25    (2)   ¶%
-          jmp     mot4333           ; 269A  CC 43 33 (3)   ÃC3
+          jmp     send_8bit_to_cddsp           ; 269A  CC 43 33 (3)   ÃC3
 mot269D:  dec     069h              ; 269D  3A 69    (5)   :i
            bne    mot2685           ; 269F  26 E4    (3)   &‰
           lda     #020h             ; 26A1  A6 20    (2)   ¶
-          jsr     mot4333           ; 26A3  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 26A3  CD 43 33 (6)   ÕC3
           bset6   043h              ; 26A6  1C 43    (5)   C
           bclr5   043h              ; 26A8  1B 43    (5)   .C
           bclr2   041h              ; 26AA  15 41    (5)   .A
@@ -2793,9 +2836,9 @@ mot269D:  dec     069h              ; 269D  3A 69    (5)   :i
 mot26B1:  dec     069h              ; 26B1  3A 69    (5)   :i
            bne    mot2685           ; 26B3  26 D0    (3)   &–
           lda     #01Dh             ; 26B5  A6 1D    (2)   ¶
-          jsr     mot4333           ; 26B7  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 26B7  CD 43 33 (6)   ÕC3
           lda     #025h             ; 26BA  A6 25    (2)   ¶%
-          jsr     mot4333           ; 26BC  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 26BC  CD 43 33 (6)   ÕC3
           bclr6   043h              ; 26BF  1D 43    (5)   C
           lda     #0C8h             ; 26C1  A6 C8    (2)   ¶»
           sta     069h              ; 26C3  B7 69    (4)   ∑i
@@ -2810,7 +2853,7 @@ mot26CF:  clr     069h              ; 26CF  3F 69    (5)   ?i
           lda     #078h             ; 26D5  A6 78    (2)   ¶x
           sta     09Eh              ; 26D7  B7 9E    (4)   ∑û
           lda     #011h             ; 26D9  A6 11    (2)   ¶.
-          jmp     mot4333           ; 26DB  CC 43 33 (3)   ÃC3
+          jmp     send_8bit_to_cddsp           ; 26DB  CC 43 33 (3)   ÃC3
 mot26DE:  brset0  090h, mot2718     ; 26DE  00 90 37 (5)   .ê7
           brset2  049h, mot2719     ; 26E1  04 49 35 (5)   .I5
           brset6  040h, mot2719     ; 26E4  0C 40 32 (5)   .@2
@@ -2913,7 +2956,7 @@ mot2791:  lda     068h              ; 2791  B6 68    (3)   ∂h
           dec     068h              ; 2795  3A 68    (5)   :h
            bne    mot279E           ; 2797  26 05    (3)   &.
           lda     #0E0h             ; 2799  A6 E0    (2)   ¶‡
-          jsr     mot4333           ; 279B  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 279B  CD 43 33 (6)   ÕC3
 mot279E:  rts                       ; 279E  81       (6)   Å
 mot279F:  lda     088h              ; 279F  B6 88    (3)   ∂à
           sta     mot021A           ; 27A1  C7 02 1A (5)   «..
@@ -2929,23 +2972,23 @@ mot279F:  lda     088h              ; 279F  B6 88    (3)   ∂à
 mot27B9:  sta     mot021E           ; 27B9  C7 02 1E (5)   «.
           rts                       ; 27BC  81       (6)   Å
 mot27BD:  lda     #0EEh             ; 27BD  A6 EE    (2)   ¶Ó
-          jsr     mot4333           ; 27BF  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 27BF  CD 43 33 (6)   ÕC3
           lda     #020h             ; 27C2  A6 20    (2)   ¶
-          jsr     mot4333           ; 27C4  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 27C4  CD 43 33 (6)   ÕC3
           ldx     #064h             ; 27C7  AE 64    (2)   Æd
           jsr     delay_x_timer2_steps           ; 27C9  CD 41 C5 (6)   ÕA≈
           jsr     mot421D           ; 27CC  CD 42 1D (6)   ÕB
           lda     #019h             ; 27CF  A6 19    (2)   ¶.
-          jsr     mot4333           ; 27D1  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 27D1  CD 43 33 (6)   ÕC3
           jsr     mot27EC           ; 27D4  CD 27 EC (6)   Õ'Ï
           jsr     mot279F           ; 27D7  CD 27 9F (6)   Õ'ü
           lda     08Fh              ; 27DA  B6 8F    (3)   ∂è
           add     #030h             ; 27DC  AB 30    (2)   ´0
-          jsr     mot4333           ; 27DE  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 27DE  CD 43 33 (6)   ÕC3
           lda     #0E6h             ; 27E1  A6 E6    (2)   ¶Ê
-          jsr     mot4333           ; 27E3  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 27E3  CD 43 33 (6)   ÕC3
           lda     #025h             ; 27E6  A6 25    (2)   ¶%
-          jsr     mot4333           ; 27E8  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 27E8  CD 43 33 (6)   ÕC3
           rts                       ; 27EB  81       (6)   Å
 mot27EC:  bclr4   040h              ; 27EC  19 40    (5)   .@
           lda     #020h             ; 27EE  A6 20    (2)   ¶
@@ -2956,7 +2999,7 @@ mot27EC:  bclr4   040h              ; 27EC  19 40    (5)   .@
           sta     08Bh              ; 27F8  B7 8B    (4)   ∑ã
           lda     mot01E9           ; 27FA  C6 01 E9 (4)   ∆.È
           add     #030h             ; 27FD  AB 30    (2)   ´0
-          jsr     mot4333           ; 27FF  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 27FF  CD 43 33 (6)   ÕC3
 mot2802:  brclr7  001h, mot2815     ; 2802  0F 01 10 (5)   ...
           lda     08Bh              ; 2805  B6 8B    (3)   ∂ã
            bne    mot2813           ; 2807  26 0A    (3)   &.
@@ -3166,67 +3209,67 @@ mot29C6:  lda     #008h             ; 29C6  A6 08    (2)   ¶.
           sta     0B6h              ; 29C8  B7 B6    (4)   ∑∂
           ldx     #003h             ; 29CA  AE 03    (2)   Æ.
           stx     004h              ; 29CC  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 29CE  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 29CE  CD 40 FB (6)   Õ@˚
           ldx     #000h             ; 29D1  AE 00    (2)   Æ.
           stx     004h              ; 29D3  BF 04    (4)   ø.
           lda     #028h             ; 29D5  A6 28    (2)   ¶(
-          jsr     write_data_bus           ; 29D7  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 29D7  CD 40 FB (6)   Õ@˚
           ldx     #001h             ; 29DA  AE 01    (2)   Æ.
           stx     004h              ; 29DC  BF 04    (4)   ø.
           lda     #040h             ; 29DE  A6 40    (2)   ¶@
-          jsr     write_data_bus           ; 29E0  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 29E0  CD 40 FB (6)   Õ@˚
           ldx     #002h             ; 29E3  AE 02    (2)   Æ.
           stx     004h              ; 29E5  BF 04    (4)   ø.
           lda     #002h             ; 29E7  A6 02    (2)   ¶.
-          jsr     write_data_bus           ; 29E9  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 29E9  CD 40 FB (6)   Õ@˚
           ldx     #00Ah             ; 29EC  AE 0A    (2)   Æ.
           stx     004h              ; 29EE  BF 04    (4)   ø.
           lda     #070h             ; 29F0  A6 70    (2)   ¶p
           sta     0BAh              ; 29F2  B7 BA    (4)   ∑∫
-          jsr     write_data_bus           ; 29F4  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 29F4  CD 40 FB (6)   Õ@˚
 
 [ 0xba ] = 0x0;
           ldx     #00Bh             ; 29FB  AE 0B    (2)   Æ.
           stx     004h              ; 29FD  BF 04    (4)   ø.
           lda     #0FFh             ; 29FF  A6 FF    (2)   ¶ˇ
-          jsr     write_data_bus           ; 2A01  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A01  CD 40 FB (6)   Õ@˚
           ldx     #009h             ; 2A04  AE 09    (2)   Æ.
           stx     004h              ; 2A06  BF 04    (4)   ø.
           lda     #0DEh             ; 2A08  A6 DE    (2)   ¶ﬁ
           sta     0B8h              ; 2A0A  B7 B8    (4)   ∑∏
-          jsr     write_data_bus           ; 2A0C  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A0C  CD 40 FB (6)   Õ@˚
           lda     #000h             ; 2A0F  A6 00    (2)   ¶.
           sta     0A3h              ; 2A11  B7 A3    (4)   ∑£
           sta     0A4h              ; 2A13  B7 A4    (4)   ∑§
           sta     0A5h              ; 2A15  B7 A5    (4)   ∑•
           ldx     #010h             ; 2A17  AE 10    (2)   Æ.
           stx     004h              ; 2A19  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 2A1B  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A1B  CD 40 FB (6)   Õ@˚
           inc     004h              ; 2A1E  3C 04    (5)   <.
-          jsr     write_data_bus           ; 2A20  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A20  CD 40 FB (6)   Õ@˚
           inc     004h              ; 2A23  3C 04    (5)   <.
-          jsr     write_data_bus           ; 2A25  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A25  CD 40 FB (6)   Õ@˚
           ldx     #004h             ; 2A28  AE 04    (2)   Æ.
           stx     004h              ; 2A2A  BF 04    (4)   ø.
           lda     #023h             ; 2A2C  A6 23    (2)   ¶#
           sta     0A0h              ; 2A2E  B7 A0    (4)   ∑†
-          jsr     write_data_bus           ; 2A30  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A30  CD 40 FB (6)   Õ@˚
           inc     004h              ; 2A33  3C 04    (5)   <.
           lda     #009h             ; 2A35  A6 09    (2)   ¶.
           sta     0A1h              ; 2A37  B7 A1    (4)   ∑°
-          jsr     write_data_bus           ; 2A39  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A39  CD 40 FB (6)   Õ@˚
           inc     004h              ; 2A3C  3C 04    (5)   <.
           lda     #000h             ; 2A3E  A6 00    (2)   ¶.
           sta     0A2h              ; 2A40  B7 A2    (4)   ∑¢
-          jsr     write_data_bus           ; 2A42  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A42  CD 40 FB (6)   Õ@˚
           ldx     #00Ch             ; 2A45  AE 0C    (2)   Æ.
           stx     004h              ; 2A47  BF 04    (4)   ø.
           lda     0A8h              ; 2A49  B6 A8    (3)   ∂®
-          jsr     write_data_bus           ; 2A4B  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A4B  CD 40 FB (6)   Õ@˚
           inc     004h              ; 2A4E  3C 04    (5)   <.
           lda     #040h             ; 2A50  A6 40    (2)   ¶@
           sta     0A9h              ; 2A52  B7 A9    (4)   ∑©
-          jsr     write_data_bus           ; 2A54  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2A54  CD 40 FB (6)   Õ@˚
           rts                       ; 2A57  81       (6)   Å
 mot2A58:  jsr     mot411F           ; 2A58  CD 41 1F (6)   ÕA
           bset2   009h              ; 2A5B  14 09    (5)   ..
@@ -3273,12 +3316,12 @@ mot2AB0:  brclr6  0BBh, mot2AD9     ; 2AB0  0D BB 26 (5)   .ª&
           and     #055h             ; 2AC3  A4 55    (2)   §U
           ldx     #01Bh             ; 2AC5  AE 1B    (2)   Æ.
           stx     004h              ; 2AC7  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 2AC9  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2AC9  CD 40 FB (6)   Õ@˚
           lda     0AAh              ; 2ACC  B6 AA    (3)   ∂™
           ora     #080h             ; 2ACE  AA 80    (2)   ™Ä
           ldx     #019h             ; 2AD0  AE 19    (2)   Æ.
           stx     004h              ; 2AD2  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 2AD4  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2AD4  CD 40 FB (6)   Õ@˚
           bra     mot2AEA           ; 2AD7  20 11    (3)    .
 mot2AD9:  brclr3  0BBh, mot2AE5     ; 2AD9  07 BB 09 (5)   .ª.
           lda     mot0226           ; 2ADC  C6 02 26 (4)   ∆.&
@@ -3300,7 +3343,7 @@ mot2AF6:  ldx     #007h             ; 2AF6  AE 07    (2)   Æ.
           and     #0FDh             ; 2B01  A4 FD    (2)   §˝
           ldx     #00Bh             ; 2B03  AE 0B    (2)   Æ.
           stx     004h              ; 2B05  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 2B07  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2B07  CD 40 FB (6)   Õ@˚
           brclr7  0B3h, mot2B10     ; 2B0A  0F B3 03 (5)   .≥.
           jsr     mot2B46           ; 2B0D  CD 2B 46 (6)   Õ+F
 mot2B10:  brclr6  0B3h, mot2B16     ; 2B10  0D B3 03 (5)   .≥.
@@ -3322,21 +3365,21 @@ mot2B34:  lda     0B3h              ; 2B34  B6 B3    (3)   ∂≥
           stx     004h              ; 2B3C  BF 04    (4)   ø.
           lda     #0DEh             ; 2B3E  A6 DE    (2)   ¶ﬁ
           sta     0B8h              ; 2B40  B7 B8    (4)   ∑∏
-          jsr     write_data_bus           ; 2B42  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2B42  CD 40 FB (6)   Õ@˚
           rts                       ; 2B45  81       (6)   Å
 mot2B46:  ldx     #004h             ; 2B46  AE 04    (2)   Æ.
           stx     004h              ; 2B48  BF 04    (4)   ø.
           lda     #023h             ; 2B4A  A6 23    (2)   ¶#
           sta     0A0h              ; 2B4C  B7 A0    (4)   ∑†
-          jsr     write_data_bus           ; 2B4E  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2B4E  CD 40 FB (6)   Õ@˚
           inc     004h              ; 2B51  3C 04    (5)   <.
           lda     #05Dh             ; 2B53  A6 5D    (2)   ¶]
           sta     0A1h              ; 2B55  B7 A1    (4)   ∑°
-          jsr     write_data_bus           ; 2B57  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2B57  CD 40 FB (6)   Õ@˚
           inc     004h              ; 2B5A  3C 04    (5)   <.
           lda     #000h             ; 2B5C  A6 00    (2)   ¶.
           sta     0A2h              ; 2B5E  B7 A2    (4)   ∑¢
-          jsr     write_data_bus           ; 2B60  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 2B60  CD 40 FB (6)   Õ@˚
           rts                       ; 2B63  81       (6)   Å
 mot2B64:  brset6  050h, mot2B6A     ; 2B64  0C 50 03 (5)   .P.
           jsr     mot4073           ; 2B67  CD 40 73 (6)   Õ@s
@@ -3557,8 +3600,11 @@ mot2D41:  clra                      ; 2D41  4F       (3)   O
           sta     mot0225           ; 2D45  C7 02 25 (5)   «.%
           sta     mot0226           ; 2D48  C7 02 26 (5)   «.&
           sta     mot0227           ; 2D4B  C7 02 27 (5)   «.'
-          rts                       ; 2D4E  81       (6)   Å
-mot2D4F:  rts                       ; 2D4F  81       (6)   Å
+return;
+
+mot2D4F:
+return;
+
 mot2D50:  ldx     #011h             ; 2D50  AE 11    (2)   Æ.
           stx     004h              ; 2D52  BF 04    (4)   ø.
           jsr     mot40EF           ; 2D54  CD 40 EF (6)   Õ@Ô
@@ -3997,7 +4043,7 @@ mot3165:  bset1   040h              ; 3165  12 40    (5)   .@
 mot316D:  ldx     #007h             ; 316D  AE 07    (2)   Æ.
           stx     004h              ; 316F  BF 04    (4)   ø.
           lda     0B7h              ; 3171  B6 B7    (3)   ∂∑
-          jmp     write_data_bus           ; 3173  CC 40 FB (3)   Ã@˚
+          jmp     send_8bit_to_cd_controller_mcd           ; 3173  CC 40 FB (3)   Ã@˚
 mot3176:  jsr     mot317C           ; 3176  CD 31 7C (6)   Õ1|
           jmp     mot3BC3           ; 3179  CC 3B C3 (3)   Ã;√
 mot317C:  bclr1   040h              ; 317C  13 40    (5)   .@
@@ -4050,7 +4096,7 @@ mot31D6:  lda     mot01F0           ; 31D6  C6 01 F0 (4)   ∆.
           stx     004h              ; 31EE  BF 04    (4)   ø.
           ldx     #000h             ; 31F0  AE 00    (2)   Æ.
 mot31F2:  lda     001F0h, X         ; 31F2  D6 01 F0 (5)   ÷.
-          jsr     write_data_bus           ; 31F5  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 31F5  CD 40 FB (6)   Õ@˚
           incx                      ; 31F8  5C       (3)   \
           txa                       ; 31F9  9F       (2)   ü
           cmp     #005h             ; 31FA  A1 05    (2)   °.
@@ -4072,7 +4118,7 @@ mot3206:  lda     00211h, X         ; 3206  D6 02 11 (5)   ÷..
           stx     004h              ; 3223  BF 04    (4)   ø.
           ldx     #000h             ; 3225  AE 00    (2)   Æ.
 mot3227:  lda     001F0h, X         ; 3227  D6 01 F0 (5)   ÷.
-          jsr     write_data_bus           ; 322A  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 322A  CD 40 FB (6)   Õ@˚
           incx                      ; 322D  5C       (3)   \
           txa                       ; 322E  9F       (2)   ü
           cmp     #008h             ; 322F  A1 08    (2)   °.
@@ -4089,7 +4135,7 @@ mot323E:  lda     00220h, X         ; 323E  D6 02 20 (5)   ÷.
           stx     004h              ; 3249  BF 04    (4)   ø.
           ldx     #000h             ; 324B  AE 00    (2)   Æ.
 mot324D:  lda     001F0h, X         ; 324D  D6 01 F0 (5)   ÷.
-          jsr     write_data_bus           ; 3250  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3250  CD 40 FB (6)   Õ@˚
           incx                      ; 3253  5C       (3)   \
           txa                       ; 3254  9F       (2)   ü
           cmp     #008h             ; 3255  A1 08    (2)   °.
@@ -4134,11 +4180,11 @@ mot3296:  brclr7  040h, mot32CA     ; 3296  0F 40 31 (5)   .@1
           ldx     #017h             ; 32B1  AE 17    (2)   Æ.
           stx     004h              ; 32B3  BF 04    (4)   ø.
           lda     mot01F0           ; 32B5  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 32B8  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 32B8  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 32BB  C6 01 F1 (4)   ∆.Ò
-          jsr     write_data_bus           ; 32BE  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 32BE  CD 40 FB (6)   Õ@˚
           lda     mot01F2           ; 32C1  C6 01 F2 (4)   ∆.Ú
-          jsr     write_data_bus           ; 32C4  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 32C4  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 32C7  CC 3B D5 (3)   Ã;’
 mot32CA:  lda     #007h             ; 32CA  A6 07    (2)   ¶.
           jmp     mot3C09           ; 32CC  CC 3C 09 (3)   Ã<.
@@ -4162,11 +4208,11 @@ mot32EC:  sta     mot01F1           ; 32EC  C7 01 F1 (5)   «.Ò
           ldx     #017h             ; 32FB  AE 17    (2)   Æ.
           stx     004h              ; 32FD  BF 04    (4)   ø.
           lda     mot01F0           ; 32FF  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 3302  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3302  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 3305  C6 01 F1 (4)   ∆.Ò
-          jsr     write_data_bus           ; 3308  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3308  CD 40 FB (6)   Õ@˚
           lda     mot01F2           ; 330B  C6 01 F2 (4)   ∆.Ú
-          jsr     write_data_bus           ; 330E  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 330E  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 3311  CC 3B D5 (3)   Ã;’
 mot3314:  lda     mot01C8           ; 3314  C6 01 C8 (4)   ∆.»
           ldx     mot01C9           ; 3317  CE 01 C9 (4)   Œ.…
@@ -4285,12 +4331,12 @@ mot340F:  jmp     mot3BC3           ; 340F  CC 3B C3 (3)   Ã;√
 mot3412:  bset3   041h              ; 3412  16 41    (5)   .A
           bclr4   041h              ; 3414  19 41    (5)   .A
           lda     #0E6h             ; 3416  A6 E6    (2)   ¶Ê
-          jsr     mot4333           ; 3418  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 3418  CD 43 33 (6)   ÕC3
           jmp     mot3BC3           ; 341B  CC 3B C3 (3)   Ã;√
 mot341E:  bset3   041h              ; 341E  16 41    (5)   .A
           bset4   041h              ; 3420  18 41    (5)   .A
           lda     #0EEh             ; 3422  A6 EE    (2)   ¶Ó
-          jsr     mot4333           ; 3424  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 3424  CD 43 33 (6)   ÕC3
           jmp     mot3BC3           ; 3427  CC 3B C3 (3)   Ã;√
 mot342A:  brclr1  0BCh, mot3430     ; 342A  03 BC 03 (5)   .º.
           jsr     mot28E0           ; 342D  CD 28 E0 (6)   Õ(‡
@@ -4319,9 +4365,9 @@ mot3452:  bclr6   044h              ; 3452  1D 44    (5)   D
           ldx     #017h             ; 3468  AE 17    (2)   Æ.
           stx     004h              ; 346A  BF 04    (4)   ø.
           lda     mot01F0           ; 346C  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 346F  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 346F  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 3472  C6 01 F1 (4)   ∆.Ò
-          jsr     write_data_bus           ; 3475  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3475  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 3478  CC 3B D5 (3)   Ã;’
 mot347B:  lda     088h              ; 347B  B6 88    (3)   ∂à
           cmp     #002h             ; 347D  A1 02    (2)   °.
@@ -4336,7 +4382,7 @@ mot347B:  lda     088h              ; 347B  B6 88    (3)   ∂à
           and     #007h             ; 3492  A4 07    (2)   §.
           sta     mot01E9           ; 3494  C7 01 E9 (5)   «.È
           add     #030h             ; 3497  AB 30    (2)   ´0
-          jsr     mot4333           ; 3499  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 3499  CD 43 33 (6)   ÕC3
 mot349C:  lda     088h              ; 349C  B6 88    (3)   ∂à
           eor     #0FFh             ; 349E  A8 FF    (2)   ®ˇ
           and     #007h             ; 34A0  A4 07    (2)   §.
@@ -4345,7 +4391,7 @@ mot349C:  lda     088h              ; 349C  B6 88    (3)   ∂à
           ldx     #017h             ; 34A8  AE 17    (2)   Æ.
           stx     004h              ; 34AA  BF 04    (4)   ø.
           lda     mot01F0           ; 34AC  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 34AF  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 34AF  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 34B2  CC 3B D5 (3)   Ã;’
 mot34B5:  jmp     mot33AA           ; 34B5  CC 33 AA (3)   Ã3™
 mot34B8:  lda     088h              ; 34B8  B6 88    (3)   ∂à
@@ -4361,7 +4407,7 @@ mot34B8:  lda     088h              ; 34B8  B6 88    (3)   ∂à
           and     #007h             ; 34CF  A4 07    (2)   §.
           sta     mot01EA           ; 34D1  C7 01 EA (5)   «.Í
           add     #038h             ; 34D4  AB 38    (2)   ´8
-          jsr     mot4333           ; 34D6  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 34D6  CD 43 33 (6)   ÕC3
           bra     mot349C           ; 34D9  20 C1    (3)    ¡
 mot34DB:  lda     088h              ; 34DB  B6 88    (3)   ∂à
           cmp     #002h             ; 34DD  A1 02    (2)   °.
@@ -4385,7 +4431,7 @@ mot34F9:  lda     088h              ; 34F9  B6 88    (3)   ∂à
           ldx     #017h             ; 3505  AE 17    (2)   Æ.
           stx     004h              ; 3507  BF 04    (4)   ø.
           lda     mot01F0           ; 3509  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 350C  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 350C  CD 40 FB (6)   Õ@˚
           jsr     mot3BD5           ; 350F  CD 3B D5 (6)   Õ;’
           jmp     mot27BD           ; 3512  CC 27 BD (3)   Ã'Ω
 mot3515:  jmp     mot33AA           ; 3515  CC 33 AA (3)   Ã3™
@@ -4401,13 +4447,13 @@ mot3518:  lda     088h              ; 3518  B6 88    (3)   ∂à
           tax                       ; 352A  97       (2)   ó
           lda     0354Ch, X         ; 352B  D6 35 4C (5)   ÷5L
           bclr7   003h              ; 352E  1F 03    (5)   .
-mot3530:  jsr     mot4333           ; 3530  CD 43 33 (6)   ÕC3
+mot3530:  jsr     send_8bit_to_cddsp           ; 3530  CD 43 33 (6)   ÕC3
           jmp     mot3BC3           ; 3533  CC 3B C3 (3)   Ã;√
 mot3536:  bset7   003h              ; 3536  1E 03    (5)   .
           lda     #000h             ; 3538  A6 00    (2)   ¶.
-          jsr     mot4333           ; 353A  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 353A  CD 43 33 (6)   ÕC3
           lda     #020h             ; 353D  A6 20    (2)   ¶
-          jsr     mot4333           ; 353F  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 353F  CD 43 33 (6)   ÕC3
           lda     #0E0h             ; 3542  A6 E0    (2)   ¶‡
           bra     mot3530           ; 3544  20 EA    (3)    Í
 mot3546:  jmp     mot33AA           ; 3546  CC 33 AA (3)   Ã3™
@@ -4449,13 +4495,13 @@ mot3588:  jsr     mot3BFB           ; 3588  CD 3B FB (6)   Õ;˚
           ldx     #017h             ; 35A3  AE 17    (2)   Æ.
           stx     004h              ; 35A5  BF 04    (4)   ø.
           lda     mot01F0           ; 35A7  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 35AA  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 35AA  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 35AD  C6 01 F1 (4)   ∆.Ò
-          jsr     write_data_bus           ; 35B0  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 35B0  CD 40 FB (6)   Õ@˚
           lda     mot01F2           ; 35B3  C6 01 F2 (4)   ∆.Ú
-          jsr     write_data_bus           ; 35B6  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 35B6  CD 40 FB (6)   Õ@˚
           lda     mot01F3           ; 35B9  C6 01 F3 (4)   ∆.Û
-          jsr     write_data_bus           ; 35BC  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 35BC  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 35BF  CC 3B D5 (3)   Ã;’
 mot35C2:  jsr     mot3BFB           ; 35C2  CD 3B FB (6)   Õ;˚
           lda     #000h             ; 35C5  A6 00    (2)   ¶.
@@ -4471,14 +4517,14 @@ mot35D5:  brclr3  001h, mot35E0     ; 35D5  07 01 08 (5)   ...
 mot35E0:  ldx     #017h             ; 35E0  AE 17    (2)   Æ.
           stx     004h              ; 35E2  BF 04    (4)   ø.
           lda     mot01F0           ; 35E4  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 35E7  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 35E7  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 35EA  CC 3B D5 (3)   Ã;’
 mot35ED:  jsr     mot3BFB           ; 35ED  CD 3B FB (6)   Õ;˚
           ldx     #017h             ; 35F0  AE 17    (2)   Æ.
           stx     004h              ; 35F2  BF 04    (4)   ø.
           clrx                      ; 35F4  5F       (3)   _
 mot35F5:  lda     03645h, X         ; 35F5  D6 36 45 (5)   ÷6E
-          jsr     write_data_bus           ; 35F8  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 35F8  CD 40 FB (6)   Õ@˚
           incx                      ; 35FB  5C       (3)   \
           cpx     #007h             ; 35FC  A3 07    (2)   £.
            bne    mot35F5           ; 35FE  26 F5    (3)   &ı
@@ -4488,7 +4534,7 @@ mot3603:  jsr     mot3BFB           ; 3603  CD 3B FB (6)   Õ;˚
           stx     004h              ; 3608  BF 04    (4)   ø.
           clrx                      ; 360A  5F       (3)   _
 mot360B:  lda     0364Ch, X         ; 360B  D6 36 4C (5)   ÷6L
-          jsr     write_data_bus           ; 360E  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 360E  CD 40 FB (6)   Õ@˚
           incx                      ; 3611  5C       (3)   \
           cpx     #009h             ; 3612  A3 09    (2)   £.
            bne    mot360B           ; 3614  26 F5    (3)   &ı
@@ -4498,7 +4544,7 @@ mot3619:  jsr     mot3BFB           ; 3619  CD 3B FB (6)   Õ;˚
           stx     004h              ; 361E  BF 04    (4)   ø.
           clrx                      ; 3620  5F       (3)   _
 mot3621:  lda     03655h, X         ; 3621  D6 36 55 (5)   ÷6U
-          jsr     write_data_bus           ; 3624  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3624  CD 40 FB (6)   Õ@˚
           incx                      ; 3627  5C       (3)   \
           cpx     #008h             ; 3628  A3 08    (2)   £.
            bne    mot3621           ; 362A  26 F5    (3)   &ı
@@ -4508,7 +4554,7 @@ mot362F:  jsr     mot3BFB           ; 362F  CD 3B FB (6)   Õ;˚
           stx     004h              ; 3634  BF 04    (4)   ø.
           clrx                      ; 3636  5F       (3)   _
 mot3637:  lda     0365Dh, X         ; 3637  D6 36 5D (5)   ÷6]
-          jsr     write_data_bus           ; 363A  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 363A  CD 40 FB (6)   Õ@˚
           incx                      ; 363D  5C       (3)   \
           cpx     #009h             ; 363E  A3 09    (2)   £.
            bne    mot3637           ; 3640  26 F5    (3)   &ı
@@ -4657,9 +4703,9 @@ mot3745:  lda     088h              ; 3745  B6 88    (3)   ∂à
           ldx     #017h             ; 3760  AE 17    (2)   Æ.
           stx     004h              ; 3762  BF 04    (4)   ø.
           lda     mot01F0           ; 3764  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 3767  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3767  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 376A  C6 01 F1 (4)   ∆.Ò
-          jsr     write_data_bus           ; 376D  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 376D  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 3770  CC 3B D5 (3)   Ã;’
 mot3773:  jmp     mot33AA           ; 3773  CC 33 AA (3)   Ã3™
 mot3776:  lda     mot01E1           ; 3776  C6 01 E1 (4)   ∆.·
@@ -4684,7 +4730,7 @@ mot378F:  lda     088h              ; 378F  B6 88    (3)   ∂à
           lda     mot01E2           ; 37A3  C6 01 E2 (4)   ∆.‚
           jmp     mot431D           ; 37A6  CC 43 1D (3)   ÃC
 mot37A9:  lda     mot01E2           ; 37A9  C6 01 E2 (4)   ∆.‚
-          jmp     mot4333           ; 37AC  CC 43 33 (3)   ÃC3
+          jmp     send_8bit_to_cddsp           ; 37AC  CC 43 33 (3)   ÃC3
 mot37AF:  lda     mot01E3           ; 37AF  C6 01 E3 (4)   ∆.„
           sta     088h              ; 37B2  B7 88    (4)   ∑à
           lda     mot01E2           ; 37B4  C6 01 E2 (4)   ∆.‚
@@ -4726,7 +4772,7 @@ mot37F8:  sta     mot01F0           ; 37F8  C7 01 F0 (5)   «.
           ldx     #017h             ; 37FE  AE 17    (2)   Æ.
           stx     004h              ; 3800  BF 04    (4)   ø.
           lda     mot01F0           ; 3802  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 3805  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3805  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 3808  CC 3B D5 (3)   Ã;’
 mot380B:  jmp     mot33AA           ; 380B  CC 33 AA (3)   Ã3™
 mot380E:  lda     mot01E1           ; 380E  C6 01 E1 (4)   ∆.·
@@ -4764,7 +4810,7 @@ mot384C:  ldx     mot01E2           ; 384C  CE 01 E2 (4)   Œ.‚
           ldx     #017h             ; 385A  AE 17    (2)   Æ.
           stx     004h              ; 385C  BF 04    (4)   ø.
           lda     mot01F0           ; 385E  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 3861  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3861  CD 40 FB (6)   Õ@˚
           jmp     mot3BD5           ; 3864  CC 3B D5 (3)   Ã;’
 mot3867:  lda     088h              ; 3867  B6 88    (3)   ∂à
           cmp     #003h             ; 3869  A1 03    (2)   °.
@@ -4773,7 +4819,7 @@ mot3867:  lda     088h              ; 3867  B6 88    (3)   ∂à
 mot3870:  ldx     mot01E2           ; 3870  CE 01 E2 (4)   Œ.‚
           stx     004h              ; 3873  BF 04    (4)   ø.
           lda     mot01E3           ; 3875  C6 01 E3 (4)   ∆.„
-          jsr     write_data_bus           ; 3878  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3878  CD 40 FB (6)   Õ@˚
           jmp     mot3BC3           ; 387B  CC 3B C3 (3)   Ã;√
 mot387E:  lda     088h              ; 387E  B6 88    (3)   ∂à
           cmp     #003h             ; 3880  A1 03    (2)   °.
@@ -4793,7 +4839,7 @@ mot3888:  txa                       ; 3888  9F       (2)   ü
           stx     004h              ; 389F  BF 04    (4)   ø.
           clrx                      ; 38A1  5F       (3)   _
 mot38A2:  lda     001F0h, X         ; 38A2  D6 01 F0 (5)   ÷.
-          jsr     write_data_bus           ; 38A5  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 38A5  CD 40 FB (6)   Õ@˚
           incx                      ; 38A8  5C       (3)   \
           cpx     mot01E3           ; 38A9  C3 01 E3 (4)   √.„
            bne    mot38A2           ; 38AC  26 F4    (3)   &Ù
@@ -4808,7 +4854,7 @@ mot38BE:  txa                       ; 38BE  9F       (2)   ü
           add     mot01E2           ; 38BF  CB 01 E2 (4)   À.‚
           sta     004h              ; 38C2  B7 04    (4)   ∑.
           lda     001E4h, X         ; 38C4  D6 01 E4 (5)   ÷.‰
-          jsr     write_data_bus           ; 38C7  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 38C7  CD 40 FB (6)   Õ@˚
           incx                      ; 38CA  5C       (3)   \
           cpx     mot01E3           ; 38CB  C3 01 E3 (4)   √.„
            bne    mot38BE           ; 38CE  26 EE    (3)   &Ó
@@ -4820,7 +4866,7 @@ mot38D3:  lda     088h              ; 38D3  B6 88    (3)   ∂à
 mot38DC:  ldx     #003h             ; 38DC  AE 03    (2)   Æ.
           stx     004h              ; 38DE  BF 04    (4)   ø.
           lda     #008h             ; 38E0  A6 08    (2)   ¶.
-          jsr     write_data_bus           ; 38E2  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 38E2  CD 40 FB (6)   Õ@˚
           ldx     #00Ah             ; 38E5  AE 0A    (2)   Æ.
           stx     004h              ; 38E7  BF 04    (4)   ø.
           jsr     mot40EF           ; 38E9  CD 40 EF (6)   Õ@Ô
@@ -4842,7 +4888,7 @@ mot38DC:  ldx     #003h             ; 38DC  AE 03    (2)   Æ.
           stx     004h              ; 390F  BF 04    (4)   ø.
           clrx                      ; 3911  5F       (3)   _
 mot3912:  lda     001F0h, X         ; 3912  D6 01 F0 (5)   ÷.
-          jsr     write_data_bus           ; 3915  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3915  CD 40 FB (6)   Õ@˚
           incx                      ; 3918  5C       (3)   \
           cpx     #004h             ; 3919  A3 04    (2)   £.
            bcs    mot3912           ; 391B  25 F5    (3)   %ı
@@ -4854,23 +4900,23 @@ mot3920:  lda     088h              ; 3920  B6 88    (3)   ∂à
 mot3929:  ldx     #003h             ; 3929  AE 03    (2)   Æ.
           stx     004h              ; 392B  BF 04    (4)   ø.
           lda     #008h             ; 392D  A6 08    (2)   ¶.
-          jsr     write_data_bus           ; 392F  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 392F  CD 40 FB (6)   Õ@˚
           ldx     #00Ch             ; 3932  AE 0C    (2)   Æ.
           stx     004h              ; 3934  BF 04    (4)   ø.
           lda     mot01E2           ; 3936  C6 01 E2 (4)   ∆.‚
-          jsr     write_data_bus           ; 3939  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3939  CD 40 FB (6)   Õ@˚
           incx                      ; 393C  5C       (3)   \
           stx     004h              ; 393D  BF 04    (4)   ø.
           lda     mot01E3           ; 393F  C6 01 E3 (4)   ∆.„
-          jsr     write_data_bus           ; 3942  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3942  CD 40 FB (6)   Õ@˚
           incx                      ; 3945  5C       (3)   \
           stx     004h              ; 3946  BF 04    (4)   ø.
           lda     mot01E4           ; 3948  C6 01 E4 (4)   ∆.‰
-          jsr     write_data_bus           ; 394B  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 394B  CD 40 FB (6)   Õ@˚
           incx                      ; 394E  5C       (3)   \
           stx     004h              ; 394F  BF 04    (4)   ø.
           lda     mot01E5           ; 3951  C6 01 E5 (4)   ∆.Â
-          jsr     write_data_bus           ; 3954  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3954  CD 40 FB (6)   Õ@˚
           jmp     mot3BC3           ; 3957  CC 3B C3 (3)   Ã;√
 mot395A:  lda     088h              ; 395A  B6 88    (3)   ∂à
           cmp     #002h             ; 395C  A1 02    (2)   °.
@@ -5188,7 +5234,7 @@ mot3BC3:  bsr     mot3BFB           ; 3BC3  AD 36    (6)   ≠6
           sta     mot01F0           ; 3BCB  C7 01 F0 (5)   «.
           ldx     #017h             ; 3BCE  AE 17    (2)   Æ.
           stx     004h              ; 3BD0  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 3BD2  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3BD2  CD 40 FB (6)   Õ@˚
 mot3BD5:  jsr     mot3BDE           ; 3BD5  CD 3B DE (6)   Õ;ﬁ
           jsr     mot3BED           ; 3BD8  CD 3B ED (6)   Õ;Ì
           jmp     mot40C6           ; 3BDB  CC 40 C6 (3)   Ã@∆
@@ -5198,19 +5244,19 @@ mot3BDE:  lda     0B3h              ; 3BDE  B6 B3    (3)   ∂≥
           lda     #002h             ; 3BE4  A6 02    (2)   ¶.
           ldx     #00Bh             ; 3BE6  AE 0B    (2)   Æ.
           stx     004h              ; 3BE8  BF 04    (4)   ø.
-          jmp     write_data_bus           ; 3BEA  CC 40 FB (3)   Ã@˚
+          jmp     send_8bit_to_cd_controller_mcd           ; 3BEA  CC 40 FB (3)   Ã@˚
 mot3BED:  bset6   0BAh              ; 3BED  1C BA    (5)   ∫
           ldx     #00Ah             ; 3BEF  AE 0A    (2)   Æ.
           stx     004h              ; 3BF1  BF 04    (4)   ø.
           lda     0BAh              ; 3BF3  B6 BA    (3)   ∂∫
-          jsr     write_data_bus           ; 3BF5  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3BF5  CD 40 FB (6)   Õ@˚
           bclr6   0BAh              ; 3BF8  1D BA    (5)   ∫
           rts                       ; 3BFA  81       (6)   Å
 mot3BFB:  bset5   0BAh              ; 3BFB  1A BA    (5)   .∫
           ldx     #00Ah             ; 3BFD  AE 0A    (2)   Æ.
           stx     004h              ; 3BFF  BF 04    (4)   ø.
           lda     0BAh              ; 3C01  B6 BA    (3)   ∂∫
-          jsr     write_data_bus           ; 3C03  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3C03  CD 40 FB (6)   Õ@˚
           bclr5   0BAh              ; 3C06  1B BA    (5)   .∫
           rts                       ; 3C08  81       (6)   Å
 mot3C09:  ldx     #000h             ; 3C09  AE 00    (2)   Æ.
@@ -5250,9 +5296,9 @@ mot3C55:  jsr     mot3BFB           ; 3C55  CD 3B FB (6)   Õ;˚
           ldx     #017h             ; 3C58  AE 17    (2)   Æ.
           stx     004h              ; 3C5A  BF 04    (4)   ø.
           lda     mot01F0           ; 3C5C  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 3C5F  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3C5F  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 3C62  C6 01 F1 (4)   ∆.Ò
-          jmp     write_data_bus           ; 3C65  CC 40 FB (3)   Ã@˚
+          jmp     send_8bit_to_cd_controller_mcd           ; 3C65  CC 40 FB (3)   Ã@˚
 mot3C68:  jsr     mot4205           ; 3C68  CD 42 05 (6)   ÕB.
           jmp     mot1000           ; 3C6B  CC 10 00 (3)   Ã..
 mot3C6E:  lda     06Dh              ; 3C6E  B6 6D    (3)   ∂m
@@ -5633,10 +5679,10 @@ mot3F91:  brclr2  046h, mot3FD1     ; 3F91  05 46 3D (5)   .F=
 mot3FA5:  ldx     #00Eh             ; 3FA5  AE 0E    (2)   Æ.
           stx     004h              ; 3FA7  BF 04    (4)   ø.
           lda     0A6h              ; 3FA9  B6 A6    (3)   ∂¶
-          jsr     write_data_bus           ; 3FAB  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3FAB  CD 40 FB (6)   Õ@˚
           inc     004h              ; 3FAE  3C 04    (5)   <.
           lda     0A7h              ; 3FB0  B6 A7    (3)   ∂ß
-          jsr     write_data_bus           ; 3FB2  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3FB2  CD 40 FB (6)   Õ@˚
           bclr7   0A9h              ; 3FB5  1F A9    (5)   ©
           brset3  046h, mot3FBC     ; 3FB7  06 46 02 (5)   .F.
           bset7   0A9h              ; 3FBA  1E A9    (5)   ©
@@ -5644,10 +5690,10 @@ mot3FBC:  bset6   0A9h              ; 3FBC  1C A9    (5)   ©
           ldx     #00Ch             ; 3FBE  AE 0C    (2)   Æ.
           stx     004h              ; 3FC0  BF 04    (4)   ø.
           lda     0A8h              ; 3FC2  B6 A8    (3)   ∂®
-          jsr     write_data_bus           ; 3FC4  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3FC4  CD 40 FB (6)   Õ@˚
           inc     004h              ; 3FC7  3C 04    (5)   <.
           lda     0A9h              ; 3FC9  B6 A9    (3)   ∂©
-          jsr     write_data_bus           ; 3FCB  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 3FCB  CD 40 FB (6)   Õ@˚
           bset3   0B5h              ; 3FCE  16 B5    (5)   .µ
           rts                       ; 3FD0  81       (6)   Å
 mot3FD1:  bset3   0BCh              ; 3FD1  16 BC    (5)   .º
@@ -5674,14 +5720,14 @@ mot3FD6:  ldx     #011h             ; 3FD6  AE 11    (2)   Æ.
           ldx     #017h             ; 4002  AE 17    (2)   Æ.
           stx     004h              ; 4004  BF 04    (4)   ø.
           lda     mot01F0           ; 4006  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 4009  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4009  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 400C  C6 01 F1 (4)   ∆.Ò
-          jsr     write_data_bus           ; 400F  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 400F  CD 40 FB (6)   Õ@˚
           bra     mot401E           ; 4012  20 0A    (3)    .
 mot4014:  ldx     #017h             ; 4014  AE 17    (2)   Æ.
           stx     004h              ; 4016  BF 04    (4)   ø.
           lda     mot01F0           ; 4018  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 401B  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 401B  CD 40 FB (6)   Õ@˚
 mot401E:  bclr0   045h              ; 401E  11 45    (5)   .E
           jsr     mot40B4           ; 4020  CD 40 B4 (6)   Õ@¥
 mot4023:  rts                       ; 4023  81       (6)   Å
@@ -5691,35 +5737,52 @@ mot4024:  jsr     mot4222           ; 4024  CD 42 22 (6)   ÕB"
           jsr     mot29C6           ; 402C  CD 29 C6 (6)   Õ)∆
 mot402F:  bclr0   048h              ; 402F  11 48    (5)   .H
           rts                       ; 4031  81       (6)   Å
-mot4032:  brclr4  0B7h, mot4072     ; 4032  09 B7 3D (5)   .∑=
-          lda     #089h             ; 4035  A6 89    (2)   ¶â
+
+
+
+////////////////////////////////
+// mot4032
+
+          brclr4  0B7h, mot4072     ; 4032  09 B7 3D (5)   .∑=
+
+A = 0x89;
+
           ldx     #080h             ; 4037  AE 80    (2)   ÆÄ
           stx     088h              ; 4039  BF 88    (4)   øà
+
           jsr     mot432B           ; 403B  CD 43 2B (6)   ÕC+
+
           ldx     #003h             ; 403E  AE 03    (2)   Æ.
           stx     004h              ; 4040  BF 04    (4)   ø.
           lda     #008h             ; 4042  A6 08    (2)   ¶.
-          jsr     write_data_bus           ; 4044  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
+
           ldx     #010h             ; 4047  AE 10    (2)   Æ.
           stx     004h              ; 4049  BF 04    (4)   ø.
           lda     #000h             ; 404B  A6 00    (2)   ¶.
-          jsr     write_data_bus           ; 404D  CD 40 FB (6)   Õ@˚
+
+send_8bit_to_cd_controller_mcd();
           inc     004h              ; 4050  3C 04    (5)   <.
-          jsr     write_data_bus           ; 4052  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           inc     004h              ; 4055  3C 04    (5)   <.
-          jsr     write_data_bus           ; 4057  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
           lda     #00Dh             ; 405A  A6 0D    (2)   ¶.
           sta     0B6h              ; 405C  B7 B6    (4)   ∑∂
           bclr4   0B7h              ; 405E  19 B7    (5)   .∑
           ldx     #007h             ; 4060  AE 07    (2)   Æ.
           stx     004h              ; 4062  BF 04    (4)   ø.
           lda     0B7h              ; 4064  B6 B7    (3)   ∂∑
-          jsr     write_data_bus           ; 4066  CD 40 FB (6)   Õ@˚
+send_8bit_to_cd_controller_mcd();
+
           ldx     #003h             ; 4069  AE 03    (2)   Æ.
           stx     004h              ; 406B  BF 04    (4)   ø.
           lda     0B6h              ; 406D  B6 B6    (3)   ∂∂
-          jsr     write_data_bus           ; 406F  CD 40 FB (6)   Õ@˚
-mot4072:  rts                       ; 4072  81       (6)   Å
+send_8bit_to_cd_controller_mcd();
+mot4072:
+return;
+
+
+
 mot4073:  brset4  0B7h, mot40B3     ; 4073  08 B7 3D (5)   .∑=
           lda     #081h             ; 4076  A6 81    (2)   ¶Å
           ldx     #080h             ; 4078  AE 80    (2)   ÆÄ
@@ -5731,23 +5794,23 @@ mot4073:  brset4  0B7h, mot40B3     ; 4073  08 B7 3D (5)   .∑=
           lda     #008h             ; 4085  A6 08    (2)   ¶.
           ldx     #003h             ; 4087  AE 03    (2)   Æ.
           stx     004h              ; 4089  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 408B  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 408B  CD 40 FB (6)   Õ@˚
           ldx     #010h             ; 408E  AE 10    (2)   Æ.
           stx     004h              ; 4090  BF 04    (4)   ø.
           lda     #000h             ; 4092  A6 00    (2)   ¶.
-          jsr     write_data_bus           ; 4094  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4094  CD 40 FB (6)   Õ@˚
           inc     004h              ; 4097  3C 04    (5)   <.
-          jsr     write_data_bus           ; 4099  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4099  CD 40 FB (6)   Õ@˚
           inc     004h              ; 409C  3C 04    (5)   <.
-          jsr     write_data_bus           ; 409E  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 409E  CD 40 FB (6)   Õ@˚
           ldx     #007h             ; 40A1  AE 07    (2)   Æ.
           stx     004h              ; 40A3  BF 04    (4)   ø.
           lda     0B7h              ; 40A5  B6 B7    (3)   ∂∑
-          jsr     write_data_bus           ; 40A7  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 40A7  CD 40 FB (6)   Õ@˚
           ldx     #003h             ; 40AA  AE 03    (2)   Æ.
           stx     004h              ; 40AC  BF 04    (4)   ø.
           lda     0B6h              ; 40AE  B6 B6    (3)   ∂∂
-          jsr     write_data_bus           ; 40B0  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 40B0  CD 40 FB (6)   Õ@˚
 mot40B3:  rts                       ; 40B3  81       (6)   Å
 mot40B4:  bset0   0B9h              ; 40B4  10 B9    (5)   .π
           bclr1   0B9h              ; 40B6  13 B9    (5)   .π
@@ -5773,7 +5836,7 @@ mot40E1:  lda     0B9h              ; 40E1  B6 B9    (3)   ∂π
           and     #007h             ; 40E3  A4 07    (2)   §.
           ldx     #016h             ; 40E5  AE 16    (2)   Æ.
           stx     004h              ; 40E7  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 40E9  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 40E9  CD 40 FB (6)   Õ@˚
           clr     0B9h              ; 40EC  3F B9    (5)   ?π
           rts                       ; 40EE  81       (6)   Å
 mot40EF:  bclr4   003h              ; 40EF  19 03    (5)   ..
@@ -5787,9 +5850,7 @@ mot40EF:  bclr4   003h              ; 40EF  19 03    (5)   ..
 
 
 ////////////////////////////////
-// write_data_bus()
-
-write_byte = A;
+// send_8bit_to_cd_controller_mcd()
 
 CCR(I) = 1;
 [ 0x3e ] |= 0x01; // set OPTM = 1
@@ -5797,7 +5858,7 @@ CCR(I) = 1;
 [ 0x3e ] &= 0x01; // unset OPTM = 1
 CCR(I) = 0;
 
-[ 0x00 ] = write_byte; // databus DECD0-7
+[ 0x00 ] = A; // databus DECD0-7
 [ 0x03 ] &= 0x30; // set DECCS and DECWR pin (write data byte)
 [ 0x03 ] |= 0x30;
 
@@ -5909,43 +5970,65 @@ mot41D0:  lda     #040h             ; 41D0  A6 40    (2)   ¶@
           lda     #002h             ; 41D7  A6 02    (2)   ¶.
 mot41D9:  jsr     mot46E6           ; 41D9  CD 46 E6 (6)   ÕFÊ
            bne    mot41D9           ; 41DC  26 FB    (3)   &˚
-          rts                       ; 41DE  81       (6)   Å
+return;
+
 mot41DF:  jsr     mot4218           ; 41DF  CD 42 18 (6)   ÕB.
-mot41E2:  lda     #03Fh             ; 41E2  A6 3F    (2)   ¶?
-          jsr     mot4333           ; 41E4  CD 43 33 (6)   ÕC3
-          lda     #030h             ; 41E7  A6 30    (2)   ¶0
-          jsr     mot4333           ; 41E9  CD 43 33 (6)   ÕC3
-          lda     #000h             ; 41EC  A6 00    (2)   ¶.
-          sta     mot01E9           ; 41EE  C7 01 E9 (5)   «.È
-A = 0x00;
-          sta     mot01EA           ; 41F3  C7 01 EA (5)   «.Í
+mot41E2:
+
+A0 = 0x3f;
+send_8bit_to_cddsp();
+
+A0 = 0x30;
+send_8bit_to_cddsp();
+
+[ 0x1e9 ] = 0x00;
+[ 0x1ea ] = 0x00;
+
           bclr0   04Ah              ; 41F6  11 4A    (5)   .J
-          rts                       ; 41F8  81       (6)   Å
-mot41F9:  lda     #0D7h             ; 41F9  A6 D7    (2)   ¶◊
-          jsr     mot4333           ; 41FB  CD 43 33 (6)   ÕC3
+return;
+
+mot41F9:
+
+A = 0xd7; // CLV Ctrl
+send_8bit_to_cddsp();
+
 A = 0xc6;
           clr     088h              ; 4200  3F 88    (5)   ?à
           jmp     mot432B           ; 4202  CC 43 2B (3)   ÃC+
-mot4205:  lda     #0E0h             ; 4205  A6 E0    (2)   ¶‡
-          jsr     mot4333           ; 4207  CD 43 33 (6)   ÕC3
-mot420A:  bset7   003h              ; 420A  1E 03    (5)   .
+
+mot4205:
+A0 = 0xe0;
+send_8bit_to_cddsp();
+
+
+mot420A:
+          bset7   003h              ; 420A  1E 03    (5)   .
           clr     068h              ; 420C  3F 68    (5)   ?h
 A = 0x00;
-          jsr     mot4333           ; 4210  CD 43 33 (6)   ÕC3
+send_8bit_to_cddsp();
+
 A = 0x20;
-          jmp     mot4333           ; 4215  CC 43 33 (3)   ÃC3
-mot4218:  lda     #008h             ; 4218  A6 08    (2)   ¶.
-          jmp     mot4333           ; 421A  CC 43 33 (3)   ÃC3
-mot421D:  lda     #00Ch             ; 421D  A6 0C    (2)   ¶.
-          jmp     mot4333           ; 421F  CC 43 33 (3)   ÃC3
-mot4222:  bset3   040h              ; 4222  16 40    (5)   .@
+send_8bit_to_cddsp();
+
+mot4218:
+A0 = 0x08;
+send_8bit_to_cddsp();
+
+mot421D:
+A0 = 0x0c;
+send_8bit_to_cddsp();
+
+mot4222:
+          set3   040h              ; 4222  16 40    (5)   .@
+
+[ 0xb7 ] = [ 0xb7 ] | 0x20;
+mot422A:
+
+[ 0x04 ] = 0x07;
+
 A = [ 0xb7 ];
-          ora     #020h             ; 4226  AA 20    (2)   ™
-[ 0xb7 ] = A;
-mot422A:  ldx     #007h             ; 422A  AE 07    (2)   Æ.
-          stx     004h              ; 422C  BF 04    (4)   ø.
-          lda     0B7h              ; 422E  B6 B7    (3)   ∂∑
-          jmp     write_data_bus           ; 4230  CC 40 FB (3)   Ã@˚
+send_8bit_to_cd_controller_mcd();
+return;
 
 mot4233:  brset1  040h, mot4222     ; 4233  02 40 EC (5)   .@Ï
           brclr6  050h, mot423C     ; 4236  0D 50 03 (5)   .P.
@@ -6004,7 +6087,7 @@ mot42A4:  lda     #0BBh             ; 42A4  A6 BB    (2)   ¶ª
           lda     #001h             ; 42B4  A6 01    (2)   ¶.
           sta     06Ch              ; 42B6  B7 6C    (4)   ∑l
           lda     #002h             ; 42B8  A6 02    (2)   ¶.
-          jmp     mot4333           ; 42BA  CC 43 33 (3)   ÃC3
+          jmp     send_8bit_to_cddsp           ; 42BA  CC 43 33 (3)   ÃC3
 mot42BD:  rts                       ; 42BD  81       (6)   Å
 mot42BE:  brset6  042h, mot42EE     ; 42BE  0C 42 2D (5)   .B-
           jsr     mot41D0           ; 42C1  CD 41 D0 (6)   ÕA–
@@ -6051,37 +6134,57 @@ mot4312:  lda     #0E6h             ; 4312  A6 E6    (2)   ¶Ê
 mot431C:  rts                       ; 431C  81       (6)   Å
 mot431D:  sta     08Ah              ; 431D  B7 8A    (4)   ∑ä
           lda     089h              ; 431F  B6 89    (3)   ∂â
-          bsr     mot4341           ; 4321  AD 1E    (6)   ≠
+          bsr     write_8bit_to_cddsp_data           ; 4321  AD 1E    (6)   ≠
           lda     088h              ; 4323  B6 88    (3)   ∂à
-          bsr     mot4341           ; 4325  AD 1A    (6)   ≠.
+          bsr     write_8bit_to_cddsp_data           ; 4325  AD 1A    (6)   ≠.
           lda     08Ah              ; 4327  B6 8A    (3)   ∂ä
-          bra     mot4333           ; 4329  20 08    (3)    .
-mot432B:  sta     08Ah              ; 432B  B7 8A    (4)   ∑ä
+          bra     send_8bit_to_cddsp           ; 4329  20 08    (3)    .
+
+mot432B:
+          sta     08Ah              ; 432B  B7 8A    (4)   ∑ä
           lda     088h              ; 432D  B6 88    (3)   ∂à
-          bsr     mot4341           ; 432F  AD 10    (6)   ≠.
-          lda     08Ah              ; 4331  B6 8A    (3)   ∂ä
-mot4333:  bsr     mot4341           ; 4333  AD 0C    (6)   ≠.
-          nop                       ; 4335  9D       (2)   ù
-          bclr2   003h              ; 4336  15 03    (5)   ..
-          nop                       ; 4338  9D       (2)   ù
-          nop                       ; 4339  9D       (2)   ù
-          nop                       ; 433A  9D       (2)   ù
-          bset2   003h              ; 433B  14 03    (5)   ..
-          nop                       ; 433D  9D       (2)   ù
-          nop                       ; 433E  9D       (2)   ù
-          nop                       ; 433F  9D       (2)   ù
-          rts                       ; 4340  81       (6)   Å
-mot4341:  ldx     #007h             ; 4341  AE 07    (2)   Æ.
-mot4343:  bclr3   003h              ; 4343  17 03    (5)   ..
-          lsra                      ; 4345  44       (3)   D
-           bcc    mot434C           ; 4346  24 04    (3)   $.
-          bset1   003h              ; 4348  12 03    (5)   ..
-          bra     mot434E           ; 434A  20 02    (3)    .
-mot434C:  bclr1   003h              ; 434C  13 03    (5)   ..
-mot434E:  bset3   003h              ; 434E  16 03    (5)   ..
-          decx                      ; 4350  5A       (3)   Z
-           bpl    mot4343           ; 4351  2A F0    (3)   *
-          rts                       ; 4353  81       (6)   Å
+          bsr     write_8bit_to_cddsp_data           ; 432F  AD 10    (6)   ≠.
+
+A = [ 0x8a ];
+send_8bit_to_cddsp();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// send_8bit_to_cddsp()
+
+write_8bit_to_cddsp_data();
+[ 0x03 ] = [ 0x03 ] & 0xfb; // remove bit 0x04 "XLT" pin (indicate end of transfer)
+[ 0x03 ] = [ 0x03 ] | 0x04;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// write_8bit_to_cddsp_data()
+
+X = 0x07;
+while( X > 0 )
+{
+    [ 0x03 ] = [ 0x03 ] & 0xf7; // "CLK" pin
+    if( A & 1 )
+    {
+        [ 0x03 ] = [ 0x03 ] | 0x02; // "DATA" pin (serial data input)
+    }
+    else
+    {
+        [ 0x03 ] = [ 0x03 ] & 0xfd; // "DATA" pin (serial data input)
+    }
+    [ 0x03 ] = [ 0x03 ] | 0x08; // "CLK" pin
+
+    A = A >> 1;
+    X = X - 1;
+}
+////////////////////////////////
+
+
+
 mot4354:  lda     08Ah              ; 4354  B6 8A    (3)   ∂ä
           ldx     #08Dh             ; 4356  AE 8D    (2)   Æç
           jsr     mot415E           ; 4358  CD 41 5E (6)   ÕA^
@@ -6416,7 +6519,7 @@ mot45B8:  brclr6  047h, mot45DC     ; 45B8  0D 47 21 (5)   .G!
           lda     0BCh              ; 45D0  B6 BC    (3)   ∂º
           ldx     #017h             ; 45D2  AE 17    (2)   Æ.
           stx     004h              ; 45D4  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 45D6  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 45D6  CD 40 FB (6)   Õ@˚
           jmp     mot40BD           ; 45D9  CC 40 BD (3)   Ã@Ω
 mot45DC:  rts                       ; 45DC  81       (6)   Å
 mot45DD:  bclr7   047h              ; 45DD  1F 47    (5)   G
@@ -6457,21 +6560,21 @@ mot4615:  lda     091h              ; 4615  B6 91    (3)   ∂ë
           ldx     #017h             ; 4637  AE 17    (2)   Æ.
           stx     004h              ; 4639  BF 04    (4)   ø.
           lda     mot01F0           ; 463B  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 463E  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 463E  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 4641  C6 01 F1 (4)   ∆.Ò
-          jsr     write_data_bus           ; 4644  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4644  CD 40 FB (6)   Õ@˚
           lda     mot01F2           ; 4647  C6 01 F2 (4)   ∆.Ú
-          jsr     write_data_bus           ; 464A  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 464A  CD 40 FB (6)   Õ@˚
           lda     mot01F3           ; 464D  C6 01 F3 (4)   ∆.Û
-          jsr     write_data_bus           ; 4650  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4650  CD 40 FB (6)   Õ@˚
           lda     mot01F4           ; 4653  C6 01 F4 (4)   ∆.Ù
-          jsr     write_data_bus           ; 4656  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4656  CD 40 FB (6)   Õ@˚
           lda     mot01F5           ; 4659  C6 01 F5 (4)   ∆.ı
-          jsr     write_data_bus           ; 465C  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 465C  CD 40 FB (6)   Õ@˚
           lda     mot01F6           ; 465F  C6 01 F6 (4)   ∆.ˆ
-          jsr     write_data_bus           ; 4662  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4662  CD 40 FB (6)   Õ@˚
           lda     mot01F7           ; 4665  C6 01 F7 (4)   ∆.˜
-          jsr     write_data_bus           ; 4668  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4668  CD 40 FB (6)   Õ@˚
           rts                       ; 466B  81       (6)   Å
 mot466C:  bset5   047h              ; 466C  1A 47    (5)   .G
           rts                       ; 466E  81       (6)   Å
@@ -6489,7 +6592,7 @@ mot466F:  brclr5  047h, mot4696     ; 466F  0B 47 24 (5)   .G$
           ldx     #017h             ; 4689  AE 17    (2)   Æ.
           stx     004h              ; 468B  BF 04    (4)   ø.
           lda     mot01F0           ; 468D  C6 01 F0 (4)   ∆.
-          jsr     write_data_bus           ; 4690  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 4690  CD 40 FB (6)   Õ@˚
           jmp     mot40CF           ; 4693  CC 40 CF (3)   Ã@œ
 mot4696:  rts                       ; 4696  81       (6)   Å
 mot4697:  brclr4  047h, mot46E5     ; 4697  09 47 4B (5)   .GK
@@ -6518,11 +6621,11 @@ mot46C9:  jsr     mot3BFB           ; 46C9  CD 3B FB (6)   Õ;˚
           sta     mot01F0           ; 46CE  C7 01 F0 (5)   «.
           ldx     #017h             ; 46D1  AE 17    (2)   Æ.
           stx     004h              ; 46D3  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 46D5  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 46D5  CD 40 FB (6)   Õ@˚
           lda     mot01F1           ; 46D8  C6 01 F1 (4)   ∆.Ò
           ldx     #017h             ; 46DB  AE 17    (2)   Æ.
           stx     004h              ; 46DD  BF 04    (4)   ø.
-          jsr     write_data_bus           ; 46DF  CD 40 FB (6)   Õ@˚
+          jsr     send_8bit_to_cd_controller_mcd           ; 46DF  CD 40 FB (6)   Õ@˚
           jmp     mot40D8           ; 46E2  CC 40 D8 (3)   Ã@ÿ
 mot46E5:  rts                       ; 46E5  81       (6)   Å
 mot46E6:  nop                       ; 46E6  9D       (2)   ù
@@ -6919,53 +7022,69 @@ mot49B4:  comx                      ; 49B4  53       (3)   S
           ??                        ; 49B6  45       (0)   E
           ??                        ; 49B7  41       (0)   A
 mot49B8:  jsr     mot49D2           ; 49B8  CD 49 D2 (6)   ÕI“
-mot49BB:  lda     #020h             ; 49BB  A6 20    (2)   ¶
-          jsr     mot4333           ; 49BD  CD 43 33 (6)   ÕC3
-          lda     #002h             ; 49C0  A6 02    (2)   ¶.
+mot49BB:
+
+A = 0x20;
+send_8bit_to_cddsp();
+
+A = 0x02;
           jsr     mot4A1D           ; 49C2  CD 4A 1D (6)   ÕJ
-          lda     #025h             ; 49C5  A6 25    (2)   ¶%
-          jsr     mot4333           ; 49C7  CD 43 33 (6)   ÕC3
-          lda     #002h             ; 49CA  A6 02    (2)   ¶.
+
+A = 0x25;
+send_8bit_to_cddsp();
+
+A = 0x02;
           jsr     mot4A1D           ; 49CC  CD 4A 1D (6)   ÕJ
           jmp     mot49BB           ; 49CF  CC 49 BB (3)   ÃIª
 mot49D2:  bclr7   003h              ; 49D2  1F 03    (5)   .
           lda     #002h             ; 49D4  A6 02    (2)   ¶.
-          jsr     mot4333           ; 49D6  CD 43 33 (6)   ÕC3
+          jsr     send_8bit_to_cddsp           ; 49D6  CD 43 33 (6)   ÕC3
           lda     #001h             ; 49D9  A6 01    (2)   ¶.
           jsr     mot4A1D           ; 49DB  CD 4A 1D (6)   ÕJ
           lda     #047h             ; 49DE  A6 47    (2)   ¶G
           clr     088h              ; 49E0  3F 88    (5)   ?à
           jsr     mot432B           ; 49E2  CD 43 2B (6)   ÕC+
 mot49E5:  lda     #040h             ; 49E5  A6 40    (2)   ¶@
-          jsr     mot4341           ; 49E7  CD 43 41 (6)   ÕCA
+          jsr     write_8bit_to_cddsp_data           ; 49E7  CD 43 41 (6)   ÕCA
           lda     #07Dh             ; 49EA  A6 7D    (2)   ¶}
           jsr     mot46E6           ; 49EC  CD 46 E6 (6)   ÕFÊ
           brclr7  001h, mot49E5     ; 49EF  0F 01 F3 (5)   ..Û
-          lda     #008h             ; 49F2  A6 08    (2)   ¶.
-          jsr     mot4333           ; 49F4  CD 43 33 (6)   ÕC3
+
+A = 0x08;
+send_8bit_to_cddsp();
+
           jsr     mot421D           ; 49F7  CD 42 1D (6)   ÕB
-          lda     #034h             ; 49FA  A6 34    (2)   ¶4
-          jsr     mot4333           ; 49FC  CD 43 33 (6)   ÕC3
-          lda     #03Ch             ; 49FF  A6 3C    (2)   ¶<
-          jsr     mot4333           ; 4A01  CD 43 33 (6)   ÕC3
-          lda     #09Bh             ; 4A04  A6 9B    (2)   ¶õ
-          ldx     #000h             ; 4A06  AE 00    (2)   Æ.
-          stx     088h              ; 4A08  BF 88    (4)   øà
+
+A = 0x34;
+send_8bit_to_cddsp();
+
+A = 0x3c;
+send_8bit_to_cddsp();
+
+A = 0x9b;
+X = 0x00;
+[ 0x88 ] = X;
+
           jsr     mot432B           ; 4A0A  CD 43 2B (6)   ÕC+
-          lda     #0E8h             ; 4A0D  A6 E8    (2)   ¶Ë
-          jsr     mot4333           ; 4A0F  CD 43 33 (6)   ÕC3
-          ldx     #0C8h             ; 4A12  AE C8    (2)   Æ»
-          jsr     delay_x_timer2_steps           ; 4A14  CD 41 C5 (6)   ÕA≈
-          lda     #0E6h             ; 4A17  A6 E6    (2)   ¶Ê
-          jsr     mot4333           ; 4A19  CD 43 33 (6)   ÕC3
-          rts                       ; 4A1C  81       (6)   Å
+
+A0 = 0xe8;
+send_8bit_to_cddsp();
+
+X = 0xc8;
+delay_x_timer2_steps();
+
+A = 0xe6;
+send_8bit_to_cddsp();
+
+return;
+
 mot4A1D:  jsr     mot41C1           ; 4A1D  CD 41 C1 (6)   ÕA¡
           jsr     mot41C1           ; 4A20  CD 41 C1 (6)   ÕA¡
           jsr     mot41C1           ; 4A23  CD 41 C1 (6)   ÕA¡
           jsr     mot41C1           ; 4A26  CD 41 C1 (6)   ÕA¡
           deca                      ; 4A29  4A       (3)   J
            bne    mot4A1D           ; 4A2A  26 F1    (3)   &Ò
-          rts                       ; 4A2C  81       (6)   Å
+return;
 
 
 
@@ -6980,8 +7099,10 @@ motFE02:  jsr     motFF2A           ; FE02  CD FF 2A (6)   Õˇ*
 X = X + 1;
            bne    motFE02           ; FE08  26 F8    (3)   &¯
 motFE0A:  jsr     motFF2A           ; FE0A  CD FF 2A (6)   Õˇ*
-          sta     00140h, X         ; FE0D  D7 01 40 (6)   ◊.@
-          incx                      ; FE10  5C       (3)   \
+
+A = [ 0x140 + X ];
+X = X + 1;
+
            bne    motFE0A           ; FE11  26 F7    (3)   &˜
           bclr3   005h              ; FE13  17 05    (5)   ..
 motFE15:  jmp     040h              ; FE15  BC 40    (2)   º@
@@ -7039,9 +7160,9 @@ bne    motFE4A           ; FE4C  26 FC    (3)   &¸
 motFE60:
 A = [ 0x13 ];
 A = [ 0x18 ];
+[ 0xe4 ] = A;
+[ 0x16 ] = A;
 
-          sta     0E4h              ; FE64  B7 E4    (4)   ∑‰
-          sta     016h              ; FE66  B7 16    (4)   ∑.
           lda     019h              ; FE68  B6 19    (3)   ∂.
           sta     017h              ; FE6A  B7 17    (4)   ∑.
 X = 0x40;
@@ -7061,20 +7182,22 @@ motFE70:  add     #00Ah             ; FE70  AB 0A    (2)   ´.
           clra                      ; FE87  4F       (3)   O
 motFE88:
 A = 0x40;
-          sta     01Ch              ; FE8A  B7 1C    (4)   ∑
+[ 0x1c ] = A;
 X = 0x08;
-          stx     01Eh              ; FE8E  BF 1E    (4)   ø
-          stx     01Fh              ; FE90  BF 1F    (4)   ø
+[ 0x1e ] = X;
+[ 0x1f ] = X;
+
           com     01Dh              ; FE92  33 1D    (5)   3
 motFE94:  brclr6  01Dh, motFE94     ; FE94  0D 1D FD (5)   .˝
 X = 0x48;
-          stx     011h              ; FE99  BF 11    (4)   ø.
+[ 0x11 ] = X;
+
 motFE9B:  brclr7  011h, motFE9B     ; FE9B  0F 11 FD (5)   ..˝
 
 X = 0x05;
 motFEA0:
-          lda     X                 ; FEA0  F6       (3)   ˆ
-          decx                      ; FEA1  5A       (3)   Z
+A = [ X ]
+X = X - 1;
 bne    motFEA0           ; FEA2  26 FC    (3)   &¸
 
           com     003h              ; FEA4  33 03    (5)   3.
@@ -7082,7 +7205,10 @@ bne    motFEA0           ; FEA2  26 FC    (3)   &¸
           com     005h              ; FEA8  33 05    (5)   3.
           clrx                      ; FEAA  5F       (3)   _
 A = 0xff;
-motFEAD:  sta     040h, X           ; FEAD  E7 40    (5)   Á@
+motFEAD:
+
+[ 0x40 + X ] = A;
+
           cmp     040h, X           ; FEAF  E1 40    (4)   ·@
           sta     00140h, X         ; FEB1  D7 01 40 (6)   ◊.@
           cmp     00140h, X         ; FEB4  D1 01 40 (5)   —.@
@@ -7100,15 +7226,17 @@ motFEC3:  jsr     0E0h              ; FEC3  BD E0    (5)   Ω‡
            bne    motFEC3           ; FECA  26 F7    (3)   &˜
           coma                      ; FECC  43       (3)   C
 A = 0x50;
-          sta     00Ah              ; FECF  B7 0A    (4)   ∑.
-          lda     00Bh              ; FED1  B6 0B    (3)   ∂.
+[ 0x0a ] = A;
+A = [ 0x0b ];
 A = 0x55;
-          sta     00Ch              ; FED5  B7 0C    (4)   ∑.
+[ 0x0c ] = A;
 motFED7:  brset7  00Bh, motFED7     ; FED7  0E 0B FD (5)   ..˝
-          lda     00Bh              ; FEDA  B6 0B    (3)   ∂.
-          lda     00Ch              ; FEDC  B6 0C    (3)   ∂.
-          lda     00Bh              ; FEDE  B6 0B    (3)   ∂.
-          sta     00Ah              ; FEE0  B7 0A    (4)   ∑.
+
+A = [ 0x0b ];
+A = [ 0x0c ];
+A = [ 0x0b ];
+[ 0x0a ] = A;
+
           bset3   011h              ; FEE2  16 11    (5)   ..
           bset2   01Dh              ; FEE4  14 1D    (5)   .
           jmp     motFE60           ; FEE6  CC FE 60 (3)   Ã˛`
@@ -7151,8 +7279,12 @@ motFF1A:  inc     0E2h              ; FF1A  3C E2    (5)   <‚
           cmp     #050h             ; FF21  A1 50    (2)   °P
            bne    motFF27           ; FF23  26 02    (3)   &.
 A = 0xfe;
-motFF27:  sta     0E1h              ; FF27  B7 E1    (4)   ∑·
-motFF29:  rts                       ; FF29  81       (6)   Å
+motFF27:
+[ 0xe1 ] = A;
+
+motFF29:
+return;
+////////////////////////////////
 
 
 
