@@ -1,4 +1,114 @@
 ////////////////////////////////
+// func304e0()
+S0 = A0;
+if( S0 != 0 )
+{
+    part_data = w[S0 + 0];
+
+    A0 = w[part_data + 8];
+    system_memory_free();
+
+    if( hu[part_data + 0] & 0010 )
+    {
+        A0 = w[part_data + c];
+        system_memory_free();
+    }
+
+    [part_data + 8] = w(w[S0 + 4]);
+    [part_data + c] = w(w[S0 + 8]);
+
+    A0 = S0;
+    system_memory_free();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func301d8()
+part_header = A0;
+offset_1c = w[part_header + 1c];
+S4 = A1; // 0
+
+if( offset_1c == 0 )
+{
+    return 0;
+}
+
+[GP + 1a8] = h(2b);
+A0 = w[offset_1c] * 20 + 14;
+A1 = S4;
+system_memory_allocate();
+S1 = V0;
+
+[S1 + 0] = w(part_header);
+[S1 + 4] = w(w[part_header + 8]); // offset to vertex block
+[S1 + 8] = w(w[part_header + c]); // offset to additional vertex block
+[S1 + c] = w(w[offset_1c]);
+[S1 + 10] = w(S1 + 14);
+
+// allocate new vertex block
+[GP + 1a8] = h(2c);
+A0 = hu[part_header + 2] * 8;
+A1 = S4;
+system_memory_allocate();
+[part_header + 8] = w(V0);
+
+// copy vertexes to new position
+vertex_id = hu[part_header + 2] - 1;
+if( vertex_id != -1 )
+{
+    loop3028c:	; 8003028C
+        V1 = w[S1 + 4];
+        V0 = w[part_header + 8];
+        [V0 + vertex_id * 3 + 0] = h(hu[V1 + vertex_id * 3 + 0]);
+        [V0 + vertex_id * 3 + 2] = h(hu[V1 + vertex_id * 3 + 2]);
+        [V0 + vertex_id * 3 + 4] = h(hu[V1 + vertex_id * 3 + 4]);
+        vertex_id = vertex_id - 1;
+    800302D8	bne    vertex_id, -1, loop3028c [$8003028c]
+}
+
+if( hu[part_header + 0] & 0010 )
+{
+    [GP + 1a8] = h(2d);
+    A0 = hu[part_header + 2] * 8;
+    A1 = S4;
+    system_memory_allocate();
+    [part_header + c] = w(V0);
+
+    // copy vertexes to new position
+    vertex_id = hu[part_header + 2] - 1;
+    if( vertex_id != -1 )
+    {
+        loop3028c:	; 8003028C
+            V1 = w[S1 + 8];
+            V0 = w[part_header + c];
+            [V0 + vertex_id * 3 + 0] = h(hu[V1 + vertex_id * 3 + 0]);
+            [V0 + vertex_id * 3 + 2] = h(hu[V1 + vertex_id * 3 + 2]);
+            [V0 + vertex_id * 3 + 4] = h(hu[V1 + vertex_id * 3 + 4]);
+            vertex_id = vertex_id - 1;
+        800302D8	bne    vertex_id, -1, loop3028c [$8003028c]
+    }
+}
+
+if( w[S1 + c] > 0 )
+{
+    A1 = 0;
+    loop30398:	; 80030398
+        [S1 + 14 + S3 * 20 + 0] = w(8002ff5c);
+        [S1 + 14 + S3 * 20 + 4] = w(0);
+        [S1 + 14 + S3 * 20 + 8] = w(0);
+        [S1 + 14 + S3 * 20 + c] = w(0);
+        A1 = A1 + 1;
+        V0 = A1 < w[S1 + c];
+    800303B8	bne    v0, zero, loop30398 [$80030398]
+}
+return S1;
+////////////////////////////////
+
+
+
+////////////////////////////////
 L2de68:	; 8002DE68
 // A0 - must be offset ot mesh block.
 // A1 - number of polygons

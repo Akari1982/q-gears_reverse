@@ -314,7 +314,7 @@ if( A0 != 0 )
     80019B74	jal    func19dcc [$80019dcc]
 }
 
-//   main     
+//   main
 // 0 48A30180 54890580 7CF10680 00000000
 // 1 18750780 B8EA0A80 40370C80 01000000 // field
 // 2 50B50180 A4310C80 10310D80 01000000 // battle
@@ -349,7 +349,7 @@ if( w[S1 + c] != 0 )
 {
     A0 = w[S1 + 4];
     A1 = w[S1 + 8];
-    80019BE8	jal    func195f4 [$800195f4]
+    func195f4(); // set mem from A0 to A1 to zero
 
     A0 = w[80018088];
     func19a50(); // load some exe
@@ -384,9 +384,9 @@ if( w[S1 + c] != 0 )
 80019C54	jal    func195dc [$800195dc]
 
 A0 = w[S1 + 8] + 4;
-80019C60	jal    func31920 [$80031920]
+func31920();
 
-80019C68	jal    func31840 [$80031840]
+func31840();
 
 func35c84(); // clear button input
 
