@@ -1,4 +1,27 @@
 ////////////////////////////////
+// func774a0()
+
+if( w[800ad0a8] == 1 )
+{
+    if( h[800b1818] == 0 )
+    {
+        leader_entity_id = w[800b1740];
+        struct_5c_p = w[800aefe4];
+        struct_138 = w[struct_5c_p + leader_entity_id * 5c + 4c];
+
+        if( ( w[struct_138 + 0] & 00000800 ) != 0 )
+        {
+            return -1;
+        }
+    }
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func77518()
 
 if( w[80010000] != -1 )
@@ -640,28 +663,6 @@ return -1;
 
 
 ////////////////////////////////
-// func774a0()
-if( w[800ad0a8] == 1 )
-{
-    if( h[800b1818] == 0 )
-    {
-        leader_entity_id = w[800b1740];
-        struct_5c_p = w[800aefe4];
-        struct_138 = w[struct_5c_p + leader_entity_id * 5c + 4c];
-
-        if( ( w[struct_138 + 0] & 00000800 ) != 0 )
-        {
-            return -1;
-        }
-    }
-}
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func78fb0()
 func76c88(); // sync
 
@@ -676,6 +677,7 @@ system_exit_critical_section();
 
 ////////////////////////////////
 // func84ea4()
+
 A0 = 4;
 A1 = 0;
 func28280(); // set directory

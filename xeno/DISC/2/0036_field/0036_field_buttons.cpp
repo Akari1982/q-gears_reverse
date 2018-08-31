@@ -1,5 +1,6 @@
 ////////////////////////////////
 // func73d90()
+
 [800af370] = h(0); // current buttons c1
 [800af374] = h(0); // current buttons c2
 [800c1b68] = h(0); // pressed buttons c1
