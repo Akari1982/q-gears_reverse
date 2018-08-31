@@ -52,16 +52,16 @@ RA = w[80058a70];
 // system_bios_new_exception_handler()
 8004B3BC	nop
 8004B3C0	nop
-8004B3C4	addiu  k0, zero, $0100
-8004B3C8	lw     k0, $0008(k0)
+K0 = 0100;
+K0 = w[K0 + 0008];
 8004B3CC	nop
-8004B3D0	lw     k0, $0000(k0)
+K0 = w[K0 + 0000];
 8004B3D4	nop
-8004B3D8	addi   k0, k0, $0008
-8004B3DC	sw     at, $0004(k0)
-8004B3E0	sw     v0, $0008(k0)
-8004B3E4	sw     v1, $000c(k0)
-8004B3E8	sw     ra, $007c(k0)
+K0 = K0 + 0008;
+[K0 + 0004] = w(AT);
+[K0 + 0008] = w(V0);
+[K0 + 000c] = w(V1);
+[K0 + 007c] = w(RA);
 8004B3EC	mfc0   v0,cause
 8004B3F0	nop
 ////////////////////////////////
@@ -169,9 +169,9 @@ while( w[80058000] < A0 )
 // (flag=0: do nothing; or flag=1: automatically acknowledge the IRQ
 // and immediately return from exception). The function returns
 // the old (previous) flag value.
-8004B5D8	addiu  t2, zero, $00c0
+T2 = 00c0;
 8004B5DC	jr     t2 
-8004B5E0	addiu  t1, zero, $000a
+T1 = 000a;
 ////////////////////////////////
 
 
@@ -216,16 +216,15 @@ A0 = 4;
 
 ////////////////////////////////
 // func4b6ac
-8004B6AC	lui    v0, $8005
-8004B6B0	lw     v0, $7fcc(v0)
+V0 = w[80057fcc];
 8004B6B4	addiu  sp, sp, $ffe8 (=-$18)
-8004B6B8	sw     ra, $0010(sp)
-8004B6BC	lw     v0, $0014(v0)
+[SP + 0010] = w(RA);
+V0 = w[V0 + 0014];
 8004B6C0	nop
 8004B6C4	jalr   v0 ra
 8004B6C8	nop
-8004B6CC	lw     ra, $0010(sp)
-8004B6D0	addiu  sp, sp, $0018
+RA = w[SP + 0010];
+SP = SP + 0018;
 8004B6D4	jr     ra 
 8004B6D8	nop
 ////////////////////////////////
@@ -234,16 +233,15 @@ A0 = 4;
 
 ////////////////////////////////
 // func4b6dc
-8004B6DC	lui    v0, $8005
-8004B6E0	lw     v0, $7fcc(v0)
+V0 = w[80057fcc];
 8004B6E4	addiu  sp, sp, $ffe8 (=-$18)
-8004B6E8	sw     ra, $0010(sp)
-8004B6EC	lw     v0, $0010(v0)
+[SP + 0010] = w(RA);
+V0 = w[V0 + 0010];
 8004B6F0	nop
 8004B6F4	jalr   v0 ra
 8004B6F8	nop
-8004B6FC	lw     ra, $0010(sp)
-8004B700	addiu  sp, sp, $0018
+RA = w[SP + 0010];
+SP = SP + 0018;
 8004B704	jr     ra 
 8004B708	nop
 ////////////////////////////////
@@ -252,16 +250,15 @@ A0 = 4;
 
 ////////////////////////////////
 // func4b70c
-8004B70C	lui    v0, $8005
-8004B710	lw     v0, $7fcc(v0)
+V0 = w[80057fcc];
 8004B714	addiu  sp, sp, $ffe8 (=-$18)
-8004B718	sw     ra, $0010(sp)
-8004B71C	lw     v0, $0018(v0)
+[SP + 0010] = w(RA);
+V0 = w[V0 + 0018];
 8004B720	nop
 8004B724	jalr   v0 ra
 8004B728	nop
-8004B72C	lw     ra, $0010(sp)
-8004B730	addiu  sp, sp, $0018
+RA = w[SP + 0010];
+SP = SP + 0018;
 8004B734	jr     ra 
 8004B738	nop
 ////////////////////////////////
@@ -270,8 +267,7 @@ A0 = 4;
 
 ////////////////////////////////
 // func4b73c
-8004B73C	lui    v0, $8005
-8004B740	lhu    v0, $6f46(v0)
+V0 = hu[80056f46];
 8004B744	jr     ra 
 8004B748	nop
 ////////////////////////////////
@@ -280,10 +276,9 @@ A0 = 4;
 
 ////////////////////////////////
 // func4b74c
-8004B74C	lui    v0, $8005
-8004B750	lw     v0, $7fd4(v0)
+V0 = w[80057fd4];
 8004B754	nop
-8004B758	lhu    v0, $0000(v0)
+V0 = hu[V0 + 0000];
 8004B75C	jr     ra 
 8004B760	nop
 ////////////////////////////////
@@ -292,11 +287,10 @@ A0 = 4;
 
 ////////////////////////////////
 // func4b764
-8004B764	lui    v1, $8005
-8004B768	lw     v1, $7fd4(v1)
+V1 = w[80057fd4];
 8004B76C	nop
-8004B770	lhu    v0, $0000(v1)
-8004B774	sh     a0, $0000(v1)
+V0 = hu[V1 + 0000];
+[V1 + 0000] = h(A0);
 8004B778	jr     ra 
 8004B77C	nop
 ////////////////////////////////
@@ -499,48 +493,42 @@ return S4;
 ////////////////////////////////
 // func4bb98
 8004BB98	addiu  sp, sp, $ffe8 (=-$18)
-8004BB9C	sw     s0, $0010(sp)
+[SP + 0010] = w(S0);
 8004BBA0	lui    s0, $8005
-8004BBA4	addiu  s0, s0, $6f44
-8004BBA8	sw     ra, $0014(sp)
-8004BBAC	lhu    v0, $0000(s0)
+S0 = S0 + 6f44;
+[SP + 0014] = w(RA);
+V0 = hu[S0 + 0000];
 8004BBB0	nop
 8004BBB4	beq    v0, zero, L4bc30 [$8004bc30]
-8004BBB8	addu   v0, zero, zero
+V0 = 0;
 8004BBBC	jal    system_enter_critical_section [$8004034c]
 8004BBC0	nop
-8004BBC4	lui    v0, $8005
-8004BBC8	lw     v0, $7fd4(v0)
-8004BBCC	lui    a0, $8005
-8004BBD0	lw     a0, $7fd8(a0)
-8004BBD4	lhu    v1, $0000(v0)
-8004BBD8	lui    at, $8005
-8004BBDC	sh     v1, $6f76(at)
-8004BBE0	lw     v1, $0000(a0)
-8004BBE4	lui    a0, $8005
-8004BBE8	lw     a0, $7fd0(a0)
-8004BBEC	lui    at, $8005
-8004BBF0	sw     v1, $6f78(at)
-8004BBF4	sh     zero, $0000(v0)
-8004BBF8	lhu    v0, $0000(v0)
+V0 = w[80057fd4];
+A0 = w[80057fd8];
+V1 = hu[V0 + 0000];
+[80056f76] = h(V1);
+V1 = w[A0 + 0000];
+A0 = w[80057fd0];
+[80056f78] = w(V1);
+[V0 + 0000] = h(0);
+V0 = hu[V0 + 0000];
 8004BBFC	nop
-8004BC00	sh     v0, $0000(a0)
-8004BC04	lui    a0, $8005
-8004BC08	lw     a0, $7fd8(a0)
+[A0 + 0000] = h(V0);
+A0 = w[80057fd8];
 8004BC0C	lui    v1, $7777
-8004BC10	lw     v0, $0000(a0)
-8004BC14	ori    v1, v1, $7777
-8004BC18	and    v0, v0, v1
-8004BC1C	sw     v0, $0000(a0)
+V0 = w[A0 + 0000];
+V1 = V1 | 7777;
+V0 = V0 & V1;
+[A0 + 0000] = w(V0);
 8004BC20	jal    func4bda8 [$8004bda8]
 8004BC24	nop
-8004BC28	addu   v0, s0, zero
-8004BC2C	sh     zero, $0000(v0)
+V0 = S0;
+[V0 + 0000] = h(0);
 
 L4bc30:	; 8004BC30
-8004BC30	lw     ra, $0014(sp)
-8004BC34	lw     s0, $0010(sp)
-8004BC38	addiu  sp, sp, $0018
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
 8004BC3C	jr     ra 
 8004BC40	nop
 ////////////////////////////////
@@ -550,41 +538,37 @@ L4bc30:	; 8004BC30
 ////////////////////////////////
 // func4bc44
 8004BC44	addiu  sp, sp, $ffe8 (=-$18)
-8004BC48	sw     s0, $0010(sp)
+[SP + 0010] = w(S0);
 8004BC4C	lui    s0, $8005
-8004BC50	addiu  s0, s0, $6f44
-8004BC54	sw     ra, $0014(sp)
-8004BC58	lhu    v0, $0000(s0)
+S0 = S0 + 6f44;
+[SP + 0014] = w(RA);
+V0 = hu[S0 + 0000];
 8004BC5C	nop
 8004BC60	bne    v0, zero, L4bcb4 [$8004bcb4]
 8004BC64	nop
 8004BC68	jal    system_bios_set_custom_exit_from_exception [$8004bdb8]
-8004BC6C	addiu  a0, s0, $0038
-8004BC70	lui    a0, $8005
-8004BC74	lw     a0, $7fd4(a0)
-8004BC78	lui    v1, $8005
-8004BC7C	lhu    v1, $6f76(v1)
-8004BC80	addiu  v0, zero, $0001
-8004BC84	sh     v0, $0000(s0)
-8004BC88	sh     v1, $0000(a0)
-8004BC8C	lui    v1, $8005
-8004BC90	lw     v1, $7fd8(v1)
-8004BC94	lui    v0, $8005
-8004BC98	lw     v0, $6f78(v0)
+A0 = S0 + 0038;
+A0 = w[80057fd4];
+V1 = hu[80056f76];
+V0 = 0001;
+[S0 + 0000] = h(V0);
+[A0 + 0000] = h(V1);
+V1 = w[80057fd8];
+V0 = w[80056f78];
 8004BC9C	nop
-8004BCA0	sw     v0, $0000(v1)
+[V1 + 0000] = w(V0);
 8004BCA4	jal    system_exit_critical_section [$8004035c]
 8004BCA8	nop
 8004BCAC	j      L4bcb8 [$8004bcb8]
-8004BCB0	addu   v0, s0, zero
+V0 = S0;
 
 L4bcb4:	; 8004BCB4
-8004BCB4	addu   v0, zero, zero
+V0 = 0;
 
 L4bcb8:	; 8004BCB8
-8004BCB8	lw     ra, $0014(sp)
-8004BCBC	lw     s0, $0010(sp)
-8004BCC0	addiu  sp, sp, $0018
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
 8004BCC4	jr     ra 
 8004BCC8	nop
 ////////////////////////////////
@@ -629,19 +613,19 @@ return 0;
 
 ////////////////////////////////
 // func4bd34
-8004BD34	lw     ra, $0000(a0)
-8004BD38	lw     gp, $002c(a0)
-8004BD3C	lw     sp, $0004(a0)
-8004BD40	lw     fp, $0008(a0)
-8004BD44	lw     s0, $000c(a0)
-8004BD48	lw     s1, $0010(a0)
-8004BD4C	lw     s2, $0014(a0)
-8004BD50	lw     s3, $0018(a0)
-8004BD54	lw     s4, $001c(a0)
-8004BD58	lw     s5, $0020(a0)
-8004BD5C	lw     s6, $0024(a0)
-8004BD60	lw     s7, $0028(a0)
-8004BD64	addu   v0, a1, zero
+RA = w[A0 + 0000];
+GP = w[A0 + 002c];
+SP = w[A0 + 0004];
+FP = w[A0 + 0008];
+S0 = w[A0 + 000c];
+S1 = w[A0 + 0010];
+S2 = w[A0 + 0014];
+S3 = w[A0 + 0018];
+S4 = w[A0 + 001c];
+S5 = w[A0 + 0020];
+S6 = w[A0 + 0024];
+S7 = w[A0 + 0028];
+V0 = A1;
 8004BD68	jr     ra 
 8004BD6C	nop
 ////////////////////////////////
@@ -651,9 +635,9 @@ return 0;
 ////////////////////////////////
 // system_bios_cd_remove()
 // A(56h) or A(72h) - CdRemove()  ;does NOT work due to SysDeqIntRP bug
-8004BD80	addiu  t2, zero, $00a0
+T2 = 00a0;
 8004BD84	jr     t2 
-8004BD88	addiu  t1, zero, $0072
+T1 = 0072;
 ////////////////////////////////
 
 
@@ -666,18 +650,18 @@ return 0;
 // ExceptionHandler, however, functions in the exception chain may call
 // ReturnFromException to to return immediately, without processing chain elements
 // of lower priority.
-8004BD98	addiu  t2, zero, $00b0
+T2 = 00b0;
 8004BD9C	jr     t2 
-8004BDA0	addiu  t1, zero, $0017
+T1 = 0017;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func4bda8
-8004BDA8	addiu  t2, zero, $00b0
+T2 = 00b0;
 8004BDAC	jr     t2 
-8004BDB0	addiu  t1, zero, $0018
+T1 = 0018;
 8004BDB4	nop
 ////////////////////////////////
 
@@ -696,9 +680,9 @@ return 0;
 // ReturnFromException to abort further exception handling, and thus do skip the hook function). Once when the hook function has finished, it should execute
 // ReturnFromException. The hook function is called with r2=1 (that is important if the hook address was recorded with SaveState, where it "returns" to the
 // SaveState caller, with r2 as "return value").
-8004BDB8	addiu  t2, zero, $00b0
+T2 = 00b0;
 8004BDBC	jr     t2 
-8004BDC0	addiu  t1, zero, $0019
+T1 = 0019;
 ////////////////////////////////
 
 
@@ -898,8 +882,7 @@ return V0;
 
 ////////////////////////////////
 // func4c1b0
-8004C1B0	lui    v0, $8006
-8004C1B4	lw     v0, $8030(v0)
+V0 = w[80058030];
 8004C1B8	jr     ra 
 8004C1BC	nop
 ////////////////////////////////
@@ -967,43 +950,43 @@ return V1; // return filehandle
 ////////////////////////////////
 // func4c240()
 
-8004C248	addu   s4, a0, zero
-8004C250	addu   s3, a1, zero
-8004C258	addu   s0, a2, zero
-8004C260	addu   s2, zero, zero
+S4 = A0;
+S3 = A1;
+S0 = A2;
+S2 = 0;
 8004C270	beq    s0, zero, L4c2d0 [$8004c2d0]
 
-8004C278	ori    s6, zero, $8000
+S6 = 8000;
 8004C27C	addiu  s5, zero, $ffff (=-$1)
-8004C280	sltu   v0, s6, s0
+V0 = S6 < S0;
 
 loop4c284:	; 8004C284
 8004C284	beq    v0, zero, L4c290 [$8004c290]
-8004C288	addu   s1, s0, zero
-8004C28C	ori    s1, zero, $8000
+S1 = S0;
+S1 = 8000;
 
 L4c290:	; 8004C290
-8004C290	addu   a0, zero, zero
-8004C294	addu   a1, s4, zero
-8004C298	addu   a2, s1, zero
+A0 = 0;
+A1 = S4;
+A2 = S1;
 8004C29C	jal    func4c300 [$8004c300]
-8004C2A0	addu   a3, s3, zero
+A3 = S3;
 8004C2A4	bne    v0, s5, L4c2b4 [$8004c2b4]
-8004C2A8	addu   s2, s2, v0
+S2 = S2 + V0;
 8004C2AC	j      L4c2d4 [$8004c2d4]
 8004C2B0	addiu  v0, zero, $ffff (=-$1)
 
 L4c2b4:	; 8004C2B4
-8004C2B4	addu   s3, s3, v0
-8004C2B8	subu   s0, s0, v0
-8004C2BC	slt    v0, v0, s1
+S3 = S3 + V0;
+S0 = S0 - V0;
+V0 = V0 < S1;
 8004C2C0	bne    v0, zero, L4c2d0 [$8004c2d0]
 8004C2C4	nop
 8004C2C8	bne    s0, zero, loop4c284 [$8004c284]
-8004C2CC	sltu   v0, s6, s0
+V0 = S6 < S0;
 
 L4c2d0:	; 8004C2D0
-8004C2D0	addu   v0, s2, zero
+V0 = S2;
 
 L4c2d4:	; 8004C2D4
 ////////////////////////////////
@@ -1024,58 +1007,54 @@ return V1;
 
 
 ////////////////////////////////
-// func4c318()
+// system_devkit_pc_write_by_8000()
 
-8004C320	addu   s4, a0, zero
-8004C328	addu   s3, a1, zero
-8004C330	addu   s0, a2, zero
-8004C338	addu   s2, zero, zero
-8004C348	beq    s0, zero, L4c3a8 [$8004c3a8]
+filehandle = A0;
+src = A1;
+size = A2;
+written = 0;
+while( size != 0 )
+{
+    length = size;
+    if( size > 8000 )
+    {
+        length = 8000;
+    }
 
-8004C350	ori    s6, zero, $8000
-8004C354	addiu  s5, zero, $ffff (=-$1)
-8004C358	sltu   v0, s6, s0
+    A0 = 0;
+    A1 = filehandle;
+    A2 = length;
+    A3 = src;
+    system_devkit_pc_write();
+    written = written + V0;
 
-loop4c35c:	; 8004C35C
-8004C35C	beq    v0, zero, L4c368 [$8004c368]
-8004C360	addu   s1, s0, zero
-8004C364	ori    s1, zero, $8000
+    if( V0 == -1 )
+    {
+        return -1;
+    }
 
-L4c368:	; 8004C368
-8004C368	addu   a0, zero, zero
-8004C36C	addu   a1, s4, zero
-8004C370	addu   a2, s1, zero
-8004C374	jal    func4c3d8 [$8004c3d8]
-8004C378	addu   a3, s3, zero
-8004C37C	bne    v0, s5, L4c38c [$8004c38c]
-8004C380	addu   s2, s2, v0
-8004C384	j      L4c3ac [$8004c3ac]
-8004C388	addiu  v0, zero, $ffff (=-$1)
-
-L4c38c:	; 8004C38C
-8004C38C	addu   s3, s3, v0
-8004C390	subu   s0, s0, v0
-8004C394	slt    v0, v0, s1
-8004C398	bne    v0, zero, L4c3a8 [$8004c3a8]
-8004C39C	nop
-8004C3A0	bne    s0, zero, loop4c35c [$8004c35c]
-8004C3A4	sltu   v0, s6, s0
-
-L4c3a8:	; 8004C3A8
-8004C3A8	addu   v0, s2, zero
-
-L4c3ac:	; 8004C3AC
+    src = src + V0;
+    size = size - V0;
+    if( V0 >= length )
+    {
+        break;
+    }
+}
+return written;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4c3d8()
-// system_devkit_pc_write( filehandle, length, memory_source_address )
+// system_devkit_pc_write()
+// A0 filehandle
+// A1 length
+// A2 memory_source_address
+
 8004C3D8	break   $00106
 if( V0 != 0 )
 {
     return -1;
 }
-return V1;
+return V0;
 ////////////////////////////////
