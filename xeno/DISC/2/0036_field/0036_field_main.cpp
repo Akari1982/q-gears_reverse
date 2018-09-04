@@ -1,30 +1,21 @@
 ////////////////////////////////
-// func7743c
-8007743C	addiu  sp, sp, $ffe8 (=-$18)
-80077440	sw     ra, $0010(sp)
-80077444	jal    $8004b3f4
-80077448	ori    a0, zero, $0001
-8007744C	lui    at, $800b
-80077450	sw     v0, $d074(at)
-80077454	jal    func73670 [$80073670]
-80077458	nop
-8007745C	jal    func73d90 [$80073d90]
-80077460	nop
-80077464	lui    v0, $800c
-80077468	lw     v0, $1b60(v0)
-8007746C	nop
-80077470	bne    v0, zero, L77488 [$80077488]
-80077474	nop
-A0 = 8006f210; // "Clear OTAG"
-80077480	0C0A06C6	Ж...
+// func7743c()
 
-L77488:	; 80077488
+A0 = 1;
+system_psyq_wait_frames();
+[800ad074] = w(V0);
+
+80077454	jal    func73670 [$80073670]
+
+8007745C	jal    func73d90 [$80073d90]
+
+if( w[800c1b60] == 0 ) // debug
+{
+    A0 = 8006f210; // "Clear OTAG"
+    80077480	0C0A06C6	Ж...
+}
+
 80077488	jal    funca2778 [$800a2778]
-8007748C	nop
-80077490	lw     ra, $0010(sp)
-80077494	addiu  sp, sp, $0018
-80077498	jr     ra 
-8007749C	nop
 ////////////////////////////////
 
 
@@ -64,11 +55,7 @@ else
     [800c1b60] = w(1);
 }
 
-
-
 func78fb0(); // sync and flush cache
-
-
 
 if( w[800c1b60] == 0 ) // debug
 {
@@ -79,13 +66,9 @@ if( w[800c1b60] == 0 ) // debug
 [80061bac] = w(w[80058bfc]);
 [80061bb4] = w(w[80058c48]);
 
-
-
 A0 = 8;
 A1 = 0;
 func322bc(); // set group for memory allocation
-
-
 
 // load some debug executable
 if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
@@ -106,8 +89,6 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
     func78fb0(); // sync and flush command cache
 }
 
-
-
 if( w[8004e9b0] == 0 )
 {
     [8006f14c] = w(ff);
@@ -115,12 +96,8 @@ if( w[8004e9b0] == 0 )
     [8006f154] = w(ff);
 }
 
-
-
 A0 = 0;
 func84ea4();
-
-
 
 S4 = 0;
 
@@ -140,33 +117,22 @@ S4 = 0;
 [800ad0dc] = w(2);
 [800ad0e8] = w(0);
 
-
-
 if( w[800c1b60] == 0 ) // debug
 {
     800776C8	0C0A0481	Ѓ...
 }
-
-
 
 800776D0	jal    func76c50 [$80076c50]
 
 V1 = hu[8006efde];
 A0 = hu[8006efe4];
 [80059a38] = w(8006ccc4);
-800776F8	lui    v0, $8007
-800776FC	lhu    v0, $efe0(v0)
-80077700	lui    at, $8005
-80077704	sw     v1, $e9f0(at)
-80077708	lui    v1, $8005
-8007770C	lw     v1, $e99c(v1)
-80077710	srl    v0, v0, $09
-80077714	lui    at, $8007
-80077718	sh     a0, $e5f6(at)
-8007771C	lui    at, $8007
-80077720	sh     v0, $e5fc(at)
-
-
+V0 = hu[8006efe0];
+[8004e9f0] = w(V1);
+V1 = w[8004e99c];
+V0 = V0 >> 09;
+[8006e5f6] = h(A0);
+[8006e5fc] = h(V0);
 
 if( V1 == 0 )
 {
@@ -178,8 +144,6 @@ else
 {
     [8004e9c8] = w(hu[8006efe6]);
 }
-
-
 
 if( w[800c1b60] == 1 ) // not debug
 {
@@ -204,8 +168,6 @@ A1 = 1;
 system_memory_allocate();
 [800ad008] = w(V0);
 
-
-
 if( w[800c1b60] == 0 ) // debug
 {
     800777BC	break   $00400
@@ -217,20 +179,12 @@ if( w[800c1b60] == 0 ) // debug
     [800af7a6] = h(10);
 }
 
-
-
 S5 = 0;
-
-
 
 // call script here
 800777E8	jal    func78358 [$80078358]
 
-
-
 [800acfdc] = b(1);
-
-
 
 L77810:	; 80077810
     if( hu[800c2dd4] & 0800 ) // start repeated
@@ -266,16 +220,12 @@ L77810:	; 80077810
         }
     }
 
-
-
     if( w[800c1b60] == 1 ) // not debug
     {
         A0 = 50;
         A1 = 1;
         put_bytes_to_800C2F3C();
     }
-
-
 
     800778E8	jal    func19d24 [$80019d24]
 
@@ -285,8 +235,6 @@ L77810:	; 80077810
     func74bdc();
 
     80077900	jal    funca4dfc [$800a4dfc]
-
-
 
     // load battle
     if( w[800acfe0] == 1 )
@@ -370,8 +318,6 @@ L77810:	; 80077810
         }
     }
 
-
-
     // field load started
     if( ( w[800ad0c4] == 0 ) && ( w[8004e9ac] == 0 ) && ( w[800ad09c] == ff ) && ( w[800ad068] == 0 ) )
     {
@@ -402,8 +348,6 @@ L77810:	; 80077810
             }
         }
     }
-
-
 
     if( w[800acfe0] == 1 )
     {
@@ -488,8 +432,6 @@ L77810:	; 80077810
         }
     }
 
-
-
     if( w[800c1b60] == 0 ) // debug
     {
         if( hu[800c2ddc] & 0040 ) // cross on second controller repeated
@@ -531,8 +473,6 @@ L77810:	; 80077810
         }
     }
 
-
-
     if( ( w[800ad0b0] == -1 ) && ( w[800ad0b4] == -1 ) && ( w[800ad0bc] == -1 ) )
     {
         func781dc();
@@ -569,8 +509,6 @@ L77810:	; 80077810
                 }
             }
 
-
-
             if( hu[800c2dd4] & 0100 ) // select repeated
             {
                 if( w[800ad0c4] == -1 )
@@ -582,16 +520,12 @@ L77810:	; 80077810
                 }
             }
 
-
-
             if( ( w[800ad048] != 0 ) && ( w[800acfe0] == 1 )
             {
                 80077FB8	jal    funca7130 [$800a7130]
 
                 [800ad048] = w(0);
             }
-
-
 
             if( ( w[800ad03c] != ff ) && ( w[800acfe0] == 0 ) )
             {
@@ -610,8 +544,6 @@ L77810:	; 80077810
                 }
             }
 
-
-
             if( hu[800c2dd4] & 0010 ) // triangle repeated
             {
                 if( bu[800b16a4] == 0 )
@@ -629,13 +561,9 @@ L77810:	; 80077810
         }
     }
 
-
-
     800780BC	jal    func78170 [$80078170]
 
 800780C4	j      L77810 [$80077810]
-
-
 
 L780cc:	; 800780CC
 800780CC	jal    func78ed0 [$80078ed0]
@@ -678,27 +606,22 @@ A0 = S0;
 
 system_get_random_2_bytes();
 
-80078180	lui    v1, $8005
-80078184	lw     v1, $e9ac(v1)
+V1 = w[8004e9ac];
 80078188	addiu  v0, zero, $ffff (=-$1)
 8007818C	bne    v1, v0, L781ac [$800781ac]
 80078190	nop
-80078194	lui    a0, $8005
-80078198	lw     a0, $e9c8(a0)
+A0 = w[8004e9c8];
 8007819C	jal    func852a4 [$800852a4]
 800781A0	nop
-800781A4	lui    at, $8005
-800781A8	sw     v0, $e9ac(at)
+[8004e9ac] = w(V0);
 
 L781ac:	; 800781AC
-800781AC	lui    v0, $800b
-800781B0	lw     v0, $d0f0(v0)
+V0 = w[800ad0f0];
 800781B4	nop
 800781B8	beq    v0, zero, L781cc [$800781cc]
 800781BC	nop
 800781C0	addiu  v0, v0, $ffff (=-$1)
-800781C4	lui    at, $800b
-800781C8	sw     v0, $d0f0(at)
+[800ad0f0] = w(V0);
 
 L781cc:	; 800781CC
 ////////////////////////////////
@@ -714,8 +637,8 @@ if( w[800ad004] == 0 )
     if( ( V0 == 0 ) && ( w[8004e9ac] == 0 ) && ( w[800ad068] == 0 ) && ( w[800ad00c] == 0 ) )
     {
         V0 = w[800ad09c] XOR ff;
-        80078258	sltu   v0, zero, v0
-        8007825C	subu   v0, zero, v0
+        V0 = 0 < V0;
+        V0 = 0 - V0;
         return V0;
     }
 }
