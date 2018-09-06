@@ -147,15 +147,6 @@ func28280(); // set directory
 
 
 ////////////////////////////////
-// func76eac()
-A0 = 1;
-system_psyq_wait_frames();
-[800ad07c] = w(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func84c48
 A3 = A1 & 7;
 
@@ -190,70 +181,6 @@ A1 = S0 * 2;
 A2 = S1;
 A3 = S2;
 func39e44;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca268c()
-V0 = w[80059a38];
-[V0 + 231a] = h(w[8004e9f0]);
-[V0 + 231c] = h(hu[V0 + 1938] << 9);
-[V0 + 2320] = h(hu[V0 + 1932]);
-[V0 + 2322] = h(w[8004e9c8]);
-
-A0 = 44;
-A1 = hu[80058ab8];
-put_bytes_to_800C2F3C();
-
-A0 = 46;
-A1 = bu[80058b6c];
-put_bytes_to_800C2F3C();
-
-func96a20();
-A0 = 6; // direction of pc entity during spawn.
-A1 = V0;
-put_bytes_to_800C2F3C();
-
-func99ae8();
-A0 = 8; // direction of camera.
-A1 = V0;
-put_bytes_to_800C2F3C();
-
-A0 = 24;
-A1 = h[800aeed0];
-put_bytes_to_800C2F3C();
-
-A0 = 3c;
-A1 = w[8004e9f0]; // field id to load
-put_bytes_to_800C2F3C();
-
-funca2644();
-
-A1 = 0;
-V1 = w[80059a38];
-loopa274c:	; 800A274C
-    [V1 + 1930 + A1 * 2] = h(hu[800c2f3c + A1 * 2]);
-    A1 = A1 + 1;
-    V0 = A1 < 200;
-800A2760	bne    v0, zero, loopa274c [$800a274c]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2644()
-A0 = 3e;
-A1 = w[80061c20];
-put_bytes_to_800C2F3C();
-
-A0 = 40;
-A1 = w[80061c24];
-put_bytes_to_800C2F3C();
-
-A0 = 42;
-A1 = w[80061c28];
-put_bytes_to_800C2F3C();
 ////////////////////////////////
 
 
@@ -1155,17 +1082,6 @@ if( V1 == 1 )
 
 
 ////////////////////////////////
-// func76c88()
-A0 = 0; // wait for termination
-system_draw_sync();
-
-A0 = 0;
-system_psyq_wait_frames(); // get time and sync
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func79e08()
 offset_70 = A0;
 S2 = A1;
@@ -1484,38 +1400,6 @@ L79d98:	; 80079D98
 
 
 ////////////////////////////////
-// func76888()
-
-[80059a18] = w(A0); // store here pointer to tim file
-
-loop76898:	; 80076898
-    A0 = SP + 10; // TIM_IMAGE struct
-    system_read_tim();
-
-    if( V0 == 0 )
-    {
-        return;
-    }
-
-    A1 = w[SP + 18]; // clut pointer
-    if( A1 != 0 )
-    {
-        A0 = w[SP + 14]; // rect with size
-        system_load_image(); // load to vram
-    }
-
-    A1 = w[SP + 20]; // image pointer
-    if( A1 != 0 )
-    {
-        A0 = w[SP + 1c]; // rect with size
-        system_load_image(); // load to vram
-    }
-800768E0	j      loop76898 [$80076898]
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func7d4e0()
 8007D4E8	addu   s1, zero, zero
 8007D4F0	ori    s6, zero, $00ff
@@ -1742,50 +1626,6 @@ A2 = dest_y;
 system_move_image()
 
 func76c88(); // sync
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func73670()
-func735e0();
-
-A0 = w[800c3740] + cc;
-A1 = 1000;
-system_clear_otagr();
-
-if( w[800ad024] != 0 )
-{
-    A0 = w[800c3740] + 40d0;
-    A1 = 1000;
-    system_clear_otagr();
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func735e0()
-if( w[800c1b60] == 0 )
-{
-    800735F4	break   $00400
-}
-
-V1 = w[800acfe0];
-80073604	addiu  v1, v1, $0001
-80073608	srl    v0, v1, $1f
-8007360C	addu   v0, v1, v0
-80073610	sra    v0, v0, $01
-80073614	sll    v0, v0, $01
-80073618	subu   v1, v1, v0
-
-A0 = 800b1970 + V1 * 80f4;
-[800c3740] = w(A0);
-[800acfe0] = w(V1);
-
-A0 = A0 + 80d4;
-A1 = 8;
-system_clear_otagr();
 ////////////////////////////////
 
 
@@ -2098,4 +1938,189 @@ La5ba0:	; 800A5BA0
     S4 = S4 + 1;
     V0 = S4 < 5;
 800A5DC0	bne    v0, zero, La5ba0 [$800a5ba0]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func8af4c
+8008AF54	addu   s3, a0, zero
+8008AF58	lui    a1, $8006
+8008AF5C	lw     a1, $9a38(a1)
+8008AF60	lui    a0, $800b
+8008AF64	lw     a0, $d0a0(a0)
+8008AF68	lui    a2, $800b
+8008AF6C	lw     a2, $fb8c(a2)
+8008AF74	lui    s4, $800b
+8008AF78	lw     s4, $f54c(s4)
+8008AF7C	ori    v1, zero, $0001
+8008AFA0	lhu    v0, $1d30(a1)
+8008AFA4	sllv   v1, a0, v1
+8008AFA8	or     v0, v0, v1
+8008AFAC	sh     v0, $1d30(a1)
+8008AFB0	lui    v0, $800b
+8008AFB4	lw     v0, $cff4(v0)
+8008AFB8	nop
+8008AFBC	beq    v0, zero, L8b220 [$8008b220]
+8008AFC0	sw     a2, $0010(sp)
+8008AFC4	lhu    a2, $00cc(s4)
+8008AFC8	lui    fp, $800b
+8008AFCC	lw     fp, $f594(fp)
+8008AFD0	lui    v0, $800b
+8008AFD4	lw     v0, $d0d4(v0)
+8008AFD8	lui    s7, $800b
+8008AFDC	lw     s7, $f1f0(s7)
+8008AFE0	sw     a2, $0020(sp)
+8008AFE4	lui    a2, $800b
+8008AFE8	lw     a2, $f150(a2)
+8008AFEC	addu   s0, zero, zero
+8008AFF0	blez   v0, L8b1e4 [$8008b1e4]
+8008AFF4	sw     a2, $0018(sp)
+8008AFF8	lui    s5, $800b
+8008AFFC	addiu  s5, s5, $efe4 (=-$101c)
+8008B000	lui    s6, $8007
+8008B004	addiu  s6, s6, $f020 (=-$fe0)
+8008B008	addu   s2, zero, zero
+
+L8b00c:	; 8008B00C
+A0 = S0;
+A1 = 0;
+get_script_offset;
+S1 = V0;
+
+V1 = w[800AD0D8];
+V1 = bu[V1 + S1 + 0];
+V0 = bu[V1 + S1 + 1];
+// if SetPlayableCharacter is first.
+if (V1 == 16 && V0 == S3)
+{
+    8008B048	lw     v0, $0000(s5)
+    8008B04C	nop
+    8008B050	addu   v0, v0, s2
+    8008B054	lw     v1, $004c(v0)
+    8008B058	lui    at, $800b
+    8008B05C	sw     v0, $fb8c(at)
+    8008B060	lui    at, $800b
+    8008B064	sw     v1, $f54c(at)
+    8008B068	jal    func80088 [$80080088]
+    8008B06C	addu   a0, s0, zero
+    8008B070	lui    v0, $800b
+    8008B074	lw     v0, $efe4(v0)
+    A0 = S0;
+    8008B07C	addu   v0, s2, v0
+    8008B080	lw     v0, $004c(v0)
+    A1 = 0;
+    8008B088	lui    at, $800b
+    8008B08C	sw     s0, $f1f0(at)
+    8008B090	jal    get_script_offset [$800a2620]
+    8008B094	sh     s1, $00cc(v0)
+    8008B098	addu   a0, s0, zero
+    8008B09C	lui    v1, $800b
+    8008B0A0	lw     v1, $f54c(v1)
+    8008B0A8	lui    at, $800b
+    8008B0AC	sw     zero, $f4c0(at)
+    [V1 + cc] = h(V0);
+
+    A1 = 0;
+    get_script_offset;
+    S1 = V0;
+
+    A0 = S0;
+    A1 = w[800B1740];
+    func8c954;
+
+    A0 = ffff;
+    run_script();
+
+    8008B0D4	jal    func768f8 [$800768f8]
+    8008B0D8	nop
+    8008B0DC	ori    a0, zero, $0001
+    8008B0E0	lui    v0, $800b
+    8008B0E4	lw     v0, $d0a0(v0)
+    8008B0E8	lui    a1, $8006
+    8008B0EC	lw     a1, $9a38(a1)
+    8008B0F0	lui    v1, $8005
+    8008B0F4	lw     v1, $e9f0(v1)
+    8008B0F8	sllv   a0, v0, a0
+    8008B0FC	lhu    v0, $1d30(a1)
+    8008B100	andi   v1, v1, $c000
+    8008B104	or     v0, v0, a0
+    8008B108	beq    v1, zero, L8b1e4 [$8008b1e4]
+    8008B10C	sh     v0, $1d30(a1)
+    8008B110	lui    v0, $800b
+    8008B114	lw     v0, $d0a4(v0)
+    8008B118	nop
+    8008B11C	sll    v0, v0, $02
+    8008B120	addu   v0, v0, s6
+    8008B124	lw     v1, $0000(v0)
+    8008B128	lw     a0, $0000(v0)
+    8008B12C	sll    v0, v1, $01
+    8008B130	addu   v0, v0, v1
+    8008B134	sll    v0, v0, $03
+    8008B138	subu   v0, v0, v1
+    8008B13C	lw     v1, $0000(s5)
+    8008B140	sll    v0, v0, $02
+    8008B144	addu   v1, v1, v0
+    8008B148	lw     v0, $004c(v1)
+    8008B14C	lui    at, $800b
+    8008B150	sw     v1, $fb8c(at)
+    8008B154	lui    at, $800b
+    8008B158	sw     v0, $f54c(at)
+    8008B15C	jal    func80088 [$80080088]
+    8008B160	nop
+    8008B164	lui    v0, $800b
+    8008B168	lw     v0, $efe4(v0)
+    8008B16C	nop
+    8008B170	addu   v0, s2, v0
+    8008B174	lw     v1, $004c(v0)
+    8008B178	lui    v0, $800b
+    8008B17C	lw     v0, $d0a4(v0)
+    8008B180	nop
+    8008B184	sll    v0, v0, $02
+    8008B188	addu   v0, v0, s6
+    8008B18C	sh     s1, $00cc(v1)
+    8008B190	lw     a0, $0000(v0)
+    8008B194	lw     v0, $0000(v0)
+    8008B198	lui    at, $800b
+    8008B19C	sw     v0, $f1f0(at)
+    A1 = 0;
+    get_script_offset;
+    V1 = w[800AF54C];
+    [V1 + cc] = h(V0);
+
+    [800AF4C0] = w(0);
+
+    A0 = ffff;
+    run_script();
+}
+else
+{
+    L8b1cc:	; 8008B1CC
+    8008B1CC	lui    v0, $800b
+    8008B1D0	lw     v0, $d0d4(v0)
+    8008B1D4	addiu  s0, s0, $0001
+    8008B1D8	slt    v0, s0, v0
+    8008B1DC	bne    v0, zero, L8b00c [$8008b00c]
+    8008B1E0	addiu  s2, s2, $005c
+}
+
+L8b1e4:	; 8008B1E4
+8008B1E4	lw     a2, $0010(sp)
+8008B1E8	lui    at, $800b
+8008B1EC	sw     a2, $fb8c(at)
+8008B1F0	lw     a2, $0018(sp)
+8008B1F4	lui    at, $800b
+8008B1F8	sw     s4, $f54c(at)
+8008B1FC	lui    at, $800b
+8008B200	sw     fp, $f594(at)
+8008B204	lui    at, $800b
+8008B208	sw     s7, $f1f0(at)
+8008B20C	lui    at, $800b
+8008B210	sw     a2, $f150(at)
+8008B214	lhu    a2, $0020(sp)
+8008B218	nop
+8008B21C	sh     a2, $00cc(s4)
+
+L8b220:	; 8008B220
+return;
 ////////////////////////////////

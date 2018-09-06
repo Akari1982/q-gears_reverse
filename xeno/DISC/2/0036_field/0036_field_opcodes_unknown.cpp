@@ -1800,93 +1800,6 @@ V0 = V0 + 0B;
 
 
 ////////////////////////////////
-// 0xFE OpExtend1
-V1 = w[800AF54C];
-V0 = hu[V1 + CC];
-V0 = V0 + 1;
-[V1 + CC] = h(V0);
-
-V1 = w[800AD0D8];
-V0 = bu[V1 + V0];
-V0 = w[800ADB78 + V0 * 4];
-
-ACC80880 00
-B4E90980 01
-10510980 02
-C8C60880 03
-40C80880 04
-98520980 05
-40530980 06
-D8CB0880 07
-54C70880 08
-4CC60880 09
-58CC0880 0A
-D4CC0880 0B
-C0C50880 0C
-20BE0880 0E
-0CBF0880 0F
-34C00880 10
-20C10880 11
-48C20880 12
-A8C30880 14
-800A0A80 15
-ACBD0880 16
-D49F0980 17
-ACB30880 18
-08B90880 19
-68AE0880 1A
-A8AB0880 1B
-50800980 1C
-C07A0980 1D
-28F10980 1E
-64F30980 1F
-DCF3098078FC098038AC09806CA90980E4A709809CCB0880C4A80880FCA80880C0DA0880ECDA088018DB088044DB088090D4088018D50880A0D5088028D60880
-BCD90880E8D9088014DA088040DA08806CD80880C0D8088014D9088068D9088088D7088004C80880A4C4088038C4088054A708809CA40880ACA50880BCA60880
-1C170980 40
-D8F10980 41
-3CF20980 42
-30A70980 43
-58A70980 44
-30A40880 46
-18A70880 47
-ECAA0880 48
-D0D00880 49
-BCA20880 4A
-809F0880 4B
-489F0880 4C
-109F0880 4D
-34A00880 4E
-84310980 4F
-A8310980 50
-D0310980 51
-F4310980 52
-142D0980 55
-042F0980 56
-B42D0980 57
-F82D0980 58
-742F0980 59
-D82F0980 5A
-E4A70880 5B
-68050A80 5C
-80EC0880 5D
-ACE80880 5E
-9CE70880 5F
-04E20880CCDF088018EA088074EA0880B8EB0880D0EA08802CEB0880E8E30880F4210980B49C0880D89B0880149C0880749B0880FCF0088090F0088030AA0880
-28950880707F09808C7E0980F07B0980907B0980C47F09800C7D0980BC980880C49A0880BC9A0880B49A0880EC9A0880D49A0880DC9A0880E49A088018980880
-A4950880609608801C97088088250980CC2909807498088068950880B82C0980C4910880A0930880EC94088028910880A4E9088068E908801CE90880647D0880
-D88508804887088048890880488B0880A88C0880548E088054900880B8900880A07A0880607A088088E6088030E5088074E5088044E60880B8E50880A8790880
-2CE008803479088030780880BC7708806C770880F0810880787E0880907F0880E4FF08806800098000D1088048D2088040D308802C610980C8600980E0750880
-A0A00880A8750880FC620980F463098014620980787508806C74088030740880B4730880307108800872088004730880547308803C810880E07108801C6E0880
-D46D0880DC7A0880487C0880A4D5098008D509805065088054B208808C780880CC820880EC82088078040A8040040A80E4030A808C030A8050030A805C2E0980
-206C0880206B0880006B0880F4690880A4650880346F0880A46F08808C7008801470088050700880642D0980D467098098690880846708801C670880F0630880
-B4630880546B08800700010002000400008C008E00800082008400860088008A008C008E00800082008400860088008A008C008400880080
-
-80086018	jalr   v0 ra
-////////////////////////////////
-
-
-
-////////////////////////////////
 // 0xFE13
 8008C31C	addiu  sp, sp, $ffe8 (=-$18)
 8008C320	sw     ra, $0010(sp)
@@ -3176,4 +3089,126 @@ else
 8009DAF8	addiu  sp, sp, $0018
 8009DAFC	jr     ra 
 8009DB00	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// read_two_bytes_with_80()
+script_offset = A0
+
+A0 = script_offset;
+read_two_bytes_unsigned();
+
+if( V0 & 8000 )
+{
+    V0 = V0 & 7fff;
+}
+else
+{
+    A0 = V0 & ffff;
+    get_bytes_from_800C2F3C();
+}
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// read_two_bytes_based_on_flag_80
+// read_two_bytes_based_on_flag_40
+// read_two_bytes_based_on_flag_20
+// read_two_bytes_based_on_flag_10
+// read_two_bytes_based_on_flag_08
+// read_two_bytes_based_on_flag_04
+// read_two_bytes_based_on_flag_02
+// read_two_bytes_based_on_flag_01
+a0 - offset from current script pointer
+a1 - flags
+
+if (if bit in function name in A1 set)
+{
+    read_two_bytes_signed;
+}
+else
+{
+    read_two_bytes_unsigned;
+    A0 = V0 & ffff
+    get_bytes_from_800C2F3C [$800a25a8]
+}
+
+////////////////////////////////
+
+
+
+////////////////////////////////
+// read_two_bytes_unsigned()
+data_138 = w[800af54c];
+V0 = hu[data_138 + cc];
+script_offset = w[800ad0d8];
+return (bu[script_offset + V0 + A0 + 1] << 8) | bu[script_offset + V0 + A0 + 0];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// read_two_bytes_signed()
+data_138 = w[800af54c];
+V0 = hu[data_138 + cc];
+script_offset = w[800ad0d8];
+return (((bu[script_offset + V0 + A0 + 1] << 8) + bu[script_offset + V0 + A0 + 0]) << 10) >> 10;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// convert_magic_to_pc_id()
+if( A0 == ff )
+{
+    return w[80061c28];
+}
+else if( A0 == fe )
+{
+    return w[80061c24];
+}
+else if( A0 == fd )
+{
+    return w[80061c20];
+}
+else if( A0 == fc )
+{
+    return ff;
+}
+return A0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// get_entity_id_from_opcode
+V0 = w[800af54c];
+V0 = hu[V0 + cc];
+V1 = w[800ad0d8];
+V0 = V0 + A0;
+V1 = V1 + V0;
+entity_id = bu[V1];
+
+if (entity == ff)
+{
+    entity_id = w[80059ad4];
+}
+else if (entity == fe)
+{
+    entity_id = w[80059ad8];
+}
+else if (entity == fd)
+{
+    entity_id = w[80059adc];
+}
+else if (entity == fb)
+{
+    entity_id = w[800af1f0];
+}
+
+return entity_id;
 ////////////////////////////////

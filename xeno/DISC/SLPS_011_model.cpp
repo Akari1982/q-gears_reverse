@@ -1427,7 +1427,7 @@ loop2db68:	; 8002DB68
 8002DB6C	nop
 8002DB70	srl    a0, a0, $02
 8002DB74	sll    a0, a0, $02
-8002DB78	jal    func4702c [$8004702c]
+8002DB78	jal    system_set_texture_address [$8004702c]
 8002DB7C	addu   a0, s2, a0
 8002DB80	jal    system_read_tim [$8004703c]
 8002DB84	addiu  a0, sp, $0010
