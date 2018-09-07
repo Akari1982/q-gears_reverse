@@ -176,17 +176,6 @@ else
 
 
 ////////////////////////////////
-// func7aca8()
-vector = A0;
-A0 = w[vector + 8];
-A1 = w[vector + 0];
-system_get_rotation_based_on_vector_x_y();
-return (0 - V0) & 0fff;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // length_of_vector_by_x()
 [SP + 10] = w(A0);
 A0 = SP + 10;

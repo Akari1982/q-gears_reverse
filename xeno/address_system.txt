@@ -6,6 +6,7 @@
 8004e9d4 [][][][] looks like current field.
 8004e9d8 [][][][] init with -1 after field load and set to 0 when start field load.
 8004e9dc [][][][] compare this with value from 800b1774 + encounter * 2 during battle load.
+8004e9e8 [][][][] load some textures in file 0xa7 for field.
 8004e9ec [][][][] store here 1 in some cases during battle load.
 8004e9f0 [][][][] field id to load.
 

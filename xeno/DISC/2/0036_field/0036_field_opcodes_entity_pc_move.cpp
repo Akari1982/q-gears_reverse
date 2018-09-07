@@ -184,106 +184,6 @@ data_138 = w[800af54c];
 
 
 ////////////////////////////////
-// func7889c()
-
-// if battle already started or ???
-if( ( w[800ad0b4] == 0 ) || ( w[800ad0bc] == 0 ) || ( w[800ad0c4] == 0 ) || ( w[8004e9ac] == -1 ) )
-{
-    return;
-}
-
-if( ( w[800b176c] == 0 ) || ( h[800b164a] == -1 ) || ( w[800ad004] == 1 ) || ( bu[800acfdc] == 0 ) )
-{
-    return;
-}
-
-[800b1768] = w(w[800b1768] - 1);
-if( w[800b1768] == 0 )
-{
-    func8dcec(); // reinit 800b1774
-}
-
-if( w[800b1770] > 0 )
-{
-    S0 = 0;
-    loop78994:	; 80078994
-        if( hu[800b1774 + S0 * 2] != ffff )
-        {
-            [800b1774 + S0 * 2] = h(hu[800b1774 + S0 * 2] - 1);
-        }
-        S0 = S0 + 1;
-        V0 = S0 < w[800b1770];
-    800789B4	bne    v0, zero, loop78994 [$80078994]
-}
-
-if( w[800b1770] > 0 )
-{
-    S0 = 0;
-    loop789dc:	; 800789DC
-        if( hu[800b1774 + S0 * 2] == 0 )
-        {
-            [800b1774 + S0 * 2] = h(ffff);
-
-            max_chance = 0;
-
-            // get total encounter chance and
-            // store chance for current encounter
-            A0 = 0;
-            loop78a50:	; 80078A50
-                [SP + 10 + A0 * 4] = w(max_chance);
-                max_chance = max_chance + bu[8006516c + A0]; // last row in encounter file
-                A0 = A0 + 1;
-                V0 = A0 < 10;
-            80078A68	bne    v0, zero, loop78a50 [$80078a50]
-
-            // calculate current chance value
-            system_get_random_2_bytes();
-            cur_chance = (V0 * (max_chance + 1)) >> f;
-
-            // find encounter
-            found = 0;
-            encounter = f;
-            loop78a94:	; 80078A94
-                if( ( bu[8006516c + encounter] != 0 ) && ( w[SP + 10 + encounter * 4] < cur_chance ) ) // last row in encounter file
-                {
-                    found = 1;
-                    break;
-                }
-                encounter = encounter - 1;
-            80078AC8	bgez   encounter, loop78a94 [$80078a94]
-
-            if( found != 0 )
-            {
-                [80058ba4] = b(encounter);
-                [80058b94] = b(0);
-                [800b1764] = h(hu[800b1774 + encounter * 2]);
-
-                if( w[8004ea14] == 0 )
-                {
-                    A0 = 2; // battle
-                    func19a50(); // load exe
-                }
-
-                [800ad0b4] = w(0);
-                [800ad0a8] = w(1);
-
-                if( w[800c1b60] == 0 )
-                {
-                    A0 = encounter;
-                    80078B3C	0C0A0487	‡...
-                }
-            }
-        }
-
-        S0 = S0 + 1;
-        V0 = S0 < w[800b1770];
-    800789F8	bne    v0, zero, loop789dc [$800789dc]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func8dcec()
 [800b1768] = w(w[800b176c]);
 
@@ -333,11 +233,4 @@ if( w[800b1770] > 0 )
         V0 = S0 < w[800b1770];
     8008DE0C	bne    v0, zero, loop8ddf0 [$8008ddf0]
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func81570()
-return 0 - (0 < (((w[A0 + 0] >> 9) & 3) & (w[A0 + 14] >> 3)));
 ////////////////////////////////
