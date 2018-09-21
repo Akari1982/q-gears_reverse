@@ -39,7 +39,10 @@
 8004f4b0 [][][][] 0
 8004f4b4 [][][][] 0
 8004f4b8 [][][][] start id of files in dir or some marker.
-8004f4c0 [][][][] store 8004f4b8 here at start of loading.
+8004f4c0 [][][][] cd state:
+                    0x05 - pause.
+                    0x03 - set location.
+                    store 8004f4b8 here at start of loading.
 8004f4d4 [][][][] pointer to allocated memory for file load.
 8004f4d8 [][][][] 0
 8004f4dc [][][][] some func param (0).
@@ -132,7 +135,12 @@
 80055e29 []       cd ready interrupt result.
 80055e2a []       init with 0. cd read interrupt result?
 
-80055f70 []       gpu type (old commands or new commands).
+80055f70 []       gpu mode type (old commands or new commands).
+                    0 - old cpu.
+                    1 - enabled textures old gpu.
+                    2 - disabled textures old gpu.
+                    3 - enabled textures new gpu.
+                    4 - disabled textures new gpu.
 80055f72 []       graph debug level.
                     0 No checks are performed. (Highest speed mode)
                     1 Checks coordinating registered and drawn primitives.
@@ -386,6 +394,7 @@
 8005959c [][][][] 0
 800595a8 [][][][] global file id to load.
 800595ac cd command param array.
+
 80059b6c [][][][] 0.
 
 80059600 light matrix

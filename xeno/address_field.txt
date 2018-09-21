@@ -514,6 +514,15 @@
 
 800b1834 array of stored index to party character data (somewhere in 800b09d8) (0x4 size)
 
+800b1970 render data.
+    +00 DRAWENV struct (0x5c size).
+    +5c RECT struct (0x8 size).
+    +64
+    +b8 DISPENV struct (0x14 size).
+    +cc some array
+    +40d0
+    +80f0 otag
+
 800c1b68 [][]     pressed button mask for controller 1 (details in 800af370).
 
 800c1b6c dialogs struct (0x498 size)(4 items)
@@ -625,7 +634,7 @@
 800c373c [][][][] maybe number of inited windows.
 800c3740          end of memory block.
 
-
+800c3740 [][][][] pointer to 800b1970 (otag).
 
 801e85f4 model data to init (0x8 size 0x8 items).
 +0 [][][][] pointer to array that contains pointer to all model parts (dynamicly allocated).

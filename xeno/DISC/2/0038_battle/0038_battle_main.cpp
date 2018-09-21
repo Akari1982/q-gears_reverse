@@ -79,7 +79,7 @@ L706f0:	; 800706F0
 
 L70704:	; 80070704
 80070708	ori    a1, zero, $0002
-80070704	jal    func28280 [$80028280]
+system_filesystem_set_dir();
 
 8007070C	ori    a0, zero, $0004
 80070714	ori    a1, zero, $0001
@@ -132,7 +132,7 @@ if( V1 != -1 )
 {
     800707A8	ori    a0, zero, $0010
     800707B0	ori    a1, zero, $0002
-    800707AC	jal    func28280 [$80028280]
+    system_filesystem_set_dir();
 
     800707B4	ori    a0, zero, $0006
     800707B8	lui    a1, $8028
@@ -480,8 +480,9 @@ L70c24:	; 80070C24
 80070C40	ori    s3, zero, $0001
 
 L70c44:	; 80070C44
-80070C44	jal    func28280 [$80028280]
 80070C48	addu   a1, zero, zero
+system_filesystem_set_dir();
+
 80070C4C	ori    a0, zero, $0004
 80070C50	jal    func72e5c [$80072e5c]
 80070C54	ori    a1, zero, $0001

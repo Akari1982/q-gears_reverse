@@ -78227,15 +78227,15 @@ Lb6fb4:	; 800B6FB4
 800B7108	sb     v0, $415b(at)
 800B710C	lui    a0, $800d
 800B7110	lw     a0, $c220(a0)
-800B7114	jal    $80044d14
+800B7114	jal    $system_psyq_put_disp_env
 800B7118	addiu  a0, a0, $005c
 800B711C	lui    a0, $800d
 800B7120	lw     a0, $c220(a0)
-800B7124	jal    $80044abc
+800B7124	jal    system_psyq_put_draw_env
 800B7128	nop
 800B712C	lui    a0, $800d
 800B7130	lw     a0, $c220(a0)
-800B7134	jal    $80044a48
+800B7134	jal    system_psyq_draw_otag
 800B7138	addiu  a0, a0, $406c
 
 Lb713c:	; 800B713C
@@ -86189,15 +86189,15 @@ Lbe168:	; 800BE168
 800BE170	lui    s0, $800d
 800BE174	addiu  s0, s0, $c220 (=-$3de0)
 800BE178	lw     a0, $0000(s0)
-800BE17C	jal    $80044d14
+800BE17C	jal    $system_psyq_put_disp_env
 800BE180	addiu  a0, a0, $005c
 800BE184	lw     a0, $0000(s0)
-800BE188	jal    $80044abc
+800BE188	jal    system_psyq_put_draw_env
 800BE18C	nop
 800BE190	jal    $80024e3c
 800BE194	nop
 800BE198	lw     a0, $0000(s0)
-800BE19C	jal    $80044a48
+800BE19C	jal    system_psyq_draw_otag
 800BE1A0	addiu  a0, a0, $406c
 800BE1A4	jal    funcbe274 [$800be274]
 800BE1A8	nop

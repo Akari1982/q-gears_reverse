@@ -71,13 +71,16 @@ if( w[800c1b60] == 0 )
 
 
 ////////////////////////////////
-// func74ae8
+// func74ae8()
 
-V0 = A1;
-A1 = A2 << 02;
-A1 = V0 + A1;
-A2 = V0;
-80074AFC	jal    $800439fc
+dst1 = A0;
+dst2 = A1;
+insert = A1 + A2 * 4;
+
+A0 = dst1;
+A1 = insert;
+A2 = dst2;
+func439fc();
 ////////////////////////////////
 
 
@@ -128,13 +131,14 @@ L74bcc:	; 80074BCC
 
 ////////////////////////////////
 // func74bdc()
+
 A0 = 1;
-80074BEC	jal    system_psyq_wait_frames [$8004b3f4]
+system_psyq_wait_frames();
 
 [800ad074] = w(0);
 
 A0 = -1;
-80074BFC	jal    system_psyq_wait_frames [$8004b3f4]
+system_psyq_wait_frames();
 
 S1 = V0;
 
@@ -150,10 +154,9 @@ if( w[800c1b60] == 0 )
     80074C30	0C0A06C6	Ж...
 }
 
-A0 = w[800c3740];
+A0 = w[800c3740] + S0;
 A1 = w[800acfe0];
 80074C48	jal    func71344 [$80071344]
-A0 = A0 + S0;
 
 if( w[800c1b60] == 0 )
 {
@@ -162,15 +165,13 @@ if( w[800c1b60] == 0 )
 }
 
 80074C74	jal    func73798 [$80073798]
-80074C78	nop
-80074C7C	lui    t1, $1f80
-T1 = T1 | 03fc;
+
+T1 = 1f8003fc;
 T0 = T1;
-[T0 + 0000] = w(SP);
-80074C8C	addiu  t0, t0, $fffc (=-$4)
+[T0] = w(SP);
+T0 = T0 - 4;
 SP = T0;
 80074C94	jal    func73f78 [$80073f78]
-80074C98	nop
 
 func74958(); // update sprite
 
@@ -182,17 +183,16 @@ if( w[800c1b60] == 0 )
 }
 
 80074CC8	jal    funca4284 [$800a4284]
-80074CCC	nop
-SP = SP + 0004;
-SP = w[SP + 0000];
+
+SP = SP + 4;
+SP = w[SP];
 80074CD8	jal    funca7998 [$800a7998]
-80074CDC	nop
+
 80074CE0	jal    func74b14 [$80074b14]
-80074CE4	nop
+
 80074CE8	jal    func7489c [$8007489c]
-80074CEC	nop
+
 80074CF0	jal    funcab3a0 [$800ab3a0]
-80074CF4	nop
 
 if( w[800c1b60] == 0 )
 {
@@ -219,64 +219,53 @@ A0 = 0;
 system_psyq_wait_frames();
 
 80074D64	jal    func32adc [$80032adc]
-80074D68	nop
-V0 = w[800ad0f0];
-80074D74	nop
-80074D78	bne    v0, zero, L74da8 [$80074da8]
-V0 = 0003;
-A1 = bu[800b1670];
-A2 = bu[800b1671];
-A0 = w[800c3740];
-A3 = bu[800b1672];
-80074DA0	j      L74e08 [$80074e08]
-80074DA4	nop
 
-L74da8:	; 80074DA8
-V1 = w[800af51c];
-80074DB0	nop
-80074DB4	bne    v1, v0, L74df8 [$80074df8]
-A1 = 0;
-A0 = SP + 0010;
-A2 = w[800acfe0];
-V0 = 02c0;
-[SP + 0010] = h(V0);
-V0 = 0100;
-[SP + 0012] = h(V0);
-V0 = 0140;
-[SP + 0014] = h(V0);
-V0 = 00e0;
-[SP + 0016] = h(V0);
-A2 = A2 << 08;
-system_move_image();
+if( w[800ad0f0] == 0 )
+{
+    A0 = w[800c3740] + 5c;
+    A1 = bu[800b1670];
+    A2 = bu[800b1671];
+    A3 = bu[800b1672];
+    system_clear_image();
+}
+else
+{
+    if( w[800af51c] == 3 )
+    {
+        [SP + 10] = h(2c0);
+        [SP + 12] = h(100);
+        [SP + 14] = h(140);
+        [SP + 16] = h(e0);
 
-80074DF0	j      L74e10 [$80074e10]
-80074DF4	nop
+        A0 = SP + 10;
+        A1 = 0;
+        A2 = w[800acfe0] << 8;
+        system_move_image();
+    }
+    else
+    {
+        A0 = w[800c3740] + 5c;
+        A1 = 0;
+        A2 = 0;
+        A3 = 0;
+        system_clear_image();
+    }
+}
 
-L74df8:	; 80074DF8
-A2 = 0;
-A0 = w[800c3740];
-A3 = 0;
+A0 = w[800c3740] + b8;
+system_psyq_put_disp_env();
 
-L74e08:	; 80074E08
-A0 = A0 + 005c;
-system_clear_image();
+A0 = w[800c3740] + 0;
+system_psyq_put_draw_env();
 
-L74e10:	; 80074E10
-A0 = w[800c3740];
-80074E18	jal    func44d14 [$80044d14]
-A0 = A0 + 00b8;
-A0 = w[800c3740];
-80074E28	jal    func44abc [$80044abc]
-80074E2C	nop
 V0 = w[800c1b60];
-80074E38	nop
-80074E3C	bne    v0, zero, L74e54 [$80074e54]
-80074E40	nop
-80074E44	jal    system_psyq_wait_frames [$8004b3f4]
-A0 = 0001;
-[800ad074] = w(V0);
+if( V0 == 0 )
+{
+    A0 = 0001;
+    system_psyq_wait_frames();
+    [800ad074] = w(V0);
+}
 
-L74e54:	; 80074E54
 func24e3c();
 
 if( w[800c1b60] == 0 )
@@ -287,62 +276,46 @@ if( w[800c1b60] == 0 )
 
 80074E80	jal    func916ac [$800916ac]
 
-V0 = w[800ad08c];
-80074E90	nop
-80074E94	beq    v0, zero, L74ebc [$80074ebc]
-80074E98	nop
-A1 = w[800aed50];
-80074EA4	lui    a0, $800b
-80074EA8	addiu  a0, a0, $f12c (=-$ed4)
-system_load_image();
+if( w[800ad08c] != 0 )
+{
+    A1 = w[800aed50];
+    A0 = 800af12c;
+    system_load_image();
 
-[800ad08c] = w(0);
+    [800ad08c] = w(0);
+}
 
-L74ebc:	; 80074EBC
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f1f4; // "LineScroll"
     80074ED8	0C0A06C6	Ж...
 }
 
-V0 = w[800ad0f0];
-80074EE8	nop
-80074EEC	bne    v0, zero, L74f4c [$80074f4c]
-80074EF0	nop
-V0 = w[800ad024];
-80074EFC	nop
-80074F00	beq    v0, zero, L74f2c [$80074f2c]
-80074F04	nop
-A2 = h[800b16a8];
-A1 = w[800c3740];
-A0 = A2 << 02;
-A0 = A0 + 00cc;
-A0 = A1 + A0;
-80074F24	jal    func74ae8 [$80074ae8]
-A1 = A1 + 40d0;
+if( w[800ad0f0] == 0 )
+{
+    if( w[800ad024] != 0 )
+    {
+        A2 = h[800b16a8]; // insert id
+        A0 = w[800c3740] + A2 * 4 + cc; // dst1
+        A1 = w[800c3740] + 40d0; // dst2
+        func74ae8();
+    }
 
-L74f2c:	; 80074F2C
-A0 = 80f0;
-A1 = w[800c3740];
-A2 = h[800b16a8];
-A0 = A1 + A0;
-80074F44	jal    func74ae8 [$80074ae8]
-A1 = A1 + 00cc;
+    A0 = w[800c3740] + 80f0; // dst1
+    A1 = w[800c3740] + cc; // dst2
+    A2 = h[800b16a8]; // insert id
+    func74ae8();
+}
 
-L74f4c:	; 80074F4C
-V0 = w[800c3740];
-A0 = 80f0;
-80074F58	jal    func44a48 [$80044a48]
-A0 = V0 + A0;
+A0 = w[800c3740] + 80f0;
+system_psyq_draw_otag();
 
 loop74f60:	; 80074F60
-80074F60	jal    system_psyq_wait_frames [$8004b3f4]
-80074F64	addiu  a0, zero, $ffff (=-$1)
-V1 = w[800b1650];
-80074F70	nop
-V1 = V1 + 0002;
-V1 = S1 + V1;
-V0 = V0 < V1;
+    A0 = -1;
+    system_psyq_wait_frames();
+
+    V1 = S1 + w[800b1650] + 2;
+    V0 = V0 < V1;
 80074F80	bne    v0, zero, loop74f60 [$80074f60]
 ////////////////////////////////
 
@@ -350,52 +323,41 @@ V0 = V0 < V1;
 
 ////////////////////////////////
 // func74fa0
-80074FA0	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(RA);
+
 80074FA8	jal    func73d90 [$80073d90]
-80074FAC	nop
-80074FB0	jal    call_run_script_8 [$800a15c0]
-80074FB4	nop
+
+call_run_script_8();
+
 80074FB8	jal    func7fc08 [$8007fc08]
-80074FBC	nop
-A0 = 80d4;
-V0 = w[800c3740];
+
+A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
-80074FD4	jal    func7f660 [$8007f660]
-A0 = V0 + A0;
-80074FDC	jal    $80044448
+func7f660(); // dialog function
+
 A0 = 0;
-80074FE4	jal    $8004b3f4
+system_draw_sync();
+
 A0 = 0;
-A0 = SP + 0010;
+system_psyq_wait_frames();
+
+[SP + 10] = h(140);
+[SP + 14] = h(140);
+[SP + 16] = h(e0);
+[SP + 12] = h(((w[800ad050] + 1) & 1) << 8);
+
+A0 = SP + 10;
 A1 = 0;
-V0 = 0140;
-[SP + 0010] = h(V0);
-[SP + 0014] = h(V0);
-V0 = w[800ad050];
-A2 = w[800acfe0];
-V1 = 00e0;
-[SP + 0016] = h(V1);
-V0 = V0 + 0001;
-V0 = V0 & 0001;
-V0 = V0 << 08;
-A2 = A2 << 08;
-80075028	jal    $800447d4
-[SP + 0012] = h(V0);
-A0 = w[800c3740];
-80075038	jal    $80044d14
-A0 = A0 + 00b8;
-A0 = w[800c3740];
-80075048	jal    $80044abc
-8007504C	nop
-V0 = w[800c3740];
-A0 = 80f0;
-8007505C	jal    $80044a48
-A0 = V0 + A0;
-RA = w[SP + 0018];
-SP = SP + 0020;
-8007506C	jr     ra 
-80075070	nop
+A2 = w[800acfe0] << 8;
+system_move_image();
+
+A0 = w[800c3740] + b8;
+system_psyq_put_disp_env();
+
+A0 = w[800c3740] + 0;
+system_psyq_put_draw_env();
+
+A0 = w[800c3740] + 80f0;
+system_psyq_draw_otag();
 ////////////////////////////////
 
 
@@ -1572,13 +1534,6 @@ loop76898:	; 80076898
 A0 = w[800b1740];
 V0 = w[800b1740];
 A2 = w[800aefe4];
-80076910	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 002c] = w(RA);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 03;
@@ -1726,16 +1681,6 @@ A0 = w[800b1740];
 S1 = S1 + 0001;
 V0 = S1 < 0020;
 80076BA8	bne    v0, zero, loop76b94 [$80076b94]
-80076BAC	nop
-RA = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-80076BCC	jr     ra 
-80076BD0	nop
 ////////////////////////////////
 
 
@@ -1787,7 +1732,7 @@ func322bc();
 
 A0 = 4;
 A1 = 0;
-func28280(); // set directory
+system_filesystem_set_dir();
 
 func71578();
 ////////////////////////////////
@@ -1811,7 +1756,7 @@ system_psyq_wait_frames(); // get time and sync
 if( w[8004e9e8] == 0 )
 {
     A0 = a7; // dir_file_id
-    func286fc(); // file size to load
+    system_get_aligned_filesize_by_dir_file_id();
 
     A0 = V0;
     A1 = 1;

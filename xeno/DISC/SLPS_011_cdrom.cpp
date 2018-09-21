@@ -430,15 +430,9 @@ func4b648();
 
 
 ////////////////////////////////
-// func41288
-80041288	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80041290	jal    system_psyq_cd_data_sync [$800427b4]
-80041294	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800412A0	jr     ra 
-800412A4	nop
+// func41288()
+
+system_psyq_cd_data_sync();
 ////////////////////////////////
 
 
@@ -1354,7 +1348,9 @@ return -1;
 
 ////////////////////////////////
 // system_psyq_cd_data_sync()
-// Wait for or check a data transfer initiated by CdGetSector2()
+// If mode is 0, the function waits for a data transfer initiated by CdGetSector2() to be completed.
+// If mode is 1, the function polls the current status and returns.
+
 mode = A0;
 
 A0 = -1;

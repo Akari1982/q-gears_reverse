@@ -2234,7 +2234,7 @@ else
 
 ////////////////////////////////
 // func35b88()
-// called many times to get all buttons into
+// called many times to get all buttons info
 // 80058c0c 80058с10 // current state of buttons
 // 80058b28 80058b2c // buttons that was pressed in last update
 // 80058b40 80058b44
@@ -2262,10 +2262,9 @@ func35650();
 
 ////////////////////////////////
 // func35c74
+
 80035C74	lui    v0, $8006
 80035C78	lw     v0, $8a18(v0)
-80035C7C	jr     ra 
-80035C80	nop
 ////////////////////////////////
 
 

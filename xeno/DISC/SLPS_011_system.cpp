@@ -275,24 +275,20 @@ V0 = hu[80056f46];
 
 
 ////////////////////////////////
-// func4b74c
-V0 = w[80057fd4];
-8004B754	nop
-V0 = hu[V0 + 0000];
-8004B75C	jr     ra 
-8004B760	nop
+// system_get_interrupt_mask_register()
+
+V0 = w[80057fd4]; // 1f801074 interrupt mask register
+return hu[V0];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4b764
-V1 = w[80057fd4];
-8004B76C	nop
-V0 = hu[V1 + 0000];
-[V1 + 0000] = h(A0);
-8004B778	jr     ra 
-8004B77C	nop
+// system_set_interrupt_mask_register()
+
+V1 = w[80057fd4]; // 1f801074 interrupt mask register
+V0 = hu[V1];
+[V1] = h(A0);
 ////////////////////////////////
 
 

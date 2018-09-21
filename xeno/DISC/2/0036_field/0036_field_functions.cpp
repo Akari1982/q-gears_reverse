@@ -23,10 +23,10 @@ return V0;
 
 A0 = 4;
 A1 = 0;
-func28280(); // set directory
+system_filesystem_set_dir();
 
 A0 = a8; // STRIPCD1\10\0590.sed - 0x1d67a, 0x6f8c
-func286fc(); // get filesize
+system_get_aligned_filesize_by_dir_file_id();
 S0 = V0;
 
 A0 = S0;
@@ -70,7 +70,7 @@ func3bca4(); // wait for some sound flag
 
 A0 = 4;
 A1 = 0;
-func28280(); // set directory
+system_filesystem_set_dir();
 
 [8004e9d0] = w(-1);
 ////////////////////////////////
@@ -97,7 +97,7 @@ return;
 L85178:	; 80085178
 A0 = 1c;
 A1 = 0;
-func28280(); // set directory
+system_filesystem_set_dir();
 
 80085180	sll    s1, s0, $01
 80085184	lui    s0, $800b
@@ -141,7 +141,7 @@ system_memory_allocate();
 L8520c:	; 8008520C
 A0 = 4;
 A1 = 0;
-func28280(); // set directory
+system_filesystem_set_dir();
 
 80085218	addiu  v0, zero, $ffff (=-$1)
 8008521C	lui    at, $8005
@@ -1920,7 +1920,7 @@ if( w[8004e9dc] != S1 )
 {
     A0 = 1c;
     A1 = 0;
-    func28280(); // set directory
+    system_filesystem_set_dir();
 
     A0 = 14 + S1 * 2;
     A1 = 80061cd8;
@@ -1932,7 +1932,7 @@ if( w[8004e9dc] != S1 )
 
     A0 = 4;
     A1 = 0;
-    func28280(); // set directory
+    system_filesystem_set_dir();
 }
 
 800853D8	lui    at, $800b

@@ -75,7 +75,7 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
 {
     A0 = 4;
     A1 = 0;
-    func28280(); // set directory
+    system_filesystem_set_dir();
 
     A0 = ad; // STRIPCD1\10\0595 - 0x1d6d3, 0x621c
     A1 = 80280000; // allocated_memory
@@ -612,13 +612,10 @@ A0 = w[8004e9c8];
 
 L781ac:	; 800781AC
 V0 = w[800ad0f0];
-800781B4	nop
-800781B8	beq    v0, zero, L781cc [$800781cc]
-800781BC	nop
-800781C0	addiu  v0, v0, $ffff (=-$1)
-[800ad0f0] = w(V0);
-
-L781cc:	; 800781CC
+if( V0 != 0 )
+{
+    [800ad0f0] = w(V0 - 1);
+}
 ////////////////////////////////
 
 
@@ -1302,7 +1299,7 @@ V0 = V0 + A0;
 80078D70	jal    $80044d14
 A0 = V0 + 00b8;
 A0 = w[800c3740];
-80078D80	jal    $80044abc
+80078D80	jal    system_psyq_put_draw_env
 80078D84	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -1375,7 +1372,7 @@ A0 = w[800c3740];
 80078E94	jal    $80044d14
 A0 = A0 + 00b8;
 A0 = w[800c3740];
-80078EA4	jal    $80044abc
+80078EA4	jal    system_psyq_put_draw_env
 80078EA8	nop
 A0 = w[800c3740];
 80078EB4	jal    $80044a48

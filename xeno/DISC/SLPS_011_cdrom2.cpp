@@ -58,7 +58,7 @@ if( S0 == 0 || S0 == -1 )
     func2a238(); // execute CdlSetmode command
 
     A0 = 0;
-    func28870(); // system_psyq_cd_data_sync
+    func28870();
 
     A0 = 3;
     system_psyq_wait_frames();
@@ -95,7 +95,7 @@ if( S0 == 0 )
     func2935c();
 
     A0 = 0;
-    func28870(); // system_psyq_cd_data_sync
+    func28870();
 
     A0 = 28; // file sector
     A1 = file2_allocated_memory;
@@ -105,7 +105,7 @@ if( S0 == 0 )
     func2935c();
 
     A0 = 0;
-    func28870(); // system_psyq_cd_data_sync
+    func28870();
 }
 ////////////////////////////////
 
@@ -148,16 +148,12 @@ A0 = 0;
 [8004f4a0] = w(0);
 [8004f49c] = w(0);
 [8004f4c0] = w(0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80028278	jr     ra 
-8002827C	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func28280()
+// system_filesystem_set_dir()
 
 V0 = w[8004f498];
 // 16001800FFFFFFFF
@@ -233,7 +229,6 @@ A0 = A0 << 01;
 A0 = A0 + V0;
 V1 = hu[A0 + 0000];
 V0 = w[8004f4b8];
-80028378	jr     ra 
 V0 = V1 - V0;
 ////////////////////////////////
 
@@ -346,7 +341,7 @@ if( S0 == 0 )
 {
     if( w[8004f4ec] == 0 )
     {
-        A0 = 1;
+        A0 = 1; // check status and return
         system_psyq_cd_data_sync();
         if( V0 != 0 )
         {
@@ -364,7 +359,7 @@ return S0;
 
 
 ////////////////////////////////
-// func28548()
+// system_get_filesize_by_dir_file_id()
 
 dir_file_id = A0;
 
@@ -463,9 +458,10 @@ V0 = V0 << 02;
 
 
 ////////////////////////////////
-// func286fc()
+// system_get_aligned_filesize_by_dir_file_id()
+
 A0 = A0;
-func28548(); // get filesize by dir file id
+system_get_filesize_by_dir_file_id();
 
 return (V1 / 4) * 4; // make it aligned
 ////////////////////////////////
@@ -520,7 +516,7 @@ return 0;
 
 
 ////////////////////////////////
-// func287e0()
+// system_get_sector_by_dir_file_id()
 V0 = w[8004f494]; // pointer to 0x80010004
 A0 = w[8004f4b8] + A0 - 1;
 return (bu[V0 + A0 * 7 + 2] << 10) | (bu[V0 + A0 * 7 + 1] << 8) | bu[V0 + A0 * 7 + 0];
@@ -1319,7 +1315,7 @@ flags = A4;
 if( w[8004f4ec] == 0 )
 {
     A0 = 0;
-    func28870(); // system_psyq_cd_data_sync
+    func28870();
 
     [8004f4a8] = w(file_sector); // file sector to load
     [8004f49c] = w(file_size); // file size to load
@@ -1345,25 +1341,26 @@ dir_file_id = A0;
 allocated_memory = A1;
 S2 = A2;
 flags = A3;
+
 if( dir_file_id > 0 )
 {
     A0 = dir_file_id;
-    func28548(); // get filesize by dir file id
+    system_get_filesize_by_dir_file_id();
     if( V0 > 0 )
     {
         if( allocated_memory != 0 )
         {
             A0 = 0;
-            func28870(); // system_psyq_cd_data_sync
+            func28870();
 
             [8004f4bc] = w(w[8004f4b8]);
 
             A0 = dir_file_id;
-            func287e0();
+            system_get_sector_by_dir_file_id();
             [8004f4a8] = w(V0); // file sector to load
 
             A0 = dir_file_id;
-            func286fc();
+            system_get_aligned_filesize_by_dir_file_id();
             [8004f49c] = w(V0); // file size to load
 
             A0 = dir_file_id;
@@ -1783,7 +1780,7 @@ A0 = S2;
 
 L29a8c:	; 80029A8C
 [800595a8] = w(S0);
-80029A94	jal    func287e0 [$800287e0]
+80029A94	jal    system_get_sector_by_dir_file_id [$800287e0]
 A0 = S0;
 [8004f4a8] = w(V0);
 80029AA4	jal    func28618 [$80028618]
@@ -1971,7 +1968,7 @@ L29d34:	; 80029D34
 L29d3c:	; 80029D3C
 80029D3C	blez   s2, L2a03c [$8002a03c]
 80029D40	addiu  v0, zero, $fffd (=-$3)
-80029D44	jal    func28548 [$80028548]
+80029D44	jal    system_get_filesize_by_dir_file_id [$80028548]
 A0 = S2;
 80029D4C	blez   v0, L2a03c [$8002a03c]
 80029D50	addiu  v0, zero, $fffd (=-$3)
@@ -1998,11 +1995,15 @@ V0 = S0 << 10;
 80029DA4	jal    func288a4 [$800288a4]
 A0 = S1;
 [800595a8] = w(S2);
-80029DB4	jal    func287e0 [$800287e0]
+
 A0 = S2;
+system_get_sector_by_dir_file_id();
+
 [8004f4a8] = w(V0);
-80029DC4	jal    func286fc [$800286fc]
+
 A0 = S2;
+system_get_aligned_filesize_by_dir_file_id();
+
 S5 = 0001;
 [8004f49c] = w(V0);
 V0 = S3 << 03;
@@ -2041,8 +2042,9 @@ V0 = S4 & ffff;
 80029EB8	lui    s0, $8006
 80029EBC	addiu  s0, s0, $95ac (=-$6a54)
 A0 = w[8004f4a8];
-80029EC8	jal    system_psyq_cd_int_to_pos [$800412a8]
 A1 = S0;
+system_psyq_cd_int_to_pos();
+
 V0 = w[8004f4ec];
 80029ED8	nop
 80029EDC	beq    v0, zero, L29fdc [$80029fdc]
@@ -2158,17 +2160,17 @@ SP = SP + 0050;
 
 ////////////////////////////////
 // func2a070
-8002A070	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = A0;
-[SP + 0018] = w(RA);
+
 8002A080	blez   s1, L2a0c4 [$8002a0c4]
-[SP + 0010] = w(S0);
+
 A0 = S1 << 08;
 A0 = A0 + S1;
 A0 = A0 << 03;
-8002A094	jal    system_memory_allocate [$800319ec]
 A0 = A0 + 0024;
+8002A094	jal    system_memory_allocate [$800319ec]
+
 S0 = V0;
 8002A0A0	beq    s0, zero, L2a0c8 [$8002a0c8]
 V0 = 0;
@@ -2184,68 +2186,53 @@ L2a0c4:	; 8002A0C4
 V0 = 0;
 
 L2a0c8:	; 8002A0C8
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8002A0D8	jr     ra 
-8002A0DC	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func2a0e0
-V0 = w[8004f4ec];
-8002A0E8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-8002A0F4	bne    v0, zero, L2a190 [$8002a190]
-[SP + 0014] = w(RA);
-8002A0FC	jal    func284dc [$800284dc]
-8002A100	nop
-8002A104	bne    v0, zero, L2a190 [$8002a190]
-8002A108	nop
-V0 = w[8004f4b8];
-[8004f4bc] = w(V0);
-8002A11C	blez   s0, L2a168 [$8002a168]
-V0 = 0005;
-8002A124	jal    func287e0 [$800287e0]
-A0 = S0;
-A0 = V0;
-8002A130	lui    s0, $8006
-8002A134	addiu  s0, s0, $95ac (=-$6a54)
-8002A138	jal    system_psyq_cd_int_to_pos [$800412a8]
-A1 = S0;
-V0 = 0003;
-[8004f4c0] = w(V0);
-8002A14C	lui    a0, $8003
-8002A150	addiu  a0, a0, $a49c (=-$5b64)
-8002A154	jal    func40e2c [$80040e2c]
-8002A158	nop
-A0 = 0002;
-8002A160	j      L2a188 [$8002a188]
-A1 = S0;
+// func2a0e0()
 
-L2a168:	; 8002A168
-[8004f4c0] = w(V0);
-8002A170	lui    a0, $8003
-8002A174	addiu  a0, a0, $a49c (=-$5b64)
-8002A178	jal    func40e2c [$80040e2c]
-8002A17C	nop
-A0 = 0009;
-A1 = 0;
+dir_file_id = A0;
 
-L2a188:	; 8002A188
-8002A188	jal    func40f94 [$80040f94]
-8002A18C	nop
+if( w[8004f4ec] == 0 )
+{
+    func284dc(); // check if transfer complete
+    if( V0 == 0 )
+    {
+        [8004f4bc] = w(w[8004f4b8]);
 
-L2a190:	; 8002A190
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002A19C	jr     ra 
-8002A1A0	nop
+        if( dir_file_id > 0 )
+        {
+            A0 = dir_file_id;
+            system_get_sector_by_dir_file_id();
+
+            A0 = V0;
+            A1 = 800595ac;
+            system_psyq_cd_int_to_pos();
+
+            [8004f4c0] = w(3);
+
+            A0 = 8002a49c;
+            func40e2c(); // set some callback
+
+            A0 = 2; // CdlSetloc
+            A1 = 800595ac; // param
+            func40f94(); // run next command
+        }
+        else
+        {
+            [8004f4c0] = w(5);
+
+            A0 = 8002a49c;
+            func40e2c(); // set some callback
+
+            A0 = 9; // CdlPause
+            A1 = 0; // param
+            func40f94(); // run next command
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -2256,7 +2243,7 @@ SP = SP + 0018;
 [SP + 0014] = w(RA);
 8002A1AC	blez   a0, L2a1f8 [$8002a1f8]
 [SP + 0010] = w(S0);
-8002A1B4	jal    func287e0 [$800287e0]
+8002A1B4	jal    system_get_sector_by_dir_file_id [$800287e0]
 8002A1B8	nop
 A0 = V0;
 8002A1C0	lui    s0, $8006
@@ -2433,8 +2420,9 @@ loop2a400:	; 8002A400
 A0 = A0 + 0001;
 S0 = S1 << 03;
 S0 = S0 + S2;
-8002A40C	jal    func286fc [$800286fc]
 [S0 + 0000] = h(A0);
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
 8002A418	jal    system_memory_allocate [$800319ec]
 A1 = 0;

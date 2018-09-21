@@ -1754,11 +1754,11 @@ L795a8:	; 800795A8
 80079620	ori    s1, zero, $0040
 80079624	lui    a0, $800c
 80079628	lw     a0, $3740(a0)
-8007962C	jal    $80044d14
+8007962C	jal    $system_psyq_put_disp_env
 80079630	addiu  a0, a0, $00b8
 80079634	lui    a0, $800c
 80079638	lw     a0, $3740(a0)
-8007963C	jal    $80044abc
+8007963C	jal    system_psyq_put_draw_env
 80079640	nop
 80079644	ori    v0, zero, $02c0
 80079648	sh     v0, $0000(s0)
@@ -31663,11 +31663,11 @@ funca5dfc:	; 800A5DFC
 800A5E28	addu   a3, zero, zero
 800A5E2C	lui    a0, $800c
 800A5E30	lw     a0, $3740(a0)
-800A5E34	jal    $80044abc
+800A5E34	jal    system_psyq_put_draw_env
 800A5E38	nop
 800A5E3C	lui    a0, $800c
 800A5E40	lw     a0, $3740(a0)
-800A5E44	jal    $80044d14
+800A5E44	jal    $system_psyq_put_disp_env
 800A5E48	addiu  a0, a0, $00b8
 800A5E4C	lui    v0, $800c
 800A5E50	lw     v0, $3740(v0)
@@ -32871,11 +32871,11 @@ funca6e20:	; 800A6E20
 800A6F30	sb     zero, $9b2d(at)
 800A6F34	lui    at, $800b
 800A6F38	sb     zero, $1a39(at)
-800A6F3C	jal    $80044d14
+800A6F3C	jal    $system_psyq_put_disp_env
 800A6F40	addiu  a0, a0, $00b8
 800A6F44	lui    a0, $800c
 800A6F48	lw     a0, $3740(a0)
-800A6F4C	jal    $80044abc
+800A6F4C	jal    system_psyq_put_draw_env
 800A6F50	nop
 800A6F54	addiu  a0, sp, $0018
 800A6F58	addu   a1, zero, zero
@@ -32924,11 +32924,11 @@ La6fd0:	; 800A6FD0
 800A6FF4	addu   a3, zero, zero
 800A6FF8	lui    a0, $800c
 800A6FFC	lw     a0, $3740(a0)
-800A7000	jal    $80044d14
+800A7000	jal    $system_psyq_put_disp_env
 800A7004	addiu  a0, a0, $00b8
 800A7008	lui    a0, $800c
 800A700C	lw     a0, $3740(a0)
-800A7010	jal    $80044abc
+800A7010	jal    system_psyq_put_draw_env
 800A7014	nop
 800A7018	lui    v0, $800c
 800A701C	lw     v0, $3740(v0)
@@ -33192,11 +33192,11 @@ La73b4:	; 800A73B4
 800A73C0	addu   a0, zero, zero
 800A73C4	lui    a0, $800c
 800A73C8	lw     a0, $3740(a0)
-800A73CC	jal    $80044d14
+800A73CC	jal    $system_psyq_put_disp_env
 800A73D0	addiu  a0, a0, $00b8
 800A73D4	lui    a0, $800c
 800A73D8	lw     a0, $3740(a0)
-800A73DC	jal    $80044abc
+800A73DC	jal    system_psyq_put_draw_env
 800A73E0	nop
 800A73E4	jal    funca6804 [$800a6804]
 800A73E8	ori    a0, zero, $0003
@@ -33206,11 +33206,11 @@ La73b4:	; 800A73B4
 800A73F8	addu   a0, zero, zero
 800A73FC	lui    a0, $800c
 800A7400	lw     a0, $3740(a0)
-800A7404	jal    $80044d14
+800A7404	jal    $system_psyq_put_disp_env
 800A7408	addiu  a0, a0, $00b8
 800A740C	lui    a0, $800c
 800A7410	lw     a0, $3740(a0)
-800A7414	jal    $80044abc
+800A7414	jal    system_psyq_put_draw_env
 800A7418	nop
 800A741C	jal    funca6804 [$800a6804]
 800A7420	ori    a0, zero, $0003
@@ -33332,11 +33332,11 @@ La758c:	; 800A758C
 800A75A8	nop
 800A75AC	lui    a0, $800c
 800A75B0	lw     a0, $3740(a0)
-800A75B4	jal    $80044d14
+800A75B4	jal    $system_psyq_put_disp_env
 800A75B8	addiu  a0, a0, $00b8
 800A75BC	lui    a0, $800c
 800A75C0	lw     a0, $3740(a0)
-800A75C4	jal    $80044abc
+800A75C4	jal    system_psyq_put_draw_env
 800A75C8	nop
 800A75CC	jal    $8004b3f4
 800A75D0	addu   a0, zero, zero
@@ -33370,11 +33370,11 @@ La758c:	; 800A758C
 800A7640	addiu  s1, s0, $00b8
 800A7644	lui    at, $800c
 800A7648	sw     s0, $3740(at)
-800A764C	jal    $80044d14
+800A764C	jal    $system_psyq_put_disp_env
 800A7650	addu   a0, s1, zero
 800A7654	lui    a0, $800c
 800A7658	lw     a0, $3740(a0)
-800A765C	jal    $80044abc
+800A765C	jal    system_psyq_put_draw_env
 800A7660	nop
 800A7664	lui    v1, $800b
 800A7668	lw     v1, $d04c(v1)
@@ -33394,11 +33394,11 @@ La7680:	; 800A7680
 800A7698	addiu  v0, v0, $ff37 (=-$c9)
 800A769C	lui    at, $800c
 800A76A0	sw     v0, $3740(at)
-800A76A4	jal    $80044d14
+800A76A4	jal    $system_psyq_put_disp_env
 800A76A8	nop
 800A76AC	lui    a0, $800c
 800A76B0	lw     a0, $3740(a0)
-800A76B4	jal    $80044abc
+800A76B4	jal    system_psyq_put_draw_env
 800A76B8	nop
 800A76BC	addiu  a0, sp, $0010
 800A76C0	addu   a1, zero, zero
@@ -33418,11 +33418,11 @@ La7680:	; 800A7680
 800A76F8	sb     zero, $9b2d(at)
 800A76FC	lui    at, $800c
 800A7700	sw     s0, $3740(at)
-800A7704	jal    $80044d14
+800A7704	jal    $system_psyq_put_disp_env
 800A7708	addu   a0, s1, zero
 800A770C	lui    a0, $800c
 800A7710	lw     a0, $3740(a0)
-800A7714	jal    $80044abc
+800A7714	jal    system_psyq_put_draw_env
 800A7718	nop
 800A771C	lui    v0, $800b
 800A7720	lw     v0, $f358(v0)
