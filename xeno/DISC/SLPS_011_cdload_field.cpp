@@ -1331,7 +1331,7 @@ L37594:	; 80037594
 8003759C	addu   a0, zero, zero
 800375A0	addu   a1, zero, zero
 800375A4	lw     a2, $0068(sp)
-800375A8	jal    func43894 [$80043894]
+800375A8	jal    system_graphic_get_texpage_by_param [$system_graphic_get_texpage_by_param]
 800375AC	addu   a3, s6, zero
 800375B0	addu   a0, s5, zero
 800375B4	addu   a1, s4, zero
@@ -1372,12 +1372,12 @@ L37594:	; 80037594
 80037640	addiu  a0, s0, $001c
 80037644	addu   a1, zero, zero
 80037648	lh     a3, $0002(s0)
-8003764C	jal    func43c98 [$80043c98]
+8003764C	jal    system_graphic_create_texpage_settings_packet [$80043c98]
 80037650	addu   a2, zero, zero
 80037654	addiu  a0, s0, $0024
 80037658	addu   a1, zero, zero
 8003765C	lh     a3, $0002(s0)
-80037660	jal    func43c98 [$80043c98]
+80037660	jal    system_graphic_create_texpage_settings_packet [$80043c98]
 80037664	addu   a2, zero, zero
 80037668	ori    v0, zero, $0003
 8003766C	sb     v0, $0047(s0)

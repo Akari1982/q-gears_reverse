@@ -271,11 +271,11 @@ if (T0 < a)
             func438d0; // pack clut data
             [S3 + b8 + S4 * 28 + 0e] = h(V0);
 
-            A0 = 0;
-            A1 = 2;
-            A2 = 280;
-            A3 = 100;
-            func43894; // pack tex page settings
+            A0 = 0; // texture page colors 4bit
+            A1 = 2; // semi transparency B-F
+            A2 = 280; // x
+            A3 = 100; // y
+            system_graphic_get_texpage_by_param();
             [S3 + b8 + S4 * 28 + 16] = b(V0);
 
             [S3 + b8 + S4 * 28 + 0c] = b(0);
@@ -1206,7 +1206,7 @@ L1e1e64:	; 801E1E64
 801E1E7C	sll    a3, a3, $18
 801E1E80	addu   a2, s0, zero
 801E1E84	sra    a3, a3, $10
-801E1E88	jal    func43894 [$80043894]
+801E1E88	jal    system_graphic_get_texpage_by_param [$system_graphic_get_texpage_by_param]
 
 L1e1e8c:	; 801E1E8C
 801E1E8C	sw     t1, $00f8(sp)

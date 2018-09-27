@@ -771,7 +771,7 @@ A0 = 0;
 A1 = 2;
 A2 = 280;
 A3 = 1e0;
-func43894(); // pack texpage settings
+system_graphic_get_texpage_by_param();
 [offset_70 + 20 + 16] = h(V0);
 
 A0 = 100;
@@ -884,7 +884,7 @@ A0 = h[800ad2d8 + S5 * c];
 A1 = h[800ad2da + S5 * c];
 A2 = h[800ad2dc + S5 * c];
 A3 = h[800ad2de + S5 * c];
-func43894(); // pack texpage settings
+system_graphic_get_texpage_by_param();
 [offset_70 + 36] = h(V0);
 
 A0 = h[800ad2e0 + S5 * c];
@@ -1126,7 +1126,7 @@ A0 = 0;
 A1 = 2;
 A2 = 280;
 A3 = 1c0;
-func43894(); // pack texpage settings
+system_graphic_get_texpage_by_param();
 [S1 + 16] = h(V0);
 
 A0 = 100;
@@ -1205,7 +1205,7 @@ loop7d540:	; 8007D540
 8007D574	sh     zero, $0000(s3)
 8007D578	sh     s6, $0006(s0)
 8007D580	sh     s6, $0000(s2)
-func43894(); // pack texpage settings
+system_graphic_get_texpage_by_param();
 
 8007D584	addu   a0, s4, zero
 8007D588	addu   a1, zero, zero
@@ -1218,7 +1218,7 @@ func45354(); // set e1 e1 render settings
 8007D5A0	addu   a1, zero, zero
 8007D5A4	ori    a2, zero, $0380
 8007D5AC	ori    a3, zero, $0100
-func43894(); // pack texpage settings
+system_graphic_get_texpage_by_param();
 
 8007D5B0	addu   a0, s5, zero
 8007D5B4	addu   a1, zero, zero
@@ -1280,7 +1280,7 @@ loop7d60c:	; 8007D60C
 8007D688	addu   at, at, v0
 8007D68C	sw     s4, $fb60(at)
 8007D694	ori    a3, zero, $0100
-func43894(); // pack texpage settings
+system_graphic_get_texpage_by_param();
 
 8007D698	addu   a0, s3, zero
 8007D69C	addu   a1, zero, zero
@@ -1293,7 +1293,7 @@ func45354(); // set e1 e1 render settings
 8007D6B4	addu   a1, zero, zero
 8007D6B8	ori    a2, zero, $0300
 8007D6C0	ori    a3, zero, $0100
-func43894(); // pack texpage settings
+system_graphic_get_texpage_by_param();
 
 8007D6C4	addu   a0, s5, zero
 8007D6C8	addu   a1, zero, zero
@@ -1575,7 +1575,7 @@ La5ba0:	; 800A5BA0
     800A5C80	sh     zero, $0000(s1)
     800A5C84	sh     zero, $0002(s1)
     800A5C8C	sh     v1, $0006(s1)
-    func43894(); // pack texpage settings
+    system_graphic_get_texpage_by_param();
 
     800A5C90	lui    v1, $800b
     800A5C94	addiu  v1, v1, $0748
@@ -1592,7 +1592,7 @@ La5ba0:	; 800A5BA0
     800A5CBC	addu   a2, s5, zero
     800A5CC0	lw     a1, $0020(sp)
     800A5CC8	ori    a3, zero, $0100
-    func43894(); // pack texpage settings
+    system_graphic_get_texpage_by_param();
 
     800A5CCC	addu   a1, zero, zero
     800A5CD0	addu   a2, zero, zero
@@ -1623,7 +1623,7 @@ La5ba0:	; 800A5BA0
     800A5D2C	sb     zero, $001c(s3)
     800A5D30	sb     v0, $0024(s3)
     800A5D38	sb     v1, $0025(s3)
-    func43894(); // pack texpage settings
+    system_graphic_get_texpage_by_param();
 
     800A5D3C	addu   a2, s3, zero
     800A5D40	addiu  a3, s3, $0020

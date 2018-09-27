@@ -139,13 +139,29 @@ return number_of_files;
 
 
 ////////////////////////////////
-// system_side_of_vector
-8004A5B4	mtc2   a0,l33
-8004A5B8	mtc2   a2,gbk
-8004A5BC	mtc2   a1,rbk
-8004A5C8	gte_func26zero,r11r12
-8004A5CC	mfc2   v0,ofx
-8004A5D0	jr     ra 
+// system_calculate_rotation_matrix()
+rot_x = h[A0 + 0] & 0fff;
+cos_x = h[80051a90 + rot_x * 4 + 0];
+sin_x = h[80051a90 + rot_x * 4 + 2];
+
+rot_y = h[A0 + 2] & 0fff;
+cos_y = h[80051a90 + rot_y * 4 + 0];
+sin_y = h[80051a90 + rot_y * 4 + 2];
+
+rot_z = h[A0 + 4] & 0fff;
+cos_z = h[80051a90 + rot_z * 4 + 0];
+sin_z = h[80051a90 + rot_z * 4 + 2];
+
+[A1 + 0] = h((sin_z * sin_y) >> c);
+[A1 + 2] = h((0 - (cos_z * sin_y)) >> c);
+[A1 + 4] = h(cos_y);
+[A1 + 6] = h(((cos_z * sin_x) >> c) - ((((sin_z * (0 - cos_y)) >> c) * cos_x) >> c));
+[A1 + 8] = h(((sin_z * sin_x) >> c) + ((((cos_z * (0 - cos_y)) >> c) * cos_x) >> c));
+[A1 + a] = h((0 - (sin_y * cos_x)) >> c);
+[A1 + c] = h(((cos_z * sin_y * sin_x) >> c) + ((cos_z * cos_x) >> c));
+[A1 + e] = h(((sin_z * cos_x) >> c) - ((((cos_z * (0 - cos_y)) >> c) * sin_x) >> c));
+[A1 + 10] = h((sin_y * sin_x) >> c);
+return A1;
 ////////////////////////////////
 
 
@@ -300,40 +316,6 @@ return bu[A0 + V0 * 2 + A1 * 2 + 6];
 // func33584
 V0 = hu[A0 + 0]
 return bu[A0 + V0 * 2 + A1 * 2 + 6 + 1];
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func495f4()
-[A0 + 0] = h((h[A0 + 0] * w[A1 + 0]) >> c);
-[A0 + 2] = h((h[A0 + 2] * w[A1 + 0]) >> c);
-[A0 + 4] = h((h[A0 + 4] * w[A1 + 0]) >> c);
-[A0 + 6] = h((h[A0 + 6] * w[A1 + 4]) >> c);
-[A0 + 8] = h((h[A0 + 8] * w[A1 + 4]) >> c);
-[A0 + a] = h((h[A0 + a] * w[A1 + 4]) >> c);
-[A0 + c] = h((h[A0 + c] * w[A1 + 8]) >> c);
-[A0 + e] = h((h[A0 + e] * w[A1 + 8]) >> c);
-[A0 + 10] = h((h[A0 + 10] * w[A1 + 8]) >> c);
-
-return A0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func49c74()
-[A0 + 0] = h((h[A0 + 0] * w[A1 + 0]) >> c);
-[A0 + 2] = h((h[A0 + 2] * w[A1 + 4]) >> c);
-[A0 + 4] = h((h[A0 + 4] * w[A1 + 8]) >> c);
-[A0 + 6] = h((h[A0 + 6] * w[A1 + 0]) >> c);
-[A0 + 8] = h((h[A0 + 8] * w[A1 + 4]) >> c);
-[A0 + a] = h((h[A0 + a] * w[A1 + 8]) >> c);
-[A0 + c] = h((h[A0 + c] * w[A1 + 0]) >> c);
-[A0 + e] = h((h[A0 + e] * w[A1 + 4]) >> c);
-[A0 + 10] = h((h[A0 + 10] * w[A1 + 8]) >> c);
-
-return A0;
 ////////////////////////////////
 
 
@@ -855,7 +837,7 @@ A0 = 0;
 A1 = 0;
 A2 = u_tex;
 A3 = v_tex;
-func43894(); // pack texpage
+system_graphic_get_texpage_by_param();
 
 A0 = offset_18 + 30;
 A1 = 0;
@@ -868,7 +850,7 @@ A0 = 0;
 A1 = 0;
 A2 = u_tex + 40;
 A3 = v_tex;
-func43894(); // pack texpage
+system_graphic_get_texpage_by_param();
 
 A0 = offset_18 + 3c;
 A1 = 0;
@@ -916,4 +898,48 @@ if( A2 != ffff )
     80033948	bne    a2, ffff, loop3390c [$8003390c]
 }
 [A1] = b(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gte_calculate_and_set_lighting_matrix()
+
+V1 = 80059600;
+
+R11R12 = w[V1 + 0];
+R13R21 = w[V1 + 4];
+R22R23 = w[V1 + 8];
+R31R32 = w[V1 + c];
+R33 = w[V1 + 10];
+
+IR1 = hu[A0 + 0];
+IR2 = hu[A0 + 6];
+IR3 = hu[A0 + c];
+gte_rtir12(); // ir * rotmatrix
+[SP + 0] = h(IR1);
+[SP + 6] = h(IR2);
+[SP + c] = h(IR3);
+
+IR1 = hu[A0 + 2];
+IR2 = hu[A0 + 8];
+IR3 = hu[A0 + e];
+gte_rtir12(); // ir * rotmatrix
+[SP + 2] = h(IR1);
+[SP + 8] = h(IR2);
+[SP + e] = h(IR3);
+
+IR1 = hu[A0 + 4];
+IR2 = hu[A0 + a];
+IR3 = hu[A0 + 10];
+gte_rtir12(); // ir * rotmatrix
+[SP + 4] = h(IR1);
+[SP + a] = h(IR2);
+[SP + 10] = h(IR3);
+
+L11L12 = w[SP + 0];
+L13L21 = w[SP + 4];
+L22L23 = w[SP + 8];
+L31L32 = w[SP + c];
+L33 = w[SP + 10];
 ////////////////////////////////

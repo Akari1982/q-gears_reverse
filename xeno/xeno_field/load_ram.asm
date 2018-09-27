@@ -2608,7 +2608,7 @@ L1e019c:	; 801E019C
 801E01A8	ori    a1, zero, $0001
 801E01AC	ori    a2, zero, $0340
 801E01B0	ori    a3, zero, $0100
-801E01B4	jal    func43894 [$80043894]
+801E01B4	jal    system_graphic_get_texpage_by_param [$system_graphic_get_texpage_by_param]
 801E01B8	sh     v0, $003a(s1)
 801E01BC	ori    v1, zero, $000f
 801E01C0	sb     v1, $0048(s1)

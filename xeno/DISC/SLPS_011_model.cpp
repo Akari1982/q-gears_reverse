@@ -532,7 +532,7 @@ A2 = A0 & ffff; // TX as 0x3c0
 A3 = A1 & ffff; // TY as 0x100
 A0 = 0;
 A1 = 0;
-func43894();
+system_graphic_get_texpage_by_param();
 [800589b0] = w(V0 & 1f);
 [8004f7ac] = w(1);
 ////////////////////////////////
@@ -1276,8 +1276,9 @@ A1 = 0001;
 A0 = 0001;
 A1 = 0;
 A2 = 0280;
-8002D940	jal    func43894 [$80043894]
 A3 = 0;
+system_graphic_get_texpage_by_param();
+
 A0 = 0;
 A1 = 01e0;
 V1 = w[800589b0];

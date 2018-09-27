@@ -131,7 +131,7 @@ func1b6d0:	; 8001B6D0
 8001B720	jal    func48a6c [$80048a6c]
 8001B724	ori    s1, zero, $00e0
 8001B728	ori    a0, zero, $00a0
-8001B72C	jal    func49fd4 [$80049fd4]
+8001B72C	jal    system_gte_set_screen_offset [$80049fd4]
 8001B730	ori    a1, zero, $00b4
 8001B734	jal    system_gte_set_projection_plane_distance [$80049ff4]
 8001B738	ori    a0, zero, $0200
@@ -494,7 +494,7 @@ func1bca0:	; 8001BCA0
 8001BCA4	ori    a0, zero, $00a0
 8001BCA8	ori    a1, zero, $0070
 8001BCAC	sw     ra, $001c(sp)
-8001BCB0	jal    func49fd4 [$80049fd4]
+8001BCB0	jal    system_gte_set_screen_offset [$80049fd4]
 8001BCB4	sw     s0, $0018(sp)
 8001BCB8	jal    system_gte_set_projection_plane_distance [$80049ff4]
 8001BCBC	ori    a0, zero, $0200
@@ -2086,7 +2086,7 @@ L25754:	; 80025754
 80025770	jal    func49f64 [$80049f64]
 80025774	addiu  a1, sp, $008c
 80025778	ori    a0, zero, $00a0
-8002577C	jal    func49fd4 [$80049fd4]
+8002577C	jal    system_gte_set_screen_offset [$80049fd4]
 80025780	ori    a1, zero, $0070
 80025784	lw     v0, $003c(s2)
 80025788	lui    v1, $0200
@@ -2145,7 +2145,7 @@ L25838:	; 80025838
 80025844	nop
 80025848	lw     a0, $0088(sp)
 8002584C	lw     a1, $008c(sp)
-80025850	jal    func49fd4 [$80049fd4]
+80025850	jal    system_gte_set_screen_offset [$80049fd4]
 80025854	nop
 
 L25858:	; 80025858
@@ -2607,7 +2607,7 @@ L25d7c:	; 80025D7C
 80025E8C	sra    a0, s1, $10
 80025E90	sll    s2, s2, $10
 80025E94	sra    a1, s2, $10
-80025E98	jal    func49fd4 [$80049fd4]
+80025E98	jal    system_gte_set_screen_offset [$80049fd4]
 80025E9C	sw     v0, $0078(sp)
 80025EA0	jal    system_gte_set_projection_plane_distance [$80049ff4]
 80025EA4	ori    a0, zero, $1000
@@ -2647,7 +2647,7 @@ L25ef0:	; 80025EF0
 80025F24	lh     a0, $0010(s0)
 80025F28	lh     a2, $0016(s0)
 80025F2C	lh     a3, $0018(s0)
-80025F30	jal    func43894 [$80043894]
+80025F30	jal    system_graphic_get_texpage_by_param [$80043894]
 80025F34	addu   a1, zero, zero
 80025F38	sh     v0, $0016(s1)
 80025F3C	lh     a0, $0012(s0)
@@ -2772,7 +2772,7 @@ L26098:	; 80026098
 L260dc:	; 800260DC
 800260DC	lw     a0, $0058(sp)
 800260E0	lw     a1, $005c(sp)
-800260E4	jal    func49fd4 [$80049fd4]
+800260E4	jal    system_gte_set_screen_offset [$80049fd4]
 800260E8	nop
 800260EC	lw     a0, $0078(sp)
 800260F0	jal    system_gte_set_projection_plane_distance [$80049ff4]
@@ -2950,7 +2950,7 @@ L26334:	; 80026334
 80026358	lh     a0, $0010(s1)
 8002635C	lh     a2, $0016(s1)
 80026360	lh     a3, $0018(s1)
-80026364	jal    func43894 [$80043894]
+80026364	jal    system_graphic_get_texpage_by_param [$80043894]
 80026368	addu   a1, zero, zero
 8002636C	sh     v0, $0016(s0)
 80026370	lh     a0, $0012(s1)
@@ -3188,7 +3188,7 @@ L26668:	; 80026668
 8002668C	lh     a0, $0010(s1)
 80026690	lh     a2, $0016(s1)
 80026694	lh     a3, $0018(s1)
-80026698	jal    func43894 [$80043894]
+80026698	jal    system_graphic_get_texpage_by_param [$80043894]
 8002669C	addu   a1, zero, zero
 800266A0	sh     v0, $0016(s0)
 800266A4	lh     a0, $0012(s1)
@@ -3367,7 +3367,7 @@ L2691c:	; 8002691C
 8002691C	lh     a0, $0014(s3)
 80026920	lh     a2, $001a(s3)
 80026924	lh     a3, $001c(s3)
-80026928	jal    func43894 [$80043894]
+80026928	jal    system_graphic_get_texpage_by_param [$80043894]
 8002692C	addu   a1, zero, zero
 80026930	sll    a0, s2, $01
 80026934	sll    v1, s2, $03
@@ -3497,7 +3497,7 @@ L26a94:	; 80026A94
 80026B04	addu   a1, zero, zero
 80026B08	addu   a2, s1, zero
 80026B0C	addu   a3, s0, zero
-80026B10	jal    func43894 [$80043894]
+80026B10	jal    system_graphic_get_texpage_by_param [$80043894]
 80026B14	sh     v0, $000e(fp)
 80026B18	lw     a0, $0080(sp)
 80026B1C	addu   a1, fp, zero
@@ -3609,7 +3609,7 @@ L26c60:	; 80026C60
 80026CA0	ori    a1, zero, $0001
 80026CA4	addu   a2, s1, zero
 80026CA8	addu   a3, s0, zero
-80026CAC	jal    func43894 [$80043894]
+80026CAC	jal    system_graphic_get_texpage_by_param [$80043894]
 80026CB0	sh     v0, $000a(s4)
 80026CB4	sh     v0, $0008(s4)
 80026CB8	lbu    v0, $0000(s5)
@@ -4636,7 +4636,7 @@ L27a94:	; 80027A94
 80027AA0	sll    a3, a3, $08
 80027AA4	sw     t2, $0018(sp)
 80027AA8	sw     t3, $001c(sp)
-80027AAC	jal    func43894 [$80043894]
+80027AAC	jal    system_graphic_get_texpage_by_param [$80043894]
 80027AB0	sw     t4, $0020(sp)
 80027AB4	lui    a0, $ff00
 80027AB8	sh     v0, $0000(s0)
@@ -13317,7 +13317,7 @@ func40824:	; 80040824
 // func43858
 80043858-80043890
 ////////////////////////////////
-// func43894
+// system_graphic_get_texpage_by_param
 80043894-800438CC
 ////////////////////////////////
 // func438d0
@@ -13416,7 +13416,7 @@ func40824:	; 80040824
 // func43c78
 80043C78-80043C94
 ////////////////////////////////
-// func43c98
+// system_graphic_create_texpage_settings_packet
 80043C98-80043CC0
 ////////////////////////////////
 // func43cc4
@@ -13748,55 +13748,8 @@ L48a50:	; 80048A50
 // system_square_root
 80048AF4-80048B7C
 ////////////////////////////////
-
-
-
-80048B80	nop
-80048B84	mtc2   a0,zsf4
-80048B88	nop
-80048B8C	nop
-80048B90	mfc2   v0,flag
-80048B94	addiu  at, zero, $0020
-80048B98	beq    v0, at, L48c08 [$80048c08]
-80048B9C	nop
-80048BA0	beq    v0, zero, L48c08 [$80048c08]
-80048BA4	nop
-80048BA8	andi   t0, v0, $0001
-80048BAC	addiu  t2, zero, $fffe (=-$2)
-80048BB0	and    t2, v0, t2
-80048BB4	addiu  t1, zero, $001f
-80048BB8	sub    t1, t1, t2
-80048BBC	sra    t1, t1, $01
-80048BC0	addi   t3, t2, $ffe8 (=-$18)
-80048BC4	bltz   t3, L48bd4 [$80048bd4]
-80048BC8	nop
-80048BCC	sllv   t4, t3, a0
-80048BD0	beq    zero, zero, L48be0 [$80048be0]
-
-L48bd4:	; 80048BD4
-80048BD4	addiu  t3, zero, $0018
-80048BD8	sub    t3, t3, t2
-80048BDC	srav   t4, t3, a0
-
-L48be0:	; 80048BE0
-80048BE0	addi   t4, t4, $ffc0 (=-$40)
-80048BE4	sll    t4, t4, $01
-80048BE8	lui    t5, $8005
-80048BEC	addu   t5, t5, t4
-80048BF0	lh     t5, $6234(t5)
-80048BF4	sw     t1, $0000(a2)
-80048BF8	sw     t5, $0000(a1)
-80048BFC	addiu  v0, zero, $0001
-80048C00	jr     ra 
-80048C04	nop
-
-
-L48c08:	; 80048C08
-80048C08	jr     ra 
-80048C0C	addiu  v0, zero, $ffff (=-$1)
-
-
-
+// func48b80
+80048B80-80048C0C
 ////////////////////////////////
 // system_gte_normalize_word_vector_T0_T1_T2_to_half
 // system_gte_normalize_word_vector_T0_T1_T2_to_word
@@ -13807,241 +13760,26 @@ L48c08:	; 80048C08
 // system_gte_normalize_vector_T0_T1_T2
 80048C80-80048D38
 ////////////////////////////////
-
-
-
-80048D3C	lh     t0, $0000(a0)
-80048D40	lh     t1, $0002(a0)
-80048D44	lh     t2, $0004(a0)
-80048D48	lh     t3, $0006(a0)
-80048D4C	lh     t4, $0008(a0)
-80048D50	lh     t5, $000a(a0)
-80048D54	cfc2   v0,vxy0
-80048D58	cfc2   v1,vxy1
-80048D5C	cfc2   a2,vxy2
-80048D60	ctc2   t0,vxy0
-80048D64	ctc2   t1,vxy1
-80048D68	ctc2   t2,vxy2
-80048D6C	mtc2   t5,l31l32
-80048D70	mtc2   t3,l13l21
-80048D74	mtc2   t4,l22l23
-80048D78	nop
-80048D7C	gte_func27t8,r11r12
-80048D80	mfc2   t7,ofy
-80048D84	mfc2   t8,h
-80048D88	mfc2   t9,dqa
-80048D8C	ctc2   t3,vxy0
-80048D90	ctc2   t4,vxy1
-80048D94	ctc2   t5,vxy2
-80048D98	nop
-80048D9C	gte_func27t8,r11r12
-80048DA0	mtc2   t3,r11r12
-80048DA4	mtc2   t4,r13r21
-80048DA8	mtc2   t5,r22r23
-80048DAC	mfc2   t0,ofy
-80048DB0	mfc2   t1,h
-80048DB4	mfc2   t2,dqa
-80048DB8	ctc2   v0,vxy0
-80048DBC	ctc2   v1,vxy1
-80048DC0	ctc2   a2,vxy2
-80048DC4	addu   a3, ra, zero
-80048DC8	jal    system_gte_normalize_vector_T0_T1_T2 [$80048c80]
-80048DCC	nop
-80048DD0	sh     t0, $0000(a1)
-80048DD4	sh     t1, $0002(a1)
-80048DD8	sh     t2, $0004(a1)
-80048DDC	mfc2   t0,r11r12
-80048DE0	mfc2   t1,r13r21
-80048DE4	mfc2   t2,r22r23
-80048DE8	jal    system_gte_normalize_vector_T0_T1_T2 [$80048c80]
-80048DEC	nop
-80048DF0	sh     t0, $0006(a1)
-80048DF4	sh     t1, $0008(a1)
-80048DF8	sh     t2, $000a(a1)
-80048DFC	addu   t0, t7, zero
-80048E00	addu   t1, t8, zero
-80048E04	jal    system_gte_normalize_vector_T0_T1_T2 [$80048c80]
-80048E08	addu   t2, t9, zero
-80048E0C	addu   ra, a3, zero
-80048E10	sh     t0, $000c(a1)
-80048E14	sh     t1, $000e(a1)
-80048E18	jr     ra 
-80048E1C	sh     t2, $0010(a1)
-
-80048E20	nop
-80048E24	mtc2   a2,l11l12
-80048E28	lwc2   t1, $0000(a0)
-80048E2C	lwc2   t2, $0004(a0)
-80048E30	lwc2   t3, $0008(a0)
-80048E34	nop
-80048E38	gte_func28t8,r11r12
-80048E3C	mfc2   v0,flag
-80048E40	mtc2   a3,l11l12
-80048E44	lwc2   t1, $0000(a1)
-80048E48	lwc2   t2, $0004(a1)
-80048E4C	lwc2   t3, $0008(a1)
-80048E50	nop
-80048E54	gte_func29t0,r11r12
-80048E58	lw     t0, $0010(sp)
-80048E5C	nop
-80048E60	swc2   t1, $0000(t0)
-80048E64	swc2   t2, $0004(t0)
-80048E68	swc2   t3, $0008(t0)
-80048E6C	jr     ra 
-80048E70	nop
-
-80048E74	mtc2   a2,l11l12
-80048E78	lwc2   t1, $0000(a0)
-80048E7C	lwc2   t2, $0004(a0)
-80048E80	lwc2   t3, $0008(a0)
-80048E84	nop
-80048E88	gte_func28s0,r11r12
-80048E8C	mfc2   v0,flag
-80048E90	mtc2   a3,l11l12
-80048E94	lwc2   t1, $0000(a1)
-80048E98	lwc2   t2, $0004(a1)
-80048E9C	lwc2   t3, $0008(a1)
-80048EA0	nop
-80048EA4	gte_func29zero,r11r12
-80048EA8	lw     t0, $0010(sp)
-80048EAC	nop
-80048EB0	swc2   t1, $0000(t0)
-80048EB4	swc2   t2, $0004(t0)
-80048EB8	swc2   t3, $0008(t0)
-80048EBC	jr     ra 
-80048EC0	nop
-
-80048EC4	lw     t0, $0000(a0)
-80048EC8	lw     t2, $0004(a0)
-
-L48ecc:	; 80048ECC
-80048ECC	sra    t1, t0, $10
-80048ED0	andi   t0, t0, $ffff
-80048ED4	andi   t2, t2, $ffff
-80048ED8	mtc2   a2,l11l12
-80048EDC	mtc2   t0,l13l21
-80048EE0	mtc2   t1,l22l23
-80048EE4	mtc2   t2,l31l32
-80048EE8	nop
-80048EEC	gte_func28t8,r11r12
-80048EF0	lw     t0, $0000(a1)
-80048EF4	lw     t2, $0004(a1)
-80048EF8	sra    t1, t0, $10
-80048EFC	andi   t0, t0, $ffff
-80048F00	andi   t2, t2, $ffff
-80048F04	mfc2   v0,flag
-80048F08	mtc2   a3,l11l12
-80048F0C	mtc2   t0,l13l21
-80048F10	mtc2   t1,l22l23
-80048F14	mtc2   t2,l31l32
-80048F18	nop
-80048F1C	gte_func29t0,r11r12
-80048F20	mfc2   t0,l13l21
-80048F24	mfc2   t1,l22l23
-80048F28	andi   t0, t0, $ffff
-80048F2C	sll    t1, t1, $10
-80048F30	or     t0, t0, t1
-80048F34	lw     t5, $0010(sp)
-80048F38	mfc2   t2,l31l32
-80048F3C	sw     t0, $0000(t5)
-80048F40	sw     t2, $0004(t5)
-80048F44	jr     ra 
-80048F48	nop
-
-80048F4C	lw     t0, $0000(a0)
-80048F50	lw     t2, $0004(a0)
-80048F54	sra    t1, t0, $10
-80048F58	andi   t0, t0, $ffff
-80048F5C	andi   t2, t2, $ffff
-80048F60	mtc2   a2,l11l12
-80048F64	mtc2   t0,l13l21
-80048F68	mtc2   t1,l22l23
-80048F6C	mtc2   t2,l31l32
-80048F70	nop
-80048F74	gte_func28s0,r11r12
-80048F78	lw     t0, $0000(a1)
-80048F7C	lw     t2, $0004(a1)
-80048F80	sra    t1, t0, $10
-80048F84	andi   t0, t0, $ffff
-80048F88	andi   t2, t2, $ffff
-80048F8C	mfc2   v0,flag
-80048F90	mtc2   a3,l11l12
-80048F94	mtc2   t0,l13l21
-80048F98	mtc2   t1,l22l23
-80048F9C	mtc2   t2,l31l32
-80048FA0	nop
-80048FA4	gte_func29zero,r11r12
-80048FA8	mfc2   t0,l13l21
-80048FAC	mfc2   t1,l22l23
-80048FB0	andi   t0, t0, $ffff
-80048FB4	sll    t1, t1, $10
-80048FB8	or     t0, t0, t1
-80048FBC	lw     t5, $0010(sp)
-80048FC0	mfc2   t2,l31l32
-80048FC4	sw     t0, $0000(t5)
-80048FC8	sw     t2, $0004(t5)
-80048FCC	jr     ra 
-80048FD0	nop
-
-80048FD4	lbu    t0, $0000(a0)
-80048FD8	lbu    t1, $0001(a0)
-80048FDC	mtc2   a2,l11l12
-80048FE0	mtc2   t0,l13l21
-80048FE4	mtc2   t1,l22l23
-80048FE8	nop
-80048FEC	gte_func28s0,r11r12
-80048FF0	lbu    t0, $0000(a1)
-80048FF4	lbu    t1, $0001(a1)
-80048FF8	mfc2   v0,flag
-80048FFC	mtc2   a3,l11l12
-80049000	mtc2   t0,l13l21
-80049004	mtc2   t1,l22l23
-80049008	addiu  t3, zero, $000c
-8004900C	gte_func29zero,r11r12
-80049010	lw     t5, $0010(sp)
-80049014	mfc2   t0,ofy
-80049018	mfc2   t1,h
-8004901C	srav   t0, t3, t0
-80049020	srav   t1, t3, t1
-80049024	sb     t0, $0000(t5)
-80049028	sb     t1, $0001(t5)
-8004902C	jr     ra 
-80049030	nop
-
-80049034	lbu    t0, $0000(a0)
-80049038	lbu    t1, $0001(a0)
-8004903C	lbu    t2, $0002(a0)
-80049040	mtc2   a2,l11l12
-80049044	mtc2   t0,l13l21
-80049048	mtc2   t1,l22l23
-8004904C	mtc2   t2,l31l32
-80049050	nop
-80049054	gte_func28s0,r11r12
-80049058	lbu    t0, $0000(a1)
-8004905C	lbu    t1, $0001(a1)
-80049060	lbu    t2, $0002(a1)
-80049064	mfc2   v0,flag
-80049068	mtc2   a3,l11l12
-8004906C	mtc2   t0,l13l21
-80049070	mtc2   t1,l22l23
-80049074	mtc2   t2,l31l32
-80049078	addiu  t3, zero, $000c
-8004907C	gte_func29zero,r11r12
-80049080	lw     t5, $0010(sp)
-80049084	mfc2   t0,ofy
-80049088	mfc2   t1,h
-8004908C	mfc2   t2,dqa
-80049090	srav   t0, t3, t0
-80049094	srav   t1, t3, t1
-80049098	srav   t2, t3, t2
-8004909C	sb     t0, $0000(t5)
-800490A0	sb     t1, $0001(t5)
-800490A4	sb     t2, $0002(t5)
-800490A8	jr     ra 
-800490AC	nop
-800490B0	nop
-
-
+// func48d3c
+80048D3C-80048E1C
+////////////////////////////////
+// func48e20
+80048E20-80048E70
+////////////////////////////////
+// func48e74
+80048E74-80048EC0
+////////////////////////////////
+// func48ec4
+80048EC4-80048F48
+////////////////////////////////
+// func48f4c
+80048F4C-80048FD0
+////////////////////////////////
+// func48fd4
+80048FD4-80049030
+////////////////////////////////
+// func49034
+80049034-800490B0
 ////////////////////////////////
 // system_gte_matrix_multiplication_to_A2
 800490B4-800491C0
@@ -14052,24 +13790,8 @@ L48ecc:	; 80048ECC
 // system_gte_apply_matrix_lv
 80049324-80049480
 ////////////////////////////////
-
-
-
-80049484	lw     t0, $0000(a0)
-80049488	lw     t1, $0004(a0)
-8004948C	mtc2   t0,r11r12
-80049490	mtc2   t1,r13r21
-80049494	nop
-80049498	gte_func18t0,l33
-8004949C	swc2   t1, $0000(a1)
-800494A0	swc2   t2, $0004(a1)
-800494A4	swc2   t3, $0008(a1)
-800494A8	addu   v0, a2, zero
-800494AC	jr     ra 
-800494B0	nop
-
-
-
+// func49484
+80049484-800494B0
 ////////////////////////////////
 // system_gte_push_matrix
 800494B4-80049550
@@ -14083,184 +13805,11 @@ L48ecc:	; 80048ECC
 // func49724
 80049724-80049830
 ////////////////////////////////
-
-
-
-80049834	lw     t0, $0000(a0)
-80049838	lw     t1, $0004(a0)
-8004983C	lw     t2, $0008(a0)
-80049840	bgez   t0, L49864 [$80049864]
-80049844	sra    t3, t0, $0f
-80049848	subu   t0, zero, t0
-8004984C	sra    t3, t0, $0f
-80049850	andi   t0, t0, $7fff
-80049854	subu   t3, zero, t3
-80049858	beq    zero, zero, L49868 [$80049868]
-8004985C	subu   t0, zero, t0
-80049860	sra    t3, t0, $0f
-
-L49864:	; 80049864
-80049864	andi   t0, t0, $7fff
-
-L49868:	; 80049868
-80049868	bgez   t1, L4988c [$8004988c]
-8004986C	sra    t4, t1, $0f
-80049870	subu   t1, zero, t1
-80049874	sra    t4, t1, $0f
-80049878	andi   t1, t1, $7fff
-8004987C	subu   t4, zero, t4
-80049880	beq    zero, zero, L49890 [$80049890]
-80049884	subu   t1, zero, t1
-80049888	sra    t4, t1, $0f
-
-L4988c:	; 8004988C
-8004988C	andi   t1, t1, $7fff
-
-L49890:	; 80049890
-80049890	bgez   t2, L498b4 [$800498b4]
-80049894	sra    t5, t2, $0f
-80049898	subu   t2, zero, t2
-8004989C	sra    t5, t2, $0f
-800498A0	andi   t2, t2, $7fff
-800498A4	subu   t5, zero, t5
-800498A8	beq    zero, zero, L498b8 [$800498b8]
-800498AC	subu   t2, zero, t2
-800498B0	sra    t5, t2, $0f
-
-L498b4:	; 800498B4
-800498B4	andi   t2, t2, $7fff
-
-L498b8:	; 800498B8
-800498B8	mtc2   t3,l13l21
-800498BC	mtc2   t4,l22l23
-800498C0	mtc2   t5,l31l32
-800498C4	nop
-800498C8	gte_func18at,dqb
-800498CC	mfc2   t3,ofy
-800498D0	mfc2   t4,h
-800498D4	mfc2   t5,dqa
-800498D8	mtc2   t0,l13l21
-800498DC	mtc2   t1,l22l23
-800498E0	mtc2   t2,l31l32
-800498E4	nop
-800498E8	gte_func18t1,dqb
-800498EC	bgez   t3, L49904 [$80049904]
-800498F0	nop
-800498F4	subu   t3, zero, t3
-800498F8	sll    t3, t3, $03
-800498FC	beq    zero, zero, L49908 [$80049908]
-80049900	subu   t3, zero, t3
-
-L49904:	; 80049904
-80049904	sll    t3, t3, $03
-
-L49908:	; 80049908
-80049908	bgez   t4, L49920 [$80049920]
-8004990C	nop
-80049910	subu   t4, zero, t4
-80049914	sll    t4, t4, $03
-80049918	beq    zero, zero, L49924 [$80049924]
-8004991C	subu   t4, zero, t4
-
-L49920:	; 80049920
-80049920	sll    t4, t4, $03
-
-L49924:	; 80049924
-80049924	bgez   t5, L4993c [$8004993c]
-80049928	nop
-8004992C	subu   t5, zero, t5
-80049930	sll    t5, t5, $03
-80049934	beq    zero, zero, L49940 [$80049940]
-80049938	subu   t5, zero, t5
-
-L4993c:	; 8004993C
-8004993C	sll    t5, t5, $03
-
-L49940:	; 80049940
-80049940	mfc2   t0,ofy
-80049944	mfc2   t1,h
-80049948	mfc2   t2,dqa
-8004994C	addu   t0, t0, t3
-80049950	addu   t1, t1, t4
-80049954	addu   t2, t2, t5
-80049958	sw     t0, $0000(a1)
-8004995C	sw     t1, $0004(a1)
-80049960	sw     t2, $0008(a1)
-80049964	jr     ra 
-80049968	addu   v0, a1, zero
-
-8004996C	nop
-80049970	nop
-80049974	lw     t0, $0000(a0)
-80049978	lw     t1, $0004(a0)
-8004997C	lw     t2, $0008(a0)
-80049980	lw     t3, $000c(a0)
-80049984	lw     t4, $0010(a0)
-80049988	ctc2   t0,vxy0
-8004998C	ctc2   t1,vz0
-80049990	ctc2   t2,vxy1
-80049994	ctc2   t3,vz1
-80049998	ctc2   t4,vxy2
-8004999C	lhu    t0, $0000(a1)
-800499A0	lw     t1, $0004(a1)
-800499A4	lw     t2, $000c(a1)
-800499A8	lui    at, $ffff
-800499AC	and    t1, t1, at
-800499B0	or     t0, t0, t1
-800499B4	mtc2   t0,r11r12
-800499B8	mtc2   t2,r13r21
-800499BC	nop
-800499C0	gte_func18t0,l33
-800499C4	lhu    t0, $0002(a1)
-800499C8	lw     t1, $0008(a1)
-800499CC	lh     t2, $000e(a1)
-800499D0	sll    t1, t1, $10
-800499D4	or     t0, t0, t1
-800499D8	mfc2   t3,l13l21
-800499DC	mfc2   t4,l22l23
-800499E0	mfc2   t5,l31l32
-800499E4	mtc2   t0,r11r12
-800499E8	mtc2   t2,r13r21
-800499EC	nop
-800499F0	gte_func18t0,l33
-800499F4	lhu    t0, $0004(a1)
-800499F8	lw     t1, $0008(a1)
-800499FC	lw     t2, $0010(a1)
-80049A00	lui    at, $ffff
-80049A04	and    t1, t1, at
-80049A08	or     t0, t0, t1
-80049A0C	mfc2   t6,l13l21
-80049A10	mfc2   t7,l22l23
-80049A14	mfc2   t8,l31l32
-80049A18	mtc2   t0,r11r12
-80049A1C	mtc2   t2,r13r21
-80049A20	nop
-80049A24	gte_func18t0,l33
-80049A28	andi   t3, t3, $ffff
-80049A2C	sll    t6, t6, $10
-80049A30	or     t6, t6, t3
-80049A34	sw     t6, $0000(a0)
-80049A38	andi   t5, t5, $ffff
-80049A3C	sll    t8, t8, $10
-80049A40	or     t8, t8, t5
-80049A44	sw     t8, $000c(a0)
-80049A48	mfc2   t0,l13l21
-80049A4C	mfc2   t1,l22l23
-80049A50	andi   t0, t0, $ffff
-80049A54	sll    t4, t4, $10
-80049A58	or     t0, t0, t4
-80049A5C	sw     t0, $0004(a0)
-80049A60	andi   t7, t7, $ffff
-80049A64	sll    t1, t1, $10
-80049A68	or     t1, t1, t7
-80049A6C	sw     t1, $0008(a0)
-80049A70	swc2   t3, $0010(a0)
-80049A74	addu   v0, a0, zero
-80049A78	jr     ra 
-80049A7C	nop
-80049A80	nop
-
-
+// func49834
+80049834-80049970
+////////////////////////////////
+// func49974
+80049974-80049A80
 ////////////////////////////////
 // system_gte_matrix_multiplication_to_A1
 80049A84-80049B90
@@ -14268,52 +13817,11 @@ L49940:	; 80049940
 // system_gte_apply_matrix
 80049B94-80049BE0
 ////////////////////////////////
-
-
-
-func49be4:	; 80049BE4
-80049BE4	lw     t0, $0000(a0)
-80049BE8	lw     t1, $0004(a0)
-80049BEC	lw     t2, $0008(a0)
-80049BF0	lw     t3, $000c(a0)
-80049BF4	lw     t4, $0010(a0)
-80049BF8	ctc2   t0,vxy0
-80049BFC	ctc2   t1,vz0
-80049C00	ctc2   t2,vxy1
-80049C04	ctc2   t3,vz1
-80049C08	ctc2   t4,vxy2
-80049C0C	lwc2   zero, $0000(a1)
-80049C10	lwc2   at, $0004(a1)
-80049C14	nop
-80049C18	gte_func18t0,l33
-80049C1C	mfc2   t0,l13l21
-80049C20	mfc2   t1,l22l23
-80049C24	mfc2   t2,l31l32
-80049C28	sh     t0, $0000(a2)
-80049C2C	sh     t1, $0002(a2)
-80049C30	sh     t2, $0004(a2)
-80049C34	addu   v0, a2, zero
-80049C38	jr     ra 
-80049C3C	nop
-
-80049C40	nop
-
-func49c44:	; 80049C44
-80049C44	lw     t0, $0000(a1)
-80049C48	lw     t1, $0004(a1)
-80049C4C	lw     t2, $0008(a1)
-80049C50	sw     t0, $0014(a0)
-80049C54	sw     t1, $0018(a0)
-80049C58	sw     t2, $001c(a0)
-80049C5C	addu   v0, a0, zero
-80049C60	jr     ra 
-80049C64	nop
-80049C68	nop
-80049C6C	nop
-80049C70	nop
-
-
-
+// func49be4
+80049BE4-80049C40
+////////////////////////////////
+// func49c44
+80049C44-80049C70
 ////////////////////////////////
 // func49c74
 80049C74-80049DA0
@@ -14321,211 +13829,83 @@ func49c44:	; 80049C44
 // system_gte_set_rotation_matrix
 80049DA4-80049DD0
 ////////////////////////////////
-
-
-
-func49dd4:	; 80049DD4
-80049DD4	lw     t0, $0000(a0)
-80049DD8	lw     t1, $0004(a0)
-80049DDC	lw     t2, $0008(a0)
-80049DE0	lw     t3, $000c(a0)
-80049DE4	lw     t4, $0010(a0)
-80049DE8	ctc2   t0,ir0
-80049DEC	ctc2   t1,ir1
-80049DF0	ctc2   t2,ir2
-80049DF4	ctc2   t3,ir3
-80049DF8	ctc2   t4,sxy0
-80049DFC	jr     ra 
-80049E00	nop
-
-
-func49e04:	; 80049E04
-80049E04	lw     t0, $0000(a0)
-80049E08	lw     t1, $0004(a0)
-80049E0C	lw     t2, $0008(a0)
-80049E10	lw     t3, $000c(a0)
-80049E14	lw     t4, $0010(a0)
-80049E18	ctc2   t0,sz0
-80049E1C	ctc2   t1,sz1
-80049E20	ctc2   t2,sz2
-80049E24	ctc2   t3,sz3
-80049E28	ctc2   t4,rgb0
-80049E2C	jr     ra 
-80049E30	nop
-
-
-
+// func49dd4
+80049DD4-80049E00
+////////////////////////////////
+// func49e04
+80049E04-80049E30
 ////////////////////////////////
 // system_gte_set_translation_vector
 80049E34-80049E50
 ////////////////////////////////
-
-
-
-80049E54	lwc2   zero, $0000(a0)
-80049E58	lwc2   at, $0004(a0)
-80049E5C	jr     ra 
-80049E60	nop
-
-80049E64	lwc2   v0, $0000(a0)
-80049E68	lwc2   v1, $0004(a0)
-80049E6C	jr     ra 
-80049E70	nop
-
-80049E74	lwc2   a0, $0000(a0)
-80049E78	lwc2   a1, $0004(a0)
-80049E7C	jr     ra 
-80049E80	nop
-
-80049E84	lwc2   zero, $0000(a0)
-80049E88	lwc2   at, $0004(a0)
-80049E8C	lwc2   v0, $0000(a1)
-80049E90	lwc2   v1, $0004(a1)
-80049E94	lwc2   a0, $0000(a2)
-80049E98	lwc2   a1, $0004(a2)
-80049E9C	jr     ra 
-80049EA0	nop
-
-80049EA4	lwc2   s4, $0000(a0)
-80049EA8	lwc2   s5, $0000(a1)
-80049EAC	lwc2   s6, $0000(a2)
-80049EB0	jr     ra 
-80049EB4	nop
-
-80049EB8	mtc2   a0,l13l21
-80049EBC	mtc2   a1,l22l23
-80049EC0	mtc2   a2,l31l32
-80049EC4	jr     ra 
-80049EC8	nop
-
-80049ECC	mtc2   a0,l11l12
-80049ED0	jr     ra 
-80049ED4	nop
-
-80049ED8	mtc2   a0,lr3lg1
-80049EDC	mtc2   a1,lg2lg3
-80049EE0	mtc2   a2,lb1lb2
-80049EE4	jr     ra 
-80049EE8	nop
-
-80049EEC	mtc2   a0,lr1lr2
-80049EF0	mtc2   a1,lr3lg1
-80049EF4	mtc2   a2,lg2lg3
-80049EF8	mtc2   a3,lb1lb2
-80049EFC	jr     ra 
-80049F00	nop
-
-80049F04	mtc2   a0,l33
-80049F08	mtc2   a1,rbk
-80049F0C	mtc2   a2,gbk
-80049F10	jr     ra 
-80049F14	nop
-
-80049F18	ctc2   a0,vxy0
-80049F1C	ctc2   a1,vxy1
-80049F20	ctc2   a2,vxy2
-80049F24	jr     ra 
-80049F28	nop
-
-80049F2C	mtc2   a0,ofy
-80049F30	mtc2   a1,h
-80049F34	mtc2   a2,dqa
-80049F38	jr     ra 
-80049F3C	nop
-
-80049F40	mtc2   a0,zsf4
-80049F44	jr     ra 
-80049F48	nop
-
-
-func49f4c:	; 80049F4C
-80049F4C	ctc2   a0,mac3
-80049F50	jr     ra 
-80049F54	nop
-
-
-func49f58:	; 80049F58
-80049F58	ctc2   a0,irgb
-80049F5C	jr     ra 
-80049F60	nop
-
-
-func49f64:	; 80049F64
-80049F64	cfc2   t0,mac0
-80049F68	cfc2   t1,mac1
-80049F6C	sra    t0, t0, $10
-80049F70	sra    t1, t1, $10
-80049F74	sw     t0, $0000(a0)
-80049F78	sw     t1, $0000(a1)
-80049F7C	jr     ra 
-80049F80	nop
-
-
-func49f84:	; 80049F84
-80049F84	cfc2   v0,mac2
-80049F88	jr     ra 
-80049F8C	nop
-
-80049F90	nop
-
-func49f94:	; 80049F94
-80049F94	sll    a0, a0, $04
-80049F98	sll    a1, a1, $04
-80049F9C	sll    a2, a2, $04
-80049FA0	ctc2   a0,sxy1
-80049FA4	ctc2   a1,sxy2
-80049FA8	ctc2   a2,sxy2p
-80049FAC	jr     ra 
-80049FB0	nop
-
-80049FB4	sll    a0, a0, $04
-80049FB8	sll    a1, a1, $04
-80049FBC	sll    a2, a2, $04
-80049FC0	ctc2   a0,rgb1
-80049FC4	ctc2   a1,rgb2
-80049FC8	ctc2   a2,17
-80049FCC	jr     ra 
-80049FD0	nop
-
-
-func49fd4:	; 80049FD4
-80049FD4	sll    a0, a0, $10
-80049FD8	sll    a1, a1, $10
-80049FDC	ctc2   a0,mac0
-80049FE0	ctc2   a1,mac1
-80049FE4	jr     ra 
-80049FE8	nop
-80049FEC	nop
-80049FF0	nop
-
-
+// func49e54
+80049E54-80049E60
+////////////////////////////////
+// func49e64
+80049E64-80049E70
+////////////////////////////////
+// func49e74
+80049E74-80049E80
+////////////////////////////////
+// func49e84
+80049E84-80049EA0
+////////////////////////////////
+// func49ea4
+80049EA4-80049EB4
+////////////////////////////////
+// func49eb8
+80049EB8-80049EC8
+////////////////////////////////
+// func49ecc
+80049ECC-80049ED4
+////////////////////////////////
+// func49ed8
+80049ED8-80049EE8
+////////////////////////////////
+// func49eec
+80049EEC-80049F00
+////////////////////////////////
+// func49f04
+80049F04-80049F14
+////////////////////////////////
+// func49f18
+80049F18-80049F28
+////////////////////////////////
+// func49f2c
+80049F2C-80049F3C
+////////////////////////////////
+// func49f40
+80049F40-80049F48
+////////////////////////////////
+// func49f4c
+80049F4C-80049F54
+////////////////////////////////
+// func49f58
+80049F58-80049F60
+////////////////////////////////
+// func49f64
+80049F64-80049F80
+////////////////////////////////
+// func49f84
+80049F84-80049F90
+////////////////////////////////
+// func49f94
+80049F94-80049FB0
+////////////////////////////////
+// func49fb4
+80049FB4-80049FD0
+////////////////////////////////
+// system_gte_set_screen_offset
+80049FD4-80049FF0
 ////////////////////////////////
 // system_gte_set_projection_plane_distance
 80049FF4-8004A000
 ////////////////////////////////
-
-
-
-8004A004	lwc2   zero, $0000(a0)
-8004A008	lwc2   at, $0004(a0)
-8004A00C	nop
-8004A010	gte_func18t2,l33
-8004A014	swc2   t1, $0000(a1)
-8004A018	swc2   t2, $0004(a1)
-8004A01C	swc2   t3, $0008(a1)
-8004A020	jr     ra 
-8004A024	nop
-
-8004A028	lwc2   a2, $0000(a0)
-8004A02C	mtc2   a1,l11l12
-8004A030	nop
-8004A034	gte_func19t8,r11r12
-8004A038	swc2   s6, $0000(a2)
-8004A03C	jr     ra 
-8004A040	nop
-
-
-
+// func4a004
+8004A004-8004A024
+////////////////////////////////
+// func4a028
+8004A028-8004A040
 ////////////////////////////////
 // system_gte_calculate_normal_color_by_vector_only
 8004A044-8004A05C
@@ -14533,39 +13913,11 @@ func49fd4:	; 80049FD4
 // system_gte_calculate_normals_color_by_3vectors_only
 8004A060-8004A098
 ////////////////////////////////
-
-
-
-8004A09C	lwc2   zero, $0000(a0)
-8004A0A0	lwc2   at, $0004(a0)
-8004A0A4	lwc2   a2, $0000(a1)
-8004A0A8	mtc2   a2,l11l12
-8004A0AC	nop
-8004A0B0	gte_func23t0,r11r12
-8004A0B4	swc2   s6, $0000(a3)
-8004A0B8	jr     ra 
-8004A0BC	nop
-
-8004A0C0	lwc2   zero, $0000(a0)
-8004A0C4	lwc2   at, $0004(a0)
-8004A0C8	lwc2   v0, $0000(a1)
-8004A0CC	lwc2   v1, $0004(a1)
-8004A0D0	lwc2   a0, $0000(a2)
-8004A0D4	lwc2   a1, $0004(a2)
-8004A0D8	lwc2   a2, $0000(a3)
-8004A0DC	lwc2   t0, $0010(sp)
-8004A0E0	nop
-8004A0E4	gte_func23t8,r11r12
-8004A0E8	lw     t0, $0014(sp)
-8004A0EC	lw     t1, $0018(sp)
-8004A0F0	lw     t2, $001c(sp)
-8004A0F4	swc2   s4, $0000(t0)
-8004A0F8	swc2   s5, $0000(t1)
-8004A0FC	swc2   s6, $0000(t2)
-8004A100	jr     ra 
-8004A104	nop
-
-
+// func4a09c
+8004A09C-8004A0BC
+////////////////////////////////
+// func4a0c0
+8004A0C0-8004A104
 ////////////////////////////////
 // system_gte_calculate_normal_color_by_vector_and_color
 8004A108-8004A124
@@ -14573,132 +13925,41 @@ func49fd4:	; 80049FD4
 // system_gte_calculate_normals_color_by_3vectors_and_color
 8004A128-8004A168
 ////////////////////////////////
-
-
-
-8004A16C	lwc2   t1, $0000(a0)
-8004A170	lwc2   t2, $0004(a0)
-8004A174	lwc2   t3, $0008(a0)
-8004A178	lwc2   a2, $0000(a1)
-8004A17C	mtc2   a2,l11l12
-8004A180	nop
-8004A184	gte_func25t0,r11r12
-8004A188	swc2   s6, $0000(a3)
-8004A18C	jr     ra 
-8004A190	nop
-
-8004A194	lwc2   t1, $0000(a0)
-8004A198	lwc2   t2, $0004(a0)
-8004A19C	lwc2   t3, $0008(a0)
-8004A1A0	lwc2   a2, $0000(a1)
-8004A1A4	nop
-8004A1A8	gte_func25t8,r11r12
-8004A1AC	swc2   s6, $0000(a2)
-8004A1B0	jr     ra 
-8004A1B4	nop
-
-8004A1B8	gte_func26t8,r11r12
-8004A1BC	mfc2   v0,trz
-8004A1C0	jr     ra 
-8004A1C4	nop
-
-8004A1C8	gte_func27t0,r11r12
-8004A1CC	mfc2   v0,trz
-8004A1D0	jr     ra 
-8004A1D4	nop
-
-8004A1D8	nop
-8004A1DC	nop
-8004A1E0	nop
-8004A1E4	lwc2   t1, $0000(a0)
-8004A1E8	lwc2   t2, $0004(a0)
-8004A1EC	lwc2   t3, $0008(a0)
-8004A1F0	nop
-8004A1F4	gte_func18t5,lb3
-8004A1F8	swc2   t1, $0000(a1)
-8004A1FC	swc2   t2, $0004(a1)
-8004A200	swc2   t3, $0008(a1)
-8004A204	jr     ra 
-8004A208	nop
-
-8004A20C	lwc2   t1, $0000(a0)
-8004A210	lwc2   t2, $0004(a0)
-8004A214	lwc2   t3, $0008(a0)
-8004A218	lwc2   a2, $0000(a1)
-8004A21C	mtc2   a2,l11l12
-8004A220	nop
-8004A224	gte_func19t0,r11r12
-8004A228	swc2   s6, $0000(a3)
-8004A22C	jr     ra 
-8004A230	nop
-
-8004A234	lwc2   s4, $0000(a0)
-8004A238	lwc2   s5, $0000(a1)
-8004A23C	lwc2   s6, $0000(a2)
-8004A240	lwc2   a2, $0000(a2)
-8004A244	mtc2   a3,l11l12
-8004A248	nop
-8004A24C	gte_func23t8,r11r12
-8004A250	lw     t0, $0010(sp)
-8004A254	lw     t1, $0014(sp)
-8004A258	lw     t2, $0018(sp)
-8004A25C	swc2   s4, $0000(t0)
-8004A260	swc2   s5, $0000(t1)
-8004A264	swc2   s6, $0000(t2)
-8004A268	jr     ra 
-8004A26C	nop
-
-8004A270	lwc2   t1, $0000(a0)
-8004A274	lwc2   t2, $0004(a0)
-8004A278	lwc2   t3, $0008(a0)
-8004A27C	mtc2   a1,l11l12
-8004A280	nop
-8004A284	gte_func20t8,r11r12
-8004A288	swc2   s6, $0000(a2)
-8004A28C	jr     ra 
-8004A290	nop
-
-8004A294	lwc2   t1, $0000(a0)
-8004A298	lwc2   t2, $0004(a0)
-8004A29C	lwc2   t3, $0008(a0)
-8004A2A0	nop
-8004A2A4	gte_func21t0,r11r12
-8004A2A8	swc2   t9, $0000(a1)
-8004A2AC	swc2   k0, $0004(a1)
-8004A2B0	swc2   k1, $0008(a1)
-8004A2B4	jr     ra 
-8004A2B8	addu   v0, a1, zero
-
-
-
+// func4a16c
+8004A16C-8004A190
+////////////////////////////////
+// func4a194
+8004A194-8004A1B4
+////////////////////////////////
+// func4a1b8
+8004A1B8-8004A1C4
+////////////////////////////////
+// func4a1c8
+8004A1C8-8004A1E0
+////////////////////////////////
+// func4a1e4
+8004A1E4-8004A208
+////////////////////////////////
+// func4a20c
+8004A20C-8004A230
+////////////////////////////////
+// func4a234
+8004A234-8004A26C
+////////////////////////////////
+// func4a270
+8004A270-8004A290
+////////////////////////////////
+// func4a294
+8004A294-8004A2B8
 ////////////////////////////////
 // system_gte_square_of_vector
 8004A2BC-8004A2E0
 ////////////////////////////////
-
-
-
-8004A2E4	mtc2   a0,lr3lg1
-8004A2E8	mtc2   a1,lg2lg3
-8004A2EC	mtc2   a2,lb1lb2
-8004A2F0	nop
-8004A2F4	gte_func26t8,r11r12
-8004A2F8	mfc2   v0,trz
-8004A2FC	jr     ra 
-8004A300	nop
-
-8004A304	mtc2   a0,lr1lr2
-8004A308	mtc2   a1,lr3lg1
-8004A30C	mtc2   a2,lg2lg3
-8004A310	mtc2   a3,lb1lb2
-8004A314	nop
-8004A318	gte_func27t0,r11r12
-8004A31C	mfc2   v0,trz
-8004A320	jr     ra 
-8004A324	nop
-
-
-
+// func4a2e4
+8004A2E4-8004A300
+////////////////////////////////
+// func4a304
+8004A304-8004A324
 ////////////////////////////////
 // system_gte_outer_product2_A0_A1_to_A2
 8004A328-8004A37C
@@ -14706,137 +13967,32 @@ func49fd4:	; 80049FD4
 // system_gte_outer_product_A0_A1_to_A2
 8004A380-8004A3D4
 ////////////////////////////////
-
-
-
-8004A3D8	mtc2   a0,zsf4
-8004A3DC	nop
-8004A3E0	nop
-8004A3E4	mfc2   v0,flag
-8004A3E8	jr     ra 
-8004A3EC	nop
-8004A3F0	nop
-
-func4a3f4:	; 8004A3F4
-8004A3F4	lwc2   zero, $0000(a0)
-8004A3F8	lwc2   at, $0004(a0)
-8004A3FC	nop
-8004A400	gte_func18t0,r11r12
-8004A404	mfc2   v0,l13l21
-8004A408	mfc2   v1,l22l23
-8004A40C	swc2   t3, $0004(a1)
-8004A410	sh     v0, $0000(a1)
-8004A414	sh     v1, $0002(a1)
-8004A418	cfc2   v0,lzcr
-8004A41C	jr     ra 
-8004A420	sw     v0, $0000(a2)
-
-8004A424	lh     v0, $0000(a0)
-8004A428	lh     v1, $0002(a0)
-8004A42C	mtc2   v0,l13l21
-8004A430	mtc2   v1,l22l23
-8004A434	lwc2   t3, $0004(a0)
-8004A438	nop
-8004A43C	gte_func21t0,r11r12
-8004A440	mfc2   v0,l13l21
-8004A444	mfc2   v1,l22l23
-8004A448	swc2   t3, $0004(a1)
-8004A44C	sh     v0, $0000(a1)
-8004A450	sh     v1, $0002(a1)
-8004A454	jr     ra 
-8004A458	addu   v0, a1, zero
-
-8004A45C	lh     v0, $0000(a0)
-8004A460	lh     v1, $0002(a0)
-8004A464	mtc2   v0,l13l21
-8004A468	mtc2   v1,l22l23
-8004A46C	lwc2   t3, $0004(a0)
-8004A470	nop
-8004A474	gte_func21zero,r11r12
-8004A478	mfc2   v0,l13l21
-8004A47C	mfc2   v1,l22l23
-8004A480	swc2   t3, $0004(a1)
-8004A484	sh     v0, $0000(a1)
-8004A488	sh     v1, $0002(a1)
-8004A48C	jr     ra 
-8004A490	addu   v0, a1, zero
-
-8004A494	lh     v0, $0000(a0)
-8004A498	lh     v1, $0002(a0)
-8004A49C	mtc2   v0,l13l21
-8004A4A0	mtc2   v1,l22l23
-8004A4A4	lwc2   t3, $0004(a0)
-8004A4A8	nop
-8004A4AC	gte_func21t0,r11r12
-8004A4B0	swc2   t1, $0000(a1)
-8004A4B4	swc2   t2, $0004(a1)
-8004A4B8	swc2   t3, $0008(a1)
-8004A4BC	jr     ra 
-8004A4C0	addu   v0, a1, zero
-
-8004A4C4	lh     v0, $0000(a0)
-8004A4C8	lh     v1, $0002(a0)
-8004A4CC	mtc2   v0,l13l21
-8004A4D0	mtc2   v1,l22l23
-8004A4D4	lwc2   t3, $0004(a0)
-8004A4D8	nop
-8004A4DC	gte_func21zero,r11r12
-8004A4E0	swc2   t1, $0000(a1)
-8004A4E4	swc2   t2, $0004(a1)
-8004A4E8	swc2   t3, $0008(a1)
-8004A4EC	jr     ra 
-8004A4F0	addu   v0, a1, zero
-
-
-
+// func4a3d8
+8004A3D8-8004A3F0
+////////////////////////////////
+// func4a3f4
+8004A3F4-8004A420
+////////////////////////////////
+// func4a424
+8004A424-8004A458
+////////////////////////////////
+// func4a45c
+8004A45C-8004A490
+////////////////////////////////
+// func4a494
+8004A494-8004A4C0
+////////////////////////////////
+// func4a4c4
+8004A4C4-8004A4F0
 ////////////////////////////////
 // system_gte_vector_perspective_transform
 8004A4F4-8004A520
 ////////////////////////////////
-
-
-
-func4a524:	; 8004A524
-8004A524	lwc2   zero, $0000(a0)
-8004A528	lwc2   at, $0004(a0)
-8004A52C	lwc2   v0, $0000(a1)
-8004A530	lwc2   v1, $0004(a1)
-8004A534	lwc2   a0, $0000(a2)
-8004A538	lwc2   a1, $0004(a2)
-8004A53C	nop
-8004A540	gte_func17t0,r11r12
-8004A544	lw     t0, $0010(sp)
-8004A548	lw     t1, $0014(sp)
-8004A54C	lw     t2, $0018(sp)
-8004A550	lw     t3, $001c(sp)
-8004A554	swc2   t4, $0000(a3)
-8004A558	swc2   t5, $0000(t0)
-8004A55C	swc2   t6, $0000(t1)
-8004A560	swc2   t0, $0000(t2)
-8004A564	cfc2   v1,lzcr
-8004A568	mfc2   v0,lb1lb2
-8004A56C	sw     v1, $0000(t3)
-8004A570	jr     ra 
-8004A574	sra    v0, v0, $02
-
-8004A578	nop
-8004A57C	nop
-8004A580	nop
-8004A584	lwc2   zero, $0000(a0)
-8004A588	lwc2   at, $0004(a0)
-8004A58C	nop
-8004A590	gte_func18t0,r11r12
-8004A594	swc2   t9, $0000(a1)
-8004A598	swc2   k0, $0004(a1)
-8004A59C	swc2   k1, $0008(a1)
-8004A5A0	cfc2   v0,lzcr
-8004A5A4	jr     ra 
-8004A5A8	sw     v0, $0000(a2)
-8004A5AC	nop
-8004A5B0	nop
-
-
-
+// func4a524
+8004A524-8004A580
+////////////////////////////////
+// func4a584
+8004A584-8004A5B0
 ////////////////////////////////
 // system_side_of_vector
 8004A5B4-8004A5E0
@@ -14845,60 +14001,13 @@ func4a524:	; 8004A524
 8004A5E4-8004A660
 ////////////////////////////////
 // func4a664
-8004A664-8004A6DC
+8004A664-8004A6E0
+////////////////////////////////
+// func4a6e4
+8004A6E4-8004A790
 ////////////////////////////////
 
 
-
-8004A6E0	nop
-8004A6E4	lwc2   zero, $0000(a0)
-8004A6E8	lwc2   at, $0004(a0)
-8004A6EC	lwc2   v0, $0000(a1)
-8004A6F0	lwc2   v1, $0004(a1)
-8004A6F4	lwc2   a0, $0000(a2)
-8004A6F8	lwc2   a1, $0004(a2)
-8004A6FC	nop
-8004A700	gte_func17t0,r11r12
-8004A704	lw     t0, $0028(sp)
-8004A708	cfc2   v1,lzcr
-8004A70C	nop
-8004A710	sw     v1, $0000(t0)
-8004A714	gte_func26zero,r11r12
-8004A718	lw     t0, $0010(sp)
-8004A71C	lw     t1, $0014(sp)
-8004A720	lw     t2, $0018(sp)
-8004A724	mfc2   v0,ofx
-8004A728	nop
-8004A72C	bgtz   v0, L4a73c [$8004a73c]
-8004A730	nop
-8004A734	beq    zero, zero, L4a78c [$8004a78c]
-8004A738	nop
-
-L4a73c:	; 8004A73C
-8004A73C	swc2   t4, $0000(t0)
-8004A740	swc2   t5, $0000(t1)
-8004A744	swc2   t6, $0000(t2)
-8004A748	lwc2   zero, $0000(a3)
-8004A74C	lwc2   at, $0004(a3)
-8004A750	nop
-8004A754	gte_func16t8,r11r12
-8004A758	lw     t0, $001c(sp)
-8004A75C	lw     t1, $0020(sp)
-8004A760	lw     t2, $0028(sp)
-8004A764	swc2   t6, $0000(t0)
-8004A768	cfc2   t3,lzcr
-8004A76C	swc2   t0, $0000(t1)
-8004A770	or     t3, t3, v1
-8004A774	sw     t3, $0000(t2)
-8004A778	gte_func27t0,r11r12
-8004A77C	lw     t1, $0024(sp)
-8004A780	mfc2   t0,trz
-8004A784	nop
-8004A788	sw     t0, $0000(t1)
-
-L4a78c:	; 8004A78C
-8004A78C	jr     ra 
-8004A790	nop
 
 8004A794	addu   v0, a1, zero
 8004A798	lw     t1, $0000(a0)

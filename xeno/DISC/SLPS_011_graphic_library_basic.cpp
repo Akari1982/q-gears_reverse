@@ -59,7 +59,7 @@ A0 = S0;
 A1 = S2;
 A2 = S1;
 A3 = S3;
-800436A4	jal    func43894 [$80043894]
+system_graphic_get_texpage_by_param();
 
 return V0 & ffff;
 ////////////////////////////////
@@ -200,8 +200,14 @@ V0 = A0;
 
 
 ////////////////////////////////
-// func43894()
-return ((A0 & 3) << 7) | ((A1 & 3) << 5) | ((A3 & 0100) >> 4) | ((A2 & 03ff) >> 6) | ((A3 & 0200) << 2);
+// system_graphic_get_texpage_by_param()
+
+col_bit = A0; // Texture page colors (0=4bit, 1=8bit, 2=15bit, 3=Reserved)
+semi_tr = A1; // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
+x_base = A2; // Texture page X Base (N*64) (ie. in 64-halfword steps)
+y_base = A3; // Texture page Y Base (N*256) (ie. 0 or 256) and Texture Disable (0=Normal, 1=Disable if GP1(09h).Bit0=1) (0x200)
+
+return ((y_base & 0200) << 2) | ((col_bit & 3) << 7) | ((semi_tr & 3) << 5) | ((y_base & 0100) >> 4) | ((x_base & 03ff) >> 6);
 ////////////////////////////////
 
 
@@ -621,22 +627,22 @@ V0 = 005c;
 
 
 ////////////////////////////////
-// func43c98
-V0 = 0001;
-[A0 + 0003] = b(V0);
-80043CA0	beq    a2, zero, L43cac [$80043cac]
-80043CA4	lui    v1, $e100
-V1 = V1 | 0200;
+// system_graphic_create_texpage_settings_packet()
 
-L43cac:	; 80043CAC
-80043CAC	beq    a1, zero, L43cb8 [$80043cb8]
-V0 = A3 & 09ff;
-V0 = V0 | 0400;
+[A0 + 3] = b(1);
 
-L43cb8:	; 80043CB8
-V0 = V1 | V0;
-80043CBC	jr     ra 
-[A0 + 0004] = w(V0);
+com = e1000000 | (A3 & 09ff); // Draw Mode setting (aka "Texpage")
+
+if( A1 != 0 )
+{
+    com = com | 0400; // Drawing to display area (0=Prohibited, 1=Allowed)
+}
+if( A2 != 0 )
+{
+    com = com | 0200; // Dither 24bit to 15bit (0=Off/strip LSBs, 1=Dither Enabled)
+}
+
+[A0 + 4] = w(com);
 ////////////////////////////////
 
 
@@ -1365,9 +1371,9 @@ if( bu[80055f72] >= 2 )
 A0 = ot_ptr;
 A1 = number;
 V0 = w[80055f68];
-800449AC	jalr   w[V0 + 2c] ra // func45bd4
+800449AC	jalr   w[V0 + 2c] ra // func45bd4 clear OTagR
 
-[V0] = w(8005602c & 00ffffff);
+[V0] = w(0005602c);
 
 return ot_ptr;
 ////////////////////////////////
@@ -2622,53 +2628,35 @@ return w[gpu1814];
 
 
 ////////////////////////////////
-// func45bd4
+// func45bd4()
 
-S0 = A1;
-A1 = w[80056060];
-V0 = w[A1 + 0000];
-80045BF4	lui    v1, $0800
-V0 = V0 | V1;
-[A1 + 0000] = w(V0);
-V0 = w[8005605c];
-80045C08	nop
-[V0 + 0000] = w(0);
-V0 = S0 << 02;
-80045C14	addiu  v0, v0, $fffc (=-$4)
-V1 = w[80056054];
-A0 = A0 + V0;
-[V1 + 0000] = w(A0);
-V0 = w[80056058];
-80045C30	lui    v1, $1100
-[V0 + 0000] = w(S0);
-V0 = w[8005605c];
-V1 = V1 | 0002;
-[V0 + 0000] = w(V1);
-80045C48	jal    func46d74 [$80046d74]
-80045C4C	nop
-V0 = w[8005605c];
-80045C58	nop
-V0 = w[V0 + 0000];
-80045C60	lui    v1, $0100
-V0 = V0 & V1;
-80045C68	beq    v0, zero, L45ca4 [$80045ca4]
-V0 = S0;
-80045C70	lui    s1, $0100
+src = A0;
+words = A1;
 
-loop45c74:	; 80045C74
-system_gpu_dma_timeout_check();
-80045C78	nop
-80045C7C	bne    v0, zero, L45ca4 [$80045ca4]
-80045C80	addiu  v0, zero, $ffff (=-$1)
-V0 = w[8005605c];
-80045C8C	nop
-V0 = w[V0 + 0000];
-80045C94	nop
-V0 = V0 & S1;
-80045C9C	bne    v0, zero, loop45c74 [$80045c74]
-V0 = S0;
+gpu10e0 = w[80056054]; // 1f8010e0 DMA base address OTC (reverse clear OT) (GPU related)
+gpu10e4 = w[80056058]; // 1f8010e4 DMA Block Control OTC (reverse clear OT) (GPU related)
+gpu10e8 = w[8005605c]; // 1f8010e8 DMA Channel Control OTC (reverse clear OT) (GPU related)
+gpu10f0 = w[80056060]; // 1f8010f0 DPCR - DMA Control register
 
-L45ca4:	; 80045CA4
+[gpu10f0] = w(w[gpu10f0] | 08000000);
+[gpu10e8] = w(00000000); // disable
+[gpu10e0] = w(src + words * 4 - 4); // end address
+[gpu10e4] = w(words);
+[gpu10e8] = w(11000002); // Memory Address Step Backward (-4), Start/Enable/Busy, Manual Start, SyncMode 0
+
+func46d74(); // wait
+
+while( w[gpu10e8] & 01000000 ) // Start/Enable/Busy
+{
+    system_gpu_dma_timeout_check();
+
+    if( V0 != 0 )
+    {
+        return -1;
+    }
+}
+
+return words;
 ////////////////////////////////
 
 
@@ -2848,7 +2836,7 @@ gpu10a8 = w[80056050]; // 1f8010A8 GPU DMA channel control (lists + image data)
 
 S1 = A0;
 S2 = A1;
-80046174	jal    func46d74 [$80046d74]
+func46d74();
 
 A1 = h[S1 + 0004];
 V1 = A1;

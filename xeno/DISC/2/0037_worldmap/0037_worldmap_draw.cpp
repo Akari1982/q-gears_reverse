@@ -3,12 +3,10 @@
 
 80070968	lui    s1, $8007
 8007096C	addiu  s1, s1, $ef75 (=-$108b)
-80070970	lui    v0, $800a
-80070974	addiu  v0, v0, $b028 (=-$4fd8)
-[8009b224] = w(V0);
-V0 = 0001;
-[8009cbd8] = w(V0);
-[8009c93c] = w(V0);
+
+[8009b224] = w(8009b028);
+[8009cbd8] = w(1);
+[8009c93c] = w(1);
 
 L7099c:	; 8007099C
     [8009b104] = h(0);
@@ -85,9 +83,9 @@ L7099c:	; 8007099C
     system_clear_otagr();
 
     A0 = w[8009cbd8];
-    80070B08	jal    $80024ed4
+    80070B08	jal    $func24ed4
 
-    80070B10	jal    $8001d2e4
+    80070B10	jal    $func1d2e4
 
     80070B18	jal    func96be8 [$80096be8]
 
@@ -368,9 +366,10 @@ L7099c:	; 8007099C
     80070FB0	nop
     80070FB4	jal    func7472c [$8007472c]
     80070FB8	nop
-    A1 = w[8009b1f4];
-    A0 = 00a0;
-    80070FC4	jal    $80049fd4
+
+    A0 = a0; // x
+    A1 = w[8009b1f4]; // y
+    system_gte_set_screen_offset();
 
     V0 = w[8009b224];
     A0 = w[V0 + 70] + 0ffc;
@@ -587,23 +586,15 @@ V0 = V0 + 000a;
 
 ////////////////////////////////
 // func71304
-80071304	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0014] = w(S1);
+
 S1 = 0;
-[SP + 0028] = w(S6);
 S6 = 00ff;
-[SP + 001c] = w(S3);
 8007131C	lui    s3, $800a
 80071320	addiu  s3, s3, $c11c (=-$3ee4)
-[SP + 0024] = w(S5);
 80071328	lui    s5, $800a
 8007132C	addiu  s5, s5, $b1e0 (=-$4e20)
-[SP + 0020] = w(S4);
 S4 = S5;
-[SP + 0018] = w(S2);
 S2 = 0;
-[SP + 002c] = w(RA);
-[SP + 0010] = w(S0);
 
 loop71348:	; 80071348
 80071348	lui    at, $8007
@@ -931,11 +922,11 @@ system_move_image();
 A0 = 0;
 system_draw_sync();
 
-A0 = 0040;
-A1 = 0;
-A2 = 0004;
-A3 = 0002;
-800718B0	jal    func723dc [$800723dc]
+A0 = 40; // render num
+A1 = 0; // color
+A2 = 4; // color add
+A3 = 2; // semi transparency B-F
+func723dc(); // full screen fade
 
 A0 = 0;
 800718B8	jal    $80028870
@@ -1531,12 +1522,11 @@ S1 = S1 + 0004;
 
 ////////////////////////////////
 // func721d8
-800721D8	addiu  sp, sp, $ffd8 (=-$28)
+
 A0 = 0001;
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S1);
+
 800721E8	jal    $80043f88
-[SP + 0018] = w(S0);
+
 V0 = 0100;
 [8009b0c4] = w(V0);
 800721FC	jal    $80049ff4
@@ -1627,14 +1617,8 @@ A0 = 0b00;
 
 L723b4:	; 800723B4
 A2 = w[8009b0c4];
-800723BC	jal    $80048958
 A1 = 0e80;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800723D4	jr     ra 
-800723D8	nop
+800723BC	jal    $80048958
 ////////////////////////////////
 
 
@@ -1642,296 +1626,160 @@ SP = SP + 0028;
 ////////////////////////////////
 // func723dc()
 
-S7 = A0;
-S5 = A1;
-S3 = A3;
+render_num = A0;
+color = A1;
+color_add = A2;
+blend_mode = A3;
 
 A0 = 78;
 A1 = 1;
 system_memory_allocate();
-S1 = V0;
+pack1 = V0;
 
 A0 = 48;
 A1 = 1;
 system_memory_allocate();
-S4 = V0;
+pack2 = V0;
 
 A0 = 8;
 A1 = 1;
 system_memory_allocate();
-FP = V0;
+pack3 = V0;
 
-S2 = 0;
-A2 = 0009;
-A1 = 002c;
-A0 = 0080;
-V1 = S1;
+[pack1 + 28 * 0 + 3] = b(9);
+[pack1 + 28 * 0 + 4] = b(80);
+[pack1 + 28 * 0 + 5] = b(80);
+[pack1 + 28 * 0 + 6] = b(80);
+[pack1 + 28 * 0 + 7] = b(2d);      // Textured four-point polygon, opaque, raw-texture
+[pack1 + 28 * 0 + 8] = h(0);       // x1 0
+[pack1 + 28 * 0 + a] = h(0);       // y1 0
+[pack1 + 28 * 0 + c] = b(0);       // u1 0
+[pack1 + 28 * 0 + d] = b(0);       // v1 0
+[pack1 + 28 * 0 + 10] = h(80);     // x2 128
+[pack1 + 28 * 0 + 12] = h(0);      // y2 0
+[pack1 + 28 * 0 + 14] = b(80);     // u2 128
+[pack1 + 28 * 0 + 15] = b(0);      // v2 0
+[pack1 + 28 * 0 + 18] = h(0);      // x3 0
+[pack1 + 28 * 0 + 1a] = h(ef);     // y3 239
+[pack1 + 28 * 0 + 1c] = b(0);      // u3 0
+[pack1 + 28 * 0 + 1d] = b(ef);     // v3 239
+[pack1 + 28 * 0 + 20] = h(80);     // x4 128
+[pack1 + 28 * 0 + 22] = h(ef);     // y4 239
+[pack1 + 28 * 0 + 24] = b(80);     // u4 128
+[pack1 + 28 * 0 + 25] = b(ef);     // v4 239
 
-loop7245c:	; 8007245C
-    [V1 + 0007] = b(A1);
-    V0 = bu[V1 + 0007];
-    S2 = S2 + 0001;
-    [V1 + 0003] = b(A2);
-    [V1 + 0004] = b(A0);
-    [V1 + 0005] = b(A0);
-    [V1 + 0006] = b(A0);
-    V0 = V0 | 0001;
-    [V1 + 0007] = b(V0);
-    V0 = S2 < 0003;
-    V1 = V1 + 0028;
-80072484	bne    v0, zero, loop7245c [$8007245c]
+A0 = 2; // colors 15bit
+A1 = 0; // semi transparency B/2+F/2
+A2 = 2c0; // x_base
+A3 = 100; // y_base
+system_graphic_get_texpage_by_param();
+[pack1 + 28 * 0 + 16] = h(V0);
 
-A0 = 0002;
-A1 = 0;
-A2 = 02c0;
-A3 = 0100;
-V1 = 0080;
-T0 = 00ef;
-V0 = 0100;
-S0 = 0140;
-[S1 + 0038] = h(V0);
-[S1 + 0048] = h(V0);
-[S1 + 0058] = h(V0);
-[S1 + 0068] = h(V0);
-V0 = 0080;
-[S1 + 0010] = h(V1);
-[S1 + 0020] = h(V1);
-[S1 + 0030] = h(V1);
-[S1 + 0040] = h(V1);
-V1 = 00ef;
-[S1 + 0008] = h(0);
-[S1 + 000a] = h(0);
-[S1 + 0012] = h(0);
-[S1 + 0018] = h(0);
-[S1 + 001a] = h(T0);
-[S1 + 0022] = h(T0);
-[S1 + 0032] = h(0);
-[S1 + 003a] = h(0);
-[S1 + 0042] = h(T0);
-[S1 + 004a] = h(T0);
-[S1 + 005a] = h(0);
-[S1 + 0060] = h(S0);
-[S1 + 0062] = h(0);
-[S1 + 006a] = h(T0);
-[S1 + 0070] = h(S0);
-[S1 + 0072] = h(T0);
-[S1 + 000c] = b(0);
-[S1 + 000d] = b(0);
-[S1 + 0014] = b(V0);
-[S1 + 0015] = b(0);
-[S1 + 001c] = b(0);
-[S1 + 001d] = b(V1);
-[S1 + 0024] = b(V0);
-[S1 + 0025] = b(V1);
-[S1 + 0034] = b(0);
-[S1 + 0035] = b(0);
-[S1 + 003c] = b(V0);
-[S1 + 004c] = b(V0);
-V0 = 0040;
-[S1 + 003d] = b(0);
-[S1 + 0044] = b(0);
-[S1 + 0045] = b(V1);
-[S1 + 004d] = b(V1);
-[S1 + 005c] = b(0);
-[S1 + 005d] = b(0);
-[S1 + 0064] = b(V0);
-[S1 + 0065] = b(0);
-[S1 + 006c] = b(0);
-[S1 + 006d] = b(V1);
-[S1 + 0074] = b(V0);
-[S1 + 0075] = b(V1);
-80072574	jal    $80043894
+[pack1 + 28 * 1 + 3] = b(9);
+[pack1 + 28 * 1 + 4] = b(80);
+[pack1 + 28 * 1 + 5] = b(80);
+[pack1 + 28 * 1 + 6] = b(80);
+[pack1 + 28 * 1 + 7] = b(2d);      // Textured four-point polygon, opaque, raw-texture
+[pack1 + 28 * 1 + 8] = h(80);      // x1 128
+[pack1 + 28 * 1 + a] = h(0);       // y1 0
+[pack1 + 28 * 1 + c] = b(0);       // u1 0
+[pack1 + 28 * 1 + d] = b(0);       // v1 0
+[pack1 + 28 * 1 + 10] = h(100);    // x2 256
+[pack1 + 28 * 1 + 12] = h(0);      // y2 0
+[pack1 + 28 * 1 + 14] = b(80);     // u2 128
+[pack1 + 28 * 1 + 15] = b(0);      // v2 0
+[pack1 + 28 * 1 + 18] = h(80);     // x3 128
+[pack1 + 28 * 1 + 1a] = h(ef);     // y3 239
+[pack1 + 28 * 1 + 1c] = b(0);      // u3 0
+[pack1 + 28 * 1 + 1d] = b(ef);     // v3 239
+[pack1 + 28 * 1 + 20] = h(100);    // x4 256
+[pack1 + 28 * 1 + 22] = h(ef);     // y4 239
+[pack1 + 28 * 1 + 24] = b(80);     // u4 128
+[pack1 + 28 * 1 + 25] = b(ef);     // v4 239
 
-A0 = 0002;
-A1 = 0;
-A2 = 0340;
-A3 = 0100;
-[S1 + 0016] = h(V0);
-8007258C	jal    $80043894
+A0 = 2; // colors 15bit
+A1 = 0; // semi transparency B/2+F/2
+A2 = 340; // x_base
+A3 = 100; // y_base
+system_graphic_get_texpage_by_param();
+[pack1 + 28 * 1 + 16] = h(V0);
 
-A0 = 0002;
-A1 = 0;
-A2 = 03c0;
-A3 = 0100;
-[S1 + 003e] = h(V0);
-800725A4	jal    $80043894
+[pack1 + 28 * 2 + 3] = b(9);
+[pack1 + 28 * 2 + 4] = b(80);
+[pack1 + 28 * 2 + 5] = b(80);
+[pack1 + 28 * 2 + 6] = b(80);
+[pack1 + 28 * 2 + 7] = b(2d);     // Textured four-point polygon, opaque, raw-texture
+[pack1 + 28 * 2 + 8] = h(100);    // x1 256
+[pack1 + 28 * 2 + a] = h(0);      // y1 0
+[pack1 + 28 * 2 + c] = b(0);      // u1 0
+[pack1 + 28 * 2 + d] = b(0);      // v1 0
+[pack1 + 28 * 2 + 10] = h(140)    // x2 320
+[pack1 + 28 * 2 + 12] = h(0);     // y2 0
+[pack1 + 28 * 2 + 14] = b(40);    // u2 64
+[pack1 + 28 * 2 + 15] = b(0);     // v2 0
+[pack1 + 28 * 2 + 18] = h(100)    // x3 256
+[pack1 + 28 * 2 + 1a] = h(ef);    // y3 239
+[pack1 + 28 * 2 + 1c] = b(0);     // u3 0
+[pack1 + 28 * 2 + 1d] = b(ef);    // v3 239
+[pack1 + 28 * 2 + 20] = h(140)    // x4 320
+[pack1 + 28 * 2 + 22] = h(ef);    // y4 239
+[pack1 + 28 * 2 + 24] = b(40);    // u4 64
+[pack1 + 28 * 2 + 25] = b(ef);    // v4 239
 
-A0 = 0;
-A1 = S3;
-A2 = 0;
-A3 = 0;
-[S1 + 0066] = h(V0);
-800725BC	jal    $80043894
+A0 = 2; // colors 15bit
+A1 = 0; // semi transparency B/2+F/2
+A2 = 3c0; // x_base
+A3 = 100; // y_base
+system_graphic_get_texpage_by_param();
+[pack1 + 28 * 2 + 16] = h(V0);
 
-A0 = FP;
-A1 = 0;
-A2 = 0001;
+A0 = 2; // colors 15bit
+A1 = blend_mode;
+A2 = 0; // x_base
+A3 = 0; // y_base
+system_graphic_get_texpage_by_param();
+
+A0 = pack3; // dst
+A1 = 0; // draw to display area prohibited
+A2 = 1; // dither 24bit to 15bit enabled
 A3 = V0 & ffff;
-800725D0	jal    $80043c98
+system_graphic_create_texpage_settings_packet()
 
-A0 = S4;
-A1 = 0001;
-V0 = 0008;
-[S4 + 0003] = b(V0);
-V0 = 0038;
-[S4 + 0007] = b(V0);
-V0 = 00f0;
-[S4 + 0008] = h(0);
-[S4 + 000a] = h(0);
-[S4 + 0010] = h(S0);
-[S4 + 0012] = h(0);
-[S4 + 0018] = h(0);
-[S4 + 001a] = h(V0);
-[S4 + 0020] = h(S0);
-[S4 + 0022] = h(V0);
-[S4 + 0004] = b(0);
-[S4 + 0005] = b(0);
-[S4 + 0006] = b(0);
-[S4 + 000c] = b(0);
-[S4 + 000d] = b(0);
-[S4 + 000e] = b(0);
-[S4 + 0014] = b(0);
-[S4 + 0015] = b(0);
-[S4 + 0016] = b(0);
-[S4 + 001c] = b(0);
-[S4 + 001d] = b(0);
-[S4 + 001e] = b(0);
+[pack2 + 3] = b(8);
+[pack2 + 4] = b(0); // col
+[pack2 + 5] = b(0); // col
+[pack2 + 6] = b(0); // col
+[pack2 + 7] = b(39);    // Shaded four-point polygon, opaque (same as 38)
+[pack2 + 8] = h(0);     // x1 0
+[pack2 + a] = h(0);     // y1 0
+[pack2 + c] = b(0); // col
+[pack2 + d] = b(0); // col
+[pack2 + e] = b(0); // col
+[pack2 + 10] = h(140);  // x2 320
+[pack2 + 12] = h(0);    // y2 0
+[pack2 + 14] = b(0); // col
+[pack2 + 15] = b(0); // col
+[pack2 + 16] = b(0); // col
+[pack2 + 18] = h(0);    // x3 0
+[pack2 + 1a] = h(f0);   // y3 240
+[pack2 + 1c] = b(0); // col
+[pack2 + 1d] = b(0); // col
+[pack2 + 1e] = b(0); // col
+[pack2 + 20] = h(140);  // x4 320
+[pack2 + 22] = h(f0);   // y4 240
+
+A0 = pack2;
+A1 = 1;
 system_set_draw_packet_transparency();
 
-A3 = S4 + 0024;
-A2 = S4;
-V0 = bu[S4 + 0007];
-T0 = S4 + 0020;
-V0 = V0 | 0001;
-[S4 + 0007] = b(V0);
-
-loop72660:	; 80072660
-V0 = w[A2 + 0000];
-V1 = w[A2 + 0004];
-A0 = w[A2 + 0008];
-A1 = w[A2 + 000c];
-[A3 + 0000] = w(V0);
-[A3 + 0004] = w(V1);
-[A3 + 0008] = w(A0);
-[A3 + 000c] = w(A1);
-A2 = A2 + 0010;
-80072684	bne    a2, t0, loop72660 [$80072660]
-A3 = A3 + 0010;
-V0 = w[A2 + 0000];
-
-[A3 + 0000] = w(V0);
-A0 = 0;
-system_draw_sync();
-
-A0 = 0;
-system_psyq_wait_frames();
-
-800726A8	lui    s0, $800a
-800726AC	addiu  s0, s0, $b084 (=-$4f7c)
-A0 = S0;
-system_psyq_put_disp_env();
-
-800726BC	addiu  a0, s0, $ffa4 (=-$5c)
-system_psyq_put_draw_env();
-
-800726C0	addiu  s0, s0, $ff2c (=-$d4)
-S6 = 0;
-800726C8	addiu  s7, s7, $ffff (=-$1)
-800726CC	addiu  v0, zero, $ffff (=-$1)
-S2 = S5;
-
-if( S7 != -1 )
+// duplicate packet
+A3 = pack2 + 24;
+A2 = pack2;
+while( A2 != pack2 + 24 )
 {
-    V0 = S1 + 0028;
-    V0 = V0 & 00ffffff;
-    [SP + 0018] = w(V0);
-    V0 = S1 + 0050;
-    V0 = V0 & 00ffffff;
-    T1 = FP & 00ffffff;
-    [SP + 0020] = w(V0);
-    [SP + 0028] = w(T1);
-
-    L72704:	; 80072704
-        if( S0 != 8009afb0 )
-        {
-            S0 = 8009afb0;
-        }
-        else
-        {
-            S0 = S0 + 78;
-        }
-
-        A0 = w[V0 + 70];
-        A1 = 400;
-        system_clear_otagr();
-
-        V0 = w[S0 + 70];
-        [S1 + 0] = w((w[S1 + 0] & ff000000) | (w[V0 + 4] & 00ffffff));
-
-        A0 = w[S0 + 70];
-        [A0 + 4] = w((w[A0 + 4] & ff000000) | (S1 & 00ffffff));
-
-        V0 = w[S0 + 70];
-        [S1 + 28] = w((w[S1 + 28] & ff000000) | (w[V0 + 4] & 00ffffff));
-
-        V1 = w[S0 + 70];
-        [V1 + 4] = w((w[V1 + 4] & ff000000) | w[SP + 18]);
-
-        V0 = w[S0 + 70];
-        [S1 + 50] = w((w[S1 + 50] & ff000000) | (w[V0 + 4] & 00ffffff));
-
-        S6 = S6 ^ 1;
-
-        V1 = w[S0 + 70];
-        [V1 + 4] = w((w[V1 + 4] & ff000000) | w[SP + 20]);
-
-        [S4 + S6 * 24 + 4] = b(S2);
-        [S4 + S6 * 24 + 5] = b(S2);
-        [S4 + S6 * 24 + 6] = b(S2);
-        [S4 + S6 * 24 + c] = b(S2);
-        [S4 + S6 * 24 + d] = b(S2);
-        [S4 + S6 * 24 + e] = b(S2);
-        [S4 + S6 * 24 + 14] = b(S2);
-        [S4 + S6 * 24 + 15] = b(S2);
-        [S4 + S6 * 24 + 16] = b(S2);
-        [S4 + S6 * 24 + 1c] = b(S2);
-        [S4 + S6 * 24 + 1d] = b(S2);
-        [S4 + S6 * 24 + 1e] = b(S2);
-
-        V0 = w[S0 + 70];
-        [S4 + S6 * 24 + 0] = w((w[S4 + S6 * 24 + 0] & ff000000) | (w[V0 + 0] & 00ffffff));
-
-        A0 = w[S0 + 70];
-        [A0 + 0] = w((w[A0 + 0] & ff000000) | (V1 & 00ffffff));
-
-        V0 = w[S0 + 70];
-        [FP + 0] = w((w[FP + 0] & ff000000) | (w[V0 + 0] & 00ffffff));
-
-        V1 = w[S0 + 70];
-        [V1 + 0] = w((w[V1 + 0] & ff000000) | w[SP + 0028]);
-
-        A0 = 0;
-        system_draw_sync();
-
-        A0 = 0;
-        system_psyq_wait_frames();
-
-        A0 = S0 + 5c;
-        system_psyq_put_disp_env();
-
-        A0 = S0;
-        system_psyq_put_draw_env();
-
-        T1 = w[SP + 0010];
-        A0 = w[S0 + 0070];
-        S2 = S2 + T1;
-        A0 = A0 + 0ffc;
-        system_psyq_draw_otag();
-
-        S7 - S7 - 1;
-
-        800728B0	addiu  v0, zero, $ffff (=-$1)
-    800728B4	bne    s7, v0, L72704 [$80072704]
+    [A3] = w(w[A2]);
+    A2 = A2 + 4;
+    A3 = A3 + 4;
 }
 
 A0 = 0;
@@ -1943,12 +1791,98 @@ system_psyq_wait_frames();
 A0 = 8009b084;
 system_psyq_put_disp_env();
 
-A0 = S1;
+A0 = 8009b028;
+system_psyq_put_draw_env();
+
+S0 = 8009afb0;
+S6 = 0;
+while( render_num != 0 )
+{
+    if( S0 != 8009afb0 )
+    {
+        S0 = 8009afb0;
+    }
+    else
+    {
+        S0 = S0 + 78;
+    }
+
+    start_ptr = w[S0 + 70];
+
+    A0 = start_ptr;
+    A1 = 400;
+    system_clear_otagr();
+
+    pack1_0 = pack1 & 00ffffff;
+    [pack1 + 0] = w((w[pack1 + 0] & ff000000) | (w[start_ptr + 4] & 00ffffff));
+    [start_ptr + 4] = w((w[start_ptr + 4] & ff000000) | pack1_0);
+
+    pack1_28 = (pack1 + 28) & 00ffffff;
+    [pack1 + 28] = w((w[pack1 + 28] & ff000000) | (w[start_ptr + 4] & 00ffffff));
+    [start_ptr + 4] = w((w[start_ptr + 4] & ff000000) | pack1_28);
+
+    pack1_50 = (pack1 + 50) & 00ffffff;
+    [pack1 + 50] = w((w[pack1 + 50] & ff000000) | (w[start_ptr + 4] & 00ffffff));
+    [start_ptr + 4] = w((w[start_ptr + 4] & ff000000) | pack1_50);
+
+    S6 = S6 ^ 1;
+
+    // set back colour
+    [pack2 + S6 * 24 + 4] = b(color);
+    [pack2 + S6 * 24 + 5] = b(color);
+    [pack2 + S6 * 24 + 6] = b(color);
+    [pack2 + S6 * 24 + c] = b(color);
+    [pack2 + S6 * 24 + d] = b(color);
+    [pack2 + S6 * 24 + e] = b(color);
+    [pack2 + S6 * 24 + 14] = b(color);
+    [pack2 + S6 * 24 + 15] = b(color);
+    [pack2 + S6 * 24 + 16] = b(color);
+    [pack2 + S6 * 24 + 1c] = b(color);
+    [pack2 + S6 * 24 + 1d] = b(color);
+    [pack2 + S6 * 24 + 1e] = b(color);
+    color = color + color_add;
+
+    pack2_0 = (pack2 + S6 * 24) & 00ffffff;
+    [pack2 + S6 * 24 + 0] = w((w[pack2 + S6 * 24 + 0] & ff000000) | (w[start_ptr + 0] & 00ffffff));
+    [start_ptr + 0] = w((w[start_ptr + 0] & ff000000) | pack2_0);
+
+    pack3_0 = pack3 & 00ffffff;
+    [pack3 + 0] = w((w[pack3 + 0] & ff000000) | (w[start_ptr + 0] & 00ffffff));
+    [start_ptr + 0] = w((w[start_ptr + 0] & ff000000) | pack3_0);
+
+    A0 = 0;
+    system_draw_sync();
+
+    A0 = 0;
+    system_psyq_wait_frames();
+
+    A0 = S0 + 5c;
+    system_psyq_put_disp_env();
+
+    A0 = S0;
+    system_psyq_put_draw_env();
+
+    A0 = start_ptr + ffc;
+    system_psyq_draw_otag();
+
+    render_num = render_num - 1;
+}
+
+A0 = 0;
+system_draw_sync();
+
+A0 = 0;
+system_psyq_wait_frames();
+
+A0 = 8009b084;
+system_psyq_put_disp_env();
+
+A0 = pack1;
 system_memory_free();
 
-A0 = S4;
+A0 = pack2;
 system_memory_free();
 
-A0 = FP;
+A0 = pack3;
 system_memory_free();
 ////////////////////////////////

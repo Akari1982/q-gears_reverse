@@ -296,7 +296,7 @@ if( number_of_tiles != 0 )
             V0 = (S1 << 1) & 1c;
             A2 = h[8004f15c + V0]; // tx
             A3 = h[8004f15e + V0]; // ty and tr
-            func43894; // ((A0 & 3) << 7) | ((A1 & 3) << 5) | ((A3 & 0100) >> 4) | ((A2 & 03ff) >> 6) | ((A3 & 0200) << 2);
+            system_graphic_get_texpage_by_param();
             [tile_data + tile_id * 18 + a] = h(V0);
 
             A0 = (S1 >> 1) + f0; // x

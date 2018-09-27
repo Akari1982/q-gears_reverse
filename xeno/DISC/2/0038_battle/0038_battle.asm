@@ -7470,7 +7470,7 @@ L774a4:	; 800774A4
 800774A4	addu   a3, zero, zero
 
 L774a8:	; 800774A8
-800774A8	jal    $80043894
+800774A8	jal    $system_graphic_get_texpage_by_param
 800774AC	nop
 800774B0	sh     v0, $0016(s0)
 800774B4	andi   v0, s4, $00ff
@@ -7859,7 +7859,7 @@ loop77a0c:	; 80077A0C
 80077A54	lui    at, $0001
 80077A58	addu   at, v0, at
 80077A5C	lw     a3, $a568(at)
-80077A60	jal    $80043894
+80077A60	jal    $system_graphic_get_texpage_by_param
 80077A64	addu   a1, zero, zero
 80077A68	lui    v1, $800c
 80077A6C	lw     v1, $35c4(v1)
@@ -7961,7 +7961,7 @@ loop77b08:	; 80077B08
 80077BD8	lui    at, $0001
 80077BDC	addu   at, v0, at
 80077BE0	lw     a3, $a580(at)
-80077BE4	jal    $80043894
+80077BE4	jal    $system_graphic_get_texpage_by_param
 80077BE8	addu   a0, zero, zero
 80077BEC	sll    a0, s2, $01
 80077BF0	addu   a0, a0, s2
@@ -8613,7 +8613,7 @@ func78004:	; 80078004
 80078584	lui    at, $0001
 80078588	addu   at, a1, at
 8007858C	lw     a3, $a568(at)
-80078590	jal    $80043894
+80078590	jal    $system_graphic_get_texpage_by_param
 80078594	addu   a1, zero, zero
 80078598	addu   a1, zero, zero
 8007859C	addu   a2, zero, zero
@@ -8638,7 +8638,7 @@ func78004:	; 80078004
 800785E8	lui    at, $0001
 800785EC	addu   at, v0, at
 800785F0	lw     a3, $a568(at)
-800785F4	jal    $80043894
+800785F4	jal    $system_graphic_get_texpage_by_param
 800785F8	addu   a1, zero, zero
 800785FC	addu   a1, zero, zero
 80078600	addu   a2, zero, zero
@@ -8663,7 +8663,7 @@ func78004:	; 80078004
 8007864C	lui    at, $0001
 80078650	addu   at, v0, at
 80078654	lw     a3, $a568(at)
-80078658	jal    $80043894
+80078658	jal    $system_graphic_get_texpage_by_param
 8007865C	addu   a1, zero, zero
 80078660	addu   a1, zero, zero
 80078664	addu   a2, zero, zero
@@ -8687,7 +8687,7 @@ func78004:	; 80078004
 800786AC	lui    at, $0001
 800786B0	addu   at, v0, at
 800786B4	lw     a3, $a568(at)
-800786B8	jal    $80043894
+800786B8	jal    $system_graphic_get_texpage_by_param
 800786BC	addu   a1, zero, zero
 800786C0	addu   a1, zero, zero
 800786C4	addu   a2, zero, zero
@@ -8764,7 +8764,7 @@ L787b0:	; 800787B0
 800787BC	sll    a3, a3, $02
 800787C0	ori    a2, zero, $03c0
 800787C4	addu   a3, a3, s2
-800787C8	jal    $80043894
+800787C8	jal    $system_graphic_get_texpage_by_param
 800787CC	sh     v0, $000e(s0)
 800787D0	sh     v0, $0016(s0)
 800787D4	addiu  s0, s0, $0028
@@ -54056,7 +54056,7 @@ loopa21e4:	; 800A21E4
 800A220C	ori    a1, zero, $0001
 800A2210	ori    a2, zero, $0380
 800A2214	addu   a3, zero, zero
-800A2218	jal    $80043894
+800A2218	jal    $system_graphic_get_texpage_by_param
 800A221C	sh     v0, $003a(s1)
 800A2220	ori    v1, zero, $000f
 800A2224	sb     v1, $0048(s1)
@@ -59243,7 +59243,7 @@ La68d8:	; 800A68D8
 800A68F0	sll    a3, a3, $18
 800A68F4	addu   a2, s0, zero
 800A68F8	sra    a3, a3, $10
-800A68FC	jal    $80043894
+800A68FC	jal    $system_graphic_get_texpage_by_param
 800A6900	sw     t1, $00f8(sp)
 800A6904	lhu    t5, $0040(sp)
 800A6908	lhu    t6, $0048(sp)
@@ -61238,7 +61238,7 @@ loopa8464:	; 800A8464
 800A84CC	ori    a1, zero, $0002
 800A84D0	ori    a2, zero, $0380
 800A84D4	addu   a3, zero, zero
-800A84D8	jal    $80043894
+800A84D8	jal    $system_graphic_get_texpage_by_param
 800A84DC	sh     v0, $00c6(s2)
 800A84E0	sh     v0, $00ce(s2)
 800A84E4	sb     s7, $00c4(s2)
@@ -73506,7 +73506,7 @@ Lb2cdc:	; 800B2CDC
 800B2DC0	sh     v0, $0016(s1)
 800B2DC4	sb     a1, $0006(s1)
 800B2DC8	lbu    a1, $0041(s0)
-800B2DCC	jal    $80043894
+800B2DCC	jal    $system_graphic_get_texpage_by_param
 800B2DD0	addiu  s0, s1, $0018
 800B2DD4	addu   a0, s0, zero
 800B2DD8	addu   a1, zero, zero
@@ -75420,7 +75420,7 @@ Lb48c0:	; 800B48C0
 800B4958	sb     t0, $0025(s0)
 800B495C	andi   v0, v0, $0007
 800B4960	addiu  v0, v0, $ffc1 (=-$3f)
-800B4964	jal    $80043894
+800B4964	jal    $system_graphic_get_texpage_by_param
 800B4968	sb     v0, $0024(s0)
 800B496C	ori    a0, zero, $03f0
 800B4970	ori    a1, zero, $01ee
@@ -77916,7 +77916,7 @@ loopb6c40:	; 800B6C40
 800B6C7C	ori    t0, zero, $00ff
 800B6C80	andi   v0, v0, $00fd
 800B6C84	sb     t0, $0005(s0)
-800B6C88	jal    $80043894
+800B6C88	jal    $system_graphic_get_texpage_by_param
 800B6C8C	sb     v0, $0007(s0)
 800B6C90	sh     v0, $0016(s0)
 800B6C94	lw     t0, $0060(sp)
