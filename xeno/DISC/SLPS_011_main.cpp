@@ -513,7 +513,7 @@ system_devkit_pc_close();
 
 A0 = a;
 A1 = 0;
-80019D0C	jal    func322bc [$800322bc]
+func322bc();
 ////////////////////////////////
 
 
@@ -564,6 +564,7 @@ A0 = 0;
 
 ////////////////////////////////
 // func19dcc()
+
 S2 = A0; // file?
 S3 = A1;
 S1 = 0;
@@ -576,31 +577,32 @@ if( ( w[80010000] + 1 ) >= 2 )
     80019E14	j      L19e50 [$80019e50]
 }
 
-A0 = SP + 0110;
-A1 = 00ff;
+[SP + 110] = h(0);
+[SP + 112] = h(0);
+[SP + 114] = h(280);
+[SP + 116] = h(1e0);
+
+A0 = SP + 110;
+A1 = ff;
 A2 = 0;
 A3 = 0;
-V0 = 0280;
-[SP + 0114] = h(V0);
-V0 = 01e0;
-[SP + 0110] = h(0);
-[SP + 0112] = h(0);
-80019E40	jal    system_clear_image [$800445dc]
-[SP + 0116] = h(V0);
+system_clear_image();
 
 L19e48:	; 80019E48
 80019E48	j      L19e48 [$80019e48]
 80019E4C	nop
 
 L19e50:	; 80019E50
-80019E50	jal    func320d8 [$800320d8]
 S0 = 00f0;
+80019E50	jal    func320d8 [$800320d8]
+
 A0 = SP + 0030;
 A1 = 0;
 A2 = 0;
 A3 = 0180;
-80019E68	jal    func437a0 [$800437a0]
 [SP + 0010] = w(S0);
+80019E68	jal    func437a0 [$800437a0]
+
 A0 = SP + 00e8;
 A1 = 0;
 A2 = 00f0;
@@ -622,24 +624,22 @@ A3 = 0180;
 A0 = 0;
 system_psyq_draw_sync_callback();
 
-80019EC0	jal    func36298 [$80036298]
 A0 = 0;
-A0 = 0010;
-A1 = 0010;
-A2 = 0120;
-A3 = 00f0;
-V0 = 01f4;
-V1 = 03c0;
-[SP + 0010] = w(V0);
-V0 = 0100;
-[SP + 001c] = w(V0);
-V0 = 01ff;
-[SP + 0014] = w(0);
-[SP + 0018] = w(V1);
-[SP + 0020] = w(V1);
-[SP + 0024] = w(V0);
+80019EC0	jal    func36298 [$80036298]
+
+A0 = 10;
+A1 = 10;
+A2 = 120;
+A3 = f0;
+A4 = 1f4;
+A5 = 0;
+A6 = 3c0;
+A7 = 100;
+A8 = 3c0;
+A9 = 1ff;
+A10 = 0;
 80019F00	jal    func37390 [$80037390]
-[SP + 0028] = w(0);
+
 V1 = w[8004e964];
 V0 = 0001;
 [SP + 00a4] = b(V0);
@@ -652,8 +652,8 @@ V0 = 0001;
 [SP + 00a7] = b(0);
 V1 = V1 + 0001;
 [8004e964] = w(V1);
-80019F40	jal    system_psyq_set_disp_mask [$800443ac]
 A0 = 0001;
+system_psyq_set_disp_mask();
 
 L19f48:	; 80019F48
 S0 = S1 & 0001;
@@ -662,15 +662,15 @@ A0 = SP + 0030;
 A0 = SP + 008c;
 
 L19f58:	; 80019F58
-80019F58	jal    system_psyq_put_draw_env [$80044abc]
-80019F5C	nop
+system_psyq_put_draw_env();
+
 80019F60	bne    s0, zero, L19f6c [$80019f6c]
 A0 = SP + 00e8;
 A0 = SP + 00fc;
 
 L19f6c:	; 80019F6C
-80019F6C	jal    system_psyq_put_disp_env [$80044d14]
-80019F70	nop
+system_psyq_put_disp_env();
+
 80019F74	jal    func371cc [$800371cc]
 A0 = 0;
 
@@ -726,8 +726,9 @@ A1 = w[SP + 0124];
 A2 = A1;
 
 L1a048:	; 8001A048
-8001A048	jal    system_psyq_wait_frames [$8004b3f4]
 A0 = 0;
+system_psyq_wait_frames();
+
 8001A050	j      L19f48 [$80019f48]
 S1 = S1 + 0001;
 ////////////////////////////////
@@ -1444,26 +1445,21 @@ loop1ab10:	; 8001AB10
 
 
 ////////////////////////////////
-// func1ab38
-8001AB38	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0008;
-8001AB40	addiu  v0, zero, $ffff (=-$1)
-[SP + 0010] = w(RA);
-[8004e9d8] = w(V0);
-[8004e9d4] = w(V0);
-8001AB58	jal    func322bc [$800322bc]
+// func1ab38()
+
+[8004e9d8] = w(-1);
+[8004e9d4] = w(-1);
+
+A0 = 8;
 A1 = 0;
+func322bc();
 
 A0 = 4;
 A1 = 0;
 system_filesystem_set_dir();
 
-8001AB6C	jal    func1afec [$8001afec]
-A0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-8001AB7C	jr     ra 
-8001AB80	nop
+A0 = 1;
+func1afec();
 ////////////////////////////////
 
 
@@ -1702,71 +1698,62 @@ V0 = 0002;
 8001AEE0	jal    func1abb0 [$8001abb0]
 
 V1 = w[8004ea18];
-V0 = 0001;
-8001AEF4	beq    v1, v0, L1af20 [$8001af20]
-8001AEF8	nop
+
+8001AEF4	beq    v1, 1, L1af20 [$8001af20]
+
 V0 = w[8004e9b0];
-8001AF04	nop
+
 8001AF08	beq    v0, zero, L1af3c [$8001af3c]
-8001AF0C	nop
-8001AF10	jal    func1afec [$8001afec]
+
 A0 = 0;
-8001AF18	j      L1afd8 [$8001afd8]
-8001AF1C	nop
+8001AF10	jal    func1afec [$8001afec]
+
+return;
 
 L1af20:	; 8001AF20
 func1b23c();
 
-V0 = w[8004e9b0];
-8001AF30	nop
-8001AF34	bne    v0, zero, L1afd8 [$8001afd8]
-8001AF38	nop
+if( w[8004e9b0] != 0 )
+{
+    return;
+}
 
 L1af3c:	; 8001AF3C
-V0 = w[8004e9f0];
-8001AF44	nop
-V0 = V0 & c000;
+V0 = w[8004e9f0] & c000;
 8001AF4C	bne    v0, zero, L1af64 [$8001af64]
-V0 = 0001;
+
 [8004e9c4] = w(0);
 8001AF5C	j      L1af6c [$8001af6c]
-8001AF60	nop
 
 L1af64:	; 8001AF64
-[8004e9c4] = w(V0);
+[8004e9c4] = w(1);
 
 L1af6c:	; 8001AF6C
-V0 = w[8004e9c4];
 [8004ea18] = w(0);
-8001AF7C	bne    v0, zero, L1afb0 [$8001afb0]
-V0 = 0002;
-V0 = w[8004e9c0];
-S0 = 0001;
-8001AF90	beq    v0, s0, L1afd8 [$8001afd8]
-8001AF94	nop
-8001AF98	jal    func1abe0 [$8001abe0]
-8001AF9C	nop
-[8004ea18] = w(S0);
-8001AFA8	j      L1afd8 [$8001afd8]
-8001AFAC	nop
 
-L1afb0:	; 8001AFB0
-V1 = w[8004e9c0];
-8001AFB8	nop
-8001AFBC	beq    v1, v0, L1afd8 [$8001afd8]
-8001AFC0	nop
-8001AFC4	jal    func1ad4c [$8001ad4c]
-8001AFC8	nop
-V0 = 0001;
-[8004ea18] = w(V0);
+if( w[8004e9c4] == 0 )
+{
+    if( w[8004e9c0] != 1 )
+    {
+        8001AF98	jal    func1abe0 [$8001abe0]
 
-L1afd8:	; 8001AFD8
+        [8004ea18] = w(1);
+    }
+    return;
+}
+
+if( w[8004e9c0] != 2 )
+{
+    8001AFC4	jal    func1ad4c [$8001ad4c]
+
+    [8004ea18] = w(1);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1afec
+// func1afec()
 
 S5 = A0;
 A0 = 0001;
@@ -1796,15 +1783,16 @@ V1 = w[A0 + 0000];
 V0 = 00ff;
 8001B06C	beq    v1, v0, L1b0fc [$8001b0fc]
 V0 = V1 + 0005;
-8001B074	lui    at, $8006
-AT = AT + S2;
-[AT + 1c34] = h(V0);
-A0 = w[A0 + 0000];
-8001B084	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
-A0 = A0 + 0005;
+
+[80061c34 + S2] = h(V0);
+
+A0 = w[A0 + 0] + 0005;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-8001B090	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
+A1 = 1;
+system_memory_allocate();
+
 [S0 + 0000] = w(V0);
 8001B09C	lui    at, $8006
 AT = AT + S2;
@@ -1868,11 +1856,13 @@ AT = AT + S0;
 [8004e9e8] = w(1);
 
 L1b170:	; 8001B170
-8001B170	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
 A0 = 00a8;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-8001B17C	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
+A1 = 1;
+system_memory_allocate();
+
 S0 = S3 << 03;
 [80059b4c] = w(V0);
 

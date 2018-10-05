@@ -2724,23 +2724,13 @@ V0 = A3;
 
 ////////////////////////////////
 // func3a504
-8003A504	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0018] = w(S2);
+
 S2 = w[80058c74];
-[SP + 001c] = w(S3);
 S3 = w[80058b14];
-[SP + 0024] = w(S5);
 S5 = A0;
-[SP + 0020] = w(S4);
 S4 = A1;
-[SP + 0030] = w(FP);
 FP = 0;
-[SP + 002c] = w(S7);
 S7 = 0001;
-[SP + 0034] = w(RA);
-[SP + 0028] = w(S6);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 S1 = S2 + 0094;
 S0 = S2 + 00bb;
 
@@ -2838,19 +2828,6 @@ A1 = A1 - S4;
 
 L3a69c:	; 8003A69C
 V0 = A1;
-RA = w[SP + 0034];
-FP = w[SP + 0030];
-S7 = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0038;
-8003A6CC	jr     ra 
-8003A6D0	nop
 ////////////////////////////////
 
 
@@ -2901,14 +2878,15 @@ else
 // func3a744()
 
 main_struct = A0;
-S1 = A1;
+value = A1;
+steps = A2;
 
-[main_struct + 7a] = h(S1 << 8);
+[main_struct + 70 + a] = h(value << 8);
 
-if( A2 == 0 )
+if( steps == 0 )
 {
-    [main_struct + 70] = w(S1 << 18);
-    [main_struct + 78] = h(0);
+    [main_struct + 70 + 0] = w(value << 18);
+    [main_struct + 70 + 8] = h(0); // current counter value
 
     A0 = 0100; // calculate volume
     A1 = main_struct;
@@ -2916,18 +2894,18 @@ if( A2 == 0 )
 }
 else
 {
-    V0 = (S1 << 10) - (w[main_struct + 70] >> 8);
-    if( V0 == 0 )
+    change = (value << 10) - (w[main_struct + 70] >> 8);
+    if( change == 0 )
     {
         return;
     }
-    [main_struct + 78] = h(A2);
-    [main_struct + 74] = w((V0 / A2) << 8);
+    [main_struct + 70 + 8] = h(steps); // current counter value
+    [main_struct + 70 + 4] = w((change / steps) << 8);
 }
 
 if( hu[main_struct + 10] & 0100 )
 {
-    if( S1 != 0 )
+    if( value != 0 )
     {
         A0 = main_struct;
         func3a8d8();
@@ -2940,12 +2918,11 @@ if( hu[main_struct + 10] & 0100 )
 ////////////////////////////////
 // func3a7f0
 
-8003A7F0	addiu  sp, sp, $ffe8 (=-$18)
 A3 = A0;
 V0 = A1 << 08;
-[SP + 0010] = w(RA);
-8003A800	bne    a2, zero, L3a828 [$8003a828]
 [A3 + 0086] = h(V0);
+8003A800	bne    a2, zero, L3a828 [$8003a828]
+
 V0 = A1 << 18;
 [A3 + 007c] = w(V0);
 [A3 + 0084] = h(0);
@@ -2970,10 +2947,6 @@ V0 = V0 << 08;
 [A3 + 0080] = w(V0);
 
 L3a854:	; 8003A854
-RA = w[SP + 0010];
-SP = SP + 0018;
-8003A85C	jr     ra 
-8003A860	nop
 ////////////////////////////////
 
 
@@ -2981,12 +2954,11 @@ SP = SP + 0018;
 ////////////////////////////////
 // func3a864
 
-8003A864	addiu  sp, sp, $ffe8 (=-$18)
 A3 = A0;
 V0 = A1 << 08;
-[SP + 0010] = w(RA);
-8003A874	bne    a2, zero, L3a89c [$8003a89c]
 [A3 + 0092] = h(V0);
+8003A874	bne    a2, zero, L3a89c [$8003a89c]
+
 V0 = A1 << 18;
 [A3 + 0088] = w(V0);
 [A3 + 0090] = h(0);
@@ -3011,10 +2983,6 @@ V0 = V0 << 08;
 [A3 + 008c] = w(V0);
 
 L3a8c8:	; 8003A8C8
-RA = w[SP + 0010];
-SP = SP + 0018;
-8003A8D0	jr     ra 
-8003A8D4	nop
 ////////////////////////////////
 
 

@@ -503,6 +503,7 @@
                     0x4000 Cross
                     0x8000 Square
 
+80061bb8 field sound main struct?
 80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4 (+30).
 
 

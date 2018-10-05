@@ -1371,38 +1371,6 @@ if( w[800ad00c] != 1 )
 
 
 ////////////////////////////////
-// funca3c20()
-A0 = 2c0; // dest x
-A1 = 100; // dest y
-funca3c44();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca3c44()
-dest_x = A0;
-dest_y = A1;
-
-A0 = 200;
-system_gte_set_projection_plane_distance();
-
-[SP + 10] = h(0);
-[SP + 12] = h(0);
-[SP + 14] = h(140);
-[SP + 16] = h(e0);
-
-A0 = SP + 10; // src rect
-A1 = dest_x;
-A2 = dest_y;
-system_move_image()
-
-func76c88(); // sync
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funca788c()
 if( w[800ae74c] != 0 )
 {
@@ -1416,29 +1384,6 @@ if( w[800ae74c] != 0 )
 
     A0 = w[800af138];
     system_memory_free();
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca3cac()
-[800b154c] = h(0);
-if( w[800acffc] != 0 )
-{
-    A0 = w[800b1588];
-    system_memory_free();
-
-    A0 = w[800b15bc];
-    system_memory_free();
-
-    A0 = w[800b1590];
-    system_memory_free();
-
-    A0 = w[800b1594];
-    system_memory_free();
-
-    [800acffc] = w(0);
 }
 ////////////////////////////////
 

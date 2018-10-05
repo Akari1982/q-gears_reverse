@@ -59,7 +59,7 @@ func78fb0(); // sync and flush cache
 
 if( w[800c1b60] == 0 ) // debug
 {
-    A0 = 80076eac;
+    A0 = 80076eac; // func76eac() wait
     system_psyq_draw_sync_callback();
 }
 
@@ -299,10 +299,10 @@ L77810:	; 80077810
 
                         if( w[800ad0ac] == 1 )
                         {
-                            A0 = w[80061bb8];
-                            A1 = 7f;
-                            A2 = 0;
-                            80077A8C	jal    func3a744 [$8003a744]
+                            A0 = w[80061bb8]; // sound main struct
+                            A1 = 7f; // volume
+                            A2 = 0; // steps
+                            func3a744(); // set volume to all channels
                         }
 
                         [800ad0ac] = w(0);
