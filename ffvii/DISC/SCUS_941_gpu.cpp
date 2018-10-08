@@ -79,6 +79,31 @@ return A0 + (w[texture + 0] / 4) + 2; // tim size in int
 
 
 ////////////////////////////////
+// system_psyq_draw_otag()
+
+V0 = bu[80062c02];
+S0 = A0;
+V0 = V0 < 0002;
+if( V0 == 0 )
+{
+    A0 = 80010e20; // "DrawOTag(%08x)..."
+    V0 = w[80062bfc];
+    A1 = S0;
+    80044370	jalr   v0 ra
+
+}
+
+V0 = w[80062bf8];
+A0 = w[V0 + 18];
+A1 = S0;
+A2 = 0;
+A3 = 0;
+80044394	jalr   w[V0 + 8] ra
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_prepare_draw_env_packets()
 
 S0 = A1; // draw env

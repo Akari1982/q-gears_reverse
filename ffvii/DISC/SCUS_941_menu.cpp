@@ -194,7 +194,7 @@ D00B1D80
     80024D14	jal    system_psyq_put_draw_env [$800443b0]
     80024D18	addu   a0, a0, v0
     80024D1C	lw     a0, $0160(gp)
-    80024D20	jal    func4433c [$8004433c]
+    80024D20	jal    system_psyq_draw_otag [$8004433c]
     80024D24	addiu  s0, s0, $0001
     80024D28	lw     v0, $0214(gp)
     80024D2C	lw     v1, $027c(gp)
