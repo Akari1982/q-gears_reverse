@@ -41,7 +41,7 @@
 8010ad34 [][][][] next free model pointer.
 8010ad38 [][][][] last inserted model. Init with 0.
 8010ad3c [][][][] last inserted model. Current pointer to world map models list. We store pointer to founded 8010ad38 list structure here in opcode 0x300. Init with 0.
-8010ad40 [][][][] init with 0.
+8010ad40 [][][][] init with 0. Pointer to some struct.
 8010ad44 [][]     init with 0.
 8010ad48 [][]     init with 0.
 8010ad4c [][]     init with 0.

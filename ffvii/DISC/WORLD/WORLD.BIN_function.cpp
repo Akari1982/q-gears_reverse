@@ -1883,3 +1883,567 @@ for( int i = 0; i < 7; ++i )
 [801159dc] = w(0);
 [801159e0] = w(0);
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7228()
+
+S1 = A0;
+S2 = A1;
+S3 = A2;
+
+V1 = 0;
+S0 = 0;
+loopb7254:	; 800B7254
+    V1 = V1 + bu[8009c6e4 + f24 + S0];
+    S0 = S0 + 1;
+    V0 = S0 < 80;
+800B7270	bne    v0, zero, loopb7254 [$800b7254]
+
+if( S1 != 0 )
+{
+    [8011626c] = w(w[S1]);
+}
+else
+{
+    [8011626c] = w(0);
+}
+
+if( S2 != 0 )
+{
+    [80116270] = w(w[S2]);
+}
+else
+{
+    [80116270] = w(0);
+}
+
+A0 = (hu[8009c6e4 + f9c] >> c) & 3;
+if( A0 == 3 )
+{
+    A0 = 0;
+}
+funca2088();
+
+if( w[8011626c] != 0 )
+{
+    if( w[8011626c] - 1 < 2 )
+    {
+        [800e5608] = w(hu[8009c6e4 + f9c] & fff);
+        [800e560c] = w(hu[8009c6e4 + f9c] & fff);
+    }
+}
+else if( ( w[80116270] == 0 ) || ( w[8011626c] - 1 < 2 ) )
+{
+    [800e5608] = w(hu[8009c6e4 + f9c] & fff);
+    [800e560c] = w(hu[8009c6e4 + f9c] & fff);
+}
+
+A0 = hu[8009c6e4 + f9c] >> e; // cam rot or angle
+funcbc9e8();
+
+A0 = 8009c6e4 + cad; // party member in slot 1-3
+A1 = 8009c6e4 + 4f8; // party member in slot 1-4
+A2 = 0;
+funcb787c();
+
+A0 = w[8009c6e4 + b80]; // total number of seconds played
+funcadea8();
+
+[800c68ee] = h(w[8009c6e4 + f98] & 00ff);
+[800c6902] = h((w[8009c6e4 + f98] >> 08) & 00ff);
+[800c6916] = h((w[8009c6e4 + f98] >> 10) & 00ff);
+[8010cb14] = w(w[8009c6e4 + f98] >> 18);
+[8010cb1c] = w(0);
+[8010cb18] = w(0);
+
+[80109d6c] = w(hu[8009c6e4 + f5a]);
+
+A0 = 8009c6e4 + f5c; // Party leader's coordinates on world map
+wm_clean_all_model_structs();
+
+if( S3 != 0 )
+{
+    // remove PHS & Save from menu locking mask
+    [8009c6e4 + bc2] = h(hu[8009c6e4 + bc2] & fcff);
+}
+else
+{
+    // Snow Pole Number/Where address will be overwritten by next pole (cycling 00, 01, 02, 00, 01, 02... )
+    // 00: 1st pole address
+    // 01: 2nd pole address
+    // 02: 3rd pole address 
+    [8010cafc] = h(bu[8009c6e4 + f9f]);
+    [8010cb10] = h(0);
+    [8010cb0c] = h(0);
+    [8010cb08] = h(0);
+    [8010cb04] = h(0);
+    [8010cb00] = h(0);
+
+    // set snow pole
+    if( w[8011626c] == 1 )
+    {
+        S0 = 0;
+        S1 = 8009c6e4 + f8c; // snow pole coordinate. 
+        loopb73f0:	; 800B73F0
+            if( w[S1 + 0] != 0 )
+            {
+                wm_insert_in_model_struct_list();
+
+                A0 = S0 + 15;
+                wm_init_model_struct_list_element();
+
+                [SP + 10] = w(hu[S1 + 0]); // x
+                [SP + 14] = w(0);
+                [SP + 18] = w(hu[S1 + 2]); // y
+
+                A0 = w[8010ad3c];
+                A1 = SP + 10;
+                funca9c64(); // set pos here
+            }
+
+            S0 = S0 + 1;
+            S1 = S1 + 4;
+            V0 = S0 < 3;
+        800B7434	bne    v0, zero, loopb73f0 [$800b73f0]
+    }
+    // remove snow pole
+    else
+    {
+        V0 = 8009c6e4 + f94;
+        S0 = 2;
+        loopb7448:	; 800B7448
+            [V0] = w(0);
+            S0 = S0 - 1;
+            V0 = V0 - 4;
+        800B7450	bgez   s0, loopb7448 [$800b7448]
+    }
+}
+
+[80116278] = w(0);
+[8009c6e4 + c03] = b(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb787c()
+
+party13 = A0;
+party14 = A1;
+
+mask13 = (1 << bu[party13 + 0]) | (1 << bu[party13 + 1]) | (1 << bu[party13 + 2]);
+mask14 = (1 << bu[party14 + 0]) | (1 << bu[party14 + 1]) | (1 << bu[party14 + 2]);
+
+if( party14 != 0 )
+{
+    A0 = mask13;
+    A1 = mask14;
+    funcadb30();
+}
+
+mask13_uniq = mask13 & (0 NOR mask14); // what mask13 has what mask14 not.
+V1 = party13;
+
+loopb7900:	; 800B7900
+    if( mask13_uniq & (1 << bu[V1]) )
+    {
+        [V1] = b(ff);
+    }
+    V1 = V1 + 1;
+    V0 = V1 < party13 + 3;
+800B7924	bne    v0, zero, loopb7900 [$800b7900]
+
+mask14_uniq = (0 NOR mask13) & mask14; // what mask14 has what mask13 not
+if( mask14_uniq != 0 )
+{
+    A3 = 0;
+    A1 = party13;
+    A0 = 0;
+    loopb7944:	; 800B7944
+        if( mask14_uniq & 1 )
+        {
+            if( A0 >= 3 )
+            {
+                return;
+            }
+
+            V1 = A0 + party13;
+            loopb7958:	; 800B7958
+                V0 = bu[V1 + 0];
+                if( V0 == ff )
+                {
+                    break;
+                }
+
+                V1 = V1 + 1;
+                A0 = A0 + 1;
+                A1 = A1 + 1;
+                V0 = A0 < 3;
+            800B7974	bne    v0, zero, loopb7958 [$800b7958]
+
+            if( A0 >= 3 )
+            {
+                return;
+            }
+
+            A0 = A0 + 1;
+            [A1] = b(A3);
+            A1 = A1 + 1;
+        }
+
+        A3 = A3 + 1;
+        mask14_uniq = mask14_uniq >> 1;
+    800B7994	bne    mask14_uniq, zero, loopb7944 [$800b7944]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcadb30()
+
+mask13 = A0;
+mask14 = A1;
+
+A2 = (0 NOR mask14) & mask13;
+A3 = 0;
+
+[8010ae24] = w(0);
+[8010ae28] = w(0);
+[8010ae2c] = w(0);
+[8010ae30] = w(0);
+
+if( A2 & 40 )
+{
+    [8010ae2c] = w(26);
+    A3 = 1;
+    A2 = A2 & ffffffbf;
+}
+
+if( A3 < 0002 )
+{
+    T0 = 0;
+    loopadb94:	; 800ADB94
+        if( A2 == 0 )
+        {
+            break;
+        }
+
+        if( A2 & 1 )
+        {
+            [8010ae2c + A3 * 4] = w(T0 + 20);
+            A3 = A3 + 1;
+        }
+
+        A2 = A2 >> 1;
+        T0 = T0 + 1;
+        V0 = A3 < 2;
+    800ADBB8	bne    v0, zero, loopadb94 [$800adb94]
+}
+
+A2 = (0 NOR A0) & A1;
+A3 = 0;
+
+if( A2 & 40 )
+{
+    [8010ae24] = w(26);
+    A3 = 1;
+    A2 = (0 NOR 40) & A2;
+}
+
+if( A3 < 2 )
+{
+    T0 = 0;
+    loopadc08:	; 800ADC08
+        if( A2 == 0 )
+        {
+            break;
+        }
+
+        if( A2 & 1 )
+        {
+            [8010ae24 + A3 * 4] = w(T0 + 20);
+            A3 = A3 + 1;
+        }
+
+        A2 = A2 >> 1;
+        T0 = T0 + 1;
+        V0 = A3 < 2;
+    800ADC2C	bne    v0, zero, loopadc08 [$800adc08]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc9e8()
+
+[801164f8] = w((A0 << 10) >> 10);
+
+funca9174();
+if( V0 != 3 )
+{
+    [801164fc] = w(w[801164f8]);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca1d38()
+
+A0 = A0 & 0fff;
+[800e5608] = w(A0);
+[800e560c] = w(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca2088()
+
+[800e5648] = w(A0);
+[800e5650] = w(w[800e5648]);
+
+if( A0 < 0002 )
+{
+    if( w[800e5634] != 3 )
+    {
+        [800e5608] = w(0);
+    }
+}
+
+if( w[800e5648] == 0 )
+{
+    [800e564c] = w(78);
+}
+else
+{
+    [800e564c] = w(a0);
+}
+
+if( w[800e5648] == 3 )
+{
+    [800e5604] = w(0);
+}
+else
+{
+    [800e5604] = w(78);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcadea8()
+
+A3 = 0;
+A2 = 0;
+
+loopadec4:	; 800ADEC4
+    A1 = 1f;
+
+    loopadec8:	; 800ADEC8
+        V0 = A0 * 5d588b65;
+        800ADECC	addiu  a1, a1, $ffff (=-$1)
+        V1 = A3 >> 01;
+        A0 = A0 + 0001;
+        V0 = A0 & 80000000;
+        A3 = V1 | V0;
+    800ADEE0	bgez   a1, loopadec8 [$800adec8]
+
+    [SP + 10 + A2 * 4] = w(A3);
+    A2 = A2 + 1;
+    V0 = A2 < 11;
+800ADF00	bne    v0, zero, loopadec4 [$800adec4]
+
+A1 = SP + 0054;
+A0 = w[SP + 4c];
+V1 = w[SP + 10] >> 9;
+V0 = (w[SP + 50] << 17) ^ V1;
+V0 = V0 ^ A0;
+[SP + 0050] = w(V0);
+
+A2 = 11;
+loopadf2c:	; 800ADF2C
+    A2 = A2 + 0001;
+    V0 = w[A1 + ffbc];
+    V1 = w[A1 + ffc0];
+    A0 = w[A1 + fffc];
+    V0 = V0 << 17;
+    V1 = V1 >> 09;
+    V0 = V0 ^ V1 ^ A0;
+    [A1 + 0000] = w(V0);
+    A1 = A1 + 0004;
+    V0 = A2 < 0209;
+800ADF54	bne    v0, zero, loopadf2c [$800adf2c]
+
+A2 = 0;
+loopadf64:	; 800ADF64
+    [8010ae5c + A2] = b(bu[SP + 10 + A2 * 4]);
+    A2 = A2 + 1;
+    V0 = A2 < 209;
+800ADF84	bne    v0, zero, loopadf64 [$800adf64]
+
+800ADF8C	jal    funcade30 [$800ade30]
+
+800ADF94	jal    funcade30 [$800ade30]
+
+800ADF9C	jal    funcade30 [$800ade30]
+
+[8010ae58] = w(208);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcade30
+
+A0 = 0;
+loopade3c:	; 800ADE3C
+    [8010ae5c + A0] = b(bu[8010ae5c + A0] ^ bu[8010b045 + A0]);
+    A0 = A0 + 1;
+    V0 = A0 < 20;
+800ADE60	bne    v0, zero, loopade3c [$800ade3c]
+
+A0 = 20;
+loopade74:	; 800ADE74
+    [8010ae7c + A0] = b(bu[8010ae7c + A0] ^ bu[8010ae3c + A0]);
+    A0 = A0 + 1;
+    V0 = A0 < 209;
+800ADE98	bne    v0, zero, loopade74 [$800ade74]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3300()
+
+[800c68ee] = h(A0 & 00ff);
+[800c6902] = h((A0 >> 08) & 00ff);
+[800c6916] = h((A0 >> 10) & 00ff);
+[8010cb14] = w(A0 >> 18);
+[8010cb1c] = w(0);
+[8010cb18] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7820()
+[80116278] = w(0);
+[8009c6e4 + c03] = b(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb58f8()
+
+model_struct = A0;
+tex_coords = A1;
+
+if( model_struct == 0 || tex_coords == 0 )
+{
+    return;
+}
+
+S2 = 0;
+loopb5928:	; 800B5928
+    [model_struct + 90 + S2 * 28 + 3] = b(9);
+    [model_struct + 90 + S2 * 28 + 4] = b(20);
+    [model_struct + 90 + S2 * 28 + 5] = b(20);
+    [model_struct + 90 + S2 * 28 + 6] = b(20);
+    [model_struct + 90 + S2 * 28 + 7] = b(2e);
+
+    [model_struct + 90 + S2 * 28 + e] = h(7cc4); // clut
+
+    if( bu[80062c00] == 2 )
+    {
+        [model_struct + 90 + S2 * 28 + 16] = h(59); // texpage
+    }
+    else
+    {
+        [model_struct + 90 + S2 * 28 + 16] = h(129); // texpage
+    }
+
+    [model_struct + 90 + S2 * 28 + 1c] = b(bu[tex_coords + 0]); // u2
+    [model_struct + 90 + S2 * 28 +  c] = b(bu[tex_coords + 0]); // u0
+    [model_struct + 90 + S2 * 28 + 15] = b(bu[tex_coords + 2]); // v1
+    [model_struct + 90 + S2 * 28 +  d] = b(bu[tex_coords + 2]); // v0
+    [model_struct + 90 + S2 * 28 + 24] = b(bu[tex_coords + 0] + bu[tex_coords + 4]); // u3
+    [model_struct + 90 + S2 * 28 + 14] = b(bu[tex_coords + 0] + bu[tex_coords + 4]); // u1
+    [model_struct + 90 + S2 * 28 + 25] = b(bu[tex_coords + 2] + bu[tex_coords + 6]); // v3
+    [model_struct + 90 + S2 * 28 + 1d] = b(bu[tex_coords + 2] + bu[tex_coords + 6]); // v2
+
+    S2 = S2 + 1;
+    V0 = S2 < 2;
+800B59CC	bne    v0, zero, loopb5928 [$800b5928]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcada64()
+
+model_struct = A0;
+model_id = bu[model_struct + 50];
+
+A1 = w[8010ad50]; // savemap +f5c
+V1 = w[8010ad50] + 30;
+
+loopada84:	; 800ADA84
+    if( ( ( w[A1 + 0] >> 13 ) & 1f ) == model_id )
+    {
+        break;
+    }
+    A1 = A1 + 8;
+    V0 = A1 < V1;
+800ADAA4	bne    v0, zero, loopada84 [$800ada84]
+
+if( A1 < w[8010ad50] + 30 )
+{
+    if( model_struct != 0 )
+    {
+        // x y z
+        [model_struct + c] = w(w[A1 + 0] & 0007ffff);
+        [model_struct + 10] = w(w[A1 + 4] >> 12);
+        [model_struct + 14] = w(w[A1 + 4] & 0003ffff);
+
+        // x y z
+        [model_struct + 1c] = w(w[A1 + 0] & 0007ffff);
+        [model_struct + 20] = w(w[A1 + 4] >> 12);
+        [model_struct + 24] = w(w[A1 + 4] & 0003ffff);
+
+        // ditection
+        [model_struct + 3c] = h((w[A1 + 0] >> 14) & 0ff0);
+        [model_struct + 3e] = h(0);
+        [model_struct + 40] = h((w[A1 + 0] >> 14) & 0ff0);
+        [model_struct + 4c] = h((w[A1 + 0] >> 14) & 0ff0);
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3044()
+
+[8010cafc] = h(A0);
+[8010cb10] = h(0);
+[8010cb0c] = h(0);
+[8010cb08] = h(0);
+[8010cb04] = h(0);
+[8010cb00] = h(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcaa8d8()
+[8010ad44] = h(A0);
+[8010ad48] = h(A1);
+[8010ad4c] = h(A2);
+////////////////////////////////
