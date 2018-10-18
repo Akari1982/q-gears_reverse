@@ -20118,7 +20118,7 @@ Ld2688:	; 800D2688
 A0 = w[S0 + 0000];
 A1 = w[S0 + 0008];
 A2 = w[S0 + 000c];
-800D2694	jal    func440c8 [$800440c8]
+800D2694	jal    system_psyq_move_image [$800440c8]
 S0 = S0 + 0014;
 800D269C	j      Ld26b8 [$800d26b8]
 800D26A0	nop

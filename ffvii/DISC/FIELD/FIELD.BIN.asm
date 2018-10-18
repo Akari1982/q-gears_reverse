@@ -116,7 +116,7 @@
 // move_gateway_check
 800AA348-800AA510
 ////////////////////////////////
-// trigger_background_manipulate
+// field_trigger_background_manipulate
 800AA514-800AA5E0
 ////////////////////////////////
 // move_trigger_check
@@ -1170,7 +1170,7 @@
 // funcd4848
 800D4848-800D48BC
 ////////////////////////////////
-// funcd48c0
+// field_reset_all_windows
 800D48C0-800D4938
 ////////////////////////////////
 // reset_window

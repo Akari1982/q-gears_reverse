@@ -1,5 +1,6 @@
 ////////////////////////////////
-// funca1368
+// funca1368()
+
 if (h[800965e8] == 0) // if background start load earlier
 {
     // load field mim
@@ -8,21 +9,21 @@ if (h[800965e8] == 0) // if background start load earlier
     A0 = w[800da5b8 + V1 * 18 + c]; 
     A2 = 80128000;
     A3 = 0;
-    load_lzs_file;
+    load_lzs_file();
 
     loopa13b8:	; 800A13B8
-        800A13B8	jal    system_cdrom_read_chain [$80034b44]
+        system_cdrom_read_chain();
     800A13C0	bne    v0, zero, loopa13b8 [$800a13b8]
 }
 else
 {
     La13d0:	; 800A13D0
-        800A13D0	jal    system_cdrom_read_chain [$80034b44]
+        system_cdrom_read_chain();
     800A13D8	bne    v0, zero, La13d0 [$800a13d0]
 
     A0 = 801b0000;
     A1 = 80128000;
-    func34bb0; // copy loaded mim
+    func34bb0(); // copy loaded mim
 }
 
 // load field dat
@@ -31,11 +32,11 @@ A1 = w[800da5b8 + V1 * 18 + 0];
 A0 = w[800da5b8 + V1 * 18 + 4]; 
 A2 = 80114fe4;
 A3 = 0;
-load_lzs_file;
+load_lzs_file();
 
 
 loopa1428:	; 800A1428
-    800A1428	jal    system_cdrom_read_chain [$80034b44]
+    system_cdrom_read_chain();
 800A1430	bne    v0, zero, loopa1428 [$800a1428]
 
 V0 = w[8009ad28];
@@ -220,7 +221,6 @@ system_prepare_draw_env_struct();
 [80114268 + 18] = b(0);
 
 
-
 A0 = 800e8f80;
 A1 = 1;
 system_psyq_clear_o_tag_r();
@@ -293,11 +293,7 @@ if( ( h[800965ec] != 1 ) || ( h[800965ec] != 2 ) || ( h[800965ec] != 3 ) || ( h[
     system_psyq_clear_image();
 }
 
-S2 = 1;
-S5 = 3;
-S4 = d;
-S3 = 8009ac40;
-S1 = S3 - 4b;
+S1 = ;
 
 La1af8:	; 800A1AF8
     funcab2ac(); // do nothing, maybe removed debug
@@ -307,16 +303,15 @@ La1af8:	; 800A1AF8
 
     if (h[800965ec] == 1 || h[800965ec] == 3)
     {
-        V0 = hu[S3 + 0000];
-        if( V0 == 0 )
+        if( hu[8009abf4 + 4c + 0] == 0 )
         {
-            800A1B54	jal    func129d0 [$800129d0]
+            func129d0();
 
-            [S3 + 0000] = h(S5);
-            [80071a58] = b(S5);
-            [S3 + 0002] = h(0);
+            [8009abf4 + 4c + 0] = h(3);
+            [80071a58] = b(3);
+            [8009abf4 + 4c + 2] = h(0);
             [8007e768] = h(0);
-            [80095dd4] = h(S2);
+            [80095dd4] = h(1);
         }
     }
 
@@ -337,156 +332,89 @@ La1af8:	; 800A1AF8
     if (h[800965ec] == 2 && h[800965ec] != d)
     {
         V0 = bu[8007ebc8];
-        [8007ebe0] = b(S2);
-        if( V0 == S2 )
+        [8007ebe0] = b(1);
+        if( V0 == 1 )
         {
             [8007ebc8] = b(0);
             [8009c6d8] = b(0);
             [8007173c] = h(0);
-            [S1] = b(0);
+            [8009abf4 + 1] = b(0);
         }
     }
 
-    La1c78:	; 800A1C78
-        V0 = hu[80095dd4];
-    800A1C84	bne    v0, zero, La1c78 [$800a1c78]
+    while( hu[80095dd4] != 0 )
+    {
+    }
 
     loopa1c8c:	; 800A1C8C
         A0 = 1;
         system_psyq_draw_sync();
     800A1C94	bne    v0, zero, loopa1c8c [$800a1c8c]
 
-
-
-    if( h[800965ec] != S4 )
+    if( h[800965ec] != d )
     {
-        [S3 + 0000] = h(S2);
-        [S3 + 0002] = h(100);
-        [S3 + 0004] = h(10);
-        [S3 + 0006] = h(0);
-        [S3 + 0008] = h(0);
-        [S3 + 000a] = h(0);
+        [8009abf4 + 4c + 0] = h(1);
+        [8009abf4 + 4c + 2] = h(100);
+        [8009abf4 + 4c + 4] = h(10);
+        [8009abf4 + 4c + 6] = h(0);
+        [8009abf4 + 4c + 8] = h(0);
+        [8009abf4 + 4c + a] = h(0);
     }
 
-    V0 = hu[800965ec];
-    800A1CE0	beq    v0, zero, La1dc8 [$800a1dc8]
+    if( h[800965ec] == 0 || h[800965ec] == 1 || h[800965ec] == 3 || h[800965ec] == 6 || h[800965ec] == 7 || h[800965ec] == 8 || h[800965ec] == 9 || h[800965ec] == a || hu[800965ec] == b )
+    {
+        [8009abf4 + a6] = h(0); // x scroll for 2nd background
+        [8009abf4 + a8] = h(0); // y scroll for 2nd background
+        [8009abf4 + aa] = h(0); // x scroll for 3rd background.
+        [8009abf4 + ac] = h(0); // y scroll for 3rd background
+        [8009abf4 + ae] = h(1); // depth for background 3rd layer
+        [8009abf4 + b0] = h(fff); // depth for background 2nd layer
 
-    V0 = h[800965ec];
-    800A1CFC	beq    v0, s2, La1dc8 [$800a1dc8]
+        [8009a100] = h(0); // manual or auto scroll. If 1 then this is manual scroll. O - we auto scroll to PC.
+        [80071e38] = h(0); // current screen scroll X
+        [80071e3c] = h(0); // current screen scroll Y
 
-    V0 = h[800965ec];
-    800A1D18	beq    v0, s5, La1dc8 [$800a1dc8]
+        V1 = w[800716c4];
+        [8009abf4 + 16] = h(hu[V1 + a]); // set to 2-3 bytes in 0x6A VWOFT opcode / Height to focus the camera on the character (0= normal focus, <0= focus below, >0= focus above) 
 
-    V0 = h[800965ec];
-    V1 = 0006;
-    800A1D34	beq    v0, v1, La1dc8 [$800a1dc8]
+        A0 = 8009abf4; // start of game data
+        A1 = 80074ea4;
+        V1 = w[8007eb64];
+        A2 = w[V1]; // field script section
+        funcba534(); // init field structs and run init script
 
-    V0 = h[800965ec];
-    V1 = 0008;
-    800A1D50	beq    v0, v1, La1dc8 [$800a1dc8]
+        V0 = h[8009abf4 + 2a]; // manual model id
+        [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
 
-    V0 = h[800965ec];
-    V1 = 0007;
-    800A1D6C	beq    v0, v1, La1dc8 [$800a1dc8]
+        if( bu[8009d70b] & 80 )
+        {
+            [800e48d8] = b(ff);
+        }
+        else
+        {
+            [800e48d8] = b(0);
+        }
 
-    V0 = h[800965ec];
-    V1 = 0009;
-    800A1D88	beq    v0, v1, La1dc8 [$800a1dc8]
+        for( int i = 0; i < 10; ++i )
+        {
+            [8009a048 + i] = b(-1) // init array of states for KAWAI
+        }
 
-    V0 = h[800965ec];
-    V1 = 000b;
-    800A1DA4	beq    v0, v1, La1dc8 [$800a1dc8]
+        A0 = w[800716c4] + 158; // offset to sector 5 triggers
+        field_init_triggered_background_state();
+    }
+    else
+    {
+        [8009abf4 + 26] = h(2); // battle state?
+    }
 
-    V0 = hu[800965ec];
-    V1 = 000a;
-    800A1DC0	bne    v0, v1, La1ee8 [$800a1ee8]
-    V0 = 0002;
-
-    La1dc8:	; 800A1DC8
-    800A1DC8	lui    a0, $800a
-    800A1DCC	addiu  a0, a0, $ac9a (=-$5366)
-    800A1DD0	lui    v1, $8007
-    V1 = w[V1 + 16c4];
-    V0 = 0fff;
-    [A0 + 0000] = h(0);
-    [8009ac9c] = h(0);
-    [8009ac9e] = h(0);
-    [8009aca0] = h(0);
-    [8009aca2] = h(S2);
-    [8009aca4] = h(V0);
-    V0 = hu[V1 + 000a];
-    V1 = w[8007eb64];
-    [8009a100] = h(0);
-    [80071e38] = h(0);
-    [80071e3c] = h(0);
-
-    [8009ac0a] = h(V0);
-    // we read here something from extracted dat
-    A2 = w[V1 + 0000];
-    800A1E38	lui    a1, $8007
-    A1 = A1 + 4ea4;
-    800A1E40	jal    funcba534 [$800ba534]
-    800A1E44	addiu  a0, a0, $ff5a (=-$a6)
-    800A1E48	lui    v0, $800a
-    V0 = hu[V0 + ac1e];
-    800A1E50	nop
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V1 = V0 << 05;
-    V1 = V1 + V0;
-    800A1E64	lui    v0, $800a
-    V0 = hu[V0 + ac18];
-    V1 = V1 << 02;
-    800A1E70	lui    at, $8007
-    AT = AT + 4edc;
-    AT = AT + V1;
-    [AT + 0000] = b(V0);
-    800A1E80	lui    v0, $800a
-    V0 = bu[V0 + d70b];
-    800A1E88	nop
-    V0 = V0 & 0080;
-    800A1E90	bne    v0, zero, La1ea8 [$800a1ea8]
-    800A1E94	addiu  a0, zero, $ffff (=-$1)
-    800A1E98	lui    at, $800e
-    [AT + 48d8] = b(0);
-    800A1EA0	j      La1eb4 [$800a1eb4]
-    800A1EA4	nop
-
-    La1ea8:	; 800A1EA8
-    V0 = 00ff;
-    800A1EAC	lui    at, $800e
-    [AT + 48d8] = b(V0);
-
-    La1eb4:	; 800A1EB4
-    V1 = 000f;
-    800A1EB8	lui    v0, $800a
-    800A1EBC	addiu  v0, v0, $a057 (=-$5fa9)
-
-    loopa1ec0:	; 800A1EC0
-    [V0 + 0000] = b(A0);
-    800A1EC4	addiu  v1, v1, $ffff (=-$1)
-    800A1EC8	bgez   v1, loopa1ec0 [$800a1ec0]
-    800A1ECC	addiu  v0, v0, $ffff (=-$1)
-
-    A0 = w[800716c4] + 158; // offset to sector 5 triggers
-    field_init_triggered_background_state();
-
-    800A1EE0	j      La1ef4 [$800a1ef4]
-    800A1EE4	nop
-
-    La1ee8:	; 800A1EE8
-    [8009ac1a] = h(V0);
-
-    La1ef4:	; 800A1EF4
-    800A1EF4	jal    funcbb1b4 [$800bb1b4]
+    funcbb1b4(); // enable party models and unlink unused models
 
     A0 = 8007e7ac;
     line_clear_entity_in_line();
 
-    800A1F0C	lui    a0, $800f
-    800A1F10	addiu  a0, a0, $8df0 (=-$7210)
     [800716d0] = b(0);
-    A1 = A0 + 0180;
+    A1 = 800e8df0 + 0180;
     800A1F1C	jal    funcabf0c [$800abf0c]
 
     A0 = 8010068c;
@@ -511,11 +439,7 @@ La1af8:	; 800A1AF8
         system_execute_AKAO();
     }
 
-
-
     funca2314(); // main game
-
-
 
     loopa1fe4:	; 800A1FE4
         A0 = 1;
@@ -525,179 +449,108 @@ La1af8:	; 800A1AF8
     A0 = 1;
     func3cedc(); // wait
 
-    800A1FFC	lui    v0, $8007
-    V0 = hu[V0 + 5dec];
-    800A2004	lui    v1, $8008
-    800A2008	addiu  v1, v1, $eb79 (=-$1487)
+    V0 = h[80075dec];
+    V1 = 8007eb79;
     [V1 + 0000] = b(0);
-    800A2010	addiu  v1, v1, $ffef (=-$11)
-    800A2014	lui    at, $8008
-    [AT + eb8d] = b(0);
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
+    V1 = V1 - 11;
+
+    [8007eb8d] = b(0);
     A0 = V0 << 02;
     A0 = A0 + V0;
     A0 = A0 << 02;
-    800A2030	jal    system_psyq_put_disp_env [$800444ac]
     A0 = A0 + V1;
-    800A2038	lui    v0, $8007
-    V0 = hu[V0 + 5dec];
-    800A2040	nop
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
+    system_psyq_put_disp_env();
+
+    V0 = h[80075dec];
     A0 = V0 << 01;
     A0 = A0 + V0;
     A0 = A0 << 03;
     A0 = A0 - V0;
     A0 = A0 << 02;
-    800A2060	lui    v0, $8008
-    800A2064	addiu  v0, v0, $eaac (=-$1554)
-    800A2068	jal    system_psyq_put_draw_env [$800443b0]
-    A0 = A0 + V0;
+    A0 = 8007eaac + A0;
+    system_psyq_put_draw_env();
 
-    [800965ec] = h(S2);
+    [800965ec] = h(1);
 
-    V0 = bu[S1 + 0000];
-    V1 = 000a;
-    V0 = V0 & 00ff;
-    800A2084	beq    v0, v1, La22d8 [$800a22d8]
-    800A2088	nop
-    V0 = bu[S1 + 0000];
-    V1 = 001a;
-    V0 = V0 & 00ff;
-    800A2098	beq    v0, v1, La22d8 [$800a22d8]
-    800A209C	nop
-    V0 = bu[S1 + 0000];
-    V1 = 0005;
-    V0 = V0 & 00ff;
-    800A20AC	beq    v0, v1, La22d8 [$800a22d8]
-    800A20B0	nop
-    V0 = bu[S1 + 0000];
-    800A20B8	nop
-    800A20BC	bne    v0, s2, La2140 [$800a2140]
-    800A20C0	nop
-    V0 = hu[8009a05c];
-    V1 = h[80071a5c];
-    [S1 + 0063] = h(V0);
-    V0 = h[S1 + 0001];
+    V0 = bu[8009abf4 + 1];
+    800A2084	beq    v0, a, La22d8 [$800a22d8]
+
+    V0 = bu[8009abf4 + 1];
+    800A2098	beq    v0, 1a, La22d8 [$800a22d8]
+
+    V0 = bu[8009abf4 + 1];
+    800A20AC	beq    v0, 5, La22d8 [$800a22d8]
+
+    V0 = bu[8009abf4 + 1];
+    800A20BC	bne    v0, 1, La2140 [$800a2140]
+
+    [8009abf4 + 64] = h(hu[8009a05c]);
+
+    V0 = h[8009abf4 + 2];
     [8009a05c] = h(V0);
-    if( V0 != V1 )
+    if( V0 != h[80071a5c] )
     {
         field_stop_load_background_in_advance();
     }
 
     V0 = hu[8009a05c] - 1;
-    V0 = V0 < 0040;
-    800A2114	beq    v0, zero, La2140 [$800a2140]
-    800A2118	nop
-    800A211C	lui    at, $800a
-    [AT + c560] = h(S5);
-    800A2124	jal    func129d0 [$800129d0]
-    800A2128	nop
-    [S1 + 004b] = h(S5);
-    800A2130	lui    at, $8007
-    [AT + 1a58] = b(S5);
-    800A2138	j      La2284 [$800a2284]
-    800A213C	nop
+    if( V0 < 40 )
+    {
+        [8009c560] = h(3);
+        func129d0();
+
+        [8009abf4 + 4c] = h(3);
+        [80071a58] = b(3);
+        [8009abf4 + 4e] = h(0);
+        [8007e768] = h(0);
+        [80095dd4] = h(1);
+        800A2298	j      La22d8 [$800a22d8]
+    }
 
     La2140:	; 800A2140
-    V0 = bu[S1 + 0000];
+    V0 = bu[8009abf4 + 1];
     V1 = 000c;
-    V0 = V0 & 00ff;
-    800A214C	bne    v0, v1, La2230 [$800a2230]
-    800A2150	nop
-    800A2154	lui    v0, $800a
-    V0 = hu[V0 + a05c];
-    800A215C	nop
-    [S1 + 0063] = h(V0);
-    V0 = hu[S1 + 0001];
-    V1 = bu[S1 + 00f1];
-    800A216C	nop
-    V1 = V1 & 00ff;
-    800A2174	lui    at, $800a
-    [AT + a05c] = h(V0);
-    V0 = V1 < 0007;
-    800A2180	beq    v0, zero, La22d8 [$800a22d8]
-    V0 = V1 << 02;
-    800A2188	lui    at, $800a
-    AT = AT + 0008;
-    AT = AT + V0;
-    V0 = w[AT + 0000];
-    800A2198	nop
-    800A219C	jr     v0 
-    800A21A0	nop
+    if( V0 == c )
+    {
+        800A214C	bne    v0, v1, La2230 [$800a2230]
 
-    V0 = 0006;
-    800A21A8	lui    at, $800a
-    [AT + c560] = h(V0);
-    800A21B0	j      La22d8 [$800a22d8]
-    800A21B4	nop
-    V0 = 0007;
-    800A21BC	lui    at, $800a
-    [AT + c560] = h(V0);
-    800A21C4	j      La22d8 [$800a22d8]
-    800A21C8	nop
-    V0 = 0008;
-    800A21D0	lui    at, $800a
-    [AT + c560] = h(V0);
-    800A21D8	j      La22d8 [$800a22d8]
-    800A21DC	nop
-    V0 = 0009;
-    800A21E4	lui    at, $800a
-    [AT + c560] = h(V0);
-    800A21EC	j      La22d8 [$800a22d8]
-    800A21F0	nop
-    V0 = 000a;
-    800A21F8	lui    at, $800a
-    [AT + c560] = h(V0);
-    800A2200	j      La22d8 [$800a22d8]
-    800A2204	nop
-    V0 = 000b;
-    800A220C	lui    at, $800a
-    [AT + c560] = h(V0);
-    800A2214	j      La22d8 [$800a22d8]
-    800A2218	nop
-    V0 = 000e;
-    800A2220	lui    at, $800a
-    [AT + c560] = h(V0);
-    800A2228	j      La22d8 [$800a22d8]
-    800A222C	nop
+        [8009abf4 + 64] = h(hu[8009a05c]);
+        [8009a05c] = h(hu[8009abf4 + 2]);
+
+        switch( bu[8009abf4 + f2] )
+        {
+            case 0: [8009c560] = h(6); break;
+            case 1: [8009c560] = h(7); break;
+            case 2: [8009c560] = h(8); break;
+            case 3: [8009c560] = h(9); break;
+            case 4: [8009c560] = h(a); break;
+            case 5: [8009c560] = h(b); break;
+            case 6: [8009c560] = h(e); break;
+        }
+        800A2228	j      La22d8 [$800a22d8]
+    }
 
     La2230:	; 800A2230
-    V0 = bu[S1 + 0000];
-    V1 = 0002;
-    V0 = V0 & 00ff;
-    800A223C	beq    v0, v1, La22d8 [$800a22d8]
-    800A2240	nop
-    V0 = bu[S1 + 0000];
-    800A2248	nop
-    800A224C	beq    v0, s4, La22d8 [$800a22d8]
-    800A2250	nop
-    800A2254	lui    v0, $800a
-    V0 = hu[V0 + c560];
-    V1 = 0005;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800A2268	bne    v0, v1, La22a0 [$800a22a0]
-    800A226C	nop
-    800A2270	jal    func129d0 [$800129d0]
-    800A2274	nop
-    [S1 + 004b] = h(S4);
-    800A227C	lui    at, $8007
-    [AT + 1a58] = b(S4);
+    V0 = bu[8009abf4 + 1];
+    800A223C	beq    v0, 2, La22d8 [$800a22d8]
 
-    La2284:	; 800A2284
-    [S1 + 004d] = h(0);
-    800A2288	lui    at, $8008
-    [AT + e768] = h(0);
-    800A2290	lui    at, $8009
-    [AT + 5dd4] = h(S2);
-    800A2298	j      La22d8 [$800a22d8]
-    800A229C	nop
+    V0 = bu[8009abf4 + 1];
+    800A224C	beq    v0, d, La22d8 [$800a22d8]
 
-    La22a0:	; 800A22A0
+    if( h[8009c560] == 5 )
+    {
+        func129d0();
+
+        [8009abf4 + 004c] = h(d);
+        [80071a58] = b(d);
+        [8009abf4 + 4e] = h(0);
+        [8007e768] = h(0);
+        [80095dd4] = h(1);
+        800A2298	j      La22d8 [$800a22d8]
+    }
+
     V0 = h[8009c560];
-    800A22B4	beq    v0, s4, La22d8 [$800a22d8]
+    800A22B4	beq    v0, d, La22d8 [$800a22d8]
 
 800A22D0	bne    h[8009c560], 10, La1af8 [$800a1af8]
 
@@ -5691,49 +5544,35 @@ loopaa3e8:	; 800AA3E8
 
 
 ////////////////////////////////
-// trigger_background_manipulate()
-A1 = A1 & ff;
-A3 = 0;
+// field_trigger_background_manipulate()
 
-switch (A1)
+state = A1;
+
+ret = 0;
+
+switch( state )
 {
-    // set bit
-    case 0 2 4:
+    case 0 2 4: // set bit
     {
         group_id = bu[A0 + c];
         index_id = bu[A0 + d];
-        A0 = bu[8009abf4 + f2 + group_id];
-
-        V1 = 1 << index_id;
-        V0 = A0 & V1;
-        if (V0 == 0)
+        if( ( bu[8009abf4 + f2 + group_id] & ( 1 << index_id ) ) == 0 )
         {
-            A3 = 1;
+            ret = 1;
         }
-        V0 = V1 | A0;
-
-        [8009abf4 + f2 + group_id] = b(V0);
+        [8009abf4 + f2 + group_id] = b(bu[8009abf4 + f2 + group_id] | (1 << index_id));
     }
     break;
 
-    // unset bit
-    case 1 2 5:
+    case 1 2 5: // unset bit
     {
         group_id = bu[A0 + c];
         index_id = bu[A0 + d];
-        A2 = bu[8009abf4 + f2 + group_id];
-
-        V0 = 1 << index_id;
-        A1 = 0 NOR V0;
-        V0 = A2 | A1;
-        V0 = V0 & ff;
-        if (V0 == ff)
+        if( ( ( bu[8009abf4 + f2 + group_id] | 0 NOR ( 1 << index_id ) ) & ff ) == ff )
         {
-            A3 = 1;
+            ret = 1;
         }
-        V0 = A1 & A2;
-
-        [8009abf4 + f2 + group_id] = b(V0);
+        [8009abf4 + f2 + group_id] = b(bu[8009abf4 + f2 + group_id] & (0 NOR (1 << index_id)));
     }
 }
 
@@ -5791,7 +5630,7 @@ if( V1 != ff )
 
         A0 = S1;
         A1 = bu[S1 + e];
-        trigger_background_manipulate();
+        field_trigger_background_manipulate();
 
         if (V0 == 1)
         {
@@ -5831,7 +5670,7 @@ if( V1 != ff )
         {
             A0 = S1;
             A1 = 1;
-            trigger_background_manipulate();
+            field_trigger_background_manipulate();
 
             if( V0 == 1 )
             {
@@ -5845,7 +5684,7 @@ if( V1 != ff )
         {
             A0 = S1;
             A1 = 0;
-            trigger_background_manipulate;
+            field_trigger_background_manipulate();
 
             if (V0 == 1)
             {
@@ -5870,29 +5709,27 @@ return;
 
 ////////////////////////////////
 // field_init_triggered_background_state()
-S1 = A0;
-S2 = 0;
 
-loopaa8a4:	; 800AA8A4
-    if( bu[S1 + S2 * 10 + c] != ff ) // enter state
+trigger_data = A0;
+
+for( int i = 0; i < c; ++i )
+{
+    if( bu[trigger_data + i * 10 + c] != ff ) // enter state
     {
-        V1 = bu[S1 + S2 * 10 + e]; // default state
+        V1 = bu[trigger_data + i * 10 + e]; // default state
 
         if( V1 == 0 || V1 == 2 || V1 == 4 )
         {
-            A0 = S1 + S2 * 10;
+            A0 = trigger_data + i * 10;
             A1 = 1;
-            trigger_background_manipulate();
+            field_trigger_background_manipulate();
         }
         else if( V1 == 1 || V1 == 3 || V1 == 5 )
         {
-            A0 = S1 + S2 * 10;
+            A0 = trigger_data + i * 10;
             A1 = 0;
-            trigger_background_manipulate();
+            field_trigger_background_manipulate();
         }
     }
-
-    S2 = S2 + 1;
-    V0 = S2 < c;
-800AA904	bne    v0, zero, loopaa8a4 [$800aa8a4]
+}
 ////////////////////////////////

@@ -218,6 +218,7 @@
 
 80095d84 number of inited lines.
 
+80095dcc []   ???
 80095dd0 [][] store here map id to whish trigger player character closer to load it's texture in advance.
 80095dd4 [][] set this to 0 when type 3 fade reach 22.
 80095ddc
@@ -272,16 +273,17 @@
 + 1f []       state of scrolling. 0-init 1-action 2-finish.
 + 20 [][]     speed of background scroll. Number of steps?
 + 22 [][]     destination z during map load. (most likely triangle id).
-+ 24 [][]     rotation during map load.
++ 24 [][]     saved rotation for manual entity during map load.
 + 26 [][]     battle state ?
 + 28 [][]     number of model.
 + 2a []       manual model id.
 + 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
 + 2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
-+ 30 [][]     animation for stand. Set in CCANM (XX,-,-,2)
++ 30 [][]     animation for run. Set in CCANM (XX,-,-,2)
 + 32 []       0 if PC can move. 1 - otherwise.
 + 33 []       if 1 here model will not automove. And animation will not play.
-+ 34          we store MENU byte here. Checked when call menu.
++ 34 []       we store MENU byte here. Checked when call menu.
++ 35 []       ???
 + 36 []       check gateways during move or not (0 - check).
 + 37 []       scroll lock.
 + 38 [][]     0 here when there is no fade.
@@ -348,19 +350,20 @@
 + b2          triangle lock array (bit per triangle)
 + f2          array of background state.
 
-8009ad30 player character array of assigned entity_id (size 0x01).
+8009ad30 player character array of assigned entity_id (items 0x8 size 0x01).
 
-8009c544 offset to model related data. 0x80074ea4
+8009c544 offset to model related data. 80074ea4
 
 8009c558 [][]     total number of background scroll steps.
 
-8009c6c4 number of already inited visible entity.
+8009c6c4 []       number of already inited visible entity.
 
 8009c6dc current field file offset.
 8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
 
-
 8009d5a6 []       enable or disable PC pointer and triangles help.
+
+8009d70b []       some flag.
 
 8009d820 unknown value that checked x & 3 == 0.
 
@@ -451,11 +454,14 @@
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
 800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
+800e4254 we copy here string "Actor:[entity name]" for debug purpose.
 800e4274 offset to walkmesh block.
 800e4278 [][] name reading offset for dialog windows. (size 0x2).
 800e4280 [][] current variable for windows. (size 0x2).
 
 800e42d8 some array (size 0x18)
+
+800e48d8
 
 800e48e0 [][][][] store akao offset here when start menu tutorial.
 

@@ -652,7 +652,7 @@ A2 = 0008;
 [SP + 002c] = w(S3);
 [SP + 0028] = w(S2);
 [SP + 0024] = w(S1);
-80013CCC	jal    func440c8 [$800440c8]
+80013CCC	jal    system_psyq_move_image [$800440c8]
 [SP + 0020] = w(S0);
 80013CD4	lui    a0, $8019
 80013CD8	lui    v1, $801a
@@ -1029,7 +1029,7 @@ V0 = 0140;
 [SP + 001c] = h(V0);
 V0 = 00e0;
 [SP + 0018] = h(0);
-80014230	jal    func440c8 [$800440c8]
+80014230	jal    system_psyq_move_image [$800440c8]
 [SP + 001e] = h(V0);
 S1 = 0;
 
@@ -8145,7 +8145,7 @@ V1 = V1 + V0;
 V0 = hu[SP + 0012];
 V1 = V1 << 04;
 V0 = V0 + V1;
-80025FA0	jal    func440c8 [$800440c8]
+80025FA0	jal    system_psyq_move_image [$800440c8]
 [SP + 0012] = h(V0);
 80025FA8	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
@@ -8157,7 +8157,7 @@ V0 = 0180;
 V0 = 0001;
 [SP + 0012] = h(S0);
 [SP + 0014] = h(S4);
-80025FD0	jal    func440c8 [$800440c8]
+80025FD0	jal    system_psyq_move_image [$800440c8]
 [SP + 0016] = h(V0);
 80025FD8	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
@@ -20112,66 +20112,8 @@ SP = SP + 0018;
 // system_psyq_store_image
 80044064-800440C4
 ////////////////////////////////
-
-
-
-func440c8:	; 800440C8
-800440C8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0018] = w(S2);
-S2 = A1;
-[SP + 0014] = w(S1);
-S1 = A2;
-800440E4	lui    a0, $8001
-A0 = A0 + 0de4;
-[SP + 001c] = w(RA);
-800440F0	jal    func43e44 [$80043e44]
-A1 = S0;
-V0 = h[S0 + 0004];
-800440FC	nop
-80044100	beq    v0, zero, L44170 [$80044170]
-80044104	addiu  v0, zero, $ffff (=-$1)
-V0 = h[S0 + 0006];
-8004410C	nop
-80044110	bne    v0, zero, L44120 [$80044120]
-V0 = S1 << 10;
-80044118	j      L44170 [$80044170]
-8004411C	addiu  v0, zero, $ffff (=-$1)
-
-L44120:	; 80044120
-V1 = S2 & ffff;
-V0 = V0 | V1;
-80044128	lui    a1, $8006
-A1 = A1 + 2cb0;
-A0 = w[S0 + 0000];
-80044134	lui    v1, $8006
-V1 = w[V1 + 2bf8];
-A2 = 0014;
-80044140	lui    at, $8006
-[AT + 2cb4] = w(V0);
-[A1 + 0000] = w(A0);
-V0 = w[S0 + 0004];
-A3 = 0;
-80044154	lui    at, $8006
-[AT + 2cb8] = w(V0);
-A0 = w[V1 + 0018];
-V0 = w[V1 + 0008];
-80044164	nop
-80044168	jalr   v0 ra
-8004416C	addiu  a1, a1, $fff8 (=-$8)
-
-L44170:	; 80044170
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80044184	jr     ra 
-80044188	nop
-
-
-
+// system_psyq_move_image
+800440C8-80044188
 ////////////////////////////////
 // system_psyq_clear_o_tag
 8004418C-80044240

@@ -33,34 +33,25 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funcd48c0()
+// field_reset_all_windows()
 
-S0 = 0;
-[80071e2c] = b(0);
+[80071e2c] = b(0); // number of opened windows.
 
-loopd48d8:	; 800D48D8
-A0 = S0 << 10;
-A0 = A0 >> 10;
-reset_window();
+for( int i = 0; i < 4; ++i )
+{
+    A0 = i;
+    reset_window();
+}
 
-S0 = S0 + 0001;
-V0 = S0 < 0004;
-800D48EC	bne    v0, zero, loopd48d8 [$800d48d8]
-800D48F0	nop
 V1 = w[8009c6dc];
-800D48FC	nop
-V0 = hu[V1 + 0004];
-800D4904	nop
-800D4908	beq    v0, zero, Ld4920 [$800d4920]
-V0 = V0 + V1;
-[8007e7a8] = w(V0);
-800D4918	j      Ld4928 [$800d4928]
-800D491C	nop
-
-Ld4920:	; 800D4920
-[8007e7a8] = w(0);
-
-Ld4928:	; 800D4928
+if( hu[V1 + 4] != 0 )
+{
+    [8007e7a8] = w(V1 + hu[V1 + 4]); // offset to dialog block
+}
+else
+{
+    [8007e7a8] = w(0);
+}
 ////////////////////////////////
 
 
@@ -1181,7 +1172,7 @@ if (V1 < 20) // E0 - FF
             }
             if (0xF3 0xF4 0xF5)
             {
-                A0 = bu[8009D29E + V0] = 8009D391;
+                A0 = bu[8009D29E + V0] = 8009c6e4 + cad;
 
                 if (A0 == FF)
                 {

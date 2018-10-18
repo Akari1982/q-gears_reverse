@@ -829,7 +829,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     800240F0	sll    v0, v0, $04
                     800240F4	addiu  v0, v0, $0138
                     800240FC	sh     v0, $0032(sp)
-                    800240F8	jal    func440c8 [$800440c8]
+                    800240F8	jal    system_psyq_move_image [$800440c8]
 
                     A0 = 0;
                     system_psyq_draw_sync();
@@ -841,7 +841,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     [SP + 36] = h(S0);
                     A2 = w[GP + 2d8] * 30 + 138;
                     [SP + 32] = h(b[S5] * 30 + 138);
-                    80024144	jal    func440c8 [$800440c8]
+                    80024144	jal    system_psyq_move_image [$800440c8]
 
                     A0 = 0;
                     system_psyq_draw_sync();
@@ -854,7 +854,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     [SP + 34] = h(S1);
                     [SP + 36] = h(S0);
                     A2 = V1 * 30 + 138;
-                    80024180	jal    func440c8 [$800440c8]
+                    80024180	jal    system_psyq_move_image [$800440c8]
 
                     A0 = 0;
                     system_psyq_draw_sync();

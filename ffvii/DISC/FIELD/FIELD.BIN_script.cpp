@@ -1,4 +1,62 @@
 ////////////////////////////////
+// funcba534()
+
+field_struct = A0;
+model_data = A1;
+field_data = A2;
+
+[8009c6e0] = w(field_struct);
+[8009c544] = w(model_data); // offset to model related data
+[8009c6dc] = w(field_data); // current field file offset
+[8007ebe0] = b(1);
+[8009fe8c] = b(0);
+
+[80095dcc] = b(0);
+if( h[field_data + 6a] & 0100 ) // if select key
+{
+    [80095dcc] = b(1);
+    [80099ffc] = b(4); // script related
+}
+
+if( bu[field_data + 0] < 2 )
+{
+    A0 = 4b;
+    A1 = a;
+    system_bios_system_error_boot_or_disk_failure();
+}
+
+if( bu[field_data + 1] < 5 )
+{
+    A0 = 4b;
+    A1 = b;
+    system_bios_system_error_boot_or_disk_failure();
+}
+
+if( ( bu[field_data + 0] >= 3 ) || ( bu[field_data + 1] >= 6 ) )
+{
+    A0 = 4b;
+    A1 = c;
+    system_bios_system_error_boot_or_disk_failure();
+}
+
+field_reset_all_windows();
+
+funcba7c4(); // init default values for all field structs
+
+funcbaf54(); // run init part of 1st script
+
+if( bu[800716d4] == 0 )
+{
+    clear_akao();
+
+    [8009a000] = h(f2);
+    system_execute_AKAO();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // funcba65c()
 
 S0 = A0;
@@ -63,762 +121,302 @@ funcbc438();
 
 
 ////////////////////////////////
-// funcba7c4
-800BA7C4
-V0 = w[8009c6e0];
-800BA7CC	nop
-[V0 + 0001] = b(0);
-V1 = w[8009c6e0];
-V0 = w[8009c6dc];
-[V1 + 0002] = h(0);
-[V1 + 0026] = h(0);
-A1 = bu[V0 + 0003];
-[V1 + 0032] = b(0);
-A0 = w[8009c6e0];
-V0 = 0001;
-[V1 + 002e] = h(V0);
-V0 = 0002;
-[V1 + 002a] = h(0);
-[V1 + 002c] = h(0);
-[V1 + 0030] = h(V0);
-[80081dc4] = b(0);
-[V1 + 0028] = h(A1);
-[A0 + 0033] = b(0);
-V0 = w[8009c6e0];
-800BA82C	nop
-[V0 + 0034] = b(0);
-V0 = w[8009c6e0];
-800BA83C	nop
-[V0 + 0035] = b(0);
-V0 = w[8009c6e0];
-800BA84C	nop
-[V0 + 003b] = b(0);
-V0 = w[8009c6e0];
-800BA85C	nop
-[V0 + 0036] = b(0);
-V0 = w[8009c6e0];
-800BA86C	nop
-[V0 + 0037] = b(0);
-V0 = w[8009c6e0];
-800BA87C	nop
-[V0 + 003d] = b(0);
-V1 = w[8009c6e0];
-[V0 + 0048] = w(0);
-[V0 + 0044] = w(0);
-[V0 + 0040] = h(0);
-[V0 + 003e] = h(0);
-[V1 + 003c] = b(0);
-V0 = w[8009c6e0];
-800BA8A8	nop
-[V0 + 0012] = b(0);
-V0 = w[8009c6e0];
-800BA8B8	nop
-[V0 + 0013] = b(0);
-V0 = w[8009c6e0];
-800BA8C8	nop
-[V0 + 0014] = b(0);
-V0 = w[8009c6e0];
-800BA8D8	nop
-[V0 + 008a] = b(0);
-V1 = w[8009c6e0];
-[V0 + 0018] = h(0);
-[V0 + 001a] = h(0);
-[V1 + 0098] = b(0);
-V0 = w[8009c6e0];
-800BA8FC	nop
-[V0 + 008b] = b(0);
-V0 = w[8009c6e0];
-800BA90C	nop
-[V0 + 0099] = b(0);
-V0 = w[8009c6e0];
-800BA91C	addiu  sp, sp, $ffe8 (=-$18)
-[V0 + 003a] = b(0);
-V1 = w[8009c6e0];
-A3 = 00ff;
-[V0 + 008e] = h(0);
-[V0 + 009c] = h(0);
-[V0 + 0094] = h(0);
-[V0 + 00a2] = h(0);
-[V0 + 0096] = h(0);
-[V0 + 00a4] = h(0);
-[V1 + 001d] = b(0);
-V0 = w[8009c6dc];
-V1 = w[8009c6e0];
-V0 = hu[V0 + 0008];
-800BA960	lui    a0, $8007
-A0 = A0 + 5f23;
-[V1 + 0010] = h(V0);
+// funcba7c4()
 
-loopba96c:	; 800BA96C
-[A0 + 0000] = b(0);
-800BA970	addiu  a3, a3, $ffff (=-$1)
-800BA974	bgez   a3, loopba96c [$800ba96c]
-800BA978	addiu  a0, a0, $ffff (=-$1)
-A3 = 0;
-800BA980	lui    t8, $8007
-T8 = T8 + 1748;
-800BA988	lui    t7, $8008
-T7 = T7 + 33f8;
-800BA990	lui    t6, $8007
-T6 = T6 + 1a88;
-T5 = 00ff;
+field_struct = w[8009c6e0];
+field_data = w[8009c6dc];
+model_struct = w[8009c544];
 
-loopba99c:	; 800BA99C
-V0 = w[8009c6dc];
-800BA9A4	nop
-V0 = bu[V0 + 0002];
-800BA9AC	nop
-800BA9B0	blez   v0, Lbaa1c [$800baa1c]
-A2 = 0;
-T4 = A3 << 01;
-800BA9BC	lui    t3, $8011
-T3 = T3 + 42d4;
-T2 = T6;
-T1 = T7;
-T0 = T8;
+[field_struct + 1] = b(0); // state normal field
+[field_struct + 2] = h(0); // map to load
+[field_struct + 10] = h(hu[field_data + 8]); // field scale (9 bit fixed point)
+[field_struct + 12] = b(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 13] = b(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 14] = b(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 18] = h(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 1a] = h(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 1d] = b(0); // set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
+[field_struct + 26] = h(0); // battle state?
+[field_struct + 28] = h(bu[field_data + 3]); // number of models
+[field_struct + 2a] = h(0); // manual model id
+[field_struct + 2c] = h(0); // animation for stand
+[field_struct + 2e] = h(1); // animation for walk
+[field_struct + 30] = h(2); // animation for run
+[field_struct + 32] = b(0); // 0 if PC can move. 1 - otherwise
+[field_struct + 33] = b(0); // if 1 here model will not automove. And animation will not play
+[field_struct + 34] = b(0); // MENU byte
+[field_struct + 35] = b(0);
+[field_struct + 36] = b(0); // check gateways (0 - check)
+[field_struct + 37] = b(0); // scroll lock
+[field_struct + 3a] = b(0); // we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode
+[field_struct + 3b] = b(0); // battle field check on/off (0/1)
+[field_struct + 3c] = b(0); // battle table to use (0 or 1)
+[field_struct + 3d] = b(0);
+[field_struct + 3e] = h(0);
+[field_struct + 40] = h(0);
+[field_struct + 44] = w(0); // offset to battle music (global, with field file offset)
+[field_struct + 48] = w(0); // offset to field music (global, with field file offset)
+[field_struct + 8a] = b(0); // if 1 we activate X shaking. 0 - deactivate
+[field_struct + 8b] = b(0); // state of shaking single X movement (0 - init, 1 - action)
+[field_struct + 8e] = h(0); // shake single X movement strength
+[field_struct + 94] = h(0); // number of steps for shake single X movement
+[field_struct + 96] = h(0); // current step for shake single X movement
+[field_struct + 98] = b(0); // if 1 we activate Y shaking. 0 - deactivate
+[field_struct + 99] = b(0); // state of shaking single Y movement (0 - init, 1 - action)
+[field_struct + 9c] = h(0); // shake single Y movement strength
+[field_struct + a2] = h(0); // number of steps for shake single Y movement
+[field_struct + a4] = h(0); // current step for shake single Y movement
 
-loopba9d0:	; 800BA9D0
-A1 = T3 + A3;
-T3 = T3 + 0008;
-A0 = T2 + A3;
-T2 = T2 + 0008;
-V1 = T1 + A3;
-T1 = T1 + 0008;
-V0 = T4 + T0;
-[V0 + 0000] = h(0);
-[V1 + 0000] = b(0);
-[A0 + 0000] = b(T5);
-[A1 + 0000] = b(0);
-V0 = w[8009c6dc];
-800BAA04	nop
-V0 = bu[V0 + 0002];
-A2 = A2 + 0001;
-V0 = A2 < V0;
-800BAA14	bne    v0, zero, loopba9d0 [$800ba9d0]
-T0 = T0 + 0010;
+[80081dc4] = b(0); // current UC opcode state.
 
-Lbaa1c:	; 800BAA1C
-A3 = A3 + 0001;
-V0 = A3 < 0008;
-800BAA24	bne    v0, zero, loopba99c [$800ba99c]
-800BAA28	nop
-V0 = w[8009c6dc];
-800BAA34	nop
-V0 = bu[V0 + 0002];
-800BAA3C	nop
-800BAA40	blez   v0, Lbaacc [$800baacc]
-A3 = 0;
-A1 = 0007;
-A0 = 00ff;
-800BAA50	lui    v1, $8007
-V1 = V1 + 16dc;
+for( int i = 0; i < 100; ++i )
+{
+    [80075e24 + i] = b(0); // clear temp memory in script 5/6
+}
 
-loopbaa58:	; 800BAA58
-800BAA58	lui    at, $800a
-800BAA5C	addiu  at, at, $a1c4 (=-$5e3c)
-AT = AT + A3;
-[AT + 0000] = b(A1);
-800BAA68	lui    at, $8008
-800BAA6C	addiu  at, at, $eb98 (=-$1468)
-AT = AT + A3;
-[AT + 0000] = b(A0);
-[V1 + 0000] = h(0);
-800BAA7C	lui    at, $8008
-AT = AT + 1d90;
-AT = AT + A3;
-[AT + 0000] = b(0);
-800BAA8C	lui    at, $8007
-AT = AT + 078c;
-AT = AT + A3;
-[AT + 0000] = b(A0);
-800BAA9C	lui    at, $8011
-AT = AT + 4498;
-AT = AT + A3;
-[AT + 0000] = b(0);
-V0 = w[8009c6dc];
-800BAAB4	nop
-V0 = bu[V0 + 0002];
-A3 = A3 + 0001;
-V0 = A3 < V0;
-800BAAC4	bne    v0, zero, loopbaa58 [$800baa58]
-V1 = V1 + 0002;
+for( int i = 0; i < 8; ++i )
+{
+    for( int j = 0; j < bu[field_data + 2]; ++j )
+    {
+        [80071748 + j * 10 + i * 2] = h(0); // priority script offsets
+        [800833f8 + j * 8 + i] = b(0); // array of script running state
+        [80071a88 + j * 8 + i] = b(ff); // array if priority data
+        [801142d4 + j * 8 + i] = b(0); // priority queue script id
+    }
+}
 
-Lbaacc:	; 800BAACC
-V0 = w[8009c6dc];
-800BAAD4	nop
-V0 = bu[V0 + 0003];
-800BAADC	nop
-800BAAE0	blez   v0, Lbad6c [$800bad6c]
-A3 = 0;
-T0 = 0010;
+for( int i = 0; i < bu[field_data + 2]; ++i )
+{
+    [8009a1c4 + i] = b(7); // array of current priority slot used by entity
+    [8007eb98 + i] = b(ff); // array of entity data. entity_id <-> model_id.
+    [800716dc + i * 2] = h(0); // entity array
+    [80081d90 + i] = b(0); // array of some entity data. Store 1 to pc entity here during SPLIT
+    [8007078c + i] = b(ff); // array of enitys lines data
+    [80114498 + i] = b(0); // arrray of something entity related
+}
+
 A1 = 0;
 
-Lbaaf0:	; 800BAAF0
-V0 = w[8009c544];
-800BAAF8	nop
-V0 = A1 + V0;
-[V0 + 0036] = b(0);
-V1 = w[8009c544];
-[V0 + 0066] = h(0);
-[V0 + 000c] = w(0);
-[V0 + 0010] = w(0);
-[V0 + 0014] = w(0);
-[V0 + 0072] = h(0);
-[V0 + 0074] = h(0);
-V1 = A1 + V1;
-[V1 + 0038] = b(0);
-V0 = w[8009c544];
-800BAB34	nop
-V0 = A1 + V0;
-[V0 + 003b] = b(0);
-V0 = w[8009c544];
-800BAB48	nop
-V0 = A1 + V0;
-[V0 + 0039] = b(0);
-V0 = w[8009c544];
-800BAB5C	nop
-V0 = A1 + V0;
-[V0 + 003a] = b(0);
-V0 = w[8009c544];
-800BAB70	nop
-V0 = A1 + V0;
-[V0 + 0056] = b(0);
-V1 = w[8009c544];
-[V0 + 003c] = h(0);
-[V0 + 003e] = h(0);
-[V0 + 0040] = h(0);
-[V0 + 0046] = h(0);
-[V0 + 004c] = h(0);
-[V0 + 0042] = h(0);
-[V0 + 0048] = h(0);
-[V0 + 004e] = h(0);
-[V0 + 0044] = h(0);
-[V0 + 004a] = h(0);
-[V0 + 0050] = h(0);
-[V0 + 0052] = h(0);
-[V0 + 0054] = h(0);
-V1 = A1 + V1;
-[V1 + 005e] = b(0);
-V0 = w[8009c544];
-800BABC8	nop
-V0 = A1 + V0;
-[V0 + 0060] = h(T0);
-[V0 + 005c] = b(0);
-V1 = w[8009c6e0];
-[V0 + 0078] = w(0);
-[V0 + 007c] = w(0);
-[V0 + 0080] = w(0);
-[V0 + 0062] = h(0);
-[V0 + 0064] = h(0);
-V0 = w[8009c544];
-A0 = h[V1 + 0010];
-V0 = A1 + V0;
-[V0 + 005d] = b(0);
-V1 = w[8009c544];
-A0 = A0 << 01;
-V1 = A1 + V1;
-[V0 + 0070] = h(A0);
-[V1 + 005a] = b(0);
-V0 = w[8009c544];
-[V1 + 0068] = h(0);
-[V1 + 006a] = h(0);
-V0 = A1 + V0;
-[V0 + 0058] = b(0);
-V0 = w[8009c544];
-800BAC40	nop
-V0 = A1 + V0;
-[V0 + 0059] = b(0);
-V0 = w[8009c544];
-800BAC54	nop
-V0 = A1 + V0;
-[V0 + 005b] = b(0);
-V0 = w[8009c544];
-800BAC68	nop
-V0 = A1 + V0;
-[V0 + 0037] = b(0);
-A0 = w[8009c6e0];
-800BAC7C	nop
-V1 = h[A0 + 0010];
-800BAC84	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V1 = w[8009c544];
-V0 = V0 << 01;
-V1 = A1 + V1;
-800BACA0	bgez   v0, Lbacac [$800bacac]
-A2 = V1;
-V0 = V0 + 01ff;
+for( int i = 0; i < bu[field_data + 3]; ++i )
+{
+    [model_struct + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1
+    [model_struct + i * 84 + 2] = h(0); // store 0 here in KAWAI opcode.
+    [model_struct + i * 84 + 4] = w(0); // offset to KAWAI opcode data in script
+    [model_struct + i * 84 + 8] = b(0); // blinking. 0 - on, 1 - off.
+    [model_struct + i * 84 + 9] = b(0); // store 0 here in KAWAI opcode under some curcumstances.
+    [model_struct + i * 84 + c] = w(0); // x
+    [model_struct + i * 84 + 10] = w(0); // y
+    [model_struct + i * 84 + 14] = w(0); // z
+    [model_struct + i * 84 + 36] = b(0); // move direction
+    [model_struct + i * 84 + 37] = b(0); // lock rotation
+    [model_struct + i * 84 + 38] = b(0); // model direction
+    [model_struct + i * 84 + 39] = b(0); // number of steps for turn
+    [model_struct + i * 84 + 3a] = b(0); // current step for turn
+    [model_struct + i * 84 + 3b] = b(0); // used during TURN
+    [model_struct + i * 84 + 3c] = h(0); // start direction
+    [model_struct + i * 84 + 3e] = h(0); // end direction
+    [model_struct + i * 84 + 40] = h(0); // real X offset value
+    [model_struct + i * 84 + 42] = h(0); // start X offset value
+    [model_struct + i * 84 + 44] = h(0); // end X offset value
+    [model_struct + i * 84 + 46] = h(0); // real Y offset value.
+    [model_struct + i * 84 + 48] = h(0); // start Y offset value.
+    [model_struct + i * 84 + 4a] = h(0); // end Y offset value.
+    [model_struct + i * 84 + 4c] = h(0); // real Z offset value.
+    [model_struct + i * 84 + 4e] = h(0); // start Z offset value.
+    [model_struct + i * 84 + 50] = h(0); // end Z offset value.
+    [model_struct + i * 84 + 52] = h(0); // steps in offseting
+    [model_struct + i * 84 + 54] = h(0); // current step in offsetting
+    [model_struct + i * 84 + 56] = b(0); // type of offsetting (LINEAR SMOOTH INSTANT)
+    [model_struct + i * 84 + 58] = b(0); // pc entity collide with this entity. (1 - true/0 - false)
+    [model_struct + i * 84 + 59] = b(0); // model solidity (0x01 - off/0x00 - on)
+    [model_struct + i * 84 + 5a] = b(0); // pc entity talk with this entity. (1 - true/0 - false)
+    [model_struct + i * 84 + 5b] = b(0); // model talkability (0x01 - off/0x00 - on)
+    [model_struct + i * 84 + 5c] = b(0); // model visibility (0x01 - on/0x00 - off)
+    [model_struct + i * 84 + 5d] = b(0); // model state
+    [model_struct + i * 84 + 5e] = b(0); // animation id
+    [model_struct + i * 84 + 60] = h(10); // animation speed
+    [model_struct + i * 84 + 62] = h(0); // current frame
+    [model_struct + i * 84 + 64] = h(0); // number of frames
+    [model_struct + i * 84 + 66] = h(0); // store CHAR byte here
+    [model_struct + i * 84 + 68] = h(0); // 0 or 1 during LADER (forward or reverse)
+    [model_struct + i * 84 + 6a] = h(0); // stage of state
+    [model_struct + i * 84 + 6c] = h((h[field_struct + 10] * 1e) / 200); // solid range value
+    [model_struct + i * 84 + 6e] = h((h[field_struct + 10] * 50) / 200); // talk range value
+    [model_struct + i * 84 + 70] = h(h[field_struct + 10] * 2); // movement speed
+    [model_struct + i * 84 + 72] = h(0); // triangle
+    [model_struct + i * 84 + 74] = h(0); // move to triangle
+    [model_struct + i * 84 + 78] = w(0); // move to x
+    [model_struct + i * 84 + 7c] = w(0); // move to y
+    [model_struct + i * 84 + 80] = w(0); // move to z
 
-Lbacac:	; 800BACAC
-V0 = V0 >> 09;
-[V1 + 006c] = h(V0);
-V1 = h[A0 + 0010];
-800BACB8	nop
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 04;
-800BACC8	bgez   v0, Lbacd4 [$800bacd4]
-800BACCC	nop
-V0 = V0 + 01ff;
+    [8008325c + i] = b(0); // model default animation
+    [800756e8 + i] = b(0); // model animation state
+    [8009d828 + i * 2] = h(10); // animation speed
+    [80082248 + i * 2] = h(10); // model default animation speed
+}
 
-Lbacd4:	; 800BACD4
-V0 = V0 >> 09;
-[A2 + 006e] = h(V0);
-800BACDC	lui    at, $8008
-AT = AT + 325c;
-AT = AT + A3;
-[AT + 0000] = b(0);
-800BACEC	lui    at, $8007
-AT = AT + 56e8;
-AT = AT + A3;
-[AT + 0000] = b(0);
-V1 = w[8009c544];
-V0 = A3 << 01;
-800BAD08	lui    at, $800a
-800BAD0C	addiu  at, at, $d828 (=-$27d8)
-AT = AT + V0;
-[AT + 0000] = h(T0);
-800BAD18	lui    at, $8008
-AT = AT + 2248;
-AT = AT + V0;
-[AT + 0000] = h(T0);
-V1 = A1 + V1;
-[V1 + 0008] = b(0);
-V0 = w[8009c544];
-[V1 + 0000] = h(0);
-[V1 + 0002] = h(0);
-[V1 + 0004] = w(0);
-V0 = A1 + V0;
-[V0 + 0009] = b(0);
-V0 = w[8009c6dc];
-A3 = A3 + 0001;
-V0 = bu[V0 + 0003];
-800BAD5C	nop
-V0 = A3 < V0;
-800BAD64	bne    v0, zero, Lbaaf0 [$800baaf0]
-A1 = A1 + 0084;
+for( int i = 0; i < 40; ++i )
+{
+    [field_struct + f2 + i] = b(0); // background state
+}
 
-Lbad6c:	; 800BAD6C
-A3 = 0;
+for( int i = 0; i < 40; ++i )
+{
+    [field_struct + b2 + i] = b(0); // triangle lock array (bit per triangle)
+}
 
-loopbad70:	; 800BAD70
-V0 = w[8009c6e0];
-800BAD78	nop
-V0 = V0 + A3;
-A3 = A3 + 0001;
-[V0 + 00f2] = b(0);
-V0 = A3 < 0040;
-800BAD8C	bne    v0, zero, loopbad70 [$800bad70]
-800BAD90	nop
-A3 = 0;
+for( int i = 0; i < 40; ++i )
+{
+    for( int j = 0; j < 10; ++j )
+    {
+        [80095de0 + i * 20 + j * 2] = h(0); // array of stored background palletes
+    }
+}
 
-loopbad98:	; 800BAD98
-V0 = w[8009c6e0];
-800BADA0	nop
-V0 = V0 + A3;
-A3 = A3 + 0001;
-[V0 + 00b2] = b(0);
-V0 = A3 < 0040;
-800BADB4	bne    v0, zero, loopbad98 [$800bad98]
-800BADB8	nop
-A3 = 0;
-800BADC0	lui    v1, $8009
-V1 = V1 + 5de0;
+// init lines
+for( int i = 0; i < 20; ++i )
+{
+    [8007e7ac + i * 18 + 0] = h(0); // x1
+    [8007e7ac + i * 18 + 2] = h(0); // y1
+    [8007e7ac + i * 18 + 4] = h(0); // z1
+    [8007e7ac + i * 18 + 6] = h(0); // x2
+    [8007e7ac + i * 18 + 8] = h(0); // y2
+    [8007e7ac + i * 18 + a] = h(0); // z2
+    [8007e7ac + i * 18 + c] = b(0); // line on/off. (1 - true/0 - false)
+    [8007e7ac + i * 18 + d] = b(0); // parent entity
+    [8007e7ac + i * 18 + e] = b(0); // entity currently in LINE (with solid).  Script call
+    [8007e7ac + i * 18 + f] = b(0); // entity cross LINE. Script call (removed after script call)
+    [8007e7ac + i * 18 + 10] = b(0); // entity move to line. Script call (removed after script call)
+    [8007e7ac + i * 18 + 11] = b(0); // entity talk to LINE. (1 - true/0 - false)
+    [8007e7ac + i * 18 + 12] = b(0); // entity enter LINE. Script call (removed after script call)
+    [8007e7ac + i * 18 + 13] = b(0); // entity leave LINE. Script call (removed after script call)
+    [8007e7ac + i * 18 + 16] = b(0); // store SLIP byte here
+}
+[80095d84] = h(0); // number of inited lines
 
-loopbadc8:	; 800BADC8
-A2 = 000f;
-V0 = V1 + 001e;
+for( int i = 0; i < 8; ++i )
+{
+    [8009ad30 + i] = b(ff); // player character array of assigned entity_id
+}
 
-loopbadd0:	; 800BADD0
-[V0 + 0000] = h(0);
-800BADD4	addiu  a2, a2, $ffff (=-$1)
-800BADD8	bgez   a2, loopbadd0 [$800badd0]
-800BADDC	addiu  v0, v0, $fffe (=-$2)
-A3 = A3 + 0001;
-V0 = A3 < 0040;
-800BADE8	bne    v0, zero, loopbadc8 [$800badc8]
-V1 = V1 + 0020;
-A3 = 0;
-V1 = 0;
-
-loopbadf8:	; 800BADF8
-800BADF8	lui    at, $8008
-800BADFC	addiu  at, at, $e7bd (=-$1843)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE08	lui    at, $8008
-800BAE0C	addiu  at, at, $e7bc (=-$1844)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE18	lui    at, $8008
-800BAE1C	addiu  at, at, $e7bb (=-$1845)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE28	lui    at, $8008
-800BAE2C	addiu  at, at, $e7ba (=-$1846)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE38	lui    at, $8008
-800BAE3C	addiu  at, at, $e7be (=-$1842)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE48	lui    at, $8008
-800BAE4C	addiu  at, at, $e7bf (=-$1841)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE58	lui    at, $8008
-800BAE5C	addiu  at, at, $e7b8 (=-$1848)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE68	lui    at, $8008
-800BAE6C	addiu  at, at, $e7b9 (=-$1847)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE78	lui    at, $8008
-800BAE7C	addiu  at, at, $e7c2 (=-$183e)
-AT = AT + V1;
-[AT + 0000] = b(0);
-800BAE88	lui    at, $8008
-800BAE8C	addiu  at, at, $e7ac (=-$1854)
-AT = AT + V1;
-[AT + 0000] = h(0);
-800BAE98	lui    at, $8008
-800BAE9C	addiu  at, at, $e7ae (=-$1852)
-AT = AT + V1;
-[AT + 0000] = h(0);
-800BAEA8	lui    at, $8008
-800BAEAC	addiu  at, at, $e7b0 (=-$1850)
-AT = AT + V1;
-[AT + 0000] = h(0);
-800BAEB8	lui    at, $8008
-800BAEBC	addiu  at, at, $e7b2 (=-$184e)
-AT = AT + V1;
-[AT + 0000] = h(0);
-800BAEC8	lui    at, $8008
-800BAECC	addiu  at, at, $e7b4 (=-$184c)
-AT = AT + V1;
-[AT + 0000] = h(0);
-800BAED8	lui    at, $8008
-800BAEDC	addiu  at, at, $e7b6 (=-$184a)
-AT = AT + V1;
-[AT + 0000] = h(0);
-A3 = A3 + 0001;
-V0 = A3 < 0020;
-800BAEF0	bne    v0, zero, loopbadf8 [$800badf8]
-V1 = V1 + 0018;
-[80095d84] = h(0);
-V1 = 00ff;
-A3 = 0008;
-800BAF08	lui    v0, $800a
-800BAF0C	addiu  v0, v0, $ad38 (=-$52c8)
-
-loopbaf10:	; 800BAF10
-[V0 + 0000] = b(V1);
-800BAF14	addiu  a3, a3, $ffff (=-$1)
-800BAF18	bgez   a3, loopbaf10 [$800baf10]
-800BAF1C	addiu  v0, v0, $ffff (=-$1)
-800BAF20	lui    a0, $800a
-800BAF24	addiu  a0, a0, $d2a7 (=-$2d59)
-V1 = bu[A0 + 0000];
-V0 = 00ff;
-[800e48f0] = b(V0);
+[800e48f0] = b(ff); // store 0xff here during end of SPLIT
 [80071c1c] = b(0);
-V1 = V1 | 0003;
-[A0 + 0000] = b(V1);
-SP = SP + 0018;
-800BAF4C	jr     ra 
-800BAF50	nop
+[8009d2a7] = b(bu[8009d2a7] | 03);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbaf54
-800BAF54
-V0 = w[8009c6dc];
-800BAF5C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-[8009c6c4] = b(0);
+// funcbaf54()
+
+field_data = w[8009c6dc];
+
+[8009c6c4] = b(0); // number of already inited visible entity
+
+entity_num = bu[field_data + 2];
+akao_num = h[field_data + 6];
+
+for( int i = 0; i < entity_num; ++i )
+{
+    [800722c4] = b(i);
+
+    if( bu[80071e24] & 3 )
+    {
+        A0 = 800e4254;
+        A1 = 800e0628; // "Actor:"
+        field_copy_string();
+
+        A0 = 800e4254;
+        A1 = field_data + 20 + i * 8; // field entity names
+        field_concat_string();
+
+        if( bu[80071e24] & 1 )
+        {
+            A0 = 4;
+            A1 = 0;
+            A2 = 800e4254;
+            field_copy_into_debug_by_id();
+        }
+
+        if( bu[80071e24] & 2 )
+        {
+            A0 = 800e4254;
+            funcd4840(); // empty. Was used for debug
+        }
+    }
+
+    script = hu[field_data + 20 + entity_num * 8 + akao_num * 4 + i * 40];
+    [800831fc + i * 2] = h(script);
+
+    opcode = bu[field_data + script];
+    [8009a058] = b(opcode);
+
+    while( opcode != 0 )
+    {
+        opcode = bu[8009a058];
+        800BB0F4	jalr   w[800e0228 + opcode * 4] ra
+
+        V1 = hu[800831fc + i * 2];
+        opcode = bu[field_data + V1];
+        [8009a058] = b(opcode);
+    }
+
+    [800831fc + i * 2] = h(hu[800831fc + i * 2] + 1);
+}
+
 [800722c4] = b(0);
-V0 = bu[V0 + 0002];
-800BAF88	nop
-800BAF8C	beq    v0, zero, Lbb194 [$800bb194]
-800BAF90	nop
-800BAF94	lui    s1, $800e
-S1 = S1 + 4254;
-800BAF9C	lui    s2, $8008
-S2 = S2 + 31fc;
-800BAFA4	lui    s3, $800e
-S3 = S3 + 0228;
-
-Lbafac:	; 800BAFAC
-V0 = bu[80071e24];
-800BAFB4	nop
-V0 = V0 & 0003;
-800BAFBC	beq    v0, zero, Lbb03c [$800bb03c]
-800BAFC0	nop
-800BAFC4	lui    a1, $800e
-A1 = A1 + 0628;
-800BAFCC	jal    field_copy_string [$800da334]
-A0 = S1;
-A0 = S1;
-A1 = bu[800722c4];
-V0 = w[8009c6dc];
-A1 = A1 << 03;
-A1 = A1 + 0020;
-800BAFF0	jal    field_concat_string [$800da368]
-A1 = A1 + V0;
-V0 = bu[80071e24];
-800BB000	nop
-V0 = V0 & 0001;
-800BB008	beq    v0, zero, Lbb01c [$800bb01c]
-A0 = 0004;
-A1 = 0;
-800BB014	jal    field_copy_into_debug_by_id [$800da124]
-A2 = S1;
-
-Lbb01c:	; 800BB01C
-V0 = bu[80071e24];
-800BB024	nop
-V0 = V0 & 0002;
-800BB02C	beq    v0, zero, Lbb03c [$800bb03c]
-800BB030	nop
-800BB034	jal    funcd4840 [$800d4840]
-A0 = S1;
-
-Lbb03c:	; 800BB03C
-V1 = bu[800722c4];
-A0 = w[8009c6dc];
-A3 = V1 << 01;
-V1 = V1 << 06;
-A2 = hu[A0 + 0006];
-V0 = bu[A0 + 0002];
-A2 = A2 << 12;
-A2 = A2 >> 10;
-V0 = V0 << 03;
-V0 = V1 + V0;
-V0 = V0 + A2;
-V0 = V0 + A0;
-A1 = bu[V0 + 0020];
-A3 = A3 + S2;
-[A3 + 0000] = h(A1);
-V0 = bu[A0 + 0002];
-800BB084	nop
-V0 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 + A0;
-V1 = V1 + A2;
-V0 = bu[V1 + 0021];
-800BB09C	nop
-V0 = V0 << 08;
-A1 = A1 | V0;
-[A3 + 0000] = h(A1);
-V0 = hu[A3 + 0000];
-800BB0B0	nop
-A0 = A0 + V0;
-V0 = bu[A0 + 0000];
-800BB0BC	nop
-[8009a058] = b(V0);
-800BB0C8	beq    v0, zero, Lbb13c [$800bb13c]
-800BB0CC	nop
-800BB0D0	lui    s0, $8008
-S0 = S0 + 31fc;
-
-loopbb0d8:	; 800BB0D8
-V0 = bu[8009a058];
-800BB0E0	nop
-V0 = V0 << 02;
-V0 = V0 + S3;
-V0 = w[V0 + 0000];
-800BB0F0	nop
-800BB0F4	jalr   v0 ra
-800BB0F8	nop
-V0 = bu[800722c4];
-800BB104	nop
-V0 = V0 << 01;
-V0 = V0 + S0;
-V1 = hu[V0 + 0000];
-V0 = w[8009c6dc];
-800BB11C	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BB128	nop
-[8009a058] = b(V0);
-800BB134	bne    v0, zero, loopbb0d8 [$800bb0d8]
-800BB138	nop
-
-Lbb13c:	; 800BB13C
-V0 = bu[800722c4];
-800BB144	nop
-A0 = V0 << 01;
-A0 = A0 + S2;
-V1 = hu[A0 + 0000];
-V0 = V0 + 0001;
-[800722c4] = b(V0);
-V1 = V1 + 0001;
-[A0 + 0000] = h(V1);
-V1 = w[8009c6dc];
-V0 = bu[800722c4];
-V1 = bu[V1 + 0002];
-800BB17C	nop
-V0 = V0 < V1;
-800BB184	bne    v0, zero, Lbafac [$800bafac]
-800BB188	nop
-[800722c4] = b(0);
-
-Lbb194:	; 800BB194
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800BB1AC	jr     ra 
-800BB1B0	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbb1b4
-800BB1B4
-A2 = 0;
-A1 = 00ff;
-A3 = 0001;
-V0 = A2 << 10;
+// funcbb1b4()
 
-loopbb1c4:	; 800BB1C4
-V0 = V0 >> 10;
-800BB1C8	lui    at, $800a
-800BB1CC	addiu  at, at, $d391 (=-$2c6f)
-AT = AT + V0;
-V0 = bu[AT + 0000];
-800BB1D8	nop
-800BB1DC	beq    v0, a1, Lbb250 [$800bb250]
-800BB1E0	nop
-800BB1E4	lui    at, $800a
-800BB1E8	addiu  at, at, $ad30 (=-$52d0)
-AT = AT + V0;
-V0 = bu[AT + 0000];
-800BB1F4	nop
-800BB1F8	beq    v0, a1, Lbb250 [$800bb250]
-800BB1FC	nop
-800BB200	lui    at, $8008
-800BB204	addiu  at, at, $eb98 (=-$1468)
-AT = AT + V0;
-A0 = bu[AT + 0000];
-800BB210	nop
-800BB214	beq    a0, a1, Lbb254 [$800bb254]
-V0 = A2 + 0001;
-V0 = w[8007e770];
-800BB224	nop
-V0 = hu[V0 + 0002];
-800BB22C	nop
-V0 = A0 < V0;
-800BB234	beq    v0, zero, Lbb254 [$800bb254]
-V0 = A2 + 0001;
-V1 = w[8008357c];
-V0 = A0 << 03;
-V0 = V0 + V1;
-[V0 + 0005] = b(A3);
+field_data = w[8009c6dc];
+model_struct = w[8009c544];
+block7_data = w[8007e770];
+number_of_entities = bu[field_data + 2];
+number_of_models = hu[block7_data + 2];
 
-Lbb250:	; 800BB250
-V0 = A2 + 0001;
+for( int i = 0; i < 3; ++i )
+{
+    party_id = bu[8009c6e4 + cad + i];
+    if( party_id != ff )
+    {
+        entity_id = bu[8009ad30 + party_id];
+        if( entity_id != ff )
+        {
+            model_id = bu[8007eb98 + entity_id];
+            if( model_id != ff )
+            {
+                if( model_id < number_of_models )
+                {
+                    V1 = w[8008357c];
+                    [V1 + model_id * 8 + 5] = b(1); // set as player model
+                }
+            }
+        }
+    }
+}
 
-Lbb254:	; 800BB254
-A2 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0003;
-800BB264	bne    v0, zero, loopbb1c4 [$800bb1c4]
-V0 = A2 << 10;
-V0 = w[8007e770];
-800BB274	nop
-V0 = hu[V0 + 0002];
-800BB27C	nop
-800BB280	beq    v0, zero, Lbb3a0 [$800bb3a0]
-A2 = 0;
-T1 = 00ff;
-T0 = 0001;
-V0 = A2 << 10;
-
-loopbb294:	; 800BB294
-A0 = V0 >> 10;
-V1 = w[8008357c];
-V0 = A0 << 03;
-V0 = V0 + V1;
-V1 = bu[V0 + 0005];
-800BB2AC	nop
-800BB2B0	bne    v1, zero, Lbb37c [$800bb37c]
-V0 = A2 + 0001;
-V0 = w[8009c6dc];
-800BB2C0	nop
-V0 = bu[V0 + 0002];
-800BB2C8	nop
-V0 = V1 < V0;
-800BB2D0	beq    v0, zero, Lbb378 [$800bb378]
-A1 = 0;
-A3 = A0;
-V0 = A1 << 10;
-
-loopbb2e0:	; 800BB2E0
-V0 = V0 >> 10;
-800BB2E4	lui    at, $8008
-800BB2E8	addiu  at, at, $eb98 (=-$1468)
-AT = AT + V0;
-A0 = bu[AT + 0000];
-800BB2F4	nop
-800BB2F8	bne    a0, a3, Lbb350 [$800bb350]
-V1 = A0 << 05;
-V1 = V1 + A0;
-800BB304	lui    at, $8008
-800BB308	addiu  at, at, $eb98 (=-$1468)
-AT = AT + V0;
-[AT + 0000] = b(T1);
-V0 = w[8009c544];
-V1 = V1 << 02;
-V0 = V1 + V0;
-[V0 + 005c] = b(0);
-V0 = w[8009c544];
-800BB330	nop
-V0 = V1 + V0;
-[V0 + 0059] = b(T0);
-V0 = w[8009c544];
-800BB344	nop
-V1 = V1 + V0;
-[V1 + 005b] = b(T0);
-
-Lbb350:	; 800BB350
-V0 = A1 + 0001;
-A1 = V0;
-V1 = w[8009c6dc];
-V0 = V0 << 10;
-V1 = bu[V1 + 0002];
-V0 = V0 >> 10;
-V0 = V0 < V1;
-800BB370	bne    v0, zero, loopbb2e0 [$800bb2e0]
-V0 = A1 << 10;
-
-Lbb378:	; 800BB378
-V0 = A2 + 0001;
-
-Lbb37c:	; 800BB37C
-A2 = V0;
-V1 = w[8007e770];
-V0 = V0 << 10;
-V1 = hu[V1 + 0002];
-V0 = V0 >> 10;
-V0 = V0 < V1;
-800BB398	bne    v0, zero, loopbb294 [$800bb294]
-V0 = A2 << 10;
-
-Lbb3a0:	; 800BB3A0
-800BB3A0	jr     ra 
-800BB3A4	nop
+for( int i = 0; i < number_of_models; ++i )
+{
+    V1 = w[8008357c];
+    if( bu[V1 + i * 8 + 5] == 0 )
+    {
+        for( int j = 0; j < number_of_entities; ++j )
+        {
+            A0 = bu[8007eb98 + j];
+            if( A0 == i )
+            {
+                [model_struct + A0 * 84 + 59] = b(1); // model solidity (0x01 - off/0x00 - on)
+                [model_struct + A0 * 84 + 5b] = b(1); // model talkability (0x01 - off/0x00 - on)
+                [model_struct + A0 * 84 + 5c] = b(0); // model visibility (0x01 - on/0x00 - off)
+                [8007eb98 + j] = b(ff); // unlink model from entity
+            }
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -1018,8 +616,8 @@ if (V0 > 0)
         V0 = bu[8007E7AC + S0 + 11];
         if (V0 != 0)
         {
-            game_data = w[8009C6E0];
-            V0 = bu[game_data + 32];
+            field_struct = w[8009C6E0];
+            V0 = bu[field_struct + 32];
             if (V0 == 0)
             {
                 A0 = bu[8007E7AC + S0 + 0D];
@@ -3306,7 +2904,7 @@ Lbe698:	; 800BE698
 Lbe6a0:	; 800BE6A0
 S0 = 800e4288;
 
-A0 = bu[8009d391];
+A0 = bu[8009c6e4 + cad];
 A1 = 800e4288;
 800BE6D8	jal    field_int_to_string [$800da424]
 

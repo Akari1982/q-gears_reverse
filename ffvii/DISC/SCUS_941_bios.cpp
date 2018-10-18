@@ -211,8 +211,8 @@ T1 = 9f;
 // These are used "SystemError" functions. The functions are repeatedly jumping to
 // themselves, causing the system to hang. Possibly useful for debugging software
 // which may hook that functions.
-T2 = 00a0;
-T1 = 00a1;
+T2 = a0;
+T1 = a1;
 800429E4	jr     t2 
 ////////////////////////////////
 
