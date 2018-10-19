@@ -11,7 +11,7 @@
 // funca16cc
 800A16CC-800A2310
 ////////////////////////////////
-// funca2314
+// field_main_loop
 800A2314-800A2D58
 ////////////////////////////////
 // funca2d5c
@@ -110,7 +110,7 @@
 // move_talk_to_line
 800AA180-800AA328
 ////////////////////////////////
-// line_clear_entity_in_line
+// field_line_clear_entity_in_line
 800AA32C-800AA344
 ////////////////////////////////
 // move_gateway_check

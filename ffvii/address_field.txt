@@ -145,7 +145,7 @@
 8007e7a0          array of some fade data. (size 0x4).
 8007e7a8 [][][][] offset to dialog block.
 
-8007e7ac         array of LINE data. (size 0x18).
+8007e7ac array of LINE data. (size 0x18).
 + 00 [][] x1.
 + 02 [][] y1.
 + 04 [][] z1.

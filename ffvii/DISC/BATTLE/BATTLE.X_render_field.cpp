@@ -856,7 +856,7 @@ A0 = 0140;
 A1 = 01fe;
 V0 = 028a;
 [S0 + 0016] = h(V0);
-func46634();
+system_create_clut_for_packet();
 
 800C59F8	lui    v1, $1f80
 V1 = V1 | 0008;

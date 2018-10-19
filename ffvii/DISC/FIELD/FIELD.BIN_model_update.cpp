@@ -997,64 +997,47 @@ return;
 
 
 ////////////////////////////////
-// funcabf0c
-800ABF0C	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 001c] = w(S1);
-S1 = A0;
-[SP + 0028] = w(S4);
-S4 = A1;
-[SP + 0020] = w(S2);
-S2 = 0;
-[SP + 0024] = w(S3);
-S3 = 0080;
-[SP + 0018] = w(S0);
-S0 = S1 + 000e;
-[SP + 002c] = w(RA);
+// funcabf0c()
 
-loopabf3c:	; 800ABF3C
-800ABF3C	jal    $8004694c
-A0 = S1;
-A0 = S1;
-800ABF48	jal    $80046870
-A1 = 0001;
-A0 = S1;
-800ABF54	jal    $80046848
-A1 = 0;
-A0 = 0100;
-A1 = 01e9;
-[S0 + fff6] = b(S3);
-[S0 + fff7] = b(S3);
-800ABF6C	jal    $80046634
-[S0 + fff8] = b(S3);
-V1 = S2 + 0001;
-S2 = V1;
-[S0 + 0000] = h(V0);
-S0 = S0 + 0010;
-V1 = V1 << 10;
-V1 = V1 >> 10;
-V1 = V1 < 0018;
-800ABF90	bne    v1, zero, loopabf3c [$800abf3c]
-S1 = S1 + 0010;
+S1 = A0;
+S4 = A1;
+
+for( int i = 0; i < 18; ++i )
+{
+    A0 = S1 + i * 10;
+    func4694с(); // header for Textured Rectangle, 16x16, opaque, texture-blending
+
+    A0 = S1 + i * 10;
+    A1 = 1; // add brightness calculation
+    system_change_brightness_calculation_in_packet();
+
+    A0 = S1 + i * 10;
+    A1 = 0; // remove semi transparency
+    system_change_semi_transparency_in_packet();
+
+    // colour
+    [S1 + i * 10 + 4] = b(80);
+    [S1 + i * 10 + 5] = b(80);
+    [S1 + i * 10 + 6] = b(80);
+
+    A0 = 100; // x
+    A1 = 1e9; // y
+    system_create_clut_for_packet();
+    [S1 + i * 10 + e] = h(V0);
+}
+
 A0 = 0;
 A1 = 0;
-A2 = 03c0;
-800ABFA4	jal    $8004656c
-A3 = 0100;
-[SP + 0010] = w(0);
+A2 = 3c0;
+A3 = 100;
+system_create_texture_page_settings_for_packet();
+
 A0 = S4;
 A1 = 0;
-A2 = 0001;
-800ABFBC	jal    $80044a68
+A2 = 1;
 A3 = V0 & ffff;
-RA = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-800ABFE0	jr     ra 
-800ABFE4	nop
+A4 = 0;
+func44a68(); // create settings packet for this render
 ////////////////////////////////
 
 

@@ -411,24 +411,26 @@ La1af8:	; 800A1AF8
     funcbb1b4(); // enable party models and unlink unused models
 
     A0 = 8007e7ac;
-    line_clear_entity_in_line();
+    field_line_clear_entity_in_line();
 
     [800716d0] = b(0);
-    A1 = 800e8df0 + 0180;
-    800A1F1C	jal    funcabf0c [$800abf0c]
+
+    A0 = 800e8df0;
+    A1 = 800e8df0 + 180;
+    funcabf0c();
 
     A0 = 8010068c;
-    A1 = 8010080c;
-    800A1F34	jal    funcabf0c [$800abf0c]
+    A1 = 8010068c + 180;
+    funcabf0c();
 
-    if (h[800965ec] != 5 && h[800965ec] != d)
+    if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
     {
         A0 = 0;
         A1 = 80128000;
         funca2d5c; // load mim to vram and init struct about it.
     }
 
-    if (h[800965ec] == 2)
+    if( h[800965ec] == 2 )
     {
         [8009a000] = h(f5);
         system_execute_AKAO();
@@ -439,7 +441,7 @@ La1af8:	; 800A1AF8
         system_execute_AKAO();
     }
 
-    funca2314(); // main game
+    field_main_loop();
 
     loopa1fe4:	; 800A1FE4
         A0 = 1;
@@ -449,71 +451,58 @@ La1af8:	; 800A1AF8
     A0 = 1;
     func3cedc(); // wait
 
-    V0 = h[80075dec];
-    V1 = 8007eb79;
-    [V1 + 0000] = b(0);
-    V1 = V1 - 11;
-
+    [8007eb79] = b(0);
     [8007eb8d] = b(0);
-    A0 = V0 << 02;
-    A0 = A0 + V0;
-    A0 = A0 << 02;
-    A0 = A0 + V1;
+
+    V0 = h[80075dec];
+    A0 = 8007eb68 + V0 * 14;
     system_psyq_put_disp_env();
 
     V0 = h[80075dec];
-    A0 = V0 << 01;
-    A0 = A0 + V0;
-    A0 = A0 << 03;
-    A0 = A0 - V0;
-    A0 = A0 << 02;
-    A0 = 8007eaac + A0;
+    A0 = 8007eaac + V0 * 5c;
     system_psyq_put_draw_env();
 
     [800965ec] = h(1);
 
-    V0 = bu[8009abf4 + 1];
-    800A2084	beq    v0, a, La22d8 [$800a22d8]
-
-    V0 = bu[8009abf4 + 1];
-    800A2098	beq    v0, 1a, La22d8 [$800a22d8]
-
-    V0 = bu[8009abf4 + 1];
-    800A20AC	beq    v0, 5, La22d8 [$800a22d8]
-
-    V0 = bu[8009abf4 + 1];
-    800A20BC	bne    v0, 1, La2140 [$800a2140]
-
-    [8009abf4 + 64] = h(hu[8009a05c]);
-
-    V0 = h[8009abf4 + 2];
-    [8009a05c] = h(V0);
-    if( V0 != h[80071a5c] )
+    if( ( bu[8009abf4 + 1] == a ) || ( bu[8009abf4 + 1] == 1a ) || ( bu[8009abf4 + 1] == 5 ) )
     {
-        field_stop_load_background_in_advance();
+        A0 = 0;
+        func3cedc(); // wait
+
+        return;
     }
 
-    V0 = hu[8009a05c] - 1;
-    if( V0 < 40 )
+    if( bu[8009abf4 + 1] == 1 )
     {
-        [8009c560] = h(3);
-        func129d0();
+        [8009abf4 + 64] = h(hu[8009a05c]);
 
-        [8009abf4 + 4c] = h(3);
-        [80071a58] = b(3);
-        [8009abf4 + 4e] = h(0);
-        [8007e768] = h(0);
-        [80095dd4] = h(1);
-        800A2298	j      La22d8 [$800a22d8]
+        V0 = h[8009abf4 + 2];
+        [8009a05c] = h(V0);
+        if( V0 != h[80071a5c] )
+        {
+            field_stop_load_background_in_advance();
+        }
+
+        if( ( hu[8009a05c] - 1 ) < 40 )
+        {
+            [8009c560] = h(3);
+            func129d0();
+
+            [8009abf4 + 4c] = h(3);
+            [80071a58] = b(3);
+            [8009abf4 + 4e] = h(0);
+            [8007e768] = h(0);
+            [80095dd4] = h(1);
+
+            A0 = 0;
+            func3cedc(); // wait
+
+            return;
+        }
     }
 
-    La2140:	; 800A2140
-    V0 = bu[8009abf4 + 1];
-    V1 = 000c;
-    if( V0 == c )
+    if( bu[8009abf4 + 1] == c )
     {
-        800A214C	bne    v0, v1, La2230 [$800a2230]
-
         [8009abf4 + 64] = h(hu[8009a05c]);
         [8009a05c] = h(hu[8009abf4 + 2]);
 
@@ -527,15 +516,19 @@ La1af8:	; 800A1AF8
             case 5: [8009c560] = h(b); break;
             case 6: [8009c560] = h(e); break;
         }
-        800A2228	j      La22d8 [$800a22d8]
+        A0 = 0;
+        func3cedc(); // wait
+
+        return;
     }
 
-    La2230:	; 800A2230
-    V0 = bu[8009abf4 + 1];
-    800A223C	beq    v0, 2, La22d8 [$800a22d8]
+    if( ( bu[8009abf4 + 1] == 2 ) || ( bu[8009abf4 + 1] == d ) )
+    {
+        A0 = 0;
+        func3cedc(); // wait
 
-    V0 = bu[8009abf4 + 1];
-    800A224C	beq    v0, d, La22d8 [$800a22d8]
+        return;
+    }
 
     if( h[8009c560] == 5 )
     {
@@ -546,23 +539,28 @@ La1af8:	; 800A1AF8
         [8009abf4 + 4e] = h(0);
         [8007e768] = h(0);
         [80095dd4] = h(1);
-        800A2298	j      La22d8 [$800a22d8]
+
+        A0 = 0;
+        func3cedc(); // wait
+
+        return;
     }
 
-    V0 = h[8009c560];
-    800A22B4	beq    v0, d, La22d8 [$800a22d8]
+    if( ( bu[8009c560] == d ) || ( bu[8009c560] == 10 ) )
+    {
+        A0 = 0;
+        func3cedc(); // wait
 
-800A22D0	bne    h[8009c560], 10, La1af8 [$800a1af8]
+        return;
+    }
 
-La22d8:	; 800A22D8
-A0 = 0;
-func3cedc(); // wait
+800A22D0	j      La1af8 [$800a1af8]
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca2314()
+// field_main_loop()
 // contain move and button update, animation handler and many others
 // model new structure inited here
 
@@ -958,7 +956,7 @@ La25bc:	; 800A25BC
 
 
 ////////////////////////////////
-// funca2d5c
+// funca2d5c()
 
 // 1st part of mim - palette settings
 [800e4d94] = w(w[A1 + 0]);
@@ -1012,7 +1010,7 @@ func436c0; // load texture to vram and return texpage settings
 
 [800e4db4] = h(V0);
 
-if (w[800e4dd8] != 0)
+if( w[800e4dd8] != 0 )
 {
     A0 = 0;
     system_psyq_draw_sync();
@@ -3522,7 +3520,7 @@ if (number_of_models > 0)
         if (S2 == pc_entity)
         {
             A0 = 8007e7ac;
-            line_clear_entity_in_line;
+            field_line_clear_entity_in_line();
         }
 
         S2 = S2 + 1;
@@ -3704,7 +3702,7 @@ if (number_of_models > 0)
                 if (S2 == pc_entity)
                 {
                     A0 = 8007E7AC;
-                    line_clear_entity_in_line;
+                    field_line_clear_entity_in_line();
                 }
             }
         }
@@ -3828,7 +3826,7 @@ if (number_of_models > 0)
             if (S2 == pc_entity)
             {
                 A0 = 8007E7AC;
-                line_clear_entity_in_line;
+                field_line_clear_entity_in_line();
             }
         }
 
@@ -3899,7 +3897,7 @@ if (number_of_models > 0)
                     if (S2 == pc_entity)
                     {
                         A0 = 8007E7AC;
-                        line_clear_entity_in_line;
+                        field_line_clear_entity_in_line();
                     }
                 }
                 else
@@ -5468,16 +5466,12 @@ V0 = S4 < 20;
 
 
 ////////////////////////////////
-// line_clear_entity_in_line
-V0 = 1F;
+// field_line_clear_entity_in_line()
 
-loopaa330:	; 800AA330
-    [A0 + 15] = b(0);
-    V0 = V0 - 1;
-    A0 = A0 + 18;
-800AA338	bgez   v0, loopaa330 [$800aa330]
-
-return;
+for( int i = 0; i < 20; ++i )
+{
+    [A0 + i * 18 + 15] = b(0);
+}
 ////////////////////////////////
 
 

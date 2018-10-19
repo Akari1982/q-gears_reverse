@@ -478,7 +478,7 @@ L1d6ec:	; 8001D6EC
                             8001DA00	lui    v0, $8006
                             8001DA04	lw     v0, $2f24(v0)
                             8001DA08	ori    a1, zero, $01ea
-                            8001DA0C	jal    func46634 [$80046634]
+                            8001DA0C	jal    system_create_clut_for_packet [$80046634]
                             8001DA10	sh     v1, $0012(v0)
                             8001DA14	lui    v1, $8006
                             8001DA18	lw     v1, $2f24(v1)
@@ -592,7 +592,7 @@ L1d6ec:	; 8001D6EC
 
                             A0 = S3 | 0100; // clut X
                             A1 = S1; // clut Y
-                            func46634;
+                            system_create_clut_for_packet;
 
                             V1 = w[80062f24];
                             [V1 + 0e] = h(V0);
@@ -997,7 +997,7 @@ else
 80026E3C	lui    v0, $8006
 80026E40	lw     v0, $2f24(v0)
 80026E44	addiu  a1, s7, $01f0
-80026E48	jal    func46634 [$80046634]
+80026E48	jal    system_create_clut_for_packet [$80046634]
 80026E4C	sh     v1, $0012(v0)
 80026E50	lui    v1, $8006
 80026E54	lw     v1, $2f24(v1)
@@ -1118,7 +1118,7 @@ else
 8001ED30	lui    v1, $8006
 8001ED34	lw     v1, $2f24(v1)
 8001ED38	ori    v0, zero, $0015
-8001ED3C	jal    func46634 [$80046634]
+8001ED3C	jal    system_create_clut_for_packet [$80046634]
 8001ED40	sh     v0, $0012(v1)
 8001ED44	lui    v1, $8006
 8001ED48	lw     v1, $2f24(v1)
@@ -1199,7 +1199,7 @@ loop1ed90:	; 8001ED90
     [V1 + 10] = h(10);
     [V1 + 12] = h(15);
 
-    8001EE90	jal    func46634 [$80046634]
+    8001EE90	jal    system_create_clut_for_packet [$80046634]
     8001EE98	lui    v1, $8006
     8001EE9C	lw     v1, $2f24(v1)
     8001EEA0	nop

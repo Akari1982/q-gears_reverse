@@ -472,7 +472,7 @@ A1 = A1 >> 10;
 80028D84	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = A1 + 01e0;
-80028D90	jal    func46634 [$80046634]
+80028D90	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S7);
 80028D98	lui    v1, $8006
 V1 = w[V1 + 2f24];

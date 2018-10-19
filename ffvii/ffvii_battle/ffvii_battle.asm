@@ -12057,7 +12057,7 @@ A0 = S1;
 A0 = 0100;
 A1 = 01e1;
 V0 = 003f;
-800C1DEC	jal    func46634 [$80046634]
+800C1DEC	jal    system_create_clut_for_packet [$80046634]
 [S1 + 0016] = h(V0);
 A0 = S0;
 800C1DF8	lui    s0, $800e
@@ -12397,7 +12397,7 @@ A0 = 0100;
 A1 = 01e7;
 V1 = w[S0 + 0000];
 V0 = 003f;
-800C22B4	jal    func46634 [$80046634]
+800C22B4	jal    system_create_clut_for_packet [$80046634]
 [V1 + 0016] = h(V0);
 V1 = w[S0 + 0000];
 800C22C0	nop
@@ -12734,7 +12734,7 @@ Lc2790:	; 800C2790
 A1 = 01e4;
 
 Lc2794:	; 800C2794
-800C2794	jal    func46634 [$80046634]
+800C2794	jal    system_create_clut_for_packet [$80046634]
 800C2798	nop
 [S2 + 00fe] = h(V0);
 800C27A0	lui    a0, $00ff
@@ -25156,7 +25156,7 @@ V0 = 00e0;
 800D9AF8	lui    v1, $8006
 V1 = w[V1 + 2f24];
 V0 = 0008;
-800D9B04	jal    func46634 [$80046634]
+800D9B04	jal    system_create_clut_for_packet [$80046634]
 [V1 + 000d] = b(V0);
 800D9B0C	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -25598,7 +25598,7 @@ Lda12c:	; 800DA12C
 AT = AT + 5179;
 AT = AT + V0;
 [AT + 0000] = b(V1);
-800DA13C	jal    func46634 [$80046634]
+800DA13C	jal    system_create_clut_for_packet [$80046634]
 800DA140	lui    s1, $00ff
 800DA144	lui    a0, $800f
 A0 = w[A0 + 1994];
@@ -27982,7 +27982,7 @@ V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800DC454	jal    func46634 [$80046634]
+800DC454	jal    system_create_clut_for_packet [$80046634]
 S4 = V0 + 0084;
 V1 = bu[S0 + 0000];
 800DC460	lui    a0, $8007
@@ -28018,7 +28018,7 @@ S5 = V0 << 02;
 V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
-800DC4DC	jal    func46634 [$80046634]
+800DC4DC	jal    system_create_clut_for_packet [$80046634]
 S4 = V0 << 02;
 V1 = bu[S0 + 0000];
 800DC4E8	lui    a0, $8007
@@ -28054,7 +28054,7 @@ V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800DC564	jal    func46634 [$80046634]
+800DC564	jal    system_create_clut_for_packet [$80046634]
 S4 = V0 + 0084;
 V1 = bu[S0 + 0000];
 800DC570	lui    a0, $8007
@@ -28093,7 +28093,7 @@ S5 = V0 << 02;
 V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
-800DC5F0	jal    func46634 [$80046634]
+800DC5F0	jal    system_create_clut_for_packet [$80046634]
 S4 = V0 << 02;
 A0 = bu[S0 + 0000];
 800DC5FC	lui    v1, $8007
@@ -28238,7 +28238,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC804	jal    func46634 [$80046634]
+800DC804	jal    system_create_clut_for_packet [$80046634]
 A1 = A1 + 01e0;
 800DC80C	lui    a0, $8016
 A0 = w[A0 + 3c74];
@@ -28297,7 +28297,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC8E8	jal    func46634 [$80046634]
+800DC8E8	jal    system_create_clut_for_packet [$80046634]
 A1 = A1 + 01e0;
 800DC8F0	lui    a0, $8016
 A0 = w[A0 + 3c74];
@@ -28356,7 +28356,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC9CC	jal    func46634 [$80046634]
+800DC9CC	jal    system_create_clut_for_packet [$80046634]
 A1 = A1 + 01e0;
 800DC9D4	lui    a0, $8016
 A0 = w[A0 + 3c74];
@@ -33348,7 +33348,7 @@ V0 = 0050;
 V0 = 0008;
 [S2 + 0010] = h(V0);
 V0 = 0015;
-800E1758	jal    func46634 [$80046634]
+800E1758	jal    system_create_clut_for_packet [$80046634]
 [S2 + 0012] = h(V0);
 A1 = S2;
 [S2 + 000e] = h(V0);
@@ -33420,7 +33420,7 @@ A1 = 01ec;
 V0 = 0010;
 [S1 + 0010] = h(V0);
 V0 = 0015;
-800E1848	jal    func46634 [$80046634]
+800E1848	jal    system_create_clut_for_packet [$80046634]
 [S1 + 0012] = h(V0);
 A1 = S1;
 [S1 + 000e] = h(V0);
@@ -36489,7 +36489,7 @@ V0 = 009e;
 800E4310	lui    v1, $8006
 V1 = w[V1 + 2f24];
 V0 = 0034;
-800E431C	jal    func46634 [$80046634]
+800E431C	jal    system_create_clut_for_packet [$80046634]
 [V1 + 0012] = h(V0);
 800E4324	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -37468,7 +37468,7 @@ A1 = 01e2;
 A1 = 01e1;
 
 Le5054:	; 800E5054
-800E5054	jal    func46634 [$80046634]
+800E5054	jal    system_create_clut_for_packet [$80046634]
 A0 = 0010;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -38357,7 +38357,7 @@ AT = AT + 3450;
 AT = AT + S2;
 A1 = bu[AT + 0000];
 A0 = 0120;
-800E5C38	jal    func46634 [$80046634]
+800E5C38	jal    system_create_clut_for_packet [$80046634]
 A1 = A1 + 01e0;
 800E5C40	lui    v1, $8006
 V1 = w[V1 + 2f24];

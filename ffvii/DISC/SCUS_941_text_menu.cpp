@@ -24,7 +24,7 @@ if (character < 29) // dakuten characters
     A0 = 100;
     A1 = S4 & ff;
     A1 = A1 + 1e0;
-    func46634; // clut
+    system_create_clut_for_packet; // clut
 
     [packet + e] = h(V0);
 
@@ -54,7 +54,7 @@ else if ((((character + 4c) & ff) >= 1a) && (((character - 29) & ff) < a)) // ha
     A0 = 100;
     A1 = S4 & ff;
     A1 = A1 + 1e0;
-    func46634; // clut
+    system_create_clut_for_packet; // clut
 
     [packet + e] = h(V0);
 
@@ -86,7 +86,7 @@ system_change_brightness_calculation_in_packet;
 A0 = 100;
 A1 = S4 & ff;
 A1 = A1 + 1e0;
-func46634;
+system_create_clut_for_packet;
 
 [packet + e] = h(V0);
 
@@ -162,7 +162,7 @@ loop28ea8:	; 80028EA8
 
     A0 = 100;
     A1 = colour + 1e0;
-    func46634;
+    system_create_clut_for_packet;
 
     [packet + e] = h(V0);
 
@@ -225,7 +225,7 @@ A1 = colour + 1e0;
 80029094	lui    v1, $8006
 80029098	lw     v1, $2f24(v1)
 8002909C	ori    v0, zero, $0008
-800290A0	jal    func46634 [$80046634]
+800290A0	jal    system_create_clut_for_packet [$80046634]
 800290A4	sh     v0, $0012(v1)
 800290A8	lui    v1, $8006
 800290AC	lw     v1, $2f24(v1)

@@ -261,7 +261,7 @@ system_change_brightness_calculation_in_packet;
 
 A0 = 100;
 A1 = 1e1;
-func46634;
+system_create_clut_for_packet;
 
 [packet + e] = h(V0);
 
@@ -339,7 +339,7 @@ A0 = 0100;
 8001E104	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = 01e0;
-8001E110	jal    func46634 [$80046634]
+8001E110	jal    system_create_clut_for_packet [$80046634]
 [V0 + 000d] = b(0);
 8001E118	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -410,7 +410,7 @@ A1 = 01e0;
 8001E220	lui    v1, $8006
 V1 = w[V1 + 2f24];
 V0 = 000c;
-8001E22C	jal    func46634 [$80046634]
+8001E22C	jal    system_create_clut_for_packet [$80046634]
 [V1 + 000d] = b(V0);
 8001E234	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -488,7 +488,7 @@ V0 = 000c;
 8001E350	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = 01e0;
-8001E35C	jal    func46634 [$80046634]
+8001E35C	jal    system_create_clut_for_packet [$80046634]
 [V0 + 000d] = b(0);
 8001E364	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -556,7 +556,7 @@ A0 = 0100;
 8001E460	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = 01e0;
-8001E46C	jal    func46634 [$80046634]
+8001E46C	jal    system_create_clut_for_packet [$80046634]
 [V0 + 000d] = b(0);
 8001E474	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -624,7 +624,7 @@ S0 = 0004;
 8001E568	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = 01e0;
-8001E574	jal    func46634 [$80046634]
+8001E574	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S0);
 8001E57C	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -678,7 +678,7 @@ A0 = 0100;
 8001E640	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = 01e0;
-8001E64C	jal    func46634 [$80046634]
+8001E64C	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S0);
 8001E654	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -732,7 +732,7 @@ A0 = 0100;
 8001E718	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = 01e0;
-8001E724	jal    func46634 [$80046634]
+8001E724	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S0);
 8001E72C	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -789,7 +789,7 @@ A0 = 0100;
 8001E7FC	lui    v0, $8006
 V0 = w[V0 + 2f24];
 A1 = 01e0;
-8001E808	jal    func46634 [$80046634]
+8001E808	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S0);
 8001E810	lui    v1, $8006
 V1 = w[V1 + 2f24];
