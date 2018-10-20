@@ -923,7 +923,8 @@ return e1000000 | V1 | V0;
 
 
 ////////////////////////////////
-// func436c0
+// func436c0()
+
 address = A0;
 tp = A1;
 abr = A2;
@@ -936,28 +937,28 @@ height = A6;
 [SP + 12] = h(vram_y);
 [SP + 16] = h(height);
 
-if (tp == 0)
+if( tp == 0 )
 {
-    [SP + 14] = h(ceil(width / 4));
+    [SP + 14] = h(width / 4);
 }
-else if (tp == 1)
+else if( tp == 1 )
 {
-    [SP + 14] = h(ceil(width / 2));
+    [SP + 14] = h(width / 2);
 }
-else if (tp == 2)
+else if( tp == 2 )
 {
     [SP + 14] = h(width);
 }
 
 A0 = SP + 10;
 A1 = address;
-system_psyq_load_image;
+system_psyq_load_image();
 
 A0 = tp;
 A1 = abr;
 A2 = vram_x;
 A3 = vram_y;
-system_create_texture_page_settings_for_packet;
+system_create_texture_page_settings_for_packet();
 
 return V0;
 ////////////////////////////////

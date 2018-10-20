@@ -183,13 +183,13 @@
 // funcad858
 800AD858-800ADAA0
 ////////////////////////////////
-// model_new_structure_initing
+// field_model_new_structure_initing
 800ADAA4-800ADC8C
 ////////////////////////////////
-// load_and_global_models_and_textures
+// field_load_and_global_models_and_textures
 800ADC90-800ADD6C
 ////////////////////////////////
-// load_and_init_global_models
+// field_load_and_init_global_models
 800ADD70-800AE238
 ////////////////////////////////
 // funcae23c

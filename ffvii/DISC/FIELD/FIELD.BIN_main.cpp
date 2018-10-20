@@ -9,7 +9,7 @@ if (h[800965e8] == 0) // if background start load earlier
     A0 = w[800da5b8 + V1 * 18 + c]; 
     A2 = 80128000;
     A3 = 0;
-    load_lzs_file();
+    system_cdrom_start_load_lzs();
 
     loopa13b8:	; 800A13B8
         system_cdrom_read_chain();
@@ -32,7 +32,7 @@ A1 = w[800da5b8 + V1 * 18 + 0];
 A0 = w[800da5b8 + V1 * 18 + 4]; 
 A2 = 80114fe4;
 A3 = 0;
-load_lzs_file();
+system_cdrom_start_load_lzs();
 
 
 loopa1428:	; 800A1428
@@ -427,7 +427,7 @@ La1af8:	; 800A1AF8
     {
         A0 = 0;
         A1 = 80128000;
-        funca2d5c; // load mim to vram and init struct about it.
+        funca2d5c(); // load mim to vram and init struct about it.
     }
 
     if( h[800965ec] == 2 )
@@ -580,12 +580,10 @@ La1af8:	; 800A1AF8
 [8007eb90] = w(a0);
 [8007eb94] = w(78);
 
-if (h[800965ec] != 5 && h[800965ec] != d)
+if( h[800965ec] != 5 && h[800965ec] != d )
 {
-    funcaa930; // init models and their textures
+    funcaa930(); // init models and their textures
 }
-
-
 
 V0 = w[8009a044];
 A0 = w[V0] + 4;
@@ -958,56 +956,58 @@ La25bc:	; 800A25BC
 ////////////////////////////////
 // funca2d5c()
 
+mim_data = A1;
+
 // 1st part of mim - palette settings
-[800e4d94] = w(w[A1 + 0]);
-[800e4d98] = h(hu[A1 + 4]);
-[800e4d9a] = h(hu[A1 + 6]);
-[800e4d9c] = h(hu[A1 + 8]);
-[800e4d9e] = h(hu[A1 + a]);
-[800e4d90] = w(A1 + c);
+[800e4d90] = w(mim_data + c);
+[800e4d94] = w(w[mim_data + 0]);
+[800e4d98] = h(hu[mim_data + 4]);
+[800e4d9a] = h(hu[mim_data + 6]);
+[800e4d9c] = h(hu[mim_data + 8]);
+[800e4d9e] = h(hu[mim_data + a]);
+
 
 // 2nd part 1st image
-A1 = A1 + ((w[A1 + 0] >> 2) << 2);
-[800e4da4] = w(A1 + c);
-[800e4da8] = w(w[A1 + 0]);
-[800e4dac] = h(hu[A1 + 4]);
-[800e4dae] = h(hu[A1 + 6]);
-[800e4db0] = h(hu[A1 + 8] * 2);
-[800e4db2] = h(hu[A1 + a]);
+mim_data = mim_data + ((w[mim_data + 0] >> 2) << 2);
+[800e4da4] = w(mim_data + c);
+[800e4da8] = w(w[mim_data + 0]);
+[800e4dac] = h(hu[mim_data + 4]);
+[800e4dae] = h(hu[mim_data + 6]);
+[800e4db0] = h(hu[mim_data + 8] * 2);
+[800e4db2] = h(hu[mim_data + a]);
 
 // 3rd part 2nd image
-A1 = A1 + ((w[A1 + 0] >> 2) << 2);
-[800e4dd4] = w(A1 + c);
-[800e4dd8] = w(w[A1 + 0]);
-[800e4ddc] = h(hu[A1 + 4]);
-[800e4dde] = h(hu[A1 + 6]);
-[800e4de0] = h(hu[A1 + 8] << 1);
-[800e4de2] = h(hu[A1 + a]);
+mim_data = mim_data + ((w[mim_data + 0] >> 2) << 2);
+[800e4dd4] = w(mim_data + c);
+[800e4dd8] = w(w[mim_data + 0]);
+[800e4ddc] = h(hu[mim_data + 4]);
+[800e4dde] = h(hu[mim_data + 6]);
+[800e4de0] = h(hu[mim_data + 8] << 1);
+[800e4de2] = h(hu[mim_data + a]);
+
+A0 = 0;
+system_psyq_draw_sync();
 
 [SP + 20] = h(0);
 [SP + 22] = h(1e0);
 [SP + 24] = h(100);
 [SP + 26] = h(10);
 
-A0 = 0;
-system_psyq_draw_sync();
-
 A0 = SP + 20;
 A1 = w[800e4d90];
-system_psyq_load_image; // load to vram
+system_psyq_load_image(); // load palette to vram
 
 A0 = 0;
 system_psyq_draw_sync();
 
 A0 = w[800e4da4]; // address
-A1 = 1; // 8 bit clut
-A2 = 0;
-A3 = h[800e4dac];
-A4 = h[800e4dae];
-A5 = hu[800e4db0];
-A6 = hu[800e4db2];
-func436c0; // load texture to vram and return texpage settings
-
+A1 = 1; // tp 8 bit clut
+A2 = 0; // abr
+A3 = h[800e4dac]; // vram_x
+A4 = h[800e4dae]; // vram_y
+A5 = hu[800e4db0]; // width
+A6 = hu[800e4db2]; // height
+func436c0(); // load texture to vram and return texpage settings to use this texture
 [800e4db4] = h(V0);
 
 if( w[800e4dd8] != 0 )
@@ -1016,13 +1016,13 @@ if( w[800e4dd8] != 0 )
     system_psyq_draw_sync();
 
     A0 = w[800e4dd4];
-    A1 = 1;
-    A2 = 0;
-    A3 = h[800e4ddc];
-    A4 = h[800e4dde];
-    A5 = hu[800e4de0];
-    A6 = hu[800e4de2];
-    func436c0; // load texture to vram and return texpage settings
+    A1 = 1; // tp
+    A2 = 0; // abr
+    A3 = h[800e4ddc]; // vram_x
+    A4 = h[800e4dde]; // vram_y
+    A5 = hu[800e4de0]; // width
+    A6 = hu[800e4de2]; // height
+    func436c0(); // load texture to vram and return texpage settings to use this texture
     [800e4de4] = h(V0);
 }
 
@@ -3035,11 +3035,10 @@ else
 
 ////////////////////////////////
 // funca5fb4
+
 V0 = bu[8009ac26];
-800A5FBC	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0044] = w(RA);
 800A5FC4	bne    v0, zero, La62ec [$800a62ec]
-[SP + 0040] = w(S0);
+
 V0 = hu[8009ac1e];
 800A5FD4	nop
 [800965e0] = h(V0);
@@ -3260,11 +3259,6 @@ V1 = V1 < V0;
 A0 = A1 << 10;
 
 La6348:	; 800A6348
-RA = w[SP + 0044];
-S0 = w[SP + 0040];
-SP = SP + 0048;
-800A6354	jr     ra 
-800A6358	nop
 ////////////////////////////////
 
 

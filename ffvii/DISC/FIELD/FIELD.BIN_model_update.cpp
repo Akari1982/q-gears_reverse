@@ -1,16 +1,14 @@
 ////////////////////////////////
-// funcaa930
+// funcaa930()
 // we call function that init 0x24 model data structure here
 
 [800dfca0] = w(80128000); // address for global texture
 
 A0 = w[8007e770]; // offset to block 7 in dat file.
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
-model_new_structure_initing();
+field_model_new_structure_initing();
 [80075e10] = w(V0); // store pointer to part after all new structures for the model.
 [800e0204] = w(V0); // store pointer to part after all new structures for the model.
-
-
 
 // load field bsx
 A0 = h[8009a05c]; // looks like field id to load
@@ -18,12 +16,11 @@ A1 = w[800da5b8 + A0 * 18 + 14];
 A0 = w[800da5b8 + A0 * 18 + 10]; 
 A2 = 801b0000;
 A3 = 0;
-load_lzs_file;
+system_cdrom_start_load_lzs();
 
 loopaa9b4:	; 800AA9B4
     system_cdrom_read_chain();
 800AA9BC	bne    v0, zero, loopaa9b4 [$800aa9b4]
-
 
 
 [1f800000] = w(800df08c); // CLOUD.BCX start sector.
@@ -32,10 +29,8 @@ A0 = w[8007e770]; // offset to block 7 in dat file.
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
 A2 = w[80075e10]; // pointer to part after all new structures for the model.
 A3 = 1; // load global texture
-load_and_global_models_and_textures;
+field_load_and_global_models_and_textures();
 [80075e10] = w(V0);
-
-
 
 A0 = w[8007e770]; // offset to block 7 in dat file.
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
@@ -44,12 +39,10 @@ A3 = 801b0000; // loaded field bsx
 funcac35c; // load textures and init packet drafts/ calculates lighting scale
 [80075e10] = w(V0);
 
-
-
 V1 = w[8004a62c];
 number_of_models = bu[V1 + 0];
 S0 = 1;
-if (S0 < number_of_models)
+if( S0 < number_of_models )
 {
     loopaaa54:	; 800AAA54
         [w[V1 + 4] + S0 * 24 + 0] = b(0);
@@ -59,31 +52,19 @@ if (S0 < number_of_models)
     800AAA7C	bne    v0, zero, loopaaa54 [$800aaa54]
 }
 
-
-
-if (number_of_models != 0)
+for( int i = 0; i < number_of_models; ++i )
 {
-    S0 = 0;
-    loopaaaa8:	; 800AAAA8
-        [1f800000] = b(1);
-        [1f800001] = b(1);
-        [1f800002] = b(0);
-        [1f800003] = b(S0);
-        V0 = w[8004a62c];
-        A0 = w[V0 + 4] + S0 * 24;
-        A1 = 1f800000;
-        funcb1c7c; // load face to vram
-
-        S0 = S0 + 1;
-        V0 = S0 < number_of_models;
-    800AAAF8	bne    v0, zero, loopaaaa8 [$800aaaa8]
+    [1f800000] = b(1);
+    [1f800001] = b(1);
+    [1f800002] = b(0);
+    [1f800003] = b(S0);
+    V0 = w[8004a62c];
+    A0 = w[V0 + 4] + i * 24;
+    A1 = 1f800000;
+    funcb1c7c(); // load face to vram
 }
 
-
-
-funcafde4;
-
-
+funcafde4();
 
 return V0;
 ////////////////////////////////
@@ -1279,13 +1260,9 @@ SP = SP + 0040;
 
 
 ////////////////////////////////
-// funcac35c
-//A0 = w[8007e770]; // offset to block 7 in dat file.
-//A1 = w[8004a62c]; // offset to new model structure at 80138250.
-//A2 = 800a00dc;
-//A3 = 801b0000; // loaded field bsx
+// funcac35c()
 
-block_7    = A0;
+block_7 = A0;
 model_data = A1;
 S2 = 1f800000;
 
@@ -1298,16 +1275,14 @@ if( bu[A2] != 0 )
     A1 = w[w[1f800000] + 04];
     A2 = S1;
     A3 = 0;
-    load_lzs_file;
+    system_cdrom_start_load_lzs();
 
     Lac3bc:	; 800AC3BC
-        system_cdrom_read_chain;
+        system_cdrom_read_chain();
 
         800AC3C4	beq    v0, zero, Lac484 [$800ac484]
     800AC3CC	j      Lac3bc [$800ac3bc]
 }
-
-
 
 // copy bsx to new location
 V0 = w[S1];
@@ -1319,11 +1294,7 @@ loopac414:	; 800AC414
     V0 = A0 < T1;
 800AC448	bne    v0, zero, loopac414 [$800ac414]
 
-
-
 S1 = w[800e0204]; // BSX file address
-
-
 
 Lac484:	; 800AC484
 bsx_header = S1 + w[S1 + 4]; // offset to start data in BSX
@@ -1339,18 +1310,11 @@ if( V0 & ffffff00 )
     funcad858;
 }
 
-
-
 A0 = S0;
-bsx_texture_loading_to_vram;
-
-
+bsx_texture_loading_to_vram();
 
 A0 = 0;
 system_psyq_draw_sync();
-
-
-
 
 // add additional bones parts and animations from bsx as well as scale
 S4 = 0;
@@ -1486,7 +1450,7 @@ if( number_of_model != 0 )
             A0 = w[model_data + 4] + model_id * 24; // new model structure data
             A1 = FP; // offset to start data in BSX
             A2 = model_id; // model id
-            funcacba0; // create draft packets and scale model
+            funcacba0(); // create draft packets and scale model
             FP = V0;
 
 
@@ -1533,8 +1497,6 @@ if( number_of_model != 0 )
             A2 = 0;
             A3 = 0;
             animation_prepare_bones_matrixes;
-
-
 
             [1f800000] = b(bu[S1 + 8]);
             [1f800001] = b(bu[S1 + 9]);
@@ -1620,6 +1582,7 @@ return w[SP + 40];
 
 ////////////////////////////////
 // funcacba0
+
 S0 = A0; // new model structure data
 S3 = A1; // where create packets drafts
 S4 = A2; // model id
@@ -2307,6 +2270,7 @@ return draft_offset + hu[parts_data + 16] * 2;
 
 ////////////////////////////////
 // bsx_texture_loading_to_vram
+
 S2 = A0; // BSX texture address
 S1 = 0;
 
@@ -2323,7 +2287,7 @@ if (S3 != 0)
 
         A0 = SP + 10;
         A1 = S2 + w[S0 + 8];
-        system_psyq_load_image;
+        system_psyq_load_image();
 
         S1 = S1 + 1;
         S0 = S0 + c;
@@ -2337,7 +2301,8 @@ return;
 
 
 ////////////////////////////////
-// funcad858
+// funcad858()
+
 S1 = A0;
 if( S1 == 0 )
 {
@@ -2416,34 +2381,27 @@ Lad894:	; 800AD894
 
 
 ////////////////////////////////
-// model_new_structure_initing()
+// field_model_new_structure_initing()
 
-block_7          = A0;
-block_7_array    = block_7 + 4;
-model_data       = A1;
+block_7 = A0;
+block_7_array = block_7 + 4;
+model_data = A1;
 model_data_array = model_data + c;
 
 [model_data + 0] = b(0);
 number_of_models = hu[block_7 + 2];
 
-if (number_of_models != 0)
+for( int i = 0; i < number_of_models; ++i )
 {
-    A3 = 0;
-    loopadad0:	; 800ADAD0
-        if (bu[block_7_array + A3 * 8 + 5] != 0)
-        {
-            [block_7_array + A3 * 8 + 4] = b(bu[model_data + 0]);
-
-            [model_data + 0] = b(bu[model_data + 0] + 1);
-        }
-        else
-        {
-            [block_7_array + A3 * 8 + 4] = b(ff);
-        }
-
-        A3 = A3 + 1;
-        V0 = A3 < number_of_models;
-    800ADB10	bne    v0, zero, loopadad0 [$800adad0]
+    if( bu[block_7_array + i * 8 + 5] != 0 )
+    {
+        [block_7_array + i * 8 + 4] = b(bu[model_data + 0]);
+        [model_data + 0] = b(bu[model_data + 0] + 1);
+    }
+    else
+    {
+        [block_7_array + i * 8 + 4] = b(ff);
+    }
 }
 
 [model_data + 1] = b(0);
@@ -2453,59 +2411,50 @@ if (number_of_models != 0)
 
 A1 = model_data_array + bu[model_data + 0] * 24;
 
-if (number_of_models != 0)
+for( int i = 0; i < number_of_models; ++i )
 {
-    A3 = 0;
-
-    loopadb58:	; 800ADB58
-        if (bu[block_7_array + A3 * 8 + 5] != 0) // if model enabled
+    if( bu[block_7_array + i * 8 + 5] != 0 ) // if model enabled
+    {
+        V0 = bu[block_7_array + i * 8 + 7] - 1; // number of animation for addition model 3 at least
+        if( V0 < 9 )
         {
-            // number of animation for addition model 3 at least
-            V0 = bu[block_7_array + A3 * 8 + 7];
-            V0 = V0 - 1;
-            if (V0 < 9)
+            if( bu[block_7_array + i * 8 + 3] < 3 )
             {
-                if (bu[block_7_array + A3 * 8 + 3] < 3)
-                {
-                    [block_7_array + A3 * 8 + 3] = b(3);
-                }
+                [block_7_array + i * 8 + 3] = b(3);
             }
-
-            model_id = bu[block_7_array + A3 * 8 + 4];
-            [model_data_array + model_id * 24 + 0] = b(1);
-            [model_data_array + model_id * 24 + 1] = bu(ff);
-            [model_data_array + model_id * 24 + 2] = b(bu[block_7_array + A3 * 8 + 1]); // bones
-            [model_data_array + model_id * 24 + 3] = b(bu[block_7_array + A3 * 8 + 2]); // parts
-            [model_data_array + model_id * 24 + 4] = b(bu[block_7_array + A3 * 8 + 3]); // animations
-            [model_data_array + model_id * 24 + 5] = b(0);
-            [model_data_array + model_id * 24 + 6] = b(0);
-            [model_data_array + model_id * 24 + 7] = b(0);
-            [model_data_array + model_id * 24 + 8] = w(0);
-            [model_data_array + model_id * 24 + c] = w(0);
-            [model_data_array + model_id * 24 + 10] = w(0);
-            // global model
-            [model_data_array + model_id * 24 + 14] = b(bu[block_7_array + A3 * 8 + 7]);
-            [model_data_array + model_id * 24 + 15] = b(bu[block_7_array + A3 * 8 + 0]);
-            [model_data_array + model_id * 24 + 16] = h(1000);
-
-            A0 = bu[block_7_array + A3 * 8 + 1];
-            A0 = A0 * 4;
-            [model_data_array + model_id * 24 + 18] = h(A0); // local offset to model parts part.
-
-            V0 = bu[block_7_array + A3 * 8 + 2];
-            A0 = A0 + V0 * 20;
-            [model_data_array + model_id * 24 + 1a] = h(A0); // local offset to animation part.
-
-            [model_data_array + model_id * 24 + 1c] = w(A1); // start offset of data for this model
-            [model_data_array + model_id * 24 + 20] = w(0);
-
-            // calculate offset to next model data
-            A1 = A1 + bu[block_7_array + A3 * 8 + 1] * 4 + bu[block_7_array + A3 * 8 + 2] * 20 + bu[block_7_array + A3 * 8 + 3] * 10;
         }
 
-        A3 = A3 + 1;
-        V0 = A3 < number_of_models;
-    800ADC70	bne    v0, zero, loopadb58 [$800adb58]
+        model_id = bu[block_7_array + i * 8 + 4];
+        [model_data_array + model_id * 24 + 0] = b(1);
+        [model_data_array + model_id * 24 + 1] = bu(ff);
+        [model_data_array + model_id * 24 + 2] = b(bu[block_7_array + i * 8 + 1]); // bones
+        [model_data_array + model_id * 24 + 3] = b(bu[block_7_array + i * 8 + 2]); // parts
+        [model_data_array + model_id * 24 + 4] = b(bu[block_7_array + i * 8 + 3]); // animations
+        [model_data_array + model_id * 24 + 5] = b(0);
+        [model_data_array + model_id * 24 + 6] = b(0);
+        [model_data_array + model_id * 24 + 7] = b(0);
+        [model_data_array + model_id * 24 + 8] = w(0);
+        [model_data_array + model_id * 24 + c] = w(0);
+        [model_data_array + model_id * 24 + 10] = w(0);
+        // global model
+        [model_data_array + model_id * 24 + 14] = b(bu[block_7_array + i * 8 + 7]);
+        [model_data_array + model_id * 24 + 15] = b(bu[block_7_array + i * 8 + 0]);
+        [model_data_array + model_id * 24 + 16] = h(1000);
+
+        A0 = bu[block_7_array + i * 8 + 1];
+        A0 = A0 * 4;
+        [model_data_array + model_id * 24 + 18] = h(A0); // local offset to model parts part.
+
+        V0 = bu[block_7_array + i * 8 + 2];
+        A0 = A0 + V0 * 20;
+        [model_data_array + model_id * 24 + 1a] = h(A0); // local offset to animation part.
+
+        [model_data_array + model_id * 24 + 1c] = w(A1); // start offset of data for this model
+        [model_data_array + model_id * 24 + 20] = w(0);
+
+        // calculate offset to next model data
+        A1 = A1 + bu[block_7_array + i * 8 + 1] * 4 + bu[block_7_array + i * 8 + 2] * 20 + bu[block_7_array + i * 8 + 3] * 10;
+    }
 }
 
 [800e0204] = w(0); // reset offset to BSX file
@@ -2516,7 +2465,7 @@ return A1;
 
 
 ////////////////////////////////
-// load_and_global_models_and_textures()
+// field_load_and_global_models_and_textures()
 
 S3 = w[1f800000]; // CLOUD.BCX start sector.
 S5 = w[1f800004]; // FIELD.TDB start sector.
@@ -2527,21 +2476,15 @@ S2 = A2; // pointer to part after all new structures for the model.
 S6 = A3; // 1
 
 number_of_models = hu[block_7 + 2]; // number of models
-
-if( number_of_models != 0 )
+for( int i = 0; i < number_of_models; ++i )
 {
-    S0 = 0;
-    loopadce4:	; 800ADCE4
-        A0 = block_7;    // offset to block 7 in dat file.
-        A1 = model_data; // offset to new model structure at 80138250.
-        A2 = S2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
-        A3 = S0; // model id
-        load_and_init_global_models;
+    A0 = block_7;    // offset to block 7 in dat file.
+    A1 = model_data; // offset to new model structure at 80138250.
+    A2 = S2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
+    A3 = i; // model id
+    field_load_and_init_global_models();
 
-        S2 = V0;
-        S0 = S0 + 1;
-        V0 = S0 < number_of_models;
-    800ADD0C	bne    v0, zero, loopadce4 [$800adce4]
+    S2 = V0;
 }
 
 // load globals texture
@@ -2551,10 +2494,10 @@ if( S6 != 0 )
     A1 = w[S5 + 4]
     A2 = w[800dfca0];
     A3 = 0;
-    load_lzs_file;
+    system_cdrom_start_load_lzs();
 
     loopadd34:	; 800ADD34
-        system_cdrom_read_chain;
+        system_cdrom_read_chain();
     800ADD3C	bne    v0, zero, loopadd34 [$800add34]
 }
 
@@ -2564,17 +2507,17 @@ return S2;
 
 
 ////////////////////////////////
-// load_and_init_global_models()
+// field_load_and_init_global_models()
 
-block_7       = A0; // offset to block 7 in dat file.
+block_7 = A0; // offset to block 7 in dat file.
 block_7_array = block_7 + 4;
-model_data    = A1; // offset to new model structure at 80138250.
+model_data = A1; // offset to new model structure at 80138250.
 S0 = A2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
 S2 = A3; // model id
 
 V1 = w[1f800000]; // CLOUD.BCX start sector.
 
-if (bu[block_7_array + S2 * 8 + 5] != 0) // read is model enabled
+if( bu[block_7_array + S2 * 8 + 5] != 0 ) // read is model enabled
 {
     // read additional model
     S1 = b[block_7_array + S2 * 8 + 7];
@@ -2652,34 +2595,23 @@ if (bu[block_7_array + S2 * 8 + 5] != 0) // read is model enabled
 
             A2 = S0;
             A3 = 0;
-            load_lzs_file;
+            system_cdrom_start_load_lzs();
 
             loopade94:	; 800ADE94
                 system_cdrom_read_chain;
             800ADE9C	bne    v0, zero, loopade94 [$800ade94]
 
-
-
             // set flag that we load this model already
             number_of_model = hu[block_7 + 2];
-            if( number_of_model != 0 )
+            for( int i = 0; i < number_of_model; ++i )
             {
-                A3 = 0;
+                global_model = b[block_7_array + i * 8 + 7];
 
-                loopadebc:	; 800ADEBC
-                    global_model = b[block_7_array + A3 * 8 + 7];
-
-                    if (global_model == S1)
-                    {
-                        [block_7_array + A3 * 8 + 6] = b(1);
-                    }
-
-                    A3 = A3 + 1;
-                    V0 = A3 < number_of_model;
-                800ADEDC	bne    v0, zero, loopadebc [$800adebc]
+                if( global_model == S1 )
+                {
+                    [block_7_array + i * 8 + 6] = b(1);
+                }
             }
-
-
 
             model_index = bu[block_7_array + S2 * 8 + 4];
 
@@ -2688,24 +2620,15 @@ if (bu[block_7_array + S2 * 8 + 5] != 0) // read is model enabled
 
             new_structures_header = w[model_data + 4];
 
-
-
             // copy bones data
             number_of_bones = bu[loaded_file_header + 2];
-            if (number_of_bones != 0)
+            new_structure_data = w[new_structures_header + model_index * 24 + 1c];
+            loaded_file_data = w[loaded_file_header + 1c];
+
+            for(int i = 0; i < number_of_bones; ++i )
             {
-                new_structure_data = w[new_structures_header + model_index * 24 + 1c];
-                loaded_file_data = w[loaded_file_header + 1c];
-                A3 = 0;
-
-                loopadf38:	; 800ADF38
-                    [new_structure_data + A3 * 4] = w(w[loaded_file_data + A3 * 4]);
-                    A3 = A3 + 1;
-                    V0 = A3 < number_of_bones;
-                800ADF4C	bne    v0, zero, loopadf38 [$800adf38]
+                [new_structure_data + i * 4] = w(w[loaded_file_data + i * 4]);
             }
-
-
 
             // copy parts data
             number_of_model_parts = bu[loaded_file_header + 3];
@@ -2737,8 +2660,6 @@ if (bu[block_7_array + S2 * 8 + 5] != 0) // read is model enabled
                     V0 = A3 < number_of_model_parts;
                 800ADFF0	bne    v0, zero, loopadf7c [$800adf7c]
             }
-
-
 
             number_of_animations = bu[loaded_file_header + 4];
             if (number_of_animations != 0)
@@ -4419,16 +4340,15 @@ if (V0 == 0 || A2 != 0)
 
 
 ////////////////////////////////
-// funcafde4
+// funcafde4()
+
 [800dfdfc] = b(10);
 
-A0 = 0;
-loopafdfc:	; 800AFDFC
-    [800dfdfe + A0 * 2 + 0] = b(0);
-    [800dfdfe + A0 * 2 + 1] = b(0);
-    A0 = A0 + 1;
-    V0 = A0 < 10;
-800AFE0C	bne    v0, zero, loopafdfc [$800afdfc]
+for( int i = 0; i < 10; ++i )
+{
+    [800dfdfe + i * 2 + 0] = b(0);
+    [800dfdfe + i * 2 + 1] = b(0);
+}
 ////////////////////////////////
 
 

@@ -478,6 +478,7 @@
 800e4d9a [][]     clut vram y.
 800e4d9c [][]     clut width.
 800e4d9e [][]     clut height.
+
 800e4da4 [][][][] pointer to 1st image data.
 800e4da8 [][][][] pointer to second image block.
 800e4dac [][]     1st image vram x.
@@ -485,6 +486,7 @@
 800e4db0 [][]     1st image width.
 800e4db2 [][]     1st image height.
 800e4db4 [][]     texpage settings for 1st image.
+
 800e4dd4 [][][][] pointer to 2nd image data.
 800e4dd8 [][][][] pointer to end.
 800e4ddc [][]     2nd image vram x.
