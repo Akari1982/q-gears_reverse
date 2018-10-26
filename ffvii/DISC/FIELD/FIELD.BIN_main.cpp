@@ -593,10 +593,8 @@ V0 = w[V0];
 
 if (h[800965ec] != 5 && h[800965ec] != 2 && h[800965ec] != d)
 {
-    funca5fb4; // walkmesh related
+    funca5fb4(); // move PC model position init by walkmesh
 }
-
-
 
 A0 = 800e9704; // draft 1st and 2nd layer
 A1 = 800f3344; // draft 3rd and 4th layer
@@ -1077,8 +1075,9 @@ V1 = V1 & A0;
 
 
 ////////////////////////////////
-// funca3020
+// funca3020()
 // init packets for background
+
 V0 = w[8009d848];
 background = w[V0];
 
@@ -3034,231 +3033,58 @@ else
 
 
 ////////////////////////////////
-// funca5fb4
+// funca5fb4()
 
-V0 = bu[8009ac26];
-800A5FC4	bne    v0, zero, La62ec [$800a62ec]
+if( bu[8009abf4 + 32] == 0 ) // 0 if PC can move
+{
+    model_id = h[8009abf4 + 2a];
+    [800965e0] = h(model_id);
+    triangle_id = hu[8009abf4 + 22];
+    [80074ea4 + model_id * 84 + 72] = h(triangle_id);
+    walkmesh_data = w[800e4274];
 
-V0 = hu[8009ac1e];
-800A5FD4	nop
-[800965e0] = h(V0);
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V1 = V0 << 05;
-V1 = V1 + V0;
-V0 = hu[8009ac16];
-A3 = V1 << 02;
-800A5FFC	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + A3;
-[AT + 0000] = h(V0);
-A1 = h[8009abf8];
-V0 = 7fff;
-800A6018	bne    a1, v0, La6140 [$800a6140]
-A0 = SP + 0010;
-800A6020	lui    a2, $5555
-A2 = A2 | 5556;
-800A6028	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + A3;
-V1 = hu[AT + 0000];
-A1 = w[800e4274];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + A1;
-V1 = h[V0 + 0000];
-A0 = h[V0 + 0008];
-V0 = h[V0 + 0010];
-V1 = V1 + A0;
-V1 = V1 + V0;
-800A6064	mult   v1, a2
-V1 = V1 >> 1f;
-800A606C	mfhi   v0
-V0 = V0 - V1;
-800A6074	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + A3;
-V1 = hu[AT + 0000];
-V0 = V0 << 0c;
-800A6088	lui    at, $8007
-AT = AT + 4eb0;
-AT = AT + A3;
-[AT + 0000] = w(V0);
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + A1;
-V1 = h[V0 + 0002];
-A0 = h[V0 + 000a];
-V0 = h[V0 + 0012];
-V1 = V1 + A0;
-V1 = V1 + V0;
-800A60BC	mult   v1, a2
-V1 = V1 >> 1f;
-800A60C4	mfhi   v0
-V0 = V0 - V1;
-800A60CC	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + A3;
-V1 = hu[AT + 0000];
-V0 = V0 << 0c;
-800A60E0	lui    at, $8007
-AT = AT + 4eb4;
-AT = AT + A3;
-[AT + 0000] = w(V0);
-V0 = V1 << 01;
+    if( h[8009abf4 + 4] == 7fff ) // destination x during map load
+    {
+        [80074ea4 + model_id * 84 + c] = w(((h[walkmesh_data + triangle_id * 18 + 0] + h[walkmesh_data + triangle_id * 18 + 8] + h[walkmesh_data + triangle_id * 18 + 10]) / 3) << c); // x
+        [80074ea4 + model_id * 84 + 10] = w(((h[walkmesh_data + triangle_id * 18 + 2] + h[walkmesh_data + triangle_id * 18 + a] + h[walkmesh_data + triangle_id * 18 + 12]) / 3) << c); // y
+        [80074ea4 + model_id * 84 + 14] = w(((h[walkmesh_data + triangle_id * 18 + 4] + h[walkmesh_data + triangle_id * 18 + c] + h[walkmesh_data + triangle_id * 18 + 14]) / 3) << c); // z
+    }
+    else
+    {
+        [80074ea4 + model_id * 84 + c] = w(h[8009abf4 + 4] << c); // x
+        [80074ea4 + model_id * 84 + 10] = w(h[8009abf4 + 6] << c); // y
 
-La60f4:	; 800A60F4
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + A1;
-V1 = h[V0 + 0004];
-A0 = h[V0 + 000c];
-V0 = h[V0 + 0014];
-V1 = V1 + A0;
-V1 = V1 + V0;
-800A6114	mult   v1, a2
-V1 = V1 >> 1f;
-800A611C	mfhi   v0
-V0 = V0 - V1;
-V0 = V0 << 0c;
-800A6128	lui    at, $8007
-AT = AT + 4eb8;
-AT = AT + A3;
-[AT + 0000] = w(V0);
-800A6138	j      La6284 [$800a6284]
-800A613C	nop
+        A0 = SP + 10;
+        A1 = walkmesh_data + triangle_id * 18 + 8;
+        A2 = walkmesh_data + triangle_id * 18 + 0;
+        field_walkmesh_vector_sub();
 
-La6140:	; 800A6140
-800A6140	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + A3;
-V1 = hu[AT + 0000];
-V0 = A1 << 0c;
-800A6154	lui    at, $8007
-AT = AT + 4eb0;
-AT = AT + A3;
-[AT + 0000] = w(V0);
-V0 = h[8009abfa];
-A2 = V1 << 01;
-A2 = A2 + V1;
-A2 = A2 << 03;
-A1 = A2 + 0008;
-V1 = w[800e4274];
-V0 = V0 << 0c;
-800A6188	lui    at, $8007
-AT = AT + 4eb4;
-AT = AT + A3;
-[AT + 0000] = w(V0);
-A1 = A1 + V1;
-800A619C	jal    walkmesh_vector_sub [$800a8df4]
-A2 = A2 + V1;
-V1 = h[800965e0];
-S0 = SP + 0020;
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800A61BC	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-A0 = S0;
-A2 = V0 << 01;
-A2 = A2 + V0;
-A2 = A2 << 03;
-A1 = A2 + 0010;
-V0 = w[800e4274];
-A2 = A2 + 0008;
-A1 = A1 + V0;
-800A61F0	jal    walkmesh_vector_sub [$800a8df4]
-A2 = A2 + V0;
-A0 = SP + 0010;
-V0 = h[8009abf8];
-A2 = h[8009abfa];
-V1 = h[800965e0];
-A1 = S0;
-[SP + 0030] = w(V0);
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-[SP + 0034] = w(A2);
-800A622C	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-A2 = SP + 0030;
-A3 = V0 << 01;
-A3 = A3 + V0;
-V0 = w[800e4274];
-A3 = A3 << 03;
-800A6254	jal    walkmesh_calculate_z [$800a8e34]
-A3 = A3 + V0;
-A0 = h[800965e0];
-V0 = V0 << 0c;
-V1 = A0 << 05;
-V1 = V1 + A0;
-V1 = V1 << 02;
-800A6274	lui    at, $8007
-AT = AT + 4eb8;
-AT = AT + V1;
-[AT + 0000] = w(V0);
+        A0 = SP + 20;
+        A1 = walkmesh_data + triangle_id * 18 + 10;
+        A2 = walkmesh_data + triangle_id * 18 + 8;
+        field_walkmesh_vector_sub();
 
-La6284:	; 800A6284
-800A6284	lui    a1, $800a
-800A6288	addiu  a1, a1, $ac04 (=-$53fc)
-V0 = h[800965e0];
-V1 = h[A1 + 0000];
-A0 = V0 << 05;
-A0 = A0 + V0;
-A0 = A0 << 02;
-V0 = V1 << 04;
-V0 = V0 + V1;
-V0 = V0 >> 08;
-800A62B0	lui    at, $8007
-AT = AT + 4f10;
-AT = AT + A0;
-[AT + 0000] = h(V0);
-V0 = h[A1 + 0000];
-V1 = 0010;
-800A62C8	lui    at, $8007
-AT = AT + 4f04;
-AT = AT + A0;
-[AT + 0000] = h(V1);
-V0 = V0 << 01;
-800A62DC	lui    at, $8007
-AT = AT + 4f14;
-AT = AT + A0;
-[AT + 0000] = h(V0);
+        [SP + 30] = w(h[8009abf4 + 4]); // x
+        [SP + 34] = w(h[8009abf4 + 6]); // y
 
-La62ec:	; 800A62EC
-800A62EC	lui    a2, $800a
-800A62F0	addiu  a2, a2, $ac1c (=-$53e4)
-V0 = h[A2 + 0000];
-800A62F8	nop
-800A62FC	blez   v0, La6348 [$800a6348]
-A1 = 0;
-A0 = A1 << 10;
+        A0 = SP + 10;
+        A1 = SP + 20;
+        A2 = SP + 30;
+        A3 = walkmesh_data + triangle_id * 18;
+        field_walkmesh_calculate_z();
 
-loopa6308:	; 800A6308
-V1 = A1 + 0001;
-A1 = V1;
-A0 = A0 >> 10;
-V0 = A0 << 05;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V1 = V1 << 10;
-800A6324	lui    at, $8007
-AT = AT + 4ed9;
-AT = AT + V0;
-[AT + 0000] = b(0);
-V0 = h[A2 + 0000];
-V1 = V1 >> 10;
-V1 = V1 < V0;
-800A6340	bne    v1, zero, loopa6308 [$800a6308]
-A0 = A1 << 10;
+        [80074ea4 + model_id * 84 + 14] = w(V0 << c); // z
+    }
 
-La6348:	; 800A6348
+    [80074ea4 + model_id * 84 + 60] = h(10); // animation speed
+    [80074ea4 + model_id * 84 + 6c] = h((h[8009abf4 + 10] * 11) >> 8); // solid range value (based by field scale (9 bit fixed point))
+    [80074ea4 + model_id * 84 + 70] = h(h[8009abf4 + 10] * 2); // movement speed
+}
+
+for( int i = 0; i < h[8009ac1c]; ++i )
+{
+    [80074ea4 + i * 84 + 35] = b(0); // shift addition to move direction
+}
 ////////////////////////////////
 
 
@@ -3738,13 +3564,13 @@ if (number_of_models > 0)
                 id_offset = w[800E4274];
                 A1 = id_offset + V0 * 18 + 8;
                 A2 = id_offset + V0 * 18;
-                walkmesh_vector_sub;
+                field_walkmesh_vector_sub();
 
                 V0 = hu[80074F18 + S2 * 84];
                 A0 = S1;
                 A1 = id_offset + V0 * 18 + 10;
                 A2 = id_offset + V0 * 18 + 8;
-                walkmesh_vector_sub;
+                field_walkmesh_vector_sub();
 
                 V0 = w[80074F1C + S2 * 84];
                 V0 = V0 >> C;
@@ -3760,7 +3586,7 @@ if (number_of_models > 0)
                 A1 = S1;
                 A2 = SP + 30;
                 A3 = id_offset + V0 * 18;
-                walkmesh_calculate_z;
+                field_walkmesh_calculate_z();
                 Z_fin = V0 << C;
                 [80074EA4 + S2 * 84 + 80] = w(Z_fin);
 
@@ -4414,17 +4240,17 @@ La89f0:	; 800A89F0
 A0 = 1F800000;
 A1 = offset_to_triangle + 8;
 A2 = offset_to_triangle;
-walkmesh_vector_sub;
+field_walkmesh_vector_sub();
 
 A0 = 1F800010;
 A1 = offset_to_triangle + 10;
 A2 = offset_to_triangle + 8;
-walkmesh_vector_sub;
+field_walkmesh_vector_sub();
 
 A0 = 1F800020;
 A1 = offset_to_triangle;
 A2 = offset_to_triangle + 10;
-walkmesh_vector_sub;
+field_walkmesh_vector_sub();
 
 
 
@@ -4588,7 +4414,7 @@ A0 = 1F800000;
 A1 = 1F800010;
 A2 = 1F800030;
 A3 = offset_to_triangle;
-walkmesh_calculate_z;
+field_walkmesh_calculate_z();
 [position + 8] = w(V0);
 
 return S3;
@@ -4597,37 +4423,26 @@ return S3;
 
 
 ////////////////////////////////
-// walkmesh_vector_sub
-A0 - address to save point1 - point2
-A1 - point1
-A2 - point2
+// field_walkmesh_vector_sub()
 
-V0 = h[A1 + 0];
-V1 = h[A2 + 0];
-V0 = V0 - V1;
-[A0 + 0] = w(V0);
+ret = A0; // address to save point1 - point2
+p1 = A1;
+p2 = A2;
 
-V0 = h[A1 + 2];
-V1 = h[A2 + 2];
-V0 = V0 - V1;
-[A0 + 4] = w(V0);
-
-V0 = h[A1 + 4];
-V1 = h[A2 + 4];
-V0 = V0 - V1;
-[A0 + 8] = w(V0);
+[ret + 0] = w(h[p1 + 0] - h[p2 + 0]);
+[ret + 4] = w(h[p1 + 2] - h[p2 + 2]);
+[ret + 8] = w(h[p1 + 4] - h[p2 + 4]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// walkmesh_calculate_z
+// field_walkmesh_calculate_z()
+
 vec1 = A0;
 vec2 = A1;
 pos  = A2;
 offset_to_triangle = A3;
-
-SP = SP - 10;
 
 [SP + 0] = w((w[vec2 + 4] * w[vec1 + 8]) - (w[vec1 + 4] * w[vec2 + 8]));
 [SP + 4] = w((w[vec1 + 0] * w[vec2 + 8]) - (w[vec1 + 8] * w[vec2 + 0]));
@@ -4643,8 +4458,7 @@ A3 = w[SP + 8] * h[offset_to_triangle + 4];
 A1 = w[SP + 0] * w[pos + 0];
 V1 = w[SP + 4] * w[pos + 4];
 
-V0 = (V0 + T2 + A3 - A1 - V1) / (vec1 + 0);
-return V0;
+return (V0 + T2 + A3 - A1 - V1) / (vec1 + 0);
 ////////////////////////////////
 
 

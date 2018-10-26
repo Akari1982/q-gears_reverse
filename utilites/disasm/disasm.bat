@@ -1,1 +1,1 @@
-adisasm 0039_menu_u 0039_menu_u.asm -v -b 8006f180 80072e7C -u -a
+adisasm SLUS_012 SLUS_012.asm -v -b 8000f800 80012b68 -u -a

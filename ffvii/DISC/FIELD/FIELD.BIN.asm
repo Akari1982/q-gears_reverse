@@ -89,10 +89,10 @@
 // walkmesh_border_cross
 800A8968-800A8DF0
 ////////////////////////////////
-// walkmesh_vector_sub
+// field_walkmesh_vector_sub
 800A8DF4-800A8E30
 ////////////////////////////////
-// walkmesh_calculate_z
+// field_walkmesh_calculate_z
 800A8E34-800A8F84
 ////////////////////////////////
 // main_walkmesh_move
