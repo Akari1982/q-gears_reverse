@@ -184,6 +184,15 @@ return V0; // return rotation
 
 
 ////////////////////////////////
+// system_get_cos_by_rotation()
+
+A0 = A0 + 400;
+system_get_sin_by_rotation();
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_get_sin_by_rotation
 V0 = (A0 >> a) & 3;
 A0 = A0 & 3ff;
