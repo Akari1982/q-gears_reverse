@@ -92,6 +92,7 @@
     + 34 [][]     ? in 0x9c and 0xa8 and 0xe2 opcode.
     + 36 [][]     store +76 here in 0x9c and 0xe2 opcode. Current animation id.
     + 38 []       ? in 0xe2 opcode. Store number of frames in current animation here. When start some animations.
+    + 39 []       some animation frame id.
     + 3a []       current animation frame id. Store +60 here in 0x9c and 0xe2 opcode.
     + 3b []       ? in 0xa8 and 0xe2 opcode. Index of model data struct.
     + 3c []       solid radius.
