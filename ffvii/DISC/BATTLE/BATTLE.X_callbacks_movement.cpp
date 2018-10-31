@@ -1,5 +1,5 @@
 ////////////////////////////////
-// 800cf5bc
+// funccf5bc
 // movement callback
 
 data_id   = h[801590d0];
