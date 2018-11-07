@@ -114,7 +114,7 @@ if( battle_id != ffff )
                 A1 = S0; // unit id
                 A2 = 6;
                 A3 = 0;
-                funca7254;
+                battle_add_to_800f4308;
             }
 
             S0 = S0 + 1;
@@ -219,7 +219,7 @@ if( battle_id != ffff )
                     A1 = S0;
                     A2 = 0c;
                     A3 = 0f;
-                    funca7254;
+                    battle_add_to_800f4308;
                 }
 
                 [800f5e60 + S0 * 34 + 0c] = h(hu[800F83E0 + S0 * 68 + 28])

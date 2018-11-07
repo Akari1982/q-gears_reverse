@@ -272,7 +272,7 @@ battle_update_unit_mask();
 for( int i = 4; i < a; ++i )
 {
     A0 = 40; // random 0-3f
-    func14ba8();
+    system_get_random_byte_range();
 
     [800f5bbc + 110 + i * 44] = h((V0 + 80) << 8);
 

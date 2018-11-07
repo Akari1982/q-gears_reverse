@@ -26,6 +26,8 @@
 
 800e7a38 [][][][] maybe current unit (during attack queue).
 
+800e7a48
+
 800e7a58 []       array of player unit_ids. Used if we want some player unit to execute another player logic.
 
 800e7bbc some values
@@ -99,6 +101,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f3950 [][][][] copy 800f3944 here at start of battle damage calculation.
 800f3954 [][][][] copy 800f3948 here at start of battle damage calculation.
 
+800f3958 some action (manipulated?)
+
 800f39f0 berserk toad action stats for player units. Copy first action command for unit here. (size 0x6).
     +0 []     Init with ff. Copy action id from temp.
     +1 []     Set default 800707c4 + 0. Set 0 here if weapon is long ranged or if some other condition.
@@ -124,7 +128,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f4300 [][][][] string buffer position.
 800f4304 [][][][] index into 800f4280.
 
-800f4308 3 arrays with 0x80 items each with size 0x04 (0x04 size 0x3 * 0x80 items). We add something here and increment cell so next time we add to next cell.
+800f4308 3 arrays with 0x80 items each with size 0x04 (0x04 size 0x3 * 0x80 items).
+         We add something here and increment cell so next time we add to next cell.
+         Use Item - array1, +0 attacker id,+1 2, +2 item id.
     +00 []       store attacker id here (player)
     +01 []       we store here 6 at start of battle for player characters.
     +02 [][]     we store here 0 at start of battle for player characters.
@@ -396,8 +402,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7da8 [][]     calculated, dexterity value ((total_dexterity - 1 + number_of_party) / number_of_party + 32)
 800f7daa [][]     atb type.
 
+800f7dac [][]     some unit mask.
 800f7db2 [][]     store here escape counter.
-
+800f7dc2 [][]     unit mask for manipulator units.
+800f7dca [][]     unit mask for manipulated units.
 800f7db6 [][]     store here escape counter.
 800f7db8 [][]     store 0 here at start of attack queue executed parcing
 800f7dba [][]     store currently executed priority in main battle queue here.
@@ -1127,6 +1135,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80166f58 []       init with 0.
 
 80166f74 []       number of rows in battle item menu. Minimum 3.
+80166f75 []       set to -1 when we use item.
 
 80166f78 some structure where we store manipulate attacks from monster (size 0x6, 0x10 per monster (only 0-2 inited as manipulate, others inited with base value0xff 0 0 3))
     +00 []       local attack id (global used in whole game but after load we index into loaded array)

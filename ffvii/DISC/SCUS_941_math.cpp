@@ -1,11 +1,11 @@
 ////////////////////////////////
-// func14ba8()
+// system_get_random_byte_range()
 
 S0 = A0;
 
 system_get_random_byte_from_table()
 
-return (((V0 & ff) * S0) >> 08) & ff;
+return ((V0 * S0) >> 8) & ff;
 ////////////////////////////////
 
 
@@ -210,7 +210,7 @@ if (S0 != 0)
 {
     S1 = 1;
 
-    system_get_random_byte_from_table;
+    system_get_random_byte_from_table();
 
     V1 = V0 * S0;
     S0 = V1 >> 8;
@@ -267,14 +267,13 @@ V0 = V0 & 7;
 
 
 ////////////////////////////////
-// system_get_random_byte_from_table
-V1 = w[GP + D4];
-V0 = bu[80062E10 + V1];
-A0 = V0 + 1;
-[80062E10 + V1] = b(A0);
+// system_get_random_byte_from_table()
 
-V0 = bu[80083084 + V0];
-return V0;
+V1 = w[GP + d4];
+V0 = bu[80062e10 + V1];
+[80062e10 + V1] = b(V0 + 1);
+
+return bu[80083084 + V0];
 ////////////////////////////////
 
 
