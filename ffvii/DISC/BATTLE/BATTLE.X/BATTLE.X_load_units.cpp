@@ -1,34 +1,4 @@
 ////////////////////////////////
-// funca2894
-
-for( int i = 0; i < 3; ++i )
-{
-    if( w[800f83e0 + i * 68 + 2c] == 1e61 ) // if lucky 7777
-    {
-        if( ( bu[800f5bb8 + i * 44 + 29] & 80 ) == 0 )
-        {
-            V1 = hu[800f7de2];
-            [800f7de2] = h(V1 + 1);
-
-            if( V1 < 40 )
-            {
-                [800f5bb8 + i * 44 + 29] = b(bu[800f5bb8 + i * 44 + 29] | 80);
-
-                A0 = i; // unit id
-                A1 = 1; // priority
-                A2 = 1; // action id
-                A3 = 0; // attack id
-                A4 = 0; // target mask
-                battle_add_action_to_battle_queue();
-            }
-        }
-    }
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcb3934
 A0 = 2;
 funcb5d38;
