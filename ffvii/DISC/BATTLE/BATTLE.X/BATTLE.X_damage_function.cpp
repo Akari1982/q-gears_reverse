@@ -1,31 +1,27 @@
 ﻿////////////////////////////////
-// funca1798
+// funca1798()
 // main action function
-address = w[80063014];
 
-[800F7DB8] = h(0);
-attack_stack_offset = A0; // 800f692c
+temp = w[80063014];
 
+[800f7db8] = h(0);
 
+attack_data = A0;
 
 // increment GP + D4 (0-7 and repeat)
-system_increment_seed_for_random;
+system_increment_seed_for_random();
 
-
-
-if (bu[attack_stack_offset + 0] >= 2) // if action priority 2 3 4 5 or 6 store attacker mask
+if( bu[attack_data + 0] >= 2 ) // if action priority 2 3 4 5 or 6 store attacker mask
 {
-    V1 = b[attack_stack_offset + 2];
-    V0 = 1 << V1;
-    [800f7dd8] = h(V0);
+    [800f7dd8] = h(1 << b[attack_data + 2]);
 }
 
-[800f83a4 + 0] = b(bu[attack_stack_offset + 3] & 3F);
-[800f83a4 + 1] = b(hu[attack_stack_offset + 4]);
+[800f83a4 + 0] = b(bu[attack_data + 3] & 3f);
+[800f83a4 + 1] = b(hu[attack_data + 4]);
 
 
 
-if (bu[attack_stack_offset + 0] != 0) // if action priority not 0 - run scripts 7 for all entity
+if (bu[attack_data + 0] != 0) // if action priority not 0 - run scripts 7 for all entity
 {
     S0 = 0;
 
@@ -44,7 +40,7 @@ if (bu[attack_stack_offset + 0] != 0) // if action priority not 0 - run scripts 
 
 // reset all temp array
 S0 = FF;
-V0 = address + 3fc;
+V0 = temp + 3fc;
 
 loopa185c:	; 800A185C
     [V0] = w(0);
@@ -54,13 +50,13 @@ loopa185c:	; 800A185C
 
 
 
-attacker_id = b[attack_stack_offset + 2];
+attacker_id = b[attack_data + 2];
 
 
 
 // unknown
 S1 = -1;
-V0 = bu[attack_stack_offset + 3];
+V0 = bu[attack_data + 3];
 if (V0 & 40)
 {
     S0 = 0;
@@ -79,9 +75,9 @@ if (V0 & 40)
     800A18C0	bne    v0, zero, loopa18a8 [$800a18a8]
 }
 // store leftover part back
-V0 = bu[attack_stack_offset + 3];
+V0 = bu[attack_data + 3];
 S0 = V0 & 3F;
-[attack_stack_offset + 3] = b(S0);
+[attack_data + 3] = b(S0);
 
 
 
@@ -92,89 +88,89 @@ if (attacker_id < 3 && w[800F83E0 + attacker_id * 68] & 00000800) // if player i
 
     if (S0 == V0) // if berserk attack is the same as one we requested - set toad attack
     {
-        [attack_stack_offset + 3] = b(1);
+        [attack_data + 3] = b(1);
 
-        A0 = hu[attack_stack_offset + 6];
+        A0 = hu[attack_data + 6];
         system_select_random_bit;
-        [attack_stack_offset + 6] = h(V0);
+        [attack_data + 6] = h(V0);
     }
 }
 
 
 
-[address + 0] = w(attacker_id);
+[temp + 0] = w(attacker_id);
 
 
 
-action_type = b[attack_stack_offset + 3];
-[address + c] = w(action_type);
+action_type = b[attack_data + 3];
+[temp + c] = w(action_type);
 
 
 
-attack_index = hu[attack_stack_offset + 4];
-[address + 10] = w(attack_index);
-[address + 98] = w(attack_index);
+attack_index = hu[attack_data + 4];
+[temp + 10] = w(attack_index);
+[temp + 98] = w(attack_index);
 
 
 
-attack_mask = hu[attack_stack_offset + 6];
-[address + 18] = w(attack_mask);
-[address + 94] = w(attack_mask);
+attack_mask = hu[attack_data + 6];
+[temp + 18] = w(attack_mask);
+[temp + 94] = w(attack_mask);
 
 
 
 attacker_level = bu[800f83e0 + attacker_id * 68 + 09];
-[address + 4] = w(attacker_level);
+[temp + 4] = w(attacker_level);
 
 
 
 // store current attacker status
 A3 = w[800f83e0 + attacker_id * 68 + 00];
-[address + c8] = w(A3);
+[temp + c8] = w(A3);
 
 
 
 // set default values for attack type
 V1 = bu[800a0000 + action_type * 4];
-[address + 20] = w(V1);
+[temp + 20] = w(V1);
 attack_formula = bu[800A0001 + action_type * 4];
-[address + 40] = w(attack_formula);
+[temp + 40] = w(attack_formula);
 A1 = hu[800A0002 + action_type * 4];
-[address + 90] = w(A1);
+[temp + 90] = w(A1);
 
 
 
-[address + 1c] = w(1);
-[address + b4] = w(1);
+[temp + 1c] = w(1);
+[temp + b4] = w(1);
 
 
 
-[address + 08] = w(-1);
-[address + 14] = w(-1);
-[address + 54] = w(-1);
-[address + 58] = w(-1);
-[address + 5c] = w(-1);
-[address + 60] = w(-1);
-[address + 64] = w(-1);
-[address + 68] = w(-1);
-[address + 6c] = w(-1);
-[address + bc] = w(-1);
-[address + dc] = w(-1);
-[address + e4] = w(-1);
+[temp + 08] = w(-1);
+[temp + 14] = w(-1);
+[temp + 54] = w(-1);
+[temp + 58] = w(-1);
+[temp + 5c] = w(-1);
+[temp + 60] = w(-1);
+[temp + 64] = w(-1);
+[temp + 68] = w(-1);
+[temp + 6c] = w(-1);
+[temp + bc] = w(-1);
+[temp + dc] = w(-1);
+[temp + e4] = w(-1);
 
-[address + 50] = w(FF);
-[address + 8c] = w(FF);
+[temp + 50] = w(FF);
+[temp + 8c] = w(FF);
 
 
 
 V1 = 1 << attacker_id;
-[address + 30] = w(V1); // attacker mask
+[temp + 30] = w(V1); // attacker mask
 
 
 
 S0 = 0;
 loopa1a3c:	; 800A1A3C
-    [address + d0 + S0] = b(FF);
+    [temp + d0 + S0] = b(FF);
     S0 = S0 + 1;
     V0 = S0 < 8;
 800A1A58	bne    v0, zero, loopa1a3c [$800a1a3c]
@@ -186,17 +182,17 @@ A0 = attack_mask;
 system_count_active_bits;
 if ((V0 == 0 && attacker_id < 3 ) || V0 >= 2)
 {
-    V0 = w[address + 90];
+    V0 = w[temp + 90];
     V0 = V0 | 00000200;
-    [address + 90] = w(V0);
+    [temp + 90] = w(V0);
 }
 
 
 
 // set default target type for action type < 20 from kernel
-if (w[address + c] < 20)
+if (w[temp + c] < 20)
 {
-    [address + 50] = w(bu[800707c4 + A0 * 8 + 1]);
+    [temp + 50] = w(bu[800707c4 + A0 * 8 + 1]);
 }
 
 
@@ -210,11 +206,11 @@ if (S1 != -1)
         funca8e54;
     }
 
-    [address + f0] = w(S1 & ff);
+    [temp + f0] = w(S1 & ff);
 
-    V0 = w[address + 90];
+    V0 = w[temp + 90];
     V0 = V0 | 00400000;
-    [address + 90] = w(V0);
+    [temp + 90] = w(V0);
 }
 
 
@@ -225,7 +221,7 @@ if (attacker_id < 3)
     A0 = attacker_id;
     funca2bf4; // search current attack id.
 
-    V0 = w[address + 90];
+    V0 = w[temp + 90];
     V0 = V0 & 00400000;
     if (V0 == 0)
     {
@@ -233,20 +229,20 @@ if (attacker_id < 3)
 
         loopa1b90:	; 800A1B90
             V1 = bu[8009d84c + attacker_id * 440 + 4c + S0 * 6];
-            action_type = w[address + c];
+            action_type = w[temp + c];
 
             if (V1 == action_type)
             {
                 if (bu[800f692c + 0] >= 5) // if priority 5 or 6
                 {
-                    [address + f0] = w(bu[8009d84c + attacker_id * 440 + 4c + S0 * 6 + 5]);
+                    [temp + f0] = w(bu[8009d84c + attacker_id * 440 + 4c + S0 * 6 + 5]);
                 }
 
                 switch (action_type)
                 {
                     case 0x5 0x6 0x9 0xA 0xB 0x11: // only this actions use megaall
                     {
-                        if( w[address + 90] & 00000200 ) // if there no target for player of more than one
+                        if( w[temp + 90] & 00000200 ) // if there no target for player of more than one
                         {
                             V0 = bu[8009d84c + attacker_id * 440 + 4c + S0 * 6 + 4];
                             if( V0 != 0 )
@@ -258,15 +254,15 @@ if (attacker_id < 3)
                                 A1 = attacker_id;
                                 A2 = 15;
                                 A3 = 1;
-                                battle_add_to_800f4308;
+                                battle_add_to_800f4308();
                             }
                             else
                             {
-                                [address + 90] = w(w[address + 90] | 00100000);
+                                [temp + 90] = w(w[temp + 90] | 00100000);
                             }
                         }
 
-                        [address + 50] = w(bu[8009d84c + attacker_id * 440 + 4c + S0 * 6 + 2]);
+                        [temp + 50] = w(bu[8009d84c + attacker_id * 440 + 4c + S0 * 6 + 2]);
                     }
                 }
 
@@ -297,17 +293,17 @@ if (A0 & 80)
 
 
 
-[address + 28] = w(w[address + c]);
+[temp + 28] = w(w[temp + c]);
 
 
 // replace 15 with 2, 16 with 3, 17 with 4
 A0 = 0;
 loopa1d04:	; 800A1D04
-    V1 = w[address + 28];
+    V1 = w[temp + 28];
     V0 = w[800a0108 + A0];
     if (V1 == V0)
     {
-        [address + 28] = w(w[800a010c + A0]);
+        [temp + 28] = w(w[800a010c + A0]);
     }
 
     A0 = A0 + 8;
@@ -316,11 +312,11 @@ loopa1d04:	; 800A1D04
 
 
 
-V1 = w[address + c];
+V1 = w[temp + c];
 if (V1 < 20) // if action type less than 20
 {
-    [address + 60] = w(hu[800707c4 + V1 * 8 + 4]);
-    [address + 64] = w(hu[800707c4 + V1 * 8 + 6]);
+    [temp + 60] = w(hu[800707c4 + V1 * 8 + 4]);
+    [temp + 64] = w(hu[800707c4 + V1 * 8 + 6]);
 }
 
 
@@ -329,7 +325,7 @@ if (attacker_id >= 4)
 {
     V0 = attacker_id - 4;
     V0 = h[80163658 + V0 * 10];
-    [address + 8] = w(V0); // enemy index
+    [temp + 8] = w(V0); // enemy index
 }
 
 
@@ -354,7 +350,7 @@ if (V0 & 04)
 
 
 
-V0 = w[address + c];
+V0 = w[temp + c];
 
 // after each function
         // if error - we finish
@@ -584,7 +580,7 @@ funca304c;
 // for players
 if( attacker_id < 3 )
 {
-    action_id = w[address + c];
+    action_id = w[temp + c];
     if( action_id != c )
     {
         if( action_id < 20 )
@@ -593,21 +589,21 @@ if( attacker_id < 3 )
             A2 = 0;
 
             loopa1f18:	; 800A1F18
-                if( bu[attack_stack_offset] != 3 )
+                if( bu[attack_data] != 3 )
                 {
                     if( ( b[800f6b84 + A2 * 8 + 2] != attacker_id ) || ( bu[800f6b85 + A2 * 8] != A3 ) || ( action_id < 15 ) )
                     {
                         [800f6b84 + A2 * 8 + 1] = b(A3); // order
                         [800f6b84 + A2 * 8 + 2] = b(attacker_id);
                         [800f6b84 + A2 * 8 + 3] = b(action_id);
-                        [800f6b84 + A2 * 8 + 4] = b(w[address + 10]); // attack index
-                        [800f6b84 + A2 * 8 + 6] = b(w[address + 94]); // attack mask
-                        [800f7dda + A2 * 2] = h(w[address + f0]);
+                        [800f6b84 + A2 * 8 + 4] = b(w[temp + 10]); // attack index
+                        [800f6b84 + A2 * 8 + 6] = b(w[temp + 94]); // attack mask
+                        [800f7dda + A2 * 2] = h(w[temp + f0]);
 
-                        V0 = w[address + f8] << 8;
+                        V0 = w[temp + f8] << 8;
                         if( V0 != 0 )
                         {
-                            [800f7dda + A2 * 2] = h(w[address + f0] | V0);
+                            [800f7dda + A2 * 2] = h(w[temp + f0] | V0);
                         }
 
                         A2 = A2 + 1;
@@ -628,22 +624,22 @@ if( attacker_id < 3 )
 
 
 
-if( w[address + 90] & 0800 ) // add cut execution to priority queue
+if( w[temp + 90] & 0800 ) // add cut execution to priority queue
 {
     A0 = attacker_id;
     A1 = 3;
     A2 = 1;
     A3 = 0;
-    A4 = w[address + 94];
+    A4 = w[temp + 94];
     battle_add_action_to_battle_queue;
 }
 
 
 
-if( w[address + 28] == 6 ) // action id == sense
+if( w[temp + 28] == 6 ) // action id == sense
 {
-    [address + 78] = w(0);
-    [address + a8] = w(0);
+    [temp + 78] = w(0);
+    [temp + a8] = w(0);
 }
 
 
@@ -651,15 +647,15 @@ if( w[address + 28] == 6 ) // action id == sense
 S0 = 0;
 S3 = 1 << attacker_id;
 S1 = 0;
-[800f83d2] = h(w[address + 6c]);
-[800f83a4] = b(w[address + c]);
-[800f83a5] = b(w[address + 10]);
-[800f83ce] = h(w[address + 2c]);
-[800f83c8] = h(w[address + 44]);
+[800f83d2] = h(w[temp + 6c]);
+[800f83a4] = b(w[temp + c]);
+[800f83a5] = b(w[temp + 10]);
+[800f83ce] = h(w[temp + 2c]);
+[800f83c8] = h(w[temp + 44]);
 
-mask1 = w[address + 78] & (hu[800f7de0] NOR hu[800f7dcc]);
-mask2 = w[address + a8] & hu[800f7de0];
-mask3 = w[address + 7c] & hu[800f7de0];
+mask1 = w[temp + 78] & (hu[800f7de0] NOR hu[800f7dcc]);
+mask2 = w[temp + a8] & hu[800f7de0];
+mask3 = w[temp + 7c] & hu[800f7de0];
 
 loopa2110:	; 800A2110
     if( ( mask3 >> S0 ) & 1 )
@@ -754,7 +750,7 @@ if( unit_id != -1 )
         for( ; i < 40; ++i )
         {
             // priority == 6 and attacker id != unit id
-            if( ( bu[800f6934 + i * 8 + 0] == 6 ) && ( b[800f6934 + i * 8 + 2] != unit_id ) )
+            if( ( bu[800f692c + 8 + i * 8 + 0] == 6 ) && ( b[800f692c + 8 + i * 8 + 2] != unit_id ) )
             {
                 break;
             }
@@ -861,30 +857,30 @@ La241c:	; 800A241C
                         }
                     }
 
-                    A3 = 0;
-                    if( b[800f692f] == -1 ) // if action type not defined
+                    if( b[800f692c + 3] == -1 ) // if action type not defined
                     {
+                        A3 = 0;
                         A0 = 0;
 
                         if( unit_id >= 4 )
                         {
-                            A1 = w[800f83e0 + unit_id * 68];
-                            A2 = w[800f5bf0 + unit_id * 44];
-                            if( A1 & 00000080 ) // if in silence
+                            A2 = w[800f5bb8 + unit_id * 44 + 38];
+
+                            if( w[800f83e0 + unit_id * 68 + 0] & 00000080 ) // if Silence
                             {
                                 A3 = (hu[A2 + 9a] & 0001) < 1;
                             }
-                            if( A1 & 00800000 ) // if in berserk
+                            if( w[800f83e0 + unit_id * 68 + 0] & 00800000 ) // if Berserk
                             {
-                                A3 = 0001;
+                                A3 = 1;
                             }
                             if( A3 != 0 )
                             {
-                                A0 = hu[A2 + 0094];
+                                A0 = hu[A2 + 94];
                             }
                         }
 
-                        if( w[800f83e0 + unit_id * 68] & 00400000 ) // if unit manipulated
+                        if( w[800f83e0 + unit_id * 68 + 0] & 00400000 ) // if Manipulated
                         {
                             800A2570	j      La27ec [$800a27ec]
                         }
@@ -902,10 +898,10 @@ La241c:	; 800A241C
                         }
                         else
                         {
-                            if( w[800f83e4 + unit_id * 68] & 00000010 )
+                            if( w[800f83e0 + unit_id * 68 + 0] & 00000010 ) // if Sadness
                             {
                                 A0 = 1;
-                                800A26CC	jal    funca32c0 [$800a32c0]
+                                funca32c0();
 
                                 A0 = unit_id;
                                 A1 = 1;
@@ -923,7 +919,7 @@ La241c:	; 800A241C
                     }
                     else
                     {
-                        if( hu[800f83d0] & 0008 )
+                        if( hu[800f83a4 + 2c] & 0008 )
                         {
                             for( int i = 0; i < 3; ++i )
                             {
@@ -939,7 +935,7 @@ La241c:	; 800A241C
                         {
                             if( bu[800f692c + 0] >= 5 ) // if priority 5 or 6
                             {
-                                if( w[800f83e0 + unit_id * 68] & 00800000 ) // if in berserk status
+                                if( w[800f83e0 + unit_id * 68 + 0] & 00800000 ) // if Berserk
                                 {
                                     A0 = unit_id;
                                     battle_get_berserk_toad_attack_type_id();
@@ -1042,10 +1038,10 @@ for( int i = 0; i < 3; ++i )
 
 ////////////////////////////////
 // funca2974
-address = w[80063014];
+temp = w[80063014];
 [SP + 10] = h(0);
-enemy_struct_id = w[address + 20c];
-target_entity_id = w[address + 208];
+enemy_struct_id = w[temp + 20c];
+target_entity_id = w[temp + 208];
 
 S0 = 31; // "Nothing to steal."
 
@@ -1063,8 +1059,8 @@ if( enemy_struct_id != -1 )
     {
         if( ( bu[800f5bb8 + target_entity_id * 44 + 29] & 1 ) == 0 )
         {
-            lv_diff = w[address + 4] - w[address + 254] + 28; // attacker level - target level + 28
-            A1 = w[address + 0];
+            lv_diff = w[temp + 4] - w[temp + 254] + 28; // attacker level - target level + 28
+            A1 = w[temp + 0];
 
             if( bu[800f5bc5 + A1 * 44] == 4 )
             {
@@ -1089,10 +1085,10 @@ if( enemy_struct_id != -1 )
             else
             {
                 A0 = 0;
-                A1 = w[address + 0];
+                A1 = w[temp + 0];
                 A2 = 3;
                 A3 = V0;
-                battle_add_to_800f4308;
+                battle_add_to_800f4308();
 
                 S0 = 2f; // "Stole EBFFFF!"
                 [800f5bb8 + target_entity_id * 44 + 29] = b(bu[800f5bb8 + target_entity_id * 44 + 29] | 1);
@@ -1101,7 +1097,7 @@ if( enemy_struct_id != -1 )
     }
 }
 
-A0 = w[address + 0]; // attacker id
+A0 = w[temp + 0]; // attacker id
 A1 = S0;
 A2 = 1;
 A3 = SP + 10;
@@ -1112,36 +1108,36 @@ battle_add_string_to_display; // show string
 
 ////////////////////////////////
 // funca2b28
-address = w[80063014];
+temp = w[80063014];
 
 // mp absorb
 if (A0 & 0001)
 {
-    [address + 90] = w(w[address + 90] | 00000080);
+    [temp + 90] = w(w[temp + 90] | 00000080);
 }
 
 // hp absorb
 if (A0 & 0002)
 {
-    [address + 90] = w(w[address + 90] | 00000040);
+    [temp + 90] = w(w[temp + 90] | 00000040);
 }
 
 // steal as well
 if (A0 & 0008)
 {
-    [address + 90] = w(w[address + 90] | 00000004);
+    [temp + 90] = w(w[temp + 90] | 00000004);
 }
 
 // add cut
 if (A0 & 0010)
 {
-    [address + 90] = w(w[address + 90] | 00000800);
+    [temp + 90] = w(w[temp + 90] | 00000800);
 }
 
 if (A0 & 00e0)
 {
     V0 = A0 >> 5;
-    [address + e8] = w(V0 * a);
+    [temp + e8] = w(V0 * a);
 }
 ////////////////////////////////
 
@@ -1150,8 +1146,8 @@ if (A0 & 00e0)
 ////////////////////////////////
 // funca2bf4
 // A0 - attacker_id (unit id)
-address = w[80063014];
-V1 = w[address + c];
+temp = w[80063014];
+V1 = w[temp + c];
 
 T0 = 0; // skip records
 A1 = 0; // number of records
@@ -1179,7 +1175,7 @@ if (A1 == 0)
     return;
 }
 
-attack_index = w[address + 10];
+attack_index = w[temp + 10];
 
 V1 = 0;
 loopa2c94:	; 800A2C94
@@ -1187,7 +1183,7 @@ loopa2c94:	; 800A2C94
 
     if (V0 == attack_index)
     {
-        [address + 14] = w(A0);
+        [temp + 14] = w(A0);
         return;
     }
 
@@ -1228,11 +1224,11 @@ SP = SP + 0028;
 ////////////////////////////////
 // funca2d0c
 
-address = w[80063014];
-V1 = w[address + 208];
+temp = w[80063014];
+V1 = w[temp + 208];
 if (V1 < 3)
 {
-    V0 = w[address + cc];
+    V0 = w[temp + cc];
     V0 = bu[800a01a8 + V0]; // 05 06 07 12 0F 00 03 A6
 }
 else
@@ -1325,12 +1321,15 @@ AT = AT + V1;
 [AT + 36bc] = b(V0);
 
 La2e74:	; 800A2E74
-A0 = 0;
+
 V0 = w[80063014];
-A3 = hu[SP + 0010];
-A1 = w[V0 + 0000];
-800A2E88	jal    battle_add_to_800f4308 [$800a7254]
-A2 = 0003;
+
+A0 = 0;
+A1 = w[V0];
+A2 = 3;
+A3 = hu[SP + 10];
+battle_add_to_800f4308();
+
 A1 = 0056;
 V0 = w[80063014];
 A2 = 0001;
@@ -1372,12 +1371,9 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // funca2f24
-V0 = w[800f3950];
-V1 = w[800f3954];
-[800f3944] = w(V0);
-[800f3948] = w(V1);
-800A2F44	jr     ra 
-800A2F48	nop
+
+[800f3944] = w(w[800f3950]);
+[800f3948] = w(w[800f3954]);
 ////////////////////////////////
 
 
@@ -1567,44 +1563,43 @@ La32b8:	; 800A32B8
 
 
 ////////////////////////////////
-// funca32c0
-V0 = hu[800f7daa];
-800A32C8	addiu  sp, sp, $ffe8 (=-$18)
-800A32CC	beq    v0, zero, La3344 [$800a3344]
-[SP + 0010] = w(RA);
-800A32D4	beq    a0, zero, La3320 [$800a3320]
-V0 = 0006;
-V1 = hu[800f7dba];
-800A32E4	nop
-800A32E8	bne    v1, v0, La3344 [$800a3344]
-800A32EC	nop
-V1 = bu[800f6b9a];
-V0 = bu[800f6ba1];
-800A3300	nop
-800A3304	beq    v1, v0, La3310 [$800a3310]
-A3 = 0001;
-A3 = 0003;
+// funca32c0()
 
-La3310:	; 800A3310
-A0 = 0;
-A1 = 0;
-800A3318	j      La333c [$800a333c]
-A2 = 0007;
+if( hu[800f7daa] != 0 ) // atb type
+{
+    if( A0 != 0 )
+    {
+        if( hu[800f7dba] == 6 ) // currently executed priority
+        {
+            if( bu[800f6b9a] != bu[800f6ba1] )
+            {
+                A3 = 3;
+            }
+            else
+            {
+                A3 = 1;
+            }
+            A0 = 0;
+            A1 = 0;
+            A2 = 7;
+            battle_add_to_800f4308();
+        }
+    }
+    else
+    {
+        A0 = -1;
+        funca37f8();
 
-La3320:	; 800A3320
-800A3320	jal    funca37f8 [$800a37f8]
-800A3324	addiu  a0, zero, $ffff (=-$1)
-800A3328	beq    v0, zero, La3344 [$800a3344]
-A0 = 0;
-A1 = 0;
-A2 = 0007;
-A3 = 0;
-
-La333c:	; 800A333C
-800A333C	jal    battle_add_to_800f4308 [$800a7254]
-800A3340	nop
-
-La3344:	; 800A3344
+        if( V0 != 0 )
+        {
+            A0 = 0;
+            A1 = 0;
+            A2 = 7;
+            A3 = 0;
+            battle_add_to_800f4308();
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -1932,20 +1927,18 @@ SP = SP + 0030;
 
 
 ////////////////////////////////
-// funca37f8
-800A37F8	bgez   a0, La3810 [$800a3810]
-V0 = 0;
-V0 = w[800f39e0];
-800A3808	j      La3820 [$800a3820]
-800A380C	nop
+// funca37f8()
 
-La3810:	; 800A3810
-[800f39e0] = w(A0);
-[800f39e4] = w(0);
-
-La3820:	; 800A3820
-800A3820	jr     ra 
-800A3824	nop
+if( A0 < 0 )
+{
+    return w[800f39e0];
+}
+else
+{
+    [800f39e0] = w(A0);
+    [800f39e4] = w(0);
+    return 0;
+}
 ////////////////////////////////
 
 
@@ -2240,13 +2233,16 @@ S0 = A0;
 La3ca0:	; 800A3CA0
 800A3CA0	bne    s0, v0, La3cc8 [$800a3cc8]
 V0 = S0 << 08;
-800A3CA8	jal    battle_enable_limit_to_player_with_speed [$800a4e80]
 A0 = S1;
-A0 = 0001;
+battle_enable_limit_to_player_with_speed();
+
+
+A0 = 1;
 A1 = S1;
-A2 = 0001;
-800A3CBC	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 1;
 A3 = 0;
+battle_add_to_800f4308();
+
 V0 = S0 << 08;
 
 La3cc8:	; 800A3CC8
@@ -2872,18 +2868,18 @@ S0 = 0;
 [800f39ec] = w(0);
 V0 = V0 | 0002;
 [V1 + 0000] = h(V0);
-A0 = 0;
 
 loopa4898:	; 800A4898
+A0 = 0;
 A1 = S0;
-A2 = 0004;
+A2 = 4;
 A3 = 0;
 battle_add_to_800f4308();
 
 S0 = S0 + 0001;
 V0 = S0 < 0003;
 800A48B0	bne    v0, zero, loopa4898 [$800a4898]
-A0 = 0;
+
 S0 = 0;
 
 loopa48bc:	; 800A48BC
@@ -2939,17 +2935,18 @@ S0 = 0;
 [800f39ec] = w(0);
 V0 = V0 | 0002;
 [V1 + 0000] = h(V0);
-A0 = 0;
 
 loopa498c:	; 800A498C
+A0 = 0;
 A1 = S0;
-A2 = 0004;
-800A4994	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 4;
 A3 = 0;
+battle_add_to_800f4308();
+
 S0 = S0 + 0001;
 V0 = S0 < 0003;
 800A49A4	bne    v0, zero, loopa498c [$800a498c]
-A0 = 0;
+
 S0 = 0;
 
 loopa49b0:	; 800A49B0
@@ -2983,17 +2980,18 @@ V0 = hu[V1 + 0000];
 S0 = 0;
 V0 = V0 & fffd;
 [V1 + 0000] = h(V0);
-A0 = 0;
 
 loopa4a28:	; 800A4A28
+A0 = 0;
 A1 = S0;
-A2 = 0006;
-800A4A30	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 6;
 A3 = 0;
+battle_add_to_800f4308();
+
 S0 = S0 + 0001;
 V0 = S0 < 0003;
 800A4A40	bne    v0, zero, loopa4a28 [$800a4a28]
-A0 = 0;
+
 V0 = w[800f39ec];
 800A4A50	nop
 V0 = V0 & 0002;
@@ -3725,31 +3723,15 @@ SP = SP + 0030;
 
 
 ////////////////////////////////
-// funca555c
-V1 = A0 << 04;
-V1 = V1 + A0;
-V1 = V1 << 06;
-800A5568	lui    v0, $800a
-800A556C	addiu  v0, v0, $d954 (=-$26ac)
-V1 = V1 + V0;
-V0 = A1 << 03;
-V1 = V1 + V0;
-A0 = 0002;
-V0 = V0 - A1;
-V0 = V0 << 02;
-[V1 + 0006] = b(A0);
-800A558C	lui    at, $8007
-AT = AT + V0;
-A0 = bu[AT + 08d0];
-800A5598	nop
-[V1 + 0005] = b(A0);
-800A55A0	lui    at, $8007
-AT = AT + V0;
-V0 = hu[AT + 08c8];
-800A55AC	addiu  a1, a1, $ffb8 (=-$48)
-[V1 + 0000] = b(A1);
-800A55B4	jr     ra 
-[V1 + 0001] = b(V0);
+// funca555c()
+
+unit_id = A0;
+attack_id = A1;
+
+[8009d84c + unit_id * 440 + 108 + attack_id * 8 + 0] = b(attack_id - 48);
+[8009d84c + unit_id * 440 + 108 + attack_id * 8 + 1] = b(hu[800708c8 + attack_id * 1с]);
+[8009d84c + unit_id * 440 + 108 + attack_id * 8 + 5] = b(bu[800708d0 + attack_id * 1с]);
+[8009d84c + unit_id * 440 + 108 + attack_id * 8 + 6] = b(2);
 ////////////////////////////////
 
 
@@ -4607,41 +4589,24 @@ if( unit_id < 3 )
 
 
 ////////////////////////////////
-// funca661c
+// funca661c()
 
-S0 = A0;
+unit_id = A0;
 
 funca4d88();
 
-800A6630	lui    a1, $800f
-A1 = A1 + 7dac;
-A0 = hu[A1 + 0000];
-800A663C	nop
-V0 = A0 >> S0;
-V0 = V0 & 0001;
-800A6648	beq    v0, zero, La6690 [$800a6690]
-V0 = S0 << 04;
-V0 = V0 + S0;
-V0 = V0 << 02;
-800A6658	lui    at, $800f
-AT = AT + V0;
-V1 = hu[AT + 5bbc];
-V0 = ffff;
-800A6668	bne    v1, v0, La6680 [$800a6680]
-V0 = 0001;
-A0 = S0;
-funca4d2c();
-
-800A6678	j      La6690 [$800a6690]
-800A667C	nop
-
-La6680:	; 800A6680
-V0 = V0 << S0;
-V0 = 0 NOR V0;
-V0 = A0 & V0;
-[A1 + 0000] = h(V0);
-
-La6690:	; 800A6690
+if( ( hu[800f7dac] >> unit_id ) & 1 )
+{
+    if( h[800f5bb8 + unit_id * 44 + 4] == -1 ) // time value
+    {
+        A0 = unit_id;
+        funca4d2c();
+    }
+    else
+    {
+        [800f7dac] = h(hu[800f7dac] & (0 NOR (1 << unit_id)));
+    }
+}
 ////////////////////////////////
 
 
@@ -4699,7 +4664,7 @@ funca4d88();
 // funca6798
 
 A0 = A1;
-800A67A0	jal    funca37f8 [$800a37f8]
+funca37f8();
 ////////////////////////////////
 
 
@@ -4847,13 +4812,16 @@ AT = AT + V1;
 
 
 ////////////////////////////////
-// funca6a70
+// funca6a70()
 
-S0 = A0;
+unit_id = A0;
+attack_id = A1;
 
-800A6A7C	jal    funca555c [$800a555c]
+A0 = unit_id;
+A1 = attack_id;
+funca555c();
 
-[800f5bc6 + S0 * 44] = b(bu[800f5bc6 + S0 * 44] | 09);
+[800f5bb8 + unit_id * 44 + e] = b(bu[800f5bb8 + unit_id * 44 + e] | 09);
 ////////////////////////////////
 
 
@@ -4936,31 +4904,17 @@ A1 = SP + 0010;
 
 ////////////////////////////////
 // funca6c5c
-800A6C5C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
-A0 = 0002;
+
+A0 = 2;
 A1 = S0;
-A2 = 0014;
-[SP + 0018] = w(RA);
-800A6C80	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 14;
 A3 = S1;
-V0 = S0 << 01;
-V0 = V0 + S0;
-V0 = V0 << 02;
-V0 = V0 + S0;
-V0 = V0 << 03;
-800A6C9C	lui    at, $8010
-AT = AT + V0;
-[AT + 8432] = h(S1);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800A6CB8	jr     ra 
-800A6CBC	nop
+battle_add_to_800f4308();
+
+[800f8432 + S0 * 68] = h(S1);
 ////////////////////////////////
 
 
@@ -5080,33 +5034,21 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funca6e0c
-800A6E0C	addiu  sp, sp, $ffe8 (=-$18)
-A1 = A0;
-V0 = A1 < 0003;
-800A6E18	beq    v0, zero, La6e5c [$800a6e5c]
-[SP + 0010] = w(RA);
-V0 = A1 << 01;
-V0 = V0 + A1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-V0 = V0 << 02;
-A0 = 0;
-A2 = 0001;
-800A6E3C	lui    at, $800f
-AT = AT + V0;
-[AT + 5e6a] = h(0);
-800A6E48	lui    at, $800f
-AT = AT + V0;
-[AT + 5e68] = h(0);
-800A6E54	jal    battle_add_to_800f4308 [$800a7254]
-A3 = 0;
+// battle_hud_reset_limit()
 
-La6e5c:	; 800A6E5C
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A6E64	jr     ra 
-800A6E68	nop
+unit_id = A0;
+
+if( unit_id < 3 )
+{
+    [800f5e60 + unit_id * 34 + 8] = h(0);
+    [800f5e60 + unit_id * 34 + a] = h(0);
+
+    A0 = 0;
+    A1 = unit_id;
+    A2 = 1; // reset limit to player
+    A3 = 0;
+    battle_add_to_800f4308();
+}
 ////////////////////////////////
 
 
@@ -5114,11 +5056,13 @@ SP = SP + 0018;
 ////////////////////////////////
 // funca6e6c()
 
-V0 = A0;
-A3 = A1;
+unit_id = A0;
+attack_id = A1;
+
 A0 = 0;
-A1 = V0;
+A1 = unit_id;
 A2 = d;
+A3 = attack_id;
 battle_add_to_800f4308();
 ////////////////////////////////
 
@@ -5261,18 +5205,13 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // funca7060
-800A7060	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 V0 = A0;
 A3 = A1;
 A0 = 0;
 A1 = V0;
-800A7078	jal    battle_add_to_800f4308 [$800a7254]
-A2 = 000c;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A7088	jr     ra 
-800A708C	nop
+A2 = c;
+battle_add_to_800f4308();
 ////////////////////////////////
 
 
@@ -5385,7 +5324,7 @@ for( int i = 0; i < 3; ++i )
 {
     for( int j = 0; j < 80; ++j )
     {
-        [800f4308 + i * 200 + j * 4] = b(ff);
+        [800f4308 + i * 200 + j * 4] = b(-1);
     }
 
     [800f4908 + i * 4] = w(0);
@@ -5419,78 +5358,85 @@ if( b[800f4308 + A0 * 200 + slot_id * 4 + 0] == -1 )
 
 id = A0;
 
-S1 = w[800f4908 + id * 4];
-S0 = 800f4308 + id * 200 + S1 * 4;
+slot_id = w[800f4908 + id * 4];
 
-if( bu[S0 + 0] != ff )
+while( b[800f4308 + id * 200 + slot_id * 4 + 0] != -1 )
 {
-    loopa7334:	; 800A7334
-        V0 = bu[S0 + 1];
-        V1 = w[800e7b1c + id * 4];
-        /*
-        647A0E80
-            3C650A80 0
-            B0650A80 1
-            A4660A80 2
-            20670A80 3
-            90650A80 4
-            48670A80 5
-            1C660A80 6
-            98670A80 7
-            B8670A80 8
-            34680A80 9
-            58680A80 a
-            FC680A80 b
-            3C6A0A80 c
-            706A0A80 d
-            C46A0A80 e funca6ac4()
-            1C6B0A80 f funca6b1c()
-            886B0A80 10
-        A87A0E80 - FC6B0A80046C0A805C6C0A80
-        B47A0E80
-            C06C0A80 0
-            C06C0A80 1
-            106D0A80 2
-            3C6D0A80 3
-            C06C0A80 4
-            C06C0A80 5
-            886D0A80 6
-            C06C0A80 7
-            C06C0A80 8
-            C06C0A80 9
-            C06C0A80 a
-            C06C0A80 b
-            FC6D0A80 c
-            FC6D0A80 d
-            FC6D0A80 e
-            FC6D0A80 f
-            046E0A80 10
-            0C6E0A80 11
-            6C6E0A80 12
-            9C6E0A80 13
-            34700A80 14
-            60700A80 15
-            90700A80 16
-            C4700A80 17 funca70c4()
-            30710A80 18
-            E0710A80 19
-        */
-        V0 = w[V1 + V0 * 4];
+    A0 = bu[800f4308 + id * 200 + slot_id * 4 + 0];
+    V0 = bu[800f4308 + id * 200 + slot_id * 4 + 1];
+    A1 = hu[800f4308 + id * 200 + slot_id * 4 + 2];
 
-        A0 = bu[S0 + 0];
-        A1 = hu[S0 + 2];
-        800A7350	jalr   v0 ra
+    if( id == 0 )
+    {
+        switch( V0 )
+        {
+            // 3C650A80 0
+            case 1: battle_enable_limit_to_player_resetting_bar(); break;
+            // A4660A80 2
+            // 20670A80 3
+            // 90650A80 4
+            // 48670A80 5
+            case 6: funca661c(); break;
+            // 98670A80 7
+            // B8670A80 8
+            // 34680A80 9
+            // 58680A80 a
+            // FC680A80 b
+            // 3C6A0A80 c
+            case d: funca6a70(); break;
+            // C46A0A80 e funca6ac4()
+            // 1C6B0A80 f funca6b1c()
+            // 886B0A80 10
+        }
+    )
+    else if( id == 1 )
+    {
+        switch( V0 )
+        {
+            // FC6B0A80 0
+            // 046C0A80 1
+            // 5C6C0A80 2
+        }
+    }
+    else if( id == 2 )
+    {
+        switch( V0 )
+        {
+            // C06C0A80 0
+            // C06C0A80 1
+            // 106D0A80 2
+            // 3C6D0A80 3
+            // C06C0A80 4
+            // C06C0A80 5
+            // 886D0A80 6
+            // C06C0A80 7
+            // C06C0A80 8
+            // C06C0A80 9
+            // C06C0A80 a
+            // C06C0A80 b
+            // FC6D0A80 c
+            // FC6D0A80 d
+            // FC6D0A80 e
+            // FC6D0A80 f
+            // 046E0A80 10
+            case 11: battle_hud_reset_limit(); break;
+            case 12: funca6e6c(); break; // call id 0, func d
+            // 9C6E0A80 13
+            // 34700A80 14
+            // 60700A80 15
+            // 90700A80 16
+            // C4700A80 17 funca70c4()
+            // 30710A80 18
+            // E0710A80 19
+        }
+    }
 
-        [S0] = b(ff);
+    [800f4308 + id * 200 + slot_id * 4 + 0] = b(-1); // remove
 
-        A0 = S1;
-        battle_increment_around_128();
-
-        S1 = V0;
-        S0 = 800f4308 + id * 200 + S1 * 4;
-        [800f4908 + id * 4] = w(S1);
-        A0 = bu[S0];
-    800A7390	bne    a0, ff, loopa7334 [$800a7334]
+    A0 = slot_id;
+    battle_increment_around_128();
+    slot_id = V0;
+    [800f4908 + id * 4] = w(slot_id);
 }
 ////////////////////////////////
 
@@ -5498,38 +5444,38 @@ if( bu[S0 + 0] != ff )
 
 ////////////////////////////////
 // action_type_00
-address = w[80063014];
-[address + 2c] = w(w[address + 10]);
+temp = w[80063014];
+[temp + 2c] = w(w[temp + 10]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // action_type_01
-address = w[80063014];
-[address + 2c] = w(w[address + 10] + 38);
+temp = w[80063014];
+[temp + 2c] = w(w[temp + 10] + 38);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // action_type_02
-address = w[80063014];
+temp = w[80063014];
 
-[address + 24] = w(w[address + 10]);
-[address + 2c] = w(w[address + 10]);
+[temp + 24] = w(w[temp + 10]);
+[temp + 2c] = w(w[temp + 10]);
 
-A0 = h[address + 0];
-A1 = h[address + 2c];
+A0 = h[temp + 0];
+A1 = h[temp + 2c];
 funca55f4;
 
-if (w[address + 18] & f)
+if (w[temp + 18] & f)
 {
-    [address + 20] = w(20);
+    [temp + 20] = w(20);
 }
 else
 {
-    [address + 20] = w(21);
+    [temp + 20] = w(21);
 }
 ////////////////////////////////
 
@@ -5688,8 +5634,8 @@ A0 = w[V0 + 0010];
 ////////////////////////////////
 // funca76ac()
 
-address = w[80063014];
-[address + 2c] = w(w[address + 10] + 48);
+temp = w[80063014];
+[temp + 2c] = w(w[temp + 10] + 48);
 ////////////////////////////////
 
 
@@ -5697,24 +5643,24 @@ address = w[80063014];
 ////////////////////////////////
 // action_type_04()
 
-address = w[80063014];
-[address + 20] = w(-1);
+temp = w[80063014];
+[temp + 20] = w(-1);
 
 funcb12dc;
 
 if (V0 != 0)
 {
-    V0 = w[address + 0];
+    V0 = w[temp + 0];
     if (w[800f83e0 + V0 * 68 + 4] & 00000040)
     {
-        [address + 20] = w(3);
+        [temp + 20] = w(3);
     }
     else
     {
-        [address + 20] = w(4);
+        [temp + 20] = w(4);
     }
 
-    V0 = w[address + 0];
+    V0 = w[temp + 0];
 
 
     [800f83e0 + V0 * 68 + 4] = w(w[800f83e0 + V0 * 68 + 4] ^ 00000040);
@@ -5731,31 +5677,33 @@ if (V0 != 0)
 
 ////////////////////////////////
 // action_type_06
-A0 = w[80063014];
-A1 = w[A0 + 0];
-V0 = A1 < 4;
-if( V0 == 0 )
+
+temp = w[80063014];
+unit_id = w[temp + 0];
+
+if( unit_id >= 4 )
 {
     A0 = 25;
     800A77B0	jal    func155a4 [$800155a4]
 }
 else
 {
-    V1 = w[A0 + 10];
-    [A0 + 2c] = w(V1);
+    V1 = w[temp + 10];
+    [temp + 2c] = w(V1);
     if( V1 < 60 )
     {
-        [A0 + 2c] = w(V1 + 80);
+        [temp + 2c] = w(V1 + 80);
 
-        [800f5e60 + A1 * 34 + 4] = b(bu[800f5e60 + A1 * 34 + 4] + 1);
-        [800f5e60 + A1 * 34 + 8] = h(0);
+        [800f5e60 + unit_id * 34 + 4] = b(bu[800f5e60 + unit_id * 34 + 4] + 1);
+        [800f5e60 + unit_id * 34 + 8] = h(0);
 
         if( ( hu[800f83a4 + 2c] & 0008 ) == 0 )
         {
             A0 = 2;
-            A2 = 11;
+            A1 = unit_id;
+            A2 = 11; // hud reset limit
             A3 = 0;
-            battle_add_to_800f4308;
+            battle_add_to_800f4308();
         }
     }
 }
@@ -5771,11 +5719,11 @@ else
 // 0000 3800 4800 6000 0001
 //      02   03   0D   14
 
-address = w[80063014];
-attack_index = w[address + 10];
+temp = w[80063014];
+attack_index = w[temp + 10];
 
 attack_id = hu[800f64ec + attack_index * 2];
-[address + 2c] = w(attack_id);
+[temp + 2c] = w(attack_id);
 
 [SP + 00] = h(h(800a0290 + 0));
 [SP + 02] = h(h(800a0290 + 2));
@@ -5791,11 +5739,11 @@ loopa78ec:	; 800A78EC
     V0 = hu[SP + 2 + A2 * 2];
     if (attack_id < V0)
     {
-        [address + 28] = w(bu[SP + 10 + A2]);
+        [temp + 28] = w(bu[SP + 10 + A2]);
 
         V1 = hu[SP + A2 * 2];
         V0 = attack_id - V1;
-        [address + 98] = w(V0); // attack id in group magic summon enemy skill or limit
+        [temp + 98] = w(V0); // attack id in group magic summon enemy skill or limit
         return;
     }
 
@@ -5846,11 +5794,11 @@ funcaf9c8;
 
 ////////////////////////////////
 // action_type_0B
-address = w[80063014];
+temp = w[80063014];
 // set target type to 0 (self)
-[address + 50] = w(0);
+[temp + 50] = w(0);
 // set target mask (self)
-[address + 18] = w(1 << w[address + 0]);
+[temp + 18] = w(1 << w[temp + 0]);
 ////////////////////////////////
 
 
@@ -5859,7 +5807,7 @@ address = w[80063014];
 // action_type_0C
 //
 // load attack data
-address = w[80063014];
+temp = w[80063014];
 
 
 
@@ -5869,22 +5817,22 @@ S4 = 0;
 
 
 // set MP cost by default
-[address + 38] = w(-1);
+[temp + 38] = w(-1);
 
 
 
-V1 = w[address + 28];
+V1 = w[temp + 28];
 if( V1 == 20 )
 {
-    A0 = w[address + 2c];
+    A0 = w[temp + 2c];
     battle_get_attack_index_by_attack_id;
-    [address + 98] = w(V0);
+    [temp + 98] = w(V0);
 
     S4 = 800f616c + V0 * 1c;
 }
 else
 {
-    A0 = w[address + 2C];
+    A0 = w[temp + 2C];
     if (A0 < 80)
     {
         S4 = 800708C4 + A0 * 1C;
@@ -5894,16 +5842,16 @@ else
             V1 = bu[800A0240 + A0];
             if (V1 != -1)
             {
-                [address + 20] = w(V1);
+                [temp + 20] = w(V1);
             }
 
-            [address + 14] = w(-1);
+            [temp + 14] = w(-1);
         }
     }
     else
     {
         // if player character
-        A0 = w[address + 0];
+        A0 = w[temp + 0];
         if (A0 < 3)
         {
             V1 = A0 << 04;
@@ -5976,24 +5924,24 @@ if( S4 == 0 )
 
 
 // we use magic 0x36 (there is only 0x35 magic in game)
-if( w[address + c] == 2 && w[address + 2c] == 36 )
+if( w[temp + c] == 2 && w[temp + 2c] == 36 )
 {
     [SP + 10] = w(1);
 }
 
 
 
-A1 = w[address + 14];
+A1 = w[temp + 14];
 if( A1 != -1 )
 {
-    V0 = w[address + 90];
+    V0 = w[temp + 90];
     V0 = V0 & 00400000;
     if (V0 == 0)
     {
-        V1 = w[address + 0];
+        V1 = w[temp + 0];
         S0 = 8009d84c + V1 * 440 + 108 + A1 * 8;
         V0 = bu[S0 + 1];
-        [address + 38] = w(V0);
+        [temp + 38] = w(V0);
 
         if (bu[S0 + 4] != 0 && bu[S0 + 3] != 0)
         {
@@ -6004,15 +5952,15 @@ if( A1 != -1 )
             funca8e54;
 
             A0 = 2;
-            A1 = w[address + 0];
+            A1 = w[temp + 0];
             A2 = 15;
             A3 = 6;
-            battle_add_to_800f4308;
+            battle_add_to_800f4308();
         }
         else
         {
-            A1 = address;
-            V1 = w[address + 28];
+            A1 = temp;
+            V1 = w[temp + 28];
             if (V1 == 3)
             {
                 A0 = bu[S0 + 2];
@@ -6021,13 +5969,16 @@ if( A1 != -1 )
                 V0 = 00ff;
                 800A7C94	beq    v1, v0, La7d5c [$800a7d5c]
                 800A7C98	addiu  v0, a0, $ffff (=-$1)
-                A0 = 0002;
                 [S0 + 0002] = b(V0);
+
                 V0 = w[80063014];
-                A2 = 0015;
-                A1 = w[V0 + 0000];
-                800A7CB4	jal    battle_add_to_800f4308 [$800a7254]
-                A3 = 0004;
+
+                A0 = 2;
+                A1 = w[V0];
+                A2 = 15;
+                A3 = 4;
+                battle_add_to_800f4308();
+
                 800A7CBC	j      La7d5c [$800a7d5c]
                 800A7CC0	nop
 
@@ -6053,20 +6004,22 @@ if( A1 != -1 )
                 V0 = 00ff;
                 800A7CF8	beq    v1, v0, La7d5c [$800a7d5c]
                 800A7CFC	addiu  v0, a0, $ffff (=-$1)
-                A0 = 0002;
                 [S0 + 0002] = b(V0);
                 V0 = w[80063014];
-                A2 = 0015;
-                A1 = w[V0 + 0000];
-                800A7D18	jal    battle_add_to_800f4308 [$800a7254]
-                A3 = 0002;
+
+                A0 = 2;
+                A1 = w[V0];
+                A2 = 15;
+                A3 = 2;
+                battle_add_to_800f4308();
+
                 800A7D20	j      La7d5c [$800a7d5c]
                 800A7D24	nop
 
                 La7d40:	; 800A7D40
                 if( bu[S4 + c] & 08 )
                 {
-                    [address + 90] = w(A2 | 00100000);
+                    [temp + 90] = w(A2 | 00100000);
                 }
             }
         }
@@ -6101,16 +6054,16 @@ T0 = w[SP + 10];
 
 if (T0 != 0)
 {
-    [address + 20] = w(34);
+    [temp + 20] = w(34);
 }
 else
 {
-    V0 = w[address + 0];
+    V0 = w[temp + 0];
     if (V0 >= 4)
     {
         A1 = 0;
-        V0 = w[address + 8];
-        A3 = w[address + 2c];
+        V0 = w[temp + 8];
+        A3 = w[temp + 2c];
         V1 = 800F5F44 + V0 * b8;
         A0 = V1;
 
@@ -6118,7 +6071,7 @@ else
             V0 = hu[A0 + 48];
             if (A3 == V0)
             {
-                [address + 20] = w(bu[V1 + A1 + 38]); // attack action script id
+                [temp + 20] = w(bu[V1 + A1 + 38]); // attack action script id
                 FP = hu[A0 + 68];
                 break;
             }
@@ -6140,80 +6093,80 @@ else
 
 
 // MP cost
-if( w[address + 38] < 0 )
+if( w[temp + 38] < 0 )
 {
-    [address + 38] = w(hu[S4 + 4]);
+    [temp + 38] = w(hu[S4 + 4]);
 }
-if( bu[800f692c + 00] == 3 || ( w[address + 90] & 00400000 ) ) // set magic cost 0 if action priority 3 or 00400000 bit is set
+if( bu[800f692c + 00] == 3 || ( w[temp + 90] & 00400000 ) ) // set magic cost 0 if action priority 3 or 00400000 bit is set
 {
-    [address + 38] = w(0);
+    [temp + 38] = w(0);
 }
 
 // attack%
-[address + 3c] = w(bu[S4 + 0]);
+[temp + 3c] = w(bu[S4 + 0]);
 
 // attack formula
-[address + 40] = w(bu[S4 + e]);
+[temp + 40] = w(bu[S4 + e]);
 
 // set element
 V1 = hu[S4 + 18];
-[address + 44] = w(( V1 == -1 ) ? 0 : V1);
+[temp + 44] = w(( V1 == -1 ) ? 0 : V1);
 
 // power
-[address + 48] = w(bu[S4 + f]);
+[temp + 48] = w(bu[S4 + f]);
 
 // hurt action id
-[address + cc] = w(bu[S4 + 2]);
+[temp + cc] = w(bu[S4 + 2]);
 
 // set target according to target data
 A0 = bu[S4 + c];
 battle_copy_target_type_data_to_temp;
 
 // camera
-if( w[address + 28] == 14 )
+if( w[temp + 28] == 14 )
 {
     V0 = hu[800f83a4 + 2c];
     FP = hu[S4 + 8 + ((V0 >>> 2) & 0002)]
 }
 if( FP == -1 )
 {
-    [address + 60] = w(hu[S4 + 8]);
-    [address + 64] = w(hu[S4 + a]);
+    [temp + 60] = w(hu[S4 + 8]);
+    [temp + 64] = w(hu[S4 + a]);
 }
 else
 {
-    [address + 60] = w(FP);
-    [address + 64] = w(FP);
+    [temp + 60] = w(FP);
+    [temp + 64] = w(FP);
 }
 
 // set impact effect.
 V1 = bu[S4 + 1];
 if( V1 != -1 )
 {
-    [address + 68] = w(V1);
+    [temp + 68] = w(V1);
 }
 
 // attack effect id
-[address + 24] = w(bu[S4 + d]);
+[temp + 24] = w(bu[S4 + d]);
 
 // special flags
-[address + 6c] = w(hu[S4 + 1a]);
+[temp + 6c] = w(hu[S4 + 1a]);
 
 // sound
-[address + 54] = w(h[S4 + 6]); // normal
-[address + 58] = w(h[S4 + 6]); // cricical
-[address + 5c] = w(h[S4 + 6]); // miss
+[temp + 54] = w(h[S4 + 6]); // normal
+[temp + 58] = w(h[S4 + 6]); // cricical
+[temp + 5c] = w(h[S4 + 6]); // miss
 
 
 
 // if this is not magic attack
-if( ( w[address + 6c] & 0004 ) == 0 )
+if( ( w[temp + 6c] & 0004 ) == 0 )
 {
     // if in darkness halve attack%
-    V1 = w[address + 0];
+    V1 = w[temp + 0];
     if( w[800f83e0 + V1 * 68] & 04000000 )
     {
-        [address + 3c] = w(w[address + 3c] / 2);
+        [temp + 3c] = w(w[temp + 3c] / 2);
     }
 }
 
@@ -6228,7 +6181,7 @@ battle_copy_status_data_to_temp;
 if( w[SP + 10] != 0 )
 {
     // remove death sentence
-    V1 = w[address + 0];
+    V1 = w[temp + 0];
     [800f83e0 + V1 * 68] = w(w[800f83e0 + V1 * 68] & ffdfffff);
 }
 
@@ -6244,24 +6197,24 @@ funca8d88;
 ////////////////////////////////
 // action_type_0D
 // load item data
-address = w[80163014];
-V1 = w[address + 2c];
-[address + 3c] = w(ff);
+temp = w[80163014];
+V1 = w[temp + 2c];
+[temp + 3c] = w(ff);
 S0 = 800722cc + V1 * 1c;
-[address + 40] = bu[S0 + e];
-[address + 48] = bu[S0 + f];
+[temp + 40] = bu[S0 + e];
+[temp + 48] = bu[S0 + f];
 
 V1 = hu[S0 + 18];
 if (V1 != ffff)
 {
-    [address + 44] = w(V1);
+    [temp + 44] = w(V1);
 }
 
-[address + 60] = w(hu[S0 + 8]);
-[address + 64] = w(hu[S0 + 8]);
+[temp + 60] = w(hu[S0 + 8]);
+[temp + 64] = w(hu[S0 + 8]);
 
-[address + 24] = w(bu[S0 + d]);
-[address + 6c] = w(hu[S0 + 1a]);
+[temp + 24] = w(bu[S0 + d]);
+[temp + 6c] = w(hu[S0 + 1a]);
 
 A0 = bu[S0 + c];
 battle_copy_target_type_data_to_temp;
@@ -6350,23 +6303,23 @@ if( w[800f5bf4 + attacker_id * 44 + 0] == 1e61 ) // if lucky 7777 then no status
 
 ////////////////////////////////
 // action_type_0F
-address = w[80063014];
-if( w[address + 20] >= 0 )
+temp = w[80063014];
+if( w[temp + 20] >= 0 )
 {
     funca2f4c();
 
-    [V0 + 0] = b(w[address + 0]);
-    [V0 + 1] = b(w[address + 1c]);
-    [V0 + 2] = b(w[address + 24]);
-    [V0 + 3] = b(w[address + 28]);
+    [V0 + 0] = b(w[temp + 0]);
+    [V0 + 1] = b(w[temp + 1c]);
+    [V0 + 2] = b(w[temp + 24]);
+    [V0 + 3] = b(w[temp + 28]);
     [V0 + 4] = b(0);
-    [V0 + 5] = b(w[address + 20]);
-    [V0 + 8] = b(w[address + 60]);
+    [V0 + 5] = b(w[temp + 20]);
+    [V0 + 8] = b(w[temp + 60]);
 
     funca2fd0;
 
-    [V0 + 0] = b(w[address + 0]);
-    [V0 + 1] = b(w[address + 0]);
+    [V0 + 0] = b(w[temp + 0]);
+    [V0 + 1] = b(w[temp + 0]);
     [V0 + 2] = b(0);
     [V0 + 4] = h(0);
 
@@ -6452,26 +6405,26 @@ La85f4:	; 800A85F4
 
 ////////////////////////////////
 // action_type_15
-address = w[80063014];
-V0 = w[address + 0];
+temp = w[80063014];
+V0 = w[temp + 0];
 if (V0 >= 3)
 {
-    [address + c] = w(1);
-    [address + 50] = w(0);
+    [temp + c] = w(1);
+    [temp + 50] = w(0);
 
-    A0 = hu[address + 18];
+    A0 = hu[temp + 18];
     battle_opcodes_get_random_bit;
 
     A0 = V0 & ffff;
-    [address + 18] = w(A0);
+    [temp + 18] = w(A0);
     system_get_last_significant_bit_number;
 
-    [address + 0] = w(V0);
-    [address + 20] = w(2f);
+    [temp + 0] = w(V0);
+    [temp + 20] = w(2f);
 }
 else
 {
-    [address + 20] = w(-1);
+    [temp + 20] = w(-1);
 }
 ////////////////////////////////
 
@@ -6486,9 +6439,9 @@ A3 = 0;
 [SP + 0074] = w(S3);
 S3 = 0002;
 
-address = V0 = w[80063014];
+temp = V0 = w[80063014];
 V1 = SP + 0018;
-FP = w[address + 18]; // target mask
+FP = w[temp + 18]; // target mask
 
 loopa86c0:	; 800A86C0
 [V1 + 0028] = w(A0);
@@ -6519,7 +6472,7 @@ loopa86dc:	; 800A86DC
 
 if (FP == 0)
 {
-    A0 = w[address + 0]
+    A0 = w[temp + 0]
     A1 = 76; // string "Couldn't sense" id
     A2 = w[SP + 50];
     A3 = SP + 48;
@@ -6660,11 +6613,13 @@ loopa88b8:	; 800A88B8
 V0 = FP >> S3;
 V0 = V0 & 0001;
 800A88C0	beq    v0, zero, La8a1c [$800a8a1c]
-A0 = 0002;
+
+A0 = 2;
 A1 = S3;
-A2 = 0016;
-800A88D0	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 16;
 A3 = 0;
+battle_add_to_800f4308();
+
 V0 = ffff;
 [SP + 0048] = h(S3);
 [SP + 004a] = h(V0);
@@ -6933,8 +6888,8 @@ A0 = w[80063014];
 
 ////////////////////////////////
 // action_type_1E
-address = w[80063014];
-V1 = w[address + 0];
+temp = w[80063014];
+V1 = w[temp + 0];
 A0 = bu[800f5efc + V1 * 18];
 battle_copy_target_type_data_to_temp;
 
@@ -6945,10 +6900,10 @@ return;
 
 ////////////////////////////////
 // battle_copy_target_type_data_to_temp
-address = w[80063014];
-if( w[address + 50] == ff )
+temp = w[80063014];
+if( w[temp + 50] == ff )
 {
-    [address + 50] = w(A0);
+    [temp + 50] = w(A0);
 }
 ////////////////////////////////
 
@@ -6956,13 +6911,13 @@ if( w[address + 50] == ff )
 
 ////////////////////////////////
 // funca8d88
-address = w[80063014];
-[address + bc] = w(-1);
+temp = w[80063014];
+[temp + bc] = w(-1);
 
 if( A0 != -1 )
 {
-    [address + bc] = w(A0);
-    [address + c0] = w(A1);
+    [temp + bc] = w(A0);
+    [temp + c0] = w(A1);
 
     A0 = 2;
     funca8e84;
@@ -6975,11 +6930,11 @@ if( A0 != -1 )
 // battle_copy_status_data_to_temp
 status% = A0;
 status_mask  = A1;
-address = w[80063014];
+temp = w[80063014];
 
-[address + 80] = w(0);
-[address + 84] = w(0);
-[address + 88] = w(0);
+[temp + 80] = w(0);
+[temp + 84] = w(0);
+[temp + 88] = w(0);
 
 A3 = status% >> 6;
 if( A3 < 3 )
@@ -6989,13 +6944,13 @@ if( A3 < 3 )
     if( status_mask < 0 )
     {
         V0 = status_mask & 00000003;
-        [address + 80] = w(80000000);
+        [temp + 80] = w(80000000);
         [800f7dc6] = h(V0);
     }
     else
     {
-        [address + 8c] = w(real_status%);
-        [address + A3 * 4 + 80] = w(status_mask);
+        [temp + 8c] = w(real_status%);
+        [temp + A3 * 4 + 80] = w(status_mask);
     }
 }
 ////////////////////////////////
@@ -7018,14 +6973,14 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // funca8e54
-address = w[80063014];
+temp = w[80063014];
 
-[address + f8] = w(A0);
+[temp + f8] = w(A0);
 A0 = A0 + 3;
-[address + ac] = w(A0);
+[temp + ac] = w(A0);
 if (A0 >= 9)
 {
-    [address + ac] = w(8);
+    [temp + ac] = w(8);
 }
 
 return;
@@ -7035,8 +6990,8 @@ return;
 
 ////////////////////////////////
 // funca8e84
-address = w[80063014];
-A3 = w[address + bc];
+temp = w[80063014];
+A3 = w[temp + bc];
 if( A3 != -1 )
 {
 0400 3C00 0400 2000 0100 2400 1000 1000 0400 0200 0200 0200 0200 0100 2000 0400
@@ -7045,7 +7000,7 @@ if( A3 != -1 )
     V0 = hu[800a02c0 + A3 * 2] >> A0;
     if( V0 & 1 )
     {
-        A2 = w[address + 0];
+        A2 = w[temp + 0];
 
         V1 = 800f5e60 + A2 * 34;
         if( A3 < 24 )
@@ -7080,7 +7035,7 @@ F4980A80 1c
             // set multiple attack
             case 0:
             {
-                [address + b0] = w(w[address + c0]);
+                [temp + b0] = w(w[temp + c0]);
                 return;
             }
 
@@ -7276,11 +7231,12 @@ F4980A80 1c
             800A9220	nop
             V0 = V0 < 0003;
             800A9228	beq    v0, zero, La9240 [$800a9240]
+
             A0 = 0;
             A1 = A2;
-            A2 = 000b;
-            800A9238	jal    battle_add_to_800f4308 [$800a7254]
+            A2 = b;
             A3 = 0;
+            battle_add_to_800f4308();
 
             La9240:	; 800A9240
             A0 = w[80063014];
@@ -7325,7 +7281,7 @@ F4980A80 1c
             800A92E8	bne    v1, v0, La9bf8 [$800a9bf8]
             V0 = 0;
 
-            V0 = w[address + 214];
+            V0 = w[temp + 214];
 
             V0 = V0 << 03;
             800A92FC	j      La9bf8 [$800a9bf4]
@@ -7360,7 +7316,7 @@ F4980A80 1c
                 total_level = 0;
                 A0 = 0;
 
-                A3 = w[address + 18];
+                A3 = w[temp + 18];
 
                 V1 = 4;
                 loopa9350:	; 800A9350
@@ -7380,7 +7336,7 @@ F4980A80 1c
                     A1 = total_level / A0;
                 }
 
-                [address + 48] = w(A1);
+                [temp + 48] = w(A1);
 
                 return;
             }
@@ -7467,11 +7423,12 @@ CC930A80 e
             800A94D0	nop
             V0 = A1 < 0003;
             800A94D8	beq    v0, zero, La9540 [$800a9540]
-            A0 = 0002;
-            A2 = 0013;
-            A3 = 0001;
-            800A94E8	jal    battle_add_to_800f4308 [$800a7254]
-            A3 = A3 << A1;
+
+            A0 = 2;
+            A2 = 13;
+            A3 = 1 << A1;
+            battle_add_to_800f4308();
+
             800A94F0	j      La9540 [$800a9540]
             800A94F4	nop
             V0 = w[80063014];
@@ -7481,10 +7438,10 @@ CC930A80 e
             S0 = V0 << A1;
             V0 = A1 < 0003;
             800A9514	beq    v0, zero, La9528 [$800a9528]
-            A0 = 0002;
-            A2 = 0013;
-            800A9520	jal    battle_add_to_800f4308 [$800a7254]
+            A0 = 2;
+            A2 = 13;
             A3 = S0;
+            battle_add_to_800f4308();
 
             La9528:	; 800A9528
             800A9528	lui    v0, $800f
@@ -7603,8 +7560,8 @@ CC930A80 e
             // Alters base damage and defense by [Modifier]% (Stackable, not to exceed 200) Hero Drink 
             case 15:
             {
-                A0 = w[address + 208];
-                A1 = w[address + c0];
+                A0 = w[temp + 208];
+                A1 = w[temp + c0];
                 A2 = f;
                 A1 = A1 - 64;
                 funcb1268
@@ -7795,11 +7752,11 @@ CC930A80 e
 
             case 1e:
             {
-                power = w[address + c4];
+                power = w[temp + c4];
                 current_hp = hu[800f5bb8 + A2 * 44 + 3c];
                 max_hp = w[800f83e0 + A2 * 68 + 30];
 
-                [address + 48] = w(1 + (((current_hp * 3) / max_hp) * power));
+                [temp + 48] = w(1 + (((current_hp * 3) / max_hp) * power));
 
                 return 0;
             }
@@ -7807,11 +7764,11 @@ CC930A80 e
 
             case 1f:
             {
-                power = w[address + c4];
+                power = w[temp + c4];
                 current_mp = hu[800f5bb8 + A2 * 44 + 3e];
                 max_mp = hu[800f83e0 + A2 * 68 + 2a];
 
-                [address + 48] = w(1 + (((current_mp * 3) / max_mp) * power));
+                [temp + 48] = w(1 + (((current_mp * 3) / max_mp) * power));
 
                 return 0;
             }
@@ -7825,11 +7782,11 @@ CC930A80 e
 
             case 21:
             {
-                power = w[address + c4];
+                power = w[temp + c4];
                 V0 = w[800f5e60 + A2 * 34 + 0];
                 number_of_kills = hu[V0 + 24];
 
-                [address + 48] = w(a + (((number_of_kills / 80) * power) / 10));
+                [temp + 48] = w(a + (((number_of_kills / 80) * power) / 10));
 
                 return 0;
             }
@@ -7837,12 +7794,12 @@ CC930A80 e
 
             case 22:
             {
-                power = w[address + c4];
+                power = w[temp + c4];
 
                 limit_level = bu[800f5e60 + A2 * 34 + 5];
                 limit_bar_value = hu[800f5e60 + A2 * 34 + a];
 
-                [address + 48] = w(1 + (((limit_bar_value * (limit_level + 1) / 10) * power) / 10));
+                [temp + 48] = w(1 + (((limit_bar_value * (limit_level + 1) / 10) * power) / 10));
 
                 return 0;
             }
@@ -8159,14 +8116,16 @@ V1 = hu[AT + 840a];
 S6 = S6 + V0;
 800A9F78	beq    s3, s1, La9fac [$800a9fac]
 S7 = S7 + V1;
-A0 = 0002;
-A1 = S1;
-A2 = 0013;
-A3 = T2 << S1;
 [SP + 0030] = w(T0);
 [SP + 0034] = w(T1);
-800A9F98	jal    battle_add_to_800f4308 [$800a7254]
 [SP + 0038] = w(T2);
+
+A0 = 0002;
+A1 = S1;
+A2 = 13;
+A3 = T2 << S1;
+battle_add_to_800f4308();
+
 T2 = w[SP + 0038];
 T1 = w[SP + 0034];
 T0 = w[SP + 0030];
@@ -8262,7 +8221,7 @@ V0 = w[SP + 001c];
 AT = AT + V1;
 [AT + 8402] = h(V0);
 V0 = w[SP + 0020];
-A0 = 0002;
+
 800AA104	lui    at, $8010
 AT = AT + V1;
 [AT + 83ef] = b(V0);
@@ -8272,7 +8231,6 @@ A1 = S3;
 AT = AT + V1;
 [AT + 842d] = b(V0);
 V0 = w[SP + 0028];
-A2 = 0018;
 800AA12C	lui    at, $8010
 AT = AT + V1;
 [AT + 83f4] = b(V0);
@@ -8292,8 +8250,12 @@ AT = AT + V1;
 800AA16C	lui    at, $8010
 AT = AT + V1;
 [AT + 83f5] = b(V0);
-800AA178	jal    battle_add_to_800f4308 [$800a7254]
-A3 = 0001;
+
+A0 = 2;
+A2 = 18;
+A3 = 1;
+battle_add_to_800f4308();
+
 S0 = S0 << 02;
 V0 = 00ff;
 800AA188	lui    at, $800f
@@ -8318,15 +8280,12 @@ SP = SP + 0068;
 
 ////////////////////////////////
 // funcaa1c8
-800AA1C8	addiu  sp, sp, $ffd8 (=-$28)
+
 800AA1CC	lui    a0, $ff7f
 A0 = A0 | f7bf;
 A1 = 0;
 V0 = w[80063014];
 800AA1E0	addiu  a2, zero, $ffff (=-$1)
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
 S0 = w[V0 + 0000];
 A3 = 0;
 V0 = S0 << 01;
@@ -8488,28 +8447,22 @@ AT = AT + V1;
 [AT + 840c] = w(V0);
 800AA434	jal    funcae954 [$800ae954]
 A0 = S0;
-A0 = 0002;
+A0 = 2;
 A1 = S0;
-A2 = 0018;
-800AA448	jal    battle_add_to_800f4308 [$800a7254]
-A3 = 0001;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800AA460	jr     ra 
-800AA464	nop
+A2 = 18;
+A3 = 1;
+battle_add_to_800f4308();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcaa468
-address = w[80063014];
+temp = w[80063014];
 
-S1 = w[address + c8];
+S1 = w[temp + c8];
 
-A0 = w[address + 0];
+A0 = w[temp + 0];
 funcb10b4;
 
 if (V0 != 0)
@@ -8529,20 +8482,20 @@ V0 = V0 * 2;
 
 S0 = S0 + V0;
 
-damage = w[address + 214];
+damage = w[temp + 214];
 A1 = damage * (S0 + 1);
-[address + 214] = w(A1);
+[temp + 214] = w(A1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcaa4fc
-address = w[80063014];
+temp = w[80063014];
 
 S0 = 1;
 
-A0 = w[address + 0];
+A0 = w[temp + 0];
 funcb10b4;
 
 // if in near death
@@ -8552,25 +8505,25 @@ if (V0 != 0)
 }
 
 // if death sentense
-V0 = w[address + c8];
+V0 = w[temp + c8];
 if (V0 & 00200000)
 {
     S0 = S0 * 4;
 }
 
-V0 = w[address + 214];
-[address + 214] = w(V0 * S0);
+V0 = w[temp + 214];
+[temp + 214] = w(V0 * S0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcaa574
-address = w[80063014];
+temp = w[80063014];
 
 total_ap = 0;
 
-V1 = w[address + 0]
+V1 = w[temp + 0]
 T0 = w[800f5e60 + V1 * 34 + 0]; // savemap address
 
 T1 = 0;
@@ -8606,8 +8559,8 @@ loopaa5b8:	; 800AA5B8
     V0 = T1 < 8;
 800AA634	bne    v0, zero, loopaa5b8 [$800aa5b8]
 
-power = w[address + c4];
-[address + 48] = w(1 + (power * (total_ap / 2710) / 10));
+power = w[temp + c4];
+[temp + 48] = w(1 + (power * (total_ap / 2710) / 10));
 ////////////////////////////////
 
 
@@ -8628,9 +8581,9 @@ loopaa694:	; 800AA694
     V0 = A0 < 3;
 800AA6BC	bne    v0, zero, loopaa694 [$800aa694]
 
-address = w[80063014];
-damage = w[address + 214];
-[address + 214] = w(damage * A1);
+temp = w[80063014];
+damage = w[temp + 214];
+[temp + 214] = w(damage * A1);
 ////////////////////////////////
 
 
@@ -8672,7 +8625,7 @@ return V0;
 ////////////////////////////////
 // funcaa738
 // fill attack action struct
-address = w[80063014];
+temp = w[80063014];
 
 S0 = A0; // target mask
 
@@ -8681,24 +8634,24 @@ S1 = V0;
 
 A0 = S0;
 system_count_active_bits;
-[address + b8] = w(V0);
+[temp + b8] = w(V0);
 
-[S1 + 0] = b(w[address + 0]);
-[S1 + 1] = b(w[address + 1c]);
-[S1 + 5] = b(w[address + 20]);
+[S1 + 0] = b(w[temp + 0]);
+[S1 + 1] = b(w[temp + 1c]);
+[S1 + 5] = b(w[temp + 20]);
 
-V0 = w[address + 0];
+V0 = w[temp + 0];
 if (V0 >= 4)
 {
-    if (w[address + c8] & 00000800) // attacker frog
+    if (w[temp + c8] & 00000800) // attacker frog
     {
-        if (w[address + 20] != 34)
+        if (w[temp + 20] != 34)
         {
-            if (w[address + 28] == 20 && w[address + 24] == ff) // action id == 20 and attack effect id == ff
+            if (w[temp + 28] == 20 && w[temp + 24] == ff) // action id == 20 and attack effect id == ff
             {
                 [S1 + 5] = b(14);
             }
-            else if (w[address + 28] < 21)
+            else if (w[temp + 28] < 21)
             {
                 [S1 + 5] = b(1d);
             }
@@ -8708,7 +8661,7 @@ if (V0 >= 4)
 else if (V0 < 3)
 {
     // replace single animation action with their multiple analog
-    if (w[address + b8] >= 2 || w[address + 90] & 00000002)
+    if (w[temp + b8] >= 2 || w[temp + 90] & 00000002)
     {
         A0 = b[S1 + 5];
 
@@ -8727,22 +8680,22 @@ else if (V0 < 3)
     }
 }
 
-[S1 + 2] = b(w[address + 24]);
-[S1 + 3] = b(w[address + 28]);
+[S1 + 2] = b(w[temp + 24]);
+[S1 + 3] = b(w[temp + 28]);
 
-V0 = w[address + b8];
+V0 = w[temp + b8];
 if (V0 >= 2)
 {
-    V1 = hu[address + 64];
+    V1 = hu[temp + 64];
 }
 else
 {
-    V1 = hu[address + 60];
+    V1 = hu[temp + 60];
 }
 
 [S1 + 8] = h(V1);
 [S1 + 4] = b(0);
-[S1 + 6] = h(w[address + 98]);
+[S1 + 6] = h(w[temp + 98]);
 ////////////////////////////////
 
 
@@ -8751,7 +8704,7 @@ else
 // funcaa950
 FP = A0;
 target_id = b[FP + 0];
-address = w[80063014];
+temp = w[80063014];
 
 // go through left center and right fighters mask and search for target
 A0 = 0;
@@ -8768,13 +8721,13 @@ loopaa990:	; 800AA990
 800AA9B0	bne    v0, zero, loopaa990 [$800aa990]
 
 // if target player, damage != 0, we are not attacking ourself, there is only 1 attack, this is not magical attack
-if ((target_id < 3) && (w[address + 48] != 0) && (target_id != w[address + 0]) && (w[address + b8] == 1) && ((w[address + 6c] & 0004) == 0))
+if ((target_id < 3) && (w[temp + 48] != 0) && (target_id != w[temp + 0]) && (w[temp + b8] == 1) && ((w[temp + 6c] & 0004) == 0))
 {
-    V1 = w[address + 80] | w[address + 84] | w[address + 88];
+    V1 = w[temp + 80] | w[temp + 84] | w[temp + 88];
     V0 = V1 & 00000800;
     if (V0 == 0)
     {
-        if (w[address + 28] != 20 || w[address + 24] == ff)
+        if (w[temp + 28] != 20 || w[temp + 24] == ff)
         {
             S2 = 0;
             S0 = 0;
@@ -8791,7 +8744,7 @@ if ((target_id < 3) && (w[address + 48] != 0) && (target_id != w[address + 0]) &
                         if (S1 != 0)
                         {
                             // not self and not attacker
-                            if (w[address + 0] != S0 && target_id != S0)
+                            if (w[temp + 0] != S0 && target_id != S0)
                             {
                                 // units to cover must not be in statuses
                                 V0 = w[800f83e0 + S0 * 68 + 0] & 86805c45;
@@ -8842,12 +8795,12 @@ if ((target_id < 3) && (w[address + 48] != 0) && (target_id != w[address + 0]) &
 
 [800f4920] = w(0);
 
-address = w[80063014];
+temp = w[80063014];
 
-V0 = w[address + 20];
+V0 = w[temp + 20];
 if (V0 != -1)
 {
-    S0 = w[address + dc];
+    S0 = w[temp + dc];
     if (S0 != -1)
     {
         A0 = S0;
@@ -8855,7 +8808,7 @@ if (V0 != -1)
     }
     else
     {
-        V0 = w[address + 28];
+        V0 = w[temp + 28];
         if (V0 < 21)
         {
             funcacb98; // check if we have enough mana
@@ -8867,38 +8820,38 @@ if (V0 != -1)
         }
 
         // add flags addcut, addsteal and so on
-        A0 = w[address + f0];
+        A0 = w[temp + f0];
         if( A0 != 0 )
         {
             funca2b28;
         }
 
-        [address + ec] = w(w[address + 18]);
-        [address + c4] = w(w[address + 48]);
+        [temp + ec] = w(w[temp + 18]);
+        [temp + c4] = w(w[temp + 48]);
 
-        V1 = w[address + b4] - 1;
-        [address + b4] = w(V1);
+        V1 = w[temp + b4] - 1;
+        [temp + b4] = w(V1);
 
         if (V1 != -1)
         {
             Laacc0:	; 800AACC0
                 S1 = 0;
                 loopaacc4:	; 800AACC4
-                    S0 = bu[address + d0 + S1];
+                    S0 = bu[temp + d0 + S1];
                     if (S0 != ff)
                     {
-                        [address + d0 + S1] = b(ff);
+                        [temp + d0 + S1] = b(ff);
 
                         V1 = S0 & 7f;
-                        [address + 2c] = w(V1);
-                        [address + 98] = w(V1);
-                        [address + 50] = w(ff);
+                        [temp + 2c] = w(V1);
+                        [temp + 98] = w(V1);
+                        [temp + 50] = w(ff);
 
                         action_type_0C;
 
                         if (S0 & 80)
                         {
-                            [address + 6c] = w(w[address + 6c] & ffffdfff);
+                            [temp + 6c] = w(w[temp + 6c] & ffffdfff);
                         }
 
                         break;
@@ -8911,25 +8864,25 @@ if (V0 != -1)
 
 
                 [800f4958] = h(0);
-                [address + 18] = w(w[address + ec]);
-                [address + fc] = w(w[address + b0]);
+                [temp + 18] = w(w[temp + ec]);
+                [temp + fc] = w(w[temp + b0]);
 
                 funcaf9c8; // update target mask based on status and target type flags
 
                 funcab674; // update target mask exluding units that we can't reach
 
-                if( w[address + 90] & 00080000 )
+                if( w[temp + 90] & 00080000 )
                 {
                     S1 = 0;
                     loopaad98:	; 800AAD98
-                        V0 = w[address + 18] >> S1;
+                        V0 = w[temp + 18] >> S1;
                         if (V0 & 1)
                         {
                             if (w[800f83e0 + S1 * 68 + 0] & 00000001) // if dead
                             {
                                 V0 = 1 << S1;
                                 V0 = 0 NOR V0;
-                                [address + 18] = w(w[address + 18] & V0);
+                                [temp + 18] = w(w[temp + 18] & V0);
                             }
                         }
 
@@ -8937,17 +8890,17 @@ if (V0 != -1)
                         V0 = S1 < a;
                     800AADE0	bne    v0, zero, loopaad98 [$800aad98]
 
-                    if (w[address + 18] == 0)
+                    if (w[temp + 18] == 0)
                     {
-                        A0 = w[address + 20];
+                        A0 = w[temp + 20];
                         funca2cc4;
 
                         800AAE10	j      Lab28c [$800ab28c]
                     }
                 }
-                else if( w[address + 18] == 0 )
+                else if( w[temp + 18] == 0 )
                 {
-                    A0 = w[address + dc];
+                    A0 = w[temp + dc];
                     funcaca4c;
 
                     800AAC30	j      Lab28c [$800ab28c]
@@ -8970,8 +8923,8 @@ if (V0 != -1)
 
 
 
-                V0 = w[address + 0];
-                [800f4938 + V0 * 2] = h(w[address + 18]);
+                V0 = w[temp + 0];
+                [800f4938 + V0 * 2] = h(w[temp + 18]);
 
                 [800f4920] = w(w[800f4920] | 0009);
 
@@ -8983,9 +8936,9 @@ if (V0 != -1)
                     {
                         [800f4920] = w(A0 & fffd);
 
-                        if (w[address + 28] != 3)
+                        if (w[temp + 28] != 3)
                         {
-                            [address + 1c] = w(3);
+                            [temp + 1c] = w(3);
                         }
                     }
 
@@ -9007,9 +8960,9 @@ if (V0 != -1)
                         S2 = hu[800f4924 + S1 * 2];
                         if (S2 != 0)
                         {
-                            [address + f4] = w(S1);
-                            [address + e0] = w(0);
-                            [address + b0] = w(w[address + fc]);
+                            [temp + f4] = w(S1);
+                            [temp + e0] = w(0);
+                            [temp + b0] = w(w[temp + fc]);
 
                             [800f3950] = w(w[800f3944]);
                             [800f3954] = w(w[800f3948]);
@@ -9022,33 +8975,33 @@ if (V0 != -1)
 
 
                             loopaaf4c:	; 800AAF4C
-                                [address + 18] = w(S2);
+                                [temp + 18] = w(S2);
 
-                                is_single_target = w[address + b0] > 0; // multiple attacks
+                                is_single_target = w[temp + b0] > 0; // multiple attacks
 
-                                if (w[address + ac] != 0)
+                                if (w[temp + ac] != 0)
                                 {
-                                    if( ( w[address + 50] & 0c ) != 04 ) // if not attacks all attack
+                                    if( ( w[temp + 50] & 0c ) != 04 ) // if not attacks all attack
                                     {
                                         is_single_target = 1;
                                     }
                                 }
 
-                                if( w[address + 50] & 80 ) //if random target among selected
+                                if( w[temp + 50] & 80 ) //if random target among selected
                                 {
                                     is_single_target = 1;
                                 }
 
-                                if( w[address + 28] == 3 ) // summon affects all
+                                if( w[temp + 28] == 3 ) // summon affects all
                                 {
                                     is_single_target = 0;
                                 }
 
                                 if( is_single_target != 0 ) // leave only one random bit
                                 {
-                                    A0 = w[address + 18];
+                                    A0 = w[temp + 18];
                                     system_select_random_bit;
-                                    [address + 18] = w(V0);
+                                    [temp + 18] = w(V0);
                                 }
 
 
@@ -9056,7 +9009,7 @@ if (V0 != -1)
                                 // attack every unit
                                 S0 = 0;
                                 Laafe0:	; 800AAFE0
-                                    if( ( w[address + 18] >> S0 ) & 1 )
+                                    if( ( w[temp + 18] >> S0 ) & 1 )
                                     {
                                         // we call function that calculate and apply damage here.
                                         A0 = S1;
@@ -9069,14 +9022,14 @@ if (V0 != -1)
 
 
 
-                                V0 = w[address + b0];
+                                V0 = w[temp + b0];
                                 if (V0 == 0)
                                 {
                                     break;
                                 }
 
                                 V0 = V0 - 1;
-                                [address + b0] = w(V0);
+                                [temp + b0] = w(V0);
                             800AB038	bne    v0, zero, loopaaf4c [$800aaf4c]
 
 
@@ -9119,15 +9072,15 @@ if (V0 != -1)
 
                     if ((w[800f4920] & 2) == 0)
                     {
-                        V0 = w[address + ac];
+                        V0 = w[temp + ac];
                         if (V0 != 0)
                         {
                             V0 = V0 - 1;
-                            [address + ac] = w(V0);
+                            [temp + ac] = w(V0);
                             if (V0 != 0)
                             {
-                                A0 = w[address + 18];
-                                if (w[address + 28] == 3) // if action is summon
+                                A0 = w[temp + 18];
+                                if (w[temp + 28] == 3) // if action is summon
                                 {
                                     A0 = hu[80163758] & 3f0; // target all enemies
                                 }
@@ -9148,15 +9101,15 @@ if (V0 != -1)
                                         V0 = V1 < a;
                                     800AB14C	bne    v0, zero, loopab120 [$800ab120]
 
-                                    V0 = w[address + 0];
+                                    V0 = w[temp + 0];
                                     [800f4938 + V0 * 2] = h(A0);
                                     if (A0 == 0)
                                     {
-                                        [address + ac] = w(0);
+                                        [temp + ac] = w(0);
                                     }
                                 }
 
-                                V0 = w[address + ac];
+                                V0 = w[temp + ac];
                                 if (V0 != 0)
                                 {
                                     V0 = w[800f8920] | 00000004;
@@ -9175,56 +9128,56 @@ if (V0 != -1)
                         [800f4920] = w(V0);
                     }
 
-                    if ((w[address + 90] & 00001000) == 0)
+                    if ((w[temp + 90] & 00001000) == 0)
                     {
-                        [address + 60] = w(-4);
+                        [temp + 60] = w(-4);
                     }
                     else
                     {
-                        [address + 60] = w(-1);
+                        [temp + 60] = w(-1);
                     }
 
-                    [address + 64] = w(w[address + 60]);
+                    [temp + 64] = w(w[temp + 60]);
 
                     V1 = w[800f4920];
                     V1 = V1 & 1;
                 800AB200	bne    v1, zero, Laae9c [$800aae9c]
 
                 // for 2x cut and 4x cut
-                V0 = w[address + 20];
+                V0 = w[temp + 20];
                 if (V1 == 18)
                 {
-                    [address + 20] = w(19);
+                    [temp + 20] = w(19);
                 }
                 if (V1 == 19)
                 {
-                    [address + 20] = w(1a);
+                    [temp + 20] = w(1a);
                 }
                 if (V1 == 1a)
                 {
-                    [address + 20] = w(1b);
+                    [temp + 20] = w(1b);
                 }
                 if (V1 == 16)
                 {
-                    [address + 20] = w(17);
-                    [address + ec] = w(w[address + 18]);
+                    [temp + 20] = w(17);
+                    [temp + ec] = w(w[temp + 18]);
                 }
 
-                V1 = w[address + b4] - 1;
-                [address + b4] = w(V1);
+                V1 = w[temp + b4] - 1;
+                [temp + b4] = w(V1);
                 V0 = -1;
             800AB284	bne    v1, v0, Laacc0 [$800aacc0]
 
         }
 
         Lab28c:	; 800AB28C
-        if (w[address + 90] & 00000001)
+        if (w[temp + 90] & 00000001)
         {
             A0 = 47;
             funca2cc4;
         }
 
-        A0 = w[address + e4];
+        A0 = w[temp + e4];
         if (A0 != -1)
         {
             funcb1060;
@@ -9237,56 +9190,56 @@ if (V0 != -1)
 
 ////////////////////////////////
 // funcab308
-address = w[80063014];
+temp = w[80063014];
 
-if (w[address + 230] & 40) // absorb
+if (w[temp + 230] & 40) // absorb
 {
-    A0 = w[address + 23c];
-    [address + 23c] = w(w[address + 238]);
-    [address + 238] = w(A0);
+    A0 = w[temp + 23c];
+    [temp + 23c] = w(w[temp + 238]);
+    [temp + 238] = w(A0);
     if (A0 & 00000001)
     {
-        [address + 238] = w(A0 & fffffffe);
-        [address + 230] = w(01);
+        [temp + 238] = w(A0 & fffffffe);
+        [temp + 230] = w(01);
     }
 
-    A0 = w[address + 23c];
+    A0 = w[temp + 23c];
     if (A0 & 00000001)
     {
-        [address + 23c] = w(A0 & fffffffe);
-        [address + 230] = w(80);
+        [temp + 23c] = w(A0 & fffffffe);
+        [temp + 230] = w(80);
     }
 }
 
-if (w[address + 230] & 01) // death
+if (w[temp + 230] & 01) // death
 {
-    V1 = w[address + a4];
+    V1 = w[temp + a4];
     if (V1  == 3 || V1 == 4)
     {
         A0 = 20;
         system_get_random_byte_range; // chance 0-20
         V0 = V0 & ff;
 
-        V1 = w[address + 48];
+        V1 = w[temp + 48];
         if (V0 >= V1)
         {
-            V0 = w[address + 230] & fe;
-            [address + 230] = w(V0 | 20);
+            V0 = w[temp + 230] & fe;
+            [temp + 230] = w(V0 | 20);
         }
     }
 }
 
-V0 = w[address + 48];
+V0 = w[temp + 48];
 if (V0 == 0)
 {
-    if (w[address + 230] & 04) // double
+    if (w[temp + 230] & 04) // double
     {
-        [address + 260] = w(w[address + 260] << 1);
+        [temp + 260] = w(w[temp + 260] << 1);
     }
 
-    if (w[address + 230] & 10) // half
+    if (w[temp + 230] & 10) // half
     {
-        [address + 260] = w(w[address + 260] >> 1);
+        [temp + 260] = w(w[temp + 260] >> 1);
     }
 }
 ////////////////////////////////
@@ -9295,71 +9248,71 @@ if (V0 == 0)
 
 ////////////////////////////////
 // funcab480
-address = w[80063014];
-A0 = w[address + 230];
+temp = w[80063014];
+A0 = w[temp + 230];
 if (A0 & 40) // absorb
 {
-    [address + 220] = w(w[address + 220] XOR 0001);
+    [temp + 220] = w(w[temp + 220] XOR 0001);
 }
 else
 {
     if (A0 & 04) // double
     {
-        [address + 214] = w(w[address + 214] * 2);
+        [temp + 214] = w(w[temp + 214] * 2);
     }
     if (A0 & 10) // half
     {
-        [address + 214] = w((w[address + 214] + 1) / 2);
+        [temp + 214] = w((w[temp + 214] + 1) / 2);
     }
 }
 
 if (A0 & 01) // death
 {
-    if (w[address + 228] & 00000001) // target already dead
+    if (w[temp + 228] & 00000001) // target already dead
     {
-        [address + 214] = w(0);
-        [address + 218] = w(w[address + 218] | 3);
-        [address + 230] = w(0);
-        [address + 238] = w(0);
-        [address + 23c] = w(0);
-        [address + 240] = w(0);
-        [address + 244] = w(0);
+        [temp + 214] = w(0);
+        [temp + 218] = w(w[temp + 218] | 3);
+        [temp + 230] = w(0);
+        [temp + 238] = w(0);
+        [temp + 23c] = w(0);
+        [temp + 240] = w(0);
+        [temp + 244] = w(0);
     }
     else
     {
-        [address + 218] = w(w[address + 218] & fffffffd);
-        [address + 220] = w(w[address + 220] & fffffffe);
-        [address + 238] = w(w[address + 238] | 00000001); // status to add
-        [address + 23c] = w(w[address + 23c] & fffffffe); // status to remove
-        [address + 250] = w(fffffffe);
+        [temp + 218] = w(w[temp + 218] & fffffffd);
+        [temp + 220] = w(w[temp + 220] & fffffffe);
+        [temp + 238] = w(w[temp + 238] | 00000001); // status to add
+        [temp + 23c] = w(w[temp + 23c] & fffffffe); // status to remove
+        [temp + 250] = w(fffffffe);
     }
 }
 else if (A0 & 80) // recovery
 {
-    V1 = w[address + 208];
+    V1 = w[temp + 208];
     [800f840c + V1 * 68] = w(w[800f8410 + V1 * 68]);
     [800f8408 + V1 * 68] = h(hu[800f840a + V1 * 68]);
 
-    [address + 218] = w(w[address + 218] & fffffffd);
-    [address + 220] = w(1);
-    [address + 238] = w(w[address + 238] & fffffffe);
-    [address + 250] = w(fffffffd);
+    [temp + 218] = w(w[temp + 218] & fffffffd);
+    [temp + 220] = w(1);
+    [temp + 238] = w(w[temp + 238] & fffffffe);
+    [temp + 250] = w(fffffffd);
 }
 else
 {
     if (A0 & 20) // nullify
     {
-        if (w[address + 244] != 0 || (w[address + 44] & 0008) != 0)
+        if (w[temp + 244] != 0 || (w[temp + 44] & 0008) != 0)
         {
-            [address + 218] = w(w[address + 218] | 00000001);
+            [temp + 218] = w(w[temp + 218] | 00000001);
         }
 
-        [address + 214] = w(0);
-        [address + 230] = w(0);
-        [address + 238] = w(0);
-        [address + 23c] = w(0);
-        [address + 240] = w(0);
-        [address + 244] = w(0);
+        [temp + 214] = w(0);
+        [temp + 230] = w(0);
+        [temp + 238] = w(0);
+        [temp + 23c] = w(0);
+        [temp + 240] = w(0);
+        [temp + 244] = w(0);
     }
 }
 ////////////////////////////////
@@ -9368,15 +9321,15 @@ else
 
 ////////////////////////////////
 // funcab674
-address = w[80063014];
-if ((w[address + 90] & 0010) == 0)
+temp = w[80063014];
+if ((w[temp + 90] & 0010) == 0)
 {
-    V0 = w[address + 0];
+    V0 = w[temp + 0];
     if (V0 < 3)
     {
-        if (w[address + 44] & 1c00 || w[address + 28] == 5) // if punch hit cut || attack == steal
+        if (w[temp + 44] & 1c00 || w[temp + 28] == 5) // if punch hit cut || attack == steal
         {
-            A1 = w[address + 18];
+            A1 = w[temp + 18];
 
             V1 = 4;
             loopab6dc:	; 800AB6DC
@@ -9392,22 +9345,22 @@ if ((w[address + 90] & 0010) == 0)
                 V0 = V1 < a;
             800AB708	bne    v0, zero, loopab6dc [$800ab6dc]
 
-            V0 = w[address + 18];
+            V0 = w[temp + 18];
             if (A1 != V0)
             {
-                V0 = w[address + 0];
+                V0 = w[temp + 0];
                 // long ranged materia equipped
                 V0 = bu[8009d84c + V0 * 440 + 23];
                 if (V0 & 4)
                 {
-                    [address + 90] = w(w[address + 90] | 00020000);
+                    [temp + 90] = w(w[temp + 90] | 00020000);
                 }
                 else
                 {
-                    [address + 18] = w(A1);
+                    [temp + 18] = w(A1);
                     if (A1 == 0)
                     {
-                        [address + dc] = w(77); // Can't reach!! text id
+                        [temp + dc] = w(77); // Can't reach!! text id
                     }
                 }
             }
@@ -9420,46 +9373,43 @@ if ((w[address + 90] & 0010) == 0)
 
 ////////////////////////////////
 // funcab788
-800AB788	addiu  sp, sp, $ffe0 (=-$20)
-A3 = w[80063014];
+
+temp = w[80063014];
+
 V1 = hu[8016376a];
 A0 = 0001;
-[SP + 0018] = w(RA);
-V0 = w[A3 + 002c];
+V0 = w[temp + 002c];
 V1 = V1 & 0040;
 800AB7AC	addiu  v0, v0, $ffb8 (=-$48)
 800AB7B0	bne    v1, zero, Lab820 [$800ab820]
 A0 = A0 << V0;
-T0 = w[A3 + 0204];
+T0 = w[temp + 0204];
 800AB7BC	nop
 V1 = w[T0 + 0024];
 800AB7C4	nop
 V0 = V1 & A0;
 800AB7CC	bne    v0, zero, Lab820 [$800ab820]
-A1 = 0073;
-A2 = 0001;
+
 V0 = V1 | A0;
 [T0 + 0024] = w(V0);
-A0 = w[A3 + 0208];
-V0 = hu[A3 + 002c];
-A3 = SP + 0010;
-800AB7EC	jal    battle_add_string_to_display [$800b0ffc]
-[SP + 0010] = h(V0);
-A0 = 0002;
-V0 = w[80063014];
-A3 = hu[SP + 0010];
-A1 = w[V0 + 0208];
-800AB808	jal    battle_add_to_800f4308 [$800a7254]
-A2 = 0012;
-V1 = w[80063014];
-V0 = 000a;
-[V1 + 0224] = w(V0);
+
+[SP + 10] = h(hu[temp + 2c]);
+
+A0 = w[temp + 208];
+A1 = 73;
+A2 = 1;
+A3 = SP + 10;
+battle_add_string_to_display();
+
+A0 = 2;
+A1 = w[temp + 208]; // target unit id
+A2 = 12;
+A3 = hu[SP + 10]; // attack id
+battle_add_to_800f4308();
+
+[temp + 0224] = w(a);
 
 Lab820:	; 800AB820
-RA = w[SP + 0018];
-SP = SP + 0020;
-800AB828	jr     ra 
-800AB82C	nop
 ////////////////////////////////
 
 
@@ -12446,233 +12396,139 @@ SP = SP + 0018;
 ////////////////////////////////
 // funcaec10
 
-S1 = A0;
+unit_id = A0;
 S3 = A1;
 S4 = A2;
-V0 = S1 < 0003;
-800AEC38	bne    v0, zero, Laec7c [$800aec7c]
 
-V0 = S1 << 01;
-V0 = V0 + S1;
-V0 = V0 << 02;
-V0 = V0 + S1;
-V0 = V0 << 03;
-800AEC54	lui    at, $8010
-AT = AT + V0;
-V1 = w[AT + 83e4];
-800AEC60	addiu  a0, zero, $ffe7 (=-$19)
-V1 = V1 & A0;
-800AEC68	lui    at, $8010
-AT = AT + V0;
-[AT + 83e4] = w(V1);
-800AEC74	j      Laed48 [$800aed48]
-V0 = S1 << 01;
+if( unit_id >= 3 )
+{
+    // remove Poison Sadness
+    [800f83e0 + unit_id * 68 + 4] = w(w[800f83e0 + unit_id * 68 + 4] & ffffffe7);
+}
+else
+{
+    [800f5e68 + unit_id * 34] = h(0);
 
-Laec7c:	; 800AEC7C
-V0 = S1 << 01;
-V0 = V0 + S1;
-V0 = V0 << 02;
-S0 = V0 + S1;
-S2 = S0 << 02;
-V0 = S1 << 04;
-V0 = V0 + S1;
-T0 = V0 << 02;
-800AEC9C	lui    at, $800f
-AT = AT + S2;
-[AT + 5e68] = h(0);
-800AECA8	lui    at, $800f
-AT = AT + T0;
-V1 = bu[AT + 5be1];
-800AECB4	nop
-V0 = V1 & 0008;
-800AECBC	beq    v0, zero, Laed14 [$800aed14]
-A0 = S1;
-A1 = 0003;
-A2 = 0;
-A3 = 0;
-V0 = V1 & 00f7;
-800AECD4	lui    at, $800f
-AT = AT + T0;
-[AT + 5be1] = b(V0);
-T0 = S0 << 03;
-800AECE4	lui    at, $8010
-AT = AT + T0;
-V0 = w[AT + 83e4];
-800AECF0	addiu  v1, zero, $ffef (=-$11)
-V0 = V0 & V1;
-800AECF8	lui    at, $8010
-AT = AT + T0;
-[AT + 83e4] = w(V0);
-[SP + 0010] = w(0);
-[SP + 0014] = w(0);
-800AED0C	jal    funcb10f0 [$800b10f0]
-[SP + 0018] = w(0);
+    if( bu[800f5be1 + unit_id * 44] & 08 )
+    {
+        [800f5be1 + unit_id * 44] = b(bu[800f5be1 + unit_id * 44] & f7);
 
-Laed14:	; 800AED14
-A0 = 0002;
-A1 = S1;
-A2 = 0018;
-800AED20	lui    at, $800f
-AT = AT + S2;
-V1 = hu[AT + 5e72];
-V0 = S0 << 03;
-800AED30	lui    at, $8010
-AT = AT + V0;
-[AT + 8410] = w(V1);
-800AED3C	jal    battle_add_to_800f4308 [$800a7254]
-A3 = 0;
-V0 = S1 << 01;
+        // remove Sadness
+        [800f83e0 + unit_id * 68 + 4] = w(w[800f83e0 + unit_id * 68 + 4] & ffffffef);
 
-Laed48:	; 800AED48
-V0 = V0 + S1;
-V0 = V0 << 02;
-A3 = V0 + S1;
-V0 = A3 << 02;
-800AED58	lui    at, $800f
-AT = AT + V0;
-A0 = bu[AT + 5e66];
-800AED64	nop
-V0 = A0 < 0004;
-800AED6C	bne    v0, zero, Laeda8 [$800aeda8]
-800AED70	lui    v0, $ffbf
-V1 = A0 << 01;
-V1 = V1 + A0;
-V1 = V1 << 02;
-V1 = V1 + A0;
-V1 = V1 << 03;
-800AED88	lui    at, $8010
-AT = AT + V1;
-A0 = w[AT + 83e0];
-V0 = V0 | ffff;
-A0 = A0 & V0;
-800AED9C	lui    at, $8010
-AT = AT + V1;
-[AT + 83e0] = w(A0);
+        A1 = 3;
+        A2 = 0;
+        A3 = 0;
+        A4 = 0;
+        A5 = 0;
+        A6 = 0;
+        800AED0C	jal    funcb10f0 [$800b10f0]
+    }
 
-Laeda8:	; 800AEDA8
-A0 = S1;
+    [800f83e0 + unit_id * 68 + 30] = w(hu[800f5e72 + unit_id * 34]);
+
+    A0 = 2;
+    A1 = unit_id;
+    A2 = 18;
+    A3 = 0;
+    battle_add_to_800f4308();
+}
+
+A0 = bu[800f5e60 + unit_id * 34 + 6];
+if( A0 >= 4 )
+{
+    [800f83e0 + A0 * 68 + 0] = w(w[800f83e0 + A0 * 68 + 0] & ffbfffff);
+}
+[800f83e0 + unit_id * 68 + 2c] = w(0); // current HP
+
+A0 = unit_id;
 A1 = S3;
-V0 = A3 << 03;
-[800f840c + V0] = w(0);
 A2 = S4;
 800AEDC0	jal    funcaebf0 [$800aebf0]
 
-S0 = S1 << 04;
-S0 = S0 + S1;
-S0 = S0 << 02;
-V1 = S1 << 03;
-V0 = 00ff;
-[800f5bbe + S0] = h(0);
-[800f6b34 + V1] = b(V0);
+[800f5bbe + unit_id * 44] = h(0);
 
-A0 = S1; // unit id
+[800f6b34 + unit_id * 8] = b(-1); // remove delayed action for unit
+
+A0 = unit_id;
 battle_request_return_reserved_items();
 
-A0 = 000f;
-800AEE00	lui    v0, $800f
-V0 = V0 + 5bd7;
-S0 = S0 + V0;
-
+A0 = f;
+V0 = 800f5bd7;
+S0 = V0 + unit_id * 44;
 loopaee0c:	; 800AEE0C
-[S0 + 0000] = b(0);
-800AEE10	addiu  a0, a0, $ffff (=-$1)
+    [S0] = b(0);
+    A0 = A0 - 1;
+    S0 = S0 - 1;
 800AEE14	bgez   a0, loopaee0c [$800aee0c]
-800AEE18	addiu  s0, s0, $ffff (=-$1)
-A0 = 0007;
-V0 = S1 << 04;
-V0 = V0 + S1;
-V0 = V0 << 02;
-800AEE2C	lui    v1, $800f
-V1 = V1 + 5bdf;
-V0 = V0 + V1;
 
+A0 = 7;
+V0 = 800f5bdf + unit_id * 44;
 loopaee38:	; 800AEE38
-[V0 + 0000] = b(0);
-800AEE3C	addiu  a0, a0, $ffff (=-$1)
+    [V0] = b(0);
+    V0 = V0 - 1;
+    A0 = A0 - 1;
 800AEE40	bgez   a0, loopaee38 [$800aee38]
-800AEE44	addiu  v0, v0, $ffff (=-$1)
-V0 = hu[800f7dcc];
-800AEE50	nop
-V0 = V0 >> S1;
-V0 = V0 & 0001;
-800AEE5C	bne    v0, zero, Laef1c [$800aef1c]
-V0 = S1 << 01;
-V0 = V0 + S1;
-V0 = V0 << 02;
-V0 = V0 + S1;
-S0 = V0 << 03;
-800AEE74	lui    at, $8010
-AT = AT + S0;
-T0 = hu[AT + 8430];
-800AEE80	nop
-T1 = T0 & ffff;
-800AEE88	beq    t1, zero, Laeec4 [$800aeec4]
-A0 = 000a;
-A1 = 0054;
-A2 = 0001;
-800AEE98	lui    v1, $800a
-800AEE9C	addiu  v1, v1, $d260 (=-$2da0)
-800AEEA0	lui    at, $8010
-AT = AT + S0;
-[AT + 8430] = h(0);
-V0 = w[V1 + 0000];
-A3 = SP + 0020;
-[SP + 0020] = h(T0);
-V0 = V0 + T1;
-800AEEBC	jal    battle_add_string_to_display [$800b0ffc]
-[V1 + 0000] = w(V0);
 
-Laeec4:	; 800AEEC4
-800AEEC4	lui    at, $8010
-AT = AT + S0;
-T0 = hu[AT + 8432];
-V0 = ffff;
-A3 = T0 & ffff;
-800AEED8	beq    a3, v0, Laef1c [$800aef1c]
-V0 = ffff;
-A0 = 0;
-V1 = w[80063014];
-800AEEEC	lui    at, $8010
-AT = AT + S0;
-[AT + 8432] = h(V0);
-A1 = w[V1 + 0000];
-A2 = 0003;
-800AEF00	jal    battle_add_to_800f4308 [$800a7254]
-[SP + 0022] = h(T0);
-A0 = 000a;
-A1 = 0052;
-A2 = 0001;
-800AEF14	jal    battle_add_string_to_display [$800b0ffc]
-A3 = SP + 0022;
+if( ( (hu[800f7dcc] >> unit_id) & 1 ) == 0 )
+{
+    if( hu[800f8430 + unit_id * 68] != 0 )
+    {
+        [800f8430 + unit_id * 68] = h(0);
+        [SP + 0020] = h(hu[800f8430 + unit_id * 68]);
+        [8009d260] = w(w[8009d260] + hu[800f8430 + unit_id * 68]);
 
-Laef1c:	; 800AEF1C
+        A0 = a;
+        A1 = 54;
+        A2 = 1;
+        A3 = SP + 20;
+        battle_add_string_to_display();
+    }
+
+    if( h[800f8432 + unit_id * 68] != -1 )
+    {
+        [800f8432 + unit_id * 68] = h(-1);
+        [SP + 0022] = h(h[800f8432 + unit_id * 68]);
+
+        A0 = 0;
+        V1 = w[80063014];
+        A1 = w[V1];
+        A2 = 3;
+        battle_add_to_800f4308();
+
+        A0 = a;
+        A1 = 52;
+        A2 = 1;
+        A3 = SP + 22;
+        battle_add_string_to_display();
+    }
+}
+
 A0 = 0;
-A1 = S1;
-A2 = 0002;
-800AEF28	jal    battle_add_to_800f4308 [$800a7254]
+A1 = unit_id;
+A2 = 2;
 A3 = 0;
-800AEF30	jal    funcb108c [$800b108c]
-A0 = S1;
+battle_add_to_800f4308();
 
-A0 = S1;
+A0 = unit_id;
+800AEF30	jal    funcb108c [$800b108c]
+
+A0 = unit_id;
 A1 = 1;
-battle_remove_unit_actions_from_battle_queue_with_priority();
+battle_remove_unit_actions_from_battle_queue_with_priority(); // remove actions with priority 1 of higher
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcaef68
-800AEF68	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = A0;
 V0 = S1 << 01;
 V0 = V0 + S1;
 V0 = V0 << 02;
 V0 = V0 + S1;
-[SP + 0010] = w(S0);
 S0 = V0 << 03;
-[SP + 0018] = w(RA);
 800AEF90	lui    at, $8010
 AT = AT + S0;
 V0 = w[AT + 840c];
@@ -12739,9 +12595,9 @@ V0 = V0 & V1;
 800AF074	beq    v0, zero, Laf08c [$800af08c]
 A0 = 0;
 A1 = S1;
-A2 = 0008;
-800AF084	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 8;
 A3 = 0;
+battle_add_to_800f4308();
 
 Laf08c:	; 800AF08C
 800AF08C	lui    v0, $800f
@@ -12752,12 +12608,6 @@ A0 = hu[V0 + 0000];
 V1 = 0 NOR V1;
 A0 = A0 & V1;
 [V0 + 0000] = h(A0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800AF0BC	jr     ra 
-800AF0C0	nop
 ////////////////////////////////
 
 
@@ -12797,17 +12647,12 @@ if( ( w[800f83e0 + unit_id * 68 + 0] & 02004404 ) == 0 )
 
 ////////////////////////////////
 // funcaf1a8
-800AF1A8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-A1 = A0;
+
 A0 = 0;
-A2 = 0008;
-800AF1BC	jal    battle_add_to_800f4308 [$800a7254]
+A1 = A0;
+A2 = 8;
 A3 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800AF1CC	jr     ra 
-800AF1D0	nop
+battle_add_to_800f4308();
 ////////////////////////////////
 
 
@@ -12850,9 +12695,10 @@ A1 = S2;
 A2 = S1;
 A0 = 0;
 A1 = S0;
-A2 = 0004;
-800AF2A4	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 4;
 A3 = 0;
+battle_add_to_800f4308();
+
 800AF2AC	lui    v1, $ffbf
 V0 = S0 << 01;
 V0 = V0 + S0;
@@ -13085,18 +12931,15 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // funcaf594
-800AF594	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S2);
+
 S2 = A0;
-[SP + 0010] = w(S0);
 S0 = A2;
 A0 = 0;
 A1 = S2;
-A2 = 000a;
+A2 = a;
 A3 = S0;
-[SP + 001c] = w(RA);
-800AF5BC	jal    battle_add_to_800f4308 [$800a7254]
-[SP + 0014] = w(S1);
+battle_add_to_800f4308();
+
 800AF5C4	beq    s0, zero, Laf5dc [$800af5dc]
 S1 = 0;
 800AF5CC	jal    funca23bc [$800a23bc]
@@ -13115,9 +12958,9 @@ V0 = bu[S0 + 0000];
 A0 = 0;
 [S0 + 0000] = b(0);
 A1 = S1;
-A2 = 0006;
-800AF600	jal    battle_add_to_800f4308 [$800a7254]
+A2 = 6;
 A3 = 0;
+battle_add_to_800f4308();
 
 Laf608:	; 800AF608
 S1 = S1 + 0001;
@@ -13815,11 +13658,11 @@ S0 = 0;
 
 Lb00dc:	; 800B00DC
 800B00DC	bne    s0, zero, Lb00f4 [$800b00f4]
-A0 = 0002;
+A0 = 2;
 A1 = S3;
 A2 = S1;
-800B00EC	jal    battle_add_to_800f4308 [$800a7254]
 A3 = S1;
+battle_add_to_800f4308();
 
 Lb00f4:	; 800B00F4
 [S2 + 0000] = b(S0);

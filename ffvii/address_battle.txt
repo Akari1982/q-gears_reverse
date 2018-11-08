@@ -103,6 +103,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f3958 some action (manipulated?)
 
+800f39e0 [][][][] ??
+800f39e4 [][][][] ??
+
 800f39f0 berserk toad action stats for player units. Copy first action command for unit here. (size 0x6).
     +0 []     Init with ff. Copy action id from temp.
     +1 []     Set default 800707c4 + 0. Set 0 here if weapon is long ranged or if some other condition.
@@ -132,18 +135,16 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f4300 [][][][] string buffer position.
 800f4304 [][][][] index into 800f4280.
 
-800f4308 3 arrays with 0x80 items each with size 0x04 (0x04 size 0x3 * 0x80 items).
-         We add something here and increment cell so next time we add to next cell.
-         Use Item - array1, +0 attacker id,+1 2, +2 item id.
-    +00 []       store attacker id here (player)
-    +01 []       we store here 6 at start of battle for player characters.
-    +02 [][]     we store here 0 at start of battle for player characters.
-800f4908 [][][][] something for 1st 0x200 800f4308. Init with 0.
-800f490c [][][][] something for 2nd 0x200 800f4308. Init with 0.
-800f4910 [][][][] something for 3rd 0x200 800f4308. Init with 0.
-800f4914 [][][][] current slot in 1st 0x200 800f4308. Init with 0.
-800f4918 [][][][] current slot in 2nd 0x200 800f4308. Init with 0.
-800f491c [][][][] current slot in 3rd 0x200 800f4308. Init with 0.
+800f4308 3 arrays with 0x80 items each with size 0x04 (0x04 size 0x3 * 0x80 items). Use Item - array1, +0 attacker id,+1 2, +2 item id.
+    +00 []       argument 1 for func.
+    +01 []       callback function id.
+    +02 [][]     argument 2 for func.
+800f4908 [][][][] work id for 1st 0x200 800f4308. Init with 0.
+800f490c [][][][] work id for 2nd 0x200 800f4308. Init with 0.
+800f4910 [][][][] work id for 3rd 0x200 800f4308. Init with 0.
+800f4914 [][][][] add id for 1st 0x200 800f4308. Init with 0.
+800f4918 [][][][] add id for 2nd 0x200 800f4308. Init with 0.
+800f491c [][][][] add id for 3rd 0x200 800f4308. Init with 0.
 
 800f4920 [][][][] init with 0 at start of attack calculation in action_type_09. Add 0009 flags gefore actual calculation.
 800f4924 [][]     array of something. Copy 800f4938 array gere during cycle of attack. (0xa items)
@@ -395,7 +396,14 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f6b94 []       array of executed order number for priority. Readed during main battle queue function. Must be different from 800F6B9B to anything happens.
 
+800f6b96 []       ???
+
+800f6b9a []       ???
 800f6b9b []       array of current order number for priority. It copied to 800f692c + 01 and incremented by 1. Must be different from 800f6b94 to anything happens.
+
+800f6b9d []       ???
+
+800f6ba1 []       ???
 
 800f6ba4 formation ai scripts from scene file (0x200 size).
 
@@ -530,7 +538,6 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f8390 [][][][] address where model data for 1st enemy model stored (without texture because it's loaded to vram)
 800f8394 [][][][] address where model data for 2nd enemy model stored (without texture because it's loaded to vram)
 800f8398 [][][][] address where model data for 3rd enemy model stored (without texture because it's loaded to vram)
-
 
 
 800f83a4 battle global structure. (address 0x2000).

@@ -648,7 +648,7 @@
         +3 []       quadra pair number. Init with 0. Set data from temp in case of magic and summon.
         +4 []       quadra number. Init with 0. Set data from temp in case of magic and summon. Set 0 if this is 0x19 (escape) or 0x47 (knight of the round) slot.
         +5 []       Set 0xc data from kernel attack data for magic summon and enemy skill.
-        +6
+        +6 []       ???
         +7 []       init with 0. Add number of stars in MP turbo linked to this summon to this 0xe0 (5 maximum) and leave 0x1f as is. 0x1f - flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut). Set from temp in case of magic.
     +408 struct with equipped weapon data
         +00 []       target type flags.
