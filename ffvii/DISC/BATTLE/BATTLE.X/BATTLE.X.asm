@@ -15,7 +15,7 @@
 // funca23bc
 800A23BC-800A23DC
 ////////////////////////////////
-// funca23e0
+// battle_action_queue_execute
 800A23E0-800A2838
 ////////////////////////////////
 // funca283c
@@ -111,7 +111,7 @@
 // funca38fc
 800A38FC-800A3D48
 ////////////////////////////////
-// funca3d4c
+// battle_copy_action_to_battle_queue
 800A3D4C-800A3E94
 ////////////////////////////////
 // battle_add_action_to_battle_queue
@@ -201,10 +201,10 @@
 // funca5660
 800A5660-800A56AC
 ////////////////////////////////
-// funca56b0
+// battle_request_return_reserved_items
 800A56B0-800A574C
 ////////////////////////////////
-// funca5750
+// battle_return_reserved_items
 800A5750-800A598C
 ////////////////////////////////
 // funca5990
@@ -696,7 +696,7 @@
 // funcaef68
 800AEF68-800AF0C0
 ////////////////////////////////
-// funcaf0c4
+// battle_restore_action_if_can
 800AF0C4-800AF1A4
 ////////////////////////////////
 // funcaf1a8
@@ -816,7 +816,7 @@
 // funcb12dc
 800B12DC-800B1300
 ////////////////////////////////
-// battle_remove_action_from_attack_queue
+// battle_remove_unit_actions_from_battle_queue_with_priority
 800B1304-800B1364
 ////////////////////////////////
 // battle_opcodes_get_two_bytes

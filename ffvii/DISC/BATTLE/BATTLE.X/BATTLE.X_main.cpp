@@ -131,7 +131,7 @@ if( battle_id != ffff )
         La13a4:	; 800A13A4
             // if 1 we only execute topest priority (0)
             A0 = (hu[800f83a4 + 22] & 0025) ? 1 : 7;
-            funca23e0; // battle queue function
+            battle_action_queue_execute();
             S4 = V0;
 
 
@@ -163,8 +163,8 @@ if( battle_id != ffff )
                 funcaf65c;
             800A1430	bne    v0, zero, loopa1428 [$800a1428]
 
-            A0 = a;
-            funca56b0;
+            A0 = a; // unit id
+            battle_request_return_reserved_items();
 
 
 
