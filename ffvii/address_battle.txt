@@ -437,6 +437,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7dbc [][]     store script bit here before run opcode cycle (1 << script_to_run).
 800f7dbe [][]     store 0051 here if attacker in lucky 7777 in large_function. Store 100 + string buffer id.
 800f7dc0 [][]     store 002F here if attacker in lucky 7777 in large_function. Store 0xf.
+800f7dc4 [][]     some units mask.
 800f7dc6 [][]     store here status(from attack param) & 00000003 (if 0x80000000 bit (imprisoned) in status mask set).
 800f7dc8 [][]     store here preemptive/side/pincer battle type (00 - normal, 01 - preemptive, 02 - back, 03 - side, 04 - both sides, 05 - normal).
 800f7dce [][]     petrified unit mask.

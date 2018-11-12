@@ -339,7 +339,7 @@
 // battle_remove_players_from_battle
 800A6E9C-800A7030
 ////////////////////////////////
-// funca7034
+// battle_set_item_was_stolen_string_to_display
 800A7034-800A705C
 ////////////////////////////////
 // funca7060
