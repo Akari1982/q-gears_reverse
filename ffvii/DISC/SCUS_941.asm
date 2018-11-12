@@ -1901,13 +1901,13 @@ SP = SP + 0068;
 
 
 ////////////////////////////////
-// system_copy_text_from_kernel
+// system_decompress_kernel_string_with_f9
 800150E4-800151F0
 ////////////////////////////////
 // system_get_pointer_to_battle_text_in_kernel_with_id
 800151F4-80015218
 ////////////////////////////////
-// func1521c
+// system_get_pointer_to_decompressed_battle_text_in_kernel_with_id
 8001521C-80015244
 ////////////////////////////////
 // func15248

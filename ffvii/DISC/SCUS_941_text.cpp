@@ -145,7 +145,7 @@ V0 = w[AT + 83e4];
 V0 = V0 & 0040;
 80015460	beq    v0, zero, L15484 [$80015484]
 80015464	nop
-80015468	jal    func1521c [$8001521c]
+80015468	jal    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id [$8001521c]
 A0 = 0071;
 A0 = S0;
 A1 = V0;
@@ -169,14 +169,14 @@ V0 = hu[AT + 5bf4];
 800154B4	lui    at, $8010
 AT = AT + S1;
 V0 = w[AT + 8410];
-800154C0	jal    func1521c [$8001521c]
+800154C0	jal    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id [$8001521c]
 [SP + 0112] = h(V0);
 A0 = S0;
 A1 = V0;
 800154D0	jal    func14d58 [$80014d58]
 800154D4	addiu  a2, zero, $ffff (=-$1)
 S0 = V0;
-800154DC	jal    func1521c [$8001521c]
+800154DC	jal    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id [$8001521c]
 A0 = 0072;
 A0 = S0;
 A1 = V0;
@@ -216,14 +216,15 @@ S0 = V0;
 
 L15550:	; 80015550
 A0 = SP + 0010;
-80015554	jal    func14e74 [$80014e74]
 A1 = S0;
+80015554	jal    func14e74 [$80014e74]
+
 A0 = V0;
 A1 = S0;
 
 L15564:	; 80015564
-80015564	jal    system_copy_text_from_kernel [$800150e4]
-80015568	nop
+80015564	jal    system_decompress_kernel_string_with_f9 [$800150e4]
+
 8001556C	j      L15580 [$80015580]
 T0 = V0;
 
@@ -652,14 +653,13 @@ return pos_y;
 
 
 ////////////////////////////////
-// func1521c()
+// system_get_pointer_to_decompressed_battle_text_in_kernel_with_id()
 
 A0 = A0;
 system_get_pointer_to_battle_text_in_kernel_with_id();
-
 A0 = V0;
-A1 = A0;
-system_copy_text_from_kernel();
+A1 = V0;
+system_decompress_kernel_string_with_f9();
 ////////////////////////////////
 
 
@@ -688,80 +688,60 @@ return 80063690 + V1 + V0;
 
 
 ////////////////////////////////
-// system_copy_text_from_kernel
-from = A0;
-where = 80063560;
+// system_decompress_kernel_string_with_f9()
 
-T2 = 0;
-T3 = 0;
-T5 = 80063560;
+src = A0;
+src2 = A1;
 
-loop150fc:	; 800150FC
-    opcode = bu[from];
-    from = from + 1;
+dst = 80063560;
 
-    T3 = T3 + 1; // readed size
+read_size = 0;
+write_size = 0;
 
-    if( opcode = f9 )
-    {
-        opcode = bu[from];
-        from = from + 1;
-        8001511C	addiu  t3, t3, $0001
-        80015120	addiu  v1, t3, $fffd (=-$3)
-        V0 = opcode & 3f;
-        80015128	subu   v1, v1, v0
-        V0 = opcode >> 6;
-        80015130	sll    v0, v0, $01
-        T4 = V0 + 4;
-        if( T4 != 0 )
-        {
-            80015140	addu   a2, t2, t5
-            V1 = V1 + A1;
-            T0 = 0;
-            loop15148:	; 80015148
-                opcode = bu[V1];
-                V1 = V1 + 1;
-                where = where + 1;
-                80015154	addiu  t2, t2, $0001
-                [A2] = b(opcode);
-                80015168	addiu  a2, a2, $0001
-                T0 = T0 + 1;
-                V0 = T0 < T4;
-            80015164	bne    v0, zero, loop15148 [$80015148]
-        }
-    }
-    else
-    {
-        if( ( opcode + 16 ) & ff < 08 ) // EA EB EC ED EE EF F0 F1
-        {
-            [where] = b(opcode);
-            where = where + 1; // store address
+while( write_size < 100 )
+{
+    letter = b[src];
+    src = src + 1;
+    read_size = read_size + 1;
 
-            [where] = b(bu[from]);
-            from = from + 1;
-            where = where + 1;
-            [where] = b(bu[from]);
-            from = from + 1;
-            where = where + 1;
-
-            T3 = T3 + 2; // readed size
-            T2 = T2 + 3; // stored size
-        }
-        else
-        {
-            [where] = b(opcode);
-            where = where + 1;
-            T2 = T2 + 1; // stored size
-        }
-    }
-
-    if( opcode == ff )
+    if( letter == -1 )
     {
         break;
     }
+    else if( letter == f9 )
+    {
+        letter = bu[src];
+        src = src + 1;
+        read_size = read_size + 1;
 
-    V0 = T2 < 100;
-800151D8	bne    v0, zero, loop150fc [$800150fc]
+        offset = (read_size - 3) - (letter & 3f);
+        size = (letter >> 6) << 1 + 4;
+        for( int i = 0; i < size; ++i )
+        {
+            [80063560 + write_size + i] = b(bu[src2 + offset + i]);
+            dst = dst + 1;
+            write_size = write_size + 1;
+        }
+    }
+    else if( ( ( letter + 16 ) & ff ) < 8 ) // EA EB EC ED EE EF F0 F1
+    {
+        [dst] = b(letter);
+        dst = dst + 1; // store address
+
+        [dst + 0] = b(bu[src + 0]);
+        [dst + 1] = b(bu[src + 1]);
+        src = src + 2;
+        dst = dst + 2;
+        read_size = read_size + 2;
+        write_size = write_size + 3;
+    }
+    else
+    {
+        [dst] = b(letter);
+        dst = dst + 1;
+        write_size = write_size + 1;
+    }
+}
 
 return 80063560;
 ////////////////////////////////

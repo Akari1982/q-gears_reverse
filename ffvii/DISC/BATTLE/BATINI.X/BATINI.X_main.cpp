@@ -31,7 +31,7 @@ system_calculate_total_lure_gil_preemptive_value();
 
 // read 0x7e battle string from kernel to temp 80063560
 A0 = 7e; // "0A"
-func1521c();
+system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
 [800fafd0] = w(bu[V0 + 0]); // 0 0x10
 [800f7ed0] = w(bu[V0 + 1]); // A 0x21
 

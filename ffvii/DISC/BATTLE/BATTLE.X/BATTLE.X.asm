@@ -225,10 +225,10 @@
 // funca5bc8
 800A5BC8-800A5E08
 ////////////////////////////////
-// funca5e0c
+// battle_copy_string_and_set_names_from_var
 800A5E0C-800A5EAC
 ////////////////////////////////
-// funca5eb0
+// battle_copy_string_to_string_buffer
 800A5EB0-800A5F8C
 ////////////////////////////////
 // funca5f90
@@ -306,19 +306,19 @@
 // funca6bfc
 800A6BFC-800A6C00
 ////////////////////////////////
-// funca6c04
+// battle_set_limit_break_string_to_display
 800A6C04-800A6C58
 ////////////////////////////////
 // funca6c5c
 800A6C5C-800A6CBC
 ////////////////////////////////
-// funca6cc0
+// battle_remove_unit_status_by_special_id
 800A6CC0-800A6D0C
 ////////////////////////////////
 // funca6d10
 800A6D10-800A6D38
 ////////////////////////////////
-// funca6d3c
+// battle_change_slownumb_to_petrify
 800A6D3C-800A6D84
 ////////////////////////////////
 // funca6d88
@@ -336,7 +336,7 @@
 // funca6e6c
 800A6E6C-800A6E98
 ////////////////////////////////
-// funca6e9c
+// battle_remove_players_from_battle
 800A6E9C-800A7030
 ////////////////////////////////
 // funca7034
