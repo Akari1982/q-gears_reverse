@@ -26,6 +26,8 @@
 
 800e7a38 [][][][] maybe current unit (during attack queue).
 
+800e7a48
+
 800e7a58 []       array of player unit_ids. Used if we want some player unit to execute another player logic.
 
 800e7bbc some values
@@ -99,6 +101,11 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f3950 [][][][] copy 800f3944 here at start of battle damage calculation.
 800f3954 [][][][] copy 800f3948 here at start of battle damage calculation.
 
+800f3958 some action (manipulated?)
+
+800f39e0 [][][][] ??
+800f39e4 [][][][] ??
+
 800f39f0 berserk toad action stats for player units. Copy first action command for unit here. (size 0x6).
     +0 []     Init with ff. Copy action id from temp.
     +1 []     Set default 800707c4 + 0. Set 0 here if weapon is long ranged or if some other condition.
@@ -115,25 +122,29 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +4 []     Copy number of stars from temp (but only in case of w command). Add number of stars in megaall materia in case of command id 5 6 9 a b 11. Set 0xff if actions 0x18,0x19,0x1a,0x1b
     +5 []     Init with 0. Flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut).
 
-800f3a40 array of some items structures 0x4 size (0x10 items) If some data in here and same user and same item - discard (write ffff).
-    +0 [][]     id of unit using item. Init with 0xffff.
-    +2 [][]     index of item. Init with 0xffff.
+800f3a18 [][][][] work index into 800f3a20. Increment after reading and working with data. Cycle around 0x10.
+800f3a1c [][][][] insert index into 800f3a20. Increment after inserting. Cycle around 0x10.
+800f3a20 array of returning items ids after removing from 800f3a40 (reserved items)(0x2 size 0x10 items).
+    +0 [][]     item id.
+800f3a40 array of reserved for action items structures (0x4 size 0x10 items).
+    +0 [][]     unit id (unit using item). Init with -1.
+    +2 [][]     item id. Init with -1.
 
 800f3a80 string buffer 0x800 size. We can add a lot of strings in one frame but they will be displayed one by one. We use this buffer and array of indexes into it for this.
 800f4280 array of string buffer positions indexed by 800f4304.
 800f4300 [][][][] string buffer position.
 800f4304 [][][][] index into 800f4280.
 
-800f4308 3 arrays with 0x80 items each with size 0x04 (0x04 size 0x3 * 0x80 items). We add something here and increment cell so next time we add to next cell.
-    +00 []       store attacker id here (player)
-    +01 []       we store here 6 at start of battle for player characters.
-    +02 [][]     we store here 0 at start of battle for player characters.
-800f4908 [][][][] something for 1st 0x200 800f4308. Init with 0.
-800f490c [][][][] something for 2nd 0x200 800f4308. Init with 0.
-800f4910 [][][][] something for 3rd 0x200 800f4308. Init with 0.
-800f4914 [][][][] current slot in 1st 0x200 800f4308. Init with 0.
-800f4918 [][][][] current slot in 2nd 0x200 800f4308. Init with 0.
-800f491c [][][][] current slot in 3rd 0x200 800f4308. Init with 0.
+800f4308 3 arrays with 0x80 items each with size 0x04 (0x04 size 0x3 * 0x80 items). Use Item - array1, +0 attacker id,+1 2, +2 item id.
+    +00 []       argument 1 for func.
+    +01 []       callback function id.
+    +02 [][]     argument 2 for func.
+800f4908 [][][][] work id for 1st 0x200 800f4308. Init with 0.
+800f490c [][][][] work id for 2nd 0x200 800f4308. Init with 0.
+800f4910 [][][][] work id for 3rd 0x200 800f4308. Init with 0.
+800f4914 [][][][] add id for 1st 0x200 800f4308. Init with 0.
+800f4918 [][][][] add id for 2nd 0x200 800f4308. Init with 0.
+800f491c [][][][] add id for 3rd 0x200 800f4308. Init with 0.
 
 800f4920 [][][][] init with 0 at start of attack calculation in action_type_09. Add 0009 flags gefore actual calculation.
 800f4924 [][]     array of something. Copy 800f4938 array gere during cycle of attack. (0xa items)
@@ -217,7 +228,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                 0x04 - add in case of sneak attack.
                 0x08 - if set we add protect from frog.
                 0x80 - add in case of lucky 7777.
-    +2a []       ???
+    +2a []      ???
     +2b
     +2c [][][][] some data checked after damage apply in action_type_09 function.
     +30 [][][][] some data checked after damage apply in action_type_09 function.
@@ -332,7 +343,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f692c attack stack data (0x41 items 0x8 size). One item for current action.
     +00 []       priority. Init with 0xff (exept current).
     +01 []       order inside priority.
-    +02 []       unit_id.
+    +02 []       unit id.
     +03 []       action type (0x01 - player attack
                     0x02 - player magic
                     0x03 - player summon
@@ -373,8 +384,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +04 [][]     attack index.
     +06 [][]     attack mask.
 
-800f6b34 array of something for units. 0x0-0x3 players, 0x4-0x9 enemy. We copy here data during some circumstances in battle queue function (0x8 size 0xa items).
-    +00 []       init with 0xff in case of enemy.
+800f6b34 array for delayed actions for units. If unit was stopped then we store current action here (0x8 size 0xa items).
 
 800f6b84 store here data after command executement for player (0x8 size 0x2 items).
     +00 []       priority. Init with 0xff (exept current).
@@ -386,7 +396,14 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f6b94 []       array of executed order number for priority. Readed during main battle queue function. Must be different from 800F6B9B to anything happens.
 
+800f6b96 []       ???
+
+800f6b9a []       ???
 800f6b9b []       array of current order number for priority. It copied to 800f692c + 01 and incremented by 1. Must be different from 800f6b94 to anything happens.
+
+800f6b9d []       ???
+
+800f6ba1 []       ???
 
 800f6ba4 formation ai scripts from scene file (0x200 size).
 
@@ -396,8 +413,10 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7da8 [][]     calculated, dexterity value ((total_dexterity - 1 + number_of_party) / number_of_party + 32)
 800f7daa [][]     atb type.
 
+800f7dac [][]     some unit mask.
 800f7db2 [][]     store here escape counter.
-
+800f7dc2 [][]     unit mask for manipulator units.
+800f7dca [][]     unit mask for manipulated units.
 800f7db6 [][]     store here escape counter.
 800f7db8 [][]     store 0 here at start of attack queue executed parcing
 800f7dba [][]     store currently executed priority in main battle queue here.
@@ -521,7 +540,6 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f8398 [][][][] address where model data for 3rd enemy model stored (without texture because it's loaded to vram)
 
 
-
 800f83a4 battle global structure. (address 0x2000).
     +00 []       store data performed action type id here. (0x20 for example)
     +01 []       store data performed attack index here.
@@ -536,7 +554,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +18 [][]     init with 0. Add bits for player units.
     +1a [][]     init with 0. Add bits for inited enemy units.
     +1c [][]     all units mask.
-    +22 [][]     init with 0 at start of battle cycle. Some flags. A0 = (V0 & 25) ? 1 : 7; funca23e0; // battle queue function
+    +22 [][]     init with 0 at start of battle cycle. Some flags. A0 = (V0 & 25) ? 1 : 7; battle_action_queue_execute();
     +28 [][]     store battle id here.
     +2c [][]     something flags used during attack queue coping. Used during 8 and A 2bytes copying from attack data. 0x0004 checked in battle cycle.
                     0x0008 - if set then we init player woth filled time bat and enemy with 0.
@@ -1127,6 +1145,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80166f58 []       init with 0.
 
 80166f74 []       number of rows in battle item menu. Minimum 3.
+80166f75 []       set to -1 when we use item.
 
 80166f78 some structure where we store manipulate attacks from monster (size 0x6, 0x10 per monster (only 0-2 inited as manipulate, others inited with base value0xff 0 0 3))
     +00 []       local attack id (global used in whole game but after load we index into loaded array)

@@ -1543,7 +1543,7 @@ SP = SP + 0018;
 // system_get_random_byte_from_table
 80014B70-80014BA4
 ////////////////////////////////
-// func14ba8
+// system_get_random_byte_range
 80014BA8-80014BE0
 ////////////////////////////////
 // system_random_two_bytes
