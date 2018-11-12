@@ -22,6 +22,20 @@
                 1F 0E 18 09 1F 10 0E 09 1F 1F 1F 1F 1F 07 0C 09
                 1F 08 1F 11 1F 13 09 1F 14 1F 15 0F 1F
 
+800a04d0 array of some status id
+                0A Stop
+                19 Paralyzed
+                15 D.Sentence
+                0D Slow-numb
+                10 Barrier
+                11 MBarrier
+                03 Poison
+                02 Sleep
+                0F Regen
+                1B Dual
+                14 Shield
+                18 Peerless
+
 800a0d98 default matrix for billboards.
 
 800e7a38 [][][][] maybe current unit (during attack queue).
@@ -539,7 +553,6 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f8394 [][][][] address where model data for 2nd enemy model stored (without texture because it's loaded to vram)
 800f8398 [][][][] address where model data for 3rd enemy model stored (without texture because it's loaded to vram)
 
-
 800f83a4 battle global structure. (address 0x2000).
     +00 []       store data performed action type id here. (0x20 for example)
     +01 []       store data performed attack index here.
@@ -560,6 +573,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                     0x0008 - if set then we init player woth filled time bat and enemy with 0.
     +2e [][]     flags. 0x0004 (magical or physical attack)
     +30 [][]     some id.
+    +34 [][]
     +38 [][][][] party gil amount from savemap.
 
 
@@ -1055,7 +1069,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
         +0c [][][][] &0000001f unit states (set to +4 in unit structure). Store status of enemy here from +4 0x68 structure.
 
 801636b8 units structure (size 0x10)
-    00 []       init with -1. If this is not -1 and player not dead we execure ai script 0.
+    00 []       init with -1. If this is not -1 and player not dead we execute ai script 0.
     01 []       idle action id. in case of enemy init with +10 from 0x68 structure (there is 0 there).
     02
     03
