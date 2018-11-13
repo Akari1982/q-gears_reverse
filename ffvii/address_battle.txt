@@ -1212,9 +1212,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f800018 target mask
 1f80001c init with 1. Active Allies???
 1f800020 animation script id to play.
-1F800024 copy D byte from attack data here. (Attack effect id)
+1F800024 copy D byte from attack data here or item id. (Attack effect id)
 1f800028 action id.
-1f80002c attack id.
+1f80002c attack id or item id.
 1f800030 attacker mask.
 1f800038 -1. MP cost.
 1f80003c hit%

@@ -192,10 +192,10 @@
 // funca555c
 800A555C-800A55B8
 ////////////////////////////////
-// funca55bc
+// battle_reset_reserved_items
 800A55BC-800A55F0
 ////////////////////////////////
-// funca55f4
+// battle_remove_unit_reserved_item
 800A55F4-800A565C
 ////////////////////////////////
 // funca5660
@@ -231,7 +231,7 @@
 // battle_copy_string_to_string_buffer
 800A5EB0-800A5F8C
 ////////////////////////////////
-// funca5f90
+// battle_get_string_pointer_from_string_buffer
 800A5F90-800A5FAC
 ////////////////////////////////
 // get_enemy_ai_script_offset
