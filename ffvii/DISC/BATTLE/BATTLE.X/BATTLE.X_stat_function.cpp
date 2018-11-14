@@ -44,41 +44,31 @@ else
 
 
 ////////////////////////////////
-// funcb79f0
-action_struct_id = bu[801590e0];
-index = h[80163798 + action_struct_id * c + a];
-target_count = bu[800f9774];
+// funcc5c18()
 
-[80163cc0 + target_count * 8] = b(bu[800fa9d0 + index * c + 0]); // target id
-[801517f0 + target_count] = b(bu[800fa9d0 + index * c + 0]); // target id
+T1 = 0;
+loopc5c40:	; 800C5C40
+    if( h[800f9da8 + T1 * 6 + 0] == -1 )
+    {
+        [800f9da8 + T1 * 6 + 0] = h(A0); // string index in buffer + 0x100
+        [800f9da8 + T1 * 6 + 2] = h(A3); // 0
+        [800f9da8 + T1 * 6 + 4] = b(A1 + ff); // string argument
 
+        if( A2 == 0 ) // 0
+        {
+            [800f9da8 + T1 * 6 + 5] = b(bu[8009d7bd] >> 2 + 4);
+        }
+        else
+        {
+            [800f9da8 + T1 * 6 + 5] = b(A2);
+        }
 
-[80163cc2 + target_count * 8] = h(hu[800fa9d0 + index * c + 4]); // flags
+        break;
+    }
 
-[80163cc4 + target_count * 8] = w(w[800fa9d0 + index * c + 8]); // store status of target
-
-A0 = bu[80163cc0 + target_count * 8];
-[801518e8 + A0 * b9c] = h(bu[800fa9d0 + index * c + 2]); // hurt animation
-
-V1 = b[800fa9d0 + index * c + 3];
-[800f99ec + target_count * c] = h(hu[800f9f3c + V1 * e + 2]); // damage
-[800f99ee + target_count * c] = h(hu[800f9f3c + V1 * e + 4]); // flags
-[800f99f4 + target_count * c] = h(V1);
-[800f99f6 + target_count * c] = h(index);
-
-V1 = b[800fa9d3 + index * c];
-if (V1 == -1)
-{
-    [800f99f0 + target_count * c] = h(-1);
-    [800f99f2 + target_count * c] = h(-1);
-}
-else
-{
-    [800f99f0 + target_count * c] = h(hu[800f9f3c + V1 * e + a]); // impact sound
-    [800f99f2 + target_count * c] = h(hu[800f9f3c + V1 * e + c]); // impact effect id
-}
-
-[800f9774] = b(target_count + 1);
+    T1 = T1 + 1;
+    V0 = T1 < 40;
+800C5CA4	bne    v0, zero, loopc5c40 [$800c5c40]
 ////////////////////////////////
 
 
@@ -515,66 +505,6 @@ funcbc04c;
 
 [801621f0 + V0 * 20 + 4] = w(w[SP + 10 + S0 * 4])
 [801621f0 + V0 * 20 + 8] = h(S1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcb7db4
-[800fa69c] = h(0);
-[80163608] = h(0);
-[80162088] = h(0);
-[80161de8] = h(0);
-[800f836c] = h(0);
-[801517b4] = h(0);
-[80151774] = h(0);
-
-if (bu[800f9774] > 0)
-{
-    A1 = 80163cc0; // target id
-    A2 = 80163cc2; // flags
-
-    T0 = 0;
-    loopb7e10:	; 800B7E10
-        [80151774] = h(hu[80151774] | (1 << bu[A1]));
-
-        if (hu(A2) & 1)
-        {
-            [801517b4] = h[hu[801517b4] | (1 << bu[A1])];
-        }
-
-        if (hu(A2) & 2)
-        {
-            [800f836c] = h[hu[800f836c] | (1 << bu[A1])];
-        }
-
-        if (hu[A2] & 4) // unit is dead
-        {
-            [80161de8] = h[hu[80161de8] | (1 << bu[A1])];
-        }
-
-        if (hu[A2] & 8)
-        {
-            [80162088] = h[hu[80162088] | (1 << bu[A1])];
-        }
-
-        if (hu[A2] & 10)
-        {
-            [80163608] = h[hu[80163608] | (1 << bu[A1])];
-        }
-
-        if (hu[A2] & 20)
-        {
-            [800fa69c] = h[hu[800fa69c] | (1 << bu[A1])];
-        }
-
-        A2 = A2 + 8;
-        A1 = A1 + 8;
-
-        T0 = T0 + 1;
-        V0 = T0 < bu[800f9774];
-    800B7F58	bne    v0, zero, loopb7e10 [$800b7e10]
-}
 ////////////////////////////////
 
 

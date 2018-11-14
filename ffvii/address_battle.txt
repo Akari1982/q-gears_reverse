@@ -358,7 +358,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +00 []       priority. Init with 0xff (exept current).
     +01 []       order inside priority.
     +02 []       unit id.
-    +03 []       action type (0x01 - player attack
+    +03 []       action type (0x40 - flag, 0x3f - type)
+                    0x01 - player attack
                     0x02 - player magic
                     0x03 - player summon
                     0x04 - player item
