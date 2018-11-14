@@ -2139,11 +2139,14 @@ return 80071c24 + A0 * 10;
 
 
 ////////////////////////////////
-// system_get_limit_id()
+// system_get_limit_command_id()
 
-if( A0 < 9 )
+character_id = A0;
+limit_id = A1;
+
+if( character_id < 9 )
 {
-    return bu[80082268 + A0 * 38 + 0c + A1] - 80;
+    return bu[80082268 + character_id * 38 + c + limit_id] - 80;
 }
 return 7f;
 ////////////////////////////////

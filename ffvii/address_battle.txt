@@ -794,6 +794,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80151774 [][]     Target mask.
 
+801517b8 [][][][]
 801517c0 [][][][] store 800faff4 here during battle init. offset to packets depth queue.
 801517c4 []       init with 0.
 

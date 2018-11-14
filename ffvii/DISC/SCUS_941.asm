@@ -2284,7 +2284,7 @@ SP = SP + 0008;
 
 
 ////////////////////////////////
-// system_get_limit_id
+// system_get_limit_command_id
 80015AFC-80015B40
 ////////////////////////////////
 
@@ -5456,7 +5456,7 @@ V0 = V0 << 02;
 80021ED8	addiu  at, at, $91d0 (=-$6e30)
 AT = AT + V0;
 A0 = w[AT + 0000];
-80021EE4	jal    system_get_limit_id [$80015afc]
+80021EE4	jal    system_get_limit_command_id [$80015afc]
 A1 = S3;
 A0 = 0003;
 A1 = V0;

@@ -445,14 +445,14 @@ switch (V0)
     // mime
     case 0x0C:
     {
-        6C8A0A80 // 17
+        funca8a6c(); // 17
     }
     break;
 
     // enemy skill
     case 0x0D:
     {
-        AC760A80 // 3
+        funca76ac(); // 3
         action_type_0C; // load attack data
         action_type_09; // calculate and apply damage
     }
@@ -702,16 +702,11 @@ loopa2110:	; 800A2110
     V0 = S0 < a;
 800A221C	bne    v0, zero, loopa2110 [$800a2110]
 
+funca2894(); // lucky 7777
 
-
-funca2894; // lucky 7777
-
-
-
-V0 = w[801517b8];
-if( V0 != 0 )
+if( w[801517b8] != 0 )
 {
-    [801517b8] = w(V0 - 1);
+    [801517b8] = w(w[801517b8] - 1);
 }
 else if( attacker_id < 3 )
 {
@@ -1182,19 +1177,17 @@ return;
 
 
 ////////////////////////////////
-// funca2cc4
+// funca2cc4()
 
-V0 = w[80063014];
-V1 = w[V0 + 0098];
+temp = w[80063014];
+
 A1 = A0;
-[SP + 0014] = w(0);
-
-La2ce0:	; 800A2CE0
-[SP + 0018] = w(0);
-[SP + 0010] = w(V1);
-A0 = w[V0 + 0000];
-A2 = w[V0 + 0028];
-A3 = w[V0 + 0024];
+A0 = w[temp + 0];
+A2 = w[temp + 28];
+A3 = w[temp + 24];
+A4 = w[temp + 98];
+A5 = 0;
+A6 = 0;
 funcb10f0();
 ////////////////////////////////
 
@@ -6258,135 +6251,99 @@ return;
 
 
 ////////////////////////////////
-// funca8a6c
+// funca8a6c()
+
+temp = w[80063014];
+attacker_id = w[temp + 0];
 
 FP = 0;
-800A8A78	addiu  t0, zero, $ffff (=-$1)
-[SP + 28] = w(T0);
-T0 = 0003;
-V0 = w[80063014];
-800A8A8C	lui    v1, $800f
-V1 = V1 + 5e78;
-S7 = V1 + 1f62;
-[SP + 0030] = w(T0);
-S5 = w[V0 + 0000];
-S3 = 0;
-V0 = S5 << 01;
-V0 = V0 + S5;
-V0 = V0 << 02;
-V0 = V0 + S5;
-V0 = V0 << 02;
-S4 = V0 + V1;
-V0 = S5 << 04;
-[SP + 0018] = h(S5);
-800A8AE8	lui    at, $8016
-AT = AT + V0;
-V0 = b[AT + 36b8];
-800A8AF4	nop
-[SP + 0020] = w(V0);
 
-loopa8afc:	; 800A8AFC
-V0 = ffff;
-[S4 + 0000] = h(V0);
-800A8B04	lui    at, $800f
-AT = AT + S3;
-V1 = b[AT + 6b86];
-800A8B10	addiu  v0, zero, $ffff (=-$1)
-800A8B14	beq    v1, v0, La8bf0 [$800a8bf0]
-800A8B18	nop
-800A8B1C	lui    at, $800f
-AT = AT + S3;
-V0 = bu[AT + 6b87];
-800A8B28	lui    at, $800f
-AT = AT + S3;
-S1 = h[AT + 6b88];
-800A8B34	lui    at, $800f
-AT = AT + S3;
-S6 = hu[AT + 6b8a];
-S2 = V0 & 003f;
-V0 = 000c;
-800A8B48	beq    s2, v0, La8bf0 [$800a8bf0]
-V0 = 0014;
-800A8B50	bne    s2, v0, La8ba8 [$800a8ba8]
-S0 = 0;
+[SP + 18] = h(attacker_id);
+[SP + 20] = w(b[801636b8 + attacker_id * 10]);
+[SP + 28] = w(-1);
+[SP + 30] = w(3);
 
-loopa8b58:	; 800A8B58
-A0 = w[SP + 0020];
-800A8B5C	jal    $80015afc
-A1 = S0;
-800A8B64	beq    v0, s1, La8b7c [$800a8b7c]
-V0 = 000c;
-S0 = S0 + 0001;
-V0 = S0 < 000c;
-800A8B74	bne    v0, zero, loopa8b58 [$800a8b58]
-V0 = 000c;
-
-La8b7c:	; 800A8B7C
-800A8B7C	bne    s0, v0, La8ba8 [$800a8ba8]
-T0 = 57; // {VAR:TargetName} cannot mimic {VAR:AttackName}.
-V0 = w[80063014];
-[SP + 28] = w(T0);
-T0 = 0035;
-[SP + 0030] = w(T0);
-[V0 + 0098] = w(S1);
-V0 = S1 + 0080;
-800A8BA0	j      La8bf0 [$800a8bf0]
-[SP + 001a] = h(V0);
-
-La8ba8:	; 800A8BA8
-A1 = hu[800f7dba];
-V0 = 0001;
-800A8BB4	beq    a1, v0, La8bc0 [$800a8bc0]
-A0 = S5;
-A1 = 0004;
-
-La8bc0:	; 800A8BC0
-A2 = S2 | 0040;
-V0 = w[801517b8];
-[SP + 0010] = w(S6);
-V0 = V0 + 0001;
-[801517b8] = w(V0);
-A3 = S1;
-battle_add_action_to_battle_queue();
-
-V0 = hu[S7 + 0000];
-FP = FP + 0001;
-[S4 + 0000] = h(V0);
-
-La8bf0:	; 800A8BF0
-S4 = S4 + 0002;
-S3 = S3 + 0008;
-V0 = S3 < 0010;
-800A8BFC	bne    v0, zero, loopa8afc [$800a8afc]
-S7 = S7 + 0002;
-800A8C04	bne    fp, zero, La8c60 [$800a8c60]
-
-T0 = w[SP + 28];
-
-if( T0 == -1 )
+for( int i = 0; i < 2; ++i )
 {
-    [SP + 28] = w(58); // {VAR:TargetName} made a useless imitation.
+    [800f5e60 + attacker_id * 34 + 18 + i * 2] = h(-1);
+
+    if( b[800f6b84 + i * 8 + 2] != -1 ) // unit id
+    {
+        action_type = bu[800f6b84 + i * 8 + 3] & 003f;
+        attack_id = h[800f6b84 + i * 8 + 4];
+        target_mask = hu[800f6b84 + i * 8 + 6];
+
+        if( action_type != c ) // player mime
+        {
+            if( action_type == 14 ) // player limit
+            {
+                int j = 0;
+                for( ; j < c; ++j )
+                {
+                    A0 = w[SP + 20]; // character id
+                    A1 = j; // limit id
+                    system_get_limit_command_id();
+                    if( V0 == attack_id )
+                    {
+                        break;
+                    }
+                }
+
+                if( j == c )
+                {
+                    [SP + 28] = w(57); // {VAR:TargetName} cannot mimic {VAR:AttackName}.
+                    [SP + 30] = w(35);
+
+                    [temp + 98] = w(attack_id);
+                    [SP + 1a] = h(attack_id + 80);
+                    break;
+                }
+            }
+
+            [801517b8] = w(w[801517b8] + 1);
+
+            A0 = attacker_id; // unit id
+            A1 = hu[800f7dba]; // current priority
+            if( A1 != 1 )
+            {
+                A1 = 4;
+            }
+            A2 = action_type | 40;
+            A3 = attack_id;
+            A4 = target_mask;
+            battle_add_action_to_battle_queue();
+
+            FP = FP + 1;
+            [800f5e60 + attacker_id * 34 + 18 + i * 2] = h(hu[800f7dda + i * 2]);
+        }
+    }
 }
 
-A0 = w[SP + 0030];
-800A8C24	jal    funca2cc4 [$800a2cc4]
+if( FP == 0 )
+{
+    if( w[SP + 28] == -1 )
+    {
+        [SP + 28] = w(58); // {VAR:TargetName} made a useless imitation.
+    }
 
-A0 = S5;
-A1 = w[SP + 28];
-A2 = 1;
-A3 = SP + 18;
-battle_add_string_to_display();
+    A0 = w[SP + 30];
+    800A8C24	jal    funca2cc4 [$800a2cc4]
 
-T0 = w[SP + 0030];
-V0 = 0003;
-800A8C48	bne    t0, v0, La8c60 [$800a8c60]
-800A8C4C	nop
-800A8C50	jal    funca2cc4 [$800a2cc4]
-A0 = 003b;
-800A8C58	jal    funca2cc4 [$800a2cc4]
-A0 = 0004;
+    A0 = attacker_id;
+    A1 = w[SP + 28];
+    A2 = 1;
+    A3 = SP + 18;
+    battle_add_string_to_display();
 
-La8c60:	; 800A8C60
+    if( w[SP + 30] == 3 )
+    {
+        A0 = 3b;
+        800A8C50	jal    funca2cc4 [$800a2cc4]
+
+        A0 = 4;
+        800A8C58	jal    funca2cc4 [$800a2cc4]
+    }
+}
 ////////////////////////////////
 
 

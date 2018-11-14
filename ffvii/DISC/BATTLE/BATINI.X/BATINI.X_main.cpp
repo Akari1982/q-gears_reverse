@@ -788,7 +788,7 @@ for( int i = 0; i < 3; ++ i )
         {
             A0 = char_id;
             A1 = j;
-            system_get_limit_id();
+            system_get_limit_command_id();
             if( V0 == bu[struct_440_ac_limit + i + 0] )
             {
                 break;
