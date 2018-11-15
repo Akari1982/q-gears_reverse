@@ -35,6 +35,10 @@
                 1B Dual
                 14 Shield
                 18 Peerless
+                FF
+                FF
+                FF
+                FF
 
 800a0d98 default matrix for billboards.
 
@@ -47,6 +51,9 @@
 800e7bbc some values
                 08 00 02 08 01 08 03 08 04 08 05 08 00 02 08 01
                 08 07 08 06 08 00 02 08 00 08 08 08 08 08
+
+800e7cbc
+800e7cdc
 
 800e7d10 up vector for battle camera. (3 items, 0x4 size)
 800e7d20 vector to scale rotation matrix for 3d. (3 items, 0x4 size)
@@ -203,7 +210,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f5bb8 some unit structure. (size 0x44).
 800f5cc8 some unit structure. enemy starts here. (size 0x44).
     +00 [][]     unit speed.
-    +02 [][]     time value addition (increase with it). Initialized in funcae954 with (battle_speed * unit_dexterity / party_dexterity). We read this in main battle queue function.
+    +02 [][]     time value addition (increase with it). Initialized in battle_recalculate_unit_speed with (battle_speed * unit_dexterity / party_dexterity). We read this in main battle queue function.
     +04 [][]     init with 0. Time value (init in battleinit_init_units_time_value).
     +06 [][]
     +08 [][]     add 0x0001 bit if player with limit break and remove it during init. Limit time speed (time speed increased 4 times when this flag is on).
@@ -212,22 +219,22 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +0d []       init with 0xff. Accessory special effect.
     +0e []       add 0x01 bit if player with limit break.
     +0f []       init with 0xff. Store enemy type number (+0c from  from 800f83e0) here (formation number).
-    +10 []       store 0 here during init.
-    +11 []       store 0 here during init.
+    +10 []       init with 0. Stop related.
+    +11 []       init with 0. Paralyzed related.
     +12 []       init with 0. Store 0xff here if we set death sentence through curse ring equip.
-    +13 []       store 0 here during init.
-    +14 []       store 0 here during init.
-    +15 []       store 0 here during init.
-    +16 []       store 0 here during init.
-    +17 []       store 0 here during init.
-    +18 []       store 0 here during init.
-    +19 []       store 0 here during init.
-    +1a []       store 0 here during init.
-    +1b []       store 0 here during init.
-    +1c []       store 0 here during init.
-    +1d []       store 0 here during init.
-    +1e []       store 0 here during init.
-    +1f []       store 0 here during init.
+    +13 []       init with 0. Slow-numb related.
+    +14 []       init with 0. Barrier related.
+    +15 []       init with 0. MBarrier related.
+    +16 []       init with 0. Poison related.
+    +17 []       init with 0. Sleep related.
+    +18 []       init with 0. Regen related.
+    +19 []       init with 0. Dual related.
+    +1a []       init with 0. Shield related.
+    +1b []       init with 0. Peerless related.
+    +1c []       init with 0.
+    +1d []       init with 0.
+    +1e []       init with 0.
+    +1f []       init with 0.
     +20 []       store 0 here during init. Attack multiplier. Rised by hero drink for example.
     +21 []       store 0 here during init. Magical attack multiplier.
     +22 []       store 0 here during init. Physical defense multiplier.
@@ -238,12 +245,12 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +27 []       store 0 here during init.
     +28 []
     +29 []       add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
-                0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
-                0x04 - add in case of sneak attack.
-                0x08 - if set we add protect from frog.
-                0x80 - add in case of lucky 7777.
-    +2a []      ???
-    +2b
+                 0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
+                 0x04 - add in case of sneak attack.
+                 0x08 - if set we add protect from frog.
+                 0x80 - add in case of lucky 7777.
+    +2a []       ???
+    +2b []       dead effect?
     +2c [][][][] some data checked after damage apply in action_type_09 function.
     +30 [][][][] some data checked after damage apply in action_type_09 function.
     +34 [][][][] init with status protect mask in case of player. Add statuses from equipment here (like haste or barrier from accessory). Set inversed status immunities from enemy data structure in case of enemy (+b0).
@@ -626,7 +633,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     + 2a [][]     max MP.
     + 2c [][][][] current HP.
     + 30 [][][][] max HP.
-    + 44 [][][][] init with 0. Store status of this unit here during initialization. Copy status from +0 here.
+    + 44 [][][][] previous statuses. To check changes. Store status of this unit here during initialization. Copy status from +0 here.
     + 4c []       init with 1.
     + 4d []       set magic evade (magic defense% in game) from armor equipped in case of player.
     + 4e []       store row from battle formation here during init.

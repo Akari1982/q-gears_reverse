@@ -681,7 +681,7 @@
 // funcae82c
 800AE82C-800AE950
 ////////////////////////////////
-// funcae954
+// battle_recalculate_unit_speed
 800AE954-800AEB1C
 ////////////////////////////////
 // funcaeb20
@@ -690,13 +690,13 @@
 // funcaeb80
 800AEB80-800AEBEC
 ////////////////////////////////
-// funcaebf0
+// battle_recalculate_unit_speed
 800AEBF0-800AEC0C
 ////////////////////////////////
-// funcaec10
+// battle_post_add_death
 800AEC10-800AEF64
 ////////////////////////////////
-// funcaef68
+// battle_post_remove_death
 800AEF68-800AF0C0
 ////////////////////////////////
 // battle_restore_action_if_can
