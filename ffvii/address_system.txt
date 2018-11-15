@@ -508,6 +508,7 @@
         +1f []       flags (0x10 sadness, 0x20 fury).
         +20 []       char order (0xff normal, 0xfe back row).
         +21 []       level progress bar (0-255)
+        +24 [][]     number of kills.
         +2c [][]     current hp.
         +2e [][]     max hp (before materia alterations).
         +30 [][]     current mp.
@@ -538,6 +539,7 @@
     +0b84 [][][][] savemap seconds for timer (set in STTIM).
     +0ba4 savemap memory bank 1/2 start
     +0ba4 (+00) [][]     game progress
+    +0bbe [][]     number of escapes.
     +0bc0 (+1c) [][]     menu visibility mask.
     +0bc2 (+1e) [][]     menu locking mask.
     +0c03       []       init with 0 on worldmap loading.

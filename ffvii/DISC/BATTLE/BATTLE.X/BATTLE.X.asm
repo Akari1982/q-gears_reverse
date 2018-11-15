@@ -142,7 +142,10 @@
 800A4954-800A4A7C
 ////////////////////////////////
 // funca4a80
-800A4A80-800A4AF0
+800A4A80-800A4AC8
+////////////////////////////////
+// funca4acc
+800A4ACC-800A4AF0
 ////////////////////////////////
 // action_type_14
 800A4AF4-800A4B38
@@ -591,43 +594,43 @@
 // battle_add_random_modifier_and_zero_check
 800AD8DC-800AD920
 ////////////////////////////////
-// lower_function_00
+// battle_lower_function_00
 800AD924-800AD940
 ////////////////////////////////
-// lower_function_01
+// battle_lower_function_01
 800AD944-800ADBB8
 ////////////////////////////////
-// lower_function_02
+// battle_lower_function_02
 800ADBBC-800ADC6C
 ////////////////////////////////
-// lower_function_03
+// battle_lower_function_03
 800ADC70-800ADD28
 ////////////////////////////////
-// lower_function_04
+// battle_lower_function_04
 800ADD2C-800ADDE4
 ////////////////////////////////
-// lower_function_05
+// battle_lower_function_05
 800ADDE8-800ADE58
 ////////////////////////////////
-// lower_function_06
+// battle_lower_function_06
 800ADE5C-800ADE80
 ////////////////////////////////
-// lower_function_07
+// battle_lower_function_07
 800ADE84-800ADED4
 ////////////////////////////////
-// lower_function_08
+// battle_lower_function_08
 800ADED8-800ADF00
 ////////////////////////////////
-// lower_function_09
+// battle_lower_function_09
 800ADF04-800ADF34
 ////////////////////////////////
-// lower_function_0a
+// battle_lower_function_0a
 800ADF38-800ADFBC
 ////////////////////////////////
-// lower_function_10
+// battle_lower_function_10
 800ADFC0-800ADFF0
 ////////////////////////////////
-// lower_function_11
+// battle_lower_function_11
 800ADFF4-800AE04C
 ////////////////////////////////
 // funcae050
@@ -648,22 +651,22 @@
 // funcae078
 800AE078-800AE07C
 ////////////////////////////////
-// lower_function_18
+// battle_lower_function_18
 800AE080-800AE230
 ////////////////////////////////
-// funcae234
+// battle_set_temp_damage_as_number_of_escapes
 800AE234-800AE258
 ////////////////////////////////
-// funcae25c
+// battle_set_temp_damage_as_target_hp_minus_one
 800AE25C-800AE29C
 ////////////////////////////////
 // funcae2a0
 800AE2A0-800AE314
 ////////////////////////////////
-// funcae318
+// battle_set_temp_damage_as_number_of_kills
 800AE318-800AE374
 ////////////////////////////////
-// funcae378
+// battle_set_temp_damage_as_targets_materia_number
 800AE378-800AE428
 ////////////////////////////////
 // funcae42c
