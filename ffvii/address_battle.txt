@@ -1216,12 +1216,12 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f800004 attacker level
 1f800008 init with -1. Store enemy index here if this is enemy attack.
 1f80000c action id. (0x20 - enemy attack)
-1f800010 attack index
-1f800014 init with -1. Store attacker id here if specified attack was magic, summon or enemy skill and player has it.
+1f800010 attack id or item id.
+1f800014 init with -1. Store attacker id here if specified attack was magic, summon or enemy skill and player has it. Action Animation Base.
 1f800018 target mask
 1f80001c init with 1. Active Allies???
 1f800020 animation script id to play.
-1F800024 copy D byte from attack data here or item id. (Attack effect id)
+1F800024 copy D byte from attack data here or item id - 80. (Attack effect id)
 1f800028 action id.
 1f80002c attack id or item id.
 1f800030 attacker mask.
@@ -1262,7 +1262,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                                                           00100000 - add bit if no mega all stars left (force single target?).
                                                           01000000 - if this bit is set we can attack dead units too.
 1f800094 target mask
-1f800098 attack index. Attack index in group magic summon enemy skill, limit or attack index in scene data.
+1f800098 attack id or item id. Attack id in group magic summon enemy skill, limit or attack index in scene data.
 1f8000a0 formula upper
 1f8000a4 formula lower
 1f8000a8 reset it after action if we use sense.
@@ -1275,12 +1275,12 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f8000c4 store power modifier here.
 1f8000c8 attacker status.
 1f8000cc copy 2nd byte from attack data here. Hurt action id?
-1f8000d0 init with 0xFFFFFFFF.
-1f8000d4 init with 0xFFFFFFFF.
+1f8000d0 init with 0xFFFFFFFF. Follow-up Action(s)
+1f8000d4 init with 0xFFFFFFFF. Follow-up Action(s)
 1f8000d8 *2 used in 0x09 lower formula as base damage.
 1f8000dc init with -1. String to display.
-1f8000e0 init with 0. This is increment when we do damage.
-1f8000e4 init with -1.
+1f8000e0 init with 0. This is increment when we do damage. Number of succesful hits.
+1f8000e4 init with -1. Set to 0x59 in case of manipulate.
 1f8000e8 set ((w[1f8000f0] >> 5) * 0xa) if w[1f8000f0] & 0xe0 != 0. Mp Turbo stars * 0xa. Mp boost%
 1f8000ec store target mask here.
 1f8000f0 store lower byte of unknown data seted in large_function file. Set flags (0x01 - mp absorb, 0x02 - hp absorb, 0x08 - steal as well, 0x10 - added cut) from unit data for actions that we perform if priority 5 or 6.
@@ -1288,14 +1288,17 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f8000f8 store high byte of unknown data seted in large_function file here if it not 0.
 1f8000fc copy number of multiple attacks here.
 1f800200 address 800f5bb8 + target * 44.
-1f800204 address 800f5e60 + target * 34 or -1 in case of not player.
+1f800204 address 800f5e60 + target * 34 or -1 in case of not player. Character Map (players only)
 1f800208 target entity id.
 1f80020c store -1. Set enemy index here (1 2 3) (only in case of enemy).
 1f800210 init with 0. Calculated defense.
 1f800214 init with 0. Calculated damage.
 1f800218 init with 1f800090 flags. 0x0001 if we have power modifier 0 and we not add/remove/change statuses and if unit is undamagable (auto-miss).
                                    0x0002 add this bit in case of lower function 0 or if we done no damage.
+                                   0x0004 Attempt Steal
                                    0x0020 then we hit target for sure in case of physical attack.
+                                   0x4000 Physical Barrier
+                                   0x8000 Magical Barrier 
 1f80021c init with 0.
 1f800220 init with 0. attack flag. (0x0001 - heal, 0x0002 - critical damage, 0x0004 - damage to MP)
 1f800224 store hurt action id. Store 33 here if 1f800048 == 0.

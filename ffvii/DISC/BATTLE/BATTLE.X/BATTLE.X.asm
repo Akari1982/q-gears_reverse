@@ -210,7 +210,7 @@
 // battle_return_reserved_items
 800A5750-800A598C
 ////////////////////////////////
-// funca5990
+// battle_get_random_item_from_inventory
 800A5990-800A5A58
 ////////////////////////////////
 // funca5a5c
@@ -252,7 +252,7 @@
 // funca64a0
 800A64A0-800A64B0
 ////////////////////////////////
-// battle_use_item_from_slot
+// battle_get_item_from_slot
 800A64B4-800A6538
 ////////////////////////////////
 // battle_reset_manipulator_timer
@@ -303,7 +303,7 @@
 // funca6b1c
 800A6B1C-800A6B84
 ////////////////////////////////
-// funca6b88
+// battle_search_and_remove_item_from_slot
 800A6B88-800A6BF8
 ////////////////////////////////
 // funca6bfc
@@ -378,22 +378,22 @@
 // action_type_01
 800A73D8-800A73F4
 ////////////////////////////////
-// action_type_02
+// battle_prepare_temp_from_item_for_use
 800A73F8-800A7454
 ////////////////////////////////
-// funca7458
+// battle_prepare_temp_from_item_for_throw
 800A7458-800A755C
 ////////////////////////////////
 // funca7560
 800A7560-800A76A8
 ////////////////////////////////
-// funca76ac
+// battle_prepare_temp_for_loading_attack_for_enemy_skill
 800A76AC-800A76C8
 ////////////////////////////////
 // action_type_04
 800A76CC-800A7780
 ////////////////////////////////
-// action_type_05
+// battle_prepare_temp_for_defend
 800A7784-800A7788
 ////////////////////////////////
 // action_type_06
@@ -402,7 +402,7 @@
 // action_type_07
 800A784C-800A793C
 ////////////////////////////////
-// funca7940
+// battle_prepare_temp_for_manipulate
 800A7940-800A7958
 ////////////////////////////////
 // funca795c
@@ -597,10 +597,10 @@
 // battle_lower_function_00
 800AD924-800AD940
 ////////////////////////////////
-// battle_lower_function_01
+// battle_set_temp_damage_as_physical
 800AD944-800ADBB8
 ////////////////////////////////
-// battle_lower_function_02
+// battle_set_temp_damage_as_magical
 800ADBBC-800ADC6C
 ////////////////////////////////
 // battle_lower_function_03
@@ -807,7 +807,7 @@
 // funcb10f0
 800B10F0-800B11B0
 ////////////////////////////////
-// battle_get_attack_index_by_attack_id
+// battle_get_attack_id_in_scene_by_attack_id
 800B11B4-800B1214
 ////////////////////////////////
 // funcb1218

@@ -741,7 +741,7 @@ switch (V0)
     // item, w-item
     case 0x04 0x17:
     {
-        action_type_02(); // set attack id and animations
+        battle_prepare_temp_from_item_for_use(); // set attack id and animations
         action_type_0D; // load item attack data
         action_type_09; // calculate and apply damage
     }
@@ -767,7 +767,7 @@ switch (V0)
     // coin
     case 0x07:
     {
-        60750A80 // 1D
+        funca7560();
         action_type_09; // calculate and apply damage
     }
     break;
@@ -775,7 +775,7 @@ switch (V0)
     // throw
     case 0x08:
     {
-        58740A80 // 19
+        battle_prepare_temp_from_item_for_throw();
         action_type_09; // calculate and apply damage
     }
     break;
@@ -801,7 +801,7 @@ switch (V0)
     // manipulate
     case 0x0B:
     {
-        40790A80 // 1A
+        battle_prepare_temp_for_manipulate();
         action_type_09; // calculate and apply damage
     }
     break;
@@ -816,7 +816,7 @@ switch (V0)
     // enemy skill
     case 0x0D:
     {
-        funca76ac(); // 3
+        battle_prepare_temp_for_loading_attack_for_enemy_skill();
         action_type_0C; // load attack data
         action_type_09; // calculate and apply damage
     }
@@ -834,7 +834,7 @@ switch (V0)
     // defend
     case 0x13:
     {
-        action_type_05; // this just returns
+        battle_prepare_temp_for_defend(); // this just returns
     }
     break;
 
@@ -874,7 +874,7 @@ switch (V0)
     }
     break;
 
-    // enemy attack
+    // mob attack
     case 0x20:
     {
         action_type_07; // modify some action id and attack id because we can use global attacks for enemies attack (magic summons enemy_skills limits)
@@ -1231,7 +1231,7 @@ La241c:	; 800A241C
 
                         if( A3 != 0 )
                         {
-                            battle_get_attack_index_by_attack_id();
+                            battle_get_attack_id_in_scene_by_attack_id();
 
                             A0 = unit_id;
                             A1 = 2;  // priority
@@ -4088,7 +4088,7 @@ while( w[800f3a1c] != w[800f3a18] )
 
 
 ////////////////////////////////
-// funca5990()
+// battle_get_random_item_from_inventory()
 
 ret_id = -1;
 num = 0;
@@ -4098,7 +4098,7 @@ for( int i = 0; i < 140; ++i )
 {
     if( h[801671b8 + i * 6 + 0] != -1 )
     {
-        if( ( bu[801671b8 + i * 6 + 4] & 9 ) == 0 )
+        if( ( bu[801671b8 + i * 6 + 4] & 09 ) == 0 )
         {
             [SP + 10 + A2] = h(h[801671b8 + i * 6 + 0]);
             A2 = A2 + 2;
@@ -4118,7 +4118,7 @@ if( num != 0 )
     {
         A0 = 0;
         A1 = 0;
-        A2 = 10;
+        A2 = 10; // [0 10] search and remove item from slot
         A3 = item_id;
         battle_add_to_800f4308();
 
@@ -4625,16 +4625,17 @@ if( ( S3 != 0 ) && ( S5 == 0 ) )
 
 
 ////////////////////////////////
-// battle_use_item_from_slot()
+// battle_get_item_from_slot()
 
 item_slot_id = A0;
 item_id = -1;
 
-if( bu[801671ba + item_slot_id * 6] != 0 )
+if( bu[801671b8 + item_slot_id * 6 + 2] != 0 ) // item quantity
 {
     item_id = hu[801671b8 + item_slot_id * 6 + 0];
 
     [801671b8 + item_slot_id * 6 + 2] = b(bu[801671b8 + item_slot_id * 6 + 2] - 1);
+
     if( bu[801671b8 + item_slot_id * 6 + 2] == 0 )
     {
         [801671b8 + item_slot_id * 6 + 0] = h(-1);
@@ -4863,7 +4864,7 @@ if( A1 != 0 )
                 A1 = A1 - 1;
                 if( A1 < 0 )
                 {
-                    battle_use_item_from_slot();
+                    battle_get_item_from_slot();
                     item_id = V0;
                     break;
                 }
@@ -4939,7 +4940,7 @@ for( int i = 0; i < 3; ++i )
 
 
 ////////////////////////////////
-// funca6b88()
+// battle_search_and_remove_item_from_slot()
 
 item_id = A1;
 
@@ -4950,7 +4951,7 @@ for( int i = 0; i < 140; ++i )
         if( ( bu[801671b8 + i * 6 + 4] & 09 ) == 0 )
         {
             A0 = i; // item slot id
-            battle_use_item_from_slot();
+            battle_get_item_from_slot();
         }
         break;
     }
@@ -5310,7 +5311,7 @@ while( b[800f4308 + id * 200 + slot_id * 4 + 0] != -1 )
             case d: funca6a70(); break;
             case e: funca6ac4(); break;
             case f: funca6b1c(); break;
-            case 10: funca6b88(); break; // search for item with given id and remove one from slot
+            case 10: battle_search_and_remove_item_from_slot(); break; // [0 10]
         }
     )
     else if( id == 1 )
@@ -5372,11 +5373,11 @@ temp = w[80063014];
 
 
 ////////////////////////////////
-// action_type_02()
+// battle_prepare_temp_from_item_for_use()
 
 temp = w[80063014];
 
-[temp + 24] = w(w[temp + 10]);
+[temp + 24] = w(w[temp + 10]); // attack effect id
 [temp + 2c] = w(w[temp + 10]);
 
 A0 = h[temp + 0]; // unit id
@@ -5396,14 +5397,13 @@ else
 
 
 ////////////////////////////////
-// funca7458
+// battle_prepare_temp_from_item_for_throw()
 
 temp = w[80063014];
 
-if( w[temp + 10] == ffff )
+if( w[temp + 10] == ffff ) // if item not define earlier
 {
-    funca5990();
-
+    battle_get_random_item_from_inventory();
     [temp + 10] = w(V0 & ffff);
 }
 
@@ -5417,12 +5417,12 @@ if( w[temp + 10] != ffff )
     A1 = h[temp + 2c]; // item id
     battle_remove_unit_reserved_item();
 
-    [temp + 48] = w(10);
+    [temp + 48] = w(10); // power mod
 
-    V1 = w[temp + 24];
+    weapon_id = w[temp + 24];
     attacker_id = w[temp + 0];
-    [temp + d8] = w(bu[800738a4 + V1 * 2c] + bu[8009d84e + attacker_id * 440]);
-    [temp + 68] = w(bu[800738c7 + V1 * 2c]);
+    [temp + d8] = w(bu[800738a0 + weapon_id * 2c + 4] + bu[8009d84c + attacker_id * 440 + 2]); // attack strength + unit strength
+    [temp + 68] = w(bu[800738a0 + weapon_id * 2c + 27]); // impact effect id
 }
 else
 {
@@ -5433,7 +5433,7 @@ else
 
 
 ////////////////////////////////
-// funca7560
+// funca7560()
 
 V0 = w[80063014];
 V1 = w[V0 + 0010];
@@ -5511,10 +5511,9 @@ V0 = V1 - A0;
 
 La7670:	; 800A7670
 [A1 + 0000] = w(V0);
-800A7674	lui    v0, $6666
 
 La7678:	; 800A7678
-V0 = V0 | 6667;
+V0 = 66666667;
 800A767C	mult   a0, v0
 A0 = A0 >> 1f;
 V0 = w[80063014];
@@ -5530,10 +5529,11 @@ A0 = w[V0 + 0010];
 
 
 ////////////////////////////////
-// funca76ac()
+// battle_prepare_temp_for_loading_attack_for_enemy_skill()
 
 temp = w[80063014];
-[temp + 2c] = w(w[temp + 10] + 48);
+
+[temp + 2c] = w(w[temp + 10] + 48); // attack id
 ////////////////////////////////
 
 
@@ -5568,7 +5568,7 @@ if (V0 != 0)
 
 
 ////////////////////////////////
-// action_type_05
+// battle_prepare_temp_for_defend()
 ////////////////////////////////
 
 
@@ -5655,13 +5655,12 @@ return;
 
 
 ////////////////////////////////
-// funca7940
-V0 = w[80063014];
-800A7948	lui    v1, $0040
-[V0 + 0080] = w(V1);
-V1 = 0059;
-800A7954	jr     ra 
-[V0 + 00e4] = w(V1);
+// battle_prepare_temp_for_manipulate()
+
+temp = w[80063014];
+
+[temp + 80] = w(00400000); // status to add (Manipulate)
+[temp + e4] = w(59); // string if we fail to manipulate "Couldn't manipulate."
 ////////////////////////////////
 
 
@@ -5698,27 +5697,19 @@ temp = w[80063014];
 
 ////////////////////////////////
 // action_type_0C
-//
 // load attack data
+
 temp = w[80063014];
-
-
 
 S4 = 0;
 [SP + 10] = w(0);
 
+[temp + 38] = w(-1); // set MP cost by default
 
-
-// set MP cost by default
-[temp + 38] = w(-1);
-
-
-
-V1 = w[temp + 28];
-if( V1 == 20 )
+if( w[temp + 28] == 20 ) // if mob attack
 {
     A0 = w[temp + 2c];
-    battle_get_attack_index_by_attack_id;
+    battle_get_attack_id_in_scene_by_attack_id();
     [temp + 98] = w(V0);
 
     S4 = 800f616c + V0 * 1c;
@@ -5762,45 +5753,42 @@ else
             A0 = S5;
 
             loopa7af8:	; 800A7AF8
-            V0 = w[80063014];
-            S2 = bu[A0 + 0000];
-            V1 = w[V0 + 002c];
-            V0 = S2 + 0080;
-            800A7B0C	bne    v0, v1, La7b64 [$800a7b64]
-            A1 = A1 + 0001;
-            S1 = 0;
-            S0 = 0;
-            A0 = S6;
+                V0 = w[80063014];
+                S2 = bu[A0 + 0000];
+                V1 = w[V0 + 002c];
+                V0 = S2 + 0080;
+                800A7B0C	bne    v0, v1, La7b64 [$800a7b64]
+                A1 = A1 + 0001;
+                S1 = 0;
+                S0 = 0;
 
-            loopa7b20:	; 800A7B20
-            800A7B20	jal    func15afc [$80015afc]
-            A1 = S0;
-            800A7B28	beq    v0, s7, La7b3c [$800a7b3c]
-            800A7B2C	nop
-            800A7B30	beq    v0, s2, La7b4c [$800a7b4c]
-            800A7B34	nop
-            S1 = S1 + 0001;
+                loopa7b20:	; 800A7B20
+                    A0 = S6;
+                    800A7B20	jal    func15afc [$80015afc]
+                    A1 = S0;
+                    800A7B28	beq    v0, s7, La7b3c [$800a7b3c]
+                    800A7B2C	nop
+                    800A7B30	beq    v0, s2, La7b4c [$800a7b4c]
+                    800A7B34	nop
+                    S1 = S1 + 0001;
 
-            La7b3c:	; 800A7B3C
-            S0 = S0 + 0001;
-            V0 = S0 < 000c;
-            800A7B44	bne    v0, zero, loopa7b20 [$800a7b20]
+                    La7b3c:	; 800A7B3C
+                    S0 = S0 + 0001;
+                    V0 = S0 < 000c;
+                800A7B44	bne    v0, zero, loopa7b20 [$800a7b20]
 
-            La7b48:	; 800A7B48
-            A0 = S6;
+                La7b4c:	; 800A7B4C
+                S4 = S5 + S3;
+                V1 = w[80063014];
+                V0 = S1 + 003c;
+                800A7B5C	j      La7b74 [$800a7b74]
+                [V1 + 0020] = w(V0);
 
-            La7b4c:	; 800A7B4C
-            S4 = S5 + S3;
-            V1 = w[80063014];
-            V0 = S1 + 003c;
-            800A7B5C	j      La7b74 [$800a7b74]
-            [V1 + 0020] = w(V0);
-
-            La7b64:	; 800A7B64
-            S3 = S3 + 001c;
-            V0 = A1 < 0003;
+                La7b64:	; 800A7B64
+                A0 = A0 + 0001;
+                S3 = S3 + 001c;
+                V0 = A1 < 0003;
             800A7B6C	bne    v0, zero, loopa7af8 [$800a7af8]
-            A0 = A0 + 0001;
         }
     }
 }
@@ -9024,9 +9012,9 @@ if (V0 != -1)
             funca2cc4;
         }
 
-        A0 = w[temp + e4];
-        if (A0 != -1)
+        if( w[temp + e4] != -1 )
         {
+            A0 = w[temp + e4];
             funcb1060();
         }
     }
@@ -10935,10 +10923,11 @@ for( int i = 0; i < 1e; ++i )
 
 ////////////////////////////////
 // battle_damage_formula_run
-address = w[80063014];
-V0 = w[address + a0]; // high
 
-switch (V0)
+temp = w[80063014];
+V0 = w[temp + a0]; // high
+
+switch( V0 )
 {
     case 0x01 0x06 0x0A:
     {
@@ -10978,19 +10967,17 @@ switch (V0)
     break;
 }
 
-
-
-if (w[address + 48] != 0) // power modifier
+if( w[temp + 48] != 0 ) // power modifier
 {
     A0 = 0;
     funca8e84();
 
-    formula = w[address + a4]; // lower
-    switch (formula)
+    formula = w[temp + a4]; // lower
+    switch( formula )
     {
         case 00: battle_lower_function_00(); break;
-        case 01: battle_lower_function_01(); break; // physical damage
-        case 02: battle_lower_function_02(); break; // magical damage
+        case 01: battle_set_temp_damage_as_physical(); break;
+        case 02: battle_set_temp_damage_as_magical(); break;
         case 03: battle_lower_function_03(); break; // current hp% or current mp%
         case 04: battle_lower_function_04(); break; // max hp% or max mp%
         case 05: battle_lower_function_05(); break; // magical heal
@@ -11002,7 +10989,7 @@ if (w[address + 48] != 0) // power modifier
         case 10: battle_lower_function_10(); break; // custom 00 white wind (damage = current hp of attacker)
         case 11: battle_lower_function_11(); break; // custom 01 (damage = max hp - current hp)
         case 12 13 14 15 16 17: break;
-        case 18: battle_lower_function_18(); break; // custom 08 ()
+        case 18: battle_set_temp_damage_as_dice_roll(); break;
         case 19: battle_set_temp_damage_as_number_of_escapes(); break;
         case 1a: battle_set_temp_damage_as_target_hp_minus_one(); break;
         case 1b: funcae2a0();
@@ -11020,103 +11007,91 @@ if (w[address + 48] != 0) // power modifier
 
 ////////////////////////////////
 // battle_set_formula_and_base_damage
-address = w[80063014];
+temp = w[80063014];
 
 
 
-V1 = w[address + 40]; // load formula
+V1 = w[temp + 40]; // load formula
 upper = V1 >> 4;
-[address + a0] = w(upper); // upper
+[temp + a0] = w(upper); // upper
 
 V1 = V1 & f;
-[address + a4] = w(V1); // lower
+[temp + a4] = w(V1); // lower
 
 // set physical attack
 if (upper == 0 || upper == 1 || upper == 3 || upper == 6 || upper == a || upper == b)
 {
-    [address + 6c] = w(w[address + 6c] & fffb);
+    [temp + 6c] = w(w[temp + 6c] & fffb);
 }
 
 // use special formulas
 if (upper == 6 || upper == 7)
 {
-    [address + a4] = w(w[address + a4] | 10);
+    [temp + a4] = w(w[temp + a4] | 10);
 }
 
 // this is only for A attack type. This is physical attack with special atribures. Set them.
 // reset lower bit to 1 but set some data to bc (maybe special formula)
 if (upper == a)
 {
-    V0 = w[address + a4];
-    [address + a4] = w(00000001);
+    V0 = w[temp + a4];
+    [temp + a4] = w(00000001);
 
     V1 = bu[800a04b0 + V0]; // 0A 0B 0C 0D 1E 1F 20 21 22
-    [address + bc] = w(V1);
+    [temp + bc] = w(V1);
 }
 
 
 
 // if this is magic attack
-if( w[address + 6c] & 0004 )
+if( w[temp + 6c] & 0004 )
 {
-    A0 = w[address + 0];
+    A0 = w[temp + 0];
     A1 = bu[800f83e0 + A0 * 68 + e];
     A2 = 1;
 }
 else
 {
-    A0 = w[address + 0];
+    A0 = w[temp + 0];
     A1 = bu[800f83e0 + A0 * 68 + d];
     A2 = 0;
 }
 
 modifier = b[800f5bb8 + A0 * 44 + 20 + A2];
 
-[address + 4c] = w(A1 + (A1 * modifier) / 64);
+[temp + 4c] = w(A1 + (A1 * modifier) / 64);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// battle_add_barriers_modifier
+// battle_add_barriers_modifier()
 
-address = w[80063014];
+temp = w[80063014];
 
-V0 = w[address + 6C];
-// if magic attack
-if (V0 & 0004)
+if( w[temp + 6c] & 0004 ) // if magic attack
 {
-    // if target with mbarrier
-    V0 = w[address + 228];
-    if (V0 & 00020000)
+    if( w[temp + 228] & 00020000 ) // if target with mbarrier
     {
-        V0 = w[address + 218];
-        V0 = V0 | 8000;
-        [address + 218] = w(V0);
+        [temp + 218] = w(w[temp + 218] | 00008000);
     }
 }
 else
 {
-    // if target with barrier
-    V0 = w[address + 228];
-    if (V0 & 00010000)
+    if( w[temp + 228] & 00010000 ) // if target with barrier
     {
-        V0 = w[address + 218];
-        V0 = V0 | 4000;
-        [address + 218] = w(V0);
+        [temp + 218] = w(w[temp + 218] | 00004000);
     }
 }
-// if any barrier check complete
-V1 = w[address + 218];
-if (V1 & C000)
+
+if( w[temp + 218] & 0000c000 ) // if any barrier check complete
 {
     A0 = A0 / 2;
 }
 
-V0 = w[address + e8];
-if (V0 != 0)
+if( w[temp + e8] != 0 ) // mp boost% stars
 {
-    A0 = A0 + (A0 * V0) / 100;
+    A0 = A0 + (A0 * w[temp + e8]) / 100;
 }
 
 return A0;
@@ -11125,34 +11100,29 @@ return A0;
 
 
 ////////////////////////////////
-// battle_add_split_quater_modifier
-address  = w[80063014];
-no_split = A1;
+// battle_add_split_quater_modifier()
 
-if (no_split == 0)
+temp = w[80063014];
+
+damage = A0;
+not_split = A1;
+
+if( not_split == 0 )
 {
-    number_of_targets = w[address + B8];
-
-    target_type = w[address + 50];
-
-    if (number_of_targets < 2 || target_type & 0080)
+    if( ( w[temp + b8] < 2 ) || ( w[temp + 50] & 80 ) ) // number of targets or target type
     {
-        no_split = 1;
+        not_split = 1;
     }
 }
-
-V0 = w[address + ac];
-if (V0 != 0)
+if( w[temp + ac] != 0 ) // quater damage
 {
-    A0 = A0 / 2;
+    damage = damage / 2;
 }
-
-if (no_split == 0)
+if( not_split == 0 )
 {
-    A0 = (A0 * 2) / 3;
+    damage = (damage * 2) / 3;
 }
-
-return A0;
+return damage;
 ////////////////////////////////
 
 
@@ -11202,147 +11172,129 @@ temp = w[80063014];
 
 
 ////////////////////////////////
-// battle_lower_function_01
+// battle_set_temp_damage_as_physical()
+
 temp = w[80063014];
 
-Attack        = w[temp + 4c];
-Level         = w[temp + 4];
-Status        = w[temp + c8];
-DefNum        = w[temp + 210];
-PowerModifier = w[temp + 48];
+attacker_id = w[temp + 0];
+level = w[temp + 4];
+power_mod = w[temp + 48];
+attack = w[temp + 4c];
+status = w[temp + c8];
+target_id = w[temp + 208];
+defence = w[temp + 210];
 
-V0 = w[temp + 6с];
-if ((V0 & 2000) == 0)
+if( ( w[temp + 6с] & 2000 ) == 0 ) // not critical
 {
     [temp + 220] = w(w[temp + 220] | 0002);
 }
 
+damage = (attack + ((level + attack) / 20) * ((level * attack) / 20)) * ((200 - defence) / 200) * (power_mod / 10);
 
-Damage = (Attack + ((Level + Attack) / 20) * ((Level * Attack) / 20)) * ((200 - DefNum) / 200) * (PowerModifier / 10);
-
-
-
-// if critical
-if (w[temp + 220] & 0002)
+if( w[temp + 220] & 0002 ) // critical
 {
-    Damage = Damage * 2;
+    damage = damage * 2;
 }
 
-
-
-// if attacker is in berserk
-if (Status & 00800000)
+if( status & 00800000 ) // berserk
 {
-    Damage = Damage * 6;
+    damage = damage * 6;
 }
 
-
-
-// back row modificator
-V1 = w[temp + 208];
-V0 = w[800f83e0 + V1 * 68 + 4];
-V0 = V0 & 00000040; // back row
-A2 = 0 < V0;
-V1 = w[temp + 50];
-V0 = w[temp + 28];
-if (V1 & 0020 || V0 == 20)
+back_row = w[800f83e0 + target_id * 68 + 4] & 00000040 > 0;
+if( ( w[temp + 50] & 0020 ) || ( w[temp + 28] == 20 ) )
 {
-    V0 = w[temp + 0];
-    V0 = w[800f83e0 + V0 * 68 + 4];
-    if (V0 & 00000040) // back row
+    if( w[800f83e0 + attacker_id * 68 + 4] & 00000040 ) // back row
     {
-        A2 = 1;
+        back_row = 1;
     }
 }
 else
 {
-    A2 = 0;
+    back_row = 0;
 }
 
-if (A2 != 0)
+if( back_row != 0 )
 {
-    Damage = Damage / 2;
+    damage = damage / 2;
 }
 
-
-
-// target defend
-target_id = w[temp + 208];
-if( w[800f83e0 + target_id * 68 + 4] & 00000020 )
+if( w[800f83e0 + target_id * 68 + 4] & 00000020 ) // target defend
 {
-    Damage = Damage / 2;
+    damage = damage / 2;
 }
 
-
-
-// attack from back
-if( w[temp + 234] & 0001 )
+if( w[temp + 234] & 0001 ) // attack from back
 {
-    Damage = Damage * bu[800f83e0 + target_id * 68 + 12] / 8;
+    damage = damage * ( bu[800f83e0 + target_id * 68 + 12] / 8 );
 }
 
-
-
-// if caster is frog
-if (Status & 00000800)
+if( status & 00000800 ) // frog
 {
-    Damage = Damage / 4;
+    damage = damage / 4;
 }
 
-A0 = Damage;
-battle_add_sadness_modifier;
-A0 = V0;
+A0 = damage;
+battle_add_sadness_modifier();
+damage = V0;
 
-A1 = 0;
-battle_add_split_quater_modifier;
-A0 = V0;
+A0 = damage;
+A1 = 0; // not split
+battle_add_split_quater_modifier();
+damage = V0;
 
-battle_add_barriers_modifier;
-A0 = V0;
+A0 = damage;
+battle_add_barriers_modifier();
+damage = V0;
 
-
-
-// if attacker is small
-if (Status & 00001000)
+if( status & 00001000 ) // small
 {
-    A0 = 0;
+    damage = 0;
 }
 
-battle_add_random_modifier_and_zero_check;
+A0 = damage;
+battle_add_random_modifier_and_zero_check();
+damage = V0;
 
-[temp + 214] = w(V0);
+[temp + 214] = w(damage);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// battle_lower_function_02
+// battle_set_temp_damage_as_magical()
+
 temp = w[80063014];
 
-Attack        = w[temp + 4c];
-Level         = w[temp + 4];
-DefNum        = w[temp + 210];
-PowerModifier = w[temp + 48];
-TargetType    = w[temp + 50];
+damage = ((w[temp + 4c] + w[temp + 4]) * 6) * ((200 - w[temp + 210]) / 200) * (w[temp + 48] / 10);
 
-Damage = ((Attack + Level) * 6) * ((200 - DefNum) / 200) * (PowerModifier / 10);
+A0 = damage;
+battle_add_sadness_modifier();
+damage = V0;
 
-A0 = Damage;
-battle_add_sadness_modifier;
-A0 = V0;
+if( (w[temp + 50] & 0c) == 04 )
+{
+    not_split = 1;
+}
+else
+{
+    not_split = 0;
+}
 
-S0 = TargetType & 0c;
-S0 = S0 XOR 04;
-S0 = S0 < 1;
-A1 = S0;
-battle_add_split_quater_modifier;
-A0 = V0;
-battle_add_barriers_modifier;
-A0 = V0;
-battle_add_random_modifier_and_zero_check;
-[temp + 214] = w(V0);
+A0 = damage;
+A1 = not_split;
+battle_add_split_quater_modifier();
+damage = V0;
 
-return;
+A0 = damage;
+battle_add_barriers_modifier();
+damage = V0;
+
+A0 = damage;
+battle_add_random_modifier_and_zero_check();
+damage = V0;
+
+[temp + 214] = w(damage);
 ////////////////////////////////
 
 
@@ -11421,11 +11373,11 @@ base_damage = w[temp + 4c];
 attacker_level = w[temp + 4];
 
 A0 = (base_damage + attacker_level) * 6 + power_modifier * 16;
-A1 = 0;
-battle_add_split_quater_modifier;
+A1 = 0; // not split
+battle_add_split_quater_modifier();
 
 A0 = V0;
-battle_add_barriers_modifier;
+battle_add_barriers_modifier();
 
 A0 = V0;
 battle_add_random_modifier_and_zero_check;
@@ -11473,11 +11425,13 @@ else
 
 
 ////////////////////////////////
-// battle_lower_function_09
+// battle_lower_function_09()
+
 temp = w[80063014];
 
 [temp + 4c] = w(w[temp + d8] * 2);
-battle_lower_function_01;
+
+battle_set_temp_damage_as_physical();
 ////////////////////////////////
 
 
@@ -11555,19 +11509,21 @@ A0 = w[temp + 0];
 
 
 ////////////////////////////////
-// battle_lower_function_18
+// battle_set_temp_damage_as_dice_roll()
+
 temp = w[80063014];
+
 V0 = w[temp + 4];
-V1 = 66666667;
-T0 = hi(V0 * V1);
+T0 = hi(V0 * 66666667);
 V0 = V0 >> 1f;
 V1 = T0 >> 2;
 S1 = V1 - V0;
-if (S1 < 2)
+
+if( S1 < 2 )
 {
     S1 = 2;
 }
-else if (S1 >= 7)
+else if( S1 >= 7 )
 {
     S1 = 6;
 }
@@ -11576,93 +11532,48 @@ else
     V1 = ff;
 }
 
-S0 = 0003;
-800AE0E0	lui    v0, $8016
-V0 = V0 + 3777;
+for( int i = 0; i < 3; ++i )
+{
+    [80163774 + i] = b(V1);
+}
 
-loopae0e8:	; 800AE0E8
-[V0 + 0000] = b(V1);
-800AE0EC	addiu  s0, s0, $ffff (=-$1)
-800AE0F0	bgez   s0, loopae0e8 [$800ae0e8]
-800AE0F4	addiu  v0, v0, $ffff (=-$1)
-S0 = 0;
-800AE0FC	blez   s1, Lae194 [$800ae194]
 S2 = 0;
+for( int i = 0; i < S1; ++i )
+{
+    A0 = 6;
+    system_get_random_byte_range();
+    [SP + 10 + i * 4] = w(V0);
 
-loopae104:	; 800AE104
-    800AE104	jal    system_get_random_byte_range [$80014ba8]
-    A0 = 0006;
-    A0 = V0;
-    V0 = S0 << 02;
-    V1 = SP + 0010;
-    V0 = V0 + V1;
-    [V0 + 0000] = w(A0);
-    V0 = S2 + 0001;
-    S2 = V0 + A0;
-    V0 = S0 & 0001;
-    800AE12C	beq    v0, zero, Lae168 [$800ae168]
-    V0 = S0 >> 1f;
-    V0 = S0 + V0;
-    V0 = V0 >> 01;
-    800AE13C	lui    at, $8016
-    AT = AT + V0;
-    V1 = bu[AT + 3774];
-    A0 = A0 << 04;
-    V1 = V1 & 000f;
-    A0 = A0 | V1;
-    800AE154	lui    at, $8016
-    AT = AT + V0;
-    [AT + 3774] = b(A0);
-    800AE160	j      Lae180 [$800ae180]
-    800AE164	nop
+    S2 = S2 + V0 + 1;
 
-    Lae168:	; 800AE168
-    V0 = S0 + V0;
-    V0 = V0 >> 01;
-    V1 = A0 | 00f0;
-    800AE174	lui    at, $8016
-    AT = AT + V0;
-    [AT + 3774] = b(V1);
-
-    Lae180:	; 800AE180
-    800AE180	jal    system_increment_seed_for_random [$80014b54]
-    S0 = S0 + 0001;
-    V0 = S0 < S1;
-800AE18C	bne    v0, zero, loopae104 [$800ae104]
-
-Lae194:	; 800AE194
-A2 = 0;
-S0 = 0;
-A3 = SP + 10;
-
-loopae1a0:	; 800AE1A0
-    A1 = 0;
-    A0 = 0;
-    if (S1 > 0)
+    if( i & 1 )
     {
-        V1 = A3;
-
-        loopae1b0:	; 800AE1B0
-            V0 = w[V1];
-            if (V0 == S0)
-            {
-                A0 = A0 + 1;
-            }
-
-            A1 = A1 + 1;
-            V1 = V1 + 4;
-            V0 = A1 < S1;
-        800AE1CC	bne    v0, zero, loopae1b0 [$800ae1b0]
+        [80163774 + (S2 + 1) / 2] = b((V0 << 4) | (bu[80163774 + (S2 + 1) / 2] & f));
+    }
+    else
+    {
+        [80163774 + (S2 + 1) / 2] = b(V0 | f0);
     }
 
-    if (A2 < A0)
+    system_increment_seed_for_random();
+}
+
+A2 = 0;
+for( int i = 0; i < 6; ++i )
+{
+    A0 = 0;
+    for( int j = 0; j < S1; ++j )
+    {
+        if( w[SP + 10 + j * 4] == i )
+        {
+            A0 = A0 + 1;
+        }
+    }
+    if( A2 < A0 )
     {
         A2 = A0;
     }
-
-    S0 = S0 + 1;
-    V0 = S0 < 6;
-800AE1EC	bne    v0, zero, loopae1a0 [$800ae1a0]
+}
 
 [temp + 214] = w(S2 * A2 * 64);
 ////////////////////////////////
@@ -13993,28 +13904,22 @@ funca317c();
 
 
 ////////////////////////////////
-// battle_get_attack_index_by_attack_id
-S0 = 0;
-V1 = 800F64EC; // attack id data in scene file.
+// battle_get_attack_id_in_scene_by_attack_id()
 
-loopb11cc:	; 800B11CC
-    V0 = hu[V1];
-    if (V0 == A0)
-    {
-        break;
-    }
-    S0 = S0 + 1;
-    V0 = S0 < 20;
-    V1 = V1 + 2;
-800B11E4	bne    v0, zero, loopb11cc [$800b11cc]
-
-if (S0 == 20)
+int i = 0;
+for( ; i < 20; ++i )
+{
+        if( hu[800f64ec + i * 2 + 0] == A0 ) // attack id data in scene file
+        {
+            break;
+        }
+}
+if( i == 20 )
 {
     A0 = 20;
-    func155a4;
+    func155a4();
 }
-
-return S0;
+return i;
 ////////////////////////////////
 
 
@@ -15529,7 +15434,7 @@ else if( S1 == d )
 else if( S1 == 20 )
 {
     A0 = A2;
-    battle_get_attack_index_by_attack_id;
+    battle_get_attack_id_in_scene_by_attack_id();
     A2 = V0;
 }
 
