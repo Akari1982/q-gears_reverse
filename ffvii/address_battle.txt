@@ -147,7 +147,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f3a1c [][][][] insert index into 800f3a20. Increment after inserting. Cycle around 0x10.
 800f3a20 array of returning items ids after removing from 800f3a40 (reserved items)(0x2 size 0x10 items).
     +0 [][]     item id.
-800f3a40 array of reserved for action items structures (0x4 size 0x10 items).
+800f3a40 array of reserved for action items structures or stolen items (0x4 size 0x10 items).
     +0 [][]     unit id (unit using item). Init with -1.
     +2 [][]     item id. Init with -1.
 
@@ -245,7 +245,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +27 []       store 0 here during init.
     +28 []
     +29 []       add 0x02 bit if weapon is long ranged. Checked if A0 & 80 and then stored A0 & 7F back. Checked if A0 & 04 and then stored A0 & FB back. Init whth 0 in case of enemy. If 0x04 write "XX was cought by surprize" to output string.
-                 0x01 - can't steal from this entity. Add for enemy target if we stole something from it. Init with this flag in case of player.
+                 0x01 - can't steal from this entity. Add if we stole once from enemy, because we can stole only once. Init with this flag in case of player (players cant stole from players).
                  0x04 - add in case of sneak attack.
                  0x08 - if set we add protect from frog.
                  0x80 - add in case of lucky 7777.

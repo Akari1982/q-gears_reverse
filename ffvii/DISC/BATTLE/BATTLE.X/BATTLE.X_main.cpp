@@ -1326,7 +1326,7 @@ return 0;
 A1 = 0;
 A0 = 0;
 
-for(int i = 0; i < 6d; ++i )
+for( int i = 0; i < 6d; ++i )
 {
     if( i == A1 )
     {
@@ -1381,32 +1381,34 @@ for( int i = 0; i < 3; ++i )
 
 
 ////////////////////////////////
-// funca2974
+// battle_perform_steal_from_enemy()
+
 temp = w[80063014];
 [SP + 10] = h(0);
-enemy_struct_id = w[temp + 20c];
-target_entity_id = w[temp + 208];
+
+attacker_id = w[temp + 0];
+enemy_id = w[temp + 20c];
+target_id = w[temp + 208];
 
 S0 = 31; // "Nothing to steal."
 
-if( enemy_struct_id != -1 )
+if( enemy_id != -1 )
 {
-    enemy_struct = 800f5f44 + enemy_struct_id * b8;
+    enemy_struct = 800f5f44 + enemy_id * b8;
 
     A0 = enemy_struct;
     A1 = 80; // steal mask
-    A2 = 1;  // always
-    A3 = 0;  // roll
-    funcb0f04;
+    A2 = 1; // always
+    A3 = 0; // roll
+    battle_get_random_item_id_for_steal();
 
     if( V0 != -1 ) // if there is item to steal
     {
-        if( ( bu[800f5bb8 + target_entity_id * 44 + 29] & 1 ) == 0 )
+        if( ( bu[800f5bb8 + target_id * 44 + 29] & 1 ) == 0 ) // we can stole only one item from enemy
         {
             lv_diff = w[temp + 4] - w[temp + 254] + 28; // attacker level - target level + 28
-            A1 = w[temp + 0];
 
-            if( bu[800f5bc5 + A1 * 44] == 4 )
+            if( bu[800f5bb8 + attacker_id * 44 + d] == 4 ) // accessory special effect
             {
                 if( lv_diff < 64 )
                 {
@@ -1415,10 +1417,10 @@ if( enemy_struct_id != -1 )
             }
 
             A0 = enemy_struct;
-            A1 = 80;                 // steal mask
-            A2 = 0;                  // always
+            A1 = 80; // steal mask
+            A2 = 0; // always
             A3 = lv_diff * 200 / 64; // roll
-            funcb0f04;
+            battle_get_random_item_id_for_steal();
 
             [SP + 10] = h(V0);
 
@@ -1429,23 +1431,23 @@ if( enemy_struct_id != -1 )
             else
             {
                 A0 = 0;
-                A1 = w[temp + 0];
-                A2 = 3;
+                A1 = attacker_id;
+                A2 = 3; // [0 3]
                 A3 = V0;
                 battle_add_to_800f4308();
 
                 S0 = 2f; // "Stole {VAR:ItemName}!"
-                [800f5bb8 + target_entity_id * 44 + 29] = b(bu[800f5bb8 + target_entity_id * 44 + 29] | 1);
+                [800f5bb8 + target_id * 44 + 29] = b(bu[800f5bb8 + target_id * 44 + 29] | 1); // set flag that item stolen
             }
         }
     }
 }
 
-A0 = w[temp + 0]; // attacker id
+A0 = attacker_id;
 A1 = S0;
 A2 = 1;
 A3 = SP + 10;
-battle_add_string_to_display; // show string
+battle_add_string_to_display();
 ////////////////////////////////
 
 
@@ -2927,7 +2929,7 @@ if( w[800f39d8] != ( ( A0 + 1 ) & f ) )
     {
         A0 = unit_id;
         A1 = item_id;
-        funca5660();
+        battle_add_unit_reserved_item();
     }
 
     A0 = unit_id;
@@ -3526,111 +3528,65 @@ unit_id = A0;
 
 
 ////////////////////////////////
-// funca4f60
+// funca4f60()
 
-V0 = A0 < 0003;
-800A4F6C	beq    v0, zero, La50cc [$800a50cc]
+unit_id = A0;
 
-A3 = A0 << 04;
-V0 = A3 + A0;
-S0 = V0 << 02;
-800A4F80	lui    at, $800f
-AT = AT + S0;
-A2 = bu[AT + 5bc6];
-800A4F8C	nop
-V0 = A2 >> A1;
-V0 = V0 & 0001;
-800A4F98	beq    v0, zero, La50cc [$800a50cc]
-V1 = 0001;
-V0 = V1 << A1;
-V0 = 0 NOR V0;
-800A4FA8	lui    at, $8016
-AT = AT + A3;
-A3 = w[AT + 36c0];
-A2 = A2 & V0;
-800A4FB8	lui    at, $800f
-AT = AT + S0;
-[AT + 5bc6] = b(A2);
-800A4FC4	beq    a1, v1, La5010 [$800a5010]
-V0 = A1 < 0002;
-800A4FCC	beq    v0, zero, La4fe4 [$800a4fe4]
-800A4FD0	nop
-800A4FD4	beq    a1, zero, La5000 [$800a5000]
-800A4FD8	nop
-800A4FDC	j      La50cc [$800a50cc]
-800A4FE0	nop
+if( unit_id < 3 )
+{
+    if( ( bu[800f5bc6 + unit_id * 44] >> A1 ) & 1 )
+    {
+        [800f5bc6 + unit_id * 44] = b(bu[800f5bc6 + unit_id * 44] & (0 NOR (1 << A1)));
 
-La4fe4:	; 800A4FE4
-V0 = 0002;
-800A4FE8	beq    a1, v0, La504c [$800a504c]
-V0 = 0003;
-800A4FF0	beq    a1, v0, La5088 [$800a5088]
-V0 = A2 & 007f;
-800A4FF8	j      La50cc [$800a50cc]
-800A4FFC	nop
+        if( A1 == 0 )
+        {
+            A1 = w[801636b8 + unit_id * 10 + 8];
+            800A5000	jal    funca5250 [$800a5250]
+        }
+        else if( A1 == 1 )
+        {
+            [800f5bc6 + unit_id * 44] = b(bu[800f5bc6 + unit_id * 44] & df);
 
-La5000:	; 800A5000
-800A5000	jal    funca5250 [$800a5250]
-A1 = A3;
-800A5008	j      La50cc [$800a50cc]
-800A500C	nop
+            A1 = w[801636b8 + unit_id * 10 + 8];
+            A2 = 0;
+            A3 = 38;
+            800A5028	jal    funca50e0 [$800a50e0]
 
-La5010:	; 800A5010
-V0 = A2 & 00df;
-800A5014	lui    at, $800f
-AT = AT + S0;
-[AT + 5bc6] = b(V0);
-A1 = A3;
-A2 = 0;
-800A5028	jal    funca50e0 [$800a50e0]
-A3 = 0038;
-800A5030	beq    v0, zero, La50cc [$800a50cc]
-800A5034	nop
-800A5038	lui    at, $800f
-AT = AT + S0;
-V0 = bu[AT + 5bc6];
-800A5044	j      La50c0 [$800a50c0]
-V0 = V0 | 0020;
+            if( V0 != 0 )
+            {
+                [800f5bc6 + unit_id * 44] = b(bu[800f5bc6 + unit_id * 44] | 20);
+            }
+        }
+        else if( A1 == 2 )
+        {
+            [800f5bc6 + unit_id * 44] = b(bu[800f5bc6 + unit_id * 44] & bf);
 
-La504c:	; 800A504C
-V0 = A2 & 00bf;
-800A5050	lui    at, $800f
-AT = AT + S0;
-[AT + 5bc6] = b(V0);
-A1 = A3;
-A2 = 0038;
-800A5064	jal    funca50e0 [$800a50e0]
-A3 = 0010;
-800A506C	beq    v0, zero, La50cc [$800a50cc]
-800A5070	nop
-800A5074	lui    at, $800f
-AT = AT + S0;
-V0 = bu[AT + 5bc6];
-800A5080	j      La50c0 [$800a50c0]
-V0 = V0 | 0040;
+            A1 = w[801636b8 + unit_id * 10 + 8];
+            A2 = 38;
+            A3 = 10;
+            800A5064	jal    funca50e0 [$800a50e0]
 
-La5088:	; 800A5088
-800A5088	lui    at, $800f
-AT = AT + S0;
-[AT + 5bc6] = b(V0);
-A1 = A3;
-A2 = 0048;
-800A509C	jal    funca50e0 [$800a50e0]
-A3 = 0018;
-800A50A4	beq    v0, zero, La50cc [$800a50cc]
-800A50A8	nop
-800A50AC	lui    at, $800f
-AT = AT + S0;
-V0 = bu[AT + 5bc6];
-800A50B8	nop
-V0 = V0 | 0080;
+            if( V0 != 0 )
+            {
+                [800f5bc6 + unit_id * 44] = b(bu[800f5bc6 + unit_id * 44] | 40);
+            }
+        }
+        else if( A1 == 3 )
+        {
+            [800f5bc6 + unit_id * 44] = b(bu[800f5bc6 + unit_id * 44] & 7f);
 
-La50c0:	; 800A50C0
-800A50C0	lui    at, $800f
-AT = AT + S0;
-[AT + 5bc6] = b(V0);
+            A1 = w[801636b8 + unit_id * 10 + 8];
+            A2 = 48;
+            A3 = 18;
+            800A509C	jal    funca50e0 [$800a50e0]
 
-La50cc:	; 800A50CC
+            if( V0 != 0 )
+            {
+                [800f5bc6 + unit_id * 44] = b(bu[800f5bc6 + unit_id * 44] | 80);
+            }
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -3743,8 +3699,7 @@ V0 = A0 < V0;
 800A5244	nop
 
 La5248:	; 800A5248
-800A5248	jr     ra 
-V0 = T5;
+return T5;
 ////////////////////////////////
 
 
@@ -3958,7 +3913,7 @@ for( int i = 0; i < 10; ++i )
 
 
 ////////////////////////////////
-// funca5660()
+// battle_add_unit_reserved_item()
 
 unit_id = A0;
 item_id = A1;
@@ -4735,11 +4690,11 @@ funca4d88();
 
 
 ////////////////////////////////
-// funca6720()
+// battle_add_stolen_item_to_reserved_item()
 
 A0 = a; // unit id
 A1 = A1; // item id
-funca5660();
+battle_add_unit_reserved_item();
 ////////////////////////////////
 
 
@@ -5298,7 +5253,7 @@ while( b[800f4308 + id * 200 + slot_id * 4 + 0] != -1 )
             case 0: battle_reset_manipulator_timer(); break;
             case 1: battle_enable_limit_to_player_resetting_bar(); break;
             case 2: funca66a4(); break;
-            case 3: funca6720(); break;
+            case 3: battle_add_stolen_item_to_reserved_item(); break; // [0 3]
             case 4: funca6590(); break;
             case 5: funca6748(); break;
             case 6: funca661c(); break;
@@ -9394,9 +9349,8 @@ funca311c;
 
 ////////////////////////////////
 // battle_main_damage_calculation
-//
-// formula function called from here
-address = w[80063014];
+
+temp = w[80063014];
 
 S3 = A0; // attacker id
 S0 = A1; // target id
@@ -9426,10 +9380,10 @@ if (b[S1 + 0] != S0) // if target changed
 {
     funca3240;
 
-    [address + 218] = w(w[address + 218] | 00000020);
+    [temp + 218] = w(w[temp + 218] | 00000020);
 }
 
-S0 = w[address + 208];
+S0 = w[temp + 208];
 
 
 
@@ -9442,25 +9396,25 @@ funcab308; // do some modification acording to this attack immunities/weakness
 
 
 // if this is heal attack
-V0 = w[address + 44];
+V0 = w[temp + 44];
 if (V0 & 0200)
 {
-    [address + 220] = w(w[address + 220] | 0001);
+    [temp + 220] = w(w[temp + 220] | 0001);
 }
 
-V0 = w[address + 6c] & 0001; // damage to mp
+V0 = w[temp + 6c] & 0001; // damage to mp
 if (V0 == 0)
 {
-    [address + 220] = w(w[address + 220] | 0004);
+    [temp + 220] = w(w[temp + 220] | 0004);
 }
 
 if (w[800f83e0 + S0 * 68 + 4] & 00004000) // if undamagable
 {
-    [address + 218] = w(w[address + 218] | 00000001);
+    [temp + 218] = w(w[temp + 218] | 00000001);
 }
 
 // if not automiss
-if ((w[address + 218] & 00000001) == 0)
+if ((w[temp + 218] & 00000001) == 0)
 {
     // formula run
     battle_damage_formula_run;
@@ -9473,9 +9427,9 @@ funca8e84();
 
 
 
-if( w[address + 48] == 0 )
+if( w[temp + 48] == 0 )
 {
-    [address + 218] = w(w[address + 218] | 0002);
+    [temp + 218] = w(w[temp + 218] | 0002);
 }
 
 
@@ -9484,7 +9438,7 @@ A0 = S0;
 funcacd88;
 if( V0 != 0 ) // if target immune to magical or physical attack and this is the attack type
 {
-    [address + 230] = w(00000020); // nullify
+    [temp + 230] = w(00000020); // nullify
 }
 
 
@@ -9494,26 +9448,26 @@ funcab480; // death/halve/double/miss/recovery related
 
 
 S2 = 0;
-if( ( w[address + 6c] & 0200 ) == 0 ) // can be reflected
+if( ( w[temp + 6c] & 0200 ) == 0 ) // can be reflected
 {
     if( ( ( hu[800f4958] >> S0 ) & 0001 ) == 0 )
     {
-        S2 = (w[address + 228] >>> 12) & 0001; // reflect status
+        S2 = (w[temp + 228] >>> 12) & 0001; // reflect status
     }
 }
 
 
 
 // if we can hit target and target is alive but flag miss if not dead set - then we miss
-if( ( w[address + 6c] & 0100 ) == 0 ) // miss if target not dead
+if( ( w[temp + 6c] & 0100 ) == 0 ) // miss if target not dead
 {
     if( S2 == 0 ) // not reflecting
     {
-        if( ( w[address + 228] & 00000001 ) == 0 ) // target not dead
+        if( ( w[temp + 228] & 00000001 ) == 0 ) // target not dead
         {
-            if( ( w[address + 230] & 000000c1 ) == 0 ) // not recovery death or absorb
+            if( ( w[temp + 230] & 000000c1 ) == 0 ) // not recovery death or absorb
             {
-                [address + 218] = w(w[address + 218] | 00000001);
+                [temp + 218] = w(w[temp + 218] | 00000001);
             }
         }
     }
@@ -9521,22 +9475,22 @@ if( ( w[address + 6c] & 0100 ) == 0 ) // miss if target not dead
 
 
 
-if( ( w[address + 218] & 00000001 ) == 0 ) // if we not missing
+if( ( w[temp + 218] & 00000001 ) == 0 ) // if we not missing
 {
-    [address + e0] = w(w[address + e0] + 1);
+    [temp + e0] = w(w[temp + e0] + 1);
     [S1 + 4] = h(hu[S1 + 4] | 0001); // 800fa9d0 struct
 
     A0 = 4;
     funca8e84();
 
-    if( w[address + 0] != S0 ) // if we not attacking self
+    if( w[temp + 0] != S0 ) // if we not attacking self
     {
-        [address + 78] = w(w[address + 78] | (1 << S0));
+        [temp + 78] = w(w[temp + 78] | (1 << S0));
     }
 
-    if( ( w[address + 218] & 00000004 ) && ( w[address + b0] < 9 ) )
+    if( ( w[temp + 218] & 00000004 ) && ( w[temp + b0] < 9 ) )
     {
-        funca2974; // steal function
+        battle_perform_steal_from_enemy();
     }
 
     if (S2 != 0)
@@ -9621,7 +9575,7 @@ if( ( w[address + 218] & 00000001 ) == 0 ) // if we not missing
         V0 = S0 < 0003;
         if (V0 != 0)
         {
-            [address + 224] = w(a);
+            [temp + 224] = w(a);
         }
     }
 
@@ -9670,17 +9624,17 @@ else
     A1 = 3E7; // 999
 }
 
-A0 = address;
-V0 = w[address + 220];
+A0 = temp;
+V0 = w[temp + 220];
 if (V0 & 0004)
 {
     V1 = A1;
 }
 
-V0 = w[address + 214];
+V0 = w[temp + 214];
 if (V1 < V0)
 {
-    [address + 214] = w(V1);
+    [temp + 214] = w(V1);
 }
 
 A0 = S0;
@@ -9749,7 +9703,7 @@ A0 = w[80063014];
 Lac170:	; 800AC170
 800AC170	nop
 V0 = w[A0 + 0220];
-[address + 24c] = w(w[address + 68]);
+[temp + 24c] = w(w[temp + 68]);
 V0 = V0 & 0002;
 800AC180	beq    v0, zero, Lac194 [$800ac194]
 
@@ -9763,8 +9717,8 @@ V0 = w[A0 + 0054];
 [A0 + 0248] = w(V0);
 
 Lac1a0:	; 800AC1A0
-V1 = address;
-V0 = w[address + 220];
+V1 = temp;
+V0 = w[temp + 220];
 V0 = V0 & 0001;
 if (V0 == 0)
 {
@@ -9774,7 +9728,7 @@ if (V0 == 0)
     V0 = 0033;
 }
 
-[address + 224] = w(33);
+[temp + 224] = w(33);
 800AC1D0	j      Lac208 [$800ac208]
 
 Lac1d8:	; 800AC1D8
@@ -9796,8 +9750,8 @@ Lac200:	; 800AC200
 A0 = 0;
 
 Lac208:	; 800AC208
-V1 = address;
-A0 = w[address + 218];
+V1 = temp;
+A0 = w[temp + 218];
 if (A0 & 00000001)
 {
     T2 = 0;
@@ -9891,7 +9845,7 @@ if (A0 & 00000001)
 
     if (A0 != T3)
     {
-        V0 = w[address + 244];
+        V0 = w[temp + 244];
         V0 = T3 & V0;
         if (V0 != 0)
         {
@@ -9932,7 +9886,7 @@ if (A0 & 00000001)
 else
 {
     V0 = A0 | 00800000
-    [address + 218] = w(V0);
+    [temp + 218] = w(V0);
 }
 
 // apply damage to stats
@@ -9956,10 +9910,10 @@ A0 = w[V1 + 0218];
 V0 = A0 & 0002;
 800AC438	bne    v0, zero, Lac464 [$800ac464]
 800AC43C	lui    v0, $0080
-A1 = h[address + 250];
-A2 = hu[address + 220]; // 1f800220 damage flags (heal damage to mp critical)
-A3 = h[address + 248]; // impact sound
-[SP + 10] = w(h[address + 24c]);
+A1 = h[temp + 250];
+A2 = hu[temp + 220]; // 1f800220 damage flags (heal damage to mp critical)
+A3 = h[temp + 248]; // impact sound
+[SP + 10] = w(h[temp + 24c]);
 A0 = S1;
 800AC454	jal    funcaba68 [$800aba68]
 
@@ -10054,7 +10008,7 @@ Lac594:	; 800AC594
 Lac598:	; 800AC598
 A0 = S0 * 68;
 [S1 + 8] = w(w[800f83e0 + A0 + 0]);
-[S1 + 2] = b(w[address + 224]);
+[S1 + 2] = b(w[temp + 224]);
 V1 = w[80063014];
 V0 = w[80063014];
 800AC5D4	nop
@@ -10097,7 +10051,7 @@ if (V0 & 1)
     V0 = w[80063014];
     800AC67C	addiu  a1, zero, $fffe (=-$2)
     A3 = h[V0 + 0248];
-    [SP + 10] = w(h[address + 68]);
+    [SP + 10] = w(h[temp + 68]);
     A2 = 0;
     800AC68C	jal    funcaba68 [$800aba68]
 }
@@ -10145,67 +10099,67 @@ else
 // battle_calculate_target_stats
 S0 = A0; // target_id
 
-address = w[80063014];
+temp = w[80063014];
 
-[address + 208] = w(S0);
-[address + 20c] = w(-1);
-[address + 210] = w(0);
-[address + 214] = w(0);
-[address + 218] = w(w[address + 90]);
-[address + 21c] = w(0);
-[address + 220] = w(0);
-[address + 224] = w(bu[800f83e0 + S0 * 68 + 56]);
-[address + 228] = w(w[800f83e0 + S0 * 68 + 0]);
-[address + 230] = w(0);
-[address + 234] = w(0);
-[address + 238] = w(0);
-[address + 23c] = w(0);
-[address + 240] = w(0);
-[address + 244] = w(0);
-[address + 248] = w(-1);
-[address + 24c] = w(-1);
-[address + 250] = w(-1);
-[address + 254] = w(bu[800f83e0 + S0 * 68 + 9]);
-[address + 258] = w(w[800f83e0 + S0 * 68 + 2c]); // current hp
-[address + 25c] = w(hu[800f83e0 + S0 * 68 + 28]); // current mp
-[address + 260] = w(w[address + 3c]);
+[temp + 208] = w(S0);
+[temp + 20c] = w(-1);
+[temp + 210] = w(0);
+[temp + 214] = w(0);
+[temp + 218] = w(w[temp + 90]);
+[temp + 21c] = w(0);
+[temp + 220] = w(0);
+[temp + 224] = w(bu[800f83e0 + S0 * 68 + 56]);
+[temp + 228] = w(w[800f83e0 + S0 * 68 + 0]);
+[temp + 230] = w(0);
+[temp + 234] = w(0);
+[temp + 238] = w(0);
+[temp + 23c] = w(0);
+[temp + 240] = w(0);
+[temp + 244] = w(0);
+[temp + 248] = w(-1);
+[temp + 24c] = w(-1);
+[temp + 250] = w(-1);
+[temp + 254] = w(bu[800f83e0 + S0 * 68 + 9]);
+[temp + 258] = w(w[800f83e0 + S0 * 68 + 2c]); // current hp
+[temp + 25c] = w(hu[800f83e0 + S0 * 68 + 28]); // current mp
+[temp + 260] = w(w[temp + 3c]);
 
-[address + 200] = w(800f5bb8 + S0 * 44);
+[temp + 200] = w(800f5bb8 + S0 * 44);
 
 if (S0 < 3)
 {
-    [address + 204] = w(800f5e60 + S0 * 34);
+    [temp + 204] = w(800f5e60 + S0 * 34);
 }
 else
 {
-    [address + 204] = w(-1);
+    [temp + 204] = w(-1);
 }
 
-if (w[address + 48] == 0) // power modifier
+if (w[temp + 48] == 0) // power modifier
 {
-    [address + 224] = w(33);
+    [temp + 224] = w(33);
 }
 
 funcace88;
 if (V0 != 0)
 {
-    A0 = address;
-    A2 = address + c;
-    [address + 244] = w(0);
+    A0 = temp;
+    A2 = temp + c;
+    [temp + 244] = w(0);
 
     Lac89c:	; 800AC89C
     V0 = w[A0 + 80];
     [A0 + 238] = w(V0);
-    if (A0 == address)
+    if (A0 == temp)
     {
-        V0 = w[address + 228];
+        V0 = w[temp + 228];
         if (V0 & 00004000)
         {
-            [address + 238] = w(0);
+            [temp + 238] = w(0);
         }
     }
 
-    [address + 244] = w(w[address + 244] | w[A0 + 238]);
+    [temp + 244] = w(w[temp + 244] | w[A0 + 238]);
 
     A0 = A0 + 4;
     V0 = A0 < A2;
@@ -10215,26 +10169,26 @@ if (V0 != 0)
 }
 else
 {
-    V0 = w[address + 48];
+    V0 = w[temp + 48];
     if (V0 == 0)
     {
-        V0 = w[address + 218];
+        V0 = w[temp + 218];
         V0 = V0 | 0001;
-        [address + 218] = w(V0);
+        [temp + 218] = w(V0);
     }
 }
 
 
 
-A0 = w[address + 208];
+A0 = w[temp + 208];
 A1 = 1;
-A2 = w[address + 23c];
+A2 = w[temp + 23c];
 A2 = A2 & 00000001;
 funcaf874; // get immunities
-[address + 22c] = w(V0);
+[temp + 22c] = w(V0);
 
 
-A0 = w[address + 6c];
+A0 = w[temp + 6c];
 if (A0 & 0400) // if not ignore defense calculation
 {
     if (A0 & 0004)
@@ -10250,19 +10204,19 @@ if (A0 & 0400) // if not ignore defense calculation
 
     A0 = S0;
     funcb1218; // calculate defense
-    [address + 210] = w(V0);
+    [temp + 210] = w(V0);
 }
 
 
-V0 = w[address + 210];
+V0 = w[temp + 210];
 if (V0 >= 201)
 {
-    [address + 210] = w(200);
+    [temp + 210] = w(200);
 }
 
 if (S0 >= 4)
 {
-    [address + 20c] = w(h[80163658 + (S0 - 4) * 10]);
+    [temp + 20c] = w(h[80163658 + (S0 - 4) * 10]);
 }
 ////////////////////////////////
 
@@ -10270,13 +10224,13 @@ if (S0 >= 4)
 
 ////////////////////////////////
 // funcaca24
-address = w[80063014];
-[address + 214] = w(0);
-[address + 230] = w(0);
-[address + 238] = w(0);
-[address + 23c] = w(0);
-[address + 240] = w(0);
-[address + 244] = w(0);
+temp = w[80063014];
+[temp + 214] = w(0);
+[temp + 230] = w(0);
+[temp + 238] = w(0);
+[temp + 23c] = w(0);
+[temp + 240] = w(0);
+[temp + 244] = w(0);
 ////////////////////////////////
 
 
@@ -10395,33 +10349,33 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // funcacb98
-address = w[80063014];
-V0 = w[address + 0];
+temp = w[80063014];
+V0 = w[temp + 0];
 V0 = w[800f83e4 + V0 * 68 + 0];
 if ((V0 & 00000400) == 0)
 {
-    if (w[address + 20] != 34)
+    if (w[temp + 20] != 34)
     {
         forbid = 0;
 
         // if attacker in silence
-        if (w[address + c8] & 00000080)
+        if (w[temp + c8] & 00000080)
         {
-            V0 = w[address + 28];
-            if (V0 == 2 || V0 == 3 || V0 == d || V0 == 15 || V0 == 16 || (V0 == 20 && w[address + 38] != 0))
+            V0 = w[temp + 28];
+            if (V0 == 2 || V0 == 3 || V0 == d || V0 == 15 || V0 == 16 || (V0 == 20 && w[temp + 38] != 0))
             {
                 forbid = 1;
             }
         }
 
         // if attacker in frog status
-        if (w[address + c8] & 00000800)
+        if (w[temp + c8] & 00000800)
         {
-            V0 = w[address + 28];
+            V0 = w[temp + 28];
             // if this is magic attack and casted magic not toad
             if (V0 == 2)
             {
-                if (w[address + 2c] != a)
+                if (w[temp + 2c] != a)
                 {
                     forbid = 1;
                 }
@@ -10429,7 +10383,7 @@ if ((V0 & 00000400) == 0)
             // if this is enemy attack and magic cost greater than 0
             else if (V0 == 20)
             {
-                if (w[address + 38] != 0)
+                if (w[temp + 38] != 0)
                 {
                     forbid = 1;
                 }
@@ -10443,13 +10397,13 @@ if ((V0 & 00000400) == 0)
         A0 = -1;
         if (forbid == 0)
         {
-            A0 = w[address + 0];
-            A1 = w[address + 38];
+            A0 = w[temp + 0];
+            A1 = w[temp + 38];
             A2 = hu[800f83e4 + A0 * 68 + 24];
             if (A2 >= A1)
             {
                 [800f83e4 + A0 * 68 + 24] = h(A2 - A1);
-                [address + 38] = w(0);
+                [temp + 38] = w(0);
                 return 0;
             }
 
@@ -10467,12 +10421,12 @@ if ((V0 & 00000400) == 0)
 
         funcaca4c;
 
-        [address + 38] = w(0);
+        [temp + 38] = w(0);
         return 1;
     }
 }
 
-[address + 38] = w(0);
+[temp + 38] = w(0);
 return 0;
 ////////////////////////////////
 
@@ -10480,8 +10434,8 @@ return 0;
 
 ////////////////////////////////
 // funcacd88
-address = w[80063014];
-if( w[address + 6c] & 0004 ) // magical attack
+temp = w[80063014];
+if( w[temp + 6c] & 0004 ) // magical attack
 {
     if( w[800f83e0 + A0 * 68 + 4] & 00000200 )
     {
@@ -10543,19 +10497,19 @@ SP = SP + 0020;
 ////////////////////////////////
 // funcace88
 // check if we change status or not
-address = w[80063014];
-V0 = w[address + 0];
-S0 = w[address + 8c];
-A0 = w[address + 208];
+temp = w[80063014];
+V0 = w[temp + 0];
+S0 = w[temp + 8c];
+A0 = w[temp + 208];
 A2 = bu[800f83e0 + V0 * 68 + e]; // magic power
 A0 = hu[800f83e0 + A0 * 68 + 22]; // magic defense
 A2 = A2 - A0;
-V1 = w[address + 80];
-V0 = w[address + 84];
-A0 = w[address + 88];
+V1 = w[temp + 80];
+V0 = w[temp + 84];
+A0 = w[temp + 88];
 S1 = V1 | V0 | A0;
 
-V1 = w[address + 228];
+V1 = w[temp + 228];
 V0 = V1 & 00000800;
 if (V0 == S1)
 {
@@ -10569,7 +10523,7 @@ if (V0 == S1)
     S0 = fc;
 }
 
-V0 = w[address + 208];
+V0 = w[temp + 208];
 V0 = V0 < 3;
 if(V0 != 0)
 {
@@ -10583,19 +10537,19 @@ if(V0 != 0)
 
 if (S0 < fc)
 {
-    S0 = S0 + S0 * w[address + e8] / 64;
+    S0 = S0 + S0 * w[temp + e8] / 64;
 
-    V0 = w[address + 50];
+    V0 = w[temp + 50];
     if ((V0 & c) != 4)
     {
-        V0 = w[address + b8];
+        V0 = w[temp + b8];
         if (V0 >= 2) // number of target
         {
             S0 = S0 * 2 / 3;
         }
     }
 
-    V0 = w[address + ac];
+    V0 = w[temp + ac];
     if (V0 != 0)
     {
         S0 = S0 >> 1;
@@ -10614,7 +10568,7 @@ if (S0 < fc)
 if (S1 & 1)
 {
     V1 = hu[800f7dcc];
-    V0 = w[address + 208];
+    V0 = w[temp + 208];
     V1 = V1 >> V0;
     if (V1 & 1)
     {
@@ -10659,10 +10613,10 @@ if( V0 != 0 )
 
 ////////////////////////////////
 // funcad0fc
-address   = w[80063014];
-target_id = w[address + 208]; // entity_id
-V0 = w[address + 220];
-A1 = w[address + 214]; // lower formula calculated damage.
+temp   = w[80063014];
+target_id = w[temp + 208]; // entity_id
+V0 = w[temp + 220];
+A1 = w[temp + 214]; // lower formula calculated damage.
 if (A1 != 0)
 {
     // damage to MP
@@ -10695,7 +10649,7 @@ if (A1 != 0)
             V0 = V0 | 00000001;
             [800F83E0 + target_id * 68 + 0] = w(V0);
 
-            V0 = w[address + 90];
+            V0 = w[temp + 90];
             if (V0 & 2000)
             {
                 funca2db0;
@@ -10705,10 +10659,10 @@ if (A1 != 0)
         // if this is player
         if (target_id < 3)
         {
-            V0 = w[address + 0];
+            V0 = w[temp + 0];
             if (V0 >= 4 && S2 == 0)
             {
-                A1 = w[address + 204];
+                A1 = w[temp + 204];
                 V0 = bu[A1 + 5];
                 if (V0 < 4)
                 {
@@ -10726,7 +10680,7 @@ if (A1 != 0)
                         }
                         else
                         {
-                            V1 = w[address + 214];
+                            V1 = w[temp + 214];
                             A1 = w[A0 + 0228];
                             V0 = w[800F83E0 + target_id * 68 + 30];
                             A0 = A1 & 0020;
@@ -10986,8 +10940,8 @@ if( w[temp + 48] != 0 ) // power modifier
         case 08: battle_lower_function_08(); break; // recovery
         case 09: battle_lower_function_09(); break; // not used
         case 0a: battle_lower_function_0a(); break; // not used
-        case 10: battle_lower_function_10(); break; // custom 00 white wind (damage = current hp of attacker)
-        case 11: battle_lower_function_11(); break; // custom 01 (damage = max hp - current hp)
+        case 10: battle_set_temp_damage_as_current_hp(); break;
+        case 11: battle_set_temp_damage_as_max_hp_minus_current_hp(); break;
         case 12 13 14 15 16 17: break;
         case 18: battle_set_temp_damage_as_dice_roll(); break;
         case 19: battle_set_temp_damage_as_number_of_escapes(); break;
@@ -11455,55 +11409,59 @@ if (V0 != 0)
 
 
 ////////////////////////////////
-// battle_lower_function_10
+// battle_set_temp_damage_as_current_hp()
+
 temp = w[80063014];
-V1 = w[temp + 0];
-[temp + 214] = w(hu[800f5bb8 + V1 * 44 + 3c]);
+
+attacker_id = w[temp + 0];
+[temp + 214] = w(hu[800f5bb8 + V1 * attacker_id + 3c]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// battle_lower_function_11
+// battle_set_temp_damage_as_max_hp_minus_current_hp()
+
 temp = w[80063014];
-A0 = w[temp + 0];
-[temp + 214] = w(w[800f83e0 + A0 * 68 + 30] - hu[800f5bb8 + A0 * 44 + 3c]);
+
+attacker_id = w[temp + 0];
+[temp + 214] = w(w[800f83e0 + attacker_id * 68 + 30] - hu[800f5bb8 + attacker_id * 44 + 3c]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcae050
+// funcae050()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcae058
+// funcae058()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcae060
+// funcae060()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcae068
+// funcae068()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcae070
+// funcae070()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcae078
+// funcae078()
 ////////////////////////////////
 
 
@@ -13469,11 +13427,12 @@ if ((V0 & 00000001) == 0)
 // upper_function_07
 // hit by hit % target level
 temp = w[80063014];
+
 hit = w[temp + 3c];
-if (hit != 0)
+if( hit != 0 )
 {
     target_level = w[temp + 254];
-    if (target_level % hit)
+    if( target_level % hit )
     {
         [temp + 218] = w(w[temp + 218] | 00000001);
     }
@@ -13775,17 +13734,17 @@ return is_player & 1;
 
 
 ////////////////////////////////
-// funcb0f04
-enemy = A0;
+// battle_get_random_item_id_for_steal()
+
+enemy_struct = A0;
 mask = A1;
 always_gain = A2;
 roll = A3;
 
-
-S1 = 0;
-loopb0f50:	; 800B0F50
-    V1 = bu[enemy + 88 + S1];
-    if( ( V1 & c0 ) == mask )
+for( int i = 0; i < 4; ++i )
+{
+    chance = bu[enemy_struct + 88 + i];
+    if( ( chance & c0 ) == mask )
     {
         if( always_gain != 0 )
         {
@@ -13793,20 +13752,17 @@ loopb0f50:	; 800B0F50
         }
         else
         {
-            S0 = (V1 & 3f) * roll / 100;
+            S0 = (chance & 3f) * roll / 100;
         }
 
-        system_get_random_byte_from_table;
+        system_get_random_byte_from_table();
 
         if( S0 >= ( V0 & 3f ) )
         {
-            return hu[enemy + 8c + S1 * 2];
+            return hu[enemy_struct + 8c + i * 2]; // item id
         }
     }
-
-    S1 = S1 + 1;
-    V0 = S1 < 4;
-800B0FBC	bne    v0, zero, loopb0f50 [$800b0f50]
+}
 
 return -1;
 ////////////////////////////////
@@ -13830,7 +13786,7 @@ A0 = S0;
 A1 = 2;
 A2 = S2;
 A3 = V0 + 100;
-800B103C	jal    funca31a0 [$800a31a0]
+funca31a0();
 ////////////////////////////////
 
 

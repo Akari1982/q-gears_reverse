@@ -24,7 +24,7 @@
 // funca2894
 800A2894-800A2970
 ////////////////////////////////
-// funca2974
+// battle_perform_steal_from_enemy
 800A2974-800A2B24
 ////////////////////////////////
 // funca2b28
@@ -201,7 +201,7 @@
 // battle_remove_unit_reserved_item
 800A55F4-800A565C
 ////////////////////////////////
-// funca5660
+// battle_add_unit_reserved_item
 800A5660-800A56AC
 ////////////////////////////////
 // battle_request_return_reserved_items
@@ -270,7 +270,7 @@
 // funca66a4
 800A66A4-800A671C
 ////////////////////////////////
-// funca6720
+// battle_add_stolen_item_to_reserved_item
 800A6720-800A6744
 ////////////////////////////////
 // funca6748
@@ -627,10 +627,10 @@
 // battle_lower_function_0a
 800ADF38-800ADFBC
 ////////////////////////////////
-// battle_lower_function_10
+// battle_set_temp_damage_as_current_hp
 800ADFC0-800ADFF0
 ////////////////////////////////
-// battle_lower_function_11
+// battle_set_temp_damage_as_max_hp_minus_current_hp
 800ADFF4-800AE04C
 ////////////////////////////////
 // funcae050
@@ -789,7 +789,7 @@
 // funcb0eb4
 800B0EB4-800B0F00
 ////////////////////////////////
-// funcb0f04
+// battle_get_random_item_id_for_steal
 800B0F04-800B0FF8
 ////////////////////////////////
 // battle_add_string_to_display
