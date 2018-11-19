@@ -3592,113 +3592,89 @@ if( unit_id < 3 )
 
 
 ////////////////////////////////
-// funca50e0
-T5 = 0001;
-T3 = A1 >> 07;
-T3 = T3 ^ 0001;
-T3 = T3 & 0001;
-A1 = A1 >> 0b;
-A1 = A1 ^ 0001;
-A1 = A1 & 0001;
-V0 = A0 << 04;
-V0 = V0 + A0;
-V1 = V0 << 02;
-800A5108	lui    at, $800f
-AT = AT + V1;
-T6 = hu[AT + 5bf6];
-V0 = V0 << 06;
-800A5118	lui    v1, $800a
-800A511C	addiu  v1, v1, $d954 (=-$26ac)
-V0 = V0 + V1;
-V1 = A2 << 03;
-800A5128	blez   a3, La5248 [$800a5248]
-T4 = V0 + V1;
-A0 = T4;
+// funca50e0()
 
-loopa5134:	; 800A5134
-V1 = bu[A0 + 0000];
-V0 = 00ff;
-800A513C	beq    v1, v0, La522c [$800a522c]
-T0 = 0002;
-T1 = V1 + A2;
-V0 = T1 << 03;
-V0 = V0 - T1;
-V0 = V0 << 02;
-800A5154	lui    at, $8007
-AT = AT + V0;
-V1 = bu[AT + 08d0];
-V0 = T1 < 0038;
-800A5164	beq    v0, zero, La51cc [$800a51cc]
-T2 = 0;
-V0 = V1 & 0008;
-800A5170	beq    v0, zero, La51ac [$800a51ac]
-800A5174	nop
-V0 = bu[A0 + 0002];
-800A517C	nop
-800A5180	bne    v0, zero, La51a0 [$800a51a0]
-V0 = V1 & 0008;
-V0 = bu[A0 + 0004];
-800A518C	nop
-800A5190	bne    v0, zero, La51a0 [$800a51a0]
-V0 = V1 & 0008;
-V1 = V1 & 00f3;
-V0 = V1 & 0008;
+T5 = 1;
 
-La51a0:	; 800A51A0
-800A51A0	beq    v0, zero, La51ac [$800a51ac]
-800A51A4	nop
-T0 = T0 | 0010;
+T3 = A1 >> 7;
+T3 = T3 ^ 1;
+T3 = T3 & 1;
+A1 = A1 >> b;
+A1 = A1 ^ 1;
+A1 = A1 & 1;
 
-La51ac:	; 800A51AC
-V0 = bu[A0 + 0004];
-800A51B0	nop
-800A51B4	beq    v0, zero, La51ec [$800a51ec]
-800A51B8	addiu  v0, zero, $fff7 (=-$9)
-T0 = T0 | 0010;
-V1 = V1 & V0;
-800A51C4	j      La51ec [$800a51ec]
-V1 = V1 | 0004;
+T6 = hu[800f5bf6 + A0 * 44];
 
-La51cc:	; 800A51CC
-V0 = T1 < 0048;
-800A51D0	beq    v0, zero, La51ec [$800a51ec]
-800A51D4	nop
-V0 = bu[A0 + 0002];
-800A51DC	nop
-800A51E0	bne    v0, zero, La51ec [$800a51ec]
-800A51E4	nop
-T2 = 0001;
+if( A3 > 0 )
+{
+    T4 = 8009d954 + A0 * 440 + A2 * 8;
+    A0 = 8009d954 + A0 * 440 + A2 * 8;
 
-La51ec:	; 800A51EC
-V0 = bu[A0 + 0001];
-800A51F0	nop
-V0 = T6 < V0;
-800A51F8	bne    v0, zero, La522c [$800a522c]
-[A0 + 0005] = b(V1);
-800A5200	bne    t2, zero, La522c [$800a522c]
-800A5204	nop
-800A5208	beq    t3, zero, La522c [$800a522c]
-800A520C	nop
-800A5210	bne    a1, zero, La5224 [$800a5224]
-800A5214	addiu  v0, zero, $fffd (=-$3)
-V0 = 000a;
-800A521C	bne    t1, v0, La522c [$800a522c]
-800A5220	addiu  v0, zero, $fffd (=-$3)
+    loopa5134:	; 800A5134
+        T0 = 2;
 
-La5224:	; 800A5224
-T0 = T0 & V0;
-T5 = 0;
+        if( bu[A0 + 0] != ff )
+        {
+            T1 = V1 + A2;
+            V0 = T1 << 03;
+            V0 = V0 - T1;
+            V0 = V0 << 02;
+            V1 = bu[800708d0 + V0];
+            T2 = 0;
 
-La522c:	; 800A522C
-[A0 + 0006] = b(T0);
-A0 = A0 + 0008;
-V0 = A3 << 03;
-V0 = V0 + T4;
-V0 = A0 < V0;
-800A5240	bne    v0, zero, loopa5134 [$800a5134]
-800A5244	nop
+            if( T1 >= 38 )
+            {
+                if( T1 < 48 )
+                {
+                    if( bu[A0 + 2] == 0 )
+                    {
+                        T2 = 1;
+                    }
+                }
+            }
+            else
+            {
+                if( V1 & 8 )
+                {
+                    if( bu[A0 + 2] == 0 )
+                    {
+                        if( bu[A0 + 4] == 0 )
+                        {
+                            V1 = V1 & f3;
+                        }
+                    }
 
-La5248:	; 800A5248
+                    if( V1 & 8 )
+                    {
+                        T0 = T0 | 10;
+                    }
+                }
+
+                if( bu[A0 + 4] != 0 )
+                {
+                    T0 = T0 | 10;
+                    V1 = (V1 & fffffff7) | 00000004;
+                }
+            }
+            [A0 + 5] = b(V1);
+
+            if( ( T6 >= bu[A0 + 1] ) && ( T2 == 0 ) && ( T3 != 0 ) )
+            {
+                if( ( A1 != 0 ) || ( T1 == a ) )
+                {
+                    T0 = T0 & fffffffd;
+                    T5 = 0;
+                }
+            }
+        }
+
+        [A0 + 6] = b(T0);
+
+        A0 = A0 + 8;
+        V0 = A0 < T4 + A3 * 8;
+    800A5240	bne    v0, zero, loopa5134 [$800a5134]
+}
+
 return T5;
 ////////////////////////////////
 
