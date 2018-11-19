@@ -4087,8 +4087,7 @@ return ret_id;
 
 
 ////////////////////////////////
-// funca5a5c()
-// master command counter/sneak/final
+// battle_get_random_master_command()
 
 A0 = 7; // random 0-6
 system_get_random_byte_range();
@@ -4099,8 +4098,7 @@ return bu[800a0278 + V0];
 
 
 ////////////////////////////////
-// funca5a88
-// master magic counter/sneak/final
+// battle_get_random_master_magic()
 
 A0 = 36;
 system_get_random_byte_range();
@@ -4111,8 +4109,7 @@ return V0;
 
 
 ////////////////////////////////
-// funca5aa8()
-// master summon counter/sneak/final
+// battle_get_random_master_summon()
 
 A0 = 10;
 system_get_random_byte_range();
@@ -4123,7 +4120,7 @@ return V0 + 38;
 
 
 ////////////////////////////////
-// funca5ac8()
+// battle_get_random_auto_action()
 
 unit_id = A0;
 type = A1; // 0 - magic/summon, 1 - command, 2 - attack
@@ -4142,9 +4139,9 @@ if( A2 >= fd ) // if master equipped
 {
     switch( A2 )
     {
-        case fd: funca5a5c(); break;
-        case fe: funca5a88(); break;
-        case ff: funca5aa8(); break;
+        case fd: battle_get_random_master_command(); break;
+        case fe: battle_get_random_master_magic(); break;
+        case ff: battle_get_random_master_summon(); break;
     }
     [ret + 4] = w(V0);
 }
@@ -4167,8 +4164,8 @@ else // command
 {
     [ret + 0] = w(w[ret + 4]);
     [ret + 4] = w(-1);
-    V0 = w[ret + 4];
-    return bu[800707c4 + V0 * 8 + 1];
+    command_id = w[ret + 0];
+    return bu[800707c4 + command_id * 8 + 1]; // target flags
 }
 ////////////////////////////////
 
@@ -4178,9 +4175,9 @@ else // command
 // funca5bc8()
 
 unit_id = A0;
-type = S4 = A1; // 2 - counter/1 - sneak/0 - final
+type = A1; // 2 - counter/1 - sneak/0 - final
 
-if( type == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0 ) // no statuses that remove control or A1 == 0
+if( type == 0 || ( w[800f83e0 + unit_id * 68 + 0] & 82804c44 ) == 0 ) // final attack or no statuses that remove control
 {
     if( unit_id < 3 )
     {
@@ -4211,7 +4208,7 @@ if( type == 0 || (w[800f83e0 + unit_id * 68 + 0] & 82804c44) == 0 ) // no status
                                 A1 = j;
                                 A2 = bu[8009d84c + unit_id * 440 + 24 + i * 3 + 1];
                                 A3 = SP + 18;
-                                funca5ac8();
+                                battle_get_random_auto_action();
 
                                 if( V0 & 02 ) // if second bit in target type
                                 {
