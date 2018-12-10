@@ -1037,8 +1037,8 @@ loopa2110:	; 800A2110
                         if( attacker_id >= 4 )
                         {
                             A0 = S0;
-                            A1 = 2;
-                            funca5bc8(); // counter attack
+                            A1 = 2; // counter attack
+                            battle_add_auto_action_by_chance();
                         }
 
                         if( hu[800f83a4 + 2e] & 0004 )
@@ -4148,7 +4148,7 @@ else // command
 
 
 ////////////////////////////////
-// funca5bc8()
+// battle_add_auto_action_by_chance()
 
 unit_id = A0;
 type = A1; // 2 - counter/1 - sneak/0 - final
@@ -4181,42 +4181,41 @@ if( type == 0 || ( w[800f83e0 + unit_id * 68 + 0] & 82804c44 ) == 0 ) // final a
                             if( V0 < S0 ) // if this action must be played
                             {
                                 A0 = unit_id;
-                                A1 = j;
-                                A2 = bu[8009d84c + unit_id * 440 + 24 + i * 3 + 1];
-                                A3 = SP + 18;
+                                A1 = j; // 0 - magic/summon, 1 - command, 2 - attack
+                                A2 = bu[8009d84c + unit_id * 440 + 24 + i * 3 + 1]; // action id
+                                A3 = SP + 18; // ret
                                 battle_get_random_auto_action();
 
                                 if( V0 & 02 ) // if second bit in target type
                                 {
-                                    A1 = hu[800f83e0 + unit_id * 68 + 1a];
+                                    target_mask = hu[800f83e0 + unit_id * 68 + 1a]; // unit who attacks this unit
                                 }
                                 else
                                 {
-                                    A1 = 1 << unit_id;
+                                    target_mask = 1 << unit_id; // self
                                 }
 
                                 if( type == 0 ) // final
                                 {
                                     priority = 0;
-                                    A1 = A1 & f;
+                                    target_mask = target_mask & 000f; // only for players
                                 }
                                 else if( type == 1 ) // sneak
                                 {
                                     [800f5bb8 + unit_id * 44 + 29] = b(bu[800f5bb8 + unit_id * 44 + 29] | 04)
                                     priority = 1;
-                                    A1 = 0;
+                                    target_mask = 0;
                                 }
                                 else if( type == 2 ) // counter
                                 {
                                     priority = 1;
                                 }
 
-                                // add action
                                 A0 = unit_id;
+                                A1 = priority;
                                 A2 = w[SP + 18]; // action id
                                 A3 = w[SP + 1c]; // attack id
-                                A4 = A1; // mask
-                                A1 = priority;
+                                A4 = target_mask;
                                 battle_add_action_to_battle_queue();
                             }
                         }
@@ -4470,74 +4469,75 @@ for( int i = 0; i < 8; ++i )
 ////////////////////////////////
 // funca6278()
 
-S1 = A0;
-S0 = A1;
+attacker_id = A0;
+target_id = A1;
+
 S5 = A2;
 S3 = 0;
 
-if( S0 >= 4 )
+if( target_id >= 4 ) // enemy unit
 {
-    if( ( bu[800f5bb8 + S0 * 44 + 29] & 20 ) == 0 )
+    if( ( bu[800f5bb8 + target_id * 44 + 29] & 20 ) == 0 )
     {
-        [800f5bb8 + S0 * 44 + 29] = b(bu[800f5bb8 + S0 * 44 + 29] | 20);
+        [800f5bb8 + target_id * 44 + 29] = b(bu[800f5bb8 + target_id * 44 + 29] | 20);
 
-        if( S1 < 3 )
+        if( attacker_id < 3 )
         {
-            [800f5e67 + S1 * 34] = b(bu[800f5e67 + S1 * 34] + 1);
+            [800f5e60 + attacker_id * 34 + 7] = b(bu[800f5e60 + attacker_id * 34 + 7] + 1);
         }
     }
 }
 
-if( ( w[800f83e0 + S0 * 68 + 4] & 00002000 ) == 0 )
+if( ( w[800f83e0 + target_id * 68 + 4] & 00002000 ) == 0 )
 {
+    [800f83e0 + target_id * 68 + 4] = w(w[800f83e4 + target_id * 68] | 00002000);
+
     S4 = bu[800f6b9b];
 
-    [800f83e0 + S0 * 68 + 4] = w(w[800f83e4 + S0 * 68] | 00002000);
-
-    if( S1 >= 4 )
+    if( attacker_id >= 4 )
     {
-        A0 = S0;
-        A1 = 0;
-        funca5bc8();
+        A0 = target_id;
+        A1 = 0; // final attack
+        battle_add_auto_action_by_chance();
     }
 
-    if( S1 != S0 )
+    if( attacker_id != target_id )
     {
-        [800f83e0 + S0 * 68 + 1a] = h(1 << S1);
+        [800f83e0 + target_id * 68 + 1a] = h(1 << attacker_id);
     }
     else
     {
-        [800f83e0 + S0 * 68 + 1a] = h(0);
+        [800f83e0 + target_id * 68 + 1a] = h(0);
     }
 
-    A0 = S0;
+    A0 = target_id;
     A1 = 3; // death counter
     A2 = 0;
     funca6000();
 
     if( ( bu[800f6b9b] != S4 ) || ( S5 != 0 ) )
     {
-        if( ( w[800f83e0 + S0 * 68 + 4] & 00001000 ) == 0 )
+        if( ( w[800f83e0 + target_id * 68 + 4] & 00001000 ) == 0 )
         {
-            [800f83b2] = h(1 << S0);
+            [800f83a4 + e] = h(1 << target_id);
 
-            A0 = S0;
+            A0 = target_id;
             A1 = 25;
             A2 = 0;
             funcb2b5c();
         }
-        S3 = 0001;
+        S3 = 1;
     }
 }
 
-if( w[800f83e0 + S0 * 68 + 4] & 00001000 )
+if( w[800f83e0 + target_id * 68 + 4] & 00001000 )
 {
     S3 = 1;
 }
 
 if( ( S3 != 0 ) && ( S5 == 0 ) )
 {
-    A0 = S0;
+    A0 = target_id;
     funca3488();
 }
 ////////////////////////////////
@@ -11070,22 +11070,20 @@ return A0;
 
 
 ////////////////////////////////
-// battle_add_random_modifier_and_zero_check
-S0 = A0;
+// battle_add_random_modifier_and_zero_check()
 // modify damage by random 0.937 - 1.000
-system_get_random_byte_from_table;
 
-V0 = V0 + F01;
-V1 = S0 * V0;
-S0 = V1 >> C;
+damage = A0;
 
+system_get_random_byte_from_table();
 
-if (S0 == 0)
+damage = (damage * (V0 + f01)) >> c;
+
+if( damage == 0 )
 {
-    S0 = 1;
+    damage = 1;
 }
-
-return S0;
+return damage;
 ////////////////////////////////
 
 
@@ -11294,6 +11292,7 @@ else
 
 ////////////////////////////////
 // battle_lower_function_05
+
 temp = w[80063014];
 power_modifier = w[temp + 48];
 base_damage = w[temp + 4c];
@@ -11307,7 +11306,7 @@ A0 = V0;
 battle_add_barriers_modifier();
 
 A0 = V0;
-battle_add_random_modifier_and_zero_check;
+battle_add_random_modifier_and_zero_check();
 
 [temp + 214] = w(V0);
 ////////////////////////////////

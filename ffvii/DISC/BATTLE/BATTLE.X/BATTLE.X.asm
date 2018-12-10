@@ -222,10 +222,10 @@
 // funca5aa8
 800A5AA8-800A5AC4
 ////////////////////////////////
-// funca5ac8
+// battle_get_random_auto_action
 800A5AC8-800A5BC4
 ////////////////////////////////
-// funca5bc8
+// battle_add_auto_action_by_chance
 800A5BC8-800A5E08
 ////////////////////////////////
 // battle_copy_string_and_set_names_from_var

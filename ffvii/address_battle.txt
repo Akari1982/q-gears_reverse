@@ -248,6 +248,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                  0x01 - can't steal from this entity. Add if we stole once from enemy, because we can stole only once. Init with this flag in case of player (players cant stole from players).
                  0x04 - add in case of sneak attack.
                  0x08 - if set we add protect from frog.
+                 0x20 - add to enemy unit when it was killed.
                  0x80 - add in case of lucky 7777.
     +2a []       ???
     +2b []       dead effect?
@@ -266,6 +267,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +00 [][][][] pointer to character data in savemap.
     +05 []       limit level (0-3,0xff)
     +06 []       manipulated entity id?
+    +07 []       increased when player kills enemy unit.
     +08 [][]     init with limit bar value. We copy this to +a every battle cycle (for player units).
     +0a [][]     init with limit bar value. We copy +08 here every battle cycle (for player units).
     +0c [][]     store current unit MP here.
@@ -624,7 +626,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     + 16 []       init with 0 in case of player.
     17 []       store 0xff here at start of battle_main_damage_calculation. Index of character that we cover.
     18 [][]     attack mask set during run command.
-    + 1a [][]     - some mask (maybe mask of those who attack this unit)
+    + 1a [][]     mask of unit who attacks this unit.
     + 20 [][]     defense. Multiplied by 2 in case of enemy.
     + 22 [][]     magic defense. Multiplied by 2 in case of enemy.
     + 24 [][]     init with 0xffff. Set enemy id here.
