@@ -208,8 +208,8 @@ La4668:	; 800A4668
     800A4988	jal    funcb63f0 [$800b63f0]
 
     La4990:	; 800A4990
-    800A4990	jal    funca21b4 [$800a21b4]
-    800A4994	nop
+    funca21b4();
+
     800A4998	addiu  v0, zero, $fff1 (=-$f)
 
     [800e566c] = w(V0);
@@ -273,8 +273,8 @@ La4668:	; 800A4668
         [80116508] = w(V0);
 
         La4a74:	; 800A4A74
-        800A4A74	jal    funca21b4 [$800a21b4]
-        800A4A78	nop
+        funca21b4();
+
         800A4A7C	jal    funca44c4 [$800a44c4]
         800A4A80	nop
         800A4A84	jal    funcaa0e0 [$800aa0e0]

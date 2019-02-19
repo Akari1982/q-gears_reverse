@@ -3228,10 +3228,9 @@ return w[8010ad3c];
 V0 = w[8010ad40];
 if( V0 != 0 )
 {
-    V1 = bu[V0 + 50];
-    if( V1 < 20 )
+    if( bu[V0 + 50] < 20 )
     {
-        return (A0 >> V1) & 1;
+        return (A0 >> bu[V0 + 50]) & 1;
     }
 }
 return 0;
@@ -3468,7 +3467,6 @@ funcb58f8(); // prepare packet
 A0 = model_struct;
 funcada64(); // set coords and rotation for controlling models on map
 ////////////////////////////////
-
 
 
 
