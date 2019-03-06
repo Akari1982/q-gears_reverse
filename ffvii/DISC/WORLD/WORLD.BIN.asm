@@ -4632,7 +4632,7 @@ V0 = V0 < 0010;
 A0 = S0;
 A1 = 0;
 A2 = SP + 0080;
-800A64E4	jal    funca6884 [$800a6884]
+800A64E4	jal    wm_extract_loop_coords_top_bottom_parts [$800a6884]
 A3 = SP + 0082;
 A0 = S0;
 A1 = S1 << 10;
@@ -4915,66 +4915,10 @@ SP = SP + 0018;
 800A6880	nop
 
 
-funca6884:	; 800A6884
-800A6884	beq    a2, zero, La68c0 [$800a68c0]
-800A6888	nop
-V0 = w[A0 + 0000];
-800A6890	nop
-V1 = V0 >> 0d;
-V0 = V1 << 10;
-V0 = V0 >> 10;
-800A68A0	bgez   v0, La68b0 [$800a68b0]
-[A2 + 0000] = h(V1);
-800A68A8	j      La68bc [$800a68bc]
-V0 = V1 + 0024;
 
-La68b0:	; 800A68B0
-V0 = V0 < 0024;
-800A68B4	bne    v0, zero, La68c0 [$800a68c0]
-800A68B8	addiu  v0, v1, $ffdc (=-$24)
-
-La68bc:	; 800A68BC
-[A2 + 0000] = h(V0);
-
-La68c0:	; 800A68C0
-800A68C0	beq    a3, zero, La68fc [$800a68fc]
-800A68C4	nop
-V0 = w[A0 + 0008];
-800A68CC	nop
-V1 = V0 >> 0d;
-V0 = V1 << 10;
-V0 = V0 >> 10;
-800A68DC	bgez   v0, La68ec [$800a68ec]
-[A3 + 0000] = h(V1);
-800A68E4	j      La68f8 [$800a68f8]
-V0 = V1 + 001c;
-
-La68ec:	; 800A68EC
-V0 = V0 < 001c;
-800A68F0	bne    v0, zero, La68fc [$800a68fc]
-800A68F4	addiu  v0, v1, $ffe4 (=-$1c)
-
-La68f8:	; 800A68F8
-[A3 + 0000] = h(V0);
-
-La68fc:	; 800A68FC
-800A68FC	beq    a1, zero, La6924 [$800a6924]
-800A6900	nop
-V0 = hu[A0 + 0000];
-[A1 + 0002] = h(0);
-V0 = V0 & 1fff;
-[A1 + 0000] = h(V0);
-V0 = hu[A0 + 0008];
-800A6918	nop
-V0 = V0 & 1fff;
-[A1 + 0004] = h(V0);
-
-La6924:	; 800A6924
-800A6924	jr     ra 
-800A6928	nop
-
-
-
+////////////////////////////////
+// wm_extract_loop_coords_top_bottom_parts
+800A6884-800A6928
 ////////////////////////////////
 // wm_loop_coords_around_world
 800A692C-800A6990
@@ -5069,7 +5013,7 @@ La6924:	; 800A6924
 // funca8b30
 800A8B30-800A8C6C
 ////////////////////////////////
-// funca8c70
+// wm_insert_struct_in_model_struct_list
 800A8C70-800A8CA0
 ////////////////////////////////
 // funca8ca4
@@ -5285,7 +5229,7 @@ La6924:	; 800A6924
 // funcaa6d0
 800AA6D0-800AA7D8
 ////////////////////////////////
-// funcaa7dc
+// wm_add_coords_cycled
 800AA7DC-800AA8D4
 ////////////////////////////////
 // funcaa8d8
@@ -9889,7 +9833,7 @@ V0 = V0 + T0;
 V0 = hu[V1 + 0002];
 800B0DE8	lui    v1, $0002
 V0 = V0 + V1;
-800B0DF0	jal    funca6884 [$800a6884]
+800B0DF0	jal    wm_extract_loop_coords_top_bottom_parts [$800a6884]
 [SP + 0028] = w(V0);
 V1 = h[SP + 0038];
 V0 = h[S0 + 0010];
@@ -12140,7 +12084,7 @@ A1 = h[S0 + 0000];
 A0 = SP + 0010;
 A0 = h[SP + 0010];
 A1 = h[SP + 0014];
-800B2C50	jal    funcaa7dc [$800aa7dc]
+800B2C50	jal    wm_add_coords_cycled [$800aa7dc]
 800B2C54	nop
 V1 = w[SP + 0018];
 800B2C5C	lui    at, $8011
@@ -12831,7 +12775,7 @@ A0 = S0;
 A0 = S0;
 A1 = SP + 0018;
 A2 = 0;
-800B35CC	jal    funca6884 [$800a6884]
+800B35CC	jal    wm_extract_loop_coords_top_bottom_parts [$800a6884]
 A3 = 0;
 800B35D4	jal    funca7e7c [$800a7e7c]
 800B35D8	nop
@@ -13037,7 +12981,7 @@ A0 = SP + 0010;
 A0 = SP + 0010;
 A1 = 0;
 A2 = SP + 0020;
-800B3874	jal    funca6884 [$800a6884]
+800B3874	jal    wm_extract_loop_coords_top_bottom_parts [$800a6884]
 A3 = SP + 0022;
 A0 = h[SP + 0020];
 A1 = h[SP + 0022];
@@ -21641,7 +21585,7 @@ V0 = V0 << 10;
 A1 = V0 >> 10;
 A0 = h[SP + 0010];
 A1 = h[SP + 0014];
-800BB984	jal    funcaa7dc [$800aa7dc]
+800BB984	jal    wm_add_coords_cycled [$800aa7dc]
 800BB988	nop
 RA = w[SP + 001c];
 S0 = w[SP + 0018];

@@ -108,7 +108,7 @@ loop33cf4:	; 80033CF4
 
     if( V0 == 8 || V0 == 9 || V0 == a )
     {
-        80033D24	jal    func35658 [$80035658]
+        func35658();
     }
     else if( V0 == 12 )
     {
@@ -169,6 +169,186 @@ V0 = w[8004a634 + V0 * 4];
 80034B90	jalr   v0 ra
 
 V0 = w[80071a60];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func33f40()
+
+sector = A0;
+size = A1;
+buffer = A2;
+S3 = A3;
+
+loop33f6c:	; 80033F6C
+    A0 = sector;
+    A1 = size;
+    A2 = buffer;
+    A3 = S3;
+    system_cdrom_start_load_file();
+80033F7C	bne    v0, zero, loop33f6c [$80033f6c]
+
+L33f84:	; 80033F84
+    system_cdrom_read_chain();
+    if( V0 == 0 )
+    {
+        return 0;
+    }
+
+    A0 = 0;
+    func3cedc();
+80033F9C	j      L33f84 [$80033f84]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34048()
+
+[80071a60] = w(13);
+[80071a6c] = w(0);
+[80071a80] = w(0);
+[80071a84] = w(0);
+system_cdrom_read_chain();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3408c()
+
+switch( w[80071a60] )
+{
+    case 5 6 d e:
+    {
+        A0 = 0;
+        func3de6c(); // unset callback
+
+        A0 = 0;
+        func3de84(); // unset callback
+
+        func34048(); // set type 13
+    }
+    break;
+
+    case 8 9 a:
+    {
+        func35658();
+    }
+    break;
+
+    case 1 2 3 4 b c f 10 11 12:
+    {
+        func34048(); // set type 13
+    }
+    break;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func33b70()
+
+loop33b78:	; 80033B78
+    system_psyq_cd_init();
+80033B80	beq    v0, zero, loop33b78 [$80033b78]
+
+[80071a60] = w(0);
+
+A0 = 0;
+func3dda4(); // set text debug to 0
+
+func34f3c(); // init MDEC
+
+A0 = e; // CdlSetmode Set basic mode.
+A1 = 80; // CdlModeSpeed.
+A2 = 0; // 0: Normal speed.
+func3e100();
+
+A0 = 3;
+func3cedc();
+
+// load "\MINT\DISKINFO.CNF;1" into 800698f0
+// and return bu[800698f7] - 30 (disk number)
+func34350();
+[80071a64] = w(V0);
+
+// load "\MINT\MOVIE_ID.BIN;1" into 8009a1f4
+func34f5c();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34f5c()
+
+loop34f64:	; 80034F64
+    loop34f64:	; 80034F64
+        A0 = SP + 10;
+        A1 = 8001049c; // "\MINT\MOVIE_ID.BIN;1"
+        system_psyq_cd_search_file();
+    80034F74	beq    v0, zero, loop34f64 [$80034f64]
+
+    A0 = 2;
+    A1 = SP + 0010;
+    A2 = 0;
+    func3e100();
+
+    A0 = 1;
+    A1 = 8009a1f4;
+    A2 = 80;
+    system_psyq_cd_read();
+
+    loop34fa0:	; 80034FA0
+        A0 = 0001;
+        A1 = 0;
+        80034FA0	jal    system_psyq_cd_read_sync [$80041e30]
+    80034FA8	bgtz   v0, loop34fa0 [$80034fa0]
+80034FB0	bne    v0, zero, loop34f64 [$80034f64]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func34350()
+
+loop34358:	; 80034358
+    system_cdrom_read_chain();
+80034360	bne    v0, zero, loop34358 [$80034358]
+
+loop34368:	; 80034368
+    A0 = SP + 10;
+    A1 = 80010484; // "\MINT\DISKINFO.CNF;1"
+    system_psyq_cd_search_file();
+
+    if( V0 <= 0 )
+    {
+        if( ( V0 - 1 ) == 0 )
+        {
+            return -1;
+        }
+    }
+
+    A0 = 2; // CdlSetloc Set the seek target position.
+    A1 = SP + 10;
+    A2 = 0;
+    func3e100();
+
+    A0 = 1; // number of sectors
+    A1 = 800698f0; // buffer
+    A2 = 80;
+    system_psyq_cd_read();
+
+    loop343b8:	; 800343B8
+        A0 = 1;
+        A1 = 0;
+        system_psyq_cd_read_sync();
+    800343C0	bgtz   v0, loop343b8 [$800343b8]
+800343C8	bne    v0, zero, loop34368 [$80034368]
+
+return bu[800698f7] - 30;
 ////////////////////////////////
 
 

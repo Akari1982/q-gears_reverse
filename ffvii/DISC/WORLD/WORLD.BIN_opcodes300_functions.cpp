@@ -54,7 +54,7 @@ else
 S0 = A1;
 
 A0 = (A0 << 10) >> 10;
-funcb6efc;
+funcb6efc();
 S3 = V0;
 
 if (S3 != 0)

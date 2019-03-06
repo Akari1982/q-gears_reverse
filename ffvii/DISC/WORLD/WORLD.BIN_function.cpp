@@ -1072,8 +1072,8 @@ La305c:	; 800A305C
 La3064:	; 800A3064
 A0 = w[SP + 0064];
 A1 = w[SP + 0068];
-800A306C	jal    funcaa7dc [$800aa7dc]
-800A3070	nop
+wm_add_coords_cycled();
+
 800A3074	jal    funcaa640 [$800aa640]
 800A3078	nop
 
@@ -1094,8 +1094,8 @@ A0 = SP + 0064;
 A1 = SP + 0068;
 A0 = w[SP + 0064];
 A1 = w[SP + 0068];
-800A30B4	jal    funcaa7dc [$800aa7dc]
-800A30B8	nop
+wm_add_coords_cycled();
+
 800A30BC	jal    funcaa640 [$800aa640]
 800A30C0	nop
 

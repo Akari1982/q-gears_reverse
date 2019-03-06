@@ -295,8 +295,9 @@ A3 = SP + 0012;
 [SP + 0020] = w(RA);
 800ABAAC	lui    at, $8011
 [AT + ad3c] = w(V0);
-800ABAB4	jal    funca6884 [$800a6884]
 A0 = A0 + 000c;
+wm_extract_loop_coords_top_bottom_parts();
+
 A1 = 0003;
 S0 = S0 << 10;
 S0 = S0 >> 10;
@@ -2141,8 +2142,8 @@ Lad5b4:	; 800AD5B4
 800AD5C0	addiu  a0, sp, $0010
 800AD5C4	lh     a0, $0010(sp)
 800AD5C8	lh     a1, $0014(sp)
-800AD5CC	jal    funcaa7dc [$800aa7dc]
-800AD5D0	nop
+wm_add_coords_cycled();
+
 800AD5D4	lui    a0, $8011
 800AD5D8	lw     a0, $ad3c(a0)
 800AD5DC	nop

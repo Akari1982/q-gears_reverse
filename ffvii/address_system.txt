@@ -19,8 +19,11 @@
 
 8004bc98 Sin and Cos table. Sin +00 [][], Cos +02 [][]
 
-800604de [][]     store Interrupt mask register (0x1f801074) here.
+800504de [][]     store Interrupt mask register (0x1f801074) here.
 800504e0 [][][][] store DMA Control Register (0x1f8010f0) here.
+
+80051628 [][][][] some cdrom related callback.
+8005162c [][][][] some cdrom related callback.
 
 800617b8 [][][][] store 0 here at the start of total battle circle.
 
@@ -217,6 +220,12 @@
     + 4  [][]     default 8th 2bytes from attack data (Camera movement single).
     + 6  [][]     default Ath 2bytes from attack data (Camera movement multiple).
 800708c4 attack data in kernel file (2nd section) (0x1c size).
+
+80071a60 [][][][] cdrom load chain type id.
+80071a6c [][][][] cdrom load size.
+80071a80 [][][][] cdrom load buffer ptr.
+80071a84 [][][][] cdrom load callback.
+
 80071c24 accessory data in kernel (0x10 size).
 80071e44 armor data in kernel (0x24 size).
 800722cc item data in kernel (0x1c size).
