@@ -141,14 +141,7 @@ int main( int argc, char *argv[] )
             }
         }
 
-        if( two_row == true )
-        {
-            two_row_str += "\n";
-            out << two_row_str;
-            two_row = false;
-        }
-
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|slt|sltu|sltiu|slti|subu|sll|sra|srl|srlv|sllv|srav)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]|zero)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|slt|sltu|sltiu|slti|subu|sll|sra|srl|srlv|sllv|srav)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]$|zero).*?$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -173,48 +166,71 @@ int main( int argc, char *argv[] )
                 std::transform( m4.begin(), m4.end(), m4.begin(), ::tolower );
             }
 
-            std::stringstream ss;
-            ss << m0 << m2 << " = ";
-
-            if( m4 == "0" && m1 == "addu" )
+            unsigned int val = strtoul( m4.c_str(), NULL, 16 );
+            if( ( two_row == true ) && ( m1 == "addiu" ) && ( two_row_v1 == m3 ) )
             {
-                ss << m3 << ";";
-            }
-            else if( m3 == "0" && ( m1 == "addiu" || m1 == "ori" ) )
-            {
-                ss << m4 << ";";
-            }
-            else
-            {
-                if( m1 == "sllv" || m1 == "srav" || m1 == "srlv" )
+                if( val >= 0x8000 )
                 {
-                    ss << m4;
-                }
-                else
-                {
-                    ss << m3;
+                    two_row_v2 -= 1;
                 }
 
-                if( m1 == "addu" || m1 == "addiu" || m1 == "addi" ) ss << " + ";
-                else if( m1 == "and" || m1 == "andi" ) ss << " & ";
-                else if( m1 == "xor" || m1 == "xori" ) ss << " ^ ";
-                else if( m1 == "or" || m1 == "ori" ) ss << " | ";
-                else if( m1 == "nor" ) ss << " NOR ";
-                else if( m1 == "sltu" || m1 == "sltiu" || m1 == "slti" || m1 == "slt" ) ss << " < ";
-                else if( m1 == "subu" ) ss << " - ";
-                else if( m1 == "sll" || m1 == "sllv" ) ss << " << ";
-                else if( m1 == "sra" || m1 == "srl" || m1 == "srav" || m1 == "srlv" ) ss << " >> ";
+                std::stringstream ss;
+                ss << m0 << m2 << " = " << std::hex << two_row_v2 << m4 << ";";
+                str = ss.str();
+                two_row = false;
+            }
+            else if( ( two_row == true ) && ( m1 == "ori" ) && ( two_row_v1 == m3 ) )
+            {
+                std::stringstream ss;
+                ss << m0 << m2 << " = " << std::hex << two_row_v2 << m4 << ";";
+                str = ss.str();
+                two_row = false;
+            }
+            else if( ( m1 != "addiu" ) || ( val < 0x8000 ) )
+            {
+                std::stringstream ss;
+                ss << m0 << m2 << " = ";
 
-                if( m1 == "sllv" || m1 == "srav" || m1 == "srlv" )
+                if( m4 == "0" && m1 == "addu" )
                 {
                     ss << m3 << ";";
                 }
-                else
+                else if( m3 == "0" && ( m1 == "addiu" || m1 == "ori" ) )
                 {
                     ss << m4 << ";";
                 }
+                else
+                {
+                    if( m1 == "sllv" || m1 == "srav" || m1 == "srlv" )
+                    {
+                        ss << m4;
+                    }
+                    else
+                    {
+                        ss << m3;
+                    }
+
+                    if( m1 == "addu" || m1 == "addiu" || m1 == "addi" ) ss << " + ";
+                    else if( m1 == "and" || m1 == "andi" ) ss << " & ";
+                    else if( m1 == "xor" || m1 == "xori" ) ss << " ^ ";
+                    else if( m1 == "or" || m1 == "ori" ) ss << " | ";
+                    else if( m1 == "nor" ) ss << " NOR ";
+                    else if( m1 == "sltu" || m1 == "sltiu" || m1 == "slti" || m1 == "slt" ) ss << " < ";
+                    else if( m1 == "subu" ) ss << " - ";
+                    else if( m1 == "sll" || m1 == "sllv" ) ss << " << ";
+                    else if( m1 == "sra" || m1 == "srl" || m1 == "srav" || m1 == "srlv" ) ss << " >> ";
+
+                    if( m1 == "sllv" || m1 == "srav" || m1 == "srlv" )
+                    {
+                        ss << m3 << ";";
+                    }
+                    else
+                    {
+                        ss << m4 << ";";
+                    }
+                }
+                str = ss.str();
             }
-            str = ss.str();
         }
 
         e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](mfc0|mtc0)\\s*([a-z][0-9a-z]),([a-z][0-9a-z])$";
@@ -368,6 +384,13 @@ int main( int argc, char *argv[] )
             std::stringstream ss;
             ss << m0 << "AVSZ4(); // Average of four Z values";
             str = ss.str();
+        }
+
+        if( two_row == true )
+        {
+            two_row_str += "\n";
+            out << two_row_str;
+            two_row = false;
         }
 
         str += "\n";
