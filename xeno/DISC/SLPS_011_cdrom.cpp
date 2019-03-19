@@ -214,8 +214,9 @@ L40f20:	; 80040F20
 A0 = S4 & 00ff;
 A1 = S1;
 A2 = S2;
-80040F34	jal    system_cdrom_cdl_command_exec [$80041f00]
 A3 = 0;
+system_cdrom_cdl_command_exec();
+
 80040F3C	beq    v0, zero, L40f64 [$80040f64]
 V0 = S7 + 0001;
 

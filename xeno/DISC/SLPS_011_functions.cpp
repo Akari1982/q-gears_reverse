@@ -99,40 +99,60 @@ return V0;
 S0 = A0;
 if( S0 == 0 )
 {
-    A0 = 0020;
-    80033390	jal    func322dc [$800322dc]
+    A0 = 20;
+    func322dc();
 
     return;
 }
 
 A0 = S0;
-800333A0	jal    func31ec8 [$80031ec8]
+func31ec8();
 
+[800589e8] = w(hu[S0 + 4]);
+[800589ec] = w(hu[S0 + 6]);
+[800589f0] = w(hu[S0 + 8]);
+[800589f4] = w(hu[S0 + a]);
+[800589f8] = w(S0 + hu[S0 + 2]);
+[80058a00] = w(hu[S0 + c]);
 [80058a08] = w(S0);
-[800589f8] = w(S0);
-[800589e8] = w(hu[S0 + 0004]);
-[800589ec] = w(hu[S0 + 0006]);
-[800589f0] = w(hu[S0 + 0008]);
-[800589f4] = w(hu[S0 + 000a]);
-[800589f8] = w(S0 + hu[S0 + 0002]);
-[80058a00] = w(hu[S0 + 000c]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_set_pack_global_pointers
-number_of_files = w[A0];
-if (number_of_files != 0)
+// func33418()
+
+S0 = A0;
+if( S0 == 0 )
 {
-    A1 = 1;
-    loop33268:	; 80033268
-        [A0 + A1 * 4] = w(A0 + w[A0 + A1 * 4]); // set global offset
-        A1 = A1 + 1;
-        V0 = A1 < number_of_files;
-    80033284	beq    v0, zero, loop33268 [$80033268]
+    A0 = 20;
+    func322dc();
+
+    return;
 }
 
+A0 = S0;
+func31ec8();
+
+[80058a04] = w(S0);
+[800589fc] = w(S0);
+
+A0 = S0;
+system_set_pack_global_pointers();
+
+[800589fc] = w(w[800589fc] + 4);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_set_pack_global_pointers()
+
+number_of_files = w[A0];
+for( int i = 1; i < number_of_files; ++i )
+{
+    [A0 + i * 4] = w(A0 + w[A0 + i * 4]); // set global offset
+}
 return number_of_files;
 ////////////////////////////////
 
