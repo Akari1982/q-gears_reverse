@@ -11,32 +11,32 @@ if( entity_id < w[800ad0d4] ) // number of entity
     if( w[struct_138 + 134] & 00000080 )
     {
         A0 = w[struct_138 + 110];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     if( w[struct_138 + 12c] & 00001000 )
     {
         A0 = w[struct_138 + 114];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     if( hu[struct_5c_p + entity_id * 5c + 58] & 2000 )
     {
         A0 = w[struct_138 + 118];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     if( h[struct_138 + 124] != -1 )
     {
         A0 = w[struct_138 + 120];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     A0 = struct_138;
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     A0 = w[struct_5c_p + entity_id * 5c + 8];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     A0 = w[struct_5c_p + entity_id * 5c + 4];
     system_field_sprite_memory_free();
@@ -3200,7 +3200,7 @@ L84b24:	; 80084B24
 80084B40	bne    v0, zero, L84b64 [$80084b64]
 80084B44	addu   v0, zero, zero
 A0 = w[800ad090];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 80084B58	lui    at, $800b
 80084B5C	sw     zero, $d004(at)

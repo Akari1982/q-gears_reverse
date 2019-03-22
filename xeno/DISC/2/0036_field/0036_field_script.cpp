@@ -359,7 +359,7 @@ loopa1890:	; 800A1890
 
 
 A0 = S0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -2808,16 +2808,16 @@ func76c88(); // sync
 if( w[800acffc] != 0 )
 {
     A0 = w[800b1588];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     A0 = w[800b15bc];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     A0 = w[800b1590];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     A0 = w[800b1594];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     [800acffc] = w(0);
 }

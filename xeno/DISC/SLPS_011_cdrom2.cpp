@@ -297,7 +297,7 @@ if( V1 == 0 )
     if( S1 != 0 )
     {
         A0 = S1;
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     S1 = 0;
@@ -317,7 +317,7 @@ for( int i = 0; i < 4; ++i )
 if( S1 != 0 )
 {
     A0 = S1;
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 }
 
 return 0;
@@ -2363,7 +2363,7 @@ A0 = w[S0 + 0004];
 8002A354	nop
 8002A358	beq    a0, zero, L2a368 [$8002a368]
 S0 = S0 + 0008;
-8002A360	jal    system_memory_free [$80031f0c]
+8002A360	jal    system_memory_mark_removed_alloc [$80031f0c]
 8002A364	nop
 
 L2a368:	; 8002A368
@@ -2432,7 +2432,7 @@ A1 = 0;
 A0 = S2;
 8002A430	blez   s4, L2a474 [$8002a474]
 V0 = 0;
-8002A438	jal    system_memory_free [$80031f0c]
+8002A438	jal    system_memory_mark_removed_alloc [$80031f0c]
 A0 = S2;
 8002A440	j      L2a474 [$8002a474]
 V0 = 0;

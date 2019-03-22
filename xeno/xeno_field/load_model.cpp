@@ -519,7 +519,7 @@ if (T0 < a)
             system_memcpy;
 
             A0 = w[801e8638];
-            system_memory_free();
+            system_memory_mark_removed_alloc();
 
             801E7CBC	lw     a0, $0000(s3)
             801E7CC0	jal    func1dce18 [$801dce18]
@@ -1020,7 +1020,7 @@ L1e1c28:	; 801E1C28
 801E1C2C	sw     zero, $0014(t5)
 
 A0 = 0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 801E1C38	j      L1e22c4 [$801e22c4]
 801E1C3C	nop
@@ -1053,14 +1053,14 @@ L1e1c58:	; 801E1C58
 801E1CA0	sw     zero, $0014(t5)
 
 A0 = 0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 801E1CA4	lw     t6, $0010(sp)
 
 L1e1ca8:	; 801E1CA8
 801E1CA8	nop
 A0 = w[T6 + 1c];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 801E1CB8	j      L1e22c4 [$801e22c4]
 801E1CBC	nop
@@ -1161,16 +1161,16 @@ L1e1db8:	; 801E1DB8
 801E1DF0	lw     t6, $0010(sp)
 801E1DF8	sw     zero, $0014(t6)
 A0 = 0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 801E1DFC	lw     t5, $0010(sp)
 
 L1e1e00:	; 801E1E00
 A0 = w[T5 + 1c];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = FP;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 801E1E18	j      L1e22c4 [$801e22c4]
 801E1E1C	nop

@@ -222,10 +222,10 @@ if( number_of_entity > 0 )
             func2c9cc();
 
             A0 = w[model_struct + 8];
-            system_memory_free(); // clear packets
+            system_memory_mark_removed_alloc(); // clear packets
 
             A0 = model_struct;
-            system_memory_free();
+            system_memory_mark_removed_alloc();
         }
 
         S1 = S1 + 1;
@@ -236,25 +236,25 @@ if( number_of_entity > 0 )
 funca3cac(); // clear something 800acffc related
 
 A0 = w[800aefe4]; // allocated entity data
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[800ad0cc]; // field triggers
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[800ad0c8]; // field dialog
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[800ad0d0]; // field script
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[800aefec]; // field walkmesh
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[800aefe8]; // field model
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[800aeff0]; // field sprite
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 
 
@@ -281,12 +281,12 @@ if( V0 > 0 )
         S1 = S1 + 0001;
 
         A0 = w[S2];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
 
         S2 = S2 + 0004;
 
         A0 = w[S0];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
 
         S0 = S0 + 0004;
         V0 = h[S3 + fffc];
@@ -304,14 +304,14 @@ if( w[800b1738] != 0 )
     8006F97C	jal    func1e7fd4 [$801e7fd4]
 
     A0 = w[800acff8];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     8006F994	jal    func78fb0 [$80078fb0]
 }
 [800b1738] = w(0);
 
 A0 = 3;
-8006F9A0	jal    func31fb0 [$80031fb0]
+system_memory_mark_removed_alloc_by_type();
 
 funca788c();
 ////////////////////////////////
@@ -945,10 +945,10 @@ A0 = 0; // wait for termination
 system_draw_sync();
 
 A0 = S2;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = S4;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 
 
@@ -1222,10 +1222,10 @@ func7d4e0();
 80070C54	jal    func710f4 [$800710f4]
 
 A0 = w[80059b70];
-func31edc(); // mark memory to release
+system_memory_mark_removable();
 
 A0 = w[80059b70];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = 5;
 A1 = 0;

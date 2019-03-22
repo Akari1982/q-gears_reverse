@@ -1,14 +1,43 @@
 80018088 [][][][] init with 6. Looks like game mod (battle map ie).
 
 8004e948 array if file indexes in dir 0_1.
-8004e9ac [][][][] -1 during battle load.
-8004e9c8 [][][][] store here value from 800b1774 + encounter * 2.
-8004e9d4 [][][][] looks like current field.
-8004e9d8 [][][][] init with -1 after field load and set to 0 when start field load.
-8004e9dc [][][][] compare this with value from 800b1774 + encounter * 2 during battle load.
-8004e9e8 [][][][] load some textures in file 0xa7 for field.
-8004e9ec [][][][] store here 1 in some cases during battle load.
-8004e9f0 [][][][] field id to load.
+8004e998 [][][][] init with 0.
+8004e99c [][][][] init with 0.
+8004e9a4 [][][][] init with 0.
+8004e9a8 [][][][] init with 0.
+8004e9ac [][][][] init with -1. (-1 during battle load.)
+8004e9b0 [][][][] init with 0.
+8004e9b4 [][][][] init with 0.
+8004e9b8 [][][][] init with 0.
+8004e9bc [][][][] init with 0.
+8004e9c0 [][][][] init with 0.
+8004e9c4 [][][][] init with 0.
+8004e9c8 [][][][] init with 000000ff. Store here value from 800b1774 + encounter * 2.
+8004e9cc [][][][] init with 000000ff.
+8004e9d0 [][][][] init with -1.
+8004e9d4 [][][][] init with -1. Looks like current field.
+8004e9d8 [][][][] init with -1. After field load and set to 0 when start field load.
+8004e9dc [][][][] init with -1. Compare this with value from 800b1774 + encounter * 2 during battle load.
+8004e9e0 [][][][] init with -1.
+8004e9e4 [][][][] init with -1.
+8004e9e8 [][][][] init with 0. Load some textures in file 0xa7 for field.
+8004e9ec [][][][] init with 0. Store here 1 in some cases during battle load.
+8004e9f0 [][][][] init with -1. Field id to load.
+8004e9f4 [][][][] init with 0.
+8004e9f8 [][][][] init with 0.
+8004e9fc [][][][] init with 0.
+8004e9a0 [][][][] init with 0.
+8004ea00 [][][][] init with 0.
+8004ea04 [][][][] init with 0.
+8004ea08 [][][][] init with 1.
+8004ea0c [][][][] init with 0.
+8004ea10 [][][][] init with 0.
+8004ea14 [][][][] init with 0.
+8004ea18 [][][][] init with 0.
+8004ea1c [][][][] init with 0.
+8004ea20 [][][][] init with 0.
+8004ea24 [][][][] init with 0.
+8004ea28 [][]     init with 0.
 
 8004f23c store 4 points xyz for sprite tile during calculation in func1e264
     +00 [][] x0
@@ -226,7 +255,23 @@
     +1a8 [][]     init with 0x20.
     +1ac [][]     init with 0xa. Store 4 here when we start parse model and animation.
     +1b0 [][][][] pointer to start of allocated memory.
-    +1bc [][][][] init with 0.
+                  memory allocates as follows
+                  -8 pointer to next.
+                  -4 flags:
+                    0x001fffff - place in code from where we call allocate function.
+                    0x00200000 - final allocated memory block.
+                    0x01e00000 - hu[GP + 1ac] & 000f. (if this is 0 then we clear this memory block)
+                                 0x3 - model data.
+                    0x02000000 - can't clear this memory block.
+                    0xfc000000 - hu[GP + 1a8]:
+                                 0x21 - memory freed.
+                                 0x25 - model packets.
+                                 0x26 - lighting data.
+                                 0x2b - init +1c in model data.
+                                 0x2c - model vertexes.
+                                 0x2d - [part_header + c].
+                  -0 start of memory.
+    +1bc [][][][] set to 1 if some memory marked to remove in system_memory_mark_removed_alloc().
     +1c0 [][][][] store 0 here when we start parse model and animation.
     +1c4 [][][][] init with 0.
     +1c8 [][][][] init with 0.
@@ -286,6 +331,7 @@
 80058adc [][][][] pointer to some SED file (0391.sed).
 80058ac0 [][][][] store here pointer to place for packets.
 80058ac4 [][][][] store here data from sprite opcode 0xa7 & 0x7f if 0x80 is set. Some wait.
+80058ac8 []       init with 0.
 
 80058ae0 []       state of RightJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ae8 []       state of RightJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
@@ -312,6 +358,8 @@
 
 80058b40 [][]     repeated buttons for controller 1 (details in 80058c0c). 0x20 timer to repeat.
 80058b44 [][]     repeated buttons for controller 2 (details in 80058c0c). 0x20 timer to repeat.
+
+80058b6c []       init with 0.
 
 80058b74 [][][][] init with -1.
 80058b80 [][][][] init with 0x12345678.
@@ -466,6 +514,8 @@
     +08 [][]     discrease until == 0.
     +0a [][]     if +08 == 0 then set value with this << 10.
 
+80059ad4 array of 3 items with size 0x4. Init with 0.
+
 80059b18 [][][][] init with 0.
 80059b1c [][][][] init with 0.
 80059b20 [][][][] init with 0.
@@ -482,7 +532,16 @@
 80059b58 array of something spu related. Init with 0. (size 0x2 items 0xa)
 80059b70 [][][][] pointer to allocated memory for loading field file.
 
+80061ba8 [][][][] init with 0.
+80061bac [][][][] init with 0.
+80061bb0 [][][][] init with 0.
+80061bb4 [][][][] init with 0.
+80061bb8 field sound main struct?
+80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4 (+30).
+
 80061c1c
+
+80061c20 array of 3 items with size 0x4. Init with 0.
 
 80061c8c controller input buffers (size 0x22 items 0x2).
     +02 [][]     button mask. (0=Pressed, 1=Released)
@@ -502,9 +561,6 @@
                     0x2000 Circle
                     0x4000 Cross
                     0x8000 Square
-
-80061bb8 field sound main struct?
-80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4 (+30).
 
 
 
@@ -687,7 +743,7 @@
         +0f6 [][]     init with 0.
         // some additional data related with bu[smd + 15]
 
-
+8006f020 array of 3 items with size 0x4. Init with 0.
 
 8006f08c array of spu memory allocation structs with size 0x10. 0xc items.
     +00 []       0x80 here.
@@ -695,6 +751,8 @@
     +02 [][]     id of next item.
     +04 [][][][] start of allocated memory.
     +08 [][][][] size of allocated memory.
+
+8006f14c array of 3 items with size 0x4. Init with 0.
 
 8006f158 some struct spu memory related. Store pointer to 8005850c.
     +0 [][][][] 40001010.

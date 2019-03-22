@@ -1,1 +1,1 @@
-main SLPS_011_main.cpp
+main SLPS_011_memory.cpp

@@ -1121,7 +1121,7 @@ loop71bac:	; 80071BAC
 
 L71bb4:	; 80071BB4
 A0 = w[8009bc74];
-80071BBC	jal    $system_memory_free
+80071BBC	jal    $system_memory_mark_removed_alloc
 80071BC0	nop
 A0 = w[80061c2c];
 80071BCC	jal    $800382d0
@@ -1161,7 +1161,7 @@ A2 = 0;
 
 L71c5c:	; 80071C5C
 A0 = w[8009bc74];
-80071C64	jal    $system_memory_free
+80071C64	jal    $system_memory_mark_removed_alloc
 80071C68	nop
 A0 = w[80061c2c];
 80071C74	jal    $800382d0
@@ -1409,7 +1409,7 @@ A0 = w[80061c2c];
 func383d4(); // sound related
 
 A0 = w[80061c2c];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 loop72020:	; 80072020
 V0 = w[8009b20c];
@@ -1472,23 +1472,23 @@ S0 = 0;
 80072100	jal    func9714c [$8009714c]
 80072104	nop
 A0 = w[8009b020];
-80072110	jal    $system_memory_free
+80072110	jal    $system_memory_mark_removed_alloc
 80072114	nop
 A0 = w[8009b098];
-80072120	jal    $system_memory_free
+80072120	jal    $system_memory_mark_removed_alloc
 80072124	nop
 A0 = w[8009b024];
-80072130	jal    $system_memory_free
+80072130	jal    $system_memory_mark_removed_alloc
 80072134	nop
 A0 = w[8009b09c];
 80072140	lui    s2, $800a
 80072144	addiu  s2, s2, $b1e0 (=-$4e20)
-80072148	jal    $system_memory_free
+80072148	jal    $system_memory_mark_removed_alloc
 8007214C	nop
 A0 = w[8009b568];
 80072158	lui    s1, $800a
 8007215C	addiu  s1, s1, $c11c (=-$3ee4)
-80072160	jal    $system_memory_free
+80072160	jal    $system_memory_mark_removed_alloc
 80072164	nop
 
 loop72168:	; 80072168
@@ -1496,7 +1496,7 @@ A0 = w[S1 + 0000];
 8007216C	nop
 80072170	beq    a0, zero, L72180 [$80072180]
 80072174	nop
-80072178	jal    $system_memory_free
+80072178	jal    $system_memory_mark_removed_alloc
 8007217C	nop
 
 L72180:	; 80072180
@@ -1504,7 +1504,7 @@ A0 = w[S2 + 0000];
 80072184	nop
 80072188	beq    a0, zero, L72198 [$80072198]
 8007218C	nop
-80072190	jal    $system_memory_free
+80072190	jal    $system_memory_mark_removed_alloc
 80072194	nop
 
 L72198:	; 80072198
@@ -1878,11 +1878,11 @@ A0 = 8009b084;
 system_psyq_put_disp_env();
 
 A0 = pack1;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = pack2;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = pack3;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////

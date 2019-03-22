@@ -1764,7 +1764,7 @@ if( w[8004e9e8] == 0 )
     [80059b30] = w(A0);
 
     A0 = V0;
-    func31ec8(); // mark keep memory
+    system_memory_mark_not_removable();
 
     A0 = a7; // dir_file_id
     A1 = w[80059b30];
@@ -1777,7 +1777,7 @@ if( w[8004e9e8] == 0 )
 }
 
 A0 = w[80059b30];
-func31edc(); // mark memory for release
+system_memory_mark_removable();
 
 [8004e9e8] = w(0);
 
@@ -1819,7 +1819,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = w[80059b30];
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 

@@ -245,10 +245,10 @@ L77810:	; 80077810
                     if( w[8004e9d8] != -1 )
                     {
                         A0 = w[80059b70];
-                        func31edc(); // mark memory for release
+                        system_memory_mark_removable();
 
                         A0 = w[80059b70];
-                        system_memory_free();
+                        system_memory_mark_removed_alloc();
                     }
 
                     if( S5 == 0 )
@@ -359,10 +359,10 @@ L77810:	; 80077810
                 if( w[8004e9d8] != -1 )
                 {
                     A0 = w[80059b70];
-                    func31edc(); // mark memory for release
+                    system_memory_mark_removable();
 
                     A0 = w[80059b70];
-                    system_memory_free();
+                    system_memory_mark_removed_alloc();
                 }
                 80077BDC	j      L780cc [$800780cc]
             }
@@ -382,10 +382,10 @@ L77810:	; 80077810
                     if( w[8004e9d8] != -1 )
                     {
                         A0 = w[80059b70];
-                        func31edc(); // mark memory for release
+                        system_memory_mark_removable();
 
                         A0 = w[80059b70];
-                        system_memory_free();
+                        system_memory_mark_removed_alloc();
                     }
 
                     [8004e9b4] = w(w[8004e9b4] + 1);
@@ -411,10 +411,10 @@ L77810:	; 80077810
                         if( w[8004e9d8] != -1 )
                         {
                             A0 = w[80059b70];
-                            func31edc(); // mark memory for release
+                            system_memory_mark_removable();
 
                             A0 = w[80059b70];
-                            system_memory_free();
+                            system_memory_mark_removed_alloc();
                         }
 
                         S0 = 3;
@@ -588,7 +588,7 @@ system_psyq_wait_frames(); // get time
 [8004e9c0] = w(0);
 
 A0 = w[800ad008];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = S0;
 8007813C	jal    func78b60 [$80078b60]

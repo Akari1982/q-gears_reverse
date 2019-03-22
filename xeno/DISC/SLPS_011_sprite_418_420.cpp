@@ -175,7 +175,7 @@ S0 = A0;
 func1c9d4();
 
 A0 = S0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -333,7 +333,7 @@ S0 = A0;
 func1cc20();
 
 A0 = S0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -503,7 +503,7 @@ A0 = S0;
 func1cc20();
 
 A0 = S0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 

@@ -1160,7 +1160,7 @@ if( A0 != 0 )
     [80058954] = w(80036eb4);
     if( w[80058a3c] == 0 )
     {
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
     [80058a30] = w(0);
 }
@@ -1409,7 +1409,7 @@ L37594:	; 80037594
 800376D4	sw     s0, $8a30(at)
 800376D8	jal    func37174 [$80037174]
 800376DC	nop
-800376E0	jal    system_memory_free [$80031f0c]
+800376E0	jal    system_memory_mark_removed_alloc [$80031f0c]
 800376E4	addu   a0, s1, zero
 800376E8	addu   v0, s0, zero
 800376EC	lw     ra, $004c(sp)

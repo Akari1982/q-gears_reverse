@@ -106,7 +106,7 @@ if( S0 == 0 )
 }
 
 A0 = S0;
-func31ec8();
+system_memory_mark_not_removable();
 
 [800589e8] = w(hu[S0 + 4]);
 [800589ec] = w(hu[S0 + 6]);
@@ -132,7 +132,7 @@ if( S0 == 0 )
 }
 
 A0 = S0;
-func31ec8();
+system_memory_mark_not_removable();
 
 [80058a04] = w(S0);
 [800589fc] = w(S0);

@@ -35,7 +35,7 @@ system_memory_allocate();
 [80061c2c] = w(V0);
 
 A0 = V0;
-func31ec8(); // mark keep memory
+system_memory_mark_not_removable();
 
 if( w[8004e9d0] == -1 )
 {
@@ -56,10 +56,10 @@ else
     system_memcpy();
 
     A0 = w[80059b4c];
-    func31edc(); // mark memory for release
+    system_memory_mark_removable();
 
     A0 = w[80059b4c];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 }
 
 A0 = w[80061c2c];
@@ -236,10 +236,10 @@ A2 = w[80059b50]; // this much
 system_memcpy();
 
 A0 = w[80059b70];
-func31edc(); // mark memory for free
+system_memory_mark_removable();
 
 A0 = w[80059b70];
-system_memory_free(); // free field file memory
+system_memory_mark_removed_alloc(); // free field file memory
 
 
 
@@ -262,10 +262,10 @@ A2 = w[80059b50]; // this much
 system_memcpy; // copy clut/texture data
 
 A0 = w[80059b70];
-func31ec8(); // mark keep memory
+system_memory_mark_not_removable();
 
 A0 = S0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 
 
@@ -509,7 +509,7 @@ switch( V1 )
 
         La5598:	; 800A5598
         A0 = w[800ad0ec];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
 
         800A55A8	lui    at, $800b
         800A55AC	sw     zero, $d038(at)
@@ -734,7 +734,7 @@ if( w[800af51c] != 6 )
 
 800A58B4	jal    func76bd4 [$80076bd4]
 
-func31e1c(); // memory clean
+system_memory_clean_removed_alloc();
 ////////////////////////////////
 
 
@@ -837,14 +837,14 @@ if( V1 == 1 )
         if( h[S0 + S1 * 78 + 6] != 0 )
         {
             A0 = w[S0 + S1 * 78 + 2c];
-            system_memory_free();
+            system_memory_mark_removed_alloc();
         }
         S1 = S1 + 1;
         V0 = S1 < 8;
     800A87F0	bne    v0, zero, loopa87cc [$800a87cc]
 
     A0 = w[800c2dec + S2 * 4];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 }
 
 [800b0984 + S2] = b(0);
@@ -1380,10 +1380,10 @@ if( w[800ae74c] != 0 )
     system_draw_sync();
 
     A0 = w[800af134];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     A0 = w[800af138];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 }
 ////////////////////////////////
 
@@ -1423,7 +1423,7 @@ if( w[800ad00c] == 1 )
     800A8600	bne    a2, a3, loopa85dc [$800a85dc]
 
     A0 = w[800af144];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     [800af144] = w(S0); // vram image
 }
@@ -1815,7 +1815,7 @@ S1 = A0;
 800852E0	ori    a0, zero, $0010
 
 A0 = w[800c2ef0];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 800852F4	sll    v0, s1, $01
 800852F8	lui    at, $8005

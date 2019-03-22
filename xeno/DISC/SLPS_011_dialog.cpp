@@ -702,7 +702,7 @@ if( h[offset_18 + 84] == 0 )
         loop34494:	; 80034494
             A0 = S0;
             S0 = w[S0];
-            system_memory_free();
+            system_memory_mark_removed_alloc();
 
         800344A0	bne    s0, zero, loop34494 [$80034494]
     }
@@ -735,10 +735,10 @@ A0 = offset_18;
 func344c8();
 
 A0 = w[offset_18 + 28];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[offset_18 + 2c];
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -894,7 +894,7 @@ A0 = w[S0 + 8c];
 8003470C	sw     v0, $001c(s0)
 80034710	lw     v0, $0000(v1)
 80034718	sw     v0, $008c(s0)
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 8003471C	lhu    v0, $0082(s0)
 80034720	lhu    v1, $0010(s0)

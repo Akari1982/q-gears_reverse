@@ -6,19 +6,19 @@ if( S0 != 0 )
     part_data = w[S0 + 0];
 
     A0 = w[part_data + 8];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     if( hu[part_data + 0] & 0010 )
     {
         A0 = w[part_data + c];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     [part_data + 8] = w(w[S0 + 4]);
     [part_data + c] = w(w[S0 + 8]);
 
     A0 = S0;
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 }
 ////////////////////////////////
 

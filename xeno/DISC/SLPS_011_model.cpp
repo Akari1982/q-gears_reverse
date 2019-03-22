@@ -187,7 +187,7 @@ if( ( w[part_header + 4] & 00000002 ) == 0 )
 
     A0 = part_header;
     A1 = w[part_header + 24] - part_header;
-    func31d94();
+    system_memory_insert_alloc();
 
     return 0;
 }
@@ -210,8 +210,9 @@ V0 = 0001;
 V0 = V1 | 0040;
 A1 = w[S0 + 0014];
 [S0 + 0000] = h(V0);
-8002C4CC	jal    func31d94 [$80031d94]
 A1 = A1 - S0;
+system_memory_insert_alloc();
+
 V0 = 0;
 [S0 + 0014] = w(0);
 
@@ -517,7 +518,7 @@ V0 = hu[S0 + 0] & 0001;
 if( V0 != 0 )
 {
     A0 = w[S0 + 18];
-    system_memory_free();
+    system_memory_mark_removed_alloc();
 
     [S0 + 0] = h(hu[S0 + 0] & fffe);
 }

@@ -102,10 +102,10 @@ system_filesystem_set_dir();
 80070744	jal    func28870 [$80028870]
 
 80070750	addu   a0, s0, zero
-8007074C	jal    system_memory_free [$80031f0c]
+8007074C	jal    system_memory_mark_removed_alloc [$80031f0c]
 
 80070758	addu   a0, s1, zero
-80070754	jal    system_memory_free [$80031f0c]
+80070754	jal    system_memory_mark_removed_alloc [$80031f0c]
 
 8007075C	lui    v0, $8006
 80070760	lbu    v0, $8b18(v0)
@@ -237,7 +237,7 @@ loop708fc:	; 800708FC
 L70918:	; 80070918
 80070918	lui    a0, $8006
 8007091C	lw     a0, $8c6c(a0)
-80070920	jal    system_memory_free [$80031f0c]
+80070920	jal    system_memory_mark_removed_alloc [$80031f0c]
 80070924	nop
 80070928	lui    v1, $8006
 8007092C	lbu    v1, $8be8(v1)
@@ -256,11 +256,11 @@ L7094c:	; 8007094C
 80070958	nop
 8007095C	lui    a0, $8006
 80070960	lw     a0, $8b1c(a0)
-80070964	jal    system_memory_free [$80031f0c]
+80070964	jal    system_memory_mark_removed_alloc [$80031f0c]
 80070968	nop
 8007096C	lui    a0, $8006
 80070970	lw     a0, $8b48(a0)
-80070974	jal    system_memory_free [$80031f0c]
+80070974	jal    system_memory_mark_removed_alloc [$80031f0c]
 80070978	nop
 8007097C	jal    func704cc [$800704cc]
 80070980	nop
@@ -550,10 +550,10 @@ L70d28:	; 80070D28
 80070D34	nop
 
 A0 = w[800d245c];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = w[800d2680];
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 

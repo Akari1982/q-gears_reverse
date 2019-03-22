@@ -652,7 +652,7 @@ loop1dcdbc:	; 801DCDBC
 801DCDC0	nop
 801DCDC4	beq    a0, zero, L1dcddc [$801dcddc]
 801DCDC8	addiu  s1, s1, $0001
-801DCDCC	jal    system_memory_free [$80031f0c]
+801DCDCC	jal    system_memory_mark_removed_alloc [$80031f0c]
 801DCDD0	nop
 801DCDD4	sw     zero, $fffc(s0)
 801DCDD8	sw     zero, $0000(s0)
@@ -666,7 +666,7 @@ L1dcddc:	; 801DCDDC
 
 L1dcdf0:	; 801DCDF0
 801DCDF0	sh     zero, $000a(s2)
-801DCDF4	jal    system_memory_free [$80031f0c]
+801DCDF4	jal    system_memory_mark_removed_alloc [$80031f0c]
 801DCDF8	addu   a0, s2, zero
 
 L1dcdfc:	; 801DCDFC
@@ -720,7 +720,7 @@ L1dce90:	; 801DCE90
 801DCE94	nop
 801DCE98	beq    a0, zero, L1dceac [$801dceac]
 801DCE9C	nop
-801DCEA0	jal    system_memory_free [$80031f0c]
+801DCEA0	jal    system_memory_mark_removed_alloc [$80031f0c]
 801DCEA4	nop
 801DCEA8	sw     zero, $0000(s1)
 
@@ -1837,7 +1837,7 @@ func1df668:	; 801DF668
 801DF67C	nop
 801DF680	beq    a0, zero, L1df690 [$801df690]
 801DF684	sh     zero, $0004(s0)
-801DF688	jal    system_memory_free [$80031f0c]
+801DF688	jal    system_memory_mark_removed_alloc [$80031f0c]
 801DF68C	nop
 
 L1df690:	; 801DF690
@@ -2547,7 +2547,7 @@ func1e00dc:	; 801E00DC
 
 L1e00f8:	; 801E00F8
 801E00F8	sh     zero, $0006(s0)
-801E00FC	jal    system_memory_free [$80031f0c]
+801E00FC	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E0100	nop
 
 L1e0104:	; 801E0104
@@ -4320,7 +4320,7 @@ func1e165c:	; 801E165C
 
 L1e16a8:	; 801E16A8
 801E16A8	lw     a0, $0004(s0)
-801E16AC	jal    system_memory_free [$80031f0c]
+801E16AC	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E16B0	nop
 801E16B4	sw     zero, $0004(s0)
 
@@ -4329,7 +4329,7 @@ L1e16b8:	; 801E16B8
 801E16BC	nop
 801E16C0	beq    a0, zero, L1e16d4 [$801e16d4]
 801E16C4	nop
-801E16C8	jal    system_memory_free [$80031f0c]
+801E16C8	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E16CC	nop
 801E16D0	sw     zero, $0008(s0)
 
@@ -4338,7 +4338,7 @@ L1e16d4:	; 801E16D4
 801E16D8	nop
 801E16DC	beq    a0, zero, L1e16f0 [$801e16f0]
 801E16E0	nop
-801E16E4	jal    system_memory_free [$80031f0c]
+801E16E4	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E16E8	nop
 801E16EC	sw     zero, $000c(s0)
 
@@ -5923,24 +5923,24 @@ func1e3438:	; 801E3438
 801E344C	nop
 801E3450	beq    a0, zero, L1e34a8 [$801e34a8]
 801E3454	nop
-801E3458	jal    system_memory_free [$80031f0c]
+801E3458	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E345C	nop
 801E3460	lw     v0, $001c(s0)
 801E3464	nop
 801E3468	lw     a0, $0000(v0)
-801E346C	jal    system_memory_free [$80031f0c]
+801E346C	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E3470	nop
 801E3474	lw     a0, $001c(s0)
-801E3478	jal    system_memory_free [$80031f0c]
+801E3478	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E347C	nop
 801E3480	lw     a0, $0020(s0)
-801E3484	jal    system_memory_free [$80031f0c]
+801E3484	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E3488	nop
 801E348C	lw     a0, $0018(s0)
 801E3490	nop
 801E3494	beq    a0, zero, L1e34a4 [$801e34a4]
 801E3498	nop
-801E349C	jal    system_memory_free [$80031f0c]
+801E349C	jal    system_memory_mark_removed_alloc [$80031f0c]
 
 L1e34a0:	; 801E34A0
 801E34A0	nop
@@ -8499,7 +8499,7 @@ func1e8030:	; 801E8030
 801E8078	nop
 801E807C	beq    a0, zero, L1e80a0 [$801e80a0]
 801E8080	nop
-801E8084	jal    system_memory_free [$80031f0c]
+801E8084	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E8088	nop
 801E808C	lw     v0, $0000(s1)
 801E8090	nop
@@ -8527,7 +8527,7 @@ L1e80cc:	; 801E80CC
 801E80D8	nop
 801E80DC	beq    a0, zero, L1e80f0 [$801e80f0]
 801E80E0	addiu  v0, s4, $fff8 (=-$8)
-801E80E4	jal    system_memory_free [$80031f0c]
+801E80E4	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E80E8	nop
 801E80EC	addiu  v0, s4, $fff8 (=-$8)
 
@@ -8583,7 +8583,7 @@ L1e8164:	; 801E8164
 801E81A0	lw     v0, $0000(s1)
 801E81A4	nop
 801E81A8	lw     a0, $0004(v0)
-801E81AC	jal    system_memory_free [$80031f0c]
+801E81AC	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E81B0	nop
 
 L1e81b4:	; 801E81B4
@@ -8598,7 +8598,7 @@ L1e81b4:	; 801E81B4
 801E81D4	beq    v0, zero, L1e81e8 [$801e81e8]
 801E81D8	nop
 801E81DC	lw     a0, $0110(v1)
-801E81E0	jal    system_memory_free [$80031f0c]
+801E81E0	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E81E4	nop
 
 L1e81e8:	; 801E81E8
@@ -8634,7 +8634,7 @@ L1e8240:	; 801E8240
 801E824C	lw     v0, $8670(at)
 801E8250	nop
 801E8254	lw     a0, $0118(v0)
-801E8258	jal    system_memory_free [$80031f0c]
+801E8258	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E825C	sll    s2, s4, $02
 
 L1e8260:	; 801E8260
@@ -8674,7 +8674,7 @@ L1e82c8:	; 801E82C8
 801E82D4	lw     v0, $8670(at)
 801E82D8	nop
 801E82DC	lw     a0, $0114(v0)
-801E82E0	jal    system_memory_free [$80031f0c]
+801E82E0	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E82E4	nop
 
 L1e82e8:	; 801E82E8
@@ -8683,7 +8683,7 @@ L1e82e8:	; 801E82E8
 801E82F0	sll    s0, s4, $02
 801E82F4	addu   s0, s0, v0
 801E82F8	lw     a0, $0000(s0)
-801E82FC	jal    system_memory_free [$80031f0c]
+801E82FC	jal    system_memory_mark_removed_alloc [$80031f0c]
 801E8300	nop
 801E8304	sw     zero, $0000(s0)
 

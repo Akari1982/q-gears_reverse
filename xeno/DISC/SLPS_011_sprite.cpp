@@ -1724,7 +1724,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = S1;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -1753,7 +1753,7 @@ SP = SP + 4;
 SP = w[SP ];
 
 A0 = A0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -2041,7 +2041,7 @@ if( A1 < 73 )
             SP = w[SP];
 
             A0 = S0;
-            system_memory_free();
+            system_memory_mark_removed_alloc();
 
             return;
         }
@@ -3344,7 +3344,7 @@ D4100280 // f7
     80020FD8	nop
     if( A0 != 0 )
     {
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     A2 = w[S3 + 0020];
@@ -3386,7 +3386,7 @@ D4100280 // f7
     S1 = S0 + 0010;
     if( A0 != 0 )
     {
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     A2 = w[S3 + 0020];
@@ -3424,7 +3424,7 @@ D4100280 // f7
     S1 = S0 + 0010;
     if( A0 != 0 )
     {
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 
     A2 = w[S3 + 0020];
@@ -4684,7 +4684,7 @@ system_load_image();
 SP = w[T0];
 
 A0 = S0;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -5010,7 +5010,7 @@ A0 = w[V0 + 0034];
 80022DA4	nop
 80022DA8	beq    a0, zero, L22db8 [$80022db8]
 80022DAC	nop
-80022DB0	jal    system_memory_free [$80031f0c]
+80022DB0	jal    system_memory_mark_removed_alloc [$80031f0c]
 80022DB4	nop
 
 L22db8:	; 80022DB8
@@ -5048,7 +5048,7 @@ A0 = S1 + 1c;
 func1c9d4()
 
 A0 = S2;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -5067,7 +5067,7 @@ A0 = w[V0 + 002c];
 80022E64	nop
 80022E68	beq    a0, zero, L22e78 [$80022e78]
 S2 = A2;
-80022E70	jal    system_memory_free [$80031f0c]
+80022E70	jal    system_memory_mark_removed_alloc [$80031f0c]
 80022E74	nop
 
 L22e78:	; 80022E78
@@ -5134,7 +5134,7 @@ if( w[struct_164 + a8] & 00000001 )
     A0 = w[V0 + 18];
     if( A0 != 0 )
     {
-        system_memory_free();
+        system_memory_mark_removed_alloc();
     }
 }
 
@@ -5143,10 +5143,10 @@ func1d270()
 
 V0 = w[struct_164 + 20];
 A0 = w[V0 + 2c];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = struct_164;
-system_memory_free();
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
@@ -5317,7 +5317,7 @@ struct_b4 = w[struct_164 + 20];
 S0 = A1;
 
 A0 = w[struct_b4 + 2c];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 A0 = S0 * 18;
 A1 = 0;
@@ -6816,7 +6816,7 @@ S0 = S0 + V0;
 // func24db0()
 
 A0 = w[GP + 340];
-system_memory_free();
+system_memory_mark_removed_alloc();
 
 func1d128(); // reset render sprites list
 ////////////////////////////////
@@ -6894,7 +6894,7 @@ if( S0 != 0 )
 {
     loop24f24:	; 80024F24
         A0 = w[S0];
-        system_memory_free();
+        system_memory_mark_removed_alloc();
 
         S0 = w[S0 + 4];
     80024F38	bne    s0, zero, loop24f24 [$80024f24]
