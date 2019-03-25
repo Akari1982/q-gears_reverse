@@ -478,17 +478,17 @@ return A1 - 8;
 
 
 ////////////////////////////////
-// func322bc()
+// system_memory_set_alloc_user()
 
-[GP + 1ac] = h(A0);
-[80059640 + A0 * 4] = w(A1);
+[GP + 1ac] = h(A0); // user
+[80059640 + A0 * 4] = w(A1); // custom contents
 [GP + 1c0] = w(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func322dc()
+// system_memory_set_alloc_contents()
 
 [GP + 1a8] = h(A0);
 ////////////////////////////////
@@ -534,35 +534,35 @@ if( A2 != 0 )
 
 
 ////////////////////////////////
-// func323a8()
+// system_memory_dump_alloc()
 
-S1 = A0;
-S2 = A1;
-S3 = A2;
+mcb = A0;
+addr = A1;
+size = A2;
 S0 = A3;
 
 if( S0 & 2 )
 {
     A0 = 800588e4; // "%06x "
-    A1 = S1 & 00ffffff;
+    A1 = mcb & 00ffffff;
     func32a00();
 }
 if( S0 & 4 )
 {
     A0 = 800588e4; // "%06x "
-    A1 = S2 & 00ffffff;
+    A1 = addr & 00ffffff;
     func32a00();
 }
 if( S0 & 8 )
 {
     A0 = 800588ec; // "%6x "
-    A1 = S3;
+    A1 = size;
     func32a00();
 }
 if( S0 & 10 )
 {
     A0 = 800588f4; // "%s "
-    V0 = (w[S1 + 4] >> 15) & f; // 01e00000
+    V0 = (w[mcb + 4] >> 15) & f; // 01e00000
     // 0 "...."
     // 1 "END "
     // 2 "HIG "
@@ -585,13 +585,12 @@ if( S0 & 10 )
 if( S0 & 20 )
 {
     A0 = 800588e4; // "%06x "
-    A1 = (w[S1 + 4] & 001fffff) << 2;
+    A1 = (w[mcb + 4] & 001fffff) << 2;
     func32a00();
 }
-
 if( S0 & 40 )
 {
-    V1 = w[S1 + 4];
+    V1 = w[mcb + 4];
     if( V1 & 01e00000 )
     {
         A0 = ((V1 & 001fffff) << 02) - 80000000;
@@ -604,7 +603,7 @@ if( S0 & 40 )
 
         if( S0 & 80 )
         {
-            if( (w[S1 + 4] >> 1a) & 1f )
+            if( (w[mcb + 4] >> 1a) & 1f )
             {
                 A0 = 800588fc; // " / "
                 func32a00();
@@ -612,10 +611,9 @@ if( S0 & 40 )
         }
     }
 }
-
 if( S0 & 80 )
 {
-    A2 = w[S1 + 4] >> 1a; // fc000000 (3f)
+    A2 = w[mcb + 4] >> 1a; // fc000000 (3f)
     if( A2 & 1f )
     {
         if( A2 & 20 )
@@ -644,7 +642,7 @@ if( S0 & 80 )
         }
         else
         {
-            V1 = w[80059640 + ((w[S1 + 4] >> 15) & f) * 4];
+            V1 = w[80059640 + ((w[mcb + 4] >> 15) & f) * 4];
             A1 = w[V1 + A2 * 4];
         }
 
@@ -660,18 +658,25 @@ func32a00();
 
 
 ////////////////////////////////
-// func325b0()
+// system_memory_full_dump()
+
+// No- MCB--- ADDR-- SIZE-- USER GETADD FUNCTION/CONTENTS
+// 001 1b2020 1b2028 002000 SUGI 053cb0 GetNewSpace() / SYMBOL DATA
+// 002 1af324 1af32с 001b00 END  053eb0 CreateMesh() / MIMe Work
+// 003 1b4000 1b4008 000200 SIMA 062ca4 CreateMesh() / MDL Packet
+// --- ------ ------ ------ ---- 
+// Free 1fffff
+// 
 
 FP = A0;
-S7 = A1;
+skip = A1;
 S5 = A2;
 S1 = A3;
-S3 = 0;
 [SP + 50] = w(0);
 
 if( S1 == 0 )
 {
-    S1 = 808d;
+    S1 = 0000808d;
 )
 
 if( FP != 0 )
@@ -694,7 +699,7 @@ if( S1 & 1 )
     A0 = 80058904; // "No- "
     func32a00();
 }
-if( S1 & 2 )
+if( S1 & 2 ) // memory control block
 {
     A0 = 8005890c; // "MCB--- "
     func32a00();
@@ -733,36 +738,22 @@ if( S1 & 80 )
 A0 = 80058900; // "\n"
 func32a00();
 
-
 S2 = 0;
-V0 = w[GP + 1b0];
-S0 = V0 - 8;
-S4 = V0;
+S3 = 0;
 
-if( ( w[S4 - 4] & 01e00000 ) != 00200000 )
+S4 = w[GP + 1b0];
+
+while( ( w[S4 - 4] & 01e00000 ) != 00200000 )
 {
-    loop32754:	; 80032754
-        A0 = w[S0 + 0];
-        S2 = S2 - 10 + A0 - S0;
-        80032768	bne    fp, 2, L3278c [$8003278c]
+    A0 = w[S4 - 8];
 
-        80032784	beq    (w[S0 + 4] & fde00000), (w[A0 - 4] & fde00000), L327b0 [$800327b0]
+    S2 = S2 - 8 + A0 - S4;
 
-        L3278c:	; 8003278C
-        8003278C	bne    fp, 3, L327bc [$800327bc]
-
-        A0 = w[S0 + 0];
-        800327A8	bne    (w[S0 + 4] & 001fffff), (w[A0 - 4] & 001fffff), L327bc [$800327bc]
-
-        L327b0:	; 800327B0
-        S3 = S3 + 1;
-        S0 = A0 - 8;
-        800327B4	j      L32828 [$80032828]
-
-        L327bc:	; 800327BC
-        if( S7 != 0 )
+    if( ( ( FP != 2 ) || ( ( w[S4 - 4] & fde00000 ) != ( w[A0 - 4] & fde00000 ) ) ) && ( ( FP != 3 ) || ( ( w[S4 - 4] & 001fffff ) != ( w[A0 - 4] & 001fffff ) ) ) )
+    {
+        if( skip != 0 )
         {
-            S7 = S7 - 1;
+            skip = skip - 1;
         }
         else
         {
@@ -773,11 +764,11 @@ if( ( w[S4 - 4] & 01e00000 ) != 00200000 )
                 func32a00();
             }
 
-            A0 = S0;
-            A1 = S4;
-            A2 = S2;
-            A3 = S1;
-            func323a8();
+            A0 = S4 - 8; // mcb
+            A1 = S4; // addr
+            A2 = S2; // size
+            A3 = S1; // flag
+            system_memory_dump_alloc();
 
             S5 = S5 - 1;
         }
@@ -787,15 +778,11 @@ if( ( w[S4 - 4] & 01e00000 ) != 00200000 )
             break;
         }
 
-        S3 = S3 + 1;
-        V0 = w[S0 + 0];
         S2 = 0;
-        S0 = V0 - 8;
-        S4 = V0;
+        S4 = w[S4 - 8]; // next data
+    }
 
-        L32828:	; 80032828
-        V0 = w[S0 + 4] & 01e00000;
-    80032838	bne    v0, 00200000, loop32754 [$80032754]
+    S3 = S3 + 1;
 }
 
 if( S1 & 1 )
@@ -824,7 +811,6 @@ if( S1 & 10 )
     func32a00();
 }
 
-L328cc:	; 800328CC
 if( S1 & 8000 )
 {
     system_memory_get_uncleared_allocated_size();
@@ -844,8 +830,8 @@ func32a00();
 // func32930()
 
 store = hu[GP + 1ac];
-[GP + 1ac] = h(7);
-[GP + 1a8] = h(2f);
+[GP + 1ac] = h(7); // SUZU
+[GP + 1a8] = h(2f); // SOUND
 
 A1 = 1;
 system_memory_allocate();
@@ -866,8 +852,8 @@ return S0;
 
 store = hu[GP + 1ac];
 
-[GP + 1ac] = h(7);
-[GP + 1a8] = h(23);
+[GP + 1ac] = h(7); // SUZU
+[GP + 1a8] = h(23); // fake calloc
 
 A0 = A0 * A1;
 A1 = 0;
@@ -912,13 +898,11 @@ A0 = SP + 10;
 
 ////////////////////////////////
 // func32a3c
-80032A3C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S0);
+
 S0 = A0;
-[SP + 001c] = w(S1);
 S1 = A1;
 80032A50	bne    s0, zero, L32a7c [$80032a7c]
-[SP + 0020] = w(RA);
+
 V0 = SP + 0010;
 T7 = V0;
 [T7 + 0000] = w(RA);
@@ -938,8 +922,9 @@ A0 = S0;
 80032A90	nop
 
 L32a94:	; 80032A94
-80032A94	jal    func322dc [$800322dc]
-A0 = 0033;
+A0 = 33; // DelayFree
+system_memory_set_alloc_contents();
+
 A0 = 000c;
 80032AA0	jal    system_memory_allocate [$800319ec]
 A1 = 0001;
@@ -951,24 +936,14 @@ A0 = w[V1 + 0000];
 [V1 + 0000] = w(V0);
 
 L32ac4:	; 80032AC4
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-80032AD4	jr     ra 
-80032AD8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func32adc
-80032ADC	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = 80059668;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0010] = w(S0);
 S0 = w[S1 + 0000];
 80032AFC	nop
 80032B00	beq    s0, zero, L32b68 [$80032b68]
@@ -1005,13 +980,6 @@ S0 = w[S1 + 0000];
 80032B64	nop
 
 L32b68:	; 80032B68
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80032B7C	jr     ra 
-80032B80	nop
 ////////////////////////////////
 
 
@@ -1052,7 +1020,7 @@ system_devkit_pc_write_by_8000();
 
 
 ////////////////////////////////
-// func32c28()
+// system_memory_full_dump_to_file()
 // write debug file
 
 filename = A0;
@@ -1067,10 +1035,10 @@ system_devkit_pc_create();
 [80058954] = w(80032bf0); // func32bf0()
 
 A0 = 1;
-A1 = 0;
+A1 = 0; // skip
 A2 = 0;
-A3 = -1;
-func325b0();
+A3 = -1; // dump all fields
+system_memory_full_dump();
 
 [80058954] = w(80037870); // func37870()
 

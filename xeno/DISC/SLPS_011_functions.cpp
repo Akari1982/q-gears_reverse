@@ -1,4 +1,93 @@
 ////////////////////////////////
+// func1bf00
+8001BF00	addiu  sp, sp, $ffe8 (=-$18)
+8001BF04	sw     ra, $0014(sp)
+8001BF08	jal    func1bdc4 [$8001bdc4]
+8001BF0C	sw     s0, $0010(sp)
+8001BF10	lui    v1, $8006
+8001BF14	lw     v1, $1c30(v1)
+8001BF18	nop
+8001BF1C	lw     v0, $01d4(v1)
+8001BF20	addiu  a0, v1, $006c
+8001BF24	bne    v0, a0, L1bf30 [$8001bf30]
+8001BF28	ori    a1, zero, $0010
+8001BF2C	addiu  a0, v1, $0120
+
+L1bf30:	; 8001BF30
+8001BF30	sw     a0, $01d4(v1)
+8001BF34	lw     a0, $01d4(v1)
+8001BF38	lw     v0, $0308(v1)
+8001BF3C	addiu  a0, a0, $0070
+8001BF40	sltiu  v0, v0, $0001
+8001BF44	jal    system_clear_otagr [$80044950]
+8001BF48	sw     v0, $0308(v1)
+8001BF4C	lui    v0, $8006
+8001BF50	lw     v0, $881c(v0)
+8001BF54	nop
+8001BF58	lw     v0, $0000(v0)
+8001BF5C	addiu  s0, zero, $ffff (=-$1)
+8001BF60	beq    v0, s0, L1bfc8 [$8001bfc8]
+8001BF64	nop
+8001BF68	lui    v1, $8006
+8001BF6C	lw     v1, $1c30(v1)
+8001BF70	nop
+8001BF74	lbu    v0, $1e94(v1)
+8001BF78	nop
+8001BF7C	beq    v0, zero, L1bf94 [$8001bf94]
+8001BF80	ori    a0, zero, $0003
+8001BF84	lbu    a1, $1e95(v1)
+8001BF88	ori    a2, zero, $000f
+8001BF8C	jal    system_memory_full_dump [$800325b0]
+8001BF90	ori    a3, zero, $80ac
+
+L1bf94:	; 8001BF94
+8001BF94	lui    v0, $8006
+8001BF98	lw     v0, $881c(v0)
+8001BF9C	nop
+8001BFA0	lw     v0, $0000(v0)
+8001BFA4	nop
+8001BFA8	beq    v0, s0, L1bfc8 [$8001bfc8]
+8001BFAC	nop
+8001BFB0	lui    v0, $8006
+8001BFB4	lw     v0, $1c30(v0)
+8001BFB8	nop
+8001BFBC	lw     a0, $01d4(v0)
+8001BFC0	jal    func371cc [$800371cc]
+8001BFC4	addiu  a0, a0, $0070
+
+L1bfc8:	; 8001BFC8
+8001BFC8	jal    system_draw_sync [$80044448]
+8001BFCC	addu   a0, zero, zero
+8001BFD0	jal    system_psyq_wait_frames [$8004b3f4]
+8001BFD4	addu   a0, zero, zero
+8001BFD8	lui    v0, $8006
+8001BFDC	lw     v0, $1c30(v0)
+8001BFE0	nop
+8001BFE4	lw     a0, $01d4(v0)
+8001BFE8	jal    system_psyq_put_draw_env [$80044abc]
+8001BFEC	nop
+8001BFF0	lui    v0, $8006
+8001BFF4	lw     v0, $1c30(v0)
+8001BFF8	nop
+8001BFFC	lw     a0, $01d4(v0)
+8001C000	jal    system_psyq_put_disp_env [$80044d14]
+8001C004	addiu  a0, a0, $005c
+8001C008	lui    v0, $8006
+8001C00C	lw     v0, $1c30(v0)
+8001C010	nop
+8001C014	lw     a0, $01d4(v0)
+8001C018	jal    system_psyq_draw_otag [$80044a48]
+8001C01C	addiu  a0, a0, $00ac
+8001C020	lw     ra, $0014(sp)
+8001C024	lw     s0, $0010(sp)
+8001C028	addiu  sp, sp, $0018
+8001C02C	jr     ra 
+8001C030	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func36298()
 
 [8004f8a0] = w(A0);
@@ -119,8 +208,8 @@ return V1;
 S0 = A0;
 if( S0 == 0 )
 {
-    A0 = 20;
-    func322dc();
+    A0 = 20; // ""
+    system_memory_set_alloc_contents();
 
     return;
 }
@@ -145,8 +234,8 @@ system_memory_mark_not_removable();
 S0 = A0;
 if( S0 == 0 )
 {
-    A0 = 20;
-    func322dc();
+    A0 = 20; // ""
+    system_memory_set_alloc_contents();
 
     return;
 }

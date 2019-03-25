@@ -41,9 +41,9 @@ animation_file_pointer = A2;
 [SP + 78] = h(hu[SP + e8]);
 [SP + 80] = h(hu[SP + ec]);
 
-A0 = 4;
+A0 = 4 // MASA;
 A1 = 0;
-func322bc;
+system_memory_set_alloc_user();
 
 T0 = w[SP + 50];
 if (T0 < a)
@@ -546,9 +546,9 @@ if (T0 < a)
 S2 = A0; // model 3d data file
 S1 = A1;
 
-A0 = 4;
+A0 = 4 // MASA;
 A1 = 0;
-func322bc;
+system_memory_set_alloc_user();
 
 A0 = S2;
 func2c1f8; // sets global offsets for model file and return number of parts
@@ -593,9 +593,9 @@ S6 = h[SP + 1c]; // clut Y
 
 
 
-A0 = 4;
+A0 = 4; //MASA
 A1 = 0;
-func322bc;
+system_memory_set_alloc_user();
 
 
 
@@ -915,13 +915,15 @@ if (bu[S0 + 10c] > 0)
 801E1AC8	addu   s5, a3, zero
 801E1ACC	sb     t6, $0060(sp)
 801E1AD0	lbu    t6, $0178(sp)
-801E1AD4	ori    a0, zero, $0004
 801E1AD8	sb     t5, $0068(sp)
 801E1ADC	lbu    t5, $017c(sp)
-801E1AE0	addu   a1, zero, zero
 801E1AE4	sb     t6, $0070(sp)
-801E1AE8	jal    func322bc [$800322bc]
 801E1AEC	sb     t5, $0078(sp)
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
 801E1AF0	lw     t6, $0010(sp)
 801E1AF4	addiu  s1, s1, $0002
 801E1AF8	lh     a0, $0004(t6)

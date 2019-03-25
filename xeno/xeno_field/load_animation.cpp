@@ -22,9 +22,9 @@ if( w[model_struct + 10] == 0 ) // animation start pos file
 
 
 
-A0 = 4;
+A0 = 4; // MASA
 A1 = 0;
-func322bc;
+system_memory_set_alloc_user;
 
 
 [SP + f0] = w(0);

@@ -215,8 +215,8 @@ func293e8(); // load file by dir file id
 A0 = 0;
 func28870(); // ececute till cd sync
 
-A0 = 31;
-func322dc();
+A0 = 31; // MES SYSDATA
+system_memory_set_alloc_contents();
 
 A0 = S5;
 A1 = 1;
@@ -425,9 +425,9 @@ system_psyq_wait_frames();
 A0 = w[S1 + 8] + 800;
 system_memory_realloc_heap();
 
-A0 = a;
+A0 = a; // ????
 A1 = 0;
-func322bc();
+system_memory_set_alloc_user();
 
 if( w[S1 + c] != 0 )
 {
@@ -509,9 +509,9 @@ system_devkit_pc_close();
 ////////////////////////////////
 // func19d00()
 
-A0 = a;
+A0 = a; // ????
 A1 = 0;
-func322bc();
+system_memory_set_alloc_user();
 ////////////////////////////////
 
 
@@ -570,7 +570,7 @@ S1 = 0;
 if( ( w[80010000] + 1 ) >= 2 )
 {
     A0 = 80018198; // filename "c:\lserrmem.txt"
-    func32c28(); // write debug file
+    system_memory_full_dump_to_file();
 
     80019E14	j      L19e50 [$80019e50]
 }
@@ -760,13 +760,11 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func1a0e4
-8001A0E4	addiu  sp, sp, $ffb8 (=-$48)
-A0 = 0006;
+
+A0 = 6; // SUGI
 A1 = 0;
-[SP + 0040] = w(RA);
-[SP + 003c] = w(S1);
-8001A0F8	jal    func322bc [$800322bc]
-[SP + 0038] = w(S0);
+system_memory_set_alloc_user();
+
 A0 = 0008;
 A1 = 0010;
 A2 = 0170;
@@ -1411,9 +1409,9 @@ for( int i = 0; i < 3; ++i )
 [8004e9d8] = w(-1);
 [8004e9d4] = w(-1);
 
-A0 = 8;
+A0 = 8; // YOSI
 A1 = 0;
-func322bc();
+system_memory_set_alloc_user();
 
 A0 = 4;
 A1 = 0;
@@ -2205,9 +2203,9 @@ A0 = 10;
 A1 = 0;
 system_filesystem_set_dir();
 
-A0 = 2;
+A0 = 2; // HIG
 A1 = 0;
-func322bc();
+system_memory_set_alloc_user();
 
 A0 = 3;
 system_get_aligned_filesize_by_dir_file_id();

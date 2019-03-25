@@ -1345,9 +1345,9 @@ if( w[800ad00c] != 1 )
 {
     [800ad00c] = w(1);
 
-    A0 = 8;
+    A0 = 8; // YOSI
     A1 = 0;
-    func322bc(); // set group for memory allocation
+    system_memory_set_alloc_user();
 
     A0 = 8000;
     A1 = 1;
@@ -1396,7 +1396,7 @@ if( w[800ad00c] == 1 )
 {
     A0 = 8;
     A1 = 0;
-    func322bc();
+    system_memory_set_alloc_user();
 
     A0 = 8000;
     A1 = S0;

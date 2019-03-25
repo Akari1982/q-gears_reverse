@@ -1726,9 +1726,9 @@ SP = SP + 0038;
 ////////////////////////////////
 // func76c50()
 
-A0 = 8;
+A0 = 8; // YOSI
 A1 = 0;
-func322bc();
+system_memory_set_alloc_user();
 
 A0 = 4;
 A1 = 0;

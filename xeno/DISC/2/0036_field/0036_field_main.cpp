@@ -66,9 +66,9 @@ if( w[800c1b60] == 0 ) // debug
 [80061bac] = w(w[80058bfc]);
 [80061bb4] = w(w[80058c48]);
 
-A0 = 8;
+A0 = 8; // YOSI
 A1 = 0;
-func322bc(); // set group for memory allocation
+system_memory_set_alloc_user();
 
 // load some debug executable
 if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )

@@ -1197,8 +1197,9 @@ if( A0 != 0 )
 800373E4	sw     a2, $0018(sp)
 800373E8	bne    v0, zero, L37424 [$80037424]
 800373EC	sw     a3, $0020(sp)
-800373F0	jal    func322dc [$800322dc]
-800373F4	ori    a0, zero, $0032
+A0 = 32; // LsFONT
+system_memory_set_alloc_contents();
+
 800373F8	andi   v0, s2, $0001
 800373FC	bne    v0, zero, L37410 [$80037410]
 80037400	sll    a0, s3, $04

@@ -1796,10 +1796,12 @@ func1df5f4:	; 801DF5F4
 801DF604	addu   s0, a1, zero
 801DF608	blez   s0, L1df63c [$801df63c]
 801DF60C	sw     ra, $0018(sp)
-801DF610	ori    a0, zero, $0004
-801DF614	addu   a1, zero, zero
-801DF618	jal    func322bc [$800322bc]
 801DF61C	sh     s0, $0006(s1)
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
 801DF620	sll    a0, s0, $02
 801DF624	addu   a0, a0, s0
 801DF628	sll    a0, a0, $02
@@ -2501,12 +2503,14 @@ func1e0064:	; 801E0064
 801E006C	addu   s1, a0, zero
 801E0070	sw     s0, $0010(sp)
 801E0074	addu   s0, a1, zero
-801E0078	ori    a0, zero, $0004
+
 801E007C	sw     ra, $0018(sp)
 
 L1e0080:	; 801E0080
-801E0080	jal    func322bc [$800322bc]
-801E0084	addu   a1, zero, zero
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
 801E0088	addiu  v0, s0, $0001
 801E008C	sll    a0, v0, $05
 801E0090	subu   a0, a0, v0
@@ -3348,9 +3352,11 @@ L1e0ac0:	; 801E0AC0
 801E0AC8	lhu    s6, $014c(sp)
 801E0ACC	bne    v0, zero, L1e1224 [$801e1224]
 801E0AD0	addu   v0, zero, zero
-801E0AD4	ori    a0, zero, $0004
-801E0AD8	jal    func322bc [$800322bc]
-801E0ADC	addu   a1, zero, zero
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
 801E0AE0	ori    v0, zero, $0001
 801E0AE4	sh     v0, $001a(s0)
 801E0AE8	lbu    t6, $0020(sp)

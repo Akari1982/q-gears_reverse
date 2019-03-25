@@ -123,13 +123,15 @@
 
 
 8001BA38	addiu  sp, sp, $ffe0 (=-$20)
-8001BA3C	ori    a0, zero, $0002
-8001BA40	addu   a1, zero, zero
 8001BA44	sw     ra, $001c(sp)
 8001BA48	sw     s2, $0018(sp)
 8001BA4C	sw     s1, $0014(sp)
-8001BA50	jal    func322bc [$800322bc]
 8001BA54	sw     s0, $0010(sp)
+
+A0 = 2; // HIG
+A1 = 0;
+system_memory_set_alloc_user();
+
 8001BA58	ori    a0, zero, $000c
 8001BA5C	jal    system_filesystem_set_dir [$80028280]
 8001BA60	addu   a1, zero, zero
@@ -441,90 +443,12 @@ L1bedc:	; 8001BEDC
 8001BEFC	nop
 
 
-func1bf00:	; 8001BF00
-8001BF00	addiu  sp, sp, $ffe8 (=-$18)
-8001BF04	sw     ra, $0014(sp)
-8001BF08	jal    func1bdc4 [$8001bdc4]
-8001BF0C	sw     s0, $0010(sp)
-8001BF10	lui    v1, $8006
-8001BF14	lw     v1, $1c30(v1)
-8001BF18	nop
-8001BF1C	lw     v0, $01d4(v1)
-8001BF20	addiu  a0, v1, $006c
-8001BF24	bne    v0, a0, L1bf30 [$8001bf30]
-8001BF28	ori    a1, zero, $0010
-8001BF2C	addiu  a0, v1, $0120
 
-L1bf30:	; 8001BF30
-8001BF30	sw     a0, $01d4(v1)
-8001BF34	lw     a0, $01d4(v1)
-8001BF38	lw     v0, $0308(v1)
-8001BF3C	addiu  a0, a0, $0070
-8001BF40	sltiu  v0, v0, $0001
-8001BF44	jal    system_clear_otagr [$80044950]
-8001BF48	sw     v0, $0308(v1)
-8001BF4C	lui    v0, $8006
-8001BF50	lw     v0, $881c(v0)
-8001BF54	nop
-8001BF58	lw     v0, $0000(v0)
-8001BF5C	addiu  s0, zero, $ffff (=-$1)
-8001BF60	beq    v0, s0, L1bfc8 [$8001bfc8]
-8001BF64	nop
-8001BF68	lui    v1, $8006
-8001BF6C	lw     v1, $1c30(v1)
-8001BF70	nop
-8001BF74	lbu    v0, $1e94(v1)
-8001BF78	nop
-8001BF7C	beq    v0, zero, L1bf94 [$8001bf94]
-8001BF80	ori    a0, zero, $0003
-8001BF84	lbu    a1, $1e95(v1)
-8001BF88	ori    a2, zero, $000f
-8001BF8C	jal    func325b0 [$800325b0]
-8001BF90	ori    a3, zero, $80ac
+////////////////////////////////
+// func1bf00
+8001BF00-8001C030
+////////////////////////////////
 
-L1bf94:	; 8001BF94
-8001BF94	lui    v0, $8006
-8001BF98	lw     v0, $881c(v0)
-8001BF9C	nop
-8001BFA0	lw     v0, $0000(v0)
-8001BFA4	nop
-8001BFA8	beq    v0, s0, L1bfc8 [$8001bfc8]
-8001BFAC	nop
-8001BFB0	lui    v0, $8006
-8001BFB4	lw     v0, $1c30(v0)
-8001BFB8	nop
-8001BFBC	lw     a0, $01d4(v0)
-8001BFC0	jal    func371cc [$800371cc]
-8001BFC4	addiu  a0, a0, $0070
-
-L1bfc8:	; 8001BFC8
-8001BFC8	jal    system_draw_sync [$80044448]
-8001BFCC	addu   a0, zero, zero
-8001BFD0	jal    system_psyq_wait_frames [$8004b3f4]
-8001BFD4	addu   a0, zero, zero
-8001BFD8	lui    v0, $8006
-8001BFDC	lw     v0, $1c30(v0)
-8001BFE0	nop
-8001BFE4	lw     a0, $01d4(v0)
-8001BFE8	jal    system_psyq_put_draw_env [$80044abc]
-8001BFEC	nop
-8001BFF0	lui    v0, $8006
-8001BFF4	lw     v0, $1c30(v0)
-8001BFF8	nop
-8001BFFC	lw     a0, $01d4(v0)
-8001C000	jal    system_psyq_put_disp_env [$80044d14]
-8001C004	addiu  a0, a0, $005c
-8001C008	lui    v0, $8006
-8001C00C	lw     v0, $1c30(v0)
-8001C010	nop
-8001C014	lw     a0, $01d4(v0)
-8001C018	jal    system_psyq_draw_otag [$80044a48]
-8001C01C	addiu  a0, a0, $00ac
-8001C020	lw     ra, $0014(sp)
-8001C024	lw     s0, $0010(sp)
-8001C028	addiu  sp, sp, $0018
-8001C02C	jr     ra 
-8001C030	nop
 
 
 func1c034:	; 8001C034
@@ -674,11 +598,14 @@ L1c20c:	; 8001C20C
 8001C224	beq    v0, zero, L1c370 [$8001c370]
 8001C228	lui    v0, $3b9a
 8001C22C	ori    v0, v0, $c9ff
-8001C230	ori    a0, zero, $0002
 8001C234	lui    at, $8007
 8001C238	sw     v0, $e5e8(at)
-8001C23C	jal    func322bc [$800322bc]
-8001C240	addu   a1, zero, zero
+
+A0 = 2; // HIG
+A1 = 0;
+system_memory_set_alloc_user();
+
+
 8001C244	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
 8001C248	ori    a0, zero, $0001
 8001C24C	addu   a0, v0, zero
@@ -861,13 +788,16 @@ L1c498:	; 8001C498
 8001C4E0	sw     a0, $1c30(at)
 8001C4E4	jal    func3f790 [$8003f790]
 8001C4E8	ori    a1, zero, $1e98
-8001C4EC	ori    a0, zero, $0002
-8001C4F0	addu   a1, zero, zero
 8001C4F4	lui    v1, $8006
 8001C4F8	lw     v1, $1c30(v1)
 8001C4FC	ori    v0, zero, $0008
-8001C500	jal    func322bc [$800322bc]
 8001C504	sb     v0, $0325(v1)
+
+A0 = 2; // HIG
+A1 = 0;
+system_memory_set_alloc_user();
+
+
 8001C508	lui    v0, $8006
 8001C50C	lw     v0, $1c30(v0)
 8001C510	nop
@@ -3543,13 +3473,16 @@ L26ea4:	; 80026EA4
 80026EE0	sw     fp, $0098(sp)
 80026EE4	addu   fp, a3, zero
 80026EE8	sw     a0, $0070(sp)
-80026EEC	ori    a0, zero, $0004
 80026EF0	sw     s6, $0090(sp)
 80026EF4	lhu    s6, $00d0(sp)
-80026EF8	addu   a1, zero, zero
 80026EFC	sw     ra, $009c(sp)
-80026F00	jal    func322bc [$800322bc]
 80026F04	sw     s4, $0088(sp)
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
+
 80026F08	ori    a0, zero, $034c
 80026F0C	jal    system_memory_allocate [$800319ec]
 80026F10	addu   a1, zero, zero
@@ -4474,18 +4407,20 @@ L27b64:	; 80027B64
 80027B94	addu   fp, a0, zero
 80027B98	sw     s5, $0034(sp)
 80027B9C	lhu    s5, $0060(sp)
-80027BA0	ori    a0, zero, $0004
 80027BA4	sw     s4, $0030(sp)
 80027BA8	addu   s4, a1, zero
 80027BAC	sw     s6, $0038(sp)
 80027BB0	lhu    s6, $0064(sp)
-80027BB4	addu   a1, zero, zero
 80027BB8	sw     s2, $0028(sp)
 80027BBC	addu   s2, a2, zero
 80027BC0	sw     s3, $002c(sp)
 80027BC4	sw     ra, $0044(sp)
-80027BC8	jal    func322bc [$800322bc]
 80027BCC	addu   s3, a3, zero
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
 80027BD0	sll    v1, s0, $10
 80027BD4	sra    v1, v1, $10
 80027BD8	sll    v0, s1, $10
@@ -8966,8 +8901,10 @@ func31614:	; 80031614
 80031760	addu   a1, zero, zero
 80031764	jal    system_devkit_pc_seek [$8004c1f0]
 80031768	addu   a2, zero, zero
-8003176C	jal    func322dc [$800322dc]
-80031770	ori    a0, zero, $002e
+
+A0 = 2e; // SYMBOL DATA
+system_memory_set_alloc_contents();
+
 80031774	addu   a0, s1, zero
 80031778	jal    system_memory_allocate [$800319ec]
 8003177C	addu   a1, zero, zero
@@ -9093,19 +9030,19 @@ L31820:	; 80031820
 // func32228
 80032228-800322B8
 ////////////////////////////////
-// func322bc
+// system_memory_set_alloc_user
 800322BC-800322D8
 ////////////////////////////////
-// func322dc
+// system_memory_set_alloc_contents
 800322DC-800322E4
 ////////////////////////////////
 // system_memory_get_function_name_as_string
 800322E8-800323A4
 ////////////////////////////////
-// func323a8
+// system_memory_dump_alloc
 800323A8-800325AC
 ////////////////////////////////
-// func325b0
+// system_memory_full_dump
 800325B0-8003292C
 ////////////////////////////////
 // func32930
@@ -9132,7 +9069,7 @@ L31820:	; 80031820
 // func32bf0
 80032BF0-80032C24
 ////////////////////////////////
-// func32c28
+// system_memory_full_dump_to_file
 80032C28-80032C9C
 ////////////////////////////////
 
@@ -10297,9 +10234,11 @@ func37880:	; 80037880
 800378D0	ori    a0, zero, $000c
 800378D4	jal    system_filesystem_set_dir [$80028280]
 800378D8	ori    a1, zero, $0003
-800378DC	ori    a0, zero, $0004
-800378E0	jal    func322bc [$800322bc]
-800378E4	addu   a1, zero, zero
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
 800378E8	jal    func28738 [$80028738]
 800378EC	ori    a0, zero, $0005
 800378F0	sll    v0, v0, $10

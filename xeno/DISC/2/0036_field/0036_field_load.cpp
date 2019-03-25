@@ -1172,18 +1172,18 @@ if( number_of_entities > 0 )
 
             if( hu[struct_5c + entity_id * 5c + 58] & 2000 )
             {
-                A0 = 3;
+                A0 = 3; // KAZM
                 A1 = 0;
-                func322bc(); // set group for memory allocation
+                system_memory_set_alloc_user();
 
                 A0 = w[S0 + 4];
                 A1 = 0;
                 func301d8(); // init +1c in model data
                 [S0 + 14] = w(V0);
 
-                A0 = 8;
+                A0 = 8; // YOSI
                 A1 = 0;
-                func322bc(); // set group for memory allocation
+                system_memory_set_alloc_user();
             }
 
             A0 = w[S0 + 4];
@@ -1227,9 +1227,9 @@ system_memory_mark_removable();
 A0 = w[80059b70];
 system_memory_mark_removed_alloc();
 
-A0 = 5;
+A0 = 5; // MIYA
 A1 = 0;
-func322bc(); // set group for memory allocation
+system_memory_set_alloc_user();
 
 A0 = 3c00;
 A1 = 0;
@@ -1237,9 +1237,9 @@ A1 = 0;
 
 80070C94	jal    func1c7d0 [$8001c7d0]
 
-A0 = 8;
+A0 = 8; // YOSI
 A1 = 0;
-func322bc(); // set group for memory allocation
+system_memory_set_alloc_user();
 
 S0 = 800b1710;
 
@@ -1342,9 +1342,9 @@ if( h[800af586] != 0 )
     [800af550] = w(V0);
 }
 
-A0 = 8;
+A0 = 8; // YOSI
 A1 = 0;
-func322bc(); // set group for memory allocation
+system_memory_set_alloc_user();
 
 V1 = hu[800b1812];
 

@@ -261,22 +261,18 @@
                     0x001fffff - place in code from where we call allocate function.
                     0x00200000 - final allocated memory block.
                     0x01e00000 - hu[GP + 1ac] & 000f. (if this is 0 then we clear this memory block)
-                                 0x0 "...."
-                                 0x1 "END "
-                                 0x2 "HIG "
-                                 0x3 "KAZM" (model data)
-                                 0x4 "MASA"
-                                 0x5 "MIYA"
-                                 0x6 "SUGI"
-                                 0x7 "SUZU" (func32930() func32988())
-                                 0x8 "YOSI"
-                                 0x9 "SIMA"
-                                 0xa "????"
-                                 0xb "TEST"
-                                 0xc ""
-                                 0xd "FREE AREA"
-                                 0xe "fake malloc"
-                                 0xf "fake calloc"
+                                 0x0 ....
+                                 0x1 END 
+                                 0x2 HIG 
+                                 0x3 KAZM (model data)
+                                 0x4 MASA
+                                 0x5 MIYA
+                                 0x6 SUGI
+                                 0x7 SUZU (func32930() func32988())
+                                 0x8 YOSI
+                                 0x9 SIMA
+                                 0xa ????
+                                 0xb TEST
                     0x02000000 - can't clear this memory block.
                     0xfc000000 - hu[GP + 1a8] flag 0x20 and mem marker id:
                                  0x00 ""
