@@ -9099,7 +9099,7 @@ L31820:	; 80031820
 // func322dc
 800322DC-800322E4
 ////////////////////////////////
-// func322e8
+// system_memory_get_function_name_as_string
 800322E8-800323A4
 ////////////////////////////////
 // func323a8
@@ -11414,25 +11414,12 @@ L3fa38:	; 8003FA38
 8003FA3C	nop
 
 
-func3fa40:	; 8003FA40
-8003FA40	bne    a0, zero, L3fa54 [$8003fa54]
-8003FA44	addu   v1, zero, zero
-8003FA48	j      L3fa68 [$8003fa68]
-8003FA4C	addu   v0, zero, zero
 
-loop3fa50:	; 8003FA50
-8003FA50	addiu  v1, v1, $0001
+////////////////////////////////
+// func3fa40
+8003FA40-8003FA6C
+////////////////////////////////
 
-L3fa54:	; 8003FA54
-8003FA54	lbu    v0, $0000(a0)
-8003FA58	nop
-8003FA5C	bne    v0, zero, loop3fa50 [$8003fa50]
-8003FA60	addiu  a0, a0, $0001
-8003FA64	addu   v0, v1, zero
-
-L3fa68:	; 8003FA68
-8003FA68	jr     ra 
-8003FA6C	nop
 
 
 func3fa70:	; 8003FA70
