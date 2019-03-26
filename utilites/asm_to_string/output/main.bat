@@ -1,1 +1,1 @@
-main SLPS_011_memory.cpp
+main SLPS_011_graphic_library_basic.cpp

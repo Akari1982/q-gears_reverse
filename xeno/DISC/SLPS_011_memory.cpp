@@ -4,10 +4,10 @@
 A0 = 0;
 func37324();
 
-[GP + 1a8] = h(20);
-[GP + 1ac] = h(a);
-[GP + 1c4] = w(0);
-[GP + 1c8] = w(0);
+[GP + 1a8] = h(20); // empty mem contents id
+[GP + 1ac] = h(a); // unknown user by default "????"
+[GP + 1c4] = w(0); // functions name start
+[GP + 1c8] = w(0); // function names end
 ////////////////////////////////
 
 
@@ -18,12 +18,12 @@ func37324();
 start = A0 & fffffffc;
 end = A1 & fffffffc;
 
-[GP + 1a8] = h(20);
-[GP + 1ac] = h(a);
+[GP + 1a8] = h(20); // empty mem contents id
+[GP + 1ac] = h(a); // unknown user by default "????"
 [GP + 1b0] = w(start + 8); // start of memory
 [GP + 1bc] = w(0); // memory dirty
-[GP + 1c4] = w(0);
-[GP + 1c8] = w(0);
+[GP + 1c4] = w(0); // functions name start
+[GP + 1c8] = w(0); // function names end
 
 [start + 0] = w(end);
 [start + 4] = w(84000000 | (w[start + 4] & fe1fffff & 03ffffff));
@@ -55,7 +55,7 @@ A0 = w[GP + 1b0];
 [GP + 1b0] = w(start + 8);
 [start + 4] = w(w[start + 4] & fe1fffff);
 [start + 4] = w(w[start + 4] & 03ffffff);
-[start + 4] = w(w[start + 4] | 84000000); // add new identificator 0x21
+[start + 4] = w(w[start + 4] | 84000000); // add new identificator 0x21 "FREE AREA"
 [start + 0] = w(w[A0 - 8]);
 
 [80059668] = w(0);
@@ -186,7 +186,7 @@ while( true )
 
 
 
-    free_space = w[data - 8] - data - 18;
+    free_space = w[data - 8] - data - 8;
 
 
 
@@ -897,89 +897,76 @@ A0 = SP + 10;
 
 
 ////////////////////////////////
-// func32a3c
+// func32a3c()
 
 S0 = A0;
 S1 = A1;
-80032A50	bne    s0, zero, L32a7c [$80032a7c]
 
-V0 = SP + 0010;
-T7 = V0;
-[T7 + 0000] = w(RA);
-V0 = w[SP + 0010];
-[GP + 01cc] = w(0);
-80032A6C	addiu  v0, v0, $fff8 (=-$8)
-[GP + 01d0] = w(V0);
-80032A74	jal    func19b50 [$80019b50]
-A0 = 0083;
+if( S0 == 0 )
+{
+    T7 = SP + 10;
+    [T7 + 0] = w(RA);
+    [GP + 1cc] = w(0);
+    [GP + 1d0] = w(w[SP + 10] - 8);
 
-L32a7c:	; 80032A7C
-80032A7C	bne    s1, zero, L32a94 [$80032a94]
-80032A80	nop
-80032A84	jal    system_memory_mark_removed_alloc [$80031f0c]
-A0 = S0;
-80032A8C	j      L32ac4 [$80032ac4]
-80032A90	nop
+    A0 = 83;
+    80032A74	jal    func19b50 [$80019b50]
+}
 
-L32a94:	; 80032A94
-A0 = 33; // DelayFree
-system_memory_set_alloc_contents();
+if( S1 == 0 )
+{
+    A0 = S0;
+    system_memory_mark_removed_alloc();
+}
+else
+{
+    A0 = 33; // DelayFree
+    system_memory_set_alloc_contents();
 
-A0 = 000c;
-80032AA0	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-V1 = 80059668;
-A0 = w[V1 + 0000];
-[V0 + 0004] = w(S0);
-[V0 + 0008] = w(S1);
-[V0 + 0000] = w(A0);
-[V1 + 0000] = w(V0);
+    A0 = c;
+    A1 = 1;
+    system_memory_allocate();
 
-L32ac4:	; 80032AC4
+    [V0 + 4] = w(S0);
+    [V0 + 8] = w(S1);
+    [V0 + 0] = w(w[80059668]);
+    [80059668] = w(V0);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func32adc
+// func32adc()
 
 S1 = 80059668;
-S0 = w[S1 + 0000];
-80032AFC	nop
-80032B00	beq    s0, zero, L32b68 [$80032b68]
-80032B04	addiu  s2, zero, $ffff (=-$1)
+S0 = w[S1 + 0];
+while( S0 != 0 )
+{
+    V0 = w[S0 + 8] - 1;
+    [S0 + 8] = w(V0);
+    if( V0 == -1 )
+    {
+        A0 = w[S0 + 4];
+        system_memory_mark_removed_alloc();
 
-loop32b08:	; 80032B08
-V0 = w[S0 + 0008];
-80032B0C	nop
-80032B10	addiu  v0, v0, $ffff (=-$1)
-80032B14	bne    v0, s2, L32b50 [$80032b50]
-[S0 + 0008] = w(V0);
-A0 = w[S0 + 0004];
-80032B20	jal    system_memory_mark_removed_alloc [$80031f0c]
-80032B24	nop
-V0 = w[S0 + 0000];
-A0 = S0;
-80032B30	jal    system_memory_mark_removed_alloc [$80031f0c]
-[S1 + 0000] = w(V0);
-V0 = w[S1 + 0000];
-80032B3C	nop
-80032B40	beq    v0, zero, L32b68 [$80032b68]
-80032B44	nop
-80032B48	j      L32b54 [$80032b54]
-80032B4C	nop
+        V0 = w[S0 + 0];
+        A0 = S0;
+        [S1 + 0] = w(V0);
+        system_memory_mark_removed_alloc();
 
-L32b50:	; 80032B50
-S1 = w[S1 + 0000];
+        if( w[S1 + 0] == 0 )
+        {
+            return;
+        }
+    }
+    else
+    {
+        S1 = w[S1 + 0];
+    }
 
-L32b54:	; 80032B54
-80032B54	nop
-S0 = w[S1 + 0000];
-80032B5C	nop
-80032B60	bne    s0, zero, loop32b08 [$80032b08]
-80032B64	nop
-
-L32b68:	; 80032B68
+    S0 = w[S1 + 0];
+}
 ////////////////////////////////
 
 

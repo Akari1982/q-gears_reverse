@@ -274,7 +274,7 @@
                                  0xa ????
                                  0xb TEST
                     0x02000000 - can't clear this memory block.
-                    0xfc000000 - hu[GP + 1a8] flag 0x20 and mem marker id:
+                    0xfc000000 - hu[GP + 1a8] flag 0x20 and mem contents id:
                                  0x00 ""
                                  0x01 FREE AREA
                                  0x02 fake malloc
