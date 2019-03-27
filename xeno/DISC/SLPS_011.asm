@@ -12748,7 +12748,7 @@ func40824:	; 80040824
 // system_psyq_put_draw_env
 80044ABC-80044BBC
 ////////////////////////////////
-// func44bc0
+// system_psyq_draw_otag_env
 80044BC0-80044CD8
 ////////////////////////////////
 // func44cdc
@@ -13917,10 +13917,10 @@ L4b098:	; 8004B098
 // func4b648
 8004B648-8004B674
 ////////////////////////////////
-// func4b678
+// system_call_main_timer_additional_callback_4
 8004B678-8004B6A8
 ////////////////////////////////
-// func4b6ac
+// system_call_main_timer_additional_callback_any
 8004B6AC-8004B6D8
 ////////////////////////////////
 // func4b6dc
@@ -13988,13 +13988,13 @@ L4b098:	; 8004B098
 // system_bios_set_custom_exit_from_exception
 8004BDB8-8004BDC4
 ////////////////////////////////
-// func4bdc8
+// system_main_timer_initialize
 8004BDC8-8004BE1C
 ////////////////////////////////
-// func4be20
+// system_main_timer_callback
 8004BE20-8004BE94
 ////////////////////////////////
-// func4be98
+// system_main_timer_additional_callback
 8004BE98-8004BEC0
 ////////////////////////////////
 // func4bec4

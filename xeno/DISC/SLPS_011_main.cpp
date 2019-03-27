@@ -74,8 +74,8 @@ func4e690(); // start memory card
 
 system_bios_bu_init(); // to start memory card
 
-A0 = 800361f4;
-func4b678(); // set 4th callback
+A0 = 800361f4; // func361f4()
+system_call_main_timer_additional_callback_4();
 
 A0 = 8006f180; // pointer to start of allocated memory
 A1 = 801fc000; // pointer to end of allocated memory
@@ -547,7 +547,7 @@ A0 = 0;
 system_psyq_draw_sync_callback();
 
 A0 = 0;
-80019D94	jal    func4b678 [$8004b678]
+system_call_main_timer_additional_callback_4();
 
 80019D9C	jal    func40d4c [$80040d4c]
 

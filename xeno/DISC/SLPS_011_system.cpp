@@ -73,7 +73,7 @@ K0 = K0 + 0008;
 
 // if A0 == -1 - return value from 80058000
 // if A0 == 1 - return delta time from prev update
-// if A0 = 0 o2 and greater - wait number of frames
+// if A0 == 2 and greater - wait number of frames
 
 gpustat = w[80056edc]; // 1f801814 GPUSTAT Read GPU Status Register
 timer1_value = w[80056ee0]; // 1f801110 Timer 1 Current Counter Value
@@ -204,65 +204,48 @@ V0 = w[80057fcc]; // 80057fac
 
 
 ////////////////////////////////
-// func4b678()
+// system_call_main_timer_additional_callback_4()
 
 V0 = w[80057fcc];
 A1 = A0;
 A0 = 4;
-8004B694	jalr   w[V0 + 14] ra // func4be98
+8004B694	jalr   w[V0 + 14] ra // system_main_timer_additional_callback()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4b6ac
+// system_call_main_timer_additional_callback_any()
 
 V0 = w[80057fcc];
-
-8004B6C4	jalr   w[V0 + 14] ra
+8004B6C4	jalr   w[V0 + 14] ra // system_main_timer_additional_callback()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4b6dc
+// func4b6dc()
+
 V0 = w[80057fcc];
-8004B6E4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = w[V0 + 0010];
-8004B6F0	nop
-8004B6F4	jalr   v0 ra
-8004B6F8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8004B704	jr     ra 
-8004B708	nop
+8004B6F4	jalr   w[V0 + 10] ra
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func4b70c
+
 V0 = w[80057fcc];
-8004B714	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
 V0 = w[V0 + 0018];
-8004B720	nop
 8004B724	jalr   v0 ra
-8004B728	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8004B734	jr     ra 
-8004B738	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func4b73c
-V0 = hu[80056f46];
-8004B744	jr     ra 
-8004B748	nop
+
+return hu[80056f46];
 ////////////////////////////////
 
 
@@ -320,7 +303,7 @@ system_bios_set_custom_exit_from_exception();
 
 [80056f44] = h(1);
 
-func4bdc8(); // wait timer init
+system_main_timer_initialize();
 V1 = w[80057fcc];
 [V1 + 14] = w(V0);
 
@@ -678,7 +661,7 @@ T1 = 0019;
 
 
 ////////////////////////////////
-// func4bdc8()
+// system_main_timer_initialize()
 
 V1 = w[80058004]; // 1f801114 Timer 1 Counter Mode (R/W)
 // 0 Synchronization Enable 1=Synchronize via Bit1-2)
@@ -694,16 +677,16 @@ A1 = 8;
 func4bec4(); // set mem to zero
 
 A0 = 0;
-A1 = 8004be20; // func4be20()
+A1 = 8004be20; // system_main_timer_callback()
 func4b618();
 
-return 8004be98;
+return 8004be98; // system_main_timer_additional_callback()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4be20()
+// system_main_timer_callback()
 
 [80058000] = w(w[80058000] + 1);
 
@@ -719,7 +702,7 @@ for( int i = 0; i < 8; ++i )
 
 
 ////////////////////////////////
-// func4be98()
+// system_main_timer_additional_callback()
 
 if( A1 != w[80057fe0 + A0 * 4] )
 {

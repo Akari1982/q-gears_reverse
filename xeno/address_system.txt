@@ -205,15 +205,15 @@
     + 8 func4ba44()
     + c func4b780()
     +10 8004bb98
-    +14 8004be98
+    +14 system_main_timer_additional_callback()
     +18 8004bc44
     +1c 80056f44
 80057fd0 [][][][] 1f801070 interrupt status register.
 80057fd4 [][][][] 1f801074 interrupt mask register.
 80057fd8 [][][][] 1f8010f0 dma control register.
 
-80057fe0 array of callbacks called everytime when wait timer updates (0x4 size).
-            4 - set with func4b678();
+80057fe0 array of 8 callbacks called everytime when wait timer updates (0x4 size).
+            4 - set with system_call_main_timer_additional_callback_4();
 
 80058000 [][][][] frame timer.
 80058004 [][][][] 1f801114 Timer 1 Counter Mode (R/W)
