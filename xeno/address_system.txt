@@ -175,8 +175,20 @@
                     1 Checks coordinating registered and drawn primitives.
                     2 Registered and drawn primitives are dumped.
 80055f73 []       graph debug reverse.
-
+80055f74 [][]     max load image width.
+80055f76 [][]     max load image height.
+80055f78 [][][][] set draw flag to call draw sync callback when necessary.
 80055f7c [][][][] draw sync callback pointer.
+
+80056018-80056028 MoveImage gpu packet static memory.
+
+80056064 [][][][] current render queue transfer func.
+80056068 [][][][] current render queue otag ptr.
+8005606c [][][][] current render queue data src (data to transfer).
+
+80056074 [][][][] index into render queue to insert.
+80056078 [][][][] index into render queue to render 8006b4c4 8006b4c8 8006b4cc.
+80056080 [][][][] store prev value of 1f801074 interrupt mask register here.
 
 800560a0 square root data (0x2 each). 12bit fixed point.
 
@@ -502,6 +514,8 @@
 800598b4 array of stored cdl command response fifo (0x1 size 0x8 items).
 800598bc array of stored cdl command response fifo (0x1 size 0x8 items).
 
+800598d4-80059904 temp for DMA2 transfer
+
 80059a5c [][][][] init with 0xc.
     +00 [][][][] flags.
                     0x00000001 main volume left.
@@ -769,6 +783,12 @@
         +0ec [][]     some wait timers.
         +0f6 [][]     init with 0.
         // some additional data related with bu[smd + 15]
+
+Render queue of 0x40 structs with size 0x60.
+8006b4c4 [][][][] pointer to transfer func.
+8006b4c8 [][][][] otag ptr.
+8006b4cc [][][][] data src (data to transfer).
+8006b4d0 start of otag data.
 
 8006f020 array of 3 items with size 0x4. Init with 0.
 

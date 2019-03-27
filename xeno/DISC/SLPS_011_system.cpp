@@ -282,6 +282,7 @@ return hu[V0];
 V1 = w[80057fd4]; // 1f801074 interrupt mask register
 V0 = hu[V1];
 [V1] = h(A0);
+return V0;
 ////////////////////////////////
 
 

@@ -106,8 +106,9 @@ V0 = 0001;
 [SP + 0020] = w(RA);
 [SP + 0010] = h(S0);
 [SP + 0012] = h(S1);
-80043770	jal    system_load_image [$8004470c]
 [SP + 0016] = h(V0);
+system_load_image();
+
 A0 = S0;
 8004377C	jal    func438d0 [$800438d0]
 A1 = S1;
@@ -1117,13 +1118,13 @@ if( bu[80055f72] >= 2 )
 
 A0 = mode;
 V0 = w[80055f68];
-80044498	jalr   w[V0 + 3c] ra // func46c2c
+80044498	jalr   w[V0 + 3c] ra // func46c2c()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func444b4()
+// system_graphic_debug_print_rect()
 
 str = A0;
 rect = A1;
@@ -1194,14 +1195,14 @@ b = A3;
 
 A0 = 80019214; // "ClearImage"
 A1 = rect;
-func444b4();
+system_graphic_debug_print_rect();
 
 V0 = w[80055f68];
-A0 = w[V0 + c]; // func45cbc()
-A1 = rect;
-A2 = 8;
+A0 = w[V0 + c]; // system_gpu_clear_image_transfer_func()
+A1 = rect; // data
+A2 = 8; // size
 A3 = ((b & ff) << 10) | ((g & ff) << 8) | (r & ff);
-80044648	jalr   w[V0 + 8] ra // func46504()
+80044648	jalr   w[V0 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 ////////////////////////////////
 
 
@@ -1216,14 +1217,14 @@ b = A3;
 
 A0 = 80019214; // "ClearImage"
 A1 = rect;
-func444b4();
+system_graphic_debug_print_rect();
 
 V1 = w[80055f68];
-A0 = w[V1 + c]; // func45cbc()
+A0 = w[V1 + c]; // system_gpu_clear_image_transfer_func()
 A1 = rect;
 A2 = 8;
 A3 = 80000000 | ((b & ff) << 10) | ((g & ff) << 8) | (r & ff);
-800446E4	jalr   w[V1 + 8] ra // func46504()
+800446E4	jalr   w[V1 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 ////////////////////////////////
 
 
@@ -1237,14 +1238,14 @@ ptr = A1; // start address
 
 A0 = 80019220; // "LoadImage"
 A1 = rect;
-func444b4();
+system_graphic_debug_print_rect();
 
 V0 = w[80055f68];
-A0 = w[V0 + 20]; // func45f18 transfer to vram
+A0 = w[V0 + 20]; // system_gpu_load_image_transfer_func()
 A1 = rect; // struct with size (0 x, 2 y, 4 width, 6 height)
-A2 = 8;
+A2 = 8; // size
 A3 = ptr;
-80044750	jalr   w[V0 + 8] ra // func46504
+80044750	jalr   w[V0 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 ////////////////////////////////
 
 
@@ -1258,15 +1259,14 @@ ptr = A1;
 
 A0 = 8001922c; // "StoreImage"
 A1 = rect;
-func444b4();
+system_graphic_debug_print_rect();
 
 V0 = w[80055f68];
-A0 = w[V0 + 1c]; // func46154
+A0 = w[V0 + 1c]; // system_gpu_store_image_transfer_func()
 A1 = rect;
 A2 = 8;
 A3 = ptr;
-V0 = w[V0 + 8];
-800447B4	jalr   v0 ra
+800447B4	jalr   w[V0 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 ////////////////////////////////
 
 
@@ -1281,7 +1281,7 @@ y = A2;
 
 A0 = 80019238; // "MoveImage"
 A1 = rect;
-func444b4();
+system_graphic_debug_print_rect();
 
 if( ( hu[rect + 4] != 0 ) && ( hu[rect + 6] != 0 ) )
 {
@@ -1290,12 +1290,11 @@ if( ( hu[rect + 4] != 0 ) && ( hu[rect + 6] != 0 ) )
     [80056028] = h(hu[rect + 4]);
 
     V1 = [80055f68];
-    A0 = w[V1 + 18]; // func46464 start dma to gpu
+    A0 = w[V1 + 18]; // system_gpu_start_dma_to_gpu()
     A1 = 80056018;
     A2 = 14;
     A3 = 0;
-    V0 = w[V1 + 8];
-    80044874	jalr   v0 ra
+    80044874	jalr   w[V1 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 }
 return -1;
 ////////////////////////////////
@@ -1391,11 +1390,11 @@ if( bu[80055f72] >= 2 )
 }
 
 V0 = w[80055f68];
-A0 = w[V0 + 18]; // func46464 start dma to gpu 
-A1 = S0;
-A2 = 0;
-A3 = 0;
-80044AA0	jalr   w[V0 + 8] ra // func46504
+A0 = w[V0 + 18]; // system_gpu_start_dma_to_gpu()
+A1 = S0; // data
+A2 = 0; // size
+A3 = 0; // src
+80044AA0	jalr   w[V0 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 ////////////////////////////////
 
 
@@ -1416,7 +1415,7 @@ if( bu[80055f72] >= 2 )
     80044B00	jalr   w[80055f6c] ra
 }
 
-S0 = env + 001c;
+S0 = env + 1c;
 A0 = S0;
 A1 = env;
 80044B10	jal    func455c4 [$800455c4]
@@ -1424,11 +1423,11 @@ A1 = env;
 [env + 1c] = w(w[env + 1c] | 00ffffff);
 
 V1 = w[80055f68];
-A0 = w[V1 + 18];
+A0 = w[V1 + 18]; // system_gpu_start_dma_to_gpu()
 A1 = S0;
 A2 = 40;
 A3 = 0;
-80044B48	jalr   w[V1 + 8] ra
+80044B48	jalr   w[V1 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 
 A3 = 80055f80;
 A2 = env;
@@ -2140,16 +2139,13 @@ L455a4:	; 800455A4
 
 ////////////////////////////////
 // func455c4
-800455C4	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 0030] = w(S0);
+
 S0 = A1;
-[SP + 0034] = w(S1);
 S1 = A0;
-[SP + 0038] = w(RA);
 A0 = h[S0 + 0000];
 A1 = h[S0 + 0002];
 800455E4	jal    func458ac [$800458ac]
-800455E8	nop
+
 [S1 + 0004] = w(V0);
 A0 = hu[S0 + 0004];
 V0 = hu[S0 + 0000];
@@ -2306,14 +2302,7 @@ A3 = A3 + S1;
 [A3 + 0000] = w(V0);
 
 L45834:	; 80045834
-80045834	addiu  v0, t0, $ffff (=-$1)
-[S1 + 0003] = b(V0);
-RA = w[SP + 0038];
-S1 = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0040;
-8004584C	jr     ra 
-80045850	nop
+[S1 + 0003] = b(T0 - 1);
 ////////////////////////////////
 
 
@@ -2418,9 +2407,7 @@ V1 = V1 << 0c;
 V0 = A3 & 0fff;
 
 L45960:	; 80045960
-80045960	lui    a0, $e300
-V0 = V0 | A0;
-V0 = V1 | V0;
+return e3000000 | V0 | V0;
 ////////////////////////////////
 
 
@@ -2639,53 +2626,53 @@ return words;
 
 
 ////////////////////////////////
-// func45cbc
+// system_gpu_clear_image_transfer_func()
 
 gpu1814 = w[80056044]; // 1f801814 GP1 Send GP1 Commands (Display Control)
 
-T0 = A0;
-T1 = A1;
+rect = A0;
+colour = A1;
 
-if( h[T0 + 4] >= 0 )
+if( h[rect + 4] >= 0 )
 {
-    if( h[80055f74] - 1 >= h[T0 + 4] )
+    if( h[80055f74] - 1 >= h[rect + 4] )
     {
-        [T0 + 4] = h(h[T0 + 4]);
+        [rect + 4] = h(h[rect + 4]);
     }
     else
     {
-        [T0 + 4] = h(h[80055f74] - 1);
+        [rect + 4] = h(h[80055f74] - 1);
     }
 }
 else
 {
-    [T0 + 4] = h(0);
+    [rect + 4] = h(0);
 }
 
-if( h[T0 + 6] >= 0 )
+if( h[rect + 6] >= 0 )
 {
-    if( h[80055f76] - 1 >= h[T0 + 6] )
+    if( h[80055f76] - 1 >= h[rect + 6] )
     {
-        [T0 + 6] = h(h[T0 + 6]);
+        [rect + 6] = h(h[rect + 6]);
     }
     else
     {
-        [T0 + 6] = h(h[80055f76] - 1);
+        [rect + 6] = h(h[80055f76] - 1);
     }
 }
 else
 {
-    [T0 + 6] = h(0);
+    [rect + 6] = h(0);
 }
 
-if( ( ( hu[T0 + 0] & 3f ) == 0 ) && ( ( hu[T0 + 4] & 3f ) == 0 ) )
+if( ( ( hu[rect + 0] & 3f ) == 0 ) && ( ( hu[rect + 4] & 3f ) == 0 ) )
 {
     [800598d4] = w(05ааffff); // nop
     [800598d8] = w(e6000000); // TextureBit15, Draw Always
-    [800598dc] = w(e1000000 | ((T1 >> 1f) << 0a) | (w[gpu1814] & 000007ff)); // Draw Mode setting (aka "Texpage")
-    [800598e0] = w(02000000 | (T1 & 00ffffff)); // Fill Rectangle in VRAM (24bit RGB value)
-    [800598e4] = w(w[T0 + 0]); // Xpos counted in halfwords, steps of 10h
-    [800598e8] = w(w[T0 + 4]); // Xsiz counted in halfwords, steps of 10h
+    [800598dc] = w(e1000000 | ((colour >> 1f) << 0a) | (w[gpu1814] & 000007ff)); // Draw Mode setting (aka "Texpage")
+    [800598e0] = w(02000000 | (colour & 00ffffff)); // Fill Rectangle in VRAM (24bit RGB value)
+    [800598e4] = w(w[rect + 0]); // Xpos counted in halfwords, steps of 10h
+    [800598e8] = w(w[rect + 4]); // Xsiz counted in halfwords, steps of 10h
 }
 else
 {
@@ -2694,10 +2681,10 @@ else
     [800598dc] = w(e4ffffff); // Set Drawing Area bottom right (X2,Y2)
     [800598e0] = w(e5000000); // Set Drawing Offset (X,Y)
     [800598e4] = w(e6000000); // TextureBit15, Draw Always
-    [800598e8] = w(e1000000 | ((T1 >> 1f) << a) | (w[gpu1814] & 07ff)); // Draw Mode setting (aka "Texpage")
-    [800598ec] = w(60000000 | (T1 & 00ffffff)); // Monochrome Rectangle (variable size) (opaque)
-    [800598f0] = w(w[T0 + 0]);
-    [800598f4] = w(w[T0 + 4]);
+    [800598e8] = w(e1000000 | ((colour >> 1f) << a) | (w[gpu1814] & 07ff)); // Draw Mode setting (aka "Texpage")
+    [800598ec] = w(60000000 | (colour & 00ffffff)); // Monochrome Rectangle (variable size) (opaque)
+    [800598f0] = w(w[rect + 0]);
+    [800598f4] = w(w[rect + 4]);
     [800598f8] = w(03ffffff); // Unknown
 
     A0 = 3; // Read Draw area top left
@@ -2714,7 +2701,7 @@ else
 }
 
 A0 = 800598d4;
-func46464(); // start dma to gpu
+system_gpu_start_dma_to_gpu();
 
 return 0;
 ////////////////////////////////
@@ -2722,7 +2709,7 @@ return 0;
 
 
 ////////////////////////////////
-// func45f18
+// system_gpu_load_image_transfer_func()
 
 gpu1810 = w[80056040];
 gpu1814 = w[80056044];
@@ -2730,34 +2717,29 @@ gpu10a0 = w[80056048]; // 1f8010a0 GPU DMA base address
 gpu10a4 = w[8005604c]; // 1f8010a4 GPU DMA Block Control
 gpu10a8 = w[80056050]; // 1f8010A8 GPU DMA channel control (lists + image data)
 
-sizes = A0; // struct with size (0 x, 2 y, 4 width, 6 height)
+rect = A0; // struct with size (0 x, 2 y, 4 width, 6 height)
 src = A1;
 
-func46d74();
+func46d74(); // wait
 
-width = h[sizes + 4];
-if( width < 0 )
+if( h[rect + 4] < 0 )
 {
-    width = 0;
+    h[rect + 4] = 0;
 }
-else if( width > h[80055f74] )
+else if( h[rect + 4] > h[80055f74] )
 {
-    width = h[80055f74];
+    h[rect + 4] = h[80055f74];
 }
-[sizes + 4] = h(width);
+if( h[rect + 6] < 0 )
+{
+    h[rect + 6] = 0;
+}
+else if( h[rect + 6] > h[80055f76] )
+{
+    h[rect + 6] = h[80055f76];
+}
 
-height = h[sizes + 6];
-if( height < 0 )
-{
-    height = 0;
-}
-else if( height > h[80055f76] )
-{
-    height = h[80055f76];
-}
-[sizes + 6] = h(height);
-
-pixels = h[sizes + 4] * h[sizes + 6];
+pixels = h[rect + 4] * h[rect + 6];
 
 A0 = pixels / 2;
 if( A0 <= 0 )
@@ -2779,8 +2761,8 @@ while( ( w[gpu1814] & 04000000 ) == 0 )
 [gpu1814] = w(04000000);  // DMA Direction 0=Off
 [gpu1810] = w(01000000);  //  Clear Cache
 [gpu1810] = w(a0000000);  // Copy Rectangle (CPU to VRAM)
-[gpu1810] = w(w[sizes + 0]); // Destination Coord (YyyyXxxxh)
-[gpu1810] = w(w[sizes + 4]); // Width+Height      (YsizXsizh)
+[gpu1810] = w(w[rect + 0]); // Destination Coord (YyyyXxxxh)
+[gpu1810] = w(w[rect + 4]); // Width+Height      (YsizXsizh)
 
 while( words != 0 )
 {
@@ -2803,7 +2785,7 @@ return 0;
 
 
 ////////////////////////////////
-// func46154()
+// system_gpu_store_image_transfer_func()
 
 gpu1810 = w[80056040]; // 1f801810 GP0 Commands
 gpu1814 = w[80056044]; // 1f801814 GP1 Send GP1 Commands (Display Control)
@@ -2811,66 +2793,36 @@ gpu10a0 = w[80056048]; // 1f8010a0 GPU DMA base address
 gpu10a4 = w[8005604c]; // 1f8010a4 GPU DMA Block Control
 gpu10a8 = w[80056050]; // 1f8010A8 GPU DMA channel control (lists + image data)
 
-S1 = A0;
-S2 = A1;
-func46d74();
+rect = A0;
+ptr = A1;
 
-A1 = h[S1 + 0004];
-V1 = A1;
-80046184	bltz   a1, L461b0 [$800461b0]
+func46d74(); // wait
 
-V0 = h[80055f74];
-A0 = V0;
-V0 = V0 < A1;
-800461A0	beq    v0, zero, L461b4 [$800461b4]
+if( h[rect + 4] < 0 )
+{
+    [rect + 4] = h(0);
+}
+if( h[rect + 4] > h[80055f74] )
+{
+    [rect + 4] = h(h[80055f74]);
+}
+if( h[rect + 6] < 0 )
+{
+    [rect + 6] = h(0);
+}
+if( h[rect + 6] > h[80055f76] )
+{
+    [rect + 6] = h(h[80055f76]);
+}
 
-V1 = A0;
-800461A8	j      L461b4 [$800461b4]
+pixels = h[rect + 4] * h[rect + 6];
 
-L461b0:	; 800461B0
-V1 = 0;
-
-L461b4:	; 800461B4
-A1 = h[S1 + 6];
-[S1 + 4] = h(V1);
-V1 = A1;
-800461BC	bltz   a1, L461e8 [$800461e8]
-
-V0 = h[80055f76];
-A0 = V1;
-V1 = V0;
-V0 = V0 < A1;
-800461D8	beq    v0, zero, L461f0 [$800461f0]
-V0 = A0 << 10;
-800461E0	j      L461ec [$800461ec]
-A0 = V1;
-
-L461e8:	; 800461E8
-A0 = 0;
-
-L461ec:	; 800461EC
-V0 = A0 << 10;
-
-L461f0:	; 800461F0
-V1 = h[S1 + 0004];
-V0 = V0 >> 10;
-800461F8	mult   v1, v0
-[S1 + 0006] = h(A0);
-80046200	mflo   a2
-V1 = A2 + 0001;
-V0 = V1 >> 1f;
-V1 = V1 + V0;
-A0 = V1 >> 01;
-S0 = V1 >> 05;
+A0 = pixels / 2;
 if( A0 < 0 )
 {
     return -1;
 }
-
-V1 = S0;
-V0 = V1 << 04;
-S0 = A0 - V0;
-S4 = V1;
+words = A0 - ((pixels >> 5) << 4);
 
 while( ( w[gpu1814] & 04000000 ) == 0 )
 {
@@ -2885,8 +2837,8 @@ while( ( w[gpu1814] & 04000000 ) == 0 )
 [gpu1814] = w(04000000);
 [gpu1810] = w(01000000);
 [gpu1810] = w(c0000000);
-[gpu1810] = w(w[S1 + 0]);
-[gpu1810] = w(w[S1 + 4]);
+[gpu1810] = w(w[rect + 0]);
+[gpu1810] = w(w[rect + 4]);
 
 while( ( w[gpu1814] & 08000000 ) == 0 )
 {
@@ -2898,18 +2850,18 @@ while( ( w[gpu1814] & 08000000 ) == 0 )
     }
 }
 
-while( S0 != 0 )
+while( words != 0 )
 {
-    [S2] = w(w[gpu1810]);
-    S0 = S0 - 1;
-    S2 = S2 + 4;
+    [ptr] = w(w[gpu1810]);
+    words = words - 1;
+    ptr = ptr + 4;
 }
 
-if( S4 != 0 )
+if( ( pixels >> 5 ) != 0 )
 {
     [gpu1814] = w(04000003);
-    [gpu10a0] = w(S2);
-    [gpu10a4] = w((S4 << 10) | 0010);
+    [gpu10a0] = w(ptr);
+    [gpu10a4] = w(((pixels >> 5) << 10) | 0010);
     [gpu10a8] = w(01000200);
 }
 
@@ -2961,8 +2913,7 @@ return 0;
 
 
 ////////////////////////////////
-// func46464()
-// start dma to gpu
+// system_gpu_start_dma_to_gpu()
 
 address = A0;
 
@@ -2995,25 +2946,27 @@ return w[gpu1810] & 00ffffff;
 ////////////////////////////////
 // func464e0()
 
-A2 = 0;
-A3 = A2;
-func46504();
+A0 = A0; // func
+A3 = A2; // src
+A1 = A1 // data
+A2 = 0; // size
+system_gpu_render_queue_item_add_and_exec();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func46504()
+// system_gpu_render_queue_item_add_and_exec()
 
-S3 = A0; // func
-S0 = A1; // struct with size; Otag ptr
-S1 = A2;
-S2 = A3; // start address
+func = A0;
+data = A1;
+size = A2;
+src = A3;
 
 gpu10a8 = w[80056050]; // 1f8010A8 DMA2 channel control- GPU (lists + image data)
 gpu1814 = w[80056044]; // 1f801814 GPUSTAT Read GPU Status Register
 
-func46d74();
+func46d74(); // wait
 
 while( w[80056078] == ( (w[80056074] + 1) & 3f ) )
 {
@@ -3024,9 +2977,10 @@ while( w[80056078] == ( (w[80056074] + 1) & 3f ) )
         return -1;
     }
 
-    80046548	jal    func467e4 [$800467e4]
+    system_gpu_render_queue_item_exec();
 }
 
+// disable interrupts
 A0 = 0;
 system_set_interrupt_mask_register();
 [8005607c] = w(V0);
@@ -3035,99 +2989,93 @@ system_set_interrupt_mask_register();
 
 if( ( bu[80055f71] == 0 ) || ( ( w[80056074] == w[80056078] ) && ( ( w[gpu10a8] & 01000000 ) == 0 ) && ( w[80055f7c] == 0 ) ) )
 {
-    loop465f8:	; 800465F8
-        V0 = w[gpu1814] & 04000000;
-    80046604	beq    v0, zero, loop465f8 [$800465f8]
+    while( ( w[gpu1814] & 04000000 ) == 0 ) // wait till GPU ready to receive Cmd Word
+    {
+    }
 
-    // called here func45f18 transfer to vram
-    A0 = S0; // struct with size
-    A1 = S2;
-    80046610	jalr   s3 ra
+    A0 = data; // struct with size
+    A1 = src;
+    80046610	jalr   func ra
 
-    [80056064] = w(S3);
-    [80056068] = w(S0);
-    [8005606c] = w(S2);
+    [80056064] = w(func);
+    [80056068] = w(data);
+    [8005606c] = w(src);
 
     A0 = w[8005607c];
     system_set_interrupt_mask_register();
 
     return 0;
 }
-
-A0 = 2; // slot
-A1 = 800467e4; // func467e4()
-func4b648();
-
-A2 = 0;
-8004665C	beq    s1, zero, L4670c [$8004670c]
-
-T0 = 8006b4d0;
-A3 = S0;
-V0 = S1;
-
-L46674:	; 80046674
-80046674	bgez   v0, L46680 [$80046680]
-80046678	nop
-V0 = V0 + 3;
-
-L46680:	; 80046680
-V0 = V0 >> 2;
-if( A2 >= V0 )
+else
 {
-    V1 = w[80056074];
-    [8006b4c8 + V1 * 60] = w(8006b4d0 + V1 * 60);
-    80046704	j      L46730 [$80046730]
+    A0 = 2; // slot
+    A1 = 800467e4; // system_gpu_render_queue_item_exec()
+    func4b648();
+
+    queue_id = w[80056074];
+
+    A2 = 0;
+    if( size != 0 )
+    {
+        A3 = data;
+
+        while( true )
+        {
+            if( A2 >= ( size / 4 ) )
+            {
+                [8006b4c8 + queue_id * 60] = w(8006b4d0 + queue_id * 60);
+                break;
+            }
+
+            [8006b4d0 + queue_id * 60 + A2 * 4] = w(w[A3 + 0]);
+            A3 = A3 + 4;
+            A2 = A2 + 1;
+        }
+    }
+    else
+    {
+        [8006b4c8 + queue_id * 60] = w(data);
+    }
+
+    [8006b4c4 + queue_id * 60] = w(func);
+    [8006b4cc + queue_id * 60] = w(src);
+    [80056074] = w((queue_id + 1) & 3f);
+
+    // restore interrupt
+    A0 = w[8005607c];
+    system_set_interrupt_mask_register();
+
+    system_gpu_render_queue_item_exec();
+
+    return (w[80056074] - w[80056078]) & 3f; // queue items left
 }
-
-A0 = A2 << 2;
-A1 = w[A3 + 0];
-A3 = A3 + 4;
-V1 = w[80056074];
-A2 = A2 + 1;
-A0 = A0 + V1 * 60 + T0;
-[A0 + 0000] = w(A1);
-V0 = S1;
-800466BC	j      L46674 [$80046674]
-
-L4670c:	; 8004670C
-V1 = w[80056074];
-[8006b4c8 + V1 * 60] = w(S0);
-
-L46730:	; 80046730
-V1 = w[80056074];
-[8006b4cc + V1 * 60] = w(S2);
-[8006b4c4 + V1 * 60] = w(S3);
-[80056074] = w((w[80056074] + 1) & 3f);
-
-A0 = w[8005607c];
-system_set_interrupt_mask_register();
-
-800467A0	jal    func467e4 [$800467e4]
-
-return (w[80056074] - w[80056078]) & 3f;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func467e4()
+// system_gpu_render_queue_item_exec()
 
 gpu10a8 = w[80056050]; // 1f8010A8 DMA2 channel control- GPU (lists + image data)
 gpu1814 = w[80056044]; // 1f801814
 
-if( w[gpu10a8] & 01000000 )
+if( w[gpu10a8] & 01000000 ) // if DMA2 already enabled
 {
     return 1;
 }
 
+// disable interrupts
 A0 = 0;
 system_set_interrupt_mask_register();
 [80056080] = w(V0);
 
-while( ( w[80056074] != w[80056078] ) && ( ( w[gpu10a8] & 01000000 ) == 0 ) )
+// while render queue not empty and dma2 not enabled
+while( ( w[80056078] != w[80056074] ) && ( ( w[gpu10a8] & 01000000 ) == 0 ) )
 {
+    // if next render queue item exist
     if( ( (w[80056078] + 1) & 3f ) == w[80056074] )
     {
+        // if draw sync callback not exist remove existed
         if( w[80055f7c] == 0 )
         {
             A0 = 2; // slot
@@ -3136,28 +3084,28 @@ while( ( w[80056074] != w[80056078] ) && ( ( w[gpu10a8] & 01000000 ) == 0 ) )
         }
     }
 
-    while( ( w[gpu1814] & 04000000 ) == 0 )
+    while( ( w[gpu1814] & 04000000 ) == 0 ) // wait till GPU ready to receive Cmd Word
     {
     }
 
-    V1 = w[80056078];
-    A0 = w[8006b4c8 + V1 * 60];
-    A1 = w[8006b4cc + V1 * 60];
-    80046938	jalr   w[8006b4c4 + V1 * 60] ra
+    queue_id = w[80056078];
+    A0 = w[8006b4c8 + queue_id * 60];
+    A1 = w[8006b4cc + queue_id * 60];
+    80046938	jalr   w[8006b4c4 + queue_id * 60] ra
 
-    V1 = w[80056078];
-    [80056064] = w(w[8006b4c4 + V1 * 60]);
-    [80056068] = w(w[8006b4c8 + V1 * 60]);
-    [8005606c] = w(w[8006b4cc + V1 * 60]);
-    [80056078] = w((w[80056078] + 1) & 003f);
+    [80056064] = w(w[8006b4c4 + queue_id * 60]);
+    [80056068] = w(w[8006b4c8 + queue_id * 60]);
+    [8005606c] = w(w[8006b4cc + queue_id * 60]);
+    [80056078] = w((queue_id + 1) & 3f);
 }
 
+// restore interrupt
 A0 = w[80056080];
 system_set_interrupt_mask_register();
 
 if( w[80056074] == w[80056078] )
 {
-    if( ( w[gpu10a8] & 01000000 ) == 0 )
+    if( ( w[gpu10a8] & 01000000 ) == 0 ) // if DMA2 not enabled
     {
         if( w[80055f78] != 0 )
         {
@@ -3170,7 +3118,7 @@ if( w[80056074] == w[80056078] )
     }
 }
 
-return (w[80056074] - w[80056078]) & 3f;
+return (w[80056074] - w[80056078]) & 3f; // queue items left
 ////////////////////////////////
 
 
@@ -3188,9 +3136,8 @@ A0 = 0; // disable all interrupts
 system_set_interrupt_mask_register();
 [80056084] = w(V0); // store prev
 
+[80056074] = w(0);
 [80056078] = w(0);
-
-[80056074] = w(w[80056078]);
 
 V1 = mode & 7;
 
@@ -3252,11 +3199,11 @@ gpu1814 = w[80056044]; // 1f801814
 
 if( A0 != 0 )
 {
-    S0 = (w[80056074] - w[80056078]) & 3f;
+    S0 = (w[80056074] - w[80056078]) & 3f; // queue items left
 
     if( S0 != 0 )
     {
-        func467e4();
+        system_gpu_render_queue_item_exec();
     }
 
     if( ( w[gpu10a8] & 01000000 ) == 0 )
@@ -3275,12 +3222,12 @@ if( A0 != 0 )
 
 }
 
-func46d74();
+func46d74(); // wait
 
 80046C44	j      L46c64 [$80046c64]
 
 L46c4c:	; 80046C4C
-80046C4C	jal    func467e4 [$800467e4]
+system_gpu_render_queue_item_exec();
 
 system_gpu_dma_timeout_check();
 
@@ -3351,7 +3298,7 @@ if( w[80056088] >= V0 )
 }
 
 A0 = 800192d4; // "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x,"
-A1 = (w[80056074] - w[80056078]) & 3f;
+A1 = (w[80056074] - w[80056078]) & 3f; // queue items left
 A2 = w[gpu1814];
 A3 = w[gpu10a8];
 A4 = w[gpu10a0];
@@ -3480,133 +3427,76 @@ A2 = 80059a24; // prim addr
 A3 = 80059a1c; // vert addr
 A4 = 80059a20; // norm addr
 func474b0();
+
 [80059a28] = w(V0); // number of primitives
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func470e4
+// func470e4()
 
-S0 = A0;
-A0 = w[80059a24];
-A1 = S0;
+dst = A0;
+
+A0 = w[80059a24]; // prim addr
+A1 = dst;
 func47648();
 
-A2 = V0;
-80047108	bltz   a2, L4737c [$8004737c]
-V0 = 0;
-A1 = w[80059a1c];
-A0 = w[80059a20];
+size = V0;
 
-V0 = hu[S0 + 70];
-[S0 + 64] = w(A0);
-[S0 + 40] = h(hu[A0 + V0 * 8 + 0]);
-[S0 + 42] = h(hu[A0 + V0 * 8 + 2]);
-[S0 + 44] = h(hu[A0 + V0 * 8 + 4]);
-V0 = hu[S0 + 72];
-[S0 + 48] = h(hu[A0 + V0 * 8 + 0]);
-[S0 + 4a] = h(hu[A0 + V0 * 8 + 2]);
-[S0 + 4c] = h(hu[A0 + V0 * 8 + 4]);
-V0 = hu[S0 + 74];
-[S0 + 50] = h(hu[A0 + V0 * 8 + 0]);
-[S0 + 52] = h(hu[A0 + V0 * 8 + 2]);
-[S0 + 54] = h(hu[A0 + V0 * 8 + 4]);
+if( size < 0 )
+{
+    return 0;
+}
 
-V1 = hu[S0 + 0076];
-V1 = V1 << 03;
-V1 = V1 + A0;
-V1 = hu[V1 + 0000];
-[80059a24] = w(w[80059a24] + A2);
-[S0 + 0058] = h(V1);
+A1 = w[80059a1c]; // vert addr
+A0 = w[80059a20]; // norm addr
 
-V0 = hu[S0 + 0076];
-V0 = V0 << 03;
-V0 = V0 + A0;
-V1 = hu[V0 + 0002];
-V0 = hu[S0 + 0076];
-8004723C	nop
-V0 = V0 << 03;
-V0 = V0 + A0;
-[S0 + 005a] = h(V1);
-V1 = hu[V0 + 0004];
-V0 = hu[S0 + 0068];
-80047254	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 005c] = h(V1);
-V1 = hu[V0 + 0000];
-V0 = hu[S0 + 0068];
-8004726C	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 0020] = h(V1);
-V1 = hu[V0 + 0002];
-V0 = hu[S0 + 0068];
-80047284	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 0022] = h(V1);
-V1 = hu[V0 + 0004];
-V0 = hu[S0 + 006a];
-8004729C	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 0024] = h(V1);
-V1 = hu[V0 + 0000];
-V0 = hu[S0 + 006a];
-800472B4	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 0028] = h(V1);
-V1 = hu[V0 + 0002];
-V0 = hu[S0 + 006a];
-800472CC	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 002a] = h(V1);
-V1 = hu[V0 + 0004];
-V0 = hu[S0 + 006c];
-800472E4	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 002c] = h(V1);
-V1 = hu[V0 + 0000];
-V0 = hu[S0 + 006c];
-800472FC	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 0030] = h(V1);
-V1 = hu[V0 + 0002];
-V0 = hu[S0 + 006c];
-80047314	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 0032] = h(V1);
-V1 = hu[V0 + 0004];
-V0 = hu[S0 + 006e];
-8004732C	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 0034] = h(V1);
-V0 = hu[V0 + 0000];
-80047340	nop
-[S0 + 0038] = h(V0);
-V0 = hu[S0 + 006e];
-8004734C	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-V1 = hu[V0 + 0002];
-V0 = hu[S0 + 006e];
-80047360	nop
-V0 = V0 << 03;
-V0 = V0 + A1;
-[S0 + 003a] = h(V1);
-V1 = hu[V0 + 0004];
-V0 = S0;
-[V0 + 003c] = h(V1);
+V0 = hu[dst + 70];
+[dst + 64] = w(A0);
+[dst + 40] = h(hu[A0 + V0 * 8 + 0]);
+[dst + 42] = h(hu[A0 + V0 * 8 + 2]);
+[dst + 44] = h(hu[A0 + V0 * 8 + 4]);
 
-L4737c:	; 8004737C
+V0 = hu[dst + 72];
+[dst + 48] = h(hu[A0 + V0 * 8 + 0]);
+[dst + 4a] = h(hu[A0 + V0 * 8 + 2]);
+[dst + 4c] = h(hu[A0 + V0 * 8 + 4]);
+
+V0 = hu[dst + 74];
+[dst + 50] = h(hu[A0 + V0 * 8 + 0]);
+[dst + 52] = h(hu[A0 + V0 * 8 + 2]);
+[dst + 54] = h(hu[A0 + V0 * 8 + 4]);
+
+V0 = hu[dst + 76];
+[dst + 58] = h(hu[A0 + V0 * 8 + 0]);
+[dst + 5a] = h(hu[A0 + V0 * 8 + 2]);
+[dst + 5c] = h(hu[A0 + V0 * 8 + 4]);
+
+V0 = hu[dst + 68];
+[dst + 20] = h(hu[A1 + V0 * 8 + 0]);
+[dst + 22] = h(hu[A1 + V0 * 8 + 2]);
+[dst + 24] = h(hu[A1 + V0 * 8 + 4]);
+
+V0 = hu[dst + 6a];
+[dst + 28] = h(hu[A1 + V0 * 8 + 0]);
+[dst + 2a] = h(hu[A1 + V0 * 8 + 2]);
+[dst + 2c] = h(hu[A1 + V0 * 8 + 4]);
+
+V0 = hu[dst + 6с];
+[dst + 30] = h(hu[A1 + V0 * 8 + 0]);
+[dst + 32] = h(hu[A1 + V0 * 8 + 2]);
+[dst + 34] = h(hu[A1 + V0 * 8 + 4]);
+
+V0 = hu[dst + 6e];
+[dst + 38] = h(hu[A1 + V0 * 8 + 0]);
+[dst + 3a] = h(hu[A1 + V0 * 8 + 2]);
+[dst + 3c] = h(hu[A1 + V0 * 8 + 4]);
+
+// go to next primitive
+[80059a24] = w(w[80059a24] + size);
+
+return dst;
 ////////////////////////////////
 
 
@@ -3713,17 +3603,17 @@ return w[S0 + c + S1 * 1c + 14]; // nprim
 ////////////////////////////////
 // func47648()
 
-S0 = A0;
-S1 = A1;
+data = A0;
+dst = A1;
 
-A0 = S1;
-A1 = 0;
-A2 = 78;
-80047668	jal    func48928 [$80048928]
+A0 = dst; // ptr
+A1 = 0; // val
+A2 = 78; // size
+system_graphic_fill_buffer();
 
-V0 = w[S0 + 0];
-V1 = V0 & fdffffff;
-[S1 + 0] = w(V0);
+[dst + 0] = w(w[data + 0]);
+
+V1 = w[data + 0] & fdffffff;
 
 if( ( V1 == 20020304 ) || ( V1 == 20000304 ) )
 {
@@ -3735,11 +3625,11 @@ if( ( V1 == 20020304 ) || ( V1 == 20000304 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 4]); [S1 +  5] = b(bu[S0 + 5]); [S1 +  6] = b(bu[S0 + 6]);
-    [S1 +  8] = b(bu[S0 + 4]); [S1 +  9] = b(bu[S0 + 5]); [S1 +  a] = b(bu[S0 + 6]);
-    [S1 +  c] = b(bu[S0 + 4]); [S1 +  d] = b(bu[S0 + 5]); [S1 +  e] = b(bu[S0 + 6]);
-    [S1 + 68] = h(hu[S0 + a]); [S1 + 6a] = h(hu[S0 + c]); [S1 + 6c] = h(hu[S0 + e]);
-    [S1 + 70] = h(hu[S0 + 8]); [S1 + 72] = h(hu[S0 + 8]); [S1 + 74] = h(hu[S0 + 8]);
+    [dst +  4] = b(bu[data + 4]); [dst +  5] = b(bu[data + 5]); [dst +  6] = b(bu[data + 6]);
+    [dst +  8] = b(bu[data + 4]); [dst +  9] = b(bu[data + 5]); [dst +  a] = b(bu[data + 6]);
+    [dst +  c] = b(bu[data + 4]); [dst +  d] = b(bu[data + 5]); [dst +  e] = b(bu[data + 6]);
+    [dst + 68] = h(hu[data + a]); [dst + 6a] = h(hu[data + c]); [dst + 6c] = h(hu[data + e]);
+    [dst + 70] = h(hu[data + 8]); [dst + 72] = h(hu[data + 8]); [dst + 74] = h(hu[data + 8]);
 
     return 10;
 }
@@ -3753,10 +3643,10 @@ if( ( V1 == 21030304 ) || ( V1 == 21010304 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 4]); [S1 +  5] = b(bu[S0 + 5]); [S1 +  6] = b(bu[S0 + 6]);
-    [S1 +  8] = b(bu[S0 + 4]); [S1 +  9] = b(bu[S0 + 5]); [S1 +  a] = b(bu[S0 + 6]);
-    [S1 +  c] = b(bu[S0 + 4]); [S1 +  d] = b(bu[S0 + 5]); [S1 +  e] = b(bu[S0 + 6]);
-    [S1 + 68] = h(hu[S0 + 8]); [S1 + 6a] = h(hu[S0 + a]); [S1 + 6c] = h(hu[S0 + c]);
+    [dst +  4] = b(bu[data + 4]); [dst +  5] = b(bu[data + 5]); [dst +  6] = b(bu[data + 6]);
+    [dst +  8] = b(bu[data + 4]); [dst +  9] = b(bu[data + 5]); [dst +  a] = b(bu[data + 6]);
+    [dst +  c] = b(bu[data + 4]); [dst +  d] = b(bu[data + 5]); [dst +  e] = b(bu[data + 6]);
+    [dst + 68] = h(hu[data + 8]); [dst + 6a] = h(hu[data + a]); [dst + 6c] = h(hu[data + c]);
 
     return 10;
 }
@@ -3770,11 +3660,11 @@ if( ( V1 == 24020507 ) || ( V1 == 24000507 ) )
         system_bios_printf();
     }
 
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]);
-    [S1 + 1b] = b(bu[S0 +  9]); [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]);
-    [S1 + 68] = h(hu[S0 + 12]); [S1 + 6a] = h(hu[S0 + 14]); [S1 + 6c] = h(hu[S0 + 16]);
-    [S1 + 70] = h(hu[S0 + 10]); [S1 + 72] = h(hu[S0 + 10]); [S1 + 74] = h(hu[S0 + 10]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]);
+    [dst + 1b] = b(bu[data +  9]); [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]);
+    [dst + 68] = h(hu[data + 12]); [dst + 6a] = h(hu[data + 14]); [dst + 6c] = h(hu[data + 16]);
+    [dst + 70] = h(hu[data + 10]); [dst + 72] = h(hu[data + 10]); [dst + 74] = h(hu[data + 10]);
 
     return 18;
 }
@@ -3788,13 +3678,13 @@ if( ( V1 == 25030607 ) || ( V1 == 25010607 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 10]); [S1 +  5] = b(bu[S0 + 11]); [S1 +  6] = b(bu[S0 + 12]);
-    [S1 +  8] = b(bu[S0 + 10]); [S1 +  9] = b(bu[S0 + 11]); [S1 +  a] = b(bu[S0 + 12]);
-    [S1 +  c] = b(bu[S0 + 10]); [S1 +  d] = b(bu[S0 + 11]); [S1 +  e] = b(bu[S0 + 12]);
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]);
-    [S1 + 1b] = b(bu[S0 +  9]); [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]);
-    [S1 + 68] = h(hu[S0 + 14]); [S1 + 6a] = h(hu[S0 + 16]); [S1 + 6c] = h(hu[S0 + 18]);
+    [dst +  4] = b(bu[data + 10]); [dst +  5] = b(bu[data + 11]); [dst +  6] = b(bu[data + 12]);
+    [dst +  8] = b(bu[data + 10]); [dst +  9] = b(bu[data + 11]); [dst +  a] = b(bu[data + 12]);
+    [dst +  c] = b(bu[data + 10]); [dst +  d] = b(bu[data + 11]); [dst +  e] = b(bu[data + 12]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]);
+    [dst + 1b] = b(bu[data +  9]); [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]);
+    [dst + 68] = h(hu[data + 14]); [dst + 6a] = h(hu[data + 16]); [dst + 6c] = h(hu[data + 18]);
 
     return 1c;
 }
@@ -3808,12 +3698,12 @@ if( ( V1 == 28020405 ) || ( V1 == 28000405 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 4]); [S1 +  5] = b(bu[S0 + 5]); [S1 +  6] = b(bu[S0 + 6]);
-    [S1 +  8] = b(bu[S0 + 4]); [S1 +  9] = b(bu[S0 + 5]); [S1 +  a] = b(bu[S0 + 6]);
-    [S1 +  c] = b(bu[S0 + 4]); [S1 +  d] = b(bu[S0 + 5]); [S1 +  e] = b(bu[S0 + 6]);
-    [S1 + 10] = b(bu[S0 + 4]); [S1 + 11] = b(bu[S0 + 5]); [S1 + 12] = b(bu[S0 + 6]);
-    [S1 + 68] = h(hu[S0 + a]); [S1 + 6a] = h(hu[S0 + c]); [S1 + 6c] = h(hu[S0 + e]); [S1 + 6e] = h(hu[S0 + 10]);
-    [S1 + 70] = h(hu[S0 + 8]); [S1 + 72] = h(hu[S0 + 8]); [S1 + 74] = h(hu[S0 + 8]); [S1 + 76] = h(hu[S0 + 8]);
+    [dst +  4] = b(bu[data + 4]); [dst +  5] = b(bu[data + 5]); [dst +  6] = b(bu[data + 6]);
+    [dst +  8] = b(bu[data + 4]); [dst +  9] = b(bu[data + 5]); [dst +  a] = b(bu[data + 6]);
+    [dst +  c] = b(bu[data + 4]); [dst +  d] = b(bu[data + 5]); [dst +  e] = b(bu[data + 6]);
+    [dst + 10] = b(bu[data + 4]); [dst + 11] = b(bu[data + 5]); [dst + 12] = b(bu[data + 6]);
+    [dst + 68] = h(hu[data + a]); [dst + 6a] = h(hu[data + c]); [dst + 6c] = h(hu[data + e]); [dst + 6e] = h(hu[data + 10]);
+    [dst + 70] = h(hu[data + 8]); [dst + 72] = h(hu[data + 8]); [dst + 74] = h(hu[data + 8]); [dst + 76] = h(hu[data + 8]);
 
     return 14;
 }
@@ -3827,11 +3717,11 @@ if( ( V1 == 29030305 ) || ( V1 == 29010305 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 4]); [S1 +  5] = b(bu[S0 + 5]); [S1 +  6] = b(bu[S0 + 6]);
-    [S1 +  8] = b(bu[S0 + 4]); [S1 +  9] = b(bu[S0 + 5]); [S1 +  a] = b(bu[S0 + 6]);
-    [S1 +  c] = b(bu[S0 + 4]); [S1 +  d] = b(bu[S0 + 5]); [S1 +  e] = b(bu[S0 + 6]);
-    [S1 + 10] = b(bu[S0 + 4]); [S1 + 11] = b(bu[S0 + 5]); [S1 + 12] = b(bu[S0 + 6]);
-    [S1 + 68] = h(hu[S0 + 8]); [S1 + 6a] = h(hu[S0 + a]); [S1 + 6c] = h(hu[S0 + c]); [S1 + 6e] = h(hu[S0 + e]);
+    [dst +  4] = b(bu[data + 4]); [dst +  5] = b(bu[data + 5]); [dst +  6] = b(bu[data + 6]);
+    [dst +  8] = b(bu[data + 4]); [dst +  9] = b(bu[data + 5]); [dst +  a] = b(bu[data + 6]);
+    [dst +  c] = b(bu[data + 4]); [dst +  d] = b(bu[data + 5]); [dst +  e] = b(bu[data + 6]);
+    [dst + 10] = b(bu[data + 4]); [dst + 11] = b(bu[data + 5]); [dst + 12] = b(bu[data + 6]);
+    [dst + 68] = h(hu[data + 8]); [dst + 6a] = h(hu[data + a]); [dst + 6c] = h(hu[data + c]); [dst + 6e] = h(hu[data + e]);
 
     return 10;
 }
@@ -3845,11 +3735,11 @@ if( ( V1 == 2c020709 ) || ( V1 == 2c000709 ) )
         system_bios_printf();
     }
 
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]); [S1 + 1b] = b(bu[S0 +  9]);
-    [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]); [S1 + 1e] = b(bu[S0 + 10]); [S1 + 1f] = b(bu[S0 + 11]);
-    [S1 + 68] = h(hu[S0 + 16]); [S1 + 6a] = h(hu[S0 + 18]); [S1 + 6c] = h(hu[S0 + 1a]); [S1 + 6e] = h(hu[S0 + 1c]);
-    [S1 + 70] = h(hu[S0 + 14]); [S1 + 72] = h(hu[S0 + 14]); [S1 + 74] = h(hu[S0 + 14]); [S1 + 76] = h(hu[S0 + 14]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]); [dst + 1b] = b(bu[data +  9]);
+    [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]); [dst + 1e] = b(bu[data + 10]); [dst + 1f] = b(bu[data + 11]);
+    [dst + 68] = h(hu[data + 16]); [dst + 6a] = h(hu[data + 18]); [dst + 6c] = h(hu[data + 1a]); [dst + 6e] = h(hu[data + 1c]);
+    [dst + 70] = h(hu[data + 14]); [dst + 72] = h(hu[data + 14]); [dst + 74] = h(hu[data + 14]); [dst + 76] = h(hu[data + 14]);
 
     return 20;
 }
@@ -3863,14 +3753,14 @@ if( ( V1 == 2d030709 ) || ( V1 == 2d010709 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 14]); [S1 +  5] = b(bu[S0 + 15]); [S1 +  6] = b(bu[S0 + 16]);
-    [S1 +  8] = b(bu[S0 + 14]); [S1 +  9] = b(bu[S0 + 15]); [S1 +  a] = b(bu[S0 + 16]);
-    [S1 +  c] = b(bu[S0 + 14]); [S1 +  d] = b(bu[S0 + 15]); [S1 +  e] = b(bu[S0 + 16]);
-    [S1 + 10] = b(bu[S0 + 14]); [S1 + 11] = b(bu[S0 + 15]); [S1 + 12] = b(bu[S0 + 16]);
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]); [S1 + 1b] = b(bu[S0 +  9]);
-    [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]); [S1 + 1e] = b(bu[S0 + 10]); [S1 + 1f] = b(bu[S0 + 11]);
-    [S1 + 68] = h(hu[S0 + 18]); [S1 + 6a] = h(hu[S0 + 1a]); [S1 + 6c] = h(hu[S0 + 1c]); [S1 + 6e] = h(hu[S0 + 1e]);
+    [dst +  4] = b(bu[data + 14]); [dst +  5] = b(bu[data + 15]); [dst +  6] = b(bu[data + 16]);
+    [dst +  8] = b(bu[data + 14]); [dst +  9] = b(bu[data + 15]); [dst +  a] = b(bu[data + 16]);
+    [dst +  c] = b(bu[data + 14]); [dst +  d] = b(bu[data + 15]); [dst +  e] = b(bu[data + 16]);
+    [dst + 10] = b(bu[data + 14]); [dst + 11] = b(bu[data + 15]); [dst + 12] = b(bu[data + 16]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]); [dst + 1b] = b(bu[data +  9]);
+    [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]); [dst + 1e] = b(bu[data + 10]); [dst + 1f] = b(bu[data + 11]);
+    [dst + 68] = h(hu[data + 18]); [dst + 6a] = h(hu[data + 1a]); [dst + 6c] = h(hu[data + 1c]); [dst + 6e] = h(hu[data + 1e]);
 
     return 20;
 
@@ -3885,11 +3775,11 @@ if( ( V1 == 30020406 ) || ( V1 == 30000406 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 4]); [S1 +  5] = b(bu[S0 + 5]); [S1 +  6] = b(bu[S0 +  6]);
-    [S1 +  8] = b(bu[S0 + 4]); [S1 +  9] = b(bu[S0 + 5]); [S1 +  a] = b(bu[S0 +  6]);
-    [S1 +  c] = b(bu[S0 + 4]); [S1 +  d] = b(bu[S0 + 5]); [S1 +  e] = b(bu[S0 +  6]);
-    [S1 + 68] = h(hu[S0 + a]); [S1 + 6a] = h(hu[S0 + e]); [S1 + 6c] = h(hu[S0 + 12]);
-    [S1 + 70] = h(hu[S0 + 8]); [S1 + 72] = h(hu[S0 + c]); [S1 + 74] = h(hu[S0 + 10]);
+    [dst +  4] = b(bu[data + 4]); [dst +  5] = b(bu[data + 5]); [dst +  6] = b(bu[data +  6]);
+    [dst +  8] = b(bu[data + 4]); [dst +  9] = b(bu[data + 5]); [dst +  a] = b(bu[data +  6]);
+    [dst +  c] = b(bu[data + 4]); [dst +  d] = b(bu[data + 5]); [dst +  e] = b(bu[data +  6]);
+    [dst + 68] = h(hu[data + a]); [dst + 6a] = h(hu[data + e]); [dst + 6c] = h(hu[data + 12]);
+    [dst + 70] = h(hu[data + 8]); [dst + 72] = h(hu[data + c]); [dst + 74] = h(hu[data + 10]);
 
     return 14;
 }
@@ -3903,10 +3793,10 @@ if( ( V1 == 31030506 ) || ( V1 == 31010506 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 +  4]); [S1 +  5] = b(bu[S0 +  5]); [S1 +  6] = b(bu[S0 +  6]);
-    [S1 +  8] = b(bu[S0 +  8]); [S1 +  9] = b(bu[S0 +  9]); [S1 +  a] = b(bu[S0 +  a]);
-    [S1 +  c] = b(bu[S0 +  c]); [S1 +  d] = b(bu[S0 +  d]); [S1 +  e] = b(bu[S0 +  e]);
-    [S1 + 68] = h(hu[S0 + 10]); [S1 + 6a] = h(hu[S0 + 12]); [S1 + 6c] = h(hu[S0 + 14]);
+    [dst +  4] = b(bu[data +  4]); [dst +  5] = b(bu[data +  5]); [dst +  6] = b(bu[data +  6]);
+    [dst +  8] = b(bu[data +  8]); [dst +  9] = b(bu[data +  9]); [dst +  a] = b(bu[data +  a]);
+    [dst +  c] = b(bu[data +  c]); [dst +  d] = b(bu[data +  d]); [dst +  e] = b(bu[data +  e]);
+    [dst + 68] = h(hu[data + 10]); [dst + 6a] = h(hu[data + 12]); [dst + 6c] = h(hu[data + 14]);
 
     return 18;
 }
@@ -3920,11 +3810,11 @@ if( ( V1 == 34020609 ) || ( V1 == 34000609 ) )
         system_bios_printf();
     }
 
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]);
-    [S1 + 1b] = b(bu[S0 +  9]); [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]);
-    [S1 + 68] = h(hu[S0 + 12]); [S1 + 6a] = h(hu[S0 + 16]); [S1 + 6c] = h(hu[S0 + 1a]);
-    [S1 + 70] = h(hu[S0 + 10]); [S1 + 72] = h(hu[S0 + 14]); [S1 + 74] = h(hu[S0 + 18]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]);
+    [dst + 1b] = b(bu[data +  9]); [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]);
+    [dst + 68] = h(hu[data + 12]); [dst + 6a] = h(hu[data + 16]); [dst + 6c] = h(hu[data + 1a]);
+    [dst + 70] = h(hu[data + 10]); [dst + 72] = h(hu[data + 14]); [dst + 74] = h(hu[data + 18]);
 
     return 1c;
 }
@@ -3938,13 +3828,13 @@ if( ( V1 == 35030809 ) || ( V1 == 35010809 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 10]); [S1 +  5] = b(bu[S0 + 11]); [S1 +  6] = b(bu[S0 + 12]);
-    [S1 +  8] = b(bu[S0 + 14]); [S1 +  9] = b(bu[S0 + 15]); [S1 +  a] = b(bu[S0 + 16]);
-    [S1 +  c] = b(bu[S0 + 18]); [S1 +  d] = b(bu[S0 + 19]); [S1 +  e] = b(bu[S0 + 1a]);
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]);
-    [S1 + 1b] = b(bu[S0 +  9]); [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]);
-    [S1 + 68] = h(hu[S0 + 1c]); [S1 + 6a] = h(hu[S0 + 1e]); [S1 + 6c] = h(hu[S0 + 20]);
+    [dst +  4] = b(bu[data + 10]); [dst +  5] = b(bu[data + 11]); [dst +  6] = b(bu[data + 12]);
+    [dst +  8] = b(bu[data + 14]); [dst +  9] = b(bu[data + 15]); [dst +  a] = b(bu[data + 16]);
+    [dst +  c] = b(bu[data + 18]); [dst +  d] = b(bu[data + 19]); [dst +  e] = b(bu[data + 1a]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]);
+    [dst + 1b] = b(bu[data +  9]); [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]);
+    [dst + 68] = h(hu[data + 1c]); [dst + 6a] = h(hu[data + 1e]); [dst + 6c] = h(hu[data + 20]);
     return 24;
 }
 if( ( V1 == 38020508 ) || ( V1 == 38000508 ) )
@@ -3957,12 +3847,12 @@ if( ( V1 == 38020508 ) || ( V1 == 38000508 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 4]); [S1 +  5] = b(bu[S0 + 5]); [S1 +  6] = b(bu[S0 + 6]);
-    [S1 +  8] = b(bu[S0 + 4]); [S1 +  9] = b(bu[S0 + 5]); [S1 +  a] = b(bu[S0 + 6]);
-    [S1 +  c] = b(bu[S0 + 4]); [S1 +  d] = b(bu[S0 + 5]); [S1 +  e] = b(bu[S0 + 6]);
-    [S1 + 10] = b(bu[S0 + 4]); [S1 + 11] = b(bu[S0 + 5]); [S1 + 12] = b(bu[S0 + 6]);
-    [S1 + 68] = h(hu[S0 + a]); [S1 + 6a] = h(hu[S0 + e]); [S1 + 6c] = h(hu[S0 + 12]); [S1 + 6e] = h(hu[S0 + 16]);
-    [S1 + 70] = h(hu[S0 + 8]); [S1 + 72] = h(hu[S0 + c]); [S1 + 74] = h(hu[S0 + 10]); [S1 + 76] = h(hu[S0 + 14]);
+    [dst +  4] = b(bu[data + 4]); [dst +  5] = b(bu[data + 5]); [dst +  6] = b(bu[data + 6]);
+    [dst +  8] = b(bu[data + 4]); [dst +  9] = b(bu[data + 5]); [dst +  a] = b(bu[data + 6]);
+    [dst +  c] = b(bu[data + 4]); [dst +  d] = b(bu[data + 5]); [dst +  e] = b(bu[data + 6]);
+    [dst + 10] = b(bu[data + 4]); [dst + 11] = b(bu[data + 5]); [dst + 12] = b(bu[data + 6]);
+    [dst + 68] = h(hu[data + a]); [dst + 6a] = h(hu[data + e]); [dst + 6c] = h(hu[data + 12]); [dst + 6e] = h(hu[data + 16]);
+    [dst + 70] = h(hu[data + 8]); [dst + 72] = h(hu[data + c]); [dst + 74] = h(hu[data + 10]); [dst + 76] = h(hu[data + 14]);
 
     return 18;
 }
@@ -3976,11 +3866,11 @@ if( ( V1 == 39030608 ) || ( V1 == 39010608 ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 +  4]); [S1 +  5] = b(bu[S0 +  5]); [S1 +  6] = b(bu[S0 +  6]);
-    [S1 +  8] = b(bu[S0 +  8]); [S1 +  9] = b(bu[S0 +  9]); [S1 +  a] = b(bu[S0 +  a]);
-    [S1 +  c] = b(bu[S0 +  c]); [S1 +  d] = b(bu[S0 +  d]); [S1 +  e] = b(bu[S0 +  e]);
-    [S1 + 10] = b(bu[S0 + 10]); [S1 + 11] = b(bu[S0 + 11]); [S1 + 12] = b(bu[S0 + 12]);
-    [S1 + 68] = h(hu[S0 + 14]); [S1 + 6a] = h(hu[S0 + 16]); [S1 + 6c] = h(hu[S0 + 18]); [S1 + 6e] = h(hu[S0 + 1a]);
+    [dst +  4] = b(bu[data +  4]); [dst +  5] = b(bu[data +  5]); [dst +  6] = b(bu[data +  6]);
+    [dst +  8] = b(bu[data +  8]); [dst +  9] = b(bu[data +  9]); [dst +  a] = b(bu[data +  a]);
+    [dst +  c] = b(bu[data +  c]); [dst +  d] = b(bu[data +  d]); [dst +  e] = b(bu[data +  e]);
+    [dst + 10] = b(bu[data + 10]); [dst + 11] = b(bu[data + 11]); [dst + 12] = b(bu[data + 12]);
+    [dst + 68] = h(hu[data + 14]); [dst + 6a] = h(hu[data + 16]); [dst + 6c] = h(hu[data + 18]); [dst + 6e] = h(hu[data + 1a]);
 
     return 1c;
 }
@@ -3994,11 +3884,11 @@ if( ( V1 == 3c02080c ) || ( V1 == 3c00080c ) )
         system_bios_printf();
     }
 
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]); [S1 + 1b] = b(bu[S0 +  9]);
-    [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]); [S1 + 1e] = b(bu[S0 + 10]); [S1 + 1f] = b(bu[S0 + 11]);
-    [S1 + 68] = h(hu[S0 + 16]); [S1 + 6a] = h(hu[S0 + 1a]); [S1 + 6c] = h(hu[S0 + 1e]); [S1 + 6e] = h(hu[S0 + 22]);
-    [S1 + 70] = h(hu[S0 + 14]); [S1 + 72] = h(hu[S0 + 18]); [S1 + 74] = h(hu[S0 + 1c]); [S1 + 76] = h(hu[S0 + 20]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]); [dst + 1b] = b(bu[data +  9]);
+    [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]); [dst + 1e] = b(bu[data + 10]); [dst + 1f] = b(bu[data + 11]);
+    [dst + 68] = h(hu[data + 16]); [dst + 6a] = h(hu[data + 1a]); [dst + 6c] = h(hu[data + 1e]); [dst + 6e] = h(hu[data + 22]);
+    [dst + 70] = h(hu[data + 14]); [dst + 72] = h(hu[data + 18]); [dst + 74] = h(hu[data + 1c]); [dst + 76] = h(hu[data + 20]);
 
     return 24;
 }
@@ -4012,21 +3902,92 @@ if( ( V1 == 3d010a0c ) || ( V1 == 3d030a0c ) )
         system_bios_printf();
     }
 
-    [S1 +  4] = b(bu[S0 + 14]); [S1 +  5] = b(bu[S0 + 15]); [S1 +  6] = b(bu[S0 + 16]);
-    [S1 +  8] = b(bu[S0 + 18]); [S1 +  9] = b(bu[S0 + 19]); [S1 +  a] = b(bu[S0 + 1a]);
-    [S1 +  c] = b(bu[S0 + 1c]); [S1 +  d] = b(bu[S0 + 1d]); [S1 +  e] = b(bu[S0 + 1e]);
-    [S1 + 10] = b(bu[S0 + 20]); [S1 + 11] = b(bu[S0 + 21]); [S1 + 12] = b(bu[S0 + 22]);
-    [S1 + 14] = h(hu[S0 +  a]); [S1 + 16] = h(hu[S0 +  6]);
-    [S1 + 18] = b(bu[S0 +  4]); [S1 + 19] = b(bu[S0 +  5]); [S1 + 1a] = b(bu[S0 +  8]); [S1 + 1b] = b(bu[S0 +  9]);
-    [S1 + 1c] = b(bu[S0 +  c]); [S1 + 1d] = b(bu[S0 +  d]); [S1 + 1e] = b(bu[S0 + 10]); [S1 + 1f] = b(bu[S0 + 11]);
-    [S1 + 68] = h(hu[S0 + 24]); [S1 + 6a] = h(hu[S0 + 26]); [S1 + 6c] = h(hu[S0 + 28]); [S1 + 6e] = h(hu[S0 + 2a]);
+    [dst +  4] = b(bu[data + 14]); [dst +  5] = b(bu[data + 15]); [dst +  6] = b(bu[data + 16]);
+    [dst +  8] = b(bu[data + 18]); [dst +  9] = b(bu[data + 19]); [dst +  a] = b(bu[data + 1a]);
+    [dst +  c] = b(bu[data + 1c]); [dst +  d] = b(bu[data + 1d]); [dst +  e] = b(bu[data + 1e]);
+    [dst + 10] = b(bu[data + 20]); [dst + 11] = b(bu[data + 21]); [dst + 12] = b(bu[data + 22]);
+    [dst + 14] = h(hu[data +  a]); [dst + 16] = h(hu[data +  6]);
+    [dst + 18] = b(bu[data +  4]); [dst + 19] = b(bu[data +  5]); [dst + 1a] = b(bu[data +  8]); [dst + 1b] = b(bu[data +  9]);
+    [dst + 1c] = b(bu[data +  c]); [dst + 1d] = b(bu[data +  d]); [dst + 1e] = b(bu[data + 10]); [dst + 1f] = b(bu[data + 11]);
+    [dst + 68] = h(hu[data + 24]); [dst + 6a] = h(hu[data + 26]); [dst + 6c] = h(hu[data + 28]); [dst + 6e] = h(hu[data + 2a]);
 
     return 2c;
 }
 
 A0 = 8001943c; // "unsupported type (%08x)"
-A1 = w[S1 + 0] & fdffffff;
+A1 = w[dst + 0] & fdffffff;
 system_bios_printf();
 
 return -1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_graphic_fill_buffer()
+
+dst = A0;
+val = A1;
+size = A2;
+
+if( ( dst != 0 ) || ( size <= 0 ) )
+{
+    return 0;
+}
+
+V0 = dst;
+
+while( size > 0 )
+{
+    [dst] = b(val);
+    size = size - 1;
+    dst = dst + 1;
+}
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func48958
+
+A3 = A1 - A0;
+V0 = A3 < 0064;
+80048968	bne    v0, zero, L48a50 [$80048a50]
+
+V0 = 0 - A0;
+80048974	mult   v0, a1
+80048978	mflo   v0
+8004897C	nop
+80048980	nop
+80048984	div    v0, a3
+800489AC	mflo   v0
+V1 = A1 << 0c;
+800489B4	nop
+800489B8	div    v1, a3
+800489E0	mflo   v1
+V0 = V0 << 08;
+800489E8	nop
+800489EC	div    v0, a2
+80048A14	mflo   a0
+80048A18	nop
+V0 = A0 < 8000;
+80048A20	beq    v0, zero, L48a2c [$80048a2c]
+S0 = V1 << 0c;
+80048A28	addiu  a0, zero, $8000 (=-$8000)
+
+L48a2c:	; 80048A2C
+V0 = 7fff;
+V0 = V0 < A0;
+80048A34	beq    v0, zero, L48a40 [$80048a40]
+80048A38	nop
+A0 = 7fff;
+
+L48a40:	; 80048A40
+80048A40	jal    func49f4c [$80049f4c]
+80048A44	nop
+80048A48	jal    func49f58 [$80049f58]
+A0 = S0;
+
+L48a50:	; 80048A50
 ////////////////////////////////

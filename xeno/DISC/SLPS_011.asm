@@ -12715,7 +12715,7 @@ func40824:	; 80040824
 // system_draw_sync
 80044448-800444B0
 ////////////////////////////////
-// func444b4
+// system_graphic_debug_print_rect
 800444B4-800445D8
 ////////////////////////////////
 // system_clear_image
@@ -12808,13 +12808,13 @@ func40824:	; 80040824
 // func45bd4
 80045BD4-80045CB8
 ////////////////////////////////
-// func45cbc
+// system_gpu_clear_image_transfer_func
 80045CBC-80045F14
 ////////////////////////////////
-// func45f18
+// system_gpu_load_image_transfer_func
 80045F18-80046150
 ////////////////////////////////
-// func46154
+// system_gpu_store_image_transfer_func
 80046154-800463D4
 ////////////////////////////////
 // func463d8
@@ -12826,7 +12826,7 @@ func40824:	; 80040824
 // func46414
 80046414-80046460
 ////////////////////////////////
-// func46464
+// system_gpu_start_dma_to_gpu
 80046464-800464AC
 ////////////////////////////////
 // system_get_gpu_info
@@ -12835,10 +12835,10 @@ func40824:	; 80040824
 // func464e0
 800464E0-80046500
 ////////////////////////////////
-// func46504
+// system_gpu_render_queue_item_add_and_exec
 80046504-800467E0
 ////////////////////////////////
-// func467e4
+// system_gpu_render_queue_item_exec
 800467E4-80046ACC
 ////////////////////////////////
 // func46ad0
@@ -12883,112 +12883,14 @@ func40824:	; 80040824
 // func47648
 80047648-80048924
 ////////////////////////////////
+// system_graphic_fill_buffer
+80048928-80048954
+////////////////////////////////
+// func48958
+80048958-80048A60
+////////////////////////////////
 
 
-
-func48928:	; 80048928
-80048928	beq    a0, zero, L48950 [$80048950]
-8004892C	addu   v0, zero, zero
-80048930	bgtz   a2, L48940 [$80048940]
-80048934	addu   v0, a0, zero
-80048938	j      L48950 [$80048950]
-8004893C	addu   v0, zero, zero
-
-L48940:	; 80048940
-80048940	sb     a1, $0000(a0)
-80048944	addiu  a2, a2, $ffff (=-$1)
-80048948	bgtz   a2, L48940 [$80048940]
-8004894C	addiu  a0, a0, $0001
-
-L48950:	; 80048950
-80048950	jr     ra 
-80048954	nop
-
-80048958	addiu  sp, sp, $ffe8 (=-$18)
-8004895C	subu   a3, a1, a0
-80048960	slti   v0, a3, $0064
-80048964	sw     ra, $0014(sp)
-80048968	bne    v0, zero, L48a50 [$80048a50]
-8004896C	sw     s0, $0010(sp)
-80048970	subu   v0, zero, a0
-80048974	mult   v0, a1
-80048978	mflo   v0
-8004897C	nop
-80048980	nop
-80048984	div    v0, a3
-80048988	bne    a3, zero, L48994 [$80048994]
-8004898C	nop
-80048990	break   $01c00
-
-L48994:	; 80048994
-80048994	addiu  at, zero, $ffff (=-$1)
-80048998	bne    a3, at, L489ac [$800489ac]
-8004899C	lui    at, $8000
-800489A0	bne    v0, at, L489ac [$800489ac]
-800489A4	nop
-800489A8	break   $01800
-
-L489ac:	; 800489AC
-800489AC	mflo   v0
-800489B0	sll    v1, a1, $0c
-800489B4	nop
-800489B8	div    v1, a3
-800489BC	bne    a3, zero, L489c8 [$800489c8]
-800489C0	nop
-800489C4	break   $01c00
-
-L489c8:	; 800489C8
-800489C8	addiu  at, zero, $ffff (=-$1)
-800489CC	bne    a3, at, L489e0 [$800489e0]
-800489D0	lui    at, $8000
-800489D4	bne    v1, at, L489e0 [$800489e0]
-800489D8	nop
-800489DC	break   $01800
-
-L489e0:	; 800489E0
-800489E0	mflo   v1
-800489E4	sll    v0, v0, $08
-800489E8	nop
-800489EC	div    v0, a2
-800489F0	bne    a2, zero, L489fc [$800489fc]
-800489F4	nop
-800489F8	break   $01c00
-
-L489fc:	; 800489FC
-800489FC	addiu  at, zero, $ffff (=-$1)
-80048A00	bne    a2, at, L48a14 [$80048a14]
-80048A04	lui    at, $8000
-80048A08	bne    v0, at, L48a14 [$80048a14]
-80048A0C	nop
-80048A10	break   $01800
-
-L48a14:	; 80048A14
-80048A14	mflo   a0
-80048A18	nop
-80048A1C	slti   v0, a0, $8000 (=-$8000)
-80048A20	beq    v0, zero, L48a2c [$80048a2c]
-80048A24	sll    s0, v1, $0c
-80048A28	addiu  a0, zero, $8000 (=-$8000)
-
-L48a2c:	; 80048A2C
-80048A2C	addiu  v0, zero, $7fff
-80048A30	slt    v0, v0, a0
-80048A34	beq    v0, zero, L48a40 [$80048a40]
-80048A38	nop
-80048A3C	addiu  a0, zero, $7fff
-
-L48a40:	; 80048A40
-80048A40	jal    func49f4c [$80049f4c]
-80048A44	nop
-80048A48	jal    func49f58 [$80049f58]
-80048A4C	addu   a0, s0, zero
-
-L48a50:	; 80048A50
-80048A50	lw     ra, $0014(sp)
-80048A54	lw     s0, $0010(sp)
-80048A58	addiu  sp, sp, $0018
-80048A5C	jr     ra 
-80048A60	nop
 
 80048A64	bne    t0, t1, $800657a8
 80048A68	00409F9C	œŸ@.
