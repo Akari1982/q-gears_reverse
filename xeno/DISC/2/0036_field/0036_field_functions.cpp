@@ -1212,7 +1212,7 @@ system_graphic_get_texpage_by_param();
 8007D58C	addu   a2, zero, zero
 8007D590	andi   a3, v0, $ffff
 8007D598	sw     s0, $0010(sp)
-func45354(); // set e1 e1 render settings
+system_gpu_create_texture_setting_packet();
 
 8007D59C	addu   a0, zero, zero
 8007D5A0	addu   a1, zero, zero
@@ -1225,7 +1225,7 @@ system_graphic_get_texpage_by_param();
 8007D5B8	addu   a2, zero, zero
 8007D5BC	andi   a3, v0, $ffff
 8007D5C4	sw     s0, $0010(sp)
-func45354(); // set e1 e1 render settings
+system_gpu_create_texture_setting_packet();
 
 8007D5C8	addiu  s5, s5, $000c
 8007D5CC	addiu  s4, s4, $000c
@@ -1287,7 +1287,7 @@ system_graphic_get_texpage_by_param();
 8007D6A0	addu   a2, zero, zero
 8007D6A4	andi   a3, v0, $ffff
 8007D6AC	sw     s6, $0010(sp)
-func45354(); // set e1 e1 render settings
+system_gpu_create_texture_setting_packet();
 
 8007D6B0	addu   a0, zero, zero
 8007D6B4	addu   a1, zero, zero
@@ -1300,7 +1300,7 @@ system_graphic_get_texpage_by_param();
 8007D6CC	addu   a2, zero, zero
 8007D6D0	andi   a3, v0, $ffff
 8007D6D8	sw     s6, $0010(sp)
-func45354(); // set e1 e1 render settings
+system_gpu_create_texture_setting_packet();
 
 8007D6DC	addiu  s5, s5, $0498
 8007D6E0	addiu  s3, s3, $0498
@@ -1531,7 +1531,7 @@ La5ba0:	; 800A5BA0
     800A5CA8	andi   a3, v0, $ffff
     800A5CAC	sw     s0, $0010(sp)
     800A5CB4	addu   a0, v1, a0
-    func45354(); // set e1 e1 render settings
+    system_gpu_create_texture_setting_packet();
 
     800A5CB8	ori    a0, zero, $0002
     800A5CBC	addu   a2, s5, zero
@@ -1544,7 +1544,7 @@ La5ba0:	; 800A5BA0
     800A5CD4	lw     a0, $0028(sp)
     800A5CD8	andi   a3, v0, $ffff
     800A5CE0	sw     s1, $0010(sp)
-    func45354(); // set e1 e1 render settings
+    system_gpu_create_texture_setting_packet();
 
     800A5CE4	addu   a0, s3, zero
     800A5CE8	lw     a1, $0018(sp)

@@ -57,10 +57,10 @@ A2 = 0;
 A3 = 0;
 system_clear_image();
 
-A0 = 0;
+A0 = 0; // sync
 system_draw_sync();
 
-A0 = 1;
+A0 = 1; // display on screen
 system_psyq_set_disp_mask();
 
 func48a6c(); // init gte and patch exception handler.

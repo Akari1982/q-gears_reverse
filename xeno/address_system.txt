@@ -108,7 +108,7 @@
 
 8004f8a4 [][][][] init with 1. Buttons related.
 8004f8a8 [][][][] init with 0. Buttons related.
-8004f8ac [][][][] init with 0. Buttons related.
+8004f8ac [][][][] init with 0. Set to 1 if button buffer is overflow.
 
 8004f8d0 [][][][] timer for repeated buttons for controller 1 (80058b40).
 8004f8d4 [][][][] timer for repeated buttons for controller 2 (80058b44).
@@ -170,6 +170,7 @@
                     2 - disabled textures old gpu.
                     3 - enabled textures new gpu.
                     4 - disabled textures new gpu.
+80055f71 []       init with 1.
 80055f72 []       graph debug level.
                     0 No checks are performed. (Highest speed mode)
                     1 Checks coordinating registered and drawn primitives.
@@ -180,7 +181,11 @@
 80055f78 [][][][] set draw flag to call draw sync callback when necessary.
 80055f7c [][][][] draw sync callback pointer.
 
+80055f80 draw enviroment (0x5c size).
+80055fdc display enviroment (0x14 size).
+
 80056018-80056028 MoveImage gpu packet static memory.
+8005602c some default otag.
 
 80056064 [][][][] current render queue transfer func.
 80056068 [][][][] current render queue otag ptr.
@@ -189,6 +194,9 @@
 80056074 [][][][] index into render queue to insert.
 80056078 [][][][] index into render queue to render 8006b4c4 8006b4c8 8006b4cc.
 80056080 [][][][] store prev value of 1f801074 interrupt mask register here.
+
+80056088 [][][][] store here current number of frames + 0xf0.
+8005608c [][][][] init with 0.
 
 800560a0 square root data (0x2 each). 12bit fixed point.
 
@@ -388,7 +396,7 @@
 
 80058b14 [][][][] number of initing channels.
 
-80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40.
+80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40. Increment every frame.
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
 80058b2c [][]     mask of buttons that was pressed in last update for controller 2 (details in 80058c0c).
 
@@ -506,6 +514,13 @@
 8005977a [][]     store -1 here when translate number to letters for text.
 80059780 temp array with letters generated from numbers to insert number in text (in usual text format).
 
+800597b8 array for pressed buttons controller 2 (0x10 item 0x2 size).
+800597d8 array for pressed in last update controller 1 (0x10 item 0x2 size).
+800597f8 array for pressed in last update controller 2 (0x10 item 0x2 size).
+80059818 array for repeated buttons controller 1 (0x10 item 0x2 size).
+80059798 array for pressed buttons controller 1 (0x10 item 0x2 size).
+80059838 array for repeated buttons controller 2 (0x10 item 0x2 size).
+
 8005989c [][][][] init with 0.
 800598a0 [][][][] init with callback to 8004085c.
 800598a4 [][][][] init with callback to 800408c4.
@@ -515,6 +530,8 @@
 800598bc array of stored cdl command response fifo (0x1 size 0x8 items).
 
 800598d4-80059904 temp for DMA2 transfer
+
+80059918 some gpu mem set (0x100 size).
 
 80059a5c [][][][] init with 0xc.
     +00 [][][][] flags.
@@ -784,7 +801,7 @@
         +0f6 [][]     init with 0.
         // some additional data related with bu[smd + 15]
 
-Render queue of 0x40 structs with size 0x60.
+8006b4c4 render queue of 0x40 structs with size 0x60.
 8006b4c4 [][][][] pointer to transfer func.
 8006b4c8 [][][][] otag ptr.
 8006b4cc [][][][] data src (data to transfer).

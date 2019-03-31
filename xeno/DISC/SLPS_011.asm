@@ -3083,7 +3083,7 @@ L2691c:	; 8002691C
 80026958	andi   a3, v0, $ffff
 8002695C	sw     zero, $0010(sp)
 80026960	addu   v1, t0, v1
-80026964	jal    func45354 [$80045354]
+80026964	jal    system_gpu_create_texture_setting_packet [$80045354]
 80026968	addu   a0, v1, a0
 8002696C	lh     v0, $0000(s3)
 80026970	nop
@@ -3489,7 +3489,7 @@ system_memory_set_alloc_user();
 80026F14	addu   s4, v0, zero
 80026F18	beq    s4, zero, L271a0 [$800271a0]
 80026F1C	addu   v0, zero, zero
-80026F20	jal    func44cdc [$80044cdc]
+80026F20	jal    system_psyq_get_draw_env [$80044cdc]
 80026F24	addiu  a0, sp, $0010
 80026F28	sw     s7, $0328(s4)
 80026F2C	sw     fp, $032c(s4)
@@ -9738,55 +9738,14 @@ L33ad8:	; 80033AD8
 800361EC	jr     ra 
 800361F0	nop
 
-800361F4	lui    v0, $8006
-800361F8	lw     v0, $8b24(v0)
-800361FC	addiu  sp, sp, $ffc0 (=-$40)
-80036200	sw     ra, $0038(sp)
-80036204	addiu  v0, v0, $0001
-80036208	lui    at, $8006
-8003620C	sw     v0, $8b24(at)
-80036210	jal    func35788 [$80035788]
-80036214	nop
-80036218	jal    func35ab8 [$80035ab8]
-8003621C	nop
-80036220	jal    func35d18 [$80035d18]
-80036224	nop
-80036228	jal    func360f4 [$800360f4]
-8003622C	nop
-80036230	lui    v0, $8005
-80036234	lw     v0, $f8a0(v0)
-80036238	nop
-8003623C	beq    v0, zero, L3624c [$8003624c]
-80036240	nop
-80036244	jalr   v0 ra
-80036248	nop
-
-L3624c:	; 8003624C
-8003624C	lui    v1, $8001
-80036250	lw     v1, $0000(v1)
-80036254	addiu  v0, zero, $ffff (=-$1)
-80036258	beq    v1, v0, L36278 [$80036278]
-8003625C	nop
-80036260	lui    v0, $8006
-80036264	lw     v0, $8a2c(v0)
-80036268	nop
-8003626C	beq    v0, zero, L36278 [$80036278]
-80036270	nop
-80036274	break   $00400
-
-L36278:	; 80036278
-80036278	lw     ra, $0038(sp)
-8003627C	addiu  sp, sp, $0040
-80036280	jr     ra 
-80036284	nop
-
-80036288	lui    at, $8006
-8003628C	sw     a0, $8a2c(at)
-80036290	jr     ra 
-80036294	nop
 
 
-
+////////////////////////////////
+// func361f4()
+800361F4-80036284
+////////////////////////////////
+// func36288
+80036288-80036294
 ////////////////////////////////
 // func36298
 80036298-800362A4
@@ -12577,10 +12536,10 @@ func40824:	; 80040824
 // func438d0
 800438D0-800438E4
 ////////////////////////////////
-// func438e8
+// system_gpu_print_tpage_info
 800438E8-80043944
 ////////////////////////////////
-// func43948
+// system_gpu_print_clut_info
 80043948-80043984
 ////////////////////////////////
 // func43988
@@ -12682,10 +12641,10 @@ func40824:	; 80040824
 // func43d90
 80043D90-80043DC4
 ////////////////////////////////
-// func43dc8
+// system_gpu_print_draw_enviroment_info
 80043DC8-80043ED8
 ////////////////////////////////
-// func43edc
+// system_gpu_print_display_enviroment_info
 80043EDC-80043F84
 ////////////////////////////////
 // system_psyq_reset_graph
@@ -12733,7 +12692,7 @@ func40824:	; 80040824
 // system_move_image
 800447D4-80044894
 ////////////////////////////////
-// func44898
+// system_clear_otag
 80044898-8004494C
 ////////////////////////////////
 // system_clear_otagr
@@ -12751,58 +12710,58 @@ func40824:	; 80040824
 // system_psyq_draw_otag_env
 80044BC0-80044CD8
 ////////////////////////////////
-// func44cdc
+// system_psyq_get_draw_env
 80044CDC-80044D10
 ////////////////////////////////
 // system_psyq_put_disp_env
 80044D14-800451B8
 ////////////////////////////////
-// func451bc
+// system_psyq_get_disp_env
 800451BC-800451F0
 ////////////////////////////////
-// func451f4
+// system_gpu_get_odd_even_line
 800451F4-80045220
 ////////////////////////////////
-// func45224
+// system_gpu_create_texture_window_setting_packet
 80045224-8004525C
 ////////////////////////////////
-// func45260
+// system_gpu_create_set_drawing_area_packet
 80045260-800452E0
 ////////////////////////////////
-// func452e4
+// system_gpu_create_set_drawing_offset_packet
 800452E4-80045324
 ////////////////////////////////
-// func45328
+// system_gpu_create_mask_bit_setting_packet
 80045328-80045350
 ////////////////////////////////
-// func45354
+// system_gpu_create_texture_setting_packet
 80045354-800453A8
 ////////////////////////////////
 // func453ac
 800453AC-800455C0
 ////////////////////////////////
-// func455c4
+// system_gpu_create_set_draw_env_packet
 800455C4-80045850
 ////////////////////////////////
-// func45854
+// system_gpu_get_draw_mode_setting_command
 80045854-800458A8
 ////////////////////////////////
-// func458ac
+// system_gpu_get_set_drawing_area_tl_command
 800458AC-80045974
 ////////////////////////////////
-// func45978
+// system_gpu_get_set_drawing_area_br_command
 80045978-80045A40
 ////////////////////////////////
-// func45a44
+// system_gpu_get_set_drawing_offset_command
 80045A44-80045A84
 ////////////////////////////////
-// func45a88
+// system_gpu_get_texture_window_setting_command
 80045A88-80045B08
 ////////////////////////////////
 // func45b0c
 80045B0C-80045BB8
 ////////////////////////////////
-// func45bbc
+// system_gpu_get_gpu_stat
 80045BBC-80045BD0
 ////////////////////////////////
 // func45bd4
@@ -12844,10 +12803,10 @@ func40824:	; 80040824
 // func46ad0
 80046AD0-80046C28
 ////////////////////////////////
-// func46c2c
+// system_gpu_draw_sync_internal
 80046C2C-80046D70
 ////////////////////////////////
-// func46d74
+// system_gpu_dma_timeout_init
 80046D74-80046DA4
 ////////////////////////////////
 // system_gpu_dma_timeout_check

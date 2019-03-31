@@ -83,7 +83,7 @@ system_load_image();
 
 A0 = S0;
 A1 = S1;
-80043714	jal    func438d0 [$800438d0]
+func438d0();
 
 return V0 & ffff;
 ////////////////////////////////
@@ -92,33 +92,25 @@ return V0 & ffff;
 
 ////////////////////////////////
 // func43738
-80043738	addiu  sp, sp, $ffd8 (=-$28)
+
 V0 = A0;
-[SP + 0018] = w(S0);
 S0 = A1;
-[SP + 001c] = w(S1);
 S1 = A2;
-A0 = SP + 0010;
-A1 = V0;
-V0 = 0010;
-[SP + 0014] = h(V0);
-V0 = 0001;
-[SP + 0020] = w(RA);
+
 [SP + 0010] = h(S0);
 [SP + 0012] = h(S1);
-[SP + 0016] = h(V0);
+[SP + 0014] = h(10);
+[SP + 0016] = h(1);
+
+A0 = SP + 10;
+A1 = V0;
 system_load_image();
 
 A0 = S0;
-8004377C	jal    func438d0 [$800438d0]
 A1 = S1;
-V0 = V0 & ffff;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-80043798	jr     ra 
-8004379C	nop
+func438d0();
+
+return V0 & ffff;
 ////////////////////////////////
 
 
@@ -209,70 +201,47 @@ return ((A1 << 6) | ((A0 >> 4) & 3f)) & ffff;
 
 
 ////////////////////////////////
-// func438e8
+// system_gpu_print_tpage_info()
 
-A3 = A0 & ffff;
-V1 = A3 << 04;
-V1 = V1 & 0100;
-V0 = A3 >> 02;
-V0 = V0 & 0200;
-V1 = V1 + V0;
-A1 = A3 >> 07;
-A2 = A3 >> 05;
-A3 = A3 << 06;
-A0 = 8001901c;
-A1 = A1 & 0003;
-A2 = A2 & 0003;
-V0 = w[80055f6c];
-A3 = A3 & 07c0;
-[SP + 0010] = w(V1);
-80043930	jalr   v0 ra
+tpage = A0 & ffff;
+
+A0 = 8001901c; // "tpage: (%d,%d,%d,%d)\n"
+A1 = (tpage >> 7) & 3;
+A2 = (tpage >> 5) & 3;
+A3 = (tpage << 6) & 7c0;
+A4 = ((tpage << 4) & 100) + ((tpage >> 2) & 200);
+80043930	jalr   w[80055f6c] ra // system_bios_printf()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43948
-80043948	addiu  sp, sp, $ffe8 (=-$18)
-A2 = A0;
-A1 = A2 & 003f;
-A2 = A2 & ffff;
-A0 = 80019034;
-A1 = A1 << 04;
-V0 = w[80055f6c];
-[SP + 0010] = w(RA);
-80043970	jalr   v0 ra
-A2 = A2 >> 06;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80043980	jr     ra 
-80043984	nop
+// system_gpu_print_clut_info()
+
+clut = A0;
+
+A0 = 80019034; // "clut: (%d,%d)\n"
+A1 = (clut & 3f) << 4;
+A2 = (clut & ffff) >> 6;
+80043970	jalr   w[80055f6c] ra // system_bios_printf()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func43988
-80043988	lui    v1, $00ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-80043998	lui    v1, $8000
-8004399C	jr     ra 
-V0 = V0 | V1;
+
+return 80000000 | (w[A0 + 0000] & 00ffffff);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func439a4
-800439A4	lui    v1, $00ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-V0 = V0 ^ V1;
-800439B8	jr     ra 
-V0 = V0 < 0001;
+
+V0 = w[A0] & 00ffffff;
+V0 = V0 ^ 00ffffff;
+return V0 < 0001;
 ////////////////////////////////
 
 
@@ -292,7 +261,6 @@ V0 = w[A0 + 0000];
 A1 = A1 & A2;
 V0 = V0 & A3;
 V0 = V0 | A1;
-800439F4	jr     ra 
 [A0 + 0000] = w(V0);
 ////////////////////////////////
 
@@ -688,9 +656,10 @@ V0 = A0 + V0;
 
 ////////////////////////////////
 // func43d90
+
 V0 = bu[A0 + 0003];
 V1 = bu[A1 + 0003];
-80043D98	nop
+
 V0 = V0 + V1;
 V1 = V0 + 0001;
 V0 = V1 < 0011;
@@ -704,112 +673,78 @@ L43dbc:	; 80043DBC
 80043DBC	addiu  v0, zero, $ffff (=-$1)
 
 L43dc0:	; 80043DC0
-80043DC0	jr     ra 
-80043DC4	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43dc8
-80043DC8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
+// system_gpu_print_draw_enviroment_info()
+
 S0 = A0;
-[SP + 001c] = w(RA);
-A1 = h[S0 + 0000];
-A2 = h[S0 + 0002];
-A3 = h[S0 + 0004];
-V0 = h[S0 + 0006];
-V1 = w[80055f6c];
-A0 = 80019044;
-80043DF8	jalr   v1 ra
-[SP + 0010] = w(V0);
-A1 = h[S0 + 0008];
-A2 = h[S0 + 000a];
-V0 = w[80055f6c];
-A0 = 8001905c;
-80043E18	jalr   v0 ra
-80043E1C	nop
-A1 = h[S0 + 000c];
-A2 = h[S0 + 000e];
-A3 = h[S0 + 0010];
-V0 = h[S0 + 0012];
-V1 = w[80055f6c];
-A0 = 8001906c;
-80043E40	jalr   v1 ra
-[SP + 0010] = w(V0);
+
+A0 = 80019044; // "clip (%3d,%3d)-(%d,%d)\n"
+A1 = h[S0 + 0];
+A2 = h[S0 + 2];
+A3 = h[S0 + 4];
+A4 = h[S0 + 6];
+80043DF8	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 8001905c; // "ofs  (%3d,%3d)\n"
+A1 = h[S0 + 8];
+A2 = h[S0 + a];
+80043E18	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 8001906c; // "tw   (%d,%d)-(%d,%d)\n"
+A1 = h[S0 + c];
+A2 = h[S0 + e];
+A3 = h[S0 + 10];
+A4 = h[S0 + 12];
+80043E40	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 80019084; // "dtd   %d\n"
 A1 = bu[S0 + 0016];
-V0 = w[80055f6c];
-A0 = 80019084;
-80043E5C	jalr   v0 ra
-80043E60	nop
+80043E5C	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 80019090; // "dfe   %d\n"
 A1 = bu[S0 + 0017];
-V0 = w[80055f6c];
-A0 = 80019090;
-80043E78	jalr   v0 ra
-80043E7C	nop
-A0 = 8001901c;
-V0 = hu[S0 + 0014];
-T0 = w[80055f6c];
-A1 = V0 >> 07;
-A1 = A1 & 0003;
-A2 = V0 >> 05;
-A2 = A2 & 0003;
-A3 = V0 << 06;
-A3 = A3 & 07c0;
-V1 = V0 << 04;
-V1 = V1 & 0100;
-V0 = V0 >> 02;
-V0 = V0 & 0200;
-V1 = V1 + V0;
-80043EC0	jalr   t0 ra
-[SP + 0010] = w(V1);
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-80043ED4	jr     ra 
-80043ED8	nop
+80043E78	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 8001901c; // "tpage: (%d,%d,%d,%d)\n"
+A1 = (hu[S0 + 14] >> 7) & 3;
+A2 = (hu[S0 + 14] >> 5) & 3;
+A3 = (hu[S0 + 14] << 6) & 7c0;
+A4 = ((hu[S0 + 14] << 4) & 100) + ((hu[S0 + 14] >> 2) & 200);
+80043EC0	jalr   w[80055f6c] ra // system_bios_printf()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43edc
-80043EDC	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
+// system_gpu_print_display_enviroment_info()
+
 S0 = A0;
-[SP + 001c] = w(RA);
-A1 = h[S0 + 0000];
-A2 = h[S0 + 0002];
-A3 = h[S0 + 0004];
-V0 = h[S0 + 0006];
-V1 = w[80055f6c];
-A0 = 8001909c;
-80043F0C	jalr   v1 ra
-[SP + 0010] = w(V0);
-A1 = h[S0 + 0008];
-A2 = h[S0 + 000a];
-A3 = h[S0 + 000c];
-V0 = h[S0 + 000e];
-V1 = w[80055f6c];
-A0 = 800190b8;
-80043F34	jalr   v1 ra
-[SP + 0010] = w(V0);
-A1 = bu[S0 + 0010];
-V0 = w[80055f6c];
-A0 = 800190d4;
-80043F50	jalr   v0 ra
-80043F54	nop
-A1 = bu[S0 + 0011];
-V0 = w[80055f6c];
-A0 = 800190e0;
-80043F6C	jalr   v0 ra
-80043F70	nop
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-80043F80	jr     ra 
-80043F84	nop
+
+A0 = 8001909c; // "disp   (%3d,%3d)-(%d,%d)\n"
+A1 = h[S0 + 0];
+A2 = h[S0 + 2];
+A3 = h[S0 + 4];
+A4 = h[S0 + 6];
+80043F0C	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 800190b8; // "screen (%3d,%3d)-(%d,%d)\n"
+A1 = h[S0 + 8];
+A2 = h[S0 + a];
+A3 = h[S0 + c];
+A4 = h[S0 + e];
+80043F34	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 800190d4; // "isinter %d\n"
+A1 = bu[S0 + 10];
+80043F50	jalr   w[80055f6c] ra // system_bios_printf()
+
+A0 = 800190e0; // "isrgb24 %d\n"
+A1 = bu[S0 + 11];
+80043F6C	jalr   w[80055f6c] ra // system_bios_printf()
 ////////////////////////////////
 
 
@@ -853,8 +788,8 @@ if(  mode == 0 || mode == 3 || mode == 5 )
 
     [80055f70] = b(V0); // gpu mode
     [80055f71] = b(1);
-    [80055f74] = h(w[80055ff0 + V0 * 4]);
-    [80055f76] = h(w[80056004 + V0 * 4]);
+    [80055f74] = h(w[80055ff0 + V0 * 4]); // max load image width (old 400,400,400, new 400, new disabled tex 400)
+    [80055f76] = h(w[80056004 + V0 * 4]); // max load image height (old 200,400,400, new 200, new disabled tex 400)
 
     A0 = 80055f80;
     A1 = -1;
@@ -1100,7 +1035,7 @@ if( bu[80055f72] >= 2 )
 
 A0 = mode;
 V0 = w[80055f68];
-80044498	jalr   w[V0 + 3c] ra // func46c2c()
+80044498	jalr   w[V0 + 3c] ra // system_gpu_draw_sync_internal()
 ////////////////////////////////
 
 
@@ -1284,29 +1219,31 @@ return -1;
 
 
 ////////////////////////////////
-// func44898()
+// system_clear_otag()
 
-S0 = A0;
-S1 = A1;
+ot_ptr = A0;
+number = A1;
 
 if( bu[80055f72] >= 2 )
 {
     A0 = 80019244; // "ClearOTag(%08x,%d)..."
-    A1 = S0;
-    A2 = S1;
+    A1 = ot_ptr;
+    A2 = number;
     800448D4	jalr   w[80055f6c] ra // system_bios_printf()
 }
 
-while( S1 != 1 )
+A0 = ot_ptr
+while( number != 1 )
 {
-    [S0 + 3] = b(0);
-    [S0] = w((w[S0] & ff000000) | ((S0 + 4) & 00ffffff));
-    S0 = S0 + 4;
-    S1 = S1 - 1;
+    [A0 + 3] = b(0);
+    [A0] = w((w[A0] & ff000000) | ((A0 + 4) & 00ffffff));
+    A0 = A0 + 4;
+    number = number - 1;
 }
 
-[S0] = w(0005602c);
-return S0;
+[ot_ptr] = w(0005602c);
+
+return ot_ptr;
 ////////////////////////////////
 
 
@@ -1326,12 +1263,12 @@ if( bu[80055f72] >= 2 )
     80044990	jalr   w[80055f6c] ra // system_bios_printf()
 }
 
+V0 = w[80055f68];
 A0 = ot_ptr;
 A1 = number;
-V0 = w[80055f68];
 800449AC	jalr   w[V0 + 2c] ra // func45bd4 clear OTagR
 
-[V0] = w(0005602c);
+[ot_ptr] = w(0005602c);
 
 return ot_ptr;
 ////////////////////////////////
@@ -1344,9 +1281,9 @@ return ot_ptr;
 S0 = A0; // ot ptr
 S1 = bu[S0 + 3]; // size
 
-A0 = 0;
+A0 = 0; // wait until all draw operations finished
 V0 = w[80055f68];
-80044A0C	jalr   w[V0 + 3c] ra // func46c2c wait for draw sync
+80044A0C	jalr   w[V0 + 3c] ra // system_gpu_draw_sync_internal()
 
 A0 = S0 + 4; // src for GP0 commands
 A1 = S1; // size
@@ -1398,9 +1335,10 @@ if( bu[80055f72] >= 2 )
 }
 
 S0 = env + 1c;
+
 A0 = S0;
 A1 = env;
-80044B10	jal    func455c4 [$800455c4]
+system_gpu_create_set_draw_env_packet();
 
 [env + 1c] = w(w[env + 1c] | 00ffffff);
 
@@ -1437,33 +1375,34 @@ return S1;
 // system_psyq_draw_otag_env()
 
 S2 = A0;
-S1 = A1;
+env = A1;
 
 if( bu[80055f72] >= 2 )
 {
     A0 = 800192a0; // "DrawOTagEnv(%08x,&08x)..."
     A1 = S2;
     V0 = w[80055f6c];
-    A2 = S1;
+    A2 = env;
     80044C10	jalr   v0 ra
 }
 
-S0 = S1 + 1c;
-A0 = S0;
-A1 = S1;
-80044C20	jal    func455c4 [$800455c4]
+S0 = env + 1c;
 
-[S1 + 1c] = w((w[S1 + 1c] & ff000000) | (S2 & 00ffffff));
+A0 = S0;
+A1 = env;
+system_gpu_create_set_draw_env_packet();
+
+[env + 1c] = w((w[env + 1c] & ff000000) | (S2 & 00ffffff));
 
 V1 = w[80055f68];
-A0 = w[V1 + 18];
+A0 = w[V1 + 18]; // system_gpu_start_dma_to_gpu()
 A1 = S0;
 A2 = 40;
 A3 = 0;
-80044C64	jalr   w[V1 + 8] ra
+80044C64	jalr   w[V1 + 8] ra // system_gpu_render_queue_item_add_and_exec()
 
-A3 = 80055f72 + e;
-A2 = S1;
+A3 = 80055f80;
+A2 = env;
 T0 = A2 + 50;
 
 loop44c78:	; 80044C78
@@ -1484,12 +1423,12 @@ loop44c78:	; 80044C78
 
 
 ////////////////////////////////
-// func44cdc()
+// system_psyq_get_draw_env()
 
 S0 = A0;
 
 A1 = 80055f80;
-A2 = 005c;
+A2 = 5c;
 system_memcpy();
 
 return S0;
@@ -1500,22 +1439,19 @@ return S0;
 ////////////////////////////////
 // system_psyq_put_disp_env()
 
-V0 = bu[80055f72];
 S0 = A0;
-80044D2C	lui    s3, $0800
-V0 = V0 < 0002;
-80044D3C	bne    v0, zero, L44d60 [$80044d60]
+S3 = 08000000;
 
-A0 = 800192bc; // "PutDispEnv(%08x)..."
-V0 = w[80055f6c];
-80044D54	nop
-80044D58	jalr   v0 ra
-A1 = S0;
+if( bu[80055f72] >= 2 )
+{
+    A0 = 800192bc; // "PutDispEnv(%08x)..."
+    A1 = S0;
+    80044D58	jalr   w[80055f6c] ra
 
-L44d60:	; 80044D60
-V0 = bu[80055f70];
-80044D68	nop
-80044D6C	addiu  v0, v0, $ffff (=-$1)
+}
+
+V0 = bu[80055f70] - 1;
+
 V0 = V0 < 0002;
 80044D74	beq    v0, zero, L44da0 [$80044da0]
 80044D78	nop
@@ -1541,10 +1477,9 @@ V0 = V0 | V1;
 L44dbc:	; 80044DBC
 A0 = V0 | V1;
 V0 = w[80055f68];
-V0 = w[V0 + 0010]; // func463d8 send GP command
-80044DD0	nop
+V0 = w[V0 + 10]; // func463d8 send GP command
 80044DD4	jalr   v0 ra
-80044DD8	nop
+
 80044DDC	lui    v0, $8005
 V0 = V0 + 5fe4;
 V0 = hu[V0 + 0000];
@@ -1708,7 +1643,7 @@ A0 = V1 & 0fff;
 A1 = w[80055f68];
 A0 = A0 | V1;
 V1 = w[A1 + 0010]; // func463d8 send GP command
-80044FE0	nop
+
 80044FE4	jalr   v1 ra
 A0 = V0 | A0;
 V0 = S2 & 03ff;
@@ -1824,30 +1759,14 @@ S3 = S3 | 0024;
 
 L45168:	; 80045168
 V0 = w[80055f68];
-80045170	nop
-V0 = w[V0 + 0010]; // func463d8 send GP command
-80045178	nop
-8004517C	jalr   v0 ra
 A0 = S3;
+8004517C	jalr   w[V0 + 10] ra // func463d8 send GP command
+
 
 L45184:	; 80045184
-80045184	lui    a0, $8005
-A0 = A0 + 5fdc;
+A0 = 80055fdc;
 A1 = S0;
-80045190	jal    system_memcpy [$8003f810]
-A2 = 0014;
-V0 = S0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func451bc()
-
-S0 = A0;
-
-A1 = 80055fdc;
-A2 = 0014;
+A2 = 14;
 system_memcpy();
 
 return S0;
@@ -1856,90 +1775,110 @@ return S0;
 
 
 ////////////////////////////////
-// func451f4
+// system_psyq_get_disp_env()
+
+dst = A0;
+
+A0 = dst;
+A1 = 80055fdc; // src
+A2 = 14;
+system_memcpy();
+
+return dst;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gpu_get_odd_even_line()
 
 V0 = w[80055f68];
-V0 = w[V0 + 0038]; // func45bbc
+V0 = w[V0 + 38]; // system_gpu_get_gpu_stat()
 8004520C	jalr   v0 ra
 
-V0 = V0 >> 1f;
+// 31    Drawing even/odd lines in interlace mode (0=Even or Vblank, 1=Odd)
+// In 480-lines mode, bit31 changes per frame. And in 240-lines mode, the bit
+// changes per scanline. The bit is always zero during Vblank (vertical retrace
+// and upper/lower screen border).
+return V0 >> 1f;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45224
+// system_gpu_create_texture_window_setting_packet()
 
 S0 = A0;
-V0 = 0002;
+
 A0 = A1;
-[S0 + 0003] = b(V0);
-8004523C	jal    func45a88 [$80045a88]
+system_gpu_get_texture_window_setting_command();
 
-[S0 + 0004] = w(V0);
-[S0 + 0008] = w(0);
+[S0 + 3] = b(2);
+[S0 + 4] = w(V0);
+[S0 + 8] = w(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45260
+// system_gpu_create_set_drawing_area_packet()
 
 S1 = A0;
-S0 = A1;
-V0 = 0002;
-[S1 + 0003] = b(V0);
-A0 = h[S0 + 0000];
-A1 = h[S0 + 0002];
-80045288	jal    func458ac [$800458ac]
+rect = A1;
 
-[S1 + 0004] = w(V0);
-A0 = hu[S0 + 0000];
-V0 = hu[S0 + 0004];
-A1 = hu[S0 + 0002];
-A0 = A0 + V0;
-800452A4	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-V0 = hu[S0 + 0006];
-A0 = A0 >> 10;
-A1 = A1 + V0;
-800452B8	addiu  a1, a1, $ffff (=-$1)
-A1 = A1 << 10;
-800452C0	jal    func45978 [$80045978]
-A1 = A1 >> 10;
-[S1 + 0008] = w(V0);
+[S1 + 3] = b(2);
+
+A0 = h[rect + 0];
+A1 = h[rect + 2];
+system_gpu_get_set_drawing_area_tl_command();
+[S1 + 4] = w(V0);
+
+A0 = h[rect + 0] + h[rect + 4] - 1;
+A1 = h[rect + 2] + h[rect + 6] - 1;
+system_gpu_get_set_drawing_area_br_command();
+[S1 + 8] = w(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func452e4()
+// system_gpu_create_set_drawing_offset_packet()
 
 S0 = A0;
-[S0 + 0003] = b(2);
-A0 = h[A1 + 0000];
-A1 = h[A1 + 0002];
-80045304	jal    func45a44 [$80045a44]
 
-[S0 + 0004] = w(V0);
-[S0 + 0008] = w(0);
+A0 = h[A1 + 0]; // x offset
+A1 = h[A1 + 2]; // y offset
+system_gpu_get_set_drawing_offset_command();
+
+[S0 + 3] = b(2);
+[S0 + 4] = w(V0);
+[S0 + 8] = w(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45328()
+// system_gpu_create_mask_bit_setting_packet()
+// GP0(E6h) - Mask Bit Setting
+// When bit0 is off, the upper bit of the data written to the framebuffer is equal
+// to bit15 of the texture color (ie. it is set for colors that are marked as
+// "semi-transparent") (for untextured polygons, bit15 is set to zero).
+// When bit1 is on, any (old) pixels in the framebuffer with bit15=1 are
+// write-protected, and cannot be overwritten by (new) rendering commands.
+// The mask setting affects all rendering commands, as well as CPU-to-VRAM and
+// VRAM-to-VRAM transfer commands (where it acts on the separate halfwords, ie. as
+// for 15bit textures). However, Mask does NOT affect the Fill-VRAM command.
 
 V0 = e6000000;
 if( A1 != 0 )
 {
-    V0 = V0 | 00000002;
+    V0 = V0 | 00000002; // Check mask before draw (0=Draw Always, 1=Draw if Bit15=0) ;GPUSTAT.12
 }
 if( A2 != 0 )
 {
-    V0 = V0 | 00000001;
+    V0 = V0 | 00000001; // Set mask while drawing (0=TextureBit15, 1=ForceBit15=1)   ;GPUSTAT.11
 }
-[A0 + 3] = b(02);
+[A0 + 3] = b(2);
 [A0 + 4] = w(V0);
 [A0 + 8] = w(0);
 ////////////////////////////////
@@ -1948,7 +1887,8 @@ if( A2 != 0 )
 
 
 ////////////////////////////////
-// func45354()
+// system_gpu_create_texture_setting_packet()
+
 S0 = A0;
 S1 = A4;
 
@@ -1957,11 +1897,11 @@ S1 = A4;
 A0 = A1;
 A1 = A2;
 A2 = A3 & ffff; // tex page
-func45854(); // set md me dtd dfe
+system_gpu_get_draw_mode_setting_command(); // set md me dtd dfe
 [S0 + 4] = w(V0); // draw mode settings commend to GPU (e1)
 
 A0 = S1;
-func45a88();
+system_gpu_get_texture_window_setting_command();
 [S0 + 8] = w(V0); // texture window setting (e2)
 ////////////////////////////////
 
@@ -1972,63 +1912,48 @@ func45a88();
 
 S0 = A1;
 S1 = A0;
-A0 = h[S0 + 0000];
-A1 = h[S0 + 0002];
-800453CC	jal    func458ac [$800458ac]
-800453D0	nop
-[S1 + 0004] = w(V0);
-A0 = hu[S0 + 0004];
-V0 = hu[S0 + 0000];
-A1 = hu[S0 + 0002];
-A0 = A0 + V0;
-800453E8	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-V0 = hu[S0 + 0006];
-A0 = A0 >> 10;
-A1 = A1 + V0;
-800453FC	addiu  a1, a1, $ffff (=-$1)
-A1 = A1 << 10;
-80045404	jal    func45978 [$80045978]
-A1 = A1 >> 10;
-[S1 + 0008] = w(V0);
-A0 = h[S0 + 0008];
-A1 = h[S0 + 000a];
-80045418	jal    func45a44 [$80045a44]
-8004541C	nop
-[S1 + 000c] = w(V0);
-A0 = bu[S0 + 0017];
-A1 = bu[S0 + 0016];
-A2 = hu[S0 + 0014];
-80045430	jal    func45854 [$80045854]
-80045434	nop
-A0 = S0 + 000c;
-8004543C	jal    func45a88 [$80045a88]
-[S1 + 0010] = w(V0);
-[S1 + 0014] = w(V0);
-80045448	lui    v0, $e600
-[S1 + 0018] = w(V0);
+A0 = h[S0 + 0];
+A1 = h[S0 + 2];
+system_gpu_get_set_drawing_area_tl_command();
+[S1 + 4] = w(V0);
+
+A0 = h[S0 + 0] + h[S0 + 4] - 1;
+A1 = h[S0 + 2] + h[S0 + 6] - 1;
+system_gpu_get_set_drawing_area_br_command();
+[S1 + 8] = w(V0);
+
+A0 = h[S0 + 8];
+A1 = h[S0 + a];
+system_gpu_get_set_drawing_offset_command();
+[S1 + c] = w(V0);
+
+A0 = bu[S0 + 17];
+A1 = bu[S0 + 16];
+A2 = hu[S0 + 14];
+system_gpu_get_draw_mode_setting_command();
+[S1 + 10] = w(V0);
+
+A0 = S0 + c;
+system_gpu_get_texture_window_setting_command();
+[S1 + 14] = w(V0);
+
+[S1 + 18] = w(e6000000);
+
 V0 = bu[S0 + 0018];
 80045454	nop
 80045458	beq    v0, zero, L455a4 [$800455a4]
 A3 = 0007;
-V0 = hu[S0 + 0000];
-80045464	nop
-[SP + 0010] = h(V0);
-V0 = hu[S0 + 0002];
-80045470	nop
-[SP + 0012] = h(V0);
-A0 = hu[S0 + 0004];
-8004547C	nop
-[SP + 0014] = h(A0);
-V0 = hu[S0 + 0006];
-80045488	nop
-[SP + 0016] = h(V0);
-V0 = A0 << 10;
-A1 = V0 >> 10;
+
+[SP + 0010] = h(h[S0 + 0000]);
+[SP + 0012] = h(h[S0 + 0002]);
+[SP + 0014] = h(h[S0 + 0004]);
+[SP + 0016] = h(h[S0 + 0006]);
+A0 = h[S0 + 0004];
+
+A1 = A0;
 80045498	bltz   a1, L454c4 [$800454c4]
 V0 = 0;
 V0 = h[80055f74];
-800454A8	nop
 V1 = V0;
 800454B0	addiu  v0, v0, $ffff (=-$1)
 V0 = V0 < A1;
@@ -2060,222 +1985,128 @@ A3 = A3 + 0001;
 A1 = A3 << 02;
 A3 = A3 + 0001;
 [SP + 0016] = h(V0);
-V0 = hu[SP + 0010];
-V1 = hu[S0 + 0008];
 A2 = A2 + S1;
-V0 = V0 - V1;
-[SP + 0010] = h(V0);
-V0 = hu[SP + 0012];
-V1 = hu[S0 + 000a];
-80045530	lui    a0, $6000
-V0 = V0 - V1;
-[SP + 0012] = h(V0);
-V0 = bu[S0 + 001b];
-V1 = bu[S0 + 001a];
-V0 = V0 << 10;
-V1 = V1 << 08;
-V1 = V1 | A0;
-A0 = bu[S0 + 0019];
-V0 = V0 | V1;
-V0 = V0 | A0;
-[A2 + 0000] = w(V0);
-V0 = w[SP + 0010];
-A1 = A1 + S1;
-[A1 + 0000] = w(V0);
+[SP + 0010] = h(hu[SP + 0010] - hu[S0 + 0008]);
+[SP + 0012] = h(hu[SP + 0012] - hu[S0 + 000a]);
+[A2 + 0000] = w(60000000 | (bu[S0 + 001b] << 10) | (bu[S0 + 001a] << 08) | bu[S0 + 0019]);
+[A1 + S1] = w(w[SP + 0010]);
 V0 = A3 << 02;
-V1 = w[SP + 0014];
-V0 = V0 + S1;
-[V0 + 0000] = w(V1);
-V0 = hu[SP + 0010];
-V1 = hu[S0 + 0008];
-80045584	nop
-V0 = V0 + V1;
-[SP + 0010] = h(V0);
-V0 = hu[SP + 0012];
-V1 = hu[S0 + 000a];
-A3 = A3 + 0001;
-V0 = V0 + V1;
-[SP + 0012] = h(V0);
+[S1 + V0] = w(w[SP + 14]);
+[SP + 10] = h(hu[SP + 10] + hu[S0 + 8]);
+A3 = A3 + 1;
+[SP + 12] = h(hu[SP + 12] + hu[S0 + a]);
 
 L455a4:	; 800455A4
-800455A4	addiu  v0, a3, $ffff (=-$1)
-[S1 + 0003] = b(V0);
+[S1 + 0003] = b(A3 - 1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func455c4
+// system_gpu_create_set_draw_env_packet()
 
-S0 = A1;
+draw_env = A1;
 S1 = A0;
-A0 = h[S0 + 0000];
-A1 = h[S0 + 0002];
-800455E4	jal    func458ac [$800458ac]
 
-[S1 + 0004] = w(V0);
-A0 = hu[S0 + 0004];
-V0 = hu[S0 + 0000];
-A1 = hu[S0 + 0002];
-A0 = A0 + V0;
-80045600	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-V0 = hu[S0 + 0006];
-A0 = A0 >> 10;
-A1 = A1 + V0;
-80045614	addiu  a1, a1, $ffff (=-$1)
-A1 = A1 << 10;
-8004561C	jal    func45978 [$80045978]
-A1 = A1 >> 10;
-[S1 + 0008] = w(V0);
-A0 = h[S0 + 0008];
-A1 = h[S0 + 000a];
-80045630	jal    func45a44 [$80045a44]
-80045634	nop
-[S1 + 000c] = w(V0);
-A0 = bu[S0 + 0017];
-A1 = bu[S0 + 0016];
-A2 = hu[S0 + 0014];
-80045648	jal    func45854 [$80045854]
-8004564C	nop
-A0 = S0 + 000c;
-80045654	jal    func45a88 [$80045a88]
-[S1 + 0010] = w(V0);
-[S1 + 0014] = w(V0);
-80045660	lui    v0, $e600
-[S1 + 0018] = w(V0);
-V0 = bu[S0 + 0018];
-8004566C	nop
-80045670	beq    v0, zero, L45834 [$80045834]
-T0 = 0007;
-V0 = hu[S0 + 0000];
-8004567C	nop
-[SP + 0010] = h(V0);
-V0 = hu[S0 + 0002];
-80045688	nop
-[SP + 0012] = h(V0);
-A0 = hu[S0 + 0004];
-80045694	nop
-[SP + 0014] = h(A0);
-V0 = hu[S0 + 0006];
-800456A0	nop
-[SP + 0016] = h(V0);
-V0 = A0 << 10;
-A1 = V0 >> 10;
-800456B0	bltz   a1, L456dc [$800456dc]
-V0 = 0;
-V0 = h[80055f74];
-800456C0	nop
-V1 = V0;
-800456C8	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A1;
-800456D0	bne    v0, zero, L456dc [$800456dc]
-800456D4	addiu  v0, v1, $ffff (=-$1)
-V0 = A0;
+A0 = h[draw_env + 0];
+A1 = h[draw_env + 2];
+system_gpu_get_set_drawing_area_tl_command();
+[S1 + 4] = w(V0);
 
-L456dc:	; 800456DC
-A1 = h[SP + 0016];
-[SP + 0014] = h(V0);
-800456E4	bltz   a1, L45714 [$80045714]
-A0 = A1;
-V0 = h[80055f76];
-800456F4	nop
-V1 = V0;
-800456FC	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A1;
-80045704	bne    v0, zero, L45718 [$80045718]
-80045708	addiu  v0, v1, $ffff (=-$1)
-8004570C	j      L45718 [$80045718]
-V0 = A0;
+A0 = h[draw_env + 0] + h[draw_env + 4] - 1;
+A1 = h[draw_env + 2] + h[draw_env + 6] - 1;
+system_gpu_get_set_drawing_area_br_command();
+[S1 + 8] = w(V0);
 
-L45714:	; 80045714
-V0 = 0;
+A0 = h[draw_env + 8];
+A1 = h[draw_env + a];
+system_gpu_get_set_drawing_offset_command();
+[S1 + c] = w(V0);
 
-L45718:	; 80045718
-V1 = hu[SP + 0010];
-[SP + 0016] = h(V0);
-V0 = V1 & 003f;
-80045724	bne    v0, zero, L45740 [$80045740]
-A2 = T0 << 02;
-V0 = hu[SP + 0014];
-80045730	nop
-V0 = V0 & 003f;
-80045738	beq    v0, zero, L457dc [$800457dc]
-A1 = T0 << 02;
+A0 = bu[draw_env + 17]; // dfe
+A1 = bu[draw_env + 16]; // dtd
+A2 = hu[draw_env + 14]; // tpage
+system_gpu_get_draw_mode_setting_command();
+[S1 + 10] = w(V0);
 
-L45740:	; 80045740
-T0 = T0 + 0001;
-A1 = T0 << 02;
-T0 = T0 + 0001;
-V0 = hu[S0 + 0008];
-A2 = A2 + S1;
-V0 = V1 - V0;
-[SP + 0010] = h(V0);
-V0 = hu[SP + 0012];
-V1 = hu[S0 + 000a];
-80045764	lui    a0, $6000
-V0 = V0 - V1;
-[SP + 0012] = h(V0);
-V0 = bu[S0 + 001b];
-V1 = bu[S0 + 001a];
-V0 = V0 << 10;
-V1 = V1 << 08;
-V1 = V1 | A0;
-A0 = bu[S0 + 0019];
-V0 = V0 | V1;
-V0 = V0 | A0;
-[A2 + 0000] = w(V0);
-V0 = w[SP + 0010];
-A1 = A1 + S1;
-[A1 + 0000] = w(V0);
-V0 = T0 << 02;
-V1 = w[SP + 0014];
-V0 = V0 + S1;
-[V0 + 0000] = w(V1);
-V0 = hu[SP + 0010];
-V1 = hu[S0 + 0008];
-800457B8	nop
-V0 = V0 + V1;
-[SP + 0010] = h(V0);
-V0 = hu[SP + 0012];
-V1 = hu[S0 + 000a];
-T0 = T0 + 0001;
-V0 = V0 + V1;
-800457D4	j      L45834 [$80045834]
-[SP + 0012] = h(V0);
+A0 = draw_env + c;
+system_gpu_get_texture_window_setting_command();
+[S1 + 14] = w(V0);
 
-L457dc:	; 800457DC
-T0 = T0 + 0001;
-A2 = T0 << 02;
-T0 = T0 + 0001;
-A3 = T0 << 02;
-T0 = T0 + 0001;
-A1 = A1 + S1;
-800457F4	lui    a0, $0200
-V0 = bu[S0 + 001b];
-V1 = bu[S0 + 001a];
-V0 = V0 << 10;
-V1 = V1 << 08;
-V1 = V1 | A0;
-A0 = bu[S0 + 0019];
-V0 = V0 | V1;
-V0 = V0 | A0;
-[A1 + 0000] = w(V0);
-V0 = w[SP + 0010];
-A2 = A2 + S1;
-[A2 + 0000] = w(V0);
-V0 = w[SP + 0014];
-A3 = A3 + S1;
-[A3 + 0000] = w(V0);
+[S1 + 18] = w(e6000000);
 
-L45834:	; 80045834
-[S1 + 0003] = b(T0 - 1);
+// 0: Does not clear drawing area when drawing environment is set.
+// 1: Paints entire clip area with brightness values (r0, g0, b0) when drawing environment is set.
+if( bu[draw_env + 18] != 0 ) // isbg
+{
+    [SP + 10] = h(hu[draw_env + 0]);
+    [SP + 12] = h(hu[draw_env + 2]);
+
+    A1 = h[draw_env + 4];
+    if( A1 < 0 )
+    {
+        A1 = 0;
+    }
+    else
+    {
+        if( ( h[80055f74] - 1 ) < A1 )
+        {
+            A1 = h[80055f74] - 1;
+        }
+    }
+    [SP + 14] = h(A1);
+
+    A1 = h[draw_env + 6];
+    if( A1 < 0 )
+    {
+        A1 = 0;
+    }
+    else
+    {
+        if( ( h[80055f76] - 1 ) < A1 )
+        {
+            A1 = h[80055f76] - 1;
+        }
+    }
+    [SP + 16] = h(A1);
+
+    if( ( hu[SP + 10] & 3f ) || ( hu[SP + 14] & 3f ) )
+    {
+        [SP + 10] = h(hu[SP + 10] - hu[draw_env + 8]);
+        [SP + 12] = h(hu[SP + 12] - hu[draw_env + a]);
+
+        // GP0(60h) - Monochrome Rectangle (variable size) (opaque)
+        [S1 + 7 * 4] = w(60000000 | (bu[draw_env + 1b] << 10) | (bu[draw_env + 1a] << 8) | bu[draw_env + 19]); // r0 g0 b0
+        [S1 + 8 * 4] = w(w[SP + 10]);
+        [S1 + 9 * 4] = w(w[SP + 14]);
+    }
+    else
+    {
+        // GP0(02h) - Fill Rectangle in VRAM
+        [S1 + 7 * 4] = w(02000000 | (bu[draw_env + 1b] << 10) | (bu[draw_env + 1a] << 8) | bu[draw_env + 19]); // r0 g0 b0
+        [S1 + 8 * 4] = w(w[SP + 10]);
+        [S1 + 9 * 4] = w(w[SP + 14]);
+    }
+    [S1 + 3] = b(9);
+}
+else
+{
+    [S1 + 3] = b(7);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45854()
+// system_gpu_get_draw_mode_setting_command()
+// The GP0(E1h) command is required only for Lines, Rectangle, and
+// Untextured-Polygons (for Textured-Polygons, the data is specified in form of
+// the Texpage attribute; except that, Bit9-10 can be changed only via GP0(E1h),
+// not via the Texpage attribute).
+// Texture page colors setting 3 (reserved) is same as setting 2 (15bit).
+// Note: GP0(00h) seems to be often inserted between Texpage and Rectangle
+// commands, maybe it acts as a NOP, which may be required between that commands,
+// for timing reasons...?
 
 if( ( bu[80062c00] - 1 ) < 2 ) // old gpu
 {
@@ -2318,173 +2149,147 @@ return e1000000 | V1 | V0;
 
 
 ////////////////////////////////
-// func458ac
+// system_gpu_get_set_drawing_area_tl_command()
+// Sets the drawing area corners. The Render commands GP0(20h..7Fh) are
+// automatically clipping any pixels that are outside of this region.
 
-A3 = A0;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-800458B8	bltz   a0, L458e8 [$800458e8]
+x = A0;
+y = A1;
 
-V0 = h[80055f74];
-800458C8	nop
-A2 = V0;
-800458D0	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A0;
-800458D8	bne    v0, zero, L458ec [$800458ec]
-800458DC	addiu  v0, a2, $ffff (=-$1)
-800458E0	j      L458ec [$800458ec]
-V0 = A3;
+if( x >= 0 )
+{
+    if( ( h[80055f74] - 1 ) < x )
+    {
+        x = h[80055f74] - 1;
+    }
+}
+else
+{
+    x = 0;
+}
 
-L458e8:	; 800458E8
-V0 = 0;
+if( y >= 0 )
+{
+    if( ( h[80055f76] - 1 ) < y )
+    {
+        y = h[80055f76] - 1;
+    }
+}
+else
+{
+    y = 0;
+}
 
-L458ec:	; 800458EC
-A3 = V0;
-V0 = A1 << 10;
-A2 = V0 >> 10;
-800458F8	bltz   a2, L45928 [$80045928]
-800458FC	nop
-V0 = h[80055f76];
-80045908	nop
-A0 = V0;
-80045910	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A2;
-80045918	beq    v0, zero, L4592c [$8004592c]
-8004591C	nop
-80045920	j      L4592c [$8004592c]
-80045924	addiu  a1, a0, $ffff (=-$1)
+if( ( bu[80055f70] - 1 ) >= 2 )
+{
+    y = (y & 3ff) << a;
+    x = x & 3ff;
+}
+else
+{
+    y = (y & fff) << c;
+    x = x & fff;
+}
 
-L45928:	; 80045928
-A1 = 0;
-
-L4592c:	; 8004592C
-V0 = bu[80055f70];
-80045934	nop
-80045938	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < 0002;
-80045940	bne    v0, zero, L45958 [$80045958]
-V1 = A1 & 0fff;
-V1 = A1 & 03ff;
-V1 = V1 << 0a;
-80045950	j      L45960 [$80045960]
-V0 = A3 & 03ff;
-
-L45958:	; 80045958
-V1 = V1 << 0c;
-V0 = A3 & 0fff;
-
-L45960:	; 80045960
-return e3000000 | V0 | V0;
+return e3000000 | y | x;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45978
-A3 = A0;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-80045984	bltz   a0, L459b4 [$800459b4]
-80045988	addiu  sp, sp, $fff0 (=-$10)
-V0 = h[80055f74];
-80045994	nop
-A2 = V0;
-8004599C	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A0;
-800459A4	bne    v0, zero, L459b8 [$800459b8]
-800459A8	addiu  v0, a2, $ffff (=-$1)
-800459AC	j      L459b8 [$800459b8]
-V0 = A3;
+// system_gpu_get_set_drawing_area_br_command()
+// Sets the drawing area corners. The Render commands GP0(20h..7Fh) are
+// automatically clipping any pixels that are outside of this region.
 
-L459b4:	; 800459B4
-V0 = 0;
+x = A0;
+y = A1;
 
-L459b8:	; 800459B8
-A3 = V0;
-V0 = A1 << 10;
-A2 = V0 >> 10;
-800459C4	bltz   a2, L459f4 [$800459f4]
-800459C8	nop
-V0 = h[80055f76];
-800459D4	nop
-A0 = V0;
-800459DC	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A2;
-800459E4	beq    v0, zero, L459f8 [$800459f8]
-800459E8	nop
-800459EC	j      L459f8 [$800459f8]
-800459F0	addiu  a1, a0, $ffff (=-$1)
+if( x >= 0 )
+{
+    if( ( h[80055f74] - 1 ) < x )
+    {
+        x = h[80055f74] - 1;
+    }
+}
+else
+{
+    x = 0;
+}
 
-L459f4:	; 800459F4
-A1 = 0;
+if( y >= 0 )
+{
+    if( ( h[80055f76] - 1 ) < y )
+    {
+        y = h[80055f76] - 1;
+    }
+}
+else
+{
+    y = 0;
+}
 
-L459f8:	; 800459F8
-V0 = bu[80055f70];
-80045A00	nop
-80045A04	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < 0002;
-80045A0C	bne    v0, zero, L45a24 [$80045a24]
-V1 = A1 & 0fff;
-V1 = A1 & 03ff;
-V1 = V1 << 0a;
-80045A1C	j      L45a2c [$80045a2c]
-V0 = A3 & 03ff;
+if( ( bu[80055f70] - 1 ) >= 2 )
+{
+    y = (y & 3ff) << a;
+    x = x & 03ff;
+}
+else
+{
+    y = (y & fff) << c;
+    x = x & 0fff;
+}
 
-L45a24:	; 80045A24
-V1 = V1 << 0c;
-V0 = A3 & 0fff;
-
-L45a2c:	; 80045A2C
-80045A2C	lui    a0, $e400
-V0 = V0 | A0;
-V0 = V1 | V0;
-SP = SP + 0010;
-80045A3C	jr     ra 
-80045A40	nop
+return e4000000 | y | x;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45a44
-V0 = bu[80055f70];
-80045A4C	nop
-80045A50	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < 0002;
-80045A58	bne    v0, zero, L45a70 [$80045a70]
-V1 = A1 & 0fff;
-V1 = A1 & 07ff;
-V1 = V1 << 0b;
-80045A68	j      L45a78 [$80045a78]
-V0 = A0 & 07ff;
+// system_gpu_get_set_drawing_offset_command()
+//  0-10 X-offset (-1024..+1023) (usually within X1,X2 of Drawing Area)
+// 11-21 Y-offset (-1024..+1023) (usually within Y1,Y2 of Drawing Area)
+// 24-31 Command  (E5h)
+// If you have configured the GTE to produce vertices with coordinate "0,0" being
+// located in the center of the drawing area, then the Drawing Offset must be
+// "X1+(X2-X1)/2, Y1+(Y2-Y1)/2". Or, if coordinate "0,0" shall be the upper-left
+// of the Drawing Area, then Drawing Offset should be "X1,Y1". Where X1,Y1,X2,Y2
+// are the values defined with GP0(E3h-E4h).
 
-L45a70:	; 80045A70
-V1 = V1 << 0c;
-V0 = A0 & 0fff;
+x_off = A0;
+y_off = A1;
 
-L45a78:	; 80045A78
-80045A78	lui    a0, $e500
-V0 = V0 | A0;
-80045A80	jr     ra 
-V0 = V1 | V0;
+if( ( bu[80055f70] - 1 ) >= 2 ) // new gpu
+{
+    return e5000000 | ((y_off & 07ff) << b) | (x_off & 07ff);
+}
+else
+{
+    return e5000000 | ((y_off & 0fff) << c) | (x_off & 0fff);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45a88()
+// system_gpu_get_texture_window_setting_command()
+// Mask specifies the bits that are to be manipulated, and Offset contains the new
+// values for these bits, ie. texture X/Y coordinates are adjusted as so:
+// Texcoord = (Texcoord AND (NOT (Mask*8))) OR ((Offset AND Mask)*8)
+// The area within a texture window is repeated throughout the texture page. The
+// data is not actually stored all over the texture page but the GPU reads the
+// repeated patterns as if they were there.
 
-A0 = A0; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
+rect = A0; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
 
-if( A0 == 0 )
+if( rect == 0 )
 {
     return 0;
 }
 
-off_x = bu[A0 + 0] >> 3;
-off_y = bu[A0 + 2] >> 3;
-mask_x = ((0 - h[A0 + 4]) & ff) >> 3;
-mask_y = ((0 - h[A0 + 6]) & ff) >> 3;
+off_x = bu[rect + 0] >> 3;
+off_y = bu[rect + 2] >> 3;
+mask_x = ((0 - h[rect + 4]) & ff) >> 3;
+mask_y = ((0 - h[rect + 6]) & ff) >> 3;
 return e2000000 | (off_y << f) | (off_x << a) | (mask_y << 5) | mask_x;
 ////////////////////////////////
 
@@ -2530,11 +2335,8 @@ V1 = V1 >> 01;
 V0 = 0400;
 
 L45b90:	; 80045B90
-V0 = hu[A0 + 0000];
-80045B94	nop
-V0 = V0 << 10;
-V1 = V0 >> 10;
-V0 = V0 >> 1f;
+V1 = h[A0 + 0];
+V0 = V1 >> f;
 V1 = V1 + V0;
 80045BA8	j      L45bb4 [$80045bb4]
 V0 = V1 >> 01;
@@ -2543,14 +2345,12 @@ L45bb0:	; 80045BB0
 V0 = h[A0 + 0000];
 
 L45bb4:	; 80045BB4
-80045BB4	jr     ra 
-80045BB8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func45bbc
+// system_gpu_get_gpu_stat()
 
 gpu1814 = w[80056044]; // 1f801814
 return w[gpu1814];
@@ -2575,7 +2375,7 @@ gpu10f0 = w[80056060]; // 1f8010f0 DPCR - DMA Control register
 [gpu10e4] = w(words);
 [gpu10e8] = w(11000002); // Memory Address Step Backward (-4), Start/Enable/Busy, Manual Start, SyncMode 0
 
-func46d74(); // wait
+system_gpu_dma_timeout_init();
 
 while( w[gpu10e8] & 01000000 ) // Start/Enable/Busy
 {
@@ -2687,7 +2487,7 @@ gpu10a8 = w[80056050]; // 1f8010A8 GPU DMA channel control (lists + image data)
 rect = A0; // struct with size (0 x, 2 y, 4 width, 6 height)
 src = A1;
 
-func46d74(); // wait
+system_gpu_dma_timeout_init();
 
 if( h[rect + 4] < 0 )
 {
@@ -2763,7 +2563,7 @@ gpu10a8 = w[80056050]; // 1f8010A8 GPU DMA channel control (lists + image data)
 rect = A0;
 ptr = A1;
 
-func46d74(); // wait
+system_gpu_dma_timeout_init();
 
 if( h[rect + 4] < 0 )
 {
@@ -2933,7 +2733,7 @@ src = A3;
 gpu10a8 = w[80056050]; // 1f8010A8 DMA2 channel control- GPU (lists + image data)
 gpu1814 = w[80056044]; // 1f801814 GPUSTAT Read GPU Status Register
 
-func46d74(); // wait
+system_gpu_dma_timeout_init();
 
 while( w[80056078] == ( (w[80056074] + 1) & 3f ) )
 {
@@ -3126,7 +2926,7 @@ else if( V1 == 0 ) // Complete reset. The drawing environment and display enviro
     A2 = 100;
     system_graphic_set_mem();
 
-    A0 = 8006и4с4;
+    A0 = 8006b4c4; // render queue
     A1 = 0;
     A2 = 1800;
     system_graphic_set_mem();
@@ -3149,7 +2949,7 @@ return V0;
 
 
 ////////////////////////////////
-// func46c2c()
+// system_gpu_draw_sync_internal()
 // Waits for drawing to terminate.
 // If DrawSync(0) is used, and execution of the primitive list takes an exceptionally long time (approximately
 // longer than 8 Vsync) to complete, a timeout is generated and the GPU is reset. Reasons why this might
@@ -3164,7 +2964,9 @@ return V0;
 gpu10a8 = w[80056050]; // 1f8010A8 DMA2 channel control- GPU (lists + image data)
 gpu1814 = w[80056044]; // 1f801814
 
-if( A0 != 0 )
+mode = A0;
+
+if( mode != 0 )
 {
     S0 = (w[80056074] - w[80056078]) & 3f; // queue items left
 
@@ -3173,12 +2975,9 @@ if( A0 != 0 )
         system_gpu_render_queue_item_exec();
     }
 
-    if( ( w[gpu10a8] & 01000000 ) == 0 )
+    if( ( ( w[gpu10a8] & 01000000 ) == 0 ) && ( w[gpu1814] & 04000000 ) )
     {
-        if( w[gpu1814] & 04000000 )
-        {
-            return S0;
-        }
+        return S0;
     }
 
     if( S0 != 0 )
@@ -3186,52 +2985,44 @@ if( A0 != 0 )
         return S0;
     }
     return 1;
-
 }
-
-func46d74(); // wait
-
-80046C44	j      L46c64 [$80046c64]
-
-L46c4c:	; 80046C4C
-system_gpu_render_queue_item_exec();
-
-system_gpu_dma_timeout_check();
-
-if( V0 != 0 ) // timeout
+else
 {
-    return -1;
+    system_gpu_dma_timeout_init();
+
+    while( w[80056074] != w[80056078] ) // queue items left
+    {
+        system_gpu_render_queue_item_exec();
+
+        system_gpu_dma_timeout_check();
+
+        if( V0 != 0 ) // timeout
+        {
+            return -1;
+        }
+    }
+
+    while( true )
+    {
+        if( ( w[gpu10a8] & 01000000 ) && ( w[gpu1814] & 04000000 ) )
+        {
+            return 0;
+        }
+
+        system_gpu_dma_timeout_check();
+
+        if( V0 != 0 ) // timeout
+        {
+            return -1;
+        }
+    }
 }
-
-L46c64:	; 80046C64
-V1 = w[80056074];
-V0 = w[80056078];
-80046C78	beq    v1, v0, L46c98 [$80046c98]
-
-80046C80	j      L46c4c [$80046c4c]
-
-loop46c88:	; 80046C88
-system_gpu_dma_timeout_check();
-
-if( V0 != 0 ) // timeout
-{
-    return -1;
-}
-
-L46c98:	; 80046C98
-V0 = w[gpu10a8] & 01000000;
-80046CB0	bne    v0, zero, loop46c88 [$80046c88]
-
-V0 = w[gpu1814] & 04000000;
-80046CD0	beq    v0, zero, loop46c88 [$80046c88]
-
-return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func46d74()
+// system_gpu_dma_timeout_init()
 
 A0 = -1; // return number of frames
 system_psyq_wait_frames();
