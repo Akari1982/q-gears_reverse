@@ -244,7 +244,7 @@ V0 = w[V0 + 0018];
 
 
 ////////////////////////////////
-// func4b73c
+// func4b73c()
 
 return hu[80056f46];
 ////////////////////////////////
@@ -288,14 +288,19 @@ dma10f0 = w[80057fd8]; // 1f8010f0 dma control register
 
 A0 = 80056f44; // addr
 A1 = 41a; // number of ints
-system_int_memset(); // set mem to zero
+system_int_memzero(); // set mem to zero
 
-A0 = 80056f4c;
+A0 = 80056f7с;
 system_int_store_registers_to_mem(); // store registers
-if( V0 != 0 ) // always 0
+
+// this is RA for interrupt
+// custom exit from exception jumps here
+if( V0 != 0 )
 {
-    func4b85c(); // interrupt handler
+    system_int_handler();
 }
+
+[S0] = w(S0 + fdc)
 
 [80056f80] = w(80057f5c); // r28/sp
 
@@ -309,8 +314,8 @@ V1 = w[80057fcc];
 [V1 + 14] = w(V0);
 
 func4bef0();
-A0 = w[80057fcc];
-[A0 + 4] = w(V0);
+V1 = w[80057fcc];
+[V1 + 4] = w(V0);
 
 system_bios_cd_remove(); // does NOT work due to SysDeqIntRP bug
 
@@ -322,74 +327,67 @@ return 80056f44;
 
 
 ////////////////////////////////
-// func4b85c()
+// system_int_handler()
 
-if( hu[80056ff4] == 0 )
+if( hu[80056f44] != 0 )
 {
-    system_bios_return_from_exception();
-}
+    int_status = w[80057fd0]; // 1f801070 interrupt status register
+    int_mask = w[80057fd4]; // 1f801074 interrupt mask register
 
-int_status = w[80057fd0]; // 1f801070 interrupt status register
-int_mask = w[80057fd4]; // 1f801074 interrupt mask register
+    [80056f46] = h(1);
 
-[80056f46] = h(1);
+    S0 = hu[int_mask] & hu[int_status] & hu[80056f74];
+    while( S0 != 0 )
+    {
+        type = 0;
 
-S0 = hu[int_mask] & hu[int_status] & hu[80056f74];
-if( S0 != 0 )
-{
-    S3 = 1;
-    loop4b8fc:	; 8004B8FC
-        if( S0 != 0 )
+        while( S0 != 0 )
         {
-            S1 = 0;
-            loop4b908:	; 8004B908
-                if( S1 >= b )
+            if( type >= b )
+            {
+                break;
+            }
+
+            if( S0 & 1 )
+            {
+                [int_status] = h(0 NOR (1 << type));
+
+                V0 = w[80056f48 + type * 4];
+                if( V0 != 0 )
                 {
-                    break;
+                    8004B93C	jalr   v0 ra
                 }
+            }
 
-                if( S0 & 1 )
-                {
-                    [int_status] = h(0 NOR (S3 << S1));
-
-                    V0 = w[80056ff8 + S1 * 4];
-                    if( V0 != 0 )
-                    {
-                        8004B93C	jalr   v0 ra
-                    }
-                }
-
-                S1 = S1 + 1;
-                S0 = S0 >> 1;
-                V0 = S0 & ffff;
-            8004B950	bne    v0, zero, loop4b908 [$8004b908]
+            type = type + 1;
+            S0 = S0 >> 1;
         }
 
         S0 = hu[int_mask] & hu[int_status] & hu[80056f74];
-    8004B980	bne    s0, zero, loop4b8fc [$8004b8fc]
-}
-
-if( hu[int_mask] & hu[int_status] )
-{
-    V0 = w[80057fdc];
-    [80057fdc] = w(V0 + 1);
-    if( V0 >= 801 )
-    {
-        A0 = 800194b8; // "intr timeout(%04x:%04x)"
-        A1 = hu[int_status];
-        A2 = hu[int_mask];
-        system_bios_printf();
-
-        [80057fdc] = w(0);
-        [int_status] = h(0);
     }
-}
-else
-{
-    [80057fdc] = w(0);
-}
 
-[80056f46] = h(0);
+    if( hu[int_mask] & hu[int_status] )
+    {
+        V0 = w[80057fdc];
+        [80057fdc] = w(V0 + 1);
+        if( V0 >= 801 )
+        {
+            A0 = 800194b8; // "intr timeout(%04x:%04x)"
+            A1 = hu[int_status];
+            A2 = hu[int_mask];
+            system_bios_printf();
+
+            [80057fdc] = w(0);
+            [int_status] = h(0);
+        }
+    }
+    else
+    {
+        [80057fdc] = w(0);
+    }
+
+    [80056f46] = h(0);
+}
 
 system_bios_return_from_exception();
 ////////////////////////////////
@@ -564,7 +562,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// system_int_memset()
+// system_int_memzero()
 
 if( A1 != 0 )
 {
@@ -639,9 +637,10 @@ T1 = 0072;
 // ExceptionHandler, however, functions in the exception chain may call
 // ReturnFromException to to return immediately, without processing chain elements
 // of lower priority.
-T2 = 00b0;
+
+T2 = b0;
+T1 = 17;
 8004BD9C	jr     t2 
-T1 = 0017;
 ////////////////////////////////
 
 
@@ -667,7 +666,7 @@ T1 = 0018;
 //  2Ch 4    r28/gp    ;usually 0
 // The hook function is executed only if the ExceptionHandler has been fully executed (after processing an IRQ, many interrupt handlers are calling
 // ReturnFromException to abort further exception handling, and thus do skip the hook function). Once when the hook function has finished, it should execute
-// ReturnFromException. The hook function is called with r2=1 (that is important if the hook address was recorded with SaveState, where it "returns" to the
+// ReturnFromException. The hook function is called with r2=1 (V0) (that is important if the hook address was recorded with SaveState, where it "returns" to the
 // SaveState caller, with r2 as "return value").
 
 T2 = b0;
@@ -752,32 +751,32 @@ A0 = 8005800c;
 A1 = 8;
 func4c16c(); // remove all dma callbacks
 
-V0 = w[80058008];
-[V0] = w(0); // remove callback flags
+dma10f4 = w[80058008];
+[dma10f4] = w(0); // remove dma callback flags
 
 A0 = 3; // IRQ3 DMA
-A1 = 8004bf40; // func4bf40()
+A1 = 8004bf40; // system_int_dma_handler()
 system_int_set_interrupt_callback();
 
-return 8004c0c4;
+return 8004c0c4; // func4c0c4()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4bf40()
+// system_int_dma_handler()
 
-flags = w[80058008];
+dma10f4 = w[80058008];
 
-while( (w[flags] >> 18) & 7f )
+while( (w[dma10f4] >> 18) & 7f )
 {
-    S1 = (w[flags] >> 18) & 7f;
+    S1 = (w[dma10f4] >> 18) & 7f;
 
     for( int i = 0; i < 8; ++i )
     {
         if( S1 & 1 )
         {
-            [flags] = w(w[flags] & ((1 << (i + 18)) | 00ffffff));
+            [dma10f4] = w(w[dma10f4] & ((1 << (i + 18)) | 00ffffff));
 
             if( w[8005800c + i * 4] != 0 )
             {
@@ -793,16 +792,16 @@ while( (w[flags] >> 18) & 7f )
     }
 }
 
-if( ( w[flags] & ff000000 ) != 80000000 )
+if( ( w[dma10f4] & ff000000 ) != 80000000 )
 {
-    if( ( w[flags] & 00008000 ) == 0 )
+    if( ( w[dma10f4] & 00008000 ) == 0 )
     {
         return;
     }
 }
 
 A0 = 800194d4; // "DMA bus error: code=%08x"
-A1 = w[flags];
+A1 = w[dma10f4];
 system_bios_printf();
 
 for( int i = 0; i < 7; ++i )
@@ -823,19 +822,19 @@ for( int i = 0; i < 7; ++i )
 slot = A0;
 func = A1;
 
+dma10f4 = w[80058008];
+
 if( func != w[8005800c + slot * 4] )
 {
     if( func != 0 )
     {
         [8005800c + slot * 4] = w(func);
-        A1 = w[80058008];
-        [A1] = w((w[A1] & 00ffffff) | ((1 << (slot + 10)) | 00800000));
+        [dma10f4] = w((w[dma10f4] & 00ffffff) | ((1 << (slot + 10)) | 00800000));
     }
     else
     {
         [8005800c + slot * 4] = w(0);
-        A1 = w[80058008];
-        [A1] = w(((w[A1] & (00ffffff)) | 00800000) & (0 NOR (1 << (slot + 10))));
+        [dma10f4] = w(((w[dma10f4] & (00ffffff)) | 00800000) & (0 NOR (1 << (slot + 10))));
     }
 }
 

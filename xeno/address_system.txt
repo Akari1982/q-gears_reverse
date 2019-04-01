@@ -208,11 +208,12 @@
 80056ee8 [][][][] store previous 80058000.
 
 80056f44 clear 0x41a area when init interrupts.
-80056f44 [][][][] interrupt init flag. If inited set to 1 and never init again.
+80056f44 [][]     interrupt init flag. If inited set to 1 and never init again.
+80056f46 [][]     flag that set when we inside interrupt exception handler.
 80056f48 array of interrupt callbacks.
 
 80056f74 [][]     interrupt callbacks mask.
-80056f7c
+80056f7c store registers here.
 80056f80 [][][][] init with 0x80057f5c.
 
 80057fcc [][][][] pointer to some func callbacks (80057fac).
@@ -227,13 +228,13 @@
 80057fd0 [][][][] 1f801070 interrupt status register.
 80057fd4 [][][][] 1f801074 interrupt mask register.
 80057fd8 [][][][] 1f8010f0 dma control register.
-
+80057fdc [][][][] interrupt timeout timer.
 80057fe0 array of 8 callbacks called everytime when wait timer updates (0x4 size).
             4 - set with system_call_main_timer_additional_callback_4();
 
 80058000 [][][][] frame timer.
 80058004 [][][][] 1f801114 Timer 1 Counter Mode (R/W)
-80058008 [][][][] address for flags for enabling dma callbacks.
+80058008 [][][][] 1f8010f4 address for flags for enabling dma callbacks.
 8005800c array of dma callbacks.
 80058030 [][][][] set to 0 during game init.
 8005803c [][][][] store irq9 spu command completed event here.

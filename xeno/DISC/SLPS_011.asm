@@ -13900,7 +13900,7 @@ L4b098:	; 8004B098
 // func4b780
 8004B780-8004B858
 ////////////////////////////////
-// func4b85c
+// system_int_handler
 8004B85C-8004BA40
 ////////////////////////////////
 // system_int_set_interrupt_callback_inter
@@ -13912,7 +13912,7 @@ L4b098:	; 8004B098
 // func4bc44
 8004BC44-8004BCC8
 ////////////////////////////////
-// system_int_memset
+// system_int_memzero
 8004BCCC-8004BCF4
 ////////////////////////////////
 // system_int_store_registers_to_mem
@@ -13962,7 +13962,7 @@ L4b098:	; 8004B098
 // func4bef0
 8004BEF0-8004BF3C
 ////////////////////////////////
-// func4bf40
+// system_int_dma_handler
 8004BF40-8004C0C0
 ////////////////////////////////
 // func4c0c4
