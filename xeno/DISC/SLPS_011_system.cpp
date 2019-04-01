@@ -750,7 +750,7 @@ if( A1 != 0 )
 
 A0 = 8005800c;
 A1 = 8;
-func4c16c(); // remove all callbacks
+func4c16c(); // remove all dma callbacks
 
 V0 = w[80058008];
 [V0] = w(0); // remove callback flags
