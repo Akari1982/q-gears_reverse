@@ -67,7 +67,7 @@ return 1;
 
 
 ////////////////////////////////
-// func40d6c()
+// system_cdrom_set_debug_level()
 
 V0 = w[80055b54];
 [80055b54] = w(A0);
@@ -409,22 +409,19 @@ return V0 < 1;
 
 ////////////////////////////////
 // func41244
-80041244	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 8004124C	jal    func42a20 [$80042a20]
-80041250	nop
-RA = w[SP + 0010];
+
 V0 = V0 < 0001;
-8004125C	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func41264()
-A0 = 3;
-A1 = A0;
+
+A0 = 3; // slot
+A1 = A0; // callback
 func4b648();
 ////////////////////////////////
 
@@ -1248,9 +1245,9 @@ return 0;
 
 func4b5e8(); // reset interrupts
 
-A0 = 2;
+A0 = 2; // IRQ2 CDROM
 A1 = 80042b20; // func42b20()
-func4b618();
+system_int_set_interrupt_callback();
 ////////////////////////////////
 
 
@@ -1279,9 +1276,9 @@ system_bios_printf();
 
 func4b5e8(); // reset interrupts
 
-A0 = 2;
+A0 = 2; // IRQ2 CDROM
 A1 = 80042b20; // func42b20()
-func4b618();
+system_int_set_interrupt_callback();
 
 [cd_1800] = b(01);
 while( bu[cd_1803] & 7 ) // interrupt response received

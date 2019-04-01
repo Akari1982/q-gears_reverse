@@ -207,10 +207,31 @@
 80056ee4 [][][][] previous timer1 value.
 80056ee8 [][][][] store previous 80058000.
 
+80056f44 clear 0x41a area when init interrupts.
+80056f44 [][][][] interrupt init flag. If inited set to 1 and never init again.
+80056f48 array of interrupt callbacks.
+80056f4c store registers here.
+    + 0 [][][][] RA
+    + 4 [][][][] SP
+    + 8 [][][][] FP
+    + c [][][][] S0
+    +10 [][][][] S1
+    +14 [][][][] S2
+    +18 [][][][] S3
+    +1c [][][][] S4
+    +20 [][][][] S5
+    +24 [][][][] S6
+    +28 [][][][] S7
+    +2c [][][][] GP
+
+80056f74 [][]     interrupt callbacks mask.
+80056f7c
+80056f80 [][][][] init with 0x80057f5c.
+
 80057fcc [][][][] pointer to some func callbacks (80057fac).
     + 0 80019468
     + 4 8004c0c4
-    + 8 func4ba44()
+    + 8 system_int_set_interrupt_callback_inter()
     + c func4b780()
     +10 8004bb98
     +14 system_main_timer_additional_callback()
@@ -357,7 +378,7 @@
 
 80058a24 []       ID1 of last reveived controller input.
 80058a28 []       init with 1.
-80058a2c [][][][] init with 0.
+80058a2c [][][][] init with 0. If set then call some dev breakpoint.
 
 80058a3c [][][][] init with 0.
 
@@ -520,6 +541,9 @@
 80059818 array for repeated buttons controller 1 (0x10 item 0x2 size).
 80059798 array for pressed buttons controller 1 (0x10 item 0x2 size).
 80059838 array for repeated buttons controller 2 (0x10 item 0x2 size).
+
+80059858 vibration command for controller 1.
+80059860 vibration command for controller 2.
 
 8005989c [][][][] init with 0.
 800598a0 [][][][] init with callback to 8004085c.

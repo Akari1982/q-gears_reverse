@@ -280,6 +280,7 @@ RA = w[80058a50];
 
 ////////////////////////////////
 // system_bios_change_clear_pad_patch()
+
 V0 = V0 & S5;
 80040A9C	nop
 80040AA0	nop

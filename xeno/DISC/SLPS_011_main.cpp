@@ -86,7 +86,7 @@ system_psyq_spu_init();
 A0 = 80010004; // file1 allocated memory
 A1 = 80018004; // file2 allocated memory
 A2 = w[80010000]; // ffffffff
-func28040();
+func28040(); // cd init
 
 A0 = 0;
 system_sound_initialize();
@@ -540,8 +540,8 @@ system_sound_deinitialize();
 
 80019D7C	jal    func4d13c [$8004d13c]
 
-A0 = 0;
-80019D84	jal    func36298 [$80036298]
+A0 = 0; // unset frame update callback
+func36298();
 
 A0 = 0;
 system_psyq_draw_sync_callback();
@@ -623,8 +623,8 @@ A3 = 0180;
 A0 = 0;
 system_psyq_draw_sync_callback();
 
-A0 = 0;
-80019EC0	jal    func36298 [$80036298]
+A0 = 0; // unset frame update callback
+func36298();
 
 A0 = 10;
 A1 = 10;

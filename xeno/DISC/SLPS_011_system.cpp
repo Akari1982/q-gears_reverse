@@ -169,9 +169,10 @@ while( w[80058000] < A0 )
 // (flag=0: do nothing; or flag=1: automatically acknowledge the IRQ
 // and immediately return from exception). The function returns
 // the old (previous) flag value.
-T2 = 00c0;
+
+T2 = c0;
+T1 = a;
 8004B5DC	jr     t2 
-T1 = 000a;
 ////////////////////////////////
 
 
@@ -186,10 +187,10 @@ V0 = w[80057fcc];
 
 
 ////////////////////////////////
-// func4b618()
+// system_int_set_interrupt_callback()
 
 V0 = w[80057fcc];
-8004B630	jalr   w[V0 + 8] ra // func4ba44()
+8004B630	jalr   w[V0 + 8] ra // system_int_set_interrupt_callback_inter()
 ////////////////////////////////
 
 
@@ -278,27 +279,27 @@ if( hu[80056f44] != 0 )
     return 0;
 }
 
-V0 = w[80057fd0]; // 1f801070 interrupt status register
-[V0] = h(0000); // clear all interrupts
-V0 = w[80057fd4]; // 1f801074 interrupt mask register
-[V0] = h(0000); // clear mask
-V0 = w[80057fd8]; // 1f8010f0 dma control register
-[V0] = w(33333333); // set lowest priority for all dma and disable them
+int1070 = w[80057fd0]; // 1f801070 interrupt status register
+[int1070] = h(0000); // clear all interrupts
+int1074 = w[80057fd4]; // 1f801074 interrupt mask register
+[int1074] = h(0000); // clear mask
+dma10f0 = w[80057fd8]; // 1f8010f0 dma control register
+[dma10f0] = w(33333333); // set lowest priority for all dma and disable them
 
 A0 = 80056f44; // addr
 A1 = 41a; // number of ints
-func4bccc(); // set mem to zero
+system_int_memset(); // set mem to zero
 
 A0 = 80056f4c;
-func4bcf8(); // store registers
+system_int_store_registers_to_mem(); // store registers
 if( V0 != 0 ) // always 0
 {
     func4b85c(); // interrupt handler
 }
 
-[80056f80] = w(80057f5c);
+[80056f80] = w(80057f5c); // r28/sp
 
-A0 = 80056f7c;
+A0 = 80056f7c; // pointer to registers
 system_bios_set_custom_exit_from_exception();
 
 [80056f44] = h(1);
@@ -396,18 +397,31 @@ system_bios_return_from_exception();
 
 
 ////////////////////////////////
-// func4ba44()
+// system_int_set_interrupt_callback_inter()
 
 int_mask = w[80057fd4]; // 1f801074 interrupt mask register
 
 type = A0;
 func = A1;
 
+// type
+//  0     IRQ0 VBLANK (PAL=50Hz, NTSC=60Hz)
+//  1     IRQ1 GPU   Can be requested via GP0(1Fh) command (rarely used)
+//  2     IRQ2 CDROM
+//  3     IRQ3 DMA
+//  4     IRQ4 TMR0  Timer 0 aka Root Counter 0 (Sysclk or Dotclk)
+//  5     IRQ5 TMR1  Timer 1 aka Root Counter 1 (Sysclk or H-blank)
+//  6     IRQ6 TMR2  Timer 2 aka Root Counter 2 (Sysclk or Sysclk/8)
+//  7     IRQ7 Controller and Memory Card - Byte Received Interrupt
+//  8     IRQ8 SIO
+//  9     IRQ9 SPU
+//  10    IRQ10 Controller - Lightpen Interrupt (reportedly also PIO...?)
+
 S4 = w[80056f48 + type * 4];
 
 if( func != S4 )
 {
-    if( hu[80056f44] != 0 )
+    if( hu[80056f44] != 0 ) // if inited
     {
         S3 = hu[int_mask];
         [int_mask] = h(0);
@@ -431,26 +445,26 @@ if( func != S4 )
             A0 = func < 1;
             system_bios_change_clear_pad();
 
-            A0 = 3;
-            A1 = func < 1;
+            A0 = 3; // vblank
+            A1 = ( func == 0 ); // (flag=0: do nothing; or flag=1: automatically acknowledge the IRQ and immediately return from exception).
             system_bios_change_clear_rcnt();
         }
         if( type == 4 )
         {
-            A0 = 0;
-            A1 = func < 1;
+            A0 = 0; // timer 0
+            A1 = ( func == 0 );
             system_bios_change_clear_rcnt();
         }
         if( type == 5 )
         {
-            A0 = 1;
-            A1 = func < 1;
+            A0 = 1; // timer 1
+            A1 = ( func == 0 );
             system_bios_change_clear_rcnt();
         }
         if( type == 6 )
         {
-            A0 = 2;
-            A1 = func < 1;
+            A0 = 2; // timer 2
+            A1 = ( func == 0 );
             system_bios_change_clear_rcnt();
         }
 
@@ -519,8 +533,9 @@ V0 = hu[S0 + 0000];
 8004BC5C	nop
 8004BC60	bne    v0, zero, L4bcb4 [$8004bcb4]
 8004BC64	nop
-8004BC68	jal    system_bios_set_custom_exit_from_exception [$8004bdb8]
 A0 = S0 + 0038;
+system_bios_set_custom_exit_from_exception();
+
 A0 = w[80057fd4];
 V1 = hu[80056f76];
 V0 = 0001;
@@ -549,7 +564,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func4bccc()
+// system_int_memset()
 
 if( A1 != 0 )
 {
@@ -565,20 +580,21 @@ if( A1 != 0 )
 
 
 ////////////////////////////////
-// func4bcf8()
+// system_int_store_registers_to_mem()
 
-[A0 + 0000] = w(RA);
-[A0 + 002c] = w(GP);
-[A0 + 0004] = w(SP);
-[A0 + 0008] = w(FP);
-[A0 + 000c] = w(S0);
-[A0 + 0010] = w(S1);
-[A0 + 0014] = w(S2);
-[A0 + 0018] = w(S3);
-[A0 + 001c] = w(S4);
-[A0 + 0020] = w(S5);
-[A0 + 0024] = w(S6);
-[A0 + 0028] = w(S7);
+[A0 + 0] = w(RA);
+[A0 + 4] = w(SP);
+[A0 + 8] = w(FP);
+[A0 + c] = w(S0);
+[A0 + 10] = w(S1);
+[A0 + 14] = w(S2);
+[A0 + 18] = w(S3);
+[A0 + 1c] = w(S4);
+[A0 + 20] = w(S5);
+[A0 + 24] = w(S6);
+[A0 + 28] = w(S7);
+[A0 + 2c] = w(GP);
+
 return 0;
 ////////////////////////////////
 
@@ -653,9 +669,10 @@ T1 = 0018;
 // ReturnFromException to abort further exception handling, and thus do skip the hook function). Once when the hook function has finished, it should execute
 // ReturnFromException. The hook function is called with r2=1 (that is important if the hook address was recorded with SaveState, where it "returns" to the
 // SaveState caller, with r2 as "return value").
-T2 = 00b0;
+
+T2 = b0;
+T1 = 19;
 8004BDBC	jr     t2 
-T1 = 0019;
 ////////////////////////////////
 
 
@@ -663,22 +680,22 @@ T1 = 0019;
 ////////////////////////////////
 // system_main_timer_initialize()
 
-V1 = w[80058004]; // 1f801114 Timer 1 Counter Mode (R/W)
+timer1114 = w[80058004]; // 1f801114 Timer 1 Counter Mode (R/W)
 // 0 Synchronization Enable 1=Synchronize via Bit1-2)
 // 1-2 Synchronization Mode
 //     3 = Pause until Vblank occurs once, then switch to Free Run
 // 8-9 Clock Source (0-3, see list below)
 //     Counter 1:  1 or 3 = Hblank
-[V1] = w(00000107);
+[timer1114] = w(00000107);
 [80058000] = w(0);
 
 A0 = 80057fe0;
 A1 = 8;
 func4bec4(); // set mem to zero
 
-A0 = 0;
+A0 = 0; // IRQ0 VBLANK (PAL=50Hz, NTSC=60Hz)
 A1 = 8004be20; // system_main_timer_callback()
-func4b618();
+system_int_set_interrupt_callback();
 
 return 8004be98; // system_main_timer_additional_callback()
 ////////////////////////////////
@@ -738,9 +755,9 @@ func4c16c(); // remove all callbacks
 V0 = w[80058008];
 [V0] = w(0); // remove callback flags
 
-A0 = 3;
-A1 = 8004bf40;
-func4b618();
+A0 = 3; // IRQ3 DMA
+A1 = 8004bf40; // func4bf40()
+system_int_set_interrupt_callback();
 
 return 8004c0c4;
 ////////////////////////////////

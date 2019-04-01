@@ -953,7 +953,7 @@ S0 = w[800584e4];
 if( A0 != S0 )
 {
     [800584e4] = w(A0);
-    func4d62c(); // set irq9 callback
+    system_sound_set_spu_interrupt_callback();
 }
 
 return S0;
@@ -962,11 +962,11 @@ return S0;
 
 
 ////////////////////////////////
-// func4d62c()
+// system_sound_set_spu_interrupt_callback()
 
 A1 = A0;
-A0 = 9;
-func4b618();
+A0 = 9; // IRQ9 SPU
+system_int_set_interrupt_callback();
 ////////////////////////////////
 
 

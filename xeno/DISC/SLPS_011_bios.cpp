@@ -215,9 +215,10 @@
 ////////////////////////////////
 // system_bios_change_clear_pad()
 // B(5Bh) ChangeClearPad(int)   ;pad AND card (ie. used also for Card)
-8004044C	addiu  t2, zero, $00b0
+
+T2 = b0;
+T1 = 5b;
 80040450	jr     t2 
-80040454	addiu  t1, zero, $005b
 ////////////////////////////////
 
 
