@@ -162,7 +162,9 @@
 
 80055e28 []       cd sync interrupt result.
 80055e29 []       cd ready interrupt result.
-80055e2a []       init with 0. cd read interrupt result?
+80055e2a []       cd read interrupt result.
+
+80055e2c address of cd init data.
 
 80055f70 []       gpu mode type (old commands or new commands).
                     0 - old cpu.
@@ -213,16 +215,18 @@
 80056f48 array of interrupt callbacks.
 
 80056f74 [][]     interrupt callbacks mask.
-80056f7c store registers here.
+80056f76 [][]     store interrupt mask register here during reset to default handlers.
+80056f78 [][][][] store dma control register here during reset to default handlers.
+80056f7c store custom interrupt handler here (registers).
 80056f80 [][][][] init with 0x80057f5c.
 
 80057fcc [][][][] pointer to some func callbacks (80057fac).
     + 0 80019468
-    + 4 8004c0c4
+    + 4 system_dma_additional_callback_inter()
     + 8 system_int_set_interrupt_callback_inter()
-    + c func4b780()
+    + c system_interrupts_timer_dma_initialize_inter()
     +10 8004bb98
-    +14 system_main_timer_additional_callback()
+    +14 system_main_timer_additional_callback_inter()
     +18 8004bc44
     +1c 80056f44
 80057fd0 [][][][] 1f801070 interrupt status register.

@@ -2361,7 +2361,7 @@ A1 = 0;
 S1 = V0;
 A0 = S1;
 A1 = SP + 0010;
-80035E80	jal    system_devkit_pc_write_by_8000 [$8004c318]
+80035E80	jal    system_devkit_pc_write_all [$8004c318]
 A2 = 0014;
 V1 = h[S0 + 0004];
 V0 = h[S0 + 0006];
@@ -2370,7 +2370,7 @@ V0 = h[S0 + 0006];
 A0 = S1;
 80035E9C	lui    a1, $8070
 80035EA0	mflo   a3
-80035EA4	jal    system_devkit_pc_write_by_8000 [$8004c318]
+80035EA4	jal    system_devkit_pc_write_all [$8004c318]
 A2 = A3 << 01;
 80035EAC	jal    system_devkit_pc_close [$8004c1e0]
 A0 = S1;
@@ -2450,12 +2450,12 @@ if( S0 != -1 )
     A0 = S0;
     A1 = SP + 10;
     A2 = V0;
-    system_devkit_pc_write_by_8000();
+    system_devkit_pc_write_all();
 
     A0 = S0;
     A1 = 80700000;
     A2 = S1 * 3;
-    system_devkit_pc_write_by_8000();
+    system_devkit_pc_write_all();
 
     A0 = S0;
     system_devkit_pc_close();
@@ -2586,7 +2586,7 @@ for( int i = 0; i < 8; ++i )
 
 
 ////////////////////////////////
-// func361f4()
+// system_game_controllers_update()
 
 [80058b24] = w(w[80058b24] + 1);
 

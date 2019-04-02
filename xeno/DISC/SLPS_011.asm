@@ -4933,7 +4933,7 @@ L2b8d0:	; 8002B8D0
 8002B924	nop
 8002B928	lui    at, $8005
 8002B92C	sw     zero, $f49c(at)
-8002B930	jal    func41264 [$80041264]
+8002B930	jal    system_cdrom_dma_callback [$80041264]
 8002B934	addu   a0, zero, zero
 8002B938	lui    a0, $8005
 8002B93C	lw     a0, $f4dc(a0)
@@ -8922,7 +8922,7 @@ L31790:	; 80031790
 
 L317a4:	; 800317A4
 800317A4	addu   a1, s0, zero
-800317A8	jal    func4c240 [$8004c240]
+800317A8	jal    system_devkit_pc_read_all [$8004c240]
 800317AC	addu   a2, s2, zero
 800317B0	subu   s1, s1, s2
 800317B4	j      L31790 [$80031790]
@@ -9741,7 +9741,7 @@ L33ad8:	; 80033AD8
 
 
 ////////////////////////////////
-// func361f4()
+// system_game_controllers_update()
 800361F4-80036284
 ////////////////////////////////
 // func36288
@@ -12145,48 +12145,12 @@ L405dc:	; 800405DC
 800405FC	jr     ra 
 80040600	nop
 
-80040604	addiu  sp, sp, $ffd8 (=-$28)
-80040608	sw     s0, $0010(sp)
-8004060C	addu   s0, a0, zero
-80040610	sw     s1, $0014(sp)
-80040614	addu   s1, a1, zero
-80040618	sw     s2, $0018(sp)
-8004061C	addu   s2, a2, zero
-80040620	sw     s3, $001c(sp)
-80040624	sw     ra, $0020(sp)
-80040628	jal    system_patch_no_pad_card_auto_ack [$80040ad4]
-8004062C	addu   s3, a3, zero
-80040630	jal    system_enter_critical_section [$8004034c]
-80040634	nop
-80040638	jal    system_patch_pad_error_handling_and_get_pad_enable_functions [$8004098c]
-8004063C	nop
-80040640	jal    system_exit_critical_section [$8004035c]
-80040644	nop
-80040648	jal    system_bios_change_clear_pad [$8004044c]
-8004064C	addu   a0, zero, zero
-80040650	jal    system_add_interrupt_priority1_handler [$800407a4]
-80040654	nop
-80040658	addu   a0, s0, zero
-8004065C	addu   a1, s1, zero
-80040660	addu   a2, s2, zero
-80040664	jal    system_bios_outdated_pad_init_and_start [$80040934]
-80040668	addu   a3, s3, zero
-8004066C	jal    system_patch_optional_pad_output [$80040a1c]
-80040670	nop
-80040674	addiu  v0, zero, $0001
-80040678	lui    at, $8005
-8004067C	sw     v0, $5ab4(at)
-80040680	lw     ra, $0020(sp)
-80040684	lw     s3, $001c(sp)
-80040688	lw     s2, $0018(sp)
-8004068C	lw     s1, $0014(sp)
-80040690	lw     s0, $0010(sp)
-80040694	addiu  sp, sp, $0028
-80040698	jr     ra 
-8004069C	nop
 
 
-
+// SLPS_011_buttons.cpp //
+////////////////////////////////
+// func40604
+80040604-8004069C
 ////////////////////////////////
 // func406a0
 800406A0-80040738
@@ -12194,52 +12158,14 @@ L405dc:	; 800405DC
 // func4073c
 8004073C-80040768
 ////////////////////////////////
-
-
-
-func4076c:	; 8004076C
-8004076C	addiu  sp, sp, $ffe8 (=-$18)
-80040770	sw     ra, $0010(sp)
-80040774	jal    system_clear_pad_enable_flag [$80040978]
-80040778	nop
-8004077C	jal    system_bios_stop_pad [$80040924]
-80040780	nop
-80040784	jal    func40824 [$80040824]
-80040788	nop
-8004078C	lui    at, $8005
-80040790	sw     zero, $5ab4(at)
-80040794	lw     ra, $0010(sp)
-80040798	addiu  sp, sp, $0018
-8004079C	jr     ra 
-800407A0	nop
-
-
-
+// func4076c
+8004076C-800407A0
 ////////////////////////////////
 // system_add_interrupt_priority1_handler
 800407A4-80040820
 ////////////////////////////////
-
-
-
-func40824:	; 80040824
-80040824	addiu  sp, sp, $ffe8 (=-$18)
-80040828	sw     ra, $0010(sp)
-8004082C	jal    system_enter_critical_section [$8004034c]
-80040830	nop
-80040834	lui    a1, $8006
-80040838	addiu  a1, a1, $989c (=-$6764)
-8004083C	jal    system_bios_sys_deq_int_rp [$80040954]
-80040840	addiu  a0, zero, $0001
-80040844	jal    system_exit_critical_section [$8004035c]
-80040848	nop
-8004084C	lw     ra, $0010(sp)
-80040850	addiu  v0, zero, $0001
-80040854	jr     ra 
-80040858	addiu  sp, sp, $0018
-
-
-
+// func40824
+80040824-80040858
 ////////////////////////////////
 // func4085c
 8004085C-800408C0
@@ -12305,67 +12231,26 @@ func40824:	; 80040824
 80040B54	jr     ra 
 80040B58	sw     a0, $0000(v1)
 
-80040B5C	addiu  sp, sp, $ffe8 (=-$18)
-80040B60	sw     ra, $0010(sp)
-80040B64	addu   a1, a0, zero
-80040B68	jal    func4b648 [$8004b648]
-80040B6C	addiu  a0, zero, $0003
-80040B70	lw     ra, $0010(sp)
-80040B74	addiu  sp, sp, $0018
-80040B78	jr     ra 
-80040B7C	nop
 
-
-
+// SLPS_011_cdrom.cpp//
+////////////////////////////////
+// system_cdrom_dma_callback_2
+80040B5C-80040B7C
 ////////////////////////////////
 // func40b80
 80040B80-80040C14
 ////////////////////////////////
-
-
-
-80040C18	addiu  sp, sp, $ffe8 (=-$18)
-80040C1C	sw     ra, $0010(sp)
-80040C20	lui    a0, $f000
-80040C24	ori    a0, a0, $0003
-80040C28	jal    system_bios_deliver_event [$80040c90]
-80040C2C	addiu  a1, zero, $0020
-80040C30	lw     ra, $0010(sp)
-80040C34	addiu  sp, sp, $0018
-80040C38	jr     ra 
-80040C3C	nop
-
-80040C40	addiu  sp, sp, $ffe8 (=-$18)
-80040C44	sw     ra, $0010(sp)
-80040C48	lui    a0, $f000
-80040C4C	ori    a0, a0, $0003
-80040C50	jal    system_bios_deliver_event [$80040c90]
-80040C54	addiu  a1, zero, $0040
-80040C58	lw     ra, $0010(sp)
-80040C5C	addiu  sp, sp, $0018
-80040C60	jr     ra 
-80040C64	nop
-
-80040C68	addiu  sp, sp, $ffe8 (=-$18)
-80040C6C	sw     ra, $0010(sp)
-80040C70	lui    a0, $f000
-80040C74	ori    a0, a0, $0003
-80040C78	jal    system_bios_deliver_event [$80040c90]
-80040C7C	addiu  a1, zero, $0040
-80040C80	lw     ra, $0010(sp)
-80040C84	addiu  sp, sp, $0018
-80040C88	jr     ra 
-80040C8C	nop
-
-
-
+// func40c18
+80040C18-80040C3C
+////////////////////////////////
+// func40c40
+80040C40-80040C64
+////////////////////////////////
+// func40c68
+80040C68-80040C8C
 ////////////////////////////////
 // system_bios_deliver_event
 80040C90-80040C9C
-////////////////////////////////
-
-
-
 ////////////////////////////////
 // func40ca0
 80040CA0-80040CAC
@@ -12424,7 +12309,7 @@ func40824:	; 80040824
 // func41244
 80041244-80041260
 ////////////////////////////////
-// func41264
+// system_cdrom_dma_callback
 80041264-80041284
 ////////////////////////////////
 // func41288
@@ -12460,7 +12345,7 @@ func40824:	; 80040824
 // func42578
 80042578-800425C4
 ////////////////////////////////
-// func425c8
+// system_cdrom_init
 800425C8-800427B0
 ////////////////////////////////
 // system_psyq_cd_data_sync
@@ -12472,7 +12357,7 @@ func40824:	; 80040824
 // func42a20
 80042A20-80042B1C
 ////////////////////////////////
-// func42b20
+// system_cdrom_interrupt_handler
 80042B20-80042C00
 ////////////////////////////////
 // func42c04
@@ -12514,6 +12399,7 @@ func40824:	; 80040824
 
 
 
+// SLPS_011_graphic_library_basic.cpp //
 ////////////////////////////////
 // func435e4
 800435E4-800436CC
@@ -13867,13 +13753,13 @@ L4b098:	; 8004B098
 // system_bios_change_clear_rcnt
 8004B5D8-8004B5E4
 ////////////////////////////////
-// func4b5e8
+// system_interrupts_timer_dma_initialize
 8004B5E8-8004B614
 ////////////////////////////////
 // system_int_set_interrupt_callback
 8004B618-8004B644
 ////////////////////////////////
-// func4b648
+// system_dma_additional_callback
 8004B648-8004B674
 ////////////////////////////////
 // system_call_main_timer_additional_callback_4
@@ -13897,7 +13783,7 @@ L4b098:	; 8004B098
 // system_set_interrupt_mask_register
 8004B764-8004B77C
 ////////////////////////////////
-// func4b780
+// system_interrupts_timer_dma_initialize_inter
 8004B780-8004B858
 ////////////////////////////////
 // system_int_handler
@@ -13906,10 +13792,10 @@ L4b098:	; 8004B098
 // system_int_set_interrupt_callback_inter
 8004BA44-8004BB94
 ////////////////////////////////
-// func4bb98
+// system_interrupts_timer_dma_store
 8004BB98-8004BC40
 ////////////////////////////////
-// func4bc44
+// system_interrupts_timer_dma_restore
 8004BC44-8004BCC8
 ////////////////////////////////
 // system_int_memzero
@@ -13918,7 +13804,7 @@ L4b098:	; 8004B098
 // system_int_store_registers_to_mem
 8004BCF8-8004BD30
 ////////////////////////////////
-// func4bd34
+// system_int_restore_mem_to_registers
 8004BD34-8004BD6C
 ////////////////////////////////
 
@@ -13941,7 +13827,7 @@ L4b098:	; 8004B098
 // system_bios_return_from_exception
 8004BD98-8004BDA4
 ////////////////////////////////
-// func4bda8
+// system_bios_set_default_exit_from_exception
 8004BDA8-8004BDB4
 ////////////////////////////////
 // system_bios_set_custom_exit_from_exception
@@ -13953,19 +13839,19 @@ L4b098:	; 8004B098
 // system_main_timer_callback
 8004BE20-8004BE94
 ////////////////////////////////
-// system_main_timer_additional_callback
+// system_main_timer_additional_callback_inter
 8004BE98-8004BEC0
 ////////////////////////////////
 // func4bec4
 8004BEC4-8004BEEC
 ////////////////////////////////
-// func4bef0
+// system_dma_callback_initialize
 8004BEF0-8004BF3C
 ////////////////////////////////
 // system_int_dma_handler
 8004BF40-8004C0C0
 ////////////////////////////////
-// func4c0c4
+// system_dma_additional_callback_inter
 8004C0C4-8004C168
 ////////////////////////////////
 // func4c16c
@@ -13992,13 +13878,13 @@ L4b098:	; 8004B098
 // system_devkit_pc_init
 8004C234-8004C23C
 ////////////////////////////////
-// func4c240
+// system_devkit_pc_read_all
 8004C240-8004C2FC
 ////////////////////////////////
-// func4c300
+// system_devkit_pc_read
 8004C300-8004C314
 ////////////////////////////////
-// system_devkit_pc_write_by_8000
+// system_devkit_pc_write_all
 8004C318-8004C3D4
 ////////////////////////////////
 // system_devkit_pc_write
@@ -14059,7 +13945,7 @@ L4b098:	; 8004B098
 // system_sound_wait_sync
 8004D0B0-8004D114
 ////////////////////////////////
-// func4d118
+// system_sound_spu_dma_callback
 8004D118-8004D138
 ////////////////////////////////
 // func4d13c

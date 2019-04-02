@@ -12,7 +12,7 @@ func4c410();
 
 without_data = A0;
 
-func4b5e8();
+system_interrupts_timer_dma_initialize();
 
 A0 = without_data;
 func4c584(); // init spu registers and ram
@@ -69,7 +69,7 @@ if( w[800584a4] == 0 )
     system_enter_critical_section();
 
     A0 = 8004c9e4; // func4c9e4()
-    func4d118();
+    system_sound_spu_dma_callback();
 
     A0 = f0000009; // IRQ9 SPU
     A1 = 20; // command completed
@@ -659,11 +659,11 @@ while( w[SP + 0] < 3c )
 
 
 ////////////////////////////////
-// func4d118()
+// system_sound_spu_dma_callback()
 
 A1 = A0;
-A0 = 4;
-func4b648();
+A0 = 4; // SPU
+system_dma_additional_callback();
 ////////////////////////////////
 
 
@@ -681,7 +681,7 @@ if( w[800584a4] == 1 )
     [800584e4] = w(0);
 
     A0 = 0;
-    func4d118();
+    system_sound_spu_dma_callback();
 
     A0 = w[8005803c];
     system_bios_close_event();

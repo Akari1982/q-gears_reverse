@@ -25,7 +25,7 @@ if( S0 == 0 || S0 == -1 )
     system_cdrom_set_debug_level();
 
     A0 = 0;
-    func41264();
+    system_cdrom_dma_callback();
 
     A0 = 0;
     func40e2c(); // set cd load callback
@@ -142,7 +142,7 @@ A0 = 0003;
 
 L28240:	; 80028240
 A0 = 0;
-80028240	jal    func41264 [$80041264]
+80028240	jal    system_cdrom_dma_callback [$80041264]
 
 A0 = 0;
 80028248	jal    func40e2c [$80040e2c]
@@ -290,7 +290,7 @@ if( S1 != 0 )
         A0 = S2;
         A1 = S1;
         A2 = S3;
-        80028430	jal    func4c240 [$8004c240]
+        80028430	jal    system_devkit_pc_read_all [$8004c240]
 
         V1 = V0;
         8002843C	bne    v1, zero, L2846c [$8002846c]
@@ -684,7 +684,7 @@ S0 = 0;
 loop28a30:	; 80028A30
 A0 = w[8004f4f0];
 A1 = S2;
-80028A3C	jal    func4c240 [$8004c240]
+80028A3C	jal    system_devkit_pc_read_all [$8004c240]
 A2 = 0800;
 80028A44	bne    v0, zero, L28a74 [$80028a74]
 A0 = S0;
@@ -980,7 +980,7 @@ S4 = S1 << 0b;
 80028E60	addiu  s0, s0, $8d94 (=-$726c)
 A1 = S0;
 A0 = w[8004f4f0];
-80028E70	jal    func4c240 [$8004c240]
+80028E70	jal    system_devkit_pc_read_all [$8004c240]
 A2 = 0008;
 V1 = bu[S0 + 0000];
 V0 = 0001;
@@ -994,7 +994,7 @@ A0 = w[8004f4f0];
 V0 = S4 + V0;
 S0 = V0;
 [800595f0] = w(S0);
-80028EAC	jal    func4c240 [$8004c240]
+80028EAC	jal    system_devkit_pc_read_all [$8004c240]
 A1 = S0;
 V1 = hu[S0 + 0006];
 V0 = hu[S0 + 0008];
@@ -1051,7 +1051,7 @@ V0 = V0 << 05;
 A1 = A1 + V0;
 [8004f4ca] = h(V1);
 [800595f4] = w(A1);
-80028FAC	jal    func4c240 [$8004c240]
+80028FAC	jal    system_devkit_pc_read_all [$8004c240]
 A2 = 07e0;
 V0 = bu[800595b4];
 80028FBC	nop
@@ -1082,7 +1082,7 @@ V0 = V0 & 0008;
 8002902C	lui    s0, $8006
 80029030	addiu  s0, s0, $8d94 (=-$726c)
 A1 = S0;
-80029038	jal    func4c240 [$8004c240]
+80029038	jal    system_devkit_pc_read_all [$8004c240]
 A2 = 0008;
 V1 = bu[S0 + 0000];
 V0 = 0001;
@@ -1118,7 +1118,7 @@ V0 = V0 + 0001;
 V1 = w[800595f0];
 A1 = A1 << 05;
 [8004f4ca] = h(V0);
-800290D8	jal    func4c240 [$8004c240]
+800290D8	jal    system_devkit_pc_read_all [$8004c240]
 A1 = A1 + V1;
 A2 = 07e0;
 V0 = h[800595fc];
@@ -1127,7 +1127,7 @@ A1 = V0 << 06;
 A1 = A1 - V0;
 V0 = w[800595f4];
 A1 = A1 << 05;
-80029108	jal    func4c240 [$8004c240]
+80029108	jal    system_devkit_pc_read_all [$8004c240]
 A1 = A1 + V0;
 V0 = bu[800595b4];
 80029118	nop
@@ -1467,7 +1467,7 @@ if( flags & 100 )
     [8004f4c0] = w(1);
 
     A0 = 8002b868;
-    func41264();
+    system_cdrom_dma_callback();
 
     A0 = 8002a49c;
     func40e2c(); // set cd load callback 80055b48
@@ -1601,7 +1601,7 @@ else
                 A0 = S1;
                 A1 = allocated_memory;
                 A2 = w[8004f49c]; // file size to load
-                func4c240();
+                system_devkit_pc_read_all();
 
                 if( V0 != 0 )
                 {
@@ -1648,7 +1648,7 @@ else
         [8004f4c0] = w(1);
 
         A0 = 0;
-        func41264();
+        system_cdrom_dma_callback();
 
         A0 = 8002a49c;
         func40e2c(); // set cd load callback 80055b48
@@ -1849,7 +1849,7 @@ loop29b88:	; 80029B88
 A0 = S1 & ffff;
 A0 = S2;
 A1 = w[S3 + 0004];
-80029B98	jal    func4c240 [$8004c240]
+80029B98	jal    system_devkit_pc_read_all [$8004c240]
 A2 = V0;
 80029BA0	bne    v0, zero, L29bc8 [$80029bc8]
 A0 = S0;
@@ -1898,7 +1898,7 @@ L29c2c:	; 80029C2C
 80029C30	addiu  a0, a0, $b850 (=-$47b0)
 V0 = 0001;
 [8004f4c0] = w(V0);
-80029C40	jal    func41264 [$80041264]
+80029C40	jal    system_cdrom_dma_callback [$80041264]
 80029C44	nop
 80029C48	lui    a0, $8003
 80029C4C	addiu  a0, a0, $a49c (=-$5b64)
@@ -2126,7 +2126,7 @@ L29fdc:	; 80029FDC
 80029FDC	lui    a0, $8003
 80029FE0	addiu  a0, a0, $b960 (=-$46a0)
 [8004f4c0] = w(S5);
-80029FEC	jal    func41264 [$80041264]
+80029FEC	jal    system_cdrom_dma_callback [$80041264]
 80029FF0	nop
 80029FF4	lui    a0, $8003
 80029FF8	addiu  a0, a0, $a49c (=-$5b64)
@@ -2838,7 +2838,7 @@ V0 = w[8004f4d8];
 8002AA5C	nop
 8002AA60	jal    func40e44 [$80040e44]
 A0 = 0;
-8002AA68	jal    func41264 [$80041264]
+8002AA68	jal    system_cdrom_dma_callback [$80041264]
 A0 = 0;
 A0 = w[8004f4dc];
 [8004f49c] = w(0);
@@ -3268,7 +3268,7 @@ if( interupt == 1 )
         func40e44(); // remove 80055b4c callback
 
         A0 = 0;
-        func41264();
+        system_cdrom_dma_callback();
 
         A0 = w[8004f4dc];
 
@@ -3423,7 +3423,7 @@ V0 = w[8004f4d8];
 8002B410	nop
 8002B414	jal    func40e44 [$80040e44]
 A0 = 0;
-8002B41C	jal    func41264 [$80041264]
+8002B41C	jal    system_cdrom_dma_callback [$80041264]
 A0 = 0;
 A0 = w[8004f4dc];
 [8004f49c] = w(0);
@@ -3642,7 +3642,7 @@ A2 = 0800;
 loop2b794:	; 8002B794
 A1 = w[8004f4ac];
 A0 = w[800595a0];
-8002B7A4	jal    func4c240 [$8004c240]
+8002B7A4	jal    system_devkit_pc_read_all [$8004c240]
 A1 = S1 + A1;
 8002B7AC	bne    v0, zero, L2b7e4 [$8002b7e4]
 A0 = S0 << 10;

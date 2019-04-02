@@ -1,4 +1,94 @@
 ////////////////////////////////
+// system_cdrom_dma_callback_2
+
+A1 = A0;
+A0 = 3; // CDROM   (CDROM to RAM)
+system_dma_additional_callback();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func40b80()
+
+S0 = 4;
+loop40b90:	; 80040B90
+    A0 = 1;
+    func40ce0();
+
+    if( V0 == 1 )
+    {
+        A0 = 80040c18; // func40c18()
+        func40e2c();
+
+        A0 = 80040c40; // func40c40()
+        func40e44();
+
+        A0 = 80040c68; // func40c68()
+        func435b4();
+
+        A0 = 0;
+        func435cc();
+
+        return 1;
+    }
+
+    S0 = S0 - 1;
+80040BE8	bne    s0, -1, loop40b90 [$80040b90]
+
+A0 = 80018d60; // "CdInit: Init failed"
+system_bios_printf();
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func40c18()
+
+A0 = f0000003;
+A1 = 20;
+system_bios_deliver_event();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func40c40()
+
+A0 = f0000003;
+A1 = 40;
+system_bios_deliver_event();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func40c68()
+
+A0 = f0000003;
+A1 = 40;
+system_bios_deliver_event();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_deliver_event()
+// B(07h) DeliverEvent(class, spec)
+// This function is usually called by the kernel, it triggers all events that are
+// enabled/busy, and that have the specified class and spec values. Depending on
+// the mode, either the callback function is called (mode=1000h), or the event is
+// marked as enabled/ready (mode=2000h).
+T2 = 00b0;
+80040C94	jr     t2 
+T1 = 0007;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func40ca0()
 
 return bu[80055b58];
@@ -41,7 +131,7 @@ if( S0 == 2 )
 }
 else
 {
-    func425c8();
+    system_cdrom_init();
     if( V0 != 0 )
     {
         return 0;
@@ -59,7 +149,7 @@ return 1;
 
 
 ////////////////////////////////
-// func40d4c
+// func40d4c()
 
 80040D54	jal    func423a4 [$800423a4]
 ////////////////////////////////
@@ -89,8 +179,7 @@ V0 = w[AT + 5b70];
 80040DA4	nop
 
 L40da8:	; 80040DA8
-80040DA8	lui    v0, $8002
-80040DAC	addiu  v0, v0, $8d78 (=-$7288)
+V0 = 80018d78;
 
 L40db0:	; 80040DB0
 80040DB0	jr     ra 
@@ -112,8 +201,7 @@ V0 = w[AT + 5bf0];
 80040DD8	nop
 
 L40ddc:	; 80040DDC
-80040DDC	lui    v0, $8002
-80040DE0	addiu  v0, v0, $8d78 (=-$7288)
+V0 = 80018d78;
 
 L40de4:	; 80040DE4
 ////////////////////////////////
@@ -418,11 +506,11 @@ V0 = V0 < 0001;
 
 
 ////////////////////////////////
-// func41264()
+// system_cdrom_dma_callback()
 
-A0 = 3; // slot
 A1 = A0; // callback
-func4b648();
+A0 = 3; // CDROM   (CDROM to RAM)
+system_dma_additional_callback();
 ////////////////////////////////
 
 
@@ -568,14 +656,7 @@ cdl_command = bu[80055b69];
 
 error = 0;
 
-// 00 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
-// 08 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
-// 10 00000000 00000000 01000000 01000000 01000000 01000000 01000000 01000000
-// 18 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
-// 20 00000000 00000000 03000000 00000000 00000000 00000000 00000000 00000000
-// 28 00000000 00000000 00000000 00000000 00000000 02000000 01000000 00000000
-// 30 00000000 00000000 01000000 00000000 01000000 00000000 00000000 00000000
-// 38 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+// == 0 only for CdlGetlocL and CdlGetlocP
 if( ( last_int != 3 ) || ( w[80055d10 + cdl_command * 4] != 0 ) )
 {
     // shell was closed and now opened
@@ -937,8 +1018,7 @@ A2 = V0 & 00ff;
 80041E34	beq    a2, zero, L41e78 [$80041e78]
 80041E38	nop
 [S3 + 0000] = b(0);
-80041E40	lui    a0, $8006
-80041E44	addiu  a0, a0, $98bc (=-$6744)
+A0 = 800598bc;
 80041E48	beq    s4, zero, L41ec0 [$80041ec0]
 A1 = S4;
 V1 = 0007;
@@ -962,8 +1042,7 @@ A2 = V0 & 00ff;
 80041E88	nop
 [S3 + ffff] = b(0);
 A1 = S4;
-80041E94	lui    a0, $8006
-80041E98	addiu  a0, a0, $98b4 (=-$674c)
+A0 = 800598b4;
 80041E9C	beq    a1, zero, L41ec0 [$80041ec0]
 V1 = 0007;
 80041EA4	addiu  a3, zero, $ffff (=-$1)
@@ -1190,7 +1269,7 @@ while( bu[cd_1803] & 7 ) // interrupt response received
     [cd_1802] = b(07); // enable interrupts
 }
 
-[80055e28] = b(2);
+[80055e28] = b(2); // CdlComplete
 [80055e29] = b(0);
 [80055e2a] = b(0);
 
@@ -1243,17 +1322,17 @@ return 0;
 [80055b5c] = w(0);
 [80055b58] = w(0);
 
-func4b5e8(); // reset interrupts
+system_interrupts_timer_dma_initialize(); // init if we not yet
 
 A0 = 2; // IRQ2 CDROM
-A1 = 80042b20; // func42b20()
+A1 = 80042b20; // system_cdrom_interrupt_handler()
 system_int_set_interrupt_callback();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func425c8()
+// system_cdrom_init()
 
 cd_1800 = w[80055e10]; // 1f801800
 cd_1802 = w[80055e18]; // 1f801802
@@ -1274,10 +1353,10 @@ system_bios_printf();
 [80055b58] = w(0);
 [80055b5c] = w(0);
 
-func4b5e8(); // reset interrupts
+system_interrupts_timer_dma_initialize(); // init if we not yet
 
 A0 = 2; // IRQ2 CDROM
-A1 = 80042b20; // func42b20()
+A1 = 80042b20; // system_cdrom_interrupt_handler()
 system_int_set_interrupt_callback();
 
 [cd_1800] = b(01);
@@ -1288,15 +1367,15 @@ while( bu[cd_1803] & 7 ) // interrupt response received
     [cd_1802] = b(07); // enable interrupts
 }
 
-[80055e28] = b(2);
-[80055e29] = b(0);
-[80055e2a] = b(0);
+[80055e28] = b(2); // CdlComplete
+[80055e29] = b(0); // CdlNoIntr
+[80055e2a] = b(0); // CdlNoIntr
 
 [cd_1800] = b(00);
 [cd_1803] = b(00); // reset fifo
 [com_delay] = w(1325); // set delay
 
-A0 = 1;
+A0 = 1; // CdlNop
 A1 = 0;
 A2 = 0;
 A3 = 0;
@@ -1305,14 +1384,14 @@ system_cdrom_cdl_command_exec();
 // shell open (0 = closed, 1 = is/was open)
 if( w[80055b58] & 10 )
 {
-    A0 = 1;
+    A0 = 1; // CdlNop
     A1 = 0;
     A2 = 0;
     A3 = 0;
     system_cdrom_cdl_command_exec();
 }
 
-A0 = a;
+A0 = a; // CdlInit
 A1 = 0;
 A2 = 0;
 A3 = 0;
@@ -1320,7 +1399,7 @@ system_cdrom_cdl_command_exec();
 
 if( V0 == 0 )
 {
-    A0 = c;
+    A0 = c; // CdlDemute
     A1 = 0;
     A2 = 0;
     A3 = 0;
@@ -1332,10 +1411,10 @@ if( V0 == 0 )
         A1 = 0;
         system_psyq_cd_sync();
 
-        V0 = V0 ^ 2;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        return V0;
+        if( V0 == 2 ) // CdlComplete
+        {
+            return 0;
+        }
     }
 }
 
@@ -1510,7 +1589,7 @@ SP = SP + 0008;
 
 
 ////////////////////////////////
-// func42b20()
+// system_cdrom_interrupt_handler()
 
 cd_1800 = w[80055e10]; // 1f801800
 
@@ -1671,7 +1750,7 @@ V0 = w[80055f18];
 V0 = V0 & 0001;
 80042DC8	beq    v0, zero, L42e04 [$80042e04]
 A0 = SP + 0010;
-80042DD0	jal    func41264 [$80041264]
+80042DD0	jal    system_cdrom_dma_callback [$80041264]
 A0 = 0;
 A0 = SP + 0010;
 80042DDC	jal    func41244 [$80041244]
@@ -1680,7 +1759,7 @@ A1 = 0003;
 A0 = 0;
 80042DEC	lui    a0, $8004
 A0 = A0 + 3038;
-80042DF4	jal    func41264 [$80041264]
+80042DF4	jal    system_cdrom_dma_callback [$80041264]
 80042DF8	nop
 80042DFC	j      L42e0c [$80042e0c]
 80042E00	nop
@@ -1698,8 +1777,7 @@ V1 = w[V1 + 0000];
 80042E20	nop
 80042E24	beq    v0, v1, L42e48 [$80042e48]
 80042E28	nop
-80042E2C	lui    a0, $8002
-80042E30	addiu  a0, a0, $8fd8 (=-$7028)
+A0 = 80018fd8;
 80042E34	jal    func42c04 [$80042c04]
 80042E38	nop
 80042E3C	addiu  v0, zero, $ffff (=-$1)
@@ -1795,7 +1873,7 @@ V0 = V0 & 0001;
 80042FCC	beq    v0, zero, L42fe8 [$80042fe8]
 A0 = 0009;
 A0 = w[80055f14];
-80042FDC	jal    func41264 [$80041264]
+80042FDC	jal    system_cdrom_dma_callback [$80041264]
 80042FE0	nop
 A0 = 0009;
 
@@ -1859,7 +1937,7 @@ V0 = V0 & 0001;
 800430DC	beq    v0, zero, L430f8 [$800430f8]
 A0 = 0009;
 A0 = w[80055f14];
-800430EC	jal    func41264 [$80041264]
+800430EC	jal    system_cdrom_dma_callback [$80041264]
 800430F0	nop
 A0 = 0009;
 
@@ -1897,7 +1975,7 @@ V0 = w[V0 + 0000];
 V0 = V0 & 0001;
 8004316C	beq    v0, zero, L4317c [$8004317c]
 80043170	nop
-80043174	jal    func41264 [$80041264]
+80043174	jal    system_cdrom_dma_callback [$80041264]
 A0 = 0;
 
 L4317c:	; 8004317C
@@ -1911,8 +1989,7 @@ V0 = V0 & 0010;
 V0 = V0 & 003f;
 8004319C	bne    v0, zero, L431b8 [$800431b8]
 A0 = 0001;
-800431A4	lui    a0, $8002
-800431A8	addiu  a0, a0, $8ff0 (=-$7010)
+A0 = 80018ff0;
 800431AC	jal    func42c04 [$80042c04]
 800431B0	nop
 A0 = 0001;
@@ -1931,8 +2008,7 @@ A1 = 0;
 L431e4:	; 800431E4
 800431E4	beq    s1, zero, L4323c [$8004323c]
 800431E8	nop
-800431EC	lui    a0, $8002
-800431F0	addiu  a0, a0, $9008 (=-$6ff8)
+A0 = 80019008;
 800431F4	jal    func42c04 [$80042c04]
 800431F8	nop
 A0 = 0009;
@@ -1993,7 +2069,7 @@ V0 = V0 & 0001;
 A0 = 0006;
 800432D4	lui    a0, $8004
 A0 = A0 + 3038;
-800432DC	jal    func41264 [$80041264]
+800432DC	jal    system_cdrom_dma_callback [$80041264]
 800432E0	nop
 A0 = 0006;
 
@@ -2051,7 +2127,7 @@ V0 = V0 & 0001;
 800433AC	beq    v0, zero, L433c8 [$800433c8]
 A0 = 0009;
 A0 = w[80055f14];
-800433BC	jal    func41264 [$80041264]
+800433BC	jal    system_cdrom_dma_callback [$80041264]
 800433C0	nop
 A0 = 0009;
 
@@ -2107,7 +2183,7 @@ V0 = w[80055f18];
 V0 = V0 & 0001;
 80043488	beq    v0, zero, L434a0 [$800434a0]
 8004348C	nop
-80043490	jal    func41264 [$80041264]
+80043490	jal    system_cdrom_dma_callback [$80041264]
 A0 = 0;
 [80055f14] = w(V0);
 

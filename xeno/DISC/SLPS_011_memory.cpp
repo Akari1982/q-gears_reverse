@@ -1001,7 +1001,7 @@ func3fa40(); // get string size
 A0 = w[GP + 1d4];
 A1 = string;
 A2 = V0;
-system_devkit_pc_write_by_8000();
+system_devkit_pc_write_all();
 ////////////////////////////////
 
 

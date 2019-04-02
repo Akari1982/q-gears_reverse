@@ -1,1 +1,1 @@
-main SLPS_011_dialog.cpp
+main SLPS_011_cdrom.cpp

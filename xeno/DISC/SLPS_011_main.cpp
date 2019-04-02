@@ -35,7 +35,7 @@ while( A0 != A1 )
 ////////////////////////////////
 // func1960c()
 
-func4b5e8();
+system_interrupts_timer_dma_initialize();
 
 A0 = 0;
 system_psyq_set_graph_debug();
@@ -74,7 +74,7 @@ func4e690(); // start memory card
 
 system_bios_bu_init(); // to start memory card
 
-A0 = 800361f4; // func361f4()
+A0 = 800361f4; // system_game_controllers_update()
 system_call_main_timer_additional_callback_4();
 
 A0 = 8006f180; // pointer to start of allocated memory
@@ -498,7 +498,7 @@ S0 = V0;
 A0 = S0; // filehandle
 A1 = 80000000; // src
 A2 = 200000; // size
-system_devkit_pc_write_by_8000();
+system_devkit_pc_write_all();
 
 A0 = S0;
 system_devkit_pc_close();

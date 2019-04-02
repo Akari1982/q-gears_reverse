@@ -778,7 +778,7 @@ if(  mode == 0 || mode == 3 || mode == 5 )
     A2 = 80;
     system_graphic_set_mem();
 
-    func4b5e8(); // call func4b780()
+    system_interrupts_timer_dma_initialize();
 
     A0 = w[80055f68] & 00ffffff; // GP0 nop
     system_bios_gpu_cw();
@@ -919,9 +919,9 @@ if( que != que_old )
 
     [80055f71] = b(que);
 
-    A0 = 2; // slot
+    A0 = 2; // GPU (lists + image data)
     A1 = 0; // remove callback
-    func4b648();
+    system_dma_additional_callback();
 }
 return que_old;
 ////////////////////////////////
@@ -2775,9 +2775,9 @@ if( ( bu[80055f71] == 0 ) || ( ( w[80056074] == w[80056078] ) && ( ( w[gpu10a8] 
 }
 else
 {
-    A0 = 2; // slot
+    A0 = 2; // GPU (lists + image data)
     A1 = 800467e4; // system_gpu_render_queue_item_exec()
-    func4b648();
+    system_dma_additional_callback();
 
     queue_id = w[80056074];
 
@@ -2845,9 +2845,9 @@ while( ( w[80056078] != w[80056074] ) && ( ( w[gpu10a8] & 01000000 ) == 0 ) )
         // if draw sync callback not exist remove existed
         if( w[80055f7c] == 0 )
         {
-            A0 = 2; // slot
+            A0 = 2; // GPU (lists + image data)
             A1 = 0; // remove callback
-            func4b648();
+            system_dma_additional_callback();
         }
     }
 

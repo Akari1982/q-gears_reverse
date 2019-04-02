@@ -178,10 +178,10 @@ T1 = a;
 
 
 ////////////////////////////////
-// func4b5e8()
+// system_interrupts_timer_dma_initialize()
 
 V0 = w[80057fcc];
-8004B600	jalr   w[V0 + c] ra // func4b780()
+8004B600	jalr   w[V0 + c] ra // system_interrupts_timer_dma_initialize_inter()
 ////////////////////////////////
 
 
@@ -196,10 +196,10 @@ V0 = w[80057fcc];
 
 
 ////////////////////////////////
-// func4b648()
+// system_dma_additional_callback()
 
 V0 = w[80057fcc]; // 80057fac
-8004B660	jalr   w[V0 + 4] ra // func4c0c4()
+8004B660	jalr   w[V0 + 4] ra // system_dma_additional_callback_inter()
 ////////////////////////////////
 
 
@@ -210,7 +210,7 @@ V0 = w[80057fcc]; // 80057fac
 V0 = w[80057fcc];
 A1 = A0;
 A0 = 4;
-8004B694	jalr   w[V0 + 14] ra // system_main_timer_additional_callback()
+8004B694	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
 
@@ -219,7 +219,7 @@ A0 = 4;
 // system_call_main_timer_additional_callback_any()
 
 V0 = w[80057fcc];
-8004B6C4	jalr   w[V0 + 14] ra // system_main_timer_additional_callback()
+8004B6C4	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
 
@@ -237,8 +237,7 @@ V0 = w[80057fcc];
 // func4b70c
 
 V0 = w[80057fcc];
-V0 = w[V0 + 0018];
-8004B724	jalr   v0 ra
+8004B724	jalr   w[V0 + 18] ra
 ////////////////////////////////
 
 
@@ -272,7 +271,7 @@ return V0;
 
 
 ////////////////////////////////
-// func4b780()
+// system_interrupts_timer_dma_initialize_inter()
 
 if( hu[80056f44] != 0 )
 {
@@ -313,7 +312,7 @@ system_main_timer_initialize();
 V1 = w[80057fcc];
 [V1 + 14] = w(V0);
 
-func4bef0();
+system_dma_callback_initialize();
 V1 = w[80057fcc];
 [V1 + 4] = w(V0);
 
@@ -476,87 +475,54 @@ return S4;
 
 
 ////////////////////////////////
-// func4bb98
-8004BB98	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-8004BBA0	lui    s0, $8005
-S0 = S0 + 6f44;
-[SP + 0014] = w(RA);
-V0 = hu[S0 + 0000];
-8004BBB0	nop
-8004BBB4	beq    v0, zero, L4bc30 [$8004bc30]
-V0 = 0;
-8004BBBC	jal    system_enter_critical_section [$8004034c]
-8004BBC0	nop
-V0 = w[80057fd4];
-A0 = w[80057fd8];
-V1 = hu[V0 + 0000];
-[80056f76] = h(V1);
-V1 = w[A0 + 0000];
-A0 = w[80057fd0];
-[80056f78] = w(V1);
-[V0 + 0000] = h(0);
-V0 = hu[V0 + 0000];
-8004BBFC	nop
-[A0 + 0000] = h(V0);
-A0 = w[80057fd8];
-8004BC0C	lui    v1, $7777
-V0 = w[A0 + 0000];
-V1 = V1 | 7777;
-V0 = V0 & V1;
-[A0 + 0000] = w(V0);
-8004BC20	jal    func4bda8 [$8004bda8]
-8004BC24	nop
-V0 = S0;
-[V0 + 0000] = h(0);
+// system_interrupts_timer_dma_store()
+system_interrupts_timer_dma_initialize_inter
+if( hu[80056f44] != 0 )
+{
+    system_enter_critical_section();
 
-L4bc30:	; 8004BC30
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8004BC3C	jr     ra 
-8004BC40	nop
+    int_mask = w[80057fd4]; // 1f801074 interrupt mask register
+    int_status = w[80057fd0]; // 1f801070 interrupt status register
+    dma10f0 = w[80057fd8]; // 1f8010f0 dma control register
+
+    [80056f76] = h(hu[int_mask]);
+    [80056f78] = w(w[dma10f0]);
+    [int_mask] = h(0);
+    [int_status] = h(hu[int_mask]);
+    [dma10f0] = w(w[dma10f0] & 77777777);
+
+    system_bios_set_default_exit_from_exception();
+
+    [80056f44] = h(0);
+    return 80056f44;
+}
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4bc44
-8004BC44	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-8004BC4C	lui    s0, $8005
-S0 = S0 + 6f44;
-[SP + 0014] = w(RA);
-V0 = hu[S0 + 0000];
-8004BC5C	nop
-8004BC60	bne    v0, zero, L4bcb4 [$8004bcb4]
-8004BC64	nop
-A0 = S0 + 0038;
-system_bios_set_custom_exit_from_exception();
+// system_interrupts_timer_dma_restore()
 
-A0 = w[80057fd4];
-V1 = hu[80056f76];
-V0 = 0001;
-[S0 + 0000] = h(V0);
-[A0 + 0000] = h(V1);
-V1 = w[80057fd8];
-V0 = w[80056f78];
-8004BC9C	nop
-[V1 + 0000] = w(V0);
-8004BCA4	jal    system_exit_critical_section [$8004035c]
-8004BCA8	nop
-8004BCAC	j      L4bcb8 [$8004bcb8]
-V0 = S0;
+if( hu[80056f44] == 0 )
+{
+    A0 = 80056f7c;
+    system_bios_set_custom_exit_from_exception();
 
-L4bcb4:	; 8004BCB4
-V0 = 0;
+    int_mask = w[80057fd4]; // 1f801074 interrupt mask register
+    dma10f0 = w[80057fd8]; // 1f8010f0 dma control register
 
-L4bcb8:	; 8004BCB8
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8004BCC4	jr     ra 
-8004BCC8	nop
+    [int_mask] = h(hu[80056f76]);
+    [dma10f0] = w(w[80056f78]);
+
+    [80056f44] = h(1);
+
+    system_exit_critical_section();
+
+    return 80056f44;
+}
+
+return 0;
 ////////////////////////////////
 
 
@@ -599,22 +565,22 @@ return 0;
 
 
 ////////////////////////////////
-// func4bd34
-RA = w[A0 + 0000];
-GP = w[A0 + 002c];
-SP = w[A0 + 0004];
-FP = w[A0 + 0008];
-S0 = w[A0 + 000c];
-S1 = w[A0 + 0010];
-S2 = w[A0 + 0014];
-S3 = w[A0 + 0018];
-S4 = w[A0 + 001c];
-S5 = w[A0 + 0020];
-S6 = w[A0 + 0024];
-S7 = w[A0 + 0028];
-V0 = A1;
-8004BD68	jr     ra 
-8004BD6C	nop
+// system_int_restore_mem_to_registers()
+
+RA = w[A0 + 0];
+SP = w[A0 + 4];
+FP = w[A0 + 8];
+S0 = w[A0 + c];
+S1 = w[A0 + 10];
+S2 = w[A0 + 14];
+S3 = w[A0 + 18];
+S4 = w[A0 + 1c];
+S5 = w[A0 + 20];
+S6 = w[A0 + 24];
+S7 = w[A0 + 28];
+GP = w[A0 + 2c];
+
+return A1;
 ////////////////////////////////
 
 
@@ -622,9 +588,10 @@ V0 = A1;
 ////////////////////////////////
 // system_bios_cd_remove()
 // A(56h) or A(72h) - CdRemove()  ;does NOT work due to SysDeqIntRP bug
-T2 = 00a0;
+
+T2 = a0;
+T1 = 72;
 8004BD84	jr     t2 
-T1 = 0072;
 ////////////////////////////////
 
 
@@ -646,11 +613,16 @@ T1 = 17;
 
 
 ////////////////////////////////
-// func4bda8
-T2 = 00b0;
+// system_bios_set_default_exit_from_exception()
+// B(18h) - SetDefaultExitFromException()
+// Applies the default "Exit" structure (which consists of a pointer to
+// ReturnFromException, and the Kernel's exception stacktop (minus 4, for whatever
+// reason), and zeroes for the R16..R23,R28,R30 registers. Returns the address of
+// that structure.
+
+T2 = b0;
+T1 = 18;
 8004BDAC	jr     t2 
-T1 = 0018;
-8004BDB4	nop
 ////////////////////////////////
 
 
@@ -696,7 +668,7 @@ A0 = 0; // IRQ0 VBLANK (PAL=50Hz, NTSC=60Hz)
 A1 = 8004be20; // system_main_timer_callback()
 system_int_set_interrupt_callback();
 
-return 8004be98; // system_main_timer_additional_callback()
+return 8004be98; // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
 
@@ -718,7 +690,7 @@ for( int i = 0; i < 8; ++i )
 
 
 ////////////////////////////////
-// system_main_timer_additional_callback()
+// system_main_timer_additional_callback_inter()
 
 if( A1 != w[80057fe0 + A0 * 4] )
 {
@@ -745,7 +717,7 @@ if( A1 != 0 )
 
 
 ////////////////////////////////
-// func4bef0()
+// system_dma_callback_initialize()
 
 A0 = 8005800c;
 A1 = 8;
@@ -758,7 +730,7 @@ A0 = 3; // IRQ3 DMA
 A1 = 8004bf40; // system_int_dma_handler()
 system_int_set_interrupt_callback();
 
-return 8004c0c4; // func4c0c4()
+return 8004c0c4; // system_dma_additional_callback_inter()
 ////////////////////////////////
 
 
@@ -817,10 +789,19 @@ for( int i = 0; i < 7; ++i )
 
 
 ////////////////////////////////
-// func4c0c4()
+// system_dma_additional_callback_inter()
 
 slot = A0;
 func = A1;
+
+// slot
+// 0  MDECin  (RAM to MDEC)
+// 1  MDECout (MDEC to RAM)
+// 2  GPU (lists + image data)
+// 3  CDROM   (CDROM to RAM)
+// 4  SPU
+// 5  PIO (Expansion Port)
+// 6  OTC (reverse clear OT) (GPU related)
 
 dma10f4 = w[80058008];
 
@@ -870,7 +851,7 @@ return V0;
 
 
 ////////////////////////////////
-// func4c1b0
+// func4c1b0()
 
 return w[80058030];
 ////////////////////////////////
@@ -936,55 +917,58 @@ return V1; // return filehandle
 
 
 ////////////////////////////////
-// func4c240()
+// system_devkit_pc_read_all()
 
-S4 = A0;
-S3 = A1;
-S0 = A2;
-S2 = 0;
-8004C270	beq    s0, zero, L4c2d0 [$8004c2d0]
+filehandle = A0;
+dst = A1;
+size = A2;
+read = 0;
+while( size != 0 )
+{
+    length = size;
+    if( length > 8000 )
+    {
+        length = 8000;
+    }
 
-S6 = 8000;
-8004C27C	addiu  s5, zero, $ffff (=-$1)
-V0 = S6 < S0;
+    A0 = 0; 
+    A1 = filehandle;
+    A2 = length;
+    A3 = dst;
+    system_devkit_pc_read();
 
-loop4c284:	; 8004C284
-8004C284	beq    v0, zero, L4c290 [$8004c290]
-S1 = S0;
-S1 = 8000;
+    if( V0 == -1 )
+    {
+        return -1;
+    }
 
-L4c290:	; 8004C290
-A0 = 0;
-A1 = S4;
-A2 = S1;
-8004C29C	jal    func4c300 [$8004c300]
-A3 = S3;
-8004C2A4	bne    v0, s5, L4c2b4 [$8004c2b4]
-S2 = S2 + V0;
-8004C2AC	j      L4c2d4 [$8004c2d4]
-8004C2B0	addiu  v0, zero, $ffff (=-$1)
+    dst = dst + V0;
+    size = size - V0;
+    read = read + V0;
+    if( V0 < length )
+    {
+        break;
+    }
+}
 
-L4c2b4:	; 8004C2B4
-S3 = S3 + V0;
-S0 = S0 - V0;
-V0 = V0 < S1;
-8004C2C0	bne    v0, zero, L4c2d0 [$8004c2d0]
-8004C2C4	nop
-8004C2C8	bne    s0, zero, loop4c284 [$8004c284]
-V0 = S6 < S0;
-
-L4c2d0:	; 8004C2D0
-V0 = S2;
-
-L4c2d4:	; 8004C2D4
+return read;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4c300()
-// system_pc_read( filehandle, length, memory_destination_address )
+// system_devkit_pc_read()
+// BRK(105h) - PCRead(filehandle, length, memory_destination_address)
+// out: V0  0 = success, -1 = failure
+//      V1  number of read bytes or error code if V0 is negative.
+// Note: PCRead does not stop at EOF, so if you set more bytes to read than the
+// filelength, the fileserver will pad with zero bytes. If you are not sure of the
+// filelength obtain the filelength by PClSeek (A2=0, A3=2, V1 will return the
+// length of the file, don't forget to reset the file pointer to the start before
+// calling PCread!)
+
 8004C300	break   $00105
+
 if( V0 != 0 )
 {
     return -1;
@@ -995,7 +979,7 @@ return V1;
 
 
 ////////////////////////////////
-// system_devkit_pc_write_by_8000()
+// system_devkit_pc_write_all()
 
 filehandle = A0;
 src = A1;
@@ -1004,7 +988,7 @@ written = 0;
 while( size != 0 )
 {
     length = size;
-    if( size > 8000 )
+    if( length > 8000 )
     {
         length = 8000;
     }
@@ -1014,7 +998,6 @@ while( size != 0 )
     A2 = length;
     A3 = src;
     system_devkit_pc_write();
-    written = written + V0;
 
     if( V0 == -1 )
     {
@@ -1023,6 +1006,7 @@ while( size != 0 )
 
     src = src + V0;
     size = size - V0;
+    written = written + V0;
     if( V0 >= length )
     {
         break;
