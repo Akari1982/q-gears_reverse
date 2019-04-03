@@ -69,6 +69,7 @@
 8004f4b4 [][][][] 0
 8004f4b8 [][][][] start id of files in dir or some marker.
 8004f4c0 [][][][] cd state:
+                    0x09 - 
                     0x05 - pause.
                     0x03 - set location.
                     store 8004f4b8 here at start of loading.
@@ -128,8 +129,8 @@
 
 80055ab4 [][][][] set to 1 after gamepad init.
 
-80055b48 [][][][] init with 0. some callback cd related.
-80055b4c [][][][] some callback cd related.
+80055b48 [][][][] cd sync interrupt handler.
+80055b4c [][][][] cd ready interrupt handler.
 
 80055b54 [][][][] cd debug level.
                   0: no checks performed
@@ -503,6 +504,11 @@
 800595a8 [][][][] global file id to load.
 800595ac cd command param array.
 
+800595b5 []       
+800595b6 []       
+800595b7 []       
+800595b8 store here result of CdlStandby (MotorOn) cdrom command.
+
 80059b6c [][][][] 0.
 
 80059600 light matrix
@@ -541,9 +547,13 @@
 800598a0 [][][][] init with callback to 8004085c.
 800598a4 [][][][] init with callback to 800408c4.
 800598a8 [][][][] init with 0.
-800598ac array of stored cdl command response fifo (0x1 size 0x8 items).
-800598b4 array of stored cdl command response fifo (0x1 size 0x8 items).
-800598bc array of stored cdl command response fifo (0x1 size 0x8 items).
+800598ac array of stored cdl command response fifo (0x1 size 0x8 items). Cd sync interrupt result.
+800598b4 array of stored cdl command response fifo (0x1 size 0x8 items). Cd ready interrupt result.
+800598bc array of stored cdl command response fifo (0x1 size 0x8 items). Сd read interrupt result.
+
+800598c4 [][][][] cdrom timeout frame value.
+800598c8 [][][][] cdrom current wait time.
+800598cc [][][][] store here string to print during cdrom timeout.
 
 800598d4-80059904 temp for DMA2 transfer
 

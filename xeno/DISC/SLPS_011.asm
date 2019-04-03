@@ -12237,7 +12237,7 @@ L405dc:	; 800405DC
 // system_cdrom_dma_callback_2
 80040B5C-80040B7C
 ////////////////////////////////
-// func40b80
+// system_cdrom_init
 80040B80-80040C14
 ////////////////////////////////
 // func40c18
@@ -12264,7 +12264,7 @@ L405dc:	; 800405DC
 // func40cd0
 80040CD0-80040CDC
 ////////////////////////////////
-// func40ce0
+// system_cdrom_and_audio_init
 80040CE0-80040D48
 ////////////////////////////////
 // func40d4c
@@ -12285,16 +12285,16 @@ L405dc:	; 800405DC
 // func40e0c
 80040E0C-80040E28
 ////////////////////////////////
-// func40e2c
+// system_cdrom_set_sync_callback
 80040E2C-80040E40
 ////////////////////////////////
-// func40e44
+// system_cdrom_set_ready_callback
 80040E44-80040E58
 ////////////////////////////////
-// func40e5c
+// system_cdrom_cdl_command_exec_with_sync_ret
 80040E5C-80040F90
 ////////////////////////////////
-// func40f94
+// system_cdrom_cdl_command_exec_without_ret
 80040F94-800410BC
 ////////////////////////////////
 // func410c0
@@ -12321,7 +12321,7 @@ L405dc:	; 800405DC
 // system_psyq_cd_pos_to_int
 800413AC-80041428
 ////////////////////////////////
-// func4142c
+// system_cdrom_get_response_from_interrupt
 8004142C-800419B0
 ////////////////////////////////
 // system_psyq_cd_sync
@@ -12339,13 +12339,13 @@ L405dc:	; 800405DC
 // func423a4
 800423A4-80042480
 ////////////////////////////////
-// func42484
+// system_cdrom_audio_init
 80042484-80042574
 ////////////////////////////////
-// func42578
+// system_cdrom_reinit_inter
 80042578-800425C4
 ////////////////////////////////
-// system_cdrom_init
+// system_cdrom_init_inter
 800425C8-800427B0
 ////////////////////////////////
 // system_psyq_cd_data_sync
