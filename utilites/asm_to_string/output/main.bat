@@ -1,1 +1,1 @@
-main SLPS_011_cdrom.cpp
+main SLPS_011_cdrom2.cpp

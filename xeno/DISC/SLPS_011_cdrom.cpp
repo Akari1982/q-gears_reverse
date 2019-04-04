@@ -46,8 +46,8 @@ return 0;
 ////////////////////////////////
 // func40c18()
 
-A0 = f0000003;
-A1 = 20;
+A0 = f0000003; // CDROM Decoder
+A1 = 20; // command completed
 system_bios_deliver_event();
 ////////////////////////////////
 
@@ -56,8 +56,8 @@ system_bios_deliver_event();
 ////////////////////////////////
 // func40c40()
 
-A0 = f0000003;
-A1 = 40;
+A0 = f0000003; // CDROM Decoder
+A1 = 40; // data ready
 system_bios_deliver_event();
 ////////////////////////////////
 
@@ -66,8 +66,8 @@ system_bios_deliver_event();
 ////////////////////////////////
 // func40c68()
 
-A0 = f0000003;
-A1 = 40;
+A0 = f0000003; // CDROM Decoder
+A1 = 40; // data ready
 system_bios_deliver_event();
 ////////////////////////////////
 
@@ -80,9 +80,10 @@ system_bios_deliver_event();
 // enabled/busy, and that have the specified class and spec values. Depending on
 // the mode, either the callback function is called (mode=1000h), or the event is
 // marked as enabled/ready (mode=2000h).
-T2 = 00b0;
+
+T2 = b0;
+T1 = 7;
 80040C94	jr     t2 
-T1 = 0007;
 ////////////////////////////////
 
 

@@ -69,10 +69,36 @@
 8004f4b4 [][][][] 0
 8004f4b8 [][][][] start id of files in dir or some marker.
 8004f4c0 [][][][] cd state:
-                    0x09 - 
-                    0x05 - pause.
-                    0x03 - set location.
-                    store 8004f4b8 here at start of loading.
+                    [1] CdlSetloc => [2] CdlReadN 80059b1c+1 (fail [a][4] CdlNop 80059b20+1 store_ready) => [0] unset 80059b1c+1 (fail [a][3] CdlNop 80059b20+1 store_ready)
+                    [3] CdlSetloc => [4] CdlSeekL (fail [a][1] CdlNop ) => [0] unset (fail [a][1] CdlNop )
+                    [6] CdlPause => [1] CdlSetloc param_800595ac 80059b18+1 80059b24+1 restore_ready (fail [a][3] CdlNop 80059b28+1) => [2] CdlReadN 80059b1c+1 (fail [a][4] CdlNop 80059b20+1 store_ready) => [0] unset 80059b1c+1 (fail [a][3] CdlNop 80059b20+1 store_ready)
+                    [9] CdlSetmode => [5] CdlPause (fail [a][6] CdlNop 80059b44+1 ) => [0] unset (fail [a][2] CdlNop)
+                    [a] CdlNop => [b] CdlGetTN (fail [a] CdlNop ) => 1 [3] CdlSetloc param_800595ac     (fail [a] CdlNop )
+                                                                     2 [5] CdlPause
+                                                                     3 [6] CdlPause
+                                                                     4 [7] CdlStop
+                                                                     5 [c] CdlSetmode param_800595b4
+                                                                     6 [9] CdlSetmode param_800595b4
+
+                    0x1 - CdlSetloc
+                    0x2 - CdlReadN
+                    0x3 - CdlSetloc
+                    0x4 - CdlSeekL
+                    0x5 - CdlPause
+                    0x6 - CdlPause
+                    0x7 - CdlStop
+                    0x8 - CdlSetfilter
+                    0x9 - CdlSetmode
+                    0xa - fail command chain handle that call CdlGetTN to get track number.
+                    0xb - fail command chain handle
+                            0x1 - fail to CdlSetloc with start state 3.
+                            0x2 - fail to CdlPause step of CdlSetmode with start state 9.
+                            0x3 - 
+                            0x4 - fail to CdlSetloc with start state 1.
+                            0x5 - fail to CdlSetmode with start state 0xc.
+                            0x6 - fail to CdlSetmode with start state 9.
+                    0xc - CdlSetmode
+8004f4c4 [][][][]
 8004f4d4 [][][][] pointer to allocated memory for file load.
 8004f4d8 [][][][] 0
 8004f4dc [][][][] some func param (0).
@@ -501,12 +527,14 @@
 80059594 [][][][] 0
 80059598 [][][][] 0
 8005959c [][][][] 0
+800595a4 [][][][] store cdrom ready callback here.
 800595a8 [][][][] global file id to load.
 800595ac cd command param array.
 
-800595b5 []       
-800595b6 []       
-800595b7 []       
+800595b4 []       cdrom command param 1.
+800595b5 []       cdrom command param 2.
+800595b6 []       cdrom command param 3.
+800595b7 []       cdrom command param 4.
 800595b8 store here result of CdlStandby (MotorOn) cdrom command.
 
 80059b6c [][][][] 0.

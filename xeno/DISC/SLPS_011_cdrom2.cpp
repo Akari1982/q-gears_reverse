@@ -24,13 +24,13 @@ if( S0 == 0 || S0 == -1 )
     A0 = 0; // no checks performed
     system_cdrom_set_debug_level();
 
-    A0 = 0;
+    A0 = 0; // unset internal callbacks
     system_cdrom_dma_callback();
 
-    A0 = 0;
+    A0 = 0; // unset internal callbacks
     system_cdrom_set_sync_callback();
 
-    A0 = 0;
+    A0 = 0; // unset internal callbacks
     system_cdrom_set_ready_callback();
 
     A0 = 7; // CdlStandby (MotorOn)
@@ -127,8 +127,7 @@ V0 = w[8004f4ec];
 
 
 loop28210:	; 80028210
-80028210	lui    a2, $8006
-80028214	addiu  a2, a2, $95b8 (=-$6a48)
+A2 = 800595b8;
 80028218	jal    func410c0 [$800410c0]
 A1 = 0;
 80028220	beq    v0, zero, loop28210 [$80028210]
@@ -145,7 +144,7 @@ A0 = 0;
 80028240	jal    system_cdrom_dma_callback [$80041264]
 
 A0 = 0;
-80028248	jal    system_cdrom_set_sync_callback [$80040e2c]
+system_cdrom_set_sync_callback();
 
 A0 = 0;
 80028250	jal    system_cdrom_set_ready_callback [$80040e44]
@@ -976,8 +975,7 @@ V0 = bu[800595b4];
 V0 = V0 & 0008;
 80028E54	beq    v0, zero, L28e88 [$80028e88]
 S4 = S1 << 0b;
-80028E5C	lui    s0, $8006
-80028E60	addiu  s0, s0, $8d94 (=-$726c)
+S0 = 80058d94;
 A1 = S0;
 A0 = w[8004f4f0];
 80028E70	jal    system_devkit_pc_read_all [$8004c240]
@@ -1079,8 +1077,7 @@ V0 = bu[800595b4];
 V0 = V0 & 0008;
 80029024	beq    v0, zero, L2906c [$8002906c]
 80029028	nop
-8002902C	lui    s0, $8006
-80029030	addiu  s0, s0, $8d94 (=-$726c)
+S0 = 80058d94;
 A1 = S0;
 80029038	jal    system_devkit_pc_read_all [$8004c240]
 A2 = 0008;
@@ -1434,7 +1431,7 @@ if( flags & 100 )
     800295B0	jal    func288bc [$800288bc]
     800295B4	nop
     V0 = w[8004f4ec];
-    800295C0	nop
+
     if( V0 != 0 )
     {
         A0 = dir_file_id;
@@ -1464,17 +1461,16 @@ if( flags & 100 )
         80029620	j      L29760 [$80029760]
     }
 
-    [8004f4c0] = w(1);
-
     A0 = 8002b868;
     system_cdrom_dma_callback();
 
-    A0 = 8002a49c;
+    A0 = 8002a49c; // system_cdrom_sync_callback()
     system_cdrom_set_sync_callback();
 
     A0 = 8002b100;
     system_cdrom_set_ready_callback();
 
+    [8004f4c0] = w(1);
     [80059b18] = w(w[80059b18] + 1);
 
     A0 = 2; // CdlSetloc
@@ -1509,8 +1505,7 @@ else if( flags & 0200 )
     [8004f4c8] = h(0);
     800296D0	jal    func288bc [$800288bc]
     S0 = 0003;
-    800296D8	lui    v0, $8006
-    800296DC	addiu  v0, v0, $95b7 (=-$6a49)
+    V0 = 800595b7;
 
     loop296e0:	; 800296E0
         [V0 + 0000] = b(0);
@@ -1645,17 +1640,16 @@ else
     }
     else
     {
-        [8004f4c0] = w(1);
-
         A0 = 0;
         system_cdrom_dma_callback();
 
-        A0 = 8002a49c;
+        A0 = 8002a49c; // system_cdrom_sync_callback()
         system_cdrom_set_sync_callback();
 
         A0 = 8002ae94;
         system_cdrom_set_ready_callback();
 
+        [8004f4c0] = w(1);
         [80059b18] = w(w[80059b18] + 1);
 
         A0 = 2; // CdlSetloc
@@ -1756,8 +1750,7 @@ L29a08:	; 80029A08
 A0 = 0;
 A1 = 0002;
 V0 = w[8004f4b8];
-80029A1C	lui    v1, $8006
-80029A20	addiu  v1, v1, $959c (=-$6a64)
+V1 = 8005959c;
 [8004f4bc] = w(V0);
 
 loop29a2c:	; 80029A2C
@@ -1790,8 +1783,7 @@ A0 = S0;
 [8004f4a8] = w(V0);
 80029AA4	jal    func28618 [$80028618]
 A0 = S0;
-80029AAC	lui    s0, $8006
-80029AB0	addiu  s0, s0, $95ac (=-$6a54)
+S0 = 800595ac;
 A0 = w[8004f4a8];
 [8004f49c] = w(V0);
 V0 = S2 & ffff;
@@ -1894,72 +1886,49 @@ L29c14:	; 80029C14
 V0 = 0;
 
 L29c2c:	; 80029C2C
-80029C2C	lui    a0, $8003
-80029C30	addiu  a0, a0, $b850 (=-$47b0)
-V0 = 0001;
-[8004f4c0] = w(V0);
-80029C40	jal    system_cdrom_dma_callback [$80041264]
-80029C44	nop
-80029C48	lui    a0, $8003
-80029C4C	addiu  a0, a0, $a49c (=-$5b64)
-80029C50	jal    system_cdrom_set_sync_callback [$80040e2c]
-80029C54	nop
-80029C58	lui    a0, $8003
-80029C5C	addiu  a0, a0, $aa34 (=-$55cc)
-80029C60	jal    system_cdrom_set_ready_callback [$80040e44]
-80029C64	nop
-A0 = 0002;
-V0 = w[80059b18];
-80029C74	nop
-V0 = V0 + 0001;
-[80059b18] = w(V0);
-80029C84	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
+[8004f4c0] = w(1);
+
+A0 = 8002b850;
+system_cdrom_dma_callback();
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
+A0 = 8002aa34;
+system_cdrom_set_ready_callback();
+
+[80059b18] = w(w[80059b18] + 1);
+
+A0 = 2; // CdlSetloc
 A1 = S0;
+system_cdrom_cdl_command_exec_without_ret();
+
 V0 = 0;
 
 L29c90:	; 80029C90
-RA = w[SP + 0038];
-S7 = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0040;
-80029CB8	jr     ra 
-80029CBC	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func29cc0
-80029CC0	addiu  sp, sp, $ffb0 (=-$50)
-[SP + 0040] = w(S6);
+
 S6 = hu[SP + 0060];
-[SP + 0044] = w(S7);
 S7 = hu[SP + 0064];
-[SP + 0048] = w(FP);
 FP = hu[SP + 0068];
 T0 = hu[SP + 006c];
-[SP + 0030] = w(S2);
 S2 = A0;
-[SP + 002c] = w(S1);
 [SP + 0010] = h(T0);
 T0 = hu[SP + 0070];
 S1 = A1;
-[SP + 0038] = w(S4);
 [SP + 0018] = h(T0);
 T0 = hu[SP + 0074];
 S4 = A2;
-[SP + 004c] = w(RA);
-[SP + 003c] = w(S5);
-[SP + 0034] = w(S3);
-[SP + 0028] = w(S0);
-80029D18	beq    s1, zero, L29d34 [$80029d34]
 [SP + 0020] = h(T0);
+
+80029D18	beq    s1, zero, L29d34 [$80029d34]
+
+
 S3 = w[S1 + 0000];
 80029D24	nop
 V0 = S3 < 0002;
@@ -1981,8 +1950,7 @@ A0 = S2;
 A0 = 0;
 S0 = 0;
 V0 = w[8004f4b8];
-80029D68	lui    v1, $8006
-80029D6C	addiu  v1, v1, $9594 (=-$6a6c)
+V1 = 80059594;
 [8004f4bc] = w(V0);
 V0 = S0 << 10;
 
@@ -2009,7 +1977,6 @@ system_get_sector_by_dir_file_id();
 A0 = S2;
 system_get_aligned_filesize_by_dir_file_id();
 
-S5 = 0001;
 [8004f49c] = w(V0);
 V0 = S3 << 03;
 V0 = S1 + V0;
@@ -2023,7 +1990,7 @@ V0 = S1 + 0004;
 [800595d0] = h(T0);
 T0 = hu[SP + 0020];
 V0 = S4 & ffff;
-[8004f4a0] = w(S5);
+[8004f4a0] = w(1);
 [8004f4dc] = w(V0);
 [8004f4b4] = w(0);
 [8004f4e4] = w(S3);
@@ -2044,8 +2011,7 @@ V0 = S4 & ffff;
 [800595d4] = h(T0);
 80029EB0	jal    func288bc [$800288bc]
 80029EB4	nop
-80029EB8	lui    s0, $8006
-80029EBC	addiu  s0, s0, $95ac (=-$6a54)
+S0 = 800595ac;
 A0 = w[8004f4a8];
 A1 = S0;
 system_psyq_cd_int_to_pos();
@@ -2123,42 +2089,26 @@ L29fc4:	; 80029FC4
 V0 = 0;
 
 L29fdc:	; 80029FDC
-80029FDC	lui    a0, $8003
-80029FE0	addiu  a0, a0, $b960 (=-$46a0)
-[8004f4c0] = w(S5);
-80029FEC	jal    system_cdrom_dma_callback [$80041264]
-80029FF0	nop
-80029FF4	lui    a0, $8003
-80029FF8	addiu  a0, a0, $a49c (=-$5b64)
-80029FFC	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002A000	nop
-8002A004	lui    a0, $8003
-8002A008	addiu  a0, a0, $b3e0 (=-$4c20)
-8002A00C	jal    system_cdrom_set_ready_callback [$80040e44]
-8002A010	nop
-A0 = 0002;
-V0 = w[80059b18];
-8002A020	nop
-V0 = V0 + 0001;
-[80059b18] = w(V0);
-8002A030	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
+[8004f4c0] = w(1);
+
+A0 = 8002b960;
+system_cdrom_dma_callback();
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
+A0 = 8002b3e0;
+system_cdrom_set_ready_callback();
+
+[80059b18] = w(w[80059b18] + 1);
+
+A0 = 2;
 A1 = S0;
+system_cdrom_cdl_command_exec_without_ret();
+
 V0 = 0;
 
 L2a03c:	; 8002A03C
-RA = w[SP + 004c];
-FP = w[SP + 0048];
-S7 = w[SP + 0044];
-S6 = w[SP + 0040];
-S5 = w[SP + 003c];
-S4 = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0050;
-8002A068	jr     ra 
-8002A06C	nop
 ////////////////////////////////
 
 
@@ -2216,10 +2166,10 @@ if( w[8004f4ec] == 0 )
             A1 = 800595ac;
             system_psyq_cd_int_to_pos();
 
-            [8004f4c0] = w(3);
-
-            A0 = 8002a49c;
+            A0 = 8002a49c; // system_cdrom_sync_callback()
             system_cdrom_set_sync_callback();
+
+            [8004f4c0] = w(3);
 
             A0 = 2; // CdlSetloc
             A1 = 800595ac; // param
@@ -2227,10 +2177,10 @@ if( w[8004f4ec] == 0 )
         }
         else
         {
-            [8004f4c0] = w(5);
-
-            A0 = 8002a49c;
+            A0 = 8002a49c; // system_cdrom_sync_callback()
             system_cdrom_set_sync_callback();
+
+            [8004f4c0] = w(5);
 
             A0 = 9; // CdlPause
             A1 = 0; // param
@@ -2251,38 +2201,30 @@ if( w[8004f4ec] == 0 )
 8002A1B4	jal    system_get_sector_by_dir_file_id [$800287e0]
 8002A1B8	nop
 A0 = V0;
-8002A1C0	lui    s0, $8006
-8002A1C4	addiu  s0, s0, $95ac (=-$6a54)
+S0 = 800595ac;
 8002A1C8	jal    system_psyq_cd_int_to_pos [$800412a8]
 A1 = S0;
-V0 = 0003;
-[8004f4c0] = w(V0);
-8002A1DC	lui    a0, $8003
-8002A1E0	addiu  a0, a0, $a49c (=-$5b64)
-8002A1E4	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002A1E8	nop
+
+[8004f4c0] = w(3);
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
 A0 = 0002;
 8002A1F0	j      L2a21c [$8002a21c]
 A1 = S0;
 
 L2a1f8:	; 8002A1F8
-V0 = 0005;
-[8004f4c0] = w(V0);
-8002A204	lui    a0, $8003
-8002A208	addiu  a0, a0, $a49c (=-$5b64)
-8002A20C	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002A210	nop
+[8004f4c0] = w(5);
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
 A0 = 0009;
 A1 = 0;
 
 L2a21c:	; 8002A21C
-8002A21C	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
-8002A220	nop
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002A230	jr     ra 
-8002A234	nop
+system_cdrom_cdl_command_exec_without_ret();
 ////////////////////////////////
 
 
@@ -2294,17 +2236,13 @@ S0 = A0;
 
 [8004f4c0] = w(9);
 
-A0 = 8002a49c;
+A0 = 8002a49c; // system_cdrom_sync_callback()
 system_cdrom_set_sync_callback();
 
-V0 = 800595b7;
-for( int i = 3; i >= 0; --i )
-{
-    [V0] = b(0);
-    V0 = V0 - 1;
-}
-
 [800595b4] = b(S0);
+[800595b5] = b(0);
+[800595b6] = b(0);
+[800595b7] = b(0);
 
 A0 = e; // CdlSetmode
 A1 = 800595b4; // param_ptr
@@ -2388,18 +2326,12 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func2a38c
-8002A38C	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 002c] = w(S5);
+
 S5 = A0;
-[SP + 0020] = w(S2);
 S2 = A1;
-[SP + 0028] = w(S4);
 S4 = 0;
-[SP + 0030] = w(RA);
-[SP + 0024] = w(S3);
-[SP + 001c] = w(S1);
 8002A3B4	jal    func28738 [$80028738]
-[SP + 0018] = w(S0);
+
 V0 = V0 << 10;
 S3 = V0 >> 10;
 8002A3C4	blez   s3, L2a46c [$8002a46c]
@@ -2461,81 +2393,45 @@ L2a470:	; 8002A470
 V0 = S2;
 
 L2a474:	; 8002A474
-RA = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-8002A494	jr     ra 
-8002A498	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func2a49c()
-// load callback 80055b48
+// system_cdrom_sync_callback()
 
-interupt = A0; // 80055e28 interupt
-result_ptr = A1; // 800598ac
+interupt = A0; // 80055e28 cd sync interrupt result
+result_ptr = A1; // 800598ac array of stored cdl command response fifo (0x1 size 0x8 items). Cd sync interrupt result.
 
-V1 = w[8004f4c0];
-if( V1 >= d )
+switch( w[8004f4c0] )
 {
-    return;
-}
-V0 = w[800188c4 + V1 * 4];
-8002A4C8	jr     v0
-
-D8A50280 3
-2CA60280 4
-5CA60280 5
-A4A60280 6
-3CA70280 7
-10A80280 8
-A8A80280 9
-00A90280 a
-38A90280 b
-ACA70280 c
-
-switch( V1 )
-{
-    case 0:
-    {
-        return;
-    }
-    break;
-
     case 1:
     {
         if( interupt == 2 ) // CdlComplete
         {
+            [8004f4c0] = w(2);
+
             [80059b1c] = w(w[80059b1c] + 1);
-            [8004f4c0] = w(w[8004f4c0] + 1);
 
             A0 = 6; // CdlReadN
             A1 = 0;
-            system_cdrom_cdl_command_exec_without_ret(); // run next command
+            system_cdrom_cdl_command_exec_without_ret();
         }
         else
         {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(3);
+
             [80059b20] = w(w[80059b20] + 1);
 
             A0 = 0;
             system_cdrom_set_ready_callback();
             [800595a4] = w(V0);
 
-            [8004f4c4] = w(3);
-            [8004f4c0] = w(a);
-
             A0 = 1; // CdlNop
             A1 = 0;
-            system_cdrom_cdl_command_exec_without_ret(); // run next command
+            system_cdrom_cdl_command_exec_without_ret();
         }
-        return;
     }
     break;
 
@@ -2543,282 +2439,328 @@ switch( V1 )
     {
         if( interupt == 2 ) // CdlComplete
         {
+            [8004f4c0] = w(0);
+
             [80059b1c] = w(w[80059b1c] + 1);
 
             A0 = 0;
             system_cdrom_set_sync_callback();
-
-            [8004f4c0] = w(0);
         }
         else
         {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(3);
+
             [80059b20] = w(w[80059b20] + 1);
 
             A0 = 0;
             system_cdrom_set_ready_callback();
             [800595a4] = w(V0);
 
-            [8004f4c4] = w(3);
-            [8004f4c0] = w(a);
             A0 = 1; // CdlNop
             A1 = 0;
-            system_cdrom_cdl_command_exec_without_ret(); // run next command
+            system_cdrom_cdl_command_exec_without_ret();
         }
-        return;
+    }
+    break;
+
+    case 3:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(4);
+
+            A0 = 15; // CdlSeekL
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(1);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case 4:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(0);
+
+            A0 = 0;
+            system_cdrom_set_sync_callback();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(1);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case 5:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(0);
+
+            A0 = 0;
+            system_cdrom_set_sync_callback();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(2);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case 6:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(1);
+
+            [80059b18] = w(w[80059b18] + 1);
+            [80059b24] = w(w[80059b24] + 1);
+
+            A0 = w[800595a4];
+            system_cdrom_set_ready_callback();
+
+            A0 = 2; // CdlSetloc
+            A1 = 800595ac;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(3);
+
+            [80059b28] = w(w[80059b28] + 1);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case 7:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(6);
+
+            [80059b38] = w(w[80059b38] + 1);
+
+            A0 = 9; // CdlPause
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(4);
+
+            [80059b44] = w(w[80059b44] + 1);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case 8:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(1);
+
+            [80059b18] = w(w[80059b18] + 1);
+            [80059b24] = w(w[80059b24] + 1);
+
+            A0 = w[800595a4];
+            system_cdrom_set_ready_callback();
+
+            A0 = 2; // CdlSetloc
+            A1 = 800595ac;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(5);
+
+            [80059b28] = w(w[80059b28] + 1);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case 9:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(5);
+
+            A0 = 9; // CdlPause
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(6);
+
+            [80059b44] = w(w[80059b44] + 1);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case a:
+    {
+        if( ( interupt == 2 ) && ( ( bu[result_ptr + 0] & 10) == 0 ) )
+        {
+            [8004f4c0] = w(b);
+
+            A0 = 13; // CdlGetTN
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+    break;
+
+    case b:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            switch( w[8004f4c4] )
+            {
+                case 1:
+                {
+                    [8004f4c0] = w(3);
+
+                    A0 = 2; // CdlSetloc
+                    A1 = 800595ac;
+                    system_cdrom_cdl_command_exec_without_ret();
+                }
+                break;
+
+                case 2:
+                {
+                    [8004f4c0] = w(5);
+
+                    A0 = 9; // CdlPause
+                    A1 = 0;
+                    system_cdrom_cdl_command_exec_without_ret();
+                }
+                break;
+
+                case 3:
+                {
+                    [8004f4c0] = w(6);
+
+                    A0 = 9; // CdlPause
+                    A1 = 0;
+                    system_cdrom_cdl_command_exec_without_ret();
+                }
+                break;
+
+                case 4:
+                {
+                    [8004f4c0] = w(7);
+
+                    A0 = 8; // CdlStop
+                    A1 = 0;
+                    system_cdrom_cdl_command_exec_without_ret();
+                }
+                break;
+
+                case 5:
+                {
+                    [8004f4c0] = w(c);
+
+                    A0 = e; // CdlSetmode
+                    A1 = 800595b4;
+                    system_cdrom_cdl_command_exec_without_ret();
+                }
+                break;
+
+                case 6:
+                {
+                    [8004f4c0] = w(9);
+
+                    A0 = e; // CdlSetmode
+                    A1 = 800595b4;
+                    system_cdrom_cdl_command_exec_without_ret();
+                }
+                break;
+            }
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+    }
+
+    case c:
+    {
+        if( interupt == 2 ) // CdlComplete
+        {
+            [8004f4c0] = w(8);
+            [800595b0] = b(1);
+
+            [800595b1] = b(bu[8004f4dc]);
+
+            A0 = d; // CdlSetfilter
+            A1 = 800595b0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
+        else
+        {
+            [8004f4c0] = w(a);
+            [8004f4c4] = w(5);
+
+            A0 = 1; // CdlNop
+            A1 = 0;
+            system_cdrom_cdl_command_exec_without_ret();
+        }
     }
     break;
 }
-
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A5E0	bne    v1, v0, L2a60c [$8002a60c]
-A0 = 0001;
-A0 = 0015;
-V0 = w[8004f4c0];
-8002A5F4	nop
-V0 = V0 + 0001;
-[8004f4c0] = w(V0);
-8002A604	j      L2aa1c [$8002aa1c]
-A1 = 0;
-
-L2a60c:	; 8002A60C
-[8004f4c4] = w(1);
-[8004f4c0] = w(a);
-A1 = 0;
-8002A624	j      L2aa1c [$8002aa1c]
-
-V1 = A0 & 00ff;
-V0 = 2;
-8002A634	beq    v1, v0, L2a66c [$8002a66c]
-A0 = 0001;
-V0 = 0001;
-[8004f4c4] = w(V0);
-V0 = 000a;
-[8004f4c0] = w(V0);
-8002A654	j      L2aa1c [$8002aa1c]
-A1 = 0;
-V0 = A0 & 00ff;
-V1 = 0002;
-8002A664	bne    v0, v1, L2a688 [$8002a688]
-A0 = 0001;
-
-L2a66c:	; 8002A66C
-A0 = 0;
-
-L2a670:	; 8002A670
-8002A670	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002A674	nop
-[8004f4c0] = w(0);
-8002A680	j      L2aa24 [$8002aa24]
-8002A684	nop
-
-L2a688:	; 8002A688
-V0 = 000a;
-[8004f4c4] = w(V1);
-[8004f4c0] = w(V0);
-8002A69C	j      L2aa1c [$8002aa1c]
-A1 = 0;
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A6AC	bne    v1, v0, L2a708 [$8002a708]
-V0 = 0003;
-A0 = w[800595a4];
-V0 = 0001;
-[8004f4c0] = w(V0);
-V0 = w[80059b18];
-V1 = w[80059b24];
-V0 = V0 + 0001;
-V1 = V1 + 0001;
-[80059b18] = w(V0);
-[80059b24] = w(V1);
-8002A6F0	jal    system_cdrom_set_ready_callback [$80040e44]
-8002A6F4	nop
-8002A6F8	lui    a1, $8006
-8002A6FC	addiu  a1, a1, $95ac (=-$6a54)
-8002A700	j      L2aa1c [$8002aa1c]
-A0 = 0002;
-
-L2a708:	; 8002A708
-A0 = 0001;
-[8004f4c4] = w(V0);
-V0 = w[80059b28];
-V1 = 000a;
-[8004f4c0] = w(V1);
-V0 = V0 + 0001;
-[80059b28] = w(V0);
-8002A734	j      L2aa1c [$8002aa1c]
-A1 = 0;
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A744	bne    v1, v0, L2a778 [$8002a778]
-A0 = 0001;
-A0 = 0009;
-V0 = w[80059b38];
-V1 = 0006;
-[8004f4c0] = w(V1);
-V0 = V0 + 0001;
-[80059b38] = w(V0);
-8002A770	j      L2aa1c [$8002aa1c]
-A1 = 0;
-
-L2a778:	; 8002A778
-V0 = 0004;
-[8004f4c4] = w(V0);
-V0 = w[80059b44];
-V1 = 000a;
-[8004f4c0] = w(V1);
-V0 = V0 + 0001;
-[80059b44] = w(V0);
-8002A7A4	j      L2aa1c [$8002aa1c]
-A1 = 0;
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A7B4	bne    v1, v0, L2a7f0 [$8002a7f0]
-A0 = 0001;
-8002A7BC	lui    a1, $8006
-8002A7C0	addiu  a1, a1, $95b0 (=-$6a50)
-V1 = bu[8004f4dc];
-V0 = 0008;
-[8004f4c0] = w(V0);
-V0 = 0001;
-[A1 + 0000] = b(V0);
-[800595b1] = b(V1);
-8002A7E8	j      L2aa1c [$8002aa1c]
-A0 = 000d;
-
-L2a7f0:	; 8002A7F0
-V0 = 0005;
-[8004f4c4] = w(V0);
-V0 = 000a;
-[8004f4c0] = w(V0);
-8002A808	j      L2aa1c [$8002aa1c]
-A1 = 0;
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A818	bne    v1, v0, L2a874 [$8002a874]
-V0 = 0005;
-A0 = w[800595a4];
-V0 = 0001;
-[8004f4c0] = w(V0);
-V0 = w[80059b18];
-V1 = w[80059b24];
-V0 = V0 + 0001;
-V1 = V1 + 0001;
-[80059b18] = w(V0);
-[80059b24] = w(V1);
-8002A85C	jal    system_cdrom_set_ready_callback [$80040e44]
-8002A860	nop
-8002A864	lui    a1, $8006
-8002A868	addiu  a1, a1, $95ac (=-$6a54)
-8002A86C	j      L2aa1c [$8002aa1c]
-A0 = 0002;
-
-L2a874:	; 8002A874
-A0 = 0001;
-[8004f4c4] = w(V0);
-V0 = w[80059b28];
-V1 = 000a;
-[8004f4c0] = w(V1);
-V0 = V0 + 0001;
-[80059b28] = w(V0);
-8002A8A0	j      L2aa1c [$8002aa1c]
-A1 = 0;
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A8B0	bne    v1, v0, L2a8cc [$8002a8cc]
-A0 = 0001;
-V0 = 0005;
-[8004f4c0] = w(V0);
-8002A8C4	j      L2aa18 [$8002aa18]
-A0 = 0009;
-
-L2a8cc:	; 8002A8CC
-V0 = 0006;
-[8004f4c4] = w(V0);
-V0 = w[80059b44];
-V1 = 000a;
-[8004f4c0] = w(V1);
-V0 = V0 + 0001;
-[80059b44] = w(V0);
-8002A8F8	j      L2aa1c [$8002aa1c]
-A1 = 0;
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A908	bne    v1, v0, L2aa0c [$8002aa0c]
-V0 = 000a;
-V0 = bu[A1 + 0000];
-8002A914	nop
-V0 = V0 & 0010;
-8002A91C	bne    v0, zero, L2aa0c [$8002aa0c]
-V0 = 000a;
-V0 = 000b;
-[8004f4c0] = w(V0);
-8002A930	j      L2aa18 [$8002aa18]
-A0 = 0013;
-V1 = A0 & 00ff;
-V0 = 0002;
-8002A940	bne    v1, v0, L2aa0c [$8002aa0c]
-V0 = 000a;
-V0 = w[8004f4c4];
-8002A950	nop
-8002A954	addiu  v1, v0, $ffff (=-$1)
-V0 = V1 < 0006;
-8002A95C	beq    v0, zero, L2aa24 [$8002aa24]
-V0 = V1 << 02;
-8002A964	lui    at, $8002
-AT = AT + V0;
-V0 = w[AT + 88fc];
-8002A970	nop
-8002A974	jr     v0 
-8002A978	nop
-
-V0 = 0003;
-[8004f4c0] = w(V0);
-8002A988	lui    a1, $8006
-8002A98C	addiu  a1, a1, $95ac (=-$6a54)
-8002A990	j      L2aa1c [$8002aa1c]
-A0 = 0002;
-V0 = 0005;
-[8004f4c0] = w(V0);
-8002A9A4	j      L2aa18 [$8002aa18]
-A0 = 0009;
-V0 = 0006;
-[8004f4c0] = w(V0);
-8002A9B8	j      L2aa18 [$8002aa18]
-A0 = 0009;
-V0 = 0007;
-[8004f4c0] = w(V0);
-8002A9CC	j      L2aa18 [$8002aa18]
-A0 = 0008;
-V0 = 000c;
-[8004f4c0] = w(V0);
-8002A9E0	lui    a1, $8006
-8002A9E4	addiu  a1, a1, $95b4 (=-$6a4c)
-8002A9E8	j      L2aa1c [$8002aa1c]
-A0 = 000e;
-V0 = 0009;
-[8004f4c0] = w(V0);
-8002A9FC	lui    a1, $8006
-8002AA00	addiu  a1, a1, $95b4 (=-$6a4c)
-8002AA04	j      L2aa1c [$8002aa1c]
-A0 = 000e;
-
-L2aa0c:	; 8002AA0C
-[8004f4c0] = w(V0);
-A0 = 0001;
-
-L2aa18:	; 8002AA18
-A1 = 0;
-
-L2aa1c:	; 8002AA1C
-8002AA1C	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
-8002AA20	nop
-
-L2aa24:	; 8002AA24
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002AA2C	jr     ra 
-8002AA30	nop
 ////////////////////////////////
 
 
@@ -2854,8 +2796,7 @@ V0 = w[8004f4e0];
 8002AAA8	nop
 8002AAAC	bne    v0, zero, L2ab5c [$8002ab5c]
 8002AAB0	nop
-8002AAB4	lui    a0, $8006
-8002AAB8	addiu  a0, a0, $9594 (=-$6a6c)
+A0 = 80059594;
 8002AABC	jal    func41224 [$80041224]
 A1 = 0003;
 A0 = w[8004f4ac];
@@ -2869,8 +2810,7 @@ V0 = w[8004f4e0];
 8002AAE4	nop
 8002AAE8	bne    v0, zero, L2ab5c [$8002ab5c]
 8002AAEC	nop
-8002AAF0	lui    a0, $8006
-8002AAF4	addiu  a0, a0, $9594 (=-$6a6c)
+A0 = 80059594;
 8002AAF8	jal    func41224 [$80041224]
 A1 = 0003;
 V0 = w[8004f49c];
@@ -2891,8 +2831,7 @@ A1 = 0200;
 V0 = V1 + 0006;
 
 L2ab44:	; 8002AB44
-8002AB44	lui    a0, $8006
-8002AB48	addiu  a0, a0, $8d94 (=-$726c)
+A0 = 80058d94;
 V0 = V0 >> 02;
 A1 = A1 - V0;
 
@@ -2901,8 +2840,7 @@ L2ab54:	; 8002AB54
 8002AB58	nop
 
 L2ab5c:	; 8002AB5C
-8002AB5C	lui    a0, $8006
-8002AB60	addiu  a0, a0, $9594 (=-$6a6c)
+A0 = 80059594;
 8002AB64	jal    system_psyq_cd_pos_to_int [$800413ac]
 8002AB68	nop
 V1 = w[8004f4a8];
@@ -2992,20 +2930,20 @@ L2acec:	; 8002ACEC
 8002ACFC	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
 A0 = w[8004f4a8];
-8002AD0C	lui    a1, $8006
-8002AD10	addiu  a1, a1, $95ac (=-$6a54)
+A1 = 800595ac;
 [800595a4] = w(V0);
 8002AD1C	jal    system_psyq_cd_int_to_pos [$800412a8]
 8002AD20	nop
-8002AD24	lui    a0, $8003
-8002AD28	addiu  a0, a0, $a49c (=-$5b64)
-V0 = 0006;
-[8004f4c0] = w(V0);
-8002AD38	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002AD3C	nop
-A0 = 0009;
-8002AD44	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
+
+[8004f4c0] = w(6);
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
+A0 = 9; // CdlPause
 A1 = 0;
+system_cdrom_cdl_command_exec_without_ret();
+
 V0 = w[8004f4a4];
 8002AD54	nop
 8002AD58	addiu  v0, v0, $ffff (=-$1)
@@ -3037,8 +2975,7 @@ V0 = V0 + 0001;
 8002ADBC	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
 A0 = w[8004f4a8];
-8002ADCC	lui    a1, $8006
-8002ADD0	addiu  a1, a1, $95ac (=-$6a54)
+A1 = 800595ac;
 [800595a4] = w(V0);
 8002ADDC	jal    system_psyq_cd_int_to_pos [$800412a8]
 8002ADE0	nop
@@ -3049,7 +2986,6 @@ V0 = V0 < 0003;
 V0 = 0003;
 [8004f4c4] = w(V0);
 8002AE04	j      L2ae5c [$8002ae5c]
-V0 = 000a;
 
 L2ae0c:	; 8002AE0C
 V1 = 270f;
@@ -3071,24 +3007,18 @@ V1 = 0004;
 [8004f4c4] = w(V1);
 V0 = V0 + 0001;
 [80059b34] = w(V0);
-V0 = 000a;
 
 L2ae5c:	; 8002AE5C
-[8004f4c0] = w(V0);
-8002AE64	lui    a0, $8003
-8002AE68	addiu  a0, a0, $a49c (=-$5b64)
-8002AE6C	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002AE70	nop
-A0 = 0001;
-8002AE78	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
+[8004f4c0] = w(a);
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
+A0 = 1; // CdlNop
 A1 = 0;
+system_cdrom_cdl_command_exec_without_ret();
 
 L2ae80:	; 8002AE80
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002AE8C	jr     ra 
-8002AE90	nop
 ////////////////////////////////
 
 
@@ -3109,8 +3039,7 @@ V1 = w[8004f49c];
 V0 = V1 < 0800;
 8002AECC	bne    v0, zero, L2aef4 [$8002aef4]
 8002AED0	nop
-8002AED4	lui    a0, $8006
-8002AED8	addiu  a0, a0, $9594 (=-$6a6c)
+A0 = 80059594;
 8002AEDC	jal    func41224 [$80041224]
 A1 = 0003;
 A0 = w[8004f4ac];
@@ -3120,8 +3049,7 @@ A1 = 0200;
 L2aef4:	; 8002AEF4
 8002AEF4	blez   v1, L2af68 [$8002af68]
 8002AEF8	nop
-8002AEFC	lui    a0, $8006
-8002AF00	addiu  a0, a0, $9594 (=-$6a6c)
+A0 = 80059594;
 8002AF04	jal    func41224 [$80041224]
 A1 = 0003;
 V0 = w[8004f49c];
@@ -3142,8 +3070,7 @@ A1 = 0200;
 V0 = V1 + 0006;
 
 L2af50:	; 8002AF50
-8002AF50	lui    a0, $8006
-8002AF54	addiu  a0, a0, $8d94 (=-$726c)
+A0 = 80058d94;
 V0 = V0 >> 02;
 A1 = A1 - V0;
 
@@ -3152,8 +3079,7 @@ L2af60:	; 8002AF60
 8002AF64	nop
 
 L2af68:	; 8002AF68
-8002AF68	lui    a0, $8006
-8002AF6C	addiu  a0, a0, $9594 (=-$6a6c)
+A0 = 80059594;
 8002AF70	jal    system_psyq_cd_pos_to_int [$800413ac]
 8002AF74	nop
 V1 = w[8004f4a8];
@@ -3197,8 +3123,7 @@ V0 = V0 + 0001;
 8002B02C	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
 A0 = w[8004f4a8];
-8002B03C	lui    a1, $8006
-8002B040	addiu  a1, a1, $95ac (=-$6a54)
+A1 = 800595ac;
 [800595a4] = w(V0);
 8002B04C	jal    system_psyq_cd_int_to_pos [$800412a8]
 8002B050	nop
@@ -3209,7 +3134,6 @@ V0 = V0 < 0003;
 V0 = 0003;
 [8004f4c4] = w(V0);
 8002B074	j      L2b0cc [$8002b0cc]
-V0 = 000a;
 
 L2b07c:	; 8002B07C
 V1 = 270f;
@@ -3231,23 +3155,18 @@ V1 = 0004;
 [8004f4c4] = w(V1);
 V0 = V0 + 0001;
 [80059b34] = w(V0);
-V0 = 000a;
 
 L2b0cc:	; 8002B0CC
-[8004f4c0] = w(V0);
-8002B0D4	lui    a0, $8003
-8002B0D8	addiu  a0, a0, $a49c (=-$5b64)
-8002B0DC	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002B0E0	nop
+[8004f4c0] = w(a);
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
 A0 = 0001;
 8002B0E8	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
 A1 = 0;
 
 L2b0f0:	; 8002B0F0
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002B0F8	jr     ra 
-8002B0FC	nop
 ////////////////////////////////
 
 
@@ -3399,7 +3318,7 @@ else
 
 [8004f4c0] = w(a);
 
-A0 = 8002a49c;
+A0 = 8002a49c; // system_cdrom_sync_callback()
 system_cdrom_set_sync_callback();
 
 A0 = 1; // CdlNop
@@ -3473,8 +3392,7 @@ V0 = hu[S1 + 0000];
 8002B4E0	nop
 
 L2b4e4:	; 8002B4E4
-8002B4E4	lui    s0, $8006
-8002B4E8	addiu  s0, s0, $9594 (=-$6a6c)
+S0 = 80059594;
 A0 = S0;
 8002B4F0	jal    func41224 [$80041224]
 A1 = 0003;
@@ -3484,8 +3402,7 @@ V1 = w[8004f4a8];
 8002B508	nop
 8002B50C	beq    v0, v1, L2b544 [$8002b544]
 V0 = 0001;
-8002B514	lui    a0, $8006
-8002B518	addiu  a0, a0, $8d94 (=-$726c)
+A0 = 80058d94;
 V0 = w[8004f490];
 8002B524	nop
 V0 = V0 + 0001;
@@ -3533,8 +3450,7 @@ L2b5e0:	; 8002B5E0
 8002B5E0	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
 A0 = w[8004f4a8];
-8002B5F0	lui    a1, $8006
-8002B5F4	addiu  a1, a1, $95ac (=-$6a54)
+A1 = 800595ac;
 [800595a4] = w(V0);
 8002B600	jal    system_psyq_cd_int_to_pos [$800412a8]
 8002B604	nop
@@ -3545,7 +3461,6 @@ V0 = V0 < 0003;
 V0 = 0003;
 [8004f4c4] = w(V0);
 8002B628	j      L2b680 [$8002b680]
-V0 = 000a;
 
 L2b630:	; 8002B630
 V1 = 270f;
@@ -3567,14 +3482,13 @@ V1 = 0004;
 [8004f4c4] = w(V1);
 V0 = V0 + 0001;
 [80059b34] = w(V0);
-V0 = 000a;
 
 L2b680:	; 8002B680
-[8004f4c0] = w(V0);
-8002B688	lui    a0, $8003
-8002B68C	addiu  a0, a0, $a49c (=-$5b64)
-8002B690	jal    system_cdrom_set_sync_callback [$80040e2c]
-8002B694	nop
+[8004f4c0] = w(a);
+
+A0 = 8002a49c; // system_cdrom_sync_callback()
+system_cdrom_set_sync_callback();
+
 A0 = 0001;
 8002B69C	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
 A1 = 0;
