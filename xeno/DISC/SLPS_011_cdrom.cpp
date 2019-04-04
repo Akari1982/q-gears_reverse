@@ -1843,8 +1843,8 @@ A0 = w[80055f0c];
 80042FA4	jal    system_cdrom_set_sync_callback [$80040e2c]
 80042FA8	nop
 A0 = w[80055f10];
-80042FB4	jal    system_cdrom_set_ready_callback [$80040e44]
-80042FB8	nop
+system_cdrom_set_ready_callback();
+
 V0 = w[80055f18];
 80042FC4	nop
 V0 = V0 & 0001;

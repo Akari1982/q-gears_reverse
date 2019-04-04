@@ -4852,16 +4852,16 @@ L28024:	; 80028024
 // system_cdrom_sync_callback
 8002A49C-8002AA30
 ////////////////////////////////
-// func2aa34
+// system_cdrom_ready_callback_1
 8002AA34-8002AE90
 ////////////////////////////////
-// func2ae94
+// system_cdrom_ready_callback_2
 8002AE94-8002B0FC
 ////////////////////////////////
-// func2b100
+// system_cdrom_ready_callback_3
 8002B100-8002B3DC
 ////////////////////////////////
-// func2b3e0
+// system_cdrom_ready_callback_4
 8002B3E0-8002B6BC
 ////////////////////////////////
 // func2b6c0

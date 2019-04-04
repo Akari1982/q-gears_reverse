@@ -147,7 +147,7 @@ A0 = 0;
 system_cdrom_set_sync_callback();
 
 A0 = 0;
-80028250	jal    system_cdrom_set_ready_callback [$80040e44]
+system_cdrom_set_ready_callback();
 
 [8004f4a0] = w(0);
 [8004f49c] = w(0);
@@ -1467,7 +1467,7 @@ if( flags & 100 )
     A0 = 8002a49c; // system_cdrom_sync_callback()
     system_cdrom_set_sync_callback();
 
-    A0 = 8002b100;
+    A0 = 8002b100; // system_cdrom_ready_callback_3()
     system_cdrom_set_ready_callback();
 
     [8004f4c0] = w(1);
@@ -1646,7 +1646,7 @@ else
         A0 = 8002a49c; // system_cdrom_sync_callback()
         system_cdrom_set_sync_callback();
 
-        A0 = 8002ae94;
+        A0 = 8002ae94; // system_cdrom_ready_callback_2()
         system_cdrom_set_ready_callback();
 
         [8004f4c0] = w(1);
@@ -1894,7 +1894,7 @@ system_cdrom_dma_callback();
 A0 = 8002a49c; // system_cdrom_sync_callback()
 system_cdrom_set_sync_callback();
 
-A0 = 8002aa34;
+A0 = 8002aa34; // system_cdrom_ready_callback_1()
 system_cdrom_set_ready_callback();
 
 [80059b18] = w(w[80059b18] + 1);
@@ -2097,7 +2097,7 @@ system_cdrom_dma_callback();
 A0 = 8002a49c; // system_cdrom_sync_callback()
 system_cdrom_set_sync_callback();
 
-A0 = 8002b3e0;
+A0 = 8002b3e0; // system_cdrom_ready_callback_4()
 system_cdrom_set_ready_callback();
 
 [80059b18] = w(w[80059b18] + 1);
@@ -2766,21 +2766,23 @@ switch( w[8004f4c0] )
 
 
 ////////////////////////////////
-// func2aa34
-8002AA34	addiu  sp, sp, $ffe8 (=-$18)
+// system_cdrom_ready_callback_1
+
 A0 = A0 & 00ff;
 V0 = 0001;
-[SP + 0014] = w(RA);
+
 8002AA44	bne    a0, v0, L2ada4 [$8002ada4]
-[SP + 0010] = w(S0);
+
 V0 = w[8004f4d8];
 8002AA54	nop
 8002AA58	blez   v0, L2aa88 [$8002aa88]
 8002AA5C	nop
-8002AA60	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
-8002AA68	jal    system_cdrom_dma_callback [$80041264]
+system_cdrom_set_ready_callback();
+
 A0 = 0;
+system_cdrom_dma_callback();
+
 A0 = w[8004f4dc];
 [8004f49c] = w(0);
 8002AA80	j      L2ad84 [$8002ad84]
@@ -2927,8 +2929,10 @@ V0 = w[8004f4a4];
 L2acec:	; 8002ACEC
 [8004f4e0] = w(0);
 [8004f4a8] = w(S0);
-8002ACFC	jal    system_cdrom_set_ready_callback [$80040e44]
+
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 A0 = w[8004f4a8];
 A1 = 800595ac;
 [800595a4] = w(V0);
@@ -2955,8 +2959,9 @@ L2ad5c:	; 8002AD5C
 
 L2ad6c:	; 8002AD6C
 [8004f49c] = w(0);
-8002AD74	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 A0 = w[8004f4dc];
 
 L2ad84:	; 8002AD84
@@ -2972,8 +2977,9 @@ V0 = w[80059b6c];
 8002ADAC	nop
 V0 = V0 + 0001;
 [80059b6c] = w(V0);
-8002ADBC	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 A0 = w[8004f4a8];
 A1 = 800595ac;
 [800595a4] = w(V0);
@@ -3024,12 +3030,12 @@ L2ae80:	; 8002AE80
 
 
 ////////////////////////////////
-// func2ae94
-8002AE94	addiu  sp, sp, $ffe8 (=-$18)
+// system_cdrom_ready_callback_2
+
 A0 = A0 & 00ff;
 V0 = 0001;
 8002AEA0	bne    a0, v0, L2b014 [$8002b014]
-[SP + 0010] = w(RA);
+
 V0 = w[8004f4d8];
 8002AEB0	nop
 8002AEB4	bgtz   v0, L2afe4 [$8002afe4]
@@ -3105,8 +3111,9 @@ V0 = V0 + 0800;
 8002AFE0	nop
 
 L2afe4:	; 8002AFE4
-8002AFE4	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 A0 = w[8004f4dc];
 [8004f49c] = w(0);
 8002AFFC	jal    func2a1a4 [$8002a1a4]
@@ -3120,8 +3127,10 @@ V0 = w[80059b6c];
 8002B01C	nop
 V0 = V0 + 0001;
 [80059b6c] = w(V0);
-8002B02C	jal    system_cdrom_set_ready_callback [$80040e44]
+
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 A0 = w[8004f4a8];
 A1 = 800595ac;
 [800595a4] = w(V0);
@@ -3172,8 +3181,7 @@ L2b0f0:	; 8002B0F0
 
 
 ////////////////////////////////
-// func2b100()
-// load callback 80055b4c
+// system_cdrom_ready_callback_3()
 
 interupt = A0; // 80055e2c interupt
 result_ptr = A1; // 800598b4
@@ -3329,7 +3337,7 @@ system_cdrom_cdl_command_exec_without_ret(); // run next command
 
 
 ////////////////////////////////
-// func2b3e0
+// system_cdrom_ready_callback_4
 
 A0 = A0 & 00ff;
 V0 = 0001;
@@ -3339,8 +3347,10 @@ V0 = w[8004f4d8];
 8002B408	nop
 8002B40C	blez   v0, L2b44c [$8002b44c]
 8002B410	nop
-8002B414	jal    system_cdrom_set_ready_callback [$80040e44]
+
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 8002B41C	jal    system_cdrom_dma_callback [$80041264]
 A0 = 0;
 A0 = w[8004f4dc];
@@ -3434,8 +3444,9 @@ V0 = V0 + 0001;
 8002B5AC	nop
 
 L2b5b0:	; 8002B5B0
-8002B5B0	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 [8004f49c] = w(0);
 8002B5C0	j      L2b6a4 [$8002b6a4]
 8002B5C4	nop
@@ -3447,8 +3458,9 @@ V0 = V0 + 0001;
 [80059b6c] = w(V0);
 
 L2b5e0:	; 8002B5E0
-8002B5E0	jal    system_cdrom_set_ready_callback [$80040e44]
 A0 = 0;
+system_cdrom_set_ready_callback();
+
 A0 = w[8004f4a8];
 A1 = 800595ac;
 [800595a4] = w(V0);
