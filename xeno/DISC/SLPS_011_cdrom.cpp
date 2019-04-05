@@ -460,9 +460,9 @@ return 1;
 
 
 ////////////////////////////////
-// func41224()
+// system_cdrom_dma_to_main_memory_wrapper()
 
-func42920();
+system_cdrom_dma_to_main_memory();
 
 return V0 < 1;
 ////////////////////////////////
@@ -890,13 +890,12 @@ return 0;
 // func41c34
 S7 = A0;
 S4 = A1;
-80041C48	addiu  a0, zero, $ffff (=-$1)
-80041C64	jal    system_psyq_wait_frames [$8004b3f4]
 
-80041C6C	lui    s5, $8005
-S5 = S5 + 5bf0;
-80041C74	lui    s2, $8005
-S2 = S2 + 5e28;
+A0 = -1;
+system_psyq_wait_frames();
+
+S5 = 80055bf0;
+S2 = 80055e28;
 S6 = S2 + 0001;
 S3 = S2 + 0002;
 V0 = V0 + 03c0;
@@ -1460,42 +1459,48 @@ return 1; // transfer still being performed
 
 
 ////////////////////////////////
-// func42920()
+// system_cdrom_dma_to_main_memory()
 
 allocated_memory = A0;
 size = A1;
 
-cd_1800 = w[80055e10];
-cd_1803 = w[80055e1c];
+cd_1800 = w[80055e10]; // 1f801800 CDROM Controller Index/Status Register
+cd_1803 = w[80055e1c]; // 1f801803 CDROM Controller Index0 Request Register
 cd_1020 = w[80055e20]; // COMMON_DELAY
-cd_1018 = w[80055e44]; // CDROM_DELAY
-cd_10f0 = w[80055e48]; // DPCR - DMA Control register
+cd_1018 = w[80055e44]; // 1f801018 CDROM_DELAY
+cd_10f0 = w[80055e48]; // 1f8010f0 DPCR - DMA Control register
 cd_10b0 = w[80055e4c]; // 1f8010b0
 cd_10b4 = w[80055e50]; // 1f8010b4
 cd_10b8 = w[80055e54]; // 1f8010b8
 
-[cd_1800] = b(00);
-[cd_1803] = b(80);
-[cd_1018] = w(00020943);
-[cd_1020] = w(00001323);
-[cd_10f0] = w(w[cd_10f0] | 00008000);
+[cd_1800] = b(00); // use index 0
+[cd_1803] = b(80); // want Data (0=No/Reset Data Fifo, 1=Yes/Load Data Fifo)
+[cd_1018] = w(00020943); // cdrom delay
+[cd_1020] = w(00001323); // com delay
+
+[cd_10f0] = w(w[cd_10f0] | 00008000); // CDROM Master Enable (0=Disable, 1=Enable)
 [cd_10b0] = w(allocated_memory);
-[cd_10b4] = w(size | 00010000);
+[cd_10b4] = w(size | 00010000); // size
 
-loop429a8:	; 800429A8
-    V0 = bu[cd_1800] & 40;
-800429B8	beq    v0, zero, loop429a8 [$800429a8]
-
-[cd_10b8] = w(11000000);
-
-if( w[cd_10b8] & 01000000 )
+while( ( bu[cd_1800] & 40 ) == 0 ) // Data fifo empty (0=Empty) (triggered after reading LAST byte)
 {
-    loop429f4:	; 800429F4
-        V0 = w[cd_10b8] & 01000000;
-    80042A00	bne    v0, zero, loop429f4 [$800429f4]
 }
 
-[cd_1020] = w(00001325);
+//     0 Transfer Direction 0 = To Main RAM
+//     1 Memory Address Step 0 = Forward;+4
+//     8 Chopping Enable 0 = Normal
+//  9-10 SyncMode, Transfer Synchronisation/Mode (0-3): 0  Start immediately and transfer all at once (used for CDROM, OTC)
+// 16-18 Chopping DMA Window Size (1 SHL N words)
+// 20-22 Chopping CPU Window Size (1 SHL N clks)
+//    24 Start/Busy 1 = Start/Enable/Busy
+//    28 Start/Trigger 1 = Manual Start; use for SyncMode=0
+[cd_10b8] = w(11000000);
+
+while( w[cd_10b8] & 01000000 ) // 24 Start/Busy (0=Stopped/Completed, 1=Start/Enable/Busy)
+{
+}
+
+[cd_1020] = w(00001325); // reset common delay
 
 return 0;
 ////////////////////////////////
@@ -1743,8 +1748,8 @@ A0 = A0 + 3038;
 80042E00	nop
 
 L42e04:	; 80042E04
-80042E04	jal    func41224 [$80041224]
-A1 = 0003;
+A1 = 3;
+system_cdrom_dma_to_main_memory_wrapper();
 
 L42e0c:	; 80042E0C
 80042E0C	jal    system_psyq_cd_pos_to_int [$800413ac]
@@ -1779,8 +1784,8 @@ A1 = w[80055ef8];
 L42e84:	; 80042E84
 A0 = w[80055ef0];
 A1 = w[80055ef8];
-80042E94	jal    func41224 [$80041224]
-80042E98	nop
+system_cdrom_dma_to_main_memory_wrapper();
+
 V0 = w[80055ef8];
 V1 = w[80055ef0];
 V0 = V0 << 02;

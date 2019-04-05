@@ -104,8 +104,6 @@
 8004f4dc [][][][] some func param (0).
 8004f4ec [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
 
-
-
 8004f4f4 data for load 3d data.
 // load_poly functions
 //                                                         18       1c       20       24
