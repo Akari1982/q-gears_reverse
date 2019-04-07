@@ -1,1 +1,1 @@
-main SLPS_011_cdrom2.cpp
+main SLPS_011_sound.cpp

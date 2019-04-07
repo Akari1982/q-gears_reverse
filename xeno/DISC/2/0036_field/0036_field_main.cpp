@@ -84,7 +84,7 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
     func293e8(); // load file
 
     A0 = 0;
-    func28870(); // execute until command finished
+    system_cdrom_action_sync(); // execute until command finished
 
     func78fb0(); // sync and flush command cache
 }
@@ -322,7 +322,7 @@ L77810:	; 80077810
         func1b318(); // prepare cdrom for field load
         if( V0 == 0 )
         {
-            func284dc(); // wait for command to finish
+            system_cdrom_data_sync(); // wait for command to finish
             if( V0 == 0 )
             {
                 if( h[800b15ec] == 0 )
@@ -332,7 +332,7 @@ L77810:	; 80077810
                     funca268c();
 
                     A0 = 0;
-                    func28870(); // execute until command finished
+                    system_cdrom_action_sync(); // execute until command finished
 
                     funca5118(); // load field here
 
@@ -353,7 +353,7 @@ L77810:	; 80077810
             if( V0 == 0 )
             {
                 A0 = 0;
-                func28870(); // execute until command finished
+                system_cdrom_action_sync(); // execute until command finished
 
                 S0 = 1;
                 if( w[8004e9d8] != -1 )
@@ -377,7 +377,7 @@ L77810:	; 80077810
                 if( V0 == 0 )
                 {
                     A0 = 0;
-                    func28870(); // execute until command finished
+                    system_cdrom_action_sync(); // execute until command finished
 
                     if( w[8004e9d8] != -1 )
                     {
@@ -406,7 +406,7 @@ L77810:	; 80077810
                     if( V0 == 0 )
                     {
                         A0 = 0;
-                        func28870(); // execute until command finished
+                        system_cdrom_action_sync(); // execute until command finished
 
                         if( w[8004e9d8] != -1 )
                         {
@@ -624,7 +624,7 @@ if( V0 != 0 )
 // func781dc()
 if( w[800ad004] == 0 )
 {
-    func284dc(); // wait for command to finish
+    system_cdrom_data_sync(); // wait for command to finish
 
     if( ( V0 == 0 ) && ( w[8004e9ac] == 0 ) && ( w[800ad068] == 0 ) && ( w[800ad00c] == 0 ) )
     {

@@ -490,9 +490,9 @@ system_dma_additional_callback();
 
 
 ////////////////////////////////
-// func41288()
+// system_psyq_cd_data_sync()
 
-system_psyq_cd_data_sync();
+system_psyq_cd_data_sync_inter();
 ////////////////////////////////
 
 
@@ -781,7 +781,7 @@ switch( last_int )
     default:
     {
         A0 = 80018f10; // "CDROM: unknown intr"
-        func42c04();
+        system_cdrom_write_stringl_to_file_1();
 
         A0 = 80018f24; // "(%d)"
         A1 = last_int;
@@ -806,7 +806,8 @@ system_psyq_wait_frames();
 [800598c8] = w(0);
 [800598cc] = w(80018f44); // "CD_sync"
 
-L41a20:	; 80041A20
+do
+{
     A0 = -1; // get current frame time
     system_psyq_wait_frames();
 
@@ -815,7 +816,7 @@ L41a20:	; 80041A20
     if( ( V0 > w[800598c4] ) || ( w[800598c8] > 003c0000 ) )
     {
         A0 = 80018ebc; // "CD timeout: "
-        func42c04();
+        system_cdrom_write_stringl_to_file_1();
 
         A0 = 80018ecc; // "%s:(%s) Sync=%s, Ready=%s"
         A1 = w[800598cc]; // "CD_sync"
@@ -879,7 +880,7 @@ L41a20:	; 80041A20
 
         return bu[80055e28];
     }
-80041C00	beq    mode, zero, L41a20 [$80041a20]
+} while( mode == 0 )
 
 return 0;
 ////////////////////////////////
@@ -924,7 +925,7 @@ V0 = V0 < V1;
 
 L41cf0:	; 80041CF0
 A0 = 80018ebc; // "CD timeout: "
-80041CF8	jal    func42c04 [$80042c04]
+system_cdrom_write_stringl_to_file_1();
 
 A0 = bu[S2 + 0000];
 V0 = bu[S2 + 0001];
@@ -1136,7 +1137,7 @@ if( dont_wait == 0 )
             if( ( V0 > w[800598c4] ) || ( w[800598c8] > 003c0000 ) )
             {
                 A0 = 80018ebc; // "CD timeout: "
-                func42c04();
+                system_cdrom_write_stringl_to_file_1();
 
                 A0 = 80018ecc; // "%s:(%s) Sync=%s, Ready=%s"
                 A1 = w[800598cc]; // "CD_cw"
@@ -1317,7 +1318,7 @@ cd_1803 = w[80055e1c]; // 1f801803
 com_delay = w[80055e20]; // 1f801020
 
 A0 = 80018fac; // "CD_init:"
-func42c04();
+system_cdrom_write_stringl_to_file_1();
 
 A0 = 80018fb8; // "addr=%08x"
 A1 = 80055e2c;
@@ -1401,35 +1402,29 @@ return -1;
 
 
 ////////////////////////////////
-// system_psyq_cd_data_sync()
+// system_psyq_cd_data_sync_inter()
 // If mode is 0, the function waits for a data transfer initiated by CdGetSector2() to be completed.
 // If mode is 1, the function polls the current status and returns.
 
 mode = A0;
 
-A0 = -1;
+A0 = -1; // current number of frames
 system_psyq_wait_frames();
 [800598c4] = w(V0 + 3c0);
 [800598c8] = w(0);
 [800598cc] = w(80018fc4); // "CD_datasync"
 
-
-
-loop42814:	; 80042814
-    A0 = -1;
+do
+{
+    A0 = -1; // current number of frames
     system_psyq_wait_frames();
 
-    V1 = w[800598c4] < V0;
-    80041A38	bne    v1, zero, L41a68 [$80041a68]
+    [800598c8] = w(w[800598c8] + 1);
 
-    V1 = w[800598c8];
-    [800598c8] = w(V1 + 1);
-
-    if( V1 > 003c0000 )
+    if( ( V0 > w[800598c4] ) || ( w[800598c8] > 003c0000 ) )
     {
-        L4285c:	; 8004285C
         A0 = 80018ebc; // "CD timeout: "
-        func42c04();
+        system_cdrom_write_stringl_to_file_1();
 
         A0 = 80018ecc; // "%s:(%s) Sync=%s, Ready=%s"
         A1 = w[800598cc]; // "CD_datasync"
@@ -1451,7 +1446,7 @@ loop42814:	; 80042814
     {
         return 0; // transfer complete
     }
-800428F8	beq    mode, zero, loop42814 [$80042814]
+} while( mode == 0 )
 
 return 1; // transfer still being performed
 ////////////////////////////////
@@ -1605,32 +1600,39 @@ loop42b54:	; 80042B54
 
 
 ////////////////////////////////
-// func42c04()
+// system_cdrom_write_stringl_to_file_1()
 
 str = A0;
 if( str == 0 )
 {
     str = 80018fd0; // "<NULL>"
 }
-80042C20	j      L42c30 [$80042c30]
 
-loop42c28:	; 80042C28
-    func42c54();
-
-    L42c30:	; 80042C30
+while( bu[str] != 0 )
+{
     A0 = bu[str];
+    system_cdrom_write_symbol_to_file_1();
+
     str = str + 1;
-80042C38	bne    a0, zero, loop42c28 [$80042c28]
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func42c54()
+// system_cdrom_write_symbol_to_file_1()
 
 [SP + 10] = b(A0);
 
-if( A0 != 9 )
+if( A0 == 9 ) // tabulation
+{
+    do
+    {
+        A0 = 20; // add "space"
+        system_cdrom_write_symbol_to_file_1();
+    } while( w[800598d0] & 7 )
+}
+else
 {
     if( A0 != a )
     {
@@ -1639,33 +1641,24 @@ if( A0 != 9 )
             [800598d0] = w(w[800598d0] + 1);
         }
 
+        A0 = 1; // file descriptor
+        A1 = SP + 10; // source
+        A2 = 1; // length
+        system_bios_file_write();
+    }
+    else
+    {
+        A0 = d; // add "carriage return"
+        system_cdrom_write_symbol_to_file_1();
+
+        [800598d0] = w(0);
+
         A0 = 1;
         A1 = SP + 10;
         A2 = 1;
         system_bios_file_write();
     }
-
-    A0 = d;
-    func42c54();
-
-    [800598d0] = w(0);
-
-    A0 = 1;
-    A1 = SP + 10;
-    A2 = 1;
-    system_bios_file_write();
-    return;
 }
-
-L42c90:	; 80042C90
-    A0 = 20;
-    func42c54();
-
-    if( ( w[800598d0] & 7 ) == 0 )
-    {
-        return;
-    }
-80042CB0	j      L42c90 [$80042c90]
 ////////////////////////////////
 
 
@@ -1738,7 +1731,7 @@ A0 = 0;
 A0 = SP + 0010;
 80042DDC	jal    func41244 [$80041244]
 A1 = 0003;
-80042DE4	jal    func41288 [$80041288]
+80042DE4	jal    system_psyq_cd_data_sync [$80041288]
 A0 = 0;
 80042DEC	lui    a0, $8004
 A0 = A0 + 3038;
@@ -1759,10 +1752,10 @@ V1 = V1 + 5f08;
 V1 = w[V1 + 0000];
 80042E20	nop
 80042E24	beq    v0, v1, L42e48 [$80042e48]
-80042E28	nop
-A0 = 80018fd8;
-80042E34	jal    func42c04 [$80042c04]
-80042E38	nop
+
+A0 = 80018fd8; // "CdRead: sector error\n"
+system_cdrom_write_stringl_to_file_1();
+
 80042E3C	addiu  v0, zero, $ffff (=-$1)
 [80055efc] = w(V0);
 
@@ -1972,9 +1965,9 @@ V0 = V0 & 0010;
 V0 = V0 & 003f;
 8004319C	bne    v0, zero, L431b8 [$800431b8]
 A0 = 0001;
-A0 = 80018ff0;
-800431AC	jal    func42c04 [$80042c04]
-800431B0	nop
+A0 = 80018ff0; // "CdRead: Shell open...\n"
+system_cdrom_write_stringl_to_file_1();
+
 A0 = 0001;
 
 L431b8:	; 800431B8
@@ -1990,10 +1983,10 @@ A1 = 0;
 
 L431e4:	; 800431E4
 800431E4	beq    s1, zero, L4323c [$8004323c]
-800431E8	nop
-A0 = 80019008;
-800431F4	jal    func42c04 [$80042c04]
-800431F8	nop
+
+A0 = 80019008; // "CdRead: retry...\n"
+system_cdrom_write_stringl_to_file_1();
+
 A0 = 0009;
 A1 = 0;
 80043204	jal    system_cdrom_cdl_command_exec_with_sync_ret [$80040e5c]
@@ -2093,7 +2086,7 @@ V0 = w[S0 + 0000];
 V0 = V0 & 0001;
 80043368	beq    v0, zero, L43378 [$80043378]
 8004336C	nop
-80043370	jal    func41288 [$80041288]
+80043370	jal    system_psyq_cd_data_sync [$80041288]
 A0 = 0;
 
 L43378:	; 80043378

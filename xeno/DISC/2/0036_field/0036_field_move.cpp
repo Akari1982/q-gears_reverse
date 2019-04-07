@@ -3190,7 +3190,7 @@ return 0;
 80084B20	addu   v0, zero, zero
 
 L84b24:	; 80084B24
-80084B24	jal    func284dc [$800284dc]
+80084B24	jal    system_cdrom_data_sync [$800284dc]
 80084B28	nop
 80084B2C	bne    v0, zero, L84b64 [$80084b64]
 80084B30	addu   v0, zero, zero

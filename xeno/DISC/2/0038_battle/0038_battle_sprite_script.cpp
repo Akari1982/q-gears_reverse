@@ -602,7 +602,7 @@ B40F0C80 // 9E
 
 DC0F0C80 // 95
         800C0FDC	ori    v0, zero, $0001
-        800C0FE0	jal    func284dc [$800284dc]
+        800C0FE0	jal    system_cdrom_data_sync [$800284dc]
         800C0FE4	sh     v0, $009e(s1)
         800C0FE8	bne    v0, zero, Lc1754 [$800c1754]
         800C0FEC	andi   v0, s5, $00ff

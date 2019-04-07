@@ -1,4 +1,581 @@
 ////////////////////////////////
+// func27708
+80027708	addiu  sp, sp, $ffb0 (=-$50)
+[SP + 002c] = w(S1);
+S1 = A0;
+T3 = A2;
+[SP + 004c] = w(RA);
+[SP + 0048] = w(FP);
+[SP + 0044] = w(S7);
+[SP + 0040] = w(S6);
+[SP + 003c] = w(S5);
+[SP + 0038] = w(S4);
+[SP + 0034] = w(S3);
+[SP + 0030] = w(S2);
+[SP + 0028] = w(S0);
+A0 = w[S1 + 0328];
+A2 = A3 + 0100;
+V1 = A0 << 08;
+80027748	div    v1, a2
+80027770	mflo   v1
+V0 = 0140;
+V0 = V0 - V1;
+V1 = V0 >> 1f;
+V0 = V0 + V1;
+V1 = V0 >> 01;
+80027788	mult   v1, a3
+T4 = w[SP + 0060];
+T1 = w[SP + 0064];
+80027794	mflo   v0
+80027798	bgez   v0, L277a4 [$800277a4]
+8002779C	nop
+V0 = V0 + 00ff;
+
+L277a4:	; 800277A4
+V0 = V0 >> 08;
+V1 = V1 + V0;
+V0 = A1 - V1;
+V0 = V0 << 10;
+V0 = V0 >> 10;
+800277B8	div    v0, a0
+800277E0	mfhi   v1
+800277E4	nop
+V0 = V1 << 10;
+800277EC	bgez   v0, L27800 [$80027800]
+S3 = V1;
+V0 = hu[S1 + 0328];
+800277F8	nop
+S3 = V0 + V1;
+
+L27800:	; 80027800
+80027800	bltz   t3, L27820 [$80027820]
+T2 = 0;
+V1 = w[S1 + 032c];
+8002780C	nop
+V0 = V1 + 00f0;
+V0 = V0 < T3;
+80027818	beq    v0, zero, L27828 [$80027828]
+V0 = V1 << 08;
+
+L27820:	; 80027820
+80027820	j      L27860 [$80027860]
+T0 = 0;
+
+L27828:	; 80027828
+80027828	div    v0, a2
+80027850	mflo   v0
+80027854	nop
+T2 = V0;
+T0 = 0;
+
+L27860:	; 80027860
+V0 = T1 & 0001;
+V1 = V0 << 02;
+V1 = V1 + V0;
+V1 = V1 << 06;
+V0 = T2 << 10;
+80027874	blez   v0, L27b1c [$80027b1c]
+S4 = S1 + V1;
+V1 = h[S1 + 0334];
+80027880	nop
+80027884	bgez   v1, L27890 [$80027890]
+V0 = V1;
+V0 = V1 + 003f;
+
+L27890:	; 80027890
+S7 = 0;
+S6 = A3 + 0100;
+FP = T3;
+S5 = ffffff;
+S0 = S4 + 0016;
+V0 = V0 >> 06;
+V0 = V0 << 06;
+V0 = V1 - V0;
+A0 = h[S1 + 0338];
+V1 = 0002;
+V1 = V1 - A0;
+V0 = V0 << V1;
+[SP + 0010] = h(V0);
+
+L278c8:	; 800278C8
+A1 = S3 << 10;
+A1 = A1 >> 10;
+V0 = 0002;
+A0 = h[S1 + 0338];
+V1 = hu[S1 + 0334];
+T5 = hu[SP + 0010];
+V0 = V0 - A0;
+V0 = A1 >> V0;
+T1 = V1 + V0;
+V1 = S3 + T5;
+V0 = 0100;
+A0 = V0 >> A0;
+800278F8	addiu  a0, a0, $ffff (=-$1)
+V1 = V1 & A0;
+V0 = V0 - V1;
+A0 = V0;
+A3 = V1;
+V0 = V0 << 10;
+V0 = V0 >> 10;
+V1 = w[S1 + 0328];
+A1 = A1 + V0;
+V1 = V1 < A1;
+80027920	beq    v1, zero, L2793c [$8002793c]
+V0 = A0 << 10;
+V0 = hu[S1 + 0328];
+8002792C	nop
+V0 = V0 - S3;
+A0 = V0;
+V0 = A0 << 10;
+
+L2793c:	; 8002793C
+V0 = V0 >> 08;
+80027940	div    v0, s6
+80027968	mflo   v0
+V1 = T0 << 10;
+V1 = V1 >> 10;
+A2 = V0;
+V0 = V0 << 10;
+V0 = V0 >> 10;
+V1 = V1 + V0;
+V1 = V1 < 0141;
+80027988	bne    v1, zero, L279bc [$800279bc]
+V0 = S3 + A0;
+V1 = 0140;
+V1 = V1 - T0;
+V0 = V1 << 10;
+V0 = V0 >> 10;
+800279A0	mult   v0, s6
+800279A4	mflo   v0
+800279A8	bgez   v0, L279b4 [$800279b4]
+A2 = V1;
+V0 = V0 + 00ff;
+
+L279b4:	; 800279B4
+A0 = V0 >> 08;
+V0 = S3 + A0;
+
+L279bc:	; 800279BC
+V0 = V0 << 10;
+V1 = w[S1 + 0328];
+V0 = V0 >> 10;
+800279C8	div    v0, v1
+800279F0	mfhi   a1
+S2 = T0 + A2;
+[S0 + fff2] = h(T0);
+[S0 + fffa] = h(S2);
+[S0 + 0002] = h(T0);
+[S0 + 0004] = h(FP);
+[S0 + 000a] = h(S2);
+[S0 + 000c] = h(FP);
+[S0 + fff6] = b(A3);
+V0 = T3 - T2;
+V1 = A3;
+A0 = A0 + V1;
+[S0 + fff4] = h(V0);
+[S0 + fffc] = h(V0);
+V0 = bu[S1 + 033a];
+80027A2C	addiu  a0, a0, $ffff (=-$1)
+[S0 + fffe] = b(A0);
+[S0 + fff7] = b(V0);
+V0 = bu[S1 + 033a];
+[S0 + 0006] = b(V1);
+[S0 + ffff] = b(V0);
+V0 = bu[S1 + 033a];
+V1 = bu[S1 + 032c];
+[S0 + 000e] = b(A0);
+A0 = T1 << 10;
+V0 = V0 + V1;
+[S0 + 0007] = b(V0);
+V0 = bu[S1 + 033a];
+V1 = bu[S1 + 032c];
+A0 = A0 >> 10;
+V0 = V0 + V1;
+[S0 + 000f] = b(V0);
+V1 = h[S1 + 0338];
+80027A74	bgez   a0, L27a80 [$80027a80]
+S3 = A1;
+A0 = A0 + 003f;
+
+L27a80:	; 80027A80
+A3 = h[S1 + 0336];
+V0 = A0 >> 06;
+80027A88	bgez   a3, L27a94 [$80027a94]
+A2 = V0 << 06;
+A3 = A3 + 00ff;
+
+L27a94:	; 80027A94
+A3 = A3 >> 08;
+A0 = V1;
+A1 = 0;
+A3 = A3 << 08;
+[SP + 0018] = w(T2);
+[SP + 001c] = w(T3);
+80027AAC	jal    system_graphic_get_texpage_by_param [$80043894]
+[SP + 0020] = w(T4);
+80027AB4	lui    a0, $ff00
+[S0 + 0000] = h(V0);
+T4 = w[SP + 0020];
+V1 = w[S4 + 0000];
+V0 = w[T4 + 0000];
+V1 = V1 & A0;
+V0 = V0 & S5;
+V1 = V1 | V0;
+[S4 + 0000] = w(V1);
+V1 = w[T4 + 0000];
+V0 = S4 & S5;
+V1 = V1 & A0;
+V1 = V1 | V0;
+V0 = S2 << 10;
+V0 = V0 >> 10;
+V0 = V0 < 0140;
+[T4 + 0000] = w(V1);
+T2 = w[SP + 0018];
+T3 = w[SP + 001c];
+80027B00	beq    v0, zero, L27b1c [$80027b1c]
+T0 = S2;
+S0 = S0 + 0028;
+S7 = S7 + 0001;
+V0 = S7 < 0008;
+80027B14	bne    v0, zero, L278c8 [$800278c8]
+S4 = S4 + 0028;
+
+L27b1c:	; 80027B1C
+RA = w[SP + 004c];
+FP = w[SP + 0048];
+S7 = w[SP + 0044];
+S6 = w[SP + 0040];
+S5 = w[SP + 003c];
+S4 = w[SP + 0038];
+S3 = w[SP + 0034];
+S2 = w[SP + 0030];
+S1 = w[SP + 002c];
+S0 = w[SP + 0028];
+SP = SP + 0050;
+80027B48	jr     ra 
+80027B4C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func27b50
+80027B50	addiu  sp, sp, $ffe8 (=-$18)
+80027B54	beq    a0, zero, L27b64 [$80027b64]
+[SP + 0010] = w(RA);
+80027B5C	jal    system_memory_mark_removed_alloc [$80031f0c]
+80027B60	nop
+
+L27b64:	; 80027B64
+RA = w[SP + 0010];
+SP = SP + 0018;
+80027B6C	jr     ra 
+80027B70	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func27b54
+
+S0 = w[SP + 0058];
+S1 = w[SP + 005c];
+S7 = w[SP + 0068];
+FP = A0;
+S5 = hu[SP + 0060];
+S4 = A1;
+S6 = hu[SP + 0064];
+S2 = A2;
+S3 = A3;
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
+V1 = S0 << 10;
+V1 = V1 >> 10;
+V0 = S1 << 10;
+A2 = V0 >> 10;
+80027BE0	div    v1, a2
+80027C08	mflo   v1
+A1 = 0;
+[FP + 0000] = h(S4);
+[FP + 0002] = h(S2);
+[FP + 0004] = h(S3);
+A0 = A2 << 01;
+[FP + 0006] = h(S0);
+[FP + 000a] = h(S1);
+[FP + 000c] = h(S5);
+[FP + 000e] = h(S6);
+[FP + 0010] = w(S7);
+[FP + 0008] = h(V1);
+80027C38	jal    system_memory_allocate [$800319ec]
+[SP + 0018] = w(A2);
+[FP + 0014] = w(V0);
+A2 = w[SP + 0018];
+80027C48	bne    v0, zero, L27c58 [$80027c58]
+80027C4C	nop
+80027C50	j      L27c84 [$80027c84]
+FP = 0;
+
+L27c58:	; 80027C58
+80027C58	blez   a2, L27c84 [$80027c84]
+A1 = 0;
+A0 = A2;
+V0 = A1 << 01;
+
+loop27c68:	; 80027C68
+V1 = w[FP + 0014];
+A1 = A1 + 0001;
+V0 = V0 + V1;
+[V0 + 0000] = h(0);
+V0 = A1 < A0;
+80027C7C	bne    v0, zero, loop27c68 [$80027c68]
+V0 = A1 << 01;
+
+L27c84:	; 80027C84
+V0 = FP;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func27cbc
+80027CBC	addiu  sp, sp, $ffc0 (=-$40)
+[SP + 002c] = w(S3);
+S3 = A0;
+[SP + 0038] = w(RA);
+[SP + 0034] = w(S5);
+[SP + 0030] = w(S4);
+[SP + 0028] = w(S2);
+[SP + 0024] = w(S1);
+[SP + 0020] = w(S0);
+V0 = w[S3 + 0014];
+80027CE4	nop
+80027CE8	beq    v0, zero, L27df4 [$80027df4]
+80027CEC	nop
+V0 = hu[S3 + 0002];
+80027CF4	nop
+[SP + 0012] = h(V0);
+V0 = hu[S3 + 0008];
+80027D00	nop
+[SP + 0016] = h(V0);
+V0 = hu[S3 + 000a];
+S5 = hu[S3 + 000e];
+80027D10	blez   v0, L27df4 [$80027df4]
+S4 = 0;
+
+loop27d18:	; 80027D18
+A1 = S4 << 01;
+V0 = w[S3 + 0010];
+V1 = w[S3 + 0014];
+V0 = V0 + S4;
+V1 = A1 + V1;
+V0 = bu[V0 + 0000];
+A0 = hu[V1 + 0000];
+V0 = V0 << 18;
+V0 = V0 >> 18;
+V0 = V0 + A0;
+[V1 + 0000] = h(V0);
+V0 = w[S3 + 0014];
+80027D48	nop
+A1 = A1 + V0;
+V0 = hu[A1 + 0000];
+V1 = hu[S3 + 0004];
+V0 = V0 << 10;
+V0 = V0 >> 14;
+V0 = V0 & ffff;
+80027D64	divu   v0, v1
+80027D68	bne    v1, zero, L27d74 [$80027d74]
+80027D6C	nop
+80027D70	break   $01c00
+
+L27d74:	; 80027D74
+80027D74	mfhi   s1
+S2 = S5 & ffff;
+A2 = S2;
+S0 = hu[S3 + 0004];
+V0 = hu[S3 + 0000];
+A0 = SP + 0010;
+[SP + 0010] = h(V0);
+S0 = S0 - S1;
+[SP + 0014] = h(S1);
+V0 = hu[S3 + 000c];
+A1 = S0 & ffff;
+80027DA0	jal    system_move_image [$800447d4]
+A1 = V0 + A1;
+V0 = hu[S3 + 0000];
+A0 = SP + 0010;
+[SP + 0014] = h(S0);
+S1 = S1 + V0;
+[SP + 0010] = h(S1);
+A1 = hu[S3 + 000c];
+80027DC0	jal    system_move_image [$800447d4]
+A2 = S2;
+V1 = hu[S3 + 0008];
+V0 = hu[SP + 0012];
+S4 = S4 + 0001;
+V0 = V0 + V1;
+V1 = S5 + V1;
+[SP + 0012] = h(V0);
+V0 = hu[S3 + 000a];
+80027DE4	nop
+V0 = S4 < V0;
+80027DEC	bne    v0, zero, loop27d18 [$80027d18]
+S5 = V1;
+
+L27df4:	; 80027DF4
+RA = w[SP + 0038];
+S5 = w[SP + 0034];
+S4 = w[SP + 0030];
+S3 = w[SP + 002c];
+S2 = w[SP + 0028];
+S1 = w[SP + 0024];
+S0 = w[SP + 0020];
+SP = SP + 0040;
+80027E14	jr     ra 
+80027E18	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func27e1c
+
+S0 = A0;
+A0 = w[S0 + 0014];
+80027E30	nop
+80027E34	beq    a0, zero, L27e48 [$80027e48]
+80027E38	nop
+80027E3C	jal    system_memory_mark_removed_alloc [$80031f0c]
+80027E40	nop
+[S0 + 0014] = w(0);
+
+L27e48:	; 80027E48
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func27e5c()
+
+[SP + 30] = h((A0 + 1) * a);
+[SP + 32] = h(0);
+[SP + 34] = h(8);
+[SP + 36] = h(1c0);
+
+S0 = A0 + 1 < 4;
+
+if( S0 == 0 )
+{
+    A1 = ff;
+    A2 = ff;
+    A3 = ff;
+}
+
+A0 = SP + 30;
+A1 = A1 & ff;
+A2 = A2 & ff;
+A3 = A3 & ff;
+system_clear_image();
+
+A0 = 0;
+system_draw_sync();
+
+if( S0 == 0 )
+{
+    A0 = 0;
+    system_psyq_reset_graph();
+
+    80027EDC	jal    func48a6c [$80048a6c]
+    S2 = 0100;
+    S1 = SP + 0038;
+    A0 = S1;
+    A1 = 0;
+    A2 = 0;
+    A3 = 0140;
+    80027EF8	jal    func437a0 [$800437a0]
+    [SP + 0010] = w(S2);
+    S0 = SP + 0094;
+    A0 = S0;
+    A1 = 0;
+    A2 = 0;
+    A3 = 0140;
+    V0 = 00f0;
+    80027F18	jal    func43858 [$80043858]
+    [SP + 0010] = w(V0);
+    A0 = S1;
+    V0 = 0001;
+    [SP + 004e] = b(0);
+    [SP + 0050] = b(0);
+    [SP + 004f] = b(V0);
+    80027F34	jal    system_psyq_put_draw_env [$80044abc]
+    [SP + 00a4] = b(0);
+    80027F3C	jal    system_psyq_put_disp_env [$80044d14]
+    A0 = S0;
+    A0 = 0010;
+    A1 = 0010;
+    A2 = 0280;
+    A3 = 00f0;
+    V0 = 0400;
+    [SP + 0010] = w(V0);
+    V0 = 0280;
+    [SP + 0014] = w(0);
+    [SP + 0018] = w(V0);
+    [SP + 001c] = w(0);
+    [SP + 0020] = w(V0);
+    [SP + 0024] = w(S2);
+    80027F74	jal    func37390 [$80037390]
+    [SP + 0028] = w(0);
+    80027F7C	jal    system_psyq_set_disp_mask [$800443ac]
+    A0 = 0001;
+    A0 = SP + 0030;
+    A1 = 0;
+    A2 = 0;
+    A3 = 0;
+    V0 = 0280;
+    [SP + 0034] = h(V0);
+    V0 = 0030;
+    [SP + 0030] = h(0);
+    [SP + 0032] = h(0);
+    80027FA8	jal    system_clear_image [$800445dc]
+    [SP + 0036] = h(V0);
+    S0 = SP + 00a8;
+
+    L27fb8:	; 80027FB8
+        A0 = S0;
+        A1 = 8;
+        system_clear_otagr();
+
+        A1 = w[8004f4b8];
+        V0 = w[800595a8];
+        A0 = 800188bc;
+        A1 = A1 + V0 - 1;
+        80027FDC	jal    func36eb4 [$80036eb4]
+
+        A0 = w[800595a8];
+        system_filesystem_get_debug_filename();
+
+        A0 = 800188c0;
+        A1 = V0;
+        80027FFC	jal    func36eb4 [$80036eb4]
+
+        A0 = S0;
+        80028004	jal    func371cc [$800371cc]
+
+        A0 = SP + c4;
+        system_psyq_draw_otag();
+
+        A0 = 0;
+        system_draw_sync();
+
+    8002801C	j      L27fb8 [$80027fb8]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func28040()
 
 file1_allocated_memory = A0;
@@ -58,8 +635,8 @@ if( S0 == 0 || S0 == -1 )
     // causes INT1 to return status.Bit3=set (IdError). Purpose of Bit4 is unknown?
     system_cdrom_command_cdl_set_mode();
 
-    A0 = 0;
-    func28870();
+    A0 = 0; // until the end
+    system_cdrom_action_sync();
 
     A0 = 3; // wait 3 frame
     system_psyq_wait_frames();
@@ -84,7 +661,7 @@ else
 [8004f49c] = w(0); // file size to load
 [8004f4a0] = w(0);
 [8004f4b8] = w(0);
-[8004f4c0] = w(0);
+[8004f4c0] = w(0); // cd state
 [8004f4f0] = w(-1);
 
 if( S0 == 0 )
@@ -96,8 +673,8 @@ if( S0 == 0 )
     A4 = 0; // flags
     func2935c();
 
-    A0 = 0;
-    func28870();
+    A0 = 0; // until the end
+    system_cdrom_action_sync();
 
     A0 = 28; // file sector
     A1 = file2_allocated_memory;
@@ -106,8 +683,8 @@ if( S0 == 0 )
     A4 = 0; // flags
     func2935c();
 
-    A0 = 0;
-    func28870();
+    A0 = 0; // until the end
+    system_cdrom_action_sync();
 }
 ////////////////////////////////
 
@@ -119,8 +696,8 @@ if( S0 == 0 )
 A0 = 0;
 800281EC	jal    func2a2a8 [$8002a2a8]
 
-A0 = 0;
-800281F4	jal    func28870 [$80028870]
+A0 = 0; // until the end
+system_cdrom_action_sync();
 
 A0 = 0009;
 
@@ -134,16 +711,19 @@ A2 = 800595b8;
 A1 = 0;
 80028220	beq    v0, zero, loop28210 [$80028210]
 A0 = 0009;
-80028228	jal    system_cdrom_command_cdl_set_mode [$8002a238]
-A0 = 00a0;
-80028230	jal    func28870 [$80028870]
-A0 = 0;
-80028238	jal    system_psyq_wait_frames [$8004b3f4]
+
+A0 = a0;
+system_cdrom_command_cdl_set_mode();
+
+A0 = 0; // until the end
+system_cdrom_action_sync();
+
 A0 = 0003;
+system_psyq_wait_frames();
 
 L28240:	; 80028240
 A0 = 0;
-80028240	jal    system_cdrom_dma_callback [$80041264]
+system_cdrom_dma_callback()
 
 A0 = 0;
 system_cdrom_set_sync_callback();
@@ -161,24 +741,28 @@ system_cdrom_set_ready_callback();
 ////////////////////////////////
 // system_filesystem_set_dir()
 
+// 00 16001800FFFFFFFF
+// 04 A801FFFFFFFFFFFF
+// 08 FFFFFFFFFFFFFFFF
+// 0с 350A3A0A350DD30A
+// 10 220A2E0A2F0AFFFF
+// 14 FFFFFFFFFFFFFFFF
+// 18 140001001300FFFF
+// 1с 7500FFFFFFFFFFFF
+// 20 100C140C150C190C
+// 24 520FFFFFFFFFFFFF
+// 28 4C0F6E0B4D0C3710
+// 2с 090CAD0BFFFFFFFF
+// 30 2E003400FFFFFFFF
+// 34 FFFFFFFFFFFFFFFF
+// 38 FFFFFFFFFFFFFFFF
+// 3с 0100
+
 V0 = w[8004f498];
-// 16001800FFFFFFFF
-// A801FFFFFFFFFFFF
-// FFFFFFFFFFFFFFFF
-// 350A3A0A350DD30A
-// 220A2E0A2F0AFFFF
-// FFFFFFFFFFFFFFFF
-// 140001001300FFFF
-// 7500FFFFFFFFFFFF
-// 100C140C150C190C
-// 520FFFFFFFFFFFFF
-// 4C0F6E0B4D0C3710
-// 090CAD0BFFFFFFFF
-// 2E003400FFFFFFFF
-// FFFFFFFFFFFFFFFF
-// FFFFFFFFFFFFFFFF
 V0 = hu[V0 + (A0 + A1) * 2] - 1;
-[8004f4b8] = w(V0);
+
+[8004f4b8] = w(V0); // start id of files in dir
+
 if( V0 < 0 )
 {
     [8004f4b8] = w(0);
@@ -190,27 +774,22 @@ return V0;
 
 
 ////////////////////////////////
-// func282c4()
+// system_filesystem_get_current_dir()
 
 A3 = w[8004f498];
 
-A2 = 0;
-loop282d0:	; 800282D0
-    // if ??? == id of first file in dir 7
-    if( hu[A3 + A2 * 2] == ( w[8004f4b8] + 1 ) )
+[A0] = w(0);
+[A1] = w(0);
+
+for( int i = 0; i < 40; ++i )
+{
+    // if start file index is dir start id
+    if( hu[A3 + i * 2] == ( w[8004f4b8] + 1 ) )
     {
-        [A0] = w((A2 >> 2) << 2);
-        [A1] = w(A2 % 4);
+        [A0] = w((i >> 2) << 2);
+        [A1] = w(i % 4);
         break;
     }
-    A2 = A2 + 1;
-    V0 = A2 < 40;
-80028314	bne    v0, zero, loop282d0 [$800282d0]
-
-if( A2 == 40 )
-{
-    [A0] = w(0);
-    [A1] = w(0);
 }
 
 return w[8004f4b8];
@@ -228,14 +807,10 @@ return hu[V0 + 78];
 
 
 ////////////////////////////////
-// func28358
-A0 = A0 + A1;
+// func28358()
+
 V0 = w[8004f498];
-A0 = A0 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-V0 = w[8004f4b8];
-V0 = V1 - V0;
+return hu[V0 + (A0 + A1) * 2] - w[8004f4b8];
 ////////////////////////////////
 
 
@@ -291,7 +866,7 @@ if( S1 != 0 )
         A0 = S2;
         A1 = S1;
         A2 = S3;
-        80028430	jal    system_devkit_pc_read_all [$8004c240]
+        system_devkit_pc_read_all();
 
         V1 = V0;
         8002843C	bne    v1, zero, L2846c [$8002846c]
@@ -340,7 +915,7 @@ return w[8004f49c];
 
 
 ////////////////////////////////
-// func284dc()
+// system_cdrom_data_sync()
 
 S0 = w[8004f4a0];
 if( S0 == 0 )
@@ -348,16 +923,18 @@ if( S0 == 0 )
     if( w[8004f4ec] == 0 )
     {
         A0 = 1; // check status and return
-        system_psyq_cd_data_sync();
+        system_psyq_cd_data_sync_inter();
         if( V0 != 0 )
         {
             return 1; // error or transfer still being performed
         }
     }
-    if( w[8004f4c0] != 0 )
+    if( w[8004f4c0] != 0 ) // if some operation still works
     {
         return 1;
     }
+
+    return 0; // all finished
 }
 return S0;
 ////////////////////////////////
@@ -372,7 +949,7 @@ dir_file_id = A0;
 if( w[8004f4ec] != 0 )
 {
     A0 = dir_file_id;
-    func287a8();
+    system_filesystem_get_debug_filename();
 
     A0 = V0; // filename
     A1 = 0; // accessmode
@@ -397,7 +974,6 @@ if( w[8004f4ec] != 0 )
 
 A0 = w[8004f494]; // pointer to 0x80010004
 V0 = w[8004f4b8] + dir_file_id - 1;
-
 return w[A0 + V0 * 7 + 3]; // size of file
 ////////////////////////////////
 
@@ -408,57 +984,36 @@ return w[A0 + V0 * 7 + 3]; // size of file
 
 V0 = w[8004f4ec];
 
-S2 = A0;
-80028634	beq    v0, zero, L2867c [$8002867c]
+dir_file_id = A0;
+if( V0 != 0 )
+{
+    A0 = dir_file_id;
+    system_filesystem_get_debug_filename();
 
-8002863C	jal    func287a8 [$800287a8]
-80028640	nop
-A0 = V0;
-A1 = 0;
-A2 = 0;
-system_devkit_pc_open();
+    A0 = V0;
+    A1 = 0;
+    A2 = 0;
+    system_devkit_pc_open();
+    S0 = V0;
 
-S0 = V0;
-A0 = S0;
-A1 = 0;
-A2 = 0002;
-system_devkit_pc_seek();
+    A0 = S0;
+    A1 = 0;
+    A2 = 2;
+    system_devkit_pc_seek();
+    S1 = V0;
 
-S1 = V0;
-A0 = S0;
-system_devkit_pc_close();
+    A0 = S0;
+    system_devkit_pc_close();
 
-80028674	bgtz   s1, L286cc [$800286cc]
-V0 = S1 + 0003;
+    if( S1 > 0 )
+    {
+        return (S1 / 4) * 4;
+    }
+}
 
-L2867c:	; 8002867C
-V0 = w[8004f4bc];
 A0 = w[8004f494];
-V0 = S2 + V0;
-80028690	addiu  v0, v0, $ffff (=-$1)
-V1 = V0 << 03;
-V1 = V1 - V0;
-V1 = V1 + A0;
-V0 = bu[V1 + 0006];
-A0 = bu[V1 + 0005];
-A1 = bu[V1 + 0004];
-V1 = bu[V1 + 0003];
-V0 = V0 << 18;
-A0 = A0 << 10;
-V0 = V0 + A0;
-A1 = A1 << 08;
-V0 = V0 + A1;
-S1 = V0 + V1;
-V0 = S1 + 0003;
-
-L286cc:	; 800286CC
-800286CC	bgez   v0, L286dc [$800286dc]
-V0 = V0 >> 02;
-V0 = S1 + 0006;
-V0 = V0 >> 02;
-
-L286dc:	; 800286DC
-V0 = V0 << 02;
+V0 = w[8004f4bc] + dir_file_id - 1;
+return (w[A0 + V0 * 7 + 3] / 4) * 4; // make it aligned
 ////////////////////////////////
 
 
@@ -475,43 +1030,27 @@ return (V1 / 4) * 4; // make it aligned
 
 
 ////////////////////////////////
-// func28738
-V0 = w[8004f4b8];
-80028740	nop
-A0 = A0 + V0;
-80028748	addiu  a0, a0, $ffff (=-$1)
-V1 = A0 << 03;
+// system_cdrom_get_number_of_files_in_dir()
+
+A0 = w[8004f4b8] + A0 - 1;
 V0 = w[8004f494];
-V1 = V1 - A0;
-V1 = V1 + V0;
-V0 = bu[V1 + 0006];
-A0 = bu[V1 + 0005];
-A1 = bu[V1 + 0004];
-V1 = bu[V1 + 0003];
-V0 = V0 << 18;
-A0 = A0 << 10;
-V0 = V0 + A0;
-A1 = A1 << 08;
-V0 = V0 + A1;
-V0 = V0 + V1;
-80028788	bltz   v0, L28798 [$80028798]
-V0 = 0 - V0;
-80028790	j      L287a0 [$800287a0]
-V0 = 0;
+V0 = w[V0 + A0 * 7 + 3];
 
-L28798:	; 80028798
-V0 = V0 << 10;
-V0 = V0 >> 10;
-
-L287a0:	; 800287A0
-800287A0	jr     ra 
-800287A4	nop
+if( V0 < 0 )
+{
+    return ((0 - V0) << 10) >> 10;
+}
+else
+{
+    return 0;
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func287a8()
+// system_filesystem_get_debug_filename()
+
 if( w[8004f4ec] != 0 )
 {
     return w[8004f4ec] + (w[8004f4b8] + A0 - 1) * 40;
@@ -534,34 +1073,24 @@ return (bu[V0 + A0 * 7 + 2] << 10) | (bu[V0 + A0 * 7 + 1] << 8) | bu[V0 + A0 * 7
 ////////////////////////////////
 // func28828
 
-V0 = w[8004f4bc];
-A0 = A0 + V0;
-80028838	addiu  a0, a0, $ffff (=-$1)
-V1 = A0 << 03;
-V0 = w[8004f494];
-V1 = V1 - A0;
-V1 = V1 + V0;
-V0 = bu[V1 + 0002];
-A0 = bu[V1 + 0001];
-V1 = bu[V1 + 0000];
-V0 = V0 << 10;
-A0 = A0 << 08;
-V0 = V0 + A0;
-return V0 | V1;
+V0 = w[8004f494]; // pointer to 0x80010004
+A0 = w[8004f4bc] + A0 - 1;
+return (bu[V0 + A0 * 7 + 2] << 10) | (bu[V0 + A0 * 7 + 1] << 8) | bu[V0 + A0 * 7 + 0];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func28870()
+// system_cdrom_action_sync()
 
 if( A0 == 0 )
 {
-    loop2887c:	; 8002887C
-        func284dc();
-    80028884	bgtz   v0, loop2887c [$8002887c]
+    do
+    {
+        system_cdrom_data_sync();
+    } while( V0 > 0 )
 }
-func284dc();
+system_cdrom_data_sync();
 ////////////////////////////////
 
 
@@ -576,40 +1105,27 @@ return V0;
 
 
 ////////////////////////////////
-// func288bc
-V0 = w[8004f4d4];
-800288C4	nop
-800288C8	bne    v0, zero, L288d8 [$800288d8]
-800288CC	addiu  sp, sp, $fff8 (=-$8)
-800288D0	j      L28918 [$80028918]
-800288D4	addiu  v0, zero, $ffff (=-$1)
+// func288bc()
 
-L288d8:	; 800288D8
-A0 = 0;
-A1 = w[V0 + 0000];
-800288E0	nop
-800288E4	blez   a1, L28910 [$80028910]
-A2 = V0 + 0004;
-V1 = A2;
+alloc_mem = w[8004f4d4];
 
-loop288f0:	; 800288F0
-[V1 + 0000] = h(0);
-[V1 + 0002] = h(0);
-[V1 + 0004] = h(0);
-[V1 + 0006] = h(0);
-A0 = A0 + 0001;
-V0 = A0 < A1;
-80028908	bne    v0, zero, loop288f0 [$800288f0]
-V1 = V1 + 0008;
+if( alloc_mem == 0 )
+{
+    return -1;
+}
 
-L28910:	; 80028910
-[A2 + 0004] = h(A1);
-V0 = A1;
+size = w[alloc_mem + 0];
 
-L28918:	; 80028918
-SP = SP + 0008;
-8002891C	jr     ra 
-80028920	nop
+for( int i = 0; i < size; ++i )
+{
+    [alloc_mem + 4 + i * 8 + 0] = h(0);
+    [alloc_mem + 4 + i * 8 + 2] = h(0);
+    [alloc_mem + 4 + i * 8 + 4] = h(0);
+    [alloc_mem + 4 + i * 8 + 6] = h(0);
+}
+
+[alloc_mem + 8] = h(size);
+return size;
 ////////////////////////////////
 
 
@@ -747,9 +1263,10 @@ S1 = hu[V1 + 0000];
 V0 = w[V1 + 0004];
 80028B2C	nop
 80028B30	beq    v0, zero, L28bb8 [$80028bb8]
-80028B34	nop
-80028B38	jal    func287a8 [$800287a8]
+
 A0 = S1;
+system_filesystem_get_debug_filename();
+
 S3 = V0;
 S0 = 0;
 80028B48	addiu  s4, zero, $ffff (=-$1)
@@ -1319,8 +1836,8 @@ flags = A4;
 
 if( w[8004f4ec] == 0 )
 {
-    A0 = 0;
-    func28870();
+    A0 = 0; // until the end
+    system_cdrom_action_sync();
 
     [8004f4a8] = w(file_sector); // file sector to load
     [8004f49c] = w(file_size); // file size to load
@@ -1355,8 +1872,8 @@ if( dir_file_id > 0 )
     {
         if( allocated_memory != 0 )
         {
-            A0 = 0;
-            func28870();
+            A0 = 0; // until the end
+            system_cdrom_action_sync();
 
             [8004f4bc] = w(w[8004f4b8]);
 
@@ -1385,6 +1902,7 @@ return -3;
 
 ////////////////////////////////
 // func294a0()
+
 dir_file_id = A0;
 allocated_memory = A1;
 flags = A3;
@@ -1409,8 +1927,6 @@ A0 = w[8004f4a8]; // file sector to load
 A1 = param_ptr;
 system_psyq_cd_int_to_pos();
 
-
-
 if( flags & 100 )
 {
     [8004f4d4] = w(allocated_memory);
@@ -1431,35 +1947,35 @@ if( flags & 100 )
     [8004f4ca] = h(0);
     [8004f4cc] = h(0);
     [8004f4c8] = h(0);
-    800295B0	jal    func288bc [$800288bc]
-    800295B4	nop
+    func288bc();
+
     V0 = w[8004f4ec];
 
     if( V0 != 0 )
     {
         A0 = dir_file_id;
-        func287a8(); // get disc filename
-
+        system_filesystem_get_debug_filename();
         S1 = V0;
-        S0 = 0;
-        800295DC	addiu  s2, zero, $ffff (=-$1)
 
-        loop295e4:	; 800295E4
+        for( int i = 0; i < 4; ++i )
+        {
             A0 = S1;
             A1 = 0;
             A2 = 0;
             system_devkit_pc_open();
-
             [8004f4f0] = w(V0);
-            800295F8	bne    v0, s2, L29760 [$80029760]
-            A0 = S0;
-            A1 = 00ff;
+
+            if( V0 != -1 )
+            {
+                break;
+            }
+
+            A0 = i;
+            A1 = ff;
             A2 = 0;
-            80029608	jal    func27e5c [$80027e5c]
             A3 = 0;
-            S0 = S0 + 0001;
-            V0 = S0 < 0004;
-        80029618	bne    v0, zero, loop295e4 [$800295e4]
+            func27e5c();
+        }
 
         80029620	j      L29760 [$80029760]
     }
@@ -1506,8 +2022,9 @@ else if( flags & 0200 )
     [8004f4ca] = h(0);
     [8004f4cc] = h(0);
     [8004f4c8] = h(0);
-    800296D0	jal    func288bc [$800288bc]
     S0 = 0003;
+    func288bc();
+
     V0 = 800595b7;
 
     loop296e0:	; 800296E0
@@ -1525,7 +2042,7 @@ else if( flags & 0200 )
     }
 
     A0 = dir_file_id;
-    func287a8(); // get disc filename
+    system_filesystem_get_debug_filename();
 
     S1 = V0;
     S0 = 0;
@@ -1557,11 +2074,11 @@ else if( flags & 0200 )
 }
 else
 {
-    // if disk files pointer exist
+    // if debug disk file name exist load from pc
     if( w[8004f4ec] != 0 )
     {
         A0 = dir_file_id;
-        func287a8(); // get disc filename
+        system_filesystem_get_debug_filename();
         S3 = V0;
 
         S0 = 0;
@@ -1617,8 +2134,8 @@ else
             80029834	bne    v0, zero, loop29804 [$80029804]
         }
 
-        S0 = 0;
-        loop29840:	; 80029840
+        for( int i = 0; i < 4; ++i )
+        {
             A0 = S1;
             system_devkit_pc_close();
 
@@ -1629,15 +2146,12 @@ else
                 return 0;
             }
 
-            A0 = S0;
+            A0 = i;
             A1 = 0;
             A2 = 0;
             A3 = ff;
             80029858	jal    func27e5c [$80027e5c]
-
-            S0 = S0 + 1;
-            V0 = S0 < 4;
-        80029868	bne    v0, zero, loop29840 [$80029840]
+        }
 
         return -6;
     }
@@ -1652,8 +2166,9 @@ else
         A0 = 8002ae94; // system_cdrom_ready_callback_2()
         system_cdrom_set_ready_callback();
 
-        [8004f4c0] = w(1);
         [80059b18] = w(w[80059b18] + 1);
+
+        [8004f4c0] = w(1); // load file
 
         A0 = 2; // CdlSetloc
         A1 = param_ptr;
@@ -1749,8 +2264,9 @@ V0 = A1 < A3;
 [V1 + 0004] = w(A0);
 
 L29a08:	; 80029A08
-80029A08	jal    func28870 [$80028870]
-A0 = 0;
+A0 = 0; // until the end
+system_cdrom_action_sync();
+
 A1 = 0002;
 V0 = w[8004f4b8];
 V1 = 8005959c;
@@ -1807,11 +2323,11 @@ S4 = S6;
 
 loop29b10:	; 80029B10
 S1 = hu[S4 + 0000];
-80029B14	nop
 A0 = S1 & ffff;
 [800595a8] = w(A0);
-80029B24	jal    func287a8 [$800287a8]
 S0 = 0;
+system_filesystem_get_debug_filename();
+
 S3 = V0;
 A0 = S3;
 
@@ -1950,8 +2466,9 @@ L29d3c:	; 80029D3C
 A0 = S2;
 80029D4C	blez   v0, L2a03c [$8002a03c]
 80029D50	addiu  v0, zero, $fffd (=-$3)
-80029D54	jal    func28870 [$80028870]
-A0 = 0;
+A0 = 0; // until the end
+system_cdrom_action_sync();
+
 S0 = 0;
 V0 = w[8004f4b8];
 V1 = 80059594;
@@ -2013,8 +2530,8 @@ V0 = S4 & ffff;
 [800595e8] = w(0);
 [800595ec] = w(0);
 [800595d4] = h(T0);
-80029EB0	jal    func288bc [$800288bc]
-80029EB4	nop
+func288bc();
+
 S0 = 800595ac;
 A0 = w[8004f4a8];
 A1 = S0;
@@ -2024,8 +2541,9 @@ V0 = w[8004f4ec];
 80029ED8	nop
 80029EDC	beq    v0, zero, L29fdc [$80029fdc]
 80029EE0	nop
-80029EE4	jal    func287a8 [$800287a8]
 A0 = S2;
+system_filesystem_get_debug_filename();
+
 S1 = V0;
 S0 = 0;
 80029EF4	addiu  s2, zero, $ffff (=-$1)
@@ -2134,10 +2652,11 @@ S0 = V0;
 8002A0A0	beq    s0, zero, L2a0c8 [$8002a0c8]
 V0 = 0;
 [S0 + 0000] = w(S1);
-8002A0AC	jal    func288a4 [$800288a4]
 A0 = S0;
-8002A0B4	jal    func288bc [$800288bc]
-8002A0B8	nop
+8002A0AC	jal    func288a4 [$800288a4]
+
+func288bc();
+
 8002A0BC	j      L2a0c8 [$8002a0c8]
 V0 = S0;
 
@@ -2156,7 +2675,7 @@ dir_file_id = A0;
 
 if( w[8004f4ec] == 0 )
 {
-    func284dc(); // check if transfer complete
+    system_cdrom_data_sync();
     if( V0 == 0 )
     {
         [8004f4bc] = w(w[8004f4b8]);
@@ -2294,34 +2813,23 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func2a334
-8002A334	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-[SP + 0010] = w(S0);
-V0 = hu[A0 + 0000];
-8002A344	nop
-8002A348	beq    v0, zero, L2a378 [$8002a378]
+
 S0 = A0;
 
-loop2a350:	; 8002A350
-A0 = w[S0 + 0004];
-8002A354	nop
-8002A358	beq    a0, zero, L2a368 [$8002a368]
-S0 = S0 + 0008;
-8002A360	jal    system_memory_mark_removed_alloc [$80031f0c]
-8002A364	nop
+V0 = hu[A0 + 0000];
+8002A348	beq    v0, zero, L2a378 [$8002a378]
 
-L2a368:	; 8002A368
-V0 = hu[S0 + 0000];
-8002A36C	nop
+loop2a350:	; 8002A350
+    A0 = w[S0 + 0004];
+    8002A358	beq    a0, zero, L2a368 [$8002a368]
+    S0 = S0 + 0008;
+    system_memory_mark_removed_alloc();
+
+    L2a368:	; 8002A368
+    V0 = hu[S0 + 0000];
 8002A370	bne    v0, zero, loop2a350 [$8002a350]
-8002A374	nop
 
 L2a378:	; 8002A378
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002A384	jr     ra 
-8002A388	nop
 ////////////////////////////////
 
 
@@ -2332,69 +2840,61 @@ SP = SP + 0018;
 S5 = A0;
 S2 = A1;
 S4 = 0;
-8002A3B4	jal    func28738 [$80028738]
 
-V0 = V0 << 10;
-S3 = V0 >> 10;
-8002A3C4	blez   s3, L2a46c [$8002a46c]
-8002A3C8	nop
-8002A3CC	bne    s2, zero, L2a3f4 [$8002a3f4]
-A0 = S3 + 0001;
-A0 = A0 << 03;
-8002A3D8	jal    system_memory_allocate [$800319ec]
-A1 = 0;
-S2 = V0;
-8002A3E4	bne    s2, zero, L2a3f4 [$8002a3f4]
-S4 = 0001;
-8002A3EC	j      L2a474 [$8002a474]
-V0 = 0;
+system_cdrom_get_number_of_files_in_dir();
 
-L2a3f4:	; 8002A3F4
-8002A3F4	blez   s3, L2a458 [$8002a458]
-S1 = 0;
-A0 = S5 + S1;
+S3 = (V0 << 10) >> 10;
 
-loop2a400:	; 8002A400
-A0 = A0 + 0001;
-S0 = S1 << 03;
-S0 = S0 + S2;
-[S0 + 0000] = h(A0);
-system_get_aligned_filesize_by_dir_file_id();
+if( S3 <= 0 )
+{
+    return 0;
+}
 
-A0 = V0;
-8002A418	jal    system_memory_allocate [$800319ec]
-A1 = 0;
-8002A420	bne    v0, zero, L2a448 [$8002a448]
-[S0 + 0004] = w(V0);
-8002A428	jal    func2a334 [$8002a334]
-A0 = S2;
-8002A430	blez   s4, L2a474 [$8002a474]
-V0 = 0;
-8002A438	jal    system_memory_mark_removed_alloc [$80031f0c]
-A0 = S2;
-8002A440	j      L2a474 [$8002a474]
-V0 = 0;
+if( S2 == 0 )
+{
+    A0 = (S3 + 1) * 8;
+    A1 = 0;
+    system_memory_allocate();
 
-L2a448:	; 8002A448
-S1 = S1 + 0001;
-V0 = S1 < S3;
-8002A450	bne    v0, zero, loop2a400 [$8002a400]
-A0 = S5 + S1;
+    S2 = V0;
+    S4 = 1;
+    if( S2 == 0 )
+    {
+        return 0;
+    }
+}
 
-L2a458:	; 8002A458
-V0 = S3 << 03;
-V0 = V0 + S2;
-[V0 + 0000] = h(0);
-8002A464	j      L2a470 [$8002a470]
-[V0 + 0004] = w(0);
+for( int i = 0; i < S3; ++i )
+{
+    A0 = S5 + i + 1;
 
-L2a46c:	; 8002A46C
-S2 = 0;
+    [S2 + i * 8 + 0] = h(A0);
 
-L2a470:	; 8002A470
-V0 = S2;
+    system_get_aligned_filesize_by_dir_file_id();
 
-L2a474:	; 8002A474
+    A0 = V0;
+    A1 = 0;
+    system_memory_allocate();
+
+    [S2 + i * 8 + 4] = w(V0);
+
+    if( V0 == 0 )
+    {
+        A0 = S2;
+        func2a334();
+
+        if( S4 > 0 )
+        {
+            A0 = S2;
+            system_memory_mark_removed_alloc();
+        }
+        return 0;
+    }
+}
+
+[S2 + S3 * 8 + 0] = h(0);
+[S2 + S3 * 8 + 4] = w(0);
+return S2;
 ////////////////////////////////
 
 
@@ -2783,7 +3283,7 @@ if( interupt == 1 ) // CdlDataReady
         A0 = 0;
         system_cdrom_dma_callback();
 
-        [8004f49c] = w(0);
+        [8004f49c] = w(0); // filesize
 
         A0 = w[8004f4dc];
         func2a1a4(); // set loc or pause
@@ -2793,7 +3293,7 @@ if( interupt == 1 ) // CdlDataReady
         return
     }
 
-    if( w[8004f49c] >= 800 )
+    if( w[8004f49c] >= 800 ) // filesize
     {
         V0 = w[8004f4e0];
         if( V0 == 0 )
@@ -2809,7 +3309,7 @@ if( interupt == 1 ) // CdlDataReady
     }
     else
     {
-        if( w[8004f49c] > 0 )
+        if( w[8004f49c] > 0 ) // filesize
         {
             if( w[8004f4e0] == 0 )
             {
@@ -2818,11 +3318,11 @@ if( interupt == 1 ) // CdlDataReady
                 system_cdrom_dma_to_main_memory_wrapper();
 
                 A0 = w[8004f4ac]; // addr
-                A1 = w[8004f49c] / 4; // size
+                A1 = w[8004f49c] / 4; // filesize
                 system_cdrom_dma_to_main_memory_wrapper();
 
                 A0 = 80058d94; // addr
-                A1 = 200 - w[8004f49c] / 4; // size
+                A1 = 200 - w[8004f49c] / 4; // filesize
                 system_cdrom_dma_to_main_memory_wrapper();
             }
         }
@@ -2838,10 +3338,10 @@ if( interupt == 1 ) // CdlDataReady
     }
 
     [8004f4ac] = w(w[8004f4ac] + 800);
-    [8004f49c] = w(w[8004f49c] - 800);
+    [8004f49c] = w(w[8004f49c] - 800); // filesize
     [8004f4a8] = w(w[8004f4a8] + 1);
 
-    if( w[8004f49c] > 0 )
+    if( w[8004f49c] > 0 ) // filesize
     {
         return;
     }
@@ -2862,14 +3362,14 @@ if( interupt == 1 ) // CdlDataReady
         8002AC4C	jal    func28618 [$80028618]
 
         S0 = V0;
-        [8004f49c] = w(V0);
+        [8004f49c] = w(V0); // filesize
 
         if( w[8004f4a8] < S0 )
         {
             if( (w[8004f4a8] + w[8004f484]) >= S0 )
             {
                 [8004f4e0] = w(1);
-                [8004f49c] = w((w[8004f4a8] - S0) << b);
+                [8004f49c] = w((w[8004f4a8] - S0) << b); // filesize
                 [8004f4b4] = w(w[8004f4b4] - 1);
                 return;
             }
@@ -2909,7 +3409,7 @@ if( interupt == 1 ) // CdlDataReady
         A0 = 0;
         system_cdrom_set_ready_callback();
 
-        [8004f49c] = w(0);
+        [8004f49c] = w(0); // filesize
 
         A0 = w[8004f4dc];
         func2a1a4();
@@ -2981,50 +3481,47 @@ interupt = A0; // 80055e29 cd ready interrupt result.
 result_ptr = A1; // 800598b4
 
 A0 = A0 & 00ff;
-V0 = 0001;
+V0 = 1;
 8002AEA0	bne    a0, v0, L2b014 [$8002b014]
 
 V0 = w[8004f4d8];
-8002AEB0	nop
 8002AEB4	bgtz   v0, L2afe4 [$8002afe4]
-8002AEB8	nop
+
 V1 = w[8004f49c];
-8002AEC4	nop
-V0 = V1 < 0800;
+V0 = V1 < 800;
 8002AECC	bne    v0, zero, L2aef4 [$8002aef4]
-8002AED0	nop
+
 A0 = 80059594;
 A1 = 3;
 system_cdrom_dma_to_main_memory_wrapper();
 
 A0 = w[8004f4ac];
+A1 = 200;
 8002AEEC	j      L2af60 [$8002af60]
-A1 = 0200;
 
 L2aef4:	; 8002AEF4
 8002AEF4	blez   v1, L2af68 [$8002af68]
-8002AEF8	nop
+
 A0 = 80059594;
 A1 = 3;
-system_cdrom_dma_to_main_memory_wrapper;
+system_cdrom_dma_to_main_memory_wrapper();
 
 V0 = w[8004f49c];
 A0 = w[8004f4ac];
-A1 = V0 + 0003;
+A1 = V0 + 3;
 8002AF20	bgez   a1, L2af2c [$8002af2c]
-8002AF24	nop
-A1 = V0 + 0006;
+
+A1 = V0 + 6;
 
 L2af2c:	; 8002AF2C
-A1 = A1 >> 02;
+A1 = A1 >> 2;
 system_cdrom_dma_to_main_memory_wrapper();
 
 V1 = w[8004f49c];
-8002AF3C	nop
-V0 = V1 + 0003;
+V0 = V1 + 3;
 8002AF44	bgez   v0, L2af50 [$8002af50]
-A1 = 0200;
-V0 = V1 + 0006;
+A1 = 200;
+V0 = V1 + 6;
 
 L2af50:	; 8002AF50
 A0 = 80058d94;
@@ -3036,29 +3533,24 @@ system_cdrom_dma_to_main_memory_wrapper();
 
 L2af68:	; 8002AF68
 A0 = 80059594;
-8002AF70	jal    system_psyq_cd_pos_to_int [$800413ac]
-8002AF74	nop
+system_psyq_cd_pos_to_int();
+
 V1 = w[8004f4a8];
 8002AF80	nop
 8002AF84	beq    v0, v1, L2afac [$8002afac]
-V0 = V0 + 0001;
-V0 = w[8004f488];
-8002AF94	nop
-V0 = V0 + 0001;
-[8004f488] = w(V0);
+
+[8004f488] = w(w[8004f488] + 1);
 8002AFA4	j      L2b014 [$8002b014]
 8002AFA8	nop
 
 L2afac:	; 8002AFAC
-[8004f4a8] = w(V0);
-V0 = w[8004f4ac];
-V1 = w[8004f49c];
-V0 = V0 + 0800;
-8002AFC8	addiu  v1, v1, $f800 (=-$800)
-[8004f4ac] = w(V0);
-[8004f49c] = w(V1);
-8002AFDC	bgtz   v1, L2b0f0 [$8002b0f0]
-8002AFE0	nop
+[8004f4a8] = w(V0 + 1);
+[8004f4ac] = w(w[8004f4ac] + 800);
+[8004f49c] = w(w[8004f49c] - 800);
+if( V1 > 0 )
+{
+    return;
+}
 
 L2afe4:	; 8002AFE4
 A0 = 0;
@@ -3070,63 +3562,51 @@ A0 = w[8004f4dc];
 func2a1a4();
 
 [8004f4a0] = w(0);
-8002B00C	j      L2b0f0 [$8002b0f0]
-8002B010	nop
+return;
 
 L2b014:	; 8002B014
-V0 = w[80059b6c];
-8002B01C	nop
-V0 = V0 + 0001;
-[80059b6c] = w(V0);
+[80059b6c] = w(w[80059b6c] + 1);
 
 A0 = 0;
 system_cdrom_set_ready_callback();
+[800595a4] = w(V0);
 
 A0 = w[8004f4a8];
 A1 = 800595ac;
-[800595a4] = w(V0);
-8002B04C	jal    system_psyq_cd_int_to_pos [$800412a8]
-8002B050	nop
+system_psyq_cd_int_to_pos();
+
 V0 = w[80059b6c];
-8002B05C	nop
 V0 = V0 < 0003;
-8002B064	beq    v0, zero, L2b07c [$8002b07c]
-V0 = 0003;
-[8004f4c4] = w(V0);
-8002B074	j      L2b0cc [$8002b0cc]
+if( V0 != 0 )
+{
+    [8004f4c4] = w(3);
+}
+else
+{
+    // wait cycle
+    V1 = 270f;
+    loop2b084:	; 8002B084
+        V0 = 7cf;
+        loop2b088:	; 8002B088
+            V0 = V0 - 1;
+        8002B088	bgez   v0, loop2b088 [$8002b088]
 
-L2b07c:	; 8002B07C
-V1 = 270f;
-V0 = 07cf;
+        V1 = V1 - 1;
+    8002B098	bgez   v1, loop2b084 [$8002b084]
 
-loop2b084:	; 8002B084
-8002B084	addiu  v0, v0, $ffff (=-$1)
+    [80059b6c] = w(0);
+    [8004f4c4] = w(4);
+    [80059b34] = w(w[80059b34] + 1);
+}
 
-loop2b088:	; 8002B088
-8002B088	bgez   v0, loop2b088 [$8002b088]
-8002B08C	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 + 0001;
-8002B094	addiu  v1, v1, $ffff (=-$1)
-8002B098	bgez   v1, loop2b084 [$8002b084]
-V0 = 07cf;
-V0 = w[80059b34];
-V1 = 0004;
-[80059b6c] = w(0);
-[8004f4c4] = w(V1);
-V0 = V0 + 0001;
-[80059b34] = w(V0);
-
-L2b0cc:	; 8002B0CC
 [8004f4c0] = w(a);
 
 A0 = 8002a49c; // system_cdrom_sync_callback()
 system_cdrom_set_sync_callback();
 
-A0 = 0001;
-8002B0E8	jal    system_cdrom_cdl_command_exec_without_ret [$80040f94]
+A0 = 1;
 A1 = 0;
-
-L2b0f0:	; 8002B0F0
+system_cdrom_cdl_command_exec_without_ret();
 ////////////////////////////////
 
 

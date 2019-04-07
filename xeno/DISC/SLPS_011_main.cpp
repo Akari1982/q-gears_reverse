@@ -148,7 +148,7 @@ A3 = 0;
 func293e8(); // load file by dir file id
 
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 
 A0 = snd24_mem;
 A1 = 0;
@@ -171,7 +171,7 @@ system_sound_load_snd_file();
 S4 = hu[GP + 1ac];
 [GP +1ac] = h(6);
 
-A0 = 6;
+A0 = 6; // STRIPCD1\1\0028
 system_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
@@ -185,7 +185,7 @@ A3 = 0;
 func293e8(); // load file by dir file id
 
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 
 [GP + 1a8] = h(30);
 
@@ -199,7 +199,7 @@ func3337c(); // set some font related settings
 A0 = S5;
 system_memory_mark_removed_alloc();
 
-A0 = 7;
+A0 = 7; // STRIPCD1\1\0029
 system_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
@@ -213,7 +213,7 @@ A3 = 0;
 func293e8(); // load file by dir file id
 
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 
 A0 = 31; // MES SYSDATA
 system_memory_set_alloc_contents();
@@ -331,9 +331,10 @@ if( w[8005895c] != S0 )
 
     S2 = hu[GP + 1ac];
 
+    // store prev directory
     A0 = SP + 10;
     A1 = SP + 14;
-    func282c4(); // get directory
+    system_filesystem_get_current_dir();
 
     [GP + 1ac] = h(6);
 
@@ -376,6 +377,7 @@ if( w[8005895c] != S0 )
 
     [GP + 1c0] = w(S1);
 
+    // restore prev directory
     A0 = w[SP + 10];
     A1 = w[SP + 14];
     system_filesystem_set_dir();
@@ -440,7 +442,7 @@ if( w[S1 + c] != 0 )
     S0 = V0;
 
     A0 = 0;
-    func28870(); // ececute till cd sync
+    system_cdrom_action_sync(); // ececute till cd sync
 
     A0 = S0; // src
     A1 = w[80018084]; // dst
@@ -1442,12 +1444,13 @@ V0 = bu[V1 + 030c];
 ////////////////////////////////
 // func1abb0()
 
-loop1abb8:	; 8001ABB8
-    func284dc(); // cd sync
-8001ABC0	bne    v0, zero, loop1abb8 [$8001abb8]
+do
+{
+    system_cdrom_data_sync();
+} while( V0 != 0 )
 
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 ////////////////////////////////
 
 
@@ -1905,13 +1908,13 @@ if( ( w[8004e9d8] == S1 ) && ( w[8004e9d4] == field_id ) )
     return 0;
 }
 
-func284dc(); // cd sync
+system_cdrom_data_sync();
 if( V0 != 0 )
 {
     return -1;
 }
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 
 if( w[8004e9d8] != -1 )
 {
@@ -2020,7 +2023,7 @@ if( w[8004ea10] != 0 )
 [GP + 428] = b(1);
 
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 
 A0 = c;
 A1 = 0;
@@ -2222,7 +2225,7 @@ A3 = 0080;
 8001B850	jal    func293e8 [$800293e8]
 
 A0 = 0;
-8001B858	jal    func28870 [$80028870]
+8001B858	jal    system_cdrom_action_sync [$80028870]
 
 S1 = 8006ccc4;
 A0 = S1;
@@ -2334,7 +2337,7 @@ L1b9c8:	; 8001B9C8
 func1b7fc();
 
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 
 [GP + 360] = b(88);
 [80058b71] = b(76);

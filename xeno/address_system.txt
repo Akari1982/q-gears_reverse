@@ -60,7 +60,7 @@
 8004f25c matrix used to render sprite.
 
 8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
-8004f498 [][][][] ???
+8004f498 [][][][] pointer to 0x80018004
 8004f49c [][][][] file size to load.
 8004f4a0 [][][][] store 1 here before load.
 8004f4a8 [][][][] file sector to load.
@@ -79,10 +79,9 @@
                                                                      4 [7] CdlStop
                                                                      5 [c] CdlSetmode param_800595b4
                                                                      6 [9] CdlSetmode param_800595b4
-
-                    0x1 - CdlSetloc
+                    0x1 - CdlSetloc (load file)
                     0x2 - CdlReadN
-                    0x3 - CdlSetloc
+                    0x3 - CdlSetloc (just set loc)
                     0x4 - CdlSeekL
                     0x5 - CdlPause
                     0x6 - CdlPause
@@ -103,6 +102,7 @@
 8004f4d8 [][][][] 0
 8004f4dc [][][][] some func param (0).
 8004f4ec [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
+8004f4f0 [][][][] init with -1.
 
 8004f4f4 data for load 3d data.
 // load_poly functions
@@ -321,14 +321,14 @@
                     0x01e00000 - hu[GP + 1ac] & 000f. (if this is 0 then we clear this memory block)
                                  0x0 ....
                                  0x1 END 
-                                 0x2 HIG 
-                                 0x3 KAZM (model data)
-                                 0x4 MASA
-                                 0x5 MIYA
-                                 0x6 SUGI
-                                 0x7 SUZU (func32930() func32988())
-                                 0x8 YOSI
-                                 0x9 SIMA
+                                 0x2 HIG  Katsuhisa Higuchi (Battle Menu Programmer)
+                                 0x3 KAZM (model data) Kazumi Kobayashi (World Map Programming)
+                                 0x4 MASA Masaki Kobayashi (Gear Motion/Movie Programming)
+                                 0x5 MIYA Yoshiyuki Miyagawa (Character Effect Programming)
+                                 0x6 SUGI Koji Sugimoto (Kernel Program/Battling/3d Graphic Library)
+                                 0x7 SUZU (func32930() func32988()) Hidenori Suzuki (Sound Programming)
+                                 0x8 YOSI Kiyoshi Yoshii (Main Programmer)
+                                 0x9 SIMA Masaki Kobayashi (Gear Motion/Movie Programming)
                                  0xa ????
                                  0xb TEST
                     0x02000000 - can't clear this memory block.

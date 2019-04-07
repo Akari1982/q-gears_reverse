@@ -46,7 +46,7 @@ if( w[8004e9d0] == -1 )
     func293e8();
 
     A0 = 0;
-    func28870(); // ececute till cd sync
+    system_cdrom_action_sync(); // ececute till cd sync
 }
 else
 {
@@ -82,7 +82,7 @@ system_filesystem_set_dir();
 8008513C	addu   s0, a0, zero
 
 A0 = 0;
-func28870(); // execute until command finished
+system_cdrom_action_sync(); // execute until command finished
 
 8008515C	ori    s2, zero, $00ff
 
@@ -486,7 +486,7 @@ switch( V1 )
         800A5544	nop
 
         loopa5548:	; 800A5548
-        func284dc(); // wait for command to finish
+        system_cdrom_data_sync(); // wait for command to finish
 
         800A5550	beq    v0, zero, La5598 [$800a5598]
 
@@ -1886,7 +1886,7 @@ if( w[8004e9dc] != S1 )
 800853E4	addiu  v0, zero, $ffff (=-$1)
 
 L853e8:	; 800853E8
-800853E8	jal    func284dc [$800284dc]
+800853E8	jal    system_cdrom_data_sync [$800284dc]
 800853EC	nop
 800853F0	bne    v0, zero, L854e8 [$800854e8]
 800853F4	addiu  v0, zero, $ffff (=-$1)

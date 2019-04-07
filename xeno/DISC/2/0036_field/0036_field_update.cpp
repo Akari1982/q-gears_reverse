@@ -1773,7 +1773,7 @@ if( w[8004e9e8] == 0 )
     func293e8(); // load file by dir file id
 
     A0 = 0;
-    func28870(); // ececute till cd sync
+    system_cdrom_action_sync(); // ececute till cd sync
 }
 
 A0 = w[80059b30];
@@ -1828,7 +1828,7 @@ system_memory_mark_removed_alloc();
 // func76e6c()
 
 A0 = 0;
-func28870(); // ececute till cd sync
+system_cdrom_action_sync(); // ececute till cd sync
 
 loop76e7c:	; 80076E7C
     A0 = (w[8004e9f0] & fff) << 1;

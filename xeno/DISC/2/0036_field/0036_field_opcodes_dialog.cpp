@@ -769,11 +769,11 @@ return 0;
 // func89b2c
 if (w[800ad004] == 0)
 {
-    func284dc;
+    system_cdrom_data_sync;
     if (V0 == 0)
     {
         A0 = 0;
-        func28870;
+        system_cdrom_action_sync;
 
         return 0;
     }

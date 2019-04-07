@@ -1,4 +1,106 @@
 ﻿////////////////////////////////
+// func37880
+
+S0 = A0;
+S4 = A1;
+S5 = A2;
+S6 = A3;
+FP = A4;
+
+S7 = 0;
+
+// store prev dir
+A0 = SP + 10;
+A1 = SP + 14;
+system_filesystem_get_current_dir();
+
+A0 = c;
+A1 = 3;
+system_filesystem_set_dir();
+
+
+A0 = 4; // MASA
+A1 = 0;
+system_memory_set_alloc_user();
+
+A0 = 5;
+system_cdrom_get_number_of_files_in_dir();
+
+V0 = V0 << 10;
+V1 = V0 >> 10;
+V0 = V0 >> 1f;
+V1 = V1 + V0;
+V1 = V1 >> 01;
+V1 = S0 < V1;
+80037908	bne    v1, zero, L37924 [$80037924]
+S0 = S0 << 01;
+80037910	addiu  s7, zero, $ffff (=-$1)
+[S5 + 0000] = w(0);
+[S6 + 0000] = w(0);
+8003791C	j      L379e8 [$800379e8]
+[FP + 0000] = w(0);
+
+L37924:	; 80037924
+A0 = S4 + 7;
+A0 = S0 + A0;
+system_get_aligned_filesize_by_dir_file_id();
+
+A0 = V0;
+A1 = 1;
+system_memory_allocate();
+
+S3 = V0;
+A0 = S3;
+system_memory_mark_not_removable();
+
+S2 = S0 + 0006;
+A0 = S2;
+system_get_aligned_filesize_by_dir_file_id();
+
+A0 = V0;
+A1 = 1;
+system_memory_allocate();
+S1 = V0;
+
+A0 = S1;
+system_memory_mark_not_removable();
+
+A0 = 80059878;
+A1 = 0;
+S0 = S0 + 0007;
+S0 = S0 + S4;
+[A0 + 0000] = h(S2);
+[8005987c] = w(S1);
+[80059880] = h(S0);
+[80059884] = w(S3);
+[80059888] = h(0);
+[8005988c] = w(0);
+800379AC	jal    func2990c [$8002990c]
+A2 = 0;
+[S5 + 0000] = w(S1);
+[S6 + 0000] = w(0);
+V0 = w[80059884];
+800379C4	nop
+V0 = V0 + 0004;
+[FP + 0000] = w(V0);
+V0 = w[80059884];
+800379D8	nop
+V0 = V0 + 0004;
+[80064f58] = w(V0);
+
+L379e8:	; 800379E8
+
+// restore old dir
+A0 = w[SP + 10];
+A1 = w[SP + 14];
+system_filesystem_set_dir();
+
+return S7;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_sound_initialize()
 
 flags = A0;
@@ -599,8 +701,7 @@ A0 = w[80058c58]; // sound event callback
 system_bios_disable_event();
 
 V0 = w[80058adc];
-80038384	lui    a0, $8006
-80038388	addiu  a0, a0, $8adc (=-$7524)
+A0 = 80058adc;
 if( V0 != 0 )
 {
     loop38394:	; 80038394
@@ -1501,8 +1602,7 @@ return 0;
 [SP + 0014] = w(S1);
 S1 = A0;
 [SP + 0010] = w(S0);
-80039370	lui    s0, $8007
-80039374	addiu  s0, s0, $f08c (=-$f74)
+S0 = 8006f08c;
 A2 = 0;
 8003937C	lui    a3, $0008
 T0 = S0;
@@ -1548,8 +1648,7 @@ V0 = 0;
 A1 = V0;
 80039404	bltz   a1, L39440 [$80039440]
 V1 = A1 << 04;
-8003940C	lui    v0, $8007
-80039410	addiu  v0, v0, $f08c (=-$f74)
+V0 = 8006f08c;
 A0 = V1 + V0;
 V0 = 0080;
 [A0 + 0000] = b(V0);
