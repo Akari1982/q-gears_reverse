@@ -694,7 +694,7 @@ if( S0 == 0 )
 // func281e4
 
 A0 = 0;
-800281EC	jal    func2a2a8 [$8002a2a8]
+func2a2a8();
 
 A0 = 0; // until the end
 system_cdrom_action_sync();
@@ -1061,7 +1061,7 @@ return 0;
 
 
 ////////////////////////////////
-// system_get_sector_by_dir_file_id()
+// system_filesystem_get_sector_by_dir_file_id()
 
 V0 = w[8004f494]; // pointer to 0x80010004
 A0 = w[8004f4b8] + A0 - 1;
@@ -1097,6 +1097,7 @@ system_cdrom_data_sync();
 
 ////////////////////////////////
 // func288a4()
+
 V0 = w[8004f4d4];
 [8004f4d4] = w(A0);
 return V0;
@@ -1132,15 +1133,11 @@ return size;
 
 ////////////////////////////////
 // func28924
+
 V0 = w[8004f4d4];
-8002892C	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0034] = w(RA);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-[SP + 0028] = w(S2);
-[SP + 0024] = w(S1);
+
 80028944	beq    v0, zero, L28c48 [$80028c48]
-[SP + 0020] = w(S0);
+
 S2 = V0;
 A0 = S2 + 0004;
 A1 = w[S2 + 0000];
@@ -1202,8 +1199,9 @@ S0 = 0;
 loop28a30:	; 80028A30
 A0 = w[8004f4f0];
 A1 = S2;
-80028A3C	jal    system_devkit_pc_read_all [$8004c240]
-A2 = 0800;
+A2 = 800;
+system_devkit_pc_read_all();
+
 80028A44	bne    v0, zero, L28a74 [$80028a74]
 A0 = S0;
 A1 = 0;
@@ -1231,8 +1229,8 @@ S0 = 0;
 
 loop28aa0:	; 80028AA0
 A0 = w[8004f4f0];
-80028AA8	jal    system_devkit_pc_close [$8004c1e0]
-80028AAC	nop
+system_devkit_pc_close();
+
 80028AB0	beq    v0, zero, L28ad8 [$80028ad8]
 A0 = S0;
 A1 = 0;
@@ -1359,39 +1357,36 @@ SP = SP + 0038;
 
 ////////////////////////////////
 // func28c70
-80028C70	addiu  sp, sp, $fff8 (=-$8)
-80028C74	blez   a1, L28ccc [$80028ccc]
-A3 = 0;
-V0 = A0 << 03;
-V1 = w[8004f4d0];
-T0 = w[8004f4e4];
-V1 = V0 + V1;
 
-loop28c94:	; 80028C94
-V0 = hu[V1 + 0000];
-80028C98	nop
-80028C9C	bne    v0, a2, L28cd0 [$80028cd0]
-V0 = 0001;
-A0 = A0 + 0001;
-V0 = T0 < A0;
-80028CAC	beq    v0, zero, L28cbc [$80028cbc]
-V1 = V1 + 0008;
-80028CB4	j      L28cd0 [$80028cd0]
-V0 = 0001;
+if( A1 > 0 )
+{
+    A3 = 0;
+    V0 = A0 << 03;
+    V1 = w[8004f4d0];
+    T0 = w[8004f4e4];
+    V1 = V0 + V1;
 
-L28cbc:	; 80028CBC
-A3 = A3 + 0001;
-V0 = A3 < A1;
-80028CC4	bne    v0, zero, loop28c94 [$80028c94]
-80028CC8	nop
+    loop28c94:	; 80028C94
+        V0 = hu[V1 + 0000];
+        if( V0 != A2 )
+        {
+            return 1;
+        }
 
-L28ccc:	; 80028CCC
-V0 = 0;
+        A0 = A0 + 0001;
+        V1 = V1 + 0008;
+        V0 = ;
+        if( T0 < A0 )
+        {
+            return 1;
+        }
 
-L28cd0:	; 80028CD0
-SP = SP + 0008;
-80028CD4	jr     ra 
-80028CD8	nop
+        A3 = A3 + 1;
+        V0 = A3 < A1;
+    80028CC4	bne    v0, zero, loop28c94 [$80028c94]
+}
+
+return 0;
 ////////////////////////////////
 
 
@@ -1429,21 +1424,12 @@ SP = SP + 0008;
 
 ////////////////////////////////
 // func28d40
+
 V0 = w[8004f4d4];
-80028D48	addiu  sp, sp, $ffb0 (=-$50)
-[SP + 0048] = w(FP);
 FP = A0;
-[SP + 0044] = w(S7);
 S7 = A1;
-[SP + 004c] = w(RA);
-[SP + 0040] = w(S6);
-[SP + 003c] = w(S5);
-[SP + 0038] = w(S4);
-[SP + 0034] = w(S3);
-[SP + 0030] = w(S2);
-[SP + 002c] = w(S1);
 80028D78	beq    v0, zero, L29234 [$80029234]
-[SP + 0028] = w(S0);
+
 S5 = V0;
 S3 = S5 + 0004;
 S6 = w[S5 + 0000];
@@ -1608,11 +1594,12 @@ V0 = 0001;
 
 L29050:	; 80029050
 A0 = w[8004f4f0];
-A1 = 0918;
+A1 = 918;
 
 L2905c:	; 8002905C
-8002905C	jal    system_devkit_pc_seek [$8004c1f0]
-A2 = 0001;
+A2 = 1;
+system_devkit_pc_seek();
+
 80029064	j      L29188 [$80029188]
 [S7 + 0000] = w(0);
 
@@ -1635,8 +1622,9 @@ V0 = V0 + 0001;
 V1 = w[800595f0];
 A1 = A1 << 05;
 [8004f4ca] = h(V0);
-800290D8	jal    system_devkit_pc_read_all [$8004c240]
 A1 = A1 + V1;
+system_devkit_pc_read_all();
+
 A2 = 07e0;
 V0 = h[800595fc];
 A0 = w[8004f4f0];
@@ -1644,18 +1632,17 @@ A1 = V0 << 06;
 A1 = A1 - V0;
 V0 = w[800595f4];
 A1 = A1 << 05;
-80029108	jal    system_devkit_pc_read_all [$8004c240]
 A1 = A1 + V0;
-V0 = bu[800595b4];
-80029118	nop
-V0 = V0 & 0008;
-80029120	beq    v0, zero, L29138 [$80029138]
-A1 = 0118;
-A0 = w[8004f4f0];
-80029130	jal    system_devkit_pc_seek [$8004c1f0]
-A2 = 0001;
+system_devkit_pc_read_all();
 
-L29138:	; 80029138
+if( bu[800595b4] & 8 )
+{
+    A0 = w[8004f4f0];
+    A1 = 118;
+    A2 = 1;
+    system_devkit_pc_seek();
+}
+
 V0 = w[8004f49c];
 V1 = hu[800595fc];
 80029148	addiu  v0, v0, $f800 (=-$800)
@@ -1707,36 +1694,22 @@ A0 = S1;
 V0 = V0 << 05;
 V0 = S0 + V0;
 [FP + 0000] = w(V0);
-A1 = hu[S0 + 0006];
+
+A1 = hu[S0 + 6];
+A2 = 3;
 80029200	jal    func28c70 [$80028c70]
-A2 = 0003;
-80029208	bne    v0, zero, L29238 [$80029238]
-V0 = 0001;
-V1 = hu[8004f4c8];
-A0 = hu[S0 + 0006];
-8002921C	nop
-V1 = V1 + A0;
-[8004f4c8] = h(V1);
-8002922C	j      L29238 [$80029238]
-V0 = 0;
+
+if( V0 != 0 )
+{
+    return 1;
+}
+
+[8004f4c8] = h(hu[8004f4c8] + hu[S0 + 6]);
+
+return 0;
 
 L29234:	; 80029234
-V0 = 0001;
-
-L29238:	; 80029238
-RA = w[SP + 004c];
-FP = w[SP + 0048];
-S7 = w[SP + 0044];
-S6 = w[SP + 0040];
-S5 = w[SP + 003c];
-S4 = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0050;
-80029264	jr     ra 
-80029268	nop
+return 1;
 ////////////////////////////////
 
 
@@ -1878,7 +1851,7 @@ if( dir_file_id > 0 )
             [8004f4bc] = w(w[8004f4b8]);
 
             A0 = dir_file_id;
-            system_get_sector_by_dir_file_id();
+            system_filesystem_get_sector_by_dir_file_id();
             [8004f4a8] = w(V0); // file sector to load
 
             A0 = dir_file_id;
@@ -2298,8 +2271,9 @@ func2a1a4();
 
 L29a8c:	; 80029A8C
 [800595a8] = w(S0);
-80029A94	jal    system_get_sector_by_dir_file_id [$800287e0]
 A0 = S0;
+system_filesystem_get_sector_by_dir_file_id();
+
 [8004f4a8] = w(V0);
 80029AA4	jal    func28618 [$80028618]
 A0 = S0;
@@ -2462,8 +2436,9 @@ L29d34:	; 80029D34
 L29d3c:	; 80029D3C
 80029D3C	blez   s2, L2a03c [$8002a03c]
 80029D40	addiu  v0, zero, $fffd (=-$3)
-80029D44	jal    system_get_filesize_by_dir_file_id [$80028548]
 A0 = S2;
+system_get_filesize_by_dir_file_id();
+
 80029D4C	blez   v0, L2a03c [$8002a03c]
 80029D50	addiu  v0, zero, $fffd (=-$3)
 A0 = 0; // until the end
@@ -2491,7 +2466,7 @@ A0 = S1;
 [800595a8] = w(S2);
 
 A0 = S2;
-system_get_sector_by_dir_file_id();
+system_filesystem_get_sector_by_dir_file_id();
 
 [8004f4a8] = w(V0);
 
@@ -2683,7 +2658,7 @@ if( w[8004f4ec] == 0 )
         if( dir_file_id > 0 )
         {
             A0 = dir_file_id;
-            system_get_sector_by_dir_file_id();
+            system_filesystem_get_sector_by_dir_file_id();
 
             A0 = V0;
             A1 = 800595ac;
@@ -2718,9 +2693,12 @@ if( w[8004f4ec] == 0 )
 ////////////////////////////////
 // func2a1a4()
 
-if( A0 > 0 )
+dir_file_id = A0;
+
+if( dir_file_id > 0 )
 {
-    system_get_sector_by_dir_file_id();
+    A0 = dir_file_id;
+    system_filesystem_get_sector_by_dir_file_id();
 
     A0 = V0; // sector to read
     A1 = 800595ac; // result
@@ -2773,102 +2751,91 @@ system_cdrom_cdl_command_exec_without_ret();
 
 
 ////////////////////////////////
-// func2a2a8
-8002A2A8	addiu  sp, sp, $ffe8 (=-$18)
-V1 = w[8004f4ec];
-V0 = 0001;
-[SP + 0010] = w(RA);
-[8004f4d8] = w(V0);
+// func2a2a8()
+
+[8004f4d8] = w(1);
 [8004f4dc] = w(A0);
-8002A2CC	beq    v1, zero, L2a324 [$8002a324]
-8002A2D0	addiu  v0, zero, $ffff (=-$1)
-V1 = w[8004f4f0];
-[8004f49c] = w(0);
-[8004f4a0] = w(0);
-8002A2EC	beq    v1, v0, L2a324 [$8002a324]
-8002A2F0	nop
 
-loop2a2f4:	; 8002A2F4
-A0 = w[8004f4f0];
-8002A2FC	jal    system_devkit_pc_close [$8004c1e0]
-8002A300	nop
-8002A304	beq    v0, zero, L2a318 [$8002a318]
-V0 = V0 + 0001;
-V0 = V0 < 0004;
-8002A310	bne    v0, zero, loop2a2f4 [$8002a2f4]
-8002A314	nop
+if( w[8004f4ec] != 0 ) // debug filenames exist
+{
+    [8004f49c] = w(0);
+    [8004f4a0] = w(0);
 
-L2a318:	; 8002A318
-8002A318	addiu  v0, zero, $ffff (=-$1)
-[8004f4f0] = w(V0);
+    if( w[8004f4f0] != -1 )
+    {
+        loop2a2f4:	; 8002A2F4
+            A0 = w[8004f4f0];
+            system_devkit_pc_close();
+            if( V0 == 0 )
+            {
+                break;
+            }
+            V0 = V0 + 1;
+            V0 = V0 < 4;
+        8002A310	bne    v0, zero, loop2a2f4 [$8002a2f4]
 
-L2a324:	; 8002A324
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002A32C	jr     ra 
-8002A330	nop
+        [8004f4f0] = w(-1);
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func2a334
+// func2a334()
 
 S0 = A0;
 
-V0 = hu[A0 + 0000];
-8002A348	beq    v0, zero, L2a378 [$8002a378]
-
-loop2a350:	; 8002A350
+while( hu[S0 + 0] != 0 )
+{
     A0 = w[S0 + 0004];
-    8002A358	beq    a0, zero, L2a368 [$8002a368]
-    S0 = S0 + 0008;
-    system_memory_mark_removed_alloc();
+    if( A0 != 0 )
+    {
+        system_memory_mark_removed_alloc();
+    }
 
-    L2a368:	; 8002A368
-    V0 = hu[S0 + 0000];
-8002A370	bne    v0, zero, loop2a350 [$8002a350]
-
-L2a378:	; 8002A378
+    S0 = S0 + 8;
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func2a38c
+// func2a38c()
 
 S5 = A0;
-S2 = A1;
-S4 = 0;
+data = A1;
 
+new_alloc = 0;
+
+A0 = S5;
 system_cdrom_get_number_of_files_in_dir();
+number = (V0 << 10) >> 10;
 
-S3 = (V0 << 10) >> 10;
-
-if( S3 <= 0 )
+if( number <= 0 )
 {
     return 0;
 }
 
-if( S2 == 0 )
+if( data == 0 )
 {
-    A0 = (S3 + 1) * 8;
+    A0 = (number + 1) * 8;
     A1 = 0;
     system_memory_allocate();
+    data = V0;
 
-    S2 = V0;
-    S4 = 1;
-    if( S2 == 0 )
+    new_alloc = 1;
+    if( data == 0 )
     {
         return 0;
     }
 }
 
-for( int i = 0; i < S3; ++i )
+for( int i = 0; i < number; ++i )
 {
     A0 = S5 + i + 1;
 
-    [S2 + i * 8 + 0] = h(A0);
+    [data + i * 8 + 0] = h(A0);
 
     system_get_aligned_filesize_by_dir_file_id();
 
@@ -2876,25 +2843,25 @@ for( int i = 0; i < S3; ++i )
     A1 = 0;
     system_memory_allocate();
 
-    [S2 + i * 8 + 4] = w(V0);
+    [data + i * 8 + 4] = w(V0);
 
     if( V0 == 0 )
     {
-        A0 = S2;
+        A0 = data;
         func2a334();
 
-        if( S4 > 0 )
+        if( new_alloc > 0 )
         {
-            A0 = S2;
+            A0 = data;
             system_memory_mark_removed_alloc();
         }
         return 0;
     }
 }
 
-[S2 + S3 * 8 + 0] = h(0);
-[S2 + S3 * 8 + 4] = w(0);
-return S2;
+[data + number * 8 + 0] = h(0);
+[data + number * 8 + 4] = w(0);
+return data;
 ////////////////////////////////
 
 

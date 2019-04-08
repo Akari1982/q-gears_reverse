@@ -25,9 +25,9 @@ system_memory_set_alloc_user();
 
 A0 = 5;
 system_cdrom_get_number_of_files_in_dir();
-
 V0 = V0 << 10;
 V1 = V0 >> 10;
+
 V0 = V0 >> 1f;
 V1 = V1 + V0;
 V1 = V1 >> 01;

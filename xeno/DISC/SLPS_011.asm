@@ -4124,7 +4124,7 @@ L276e0:	; 800276E0
 // system_filesystem_get_debug_filename
 800287A8-800287DC
 ////////////////////////////////
-// system_get_sector_by_dir_file_id
+// system_filesystem_get_sector_by_dir_file_id
 800287E0-80028824
 ////////////////////////////////
 // func28828
