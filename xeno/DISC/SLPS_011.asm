@@ -278,7 +278,7 @@ func1bca0:	; 8001BCA0
 8001BCD0	lw     a0, $1c30(a0)
 8001BCD4	ori    s0, zero, $00e0
 8001BCD8	sw     s0, $0010(sp)
-8001BCDC	jal    func43858 [$80043858]
+8001BCDC	jal    system_graphic_create_display_env_struct [$80043858]
 8001BCE0	addiu  a0, a0, $00c8
 8001BCE4	addu   a1, zero, zero
 8001BCE8	addu   a2, zero, zero
@@ -286,7 +286,7 @@ func1bca0:	; 8001BCA0
 8001BCF0	lw     a0, $1c30(a0)
 8001BCF4	ori    a3, zero, $0140
 8001BCF8	sw     s0, $0010(sp)
-8001BCFC	jal    func437a0 [$800437a0]
+8001BCFC	jal    system_graphic_create_draw_env_struct [$800437a0]
 8001BD00	addiu  a0, a0, $006c
 8001BD04	addu   a1, zero, zero
 8001BD08	addu   a2, zero, zero
@@ -294,7 +294,7 @@ func1bca0:	; 8001BCA0
 8001BD10	lw     a0, $1c30(a0)
 8001BD14	ori    a3, zero, $0140
 8001BD18	sw     s0, $0010(sp)
-8001BD1C	jal    func43858 [$80043858]
+8001BD1C	jal    system_graphic_create_display_env_struct [$80043858]
 8001BD20	addiu  a0, a0, $017c
 8001BD24	addu   a1, zero, zero
 8001BD28	ori    a2, zero, $00e0
@@ -302,7 +302,7 @@ func1bca0:	; 8001BCA0
 8001BD30	lw     a0, $1c30(a0)
 8001BD34	ori    a3, zero, $0140
 8001BD38	sw     s0, $0010(sp)
-8001BD3C	jal    func437a0 [$800437a0]
+8001BD3C	jal    system_graphic_create_draw_env_struct [$800437a0]
 8001BD40	addiu  a0, a0, $0120
 8001BD44	lui    a0, $8006
 8001BD48	lw     a0, $1c30(a0)
@@ -4067,7 +4067,7 @@ L276e0:	; 800276E0
 // func27708
 80027708-80027B4C
 ////////////////////////////////
-// func27b50
+// system_cdrom_memory_mark_removed_alloc
 80027B50-80027B70
 ////////////////////////////////
 // func27b54
@@ -11640,10 +11640,10 @@ L405dc:	; 800405DC
 // func43738
 80043738-8004379C
 ////////////////////////////////
-// func437a0
+// system_graphic_create_draw_env_struct
 800437A0-80043854
 ////////////////////////////////
-// func43858
+// system_graphic_create_display_env_struct
 80043858-80043890
 ////////////////////////////////
 // system_graphic_get_texpage_by_param

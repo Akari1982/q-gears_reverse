@@ -256,12 +256,10 @@ system_memory_mark_removed_alloc();
 A0 = w[800aeff0]; // field sprite
 system_memory_mark_removed_alloc();
 
-
-
 if( h[800af586] != 0 )
 {
     A0 = w[800af550];
-    8006F8F4	jal    func27b50 [$80027b50]
+    system_cdrom_memory_mark_removed_alloc();
 }
 
 

@@ -67,7 +67,7 @@
 8004f4ac [][][][] pointer to allocated memory for file load.
 8004f4b0 [][][][] 0
 8004f4b4 [][][][] 0
-8004f4b8 [][][][] start id of files in dir or some marker.
+8004f4b8 [][][][] start id of files in current dir.
 8004f4c0 [][][][] cd state:
                     [1] CdlSetloc => [2] CdlReadN 80059b1c+1 (fail [a][4] CdlNop 80059b20+1 store_ready) => [0] unset 80059b1c+1 (fail [a][3] CdlNop 80059b20+1 store_ready)
                     [3] CdlSetloc => [4] CdlSeekL (fail [a][1] CdlNop ) => [0] unset (fail [a][1] CdlNop )
@@ -101,6 +101,10 @@
 8004f4d4 [][][][] pointer to allocated memory for file load.
 8004f4d8 [][][][] 0
 8004f4dc [][][][] some func param (0).
+8004f4e8 []       init with 1.
+8004f4e9 []       store here 0x10 if index_cd2_1.bin laft byte == 1 (0x7 otherwise)
+8004f4ea []       init with 1.
+8004f4eb []       init with 0.
 8004f4ec [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
 8004f4f0 [][][][] init with -1. Some debug filehandler.
 
@@ -325,7 +329,7 @@
                                  0x3 KAZM (model data) Kazumi Kobayashi (World Map Programming)
                                  0x4 MASA Masaki Kobayashi (Gear Motion/Movie Programming)
                                  0x5 MIYA Yoshiyuki Miyagawa (Character Effect Programming)
-                                 0x6 SUGI Koji Sugimoto (Kernel Program/Battling/3d Graphic Library)
+                                 0x6 SUGI Koji Sugimoto (Polygon,3D Graphics Engine,Memory Manager,Message,Font,Controler,VSync,Kernel OS,Compress,Debugger&Tools) Library 'LibLS.LIB'
                                  0x7 SUZU (func32930() func32988()) Hidenori Suzuki (Sound Programming)
                                  0x8 YOSI Kiyoshi Yoshii (Main Programmer)
                                  0x9 SIMA Masaki Kobayashi (Gear Motion/Movie Programming)
@@ -526,7 +530,7 @@
 80059598 [][][][] 0
 8005959c [][][][] 0
 800595a4 [][][][] store cdrom ready callback here.
-800595a8 [][][][] global file id to load.
+800595a8 [][][][] local file id to load.
 800595ac cd command param array.
 
 800595b4 []       cdrom command param 1.

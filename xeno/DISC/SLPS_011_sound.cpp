@@ -107,7 +107,7 @@ flags = A0;
 if( h[80058c18] < 0 )
 {
     A0 = 28;
-    system_sound_error(); // error
+    system_sound_error();
     return;
 }
 
@@ -345,11 +345,12 @@ if( hu[80058c18] & 0001 )
 ////////////////////////////////
 // system_sound_load_snd_file()
 
-sound_file = A0; // sound file
+sound_file = A0;
+from_file = A1; // start spu address, 0 if we want set it from file, -1 if automatic alloc
 
 A0 = sound_file;
-A1 = A1; // start spu address, 0 if we want set it from file, -1 if automatic alloc
-system_sound_spu_snd_file_malloc(); // allocate spu memory for sound file
+A1 = from_file;
+system_sound_spu_snd_file_malloc();
 spu_mem = V0;
 
 if( spu_mem != 0 )
@@ -663,15 +664,18 @@ if( V0 == 0 )
     V1 = w[80058adc];
     if( V1 != 0 )
     {
-        A1 = hu[S0 + 0014];
+        A1 = hu[S0 + 14];
 
         loop3830c:	; 8003830C
-            V0 = hu[V1 + 0014];
-            80038310	nop
-            80038314	beq    a1, v0, L3835c [$8003835c]
-            80038318	nop
-            V1 = w[V1 + 001c];
-            80038320	nop
+            if( A1 == hu[V1 + 14] )
+            {
+                A0 = 15;
+                system_sound_error();
+
+                return;
+            }
+
+            V1 = w[V1 + 1c];
         80038324	bne    v1, zero, loop3830c [$8003830c]
     }
 }
@@ -682,21 +686,13 @@ A2 = 101;
 
 V0 = V0 << 10;
 A0 = V0 >> 10;
-80038344	beq    a0, zero, L3836c [$8003836c]
+if( A0 != 0 )
+{
+    system_sound_error();
 
-system_sound_error();
+    return;
+}
 
-80038354	j      L383c0 [$800383c0]
-80038358	nop
-
-L3835c:	; 8003835C
-A0 = 0015;
-system_sound_error();
-
-80038364	j      L383c0 [$800383c0]
-80038368	nop
-
-L3836c:	; 8003836C
 A0 = w[80058c58]; // sound event callback
 system_bios_disable_event();
 
@@ -705,11 +701,8 @@ A0 = 80058adc;
 if( V0 != 0 )
 {
     loop38394:	; 80038394
-        V0 = w[A0 + 0000];
-        80038398	nop
         V1 = w[V0 + 001c];
-        800383A0	nop
-        A0 = V0 + 001c;
+        A0 = w[A0 + 0000] + 001c;
     800383A4	bne    v1, zero, loop38394 [$80038394]
 }
 
@@ -718,8 +711,6 @@ if( V0 != 0 )
 
 A0 = w[80058c58];
 system_bios_enable_event();
-
-L383c0:	; 800383C0
 ////////////////////////////////
 
 
@@ -2250,26 +2241,25 @@ L39cf8:	; 80039CF8
 
 
 ////////////////////////////////
-// func39d08
+// func39d08()
 
-V0 = hu[80058c18];
 S0 = A0;
-V0 = V0 & 0800;
-80039D20	beq    v0, zero, L39d58 [$80039d58]
 
-80039D28	jal    func3a504 [$8003a504]
-A1 = 0002;
-V1 = 0002;
-[80058aa0] = w(V1);
-V0 = V0 | 2000;
-V0 = V0 << 10;
-A0 = V0 >> 10;
-A1 = S0;
-A2 = 6000;
-80039D50	jal    func3b4ec [$8003b4ec]
-A3 = 4000;
+if( hu[80058c18] & 0800 )
+{
+    A1 = 2;
+    80039D28	jal    func3a504 [$8003a504]
 
-L39d58:	; 80039D58
+    [80058aa0] = w(2);
+
+    V0 = V0 | 2000;
+    V0 = V0 << 10;
+    A0 = V0 >> 10;
+    A1 = S0;
+    A2 = 6000;
+    A3 = 4000;
+    80039D50	jal    func3b4ec [$8003b4ec]
+}
 ////////////////////////////////
 
 
@@ -2933,9 +2923,8 @@ V0 = A1;
 
 ////////////////////////////////
 // func3a6d4
-V0 = hu[A0 + 0010];
-8003A6D8	jr     ra 
-V0 = V0 >> 0f;
+
+return hu[A0 + 10] >> f;
 ////////////////////////////////
 
 
@@ -8083,11 +8072,11 @@ A1 = 0;
 system_sound_load_snd_file();
 
 A0 = 8004ffb0;
-8003F5A8	jal    func382d0 [$800382d0]
+func382d0();
 
 A0 = 10;
 func3bca4();
 
 A0 = (hu[8004ffc4] << 10) | 1;
-8003F5C8	jal    func39d08 [$80039d08]
+func39d08();
 ////////////////////////////////

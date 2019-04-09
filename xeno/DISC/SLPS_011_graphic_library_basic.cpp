@@ -116,65 +116,56 @@ return V0 & ffff;
 
 
 ////////////////////////////////
-// func437a0
+// system_graphic_create_draw_env_struct()
 
-S2 = w[SP + 0038];
+S2 = A4;
 S1 = A0;
-S3 = A1;
-S4 = A2;
-S0 = A3;
 
-800437CC	jal    func4c1b0 [$8004c1b0]
+[S1 + 0] = h(A1); // clip x
+[S1 + 2] = h(A2); // clip y
+[S1 + 4] = h(A3); // clip width
+[S1 + 6] = h(S2); // clip height
+[S1 + 8] = h(A1); // offset x
+[S1 + a] = h(A2); // offset y
+[S1 + c] = h(0); // tw x
+[S1 + e] = h(0); // tw y
+[S1 + 10] = h(0); // tw width
+[S1 + 12] = h(0); // tw height
+[S1 + 14] = h(a); // initial value of texture page
+[S1 + 16] = b(1); // dithering processing flag. 0: off; 1: on
+[S1 + 18] = b(0);
+[S1 + 19] = b(0);
+[S1 + 1a] = b(0);
+[S1 + 1b] = b(0);
 
-V1 = 0001;
-[S1 + 0000] = h(S3);
-[S1 + 0002] = h(S4);
-[S1 + 0004] = h(S0);
-[S1 + 000c] = h(0);
-[S1 + 000e] = h(0);
-[S1 + 0010] = h(0);
-[S1 + 0012] = h(0);
-[S1 + 0019] = b(0);
-[S1 + 001a] = b(0);
-[S1 + 001b] = b(0);
-[S1 + 0016] = b(V1);
-80043804	beq    v0, zero, L43814 [$80043814]
-[S1 + 0006] = h(S2);
-8004380C	j      L43818 [$80043818]
-V0 = S2 < 0121;
-
-L43814:	; 80043814
-V0 = S2 < 0101;
-
-L43818:	; 80043818
-[S1 + 0017] = b(V0);
-V0 = S1;
-V1 = 000a;
-[V0 + 0008] = h(S3);
-[V0 + 000a] = h(S4);
-[V0 + 0014] = h(V1);
-[V0 + 0018] = b(0);
+func4c1b0(); // get data from 80058030
+if( V0 != 0 )
+{
+    [S1 + 17] = b(S2 < 121); // 0: drawing to display area is blocked1: drawing to display area is permitted
+}
+else
+{
+    [S1 + 17] = b(S2 < 101); // 0: drawing to display area is blocked1: drawing to display area is permitted
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43858
+// system_graphic_create_display_env_struct()
 
-V1 = w[SP + 0010];
-V0 = A0;
-[V0 + 0000] = h(A1);
-[V0 + 0002] = h(A2);
-[V0 + 0004] = h(A3);
-[V0 + 0008] = h(0);
-[V0 + 000a] = h(0);
-[V0 + 000c] = h(0);
-[V0 + 000e] = h(0);
-[V0 + 0011] = b(0);
-[V0 + 0010] = b(0);
-[V0 + 0013] = b(0);
-[V0 + 0012] = b(0);
-[V0 + 0006] = h(V1);
+[A0 + 0] = h(A1); // display area x
+[A0 + 2] = h(A2); // display area y
+[A0 + 4] = h(A3); // display area width
+[A0 + 6] = h(A4); // display area height
+[A0 + 8] = h(0);
+[A0 + a] = h(0);
+[A0 + c] = h(0);
+[A0 + e] = h(0);
+[A0 + 10] = b(0); // Interlace mode flag. 0: non-interlace; 1: interlace
+[A0 + 11] = b(0); // 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
+[A0 + 12] = b(0);
+[A0 + 13] = b(0);
 ////////////////////////////////
 
 

@@ -257,11 +257,12 @@ A0 = 0;
 
 [8005895c] = w(-1);
 [80058958] = w(0);
+
 [8004f4e8] = b(1);
 [8004f4ea] = b(1);
 [8004f4eb] = b(0);
 
-8001994C	jal    func28340 [$80028340]
+func28340(); // get last dit in folder file
 
 if( V0 == 1 )
 {
@@ -602,25 +603,25 @@ A1 = 0;
 A2 = 0;
 A3 = 0180;
 [SP + 0010] = w(S0);
-80019E68	jal    func437a0 [$800437a0]
+80019E68	jal    system_graphic_create_draw_env_struct [$800437a0]
 
 A0 = SP + 00e8;
 A1 = 0;
 A2 = 00f0;
 A3 = 0180;
-80019E80	jal    func43858 [$80043858]
+80019E80	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S0);
 A0 = SP + 008c;
 A1 = 0;
 A2 = 00f0;
 A3 = 0180;
-80019E98	jal    func437a0 [$800437a0]
+80019E98	jal    system_graphic_create_draw_env_struct [$800437a0]
 [SP + 0010] = w(S0);
 A0 = SP + 00fc;
 A1 = 0;
 A2 = 0;
 A3 = 0180;
-80019EB0	jal    func43858 [$80043858]
+80019EB0	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S0);
 A0 = 0;
 system_psyq_draw_sync_callback();
@@ -790,25 +791,25 @@ A1 = 0;
 A2 = 0;
 A3 = 0140;
 S0 = 00e0;
-8001A160	jal    func437a0 [$800437a0]
+8001A160	jal    system_graphic_create_draw_env_struct [$800437a0]
 [SP + 0010] = w(S0);
 A0 = S1 + 0088;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
-8001A178	jal    func437a0 [$800437a0]
+8001A178	jal    system_graphic_create_draw_env_struct [$800437a0]
 [SP + 0010] = w(S0);
 A0 = S1 + 005c;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
-8001A190	jal    func43858 [$80043858]
+8001A190	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S0);
 A0 = S1 + 00e4;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-8001A1A8	jal    func43858 [$80043858]
+8001A1A8	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S0);
 8001A1B0	jal    func1a078 [$8001a078]
 A0 = 0;
@@ -2147,27 +2148,27 @@ A0 = S0;
 A1 = 0;
 A2 = 00e0;
 A3 = 0140;
-8001B754	jal    func43858 [$80043858]
+8001B754	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S1);
 8001B75C	addiu  s2, s0, $ffa4 (=-$5c)
 A0 = S2;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-8001B770	jal    func437a0 [$800437a0]
+8001B770	jal    system_graphic_create_draw_env_struct [$800437a0]
 [SP + 0010] = w(S1);
 A0 = S0 + 4070;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-8001B788	jal    func43858 [$80043858]
+8001B788	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S1);
 S0 = S0 + 4014;
 A0 = S0;
 A1 = 0;
 A2 = 00e0;
 A3 = 0140;
-8001B7A4	jal    func437a0 [$800437a0]
+8001B7A4	jal    system_graphic_create_draw_env_struct [$800437a0]
 [SP + 0010] = w(S1);
 8001B7AC	jal    func1b7d8 [$8001b7d8]
 A0 = S2;
