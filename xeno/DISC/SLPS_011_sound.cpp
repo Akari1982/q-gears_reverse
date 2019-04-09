@@ -104,6 +104,7 @@ return S7;
 // system_sound_initialize()
 
 flags = A0;
+
 if( h[80058c18] < 0 )
 {
     A0 = 28;
@@ -771,9 +772,10 @@ A2 = 0101;
 L38484:	; 80038484
 V0 = V0 << 10;
 80038488	beq    v0, zero, L384a0 [$800384a0]
-8003848C	nop
-80038490	jal    system_sound_error [$8003f558]
-A0 = 000b;
+
+A0 = b;
+system_sound_error();
+
 80038498	j      L384b0 [$800384b0]
 8003849C	nop
 

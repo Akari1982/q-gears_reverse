@@ -456,7 +456,7 @@
 80058b90 [][]     id of loaded spu dma transfer.
 80058b94 [][][][] store here 0 when start load battle exe.
 80058b98 [][][][] flags for turning SPU Voice ON.
-80058b9c [][]     init with 0.
+80058b9c [][]     spu sound error. Init with 0.
 
 80058ba0 [][][][] increment each system_sound_main() call.
 80058ba4 [][][][] store here id of encounter in field.
@@ -511,7 +511,7 @@
                     0x1000 ???
                     0x2000 enable reverb.
                     0x4000 set cd out volume to spu.
-                    0x8000 ???
+                    0x8000 already inited flag.
 
 80058c20 [][][][] allocated spu pointer for pcm data.
 80058c24 [][][][] size of pcm data.
