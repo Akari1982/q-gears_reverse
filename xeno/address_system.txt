@@ -315,14 +315,14 @@
     + 3d []       if this != 0 then we use +38 to calculate rotation matrix for sprite animation (if flag 0x2000 not set).
     + 3e []       
     +1a8 [][]     init with 0x20. 0xfc000000 type of memory alloc.
-    +1ac [][]     init with 0xa. 0x01e00000 type for memory alloc.
+    +1ac [][]     init with 0xa. 0x01e00000 owner for memory alloc.
     +1b0 [][][][] pointer to start of allocated memory.
                   memory allocates as follows
                   -8 pointer to next.
                   -4 flags:
                     0x001fffff - place in code from where we call allocate function.
                     0x00200000 - final allocated memory block.
-                    0x01e00000 - hu[GP + 1ac] & 000f. (if this is 0 then we clear this memory block)
+                    0x01e00000 - owner. hu[GP + 1ac] & 000f. (if this is 0 then we clear this memory block)
                                  0x0 ....
                                  0x1 END 
                                  0x2 HIG  Katsuhisa Higuchi (Battle Menu Programmer)

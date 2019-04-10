@@ -1792,6 +1792,7 @@ if( dir_file_id > 0 )
 {
     A0 = dir_file_id;
     system_get_filesize_by_dir_file_id();
+
     if( V0 > 0 )
     {
         if( allocated_memory != 0 )

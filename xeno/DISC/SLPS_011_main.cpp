@@ -11,7 +11,7 @@ loop195c8:	; 800195C8
 
 // init stack pointer, global pointer and FP
 SP = 80200000;
-FP = SP;
+FP = 80200000;
 GP = 80058810;
 
 RA = 8001960c; // func1960c()
@@ -19,6 +19,14 @@ RA = 8001960c; // func1960c()
 ////////////////////////////////
 
 
+
+////////////////////////////////
+// func195dc()
+
+SP = 80200000;
+FP = 80200000;
+GP = 80058810;
+////////////////////////////////
 
 ////////////////////////////////
 // func195f4
@@ -325,25 +333,27 @@ if( A0 != 0 )
 
 ////////////////////////////////
 // func19a50()
-S0 = A0;
-if( w[8005895c] != S0 )
-{
-    [8005895c] = w(S0);
 
-    S2 = hu[GP + 1ac];
+exe_id = A0;
+
+if( w[8005895c] != exe_id )
+{
+    [8005895c] = w(exe_id);
+
+    S2 = hu[GP + 1ac]; // memory alloc type
 
     // store prev directory
     A0 = SP + 10;
     A1 = SP + 14;
     system_filesystem_get_current_dir();
 
-    [GP + 1ac] = h(6);
+    [GP + 1ac] = h(6); // SUGI Koji Sugimoto Library 'LibLS.LIB'
 
     A0 = 0;
     A1 = 1;
     system_filesystem_set_dir();
 
-    S1 = w[GP + 1c0];
+    S1 = w[GP + 1c0]; // store
     [GP + 1c0] = w(1);
 
     // 00000000 0E000000 10000000 0F000000 0D000000 11000000 12000000 00000000
@@ -355,7 +365,7 @@ if( w[8005895c] != S0 )
     // 5 STRIPCD1\2\0039 - 0x1a9a9, 0x112e4     menu.exe
     // 6 STRIPCD1\2\0040 - 0x1a9cc, 0x3830      movie.exe
     // 7 start dir
-    A0 = w[8004e948 + S0 * 4];
+    A0 = w[8004e948 + exe_id * 4];
     system_get_filesize_by_dir_file_id();
 
     A0 = V0;
@@ -365,7 +375,7 @@ if( w[8005895c] != S0 )
 
     if( V0 != 0 )
     {
-        A0 = w[8004e948 + S0 * 4];
+        A0 = w[8004e948 + exe_id * 4];
         A1 = V0;
         A2 = 0;
         A3 = 0;
@@ -376,14 +386,14 @@ if( w[8005895c] != S0 )
         [8005895c] = w(-1);
     }
 
-    [GP + 1c0] = w(S1);
+    [GP + 1c0] = w(S1); // restore
 
     // restore prev directory
     A0 = w[SP + 10];
     A1 = w[SP + 14];
     system_filesystem_set_dir();
 
-    [GP + 1ac] = h(S2);
+    [GP + 1ac] = h(S2); // restore memory alloc type
 }
 
 return w[80058958];
@@ -401,14 +411,14 @@ if( A0 != 0 )
     80019B74	jal    func19dcc [$80019dcc]
 }
 
-//   main
-// 0 48A30180 54890580 7CF10680 00000000
-// 1 18750780 B8EA0A80 40370C80 01000000 // field
-// 2 50B50180 A4310C80 10310D80 01000000 // battle
-// 3 8C030780 98AF0980 F4CB0980 01000000 // worldmap
-// 4 D4840880 0C1C0980 90AB0980 01000000 // battling
-// 5 C0C40180 54890580 7CF10680 00000000 // menu
-// 6 7C2E0780 C8650780 E46A0780 01000000 // movie
+//   main()   start    mem heap load
+// 0 8001A348 80058954 8006F17C 00000000
+// 1 80077518 800AEAB8 800C3740 00000001 // field
+// 2 8001B550 800C31A4 800D3110 00000001 // battle
+// 3 8007038C 8009AF98 8009CBF4 00000001 // worldmap
+// 4 800884D4 80091C0C 8009AB90 00000001 // battling
+// 5 8001C4C0 80058954 8006F17C 00000000 // menu
+// 6 80072E7C 800765C8 80076AE4 00000001 // movie       func72e7c()
 S1 = 8001808c + w[80018088] * 10;
 
 A0 = 1; // cancels the current drawing and flushes the command buffer.
@@ -439,14 +449,14 @@ if( w[S1 + c] != 0 )
     func195f4(); // set mem from A0 to A1 to zero
 
     A0 = w[80018088];
-    func19a50(); // load some exe
+    func19a50(); // start load some exe
     S0 = V0;
 
     A0 = 0;
-    system_cdrom_action_sync(); // ececute till cd sync
+    system_cdrom_action_sync(); // wait till load complete
 
     A0 = S0; // src
-    A1 = w[80018084]; // dst
+    A1 = w[80018084]; // dst 8006F180
     system_extract_archive();
 
     A0 = 0;
@@ -468,17 +478,17 @@ if( w[S1 + c] != 0 )
     system_exit_critical_section();
 }
 
-80019C54	jal    func195dc [$800195dc]
+func195dc(); // init stack pointer, global pointer and FP
 
 A0 = w[S1 + 8] + 4;
 system_memory_realloc_heap();
 
-func31840();
+func31840(); // reset mem owner and type data
 
 func35c84(); // clear button input
 
 A0 = 0;
-func199f0();
+func199f0(); // set next exe to load
 
 80019C88	jalr   w[S1 + 0] ra
 
@@ -2187,15 +2197,12 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // func1b7d8
-V0 = 0001;
-[A0 + 0018] = b(V0);
-[A0 + 0016] = b(V0);
-V0 = 003c;
-[A0 + 0019] = b(V0);
-V0 = 0078;
-[A0 + 001a] = b(V0);
-8001B7F4	jr     ra 
-[A0 + 001b] = b(V0);
+
+[A0 + 18] = b(1);
+[A0 + 16] = b(1);
+[A0 + 19] = b(3c);
+[A0 + 1a] = b(78);
+[A0 + 1b] = b(78);
 ////////////////////////////////
 
 
@@ -2226,7 +2233,7 @@ A3 = 0080;
 8001B850	jal    func293e8 [$800293e8]
 
 A0 = 0;
-8001B858	jal    system_cdrom_action_sync [$80028870]
+system_cdrom_action_sync();
 
 S1 = 8006ccc4;
 A0 = S1;
