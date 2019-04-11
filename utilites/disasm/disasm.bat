@@ -1,1 +1,1 @@
-adisasm SLUS_012 SLUS_012.asm -v -b 8000f800 80012b68 -u -a
+adisasm 0019 0019.asm -v -b 80000000 80000000 -u -a
