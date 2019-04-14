@@ -503,14 +503,14 @@ if( S0 == 0 )
 
         A0 = 800188bc; // "\n%d"
         A1 = w[8004f4b8] + w[800595a8] - 1; // global file id
-        func36eb4();
+        system_print();
 
         A0 = w[800595a8]; // local file id
         system_filesystem_get_debug_filename();
 
         A0 = 800188c0; // "\n%s"
         A1 = V0;
-        func36eb4();
+        system_print();
 
         A0 = SP + a8;
         func371cc();
@@ -749,7 +749,7 @@ return w[8004f4b8];
 
 
 ////////////////////////////////
-// func28340()
+// system_filesystem_get_disc_number()
 
 V0 = w[8004f498];
 return hu[V0 + 78];
@@ -933,10 +933,9 @@ return w[A0 + V0 * 7 + 3]; // size of file
 ////////////////////////////////
 // func28618
 
-V0 = w[8004f4ec];
-
 dir_file_id = A0;
-if( V0 != 0 )
+
+if( w[8004f4ec] != 0 )
 {
     A0 = dir_file_id;
     system_filesystem_get_debug_filename();
@@ -3933,4 +3932,637 @@ if( w[8004f49c] > 0 ) // file size to load
 }
 
 [8004f49c] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2b850
+8002B850	lui    v0, $8005
+8002B854	lw     v0, $f4a4(v0)
+8002B858	lui    at, $8005
+8002B85C	sw     v0, $f4a0(at)
+8002B860	jr     ra 
+8002B864	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2b868
+8002B868	addiu  sp, sp, $ffe8 (=-$18)
+8002B86C	lui    v0, $8005
+8002B870	lw     v0, $f4e4(v0)
+8002B874	lui    a0, $8005
+8002B878	lw     a0, $f4d0(a0)
+8002B87C	addu   v1, zero, zero
+8002B880	blez   v0, L2b8d0 [$8002b8d0]
+8002B884	sw     ra, $0010(sp)
+8002B888	ori    a3, zero, $0001
+8002B88C	lui    a2, $8005
+8002B890	lhu    a2, $f4cc(a2)
+8002B894	addu   a1, v0, zero
+
+loop2b898:	; 8002B898
+8002B898	lhu    v0, $0000(a0)
+8002B89C	nop
+8002B8A0	bne    v0, a3, L2b8b8 [$8002b8b8]
+8002B8A4	addiu  v0, v1, $0001
+8002B8A8	lhu    v0, $0002(a0)
+8002B8AC	nop
+8002B8B0	beq    v0, a2, L2b8d0 [$8002b8d0]
+8002B8B4	addiu  v0, v1, $0001
+
+L2b8b8:	; 8002B8B8
+8002B8B8	addu   v1, v0, zero
+8002B8BC	sll    v0, v0, $10
+8002B8C0	sra    v0, v0, $10
+8002B8C4	slt    v0, v0, a1
+8002B8C8	bne    v0, zero, loop2b898 [$8002b898]
+8002B8CC	addiu  a0, a0, $0008
+
+L2b8d0:	; 8002B8D0
+8002B8D0	sll    v0, v1, $10
+8002B8D4	lui    v1, $8005
+8002B8D8	lw     v1, $f4e4(v1)
+8002B8DC	sra    v0, v0, $10
+8002B8E0	beq    v0, v1, L2b950 [$8002b950]
+8002B8E4	ori    v0, zero, $0003
+8002B8E8	sh     v0, $0000(a0)
+8002B8EC	lui    v0, $8005
+8002B8F0	lhu    v0, $f4cc(v0)
+8002B8F4	lui    v1, $8005
+8002B8F8	lw     v1, $f49c(v1)
+8002B8FC	addiu  v0, v0, $0001
+8002B900	lui    at, $8005
+8002B904	sh     v0, $f4cc(at)
+8002B908	bgtz   v1, L2b950 [$8002b950]
+8002B90C	nop
+8002B910	lui    v0, $8005
+8002B914	lw     v0, $f4a0(v0)
+8002B918	nop
+8002B91C	slti   v0, v0, $0002
+8002B920	beq    v0, zero, L2b950 [$8002b950]
+8002B924	nop
+8002B928	lui    at, $8005
+8002B92C	sw     zero, $f49c(at)
+8002B930	jal    system_cdrom_dma_callback [$80041264]
+8002B934	addu   a0, zero, zero
+8002B938	lui    a0, $8005
+8002B93C	lw     a0, $f4dc(a0)
+8002B940	jal    func2a1a4 [$8002a1a4]
+8002B944	nop
+8002B948	lui    at, $8005
+8002B94C	sw     zero, $f4a0(at)
+
+L2b950:	; 8002B950
+8002B950	lw     ra, $0010(sp)
+8002B954	addiu  sp, sp, $0018
+8002B958	jr     ra 
+8002B95C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2b960
+V0 = w[8004f4e4];
+S0 = w[8004f4d0];
+
+A0 = 0;
+
+if( V0 > 0 )
+{
+    A1 = hu[8004f4cc];
+    V1 = V0;
+
+    loop2b994:	; 8002B994
+        V0 = hu[S0];
+        if( V0 == 1 )
+        {
+            V0 = hu[S0 + 2];
+            8002B9AC	beq    v0, a1, L2b9cc [$8002b9cc]
+        }
+
+        V0 = A0 + 0001;
+        A0 = V0;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        S0 = S0 + 0008;
+        V0 = V0 < V1;
+    8002B9C4	bne    v0, zero, loop2b994 [$8002b994]
+}
+
+L2b9cc:	; 8002B9CC
+V0 = A0 << 10;
+V1 = w[8004f4e4];
+A0 = V0 >> 10;
+if( A0 == V1 )
+{
+    return;
+}
+
+A0 = A0 * 800;
+
+[S0] = h(2);
+
+if( w[800595ec] == 0 ) // if texture not started
+{
+    A2 = w[8004f4ac] + A0;
+    T0 = w[A2];
+    A2 = A2 + 4;
+    V0 = T0 - 1200;
+    if( V0 >= 2 )
+    {
+        [8004f49c] = w(0);
+
+        V0 = w[80057fcc];
+        V0 = w[V0 + 4];
+        A0 = 3;
+        A1 = 0;
+        8004B660	jalr   v0 ra
+
+        A0 = w[8004f4dc];
+        8002BD00	jal    func2a1a4 [$8002a1a4]
+
+        [8004f4a0] = w(0);
+        return;
+    }
+
+    if( T0 == 1200 )
+    {
+        if( h[800595c0] == 1 )
+        {
+            [800595dc] = h(hu[800595c4] + hu[A2 + 4]); // x
+            [800595e0] = h(hu[800595c8] + hu[A2 + 6]); // y
+        }
+        else if( h[800595c0] == 2 )
+        {
+            [800595dc] = h(hu[800595c4] + hu[A2 + 0] + hu[A2 + 4]); // x
+            [800595e0] = h(hu[800595c8] + hu[A2 + 2] + hu[A2 + 6]); // y
+        }
+        else
+        {
+            [800595dc] = h(hu[A2 + 0] + hu[A2 + 4]); // x
+            [800595e0] = h(hu[A2 + 2] + hu[A2 + 6]); // y
+        }
+    }
+
+    if( T0 == 1201 )
+    {
+        if( h[800595cc] == 1 )
+        {
+            [800595dc] = h(hu[800595d0] + hu[A2 + 4]); // x
+            [800595e0] = h(hu[800595d4] + hu[A2 + 6]); // y
+        }
+        else if( h[800595cc] == 2 )
+        {
+            [800595dc] = h(hu[800595d0] + hu[A2 + 0] + hu[A2 + 4]);
+            [800595e0] = h(hu[800595d4] + hu[A2 + 2] + hu[A2 + 6]);
+        }
+        else
+        {
+            [800595dc] = h(hu[A2 + 0] + hu[A2 + 4]); // x
+            [800595e0] = h(hu[A2 + 2] + hu[A2 + 6]); // y
+        }
+    }
+
+    A2 = A2 + 8;
+    [800595e4] = h(hu[A2]); // width
+    A2 = A2 + 8;
+
+    if( w[800595d8] == 0 )
+    {
+        [800595d8] = w(w[A2]);
+    }
+    A2 = A2 + 4;
+    [800595ec] = w(w[A2]); // number_of_chunk
+    A2 = A2 + 4;
+    [800595e8] = w(A2);
+}
+else
+{
+    A1 = w[800595e8];
+    [SP + 10] = h(hu[800595dc]); // x
+    [SP + 12] = h(hu[800595e0]); // y
+    [SP + 14] = h(hu[800595e4]); // width
+    [SP + 16] = h(hu[A1]); // height
+
+    A0 = SP + 10; // struct with size (0 x, 2 y, 4 width, 6 height)
+    A1 = A2; // start address
+    system_load_image();
+
+    A0 = w[800595e8];
+    V1 = hu[800595e0];
+    [800595e8] = w(A0 + 2);
+    A0 = hu[A0];
+    V1 = V1 + A0;
+    [800595ec] = w(w[800595ec] - 1); // descrease number of chank by 1
+    [800595e0] = h(V1);
+    if( w[800595ec] <= 0 )
+    {
+        V0 = w[800595d8];
+        A1 = w[8004f4e4];
+        [800595ec] = w(0);
+        8002BC8C	addiu  v0, v0, $ffff (=-$1)
+        [800595d8] = w(V0);
+        A0 = 0;
+        if( A1 < 0 )
+        {
+            A2 = w[8004f4d0];
+
+            loop2bca8:	; 8002BCA8
+                V1 = A0 << 10;
+                V0 = A0 + 0001;
+                A0 = V0;
+                V1 = V1 >> 0d;
+                V1 = V1 + A2;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                V0 = V0 < A1;
+                [V1 + 0000] = h(0);
+                [V1 + 0002] = h(0);
+            8002BCCC	bne    v0, zero, loop2bca8 [$8002bca8]
+        }
+
+        V0 = w[800595d8];
+        if( V0 <= 0 )
+        {
+            [8004f49c] = w(0);
+
+            V0 = w[80057fcc];
+            V0 = w[V0 + 4];
+            A0 = 3;
+            A1 = 0;
+            8004B660	jalr   v0 ra
+
+            A0 = w[8004f4dc];
+            8002BD00	jal    func2a1a4 [$8002a1a4]
+
+            [8004f4a0] = w(0);
+            return;
+        }
+    }
+
+    [S0 + 0000] = h(0);
+}
+[8004f4cc] = h(hu[8004f4cc] + 1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2bd48
+8002BD48	lui    v0, $8005
+8002BD4C	lw     v0, $f4e4(v0)
+8002BD50	addiu  sp, sp, $ffe0 (=-$20)
+8002BD54	sw     s0, $0018(sp)
+8002BD58	lui    s0, $8005
+8002BD5C	lw     s0, $f4d0(s0)
+8002BD60	addu   a0, zero, zero
+8002BD64	blez   v0, L2bdb4 [$8002bdb4]
+8002BD68	sw     ra, $001c(sp)
+8002BD6C	ori    a2, zero, $0001
+8002BD70	lui    a1, $8005
+8002BD74	lhu    a1, $f4cc(a1)
+8002BD78	addu   v1, v0, zero
+
+loop2bd7c:	; 8002BD7C
+8002BD7C	lhu    v0, $0000(s0)
+8002BD80	nop
+8002BD84	bne    v0, a2, L2bd9c [$8002bd9c]
+8002BD88	addiu  v0, a0, $0001
+8002BD8C	lhu    v0, $0002(s0)
+8002BD90	nop
+8002BD94	beq    v0, a1, L2bdb4 [$8002bdb4]
+8002BD98	addiu  v0, a0, $0001
+
+L2bd9c:	; 8002BD9C
+8002BD9C	addu   a0, v0, zero
+8002BDA0	sll    v0, v0, $10
+8002BDA4	sra    v0, v0, $10
+8002BDA8	slt    v0, v0, v1
+8002BDAC	bne    v0, zero, loop2bd7c [$8002bd7c]
+8002BDB0	addiu  s0, s0, $0008
+
+L2bdb4:	; 8002BDB4
+8002BDB4	sll    v0, a0, $10
+8002BDB8	lui    v1, $8005
+8002BDBC	lw     v1, $f4e4(v1)
+8002BDC0	sra    a0, v0, $10
+8002BDC4	beq    a0, v1, L2c10c [$8002c10c]
+8002BDC8	ori    v0, zero, $0002
+8002BDCC	sll    a0, a0, $0b
+8002BDD0	sh     v0, $0000(s0)
+8002BDD4	lui    v0, $8005
+8002BDD8	lw     v0, $f4ac(v0)
+8002BDDC	lui    v1, $8006
+8002BDE0	lw     v1, $95ec(v1)
+8002BDE4	nop
+8002BDE8	bne    v1, zero, L2bfd4 [$8002bfd4]
+8002BDEC	addu   a2, a0, v0
+8002BDF0	lw     t0, $0000(a2)
+8002BDF4	addiu  a2, a2, $0004
+8002BDF8	addiu  v0, t0, $ee00 (=-$1200)
+8002BDFC	sltiu  v0, v0, $0002
+8002BE00	beq    v0, zero, L2c10c [$8002c10c]
+8002BE04	addu   a3, a2, zero
+8002BE08	ori    v0, zero, $1200
+8002BE0C	bne    t0, v0, L2becc [$8002becc]
+8002BE10	ori    v0, zero, $1201
+8002BE14	lui    v1, $8006
+8002BE18	lh     v1, $95c0(v1)
+8002BE1C	ori    v0, zero, $0001
+8002BE20	beq    v1, v0, L2be38 [$8002be38]
+8002BE24	ori    v0, zero, $0002
+8002BE28	beq    v1, v0, L2be58 [$8002be58]
+8002BE2C	nop
+8002BE30	j      L2bea0 [$8002bea0]
+8002BE34	nop
+
+L2be38:	; 8002BE38
+8002BE38	lui    v0, $8006
+8002BE3C	lhu    v0, $95c4(v0)
+8002BE40	lhu    a0, $0004(a2)
+8002BE44	lui    v1, $8006
+8002BE48	lhu    v1, $95c8(v1)
+8002BE4C	lhu    a1, $0006(a2)
+8002BE50	j      L2beb4 [$8002beb4]
+8002BE54	addu   v0, v0, a0
+
+L2be58:	; 8002BE58
+8002BE58	lui    v0, $8006
+8002BE5C	lhu    v0, $95c4(v0)
+8002BE60	lhu    v1, $0000(a2)
+8002BE64	lhu    a0, $0004(a2)
+8002BE68	addu   v0, v0, v1
+8002BE6C	addu   v0, v0, a0
+8002BE70	lui    at, $8006
+8002BE74	sh     v0, $95dc(at)
+8002BE78	lui    v0, $8006
+8002BE7C	lhu    v0, $95c8(v0)
+8002BE80	lhu    v1, $0002(a2)
+8002BE84	lhu    a0, $0006(a2)
+8002BE88	addu   v0, v0, v1
+8002BE8C	addu   v0, v0, a0
+8002BE90	lui    at, $8006
+8002BE94	sh     v0, $95e0(at)
+8002BE98	j      L2becc [$8002becc]
+8002BE9C	ori    v0, zero, $1201
+
+L2bea0:	; 8002BEA0
+8002BEA0	lhu    v0, $0000(a3)
+8002BEA4	lhu    a0, $0004(a3)
+8002BEA8	lhu    v1, $0002(a3)
+8002BEAC	lhu    a1, $0006(a3)
+8002BEB0	addu   v0, v0, a0
+
+L2beb4:	; 8002BEB4
+8002BEB4	addu   v1, v1, a1
+8002BEB8	lui    at, $8006
+8002BEBC	sh     v0, $95dc(at)
+8002BEC0	lui    at, $8006
+8002BEC4	sh     v1, $95e0(at)
+8002BEC8	ori    v0, zero, $1201
+
+L2becc:	; 8002BECC
+8002BECC	bne    t0, v0, L2bf84 [$8002bf84]
+8002BED0	ori    v0, zero, $0001
+8002BED4	lui    v1, $8006
+8002BED8	lh     v1, $95cc(v1)
+8002BEDC	nop
+8002BEE0	beq    v1, v0, L2bef8 [$8002bef8]
+8002BEE4	ori    v0, zero, $0002
+8002BEE8	beq    v1, v0, L2bf14 [$8002bf14]
+8002BEEC	nop
+8002BEF0	j      L2bf5c [$8002bf5c]
+8002BEF4	nop
+
+L2bef8:	; 8002BEF8
+8002BEF8	lui    v0, $8006
+8002BEFC	lhu    v0, $95d0(v0)
+8002BF00	lhu    a0, $0004(a3)
+8002BF04	lui    v1, $8006
+8002BF08	lhu    v1, $95d4(v1)
+8002BF0C	j      L2bf68 [$8002bf68]
+8002BF10	nop
+
+L2bf14:	; 8002BF14
+8002BF14	lui    v0, $8006
+8002BF18	lhu    v0, $95d0(v0)
+8002BF1C	lhu    v1, $0000(a3)
+8002BF20	lhu    a0, $0004(a3)
+8002BF24	addu   v0, v0, v1
+8002BF28	addu   v0, v0, a0
+8002BF2C	lui    at, $8006
+8002BF30	sh     v0, $95dc(at)
+8002BF34	lui    v0, $8006
+8002BF38	lhu    v0, $95d4(v0)
+8002BF3C	lhu    v1, $0002(a3)
+8002BF40	lhu    a0, $0006(a3)
+8002BF44	addu   v0, v0, v1
+8002BF48	addu   v0, v0, a0
+8002BF4C	lui    at, $8006
+8002BF50	sh     v0, $95e0(at)
+8002BF54	j      L2bf88 [$8002bf88]
+8002BF58	addiu  a2, a2, $0008
+
+L2bf5c:	; 8002BF5C
+8002BF5C	lhu    v0, $0000(a3)
+8002BF60	lhu    a0, $0004(a3)
+8002BF64	lhu    v1, $0002(a3)
+
+L2bf68:	; 8002BF68
+8002BF68	lhu    a1, $0006(a3)
+8002BF6C	addu   v0, v0, a0
+8002BF70	addu   v1, v1, a1
+8002BF74	lui    at, $8006
+8002BF78	sh     v0, $95dc(at)
+8002BF7C	lui    at, $8006
+8002BF80	sh     v1, $95e0(at)
+
+L2bf84:	; 8002BF84
+8002BF84	addiu  a2, a2, $0008
+
+L2bf88:	; 8002BF88
+8002BF88	lhu    v0, $0000(a2)
+8002BF8C	lui    v1, $8006
+8002BF90	lw     v1, $95d8(v1)
+8002BF94	lui    at, $8006
+8002BF98	sh     v0, $95e4(at)
+8002BF9C	bne    v1, zero, L2bfb0 [$8002bfb0]
+8002BFA0	addiu  a2, a2, $0008
+8002BFA4	lw     v0, $0000(a2)
+8002BFA8	lui    at, $8006
+8002BFAC	sw     v0, $95d8(at)
+
+L2bfb0:	; 8002BFB0
+8002BFB0	addiu  a2, a2, $0004
+8002BFB4	lw     v0, $0000(a2)
+8002BFB8	addiu  a2, a2, $0004
+8002BFBC	lui    at, $8006
+8002BFC0	sw     a2, $95e8(at)
+8002BFC4	lui    at, $8006
+8002BFC8	sw     v0, $95ec(at)
+8002BFCC	j      L2c0f4 [$8002c0f4]
+8002BFD0	nop
+
+L2bfd4:	; 8002BFD4
+8002BFD4	lui    a0, $8006
+8002BFD8	lhu    a0, $95e4(a0)
+8002BFDC	lui    v0, $8006
+8002BFE0	lhu    v0, $95dc(v0)
+8002BFE4	lui    v1, $8006
+8002BFE8	lhu    v1, $95e0(v1)
+8002BFEC	lui    a1, $8006
+8002BFF0	lw     a1, $95e8(a1)
+8002BFF4	sh     a0, $0014(sp)
+8002BFF8	addiu  a0, sp, $0010
+8002BFFC	sh     v0, $0010(sp)
+8002C000	sh     v1, $0012(sp)
+8002C004	lhu    v0, $0000(a1)
+8002C008	addu   a1, a2, zero
+8002C00C	jal    system_load_image [$8004470c]
+8002C010	sh     v0, $0016(sp)
+8002C014	jal    system_draw_sync [$80044448]
+8002C018	addu   a0, zero, zero
+8002C01C	lui    a0, $8006
+8002C020	lw     a0, $95e8(a0)
+8002C024	lui    v1, $8006
+8002C028	lhu    v1, $95e0(v1)
+8002C02C	addiu  v0, a0, $0002
+8002C030	lui    at, $8006
+8002C034	sw     v0, $95e8(at)
+8002C038	lui    v0, $8006
+8002C03C	lw     v0, $95ec(v0)
+8002C040	lhu    a0, $0000(a0)
+8002C044	addiu  v0, v0, $ffff (=-$1)
+8002C048	addu   v1, v1, a0
+8002C04C	lui    at, $8006
+8002C050	sw     v0, $95ec(at)
+8002C054	lui    at, $8006
+8002C058	sh     v1, $95e0(at)
+8002C05C	bgtz   v0, L2c0f0 [$8002c0f0]
+8002C060	nop
+8002C064	lui    v0, $8006
+8002C068	lw     v0, $95d8(v0)
+8002C06C	lui    a1, $8005
+8002C070	lw     a1, $f4e4(a1)
+8002C074	lui    at, $8006
+8002C078	sw     zero, $95ec(at)
+8002C07C	addiu  v0, v0, $ffff (=-$1)
+8002C080	lui    at, $8006
+8002C084	sw     v0, $95d8(at)
+8002C088	blez   a1, L2c0c4 [$8002c0c4]
+8002C08C	addu   a0, zero, zero
+8002C090	lui    a2, $8005
+8002C094	lw     a2, $f4d0(a2)
+
+loop2c098:	; 8002C098
+8002C098	sll    v1, a0, $10
+8002C09C	addiu  v0, a0, $0001
+8002C0A0	addu   a0, v0, zero
+8002C0A4	sra    v1, v1, $0d
+8002C0A8	addu   v1, v1, a2
+8002C0AC	sll    v0, v0, $10
+8002C0B0	sra    v0, v0, $10
+8002C0B4	slt    v0, v0, a1
+8002C0B8	sh     zero, $0000(v1)
+8002C0BC	bne    v0, zero, loop2c098 [$8002c098]
+8002C0C0	sh     zero, $0002(v1)
+
+L2c0c4:	; 8002C0C4
+8002C0C4	lui    v0, $8006
+8002C0C8	lw     v0, $95d8(v0)
+8002C0CC	nop
+8002C0D0	bgtz   v0, L2c0f0 [$8002c0f0]
+8002C0D4	nop
+8002C0D8	lui    at, $8005
+8002C0DC	sw     zero, $f49c(at)
+8002C0E0	lui    at, $8005
+8002C0E4	sw     zero, $f4a0(at)
+8002C0E8	j      L2c10c [$8002c10c]
+8002C0EC	nop
+
+L2c0f0:	; 8002C0F0
+8002C0F0	sh     zero, $0000(s0)
+
+L2c0f4:	; 8002C0F4
+8002C0F4	lui    v0, $8005
+8002C0F8	lhu    v0, $f4cc(v0)
+8002C0FC	nop
+8002C100	addiu  v0, v0, $0001
+8002C104	lui    at, $8005
+8002C108	sh     v0, $f4cc(at)
+
+L2c10c:	; 8002C10C
+8002C10C	lw     ra, $001c(sp)
+8002C110	lw     s0, $0018(sp)
+8002C114	addiu  sp, sp, $0020
+8002C118	jr     ra 
+8002C11C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2c120
+8002C120	addiu  sp, sp, $ffe0 (=-$20)
+8002C124	lui    a1, $8005
+8002C128	lw     a1, $f494(a1)
+8002C12C	lui    a2, $8005
+8002C130	lw     a2, $f4ac(a2)
+8002C134	lui    a3, $8005
+8002C138	lw     a3, $f4d0(a3)
+8002C13C	lui    a0, $8002
+8002C140	addiu  a0, a0, $8914 (=-$76ec)
+8002C144	sw     ra, $0018(sp)
+8002C148	jal    func37870 [$80037870]
+8002C14C	nop
+8002C150	lui    a1, $8005
+8002C154	lw     a1, $f4e4(a1)
+8002C158	lui    a2, $8005
+8002C15C	lw     a2, $f4b4(a2)
+8002C160	lui    a3, $8006
+8002C164	lw     a3, $95d8(a3)
+8002C168	lui    v0, $8006
+8002C16C	lw     v0, $95ec(v0)
+8002C170	lui    a0, $8002
+8002C174	addiu  a0, a0, $8924 (=-$76dc)
+8002C178	jal    func37870 [$80037870]
+8002C17C	sw     v0, $0010(sp)
+8002C180	lui    a1, $8006
+8002C184	lh     a1, $95dc(a1)
+8002C188	lui    a2, $8006
+8002C18C	lh     a2, $95e0(a2)
+8002C190	lui    a3, $8006
+8002C194	lh     a3, $95e4(a3)
+8002C198	lui    v0, $8006
+8002C19C	lw     v0, $95e8(v0)
+8002C1A0	lui    a0, $8002
+8002C1A4	addiu  a0, a0, $8934 (=-$76cc)
+8002C1A8	jal    func37870 [$80037870]
+8002C1AC	sw     v0, $0010(sp)
+8002C1B0	lui    v0, $8006
+8002C1B4	lw     v0, $95e8(v0)
+8002C1B8	nop
+8002C1BC	lhu    a1, $0000(v0)
+8002C1C0	lhu    a2, $0002(v0)
+8002C1C4	lhu    a3, $0004(v0)
+8002C1C8	lui    a0, $8002
+8002C1CC	addiu  a0, a0, $8944 (=-$76bc)
+8002C1D0	jal    func37870 [$80037870]
+8002C1D4	nop
+8002C1D8	lw     ra, $0018(sp)
+8002C1DC	addiu  sp, sp, $0020
+8002C1E0	jr     ra 
+8002C1E4	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_cdrom_get_cdrom_hdd_mode()
+
+return w[8004f4ec];
 ////////////////////////////////

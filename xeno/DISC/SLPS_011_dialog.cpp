@@ -1907,7 +1907,8 @@ else
 
 
 ////////////////////////////////
-// func354c0()
+// system_controller_get_pressed_button_mask()
+
 [80058a24] = b(0);
 
 // Status ( 00 = okay, FF = timeout/wrong ID2)
@@ -2072,7 +2073,7 @@ V0 = bu[AT + f8c0];
 
 // CONTROLLER 1
 A0 = 0;
-func354c0(); // return pressed buttons mask
+system_controller_get_pressed_button_mask();
 A0 = V0;
 [80058c0c] = h(A0);
 
@@ -2136,7 +2137,7 @@ else if( w[80058b24] & 3 )
 
 // CONTROLLER 2
 A0 = 1;
-func354c0();
+system_controller_get_pressed_button_mask();
 A0 = V0;
 [80058c10] = h(A0);
 

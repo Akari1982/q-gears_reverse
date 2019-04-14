@@ -270,13 +270,13 @@ A0 = 0;
 [8004f4ea] = b(1);
 [8004f4eb] = b(0);
 
-func28340(); // get last dit in folder file
+system_filesystem_get_disc_number();
 
-if( V0 == 1 )
+if( V0 == 1 ) // disc 1
 {
     [8004f4e9] = b(10);
 }
-else
+else // disc 2
 {
     [8004f4e9] = b(7);
 }
@@ -408,7 +408,7 @@ if( A0 != 0 )
 {
     [SP + 10] = w(RA);
     A1 = w[SP + 10];
-    80019B74	jal    func19dcc [$80019dcc]
+    func19dcc();
 }
 
 //   main()   start    mem heap load
@@ -531,6 +531,7 @@ system_memory_set_alloc_user();
 
 ////////////////////////////////
 // func19d24()
+
 if( hu[80058c0c] == 090c ) // pressed buttons start select L1 R1
 {
     func19d54();
@@ -576,7 +577,7 @@ system_call_main_timer_additional_callback_4();
 ////////////////////////////////
 // func19dcc()
 
-S2 = A0; // file?
+S2 = A0; // system error
 S3 = A1;
 S1 = 0;
 
@@ -584,55 +585,54 @@ if( ( w[80010000] + 1 ) >= 2 )
 {
     A0 = 80018198; // filename "c:\lserrmem.txt"
     system_memory_full_dump_to_file();
-
-    80019E14	j      L19e50 [$80019e50]
 }
+else
+{
+    [SP + 110] = h(0);
+    [SP + 112] = h(0);
+    [SP + 114] = h(280);
+    [SP + 116] = h(1e0);
 
-[SP + 110] = h(0);
-[SP + 112] = h(0);
-[SP + 114] = h(280);
-[SP + 116] = h(1e0);
+    A0 = SP + 110;
+    A1 = ff;
+    A2 = 0;
+    A3 = 0;
+    system_clear_image();
 
-A0 = SP + 110;
-A1 = ff;
-A2 = 0;
-A3 = 0;
-system_clear_image();
-
-L19e48:	; 80019E48
-80019E48	j      L19e48 [$80019e48]
-80019E4C	nop
-
-L19e50:	; 80019E50
-S0 = 00f0;
+    L19e48:	; 80019E48
+    80019E48	j      L19e48 [$80019e48]
+}
 
 system_memory_mark_forced_removed_alloc_all();
 
-A0 = SP + 0030;
+A0 = SP + 30;
 A1 = 0;
 A2 = 0;
-A3 = 0180;
-[SP + 0010] = w(S0);
-80019E68	jal    system_graphic_create_draw_env_struct [$800437a0]
+A3 = 180;
+A4 = f0;
+system_graphic_create_draw_env_struct();
 
-A0 = SP + 00e8;
+A0 = SP + e8;
 A1 = 0;
-A2 = 00f0;
-A3 = 0180;
-80019E80	jal    system_graphic_create_display_env_struct [$80043858]
-[SP + 0010] = w(S0);
-A0 = SP + 008c;
+A2 = f0;
+A3 = 180;
+A4 = f0;
+system_graphic_create_display_env_struct();
+
+A0 = SP + 8c;
 A1 = 0;
-A2 = 00f0;
-A3 = 0180;
-80019E98	jal    system_graphic_create_draw_env_struct [$800437a0]
-[SP + 0010] = w(S0);
-A0 = SP + 00fc;
+A2 = f0;
+A3 = 180;
+A4 = f0;
+system_graphic_create_draw_env_struct();
+
+A0 = SP + fc;
 A1 = 0;
 A2 = 0;
-A3 = 0180;
-80019EB0	jal    system_graphic_create_display_env_struct [$80043858]
-[SP + 0010] = w(S0);
+A3 = 180;
+A4 = f0;
+system_graphic_create_display_env_struct();
+
 A0 = 0;
 system_psyq_draw_sync_callback();
 
@@ -652,89 +652,100 @@ A9 = 1ff;
 A10 = 0;
 80019F00	jal    func37390 [$80037390]
 
-V1 = w[8004e964];
-V0 = 0001;
-[SP + 00a4] = b(V0);
-[SP + 0048] = b(V0);
-[SP + 0049] = b(0);
-[SP + 004a] = b(0);
-[SP + 004b] = b(0);
-[SP + 00a5] = b(0);
-[SP + 00a6] = b(0);
-[SP + 00a7] = b(0);
-V1 = V1 + 0001;
-[8004e964] = w(V1);
-A0 = 0001;
+[SP + a4] = b(1);
+[SP + 48] = b(1);
+[SP + 49] = b(0);
+[SP + 4a] = b(0);
+[SP + 4b] = b(0);
+[SP + a5] = b(0);
+[SP + a6] = b(0);
+[SP + a7] = b(0);
+
+[8004e964] = w(w[8004e964] + 1);
+
+A0 = 1;
 system_psyq_set_disp_mask();
 
 L19f48:	; 80019F48
-S0 = S1 & 0001;
-80019F4C	bne    s0, zero, L19f58 [$80019f58]
-A0 = SP + 0030;
-A0 = SP + 008c;
+    S0 = S1 & 0001;
+    80019F4C	bne    s0, zero, L19f58 [$80019f58]
+    A0 = SP + 0030;
+    A0 = SP + 008c;
 
-L19f58:	; 80019F58
-system_psyq_put_draw_env();
+    L19f58:	; 80019F58
+    system_psyq_put_draw_env();
 
-80019F60	bne    s0, zero, L19f6c [$80019f6c]
-A0 = SP + 00e8;
-A0 = SP + 00fc;
+    80019F60	bne    s0, zero, L19f6c [$80019f6c]
+    A0 = SP + 00e8;
+    A0 = SP + 00fc;
 
-L19f6c:	; 80019F6C
-system_psyq_put_disp_env();
+    L19f6c:	; 80019F6C
+    system_psyq_put_disp_env();
 
-80019F74	jal    func371cc [$800371cc]
-A0 = 0;
+    A0 = 0;
+    80019F74	jal    func371cc [$800371cc]
 
-A0 = 800181a8;
-A1 = S2;
-80019F84	jal    func36eb4 [$80036eb4]
+    A0 = 800181a8; // "System Error No %d\n"
+    A1 = S2;
+    system_print();
 
-A0 = 800181bc;
-80019F94	jal    func36eb4 [$80036eb4]
-A1 = S3;
-A1 = w[8004e964];
-A0 = 800181c8;
-80019FAC	jal    func36eb4 [$80036eb4]
-80019FB0	nop
-A0 = 800181d4;
-80019FBC	jal    func36eb4 [$80036eb4]
-A1 = S1;
-A0 = 800181e0;
-80019FCC	jal    func36eb4 [$80036eb4]
-80019FD0	nop
-A0 = 80018200;
-80019FDC	jal    func36eb4 [$80036eb4]
-80019FE0	nop
-V0 = S2 & 0080;
-80019FE8	beq    v0, zero, L1a048 [$8001a048]
-V0 = S2 << 02;
-80019FF0	lui    at, $8005
-AT = AT + V0;
-A1 = w[AT + e768];
-A0 = 80018204;
-8001A004	jal    func36eb4 [$80036eb4]
-8001A008	nop
-V0 = 0082;
-8001A010	bne    s2, v0, L1a048 [$8001a048]
-A0 = SP + 0120;
-8001A018	jal    func319d4 [$800319d4]
-A1 = SP + 0124;
-A1 = w[SP + 0120];
-A0 = 80018208;
-8001A02C	jal    func36eb4 [$80036eb4]
-8001A030	nop
-A1 = w[SP + 0124];
-A0 = 8001821c;
-8001A040	jal    func36eb4 [$80036eb4]
-A2 = A1;
+    A0 = 800181bc; // "From  %08x\n"
+    A1 = S3;
+    system_print();
 
-L1a048:	; 8001A048
-A0 = 0;
-system_psyq_wait_frames();
+    A0 = 800181c8; // "Count %d\n"
+    A1 = w[8004e964];
+    system_print();
 
+    A0 = 800181d4; // "Frame %d\n"
+    A1 = S1;
+    system_print();
+
+    A0 = 800181e0; // "ErrMemFile -> c:\lserrmem.txt\n"
+    system_print();
+
+    A0 = 80018200; // "\n"
+    system_print();
+
+    if( S2 & 0080 )
+    {
+        A0 = 80018204; // "%s\n"
+        // 80 "LsKernel:Program Not Defined"
+        // 81 "LsKernel:PC File Not Found"
+        // 82 "LsGetMem:Memory Not Enough"
+        // 83 "LsFreeMem:Can't Release NULL Pointer"
+        // 84 "LsGetMem:MCB Broken"
+        // 86 "YOSHII"
+        // 87 "HIGUCHI,MIYAGAWA,MASAKI"
+        // 88 "KAZUMI"
+        // 89 "SUGIMOTO"
+        // 8a "HIGUCHI"
+        // 8b "MASAKI"
+        A1 = w[8004e768 + S2 * 4];
+        system_print();
+
+        if( S2 == 82 )
+        {
+            A0 = SP + 120;
+            A1 = SP + 124;
+            8001A018	jal    func319d4 [$800319d4]
+
+            A1 = w[SP + 120];
+            A0 = 80018208; // "Program From %08x\n"
+            system_print();
+
+            A0 = 8001821c; // "Failure Size %d (%xh) byte \n"
+            A1 = w[SP + 124];
+            A2 = w[SP + 124];
+            system_print();
+        }
+    }
+
+    A0 = 0;
+    system_psyq_wait_frames();
+
+    S1 = S1 + 1;
 8001A050	j      L19f48 [$80019f48]
-S1 = S1 + 0001;
 ////////////////////////////////
 
 
@@ -836,85 +847,62 @@ SP = SP + 0048;
 
 
 ////////////////////////////////
-// func1a1d8
-V0 = hu[80058b40];
-8001A1E0	addiu  sp, sp, $ffc8 (=-$38)
-V0 = V0 & 1000;
-8001A1E8	beq    v0, zero, L1a218 [$8001a218]
-[SP + 0030] = w(RA);
-V0 = w[8004e97c];
-8001A1F8	nop
-8001A1FC	addiu  v0, v0, $ffff (=-$1)
-[8004e97c] = w(V0);
-8001A208	bgez   v0, L1a218 [$8001a218]
-V0 = 0005;
-[8004e97c] = w(V0);
+// func1a1d8()
 
-L1a218:	; 8001A218
-V0 = hu[80058b40];
-8001A220	nop
-V0 = V0 & 4000;
-8001A228	beq    v0, zero, L1a25c [$8001a25c]
-8001A22C	nop
-V0 = w[8004e97c];
-8001A238	nop
-V0 = V0 + 0001;
-[8004e97c] = w(V0);
-V0 = V0 < 0006;
-8001A24C	bne    v0, zero, L1a25c [$8001a25c]
-8001A250	nop
-[8004e97c] = w(0);
+if( hu[80058b40] & 1000 )
+{
+    [8004e97c] = w(w[8004e97c] - 1);
+    if( w[8004e97c] < 0 )
+    {
+        [8004e97c] = w(5);
+    }
+}
 
-L1a25c:	; 8001A25C
-V0 = hu[80058b28];
-8001A264	nop
-V0 = V0 & 0020;
-8001A26C	beq    v0, zero, L1a28c [$8001a28c]
-8001A270	nop
-A0 = w[8004e97c];
-8001A27C	jal    func199f0 [$800199f0]
-A0 = A0 + 0001;
-[8005896c] = w(0);
+if( hu[80058b40] & 4000 )
+{
+    [8004e97c] = w(w[8004e97c] + 1);
 
-L1a28c:	; 8001A28C
-A0 = SP + 0018;
+    if( w[8004e97c] >= 6 )
+    {
+        [8004e97c] = w(0);
+    }
+}
+
+if( hu[80058b28] & 0020 )
+{
+    A0 = w[8004e97c] + 1;
+    8001A27C	jal    func199f0 [$800199f0]
+
+    [8005896c] = w(0);
+}
+
+A0 = SP + 18;
+A1 = 80018280; // "%02d:%02d:%02d"
 A2 = bu[80058b20];
 A3 = bu[80058abc];
-V0 = bu[80058ab4];
-A1 = 80018280;
-8001A2B0	jal    func3fa70 [$8003fa70]
-[SP + 0010] = w(V0);
-V0 = w[80010000];
-A2 = 800182c0;
-8001A2C8	beq    v0, zero, L1a2d8 [$8001a2d8]
-8001A2CC	nop
-A2 = 800182b8;
+A4 = bu[80058ab4];
+func3fa70();
 
-L1a2d8:	; 8001A2D8
-A0 = 80018290;
-8001A2E0	jal    func36eb4 [$80036eb4]
-A1 = SP + 0018;
-A0 = 800182c8;
-8001A2F0	jal    func36eb4 [$80036eb4]
-8001A2F4	nop
-V1 = w[8004e97c];
+if( w[80010000] != 0 )
+{
+    A2 = 800182b8; // "PC HDD"
+}
+else
+{
+    A2 = 800182c0; // "CD EMU"
+}
+
+A0 = 80018290; // " XENOGEARS Kernel MENU\n  %s %s MODE\n\n"
+A1 = SP + 18;
+system_print();
+
+A0 = 800182c8; // "    Field\n    Battle\n    Worldmap\n    Battling\n    Menu\n    Movie\n\n"
+system_print();
+
 A0 = w[80058968];
-V1 = V1 << 03;
-V0 = V1 + 0028;
-V0 = V0 << 10;
-V0 = V0 | 0020;
-[A0 + 007c] = w(V0);
-V0 = V1 + 002c;
-V0 = V0 << 10;
-V0 = V0 | 0027;
-V1 = V1 + 0030;
-V1 = V1 << 10;
-V1 = V1 | 0020;
-[A0 + 0080] = w(V0);
-RA = w[SP + 0030];
-[A0 + 0084] = w(V1);
-8001A340	jr     ra 
-SP = SP + 0038;
+[A0 + 7c] = w(((w[8004e97c] * 8 + 28) << 10) | 20);
+[A0 + 80] = w(((w[8004e97c] * 8 + 2c) << 10) | 27);
+[A0 + 84] = w(((w[8004e97c] * 8 + 30) << 10) | 20);
 ////////////////////////////////
 
 

@@ -106,6 +106,9 @@
 8004f4ea []       init with 1.
 8004f4eb []       init with 0.
 8004f4ec [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
+                  0 - CD-ROM MODE1
+                 -1 - CD-ROM MODE2
+                  else - PC HDD MODE
 8004f4f0 [][][][] init with -1. Some debug filehandler.
 
 8004f4f4 data for load 3d data.
@@ -417,16 +420,15 @@
 80058aaa [][]     reverb output volume right.
 80058aac [][][][] pointer to start of all sound structs memory (800651a0). Structs is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
 
-80058adc [][][][] pointer to some SED file (0391.sed).
 80058ac0 [][][][] store here pointer to place for packets.
 80058ac4 [][][][] store here data from sprite opcode 0xa7 & 0x7f if 0x80 is set. Some wait.
 80058ac8 []       init with 0.
-
-80058ae0 []       state of RightJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
-80058ae8 []       state of RightJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
 80058acc []       state of LeftJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ad4 []       state of LeftJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
+80058adc [][][][] pointer to some SED file (0391.sed).
+80058ae0 []       state of RightJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ae4 []       state of RightJoyX for controller 2 (0x00=Left, 0x80=Center, 0xFF=Right).
+80058ae8 []       state of RightJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
 80058aec []       state of RightJoyY for controller 2 (0x00=Up, 0x80=Center, 0xFF=Down).
 80058ad0 []       state of LeftJoyX for controller 2 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ad8 []       state of LeftJoyY for controller 2 (0x00=Up, 0x80=Center, 0xFF=Down).
