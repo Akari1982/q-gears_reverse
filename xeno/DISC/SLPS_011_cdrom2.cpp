@@ -513,7 +513,7 @@ if( S0 == 0 )
         system_print();
 
         A0 = SP + a8;
-        func371cc();
+        system_print_render_strings();
 
         A0 = SP + c4;
         system_psyq_draw_otag();

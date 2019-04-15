@@ -8896,10 +8896,10 @@ L36574:	; 80036574
 
 
 ////////////////////////////////
-// func36598
+// system_print_add_letter_to_render
 80036598-800365BC
 ////////////////////////////////
-// func365c0
+// system_print_inner
 800365C0-80036B7C
 ////////////////////////////////
 // func36b80
@@ -8920,16 +8920,16 @@ L36574:	; 80036574
 // func36c18
 80036C18-80036C2C
 ////////////////////////////////
-// func36c30
+// system_print_set_default_letter_width
 80036C30-80036C3C
 ////////////////////////////////
-// func36c40
+// system_print_set_default_letter_height
 80036C40-80036C4C
 ////////////////////////////////
-// func36c50
+// system_print_set_current_letter_x
 80036C50-80036C5C
 ////////////////////////////////
-// func36c60
+// system_print_set_current_letter_y
 80036C60-80036C6C
 ////////////////////////////////
 // func36c70
@@ -8938,16 +8938,16 @@ L36574:	; 80036574
 // func36cf4
 80036CF4-80036DE8
 ////////////////////////////////
-// func36dec
+// system_print_get_default_letter_width
 80036DEC-80036E00
 ////////////////////////////////
-// func36e04
+// system_print_get_default_letter_height
 80036E04-80036E18
 ////////////////////////////////
-// func36e1c
+// system_print_get_current_letter_x
 80036E1C-80036E30
 ////////////////////////////////
-// func36e34
+// system_print_get_current_letter_y
 80036E34-80036E48
 ////////////////////////////////
 // func36e4c
@@ -8968,13 +8968,13 @@ L36574:	; 80036574
 // func36f34
 80036F34-80036F80
 ////////////////////////////////
-// func36f84
+// system_print_add_letter_to_render_inner
 80036F84-80037170
 ////////////////////////////////
 // func37174
 80037174-800371C8
 ////////////////////////////////
-// func371cc
+// system_print_render_strings
 800371CC-80037320
 ////////////////////////////////
 // func37324

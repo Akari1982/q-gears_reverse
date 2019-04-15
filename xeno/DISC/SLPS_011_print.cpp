@@ -1,14 +1,14 @@
 ////////////////////////////////
-// func36598()
+// system_print_add_letter_to_render()
 
-V0 = w[8004fc34]; // func36f84()
+V0 = w[8004fc34]; // system_print_add_letter_to_render_inner()
 800365A8	jalr   v0 ra
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func365c0()
+// system_print_inner()
 
 string = A1;
 
@@ -158,15 +158,18 @@ L36608:	; 80036608
         800367F0	jr     v0 
         800367F4	nop
 
-    800367F8 a
-        S3 = S3 + 4;
-        A0 = w[S3 - 4];
-        80036800	j      L36854 [$80036854]
-        V0 = 0002;
+        case a:
+        {
+            S3 = S3 + 4;
+            A0 = w[S3 - 4];
+            V0 = 2;
+            80036800	j      L36854 [$80036854]
+        }
+        break;
 
     80036808 c 11
-        S3 = S3 + 0004;
-        A0 = w[S3 + fffc];
+        S3 = S3 + 4;
+        A0 = w[S3 - 4];
         80036810	nop
         80036814	bgez   a0, L36828 [$80036828]
         80036818	nop
@@ -379,10 +382,10 @@ L36608:	; 80036608
     S5 = S5 + 1;
 
     A0 = letter;
-    func36598();
+    system_print_add_letter_to_render();
 
     80036A90	j      L36b3c [$80036b3c]
-    string = string + 0001;
+    string = string + 1;
 
     L36a98:	; 80036A98
     if( S1 < w[SP + 114] )
@@ -391,12 +394,11 @@ L36608:	; 80036608
         {
             loop36ac0:	; 80036AC0
                 A0 = 20;
-                func36598();
+                system_print_add_letter_to_render();
 
-                V0 = w[SP + 0114] - 1;
-                [SP + 114] = w(V0);
                 S5 = S5 + 1;
-                V0 = S1 < V0;
+                [SP + 114] = w(w[SP + 114] - 1);
+                V0 = S1 < w[SP + 114];
             80036ADC	bne    v0, zero, loop36ac0 [$80036ac0]
         }
     }
@@ -407,9 +409,9 @@ L36608:	; 80036608
 
         loop36af0:	; 80036AF0
             A0 = bu[S0];
-            func36598();
+            system_print_add_letter_to_render();
 
-            S0 = S0 + 0001;
+            S0 = S0 + 1;
             V0 = S0 < S2;
         80036B00	bne    v0, zero, loop36af0 [$80036af0]
     }
@@ -419,7 +421,7 @@ L36608:	; 80036608
     {
         loop36b1c:	; 80036B1C
             A0 = 20;
-            func36598(); // call func from 8004fc34
+            system_print_add_letter_to_render();
 
             S5 = S5 + 1;
             S1 = S1 + 1;
@@ -479,7 +481,7 @@ V1 = w[80058a30];
 // func36bf8
 
 V1 = w[80058a30];
-[V1 + 2e] = h(hu[V1 + 2e] | (v));
+[V1 + 2e] = h(hu[V1 + 2e] | (0 NOR A0));
 ////////////////////////////////
 
 
@@ -494,7 +496,7 @@ return h[V0 + 2e];
 
 
 ////////////////////////////////
-// func36c30
+// system_print_set_default_letter_width()
 
 V0 = w[80058a30];
 [V0 + 14] = h(A0);
@@ -503,7 +505,7 @@ V0 = w[80058a30];
 
 
 ////////////////////////////////
-// func36c40
+// system_print_set_default_letter_height()
 
 V0 = w[80058a30];
 [V0 + 16] = h(A0);
@@ -512,7 +514,7 @@ V0 = w[80058a30];
 
 
 ////////////////////////////////
-// func36c50
+// system_print_set_current_letter_x
 
 V0 = w[80058a30];
 [V0 + 30] = h(A0);
@@ -521,7 +523,7 @@ V0 = w[80058a30];
 
 
 ////////////////////////////////
-// func36c60
+// system_print_set_current_letter_y
 
 V0 = w[80058a30];
 [V0 + 32] = h(A0);
@@ -533,15 +535,13 @@ V0 = w[80058a30];
 // func36c70
 
 V0 = w[80058a30];
-80036C78	nop
-[V0 + 0018] = b(A0);
-V0 = w[80058a30];
-80036C88	nop
-[V0 + 0019] = b(A1);
-V0 = w[80058a30];
+[V0 + 18] = b(A0); // r
+[V0 + 19] = b(A1); // g
+[V0 + 1a] = b(A2); // b
+
 A0 = A0 < 0080;
 80036C9C	bne    a0, zero, L36cbc [$80036cbc]
-[V0 + 001a] = b(A2);
+
 V0 = A1 < 0080;
 80036CA8	bne    v0, zero, L36cbc [$80036cbc]
 80036CAC	nop
@@ -551,28 +551,22 @@ V0 = A2 < 0080;
 
 L36cbc:	; 80036CBC
 V1 = w[80058a30];
-80036CC4	nop
-V0 = bu[V1 + 001b];
+V0 = bu[V1 + 1b] & 00fe;
 80036CCC	j      L36cec [$80036cec]
-V0 = V0 & 00fe;
 
 L36cd4:	; 80036CD4
 V1 = w[80058a30];
-80036CDC	nop
-V0 = bu[V1 + 001b];
-80036CE4	nop
-V0 = V0 | 0001;
+V0 = bu[V1 + 1b] | 0001;
 
 L36cec:	; 80036CEC
-[V1 + 001b] = b(V0);
+[V1 + 1b] = b(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func36cf4
-80036CF4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 A2 = 8004fc38;
 A3 = 0;
 
@@ -638,18 +632,13 @@ V0 = V1 < 0010;
 A2 = A2 + 0002;
 A0 = 80058a34;
 A1 = 8004fc38;
-80036DD4	jal    system_load_image [$8004470c]
-80036DD8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80036DE4	jr     ra 
-80036DE8	nop
+system_load_image();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func36dec
+// system_print_get_default_letter_width()
 
 V0 = w[80058a30];
 return h[V0 + 14];
@@ -658,7 +647,7 @@ return h[V0 + 14];
 
 
 ////////////////////////////////
-// func36e04
+// system_print_get_default_letter_height()
 
 V0 = w[80058a30];
 return h[V0 + 16];
@@ -667,7 +656,7 @@ return h[V0 + 16];
 
 
 ////////////////////////////////
-// func36e1c
+// system_print_get_current_letter_x()
 
 V0 = w[80058a30];
 return h[V0 + 30];
@@ -676,7 +665,7 @@ return h[V0 + 30];
 
 
 ////////////////////////////////
-// func36e34
+// system_print_get_current_letter_y
 
 V0 = w[80058a30];
 return h[V0 + 32];
@@ -697,29 +686,20 @@ return h[V0 + 34];
 // func36e64
 
 V0 = w[80058a30];
-80036E6C	nop
-V1 = hu[V0 + 0030];
-A0 = hu[V0 + 0032];
-A1 = hu[V0 + 0036];
-[V0 + 00cc] = h(V1);
-[V0 + 00ce] = h(A0);
-80036E84	jr     ra 
-[V0 + 00d0] = h(A1);
+[V0 + cc] = h(hu[V0 + 30]);
+[V0 + ce] = h(hu[V0 + 32]);
+[V0 + d0] = h(hu[V0 + 36]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func36e8c
+
 V0 = w[80058a30];
-80036E94	nop
-V1 = hu[V0 + 00cc];
-A0 = hu[V0 + 00ce];
-A1 = hu[V0 + 00d0];
-[V0 + 0030] = h(V1);
-[V0 + 0032] = h(A0);
-80036EAC	jr     ra 
-[V0 + 0036] = h(A1);
+[V0 + 30] = h(hu[V0 + cc]);
+[V0 + 32] = h(hu[V0 + ce]);
+[V0 + 36] = h(hu[V0 + d0]);
 ////////////////////////////////
 
 
@@ -739,7 +719,7 @@ if( w[80058a30] != 0 )
     A0 = 0;
     A1 = string;
     A2 = SP + 1c; // args
-    func365c0();
+    system_print_inner();
 }
 ////////////////////////////////
 
@@ -747,26 +727,20 @@ if( w[80058a30] != 0 )
 
 ////////////////////////////////
 // func36f00
-A2 = w[80058a30];
-80036F08	nop
-80036F0C	beq    a2, zero, L36f2c [$80036f2c]
-80036F10	nop
-V0 = hu[A2 + 000c];
-V1 = hu[A2 + 000e];
-V0 = V0 + A0;
-V1 = V1 + A1;
-[A2 + 0030] = h(V0);
-[A2 + 0032] = h(V1);
 
-L36f2c:	; 80036F2C
-80036F2C	jr     ra 
-80036F30	nop
+A2 = w[80058a30];
+if( A2 != 0 )
+{
+    [A2 + 30] = h(hu[A2 + c] + A0);
+    [A2 + 32] = h(hu[A2 + e] + A1);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func36f34
+
 A2 = w[80058a30];
 80036F3C	nop
 80036F40	beq    a2, zero, L36f7c [$80036f7c]
@@ -781,23 +755,17 @@ L36f54:	; 80036F54
 A1 = 0;
 
 L36f60:	; 80036F60
-V0 = hu[A2 + 000c];
-V1 = hu[A2 + 000e];
-V0 = V0 + A0;
-V1 = V1 + A1;
-[A2 + 0030] = h(V0);
-[A2 + 0036] = h(V0);
-[A2 + 0032] = h(V1);
+[A2 + 30] = h(hu[A2 + c] + A0);
+[A2 + 36] = h(hu[A2 + c] + A0);
+[A2 + 32] = h(hu[A2 + e] + A1);
 
 L36f7c:	; 80036F7C
-80036F7C	jr     ra 
-80036F80	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func36f84()
+// system_print_add_letter_to_render_inner()
 
 A2 = w[80058a30];
 
@@ -805,13 +773,13 @@ letter = A0;
 
 if( letter != 0 )
 {
-    if( ( h[A2 + e] + h[A2 + 12] ) >= ( h[A2 + 32] + h[A2 + 16] ) )
+    if( ( h[A2 + 32] + h[A2 + 16] ) <= ( h[A2 + e] + h[A2 + 12] ) )
     {
-        if( h[A2 + 2c] >= h[A2 + 34] )
+        if( h[A2 + 34] <= h[A2 + 2c] )
         {
-            if( letter < 20 )
+            if( letter < 20 ) // control characters
             {
-                if( letter == a )
+                if( letter == a ) // new line
                 {
                     [A2 + 30] = h(hu[A2 + 36]);
                     [A2 + 32] = h(hu[A2 + 32] + hu[A2 + 16]);
@@ -819,7 +787,7 @@ if( letter != 0 )
             }
             else
             {
-                if( hu[A2 + 2e] & 0004 )
+                if( hu[A2 + 2e] & 0004 ) // use uppercase characters
                 {
                     if( letter >= 60 )
                     {
@@ -831,11 +799,11 @@ if( letter != 0 )
 
                 if( hu[A2 + 2e] & 0008 )
                 {
-                    A1 = bu[A2 + letter + 64];
+                    A1 = bu[A2 + 64 + letter]; // width
                 }
                 else
                 {
-                    A1 = h[A2 + 0014];
+                    A1 = h[A2 + 14]; // default
                 }
 
                 if( ( h[A2 + 30] + A1 ) >= ( h[A2 + c] + h[A2 + 10] ) )
@@ -849,36 +817,25 @@ if( letter != 0 )
                     [A2 + 32] = h(hu[A2 + 32] + hu[A2 + 16]);
                 }
 
-                if( letter != 0 )
+                if( letter != 0 ) // if not space
                 {
-                    V1 = w[A2 + 38];
-                    [V1 + 4] = w(w[A2 + 18]);
-                    [V1 + 8] = w((h[A2 + 32] << 10) | h[A2 + 0030]);
+                    packet = w[A2 + 38];
+                    [packet + 4] = w(w[A2 + 18]); // colour
+                    [packet + 8] = w((h[A2 + 32] << 10) | h[A2 + 30]); // x and y
 
                     if( hu[A2 + 2e] & 0002 )
                     {
-                        V1 = w[A2 + 38];
-                        A0 = (letter & 07) << 4;
-                        [V1 + e] = h(hu[A2 + (letter & 18) >> 2 + 3c]);
-                        V1 = bu[A2 + 00d2];
-                        V0 = letter & 60 >> 1;
+                        [packet + c] = h(((letter & 07) << 4) | ((bu[A2 + d2] + (letter & 60 >> 1)) << 8)); // uv
+                        [packet + e] = h(hu[A2 + 3c + ((letter & 18) / 4])); // palette
                     }
                     else
                     {
-                        V1 = w[A2 + 38];
-                        A0 = (letter & 0f) << 3;
-                        [V1 + e] = h(hu[A2 + (letter & 30) >> 3 + 3c]);
-                        V1 = bu[A2 + d2];
-                        V0 = (letter & c0) >> 3;
+                        [packet + c] = h(((letter & 0f) << 3) | ((bu[A2 + d2] + ((letter & c0) >> 3)) << 8)); uv
+                        [packet + e] = h(hu[A2 + 3c + ((letter & 30) / 8)]); // palette
                     }
 
-                    V1 = (V1 + V0) << 8;
-
-                    V0 = w[A2 + 38];
-                    [V0 + c] = h(A0 | V1);
-
-                    [A2 + 38] = w(w[A2 + 38] + 10);
-                    [A2 + 34] = h(hu[A2 + 34] + 1);
+                    [A2 + 38] = w(packet + 10);
+                    [A2 + 34] = h(hu[A2 + 34] + 1); // increment number of letters
                 }
 
                 [A2 + 30] = h(hu[A2 + 30] + A1);
@@ -892,120 +849,95 @@ if( letter != 0 )
 
 ////////////////////////////////
 // func37174
+
 V1 = w[80058a30];
-8003717C	nop
-V0 = hu[V1 + 002e];
-A1 = hu[V1 + 000e];
-A0 = bu[V1 + 001b];
-V0 = V0 & 0001;
-V0 = V0 << 02;
-V0 = V0 + V1;
-A2 = w[V0 + 0004];
-V0 = hu[V1 + 000c];
-A0 = A0 & 00fe;
-[V1 + 0034] = h(0);
-[V1 + 0032] = h(A1);
-[V1 + 00ce] = h(A1);
-[V1 + 001b] = b(A0);
-[V1 + 0030] = h(V0);
-[V1 + 00cc] = h(V0);
-[V1 + 0036] = h(V0);
-[V1 + 00d0] = h(V0);
-800371C4	jr     ra 
-[V1 + 0038] = w(A2);
+V0 = V1 + (hu[V1 + 2e] & 1) * 4;
+
+[V1 + 1b] = b(bu[V1 + 1b] & fe);
+[V1 + 30] = h(hu[V1 + c]);
+[V1 + 32] = h(hu[V1 + e]);
+[V1 + 36] = h(hu[V1 + c]);
+[V1 + 34] = h(0);
+[V1 + 38] = w(w[V0 + 4]);
+[V1 + cc] = h(hu[V1 + c]);
+[V1 + ce] = h(hu[V1 + e]);
+[V1 + d0] = h(hu[V1 + c]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func371cc
+// system_print_render_strings()
+
+S3 = A0;
 
 S2 = w[80058a30];
-S3 = A0;
-800371F4	beq    s2, zero, L372fc [$800372fc]
 
-V0 = hu[S2 + 0000];
-80037200	nop
-V0 = V0 & 0001;
-80037208	beq    v0, zero, L37220 [$80037220]
-S5 = 0;
-V0 = hu[S2 + 002e];
-S4 = 0;
-80037218	j      L37240 [$80037240]
-V0 = V0 & fffe;
+if( S2 != 0 )
+{
+    S5 = 0;
 
-L37220:	; 80037220
-V1 = hu[S2 + 002e];
-80037224	nop
-V0 = V1 & 0001;
-8003722C	beq    v0, zero, L3723c [$8003723c]
-S4 = V0;
-80037234	j      L37240 [$80037240]
-V0 = V1 & fffe;
+    if( hu[S2 + 0] & 0001 )
+    {
+        S4 = 0;
+        [S2 + 2e] = h(hu[S2 + 2e] & fffe);
+    }
+    else
+    {
+        S4 = hu[S2 + 2e] & 0001;
+        if( S4 != 0 )
+        {
+            [S2 + 2e] = h(hu[S2 + 2e] & fffe);
+        }
+        else
+        {
+            [S2 + 2e] = h(hu[S2 + 2e] | 0001);
+        }
+    }
 
-L3723c:	; 8003723C
-V0 = V1 | 0001;
+    if( ( S3 == 0 ) || ( S3 == -1 ) )
+    {
+        A0 = 0;
+        system_draw_sync();
 
-L37240:	; 80037240
-80037240	beq    s3, zero, L37254 [$80037254]
-[S2 + 002e] = h(V0);
-80037248	addiu  v0, zero, $ffff (=-$1)
-8003724C	bne    s3, v0, L37278 [$80037278]
-V0 = S4 << 02;
+        S3 = S2 + c4 + S4 * 4;
+        S5 = 1;
 
-L37254:	; 80037254
-80037254	jal    system_draw_sync [$80044448]
-A0 = 0;
-V0 = S4 << 02;
-V0 = V0 + 00c4;
-S3 = S2 + V0;
-S5 = 0001;
-8003726C	jal    func43a5c [$80043a5c]
-A0 = S3;
-V0 = S4 << 02;
+        A0 = S3;
+        func43a5c();
+    }
 
-L37278:	; 80037278
-V0 = V0 + S2;
-S0 = h[S2 + 0034];
-S1 = w[V0 + 0004];
-80037284	beq    s0, zero, L372a8 [$800372a8]
-A0 = S3;
+    S0 = h[S2 + 34];
+    S1 = w[S2 + S4 * 4 + 4];
 
-loop3728c:	; 8003728C
-A1 = S1;
-S1 = S1 + 0010;
-80037294	jal    func315f0 [$800315f0]
-A0 = S3;
-8003729C	addiu  s0, s0, $ffff (=-$1)
-800372A0	bne    s0, zero, loop3728c [$8003728c]
-A0 = S3;
+    while( S0 != 0 )
+    {
+        A0 = S3;
+        A1 = S1;
+        80037294	jal    func315f0 [$800315f0]
 
-L372a8:	; 800372A8
-S0 = S4;
-A1 = S0 << 03;
-A1 = A1 + 001c;
-800372B4	jal    func439c0 [$800439c0]
-A1 = S2 + A1;
-V0 = hu[S2 + 0000];
-800372C0	nop
-V0 = V0 & 0010;
-800372C8	beq    v0, zero, L372e0 [$800372e0]
-A0 = S3;
-A1 = S0 << 04;
-A1 = A1 + 0044;
-800372D8	jal    func31614 [$80031614]
-A1 = S2 + A1;
+        S1 = S1 + 10;
+    }
 
-L372e0:	; 800372E0
-800372E0	jal    func37174 [$80037174]
-800372E4	nop
-V0 = S5;
-800372EC	beq    v0, zero, L372fc [$800372fc]
-800372F0	nop
-800372F4	jal    system_psyq_draw_otag [$80044a48]
-A0 = S3;
+    A0 = S3;
+    A1 = S2 + 1c + S4 * 8;
+    800372B4	jal    func439c0 [$800439c0]
 
-L372fc:	; 800372FC
+    if( hu[S2 + 0] & 0010 )
+    {
+        A0 = S3;
+        A1 = S2 + 44 + S4 * 10;
+        800372D8	jal    func31614 [$80031614]
+    }
+
+    func37174(); // reset current string buffer
+
+    if( S5 != 0 )
+    {
+        A0 = S3;
+        system_psyq_draw_otag();
+    }
+}
 ////////////////////////////////
 
 
@@ -1068,25 +1000,26 @@ A0 = A0 + 00d4;
 L37414:	; 80037414
 A1 = S2 >> 02;
 A1 = A1 ^ 0001;
-8003741C	jal    system_memory_allocate [$800319ec]
 A1 = A1 & 0001;
+system_memory_allocate();
 
 L37424:	; 80037424
 A1 = V0;
 S0 = A1;
 V1 = S0 + 00d4;
 V0 = S2 & 0001;
-80037434	beq    v0, zero, L37444 [$80037444]
 [S0 + 0004] = w(V1);
-8003743C	j      L37450 [$80037450]
-[S0 + 0008] = w(V1);
+if( V0 != 0 )
+{
+    [S0 + 8] = w(V1);
+}
+else
+{
+    V0 = S3 << 04;
+    V0 = V1 + V0;
+    [S0 + 8] = w(V0);
+}
 
-L37444:	; 80037444
-V0 = S3 << 04;
-V0 = V1 + V0;
-[S0 + 0008] = w(V0);
-
-L37450:	; 80037450
 80037450	bne    s1, zero, L37464 [$80037464]
 A0 = S1;
 S1 = 8004f8e0;
@@ -1117,26 +1050,29 @@ V0 = S7;
 [S0 + 000e] = h(V0);
 [S0 + 0032] = h(V0);
 T0 = hu[SP + 0018];
-V0 = 00ff;
 [S0 + 0010] = h(T0);
 T0 = hu[SP + 0020];
-[S0 + 001a] = b(V0);
-[S0 + 0019] = b(V0);
-[S0 + 0018] = b(V0);
-V0 = A1;
-[S0 + 002c] = h(S3);
-[S0 + 0034] = h(0);
-[S0 + 002e] = h(0);
-800374E4	beq    v0, zero, L374f4 [$800374f4]
-[S0 + 0012] = h(T0);
-800374EC	j      L374f8 [$800374f8]
-V0 = 007d;
 
-L374f4:	; 800374F4
-V0 = 0075;
+[S0 + 18] = b(ff); // r
+[S0 + 19] = b(ff); // g
+[S0 + 1a] = b(ff); // b
 
-L374f8:	; 800374F8
-[S0 + 001b] = b(V0);
+[S0 + 2c] = h(S3);
+[S0 + 34] = h(0);
+[S0 + 2e] = h(0);
+[S0 + 12] = h(T0);
+
+if( A1 != 0 )
+{
+    [S0 + 1b] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
+}
+else
+{
+    [S0 + 1b] = b(75); // Textured Rectangle, 8x8, opaque, raw-texture
+}
+
+
+
 V0 = A0 << 10;
 A0 = V0 >> 10;
 80037504	bne    a0, zero, L3751c [$8003751c]
@@ -1263,9 +1199,10 @@ A1 = w[S0 + 0050];
 [S0 + 0060] = w(A1);
 [80058a30] = w(S0);
 
-800376D8	jal    func37174 [$80037174]
-800376DC	nop
-800376E0	jal    system_memory_mark_removed_alloc [$80031f0c]
+func37174();
+
 A0 = S1;
-V0 = S0;
+system_memory_mark_removed_alloc();
+
+return S0;
 ////////////////////////////////

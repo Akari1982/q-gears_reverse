@@ -683,7 +683,7 @@ L19f48:	; 80019F48
     system_psyq_put_disp_env();
 
     A0 = 0;
-    80019F74	jal    func371cc [$800371cc]
+    system_print_render_strings();
 
     A0 = 800181a8; // "System Error No %d\n"
     A1 = S2;
@@ -909,10 +909,9 @@ A0 = w[80058968];
 
 ////////////////////////////////
 // func1a348
-8001A348	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
+
 8001A350	jal    func1a0e4 [$8001a0e4]
-[SP + 0010] = w(S0);
+
 V0 = 0001;
 [8005896c] = w(V0);
 [80058964] = w(0);
@@ -932,8 +931,10 @@ S0 = V0 + 0070;
 [80058968] = w(V0);
 8001A3B0	jal    func43a5c [$80043a5c]
 A0 = S0;
-8001A3B8	jal    func371cc [$800371cc]
+
 A0 = S0;
+system_print_render_strings();
+
 8001A3C0	jal    func1a1d8 [$8001a1d8]
 8001A3C4	nop
 A1 = w[80058968];
@@ -964,11 +965,6 @@ V0 = w[80058964];
 A0 = 0;
 8001A444	jal    func19b50 [$80019b50]
 A0 = 0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8001A458	jr     ra 
-8001A45C	nop
 ////////////////////////////////
 
 

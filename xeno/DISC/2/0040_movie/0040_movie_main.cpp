@@ -320,7 +320,7 @@ L6fc8c:	; 8006FC8C
     }
 
     A0 = w[800767b0] + 70;
-    func371cc();
+    system_print_render_strings();
 
     A0 = w[800767b0] + 70;
     A1 = w[800767b0] + f0;
@@ -2124,9 +2124,8 @@ L71b4c:	; 80071B4C
     [80076a24] = w(0);
 
     L71ef0:	; 80071EF0
-    A0 = w[800767b0];
-    A0 = A0 + 0070;
-    80071EF8	jal    $func371cc
+    A0 = w[800767b0] + 70;
+    system_print_render_strings()
 
     A2 = 0008;
     A3 = 0014;
@@ -3697,7 +3696,7 @@ L732dc:	; 800732DC
     }
 
     A0 = w[800767b0] + 70;
-    func371cc();
+    system_print_render_strings();
 
     A0 = w[800767b0] + 70;
     A1 = w[800767b0] + f0;
@@ -4886,7 +4885,7 @@ L74ce8:	; 80074CE8
     }
 
     A0 = w[800767b0] + 70;
-    func371cc();
+    system_print_render_strings();
 
     A0 = w[800767b0] + 70;
     A1 = w[800767b0] + f0;
@@ -5257,9 +5256,9 @@ A1 = 0;
 A3 = 808d;
 
 L757f8:	; 800757F8
-A0 = w[800767b0];
-80075800	jal    $func371cc
-A0 = A0 + 0070;
+A0 = w[800767b0] + 70;
+system_print_render_strings();
+
 A2 = 0008;
 A3 = 0014;
 A1 = w[800767b0];

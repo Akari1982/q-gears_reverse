@@ -405,6 +405,30 @@
 80058a2c [][][][] init with 0. If set then call some dev breakpoint.
 
 80058a30 [][][][] pointer to printf struct buffer.
+    +00 [][]     flags.
+                    0x0008 - not use new row wher text reach string end.
+    +0c [][]     with +10 is rows max width.
+    +0e [][]     with +12 is rows max height.
+    +10 [][]     with +0с is rows max width.
+    +12 [][]     with +0e is rows max height.
+    +14 [][]     letter width (if +2e 0x0008 is not set).
+    +16 [][]     row height.
+    +18 [][][][] default colour.
+    +2c [][]     max number of letters.
+    +2e [][]     flags.
+                    0x0002 - letter texture coords related.
+                    0x0004 - use uppercase letter (only if >= 0x60).
+                    0x0008 - use letter width.
+    +30 [][]     current x of letter.
+    +32 [][]     current y of row.
+    +34 [][]     current number of letters.
+    +36 [][]     x of new row.
+    +38 [][][][] pointer to letter render packet (move to next +10 each time we add new letter).
+    +3c array of letter clut.
+    +64 array of letter width (starting from letter 0x20).
+    +c4 [][][][] start of packets 1.
+    +c8 [][][][] start of packets 2.
+    +d2 []       x offset of letter texture in vram.
 
 80058a3c [][][][] init with 0.
 

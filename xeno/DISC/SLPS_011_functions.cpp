@@ -43,12 +43,10 @@ V0 = w[8005881c];
 V0 = w[V0 + 0000];
 8001BFA4	nop
 8001BFA8	beq    v0, s0, L1bfc8 [$8001bfc8]
-8001BFAC	nop
+
 V0 = w[80061c30];
-8001BFB8	nop
-A0 = w[V0 + 01d4];
-8001BFC0	jal    func371cc [$800371cc]
-A0 = A0 + 0070;
+A0 = w[V0 + 1d4] + 70;
+system_print_render_strings();
 
 L1bfc8:	; 8001BFC8
 8001BFC8	jal    system_draw_sync [$80044448]
