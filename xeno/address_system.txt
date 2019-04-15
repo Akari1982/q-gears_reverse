@@ -404,6 +404,8 @@
 80058a28 []       init with 1.
 80058a2c [][][][] init with 0. If set then call some dev breakpoint.
 
+80058a30 [][][][] pointer to printf struct buffer.
+
 80058a3c [][][][] init with 0.
 
 80058a48 [][][][] pointer to bios SetPadEnableFlag().
