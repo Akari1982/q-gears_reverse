@@ -1253,7 +1253,7 @@ V0 = bu[800ad40c + A1 * 4 + 2] + 40;
 
 A0 = 0; // clut X
 A1 = A1 + 00e0; // clut Y
-func438d0(); // ((A1 << 6) | ((A0 >> 4) & 3f)) & ffff
+system_graphic_get_clut_by_param();
 [800c1b6c + window_id * 498 + 450 + 2] = h(V0);
 [800c1b6c + window_id * 498 + 478 + 2] = h(V0);
 ////////////////////////////////

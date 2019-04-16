@@ -2353,7 +2353,7 @@ L25ef0:	; 80025EF0
 80025F38	sh     v0, $0016(s1)
 80025F3C	lh     a0, $0012(s0)
 80025F40	lh     a1, $0014(s0)
-80025F44	jal    func438d0 [$800438d0]
+80025F44	jal    system_graphic_get_clut_by_param [$800438d0]
 80025F48	nop
 80025F4C	sh     v0, $000e(s1)
 80025F50	lhu    a2, $0004(s0)
@@ -2656,7 +2656,7 @@ L26334:	; 80026334
 8002636C	sh     v0, $0016(s0)
 80026370	lh     a0, $0012(s1)
 80026374	lh     a1, $0014(s1)
-80026378	jal    func438d0 [$800438d0]
+80026378	jal    system_graphic_get_clut_by_param [$800438d0]
 8002637C	addu   s2, s4, zero
 80026380	sh     v0, $000e(s0)
 80026384	lbu    t0, $0028(sp)
@@ -2894,7 +2894,7 @@ L26668:	; 80026668
 800266A0	sh     v0, $0016(s0)
 800266A4	lh     a0, $0012(s1)
 800266A8	lh     a1, $0014(s1)
-800266AC	jal    func438d0 [$800438d0]
+800266AC	jal    system_graphic_get_clut_by_param [$800438d0]
 800266B0	nop
 800266B4	sh     v0, $000e(s0)
 800266B8	lhu    a2, $0000(s1)
@@ -3035,7 +3035,7 @@ loop26894:	; 80026894
 800268A0	addiu  s5, s5, $001c
 800268A4	lh     a0, $0012(s0)
 800268A8	lh     a1, $0014(s0)
-800268AC	jal    func438d0 [$800438d0]
+800268AC	jal    system_graphic_get_clut_by_param [$800438d0]
 800268B0	addiu  s4, s4, $0028
 800268B4	addu   a0, s1, zero
 800268B8	addu   a1, zero, zero
@@ -3192,7 +3192,7 @@ L26a94:	; 80026A94
 80026AEC	sra    s0, s0, $10
 80026AF0	lh     v1, $0000(a2)
 80026AF4	addu   s0, s0, s4
-80026AF8	jal    func438d0 [$800438d0]
+80026AF8	jal    system_graphic_get_clut_by_param [$800438d0]
 80026AFC	sw     v1, $0040(sp)
 80026B00	addu   a0, s5, zero
 80026B04	addu   a1, zero, zero
@@ -3304,7 +3304,7 @@ L26c60:	; 80026C60
 80026C88	sll    s0, s0, $10
 80026C8C	lh     v0, $fff8(s3)
 80026C90	sra    s0, s0, $10
-80026C94	jal    func438d0 [$800438d0]
+80026C94	jal    system_graphic_get_clut_by_param [$800438d0]
 80026C98	addu   s0, s0, v0
 80026C9C	addu   a0, s2, zero
 80026CA0	ori    a1, zero, $0001
@@ -3544,7 +3544,7 @@ loop26fc0:	; 80026FC0
 80026FD0	ori    a1, zero, $0001
 80026FD4	lw     a0, $00b0(sp)
 80026FD8	lw     a1, $00b4(sp)
-80026FDC	jal    func438d0 [$800438d0]
+80026FDC	jal    system_graphic_get_clut_by_param [$800438d0]
 80026FE0	addiu  s3, s3, $0001
 80026FE4	sh     v0, $000e(s0)
 80026FE8	slti   v0, s3, $0010
@@ -8137,12 +8137,12 @@ L332d4:	; 800332D4
 80033504	addu   a0, s0, zero
 80033508	sll    s1, s1, $10
 8003350C	sra    s1, s1, $10
-80033510	jal    func438d0 [$800438d0]
+80033510	jal    system_graphic_get_clut_by_param [$800438d0]
 80033514	addu   a1, s1, zero
 80033518	addiu  a0, s0, $0010
 8003351C	lui    at, $8006
 80033520	sh     v0, $8c70(at)
-80033524	jal    func438d0 [$800438d0]
+80033524	jal    system_graphic_get_clut_by_param [$800438d0]
 80033528	addu   a1, s1, zero
 8003352C	lui    at, $8006
 80033530	sh     v0, $8ab0(at)
@@ -11233,7 +11233,7 @@ L405dc:	; 800405DC
 // system_graphic_get_texpage_by_param
 80043894-800438CC
 ////////////////////////////////
-// func438d0
+// system_graphic_get_clut_by_param
 800438D0-800438E4
 ////////////////////////////////
 // system_gpu_print_tpage_info

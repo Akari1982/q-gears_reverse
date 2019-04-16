@@ -301,7 +301,7 @@ if( number_of_tiles != 0 )
 
             A0 = (S1 >> 1) + f0; // x
             A1 = ((S1 >> 9) & f) + 1cc; // y
-            func438d0(); // ((A1 << 6) | ((A0 >> 4) & 3f)) & ffff;
+            system_graphic_get_clut_by_param();
             [tile_data + tile_id * 18 + c] = h(V0);
         }
         else
@@ -567,7 +567,7 @@ if( number_of_tiles != 0 )
 
         A0 = h[struct_110 + 8] + (A2 << 4); // clut x
         A1 = h[struct_110 + a]; // clut y
-        func438d0(); // ((A1 << 6) | ((A0 >> 4) & 3f)) & ffff
+        system_graphic_get_clut_by_param();
         [tile_data + tile_id * 18 + c] = h(V0); // clut id
 
         A0 = S0 + 4; // address to load

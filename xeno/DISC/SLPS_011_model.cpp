@@ -554,9 +554,10 @@ V0 = 0002;
 
 ////////////////////////////////
 // system_set_default_clut_settings
+
 A0 = A0 & ffff; // clut X
 A1 = A1 & ffff; // clut Y
-func438d0();
+system_graphic_get_clut_by_param();
 [800589b4] = w(V0 & fff0);
 [8004f7b0] = w(0);
 ////////////////////////////////
@@ -1285,7 +1286,7 @@ A1 = 01e0;
 V1 = w[800589b0];
 V0 = V0 & ffe0;
 V0 = V0 | V1;
-8002D960	jal    func438d0 [$800438d0]
+8002D960	jal    system_graphic_get_clut_by_param [$800438d0]
 [S0 + 0016] = h(V0);
 V1 = V0 & 000f;
 A0 = w[800589b4];

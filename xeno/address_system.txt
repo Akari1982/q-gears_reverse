@@ -424,7 +424,7 @@
     +34 [][]     current number of letters.
     +36 [][]     x of new row.
     +38 [][][][] pointer to letter render packet (move to next +10 each time we add new letter).
-    +3c array of letter clut.
+    +3c array of letter clut (0x4 items 0x2 size).
     +64 array of letter width (starting from letter 0x20).
     +c4 [][][][] start of packets 1.
     +c8 [][][][] start of packets 2.

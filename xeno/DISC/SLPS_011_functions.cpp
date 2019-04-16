@@ -148,7 +148,7 @@ src = A0;
 
 A0 = w[A0];
 A1 = A1;
-80032CB8	jal    func319ec [$800319ec]
+system_memory_allocate();
 
 if( V0 == 0 )
 {

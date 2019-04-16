@@ -83,7 +83,7 @@ system_load_image();
 
 A0 = S0;
 A1 = S1;
-func438d0();
+system_graphic_get_clut_by_param();
 
 return V0 & ffff;
 ////////////////////////////////
@@ -108,7 +108,7 @@ system_load_image();
 
 A0 = S0;
 A1 = S1;
-func438d0();
+system_graphic_get_clut_by_param();
 
 return V0 & ffff;
 ////////////////////////////////
@@ -184,7 +184,7 @@ return ((y_base & 0200) << 2) | ((col_bit & 3) << 7) | ((semi_tr & 3) << 5) | ((
 
 
 ////////////////////////////////
-// func438d0()
+// system_graphic_get_clut_by_param()
 
 return ((A1 << 6) | ((A0 >> 4) & 3f)) & ffff;
 ////////////////////////////////

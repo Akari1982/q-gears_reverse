@@ -970,248 +970,213 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// func37390
+// func37390()
 
-S1 = w[SP + 0078];
-S3 = w[SP + 0060];
-S2 = w[SP + 0064];
-S6 = w[SP + 006c];
-S5 = w[SP + 0070];
-V0 = w[80058a3c];
-S4 = w[SP + 0074];
+S1 = A10;
+max_letters = A4;
+S2 = A5;
+texpage_x = A6;
+texpage_y = A7;
+clut_x = A8;
+clut_y = A9;
 FP = A0;
 S7 = A1;
-[SP + 0018] = w(A2);
-[SP + 0020] = w(A3);
-800373E8	bne    v0, zero, L37424 [$80037424]
+[SP + 18] = w(A2);
+[SP + 20] = w(A3);
 
-A0 = 32; // LsFONT
-system_memory_set_alloc_contents();
-
-V0 = S2 & 0001;
-800373FC	bne    v0, zero, L37410 [$80037410]
-A0 = S3 << 04;
-V0 = S3 << 05;
-80037408	j      L37414 [$80037414]
-A0 = V0 + 00d4;
-
-L37410:	; 80037410
-A0 = A0 + 00d4;
-
-L37414:	; 80037414
-A1 = S2 >> 02;
-A1 = A1 ^ 0001;
-A1 = A1 & 0001;
-system_memory_allocate();
-
-L37424:	; 80037424
-A1 = V0;
-S0 = A1;
-V1 = S0 + 00d4;
-V0 = S2 & 0001;
-[S0 + 0004] = w(V1);
-if( V0 != 0 )
+mem = w[80058a3c];
+if( mem == 0 )
 {
-    [S0 + 8] = w(V1);
+    A0 = 32; // LsFONT
+    system_memory_set_alloc_contents();
+
+    if( ( S2 & 1 ) == 0 )
+    {
+        A0 = (max_letters << 5) + d4;
+    }
+    else
+    {
+        A0 = (max_letters << 4) + d4;
+    }
+
+    A1 = ((S2 >> 2) ^ 1) & 1;
+    system_memory_allocate();
+    mem = V0;
+}
+
+[mem + 4] = w(mem + d4);
+
+if( S2 & 1 )
+{
+    [mem + 8] = w(mem + d4);
 }
 else
 {
-    V0 = S3 << 04;
-    V0 = V1 + V0;
-    [S0 + 8] = w(V0);
+    [mem + 8] = w(mem + d4 + max_letters * 10);
 }
 
-80037450	bne    s1, zero, L37464 [$80037464]
-A0 = S1;
-S1 = 8004f8e0;
-A0 = S1;
+if( S1 == 0 )
+{
+    S1 = 8004f8e0;
+}
 
-L37464:	; 80037464
+A0 = S1;
 A1 = 0;
-80037464	jal    func32cac [$80032cac]
+func32cac();
 
 S1 = V0;
 V0 = bu[S1 + 0000];
-V1 = bu[S1 + 0002];
 A1 = V0 & 0001;
 V0 = V0 & 0002;
 A0 = V0 & 00ff;
-[S0 + 0014] = h(V1);
-V1 = bu[S1 + 0003];
-V0 = S2 & 0002;
-80037490	beq    v0, zero, L3749c [$8003749c]
-[S0 + 0016] = h(V1);
-A0 = 0;
+[mem + 14] = h(bu[S1 + 2]);
+[mem + 16] = h(bu[S1 + 3]);
 
-L3749c:	; 8003749C
-V0 = FP;
-[S0 + 000c] = h(V0);
-[S0 + 0030] = h(V0);
-V0 = S7;
-[S0 + 0000] = h(S2);
-[S0 + 000e] = h(V0);
-[S0 + 0032] = h(V0);
-T0 = hu[SP + 0018];
-[S0 + 0010] = h(T0);
-T0 = hu[SP + 0020];
+if( S2 & 2 )
+{
+    A0 = 0;
+}
 
-[S0 + 18] = b(ff); // r
-[S0 + 19] = b(ff); // g
-[S0 + 1a] = b(ff); // b
+[mem + c] = h(FP);
+[mem + 30] = h(FP);
+[mem + 0] = h(S2);
+[mem + e] = h(S7);
+[mem + 32] = h(S7);
+[mem + 10] = h(hu[SP + 18]);
 
-[S0 + 2c] = h(S3);
-[S0 + 34] = h(0);
-[S0 + 2e] = h(0);
-[S0 + 12] = h(T0);
+[mem + 18] = b(ff); // r
+[mem + 19] = b(ff); // g
+[mem + 1a] = b(ff); // b
+
+[mem + 2c] = h(max_letters);
+[mem + 34] = h(0);
+[mem + 2e] = h(0);
+[mem + 12] = h(hu[SP + 20]);
 
 if( A1 != 0 )
 {
-    [S0 + 1b] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
+    [mem + 1b] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
 }
 else
 {
-    [S0 + 1b] = b(75); // Textured Rectangle, 8x8, opaque, raw-texture
+    [mem + 1b] = b(75); // Textured Rectangle, 8x8, opaque, raw-texture
 }
 
+[mem + d2] = b(texpage_y);
 
+if( A0 == 0 )
+{
+    [mem + 2e] = h(hu[mem + 2e] | 0004);
+}
 
-V0 = A0 << 10;
-A0 = V0 >> 10;
-80037504	bne    a0, zero, L3751c [$8003751c]
-[S0 + 00d2] = b(S6);
-V0 = hu[S0 + 002e];
-80037510	nop
-V0 = V0 | 0004;
-[S0 + 002e] = h(V0);
+if( A1 != 0 )
+{
+    [mem + 2e] = h(hu[mem + 2e] | 0002);
 
-L3751c:	; 8003751C
-V0 = A1;
-80037520	beq    v0, zero, L37544 [$80037544]
-80037524	nop
-V0 = hu[S0 + 002e];
-V1 = 0020;
-V0 = V0 | 0002;
-80037534	beq    a0, zero, L37550 [$80037550]
-[S0 + 002e] = h(V0);
-8003753C	j      L37550 [$80037550]
-V1 = 0030;
+    V1 = 20;
+    if( A0 != 0 )
+    {
+        V1 = 30;
+    }
+}
+else
+{
+    V1 = 8;
+    if( A0 != 0 )
+    {
+        V1 = 10;
+    }
+}
 
-L37544:	; 80037544
-80037544	beq    a0, zero, L37550 [$80037550]
-V1 = 0008;
-V1 = 0010;
+[SP + 10] = h(texpage_x);
+[SP + 12] = h(texpage_y);
+[SP + 14] = h(20);
+[SP + 16] = h(V1);
 
-L37550:	; 80037550
-T0 = hu[SP + 0068];
-V0 = 0020;
-[SP + 0012] = h(S6);
-[SP + 0014] = h(V0);
-[SP + 0016] = h(V1);
-[SP + 0010] = h(T0);
-V0 = h[S0 + 0014];
-8003756C	nop
-80037570	bne    v0, zero, L37594 [$80037594]
-A1 = S1 + 0004;
-A0 = S0 + 0064;
-V0 = hu[S0 + 002e];
-A2 = 0060;
-V0 = V0 | 0008;
-[S0 + 002e] = h(V0);
+A1 = S1 + 4;
 
-system_memmove();
+if( h[mem + 14] == 0 )
+{
+    [mem + 2e] = h(hu[mem + 2e] | 0008);
 
-A1 = S1 + 0064;
+    A0 = mem + 64;
+    A2 = 60;
+    system_memmove();
 
-L37594:	; 80037594
+    A1 = S1 + 64;
+}
+
 A0 = SP + 10;
 system_load_image();
 
 A0 = 0;
 A1 = 0;
-A2 = w[SP + 0068];
-A3 = S6;
+A2 = texpage_x;
+A3 = texpage_y;
 system_graphic_get_texpage_by_param();
+[mem + 2] = h(V0);
 
-A0 = S5;
-A1 = S4;
-[S0 + 0002] = h(V0);
-V0 = 0040;
-[SP + 0014] = h(V0);
-V0 = 0001;
-[SP + 0010] = h(S5);
-[SP + 0012] = h(S4);
-[SP + 0016] = h(V0);
-800375D0	jal    func438d0 [$800438d0]
+A0 = clut_x;
+A1 = clut_y;
+system_graphic_get_clut_by_param();
+[mem + 3c] = h(V0);
 
-A0 = S5 + 0010;
-A1 = S4;
-[S0 + 003c] = h(V0);
-800375E0	jal    func438d0 [$800438d0]
+A0 = clut_x + 10;
+A1 = clut_y;
+system_graphic_get_clut_by_param();
+[mem + 3e] = h(V0);
 
-A0 = S5 + 0020;
-A1 = S4;
-[S0 + 003e] = h(V0);
-800375F0	jal    func438d0 [$800438d0]
+A0 = clut_x + 20;
+A1 = clut_y;
+system_graphic_get_clut_by_param();
+[mem + 40] = h(V0);
 
-A0 = S5 + 0030;
-A1 = S4;
-[S0 + 0040] = h(V0);
-80037600	jal    func438d0 [$800438d0]
+A0 = clut_x + 30;
+A1 = clut_y;
+system_graphic_get_clut_by_param();
+[mem + 42] = h(V0);
 
-[S0 + 0042] = h(V0);
-A1 = 80058a34;
-
-[A1 + 0] = w(w[SP + 10]);
-[A1 + 4] = w(w[SP + 14]);
+[80058a34 + 0] = h(clut_x);
+[80058a34 + 2] = h(clut_y);
+[80058a34 + 4] = h(40);
+[80058a34 + 6] = h(1);
 
 A0 = 7fff;
 A1 = 0;
 80037638	jal    func36cf4 [$80036cf4]
 
-A0 = S0 + 001c;
+A0 = mem + 1c;
 A1 = 0;
-A3 = h[S0 + 0002];
+A3 = h[mem + 2];
 A2 = 0;
 system_graphic_create_texpage_settings_packet();
 
-A0 = S0 + 0024;
+A0 = mem + 24;
 A1 = 0;
-A3 = h[S0 + 0002];
+A3 = h[mem + 2];
 A2 = 0;
 system_graphic_create_texpage_settings_packet();
 
-V0 = 0003;
-[S0 + 0047] = b(V0);
-V0 = 0060;
-[S0 + 004b] = b(V0);
-V0 = S7 << 10;
-V0 = FP | V0;
-[S0 + 0048] = b(0);
-[S0 + 0049] = b(0);
-[S0 + 004a] = b(0);
-[S0 + 004c] = w(V0);
-T0 = w[SP + 0020];
-V1 = bu[S0 + 004b];
-V0 = T0 << 10;
-T0 = w[SP + 0018];
-V1 = V1 | 0002;
-V0 = T0 | V0;
-[S0 + 0050] = w(V0);
-[S0 + 004b] = b(V1);
-V0 = w[S0 + 0044];
-V1 = w[S0 + 0048];
-A0 = w[S0 + 004c];
-A1 = w[S0 + 0050];
-[S0 + 0054] = w(V0);
-[S0 + 0058] = w(V1);
-[S0 + 005c] = w(A0);
-[S0 + 0060] = w(A1);
-[80058a30] = w(S0);
+[mem + 47] = b(3);
+[mem + 48] = b(0);
+[mem + 49] = b(0);
+[mem + 4a] = b(0);
+[mem + 4b] = b(60);
+[mem + 4c] = w((S7 << 10) | FP);
+[mem + 50] = w((w[SP + 20] << 10) | w[SP + 18]);
+[mem + 4b] = b(bu[mem + 4b] | 0002);
+
+[mem + 54] = w(w[mem + 44]);
+[mem + 58] = w(w[mem + 48]);
+[mem + 5c] = w(w[mem + 4c]);
+[mem + 60] = w(w[mem + 50]);
+
+[80058a30] = w(mem);
 
 func37174();
 
 A0 = S1;
 system_memory_mark_removed_alloc();
 
-return S0;
+return mem;
 ////////////////////////////////

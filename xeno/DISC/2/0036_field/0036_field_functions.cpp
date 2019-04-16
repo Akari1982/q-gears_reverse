@@ -776,7 +776,7 @@ system_graphic_get_texpage_by_param();
 
 A0 = 100;
 A1 = f3;
-func438d0(); // pack clut
+system_graphic_get_clut_by_param(); // pack clut
 [offset_70 + 20 + e] = h(V0);
 
 A0 = offset_70 + 20;
@@ -889,7 +889,7 @@ system_graphic_get_texpage_by_param();
 
 A0 = h[800ad2e0 + S5 * c];
 A1 = h[800ad2e2 + S5 * c];
-func438d0(); // pack clut
+system_graphic_get_clut_by_param(); // pack clut
 [offset_70 + 2e] = h(V0);
 
 A0 = offset_70 + 20;
@@ -1131,7 +1131,7 @@ system_graphic_get_texpage_by_param();
 
 A0 = 100;
 A1 = f2;
-func438d0(); // pack clut
+system_graphic_get_clut_by_param(); // pack clut
 
 
 80079D60	addiu  v1, s1, $0028
