@@ -72,14 +72,15 @@ L36608:	; 80036608
         S3 = S3 + 0004;
         V0 = w[S3 + fffc];
         800366C4	nop
-        800366C8	bgez   v0, L366e4 [$800366e4]
         [SP + 0114] = w(V0);
-        V1 = w[SP + 0110];
-        V0 = 0 - V0;
-        [SP + 0114] = w(V0);
-        V1 = V1 | 0001;
-        [SP + 0110] = w(V1);
-
+        if( V0 < 0 )
+        {
+            V1 = w[SP + 0110];
+            V0 = 0 - V0;
+            [SP + 0114] = w(V0);
+            V1 = V1 | 0001;
+            [SP + 0110] = w(V1);
+        }
         L366e4:	; 800366E4
         string = string + 0001;
         A0 = bu[string + 0000];
@@ -141,15 +142,12 @@ L36608:	; 80036608
         }
 
         L367b0:	; 800367B0
-        V1 = w[SP + 110];
-        V0 = V1 & 0001;
-        800367BC	beq    v0, zero, L367d0 [$800367d0]
         S0 = SP + 0110;
-        800367C4	addiu  v0, zero, $fffb (=-$5)
-        V0 = V1 & V0;
-        [SP + 0110] = w(V0);
+        if( w[SP + 110] & 00000001 )
+        {
+            [SP + 110] = w(w[SP + 110] & fffffffb);
+        }
 
-        L367d0:	; 800367D0
         800367D0	addiu  v1, a0, $ffa8 (=-$58)
         V0 = V1 < 0021;
         800367D8	beq    v0, zero, L36a7c [$80036a7c]
@@ -191,7 +189,7 @@ L36608:	; 80036608
 
     80036848 1d
         S3 = S3 + 0004;
-        A0 = w[S3 + fffc];
+        A0 = w[S3 - 4];
         V0 = 000a;
 
         L36854:	; 80036854
@@ -199,51 +197,39 @@ L36608:	; 80036608
 
         L36858:	; 80036858
         [SP + 011c] = w(V0);
-        V1 = w[SP + 0110];
-        80036860	nop
-        V0 = V1 & 0008;
-        80036868	bne    v0, zero, L368a8 [$800368a8]
-        V0 = V1 & 0004;
-        80036870	beq    v0, zero, L36894 [$80036894]
-        80036874	nop
-        V1 = w[SP + 0114];
-        V0 = bu[SP + 0111];
-        80036880	nop
-        80036884	beq    v0, zero, L36894 [$80036894]
-        [SP + 0118] = w(V1);
-        8003688C	addiu  v0, v1, $ffff (=-$1)
-        [SP + 0118] = w(V0);
 
-        L36894:	; 80036894
-        V0 = w[SP + 0118];
-        80036898	nop
-        8003689C	bgtz   v0, L368a8 [$800368a8]
-        V0 = 0001;
-        [SP + 0118] = w(V0);
+        if( ( w[SP + 110] & 8 ) == 0 )
+        {
+            if( w[SP + 110] & 4 )
+            {
+                [SP + 118] = w(w[SP + 114]);
 
-        L368a8:	; 800368A8
-        800368A8	beq    a0, zero, L368e8 [$800368e8]
+                if( bu[SP + 111] != 0 )
+                {
+                    [SP + 118] = w(w[SP + 114] - 1);
+                }
+            }
+
+            if( w[SP + 118] <= 0 )
+            {
+                [SP + 118] = w(1);
+            }
+        }
+
         S1 = 0;
 
-        loop368b0:	; 800368B0
-        V0 = w[SP + 011c];
-        800368B4	nop
-        800368B8	divu   a0, v0
-        800368BC	mfhi   v1
-        800368C0	addiu  s0, s0, $ffff (=-$1)
-        V1 = V1 + 0030;
-        [S0 + 0000] = b(V1);
+        while( A0 != 0 )
+        {
+            V1 = A0 % w[SP + 11c];
+            S0 = S0 - 1;
+            V1 = V1 + 30;
+            [S0 + 0000] = b(V1);
+            S1 = S1 + 1;
 
-        A0 = A0 / w[SP + 11c];
-        800368DC	nop
-        800368E0	bne    a0, zero, loop368b0 [$800368b0]
-        S1 = S1 + 0001;
+            A0 = A0 / w[SP + 11c];
+        }
 
-        L368e8:	; 800368E8
-        V0 = w[SP + 0118];
-        800368EC	nop
-        V0 = S1 < V0;
-        if( V0 != 0 )
+        if( S1 < w[SP + 118] )
         {
             V1 = 0030;
             80036900	addiu  s0, s0, $ffff (=-$1)
@@ -565,71 +551,57 @@ L36cec:	; 80036CEC
 
 
 ////////////////////////////////
-// func36cf4
+// system_print_create_clut()
 
 A2 = 8004fc38;
-A3 = 0;
 
-loop36d08:	; 80036D08
-[A2 + 0000] = h(A1);
-A2 = A2 + 0002;
-[A2 + 0000] = h(A0);
-A3 = A3 + 0001;
-V0 = A3 < 0008;
-80036D1C	bne    v0, zero, loop36d08 [$80036d08]
-A2 = A2 + 0002;
-V0 = A3 < 000c;
-80036D28	beq    v0, zero, L36d90 [$80036d90]
-V0 = A3 < 000e;
+// 1st clut
+for( int i = 0; i < 8; ++i )
+{
+    [A2 + 0] = h(A1);
+    [A2 + 2] = h(A0);
+    A2 = A2 + 4;
+}
 
-loop36d30:	; 80036D30
-[A2 + 0000] = h(A1);
-A2 = A2 + 0002;
-[A2 + 0000] = h(A1);
-A2 = A2 + 0002;
-[A2 + 0000] = h(A0);
-A2 = A2 + 0002;
-[A2 + 0000] = h(A0);
-A3 = A3 + 0001;
-V0 = A3 < 000c;
-80036D54	bne    v0, zero, loop36d30 [$80036d30]
-A2 = A2 + 0002;
-80036D5C	j      L36d90 [$80036d90]
-V0 = A3 < 000e;
+// 2nd clut
+for( int i = 8; i < c; ++i )
+{
+    [A2 + 0] = h(A1);
+    [A2 + 2] = h(A1);
+    [A2 + 4] = h(A0);
+    [A2 + 6] = h(A0);
+    A2 = A2 + 8;
+}
 
-loop36d64:	; 80036D64
-[A2 + 0000] = h(A1);
-80036D68	addiu  v1, v1, $ffff (=-$1)
-80036D6C	bgez   v1, loop36d64 [$80036d64]
-A2 = A2 + 0002;
-V1 = 0003;
+// 3rd clut
+for( int i = c; i < e; ++i )
+{
+    for( int j = 0; j < 4; ++j )
+    {
+        [A2] = h(A1);
+        A2 = A2 + 2;
+    }
 
-loop36d78:	; 80036D78
-[A2 + 0000] = h(A0);
-80036D7C	addiu  v1, v1, $ffff (=-$1)
-80036D80	bgez   v1, loop36d78 [$80036d78]
-A2 = A2 + 0002;
-A3 = A3 + 0001;
-V0 = A3 < 000e;
+    for( int j = 0; j < 4; ++j )
+    {
+        [A2] = h(A0);
+        A2 = A2 + 2;
+    }
+}
 
-L36d90:	; 80036D90
-80036D90	bne    v0, zero, loop36d64 [$80036d64]
-V1 = 0003;
-V1 = 0007;
+// 4th clut
+for( int i = 0; i < 8; ++i )
+{
+    [A2] = h(A1);
+    A2 = A2 + 2;
+}
 
-loop36d9c:	; 80036D9C
-[A2 + 0000] = h(A1);
-80036DA0	addiu  v1, v1, $ffff (=-$1)
-80036DA4	bgez   v1, loop36d9c [$80036d9c]
-A2 = A2 + 0002;
-V1 = 0008;
+for( int i = 8; i < 10; ++i )
+{
+    [A2] = h(A0);
+    A2 = A2 + 2;
+}
 
-loop36db0:	; 80036DB0
-[A2 + 0000] = h(A0);
-V1 = V1 + 0001;
-V0 = V1 < 0010;
-80036DBC	bne    v0, zero, loop36db0 [$80036db0]
-A2 = A2 + 0002;
 A0 = 80058a34;
 A1 = 8004fc38;
 system_load_image();
@@ -848,17 +820,19 @@ if( letter != 0 )
 
 
 ////////////////////////////////
-// func37174
+// system_print_reset_string_buffer()
 
 V1 = w[80058a30];
-V0 = V1 + (hu[V1 + 2e] & 1) * 4;
+
+flags = hu[V1 + 2e];
 
 [V1 + 1b] = b(bu[V1 + 1b] & fe);
-[V1 + 30] = h(hu[V1 + c]);
-[V1 + 32] = h(hu[V1 + e]);
-[V1 + 36] = h(hu[V1 + c]);
-[V1 + 34] = h(0);
-[V1 + 38] = w(w[V0 + 4]);
+[V1 + 30] = h(hu[V1 + c]); // reset cur x pos to start
+[V1 + 32] = h(hu[V1 + e]); // reset cur y pos to start
+[V1 + 36] = h(hu[V1 + c]); // set x of new row
+[V1 + 34] = h(0); // number of letters
+[V1 + 38] = w(w[V1 + (flags & 1) * 4 + 4]); // reset buffer to beginning
+
 [V1 + cc] = h(hu[V1 + c]);
 [V1 + ce] = h(hu[V1 + e]);
 [V1 + d0] = h(hu[V1 + c]);
@@ -877,7 +851,7 @@ if( S2 != 0 )
 {
     S5 = 0;
 
-    if( hu[S2 + 0] & 0001 )
+    if( hu[S2 + 0] & 0001 ) // not use 2nd buffer.
     {
         S4 = 0;
         [S2 + 2e] = h(hu[S2 + 2e] & fffe);
@@ -914,23 +888,23 @@ if( S2 != 0 )
     {
         A0 = S3;
         A1 = S1;
-        80037294	jal    func315f0 [$800315f0]
+        func315f0();
 
         S1 = S1 + 10;
     }
 
     A0 = S3;
     A1 = S2 + 1c + S4 * 8;
-    800372B4	jal    func439c0 [$800439c0]
+    func439c0();
 
     if( hu[S2 + 0] & 0010 )
     {
         A0 = S3;
         A1 = S2 + 44 + S4 * 10;
-        800372D8	jal    func31614 [$80031614]
+        func31614();
     }
 
-    func37174(); // reset current string buffer
+    system_print_reset_string_buffer();
 
     if( S5 != 0 )
     {
@@ -972,41 +946,42 @@ if( A0 != 0 )
 ////////////////////////////////
 // func37390()
 
-S1 = A10;
+start_x = A0;
+start_y = A1;
+area_width = A2;
+area_height = A3;
 max_letters = A4;
-S2 = A5;
+flags = A5;
 texpage_x = A6;
 texpage_y = A7;
 clut_x = A8;
 clut_y = A9;
-FP = A0;
-S7 = A1;
-[SP + 18] = w(A2);
-[SP + 20] = w(A3);
+file = A10;
 
 mem = w[80058a3c];
+
 if( mem == 0 )
 {
     A0 = 32; // LsFONT
     system_memory_set_alloc_contents();
 
-    if( ( S2 & 1 ) == 0 )
+    if( ( flags & 1 ) == 0 ) // with 2nd buffer
     {
-        A0 = (max_letters << 5) + d4;
+        A0 = (max_letters  * 20) + d4;
     }
     else
     {
-        A0 = (max_letters << 4) + d4;
+        A0 = (max_letters * 10) + d4;
     }
 
-    A1 = ((S2 >> 2) ^ 1) & 1;
+    A1 = ((flags >> 2) ^ 1) & 1;
     system_memory_allocate();
     mem = V0;
 }
 
 [mem + 4] = w(mem + d4);
 
-if( S2 & 1 )
+if( flags & 1 )
 {
     [mem + 8] = w(mem + d4);
 }
@@ -1015,45 +990,48 @@ else
     [mem + 8] = w(mem + d4 + max_letters * 10);
 }
 
-if( S1 == 0 )
+if( file == 0 )
 {
-    S1 = 8004f8e0;
+    file = 8004f8e0;
 }
 
-A0 = S1;
+A0 = file;
 A1 = 0;
-func32cac();
+func32cac(); // extract archive to any free space
+file = V0;
 
-S1 = V0;
-V0 = bu[S1 + 0000];
-A1 = V0 & 0001;
-V0 = V0 & 0002;
-A0 = V0 & 00ff;
-[mem + 14] = h(bu[S1 + 2]);
-[mem + 16] = h(bu[S1 + 3]);
+V0 = bu[file + 0];
+flag_16 = V0 & 1;
+V0 = V0 & 2;
+A0 = V0 & ff;
 
-if( S2 & 2 )
+[mem + 14] = h(bu[file + 2]); // default letter width
+[mem + 16] = h(bu[file + 3]); // row height
+
+if( flags & 2 )
 {
     A0 = 0;
 }
 
-[mem + c] = h(FP);
-[mem + 30] = h(FP);
-[mem + 0] = h(S2);
-[mem + e] = h(S7);
-[mem + 32] = h(S7);
-[mem + 10] = h(hu[SP + 18]);
+[mem + 0] = h(flags);
+
+[mem + c] = h(start_x);
+[mem + e] = h(start_y);
+[mem + 10] = h(area_width);
+[mem + 12] = h(area_height);
 
 [mem + 18] = b(ff); // r
 [mem + 19] = b(ff); // g
 [mem + 1a] = b(ff); // b
 
 [mem + 2c] = h(max_letters);
-[mem + 34] = h(0);
-[mem + 2e] = h(0);
-[mem + 12] = h(hu[SP + 20]);
+[mem + 2e] = h(0); // new flag
+[mem + 30] = h(start_x);
+[mem + 32] = h(start_y);
+[mem + 34] = h(0); // current number of letters
 
-if( A1 != 0 )
+
+if( flag_16 != 0 )
 {
     [mem + 1b] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
 }
@@ -1066,45 +1044,51 @@ else
 
 if( A0 == 0 )
 {
-    [mem + 2e] = h(hu[mem + 2e] | 0004);
+    [mem + 2e] = h(hu[mem + 2e] | 0004); // only upper case
 }
 
-if( A1 != 0 )
+if( flag_16 != 0 ) // 16x16
 {
     [mem + 2e] = h(hu[mem + 2e] | 0002);
 
-    V1 = 20;
-    if( A0 != 0 )
+    if( A0 == 0 ) // only upper letters
     {
-        V1 = 30;
+        texture_height = 20;
+    }
+    else
+    {
+        texture_height = 30;
     }
 }
-else
+else // 8x8
 {
-    V1 = 8;
-    if( A0 != 0 )
+    if( A0 == 0 ) // only upper letters
     {
-        V1 = 10;
+        texture_height = 8;
     }
+    else
+    {
+        texture_height = 10;
+    }
+}
+
+A1 = file + 4; // src
+
+if( h[mem + 14] == 0 ) // default letter width
+{
+    [mem + 2e] = h(hu[mem + 2e] | 0008); // use separate letter width
+
+    A0 = mem + 64; // dst
+    A2 = 60; // size
+    system_memmove();
+
+    A1 = file + 64; // start address to load image
 }
 
 [SP + 10] = h(texpage_x);
 [SP + 12] = h(texpage_y);
-[SP + 14] = h(20);
-[SP + 16] = h(V1);
-
-A1 = S1 + 4;
-
-if( h[mem + 14] == 0 )
-{
-    [mem + 2e] = h(hu[mem + 2e] | 0008);
-
-    A0 = mem + 64;
-    A2 = 60;
-    system_memmove();
-
-    A1 = S1 + 64;
-}
+[SP + 14] = h(20); // texture width
+[SP + 16] = h(texture_height);
 
 A0 = SP + 10;
 system_load_image();
@@ -1143,28 +1127,27 @@ system_graphic_get_clut_by_param();
 
 A0 = 7fff;
 A1 = 0;
-80037638	jal    func36cf4 [$80036cf4]
+system_print_create_clut();
 
 A0 = mem + 1c;
 A1 = 0;
-A3 = h[mem + 2];
 A2 = 0;
+A3 = h[mem + 2]; // use only data from here
 system_graphic_create_texpage_settings_packet();
 
 A0 = mem + 24;
 A1 = 0;
-A3 = h[mem + 2];
 A2 = 0;
+A3 = h[mem + 2];
 system_graphic_create_texpage_settings_packet();
 
 [mem + 47] = b(3);
 [mem + 48] = b(0);
 [mem + 49] = b(0);
 [mem + 4a] = b(0);
-[mem + 4b] = b(60);
-[mem + 4c] = w((S7 << 10) | FP);
-[mem + 50] = w((w[SP + 20] << 10) | w[SP + 18]);
-[mem + 4b] = b(bu[mem + 4b] | 0002);
+[mem + 4b] = b(62);
+[mem + 4c] = w((start_y << 10) | start_x);
+[mem + 50] = w((area_height << 10) | area_width);
 
 [mem + 54] = w(w[mem + 44]);
 [mem + 58] = w(w[mem + 48]);
@@ -1173,9 +1156,9 @@ system_graphic_create_texpage_settings_packet();
 
 [80058a30] = w(mem);
 
-func37174();
+system_print_reset_string_buffer();
 
-A0 = S1;
+A0 = file;
 system_memory_mark_removed_alloc();
 
 return mem;

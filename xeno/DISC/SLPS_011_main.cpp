@@ -639,18 +639,18 @@ system_psyq_draw_sync_callback();
 A0 = 0; // unset frame update callback
 func36298();
 
-A0 = 10;
-A1 = 10;
-A2 = 120;
-A3 = f0;
-A4 = 1f4;
-A5 = 0;
-A6 = 3c0;
-A7 = 100;
-A8 = 3c0;
-A9 = 1ff;
-A10 = 0;
-func37390(); // LsFont init
+A0 = 10;    // start x
+A1 = 10;    // start y
+A2 = 120;   // area width
+A3 = f0;    // area height
+A4 = 1f4;   // max letters
+A5 = 0;     // flags
+A6 = 3c0;   // texpage x
+A7 = 100;   // texpage y
+A8 = 3c0;   // clut x
+A9 = 1ff;   // clut y
+A10 = 0;    // file
+func37390(); // LsFONT
 
 [SP + a4] = b(1);
 [SP + 48] = b(1);
@@ -752,15 +752,12 @@ L19f48:	; 80019F48
 
 ////////////////////////////////
 // func1a078
-8001A078	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
 S0 = A0 << 04;
 S0 = S0 + A0;
 S0 = S0 << 03;
 V0 = 80058c84;
 S0 = S0 + V0;
 V0 = 0001;
-[SP + 0014] = w(RA);
 [S0 + 0018] = b(V0);
 [S0 + 0016] = b(V0);
 V0 = 0020;
@@ -773,75 +770,64 @@ V0 = 00ff;
 [S0 + 0078] = b(V0);
 [S0 + 0079] = b(V0);
 [S0 + 007a] = b(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8001A0DC	jr     ra 
-8001A0E0	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1a0e4
+// func1a0e4()
 
 A0 = 6; // SUGI
 A1 = 0;
 system_memory_set_alloc_user();
 
-A0 = 0008;
-A1 = 0010;
-A2 = 0170;
-A3 = 01e0;
-V0 = 03e8;
-[SP + 0010] = w(V0);
-V0 = 0001;
-V1 = 03c0;
-[SP + 0014] = w(V0);
-V0 = 0100;
-[SP + 001c] = w(V0);
-V0 = 01ff;
-[SP + 0018] = w(V1);
-[SP + 0020] = w(V1);
-[SP + 0024] = w(V0);
-8001A13C	jal    func37390 [$80037390]
-[SP + 0028] = w(0);
+A0 = 8;     // start x
+A1 = 10;    // start y
+A2 = 170;   // area width
+A3 = 1e0;   // area height
+A4 = 3e8;   // max letters
+A5 = 1;     // flags
+A6 = 3c0;   // texpage x
+A7 = 100;   // texpage y
+A8 = 3c0;   // clut x
+A9 = 1ff;   // clut y
+A10 = 0;    // file
+func37390(); // LsFONT
+
 S1 = 80058c84;
 A0 = S1;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
 S0 = 00e0;
-8001A160	jal    system_graphic_create_draw_env_struct [$800437a0]
 [SP + 0010] = w(S0);
+system_graphic_create_draw_env_struct();
+
 A0 = S1 + 0088;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
-8001A178	jal    system_graphic_create_draw_env_struct [$800437a0]
 [SP + 0010] = w(S0);
+system_graphic_create_draw_env_struct();
+
 A0 = S1 + 005c;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
-8001A190	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S0);
+system_graphic_create_display_env_struct();
+
 A0 = S1 + 00e4;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-8001A1A8	jal    system_graphic_create_display_env_struct [$80043858]
 [SP + 0010] = w(S0);
+system_graphic_create_display_env_struct();
+
 8001A1B0	jal    func1a078 [$8001a078]
 A0 = 0;
 8001A1B8	jal    func1a078 [$8001a078]
 A0 = 0001;
-RA = w[SP + 0040];
-S1 = w[SP + 003c];
-S0 = w[SP + 0038];
-SP = SP + 0048;
-8001A1D0	jr     ra 
-8001A1D4	nop
 ////////////////////////////////
 
 
@@ -910,7 +896,7 @@ A0 = w[80058968];
 ////////////////////////////////
 // func1a348
 
-8001A350	jal    func1a0e4 [$8001a0e4]
+func1a0e4();
 
 V0 = 0001;
 [8005896c] = w(V0);
@@ -2032,18 +2018,18 @@ if( V1 != -1 )
     A0 = 80200000;
     func37324();
 
-    A0 = 10;
-    A1 = 10;
-    A2 = 140;
-    A3 = 100;
-    A4 = 3e8;
-    A5 = 0;
-    A6 = 340;
-    A7 = 0;
-    A8 = 340;
-    A9 = 20;
-    A10 = 0;
-    func37390();
+    A0 = 10;    // start x
+    A1 = 10;    // start y
+    A2 = 140;   // area width
+    A3 = 100;   // area height
+    A4 = 3e8;   // max letters
+    A5 = 0;     // flags
+    A6 = 340;   // texpage x
+    A7 = 0;     // texpage y
+    A8 = 340;   // clut x
+    A9 = 20;    // clut y
+    A10 = 0;    // file
+    func37390(); // LsFONT
 }
 
 8001B5D4	jal    func1b6d0 [$8001b6d0]

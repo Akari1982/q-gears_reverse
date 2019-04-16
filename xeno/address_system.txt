@@ -406,17 +406,26 @@
 
 80058a30 [][][][] pointer to printf struct buffer.
     +00 [][]     flags.
+                    0x0001 - not use 2nd buffer.
+                    0x0002 - ???
+                    0x0004 - memory allocation flag.
                     0x0008 - not use new row wher text reach string end.
-    +0c [][]     with +10 is rows max width.
-    +0e [][]     with +12 is rows max height.
-    +10 [][]     with +0с is rows max width.
-    +12 [][]     with +0e is rows max height.
+    +02 [][]     texpage settings.
+    +04 [][][][] pointer to +d4 (packet buffer 1).
+    +08 [][][][] pointer to +d4 or +d4 + max_letters * 0x10 (packet buffer 2).
+    +0c [][]     start x.
+    +0e [][]     start y.
+    +10 [][]     area width.
+    +12 [][]     area height.
     +14 [][]     letter width (if +2e 0x0008 is not set).
     +16 [][]     row height.
     +18 [][][][] default colour.
+    +1c texpage settings packet 0x8 size for buffer 1.
+    +24 texpage settings packet 0x8 size for buffer 2.
     +2c [][]     max number of letters.
     +2e [][]     flags.
-                    0x0002 - letter texture coords related.
+                    0x0001 - current render buffer.
+                    0x0002 - 16x16 letters.
                     0x0004 - use uppercase letter (only if >= 0x60).
                     0x0008 - use letter width.
     +30 [][]     current x of letter.
@@ -425,9 +434,21 @@
     +36 [][]     x of new row.
     +38 [][][][] pointer to letter render packet (move to next +10 each time we add new letter).
     +3c array of letter clut (0x4 items 0x2 size).
+    +44 packet for background 0x10 size for buffer 1.
+    +47 []       3
+    +48 []       0
+    +49 []       0
+    +4a []       0
+    +4b []       62 // Monochrome Rectangle (variable size) (semi-transparent)
+    +4c [][][][] start xy.
+    +50 [][][][] size
+    +54 packet for background 0x10 size for buffer 2.
     +64 array of letter width (starting from letter 0x20).
     +c4 [][][][] start of packets 1.
     +c8 [][][][] start of packets 2.
+    +cc [][]     stored current x pos.
+    +ce [][]     stored current y pos.
+    +d0 [][]     stored x of new row.
     +d2 []       x offset of letter texture in vram.
 
 80058a3c [][][][] allocated memory for print routine?

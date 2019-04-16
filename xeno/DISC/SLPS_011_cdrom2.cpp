@@ -468,18 +468,18 @@ if( S0 == 0 )
     [SP + a4] = b(0); // Interlace mode flag. 0: non-interlace;
     system_psyq_put_disp_env();
 
-    A0 = 10;
-    A1 = 10;
-    A2 = 280;
-    A3 = f0;
-    A4 = 400;
-    A5 = 0;
-    A6 = 280;
-    A7 = 0;
-    A8 = 280;
-    A9 = 100;
-    A10 = 0;
-    func37390(); // font related
+    A0 = 10;    // start x
+    A1 = 10;    // start y
+    A2 = 280;   // area width
+    A3 = f0;    // area height
+    A4 = 400;   // max letters
+    A5 = 0;     // flags
+    A6 = 280;   // texpage x
+    A7 = 0;     // texpage y
+    A8 = 280;   // clut x
+    A9 = 100;   // clut y
+    A10 = 0;    // file
+    func37390(); // LsFONT
 
     A0 = 1;
     system_psyq_set_disp_mask();
