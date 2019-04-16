@@ -430,7 +430,7 @@
     +c8 [][][][] start of packets 2.
     +d2 []       x offset of letter texture in vram.
 
-80058a3c [][][][] init with 0.
+80058a3c [][][][] allocated memory for print routine?
 
 80058a48 [][][][] pointer to bios SetPadEnableFlag().
 80058a4c [][][][] pointer to bios ClearPadEnableFlag().

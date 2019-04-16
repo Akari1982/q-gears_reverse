@@ -956,12 +956,13 @@ if( S2 != 0 )
 A0 = w[80058a30];
 if( A0 != 0 )
 {
-    [80058954] = w(80036eb4);
+    [80058954] = w(80036eb4); // system_print()
+
     if( w[80058a3c] == 0 )
     {
         system_memory_mark_removed_alloc();
+        [80058a30] = w(0);
     }
-    [80058a30] = w(0);
 }
 [80058a3c] = w(0);
 ////////////////////////////////
@@ -1026,8 +1027,9 @@ S1 = 8004f8e0;
 A0 = S1;
 
 L37464:	; 80037464
-80037464	jal    func32cac [$80032cac]
 A1 = 0;
+80037464	jal    func32cac [$80032cac]
+
 S1 = V0;
 V0 = bu[S1 + 0000];
 V1 = bu[S1 + 0002];
@@ -1114,18 +1116,22 @@ A0 = S0 + 0064;
 V0 = hu[S0 + 002e];
 A2 = 0060;
 V0 = V0 | 0008;
-80037588	jal    system_memmove [$8003f844]
 [S0 + 002e] = h(V0);
+
+system_memmove();
+
 A1 = S1 + 0064;
 
 L37594:	; 80037594
-80037594	jal    system_load_image [$8004470c]
-A0 = SP + 0010;
+A0 = SP + 10;
+system_load_image();
+
 A0 = 0;
 A1 = 0;
 A2 = w[SP + 0068];
-800375A8	jal    system_graphic_get_texpage_by_param [$system_graphic_get_texpage_by_param]
 A3 = S6;
+system_graphic_get_texpage_by_param();
+
 A0 = S5;
 A1 = S4;
 [S0 + 0002] = h(V0);
@@ -1134,43 +1140,46 @@ V0 = 0040;
 V0 = 0001;
 [SP + 0010] = h(S5);
 [SP + 0012] = h(S4);
-800375D0	jal    func438d0 [$800438d0]
 [SP + 0016] = h(V0);
+800375D0	jal    func438d0 [$800438d0]
+
 A0 = S5 + 0010;
 A1 = S4;
-800375E0	jal    func438d0 [$800438d0]
 [S0 + 003c] = h(V0);
+800375E0	jal    func438d0 [$800438d0]
+
 A0 = S5 + 0020;
 A1 = S4;
-800375F0	jal    func438d0 [$800438d0]
 [S0 + 003e] = h(V0);
+800375F0	jal    func438d0 [$800438d0]
+
 A0 = S5 + 0030;
 A1 = S4;
-80037600	jal    func438d0 [$800438d0]
 [S0 + 0040] = h(V0);
+80037600	jal    func438d0 [$800438d0]
+
 [S0 + 0042] = h(V0);
 A1 = 80058a34;
-80037614	lwl    v0, $0013(sp)
-80037618	lwr    v0, $0010(sp)
-8003761C	lwl    v1, $0017(sp)
-80037620	lwr    v1, $0014(sp)
-80037624	swl    v0, $0003(a1)
-80037628	swr    v0, $0000(a1)
-8003762C	swl    v1, $0007(a1)
-80037630	swr    v1, $0004(a1)
+
+[A1 + 0] = w(w[SP + 10]);
+[A1 + 4] = w(w[SP + 14]);
+
 A0 = 7fff;
-80037638	jal    func36cf4 [$80036cf4]
 A1 = 0;
+80037638	jal    func36cf4 [$80036cf4]
+
 A0 = S0 + 001c;
 A1 = 0;
 A3 = h[S0 + 0002];
-8003764C	jal    system_graphic_create_texpage_settings_packet [$80043c98]
 A2 = 0;
+system_graphic_create_texpage_settings_packet();
+
 A0 = S0 + 0024;
 A1 = 0;
 A3 = h[S0 + 0002];
-80037660	jal    system_graphic_create_texpage_settings_packet [$80043c98]
 A2 = 0;
+system_graphic_create_texpage_settings_packet();
+
 V0 = 0003;
 [S0 + 0047] = b(V0);
 V0 = 0060;
