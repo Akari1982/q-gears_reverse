@@ -479,7 +479,7 @@ if( S0 == 0 )
     A8 = 280;   // clut x
     A9 = 100;   // clut y
     A10 = 0;    // file
-    func37390(); // LsFONT
+    system_print_init(); // LsFONT
 
     A0 = 1;
     system_psyq_set_disp_mask();

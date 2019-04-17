@@ -650,7 +650,7 @@ A7 = 100;   // texpage y
 A8 = 3c0;   // clut x
 A9 = 1ff;   // clut y
 A10 = 0;    // file
-func37390(); // LsFONT
+system_print_init(); // LsFONT
 
 [SP + a4] = b(1);
 [SP + 48] = b(1);
@@ -792,7 +792,7 @@ A7 = 100;   // texpage y
 A8 = 3c0;   // clut x
 A9 = 1ff;   // clut y
 A10 = 0;    // file
-func37390(); // LsFONT
+system_print_init(); // LsFONT
 
 S1 = 80058c84;
 A0 = S1;
@@ -2029,7 +2029,7 @@ if( V1 != -1 )
     A8 = 340;   // clut x
     A9 = 20;    // clut y
     A10 = 0;    // file
-    func37390(); // LsFONT
+    system_print_init(); // LsFONT
 }
 
 8001B5D4	jal    func1b6d0 [$8001b6d0]

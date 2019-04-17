@@ -944,7 +944,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// func37390()
+// system_print_init()
 
 start_x = A0;
 start_y = A1;

@@ -2747,11 +2747,7 @@ V1 = V1 & A1;
 V0 = V0 & A0;
 V1 = V1 | V0;
 [S0 + 0000] = w(V1);
-V0 = w[T0 + 0000];
-A0 = S0 & A0;
-V0 = V0 & A1;
-V0 = V0 | A0;
-[T0 + 0000] = w(V0);
+[T0 + 0] = w((w[T0 + 0] & A1) | (S0 & A0));
 ////////////////////////////////
 
 
@@ -3209,7 +3205,7 @@ A7 = 0;     // texpage y
 A8 = 280;   // clut x
 A9 = 100;   // clut y
 A10 = 0;    // file
-func37390(); // LsFONT
+system_print_init(); // LsFONT
 
 [80076ad0] = w(1);
 
@@ -5242,32 +5238,28 @@ V0 = S1 + 0014;
 L757b8:	; 800757B8
 V0 = S0 < V0;
 800757BC	bne    v0, zero, L75660 [$80075660]
-800757C0	nop
-A0 = 8006fac0; // "\nPUSH CIRCLE BUTTON TO MENU."
-800757CC	jal    $system_print
-800757D0	nop
-V0 = w[80076a24];
-800757DC	nop
-800757E0	blez   v0, L757f8 [$800757f8]
-A2 = 0006;
-A0 = 0001;
-A1 = 0;
-800757F0	jal    $system_memory_full_dump
-A3 = 808d;
 
-L757f8:	; 800757F8
+A0 = 8006fac0; // "\nPUSH CIRCLE BUTTON TO MENU."
+system_print();
+
+if( w[80076a24] > 0 )
+{
+    A0 = 1;
+    A1 = 0;
+    A2 = 6;
+    A3 = 808d;
+    system_memory_full_dump();
+}
+
 A0 = w[800767b0] + 70;
 system_print_render_strings();
 
-A2 = 0008;
-A3 = 0014;
-A1 = w[800767b0];
-V0 = 0130;
-[SP + 0010] = w(V0);
-V0 = 00c0;
-[SP + 0014] = w(V0);
-A0 = A1 + 0070;
-A1 = A1 + 00f0;
+A0 = w[800767b0] + 70;
+A1 = w[800767b0] + f0;
+A2 = 8;
+A3 = 14;
+A4 = 130;
+A5 = c0;
 8007582C	jal    func72628 [$80072628]
 
 A0 = w[800767b0] + 70;
