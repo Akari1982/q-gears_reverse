@@ -2711,7 +2711,7 @@ system_cdrom_cdl_command_exec_without_ret();
 
 if( w[8004f4ec] != 0 ) // debug filenames exist
 {
-    [8004f49c] = w(0);
+    [8004f49c] = w(0); // filesize to load
     [8004f4a0] = w(0);
 
     if( w[8004f4f0] != -1 )
