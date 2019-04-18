@@ -418,7 +418,7 @@ if( A0 != 0 )
 // 3 8007038C 8009AF98 8009CBF4 00000001 // worldmap
 // 4 800884D4 80091C0C 8009AB90 00000001 // battling
 // 5 8001C4C0 80058954 8006F17C 00000000 // menu
-// 6 80072E7C 800765C8 80076AE4 00000001 // movie       func72e7c()
+// 6 80072E7C 800765C8 80076AE4 00000001 // movie       movie_main()
 S1 = 8001808c + w[80018088] * 10;
 
 A0 = 1; // cancels the current drawing and flushes the command buffer.

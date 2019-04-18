@@ -53,8 +53,10 @@ A0 = c;
 A1 = 3;
 system_filesystem_set_dir();
 
-L6fc8c:	; 8006FC8C
+while( true )
+{
     V1 = 800767b4;
+
     if( w[800767b0] == V1 )
     {
         V1 = V1 + 138;
@@ -97,41 +99,22 @@ L6fc8c:	; 8006FC8C
     A5 = w[8004f4c0];
     system_print();
 
-    V1 = w[800764f4];
-    8006FD7C	nop
-    8006FD80	beq    v1, 1, L6fdc4 [$8006fdc4]
-    V0 = V1 < 0002;
-    8006FD88	beq    v0, zero, L6fda0 [$8006fda0]
-    8006FD8C	nop
-    8006FD90	beq    v1, zero, L6fdb4 [$8006fdb4]
-    8006FD94	nop
-    8006FD98	j      L6fde4 [$8006fde4]
-    8006FD9C	nop
+    if( w[800764f4] == 0 )
+    {
+        A0 = 8006f1d4; // "Waiting\n"
+        system_print();
+    }
+    else if( w[800764f4] == 1 )
+    {
+        A0 = 8006f1e0; // "Reading\n"
+        system_print();
+    }
+    else if( w[800764f4] == 2 )
+    {
+        A0 = 8006f1ec; // "Verifing\n"
+        system_print();
+    }
 
-    L6fda0:	; 8006FDA0
-    V0 = 0002;
-    8006FDA4	beq    v1, v0, L6fdd4 [$8006fdd4]
-    8006FDA8	nop
-    8006FDAC	j      L6fde4 [$8006fde4]
-    8006FDB0	nop
-
-    L6fdb4:	; 8006FDB4
-    A0 = 8006f1d4; // "Waiting\n"
-    8006FDBC	j      L6fddc [$8006fddc]
-    8006FDC0	nop
-
-    L6fdc4:	; 8006FDC4
-    A0 = 8006f1e0; // "Reading\n"
-    8006FDCC	j      L6fddc [$8006fddc]
-    8006FDD0	nop
-
-    L6fdd4:	; 8006FDD4
-    A0 = 8006f1ec; // "Verifing\n"
-
-    L6fddc:	; 8006FDDC
-    system_print();
-
-    L6fde4:	; 8006FDE4
     A0 = 8006f1f8; // "C1 %3d C2 %3d C3 %3d C4 %3d C5 %3d C6 %3d C7 %3d C8 %3d C9 %3d\n"
     A1 = w[80059b18];
     A2 = w[80059b1c];
@@ -174,80 +157,71 @@ L6fc8c:	; 8006FC8C
     A4 = w[8007651c];
     system_print();
 
-    V0 = w[800764d8];
-    8006FF20	nop
-    V0 = V0 < 000b;
-    8006FF28	beq    v0, zero, L6ff44 [$8006ff44]
-
-    V0 = w[80076524];
-    8006FF38	nop
-    8006FF3C	blez   v0, L700b0 [$800700b0]
-    8006FF40	nop
-
-    L6ff44:	; 8006FF44
-    A0 = 8006f2d0; // "S %8x Adrs %8x Write %8x Rest %8x\n"
-    A1 = w[80076528];
-    A2 = w[8007652c];
-    A3 = w[80076514];
-    A4 = w[80076524];
-    system_print();
-
-    for( int i = 0; i < 7; ++i )
+    if( ( w[800764d8] >= b ) || ( w[80076524] > 0 ) )
     {
-        A0 = 8006f2f4; // "%08x "
-        V0 = w[80076528];
-        A1 = w[V0 + i * 4 + 0];
+        A0 = 8006f2d0; // "S %8x Adrs %8x Write %8x Rest %8x\n"
+        A1 = w[80076528];
+        A2 = w[8007652c];
+        A3 = w[80076514];
+        A4 = w[80076524];
         system_print();
+
+        for( int i = 0; i < 7; ++i )
+        {
+            A0 = 8006f2f4; // "%08x "
+            V0 = w[80076528];
+            A1 = w[V0 + i * 4 + 0];
+            system_print();
+        }
+
+        A0 = 8006f2fc; // "\n"
+        system_print();
+
+        for( int i = 0; i < 7; ++i )
+        {
+            A0 = 8006f2f4; // "%08x "
+            V0 = w[80076528];
+            A1 = w[V0 + i * 4 + 1c];
+            system_print();
+        }
+
+        A0 = 8006f2fc; // "\n"
+        system_print();
+
+        for( int i = 0; i < 7; ++i )
+        {
+            A0 = 8006f2f4; // "%08x "
+            V0 = w[80076528];
+            A1 = w[V0 + 38 + i * 4];
+            system_print();
+        }
+
+        A0 = 8006f2fc; // "\n"
+        system_print();
+
+        for( int i = 0; i < 7; ++i )
+        {
+            A0 = 8006f2f4; // "%08x "
+            V0 = w[80076528];
+            A1 = w[V0 + i * 4 + 54];
+            system_print();
+        }
+
+        A0 = 8006f2fc; // "\n"
+        system_print();
+
+        V1 = w[8007650c];
+        if( V1 != 0 )
+        {
+            A0 = 8006f300; // "%08x %08x %08x %08x %08x\n"
+            A1 = w[V1 + 4];
+            A2 = w[V1 + c];
+            A3 = w[V1 + 14];
+            A4 = w[V1 + 1c];
+            system_print();
+        }
     }
 
-    A0 = 8006f2fc; // "\n"
-    system_print();
-
-    for( int i = 0; i < 7; ++i )
-    {
-        A0 = 8006f2f4; // "%08x "
-        V0 = w[80076528];
-        A1 = w[V0 + i * 4 + 1c];
-        system_print();
-    }
-
-    A0 = 8006f2fc; // "\n"
-    system_print();
-
-    for( int i = 0; i < 7; ++i )
-    {
-        A0 = 8006f2f4; // "%08x "
-        V0 = w[80076528];
-        A1 = w[V0 + 38 + i * 4];
-        system_print();
-    }
-
-    A0 = 8006f2fc; // "\n"
-    system_print();
-
-    for( int i = 0; i < 7; ++i )
-    {
-        A0 = 8006f2f4; // "%08x "
-        V0 = w[80076528];
-        A1 = w[V0 + i * 4 + 54];
-        system_print();
-    }
-
-    A0 = 8006f2fc; // "\n"
-    system_print();
-
-    V1 = w[8007650c];
-    if( V1 != 0 )
-    {
-        A0 = 8006f300; // "%08x %08x %08x %08x %08x\n"
-        A1 = w[V1 + 4];
-        A2 = w[V1 + c];
-        A3 = w[V1 + 14];
-        A4 = w[V1 + 1c];
-        system_print();
-    }
-
-    L700b0:	; 800700B0
     [80076538] = w(0);
 
     A0 = 8006f31c; // "Cancel%8d\n"
@@ -282,25 +256,26 @@ L6fc8c:	; 8006FC8C
         S1 = S1 + 4;
     }
 
-    T0 = w[80076558];
-    V0 = 91a2b3c5;
-    A2 = T0 % V0;
-    V0 = 88888889;
-    80070180	mult   t0, v0
     A0 = 8006f344; // "\nTOTAL %8d : Time %3d:%02d:%02d\n"
+
+    T0 = w[80076558];
+    A2 = T0 % 91a2b3c5;
+    V1 = T0 % 88888889;
     A1 = w[80076538];
+
     A2 = A2 + T0;
-    A2 = A2 >> 0b;
+    A2 = A2 >> b;
     V0 = T0 >> 1f;
     A2 = A2 - V0;
+
     A3 = A2 << 04;
     A3 = A3 - A2;
     A3 = A3 << 02;
-    800701B0	mfhi   v1
     V1 = V1 + T0;
     V1 = V1 >> 05;
     V1 = V1 - V0;
     A3 = V1 - A3;
+
     V0 = V1 << 04;
     V0 = V0 - V1;
     V0 = V0 << 2;
@@ -353,88 +328,80 @@ L6fc8c:	; 8006FC8C
     A0 = w[800767b0] + ec;
     system_psyq_draw_otag();
 
-    V0 = w[80076a44];
-    V1 = w[800767a8];
-    V0 = V0 & 0800;
-    800702CC	bne    v0, zero, L70428 [$80070428]
-    800702D0	nop
-    V0 = w[80076a3c];
-    800702DC	nop
-    V0 = V0 & 0800;
-    800702E4	beq    v0, zero, L70428 [$80070428]
-    800702E8	nop
-    V0 = w[800764d8];
-    800702F4	nop
-    800702F8	bne    v0, zero, L70428 [$80070428]
-    800702FC	nop
-    [80076a24] = w(0);
-
-    A0 = 0;
-    func2a2a8();
-
-    A0 = 0;
-    system_cdrom_action_sync();
-
-    A0 = w[80076530];
-    if( A0 != 0 )
+    if( ( w[80076a44] & 0800 ) == 0 )
     {
-        system_memory_mark_removed_alloc();
+        if( w[80076a3c] & 0800 )
+        {
+            if( w[800764d8] == 0 )
+            {
+                [80076a24] = w(0);
+
+                A0 = 0;
+                func2a2a8();
+
+                A0 = 0;
+                system_cdrom_action_sync();
+
+                A0 = w[80076530];
+                if( A0 != 0 )
+                {
+                    system_memory_mark_removed_alloc();
+                }
+
+                A0 = w[80076528];
+                [80076530] = w(0);
+
+                if( A0 != 0 )
+                {
+                    system_memory_mark_removed_alloc();
+                }
+
+                [80076528] = w(0);
+                movie_clear_work_area_sync();
+
+                A0 = 800767b4;
+                A1 = 0;
+                A2 = 0;
+                A3 = 140;
+                A4 = f0;
+                system_graphic_create_draw_env_struct();
+
+                A0 = 800767b4 + 5c;
+                A1 = 0;
+                A2 = f0;
+                A3 = 140;
+                A4 = f0;
+                system_graphic_create_display_env_struct();
+
+                A0 = 800767b4 + 138;
+                A1 = 0;
+                A2 = f0;
+                A3 = 140;
+                A4 = f0;
+                system_graphic_create_draw_env_struct();
+
+                A0 = 800767b4 + 194;
+                A1 = 0;
+                A2 = 0;
+                A3 = 140;
+                A4 = f0;
+                system_graphic_create_display_env_struct();
+
+                [80076818] = h(0);
+                [8007681a] = h(a);
+                [8007681c] = h(100);
+                [8007681e] = h(d8);
+                [80076950] = h(0);
+                [80076952] = h(a);
+                [80076954] = h(100);
+                [80076956] = h(d8);
+                [800767cc] = b(1);
+                [80076904] = b(1);
+                return;
+            }
+        }
     }
-
-    A0 = w[80076528];
-    [80076530] = w(0);
-
-    if( A0 != 0 )
-    {
-        system_memory_mark_removed_alloc();
-    }
-
-    [80076528] = w(0);
-    movie_clear_work_area_sync();
-
-    A0 = 800767b4;
-    A1 = 0;
-    A2 = 0;
-    A3 = 140;
-    A4 = f0;
-    system_graphic_create_draw_env_struct();
-
-    A0 = 800767b4 + 5c;
-    A1 = 0;
-    A2 = f0;
-    A3 = 140;
-    A4 = f0;
-    system_graphic_create_display_env_struct();
-
-    A0 = 800767b4 + 138;
-    A1 = 0;
-    A2 = f0;
-    A3 = 140;
-    A4 = f0;
-    system_graphic_create_draw_env_struct();
-
-    A0 = 800767b4 + 194;
-    A1 = 0;
-    A2 = 0;
-    A3 = 140;
-    A4 = f0;
-    system_graphic_create_display_env_struct();
-
-    [80076818] = h(0);
-    [8007681a] = h(a);
-    [8007681c] = h(100);
-    [8007681e] = h(d8);
-    [80076950] = h(0);
-    [80076952] = h(a);
-    [80076954] = h(100);
-    [80076956] = h(d8);
-    [800767cc] = b(1);
-    [80076904] = b(1);
-    return;
-
-    L70428:	; 80070428
-    [800767a8] = w(V1);
-80070430	j      L6fc8c [$8006fc8c]
+}
 ////////////////////////////////
 
 
@@ -2992,8 +2959,7 @@ V0 = V0 | A0;
 
 
 ////////////////////////////////
-// func72e7c()
-// Entry:	; 80072E7C
+// movie_main()
 
 A1 = 8006f714; // "trouble"
 [SP + 30] = w(w[A1 + 0]);
@@ -3772,6 +3738,7 @@ L732dc:	; 800732DC
         A0 = 0;
         func19b50();
     }
+
     [800767a8] = w(S0);
 
     func19d24(); // reset check

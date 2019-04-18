@@ -100,63 +100,52 @@ SP = SP + 0018;
 ////////////////////////////////
 // system_extract_archive()
 
-comp_position = A0;
-decomp_length = w[comp_position];
-comp_position = comp_position + 4;
-T7 = A1 + decomp_length;
+src = A0;
+dst = A1;
 
-T6 = A1;
-T8 = bu[comp_position];
+size = w[src];
+src = src + 4;
+end = dst + size;
+start = dst;
 
-L32cec:	; 80032CEC
-    if( A1 == T7 )
+while( true )
+{
+    if( dst == end )
     {
-        return T6;
+        return start;
     }
 
-    comp_position = comp_position + 1;
-    T1 = T8 & 0001;
-    T9 = 0008;
+    control = bu[src];
+    src = src + 1;
 
-    loop32cfc:	; 80032CFC
-        T0 = bu[A0];
+    for( int i = 8; i != 0; --i )
+    {
+        data = bu[src];
+        src = src + 1;
 
-        T8 = T8 >> 01;
-        80032D04	addiu  t9, t9, $ffff (=-$1)
-        comp_position = comp_position + 1;
-        80032D08	bne    t1, zero, L32d28 [$80032d28]
+        if( control & 1 )
+        {
+            repeat = dst - (((bu[src] & f) << 8) | data);
+            repeat_end = repeat + (bu[src] >> 4) + 3;
 
-        [A1 + 0000] = b(T0);
-        A1 = A1 + 0001;
-        T1 = T8 & 0001;
-    80032D18	bne    t9, zero, loop32cfc [$80032cfc]
+            do
+            {
+                [dst] = b(b[repeat]);
+                repeat = repeat + 1;
+                dst = dst + 1;
+            } while( repeat != repeat_end )
 
-    T8 = bu[comp_position];
-    80032D20	j      L32cec [$80032cec]
+            src = src + 1;
+        }
+        else
+        {
+            [dst] = b(data);
+            dst = dst + 1;
+        }
 
-    L32d28:	; 80032D28
-    T4 = bu[comp_position];
-    comp_position = comp_position + 1;
-
-    T1 = T4 & 000f;
-    T1 = T1 << 08;
-    T0 = T0 | T1;
-    T1 = A1 - T0;
-    T3 = T4 >> 04;
-    T3 = T3 + 0003;
-    T3 = T3 + T1;
-
-    loop32d4c:	; 80032D4C
-        T0 = b[T1];
-        [A1] = b(T0);
-        T1 = T1 + 1;
-        A1 = A1 + 1;
-    80032D58	bne    t1, t3, loop32d4c [$80032d4c]
-
-    80032D60	bne    t9, zero, loop32cfc [$80032cfc]
-    T1 = T8 & 0001;
-    T8 = bu[comp_position];
-80032D68	j      L32cec [$80032cec]
+        control = control >> 1;
+    }
+}
 ////////////////////////////////
 
 
@@ -166,7 +155,7 @@ L32cec:	; 80032CEC
 
 src = A0;
 
-A0 = w[A0];
+A0 = w[src + 0];
 A1 = A1;
 system_memory_allocate();
 
