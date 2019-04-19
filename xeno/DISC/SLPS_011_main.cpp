@@ -456,7 +456,7 @@ if( w[S1 + c] != 0 )
     system_cdrom_action_sync(); // wait till load complete
 
     A0 = S0; // src
-    A1 = w[80018084]; // dst 8006F180
+    A1 = w[80018084]; // dst 8006f180
     system_extract_archive();
 
     A0 = 0;
