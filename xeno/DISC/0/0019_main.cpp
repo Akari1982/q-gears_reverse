@@ -271,7 +271,7 @@ A0 = w[V0 + ffe4];
 801D34FC	mflo   a1
 V0 = A1 >> 1f;
 A1 = A1 + V0;
-801D3508	jal    func1d471c [$801d471c]
+801D3508	jal    mdec_out_setup [$801d471c]
 A1 = A1 >> 01;
 
 L1d3510:	; 801D3510
@@ -290,56 +290,51 @@ SP = SP + 0048;
 
 
 ////////////////////////////////
-// func1d3538
+// func1d3538()
 
-FP = A4;
-S7 = A5;
-S1 = A6;
 S3 = A0;
 S5 = A1;
 S0 = A2;
 S4 = A3;
+FP = A4;
+S7 = A5;
+S1 = A6;
 
 system_cdrom_get_cdrom_hdd_mode();
 
-801D3584	beq    v0, zero, L1d359c [$801d359c]
-V0 = 0001;
-[801e8968] = b(V0);
-801D3594	j      L1d35a4 [$801d35a4]
-801D3598	nop
+if( V0 != 0 )
+{
+    [801e8968] = b(1);
+}
+else
+{
+    [801e8968] = b(0);
+}
 
-L1d359c:	; 801D359C
-[801e8968] = b(0);
-
-L1d35a4:	; 801D35A4
 V0 = w[801d68b4];
 [801e8964] = b(0);
-801D35B4	beq    v0, zero, L1d35c0 [$801d35c0]
-S2 = S3 & ffff;
-S4 = S3;
 
-L1d35c0:	; 801D35C0
-801D35C0	jal    func1d4534 [$801d4534]
+S2 = S3 & ffff;
+
+if( V0 != 0 )
+{
+    S4 = S3;
+}
+
 A0 = 0;
+func1d4534();
+
 S6 = S5 & ffff;
-801D35CC	mult   s2, s6
-801D35D0	mflo   v0
+V0 = S2 * S6;
 V1 = S0 & ffff;
 V1 = V1 << 01;
-801D35DC	mult   v0, v1
-801D35E0	lui    at, $801d
-
-L1d35e4:	; 801D35E4
-[AT + 68c4] = w(S7);
+S0 = V0 * V1;
+[801d68c4] = w(S7);
 V0 = S1 & 0003;
 [801d68c8] = w(V0);
-801D35F4	mflo   s0
-801D35F8	bgez   s0, L1d3604 [$801d3604]
-A0 = S0;
-A0 = S0 + 00ff;
 
-L1d3604:	; 801D3604
-S1 = A0 >> 08;
+A0 = S0;
+S1 = A0 / 100;
 A0 = S1;
 
 A1 = 0;
@@ -351,28 +346,25 @@ A1 = 0;
 system_memory_allocate();
 [801e8920] = w(V0);
 
-V1 = w[801d68c8] & 0001;
-801D363C	beq    v1, zero, L1d3660 [$801d3660]
-A1 = 0;
+if( w[801d68c8] & 0001 )
+{
+    V0 = S4 & ffff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    S4 = V1 >> 01;
+    V0 = S2 << 01;
+    V0 = V0 + S2;
+    S3 = V0 >> 01;
+}
 
-L1d3644:	; 801D3644
 V0 = S4 & ffff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-S4 = V1 >> 01;
-V0 = S2 << 01;
-V0 = V0 + S2;
-S3 = V0 >> 01;
-
-L1d3660:	; 801D3660
-V0 = S4 & ffff;
-801D3664	mult   v0, s6
+S0 = V0 * S6;
 [801d68bc] = h(S3);
 [801d68be] = h(S5);
-801D3678	mflo   s0
 S0 = S0 << 01;
 
 A0 = S0;
+A1 = 0;
 system_memory_allocate();
 [801e8928] = w(V0);
 
@@ -398,39 +390,35 @@ V1 = bu[801e8968];
 [801e8952] = h(0);
 [801e8954] = h(S4);
 [801e8956] = h(S5);
-801D372C	beq    v1, zero, L1d374c [$801d374c]
-A0 = FP;
-A1 = 0;
-func2a070();
 
-[801e898c] = w(V0);
-801D3744	j      L1d3770 [$801d3770]
-801D3748	nop
+if( V1 != 0 )
+{
+    A0 = FP;
+    A1 = 0;
+    func2a070();
 
-L1d374c:	; 801D374C
-S0 = FP & ffff;
-A0 = S0 << 0b;
-A1 = 0;
-system_memory_allocate();
+    [801e898c] = w(V0);
+}
+else
+{
+    S0 = FP & ffff;
+    A0 = S0 << b;
+    A1 = 0;
+    system_memory_allocate();
 
-[801e898c] = w(V0);
-A0 = V0;
-801D3768	jal    func1d583c [$801d583c]
-A1 = S0;
+    [801e898c] = w(V0);
+    A0 = V0;
+    A1 = S0;
+    801D3768	jal    func1d583c [$801d583c]
+}
 
-L1d3770:	; 801D3770
-V0 = w[801e898c];
-801D3778	nop
-801D377C	beq    v0, zero, L1d3794 [$801d3794]
-V0 = 0001;
-[801e8964] = b(V0);
-801D378C	j      L1d3798 [$801d3798]
-V0 = 0;
+if( w[801e898c] != 0 )
+{
+    [801e8964] = b(1);
+    return 0;
+}
 
-L1d3794:	; 801D3794
-801D3794	addiu  v0, zero, $ffff (=-$1)
-
-L1d3798:	; 801D3798
+return -1;
 ////////////////////////////////
 
 
@@ -824,7 +812,7 @@ A0 = w[V0 + fff8];
 801D3E48	mflo   a1
 V0 = A1 >> 1f;
 A1 = A1 + V0;
-801D3E54	jal    func1d471c [$801d471c]
+801D3E54	jal    mdec_out_setup [$801d471c]
 A1 = A1 >> 01;
 V0 = w[S0 + 0000];
 A0 = w[801e8918];
@@ -1143,8 +1131,9 @@ A1 = 0;
 A0 = 0;
 801D4334	jal    func1d47d8 [$801d47d8]
 A0 = 0;
-801D433C	jal    func1d4534 [$801d4534]
 A0 = 0;
+func1d4534();
+
 V1 = bu[801e8968];
 801D434C	addiu  v0, zero, $ffff (=-$1)
 [801e8964] = b(V0);
@@ -1307,7 +1296,7 @@ if( S0 == 0 )
 }
 
 A0 = S0;
-func1d47fc();
+mdec_reset();
 ////////////////////////////////
 
 
@@ -1358,8 +1347,7 @@ V0 = A0;
 
 ////////////////////////////////
 // func1d45f8
-801D45F8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
 S0 = A0;
 A1 = 801d76e4;
 V1 = 000f;
@@ -1385,18 +1373,16 @@ A0 = A0 + 0004;
 [A1 + 0000] = w(V0);
 801D4654	bne    v1, a2, loop1d4644 [$801d4644]
 A1 = A1 + 0004;
+
 A0 = 801d76e0;
-801D4664	jal    func1d48f8 [$801d48f8]
 A1 = 0020;
+mdec_in_setup();
+
 A0 = 801d7764;
-801D4674	jal    func1d48f8 [$801d48f8]
 A1 = 0020;
+mdec_in_setup();
+
 V0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-801D468C	jr     ra 
-801D4690	nop
 ////////////////////////////////
 
 
@@ -1445,7 +1431,7 @@ V0 = V0 & V1;
 L1d46fc:	; 801D46FC
 [A0 + 0000] = w(V0);
 A1 = hu[A0 + 0000];
-801D4704	jal    func1d48f8 [$801d48f8]
+801D4704	jal    mdec_in_setup [$801d48f8]
 801D4708	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -1456,136 +1442,114 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func1d471c
-801D471C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-801D4724	jal    func1d498c [$801d498c]
-801D4728	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-801D4734	jr     ra 
-801D4738	nop
+// mdec_out_setup
+
+mdec_out_setup_inner();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d473c
-801D473C	addiu  sp, sp, $ffe8 (=-$18)
-801D4740	bne    a0, zero, L1d4758 [$801d4758]
-[SP + 0010] = w(RA);
-801D4748	jal    func1d4a1c [$801d4a1c]
-801D474C	nop
-801D4750	j      L1d4768 [$801d4768]
-801D4754	nop
+// func1d473c()
 
-L1d4758:	; 801D4758
-801D4758	jal    func1d4b4c [$801d4b4c]
-801D475C	nop
-V0 = V0 >> 1d;
-V0 = V0 & 0001;
-
-L1d4768:	; 801D4768
-RA = w[SP + 0010];
-SP = SP + 0018;
-801D4770	jr     ra 
-801D4774	nop
+if( A0 == 0 )
+{
+    mdec_in_sync();
+}
+else
+{
+    mdec_get_status_register();
+    V0 = (V0 >> 1d) & 1; // Command Busy (0=Ready, 1=Busy receiving or processing parameters)
+}
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d4778
-801D4778	addiu  sp, sp, $ffe8 (=-$18)
-801D477C	bne    a0, zero, L1d4794 [$801d4794]
-[SP + 0010] = w(RA);
+// func1d4778()
 
-L1d4784:	; 801D4784
-801D4784	jal    func1d4ab4 [$801d4ab4]
-801D4788	nop
-801D478C	j      L1d47a4 [$801d47a4]
-801D4790	nop
-
-L1d4794:	; 801D4794
-801D4794	jal    func1d4b4c [$801d4b4c]
-801D4798	nop
-V0 = V0 >> 18;
-V0 = V0 & 0001;
-
-L1d47a4:	; 801D47A4
-RA = w[SP + 0010];
-SP = SP + 0018;
-801D47AC	jr     ra 
-801D47B0	nop
+if( A0 == 0 )
+{
+    mdec_out_sync();
+}
+else
+{
+    mdec_get_status_register();
+    V0 = (V0 >> 18) & 1; // Data Output Signed (0=Unsigned, 1=Signed)
+}
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func1d47b4
-801D47B4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 A1 = A0;
-801D47C0	jal    $8004b648
 A0 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-801D47D0	jr     ra 
-801D47D4	nop
+system_dma_additional_callback();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func1d47d8
-801D47D8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 A1 = A0;
-801D47E4	jal    $8004b648
-A0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-801D47F4	jr     ra 
-801D47F8	nop
+A0 = 1;
+system_dma_additional_callback();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d47fc()
+// mdec_reset()
+// 0: Initializes all internal states
+// 1: Discontinues only current decoding; does not affect internal states
 
-A1 = A0;
-if( A1 == 0 )
+mode = A0;
+
+mdec_control = w[801d7824]; // 1f801824 MDEC Control/Reset Register (W)
+dma_mdec_in_control = w[801d77f8]; // 1f801088 DMA Channel Control (MDEC.In) (R/W)
+dma_mdec_out_control = w[801d7804]; // 1f801098 DMA Channel Control (MDEC.Out) (R/W)
+
+if( mode == 0 )
 {
-    V1 = w[801d7824];
-    [V1] = w(80000000);
-    V0 = w[801d77f8];
-    [V0] = w(0);
-    V0 = w[801d7804];
-    [V0] = w(0);
-    V1 = w[801d7824];
-    [V1] = w(60000000);
+    [mdec_control] = w(80000000);
+    [dma_mdec_in_control] = w(00000000);
+    [dma_mdec_out_control] = w(00000000);
+    [mdec_control] = w(60000000);
 
-    A0 = 801d76e0;
+    A0 = 801d76e0; // 01000040
+    // MDEC(1) - Decode Macroblock(s)
+    // 31-29 Command (1=decode_macroblock)
+    // 28-27 Data Output Depth  (0=4bit, 1=8bit, 2=24bit, 3=15bit)      ;STAT.26-25
+    // 26    Data Output Signed (0=Unsigned, 1=Signed)                  ;STAT.24
+    // 25    Data Output Bit15  (0=Clear, 1=Set) (for 15bit depth only) ;STAT.23
+    // 24-16 Not used (should be zero)
+    // 15-0  Number of Parameter Words (size of compressed data)
+    // This command is followed by one or more Macroblock parameters (usually, all
+    // macroblocks for the whole image are sent at once).
     A1 = 20;
-    801D4864	jal    func1d48f8 [$801d48f8]
+    mdec_in_setup();
 
-    A0 = 801d7764;
+    A0 = 801d7764; // 00000060
+    // MDEC(0) - No function
+    // This command has no function. Command bits 25-28 are reflected to Status bits
+    // 23-26 as usually. Command bits 0-15 are reflected to Status bits 0-15 (similar
+    // as the "number of parameter words" for MDEC(1), but without the "minus 1"
+    // effect, and without actually expecting any parameters).
     A1 = 20;
-    801D4874	jal    func1d48f8 [$801d48f8]
+    mdec_in_setup();
 }
-else if( A1 == 1 )
+else if( mode == 1 )
 {
-    V1 = w[801d7824];
-    [V1] = w(80000000);
-    V0 = w[801d77f8];
-    [V0] = w(0);
-    V0 = w[801d7804];
-    [V0] = w(0);
-    V0 = w[801d7804];
-    V1 = w[801d7824];
-    V0 = w[V0];
-    [V1] = w(60000000);
+    [mdec_control] = w(80000000);
+    [dma_mdec_in_control] = w(00000000);
+    [dma_mdec_out_control] = w(00000000);
+    V0 = w[dma_mdec_out_control];
+    [mdec_control] = w(60000000);
 }
 else
 {
@@ -1597,226 +1561,156 @@ else
 
 
 ////////////////////////////////
-// func1d48f8
+// mdec_in_setup()
 
 S1 = A0;
-S0 = A1;
+block = A1;
 
-801D490C	jal    func1d4a1c [$801d4a1c]
+mdec_command = w[801d7820]; // 1f801820 MDEC Command/Parameter Register (W)
+dma_control = w[801d7828]; // 1f8010f0 DMA Control Register (R/W)
+dma_mdec_in_address = w[801d77f0]; // 1f801080 DMA base address (MDEC.In) (R/W)
+dma_mdec_in_block = w[801d77f4]; // 1f801084 DMA Block Control (MDEC.In) (R/W)
+dma_mdec_in_control = w[801d77f8]; // 1f801088 DMA Channel Control (MDEC.In) (R/W)
 
-V1 = w[801d7828];
-S0 = S0 >> 05;
-V0 = w[V1];
-S0 = S0 << 10;
-[V1] = w(V0 | 0088);
-V1 = w[801d77f0];
-V0 = S1 + 4;
-[V1] = w(V0);
-V0 = w[801d77f4];
-[V0] = w(S0 | 0020);
-V1 = w[801d7820];
-V0 = w[S1];
-[V1] = w(V0);
+mdec_in_sync();
 
-V0 = w[801d77f8];
-[V0] = w(01000201);
+[dma_control] = w(w[dma_control] | 00000088); // enable MDECin and MDECout
+[dma_mdec_in_address] = w(S1 + 4);
+[dma_mdec_in_block] = w(((block >> 5) << 10) | 0020);
+[mdec_command] = w(w[S1]);
+
+// SyncMode, Transfer Synchronisation/Mode (0-3): 1 Sync blocks to DMA requests   (used for MDEC, SPU, and GPU-data)
+// Start/Busy 1=Start/Enable/Busy
+// Transfer Direction 1=From Main RAM
+[dma_mdec_in_control] = w(01000201);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d498c
-801D498C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-S1 = A0;
-[SP + 0010] = w(S0);
-[SP + 0018] = w(RA);
-801D49A0	jal    func1d4ab4 [$801d4ab4]
-S0 = A1;
-V1 = w[801d7828];
-801D49B0	nop
-V0 = w[V1 + 0000];
-S0 = S0 >> 05;
-V0 = V0 | 0088;
-[V1 + 0000] = w(V0);
-V0 = w[801d7804];
-S0 = S0 << 10;
-[V0 + 0000] = w(0);
-V0 = w[801d77fc];
-S0 = S0 | 0020;
-[V0 + 0000] = w(S1);
-V0 = w[801d7800];
-801D49EC	lui    v1, $0100
-[V0 + 0000] = w(S0);
-V0 = w[801d7804];
-V1 = V1 | 0200;
-[V0 + 0000] = w(V1);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-801D4A14	jr     ra 
-801D4A18	nop
+// mdec_out_setup_inner()
+
+out_address = A0;
+block = A1;
+
+dma_control = w[801d7828]; // 1f8010f0 DMA Control Register (R/W)
+dma_mdec_out_address = w[801d77fc]; // 1f801090 DMA base address (MDEC.Out) (R/W)
+dma_mdec_out_block = w[801d7800]; // 1f801094 DMA Block Control (MDEC.Out) (R/W)
+dma_mdec_out_control = w[801d7804]; // 1f801098 DMA Channel Control (MDEC.Out) (R/W)
+
+mdec_out_sync();
+
+[dma_control] = w(w[dma_control] | 00000088); // enable MDECin and MDECout
+[dma_mdec_out_control] = w(00000000);
+[dma_mdec_out_address] = w(out_address);
+[dma_mdec_out_block] = w(((block >> 5) << 10) | 0020);
+
+// SyncMode, Transfer Synchronisation/Mode (0-3): 1 Sync blocks to DMA requests   (used for MDEC, SPU, and GPU-data)
+// Start/Busy 1=Start/Enable/Busy
+// Transfer Direction 0=To Main RAM
+[dma_mdec_out_control] = w(01000200);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d4a1c
+// mdec_in_sync()
 
-V1 = w[801d7824];
-801D4A28	lui    v0, $0010
-[SP + 0010] = w(V0);
-V0 = w[V1 + 0000];
-801D4A38	lui    v1, $2000
-V0 = V0 & V1;
-801D4A40	beq    v0, zero, L1d4aa4 [$801d4aa4]
-V0 = 0;
-801D4A48	addiu  a0, zero, $ffff (=-$1)
+mdec_status = w[801d7824]; // 1f801824 MDEC Status Register (R)
 
-loop1d4a4c:	; 801D4A4C
-V0 = w[SP + 0010];
-801D4A50	nop
-801D4A54	addiu  v0, v0, $ffff (=-$1)
-[SP + 0010] = w(V0);
-V0 = w[SP + 0010];
-801D4A60	nop
-801D4A64	bne    v0, a0, L1d4a84 [$801d4a84]
-801D4A68	nop
-A0 = 801d301c;
-801D4A74	jal    func1d4b64 [$801d4b64]
-801D4A78	nop
-801D4A7C	j      L1d4aa4 [$801d4aa4]
-801D4A80	addiu  v0, zero, $ffff (=-$1)
+S0 = 100000;
 
-L1d4a84:	; 801D4A84
-V0 = w[801d7824];
-801D4A8C	nop
-V0 = w[V0 + 0000];
-801D4A94	nop
-V0 = V0 & V1;
-801D4A9C	bne    v0, zero, loop1d4a4c [$801d4a4c]
-V0 = 0;
+// Command Busy  (0=Ready, 1=Busy receiving or processing parameters)
+while( w[mdec_status] & 20000000 )
+{
+    S0 = S0 - 1;
 
-L1d4aa4:	; 801D4AA4
+    if( S0 == -1 )
+    {
+        A0 = 801d301c; // "MDEC_in_sync"
+        mdec_timeout_reset();
+
+        return -1;
+    }
+}
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d4ab4
-801D4AB4	addiu  sp, sp, $ffe0 (=-$20)
-V1 = w[801d7804];
-801D4AC0	lui    v0, $0010
-[SP + 0018] = w(RA);
-[SP + 0010] = w(V0);
-V0 = w[V1 + 0000];
-801D4AD0	lui    v1, $0100
-V0 = V0 & V1;
-801D4AD8	beq    v0, zero, L1d4b3c [$801d4b3c]
-V0 = 0;
-801D4AE0	addiu  a0, zero, $ffff (=-$1)
+// mdec_out_sync()
 
-loop1d4ae4:	; 801D4AE4
-V0 = w[SP + 0010];
-801D4AE8	nop
-801D4AEC	addiu  v0, v0, $ffff (=-$1)
-[SP + 0010] = w(V0);
-V0 = w[SP + 0010];
-801D4AF8	nop
-801D4AFC	bne    v0, a0, L1d4b1c [$801d4b1c]
-801D4B00	nop
-A0 = 801d302c;
-801D4B0C	jal    func1d4b64 [$801d4b64]
-801D4B10	nop
-801D4B14	j      L1d4b3c [$801d4b3c]
-801D4B18	addiu  v0, zero, $ffff (=-$1)
+dma_mdec_out_control = w[801d7804]; // 1f801098 DMA Channel Control (MDEC.Out) (R/W)
 
-L1d4b1c:	; 801D4B1C
-V0 = w[801d7804];
-801D4B24	nop
-V0 = w[V0 + 0000];
-801D4B2C	nop
-V0 = V0 & V1;
-801D4B34	bne    v0, zero, loop1d4ae4 [$801d4ae4]
-V0 = 0;
+S0 = 100000;
 
-L1d4b3c:	; 801D4B3C
-RA = w[SP + 0018];
-SP = SP + 0020;
-801D4B44	jr     ra 
-801D4B48	nop
+// 24 Start/Busy (0=Stopped/Completed, 1=Start/Enable/Busy)
+while( w[dma_mdec_out_control] & 01000000 )
+{
+    S0 = S0 - 1;
+    if( S0 == -1 )
+    {
+        A0 = 801d302c; // "MDEC_out_sync"
+        mdec_timeout_reset();
+
+        return -1;
+    }
+}
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d4b4c()
+// mdec_get_status_register()
 
-V0 = w[801d7824];
-return w[V0];
+mdec_status = w[801d7824]; // 1f801824 MDEC Status Register (R)
+
+return w[mdec_status];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d4b64()
+// mdec_timeout_reset()
+
+mdec_control = w[801d7824]; // 1f801824 MDEC Control/Reset Register (W)
+mdec_status = w[801d7824]; // 1f801824 MDEC Status Register (R)
+dma_mdec_in_control = w[801d77f8]; // 1f801088 DMA Channel Control (MDEC.In) (R/W)
+dma_mdec_in_address = w[801d77f0]; // 1f801080 DMA base address (MDEC.In) (R/W)
+dma_mdec_out_control = w[801d7804]; // 1f801098 DMA Channel Control (MDEC.Out) (R/W)
+dma_mdec_out_address = w[801d77fc]; // 1f801090 DMA base address (MDEC.Out) (R/W)
 
 A1 = A0;
 A0 = 801d309c; // "%s timeout:\n"
 system_bios_printf();
 
 A0 = 801d303c; // "	 DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n"
-V0 = w[801d7824];
-V1 = w[801d77f8];
-S0 = w[V0 + 0000];
-A1 = w[V1 + 0000];
-V0 = w[801d7804];
-V1 = w[801d77f0];
-A1 = A1 >> 18;
-A2 = w[V0 + 0000];
-V0 = w[801d77fc];
-A1 = A1 & 0001;
-V0 = w[V0 + 0000];
-A2 = A2 >> 18;
-[SP + 0010] = w(V0);
-A3 = w[V1 + 0000];
-A2 = A2 & 0001;
+A1 = (w[dma_mdec_in_control] >> 18) & 1; // Start/Busy (0=Stopped/Completed, 1=Start/Enable/Busy)
+A2 = (w[dma_mdec_out_control] >> 18) & 1; // Start/Busy (0=Stopped/Completed, 1=Start/Enable/Busy)
+A3 = w[dma_mdec_in_address];
+A4 = w[dma_mdec_out_address];
 system_bios_printf();
+
+S0 = w[mdec_status];
 
 A0 = 801d3064; // "	 FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n"
-A1 = 0 NOR S0;
-A1 = A1 >> 1f;
-A2 = S0 >> 1e;
-A2 = A2 & 0001;
-A3 = S0 >> 1d;
-
-L1d4bf8:	; 801D4BF8
-A3 = A3 & 0001;
-V0 = S0 >> 1c;
-V0 = V0 & 0001;
-[SP + 0010] = w(V0);
-V0 = S0 >> 1b;
-V0 = V0 & 0001;
-[SP + 0014] = w(V0);
-V0 = S0 >> 19;
-V0 = V0 & 0001;
-S0 = S0 >> 17;
-S0 = S0 & 0001;
-[SP + 18] = w(V0);
-[SP + 1c] = w(S0);
+A1 = (0 NOR S0) >> 1f; // Data-Out Fifo Empty (0=No, 1=Empty)
+A2 = (S0 >> 1e) & 1; // Data-In Fifo Full   (0=No, 1=Full, or Last word received)
+A3 = (S0 >> 1d) & 1; // Command Busy  (0=Ready, 1=Busy receiving or processing parameters)
+A4 = (S0 >> 1c) & 1; // Data-In Request  (set when DMA0 enabled and ready to receive data)
+A5 = (S0 >> 1b) & 1; // Data-Out Request (set when DMA1 enabled and ready to send data)
+A6 = (S0 >> 19) & 1; // 26-25 Data Output Depth  (0=4bit, 1=8bit, 2=24bit, 3=15bit)
+A7 = (S0 >> 17) & 1; // Data Output Bit15  (0=Clear, 1=Set) (for 15bit depth only)
 system_bios_printf();
 
-V1 = w[801d7824];
-[V1] = w(80000000);
-V0 = w[801d77f8];
-[V0] = w(0);
-V0 = w[801d7804];
-[V0] = w(0);
-V1 = w[801d7804];
-A0 = w[801d7824];
-V1 = w[V1];
-[A0] = w(60000000);
+[mdec_control] = w(80000000); // Reset MDEC (0=No change, 1=Abort any command, and set status=80040000h)
+[dma_mdec_in_control] = w(00000000);
+[dma_mdec_out_control] = w(00000000);
+V1 = w[dma_mdec_out_control];
+[mdec_control] = w(60000000); // Enable Data-In/Out Request  (0=Disable, 1=Enable DMA0 and Status.bit28)
 
 return 0;
 ////////////////////////////////
