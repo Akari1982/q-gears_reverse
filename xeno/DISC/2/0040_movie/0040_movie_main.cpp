@@ -3707,7 +3707,7 @@ system_devkit_pc_open();
 S4 = V0;
 A0 = S4;
 A1 = 0;
-A2 = 0002;
+A2 = 2;
 system_devkit_pc_seek();
 
 A0 = S4;
@@ -4083,7 +4083,7 @@ A1 = 0;
 system_filesystem_set_dir();
 
 A0 = 2;
-80074868	jal    $system_cdrom_get_number_of_files_in_dir
+system_cdrom_get_number_of_files_in_dir();
 
 V0 = V0 << 10;
 A0 = w[800767ac];
@@ -4092,7 +4092,7 @@ V0 = A0 < V0;
 80074884	beq    v0, zero, L74a20 [$80074a20]
 S1 = A0 + 0003;
 A0 = S1;
-8007488C	jal    $system_filesystem_get_debug_filename
+system_filesystem_get_debug_filename();
 
 S0 = V0;
 S2 = 0800;
@@ -4123,7 +4123,7 @@ V0 = A0 < V0;
 800748EC	beq    v0, zero, L74a20 [$80074a20]
 S1 = A0 + 0002;
 A0 = S1;
-800748F4	jal    $system_filesystem_get_debug_filename
+system_filesystem_get_debug_filename();
 
 S0 = V0;
 S2 = 0920;
@@ -4143,18 +4143,18 @@ S1 = V0;
 A0 = S1;
 A1 = 0;
 A2 = 2;
-80074934	jal    $system_devkit_pc_seek
+system_devkit_pc_seek();
 
 S0 = V0;
 A0 = S1;
 A1 = 0;
 A2 = 0;
-80074948	jal    $system_devkit_pc_seek
+system_devkit_pc_seek();
 
 A0 = S1;
 A1 = S0 - S2;
 A2 = 0;
-80074958	jal    $system_devkit_pc_seek
+system_devkit_pc_seek();
 
 A0 = S1;
 A1 = SP + 0018;
@@ -4186,7 +4186,7 @@ V0 = V0 + S2;
 800749D4	mflo   s0
 
 A0 = S1;
-800749D8	jal    $system_filesystem_get_sector_by_dir_file_id
+system_filesystem_get_sector_by_dir_file_id();
 
 A1 = SP + 18;
 A2 = 0800;
@@ -5137,7 +5137,7 @@ system_psyq_wait_frames();
 
 [800766a8] = w(0);
 [800766ac] = w(0);
-80075C18	jal    $801d43b0
+func1d43b0();
 
 V1 = w[80076a30];
 80075C28	nop
@@ -5156,16 +5156,13 @@ L75c54:	; 80075C54
 A0 = 0140;
 
 L75c60:	; 80075C60
-A1 = 00f0;
-A2 = 0080;
-A3 = 0010;
-V1 = hu[80076ae4];
-V0 = 0020;
-[SP + 0010] = w(V0);
-V0 = 0800;
-[SP + 0014] = w(V0);
-[SP + 0018] = w(V1);
-80075C84	jal    $801d3538
+A1 = f0;
+A2 = 80;
+A3 = 10;
+A4 = 20;
+A5 = 800;
+A6 = hu[80076ae4];
+func1d3538();
 
 V0 = w[80076ac8];
 [801d68b4] = w(0);
@@ -5190,18 +5187,12 @@ V1 = hu[T0 + 0000];
 A1 = w[80076a38];
 A2 = hu[80076a34];
 A3 = hu[80076a2c];
-V0 = 80075f68;
-[SP + 0030] = w(V0);
-V0 = hu[80076a28];
-T0 = hu[T0 + 0000];
-V1 = V1 + 00f0;
-[SP + 0010] = w(V0);
-V0 = h[80076a30];
-V1 = V1 & ffff;
-[SP + 0020] = w(T0);
-[SP + 0028] = w(V1);
-[SP + 002c] = w(V0);
-80075D28	jal    $801d37cc
+[SP + 0030] = w(80075f68);
+[SP + 0010] = w(hu[80076a28]);
+[SP + 0020] = w(hu[T0 + 0000]);
+[SP + 0028] = w((V1 + f0) & ffff);
+[SP + 002c] = w(h[80076a30]);
+func1d37cc();
 
 S5 = 001e;
 S7 = 66666667;
