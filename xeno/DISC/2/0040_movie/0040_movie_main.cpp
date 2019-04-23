@@ -19,35 +19,36 @@ for( int i = 0; i < 10; ++i )
 }
 
 A0 = 800767b4;
-A1 = 0;
-A2 = 0;
-A3 = 280;
-A4 = f0;
+A1 = 0;   // x
+A2 = 0;   // y
+A3 = 280; // width
+A4 = f0;  // height
 system_graphic_create_draw_env_struct()
 
+A0 = 800767b4 + 194;
+A1 = 0;   // x
+A2 = 0;   // y
+A3 = 280; // width
+A4 = f0;  // height
+system_graphic_create_display_env_struct();
+
 A0 = 800767b4 + 5c;
-A1 = 0;
-A2 = f0;
-A3 = 280;
-A4 = f0;
+A1 = 0;   // x
+A2 = f0;  // y
+A3 = 280; // width
+A4 = f0;  // height
 system_graphic_create_display_env_struct();
 
 A0 = 800767b4 + 138;
-A1 = 0;
-A2 = f0;
-A3 = 280;
-A4 = f0;
+A1 = 0;   // x
+A2 = f0;  // y
+A3 = 280; // width
+A4 = f0;  // height
 system_graphic_create_draw_env_struct();
 
-A0 = 800767b4 + 194;
-A1 = 0;
-A2 = 0;
-A3 = 280;
-A4 = f0;
-system_graphic_create_display_env_struct();
-
-[800767cc] = b(1);
-[80076904] = b(1);
+// set Paints entire clip area with brightness values (r0, g0, b0) when drawing
+[800767b4 + 18] = b(1);
+[800767b4 + 138 + 18] = b(1);
 
 A0 = c;
 A1 = 3;
@@ -2710,16 +2711,16 @@ system_memory_allocate();
 S0 = V0;
 
 V1 = ffe2cff8;
-A0 = (S0 & 00ffffff) + V1; // 
+A0 = (S0 & 00ffffff) + V1;
 A1 = 1;
 system_memory_allocate();
-S4 = V0; // 801d3000
+mdec_lib = V0; // 801d3000
 
 A0 = S0;
 system_memory_mark_removed_alloc();
 
 A0 = 1; // local file id
-A1 = S4; // memory
+A1 = mdec_lib;
 A2 = 0;
 A3 = 0;
 func293e8(); // load file "0\0019"
@@ -2734,75 +2735,80 @@ A3 = 10;
 A4 = 20;
 A5 = 800;
 A6 = 3;
-func1d3538();
+mdec_init();
 
 system_cdrom_get_cdrom_hdd_mode();
-
 [80076ae0] = w(V0);
-[80076a30] = w(-1);
-[80076a2c] = w(c80);
-[80076a24] = w(0);
-[80076a40] = w(0);
-[80076ae4] = w(1);
-[80076ad8] = w(1);
+
 [800767ac] = w(0);
-[80076a34] = w(1);
+[80076a24] = w(0);
 [80076a28] = w(1);
-[80076ad4] = w(2);
-[80076acc] = w(0);
+[80076a2c] = w(c80);
+[80076a30] = w(-1);
+[80076a34] = w(1);
 [80076a38] = w(0);
+[80076a40] = w(0);
 [80076ac8] = w(0);
+[80076acc] = w(0);
+[80076ad4] = w(2);
+[80076ad8] = w(1);
+[80076adc] = w(0);
+[80076ae4] = w(1);
 
 A0 = 800767b4;
-A1 = 0;
-A2 = 0;
-A3 = 140;
-A4 = f0;
+A1 = 0;   // x
+A2 = 0;   // y
+A3 = 140; // width
+A4 = f0;  // height
 system_graphic_create_draw_env_struct();
+
+[800767b4 + 16] = b(1); // dithering processing flag on
+[800767b4 + 18] = b(1); // paints entire clip area with brightness values (r0, g0, b0) when drawing
+[800767b4 + 19] = b(0); // r0
+[800767b4 + 1a] = b(0); // g0
+[800767b4 + 1b] = b(0); // b0
 
 A0 = 800767b4 + 5c;
-A1 = 0;
-A2 = f0;
-A3 = 140;
-A4 = f0;
+A1 = 0;   // x
+A2 = f0;  // y
+A3 = 140; // width
+A4 = f0;  // height
 system_graphic_create_display_env_struct();
+
+[800767b4 + 5c + 8] = h(0);   //output screen display area x
+[800767b4 + 5c + a] = h(a);   // output screen display area y
+[800767b4 + 5c + c] = h(100); // output screen display area width
+[800767b4 + 5c + e] = h(d8);  // output screen display area height
+[800767b4 + 5c + 10] = b(0);  // Interlace mode flag non-interlace
 
 A0 = 800767b4 + 138;
-A1 = 0;
-A2 = f0;
-A3 = 140;
-A4 = f0;
+A1 = 0;   // x
+A2 = f0;  // y
+A3 = 140; // width
+A4 = f0;  // height
 system_graphic_create_draw_env_struct();
 
+[800767b4 + 138 + 16] = b(1); // dithering processing flag on
+[800767b4 + 138 + 18] = b(1); // paints entire clip area with brightness values (r0, g0, b0) when drawing
+[800767b4 + 138 + 19] = b(0); // r0
+[800767b4 + 138 + 1a] = b(0); // g0
+[800767b4 + 138 + 1b] = b(0); // b0
+
 A0 = 800767b4 + 194;
-A1 = 0;
-A2 = 0;
-A3 = 140;
-A4 = f0;
+A1 = 0;   // x
+A2 = 0;   // y
+A3 = 140; // width
+A4 = f0;  // height
 system_graphic_create_display_env_struct();
 
-[800767ca] = b(1);
-[800767cc] = b(1);
-[80076902] = b(1);
-[80076904] = b(1);
-[800767cd] = b(0);
-[800767ce] = b(0);
-[800767cf] = b(0);
-[80076820] = b(0);
-[80076905] = b(0);
-[80076906] = b(0);
-[80076907] = b(0);
-[80076958] = b(0);
-[80076818] = h(0);
-[8007681a] = h(a);
-[8007681c] = h(100);
-[8007681e] = h(d8);
-[80076950] = h(0);
-[80076952] = h(a);
-[80076954] = h(100);
-[80076956] = h(d8);
+[800767b4 + 194 + 8] = h(0);   //output screen display area x
+[800767b4 + 194 + a] = h(a);   // output screen display area y
+[800767b4 + 194 + c] = h(100); // output screen display area width
+[800767b4 + 194 + e] = h(d8);  // output screen display area height
+[800767b4 + 194 + 10] = b(0);  // Interlace mode flag non-interlace
+
+// store enviroments
 [800767b0] = w(800767b4);
-[80076adc] = w(0);
 
 A0 = 800767b4;
 system_psyq_put_draw_env();
@@ -2810,7 +2816,7 @@ system_psyq_put_draw_env();
 A0 = w[800767b0] + 5c;
 system_psyq_put_disp_env();
 
-if( w[80076ae0] != 0 )
+if( w[80076ae0] != 0 ) // CD-ROM MODE2 or PC HDD MODE
 {
     A0 = 2;
     system_psyq_wait_frames();
@@ -2819,7 +2825,7 @@ if( w[80076ae0] != 0 )
     system_controller_get_pressed_button_mask();
     [80076a3c] = w(V0);
 }
-else
+else // CD-ROM MODE1
 {
     [80076a3c] = w(0);
 }
@@ -2849,16 +2855,16 @@ if( bu[8004f4e8] != ff )
         A0 = bu[8004f4eb];
         func75a4c();
 
-        8007321C	jal    $801d43b0
+        mdec_deinit();
 
-        A0 = S4;
+        A0 = mdec_lib;
         system_memory_mark_removed_alloc();
 
         A0 = bu[8004f4ea];
         func199f0();
 
         A0 = 0;
-        func19b50();
+        func19b50(); // return to main
     }
 }
 
@@ -3450,11 +3456,11 @@ L732dc:	; 800732DC
 
     if( ( w[800767a8] == d ) && ( w[SP + 38] == 2 ) )
     {
-        A0 = S4;
+        A0 = mdec_lib;
         system_memory_mark_removed_alloc();
 
         A0 = 0;
-        func19b50();
+        func19b50(); // return to main
     }
 
     [800767a8] = w(S0);
@@ -5137,7 +5143,7 @@ system_psyq_wait_frames();
 
 [800766a8] = w(0);
 [800766ac] = w(0);
-func1d43b0();
+mdec_deinit();
 
 V1 = w[80076a30];
 80075C28	nop
@@ -5162,7 +5168,7 @@ A3 = 10;
 A4 = 20;
 A5 = 800;
 A6 = hu[80076ae4];
-func1d3538();
+mdec_init();
 
 V0 = w[80076ac8];
 [801d68b4] = w(0);
@@ -5242,7 +5248,7 @@ A0 = 1;
 system_psyq_wait_frames();
 
 S3 = V0;
-80075DE8	jal    $801d3f7c
+func1d3f7c();
 
 A0 = 1;
 system_psyq_wait_frames();

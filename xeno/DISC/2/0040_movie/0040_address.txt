@@ -1,0 +1,31 @@
+800767ac [][][][] init with 0.
+
+800767b0 [][][][] pointer to enviroments 800767b4.
+
+800767b4 addresses for enviroments
+    + 00 draw enviroment 1 (0x5c size).
+    + 5c display enviroment 2 (0x14 size).
+    +138 draw enviroment 2 (0x5c size).
+    +194 display enviroment 1 (0x14 size).
+
+80076a24 [][][][] init with 0.
+80076a28 [][][][] init with 1.
+80076a2c [][][][] init with 0xc80.
+80076a30 [][][][] init with -1.
+80076a34 [][][][] init with 1.
+80076a38 [][][][] init with 0.
+
+80076a40 [][][][] init with 0.
+
+80076ac8 [][][][] init with 0.
+80076acc [][][][] init with 0.
+
+80076ad4 [][][][] init with 2.
+80076ad8 [][][][] init with 1.
+80076adc [][][][] init with 0.
+
+80076ae0 [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
+                  0 - CD-ROM MODE1
+                 -1 - CD-ROM MODE2
+                  else - PC HDD MODE
+80076ae4 [][][][] init with 1.

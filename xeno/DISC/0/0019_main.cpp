@@ -1,23 +1,19 @@
 ////////////////////////////////
-// func1d30c4
+// func1d30c4()
 
-V0 = bu[801e8968];
-801D30E8	bne    v0, zero, L1d312c [$801d312c]
+if( bu[801e8968] == 0 )
+{
+    if( w[801d68c8] & 1 )
+    {
+        if( w[801e89d0] != 0 )
+        {
+            801D311C	jal    func1d5d54 [$801d5d54]
 
-V0 = w[801d68c8];
-801D30F8	nop
-V0 = V0 & 0001;
-801D3100	beq    v0, zero, L1d312c [$801d312c]
-801D3104	nop
-V0 = w[801e89d0];
-801D3110	nop
-801D3114	beq    v0, zero, L1d312c [$801d312c]
-801D3118	nop
-801D311C	jal    func1d5d54 [$801d5d54]
+            [801e89d0] = w(0);
+        }
+    }
+}
 
-[801e89d0] = w(0);
-
-L1d312c:	; 801D312C
 V0 = w[801e8944];
 V1 = h[801e897c];
 A1 = V0 << 03;
@@ -258,7 +254,7 @@ L1d3510:	; 801D3510
 
 
 ////////////////////////////////
-// func1d3538()
+// mdec_init()
 
 S3 = A0;
 S5 = A1;
@@ -298,13 +294,12 @@ V1 = S0 & ffff;
 V1 = V1 << 01;
 S0 = V0 * V1;
 [801d68c4] = w(S7);
-V0 = S1 & 0003;
+V0 = S1 & 3;
 [801d68c8] = w(V0);
 
-A0 = S0;
-S1 = A0 / 100;
-A0 = S1;
+S1 = S0 / 100;
 
+A0 = S1;
 A1 = 0;
 system_memory_allocate();
 [801e891c] = w(V0);
@@ -314,7 +309,7 @@ A1 = 0;
 system_memory_allocate();
 [801e8920] = w(V0);
 
-if( w[801d68c8] & 0001 )
+if( w[801d68c8] & 1 )
 {
     V0 = S4 & ffff;
     V1 = V0 << 01;
@@ -707,21 +702,12 @@ S0 = 801e8930;
 V0 = w[S0 + 0000];
 801D3D8C	nop
 V0 = V0 << 03;
-801D3D94	lui    at, $801f
-AT = AT + V0;
-V1 = hu[AT + 8934];
-801D3DA0	lui    at, $801f
-AT = AT + V0;
-[AT + 8948] = h(V1);
+V1 = hu[801e8934 + V0];
+[801e8948 + V0] = h(V1);
 V0 = w[S0 + 0000];
-801D3DB0	nop
 V0 = V0 << 03;
-801D3DB8	lui    at, $801f
-AT = AT + V0;
-V1 = hu[AT + 8936];
-801D3DC4	lui    at, $801f
-AT = AT + V0;
-[AT + 894a] = h(V1);
+V1 = hu[801e8936 + V0];
+[801e894a + V0] = h(V1);
 V0 = w[801e8918];
 A1 = w[801d68c8];
 V0 = V0 << 02;
@@ -750,8 +736,9 @@ A0 = w[V0 + fff8];
 801D3E48	mflo   a1
 V0 = A1 >> 1f;
 A1 = A1 + V0;
-801D3E54	jal    mdec_out_setup [$801d471c]
 A1 = A1 >> 01;
+mdec_out_setup();
+
 V0 = w[S0 + 0000];
 A0 = w[801e8918];
 V1 = 0001;
@@ -823,7 +810,10 @@ L1d3f68:	; 801D3F68
 // func1d3f7c
 
 V0 = b[801e8964];
-801D3F8C	blez   v0, L1d4198 [$801d4198]
+if( V0 <= 0 )
+{
+    return;
+}
 
 V1 = w[801e8988];
 V0 = w[801e8984];
@@ -836,8 +826,9 @@ V0 = w[801e89a4];
 801D3FC0	beq    v0, zero, L1d3fd8 [$801d3fd8]
 A0 = 7fff;
 [801e89a4] = w(0);
-801D3FD0	jal    $80038bc0
 A1 = 0028;
+system_sound_set_cd_volume_increase();
+
 
 L1d3fd8:	; 801D3FD8
 V0 = w[801d68cc];
@@ -851,8 +842,8 @@ V0 = w[801e89a8];
 801D4004	beq    v0, zero, L1d401c [$801d401c]
 A0 = 0;
 [801e89a8] = w(0);
-801D4014	jal    $80038bc0
-A1 = 0028;
+A1 = 28;
+system_sound_set_cd_volume_increase();
 
 L1d401c:	; 801D401C
 V0 = w[801e8988];
@@ -899,10 +890,10 @@ L1d40d4:	; 801D40D4
 801D40D8	nop
 
 L1d40dc:	; 801D40DC
-V0 = w[801e89f4];
-801D40E4	nop
-V0 = V0 < 0871;
-801D40EC	bne    v0, zero, L1d4198 [$801d4198]
+if( w[801e89f4] < 871 )
+{
+    return;
+}
 
 [801e89f4] = w(0);
 
@@ -934,12 +925,9 @@ A0 = hu[801e8974];
 A1 = w[801e896c];
 A2 = hu[801e8978];
 A3 = w[801e8970];
-801D4184	addiu  v0, zero, $ffff (=-$1)
-[801e8988] = w(V0);
-801D4190	jal    func1d41ac [$801d41ac]
-[SP + 0010] = w(V1);
-
-L1d4198:	; 801D4198
+[801e8988] = w(-1);
+A4 = V1;
+func1d41ac();
 ////////////////////////////////
 
 
@@ -958,11 +946,12 @@ A1 = 0;
 system_sound_set_cd_volume_increase();
 
 A0 = 0;
-801D41E8	jal    $func2a2a8
+func2a2a8();
 
 A0 = 0;
 system_cdrom_action_sync();
 
+// save cur dir
 A0 = SP + 18;
 A1 = SP + 1c;
 system_filesystem_get_current_dir();
@@ -971,68 +960,70 @@ A0 = w[801e899c];
 A1 = w[801e89a0];
 system_filesystem_set_dir();
 
-V1 = bu[801e8968];
-V0 = 0001;
-[801e89a4] = w(V0);
-[801e89a8] = w(V0);
-801D4238	beq    v1, zero, L1d4298 [$801d4298]
+[801e89a4] = w(1);
+[801e89a8] = w(1);
 
-A0 = S2;
-A1 = w[801e898c];
-A2 = S3;
-A3 = S1;
-func293e8();
+if( bu[801e8968]; != 0 )
+{
+    A0 = S2;
+    A1 = w[801e898c];
+    A2 = S3;
+    A3 = S1;
+    func293e8();
 
-V0 = S1 & 0008;
-801D4258	beq    v0, zero, L1d427c [$801d427c]
-A1 = S0 << 03;
-A0 = w[8004f4f0];
-A1 = A1 + S0;
-A1 = A1 << 03;
-A1 = A1 + S0;
-801D4274	j      L1d4288 [$801d4288]
-A1 = A1 << 05;
+    V0 = S1 & 0008;
+    A1 = S0 << 03;
+    if( V0 != 0 )
+    {
+        A0 = w[8004f4f0];
+        A1 = A1 + S0;
+        A1 = A1 << 03;
+        A1 = A1 + S0;
+        A1 = A1 << 05;
+    }
+    else
+    {
+        A0 = w[8004f4f0];
+        A1 = S0 << b;
+    }
 
-L1d427c:	; 801D427C
-A0 = w[8004f4f0];
-A1 = S0 << 0b;
-
-L1d4288:	; 801D4288
-A2 = 0;
-system_devkit_pc_seek();
-
-801D4290	j      L1d42e4 [$801d42e4]
-801D4294	nop
-
-L1d4298:	; 801D4298
-S1 = S1 | 0080;
-A0 = S2;
-system_filesystem_get_sector_by_dir_file_id();
-
-A0 = V0 + S0;
-A1 = SP + 10;
-system_psyq_cd_int_to_pos();
-
-801D42B0	bne    s4, zero, L1d42bc [$801d42bc]
-S0 = S4;
-S0 = SP + 0010;
-
-L1d42bc:	; 801D42BC
-
-loop1d42c0:	; 801D42C0
-    A0 = 2;
-    A1 = S0;
     A2 = 0;
-    func410c0();
+    system_devkit_pc_seek();
+}
+else
+{
+    S1 = S1 | 0080;
+    A0 = S2;
+    system_filesystem_get_sector_by_dir_file_id();
 
-801D42CC	beq    v0, zero, loop1d42c0 [$801d42c0]
+    A0 = V0 + S0;
+    A1 = SP + 10;
+    system_psyq_cd_int_to_pos();
 
-loop1d42d4:	; 801D42D4
-    A0 = S1;
-    func1d586c();
-801D42DC	beq    v0, zero, loop1d42d4 [$801d42d4]
+    if( S4 != 0 )
+    {
+        S0 = S4;
+    }
+    else
+    {
+        S0 = SP + 10;
+    }
 
-L1d42e4:	; 801D42E4
+    loop1d42c0:	; 801D42C0
+        A0 = 2;
+        A1 = S0;
+        A2 = 0;
+        func410c0();
+
+    801D42CC	beq    v0, zero, loop1d42c0 [$801d42c0]
+
+    loop1d42d4:	; 801D42D4
+        A0 = S1;
+        func1d586c();
+    801D42DC	beq    v0, zero, loop1d42d4 [$801d42d4]
+}
+
+// restore cur dir
 A0 = w[SP + 18];
 A1 = w[SP + 1c];
 system_filesystem_set_dir();
@@ -1084,7 +1075,7 @@ system_cdrom_action_sync();
 
 
 ////////////////////////////////
-// func1d43b0()
+// mdec_deinit()
 
 func1d4318();
 
@@ -2739,8 +2730,8 @@ V0 = V0 << 05;
 V0 = V1 + V0;
 A0 = A0 - V0;
 V0 = A0 >> 02;
-801D5BA4	mult   v0, a1
 A0 = A0 >> 1f;
+801D5BA4	mult   v0, a1
 801D5BAC	mfhi   a3
 V0 = A3 + V0;
 V0 = V0 >> 08;
@@ -2763,16 +2754,16 @@ A0 = 0;
 A2 = V0;
 
 loop1d5bf4:	; 801D5BF4
-V0 = A0 + A1;
-A0 = A0 + 0001;
-V1 = w[801e8a14];
-V0 = V0 << 05;
-V1 = V1 + V0;
-V0 = A0 < A2;
+    V0 = A0 + A1;
+    A0 = A0 + 0001;
+    V1 = w[801e8a14];
+    V0 = V0 << 05;
+    V1 = V1 + V0;
+    V0 = A0 < A2;
 
-L1d5c10:	; 801D5C10
+    L1d5c10:	; 801D5C10
+    [V1 + 0000] = h(0);
 801D5C10	bne    v0, zero, loop1d5bf4 [$801d5bf4]
-[V1 + 0000] = h(0);
 
 L1d5c18:	; 801D5C18
 V0 = A0 + A1;
@@ -2998,14 +2989,14 @@ A1 = V0 + A1;
 801D5F9C	nop
 
 L1d5fa0:	; 801D5FA0
-A0 = 0003;
-A2 = 0;
-A1 = w[801e89b4];
-A3 = 0008;
-[SP + 0010] = w(T0);
-[SP + 0014] = w(0);
-801D5FBC	jal    func1d66f8 [$801d66f8]
-[SP + 0018] = w(0);
+A0 = 3; // dma CDROM (CDROM to RAM)
+A1 = w[801e89b4]; // address
+A2 = 0; // blocks
+A3 = 8; // size
+A4 = T0; // control
+A5 = 0; // enable irq
+A6 = 0;
+func1d66f8();
 
 L1d5fc4:	; 801D5FC4
 A0 = w[801e88f0];
@@ -3296,8 +3287,9 @@ V0 = V0 << 05;
 A0 = w[801e89c4];
 V1 = V1 + V0;
 [801e8a10] = w(V1);
-801D64C0	beq    a0, zero, L1d64f4 [$801d64f4]
 801D64C4	lui    t0, $1100
+801D64C0	beq    a0, zero, L1d64f4 [$801d64f4]
+
 801D64C8	lui    v1, $0002
 V0 = w[801e88d0];
 V1 = V1 | 0943;
@@ -3342,14 +3334,14 @@ V0 = V0 + 0001;
 801D6588	nop
 
 L1d658c:	; 801D658C
-A0 = 0003;
-A2 = 0;
-A1 = w[801e8a10];
-A3 = 01f8;
-[SP + 0010] = w(T0);
-[SP + 0014] = w(V1);
-801D65A8	jal    func1d66f8 [$801d66f8]
-[SP + 0018] = w(0);
+A0 = 3; // dma CDROM (CDROM to RAM)
+A1 = w[801e8a10]; // address
+A2 = 0; // blocks
+A3 = 1f8; // size
+A4 = T0; // control
+A5 = V1; // enable irq
+A6 = 0;
+func1d66f8();
 
 L1d65b0:	; 801D65B0
 V0 = w[801e89d8];
@@ -3379,14 +3371,14 @@ V0 = V0 + 0001;
 801D662C	nop
 
 L1d6630:	; 801D6630
-A0 = 0003;
-A2 = 0;
-A1 = w[801e8a10];
-A3 = 01f8;
-[SP + 0010] = w(T0);
-[SP + 0014] = w(0);
-801D664C	jal    func1d66f8 [$801d66f8]
-[SP + 0018] = w(0);
+A0 = 3; // dma CDROM (CDROM to RAM)
+A1 = w[801e8a10]; // address
+A2 = 0; // blocks
+A3 = 1f8; // size
+A4 = T0; // control
+A5 = 0; // enable irq
+A6 = 0;
+func1d66f8();
 
 L1d6654:	; 801D6654
 V1 = w[801e88d4];
@@ -3416,129 +3408,66 @@ L1d66b4:	; 801D66B4
 
 
 ////////////////////////////////
-// func1d66c4
+// func1d66c4()
 
-801D66C8	beq    a2, zero, L1d66ec [$801d66ec]
-V1 = 0;
-
-loop1d66d0:	; 801D66D0
-V0 = w[A1 + 0000];
-A1 = A1 + 0004;
-V1 = V1 + 0001;
-[A0 + 0000] = w(V0);
-V0 = V1 < A2;
-801D66E4	bne    v0, zero, loop1d66d0 [$801d66d0]
-A0 = A0 + 0004;
-
-L1d66ec:	; 801D66EC
+for( int i = 0 i < A2; ++i )
+{
+    [A0 + i * 4] = w(w[A1 + i * 4]);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d66f8
+// func1d66f8()
 
-S0 = A0;
-S2 = A1;
-S3 = A2;
-S4 = A3;
+dma_id = A0;
+address = A1;
+blocks = A2;
+size = A3;
+control = A4;
+enable_irq = A5;
+
+dma_interrupt = w[801e88dc]; // 1f8010f4 DMA Interrupt Register (R/W)
+dma_control = w[801e88d8]; // 1f8010f0 DMA Control Register (R/W)
+index = w[801e88c0]; // 1f801800 Index/Status Register (Bit0-1 R/W) (Bit2-7 Read Only)
+
 A0 = 0;
-A1 = S0 << 04;
-801D6724	lui    v0, $0100
-801D6734	lui    at, $1f80
-AT = A1 + AT;
-V1 = w[AT + 1088];
-S5 = w[SP + 0048];
-S1 = bu[SP + 004c];
-V1 = V1 & V0;
-801D674C	beq    v1, zero, L1d6784 [$801d6784]
-V0 = S1 & 00ff;
-801D6754	lui    a2, $0001
-801D6758	lui    v1, $0100
+// Start/Busy (0=Stopped/Completed, 1=Start/Enable/Busy)
+while( w[1f801088 + dma_id * 10] & 01000000 )
+{
+    if( A0 == 10000 )
+    {
+        A0 = 801d30ac; // "DMA STATUS ERROR %x\n"
+        A1 = w[1f801088 + dma_id * 10];
+        system_bios_printf();
 
-loop1d675c:	; 801D675C
-801D675C	beq    a0, a2, L1d67a8 [$801d67a8]
-801D6760	nop
-801D6764	lui    at, $1f80
-AT = A1 + AT;
-V0 = w[AT + 1088];
-801D6770	nop
-V0 = V0 & V1;
-801D6778	bne    v0, zero, loop1d675c [$801d675c]
-A0 = A0 + 0001;
-V0 = S1 & 00ff;
+        break;
+    }
+    A0 = A0 + 1;
+}
 
-L1d6784:	; 801D6784
-A1 = 0001;
-801D6788	bne    v0, a1, L1d67cc [$801d67cc]
-V0 = A1 << S0;
-V1 = w[801e88dc];
-801D6798	nop
-A0 = bu[V1 + 0002];
-801D67A0	j      L1d67e4 [$801d67e4]
-A0 = A0 | V0;
+if( enable_irq != 1 )
+{
+    [dma_interrupt + 2] = b(bu[dma_interrupt + 2] & (0 NOR (1 << dma_id))); // disable dma interrupt
+}
+else
+{
+    [dma_interrupt + 2] = b(bu[dma_interrupt + 2] | (1 << dma_id)); // enable dma interrupt
+}
 
-L1d67a8:	; 801D67A8
-801D67A8	lui    at, $1f80
-AT = A1 + AT;
-A1 = w[AT + 1088];
-A0 = 801d30ac;
-801D67BC	jal    $800199e8
-801D67C0	nop
-801D67C4	j      L1d6784 [$801d6784]
-V0 = S1 & 00ff;
+[SP + 10] = w(w[dma_interrupt]);
 
-L1d67cc:	; 801D67CC
-V1 = w[801e88dc];
-801D67D4	nop
-A0 = bu[V1 + 0002];
-V0 = 0 NOR V0;
-A0 = A0 & V0;
+[dma_control] = w(w[dma_control] | (1 << ((dma_id * 4) + 3))); // enable dma
 
-L1d67e4:	; 801D67E4
-[V1 + 0002] = b(A0);
-V0 = w[801e88dc];
-801D67F0	nop
-V0 = w[V0 + 0000];
-801D67F8	nop
-[SP + 0010] = w(V0);
-A2 = S0 << 02;
-A2 = A2 + 0003;
-V1 = 0001;
-V1 = V1 << A2;
-A1 = 1f801080;
-V0 = S0 << 04;
-A1 = V0 + A1;
-A0 = w[801e88d8];
-V0 = S3 << 10;
-A2 = w[A0 + 0000];
-V0 = V0 | S4;
-A2 = A2 | V1;
-[A0 + 0000] = w(A2);
-[A1 + 0000] = w(S2);
+[1f801080 + dma_id * 10] = w(address);
+[1f801084 + dma_id * 10] = w((blocks << 10) | size);
 
-L1d6840:	; 801D6840
-A1 = A1 + 0004;
-[A1 + 0000] = w(V0);
-V1 = w[801e88c0];
-801D6850	nop
-V0 = bu[V1 + 0000];
-801D6858	nop
-V0 = V0 & 0040;
-801D6860	bne    v0, zero, L1d687c [$801d687c]
-A1 = A1 + 0004;
+// Data fifo empty (0=Empty) (triggered after reading LAST byte)
+while( ( bu[index] & 40 ) == 0 )
+{
+}
 
-loop1d6868:	; 801D6868
-V0 = bu[V1 + 0000];
-801D686C	nop
-
-L1d6870:	; 801D6870
-V0 = V0 & 0040;
-801D6874	beq    v0, zero, loop1d6868 [$801d6868]
-801D6878	nop
-
-L1d687c:	; 801D687C
-[A1 + 0000] = w(S5);
-V0 = w[A1 + 0000];
-[SP + 0010] = w(V0);
+[1f801088 + dma_id * 10] = w(control);
+[SP + 10] = w(w[1f801088 + dma_id * 10]);
 ////////////////////////////////

@@ -133,10 +133,10 @@ S1 = A0;
 [S1 + 12] = h(0); // tw height
 [S1 + 14] = h(a); // initial value of texture page
 [S1 + 16] = b(1); // dithering processing flag. 0: off; 1: on
-[S1 + 18] = b(0);
-[S1 + 19] = b(0);
-[S1 + 1a] = b(0);
-[S1 + 1b] = b(0);
+[S1 + 18] = b(0); // 0: Does not clear drawing area when drawing environment is set.1: Paints entire clip area with brightness values (r0, g0, b0) when drawing
+[S1 + 19] = b(0); // r
+[S1 + 1a] = b(0); // g
+[S1 + 1b] = b(0); // b
 
 func4c1b0(); // get data from 80058030
 if( V0 != 0 )
@@ -158,10 +158,10 @@ else
 [A0 + 2] = h(A2); // display area y
 [A0 + 4] = h(A3); // display area width
 [A0 + 6] = h(A4); // display area height
-[A0 + 8] = h(0);
-[A0 + a] = h(0);
-[A0 + c] = h(0);
-[A0 + e] = h(0);
+[A0 + 8] = h(0); // output screen display area x.
+[A0 + a] = h(0); // output screen display area y.
+[A0 + c] = h(0); // output screen display area width.
+[A0 + e] = h(0); // output screen display area height.
 [A0 + 10] = b(0); // Interlace mode flag. 0: non-interlace; 1: interlace
 [A0 + 11] = b(0); // 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
 [A0 + 12] = b(0);
