@@ -387,87 +387,89 @@ return -1;
 
 
 ////////////////////////////////
-// func1d37cc
+// func1d37cc()
 
-S3 = A4;
-S2 = A5;
-S0 = A6;
-S4 = A7;
-S5 = A8;
-S6 = A9;
-S7 = A10;
-S1 = A11;
-T0 = A12;
-FP = A0;
-
-[SP + 28] = w(A1);
-[SP + 30] = h(A2);
-[SP + 38] = h(A3);
+FP = A0; // movie id
+[SP + 28] = w(A1); // number of sectors to play
+[SP + 30] = h(A2); // start frame
+[SP + 38] = h(A3); // end frame
+S3 = A4; // movie channel
+S2 = A5; // movie type
+rewind = A6;
+S4 = A7; // 0
+S5 = A8; // screen draw related
+S6 = A9; // 0
+S7 = A10; // screen draw related
+S1 = A11; // screen draw
+T0 = A12; // callback
 [SP + 40] = w(T0);
 
-V0 = b[801e8964];
-
-801D3834	beq    v0, zero, L1d3acc [$801d3acc]
+if( b[801e8964] == 0 )
+{
+    return;
+}
 
 A0 = 801e899c;
 A1 = 801e89a0;
 system_filesystem_get_current_dir();
 
-A0 = 801d30c4;
-801D385C	jal    func1d47d8 [$801d47d8]
+A0 = 801d30c4; // func1d30c4()
+mdec_out_dma_callback();
 
-801D3864	bne    s0, zero, L1d3870 [$801d3870]
-V0 = 0002;
-V0 = 0001;
+if( rewind != 0 )
+{
+    [801e8964] = b(2); // rewind on
+}
+else
+{
+    [801e8964] = b(1); // rewind off
+}
 
-L1d3870:	; 801D3870
-[801e8964] = b(V0);
-V0 = bu[801e8968];
 T0 = w[SP + 0028];
 [801e8960] = b(0);
 [801e897c] = h(S1);
 [801e8974] = h(FP);
 [801e896c] = w(T0);
-801D38A4	beq    v0, zero, L1d38fc [$801d38fc]
+
+if( bu[801e8968] != 0 )
+{
+    if( S2 & 0001 )
+    {
+        V0 = 248;
+        [801e8978] = h(S3);
+    }
+    else
+    {
+        [801e8978] = h(1);
+        V0 = 200;
+    }
+
+    [801e8970] = w(V0);
+    func288bc();
+
+    [80059b48] = h(0);
+    [80061ba4] = h(0);
+    801D38F4	j      L1d3978 [$801d3978]
+    V0 = S2 & 0002;
+}
+
 V0 = S2 & 0001;
-801D38AC	beq    v0, zero, L1d38c4 [$801d38c4]
-V0 = 0248;
-[801e8978] = h(S3);
-801D38BC	j      L1d38d4 [$801d38d4]
-801D38C0	nop
-
-L1d38c4:	; 801D38C4
-V0 = 0001;
-[801e8978] = h(V0);
-V0 = 0200;
-
-L1d38d4:	; 801D38D4
-[801e8970] = w(V0);
-801D38DC	jal    $800288bc
-801D38E0	nop
-
-L1d38e4:	; 801D38E4
-[80059b48] = h(0);
-[80061ba4] = h(0);
-801D38F4	j      L1d3978 [$801d3978]
-V0 = S2 & 0002;
-
-L1d38fc:	; 801D38FC
 801D38FC	beq    v0, zero, L1d3948 [$801d3948]
 V0 = 0148;
 [801e8978] = h(S3);
 V1 = bu[801e8978];
 [801e8970] = w(V0);
-V0 = 0001;
-[SP + 0020] = b(V0);
+[SP + 0020] = b(1);
 [SP + 0021] = b(V1);
 
 loop1d3928:	; 801D3928
-A0 = 000d;
-A1 = SP + 0020;
-801D3930	jal    $func410c0
-A2 = 0;
+    A0 = d;
+    A1 = SP + 20;
+    A2 = 0;
+    func410c0();
+
 801D3938	beq    v0, zero, loop1d3928 [$801d3928]
+
 801D393C	addiu  a2, zero, $ffff (=-$1)
 801D3940	j      L1d3958 [$801d3958]
 801D3944	nop
@@ -548,10 +550,9 @@ L1d3a78:	; 801D3A78
 [801e89d4] = w(0);
 [SP + 0010] = w(0);
 [801d68cc] = w(V0);
-801D3AC4	jal    func1d41ac [$801d41ac]
-A0 = FP;
 
-L1d3acc:	; 801D3ACC
+A0 = FP;
+func1d41ac();
 ////////////////////////////////
 
 
@@ -905,8 +906,9 @@ S0 = V0;
 [80059b48] = h(S0);
 V1 = V1 + 0001;
 [80059b6c] = w(V1);
-801D4124	jal    $800413ac
 A0 = SP + 0018;
+system_psyq_cd_pos_to_int();
+
 A0 = w[801e896c];
 V1 = w[801d68cc];
 [80059b38] = w(V0);
@@ -1042,7 +1044,7 @@ A0 = 0;
 func2a2a8();
 
 A0 = 0;
-func1d47d8();
+mdec_out_dma_callback();
 
 A0 = 0; // Initializes all internal states
 mdec_reset();
@@ -1381,20 +1383,20 @@ return V0;
 
 
 ////////////////////////////////
-// func1d47b4
+// mdec_in_dma_callback()
 
 A1 = A0;
-A0 = 0;
+A0 = 0; // MDECin  (RAM to MDEC)
 system_dma_additional_callback();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d47d8
+// mdec_out_dma_callback()
 
 A1 = A0;
-A0 = 1;
+A0 = 1; // MDECout (MDEC to RAM)
 system_dma_additional_callback();
 ////////////////////////////////
 

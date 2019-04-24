@@ -2734,7 +2734,7 @@ A2 = 80;
 A3 = 10;
 A4 = 20;
 A5 = 800;
-A6 = 3;
+A6 = 3; // some bit color
 mdec_init();
 
 system_cdrom_get_cdrom_hdd_mode();
@@ -5096,45 +5096,39 @@ else if( w[80076ad8] != 2 ) // movie type not adpcm only
 // func75b18()
 // play movie
 
-V0 = w[80076ad8];
-A2 = 8006fb70;
-80075B54	lwl    v1, $0003(a2)
-80075B58	lwr    v1, $0000(a2)
-80075B5C	lwl    a0, $0007(a2)
-80075B60	lwr    a0, $0004(a2)
-80075B64	swl    v1, $00cb(sp)
-80075B68	swr    v1, $00c8(sp)
-80075B6C	swl    a0, $00cf(sp)
-80075B70	swr    a0, $00cc(sp)
 [800766a4] = w(0);
 [800766b0] = w(0);
-80075B84	bne    v0, zero, L75ba0 [$80075ba0]
-S1 = 0001;
-V0 = w[800767ac];
-S1 = 0;
-80075B98	j      L75bb0 [$80075bb0]
-S0 = V0 + 0003;
 
-L75ba0:	; 80075BA0
-V0 = w[800767ac];
-S0 = V0 + 0002;
+if( w[80076ad8] == 0 ) // movie type picture only
+{
+    S1 = 0;
+    S0 = w[800767ac] + 3; // movie id
+}
+else // movie type picture + adpcm
+{
+    S1 = 1;
+    S0 = w[800767ac] + 2;
+}
 
-L75bb0:	; 80075BB0
 A0 = S0;
 system_get_filesize_by_dir_file_id();
 
-V1 = 0018;
-80075BBC	bne    v0, v1, L75bdc [$80075bdc]
+if( V0 == 18 )
+{
+    A0 = 1;
+    system_psyq_set_disp_mask();
 
-A0 = 1;
-system_psyq_set_disp_mask();
+    [8004f4ea] = b(0);
+    return 0;
+}
 
-[8004f4ea] = b(0);
-return 0;
-
-L75bdc:	; 80075BDC
 A0 = 0;
 system_psyq_wait_frames();
+
+[SP + c8] = h(h[8006fb70 + 0]); // 0 x
+[SP + ca] = h(h[8006fb70 + 2]); // 0 y
+[SP + cc] = h(h[8006fb70 + 4]); // 280 width
+[SP + ce] = h(h[8006fb70 + 6]); // 200 height
 
 A0 = SP + c8;
 A1 = 0;
@@ -5150,178 +5144,150 @@ system_psyq_wait_frames();
 
 [800766a8] = w(0);
 [800766ac] = w(0);
+
 mdec_deinit();
 
-V1 = w[80076a30];
-80075C28	nop
-80075C2C	blez   v1, L75c54 [$80075c54]
-V0 = 00f0;
-V0 = V0 - V1;
-V1 = V0 >> 1f;
-V0 = V0 + V1;
-V0 = V0 >> 01;
-[800766b4] = w(V0);
-80075C4C	j      L75c60 [$80075c60]
-A0 = 0140;
+if( w[80076a30] > 0 )
+{
+    [800766b4] = w((f0 - w[80076a30]) / 2);
+}
+else
+{
+    [800766b4] = w(0);
+}
 
-L75c54:	; 80075C54
-[800766b4] = w(0);
-A0 = 0140;
-
-L75c60:	; 80075C60
+A0 = 140;
 A1 = f0;
 A2 = 80;
 A3 = 10;
 A4 = 20;
 A5 = 800;
-A6 = hu[80076ae4];
+A6 = hu[80076ae4]; // 16 or 24 bit color
 mdec_init();
 
-V0 = w[80076ac8];
 [801d68b4] = w(0);
-80075C9C	beq    v0, zero, L75cbc [$80075cbc]
-V0 = 0001;
-A0 = S0;
-T0 = 800766b4;
-[SP + 0014] = w(S1);
-80075CB4	j      L75cd0 [$80075cd0]
-[SP + 0018] = w(V0);
 
-L75cbc:	; 80075CBC
-A0 = S0;
-T0 = 800766b4;
-[SP + 0014] = w(S1);
-[SP + 0018] = w(0);
+if( w[80076ac8] != 0 )
+{
+    A6 = 1; // rewind on
+}
+else
+{
+    A6 = 0; // rewind off
+}
 
-L75cd0:	; 80075CD0
-[SP + 001c] = w(0);
-[SP + 0024] = w(0);
-V1 = hu[T0 + 0000];
-A1 = w[80076a38];
-A2 = hu[80076a34];
-A3 = hu[80076a2c];
-[SP + 0030] = w(80075f68);
-[SP + 0010] = w(hu[80076a28]);
-[SP + 0020] = w(hu[T0 + 0000]);
-[SP + 0028] = w((V1 + f0) & ffff);
-[SP + 002c] = w(h[80076a30]);
+A0 = S0; // movie id
+A1 = w[80076a38]; // number of sectors to play
+A2 = hu[80076a34]; // start frame
+A3 = hu[80076a2c]; // end frame
+A4 = hu[80076a28]; // movie channel
+A5 = S1; // movie type
+A7 = 0;
+A8 = hu[800766b4]; // screen draw related
+A9 = 0;
+A10 = (hu[800766b4] + f0) & ffff; // screen draw related
+A11 = h[80076a30]; // screen draw
+A12 = 80075f68; // func75f68()
 func1d37cc();
 
-S5 = 001e;
-S7 = 66666667;
 V0 = w[800766a8];
-S0 = 800767b4;
-A0 = V0 << 02;
-A0 = A0 + V0;
-A0 = A0 << 03;
-A0 = A0 - V0;
-A0 = A0 << 03;
-A0 = A0 + S0;
+A0 = 800767b4 + V0 * 138;
 system_psyq_put_draw_env();
 
-S0 = S0 + 005c;
+S0 = 800767b4 + 5c;
 V0 = w[800766a8];
 FP = S0;
-A0 = V0 << 02;
-A0 = A0 + V0;
-A0 = A0 << 03;
-A0 = A0 - V0;
-A0 = A0 << 03;
-A0 = A0 + FP;
+A0 = FP + V0 * 138;
 system_psyq_put_disp_env();
 
 A0 = 1;
 system_psyq_set_disp_mask();
 
+S5 = 1e;
+S7 = 66666667;
 
-loop75d9c:	; 80075D9C
-V0 = w[800766b0];
-80075DA4	nop
-80075DA8	bne    v0, zero, L75e48 [$80075e48]
-80075DAC	mult   s5, s7
-V1 = S5 >> 1f;
-80075DB4	mfhi   v0
-V0 = V0 >> 02;
-V0 = V0 - V1;
-80075DC0	blez   v0, L75e2c [$80075e2c]
-S4 = 0;
-S6 = V0;
-S2 = 80076a4c;
-S1 = 80076a48;
-S0 = 0001;
 
-loop75de0:	; 80075DE0
-A0 = 1;
-system_psyq_wait_frames();
+while( true )
+{
+    if( w[800766b0] == 0 )
+    {
+        80075DAC	mult   s5, s7
+        V1 = S5 >> 1f;
+        80075DB4	mfhi   v0
+        V0 = V0 >> 02;
+        V0 = V0 - V1;
 
-S3 = V0;
-func1d3f7c();
+        if( V0 > 0 )
+        {
+            S6 = V0;
+            S2 = 80076a4c;
+            S1 = 80076a48;
+            S0 = 0001;
 
-A0 = 1;
-system_psyq_wait_frames();
+            for( int i = 0; i < S6; ++i )
+            {
+                A0 = 1;
+                system_psyq_wait_frames();
+                S3 = V0;
 
-V1 = V0;
-V0 = S0 < 0020;
-80075E00	beq    v0, zero, L75e10 [$80075e10]
-S0 = S0 + 0002;
-[S1 + 0000] = w(S3);
-[S2 + 0000] = w(V1);
+                func1d3f7c();
 
-L75e10:	; 80075E10
-S2 = S2 + 0008;
-S4 = S4 + 0001;
-V0 = S4 < S6;
-80075E1C	bne    v0, zero, loop75de0 [$80075de0]
-S1 = S1 + 0008;
-80075E24	mult   s5, s7
-V1 = S5 >> 1f;
+                A0 = 1;
+                system_psyq_wait_frames();
+                V1 = V0;
 
-L75e2c:	; 80075E2C
-80075E2C	mfhi   v0
-V0 = V0 >> 02;
-V0 = V0 - V1;
-V1 = V0 << 02;
-V1 = V1 + V0;
-V1 = V1 << 01;
-S5 = S5 - V1;
+                if( S0 < 20 )
+                {
+                    [S1 + 0] = w(S3);
+                    [S2 + 0] = w(V1);
+                }
 
-L75e48:	; 80075E48
-S5 = S5 + 001e;
-func76034();
+                S0 = S0 + 2;
+                S2 = S2 + 8;
+                S1 = S1 + 8;
+            }
 
-func19d24();
+            80075E24	mult   s5, s7
+            V1 = S5 >> 1f;
+        }
 
-A0 = 0;
-system_psyq_wait_frames();
+        80075E2C	mfhi   v0
+        V0 = V0 >> 02;
+        V0 = V0 - V1;
+        V1 = V0 << 02;
+        V1 = V1 + V0;
+        V1 = V1 << 01;
+        S5 = S5 - V1;
+    }
 
-V0 = w[800766ac];
-80075E68	nop
-A0 = V0 << 02;
-A0 = A0 + V0;
-A0 = A0 << 03;
-A0 = A0 - V0;
-A0 = A0 << 03;
-A0 = A0 + FP;
-system_psyq_put_disp_env();
+    S5 = S5 + 1e;
+    func76034();
 
-V0 = w[800766a8];
-V1 = w[800766a4];
-[800766ac] = w(V0);
-V0 = 0001;
-80075EA4	beq    v1, v0, L75ec4 [$80075ec4]
-V0 = V1 < 0002;
-80075EAC	bne    v0, zero, loop75d9c [$80075d9c]
-80075EB0	addiu  v0, v1, $ffff (=-$1)
-[800766a4] = w(V0);
-80075EBC	j      loop75d9c [$80075d9c]
-80075EC0	nop
+    func19d24(); // check game reset (all buttons pressed)
 
-L75ec4:	; 80075EC4
-80075EC4	jal    $801d4318
-80075EC8	nop
-V0 = w[800766ac];
-80075ED4	nop
-if( V0 != 0 )
+    A0 = 0;
+    system_psyq_wait_frames();
+
+    V0 = w[800766ac];
+    A0 = FP + V0 * 138;
+    system_psyq_put_disp_env();
+
+    [800766ac] = w(w[800766a8]);
+
+    if( w[800766a4] == 1 )
+    {
+        break;
+    }
+
+    if( w[800766a4] >= 2 )
+    {
+        [800766a4] = w(w[800766a4] - 1);
+    }
+}
+
+func1d4318();
+
+if( w[800766ac] != 0 )
 {
     return 0;
 }
@@ -5357,54 +5323,39 @@ return 0;
 
 
 ////////////////////////////////
-// func75f68
+// func75f68()
 
-V0 = A0 & ffff;
-[800766a0] = w(V0);
-V0 = w[801d68b4];
-A1 = 0001;
-80075F80	bne    v0, a1, L75fbc [$80075fbc]
-V0 = A2 & ffff;
-V1 = w[800766b4];
-80075F90	nop
-80075F94	beq    v0, v1, L75fac [$80075fac]
-80075F98	nop
-[800766a8] = w(0);
-80075FA4	j      L75ff8 [$80075ff8]
-80075FA8	nop
+[800766a0] = w(A0 & ffff);
 
-L75fac:	; 80075FAC
-[800766a8] = w(A1);
-80075FB4	j      L75ff8 [$80075ff8]
-80075FB8	nop
+if( w[801d68b4] == 1 )
+{
+    if( ( A2 & ffff ) != w[800766b4] )
+    {
+        [800766a8] = w(0);
+    }
+    else
+    {
+        [800766a8] = w(1);
+    }
+}
+else
+{
+    if( ( A2 & ffff ) != w[800766b4] )
+    {
+        [800766a8] = w(0);
+        [800766ac] = w(0);
+    }
+    else
+    {
+        [800766a8] = w(1);
+        [800766ac] = w(1);
+    }
+}
 
-L75fbc:	; 80075FBC
-V1 = w[800766b4];
-80075FC4	nop
-80075FC8	beq    v0, v1, L75fe8 [$80075fe8]
-80075FCC	nop
-[800766a8] = w(0);
-[800766ac] = w(0);
-80075FE0	j      L75ff8 [$80075ff8]
-80075FE4	nop
-
-L75fe8:	; 80075FE8
-[800766a8] = w(A1);
-[800766ac] = w(A1);
-
-L75ff8:	; 80075FF8
-V1 = w[80076a2c];
-V0 = A0 & ffff;
-V0 = V0 < V1;
-80076008	bne    v0, zero, L7602c [$8007602c]
-8007600C	nop
-V0 = w[80076ac8];
-80076018	nop
-8007601C	bne    v0, zero, L7602c [$8007602c]
-V0 = 0001;
-[800766a4] = w(V0);
-
-L7602c:	; 8007602C
+if( ( ( A0 & ffff ) >= w[80076a2c] ) && ( w[80076ac8] == 0 ) )
+{
+    [800766a4] = w(1);
+}
 ////////////////////////////////
 
 

@@ -1,3 +1,9 @@
+800766a0 [][][][] 
+800766a4 [][][][] init with 0.
+800766a8 [][][][] init with 0.
+800766ac [][][][] current frame buffer id (0 or 1). Init with 0.
+800766b0 [][][][] init with 0.
+800766b4 [][][][] -1 if screen draw all, (0xf0 - screen draw / 2) otherwise.
 800766b8 [][][][]
 
 
@@ -15,18 +21,25 @@
 80076a24 [][][][] init with 0.
 80076a28 [][][][] movie channel.
 80076a2c [][][][] end frame. Init with 0xc80. Set to hu[80061ba4] if bu[8004f4e8] & 80, 0xe9 otherwise.
-80076a30 [][][][] init with -1.
+80076a30 [][][][] screen draw. Init with -1.
+                   -1 - all
+                    else - some number
 80076a34 [][][][] start frame.
 80076a38 [][][][] number of sectors to play (-1 for mpay till the end of file).
 80076a3c [][][][] pressed button mask.
 
 80076a40 [][][][] init with 0.
 
-80076ac8 [][][][] init with 0.
-80076acc [][][][] init with 0.
-
+80076ac8 [][][][] rewind. Init with 0.
+                    0 - off
+                    else - on
+80076acc [][][][] type of end frame. Init with 0.
+                    0 - fixed end frame.
+                    2 - unknown ("???").
 80076ad0 [][][][] init with 0 for movie play.
-80076ad4 [][][][] init with 2.
+80076ad4 [][][][] type of start frame. Init with 2.
+                    1 - fixed start frame.
+                    2 - dynamic start frame.
 80076ad8 [][][][] movie type
                     0 - picture only
                     1 - picture + adpcm
@@ -34,7 +47,9 @@
 80076adc [][][][] init with 0.
 
 80076ae0 [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
-                  0 - CD-ROM MODE1
-                 -1 - CD-ROM MODE2
+                    0 - CD-ROM MODE1
+                   -1 - CD-ROM MODE2
                   else - PC HDD MODE
-80076ae4 [][][][] init with 1.
+80076ae4 [][][][] screen mode. Init with 1.
+                    0 - 16 BIT COLOR
+                    else - 24 BIT COLOR
