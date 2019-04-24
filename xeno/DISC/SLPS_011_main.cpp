@@ -274,11 +274,11 @@ system_filesystem_get_disc_number();
 
 if( V0 == 1 ) // disc 1
 {
-    [8004f4e9] = b(10);
+    [8004f4e9] = b(10); // start movie id
 }
 else // disc 2
 {
-    [8004f4e9] = b(7);
+    [8004f4e9] = b(7); // start movie id
 }
 
 A0 = 0;

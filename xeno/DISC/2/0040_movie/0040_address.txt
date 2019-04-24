@@ -1,4 +1,8 @@
-800767ac [][][][] init with 0.
+800766b8 [][][][]
+
+
+800767a8 [][][][] movie debug menu cursor position.
+800767ac [][][][] movie id to play.
 
 800767b0 [][][][] pointer to enviroments 800767b4.
 
@@ -9,19 +13,24 @@
     +194 display enviroment 1 (0x14 size).
 
 80076a24 [][][][] init with 0.
-80076a28 [][][][] init with 1.
-80076a2c [][][][] init with 0xc80.
+80076a28 [][][][] movie channel.
+80076a2c [][][][] end frame. Init with 0xc80. Set to hu[80061ba4] if bu[8004f4e8] & 80, 0xe9 otherwise.
 80076a30 [][][][] init with -1.
-80076a34 [][][][] init with 1.
-80076a38 [][][][] init with 0.
+80076a34 [][][][] start frame.
+80076a38 [][][][] number of sectors to play (-1 for mpay till the end of file).
+80076a3c [][][][] pressed button mask.
 
 80076a40 [][][][] init with 0.
 
 80076ac8 [][][][] init with 0.
 80076acc [][][][] init with 0.
 
+80076ad0 [][][][] init with 0 for movie play.
 80076ad4 [][][][] init with 2.
-80076ad8 [][][][] init with 1.
+80076ad8 [][][][] movie type
+                    0 - picture only
+                    1 - picture + adpcm
+                    2 - adpcm only
 80076adc [][][][] init with 0.
 
 80076ae0 [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.

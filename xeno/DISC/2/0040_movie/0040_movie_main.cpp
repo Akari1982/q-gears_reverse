@@ -2818,7 +2818,7 @@ system_psyq_put_disp_env();
 
 if( w[80076ae0] != 0 ) // CD-ROM MODE2 or PC HDD MODE
 {
-    A0 = 2;
+    A0 = 2; // wait 2 frame
     system_psyq_wait_frames();
 
     A0 = 0;
@@ -2834,16 +2834,15 @@ if( bu[8004f4e8] != ff )
 {
     if( ( w[80076a3c] & 0100 ) == 0 ) // select
     {
+        // normal movie play
         [80076ad0] = w(0);
         [80076a28] = w(1);
         [80076a34] = w(1);
 
-        [800767ac] = w(bu[8004f4e9]);
+        [800767ac] = w(bu[8004f4e9]); // movie id
+        [80076ad8] = w(bu[8004f4e8] & 007f); // movie type
 
-        V1 = bu[8004f4e8];
-        [80076ad8] = w(V1 & 007f);
-
-        if( V1 & 0080 )
+        if( bu[8004f4e8] & 80 )
         {
             [80076a2c] = w(hu[80061ba4]);
         }
@@ -5032,61 +5031,70 @@ L75a38:	; 80075A38
 
 
 ////////////////////////////////
-// func75a4c
+// func75a4c()
 
-A0 = A0 & 00ff;
-V1 = w[80076ad8];
-80075A5C	addiu  v0, zero, $ffff (=-$1)
 [800766b8] = w(A0);
-[80076a3c] = w(V0);
-80075A74	bne    v1, zero, L75a90 [$80075a90]
-V0 = 0001;
-A0 = 0018;
-80075A80	jal    $system_filesystem_set_dir
-A1 = 0;
-80075A88	j      L75aa8 [$80075aa8]
-A0 = 0002;
 
-L75a90:	; 80075A90
-80075A90	bne    v1, v0, L75ad4 [$80075ad4]
-V0 = 0002;
-A0 = 0018;
-80075A9C	jal    $system_filesystem_set_dir
-A1 = 0001;
-A0 = 0001;
+[80076a3c] = w(-1); // pressed button mask
 
-L75aa8:	; 80075AA8
-80075AA8	jal    $system_cdrom_get_number_of_files_in_dir
-80075AAC	nop
-V0 = V0 << 10;
-V1 = w[800767ac];
-V0 = V0 >> 10;
-V1 = V1 < V0;
-80075AC4	beq    v1, zero, L75b08 [$80075b08]
-80075AC8	nop
-80075ACC	j      L75ae0 [$80075ae0]
-V0 = 0001;
+if( w[80076ad8] == 0 ) // movie type picture only
+{
+    A0 = 18;
+    A1 = 0;
+    system_filesystem_set_dir();
 
-L75ad4:	; 80075AD4
-80075AD4	beq    v1, v0, L75b08 [$80075b08]
-80075AD8	nop
-V0 = 0001;
+    A0 = 2;
+    system_cdrom_get_number_of_files_in_dir();
 
-L75ae0:	; 80075AE0
-[800767cc] = b(0);
-[80076904] = b(0);
-[80076821] = b(V0);
-[80076959] = b(V0);
-80075B00	jal    func75b18 [$80075b18]
-80075B04	nop
+    // movie inside movie dir
+    if( w[800767ac] < V0 )
+    {
+        // 0: Does not clear drawing area when drawing environment is set
+        [800767b4 + 18] = b(0);
+        [800767b4 + 138 + 18] = b(0);
+        // 1: 24-bit mode
+        [800767b4 + 5c + 11] = b(1);
+        [800767b4 + 194 + 11] = b(1);
 
-L75b08:	; 80075B08
+        func75b18();
+    }
+}
+else if( w[80076ad8] == 1 ) // movie type picture + adpcm
+{
+    A0 = 18;
+    A1 = 1;
+    system_filesystem_set_dir();
+
+    A0 = 1;
+    system_cdrom_get_number_of_files_in_dir();
+
+    // movie inside movie dir
+    if( w[800767ac] < V0 )
+    {
+        [800767b4 + 18] = b(0);
+        [800767b4 + 138 + 18] = b(0);
+        [800767b4 + 5c + 11] = b(1);
+        [800767b4 + 194 + 11] = b(1);
+
+        func75b18();
+    }
+}
+else if( w[80076ad8] != 2 ) // movie type not adpcm only
+{
+    [800767b4 + 18] = b(0);
+    [800767b4 + 138 + 18] = b(0);
+    [800767b4 + 5c + 11] = b(1);
+    [800767b4 + 194 + 11] = b(1);
+
+    func75b18();
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func75b18
+// func75b18()
+// play movie
 
 V0 = w[80076ad8];
 A2 = 8006fb70;
@@ -5122,8 +5130,7 @@ A0 = 1;
 system_psyq_set_disp_mask();
 
 [8004f4ea] = b(0);
-80075BD4	j      L75f34 [$80075f34]
-80075BD8	nop
+return 0;
 
 L75bdc:	; 80075BDC
 A0 = 0;
@@ -5314,8 +5321,11 @@ L75ec4:	; 80075EC4
 80075EC8	nop
 V0 = w[800766ac];
 80075ED4	nop
-80075ED8	bne    v0, zero, L75f34 [$80075f34]
-V0 = 0;
+if( V0 != 0 )
+{
+    return 0;
+}
+
 A0 = 0;
 system_draw_sync();
 
@@ -5338,12 +5348,10 @@ system_draw_sync();
 A0 = 0;
 system_psyq_wait_frames();
 
-A0 = FP + 0138;
+A0 = FP + 138;
 system_psyq_put_disp_env();
 
-V0 = 0;
-
-L75f34:	; 80075F34
+return 0;
 ////////////////////////////////
 
 
