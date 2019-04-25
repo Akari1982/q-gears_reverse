@@ -4292,7 +4292,6 @@ A0 = S0;
 A1 = 0;
 system_sound_load_snd_file();
 
-
 loop74b48:	; 80074B48
     A0 = 0;
     func3bca4();
@@ -4944,88 +4943,82 @@ system_filesystem_set_dir();
 
 
 ////////////////////////////////
-// func758ec
+// func758ec()
 
-A1 = 8006fb70;
-80075900	lwl    v0, $0003(a1)
-80075904	lwr    v0, $0000(a1)
-80075908	lwl    v1, $0007(a1)
-8007590C	lwr    v1, $0004(a1)
-80075910	swl    v0, $002b(sp)
-80075914	swr    v0, $0028(sp)
-80075918	swl    v1, $002f(sp)
-8007591C	swr    v1, $002c(sp)
-V1 = w[80076ad8];
-80075928	addiu  v0, zero, $ffff (=-$1)
+[SP + 28] = w(w[8006fb70 + 0]);
+[SP + 2с] = w(w[8006fb70 + 4]);
+
 [800766b8] = w(0);
-[80076a3c] = w(V0);
-8007593C	bne    v1, zero, L75958 [$80075958]
-V0 = 0001;
-A0 = 0018;
-80075948	jal    $system_filesystem_set_dir
-A1 = 0;
-80075950	j      L75970 [$80075970]
-A0 = 0002;
+[80076a3c] = w(-1);
 
-L75958:	; 80075958
-80075958	bne    v1, v0, L759a4 [$800759a4]
-V0 = 0002;
-A0 = 0018;
-80075964	jal    $system_filesystem_set_dir
-A1 = 0001;
-A0 = 0001;
+V1 = w[80076ad8];
 
-L75970:	; 80075970
-80075970	jal    $system_cdrom_get_number_of_files_in_dir
-80075974	nop
-V0 = V0 << 10;
-V1 = w[800767ac];
-V0 = V0 >> 10;
-V1 = V1 < V0;
-8007598C	beq    v1, zero, L75a38 [$80075a38]
-80075990	nop
-80075994	jal    $system_psyq_set_disp_mask
+if( V1 == 0 )
+{
+    A0 = 18;
+    A1 = 0;
+    system_filesystem_set_dir();
+
+    A0 = 2;
+}
+else if( V1 == 1 )
+{
+    A0 = 18;
+    A1 = 1;
+    system_filesystem_set_dir();
+
+    A0 = 1;
+}
+else if( V1 == 2 )
+{
+    return;
+}
+
+system_cdrom_get_number_of_files_in_dir();
+
+if( w[800767ac] >= V0 )
+{
+    return;
+}
+
 A0 = 0;
-8007599C	j      L759ac [$800759ac]
-800759A0	nop
+system_psyq_set_disp_mask();
 
-L759a4:	; 800759A4
-800759A4	beq    v1, v0, L75a38 [$80075a38]
-800759A8	nop
+[800767cc] = b(0);
+[800767cc + 138] = b(0);
 
-L759ac:	; 800759AC
-V0 = w[80076ae4];
-S0 = 800767cc;
-[S0 + 0000] = b(0);
-800759C0	beq    v0, zero, L759dc [$800759dc]
-[S0 + 0138] = b(0);
-V0 = 0001;
-[80076821] = b(V0);
-[80076959] = b(V0);
+if( w[80076ae4] != 0 )
+{
+    [80076821] = b(1);
+    [80076959] = b(1);
+}
 
-L759dc:	; 800759DC
-800759DC	jal    func75b18 [$80075b18]
-800759E0	nop
-800759E4	jal    $system_psyq_wait_frames
+func75b18(); // play movie
+
 A0 = 0;
-A0 = SP + 0028;
+system_psyq_wait_frames();
+
+A0 = SP + 28;
 A1 = 0;
 A2 = 0;
-800759F8	jal    $system_clear_image
 A3 = 0;
-80075A00	jal    $system_draw_sync
-A0 = 0;
-80075A08	jal    $system_psyq_wait_frames
-A0 = 0;
-V1 = w[80076ae4];
-V0 = 0001;
-[S0 + 0000] = b(V0);
-80075A20	beq    v1, zero, L75a38 [$80075a38]
-[S0 + 0138] = b(V0);
-[80076821] = b(0);
-[80076959] = b(0);
+system_clear_image();
 
-L75a38:	; 80075A38
+A0 = 0;
+system_draw_sync();
+
+A0 = 0;
+system_psyq_wait_frames();
+
+V1 = w[80076ae4];
+
+[800767cc] = b(1);
+[800767cc + 138] = b(1);
+if( V1 != 0 )
+{
+    [80076821] = b(0);
+    [80076959] = b(0);
+}
 ////////////////////////////////
 
 
