@@ -412,7 +412,7 @@ if( A0 != 0 )
 }
 
 //   main()   start    mem heap load
-// 0 8001A348 80058954 8006F17C 00000000
+// 0 8001A348 80058954 8006F17C 00000000 // kernel      func1a348()
 // 1 80077518 800AEAB8 800C3740 00000001 // field
 // 2 8001B550 800C31A4 800D3110 00000001 // battle
 // 3 8007038C 8009AF98 8009CBF4 00000001 // worldmap
@@ -488,7 +488,7 @@ func31840(); // reset mem owner and type data
 func35c84(); // clear button input
 
 A0 = 0;
-func199f0(); // set next exe to load
+func199f0(); // set kernel exe to load
 
 80019C88	jalr   w[S1 + 0] ra
 
@@ -857,7 +857,7 @@ if( hu[80058b40] & 4000 )
 if( hu[80058b28] & 0020 )
 {
     A0 = w[8004e97c] + 1;
-    8001A27C	jal    func199f0 [$800199f0]
+    func199f0();
 
     [8005896c] = w(0);
 }
@@ -898,59 +898,59 @@ A0 = w[80058968];
 
 func1a0e4();
 
-V0 = 0001;
-[8005896c] = w(V0);
+[8005896c] = w(1);
 [80058964] = w(0);
 
 loop1a36c:	; 8001A36C
-A1 = w[80058960];
-V1 = 80058c84;
-A1 = A1 + 0001;
-A2 = A1 & 0001;
-V0 = A2 << 04;
-V0 = V0 + A2;
-V0 = V0 << 03;
-V0 = V0 + V1;
-S0 = V0 + 0070;
-[80058960] = w(A1);
-[80058964] = w(A2);
-[80058968] = w(V0);
-8001A3B0	jal    func43a5c [$80043a5c]
-A0 = S0;
+    A1 = w[80058960];
+    V1 = 80058c84;
+    A1 = A1 + 0001;
+    A2 = A1 & 0001;
+    V0 = A2 << 04;
+    V0 = V0 + A2;
+    V0 = V0 << 03;
+    V0 = V0 + V1;
+    S0 = V0 + 0070;
+    [80058960] = w(A1);
+    [80058964] = w(A2);
+    [80058968] = w(V0);
+    8001A3B0	jal    func43a5c [$80043a5c]
+    A0 = S0;
 
-A0 = S0;
-system_print_render_strings();
+    A0 = S0;
+    system_print_render_strings();
 
-8001A3C0	jal    func1a1d8 [$8001a1d8]
-8001A3C4	nop
-A1 = w[80058968];
-A0 = S0;
-8001A3D4	jal    func439c0 [$800439c0]
-A1 = A1 + 0074;
-8001A3DC	jal    system_draw_sync [$80044448]
-A0 = 0;
-8001A3E4	jal    system_psyq_wait_frames [$8004b3f4]
-A0 = 0;
-A0 = w[80058968];
-8001A3F4	jal    system_psyq_put_draw_env [$80044abc]
-8001A3F8	nop
-A0 = w[80058968];
-8001A404	jal    system_psyq_put_disp_env [$80044d14]
-A0 = A0 + 005c;
-8001A40C	jal    system_psyq_draw_otag [$80044a48]
-A0 = S0;
-V0 = w[8005896c];
-8001A41C	nop
-8001A420	bne    v0, zero, loop1a36c [$8001a36c]
-8001A424	nop
-V0 = w[80058964];
-8001A430	nop
+    func1a1d8(); // draw kernel
+
+    A1 = w[80058968];
+    A0 = S0;
+    8001A3D4	jal    func439c0 [$800439c0]
+    A1 = A1 + 0074;
+    8001A3DC	jal    system_draw_sync [$80044448]
+    A0 = 0;
+    8001A3E4	jal    system_psyq_wait_frames [$8004b3f4]
+    A0 = 0;
+    A0 = w[80058968];
+    8001A3F4	jal    system_psyq_put_draw_env [$80044abc]
+    8001A3F8	nop
+    A0 = w[80058968];
+    8001A404	jal    system_psyq_put_disp_env [$80044d14]
+    A0 = A0 + 005c;
+    8001A40C	jal    system_psyq_draw_otag [$80044a48]
+    A0 = S0;
+    V0 = w[8005896c];
+    8001A41C	nop
+    8001A420	bne    v0, zero, loop1a36c [$8001a36c]
+    8001A424	nop
+    V0 = w[80058964];
+    8001A430	nop
 8001A434	beq    v0, zero, loop1a36c [$8001a36c]
-8001A438	nop
-8001A43C	jal    system_draw_sync [$80044448]
+
 A0 = 0;
-8001A444	jal    func19b50 [$80019b50]
+system_draw_sync();
+
 A0 = 0;
+func19b50();
 ////////////////////////////////
 
 
@@ -2080,8 +2080,7 @@ V0 = 01ea;
 [8006efe4] = h(0);
 
 L1b694:	; 8001B694
-8001B694	jal    func199f0 [$800199f0]
-8001B698	nop
+func199f0();
 
 L1b69c:	; 8001B69C
 V0 = bu[80058b18];
@@ -2092,7 +2091,7 @@ V0 = 0001;
 
 L1b6b8:	; 8001B6B8
 A0 = 0;
-8001B6B8	jal    func19b50 [$80019b50]
+func19b50();
 ////////////////////////////////
 
 
