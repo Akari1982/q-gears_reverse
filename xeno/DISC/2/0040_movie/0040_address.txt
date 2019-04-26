@@ -1,3 +1,6 @@
+8007657c [][][][] timer for buttons hold.
+80076580 [][][][] treshhold for buttons repeat.
+
 800766a0 [][][][] 
 800766a4 [][][][] init with 0.
 800766a8 [][][][] init with 0.
@@ -18,7 +21,7 @@
     +138 draw enviroment 2 (0x5c size).
     +194 display enviroment 1 (0x14 size).
 
-80076a24 [][][][] init with 0.
+80076a24 [][][][] init with 0. Set to 1-value if start is pressed. Memory full dump?
 80076a28 [][][][] movie channel.
 80076a2c [][][][] end frame. Init with 0xc80. Set to hu[80061ba4] if bu[8004f4e8] & 80, 0xe9 otherwise.
 80076a30 [][][][] screen draw. Init with -1.
@@ -27,8 +30,8 @@
 80076a34 [][][][] start frame.
 80076a38 [][][][] number of sectors to play (-1 for mpay till the end of file).
 80076a3c [][][][] pressed button mask.
-
-80076a40 [][][][] init with 0.
+80076a40 [][][][] init with 0. Set to 1-value if select is pressed.
+80076a44 [][][][] prev pressed button mask.
 
 80076ac8 [][][][] rewind. Init with 0.
                     0 - off
