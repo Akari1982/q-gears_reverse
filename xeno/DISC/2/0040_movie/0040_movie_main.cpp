@@ -3523,7 +3523,7 @@ system_draw_sync();
 // func74234()
 
 V1 = w[80076ad8];
-S3 = A0;
+start_frame = A0; // start frame
 S6 = 0;
 
 if( V1 == 0 )
@@ -3546,52 +3546,44 @@ if( V1 == 0 )
     S0 = V0;
 
     S7 = 800;
-    T0 = 20;
-    [SP + 1018] = w(T0);
+    [SP + 1018] = w(20);
     [SP + 1020] = w(0);
     800742BC	j      L74330 [$80074330]
 }
-
-V0 = 0001;
-800742C8	beq    v1, v0, L742e0 [$800742e0]
-V0 = 0002;
-800742D0	bne    v1, v0, L74334 [$80074334]
-V0 = S3 < 0002;
-return -1
-
-L742e0:	; 800742E0
-A0 = 18;
-A1 = 1;
-system_filesystem_set_dir();
-
-A0 = 1;
-system_cdrom_get_number_of_files_in_dir();
-
-V0 = V0 << 10;
-A0 = w[800767ac];
-V0 = V0 >> 10;
-V0 = A0 < V0;
-S5 = A0 + 0002;
-if( V0 == 0 )
+else if( V1 == 1 )
 {
-    return 0;
+    A0 = 18;
+    A1 = 1;
+    system_filesystem_set_dir();
+
+    A0 = 1;
+    system_cdrom_get_number_of_files_in_dir();
+
+    V0 = V0 << 10;
+    A0 = w[800767ac];
+    V0 = V0 >> 10;
+    V0 = A0 < V0;
+    S5 = A0 + 0002;
+    if( V0 == 0 )
+    {
+        return 0;
+    }
+
+    A0 = S5;
+    system_filesystem_get_debug_filename();
+
+    S0 = V0;
+    S7 = 0920;
+    [SP + 1018] = w(28);
+    [SP + 1020] = w(8);
+
+}
+else if ( V1 == 2 )
+{
+    return -1;
 }
 
-A0 = S5;
-system_filesystem_get_debug_filename();
-
-S0 = V0;
-S7 = 0920;
-T0 = 0028;
-[SP + 1018] = w(T0);
-T0 = 0008;
-[SP + 1020] = w(T0);
-
-L74330:	; 80074330
-V0 = S3 < 0002;
-
-L74334:	; 80074334
-if( V0 != 0 )
+if( start_frame < 2 )
 {
     return 0;
 }
@@ -3621,15 +3613,15 @@ A2 = w[SP + 1018];
 system_devkit_pc_read_all();
 
 T0 = w[SP + 1020];
-S2 = SP + 0018;
+S2 = SP + 18;
 S1 = S2 + T0;
-FP = hu[S1 + 0006];
-V0 = S3 - 1;
+FP = hu[S1 + 6];
+V0 = start_frame - 1;
 V1 = V0 * FP;
 A0 = S4;
 if( V0 < 0 )
 {
-    V0 = S3 + 0002;
+    V0 = start_frame + 2;
 }
 
 S0 = V1 - V0 / 4;
@@ -3645,13 +3637,13 @@ system_devkit_pc_read_all();
 
 V1 = w[S1 + 0008];
 800743E0	nop
-800743E4	bne    v1, s3, L743f4 [$800743f4]
+800743E4	bne    v1, start_frame, L743f4 [$800743f4]
 A0 = V0;
 800743EC	bne    a0, zero, L744a4 [$800744a4]
 800743F0	nop
 
 L743f4:	; 800743F4
-if( w[S1 + 8] < S3 )
+if( w[S1 + 8] < start_frame )
 {
     if( S6 < S0 )
     {
@@ -3662,25 +3654,18 @@ if( w[S1 + 8] < S3 )
     }
 }
 
-V0 = S3 - 1;
+V0 = start_frame - 1;
 V1 = V0 * FP;
-A0 = S4;
 if( V0 < 0 )
 {
-    V0 = S3 + 2;
+    V0 = start_frame + 2;
 }
-V0 = V0 / 4;
-S0 = V1 - V0;
-V0 = 92492493;
-80074444	mult   s0, v0
-V1 = S0 >> 1f;
-8007444C	mfhi   v0
-V0 = V0 + S0;
-V0 = V0 >> 02;
-V0 = V0 - V1;
-S0 = S0 + V0;
-A1 = S0 * S7;
-A2 = 0;
+S0 = V1 - (V0 / 4);
+S0 = S0 + (((hi(S0 * 92492493) + S0) >> 2) - (S0 >> 1f)); // ((4 * n) / 7 + n ) >> 2
+
+A0 = S4; // file
+A1 = S0 * S7; // offset
+A2 = 0; // from beginning
 system_devkit_pc_seek();
 
 A0 = S4;
@@ -3693,38 +3678,40 @@ V1 = SP + 0018;
 S1 = V1 + T0;
 V1 = w[S1 + 0008];
 80074490	nop
-80074494	bne    v1, s3, L744c0 [$800744c0]
+80074494	bne    v1, start_frame, L744c0 [$800744c0]
 A0 = V0;
 8007449C	beq    a0, zero, L744c0 [$800744c0]
 800744A0	nop
 
 L744a4:	; 800744A4
 V0 = hu[S1 + 0004];
-800744A8	nop
-800744AC	beq    v0, zero, L74584 [$80074584]
-800744B0	nop
+if( V0 == 0 )
+{
+    A0 = S4;
+    system_devkit_pc_close();
+
+    return S0;
+}
+
 S0 = S0 - V0;
+S2 = S0 - 2;
 800744B8	j      L74504 [$80074504]
-800744BC	addiu  s2, s0, $fffe (=-$2)
 
 L744c0:	; 800744C0
-V0 = w[S1 + 0008];
-800744C4	nop
-V0 = V0 < S3;
-800744CC	beq    v0, zero, L744ec [$800744ec]
-800744D0	addiu  v1, fp, $ffff (=-$1)
-V0 = S6 < S0;
-800744D8	beq    v0, zero, L744ec [$800744ec]
-800744DC	nop
-800744E0	beq    a0, zero, L744f0 [$800744f0]
-800744E4	addiu  v0, s3, $ffff (=-$1)
-S6 = S0;
+V1 = FP - 1;
 
-L744ec:	; 800744EC
-800744EC	addiu  v0, s3, $ffff (=-$1)
+if( w[S1 + 8] < start_frame )
+{
+    if( S6 < S0 )
+    {
+        if( A0 != 0 )
+        {
+            S6 = S0;
+        }
+    }
+}
 
-L744f0:	; 800744F0
-S2 = V1 * V0;
+S2 = V1 * (start_frame - 1);
 if( S6 > 0 )
 {
     S2 = S6;
@@ -3732,46 +3719,39 @@ if( S6 > 0 )
 
 L74504:	; 80074504
 T0 = w[SP + 1020];
-V0 = SP + 0018;
-S1 = V0 + T0;
+S1 = SP + 18 + T0;
 
 loop74510:	; 80074510
-S0 = S2;
-A0 = S4;
-A1 = S2 * S7;
-A2 = 0;
-system_devkit_pc_seek();
+    S0 = S2;
+    A0 = S4;
+    A1 = S2 * S7;
+    A2 = 0;
+    system_devkit_pc_seek();
 
-A0 = S4;
-A2 = w[SP + 1018];
-A1 = SP + 0018;
-system_devkit_pc_read_all();
+    A0 = S4;
+    A2 = w[SP + 1018];
+    A1 = SP + 0018;
+    system_devkit_pc_read_all();
+    A0 = V0;
 
-A0 = V0;
-V1 = hu[S1 + 0000];
-V0 = 0160;
-80074544	bne    v1, v0, L74560 [$80074560]
-S2 = S0 + 0001;
-V0 = hu[S1 + 0006];
-V1 = hu[S1 + 0004];
-80074554	nop
-V0 = V0 - V1;
-S2 = S0 + V0;
+    S2 = S0 + 1;
 
-L74560:	; 80074560
-V0 = w[S1 + 0008];
-80074564	nop
-80074568	beq    v0, s3, L74578 [$80074578]
-8007456C	nop
+    if( hu[S1 + 0] == 160 )
+    {
+        S2 = S0 + hu[S1 + 6] - hu[S1 + 4];
+    }
+
+    if( w[S1 + 8] == start_frame )
+    {
+        break;
+    }
 80074570	bgtz   a0, loop74510 [$80074510]
-80074574	nop
 
-L74578:	; 80074578
-80074578	bne    a0, zero, L74584 [$80074584]
-8007457C	nop
-80074580	addiu  s0, zero, $ffff (=-$1)
+if( A0 == 0 )
+{
+    S0 = -1;
+}
 
-L74584:	; 80074584
 A0 = S4;
 system_devkit_pc_close();
 
@@ -3798,14 +3778,14 @@ system_get_aligned_filesize_by_dir_file_id();
 
 V0 = V0 + S7 - 1;
 S4 = V0 / S7;
-800745FC	addiu  v0, s3, $ffff (=-$1)
+800745FC	addiu  v0, start_frame, $ffff (=-$1)
 
 V1 = V0 * FP;
 
 S1 = SP + 18;
 8007460C	bgez   v0, L74618 [$80074618]
 
-V0 = S3 + 2;
+V0 = start_frame + 2;
 
 L74618:	; 80074618
 V0 = V0 >> 02;
@@ -3825,7 +3805,7 @@ A0 = 0;
 system_cdrom_action_sync();
 
 V0 = w[SP + 0020];
-80074650	bne    v0, s3, L7466c [$8007466c]
+80074650	bne    v0, start_frame, L7466c [$8007466c]
 V0 = S0 < S4;
 80074658	beq    v0, zero, L7466c [$8007466c]
 8007465C	nop
@@ -3836,32 +3816,31 @@ V0 = hu[SP + 001c];
 L7466c:	; 8007466C
 V0 = w[S1 + 0008];
 80074670	nop
-V0 = V0 < S3;
+V0 = V0 < start_frame;
 80074678	beq    v0, zero, L74694 [$80074694]
 V0 = S6 < S0;
 80074680	beq    v0, zero, L74694 [$80074694]
 V0 = S0 < S4;
 80074688	beq    v0, zero, L74698 [$80074698]
-8007468C	addiu  v0, s3, $ffff (=-$1)
+8007468C	addiu  v0, start_frame, $ffff (=-$1)
 S6 = S0;
 
 L74694:	; 80074694
-80074694	addiu  v0, s3, $ffff (=-$1)
+80074694	addiu  v0, start_frame, $ffff (=-$1)
 
 L74698:	; 80074698
 V1 = V0 * FP;
 A0 = S5;
 800746A0	bgez   v0, L746ac [$800746ac]
 
-V0 = S3 + 2;
+V0 = start_frame + 2;
 
 L746ac:	; 800746AC
 V0 = V0 >> 02;
 S0 = V1 - V0;
 V0 = 92492493;
-800746BC	mult   s0, v0
+V0 = hi(S0 * V0);
 V1 = S0 >> 1f;
-800746C4	mfhi   v0
 V0 = V0 + S0;
 V0 = V0 >> 02;
 V0 = V0 - V1;
@@ -3881,8 +3860,8 @@ system_cdrom_action_sync();
 
 V0 = w[S1 + 0008];
 80074700	nop
-80074704	bne    v0, s3, L74740 [$80074740]
-V0 = V0 < S3;
+80074704	bne    v0, start_frame, L74740 [$80074740]
+V0 = V0 < start_frame;
 V0 = S0 < S4;
 80074710	beq    v0, zero, L74734 [$80074734]
 80074714	nop
@@ -3897,7 +3876,7 @@ S0 = S0 - V0;
 80074730	addiu  s2, s0, $fffe (=-$2)
 
 L74734:	; 80074734
-V0 = w[S1 + 8] < S3;
+V0 = w[S1 + 8] < start_frame;
 
 L74740:	; 80074740
 80074740	beq    v0, zero, L74760 [$80074760]
@@ -3906,11 +3885,11 @@ V0 = S6 < S0;
 8007474C	beq    v0, zero, L74760 [$80074760]
 V0 = S0 < S4;
 80074754	beq    v0, zero, L74764 [$80074764]
-80074758	addiu  v0, s3, $ffff (=-$1)
+80074758	addiu  v0, start_frame, $ffff (=-$1)
 S6 = S0;
 
 L74760:	; 80074760
-80074760	addiu  v0, s3, $ffff (=-$1)
+80074760	addiu  v0, start_frame, $ffff (=-$1)
 
 L74764:	; 80074764
 S2 = V1 * V0;
@@ -3944,7 +3923,7 @@ L7477c:	; 8007477C
     }
 
     S2 = S0 + 1;
-    if( w[S1 + 8] == S3 )
+    if( w[S1 + 8] == start_frame )
     {
         break;
     }

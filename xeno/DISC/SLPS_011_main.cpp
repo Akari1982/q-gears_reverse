@@ -412,8 +412,8 @@ if( A0 != 0 )
 }
 
 //   main()   start    mem heap load
-// 0 8001A348 80058954 8006F17C 00000000 // kernel      func1a348()
-// 1 80077518 800AEAB8 800C3740 00000001 // field
+// 0 8001A348 80058954 8006F17C 00000000 // kernel      kernel_main()
+// 1 80077518 800AEAB8 800C3740 00000001 // field       field_main()
 // 2 8001B550 800C31A4 800D3110 00000001 // battle
 // 3 8007038C 8009AF98 8009CBF4 00000001 // worldmap
 // 4 800884D4 80091C0C 8009AB90 00000001 // battling
@@ -751,31 +751,28 @@ L19f48:	; 80019F48
 
 
 ////////////////////////////////
-// func1a078
-S0 = A0 << 04;
-S0 = S0 + A0;
-S0 = S0 << 03;
-V0 = 80058c84;
-S0 = S0 + V0;
-V0 = 0001;
-[S0 + 0018] = b(V0);
-[S0 + 0016] = b(V0);
-V0 = 0020;
-A0 = S0 + 0074;
-[S0 + 0019] = b(0);
-[S0 + 001a] = b(0);
-8001A0B8	jal    func43ac4 [$80043ac4]
-[S0 + 001b] = b(V0);
-V0 = 00ff;
-[S0 + 0078] = b(V0);
-[S0 + 0079] = b(V0);
-[S0 + 007a] = b(V0);
+// kernel_create_cursor();
+
+S0 = 80058c84 + A0 * 88;
+
+[S0 + 16] = b(1); // dithering processing flag. 1: on
+[S0 + 18] = b(1); // Paints entire clip area with brightness values (r0, g0, b0) when drawing
+[S0 + 19] = b(0); // r
+[S0 + 1a] = b(0); // g
+[S0 + 1b] = b(20); // b
+
+A0 = S0 + 74;
+system_graphic_mono_triangle_header();
+
+[S0 + 78] = b(ff); // r
+[S0 + 79] = b(ff); // g
+[S0 + 7a] = b(ff); // b
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1a0e4()
+// kernel_init_graphic()
 
 A0 = 6; // SUGI
 A1 = 0;
@@ -794,48 +791,47 @@ A9 = 1ff;   // clut y
 A10 = 0;    // file
 system_print_init(); // LsFONT
 
-S1 = 80058c84;
-A0 = S1;
+A0 = 80058c84;
 A1 = 0;
 A2 = 0;
-A3 = 0140;
-S0 = 00e0;
-[SP + 0010] = w(S0);
+A3 = 140;
+A4 = e0;
 system_graphic_create_draw_env_struct();
 
-A0 = S1 + 0088;
+A0 = 80058c84 + 88;
 A1 = 0;
-A2 = 00f0;
-A3 = 0140;
-[SP + 0010] = w(S0);
+A2 = f0;
+A3 = 140;
+A4 = e0;
 system_graphic_create_draw_env_struct();
 
-A0 = S1 + 005c;
+A0 = 80058c84 + 5c;
 A1 = 0;
-A2 = 00f0;
-A3 = 0140;
-[SP + 0010] = w(S0);
+A2 = f0;
+A3 = 140;
+A4 = e0;
 system_graphic_create_display_env_struct();
 
-A0 = S1 + 00e4;
+A0 = 80058c84 + e4;
 A1 = 0;
 A2 = 0;
-A3 = 0140;
-[SP + 0010] = w(S0);
+A3 = 140;
+A4 = e0;
 system_graphic_create_display_env_struct();
 
-8001A1B0	jal    func1a078 [$8001a078]
-A0 = 0;
-8001A1B8	jal    func1a078 [$8001a078]
-A0 = 0001;
+A0 = 0; // buffer 0
+kernel_create_cursor();
+
+A0 = 1; // buffer 1
+kernel_create_cursor();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1a1d8()
+// kernel_update()
 
-if( hu[80058b40] & 1000 )
+if( hu[80058b40] & 1000 ) // up
 {
     [8004e97c] = w(w[8004e97c] - 1);
     if( w[8004e97c] < 0 )
@@ -844,22 +840,21 @@ if( hu[80058b40] & 1000 )
     }
 }
 
-if( hu[80058b40] & 4000 )
+if( hu[80058b40] & 4000 ) // down
 {
     [8004e97c] = w(w[8004e97c] + 1);
-
     if( w[8004e97c] >= 6 )
     {
         [8004e97c] = w(0);
     }
 }
 
-if( hu[80058b28] & 0020 )
+if( hu[80058b28] & 0020 ) // circle
 {
     A0 = w[8004e97c] + 1;
-    func199f0();
+    func199f0(); // set kernel exe to load
 
-    [8005896c] = w(0);
+    [8005896c] = w(0); // set exit kernel
 }
 
 A0 = SP + 18;
@@ -885,6 +880,7 @@ system_print();
 A0 = 800182c8; // "    Field\n    Battle\n    Worldmap\n    Battling\n    Menu\n    Movie\n\n"
 system_print();
 
+// set cursor position
 A0 = w[80058968];
 [A0 + 7c] = w(((w[8004e97c] * 8 + 28) << 10) | 20);
 [A0 + 80] = w(((w[8004e97c] * 8 + 2c) << 10) | 27);
@@ -894,57 +890,52 @@ A0 = w[80058968];
 
 
 ////////////////////////////////
-// func1a348
+// kernel_main()
 
-func1a0e4();
+kernel_init_graphic();
 
-[8005896c] = w(1);
+[8005896c] = w(1); // kernel menu not selected
 [80058964] = w(0);
 
-loop1a36c:	; 8001A36C
-    A1 = w[80058960];
-    V1 = 80058c84;
-    A1 = A1 + 0001;
-    A2 = A1 & 0001;
-    V0 = A2 << 04;
-    V0 = V0 + A2;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    S0 = V0 + 0070;
-    [80058960] = w(A1);
+while( ( w[8005896c] != 0 ) || ( w[80058964] == 0 ) )
+{
+    [80058960] = w(w[80058960] + 1);
+
+    A2 = w[80058960] & 1;
     [80058964] = w(A2);
+
+    V0 = 80058c84 + A2 * 88;
     [80058968] = w(V0);
-    8001A3B0	jal    func43a5c [$80043a5c]
+
+    S0 = V0 + 70;
+
     A0 = S0;
+    func43a5c();
 
     A0 = S0;
     system_print_render_strings();
 
-    func1a1d8(); // draw kernel
+    kernel_update();
 
-    A1 = w[80058968];
     A0 = S0;
-    8001A3D4	jal    func439c0 [$800439c0]
-    A1 = A1 + 0074;
-    8001A3DC	jal    system_draw_sync [$80044448]
+    A1 = w[80058968] + 74;
+    func439c0();
+
     A0 = 0;
-    8001A3E4	jal    system_psyq_wait_frames [$8004b3f4]
+    system_draw_sync();
+
     A0 = 0;
+    system_psyq_wait_frames();
+
     A0 = w[80058968];
-    8001A3F4	jal    system_psyq_put_draw_env [$80044abc]
-    8001A3F8	nop
-    A0 = w[80058968];
-    8001A404	jal    system_psyq_put_disp_env [$80044d14]
-    A0 = A0 + 005c;
-    8001A40C	jal    system_psyq_draw_otag [$80044a48]
+    system_psyq_put_draw_env();
+
+    A0 = w[80058968] + 5c;
+    system_psyq_put_disp_env();
+
     A0 = S0;
-    V0 = w[8005896c];
-    8001A41C	nop
-    8001A420	bne    v0, zero, loop1a36c [$8001a36c]
-    8001A424	nop
-    V0 = w[80058964];
-    8001A430	nop
-8001A434	beq    v0, zero, loop1a36c [$8001a36c]
+    system_psyq_draw_otag();
+}
 
 A0 = 0;
 system_draw_sync();
@@ -957,50 +948,51 @@ func19b50();
 
 ////////////////////////////////
 // func1a460
-8001A460	addiu  sp, sp, $ffe8 (=-$18)
+
 A0 = 3480;
-[SP + 0010] = w(RA);
-8001A46C	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-A0 = 3480;
+A1 = 1;
+system_memory_allocate();
 [80058978] = w(V0);
-8001A480	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-A0 = 0460;
+
+A0 = 3480;
+A1 = 1;
+system_memory_allocate();
 [8005897c] = w(V0);
-8001A494	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-A0 = 0460;
+
+A0 = 460;
+A1 = 1;
+system_memory_allocate();
 [80058970] = w(V0);
-8001A4A8	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-A2 = 0;
-A1 = 0;
+
+A0 = 460;
+A1 = 1;
+system_memory_allocate();
 [80058974] = w(V0);
 
-loop1a4c0:	; 8001A4C0
-A0 = 0;
+A2 = 0;
+A1 = 0;
 
-loop1a4c4:	; 8001A4C4
-V0 = w[80058970];
-V1 = A1 + A0;
-V0 = V0 + V1;
-[V0 + 0000] = b(0);
-V0 = w[80058974];
-A0 = A0 + 0001;
-V0 = V0 + V1;
-[V0 + 0000] = b(0);
-V0 = A0 < 0028;
-8001A4F0	bne    v0, zero, loop1a4c4 [$8001a4c4]
-8001A4F4	nop
-A2 = A2 + 0001;
-V0 = A2 < 001c;
+loop1a4c0:	; 8001A4C0
+    A0 = 0;
+
+    loop1a4c4:	; 8001A4C4
+        V0 = w[80058970];
+        V1 = A1 + A0;
+        V0 = V0 + V1;
+        [V0 + 0000] = b(0);
+        V0 = w[80058974];
+        A0 = A0 + 0001;
+        V0 = V0 + V1;
+        [V0 + 0000] = b(0);
+        V0 = A0 < 0028;
+    8001A4F0	bne    v0, zero, loop1a4c4 [$8001a4c4]
+
+    A1 = A1 + 0028;
+    A2 = A2 + 0001;
+    V0 = A2 < 001c;
 8001A500	bne    v0, zero, loop1a4c0 [$8001a4c0]
-A1 = A1 + 0028;
-RA = w[SP + 0010];
-SP = SP + 0018;
-8001A510	jr     ra 
-8001A514	nop
+
+
 ////////////////////////////////
 
 

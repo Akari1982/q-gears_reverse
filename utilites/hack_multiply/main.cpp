@@ -50,6 +50,18 @@ int main()
     }
 */
 
+    for( __int64 n = 0; n <= 100; ++n )
+    {
+        printf( "%d:", (int)n );
+
+        __int64 V0 = n * 0x92492493;
+        int x = ((V0 >> 0x20) + n) >> 2;
+
+        int y = ((4 * n) / 7 + n ) >> 2;
+        printf( "%d %d\n", x, y );
+    }
+
+/*
     for( __int64 A0 = 0; A0 <= 100; ++A0 )
     {
         printf( "%d:", (int)A0 );
@@ -59,7 +71,7 @@ int main()
         int x = A2 - (A0 >> 0x1f);
         printf("%d\n", x);
     }
-
+*/
 /*
     for( __int64 A0 = 0; A0 <= 1000; A0 += 10 )
     {

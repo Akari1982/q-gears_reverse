@@ -1,6 +1,9 @@
 80018088 [][][][] init with 6. Looks like game mod (battle map ie).
 
 8004e948 array if file indexes in dir 0_1.
+
+8004e97c kernel cursor position.
+
 8004e998 [][][][] init with 0.
 8004e99c [][][][] init with 0.
 8004e9a4 [][][][] init with 0.
@@ -386,6 +389,8 @@
 80058958 [][][][] pointer to file loaded via func19a50() (we allocate place for file here).
 8005895c [][][][] store here id of file to load via func19a50().
 
+8005896c [][][][] kernel selection not confirmed flag. Exit kernel if this = 0.
+
 800589a8 [][]     store tex page setting here during initialization.
 800589ac [][]     store here clut setting during initialization.
 800589b0 [][][][] we get here default tex page setting and store it to 800589a8 if 8004f7ac == 2, in case of 1 we load only tex X and Y from here.
@@ -467,6 +472,8 @@
 80058aaa [][]     reverb output volume right.
 80058aac [][][][] pointer to start of all sound structs memory (800651a0). Structs is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
 
+80058ab4 []       number of seconds game working.
+80058abc []       number of minutes game working.
 80058ac0 [][][][] store here pointer to place for packets.
 80058ac4 [][][][] store here data from sprite opcode 0xa7 & 0x7f if 0x80 is set. Some wait.
 80058ac8 []       init with 0.
@@ -487,6 +494,7 @@
 
 80058b14 [][][][] number of initing channels.
 
+80058b20 []       number of hours game working.
 80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40. Increment every frame.
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
 80058b2c [][]     mask of buttons that was pressed in last update for controller 2 (details in 80058c0c).
@@ -574,6 +582,15 @@
 80058c74 [][][][] offset to main struct with 0x10 music struct channels.
 
 80058c80 [][][][] end of memory for sound structs (8006b490).
+
+80058c84 addresses for kernel debug enviroments
+    +00 draw enviroment 1 (0x5c size).
+    +5c display enviroment 2 (0x14 size).
+    +74 mono triangle 1 (cursor) packet.
+
+    +88 draw enviroment 2 (0x5c size).
+    +e4 display enviroment 1 (0x14 size).
+    +fc mono triangle 2 (cursor) packet.
 
 80059594 [][][][] 0
 80059598 [][][][] 0
