@@ -1,5 +1,5 @@
 ////////////////////////////////
-// func6fb78()
+// movie_cdrom_check()
 
 [SP + 30] = b(b[8006f184 + 0]);
 [SP + 31] = b(b[8006f184 + 1]);
@@ -300,10 +300,10 @@ while( true )
 
     A0 = w[800767b0] + 70;
     A1 = w[800767b0] + f0;
-    A2 = 8;
-    A3 = c;
-    A4 = 270;
-    A5 = d8;
+    A2 = 8; // x
+    A3 = c; // y
+    A4 = 270; // width
+    A5 = d8; // height
     func72628();
 
     A0 = w[800767b0] + 70;
@@ -1604,7 +1604,7 @@ if( w[8007655c] >= 3c )
 
 
 ////////////////////////////////
-// func71b10()
+// movie_disk_change()
 
 S3 = 0;
 S1 = 0;
@@ -1856,15 +1856,12 @@ L71b4c:	; 80071B4C
     A0 = w[800767b0] + 70;
     system_print_render_strings()
 
-    A2 = 0008;
-    A3 = 0014;
-    A1 = w[800767b0];
-    V0 = 0130;
-    [SP + 0010] = w(V0);
-    V0 = 00c0;
-    [SP + 0014] = w(V0);
-    A0 = A1 + 0070;
-    A1 = A1 + 00f0;
+    A0 = w[800767b0] + 70;
+    A1 = w[800767b0] + f0;
+    A2 = 8; // x
+    A3 = 14; // y
+    A4 = 130; // width
+    A5 = c0; // height
     func72628();
 
     A0 = w[800767b0] + 70;
@@ -2289,174 +2286,76 @@ system_set_draw_packet_transparency();
 ////////////////////////////////
 // func72628()
 
-S0 = A1;
-S2 = 0;
-S5 = 8007661e;
-S4 = 8007662e;
-80072654	addiu  t0, s5, $ffff (=-$1)
-8007265C	addiu  fp, s4, $ffff (=-$1)
-S3 = 8007663c;
-80072670	addiu  s7, s5, $fffe (=-$2)
-80072678	addiu  s6, s4, $fffe (=-$2)
-[SP + 0010] = w(A0);
-[SP + 0018] = w(T0);
-[SP + 0020] = w(0);
-[S0 + 0008] = h(A2);
-[S0 + 000a] = h(A3);
-[S0 + 0012] = h(A3);
-[S0 + 0018] = h(A2);
-V0 = w[SP + 0060];
-V1 = w[SP + 0064];
-A2 = A2 + V0;
-A3 = A3 + V1;
-[S0 + 0010] = h(A2);
-[S0 + 001a] = h(A3);
-[S0 + 0020] = h(A2);
-[S0 + 0022] = h(A3);
+dst = A0;
+src = A1;
 
-L726c0:	; 800726C0
-    V1 = w[S3 + 0000];
-    800726C4	nop
-    V1 = V1 + 0001;
-    [S3 + 0000] = w(V1);
-    T0 = w[SP + 0020];
-    V0 = 8007664c;
-    S1 = T0 + V0;
-    V0 = w[S1 + 0000];
-    800726E4	nop
-    V0 = V0 < V1;
-    800726EC	beq    v0, zero, L7277c [$8007277c]
-    800726F0	nop
+[src + 8] = h(A2);
+[src + a] = h(A3);
+[src + 10] = h(A2 + A4);
+[src + 12] = h(A3);
+[src + 18] = h(A2);
+[src + 1a] = h(A3 + A5);
+[src + 20] = h(A2 + A4);
+[src + 22] = h(A3 + A5);
 
-    [S3 + 0000] = w(0);
-    func74180();
+for( int i = 0; i < 4; ++i )
+{
+    [8007663c + i * 4] = w(w[8007663c + i * 4] + 1);
 
-    V0 = V0 & 00ff;
-    V0 = V0 + 0020;
-    [S1 + 0000] = w(V0);
-    V0 = bu[S6 + 0000];
-    8007270C	nop
-    [S7 + 0000] = b(V0);
-    V0 = bu[FP + 0000];
-    T0 = w[SP + 0018];
-    8007271C	nop
-    [T0 + 0000] = b(V0);
-    V0 = bu[S4 + 0000];
-    80072728	jal    func74180 [$80074180]
-    [S5 + 0000] = b(V0);
-    V0 = V0 & 00ff;
-    80072734	bgez   v0, L72740 [$80072740]
-    80072738	nop
-    V0 = V0 + 001f;
+    if( w[8007663c + i * 4] > w[8007664c + i * 4] )
+    {
+        [8007663c + i * 4] = w(0);
+        func74180();
 
-    L72740:	; 80072740
-    V0 = V0 >> 05;
-    V0 = V0 + 0008;
-    [S6 + 0000] = b(V0);
-    V0 = 0008;
-    80072750	jal    func74180 [$80074180]
-    [FP + 0000] = b(V0);
-    V1 = 55555556;
-    V0 = V0 & 00ff;
-    80072764	mult   v0, v1
-    V0 = V0 >> 1f;
-    8007276C	mfhi   v1
-    V1 = V1 - V0;
-    V1 = V1 + 0010;
-    [S4 + 0000] = b(V1);
+        [8007664c + i * 4] = w((V0 & ff) + 20);
 
-    L7277c:	; 8007277C
-    V0 = bu[S6 + 0000];
-    V1 = bu[S7 + 0000];
-    A3 = w[S3 + 0000];
-    V0 = V0 - V1;
-    T0 = w[SP + 0020];
-    A2 = V0 * A3;
-    A0 = w[8007664c + T0];
-    A2 = A2 / A0;
-    T0 = w[SP + 0018];
-    800727D8	nop
-    V1 = bu[T0 + 0000];
-    V0 = bu[FP + 0000];
-    800727E4	nop
-    V0 = V0 - V1;
-    A1 = V0 * A3;
-    A1 = A1 / A0;
-    V1 = bu[S5 + 0000];
-    V0 = bu[S4 + 0000];
-    V0 = V0 - V1;
-    V1 = V0 * A3;
-    V1 = V1 / A0;
-    V0 = bu[S7 + 0000];
-    A2 = V0 + A2;
-    V0 = bu[T0 + 0000];
-    A0 = bu[S5 + 0000];
-    A1 = V0 + A1;
-    V0 = 0001;
-    80072890	beq    s2, v0, L728e0 [$800728e0]
-    A0 = A0 + V1;
-    V0 = S2 < 0002;
-    8007289C	beq    v0, zero, L728b4 [$800728b4]
-    800728A0	nop
-    800728A4	beq    s2, zero, L728d0 [$800728d0]
-    800728A8	nop
-    800728AC	j      L72910 [$80072910]
-    S5 = S5 + 0004;
+        [8007661c + i * 4] = b(bu[8007662c + i * 4]);
+        [8007661d + i * 4] = b(bu[8007662d + i * 4]);
+        [8007661e + i * 4] = b(bu[8007662e + i * 4]);
 
-    L728b4:	; 800728B4
-    V0 = 0002;
-    800728B8	beq    s2, v0, L728f0 [$800728f0]
-    V0 = 0003;
-    800728C0	beq    s2, v0, L72900 [$80072900]
-    800728C4	nop
-    800728C8	j      L72910 [$80072910]
-    S5 = S5 + 0004;
+        func74180();
 
-    L728d0:	; 800728D0
-    [S0 + 0004] = b(A2);
-    [S0 + 0005] = b(A1);
-    800728D8	j      L7290c [$8007290c]
-    [S0 + 0006] = b(A0);
+        [8007662c + i * 4] = b(((V0 & ff) / 20) + 8);
+        [8007662d + i * 4] = b(8);
 
-    L728e0:	; 800728E0
-    [S0 + 000c] = b(A2);
-    [S0 + 000d] = b(A1);
-    800728E8	j      L7290c [$8007290c]
-    [S0 + 000e] = b(A0);
+        func74180();
 
-    L728f0:	; 800728F0
-    [S0 + 0014] = b(A2);
-    [S0 + 0015] = b(A1);
-    800728F8	j      L7290c [$8007290c]
-    [S0 + 0016] = b(A0);
+        [8007662e + i * 4] = b((V0 & ff) / 3 + 10);
+    }
 
-    L72900:	; 80072900
-    [S0 + 001c] = b(A2);
-    [S0 + 001d] = b(A1);
-    [S0 + 001e] = b(A0);
+    r = bu[8007661c + i * 4] + ((bu[8007662c + i * 4] - bu[8007661c + i * 4]) * w[8007663c + i * 4]) / w[8007664c + i * 4];
+    g = bu[8007661d + i * 4] + ((bu[8007662d + i * 4] - bu[8007661d + i * 4]) * w[8007663c + i * 4]) / w[8007664c + i * 4];
+    b = bu[8007661e + i * 4] + ((bu[8007662e + i * 4] - bu[8007661e + i * 4]) * w[8007663c + i * 4]) / w[8007664c + i * 4];
 
-    L7290c:	; 8007290C
-    S5 = S5 + 0004;
+    if( i == 0 )
+    {
+        [src + 4] = b(r);
+        [src + 5] = b(g);
+        [src + 6] = b(b);
+    }
+    else if( i == 1 )
+    {
+        [src + c] = b(r);
+        [src + d] = b(g);
+        [src + e] = b(b);
+    }
+    else if( i == 2 )
+    {
+        [src + 14] = b(r);
+        [src + 15] = b(g);
+        [src + 16] = b(b);
+    }
+    else if( i == 3 )
+    {
+        [src + 1c] = b(r);
+        [src + 1d] = b(g);
+        [src + 1e] = b(b);
+    }
+}
 
-    L72910:	; 80072910
-    S4 = S4 + 4;
-    FP = FP + 4;
-    S3 = S3 + 4;
-    S7 = S7 + 4;
-    S6 = S6 + 4;
-    T0 = w[SP + 0018];
-    S2 = S2 + 0001;
-    T0 = T0 + 0004;
-    [SP + 0018] = w(T0);
-    T0 = w[SP + 0020];
-    V0 = S2 < 0004;
-    T0 = T0 + 0004;
-    [SP + 0020] = w(T0);
-80072940	bne    v0, zero, L726c0 [$800726c0]
-
-T0 = w[SP + 10];
-[S0 + 0] = w((w[S0 + 0] & ff000000) | (w[T0 + 0] & 00ffffff));
-[T0 + 0] = w((w[T0 + 0] & ff000000) | (S0 & 00ffffff));
+// insert into otag
+[src] = w((w[src] & ff000000) | (w[dst] & 00ffffff));
+[dst] = w((w[dst] & ff000000) | (src & 00ffffff));
 ////////////////////////////////
 
 
@@ -2523,91 +2422,73 @@ func43b3c();
 ////////////////////////////////
 // func72b48()
 
-S0 = A1;
-S5 = 8007665e;
-S4 = 8007666e;
-T0 = S5 - 1;
-FP = S4 - 1;
-S7 = S5 - 2;
-S6 = S4 - 2;
+dst = A0;
+src = A1;
 
-[SP + 10] = w(A0);
-
-[S0 + 8] = h(A2);
-[S0 + a] = h(A3);
-[S0 + 12] = h(A3);
-[S0 + 18] = h(A2);
-[S0 + 10] = h(A2 + A4);
-[S0 + 1a] = h(A3 + A5);
-[S0 + 20] = h(A2 + A4);
-[S0 + 22] = h(A3 + A5);
+[src + 8] = h(A2);
+[src + a] = h(A3);
+[src + 12] = h(A3);
+[src + 18] = h(A2);
+[src + 10] = h(A2 + A4);
+[src + 1a] = h(A3 + A5);
+[src + 20] = h(A2 + A4);
+[src + 22] = h(A3 + A5);
 
 for( int i = 0; i < 4; ++i )
 {
-    S1 = 8007667c + i * 4;
-    S2 = 8007668c + i * 4;
+    [8007667c + i * 4] = w(w[8007667c + i * 4] + 1);
 
-    [S1] = w(w[S1] + 1);
-
-    if( w[S2] < w[S1] )
+    if( w[8007667c + i * 4] > w[8007668c + i * 4] )
     {
-        [S1] = w(0);
-        [SP + 18] = w(T0);
+        [8007667c + i * 4] = w(0);
+
         func74180();
 
-        [S2] = w((V0 & ff) + 20);
-        [S7] = b( bu[S6]);
-        T0 = w[SP + 18];
-        [T0] = b(bu[FP]);
-        [S5] = b(bu[S4]);
-        [S6] = b(ff);
-        [FP] = b(ff);
+        [8007668c + i * 4] = w((V0 & ff) + 20);
+        [8007665c + i * 4] = b(bu[8007666c + i * 4]);
+        [8007665d + i * 4] = b(bu[8007666d + i * 4]);
+        [8007665e + i * 4] = b(bu[8007666e + i * 4]);
+
+        [8007666c + i * 4] = b(ff);
+        [8007666d + i * 4] = b(ff);
+
         func74180();
 
-        [S4] = b((V0 & 003f) - 42);
-        T0 = w[SP + 18];
+        [8007666e + i * 4] = b((V0 & 3f) - 42);
     }
 
-    A2 = bu[S7] + (((bu[S6] - bu[S7]) * w[S1]) / w[S2]);
-    A1 = bu[T0] + (((bu[FP] - bu[T0]) * w[S1]) / w[S2]);
-    A0 = bu[S5] + (((bu[S4] - bu[S5]) * w[S1]) / w[S2]);
+    r = bu[8007665c + i * 4] + (((bu[8007666c + i * 4] - bu[8007665c + i * 4]) * w[8007667c + i * 4]) / w[8007668c + i * 4]);
+    g = bu[8007665d + i * 4] + (((bu[8007666d + i * 4] - bu[8007665d + i * 4]) * w[8007667c + i * 4]) / w[8007668c + i * 4]);
+    b = bu[8007665e + i * 4] + (((bu[8007666e + i * 4] - bu[8007665e + i * 4]) * w[8007667c + i * 4]) / w[8007668c + i * 4]);
 
     if( i == 0 )
     {
-        [S0 + 4] = b(A2);
-        [S0 + 5] = b(A1);
-        [S0 + 6] = b(A0);
+        [src + 4] = b(r);
+        [src + 5] = b(g);
+        [src + 6] = b(b);
     }
     if( i == 1 )
     {
-        [S0 + c] = b(A2);
-        [S0 + d] = b(A1);
-        [S0 + e] = b(A0);
+        [src + c] = b(r);
+        [src + d] = b(g);
+        [src + e] = b(b);
     }
     else if( i == 2 )
     {
-        [S0 + 14] = b(A2);
-        [S0 + 15] = b(A1);
-        [S0 + 16] = b(A0);
+        [src + 14] = b(r);
+        [src + 15] = b(g);
+        [src + 16] = b(b);
     }
     else if( i == 3 )
     {
-        [S0 + 1c] = b(A2);
-        [S0 + 1d] = b(A1);
-        [S0 + 1e] = b(A0);
+        [src + 1c] = b(r);
+        [src + 1d] = b(g);
+        [src + 1e] = b(b);
     }
-
-    S5 = S5 + 4;
-    S4 = S4 + 4;
-    T0 = T0 + 4;
-    FP = FP + 4;
-    S7 = S7 + 4;
-    S6 = S6 + 4;
 }
 
-T1 = w[SP + 10];
-[S0 + 0] = w((w[S0 + 0] & ff000000) | (w[T1 + 0] & 00ffffff));
-[T1 + 0] = w((w[T1 + 0] & ff000000) | (S0 & 00ffffff));
+[src] = w((w[src] & ff000000) | (w[dst] & 00ffffff));
+[dst] = w((w[dst] & ff000000) | (src & 00ffffff));
 ////////////////////////////////
 
 
@@ -2966,10 +2847,10 @@ while( true )
                 func74234();
                 [80076a38] = w(V0); // number of sectors to play
 
-                if( w[80076a34] >= w[80076a2c] )
+                if( w[80076a34] >= w[80076a2c] ) // cap to end frame
                 {
                     [80076a2c] = w(w[80076a34]);
-                    [80076acc] = w(0);
+                    [80076acc] = w(0); // type of end frame
                 }
 
                 [80076ad4] = w(2); // dynamic start frame
@@ -2977,42 +2858,36 @@ while( true )
         }
     }
 
-    if( w[800767a8] == 3 )
+    if( w[800767a8] == 3 ) // end frame
     {
         if( lr != 0 )
         {
             [80076a2c] = w(w[80076a2c] + lr * lr_mod);
-
             if( w[80076a2c] <= 0 )
             {
                 [80076a2c] = w(1);
             }
-
             if( w[80076a2c] >= 2000 )
             {
                 [80076a2c] = w(1fff);
             }
-
-            if( w[80076a2c] < w[80076a34] )
+            if( w[80076a2c] < w[80076a34] ) // cap to start frame
             {
                 [80076a2c] = w(w[80076a34]);
             }
-
-            [80076acc] = w(0);
+            [80076acc] = w(0); // type of end frame
         }
-
         if( w[SP + 38] == 2 ) // circle
         {
             if( w[80076acc] == 0 )
             {
-                func7482c();
-
+                movie_get_end_sector();
                 if( V0 >= 0 )
                 {
                     [80076a2c] = w(V0);
-                    [80076acc] = w(1);
+                    [80076acc] = w(1); // type of end frame
 
-                    if( w[80076a34] >= V0 )
+                    if( w[80076a34] >= V0 ) // cap to start frame
                     {
                         [80076a34] = w(V0);
                         [80076ad4] = w(1);
@@ -3020,56 +2895,45 @@ while( true )
                 }
                 else
                 {
-                    [80076acc] = w(2);
+                    [80076acc] = w(2); // type of end frame
                 }
             }
         }
     }
 
-    if( w[800767a8] == 4 )
+    if( ( w[800767a8] == 4 ) && ( lr != 0 ) ) // movie channel
     {
-        if( lr != 0 )
+        [80076a28] = w(w[80076a28] + lr);
+        if( w[80076a28] < 0 )
         {
-            [80076a28] = w(w[80076a28] + lr);
-
-            if( w[80076a28] < 0 )
-            {
-                [80076a28] = w(7);
-            }
-            if( w[80076a28] >= 8 )
-            {
-                [80076a28] = w(0);
-            }
+            [80076a28] = w(7);
+        }
+        if( w[80076a28] >= 8 )
+        {
+            [80076a28] = w(0);
         }
     }
 
-    if( w[800767a8] == 5 )
+    if( ( w[800767a8] == 5 ) && ( lr != 0 ) ) // screen mode
     {
-        if( lr != 0 )
-        {
-            [80076ae4] = w(1 - w[80076ae4]);
-        }
+        [80076ae4] = w(1 - w[80076ae4]);
     }
 
-    if( w[800767a8] == 6 )
+    if( w[800767a8] == 6 ) // screen draw
     {
         if( lr != 0 )
         {
-            [80076a30] = w((w[80076a30] + lr * lr_mod) & 00ff);
+            [80076a30] = w((w[80076a30] + lr * lr_mod) & ff);
         }
-
         if( w[SP + 38] == 2 ) // circle
         {
             [80076a30] = w(-1);
         }
     }
 
-    if( w[800767a8] == 7 )
+    if( ( w[800767a8] == 7 ) && ( lr != 0 ) ) // rewind
     {
-        if( lr != 0 )
-        {
-            [80076ac8] = w(1 - w[80076ac8]);
-        }
+        [80076ac8] = w(1 - w[80076ac8]);
     }
 
     for( int i = 0; i < e; ++i )
@@ -3301,10 +3165,10 @@ while( true )
 
     A0 = w[800767b0] + 70;
     A1 = w[800767b0] + f0;
-    A2 = 14;
-    A3 = c;
-    A4 = 11c;
-    A5 = c6;
+    A2 = 14; // x
+    A3 = c; // y
+    A4 = 11c; // width
+    A5 = c6; // height
     func72628();
 
     A0 = w[800767b0] + 70;
@@ -3349,22 +3213,22 @@ while( true )
 
     if( ( w[800767a8] == 9 ) && ( w[SP + 38] == 2 ) )
     {
-        func74bc4(); // cdrom monitor
+        movie_cdrom_monitor();
     }
 
     if( ( w[800767a8] == a ) && ( w[SP + 38] == 2 ) )
     {
-        func6fb78(); // cdrom check
+        movie_cdrom_check();
     }
 
     if( ( w[800767a8] == d ) && ( w[SP + 38] == 2 ) )
     {
-        func7541c(); // fat check
+        movie_fat_check();
     }
 
     if( ( w[800767a8] == c ) && ( w[SP + 38] == 2 ) )
     {
-        func71b10(); // disk change
+        movie_disk_change();
     }
 
     if( ( w[800767a8] == d ) && ( w[SP + 38] == 2 ) ) // return to kernel
@@ -3943,142 +3807,127 @@ return -1;
 
 
 ////////////////////////////////
-// func7482c
+// movie_get_end_sector()
 
-V1 = w[80076ad8];
-8007483C	addiu  s4, zero, $ffff (=-$1)
-80074854	bne    v1, zero, L748a8 [$800748a8]
+S4 = -1;
 
-A0 = 18;
-A1 = 0;
-system_filesystem_set_dir();
+if( w[80076ad8] == 0 ) // picture only
+{
+    A0 = 18;
+    A1 = 0;
+    system_filesystem_set_dir();
 
-A0 = 2;
-system_cdrom_get_number_of_files_in_dir();
+    A0 = 2;
+    system_cdrom_get_number_of_files_in_dir();
 
-V0 = V0 << 10;
-A0 = w[800767ac];
-V0 = V0 >> 10;
-V0 = A0 < V0;
-80074884	beq    v0, zero, L74a20 [$80074a20]
-S1 = A0 + 0003;
-A0 = S1;
-system_filesystem_get_debug_filename();
+    if( w[800767ac] >= V0 )
+    {
+        return 0;
+    }
 
-S0 = V0;
-S2 = 0800;
-S3 = 0020;
-800748A0	j      L7490c [$8007490c]
-S5 = 0;
+    dir_file_id = w[800767ac] + 3;
 
-L748a8:	; 800748A8
-V0 = 0001;
-800748AC	beq    v1, v0, L748c4 [$800748c4]
-V0 = 0002;
-800748B4	bne    v1, v0, L7490c [$8007490c]
-800748B8	addiu  v0, zero, $ffff (=-$1)
-800748BC	j      L74a20 [$80074a20]
-800748C0	nop
+    A0 = dir_file_id;
+    system_filesystem_get_debug_filename();
+    filename = V0;
 
-L748c4:	; 800748C4
-A0 = 18;
-A1 = 1;
-system_filesystem_set_dir();
+    sectorsize = 800;
+    datasize = 20;
+    S5 = 0;
+}
+else if( w[80076ad8] == 1 ) // picture + adpcm
+{
+    A0 = 18;
+    A1 = 1;
+    system_filesystem_set_dir();
 
-800748D0	jal    $system_cdrom_get_number_of_files_in_dir
-A0 = 0001;
-V0 = V0 << 10;
-A0 = w[800767ac];
-V0 = V0 >> 10;
-V0 = A0 < V0;
-800748EC	beq    v0, zero, L74a20 [$80074a20]
-S1 = A0 + 0002;
-A0 = S1;
-system_filesystem_get_debug_filename();
+    A0 = 1;
+    system_cdrom_get_number_of_files_in_dir();
 
-S0 = V0;
-S2 = 0920;
-S3 = 0028;
-S5 = 0008;
+    if( w[800767ac] >= V0 )
+    {
+        return 0;
+    }
 
-L7490c:	; 8007490C
+    dir_file_id = w[800767ac] + 2;
+
+    A0 = dir_file_id;
+    system_filesystem_get_debug_filename();
+    filename = V0;
+
+    sectorsize = 920;
+    datasize = 28;
+    S5 = 8;
+}
+else if( w[80076ad8] == 2 ) // adpcm only
+{
+    return -1
+}
+
 system_cdrom_get_cdrom_hdd_mode();
 
-80074914	beq    v0, zero, L7499c [$8007499c]
-A0 = S0;
-A1 = 0;
-A2 = 0;
-system_devkit_pc_open();
+if( V0 != 0 ) // PC HDD MODE
+{
+    A0 = filename;
+    A1 = 0;
+    A2 = 0;
+    system_devkit_pc_open();
+    file = V0;
 
-S1 = V0;
-A0 = S1;
-A1 = 0;
-A2 = 2;
-system_devkit_pc_seek();
+    A0 = file;
+    A1 = 0;
+    A2 = 2;
+    system_devkit_pc_seek();
+    fileend = V0;
 
-S0 = V0;
-A0 = S1;
-A1 = 0;
-A2 = 0;
-system_devkit_pc_seek();
+    A0 = file;
+    A1 = 0;
+    A2 = 0;
+    system_devkit_pc_seek();
 
-A0 = S1;
-A1 = S0 - S2;
-A2 = 0;
-system_devkit_pc_seek();
+    A0 = file;
+    A1 = fileend - sectorsize;
+    A2 = 0;
+    system_devkit_pc_seek();
 
-A0 = S1;
-A1 = SP + 0018;
-A2 = S3;
-system_devkit_pc_read_all();
+    A0 = file;
+    A1 = SP + 18;
+    A2 = datasize;
+    system_devkit_pc_read_all();
 
-V0 = SP + 0018;
-A0 = V0 + S5;
-V1 = hu[A0 + 0000];
-V0 = 0160;
-80074980	bne    v1, v0, L7498c [$8007498c]
-80074984	nop
-S4 = w[A0 + 0008];
+    if( hu[SP + 18 + S5 + 0] == 160 )
+    {
+        S4 = w[SP + 18 + S5 + 8];
+    }
 
-L7498c:	; 8007498C
-A0 = S1;
-system_devkit_pc_close();
+    A0 = file;
+    system_devkit_pc_close();
+}
+else // CD-ROM MODE1
+{
+    A0 = dir_file_id;
+    system_get_aligned_filesize_by_dir_file_id();
+    S0 = (V0 + sectorsize - 1) / sectorsize;
 
-80074994	j      L74a20 [$80074a20]
-V0 = S4;
+    A0 = dir_file_id;
+    system_filesystem_get_sector_by_dir_file_id();
 
-L7499c:	; 8007499C
-A0 = S1;
-system_get_aligned_filesize_by_dir_file_id();
+    A0 = V0 + S0 - 1; // end file sector
+    A1 = SP + 18; // alloc memory
+    A2 = 800; // file size
+    A3 = 0;
+    A4 = 0;
+    func2935c();
 
-V0 = V0 + S2;
-800749A8	addiu  v0, v0, $ffff (=-$1)
-800749AC	div    v0, s2
-800749D4	mflo   s0
+    A0 = 0;
+    system_cdrom_action_sync();
 
-A0 = S1;
-system_filesystem_get_sector_by_dir_file_id();
-
-A1 = SP + 18;
-A2 = 0800;
-A3 = 0;
-[SP + 0010] = w(0);
-V0 = V0 + S0;
-800749F8	addiu  a0, v0, $ffff (=-$1)
-800749F4	jal    $func2935c
-
-A0 = 0;
-system_cdrom_action_sync();
-
-V1 = hu[SP + 0018];
-V0 = 0160;
-80074A0C	bne    v1, v0, L74a20 [$80074a20]
-V0 = S4;
-S4 = w[SP + 0020];
-80074A18	nop
-V0 = S4;
-
-L74a20:	; 80074A20
+    if( hu[SP + 18] == 160 )
+    {
+        S4 = w[SP + 20];
+    }
+}
+return S4;
 ////////////////////////////////
 
 
@@ -4191,7 +4040,7 @@ func39928();
 
 
 ////////////////////////////////
-// func74bc4()
+// movie_cdrom_monitor()
 
 movie_clear_work_area_sync();
 
@@ -4438,10 +4287,10 @@ L74ce8:	; 80074CE8
 
     A0 = w[800767b0] + 70;
     A1 = w[800767b0] + f0;
-    A2 = 8;
-    A3 = 14;
-    A4 = 270;
-    A5 = a0;
+    A2 = 8; // x
+    A3 = 14; // y
+    A4 = 270; // width
+    A5 = a0; // height
     func72628();
 
     A0 = w[800767b0] + 70;
@@ -4533,7 +4382,7 @@ return w[V0 + A0 * 7 + 3];
 
 
 ////////////////////////////////
-// func7541c()
+// movie_fat_check()
 
 movie_clear_work_area_sync();
 
@@ -4767,10 +4616,10 @@ L75474:	; 80075474
 
     A0 = w[800767b0] + 70;
     A1 = w[800767b0] + f0;
-    A2 = 8;
-    A3 = 14;
-    A4 = 130;
-    A5 = c0;
+    A2 = 8; // x
+    A3 = 14; // y
+    A4 = 130; // width
+    A5 = c0; // height
     func72628();
 
     A0 = w[800767b0] + 70;
@@ -4790,12 +4639,10 @@ L75474:	; 80075474
     A0 = w[800767b0];
     system_psyq_put_draw_env();
 
-    A0 = w[800767b0];
-    A0 = A0 + 005c;
+    A0 = w[800767b0] + 5c;
     system_psyq_put_disp_env();
 
-    A0 = w[800767b0];
-    A0 = A0 + 00ec;
+    A0 = w[800767b0] + ec;
     system_psyq_draw_otag();
 
     V1 = w[SP + 20];
