@@ -93,47 +93,6 @@ A0 = w[800af54c];
 
 
 ////////////////////////////////
-// 0xF6
-data_138 = w[800af54c];
-V0 = hu[data_138 + cc];
-V1 = w[800ad0d8];
-V1 = bu[V1 + V0];
-
-if( V1 == 0 )
-{
-    if( w[data_138 + 0] & 00008000 )
-    {
-        [data_138 + 0] = w(w[data_138 + 0] & ffff7fff);
-    }
-
-    if( w[data_138 + 4] & 00080000 )
-    {
-        current_entity_id = w[800af1f0];
-        V1 = w[800aefe4];
-        V0 = w[V1 + current_entity_id * 5c + 4];
-        [V0 + c] = w(0); // animaton move x
-        [V0 + 14] = w(0); // animation move z
-        [V0 + 18] = w(0); // move speed
-
-        [data_138 + 4] = w(w[data_138 + 4] & fff7ffff);
-    }
-}
-else if( V1 == 1 )
-{
-    [data_138 + 0] = w(w[data_138 + 0] | 00008000);
-    [data_138 + 11c] = h(hu[data_138 + 106]);
-}
-else if( V1 == 2 )
-{
-    [data_138 + 4] = w(w[data_138 + 4] | 00080000);
-}
-
-[data_138 + cc] = h(hu[data_138 + cc] + 2);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // 0x36_VariableSetTrue
 A0 = 1;
 read_two_bytes_unsigned;
@@ -1763,86 +1722,6 @@ L9138c:	; 8009138C
 
 
 ////////////////////////////////
-// 0xF1
-A0 = 9;
-read_two_bytes_with_80;
-S3 = V0;
-
-A0 = 3;
-read_two_bytes_with_80;
-S2 = V0;
-
-A0 = 5;
-read_two_bytes_with_80;
-S1 = V0;
-
-A0 = 7;
-read_two_bytes_with_80;
-S0 = V0;
-
-A0 = 1;
-read_two_bytes_with_80;
-
-A0 = 1;
-A1 = S3;
-A2 = S2;
-A3 = S1;
-[SP + 10] = w(S0);
-[SP + 14] = w(V0);
-func71398;
-
-V1 = w[800AF54C];
-V0 = hu[V1 + CC];
-V0 = V0 + 0B;
-[V1 + CC] = h(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE13
-8008C31C	addiu  sp, sp, $ffe8 (=-$18)
-8008C320	sw     ra, $0010(sp)
-8008C324	jal    read_two_bytes_with_80 [$800ac2c4]
-8008C328	ori    a0, zero, $0001
-8008C32C	lui    v1, $800b
-8008C330	lw     v1, $f54c(v1)
-8008C334	ori    a0, zero, $0003
-8008C338	sh     v0, $010a(v1)
-8008C33C	jal    read_two_bytes_with_80 [$800ac2c4]
-8008C340	sb     zero, $010d(v1)
-8008C344	lui    v1, $800b
-8008C348	lw     v1, $f54c(v1)
-8008C34C	nop
-8008C350	sb     v0, $010c(v1)
-8008C354	lui    v1, $800b
-8008C358	lw     v1, $f54c(v1)
-8008C35C	nop
-8008C360	lhu    v0, $00cc(v1)
-8008C364	lui    a0, $800b
-8008C368	lw     a0, $f1f0(a0)
-8008C36C	addiu  v0, v0, $0005
-8008C370	jal    func859fc [$800859fc]
-8008C374	sh     v0, $00cc(v1)
-8008C378	lui    v1, $800b
-8008C37C	lw     v1, $f54c(v1)
-8008C380	nop
-8008C384	lhu    v0, $010a(v1)
-8008C388	nop
-8008C38C	bne    v0, zero, L8c398 [$8008c398]
-8008C390	ori    v0, zero, $00ff
-8008C394	sb     v0, $010d(v1)
-
-L8c398:	; 8008C398
-8008C398	lw     ra, $0010(sp)
-8008C39C	addiu  sp, sp, $0018
-8008C3A0	jr     ra 
-8008C3A4	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
 // 0xFE53
 8009309C	lui    v1, $800b
 800930A0	addiu  v1, v1, $eeac (=-$1154)
@@ -3157,29 +3036,6 @@ data_138 = w[800af54c];
 V0 = hu[data_138 + cc];
 script_offset = w[800ad0d8];
 return (((bu[script_offset + V0 + A0 + 1] << 8) + bu[script_offset + V0 + A0 + 0]) << 10) >> 10;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// convert_magic_to_pc_id()
-if( A0 == ff )
-{
-    return w[80061c28];
-}
-else if( A0 == fe )
-{
-    return w[80061c24];
-}
-else if( A0 == fd )
-{
-    return w[80061c20];
-}
-else if( A0 == fc )
-{
-    return ff;
-}
-return A0;
 ////////////////////////////////
 
 

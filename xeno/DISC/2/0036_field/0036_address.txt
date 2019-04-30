@@ -4,6 +4,9 @@
 80059ad8 [][][][] entity id in party 2.
 80059adñ [][][][] entity id in patry 3.
 
+80061bac [][][][] pointer to struct from STRIPCD1\1\0025.snd file.
+80061bb4 [][][][] pointer to struct from STRIPCD1\1\0027.snd file.
+
 80061c20 [][][][] party member 1.
 80061c24 [][][][] party member 2.
 80061c28 [][][][] party member 3.
@@ -51,7 +54,7 @@
 
 800ad070 [][][][] checked if equal to 0 in func83f40.
 
-800ad07ñ [][][][] store here time from last draw time.
+800ad07ñ [][][][] store here delta time from last draw.
 800ad080 [][][][] 1 if we use cam y pos same as entity y. 0 otherwise.
 800ad084 [][][][] set to 0 in cam mode 2. Counter for cam mode 0. Each &3 == 0 we do adjustments to 800aee58 and 800aee5c.
 800ad088 [][][][] some incremental counter used while in cam mode 2. When reach 0x41 set cam mode (800aee08) to 0.
@@ -522,6 +525,8 @@
     +cc some array
     +40d0
     +80f0 otag
+
+800c1b60 [][][][] 0 - PC HDD MODE, 1 - CD-ROM MODE1
 
 800c1b68 [][]     pressed button mask for controller 1 (details in 800af370).
 

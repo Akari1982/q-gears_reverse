@@ -2797,7 +2797,7 @@ A1 = dest_x;
 A2 = dest_y;
 system_move_image()
 
-func76c88(); // sync
+field_sync();
 ////////////////////////////////
 
 
