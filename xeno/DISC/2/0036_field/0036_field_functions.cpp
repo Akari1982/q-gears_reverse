@@ -1,24 +1,4 @@
 ////////////////////////////////
-// length_of_vector_by_x_y()
-[SP + 10] = w(A0);
-[SP + 14] = w(A1);
-[SP + 18] = w(0);
-
-A0 = SP + 10;
-A1 = SP + 20;
-system_gte_square_of_vector();
-
-V0 = w[SP + 20];
-A0 = w[SP + 24];
-A0 = V0 + A0;
-system_square_root();
-
-return V0;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funca5118()
 
 func37334();
