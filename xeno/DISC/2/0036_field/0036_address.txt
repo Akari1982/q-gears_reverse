@@ -1,4 +1,6 @@
-80059aa4 array of offsets to player sprite datas by party slot. (size 0x04)
+80059aa4 pointer to player sprite data for party slot 1.
+80059aa8 pointer to player sprite data for party slot 2.
+80059aac pointer to player sprite data for party slot 3.
 
 80059ad4 array of party slot - entity id association. (size 0x04).
 80059ad8 [][][][] entity id in party 2.
@@ -12,8 +14,8 @@
 80061c28 [][][][] party member 3.
 
 80064ed8 store mouse input from second controller here.
-    +00 [][][][] movement X
-    +04 [][][][] movement Y.
+    +00 [][][][] pos X
+    +04 [][][][] pos Y.
     +08 [][][][] mouse buttons mask.
     +0c [][][][] relative movement X from last update.
     +10 [][][][] relative movement Y from last update.
@@ -53,6 +55,7 @@
 800ad04c [][][][] if this is 1 then we set number of entities to 1 in script call call_run_script_8().
 
 800ad070 [][][][] checked if equal to 0 in func83f40.
+800ad074 [][][][] delta time from prev update.
 
 800ad07ñ [][][][] store here delta time from last draw.
 800ad080 [][][][] 1 if we use cam y pos same as entity y. 0 otherwise.
@@ -475,6 +478,14 @@
 800af528 [][][][] address to controller 1 system button buffer.
 800af52c [][][][] address to controller 2 system button buffer.
 
+800af530 [][]     mouse horizontal speed.
+800af534 [][]     mouse vertical speed.
+
+800af53c [][][][] mouse horizontal position controller 1.
+800af540 [][][][] mouse horizontal position controller 2.
+800af544 [][][][] mouse vertical position controller 1.
+800af548 [][][][] mouse vertical position controller 2.
+
 800af54c [][][][] offset to struct 0x138 for current entity in script call.
 
 800af594 [][][][] seems like return result from function (wait opcode returns 1). Set to 0 at start of run_script function.
@@ -621,7 +632,10 @@
 800c2dd4 [][]     repeated button mask for controller 1 (details in 800af370).
 800c2ddc [][]     repeated button mask for controller 2 (details in 800af370).
 
-
+800c2f18 [][][][] min horizontal movement for mouse controller.
+800c2f20 [][][][] min vertical movement for mouse controller.
+800c2f24 [][][][] max horizontal movement for mouse controller.
+800c2f28 [][][][] max vertical movement for mouse controller.
 
 800c2f3c memory block. used in get_bytes_from_800C2F3C.
 + 0000 [][]     progress.

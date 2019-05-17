@@ -859,3 +859,44 @@ La5ba0:	; 800A5BA0
     V0 = S4 < 5;
 800A5DC0	bne    v0, zero, La5ba0 [$800a5ba0]
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// read_two_bytes_with_80()
+script_offset = A0
+
+A0 = script_offset;
+read_two_bytes_unsigned();
+
+if( V0 & 8000 )
+{
+    V0 = V0 & 7fff;
+}
+else
+{
+    A0 = V0 & ffff;
+    get_bytes_from_800C2F3C();
+}
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// read_two_bytes_unsigned()
+data_138 = w[800af54c];
+V0 = hu[data_138 + cc];
+script_offset = w[800ad0d8];
+return (bu[script_offset + V0 + A0 + 1] << 8) | bu[script_offset + V0 + A0 + 0];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// read_two_bytes_signed()
+data_138 = w[800af54c];
+V0 = hu[data_138 + cc];
+script_offset = w[800ad0d8];
+return (((bu[script_offset + V0 + A0 + 1] << 8) + bu[script_offset + V0 + A0 + 0]) << 10) >> 10;
+////////////////////////////////

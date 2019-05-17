@@ -1792,13 +1792,13 @@ L71570:	; 80071570
 ////////////////////////////////
 // func71578()
 
-A0 = 80061c8c;
-A1 = A0 + 22;
-80071588	jal    func7a3a0 [$8007a3a0]
+A0 = 80061c8c; // system buffer for controller 1
+A1 = A0 + 22; // system buffer for controller 2
+field_set_controllers_system_buttons_buffer();
 
-A0 = 3;
-A1 = 4;
-80071594	jal    func7a428 [$8007a428]
+A0 = 3; // horizontal
+A1 = 4; // vertical
+field_set_mouse_speed();
 
 A0 = 0;
 A1 = 140;
@@ -3322,6 +3322,7 @@ system_clear_otagr();
 
 ////////////////////////////////
 // func73670()
+
 func735e0();
 
 A0 = w[800c3740] + cc;
@@ -3806,8 +3807,8 @@ L73dc8:	; 80073DC8
 func35c84(); // clear system button masks
 
 A0 = 1;
-A1 = 80064ed8;
-func7a48c(); // add mouse
+A1 = 80064ed8; // mouse struct
+field_get_mouse_data();
 
 if( w[800ad0f0] != 0 )
 {

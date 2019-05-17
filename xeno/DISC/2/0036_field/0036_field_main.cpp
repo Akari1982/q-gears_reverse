@@ -1,7 +1,65 @@
 ////////////////////////////////
+// field_allocate_memory_for_party_sprites()
+
+A0 = 8; // YOSI Kiyoshi Yoshii (Main Programmer)
+A1 = 0;
+system_memory_set_alloc_user();
+
+A0 = 14000;
+A1 = 0;
+system_memory_allocate();
+[80059aa4] = w(V0);
+
+A0 = 14000;
+A1 = 0;
+system_memory_allocate();
+[80059aa8] = w(V0);
+
+A0 = 14000;
+A1 = 0;
+system_memory_allocate();
+[80059aac] = w(V0);
+
+A0 = w[80059aa4];
+system_memory_mark_not_removable();
+
+A0 = w[80059aa8];
+system_memory_mark_not_removable();
+
+A0 = w[80059aac];
+system_memory_mark_not_removable();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_deallocate_memory_for_party_sprites()
+
+A0 = w[80059aa4];
+system_memory_mark_removable();
+
+A0 = w[80059aa8];
+system_memory_mark_removable();
+
+A0 = w[80059aac];
+system_memory_mark_removable();
+
+A0 = w[80059aa4];
+system_memory_mark_removed_alloc();
+
+A0 = w[80059aa8];
+system_memory_mark_removed_alloc();
+
+A0 = w[80059aac];
+system_memory_mark_removed_alloc();
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func7743c()
 
-A0 = 1;
+A0 = 1; // delta
 system_psyq_wait_frames();
 [800ad074] = w(V0);
 
@@ -101,7 +159,7 @@ func84ea4();
 
 S4 = 0;
 
-80077648	jal    func77318 [$80077318]
+field_allocate_memory_for_party_sprites();
 
 [8004e9f8] = w(0);
 [8004e9fc] = w(0);
@@ -224,7 +282,7 @@ L77810:	; 80077810
 
     800778E8	jal    func19d24 [$80019d24]
 
-    800778F0	jal    func7743c [$8007743c]
+    func7743c();
 
     // move and update sprite and model here
     func74bdc();
@@ -581,7 +639,7 @@ system_psyq_wait_frames(); // get time
 
 8007810C	jal    func6f740 [$8006f740]
 
-80078114	jal    func773bc [$800773bc]
+field_deallocate_memory_for_party_sprites();
 
 8007811C	jal    func84f9c [$80084f9c]
 
@@ -695,7 +753,7 @@ A0 = SP + 0010;
 A1 = S0;
 80078334	jal    $80044448
 A0 = 0;
-8007833C	jal    $80031f0c
+8007833C	jal    $system_memory_mark_removed_alloc
 A0 = S0;
 
 L78344:	; 80078344
@@ -853,7 +911,7 @@ L78574:	; 80078574
 80078584	jal    $80044448
 A0 = 0;
 A0 = w[800ad0ec];
-80078594	jal    $80031f0c
+80078594	jal    $system_memory_mark_removed_alloc
 80078598	nop
 [800ad038] = w(0);
 800785A4	jal    func78270 [$80078270]
@@ -1534,8 +1592,9 @@ A2 = 0;
 A3 = V0 & ffff;
 8007912C	jal    $80045354
 [SP + 0010] = w(0);
-80079134	jal    func773bc [$800773bc]
-80079138	nop
+
+field_deallocate_memory_for_party_sprites();
+
 V0 = w[800b1738];
 80079144	nop
 80079148	beq    v0, zero, L791a0 [$800791a0]
@@ -1556,7 +1615,7 @@ A2 = V0;
 80079188	jal    $8003f810
 A1 = S0;
 A0 = w[800acff8];
-80079198	jal    $80031f0c
+80079198	jal    $system_memory_mark_removed_alloc
 8007919C	nop
 
 L791a0:	; 800791A0
@@ -1958,11 +2017,11 @@ V0 = 03c0;
 [SP + 0018] = h(V0);
 80079830	jal    $80044448
 A0 = 0;
-80079838	jal    $80031f0c
+80079838	jal    $system_memory_mark_removed_alloc
 A0 = S5;
-80079840	jal    $80031f0c
+80079840	jal    $system_memory_mark_removed_alloc
 A0 = S6;
-80079848	jal    $80031f0c
+80079848	jal    $system_memory_mark_removed_alloc
 A0 = S7;
 A0 = 0004;
 80079854	jal    $80028280
@@ -2000,7 +2059,7 @@ A1 = FP;
 A2 = V0;
 800798DC	jal    $8003f810
 A0 = S0;
-800798E4	jal    $80031f0c
+800798E4	jal    $system_memory_mark_removed_alloc
 A0 = FP;
 A0 = 00a0;
 
@@ -2010,8 +2069,8 @@ A1 = 0070;
 A0 = w[800aeecc];
 80079900	jal    $80049ff4
 80079904	nop
-80079908	jal    func77318 [$80077318]
-8007990C	nop
+field_allocate_memory_for_party_sprites();
+
 V1 = w[800ad03c];
 V0 = 0001;
 8007991C	bne    v1, v0, L79984 [$80079984]
@@ -2061,7 +2120,7 @@ AT = AT + S3;
 A1 = w[AT + 9aa4];
 800799E0	jal    $80032cd8
 A0 = S0;
-800799E8	jal    $80031f0c
+800799E8	jal    $system_memory_mark_removed_alloc
 A0 = S0;
 
 L799f0:	; 800799F0
@@ -2626,75 +2685,4 @@ S0 = w[SP + 0030];
 SP = SP + 0048;
 8007A398	jr     ra 
 8007A39C	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func7a3a0
-[800af528] = w(A0);
-[800af52c] = w(A1);
-8007A3B0	jr     ra 
-8007A3B4	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func7a3b8
-V0 = hu[800af530];
-8007A3C0	nop
-8007A3C4	mult   a0, v0
-8007A3C8	mflo   v1
-8007A3CC	nop
-8007A3D0	nop
-8007A3D4	mult   a1, v0
-8007A3D8	mflo   a0
-V0 = hu[800af534];
-8007A3E4	nop
-8007A3E8	mult   a2, v0
-8007A3EC	mflo   t1
-8007A3F0	nop
-8007A3F4	nop
-8007A3F8	mult   a3, v0
-[800c2f18] = w(V1);
-[800c2f24] = w(A0);
-[800c2f20] = w(T1);
-8007A414	mflo   v0
-[800c2f28] = w(V0);
-8007A420	jr     ra 
-8007A424	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func7a428
-[800af530] = h(A0);
-[800af534] = h(A1);
-8007A438	jr     ra 
-8007A43C	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func7a440
-V0 = hu[800af530];
-8007A448	nop
-8007A44C	mult   a1, v0
-8007A450	mflo   v1
-V0 = hu[800af534];
-8007A45C	nop
-8007A460	mult   a2, v0
-A0 = A0 << 02;
-8007A468	lui    at, $800b
-AT = AT + A0;
-[AT + f53c] = w(V1);
-8007A474	mflo   v0
-8007A478	lui    at, $800b
-AT = AT + A0;
-[AT + f544] = w(V0);
-8007A484	jr     ra 
-8007A488	nop
 ////////////////////////////////
