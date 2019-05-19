@@ -155,7 +155,7 @@ if( w[8004e9b0] == 0 )
 }
 
 A0 = 0;
-func84ea4();
+func84ea4(); // load some sound file
 
 S4 = 0;
 
@@ -183,7 +183,7 @@ if( w[800c1b60] == 0 ) // debug
 func76c50(); // set dir inside
 
 [80059a38] = w(8006ccc4);
-[8004e9f0] = w(hu[8006efde]);
+[8004e9f0] = w(hu[8006efde]); // field id to load
 [8006e5f6] = h(hu[8006efe4]);
 [8006e5fc] = h(hu[8006efe0] >> 9);
 

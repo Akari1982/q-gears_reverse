@@ -68,7 +68,7 @@
 // func1ab84
 8001AB84-8001ABAC
 ////////////////////////////////
-// func1abb0
+// system_cdrom_data_action_sync
 8001ABB0-8001ABDC
 ////////////////////////////////
 // func1abe0

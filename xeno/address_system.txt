@@ -36,7 +36,7 @@
 8004ea0c [][][][] init with 0.
 8004ea10 [][][][] init with 0.
 8004ea14 [][][][] init with 0.
-8004ea18 [][][][] init with 0.
+8004ea18 [][][][] init with 0. Set to 1 if some memory inited.
 8004ea1c [][][][] init with 0.
 8004ea20 [][][][] init with 0.
 8004ea24 [][][][] init with 0.

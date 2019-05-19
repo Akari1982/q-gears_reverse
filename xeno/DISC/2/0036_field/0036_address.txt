@@ -12,6 +12,7 @@
 80061c20 [][][][] party member 1.
 80061c24 [][][][] party member 2.
 80061c28 [][][][] party member 3.
+80061c2c [][][][] pointer to some sound STRIPCD1\10\0590.sed
 
 80064ed8 store mouse input from second controller here.
     +00 [][][][] pos X
