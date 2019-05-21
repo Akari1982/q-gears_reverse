@@ -1682,39 +1682,30 @@ V0 = S1 < 0020;
 
 
 ////////////////////////////////
-// func76bd4
-V0 = w[800c1b60];
-80076BDC	addiu  sp, sp, $ffc8 (=-$38)
-80076BE0	bne    v0, zero, L76c34 [$80076c34]
-[SP + 0030] = w(RA);
-80076BE8	jal    $80037324
-80076BEC	lui    a0, $8027
-A0 = 0010;
-A1 = 0010;
-V0 = 0400;
-[SP + 0010] = w(V0);
-V0 = 0004;
-[SP + 0014] = w(V0);
-V0 = 03c0;
-[SP + 0018] = w(V0);
-V0 = 0100;
-[SP + 001c] = w(V0);
-[SP + 0020] = w(V0);
-V0 = 01ff;
-A2 = 0130;
-A3 = 00e0;
-[SP + 0024] = w(V0);
-80076C2C	jal    $80037390
-[SP + 0028] = w(0);
+// func76bd4()
 
-L76c34:	; 80076C34
-A0 = 0100;
-80076C38	jal    $800334bc
-A1 = 00f0;
-RA = w[SP + 0030];
-SP = SP + 0038;
-80076C48	jr     ra 
-80076C4C	nop
+if( w[800c1b60] == 0 ) // debug
+{
+    A0 = 80270000;
+    system_print_set_memory();
+
+    A0 = 10;
+    A1 = 10;
+    A2 = 130;
+    A3 = e0;
+    A4 = 400;
+    A5 = 4;
+    A6 = 3c0;
+    A7 = 100;
+    A8 = 100;
+    A9 = 1ff;
+    A10 = 0;
+    system_print_init();
+}
+
+A0 = 100;
+A1 = f0;
+func334bc();
 ////////////////////////////////
 
 
@@ -1882,7 +1873,7 @@ V0 = w[800b1738];
 80076F3C	jal    func89af4 [$80089af4]
 80076F40	nop
 A0 = 0004;
-80076F48	jal    $80028280
+80076F48	jal    $system_filesystem_set_dir
 A1 = 0;
 80076F50	jal    funca858c [$800a858c]
 A0 = 0;
@@ -1897,7 +1888,7 @@ A0 = V1 & A0;
 A0 = A0 + V0;
 
 L76f88:	; 80076F88
-80076F88	jal    $800286fc
+80076F88	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 06b9;
 A0 = V0;
 
@@ -1926,7 +1917,7 @@ AT = AT + S0;
 [AT + 1868] = h(V0);
 A0 = h[S2 + 0000];
 S2 = S2 + 0002;
-80076FF8	jal    $800286fc
+80076FF8	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = A0 + 06bb;
 A0 = V0;
 80077004	jal    $system_memory_allocate
@@ -1962,7 +1953,7 @@ AT = AT + S0;
 [AT + 1868] = h(V0);
 A0 = h[S2 + 0000];
 S2 = S2 + 0002;
-80077080	jal    $800286fc
+80077080	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = A0 + 06ba;
 A0 = V0;
 8007708C	jal    $system_memory_allocate

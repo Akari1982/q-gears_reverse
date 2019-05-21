@@ -3242,7 +3242,7 @@ while( true )
 
     [800767a8] = w(S0);
 
-    func19d24(); // reset check
+    system_reset_check(); // reset check
 }
 ////////////////////////////////
 
@@ -4969,7 +4969,7 @@ while( true )
     S5 = S5 + 1e;
     func76034();
 
-    func19d24(); // check game reset (all buttons pressed)
+    system_reset_check(); // check game reset (all buttons pressed)
 
     A0 = 0;
     system_psyq_wait_frames();

@@ -95,7 +95,7 @@ L7099c:	; 8007099C
     A0 = 2;
     system_psyq_wait_frames();
 
-    func19d24(); // pressed buttons start select L1 R1 reset?
+    system_reset_check(); // pressed buttons start select L1 R1 reset?
 
     A0 = w[8009b224] + 5c;
     system_psyq_put_disp_env();

@@ -2,7 +2,7 @@
 // func31840()
 
 A0 = 0;
-func37324();
+system_print_set_memory();
 
 [GP + 1a8] = h(20); // empty mem contents id
 [GP + 1ac] = h(a); // unknown user by default "????"

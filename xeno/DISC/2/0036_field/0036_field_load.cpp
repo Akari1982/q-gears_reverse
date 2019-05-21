@@ -293,7 +293,7 @@ if( V0 > 0 )
     8006F950	bne    v0, zero, loop6f920 [$8006f920]
 }
 
-8006F958	jal    func37334 [$80037334]
+system_print_clear_memory();
 
 [800af37c] = h(0);
 

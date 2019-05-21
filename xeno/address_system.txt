@@ -309,6 +309,7 @@
 80058508 [][][][] init with 0.
 8005850c [][][][] init with 0. Set to 8006f158 during sound init.
 
+
 80058810 GP
     + 14 [][][][] some id for GP + 420 or GP + 418 struct. Increment after inserting new.
     + 18 [][][][] increment after inserting new to GP + 418.

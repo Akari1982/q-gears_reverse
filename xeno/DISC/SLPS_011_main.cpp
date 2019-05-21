@@ -530,7 +530,7 @@ system_memory_set_alloc_user();
 
 
 ////////////////////////////////
-// func19d24()
+// system_reset_check()
 
 if( hu[80058c0c] == 090c ) // pressed buttons start select L1 R1
 {
@@ -1914,7 +1914,7 @@ V1 = w[V0 + 0000];
 if( V1 != -1 )
 {
     A0 = 80200000;
-    func37324();
+    system_print_set_memory();
 
     A0 = 10;    // start x
     A1 = 10;    // start y
@@ -2051,13 +2051,6 @@ A3 = 0140;
 A0 = S2;
 8001B7B4	jal    func1b7d8 [$8001b7d8]
 A0 = S0;
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-8001B7D0	jr     ra 
-8001B7D4	nop
 ////////////////////////////////
 
 

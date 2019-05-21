@@ -379,7 +379,7 @@ V0 = 0200;
 [SP + 001a] = h(0);
 80086464	jal    $800445dc
 [SP + 001e] = h(V0);
-8008646C	jal    $80044448
+8008646C	jal    $system_draw_sync
 A0 = 0;
 80086474	jal    $8004b3f4
 A0 = 0;
@@ -653,11 +653,11 @@ S1 = V0;
 S2 = V0;
 S0 = S2 << 09;
 A0 = S0;
-80086834	jal    $800319ec
+80086834	jal    $system_memory_allocate
 A1 = 0;
 A0 = S0;
 [800c2f1c] = w(V0);
-80086848	jal    $800319ec
+80086848	jal    $system_memory_allocate
 A1 = 0;
 A1 = w[800c2f1c];
 A0 = 800af12c;
@@ -3913,13 +3913,13 @@ A1 = bu[V1 + 000d];
 A0 = 0005;
 A0 = 0004;
 A1 = 0;
-80089948	jal    $80028280
+80089948	jal    $system_filesystem_set_dir
 S0 = V0;
 S0 = S0 + 07fb;
-80089954	jal    $800286fc
+80089954	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0;
 A0 = V0;
-80089960	jal    $800319ec
+80089960	jal    $system_memory_allocate
 A1 = 0;
 A0 = S0;
 A1 = V0;
@@ -4293,13 +4293,13 @@ A0 = 0004;
 [SP + 0018] = w(RA);
 [SP + 0010] = w(S0);
 [800ad0a0] = w(S1);
-80089DD8	jal    $80028280
+80089DD8	jal    $system_filesystem_set_dir
 A1 = 0;
 V0 = w[800acff4];
 80089DE8	nop
 80089DEC	bne    v0, zero, L89dfc [$80089dfc]
 80089DF0	nop
-80089DF4	jal    $80028870
+80089DF4	jal    $system_cdrom_action_sync
 A0 = 0;
 
 L89dfc:	; 80089DFC
@@ -4308,7 +4308,7 @@ V0 = w[8004e9f0];
 V0 = V0 & c000;
 80089E0C	bne    v0, zero, L89e60 [$80089e60]
 S0 = S1 + 0005;
-80089E14	jal    $800286fc
+80089E14	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0;
 A0 = V0;
 V0 = w[800ad0a4];
@@ -4317,7 +4317,7 @@ V0 = V0 << 02;
 80089E30	lui    at, $8007
 AT = AT + V0;
 [AT + f14c] = w(S1);
-80089E3C	jal    $800319ec
+80089E3C	jal    $system_memory_allocate
 A1 = 0;
 A0 = S0;
 A1 = V0;
@@ -4338,10 +4338,10 @@ S1 = S1 + 0010;
 
 L89e80:	; 80089E80
 S0 = S1 + 0005;
-80089E84	jal    $800286fc
+80089E84	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0;
 A0 = V0;
-80089E90	jal    $800319ec
+80089E90	jal    $system_memory_allocate
 A1 = 0;
 A0 = S0;
 A1 = V0;
@@ -4361,7 +4361,7 @@ V0 = w[800acff4];
 80089ED8	nop
 80089EDC	bne    v0, zero, L89ef0 [$80089ef0]
 V0 = 0001;
-80089EE4	jal    $80028870
+80089EE4	jal    $system_cdrom_action_sync
 A0 = 0;
 V0 = 0001;
 
@@ -4539,7 +4539,7 @@ V0 = V1 & 0080;
 A0 = 001c;
 
 L8a1b8:	; 8008A1B8
-8008A1B8	jal    $80028280
+8008A1B8	jal    $system_filesystem_set_dir
 A1 = 0;
 V0 = w[800af1e0];
 8008A1C8	nop
@@ -4562,15 +4562,15 @@ L8a208:	; 8008A208
 V0 = V0 + 001f;
 [800af1e0] = w(V0);
 A0 = 002c;
-8008A218	jal    $80028280
+8008A218	jal    $system_filesystem_set_dir
 A1 = 0001;
 
 L8a220:	; 8008A220
 A0 = w[800af1e0];
-8008A228	jal    $800286fc
+8008A228	jal    $system_get_aligned_filesize_by_dir_file_id
 8008A22C	nop
 A0 = V0;
-8008A234	jal    $800319ec
+8008A234	jal    $system_memory_allocate
 A1 = 0;
 A1 = V0;
 A2 = 0;
@@ -4579,7 +4579,7 @@ A0 = w[800af1e0];
 8008A254	jal    $800293e8
 A3 = 0080;
 A0 = 0004;
-8008A260	jal    $80028280
+8008A260	jal    $system_filesystem_set_dir
 A1 = 0;
 V1 = w[800af54c];
 8008A270	nop
@@ -4645,15 +4645,15 @@ L8a354:	; 8008A354
 A0 = 0001;
 A0 = 0004;
 A1 = 0;
-8008A364	jal    $80028280
+8008A364	jal    $system_filesystem_set_dir
 S0 = V0;
 S0 = S0 + 077a;
-8008A370	jal    $800286fc
+8008A370	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0;
 A0 = V0 + 0008;
 V0 = w[800af54c];
 A1 = 0;
-8008A388	jal    $800319ec
+8008A388	jal    $system_memory_allocate
 [V0 + 0124] = h(S0);
 A0 = S0;
 A1 = V0;
@@ -4666,7 +4666,7 @@ V0 = w[800acff4];
 8008A3B8	nop
 8008A3BC	bne    v0, zero, L8a3cc [$8008a3cc]
 8008A3C0	nop
-8008A3C4	jal    $80028870
+8008A3C4	jal    $system_cdrom_action_sync
 A0 = 0;
 
 L8a3cc:	; 8008A3CC
@@ -5366,7 +5366,7 @@ S0 = 00ff;
 8008AE88	nop
 8008AE8C	bne    v0, zero, L8af14 [$8008af14]
 8008AE90	nop
-8008AE94	jal    $80028870
+8008AE94	jal    $system_cdrom_action_sync
 A0 = 0;
 V0 = w[800ad0a4];
 A0 = w[800ad098];
@@ -5581,7 +5581,7 @@ V0 = w[800ad004];
 8008B28C	nop
 8008B290	bne    v0, zero, L8b370 [$8008b370]
 8008B294	nop
-8008B298	jal    $80028870
+8008B298	jal    $system_cdrom_action_sync
 A0 = 0;
 8008B2A0	jal    read_two_bytes_with_80 [$800ac2c4]
 A0 = 0001;
@@ -5666,7 +5666,7 @@ V0 = w[800ad004];
 8008B3DC	nop
 8008B3E0	bne    v0, zero, L8b4d8 [$8008b4d8]
 8008B3E4	nop
-8008B3E8	jal    $80028870
+8008B3E8	jal    $system_cdrom_action_sync
 A0 = 0;
 V0 = w[800af54c];
 V1 = w[800ad0d8];
@@ -5998,7 +5998,7 @@ A0 = 0001;
 [V0 + 00cc] = h(V1);
 
 L8b94c:	; 8008B94C
-8008B94C	jal    $80044448
+8008B94C	jal    $system_draw_sync
 A0 = 0;
 V0 = w[800af54c];
 V1 = w[800ad0d8];
@@ -11955,7 +11955,7 @@ V0 = h[S0 + 0000];
 V1 = S0 + 0104;
 V0 = V0 << 01;
 V0 = V0 + V1;
-80091828	jal    $800319ec
+80091828	jal    $system_memory_allocate
 [V0 + 0000] = h(S5);
 A0 = 0018;
 A1 = 0;
@@ -11963,7 +11963,7 @@ V1 = h[S0 + 0000];
 S1 = S0 + 0084;
 V1 = V1 << 02;
 V1 = V1 + S1;
-80091848	jal    $800319ec
+80091848	jal    $system_memory_allocate
 [V1 + 0000] = w(V0);
 A0 = 000f;
 V1 = h[S0 + 0000];
@@ -22474,7 +22474,7 @@ V1 = h[S0 + 0000];
 8009B77C	nop
 8009B780	bne    v1, s5, L9b83c [$8009b83c]
 V0 = 0002;
-8009B788	jal    $80028870
+8009B788	jal    $system_cdrom_action_sync
 A0 = 0001;
 8009B790	bne    v0, zero, L9badc [$8009badc]
 8009B794	addiu  v0, zero, $ffff (=-$1)
@@ -22620,7 +22620,7 @@ V1 = w[A3 + 012c];
 V0 = V0 << 02;
 V1 = V1 & A2;
 V1 = V1 | V0;
-8009B9A8	jal    $80028280
+8009B9A8	jal    $system_filesystem_set_dir
 [A3 + 012c] = w(V1);
 S3 = 0001;
 S0 = 800ad6b8;
@@ -22643,10 +22643,10 @@ A0 = bu[S2 + 0000];
 8009BA00	nop
 A0 = A0 + 0046;
 [800af59c] = h(A0);
-8009BA10	jal    $800286fc
+8009BA10	jal    $system_get_aligned_filesize_by_dir_file_id
 S0 = S0 + 0001;
 A0 = V0;
-8009BA1C	jal    $800319ec
+8009BA1C	jal    $system_memory_allocate
 A1 = 0;
 A0 = S1 + S0;
 [800acfe8] = w(V0);
@@ -22668,10 +22668,10 @@ A0 = bu[A0 + 0000];
 8009BA74	nop
 A0 = A0 + 0046;
 [800af5a4] = h(A0);
-8009BA84	jal    $800286fc
+8009BA84	jal    $system_get_aligned_filesize_by_dir_file_id
 S2 = 0002;
 A0 = V0;
-8009BA90	jal    $800319ec
+8009BA90	jal    $system_memory_allocate
 A1 = 0;
 [800acfec] = w(V0);
 [800af5a8] = w(V0);
@@ -24836,7 +24836,7 @@ V0 = V0 & 1000;
 8009DEC8	bne    v0, zero, L9deec [$8009deec]
 8009DECC	nop
 A0 = 0010;
-8009DED4	jal    $800319ec
+8009DED4	jal    $system_memory_allocate
 A1 = 0;
 V1 = w[800af54c];
 8009DEE4	nop
@@ -27077,7 +27077,7 @@ S1 = V0 >> 0d;
 V0 = w[A2 + 0004];
 800A05E0	addiu  v1, zero, $dfff (=-$2001)
 V0 = V0 & V1;
-800A05E8	jal    $80028280
+800A05E8	jal    $system_filesystem_set_dir
 [A2 + 0004] = w(V0);
 A0 = w[800af54c];
 V1 = w[800ad0d8];
@@ -27132,10 +27132,10 @@ S2 = 800b1868;
 V0 = V0 + 06ba;
 [S2 + 0000] = h(V0);
 A0 = h[S0 + 0000];
-800A06C0	jal    $800286fc
+800A06C0	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = A0 + 06ba;
 A0 = V0;
-800A06CC	jal    $800319ec
+800A06CC	jal    $system_memory_allocate
 A1 = 0;
 S1 = S1 << 02;
 800A06D8	lui    at, $8006
@@ -27147,10 +27147,10 @@ V0 = hu[S0 + 0000];
 V0 = V0 + 06bb;
 [800b1870] = h(V0);
 A0 = h[S0 + 0000];
-800A0704	jal    $800286fc
+800A0704	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = A0 + 06bb;
 A0 = V0;
-800A0710	jal    $800319ec
+800A0710	jal    $system_memory_allocate
 A1 = 0001;
 A0 = S2;
 A1 = 0;
@@ -27169,7 +27169,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0002;
 
 La0764:	; 800A0764
-800A0764	jal    $80028870
+800A0764	jal    $system_cdrom_action_sync
 A0 = 0001;
 800A076C	bne    v0, zero, La08ac [$800a08ac]
 800A0770	nop
