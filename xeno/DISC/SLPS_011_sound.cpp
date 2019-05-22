@@ -116,10 +116,10 @@ if( h[80058c18] < 0 )
 
 A0 = 4;
 A1 = 8006f158;
-func4d1b8();
+func4d1b8(); // init some struct
 
-A0 = 8006519c;
-A1 = 6300;
+A0 = 8006519c; // start (real struct will be at 800651a0)
+A1 = 6300; // size
 system_sound_structs_meminit();
 
 system_sound_spu_meminit();
@@ -1299,23 +1299,25 @@ if( hu[80058c18] & 0600 )
 ////////////////////////////////
 // system_sound_structs_meminit()
 
+start = A0;
+size = A1;
+
 // align memory
-A1 = A1 & fffffff0;
-if( A0 & f )
+size = size & fffffff0;
+if( start & f )
 {
-    A1 = A1 - 10;
-    V0 = A0 + f;
-    A0 = V0 & fffffff0;
+    size = size - 10;
+    start = (start + f) & fffffff0; // ceil()
 }
 
-[80058aac] = w(A0); // start of sound structs
-[80058bb8] = w(A1); // size of sound structs
-[80058c80] = w(A0 + A1); // end of sound structs
+[80058aac] = w(start); // start of sound structs
+[80058bb8] = w(size); // size of sound structs
+[80058c80] = w(start + size); // end of sound structs
 
 [A0 + 0] = h(8000);
 [A0 + 2] = h(0);
 [A0 + 4] = w(0);
-[A0 + 8] = w(A0 + 10); // end of data
+[A0 + 8] = w(A0 + 10); // current end of data
 [A0 + c] = w(0); // link to next struct
 ////////////////////////////////
 
@@ -1529,9 +1531,9 @@ for( int i = 0; i < c; ++i )
 
 [8006f08c + 0] = b(81);
 [8006f08c + 1] = b(05);
-[8006f08c + 2] = h(0);
-[8006f08c + 4] = w(0);
-[8006f08c + 8] = w(00001010);
+[8006f08c + 2] = h(0); // next id
+[8006f08c + 4] = w(0); // start
+[8006f08c + 8] = w(00001010); // size
 ////////////////////////////////
 
 
@@ -1551,7 +1553,7 @@ while( h[old_item + 2] != 0 ) // if next item exist
     // if there is enough space between curent element end and next element start
     if( ( w[next_item + 4] - old_end ) >= new_size )
     {
-        func3962c() ;// find first empty item in array
+        system_sound_spu_memory_find_empty();
         if( V0 >= 0 ) // insert new item in array
         {
             [8006f08c + V0 * 10 + 0] = b(80);
@@ -1571,7 +1573,7 @@ old_end = w[old_item + 4] + w[old_item + 8];
 // if there is enough space between curent element end and max ptr
 if( ( 80000 - old_end ) >= new_size )
 {
-    func3962c(); // find first empty item in array
+    system_sound_spu_memory_find_empty();
     if( V0 >= 0 ) // insert new item in array
     {
         [8006f08c + V0 * 10 + 0] = b(80);
@@ -1589,81 +1591,55 @@ return 0;
 
 
 ////////////////////////////////
-// func39360
-80039360	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+// func39360()
+
 S1 = A0;
-[SP + 0010] = w(S0);
 S0 = 8006f08c;
 A2 = 0;
-8003937C	lui    a3, $0008
-T0 = S0;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
 
 L3938c:	; 8003938C
-V1 = w[S0 + 0004];
-V0 = w[S0 + 0008];
-A0 = h[S0 + 0002];
-80039398	nop
-8003939C	bne    a0, zero, L393c0 [$800393c0]
-V1 = V1 + V0;
-V0 = A3 - V1;
-V0 = V0 < S1;
-800393AC	bne    v0, zero, L393f0 [$800393f0]
-800393B0	nop
-A2 = S0;
-800393B8	j      L393f0 [$800393f0]
-S2 = A3 - S1;
+    V0 = w[S0 + 8];
+    A0 = h[S0 + 2];
+    V1 = w[S0 + 4] + V0;
 
-L393c0:	; 800393C0
-V0 = A0 << 04;
-A0 = V0 + T0;
-A1 = w[A0 + 0004];
-800393CC	nop
-V0 = A1 - V1;
-V0 = V0 < S1;
-800393D8	bne    v0, zero, L393e8 [$800393e8]
-800393DC	nop
-A2 = S0;
-S2 = A1 - S1;
+    if( A0 == 0 )
+    {
+        V0 = 80000 - V1;
+        if( V0 >= S1 )
+        {
+            A2 = S0;
+            S2 = 80000 - S1;
+        }
+        break;
+    }
 
-L393e8:	; 800393E8
+    A0 = 8006f08c + A0 * 10;
+    A1 = w[A0 + 4];
+    if( ( A1 - V1 ) >= S1 )
+    {
+        A2 = S0;
+        S2 = A1 - S1;
+    }
+
+    S0 = A0;
 800393E8	j      L3938c [$8003938c]
-S0 = A0;
 
-L393f0:	; 800393F0
-800393F0	beq    a2, zero, L39444 [$80039444]
-V0 = 0;
-800393F8	jal    func3962c [$8003962c]
-800393FC	nop
-A1 = V0;
-80039404	bltz   a1, L39440 [$80039440]
-V1 = A1 << 04;
-V0 = 8006f08c;
-A0 = V1 + V0;
-V0 = 0080;
-[A0 + 0000] = b(V0);
-[A0 + 0001] = b(0);
-[A0 + 0004] = w(S2);
-[A0 + 0008] = w(S1);
-V1 = hu[S0 + 0002];
-V0 = S2;
-[A0 + 0002] = h(V1);
-80039438	j      L39444 [$80039444]
-[S0 + 0002] = h(A1);
+if( A2 != 0 )
+{
+    system_sound_spu_memory_find_empty();
 
-L39440:	; 80039440
-V0 = 0;
-
-L39444:	; 80039444
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80039458	jr     ra 
-8003945C	nop
+    if( V0 >= 0 )
+    {
+        [8006f08c + V0 * 10 + 0] = b(80);
+        [8006f08c + V0 * 10 + 1] = b(0);
+        [8006f08c + V0 * 10 + 4] = w(S2);
+        [8006f08c + V0 * 10 + 8] = w(S1);
+        [8006f08c + V0 * 10 + 2] = h(hu[S0 + 2]);
+        [8006f08c + V0 * 10 + 2] = h(V0);
+        return S2;
+    }
+}
+return 0;
 ////////////////////////////////
 
 
@@ -1702,7 +1678,7 @@ while( old_start < new_start )
 
 if( new_size <= free_size && new_start >= old_end )
 {
-    func3962c(); // find first empty item in array
+    system_sound_spu_memory_find_empty();
     if( V0 >= 0 )
     {
         [8006f08c + V0 * 10 + 0] = b(80);
@@ -1724,29 +1700,28 @@ return 0;
 
 spu_mem = A0;
 
-A1 = 0;
+curr = 0;
 id = 0;
-L39598:	; 80039598
-    prev = A1;
-    A1 = 8006f08c + id * 10;
+do
+{
+    prev = curr;
+    curr = 8006f08c + id * 10;
 
-    if( w[A1 + 4] == spu_mem )
+    if( w[curr + 4] == spu_mem )
     {
-        [prev + 2] = h(hu[A1 + 2]);
+        [prev + 2] = h(hu[curr + 2]);
 
-        [A1 + 0] = b(0);
-        [A1 + 1] = b(0);
-        [A1 + 2] = h(0);
-        [A1 + 4] = w(0);
+        [curr + 0] = b(0);
+        [curr + 1] = b(0);
+        [curr + 2] = h(0);
+        [curr + 4] = w(0);
         return spu_mem;
     }
 
-    id = h[A1 + 2];
-    if( id == 0 )
-    {
-        return 0;
-    }
-800395DC	j      L39598 [$80039598]
+    id = h[curr + 2]; // next
+} while( id != 0 )
+
+return 0;
 ////////////////////////////////
 
 
@@ -1775,8 +1750,7 @@ return 0;
 
 
 ////////////////////////////////
-// func3962c()
-// find first item in array with 00 == 0
+// system_sound_spu_memory_find_empty()
 
 for( int i = 0; i < c; ++i )
 {

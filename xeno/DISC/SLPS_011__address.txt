@@ -514,7 +514,8 @@
 80058b90 [][]     id of loaded spu dma transfer.
 80058b94 [][][][] store here 0 when start load battle exe.
 80058b98 [][][][] flags for turning SPU Voice ON.
-80058b9c [][]     spu sound error. Init with 0.
+80058b9c [][]     spu sound error id. Init with 0.
+                    0x28 already inited
 
 80058ba0 [][][][] increment each system_sound_main() call.
 80058ba4 [][][][] store here id of encounter in field.
@@ -562,6 +563,7 @@
                     0x0008 add if we genegate sound error.
                     0x0010 ???
                     0x0040 we don't play system_sound_main() if this is set. Maybe pause sound.
+                    0x0080 do not generate sound error if this flag set.
                     0x0100 if this flag is set then we use mono sound without separation on different channels. Set during init.
                     0x0200 removed during init.
                     0x0400 removed during init.
@@ -746,6 +748,7 @@
 
 
 800651a0-8006b490. Spu data structures. Can be anywhere because allocate dynamicly. Located via struct header.
+First struct is just header struct (0x10 size), later we add more structs different size.
 // header (0x10 size)
     +00 [][]     some id. In music set to 2; Init with 0x8000.
     +02 [][]     0.
@@ -933,11 +936,12 @@
 8006f020 array of 3 items with size 0x4. Init with 0.
 
 8006f08c array of spu memory allocation structs with size 0x10. 0xc items.
-    +00 []       0x80 here.
-    +01 []       0x00 here.
-    +02 [][]     id of next item.
-    +04 [][][][] start of allocated memory.
-    +08 [][][][] size of allocated memory.
+         Insert first item right after init. (+0 0x81, +1 0x05, +2 0x0000, +4 0x00000000, +8 0x00001010)
+    +0 []       0x80 here.
+    +1 []       0x00 here.
+    +2 [][]     id of next item.
+    +4 [][][][] start of allocated memory.
+    +8 [][][][] size of allocated memory.
 
 8006f14c array of 3 items with size 0x4. Init with 0.
 
