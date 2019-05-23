@@ -939,7 +939,7 @@ return A0;
 
 
 ////////////////////////////////
-// system_sound_spu_irq9_callback()
+// system_sound_spu_set_irq9_callback()
 
 S0 = w[800584e4];
 
@@ -1086,7 +1086,7 @@ else
 
 
 ////////////////////////////////
-// system_sound_spu_dma_stop_callback()
+// system_sound_set_spu_dma_stop_callback()
 
 V0 = w[800584e0];
 if( A0 != V0 )

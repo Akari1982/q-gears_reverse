@@ -124,14 +124,15 @@ system_sound_structs_meminit();
 
 system_sound_spu_meminit();
 
-A0 = a0;
+A0 = a0; // 0x14 size 0x8 items
 system_sound_structs_malloc();
 [80058af4] = w(V0); // spu dma transfer structs
 
+// set offsets to 0
 system_sound_channel_structures_offset_init();
 
 [80058b80] = w(12345678);
-[80058c00] = w(0); // pointer to main music structs data after header
+[80058c00] = w(0); // pointer to main music structs data
 [80058c74] = w(0); // offset to 80061bbc SPU channel structures + 30
 [80058adc] = w(0); // pointer to SED file
 [80058bf4] = w(0); // pointer to SND file (with wds signature)
@@ -139,9 +140,10 @@ system_sound_channel_structures_offset_init();
 [80058b98] = w(0); // flags for turning SPU Voice ON
 [80058bec] = w(0);
 [80058bf0] = w(0); // flags for turning SPU Voice OFF
-[80059a64] = h(0);
-[80059a66] = h(0);
-[80059a5c] = w(c);
+
+[80059a5c + 0] = w(0000000c); // flags for predefined main volume left/right
+[80059a5c + 8] = h(0); // predefined main volume left id
+[80059a5c + a] = h(0); // predefined main volume right id
 
 system_enter_critical_section();
 
@@ -160,11 +162,11 @@ system_root_counter_setup()
 A0 = f2000002;
 system_root_counter_enable();
 
-A0 = 8003ba0c; // func3ba0c()
-system_sound_spu_dma_stop_callback();
+A0 = 8003ba0c; // system_sound_spu_dma_stop_callback()
+system_sound_set_spu_dma_stop_callback();
 
-A0 = 8003be48; // func3be48()
-system_sound_spu_irq9_callback();
+A0 = 8003be48; // system_sound_spu_interrupt_callback()
+system_sound_spu_set_irq9_callback();
 
 A0 = 0; // on
 system_sound_spu_irq9();
@@ -241,10 +243,10 @@ A0 = 0; // on
 system_sound_spu_irq9();
 
 A0 = 0;
-system_sound_spu_dma_stop_callback();
+system_sound_set_spu_dma_stop_callback();
 
 A0 = 0;
-system_sound_spu_irq9_callback();
+system_sound_spu_set_irq9_callback();
 
 A0 = f2000002;
 system_root_counter_disable();
@@ -1550,6 +1552,7 @@ while( h[old_item + 2] != 0 ) // if next item exist
     next_id = h[old_item + 2];
     old_end = w[old_item + 4] + w[old_item + 8];
     next_item = 8006f08c + next_id * 10;
+
     // if there is enough space between curent element end and next element start
     if( ( w[next_item + 4] - old_end ) >= new_size )
     {
@@ -1591,37 +1594,36 @@ return 0;
 
 
 ////////////////////////////////
-// func39360()
+// system_sound_spu_malloc_end()
 
-S1 = A0;
-S0 = 8006f08c;
+new_size = A0;
+
+old_item = 8006f08c;
+
 A2 = 0;
-
 L3938c:	; 8003938C
-    V0 = w[S0 + 8];
-    A0 = h[S0 + 2];
-    V1 = w[S0 + 4] + V0;
+    next_id = h[old_item + 2];
+    old_end = w[old_item + 4] + w[old_item + 8];
 
-    if( A0 == 0 )
+    if( next_id == 0 ) // insert new
     {
-        V0 = 80000 - V1;
-        if( V0 >= S1 )
+        if( ( 80000 - old_end ) >= new_size )
         {
-            A2 = S0;
-            S2 = 80000 - S1;
+            A2 = old_item;
+            new_start = 80000 - new_size;
         }
         break;
     }
 
-    A0 = 8006f08c + A0 * 10;
-    A1 = w[A0 + 4];
-    if( ( A1 - V1 ) >= S1 )
+    next_item = 8006f08c + next_id * 10;
+    next_start = w[next_item + 4];
+    if( ( next_start - old_end ) >= new_size )
     {
-        A2 = S0;
-        S2 = A1 - S1;
+        A2 = old_item;
+        new_start = next_start - new_size;
     }
 
-    S0 = A0;
+    old_item = next_item;
 800393E8	j      L3938c [$8003938c]
 
 if( A2 != 0 )
@@ -1632,11 +1634,12 @@ if( A2 != 0 )
     {
         [8006f08c + V0 * 10 + 0] = b(80);
         [8006f08c + V0 * 10 + 1] = b(0);
-        [8006f08c + V0 * 10 + 4] = w(S2);
-        [8006f08c + V0 * 10 + 8] = w(S1);
         [8006f08c + V0 * 10 + 2] = h(hu[S0 + 2]);
+        [8006f08c + V0 * 10 + 4] = w(new_start);
+        [8006f08c + V0 * 10 + 8] = w(new_size);
+
         [8006f08c + V0 * 10 + 2] = h(V0);
-        return S2;
+        return new_start;
     }
 }
 return 0;
@@ -1768,11 +1771,11 @@ return 0;
 // func39668()
 
 L39674:	; 80039674
-    if( w[8006f08c + 4] == A0 )
+    if( w[8006f08c + 4] == A0 ) // search start
     {
         return 8006f08c;
     }
-    if( h[8006f08c + 2] != 0 )
+    if( h[8006f08c + 2] != 0 ) // next exist
     {
         return 0;
     }
@@ -4086,7 +4089,7 @@ return A0 * 158 + 94;
 
 
 ////////////////////////////////
-// func3ba0c()
+// system_sound_spu_dma_stop_callback()
 
 [80058c18] = h(hu[80058c18] | 0004);
 
@@ -4250,8 +4253,8 @@ V1 = V1 & ffff;
 V0 = V0 | 0010;
 [80058c18] = h(V0);
 
-A0 = 8003ba0c; // func3ba0c()
-system_sound_spu_dma_stop_callback();
+A0 = 8003ba0c; // system_sound_spu_dma_stop_callback()
+system_sound_set_spu_dma_stop_callback();
 
 A0 = 0;
 8003BD84	jal    func4d7d8 [$8004d7d8]
@@ -4312,7 +4315,7 @@ if( S1 != 8003ba0c )
 
 
 ////////////////////////////////
-// func3be48()
+// system_sound_spu_interrupt_callback()
 
 [80058c18] = h(hu[80058c18] | 0004);
 [80058bb0] = w(w[80058bb0] + 1);
@@ -7043,11 +7046,10 @@ while( number_of_channels != 0 )
 ////////////////////////////////
 // system_sound_channel_structures_offset_init()
 
-V0 = 5c;
-loop3e5ac:	; 8003E5AC
-    [80061bbc + V0] = w(0);
-    V0 = V0 - 4;
-8003E5BC	bgez   v0, loop3e5ac [$8003e5ac]
+for( int i = 0; i < 18; ++i )
+{
+    [80061bbc + i * 4] = w(0);
+}
 ////////////////////////////////
 
 

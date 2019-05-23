@@ -8799,7 +8799,7 @@ func37878:	; 80037878
 // system_sound_spu_malloc_any
 80039260-8003935C
 ////////////////////////////////
-// func39360
+// system_sound_spu_malloc_end
 80039360-8003945C
 ////////////////////////////////
 // system_sound_spu_malloc_place
@@ -9027,7 +9027,7 @@ func37878:	; 80037878
 // system_sound_get_sizeof_channel_and_main_struct
 8003B9E8-8003BA08
 ////////////////////////////////
-// func3ba0c
+// system_sound_spu_dma_stop_callback
 8003BA0C-8003BAB4
 ////////////////////////////////
 // func3bab8
@@ -9059,7 +9059,7 @@ func37878:	; 80037878
 // func3bd10
 8003BD10-8003BE44
 ////////////////////////////////
-// func3be48
+// system_sound_spu_interrupt_callback
 8003BE48-8003BEB4
 ////////////////////////////////
 // func3beb8
@@ -12363,7 +12363,7 @@ L4b098:	; 8004B098
 // system_sound_spu_irq9
 8004D4A8-8004D5E4
 ////////////////////////////////
-// system_sound_spu_irq9_callback
+// system_sound_spu_set_irq9_callback
 8004D5E8-8004D628
 ////////////////////////////////
 // system_sound_set_spu_interrupt_callback
@@ -12384,7 +12384,7 @@ L4b098:	; 8004B098
 // func4d7d8
 8004D7D8-8004D808
 ////////////////////////////////
-// system_sound_spu_dma_stop_callback
+// system_sound_set_spu_dma_stop_callback
 8004D80C-8004D82C
 ////////////////////////////////
 // system_sound_spu_main_and_cd_volume

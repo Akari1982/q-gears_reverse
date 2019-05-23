@@ -303,7 +303,7 @@
 800584d8 [][][][] init with 7.
 800584dc [][][][] init with 1.
 800584e0 [][][][] spu dma transfer stop callback.
-800584e4 [][][][] spu irq9 callback.
+800584e4 [][][][] spu interrupt callback.
 
 80058504 [][][][] init with 0. Set to 4 during sound init.
 80058508 [][][][] init with 0.
@@ -537,7 +537,7 @@
 80058bf4 [][][][] pointer to SND file (with wds signature).
 80058bfc [][][][] pointer to struct from STRIPCD1\1\0025.snd file.
 
-80058c00 [][][][] pointer to main sound structs data after header.
+80058c00 [][][][] pointer to main sound structs data.
 
 80058c0c [][]     pressed buttons in Xeno format for controller 1. (1=Pressed, 0=Released)
                     0x0001 L2
@@ -747,7 +747,7 @@
 
 
 
-800651a0-8006b490. Spu data structures. Can be anywhere because allocate dynamicly. Located via struct header.
+800651a0-8006b490. Spu memory struct
 First struct is just header struct (0x10 size), later we add more structs different size.
 // header (0x10 size)
     +00 [][]     some id. In music set to 2; Init with 0x8000.
