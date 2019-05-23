@@ -75,8 +75,10 @@ S0 = S0 + S4;
 [80059884] = w(S3);
 [80059888] = h(0);
 [8005988c] = w(0);
-800379AC	jal    func2990c [$8002990c]
 A2 = 0;
+
+800379AC	jal    func2990c [$8002990c]
+
 [S5 + 0000] = w(S1);
 [S6 + 0000] = w(0);
 V0 = w[80059884];
@@ -4058,24 +4060,19 @@ return 0;
 
 ////////////////////////////////
 // func3b9b0
-V1 = A1 + 0094;
-A1 = bu[A1 + 0014];
+
+V1 = A1 + 94;
+A1 = bu[A1 + 14];
 
 loop3b9b8:	; 8003B9B8
-V0 = hu[V1 + 0000];
-8003B9BC	nop
-8003B9C0	beq    v0, zero, L3b9d8 [$8003b9d8]
-8003B9C4	addiu  a1, a1, $ffff (=-$1)
-V0 = hu[V1 + 0000];
-8003B9CC	nop
-V0 = A0 | V0;
-[V1 + 0000] = h(V0);
+    A1 = A1 - 1;
+    if( hu[V1 + 0] != 0 )
+    {
+        [V1 + 0] = h(hu[V1 + 0] | A0);
+    }
 
-L3b9d8:	; 8003B9D8
+    V1 = V1 + 158;
 8003B9D8	bne    a1, zero, loop3b9b8 [$8003b9b8]
-V1 = V1 + 0158;
-8003B9E0	jr     ra 
-8003B9E4	nop
 ////////////////////////////////
 
 
@@ -4115,6 +4112,7 @@ if( hu[80058bac] != hu[80058b90] )
 
 ////////////////////////////////
 // func3bab8()
+// dma to spu
 
 A4 = 1;
 func3bb48();
@@ -4124,6 +4122,7 @@ func3bb48();
 
 ////////////////////////////////
 // func3badc()
+// dma to main memory
 
 A4 = 2;
 func3bb48();
@@ -4168,16 +4167,14 @@ if( ( S1 & 0004 ) == 0 )
     system_enter_critical_section();
 }
 
-V0 = hu[80058b90];
-V1 = V0 + 1;
-V0 = V1 & ffff;
-if( V0 >= 8 )
+V1 = hu[80058b90] + 1;
+if( V1 >= 8 )
 {
     V1 = 0;
 }
 [80058b90] = h(V1);
 
-V0 = w[80058af4] + V0 * 14;
+V0 = w[80058af4] + V1 * 14;
 [V0 + 00] = h(S0 & f);
 [V0 + 02] = h(0);
 [V0 + 04] = w(src);
@@ -4247,11 +4244,9 @@ if( V0 == 0 )
     V1 = 0;
 }
 
-V0 = hu[80058c18];
 [80058bac] = h(V1);
 V1 = V1 & ffff;
-V0 = V0 | 0010;
-[80058c18] = h(V0);
+[80058c18] = h(hu[80058c18] | 0010);
 
 A0 = 8003ba0c; // system_sound_spu_dma_stop_callback()
 system_sound_set_spu_dma_stop_callback();
@@ -4264,42 +4259,42 @@ S0 = w[80058af4] + V1 * 14;
 A0 = w[S0 + 8]; // start
 func4d780;
 
-V1 = hu[S0 + 00];
+V1 = hu[S0 + 0];
 
 switch( V1 )
 {
     case 1: // we send dma to spu here
     {
-        A0 = w[S0 + 04]; // affress from we send
-        A1 = w[S0 + 0c]; // 800;
+        A0 = w[S0 + 4]; // src address (main memory)
+        A1 = w[S0 + c]; // dst spu address;
         func4d720;
     }
     break;
 
-    case 2:
+    case 2: // we get dma from spu here
     {
-        A0 = w[S0 + 0004];
-        A1 = w[S0 + 000c];
-        8003BDE4	jal    func4d6c0 [$8004d6c0]
+        A0 = w[S0 + 4]; // dst address (main memory)
+        A1 = w[S0 + c]; // src spu address
+        func4d6c0()
     }
     break;
 
     case 3:
     {
         A0 = w[S0 + 0004];
-        8003BDF8	j      L3be08 [$8003be08]
         A1 = 0;
+        8003BE08	jal    func4d438 [$8004d438]
+
+        [80058be4] = h(V0);
     }
     break;
 
     case 4:
     {
         A0 = w[S0 + 0004];
-        A1 = 0005;
-
-        L3be08:	; 8003BE08
+        A1 = 5;
         8003BE08	jal    func4d438 [$8004d438]
-        8003BE0C	nop
+
         [80058be4] = h(V0);
     }
     break;

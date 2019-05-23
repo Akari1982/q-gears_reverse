@@ -367,6 +367,8 @@ if( A0 == 0 )
         }
         V1 = V1 + 1;
     }
+    // 1F801DAAh - SPU Control Register (SPUCNT)
+    // Sound RAM Transfer Mode (3=DMAread)
     [spu + 1aa] = h(hu[spu + 1aa]| 0030);
 }
 else if( A0 == 1 ) // wait until spu address is set
@@ -468,6 +470,7 @@ return 0;
 
 ////////////////////////////////
 // func4cde0()
+// write to spu
 
 S1 = A0;
 S0 = A1;
@@ -499,13 +502,14 @@ return S0;
 
 ////////////////////////////////
 // func4ce68()
+// read from spu
 
 S1 = A0;
 S0 = A1;
 
 A0 = 2;
-A1 = hu[800584c0] << w[800584d0];
-func4cb50();
+A1 = hu[800584c0] << w[800584d0]; // always 3 because spu address always divided by 8
+func4cb50(); // set address in spu to write to 0x1f801da6
 
 A0 = 0;
 func4cb50();
@@ -539,6 +543,7 @@ else
 
 ////////////////////////////////
 // func4cf18
+
 A2 = A0;
 
 V0 = w[800584cc];
@@ -585,11 +590,9 @@ V0 = w[800584d0];
 V0 = A0 << V0;
 
 L4cfec:	; 8004CFEC
-V0 = A0;
+return A0;
 
 L4cff0:	; 8004CFF0
-8004CFF0	jr     ra 
-8004CFF4	nop
 ////////////////////////////////
 
 
@@ -1005,24 +1008,23 @@ L4d6b8:	; 8004D6B8
 
 
 ////////////////////////////////
-// func4d6c0
+// func4d6c0()
 
 S0 = A1;
-V0 = 7eff0 < S0;
-8004D6D8	beq    v0, zero, L4d6e8 [$8004d6e8]
+if( S0 > 7eff0 )
+{
+    S0 = 7eff0;
+}
 
-S0 = 0007eff0;
-
-L4d6e8:	; 8004D6E8
-8004D6E8	jal    func4ce68 [$8004ce68]
 A1 = S0;
-V0 = w[800584e0];
+func4ce68();
 
-8004D6FC	bne    v0, zero, L4d70c [$8004d70c]
-V0 = S0;
-[800584dc] = w(0);
+if( w[800584e0] == 0 )
+{
+    [800584dc] = w(0);
+}
 
-L4d70c:	; 8004D70C
+return S0;
 ////////////////////////////////
 
 
