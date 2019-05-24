@@ -17,9 +17,9 @@ loopa1488:	; 800A1488
     {
         if( w[800c1b60] == 0 )
         {
-            A0 = 8006f414; // EVENTLOOP ERROR ACT=%d
+            A0 = 8006f414; // "EVENTLOOP ERROR ACT=%d"
             A1 = w[800af1f0]; // current entity id
-            func37870();
+            system_print_alias();
         }
         return;
     }

@@ -1027,7 +1027,7 @@ A2 = 0;
 A3 = -1; // dump all fields
 system_memory_full_dump();
 
-[80058954] = w(80037870); // func37870()
+[80058954] = w(80037870); // system_print_alias()
 
 A0 = w[GP + 1d4]; // filehandle
 system_devkit_pc_close();

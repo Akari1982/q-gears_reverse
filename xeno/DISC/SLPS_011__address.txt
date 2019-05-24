@@ -66,11 +66,13 @@
 8004f498 [][][][] pointer to 0x80018004
 8004f49c [][][][] file size to load.
 8004f4a0 [][][][] store 1 here before load.
+8004f4a4 [][][][] ???
 8004f4a8 [][][][] file sector to load.
 8004f4ac [][][][] pointer to allocated memory for file load.
 8004f4b0 [][][][] 0
 8004f4b4 [][][][] 0
 8004f4b8 [][][][] start id of files in current dir.
+8004f4bc [][][][] start id of files in current dir (stored for async cd loading).
 8004f4c0 [][][][] cd state:
                     [1] CdlSetloc => [2] CdlReadN 80059b1c+1 (fail [a][4] CdlNop 80059b20+1 store_ready) => [0] unset 80059b1c+1 (fail [a][3] CdlNop 80059b20+1 store_ready)
                     [3] CdlSetloc => [4] CdlSeekL (fail [a][1] CdlNop ) => [0] unset (fail [a][1] CdlNop )

@@ -2426,9 +2426,9 @@ if( number_of_entities > 0 )
                     // DEBUG TEXT
                     if( w[800c1b60] == 0 )
                     {
-                        A0 = 8006f2d8; // POLYCHECK %d
+                        A0 = 8006f2d8; // "POLYCHECK %d"
                         A1 = entity_id;
-                        func37870();
+                        system_print_alias();
                     }
 
                     A0 = w[SP + 40] + hu[data_138 + 1a];
@@ -2477,8 +2477,8 @@ if( number_of_entities > 0 )
                             // DEBUG TEXT
                             if( w[800c1b60] == 0 )
                             {
-                                A0 = 8006f2e8; // HITOFF
-                                func37870();
+                                A0 = 8006f2e8; // "HITOFF"
+                                system_print_alias();
                             }
                         }
                         else if( ( ( w[data_138 + 0] | leader_flags0 ) & 00000080 ) == 0 ) // both entity solid
@@ -2910,14 +2910,14 @@ if( S4 == walkmesh_blocks )
         {
             if( err0 )
             {
-                A0 = 8006f304; // ERROR ID0 ACT=%d
+                A0 = 8006f304; // "ERROR ID0 ACT=%d"
             }
             else
             {
-                A0 = 8006f2f0; // ERROR ID1 ACT=%d
+                A0 = 8006f2f0; // "ERROR ID1 ACT=%d"
             }
             A1 = entity_id;
-            func37870();
+            system_print_alias();
         }
 
         if( entity_id == w[800b1740] ) // if entity is party leader

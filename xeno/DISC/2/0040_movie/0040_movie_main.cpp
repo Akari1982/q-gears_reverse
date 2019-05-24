@@ -3937,7 +3937,7 @@ return S4;
 
 A0 = 8006f994; // "c:\work\cdrom\sound\wave\main_se.wd"
 A1 = 0;
-func28380();
+system_debug_read_filename_to_memory();
 S0 = V0;
 
 A0 = S0;
@@ -3956,7 +3956,7 @@ system_memory_mark_removed_alloc();
 
 A0 = 8006f9b8; // "c:\work\cdrom\sound\wave\bat_se.wd"
 A1 = 0;
-func28380();
+system_debug_read_filename_to_memory();
 S0 = V0;
 
 A0 = S0;
@@ -3975,7 +3975,7 @@ system_memory_mark_removed_alloc();
 
 A0 = 8006f9dc; // "c:\work\cdrom\sound\wave\gear_se.wd"
 A1 = 0;
-func28380();
+system_debug_read_filename_to_memory();
 S0 = V0;
 
 A0 = S0;
@@ -4000,7 +4000,7 @@ system_memory_mark_removed_alloc();
 
 A0 = 8006fa00; // "c:\work\cdrom\sound\wave\battle2.wd"
 A1 = 0;
-func28380();
+system_debug_read_filename_to_memory();
 S0 = V0;
 
 A0 = S0;
@@ -4019,7 +4019,7 @@ system_memory_mark_removed_alloc();
 
 A0 = 8006fa24; // "c:\work\cdrom\sound\music\battle2.smd"
 A1 = 0;
-func28380();
+system_debug_read_filename_to_memory();
 
 A0 = V0;
 func396f8();

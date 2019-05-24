@@ -27512,9 +27512,9 @@ V1 = V1 | V0;
 La0d3c:	; 800A0D3C
 if( w[800c1b60] == 0 )
 {
-    A0 = 8006f3d4; // STACKERR ACT=%d
+    A0 = 8006f3d4; // "STACKERR ACT=%d"
     A1 = w[800af1f0];
-    func37870();
+    system_print_alias();
 }
 V0 = 0001;
 [800af594] = w(V0);

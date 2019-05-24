@@ -4101,7 +4101,7 @@ L276e0:	; 800276E0
 // func28358
 80028358-8002837C
 ////////////////////////////////
-// func28380
+// system_debug_read_filename_to_memory
 80028380-800284C8
 ////////////////////////////////
 // func284cc
@@ -4113,7 +4113,7 @@ L276e0:	; 800276E0
 // system_get_filesize_by_dir_file_id
 80028548-80028614
 ////////////////////////////////
-// func28618
+// system_get_aligned_filesize_by_dir_file_id_async
 80028618-800286F8
 ////////////////////////////////
 // system_get_aligned_filesize_by_dir_file_id
@@ -4128,7 +4128,7 @@ L276e0:	; 800276E0
 // system_filesystem_get_sector_by_dir_file_id
 800287E0-80028824
 ////////////////////////////////
-// func28828
+// system_filesystem_get_sector_by_dir_file_id_async
 80028828-8002886C
 ////////////////////////////////
 // system_cdrom_action_sync
@@ -8665,16 +8665,13 @@ func3785c:	; 8003785C
 8003786C	nop
 
 
-func37870:	; 80037870
-80037870	j      system_print [$80036eb4]
-80037874	nop
 
-func37878:	; 80037878
-80037878	jr     ra 
-8003787C	nop
-
-
-
+////////////////////////////////
+// system_print_alias
+80037870-80037874
+////////////////////////////////
+// func37878
+80037878-8003787C
 ////////////////////////////////
 // func37880
 80037880-80037A2C

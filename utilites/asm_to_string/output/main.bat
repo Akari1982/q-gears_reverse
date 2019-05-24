@@ -1,1 +1,1 @@
-main q.txt
+main SLPS_011_cdrom2.cpp
