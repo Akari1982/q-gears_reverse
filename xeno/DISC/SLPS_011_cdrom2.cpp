@@ -1061,8 +1061,10 @@ return size;
 // func28924
 
 V0 = w[8004f4d4];
-
-80028944	beq    v0, zero, L28c48 [$80028c48]
+if( V0 == 0 )
+{
+    return 0;
+}
 
 S2 = V0;
 A0 = S2 + 0004;
@@ -1074,14 +1076,18 @@ V0 = S2 + V0;
 S2 = V0 + 0024;
 V1 = w[8004f4f0];
 80028978	addiu  v0, zero, $ffff (=-$1)
-8002897C	beq    v1, v0, L28c4c [$80028c4c]
-V0 = 0;
+if( V1 == V0 )
+{
+    return 0;
+}
+
 V0 = w[8004f49c];
-8002898C	nop
-80028990	blez   v0, L28c4c [$80028c4c]
-V0 = 0;
+if( V0 <= 0 )
+{
+    return 0;
+}
+
 V0 = w[8004f4e4];
-800289A0	nop
 800289A4	blez   v0, L28a0c [$80028a0c]
 S0 = 0;
 A3 = w[8004f4d0];
@@ -1111,9 +1117,10 @@ V0 = S0 < A1;
 
 L28a0c:	; 80028A0C
 V0 = hu[A0 + 0000];
-80028A10	nop
-80028A14	bne    v0, zero, L28c4c [$80028c4c]
-V0 = 0;
+if( V0 != 0 )
+{
+    return 0;
+}
 
 L28a1c:	; 80028A1C
 V0 = 0003;
@@ -1139,44 +1146,47 @@ L28a5c:	; 80028A5C
 S0 = S0 + 0001;
 V0 = S0 < 0004;
 80028A64	bne    v0, zero, loop28a30 [$80028a30]
-V0 = 0;
-80028A6C	j      L28c4c [$80028c4c]
-80028A70	nop
+
+return 0;
 
 L28a74:	; 80028A74
-V0 = w[8004f49c];
-80028A7C	nop
-80028A80	addiu  v0, v0, $f800 (=-$800)
+V0 = w[8004f49c] - 800;
 [8004f49c] = w(V0);
-80028A8C	bgtz   v0, L28c4c [$80028c4c]
-V0 = S2;
+
+if( V0 > 0 )
+{
+    return S2;
+}
+
 [8004f49c] = w(0);
 S0 = 0;
 
 loop28aa0:	; 80028AA0
-A0 = w[8004f4f0];
-system_devkit_pc_close();
+    A0 = w[8004f4f0];
+    system_devkit_pc_close();
 
-80028AB0	beq    v0, zero, L28ad8 [$80028ad8]
-A0 = S0;
-A1 = 0;
-A2 = 0;
-80028AC0	jal    func27e5c [$80027e5c]
-A3 = 00ff;
-S0 = S0 + 0001;
-V0 = S0 < 0004;
+    if( V0 == 0 )
+    {
+        break;
+    }
+
+    A0 = S0;
+    A1 = 0;
+    A2 = 0;
+    A3 = ff;
+    80028AC0	jal    func27e5c [$80027e5c]
+
+
+    S0 = S0 + 1;
+    V0 = S0 < 4;
 80028AD0	bne    v0, zero, loop28aa0 [$80028aa0]
-80028AD4	nop
 
-L28ad8:	; 80028AD8
+[8004f4f0] = w(-1);
+
 A0 = w[8004f4b0];
-80028AE0	addiu  v0, zero, $ffff (=-$1)
-[8004f4f0] = w(V0);
 80028AEC	beq    a0, zero, L28bc0 [$80028bc0]
-80028AF0	nop
-V0 = w[8004f4b4];
-80028AFC	nop
-V0 = V0 + 0001;
+
+V0 = w[8004f4b4] + 1;
 V1 = V0 << 03;
 V1 = V1 + A0;
 S1 = hu[V1 + 0000];
@@ -1197,87 +1207,72 @@ S0 = 0;
 A0 = S3;
 
 loop28b50:	; 80028B50
-A1 = 0;
-80028B54	jal    system_devkit_pc_open [$8004c1c0]
-A2 = 0;
-[8004f4f0] = w(V0);
-80028B64	bne    v0, s4, L28b8c [$80028b8c]
-A0 = S0;
-A1 = 00ff;
-A2 = 0;
-80028B74	jal    func27e5c [$80027e5c]
-A3 = 0;
-S0 = S0 + 0001;
-V0 = S0 < 0004;
+    A1 = 0;
+    A2 = 0;
+    system_devkit_pc_open();
+    [8004f4f0] = w(V0);
+
+    80028B64	bne    v0, s4, L28b8c [$80028b8c]
+
+    A0 = S0;
+    A1 = ff;
+    A2 = 0;
+    A3 = 0;
+    80028B74	jal    func27e5c [$80027e5c]
+
+    A0 = S3;
+    S0 = S0 + 0001;
+    V0 = S0 < 0004;
 80028B84	bne    v0, zero, loop28b50 [$80028b50]
-A0 = S3;
+
 
 L28b8c:	; 80028B8C
 A0 = S1;
 system_get_aligned_filesize_by_dir_file_id_async();
 
-V1 = w[8004f4a0];
 [8004f49c] = w(V0);
-80028BA4	addiu  v1, v1, $ffff (=-$1)
-[8004f4a0] = w(V1);
-80028BB0	j      L28c4c [$80028c4c]
-V0 = S2;
+[8004f4a0] = w(w[8004f4a0] - 1);
+
+return S2;
 
 L28bb8:	; 80028BB8
 [8004f49c] = w(0);
 
 L28bc0:	; 80028BC0
 [8004f4a0] = w(0);
-80028BC8	j      L28c4c [$80028c4c]
-V0 = S2;
+return S2;
 
 L28bd0:	; 80028BD0
-80028BD0	blez   a1, L28c14 [$80028c14]
 S0 = 0;
-A2 = 0003;
-V1 = hu[8004f4c8];
 
-loop28be4:	; 80028BE4
-V0 = hu[A0 + 0000];
-80028BE8	nop
-80028BEC	bne    v0, a2, L28c04 [$80028c04]
-80028BF0	nop
-V0 = hu[A0 + 0002];
-80028BF8	nop
-80028BFC	beq    v0, v1, L28c14 [$80028c14]
-80028C00	nop
+if( A1 > 0 )
+{
+    A2 = 3;
+    V1 = hu[8004f4c8];
 
-L28c04:	; 80028C04
-S0 = S0 + 0001;
-V0 = S0 < A1;
-80028C0C	bne    v0, zero, loop28be4 [$80028be4]
-A0 = A0 + 0008;
+    loop28be4:	; 80028BE4
+        if( hu[A0 + 0] == A2 )
+        {
+            if( hu[A0 + 2] == V1 )
+            {
+                break;
+            }
+        }
 
-L28c14:	; 80028C14
-V0 = w[8004f4e4];
-80028C1C	nop
-80028C20	beq    s0, v0, L28c48 [$80028c48]
-V0 = S0 << 0b;
-V1 = hu[8004f4c8];
-80028C30	nop
-V1 = V1 + 0001;
-[8004f4c8] = h(V1);
-80028C40	j      L28c4c [$80028c4c]
-V0 = S2 + V0;
+        A0 = A0 + 8;
+        S0 = S0 + 1;
+        V0 = S0 < A1;
+    80028C0C	bne    v0, zero, loop28be4 [$80028be4]
+}
 
-L28c48:	; 80028C48
-V0 = 0;
+if( S0 != w[8004f4e4] )
+{
+    [8004f4c8] = h(hu[8004f4c8] + 1);
 
-L28c4c:	; 80028C4C
-RA = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0038;
-80028C68	jr     ra 
-80028C6C	nop
+    return S2 + (S0 << b);
+}
+
+return 0;
 ////////////////////////////////
 
 
