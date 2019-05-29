@@ -1,1 +1,1 @@
-main 0038_battle.asm
+main 0038_battle_main.cpp
