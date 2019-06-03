@@ -1780,7 +1780,7 @@ V0 = fffe;
 V0 = V0 < S0;
 80071FA0	bne    v0, zero, L71fd0 [$80071fd0]
 80071FA4	nop
-80071FA8	jal    $8003f8b0
+80071FA8	jal    $system_get_random_2_bytes
 80071FAC	nop
 V0 = V0 & ffff;
 V1 = S0 + 0001;
@@ -1792,7 +1792,7 @@ V1 = S1 + V1;
 V0 = V1 & ffff;
 
 L71fd0:	; 80071FD0
-80071FD0	jal    $8003f8b0
+80071FD0	jal    $system_get_random_2_bytes
 80071FD4	nop
 V0 = V0 & ffff;
 
@@ -10004,13 +10004,12 @@ return;
 
 ////////////////////////////////
 // battle_ai_script_cycle()
+
 S1 = 0;
 S0 = A0 - 3;
 
-V0 = w[800D2B20 + S0 * 40];
+V0 = w[800d2b20 + S0 * 40];
 [SP + 10] = w(V0);
-
-
 
 // clean up action queue
 V1 = 800D257C;
@@ -10021,48 +10020,42 @@ loop7a078:	; 8007A078
     V0 = V1 < A0;
 8007A084	bne    v0, zero, loop7a078 [$8007a078]
 
-
-
-V0 = 8B8;
+V0 = 8b8;
 loop7a090:	; 8007A090
-    [800C374F + V0] = b(FF);
+    [800C374F + V0] = b(ff);
     V0 = V0 - 48;
 8007A0A0	bgez   v0, loop7a090 [$8007a090]
 
-8007A0A8	j      L7a0f4 [$8007a0f4]
-
-loop7a0b0:	; 8007A0B0
-    if (V1 == FF)
+A0 = w[SP + 10];
+while( bu[A0] != fd )
+{
+    if( V1 == ff )
     {
         return;
     }
-    else if (V1 >= 80)
+    else if( V1 >= 80 )
     {
         A0 = SP + 10;
-        A1 = S0 & FF;
-        func7ff34;
+        A1 = S0 & ff;
+        func7ff34();
 
-        if (V0 == 0)
+        if( V0 == 0 )
         {
             A0 = SP + 10;
-            func79fbc;
+            func79fbc();
         }
     }
     else
     {
         A0 = SP + 10;
-        A1 = S0 & FF;
-        A2 = S1 & FF;
-        func7f5e0;
+        A1 = S0 & ff;
+        A2 = S1 & ff;
+        func7f5e0();
         S1 = V0;
     }
 
-    L7a0f4:	; 8007A0F4
     A0 = w[SP + 10];
-    V1 = bu[A0];
-8007A104	bne    v1, FD, loop7a0b0 [$8007a0b0]
-
-return;
+}
 ////////////////////////////////
 
 
@@ -15339,187 +15332,142 @@ SP = SP + 0018;
 8007EFA0	jr     ra 
 8007EFA4	nop
 ////////////////////////////////
-// func7efa8
-8007EFA8	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(RA);
-8007EFB0	jal    func78b7c [$80078b7c]
-A0 = SP + 0010;
-RA = w[SP + 0020];
-SP = SP + 0028;
-8007EFC0	jr     ra 
-8007EFC4	nop
+
+
+
 ////////////////////////////////
-// func7efc8
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007EFF0	nop
-V0 = V0 ^ V1;
-8007EFF8	jr     ra 
-V0 = V0 < 0001;
+// func7efa8()
+
+A0 = SP + 10;
+func78b7c();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0x82
-// func7f000
-address = w[A0];
-unit_id = A1;
+// func7efc8()
 
-V0 = bu[address + 1];
-V1 = hu[address + 2];
-
-V0 = hu[800D2B40 + unit_id * 40 + V0 * 2];
-return (V0 XOR V1) == 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0x83
-// func7f044
 address = w[A0];
 unit_id = A1;
 
 V1 = bu[address + 1];
-V0 = bu[address + 2];
-
-V1 = bu[800D2B40 + unit_id * 40 + 10 + V1];
-return V1 <= V0;
+return bu[800d2b20 + unit_id * 40 + 30 + V1] == bu[address + 2];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func7f07c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-A2 = bu[A0 + 0003];
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0002];
-A2 = A2 << 08;
-V1 = V1 << 01;
-V1 = V1 + A1;
-V1 = hu[V1 + 0000];
-V0 = V0 | A2;
-V0 = V0 < V1;
-8007F0B8	jr     ra 
-V0 = V0 ^ 0001;
+// func7f000()
+
+address = w[A0];
+unit_id = A1;
+
+V0 = bu[address + 1];
+return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] == hu[address + 2];
 ////////////////////////////////
-// func7f0c0
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007F0E8	nop
-V0 = V0 < V1;
-8007F0F0	jr     ra 
-V0 = V0 ^ 0001;
+
+
+
 ////////////////////////////////
-// func7f0f8
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V1 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V1;
-A2 = bu[A0 + 0003];
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-A2 = A2 << 08;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V0 = hu[V0 + 0000];
-V1 = V1 | A2;
-V0 = V0 < V1;
-8007F134	jr     ra 
-V0 = V0 ^ 0001;
+// func7f044()
+
+address = w[A0];
+unit_id = A1;
+
+V1 = bu[address + 1];
+return bu[800d2b20 + unit_id * 40 + 30 + V1] <= bu[address + 2];
 ////////////////////////////////
-// func7f13c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-V1 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[V1 + 0001];
-V1 = bu[V1 + 0002];
-V0 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[V0 + 0000];
-V1 = bu[A1 + 0000];
-8007F16C	nop
-V0 = V0 ^ V1;
-8007F174	jr     ra 
-V0 = V0 < 0001;
+
+
+
 ////////////////////////////////
-// func7f17c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V1 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V1;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = hu[V0 + 0000];
-V1 = hu[V1 + 0000];
-8007F1B4	nop
-V0 = V0 ^ V1;
-8007F1BC	jr     ra 
-V0 = V0 < 0001;
+// func7f07c()
+
+address = w[A0];
+unit_id = A1;
+
+V1 = bu[address + 1];
+return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] <= hu[address + 2];
 ////////////////////////////////
-// func7f1c4
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-V1 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[V1 + 0001];
-V1 = bu[V1 + 0002];
-V0 = A1 + V0;
-A1 = A1 + V1;
-V1 = bu[V0 + 0000];
-V0 = bu[A1 + 0000];
-8007F1F4	nop
-V0 = V0 < V1;
-8007F1FC	jr     ra 
-V0 = V0 ^ 0001;
+
+
+
 ////////////////////////////////
-// func7f204
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0002];
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-8007F23C	nop
-V0 = V0 < V1;
-8007F244	jr     ra 
-V0 = V0 ^ 0001;
+// func7f0c0()
+
+address = w[A0];
+unit_id = A1;
+
+V1 = bu[address + 1];
+return bu[800d2b20 + unit_id * 40 + 30 + V1] >= bu[address + 2];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7f0f8()
+
+address = w[A0];
+unit_id = A1;
+
+V1 = bu[address + 1];
+return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] >= hu[address + 2];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7f13c()
+
+address = w[A0];
+unit_id = A1;
+
+V0 = bu[address + 1];
+V1 = bu[address + 2];
+return bu[800d2b20 + unit_id * 40 + 30 + V0] == bu[800d2b20 + unit_id * 40 + 30 + V1];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7f17c()
+
+address = w[A0];
+unit_id = A1;
+
+V0 = bu[address + 1];
+V1 = bu[address + 2];
+return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] == hu[800d2b20 + unit_id * 40 + 20 + V1 * 2];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7f1c4()
+
+address = w[A0];
+unit_id = A1;
+
+V0 = bu[address + 1];
+V1 = bu[address + 2];
+return bu[800d2b20 + unit_id * 40 + 30 + V0] <= bu[800d2b20 + unit_id * 40 + 30 + V1];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7f204()
+
+address = w[A0];
+unit_id = A1;
+
+V0 = bu[address + 1];
+V1 = bu[address + 2];
+return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] <= hu[800d2b20 + unit_id * 40 + 20 + V1 * 2];
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f24c
 A1 = A1 & 00ff;
@@ -15531,10 +15479,13 @@ A1 = A1 + V0;
 A1 = A1 + V1;
 V0 = bu[A1 + 0000];
 V1 = bu[A0 + 0002];
-8007F274	nop
+
 V0 = V0 & V1;
-8007F27C	jr     ra 
 V0 = 0 < V0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f284
 A1 = A1 & 00ff;
@@ -15551,8 +15502,11 @@ V0 = V0 + A1;
 V0 = hu[V0 + 0000];
 V1 = V1 + A2;
 V0 = V0 & V1;
-8007F2C0	jr     ra 
 V0 = 0 < V0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f2c8
 A1 = A1 & 00ff;
@@ -15568,8 +15522,11 @@ V0 = bu[V0 + 0000];
 V1 = bu[A1 + 0000];
 8007F2F8	nop
 V0 = V0 & V1;
-8007F300	jr     ra 
 V0 = 0 < V0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f308
 A1 = A1 & 00ff;
@@ -15587,8 +15544,11 @@ V0 = hu[V0 + 0000];
 V1 = hu[V1 + 0000];
 8007F340	nop
 V0 = V0 & V1;
-8007F348	jr     ra 
 V0 = 0 < V0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f350
 A1 = A1 & 00ff;
@@ -15600,10 +15560,12 @@ A1 = A1 + V0;
 A1 = A1 + V1;
 V0 = bu[A1 + 0000];
 V1 = bu[A0 + 0002];
-8007F378	nop
-V0 = V0 ^ V1;
-8007F380	jr     ra 
-V0 = 0 < V0;
+
+return V0 != V1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f388
 A1 = A1 & 00ff;
@@ -15619,9 +15581,11 @@ V0 = V0 << 01;
 V0 = V0 + A1;
 V0 = hu[V0 + 0000];
 V1 = V1 | A2;
-V0 = V0 ^ V1;
-8007F3C4	jr     ra 
-V0 = 0 < V0;
+return V0 != V1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f3cc
 A1 = A1 & 00ff;
@@ -15635,10 +15599,11 @@ V0 = A1 + V0;
 A1 = A1 + V1;
 V0 = bu[V0 + 0000];
 V1 = bu[A1 + 0000];
-8007F3FC	nop
-V0 = V0 ^ V1;
-8007F404	jr     ra 
-V0 = 0 < V0;
+return V0 != V1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f40c
 A1 = A1 & 00ff;
@@ -15654,10 +15619,11 @@ V1 = V1 << 01;
 V1 = V1 + A1;
 V0 = hu[V0 + 0000];
 V1 = hu[V1 + 0000];
-8007F444	nop
-V0 = V0 ^ V1;
-8007F44C	jr     ra 
-V0 = 0 < V0;
+return V0 != V1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f454
 A1 = A1 & 00ff;
@@ -15673,10 +15639,12 @@ V1 = V1 << 02;
 V1 = V1 + A1;
 V0 = w[V0 + 0000];
 V1 = w[V1 + 0000];
-8007F48C	nop
-V0 = V0 ^ V1;
-8007F494	jr     ra 
-V0 = V0 < 0001;
+
+return V0 == V1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f49c
 A1 = A1 & 00ff;
@@ -15692,10 +15660,11 @@ V0 = V0 << 02;
 V0 = V0 + A1;
 V1 = w[V1 + 0000];
 V0 = w[V0 + 0000];
-8007F4D4	nop
-V0 = V0 < V1;
-8007F4DC	jr     ra 
-V0 = V0 ^ 0001;
+return V0 == V1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f4e4
 V0 = w[A0 + 0000];
@@ -15710,8 +15679,11 @@ V0 = V0 << 04;
 8007F508	lui    at, $800d
 AT = AT + V0;
 V0 = hu[AT + c484];
-8007F514	jr     ra 
 V0 = V0 >> 0f;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f51c
 V0 = w[A0 + 0000];
@@ -15722,15 +15694,22 @@ V0 = V0 << 02;
 8007F530	lui    at, $800d
 AT = AT + V0;
 V0 = bu[AT + 273c];
-8007F53C	jr     ra 
+
 V0 = V0 < 0001;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f544
 V0 = hu[800d30fc];
 8007F54C	nop
 V0 = V0 & 0003;
-8007F554	jr     ra 
 V0 = V0 < 0001;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f55c
 A1 = 0001;
@@ -15759,8 +15738,11 @@ V0 = A0 < 0008;
 V1 = V1 + 001c;
 
 L7f5b0:	; 8007F5B0
-8007F5B0	jr     ra 
 V0 = A1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7f5b8
 A0 = A0 & 00ff;
@@ -15768,10 +15750,7 @@ A0 = A0 + 0003;
 V0 = A0 << 03;
 V0 = V0 - A0;
 V0 = V0 << 02;
-8007F5CC	lui    at, $800c
-AT = AT + V0;
-V0 = bu[AT + 35d7];
-8007F5D8	jr     ra 
+V0 = bu[800c35d7 + V0];
 V0 = V0 >> 07;
 ////////////////////////////////
 
@@ -16465,228 +16444,285 @@ return S1;
 
 
 ////////////////////////////////
-// func7ff34
-S1 = A0;
-S2 = A1;
-S0 = 0;
-S4 = 0;
-S3 = 0;
+// func7ff34()
+
+address = A0;
+unit_id = A1;
+
+add = 0;
+end = 0;
+res = 0;
 
 L7ff64:	; 8007FF64
-V0 = w[S1]; // opcode address
-V0 = bu[V0]; // opcode reading
+    V0 = w[address]; // opcode address
+    opcode = bu[V0]; // opcode reading
 
-V1 = V0 - 80;
-if (V1 < 1C)
-{
-    switch (V0)
+    switch( opcode )
     {
-        case 0x80:
-        case 0x9A:
+        case 80:
+        case 9a:
         {
-            S0 = 1;
+            add = 1;
         }
         break;
 
-    A4FF0780 // 99
-        8007FFA4	j      L80188 [$80080188]
-        S4 = 0001;
-
-    ACFF0780 // 81
-        A0 = S1;
-        8007FFB0	jal    func7efc8 [$8007efc8]
-        A1 = S2 & 00ff;
-        8007FFB8	j      L80188 [$80080188]
-        S0 = V0;
-
-        case 0x82:
+        case 99:
         {
-            A0 = S1;
-            A1 = S2;
-            func7f000;
-            S0 = V0;
+
+            end = 1;
         }
         break;
 
-        case 0x83:
+        case 81:
         {
-            A0 = S1;
-            A1 = S2;
-            func7f044;
-            S0 = V0;
-
-            8007FFE0	j      L80188 [$80080188]
+            A0 = address;
+            A1 = unit_id;
+            func7efc8(); // check if 800d2b20 + 30 var with id [x] == value [y]
+            add = V0;
         }
         break;
 
-    E8FF0780 // 84
-        A0 = S1;
-        8007FFEC	jal    func7f07c [$8007f07c]
-        A1 = S2 & 00ff;
-        8007FFF4	j      L80188 [$80080188]
-        S0 = V0;
+        case 82:
+        {
+            A0 = address;
+            A1 = unit_id;
+            func7f000(); // check if 800d2b20 + 20 var with id [x] equals value [[y]]
+            add = V0;
+        }
+        break;
 
-    FCFF0780 // 85
-        A0 = S1;
-        80080000	jal    func7f0c0 [$8007f0c0]
-        A1 = S2 & 00ff;
-        80080008	j      L80188 [$80080188]
-        S0 = V0;
+        case 83:
+        {
+            A0 = address;
+            A1 = unit_id;
+            func7f044(); // check if 800d2b20 + 30 var with id [x] less or equals value [y]
+            add = V0;
+        }
+        break;
 
-    10000880 // 86
-        A0 = S1;
-        80080014	jal    func7f0f8 [$8007f0f8]
-        A1 = S2 & 00ff;
-        8008001C	j      L80188 [$80080188]
-        S0 = V0;
+        case 84:
+        {
+            A0 = address;
+            A1 = unit_id;
+            func7f07c(); // check if 800d2b20 + 20 var with id [x] less or equals value [[y]]
+            add = V0;
+        }
+        break;
 
-    24000880 // 87
-        A0 = S1;
-        80080028	jal    func7f13c [$8007f13c]
-        A1 = S2 & 00ff;
-        80080030	j      L80188 [$80080188]
-        S0 = V0;
+        case 85:
+        {
+            A0 = address;
+            A1 = unit_id;
+            func7f0c0(); // check if 800d2b20 + 30 var with id [x] greater or equals value [y]
+            add = V0;
+        }
+        break;
 
-    38000880 // 88
-        A0 = S1;
-        8008003C	jal    func7f17c [$8007f17c]
-        A1 = S2 & 00ff;
-        80080044	j      L80188 [$80080188]
-        S0 = V0;
+        case 86:
+        {
+            A0 = address;
+            A1 = unit_id;
+            func7f0f8(); // check if 800d2b20 + 20 var with id [x] greater or equals value [[y]]
+            add = V0;
+        }
+        break;
 
-    4C000880 // 89
-        A0 = S1;
-        80080050	jal    func7f1c4 [$8007f1c4]
-        A1 = S2 & 00ff;
-        80080058	j      L80188 [$80080188]
-        S0 = V0;
+        case 87:
+        {
+            A0 = address;
+            A1 = unit_id;
+            func7f13c(); // check if 800d2b20 + 30 var with id [x] == 800d2b20 + 30 var with id [y]
+            add = V0;
+        }
+        break;
 
-    60000880 // 8A
-        A0 = S1;
-        80080064	jal    func7f204 [$8007f204]
-        A1 = S2 & 00ff;
-        8008006C	j      L80188 [$80080188]
-        S0 = V0;
+        case 88:
+        {
+            A0 = address;
+            A1 = unit_id;
+            func7f17c(); // check if 800d2b20 + 20 var with id [x] == 800d2b20 + 20 var with id [y]
+            add = V0;
+        }
+        break;
 
-    74000880 // 8B
-        A0 = S1;
-        80080078	jal    func7f24c [$8007f24c]
-        A1 = S2 & 00ff;
-        80080080	j      L80188 [$80080188]
-        S0 = V0;
+        case 89:
+        {
+            A0 = address;
+            A1 = unit_id;
+            80080050	jal    func7f1c4 [$8007f1c4]
 
-    88000880 // 8C
-        A0 = S1;
-        8008008C	jal    func7f284 [$8007f284]
-        A1 = S2 & 00ff;
-        80080094	j      L80188 [$80080188]
-        S0 = V0;
+            add = V0;
+        }
+        break;
 
-    9C000880 // 8D
-        A0 = S1;
-        800800A0	jal    func7f2c8 [$8007f2c8]
-        A1 = S2 & 00ff;
-        800800A8	j      L80188 [$80080188]
-        S0 = V0;
+        case 8a:
+        {
+            A0 = address;
+            A1 = unit_id;
+            80080064	jal    func7f204 [$8007f204]
 
-    B0000880 // 8E
-        A0 = S1;
-        800800B4	jal    func7f308 [$8007f308]
-        A1 = S2 & 00ff;
-        800800BC	j      L80188 [$80080188]
-        S0 = V0;
+            add = V0;
+        }
+        break;
 
-    C4000880 // 8F
-        A0 = S1;
-        800800C8	jal    func7f350 [$8007f350]
-        A1 = S2 & 00ff;
-        800800D0	j      L80188 [$80080188]
-        S0 = V0;
+        case 8b:
+        {
+            A0 = address;
+            A1 = unit_id;
+            80080078	jal    func7f24c [$8007f24c]
 
-    D8000880 // 90
-        A0 = S1;
-        800800DC	jal    func7f388 [$8007f388]
-        A1 = S2 & 00ff;
-        800800E4	j      L80188 [$80080188]
-        S0 = V0;
+            add = V0;
+        }
+        break;
 
-    EC000880 // 91
-        A0 = S1;
-        800800F0	jal    func7f3cc [$8007f3cc]
-        A1 = S2 & 00ff;
-        800800F8	j      L80188 [$80080188]
-        S0 = V0;
+        case 8c:
+        {
+            A0 = address;
+            A1 = unit_id;
+            8008008C	jal    func7f284 [$8007f284]
 
-    00010880 // 92
-        A0 = S1;
-        80080104	jal    func7f40c [$8007f40c]
-        A1 = S2 & 00ff;
-        8008010C	j      L80188 [$80080188]
-        S0 = V0;
+            add = V0;
+        }
+        break;
 
-    14010880 // 93
-        A0 = S1;
-        80080118	jal    func7f454 [$8007f454]
-        A1 = S2 & 00ff;
-        80080120	j      L80188 [$80080188]
-        S0 = V0;
+        case 8d:
+        {
+            A0 = address;
+            A1 = unit_id;
+            800800A0	jal    func7f2c8 [$8007f2c8]
 
-    28010880 // 94
-        A0 = S1;
-        8008012C	jal    func7f49c [$8007f49c]
-        A1 = S2 & 00ff;
-        80080134	j      L80188 [$80080188]
-        S0 = V0;
+            add = V0;
+        }
+        break;
 
-    3C010880 // 95
-        8008013C	jal    func7f4e4 [$8007f4e4]
-        A0 = S1;
-        80080144	j      L80188 [$80080188]
-        S0 = V0;
+        case 8e:
+        {
+            A0 = address;
+            A1 = unit_id;
+            800800B4	jal    func7f308 [$8007f308]
 
-    4C010880 // 96
-        8008014C	jal    func7f51c [$8007f51c]
-        A0 = S1;
-        80080154	j      L80188 [$80080188]
-        S0 = V0;
+            add = V0;
+        }
+        break;
 
-    5C010880 // 97
-        8008015C	jal    func7f544 [$8007f544]
-        80080160	nop
-        80080164	j      L80188 [$80080188]
-        S0 = V0;
+        case 8f:
+        {
+            A0 = address;
+            A1 = unit_id;
+            800800C8	jal    func7f350 [$8007f350]
 
-    6C010880 // 98
-        8008016C	jal    func7f55c [$8007f55c]
-        80080170	nop
-        80080174	j      L80188 [$80080188]
-        S0 = V0;
+            add = V0;
+        }
+        break;
 
-    7C010880 // 9B
-        8008017C	jal    func7f5b8 [$8007f5b8]
-        A0 = S2 & 00ff;
-        S0 = V0;
+        case 90:
+        {
+            A0 = address;
+            A1 = unit_id;
+            800800DC	jal    func7f388 [$8007f388]
+
+            add = V0;
+        }
+        break;
+
+        case 91:
+        {
+            A0 = address;
+            A1 = unit_id;
+            800800F0	jal    func7f3cc [$8007f3cc]
+
+            add = V0;
+        }
+        break;
+
+        case 92:
+        {
+            A0 = address;
+            A1 = unit_id;
+            80080104	jal    func7f40c [$8007f40c]
+
+            add = V0;
+        }
+        break;
+
+        case 93:
+        {
+            A0 = address;
+            A1 = unit_id;
+            80080118	jal    func7f454 [$8007f454]
+
+            add = V0;
+        }
+        break;
+
+        case 94:
+        {
+            A0 = address;
+            A1 = unit_id;
+            8008012C	jal    func7f49c [$8007f49c]
+
+            add = V0;
+        }
+        break;
+
+        case 95:
+        {
+            A0 = address;
+            8008013C	jal    func7f4e4 [$8007f4e4]
+
+            add = V0;
+        }
+        break;
+
+        case 96:
+        {
+            A0 = address;
+            8008014C	jal    func7f51c [$8007f51c]
+
+            add = V0;
+        }
+        break;
+
+        case 97:
+        {
+            8008015C	jal    func7f544 [$8007f544]
+
+            add = V0;
+        }
+        break;
+
+        case 98:
+        {
+            8008016C	jal    func7f55c [$8007f55c]
+
+            add = V0;
+        }
+        break;
+
+        case 9b:
+        {
+            A0 = unit_id;
+            8008017C	jal    func7f5b8 [$8007f5b8]
+
+            add = V0;
+        }
+        break;
     }
-}
 
-L80188:	; 80080188
-A0 = S1;
-battle_ai_move_script_pointer_4;
+    A0 = address;
+    battle_ai_move_script_pointer_4();
 
-if (S4 != 0)
-{
-    V0 = w[S1];
-    V1 = S3 | S0;
-    V0 = bu[V0];
-    V0 = V0 < 80;
+    if( end == 0 )
+    {
+        return add;
+    }
+    res = res | add;
 
-    800801B0	beq    v0, zero, L7ff64 [$8007ff64]
+    V0 = w[address];
+    V0 = bu[V0] < 80;
+800801B0	beq    v0, zero, L7ff64 [$8007ff64]
 
-    S3 = V1;
-    S0 = S3;
-}
-
-return S0;
+return res;
 ////////////////////////////////
 
 
@@ -35628,7 +35664,7 @@ A0 = V1 & efff;
 V1 = V1 & 2000;
 8009290C	beq    v1, zero, L92978 [$80092978]
 [V0 + 0080] = h(A0);
-80092914	jal    $8003f8b0
+80092914	jal    $system_get_random_2_bytes
 80092918	nop
 V1 = 51eb851f;
 80092924	mult   v0, v1
@@ -35711,7 +35747,7 @@ S0 = 003c;
 S0 = 0050;
 
 L92a6c:	; 80092A6C
-80092A6C	jal    $8003f8b0
+80092A6C	jal    $system_get_random_2_bytes
 80092A70	nop
 V1 = 51eb851f;
 80092A7C	mult   v0, v1
@@ -36492,7 +36528,7 @@ S0 = 0;
 L935e4:	; 800935E4
 800935E4	beq    v0, zero, L93610 [$80093610]
 800935E8	nop
-800935EC	jal    $8003f8b0
+800935EC	jal    $system_get_random_2_bytes
 800935F0	nop
 V1 = V0 >> 1f;
 V1 = V0 + V1;
@@ -36503,7 +36539,7 @@ V0 = V0 - V1;
 S0 = S0 + V0;
 
 L93610:	; 80093610
-80093610	jal    $8003f8b0
+80093610	jal    $system_get_random_2_bytes
 80093614	nop
 V1 = 66666667;
 80093620	mult   s0, v1
@@ -36751,7 +36787,7 @@ V1 = V1 | V0;
 // func939e8
 800939E8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800939F0	jal    $8003f8b0
+800939F0	jal    $system_get_random_2_bytes
 800939F4	nop
 V1 = 51eb851f;
 80093A00	mult   v0, v1
@@ -36938,7 +36974,7 @@ V0 = w[800c351c];
 [SP + 0014] = w(RA);
 [SP + 0010] = w(S0);
 S0 = bu[V0 + 001c];
-80093CD4	jal    $8003f8b0
+80093CD4	jal    $system_get_random_2_bytes
 80093CD8	nop
 V1 = 51eb851f;
 80093CE4	mult   v0, v1
@@ -37062,7 +37098,7 @@ L93eac:	; 80093EAC
 S0 = bu[A0 + 001c];
 
 L93eb0:	; 80093EB0
-80093EB0	jal    $8003f8b0
+80093EB0	jal    $system_get_random_2_bytes
 S0 = S0 & 00ff;
 V1 = 51eb851f;
 80093EC0	mult   v0, v1
@@ -37248,7 +37284,7 @@ L94174:	; 80094174
 S0 = bu[A0 + 001c];
 
 L94178:	; 80094178
-80094178	jal    $8003f8b0
+80094178	jal    $system_get_random_2_bytes
 S0 = S0 & 00ff;
 V1 = 51eb851f;
 80094188	mult   v0, v1
@@ -37771,7 +37807,7 @@ V1 = w[800c351c];
 [SP + 0010] = w(S0);
 S0 = bu[V0 + 005b];
 V0 = bu[V1 + 0014];
-80094958	jal    $8003f8b0
+80094958	jal    $system_get_random_2_bytes
 S0 = S0 + V0;
 V1 = 51eb851f;
 80094968	mult   v0, v1
@@ -37857,7 +37893,7 @@ S0 = 0032;
 S0 = 003c;
 
 L94aac:	; 80094AAC
-80094AAC	jal    $8003f8b0
+80094AAC	jal    $system_get_random_2_bytes
 80094AB0	nop
 V1 = 51eb851f;
 80094ABC	mult   v0, v1
@@ -38100,7 +38136,7 @@ V0 = bu[V1 + 015a];
 V0 = V0 & 0001;
 80094E98	beq    v0, zero, L94ef4 [$80094ef4]
 S0 = A0 - T1;
-80094EA0	jal    $8003f8b0
+80094EA0	jal    $system_get_random_2_bytes
 80094EA4	nop
 V1 = 51eb851f;
 A1 = V0;
@@ -38125,7 +38161,7 @@ L94ef4:	; 80094EF4
 V0 = A2 & 0020;
 80094EF8	beq    v0, zero, L94f60 [$80094f60]
 80094EFC	nop
-80094F00	jal    $8003f8b0
+80094F00	jal    $system_get_random_2_bytes
 80094F04	nop
 V1 = 51eb851f;
 A1 = V0;
@@ -38159,7 +38195,7 @@ V1 = V1 | V0;
 V1 = V1 & 0040;
 80094F80	beq    v1, zero, L94fe8 [$80094fe8]
 80094F84	nop
-80094F88	jal    $8003f8b0
+80094F88	jal    $system_get_random_2_bytes
 80094F8C	nop
 V1 = 51eb851f;
 A1 = V0;
@@ -38184,7 +38220,7 @@ V0 = 0001;
 V0 = 0002;
 
 L94fe8:	; 80094FE8
-80094FE8	jal    $8003f8b0
+80094FE8	jal    $system_get_random_2_bytes
 S1 = 51eb851f;
 80094FF4	mult   v0, s1
 V1 = V0 >> 1f;
@@ -38207,7 +38243,7 @@ V1 = V1 >> 10;
 V0 = V0 < V1;
 80095040	beq    v0, zero, L94cf8 [$80094cf8]
 80095044	nop
-80095048	jal    $8003f8b0
+80095048	jal    $system_get_random_2_bytes
 8009504C	nop
 A1 = V0;
 80095054	mult   v0, s1
@@ -38947,7 +38983,7 @@ V0 = bu[V1 + 015a];
 V0 = V0 & 0080;
 80095AC0	bne    v0, zero, L95b98 [$80095b98]
 S1 = A2;
-80095AC8	jal    $8003f8b0
+80095AC8	jal    $system_get_random_2_bytes
 S0 = A0 & 00ff;
 V1 = 51eb851f;
 80095AD8	mult   v0, v1
@@ -40132,7 +40168,7 @@ V0 = 00a5;
 S0 = 00a0;
 
 L96d34:	; 80096D34
-80096D34	jal    $8003f8b0
+80096D34	jal    $system_get_random_2_bytes
 S0 = V0 - S0;
 V1 = V0;
 80096D40	bgez   v1, L96d50 [$80096d50]
@@ -42062,7 +42098,7 @@ V0 = hu[8006ef7a];
 V0 = V0 & 4000;
 800987B0	beq    v0, zero, L9886c [$8009886c]
 800987B4	nop
-800987B8	jal    $8003f8b0
+800987B8	jal    $system_get_random_2_bytes
 800987BC	nop
 V1 = 51eb851f;
 800987C8	mult   v0, v1
@@ -42266,7 +42302,7 @@ V1 = A3 & 00ff;
 V0 = w[800c2be8];
 80098AAC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80098AB4	jal    $8003f8b0
+80098AB4	jal    $system_get_random_2_bytes
 [V0 + 5fc2] = b(0);
 V1 = 51eb851f;
 80098AC4	mult   v0, v1
@@ -43057,7 +43093,7 @@ V0 = V1 & 0200;
 S0 = 003c;
 
 L996d0:	; 800996D0
-800996D0	jal    $8003f8b0
+800996D0	jal    $system_get_random_2_bytes
 800996D4	nop
 V1 = 51eb851f;
 800996E0	mult   v0, v1
@@ -43438,7 +43474,7 @@ V1 = bu[AT + c562];
 V1 = V1 & 0080;
 80099BE4	bne    v1, zero, L99da0 [$80099da0]
 S3 = V0 + A0;
-80099BEC	jal    $8003f8b0
+80099BEC	jal    $system_get_random_2_bytes
 80099BF0	nop
 V1 = 51eb851f;
 80099BFC	mult   v0, v1
@@ -43503,7 +43539,7 @@ L99cd4:	; 80099CD4
 S0 = 0004;
 
 L99cd8:	; 80099CD8
-80099CD8	jal    $8003f8b0
+80099CD8	jal    $system_get_random_2_bytes
 80099CDC	nop
 V1 = 51eb851f;
 80099CE8	mult   v0, v1
@@ -43525,7 +43561,7 @@ V0 = hu[S3 + 007a];
 V0 = V0 & 0020;
 80099D2C	bne    v0, zero, L99d84 [$80099d84]
 V0 = 0002;
-80099D34	jal    $8003f8b0
+80099D34	jal    $system_get_random_2_bytes
 [S2 + 0000] = b(V0);
 V1 = S0 & 00ff;
 80099D40	div    v0, v1
@@ -43561,7 +43597,7 @@ L99da0:	; 80099DA0
 S1 = 0001;
 
 L99da4:	; 80099DA4
-80099DA4	jal    $8003f8b0
+80099DA4	jal    $system_get_random_2_bytes
 [S2 + 0000] = b(S1);
 S0 = 51eb851f;
 80099DB4	mult   v0, s0
@@ -43578,7 +43614,7 @@ V0 = V0 - V1;
 V0 = V0 < 0050;
 80099DE4	beq    v0, zero, L99e34 [$80099e34]
 V0 = 0002;
-80099DEC	jal    $8003f8b0
+80099DEC	jal    $system_get_random_2_bytes
 80099DF0	nop
 80099DF4	mult   v0, s0
 V1 = V0 >> 1f;
@@ -44235,7 +44271,7 @@ V0 = hu[V0 + 0080];
 V0 = V0 & 2000;
 8009A7F0	beq    v0, zero, L9a870 [$8009a870]
 8009A7F4	nop
-8009A7F8	jal    $8003f8b0
+8009A7F8	jal    $system_get_random_2_bytes
 8009A7FC	nop
 V1 = 51eb851f;
 8009A808	mult   v0, v1
@@ -44305,7 +44341,7 @@ S0 = 003c;
 S0 = 0050;
 
 L9a91c:	; 8009A91C
-8009A91C	jal    $8003f8b0
+8009A91C	jal    $system_get_random_2_bytes
 8009A920	nop
 V1 = 51eb851f;
 8009A92C	mult   v0, v1
@@ -44877,7 +44913,7 @@ S0 = 0;
 L9b1c0:	; 8009B1C0
 8009B1C0	beq    v0, zero, L9b1fc [$8009b1fc]
 8009B1C4	nop
-8009B1C8	jal    $8003f8b0
+8009B1C8	jal    $system_get_random_2_bytes
 8009B1CC	nop
 V1 = 55555556;
 8009B1D8	mult   v0, v1
@@ -44891,7 +44927,7 @@ V0 = V0 - V1;
 S0 = S0 + V0;
 
 L9b1fc:	; 8009B1FC
-8009B1FC	jal    $8003f8b0
+8009B1FC	jal    $system_get_random_2_bytes
 8009B200	nop
 V1 = 88888889;
 8009B20C	mult   s0, v1
@@ -45288,7 +45324,7 @@ V0 = bu[V1 + 015a];
 V0 = V0 & 0001;
 8009B7D8	beq    v0, zero, L9b834 [$8009b834]
 8009B7DC	nop
-8009B7E0	jal    $8003f8b0
+8009B7E0	jal    $system_get_random_2_bytes
 8009B7E4	nop
 V1 = 51eb851f;
 A1 = V0;
@@ -45323,7 +45359,7 @@ A0 = A0 | V1;
 V0 = A0 & 0020;
 8009B868	beq    v0, zero, L9b8d0 [$8009b8d0]
 8009B86C	nop
-8009B870	jal    $8003f8b0
+8009B870	jal    $system_get_random_2_bytes
 8009B874	nop
 V1 = 51eb851f;
 A1 = V0;
@@ -45353,7 +45389,7 @@ L9b8d0:	; 8009B8D0
 V0 = A0 & 0040;
 8009B8D4	beq    v0, zero, L9b93c [$8009b93c]
 8009B8D8	nop
-8009B8DC	jal    $8003f8b0
+8009B8DC	jal    $system_get_random_2_bytes
 8009B8E0	nop
 V1 = 51eb851f;
 A1 = V0;
@@ -45378,7 +45414,7 @@ V0 = 0001;
 V0 = 0002;
 
 L9b93c:	; 8009B93C
-8009B93C	jal    $8003f8b0
+8009B93C	jal    $system_get_random_2_bytes
 S2 = 51eb851f;
 8009B948	mult   v0, s2
 V1 = V0 >> 1f;
@@ -45401,7 +45437,7 @@ S0 = V1 >> 10;
 V0 = V0 < S0;
 8009B994	beq    v0, zero, loop9b8c8 [$8009b8c8]
 8009B998	nop
-8009B99C	jal    $8003f8b0
+8009B99C	jal    $system_get_random_2_bytes
 8009B9A0	nop
 A1 = V0;
 8009B9A8	mult   v0, s2
@@ -45677,7 +45713,7 @@ V0 = bu[V1 + 015a];
 V0 = V0 & 0080;
 8009BD8C	beq    v0, zero, L9c0e8 [$8009c0e8]
 S0 = S0 << 18;
-8009BD94	jal    $8003f8b0
+8009BD94	jal    $system_get_random_2_bytes
 S0 = S0 >> 18;
 V1 = 51eb851f;
 8009BDA4	mult   v0, v1
@@ -63761,7 +63797,7 @@ S3 = S3 + 0002;
 V0 = V1 << 10;
 V0 = hu[S3 + 0000];
 S3 = S3 + 0002;
-800ABC88	jal    $8003f8b0
+800ABC88	jal    $system_get_random_2_bytes
 [SP + 009c] = h(V0);
 V0 = V0 < 4000;
 800ABC94	beq    v0, zero, Lad2cc [$800ad2cc]
@@ -72135,7 +72171,7 @@ A1 = 0;
 V0 = 800b30e8;
 A2 = 800b3050;
 A3 = 800b3134;
-800B3204	jal    $8001d05c
+800B3204	jal    $func1d05c
 [SP + 0010] = w(V0);
 S1 = V0;
 A0 = 1000;
@@ -73829,7 +73865,7 @@ A2 = 800b4abc;
 [SP + 0010] = w(0);
 A1 = w[S2 + 006c];
 A3 = 800b4c08;
-800B4C84	jal    $8001d05c
+800B4C84	jal    $func1d05c
 A0 = 00b8;
 S1 = V0;
 [S1 + 0038] = w(S2);
@@ -75776,7 +75812,7 @@ A1 = 0;
 A2 = 800b644c;
 A3 = 800b665c;
 [SP + 0018] = w(RA);
-800B68EC	jal    $8001d05c
+800B68EC	jal    $func1d05c
 [SP + 0010] = w(V0);
 800B68F4	jal    funcb6944 [$800b6944]
 A0 = V0;
@@ -75878,7 +75914,7 @@ V0 = 4000;
 Lb6a48:	; 800B6A48
 800B6A48	lui    v0, $fe0c
 [800c2d04] = w(V0);
-800B6A54	jal    $8003f8b0
+800B6A54	jal    $system_get_random_2_bytes
 800B6A58	nop
 V1 = 10624dd3;
 800B6A64	mult   v0, v1
@@ -75929,7 +75965,7 @@ A1 = w[S2 + 0010];
 V0 = V0 >> 0a;
 800B6B0C	jal    $8004b1d4
 [S2 + 0064] = w(V0);
-800B6B14	jal    $8003f8b0
+800B6B14	jal    $system_get_random_2_bytes
 S0 = V0;
 V1 = V0;
 A0 = V1;
@@ -75945,7 +75981,7 @@ V0 = S1 << 0b;
 V0 = A0 >> 0a;
 V0 = V0 << 0a;
 V0 = V1 - V0;
-800B6B4C	jal    $8003f8b0
+800B6B4C	jal    $system_get_random_2_bytes
 S3 = S0 + V0;
 V1 = V0;
 800B6B58	bgez   v1, Lb6b64 [$800b6b64]
@@ -75969,7 +76005,7 @@ T0 = 800c2d04;
 800B6B9C	addiu  a1, t0, $fff8 (=-$8)
 800B6BA0	jal    $80049324
 A2 = S2 + 0068;
-800B6BA8	jal    $8003f8b0
+800B6BA8	jal    $system_get_random_2_bytes
 S6 = 0;
 V1 = 51eb851f;
 800B6BB8	mult   v0, v1
@@ -75992,15 +76028,15 @@ V1 = V1 << 06;
 V0 = V0 - V1;
 V0 = V0 << 08;
 A1 = A1 - V0;
-800B6C0C	jal    $8003f8b0
+800B6C0C	jal    $system_get_random_2_bytes
 [S2 + 0078] = w(A1);
 V0 = V0 & 00ff;
 800B6C18	addiu  v0, v0, $ff81 (=-$7f)
-800B6C1C	jal    $8003f8b0
+800B6C1C	jal    $system_get_random_2_bytes
 [S2 + 0008] = h(V0);
 V0 = V0 & 00ff;
 800B6C28	addiu  v0, v0, $ff81 (=-$7f)
-800B6C2C	jal    $8003f8b0
+800B6C2C	jal    $system_get_random_2_bytes
 [S2 + 000a] = h(V0);
 V0 = V0 & 01ff;
 800B6C38	addiu  v0, v0, $ff01 (=-$ff)
@@ -79364,7 +79400,7 @@ V0 = 800ba1b0;
 [SP + 0060] = w(S6);
 [SP + 0048] = w(S0);
 [SP + 0010] = w(V0);
-800B9FD0	jal    $8001d05c
+800B9FD0	jal    $func1d05c
 [SP + 0038] = h(T0);
 S0 = V0;
 S6 = S0 + 0038;
@@ -80012,7 +80048,7 @@ A2 = 800ba6d8;
 S2 = bu[8005884c];
 A3 = 800ba7d0;
 [8005884c] = b(0);
-800BA93C	jal    $8001d05c
+800BA93C	jal    $func1d05c
 [SP + 0010] = w(V0);
 S0 = V0;
 S1 = S0 + 0038;
@@ -81950,7 +81986,7 @@ A3 = 800bc584;
 [SP + 0018] = w(S0);
 S5 = w[A1 + 0004];
 V0 = 800bc6f8;
-800BC7B0	jal    $8001d05c
+800BC7B0	jal    $func1d05c
 [SP + 0010] = w(V0);
 V1 = bu[8005884c];
 S4 = V0;
@@ -82179,7 +82215,7 @@ A1 = 0;
 A2 = 800bd388;
 A3 = 800bd12c;
 V0 = 800bce94;
-800BCB34	jal    $8001d05c
+800BCB34	jal    $func1d05c
 [SP + 0010] = w(V0);
 S0 = V0;
 V1 = w[800c2e88];
@@ -82715,6 +82751,10 @@ SP = SP + 0020;
 800BD31C	jr     ra 
 800BD320	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funcbd324
 800BD324	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(S0);
@@ -82742,6 +82782,10 @@ S0 = w[SP + 0010];
 SP = SP + 0018;
 800BD380	jr     ra 
 800BD384	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbd388
 800BD388	addiu  sp, sp, $ffe8 (=-$18)
@@ -82786,7 +82830,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// funcbd408
+// funcbd408()
 
 [800d2488] = w(0);
 
@@ -82803,8 +82847,10 @@ func1cc20();
 
 ////////////////////////////////
 // funcbd444
-800BD444	jr     ra 
-800BD448	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbd44c
 800BD44C	addiu  sp, sp, $ff98 (=-$68)
@@ -82929,14 +82975,11 @@ Lbd62c:	; 800BD62C
 
 ////////////////////////////////
 // funcbd644
+
 A2 = w[800d2488];
-800BD64C	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0024] = w(S1);
 S1 = w[800c3460];
-[SP + 002c] = w(RA);
-[SP + 0028] = w(S2);
 800BD664	beq    a2, zero, Lbd7e8 [$800bd7e8]
-[SP + 0020] = w(S0);
+
 V0 = bu[800c2eb8];
 800BD674	nop
 800BD678	bne    v0, zero, Lbd7e8 [$800bd7e8]
@@ -82946,8 +82989,9 @@ V0 = w[800d2da0];
 800BD68C	beq    s1, v0, Lbd7e8 [$800bd7e8]
 S0 = A2;
 [800d2da0] = w(S1);
-800BD69C	jal    funcbda5c [$800bda5c]
 A0 = S1;
+800BD69C	jal    funcbda5c [$800bda5c]
+
 V0 = 002d;
 [S0 + 0063] = b(V0);
 V1 = bu[S0 + 0063];
@@ -83045,33 +83089,31 @@ V0 = bu[SP + 0018];
 S2 = S2 + 000a;
 
 Lbd7e8:	; 800BD7E8
-RA = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0030;
-800BD7FC	jr     ra 
-800BD800	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbd804
-A0 = w[800d2488];
-800BD80C	addiu  sp, sp, $ffe8 (=-$18)
-800BD810	beq    a0, zero, Lbd820 [$800bd820]
-[SP + 0010] = w(RA);
-800BD818	jal    funcbd408 [$800bd408]
-800BD81C	nop
 
-Lbd820:	; 800BD820
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BD828	jr     ra 
-800BD82C	nop
+A0 = w[800d2488];
+if( A0 != 0 )
+{
+    funcbd408();
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbd830
+
 [800d2488] = w(0);
 [800c2e84] = w(0);
-800BD840	jr     ra 
-800BD844	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbd848
 800BD848	addiu  sp, sp, $ffe8 (=-$18)
@@ -83227,9 +83269,9 @@ A3 = 800bd8f0;
 [SP + 002c] = w(RA);
 [SP + 0028] = w(S2);
 [SP + 0020] = w(S0);
-800BDA8C	jal    $8001d05c
+800BDA8C	jal    $func1d05c
 [SP + 0010] = w(0);
-800BDA94	jal    $8003f8b0
+800BDA94	jal    $system_get_random_2_bytes
 S0 = V0;
 V0 = V0 & 0003;
 800BDAA0	addiu  v0, v0, $fffe (=-$2)
