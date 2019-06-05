@@ -15606,68 +15606,95 @@ if (V1 < 74)
         }
         break;
 
-8007F660 // 03
-        8007F660	jal    func7af28 [$8007af28]
-        A0 = S0;
-        8007F668	j      L7ff10 [$8007ff10]
-        8007F66C	nop
+        case 03:
+        {
+            8007F660	jal    func7af28 [$8007af28]
+            A0 = S0;
+            8007F668	j      L7ff10 [$8007ff10]
+            8007F66C	nop
+        }
+        break;
 
-8007F670 // 04
-        A0 = S0;
-        8007F674	jal    func7af74 [$8007af74]
-        A1 = A2 & 00ff;
-        8007F67C	j      L7ff10 [$8007ff10]
-        8007F680	nop
+        case 04:
+        {
+            A0 = S0;
+            8007F674	jal    func7af74 [$8007af74]
+            A1 = A2 & 00ff;
+            8007F67C	j      L7ff10 [$8007ff10]
+            8007F680	nop
+        }
+        break;
 
-8007F684 // 05
-        A0 = S0;
-        8007F688	jal    func7afa0 [$8007afa0]
-        A1 = A2 & 00ff;
-        8007F690	j      L7ff10 [$8007ff10]
-        8007F694	nop
+        case 05:
+        {
+            A0 = S0;
+            8007F688	jal    func7afa0 [$8007afa0]
+            A1 = A2 & 00ff;
+            8007F690	j      L7ff10 [$8007ff10]
+            8007F694	nop
+        }
+        break;
 
-8007F698 // 06
-        A0 = S0;
-        8007F69C	jal    func7afdc [$8007afdc]
-        A1 = A2 & 00ff;
-        8007F6A4	j      L7ff10 [$8007ff10]
-        8007F6A8	nop
+        case 06:
+        {
+            A0 = S0;
+            8007F69C	jal    func7afdc [$8007afdc]
+            A1 = A2 & 00ff;
+            8007F6A4	j      L7ff10 [$8007ff10]
+            8007F6A8	nop
+        }
+        break;
 
-8007F6AC // 07
-        8007F6AC	jal    func7b01c [$8007b01c]
-        A0 = S0;
-        8007F6B4	j      L7ff10 [$8007ff10]
-        8007F6B8	nop
+        case 07:
+        {
+            8007F6AC	jal    func7b01c [$8007b01c]
+            A0 = S0;
+            8007F6B4	j      L7ff10 [$8007ff10]
+            8007F6B8	nop
+        }
+        break;
 
-8007F6BC // 08
-        A0 = S0;
-        8007F6C0	jal    func7b044 [$8007b044]
-        A1 = A2 & 00ff;
-        8007F6C8	j      L7ff10 [$8007ff10]
-        8007F6CC	nop
+        case 08:
+        {
+            A0 = S0;
+            8007F6C0	jal    func7b044 [$8007b044]
+            A1 = A2 & 00ff;
+            8007F6C8	j      L7ff10 [$8007ff10]
+            8007F6CC	nop
+        }
+        break;
 
-8007F6D0 // 09
-        A0 = S0;
-        8007F6D4	jal    func7b090 [$8007b090]
-        A1 = A2 & 00ff;
-        8007F6DC	j      L7ff10 [$8007ff10]
-        8007F6E0	nop
+        case 09:
+        {
+            A0 = S0;
+            8007F6D4	jal    func7b090 [$8007b090]
+            A1 = A2 & 00ff;
+            8007F6DC	j      L7ff10 [$8007ff10]
+            8007F6E0	nop
+        }
+        break;
 
-8007F6E4 // 0a
-        A0 = S0;
-        8007F6E8	jal    func7b0d4 [$8007b0d4]
-        A1 = A2 & 00ff;
-        8007F6F0	j      L7ff10 [$8007ff10]
-        8007F6F4	nop
+        case 0a:
+        {
+            A0 = S0;
+            8007F6E8	jal    func7b0d4 [$8007b0d4]
+            A1 = A2 & 00ff;
+            8007F6F0	j      L7ff10 [$8007ff10]
+            8007F6F4	nop
+        }
+        break;
 
-8007F6F8 // 0b
-        A0 = S0;
-        8007F6FC	jal    func7b12c [$8007b12c]
-        A1 = A2 & 00ff;
-        8007F704	j      L7ff10 [$8007ff10]
-        8007F708	nop
+        case 0b:
+        {
+            A0 = S0;
+            8007F6FC	jal    func7b12c [$8007b12c]
+            A1 = A2 & 00ff;
+            8007F704	j      L7ff10 [$8007ff10]
+            8007F708	nop
+        }
+        break;
 
-        case 0x0C:
+        case 0c:
         {
             A0 = S0;
             A1 = A2 & FF;
@@ -15677,349 +15704,409 @@ if (V1 < 74)
         }
         break;
 
-8007F720 // 0d
-        A0 = S0;
-        8007F724	jal    func7b1a4 [$8007b1a4]
-        A1 = A2 & 00ff;
-        8007F72C	j      L7ff10 [$8007ff10]
-        8007F730	nop
+        case 0d:
+        {
+            A0 = S0;
+            8007F724	jal    func7b1a4 [$8007b1a4]
+            A1 = A2 & 00ff;
+            8007F72C	j      L7ff10 [$8007ff10]
+            8007F730	nop
+        }
+        break;
 
-8007F734 // 0e
-        A0 = S0;
-        8007F738	jal    func7b1dc [$8007b1dc]
-        A1 = A2 & 00ff;
-        8007F740	j      L7ff10 [$8007ff10]
-        8007F744	nop
+        case 0e:
+        {
+            A0 = S0;
+            8007F738	jal    func7b1dc [$8007b1dc]
+            A1 = A2 & 00ff;
+            8007F740	j      L7ff10 [$8007ff10]
+            8007F744	nop
+        }
+        break;
 
-8007F748 // 0f
-        A0 = S0;
-        8007F74C	jal    func7b214 [$8007b214]
-        A1 = A2 & 00ff;
-        8007F754	j      L7ff10 [$8007ff10]
-        8007F758	nop
+        case 0f:
+        {
+            A0 = S0;
+            8007F74C	jal    func7b214 [$8007b214]
+            A1 = A2 & 00ff;
+            8007F754	j      L7ff10 [$8007ff10]
+            8007F758	nop
+        }
+        break;
 
-8007F75C // 10
-        A0 = S0;
-        8007F760	jal    func7b24c [$8007b24c]
-        A1 = A2 & 00ff;
-        8007F768	j      L7ff10 [$8007ff10]
-        8007F76C	nop
+        case 10:
+        {
+            A0 = S0;
+            8007F760	jal    func7b24c [$8007b24c]
+            A1 = A2 & 00ff;
+            8007F768	j      L7ff10 [$8007ff10]
+            8007F76C	nop
+        }
+        break;
 
-8007F770 // 11
-        A0 = S0;
-        8007F774	jal    func7b2a4 [$8007b2a4]
-        A1 = A2 & 00ff;
-        8007F77C	j      L7ff10 [$8007ff10]
-        8007F780	nop
+        case 11:
+        {
+            A0 = S0;
+            8007F774	jal    func7b2a4 [$8007b2a4]
+            A1 = A2 & 00ff;
+            8007F77C	j      L7ff10 [$8007ff10]
+            8007F780	nop
+        }
+        break;
 
-8007F784 // 12
-        A0 = S0;
-        8007F788	jal    func7b2f4 [$8007b2f4]
-        A1 = A2 & 00ff;
-        8007F790	j      L7ff10 [$8007ff10]
-        8007F794	nop
+        case 12:
+        {
+            A0 = S0;
+            8007F788	jal    func7b2f4 [$8007b2f4]
+            A1 = A2 & 00ff;
+            8007F790	j      L7ff10 [$8007ff10]
+            8007F794	nop
+        }
+        break;
 
-8007F798 // 13
-        A0 = S0;
-        8007F79C	jal    func7b350 [$8007b350]
-        A1 = A2 & 00ff;
-        8007F7A4	j      L7ff10 [$8007ff10]
-        8007F7A8	nop
+        case 13:
+        {
+            A0 = S0;
+            8007F79C	jal    func7b350 [$8007b350]
+            A1 = A2 & 00ff;
+            8007F7A4	j      L7ff10 [$8007ff10]
+            8007F7A8	nop
+        }
+        break;
 
-8007F7AC // 14
-        A0 = S0;
-        8007F7B0	jal    func7b398 [$8007b398]
-        A1 = A2 & 00ff;
-        8007F7B8	j      L7ff10 [$8007ff10]
-        8007F7BC	nop
+        case 14:
+        {
+            A0 = S0;
+            8007F7B0	jal    func7b398 [$8007b398]
+            A1 = A2 & 00ff;
+            8007F7B8	j      L7ff10 [$8007ff10]
+            8007F7BC	nop
+        }
+        break;
 
-8007F7C0 // 15
-        A0 = S0;
-        8007F7C4	jal    func7b3e0 [$8007b3e0]
-        A1 = A2 & 00ff;
-        8007F7CC	j      L7ff10 [$8007ff10]
-        8007F7D0	nop
+        case 15:
+        {
+            A0 = S0;
+            8007F7C4	jal    func7b3e0 [$8007b3e0]
+            A1 = A2 & 00ff;
+            8007F7CC	j      L7ff10 [$8007ff10]
+            8007F7D0	nop
+        }
+        break;
 
-8007F7D4 // 16
-        A0 = S0;
-        8007F7D8	jal    func7b424 [$8007b424]
-        A1 = A2 & 00ff;
-        8007F7E0	j      L7ff10 [$8007ff10]
-        8007F7E4	nop
+        case 16:
+        {
+            A0 = S0;
+            8007F7D8	jal    func7b424 [$8007b424]
+            A1 = A2 & 00ff;
+            8007F7E0	j      L7ff10 [$8007ff10]
+            8007F7E4	nop
+        }
+        break;
 
-8007F7E8 // 17
-        A0 = S0;
-        8007F7EC	jal    func7b468 [$8007b468]
-        A1 = A2 & 00ff;
-        8007F7F4	j      L7ff10 [$8007ff10]
-        8007F7F8	nop
+        case 17:
+        {
+            A0 = S0;
+            8007F7EC	jal    func7b468 [$8007b468]
+            A1 = A2 & 00ff;
+            8007F7F4	j      L7ff10 [$8007ff10]
+            8007F7F8	nop
+        }
+        break;
 
-8007F7FC // 18
-        A0 = S0;
-        8007F800	jal    func7b4ac [$8007b4ac]
-        A1 = A2 & 00ff;
-        8007F808	j      L7ff10 [$8007ff10]
-        8007F80C	nop
+        case 18:
+        {
+            A0 = S0;
+            8007F800	jal    func7b4ac [$8007b4ac]
+            A1 = A2 & 00ff;
+            8007F808	j      L7ff10 [$8007ff10]
+            8007F80C	nop
+        }
+        break;
 
-8007F810 // 19
-        A0 = S0;
-        8007F814	jal    func7b50c [$8007b50c]
-        A1 = A2 & 00ff;
-        8007F81C	j      L7ff10 [$8007ff10]
-        8007F820	nop
+        case 19:
+        {
+            A0 = S0;
+            8007F814	jal    func7b50c [$8007b50c]
+            A1 = A2 & 00ff;
+            8007F81C	j      L7ff10 [$8007ff10]
+            8007F820	nop
+        }
+        break;
 
-8007F824 // 1a
-        A0 = S0;
-        8007F828	jal    func7b564 [$8007b564]
-        A1 = A2 & 00ff;
-        8007F830	j      L7ff10 [$8007ff10]
-        8007F834	nop
+        case 1a:
+        {
+            A0 = S0;
+            8007F828	jal    func7b564 [$8007b564]
+            A1 = A2 & 00ff;
+            8007F830	j      L7ff10 [$8007ff10]
+            8007F834	nop
+        }
+        break;
 
-8007F838 // 1b
-        A0 = S0;
-        8007F83C	jal    func7b5d0 [$8007b5d0]
-        A1 = A2 & 00ff;
-        8007F844	j      L7ff10 [$8007ff10]
-        8007F848	nop
+        case 1b:
+        {
+            A0 = S0;
+            8007F83C	jal    func7b5d0 [$8007b5d0]
+            A1 = A2 & 00ff;
+            8007F844	j      L7ff10 [$8007ff10]
+            8007F848	nop
+        }
+        break;
 
-8007F84C // 1c
-        A0 = S0;
-        8007F850	jal    func7b620 [$8007b620]
-        A1 = A2 & 00ff;
-        8007F858	j      L7ff10 [$8007ff10]
-        8007F85C	nop
+        case 1c:
+        {
+            A0 = S0;
+            8007F850	jal    func7b620 [$8007b620]
+            A1 = A2 & 00ff;
+            8007F858	j      L7ff10 [$8007ff10]
+            8007F85C	nop
+        }
+        break;
 
-8007F860 // 1d
-        A0 = S0;
-        8007F864	jal    func7b670 [$8007b670]
-        A1 = A2 & 00ff;
-        8007F86C	j      L7ff10 [$8007ff10]
-        8007F870	nop
+        case 1d:
+        {
+            A0 = S0;
+            8007F864	jal    func7b670 [$8007b670]
+            A1 = A2 & 00ff;
+            8007F86C	j      L7ff10 [$8007ff10]
+            8007F870	nop
+        }
+        break;
 
-8007F874 // 1e
-        A0 = S0;
-        8007F878	jal    func7b6b4 [$8007b6b4]
-        A1 = A2 & 00ff;
-        8007F880	j      L7ff10 [$8007ff10]
-        8007F884	nop
+        case 1e:
+        {
+            A0 = S0;
+            8007F878	jal    func7b6b4 [$8007b6b4]
+            A1 = A2 & 00ff;
+            8007F880	j      L7ff10 [$8007ff10]
+            8007F884	nop
+        }
+        break;
 
-8007F888 // 1f
-        A0 = S0;
-        8007F88C	jal    func7b6f8 [$8007b6f8]
-        A1 = A2 & 00ff;
-        8007F894	j      L7ff10 [$8007ff10]
-        8007F898	nop
+        case 1f:
+        {
+            A0 = S0;
+            8007F88C	jal    func7b6f8 [$8007b6f8]
+            A1 = A2 & 00ff;
+            8007F894	j      L7ff10 [$8007ff10]
+            8007F898	nop
+        }
+        break;
 
-8007F89C // 20
-        A0 = S0;
-        8007F8A0	jal    func7b73c [$8007b73c]
-        A1 = A2 & 00ff;
-        8007F8A8	j      L7ff10 [$8007ff10]
-        8007F8AC	nop
+        case 20:
+        {
+            A0 = S0;
+            8007F8A0	jal    func7b73c [$8007b73c]
+            A1 = A2 & 00ff;
+            8007F8A8	j      L7ff10 [$8007ff10]
+            8007F8AC	nop
+        }
+        break;
 
-8007F8B0 // 21
-        A0 = S0;
-        8007F8B4	jal    func7b7a8 [$8007b7a8]
-        A1 = A2 & 00ff;
-        8007F8BC	j      L7ff10 [$8007ff10]
-        8007F8C0	nop
+    8007F8B0 // 21
+            A0 = S0;
+            8007F8B4	jal    func7b7a8 [$8007b7a8]
+            A1 = A2 & 00ff;
+            8007F8BC	j      L7ff10 [$8007ff10]
+            8007F8C0	nop
 
-8007F8C4 // 22
-        A0 = S0;
-        8007F8C8	jal    func7b80c [$8007b80c]
-        A1 = A2 & 00ff;
-        8007F8D0	j      L7ff10 [$8007ff10]
-        8007F8D4	nop
+    8007F8C4 // 22
+            A0 = S0;
+            8007F8C8	jal    func7b80c [$8007b80c]
+            A1 = A2 & 00ff;
+            8007F8D0	j      L7ff10 [$8007ff10]
+            8007F8D4	nop
 
-8007F8D8 // 23
-        A0 = S0;
-        8007F8DC	jal    func7b87c [$8007b87c]
-        A1 = A2 & 00ff;
-        8007F8E4	j      L7ff10 [$8007ff10]
-        8007F8E8	nop
+    8007F8D8 // 23
+            A0 = S0;
+            8007F8DC	jal    func7b87c [$8007b87c]
+            A1 = A2 & 00ff;
+            8007F8E4	j      L7ff10 [$8007ff10]
+            8007F8E8	nop
 
-8007F8EC // 24
-        A0 = S0;
-        8007F8F0	jal    func7b8d8 [$8007b8d8]
-        A1 = A2 & 00ff;
-        8007F8F8	j      L7ff10 [$8007ff10]
-        8007F8FC	nop
+    8007F8EC // 24
+            A0 = S0;
+            8007F8F0	jal    func7b8d8 [$8007b8d8]
+            A1 = A2 & 00ff;
+            8007F8F8	j      L7ff10 [$8007ff10]
+            8007F8FC	nop
 
-8007F900 // 25
-        A0 = S0;
-        8007F904	jal    func7b934 [$8007b934]
-        A1 = A2 & 00ff;
-        8007F90C	j      L7ff10 [$8007ff10]
-        8007F910	nop
+    8007F900 // 25
+            A0 = S0;
+            8007F904	jal    func7b934 [$8007b934]
+            A1 = A2 & 00ff;
+            8007F90C	j      L7ff10 [$8007ff10]
+            8007F910	nop
 
-8007F914 // 26
-        A0 = S0;
-        8007F918	jal    func7b984 [$8007b984]
-        A1 = A2 & 00ff;
-        8007F920	j      L7ff10 [$8007ff10]
-        8007F924	nop
+    8007F914 // 26
+            A0 = S0;
+            8007F918	jal    func7b984 [$8007b984]
+            A1 = A2 & 00ff;
+            8007F920	j      L7ff10 [$8007ff10]
+            8007F924	nop
 
-8007F928 // 27
-        A0 = S0;
-        8007F92C	jal    func7b9d4 [$8007b9d4]
-        A1 = A2 & 00ff;
-        8007F934	j      L7ff10 [$8007ff10]
-        8007F938	nop
+    8007F928 // 27
+            A0 = S0;
+            8007F92C	jal    func7b9d4 [$8007b9d4]
+            A1 = A2 & 00ff;
+            8007F934	j      L7ff10 [$8007ff10]
+            8007F938	nop
 
-8007F93C // 28
-        A0 = S0;
-        8007F940	jal    func7ba24 [$8007ba24]
-        A1 = A2 & 00ff;
-        8007F948	j      L7ff10 [$8007ff10]
-        8007F94C	nop
+    8007F93C // 28
+            A0 = S0;
+            8007F940	jal    func7ba24 [$8007ba24]
+            A1 = A2 & 00ff;
+            8007F948	j      L7ff10 [$8007ff10]
+            8007F94C	nop
 
-8007F950 // 29
-        A0 = S0;
-        8007F954	jal    func7ba58 [$8007ba58]
-        A1 = A2 & 00ff;
-        8007F95C	j      L7ff10 [$8007ff10]
-        8007F960	nop
+    8007F950 // 29
+            A0 = S0;
+            8007F954	jal    func7ba58 [$8007ba58]
+            A1 = A2 & 00ff;
+            8007F95C	j      L7ff10 [$8007ff10]
+            8007F960	nop
 
-8007F964 // 2a
-        A0 = S0;
-        8007F968	jal    func7ba98 [$8007ba98]
-        A1 = A2 & 00ff;
-        8007F970	j      L7ff10 [$8007ff10]
-        8007F974	nop
+    8007F964 // 2a
+            A0 = S0;
+            8007F968	jal    func7ba98 [$8007ba98]
+            A1 = A2 & 00ff;
+            8007F970	j      L7ff10 [$8007ff10]
+            8007F974	nop
 
-8007F978 // 2b
-        A0 = S0;
-        A1 = A2 & 00ff;
-        8007F980	jal    func7bb2c [$8007bb2c]
-        A2 = S1 & 00ff;
-        8007F988	j      L7ff10 [$8007ff10]
-        S1 = V0;
+    8007F978 // 2b
+            A0 = S0;
+            A1 = A2 & 00ff;
+            8007F980	jal    func7bb2c [$8007bb2c]
+            A2 = S1 & 00ff;
+            8007F988	j      L7ff10 [$8007ff10]
+            S1 = V0;
 
-8007F990 // 2c
-        A0 = S0;
-        8007F994	jal    func7bbec [$8007bbec]
-        A1 = A2 & 00ff;
-        8007F99C	j      L7ff10 [$8007ff10]
-        8007F9A0	nop
+    8007F990 // 2c
+            A0 = S0;
+            8007F994	jal    func7bbec [$8007bbec]
+            A1 = A2 & 00ff;
+            8007F99C	j      L7ff10 [$8007ff10]
+            8007F9A0	nop
 
-8007F9A4 // 2d
-        A0 = S0;
-        A1 = A2 & 00ff;
-        8007F9AC	jal    func7bc7c [$8007bc7c]
-        A2 = S1 & 00ff;
-        8007F9B4	j      L7ff10 [$8007ff10]
-        S1 = V0;
+    8007F9A4 // 2d
+            A0 = S0;
+            A1 = A2 & 00ff;
+            8007F9AC	jal    func7bc7c [$8007bc7c]
+            A2 = S1 & 00ff;
+            8007F9B4	j      L7ff10 [$8007ff10]
+            S1 = V0;
 
-8007F9BC // 2e
-        A0 = S0;
-        8007F9C0	jal    func7bd34 [$8007bd34]
-        A1 = A2 & 00ff;
-        8007F9C8	j      L7ff10 [$8007ff10]
-        8007F9CC	nop
+    8007F9BC // 2e
+            A0 = S0;
+            8007F9C0	jal    func7bd34 [$8007bd34]
+            A1 = A2 & 00ff;
+            8007F9C8	j      L7ff10 [$8007ff10]
+            8007F9CC	nop
 
-8007F9D0 // 2f
-        A0 = S0;
-        A1 = A2 & 00ff;
-        8007F9D8	jal    func7be24 [$8007be24]
-        A2 = S1 & 00ff;
-        8007F9E0	j      L7ff10 [$8007ff10]
-        S1 = V0;
+    8007F9D0 // 2f
+            A0 = S0;
+            A1 = A2 & 00ff;
+            8007F9D8	jal    func7be24 [$8007be24]
+            A2 = S1 & 00ff;
+            8007F9E0	j      L7ff10 [$8007ff10]
+            S1 = V0;
 
-8007F9E8 // 30
-        A0 = S0;
-        8007F9EC	jal    func7bf48 [$8007bf48]
-        A1 = A2 & 00ff;
-        8007F9F4	j      L7ff10 [$8007ff10]
-        8007F9F8	nop
+    8007F9E8 // 30
+            A0 = S0;
+            8007F9EC	jal    func7bf48 [$8007bf48]
+            A1 = A2 & 00ff;
+            8007F9F4	j      L7ff10 [$8007ff10]
+            8007F9F8	nop
 
-8007F9FC // 31
-        A0 = S0;
-        8007FA00	jal    func7bf88 [$8007bf88]
-        A1 = A2 & 00ff;
-        8007FA08	j      L7ff10 [$8007ff10]
-        8007FA0C	nop
+    8007F9FC // 31
+            A0 = S0;
+            8007FA00	jal    func7bf88 [$8007bf88]
+            A1 = A2 & 00ff;
+            8007FA08	j      L7ff10 [$8007ff10]
+            8007FA0C	nop
 
-8007FA10 // 32
-        A0 = S0;
-        8007FA14	jal    func7bfcc [$8007bfcc]
-        A1 = A2 & 00ff;
-        8007FA1C	j      L7ff10 [$8007ff10]
-        8007FA20	nop
+    8007FA10 // 32
+            A0 = S0;
+            8007FA14	jal    func7bfcc [$8007bfcc]
+            A1 = A2 & 00ff;
+            8007FA1C	j      L7ff10 [$8007ff10]
+            8007FA20	nop
 
-8007FA24 // 33
-        A0 = S0;
-        8007FA28	jal    func7c000 [$8007c000]
-        A1 = A2 & 00ff;
-        8007FA30	j      L7ff10 [$8007ff10]
-        8007FA34	nop
+    8007FA24 // 33
+            A0 = S0;
+            8007FA28	jal    func7c000 [$8007c000]
+            A1 = A2 & 00ff;
+            8007FA30	j      L7ff10 [$8007ff10]
+            8007FA34	nop
 
-8007FA38 // 34
-        A0 = S0;
-        8007FA3C	jal    func7c03c [$8007c03c]
-        A1 = A2 & 00ff;
-        8007FA44	j      L7ff10 [$8007ff10]
-        8007FA48	nop
+    8007FA38 // 34
+            A0 = S0;
+            8007FA3C	jal    func7c03c [$8007c03c]
+            A1 = A2 & 00ff;
+            8007FA44	j      L7ff10 [$8007ff10]
+            8007FA48	nop
 
-8007FA4C // 35
-        A0 = S0;
-        8007FA50	jal    func7c078 [$8007c078]
-        A1 = A2 & 00ff;
-        8007FA58	j      L7ff10 [$8007ff10]
-        8007FA5C	nop
+    8007FA4C // 35
+            A0 = S0;
+            8007FA50	jal    func7c078 [$8007c078]
+            A1 = A2 & 00ff;
+            8007FA58	j      L7ff10 [$8007ff10]
+            8007FA5C	nop
 
-8007FA60 // 36
-        A0 = S0;
-        8007FA64	jal    func7c0b8 [$8007c0b8]
-        A1 = A2 & 00ff;
-        8007FA6C	j      L7ff10 [$8007ff10]
-        8007FA70	nop
+    8007FA60 // 36
+            A0 = S0;
+            8007FA64	jal    func7c0b8 [$8007c0b8]
+            A1 = A2 & 00ff;
+            8007FA6C	j      L7ff10 [$8007ff10]
+            8007FA70	nop
 
-8007FA74 // 37
-        8007FA74	jal    func7c0fc [$8007c0fc]
-        A0 = A2 & 00ff;
-        8007FA7C	j      L7ff10 [$8007ff10]
-        8007FA80	nop
+    8007FA74 // 37
+            8007FA74	jal    func7c0fc [$8007c0fc]
+            A0 = A2 & 00ff;
+            8007FA7C	j      L7ff10 [$8007ff10]
+            8007FA80	nop
 
-8007FA84 // 38
-        8007FA84	jal    func7c12c [$8007c12c]
-        A0 = A2 & 00ff;
-        8007FA8C	j      L7ff10 [$8007ff10]
-        8007FA90	nop
+    8007FA84 // 38
+            8007FA84	jal    func7c12c [$8007c12c]
+            A0 = A2 & 00ff;
+            8007FA8C	j      L7ff10 [$8007ff10]
+            8007FA90	nop
 
-8007FA94 // 39
-        A0 = S0;
-        8007FA98	jal    func7c15c [$8007c15c]
-        A1 = A2 & 00ff;
-        8007FAA0	j      L7ff10 [$8007ff10]
-        8007FAA4	nop
+    8007FA94 // 39
+            A0 = S0;
+            8007FA98	jal    func7c15c [$8007c15c]
+            A1 = A2 & 00ff;
+            8007FAA0	j      L7ff10 [$8007ff10]
+            8007FAA4	nop
 
-8007FAA8 // 3a
-        A0 = S0;
-        8007FAAC	jal    func7c1a0 [$8007c1a0]
-        A1 = A2 & 00ff;
-        8007FAB4	j      L7ff10 [$8007ff10]
-        8007FAB8	nop
+    8007FAA8 // 3a
+            A0 = S0;
+            8007FAAC	jal    func7c1a0 [$8007c1a0]
+            A1 = A2 & 00ff;
+            8007FAB4	j      L7ff10 [$8007ff10]
+            8007FAB8	nop
 
-8007FABC // 3b
-        A0 = S0;
-        8007FAC0	jal    func7c1e4 [$8007c1e4]
-        A1 = A2 & 00ff;
-        8007FAC8	j      L7ff10 [$8007ff10]
-        8007FACC	nop
+    8007FABC // 3b
+            A0 = S0;
+            8007FAC0	jal    func7c1e4 [$8007c1e4]
+            A1 = A2 & 00ff;
+            8007FAC8	j      L7ff10 [$8007ff10]
+            8007FACC	nop
 
-8007FAD0 // 3c
-        A0 = S0;
-        8007FAD4	jal    func7c24c [$8007c24c]
-        A1 = A2 & 00ff;
-        8007FADC	j      L7ff10 [$8007ff10]
-        8007FAE0	nop
+    8007FAD0 // 3c
+            A0 = S0;
+            8007FAD4	jal    func7c24c [$8007c24c]
+            A1 = A2 & 00ff;
+            8007FADC	j      L7ff10 [$8007ff10]
+            8007FAE0	nop
 
-8007FAE4 // 3d
-        A0 = S0;
-        8007FAE8	jal    func7c2b4 [$8007c2b4]
-        A2 = S1 & 00ff;
-        8007FAF0	j      L7ff10 [$8007ff10]
-        8007FAF4	nop
+    8007FAE4 // 3d
+            A0 = S0;
+            8007FAE8	jal    func7c2b4 [$8007c2b4]
+            A2 = S1 & 00ff;
+            8007FAF0	j      L7ff10 [$8007ff10]
+            8007FAF4	nop
 
         case 0x3E:
         {
