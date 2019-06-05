@@ -66,31 +66,32 @@
 +2 [][]     reset with 0xffff. Init 1st item with 0x00.
 +4 []       init 1st item with 0x00.
 
-800CC408                unit data array (0x170 size)
-800CC408 +  4C [][]     unit current hp.
-800CC408 +  4E [][]     unit max hp.
-800CC408 +  5A []       unit speed.
-800CC408 +  5C []       unit ether def.
-800CC408 +  7C [][]     some flags
-800CC408 +  84 [][]     some flags.
-800CC408 + 14C          experience.
+800cc408                unit data array (0x170 size)
+800cc408 +  4c [][]     unit current hp.
+800cc408 +  4e [][]     unit max hp.
+800cc408 +  5a []       unit speed.
+800cc408 +  5c []       unit ether def.
+800cc408 +  7c [][]     some flags
+800cc408 +  84 [][]     some flags.
+800cc408 + 14c          experience.
 
-800D24EC      []       array of unit exists in battle (1-3 party, 3-A enemy). (0 - no 1 - yes)
+800d24ec []       array of unit exists in battle (1-3 party, 3-A enemy). (0 - no 1 - yes)
 
 800d257c attack queue array. (size 0x08 items 0x20).
 + 00 []       action id.
 + 04 []       in jump to unit we check if this != 1.
 + 06 [][]     target mask.
 
-800D29C1      []       array of something unit related. (size 0x08).
+800d29c1      []       array of something unit related. (size 0x08).
 
 800d2b20               array of struct with script pointers for enemy unit (index = unit_is - 3) (size 0x40).
 800d2b20 + 00 [][][][] pointer to script.
+800d2b20 + 10          variable store array (0x04 0x04).
 800d2b20 + 20          variable store array (0x08 0x02).
 800d2b20 + 30          variable store array (0x10 0x01).
 
-800D2E40               some data (size 0x60). read in text output finction.
-800D2E40 + 00 [][][][] pointer to some data related to string.
+800D2e40               some data (size 0x60). read in text output finction.
+800D2e40 + 00 [][][][] pointer to some data related to string.
 
 8010C48C + 20 [][][][] pointer to some data (8010C540).
 8010C48C + 2C [][]     store scale data here (*256).

@@ -354,10 +354,10 @@
 // func79eb4
 80079EB4-80079FA4
 ////////////////////////////////
-// battle_ai_move_script_pointer_4
+// battle_ai_script_move_pointer_4
 80079FA8-80079FB8
 ////////////////////////////////
-// func79fbc
+// battle_ai_script_skip
 80079FBC-8007A038
 ////////////////////////////////
 // battle_ai_script_cycle
@@ -825,7 +825,7 @@
 // func7f5e0
 8007F5E0-8007FF30
 ////////////////////////////////
-// func7ff34
+// battle_ai_script_var_check
 8007FF34-800801E0
 ////////////////////////////////
 // func801e4
