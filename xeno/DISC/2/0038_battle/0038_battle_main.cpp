@@ -9922,15 +9922,16 @@ SP = SP + 0020;
 ////////////////////////////////
 // battle_ai_script_skip()
 
-address = w[A0];
-
-while( bu[address] >= 80 )
+script = w[A0];
+while( bu[script] >= 80 )
 {
+    A0 = A0;
     battle_ai_script_move_pointer_4();
 }
 
-while( ( ( bu[address] + 80 ) & ff ) >= 70 )
+while( ( ( bu[script] + 80 ) & ff ) >= 70 )
 {
+    A0 = A0;
     battle_ai_script_move_pointer_4();
 }
 ////////////////////////////////
@@ -10879,11 +10880,11 @@ V0 = A3 & 00ff;
 
 
 ////////////////////////////////
-// 0x01
-// func7ae9c()
-address = w[A0];
-param1 = bu[address + 1];
-param2 = bu[address + 2];
+// battle_ai_script_01_set_action_value()
+
+script = w[A0];
+param1 = bu[script + 1];
+param2 = bu[script + 2];
 
 [800d257c + A1 * 8 + param1] = b(param2);
 
@@ -10897,243 +10898,207 @@ return A1 & ff;
 
 
 ////////////////////////////////
-// 0x02
 // func7aee8()
-address = w[A0];
+
+script = w[A0];
 unit_id = A1;
 
-param1 = bu[address + 1];
-param2 = bu[address + 2];
-[800d257c + A2 * 8 + param1] = b(bu[800d2b20 + 20 + unit_id * 40 + 10 + param2]);
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+[800d257c + A2 * 8 + param1] = b(bu[800d2b20 + unit_id * 40 + 30 + param2]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func7af28
-A2 = 0;
+// func7af28()
 
-loop7af2c:	; 8007AF2C
-V0 = w[A0 + 0000];
-8007AF30	nop
-V1 = bu[V0 + 0002];
-V0 = bu[V0 + 0001];
-V1 = V1 << 03;
-V1 = V1 + A2;
-V0 = V0 << 03;
-V0 = V0 + A2;
-A2 = A2 + 0001;
-V0 = A1 + V0;
-V0 = bu[V0 + 0000];
-V1 = A1 + V1;
-[V1 + 0000] = b(V0);
-V0 = A2 < 0008;
-8007AF64	bne    v0, zero, loop7af2c [$8007af2c]
-8007AF68	nop
-8007AF6C	jr     ra 
-8007AF70	nop
-////////////////////////////////
-// func7af74
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-V1 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[V1 + 0001];
-V1 = bu[V1 + 0002];
-A1 = A1 + V0;
-8007AF98	jr     ra 
-[A1 + 0000] = b(V1);
-////////////////////////////////
-// func7afa0
-A1 = A1 & 00ff;
-V1 = w[A0 + 0000];
-A1 = A1 << 06;
-V0 = bu[V1 + 0003];
-A0 = bu[V1 + 0002];
-V0 = V0 << 08;
-A0 = A0 | V0;
-V0 = bu[V1 + 0001];
-V1 = 800d2b40;
-A1 = A1 + V1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-8007AFD4	jr     ra 
-[V0 + 0000] = h(A0);
-////////////////////////////////
-// func7afdc
-A1 = A1 & 00ff;
-V0 = w[A0 + 0000];
-A1 = A1 << 06;
-V1 = bu[V0 + 0003];
-A0 = bu[V0 + 0002];
-V0 = bu[V0 + 0001];
-V1 = V1 << 08;
-V1 = V1 + A0;
-V1 = V1 << 04;
-A0 = 800d2b30;
-V0 = V0 << 02;
-A1 = A1 + A0;
-V0 = V0 + A1;
-8007B014	jr     ra 
-[V0 + 0000] = w(V1);
-////////////////////////////////
-// func7b01c
-V0 = w[A0 + 0000];
-8007B020	nop
-V1 = bu[V0 + 0001];
-V0 = bu[V0 + 0002];
-V1 = V1 << 01;
-8007B030	lui    at, $8006
-AT = AT + V1;
-[AT + 9a3c] = h(V0);
-8007B03C	jr     ra 
-8007B040	nop
-////////////////////////////////
-// func7b044
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007B06C	nop
-V0 = V0 + V1;
-V1 = V0;
-V0 = V0 < 0100;
-8007B07C	bne    v0, zero, L7b088 [$8007b088]
-8007B080	nop
-V1 = 00ff;
+script = w[A0];
 
-L7b088:	; 8007B088
-8007B088	jr     ra 
-[A1 + 0000] = b(V1);
-////////////////////////////////
-// func7b090
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007B0B8	nop
-V0 = V0 - V1;
-8007B0C0	bgez   v0, L7b0cc [$8007b0cc]
-V1 = V0;
-V1 = 0;
-
-L7b0cc:	; 8007B0CC
-8007B0CC	jr     ra 
-[A1 + 0000] = b(V1);
-////////////////////////////////
-// func7b0d4
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0002];
-A1 = A1 + V1;
-V1 = bu[A1 + 0000];
-8007B0FC	nop
-8007B100	mult   v1, v0
-8007B104	mflo   v0
-V1 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0100;
-8007B118	bne    v0, zero, L7b124 [$8007b124]
-8007B11C	nop
-V1 = 00ff;
-
-L7b124:	; 8007B124
-8007B124	jr     ra 
-[A1 + 0000] = b(V1);
-////////////////////////////////
-// func7b12c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007B154	nop
-8007B158	divu   v0, v1
-8007B15C	mflo   v0
-8007B160	jr     ra 
-[A1 + 0000] = b(V0);
+for( int i = 0; i < 8; ++i )
+{
+    param1 = bu[script + 1];
+    param2 = bu[script + 2];
+    [A1 + param2 * 8 + i] = b(bu[A1 + param1 * 8 + i]); // 800d257c
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0x0C
+// func7af74()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+[800d2b20 + unit_id * 40 + 30 + param1] = b(param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7afa0()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+[800d2b20 + unit_id * 2 + 20 + param1] = h(param2);
+////////////////////////////////
+
+
+
+////////////////////////////////s
+// func7afdc()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2] << 4;
+[800d2b20 + unit_id * 40 + 10 + param1 * 4] = w(param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b01c()
+
+script = w[A0];
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+[80059a3c + param1 * 2] = h(param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b044()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+
+V1 = bu[800d2b20 + unit_id * 40 + 30 + param1] + param2;
+if( V1 >= 100 )
+{
+    V1 = ff;
+}
+[800d2b20 + unit_id * 40 + 30 + param1] = b(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b090()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+
+V1 = bu[800d2b20 + unit_id * 40 + 30 + param1] - param2;
+if( V1 < 0 )
+{
+    V1 = 0;
+}
+[800d2b20 + unit_id * 40 + 30 + param1] = b(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b0d4()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+
+V1 = bu[800d2b20 + unit_id * 40 + 30 + param1] * param2;
+if( V1 >= 100 )
+{
+    V1 = ff;
+}
+[800d2b20 + unit_id * 40 + 30 + param1] = b(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b12c()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+
+[800d2b20 + unit_id * 40 + 30 + param1] = b(bu[800d2b20 + unit_id * 40 + 30 + param1] / param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // battle_ai_0C_mod()
-address = w[A0];
+
+script = w[A0];
 unit_id = A1;
 
-param1 = bu[address + 1];
-param2 = bu[address + 2];
+param1 = bu[script + 1];
+param2 = bu[script + 2];
 [800d2b40 + unit_id * 40 + 10 + param1] = b(bu[800d2b40 + unit_id * 40 + 10 + param1] % param2);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func7b1a4
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007B1CC	nop
-V0 = V0 & V1;
-8007B1D4	jr     ra 
-[A1 + 0000] = b(V0);
+// func7b1a4()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+[800d2b20 + unit_id * 40 + 30 + param1] = b(bu[800d2b20 + unit_id * 40 + 30 + param1] & param2);
 ////////////////////////////////
-// func7b1dc
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007B204	nop
-V0 = V0 | V1;
-8007B20C	jr     ra 
-[A1 + 0000] = b(V0);
+
+
+
 ////////////////////////////////
-// func7b214
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A0 = w[A0 + 0000];
-V0 = 800d2b50;
-V1 = bu[A0 + 0001];
-A1 = A1 + V0;
-A1 = A1 + V1;
-V0 = bu[A1 + 0000];
-V1 = bu[A0 + 0002];
-8007B23C	nop
-V0 = V0 ^ V1;
-8007B244	jr     ra 
-[A1 + 0000] = b(V0);
+// func7b1dc()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+[800d2b20 + unit_id * 40 + 30 + param1] = b(bu[800d2b20 + unit_id * 40 + 30 + param1] | param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b214()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+[800d2b20 + unit_id * 40 + 30 + param1] = b(bu[800d2b20 + unit_id * 40 + 30 + param1] ^ param2);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7b24c
 A1 = A1 & 00ff;
@@ -12300,11 +12265,11 @@ A1 = A1 + A2;
 ////////////////////////////////
 // 0x3E
 // battle_ai_3E_get_random()
-address = w[A0];
+script = w[A0];
 unit_id = A1;
 
-param1 = bu[address + 1];
-param2 = bu[address + 2];
+param1 = bu[script + 1];
+param2 = bu[script + 2];
 
 A0 = 0;
 A1 = param2;
@@ -15281,10 +15246,10 @@ func78b7c();
 ////////////////////////////////
 // func7efc8()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V1 = bu[address + 1];
-return bu[800d2b20 + unit_id * 40 + 30 + V1] == bu[address + 2];
+V1 = bu[script + 1];
+return bu[800d2b20 + unit_id * 40 + 30 + V1] == bu[script + 2];
 ////////////////////////////////
 
 
@@ -15292,10 +15257,10 @@ return bu[800d2b20 + unit_id * 40 + 30 + V1] == bu[address + 2];
 ////////////////////////////////
 // func7f000()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] == hu[address + 2];
+V0 = bu[script + 1];
+return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] == hu[script + 2];
 ////////////////////////////////
 
 
@@ -15303,10 +15268,10 @@ return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] == hu[address + 2];
 ////////////////////////////////
 // func7f044()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V1 = bu[address + 1];
-return bu[800d2b20 + unit_id * 40 + 30 + V1] <= bu[address + 2];
+V1 = bu[script + 1];
+return bu[800d2b20 + unit_id * 40 + 30 + V1] <= bu[script + 2];
 ////////////////////////////////
 
 
@@ -15314,10 +15279,10 @@ return bu[800d2b20 + unit_id * 40 + 30 + V1] <= bu[address + 2];
 ////////////////////////////////
 // func7f07c()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V1 = bu[address + 1];
-return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] <= hu[address + 2];
+V1 = bu[script + 1];
+return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] <= hu[script + 2];
 ////////////////////////////////
 
 
@@ -15325,10 +15290,10 @@ return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] <= hu[address + 2];
 ////////////////////////////////
 // func7f0c0()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V1 = bu[address + 1];
-return bu[800d2b20 + unit_id * 40 + 30 + V1] >= bu[address + 2];
+V1 = bu[script + 1];
+return bu[800d2b20 + unit_id * 40 + 30 + V1] >= bu[script + 2];
 ////////////////////////////////
 
 
@@ -15336,10 +15301,10 @@ return bu[800d2b20 + unit_id * 40 + 30 + V1] >= bu[address + 2];
 ////////////////////////////////
 // func7f0f8()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V1 = bu[address + 1];
-return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] >= hu[address + 2];
+V1 = bu[script + 1];
+return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] >= hu[script + 2];
 ////////////////////////////////
 
 
@@ -15347,10 +15312,10 @@ return hu[800d2b20 + unit_id * 40 + 20 + V1 * 2] >= hu[address + 2];
 ////////////////////////////////
 // func7f13c()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 return bu[800d2b20 + unit_id * 40 + 30 + V0] == bu[800d2b20 + unit_id * 40 + 30 + V1];
 ////////////////////////////////
 
@@ -15359,10 +15324,10 @@ return bu[800d2b20 + unit_id * 40 + 30 + V0] == bu[800d2b20 + unit_id * 40 + 30 
 ////////////////////////////////
 // func7f17c()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] == hu[800d2b20 + unit_id * 40 + 20 + V1 * 2];
 ////////////////////////////////
 
@@ -15371,10 +15336,10 @@ return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] == hu[800d2b20 + unit_id * 40 +
 ////////////////////////////////
 // func7f1c4()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 return bu[800d2b20 + unit_id * 40 + 30 + V0] <= bu[800d2b20 + unit_id * 40 + 30 + V1];
 ////////////////////////////////
 
@@ -15383,10 +15348,10 @@ return bu[800d2b20 + unit_id * 40 + 30 + V0] <= bu[800d2b20 + unit_id * 40 + 30 
 ////////////////////////////////
 // func7f204()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] <= hu[800d2b20 + unit_id * 40 + 20 + V1 * 2];
 ////////////////////////////////
 
@@ -15395,10 +15360,10 @@ return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] <= hu[800d2b20 + unit_id * 40 +
 ////////////////////////////////
 // func7f24c()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V1 = bu[address + 1];
-V0 = bu[800d2b20 + unit_id * 40 + 30 + V1] & bu[address + 2];
+V1 = bu[script + 1];
+V0 = bu[800d2b20 + unit_id * 40 + 30 + V1] & bu[script + 2];
 V0 = 0 < V0;
 ////////////////////////////////
 
@@ -15407,10 +15372,10 @@ V0 = 0 < V0;
 ////////////////////////////////
 // func7f284()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V0 = hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] & hu[address + 2];
+V0 = bu[script + 1];
+V0 = hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] & hu[script + 2];
 V0 = 0 < V0;
 ////////////////////////////////
 
@@ -15419,10 +15384,10 @@ V0 = 0 < V0;
 ////////////////////////////////
 // func7f2c8()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 V0 = bu[800d2b20 + unit_id * 40 + 30 + V0] & bu[800d2b20 + unit_id * 40 + 30 + V1];
 V0 = 0 < V0;
 ////////////////////////////////
@@ -15432,10 +15397,10 @@ V0 = 0 < V0;
 ////////////////////////////////
 // func7f308()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 V0 = hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] & hu[800d2b20 + unit_id * 40 + 20 + V1 * 2];
 V0 = 0 < V0;
 ////////////////////////////////
@@ -15445,10 +15410,10 @@ V0 = 0 < V0;
 ////////////////////////////////
 // func7f350()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V1 = bu[address + 1];
-return bu[800d2b20 + unit_id * 40 + 30 + V1] != bu[address + 2];
+V1 = bu[script + 1];
+return bu[800d2b20 + unit_id * 40 + 30 + V1] != bu[script + 2];
 ////////////////////////////////
 
 
@@ -15456,10 +15421,10 @@ return bu[800d2b20 + unit_id * 40 + 30 + V1] != bu[address + 2];
 ////////////////////////////////
 // func7f388()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] != hu[address + 2];
+V0 = bu[script + 1];
+return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] != hu[script + 2];
 ////////////////////////////////
 
 
@@ -15467,10 +15432,10 @@ return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] != hu[address + 2];
 ////////////////////////////////
 // func7f3cc()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 return bu[800d2b20 + unit_id * 40 + 30 + V0] != bu[800d2b20 + unit_id * 40 + 30 + V1];
 ////////////////////////////////
 
@@ -15479,11 +15444,11 @@ return bu[800d2b20 + unit_id * 40 + 30 + V0] != bu[800d2b20 + unit_id * 40 + 30 
 ////////////////////////////////
 // func7f40c()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
 
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] != hu[800d2b20 + unit_id * 40 + 20 + V1 * 2];
 ////////////////////////////////
 
@@ -15492,11 +15457,11 @@ return hu[800d2b20 + unit_id * 40 + 20 + V0 * 2] != hu[800d2b20 + unit_id * 40 +
 ////////////////////////////////
 // func7f454()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
 
-V0 = bu[address + 1];
-V1 = bu[address + 2];
+V0 = bu[script + 1];
+V1 = bu[script + 2];
 return w[800d2b20 + unit_id * 40 + 10 + V0 * 4] == w[800d2b20 + unit_id * 40 + 10 + V1 * 4];
 ////////////////////////////////
 
@@ -15505,11 +15470,11 @@ return w[800d2b20 + unit_id * 40 + 10 + V0 * 4] == w[800d2b20 + unit_id * 40 + 1
 ////////////////////////////////
 // func7f49c()
 
-address = w[A0];
+script = w[A0];
 unit_id = A1;
 
-V1 = bu[address + 1];
-V0 = bu[address + 2];
+V1 = bu[script + 1];
+V0 = bu[script + 2];
 return w[800d2b20 + unit_id * 40 + 10 + V1 * 4] <= w[800d2b20 + unit_id * 40 + 10 + V0 * 4];
 ////////////////////////////////
 
@@ -15518,8 +15483,8 @@ return w[800d2b20 + unit_id * 40 + 10 + V1 * 4] <= w[800d2b20 + unit_id * 40 + 1
 ////////////////////////////////
 // func7f4e4()
 
-address = w[A0];
-V1 = bu[address + 1];
+script = w[A0];
+V1 = bu[script + 1];
 return hu[800cc408 + V1 * 170 + 7c] >> f;
 ////////////////////////////////
 
@@ -15528,8 +15493,8 @@ return hu[800cc408 + V1 * 170 + 7c] >> f;
 ////////////////////////////////
 // func7f51c()
 
-address = w[A0];
-V0 = bu[address + 1];
+script = w[A0];
+V0 = bu[script + 1];
 return bu[800d273c + V0 * 4] < 1;
 ////////////////////////////////
 
@@ -15573,943 +15538,1166 @@ return bu[800c35d7 + (A0 + 3) * 1c] >> 7;
 ////////////////////////////////
 // func7f5e0()
 
-S0 = A0;
-S1 = A2;
-V0 = w[S0];
-A2 = A1;
-V0 = bu[V0];
-A1 = 800D257C;
-V1 = V0 - 1;
-if (V1 < 74)
+address = A0;
+script = w[address];
+opcode = bu[script];
+
+unit_id = A1;
+action_queue_id = A2;
+
+A1 = 800d257c;
+
+switch( opcode )
 {
-    switch (V0)
+    case 01:
     {
-        case 01:
-        {
-            A0 = S0;
-            A1 = S1;
-            func7ae9c();
-            S1 = V0;
-
-            8007F640	j      L7ff10 [$8007ff10]
-        }
-        break;
-
-        case 02:
-        {
-            A0 = S0;
-            A1 = A2;
-            A2 = S1;
-            func7aee8();
-
-            8007F658	j      L7ff10 [$8007ff10]
-        }
-        break;
-
-        case 03:
-        {
-            8007F660	jal    func7af28 [$8007af28]
-            A0 = S0;
-            8007F668	j      L7ff10 [$8007ff10]
-            8007F66C	nop
-        }
-        break;
-
-        case 04:
-        {
-            A0 = S0;
-            8007F674	jal    func7af74 [$8007af74]
-            A1 = A2 & 00ff;
-            8007F67C	j      L7ff10 [$8007ff10]
-            8007F680	nop
-        }
-        break;
-
-        case 05:
-        {
-            A0 = S0;
-            8007F688	jal    func7afa0 [$8007afa0]
-            A1 = A2 & 00ff;
-            8007F690	j      L7ff10 [$8007ff10]
-            8007F694	nop
-        }
-        break;
-
-        case 06:
-        {
-            A0 = S0;
-            8007F69C	jal    func7afdc [$8007afdc]
-            A1 = A2 & 00ff;
-            8007F6A4	j      L7ff10 [$8007ff10]
-            8007F6A8	nop
-        }
-        break;
-
-        case 07:
-        {
-            8007F6AC	jal    func7b01c [$8007b01c]
-            A0 = S0;
-            8007F6B4	j      L7ff10 [$8007ff10]
-            8007F6B8	nop
-        }
-        break;
-
-        case 08:
-        {
-            A0 = S0;
-            8007F6C0	jal    func7b044 [$8007b044]
-            A1 = A2 & 00ff;
-            8007F6C8	j      L7ff10 [$8007ff10]
-            8007F6CC	nop
-        }
-        break;
-
-        case 09:
-        {
-            A0 = S0;
-            8007F6D4	jal    func7b090 [$8007b090]
-            A1 = A2 & 00ff;
-            8007F6DC	j      L7ff10 [$8007ff10]
-            8007F6E0	nop
-        }
-        break;
-
-        case 0a:
-        {
-            A0 = S0;
-            8007F6E8	jal    func7b0d4 [$8007b0d4]
-            A1 = A2 & 00ff;
-            8007F6F0	j      L7ff10 [$8007ff10]
-            8007F6F4	nop
-        }
-        break;
-
-        case 0b:
-        {
-            A0 = S0;
-            8007F6FC	jal    func7b12c [$8007b12c]
-            A1 = A2 & 00ff;
-            8007F704	j      L7ff10 [$8007ff10]
-            8007F708	nop
-        }
-        break;
-
-        case 0c:
-        {
-            A0 = S0;
-            A1 = A2 & FF;
-            battle_ai_0C_mod();
-
-            8007F718	j      L7ff10 [$8007ff10]
-        }
-        break;
-
-        case 0d:
-        {
-            A0 = S0;
-            8007F724	jal    func7b1a4 [$8007b1a4]
-            A1 = A2 & 00ff;
-            8007F72C	j      L7ff10 [$8007ff10]
-            8007F730	nop
-        }
-        break;
-
-        case 0e:
-        {
-            A0 = S0;
-            8007F738	jal    func7b1dc [$8007b1dc]
-            A1 = A2 & 00ff;
-            8007F740	j      L7ff10 [$8007ff10]
-            8007F744	nop
-        }
-        break;
-
-        case 0f:
-        {
-            A0 = S0;
-            8007F74C	jal    func7b214 [$8007b214]
-            A1 = A2 & 00ff;
-            8007F754	j      L7ff10 [$8007ff10]
-            8007F758	nop
-        }
-        break;
-
-        case 10:
-        {
-            A0 = S0;
-            8007F760	jal    func7b24c [$8007b24c]
-            A1 = A2 & 00ff;
-            8007F768	j      L7ff10 [$8007ff10]
-            8007F76C	nop
-        }
-        break;
-
-        case 11:
-        {
-            A0 = S0;
-            8007F774	jal    func7b2a4 [$8007b2a4]
-            A1 = A2 & 00ff;
-            8007F77C	j      L7ff10 [$8007ff10]
-            8007F780	nop
-        }
-        break;
-
-        case 12:
-        {
-            A0 = S0;
-            8007F788	jal    func7b2f4 [$8007b2f4]
-            A1 = A2 & 00ff;
-            8007F790	j      L7ff10 [$8007ff10]
-            8007F794	nop
-        }
-        break;
-
-        case 13:
-        {
-            A0 = S0;
-            8007F79C	jal    func7b350 [$8007b350]
-            A1 = A2 & 00ff;
-            8007F7A4	j      L7ff10 [$8007ff10]
-            8007F7A8	nop
-        }
-        break;
-
-        case 14:
-        {
-            A0 = S0;
-            8007F7B0	jal    func7b398 [$8007b398]
-            A1 = A2 & 00ff;
-            8007F7B8	j      L7ff10 [$8007ff10]
-            8007F7BC	nop
-        }
-        break;
-
-        case 15:
-        {
-            A0 = S0;
-            8007F7C4	jal    func7b3e0 [$8007b3e0]
-            A1 = A2 & 00ff;
-            8007F7CC	j      L7ff10 [$8007ff10]
-            8007F7D0	nop
-        }
-        break;
-
-        case 16:
-        {
-            A0 = S0;
-            8007F7D8	jal    func7b424 [$8007b424]
-            A1 = A2 & 00ff;
-            8007F7E0	j      L7ff10 [$8007ff10]
-            8007F7E4	nop
-        }
-        break;
-
-        case 17:
-        {
-            A0 = S0;
-            8007F7EC	jal    func7b468 [$8007b468]
-            A1 = A2 & 00ff;
-            8007F7F4	j      L7ff10 [$8007ff10]
-            8007F7F8	nop
-        }
-        break;
-
-        case 18:
-        {
-            A0 = S0;
-            8007F800	jal    func7b4ac [$8007b4ac]
-            A1 = A2 & 00ff;
-            8007F808	j      L7ff10 [$8007ff10]
-            8007F80C	nop
-        }
-        break;
-
-        case 19:
-        {
-            A0 = S0;
-            8007F814	jal    func7b50c [$8007b50c]
-            A1 = A2 & 00ff;
-            8007F81C	j      L7ff10 [$8007ff10]
-            8007F820	nop
-        }
-        break;
-
-        case 1a:
-        {
-            A0 = S0;
-            8007F828	jal    func7b564 [$8007b564]
-            A1 = A2 & 00ff;
-            8007F830	j      L7ff10 [$8007ff10]
-            8007F834	nop
-        }
-        break;
-
-        case 1b:
-        {
-            A0 = S0;
-            8007F83C	jal    func7b5d0 [$8007b5d0]
-            A1 = A2 & 00ff;
-            8007F844	j      L7ff10 [$8007ff10]
-            8007F848	nop
-        }
-        break;
-
-        case 1c:
-        {
-            A0 = S0;
-            8007F850	jal    func7b620 [$8007b620]
-            A1 = A2 & 00ff;
-            8007F858	j      L7ff10 [$8007ff10]
-            8007F85C	nop
-        }
-        break;
-
-        case 1d:
-        {
-            A0 = S0;
-            8007F864	jal    func7b670 [$8007b670]
-            A1 = A2 & 00ff;
-            8007F86C	j      L7ff10 [$8007ff10]
-            8007F870	nop
-        }
-        break;
-
-        case 1e:
-        {
-            A0 = S0;
-            8007F878	jal    func7b6b4 [$8007b6b4]
-            A1 = A2 & 00ff;
-            8007F880	j      L7ff10 [$8007ff10]
-            8007F884	nop
-        }
-        break;
-
-        case 1f:
-        {
-            A0 = S0;
-            8007F88C	jal    func7b6f8 [$8007b6f8]
-            A1 = A2 & 00ff;
-            8007F894	j      L7ff10 [$8007ff10]
-            8007F898	nop
-        }
-        break;
-
-        case 20:
-        {
-            A0 = S0;
-            8007F8A0	jal    func7b73c [$8007b73c]
-            A1 = A2 & 00ff;
-            8007F8A8	j      L7ff10 [$8007ff10]
-            8007F8AC	nop
-        }
-        break;
-
-    8007F8B0 // 21
-            A0 = S0;
-            8007F8B4	jal    func7b7a8 [$8007b7a8]
-            A1 = A2 & 00ff;
-            8007F8BC	j      L7ff10 [$8007ff10]
-            8007F8C0	nop
-
-    8007F8C4 // 22
-            A0 = S0;
-            8007F8C8	jal    func7b80c [$8007b80c]
-            A1 = A2 & 00ff;
-            8007F8D0	j      L7ff10 [$8007ff10]
-            8007F8D4	nop
-
-    8007F8D8 // 23
-            A0 = S0;
-            8007F8DC	jal    func7b87c [$8007b87c]
-            A1 = A2 & 00ff;
-            8007F8E4	j      L7ff10 [$8007ff10]
-            8007F8E8	nop
-
-    8007F8EC // 24
-            A0 = S0;
-            8007F8F0	jal    func7b8d8 [$8007b8d8]
-            A1 = A2 & 00ff;
-            8007F8F8	j      L7ff10 [$8007ff10]
-            8007F8FC	nop
-
-    8007F900 // 25
-            A0 = S0;
-            8007F904	jal    func7b934 [$8007b934]
-            A1 = A2 & 00ff;
-            8007F90C	j      L7ff10 [$8007ff10]
-            8007F910	nop
-
-    8007F914 // 26
-            A0 = S0;
-            8007F918	jal    func7b984 [$8007b984]
-            A1 = A2 & 00ff;
-            8007F920	j      L7ff10 [$8007ff10]
-            8007F924	nop
-
-    8007F928 // 27
-            A0 = S0;
-            8007F92C	jal    func7b9d4 [$8007b9d4]
-            A1 = A2 & 00ff;
-            8007F934	j      L7ff10 [$8007ff10]
-            8007F938	nop
-
-    8007F93C // 28
-            A0 = S0;
-            8007F940	jal    func7ba24 [$8007ba24]
-            A1 = A2 & 00ff;
-            8007F948	j      L7ff10 [$8007ff10]
-            8007F94C	nop
-
-    8007F950 // 29
-            A0 = S0;
-            8007F954	jal    func7ba58 [$8007ba58]
-            A1 = A2 & 00ff;
-            8007F95C	j      L7ff10 [$8007ff10]
-            8007F960	nop
-
-    8007F964 // 2a
-            A0 = S0;
-            8007F968	jal    func7ba98 [$8007ba98]
-            A1 = A2 & 00ff;
-            8007F970	j      L7ff10 [$8007ff10]
-            8007F974	nop
-
-    8007F978 // 2b
-            A0 = S0;
-            A1 = A2 & 00ff;
-            8007F980	jal    func7bb2c [$8007bb2c]
-            A2 = S1 & 00ff;
-            8007F988	j      L7ff10 [$8007ff10]
-            S1 = V0;
-
-    8007F990 // 2c
-            A0 = S0;
-            8007F994	jal    func7bbec [$8007bbec]
-            A1 = A2 & 00ff;
-            8007F99C	j      L7ff10 [$8007ff10]
-            8007F9A0	nop
-
-    8007F9A4 // 2d
-            A0 = S0;
-            A1 = A2 & 00ff;
-            8007F9AC	jal    func7bc7c [$8007bc7c]
-            A2 = S1 & 00ff;
-            8007F9B4	j      L7ff10 [$8007ff10]
-            S1 = V0;
-
-    8007F9BC // 2e
-            A0 = S0;
-            8007F9C0	jal    func7bd34 [$8007bd34]
-            A1 = A2 & 00ff;
-            8007F9C8	j      L7ff10 [$8007ff10]
-            8007F9CC	nop
-
-    8007F9D0 // 2f
-            A0 = S0;
-            A1 = A2 & 00ff;
-            8007F9D8	jal    func7be24 [$8007be24]
-            A2 = S1 & 00ff;
-            8007F9E0	j      L7ff10 [$8007ff10]
-            S1 = V0;
-
-    8007F9E8 // 30
-            A0 = S0;
-            8007F9EC	jal    func7bf48 [$8007bf48]
-            A1 = A2 & 00ff;
-            8007F9F4	j      L7ff10 [$8007ff10]
-            8007F9F8	nop
-
-    8007F9FC // 31
-            A0 = S0;
-            8007FA00	jal    func7bf88 [$8007bf88]
-            A1 = A2 & 00ff;
-            8007FA08	j      L7ff10 [$8007ff10]
-            8007FA0C	nop
-
-    8007FA10 // 32
-            A0 = S0;
-            8007FA14	jal    func7bfcc [$8007bfcc]
-            A1 = A2 & 00ff;
-            8007FA1C	j      L7ff10 [$8007ff10]
-            8007FA20	nop
-
-    8007FA24 // 33
-            A0 = S0;
-            8007FA28	jal    func7c000 [$8007c000]
-            A1 = A2 & 00ff;
-            8007FA30	j      L7ff10 [$8007ff10]
-            8007FA34	nop
-
-    8007FA38 // 34
-            A0 = S0;
-            8007FA3C	jal    func7c03c [$8007c03c]
-            A1 = A2 & 00ff;
-            8007FA44	j      L7ff10 [$8007ff10]
-            8007FA48	nop
-
-    8007FA4C // 35
-            A0 = S0;
-            8007FA50	jal    func7c078 [$8007c078]
-            A1 = A2 & 00ff;
-            8007FA58	j      L7ff10 [$8007ff10]
-            8007FA5C	nop
-
-    8007FA60 // 36
-            A0 = S0;
-            8007FA64	jal    func7c0b8 [$8007c0b8]
-            A1 = A2 & 00ff;
-            8007FA6C	j      L7ff10 [$8007ff10]
-            8007FA70	nop
-
-    8007FA74 // 37
-            8007FA74	jal    func7c0fc [$8007c0fc]
-            A0 = A2 & 00ff;
-            8007FA7C	j      L7ff10 [$8007ff10]
-            8007FA80	nop
-
-    8007FA84 // 38
-            8007FA84	jal    func7c12c [$8007c12c]
-            A0 = A2 & 00ff;
-            8007FA8C	j      L7ff10 [$8007ff10]
-            8007FA90	nop
-
-    8007FA94 // 39
-            A0 = S0;
-            8007FA98	jal    func7c15c [$8007c15c]
-            A1 = A2 & 00ff;
-            8007FAA0	j      L7ff10 [$8007ff10]
-            8007FAA4	nop
-
-    8007FAA8 // 3a
-            A0 = S0;
-            8007FAAC	jal    func7c1a0 [$8007c1a0]
-            A1 = A2 & 00ff;
-            8007FAB4	j      L7ff10 [$8007ff10]
-            8007FAB8	nop
-
-    8007FABC // 3b
-            A0 = S0;
-            8007FAC0	jal    func7c1e4 [$8007c1e4]
-            A1 = A2 & 00ff;
-            8007FAC8	j      L7ff10 [$8007ff10]
-            8007FACC	nop
-
-    8007FAD0 // 3c
-            A0 = S0;
-            8007FAD4	jal    func7c24c [$8007c24c]
-            A1 = A2 & 00ff;
-            8007FADC	j      L7ff10 [$8007ff10]
-            8007FAE0	nop
-
-    8007FAE4 // 3d
-            A0 = S0;
-            8007FAE8	jal    func7c2b4 [$8007c2b4]
-            A2 = S1 & 00ff;
-            8007FAF0	j      L7ff10 [$8007ff10]
-            8007FAF4	nop
-
-        case 0x3E:
-        {
-            A0 = S0;
-            A1 = A2 & FF;
-            battle_ai_3E_get_random;
-
-            8007FB04	j      L7ff10 [$8007ff10]
-        }
-        break;
-
-8007FB0C // 3f
-        A0 = S0;
+        A0 = address;
+        A1 = action_queue_id;
+        battle_ai_script_01_set_action_value();
+        action_queue_id = V0;
+
+        8007F640	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 02:
+    {
+        A0 = address;
+        A1 = unit_id;
+        A2 = action_queue_id;
+        func7aee8();
+
+        8007F658	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 03:
+    {
+        A0 = address;
+        A1 = 800d257c;
+        func7af28();
+
+        8007F668	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 04:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7af74();
+
+        8007F67C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 05:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7afa0();
+
+        8007F690	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 06:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7afdc();
+
+        8007F6A4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 07:
+    {
+        A0 = address;
+        func7b01c();
+
+        8007F6B4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 08:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7b044();
+
+        8007F6C8	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 09:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7b090();
+
+        8007F6DC	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 0a:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7b0d4();
+
+        8007F6F0	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 0b:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7b12c();
+
+        8007F704	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 0c:
+    {
+        A0 = address;
+        A1 = unit_id;
+        battle_ai_0C_mod();
+
+        8007F718	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 0d:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7b1a4();
+
+        8007F72C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 0e:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7b1dc();
+
+        8007F740	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 0f:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7b214();
+
+        8007F754	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 10:
+    {
+        A0 = address;
+        8007F760	jal    func7b24c [$8007b24c]
+        A1 = unit_id & 00ff;
+        8007F768	j      L7ff10 [$8007ff10]
+        8007F76C	nop
+    }
+    break;
+
+    case 11:
+    {
+        A0 = address;
+        8007F774	jal    func7b2a4 [$8007b2a4]
+        A1 = unit_id & 00ff;
+        8007F77C	j      L7ff10 [$8007ff10]
+        8007F780	nop
+    }
+    break;
+
+    case 12:
+    {
+        A0 = address;
+        8007F788	jal    func7b2f4 [$8007b2f4]
+        A1 = unit_id & 00ff;
+        8007F790	j      L7ff10 [$8007ff10]
+        8007F794	nop
+    }
+    break;
+
+    case 13:
+    {
+        A0 = address;
+        8007F79C	jal    func7b350 [$8007b350]
+        A1 = unit_id & 00ff;
+        8007F7A4	j      L7ff10 [$8007ff10]
+        8007F7A8	nop
+    }
+    break;
+
+    case 14:
+    {
+        A0 = address;
+        8007F7B0	jal    func7b398 [$8007b398]
+        A1 = unit_id & 00ff;
+        8007F7B8	j      L7ff10 [$8007ff10]
+        8007F7BC	nop
+    }
+    break;
+
+    case 15:
+    {
+        A0 = address;
+        8007F7C4	jal    func7b3e0 [$8007b3e0]
+        A1 = unit_id & 00ff;
+        8007F7CC	j      L7ff10 [$8007ff10]
+        8007F7D0	nop
+    }
+    break;
+
+    case 16:
+    {
+        A0 = address;
+        8007F7D8	jal    func7b424 [$8007b424]
+        A1 = unit_id & 00ff;
+        8007F7E0	j      L7ff10 [$8007ff10]
+        8007F7E4	nop
+    }
+    break;
+
+    case 17:
+    {
+        A0 = address;
+        8007F7EC	jal    func7b468 [$8007b468]
+        A1 = unit_id & 00ff;
+        8007F7F4	j      L7ff10 [$8007ff10]
+        8007F7F8	nop
+    }
+    break;
+
+    case 18:
+    {
+        A0 = address;
+        8007F800	jal    func7b4ac [$8007b4ac]
+        A1 = unit_id & 00ff;
+        8007F808	j      L7ff10 [$8007ff10]
+        8007F80C	nop
+    }
+    break;
+
+    case 19:
+    {
+        A0 = address;
+        8007F814	jal    func7b50c [$8007b50c]
+        A1 = unit_id & 00ff;
+        8007F81C	j      L7ff10 [$8007ff10]
+        8007F820	nop
+    }
+    break;
+
+    case 1a:
+    {
+        A0 = address;
+        8007F828	jal    func7b564 [$8007b564]
+        A1 = unit_id & 00ff;
+        8007F830	j      L7ff10 [$8007ff10]
+        8007F834	nop
+    }
+    break;
+
+    case 1b:
+    {
+        A0 = address;
+        8007F83C	jal    func7b5d0 [$8007b5d0]
+        A1 = unit_id & 00ff;
+        8007F844	j      L7ff10 [$8007ff10]
+        8007F848	nop
+    }
+    break;
+
+    case 1c:
+    {
+        A0 = address;
+        8007F850	jal    func7b620 [$8007b620]
+        A1 = unit_id & 00ff;
+        8007F858	j      L7ff10 [$8007ff10]
+        8007F85C	nop
+    }
+    break;
+
+    case 1d:
+    {
+        A0 = address;
+        8007F864	jal    func7b670 [$8007b670]
+        A1 = unit_id & 00ff;
+        8007F86C	j      L7ff10 [$8007ff10]
+        8007F870	nop
+    }
+    break;
+
+    case 1e:
+    {
+        A0 = address;
+        8007F878	jal    func7b6b4 [$8007b6b4]
+        A1 = unit_id & 00ff;
+        8007F880	j      L7ff10 [$8007ff10]
+        8007F884	nop
+    }
+    break;
+
+    case 1f:
+    {
+        A0 = address;
+        8007F88C	jal    func7b6f8 [$8007b6f8]
+        A1 = unit_id & 00ff;
+        8007F894	j      L7ff10 [$8007ff10]
+        8007F898	nop
+    }
+    break;
+
+    case 20:
+    {
+        A0 = address;
+        8007F8A0	jal    func7b73c [$8007b73c]
+        A1 = unit_id & 00ff;
+        8007F8A8	j      L7ff10 [$8007ff10]
+        8007F8AC	nop
+    }
+    break;
+
+    case 21:
+    {
+        A0 = address;
+        8007F8B4	jal    func7b7a8 [$8007b7a8]
+        A1 = unit_id & 00ff;
+        8007F8BC	j      L7ff10 [$8007ff10]
+        8007F8C0	nop
+    }
+    break;
+
+    case 22:
+    {
+        A0 = address;
+        8007F8C8	jal    func7b80c [$8007b80c]
+        A1 = unit_id & 00ff;
+        8007F8D0	j      L7ff10 [$8007ff10]
+        8007F8D4	nop
+    }
+    break;
+
+    case 23:
+    {
+        A0 = address;
+        8007F8DC	jal    func7b87c [$8007b87c]
+        A1 = unit_id & 00ff;
+        8007F8E4	j      L7ff10 [$8007ff10]
+        8007F8E8	nop
+    }
+    break;
+
+    case 24:
+    {
+        A0 = address;
+        8007F8F0	jal    func7b8d8 [$8007b8d8]
+        A1 = unit_id & 00ff;
+        8007F8F8	j      L7ff10 [$8007ff10]
+        8007F8FC	nop
+    }
+    break;
+
+    case 25:
+    {
+        A0 = address;
+        8007F904	jal    func7b934 [$8007b934]
+        A1 = unit_id & 00ff;
+        8007F90C	j      L7ff10 [$8007ff10]
+        8007F910	nop
+    }
+    break;
+
+    case 26:
+    {
+        A0 = address;
+        8007F918	jal    func7b984 [$8007b984]
+        A1 = unit_id & 00ff;
+        8007F920	j      L7ff10 [$8007ff10]
+        8007F924	nop
+    }
+    break;
+
+    case 27:
+    {
+        A0 = address;
+        8007F92C	jal    func7b9d4 [$8007b9d4]
+        A1 = unit_id & 00ff;
+        8007F934	j      L7ff10 [$8007ff10]
+        8007F938	nop
+    }
+    break;
+
+    case 28:
+    {
+        A0 = address;
+        8007F940	jal    func7ba24 [$8007ba24]
+        A1 = unit_id & 00ff;
+        8007F948	j      L7ff10 [$8007ff10]
+        8007F94C	nop
+    }
+    break;
+
+    case 29:
+    {
+        A0 = address;
+        8007F954	jal    func7ba58 [$8007ba58]
+        A1 = unit_id & 00ff;
+        8007F95C	j      L7ff10 [$8007ff10]
+        8007F960	nop
+    }
+    break;
+
+    case 2a:
+    {
+        A0 = address;
+        8007F968	jal    func7ba98 [$8007ba98]
+        A1 = unit_id & 00ff;
+        8007F970	j      L7ff10 [$8007ff10]
+        8007F974	nop
+    }
+    break;
+
+    case 2b:
+    {
+        A0 = address;
+        A1 = unit_id & 00ff;
+        8007F980	jal    func7bb2c [$8007bb2c]
+        A2 = action_queue_id & 00ff;
+        8007F988	j      L7ff10 [$8007ff10]
+        action_queue_id = V0;
+    }
+    break;
+
+    case 2c:
+    {
+        A0 = address;
+        8007F994	jal    func7bbec [$8007bbec]
+        A1 = unit_id & 00ff;
+        8007F99C	j      L7ff10 [$8007ff10]
+        8007F9A0	nop
+    }
+    break;
+
+    case 2d:
+    {
+        A0 = address;
+        A1 = unit_id & 00ff;
+        8007F9AC	jal    func7bc7c [$8007bc7c]
+        A2 = action_queue_id & 00ff;
+        8007F9B4	j      L7ff10 [$8007ff10]
+        action_queue_id = V0;
+    }
+    break;
+
+    case 2e:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007F9C0	jal    func7bd34 [$8007bd34]
+
+        8007F9C8	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 2f:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007F9D8	jal    func7be24 [$8007be24]
+        A2 = action_queue_id & 00ff;
+
+        8007F9E0	j      L7ff10 [$8007ff10]
+        action_queue_id = V0;
+    }
+    break;
+
+    case 30:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007F9EC	jal    func7bf48 [$8007bf48]
+
+        8007F9F4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 31:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FA00	jal    func7bf88 [$8007bf88]
+
+        8007FA08	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 32:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FA14	jal    func7bfcc [$8007bfcc]
+
+        8007FA1C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 33:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FA28	jal    func7c000 [$8007c000]
+
+        8007FA30	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 34:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FA3C	jal    func7c03c [$8007c03c]
+
+        8007FA44	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 35:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FA50	jal    func7c078 [$8007c078]
+
+        8007FA58	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 36:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FA64	jal    func7c0b8 [$8007c0b8]
+
+        8007FA6C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 37:
+    {
+        A0 = unit_id;
+        8007FA74	jal    func7c0fc [$8007c0fc]
+
+        8007FA7C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 38:
+    {
+        A0 = unit_id;
+        8007FA84	jal    func7c12c [$8007c12c]
+
+        8007FA8C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 39:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FA98	jal    func7c15c [$8007c15c]
+
+        8007FAA0	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 3a:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FAAC	jal    func7c1a0 [$8007c1a0]
+
+        8007FAB4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 3b:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FAC0	jal    func7c1e4 [$8007c1e4]
+
+        8007FAC8	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 3c:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FAD4	jal    func7c24c [$8007c24c]
+
+        8007FADC	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 3d:
+    {
+        A0 = address;
+        A2 = action_queue_id & 00ff;
+        8007FAE8	jal    func7c2b4 [$8007c2b4]
+
+        8007FAF0	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 3e:
+    {
+        A0 = address;
+        A1 = unit_id;
+        battle_ai_3E_get_random();
+
+        8007FB04	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 3f:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FB10	jal    func7c35c [$8007c35c]
-        A1 = A2 & 00ff;
+
         8007FB18	j      L7ff10 [$8007ff10]
-        8007FB1C	nop
+    }
+    break;
 
-        case 0x40
-        {
-            A0 = S0;
-            A1 = A2 & FF;
-            func7c3d0;
+    case 40:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7c3d0();
 
-            8007FB2C	j      L7ff10 [$8007ff10]
-        }
-        break;
+        8007FB2C	j      L7ff10 [$8007ff10]
+    }
+    break;
 
-        case 0x41:
-        {
-            A0 = S0;
-            A1 = A2 & FF;
-            func7c51c;
+    case 41:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7c51c();
 
-            8007FB40	j      L7ff10 [$8007ff10]
-        }
-        break;
+        8007FB40	j      L7ff10 [$8007ff10]
+    }
+    break;
 
-8007FB48 // 42
-        A0 = S0;
+    case 42:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FB4C	jal    func7c6b4 [$8007c6b4]
-        A1 = A2 & 00ff;
+
         8007FB54	j      L7ff10 [$8007ff10]
-        8007FB58	nop
+    }
+    break;
 
-8007FB5C // 43
-        A0 = S0;
+    case 43:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FB60	jal    func7c818 [$8007c818]
-        A1 = A2 & 00ff;
+
         8007FB68	j      L7ff10 [$8007ff10]
-        8007FB6C	nop
+    }
+    break;
 
-8007FB70 // 44
-        A0 = S0;
+    case 44:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FB74	jal    func7c9b0 [$8007c9b0]
-        A1 = A2 & 00ff;
+
         8007FB7C	j      L7ff10 [$8007ff10]
-        8007FB80	nop
+    }
+    break;
 
-8007FB84 // 45
-        A0 = S0;
+    case 45:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FB88	jal    func7cb14 [$8007cb14]
-        A1 = A2 & 00ff;
+
         8007FB90	j      L7ff10 [$8007ff10]
-        8007FB94	nop
+    }
+    break;
 
-8007FB98 // 46
-        A0 = S0;
+    case 46:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FB9C	jal    func7cbf4 [$8007cbf4]
-        A1 = A2 & 00ff;
+
         8007FBA4	j      L7ff10 [$8007ff10]
-        8007FBA8	nop
+    }
+    break;
 
-8007FBAC // 47
-        A0 = S0;
+    case 47:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FBB0	jal    func7ccec [$8007ccec]
-        A1 = A2 & 00ff;
+
         8007FBB8	j      L7ff10 [$8007ff10]
-        8007FBBC	nop
+    }
+    break;
 
-8007FBC0 // 48
-        A0 = S0;
+    case 48:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FBC4	jal    func7cdd0 [$8007cdd0]
-        A1 = A2 & 00ff;
+
         8007FBCC	j      L7ff10 [$8007ff10]
-        8007FBD0	nop
+    }
+    break;
 
-8007FBD4 // 49
-        A0 = S0;
+    case 49:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FBD8	jal    func7ceb4 [$8007ceb4]
-        A1 = A2 & 00ff;
+
         8007FBE0	j      L7ff10 [$8007ff10]
-        8007FBE4	nop
+    }
+    break;
 
-        case 0x4A:
-        {
-            A0 = S0;
-            A1 = A2 & FF;
-            func7d048;
+    case 4a:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7d048;
 
-            8007FBF4	j      L7ff10 [$8007ff10]
-        }
-        break;
+        8007FBF4	j      L7ff10 [$8007ff10]
+    }
+    break;
 
-8007FBFC // 4b
-        A0 = S0;
+    case 4b:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FC00	jal    func7d194 [$8007d194]
-        A1 = A2 & 00ff;
+
         8007FC08	j      L7ff10 [$8007ff10]
-        8007FC0C	nop
+    }
+    break;
 
-8007FC10 // 4c
-        A0 = S0;
+    case 4c:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FC14	jal    func7d2c4 [$8007d2c4]
-        A1 = A2 & 00ff;
+
         8007FC1C	j      L7ff10 [$8007ff10]
-        8007FC20	nop
+    }
+    break;
 
-8007FC24 // 4d
-        A0 = S0;
+    case 4d:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FC28	jal    func7d384 [$8007d384]
-        A1 = A2 & 00ff;
+
         8007FC30	j      L7ff10 [$8007ff10]
-        8007FC34	nop
+    }
+    break;
 
-8007FC38 // 4e
-        A0 = S0;
+    case 4e:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FC3C	jal    func7d444 [$8007d444]
-        A1 = A2 & 00ff;
+
         8007FC44	j      L7ff10 [$8007ff10]
-        8007FC48	nop
+    }
+    break;
 
-8007FC4C // 4f
-        A0 = S0;
+    case 4f:
+    {
+        A0 = address;
+        A1 = unit_id;
         8007FC50	jal    func7d518 [$8007d518]
-        A1 = A2 & 00ff;
+
         8007FC58	j      L7ff10 [$8007ff10]
-        8007FC5C	nop
+    }
+    break;
 
-        case 0x50:
-        {
-            A0 = S0;
-            A1 = A2 & ff;
-            func7d62c();
+    case 50:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7d62c();
 
-            8007FC6C	j      L7ff10 [$8007ff10]
-
-        }
-        break;
-
-8007FC74 // 51
-        A0 = S0;
-        8007FC78	jal    func7d740 [$8007d740]
-        A1 = A2 & 00ff;
-        8007FC80	j      L7ff10 [$8007ff10]
-        8007FC84	nop
-
-        case 0x52:
-        {
-            A0 = S0;
-            A1 = A2 & ff;
-            A2 = S1 & ff;
-            func7d7bc();
-
-            8007FC98	j      L7ff10 [$8007ff10]
-        }
-        break;
-
-8007FCA0 // 53
-        A0 = S0;
-        8007FCA4	jal    func7d81c [$8007d81c]
-        A1 = A2 & 00ff;
-        8007FCAC	j      L7ff10 [$8007ff10]
-        8007FCB0	nop
-
-8007FCB4 // 54
-        A0 = S0;
-        8007FCB8	jal    func7d850 [$8007d850]
-        A1 = A2 & 00ff;
-        8007FCC0	j      L7ff10 [$8007ff10]
-        8007FCC4	nop
-
-8007FCC8 // 55
-        A0 = S0;
-        8007FCCC	jal    func7d980 [$8007d980]
-        A1 = A2 & 00ff;
-        8007FCD4	j      L7ff10 [$8007ff10]
-        8007FCD8	nop
-
-8007FCDC // 56
-        A0 = S0;
-        8007FCE0	jal    func7d9b8 [$8007d9b8]
-        A1 = A2 & 00ff;
-        8007FCE8	j      L7ff10 [$8007ff10]
-        8007FCEC	nop
-
-8007FCF0 // 57
-        A0 = S0;
-        8007FCF4	jal    func7daec [$8007daec]
-        A1 = A2 & 00ff;
-        8007FCFC	j      L7ff10 [$8007ff10]
-        8007FD00	nop
-
-8007FD04 // 58
-        A0 = S0;
-        8007FD08	jal    func7dc24 [$8007dc24]
-        A1 = A2 & 00ff;
-        8007FD10	j      L7ff10 [$8007ff10]
-        8007FD14	nop
-
-8007FD18 // 59
-        A0 = S0;
-        8007FD1C	jal    func7dc84 [$8007dc84]
-        A1 = A2 & 00ff;
-        8007FD24	j      L7ff10 [$8007ff10]
-        8007FD28	nop
-
-8007FD2C // 5a
-        A0 = S0;
-        8007FD30	jal    func7dd1c [$8007dd1c]
-        A1 = A2 & 00ff;
-        8007FD38	j      L7ff10 [$8007ff10]
-        8007FD3C	nop
-
-8007FD40 // 5b
-        A0 = S0;
-        8007FD44	jal    func7de28 [$8007de28]
-        A1 = A2 & 00ff;
-        8007FD4C	j      L7ff10 [$8007ff10]
-        8007FD50	nop
-
-8007FD54 // 5c
-        A0 = S0;
-        8007FD58	jal    func7df34 [$8007df34]
-        A1 = A2 & 00ff;
-        8007FD60	j      L7ff10 [$8007ff10]
-        8007FD64	nop
-
-8007FD68 // 5d
-        A0 = S0;
-        8007FD6C	jal    func7e090 [$8007e090]
-        A1 = A2 & 00ff;
-        8007FD74	j      L7ff10 [$8007ff10]
-        8007FD78	nop
-
-8007FD7C // 5e
-        A0 = S0;
-        8007FD80	jal    func7e1ec [$8007e1ec]
-        A1 = A2 & 00ff;
-        8007FD88	j      L7ff10 [$8007ff10]
-        8007FD8C	nop
-
-8007FD90 // 5f
-        A0 = S0;
-        8007FD94	jal    func7e36c [$8007e36c]
-        A1 = A2 & 00ff;
-        8007FD9C	j      L7ff10 [$8007ff10]
-        8007FDA0	nop
-
-8007FDA4 // 60
-        A0 = S0;
-        8007FDA8	jal    func7e4ec [$8007e4ec]
-        A1 = A2 & 00ff;
-        8007FDB0	j      L7ff10 [$8007ff10]
-        8007FDB4	nop
-
-8007FDB8 // 61
-        A0 = S0;
-        8007FDBC	jal    func7e648 [$8007e648]
-        A1 = A2 & 00ff;
-        8007FDC4	j      L7ff10 [$8007ff10]
-        8007FDC8	nop
-
-8007FDCC // 63
-        A0 = S0;
-        8007FDD0	jal    func7e7c8 [$8007e7c8]
-        A1 = A2 & 00ff;
-        8007FDD8	j      L7ff10 [$8007ff10]
-        8007FDDC	nop
-
-        case 0x64:
-        {
-            A0 = S0;
-            A1 = A2 & ff;
-            func7e844();
-
-            8007FDEC	j      L7ff10 [$8007ff10]
-        }
-        break;
-
-8007FDF4 // 65
-        A0 = S0;
-        8007FDF8	jal    func7e8a8 [$8007e8a8]
-        A1 = A2 & 00ff;
-        8007FE00	j      L7ff10 [$8007ff10]
-        8007FE04	nop
-
-8007FE08 // 66
-        A0 = S0;
-        8007FE0C	jal    func7e9a8 [$8007e9a8]
-        A1 = A2 & 00ff;
-        8007FE14	j      L7ff10 [$8007ff10]
-        8007FE18	nop
-
-8007FE1C // 67
-        A0 = S0;
-        8007FE20	jal    func7eaac [$8007eaac]
-        A1 = A2 & 00ff;
-        8007FE28	j      L7ff10 [$8007ff10]
-        8007FE2C	nop
-
-8007FE30 // 68
-        A0 = S0;
-        8007FE34	jal    func7ebc8 [$8007ebc8]
-        A1 = A2 & 00ff;
-        8007FE3C	j      L7ff10 [$8007ff10]
-        8007FE40	nop
-
-8007FE44 // 69
-        8007FE44	jal    func7ece8 [$8007ece8]
-        A0 = A2 & 00ff;
-        8007FE4C	j      L7ff10 [$8007ff10]
-        8007FE50	nop
-
-8007FE54 // 6a
-        A0 = S0;
-        8007FE58	jal    func7ed14 [$8007ed14]
-        A1 = A2 & 00ff;
-        8007FE60	j      L7ff10 [$8007ff10]
-        8007FE64	nop
-
-8007FE68 // 6b
-        A0 = S0;
-        8007FE6C	jal    func7ed64 [$8007ed64]
-        A1 = A2 & 00ff;
-        8007FE74	j      L7ff10 [$8007ff10]
-        8007FE78	nop
-
-8007FE7C // 6c
-        A0 = S0;
-        8007FE80	jal    func7edb4 [$8007edb4]
-        A1 = A2 & 00ff;
-        8007FE88	j      L7ff10 [$8007ff10]
-        8007FE8C	nop
-
-8007FE90 // 6d
-        A0 = S0;
-        8007FE94	jal    func7edf4 [$8007edf4]
-        A1 = A2 & 00ff;
-        8007FE9C	j      L7ff10 [$8007ff10]
-        8007FEA0	nop
-
-8007FEA4 // 70
-        8007FEA4	jal    func7ee34 [$8007ee34]
-        A0 = S0;
-        8007FEAC	j      L7ff10 [$8007ff10]
-        8007FEB0	nop
-
-8007FEB4 // 71
-        A0 = S0;
-        8007FEB8	jal    func7ee58 [$8007ee58]
-        A1 = A2 & 00ff;
-        8007FEC0	j      L7ff10 [$8007ff10]
-        8007FEC4	nop
-
-8007FEC8 // 72
-        8007FEC8	jal    func7ef20 [$8007ef20]
-        A0 = S0;
-        8007FED0	j      L7ff10 [$8007ff10]
-        8007FED4	nop
-
-8007FED8 // 73
-        A0 = S0;
-        8007FEDC	jal    func7ef54 [$8007ef54]
-        A1 = A2 & 00ff;
-        8007FEE4	j      L7ff10 [$8007ff10]
-        8007FEE8	nop
-
-8007FEEC // 74
-        8007FEEC	jal    func7efa8 [$8007efa8]
-        8007FEF0	nop
-        8007FEF4	j      L7ff10 [$8007ff10]
-        8007FEF8	nop
-
-
-8007FEFC // 6e 6f
-8007FF10 // 62
+        8007FC6C	j      L7ff10 [$8007ff10]
 
     }
+    break;
+
+    case 51:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FC78	jal    func7d740 [$8007d740]
+
+        8007FC80	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 52:
+    {
+        A0 = address;
+        A1 = unit_id;
+        A2 = action_queue_id;
+        func7d7bc();
+
+        8007FC98	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 53:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FCA4	jal    func7d81c [$8007d81c]
+
+        8007FCAC	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 54:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FCB8	jal    func7d850 [$8007d850]
+
+        8007FCC0	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 55:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FCCC	jal    func7d980 [$8007d980]
+
+        8007FCD4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 56:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FCE0	jal    func7d9b8 [$8007d9b8]
+
+        8007FCE8	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 57:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FCF4	jal    func7daec [$8007daec]
+
+        8007FCFC	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 58:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD08	jal    func7dc24 [$8007dc24]
+
+        8007FD10	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 59:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD1C	jal    func7dc84 [$8007dc84]
+
+        8007FD24	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 5a:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD30	jal    func7dd1c [$8007dd1c]
+
+        8007FD38	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 5b:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD44	jal    func7de28 [$8007de28]
+
+        8007FD4C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 5c:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD58	jal    func7df34 [$8007df34]
+
+        8007FD60	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 5d:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD6C	jal    func7e090 [$8007e090]
+
+        8007FD74	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 5e:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD80	jal    func7e1ec [$8007e1ec]
+
+        8007FD88	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 5f:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FD94	jal    func7e36c [$8007e36c]
+
+        8007FD9C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 60:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FDA8	jal    func7e4ec [$8007e4ec]
+
+        8007FDB0	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 61:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FDBC	jal    func7e648 [$8007e648]
+
+        8007FDC4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 62:
+    {
+        8007FEF4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 63:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FDD0	jal    func7e7c8 [$8007e7c8]
+
+        8007FDD8	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 64:
+    {
+        A0 = address;
+        A1 = unit_id;
+        func7e844();
+
+        8007FDEC	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 65:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FDF8	jal    func7e8a8 [$8007e8a8]
+
+        8007FE00	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 66:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FE0C	jal    func7e9a8 [$8007e9a8]
+
+        8007FE14	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 67:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FE20	jal    func7eaac [$8007eaac]
+
+        8007FE28	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 68:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FE34	jal    func7ebc8 [$8007ebc8]
+
+        8007FE3C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 69:
+    {
+        A0 = unit_id;
+        8007FE44	jal    func7ece8 [$8007ece8]
+
+        8007FE4C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 6a:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FE58	jal    func7ed14 [$8007ed14]
+
+        8007FE60	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 6b:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FE6C	jal    func7ed64 [$8007ed64]
+
+        8007FE74	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 6c:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FE80	jal    func7edb4 [$8007edb4]
+
+        8007FE88	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 6d:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FE94	jal    func7edf4 [$8007edf4]
+
+        8007FE9C	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 70:
+    {
+        A0 = address;
+        8007FEA4	jal    func7ee34 [$8007ee34]
+
+        8007FEAC	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 71:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FEB8	jal    func7ee58 [$8007ee58]
+
+        8007FEC0	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 72:
+    {
+        A0 = address;
+        8007FEC8	jal    func7ef20 [$8007ef20]
+
+        8007FED0	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 73:
+    {
+        A0 = address;
+        A1 = unit_id;
+        8007FEDC	jal    func7ef54 [$8007ef54]
+
+        8007FEE4	j      L7ff10 [$8007ff10]
+    }
+    break;
+
+    case 74:
+    {
+        8007FEEC	jal    func7efa8 [$8007efa8]
+
+        8007FEF4	j      L7ff10 [$8007ff10]
+    }
+    break;
 }
 
-L7fefc:	; 8007FEFC
-A0 = S0;
-A2 = A2 & 00ff;
+A0 = address;
+A2 = unit_id;
+A3 = action_queue_id & ff;
 8007FF04	jal    func7ae30 [$8007ae30]
-A3 = S1 & 00ff;
-S1 = V0;
+
+action_queue_id = V0;
 
 L7ff10:	; 8007FF10
-A0 = S0;
+A0 = address;
 battle_ai_script_move_pointer_4();
 
-return S1;
+return action_queue_id;
 ////////////////////////////////
 
 
@@ -16525,8 +16713,8 @@ end = 0;
 res = 0;
 
 L7ff64:	; 8007FF64
-    V0 = w[address]; // opcode address
-    opcode = bu[V0]; // opcode reading
+    script = w[address]; // opcode address
+    opcode = bu[script]; // opcode reading
 
     switch( opcode )
     {

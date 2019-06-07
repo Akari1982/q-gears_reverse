@@ -660,6 +660,8 @@
 
 80059918 some gpu mem set (0x100 size).
 
+80059a3c some array 0x2 size.
+
 80059a5c [][][][] init with 0xc.
     +00 [][][][] flags.
                     0x00000001 main volume left.

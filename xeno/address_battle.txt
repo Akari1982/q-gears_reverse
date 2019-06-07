@@ -78,17 +78,17 @@
 800d24ec []       array of unit exists in battle (1-3 party, 3-A enemy). (0 - no 1 - yes)
 
 800d257c attack queue array. (size 0x08 items 0x20).
-+ 00 []       action id.
-+ 04 []       in jump to unit we check if this != 1.
-+ 06 [][]     target mask.
+    +0 []       action id.
+    +4 []       in jump to unit we check if this != 1.
+    +6 [][]     target mask.
 
 800d29c1      []       array of something unit related. (size 0x08).
 
 800d2b20               array of struct with script pointers for enemy unit (index = unit_is - 3) (size 0x40).
-800d2b20 + 00 [][][][] pointer to script.
-800d2b20 + 10          variable store array (0x04 0x04).
-800d2b20 + 20          variable store array (0x08 0x02).
-800d2b20 + 30          variable store array (0x10 0x01).
+    +00 [][][][] pointer to script.
+    +10          variable store array (0x04 0x04).
+    +20          variable store array (0x08 0x02).
+    +30          variable store array (0x10 0x01).
 
 800D2e40               some data (size 0x60). read in text output finction.
 800D2e40 + 00 [][][][] pointer to some data related to string.
