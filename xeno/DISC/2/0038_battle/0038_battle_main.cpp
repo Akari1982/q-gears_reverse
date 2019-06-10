@@ -10298,208 +10298,280 @@ return S0;
 
 ////////////////////////////////
 // func7a54c
+
 A1 = A1 & 00ff;
 V0 = A1 < 0018;
 8007A554	beq    v0, zero, L7a8d4 [$8007a8d4]
 V0 = A1 << 02;
-8007A55C	lui    at, $8007
+
 AT = AT + V0;
-V0 = w[AT + f20c];
+V0 = w[8006f20c]; // 8c
 8007A568	nop
 8007A56C	jr     v0 
 8007A570	nop
 
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc40c;
-8007A590	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc45e;
-8007A5B4	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc4e8;
-8007A5D8	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc4eb;
-8007A5FC	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc460;
-8007A620	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc461;
-8007A644	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc462;
-8007A668	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc435;
-8007A68C	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc465;
-8007A6B0	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc463;
-8007A6D4	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc464;
-8007A6F8	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc466;
-8007A71C	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc467;
-8007A740	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc468;
-8007A764	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc469;
-8007A788	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc46c;
-8007A7AC	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc46d;
-8007A7D0	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc46e;
-8007A7F4	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc46f;
-8007A818	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc544;
-8007A83C	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc4be;
-8007A860	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc548;
-8007A884	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = 800cc549;
-8007A8A8	j      L7a8d0 [$8007a8d0]
-V1 = V1 << 04;
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V1 = V1 << 04;
-V0 = 800cc54a;
+8007A574 0
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc40c;
+    8007A590	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A598 1
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc45e;
+    8007A5B4	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A5BC 2
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc4e8;
+    8007A5D8	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A5E0 3
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc4eb;
+    8007A5FC	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A604 4
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc460;
+    8007A620	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A628 5
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc461;
+    8007A644	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A64C 6
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc462;
+    8007A668	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A670 7
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc435;
+    8007A68C	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A694 8
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc465;
+    8007A6B0	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A6B8 9
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc463;
+    8007A6D4	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A6DC a
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc464;
+    8007A6F8	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A700 b
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc466;
+    8007A71C	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A724 c
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc467;
+    8007A740	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A748 d
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc468;
+    8007A764	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A76C e
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc469;
+    8007A788	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A790 f
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc46c;
+    8007A7AC	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A7B4 10
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc46d;
+    8007A7D0	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A7D8 11
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc46e;
+    8007A7F4	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A7FC 12
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc46f;
+    8007A818	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A820 13
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc544;
+    8007A83C	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A844 14
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc4be;
+    8007A860	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A868 15
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc548;
+    8007A884	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A88C 16
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V0 = 800cc549;
+    8007A8A8	j      L7a8d0 [$8007a8d0]
+    V1 = V1 << 04;
+
+8007A8B0 17
+
+    V0 = A0 & 00ff;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    V1 = V1 << 03;
+    V1 = V1 - V0;
+    V1 = V1 << 04;
+    V0 = 800cc54a;
 
 L7a8d0:	; 8007A8D0
 V1 = V1 + V0;
@@ -10515,8 +10587,11 @@ L7a8e8:	; 8007A8E8
 T0 = bu[V1 + 0000];
 
 L7a8ec:	; 8007A8EC
-8007A8EC	jr     ra 
-V0 = T0;
+return T0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7a8f4
 A1 = A1 & 00ff;
@@ -10984,7 +11059,6 @@ unit_id = A1;
 
 param1 = bu[script + 1];
 param2 = bu[script + 2];
-
 V1 = bu[800d2b20 + unit_id * 40 + 30 + param1] + param2;
 if( V1 >= 100 )
 {
@@ -11003,7 +11077,6 @@ unit_id = A1;
 
 param1 = bu[script + 1];
 param2 = bu[script + 2];
-
 V1 = bu[800d2b20 + unit_id * 40 + 30 + param1] - param2;
 if( V1 < 0 )
 {
@@ -11022,7 +11095,6 @@ unit_id = A1;
 
 param1 = bu[script + 1];
 param2 = bu[script + 2];
-
 V1 = bu[800d2b20 + unit_id * 40 + 30 + param1] * param2;
 if( V1 >= 100 )
 {
@@ -11041,7 +11113,6 @@ unit_id = A1;
 
 param1 = bu[script + 1];
 param2 = bu[script + 2];
-
 [800d2b20 + unit_id * 40 + 30 + param1] = b(bu[800d2b20 + unit_id * 40 + 30 + param1] / param2);
 ////////////////////////////////
 
@@ -11100,564 +11171,393 @@ param2 = bu[script + 2];
 
 
 ////////////////////////////////
-// func7b24c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0003];
-V1 = V1 << 01;
-A1 = V1 + A1;
-V0 = V0 << 08;
-V1 = bu[A0 + 0002];
-A0 = hu[A1 + 0000];
-V0 = V0 + V1;
-A0 = A0 + V0;
-V0 = ffff;
-V0 = V0 < A0;
-8007B290	beq    v0, zero, L7b29c [$8007b29c]
-8007B294	nop
-A0 = ffff;
+// func7b24c()
 
-L7b29c:	; 8007B29C
-8007B29C	jr     ra 
-[A1 + 0000] = h(A0);
-////////////////////////////////
-// func7b2a4
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0003];
-V1 = V1 << 01;
-A1 = V1 + A1;
-V0 = V0 << 08;
-V1 = bu[A0 + 0002];
-A0 = hu[A1 + 0000];
-V0 = V0 + V1;
-A0 = A0 - V0;
-8007B2E0	bgez   a0, L7b2ec [$8007b2ec]
-8007B2E4	nop
-A0 = 0;
+script = w[A0];
+unit_id = A1;
 
-L7b2ec:	; 8007B2EC
-8007B2EC	jr     ra 
-[A1 + 0000] = h(A0);
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+A0 = hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] + param2;
+if( A0 > ffff )
+{
+    A0 = ffff;
+}
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(A0);
 ////////////////////////////////
-// func7b2f4
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0003];
-V1 = V1 << 01;
-A1 = V1 + A1;
-V0 = V0 << 08;
-V1 = bu[A0 + 0002];
-A0 = hu[A1 + 0000];
-V0 = V0 + V1;
-8007B32C	mult   a0, v0
-V0 = ffff;
-8007B334	mflo   v1
-V0 = V0 < V1;
-8007B33C	beq    v0, zero, L7b348 [$8007b348]
-8007B340	nop
-V1 = ffff;
 
-L7b348:	; 8007B348
-8007B348	jr     ra 
-[A1 + 0000] = h(V1);
-////////////////////////////////
-// func7b350
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A2 = w[A0 + 0000];
-A1 = A1 + V0;
-A0 = bu[A2 + 0001];
-V1 = bu[A2 + 0003];
-A0 = A0 << 01;
-A0 = A0 + A1;
-V1 = V1 << 08;
-A1 = bu[A2 + 0002];
-V0 = hu[A0 + 0000];
-V1 = V1 + A1;
-8007B388	div    v0, v1
-8007B38C	mflo   v0
-8007B390	jr     ra 
-[A0 + 0000] = h(V0);
-////////////////////////////////
-// func7b398
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A2 = w[A0 + 0000];
-A1 = A1 + V0;
-A0 = bu[A2 + 0001];
-V1 = bu[A2 + 0003];
-A0 = A0 << 01;
-A0 = A0 + A1;
-V1 = V1 << 08;
-A1 = bu[A2 + 0002];
-V0 = hu[A0 + 0000];
-V1 = V1 + A1;
-8007B3D0	div    v0, v1
-8007B3D4	mfhi   v1
-8007B3D8	jr     ra 
-[A0 + 0000] = h(V1);
-////////////////////////////////
-// func7b3e0
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-V1 = w[A0 + 0000];
-A1 = A1 + V0;
-A2 = bu[V1 + 0001];
-A0 = bu[V1 + 0003];
-V0 = bu[V1 + 0002];
-A2 = A2 << 01;
-A2 = A2 + A1;
-A0 = A0 << 08;
-V1 = hu[A2 + 0000];
-V0 = V0 + A0;
-V1 = V1 & V0;
-8007B41C	jr     ra 
-[A2 + 0000] = h(V1);
-////////////////////////////////
-// func7b424
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-V1 = w[A0 + 0000];
-A1 = A1 + V0;
-A2 = bu[V1 + 0001];
-A0 = bu[V1 + 0003];
-V0 = bu[V1 + 0002];
-A2 = A2 << 01;
-A2 = A2 + A1;
-A0 = A0 << 08;
-V1 = hu[A2 + 0000];
-V0 = V0 + A0;
-V1 = V1 | V0;
-8007B460	jr     ra 
-[A2 + 0000] = h(V1);
-////////////////////////////////
-// func7b468
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-V1 = w[A0 + 0000];
-A1 = A1 + V0;
-A2 = bu[V1 + 0001];
-A0 = bu[V1 + 0003];
-V0 = bu[V1 + 0002];
-A2 = A2 << 01;
-A2 = A2 + A1;
-A0 = A0 << 08;
-V1 = hu[A2 + 0000];
-V0 = V0 + A0;
-V1 = V1 ^ V0;
-8007B4A4	jr     ra 
-[A2 + 0000] = h(V1);
-////////////////////////////////
-// func7b4ac
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-V0 = A1 + V0;
-V1 = A1 + V1;
-V0 = bu[V0 + 0000];
-V1 = bu[V1 + 0000];
-8007B4DC	nop
-V0 = V0 + V1;
-V1 = V0;
-V0 = V0 < 0100;
-8007B4EC	bne    v0, zero, L7b4f8 [$8007b4f8]
-8007B4F0	nop
-V1 = 00ff;
 
-L7b4f8:	; 8007B4F8
-V0 = bu[A0 + 0003];
-8007B4FC	nop
-V0 = A1 + V0;
-8007B504	jr     ra 
-[V0 + 0000] = b(V1);
-////////////////////////////////
-// func7b50c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-V0 = A1 + V0;
-V1 = A1 + V1;
-V0 = bu[V0 + 0000];
-V1 = bu[V1 + 0000];
-8007B53C	nop
-V0 = V0 - V1;
-8007B544	bgez   v0, L7b550 [$8007b550]
-V1 = V0;
-V1 = 0;
 
-L7b550:	; 8007B550
-V0 = bu[A0 + 0003];
-8007B554	nop
-V0 = A1 + V0;
-8007B55C	jr     ra 
-[V0 + 0000] = b(V1);
 ////////////////////////////////
-// func7b564
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A2 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A2 + 0001];
-V1 = bu[A2 + 0002];
-V0 = A1 + V0;
-V1 = A1 + V1;
-A0 = bu[V0 + 0000];
-V0 = bu[V1 + 0000];
-8007B594	nop
-8007B598	mult   a0, v0
-8007B59C	mflo   v0
-V1 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0100;
-8007B5B0	bne    v0, zero, L7b5bc [$8007b5bc]
-8007B5B4	nop
-V1 = 00ff;
+// func7b2a4()
 
-L7b5bc:	; 8007B5BC
-V0 = bu[A2 + 0003];
-8007B5C0	nop
-V0 = A1 + V0;
-8007B5C8	jr     ra 
-[V0 + 0000] = b(V1);
-////////////////////////////////
-// func7b5d0
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A2 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A2 + 0001];
-V1 = bu[A2 + 0002];
-V0 = A1 + V0;
-V1 = A1 + V1;
-A0 = bu[V0 + 0000];
-V0 = bu[V1 + 0000];
-8007B600	nop
-8007B604	divu   a0, v0
-8007B608	mflo   a0
-V0 = bu[A2 + 0003];
-8007B610	nop
-A1 = A1 + V0;
-8007B618	jr     ra 
-[A1 + 0000] = b(A0);
-////////////////////////////////
-// func7b620
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-V0 = A1 + V0;
-V1 = A1 + V1;
-V0 = bu[V0 + 0000];
-V1 = bu[V1 + 0000];
-8007B650	nop
-8007B654	divu   v0, v1
-8007B658	mfhi   v1
-V0 = bu[A0 + 0003];
-8007B660	nop
-A1 = A1 + V0;
-8007B668	jr     ra 
-[A1 + 0000] = b(V1);
-////////////////////////////////
-// func7b670
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-A0 = bu[A0 + 0003];
-V0 = A1 + V0;
-V1 = A1 + V1;
-V0 = bu[V0 + 0000];
-V1 = bu[V1 + 0000];
-A1 = A1 + A0;
-V0 = V0 & V1;
-8007B6AC	jr     ra 
-[A1 + 0000] = b(V0);
-////////////////////////////////
-// func7b6b4
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-A0 = bu[A0 + 0003];
-V0 = A1 + V0;
-V1 = A1 + V1;
-V0 = bu[V0 + 0000];
-V1 = bu[V1 + 0000];
-A1 = A1 + A0;
-V0 = V0 | V1;
-8007B6F0	jr     ra 
-[A1 + 0000] = b(V0);
-////////////////////////////////
-// func7b6f8
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b50;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-A0 = bu[A0 + 0003];
-V0 = A1 + V0;
-V1 = A1 + V1;
-V0 = bu[V0 + 0000];
-V1 = bu[V1 + 0000];
-A1 = A1 + A0;
-V0 = V0 ^ V1;
-8007B734	jr     ra 
-[A1 + 0000] = b(V0);
-////////////////////////////////
-// func7b73c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0002];
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-8007B774	nop
-V1 = V1 + V0;
-V0 = ffff;
-V0 = V0 < V1;
-8007B784	beq    v0, zero, L7b790 [$8007b790]
-8007B788	nop
-V1 = ffff;
+script = w[A0];
+unit_id = A1;
 
-L7b790:	; 8007B790
-V0 = bu[A0 + 0003];
-8007B794	nop
-V0 = V0 << 01;
-V0 = V0 + A1;
-8007B7A0	jr     ra 
-[V0 + 0000] = h(V1);
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+A0 = hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] - param2;
+if( A0 < 0 )
+{
+    A0 = 0;
+}
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(A0);
 ////////////////////////////////
-// func7b7a8
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0002];
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-8007B7E0	nop
-V1 = V1 - V0;
-8007B7E8	bgez   v1, L7b7f4 [$8007b7f4]
-8007B7EC	nop
-V1 = 0;
 
-L7b7f4:	; 8007B7F4
-V0 = bu[A0 + 0003];
-8007B7F8	nop
-V0 = V0 << 01;
-V0 = V0 + A1;
-8007B804	jr     ra 
-[V0 + 0000] = h(V1);
-////////////////////////////////
-// func7b80c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0002];
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-8007B844	nop
-8007B848	mult   v1, v0
-V0 = ffff;
-8007B850	mflo   v1
-V0 = V0 < V1;
-8007B858	beq    v0, zero, L7b864 [$8007b864]
-8007B85C	nop
-V1 = ffff;
 
-L7b864:	; 8007B864
-V0 = bu[A0 + 0003];
-8007B868	nop
-V0 = V0 << 01;
-V0 = V0 + A1;
-8007B874	jr     ra 
-[V0 + 0000] = h(V1);
+
 ////////////////////////////////
-// func7b87c
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V0 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V0;
-V1 = bu[A0 + 0001];
-V0 = bu[A0 + 0002];
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-8007B8B4	nop
-8007B8B8	divu   v1, v0
-8007B8BC	mflo   v1
-V0 = bu[A0 + 0003];
-8007B8C4	nop
-V0 = V0 << 01;
-V0 = V0 + A1;
-8007B8D0	jr     ra 
-[V0 + 0000] = h(V1);
+// func7b2f4()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+A0 = hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] * param2;
+if( A0 > ffff )
+{
+    A0 = ffff;
+}
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(A0);
 ////////////////////////////////
-// func7b8d8
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-V1 = 800d2b40;
-A0 = w[A0 + 0000];
-A1 = A1 + V1;
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0002];
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = hu[V0 + 0000];
-V1 = hu[V1 + 0000];
-8007B910	nop
-8007B914	divu   v0, v1
-8007B918	mfhi   v1
-V0 = bu[A0 + 0003];
-8007B920	nop
-V0 = V0 << 01;
-V0 = V0 + A1;
-8007B92C	jr     ra 
-[V0 + 0000] = h(V1);
+
+
+
 ////////////////////////////////
-// func7b934
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A2 = 800d2b40;
-V0 = w[A0 + 0000];
-A1 = A1 + A2;
-A0 = bu[V0 + 0003];
-V1 = bu[V0 + 0001];
-V0 = bu[V0 + 0002];
-A0 = A0 << 01;
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-A0 = A0 + A1;
-V1 = V1 & V0;
-8007B97C	jr     ra 
-[A0 + 0000] = h(V1);
+// func7b350()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] / param2);
 ////////////////////////////////
-// func7b984
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A2 = 800d2b40;
-V0 = w[A0 + 0000];
-A1 = A1 + A2;
-A0 = bu[V0 + 0003];
-V1 = bu[V0 + 0001];
-V0 = bu[V0 + 0002];
-A0 = A0 << 01;
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-A0 = A0 + A1;
-V1 = V1 | V0;
-8007B9CC	jr     ra 
-[A0 + 0000] = h(V1);
+
+
+
 ////////////////////////////////
-// func7b9d4
-A1 = A1 & 00ff;
-A1 = A1 << 06;
-A2 = 800d2b40;
-V0 = w[A0 + 0000];
-A1 = A1 + A2;
-A0 = bu[V0 + 0003];
-V1 = bu[V0 + 0001];
-V0 = bu[V0 + 0002];
-A0 = A0 << 01;
-V1 = V1 << 01;
-V1 = V1 + A1;
-V0 = V0 << 01;
-V0 = V0 + A1;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-A0 = A0 + A1;
-V1 = V1 ^ V0;
-8007BA1C	jr     ra 
-[A0 + 0000] = h(V1);
+// func7b398()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] % param2);
 ////////////////////////////////
-// func7ba24
-8007BA24	addiu  sp, sp, $ffe8 (=-$18)
-A1 = A1 + 0003;
-[SP + 0010] = w(RA);
-V0 = w[A0 + 0000];
-A0 = A1 & 00ff;
-A1 = bu[V0 + 0001];
-A2 = bu[V0 + 0002];
-8007BA40	jal    func7a54c [$8007a54c]
+
+
+
+////////////////////////////////
+// func7b3e0()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] & param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b424()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] | param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b468()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = hu[script + 2];
+[800d2b20 + unit_id * 40 + 20 + param1 * 2] = h(hu[800d2b20 + unit_id * 40 + 20 + param1 * 2] ^ param2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b4ac()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+V1 = bu[800d2b20 + A1 * 40 + 30 + param1] + bu[800d2b20 + A1 * 40 + 30 + param2];
+if( V1 >= 100 )
+{
+    V1 = ff;
+}
+[800d2b20 + A1 * 40 + 30 + param3] = b(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b50c()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+V1 = bu[800d2b20 + A1 * 40 + 30 + param1] - bu[800d2b20 + A1 * 40 + 30 + param2];
+if( V1 < 0 )
+{
+    V1 = 0;
+}
+[800d2b20 + A1 * 40 + 30 + param3] = b(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b564()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+V1 = bu[800d2b20 + A1 * 40 + 30 + param1] * bu[800d2b20 + A1 * 40 + 30 + param2];
+if( V1 >= 100 )
+{
+    V1 = ff;
+}
+[800d2b20 + A1 * 40 + 30 + param3] = b(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b5d0()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 30 + param3] = b(bu[800d2b20 + A1 * 40 + 30 + param1] / bu[800d2b20 + A1 * 40 + 30 + param2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b620()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 30 + param3] = b(bu[800d2b20 + A1 * 40 + 30 + param1] % bu[800d2b20 + A1 * 40 + 30 + param2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b670()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 30 + param3] = b(bu[800d2b20 + A1 * 40 + 30 + param1] & bu[800d2b20 + A1 * 40 + 30 + param2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b6b4()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 30 + param3] = b(bu[800d2b20 + A1 * 40 + 30 + param1] | bu[800d2b20 + A1 * 40 + 30 + param2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b6f8()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 30 + param3] = b(bu[800d2b20 + A1 * 40 + 30 + param1] ^ bu[800d2b20 + A1 * 40 + 30 + param2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b73c()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+V1 = hu[800d2b20 + A1 * 40 + 20 + param1 * 2] + hu[800d2b20 + A1 * 40 + 20 + param2 * 2];
+if( V1 > ffff )
+{
+    V1 = ffff;
+}
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b7a8()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+V1 = hu[800d2b20 + A1 * 40 + 20 + param1 * 2] - hu[800d2b20 + A1 * 40 + 20 + param2 * 2];
+if( V1 < 0 )
+{
+    V1 = 0;
+}
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b80c()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+V1 = hu[800d2b20 + A1 * 40 + 20 + param1 * 2] * hu[800d2b20 + A1 * 40 + 20 + param2 * 2];
+if( V1 > ffff )
+{
+    V1 = ffff;
+}
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b87c()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(hu[800d2b20 + A1 * 40 + 20 + param1 * 2] / hu[800d2b20 + A1 * 40 + 20 + param2 * 2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b8d8()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(hu[800d2b20 + A1 * 40 + 20 + param1 * 2] % hu[800d2b20 + A1 * 40 + 20 + param2 * 2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b934()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(hu[800d2b20 + A1 * 40 + 20 + param1 * 2] & hu[800d2b20 + A1 * 40 + 20 + param2 * 2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b984()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(hu[800d2b20 + A1 * 40 + 20 + param1 * 2] | hu[800d2b20 + A1 * 40 + 20 + param2 * 2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7b9d4()
+
+script = w[A0];
+unit_id = A1;
+
+param1 = bu[script + 1];
+param2 = bu[script + 2];
+param3 = bu[script + 3];
+[800d2b20 + A1 * 40 + 20 + param3 * 2] = h(hu[800d2b20 + A1 * 40 + 20 + param1 * 2] ^ hu[800d2b20 + A1 * 40 + 20 + param2 * 2]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7ba24()
+
+script = w[A0];
+unit_id = A1;
+
+A0 = unit_id + 3;
+A1 = bu[script + 1];
+A2 = bu[script + 2];
 A3 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-8007BA50	jr     ra 
-8007BA54	nop
+8007BA40	jal    func7a54c [$8007a54c]
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7ba58
 8007BA58	addiu  sp, sp, $ffe8 (=-$18)
@@ -15703,250 +15603,250 @@ switch( opcode )
     case 10:
     {
         A0 = address;
-        8007F760	jal    func7b24c [$8007b24c]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b24c();
+
         8007F768	j      L7ff10 [$8007ff10]
-        8007F76C	nop
     }
     break;
 
     case 11:
     {
         A0 = address;
-        8007F774	jal    func7b2a4 [$8007b2a4]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b2a4();
+
         8007F77C	j      L7ff10 [$8007ff10]
-        8007F780	nop
     }
     break;
 
     case 12:
     {
         A0 = address;
-        8007F788	jal    func7b2f4 [$8007b2f4]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b2f4();
+
         8007F790	j      L7ff10 [$8007ff10]
-        8007F794	nop
     }
     break;
 
     case 13:
     {
         A0 = address;
-        8007F79C	jal    func7b350 [$8007b350]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b350();
+
         8007F7A4	j      L7ff10 [$8007ff10]
-        8007F7A8	nop
     }
     break;
 
     case 14:
     {
         A0 = address;
-        8007F7B0	jal    func7b398 [$8007b398]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b398();
+
         8007F7B8	j      L7ff10 [$8007ff10]
-        8007F7BC	nop
     }
     break;
 
     case 15:
     {
         A0 = address;
-        8007F7C4	jal    func7b3e0 [$8007b3e0]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b3e0();
+
         8007F7CC	j      L7ff10 [$8007ff10]
-        8007F7D0	nop
     }
     break;
 
     case 16:
     {
         A0 = address;
-        8007F7D8	jal    func7b424 [$8007b424]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b424();
+
         8007F7E0	j      L7ff10 [$8007ff10]
-        8007F7E4	nop
     }
     break;
 
     case 17:
     {
         A0 = address;
-        8007F7EC	jal    func7b468 [$8007b468]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b468();
+
         8007F7F4	j      L7ff10 [$8007ff10]
-        8007F7F8	nop
     }
     break;
 
     case 18:
     {
         A0 = address;
-        8007F800	jal    func7b4ac [$8007b4ac]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b4ac();
+
         8007F808	j      L7ff10 [$8007ff10]
-        8007F80C	nop
     }
     break;
 
     case 19:
     {
         A0 = address;
-        8007F814	jal    func7b50c [$8007b50c]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b50c();
+
         8007F81C	j      L7ff10 [$8007ff10]
-        8007F820	nop
     }
     break;
 
     case 1a:
     {
         A0 = address;
-        8007F828	jal    func7b564 [$8007b564]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b564();
+
         8007F830	j      L7ff10 [$8007ff10]
-        8007F834	nop
     }
     break;
 
     case 1b:
     {
         A0 = address;
-        8007F83C	jal    func7b5d0 [$8007b5d0]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b5d0();
+
         8007F844	j      L7ff10 [$8007ff10]
-        8007F848	nop
     }
     break;
 
     case 1c:
     {
         A0 = address;
-        8007F850	jal    func7b620 [$8007b620]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b620();
+
         8007F858	j      L7ff10 [$8007ff10]
-        8007F85C	nop
     }
     break;
 
     case 1d:
     {
         A0 = address;
-        8007F864	jal    func7b670 [$8007b670]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b670();
+
         8007F86C	j      L7ff10 [$8007ff10]
-        8007F870	nop
     }
     break;
 
     case 1e:
     {
         A0 = address;
-        8007F878	jal    func7b6b4 [$8007b6b4]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b6b4();
+
         8007F880	j      L7ff10 [$8007ff10]
-        8007F884	nop
     }
     break;
 
     case 1f:
     {
         A0 = address;
-        8007F88C	jal    func7b6f8 [$8007b6f8]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b6f8();
+
         8007F894	j      L7ff10 [$8007ff10]
-        8007F898	nop
     }
     break;
 
     case 20:
     {
         A0 = address;
-        8007F8A0	jal    func7b73c [$8007b73c]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b73c();
+
         8007F8A8	j      L7ff10 [$8007ff10]
-        8007F8AC	nop
     }
     break;
 
     case 21:
     {
         A0 = address;
-        8007F8B4	jal    func7b7a8 [$8007b7a8]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b7a8();
+
         8007F8BC	j      L7ff10 [$8007ff10]
-        8007F8C0	nop
     }
     break;
 
     case 22:
     {
         A0 = address;
-        8007F8C8	jal    func7b80c [$8007b80c]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b80c();
+
         8007F8D0	j      L7ff10 [$8007ff10]
-        8007F8D4	nop
     }
     break;
 
     case 23:
     {
         A0 = address;
-        8007F8DC	jal    func7b87c [$8007b87c]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b87c();
+
         8007F8E4	j      L7ff10 [$8007ff10]
-        8007F8E8	nop
     }
     break;
 
     case 24:
     {
         A0 = address;
-        8007F8F0	jal    func7b8d8 [$8007b8d8]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b8d8();
+
         8007F8F8	j      L7ff10 [$8007ff10]
-        8007F8FC	nop
     }
     break;
 
     case 25:
     {
         A0 = address;
-        8007F904	jal    func7b934 [$8007b934]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b934();
+
         8007F90C	j      L7ff10 [$8007ff10]
-        8007F910	nop
     }
     break;
 
     case 26:
     {
         A0 = address;
-        8007F918	jal    func7b984 [$8007b984]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b984();
+
         8007F920	j      L7ff10 [$8007ff10]
-        8007F924	nop
     }
     break;
 
     case 27:
     {
         A0 = address;
-        8007F92C	jal    func7b9d4 [$8007b9d4]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7b9d4();
+
         8007F934	j      L7ff10 [$8007ff10]
-        8007F938	nop
     }
     break;
 
     case 28:
     {
         A0 = address;
-        8007F940	jal    func7ba24 [$8007ba24]
-        A1 = unit_id & 00ff;
+        A1 = unit_id;
+        func7ba24();
+
         8007F948	j      L7ff10 [$8007ff10]
-        8007F94C	nop
     }
     break;
 
