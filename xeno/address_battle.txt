@@ -66,14 +66,14 @@
 +2 [][]     reset with 0xffff. Init 1st item with 0x00.
 +4 []       init 1st item with 0x00.
 
-800cc408                unit data array (0x170 size)
-800cc408 +  4c [][]     unit current hp.
-800cc408 +  4e [][]     unit max hp.
-800cc408 +  5a []       unit speed.
-800cc408 +  5c []       unit ether def.
-800cc408 +  7c [][]     some flags
-800cc408 +  84 [][]     some flags.
-800cc408 + 14c          experience.
+800cc408 unit data array (0x170 size)
+    + 4c [][]     unit current hp.
+    + 4e [][]     unit max hp.
+    + 5a []       unit speed.
+    + 5c []       unit ether def.
+    + 7c [][]     some flags
+    + 84 [][]     some flags.
+    +14c          experience.
 
 800d24ec []       array of unit exists in battle (1-3 party, 3-A enemy). (0 - no 1 - yes)
 

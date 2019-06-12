@@ -44,6 +44,7 @@
 [0x25][2xslot][2xslot2][2xslot3] 2xslot3 = 2xslot & 2xslot2.
 [0x26][2xslot][2xslot2][2xslot3] 2xslot3 = 2xslot | 2xslot2.
 [0x27][2xslot][2xslot2][2xslot3] 2xslot3 = 2xslot ^ 2xslot2.
+[0x28][param][value]             set value to 1byte param in unit structure.
 
 [0x3e][1xslot][max]     get random value from 0 to max and store it to given 1xslot.
 [0x40][2xslot][flag]    get unit from random accessible player unit (1-3) and store it to given 2xslot. Flag used to ignore something during selection.

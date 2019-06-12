@@ -9323,7 +9323,7 @@ A1 = bu[AT + 257d];
 800796E8	lui    at, $800d
 AT = AT + V0;
 A2 = bu[AT + 2580];
-800796F4	jal    func7a54c [$8007a54c]
+800796F4	jal    battle_get_set_1byte_unit_data [$8007a54c]
 A3 = 0;
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -9343,7 +9343,7 @@ S0 = S0 << 03;
 80079730	lui    at, $800d
 AT = AT + S0;
 A1 = bu[AT + 257d];
-8007973C	jal    func7a54c [$8007a54c]
+8007973C	jal    battle_get_set_1byte_unit_data [$8007a54c]
 A3 = 0001;
 A0 = S1;
 A3 = 0;
@@ -9354,7 +9354,7 @@ A2 = bu[AT + 2580];
 AT = AT + S0;
 A1 = bu[AT + 257d];
 A2 = A2 + V0;
-80079768	jal    func7a54c [$8007a54c]
+80079768	jal    battle_get_set_1byte_unit_data [$8007a54c]
 A2 = A2 & 00ff;
 RA = w[SP + 0018];
 S1 = w[SP + 0014];
@@ -10297,303 +10297,174 @@ return S0;
 
 
 ////////////////////////////////
-// func7a54c
+// battle_get_set_1byte_unit_data()
 
-A1 = A1 & 00ff;
-V0 = A1 < 0018;
-8007A554	beq    v0, zero, L7a8d4 [$8007a8d4]
-V0 = A1 << 02;
+unit_id = A0; // +3
 
-AT = AT + V0;
-V0 = w[8006f20c]; // 8c
-8007A568	nop
-8007A56C	jr     v0 
-8007A570	nop
+switch( A1 )
+{
+    case 00:
+    {
+        V1 = 800cc408 + unit_id * 170 + 4;
+    }
+    break;
 
-8007A574 0
+    case 01:
+    {
+        V1 = 800cc408 + unit_id * 170 + 56;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc40c;
-    8007A590	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 02:
+    {
+        V1 = 800cc408 + unit_id * 170 + e0;
+    }
+    break;
 
-8007A598 1
+    case 03:
+    {
+        V1 = 800cc408 + unit_id * 170 + e3;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc45e;
-    8007A5B4	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 04:
+    {
+        V1 = 800cc408 + unit_id * 170 + 58;
+    }
+    break;
 
-8007A5BC 2
+    case 05:
+    {
+        V1 = 800cc408 + unit_id * 170 + 59;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc4e8;
-    8007A5D8	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 06:
+    {
+        V1 = 800cc408 + unit_id * 170 + 5a; // unit speed
+    }
+    break;
 
-8007A5E0 3
+    case 07:
+    {
+        V1 = 800cc408 + unit_id * 170 + 2d;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc4eb;
-    8007A5FC	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 08:
+    {
+        V1 = 800cc408 + unit_id * 170 + 5d;
+    }
+    break;
 
-8007A604 4
+    case 09:
+    {
+        V1 = 800cc408 + unit_id * 170 + 5b;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc460;
-    8007A620	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 0a:
+    {
+        V1 = 800cc408 + unit_id * 170 + 5c; // unit ether def
+    }
+    break;
 
-8007A628 5
+    case 0b:
+    {
+        V1 = 800cc408 + unit_id * 170 + 5e;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc461;
-    8007A644	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 0c:
+    {
+        V1 = 800cc408 + unit_id * 170 + 5f;
+    }
+    break;
 
-8007A64C 6
+    case 0d:
+    {
+        V1 = 800cc408 + unit_id * 170 + 60;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc462;
-    8007A668	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 0e:
+    {
+        V1 = 800cc408 + unit_id * 170 + 61;
+    }
+    break;
 
-8007A670 7
+    case 0f:
+    {
+        V1 = 800cc408 + unit_id * 170 + 64;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc435;
-    8007A68C	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 10:
+    {
+        V1 = 800cc408 + unit_id * 170 + 65;
+    }
+    break;
 
-8007A694 8
+    case 11:
+    {
+        V1 = 800cc408 + unit_id * 170 + 66;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc465;
-    8007A6B0	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 12:
+    {
+        V1 = 800cc408 + unit_id * 170 + 67;
+    }
+    break;
 
-8007A6B8 9
+    case 13:
+    {
+        V1 = 800cc408 + unit_id * 170 + 13c;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc463;
-    8007A6D4	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 14:
+    {
+        V1 = 800cc408 + unit_id * 170 + b6;
+    }
+    break;
 
-8007A6DC a
+    case 15:
+    {
+        V1 = 800cc408 + unit_id * 170 + 140;
+    }
+    break;
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc464;
-    8007A6F8	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+    case 16:
+    {
+        V1 = 800cc408 + unit_id * 170 + 141;
+    }
+    break;
 
-8007A700 b
+    case 17:
+    {
+        V1 = 800cc408 + unit_id * 170 + 142;
+    }
+    break;
+}
 
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc466;
-    8007A71C	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
+if( A3 == 0 )
+{
+    [V1] = b(A2);
+}
+else
+{
+    T0 = bu[V1];
+}
 
-8007A724 c
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc467;
-    8007A740	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A748 d
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc468;
-    8007A764	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A76C e
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc469;
-    8007A788	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A790 f
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc46c;
-    8007A7AC	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A7B4 10
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc46d;
-    8007A7D0	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A7D8 11
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc46e;
-    8007A7F4	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A7FC 12
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc46f;
-    8007A818	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A820 13
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc544;
-    8007A83C	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A844 14
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc4be;
-    8007A860	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A868 15
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc548;
-    8007A884	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A88C 16
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V0 = 800cc549;
-    8007A8A8	j      L7a8d0 [$8007a8d0]
-    V1 = V1 << 04;
-
-8007A8B0 17
-
-    V0 = A0 & 00ff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 - V0;
-    V1 = V1 << 04;
-    V0 = 800cc54a;
-
-L7a8d0:	; 8007A8D0
-V1 = V1 + V0;
-
-L7a8d4:	; 8007A8D4
-V0 = A3 & 00ff;
-8007A8D8	bne    v0, zero, L7a8e8 [$8007a8e8]
-8007A8DC	nop
-8007A8E0	j      L7a8ec [$8007a8ec]
-[V1 + 0000] = b(A2);
-
-L7a8e8:	; 8007A8E8
-T0 = bu[V1 + 0000];
-
-L7a8ec:	; 8007A8EC
 return T0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func7a8f4
+// func7a8f4()
+
 A1 = A1 & 00ff;
 V0 = A1 < 0018;
 8007A8FC	beq    v0, zero, L7ac7c [$8007ac7c]
@@ -11550,32 +11421,29 @@ script = w[A0];
 unit_id = A1;
 
 A0 = unit_id + 3;
-A1 = bu[script + 1];
-A2 = bu[script + 2];
-A3 = 0;
-8007BA40	jal    func7a54c [$8007a54c]
+A1 = bu[script + 1]; // param
+A2 = bu[script + 2]; // value
+A3 = 0; // set
+battle_get_set_1byte_unit_data();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func7ba58
-8007BA58	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = w[A0 + 0000];
-A0 = A1 + 0003;
-A0 = A0 & 00ff;
-A3 = 0;
-A2 = bu[V0 + 0003];
-V1 = bu[V0 + 0002];
-A1 = bu[V0 + 0001];
-A2 = A2 << 08;
-8007BA80	jal    func7a8f4 [$8007a8f4]
-A2 = V1 | A2;
-RA = w[SP + 0010];
-SP = SP + 0018;
-8007BA90	jr     ra 
-8007BA94	nop
+// func7ba58()
+
+script = w[A0];
+unit_id = A1;
+
+A0 = unit_id + 3;
+A1 = bu[script + 1]; // param
+A2 = hu[script + 2]; // value
+A3 = 0; // set
+func7a8f4();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func7ba98
 8007BA98	addiu  sp, sp, $ffe0 (=-$20)
@@ -11599,7 +11467,7 @@ A0 = V0 & 00ff;
 V0 = w[S2 + 0000];
 A2 = 0;
 A1 = bu[V0 + 0002];
-8007BAF0	jal    func7a54c [$8007a54c]
+8007BAF0	jal    battle_get_set_1byte_unit_data [$8007a54c]
 A3 = 0001;
 V1 = w[S2 + 0000];
 8007BAFC	nop
@@ -11652,7 +11520,7 @@ V1 = S3 + V1;
 V1 = V1 + A1;
 A1 = bu[V0 + 0002];
 A2 = bu[V1 + 0000];
-8007BBBC	jal    func7a54c [$8007a54c]
+8007BBBC	jal    battle_get_set_1byte_unit_data [$8007a54c]
 A3 = 0;
 
 L7bbc4:	; 8007BBC4
