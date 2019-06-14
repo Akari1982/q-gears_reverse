@@ -375,13 +375,13 @@
 // func7a4c0
 8007A4C0-8007A4EC
 ////////////////////////////////
-// func7a4f0
+// battle_get_unit_id_by_mask
 8007A4F0-8007A548
 ////////////////////////////////
 // battle_get_set_1byte_unit_data
 8007A54C-8007A8F0
 ////////////////////////////////
-// func7a8f4
+// battle_get_set_2byte_unit_data
 8007A8F4-8007AC98
 ////////////////////////////////
 // battle_get_targetable_unit
