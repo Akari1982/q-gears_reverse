@@ -1,1 +1,1 @@
-main 0038_battle_main.cpp
+main WORLD.BIN_main.cpp
