@@ -1,3 +1,12 @@
+800c74c4 array with .MAP files cd data (0x8 size).
+    00003CED 00003093 WM0.BSZ
+    00003CF4 000033AB WM1.BSZ
+    00003CFB 0000314F WM2.BSZ
+    00003D02 0001948D WM3.BSZ
+    +0 [][][][] sector for BSZ files.
+    +4 [][][][] size.
+
+
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
@@ -68,5 +77,10 @@
 
 801159e8 array of some data (0x2b items 0x1 size).
 
+80115a5c [][][][] PC character model id.
+80115a60 [][][][] is PC character model loaded into 8014a600.
+
 8011626c [][][][] we get value from here in 0x05 of 0x11b opcode. If 1 then place snow pole on map or remove their coords from savemap otherwise.
 80116278 [][][][] init with 0.
+
+8014a600 place for BSZ PC character model file.

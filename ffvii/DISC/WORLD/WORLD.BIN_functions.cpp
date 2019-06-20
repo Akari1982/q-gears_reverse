@@ -3589,8 +3589,7 @@ S0 = A0;
 
 if( ( w[8010ae54] >> S0 ) & 1 )
 {
-    V0 = (ffffffff << (S0 + 1)) & w[8010ae54];
-    if( V0 == 0 )
+    if( ( ( ffffffff << ( S0 + 1 ) ) & w[8010ae54] ) == 0 )
     {
         return 1;
     }
@@ -13468,7 +13467,7 @@ SP = SP + 0040;
 
 
 ////////////////////////////////
-// funcb69a4()
+// wm_load_pc_character_model()
 
 model_id = A0;
 
@@ -13481,10 +13480,13 @@ if( w[80115a60] == 0 )
     {
         [80115a48] = w(0);
 
-        A0 = w[800c74c4 + model_id * 8 + 0]; // sector for .MAP files
+        // 00003CED 00003093 WM0.BSZ Cloud model
+        // 00003CF4 000033AB WM1.BSZ Tifa model
+        // 00003CFB 0000314F WM2.BSZ Cid model
+        A0 = w[800c74c4 + model_id * 8 + 0]; // sector for .BSZ files
         A1 = w[800c74c4 + model_id * 8 + 4]; // size
         A2 = 8014a600; // buffer
-        A3 = 800b6aec; // callback?
+        A3 = 800b6aec; // funcb6aec()
         system_cdrom_start_load_lzs();
 
         system_cdrom_read_chain();
@@ -13622,44 +13624,39 @@ V0 = S3 < 0020;
 
 
 ////////////////////////////////
-// funcb6c84
-800B6C84	lui    v0, $8011
-V0 = w[V0 + 5a60];
-800B6C8C	addiu  sp, sp, $ffe8 (=-$18)
-800B6C90	bne    v0, zero, Lb6d00 [$800b6d00]
-[SP + 0010] = w(RA);
-800B6C98	jal    funca7f38 [$800a7f38]
-800B6C9C	nop
-800B6CA0	jal    funca86c4 [$800a86c4]
-A0 = 0002;
-800B6CA8	lui    at, $8011
-[AT + 5a40] = w(V0);
-800B6CB0	jal    funcadc80 [$800adc80]
-A0 = 0002;
-800B6CB8	beq    v0, zero, Lb6d00 [$800b6d00]
-V0 = 0001;
-800B6CC0	lui    a0, $800c
-A0 = w[A0 + 74dc];
-800B6CC8	lui    a1, $800c
-A1 = w[A1 + 74e0];
-800B6CD0	lui    a2, $8011
-A2 = w[A2 + 5a40];
-800B6CD8	lui    a3, $800b
-A3 = A3 + 6dcc;
-800B6CE0	lui    at, $8011
-[AT + 5a60] = w(V0);
-800B6CE8	lui    at, $8011
-[AT + 5a50] = w(0);
-800B6CF0	jal    $80033e74
-800B6CF4	nop
-800B6CF8	jal    $80034b44
-800B6CFC	nop
+// funcb6c84()
 
-Lb6d00:	; 800B6D00
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B6D08	jr     ra 
-800B6D0C	nop
+if( w[80115a60] == 0 )
+{
+    800B6C98	jal    funca7f38 [$800a7f38]
+
+    A0 = 0002;
+    800B6CA0	jal    funca86c4 [$800a86c4]
+
+    [80115a40] = w(V0);
+
+    A0 = 2;
+    800B6CB0	jal    funcadc80 [$800adc80]
+
+    if( V0 != 0 )
+    {
+        // 00003D02 0001948D WM3.BSZ
+        A0 = w[800c74c4 + 3 * 8 + 0];
+        A1 = w[800c74c4 + 3 * 8 + 4];
+        A2 = w[80115a40];
+        A3 = 800b6dcc; // funcb6dcc()
+        system_cdrom_start_load_lzs();
+
+        system_cdrom_read_chain();
+
+        [80115a60] = w(1);
+        [80115a50] = w(0);
+    }
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb6d10
 800B6D10	lui    v0, $8011
@@ -13775,7 +13772,7 @@ V0 = w[V0 + 5a60];
 800B6E80	addiu  sp, sp, $ffe8 (=-$18)
 800B6E84	beq    v0, zero, Lb6e94 [$800b6e94]
 [SP + 0010] = w(RA);
-800B6E8C	jal    $80034b44
+800B6E8C	jal    $system_cdrom_read_chain
 800B6E90	nop
 
 Lb6e94:	; 800B6E94
@@ -13821,17 +13818,17 @@ if( model_id >= 2b )
 
 if( b[801159e8 + model_id] < 0 )
 {
-    if( model_id >= 3 )
+    if( model_id >= 3 ) // if npc
     {
         if( model_id < 20 )
         {
             return 0;
         }
     }
-    else
+    else // pc
     {
         A0 = model_id;
-        funcb69a4();
+        wm_load_pc_character_model();
     }
 }
 
