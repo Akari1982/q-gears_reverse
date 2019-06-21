@@ -1,110 +1,56 @@
 ﻿////////////////////////////////
-// func13624()
+// func128b8()
 
-[8009abf4 + 38] = b(0);
-
-V0 = hu[8009abf4 + 4e];
-V0 = V0 + 1;
-[8009abf4 + 4e] = h(V0);
-
-V1 = hu[8009abf4 + 50];
-
-if (V0 >= V1)
+for( int i = 0; i < 2; ++i )
 {
-    [8009abf4 + 58] = h(hu[8009abf4 + 5e]);
-    [8009abf4 + 5a] = h(hu[8009abf4 + 60]);
-    [8009abf4 + 5c] = h(hu[8009abf4 + 62]);
-    [8009abf4 + 4e] = h(hu[8009abf4 + 50]);
+    for( int j = 0; j < 2; ++j )
+    {
+        A0 = 8009a074 + i * 30 + j * 10;
+        800128FC	jal    func469b0 [$800469b0]
+
+        A0 = 8009a074 + i * 30 + j * 10;
+        A1 = 1;
+        system_change_semi_transparency_in_packet();
+
+        A0 = 8009a074 + i * 30 + J * 10;
+        A1 = 1;
+        system_change_brightness_calculation_in_packet();
+
+        [8009a074 + i * 30 + j * 10 + 4] = b(0);
+        [8009a074 + i * 30 + j * 10 + 5] = b(0);
+        [8009a074 + i * 30 + j * 10 + 6] = b(0);
+        [8009a074 + i * 30 + j * 10 + c] = h(a0);
+        [8009a074 + i * 30 + j * 10 + e] = h(e0);
+    }
 }
 
-A0 = hu[8009abf4 + 58];
-A1 = hu[8009abf4 + 5e];
-A2 = hu[8009abf4 + 4e];
-A3 = hu[8009abf4 + 50];
-func135c0;
-[8009abf4 + 52] = h(V0);
-
-A0 = hu[8009abf4 + 5a];
-A1 = hu[8009abf4 + 60];
-A2 = hu[8009abf4 + 4e];
-A3 = hu[8009abf4 + 50];
-func135c0;
-[8009abf4 + 54] = h(V0);
-
-A0 = hu[8009abf4 + 5c];
-A1 = hu[8009abf4 + 62];
-A2 = hu[8009abf4 + 4e];
-A3 = hu[8009abf4 + 50];
-func135c0;
-[8009abf4 + 56] = h(V0);
-
-A0 = hu[8009abf4 + 52];
-A1 = hu[8009abf4 + 54];
-A2 = hu[8009abf4 + 56];
-func131b8;
-
-return;
+[8009a07c] = h(0);
+[8009a07e] = h(0);
+[8009a08c] = h(a0);
+[8009a08e] = h(0);
+[8009a0ac] = h(0);
+[8009a0ae] = h(0);
+[8009a0bc] = h(a0);
+[8009a0be] = h(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func135c0()
+// func129d0()
 
-current = A0;
-final   = A1;
-step    = A2;
-speed   = A3;
-return current + ((final - current) * step) / speed;
-////////////////////////////////
+V0 = h[80075dec];
+A0 = 8007eb68 + V0 * 14; // rect
+V0 = (h[80075dec] + 1) & 1;
+A1 = h[8007eb68 + V0 * 14]; // x
+V0 = (h[80075dec] + 1) & 1;
+A2 = h[8007eb6a + V0 * 14]; // y
+system_psyq_move_image();
 
-
-
-////////////////////////////////
-// func131b8()
-
-red   = A0;
-green = A1;
-blue  = A2;
-
-value1 = hu[80075dec];
-
-A0 = 8007e7a0 + value1 * 4;
-A1 = 1;
-system_psyq_clear_o_tag_r();
-
-[8009a078 + value1 * 30] = b(red);
-[8009a088 + value1 * 30] = b(red);
-
-[8009a079 + value1 * 30] = b(green);
-[8009a089 + value1 * 30] = b(green);
-
-[8009a07a + value1 * 30] = b(blue);
-[8009a08a + value1 * 30] = b(blue);
-
-V1 = w[8009a074 + value1 * 30] & ff000000;
-V0 = w[8007e7a0 + value1 * 04] & 00ffffff;
-[8009a074 + value1 * 30] = w(V1 | V0);
-
-A0 = w[8007e7a0 + value1 * 4] & ff000000;
-V0 = (8009a074 + value1 * 30) & 00ffffff;
-[8007e7a0 + value1 * 4] = w(A0 | V0)
-
-V1 = w[8009a084 + value1 * 30] & ff000000;
-V0 = w[8007e7a0 + value1 * 04] & 00ffffff;
-[8009a084 + value1 * 30] = w(V1 | V0);
-
-A0 = w[8007e7a0 + value1 * 04] & ff000000;
-V0 = (8009a084 + value1 * 30) & 00ffffff;
-[8007e7a0 + value1 * 4] = w(A0 | V0);
-
-V1 = w[8009a068 + value1 * 30] & ff000000;
-V0 = w[8007e7a0 + value1 * 04] & 00ffffff;
-[8009a068 + value1 * 30] = w(V1 | V0);
-
-A0 = w[8007e7a0 + value1 * 04] & ff000000;
-V0 = (8009a068 + value1 * 30) & 00ffffff;
-[8007e7a0 + value1 * 4] = w(A0 | V0);
+loop12a6c:	; 80012A6C
+    A0 = 1;
+    system_psyq_draw_sync();
+80012A74	bne    v0, zero, loop12a6c [$80012a6c]
 ////////////////////////////////
 
 
@@ -216,29 +162,50 @@ V0 = (8009a068 + value1 * 30) & 00ffffff;
 
 
 ////////////////////////////////
-// func12840()
+// func131b8()
 
-A1 = A0;
-A0 = 0;
-A2 = 0;
-A3 = 0;
-system_create_texture_page_settings_for_packet;
+red   = A0;
+green = A1;
+blue  = A2;
 
-80012864	lui    s1, $800a
-80012868	addiu  s1, s1, $a068 (=-$5f98)
-8001286C	addu   a0, s1, zero
-80012870	addu   a1, zero, zero
-80012874	addu   a2, zero, zero
-80012878	andi   s0, v0, $ffff
-8001287C	addu   a3, s0, zero
-80012880	jal    func44a68 [$80044a68]
-80012884	sw     zero, $0010(sp)
-80012888	addiu  a0, s1, $0030
-8001288C	addu   a1, zero, zero
-80012890	addu   a2, zero, zero
-80012894	addu   a3, s0, zero
-80012898	jal    func44a68 [$80044a68]
-8001289C	sw     zero, $0010(sp)
+value1 = hu[80075dec];
+
+A0 = 8007e7a0 + value1 * 4;
+A1 = 1;
+system_psyq_clear_o_tag_r();
+
+[8009a078 + value1 * 30] = b(red);
+[8009a088 + value1 * 30] = b(red);
+
+[8009a079 + value1 * 30] = b(green);
+[8009a089 + value1 * 30] = b(green);
+
+[8009a07a + value1 * 30] = b(blue);
+[8009a08a + value1 * 30] = b(blue);
+
+V1 = w[8009a074 + value1 * 30] & ff000000;
+V0 = w[8007e7a0 + value1 * 04] & 00ffffff;
+[8009a074 + value1 * 30] = w(V1 | V0);
+
+A0 = w[8007e7a0 + value1 * 4] & ff000000;
+V0 = (8009a074 + value1 * 30) & 00ffffff;
+[8007e7a0 + value1 * 4] = w(A0 | V0)
+
+V1 = w[8009a084 + value1 * 30] & ff000000;
+V0 = w[8007e7a0 + value1 * 04] & 00ffffff;
+[8009a084 + value1 * 30] = w(V1 | V0);
+
+A0 = w[8007e7a0 + value1 * 04] & ff000000;
+V0 = (8009a084 + value1 * 30) & 00ffffff;
+[8007e7a0 + value1 * 4] = w(A0 | V0);
+
+V1 = w[8009a068 + value1 * 30] & ff000000;
+V0 = w[8007e7a0 + value1 * 04] & 00ffffff;
+[8009a068 + value1 * 30] = w(V1 | V0);
+
+A0 = w[8007e7a0 + value1 * 04] & ff000000;
+V0 = (8009a068 + value1 * 30) & 00ffffff;
+[8007e7a0 + value1 * 4] = w(A0 | V0);
 ////////////////////////////////
 
 
@@ -276,6 +243,141 @@ if (hu[8009abf4 + 4e] >= 100)
 {
     [8009abf4 + 4e] = h(ff);
 }
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func135c0()
+
+current = A0;
+final   = A1;
+step    = A2;
+speed   = A3;
+return current + ((final - current) * step) / speed;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func13624()
+
+[8009abf4 + 38] = b(0);
+
+V0 = hu[8009abf4 + 4e];
+V0 = V0 + 1;
+[8009abf4 + 4e] = h(V0);
+
+V1 = hu[8009abf4 + 50];
+
+if (V0 >= V1)
+{
+    [8009abf4 + 58] = h(hu[8009abf4 + 5e]);
+    [8009abf4 + 5a] = h(hu[8009abf4 + 60]);
+    [8009abf4 + 5c] = h(hu[8009abf4 + 62]);
+    [8009abf4 + 4e] = h(hu[8009abf4 + 50]);
+}
+
+A0 = hu[8009abf4 + 58];
+A1 = hu[8009abf4 + 5e];
+A2 = hu[8009abf4 + 4e];
+A3 = hu[8009abf4 + 50];
+func135c0;
+[8009abf4 + 52] = h(V0);
+
+A0 = hu[8009abf4 + 5a];
+A1 = hu[8009abf4 + 60];
+A2 = hu[8009abf4 + 4e];
+A3 = hu[8009abf4 + 50];
+func135c0;
+[8009abf4 + 54] = h(V0);
+
+A0 = hu[8009abf4 + 5c];
+A1 = hu[8009abf4 + 62];
+A2 = hu[8009abf4 + 4e];
+A3 = hu[8009abf4 + 50];
+func135c0;
+[8009abf4 + 56] = h(V0);
+
+A0 = hu[8009abf4 + 52];
+A1 = hu[8009abf4 + 54];
+A2 = hu[8009abf4 + 56];
+func131b8;
+
+return;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func13800
+80013800	addiu  sp, sp, $ffe8 (=-$18)
+80013804	lui    v1, $8007
+V1 = bu[V1 + 1a58];
+V0 = 0003;
+80013810	bne    v1, v0, L13878 [$80013878]
+[SP + 0010] = w(RA);
+80013818	lui    v1, $800a
+8001381C	addiu  v1, v1, $ac42 (=-$53be)
+V0 = hu[V1 + 0000];
+80013824	nop
+V0 = V0 + 0001;
+[V1 + 0000] = h(V0);
+V0 = hu[V1 + 0000];
+80013834	nop
+V0 = hu[V1 + 0000];
+V1 = 0022;
+V0 = V0 << 10;
+V0 = V0 >> 10;
+80013848	bne    v0, v1, L13868 [$80013868]
+8001384C	nop
+80013850	lui    at, $800a
+[AT + ac40] = h(0);
+80013858	lui    at, $8009
+[AT + 5dd4] = h(0);
+80013860	lui    at, $8007
+[AT + 1a58] = b(0);
+
+L13868:	; 80013868
+80013868	jal    func12840 [$80012840]
+A0 = 0002;
+80013870	j      L138d4 [$800138d4]
+A0 = 0010;
+
+L13878:	; 80013878
+80013878	lui    v1, $800a
+8001387C	addiu  v1, v1, $ac42 (=-$53be)
+V0 = hu[V1 + 0000];
+80013884	nop
+V0 = V0 + 0001;
+[V1 + 0000] = h(V0);
+V0 = hu[V1 + 0000];
+80013894	nop
+V0 = hu[V1 + 0000];
+V1 = 0012;
+V0 = V0 << 10;
+V0 = V0 >> 10;
+800138A8	bne    v0, v1, L138c8 [$800138c8]
+800138AC	nop
+800138B0	lui    at, $800a
+[AT + ac40] = h(0);
+800138B8	lui    at, $8009
+[AT + 5dd4] = h(0);
+800138C0	lui    at, $8007
+[AT + 1a58] = b(0);
+
+L138c8:	; 800138C8
+800138C8	jal    func12840 [$80012840]
+A0 = 0002;
+A0 = 0020;
+
+L138d4:	; 800138D4
+800138D4	jal    func12a8c [$80012a8c]
+800138D8	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+800138E4	jr     ra 
+800138E8	nop
 ////////////////////////////////
 
 
@@ -480,61 +582,4 @@ switch (V1)
 }
 
 return;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func128b8()
-
-for( int i = 0; i < 2; ++i )
-{
-    for( int j = 0; j < 2; ++j )
-    {
-        A0 = 8009a074 + i * 30 + j * 10;
-        800128FC	jal    func469b0 [$800469b0]
-
-        A0 = 8009a074 + i * 30 + j * 10;
-        A1 = 1;
-        system_change_semi_transparency_in_packet();
-
-        A0 = 8009a074 + i * 30 + J * 10;
-        A1 = 1;
-        system_change_brightness_calculation_in_packet();
-
-        [8009a074 + i * 30 + j * 10 + 4] = b(0);
-        [8009a074 + i * 30 + j * 10 + 5] = b(0);
-        [8009a074 + i * 30 + j * 10 + 6] = b(0);
-        [8009a074 + i * 30 + j * 10 + c] = h(a0);
-        [8009a074 + i * 30 + j * 10 + e] = h(e0);
-    }
-}
-
-[8009a07c] = h(0);
-[8009a07e] = h(0);
-[8009a08c] = h(a0);
-[8009a08e] = h(0);
-[8009a0ac] = h(0);
-[8009a0ae] = h(0);
-[8009a0bc] = h(a0);
-[8009a0be] = h(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func129d0()
-
-V0 = h[80075dec];
-A0 = 8007eb68 + V0 * 14; // rect
-V0 = (h[80075dec] + 1) & 1;
-A1 = h[8007eb68 + V0 * 14]; // x
-V0 = (h[80075dec] + 1) & 1;
-A2 = h[8007eb6a + V0 * 14]; // y
-system_psyq_move_image();
-
-loop12a6c:	; 80012A6C
-    A0 = 1;
-    system_psyq_draw_sync();
-80012A74	bne    v0, zero, loop12a6c [$80012a6c]
 ////////////////////////////////
