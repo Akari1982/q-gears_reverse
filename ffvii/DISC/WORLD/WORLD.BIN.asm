@@ -1009,10 +1009,10 @@
 // wm_load_pc_character_model
 800B69A4-800B6A48
 ////////////////////////////////
-// funcb6a4c
+// wm_unload_pc_character_model
 800B6A4C-800B6AE8
 ////////////////////////////////
-// funcb6aec
+// system_cdrom_pc_character_model_load_callback
 800B6AEC-800B6B24
 ////////////////////////////////
 // funcb6b28

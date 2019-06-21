@@ -4,10 +4,10 @@ There is a remarkable resemblance here to BCX format, so I should be able to cre
 
 Akari: Perhaps you can use this data to implement a utility and functionality in Q-Gears?
 
-Without further ado:
 
 
-______________________________________
+
+
 
 
 In PSX memory, WM0.BSZ starts at 14A600 (and ends at 14F3B7). Every 80-type offset in this file can be treated as such: offset minus 8014A600 equals in-file offset.

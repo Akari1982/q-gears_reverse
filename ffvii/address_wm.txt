@@ -1,11 +1,23 @@
-800c74c4 array with .MAP files cd data (0x8 size).
+800c74a4
+800c74c4 array with .BSZ files cd data (0x8 size).
     00003CED 00003093 WM0.BSZ
     00003CF4 000033AB WM1.BSZ
     00003CFB 0000314F WM2.BSZ
     00003D02 0001948D WM3.BSZ
     +0 [][][][] sector for BSZ files.
     +4 [][][][] size.
-
+800c74e4 array with .MAP files cd data (0x8 size).
+    00003D35 00319800 WM0.MAP
+    00004368 00000002 WM1.MAP
+    00004369 0008A000 WM2.MAP
+    0000447D 0002E000 WM3.MAP
+    000044D9 00007800 WM0.EV
+    000044E8 00004000 WM1.EV
+    000044F0 00007800 WM2.EV
+    000044FF 00007800 WM3.EV
+    0000450E 00000600 FIELD.TBL
+    +0 [][][][] sector for MAP files.
+    +4 [][][][] size.
 
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
@@ -84,3 +96,4 @@
 80116278 [][][][] init with 0.
 
 8014a600 place for BSZ PC character model file.
+8014a610 ???

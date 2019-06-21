@@ -4,14 +4,14 @@
 sector = A0;
 size = A1;
 buffer = A2;
-callback = A4;
+callback = A3;
 
-A0 = 3;
+A0 = 3; // chain type
 A1 = sector;
 A2 = size;
 A3 = buffer;
 A4 = callback;
-func33cb8();
+system_cdrom_set_chain_param();
 
 return 0;
 ////////////////////////////////
@@ -26,18 +26,18 @@ size = A1;
 buffer = A2;
 callback = A3;
 
-A0 = b;
+A0 = b; // chain type
 A1 = sector;
 A2 = size;
 A3 = buffer;
 A4 = callback;
-func33cb8();
+system_cdrom_set_chain_param();
 
 [800698e8] = w(sector);
 
-A0 = 800698f0
+A0 = 800698f0; // temp buffer
 A1 = buffer;
-func34d2c();
+system_cdrom_set_lzs_extract();
 
 return 0;
 ////////////////////////////////
@@ -48,12 +48,14 @@ return 0;
 // func33dac()
 
 sector = A0;
+callback = A1;
 
 A0 = 1; // just set location
 A1 = sector;
-A2 = 0; // buffer
-A3 = 0; // callback
-func33cb8();
+A2 = 0; // size
+A3 = 0; // buffer
+A4 = callback;
+system_cdrom_set_chain_param();
 
 return 0;
 ////////////////////////////////
@@ -67,9 +69,10 @@ sector = A0;
 
 A0 = 0;
 A1 = sector;
-A2 = 0; // buffer
-A3 = 0; // callback
-func33cb8();
+A2 = 0; // size
+A3 = 0; // buffer
+A4 = 0; // callback
+system_cdrom_set_chain_param();
 
 loop33e08:	; 80033E08
     A0 = 2; // cdl_command
@@ -84,18 +87,18 @@ return 0;
 
 
 ////////////////////////////////
-// func34d2c()
+// system_cdrom_set_lzs_extract()
 
 [80034cf0] = w(A0); // buffer where we read into
 [80034cf4] = w(A1); // final buffer
 [80034cfc] = w(A1); // final buffer
-[80034d14] = w(80034e00); // lzs extract callback
+[80034d14] = w(80034e00); // system_cdrom_lzs_extract()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func33cb8()
+// system_cdrom_set_chain_param()
 
 start_chain_type = A0;
 sector = A1;
@@ -120,13 +123,13 @@ loop33cf4:	; 80033CF4
 80033D40	bne    v0, zero, loop33cf4 [$80033cf4]
 
 A0 = sector;
-A1 = 80071a68; // stored params
+A1 = 80071a68; // store pos here
 system_psyq_cd_int_to_pos();
 
-[80071a6c] = w((size + 07ff) >> 0b);
+[80071a60] = w(start_chain_type);
+[80071a6c] = w((size + 7ff) >> b);
 [80071a80] = w(buffer);
 [80071a84] = w(callback);
-[80071a60] = w(start_chain_type);
 ////////////////////////////////
 
 
@@ -1019,7 +1022,7 @@ else
 
 [8006e0f8] = w(w[80071a6c]); // size
 
-if( w[80071a6c] >= 9 )
+if( w[8006e0f8] >= 9 )
 {
     [8006e0f8] = w(9);
 }
@@ -1098,14 +1101,13 @@ T7 = 4800;
 [80034d10] = w(RA);
 
 A0 = w[80034d08];
-80034DA8	jr     w[80034d14]; // run lzs extract callback
+80034DA8	jr     w[80034d14]; // system_cdrom_lzs_extract()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func34e00
-// extract lzs
+// system_cdrom_lzs_extract()
 
 T2 = w[T0];
 T0 = T0 + 4;

@@ -1,3 +1,8 @@
+80034cf0 lzs buffer where we read into.
+80034cf4 lzs extracted buffer.
+80034cfc lzs extracted buffer.
+80034d14 lzs extract function.
+
 800491b0 elemental bit accordinance array (00 - 0x0001, 01 - 0x0002 etc)
 
 800491d0 character id -> savemap block assosiation id. (0-0, 1-1, 2-2, 3-3, 4-4, 5-5, 6-6, 7-7, 8-8, 9-6, A-7)
@@ -211,6 +216,13 @@
     +01 []       ID1    (eg. 41h=digital_pad, 73h=analogue_pad, 12h=mouse, etc.)
     +02 [][]     (max 16 halfwords, depending on lower 4bit of ID1)
 
+800698e8 [][][][] start cd sector to load (increment during load chain).
+800698ec [][][][] some counter. Set to 0 when set cd load chain to 0xc.
+800698f0 temp buffer for lzs compressed file.
+
+8006e0f4 [][][][] set to 0 when set cd load chain to 0xc.
+8006e0f8 [][][][] size to read. Clamp to 0x9 if greater.
+
 800707bc [][]     battle id.
 800707be [][]     battle result stored here. Loaded by 0x23 BTRLD.
 800707c0 font width data.
@@ -222,7 +234,32 @@
 800708c4 attack data in kernel file (2nd section) (0x1c size).
 
 80071a60 [][][][] cdrom load chain type id.
-80071a6c [][][][] cdrom load size.
+                  0  func34420() do nothing.
+                  1  func3447c() set cd loc and set status to 2.
+                  2  func344c0() check prev command in success then 11, if not retry with 1.
+                  3  func345bc() set cd loc and set status to 4.
+                  4  func34600() check prev command in success then 5, if not retry with 3.
+                  5  func346f8() set cd read and set to 6 if success, if not retry with 3.
+                  6  func34754() check if read finished and set to 11 or wait in this status. If error retry with 3.
+                  7  func34428() do nothing.
+                  8  func35744() 
+                  9  func35430() 
+                  a  func34420() do nothing.
+                  b  func347b4() set cd loc and set status to c.
+                  c  func347f8() check prev command in success then d, if not retry with b.
+                  d  func348f4() set cd read from first 9 sectors to 800698f0 and set to e if success, if not retry with b.
+                  e  func34974() check if read finished, check if lzs finished and set to 11 or continue with b. If error retry with b.
+                  f  func34420() do nothing.
+                  10 func34444() set to 0 and call calback from 80071a84 if exist.
+                  11 func34430() set to 10.
+                  12 func34420() do nothing.
+                  13 func34a58() set cd pause and set status to 14.
+                  14 func34a90() if success set to 0 and call calback from 80071a84 if exist, if not retry with 13.
+                  15 and greater are invalid and will cause freeze.
+80071a68 []       amm.
+80071a69 []       ass.
+80071a6a []       asect.
+80071a6c [][][][] cdrom left load size.
 80071a80 [][][][] cdrom load buffer ptr.
 80071a84 [][][][] cdrom load callback.
 
