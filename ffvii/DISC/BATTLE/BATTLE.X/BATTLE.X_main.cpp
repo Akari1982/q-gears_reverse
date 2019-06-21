@@ -15985,3 +15985,3432 @@ A4 = bu[800fa670]; // background color g
 A5 = bu[800f9f34]; // background color b
 funcd91dc(); // set initial disp env and prepare additional
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb37ec
+800B37EC	addiu  sp, sp, $ffe8 (=-$18)
+800B37F0	ori    v0, zero, $0004
+800B37F4	sw     ra, $0010(sp)
+800B37F8	lui    at, $8016
+800B37FC	sb     v0, $2094(at)
+800B3800	jal    funcd8a78 [$800d8a78]
+800B3804	ori    a0, zero, $0004
+800B3808	jal    funce15d8 [$800e15d8]
+800B380C	nop
+800B3810	addiu  a0, zero, $ffff (=-$1)
+800B3814	addiu  a1, zero, $ffff (=-$1)
+800B3818	jal    funcd9e0c [$800d9e0c]
+800B381C	addu   a2, zero, zero
+800B3820	ori    v0, zero, $0002
+800B3824	lui    at, $8009
+800B3828	sh     v0, $5dd4(at)
+800B382C	lw     ra, $0010(sp)
+800B3830	addiu  sp, sp, $0018
+800B3834	jr     ra 
+800B3838	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb383c()
+
+funcb3ffc(); // init some enemy things
+
+// load camera data
+V0 = bu[800fa6d0];
+A0 = w[800e7d50 + V0 * 8 + 0];
+A1 = w[800e7d50 + V0 * 8 + 4];
+A2 = 801a0000;
+A3 = 0;
+load_lzs();
+
+// load battle field
+V0 = hu[8016360c + 8]; // battle field id
+A0 = w[800e7d98 + V0 * 8 + 0];
+A1 = w[800e7d98 + V0 * 8 + 4];
+A2 = 801b0000;
+A3 = 0;
+load_lzs();
+
+funcbb4f8(); // set texture to load queue
+
+// copy battle field
+A0 = 801590e4; // dst
+A1 = 801b0000; // src
+A2 = 8d04; // size
+func1c3cc();
+
+A0 = 0;
+system_psyq_draw_sync();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb38e0
+800B38E0	addiu  sp, sp, $ffe8 (=-$18)
+800B38E4	lui    v1, $800f
+800B38E8	addiu  v1, v1, $8050 (=-$7fb0)
+800B38EC	lui    v0, $800f
+800B38F0	lw     v0, $7df8(v0)
+800B38F4	sw     ra, $0010(sp)
+800B38F8	sll    v0, v0, $03
+800B38FC	addu   a0, v0, v1
+800B3900	addu   v1, v1, v0
+800B3904	lw     a0, $0000(a0)
+800B3908	lw     a1, $0004(v1)
+800B390C	lui    a3, $800b
+800B3910	addiu  a3, a3, $3a04
+800B3914	jal    $80033e74
+800B3918	lui    a2, $801b
+800B391C	jal    funcb7fb4 [$800b7fb4]
+800B3920	nop
+800B3924	lw     ra, $0010(sp)
+800B3928	addiu  sp, sp, $0018
+800B392C	jr     ra 
+800B3930	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3934
+A0 = 2;
+funcb5d38;
+
+A0 = 2;
+funcb5cd4;
+
+[80166f64] = b(3);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3968
+A0 = 1;
+funcb5d38;
+
+A0 = 1;
+funcb5cd4;
+
+[80166f64] = b(2);
+
+[800f8398] = w(w[800f8394] + V0);
+
+if (bu[800f7df4] >= 3) // number of inited enemy
+{
+    V0 = w[800f7e00];
+    A0 = w[800e8050 + V0 * 8 + 0];
+    A1 = w[800e8050 + V0 * 8 + 4];
+    A2 = 801b0000;
+    A3 = 800b3934;
+    system_cdrom_start_load_lzs();
+
+    funcb7fb4;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3a04
+[800f8390] = w(80130200);
+
+A0 = 0;
+funcb5d38;
+
+A0 = 0;
+funcb5cd4;
+
+[80166f64] = b(1);
+
+[800f8394] = w(w[800f8390] + V0);
+
+if (bu[800f7df4] >= 2) // number of inited enemy
+{
+    V0 = w[800f7dfc];
+    A0 = w[800e8050 + V0 * 8 + 0];
+    A1 = w[800e8050 + V0 * 8 + 4];
+    A2 = 801b0000;
+    A3 = 800b3968;
+    system_cdrom_start_load_lzs();
+
+    funcb7fb4;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3ab8
+800B3AB8	addiu  sp, sp, $ffe8 (=-$18)
+800B3ABC	sw     s0, $0010(sp)
+800B3AC0	lui    s0, $8010
+800B3AC4	addiu  s0, s0, $a9c6 (=-$563a)
+800B3AC8	sw     ra, $0014(sp)
+800B3ACC	lh     v1, $0000(s0)
+800B3AD0	nop
+800B3AD4	sll    a0, v1, $02
+800B3AD8	sll    v0, v1, $04
+800B3ADC	subu   v0, v0, v1
+800B3AE0	sll    v0, v0, $0c
+800B3AE4	lui    v1, $8010
+800B3AE8	addiu  v1, v1, $3200
+800B3AEC	addu   v0, v0, v1
+800B3AF0	lui    at, $8010
+800B3AF4	addiu  at, at, $8384 (=-$7c7c)
+800B3AF8	addu   at, at, a0
+800B3AFC	sw     v0, $0000(at)
+800B3B00	lh     a0, $0000(s0)
+800B3B04	jal    funcb5e64 [$800b5e64]
+800B3B08	nop
+800B3B0C	lh     a0, $0000(s0)
+800B3B10	jal    funcb5c1c [$800b5c1c]
+800B3B14	nop
+800B3B18	lui    a1, $8010
+800B3B1C	lh     a1, $a9c8(a1)
+800B3B20	ori    v0, zero, $00c8
+800B3B24	beq    a1, v0, Lb3b64 [$800b3b64]
+800B3B28	sll    a1, a1, $03
+800B3B2C	lui    v0, $800f
+800B3B30	addiu  v0, v0, $8068 (=-$7f98)
+800B3B34	addu   v1, a1, v0
+800B3B38	addu   v0, v0, a1
+800B3B3C	lw     a0, $0000(v1)
+800B3B40	lw     a1, $0004(v0)
+800B3B44	lui    a3, $800b
+800B3B48	addiu  a3, a3, $3b84
+800B3B4C	jal    $80033e74
+800B3B50	lui    a2, $801b
+800B3B54	jal    funcb7fb4 [$800b7fb4]
+800B3B58	nop
+800B3B5C	j      Lb3b70 [$800b3b70]
+800B3B60	nop
+
+Lb3b64:	; 800B3B64
+800B3B64	ori    v0, zero, $0003
+800B3B68	lui    at, $8016
+800B3B6C	sb     v0, $6f64(at)
+
+Lb3b70:	; 800B3B70
+800B3B70	lw     ra, $0014(sp)
+800B3B74	lw     s0, $0010(sp)
+800B3B78	addiu  sp, sp, $0018
+800B3B7C	jr     ra 
+800B3B80	nop
+////////////////////////////////
+// funcb3b84
+800B3B84	addiu  sp, sp, $ffe8 (=-$18)
+800B3B88	sw     s0, $0010(sp)
+800B3B8C	lui    s0, $8010
+800B3B90	addiu  s0, s0, $a9ca (=-$5636)
+800B3B94	sw     ra, $0014(sp)
+800B3B98	lh     v1, $0000(s0)
+800B3B9C	nop
+800B3BA0	sll    a0, v1, $02
+800B3BA4	sll    v0, v1, $04
+800B3BA8	subu   v0, v0, v1
+800B3BAC	sll    v0, v0, $0c
+800B3BB0	lui    v1, $8010
+800B3BB4	addiu  v1, v1, $3200
+800B3BB8	addu   v0, v0, v1
+800B3BBC	lui    at, $8010
+800B3BC0	addiu  at, at, $8384 (=-$7c7c)
+800B3BC4	addu   at, at, a0
+800B3BC8	sw     v0, $0000(at)
+800B3BCC	lh     a0, $0000(s0)
+800B3BD0	jal    funcb5e64 [$800b5e64]
+800B3BD4	nop
+800B3BD8	lh     a0, $0000(s0)
+800B3BDC	jal    funcb5c1c [$800b5c1c]
+800B3BE0	nop
+800B3BE4	lui    a1, $8010
+800B3BE8	lh     a1, $a9cc(a1)
+800B3BEC	ori    v0, zero, $00c8
+800B3BF0	beq    a1, v0, Lb3c30 [$800b3c30]
+800B3BF4	sll    a1, a1, $03
+800B3BF8	lui    v0, $800f
+800B3BFC	addiu  v0, v0, $8068 (=-$7f98)
+800B3C00	addu   v1, a1, v0
+800B3C04	addu   v0, v0, a1
+800B3C08	lw     a0, $0000(v1)
+800B3C0C	lw     a1, $0004(v0)
+800B3C10	lui    a3, $800b
+800B3C14	addiu  a3, a3, $3c50
+800B3C18	jal    $80033e74
+800B3C1C	lui    a2, $801b
+800B3C20	jal    funcb7fb4 [$800b7fb4]
+800B3C24	nop
+800B3C28	j      Lb3c3c [$800b3c3c]
+800B3C2C	nop
+
+Lb3c30:	; 800B3C30
+800B3C30	ori    v0, zero, $0003
+800B3C34	lui    at, $8016
+800B3C38	sb     v0, $6f64(at)
+
+Lb3c3c:	; 800B3C3C
+800B3C3C	lw     ra, $0014(sp)
+800B3C40	lw     s0, $0010(sp)
+800B3C44	addiu  sp, sp, $0018
+800B3C48	jr     ra 
+800B3C4C	nop
+////////////////////////////////
+// funcb3c50
+800B3C50	addiu  sp, sp, $ffe8 (=-$18)
+800B3C54	sw     s0, $0010(sp)
+800B3C58	lui    s0, $8010
+800B3C5C	addiu  s0, s0, $a9ce (=-$5632)
+800B3C60	sw     ra, $0014(sp)
+800B3C64	lh     v1, $0000(s0)
+800B3C68	nop
+800B3C6C	sll    a0, v1, $02
+800B3C70	sll    v0, v1, $04
+800B3C74	subu   v0, v0, v1
+800B3C78	sll    v0, v0, $0c
+800B3C7C	lui    v1, $8010
+800B3C80	addiu  v1, v1, $3200
+800B3C84	addu   v0, v0, v1
+800B3C88	lui    at, $8010
+800B3C8C	addiu  at, at, $8384 (=-$7c7c)
+800B3C90	addu   at, at, a0
+800B3C94	sw     v0, $0000(at)
+800B3C98	lh     a0, $0000(s0)
+800B3C9C	jal    funcb5e64 [$800b5e64]
+800B3CA0	nop
+800B3CA4	lh     a0, $0000(s0)
+800B3CA8	jal    funcb5c1c [$800b5c1c]
+800B3CAC	nop
+800B3CB0	ori    v0, zero, $0003
+800B3CB4	lui    at, $8016
+800B3CB8	sb     v0, $6f64(at)
+800B3CBC	lw     ra, $0014(sp)
+800B3CC0	lw     s0, $0010(sp)
+800B3CC4	addiu  sp, sp, $0018
+800B3CC8	jr     ra 
+800B3CCC	nop
+////////////////////////////////
+// funcb3cd0
+800B3CD0	addiu  sp, sp, $ffe8 (=-$18)
+800B3CD4	lui    a0, $801b
+800B3CD8	addu   a1, zero, zero
+800B3CDC	addu   a2, zero, zero
+800B3CE0	sw     ra, $0010(sp)
+800B3CE4	jal    funcd2980 [$800d2980]
+800B3CE8	addu   a3, zero, zero
+800B3CEC	lui    v0, $8010
+800B3CF0	lh     v0, $a9c4(v0)
+800B3CF4	lui    v1, $800f
+800B3CF8	addiu  v1, v1, $8068 (=-$7f98)
+800B3CFC	sll    v0, v0, $03
+800B3D00	addu   a0, v0, v1
+800B3D04	addu   v1, v1, v0
+800B3D08	lw     a0, $0000(a0)
+800B3D0C	lw     a1, $0004(v1)
+800B3D10	lui    a3, $800b
+800B3D14	addiu  a3, a3, $3ab8
+800B3D18	jal    $80033e74
+800B3D1C	lui    a2, $801b
+800B3D20	jal    funcb7fb4 [$800b7fb4]
+800B3D24	nop
+800B3D28	lw     ra, $0010(sp)
+800B3D2C	addiu  sp, sp, $0018
+800B3D30	jr     ra 
+800B3D34	nop
+////////////////////////////////
+// funcb3d38
+800B3D38	addiu  sp, sp, $ffe8 (=-$18)
+800B3D3C	sw     ra, $0010(sp)
+800B3D40	jal    funcc5e94 [$800c5e94]
+800B3D44	nop
+800B3D48	lui    v0, $800f
+800B3D4C	addiu  v0, v0, $a50c (=-$5af4)
+800B3D50	ori    a0, zero, $755e
+800B3D54	ori    a1, zero, $a800
+800B3D58	lui    a3, $800b
+800B3D5C	addiu  a3, a3, $3cd0
+800B3D60	lui    at, $8010
+800B3D64	sw     v0, $839c(at)
+800B3D68	jal    $80033e74
+800B3D6C	lui    a2, $801b
+800B3D70	jal    funcb7fb4 [$800b7fb4]
+800B3D74	nop
+800B3D78	lw     ra, $0010(sp)
+800B3D7C	addiu  sp, sp, $0018
+800B3D80	jr     ra 
+800B3D84	nop
+////////////////////////////////
+// funcb3d88
+800B3D88	addiu  sp, sp, $ffe8 (=-$18)
+800B3D8C	sw     ra, $0010(sp)
+800B3D90	jal    funcb588c [$800b588c]
+800B3D94	nop
+800B3D98	ori    a0, zero, $0004
+800B3D9C	jal    funcb6b98 [$800b6b98]
+800B3DA0	ori    a1, zero, $000a
+800B3DA4	jal    funcb36b4 [$800b36b4]
+800B3DA8	nop
+800B3DAC	lw     ra, $0010(sp)
+800B3DB0	addiu  sp, sp, $0018
+800B3DB4	jr     ra 
+800B3DB8	nop
+////////////////////////////////
+// funcb3dbc
+800B3DBC	addiu  sp, sp, $ffe8 (=-$18)
+800B3DC0	sw     ra, $0010(sp)
+800B3DC4	jal    funcb4794 [$800b4794]
+800B3DC8	nop
+800B3DCC	addu   a0, zero, zero
+800B3DD0	jal    funcb6b98 [$800b6b98]
+800B3DD4	ori    a1, zero, $0003
+800B3DD8	ori    a0, zero, $0003
+800B3DDC	jal    funcb6b98 [$800b6b98]
+800B3DE0	ori    a1, zero, $0003
+800B3DE4	lui    v1, $8016
+800B3DE8	lhu    v1, $3614(v1)
+800B3DEC	ori    v0, zero, $0039
+800B3DF0	bne    v1, v0, Lb3e1c [$800b3e1c]
+800B3DF4	addu   a0, zero, zero
+800B3DF8	lui    v1, $8015
+800B3DFC	addiu  v1, v1, $1909
+
+loopb3e00:	; 800B3E00
+800B3E00	lbu    v0, $0000(v1)
+800B3E04	addiu  a0, a0, $0001
+800B3E08	ori    v0, v0, $0010
+800B3E0C	sb     v0, $0000(v1)
+800B3E10	slti   v0, a0, $000a
+800B3E14	bne    v0, zero, loopb3e00 [$800b3e00]
+800B3E18	addiu  v1, v1, $0b9c
+
+Lb3e1c:	; 800B3E1C
+800B3E1C	lw     ra, $0010(sp)
+800B3E20	addiu  sp, sp, $0018
+800B3E24	jr     ra 
+800B3E28	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3e2c()
+
+[800f7de4] = b(1);
+[800f7ed4] = b(0);
+[800f837c] = b(0); // index in camera start end vector structures.
+[800f8380] = b(0); // don't draw flags.
+
+[800f9d94] = b(0);
+[800f9d98] = b(0);
+[800f9d9c] = b(0);
+
+[800fa6d4] = b(0);
+[800fafdc] = b(0);
+
+[801031e0] = b(1);
+
+[801516a0] = h(0);
+[801517c4] = b(0);
+[801590cc] = b(0); // attacker id
+[801590d8] = b(0);
+[801590e0] = b(0);
+[801620a0] = b(0);
+[801620a4] = b(0);
+[80162974] = b(0);
+[80163b38] = b(0);
+[80163c7c] = b(0);
+[80166f58] = b(0);
+
+for( int i = 0; i < a; ++i )
+{
+    [801518e4 + i * b9c + 26] = b(1);
+}
+
+for( int i = 0; i < 3; ++i )
+{
+    [800f9f28 + i * 4] = w(0);
+}
+
+A0 = bu[801590cc];
+[801518e4 + A0 * b9c + 22] = b(0);
+
+[800f8374] = b(e);
+
+V1 = bu[801590e0];
+[80163798 + V1 * c + 8] = h(-2); // camera id ( -2 - start battle camera)
+
+funcbc1e0(); // init damage, unit movement, effect and camera callback arrays
+
+funcc5bec(); // init 800f9da8 array
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3fac()
+// check if enemy has formation record
+
+for( int i = 0; i < 6; ++i )
+{
+    if( h[8016360c + 4c + i * 10 + 0] == A0 ) // battle formation enemy id
+    {
+        [800f7df4] = b(bu[800f7df4] + 1);
+        return 0;
+    }
+}
+return -1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3ffc()
+// init some enemy things
+
+[80163b3c] = b(0);
+[800f7df4] = b(0);
+[800fa6d0] = b(bu[8016360c + 1a]); // formation type id
+[80163f30] = b(bu[8016360c + 1b]); // init camera script id
+
+for( int i = 0; i < 3; ++i )
+{
+    A0 = i;
+    funcb3fac(); // check if enemy exist in formation
+    if( V0 != -1 )
+    {
+        V0 = h[8016360c + i * 2] + 14;
+    }
+    [800f7df8 + i * 4] = w(V0);
+}
+
+[800f7e04] = b(0);
+
+for( int i = 0; i < 6; ++i )
+{
+    if( h[8016360c + 4c + i * 10 + 0] != -1) // battle formation enemy id
+    {
+        [800f7e04] = b(bu[800f7e04] + 1);
+    }
+}
+
+for( int i = 0; i < 6; ++i )
+{
+    [800f7e08 + i * c + 0] = h(hu[8016360c + 4c + i * 10 + 0]);
+    [800f7e08 + i * c + 2] = h(hu[8016360c + 4c + i * 10 + 2]);
+    [800f7e08 + i * c + 4] = h(hu[8016360c + 4c + i * 10 + 4]);
+    [800f7e08 + i * c + 6] = h(hu[8016360c + 4c + i * 10 + 6]);
+    [800f7e08 + i * c + 8] = w(w[8016360c + 4c + i * 10 + c]);
+}
+
+if( w[800f7df8] == -1 )
+{
+    for( int i = 0; i < 6; ++i )
+    {
+        if( h[800f7e08 + i * c + 0] != -1 )
+        {
+            [800f7e08 + i * c + 0] = h(h[800f7e08 + i * c + 0] - 1);
+        }
+    }
+}
+
+if( w[800f7dfc] == -1 )
+{
+    for( int i = 0; i < 6; ++i )
+    {
+        if( ( h[800f7e08 + i * c + 0] != -1 ) && ( h[800f7e08 + i * c + 0] != 0 ) )
+        {
+            [800f7e08 + i * c + 0] = h(h[800f7e08 + i * c + 0] - 1);
+        }
+    }
+}
+
+for( int i = 0; i < 3; ++i )
+{
+    if( w[800f7df8 + 0] == -1 )
+    {
+        [800f7df8 + 8] = w(w[800f7df8 + 0]);
+        [800f7df8 + 0] = w(w[800f7df8 + 4]);
+        [800f7df8 + 4] = w(w[800f7df8 + 8]);
+    }
+}
+
+for( int i = 0; i < 2; ++i )
+{
+    if( w[800f7df8 + 4] == -1 )
+    {
+        [800f7df8 + 8] = w(w[800f7df8 + 4]);
+        [800f7df8 + 4] = w(w[800f7df8 + 8]);
+    }
+}
+
+for( int i = 0; i < 6; ++i )
+{
+    if( h[800f7e08 + i * c + 0] != -1 )
+    {
+        [800f7e08 + i * c + 0] = h(h[800f7e08 + i * c + 0] + 3);
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb430c()
+
+[80163b44] = h(0);
+[80163b46] = h(10);
+
+// reset rotation and translation for camera matrix
+[800fa63c + 20] = h(0);
+[800fa63c + 22] = h(0);
+[800fa63c + 24] = h(0);
+[800fa63c + 28] = h(0);
+[800fa63c + 2a] = h(0);
+[800fa63c + 2c] = h(0);
+
+for( int i = 0; i < a; ++i )
+{
+    // reset rotation and translation for field parts transformation matrixes
+    [800f8158 + i * 34 + 20] = h(0)
+    [800f8158 + i * 34 + 22] = h(0);
+    [800f8158 + i * 34 + 24] = h(0);
+    [800f8158 + i * 34 + 28] = h(0)
+    [800f8158 + i * 34 + 2a] = h(0);
+    [800f8158 + i * 34 + 2c] = h(0);
+}
+[800f8158 + i * 0 + 30] = w(800fa63c);
+
+V1 = w[801590e4 + 4]; // offset to first file (settings)
+V1 = bu[801590e4 + V1 + 0]; // type of field
+if( V1 == 0 ) // mesh with horisontal scrolling parts (field 47 - Corel Train Battle)
+{
+    for( int i = 0; i < a; ++i )
+    {
+        [800f8158 + i * 34 + 30] = w(800fa63c);
+    }
+
+    [800f8158 + 2 * 34 + 2c] = h(7530);
+    [800f8158 + 3 * 34 + 2c] = h(4e20);
+    [800f8158 + 4 * 34 + 2c] = h(2710);
+    [800f8158 + 5 * 34 + 2c] = h(63c0);
+    [800f8158 + 6 * 34 + 2c] = h(d8f0);
+    [800f8158 + 7 * 34 + 2c] = h(b1e0);
+    [800f8158 + 8 * 34 + 2c] = h(63c0);
+}
+else if( V1 == 2 ) // mesh with vertical scrolling parts (field 12 - Shinra Elevators)
+{
+    [800f8158 + 1 * 34 + 30] = w(800fa63c);
+    [800f8158 + 2 * 34 + 30] = w(800fa63c);
+    [800f8158 + 3 * 34 + 30] = w(800fa63c);
+    [800f8158 + 4 * 34 + 30] = w(800fa63c);
+
+    [800f8158 + 4 * 34 + 2a] = h(30d4);
+}
+else if( V1 == 3 )// mesh with lifestream (field 4e - Final Battle - Sephiroth)
+{
+    [800f8158 + 1 * 34 + 30] = w(800fa63c);
+    [800f8158 + 2 * 34 + 30] = w(800fa63c);
+    [800f8158 + 3 * 34 + 30] = w(800fa63c);
+}
+else if( V1 == 4 ) // mesh with rotating parts (field 39 - Safer Battle)
+{
+    [800f8158 + 1 * 34 + 30] = w(800fa63c);
+    [800f8158 + 2 * 34 + 30] = w(800fa63c);
+    [800f8158 + 3 * 34 + 30] = w(800fa63c);
+    [800f8158 + 4 * 34 + 30] = w(800fa63c);
+    [800f8158 + 5 * 34 + 30] = w(800fa63c);
+    [800f8158 + 6 * 34 + 30] = w(800fa63c);
+}
+
+// reset root translation and ???
+for( int i = 0; i < a; ++i )
+{
+    [801518e4 + i * b9c + 168] = h(0);
+    [801518e4 + i * b9c + 16a] = h(0);
+    [801518e4 + i * b9c + 16c] = h(0);
+
+    [80151200 + i * 74 + 34] = b(0);
+}
+
+[800f5b70] = b(0); // R
+[800f5b71] = b(0); // G
+[800f5b72] = b(0); // B
+[800f5b73] = b(1f);
+[800f5b74] = h(0);
+
+if( hu[8016360c + 8] == 3a ) // if battle id == Kalm Flashback (with rain)
+{
+    funcc57b0(); // settings for specific scene model mesh for rain
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb45f0
+formation_type = bu[800fa6d0];
+
+A3 = 0;
+loopb4624:	; 800B4624
+    if (hu[801636b8 + A3 * 10 + 6] & 1)
+    {
+        if (h[800e8f94 + formation_type * 26 + A3 * 2] == 0)
+        {
+            V0 = hu[800e8e84 + formation_type * 12 + A3 * 6 + 4] + 204;
+        }
+        else
+        {
+            V0 = hu[800e8e84 + formation_type * 12 + A3 * 6 + 4] - 204;
+        }
+
+        [800e8e84 + formation_type * 12 + A3 * 6 + 4] = h(V0);
+    }
+
+    A3 = A3 + 1;
+    V0 = A3 < 3;
+800B46A4	bne    v0, zero, loopb4624 [$800b4624]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb46b4
+formation_type = bu[800fa6d0];
+
+A0 = 0;
+loopb46e0:	; 800B46E0
+    [801518e4 + A0 * b9c + 18] = h(hu[800e8f94 + formation_type * 6 + A0 * 2]);
+
+    if (formation_type == 2)
+    {
+        [801518e4 + A0 * b9c + 162] = h(0);
+    }
+    else
+    {
+        if (hu[800707bc] == 3d6) // battle id
+        {
+            [801518e4 + A0 * b9c + 18] = h(0);
+            [801518e4 + A0 * b9c + 162] = h(0);
+        }
+        else
+        {
+            [801518e4 + A0 * b9c + 162] = h(hu[800e8f94 + formation_type * 6 + A0 * 2]);
+        }
+    }
+
+    [801518e4 + A0 * b9c + 160] = h(0); // rotation X
+    [801518e4 + A0 * b9c + 164] = h(0); // rotation Z
+
+    A0 = A0 + 1;
+    V0 = A0 < 3;
+800B4784	bne    v0, zero, loopb46e0 [$800b46e0]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb4794
+S0 = 2;
+loopb47b0:	; 800B47B0
+    [80151200 + S0 * 74 + 32] = b(S0);
+    S0 = S0 - 1;
+800B47C4	bgez   s0, loopb47b0 [$800b47b0]
+
+
+
+A0 = w[800f839c];
+[A0 + 8] = w(w[800f839c] + w[A0 + 8]);
+
+
+
+V0 = w[800f839c];
+A2 = w[V0 + 8];
+
+A1 = 0;
+loopb4804:	; 800B4804
+    V1 = w[800f839c];
+    [A2 + A1 * 4 + 68] = w(w[V1 + 8] + w[A2 + A1 * 4 + 68]);
+    A1 = A1 + 1;
+    V0 = A1 < 4a;
+800B4824	bne    v0, zero, loopb4804 [$800b4804]
+
+
+
+A1 = 0;
+loopb4834:	; 800B4834
+    V1 = w[800f839c];
+    [A2 + A1 * 4 + 24] = w(w[V1 + 8] + w[A2 + A1 * 4 + 24]);
+    A1 = A1 + 1;
+    V0 = A1 < 8;
+800B4854	bne    v0, zero, loopb4834 [$800b4834]
+
+
+
+[800f9980] = b(0);
+
+S0 = 0;
+loopb4878:	; 800B4878
+    if (b[801636b8 + S0 * 10 + 0] != -1)
+    {
+        model_file = w[800f8384 + S0 * 4];
+        [model_file + 8] = w(model_file + w[model_file + 8]);
+
+        [800f9980] = b(bu[800f9980] + 1);
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+800B48C0	bne    v0, zero, loopb4878 [$800b4878]
+
+
+
+S0 = 0;
+loopb48d8:	; 800B48D8
+    if (b[801636b8 + S0 * 10 + 0] != -1)
+    {
+        model_file = w[800f8384 + S0 * 4];
+        anim_settings = w[model_file + 8];
+
+        A1 = 0;
+        loopb4908:	; 800B4908
+            [A2 + A1 * 4 + 68] = w(anim_settings + w[A2 + A1 * 4 + 68]);
+            A1 = A1 + 1;
+            V0 = A1 < 4a;
+        800B4924	bne    v0, zero, loopb4908 [$800b4908]
+
+        A1 = 0;
+        loopb4938:	; 800B4938
+            [A2 + A1 * 4 + 24] = w(anim_settings + w[A2 + A1 * 4 + 24]);
+            A1 = A1 + 1;
+            V0 = A1 < 8;
+        800B4954	bne    v0, zero, loopb4938 [$800b4938]
+
+        A0 = S0;
+        funcd0958;
+    }
+
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+800B4970	bne    v0, zero, loopb48d8 [$800b48d8]
+
+
+
+A0 = 0;
+funcb4e30;
+
+A0 = 1;
+funcb4e30;
+
+A0 = 2;
+funcb4e30;
+
+A0 = 0;
+A1 = 0;
+funcbb430;
+
+A0 = 1;
+A1 = 10;
+funcbb430;
+
+A0 = 2;
+A1 = 11;
+funcbb430;
+
+V1 = bu[800f9980];
+if( V1 == 1 )
+{
+    funcb45f0;
+
+    V1 = bu[800fa6d0];
+    S0 = 0;
+    loopb49f8:	; 800B49F8
+        [80163c80 + S0 * 6 + 0] = h(0);
+        [80163c80 + S0 * 6 + 2] = h(hu[800e8e84 + V1 * 12 + S0 * 6 + 2]);
+        [80163c80 + S0 * 6 + 4] = h(hu[800e8e84 + V1 * 12 + S0 * 6 + 4]);
+        S0 = S0 + 1;
+        V0 = S0 < 3;
+    800B4A54	bne    v0, zero, loopb49f8 [$800b49f8]
+
+    funcb46b4; // set rotation
+}
+if( V1 != 2 )
+{
+    funcb45f0;
+
+    V1 = bu[800fa6d0];
+    S0 = 0;
+    loopb4cd8:	; 800B4CD8
+        [80163c80 + S0 * 6 + 0] = h(hu[800e8e84 + V1 * 12 + S0 * 6 + 0]);
+        [80163c80 + S0 * 6 + 2] = h(hu[800e8e84 + V1 * 12 + S0 * 6 + 2]);
+        [80163c80 + S0 * 6 + 4] = h(hu[800e8e84 + V1 * 12 + S0 * 6 + 4]);
+        S0 = S0 + 1;
+        V0 = S0 < 3;
+    800B4D48	bne    v0, zero, loopb4cd8 [$800b4cd8]
+
+    funcb46b4; // set rotation
+}
+else
+{
+    V0 = bu[800fa6d0];
+    800B4A6C	addu   a1, zero, zero
+    800B4A70	sll    v1, v0, $01
+    800B4A74	addu   v1, v1, v0
+    800B4A78	sll    a0, v1, $02
+    800B4A7C	lui    v1, $800f
+    800B4A80	addiu  v1, v1, $8fcc (=-$7034)
+    800B4A84	sll    v0, v0, $02
+    800B4A88	addu   v1, v0, v1
+
+    loopb4a8c:	; 800B4A8C
+        if (b[801636b8 + A1] != -1)
+        {
+            if (hu[801636be + A1] & 1)
+            {
+                if (h[V1] == 0)
+                {
+                    V0 = hu[800e8f2c + A0] + 204;
+                }
+                else
+                {
+                    V0 = hu[800e8f2c + A0] - 204;
+                }
+                [800e8f2c + A0] = h(V0);
+            }
+
+            A0 = A0 + 6;
+            V1 = V1 + 2;
+        }
+
+        A1 = A1 + 10;
+        V0 = A1 < 30;
+    800B4B28	bne    v0, zero, loopb4a8c [$800b4a8c]
+
+    800B4B2C	addu   s0, zero, zero
+    800B4B34	addu   a0, zero, zero
+    800B4B38	lui    v1, $8010
+    800B4B3C	lbu    v1, $a6d0(v1)
+    800B4B40	addu   a1, zero, zero
+
+    V1 = V1 * c;
+
+    loopb4b50:	; 800B4B50
+        V0 = b[801636b8 + A1];
+        if (V0 != -1)
+        {
+            [80163c80 + A0 + 0] = h(hu[800e8f28 + V1 + 0]);
+            [80163c80 + A0 + 2] = h(hu[800e8f28 + V1 + 2]);
+            [80163c80 + A0 + 4] = h(hu[800e8f28 + V1 + 4]);
+            V1 = V1 + 6;
+        }
+
+        A1 = A1 + 10;
+        800B4BD8	addiu  s0, s0, $0001
+        800B4BDC	slti   v0, s0, $0003
+        800B4BE4	addiu  a0, a0, $0006
+    800B4BE0	bne    v0, zero, loopb4b50 [$800b4b50]
+
+    800B4BE8	addiu  a3, zero, $ffff (=-$1)
+    800B4BEC	addu   a0, zero, zero
+    800B4BF0	addu   a1, zero, zero
+    800B4BF4	lui    a2, $8010
+    800B4BF8	lbu    a2, $a6d0(a2)
+    800B4BFC	lui    v1, $800f
+    800B4C00	addiu  v1, v1, $8fcc (=-$7034)
+    800B4C04	sll    v0, a2, $02
+    800B4C08	addu   v1, v0, v1
+
+    loopb4c0c:	; 800B4C0C
+    800B4C0C	lui    at, $8016
+    800B4C10	addiu  at, at, $36b8
+    800B4C14	addu   at, at, a1
+    800B4C18	lb     v0, $0000(at)
+    800B4C1C	nop
+    800B4C20	beq    v0, a3, Lb4ca0 [$800b4ca0]
+    800B4C24	nop
+    800B4C28	lhu    v0, $0000(v1)
+    800B4C2C	nop
+    800B4C30	lui    at, $8015
+    800B4C34	addiu  at, at, $18fc
+    800B4C38	addu   at, at, a0
+    800B4C3C	sh     v0, $0000(at)
+    800B4C40	ori    v0, zero, $0002
+    800B4C44	bne    a2, v0, Lb4c64 [$800b4c64]
+    800B4C48	nop
+    800B4C4C	lui    at, $8015
+    800B4C50	addiu  at, at, $1a46
+    800B4C54	addu   at, at, a0
+    800B4C58	sh     zero, $0000(at)
+    800B4C5C	j      Lb4c80 [$800b4c80]
+    800B4C60	addiu  v1, v1, $0002
+
+    Lb4c64:	; 800B4C64
+    800B4C64	lhu    v0, $0000(v1)
+    800B4C68	nop
+    800B4C6C	lui    at, $8015
+    800B4C70	addiu  at, at, $1a46
+    800B4C74	addu   at, at, a0
+    800B4C78	sh     v0, $0000(at)
+    800B4C7C	addiu  v1, v1, $0002
+
+    Lb4c80:	; 800B4C80
+    800B4C80	lui    at, $8015
+    800B4C84	addiu  at, at, $1a48
+    800B4C88	addu   at, at, a0
+    800B4C8C	sh     zero, $0000(at)
+    800B4C90	lui    at, $8015
+    800B4C94	addiu  at, at, $1a44
+    800B4C98	addu   at, at, a0
+
+    Lb4c9c:	; 800B4C9C
+    800B4C9C	sh     zero, $0000(at)
+
+    Lb4ca0:	; 800B4CA0
+    800B4CA0	addiu  a1, a1, $0010
+    800B4CA4	slti   v0, a1, $0030
+    800B4CA8	bne    v0, zero, loopb4c0c [$800b4c0c]
+    800B4CAC	addiu  a0, a0, $0b9c
+}
+
+
+
+S0 = 0;
+loopb4d5c:	; 800B4D5C
+    [80163784 + S0] = b(bu[801636b8 + S0 * 10 + 1]);
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+800B4D88	bne    v0, zero, loopb4d5c [$800b4d5c]
+
+
+
+S0 = 0;
+loopb4d9c:	; 800B4D9C
+    [801518e4 + S0 * b9c + 168] = h(hu[80163c80 + S0 * 6 + 0]);
+    [801518e4 + S0 * b9c + 16a] = h(hu[80163c80 + S0 * 6 + 2]);
+    [801518e4 + S0 * b9c + 16c] = h(hu[80163c80 + S0 * 6 + 4]);
+    S0 = S0 + 1;
+    V0 = S0 < 3;
+800B4E0C	bne    v0, zero, loopb4d9c [$800b4d9c]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb4e30
+unit_id = A0;
+
+V1 = bu[801636b8 + S2 * 10];
+if (V1 != -1)
+{
+    S1 = 800f8384 + bu[80151232 + unit_id * 74] * 4;
+    V0 = w[S1]; // loaded file offset
+    A0 = unit_id;
+    A1 = V0 + w[V0 + 4]; // offset to 1st file (model data)
+    A2 = 0;
+    funcbb538;
+
+    V0 = w[S1];
+    S3 = w[V0 + 8];
+
+    [801518e4 + unit_id * b9c + 0] = h(hu[S3 + 0]);
+    [801518e4 + unit_id * b9c + 8] = h(hu[S3 + 6]);
+    [801518e4 + unit_id * b9c + a] = h(hu[S3 + 8]);
+    [801518e4 + unit_id * b9c + c] = h(hu[S3 + a]);
+    [801518e4 + unit_id * b9c + 12] = h(hu[S3 + 4]);
+    [801518e4 + unit_id * b9c + 27] = b(bu[S3 + 2]);
+
+    [80151200 + unit_id * 78 + 26] = h(hu[S3 + c]);
+    [80151200 + unit_id * 78 + 28] = h(hu[S3 + e]);
+    [80151200 + unit_id * 78 + 2a] = h(hu[S3 + 10]);
+    [80151200 + unit_id * 78 + 2e] = h(0);
+    [80151200 + unit_id * 78 + 30] = h(hu[S3 + 64]);
+
+
+
+    A2 = 0;
+    loopb4fe4:	; 800B4FE4
+        [80151200 + unit_id * 78 + 4 + A2 * 2] = h(hu[S3 + 44 + A2 * 2]);
+        A2 = A2 + 1;
+        V0 = A2 < 4;
+    800B4FF8	bne    v0, zero, loopb4fe4 [$800b4fe4]
+
+
+
+
+    A2 = 0;
+    loopb5754:	; 800B5754
+        [80151200 + unit_id * 78 + e + A2 * 2] = h(hu[S3 + 4c + A2 * 2]);
+        [80151200 + unit_id * 78 + 1a + A2 * 2] = h(hu[S3 + 58 + A2 * 2]);
+        A2 = A2 + 1;
+        V0 = A2 < 6;
+    800B5774	bne    v0, zero, loopb5754 [$800b5754]
+
+
+
+    if (bu[801518e4 + unit_id * b9c + 27] & 80) // if secondary animation
+    {
+        [800fa6d8 + unit_id * 40 + 38] = w(801518e4 + unit_id * b9c + 140);
+
+        A0 = 800fa6d8 + unit_id * 40 + 3c;
+        A1 = 80163f34 + unit_id * 100c;
+        A2 = unit_id;
+        funcc7924;
+    }
+
+
+
+    // copy joints
+    S5 = 0;
+    loopb5848:	; 800B5848
+        [8015190f + unit_id * b9c + S5] = b(bu[S3 + S5 + 12]);
+        S5 = S5 + 1;
+        V0 = S5 < 10;
+    800B585C	bne    v0, zero, loopb5848 [$800b5848]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5138
+S0 = 4;
+if (S0 < bu[800f7e04] + 4)
+{
+    loopb5168:	; 800B5168
+        [80151200 + S0 * 74 + 32] = b(0);
+        S0 = S0 + 1;
+        V0 = S0 < bu[800f7e04] + 4;
+    800B5188	bne    v0, zero, loopb5168 [$800b5168]
+}
+
+
+
+// set global offsets to all animation script files in model files
+S0 = 3;
+if (S0 < bu[800f7df4] + 3) // number of enemies
+{
+    loopb51b8:	; 800B51B8
+        model_file = w[800f8390 + (S0 - 3) * 4]; // offset to model file
+        [model_file + 8] = w(model_file + w[model_file + 8]);
+
+        S0 = S0 + 1;
+        V0 = S0 < bu[800f7df4] + 3;
+    800B51E0	bne    v0, zero, loopb51b8 [$800b51b8]
+}
+
+
+
+// set some offsets to global in animation script file in model file
+S0 = 3;
+if (S0 < bu[800f7df4] + 3) // number of enemies
+{
+    loopb5214:	; 800B5214
+        model_file = w[800f8390 + (S0 - 3) * 4]; // offset to model file
+        script_file = w[model_file + 8]; // offset to file with animation scripts
+
+        A1 = 0;
+        loopb5224:	; 800B5224
+            [A0 + 24 + A1 * 4] = w(script_file + w[A0 + 24 + A1 * 4]);
+            A1 = A1 + 1;
+            V0 = A1 < 8;
+        800B5240	bne    v0, zero, loopb5224 [$800b5224]
+
+        S0 = S0 + 1;
+        V0 = S0 < bu[800f7df4] + 3;
+    800B52CC	bne    v0, zero, loopb5288 [$800b5288]
+}
+
+
+
+// set global offsets to all animation scripts for enemies
+S0 = 3;
+if (S0 < bu[800f7df4] + 3) // number of enemies
+{
+    loopb5288:	; 800B5288
+        model_file = w[800f8390 + (S0 - 3) * 4]; // offset to model file
+        script_file = w[model_file + 8]; // offset to file with animation scripts
+
+        A1 = 0;
+        loopb5298:	; 800B5298
+            [A0 + 68 + A1 * 4] = w(script_file + w[A0 + 68 + A1 * 4]);
+            A1 = A1 + 1;
+            V0 = A1 < 20;
+        800B52B4	bne    v0, zero, loopb5298 [$800b5298]
+
+        S0 = S0 + 1;
+        V0 = S0 < bu[800f7df4] + 3;
+    800B52CC	bne    v0, zero, loopb5288 [$800b5288]
+}
+
+
+
+V0 = bu[800f7e04] + 4;
+S0 = 4;
+800B52DC	j      Lb52f8 [$800b52f8]
+
+loopb52e4:	; 800B52E4
+    A0 = S0;
+    funcb54b8; // parse loaded model file here (init some values and create skeletons)
+
+    V0 = bu[800f7e04] + 4;
+    S0 = S0 + 1;
+
+    Lb52f8:	; 800B52F8
+    V0 = S0 < V0;
+800B5300	bne    v0, zero, loopb52e4 [$800b52e4]
+
+
+
+S0 = 4;
+if( S0 < bu[800f7e04] + 4 )
+{
+    loopb5350:	; 800B5350
+        [80163784 + S4] = b(bu[801636b8 + S0 * 10 + 1]); // idle action id
+
+        [80163c80 + S0 * 6 + 0] = h(hu[800f7e08 + (S0 - 4) * c + 2]); // x default position from formation
+        [80163c80 + S0 * 6 + 2] = h(hu[800f7e08 + (S0 - 4) * c + 4]); // y default position from formation
+        [80163c80 + S0 * 6 + 4] = h(hu[800f7e08 + (S0 - 4) * c + 6]); // z default position from formation
+
+        [801518e4 + S0 * b9c + 160] = h(0); // root x rotation
+        [801518e4 + S0 * b9c + 164] = h(0); // root z rotation
+
+        switch( bu[800fa6d0] ) // formation type
+        {
+            case 1: // enemy look from left to left initial, left to right normal
+            {
+                [801518e4 + S0 * b9c + 18] = h(0800); // default
+                [801518e4 + S0 * b9c + 162] = h(0); // root y rotation
+            }
+            break;
+
+            case 0 2 4 8: // enemy look from sides to center
+            {
+                V0 = h[80163c80 + S0 * 6 + 4];
+                if (V0 < 0)
+                {
+                    [801518e4 + S0 * b9c + 18] = h(0800);
+                    [801518e4 + S0 * b9c + 162] = h(0800);
+                }
+                else
+                {
+                    [801518e4 + S0 * b9c + 18] = h(0);
+                    [801518e4 + S0 * b9c + 162] = h(0);
+                }
+            }
+
+            case 3 5 6 7: // enemy looks from center to sides
+            {
+                V0 = h[80163c80 + S0 * 6 + 4];
+                if (V0 >= 0)
+                {
+                    [801518e4 + S0 * b9c + 18] = h(0800);
+                    [801518e4 + S0 * b9c + 162] = h(0800);
+                }
+                else
+                {
+                    [801518e4 + S0 * b9c + 18] = h(0);
+                    [801518e4 + S0 * b9c + 162] = h(0);
+                }
+            }
+            break;
+        }
+
+        S0 = S0 + 1;
+        V0 = S0 < bu[800f7e04] + 4;
+    800B549C	bne    v0, zero, loopb5350 [$800b5350]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb54b8
+unit_id = A0;
+
+V1 = bu[80151200 + unit_id * 74 + 32];
+if (V1 == 6)
+{
+    enemy_id = 6;
+}
+else
+{
+    enemy_id = h[800f7e08 + (unit_id - 4) * c + 0]; // enemy id
+}
+
+V0 = w[800f8384 + enemy_id * 4]; // loaded file offset
+A0 = unit_id;
+A1 = V0 + w[V0 + 4]; // offset to 1st file (model data)
+A2 = 1;
+funcbb538;
+
+
+
+V1 = w[800f8384 + enemy_id * 4]; // loaded file offset
+S3 = w[V1 + 8];
+
+[801518e4 + unit_id * b9c + 0] = h(hu[800f7dec + enemy_id * 4]);
+[801518e4 + unit_id * b9c + 8] = h(hu[S3 + 6]);
+[801518e4 + unit_id * b9c + a] = h(hu[S3 + 8]);
+[801518e4 + unit_id * b9c + c] = h(hu[S3 + a]);
+[801518e4 + unit_id * b9c + 12] = h(hu[S3 + 4]);
+[801518e4 + unit_id * b9c + 27] = b(bu[S3 + 2]);
+[801518e4 + unit_id * b9c + 28] = b(0); // additional R
+[801518e4 + unit_id * b9c + 29] = b(0); // additional G
+[801518e4 + unit_id * b9c + 2a] = b(0); // additional B
+if (h[S3 + 0] != 0)
+{
+    [801518e4 + unit_id * b9c + 27] = b(bu[801518e4 + unit_id * b9c + 27] | 40);
+}
+
+
+
+[80151200 + unit_id * 78 + 26] = h(hu[S3 + c]);
+[80151200 + unit_id * 78 + 28] = h(hu[S3 + e]);
+[80151200 + unit_id * 78 + 2a] = h(hu[S3 + c] - 384);
+[80151200 + unit_id * 78 + 2e] = h(0);
+[80151200 + unit_id * 78 + 30] = h(hu[S3 + 64]);
+
+
+
+A2 = 0;
+loopb5704:	; 800B5704
+    [80151200 + unit_id * 78 + 4 + A2 * 2] = h(hu[S3 + 44 + A2 * 2]);
+    A2 = A2 + 1;
+    V0 = A2 < 4;
+800B5718	bne    v0, zero, loopb5704 [$800b5704]
+
+
+
+A2 = 0;
+loopb5754:	; 800B5754
+    [80151200 + unit_id * 78 + e + A2 * 2] = h(hu[S3 + 4c + A2 * 2]);
+    [80151200 + unit_id * 78 + 1a + A2 * 2] = h(hu[S3 + 58 + A2 * 2]);
+    A2 = A2 + 1;
+    V0 = A2 < 6;
+800B5774	bne    v0, zero, loopb5754 [$800b5754]
+
+
+
+[801636b8 + unit_id * 10 + 4] = b(bu[801518e4 + unit_id * b9c + 27] & 3f);
+
+
+
+if (bu[801518e4 + unit_id * b9c + 27] & 80) // if secondary animation
+{
+    [800fa6d8 + unit_id * 40 + 38] = w(801518e4 + unit_id * b9c + 140);
+
+    A1 = w[800f8384 + enemy_id * 4]; // loaded file offset
+    A0 = 800fa6d8 + unit_id * 40 + 3c;
+    V0 = w[A1] - 1;
+    A1 = A1 + w[A1 + V0 * 4]; // offset to last file - 1 in model file
+    A2 = unit_id;
+    funcc7924;
+}
+
+
+
+// copy joints
+S5 = 0;
+loopb5848:	; 800B5848
+    [8015190f + unit_id * b9c + S5] = b(bu[S3 + S5 + 12]);
+    S5 = S5 + 1;
+    V0 = S5 < 10;
+800B585C	bne    v0, zero, loopb5848 [$800b5848]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb588c
+800B588C	addiu  sp, sp, $ffd0 (=-$30)
+800B5890	lui    v1, $800f
+800B5894	addiu  v1, v1, $7df4
+800B5898	sw     ra, $002c(sp)
+800B589C	sw     s4, $0028(sp)
+800B58A0	sw     s3, $0024(sp)
+800B58A4	sw     s2, $0020(sp)
+800B58A8	sw     s1, $001c(sp)
+800B58AC	sw     s0, $0018(sp)
+800B58B0	lbu    v0, $0000(v1)
+800B58B4	nop
+800B58B8	blez   v0, Lb5974 [$800b5974]
+800B58BC	addu   s2, zero, zero
+800B58C0	addiu  s0, v1, $0004
+800B58C4	lui    s3, $0012
+800B58C8	lui    s1, $0013
+
+loopb58cc:	; 800B58CC
+800B58CC	ori    a3, zero, $0004
+800B58D0	addu   t0, s1, zero
+800B58D4	addu   a1, s3, zero
+800B58D8	lui    a0, $0004
+800B58DC	ori    a2, zero, $2e70
+
+loopb58e0:	; 800B58E0
+800B58E0	lui    at, $8015
+800B58E4	addiu  at, at, $18e4
+800B58E8	addu   at, at, a2
+800B58EC	lh     v1, $0000(at)
+800B58F0	lw     v0, $0000(s0)
+800B58F4	nop
+800B58F8	bne    v1, v0, Lb593c [$800b593c]
+800B58FC	lui    v0, $0001
+800B5900	lui    v1, $8016
+800B5904	lhu    v1, $3614(v1)
+800B5908	ori    v0, zero, $004e
+800B590C	bne    v1, v0, Lb5928 [$800b5928]
+800B5910	nop
+800B5914	sra    a0, a0, $10
+800B5918	jal    funcbb430 [$800bb430]
+800B591C	sra    a1, t0, $10
+800B5920	j      Lb5954 [$800b5954]
+800B5924	lui    v0, $0001
+
+Lb5928:	; 800B5928
+800B5928	sra    a0, a0, $10
+800B592C	jal    funcbb430 [$800bb430]
+800B5930	sra    a1, a1, $10
+800B5934	j      Lb5954 [$800b5954]
+800B5938	lui    v0, $0001
+
+Lb593c:	; 800B593C
+800B593C	addu   a0, a0, v0
+800B5940	addiu  a3, a3, $0001
+800B5944	slti   v0, a3, $000a
+800B5948	bne    v0, zero, loopb58e0 [$800b58e0]
+800B594C	addiu  a2, a2, $0b9c
+800B5950	lui    v0, $0001
+
+Lb5954:	; 800B5954
+800B5954	addu   s3, s3, v0
+800B5958	addu   s1, s1, v0
+800B595C	lui    v0, $800f
+800B5960	lbu    v0, $7df4(v0)
+800B5964	addiu  s2, s2, $0001
+800B5968	slt    v0, s2, v0
+800B596C	bne    v0, zero, loopb58cc [$800b58cc]
+800B5970	addiu  s0, s0, $0004
+
+Lb5974:	; 800B5974
+800B5974	lui    v1, $8016
+800B5978	lhu    v1, $3614(v1)
+800B597C	ori    v0, zero, $0240
+800B5980	lui    at, $8015
+800B5984	sh     v0, $3bce(at)
+800B5988	ori    v0, zero, $004e
+800B598C	bne    v1, v0, Lb59a4 [$800b59a4]
+800B5990	ori    v0, zero, $0300
+800B5994	lui    at, $8015
+800B5998	sh     zero, $476a(at)
+800B599C	j      Lb59b0 [$800b59b0]
+800B59A0	ori    s2, zero, $0004
+
+Lb59a4:	; 800B59A4
+800B59A4	lui    at, $8015
+800B59A8	sh     v0, $476a(at)
+800B59AC	ori    s2, zero, $0004
+
+Lb59b0:	; 800B59B0
+800B59B0	ori    s1, zero, $0018
+800B59B4	lui    v1, $8015
+800B59B8	addiu  v1, v1, $5306
+800B59BC	addiu  s4, v1, $f5c2 (=-$a3e)
+800B59C0	addiu  s3, v1, $f58e (=-$a72)
+800B59C4	ori    s0, zero, $2e70
+800B59C8	ori    v0, zero, $03c0
+800B59CC	sh     v0, $0000(v1)
+800B59D0	ori    v0, zero, $0480
+800B59D4	lui    at, $8015
+800B59D8	sh     v0, $5ea2(at)
+800B59DC	ori    v0, zero, $0540
+800B59E0	lui    at, $8015
+800B59E4	sh     v0, $6a3e(at)
+800B59E8	ori    v0, zero, $0600
+800B59EC	lui    at, $8015
+800B59F0	sh     v0, $75da(at)
+800B59F4	ori    v0, zero, $06c0
+800B59F8	lui    at, $8016
+800B59FC	sh     v0, $8176(at)
+
+loopb5a00:	; 800B5A00
+800B5A00	addu   a0, s3, zero
+800B5A04	jal    funcbb67c [$800bb67c]
+800B5A08	addiu  a1, s4, $09f4
+800B5A0C	addiu  s4, s4, $0b9c
+800B5A10	lui    at, $8016
+800B5A14	addiu  at, at, $3c80
+800B5A18	addu   at, at, s1
+800B5A1C	lhu    v0, $0000(at)
+800B5A20	addiu  s3, s3, $0b9c
+800B5A24	lui    at, $8015
+800B5A28	addiu  at, at, $1a4c
+800B5A2C	addu   at, at, s0
+800B5A30	sh     v0, $0000(at)
+800B5A34	lui    at, $8016
+800B5A38	addiu  at, at, $3c82
+800B5A3C	addu   at, at, s1
+800B5A40	lhu    v0, $0000(at)
+800B5A44	addiu  s2, s2, $0001
+800B5A48	lui    at, $8015
+800B5A4C	addiu  at, at, $1a4e
+800B5A50	addu   at, at, s0
+800B5A54	sh     v0, $0000(at)
+800B5A58	lui    at, $8016
+800B5A5C	addiu  at, at, $3c84
+800B5A60	addu   at, at, s1
+800B5A64	lhu    v0, $0000(at)
+800B5A68	addiu  s1, s1, $0006
+800B5A6C	lui    at, $8015
+800B5A70	addiu  at, at, $1a50
+800B5A74	addu   at, at, s0
+800B5A78	sh     v0, $0000(at)
+800B5A7C	slti   v0, s2, $000a
+800B5A80	bne    v0, zero, loopb5a00 [$800b5a00]
+800B5A84	addiu  s0, s0, $0b9c
+800B5A88	lw     ra, $002c(sp)
+800B5A8C	lw     s4, $0028(sp)
+800B5A90	lw     s3, $0024(sp)
+800B5A94	lw     s2, $0020(sp)
+800B5A98	lw     s1, $001c(sp)
+800B5A9C	lw     s0, $0018(sp)
+800B5AA0	addiu  sp, sp, $0030
+800B5AA4	jr     ra 
+800B5AA8	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5aac
+A2 = A0;
+
+[801518e4 + A2 * b9c + 168] = h(hu[80163c80 + A2 * 6 + 0]);
+[801518e4 + A2 * b9c + 16a] = h(hu[80163c80 + A2 * 6 + 2]);
+[801518e4 + A2 * b9c + 16c] = h(hu[80163c80 + A2 * 6 + 4]);
+
+[801518e4 + A2 * b9c + 6] = h(1000); // scale
+
+[80151200 + A2 * 74 +  0] = w(0);
+[80151200 + A2 * 74 +  c] = h(0);
+[80151200 + A2 * 74 + 38] = h(1000);
+[80151200 + A2 * 74 + 3a] = h(1000);
+[80151200 + A2 * 74 + 3c] = h(1000);
+
+if (h[801518e4 + A2 * b9c + 10] > 0)
+{
+    A0 = 0;
+    loopb5bc0:	; 800B5BC0
+        [801518e4 + A2 * b9c + 174 + A0 * 34 + 2a] = h(0);
+
+        A0= A0 + 1;
+        V0 = A0 < h[801518e4 + A2 * b9c + 10];
+    800B5C08	bne    v0, zero, loopb5bc0 [$800b5bc0]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5c1c
+800B5C1C	addiu  sp, sp, $ffe0 (=-$20)
+800B5C20	sw     s0, $0010(sp)
+800B5C24	addu   s0, a0, zero
+800B5C28	sw     s1, $0014(sp)
+800B5C2C	lui    s1, $801b
+800B5C30	sll    a0, s0, $04
+800B5C34	subu   a0, a0, s0
+800B5C38	sll    a0, a0, $0c
+800B5C3C	lui    v1, $8010
+800B5C40	addiu  v1, v1, $3200
+800B5C44	sw     ra, $0018(sp)
+800B5C48	lw     v0, $0000(s1)
+800B5C4C	addu   a0, a0, v1
+800B5C50	sll    v0, v0, $02
+800B5C54	lui    at, $801b
+800B5C58	addu   at, v0, at
+800B5C5C	lw     a2, $ffc0(at)
+800B5C60	jal    $8001c3cc
+800B5C64	lui    a1, $801b
+800B5C68	jal    $80025788
+800B5C6C	addu   a0, s0, zero
+800B5C70	sll    a0, s0, $08
+800B5C74	addu   a0, a0, s0
+800B5C78	sll    a0, a0, $02
+800B5C7C	subu   a0, a0, s0
+800B5C80	sll    a0, a0, $02
+800B5C84	lui    v1, $8016
+800B5C88	addiu  v1, v1, $3f34
+800B5C8C	addu   a0, a0, v1
+800B5C90	lbu    v1, $0411(v0)
+800B5C94	lw     v0, $0000(s1)
+800B5C98	andi   v1, v1, $000f
+800B5C9C	addu   v0, v0, v1
+800B5CA0	sll    v0, v0, $02
+800B5CA4	lui    at, $801b
+800B5CA8	addu   at, v0, at
+800B5CAC	lw     a1, $ffc4(at)
+800B5CB0	ori    a2, zero, $1000
+800B5CB4	jal    $8001c3cc
+800B5CB8	addu   a1, a1, s1
+800B5CBC	lw     ra, $0018(sp)
+800B5CC0	lw     s1, $0014(sp)
+800B5CC4	lw     s0, $0010(sp)
+800B5CC8	addiu  sp, sp, $0020
+800B5CCC	jr     ra 
+800B5CD0	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5cd4
+// copy battle field
+
+A0 = w[800f8390 + A0 * 4]; // 80130200 address where we copy model data
+A1 = 8001b0000; // from where
+A2 = w[S0 + w[S0] * 4]; // how much
+func1c3cc;
+
+return w[S0 + w[S0] * 4];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5d38
+S1 = A0;
+
+V1 = hu[80163614];
+if (V1 == 4e) // if final battle with sephiroth field
+{
+    A1 = S1 + 13;
+    A2 = 0;
+    A3 = 0;
+}
+else
+{
+    A1 = S1 + 12;
+    A2 = 0;
+    A3 = (S1 + 3) * 3;
+}
+
+// load texture
+A0 = 801b0000 + w[801b0000 + w[801b0000] * 4]; // offset to last block in battle model file
+funcd2980;
+
+
+
+S3 = S1 + 3;
+S0 = 4;
+
+if (bu[800f7e04] + 4 >= S0)
+{
+    S1 = 0;
+
+    loopb5dec:	; 800B5DEC
+        if (h[800f7e08 + S1] == S3) // enemy id
+        {
+            A0 = 801b0000 + w[801b0000 + w[801b0000] * 4]; // offset to last block in battle model file
+            A1 = S0;
+            funcc614c;
+        }
+
+        S1 = S1 + c;
+        S0 = S0 + 1;
+        V0 = bu[800f7e04] + 4 >= S0;
+    800B5E3C	bne    v0, zero, loopb5dec [$800b5dec]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5e64
+800B5E64	addiu  sp, sp, $ffd8 (=-$28)
+800B5E68	sw     s2, $0018(sp)
+800B5E6C	addu   s2, a0, zero
+800B5E70	ori    v0, zero, $0001
+800B5E74	sw     ra, $0024(sp)
+800B5E78	sw     s4, $0020(sp)
+800B5E7C	sw     s3, $001c(sp)
+800B5E80	sw     s1, $0014(sp)
+800B5E84	beq    s2, v0, Lb5ecc [$800b5ecc]
+800B5E88	sw     s0, $0010(sp)
+800B5E8C	slti   v0, s2, $0002
+800B5E90	beq    v0, zero, Lb5ea8 [$800b5ea8]
+800B5E94	nop
+800B5E98	beq    s2, zero, Lb5ebc [$800b5ebc]
+800B5E9C	sll    v0, s2, $04
+800B5EA0	j      Lb5eec [$800b5eec]
+800B5EA4	nop
+
+Lb5ea8:	; 800B5EA8
+800B5EA8	ori    v0, zero, $0002
+800B5EAC	beq    s2, v0, Lb5edc [$800b5edc]
+800B5EB0	sll    v0, s2, $04
+800B5EB4	j      Lb5eec [$800b5eec]
+800B5EB8	nop
+
+Lb5ebc:	; 800B5EBC
+800B5EBC	addu   a1, zero, zero
+800B5EC0	addu   s3, zero, zero
+800B5EC4	j      Lb5ee8 [$800b5ee8]
+800B5EC8	addu   s4, zero, zero
+
+Lb5ecc:	; 800B5ECC
+800B5ECC	ori    a1, zero, $0010
+800B5ED0	ori    s3, zero, $0001
+800B5ED4	j      Lb5ee8 [$800b5ee8]
+800B5ED8	ori    s4, zero, $00c0
+
+Lb5edc:	; 800B5EDC
+800B5EDC	ori    a1, zero, $0011
+800B5EE0	ori    s3, zero, $0002
+800B5EE4	ori    s4, zero, $0180
+
+Lb5ee8:	; 800B5EE8
+800B5EE8	sll    v0, s2, $04
+
+Lb5eec:	; 800B5EEC
+800B5EEC	lui    at, $8016
+800B5EF0	addiu  at, at, $36b8
+800B5EF4	addu   at, at, v0
+800B5EF8	lb     v1, $0000(at)
+800B5EFC	addiu  v0, zero, $ffff (=-$1)
+800B5F00	beq    v1, v0, Lb5fa0 [$800b5fa0]
+800B5F04	lui    s1, $801b
+800B5F08	sll    a1, a1, $10
+800B5F0C	sra    a1, a1, $10
+800B5F10	sll    s0, s2, $01
+800B5F14	addu   s0, s0, s2
+800B5F18	sll    a3, s0, $10
+800B5F1C	lw     v0, $0000(s1)
+800B5F20	addu   a2, zero, zero
+800B5F24	sll    v0, v0, $02
+800B5F28	lui    at, $801b
+800B5F2C	addu   at, v0, at
+800B5F30	lw     a0, $ffc0(at)
+800B5F34	sra    a3, a3, $10
+800B5F38	jal    funcd2980 [$800d2980]
+800B5F3C	addu   a0, a0, s1
+800B5F40	lw     v0, $0000(s1)
+800B5F44	nop
+800B5F48	sll    v0, v0, $02
+800B5F4C	lui    at, $801b
+800B5F50	addu   at, v0, at
+800B5F54	lw     a0, $ffc0(at)
+800B5F58	addu   a1, s3, zero
+800B5F5C	jal    funcc614c [$800c614c]
+800B5F60	addu   a0, a0, s1
+800B5F64	sll    v0, s0, $05
+800B5F68	subu   v0, v0, s0
+800B5F6C	sll    v0, v0, $03
+800B5F70	subu   v0, v0, s2
+800B5F74	sll    v0, v0, $02
+800B5F78	lui    a1, $8015
+800B5F7C	addiu  a1, a1, $1a24
+800B5F80	addu   a0, v0, a1
+800B5F84	addu   a1, a1, v0
+800B5F88	lui    at, $8015
+800B5F8C	addiu  at, at, $18fa
+800B5F90	addu   at, at, v0
+800B5F94	sh     s4, $0000(at)
+800B5F98	jal    funcbb67c [$800bb67c]
+800B5F9C	addiu  a1, a1, $0a28
+
+Lb5fa0:	; 800B5FA0
+800B5FA0	lw     ra, $0024(sp)
+800B5FA4	lw     s4, $0020(sp)
+800B5FA8	lw     s3, $001c(sp)
+800B5FAC	lw     s2, $0018(sp)
+800B5FB0	lw     s1, $0014(sp)
+800B5FB4	lw     s0, $0010(sp)
+800B5FB8	addiu  sp, sp, $0028
+800B5FBC	jr     ra 
+800B5FC0	nop
+////////////////////////////////
+// funcb5fc4
+800B5FC4	addiu  sp, sp, $ffe8 (=-$18)
+800B5FC8	sw     ra, $0010(sp)
+800B5FCC	sll    a0, a0, $10
+800B5FD0	jal    funcb60e0 [$800b60e0]
+800B5FD4	sra    a0, a0, $10
+800B5FD8	lw     ra, $0010(sp)
+800B5FDC	addiu  sp, sp, $0018
+800B5FE0	jr     ra 
+800B5FE4	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb5fe8
+unit_id = A0;
+
+number_of_bones = h[801518e4 + unit_id * b9c + 10];
+if (number_of_bones > 0)
+{
+    V1 = 801518e4 + unit_id * b9c + 3f;
+
+    A2 = 0;
+    loopb603c:	; 800B603C
+        [V1] = b(bu[V1] | 8);
+
+        V1 = V1 + 1;
+        A2 = A2 + 1;
+        V0 = A2 < number_of_bones;
+    800B6064	bne    v0, zero, loopb603c [$800b603c]
+}
+
+number_of_bones2 = h[800fa714 + unit_id * 40]; // number of bones in secondary animation
+if (V0 > 0)
+{
+    V1 = 800fa716 + unit_id * 40
+
+    A2 = 0;
+    loopb60a0:	; 800B60A0
+        [V1] = b(bu[V1] | 08);
+
+        A2 = A2 + 1;
+        V1 = V1 + 1;
+        V0 = A2 < number_of_bones2;
+    800B60CC	bne    v0, zero, loopb60a0 [$800b60a0]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb60e0
+800B60E0	addiu  sp, sp, $ffe0 (=-$20)
+800B60E4	sll    v0, a0, $10
+800B60E8	sw     s1, $0014(sp)
+800B60EC	sra    s1, v0, $10
+800B60F0	sll    v1, s1, $01
+800B60F4	addu   v1, v1, s1
+800B60F8	sll    v0, v1, $05
+800B60FC	subu   v0, v0, v1
+800B6100	sll    v0, v0, $03
+800B6104	subu   v0, v0, s1
+800B6108	sw     s0, $0010(sp)
+800B610C	sll    s0, v0, $02
+800B6110	sw     ra, $001c(sp)
+800B6114	sw     s2, $0018(sp)
+800B6118	lui    at, $8015
+800B611C	addiu  at, at, $1922
+800B6120	addu   at, at, s0
+800B6124	lbu    v1, $0000(at)
+800B6128	nop
+800B612C	andi   v0, v1, $0002
+800B6130	beq    v0, zero, Lb62ac [$800b62ac]
+800B6134	addu   s2, a0, zero
+800B6138	lui    a0, $800b
+800B613C	addiu  a0, a0, $64cc
+800B6140	andi   v0, v1, $00fd
+800B6144	lui    at, $8015
+800B6148	addiu  at, at, $1922
+800B614C	addu   at, at, s0
+800B6150	sb     v0, $0000(at)
+800B6154	jal    funcbbf7c [$800bbf7c]
+800B6158	nop
+800B615C	lui    v1, $8010
+800B6160	lbu    v1, $8374(v1)
+800B6164	lui    a0, $8010
+800B6168	lbu    a0, $8374(a0)
+800B616C	lui    at, $1f80
+800B6170	sw     v0, $0000(at)
+800B6174	sll    v0, v0, $05
+800B6178	lui    at, $8016
+800B617C	addiu  at, at, $20b2
+800B6180	addu   at, at, v0
+800B6184	sh     s2, $0000(at)
+800B6188	lui    at, $8016
+800B618C	addiu  at, at, $20b0
+800B6190	addu   at, at, v0
+800B6194	sh     v1, $0000(at)
+800B6198	lui    at, $8015
+800B619C	addiu  at, at, $190c
+800B61A0	addu   at, at, s0
+800B61A4	lbu    v1, $0000(at)
+800B61A8	nop
+800B61AC	divu   v1, a0
+800B61B0	bne    a0, zero, Lb61bc [$800b61bc]
+800B61B4	nop
+800B61B8	break   $01c00
+
+Lb61bc:	; 800B61BC
+800B61BC	mflo   v1
+800B61C0	lui    at, $8015
+800B61C4	addiu  at, at, $18f8
+800B61C8	addu   at, at, s0
+800B61CC	sh     zero, $0000(at)
+800B61D0	lui    at, $8016
+800B61D4	addiu  at, at, $20b4
+800B61D8	addu   at, at, v0
+800B61DC	sh     v1, $0000(at)
+800B61E0	lui    at, $8015
+800B61E4	addiu  at, at, $190d
+800B61E8	addu   at, at, s0
+800B61EC	lbu    v1, $0000(at)
+800B61F0	nop
+800B61F4	divu   v1, a0
+800B61F8	bne    a0, zero, Lb6204 [$800b6204]
+800B61FC	nop
+800B6200	break   $01c00
+
+Lb6204:	; 800B6204
+800B6204	mflo   v1
+800B6208	nop
+800B620C	lui    at, $8016
+800B6210	addiu  at, at, $20b6
+800B6214	addu   at, at, v0
+800B6218	sh     v1, $0000(at)
+800B621C	lui    at, $8015
+800B6220	addiu  at, at, $190e
+800B6224	addu   at, at, s0
+800B6228	lbu    a1, $0000(at)
+800B622C	nop
+800B6230	divu   a1, a0
+800B6234	bne    a0, zero, Lb6240 [$800b6240]
+800B6238	nop
+800B623C	break   $01c00
+
+Lb6240:	; 800B6240
+800B6240	mflo   a1
+800B6244	ori    v1, zero, $1000
+800B6248	div    v1, a0
+800B624C	bne    a0, zero, Lb6258 [$800b6258]
+800B6250	nop
+800B6254	break   $01c00
+
+Lb6258:	; 800B6258
+800B6258	addiu  at, zero, $ffff (=-$1)
+800B625C	bne    a0, at, Lb6270 [$800b6270]
+800B6260	lui    at, $8000
+800B6264	bne    v1, at, Lb6270 [$800b6270]
+800B6268	nop
+800B626C	break   $01800
+
+Lb6270:	; 800B6270
+800B6270	mflo   v1
+800B6274	lui    at, $8016
+800B6278	addiu  at, at, $20b8
+800B627C	addu   at, at, v0
+800B6280	sh     a1, $0000(at)
+800B6284	lui    at, $8016
+800B6288	addiu  at, at, $20ba
+800B628C	addu   at, at, v0
+800B6290	sh     v1, $0000(at)
+800B6294	jal    funcb5fe8 [$800b5fe8]
+800B6298	addu   a0, s1, zero
+800B629C	lui    at, $8015
+800B62A0	addiu  at, at, $1922
+800B62A4	addu   at, at, s0
+800B62A8	lbu    v1, $0000(at)
+
+Lb62ac:	; 800B62AC
+800B62AC	nop
+800B62B0	andi   v0, v1, $0004
+800B62B4	beq    v0, zero, Lb64b0 [$800b64b0]
+800B62B8	andi   v0, v1, $00fb
+800B62BC	lui    a0, $800b
+800B62C0	addiu  a0, a0, $677c
+800B62C4	lui    at, $8015
+800B62C8	addiu  at, at, $1922
+800B62CC	addu   at, at, s0
+800B62D0	sb     v0, $0000(at)
+800B62D4	jal    funcbbf7c [$800bbf7c]
+800B62D8	nop
+800B62DC	lui    v1, $8010
+800B62E0	lbu    v1, $8374(v1)
+800B62E4	lui    a1, $8010
+800B62E8	lbu    a1, $8374(a1)
+800B62EC	lui    at, $1f80
+800B62F0	sw     v0, $0000(at)
+800B62F4	sll    v0, v0, $05
+800B62F8	lui    at, $8016
+800B62FC	addiu  at, at, $20b2
+800B6300	addu   at, at, v0
+800B6304	sh     s2, $0000(at)
+800B6308	lui    at, $8016
+800B630C	addiu  at, at, $20b0
+800B6310	addu   at, at, v0
+800B6314	sh     v1, $0000(at)
+800B6318	lui    at, $8015
+800B631C	addiu  at, at, $190c
+800B6320	addu   at, at, s0
+800B6324	lbu    v1, $0000(at)
+800B6328	nop
+800B632C	divu   v1, a1
+800B6330	bne    a1, zero, Lb633c [$800b633c]
+800B6334	nop
+800B6338	break   $01c00
+
+Lb633c:	; 800B633C
+800B633C	mflo   v1
+800B6340	ori    a0, zero, $1000
+800B6344	lui    at, $8015
+800B6348	addiu  at, at, $18f8
+800B634C	addu   at, at, s0
+800B6350	sh     a0, $0000(at)
+800B6354	lui    at, $8016
+800B6358	addiu  at, at, $20b4
+800B635C	addu   at, at, v0
+800B6360	sh     v1, $0000(at)
+800B6364	lui    at, $8015
+800B6368	addiu  at, at, $190d
+800B636C	addu   at, at, s0
+800B6370	lbu    v1, $0000(at)
+800B6374	nop
+800B6378	divu   v1, a1
+800B637C	bne    a1, zero, Lb6388 [$800b6388]
+800B6380	nop
+800B6384	break   $01c00
+
+Lb6388:	; 800B6388
+800B6388	mflo   v1
+800B638C	nop
+800B6390	lui    at, $8016
+800B6394	addiu  at, at, $20b6
+800B6398	addu   at, at, v0
+800B639C	sh     v1, $0000(at)
+800B63A0	lui    at, $8015
+800B63A4	addiu  at, at, $190e
+800B63A8	addu   at, at, s0
+800B63AC	lbu    a0, $0000(at)
+800B63B0	nop
+800B63B4	divu   a0, a1
+800B63B8	bne    a1, zero, Lb63c4 [$800b63c4]
+800B63BC	nop
+800B63C0	break   $01c00
+
+Lb63c4:	; 800B63C4
+800B63C4	mflo   a0
+800B63C8	ori    v1, zero, $1000
+800B63CC	div    v1, a1
+800B63D0	bne    a1, zero, Lb63dc [$800b63dc]
+800B63D4	nop
+800B63D8	break   $01c00
+
+Lb63dc:	; 800B63DC
+800B63DC	addiu  at, zero, $ffff (=-$1)
+800B63E0	bne    a1, at, Lb63f4 [$800b63f4]
+800B63E4	lui    at, $8000
+800B63E8	bne    v1, at, Lb63f4 [$800b63f4]
+800B63EC	nop
+800B63F0	break   $01800
+
+Lb63f4:	; 800B63F4
+800B63F4	mflo   v1
+800B63F8	lui    at, $8016
+800B63FC	addiu  at, at, $20b8
+800B6400	addu   at, at, v0
+800B6404	sh     a0, $0000(at)
+800B6408	lui    at, $8016
+800B640C	addiu  at, at, $20ba
+800B6410	addu   at, at, v0
+800B6414	sh     v1, $0000(at)
+800B6418	ori    v0, zero, $0003
+800B641C	bne    s1, v0, Lb6448 [$800b6448]
+800B6420	slti   v0, s1, $0004
+800B6424	lui    v0, $8015
+800B6428	lbu    v0, $3bdd(v0)
+800B642C	nop
+800B6430	andi   v0, v0, $00fb
+800B6434	lui    at, $8015
+800B6438	sb     v0, $3bdd(at)
+800B643C	jal    funcb5fe8 [$800b5fe8]
+800B6440	ori    a0, zero, $0003
+800B6444	slti   v0, s1, $0004
+
+Lb6448:	; 800B6448
+800B6448	bne    v0, zero, Lb647c [$800b647c]
+800B644C	addiu  v0, s1, $fffc (=-$4)
+800B6450	sll    v1, v0, $01
+800B6454	addu   v1, v1, v0
+800B6458	sll    v1, v1, $02
+800B645C	lui    at, $800f
+800B6460	addiu  at, at, $7e10
+800B6464	addu   at, at, v1
+800B6468	lw     v0, $0000(at)
+800B646C	nop
+800B6470	andi   v0, v0, $0001
+800B6474	beq    v0, zero, Lb64a4 [$800b64a4]
+800B6478	nop
+
+Lb647c:	; 800B647C
+800B647C	lui    at, $8015
+800B6480	addiu  at, at, $1909
+800B6484	addu   at, at, s0
+800B6488	lbu    v0, $0000(at)
+800B648C	nop
+800B6490	andi   v0, v0, $00fb
+800B6494	lui    at, $8015
+800B6498	addiu  at, at, $1909
+800B649C	addu   at, at, s0
+800B64A0	sb     v0, $0000(at)
+
+Lb64a4:	; 800B64A4
+800B64A4	sll    a0, s2, $10
+800B64A8	jal    funcb5fe8 [$800b5fe8]
+800B64AC	sra    a0, a0, $10
+
+Lb64b0:	; 800B64B0
+800B64B0	lw     ra, $001c(sp)
+800B64B4	lw     s2, $0018(sp)
+800B64B8	lw     s1, $0014(sp)
+800B64BC	lw     s0, $0010(sp)
+800B64C0	addiu  sp, sp, $0020
+800B64C4	jr     ra 
+800B64C8	nop
+////////////////////////////////
+// funcb64cc
+800B64CC	lui    v0, $8016
+800B64D0	lh     v0, $90d0(v0)
+800B64D4	lui    a2, $1f80
+800B64D8	sll    a1, v0, $05
+800B64DC	lui    at, $8016
+800B64E0	addiu  at, at, $20b2
+800B64E4	addu   at, at, a1
+800B64E8	lh     a0, $0000(at)
+800B64EC	ori    a2, a2, $0008
+800B64F0	sw     a0, $0000(a2)
+800B64F4	lui    at, $8016
+800B64F8	addiu  at, at, $20b0
+800B64FC	addu   at, at, a1
+800B6500	lh     v0, $0000(at)
+800B6504	nop
+800B6508	bne    v0, zero, Lb65b4 [$800b65b4]
+800B650C	sll    v0, a0, $01
+800B6510	sll    v1, a0, $01
+800B6514	addu   v1, v1, a0
+800B6518	sll    v0, v1, $05
+800B651C	subu   v0, v0, v1
+800B6520	sll    v0, v0, $03
+800B6524	subu   v0, v0, a0
+800B6528	sll    v0, v0, $02
+800B652C	lui    at, $8015
+800B6530	addiu  at, at, $1909
+800B6534	addu   at, at, v0
+800B6538	lbu    v1, $0000(at)
+800B653C	lui    at, $8015
+800B6540	addiu  at, at, $18f8
+800B6544	addu   at, at, v0
+800B6548	sh     zero, $0000(at)
+800B654C	ori    v1, v1, $0004
+800B6550	lui    at, $8015
+800B6554	addiu  at, at, $1909
+800B6558	addu   at, at, v0
+800B655C	sb     v1, $0000(at)
+800B6560	lui    v1, $8016
+800B6564	lh     v1, $90d0(v1)
+800B6568	addiu  v0, zero, $ffff (=-$1)
+800B656C	sll    v1, v1, $05
+800B6570	lui    at, $8016
+800B6574	addiu  at, at, $20ac
+800B6578	addu   at, at, v1
+800B657C	sh     v0, $0000(at)
+800B6580	lw     v1, $0000(a2)
+800B6584	nop
+800B6588	sll    v0, v1, $03
+800B658C	subu   v0, v0, v1
+800B6590	sll    v0, v0, $02
+800B6594	addu   v0, v0, v1
+800B6598	sll    v0, v0, $02
+800B659C	lui    at, $8015
+800B65A0	addiu  at, at, $1235
+800B65A4	addu   at, at, v0
+800B65A8	sb     zero, $0000(at)
+800B65AC	j      Lb6774 [$800b6774]
+800B65B0	nop
+
+Lb65b4:	; 800B65B4
+800B65B4	addu   v0, v0, a0
+800B65B8	sll    v1, v0, $05
+800B65BC	subu   v1, v1, v0
+800B65C0	sll    v1, v1, $03
+800B65C4	subu   v1, v1, a0
+800B65C8	sll    v1, v1, $02
+800B65CC	lui    at, $8015
+800B65D0	addiu  at, at, $18f8
+800B65D4	addu   at, at, v1
+800B65D8	lhu    v0, $0000(at)
+800B65DC	lui    at, $8016
+800B65E0	addiu  at, at, $20ba
+800B65E4	addu   at, at, a1
+800B65E8	lhu    a0, $0000(at)
+800B65EC	nop
+800B65F0	addu   v0, v0, a0
+800B65F4	lui    at, $8015
+800B65F8	addiu  at, at, $18f8
+800B65FC	addu   at, at, v1
+800B6600	sh     v0, $0000(at)
+800B6604	lui    at, $8015
+800B6608	addiu  at, at, $190c
+800B660C	addu   at, at, v1
+800B6610	lbu    v0, $0000(at)
+800B6614	lui    at, $8016
+800B6618	addiu  at, at, $20b4
+800B661C	addu   at, at, a1
+800B6620	lbu    a0, $0000(at)
+800B6624	nop
+800B6628	subu   v0, v0, a0
+800B662C	lui    at, $8015
+800B6630	addiu  at, at, $190c
+800B6634	addu   at, at, v1
+800B6638	sb     v0, $0000(at)
+800B663C	lw     a0, $0000(a2)
+800B6640	nop
+800B6644	sll    v0, a0, $01
+800B6648	addu   v0, v0, a0
+800B664C	sll    v1, v0, $05
+800B6650	subu   v1, v1, v0
+800B6654	sll    v1, v1, $03
+800B6658	subu   v1, v1, a0
+800B665C	sll    v1, v1, $02
+800B6660	lui    a0, $8016
+800B6664	lh     a0, $90d0(a0)
+800B6668	lui    at, $8015
+800B666C	addiu  at, at, $190d
+800B6670	addu   at, at, v1
+800B6674	lbu    v0, $0000(at)
+800B6678	sll    a0, a0, $05
+800B667C	lui    at, $8016
+800B6680	addiu  at, at, $20b6
+800B6684	addu   at, at, a0
+800B6688	lbu    a0, $0000(at)
+800B668C	nop
+800B6690	subu   v0, v0, a0
+800B6694	lui    at, $8015
+800B6698	addiu  at, at, $190d
+800B669C	addu   at, at, v1
+800B66A0	sb     v0, $0000(at)
+800B66A4	lw     a0, $0000(a2)
+800B66A8	nop
+800B66AC	sll    v0, a0, $01
+800B66B0	addu   v0, v0, a0
+800B66B4	sll    v1, v0, $05
+800B66B8	subu   v1, v1, v0
+800B66BC	sll    v1, v1, $03
+800B66C0	subu   v1, v1, a0
+800B66C4	sll    v1, v1, $02
+800B66C8	lui    a0, $8016
+800B66CC	lh     a0, $90d0(a0)
+800B66D0	lui    at, $8015
+800B66D4	addiu  at, at, $190e
+800B66D8	addu   at, at, v1
+800B66DC	lbu    v0, $0000(at)
+800B66E0	sll    a0, a0, $05
+800B66E4	lui    at, $8016
+800B66E8	addiu  at, at, $20b8
+800B66EC	addu   at, at, a0
+800B66F0	lbu    a0, $0000(at)
+800B66F4	nop
+800B66F8	subu   v0, v0, a0
+800B66FC	lui    at, $8015
+800B6700	addiu  at, at, $190e
+800B6704	addu   at, at, v1
+800B6708	sb     v0, $0000(at)
+800B670C	lw     v1, $0000(a2)
+800B6710	nop
+800B6714	sll    v0, v1, $03
+800B6718	subu   v0, v0, v1
+800B671C	sll    v0, v0, $02
+800B6720	addu   v0, v0, v1
+800B6724	sll    v0, v0, $02
+800B6728	ori    v1, zero, $0001
+800B672C	lui    at, $8015
+800B6730	addiu  at, at, $1235
+800B6734	addu   at, at, v0
+800B6738	sb     v1, $0000(at)
+800B673C	lui    v1, $8016
+800B6740	lh     v1, $90d0(v1)
+800B6744	nop
+800B6748	sll    v1, v1, $05
+800B674C	lui    at, $8016
+800B6750	addiu  at, at, $20b0
+800B6754	addu   at, at, v1
+800B6758	lhu    v0, $0000(at)
+800B675C	nop
+800B6760	addiu  v0, v0, $ffff (=-$1)
+800B6764	lui    at, $8016
+800B6768	addiu  at, at, $20b0
+800B676C	addu   at, at, v1
+800B6770	sh     v0, $0000(at)
+
+Lb6774:	; 800B6774
+800B6774	jr     ra 
+800B6778	nop
+////////////////////////////////
+// funcb677c
+800B677C	lui    v0, $8016
+800B6780	lh     v0, $90d0(v0)
+800B6784	lui    a2, $1f80
+800B6788	sll    a1, v0, $05
+800B678C	lui    at, $8016
+800B6790	addiu  at, at, $20b2
+800B6794	addu   at, at, a1
+800B6798	lh     a0, $0000(at)
+800B679C	ori    a2, a2, $0008
+800B67A0	sw     a0, $0000(a2)
+800B67A4	lui    at, $8016
+800B67A8	addiu  at, at, $20b0
+800B67AC	addu   at, at, a1
+800B67B0	lh     v0, $0000(at)
+800B67B4	nop
+800B67B8	bne    v0, zero, Lb69c8 [$800b69c8]
+800B67BC	addiu  sp, sp, $fff0 (=-$10)
+800B67C0	sll    v0, a0, $01
+800B67C4	addu   v0, v0, a0
+800B67C8	sll    v1, v0, $05
+800B67CC	subu   v1, v1, v0
+800B67D0	sll    v1, v1, $03
+800B67D4	subu   v1, v1, a0
+800B67D8	sll    v1, v1, $02
+800B67DC	lui    at, $8015
+800B67E0	addiu  at, at, $18f4
+800B67E4	addu   at, at, v1
+800B67E8	lh     v0, $0000(at)
+800B67EC	lui    at, $8015
+800B67F0	addiu  at, at, $18f8
+800B67F4	addu   at, at, v1
+800B67F8	sh     zero, $0000(at)
+800B67FC	blez   v0, Lb6894 [$800b6894]
+800B6800	addu   a1, zero, zero
+800B6804	lui    a2, $1f80
+800B6808	ori    a2, a2, $0008
+800B680C	lui    a3, $8015
+800B6810	addiu  a3, a3, $1923
+800B6814	lw     a0, $0000(a2)
+800B6818	nop
+800B681C	sll    v1, a0, $01
+
+loopb6820:	; 800B6820
+800B6820	addu   v1, v1, a0
+800B6824	sll    v0, v1, $05
+800B6828	subu   v0, v0, v1
+800B682C	sll    v0, v0, $03
+800B6830	subu   v0, v0, a0
+800B6834	sll    v0, v0, $02
+800B6838	addu   v0, v0, a3
+800B683C	addu   v0, v0, a1
+800B6840	lbu    v1, $0000(v0)
+800B6844	nop
+800B6848	andi   v1, v1, $00f7
+800B684C	sb     v1, $0000(v0)
+800B6850	lw     a0, $0000(a2)
+800B6854	nop
+800B6858	sll    v1, a0, $01
+800B685C	addu   v1, v1, a0
+800B6860	sll    v0, v1, $05
+800B6864	subu   v0, v0, v1
+800B6868	sll    v0, v0, $03
+800B686C	subu   v0, v0, a0
+800B6870	sll    v0, v0, $02
+800B6874	lui    at, $8015
+800B6878	addiu  at, at, $18f4
+800B687C	addu   at, at, v0
+800B6880	lh     v0, $0000(at)
+800B6884	addiu  a1, a1, $0001
+800B6888	slt    v0, a1, v0
+800B688C	bne    v0, zero, loopb6820 [$800b6820]
+800B6890	sll    v1, a0, $01
+
+Lb6894:	; 800B6894
+800B6894	lui    v0, $1f80
+800B6898	lw     v0, $0008(v0)
+800B689C	nop
+800B68A0	sll    v0, v0, $06
+800B68A4	lui    at, $8010
+800B68A8	addiu  at, at, $a714 (=-$58ec)
+800B68AC	addu   at, at, v0
+800B68B0	lh     v0, $0000(at)
+800B68B4	nop
+800B68B8	blez   v0, Lb6920 [$800b6920]
+800B68BC	addu   a1, zero, zero
+800B68C0	lui    a0, $1f80
+800B68C4	ori    a0, a0, $0008
+800B68C8	lui    a2, $8010
+800B68CC	addiu  a2, a2, $a716 (=-$58ea)
+
+loopb68d0:	; 800B68D0
+800B68D0	lw     v0, $0000(a0)
+800B68D4	nop
+800B68D8	sll    v0, v0, $06
+800B68DC	addu   v0, v0, a2
+800B68E0	addu   v0, v0, a1
+800B68E4	lbu    v1, $0000(v0)
+800B68E8	nop
+800B68EC	andi   v1, v1, $00f7
+800B68F0	sb     v1, $0000(v0)
+800B68F4	lw     v0, $0000(a0)
+800B68F8	nop
+800B68FC	sll    v0, v0, $06
+800B6900	lui    at, $8010
+800B6904	addiu  at, at, $a714 (=-$58ec)
+800B6908	addu   at, at, v0
+800B690C	lh     v0, $0000(at)
+800B6910	addiu  a1, a1, $0001
+800B6914	slt    v0, a1, v0
+800B6918	bne    v0, zero, loopb68d0 [$800b68d0]
+800B691C	nop
+
+Lb6920:	; 800B6920
+800B6920	lui    a0, $1f80
+800B6924	ori    a0, a0, $0008
+800B6928	lui    v0, $8016
+800B692C	lh     v0, $90d0(v0)
+800B6930	addiu  v1, zero, $ffff (=-$1)
+800B6934	sll    v0, v0, $05
+800B6938	lui    at, $8016
+800B693C	addiu  at, at, $20ac
+800B6940	addu   at, at, v0
+800B6944	sh     v1, $0000(at)
+800B6948	lw     v1, $0000(a0)
+800B694C	nop
+800B6950	sll    v0, v1, $03
+800B6954	subu   v0, v0, v1
+800B6958	sll    v0, v0, $02
+800B695C	addu   v0, v0, v1
+800B6960	sll    v0, v0, $02
+800B6964	lui    at, $8015
+800B6968	addiu  at, at, $1235
+800B696C	addu   at, at, v0
+800B6970	sb     zero, $0000(at)
+800B6974	lw     a0, $0000(a0)
+800B6978	nop
+800B697C	sll    v1, a0, $01
+800B6980	addu   v1, v1, a0
+800B6984	sll    v0, v1, $05
+800B6988	subu   v0, v0, v1
+800B698C	sll    v0, v0, $03
+800B6990	subu   v0, v0, a0
+800B6994	sll    v0, v0, $02
+800B6998	lui    at, $8015
+800B699C	addiu  at, at, $1922
+800B69A0	addu   at, at, v0
+800B69A4	lbu    v1, $0000(at)
+800B69A8	nop
+800B69AC	ori    v1, v1, $0020
+800B69B0	lui    at, $8015
+800B69B4	addiu  at, at, $1922
+800B69B8	addu   at, at, v0
+800B69BC	sb     v1, $0000(at)
+800B69C0	j      Lb6b8c [$800b6b8c]
+800B69C4	nop
+
+Lb69c8:	; 800B69C8
+800B69C8	sll    v0, a0, $01
+800B69CC	addu   v0, v0, a0
+800B69D0	sll    v1, v0, $05
+800B69D4	subu   v1, v1, v0
+800B69D8	sll    v1, v1, $03
+800B69DC	subu   v1, v1, a0
+800B69E0	sll    v1, v1, $02
+800B69E4	lui    at, $8015
+800B69E8	addiu  at, at, $18f8
+800B69EC	addu   at, at, v1
+800B69F0	lhu    v0, $0000(at)
+800B69F4	lui    at, $8016
+800B69F8	addiu  at, at, $20ba
+800B69FC	addu   at, at, a1
+800B6A00	lhu    a0, $0000(at)
+800B6A04	nop
+800B6A08	subu   v0, v0, a0
+800B6A0C	lui    at, $8015
+800B6A10	addiu  at, at, $18f8
+800B6A14	addu   at, at, v1
+800B6A18	sh     v0, $0000(at)
+800B6A1C	lui    at, $8015
+800B6A20	addiu  at, at, $190c
+800B6A24	addu   at, at, v1
+800B6A28	lbu    v0, $0000(at)
+800B6A2C	lui    at, $8016
+800B6A30	addiu  at, at, $20b4
+800B6A34	addu   at, at, a1
+800B6A38	lbu    a0, $0000(at)
+800B6A3C	nop
+800B6A40	addu   v0, v0, a0
+800B6A44	lui    at, $8015
+800B6A48	addiu  at, at, $190c
+800B6A4C	addu   at, at, v1
+800B6A50	sb     v0, $0000(at)
+800B6A54	lw     a0, $0000(a2)
+800B6A58	nop
+800B6A5C	sll    v0, a0, $01
+800B6A60	addu   v0, v0, a0
+800B6A64	sll    v1, v0, $05
+800B6A68	subu   v1, v1, v0
+800B6A6C	sll    v1, v1, $03
+800B6A70	subu   v1, v1, a0
+800B6A74	sll    v1, v1, $02
+800B6A78	lui    a0, $8016
+800B6A7C	lh     a0, $90d0(a0)
+800B6A80	lui    at, $8015
+800B6A84	addiu  at, at, $190d
+800B6A88	addu   at, at, v1
+800B6A8C	lbu    v0, $0000(at)
+800B6A90	sll    a0, a0, $05
+800B6A94	lui    at, $8016
+800B6A98	addiu  at, at, $20b6
+800B6A9C	addu   at, at, a0
+800B6AA0	lbu    a0, $0000(at)
+800B6AA4	nop
+800B6AA8	addu   v0, v0, a0
+800B6AAC	lui    at, $8015
+800B6AB0	addiu  at, at, $190d
+800B6AB4	addu   at, at, v1
+800B6AB8	sb     v0, $0000(at)
+800B6ABC	lw     a0, $0000(a2)
+800B6AC0	nop
+800B6AC4	sll    v0, a0, $01
+800B6AC8	addu   v0, v0, a0
+800B6ACC	sll    v1, v0, $05
+800B6AD0	subu   v1, v1, v0
+800B6AD4	sll    v1, v1, $03
+800B6AD8	subu   v1, v1, a0
+800B6ADC	sll    v1, v1, $02
+800B6AE0	lui    a0, $8016
+800B6AE4	lh     a0, $90d0(a0)
+800B6AE8	lui    at, $8015
+800B6AEC	addiu  at, at, $190e
+800B6AF0	addu   at, at, v1
+800B6AF4	lbu    v0, $0000(at)
+800B6AF8	sll    a0, a0, $05
+800B6AFC	lui    at, $8016
+800B6B00	addiu  at, at, $20b8
+800B6B04	addu   at, at, a0
+800B6B08	lbu    a0, $0000(at)
+800B6B0C	nop
+800B6B10	addu   v0, v0, a0
+800B6B14	lui    at, $8015
+800B6B18	addiu  at, at, $190e
+800B6B1C	addu   at, at, v1
+800B6B20	sb     v0, $0000(at)
+800B6B24	lw     v1, $0000(a2)
+800B6B28	nop
+800B6B2C	sll    v0, v1, $03
+800B6B30	subu   v0, v0, v1
+800B6B34	sll    v0, v0, $02
+800B6B38	addu   v0, v0, v1
+800B6B3C	sll    v0, v0, $02
+800B6B40	ori    v1, zero, $0001
+800B6B44	lui    at, $8015
+800B6B48	addiu  at, at, $1235
+800B6B4C	addu   at, at, v0
+800B6B50	sb     v1, $0000(at)
+800B6B54	lui    v1, $8016
+800B6B58	lh     v1, $90d0(v1)
+800B6B5C	nop
+800B6B60	sll    v1, v1, $05
+800B6B64	lui    at, $8016
+800B6B68	addiu  at, at, $20b0
+800B6B6C	addu   at, at, v1
+800B6B70	lhu    v0, $0000(at)
+800B6B74	nop
+800B6B78	addiu  v0, v0, $ffff (=-$1)
+800B6B7C	lui    at, $8016
+800B6B80	addiu  at, at, $20b0
+800B6B84	addu   at, at, v1
+800B6B88	sh     v0, $0000(at)
+
+Lb6b8c:	; 800B6B8C
+800B6B8C	addiu  sp, sp, $0010
+800B6B90	jr     ra 
+800B6B94	nop
+////////////////////////////////
+// funcb6b98
+800B6B98	addu   a2, a0, zero
+800B6B9C	slt    v0, a2, a1
+800B6BA0	beq    v0, zero, Lb6d64 [$800b6d64]
+800B6BA4	sll    v0, a2, $03
+800B6BA8	ori    t2, zero, $0001
+800B6BAC	ori    t1, zero, $1000
+800B6BB0	subu   v0, v0, a2
+800B6BB4	sll    v0, v0, $02
+800B6BB8	addu   v0, v0, a2
+800B6BBC	sll    a3, v0, $02
+800B6BC0	sll    v1, a2, $01
+800B6BC4	addu   v1, v1, a2
+800B6BC8	sll    v0, v1, $05
+800B6BCC	subu   v0, v0, v1
+800B6BD0	sll    v0, v0, $03
+800B6BD4	subu   v0, v0, a2
+800B6BD8	sll    v0, v0, $02
+800B6BDC	lui    a0, $8015
+800B6BE0	addiu  a0, a0, $1922
+800B6BE4	addu   t0, v0, a0
+800B6BE8	addu   a0, v0, zero
+800B6BEC	sll    v1, v1, $02
+800B6BF0	addiu  v1, v1, $ffd0 (=-$30)
+
+loopb6bf4:	; 800B6BF4
+800B6BF4	ori    v0, zero, $001f
+800B6BF8	lui    at, $8015
+800B6BFC	addiu  at, at, $1908
+800B6C00	addu   at, at, a0
+800B6C04	sb     v0, $0000(at)
+800B6C08	ori    v0, zero, $0080
+800B6C0C	lui    at, $8015
+800B6C10	addiu  at, at, $1909
+800B6C14	addu   at, at, a0
+800B6C18	sb     v0, $0000(at)
+800B6C1C	slti   v0, a2, $0004
+800B6C20	lui    at, $8015
+800B6C24	addiu  at, at, $18f8
+800B6C28	addu   at, at, a0
+800B6C2C	sh     zero, $0000(at)
+800B6C30	lui    at, $8015
+800B6C34	addiu  at, at, $190c
+800B6C38	addu   at, at, a0
+800B6C3C	sb     zero, $0000(at)
+800B6C40	lui    at, $8015
+800B6C44	addiu  at, at, $190d
+800B6C48	addu   at, at, a0
+800B6C4C	sb     zero, $0000(at)
+800B6C50	lui    at, $8015
+800B6C54	addiu  at, at, $190e
+800B6C58	addu   at, at, a0
+800B6C5C	sb     zero, $0000(at)
+800B6C60	bne    v0, zero, Lb6ce0 [$800b6ce0]
+800B6C64	nop
+800B6C68	lui    at, $800f
+800B6C6C	addiu  at, at, $7e10
+800B6C70	addu   at, at, v1
+800B6C74	lw     v0, $0000(at)
+800B6C78	nop
+800B6C7C	andi   v0, v0, $0004
+800B6C80	bne    v0, zero, Lb6c98 [$800b6c98]
+800B6C84	nop
+800B6C88	lui    at, $8015
+800B6C8C	addiu  at, at, $1909
+800B6C90	addu   at, at, a0
+800B6C94	sb     zero, $0000(at)
+
+Lb6c98:	; 800B6C98
+800B6C98	lui    at, $800f
+800B6C9C	addiu  at, at, $7e10
+800B6CA0	addu   at, at, v1
+800B6CA4	lw     v0, $0000(at)
+800B6CA8	nop
+800B6CAC	andi   v0, v0, $0001
+800B6CB0	bne    v0, zero, Lb6ce0 [$800b6ce0]
+800B6CB4	nop
+800B6CB8	lui    at, $8015
+800B6CBC	addiu  at, at, $1909
+800B6CC0	addu   at, at, a0
+800B6CC4	lbu    v0, $0000(at)
+800B6CC8	nop
+800B6CCC	ori    v0, v0, $0004
+800B6CD0	lui    at, $8015
+800B6CD4	addiu  at, at, $1909
+800B6CD8	addu   at, at, a0
+800B6CDC	sb     v0, $0000(at)
+
+Lb6ce0:	; 800B6CE0
+800B6CE0	lui    v0, $8015
+800B6CE4	addiu  v0, v0, $1200
+800B6CE8	addu   v0, a3, v0
+800B6CEC	sb     t2, $0000(t0)
+800B6CF0	lui    at, $8015
+800B6CF4	addiu  at, at, $18e6
+800B6CF8	addu   at, at, a0
+800B6CFC	sh     zero, $0000(at)
+800B6D00	lui    at, $8015
+800B6D04	addiu  at, at, $18ea
+800B6D08	addu   at, at, a0
+800B6D0C	sh     t1, $0000(at)
+800B6D10	sh     t1, $003c(v0)
+800B6D14	sh     t1, $003a(v0)
+800B6D18	lui    at, $8015
+800B6D1C	addiu  at, at, $1238
+800B6D20	addu   at, at, a3
+800B6D24	sh     t1, $0000(at)
+800B6D28	lui    at, $8015
+800B6D2C	addiu  at, at, $190a
+800B6D30	addu   at, at, a0
+800B6D34	sb     t2, $0000(at)
+800B6D38	lui    at, $8015
+800B6D3C	addiu  at, at, $1233
+800B6D40	addu   at, at, a3
+800B6D44	sb     zero, $0000(at)
+800B6D48	addiu  a3, a3, $0074
+800B6D4C	addiu  t0, t0, $0b9c
+800B6D50	addiu  a0, a0, $0b9c
+800B6D54	addiu  a2, a2, $0001
+800B6D58	slt    v0, a2, a1
+800B6D5C	bne    v0, zero, loopb6bf4 [$800b6bf4]
+800B6D60	addiu  v1, v1, $000c
+
+Lb6d64:	; 800B6D64
+800B6D64	jr     ra 
+800B6D68	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb6d6c()
+
+A0 = bu[801590e0];
+
+if( b[80163798 + A0 * c] != -1 )
+{
+    Lb6ddc:	; 800B6DDC
+        V1 = b[80163798 + A0 * c + 1];
+        switch( V1 )
+        {
+            case 0:
+            {
+                A0 = 800c494c;
+                funcbc04c();
+
+                funcb7fdc;
+                [801590e0] = b(bu[801590e0] + 1);
+            }
+            break;
+
+            case 1:
+            {
+                if( bu[800f7de4] != 0 )
+                {
+                    [800f7de4] = b(0);
+                    800B73FC	jal    funcbb684 [$800bb684]
+
+                    V1 = bu[801590e0];
+                    [801590cc] = b(bu[80163798 + V1 * c]);
+
+                    A0 = bu[801590cc];
+                    [80151922 + A0 * b9c] = b(bu[80151922 + A0 * b9c] | 01);
+
+                    A0 = bu[801590cc];
+                    [8015190a + A0 * b9c] = b(0);
+
+                    funcb7764; // we call this function where we assign action to enemy unit
+
+                    A1 = bu[801590e0];
+                    V1 = h[801637a2 + A1 * c];
+                    [800f9774] = b(0);
+                    800B74F8	j      Lb7690 [$800b7690]
+
+                    Lb7644:	; 800B7644
+                    A1 = bu[801590e0];
+                    V0 = A1 * c;
+                    V1 = hu[801637a2 + V0];
+                    A0 = V0 + 80163798;
+                    V1 = V1 + 0001;
+                    [A0 + 000a] = h(V1);
+                    V1 = h[801637a2 + V0];
+
+                    Lb7690:	; 800B7690
+                    V0 = b[800fa9d0 + V1 * c];
+                    if( V0 != -1 )
+                    {
+                        V1 = h[801537a2 + A1 * c];
+                        [800fafe0] = b(bu[800fa9d0 + V1 * c + 1]); // attacker id
+
+                        funcb79f0;
+
+                        V0 = bu[800f9774];
+
+                        if( V0 != 1 )
+                        {
+                            [800fa6d4] = b(f);
+                            [80161eec] = b(f);
+                            [800f99e8] = b(f);
+                            [801031f0] = b(1);
+                        }
+                        else
+                        {
+                            A0 = bu[801590e0];
+                            V1 = h[801637a2 + A0 * c];
+
+                            V0 = bu[800fa9d0 + V1 * c];
+                            [800fa6d4] = b(V0);
+                            [800f99e8] = b(V0);
+                            [80161eec] = b(V0);
+
+                            V1 = h[801637a2 + A0 * c];
+
+                            if( b[800fa9d2 + V1 * c] == 9 )
+                            {
+                                [800f99e8] = b(bu[800fa9d1 + V1 * c]);
+                            }
+
+                            [801031f0] = b(0);
+                            [801031f0] = b(0);
+                        }
+                        800B761C	j      Lb7644 [$800b7644]
+                    }
+
+                    800B76B4	jal    funcb7db4 [$800b7db4]
+                }
+
+                [801517bc] = b(0);
+
+                funcb7fdc;
+
+                if( bu[800f7de4] != 0 )
+                {
+                    [801590e0] = b(bu[801590e0] + 1);
+                }
+            }
+            break;
+
+            case 2:
+            {
+                index = bu[801590e0];
+                A0 = h[80163798 + index * c + 6]; // string index in buffer + 0x100
+                A1 = bu[80163798 + index * c + 5]; // string argument
+                A2 = bu[80163798 + index * c + 3]; // 0
+                A3 = bu[80163798 + index * c + 2]; // 0
+                funcc5c18();
+
+                funcb7fdc;
+                [801590e0] = b(bu[801590e0] + 1);
+            }
+            break;
+
+            case 3: // 3C720B80
+            {
+                if( bu[800f7de4] != 0 )
+                {
+                    [800f7de4] = b(0);
+
+                    800B7258	jal    funcbb684 [$800bb684]
+                    800B725C	nop
+                    V1 = bu[801590e0];
+                    800B7268	nop
+                    V0 = V1 << 01;
+                    V0 = V0 + V1;
+                    V0 = V0 << 02;
+                    800B7278	lui    at, $8016
+                    AT = AT + 37a2;
+                    AT = AT + V0;
+                    V1 = h[AT + 0000];
+                    800B7288	nop
+                    V0 = V1 << 01;
+                    V0 = V0 + V1;
+                    V0 = V0 << 02;
+                    800B7298	lui    at, $8010
+                    800B729C	addiu  at, at, $a9d1 (=-$562f)
+                    AT = AT + V0;
+                    V0 = bu[AT + 0000];
+                    800B72A8	nop
+                    [801590cc] = b(V0);
+                    A0 = bu[801590cc];
+                    800B72BC	nop
+                    V1 = A0 << 01;
+                    V1 = V1 + A0;
+                    V0 = V1 << 05;
+                    V0 = V0 - V1;
+                    V0 = V0 << 03;
+                    V0 = V0 - A0;
+                    V0 = V0 << 02;
+                    [801518e4 + V0 + 26] = b(1);
+                    800B72EC	jal    funcb7764 [$800b7764]
+                    800B72F0	nop
+                    V1 = bu[801590e0];
+                    800B72FC	nop
+                    V0 = V1 << 01;
+                    V0 = V0 + V1;
+                    V0 = V0 << 02;
+                    800B730C	lui    at, $8016
+                    AT = AT + 37a2;
+                    AT = AT + V0;
+                    V1 = h[AT + 0000];
+                    [800f9774] = b(0);
+                    V0 = V1 << 01;
+                    V0 = V0 + V1;
+                    V0 = V0 << 02;
+                    800B7330	lui    at, $8010
+                    800B7334	addiu  at, at, $a9d0 (=-$5630)
+                    AT = AT + V0;
+                    V0 = b[AT + 0000];
+                    800B7340	nop
+                    800B7348	addiu  s0, zero, $ffff (=-$1)
+
+                    if( V0 != -1 )
+                    {
+                        loopb734c:	; 800B734C
+                            800B734C	jal    funcb79f0 [$800b79f0]
+                            800B7350	nop
+                            V1 = bu[801590e0];
+                            800B735C	nop
+                            V0 = V1 << 01;
+                            V0 = V0 + V1;
+                            V0 = V0 << 02;
+                            800B736C	lui    at, $8016
+                            AT = AT + 37a2;
+                            AT = AT + V0;
+                            V1 = hu[AT + 0000];
+                            A0 = V0 + 80163798;
+                            V1 = V1 + 0001;
+                            [A0 + 000a] = h(V1);
+                            800B7388	lui    at, $8016
+                            AT = AT + 37a2;
+                            AT = AT + V0;
+                            V1 = h[AT + 0000];
+                            800B7398	nop
+                            V0 = V1 << 01;
+                            V0 = V0 + V1;
+                            V0 = V0 << 02;
+                            800B73A8	lui    at, $8010
+                            800B73AC	addiu  at, at, $a9d0 (=-$5630)
+                            AT = AT + V0;
+                            V0 = b[AT + 0000];
+                            800B73B8	nop
+                        800B73BC	bne    v0, s0, loopb734c [$800b734c]
+                    }
+
+                    V0 = 0001;
+                    [801517bc] = b(V0);
+                    800B73D0	jal    funcb7db4 [$800b7db4]
+                    800B73D4	nop
+                }
+
+                funcb7fdc;
+
+                if( bu[800f7de4] != 0 )
+                {
+                    [801590e0] = b(bu[801590e0] + 1);
+                }
+            }
+            break;
+
+            case 4: // 14700B80
+            {
+                if( bu[800f7de4] != 0 )
+                {
+                    index = bu[801590e0];
+                    unit_id = b[80163798 + index * c + 0];
+
+                    [800f7de4] = b(0);
+
+                    [1f800004] = w(b[80163798 + index * c + 5] << 8); // animation action id
+                    [1f800008] = w(h[801518ea + unit_id * b9c]);
+
+                    A0 = 800c5694;
+                    funcbbeac();
+                    data_id = V0;
+
+                    if( w[1f800004] < w[1f800008] )
+                    {
+                        V0 = w[1f800008] - w[1f800004];
+                    }
+                    else
+                    {
+                        V0 = w[1f800004] - w[1f800008];
+                    }
+
+                    [8015190a + unit_id * b9c] = b(0);
+
+                    [80162978 + data_id * 20 + 2] = h(V0 / h[80163798 + index * c + 6]);
+                    [80162978 + data_id * 20 + 4] = h(hu[80163798 + index * c + 6]);
+                    [80162978 + data_id * 20 + 6] = h(unit_id);
+
+                    [80163798 + index * c + 8] = h(-1);
+                }
+
+                funcb7fdc;
+                if( bu[800f7de4] != 0 )
+                {
+                    [801590e0] = b(bu[801590e0] + 1);
+                }
+            }
+            break;
+
+            case 5:
+            {
+                index = bu[801590e0];
+                unit_id = b[80163798 + index * c + 0];
+
+                [801518e4 + unit_id * b9c + 3e] = b(bu[801518e4 + unit_id * b9c + 3e] | 20);
+
+                [80151200 + unit_id * 74] = w(w[801636b8 + unit_id * 10 + 8]); // unit status
+
+                V1 = w[80151200 + unit_id * 74];
+                if( V1 != 00000010 && V1 != 00000020 ) // sadness and fury
+                {
+                    [801518e4 + unit_id * b9c + 162] = h(hu[801518e4 + unit_id * b9c + 18]); // store rotation
+                }
+
+                funcb7fdc;
+                [801590e0] = b(bu[801590e0] + 1);
+            }
+            break;
+        }
+
+        A0 = bu[801690e0];
+        V0 = b[80163798 + A0 * c + 0];
+    800B7724	bne    v0, -1, Lb6ddc [$800b6ddc]
+}
+
+[801590e0] = b(0);
+funcb7fdc;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7764
+800B7764	addiu  sp, sp, $ffe8 (=-$18)
+800B7768	lui    v1, $8010
+800B776C	lbu    v1, $a6d0(v1)
+800B7770	ori    v0, zero, $0002
+800B7774	bne    v1, v0, Lb77d0 [$800b77d0]
+800B7778	sw     ra, $0010(sp)
+800B777C	lui    a0, $8016
+800B7780	lbu    a0, $90cc(a0)
+800B7784	nop
+800B7788	sltiu  v0, a0, $0004
+800B778C	beq    v0, zero, Lb77d0 [$800b77d0]
+800B7790	sll    v0, a0, $01
+800B7794	addu   v0, v0, a0
+800B7798	sll    v1, v0, $05
+800B779C	subu   v1, v1, v0
+800B77A0	sll    v1, v1, $03
+800B77A4	subu   v1, v1, a0
+800B77A8	sll    v1, v1, $02
+800B77AC	ori    v0, zero, $0800
+800B77B0	lui    at, $8015
+800B77B4	addiu  at, at, $18fc
+800B77B8	addu   at, at, v1
+800B77BC	sh     v0, $0000(at)
+800B77C0	lui    at, $8015
+800B77C4	addiu  at, at, $1a46
+800B77C8	addu   at, at, v1
+800B77CC	sh     v0, $0000(at)
+
+Lb77d0:	; 800B77D0
+800B77D0	lui    v1, $8010
+800B77D4	lbu    v1, $a6d0(v1)
+800B77D8	ori    v0, zero, $0001
+800B77DC	bne    v1, v0, Lb7838 [$800b7838]
+800B77E0	nop
+800B77E4	lui    a0, $8016
+800B77E8	lbu    a0, $90cc(a0)
+800B77EC	nop
+800B77F0	sltiu  v0, a0, $0004
+800B77F4	bne    v0, zero, Lb7838 [$800b7838]
+800B77F8	sll    v0, a0, $01
+800B77FC	addu   v0, v0, a0
+800B7800	sll    v1, v0, $05
+800B7804	subu   v1, v1, v0
+800B7808	sll    v1, v1, $03
+800B780C	subu   v1, v1, a0
+800B7810	sll    v1, v1, $02
+800B7814	ori    v0, zero, $0800
+800B7818	lui    at, $8015
+800B781C	addiu  at, at, $18fc
+800B7820	addu   at, at, v1
+800B7824	sh     v0, $0000(at)
+800B7828	lui    at, $8015
+800B782C	addiu  at, at, $1a46
+800B7830	addu   at, at, v1
+800B7834	sh     v0, $0000(at)
+
+Lb7838:	; 800B7838
+800B7838	lui    v0, $8016
+800B783C	lbu    v0, $90e0(v0)
+800B7840	lui    a0, $8016
+800B7844	lbu    a0, $90cc(a0)
+800B7848	sll    a2, v0, $01
+800B784C	addu   a2, a2, v0
+800B7850	sll    a2, a2, $02
+800B7854	sll    v1, a0, $01
+800B7858	addu   v1, v1, a0
+800B785C	sll    v0, v1, $05
+800B7860	subu   v0, v0, v1
+800B7864	sll    v0, v0, $03
+800B7868	subu   v0, v0, a0
+800B786C	lui    at, $8016
+800B7870	addiu  at, at, $379d
+800B7874	addu   at, at, a2
+800B7878	lbu    a1, $0000(at)
+800B787C	sll    v0, v0, $02
+800B7880	sll    a1, a1, $18
+800B7884	sra    a1, a1, $18
+800B7888	lui    at, $8015
+800B788C	addiu  at, at, $18e6
+800B7890	addu   at, at, v0
+800B7894	sh     a1, $0000(at)
+800B7898	lui    at, $8016
+800B789C	addiu  at, at, $379a
+800B78A0	addu   at, at, a2
+800B78A4	lbu    v1, $0000(at)
+800B78A8	nop
+800B78AC	lui    at, $8015
+800B78B0	addiu  at, at, $1906
+800B78B4	addu   at, at, v0
+800B78B8	sb     v1, $0000(at)
+800B78BC	lui    a0, $8016
+800B78C0	lbu    a0, $90cc(a0)
+800B78C4	lui    a1, $8016
+800B78C8	lbu    a1, $90e0(a1)
+800B78CC	sll    v0, a0, $01
+800B78D0	addu   v0, v0, a0
+800B78D4	sll    v1, v0, $05
+800B78D8	subu   v1, v1, v0
+800B78DC	sll    v1, v1, $03
+800B78E0	subu   v1, v1, a0
+800B78E4	sll    v0, a1, $01
+800B78E8	addu   v0, v0, a1
+800B78EC	sll    v0, v0, $02
+800B78F0	lui    at, $8016
+800B78F4	addiu  at, at, $379b
+800B78F8	addu   at, at, v0
+800B78FC	lbu    v0, $0000(at)
+800B7900	sll    v1, v1, $02
+800B7904	lui    at, $8015
+800B7908	addiu  at, at, $1907
+800B790C	addu   at, at, v1
+800B7910	sb     v0, $0000(at)
+800B7914	lui    v0, $8016
+800B7918	lbu    v0, $90cc(v0)
+800B791C	lui    a0, $8016
+800B7920	lbu    a0, $90e0(a0)
+800B7924	lui    at, $8016
+800B7928	sb     zero, $3b38(at)
+800B792C	lui    at, $8016
+800B7930	sb     zero, $2090(at)
+800B7934	sll    v1, v0, $03
+800B7938	subu   v1, v1, v0
+800B793C	sll    v1, v1, $02
+800B7940	addu   v1, v1, v0
+800B7944	sll    v0, a0, $01
+800B7948	addu   v0, v0, a0
+800B794C	sll    v0, v0, $02
+800B7950	lui    at, $8016
+800B7954	addiu  at, at, $379e
+800B7958	addu   at, at, v0
+800B795C	lhu    v0, $0000(at)
+800B7960	sll    v1, v1, $02
+800B7964	lui    at, $8015
+800B7968	addiu  at, at, $123e
+800B796C	addu   at, at, v1
+800B7970	sh     v0, $0000(at)
+800B7974	jal    funcb798c [$800b798c]
+800B7978	nop
+800B797C	lw     ra, $0010(sp)
+800B7980	addiu  sp, sp, $0018
+800B7984	jr     ra 
+800B7988	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb798c
+800B798C	addu   a0, zero, zero
+800B7990	ori    a1, zero, $00ff
+800B7994	addu   v1, zero, zero
+
+loopb7998:	; 800B7998
+800B7998	lui    at, $8015
+800B799C	addiu  at, at, $17f0
+800B79A0	addu   at, at, a0
+800B79A4	sb     a1, $0000(at)
+800B79A8	lui    at, $8016
+800B79AC	addiu  at, at, $3cc0
+800B79B0	addu   at, at, v1
+800B79B4	sb     zero, $0000(at)
+800B79B8	lui    at, $8016
+800B79BC	addiu  at, at, $3cc2
+800B79C0	addu   at, at, v1
+800B79C4	sh     zero, $0000(at)
+800B79C8	lui    at, $8016
+800B79CC	addiu  at, at, $3cc4
+800B79D0	addu   at, at, v1
+800B79D4	sw     zero, $0000(at)
+800B79D8	addiu  a0, a0, $0001
+800B79DC	slti   v0, a0, $004e
+800B79E0	bne    v0, zero, loopb7998 [$800b7998]
+800B79E4	addiu  v1, v1, $0008
+800B79E8	jr     ra 
+800B79EC	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb79f0
+action_struct_id = bu[801590e0];
+index = h[80163798 + action_struct_id * c + a];
+target_count = bu[800f9774];
+
+[80163cc0 + target_count * 8] = b(bu[800fa9d0 + index * c + 0]); // target id
+[801517f0 + target_count] = b(bu[800fa9d0 + index * c + 0]); // target id
+
+
+[80163cc2 + target_count * 8] = h(hu[800fa9d0 + index * c + 4]); // flags
+
+[80163cc4 + target_count * 8] = w(w[800fa9d0 + index * c + 8]); // store status of target
+
+A0 = bu[80163cc0 + target_count * 8];
+[801518e8 + A0 * b9c] = h(bu[800fa9d0 + index * c + 2]); // hurt animation
+
+V1 = b[800fa9d0 + index * c + 3];
+[800f99ec + target_count * c] = h(hu[800f9f3c + V1 * e + 2]); // damage
+[800f99ee + target_count * c] = h(hu[800f9f3c + V1 * e + 4]); // flags
+[800f99f4 + target_count * c] = h(V1);
+[800f99f6 + target_count * c] = h(index);
+
+V1 = b[800fa9d3 + index * c];
+if (V1 == -1)
+{
+    [800f99f0 + target_count * c] = h(-1);
+    [800f99f2 + target_count * c] = h(-1);
+}
+else
+{
+    [800f99f0 + target_count * c] = h(hu[800f9f3c + V1 * e + a]); // impact sound
+    [800f99f2 + target_count * c] = h(hu[800f9f3c + V1 * e + c]); // impact effect id
+}
+
+[800f9774] = b(target_count + 1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7db4
+[800fa69c] = h(0);
+[80163608] = h(0);
+[80162088] = h(0);
+[80161de8] = h(0);
+[800f836c] = h(0);
+[801517b4] = h(0);
+[80151774] = h(0);
+
+if (bu[800f9774] > 0)
+{
+    A1 = 80163cc0; // target id
+    A2 = 80163cc2; // flags
+
+    T0 = 0;
+    loopb7e10:	; 800B7E10
+        [80151774] = h(hu[80151774] | (1 << bu[A1]));
+
+        if (hu(A2) & 1)
+        {
+            [801517b4] = h[hu[801517b4] | (1 << bu[A1])];
+        }
+
+        if (hu(A2) & 2)
+        {
+            [800f836c] = h[hu[800f836c] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 4) // unit is dead
+        {
+            [80161de8] = h[hu[80161de8] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 8)
+        {
+            [80162088] = h[hu[80162088] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 10)
+        {
+            [80163608] = h[hu[80163608] | (1 << bu[A1])];
+        }
+
+        if (hu[A2] & 20)
+        {
+            [800fa69c] = h[hu[800fa69c] | (1 << bu[A1])];
+        }
+
+        A2 = A2 + 8;
+        A1 = A1 + 8;
+
+        T0 = T0 + 1;
+        V0 = T0 < bu[800f9774];
+    800B7F58	bne    v0, zero, loopb7e10 [$800b7e10]
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7f6c
+800B7F6C	lui    v0, $8006
+800B7F70	lbu    v0, $2d99(v0)
+800B7F74	addiu  sp, sp, $ffe0 (=-$20)
+800B7F78	beq    v0, zero, Lb7f9c [$800b7f9c]
+800B7F7C	sw     ra, $0018(sp)
+
+loopb7f80:	; 800B7F80
+800B7F80	jal    funcb7fb4 [$800b7fb4]
+800B7F84	nop
+800B7F88	lui    v0, $8006
+800B7F8C	lbu    v0, $2d99(v0)
+800B7F90	nop
+800B7F94	bne    v0, zero, loopb7f80 [$800b7f80]
+800B7F98	nop
+
+Lb7f9c:	; 800B7F9C
+800B7F9C	lui    at, $8006
+800B7FA0	sb     zero, $2d98(at)
+800B7FA4	lw     ra, $0018(sp)
+800B7FA8	addiu  sp, sp, $0020
+800B7FAC	jr     ra 
+800B7FB0	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7fb4()
+
+system_cdrom_read_chain();
+[801518dc] = b(V0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb7fdc()
+
+funcb7fb4();
+
+A0 = w[801517c0] + 40a4; // 800faff4 + 40a4 = 800ff098
+A1 = 10;
+system_psyq_clear_o_tag_r();
+
+A0 = w[801517c0] + 4070;
+A1 = 2;
+system_psyq_clear_o_tag();
+
+A0 = w[801517c0] + 4078;
+A1 = 2;
+system_psyq_clear_o_tag();
+
+A0 = w[801517c0] + 70;
+A1 = 1000;
+system_psyq_clear_o_tag_r();
+
+A0 = w[801517c0] + 4080;
+A1 = 9;
+system_psyq_clear_o_tag_r();
+
+A0 = w[801517c0] + 40e4;
+A1 = 2;
+system_psyq_clear_o_tag();
+
+A0 = w[801517c0] + 40ec;
+A1 = 2;
+system_psyq_clear_o_tag();
+
+V1 = 80164000;
+if( w[800f8368] == 0 )
+{
+    V1 = 80168000;
+}
+[80163c74] = w(V1);
+
+A0 = 1;
+funcb8360();
+
+funcc5cc0(); // add next show string element 800f9da8
+
+funcb8438; // we load field model to packets here
+
+
+
+
+
+
+
+
+A0 = 0;
+A2 = 0001;
+V1 = 0;
+A1 = h[80162080];
+
+loopb80cc:	; 800B80CC
+    V0 = bu[8015190a + V1];
+    800B80E0	bne    v0, zero, Lb80f8 [$800b80f8]
+
+    [800f7de4] = b(0);
+    800B80F0	j      Lb8128 [$800b8128]
+    800B80F4	nop
+
+    Lb80f8:	; 800B80F8
+    800B80F8	bne    a1, zero, Lb8110 [$800b8110]
+    800B80FC	nop
+    [800f7de4] = b(A2);
+    800B8108	j      Lb811c [$800b811c]
+    A0 = A0 + 0001;
+
+    Lb8110:	; 800B8110
+    [800f7de4] = b(0);
+    A0 = A0 + 0001;
+
+    Lb811c:	; 800B811C
+    V1 = V1 + 0b9c;
+    V0 = A0 < 000a;
+800B8120	bne    v0, zero, loopb80cc [$800b80cc]
+
+Lb8128:	; 800B8128
+800B8128	jal    funca3ed0 [$800a3ed0]
+
+A0 = 2;
+funcb8360();
+
+A0 = w[801517c0];
+800B8140	jal    funcdcfd4 [$800dcfd4]
+A0 = A0 + 40e4;
+V0 = bu[800f9d94];
+800B8150	nop
+800B8154	bne    v0, zero, Lb8170 [$800b8170]
+800B8158	nop
+800B815C	jal    system_psyq_reset_graph [$80043938]
+A0 = 0001;
+V0 = 0001;
+[800f9d94] = b(V0);
+
+Lb8170:	; 800B8170
+V0 = hu[8016376a];
+800B8178	nop
+V0 = V0 & 0002;
+800B8180	beq    v0, zero, Lb81a8 [$800b81a8]
+A1 = 0010;
+800B8188	lui    v0, $800a
+800B818C	addiu  v0, v0, $d268 (=-$2d98)
+A2 = 0010;
+A0 = w[801517c0];
+A3 = w[V0 + 0000];
+800B81A0	jal    funce16b8 [$800e16b8]
+A0 = A0 + 40e4;
+
+Lb81a8:	; 800B81A8
+800B81A8	jal    func3cedc [$8003cedc]
+A0 = 0001;
+[800fa9b8] = w(V0);
+800B81B8	jal    funcd25e8 [$800d25e8]
+
+funcb7fb4();
+
+800B81C8	jal    funcd8a88 [$800d8a88]
+800B81CC	nop
+A0 = h[80162084];
+[80158d08] = w(V0);
+800B81E0	jal    system_set_proj_plane_dist_to_GTE [$8003b6dc]
+800B81E4	nop
+V0 = bu[801516f4];
+800B81F0	nop
+V0 = V0 + 0001;
+[801516f4] = b(V0);
+800B8200	jal    funcb7f6c [$800b7f6c]
+800B8204	nop
+800B8208	jal    funcb950c [$800b950c]
+800B820C	nop
+V0 = hu[800f198c];
+800B8218	nop
+[801516a0] = h(V0);
+////////////////////////////////
