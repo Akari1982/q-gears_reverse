@@ -81,18 +81,16 @@ SP = SP + 0018;
 800A0C4C	jr     ra 
 800A0C50	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca0c54
-800A0C54	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0014] = w(S1);
+
 S1 = A0;
-[SP + 0018] = w(S2);
 S2 = A1;
-[SP + 001c] = w(S3);
 S3 = A2;
-[SP + 0020] = w(S4);
 S4 = A3;
-[SP + 0024] = w(RA);
-[SP + 0010] = w(S0);
 
 La0c80:	; 800A0C80
 800A0C80	lui    v0, $8003
@@ -112,8 +110,8 @@ S0 = 2710;
 S0 = 0;
 
 loopa0cb4:	; 800A0CB4
-800A0CB4	jal    $system_cdrom_read_chain
-800A0CB8	nop
+system_cdrom_read_chain();
+
 800A0CBC	beq    v0, zero, La0ce0 [$800a0ce0]
 V0 = S0 < 2710;
 800A0CC4	jal    $8003cedc
@@ -135,21 +133,14 @@ La0ce0:	; 800A0CE0
 800A0CF4	nop
 
 La0cf8:	; 800A0CF8
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800A0D14	jr     ra 
-800A0D18	nop
 ////////////////////////////////
-// funca0d24
-800A0D1C	lui    at, $800e
-[AT + 55ec] = w(0);
-800A0D24	jr     ra 
-800A0D28	nop
+
+
+
+////////////////////////////////
+// funca0d24()
+
+[800e55ec] = w(0);
 ////////////////////////////////
 
 

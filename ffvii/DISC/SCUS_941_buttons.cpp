@@ -1,55 +1,112 @@
 ////////////////////////////////
-// system_get_buttons_with_config_remap()
+// func1c434()
 
-system_get_current_pad_buttons();
-cb1 = V0 & 0000ffff; // first controller
-cb2 = V0 & ffff0000; // second controller
-
-// if controller config set to normal or input not enabled
-if( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 || w[80062fa0] != 0 )
+if( bu[GP + 2c] == 0 )
 {
-    return cb2 | cb1;
-}
+    [GP + 2c] = b(1);
 
-// remap buttons according to config options
+    system_bios_start_pad();
+
+    A0 = 800696ac;
+    A1 = 4;
+    A2 = 800696ac + 22;
+    A3 = 4;
+    system_bios_init_pad();
+}
+[80062fa0] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c484
+8001C484
+V0 = 0014;
+[GP + 0158] = w(A0);
+[GP + 0150] = w(V0);
+8001C490	jr     ra 
+8001C494	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c498()
+V1 = bu[800696ac];
+
+V0 = 00ff;
+8001C4A4	beq    v1, v0, L1c4e0 [$8001c4e0]
+V0 = 0;
+V1 = bu[800696ad];
+V0 = 0041;
+8001C4B8	bne    v1, v0, L1c4dc [$8001c4dc]
+8001C4BC	nop
+V0 = bu[800696ae];
+V1 = bu[800696af];
+V0 = V0 << 08;
+8001C4D4	j      L1c4e0 [$8001c4e0]
+V0 = V1 NOR V0;
+
+L1c4dc:	; 8001C4DC
+V0 = 0;
+
+L1c4e0:	; 8001C4E0
+V0 = V0 & ffff;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c4e8
+S0 = A0;
+
+A0 = 1;
+A1 = h[GP + 2e];
+A2 = h[GP + 30];
+[GP + 2d] = b(1);
+func1f6e4;
+
+[GP + 97] = b(1);
+[GP + 98] = b(7);
+[GP + 9c] = w(28);
+[GP + a1] = b(1);
+[GP + 174] = w(S0);
+
 A0 = 0;
-V1 = 0;
-L1c92c:	; 8001C92C
-    if( cb1 & ( 1 << V1 ) )
+A1 = ff;
+
+loop1c524:	; 8001C524
+    V1 = bu[S0 + 0];
+    if( V1 < ff || V1 >= fa )
     {
-        A0 = A0 | (1 << bu[8009c6e4 + 10dc + V1]);
+        S0 = S0 + 2;
+    }
+    else
+    {
+        S0 = S0 + 1;
     }
 
-    V1 = V1 + 1;
-    if( V1 >= 10 )
+    if( bu[S0 + 0] == ff )
     {
-        return cb2 | A0;
+        S0 = S0 + 1;
+        break;
     }
-8001C964	j      L1c92c [$8001c92c]
+
+    A0 = A0 + 1;
+    V0 = A0 < 100;
+8001C56C	bne    v0, zero, loop1c524 [$8001c524]
+
+return S0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1c788
-if( w[GP + 150] != 0 )
+// func1c58c
+if( bu[GP + 97] == 0 )
 {
-    [GP + 150] = w(w[GP + 150] - 1);
+    [GP + 2d] = b(0);
 }
-else
-{
-    if( w[GP + b4] != 1 )
-    {
-        system_cdrom_read_chain();
-        if( V0 == 0 )
-        {
-            func1c5bc; // rerurn pressed button
-
-            return V0;
-        }
-    }
-}
-return 0;
 ////////////////////////////////
 
 
@@ -192,6 +249,30 @@ return 0000;
 
 
 ////////////////////////////////
+// func1c788
+if( w[GP + 150] != 0 )
+{
+    [GP + 150] = w(w[GP + 150] - 1);
+}
+else
+{
+    if( w[GP + b4] != 1 )
+    {
+        system_cdrom_read_chain();
+        if( V0 == 0 )
+        {
+            func1c5bc; // rerurn pressed button
+
+            return V0;
+        }
+    }
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_get_current_pad_buttons()
 
 if( w[80062fa0] == 0 ) // input enabled
@@ -241,55 +322,33 @@ return (V0 << 10) | (A0 & ffff);
 
 
 ////////////////////////////////
-// func1c498()
-V1 = bu[800696ac];
+// system_get_buttons_with_config_remap()
 
-V0 = 00ff;
-8001C4A4	beq    v1, v0, L1c4e0 [$8001c4e0]
-V0 = 0;
-V1 = bu[800696ad];
-V0 = 0041;
-8001C4B8	bne    v1, v0, L1c4dc [$8001c4dc]
-8001C4BC	nop
-V0 = bu[800696ae];
-V1 = bu[800696af];
-V0 = V0 << 08;
-8001C4D4	j      L1c4e0 [$8001c4e0]
-V0 = V1 NOR V0;
+system_get_current_pad_buttons();
+cb1 = V0 & 0000ffff; // first controller
+cb2 = V0 & ffff0000; // second controller
 
-L1c4dc:	; 8001C4DC
-V0 = 0;
-
-L1c4e0:	; 8001C4E0
-V0 = V0 & ffff;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func1c434()
-
-if( bu[GP + 2c] == 0 )
+// if controller config set to normal or input not enabled
+if( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 || w[80062fa0] != 0 )
 {
-    [GP + 2c] = b(1);
-
-    system_bios_start_pad();
-
-    A0 = 800696ac;
-    A1 = 4;
-    A2 = 800696ac + 22;
-    A3 = 4;
-    system_bios_init_pad();
+    return cb2 | cb1;
 }
-[80062fa0] = w(0);
-////////////////////////////////
 
+// remap buttons according to config options
+A0 = 0;
+V1 = 0;
+L1c92c:	; 8001C92C
+    if( cb1 & ( 1 << V1 ) )
+    {
+        A0 = A0 | (1 << bu[8009c6e4 + 10dc + V1]);
+    }
 
-
-////////////////////////////////
-// func3cebc()
-
-system_bios_stop_pad();
+    V1 = V1 + 1;
+    if( V1 >= 10 )
+    {
+        return cb2 | A0;
+    }
+8001C964	j      L1c92c [$8001c92c]
 ////////////////////////////////
 
 
