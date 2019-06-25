@@ -1876,54 +1876,27 @@ if( materia_id == b )
 
 
 ////////////////////////////////
-// func19da0
-80019DA0	addu   a3, a0, zero
-80019DA4	lbu    v0, $02dc(gp)
-80019DA8	nop
-80019DAC	bne    v0, zero, L19e3c [$80019e3c]
-80019DB0	addu   a2, a1, zero
-80019DB4	lw     a0, $013c(gp)
-80019DB8	ori    v0, zero, $0008
-80019DBC	beq    a0, v0, L19e44 [$80019e44]
-80019DC0	sll    v0, a0, $01
-80019DC4	addu   v0, v0, a0
-80019DC8	lw     v1, $011c(gp)
-80019DCC	ori    a1, zero, $0009
-80019DD0	addu   v1, v1, v0
-80019DD4	sb     a1, $0024(v1)
-80019DD8	lw     a0, $013c(gp)
-80019DDC	lw     v1, $011c(gp)
-80019DE0	sll    v0, a0, $01
-80019DE4	addu   v0, v0, a0
-80019DE8	addu   v1, v1, v0
-80019DEC	sb     a1, $0025(v1)
-80019DF0	lw     v0, $013c(gp)
-80019DF4	andi   a1, a3, $00ff
-80019DF8	addiu  v1, v0, $0001
-80019DFC	sll    a0, v0, $01
-80019E00	addu   a0, a0, v0
-80019E04	sw     v1, $013c(gp)
-80019E08	andi   v1, a2, $00ff
-80019E0C	sll    v0, v1, $02
-80019E10	addu   v0, v0, v1
-80019E14	sll    v0, v0, $02
-80019E18	lui    v1, $8007
-80019E1C	addiu  v1, v1, $30de
-80019E20	addu   v0, v0, v1
-80019E24	addu   v0, v0, a1
-80019E28	lw     v1, $011c(gp)
-80019E2C	lbu    v0, $0000(v0)
-80019E30	addu   v1, v1, a0
-80019E34	j      L19e44 [$80019e44]
-80019E38	sb     v0, $0026(v1)
+// system_add_materia_counter_attack()
 
-L19e3c:	; 80019E3C
-80019E3C	ori    v0, zero, $0012
-80019E40	sb     v0, $02b8(gp)
+number_of_star = A0;
+materia_id = A1;
 
-L19e44:	; 80019E44
-80019E44	jr     ra 
-80019E48	nop
+if( bu[GP + 2dc] == 0 ) // battle
+{
+    A0 = w[GP + 13c];
+    if( A0 != 8 )
+    {
+        unit_structure = w[GP + 11c];
+        [unit_structure + A0 * 3 + 24] = b(9);
+        [unit_structure + A0 * 3 + 25] = b(9);
+        [unit_structure + A0 * 3 + 26] = b(bu[800730d0 + materia_id * 14 + e + number_of_star]); // counter_value
+        [GP + 13c] = w(w[GP + 13c] + 1);
+    }
+}
+else // menu
+{
+    [GP + 2b8] = b(12);
+}
 ////////////////////////////////
 
 

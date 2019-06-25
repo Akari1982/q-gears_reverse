@@ -116,17 +116,18 @@ SP = SP + 0030;
 800AA9F8	jr     ra 
 800AA9FC	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funcaaa00
-800AAA00	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-800AAA08	lui    s1, $8011
-S1 = w[S1 + 9d70];
-[SP + 0010] = w(S0);
-[SP + 0018] = w(RA);
-800AAA18	jal    funca9a44 [$800a9a44]
+
+S1 = w[80109d70];
 S0 = A0;
-800AAA20	lui    v1, $8011
-V1 = w[V1 + 9d70];
+
+800AAA18	jal    funca9a44 [$800a9a44]
+
+V1 = w[80109d70];
 A1 = 0002;
 800AAA2C	beq    v1, a1, Laaa84 [$800aaa84]
 A0 = V0;
@@ -149,9 +150,8 @@ V0 = 0001;
 
 Laaa6c:	; 800AAA6C
 800AAA6C	bne    a0, v0, Laaae0 [$800aaae0]
-800AAA70	nop
-800AAA74	lui    at, $8011
-[AT + 9d70] = w(A1);
+
+[80109d70] = w(A1);
 800AAA7C	j      Laaae0 [$800aaae0]
 800AAA80	nop
 
@@ -169,9 +169,8 @@ V1 = 0004;
 800AAAA4	beq    a0, v1, Laaae0 [$800aaae0]
 V0 = 000b;
 800AAAAC	beq    a0, v0, Laaae0 [$800aaae0]
-800AAAB0	nop
-800AAAB4	lui    at, $8011
-[AT + 9d70] = w(V1);
+
+[80109d70] = w(V1);
 800AAABC	j      Laaae0 [$800aaae0]
 800AAAC0	nop
 
@@ -183,42 +182,26 @@ V0 = V0 < 0006;
 V0 = 0001;
 
 Laaad8:	; 800AAAD8
-800AAAD8	lui    at, $8011
-[AT + 9d70] = w(V0);
+[80109d70] = w(V0);
 
 Laaae0:	; 800AAAE0
-800AAAE0	lui    v0, $8011
-V0 = w[V0 + 9d70];
+V0 = w[80109d70];
 800AAAE8	nop
 800AAAEC	beq    v0, s1, Laab00 [$800aab00]
 800AAAF0	nop
 [S0 + 0000] = b(0);
-800AAAF8	lui    v0, $8011
-V0 = w[V0 + 9d70];
+V0 = w[80109d70];
 
 Laab00:	; 800AAB00
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800AAB10	jr     ra 
-800AAB14	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcaab18
-800AAB18	addiu  sp, sp, $ff98 (=-$68)
-[SP + 0040] = w(S0);
+
 S0 = A0;
-[SP + 0064] = w(RA);
-[SP + 0060] = w(FP);
-[SP + 005c] = w(S7);
-[SP + 0058] = w(S6);
-[SP + 0054] = w(S5);
-[SP + 0050] = w(S4);
-[SP + 004c] = w(S3);
-[SP + 0048] = w(S2);
-[SP + 0044] = w(S1);
 V1 = bu[S0 + 0051];
-800AAB4C	nop
 V0 = V1 & 0008;
 800AAB54	beq    v0, zero, Laab60 [$800aab60]
 V0 = V1 & 00fd;
@@ -236,10 +219,10 @@ V0 = bu[S0 + 0051];
 800AAB80	nop
 V0 = V0 & 0002;
 800AAB88	beq    v0, zero, Lab338 [$800ab338]
-800AAB8C	nop
-A0 = bu[S0 + 0050];
-800AAB94	jal    funcb6efc [$800b6efc]
-800AAB98	nop
+
+A0 = bu[S0 + 50]; // model id
+funcb6efc();
+
 S1 = V0;
 800AABA0	bne    s1, zero, Laabbc [$800aabbc]
 800AABA4	nop
@@ -254,9 +237,9 @@ V0 = w[S0 + 0008];
 800AABC0	nop
 800AABC4	beq    v0, zero, Laac00 [$800aac00]
 S5 = 0;
-A0 = bu[V0 + 0050];
-800AABD0	jal    funcb6efc [$800b6efc]
-800AABD4	nop
+A0 = bu[V0 + 50]; // model id
+funcb6efc();
+
 S5 = V0;
 800AABDC	bne    s5, zero, Laac00 [$800aac00]
 800AABE0	nop
@@ -823,19 +806,10 @@ V0 = S3 + V0;
 [S1 + 0026] = h(V0);
 
 Lab338:	; 800AB338
-RA = w[SP + 0064];
-FP = w[SP + 0060];
-S7 = w[SP + 005c];
-S6 = w[SP + 0058];
-S5 = w[SP + 0054];
-S4 = w[SP + 0050];
-S3 = w[SP + 004c];
-S2 = w[SP + 0048];
-S1 = w[SP + 0044];
-S0 = w[SP + 0040];
-SP = SP + 0068;
-800AB364	jr     ra 
-800AB368	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcab36c
 800AB36C	beq    a0, zero, Lab390 [$800ab390]
@@ -1568,10 +1542,12 @@ else
         V0 = V0 >> 05;
         800ABDDC	j      Labe3c [$800abe3c]
         S0 = V0 & 0007;
-        800ABDE4	jal    funcb79b8 [$800b79b8]
-        800ABDE8	nop
+        wm_get_pc_character_model_from_party();
+
+        S0 = V0; // model id
+
         800ABDEC	j      Labe3c [$800abe3c]
-        S0 = V0;
+
         800ABDF4	jal    funcadfc0 [$800adfc0]
         800ABDF8	nop
         800ABDFC	j      Labe3c [$800abe3c]
@@ -14441,49 +14417,32 @@ if( mask14_uniq != 0 )
 
 
 ////////////////////////////////
-// funcb79b8
-800B79B8	lui    a1, $800a
-A1 = bu[A1 + d391];
-800B79C0	nop
-800B79C4	beq    a1, zero, Lb7a38 [$800b7a38]
-V0 = 0;
-800B79CC	lui    a0, $800a
-A0 = bu[A0 + d392];
-800B79D4	nop
-800B79D8	beq    a0, zero, Lb7a38 [$800b7a38]
-800B79DC	nop
-800B79E0	lui    v1, $800a
-V1 = bu[V1 + d393];
-800B79E8	nop
-800B79EC	beq    v1, zero, Lb7a34 [$800b7a34]
-V0 = 0002;
-800B79F4	beq    a1, v0, Lb7a2c [$800b7a2c]
-800B79F8	nop
-800B79FC	beq    a0, v0, Lb7a2c [$800b7a2c]
-800B7A00	nop
-800B7A04	beq    v1, v0, Lb7a2c [$800b7a2c]
-V0 = 0008;
-800B7A0C	beq    a1, v0, Lb7a24 [$800b7a24]
-800B7A10	nop
-800B7A14	beq    a0, v0, Lb7a24 [$800b7a24]
-800B7A18	nop
-800B7A1C	bne    v1, v0, Lb7a38 [$800b7a38]
-V0 = 0;
+// wm_get_pc_character_model_from_party()
 
-Lb7a24:	; 800B7A24
-800B7A24	j      Lb7a38 [$800b7a38]
-V0 = 0002;
+party1 = bu[8009d391]; // party member 1
+party2 = bu[8009d392]; // party member 2
+party3 = bu[8009d393]; // party member 3
 
-Lb7a2c:	; 800B7A2C
-800B7A2C	j      Lb7a38 [$800b7a38]
-V0 = 0001;
+if( ( party1 == 0 ) || ( party2 == 0 ) || ( party3 == 0 ) ) // cloud
+{
+    return 0;
+}
 
-Lb7a34:	; 800B7A34
-V0 = 0;
+if( ( party1 == 2 ) || ( party2 == 2 ) || ( party3 == 2 ) ) // tifa
+{
+    return 1;
+}
 
-Lb7a38:	; 800B7A38
-800B7A38	jr     ra 
-800B7A3C	nop
+if( ( party1 == 8 ) || ( party2 == 8 ) || ( party3 == 8 ) ) // cid
+{
+    return 2;
+}
+
+return 0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb7a40
 800B7A40	addiu  sp, sp, $ffe8 (=-$18)
@@ -14499,11 +14458,13 @@ A2 = 0 < V0;
 800B7A6C	nop
 V1 = 0002;
 800B7A74	beq    v0, v1, Lb7aac [$800b7aac]
-800B7A78	nop
-800B7A7C	jal    funcb79b8 [$800b79b8]
-800B7A80	nop
+
+wm_get_pc_character_model_from_party();
+
+S0 = V0; // model id
+
 800B7A84	jal    funcbba44 [$800bba44]
-S0 = V0 & 00ff;
+
 V1 = 800a9a04;
 800B7A94	beq    v0, zero, Lb7aa4 [$800b7aa4]
 800B7A98	nop
@@ -19552,11 +19513,12 @@ A1 = 0006;
 
 Lbbfe4:	; 800BBFE4
 800BBFE4	bne    s2, zero, Lbc004 [$800bc004]
-800BBFE8	nop
-800BBFEC	jal    funcb79b8 [$800b79b8]
-800BBFF0	nop
-800BBFF4	jal    wm_find_id_in_model_struct_list [$800a993c]
-A0 = V0;
+
+wm_get_pc_character_model_from_party();
+
+A0 = V0; // model id
+wm_find_id_in_model_struct_list();
+
 800BBFFC	jal    funca9110 [$800a9110]
 800BC000	nop
 
