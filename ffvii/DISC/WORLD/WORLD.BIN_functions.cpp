@@ -529,56 +529,50 @@ SP = SP + 0018;
 800AE01C	jr     ra 
 800AE020	nop
 ////////////////////////////////
-// funcae024
-800AE024
-V1 = w[A0 + 0000];
-V0 = w[A1 + 0000];
-800AE02C	nop
-A2 = V1 - V0;
-800AE034	bgtz   a2, Lae040 [$800ae040]
-800AE038	nop
-A2 = V0 - V1;
 
-Lae040:	; 800AE040
-800AE040	lui    v0, $0002
-V0 = V0 | 3fff;
-V0 = V0 < A2;
-800AE04C	beq    v0, zero, Lae05c [$800ae05c]
-800AE050	lui    v0, $0004
-V0 = V0 | 8000;
-A2 = V0 - A2;
 
-Lae05c:	; 800AE05C
-V1 = w[A0 + 0004];
-V0 = w[A1 + 0004];
-800AE064	nop
-A3 = V1 - V0;
-800AE06C	bgtz   a3, Lae078 [$800ae078]
-800AE070	nop
-A3 = V0 - V1;
 
-Lae078:	; 800AE078
-A0 = w[A0 + 0008];
-A1 = w[A1 + 0008];
-800AE080	nop
-V1 = A0 - A1;
-800AE088	bgtz   v1, Lae094 [$800ae094]
-800AE08C	lui    v0, $0001
-V1 = A1 - A0;
+////////////////////////////////
+// funcae024()
 
-Lae094:	; 800AE094
-V0 = V0 | bfff;
-V0 = V0 < V1;
-800AE09C	beq    v0, zero, Lae0b0 [$800ae0b0]
-800AE0A0	nop
-800AE0A4	lui    v0, $0003
-V0 = V0 | 8000;
-V1 = V0 - V1;
+x1 = w[A0 + 0];
+x2 = w[A1 + 0];
+xd = x1 - x2;
+if( xd <= 0 )
+{
+    xd = x2 - x1;
+}
+if( 23fff < xd )
+{
+    xd = 48000 - xd;
+}
 
-Lae0b0:	; 800AE0B0
-V0 = A2 + A3;
-800AE0B4	jr     ra 
-V0 = V0 + V1;
+y1 = w[A0 + 4];
+y2 = w[A1 + 4];
+yd = y1 - y2;
+
+if( yd <= 0 )
+{
+    yd = y2 - y1;
+}
+
+z1 = w[A0 + 8];
+z2 = w[A1 + 8];
+zd = z1 - z2;
+if( zd <= 0 )
+{
+    zd = z2 - z1;
+}
+if( 1bfff < zd )
+{
+    zd = 38000 - zd;
+}
+
+return xd + yd + zd;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcae0bc
 800AE0BC	addiu  sp, sp, $ffa8 (=-$58)
@@ -1685,24 +1679,28 @@ SP = SP + 0018;
 800AF1A0	jr     ra 
 800AF1A4	nop
 ////////////////////////////////
-// funcaf1a8
-V0 = A0 < 0010;
-800AF1AC	beq    v0, zero, Laf1e0 [$800af1e0]
-V0 = A0 << 03;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V1 = 8010b178;
-V1 = V0 + V1;
-800AF1C8	lui    at, $8011
-[AT + b3b8] = w(V1);
-800AF1D0	addiu  v0, zero, $ffff (=-$1)
-800AF1D4	beq    a1, v0, Laf1e0 [$800af1e0]
-800AF1D8	nop
-[V1 + 0013] = b(A1);
 
-Laf1e0:	; 800AF1E0
-800AF1E0	jr     ra 
-800AF1E4	nop
+
+
+////////////////////////////////
+// wm_set_point_as_active()
+
+point_id = A0;
+point_type = A1;
+
+if( point_id < 10 )
+{
+    [8010b3b8] = w(8010b178 + point_id * 24);
+
+    if( point_type != -1 )
+    {
+        [8010b178 + point_id * 24 + 13] = b(point_type);
+    }
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcaf1e8
 800AF1E8	lui    a2, $8011
@@ -2283,24 +2281,28 @@ SP = SP + 0070;
 800AF964	jr     ra 
 800AF968	nop
 ////////////////////////////////
-// funcaf96c
-800AF96C	lui    a1, $8011
-A1 = w[A1 + b3b8];
-800AF974	addiu  sp, sp, $ffe8 (=-$18)
-800AF978	bne    a1, zero, Laf988 [$800af988]
-[SP + 0010] = w(RA);
-800AF980	j      Laf990 [$800af990]
-V0 = 0;
 
-Laf988:	; 800AF988
-800AF988	jal    funcae024 [$800ae024]
-800AF98C	nop
 
-Laf990:	; 800AF990
-RA = w[SP + 0010];
-SP = SP + 0018;
-800AF998	jr     ra 
-800AF99C	nop
+
+////////////////////////////////
+// funcaf96c()
+
+active_point = w[8010b3b8];
+if( active_point == 0 )
+{
+    return 0;
+}
+else
+{
+    A1 = active_point;
+    funcae024();
+
+    return V0;
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcaf9a0
 800AF9A0	lui    a1, $8011
@@ -5784,7 +5786,7 @@ A0 = 0004;
 Lb2a60:	; 800B2A60
 800B2A60	jal    wm_find_id_in_model_struct_list [$800a993c]
 800B2A64	nop
-800B2A68	jal    funcaa098 [$800aa098]
+800B2A68	jal    wm_get_position_from_active_model [$800aa098]
 A0 = S5;
 V1 = w[S2 + 0000];
 800B2A74	nop
@@ -10879,7 +10881,7 @@ loopb7590:	; 800B7590
 A0 = S0 + 0015;
 800B7598	beq    v0, zero, Lb75c0 [$800b75c0]
 800B759C	nop
-800B75A0	jal    funcaa098 [$800aa098]
+800B75A0	jal    wm_get_position_from_active_model [$800aa098]
 A0 = SP + 0010;
 V0 = w[SP + 0018];
 V1 = hu[SP + 0010];
@@ -15884,7 +15886,7 @@ Lbbaa4:	; 800BBAA4
 800BBAA8	nop
 800BBAAC	beq    v0, zero, Lbbb9c [$800bbb9c]
 800BBAB0	nop
-800BBAB4	jal    funcaa098 [$800aa098]
+800BBAB4	jal    wm_get_position_from_active_model [$800aa098]
 A0 = SP + 0010;
 800BBABC	jal    funca9154 [$800a9154]
 S0 = 0003;
@@ -16184,7 +16186,7 @@ V0 = S4 & 0040;
 800BBE84	jal    funca9154 [$800a9154]
 800BBE88	nop
 A0 = SP + 0010;
-800BBE90	jal    funcaa098 [$800aa098]
+800BBE90	jal    wm_get_position_from_active_model [$800aa098]
 S1 = V0;
 800BBE98	jal    funcaa128 [$800aa128]
 A0 = SP + 0020;
@@ -16657,7 +16659,7 @@ Lbc514:	; 800BC514
 800BC518	nop
 
 Lbc51c:	; 800BC51C
-800BC51C	jal    funcaa098 [$800aa098]
+800BC51C	jal    wm_get_position_from_active_model [$800aa098]
 A0 = SP + 0028;
 800BC524	lui    a0, $8011
 A0 = w[A0 + 6500];

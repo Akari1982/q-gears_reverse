@@ -1,7 +1,27 @@
-0x017 - set top value as (top value < 1).
-0x060 - get two top values from stack and store back (2nd value < top value).
-0x063 - get two top values from stack and store back (2nd value >= top value).
-0x070 - get two top values from stack and store back (2nd value == top value).
+0x015 - push neg            - pop value from stack and then push negative value back to stack.
+0x017 - push logicnot       - pop value from stack and then push logic negative back to stack.
+0x030 - push mul            - pop 2 values from stack and push back (2nd * 1st).
+0x040 - push add            - pop 2 values from stack and push back (2nd + 1st).
+0x041 - push sub            - pop 2 values from stack and push back (2nd - 1st).
+0x050 - push shl            - pop 2 values from stack and push back (2nd << 1st).
+0x051 - push shr            - pop 2 values from stack and push back (2nd >> 1st).
+0x060 - push less           - pop 2 values from stack and push back (2nd < 1st).
+0x061 - push greater        - pop 2 values from stack and push back (2nd > 1st).
+0x062 - push lessequal      - pop 2 values from stack and push back (2nd <= 1st).
+0x063 - push greaterequal   - pop 2 values from stack and push back (2nd >= 1st).
+0x070 - push equal          - pop 2 values from stack and push back (2nd == 1st).
+0x071 - push notequal       - pop 2 values from stack and push back (2nd != 1st).
+0x080 - push and            - pop 2 values from stack and push back (2nd & 1st).
+0x0a0 - push or             - pop 2 values from stack and push back (2nd | 1st).
+0x0b0 - push logicand       - pop 2 values from stack and push back ((2nd != 0) && (1st != 0)).
+0x0c0 - push logicor        - pop 2 values from stack and push back ((2nd != 0) || (1st != 0)).
+
+
+0x310 - set active point    - pop 2 values from stack (1st - type of point, 2nd - point id) and .
+
+
+
+
 0x100 - reset stack. Set 0x8010ad90 to 0x8010ad70.
 0x101-0x1ff - push this 2 bytes as type and next 2 bytes as value to stack.
     type 0x110 - get immediate value.

@@ -1399,41 +1399,40 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// funcabb24
+// wm_script_pop_stack()
 
-V1 = w[8010ad90];
-[8010ad90] = w(V1 - 8);
+[8010ad90] = w(w[8010ad90] - 8);
 
-A0 = w[8010ad90];
-A1 = hu[A0 + 4] & 3;
+stack = w[8010ad90];
+A1 = hu[stack + 4] & 3;
 
 if( A1 < 3 )
 {
-    V1 = hu[A0 + 4] & fffc;
+    V1 = hu[stack + 4] & fffc;
 
     if( V1 == 110 )
     {
-        return w[A0 + 0];
+        return w[stack + 0];
     }
     else if( V1 == 114 )
     {
-        V0 = w[8010ad94 + A1 * 4] + (w[A0 + 0] >> 3);
-        return (bu[V0] >> (w[A0 + 0] & 7)) & 1;
+        V0 = w[8010ad94 + A1 * 4] + (w[stack + 0] >> 3);
+        return (bu[V0] >> (w[stack + 0] & 7)) & 1;
     }
     else if( V1 == 118 )
     {
-        V0 = w[8010ad94 + A1 * 4] + w[A0 + 0];
+        V0 = w[8010ad94 + A1 * 4] + w[stack + 0];
         return bu[V0];
     }
     else if( V1 == 11c )
     {
-        V0 = w[8010ad94 + A1 * 4] + w[A0 + 0];
+        V0 = w[8010ad94 + A1 * 4] + w[stack + 0];
         return h[V0];
     }
 }
 else
 {
-    switch( w[A0 + 0] )
+    switch( w[stack + 0] )
     {
         case 0:
         {
@@ -1601,26 +1600,21 @@ return 0;
 
 
 ////////////////////////////////
-// funcabe58
-800ABE58	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-800ABE60	lui    v1, $8011
-V1 = w[V1 + ad90];
+// funcabe58()
+
+V1 = w[8010ad90];
 V0 = 8010ad68;
-[SP + 0018] = w(RA);
-[SP + 0010] = w(S0);
 800ABE78	addiu  v1, v1, $fff8 (=-$8)
 V0 = V0 < V1;
-800ABE80	lui    at, $8011
-[AT + ad90] = w(V1);
+
+[8010ad90] = w(V1);
 800ABE88	bne    v0, zero, Labe98 [$800abe98]
 S1 = A0;
 800ABE90	jal    funca0b40 [$800a0b40]
 A0 = 003e;
 
 Labe98:	; 800ABE98
-800ABE98	lui    a0, $8011
-A0 = w[A0 + ad90];
+A0 = w[8010ad90];
 800ABEA0	nop
 V0 = hu[A0 + 0004];
 V1 = hu[A0 + 0004];
@@ -1694,20 +1688,10 @@ Labf80:	; 800ABF80
 A0 = 0040;
 
 Labf88:	; 800ABF88
-800ABF88	lui    v0, $8011
-V0 = w[V0 + ad90];
-V1 = 0110;
+V0 = w[8010ad90];
 [V0 + 0000] = w(S1);
-[V0 + 0004] = h(V1);
-V0 = V0 + 0008;
-800ABFA0	lui    at, $8011
-[AT + ad90] = w(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800ABFB8	jr     ra 
-800ABFBC	nop
+[V0 + 0004] = h(110);
+[8010ad90] = w(V0 + 8);
 ////////////////////////////////
 
 
@@ -1717,289 +1701,318 @@ SP = SP + 0020;
 
 switch( A0 )
 {
-15 FCBF0A80
-16 90C30A80
-18 58C20A80
-19 8CC20A80
-1a E4C20A80
-1b 58C30A80
-1c 90C30A80
-1d 90C30A80
-1e 90C30A80
-1f 90C30A80
-20 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-30 2CC00A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-40 54C00A8074C00A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-50 64C10A8084C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-5e 90C30A80
-5f 90C30A80
-61 B4C00A80
-62 D4C00A80
-63 F8C00A80
-64 90C30A80
-65 90C30A80
-66 90C30A80
-67 90C30A80
-68 90C30A80
-69 90C30A80
-6a 90C30A80
-6b 90C30A80
-6c 90C30A80
-6d 90C30A80
-6e 90C30A80
-6f 90C30A80
-71 40C10A80
-72 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-80 A4C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-90 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-a0 C4C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-b0 E4C10A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-c0 0CC20A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-d0 90C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A8090C30A80
-e0 40C20A80
-
-    800ABFFC	jal    funcabb24 [$800abb24]
-    800AC000	nop
-    V1 = w[8010ad90];
-    800AC00C	j      Lac38c [$800ac38c]
-    V0 = 0 - V0;
-
-    case 17:
+    case 15: // push neg
     {
-        funcabb24;
+        wm_script_pop_stack();
 
         V1 = w[8010ad90];
-        [V1] = w(V0 < 1);
+        [V1 + 0] = w(0 - V0);
     }
     break;
 
-    800AC02C	jal    funcabb24 [$800abb24]
-    800AC030	nop
-    800AC034	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    800AC03C	mult   v0, s0
-    V1 = w[8010ad90];
-    800AC048	mflo   v0
-    800AC04C	j      Lac390 [$800ac390]
-    [V1 + 0000] = w(V0);
-    800AC054	jal    funcabb24 [$800abb24]
-    800AC058	nop
-    800AC05C	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V1 = w[8010ad90];
-    800AC06C	j      Lac38c [$800ac38c]
-    V0 = V0 + S0;
-    800AC074	jal    funcabb24 [$800abb24]
-    800AC078	nop
-    800AC07C	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V1 = w[8010ad90];
-    800AC08C	j      Lac38c [$800ac38c]
-    V0 = V0 - S0;
-
-    case 60:
+    case 17: // push logicnot
     {
-        funcabb24;
-        S0 = V0;
-
-        funcabb24;
+        wm_script_pop_stack();
 
         V1 = w[8010ad90];
-        [V1] = w(V0 < S0);
+        [V1 + 0] = w(V0 < 1);
     }
     break;
 
-    800AC0B4	jal    funcabb24 [$800abb24]
-    800AC0B8	nop
-    800AC0BC	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V1 = w[8010ad90];
-    800AC0CC	j      Lac38c [$800ac38c]
-    V0 = S0 < V0;
-    800AC0D4	jal    funcabb24 [$800abb24]
-    800AC0D8	nop
-    800AC0DC	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V0 = S0 < V0;
-    V1 = w[8010ad90];
-    800AC0F0	j      Lac38c [$800ac38c]
-    V0 = V0 ^ 0001;
-
-
-
-    case 63:
+    case 30: // push mul
     {
-        funcabb24;
+        wm_script_pop_stack();
         S0 = V0;
 
-        funcabb24;
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w(V0 * S0);
+    }
+    break;
+
+    case 40: // push add
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w(V0 + S0);
+    }
+    break;
+
+    case 41: // push sub
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w(V0 - S0);
+    }
+    break;
+
+    case 60: // push less
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w(V0 < S0);
+    }
+    break;
+
+    case 61: // push greater
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w(V0 > S0);
+    }
+    break;
+
+    case 62: // push lessequal
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w(V0 <= S0);
+    }
+    break;
+
+    case 63: // push greaterequal
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
 
         V1 = w[8010ad90];
         [V1] = w(V0 >= S0);
     }
     break;
 
-
-
-    case 70:
+    case 70: // push equal
     {
-        funcabb24;
+        wm_script_pop_stack();
         S0 = V0;
 
-        funcabb24;
+        wm_script_pop_stack();
 
         V1 = w[8010ad90];
         [V1] = w(V0 == S0);
     }
     break;
 
-    800AC140	jal    funcabb24 [$800abb24]
-    800AC144	nop
-    800AC148	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V0 = V0 ^ S0;
-    V1 = w[8010ad90];
-    800AC15C	j      Lac38c [$800ac38c]
-    V0 = 0 < V0;
-    800AC164	jal    funcabb24 [$800abb24]
-    800AC168	nop
-    800AC16C	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V1 = w[8010ad90];
-    800AC17C	j      Lac38c [$800ac38c]
-    V0 = V0 << S0;
-    800AC184	jal    funcabb24 [$800abb24]
-    800AC188	nop
-    800AC18C	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V1 = w[8010ad90];
-    800AC19C	j      Lac38c [$800ac38c]
-    V0 = V0 >> S0;
-    800AC1A4	jal    funcabb24 [$800abb24]
-    800AC1A8	nop
-    800AC1AC	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    V1 = w[8010ad90];
-    800AC1BC	j      Lac38c [$800ac38c]
-    V0 = V0 & S0;
-    800AC1C4	jal    funcabb24 [$800abb24]
-    800AC1C8	nop
-    800AC1CC	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    800AC1D4	lui    v1, $8011
+    case 71: // push notequal
+    {
+        wm_script_pop_stack();
+        S0 = V0;
 
-    Lac1d8:	; 800AC1D8
-    V1 = w[V1 + ad90];
-    800AC1DC	j      Lac38c [$800ac38c]
-    V0 = V0 | S0;
-    800AC1E4	jal    funcabb24 [$800abb24]
-    800AC1E8	nop
-    800AC1EC	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    A0 = w[8010ad90];
-    800AC1FC	beq    v0, zero, Lac238 [$800ac238]
-    V1 = 0;
-    800AC204	j      Lac238 [$800ac238]
-    V1 = 0 < S0;
-    800AC20C	jal    funcabb24 [$800abb24]
-    800AC210	nop
-    800AC214	jal    funcabb24 [$800abb24]
-    S0 = V0;
-    A0 = w[8010ad90];
-    800AC224	bne    v0, zero, Lac234 [$800ac234]
-    V1 = 0;
-    800AC22C	beq    s0, zero, Lac238 [$800ac238]
-    800AC230	nop
+        wm_script_pop_stack();
 
-    Lac234:	; 800AC234
-    V1 = 0001;
+        V1 = w[8010ad90];
+        [V1] = w(V0 != S0);
+    }
+    break;
 
-    Lac238:	; 800AC238
-    800AC238	j      Lac390 [$800ac390]
-    [A0 + 0000] = w(V1);
-    800AC240	jal    funcabb24 [$800abb24]
-    800AC244	nop
-    800AC248	jal    funcabe58 [$800abe58]
-    A0 = V0;
-    800AC250	j      Lac390 [$800ac390]
-    800AC254	nop
-    800AC258	jal    funcabb24 [$800abb24]
-    800AC25C	nop
-    A0 = V0;
-    800AC264	jal    funcaf1a8 [$800af1a8]
-    800AC268	addiu  a1, zero, $ffff (=-$1)
-    800AC26C	jal    funcaa098 [$800aa098]
-    A0 = SP + 0010;
-    800AC274	jal    funcaf96c [$800af96c]
-    A0 = SP + 0010;
-    V1 = w[8010ad90];
-    800AC284	j      Lac38c [$800ac38c]
-    V0 = V0 >> 05;
-    V0 = w[8010ad90];
-    S0 = w[8010ad3c];
-    800AC29C	jal    funcabb24 [$800abb24]
-    [V0 + 0000] = w(0);
-    800AC2A4	jal    wm_find_id_in_model_struct_list [$800a993c]
-    A0 = V0;
-    800AC2AC	beq    v0, zero, Lac2d4 [$800ac2d4]
-    A1 = S0 + 000c;
-    A0 = w[8010ad3c];
-    800AC2BC	jal    funcae024 [$800ae024]
-    A0 = A0 + 000c;
-    V1 = w[8010ad90];
-    V0 = V0 >> 04;
-    [V1 + 0000] = w(V0);
+    case 50: // push shl
+    {
+        wm_script_pop_stack();
+        S0 = V0;
 
-    Lac2d4:	; 800AC2D4
-    [8010ad3c] = w(S0);
-    800AC2DC	j      Lac390 [$800ac390]
-    800AC2E0	nop
-    800AC2E4	jal    funcabb24 [$800abb24]
-    800AC2E8	nop
-    V1 = w[8010ad3c];
-    S0 = w[8010ad90];
-    A0 = w[V1 + 000c];
-    A1 = w[V1 + 0010];
-    A2 = w[V1 + 0014];
-    A3 = w[V1 + 0018];
-    [SP + 0010] = w(A0);
-    [SP + 0014] = w(A1);
-    [SP + 0018] = w(A2);
-    [SP + 001c] = w(A3);
-    A1 = V0;
-    A0 = SP + 0010;
-    V0 = A1 < 0003;
-    800AC328	beq    v0, zero, Lac350 [$800ac350]
-    [SP + 0014] = w(0);
-    A1 = A1 << 04;
-    V0 = 8010adf4;
-    800AC33C	jal    funcae024 [$800ae024]
-    A1 = A1 + V0;
-    V0 = V0 >> 04;
-    800AC348	j      Lac390 [$800ac390]
-    [S0 + 0000] = w(V0);
+        wm_script_pop_stack();
 
-    Lac350:	; 800AC350
-    800AC350	j      Lac390 [$800ac390]
-    [S0 + 0000] = w(0);
-    800AC358	jal    funcabb24 [$800abb24]
-    800AC35C	nop
-    A0 = V0;
-    800AC364	jal    funcaf1a8 [$800af1a8]
-    800AC368	addiu  a1, zero, $ffff (=-$1)
-    800AC36C	jal    funcaa098 [$800aa098]
-    A0 = SP + 0010;
-    800AC374	jal    funcaf9a0 [$800af9a0]
-    A0 = SP + 0010;
-    V0 = V0 << 10;
-    V1 = w[8010ad90];
-    V0 = V0 >> 14;
+        V1 = w[8010ad90];
+        [V1] = w(V0 << S0);
+    }
+    break;
 
-    Lac38c:	; 800AC38C
-    [V1 + 0000] = w(V0);
+    case 51: // push shr
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1] = w(V0 >> S0);
+    }
+    break;
+
+    case 80: // push and
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1] = w(V0 & S0);
+    }
+    break;
+
+    case a0: // push or
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        V1 = w[8010ad90];
+        [V1] = w(V0 | S0);
+    }
+    break;
+
+    case b0: // push logicand
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        A0 = w[8010ad90];
+        if( V0 != 0 && S0 != 0 )
+        {
+            [A0 + 0] = w(1);
+        }
+        else
+        {
+            [A0 + 0] = w(0);
+        }
+    }
+    break;
+
+    case c0: // push logicor
+    {
+        wm_script_pop_stack();
+        S0 = V0;
+
+        wm_script_pop_stack();
+
+        A0 = w[8010ad90];
+        if( V0 != 0 || S0 != 0 )
+        {
+            [A0 + 0] = w(1);
+        }
+        else
+        {
+            [A0 + 0] = w(0);
+        }
+    }
+    break;
+
+    case e0: // write bank
+    {
+        wm_script_pop_stack();
+
+        A0 = V0;
+        800AC248	jal    funcabe58 [$800abe58]
+    }
+    break;
+
+    case 18: // push distance from active entity to point by point id
+    {
+        wm_script_pop_stack();
+
+        A0 = V0; // id
+        A1 = -1;
+        wm_set_point_as_active();
+
+        A0 = SP + 10;
+        wm_get_position_from_active_model();
+
+        A0 = SP + 10;
+        funcaf96c();
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w(V0 >> 5);
+    }
+    break;
+
+    case 19: // push distance from active entity to entity by model id
+    {
+        V0 = w[8010ad90];
+        [V0 + 0] = w(0);
+
+        S0 = w[8010ad3c];
+
+        wm_script_pop_stack();
+
+        A0 = V0;
+        wm_find_id_in_model_struct_list();
+
+        A1 = S0 + c;
+        if( V0 != 0 )
+        {
+
+            A0 = w[8010ad3c] + c;
+            800AC2BC	jal    funcae024 [$800ae024]
+
+            V1 = w[8010ad90];
+            [V1 + 0] = w(V0 >> 4);
+        }
+
+        [8010ad3c] = w(S0);
+    }
+    break;
+
+    case 1a:
+    {
+        wm_script_pop_stack();
+
+        V1 = w[8010ad3c];
+        [SP + 10] = w(w[V1 + c]);
+        [SP + 14] = w(0);
+        [SP + 18] = w(w[V1 + 14]);
+        [SP + 1c] = w(w[V1 + 18]);
+
+        if( V0 < 3 )
+        {
+            A0 = SP + 10;
+            A1 = 8010adf4 + V0 * 10;
+            800AC33C	jal    funcae024 [$800ae024]
+
+            S0 = w[8010ad90];
+            [S0 + 0] = w(V0 >> 4);
+        }
+        else
+        {
+            S0 = w[8010ad90];
+            [S0 + 0] = w(0);
+        }
+    }
+    break;
+
+    case 1b:
+    {
+        wm_script_pop_stack();
+
+        A0 = V0; // id
+        A1 = -1;
+        wm_set_point_as_active();
+
+        A0 = SP + 10;
+        wm_get_position_from_active_model();
+
+        A0 = SP + 10;
+        800AC374	jal    funcaf9a0 [$800af9a0]
+
+        V1 = w[8010ad90];
+        [V1 + 0] = w((V0 << 10) >> 14);
 }
 
-Lac390:	; 800AC390
 V0 = w[8010ad90];
 [V0 + 4] = h(110);
 [8010ad90] = w(V0 + 8);
@@ -2057,7 +2070,7 @@ else if (A0 == 201)
     S0 = hu[V0];
 
 
-    funcabb24();
+    wm_script_pop_stack();
     if( V0 == 0 )
     {
         [struct + 46] = h(S0);
@@ -2134,7 +2147,7 @@ else if (A0 == 203)
 }
 else
 {
-    800AC67C	jal    funcabb24 [$800abb24]
+    800AC67C	jal    wm_script_pop_stack [$800abb24]
     800AC680	nop
     V1 = w[8010ade4];
     800AC68C	nop
@@ -2168,66 +2181,13 @@ else
 ////////////////////////////////
 // wm_script_opcode_300_handle()
 
-S0 = A0;
-V0 = S0 & ffff;
-V1 = V0 - 300;
-V0 = V1 < 56;
+opcode = A0;
 
-800AC738	beq    v0, zero, Lad61c [$800ad61c]
-
-
-
-800AD61C 301 30f 31b 322 323
-800AC934 328
-800ACF34 329
-800ACF4C 32a
-800ACFE4 32b
-800AD304 32c
-800AD3B8 32d
-800AD3E4 32e
-800ACF04 32f
-800AC838 330
-800AD068 331
-800AD0E8 332
-800AC954 333
-800AD410 334
-800AD088 335
-800AC884 336
-800AD110 337
-800ACD28 338
-800ACD48 339
-800ACC88 33a
-800ACD8C 33b
-800AD078 33c
-800AD020 33d
-800AD284 33e
-800AD470 33f
-800AD4B4 340
-800AD480 341
-800AD4CC 342
-800AC79C 343
-800AC9AC 344
-800ACA38 345
-800AC850 346
-800ACB34 347
-800ACD68 348
-800AD1D4 349
-800AD1EC 34a
-800AD154 34c
-800AD20C 34d
-800AD254 34e
-800ACCC0 34f
-800AD2B8 351
-800ACF64 352
-800ACC40 353
-800AD098 354
-800ACFCC 355
-
-switch( V1 )
+switch( opcode )
 {
-    case 300:
+    case 300: // load model
     {
-        funcabb24; // get value from stack
+        wm_script_pop_stack(); // get value from stack
         S0 = V0;
 
         //800AC768
@@ -2249,6 +2209,8 @@ switch( V1 )
     }
     break;
 
+    case 343:
+    {
         V0 = w[8010ad3c];
         800AC7A4	nop
         A0 = bu[V0 + 0050];
@@ -2257,7 +2219,7 @@ switch( V1 )
         S1 = w[8010ad3c];
         800AC7BC	jal    funca8b30 [$800a8b30]
         A0 = S1;
-        800AC7C4	jal    funcabb24 [$800abb24]
+        800AC7C4	jal    wm_script_pop_stack [$800abb24]
         800AC7C8	nop
         S0 = V0;
         800AC7D0	jal    wm_find_id_in_model_struct_list [$800a993c]
@@ -2277,9 +2239,11 @@ switch( V1 )
         V0 = V0 | 0002;
         800AC808	j      Lad61c [$800ad61c]
         [V1 + 0051] = b(V0);
+    }
+    break;
 
-800AC810 302
-
+    case 302: // set player entity
+    {
         800AC810	jal    funca9110 [$800a9110]
         800AC814	nop
         V0 = w[8010ad40];
@@ -2289,28 +2253,45 @@ switch( V1 )
         800AC82C	nop
         800AC830	j      Lad620 [$800ad620]
         V0 = 0;
-        800AC838	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 330: // set active entity
+    {
+        800AC838	jal    wm_script_pop_stack [$800abb24]
         800AC83C	nop
         800AC840	jal    wm_find_id_in_model_struct_list [$800a993c]
         A0 = V0;
         800AC848	j      Lad620 [$800ad620]
         V0 = 0;
-        800AC850	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 346:
+    {
+        800AC850	jal    wm_script_pop_stack [$800abb24]
         800AC854	nop
         V1 = w[8010ad3c];
         800AC860	j      Lad61c [$800ad61c]
         [V1 + 0050] = b(V0);
+    }
+    break;
 
-800AC868 307
-
-        800AC868	jal    funcabb24 [$800abb24]
+    case 307: // set control lock
+    {
+        800AC868	jal    wm_script_pop_stack [$800abb24]
         800AC86C	nop
         A0 = V0;
         800AC874	jal    funca2108 [$800a2108]
         A1 = 0003;
         800AC87C	j      Lad620 [$800ad620]
         V0 = 0;
-        800AC884	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 336: // set active entity movespeed (honor walkmesh)
+    {
+        800AC884	jal    wm_script_pop_stack [$800abb24]
         800AC888	nop
         V1 = w[8010ad3c];
         800AC894	nop
@@ -2322,10 +2303,12 @@ switch( V1 )
         V0 = V0 | 0040;
         800AC8B4	j      Lad61c [$800ad61c]
         [V1 + 0051] = b(V0);
+    }
+    break;
 
-800AC8BC 303
-
-        800AC8BC	jal    funcabb24 [$800abb24]
+    case 303: // set active entity movespeed
+    {
+        800AC8BC	jal    wm_script_pop_stack [$800abb24]
         800AC8C0	nop
         V1 = w[8010ad3c];
         800AC8CC	nop
@@ -2339,10 +2322,12 @@ switch( V1 )
         V0 = V0 & 00bf;
         800AC8EC	j      Lad61c [$800ad61c]
         [V1 + 0051] = b(V0);
+    }
+    break;
 
-800AC8F4 304
-
-        800AC8F4	jal    funcabb24 [$800abb24]
+    case 304: // set active entity direction & facing
+    {
+        800AC8F4	jal    wm_script_pop_stack [$800abb24]
         800AC8F8	nop
         V0 = V0 << 04;
         A0 = w[8010ad3c];
@@ -2356,21 +2341,31 @@ switch( V1 )
         800AC928	nop
         800AC92C	j      Lad620 [$800ad620]
         V0 = 0;
-        800AC934	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 328: // set active entity direction
+    {
+        800AC934	jal    wm_script_pop_stack [$800abb24]
         800AC938	nop
         V0 = V0 << 04;
         V1 = w[8010ad3c];
         V0 = V0 & 0fff;
         800AC94C	j      Lad61c [$800ad61c]
         [V1 + 004c] = h(V0);
+    }
+    break;
+
+    case 333:
+    {
         S1 = w[8010ad3c];
-        800AC95C	jal    funcabb24 [$800abb24]
+        800AC95C	jal    wm_script_pop_stack [$800abb24]
         800AC960	nop
         V1 = w[8010ad3c];
         800AC96C	nop
         800AC970	beq    v1, zero, Lacbc8 [$800acbc8]
         S0 = V0 << 04;
-        800AC978	jal    funcabb24 [$800abb24]
+        800AC978	jal    wm_script_pop_stack [$800abb24]
         800AC97C	nop
         800AC980	jal    wm_find_id_in_model_struct_list [$800a993c]
         A0 = V0;
@@ -2382,7 +2377,12 @@ switch( V1 )
         V0 = V0 + S0;
         800AC9A4	j      Lacbc8 [$800acbc8]
         [S1 + 0040] = h(V0);
-        800AC9AC	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 344:
+    {
+        800AC9AC	jal    wm_script_pop_stack [$800abb24]
         800AC9B0	nop
         S0 = V0;
         V0 = S0 < 0003;
@@ -2411,7 +2411,12 @@ switch( V1 )
         [AT + 0000] = w(0);
         800ACA30	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACA38	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 345:
+    {
+        800ACA38	jal    wm_script_pop_stack [$800abb24]
         800ACA3C	nop
         S0 = V0;
         V0 = S0 < 0003;
@@ -2427,12 +2432,14 @@ switch( V1 )
         [V1 + 0040] = h(V0);
         800ACA7C	j      Lad61c [$800ad61c]
         [V1 + 004c] = h(V0);
+    }
+    break;
 
-800ACA84 308
-
-        800ACA84	jal    funcabb24 [$800abb24]
+    case 308: // set active entity mesh coordinates
+    {
+        800ACA84	jal    wm_script_pop_stack [$800abb24]
         800ACA88	nop
-        800ACA8C	jal    funcabb24 [$800abb24]
+        800ACA8C	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A2 = w[8010ad3c];
         V0 = V0 << 0d;
@@ -2444,12 +2451,14 @@ switch( V1 )
         [A2 + 000c] = w(V0);
         800ACAB8	j      Lacafc [$800acafc]
         V0 = S1 << 0d;
+    }
+    break;
 
-800ACAC0 309
-
-        800ACAC0	jal    funcabb24 [$800abb24]
+    case 309: // set active entity coordinates in mesh
+    {
+        800ACAC0	jal    wm_script_pop_stack [$800abb24]
         800ACAC4	nop
-        800ACAC8	jal    funcabb24 [$800abb24]
+        800ACAC8	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         800ACAD0	addiu  a1, zero, $e000 (=-$2000)
         A2 = w[8010ad3c];
@@ -2479,11 +2488,16 @@ switch( V1 )
         V0 = V0 | 0001;
         800ACB2C	j      Lad61c [$800ad61c]
         [A2 + 0051] = b(V0);
+    }
+    break;
+
+    case 347: // move active entity to entity by model id?
+    {
         S1 = w[8010ad3c];
         800ACB3C	nop
         800ACB40	beq    s1, zero, Lacbc8 [$800acbc8]
         800ACB44	nop
-        800ACB48	jal    funcabb24 [$800abb24]
+        800ACB48	jal    wm_script_pop_stack [$800abb24]
         800ACB4C	nop
         800ACB50	jal    wm_find_id_in_model_struct_list [$800a993c]
         A0 = V0;
@@ -2520,10 +2534,12 @@ switch( V1 )
         [8010ad3c] = w(S1);
         800ACBD0	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACBD8 30e
-
-        800ACBD8	jal    funcabb24 [$800abb24]
+    case 30e: // active entity play animation
+    {
+        800ACBD8	jal    wm_script_pop_stack [$800abb24]
         800ACBDC	nop
         800ACBE0	beq    v0, zero, Lacc00 [$800acc00]
         800ACBE4	nop
@@ -2541,7 +2557,7 @@ switch( V1 )
         V0 = V0 | 0020;
 
         Lacc18:	; 800ACC18
-        800ACC18	jal    funcabb24 [$800abb24]
+        800ACC18	jal    wm_script_pop_stack [$800abb24]
         [V1 + 0051] = b(V0);
         V1 = w[8010ad3c];
         800ACC28	nop
@@ -2549,28 +2565,42 @@ switch( V1 )
         V0 = w[8010ad3c];
         800ACC38	j      Lad61c [$800ad61c]
         [V0 + 0053] = b(0);
+    }
+    break;
+
+    case 353:
+    {
         A0 = 8010ae34;
         800ACC48	jal    funca9db4 [$800a9db4]
         800ACC4C	nop
         800ACC50	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACC58 30a
-
-        800ACC58	jal    funcabb24 [$800abb24]
+    case 30a:
+    {
+        800ACC58	jal    wm_script_pop_stack [$800abb24]
         800ACC5C	nop
         V1 = w[8010ad3c];
         800ACC68	j      Lad61c [$800ad61c]
         [V1 + 005c] = b(V0);
+    }
+    break;
 
-800ACC70 30b
-
-        800ACC70	jal    funcabb24 [$800abb24]
+    case 30b: // set active entity y offset
+    {
+        800ACC70	jal    wm_script_pop_stack [$800abb24]
         800ACC74	nop
         V1 = w[8010ad3c];
         800ACC80	j      Lad61c [$800ad61c]
         [V1 + 0044] = h(V0);
-        800ACC88	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 33a:
+    {
+        800ACC88	jal    wm_script_pop_stack [$800abb24]
         800ACC8C	nop
         V1 = w[8010ad3c];
         800ACC98	nop
@@ -2582,7 +2612,12 @@ switch( V1 )
         V0 = V0 | 0080;
         800ACCB8	j      Lad61c [$800ad61c]
         [V1 + 0051] = b(V0);
-        800ACCC0	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 34f: // set active entity y position
+    {
+        800ACCC0	jal    wm_script_pop_stack [$800abb24]
         800ACCC4	nop
         A0 = w[8010ad3c];
         800ACCD0	nop
@@ -2591,16 +2626,20 @@ switch( V1 )
         V1 = V1 | 0080;
         800ACCE0	j      Lad61c [$800ad61c]
         [A0 + 0051] = b(V1);
+    }
+    break;
 
-800ACCE8 30d
-
+    case 30d:
+    {
         800ACCE8	jal    funcaa1b8 [$800aa1b8]
         800ACCEC	nop
         800ACCF0	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACCF8 30c
-
+    case 30c: // enter vehicle?
+    {
         800ACCF8	jal    funca99bc [$800a99bc]
         800ACCFC	nop
         800ACD00	beq    v0, zero, Lad620 [$800ad620]
@@ -2609,13 +2648,20 @@ switch( V1 )
         A0 = 0001;
         800ACD10	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACD18 31a
-
+    case 31a:
+    {
         800ACD18	jal    funca8fa0 [$800a8fa0]
         800ACD1C	nop
         800ACD20	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
+
+    case 338:
+    {
         V1 = w[8010ad3c];
         800ACD30	nop
         V0 = bu[V1 + 0051];
@@ -2623,6 +2669,11 @@ switch( V1 )
         V0 = V0 & 00f7;
         800ACD40	j      Lad61c [$800ad61c]
         [V1 + 0051] = b(V0);
+    }
+    break;
+
+    case 339:
+    {
         V1 = w[8010ad3c];
         800ACD50	nop
         V0 = bu[V1 + 0051];
@@ -2630,68 +2681,87 @@ switch( V1 )
         V0 = V0 | 0008;
         800ACD60	j      Lad61c [$800ad61c]
         [V1 + 0051] = b(V0);
-        800ACD68	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 348: // fade in?
+    {
+        800ACD68	jal    wm_script_pop_stack [$800abb24]
         800ACD6C	nop
-        800ACD70	jal    funcabb24 [$800abb24]
+        800ACD70	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         800ACD7C	jal    funcaffbc [$800affbc]
         A1 = S1;
         800ACD84	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACD8C	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 33b: // fade out?
+    {
+        800ACD8C	jal    wm_script_pop_stack [$800abb24]
         800ACD90	nop
-        800ACD94	jal    funcabb24 [$800abb24]
+        800ACD94	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         800ACDA0	jal    funcb0098 [$800b0098]
         A1 = S1;
         800ACDA8	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACDB0 310
-
-        800ACDB0	jal    funcabb24 [$800abb24]
-        800ACDB4	nop
-        800ACDB8	jal    funcabb24 [$800abb24]
+    case 310: // set active point
+    {
+        wm_script_pop_stack();
         S1 = V0;
-        A0 = V0;
-        800ACDC4	jal    funcaf1a8 [$800af1a8]
-        A1 = S1;
-        800ACDCC	j      Lad620 [$800ad620]
-        V0 = 0;
 
-800ACDD4 311
+        wm_script_pop_stack()
 
-        800ACDD4	jal    funcabb24 [$800abb24]
+        A0 = V0; // id
+        A1 = S1; // type
+        wm_set_point_as_active();
+
+        return 0;
+    }
+    break;
+
+    case 311: // set point mesh coordinates
+    {
+        800ACDD4	jal    wm_script_pop_stack [$800abb24]
         800ACDD8	nop
-        800ACDDC	jal    funcabb24 [$800abb24]
+        800ACDDC	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         800ACDE8	jal    funcaf1e8 [$800af1e8]
         A1 = S1;
         800ACDF0	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACDF8 312
-
-        800ACDF8	jal    funcabb24 [$800abb24]
+    case 312: // set point coordinates in mesh
+    {
+        800ACDF8	jal    wm_script_pop_stack [$800abb24]
         800ACDFC	nop
-        800ACE00	jal    funcabb24 [$800abb24]
+        800ACE00	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         800ACE0C	jal    funcaf24c [$800af24c]
         A1 = S1;
         800ACE14	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACE1C 313
-
-        800ACE1C	jal    funcabb24 [$800abb24]
+    case 313: // set point terrain BGR
+    {
+        800ACE1C	jal    wm_script_pop_stack [$800abb24]
         800ACE20	nop
-        800ACE24	jal    funcabb24 [$800abb24]
+        800ACE24	jal    wm_script_pop_stack [$800abb24]
         S2 = V0;
-        800ACE2C	jal    funcabb24 [$800abb24]
+        800ACE2C	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         A1 = S1;
@@ -2699,27 +2769,31 @@ switch( V1 )
         A2 = S2;
         800ACE44	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACE4C 314
-
-        800ACE4C	jal    funcabb24 [$800abb24]
+    case 314: // set point dropoff parameters
+    {
+        800ACE4C	jal    wm_script_pop_stack [$800abb24]
         800ACE50	nop
         800ACE54	jal    funcaf304 [$800af304]
         A0 = V0;
-        800ACE5C	jal    funcabb24 [$800abb24]
+        800ACE5C	jal    wm_script_pop_stack [$800abb24]
         800ACE60	nop
         800ACE64	jal    funcaf2e4 [$800af2e4]
         A0 = V0;
         800ACE6C	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACE74 315
-
-        800ACE74	jal    funcabb24 [$800abb24]
+    case 315: // set point sky BGR
+    {
+        800ACE74	jal    wm_script_pop_stack [$800abb24]
         800ACE78	nop
-        800ACE7C	jal    funcabb24 [$800abb24]
+        800ACE7C	jal    wm_script_pop_stack [$800abb24]
         S2 = V0;
-        800ACE84	jal    funcabb24 [$800abb24]
+        800ACE84	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         A1 = S1;
@@ -2727,14 +2801,16 @@ switch( V1 )
         A2 = S2;
         800ACE9C	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACEA4 316
-
-        800ACEA4	jal    funcabb24 [$800abb24]
+    case 316: // set point BGR3?
+    {
+        800ACEA4	jal    wm_script_pop_stack [$800abb24]
         800ACEA8	nop
-        800ACEAC	jal    funcabb24 [$800abb24]
+        800ACEAC	jal    wm_script_pop_stack [$800abb24]
         S2 = V0;
-        800ACEB4	jal    funcabb24 [$800abb24]
+        800ACEB4	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         A1 = S1;
@@ -2742,149 +2818,220 @@ switch( V1 )
         A2 = S2;
         800ACECC	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACED4 31c
-
-        800ACED4	jal    funcabb24 [$800abb24]
+    case 31c:
+    {
+        800ACED4	jal    wm_script_pop_stack [$800abb24]
         800ACED8	nop
         800ACEDC	jal    funca1d54 [$800a1d54]
         A0 = V0;
         800ACEE4	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACEEC 31e
-
-        800ACEEC	jal    funcabb24 [$800abb24]
+    case 31e:
+    {
+        800ACEEC	jal    wm_script_pop_stack [$800abb24]
         800ACEF0	nop
         800ACEF4	jal    funca1d24 [$800a1d24]
         A0 = V0 << 04;
         800ACEFC	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACF04	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 32f:
+    {
+        800ACF04	jal    wm_script_pop_stack [$800abb24]
         800ACF08	nop
         800ACF0C	jal    funca1d38 [$800a1d38]
         A0 = V0 << 04;
         800ACF14	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACF1C 31f
-
-        800ACF1C	jal    funcabb24 [$800abb24]
+    case 31f:
+    {
+        800ACF1C	jal    wm_script_pop_stack [$800abb24]
         800ACF20	nop
         800ACF24	jal    funca4494 [$800a4494]
         A0 = V0;
         800ACF2C	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACF34	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 329:
+    {
+        800ACF34	jal    wm_script_pop_stack [$800abb24]
         800ACF38	nop
         800ACF3C	jal    funca44a4 [$800a44a4]
         A0 = V0;
         800ACF44	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACF4C	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 32a:
+    {
+        800ACF4C	jal    wm_script_pop_stack [$800abb24]
         800ACF50	nop
         800ACF54	jal    funca44b4 [$800a44b4]
         A0 = V0;
         800ACF5C	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACF64	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 352: // shake camera on/off
+    {
+        800ACF64	jal    wm_script_pop_stack [$800abb24]
         800ACF68	nop
         800ACF6C	jal    funca16d0 [$800a16d0]
         A0 = V0;
         800ACF74	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACF7C 31d
-
-        800ACF7C	jal    funcabb24 [$800abb24]
+    case 31d: // play sound effect
+    {
+        800ACF7C	jal    wm_script_pop_stack [$800abb24]
         800ACF80	nop
         800ACF84	jal    funcb64d8 [$800b64d8]
         A0 = V0;
         800ACF8C	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-            case 320:
-            {
-                funcb075c;
+    case 320:
+    {
+        funcb075c;
 
-                return 0;
-            }
-            break;
+        return 0;
+    }
+    break;
 
-800ACFA4 317
-
+    case 317: // trigger battle
+    {
         800ACFA4	jal    funcb63e0 [$800b63e0]
         A0 = 0001;
         800ACFAC	jal    funcb63f0 [$800b63f0]
         A0 = 0004;
-        800ACFB4	jal    funcabb24 [$800abb24]
+        800ACFB4	jal    wm_script_pop_stack [$800abb24]
         800ACFB8	nop
         800ACFBC	jal    funca3f4c [$800a3f4c]
         A0 = V0;
         800ACFC4	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACFCC	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 355:
+    {
+        800ACFCC	jal    wm_script_pop_stack [$800abb24]
         800ACFD0	nop
         800ACFD4	jal    funcb77f4 [$800b77f4]
         A0 = V0;
         800ACFDC	j      Lad620 [$800ad620]
         V0 = 0;
-        800ACFE4	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 32b: // set battle lock
+    {
+        800ACFE4	jal    wm_script_pop_stack [$800abb24]
         800ACFE8	nop
         800ACFEC	jal    funcb7c6c [$800b7c6c]
         A0 = V0;
         800ACFF4	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800ACFFC 318
-
-        800ACFFC	jal    funcabb24 [$800abb24]
+    case 318: // enter field scene
+    {
+        800ACFFC	jal    wm_script_pop_stack [$800abb24]
         800AD000	nop
-        800AD004	jal    funcabb24 [$800abb24]
+        800AD004	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         V0 = V0 << 08;
         800AD010	jal    funca3ec8 [$800a3ec8]
         A0 = V0 | S1;
         800AD018	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD020	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 33d: // set field entry point2?
+    {
+        800AD020	jal    wm_script_pop_stack [$800abb24]
         800AD024	nop
         800AD028	jal    funca3e9c [$800a3e9c]
         A0 = V0;
         800AD030	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800AD038 319
-
-        800AD038	jal    funcabb24 [$800abb24]
+    case 319:
+    {
+        800AD038	jal    wm_script_pop_stack [$800abb24]
         800AD03C	nop
         800AD040	jal    funca40b8 [$800a40b8]
         A0 = V0;
         800AD048	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800AD050 305
-
-        800AD050	jal    funcabb24 [$800abb24]
+    case 305: // set wait frames
+    {
+        800AD050	jal    wm_script_pop_stack [$800abb24]
         800AD054	nop
         V1 = w[8010ade4];
         800AD060	j      Lad61c [$800ad61c]
         [V1 + 0056] = b(V0);
+    }
+    break;
+
+    case 331:
+    {
         800AD068	jal    funcbbc4c [$800bbc4c]
 
         Lad06c:	; 800AD06C
         800AD06C	nop
         800AD070	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
+
+    case 33c: // set field entry point?
+    {
         800AD078	jal    funca3dfc [$800a3dfc]
         800AD07C	nop
         800AD080	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
+
+    case 335:
+    {
         800AD088	jal    funca8d58 [$800a8d58]
         800AD08C	nop
         800AD090	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD098	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 354:
+    {
+        800AD098	jal    wm_script_pop_stack [$800abb24]
         800AD09C	nop
         800AD0A0	beq    v0, zero, Lad0c8 [$800ad0c8]
         800AD0A4	nop
@@ -2904,6 +3051,11 @@ switch( V1 )
         V0 = V0 | 0010;
         800AD0E0	j      Lad61c [$800ad61c]
         [V1 + 0051] = b(V0);
+    }
+    break;
+
+    case 332:
+    {
         V1 = w[8010ad3c];
         800AD0F0	nop
         V0 = bu[V1 + 0051];
@@ -2913,34 +3065,39 @@ switch( V1 )
         [V1 + 0051] = b(V0);
         800AD108	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD110	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 337:
+    {
+        800AD110	jal    wm_script_pop_stack [$800abb24]
         800AD114	nop
         800AD118	jal    funcbc1bc [$800bc1bc]
         A0 = V0;
         800AD120	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
+    case 34b: // set chocobo type
+    {
+        wm_script_pop_stack;
+        S0 = V0;
 
+        A0 = S0;
+        funca45e4;
 
-            case 34b:
-            {
-                funcabb24;
-                S0 = V0;
+        A0 = 13;
+        A1 = (S0 << 10) >> 10;
+        funcb624c();
 
-                A0 = S0;
-                funca45e4;
+        return 0;
+    }
+    break;
 
-                A0 = 13;
-                A1 = (S0 << 10) >> 10;
-                funcb624c();
-
-                return 0;
-            }
-            break;
-
-
-
-        800AD154	jal    funcabb24 [$800abb24]
+    case 34c: // set submarine color
+    {
+        800AD154	jal    wm_script_pop_stack [$800abb24]
         800AD158	nop
         A0 = 000d;
         V0 = V0 + 0005;
@@ -2949,21 +3106,26 @@ switch( V1 )
         A1 = V0 >> 10;
         800AD170	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800AD178 321
-
+    case 321:
+    {
         V0 = w[8010ad3c];
         800AD180	nop
         800AD184	beq    v0, zero, Lad620 [$800ad620]
         V0 = 0;
-        800AD18C	jal    funcabb24 [$800abb24]
-        800AD190	nop
+
+        wm_script_pop_stack();
+
         A0 = V0;
-        800AD198	jal    funcaf1a8 [$800af1a8]
-        800AD19C	addiu  a1, zero, $ffff (=-$1)
-        S0 = SP + 0020;
-        800AD1A4	jal    funcaa098 [$800aa098]
+        A0 = -1;
+        wm_set_point_as_active();
+
+        S0 = SP + 20;
         A0 = S0;
+        wm_get_position_from_active_model();
+
         800AD1AC	jal    funcaf9a0 [$800af9a0]
         A0 = S0;
         V1 = w[8010ad3c];
@@ -2973,24 +3135,39 @@ switch( V1 )
         [V1 + 004c] = h(V0);
         800AD1CC	j      Lad61c [$800ad61c]
         [V1 + 003e] = h(0);
-        800AD1D4	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 349: // set world progress
+    {
+        800AD1D4	jal    wm_script_pop_stack [$800abb24]
         800AD1D8	nop
         800AD1DC	jal    funca8888 [$800a8888]
         A0 = V0;
         800AD1E4	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD1EC	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 34a:
+    {
+        800AD1EC	jal    wm_script_pop_stack [$800abb24]
         800AD1F0	nop
         A0 = w[8010ad3c];
         800AD1FC	jal    funcb5314 [$800b5314]
         A1 = V0;
         800AD204	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD20C	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 34d:
+    {
+        800AD20C	jal    wm_script_pop_stack [$800abb24]
         800AD210	nop
-        800AD214	jal    funcabb24 [$800abb24]
+        800AD214	jal    wm_script_pop_stack [$800abb24]
         S2 = V0;
-        800AD21C	jal    funcabb24 [$800abb24]
+        800AD21C	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         V1 = w[8010ad3c];
         800AD22C	nop
@@ -3003,31 +3180,36 @@ switch( V1 )
         A3 = S2;
         800AD24C	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD254	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 34e:
+    {
+        800AD254	jal    wm_script_pop_stack [$800abb24]
         800AD258	nop
         800AD25C	jal    funcb57c0 [$800b57c0]
         A0 = V0;
         800AD264	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
+    case 350: // set meteor texture on/off
+    {
+        wm_script_pop_stack;
 
+        A0 = V0;
+        funcaf0a0;
 
-            case 350:
-            {
-                funcabb24;
+        return 0;
+    }
+    break;
 
-                A0 = V0;
-                funcaf0a0;
-
-                return 0;
-            }
-            break;
-
-
-
+    case 33e:
+    {
         800AD284	jal    funcb63e0 [$800b63e0]
         A0 = 0001;
-        800AD28C	jal    funcabb24 [$800abb24]
+        800AD28C	jal    wm_script_pop_stack [$800abb24]
         800AD290	nop
         S0 = V0;
         800AD298	jal    funcb63f0 [$800b63f0]
@@ -3038,55 +3220,71 @@ switch( V1 )
         A0 = 0;
         800AD2B0	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD2B8	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 351: // set music volume
+    {
+        800AD2B8	jal    wm_script_pop_stack [$800abb24]
         800AD2BC	nop
         800AD2C0	jal    funcb6570 [$800b6570]
         A0 = V0;
         800AD2C8	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800AD2D0 324
-
-        800AD2D0	jal    funcabb24 [$800abb24]
+    case 324: // set window dimensions
+    {
+        800AD2D0	jal    wm_script_pop_stack [$800abb24]
         800AD2D4	nop
-        800AD2D8	jal    funcabb24 [$800abb24]
+        800AD2D8	jal    wm_script_pop_stack [$800abb24]
         [SP + 001e] = h(V0);
-        800AD2E0	jal    funcabb24 [$800abb24]
+        800AD2E0	jal    wm_script_pop_stack [$800abb24]
         [SP + 001c] = h(V0);
-        800AD2E8	jal    funcabb24 [$800abb24]
+        800AD2E8	jal    wm_script_pop_stack [$800abb24]
         [SP + 001a] = h(V0);
         A0 = SP + 0018;
         800AD2F4	jal    funcb86e8 [$800b86e8]
         [SP + 0018] = h(V0);
         800AD2FC	j      Lad620 [$800ad620]
         V0 = 0;
-        800AD304	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 32c: // set window parameters
+    {
+        800AD304	jal    wm_script_pop_stack [$800abb24]
         800AD308	nop
-        800AD30C	jal    funcabb24 [$800abb24]
+        800AD30C	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         A0 = V0;
         800AD318	jal    funcb8720 [$800b8720]
         A1 = S1;
         800AD320	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800AD328 325
-
-        800AD328	jal    funcabb24 [$800abb24]
+    case 325: // set window message
+    {
+        800AD328	jal    wm_script_pop_stack [$800abb24]
         800AD32C	nop
         V0 = V0 << 10;
         800AD334	jal    funcb84d8 [$800b84d8]
         A0 = V0 >> 10;
         800AD33C	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800AD344 326
-
-        800AD344	jal    funcabb24 [$800abb24]
+    case 326: // set window prompt
+    {
+        800AD344	jal    wm_script_pop_stack [$800abb24]
         800AD348	nop
-        800AD34C	jal    funcabb24 [$800abb24]
+        800AD34C	jal    wm_script_pop_stack [$800abb24]
         S2 = V0;
-        800AD354	jal    funcabb24 [$800abb24]
+        800AD354	jal    wm_script_pop_stack [$800abb24]
         S1 = V0;
         V0 = V0 << 10;
         A0 = V0 >> 10;
@@ -3097,9 +3295,11 @@ switch( V1 )
         A2 = A2 >> 10;
         800AD378	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
 
-800AD380 327
-
+    case 327: // wait for prompt acknowledge?
+    {
         800AD380	jal    funcb86c4 [$800b86c4]
         800AD384	nop
         V0 = V0 << 10;
@@ -3112,6 +3312,11 @@ switch( V1 )
         A0 = w[8010ad3c];
         800AD3B0	j      Lad524 [$800ad524]
         800AD3B4	nop
+    }
+    break;
+
+    case 32d: // wait for window ready
+    {
         V0 = w[8010adec];
         800AD3C0	nop
         800AD3C4	bne    v0, zero, Lad620 [$800ad620]
@@ -3121,6 +3326,11 @@ switch( V1 )
         A0 = w[8010ad3c];
         800AD3DC	j      Lad4f4 [$800ad4f4]
         S0 = V0;
+    }
+    break;
+
+    case 32e: // wait for message acknowledge
+    {
         V0 = w[8010adec];
         800AD3EC	nop
         800AD3F0	bne    v0, zero, Lad620 [$800ad620]
@@ -3130,6 +3340,11 @@ switch( V1 )
         A0 = w[8010ad3c];
         800AD408	j      Lad4f4 [$800ad4f4]
         S0 = V0;
+    }
+    break;
+
+    case 334:
+    {
         V0 = w[8010adec];
         800AD418	nop
         800AD41C	bne    v0, zero, Lad620 [$800ad620]
@@ -3149,10 +3364,20 @@ switch( V1 )
         V1 = V1 - V0;
         800AD468	j      Lad620 [$800ad620]
         [S1 + 0046] = h(V1);
+    }
+    break;
+
+    case 33f:
+    {
         800AD470	jal    funca82dc [$800a82dc]
         800AD474	nop
         800AD478	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
+
+    case 341:
+    {
         V0 = w[8010adec];
         800AD488	nop
         800AD48C	bne    v0, zero, Lad61c [$800ad61c]
@@ -3164,12 +3389,22 @@ switch( V1 )
         V1 = hu[A0 + 0046];
         800AD4AC	j      Lad4f8 [$800ad4f8]
         V0 = S0;
-        800AD4B4	jal    funcabb24 [$800abb24]
+    }
+    break;
+
+    case 340:
+    {
+        800AD4B4	jal    wm_script_pop_stack [$800abb24]
         800AD4B8	nop
         800AD4BC	jal    funcb271c [$800b271c]
         A0 = V0;
         800AD4C4	j      Lad620 [$800ad620]
         V0 = 0;
+    }
+    break;
+
+    case 342:
+    {
         V0 = w[8010adec];
         800AD4D4	nop
         800AD4D8	bne    v0, zero, Lad620 [$800ad620]
@@ -3187,9 +3422,11 @@ switch( V1 )
         V1 = V1 - V0;
         800AD500	j      Lad620 [$800ad620]
         [A0 + 0046] = h(V1);
+    }
+    break;
 
-800AD508 306
-
+    case 306: // wait?
+    {
         V0 = w[8010ade8];
         800AD510	nop
         800AD514	beq    v0, zero, Lad53c [$800ad53c]
@@ -3263,6 +3500,7 @@ switch( V1 )
         V0 = bu[A1 + 0056];
         800AD614	j      Lad620 [$800ad620]
         V0 = 0 < V0;
+}
 
 Lad61c:	; 800AD61C
 V0 = 0;
