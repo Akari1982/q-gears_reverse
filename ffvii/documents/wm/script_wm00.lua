@@ -1,5 +1,7 @@
-0x015 - push neg            - pop value from stack and then push negative value back to stack.
-0x017 - push logicnot       - pop value from stack and then push logic negative back to stack.
+0x015 - push neg            - pop value from stack and push negative value back to stack.
+0x017 - push logicnot       - pop value from stack and push logic negative back to stack.
+0x018 - push distance       - pop point id from stack and distance from active entity to point by point id.
+0x019 - push distance       - pop entity id from stack and distance from active entity to entity by entity id.
 0x030 - push mul            - pop 2 values from stack and push back (2nd * 1st).
 0x040 - push add            - pop 2 values from stack and push back (2nd + 1st).
 0x041 - push sub            - pop 2 values from stack and push back (2nd - 1st).

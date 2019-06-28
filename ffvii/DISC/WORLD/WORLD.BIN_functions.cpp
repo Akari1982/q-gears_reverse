@@ -533,7 +533,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// funcae024()
+// wm_get_distance_between_points()
 
 x1 = w[A0 + 0];
 x2 = w[A1 + 0];
@@ -1607,31 +1607,30 @@ SP = SP + 0178;
 
 
 ////////////////////////////////
-// funcaf0b0
-800AF0B0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+// funcaf0b0()
+
 A0 = 0;
 V1 = 0;
 
 loopaf0c0:	; 800AF0C0
-AT = 8010b18b;
-AT = AT + V1;
-[AT + 0000] = b(0);
-AT = 8010b17c;
-AT = AT + V1;
-[AT + 0000] = w(0);
-A0 = A0 + 0001;
-V0 = A0 < 0010;
+    AT = 8010b18b;
+    AT = AT + V1;
+    [AT + 0000] = b(0);
+    AT = 8010b17c;
+    AT = AT + V1;
+    [AT + 0000] = w(0);
+    A0 = A0 + 0001;
+    V1 = V1 + 0024;
+    V0 = A0 < 0010;
 800AF0E8	bne    v0, zero, loopaf0c0 [$800af0c0]
-V1 = V1 + 0024;
-800AF0F0	lui    at, $8011
-[AT + b3b8] = w(0);
+
+
+[8010b3b8] = w(0);
 800AF0F8	jal    funcaf110 [$800af110]
-800AF0FC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800AF108	jr     ra 
-800AF10C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcaf110
 800AF110	addiu  sp, sp, $ffe8 (=-$18)
@@ -1671,7 +1670,7 @@ A0 = A0 + 6848;
 800AF180	nop
 A0 = 0;
 A1 = 0;
-800AF18C	jal    $8003b69c
+800AF18C	jal    $system_set_far_color_to_GTE
 A2 = 0;
 RA = w[SP + 0014];
 S0 = w[SP + 0010];
@@ -1874,9 +1873,10 @@ V0 = bu[S2 + 0013];
 800AF414	nop
 800AF418	beq    v0, zero, Laf8cc [$800af8cc]
 800AF41C	nop
-A0 = w[SP + 0038];
-800AF424	jal    funcae024 [$800ae024]
+A0 = w[SP + 38];
 A1 = S2;
+wm_get_distance_between_points();
+
 V1 = w[S2 + 0020];
 800AF430	nop
 V1 = V1 << 0a;
@@ -2285,7 +2285,7 @@ SP = SP + 0070;
 
 
 ////////////////////////////////
-// funcaf96c()
+// wm_get_distance_to_active_point()
 
 active_point = w[8010b3b8];
 if( active_point == 0 )
@@ -2295,7 +2295,7 @@ if( active_point == 0 )
 else
 {
     A1 = active_point;
-    funcae024();
+    wm_get_distance_between_points();
 
     return V0;
 }
@@ -3272,11 +3272,17 @@ SP = SP + 0028;
 800B07F8	jr     ra 
 800B07FC	nop
 ////////////////////////////////
-// funcb0800
-800B0800	lui    v0, $8011
-V0 = w[V0 + c808];
-800B0808	jr     ra 
-800B080C	nop
+
+
+
+////////////////////////////////
+// funcb0800()
+
+return w[8010c808];
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb0810
 800B0810	addiu  sp, sp, $ffc8 (=-$38)
@@ -10642,13 +10648,9 @@ else
 
 
 ////////////////////////////////
-// funcb7200
-800B7200	lui    v0, $800a
-V0 = hu[V0 + d288];
-800B7208	nop
-800B720C	addiu  v0, v0, $fc18 (=-$3e8)
-800B7210	jr     ra 
-V0 = V0 < 00c8;
+// funcb7200()
+
+return (hu[8009d288] - 3e8) < c8;
 ////////////////////////////////
 
 

@@ -181,7 +181,7 @@ if( h[8009a05c] != h[80071a5c] || h[8009a05c] == 0 )
     A1 = 800730cc;
     A2 = 80095ddc;
     A3 = 0;
-    funca460c(); // worldmap main
+    wm_main();
     [80075dec] = h(V0);
 }
 else
@@ -190,7 +190,7 @@ else
     A1 = 800730cc;
     A2 = 80095ddc;
     A3 = 801b0000;
-    funca460c(); // worldmap main
+    wm_main();
     [80075dec] = h(V0);
     [80071a5c] = h(0);
     [800965e8] = h(0);
