@@ -407,16 +407,16 @@
 // funca90ec
 800A90EC-800A910C
 ////////////////////////////////
-// funca9110
+// wm_set_active_entity_as_pc_entity
 800A9110-800A9130
 ////////////////////////////////
 // funca9134
 800A9134-800A9150
 ////////////////////////////////
-// funca9154
+// wm_get_model_id_from_active_model
 800A9154-800A9170
 ////////////////////////////////
-// funca9174
+// wm_get_model_id_from_pc_model
 800A9174-800A9190
 ////////////////////////////////
 // funca9194
@@ -488,10 +488,10 @@
 // funca98e4
 800A98E4-800A990C
 ////////////////////////////////
-// funca9910
+// wm_get_pc_entity_original_y
 800A9910-800A9938
 ////////////////////////////////
-// wm_find_id_in_model_struct_list
+// wm_set_active_entity_with_model_id
 800A993C-800A9984
 ////////////////////////////////
 // funca9988
@@ -548,7 +548,7 @@
 // wm_get_position_from_active_model
 800AA098-800AA0DC
 ////////////////////////////////
-// funcaa0e0
+// wm_get_position_from_pc_model
 800AA0E0-800AA124
 ////////////////////////////////
 // funcaa128
@@ -756,13 +756,13 @@
 // wm_set_point_as_active
 800AF1A8-800AF1E4
 ////////////////////////////////
-// funcaf1e8
+// wm_set_active_point_mesh_coords
 800AF1E8-800AF248
 ////////////////////////////////
-// funcaf24c
+// wm_set_active_point_coords_in_mesh
 800AF24C-800AF2A0
 ////////////////////////////////
-// funcaf2a4
+// wm_set_active_point_colour
 800AF2A4-800AF2E0
 ////////////////////////////////
 // funcaf2e4
@@ -771,7 +771,7 @@
 // funcaf304
 800AF304-800AF320
 ////////////////////////////////
-// funcaf324
+// wm_set_active_point_sky_colour
 800AF324-800AF360
 ////////////////////////////////
 // funcaf364

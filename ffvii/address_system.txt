@@ -513,7 +513,7 @@
 8009c5a2 array of some volume mod for channels. (0x2 size)
 
 
-8009d391
+
 8009c6e4 savemap start
     +0054          savemap character name data (0x84 size).
         +00 []       character id.

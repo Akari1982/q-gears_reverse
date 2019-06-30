@@ -10,7 +10,13 @@
     0000187E 0002ACE5 WORLD\WM8S.TXZ
     000018D4 00020ED7 WORLD\WM9S.TXZ
     00001916 00020F3F WORLD\WMAS.TXZ
-800c74a4
+800c74a4 array with .BOT files cd data (0x8 size).
+    00001958 00EEA000 WM0.BOT
+    0000372C 00000002 WM1.BOT
+    0000372D 00228000 WM2.BOT
+    00003B7D 000B8000 WM3.BOT
+    +0 [][][][] sector for BOT files.
+    +4 [][][][] size.
 800c74c4 array with .BSZ files cd data (0x8 size).
     00003CED 00003093 WORLD\WM0.BSZ
     00003CF4 000033AB WORLD\WM1.BSZ
@@ -23,6 +29,9 @@
     00004368 00000002 WORLD\WM1.MAP
     00004369 0008A000 WORLD\WM2.MAP
     0000447D 0002E000 WORLD\WM3.MAP
+    +0 [][][][] sector for MAP files.
+    +4 [][][][] size.
+800c7504 array with .EV files cd data (0x8 size).
     000044D9 00007800 WORLD\WM0.EV
     000044E8 00004000 WORLD\WM1.EV
     000044F0 00007800 WORLD\WM2.EV
@@ -31,31 +40,48 @@
     +0 [][][][] sector for MAP files.
     +4 [][][][] size.
 
+800e5608 [][][][] maybe initial camera rotation.
+800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 
-80109d74 some model struct. Init with all zeroes.
-80109e54 some model struct. Init with all zeroes.
-80109f34 start of model struct linked list. (0x0e items 0xe0 size)
-+00 [][][][] pointer to next element. After insertion replace with previous.
-+0c [][][][] X
-+10 [][][][] Y
-+14 [][][][] Z
+80109d74 some entity struct.
+80109e54 some entity struct.
+80109f34 start of entity struct linked list. (0x0e items 0xe0 size)
++00 [][][][] pointer to previous entity.
++0c [][][][] x
++10 [][][][] y
++14 [][][][] z
 +18 [][][][] ???
 +1c [][][][] X
 +20 [][][][] Y
 +24 [][][][] Z
 +3c [][]     rotation.
 +3e [][]     init with 0.
-+40 [][]     rotation.
-+42 [][]     store original Y pos here (before modification).
++40 [][]     rotation of model (set using opcode 304).
++42 [][]     original Y pos here (before modification).
++44 [][]     y offset.
 +4a [][]     init with 0.
-+4c [][]     rotation.
-+50 []       model id (0x15 0x16 0x17 snow pole).
++4c [][]     direction of movement (set using opcode 304 328).
++50 []       model id.
+                0x00 Cloud
+                0x01 Tifa
+                0x02 Cid
+                0x03 Highwind / Ultimate Weapon
+                0x04 wild chocobo
+                0x08 cargo ship
+                0x0d submarine
+                0x13 chocobo
+                0x15 snow pole 1
+                0x16 snow pole 2
+                0x17 snow pole 3
+                0x19 chocobo
 +51 []       some flags.
                 0x01 - set flag if +c or +14 pos != +1c or +24 pos. Else remove flag.
-                0x80 - if set we init model pos just by X and Y (xz).
+                0x40 - use walkmesh collision.
+                0x80 - set if position was changed and needs to be recalculated.
++55 []       move speed.
 +58 []       ???
 +5e []       init with -1.
 +90 start of packet for buffer 1.
@@ -73,9 +99,9 @@
     +24 [][]     uv3.
 
 8010ad34 [][][][] next free model pointer.
-8010ad38 [][][][] last inserted model. Init with 0.
-8010ad3c [][][][] active model. Current pointer to world map models list. We store pointer to founded 8010ad38 list structure here in opcode 0x300. Init with 0.
-8010ad40 [][][][] pointer to model struct.
+8010ad38 [][][][] pointer to last inserted model.
+8010ad3c [][][][] pointer to active model.
+8010ad40 [][][][] pointer to pc character model.
 
 8010ad44 [][]     init with 0.
 8010ad48 [][]     init with 0.
@@ -100,7 +126,20 @@
 8010b174 [][][][] store 1 here at start of map if progress less or greater than 0x3e8.
 
 8010b178 array of points (0x24 size 0x10 items)
+    + 0 [][][][] global x (ffffe000 - mesh part, 0x00001fff - local part).
+    + 8 [][][][] global z (ffffe000 - mesh part, 0x00001fff - local part).
+    +10 []       B.
+    +11 []       G.
+    +12 []       R.
     +13 []       type of point (light source (1) or set of coordinates (0)).
+    +14 []       sky B.
+    +15 []       sky G.
+    +16 []       sky R.
+    +18 []       some B.
+    +19 []       some G.
+    +1a []       some R.
+    +1c [][][][] some range.
+    +20 [][][][] some range.
 
 8010b3b8 [][][][] pointer to active point structure.
 

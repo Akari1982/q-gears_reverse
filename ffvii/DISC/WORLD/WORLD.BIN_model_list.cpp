@@ -466,7 +466,7 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funca9110
+// wm_set_active_entity_as_pc_entity()
 
 V0 = w[8010ad3c];
 if( V0 != 0 )
@@ -491,7 +491,7 @@ return 0;
 
 
 ////////////////////////////////
-// funca9154
+// wm_get_model_id_from_active_model()
 
 V1 = w[8010ad3c];
 if( V1 != 0 )
@@ -504,9 +504,9 @@ return 0;
 
 
 ////////////////////////////////
-// funca9174()
+// wm_get_model_id_from_pc_model()
 
-V1 = w[8010ad40];
+V1 = w[8010ad40]; // pc model
 if( V1 != 0 )
 {
     return bu[V1 + 50];
@@ -657,27 +657,16 @@ V0 = A1;
 
 
 ////////////////////////////////
-// funca92f8
+// funca92f8()
 
-V1 = A0 & 00ff;
-V0 = 0004;
-800A9300	beq    v1, v0, La9328 [$800a9328]
-A1 = 0;
-V0 = 0013;
-800A930C	beq    v1, v0, La9328 [$800a9328]
-800A9310	nop
-800A9314	addiu  v0, a0, $ffd7 (=-$29)
-V0 = V0 & 00ff;
-V0 = V0 < 0002;
-800A9320	beq    v0, zero, La932c [$800a932c]
-800A9324	nop
-
-La9328:	; 800A9328
-A1 = 0001;
-
-La932c:	; 800A932C
-800A932C	jr     ra 
-V0 = A1;
+if( ( A0 != 4 ) && ( A0 != 13 ) ) // if not chocobo
+{
+    if( ( ( A0 - 29 ) & ff ) >= 2 )
+    {
+        return 0;
+    }
+}
+return 1;
 ////////////////////////////////
 
 
@@ -1194,71 +1183,60 @@ La98dc:	; 800A98DC
 
 
 ////////////////////////////////
-// funca98e4
-800A98E4	lui    v0, $8011
-V0 = w[V0 + ad40];
-800A98EC	nop
-800A98F0	beq    v0, zero, La9904 [$800a9904]
-800A98F4	nop
-V0 = bu[V0 + 0051];
-800A98FC	j      La9908 [$800a9908]
-V0 = V0 >> 07;
+// funca98e4()
 
-La9904:	; 800A9904
-V0 = 0;
-
-La9908:	; 800A9908
-800A9908	jr     ra 
-800A990C	nop
+V0 = w[8010ad40];
+if( V0 != 0 )
+{
+    return bu[V0 + 51] >> 7;
+}
+else
+{
+    return 0;
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca9910
-800A9910	lui    v0, $8011
-V0 = w[V0 + ad40];
-800A9918	nop
-800A991C	beq    v0, zero, La9930 [$800a9930]
-800A9920	nop
-V0 = h[V0 + 0042];
-800A9928	j      La9934 [$800a9934]
-800A992C	nop
+// wm_get_pc_entity_original_y()
 
-La9930:	; 800A9930
-V0 = 0;
-
-La9934:	; 800A9934
-800A9934	jr     ra 
-800A9938	nop
+V0 = w[8010ad40];
+if( V0 != 0 )
+{
+    return h[V0 + 42];
+}
+else
+{
+    return 0;
+}
 ////////////////////////////////
 
 
 
 
 ////////////////////////////////
-// wm_find_id_in_model_struct_list()
+// wm_set_active_entity_with_model_id()
 
 V1 = w[8010ad38];
-if (V1 != 0)
+while( V1 != 0 )
 {
-    loopa9950:	; 800A9950
-        V0 = bu[V1 + 50];
-        if (V0 == A0)
-        {
-            break;
-        }
-
-        V1 = w[V1];
-    800A9968	bne    v1, zero, loopa9950 [$800a9950]
-
-    if (V1 != 0)
+    model_id = bu[V1 + 50];
+    if( model_id == A0 )
     {
-        [8010ad3c] = w(V1);
+        break;
     }
+
+    V1 = w[V1 + 0];
 }
 
-return V1 > 0;
+if( V1 != 0 )
+{
+    [8010ad3c] = w(V1);
+    return 1;
+}
+
+return 0;
 ////////////////////////////////
 
 
@@ -1766,7 +1744,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// funcaa0e0()
+// wm_get_position_from_pc_model()
 
 if( A0 != 0 )
 {
