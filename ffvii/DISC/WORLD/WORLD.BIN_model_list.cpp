@@ -2973,7 +2973,7 @@ Lab288:	; 800AB288
 [S0 + 0058] = b(V0);
 
 Lab28c:	; 800AB28C
-800AB28C	jal    funca0bd4 [$800a0bd4]
+800AB28C	jal    wm_get_current_render_buffer_id [$800a0bd4]
 800AB290	nop
 V1 = V0 << 02;
 V1 = V1 + V0;

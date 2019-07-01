@@ -4464,21 +4464,9 @@ T4 = w[A0 + 0010];
 8003B4E4	jr     ra 
 8003B4E8	nop
 
-T0 = w[A0 + 0000];
-T1 = w[A0 + 0004];
-T2 = w[A0 + 0008];
-T3 = w[A0 + 000c];
-T4 = w[A0 + 0010];
-8003B500	ctc2   t0,sz0
-8003B504	ctc2   t1,sz1
-8003B508	ctc2   t2,sz2
-8003B50C	ctc2   t3,sz3
-8003B510	ctc2   t4,rgb0
-8003B514	jr     ra 
-8003B518	nop
-
-
-
+////////////////////////////////
+// system_gte_set_light_colour_matrix
+8003B4EC-8003B518
 ////////////////////////////////
 // system_set_translation_vector_to_GTE
 8003B51C-8003B538

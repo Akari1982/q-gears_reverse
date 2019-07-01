@@ -6,7 +6,7 @@
 // funca0b48
 800A0B48-800A0BD0
 ////////////////////////////////
-// funca0bd4
+// wm_get_current_render_buffer_id
 800A0BD4-800A0BE0
 ////////////////////////////////
 // funca0be4

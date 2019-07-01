@@ -21,7 +21,7 @@ T2 = V0 & T2;
 T1 = 0013;
 8003A5C8	sub    t1, t1, t2
 T1 = T1 >> 01;
-8003A5D0	addi   t3, t2, $ffe8 (=-$18)
+T3 = T2 + ffe8;
 8003A5D4	bltz   t3, L3a5e4 [$8003a5e4]
 8003A5D8	nop
 T4 = A0 << T3;
@@ -30,10 +30,10 @@ T4 = A0 << T3;
 L3a5e4:	; 8003A5E4
 T3 = 0018;
 8003A5E8	sub    t3, t3, t2
-8003A5EC	srav   t4, t3, a0
+T4 = A0 >> T3;
 
 L3a5f0:	; 8003A5F0
-8003A5F0	addi   t4, t4, $ffc0 (=-$40)
+T4 = T4 + ffc0;
 T4 = T4 << 01;
 8003A5F8	lui    t5, $8005
 T5 = T5 + T4;
@@ -49,7 +49,7 @@ V0 = T5 << T1;
 L3a61c:	; 8003A61C
 8003A61C	sub    t1, zero, t1
 8003A620	jr     ra 
-8003A624	srlv   v0, t1, t5
+V0 = T5 >> T1;
 
 
 L3a628:	; 8003A628
@@ -424,4 +424,16 @@ gte_OP(); // Outer Product
 R11R12 = T5;
 R22R23 = T6;
 R33 = T7;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gte_set_light_colour_matrix()
+
+LR1LR2 = w[A0 + 0];
+LR3LG1 = w[A0 + 4];
+LG2LG3 = w[A0 + 8];
+LB1LB2 = w[A0 + c];
+LB3 = w[A0 + 10];
 ////////////////////////////////

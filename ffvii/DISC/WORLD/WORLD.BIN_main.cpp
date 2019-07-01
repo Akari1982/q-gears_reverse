@@ -6,9 +6,8 @@
 
 ////////////////////////////////
 // funca0b48
-Entry:	; 800A0B48
-800A0B48	lui    v1, $800d
-V1 = w[V1 + 05e8];
+
+V1 = w[800d05e8];
 A0 = 800c8564;
 V1 = V1 < 0001;
 V0 = V1 << 07;
@@ -18,8 +17,8 @@ V0 = V0 - V1;
 V0 = V0 << 02;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800A0B78	lui    at, $800d
-[AT + 05e8] = w(V1);
+[800d05e8] = w(V1);
+
 V1 = V0 + A0;
 800A0B84	addiu  a0, a0, $ff90 (=-$70)
 800A0B88	lui    at, $800c
@@ -27,8 +26,8 @@ V1 = V0 + A0;
 AT = 800cc564;
 AT = AT + V0;
 V1 = w[AT + 0000];
-800A0BA0	lui    a1, $800d
-A1 = bu[A1 + 05e8];
+
+A1 = bu[800d05e8];
 V0 = V0 + A0;
 800A0BAC	lui    at, $800d
 [AT + 05e4] = w(V0);
@@ -45,7 +44,7 @@ V0 = V0 + A0;
 
 
 ////////////////////////////////
-// funca0bd4()
+// wm_get_current_render_buffer_id()
 
 return w[800d05e8];
 ////////////////////////////////
@@ -529,7 +528,7 @@ S4 = A0;
 [SP + 0024] = w(S3);
 [SP + 0020] = w(S2);
 [SP + 001c] = w(S1);
-800A143C	jal    funca0bd4 [$800a0bd4]
+800A143C	jal    wm_get_current_render_buffer_id [$800a0bd4]
 [SP + 0018] = w(S0);
 800A1444	lui    s1, $00ff
 S1 = S1 | ffff;
@@ -547,7 +546,7 @@ V0 = w[V0 + 2710];
 A0 = A0 & S2;
 V0 = V0 & S1;
 A0 = A0 | V0;
-800A1484	jal    funca0bd4 [$800a0bd4]
+800A1484	jal    wm_get_current_render_buffer_id [$800a0bd4]
 [V1 + 0000] = w(A0);
 V1 = V0 << 01;
 V1 = V1 + V0;
@@ -1257,23 +1256,29 @@ La1da8:	; 800A1DA8
 800A1DA8	jr     ra 
 800A1DAC	nop
 ////////////////////////////////
-// funca1db0
-800A1DB0	lui    v0, $800e
-V0 = w[V0 + 5618];
-800A1DB8	jr     ra 
-800A1DBC	nop
+
+
+
 ////////////////////////////////
-// funca1dc0
-800A1DC0	lui    v0, $800e
-V0 = w[V0 + 5654];
-800A1DC8	jr     ra 
-800A1DCC	nop
+// funca1db0()
+
+return w[800e5618];
 ////////////////////////////////
-// funca1dd0
-800A1DD0	lui    at, $800e
-[AT + 5654] = w(A0);
-800A1DD8	jr     ra 
-800A1DDC	nop
+
+
+
+////////////////////////////////
+// funca1dc0()
+
+return  w[800e5654];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca1dd0()
+
+[800e5654] = w(A0);
 ////////////////////////////////
 
 
@@ -3951,7 +3956,7 @@ SP = SP + 0018;
 800A4268	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-800A4274	jal    funca0bd4 [$800a0bd4]
+800A4274	jal    wm_get_current_render_buffer_id [$800a0bd4]
 [SP + 0010] = w(S0);
 800A427C	lui    v1, $800e
 V1 = w[V1 + 56f4];
@@ -4718,7 +4723,7 @@ La4668:	; 800A4668
     V0 = w[800e566c] < 9;
 800A4D9C	bne    v0, zero, La4668 [$800a4668]
 
-funca0bd4();
+wm_get_current_render_buffer_id();
 ////////////////////////////////
 
 

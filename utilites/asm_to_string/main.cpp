@@ -255,7 +255,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2|lzcr|trz)\\s*$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|r31r32|r33|trx|try|l33|rbk|bbk|gbk|lr1lr2|lr3lg1|lg2lg3|lb1lb2|lb3|rfc|gfc|bfc|ofx|ofy|h|dqa|dqb|zsf3|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2|lzcr|trz|sz0|sz1|sz2|sz3|rgb0|rgb1|rgb2|17|ir0|ir1|ir2|ir3|sxy0|vz2|rgb|otz|sxy1|sxy2|sxy2p)\\s*$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -266,31 +266,73 @@ int main( int argc, char *argv[] )
             if( m2 == "ZERO" ) m2 = "0";
 
             // mtc mfc
-            if( m3 == "R11R12" ) m3 = "VXY0"; // 0
-            else if( m3 == "R13R21" ) m3 = "VZ0"; // 1
-            else if( m3 == "R22R23" ) m3 = "VXY1"; // 2
-            else if( m3 == "TRZ" ) m3 = "OTZ"; // 7
-            else if( m3 == "L11L12" ) m3 = "IR0"; // 8
-            else if( m3 == "L13L21" ) m3 = "IR1"; // 9
-            else if( m3 == "L22L23" ) m3 = "IR2"; // 10
-            else if( m3 == "L31L32" ) m3 = "IR3"; // 11
-            else if( m3 == "ZSF4" ) m3 = "LZCS"; // 30
-            else if( m3 == "FLAG" ) m3 = "LZCR"; // 31
+            if(      m3 == "R11R12" ) m3 = "VXY0";  // 0
+            else if( m3 == "R13R21" ) m3 = "VZ0";   // 1
+            else if( m3 == "R22R23" ) m3 = "VXY1";  // 2
+            else if( m3 == "R31R32" ) m3 = "VZ1";   // 3
+            else if( m3 == "R33"    ) m3 = "VXY2";  // 4
+            else if( m3 == "TRX"    ) m3 = "VZ2";   // 5
+            else if( m3 == "TRY"    ) m3 = "RGB";   // 6
+            else if( m3 == "TRZ"    ) m3 = "OTZ";   // 7
+            else if( m3 == "L11L12" ) m3 = "IR0";   // 8
+            else if( m3 == "L13L21" ) m3 = "IR1";   // 9
+            else if( m3 == "L22L23" ) m3 = "IR2";   // 10
+            else if( m3 == "L31L32" ) m3 = "IR3";   // 11
+            else if( m3 == "L33"    ) m3 = "SXY0";  // 12
+            else if( m3 == "RBK"    ) m3 = "SXY1";  // 13
+            else if( m3 == "BBK"    ) m3 = "SXY2";  // 14
+            else if( m3 == "GBK"    ) m3 = "SXY2P"; // 15
+            else if( m3 == "LR1LR2" ) m3 = "SZ0";   // 16
+            else if( m3 == "LR3LG1" ) m3 = "SZ1";   // 17
+            else if( m3 == "LG2LG3" ) m3 = "SZ2";   // 18
+            else if( m3 == "LB1LB2" ) m3 = "SZ3";   // 19
+            else if( m3 == "LB3"    ) m3 = "RGB0";  // 20
+            else if( m3 == "RFC"    ) m3 = "RGB1";  // 21
+            else if( m3 == "GFC"    ) m3 = "RGB2";  // 22
+            else if( m3 == "BFC"    ) m3 = "17";    // 23
+            else if( m3 == "OFX"    ) m3 = "MAC0";  // 24
+            else if( m3 == "OFY"    ) m3 = "MAC1";  // 25
+            else if( m3 == "H"      ) m3 = "MAC2";  // 26
+            else if( m3 == "DQA"    ) m3 = "MAC3";  // 27
+            else if( m3 == "DQB"    ) m3 = "IRGB";  // 28
+            else if( m3 == "ZSF3"   ) m3 = "ORGB";  // 29
+            else if( m3 == "ZSF4"   ) m3 = "LZCS";  // 30
+            else if( m3 == "FLAG"   ) m3 = "LZCR";  // 31
+
 
             // ctc cfc
-            else if( m3 == "VXY0" ) m3 = "R11R12"; // 0
-            else if( m3 == "VZ0" ) m3 = "R13R21"; // 1
-            else if( m3 == "VXY1" ) m3 = "R22R23"; // 2
-            else if( m3 == "VZ1" ) m3 = "R31R32"; // 3
-            else if( m3 == "VXY2" ) m3 = "R33"; // 4
-            else if( m3 == "MAC0" ) m3 = "OFX"; // 24
-            else if( m3 == "MAC1" ) m3 = "OFY"; // 25
-            else if( m3 == "MAC2" ) m3 = "H"; // 26
-            else if( m3 == "MAC3" ) m3 = "DQA"; // 27
-            else if( m3 == "IRGB" ) m3 = "DQB"; // 28
-            else if( m3 == "ORGB" ) m3 = "ZSF3"; // 29
-            else if( m3 == "LZCS" ) m3 = "ZSF4"; // 30
-            else if( m3 == "LZCR" ) m3 = "FLAG"; // 31
+            else if( m3 == "VXY0"  ) m3 = "R11R12"; // 0
+            else if( m3 == "VZ0"   ) m3 = "R13R21"; // 1
+            else if( m3 == "VXY1"  ) m3 = "R22R23"; // 2
+            else if( m3 == "VZ1"   ) m3 = "R31R32"; // 3
+            else if( m3 == "VXY2"  ) m3 = "R33";    // 4
+            else if( m3 == "VZ2"   ) m3 = "TRX";    // 5
+            else if( m3 == "RGB"   ) m3 = "TRY";    // 6
+            else if( m3 == "OTZ"   ) m3 = "TRZ";    // 7
+            else if( m3 == "IR0"   ) m3 = "L11L12"; // 8
+            else if( m3 == "IR1"   ) m3 = "L13L21"; // 9
+            else if( m3 == "IR2"   ) m3 = "L22L23"; // 10
+            else if( m3 == "IR3"   ) m3 = "L31L32"; // 11
+            else if( m3 == "SXY0"  ) m3 = "L33";    // 12
+            else if( m3 == "SXY1"  ) m3 = "RBK";    // 13
+            else if( m3 == "SXY2"  ) m3 = "BBK";    // 14
+            else if( m3 == "SXY2P" ) m3 = "GBK";    // 15
+            else if( m3 == "SZ0"   ) m3 = "LR1LR2"; // 16
+            else if( m3 == "SZ1"   ) m3 = "LR3LG1"; // 17
+            else if( m3 == "SZ2"   ) m3 = "LG2LG3"; // 18
+            else if( m3 == "SZ3"   ) m3 = "LB1LB2"; // 19
+            else if( m3 == "RGB0"  ) m3 = "LB3";    // 20
+            else if( m3 == "RGB1"  ) m3 = "RFC";    // 21
+            else if( m3 == "RGB2"  ) m3 = "GFC";    // 22
+            else if( m3 == "17"    )  m3 = "BFC";    // 23
+            else if( m3 == "MAC0"  ) m3 = "OFX";    // 24
+            else if( m3 == "MAC1"  ) m3 = "OFY";    // 25
+            else if( m3 == "MAC2"  ) m3 = "H";      // 26
+            else if( m3 == "MAC3"  ) m3 = "DQA";    // 27
+            else if( m3 == "IRGB"  ) m3 = "DQB";    // 28
+            else if( m3 == "ORGB"  ) m3 = "ZSF3";   // 29
+            else if( m3 == "LZCS"  ) m3 = "ZSF4";   // 30
+            else if( m3 == "LZCR"  ) m3 = "FLAG";   // 31
 
             std::stringstream ss;
             ss << m0;
@@ -363,6 +405,16 @@ int main( int argc, char *argv[] )
 
             std::stringstream ss;
             ss << m0 << "gte_RTPT(); // Perspective transform on 3 points";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func18t0,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_rtv0tr(); // v0 * rotmatrix + tr vector";
             str = ss.str();
         }
 

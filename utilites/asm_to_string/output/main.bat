@@ -1,1 +1,1 @@
-main WORLD.BIN_main.cpp
+main SCUS_941_gte.cpp
