@@ -186,7 +186,7 @@ int main( int argc, char *argv[] )
                 str = ss.str();
                 two_row = false;
             }
-            else if( ( m1 != "addiu" ) || ( val < 0x8000 ) )
+            else if( ( ( m1 != "addiu" ) && ( m1 != "addi" ) ) || ( val < 0x8000 ) )
             {
                 std::stringstream ss;
                 ss << m0 << m2 << " = ";
@@ -418,6 +418,66 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func19t8,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_DPCS(); // Depth Cueing";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func22t0,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_NSC(); // Normal color v0";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func23t8,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func24t0,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_NCCS(); // Normal color col. v0";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func26zero,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_NCLIP(); // Normal clipping";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func26t8,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_AVSZ3(); // Average of three Z values";
+            str = ss.str();
+        }
+
         e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27s0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
@@ -434,7 +494,17 @@ int main( int argc, char *argv[] )
             std::string m0 = std::regex_replace( str, e, "$1" );
 
             std::stringstream ss;
-            ss << m0 << "AVSZ4(); // Average of four Z values";
+            ss << m0 << "gte_AVSZ4(); // Average of four Z values";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27t8,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_op12(); // Outer product";
             str = ss.str();
         }
 
