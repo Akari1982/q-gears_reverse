@@ -3471,7 +3471,7 @@ SP = SP + 0020;
 // system_scale_matrix_by_vector
 8003B35C-8003B488
 ////////////////////////////////
-// system_set_rotation_matrix_to_GTE
+// system_gte_set_rotation_matrix
 8003B48C-8003B4B8
 ////////////////////////////////
 // func3b4bc
@@ -3480,7 +3480,7 @@ SP = SP + 0020;
 // system_gte_set_light_colour_matrix
 8003B4EC-8003B518
 ////////////////////////////////
-// system_set_translation_vector_to_GTE
+// system_gte_set_translation_vector
 8003B51C-8003B538
 ////////////////////////////////
 // func3b53с

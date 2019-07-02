@@ -256,9 +256,10 @@ system_matrixes_multiply;
 
 // multiply field translation vector
 A0 = S1;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
 A0 = S1;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
+
 A0 = S0 - 28; // vector to transform
 A1 = S0 + 14; // result
 A2 = SP + 10; // flag
@@ -375,9 +376,10 @@ A1 = A1;
 system_scale_matrix_by_vector;
 
 A0 = S0;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = S0;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 ////////////////////////////////
 
 

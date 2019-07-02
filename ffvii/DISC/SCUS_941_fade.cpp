@@ -735,9 +735,9 @@ A0 = S0;
 80013E9C	lui    a1, $8019
 80013EA0	jal    system_scale_matrix_by_vector [$8003b35c]
 A1 = A1 | da14;
-80013EA8	jal    system_set_rotation_matrix_to_GTE [$8003b48c]
+80013EA8	jal    system_gte_set_rotation_matrix [$8003b48c]
 A0 = S0;
-80013EB0	jal    system_set_translation_vector_to_GTE [$8003b51c]
+80013EB0	jal    system_gte_set_translation_vector [$8003b51c]
 A0 = S0;
 S3 = 0;
 80013EBC	lui    s6, $8019

@@ -33,10 +33,10 @@ A2 = SP + 10;
 system_transformation_data_multiply;
 
 A0 = SP + 10;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
 
 A0 = SP + 10;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 
 

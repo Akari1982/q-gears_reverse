@@ -617,9 +617,10 @@ A1 = S0; // part matrix
 system_matrixes_multiply;
 
 A0 = 1f800024;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = 1f800024;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 A0 = S0 + 28; // vector
 A1 = S0 + 14; // result vector
@@ -627,9 +628,10 @@ A2 = SP + 10;
 system_call_rtv0tr_from_GTE;
 
 A0 = S0;
-system_set_rotation_matrix_to_GTE
+system_gte_set_rotation_matrix();
+
 A0 = S0;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 ////////////////////////////////
 
 

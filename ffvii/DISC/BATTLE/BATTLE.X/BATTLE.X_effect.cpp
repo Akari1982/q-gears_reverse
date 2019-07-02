@@ -648,9 +648,10 @@ if (bu[80062d98] != 0 || current_frame == 0)
     system_transformation_data_multiply;
 
     A0 = SP + 10;
-    system_set_rotation_matrix_to_GTE;
+    system_gte_set_rotation_matrix();
+
     A0 = SP + 10;
-    system_set_translation_vector_to_GTE;
+    system_gte_set_translation_vector();
 
     // load effect geometry
     A0 = 800f197c; // offset to effect 3d data
@@ -718,9 +719,10 @@ A2 = SP + 28;
 system_transformation_data_multiply;
 
 A0 = SP + 28;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = SP + 28;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 
 
@@ -795,9 +797,10 @@ A2 = A1;
 system_transformation_data_multiply;
 
 A0 = SP + 10;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = SP + 10;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 A0 = 800f1904;
 A1 = w[801517c0] + 70;

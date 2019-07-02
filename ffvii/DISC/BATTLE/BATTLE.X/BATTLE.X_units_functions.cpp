@@ -1426,9 +1426,10 @@ A2 = S0;
 funcd4284;
 
 A0 = S0;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = S0;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 A0 = 800f01e8;
 A1 = w[801517c0] + 70;
@@ -1467,9 +1468,10 @@ S2 = 801621f0 + h[801590d4] * 20;
 [800f0218 + 4] = b(h[S2 + 2] * 20);
 
 A0 = 800fa63c; // camera matrix
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = 800fa63c;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 A0 = S2 + 4; // vector to transform
 A1 = SP + 24; // result vector
@@ -1483,9 +1485,10 @@ system_call_rtv0tr_from_GTE;
 [SP + 2c] = w(w[SP + 2c] - h[S2 + 10] / 10);
 
 A0 = SP + 10;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = SP + 10;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 
 A0 = 800f0218;
@@ -1836,9 +1839,10 @@ S3 = A1;
 S2 = A2;
 
 A0 = 800fa63c;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
+
 A0 = 800fa63c;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 A0 = S1;
 A1 = S2 + 14;
@@ -1873,10 +1877,10 @@ collision = A2;
 [800f0238] = h(scale);
 
 A0 = 800fa63c;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
 
 A0 = 800fa63c;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 A0 = position;
 A1 = 800f023c;
@@ -1895,10 +1899,10 @@ if (collision != 0)
 }
 
 A0 = 800f0228;
-system_set_rotation_matrix_to_GTE;
+system_gte_set_rotation_matrix();
 
 A0 = 800f0228;
-system_set_translation_vector_to_GTE;
+system_gte_set_translation_vector();
 
 return 800f0228;
 ////////////////////////////////
@@ -3178,9 +3182,9 @@ system_execute_AKAO;
 800D56B0	addu   s1, a0, zero
 800D56B8	lui    s0, $8010
 800D56BC	addiu  s0, s0, $a63c (=-$59c4)
-800D56C4	jal    system_set_rotation_matrix_to_GTE [$8003b48c]
+800D56C4	jal    system_gte_set_rotation_matrix [$8003b48c]
 800D56C8	addu   a0, s0, zero
-800D56CC	jal    system_set_translation_vector_to_GTE [$8003b51c]
+800D56CC	jal    system_gte_set_translation_vector [$8003b51c]
 800D56D0	addu   a0, s0, zero
 800D56D4	addu   a0, s1, zero
 800D56D8	addiu  a1, sp, $0010

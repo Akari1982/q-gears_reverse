@@ -86,7 +86,7 @@ T4 = A0 << T3;
 L3a03c:	; 8003A03C
 T3 = 0018;
 8003A040	sub    t3, t3, t2
-8003A044	srav   t4, t3, a0
+T4 = A0 >> T3;
 
 L3a048:	; 8003A048
 8003A048	addi   t4, t4, $ffc0 (=-$40)
@@ -224,21 +224,21 @@ IR3 = T5;
 IR1 = T3;
 IR2 = T4;
 8003A1E0	nop
-8003A1E4	gte_func27t8,r11r12
-8003A1E8	mfc2   t7,ofy
-8003A1EC	mfc2   t8,h
-8003A1F0	mfc2   t9,dqa
+gte_op12(); // Outer product
+T7 = MAC1;
+T8 = MAC2;
+T9 = MAC3;
 R11R12 = T3;
 R22R23 = T4;
 R33 = T5;
 8003A200	nop
-8003A204	gte_func27t8,r11r12
+gte_op12(); // Outer product
 VXY0 = T3;
 VZ0 = T4;
 VXY1 = T5;
-8003A214	mfc2   t0,ofy
-8003A218	mfc2   t1,h
-8003A21C	mfc2   t2,dqa
+T0 = MAC1;
+T1 = MAC2;
+T2 = MAC3;
 R11R12 = V0;
 R22R23 = V1;
 R33 = A2;
@@ -436,10 +436,10 @@ IR2 = T1;
 T3 = 000c;
 8003A4F4	gte_func29zero,r11r12
 T5 = w[SP + 0010];
-8003A4FC	mfc2   t0,ofy
-8003A500	mfc2   t1,h
-8003A504	srav   t0, t3, t0
-8003A508	srav   t1, t3, t1
+T0 = MAC1;
+T1 = MAC2;
+T0 = T0 >> T3;
+T1 = T1 >> T3;
 [T5 + 0000] = b(T0);
 [T5 + 0001] = b(T1);
 8003A514	jr     ra 
@@ -466,12 +466,12 @@ IR3 = T2;
 T3 = 000c;
 8003A564	gte_func29zero,r11r12
 T5 = w[SP + 0010];
-8003A56C	mfc2   t0,ofy
-8003A570	mfc2   t1,h
-8003A574	mfc2   t2,dqa
-8003A578	srav   t0, t3, t0
-8003A57C	srav   t1, t3, t1
-8003A580	srav   t2, t3, t2
+T0 = MAC1;
+T1 = MAC2;
+T2 = MAC3;
+T0 = T0 >> T3;
+T1 = T1 >> T3;
+T2 = T2 >> T3;
 [T5 + 0000] = b(T0);
 [T5 + 0001] = b(T1);
 [T5 + 0002] = b(T2);
@@ -909,9 +909,9 @@ IR2 = T4;
 IR3 = T5;
 8003AC3C	nop
 8003AC40	gte_func18at,dqb
-8003AC44	mfc2   t3,ofy
-8003AC48	mfc2   t4,h
-8003AC4C	mfc2   t5,dqa
+T3 = MAC1;
+T4 = MAC2;
+T5 = MAC3;
 IR1 = T0;
 IR2 = T1;
 IR3 = T2;
@@ -950,9 +950,9 @@ L3acb4:	; 8003ACB4
 T5 = T5 << 03;
 
 L3acb8:	; 8003ACB8
-8003ACB8	mfc2   t0,ofy
-8003ACBC	mfc2   t1,h
-8003ACC0	mfc2   t2,dqa
+T0 = MAC1;
+T1 = MAC2;
+T2 = MAC3;
 T0 = T0 + T3;
 T1 = T1 + T4;
 T2 = T2 + T5;
@@ -1084,9 +1084,9 @@ T1 = R31R32;
 T0 = R33;
 8003AEA4	nop
 [T7 + 0010] = w(T0);
-8003AEAC	cfc2   t0,vz2
-8003AEB0	cfc2   t1,rgb
-8003AEB4	cfc2   t2,otz
+T0 = TRX;
+T1 = TRY;
+T2 = TRZ;
 [T7 + 0014] = w(T0);
 [T7 + 0018] = w(T1);
 [T7 + 001c] = w(T2);
@@ -1135,9 +1135,9 @@ R33 = T0;
 T0 = w[T7 + 0014];
 T1 = w[T7 + 0018];
 T2 = w[T7 + 001c];
-8003AF64	ctc2   t0,vz2
-8003AF68	ctc2   t1,rgb
-8003AF6C	ctc2   t2,otz
+TRX = T0;
+TRY = T1;
+TRZ = T2;
 8003AF70	jr     ra 
 8003AF74	nop
 ////////////////////////////////
@@ -1152,9 +1152,9 @@ T4 = R33;
 [A0 + 0008] = w(T2);
 [A0 + 000c] = w(T3);
 [A0 + 0010] = w(T4);
-8003AFA0	cfc2   t0,vz2
-8003AFA4	cfc2   t1,rgb
-8003AFA8	cfc2   t2,otz
+T0 = TRX;
+T1 = TRY;
+T2 = TRZ;
 [A0 + 0014] = w(T0);
 [A0 + 0018] = w(T1);
 [A0 + 001c] = w(T2);
@@ -1162,19 +1162,19 @@ T4 = R33;
 8003AFBC	nop
 ////////////////////////////////
 // func3afc0
-8003AFC0	cfc2   t0,ir0
-8003AFC4	cfc2   t1,ir1
-8003AFC8	cfc2   t2,ir2
-8003AFCC	cfc2   t3,ir3
-8003AFD0	cfc2   t4,sxy0
+T0 = L11L12;
+T1 = L13L21;
+T2 = L22L23;
+T3 = L31L32;
+T4 = L33;
 [A0 + 0000] = w(T0);
 [A0 + 0004] = w(T1);
 [A0 + 0008] = w(T2);
 [A0 + 000c] = w(T3);
 [A0 + 0010] = w(T4);
-8003AFE8	cfc2   t0,sxy1
-8003AFEC	cfc2   t1,sxy2
-8003AFF0	cfc2   t2,sxy2p
+T0 = RBK;
+T1 = BBK;
+T2 = GBK;
 [A0 + 0014] = w(T0);
 [A0 + 0018] = w(T1);
 [A0 + 001c] = w(T2);
@@ -1182,19 +1182,19 @@ T4 = R33;
 8003B004	nop
 ////////////////////////////////
 // func3b008
-8003B008	cfc2   t0,sz0
-8003B00C	cfc2   t1,sz1
-8003B010	cfc2   t2,sz2
-8003B014	cfc2   t3,sz3
-8003B018	cfc2   t4,rgb0
+T0 = LR1LR2;
+T1 = LR3LG1;
+T2 = LG2LG3;
+T3 = LB1LB2;
+T4 = LB3;
 [A0 + 0000] = w(T0);
 [A0 + 0004] = w(T1);
 [A0 + 0008] = w(T2);
 [A0 + 000c] = w(T3);
 [A0 + 0010] = w(T4);
-8003B030	cfc2   t0,rgb1
-8003B034	cfc2   t1,rgb2
-8003B038	cfc2   t2,17
+T0 = RFC;
+T1 = GFC;
+T2 = BFC;
 [A0 + 0014] = w(T0);
 [A0 + 0018] = w(T1);
 [A0 + 001c] = w(T2);
@@ -1332,8 +1332,8 @@ R13R21 = T1;
 R22R23 = T2;
 R31R32 = T3;
 R33 = T4;
-8003B2A4	lwc2   zero, $0000(a1)
-8003B2A8	lwc2   at, $0004(a1)
+VXY0 = w[A1 + 0000];
+VZ0 = w[A1 + 0004];
 8003B2AC	nop
 8003B2B0	gte_func18t0,l33
 [A2 + 0000] = w(MAC1);
@@ -1367,7 +1367,8 @@ return A2;
 
 
 ////////////////////////////////
-// system_copy_vector_to_matrix_translation
+// system_copy_vector_to_matrix_translation()
+
 [A0 + 14] = w(w[A1 + 0]);
 [A0 + 18] = w(w[A1 + 4]);
 [A0 + 1c] = w(w[A1 + 8]);
@@ -1404,7 +1405,7 @@ return A0;
 
 
 ////////////////////////////////
-// system_set_rotation_matrix_to_GTE()
+// system_gte_set_rotation_matrix()
 
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
@@ -1423,11 +1424,11 @@ T1 = w[A0 + 0004];
 T2 = w[A0 + 0008];
 T3 = w[A0 + 000c];
 T4 = w[A0 + 0010];
-8003B4D0	ctc2   t0,ir0
-8003B4D4	ctc2   t1,ir1
-8003B4D8	ctc2   t2,ir2
-8003B4DC	ctc2   t3,ir3
-8003B4E0	ctc2   t4,sxy0
+L11L12 = T0;
+L13L21 = T1;
+L22L23 = T2;
+L31L32 = T3;
+L33 = T4;
 8003B4E4	jr     ra 
 8003B4E8	nop
 ////////////////////////////////
@@ -1447,7 +1448,7 @@ LB3 = w[A0 + 10];
 
 
 ////////////////////////////////
-// system_set_translation_vector_to_GTE()
+// system_gte_set_translation_vector()
 
 TRX = w[A0 + 14];
 TRY = w[A0 + 18];
@@ -1458,30 +1459,30 @@ TRZ = w[A0 + 1c];
 
 ////////////////////////////////
 // func3b53с
-8003B53C	lwc2   zero, $0000(a0)
-8003B540	lwc2   at, $0004(a0)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
 8003B544	jr     ra 
 8003B548	nop
 ////////////////////////////////
 // func3b54с
-8003B54C	lwc2   v0, $0000(a0)
-8003B550	lwc2   v1, $0004(a0)
+VXY1 = w[A0 + 0000];
+VZ1 = w[A0 + 0004];
 8003B554	jr     ra 
 8003B558	nop
 ////////////////////////////////
 // func3b55с
-8003B55C	lwc2   a0, $0000(a0)
-8003B560	lwc2   a1, $0004(a0)
+VXY2 = w[A0 + 0000];
+VZ2 = w[A0 + 0004];
 8003B564	jr     ra 
 8003B568	nop
 ////////////////////////////////
 // func3b56с
-8003B56C	lwc2   zero, $0000(a0)
-8003B570	lwc2   at, $0004(a0)
-8003B574	lwc2   v0, $0000(a1)
-8003B578	lwc2   v1, $0004(a1)
-8003B57C	lwc2   a0, $0000(a2)
-8003B580	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003B584	jr     ra 
 8003B588	nop
 ////////////////////////////////
@@ -1505,24 +1506,24 @@ IR0 = A0;
 8003B5BC	nop
 ////////////////////////////////
 // func3b5c0
-8003B5C0	mtc2   a0,lr3lg1
-8003B5C4	mtc2   a1,lg2lg3
-8003B5C8	mtc2   a2,lb1lb2
+SZ1 = A0;
+SZ2 = A1;
+SZ3 = A2;
 8003B5CC	jr     ra 
 8003B5D0	nop
 ////////////////////////////////
 // func3b5d4
-8003B5D4	mtc2   a0,lr1lr2
-8003B5D8	mtc2   a1,lr3lg1
-8003B5DC	mtc2   a2,lg2lg3
-8003B5E0	mtc2   a3,lb1lb2
+SZ0 = A0;
+SZ1 = A1;
+SZ2 = A2;
+SZ3 = A3;
 8003B5E4	jr     ra 
 8003B5E8	nop
 ////////////////////////////////
 // func3b5ec
-8003B5EC	mtc2   a0,l33
-8003B5F0	mtc2   a1,rbk
-8003B5F4	mtc2   a2,gbk
+SXY0 = A0;
+SXY1 = A1;
+SXY2P = A2;
 8003B5F8	jr     ra 
 8003B5FC	nop
 ////////////////////////////////
@@ -1534,9 +1535,9 @@ R33 = A2;
 8003B610	nop
 ////////////////////////////////
 // func3b614
-8003B614	mtc2   a0,ofy
-8003B618	mtc2   a1,h
-8003B61C	mtc2   a2,dqa
+MAC1 = A0;
+MAC2 = A1;
+MAC3 = A2;
 8003B620	jr     ra 
 8003B624	nop
 ////////////////////////////////
@@ -1577,9 +1578,9 @@ V0 = H;
 A0 = A0 << 04;
 A1 = A1 << 04;
 A2 = A2 << 04;
-8003B688	ctc2   a0,sxy1
-8003B68C	ctc2   a1,sxy2
-8003B690	ctc2   a2,sxy2p
+RBK = A0;
+BBK = A1;
+GBK = A2;
 8003B694	jr     ra 
 8003B698	nop
 ////////////////////////////////
@@ -1615,8 +1616,8 @@ H = A0;
 
 ////////////////////////////////
 // func3b6ec
-8003B6EC	lwc2   zero, $0000(a0)
-8003B6F0	lwc2   at, $0004(a0)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
 8003B6F4	nop
 8003B6F8	gte_func18t2,l33
 [A1 + 0000] = w(IR1);
@@ -1629,27 +1630,27 @@ H = A0;
 8003B710	lwc2   a2, $0000(a0)
 IR0 = A1;
 8003B718	nop
-8003B71C	gte_func19t8,r11r12
+gte_DPCS(); // Depth Cueing
 8003B720	swc2   s6, $0000(a2)
 8003B724	jr     ra 
 8003B728	nop
 ////////////////////////////////
 // func3b72c
-8003B72C	lwc2   zero, $0000(a0)
-8003B730	lwc2   at, $0004(a0)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
 8003B734	nop
-8003B738	gte_func22t0,r11r12
+gte_NSC(); // Normal color v0
 8003B73C	swc2   s6, $0000(a1)
 8003B740	jr     ra 
 8003B744	nop
 ////////////////////////////////
 // func3b748
-8003B748	lwc2   zero, $0000(a0)
-8003B74C	lwc2   at, $0004(a0)
-8003B750	lwc2   v0, $0000(a1)
-8003B754	lwc2   v1, $0004(a1)
-8003B758	lwc2   a0, $0000(a2)
-8003B75C	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003B760	nop
 8003B764	gte_func22t8,r11r12
 T0 = w[SP + 0010];
@@ -1661,8 +1662,8 @@ T1 = w[SP + 0014];
 8003B780	nop
 ////////////////////////////////
 // func3b784
-8003B784	lwc2   zero, $0000(a0)
-8003B788	lwc2   at, $0004(a0)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
 8003B78C	lwc2   a2, $0000(a1)
 IR0 = A2;
 8003B794	nop
@@ -1672,16 +1673,16 @@ IR0 = A2;
 8003B7A4	nop
 ////////////////////////////////
 // func3b7a8
-8003B7A8	lwc2   zero, $0000(a0)
-8003B7AC	lwc2   at, $0004(a0)
-8003B7B0	lwc2   v0, $0000(a1)
-8003B7B4	lwc2   v1, $0004(a1)
-8003B7B8	lwc2   a0, $0000(a2)
-8003B7BC	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003B7C0	lwc2   a2, $0000(a3)
-8003B7C4	lwc2   t0, $0010(sp)
+IR0 = w[SP + 0010];
 8003B7C8	nop
-8003B7CC	gte_func23t8,r11r12
+gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
 T0 = w[SP + 0014];
 T1 = w[SP + 0018];
 T2 = w[SP + 001c];
@@ -1692,22 +1693,22 @@ T2 = w[SP + 001c];
 8003B7EC	nop
 ////////////////////////////////
 // func3b7f0
-8003B7F0	lwc2   zero, $0000(a0)
-8003B7F4	lwc2   at, $0004(a0)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
 8003B7F8	lwc2   a2, $0000(a1)
 8003B7FC	nop
-8003B800	gte_func24t0,r11r12
+gte_NCCS(); // Normal color col. v0
 8003B804	swc2   s6, $0000(a2)
 8003B808	jr     ra 
 8003B80C	nop
 ////////////////////////////////
 // func3b810
-8003B810	lwc2   zero, $0000(a0)
-8003B814	lwc2   at, $0004(a0)
-8003B818	lwc2   v0, $0000(a1)
-8003B81C	lwc2   v1, $0004(a1)
-8003B820	lwc2   a0, $0000(a2)
-8003B824	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003B828	lwc2   a2, $0000(a3)
 8003B82C	nop
 8003B830	gte_func24t8,r11r12
@@ -1744,14 +1745,14 @@ IR3 = w[A0 + 0008];
 8003B89C	nop
 ////////////////////////////////
 // func3b8a0
-8003B8A0	gte_func26t8,r11r12
-8003B8A4	mfc2   v0,trz
+gte_AVSZ3(); // Average of three Z values
+V0 = OTZ;
 8003B8A8	jr     ra 
 8003B8AC	nop
 ////////////////////////////////
 // func3b8b0
-8003B8B0	gte_func27t0,r11r12
-8003B8B4	mfc2   v0,trz
+gte_AVSZ4(); // Average of four Z values
+V0 = OTZ;
 8003B8B8	jr     ra 
 8003B8BC	nop
 8003B8C0	nop
@@ -1789,7 +1790,7 @@ IR0 = A2;
 8003B928	lwc2   a2, $0000(a2)
 IR0 = A3;
 8003B930	nop
-8003B934	gte_func23t8,r11r12
+gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
 T0 = w[SP + 0010];
 T1 = w[SP + 0014];
 T2 = w[SP + 0018];
@@ -1835,23 +1836,23 @@ IR3 = w[A0 + 0008];
 V0 = A1;
 ////////////////////////////////
 // func3b9cc
-8003B9CC	mtc2   a0,lr3lg1
-8003B9D0	mtc2   a1,lg2lg3
-8003B9D4	mtc2   a2,lb1lb2
+SZ1 = A0;
+SZ2 = A1;
+SZ3 = A2;
 8003B9D8	nop
-8003B9DC	gte_func26t8,r11r12
-8003B9E0	mfc2   v0,trz
+gte_AVSZ3(); // Average of three Z values
+V0 = OTZ;
 8003B9E4	jr     ra 
 8003B9E8	nop
 ////////////////////////////////
 // func3b9ec
-8003B9EC	mtc2   a0,lr1lr2
-8003B9F0	mtc2   a1,lr3lg1
-8003B9F4	mtc2   a2,lg2lg3
-8003B9F8	mtc2   a3,lb1lb2
+SZ0 = A0;
+SZ1 = A1;
+SZ2 = A2;
+SZ3 = A3;
 8003B9FC	nop
-8003BA00	gte_func27t0,r11r12
-8003BA04	mfc2   v0,trz
+gte_AVSZ4(); // Average of four Z values
+V0 = OTZ;
 8003BA08	jr     ra 
 8003BA0C	nop
 ////////////////////////////////
@@ -1869,7 +1870,7 @@ IR3 = w[A1 + 0008];
 IR1 = w[A1 + 0000];
 IR2 = w[A1 + 0004];
 8003BA40	nop
-8003BA44	gte_func27t8,r11r12
+gte_op12(); // Outer product
 [A2 + 0000] = w(MAC1);
 [A2 + 0004] = w(MAC2);
 [A2 + 0008] = w(MAC3);
@@ -1922,16 +1923,16 @@ V0 = LZCR;
 8003BAD8	nop
 ////////////////////////////////
 // func3badc
-8003BADC	lwc2   zero, $0000(a0)
-8003BAE0	lwc2   at, $0004(a0)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
 8003BAE4	nop
-8003BAE8	gte_func18t0,r11r12
+gte_rtv0tr(); // v0 * rotmatrix + tr vector
 V0 = IR1;
 V1 = IR2;
 [A1 + 0004] = w(IR3);
 [A1 + 0000] = h(V0);
 [A1 + 0002] = h(V1);
-8003BB00	cfc2   v0,lzcr
+V0 = FLAG;
 8003BB04	jr     ra 
 [A2 + 0000] = w(V0);
 ////////////////////////////////
@@ -1996,38 +1997,38 @@ IR3 = w[A0 + 0004];
 V0 = A1;
 ////////////////////////////////
 // func3bbdc
-8003BBDC	lwc2   zero, $0000(a0)
-8003BBE0	lwc2   at, $0004(a0)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
 8003BBE4	nop
-8003BBE8	gte_func16t8,r11r12
-8003BBEC	swc2   t6, $0000(a1)
-8003BBF0	swc2   t0, $0000(a2)
-8003BBF4	cfc2   v1,lzcr
-8003BBF8	mfc2   v0,lb1lb2
+gte_RTPS(); // Perspective transform
+[A1 + 0000] = w(SXY2);
+[A2 + 0000] = w(IR0);
+V1 = FLAG;
+V0 = SZ3;
 [A3 + 0000] = w(V1);
 8003BC00	jr     ra 
 V0 = V0 >> 02;
 8003BC08	nop
 ////////////////////////////////
 // func3bc0c
-8003BC0C	lwc2   zero, $0000(a0)
-8003BC10	lwc2   at, $0004(a0)
-8003BC14	lwc2   v0, $0000(a1)
-8003BC18	lwc2   v1, $0004(a1)
-8003BC1C	lwc2   a0, $0000(a2)
-8003BC20	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003BC24	nop
-8003BC28	gte_func17t0,r11r12
+gte_RTPT(); // Perspective transform on 3 points
 T0 = w[SP + 0010];
 T1 = w[SP + 0014];
 T2 = w[SP + 0018];
 T3 = w[SP + 001c];
-8003BC3C	swc2   t4, $0000(a3)
-8003BC40	swc2   t5, $0000(t0)
-8003BC44	swc2   t6, $0000(t1)
-8003BC48	swc2   t0, $0000(t2)
-8003BC4C	cfc2   v1,lzcr
-8003BC50	mfc2   v0,lb1lb2
+[A3 + 0000] = w(SXY0);
+[T0 + 0000] = w(SXY1);
+[T1 + 0000] = w(SXY2);
+[T2 + 0000] = w(IR0);
+V1 = FLAG;
+V0 = SZ3;
 [T3 + 0000] = w(V1);
 8003BC58	jr     ra 
 V0 = V0 >> 02;
@@ -2057,32 +2058,32 @@ return FLAG;
 
 ////////////////////////////////
 // func3bc9c
-8003BC9C	lwc2   zero, $0000(a0)
-8003BCA0	lwc2   at, $0004(a0)
-8003BCA4	lwc2   v0, $0000(a1)
-8003BCA8	lwc2   v1, $0004(a1)
-8003BCAC	lwc2   a0, $0000(a2)
-8003BCB0	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003BCB4	nop
-8003BCB8	gte_func17t0,r11r12
+gte_RTPT(); // Perspective transform on 3 points
 T0 = w[SP + 0010];
 T1 = w[SP + 0014];
 T2 = w[SP + 0018];
-8003BCC8	swc2   t4, $0000(t0)
-8003BCCC	swc2   t5, $0000(t1)
-8003BCD0	swc2   t6, $0000(t2)
-8003BCD4	cfc2   v1,lzcr
-8003BCD8	lwc2   zero, $0000(a3)
-8003BCDC	lwc2   at, $0004(a3)
+[T0 + 0000] = w(SXY0);
+[T1 + 0000] = w(SXY1);
+[T2 + 0000] = w(SXY2);
+V1 = FLAG;
+VXY0 = w[A3 + 0000];
+VZ0 = w[A3 + 0004];
 8003BCE0	nop
-8003BCE4	gte_func16t8,r11r12
+gte_RTPS(); // Perspective transform
 T0 = w[SP + 001c];
 T1 = w[SP + 0020];
 T2 = w[SP + 0024];
-8003BCF4	swc2   t6, $0000(t0)
-8003BCF8	swc2   t0, $0000(t1)
-8003BCFC	cfc2   t0,lzcr
-8003BD00	mfc2   v0,lb1lb2
+[T0 + 0000] = w(SXY2);
+[T1 + 0000] = w(IR0);
+T0 = FLAG;
+V0 = SZ3;
 T0 = T0 | V1;
 [T2 + 0000] = w(T0);
 8003BD0C	jr     ra 
@@ -2091,26 +2092,26 @@ V0 = V0 >> 02;
 // func3bd14
 8003BD14	nop
 8003BD18	nop
-8003BD1C	lwc2   zero, $0000(a0)
-8003BD20	lwc2   at, $0004(a0)
-8003BD24	lwc2   v0, $0000(a1)
-8003BD28	lwc2   v1, $0004(a1)
-8003BD2C	lwc2   a0, $0000(a2)
-8003BD30	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003BD34	nop
-8003BD38	gte_func17t0,r11r12
+gte_RTPT(); // Perspective transform on 3 points
 T0 = w[SP + 0010];
 T1 = w[SP + 0014];
 T2 = w[SP + 0018];
 T3 = w[SP + 001c];
-8003BD4C	swc2   t4, $0000(a3)
-8003BD50	swc2   t5, $0000(t0)
-8003BD54	swc2   t6, $0000(t1)
-8003BD58	cfc2   t0,lzcr
-8003BD5C	swc2   t0, $0000(t2)
+[A3 + 0000] = w(SXY0);
+[T0 + 0000] = w(SXY1);
+[T1 + 0000] = w(SXY2);
+T0 = FLAG;
+[T2 + 0000] = w(IR0);
 [T3 + 0000] = w(T0);
-8003BD64	gte_func26t8,r11r12
-8003BD68	mfc2   v0,trz
+gte_AVSZ3(); // Average of three Z values
+V0 = OTZ;
 8003BD6C	jr     ra 
 8003BD70	nop
 8003BD74	nop
@@ -2152,23 +2153,23 @@ return OTZ;
 
 ////////////////////////////////
 // func3bdfc
-8003BDFC	lwc2   zero, $0000(a0)
-8003BE00	lwc2   at, $0004(a0)
-8003BE04	lwc2   v0, $0000(a1)
-8003BE08	lwc2   v1, $0004(a1)
-8003BE0C	lwc2   a0, $0000(a2)
-8003BE10	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003BE14	nop
-8003BE18	gte_func17t0,r11r12
+gte_RTPT(); // Perspective transform on 3 points
 T0 = w[SP + 0020];
-8003BE20	cfc2   t1,lzcr
+T1 = FLAG;
 8003BE24	nop
 [T0 + 0000] = w(T1);
-8003BE2C	gte_func26zero,r11r12
+gte_NCLIP(); // Normal clipping
 T0 = w[SP + 0010];
 T1 = w[SP + 0014];
 T2 = w[SP + 0018];
-8003BE3C	mfc2   v0,ofx
+V0 = MAC0;
 8003BE40	nop
 8003BE44	bgtz   v0, L3be54 [$8003be54]
 8003BE48	nop
@@ -2176,14 +2177,14 @@ T2 = w[SP + 0018];
 8003BE50	nop
 
 L3be54:	; 8003BE54
-8003BE54	swc2   t4, $0000(a3)
-8003BE58	swc2   t5, $0000(t0)
-8003BE5C	swc2   t6, $0000(t1)
-8003BE60	swc2   t0, $0000(t2)
+[A3 + 0000] = w(SXY0);
+[T0 + 0000] = w(SXY1);
+[T1 + 0000] = w(SXY2);
+[T2 + 0000] = w(IR0);
 8003BE64	nop
-8003BE68	gte_func26t8,r11r12
+gte_AVSZ3(); // Average of three Z values
 T1 = w[SP + 001c];
-8003BE70	mfc2   t0,trz
+T0 = OTZ;
 8003BE74	nop
 [T1 + 0000] = w(T0);
 
@@ -2194,23 +2195,23 @@ L3be7c:	; 8003BE7C
 8003BE88	nop
 ////////////////////////////////
 // func3be8c
-8003BE8C	lwc2   zero, $0000(a0)
-8003BE90	lwc2   at, $0004(a0)
-8003BE94	lwc2   v0, $0000(a1)
-8003BE98	lwc2   v1, $0004(a1)
-8003BE9C	lwc2   a0, $0000(a2)
-8003BEA0	lwc2   a1, $0004(a2)
+VXY0 = w[A0 + 0000];
+VZ0 = w[A0 + 0004];
+VXY1 = w[A1 + 0000];
+VZ1 = w[A1 + 0004];
+VXY2 = w[A2 + 0000];
+VZ2 = w[A2 + 0004];
 8003BEA4	nop
-8003BEA8	gte_func17t0,r11r12
+gte_RTPT(); // Perspective transform on 3 points
 T0 = w[SP + 0028];
-8003BEB0	cfc2   v1,lzcr
+V1 = FLAG;
 8003BEB4	nop
 [T0 + 0000] = w(V1);
-8003BEBC	gte_func26zero,r11r12
+gte_NCLIP(); // Normal clipping
 T0 = w[SP + 0010];
 T1 = w[SP + 0014];
 T2 = w[SP + 0018];
-8003BECC	mfc2   v0,ofx
+V0 = MAC0;
 8003BED0	nop
 8003BED4	bgtz   v0, L3bee4 [$8003bee4]
 8003BED8	nop
@@ -2218,24 +2219,24 @@ T2 = w[SP + 0018];
 8003BEE0	nop
 
 L3bee4:	; 8003BEE4
-8003BEE4	swc2   t4, $0000(t0)
-8003BEE8	swc2   t5, $0000(t1)
-8003BEEC	swc2   t6, $0000(t2)
-8003BEF0	lwc2   zero, $0000(a3)
-8003BEF4	lwc2   at, $0004(a3)
+[T0 + 0000] = w(SXY0);
+[T1 + 0000] = w(SXY1);
+[T2 + 0000] = w(SXY2);
+VXY0 = w[A3 + 0000];
+VZ0 = w[A3 + 0004];
 8003BEF8	nop
-8003BEFC	gte_func16t8,r11r12
+gte_RTPS(); // Perspective transform
 T0 = w[SP + 001c];
 T1 = w[SP + 0020];
 T2 = w[SP + 0028];
-8003BF0C	swc2   t6, $0000(t0)
-8003BF10	cfc2   t3,lzcr
-8003BF14	swc2   t0, $0000(t1)
+[T0 + 0000] = w(SXY2);
+T3 = FLAG;
+[T1 + 0000] = w(IR0);
 T3 = T3 | V1;
 [T2 + 0000] = w(T3);
-8003BF20	gte_func27t0,r11r12
+gte_AVSZ4(); // Average of four Z values
 T1 = w[SP + 0024];
-8003BF28	mfc2   t0,trz
+T0 = OTZ;
 8003BF2C	nop
 [T1 + 0000] = w(T0);
 
@@ -2257,8 +2258,8 @@ return A1;
 
 
 ////////////////////////////////
-// func3bf8c
-8003BF8C
+// func3bf8c()
+
 T7 = h[A0 + 0000];
 V0 = A1;
 8003BF94	bgez   t7, L3bfd0 [$8003bfd0]
@@ -2312,9 +2313,7 @@ T1 = T9 >> 10;
 
 L3c034:	; 8003C034
 T8 = T9 << 02;
-8003C038	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
+T9 = w[8004bc98 + T8];
 8003C044	nop
 T6 = T9 << 10;
 T6 = T6 >> 10;
@@ -3059,7 +3058,7 @@ A0 = 0 - A0;
 
 L3cc40:	; 8003CC40
 8003CC40	bne    a1, zero, L3cc58 [$8003cc58]
-8003CC44	slt    v0, a0, a1
+V0 = A0 < A1;
 8003CC48	bne    a0, zero, L3cc58 [$8003cc58]
 8003CC4C	nop
 8003CC50	j      L3cd94 [$8003cd94]
