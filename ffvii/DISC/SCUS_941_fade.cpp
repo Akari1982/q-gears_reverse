@@ -729,7 +729,7 @@ L13e84:	; 80013E84
 A0 = A0 | da0c;
 80013E88	lui    s0, $8006
 S0 = S0 + 3028;
-80013E90	jal    func3bf8c [$8003bf8c]
+80013E90	jal    system_gte_rotation_matrix_from_xyz [$8003bf8c]
 A1 = S0;
 A0 = S0;
 80013E9C	lui    a1, $8019

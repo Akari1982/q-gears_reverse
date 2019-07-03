@@ -2114,7 +2114,7 @@ A1 = SP + 0010;
 V0 = 0 - V0;
 [SP + 0030] = h(V1);
 [SP + 0034] = h(A2);
-800A2968	jal    func3bf8c [$8003bf8c]
+800A2968	jal    system_gte_rotation_matrix_from_xyz [$8003bf8c]
 [SP + 003a] = h(V0);
 A0 = SP + 0010;
 S1 = SP + 0050;

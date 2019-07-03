@@ -574,58 +574,47 @@ return xd + yd + zd;
 
 
 ////////////////////////////////
-// funcae0bc
-800AE0BC	addiu  sp, sp, $ffa8 (=-$58)
-[SP + 004c] = w(S1);
+// funcae0bc()
+
 S1 = A0;
 V0 = A1;
-[SP + 0050] = w(RA);
-800AE0D0	beq    s1, zero, Lae168 [$800ae168]
-[SP + 0048] = w(S0);
-A0 = SP + 0030;
-A1 = SP + 0010;
-[SP + 0040] = w(0);
-[SP + 003c] = w(0);
-[SP + 0038] = w(0);
-[SP + 0034] = h(0);
-[SP + 0030] = h(0);
-800AE0F4	jal    $8003bf8c
-[SP + 0032] = h(V0);
-800AE0FC	jal    $system_gte_set_rotation_matrix
-A0 = SP + 0010;
-A0 = SP + 0010;
-S0 = SP + 0038;
-800AE10C	jal    $system_copy_vector_to_matrix_translation
-A1 = S0;
-800AE114	jal    $system_gte_set_translation_vector
-A0 = SP + 0010;
-T4 = S1;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800AE128	nop
-800AE12C	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-V0 = hu[SP + 0038];
-800AE148	nop
-[S1 + 0000] = h(V0);
-V0 = hu[SP + 003c];
-800AE154	nop
-[S1 + 0002] = h(V0);
-V0 = hu[SP + 0040];
-800AE160	nop
-[S1 + 0004] = h(V0);
+if( S1 != 0 )
+{
+    [SP + 40] = w(0);
+    [SP + 3c] = w(0);
+    [SP + 38] = w(0);
+    [SP + 34] = h(0);
+    [SP + 30] = h(0);
+    [SP + 32] = h(V0);
 
-Lae168:	; 800AE168
-RA = w[SP + 0050];
-S1 = w[SP + 004c];
-S0 = w[SP + 0048];
-SP = SP + 0058;
-800AE178	jr     ra 
-800AE17C	nop
+    A0 = SP + 30;
+    A1 = SP + 10;
+    system_gte_rotation_matrix_from_xyz();
+
+
+    A0 = SP + 10;
+    system_gte_set_rotation_matrix();
+
+    A0 = SP + 0010;
+    S0 = SP + 0038;
+    A1 = S0;
+    system_copy_vector_to_matrix_translation();
+
+    A0 = SP + 0010;
+    system_gte_set_translation_vector();
+
+    T4 = S1;
+    VXY0 = w[T4 + 0000];
+    VZ0 = w[T4 + 0004];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    [S0 + 0000] = w(MAC1);
+    [S0 + 0004] = w(MAC2);
+    [S0 + 0008] = w(MAC3);
+
+    [S1 + 0000] = h(hu[SP + 0038]);
+    [S1 + 0002] = h(hu[SP + 003c]);
+    [S1 + 0004] = h(hu[SP + 0040]);
+}
 ////////////////////////////////
 
 
@@ -850,147 +839,111 @@ return w[8010b080];
 // funcae638()
 
 S0 = A0;
+
 wm_get_current_render_buffer_id();
+buffer_id = V0;
+
+[SP + 10] = h(0);
+[SP + 12] = h(0 - hu[80116508]);
+[SP + 14] = h(-4000);
 
 A0 = SP + 10;
-S0 = 0 - S0;
-S0 = S0 << 10;
-A1 = S0 >> 10;
-800AE668	addiu  a2, zero, $c000 (=-$4000)
-S1 = V0 * 24;
-
-V1 = hu[80116508];
-S1 = 800c6770 + S1;
-[SP + 0010] = h(0);
-[SP + 0014] = h(A2);
-V1 = 0 - V1;
-[SP + 0012] = h(V1);
-
+A1 = ((0 - S0) << 10) >> 10;
 800AE698	jal    funcae0bc [$800ae0bc]
 
 A0 = SP + 10;
 800AE6A0	jal    funca1fac [$800a1fac]
 
-S3 = SP + 0010;
-[SP + 0014] = h(0);
-[SP + 0012] = h(0);
-[SP + 0010] = h(0);
-T4 = S3;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(0);
+
+VXY0 = w[SP + 10];
+VZ0 = w[SP + 14];
 gte_RTPS(); // Perspective transform
 
-V0 = SP + 50;
-T4 = V0;
-[T4 + 0000] = w(SXY2);
-V0 = hu[SP + 0052];
-[SP + 001a] = h(0);
-[SP + 0018] = h(0);
-V0 = V0 + 001a;
-[SP + 0050] = w(V0);
+[SP + 50] = w(SXY2);
+
+[SP + 1a] = h(0);
+[SP + 18] = h(0);
+
+V0 = hu[SP + 52] + 1a;
+[SP + 50] = w(V0);
 [8010b080] = w(V0);
 
 funca1dc0();
+[SP + 1c] = h(V0);
 
-A0 = SP + 0018;
-S0 = SP + 0030;
-A1 = S0;
-[SP + 001c] = h(V0);
-800AE70C	jal    $8003bf8c
+A0 = SP + 18;
+A1 = SP + 30;
+system_gte_rotation_matrix_from_xyz();
 
-A0 = S0;
+A0 = SP + 30;
 system_gte_set_rotation_matrix();
 
-A0 = S0;
-S2 = SP + 0020;
-A1 = S2;
-V1 = w[SP + 0050];
-V0 = 00a0;
-[SP + 0020] = w(V0);
-[SP + 0028] = w(0);
-[SP + 0024] = w(V1);
+[SP + 20] = w(a0);
+[SP + 28] = w(0);
+[SP + 24] = w(w[SP + 50]);
+
+A0 = SP + 30;
+A1 = SP + 20;
 system_copy_vector_to_matrix_translation();
 
-A0 = S0;
+A0 = SP + 30;
 system_gte_set_translation_vector();
 
-V0 = hu[SP + 0050];
-800AE74C	addiu  a0, zero, $ff4c (=-$b4)
-[SP + 0014] = h(0);
-[SP + 0010] = h(A0);
-V0 = 0 - V0;
-800AE75C	addiu  v0, v0, $ffe8 (=-$18)
-[SP + 0012] = h(V0);
-T4 = S3;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800AE770	nop
-800AE774	nop
+[SP + 10] = h(-b4);
+[SP + 12] = h((0 - hu[SP + 50]) - 18);
+[SP + 14] = h(0);
+
+VXY0 = w[SP + 10];
+VZ0 = w[SP + 14];
 gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S2;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-V0 = hu[SP + 0020];
-800AE790	nop
-[S1 + 0008] = h(V0);
-V0 = hu[SP + 0024];
-800AE79C	nop
-[S1 + 000a] = h(V0);
-V0 = hu[SP + 0050];
-V1 = 00b4;
-[SP + 0010] = h(V1);
-V0 = 0 - V0;
-800AE7B4	addiu  v0, v0, $ffe8 (=-$18)
-[SP + 0012] = h(V0);
-T4 = S3;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800AE7C8	nop
-800AE7CC	nop
+[SP + 20] = w(MAC1);
+[SP + 24] = w(MAC2);
+[SP + 28] = w(MAC3);
+
+[800c6770 + buffer_id * 24 + 8] = h(hu[SP + 20]);
+[800c6770 + buffer_id * 24 + a] = h(hu[SP + 24]);
+
+[SP + 10] = h(b4);
+[SP + 12] = h((0 - hu[SP + 0050]) - 18);
+
+VXY0 = w[SP + 10];
+VZ0 = w[SP + 14];
 gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S2;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-V0 = hu[SP + 0020];
-800AE7E8	nop
-[S1 + 0010] = h(V0);
-V0 = hu[SP + 0024];
-800AE7F4	nop
-[S1 + 0012] = h(V0);
-[SP + 0010] = h(A0);
-[SP + 0012] = h(0);
-T4 = S3;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800AE810	nop
-800AE814	nop
+[SP + 20] = w(MAC1);
+[SP + 24] = w(MAC2);
+[SP + 28] = w(MAC3);
+
+[800c6770 + buffer_id * 24 + 10] = h(hu[SP + 20]);
+[800c6770 + buffer_id * 24 + 12] = h(hu[SP + 24]);
+
+[SP + 10] = h(A0);
+[SP + 12] = h(0);
+
+VXY0 = w[SP + 10];
+VZ0 = w[SP + 14];
 gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S2;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-V0 = hu[SP + 0020];
-800AE830	nop
-[S1 + 0018] = h(V0);
-V0 = hu[SP + 0024];
-800AE83C	nop
-[S1 + 001a] = h(V0);
-[SP + 0010] = h(V1);
-[SP + 0012] = h(0);
-T4 = S3;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800AE858	nop
-800AE85C	nop
+[SP + 20] = w(MAC1);
+[SP + 24] = w(MAC2);
+[SP + 28] = w(MAC3);
+
+[800c6770 + buffer_id * 24 + 18] = h(hu[SP + 20]);
+[800c6770 + buffer_id * 24 + 1a] = h(hu[SP + 24]);
+
+[SP + 10] = h(V1);
+[SP + 12] = h(0);
+
+VXY0 = w[SP + 10];
+VZ0 = w[SP + 14];
 gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S2;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-[S1 + 0020] = h(hu[SP + 0020]);
-[S1 + 0022] = h(hu[SP + 0024]);
+[SP + 20] = w(MAC1);
+[SP + 24] = w(MAC2);
+[SP + 28] = w(MAC3);
+
+[800c6770 + buffer_id * 24 + 20] = h(hu[SP + 20]);
+[800c6770 + buffer_id * 24 + 22] = h(hu[SP + 24]);
 ////////////////////////////////
 
 
@@ -1282,8 +1235,9 @@ A0 = A0 & 0fff;
 A0 = SP + 0070;
 S0 = SP + 0138;
 A1 = S0;
-800AECB0	jal    $8003bf8c
 [SP + 0074] = h(V0);
+system_gte_rotation_matrix_from_xyz();
+
 800AECB8	jal    $system_gte_set_rotation_matrix
 A0 = S0;
 A0 = S0;
@@ -6113,7 +6067,7 @@ S0 = SP + 0040;
 A1 = S0;
 800B34A8	mflo   v0
 V0 = V0 >> 11;
-800B34B0	jal    $8003bf8c
+800B34B0	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0014] = h(V0);
 800B34B8	jal    $system_gte_set_rotation_matrix
 A0 = S0;
@@ -6298,7 +6252,7 @@ S0 = SP + 0040;
 A1 = S0;
 800B372C	mflo   v0
 V0 = V0 >> 10;
-800B3734	jal    $8003bf8c
+800B3734	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0014] = h(V0);
 800B373C	jal    $system_gte_set_rotation_matrix
 A0 = S0;
@@ -6519,7 +6473,7 @@ A0 = S0;
 A1 = SP + 0010;
 [SP + 0034] = h(0);
 [SP + 0030] = h(0);
-800B3A38	jal    $8003bf8c
+800B3A38	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0032] = h(S1);
 800B3A40	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
@@ -6553,7 +6507,7 @@ A3 = w[S0 + 000c];
 [S2 + 0008] = w(V1);
 [S2 + 000c] = w(A2);
 [S2 + 0010] = w(A3);
-800B3AC0	jal    $8003bf8c
+800B3AC0	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0032] = h(S3);
 800B3AC8	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
@@ -7029,7 +6983,7 @@ A0 = SP + 0028;
 [SP + 0028] = h(0);
 V0 = hu[S1 + 001a];
 A1 = S3;
-800B41B0	jal    $8003bf8c
+800B41B0	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 002a] = h(V0);
 800B41B8	j      Lb41c4 [$800b41c4]
 A0 = S3;
@@ -8784,7 +8738,7 @@ A1 = S3;
 [SP + 0012] = h(S2);
 [SP + 0034] = h(0);
 [SP + 0030] = h(0);
-800B5AA4	jal    $8003bf8c
+800B5AA4	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0032] = h(S4);
 A0 = S3;
 S0 = SP + 0060;
@@ -16356,7 +16310,7 @@ V0 = S7 + V0;
 T1 = hu[SP + 0058];
 [SP + 0012] = h(0);
 [SP + 0010] = h(0);
-800BC6FC	jal    $8003bf8c
+800BC6FC	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0014] = h(T1);
 A0 = S0;
 S4 = SP + 0018;

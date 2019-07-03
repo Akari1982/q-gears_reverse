@@ -18,7 +18,8 @@ system_set_far_color_to_GTE;
 
 A0 = 800f8158 + 0 * 34 + 20;
 A1 = 800f8158 + 0 * 34;
-system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+system_gte_rotation_matrix_from_yxz();
+
 A0 = 800f8158;
 funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -83,7 +84,8 @@ switch (bu[S1 + 00])
             {
                 A0 = 800f8158 + 1 * 34 + 20;
                 A1 = 800f8158 + 1 * 34;
-                system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+                system_gte_rotation_matrix_from_yxz();
+
                 A0 = 800f8158 + 1 * 34;
                 funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -212,7 +214,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 34 + 20;
             A1 = 800f8158 + 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -226,7 +229,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 2 * 34 + 20;
             A1 = 800f8158 + 2 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 2 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -239,7 +243,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 3 * 34 + 20;
             A1 = 800f8158 + 3 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 3 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -363,7 +368,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 1 * 34 + 20;
             A1 = 800f8158 + 1 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 1 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -383,7 +389,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 2 * 34 + 20;
             A1 = 800f8158 + 2 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 2 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -422,7 +429,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 4 * 34 + 20;
             A1 = 800f8158 + 4 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 4 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -461,7 +469,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 3 * 34 + 20;
             A1 = 800f8158 + 3 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 3 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -518,7 +527,8 @@ switch (bu[S1 + 00])
 
                 A0 = 800f8158 + 4 * 34 + 20;
                 A1 = 800f8158 + 4 * 34;
-                system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+                system_gte_rotation_matrix_from_yxz();
+
                 A0 = 800f8158 + 4 * 34;
                 funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -544,7 +554,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 1 * 34 + 20;
             A1 = 800f8158 + 1 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 1 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -562,7 +573,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 2 * 34 + 20;
             A1 = 800f8158 + 2 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 2 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -578,7 +590,8 @@ switch (bu[S1 + 00])
 
             A0 = 800f8158 + 3 * 34 + 20;
             A1 = 800f8158 + 3 * 34;
-            system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+            system_gte_rotation_matrix_from_yxz();
+
             A0 = 800f8158 + 3 * 34;
             funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -669,7 +682,8 @@ S2 = dynamic_id * 34;
 
 A0 = 800f8158 + dynamic_id * 34 + 20;
 A1 = 800f8158 + dynamic_id * 34;
-system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+system_gte_rotation_matrix_from_yxz();
+
 A0 = 800f8158 + dynamic_id * 34;
 funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
 
@@ -755,7 +769,7 @@ for( int i = 0; i < 100; ++i )
 
     A0 = 8015e1e8 + i * 34 + 20;
     A1 = 8015e1e8 + i * 34 + 0;
-    system_create_rotation_matrix_from_euler_angle();
+    system_gte_rotation_matrix_from_yxz();
 
     A0 = 8015e1e8 + i * 34;
     funcbaf34(); // multiply current part matrix to camera matrix and add translation and set it to GTE

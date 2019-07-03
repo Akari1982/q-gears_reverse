@@ -2258,262 +2258,124 @@ return A1;
 
 
 ////////////////////////////////
-// func3bf8c()
+// system_gte_rotation_matrix_from_xyz()
 
-T7 = h[A0 + 0000];
-V0 = A1;
-8003BF94	bgez   t7, L3bfd0 [$8003bfd0]
-T9 = T7 & 0fff;
-T7 = 0 - T7;
-8003BFA0	bgez   t7, L3bfa8 [$8003bfa8]
-T7 = T7 & 0fff;
-
-L3bfa8:	; 8003BFA8
-T8 = T7 << 02;
-8003BFAC	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003BFB8	nop
-T8 = T9 << 10;
-T8 = T8 >> 10;
-T3 = 0 - T8;
-8003BFC8	j      L3bff0 [$8003bff0]
-T0 = T9 >> 10;
-
-L3bfd0:	; 8003BFD0
-T8 = T9 << 02;
-8003BFD4	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003BFE0	nop
-T8 = T9 << 10;
-T3 = T8 >> 10;
-T0 = T9 >> 10;
-
-L3bff0:	; 8003BFF0
-T7 = h[A0 + 0002];
-8003BFF4	nop
-8003BFF8	bgez   t7, L3c034 [$8003c034]
-T9 = T7 & 0fff;
-T7 = 0 - T7;
-8003C004	bgez   t7, L3c00c [$8003c00c]
-T7 = T7 & 0fff;
-
-L3c00c:	; 8003C00C
-T8 = T7 << 02;
-8003C010	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003C01C	nop
-T4 = T9 << 10;
-T4 = T4 >> 10;
-T6 = 0 - T4;
-8003C02C	j      L3c058 [$8003c058]
-T1 = T9 >> 10;
-
-L3c034:	; 8003C034
-T8 = T9 << 02;
-T9 = w[8004bc98 + T8];
-8003C044	nop
-T6 = T9 << 10;
-T6 = T6 >> 10;
-T4 = 0 - T6;
-T1 = T9 >> 10;
-
-L3c058:	; 8003C058
-8003C058	multu  t1, t3
-T7 = h[A0 + 0004];
-[A1 + 0004] = h(T6);
-8003C064	mflo   t8
-T9 = 0 - T8;
-T6 = T9 >> 0c;
-8003C070	multu  t1, t0
-[A1 + 000a] = h(T6);
-8003C078	bgez   t7, L3c0c0 [$8003c0c0]
-T9 = T7 & 0fff;
-8003C080	mflo   t8
-T6 = T8 >> 0c;
-[A1 + 0010] = h(T6);
-T7 = 0 - T7;
-8003C090	bgez   t7, L3c098 [$8003c098]
-T7 = T7 & 0fff;
-
-L3c098:	; 8003C098
-T8 = T7 << 02;
-8003C09C	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003C0A8	nop
-T8 = T9 << 10;
-T8 = T8 >> 10;
-T5 = 0 - T8;
-8003C0B8	j      L3c0ec [$8003c0ec]
-T2 = T9 >> 10;
-
-L3c0c0:	; 8003C0C0
-8003C0C0	mflo   t7
-T6 = T7 >> 0c;
-[A1 + 0010] = h(T6);
-T8 = T9 << 02;
-8003C0D0	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003C0DC	nop
-T8 = T9 << 10;
-T5 = T8 >> 10;
-T2 = T9 >> 10;
-
-L3c0ec:	; 8003C0EC
-8003C0EC	multu  t2, t1
-8003C0F0	nop
-8003C0F4	nop
-8003C0F8	mflo   t7
-T6 = T7 >> 0c;
-[A1 + 0000] = h(T6);
-8003C104	multu  t5, t1
-8003C108	nop
-8003C10C	nop
-8003C110	mflo   t7
-T6 = 0 - T7;
-T7 = T6 >> 0c;
-8003C11C	multu  t2, t4
-[A1 + 0002] = h(T7);
-8003C124	nop
-8003C128	mflo   t7
-T8 = T7 >> 0c;
-8003C130	nop
-8003C134	multu  t8, t3
-8003C138	nop
-8003C13C	nop
-8003C140	mflo   t7
-T6 = T7 >> 0c;
-8003C148	nop
-8003C14C	multu  t5, t0
-8003C150	nop
-8003C154	nop
-8003C158	mflo   t7
-T9 = T7 >> 0c;
-T7 = T9 - T6;
-8003C164	multu  t8, t0
-[A1 + 0006] = h(T7);
-8003C16C	nop
-8003C170	mflo   t6
-T7 = T6 >> 0c;
-8003C178	nop
-8003C17C	multu  t5, t3
-8003C180	nop
-8003C184	nop
-8003C188	mflo   t6
-T9 = T6 >> 0c;
-T6 = T9 + T7;
-8003C194	multu  t5, t4
-[A1 + 000c] = h(T6);
-8003C19C	nop
-8003C1A0	mflo   t7
-T8 = T7 >> 0c;
-8003C1A8	nop
-8003C1AC	multu  t8, t3
-8003C1B0	nop
-8003C1B4	nop
-8003C1B8	mflo   t7
-T6 = T7 >> 0c;
-8003C1C0	nop
-8003C1C4	multu  t2, t0
-8003C1C8	nop
-8003C1CC	nop
-8003C1D0	mflo   t7
-T9 = T7 >> 0c;
-T7 = T9 + T6;
-8003C1DC	multu  t8, t0
-[A1 + 0008] = h(T7);
-8003C1E4	nop
-8003C1E8	mflo   t6
-T7 = T6 >> 0c;
-8003C1F0	nop
-8003C1F4	multu  t2, t3
-8003C1F8	nop
-8003C1FC	nop
-8003C200	mflo   t6
-T9 = T6 >> 0c;
-T6 = T9 - T7;
-[A1 + 000e] = h(T6);
-8003C210	jr     ra 
-8003C214	nop
-8003C218	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_create_rotation_matrix_from_euler_angle
-// create rotation matrix in A1 from XYZ rotation (A0 + 0 + 2 + 4)
-//                A0 = 800f8158 + 34 + 20;
-//                S0 = 800f8158 + 34;
-//                A1 = S0;
 T7 = h[A0 + 0];
-if (T7 < 0)
+if( T7 < 0 )
 {
-    T7 = -T7;
-    T7 = T7 & 0fff;
+    T7 = (0 - T7) & fff;
     T9 = w[8004bc98 + T7 * 4];
-    T6 = (T9 << 10) >> 10; // sin
-    T3 = -T6;
+    sinX = 0 - ((T9 << 10) >> 10);
 }
 else
 {
-    T7 = T7 & 0fff;
-    T9 = w[8004bc98 + T7 * 4];
-    T3 = (T9 << 10) >> 10;
-    T6 = -T3;
+    T9 = T7 & fff;
+    T9 = w[8004bc98 + T9 * 4];
+    sinX = (T9 << 10) >> 10;
 }
 cosX = T9 >> 10;
 
-
-
 T7 = h[A0 + 2];
-if (T7 < 0)
+if( T7 < 0 )
 {
-    T7 = -T7;
-    T7 = T7 & 0fff;
+    T7 = (0 - T7) & fff;
     T9 = w[8004bc98 + T7 * 4];
-    T4 = -((T9 << 10) >> 10);
+    sinY = 0 - ((T9 << 10) >> 10);
 }
 else
 {
-    T7 = T7 & 0fff;
-    T9 = w[8004bc98 + T7 * 4];
-    T4 = (T9 << 10) >> 10;
+    T9 = T7 & 0fff;
+    T9 = w[8004bc98 + T9 * 4];
+    sinY = (T9 << 10) >> 10;
 }
 cosY = T9 >> 10;
 
-
-
 T7 = h[A0 + 4];
-if (T7 < 0)
+if( T7 < 0 )
 {
-    T7 = -T7;
-    T7 = T7 & 0fff;
+    T7 = (0 - T7) & fff;
     T9 = w[8004bc98 + T7 * 4];
-    T5 = -((T9 << 10) >> 10);
+    sinZ = 0 - ((T9 << 10) >> 10);
 }
 else
 {
-    T7 = T7 & 0fff;
-    T9 = w[8004bc98 + T7 * 4];
-    T5 = (T9 << 10) >> 10;
+    T9 = T7 & fff;
+    T9 = w[8004bc98 + T9 * 4];
+    sinZ = (T9 << 10) >> 10;
 }
 cosZ = T9 >> 10;
 
+[A1 + 0] = h(((cosZ * cosY) >> c));
+[A1 + 2] = h((0 - (sinZ * cosY)) >> c);
+[A1 + 4] = h(sinY);
+[A1 + 6] = h(((sinZ * cosX) >> c) - (((cosZ * (0 - sinY) >> c) * sinX) >> c));
+[A1 + 8] = h(((cosZ * cosX) >> c) + ((((sinZ * (0 - sinY)) >> c) * sinX) >> c));
+[A1 + a] = h((0 - (cosY * sinX)) >> c);
+[A1 + c] = h(((sinZ * sinX) >> c) + (((cosZ * (0 - sinY) >> c) * cosX) >> c));
+[A1 + e] = h(((cosZ * sinX) >> c) - ((((sinZ * (0 - sinY)) >> c) * cosX) >> c));
+[A1 + 10] = h((cosY * cosX) >> c);
+
+return A1;
+////////////////////////////////
 
 
-[A1 + 0] = h(((cosY * cosZ) >> c) + ((((T4 * T3) >> c) * T5) >> c));
-[A1 + 2] = h(((((T4 * T3) >> c) * cosZ) >> c) -((cosY * T5) >> c));
-[A1 + 4] = h((T4 * cosX) >> c);
-[A1 + 6] = h((T5 * cosX) >> c);
+
+////////////////////////////////
+// system_gte_rotation_matrix_from_yxz()
+
+T7 = h[A0 + 0];
+if( T7 < 0 )
+{
+    T7 = (0 - T7) & fff;
+    T9 = w[8004bc98 + T7 * 4];
+    sinX = 0 - ((T9 << 10) >> 10);
+}
+else
+{
+    T7 = T7 & fff;
+    T9 = w[8004bc98 + T7 * 4];
+    sinX = (T9 << 10) >> 10;
+}
+cosX = T9 >> 10;
+
+T7 = h[A0 + 2];
+if( T7 < 0 )
+{
+    T7 = (0 - T7) & fff;
+    T9 = w[8004bc98 + T7 * 4];
+    sinY = 0 - ((T9 << 10) >> 10);
+}
+else
+{
+    T7 = T7 & fff;
+    T9 = w[8004bc98 + T7 * 4];
+    sinY = (T9 << 10) >> 10;
+}
+cosY = T9 >> 10;
+
+T7 = h[A0 + 4];
+if( T7 < 0 )
+{
+    T7 = (0 - T7) & fff;
+    T9 = w[8004bc98 + T7 * 4];
+    sinZ = 0 - ((T9 << 10) >> 10);
+}
+else
+{
+    T7 = T7 & fff;
+    T9 = w[8004bc98 + T7 * 4];
+    sinZ = (T9 << 10) >> 10;
+}
+cosZ = T9 >> 10;
+
+[A1 + 0] = h(((cosY * cosZ) >> c) + ((((sinY * sinX) >> c) * sinZ) >> c));
+[A1 + 2] = h(((((sinY * sinX) >> c) * cosZ) >> c) -((cosY * sinZ) >> c));
+[A1 + 4] = h((sinY * cosX) >> c);
+[A1 + 6] = h((sinZ * cosX) >> c);
 [A1 + 8] = h((cosZ * cosX) >> c);
-[A1 + a] = h(T6);
-[A1 + c] = h(((((cosY * T3) >> c) * T5) >> c) -((T4 * cosZ) >> c));
-[A1 + e] = h(((T4 * T5) >> c) + ((((cosY * T3) >> c) * cosZ) >> c));
+[A1 + a] = h(0 - sinX);
+[A1 + c] = h(((((cosY * sinX) >> c) * sinZ) >> c) -((sinY * cosZ) >> c));
+[A1 + e] = h(((sinY * sinZ) >> c) + ((((cosY * sinX) >> c) * cosZ) >> c));
 [A1 + 10] = h((cosY * cosX) >> c);
 
 return A1;

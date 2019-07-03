@@ -242,7 +242,7 @@ funcd85b0; // create camera matrix here
 // init it with rotation matrix
 A0 = S0 + 20;
 A1 = S0;
-system_create_rotation_matrix_from_euler_angle; // set temp rotation matrix from XYZ rotation
+system_gte_rotation_matrix_from_yxz();
 
 // add translation vector
 A0 = S0;

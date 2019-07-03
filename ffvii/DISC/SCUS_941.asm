@@ -3657,10 +3657,10 @@ SP = SP + 0020;
 // system_transponate_matrix
 8003BF3C-8003BF88
 ////////////////////////////////
-// func3bf8c
+// system_gte_rotation_matrix_from_xyz
 8003BF8C-8003C218
 ////////////////////////////////
-// system_create_rotation_matrix_from_euler_angle
+// system_gte_rotation_matrix_from_yxz
 8003C21C-8003C4A8
 ////////////////////////////////
 // func3c4ac

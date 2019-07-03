@@ -242,7 +242,7 @@ Lc2a88:	; 800C2A88
 800C2AA0	addu   a1, a1, v0
 800C2AA4	sll    a1, a1, $02
 800C2AA8	addu   a1, a1, s0
-800C2AAC	jal    system_create_rotation_matrix_from_euler_angle [$8003c21c]
+800C2AAC	jal    system_gte_rotation_matrix_from_yxz [$8003c21c]
 800C2AB0	addiu  a0, a1, $0020
 800C2AB4	lw     v0, $0010(s1)
 800C2AB8	nop
@@ -602,7 +602,7 @@ if( bu[80062d98] == 0 )
 
                 A0 = 801518e4 + h[S1 + 6] * b9c + 160; // attacker root rotation data
                 A1 = SP + 10;
-                system_create_rotation_matrix_from_euler_angle;
+                system_gte_rotation_matrix_from_yxz();
 
                 A0 = SP + 10;
                 A1 = SP + 30;
@@ -707,7 +707,7 @@ system_bios_rand();
 
 A0 = 800f1954;
 A1 = 800f1934;
-system_create_rotation_matrix_from_euler_angle;
+system_gte_rotation_matrix_from_yxz();
 
 [800f1948] = w(h[S1 + 8]); // set X translation
 [800f1950] = w(h[S1 + c]); // set Z translation
@@ -785,7 +785,7 @@ S0 = 801621f0 + V1 * 20;
 
 A0 = SP + 30;
 A1 = SP + 10;
-system_create_rotation_matrix_from_euler_angle;
+system_gte_rotation_matrix_from_yxz();
 
 [SP + 24] = w(h[S0 + 8]);
 [SP + 28] = w(h[S0 + a]);
