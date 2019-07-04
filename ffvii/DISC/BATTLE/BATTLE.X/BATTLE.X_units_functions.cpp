@@ -1476,7 +1476,7 @@ system_gte_set_translation_vector();
 A0 = S2 + 4; // vector to transform
 A1 = SP + 24; // result vector
 A2 = SP + 30; // flag
-system_call_rtv0tr_from_GTE;
+system_gte_rotate_and_translate_vector();
 
 // set scale
 [SP + 10] = h(h[S2 +  e] + h[S2 +  e] * h[S2 + 2] / 8);
@@ -1847,7 +1847,7 @@ system_gte_set_translation_vector();
 A0 = S1;
 A1 = S2 + 14;
 A2 = SP + 20;
-system_call_rtv0tr_from_GTE;
+system_gte_rotate_and_translate_vector();
 
 if (S3 != 0)
 {
@@ -1885,7 +1885,7 @@ system_gte_set_translation_vector();
 A0 = position;
 A1 = 800f023c;
 A2 = SP + 20;
-system_call_rtv0tr_from_GTE;
+system_gte_rotate_and_translate_vector();
 
 if (collision != 0)
 {

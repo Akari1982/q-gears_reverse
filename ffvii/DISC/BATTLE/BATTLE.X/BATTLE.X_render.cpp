@@ -637,7 +637,7 @@ A1 = 1; // drawing to display area is permitted
 A2 = 1; // dithering processing flag on
 A3 = (type & 3) * 20; // initial value of texture page
 A4 = 0;
-func44a68(); // create env settings e1 and e2
+system_gpu_create_texture_setting_packet();
 
 A0 = w[801517c0] + 4078; // inited OT for 2 packets
 A1 = w[80163c74];

@@ -247,7 +247,7 @@ system_gte_rotation_matrix_from_yxz();
 // add translation vector
 A0 = S0;
 A1 = S0 + 28; // translation vector
-system_copy_vector_to_matrix_translation;
+system_gte_copy_matrix_translation_part();
 
 // multiply field matrix
 A0 = S1;
@@ -263,7 +263,7 @@ system_gte_set_translation_vector();
 A0 = S0 - 28; // vector to transform
 A1 = S0 + 14; // result
 A2 = SP + 10; // flag
-system_call_rtv0tr_from_GTE;
+system_gte_rotate_and_translate_vector();
 
 A0 = S0; // matrix to scale
 A1 = 800e7d20; // scale vector

@@ -90,14 +90,14 @@ A1 = 1; // 1: drawing to display area is permitted
 A2 = 0; // dithering processing flag off
 A3 = 40; // initial value of texture page
 A4 = 0; // texture window rect
-func44a68();
+system_gpu_create_texture_setting_packet();
 
 A0 = S0 + 90;
 A1 = 1;
 A2 = 0;
 A3 = 20;
 A4 = 0;
-func44a68();
+system_gpu_create_texture_setting_packet();
 
 [S0 + 360 + 3] = b(8);
 [S0 + 360 + 7] = b(38);

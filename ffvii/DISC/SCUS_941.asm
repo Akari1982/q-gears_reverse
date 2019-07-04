@@ -3465,7 +3465,7 @@ SP = SP + 0020;
 // system_matrix_vector_multiply
 8003B2CC-8003B328
 ////////////////////////////////
-// system_copy_vector_to_matrix_translation
+// system_gte_copy_matrix_translation_part
 8003B32C-8003B358
 ////////////////////////////////
 // system_scale_matrix_by_vector
@@ -3636,7 +3636,7 @@ SP = SP + 0020;
 // func3bc0c
 8003BC0C-8003BC68
 ////////////////////////////////
-// system_call_rtv0tr_from_GTE
+// system_gte_rotate_and_translate_vector
 8003BC6C-8003BC98
 ////////////////////////////////
 // func3bc9c
@@ -8655,10 +8655,10 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// system_prepare_draw_env_struct
+// system_graphic_create_draw_env_struct
 80043814-800438D0
 ////////////////////////////////
-// func438d4
+// system_graphic_create_display_env_struct
 800438D4-8004390C
 ////////////////////////////////
 
@@ -8992,7 +8992,7 @@ S0 = A0;
 V0 = 0002;
 A0 = A1;
 [SP + 0014] = w(RA);
-80044954	jal    func44fa0 [$80044fa0]
+80044954	jal    system_gpu_get_texture_window_setting_command [$80044fa0]
 [S0 + 0003] = b(V0);
 [S0 + 0004] = w(V0);
 [S0 + 0008] = w(0);
@@ -9070,13 +9070,13 @@ V0 = V1 | V0;
 
 
 ////////////////////////////////
-// func44a68
+// system_gpu_create_texture_setting_packet
 80044A68-80044ABC
 ////////////////////////////////
 // system_prepare_draw_env_packets
 80044AC0-80044D60
 ////////////////////////////////
-// func44d64
+// system_gpu_get_draw_mode_setting_command
 80044D64-80044DBC
 ////////////////////////////////
 // func44dc0
@@ -9154,7 +9154,7 @@ V0 = V1 | V0;
 // func44f58
 80044F58-80044F9C
 ////////////////////////////////
-// func44fa0
+// system_gpu_get_texture_window_setting_command
 80044FA0-80045020
 ////////////////////////////////
 

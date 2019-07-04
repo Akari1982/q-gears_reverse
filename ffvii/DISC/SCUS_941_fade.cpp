@@ -926,7 +926,7 @@ V0 = 00f0;
 S0 = S0 < 0011;
 S0 = S0 ^ 0001;
 S0 = 0 - S0;
-8001416C	jal    func438d4 [$800438d4]
+8001416C	jal    system_graphic_create_display_env_struct [$800438d4]
 S0 = S0 & 0018;
 80014174	lui    a0, $8019
 A0 = A0 | da24;
@@ -934,7 +934,7 @@ A1 = 0;
 A2 = 00f0;
 A3 = 0140;
 V0 = 00e0;
-8001418C	jal    system_prepare_draw_env_struct [$80043814]
+8001418C	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 80014194	lui    a0, $8019
 V0 = 0001;

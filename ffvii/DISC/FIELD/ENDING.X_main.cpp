@@ -144,8 +144,7 @@ loopa0104:	; 800A0104
     A2 = 0001;
     A3 = V0 & ffff;
     [SP + 0010] = w(0);
-    func44a68(); // set some tex settings
-
+    system_gpu_create_texture_setting_packet();
 
     A0 = S1;
     800A0254	jal    $80046794
@@ -297,7 +296,7 @@ loopa0320:	; 800A0320
     A2 = 0001;
     A3 = V0 & ffff;
     A4 = 0;
-    func44a68(); // set some tex settings
+    system_gpu_create_texture_setting_packet();
 
     A0 = S1;
     A1 = S0;
@@ -377,7 +376,7 @@ A1 = 0;
 A2 = 0;
 A3 = S3;
 A4 = S2;
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 
 S0 = 800af398;
 
@@ -393,7 +392,7 @@ A1 = 0;
 A2 = S4;
 A3 = S3;
 A4 = S2;
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 
 A0 = S0 + 0014;
 A1 = 0;

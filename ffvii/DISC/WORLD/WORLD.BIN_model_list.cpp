@@ -2281,7 +2281,7 @@ A1 = A1 + 0260;
 800AA934	swl    v1, $0017(sp)
 800AA938	swr    v1, $0014(sp)
 S0 = SP + 0010;
-800AA940	jal    funca1fac [$800a1fac]
+800AA940	jal    wm_set_translation_vector_in_screen_space [$800a1fac]
 A0 = S0;
 [SP + 0010] = h(S1);
 [SP + 0012] = h(0);
@@ -3008,8 +3008,9 @@ V0 = V0 << 02;
 A1 = A1 + V1;
 A1 = A1 + V0;
 A1 = A1 << 10;
-800AB300	jal    funcae0bc [$800ae0bc]
 A1 = A1 >> 10;
+wm_rotate_vector_by_y_angle();
+
 V0 = hu[SP + 0028];
 800AB30C	nop
 V0 = S2 + V0;

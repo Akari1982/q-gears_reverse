@@ -171,7 +171,7 @@ A1 = 0; // x
 A2 = 8; // y
 A3 = 140; // width
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [80113f2c + 16] = b(1); // dithering processing flag (on)
 [80113f2c + 18] = b(0); // not clear drawing area when drawing environment is set
 
@@ -180,7 +180,7 @@ A1 = 0; // x
 A2 = f0; // y
 A3 = 140; // width
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [80113f88 + 16] = b(1);
 [80113f88 + 18] = b(0);
 
@@ -189,7 +189,7 @@ A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [80114154 + 16] = b(1);
 [80114154 + 18] = b(0);
 
@@ -198,7 +198,7 @@ A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [801141b0 + 16] = b(1);
 [801141b0 + 18] = b(0);
 
@@ -207,7 +207,7 @@ A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [8011420c + 16] = b(1);
 [8011420c + 18] = b(0);
 
@@ -216,7 +216,7 @@ A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [80114268 + 16] = b(1);
 [80114268 + 18] = b(0);
 
@@ -247,7 +247,7 @@ A1 = 0;
 A2 = 0008;
 A3 = 0140;
 A4 = 00e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [80113ffa] = b(1);
 [80113ffc] = b(0);
 
@@ -256,7 +256,7 @@ A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [80114056] = b(1);
 [80114058] = b(0);
 
@@ -266,7 +266,7 @@ A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [801140b2] = b(1);
 [801140b4] = b(0);
 
@@ -275,7 +275,7 @@ A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 [8011410e] = b(1);
 [80114110] = b(0);
 
@@ -1114,7 +1114,7 @@ La3098:	; 800A3098
         A3 = hu[block3];
         block3 = block3 + 2;
         A4 = 0;
-        800A30D0	jal    func44a68 [$80044a68]
+        system_gpu_create_texture_setting_packet();
 
         [8011448c] = h(hu[8011448c] + 1);
 
@@ -1169,7 +1169,7 @@ La31d4:	; 800A31D4
             A2 = 1;
             A3 = hu[block4 + 8]; // texture page settings
             A4 = 0;
-            800A3214	jal    func44a68 [$80044a68]
+            system_gpu_create_texture_setting_packet();
 
             [801144d0] = h(hu[801144d0] + 1);
 
@@ -1225,7 +1225,7 @@ La3334:	; 800A3334
         A3 = hu[block3];
         block3 = block3 + 2;
         A4 = 0;
-        800A3370	jal    func44a68 [$80044a68]
+        system_gpu_create_texture_setting_packet();
     }
     else
     {
@@ -1289,7 +1289,7 @@ La34ac:	; 800A34AC
         A3 = hu[block3];
         block3 = block3 + 2;
         A4 = 0;
-        800A34E0	jal    func44a68 [$80044a68]
+        system_gpu_create_texture_setting_packet();
     }
     else
     {

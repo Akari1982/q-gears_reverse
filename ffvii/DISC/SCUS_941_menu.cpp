@@ -2374,7 +2374,7 @@ S0 = window_data + current_messege * 30;
 A3 = h[S0 + 0008];
 V0 = h[S0 + 000a];
 A0 = SP + 0018;
-8001F3F4	jal    system_prepare_draw_env_struct [$80043814]
+8001F3F4	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 [SP + 0030] = b(0);
 [SP + 002f] = b(S4);
@@ -2488,7 +2488,7 @@ L1f4f8:	; 8001F4F8
 
         A3 = h[window_data + current_messege * 30 + 08]; // WINDOW width
         A4 = h[window_data + current_messege * 30 + 0a]; // WINDOW height
-        system_prepare_draw_env_struct();
+        system_graphic_create_draw_env_struct();
 
         A0 = w[80062f24];
         A1 = SP + 18;
@@ -3762,7 +3762,7 @@ A1 = 0;
 A2 = 0;
 A3 = 0180;
 V0 = 01d8;
-80021084	jal    system_prepare_draw_env_struct [$80043814]
+80021084	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 A0 = S3;
 S0 = 0001;
@@ -3776,27 +3776,27 @@ A1 = 0;
 A2 = 0008;
 A3 = 0180;
 S1 = 00e0;
-800210BC	jal    system_prepare_draw_env_struct [$80043814]
+800210BC	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(S1);
 S2 = S3 + 005c;
 A0 = S2;
 A1 = 0;
 A2 = 00f0;
 A3 = 0180;
-800210D8	jal    system_prepare_draw_env_struct [$80043814]
+800210D8	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(S1);
 A0 = S4;
 A1 = 0;
 A2 = 00e8;
 A3 = 016c;
 S1 = 00f0;
-800210F4	jal    func438d4 [$800438d4]
+800210F4	jal    system_graphic_create_display_env_struct [$800438d4]
 [SP + 0010] = w(S1);
 A0 = S4 + 0014;
 A1 = 0;
 A2 = 0;
 A3 = 016c;
-8002110C	jal    func438d4 [$800438d4]
+8002110C	jal    system_graphic_create_display_env_struct [$800438d4]
 [SP + 0010] = w(S1);
 [S3 + 0074] = b(S0);
 [S3 + 0018] = b(S0);
@@ -9501,12 +9501,12 @@ A3 = A2;
 A2 = A1
 A1 = A0;
 A0 = w[80062f24];
-func44a68;
+system_gpu_create_texture_setting_packet();
 
 A0 = w[GP + 280];
 A1 = w[80062f24];
 [80062f24] = w(A1 + c);
-system_add_render_packet_to_queue;
+system_add_render_packet_to_queue();
 ////////////////////////////////
 
 
@@ -9523,7 +9523,7 @@ A2 = h[V0 + 000a];
 A3 = h[V0 + 0004];
 V0 = h[V0 + 0006];
 A0 = SP + 0018;
-80026ABC	jal    system_prepare_draw_env_struct [$80043814]
+80026ABC	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(V0);
 V0 = 0001;
 [SP + 002f] = b(V0);
@@ -9836,7 +9836,7 @@ else
 80026EDC	ori    a3, a3, $0030
 80026EE0	sh     zero, $0018(sp)
 80026EE4	sh     zero, $001a(sp)
-80026EE8	jal    func44a68 [$80044a68]
+80026EE8	jal    system_gpu_create_texture_setting_packet [$80044a68]
 80026EEC	sw     v0, $0010(sp)
 80026EF0	lui    a1, $8006
 80026EF4	lw     a1, $2f24(a1)
@@ -9930,7 +9930,7 @@ if (opcode != FF)
 80027038	addiu  v0, sp, $0018
 8002703C	sh     zero, $0018(sp)
 80027040	sh     zero, $001a(sp)
-80027044	jal    func44a68 [$80044a68]
+80027044	jal    system_gpu_create_texture_setting_packet [$80044a68]
 80027048	sw     v0, $0010(sp)
 8002704C	lui    a1, $8006
 80027050	lw     a1, $2f24(a1)

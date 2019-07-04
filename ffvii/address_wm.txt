@@ -1,3 +1,5 @@
+800c6770 buffer for skybox overlay render (0x2 items 0x24 size).
+
 800c744c array with .TXZ files cd data (0x8 size).
     000015D2 00028597 WORLD\WM0S.TXZ
     00001623 0002A65A WORLD\WM1S.TXZ
@@ -40,9 +42,19 @@
     +0 [][][][] sector for MAP files.
     +4 [][][][] size.
 
+800c84f4 draw env struct for buffer 1.
+800c8550 display env struct for buffer 1.
+800cc568 draw env struct for buffer 2.
+800cc5c4 display env struct for buffer 2.
+
 800e5608 [][][][] maybe initial camera rotation.
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
+
+800e5680 buffer for skybox texture settings (0x2 items 0xc size).
+
+800e5698 looks like main camera rotation matrix.
+800e56b8 looks like main camera translation vector.
 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 
@@ -123,6 +135,8 @@
 8010ade4 [][][][] pointer to some wm script struct.
     +46 [][]     current script pair (we read 2 bytes at once).
 
+8010b068 buffer for skybox overlay texture settings buffer (0x2 items 0xc size).
+
 8010b174 [][][][] store 1 here at start of map if progress less or greater than 0x3e8.
 
 8010b178 array of points (0x24 size 0x10 items)
@@ -151,5 +165,17 @@
 8011626c [][][][] we get value from here in 0x05 of 0x11b opcode. If 1 then place snow pole on map or remove their coords from savemap otherwise.
 80116278 [][][][] init with 0.
 
+801164f8 [][][][] cam rotation.
+801164fc [][][][] copy 801164f8 here if pc model if != 3 (highwind)
+
+80116508 [][]     some length. Used to render skybox?
+
+8013a7cc load textures WM0.TXZ here.
+
 8014a600 place for BSZ PC character model file.
 8014a610 ???
+
+
+80190000 we load textures WM0S.TXZ here.
+801ad800 data of 1st render buffer of something.
+801ce000 data of 2nd render buffer of something.

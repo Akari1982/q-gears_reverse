@@ -2300,9 +2300,10 @@ switch( opcode )
 
         Lad5b4:	; 800AD5B4
         [SP + 0014] = h(V1);
-        A1 = h[A0 + 004c];
-        800AD5BC	jal    funcae0bc [$800ae0bc]
-        A0 = SP + 0010;
+        A0 = SP + 10;
+        A1 = h[A0 + 4c];
+        wm_rotate_vector_by_y_angle();
+
         A0 = h[SP + 0010];
         A1 = h[SP + 0014];
         wm_add_coords_cycled();

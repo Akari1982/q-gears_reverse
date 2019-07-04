@@ -127,11 +127,11 @@ func44f58(); // create packet for offset
 A0 = bu[S0 + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = bu[S0 + 16]; // dithering processing flag. 0: off; 1: on
 A2 = hu[S0 + 14]; // initial values of texture page
-func44d64(); // create packet
+system_gpu_get_draw_mode_setting_command(); // create packet
 [S1 + 10] = w(V0);
 
 A0 = S0 + c; // texture window rect
-func44fa0(); // create packet
+system_gpu_get_texture_window_setting_command(); // create packet
 [S1 + 14] = w(V0);
 
 [S1 + 18] = w(e6000000);
@@ -840,7 +840,7 @@ return 3;
 
 
 ////////////////////////////////
-// func44a68()
+// system_gpu_create_texture_setting_packet()
 
 buffer = A0;
 
@@ -850,18 +850,18 @@ S1 = A4;
 A0 = A1; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = A2; // dithering processing flag. 0: off; 1: on
 A2 = A3; // initial values of texture page
-func44d64(); // prepare tex page settings packet
+system_gpu_get_draw_mode_setting_command(); // prepare tex page settings packet
 [buffer + 4] = w(V0);
 
 A0 = S1; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
-func44fa0(); // prepare texture window rect packet
+system_gpu_get_texture_window_setting_command(); // prepare texture window rect packet
 [buffer + 8] = w(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func44fa0()
+// system_gpu_get_texture_window_setting_command()
 
 A0 = A0; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
 
@@ -880,7 +880,7 @@ return e2000000 | (off_y << f) | (off_x << a) | (mask_y << 5) | mask_x;
 
 
 ////////////////////////////////
-// func44d64()
+// system_gpu_get_draw_mode_setting_command()
 
 if( ( bu[80062c00] - 1 ) < 2 ) // old gpu
 {
@@ -1440,7 +1440,7 @@ return S0;
 
 
 ////////////////////////////////
-// system_prepare_draw_env_struct()
+// system_graphic_create_draw_env_struct()
 
 [A0 + 00] = h(A1); // clip rect x
 [A0 + 02] = h(A2); // clip rect y
@@ -1466,7 +1466,7 @@ return A0;
 
 
 ////////////////////////////////
-// func438d4()
+// system_graphic_create_display_env_struct()
 
 [A0 + 00] = h(A1); // x
 [A0 + 02] = h(A2); // y

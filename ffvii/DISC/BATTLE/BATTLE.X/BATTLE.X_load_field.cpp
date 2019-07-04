@@ -26,7 +26,7 @@ A1 = 0; // clip rect x
 A2 = 0; // clip rect y
 A3 = 140; // clip rect width 320
 A4 = 1d8; // clip rect height 472
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 
 [800fb00b] = b(1); // drawing to display area is enabled
 [800fb00c] = b(1); // clear drawing area when drawing environment is set
@@ -42,7 +42,7 @@ A1 = 0;
 A2 = 0;
 A3 = screen_size_x;
 A4 = screen_size_y - 4a;
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 
 [800faff6] = h(hu[800faff6] + 8); // move draw env clip rect x
 [800faffa] = h(hu[800faffa] - 8); // shrink draw env clip rect width
@@ -58,7 +58,7 @@ A1 = 0;
 A2 = f0;
 A3 = screen_size_x;
 A4 = screen_size_y - 4a;
-system_prepare_draw_env_struct();
+system_graphic_create_draw_env_struct();
 
 [800ff0ea] = h(hu[800ff0ea] + 8); // move draw env clip rect x
 [800ff0ee] = h(hu[800ff0ee] - 8); // shrink draw env clip rect width
@@ -74,14 +74,14 @@ A1 = 0;
 A2 = f0;
 A3 = screen_size_x;
 A4 = screen_size_y;
-func438d4(); // prepare draw env struct
+system_graphic_create_display_env_struct();
 
 A0 = 800ff144;
 A1 = 0;
 A2 = 0;
 A3 = screen_size_x;
 A4 = screen_size_y;
-func438d4(); // prepare draw env struct
+system_graphic_create_display_env_struct();
 ////////////////////////////////
 
 

@@ -422,14 +422,14 @@ A0 = 0; // tp
 A1 = 1; // abr
 A2 = 0; // vram_x
 A3 = 0; // vram_y
-system_create_texture_page_settings_for_packet;
+system_create_texture_page_settings_for_packet();
 
 A0 = S4 + 17490;
 A1 = 0;
 A2 = 0;
 A3 = V0;
 A4 = 0;
-func44a68;
+system_gpu_create_texture_setting_packet();
 ////////////////////////////////
 
 
@@ -1018,7 +1018,7 @@ A1 = 0;
 A2 = 1;
 A3 = V0 & ffff;
 A4 = 0;
-func44a68(); // create settings packet for this render
+system_gpu_create_texture_setting_packet();
 ////////////////////////////////
 
 

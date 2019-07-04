@@ -12,7 +12,7 @@
 // funca0be4
 800A0BE4-800A0C50
 ////////////////////////////////
-// funca0c54
+// wm_load_texture
 800A0C54-800A0D18
 ////////////////////////////////
 // funca0d24
@@ -72,7 +72,7 @@
 // funca1df0
 800A1DF0-800A1FA8
 ////////////////////////////////
-// funca1fac
+// wm_set_translation_vector_in_screen_space
 800A1FAC-800A203C
 ////////////////////////////////
 // funca2040
@@ -443,7 +443,7 @@
 // wm_init_model_struct_list_element
 800A9334-800A947C
 ////////////////////////////////
-// funca9480:	; 800A9480
+// funca9480
 800A9480-800A94A4
 ////////////////////////////////
 // funca94a8
@@ -714,7 +714,7 @@
 // wm_get_distance_between_points
 800AE024-800AE0B8
 ////////////////////////////////
-// funcae0bc
+// wm_rotate_vector_by_y_angle
 800AE0BC-800AE17C
 ////////////////////////////////
 // funcae180
@@ -723,19 +723,19 @@
 // funcae47c
 800AE47C-800AE4B4
 ////////////////////////////////
-// funcae4b8
+// wm_create_skybox_overlay_render_buffers
 800AE4B8-800AE5B4
 ////////////////////////////////
-// funcae5b8
+// wm_get_skybox_overlay_current_render_buffer
 800AE5B8-800AE5EC
 ////////////////////////////////
-// funcae5f0
+// wm_get_skybox_overlay_current_texture_setting_buffer
 800AE5F0-800AE624
 ////////////////////////////////
 // funcae628
 800AE628-800AE634
 ////////////////////////////////
-// funcae638
+// wm_update_skybox_overlay_vertexes
 800AE638-800AE8A8
 ////////////////////////////////
 // funcae8ac
@@ -777,7 +777,7 @@
 // funcaf364
 800AF364-800AF3A0
 ////////////////////////////////
-// funcaf3a4
+// wm_update_lighting_from_points
 800AF3A4-800AF968
 ////////////////////////////////
 // wm_get_distance_to_active_point

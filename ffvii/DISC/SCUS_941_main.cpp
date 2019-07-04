@@ -439,13 +439,13 @@ A3 = 0140;
 S0 = 00f0;
 [SP + 0024] = w(RA);
 [SP + 001c] = w(S1);
-800117B4	jal    func438d4 [$800438d4]
+800117B4	jal    system_graphic_create_display_env_struct [$800438d4]
 [SP + 0010] = w(S0);
 A0 = S2 + 0014;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-800117CC	jal    func438d4 [$800438d4]
+800117CC	jal    system_graphic_create_display_env_struct [$800438d4]
 [SP + 0010] = w(S0);
 800117D4	lui    s1, $8008
 800117D8	addiu  s1, s1, $eaac (=-$1554)
@@ -454,13 +454,13 @@ A1 = 0;
 A2 = 0008;
 A3 = 0140;
 S0 = 00e0;
-800117F0	jal    system_prepare_draw_env_struct [$80043814]
+800117F0	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(S0);
 A0 = S1 + 005c;
 A1 = 0;
 A2 = 00f0;
 A3 = 0140;
-80011808	jal    system_prepare_draw_env_struct [$80043814]
+80011808	jal    system_graphic_create_draw_env_struct [$80043814]
 [SP + 0010] = w(S0);
 V0 = 0001;
 80011814	lui    at, $8008
@@ -1438,12 +1438,12 @@ system_create_texture_page_settings_for_packet;
 80012874	addu   a2, zero, zero
 80012878	andi   s0, v0, $ffff
 8001287C	addu   a3, s0, zero
-80012880	jal    func44a68 [$80044a68]
+80012880	jal    system_gpu_create_texture_setting_packet [$80044a68]
 80012884	sw     zero, $0010(sp)
 80012888	addiu  a0, s1, $0030
 8001288C	addu   a1, zero, zero
 80012890	addu   a2, zero, zero
 80012894	addu   a3, s0, zero
-80012898	jal    func44a68 [$80044a68]
+80012898	jal    system_gpu_create_texture_setting_packet [$80044a68]
 8001289C	sw     zero, $0010(sp)
 ////////////////////////////////

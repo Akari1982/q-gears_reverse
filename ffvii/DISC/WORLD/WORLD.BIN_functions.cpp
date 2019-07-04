@@ -574,46 +574,45 @@ return xd + yd + zd;
 
 
 ////////////////////////////////
-// funcae0bc()
+// wm_rotate_vector_by_y_angle()
 
 S1 = A0;
-V0 = A1;
+angle = A1;
+
 if( S1 != 0 )
 {
-    [SP + 40] = w(0);
-    [SP + 3c] = w(0);
-    [SP + 38] = w(0);
-    [SP + 34] = h(0);
     [SP + 30] = h(0);
-    [SP + 32] = h(V0);
+    [SP + 32] = h(angle);
+    [SP + 34] = h(0);
 
     A0 = SP + 30;
     A1 = SP + 10;
     system_gte_rotation_matrix_from_xyz();
 
-
     A0 = SP + 10;
     system_gte_set_rotation_matrix();
 
-    A0 = SP + 0010;
-    S0 = SP + 0038;
-    A1 = S0;
-    system_copy_vector_to_matrix_translation();
+    [SP + 38] = w(0);
+    [SP + 3c] = w(0);
+    [SP + 40] = w(0);
 
-    A0 = SP + 0010;
+    A0 = SP + 10;
+    A1 = SP + 38;
+    system_gte_copy_matrix_translation_part();
+
+    A0 = SP + 10;
     system_gte_set_translation_vector();
 
-    T4 = S1;
-    VXY0 = w[T4 + 0000];
-    VZ0 = w[T4 + 0004];
+    VXY0 = w[S1 + 0];
+    VZ0 = w[S1 + 4];
     gte_rtv0tr(); // v0 * rotmatrix + tr vector
-    [S0 + 0000] = w(MAC1);
-    [S0 + 0004] = w(MAC2);
-    [S0 + 0008] = w(MAC3);
+    [SP + 38] = w(MAC1);
+    [SP + 3c] = w(MAC2);
+    [SP + 40] = w(MAC3);
 
-    [S1 + 0000] = h(hu[SP + 0038]);
-    [S1 + 0002] = h(hu[SP + 003c]);
-    [S1 + 0004] = h(hu[SP + 0040]);
+    [S1 + 0] = h(hu[SP + 38]);
+    [S1 + 2] = h(hu[SP + 3c]);
+    [S1 + 4] = h(hu[SP + 40]);
 }
 ////////////////////////////////
 
@@ -775,7 +774,7 @@ V0 = V0 >> 10;
 
 
 ////////////////////////////////
-// funcae4b8()
+// wm_create_skybox_overlay_render_buffers()
 
 for( int i = 0; i < 2; ++i )
 {
@@ -799,7 +798,7 @@ for( int i = 0; i < 2; ++i )
     A2 = 1;
     A3 = 0;
     A4 = 0;
-    func44a68();
+    system_gpu_create_texture_setting_packet();
 }
  
 [8010b080] = w(0);
@@ -808,7 +807,7 @@ for( int i = 0; i < 2; ++i )
 
 
 ////////////////////////////////
-// funcae5b8()
+// wm_get_skybox_overlay_current_render_buffer()
 
 wm_get_current_render_buffer_id();
 
@@ -818,7 +817,7 @@ return 800с6770 + V0 * 24;
 
 
 ////////////////////////////////
-// funcae5f0()
+// wm_get_skybox_overlay_current_texture_setting_buffer()
 
 wm_get_current_render_buffer_id();
 
@@ -836,7 +835,7 @@ return w[8010b080];
 
 
 ////////////////////////////////
-// funcae638()
+// wm_update_skybox_overlay_vertexes()
 
 S0 = A0;
 
@@ -847,12 +846,12 @@ buffer_id = V0;
 [SP + 12] = h(0 - hu[80116508]);
 [SP + 14] = h(-4000);
 
-A0 = SP + 10;
-A1 = ((0 - S0) << 10) >> 10;
-800AE698	jal    funcae0bc [$800ae0bc]
+A0 = SP + 10; // vector
+A1 = ((0 - S0) << 10) >> 10; // angle
+wm_rotate_vector_by_y_angle();
 
 A0 = SP + 10;
-800AE6A0	jal    funca1fac [$800a1fac]
+wm_set_translation_vector_in_screen_space();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -861,8 +860,7 @@ A0 = SP + 10;
 VXY0 = w[SP + 10];
 VZ0 = w[SP + 14];
 gte_RTPS(); // Perspective transform
-
-[SP + 50] = w(SXY2);
+[SP + 50] = w(SXY2); // screen coords
 
 [SP + 1a] = h(0);
 [SP + 18] = h(0);
@@ -887,7 +885,7 @@ system_gte_set_rotation_matrix();
 
 A0 = SP + 30;
 A1 = SP + 20;
-system_copy_vector_to_matrix_translation();
+system_gte_copy_matrix_translation_part();
 
 A0 = SP + 30;
 system_gte_set_translation_vector();
@@ -903,11 +901,11 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector
 [SP + 24] = w(MAC2);
 [SP + 28] = w(MAC3);
 
-[800c6770 + buffer_id * 24 + 8] = h(hu[SP + 20]);
-[800c6770 + buffer_id * 24 + a] = h(hu[SP + 24]);
+[800c6770 + buffer_id * 24 + 8] = h(hu[SP + 20]); // v1x
+[800c6770 + buffer_id * 24 + a] = h(hu[SP + 24]); // v1y
 
 [SP + 10] = h(b4);
-[SP + 12] = h((0 - hu[SP + 0050]) - 18);
+[SP + 12] = h((0 - hu[SP + 50]) - 18);
 
 VXY0 = w[SP + 10];
 VZ0 = w[SP + 14];
@@ -916,10 +914,10 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector
 [SP + 24] = w(MAC2);
 [SP + 28] = w(MAC3);
 
-[800c6770 + buffer_id * 24 + 10] = h(hu[SP + 20]);
-[800c6770 + buffer_id * 24 + 12] = h(hu[SP + 24]);
+[800c6770 + buffer_id * 24 + 10] = h(hu[SP + 20]); // v2x
+[800c6770 + buffer_id * 24 + 12] = h(hu[SP + 24]); // v2y
 
-[SP + 10] = h(A0);
+[SP + 10] = h(-b4);
 [SP + 12] = h(0);
 
 VXY0 = w[SP + 10];
@@ -929,10 +927,10 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector
 [SP + 24] = w(MAC2);
 [SP + 28] = w(MAC3);
 
-[800c6770 + buffer_id * 24 + 18] = h(hu[SP + 20]);
-[800c6770 + buffer_id * 24 + 1a] = h(hu[SP + 24]);
+[800c6770 + buffer_id * 24 + 18] = h(hu[SP + 20]); // v3x
+[800c6770 + buffer_id * 24 + 1a] = h(hu[SP + 24]); // v3y
 
-[SP + 10] = h(V1);
+[SP + 10] = h(b4);
 [SP + 12] = h(0);
 
 VXY0 = w[SP + 10];
@@ -942,8 +940,8 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector
 [SP + 24] = w(MAC2);
 [SP + 28] = w(MAC3);
 
-[800c6770 + buffer_id * 24 + 20] = h(hu[SP + 20]);
-[800c6770 + buffer_id * 24 + 22] = h(hu[SP + 24]);
+[800c6770 + buffer_id * 24 + 20] = h(hu[SP + 20]); // v4x
+[800c6770 + buffer_id * 24 + 22] = h(hu[SP + 24]); // v4y
 ////////////////////////////////
 
 
@@ -1706,11 +1704,11 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funcaf3a4()
+// wm_update_lighting_from_points()
 
 S7 = 0;
-[SP + 38] = w(A0);
-[SP + 40] = w(0);
+S6 = 0;
+pc_pos = A0;
 
 wm_get_current_render_buffer_id();
 buffer_id = V0;
@@ -1723,7 +1721,7 @@ for( int i = 0; i < 10; ++i )
 
     if( bu[S2 + 13] != 0 ) // point type
     {
-        A0 = w[SP + 38];
+        A0 = pc_pos;
         A1 = S2;
         wm_get_distance_between_points();
 
@@ -1733,7 +1731,7 @@ for( int i = 0; i < 10; ++i )
         {
             S1 = 0;
             T0 = 1;
-            [SP + 40] = w(T0);
+            S6 = 1;
         }
 
         S0 = w[S2 + 1c] << a;
@@ -1805,13 +1803,13 @@ if( S7 == 0 )
     A0 = 800c6848;
     system_gte_set_light_colour_matrix();
 
-    funcae4b8();
+    wm_create_skybox_overlay_render_buffers();
 }
 
 A2 = 0;
 if( S7 != 0 )
 {
-    A2 = w[SP + 40] < 1;
+    A2 = S6 < 1;
 }
 
 
@@ -1819,7 +1817,7 @@ A0 = 8010b068 + buffer_id * c;
 A1 = 0;
 A3 = 0;
 A4 = 0;
-func44a68();
+system_gpu_create_texture_setting_packet();
 ////////////////////////////////
 
 
@@ -1915,7 +1913,7 @@ A0 = 8010b434;
 A0 = S1 + A0;
 A1 = 0;
 A2 = 0001;
-800AFAA4	jal    $func44a68
+800AFAA4	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(0);
 T0 = 0004;
 A0 = 0066;
@@ -1978,7 +1976,7 @@ Lafbb4:	; 800AFBB4
 A0 = 8010b440;
 A0 = S1 + A0;
 A1 = 0;
-800AFBC8	jal    $func44a68
+800AFBC8	jal    $system_gpu_create_texture_setting_packet
 A2 = 0001;
 800AFBD0	jal    $80043cc0
 800AFBD4	nop
@@ -1995,7 +1993,7 @@ Lafbf4:	; 800AFBF4
 A0 = 8010b44c;
 A0 = S1 + A0;
 A1 = 0;
-800AFC08	jal    $func44a68
+800AFC08	jal    $system_gpu_create_texture_setting_packet
 A2 = 0001;
 S1 = S1 + 0024;
 S3 = S3 + 003c;
@@ -2283,7 +2281,7 @@ Lb003c:	; 800B003C
 A0 = 8010b434;
 A0 = S0 + A0;
 A1 = 0;
-800B0050	jal    $func44a68
+800B0050	jal    $system_gpu_create_texture_setting_packet
 A2 = 0001;
 S1 = S1 + 0001;
 V0 = S1 < 0002;
@@ -2353,7 +2351,7 @@ Lb0120:	; 800B0120
 A0 = 8010b434;
 A0 = S0 + A0;
 A1 = 0;
-800B0134	jal    $func44a68
+800B0134	jal    $system_gpu_create_texture_setting_packet
 A2 = 0001;
 S1 = S1 + 0001;
 V0 = S1 < 0002;
@@ -2826,19 +2824,16 @@ return w[8010c808];
 
 ////////////////////////////////
 // funcb0810
-800B0810	addiu  sp, sp, $ffc8 (=-$38)
+
 A0 = SP + 0010;
 800B0818	lui    a1, $8011
 A1 = h[A1 + c7f0];
 V0 = 0064;
-[SP + 0034] = w(RA);
-[SP + 0030] = w(S2);
-[SP + 002c] = w(S1);
-[SP + 0028] = w(S0);
 [SP + 0012] = h(0);
 [SP + 0010] = h(0);
-800B083C	jal    funcae0bc [$800ae0bc]
 [SP + 0014] = h(V0);
+wm_rotate_vector_by_y_angle();
+
 800B0844	lui    a0, $8011
 A0 = w[A0 + c42c];
 V1 = 8010c42c;
@@ -2913,19 +2908,6 @@ S1 = 0;
 800B0944	lui    v0, $0004
 V0 = V0 | 93e0;
 800B094C	div    v0, v1
-800B0950	bne    v1, zero, Lb095c [$800b095c]
-800B0954	nop
-800B0958	break   $01c00
-
-Lb095c:	; 800B095C
-800B095C	addiu  at, zero, $ffff (=-$1)
-800B0960	bne    v1, at, Lb0974 [$800b0974]
-800B0964	lui    at, $8000
-800B0968	bne    v0, at, Lb0974 [$800b0974]
-800B096C	nop
-800B0970	break   $01800
-
-Lb0974:	; 800B0974
 800B0974	mflo   v0
 800B0978	nop
 S1 = V0;
@@ -2940,8 +2922,9 @@ V0 = 0064;
 [SP + 0014] = h(V0);
 A1 = S1 + A1;
 A1 = A1 << 10;
-800B09A4	jal    funcae0bc [$800ae0bc]
 A1 = A1 >> 10;
+wm_rotate_vector_by_y_angle();
+
 800B09AC	lui    a2, $8011
 A2 = w[A2 + c42c];
 V0 = h[SP + 0010];
@@ -2998,8 +2981,9 @@ V0 = 0064;
 [SP + 0014] = h(V0);
 A1 = A1 - S1;
 A1 = A1 << 10;
-800B0A74	jal    funcae0bc [$800ae0bc]
 A1 = A1 >> 10;
+wm_rotate_vector_by_y_angle();
+
 800B0A7C	lui    a2, $8011
 A2 = w[A2 + c42c];
 V0 = h[SP + 0010];
@@ -3103,13 +3087,10 @@ Lb0bd0:	; 800B0BD0
 [AT + c7f0] = h(V0);
 
 Lb0bd8:	; 800B0BD8
-RA = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0038;
-800B0BEC	jr     ra 
-800B0BF0	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb0bf4
 800B0BF4	addiu  sp, sp, $ffb8 (=-$48)
@@ -5448,9 +5429,10 @@ S0 = S1 + S0;
 A0 = h[S0 + 0000];
 800B2C34	jal    funca9480 [$800a9480]
 800B2C38	nop
-A1 = h[S0 + 0000];
-800B2C40	jal    funcae0bc [$800ae0bc]
-A0 = SP + 0010;
+A0 = SP + 10;
+A1 = h[S0 + 0];
+wm_rotate_vector_by_y_angle();
+
 A0 = h[SP + 0010];
 A1 = h[SP + 0014];
 800B2C50	jal    wm_add_coords_cycled [$800aa7dc]
@@ -5904,8 +5886,9 @@ V0 = V0 + V1;
 A1 = A1 - V0;
 800B3258	lui    at, $8011
 [AT + cafc] = h(A1);
-800B3260	jal    funcae0bc [$800ae0bc]
 A1 = S0;
+wm_rotate_vector_by_y_angle();
+
 800B3268	jal    wm_get_position_from_pc_model [$800aa0e0]
 A0 = SP + 0010;
 A0 = SP + 0010;
@@ -6077,10 +6060,12 @@ A1 = S2;
 V0 = 4e20;
 [SP + 0028] = w(0);
 [SP + 0020] = w(0);
-800B34D8	jal    $system_copy_vector_to_matrix_translation
 [SP + 0024] = w(V0);
-800B34E0	jal    $system_gte_set_translation_vector
+system_gte_copy_matrix_translation_part();
+
 A0 = S0;
+system_gte_set_translation_vector();
+
 A2 = S1 + 0008;
 A3 = S1 + 0014;
 V0 = A2 < A3;
@@ -6167,8 +6152,9 @@ A0 = V1 - A0;
 A1 = V0 - A1;
 A0 = SP + 0060;
 V0 = V0 << 10;
-800B3630	jal    funcae0bc [$800ae0bc]
 A1 = V0 >> 10;
+wm_rotate_vector_by_y_angle();
+
 V0 = h[SP + 0060];
 V1 = h[SP + 0064];
 800B3640	j      Lb3798 [$800b3798]
@@ -6625,7 +6611,7 @@ A1 = SP + 0038;
 [SP + 009c] = w(RA);
 [SP + 0040] = w(0);
 [SP + 003c] = w(0);
-800B3C80	jal    $system_copy_vector_to_matrix_translation
+800B3C80	jal    $system_gte_copy_matrix_translation_part
 [SP + 0038] = w(0);
 800B3C88	jal    $system_gte_set_translation_vector
 A0 = S1;
@@ -6808,7 +6794,7 @@ T4 = A1;
 [T4 + 0004] = w(MAC2);
 [T4 + 0008] = w(MAC3);
 S0 = SP + 0058;
-800B3F24	jal    $system_copy_vector_to_matrix_translation
+800B3F24	jal    $system_gte_copy_matrix_translation_part
 A0 = S0;
 800B3F2C	jal    $system_gte_set_translation_vector
 A0 = S0;
@@ -8717,8 +8703,9 @@ V0 = 0 - V0;
 [SP + 0038] = h(V1);
 V0 = hu[S5 + 0026];
 S4 = A3;
-800B5A50	jal    funca1fac [$800a1fac]
 [SP + 003c] = h(V0);
+wm_set_translation_vector_in_screen_space();
+
 V0 = 0 - S0;
 V1 = 0 - S1;
 A0 = SP + 0030;
@@ -10248,7 +10235,7 @@ else if( ( w[80116270] == 0 ) || ( w[8011626c] - 1 < 2 ) )
     [800e560c] = w(hu[8009c6e4 + f9c] & fff);
 }
 
-A0 = hu[8009c6e4 + f9c] >> e; // cam rot or angle
+A0 = hu[8009c6e4 + f9c] >> e; // cam rotation
 funcbc9e8();
 
 A0 = 8009c6e4 + cad; // party member in slot 1-3
@@ -15299,8 +15286,9 @@ V0 = V0 + 0400;
 
 Lbb970:	; 800BB970
 V0 = V0 << 10;
-800BB974	jal    funcae0bc [$800ae0bc]
 A1 = V0 >> 10;
+wm_rotate_vector_by_y_angle();
+
 A0 = h[SP + 0010];
 A1 = h[SP + 0014];
 800BB984	jal    wm_add_coords_cycled [$800aa7dc]
@@ -16014,7 +16002,7 @@ A0 = 801164b0 + S0;
 A1 = 0;
 A2 = 1;
 A4 = 0;
-func44a68();
+system_gpu_create_texture_setting_packet();
 
 A2 = 0;
 A3 = S4;
@@ -16056,7 +16044,7 @@ A0 = S0 + A0;
 A1 = 0;
 A2 = 0001;
 [SP + 0010] = w(0);
-func44a68();
+system_gpu_create_texture_setting_packet();
 
 800BC354	lui    v1, $800c
 V1 = V1 + 738c;
@@ -16085,7 +16073,7 @@ A0 = A0 + 64e0;
 A0 = S0 + A0;
 A1 = 0;
 A2 = 0001;
-func44a68();
+system_gpu_create_texture_setting_packet();
 
 S0 = S0 + 000c;
 S4 = S4 + 0060;
@@ -16317,7 +16305,7 @@ S4 = SP + 0018;
 A1 = S4;
 [SP + 0020] = w(0);
 [SP + 001c] = w(0);
-800BC718	jal    $system_copy_vector_to_matrix_translation
+800BC718	jal    $system_gte_copy_matrix_translation_part
 [SP + 0018] = w(0);
 800BC720	jal    $system_gte_set_rotation_matrix
 A0 = S0;

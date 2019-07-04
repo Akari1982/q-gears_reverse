@@ -638,7 +638,7 @@ system_gte_set_translation_vector();
 A0 = S0 + 28; // vector
 A1 = S0 + 14; // result vector
 A2 = SP + 10;
-system_call_rtv0tr_from_GTE;
+system_gte_rotate_and_translate_vector();
 
 A0 = S0;
 system_gte_set_rotation_matrix();
