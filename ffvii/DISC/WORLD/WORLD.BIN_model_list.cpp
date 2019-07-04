@@ -1357,10 +1357,10 @@ else
 ////////////////////////////////
 // funca9ad0()
 
-V0 = w[8010ad40];
-if( V0 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    V0 = (hu[V0 + 4a] >> 5) & 7;
+    V0 = (hu[pc_entity + 4a] >> 5) & 7;
 }
 else
 {
@@ -3297,4 +3297,236 @@ A0 = A0 + 0010;
 [AT + ae34] = w(0);
 800AB6DC	jr     ra 
 800AB6E0	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab6e4()
+
+S0 = A0;
+S1 = A1;
+
+active_model = w[8010ad3c];
+
+S2 = 0;
+if( active_model != 0 )
+{
+    A0 = bu[active_model + 57];
+    V0 = A0 < S1;
+    if( ( V0 == 0 ) && ( ( A0 != S1 ) || ( S1 != 3 ) ) )
+    {
+        if( h[active_model + 46] != 0 )
+        {
+            return;
+        }
+    }
+
+    V0 = bu[active_model + 54];
+
+    if( h[active_model + 46] != 0 )
+    {
+        V0 = bu[active_model + 54];
+        [active_model + 54] = b(V0 + 1);
+        [active_model + 2c + V0 * 4 + 0] = h(hu[active_model + 46]);
+        [active_model + 2c + V0 * 4 + 2] = b(bu[active_model + 56]);
+        [active_model + 2c + V0 * 4 + 3] = b(bu[active_model + 57]);
+        S2 = 1;
+    }
+
+    V1 = 40;
+    A0 = w[8010ad68] + 200;
+
+    while( V1 != 0 )
+    {
+        if( hu[A0 + 0] == S0 )
+        {
+            break;
+        }
+        if( hu[A0 + 0] < S0 )
+        {
+            A0 = A0 + V1 * 4;
+        }
+        else
+        {
+            A0 = A0 - V1 * 4;
+        }
+
+        V1 = V1 >> 1;
+    }
+
+    if( hu[A0 + 0] == S0 )
+    {
+        [active_model + 46] = h(hu[A0 + 2]);
+        [active_model + 57] = b(S1);
+    }
+    else
+    {
+        [active_model + 46] = h(0);
+        [active_model + 57] = b(0);
+    }
+
+    if( S2 != 0 )
+    {
+        if( h[active_model + 46] == 0 )
+        {
+            [active_model + 54] = b(bu[active_model + 54] - 1);
+
+            V0 = bu[active_model + 54];
+            [active_model + 46] = h(hu[active_model + 2c + V0 * 4 + 0]);
+            [active_model + 56] = b(bu[active_model + 2c + V0 * 4 + 2]);
+            [active_model + 57] = b(bu[active_model + 2c + V0 * 4 + 3]);
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab8ec
+800AB8EC	lui    v1, $8011
+V1 = w[V1 + ad40];
+800AB8F4	nop
+800AB8F8	beq    v1, zero, Lab924 [$800ab924]
+800AB8FC	nop
+800AB900	beq    a0, zero, Lab914 [$800ab914]
+800AB904	nop
+V0 = bu[V1 + 0051];
+800AB90C	j      Lab920 [$800ab920]
+V0 = V0 | 0010;
+
+Lab914:	; 800AB914
+V0 = bu[V1 + 0051];
+800AB918	nop
+V0 = V0 & 00ef;
+
+Lab920:	; 800AB920
+[V1 + 0051] = b(V0);
+
+Lab924:	; 800AB924
+800AB924	jr     ra 
+800AB928	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab92c()
+
+V0 = w[8010ad3c];
+if( V0 != 0 )
+{
+    A1 = A0 - 2;
+    if( ( bu[V0 + 51] & 10 ) == 0 )
+    {
+        if( A1 < 0 )
+        {
+            A1 = 0;
+        }
+        if( A1 >= 4 )
+        {
+            A1 = 3;
+        }
+
+        A0 = A0 & ff;
+        funcab6e4();
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab988()
+
+S0 = A0;
+S1 = A1;
+
+wm_set_active_entity_with_model_id();
+
+active_model = w[8010ad3c];
+if( active_model != 0 )
+{
+    A1 = S1 - 2;
+    if( ( bu[active_model + 51] & 10 ) == 0 )
+    {
+
+        V1 = S0 << 08;
+        V1 = V1 & 3f00;
+        V0 = S1 & 00ff;
+        V0 = V0 | 4000;
+        A0 = V1 | V0;
+        if( A1 < 0 )
+        {
+            A1 = 0;
+        }
+        if( A1 >= 4 )
+        {
+            A1 = 3;
+        }
+
+        funcab6e4();
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcaba18()
+
+[8010ad3c] = w(80109d74);
+if( A0 == 1 )
+{
+    [8010adec] = w(1);
+}
+
+A1 = A0 - 2;
+if( A1 < 0 )
+{
+    A1 = 0;
+}
+if( A1 >= 4 )
+{
+    A1 = 3;
+}
+
+A0 = A0 & ff;
+funcab6e4();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcaba78()
+
+S0 = A0;
+S1 = A1;
+
+[8010ad3c] = w(80109d74);
+
+A0 = w[8010ad40] + c;
+A1 = 0;
+A2 = SP + 10;
+A3 = SP + 12;
+wm_extract_loop_coords_top_bottom_parts();
+
+S0 = S0 << 10;
+S0 = S0 >> 10;
+S1 = S1 << 10;
+S1 = S1 >> 10;
+
+A0 = (((h[SP + 12] * 24) + h[SP + 10]) << 4) & 3ff0;
+
+V0 = S1 << 02;
+V0 = V0 + S1;
+
+S0 = S0 + V0;
+S0 = S0 & f;
+
+
+A0 = A0 | S0 | 8000;
+A1 = 3;
+funcab6e4();
 ////////////////////////////////

@@ -1,88 +1,71 @@
 ////////////////////////////////
-// funcad804
-800AD804	lui    v0, $8011
-V0 = w[V0 + adec];
-800AD80C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-800AD814	bne    v0, zero, Lad914 [$800ad914]
-[SP + 0010] = w(S0);
-800AD81C	lui    v0, $8011
-V0 = w[V0 + ad40];
-800AD824	nop
-V0 = bu[V0 + 0051];
-800AD82C	nop
-V0 = V0 & 0008;
-800AD834	bne    v0, zero, Lad914 [$800ad914]
-800AD838	nop
-800AD83C	jal    funca91a4 [$800a91a4]
-A0 = 2000;
-800AD844	beq    v0, zero, Lad87c [$800ad87c]
-800AD848	nop
-800AD84C	lui    v0, $8011
-V0 = w[V0 + ad40];
-800AD854	nop
-V1 = h[V0 + 0042];
-V0 = w[V0 + 0010];
-800AD860	nop
-V0 = V0 - V1;
-V0 = V0 < 01f4;
-800AD86C	beq    v0, zero, Lad914 [$800ad914]
-800AD870	nop
-800AD874	j      Lad89c [$800ad89c]
-800AD878	nop
+// funcad804()
 
-Lad87c:	; 800AD87C
-800AD87C	lui    v0, $8011
-V0 = w[V0 + ad40];
-800AD884	nop
-V0 = bu[V0 + 0051];
-800AD88C	nop
-V0 = V0 & 0080;
-800AD894	bne    v0, zero, Lad914 [$800ad914]
-800AD898	nop
+if( w[8010adec] == 0 )
+{
+    pc_entity = w[8010ad40];
 
-Lad89c:	; 800AD89C
-800AD89C	jal    funca9ad0 [$800a9ad0]
-800AD8A0	nop
-S0 = V0;
-V0 = S0 < 0003;
-800AD8AC	bne    v0, zero, Lad90c [$800ad90c]
-800AD8B0	nop
-800AD8B4	lui    v0, $8011
-V0 = h[V0 + adf0];
-800AD8BC	nop
-800AD8C0	beq    v0, s0, Lad8e0 [$800ad8e0]
-800AD8C4	addiu  a0, s0, $fffd (=-$3)
-800AD8C8	lui    at, $8011
-[AT + adf0] = h(S0);
-A0 = A0 << 10;
-A0 = A0 >> 10;
-800AD8D8	jal    funcaba78 [$800aba78]
-A1 = 0;
+    if( ( bu[pc_entity + 51] & 08 ) == 0 )
+    {
+        A0 = 2000;
+        800AD83C	jal    funca91a4 [$800a91a4]
 
-Lad8e0:	; 800AD8E0
-V0 = 0007;
-800AD8E4	bne    s0, v0, Lad914 [$800ad914]
-800AD8E8	nop
-800AD8EC	jal    funca91a4 [$800a91a4]
-A0 = 2000;
-800AD8F4	bne    v0, zero, Lad914 [$800ad914]
-800AD8F8	nop
-800AD8FC	jal    funcaa238 [$800aa238]
-800AD900	nop
-800AD904	j      Lad914 [$800ad914]
-800AD908	nop
+        if( V0 != 0 )
+        {
+            // y - original_y
+            if( ( w[pc_entity + 10] - h[pc_entity + 42] ) >= 1f4 )
+            {
+                return;
+            }
+        }
+        else
+        {
+            if( bu[pc_entity + 51] & 80 )
+            {
+                return;
+            }
+        }
 
-Lad90c:	; 800AD90C
-800AD90C	lui    at, $8011
-[AT + adf0] = h(0);
+        funca9ad0();
+        S0 = V0;
 
-Lad914:	; 800AD914
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800AD920	jr     ra 
-800AD924	nop
+        if( S0 >= 3 )
+        {
+            V0 = h[8010adf0];
+            A0 = S0 - 3;
+
+            if( V0 != S0 )
+            {
+                [8010adf0] = h(S0);
+
+                A0 = A0 << 10;
+                A0 = A0 >> 10;
+                A1 = 0;
+                funcaba78();
+
+            }
+
+            if( S0 == 7 )
+            {
+                A0 = 2000;
+                800AD8EC	jal    funca91a4 [$800a91a4]
+
+                if( V0 == 0 )
+                {
+                    800AD8FC	jal    funcaa238 [$800aa238]
+                }
+            }
+        }
+        else
+        {
+            [8010adf0] = h(0);
+        }
+    }
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcad928
 800AD928	lui    v0, $8011
