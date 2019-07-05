@@ -69,6 +69,7 @@
 +1c [][][][] X
 +20 [][][][] Y
 +24 [][][][] Z
++28 [][][][] ???
 +3c [][]     rotation.
 +3e [][]     init with 0.
 +40 [][]     rotation of model (set using opcode 304).
@@ -91,11 +92,17 @@
                 0x19 chocobo
 +51 []       some flags.
                 0x01 - set flag if +c or +14 pos != +1c or +24 pos. Else remove flag.
+                0x20 - animation loop (maybe indicates loop or indicates play once).
                 0x40 - use walkmesh collision.
                 0x80 - set if position was changed and needs to be recalculated.
++53 []       init with 0 when start animation. Maybe current frame.
 +55 []       move speed.
++56 []       we stop wait in script if this is 0.
 +58 []       ???
++5c []       we discrease +44 by this value during movement.
++5d []       animation id.
 +5e []       init with -1.
++5f []       we increase +10 by this value during movement.
 +90 start of packet for buffer 1.
 +a8 start of packet for buffer 2
     +03 []       store 0x09 here.

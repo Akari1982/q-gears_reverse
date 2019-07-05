@@ -404,7 +404,7 @@
 // funca9064
 800A9064-800A90E8
 ////////////////////////////////
-// funca90ec
+// wm_set_pc_entity_as_active_entity
 800A90EC-800A910C
 ////////////////////////////////
 // wm_set_active_entity_as_pc_entity
@@ -413,10 +413,10 @@
 // funca9134
 800A9134-800A9150
 ////////////////////////////////
-// wm_get_model_id_from_active_model
+// wm_get_model_id_from_active_entity
 800A9154-800A9170
 ////////////////////////////////
-// wm_get_model_id_from_pc_model
+// wm_get_model_id_from_pc_entity
 800A9174-800A9190
 ////////////////////////////////
 // funca9194
@@ -443,7 +443,7 @@
 // wm_init_model_struct_list_element
 800A9334-800A947C
 ////////////////////////////////
-// funca9480
+// wm_set_active_entity_direction_and_rotation
 800A9480-800A94A4
 ////////////////////////////////
 // funca94a8
@@ -470,7 +470,7 @@
 // funca97a8
 800A97A8-800A97E0
 ////////////////////////////////
-// funca97e4
+// wm_get_pc_entity_total_rotation
 800A97E4-800A981C
 ////////////////////////////////
 // funca9820
@@ -485,7 +485,7 @@
 // funca98a4
 800A98A4-800A98E0
 ////////////////////////////////
-// funca98e4
+// wm_is_pc_entity_pos_need_recalculation
 800A98E4-800A990C
 ////////////////////////////////
 // wm_get_pc_entity_original_y
@@ -587,7 +587,7 @@
 // funcaa6d0
 800AA6D0-800AA7D8
 ////////////////////////////////
-// wm_add_coords_cycled
+// wm_move_active_model
 800AA7DC-800AA8D4
 ////////////////////////////////
 // funcaa8d8

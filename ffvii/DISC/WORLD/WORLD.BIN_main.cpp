@@ -29,38 +29,27 @@ return w[800d05e8];
 
 ////////////////////////////////
 // funca0be4
-800A0BE4	addiu  sp, sp, $ffe8 (=-$18)
-800A0BE8	lui    a1, $0002
-A1 = A1 | 0800;
+
 V1 = A0 << 02;
 V1 = V1 + A0;
-800A0BF8	lui    a0, $800d
-A0 = w[A0 + 05e0];
-800A0C00	lui    v0, $800d
-V0 = w[V0 + 05dc];
+A0 = w[800d05e0];
+V0 = w[800d05dc];
 V1 = V1 << 03;
-[SP + 0014] = w(RA);
+
 V1 = V1 + A0;
-V0 = V0 + A1;
-V0 = V1 < V0;
-800A0C1C	beq    v0, zero, La0c34 [$800a0c34]
-[SP + 0010] = w(S0);
-800A0C24	lui    at, $800d
-[AT + 05e0] = w(V1);
-800A0C2C	j      La0c3c [$800a0c3c]
-S0 = A0;
+V0 = V0 + 20800;
+if( V1 < V0 )
+{
+    [800d05e0] = w(V1);
+    S0 = A0;
+}
+else
+{
+    A0 = 1;
+    800A0C34	jal    funca0b40 [$800a0b40]
+}
 
-La0c34:	; 800A0C34
-800A0C34	jal    funca0b40 [$800a0b40]
-A0 = 0001;
-
-La0c3c:	; 800A0C3C
-V0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800A0C4C	jr     ra 
-800A0C50	nop
+return S0;
 ////////////////////////////////
 
 
@@ -656,7 +645,7 @@ V1 = 000e;
 V1 = S3 & 00ff;
 
 La1764:	; 800A1764
-800A1764	jal    wm_get_model_id_from_pc_model [$800a9174]
+800A1764	jal    wm_get_model_id_from_pc_entity [$800a9174]
 800A1768	nop
 V1 = S3 & 00ff;
 800A1770	bne    v0, v1, La1784 [$800a1784]
@@ -776,7 +765,7 @@ V0 = w[V0 + 5658];
 V0 = S0 & 001f;
 800A18D8	j      La19dc [$800a19dc]
 V0 = V0 < 0001;
-800A18E0	jal    funca98e4 [$800a98e4]
+800A18E0	jal    wm_is_pc_entity_pos_need_recalculation [$800a98e4]
 800A18E4	nop
 800A18E8	beq    v0, zero, La1928 [$800a1928]
 800A18EC	nop
@@ -1448,9 +1437,9 @@ return w[800e55fc];
 [SP + 64] = w(0);
 [SP + 68] = w(0);
 
-800A21D8	jal    funca90ec [$800a90ec]
+800A21D8	jal    wm_set_pc_entity_as_active_entity [$800a90ec]
 
-800A21E0	jal    wm_get_model_id_from_pc_model [$800a9174]
+800A21E0	jal    wm_get_model_id_from_pc_entity [$800a9174]
 
 V1 = w[800e55fc];
 
@@ -2516,7 +2505,7 @@ La305c:	; 800A305C
 La3064:	; 800A3064
 A0 = w[SP + 0064];
 A1 = w[SP + 0068];
-wm_add_coords_cycled();
+wm_move_active_model();
 
 800A3074	jal    funcaa640 [$800aa640]
 800A3078	nop
@@ -2538,7 +2527,7 @@ A0 = SP + 0064;
 A1 = SP + 0068;
 A0 = w[SP + 0064];
 A1 = w[SP + 0068];
-wm_add_coords_cycled();
+wm_move_active_model();
 
 800A30BC	jal    funcaa640 [$800aa640]
 800A30C0	nop
@@ -2695,7 +2684,7 @@ V0 = w[V0 + 565c];
 800A3330	nop
 800A3334	jal    funca2088 [$800a2088]
 A0 = 0003;
-800A333C	jal    wm_get_model_id_from_pc_model [$800a9174]
+800A333C	jal    wm_get_model_id_from_pc_entity [$800a9174]
 800A3340	nop
 V1 = 0003;
 800A3348	bne    v0, v1, La3354 [$800a3354]
@@ -2960,18 +2949,17 @@ V0 = w[V0 + 5658];
 800A36A4	jr     ra 
 800A36A8	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca36ac
-800A36AC	addiu  sp, sp, $ffa0 (=-$60)
-[SP + 004c] = w(S1);
+
 S1 = A0;
-[SP + 0048] = w(S0);
 S0 = A1;
-[SP + 0050] = w(S2);
 S2 = A2;
-[SP + 0054] = w(S3);
 S3 = A3;
 V0 = 1000;
-[SP + 0058] = w(RA);
 [SP + 0020] = h(V0);
 [SP + 0018] = h(V0);
 [SP + 0010] = h(V0);
@@ -3104,16 +3092,12 @@ A0 = S2;
 A1 = S0;
 [S1 + 0010] = w(0);
 [S1 + 000c] = w(0);
-800A38A0	jal    $system_gte_copy_matrix_translation_part
 [S1 + 0008] = w(0);
-RA = w[SP + 0058];
-S3 = w[SP + 0054];
-S2 = w[SP + 0050];
-S1 = w[SP + 004c];
-S0 = w[SP + 0048];
-SP = SP + 0060;
-800A38C0	jr     ra 
-800A38C4	nop
+system_gte_copy_matrix_translation_part();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca38c8
 800A38C8	addiu  sp, sp, $ffe8 (=-$18)
@@ -3365,23 +3349,19 @@ V0 = V0 + 0001;
 [AT + 566c] = w(V0);
 800A3C20	bne    v0, zero, La3c64 [$800a3c64]
 800A3C24	nop
-800A3C28	jal    $80043d3c
-A0 = 0001;
-800A3C30	lui    v1, $800e
-V1 = w[V1 + 5634];
+A0 = 1;
+system_psyq_set_disp_mask();
+
+V1 = w[800e5634];
 V0 = 0002;
 800A3C3C	beq    v1, v0, La3c50 [$800a3c50]
 A0 = 0010;
-V0 = 0001;
-800A3C48	lui    at, $800e
-[AT + 55f4] = w(V0);
+[800e55f4] = w(1);
 
 La3c50:	; 800A3C50
-V0 = 0001;
-800A3C54	lui    at, $800e
-[AT + 566c] = w(V0);
-800A3C5C	jal    funcaffbc [$800affbc]
+[800e566c] = w(1);
 A1 = 0001;
+800A3C5C	jal    funcaffbc [$800affbc]
 
 La3c64:	; 800A3C64
 ////////////////////////////////
@@ -4276,7 +4256,7 @@ La4668:	; 800A4668
 
     wm_script_run_all();
 
-    wm_get_model_id_from_pc_model();
+    wm_get_model_id_from_pc_entity();
 
     800A4898	bne    v0, s5, La48a4 [$800a48a4]
     V1 = 07d0;
@@ -4490,7 +4470,7 @@ La4668:	; 800A4668
         800A4BA0	j      La4bc4 [$800a4bc4]
 
         La4ba8:	; 800A4BA8
-        wm_get_model_id_from_pc_model();
+        wm_get_model_id_from_pc_entity();
 
         A0 = S0;
         800A4BB0	beq    v0, s5, La4bc4 [$800a4bc4]
@@ -4562,7 +4542,7 @@ La4668:	; 800A4668
 
         system_get_current_pad_buttons();
 
-        if( ( V0 & 90f ) == 90f ) // reset game if all shifts and start + select pressed
+        if( ( V0 & 090f ) == 090f ) // reset game if all shifts and start + select pressed
         {
             800A4CEC	jal    funca4008 [$800a4008]
         }
@@ -6932,7 +6912,7 @@ A0 = SP + 0020;
 [SP + 0030] = w(A1);
 800A6C84	jal    funca9134 [$800a9134]
 S0 = S2;
-800A6C8C	jal    wm_get_model_id_from_active_model [$800a9154]
+800A6C8C	jal    wm_get_model_id_from_active_entity [$800a9154]
 [SP + 0040] = w(V0);
 800A6C94	jal    funcbc1ac [$800bc1ac]
 [SP + 0038] = w(V0);
@@ -7487,7 +7467,7 @@ La73f0:	; 800A73F0
 [SP + 0f4a] = h(0);
 800A73F4	jal    $system_gte_set_translation_vector
 A0 = SP + 0f78;
-800A73FC	jal    wm_get_model_id_from_pc_model [$800a9174]
+800A73FC	jal    wm_get_model_id_from_pc_entity [$800a9174]
 S0 = 00c8;
 V1 = 0005;
 800A7408	bne    v0, v1, La7414 [$800a7414]
@@ -8421,7 +8401,7 @@ return w[800e5828];
 
 S0 = A0;
 S2 = A1;
-800A8084	jal    funca90ec [$800a90ec]
+800A8084	jal    wm_set_pc_entity_as_active_entity [$800a90ec]
 
 800A808C	jal    wm_get_position_from_pc_model [$800aa0e0]
 A0 = SP + 0010;
@@ -8552,22 +8532,22 @@ V0 = 0001;
 A0 = 0;
 
 La8230:	; 800A8230
-800A8230	lui    v1, $8011
-V1 = w[V1 + 9d64];
+V1 = w[80109d64];
 800A8238	nop
 800A823C	bne    v1, v0, La8258 [$800a8258]
 S0 = SP + 0020;
-800A8244	lui    a0, $8011
-A0 = w[A0 + 9d68];
+
+A0 = w[80109d68];
 
 La824c:	; 800A824C
-800A824C	jal    funcbb8e8 [$800bb8e8]
-800A8250	nop
-S0 = SP + 0020;
+funcbb8e8(); // calculate pc entity position
+
+S0 = SP + 20;
 
 La8258:	; 800A8258
-800A8258	jal    wm_get_position_from_pc_model [$800aa0e0]
 A0 = S0;
+wm_get_position_from_pc_model();
+
 V0 = 157c;
 800A8264	lui    at, $800c
 [AT + d134] = w(V0);

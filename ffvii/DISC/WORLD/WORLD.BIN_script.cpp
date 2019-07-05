@@ -100,7 +100,7 @@ else
 
         case 8:
         {
-            wm_get_model_id_from_pc_model();
+            wm_get_model_id_from_pc_entity();
             return V0;
         }
         break;
@@ -716,16 +716,13 @@ else if( A0 == 203 ) // return
             if( w[8010ade4] == 80109d74 )
             {
                 S0 = w[8010ad38];
-                if( S0 != 0 )
+                while( S0 != 0 )
                 {
-                    loopac61c:	; 800AC61C
-                        A0 = bu[S0 + 0050];
-                        A1 = 1;
-                        funcab988();
+                    A0 = bu[S0 + 50];
+                    A1 = 1;
+                    funcab988();
 
-                        S0 = w[S0 + 0000];
-                        800AC62C	nop
-                    800AC630	bne    s0, zero, loopac61c [$800ac61c]
+                    S0 = w[S0 + 0];
                 }
             }
         }
@@ -952,8 +949,12 @@ switch( opcode )
         800AC998	jal    funcae47c [$800ae47c]
         A1 = A1 + 000c;
         V0 = V0 + S0;
-        800AC9A4	j      Lacbc8 [$800acbc8]
         [S1 + 0040] = h(V0);
+
+        Lacbc8:	; 800ACBC8
+        [8010ad3c] = w(S1);
+
+        return 0;
     }
     break;
 
@@ -1014,134 +1015,95 @@ switch( opcode )
 
     case 308: // set active entity mesh coordinates
     {
-        800ACA84	jal    wm_script_pop_stack [$800abb24]
-        800ACA88	nop
-        800ACA8C	jal    wm_script_pop_stack [$800abb24]
+        wm_script_pop_stack();
         S1 = V0;
+
+        wm_script_pop_stack();
+
         A2 = w[8010ad3c];
-        V0 = V0 << 0d;
-        V1 = w[A2 + 000c];
-        A0 = w[A2 + 0014];
-        V1 = V1 & 1fff;
-        V0 = V0 | V1;
-        A0 = A0 & 1fff;
-        [A2 + 000c] = w(V0);
-        800ACAB8	j      Lacafc [$800acafc]
-        V0 = S1 << 0d;
+
+        [A2 + c] = w((w[A2 + c] & 00001fff) | (V0 << d)); // x
+        [A2 + 14] = w((w[A2 + 14] & 00001fff) | (S1 << d)); // z
+
+        if( ( w[A2 + 14] != w[A2 + 24] ) || ( w[A2 + c] != w[A2 + 1c] ) )
+        {
+            [A2 + 51] = b(bu[A2 + 51] | 01);
+        }
+        return 0;
     }
     break;
 
     case 309: // set active entity coordinates in mesh
     {
-        800ACAC0	jal    wm_script_pop_stack [$800abb24]
-        800ACAC4	nop
-        800ACAC8	jal    wm_script_pop_stack [$800abb24]
+        wm_script_pop_stack();
         S1 = V0;
-        800ACAD0	addiu  a1, zero, $e000 (=-$2000)
+
+        wm_script_pop_stack();
+
         A2 = w[8010ad3c];
-        V0 = V0 & 1fff;
-        V1 = w[A2 + 000c];
-        A0 = w[A2 + 0014];
-        V1 = V1 & A1;
-        V0 = V0 | V1;
-        A0 = A0 & A1;
-        [A2 + 000c] = w(V0);
-        V0 = S1 & 1fff;
+        [A2 + c] = w((w[A2 + c] & ffffe000) | (V0 & 1fff)); // x
+        [A2 + 14] = w((w[A2 + 14] & ffffe000) | (S1 & 1fff)); // z
 
-        Lacafc:	; 800ACAFC
-        A1 = w[A2 + 000c];
-        V1 = w[A2 + 001c];
-        A0 = V0 | A0;
-        800ACB08	bne    a1, v1, Lacb20 [$800acb20]
-        [A2 + 0014] = w(A0);
-        V0 = w[A2 + 0024];
-        800ACB14	nop
-        800ACB18	beq    a0, v0, Lad620 [$800ad620]
-        V0 = 0;
-
-        Lacb20:	; 800ACB20
-        V0 = bu[A2 + 0051];
-        800ACB24	nop
-        V0 = V0 | 0001;
-        800ACB2C	j      Lad61c [$800ad61c]
-        [A2 + 0051] = b(V0);
+        if( ( w[A2 + 14] != w[A2 + 24] ) || ( w[A2 + c] != w[A2 + 1c] ) )
+        {
+            [A2 + 51] = b(bu[A2 + 51] | 01);
+        }
+        return 0;
     }
     break;
 
-    case 347: // move active entity to entity by model id?
+    case 347: // set pos of active entity as pos of entity by model id
     {
         S1 = w[8010ad3c];
-        800ACB3C	nop
-        800ACB40	beq    s1, zero, Lacbc8 [$800acbc8]
-        800ACB44	nop
-        800ACB48	jal    wm_script_pop_stack [$800abb24]
-        800ACB4C	nop
-        800ACB50	jal    wm_set_active_entity_with_model_id [$800a993c]
-        A0 = V0;
+        if( S1 != 0 )
+        {
+            wm_script_pop_stack();
 
-        Lacb58:	; 800ACB58
-        800ACB58	beq    v0, zero, Lacbc8 [$800acbc8]
-        800ACB5C	nop
-        V0 = w[8010ad3c];
-        800ACB68	nop
-        V1 = w[V0 + 000c];
-        A0 = w[V0 + 0010];
-        A1 = w[V0 + 0014];
-        A2 = w[V0 + 0018];
-        [S1 + 000c] = w(V1);
-        [S1 + 0010] = w(A0);
-        [S1 + 0014] = w(A1);
-        [S1 + 0018] = w(A2);
-        V0 = w[8010ad3c];
-        800ACB94	nop
-        V1 = w[V0 + 001c];
-        A0 = w[V0 + 0020];
-        A1 = w[V0 + 0024];
-        A2 = w[V0 + 0028];
-        [S1 + 001c] = w(V1);
-        [S1 + 0020] = w(A0);
-        [S1 + 0024] = w(A1);
-        [S1 + 0028] = w(A2);
-        V0 = bu[S1 + 0051];
-        800ACBBC	nop
-        V0 = V0 | 0001;
-        [S1 + 0051] = b(V0);
+            A0 = V0;
+            wm_set_active_entity_with_model_id();
 
-        Lacbc8:	; 800ACBC8
+            if( V0 != 0 )
+            {
+                V0 = w[8010ad3c];
+                [S1 + c] = w(w[V0 + c]);
+                [S1 + 10] = w(w[V0 + 10]);
+                [S1 + 14] = w(w[V0 + 14]);
+                [S1 + 18] = w(w[V0 + 18]);
+                [S1 + 1c] = w(w[V0 + 1c]);
+                [S1 + 20] = w(w[V0 + 20]);
+                [S1 + 24] = w(w[V0 + 24]);
+                [S1 + 28] = w(w[V0 + 28]);
+                [S1 + 51] = b(bu[S1 + 51] | 01);
+            }
+        }
+
         [8010ad3c] = w(S1);
-        800ACBD0	j      Lad620 [$800ad620]
-        V0 = 0;
+
+        return 0;
     }
     break;
 
     case 30e: // active entity play animation
     {
-        800ACBD8	jal    wm_script_pop_stack [$800abb24]
-        800ACBDC	nop
-        800ACBE0	beq    v0, zero, Lacc00 [$800acc00]
-        800ACBE4	nop
-        V1 = w[8010ad3c];
-        800ACBF0	nop
-        V0 = bu[V1 + 0051];
-        800ACBF8	j      Lacc18 [$800acc18]
-        V0 = V0 & 00df;
+        wm_script_pop_stack()
 
-        Lacc00:	; 800ACC00
         V1 = w[8010ad3c];
-        800ACC08	nop
-        V0 = bu[V1 + 0051];
-        800ACC10	nop
-        V0 = V0 | 0020;
 
-        Lacc18:	; 800ACC18
-        800ACC18	jal    wm_script_pop_stack [$800abb24]
-        [V1 + 0051] = b(V0);
-        V1 = w[8010ad3c];
-        800ACC28	nop
-        [V1 + 005d] = b(V0);
-        V0 = w[8010ad3c];
-        800ACC38	j      Lad61c [$800ad61c]
-        [V0 + 0053] = b(0);
+        if( V0 != 0 )
+        {
+            [V1 + 51] = b(bu[V1 + 51] & df);
+        }
+        else
+        {
+            [V1 + 51] = b(bu[V1 + 51] | 20);
+        }
+
+        wm_script_pop_stack();
+
+        [V1 + 5d] = b(V0); // animation id
+        [V1 + 53] = b(0);
+
+        return 0;
     }
     break;
 
@@ -1680,15 +1642,13 @@ switch( opcode )
 
     case 34c: // set submarine color
     {
-        800AD154	jal    wm_script_pop_stack [$800abb24]
-        800AD158	nop
-        A0 = 000d;
-        V0 = V0 + 0005;
-        V0 = V0 << 10;
+        wm_script_pop_stack();
+
+        A0 = d;
+        A1 = ((V0 + 5) << 10) >> 10;
         800AD168	jal    funcb624c [$800b624c]
-        A1 = V0 >> 10;
-        800AD170	j      Lad620 [$800ad620]
-        V0 = 0;
+
+        return 0;
     }
     break;
 
@@ -1893,8 +1853,8 @@ switch( opcode )
         800AD3A0	bne    v0, zero, Lad620 [$800ad620]
         V0 = 0;
         A0 = w[8010ad3c];
-        800AD3B0	j      Lad524 [$800ad524]
-        800AD3B4	nop
+        [A0 + 46] = h(hu[A0 + 46] - 1);
+        return 1;
     }
     break;
 
@@ -2011,79 +1971,52 @@ switch( opcode )
     case 306: // wait?
     {
         V0 = w[8010ade8];
-        800AD510	nop
-        800AD514	beq    v0, zero, Lad53c [$800ad53c]
-        800AD518	nop
-        A0 = w[8010ade4];
+        if( V0 != 0 )
+        {
+            A0 = w[8010ade4];
+            [A0 + 46] = h(hu[A0 + 46] - 1);
+            return 1;
+        }
 
-        Lad524:	; 800AD524
-        800AD524	nop
-        V1 = hu[A0 + 0046];
-        V0 = 0001;
-        800AD530	addiu  v1, v1, $ffff (=-$1)
-        800AD534	j      Lad620 [$800ad620]
-        [A0 + 0046] = h(V1);
-
-        Lad53c:	; 800AD53C
         V1 = w[8010ade4];
-        800AD544	nop
+        [V1 + 56] = b(bu[V1 + 56] - 1);
 
-        Lad548:	; 800AD548
-        V0 = bu[V1 + 0056];
-        800AD54C	nop
-        800AD550	addiu  v0, v0, $ffff (=-$1)
-        [V1 + 0056] = b(V0);
-        V0 = V0 & 00ff;
-        800AD55C	beq    v0, zero, Lad584 [$800ad584]
-        V0 = 0001;
-        V1 = w[8010ade4];
-        800AD56C	nop
-        V0 = hu[V1 + 0046];
-        800AD574	nop
-        800AD578	addiu  v0, v0, $ffff (=-$1)
-        800AD57C	j      Lad58c [$800ad58c]
-        [V1 + 0046] = h(V0);
+        if( bu[V1 + 56] != 0 )
+        {
+            V1 = w[8010ade4];
+            [V1 + 46] = h(hu[V1 + 46] - 1);
+        }
+        else
+        {
+            [8010ade8] = w(1);
+        }
 
-        Lad584:	; 800AD584
-        [8010ade8] = w(V0);
-
-        Lad58c:	; 800AD58C
         A0 = w[8010ad3c];
-        [SP + 0012] = h(0);
-        [SP + 0010] = h(0);
-        V0 = bu[A0 + 0051];
-        V1 = bu[A0 + 0055];
-        V0 = V0 & 0040;
-        800AD5A8	beq    v0, zero, Lad5b4 [$800ad5b4]
-        800AD5AC	nop
-        V1 = V1 << 04;
+        V1 = bu[A0 + 55]; // movement speed
 
-        Lad5b4:	; 800AD5B4
-        [SP + 0014] = h(V1);
+        if( bu[A0 + 51] & 40 )
+        {
+            V1 = V1 * 10;
+        }
+
+        [SP + 10] = h(0);
+        [SP + 12] = h(0);
+        [SP + 14] = h(V1);
+
         A0 = SP + 10;
-        A1 = h[A0 + 4c];
+        A1 = h[A0 + 4c]; // movement direction
         wm_rotate_vector_by_y_angle();
 
-        A0 = h[SP + 0010];
-        A1 = h[SP + 0014];
-        wm_add_coords_cycled();
+        A0 = h[SP + 10];
+        A1 = h[SP + 14];
+        wm_move_active_model();
 
         A0 = w[8010ad3c];
-        800AD5DC	nop
-        V0 = bu[A0 + 005c];
-        V1 = hu[A0 + 0044];
-        V0 = V0 << 18;
-        V0 = V0 >> 18;
-        V1 = V1 - V0;
-        V0 = b[A0 + 005f];
-        [A0 + 0044] = h(V1);
-        V1 = w[A0 + 0010];
+        [A0 + 44] = h(hu[A0 + 44] - b[A0 + 5c]);
+        [A0 + 10] = w(w[A0 + 10] + b[A0 + 5f]);
+
         A1 = w[8010ade4];
-        V0 = V0 + V1;
-        [A0 + 0010] = w(V0);
-        V0 = bu[A1 + 0056];
-        800AD614	j      Lad620 [$800ad620]
-        V0 = 0 < V0;
+        return 0 < bu[A1 + 56];
 }
 
 Lad61c:	; 800AD61C
