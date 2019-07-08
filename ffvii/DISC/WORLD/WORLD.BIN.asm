@@ -1017,7 +1017,7 @@
 // wm_unload_pc_character_model
 800B6A4C-800B6AE8
 ////////////////////////////////
-// system_cdrom_pc_character_model_load_callback
+// wm_pc_character_model_load_callback
 800B6AEC-800B6B24
 ////////////////////////////////
 // funcb6b28
@@ -1335,10 +1335,10 @@
 // funcbfbf0
 800BFBF0-800BFCA8
 ////////////////////////////////
-// funcbfcac
+// wm_create_packets_for_model_part
 800BFCAC-800C0804
 ////////////////////////////////
-// funcc0808
+// wm_load_textures_to_vram
 800C0808-800C08A4
 ////////////////////////////////
 // funcc08a8
