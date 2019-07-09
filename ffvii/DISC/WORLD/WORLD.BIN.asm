@@ -1011,13 +1011,13 @@
 // funcb6724
 800B6724-800B69A0
 ////////////////////////////////
-// wm_load_pc_character_model
+// wm_load_pc_character_model_file
 800B69A4-800B6A48
 ////////////////////////////////
-// wm_unload_pc_character_model
+// wm_load_pc_character_model_into_memory
 800B6A4C-800B6AE8
 ////////////////////////////////
-// wm_pc_character_model_load_callback
+// wm_pc_character_model_load_file_callback
 800B6AEC-800B6B24
 ////////////////////////////////
 // funcb6b28
@@ -1332,7 +1332,7 @@
 // funcbcecc
 800BCECC-800BD12C
 ////////////////////////////////
-// funcbfbf0
+// wm_load_model_packets_and_scale
 800BFBF0-800BFCA8
 ////////////////////////////////
 // wm_create_packets_for_model_part
@@ -1350,13 +1350,13 @@
 // funcc1490
 800C1490-800C1D54
 ////////////////////////////////
-// funcc1d58
+// wm_scale_model_all
 800C1D58-800C1FD4
 ////////////////////////////////
-// funcc1fd8
+// wm_scale_model_vertexes
 800C1FD8-800C212C
 ////////////////////////////////
-// funcc2130
+// wm_scale_model_animations
 800C2130-800C244C
 ////////////////////////////////
 // funcc2450

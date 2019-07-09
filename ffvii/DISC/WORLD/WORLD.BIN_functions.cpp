@@ -9572,7 +9572,7 @@ funcc2450();
 
 
 ////////////////////////////////
-// wm_load_pc_character_model()
+// wm_load_pc_character_model_file()
 
 model_id = A0;
 
@@ -9591,7 +9591,7 @@ if( w[80115a60] == 0 )
         A0 = w[800c74c4 + model_id * 8 + 0]; // sector for .BSZ files
         A1 = w[800c74c4 + model_id * 8 + 4]; // size
         A2 = 8014a600; // buffer
-        A3 = 800b6aec; // wm_pc_character_model_load_callback()
+        A3 = 800b6aec; // wm_pc_character_model_load_file_callback()
         system_cdrom_start_load_lzs();
 
         system_cdrom_read_chain(); // finish loading and extraction
@@ -9606,7 +9606,7 @@ if( w[80115a60] == 0 )
 
 
 ////////////////////////////////
-// wm_unload_pc_character_model()
+// wm_load_pc_character_model_into_memory()
 
 A0 = 8014a604 + ((w[8014a608] >> 2) << 2); // texture global offset
 wm_load_textures_to_vram();
@@ -9614,7 +9614,7 @@ wm_load_textures_to_vram();
 A0 = w[8014a610]; // model global offset
 A1 = 8014fc00;
 A2 = 0;
-funcbfbf0();
+wm_load_model_packets_and_scale();
 
 A0 = w[8014a610];
 funcb6724();
@@ -9632,7 +9632,7 @@ model_id = w[80115a5c];
 
 
 ////////////////////////////////
-// wm_pc_character_model_load_callback()
+// wm_pc_character_model_load_file_callback()
 
 if( w[80115a60] != 0 )
 {
@@ -9641,7 +9641,7 @@ if( w[80115a60] != 0 )
     A0 = 2;
     funcadd4c();
 
-    wm_unload_pc_character_model();
+    wm_load_pc_character_model_into_memory();
 }
 ////////////////////////////////
 
@@ -9664,12 +9664,13 @@ A2 = S3;
 800B6B64	lui    a0, $8014
 A0 = w[A0 + a804];
 S3 = S3 + 0001;
-800B6B70	jal    funcbfbf0 [$800bfbf0]
 A0 = S0 + A0;
+
+wm_load_model_packets_and_scale();
+
 A1 = V0;
-800B6B7C	lui    v0, $8014
-V0 = bu[V0 + a800];
-800B6B84	nop
+V0 = bu[8013a800];
+
 V0 = S3 < V0;
 800B6B8C	bne    v0, zero, loopb6b60 [$800b6b60]
 S0 = S0 + 0024;
@@ -9923,7 +9924,7 @@ if( b[801159e8 + model_id] < 0 )
     else // pc
     {
         A0 = model_id;
-        wm_load_pc_character_model();
+        wm_load_pc_character_model_file();
     }
 }
 
@@ -9967,7 +9968,7 @@ if( V1 == 0 )
     A0 = S1;
     A1 = w[80115a44];
     A2 = S2;
-    funcbfbf0();
+    wm_load_model_packets_and_scale();
 
     [80115a44] = w(V0);
 
@@ -16908,7 +16909,7 @@ V0 = 0;
 
 
 ////////////////////////////////
-// funcbfbf0()
+// wm_load_model_packets_and_scale()
 
 model = A0; // model global offset
 S3 = A1;
@@ -16931,9 +16932,9 @@ for( int i = 0; i < bu[model + 3]; ++i )
 }
 
 A0 = model;
-A1 = h[model + 16];
-A2 = 0;
-funcc1d58();
+A1 = h[model + 16]; // scale
+A2 = 0; // not force
+wm_scale_model_all();
 
 return S3;
 ////////////////////////////////
@@ -16962,7 +16963,6 @@ if( A2 != 0 )
 
 T1 = w[SP + 0018];
 T0 = w[SP + 0010];
-800BFD18	nop
 [T0 + 001c] = w(T1);
 
 V1 = w[SP + 20];
@@ -17004,9 +17004,7 @@ for( int i = 0; i < 2; ++i )
     FP = V0 + V1;
     if( i != 0 )
     {
-
         V0 = hu[T1 + 0016];
-        800BFDA4	nop
         S5 = S5 + V0;
         T1 = w[SP + 0010];
     }
@@ -17014,150 +17012,144 @@ for( int i = 0; i < 2; ++i )
     S2 = 0;
     V0 = hu[T1 + 000e];
     S7 = bu[T1 + 0004];
-    800BFDBC	nop
-    800BFDC0	beq    s7, zero, Lc0004 [$800c0004]
     S3 = V0 + V1;
-    S4 = S3 + 0014;
-    S0 = S5 + 0007;
+    if( S7 != 0 )
+    {
+        S4 = S3 + 0014;
+        S0 = S5 + 0007;
 
-    Lbfdd0:	; 800BFDD0
-        V0 = w[S4 + fff0];
-        800BFDD4	nop
-        [S0 + fffd] = w(V0);
-        V0 = w[S4 + fff4];
-        800BFDE0	nop
-        [S0 + 0009] = w(V0);
-        V0 = w[S4 + fff8];
-        800BFDEC	nop
-        [S0 + 0015] = w(V0);
-        V0 = w[S4 + fffc];
-        800BFDF8	nop
-        [S0 + 0021] = w(V0);
-        V1 = w[S4 + 0000];
-        800BFE04	nop
-        V0 = V1 & 00ff;
-        V0 = V0 << 01;
-        V0 = V0 + A3;
-        V0 = hu[V0 + 0000];
-        800BFE18	nop
-        [S0 + 0005] = h(V0);
-        V0 = V1 & ff00;
-        V0 = V0 >> 07;
-        V0 = V0 + A3;
-        V0 = hu[V0 + 0000];
-        800BFE30	nop
-        [S0 + 0011] = h(V0);
-        V0 = V1 >> 0f;
-        V0 = V0 & 01fe;
-        V0 = V0 + A3;
-        V1 = V1 >> 18;
-        V1 = V1 << 01;
-        V0 = hu[V0 + 0000];
-        V1 = V1 + A3;
-        [S0 + 001d] = h(V0);
-        V0 = hu[V1 + 0000];
-        800BFE5C	nop
-        [S0 + 0029] = h(V0);
-        S6 = bu[FP + 0000];
-        FP = FP + 0001;
-        T0 = w[SP + 0050];
-        V0 = S6 & 000f;
-        V0 = V0 << 02;
-        V0 = V0 + T0;
-        S1 = w[V0 + 0000];
-        T1 = w[SP + 0020];
-        V0 = S1 & 003f;
-        V0 = V0 ^ 0002;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        V0 = T1 & V0;
-        V1 = S1 << 01;
-        V1 = V1 >> 17;
-        V1 = V1 + V0;
-        V1 = V1 << 06;
-        V0 = S1 >> 10;
-        V0 = V0 & 003f;
-        V1 = V1 | V0;
-        [S0 + 0007] = h(V1);
-        800BFEB8	jal    $func43cc0
-        [SP + 0098] = w(A3);
-        V1 = 0001;
-        A3 = w[SP + 0098];
-        800BFEC8	beq    v0, v1, Lbfee8 [$800bfee8]
-        V1 = S1 & 00c0;
-        800BFED0	jal    $func43cc0
-        [SP + 0098] = w(A3);
-        T0 = 0002;
-        A3 = w[SP + 0098];
-        800BFEE0	bne    v0, t0, Lbff04 [$800bff04]
-        V1 = S1 & 00c0;
+        Lbfdd0:	; 800BFDD0
+            V0 = ;
+            [S0 + fffd] = w(w[S4 - 10]);
+            [S0 + 0009] = w(w[S4 + fff4]);
+            [S0 + 0015] = w(w[S4 + fff8]);
+            [S0 + 0021] = w(w[S4 + fffc]);
+            V1 = w[S4 + 0000];
+            800BFE04	nop
+            V0 = V1 & 00ff;
+            V0 = V0 << 01;
+            V0 = V0 + A3;
+            V0 = hu[V0 + 0000];
+            800BFE18	nop
+            [S0 + 0005] = h(V0);
+            V0 = V1 & ff00;
+            V0 = V0 >> 07;
+            V0 = V0 + A3;
+            V0 = hu[V0 + 0000];
+            800BFE30	nop
+            [S0 + 0011] = h(V0);
+            V0 = V1 >> 0f;
+            V0 = V0 & 01fe;
+            V0 = V0 + A3;
+            V1 = V1 >> 18;
+            V1 = V1 << 01;
+            V0 = hu[V0 + 0000];
+            V1 = V1 + A3;
+            [S0 + 001d] = h(V0);
+            V0 = hu[V1 + 0000];
+            800BFE5C	nop
+            [S0 + 0029] = h(V0);
+            S6 = bu[FP + 0000];
+            FP = FP + 0001;
+            T0 = w[SP + 0050];
+            V0 = S6 & 000f;
+            V0 = V0 << 02;
+            V0 = V0 + T0;
+            S1 = w[V0 + 0000];
+            T1 = w[SP + 0020];
+            V0 = S1 & 003f;
+            V0 = V0 ^ 0002;
+            V0 = 0 < V0;
+            V0 = 0 - V0;
+            V0 = T1 & V0;
+            V1 = S1 << 01;
+            V1 = V1 >> 17;
+            V1 = V1 + V0;
+            V1 = V1 << 06;
+            V0 = S1 >> 10;
+            V0 = V0 & 003f;
+            V1 = V1 | V0;
+            [S0 + 0007] = h(V1);
+            [SP + 0098] = w(A3);
+            func43cc0();
 
-        Lbfee8:	; 800BFEE8
-        V1 = V1 << 03;
-        V0 = S6 << 02;
-        V0 = V0 & 0180;
-        V1 = V1 | V0;
-        V0 = S1 >> 07;
-        800BFEFC	j      Lbff1c [$800bff1c]
-        V0 = V0 & 0020;
+            V1 = 0001;
+            A3 = w[SP + 0098];
+            800BFEC8	beq    v0, v1, Lbfee8 [$800bfee8]
+            V1 = S1 & 00c0;
+            800BFED0	jal    $func43cc0
+            [SP + 0098] = w(A3);
+            T0 = 0002;
+            A3 = w[SP + 0098];
+            800BFEE0	bne    v0, t0, Lbff04 [$800bff04]
+            V1 = S1 & 00c0;
 
-        Lbff04:	; 800BFF04
-        V1 = V1 << 01;
-        V0 = S6 & 0060;
-        V1 = V1 | V0;
-        V0 = S1 >> 04;
-        V0 = V0 & 0100;
-        V0 = V0 >> 04;
+            Lbfee8:	; 800BFEE8
+            V1 = V1 << 03;
+            V0 = S6 << 02;
+            V0 = V0 & 0180;
+            V1 = V1 | V0;
+            V0 = S1 >> 07;
+            800BFEFC	j      Lbff1c [$800bff1c]
+            V0 = V0 & 0020;
 
-        Lbff1c:	; 800BFF1C
-        V1 = V1 | V0;
-        V0 = S1 & 0f00;
-        V0 = V0 >> 08;
-        V1 = V1 | V0;
-        [S0 + 0013] = h(V1);
-        V1 = S1 & 003f;
-        800BFF34	bne    v1, zero, Lbff4c [$800bff4c]
-        V0 = 0001;
-        A0 = w[SP + 0030];
-        A1 = w[SP + 0038];
-        800BFF44	j      Lbff6c [$800bff6c]
+            Lbff04:	; 800BFF04
+            V1 = V1 << 01;
+            V0 = S6 & 0060;
+            V1 = V1 | V0;
+            V0 = S1 >> 04;
+            V0 = V0 & 0100;
+            V0 = V0 >> 04;
 
-        Lbff4c:	; 800BFF4C
-        800BFF4C	bne    v1, v0, Lbff64 [$800bff64]
-        A1 = 0;
-        A0 = w[SP + 0040];
-        A1 = w[SP + 0048];
-        800BFF5C	j      Lbff6c [$800bff6c]
+            Lbff1c:	; 800BFF1C
+            V1 = V1 | V0;
+            V0 = S1 & 0f00;
+            V0 = V0 >> 08;
+            V1 = V1 | V0;
+            [S0 + 0013] = h(V1);
+            V1 = S1 & 003f;
+            800BFF34	bne    v1, zero, Lbff4c [$800bff4c]
+            V0 = 0001;
+            A0 = w[SP + 0030];
+            A1 = w[SP + 0038];
+            800BFF44	j      Lbff6c [$800bff6c]
 
-        Lbff64:	; 800BFF64
-        A0 = 0;
+            Lbff4c:	; 800BFF4C
+            800BFF4C	bne    v1, v0, Lbff64 [$800bff64]
+            A1 = 0;
+            A0 = w[SP + 0040];
+            A1 = w[SP + 0048];
+            800BFF5C	j      Lbff6c [$800bff6c]
 
-        Lbff6c:	; 800BFF6C
-        [S0 - 4] = b(0c);
-        [S0 + 0] = b(3с);
-        [S0 + 5] = b(bu[S0 + 5] + A0);
-        [S0 + 6] = b(bu[S0 + 6] + A1);
-        [S0 + 11] = b(bu[S0 + 11] + A0);
-        [S0 + 12] = b(bu[S0 + 12] + A1);
-        [S0 + 1d] = b(bu[S0 + 1d] + A0);
-        [S0 + 1e] = b(bu[S0 + 1e] + A1);
-        [S0 + 29] = b(bu[S0 + 29] + A0);
-        [S0 + 2a] = b(bu[S0 + 2a] + A1);
+            Lbff64:	; 800BFF64
+            A0 = 0;
 
-        if( S6 & 10 )
-        {
-            [S0 + 0000] = b(3e);
-        }
+            Lbff6c:	; 800BFF6C
+            [S0 - 4] = b(0c);
+            [S0 + 0] = b(3с);
+            [S0 + 5] = b(bu[S0 + 5] + A0);
+            [S0 + 6] = b(bu[S0 + 6] + A1);
+            [S0 + 11] = b(bu[S0 + 11] + A0);
+            [S0 + 12] = b(bu[S0 + 12] + A1);
+            [S0 + 1d] = b(bu[S0 + 1d] + A0);
+            [S0 + 1e] = b(bu[S0 + 1e] + A1);
+            [S0 + 29] = b(bu[S0 + 29] + A0);
+            [S0 + 2a] = b(bu[S0 + 2a] + A1);
 
-        S2 = S2 + 0001;
-        S0 = S0 + 0034;
-        S5 = S5 + 0034;
-        S3 = S3 + 0018;
-        S4 = S4 + 0018;
-        V0 = S2 < S7;
-    800BFFFC	bne    v0, zero, Lbfdd0 [$800bfdd0]
+            if( S6 & 10 )
+            {
+                [S0 + 0000] = b(3e);
+            }
 
-    Lc0004:	; 800C0004
+            S0 = S0 + 34;
+            S5 = S5 + 34;
+            S3 = S3 + 18;
+            S4 = S4 + 18;
+            S2 = S2 + 1;
+            V0 = S2 < S7;
+        800BFFFC	bne    v0, zero, Lbfdd0 [$800bfdd0]
+    }
+
     T1 = w[SP + 0010];
     800C0008	nop
     S7 = bu[T1 + 0005];
@@ -17450,28 +17442,25 @@ for( int i = 0; i < 2; ++i )
                 V1 = (((S1 & c0) << 1) | (S4 & 60)) | (((S1 >> 4) & 100) >> 4);
             }
 
-            V0 = S1 & 0f00;
-            V0 = V0 >> 08;
-            V1 = V1 | V0;
-            [S0 + 000f] = h(V1);
-            V1 = S1 & 003f;
-            800C0588	bne    v1, zero, Lc05a0 [$800c05a0]
-            V0 = 0001;
-            A0 = w[SP + 0030];
-            A1 = w[SP + 0038];
-            800C0598	j      Lc05c0 [$800c05c0]
+            [S0 + f] = h(V1 | ((S1 & 0f00) >> 8));
 
-            Lc05a0:	; 800C05A0
-            800C05A0	bne    v1, v0, Lc05b8 [$800c05b8]
-            A1 = 0;
-            A0 = w[SP + 0040];
-            A1 = w[SP + 0048];
-            800C05B0	j      Lc05c0 [$800c05c0]
+            V1 = S1 & 3f;
+            if( V1 == 0 )
+            {
+                A0 = w[SP + 30];
+                A1 = w[SP + 38];
+            }
+            else if( V1 == 1 )
+            {
+                A0 = w[SP + 40];
+                A1 = w[SP + 48];
+            }
+            else
+            {
+                A0 = 0;
+                A1 = 0;
+            }
 
-            Lc05b8:	; 800C05B8
-            A0 = 0;
-
-            Lc05c0:	; 800C05C0
             [S0 - 4] = b(7);
             [S0 + 0] = b(24);
             [S0 + 5] = b(bu[S0 + 5] + A0);
@@ -19031,461 +19020,209 @@ Lc1d28:	; 800C1D28
 
 
 ////////////////////////////////
-// funcc1d58()
+// wm_scale_model_all()
 
 model = A0;
-S1 = A1;
-S4 = ;
+scale = A1;
+force = A2;
 
-FP = A1;
-[SP + 0038] = w(S2);
-[SP + 0010] = w(A2);
+number_of_bones = bu[model + 2];
+number_of_parts = bu[model + 3];
+number_of_animations = bu[model + 4];
+part = hu[model + 18];
+animation = hu[model + 1a];
+bones = w[model + 1c];
 
-S3 = bu[model + 3];
-
-// go through all parts
-for( int i = 0; i < S3; ++i )
+for( int i = 0; i < number_of_parts; ++i )
 {
-    A0 = w[model + 1c] + hu[model + 18] + i * 20;
-    A1 = (S1 << 10) >> 10;
-    A2 = w[SP + 10];
-    800C1DD0	jal    funcc1fd8 [$800c1fd8]
+    A0 = bones + part + i * 20;
+    A1 = scale;
+    A2 = force;
+    wm_scale_model_vertexes();
 }
 
-[1f800000] = h(FP);
-[1f800008] = h(FP);
-[1f800010] = h(FP);
-[1f80001c] = w(0);
-[1f800018] = w(0);
-[1f800014] = w(0);
-[1f80000e] = h(0);
-[1f80000c] = h(0);
-[1f80000a] = h(0);
-[1f800006] = h(0);
-[1f800004] = h(0);
+// rotation matrix
+[1f800000] = h(scale);
 [1f800002] = h(0);
-T4 = w[1f800000];
-T5 = w[1f800004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[1f800008];
-T5 = w[1f80000c];
-T6 = w[1f800010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-T4 = w[1f800014];
-T5 = w[1f800018];
-TRX = T4;
-T6 = w[1f80001c];
-TRY = T5;
-TRZ = T6;
-V0 = bu[model + 0002];
-V1 = aaaaaaab;
-800C1E64	multu  v0, v1
-A0 = w[model + 001c];
-800C1E6C	mfhi   v0
-V0 = V0 >> 01;
+[1f800004] = h(0);
+[1f800006] = h(0);
+[1f800008] = h(scale);
+[1f80000a] = h(0);
+[1f80000c] = h(0);
+[1f80000e] = h(0);
+[1f800010] = h(scale);
+// translation vector
+[1f800014] = w(0);
+[1f800018] = w(0);
+[1f80001c] = w(0);
 
+R11R12 = w[1f800000];
+R13R21 = w[1f800004];
+R22R23 = w[1f800008];
+R31R32 = w[1f80000c];
+R33 = w[1f800010];
+TRX = w[1f800014];
+TRY = w[1f800018];
+TRZ = w[1f80001c];
 
-S3 = V0 & ff;
-
-if( S3 != 0 )
+for( int i = 0; i < number_of_bones; ++i )
 {
-    S0 = 0;
-    V1 = A0;
+    [1f800020] = h(hu[bones + i * 4 + 0]);
+    VXY0 = w[1f800020];
+    VZ0 = w[1f800024];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    [1f800028] = w(MAC1);
+    [1f80002c] = w(MAC2);
+    [1f800030] = w(MAC3);
+    [bones + i * 4 + 0] = h(hu[1f800028]);
+}
 
-    loopc1e84:	; 800C1E84
-        V0 = hu[V1 + 0000];
-        800C1E88	nop
-        [1f800020] = h(V0);
-        V0 = hu[V1 + 0004];
-        800C1E94	nop
-        [1f800022] = h(V0);
-        V0 = hu[V1 + 0008];
-        800C1EA0	nop
-        [1f800024] = h(V0);
-        VXY0 = w[1f800020];
-        VZ0 = w[1f800024];
-        800C1EB0	nop
-        800C1EB4	nop
+for( int i = 0; i < number_of_animations; ++i )
+{
+    A0 = bones + animation + i * 10;
+    A1 = scale;
+    A2 = force;
+    wm_scale_model_animations();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// wm_scale_model_vertexes()
+
+part = A0;
+scale = A1;
+force = A2;
+
+vertex = w[part + 18];
+
+if( w[vertex + 0] & 00000001 )
+{
+    if( force == 0 )
+    {
+        return;
+    }
+}
+
+// rotation matrix
+[1f800000] = h(scale);
+[1f800002] = h(0);
+[1f800004] = h(0);
+[1f800006] = h(0);
+[1f800008] = h(scale);
+[1f80000a] = h(0);
+[1f80000c] = h(0);
+[1f80000e] = h(0);
+[1f800010] = h(scale);
+// translation vector
+[1f800014] = w(0);
+[1f800018] = w(0);
+[1f80001c] = w(0);
+
+R11R12 = w[1f800000];
+R13R21 = w[1f800004];
+R22R23 = w[1f800008];
+R31R32 = w[1f80000c];
+R33 = w[1f800010];
+TRX = w[1f800014];
+TRY = w[1f800018];
+TRZ = w[1f80001c];
+
+number_of_vertexes = bu[part + 2];
+
+for( int i = 0; i < number_of_vertexes; ++i )
+{
+    VXY0 = w[vertex + 4 + i * 8 + 0];
+    VZ0 = w[vertex + 4 + i * 8 + 4];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    [1f800020] = w(MAC1);
+    [1f800024] = w(MAC2);
+    [1f800028] = w(MAC3);
+    [vertex + 4 + i * 8 + 0] = h(hu[1f800020]);
+    [vertex + 4 + i * 8 + 2] = h(hu[1f800024]);
+    [vertex + 4 + i * 8 + 4] = h(hu[1f800028]);
+}
+
+[vertex + 0] = w(w[vertex + 0] | 00000001);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// wm_scale_model_animations()
+
+animation = A0;
+scale = A1;
+force = A2;
+
+number_of_frames = hu[animation + 0];
+number_of_frames_translation = bu[animation + 3];
+number_of_static_translation = bu[animation + 4];
+frames_translation_data = hu[animation + 6]
+static_translation_data = hu[animation + 8];
+animation_data = w[animation + c];
+
+if( w[animation_data + 0] != 0  )
+{
+    if( force == 0 )
+    {
+        return;
+    }
+}
+
+// rotation matrix
+[1f800000] = h(scale);
+[1f800002] = h(0);
+[1f800004] = h(0);
+[1f800006] = h(0);
+[1f800008] = h(scale);
+[1f80000a] = h(0);
+[1f80000c] = h(0);
+[1f80000e] = h(0);
+[1f800010] = h(scale);
+// translation vector
+[1f800014] = w(0);
+[1f800018] = w(0);
+[1f80001c] = w(0);
+
+R11R12 = w[1f800000];
+R13R21 = w[1f800004];
+R22R23 = w[1f800008];
+R31R32 = w[1f80000c];
+R33 = w[1f800010];
+TRX = w[1f800014];
+TRY = w[1f800018];
+TRZ = w[1f80001c];
+
+for( int i = 0; i < number_of_frames_translation; ++i )
+{
+    for( int j = 0; j < number_of_frames; ++j )
+    {
+        [1f800000] = h(hu[animation_data + frames_translation_data + number_of_frames * i * 2 + j * 2 + 0]);
+        VXY0 = w[1f800000];
+        VZ0 = w[1f800004];
         gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [1f800028] = w(MAC1);
-        [1f80002c] = w(MAC2);
-        [1f800030] = w(MAC3);
-        V0 = hu[1f800028];
-        800C1ECC	nop
-        [V1 + 0000] = h(V0);
-        V0 = hu[1f800028 + 0004];
-        800C1ED8	nop
-        [V1 + 0004] = h(V0);
-        V0 = hu[1f800028 + 0008];
-        S0 = S0 + 0001;
-        [V1 + 0008] = h(V0);
-        V1 = V1 + 000c;
-        V0 = S0 < S3;
-    800C1EF0	bne    v0, zero, loopc1e84 [$800c1e84]
+        [1f800008] = w(MAC1);
+        [1f80000c] = w(MAC2);
+        [1f800010] = w(MAC3);
+        [animation_data + frames_translation_data + number_of_frames * i * 2 + j * 2 + 0] = h(hu[1f800008]);
+    }
 }
 
-V1 = S3 << 01;
-S0 = V1 + S3;
-
-if( S0 < bu[model + 2] )
+for( int i = 0; i < number_of_static_translation; ++i )
 {
-    V1 = A0 + S0 * 4;
-
-    loopc1f14:	; 800C1F14
-        [1f800020] = h(hu[V1 + 0000]);
-
-        VXY0 = w[1f800020];
-        VZ0 = w[1f800024];
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [1f800028] = w(MAC1);
-        [1f80002c] = w(MAC2);
-        [1f800030] = w(MAC3);
-
-        [V1 + 0000] = h(hu[1f800028]);
-        V1 = V1 + 0004;
-
-        S0 = S0 + 1;
-        V0 = S0 < bu[model + 2];
-    800C1F58	bne    v0, zero, loopc1f14 [$800c1f14]
+    [1f800000] = h(hu[animation_data + static_translation_data + i * 2]);
+    VXY0 = w[1f800000];
+    VZ0 = w[1f800004];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    [1f800008] = w(MAC1);
+    [1f80000c] = w(MAC2);
+    [1f800010] = w(MAC3);
+    [animation_data + static_translation_data + i * 2] = h(hu[1f800008]);
 }
 
-// go through all animations
-for( int i = 0; i < bu[model + 4]; ++i )
-{
-    A0 = w[model + 1c] + hu[model + 1a] + i * 10;
-    A1 = (FP << 10) >> 10;
-    A2 = w[SP + 10];
-    800C1F8C	jal    funcc2130 [$800c2130]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcc1fd8
-800C1FD8	addiu  sp, sp, $fff8 (=-$8)
-800C1FDC	lui    a3, $1f80
-V0 = w[A0 + 0018];
-A3 = A3 | 0020;
-V0 = w[V0 + 0000];
-800C1FEC	nop
-V0 = V0 & 0001;
-800C1FF4	beq    v0, zero, Lc2004 [$800c2004]
-800C1FF8	lui    v1, $1f80
-800C1FFC	beq    a2, zero, Lc2124 [$800c2124]
-800C2000	nop
-
-Lc2004:	; 800C2004
-[V1 + 0000] = h(A1);
-800C2008	lui    at, $1f80
-[AT + 0008] = h(A1);
-800C2010	lui    at, $1f80
-[AT + 0010] = h(A1);
-800C2018	lui    at, $1f80
-[AT + 001c] = w(0);
-800C2020	lui    at, $1f80
-[AT + 0018] = w(0);
-800C2028	lui    at, $1f80
-[AT + 0014] = w(0);
-800C2030	lui    at, $1f80
-[AT + 000e] = h(0);
-800C2038	lui    at, $1f80
-[AT + 000c] = h(0);
-800C2040	lui    at, $1f80
-[AT + 000a] = h(0);
-800C2048	lui    at, $1f80
-[AT + 0006] = h(0);
-800C2050	lui    at, $1f80
-[AT + 0004] = h(0);
-800C2058	lui    at, $1f80
-[AT + 0002] = h(0);
-T4 = w[V1 + 0000];
-T5 = w[V1 + 0004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[V1 + 0008];
-T5 = w[V1 + 000c];
-T6 = w[V1 + 0010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-T4 = w[V1 + 0014];
-T5 = w[V1 + 0018];
-TRX = T4;
-T6 = w[V1 + 001c];
-TRY = T5;
-TRZ = T6;
-A1 = 0;
-V0 = w[A0 + 0018];
-A2 = bu[A0 + 0002];
-800C20AC	nop
-800C20B0	beq    a2, zero, Lc210c [$800c210c]
-V0 = V0 + 0004;
-V1 = V0;
-
-loopc20bc:	; 800C20BC
-VXY0 = w[V1 + 0000];
-VZ0 = w[V1 + 0004];
-800C20C4	nop
-800C20C8	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-[A3 + 0000] = w(MAC1);
-[A3 + 0004] = w(MAC2);
-[A3 + 0008] = w(MAC3);
-V0 = hu[A3 + 0000];
-800C20E0	nop
-[V1 + 0000] = h(V0);
-V0 = hu[A3 + 0004];
-800C20EC	nop
-[V1 + 0002] = h(V0);
-V0 = hu[A3 + 0008];
-A1 = A1 + 0001;
-[V1 + 0004] = h(V0);
-V0 = A1 < A2;
-800C2104	bne    v0, zero, loopc20bc [$800c20bc]
-V1 = V1 + 0008;
-
-Lc210c:	; 800C210C
-V1 = w[A0 + 0018];
-800C2110	nop
-V0 = w[V1 + 0000];
-800C2118	nop
-V0 = V0 | 0001;
-[V1 + 0000] = w(V0);
-
-Lc2124:	; 800C2124
-SP = SP + 0008;
-800C2128	jr     ra 
-800C212C	nop
-////////////////////////////////
-// funcc2130
-800C2130	addiu  sp, sp, $ffe8 (=-$18)
-800C2134	lui    a3, $1f80
-A3 = A3 | 0008;
-V0 = w[A0 + 000c];
-800C2140	lui    v1, $1f80
-V0 = w[V0 + 0000];
-800C2148	nop
-800C214C	beq    v0, zero, Lc215c [$800c215c]
-800C2150	lui    t1, $1f80
-800C2154	beq    a2, zero, Lc2444 [$800c2444]
-800C2158	nop
-
-Lc215c:	; 800C215C
-[T1 + 0000] = h(A1);
-[A3 + 0000] = h(A1);
-800C2164	lui    at, $1f80
-[AT + 0010] = h(A1);
-800C216C	lui    at, $1f80
-[AT + 001c] = w(0);
-800C2174	lui    at, $1f80
-[AT + 0018] = w(0);
-800C217C	lui    at, $1f80
-[AT + 0014] = w(0);
-800C2184	lui    at, $1f80
-[AT + 000e] = h(0);
-800C218C	lui    at, $1f80
-[AT + 000c] = h(0);
-800C2194	lui    at, $1f80
-[AT + 000a] = h(0);
-800C219C	lui    at, $1f80
-[AT + 0006] = h(0);
-800C21A4	lui    at, $1f80
-[AT + 0004] = h(0);
-800C21AC	lui    at, $1f80
-[AT + 0002] = h(0);
-T4 = w[V1 + 0000];
-T5 = w[V1 + 0004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[V1 + 0008];
-T5 = w[V1 + 000c];
-T6 = w[V1 + 0010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-T4 = w[V1 + 0014];
-T5 = w[V1 + 0018];
-TRX = T4;
-T6 = w[V1 + 001c];
-TRY = T5;
-TRZ = T6;
-T5 = bu[A0 + 0003];
-T2 = hu[A0 + 0000];
-800C21FC	beq    t5, zero, Lc231c [$800c231c]
-A2 = 0;
-800C2204	lui    v0, $aaaa
-V0 = V0 | aaab;
-800C220C	multu  t2, v0
-T4 = 0;
-800C2214	mfhi   v0
-T0 = V0 >> 01;
-
-loopc221c:	; 800C221C
-V0 = hu[A0 + 0006];
-V1 = w[A0 + 000c];
-A1 = 0;
-V0 = V0 + V1;
-V1 = T4 << 01;
-800C2230	beq    t0, zero, Lc22b0 [$800c22b0]
-T3 = V0 + V1;
-V1 = T3;
-
-loopc223c:	; 800C223C
-V0 = hu[V1 + 0000];
-800C2240	nop
-[T1 + 0000] = h(V0);
-V0 = hu[V1 + 0002];
-800C224C	nop
-[T1 + 0002] = h(V0);
-V0 = hu[V1 + 0004];
-800C2258	nop
-[T1 + 0004] = h(V0);
-VXY0 = w[T1 + 0000];
-VZ0 = w[T1 + 0004];
-800C2268	nop
-800C226C	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-[A3 + 0000] = w(MAC1);
-[A3 + 0004] = w(MAC2);
-[A3 + 0008] = w(MAC3);
-V0 = hu[A3 + 0000];
-800C2284	nop
-[V1 + 0000] = h(V0);
-V0 = hu[A3 + 0004];
-800C2290	nop
-[V1 + 0002] = h(V0);
-V0 = hu[A3 + 0008];
-A1 = A1 + 0001;
-[V1 + 0004] = h(V0);
-V0 = A1 < T0;
-800C22A8	bne    v0, zero, loopc223c [$800c223c]
-V1 = V1 + 0006;
-
-Lc22b0:	; 800C22B0
-V0 = T0 << 01;
-A1 = V0 + T0;
-V0 = A1 < T2;
-800C22BC	beq    v0, zero, Lc230c [$800c230c]
-V0 = A1 << 01;
-V1 = V0 + T3;
-
-loopc22c8:	; 800C22C8
-V0 = hu[V1 + 0000];
-800C22CC	nop
-[T1 + 0000] = h(V0);
-VXY0 = w[T1 + 0000];
-VZ0 = w[T1 + 0004];
-800C22DC	nop
-800C22E0	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-[A3 + 0000] = w(MAC1);
-[A3 + 0004] = w(MAC2);
-[A3 + 0008] = w(MAC3);
-V0 = hu[A3 + 0000];
-A1 = A1 + 0001;
-[V1 + 0000] = h(V0);
-V0 = A1 < T2;
-800C2304	bne    v0, zero, loopc22c8 [$800c22c8]
-V1 = V1 + 0002;
-
-Lc230c:	; 800C230C
-A2 = A2 + 0001;
-V0 = A2 < T5;
-800C2314	bne    v0, zero, loopc221c [$800c221c]
-T4 = T4 + T2;
-
-Lc231c:	; 800C231C
-T5 = bu[A0 + 0004];
-800C2320	lui    v0, $aaaa
-V0 = V0 | aaab;
-800C2328	multu  t5, v0
-800C232C	mfhi   v0
-T0 = V0 >> 01;
-800C2334	beq    t0, zero, Lc23c8 [$800c23c8]
-A2 = 0;
-A1 = 0;
-
-loopc2340:	; 800C2340
-V1 = hu[A0 + 0008];
-V0 = w[A0 + 000c];
-800C2348	nop
-V1 = V1 + V0;
-V1 = V1 + A1;
-V0 = hu[V1 + 0000];
-800C2358	nop
-[T1 + 0000] = h(V0);
-V0 = hu[V1 + 0002];
-800C2364	nop
-[T1 + 0002] = h(V0);
-V0 = hu[V1 + 0004];
-800C2370	nop
-[T1 + 0004] = h(V0);
-VXY0 = w[T1 + 0000];
-VZ0 = w[T1 + 0004];
-800C2380	nop
-800C2384	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-[A3 + 0000] = w(MAC1);
-[A3 + 0004] = w(MAC2);
-[A3 + 0008] = w(MAC3);
-V0 = hu[A3 + 0000];
-800C239C	nop
-[V1 + 0000] = h(V0);
-V0 = hu[A3 + 0004];
-800C23A8	nop
-[V1 + 0002] = h(V0);
-V0 = hu[A3 + 0008];
-A2 = A2 + 0001;
-[V1 + 0004] = h(V0);
-V0 = A2 < T0;
-800C23C0	bne    v0, zero, loopc2340 [$800c2340]
-A1 = A1 + 0006;
-
-Lc23c8:	; 800C23C8
-V0 = T0 << 01;
-A2 = V0 + T0;
-V0 = A2 < T5;
-800C23D4	beq    v0, zero, Lc2438 [$800c2438]
-800C23D8	nop
-
-loopc23dc:	; 800C23DC
-V1 = hu[A0 + 0008];
-V0 = w[A0 + 000c];
-800C23E4	nop
-V1 = V1 + V0;
-V0 = A2 << 01;
-V1 = V1 + V0;
-V0 = hu[V1 + 0000];
-800C23F8	nop
-[T1 + 0000] = h(V0);
-VXY0 = w[T1 + 0000];
-VZ0 = w[T1 + 0004];
-800C2408	nop
-800C240C	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-[A3 + 0000] = w(MAC1);
-[A3 + 0004] = w(MAC2);
-[A3 + 0008] = w(MAC3);
-V0 = hu[A3 + 0000];
-A2 = A2 + 0001;
-[V1 + 0000] = h(V0);
-V0 = A2 < T5;
-800C2430	bne    v0, zero, loopc23dc [$800c23dc]
-800C2434	nop
-
-Lc2438:	; 800C2438
-V1 = w[A0 + 000c];
-V0 = 0001;
-[V1 + 0000] = w(V0);
-
-Lc2444:	; 800C2444
-SP = SP + 0018;
-800C2448	jr     ra 
-800C244C	nop
+[animation_data + 0] = w(1);
 ////////////////////////////////
 
 
@@ -20476,47 +20213,47 @@ V0 = bu[A1 + 0004];
 800C3264	nop
 V0 = V0 << 04;
 800C326C	lui    at, $1f80
-[AT + 0206] = h(V0);
+[1f800206] = h(V0);
 V0 = bu[A1 + 0005];
 800C3278	nop
 V0 = V0 << 04;
 800C3280	lui    at, $1f80
-[AT + 020c] = h(V0);
+[1f80020c] = h(V0);
 V0 = bu[A1 + 0006];
 800C328C	nop
 V0 = V0 << 04;
 800C3294	lui    at, $1f80
-[AT + 0202] = h(V0);
+[1f800202] = h(V0);
 V0 = bu[A1 + 0007];
 800C32A0	nop
 V0 = V0 << 04;
 800C32A8	lui    at, $1f80
-[AT + 0208] = h(V0);
+[1f800208] = h(V0);
 V0 = bu[A1 + 0008];
 800C32B4	nop
 V0 = V0 << 04;
 800C32BC	lui    at, $1f80
-[AT + 020e] = h(V0);
+[1f80020e] = h(V0);
 V0 = bu[A1 + 0009];
 800C32C8	nop
 V0 = V0 << 04;
 800C32D0	lui    at, $1f80
-[AT + 0204] = h(V0);
+[1f800204] = h(V0);
 V0 = bu[A1 + 000a];
 800C32DC	nop
 V0 = V0 << 04;
 800C32E4	lui    at, $1f80
-[AT + 020a] = h(V0);
+[1f80020a] = h(V0);
 V0 = bu[A1 + 000b];
 800C32F0	lui    at, $1f80
-[AT + 021c] = w(0);
+[1f80021c] = w(0);
 800C32F8	lui    at, $1f80
-[AT + 0218] = w(0);
+[1f800218] = w(0);
 800C3300	lui    at, $1f80
-[AT + 0214] = w(0);
+[1f800214] = w(0);
 V0 = V0 << 04;
 800C330C	lui    at, $1f80
-[AT + 0210] = h(V0);
+[1f800210] = h(V0);
 T4 = w[V1 + 0000];
 T5 = w[V1 + 0004];
 LR1LR2 = T4;
@@ -21645,16 +21382,16 @@ V1 = V1 << 08;
 V0 = V0 | V1;
 [S0 + 0006] = h(V0);
 800C4224	lui    at, $1f80
-[AT + 0200] = h(A1);
+[1f800200] = h(A1);
 V0 = hu[S0 + 0002];
 800C4230	lui    a1, $1f80
 800C4234	lui    at, $1f80
-[AT + 0202] = h(V0);
+[1f800202] = h(V0);
 V0 = hu[S0 + 0004];
 800C4240	lui    at, $1f80
-[AT + 0206] = h(0);
+[1f800206] = h(0);
 800C4248	lui    at, $1f80
-[AT + 0204] = h(V0);
+[1f800204] = h(V0);
 800C4250	jal    $8003a0b8
 A1 = A1 | 0208;
 V0 = hu[S2 + 0000];
@@ -21674,7 +21411,7 @@ V1 = h[V1 + 020c];
 800C4290	beq    v1, zero, Lc42f0 [$800c42f0]
 S4 = S4 | 0228;
 800C4298	lui    at, $1f80
-[AT + 0212] = h(0);
+[1f800212] = h(0);
 [S3 + 0000] = h(0);
 V0 = h[S0 + 0006];
 800C42A8	nop
@@ -21696,7 +21433,7 @@ Lc42d8:	; 800C42D8
 800C42D8	mflo   v0
 800C42DC	nop
 800C42E0	lui    at, $1f80
-[AT + 0214] = h(V0);
+[1f800214] = h(V0);
 800C42E8	j      Lc43bc [$800c43bc]
 800C42EC	nop
 
@@ -21707,7 +21444,7 @@ V1 = h[V1 + 020a];
 800C42FC	beq    v1, zero, Lc435c [$800c435c]
 800C4300	nop
 800C4304	lui    at, $1f80
-[AT + 0214] = h(0);
+[1f800214] = h(0);
 [S3 + 0000] = h(0);
 V0 = h[S0 + 0006];
 800C4314	nop
@@ -21729,7 +21466,7 @@ Lc4344:	; 800C4344
 800C4344	mflo   v0
 800C4348	nop
 800C434C	lui    at, $1f80
-[AT + 0212] = h(V0);
+[1f800212] = h(V0);
 800C4354	j      Lc43bc [$800c43bc]
 800C4358	nop
 
@@ -21739,9 +21476,9 @@ V1 = h[S2 + 0000];
 800C4364	beq    v1, zero, Lc4f80 [$800c4f80]
 V0 = 0001;
 800C436C	lui    at, $1f80
-[AT + 0214] = h(0);
+[1f800214] = h(0);
 800C4374	lui    at, $1f80
-[AT + 0212] = h(0);
+[1f800212] = h(0);
 V0 = h[S0 + 0006];
 800C4380	nop
 V0 = V0 << 0c;
@@ -22092,40 +21829,40 @@ V1 = w[T7 + 001c];
 S4 = w[T7 + 0020];
 V0 = 1000;
 800C4820	lui    at, $1f80
-[AT + 0218] = h(V0);
+[1f800218] = h(V0);
 800C4828	lui    at, $1f80
-[AT + 0210] = h(V0);
+[1f800210] = h(V0);
 [S1 + 0000] = h(V0);
 800C4834	lui    at, $1f80
-[AT + 0224] = w(0);
+[1f800224] = w(0);
 800C483C	lui    at, $1f80
-[AT + 0220] = w(0);
+[1f800220] = w(0);
 800C4844	lui    at, $1f80
-[AT + 021c] = w(0);
+[1f80021c] = w(0);
 800C484C	lui    at, $1f80
-[AT + 0216] = h(0);
+[1f800216] = h(0);
 800C4854	lui    at, $1f80
-[AT + 0214] = h(0);
+[1f800214] = h(0);
 800C485C	lui    at, $1f80
-[AT + 0212] = h(0);
+[1f800212] = h(0);
 800C4864	lui    at, $1f80
-[AT + 020e] = h(0);
+[1f80020e] = h(0);
 800C486C	lui    at, $1f80
-[AT + 020c] = h(0);
+[1f80020c] = h(0);
 800C4874	lui    at, $1f80
-[AT + 020a] = h(0);
+[1f80020a] = h(0);
 800C487C	lui    at, $1f80
-[AT + 0244] = w(0);
+[1f800244] = w(0);
 800C4884	lui    at, $1f80
-[AT + 0240] = w(0);
+[1f800240] = w(0);
 800C488C	lui    at, $1f80
-[AT + 023c] = w(0);
+[1f80023c] = w(0);
 800C4894	lui    at, $1f80
-[AT + 0264] = w(0);
+[1f800264] = w(0);
 800C489C	lui    at, $1f80
-[AT + 0260] = w(0);
+[1f800260] = w(0);
 800C48A4	lui    at, $1f80
-[AT + 025c] = w(0);
+[1f80025c] = w(0);
 V0 = hu[S0 + 0008];
 T7 = w[SP + 0028];
 800C48B4	lui    s5, $1f80
@@ -22134,13 +21871,13 @@ V0 = hu[S0 + 000a];
 T7 = w[SP + 0010];
 S5 = S5 | 0288;
 800C48C8	lui    at, $1f80
-[AT + 0202] = h(V0);
+[1f800202] = h(V0);
 V0 = hu[S0 + 000c];
 S7 = 0;
 800C48D8	lui    at, $1f80
-[AT + 0206] = h(0);
+[1f800206] = h(0);
 800C48E0	lui    at, $1f80
-[AT + 0204] = h(V0);
+[1f800204] = h(V0);
 V0 = bu[T7 + 0003];
 800C48EC	nop
 800C48F0	beq    v0, zero, Lc4f74 [$800c4f74]
@@ -23555,47 +23292,47 @@ V0 = bu[A1 + 0004];
 800C5D44	nop
 V0 = V0 << 04;
 800C5D4C	lui    at, $1f80
-[AT + 0206] = h(V0);
+[1f800206] = h(V0);
 V0 = bu[A1 + 0005];
 800C5D58	nop
 V0 = V0 << 04;
 800C5D60	lui    at, $1f80
-[AT + 020c] = h(V0);
+[1f80020c] = h(V0);
 V0 = bu[A1 + 0006];
 800C5D6C	nop
 V0 = V0 << 04;
 800C5D74	lui    at, $1f80
-[AT + 0202] = h(V0);
+[1f800202] = h(V0);
 V0 = bu[A1 + 0007];
 800C5D80	nop
 V0 = V0 << 04;
 800C5D88	lui    at, $1f80
-[AT + 0208] = h(V0);
+[1f800208] = h(V0);
 V0 = bu[A1 + 0008];
 800C5D94	nop
 V0 = V0 << 04;
 800C5D9C	lui    at, $1f80
-[AT + 020e] = h(V0);
+[1f80020e] = h(V0);
 V0 = bu[A1 + 0009];
 800C5DA8	nop
 V0 = V0 << 04;
 800C5DB0	lui    at, $1f80
-[AT + 0204] = h(V0);
+[1f800204] = h(V0);
 V0 = bu[A1 + 000a];
 800C5DBC	nop
 V0 = V0 << 04;
 800C5DC4	lui    at, $1f80
-[AT + 020a] = h(V0);
+[1f80020a] = h(V0);
 V0 = bu[A1 + 000b];
 800C5DD0	lui    at, $1f80
-[AT + 021c] = w(0);
+[1f80021c] = w(0);
 800C5DD8	lui    at, $1f80
-[AT + 0218] = w(0);
+[1f800218] = w(0);
 800C5DE0	lui    at, $1f80
-[AT + 0214] = w(0);
+[1f800214] = w(0);
 V0 = V0 << 04;
 800C5DEC	lui    at, $1f80
-[AT + 0210] = h(V0);
+[1f800210] = h(V0);
 T4 = w[V1 + 0000];
 T5 = w[V1 + 0004];
 LR1LR2 = T4;
