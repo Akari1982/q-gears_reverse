@@ -16944,26 +16944,34 @@ return S3;
 ////////////////////////////////
 // wm_create_packets_for_model_part()
 
-[SP + 10] = w(A0); // pointer to part
-[SP + 18] = w(A1); // place for packets
+part = A0; // pointer to part
+packet = A1; // place for packets
 [SP + 20] = w(A3); // 0
 
-V0 = hu[A0 + 12]; // Relative offset to one byte stream for every packet with texture
-V1 = w[A0 + 18]; // Offset to skeleton data section (little-endian, so 0x8014A914)
-A0 = hu[A0 + 10]; // Relative offset to texture settings. Indexed by 5th block data (control)
+quad_t = bu[part + 4];
+triangle_t = bu[part + 5];
+quad_t2 = bu[part + 6];
+triangle_t2 = bu[part + 7];
+triangle_m = bu[part + 8];
+quad_m = bu[part + 9];
+triangle = bu[part + a];
+quads = bu[part + b];
 
-V0 = V0 + V1;
-A3 = A0 + V1;
-[SP + 50] = w(V0);
+vertexes = w[part + 18];
+
+texture_coords = hu[part + 10]; // Relative offset to texture settings. Indexed by 5th block data (control)
+texture_settings = hu[part + 12]; // Relative offset to one byte stream for every packet with texture
+packets_size = hu[part + 16];
+
+A3 = vertexes + texture_coords;
+[SP + 50] = w(vertexes + texture_settings);
 
 if( A2 != 0 )
 {
-    [T1 + 18] = w(w[SP + 10] + 20);
+    [part + 38] = w(part + 20);
 }
 
-T1 = w[SP + 0018];
-T0 = w[SP + 0010];
-[T0 + 001c] = w(T1);
+[part + 1c] = w(packet);
 
 V1 = w[SP + 20];
 if( V1 < 0 )
@@ -16996,188 +17004,42 @@ V0 = V0 << 05;
 
 for( int i = 0; i < 2; ++i )
 {
-    T1 = w[SP + 0010];
-    S5 = w[SP + 0018];
-    V0 = hu[T1 + 0014];
-    V1 = w[T1 + 0018];
-    T0 = i;
-    FP = V0 + V1;
     if( i != 0 )
     {
-        V0 = hu[T1 + 0016];
-        S5 = S5 + V0;
-        T1 = w[SP + 0010];
+        packet = packet + packets_size;
     }
 
-    S2 = 0;
-    V0 = hu[T1 + 000e];
-    S7 = bu[T1 + 0004];
-    S3 = V0 + V1;
-    if( S7 != 0 )
+    texture_control = vertexes + hu[part + 14];
+    poly = vertexes + hu[part + e];
+
+    // shaded textured four-point polygon, opaque/semi-transparent, texture-blending
+    for( int j = 0; j < quad_t; ++j )
     {
-        S4 = S3 + 0014;
-        S0 = S5 + 0007;
+        [packet + 4] = w(w[poly + 4]);
+        [packet + 10] = w(w[poly + 8]);
+        [packet + 1c] = w(w[poly + c]);
+        [packet + 28] = w(w[poly + 10]);
 
-        Lbfdd0:	; 800BFDD0
-            V0 = ;
-            [S0 + fffd] = w(w[S4 - 10]);
-            [S0 + 0009] = w(w[S4 + fff4]);
-            [S0 + 0015] = w(w[S4 + fff8]);
-            [S0 + 0021] = w(w[S4 + fffc]);
-            V1 = w[S4 + 0000];
-            800BFE04	nop
-            V0 = V1 & 00ff;
-            V0 = V0 << 01;
-            V0 = V0 + A3;
-            V0 = hu[V0 + 0000];
-            800BFE18	nop
-            [S0 + 0005] = h(V0);
-            V0 = V1 & ff00;
-            V0 = V0 >> 07;
-            V0 = V0 + A3;
-            V0 = hu[V0 + 0000];
-            800BFE30	nop
-            [S0 + 0011] = h(V0);
-            V0 = V1 >> 0f;
-            V0 = V0 & 01fe;
-            V0 = V0 + A3;
-            V1 = V1 >> 18;
-            V1 = V1 << 01;
-            V0 = hu[V0 + 0000];
-            V1 = V1 + A3;
-            [S0 + 001d] = h(V0);
-            V0 = hu[V1 + 0000];
-            800BFE5C	nop
-            [S0 + 0029] = h(V0);
-            S6 = bu[FP + 0000];
-            FP = FP + 0001;
-            T0 = w[SP + 0050];
-            V0 = S6 & 000f;
-            V0 = V0 << 02;
-            V0 = V0 + T0;
-            S1 = w[V0 + 0000];
-            T1 = w[SP + 0020];
-            V0 = S1 & 003f;
-            V0 = V0 ^ 0002;
-            V0 = 0 < V0;
-            V0 = 0 - V0;
-            V0 = T1 & V0;
-            V1 = S1 << 01;
-            V1 = V1 >> 17;
-            V1 = V1 + V0;
-            V1 = V1 << 06;
-            V0 = S1 >> 10;
-            V0 = V0 & 003f;
-            V1 = V1 | V0;
-            [S0 + 0007] = h(V1);
-            [SP + 0098] = w(A3);
-            func43cc0();
-
-            V1 = 0001;
-            A3 = w[SP + 0098];
-            800BFEC8	beq    v0, v1, Lbfee8 [$800bfee8]
-            V1 = S1 & 00c0;
-            800BFED0	jal    $func43cc0
-            [SP + 0098] = w(A3);
-            T0 = 0002;
-            A3 = w[SP + 0098];
-            800BFEE0	bne    v0, t0, Lbff04 [$800bff04]
-            V1 = S1 & 00c0;
-
-            Lbfee8:	; 800BFEE8
-            V1 = V1 << 03;
-            V0 = S6 << 02;
-            V0 = V0 & 0180;
-            V1 = V1 | V0;
-            V0 = S1 >> 07;
-            800BFEFC	j      Lbff1c [$800bff1c]
-            V0 = V0 & 0020;
-
-            Lbff04:	; 800BFF04
-            V1 = V1 << 01;
-            V0 = S6 & 0060;
-            V1 = V1 | V0;
-            V0 = S1 >> 04;
-            V0 = V0 & 0100;
-            V0 = V0 >> 04;
-
-            Lbff1c:	; 800BFF1C
-            V1 = V1 | V0;
-            V0 = S1 & 0f00;
-            V0 = V0 >> 08;
-            V1 = V1 | V0;
-            [S0 + 0013] = h(V1);
-            V1 = S1 & 003f;
-            800BFF34	bne    v1, zero, Lbff4c [$800bff4c]
-            V0 = 0001;
-            A0 = w[SP + 0030];
-            A1 = w[SP + 0038];
-            800BFF44	j      Lbff6c [$800bff6c]
-
-            Lbff4c:	; 800BFF4C
-            800BFF4C	bne    v1, v0, Lbff64 [$800bff64]
-            A1 = 0;
-            A0 = w[SP + 0040];
-            A1 = w[SP + 0048];
-            800BFF5C	j      Lbff6c [$800bff6c]
-
-            Lbff64:	; 800BFF64
-            A0 = 0;
-
-            Lbff6c:	; 800BFF6C
-            [S0 - 4] = b(0c);
-            [S0 + 0] = b(3с);
-            [S0 + 5] = b(bu[S0 + 5] + A0);
-            [S0 + 6] = b(bu[S0 + 6] + A1);
-            [S0 + 11] = b(bu[S0 + 11] + A0);
-            [S0 + 12] = b(bu[S0 + 12] + A1);
-            [S0 + 1d] = b(bu[S0 + 1d] + A0);
-            [S0 + 1e] = b(bu[S0 + 1e] + A1);
-            [S0 + 29] = b(bu[S0 + 29] + A0);
-            [S0 + 2a] = b(bu[S0 + 2a] + A1);
-
-            if( S6 & 10 )
-            {
-                [S0 + 0000] = b(3e);
-            }
-
-            S0 = S0 + 34;
-            S5 = S5 + 34;
-            S3 = S3 + 18;
-            S4 = S4 + 18;
-            S2 = S2 + 1;
-            V0 = S2 < S7;
-        800BFFFC	bne    v0, zero, Lbfdd0 [$800bfdd0]
-    }
-
-    T1 = w[SP + 0010];
-    800C0008	nop
-    S7 = bu[T1 + 0005];
-    800C0010	nop
-    800C0014	beq    s7, zero, Lc0220 [$800c0220]
-    S2 = 0;
-    S4 = S3 + 0010;
-    S0 = S5 + 0007;
-
-    Lc0024:	; 800C0024
-        [S0 + fffd] = w(w[S4 - c]);
-        [S0 + 0009] = w(w[S4 - 8]);
-        [S0 + 0015] = w(w[S4 - 4]);
-        V1 = w[S4 + 0000];
-        V0 = V1 & 00ff;
+        V1 = w[poly + 14];
+        V0 = V1 & ff;
         V0 = V0 << 01;
         V0 = V0 + A3;
-        [S0 + 0005] = h(hu[V0 + 0000]);
-        V0 = V1 & ff00;
-        V0 = V0 >> 07;
+        [packet + с] = h(hu[V0 + 0]);
+        V0 = A3 + (V1 & ff) >> 7;
+        [packet + 18] = h(hu[V0 + 0]);
+
+        V0 = V1 >> 0f;
+        V0 = V0 & 01fe;
         V0 = V0 + A3;
-        V1 = V1 >> 0f;
-        V1 = V1 & 01fe;
+        V1 = V1 >> 18;
+        V1 = V1 << 01;
         V1 = V1 + A3;
-        [S0 + 0011] = h(hu[V0 + 0000]);
-        [S0 + 001d] = h(hu[V1 + 0000]);
-        S6 = bu[FP + 0000];
-        FP = FP + 0001;
+        [packet + 7 + 1d] = h(hu[V0 + 0]);
+        [packet + 7 + 29] = h(hu[V1 + 0]);
+
+        S6 = bu[texture_control];
+        texture_control = texture_control + 1;
+
         T0 = w[SP + 0050];
         V0 = S6 & 000f;
         V0 = V0 << 02;
@@ -17196,115 +17058,163 @@ for( int i = 0; i < 2; ++i )
         V0 = S1 >> 10;
         V0 = V0 & 003f;
         V1 = V1 | V0;
-        [S0 + 0007] = h(V1);
-        [SP + 0098] = w(A3);
-        800C00E8	jal    $func43cc0
+        [packet + e] = h(V1);
 
-        V1 = 0001;
-        A3 = w[SP + 0098];
-        800C00F8	beq    v0, v1, Lc0118 [$800c0118]
-        V1 = S1 & 00c0;
-        800C0100	jal    $func43cc0
-        [SP + 0098] = w(A3);
-        T0 = 0002;
-        A3 = w[SP + 0098];
-        800C0110	bne    v0, t0, Lc0134 [$800c0134]
-        V1 = S1 & 00c0;
+        func43cc0(); // check old GPU support
+        if( ( V0 == 1 ) || ( V0 == 2 ) )
+        {
+            [packet + 1a] = h(((S1 & c0) << 3) | ((S6 << 2) & 180) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8));
+        }
+        else
+        {
+            [packet + 1a] = h(((S1 & c0) << 1) | (S6 & 60) | (((S1 >> 4) & 100) >> 4) | ((S1 & f00) >> 8));
+        }
 
-        Lc0118:	; 800C0118
-        V1 = V1 << 03;
-        V0 = S6 << 02;
-        V0 = V0 & 0180;
-        V1 = V1 | V0;
-        V0 = S1 >> 07;
-        800C012C	j      Lc014c [$800c014c]
-        V0 = V0 & 0020;
+        if( ( S1 & 3f ) == 0 )
+        {
+            A0 = w[SP + 30];
+            A1 = w[SP + 38];
+        }
+        else if( ( S1 & 3f ) == 1 )
+        {
+            A0 = w[SP + 40];
+            A1 = w[SP + 48];
+        }
+        else
+        {
+            A0 = 0;
+            A1 = 0;
+        }
 
-        Lc0134:	; 800C0134
-        V1 = V1 << 01;
-        V0 = S6 & 0060;
-        V1 = V1 | V0;
-        V0 = S1 >> 04;
-        V0 = V0 & 0100;
-        V0 = V0 >> 04;
-
-        Lc014c:	; 800C014C
-        V1 = V1 | V0;
-        V0 = S1 & 0f00;
-        V0 = V0 >> 08;
-        V1 = V1 | V0;
-        [S0 + 0013] = h(V1);
-        V1 = S1 & 003f;
-        800C0164	bne    v1, zero, Lc017c [$800c017c]
-        V0 = 0001;
-        A0 = w[SP + 0030];
-        A1 = w[SP + 0038];
-        800C0174	j      Lc019c [$800c019c]
-        V0 = 0009;
-
-        Lc017c:	; 800C017C
-        800C017C	bne    v1, v0, Lc0194 [$800c0194]
-        A1 = 0;
-        A0 = w[SP + 0040];
-        A1 = w[SP + 0048];
-        800C018C	j      Lc019c [$800c019c]
-        V0 = 0009;
-
-        Lc0194:	; 800C0194
-        A0 = 0;
-        V0 = 0009;
-
-        Lc019c:	; 800C019C
-        [S0 - 4] = b(V0);
-        [S0 + 0] = b(34);
-        [S0 + 5] = b(bu[S0 + 5] + A0);
-        [S0 + 6] = b(bu[S0 + 6] + A1);
-        [S0 + 11] = b(bu[S0 + 11] + A0);
-        [S0 + 12] = b(bu[S0 + 12] + A1);
-        [S0 + 1d] = b(bu[S0 + 1d] + A0);
-        [S0 + 1e] = b(bu[S0 + 1e] + A1);
+        [packet + 3] = b(c);
+        [packet + 7] = b(3с);
+        [packet + c] = b(bu[packet + c] + A0);
+        [packet + d] = b(bu[packet + d] + A1);
+        [packet + 18] = b(bu[packet + 18] + A0);
+        [packet + 19] = b(bu[packet + 19] + A1);
+        [packet + 24] = b(bu[packet + 24] + A0);
+        [packet + 25] = b(bu[packet + 25] + A1);
+        [packet + 30] = b(bu[packet + 30] + A0);
+        [packet + 31] = b(bu[packet + 31] + A1);
 
         if( S6 & 10 )
         {
-            [S0 + 0] = b(36);
+            [packet + 7] = b(3e);
         }
 
-        S2 = S2 + 0001;
-        S0 = S0 + 0028;
-        S5 = S5 + 0028;
-        S3 = S3 + 0014;
-        S4 = S4 + 0014;
-        V0 = S2 < S7;
-    800C0214	bne    v0, zero, Lc0024 [$800c0024]
+        poly = poly + 18;
+        packet = packet + 34;
+    }
 
-    T1 = w[SP + 0010];
-
-    Lc0220:	; 800C0220
-    800C0220	nop
-    S7 = bu[T1 + 0006];
-    800C0228	nop
-    800C022C	beq    s7, zero, Lc0444 [$800c0444]
-    S2 = 0;
-    S0 = S5 + 0007;
-
-    Lc0238:	; 800C0238
-        [S0 - 3] = w(w[S3 + 4]);
-        V0 = A3 + (w[S3 + 8] & 000000ff) * 2;
-        [S0 + 0005] = h(hu[V0 + 0]);
-        V0 = w[S3 + 8] & ff00;
+    // shaded textured three-point polygon, opaque/semi-transparent, texture-blending
+    for( int j = 0; j < triangle_t; ++j )
+    {
+        [packet + 7 + fffd] = w(w[poly + 10 - c]);
+        [packet + 7 + 0009] = w(w[poly + 10 - 8]);
+        [packet + 7 + 0015] = w(w[poly + 10 - 4]);
+        V1 = w[poly + 10 + 0000];
+        V0 = V1 & 00ff;
+        V0 = V0 << 01;
+        V0 = V0 + A3;
+        [packet + 7 + 0005] = h(hu[V0 + 0000]);
+        V0 = V1 & ff00;
         V0 = V0 >> 07;
         V0 = V0 + A3;
-        [S0 + 000d] = h(hu[V0 + 0000]);
-        V0 = w[S3 + 8] >> 0f;
+        V1 = V1 >> 0f;
+        V1 = V1 & 01fe;
+        V1 = V1 + A3;
+        [packet + 7 + 0011] = h(hu[V0 + 0000]);
+        [packet + 7 + 001d] = h(hu[V1 + 0000]);
+
+        S6 = bu[texture_control];
+        texture_control = texture_control + 1;
+
+        T0 = w[SP + 0050];
+        V0 = S6 & 000f;
+        V0 = V0 << 02;
+        V0 = V0 + T0;
+        S1 = w[V0 + 0000];
+        T1 = w[SP + 0020];
+        V0 = S1 & 003f;
+        V0 = V0 ^ 0002;
+        V0 = 0 < V0;
+        V0 = 0 - V0;
+        V0 = T1 & V0;
+        V1 = S1 << 01;
+        V1 = V1 >> 17;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        V0 = S1 >> 10;
+        V0 = V0 & 003f;
+        V1 = V1 | V0;
+        [packet + 7 + 0007] = h(V1);
+
+        func43cc0(); // check old GPU support
+        if( ( V0 == 1 ) || ( V0 == 2 ) )
+        {
+            [packet + 7 + 13] = h(((S1 & c0) << 3) | ((S6 << 2) & 180) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8));
+        }
+        else
+        {
+            [packet + 7 + 13] = h(((S1 & c0) << 1) | (S6 & 60) | (((S1 >> 4) & 100) >> 4) | ((S1 & f00) >> 8));
+        }
+
+        if( ( S1 & 3f ) == 0 )
+        {
+            A0 = w[SP + 30];
+            A1 = w[SP + 38];
+        }
+        else if( ( S1 & 3f ) == 1 )
+        {
+            A0 = w[SP + 40];
+            A1 = w[SP + 48];
+        }
+        else
+        {
+            A0 = 0;
+            A1 = 0;
+        }
+
+        [packet + 3] = b(9);
+        [packet + 7] = b(34);
+        [packet + 7 + 5] = b(bu[packet + 7 + 5] + A0);
+        [packet + 7 + 6] = b(bu[packet + 7 + 6] + A1);
+        [packet + 7 + 11] = b(bu[packet + 7 + 11] + A0);
+        [packet + 7 + 12] = b(bu[packet + 7 + 12] + A1);
+        [packet + 7 + 1d] = b(bu[packet + 7 + 1d] + A0);
+        [packet + 7 + 1e] = b(bu[packet + 7 + 1e] + A1);
+
+        if( S6 & 10 )
+        {
+            [packet + 7] = b(36);
+        }
+
+        poly = poly + 14;
+        packet = packet + 28;
+    }
+
+    // textured four-point polygon, opaque/semi-transparent, texture-blending
+    for( int j = 0; j < quad_t2; ++j )
+    {
+        [packet + 7 - 3] = w(w[poly + 4]);
+        V0 = A3 + (w[poly + 8] & 000000ff) * 2;
+        [packet + 7 + 0005] = h(hu[V0 + 0]);
+        V0 = w[poly + 8] & ff00;
+        V0 = V0 >> 07;
+        V0 = V0 + A3;
+        [packet + 7 + d] = h(hu[V0 + 0000]);
+        V0 = w[poly + 8] >> 0f;
         V0 = V0 & 01fe;
         V0 = V0 + A3;
-        V1 = w[S3 + 8] >> 18;
+        V1 = w[poly + 8] >> 18;
         V1 = V1 << 01;
         V1 = V1 + A3;
-        [S0 + 15] = h(hu[V0 + 0]);
-        [S0 + 1d] = h(hu[V1 + 0]);
-        S4 = bu[FP + 0000];
-        FP = FP + 0001;
+        [packet + 7 + 15] = h(hu[V0 + 0]);
+        [packet + 7 + 1d] = h(hu[V1 + 0]);
+
+        S4 = bu[texture_control];
+        texture_control = texture_control + 1;
+
         T0 = w[SP + 0050];
         V0 = T0 + (S4 & f) * 4;
         S1 = w[V0 + 0000];
@@ -17321,219 +17231,161 @@ for( int i = 0; i < 2; ++i )
         V0 = S1 >> 10;
         V0 = V0 & 003f;
         V1 = V1 | V0;
-        [S0 + 0007] = h(V1);
-        [SP + 0098] = w(A3);
-        800C02FC	jal    $func43cc0
+        [packet + 7 + 0007] = h(V1);
 
-        A3 = w[SP + 0098];
-        800C030C	beq    v0, 1, Lc032c [$800c032c]
-        V1 = S1 & 00c0;
-        800C0314	jal    $func43cc0
-        [SP + 0098] = w(A3);
-        T0 = 0002;
-        A3 = w[SP + 0098];
-        800C0324	bne    v0, t0, Lc0348 [$800c0348]
-        V1 = S1 & 00c0;
+        func43cc0(); // check old GPU support
+        if( ( V0 == 1 ) || ( V0 == 2 ) )
+        {
+            [packet + 16] = h(((S1 & c0) << 3) | ((S6 << 2) & 180) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8));
+        }
+        else
+        {
+            [packet + 16] = h(((S1 & c0) << 1) | (S6 & 60) | (((S1 >> 4) & 100) >> 4) | ((S1 & f00) >> 8));
+        }
 
-        Lc032c:	; 800C032C
-        V1 = V1 << 03;
-        V0 = S4 << 02;
-        V0 = V0 & 0180;
-        V1 = V1 | V0;
-        V0 = S1 >> 07;
-        800C0340	j      Lc0360 [$800c0360]
-        V0 = V0 & 0020;
+        if( ( S1 & 3f ) == 0 )
+        {
+            A0 = w[SP + 30];
+            A1 = w[SP + 38];
+        }
+        else if( ( S1 & 3f ) == 1 )
+        {
+            A0 = w[SP + 40];
+            A1 = w[SP + 48];
+        }
+        else
+        {
+            A0 = 0;
+            A1 = 0;
+        }
 
-        Lc0348:	; 800C0348
-        V1 = V1 << 01;
-        V0 = S4 & 0060;
-        V1 = V1 | V0;
-        V0 = S1 >> 04;
-        V0 = V0 & 0100;
-        V0 = V0 >> 04;
-
-        Lc0360:	; 800C0360
-        V1 = V1 | V0;
-        V0 = S1 & 0f00;
-        V0 = V0 >> 08;
-        V1 = V1 | V0;
-        [S0 + 000f] = h(V1);
-        V1 = S1 & 003f;
-        800C0378	bne    v1, zero, Lc0390 [$800c0390]
-        V0 = 0001;
-        A0 = w[SP + 0030];
-        A1 = w[SP + 0038];
-        800C0388	j      Lc03b0 [$800c03b0]
-
-        Lc0390:	; 800C0390
-        800C0390	bne    v1, v0, Lc03a8 [$800c03a8]
-        A1 = 0;
-        A0 = w[SP + 0040];
-        A1 = w[SP + 0048];
-        800C03A0	j      Lc03b0 [$800c03b0]
-
-        Lc03a8:	; 800C03A8
-        A0 = 0;
-
-        Lc03b0:	; 800C03B0
-        [S0 * 4] = b(9);
-        [S0 + 0] = b(2c);
-        [S0 + 5] = b(bu[S0 + 5] + A0);
-        [S0 + 6] = b(bu[S0 + 6] + A1);
-        [S0 + d] = b(bu[S0 + d] + A0);
-        [S0 + e] = b(bu[S0 + e] + A1);
-        [S0 + 15] = b(bu[S0 + 15] + A0);
-        [S0 + 16] = b(bu[S0 + 16] + A1);
-        [S0 + 1d] = b(bu[S0 + 1d] + A0);
-        [S0 + 1e] = b(bu[S0 + 1e] + A1);
+        [packet + 3] = b(9);
+        [packet + 7] = b(2c);
+        [packet + 7 + 5] = b(bu[packet + 7 + 5] + A0);
+        [packet + 7 + 6] = b(bu[packet + 7 + 6] + A1);
+        [packet + 7 + d] = b(bu[packet + 7 + d] + A0);
+        [packet + 7 + e] = b(bu[packet + 7 + e] + A1);
+        [packet + 7 + 15] = b(bu[packet + 7 + 15] + A0);
+        [packet + 7 + 16] = b(bu[packet + 7 + 16] + A1);
+        [packet + 7 + 1d] = b(bu[packet + 7 + 1d] + A0);
+        [packet + 7 + 1e] = b(bu[packet + 7 + 1e] + A1);
 
         if( S4 & 10 )
         {
-            [S0 + 0000] = b(2e);
+            [packet + 7] = b(2e);
         }
 
-        S2 = S2 + 1;
-        S0 = S0 + 28;
-        S5 = S5 + 28;
-        S3 = S3 + c;
-        V0 = S2 < S7;
-    800C043C	bne    v0, zero, Lc0238 [$800c0238]
-
-
-    Lc0444:	; 800C0444
-    T1 = w[SP + 10];
-    S7 = bu[T1 + 7];
-    if( S7 != 0 )
-    {
-        S2 = 0;
-        S0 = S5 + 7;
-
-        Lc0460:	; 800C0460
-            [S0 - 3] = w(w[S3 + 4]);
-            V1 = w[S3 + 8];
-            [S0 + 5] = h(hu[A3 + (V1 & ff) * 2]);
-            [S0 + d] = h(hu[A3 + ((V1 & ff00) >> 08) * 2]);
-            [S0 + 15] = h(hu[A3 + ((V1 & ff0000) >> 10) * 2]);
-
-            S4 = bu[FP];
-
-            FP = FP + 1;
-
-            T0 = w[SP + 50];
-            S1 = w[T0 + (S4 & 000f) * 4];
-            V0 = w[SP + 20] & (0 - (0 < ((S1 & 3f) ^ 2)));
-            V1 = S1 << 01;
-            V1 = V1 >> 17;
-            V1 = V1 + V0;
-            V1 = V1 << 06;
-            V0 = S1 >> 10;
-            V0 = V0 & 003f;
-            V1 = V1 | V0;
-            [S0 + 0007] = h(V1);
-            [SP + 0098] = w(A3);
-
-            func43cc0(); // check old GPU support
-            if( V0 == 1 || V0 == 2 )
-            {
-                V1 = (((S1 & c0) << 3) | ((S4 << 2) & 180)) | ((S1 >> 7) & 20);
-            }
-            else
-            {
-                V1 = (((S1 & c0) << 1) | (S4 & 60)) | (((S1 >> 4) & 100) >> 4);
-            }
-
-            [S0 + f] = h(V1 | ((S1 & 0f00) >> 8));
-
-            V1 = S1 & 3f;
-            if( V1 == 0 )
-            {
-                A0 = w[SP + 30];
-                A1 = w[SP + 38];
-            }
-            else if( V1 == 1 )
-            {
-                A0 = w[SP + 40];
-                A1 = w[SP + 48];
-            }
-            else
-            {
-                A0 = 0;
-                A1 = 0;
-            }
-
-            [S0 - 4] = b(7);
-            [S0 + 0] = b(24);
-            [S0 + 5] = b(bu[S0 + 5] + A0);
-            [S0 + 6] = b(bu[S0 + 6] + A1);
-            [S0 + d] = b(bu[S0 + d] + A0);
-            [S0 + e] = b(bu[S0 + e] + A1);
-            [S0 + 15] = b(bu[S0 + 15] + A0);
-            [S0 + 16] = b(bu[S0 + 16] + A1);
-
-            if( S4 & 10 )
-            {
-                [S0 + 0] = b(26);
-            }
-
-            S3 = S3 + c;
-            S0 = S0 + 20;
-            S5 = S5 + 20;
-            S2 = S2 + 1;
-            V0 = S2 < S7;
-        800C0634	bne    v0, zero, Lc0460 [$800c0460]
+        poly = poly + c;
+        packet = packet + 28;
     }
 
-    T1 = w[SP + 10];
-    S7 = bu[T1 + 8];
-    for( int i = 0; i < S7; ++ i )
+    // textured three-point polygon, opaque/semi-transparent, texture-blending
+    for( int j = 0; j < triangle_t2; ++j )
     {
-        [S5 + i * 14 + 3] = b(4);
-        [S5 + i * 14 + 4] = w(w[S3 + i * 8 + 4]);
-        [S5 + i * 14 + 7] = b(20);
-        V1 = V1 + 0014;
-    }
-    S5 = S5 + S7 * 14;
-    S3 = S3 + S7 * 8;
+        [packet + 4] = w(w[poly + 4]);
+        V1 = w[poly + 8];
+        [packet + c] = h(hu[A3 + (V1 & ff) * 2]);
+        [packet + 14] = h(hu[A3 + ((V1 & ff00) >> 08) * 2]);
+        [packet + 1c] = h(hu[A3 + ((V1 & ff0000) >> 10) * 2]);
 
-    T0 = w[SP + 10];
-    S7 = bu[T0 + 9];
-    for( int i = 0; i < S7; ++i )
-    {
-        [S5 + i * 18 + 3] = b(5);
-        [S5 + i * 18 + 4] = w(w[S3 + i * 8 + 4]);
-        [S5 + i * 18 + 7] = b(28);
-    }
-    S5 = S5 + S7 * 18;
-    S3 = S3 + S7 * 8;
+        S4 = bu[texture_control];
+        texture_control = texture_control + 1;
 
-    T1 = w[SP + 10];
-    S7 = bu[T1 + a];
-    for( int i = 0; i < S7; ++ i )
-    {
-        [S5 + i * 1c + 3] = b(6);
-        [S5 + i * 1c + 4] = w(w[S3 + i * 10 + 4]);
-        [S5 + i * 1c + 7] = b(30);
-        [S5 + i * 1c + c] = w(w[S3 + i * 10 + 8]);
-        [S5 + i * 1c + 14] = w(w[S3 + i * 10 + c]);
-    }
-    S5 = S5 + S7 * 1c;
-    S3 = S3 + S7 * 10;
+        T0 = w[SP + 50];
+        S1 = w[T0 + (S4 & f) * 4];
 
-    T0 = w[SP + 10];
-    S7 = bu[T0 + b];
-    for( int i = 0l i < S7; ++i )
+        [packet + e] = h(((((S1 << 1) >> 17) + (w[SP + 20] & (0 - (0 < ((S1 & 3f) ^ 2))))) << 6) | ((S1 >> 10) & 3f));
+
+        func43cc0(); // check old GPU support
+        if( V0 == 1 || V0 == 2 )
+        {
+            [packet + 16] = h((((S1 & c0) << 3) | ((S4 << 2) & 180)) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8));
+        }
+        else
+        {
+            [packet + 16] = h((((S1 & c0) << 1) | (S4 & 60)) | (((S1 >> 4) & 100) >> 4) | ((S1 & 0f00) >> 8));
+        }
+
+        if( ( S1 & 3f ) == 0 )
+        {
+            A0 = w[SP + 30];
+            A1 = w[SP + 38];
+        }
+        else if( ( S1 & 3f ) == 1 )
+        {
+            A0 = w[SP + 40];
+            A1 = w[SP + 48];
+        }
+        else
+        {
+            A0 = 0;
+            A1 = 0;
+        }
+
+        [packet + 3] = b(7);
+        [packet + 7] = b(24);
+        [packet + c] = b(bu[packet + c] + A0);
+        [packet + d] = b(bu[packet + d] + A1);
+        [packet + 14] = b(bu[packet + 14] + A0);
+        [packet + 15] = b(bu[packet + 15] + A1);
+        [packet + 1c] = b(bu[packet + 1c] + A0);
+        [packet + 1d] = b(bu[packet + 1d] + A1);
+
+        if( S4 & 10 )
+        {
+            [packet + 7] = b(26);
+        }
+
+        poly = poly + c;
+        packet = packet + 20;
+    }
+
+    // monochrome three-point polygon, opaque
+    for( int j = 0; j < triangle_m; ++ j )
     {
-        [S5 + i * 24 + 3] = b(8);
-        [S5 + i * 24 + 4] = w(w[S3 + i * 14 + 4]);
-        [S5 + i * 24 + 7] = b(38);
-        [S5 + i * 24 + c] = w(w[S3 + i * 14 + 8]);
-        [S5 + i * 24 + 14] = w(w[S3 + i * 14 + c]);
-        [S5 + i * 24 + 1c] = w(w[S3 + i * 14 + 10]);
+        [packet + j * 14 + 3] = b(4);
+        [packet + j * 14 + 4] = w(w[poly + 4]);
+        [packet + j * 14 + 7] = b(20);
+        poly = poly + 8;
+    }
+    packet = packet + triangle_m * 14;
+
+    // monochrome four-point polygon, opaque
+    for( int j = 0; j < quad_m; ++j )
+    {
+        [packet + j * 18 + 3] = b(5);
+        [packet + j * 18 + 4] = w(w[poly + 4]);
+        [packet + j * 18 + 7] = b(28);
+        poly = poly + 8;
+    }
+    packet = packet + quad_m * 18;
+
+    // shaded three-point polygon, opaque
+    for( int j = 0; j < triangle; ++ j )
+    {
+        [packet + j * 1c + 3] = b(6);
+        [packet + j * 1c + 4] = w(w[poly + 4]);
+        [packet + j * 1c + 7] = b(30);
+        [packet + j * 1c + c] = w(w[poly + 8]);
+        [packet + j * 1c + 14] = w(w[poly + c]);
+        poly = poly + 10;
+    }
+    packet = packet + triangle * 1c;
+
+    // shaded four-point polygon, opaque
+    for( int j = 0; j < quads; ++j )
+    {
+        [packet + j * 24 + 3] = b(8);
+        [packet + j * 24 + 4] = w(w[poly + 4]);
+        [packet + j * 24 + 7] = b(38);
+        [packet + j * 24 + c] = w(w[poly + 8]);
+        [packet + j * 24 + 14] = w(w[poly + c]);
+        [packet + j * 24 + 1c] = w(w[poly + 10]);
+        poly = poly + 14;
     }
 }
 
-T0 = w[SP + 10];
-return w[SP + 18] + hu[T0 + 16] * 2;
+return packet + packets_size * 2;
 ////////////////////////////////
 
 
