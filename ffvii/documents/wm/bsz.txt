@@ -31,7 +31,8 @@ MODELS
     + 3 []       number of PARTS.
     + 4 []       number of ANIMATIONS.
     +16 [][]     scale.
-    +18 [][]     local offset to start of PARTS (from start of data at +1c).
+    +18 [][]     local offset to PARTS.
+    +1a [][]     local offset to ANIMATIONS.
     +1c [][][][] global offset to BONES (start of data).
     +20 [][][][] store here pointer to bone matrixes.
 
