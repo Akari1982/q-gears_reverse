@@ -9481,7 +9481,7 @@ V0 = V0 + 5a6c;
 ////////////////////////////////
 // funcb6724()
 
-S0 = A0;
+model = A0;
 
 [SP + 10] = h(1000);
 [SP + 12] = h(0);
@@ -9501,7 +9501,7 @@ S0 = A0;
 A1 = SP + 10;
 A2 = 0;
 A3 = 0;
-800B6784	jal    funcc1490 [$800c1490]
+funcc1490();
 
 [1f800000] = b(40);
 [1f800001] = b(40);
@@ -9535,7 +9535,7 @@ A3 = 0;
 [1f80001d] = b(f6);
 [1f80001e] = b(0);
 
-A0 = S0;
+A0 = model;
 A0 = 1f800000;
 800B68D8	jal    funcc31f0 [$800c31f0]
 
@@ -9547,7 +9547,7 @@ A0 = 1f800000;
 [1f800005] = b(0);
 [1f800006] = b(1);
 
-A0 = S0;
+A0 = model;
 A1 = 1f800000;
 funcc2450();
 
@@ -9561,7 +9561,7 @@ funcc2450();
 
 [800c752c] = b(bu[800c752c] ^ 1);
 
-A0 = S0;
+A0 = model;
 funcc2450();
 
 [800c752c] = b(bu[800c752c] ^ 1);
@@ -9616,7 +9616,7 @@ A1 = 8014fc00;
 A2 = 0;
 wm_load_model_packets_and_scale();
 
-A0 = w[8014a610];
+A0 = w[8014a610]; // model global offset
 funcb6724();
 
 [80115a48] = w(1);
@@ -9661,8 +9661,7 @@ S0 = 0;
 
 loopb6b60:	; 800B6B60
 A2 = S3;
-800B6B64	lui    a0, $8014
-A0 = w[A0 + a804];
+A0 = w[8013a804];
 S3 = S3 + 0001;
 A0 = S0 + A0;
 
@@ -9975,7 +9974,7 @@ if( V1 == 0 )
     if( model_id < 29 )
     {
         A0 = S1;
-        800B70A8	jal    funcb6724 [$800b6724]
+        funcb6724();
     }
 
     [80115a14 + model_id] = b(1);
@@ -16924,11 +16923,11 @@ for( int i = 0; i < bu[model + 3]; ++i )
 {
     A0 = w[model + 1c] + hu[model + 18] + i * 20; // global pointer to bones + size of something + part * 20
     A1 = S3;
-    A2 = 0;
-    A3 = S4;
+    A2 = 0; // set pointer to data
+    A3 = S4; // use global tex offset
     wm_create_packets_for_model_part();
 
-    S3 = V0;
+    S3 = V0; // end of packets
 }
 
 A0 = model;
@@ -16945,8 +16944,8 @@ return S3;
 // wm_create_packets_for_model_part()
 
 part = A0; // pointer to part
-packet = A1; // place for packets
-[SP + 20] = w(A3); // 0
+packet_start = A1; // place for packets
+S2 = A3; // 0
 
 quad_t = bu[part + 4];
 triangle_t = bu[part + 5];
@@ -16957,56 +16956,30 @@ quad_m = bu[part + 9];
 triangle = bu[part + a];
 quads = bu[part + b];
 
-vertexes = w[part + 18];
-
-texture_coords = hu[part + 10]; // Relative offset to texture settings. Indexed by 5th block data (control)
-texture_settings = hu[part + 12]; // Relative offset to one byte stream for every packet with texture
-packets_size = hu[part + 16];
-
-A3 = vertexes + texture_coords;
-[SP + 50] = w(vertexes + texture_settings);
-
 if( A2 != 0 )
 {
-    [part + 38] = w(part + 20);
+    [part + 18] = w(part + 20); // after header
 }
 
-[part + 1c] = w(packet);
+vertexes = w[part + 18];
+texture_coords = vertexes + hu[part + 10];
+texture_settings = vertexes + hu[part + 12];
+packets_size = hu[part + 16];
 
-V1 = w[SP + 20];
-if( V1 < 0 )
-{
-    V1 = V1 + 3;
-}
-V1 = V1 >> 02;
-V0 = V1 << 02;
+[part + 1c] = w(packet_start);
 
-A0 = w[SP + 20];
-V1 = V1 << 05;
-[SP + 38] = w(V1);
-V0 = A0 - V0;
-V0 = V0 << 06;
-[SP + 30] = w(V0);
+[SP + 30] = w((S2 - ((S2 / 4) * 4)) << 6);
+[SP + 38] = w((S2 / 4) << 5);
 
-if( A0 < 0 )
-{
-    A0 = A0 + 7;
-}
-V1 = A0 >> 03;
-V0 = V1 << 03;
-
-T0 = w[SP + 0020];
-V1 = V1 << 05;
-[SP + 0048] = w(V1);
-V0 = T0 - V0;
-V0 = V0 << 05;
-[SP + 0040] = w(V0);
+[SP + 40] = w((S2 - ((S2 / 8) * 8)) << 5);
+[SP + 48] = w(((S2 / 8) << 5));
 
 for( int i = 0; i < 2; ++i )
 {
+    packet = packet_start;
     if( i != 0 )
     {
-        packet = packet + packets_size;
+        packet = packet_start + packets_size;
     }
 
     texture_control = vertexes + hu[part + 14];
@@ -17015,91 +16988,66 @@ for( int i = 0; i < 2; ++i )
     // shaded textured four-point polygon, opaque/semi-transparent, texture-blending
     for( int j = 0; j < quad_t; ++j )
     {
-        [packet + 4] = w(w[poly + 4]);
-        [packet + 10] = w(w[poly + 8]);
-        [packet + 1c] = w(w[poly + c]);
-        [packet + 28] = w(w[poly + 10]);
+        [packet + 4] = w(w[poly + 4]); // colour 1
+        [packet + 10] = w(w[poly + 8]); // colour 2
+        [packet + 1c] = w(w[poly + c]); // colour 3
+        [packet + 28] = w(w[poly + 10]); // colour 4
 
         V1 = w[poly + 14];
-        V0 = V1 & ff;
-        V0 = V0 << 01;
-        V0 = V0 + A3;
-        [packet + с] = h(hu[V0 + 0]);
-        V0 = A3 + (V1 & ff) >> 7;
-        [packet + 18] = h(hu[V0 + 0]);
-
-        V0 = V1 >> 0f;
-        V0 = V0 & 01fe;
-        V0 = V0 + A3;
-        V1 = V1 >> 18;
-        V1 = V1 << 01;
-        V1 = V1 + A3;
-        [packet + 7 + 1d] = h(hu[V0 + 0]);
-        [packet + 7 + 29] = h(hu[V1 + 0]);
+        [packet + с] = h(hu[texture_coords + (V1 & ff) * 2]); // uv 1
+        [packet + 18] = h(hu[texture_coords + ((V1 & ff00) >> 8) * 2]); // uv 2
+        [packet + 24] = h(hu[texture_coords + ((V1 & ff0000) >> 10) * 2]); // uv 3
+        [packet + 30] = h(hu[texture_coords + ((V1 & ff000000) >> 18) * 2]); // uv 4
 
         S6 = bu[texture_control];
         texture_control = texture_control + 1;
 
-        T0 = w[SP + 0050];
-        V0 = S6 & 000f;
-        V0 = V0 << 02;
-        V0 = V0 + T0;
-        S1 = w[V0 + 0000];
-        T1 = w[SP + 0020];
-        V0 = S1 & 003f;
-        V0 = V0 ^ 0002;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        V0 = T1 & V0;
-        V1 = S1 << 01;
-        V1 = V1 >> 17;
-        V1 = V1 + V0;
-        V1 = V1 << 06;
-        V0 = S1 >> 10;
-        V0 = V0 & 003f;
-        V1 = V1 | V0;
-        [packet + e] = h(V1);
+        S1 = w[texture_settings + (S6 & f) * 4];
+        V0 = 0 - (0 < ((S1 & 3f) ^ 2));
+        //               y                                        x
+        [packet + e] = h(((((S1 << 1) >> 17) + (S2 & V0)) << 6) | ((S1 >> 10) & 3f)); // clut
 
         func43cc0(); // check old GPU support
         if( ( V0 == 1 ) || ( V0 == 2 ) )
         {
-            [packet + 1a] = h(((S1 & c0) << 3) | ((S6 << 2) & 180) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8));
+            [packet + 1a] = h(((S1 & c0) << 3) | ((S6 << 2) & 180) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8)); // texpage
         }
         else
         {
-            [packet + 1a] = h(((S1 & c0) << 1) | (S6 & 60) | (((S1 >> 4) & 100) >> 4) | ((S1 & f00) >> 8));
+            //                tex page bits      semi trans  tex page Y base            tex page X base
+            [packet + 1a] = h(((S1 & c0) << 1) | (S6 & 60) | (((S1 >> 4) & 100) >> 4) | ((S1 & f00) >> 8)); // texpage
         }
 
         if( ( S1 & 3f ) == 0 )
         {
-            A0 = w[SP + 30];
-            A1 = w[SP + 38];
+            off_x = w[SP + 30];
+            off_y = w[SP + 38];
         }
         else if( ( S1 & 3f ) == 1 )
         {
-            A0 = w[SP + 40];
-            A1 = w[SP + 48];
+            off_x = w[SP + 40];
+            off_y = w[SP + 48];
         }
         else
         {
-            A0 = 0;
-            A1 = 0;
+            off_x = 0;
+            off_y = 0;
         }
 
-        [packet + 3] = b(c);
-        [packet + 7] = b(3с);
-        [packet + c] = b(bu[packet + c] + A0);
-        [packet + d] = b(bu[packet + d] + A1);
-        [packet + 18] = b(bu[packet + 18] + A0);
-        [packet + 19] = b(bu[packet + 19] + A1);
-        [packet + 24] = b(bu[packet + 24] + A0);
-        [packet + 25] = b(bu[packet + 25] + A1);
-        [packet + 30] = b(bu[packet + 30] + A0);
-        [packet + 31] = b(bu[packet + 31] + A1);
+        [packet + 3] = b(c); // size
+        [packet + 7] = b(3с); // control
+        [packet + c] = b(bu[packet + c] + off_x);
+        [packet + d] = b(bu[packet + d] + off_y);
+        [packet + 18] = b(bu[packet + 18] + off_x);
+        [packet + 19] = b(bu[packet + 19] + off_y);
+        [packet + 24] = b(bu[packet + 24] + off_x);
+        [packet + 25] = b(bu[packet + 25] + off_y);
+        [packet + 30] = b(bu[packet + 30] + off_x);
+        [packet + 31] = b(bu[packet + 31] + off_y);
 
         if( S6 & 10 )
         {
-            [packet + 7] = b(3e);
+            [packet + 7] = b(3e); // control
         }
 
         poly = poly + 18;
@@ -17109,54 +17057,30 @@ for( int i = 0; i < 2; ++i )
     // shaded textured three-point polygon, opaque/semi-transparent, texture-blending
     for( int j = 0; j < triangle_t; ++j )
     {
-        [packet + 7 + fffd] = w(w[poly + 10 - c]);
-        [packet + 7 + 0009] = w(w[poly + 10 - 8]);
-        [packet + 7 + 0015] = w(w[poly + 10 - 4]);
-        V1 = w[poly + 10 + 0000];
-        V0 = V1 & 00ff;
-        V0 = V0 << 01;
-        V0 = V0 + A3;
-        [packet + 7 + 0005] = h(hu[V0 + 0000]);
-        V0 = V1 & ff00;
-        V0 = V0 >> 07;
-        V0 = V0 + A3;
-        V1 = V1 >> 0f;
-        V1 = V1 & 01fe;
-        V1 = V1 + A3;
-        [packet + 7 + 0011] = h(hu[V0 + 0000]);
-        [packet + 7 + 001d] = h(hu[V1 + 0000]);
+        [packet + 4] = w(w[poly + 4]);
+        [packet + 16] = w(w[poly + 8]);
+        [packet + 1c] = w(w[poly + c]);
+
+        V1 = w[poly + 10];
+        [packet + c] = h(hu[texture_coords + (V1 & ff) * 2]);
+        [packet + 18] = h(hu[texture_coords + (V1 & ff00) * 2]);
+        [packet + 24] = h(hu[texture_coords + (V1 & ff0000) *2]);
 
         S6 = bu[texture_control];
         texture_control = texture_control + 1;
 
-        T0 = w[SP + 0050];
-        V0 = S6 & 000f;
-        V0 = V0 << 02;
-        V0 = V0 + T0;
-        S1 = w[V0 + 0000];
-        T1 = w[SP + 0020];
-        V0 = S1 & 003f;
-        V0 = V0 ^ 0002;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        V0 = T1 & V0;
-        V1 = S1 << 01;
-        V1 = V1 >> 17;
-        V1 = V1 + V0;
-        V1 = V1 << 06;
-        V0 = S1 >> 10;
-        V0 = V0 & 003f;
-        V1 = V1 | V0;
-        [packet + 7 + 0007] = h(V1);
+        S1 = w[texture_settings + (S6 & f) * 4];
+        V0 = 0 - (0 < ((S1 & 3f) ^ 2));
+        [packet + e] = h(((((S1 << 01) >> 17) + (S2 & V0)) << 6) | ((S1 >> 10) & 3f));
 
         func43cc0(); // check old GPU support
         if( ( V0 == 1 ) || ( V0 == 2 ) )
         {
-            [packet + 7 + 13] = h(((S1 & c0) << 3) | ((S6 << 2) & 180) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8));
+            [packet + 1a] = h(((S1 & c0) << 3) | ((S6 << 2) & 180) | ((S1 >> 7) & 20) | ((S1 & f00) >> 8));
         }
         else
         {
-            [packet + 7 + 13] = h(((S1 & c0) << 1) | (S6 & 60) | (((S1 >> 4) & 100) >> 4) | ((S1 & f00) >> 8));
+            [packet + 1a] = h(((S1 & c0) << 1) | (S6 & 60) | (((S1 >> 4) & 100) >> 4) | ((S1 & f00) >> 8));
         }
 
         if( ( S1 & 3f ) == 0 )
@@ -17196,42 +17120,20 @@ for( int i = 0; i < 2; ++i )
     // textured four-point polygon, opaque/semi-transparent, texture-blending
     for( int j = 0; j < quad_t2; ++j )
     {
-        [packet + 7 - 3] = w(w[poly + 4]);
-        V0 = A3 + (w[poly + 8] & 000000ff) * 2;
-        [packet + 7 + 0005] = h(hu[V0 + 0]);
-        V0 = w[poly + 8] & ff00;
-        V0 = V0 >> 07;
-        V0 = V0 + A3;
-        [packet + 7 + d] = h(hu[V0 + 0000]);
-        V0 = w[poly + 8] >> 0f;
-        V0 = V0 & 01fe;
-        V0 = V0 + A3;
-        V1 = w[poly + 8] >> 18;
-        V1 = V1 << 01;
-        V1 = V1 + A3;
-        [packet + 7 + 15] = h(hu[V0 + 0]);
-        [packet + 7 + 1d] = h(hu[V1 + 0]);
+        [packet + 4] = w(w[poly + 4]);
+
+        V1 = w[poly + 8];
+        [packet + с] = h(hu[texture_coords + (V1 & ff) * 2]); // uv 1
+        [packet + 14] = h(hu[texture_coords + ((V1 & ff00) >> 8) * 2]); // uv 2
+        [packet + 1c] = h(hu[texture_coords + ((V1 & ff0000) >> 10) * 2]); // uv 3
+        [packet + 24] = h(hu[texture_coords + ((V1 & ff000000) >> 18) * 2]); // uv 4
 
         S4 = bu[texture_control];
         texture_control = texture_control + 1;
 
-        T0 = w[SP + 0050];
-        V0 = T0 + (S4 & f) * 4;
-        S1 = w[V0 + 0000];
-        T1 = w[SP + 0020];
-        V0 = S1 & 003f;
-        V0 = V0 ^ 0002;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        V0 = T1 & V0;
-        V1 = S1 << 01;
-        V1 = V1 >> 17;
-        V1 = V1 + V0;
-        V1 = V1 << 06;
-        V0 = S1 >> 10;
-        V0 = V0 & 003f;
-        V1 = V1 | V0;
-        [packet + 7 + 0007] = h(V1);
+        S1 = w[texture_settings + (S4 & f) * 4];
+        V0 = 0 - (0 < ((S1 & 3f) ^ 2));
+        [packet + e] = h(((((S1 << 01) >> 17) + (S2 & V0)) << 6) | ((S1 >> 10) & 3f));
 
         func43cc0(); // check old GPU support
         if( ( V0 == 1 ) || ( V0 == 2 ) )
@@ -17261,14 +17163,14 @@ for( int i = 0; i < 2; ++i )
 
         [packet + 3] = b(9);
         [packet + 7] = b(2c);
-        [packet + 7 + 5] = b(bu[packet + 7 + 5] + A0);
-        [packet + 7 + 6] = b(bu[packet + 7 + 6] + A1);
-        [packet + 7 + d] = b(bu[packet + 7 + d] + A0);
-        [packet + 7 + e] = b(bu[packet + 7 + e] + A1);
-        [packet + 7 + 15] = b(bu[packet + 7 + 15] + A0);
-        [packet + 7 + 16] = b(bu[packet + 7 + 16] + A1);
-        [packet + 7 + 1d] = b(bu[packet + 7 + 1d] + A0);
-        [packet + 7 + 1e] = b(bu[packet + 7 + 1e] + A1);
+        [packet + c] = b(bu[packet + c] + A0);
+        [packet + d] = b(bu[packet + d] + A1);
+        [packet + 14] = b(bu[packet + 14] + A0);
+        [packet + 15] = b(bu[packet + 15] + A1);
+        [packet + 1c] = b(bu[packet + 1c] + A0);
+        [packet + 1d] = b(bu[packet + 1d] + A1);
+        [packet + 24] = b(bu[packet + 24] + A0);
+        [packet + 25] = b(bu[packet + 25] + A1);
 
         if( S4 & 10 )
         {
@@ -17283,18 +17185,17 @@ for( int i = 0; i < 2; ++i )
     for( int j = 0; j < triangle_t2; ++j )
     {
         [packet + 4] = w(w[poly + 4]);
+
         V1 = w[poly + 8];
-        [packet + c] = h(hu[A3 + (V1 & ff) * 2]);
-        [packet + 14] = h(hu[A3 + ((V1 & ff00) >> 08) * 2]);
-        [packet + 1c] = h(hu[A3 + ((V1 & ff0000) >> 10) * 2]);
+        [packet + c] = h(hu[texture_coords + (V1 & ff) * 2]);
+        [packet + 14] = h(hu[texture_coords + ((V1 & ff00) >> 8) * 2]);
+        [packet + 1c] = h(hu[texture_coords + ((V1 & ff0000) >> 10) * 2]);
 
         S4 = bu[texture_control];
         texture_control = texture_control + 1;
 
-        T0 = w[SP + 50];
-        S1 = w[T0 + (S4 & f) * 4];
-
-        [packet + e] = h(((((S1 << 1) >> 17) + (w[SP + 20] & (0 - (0 < ((S1 & 3f) ^ 2))))) << 6) | ((S1 >> 10) & 3f));
+        S1 = w[texture_settings + (S4 & f) * 4];
+        [packet + e] = h(((((S1 << 1) >> 17) + (S2 & (0 - (0 < ((S1 & 3f) ^ 2))))) << 6) | ((S1 >> 10) & 3f));
 
         func43cc0(); // check old GPU support
         if( V0 == 1 || V0 == 2 )
@@ -17343,49 +17244,50 @@ for( int i = 0; i < 2; ++i )
     // monochrome three-point polygon, opaque
     for( int j = 0; j < triangle_m; ++ j )
     {
-        [packet + j * 14 + 3] = b(4);
-        [packet + j * 14 + 4] = w(w[poly + 4]);
-        [packet + j * 14 + 7] = b(20);
+        [packet + 3] = b(4);
+        [packet + 4] = w(w[poly + 4]);
+        [packet + 7] = b(20);
         poly = poly + 8;
+        packet = packet + 14;
     }
-    packet = packet + triangle_m * 14;
 
     // monochrome four-point polygon, opaque
     for( int j = 0; j < quad_m; ++j )
     {
-        [packet + j * 18 + 3] = b(5);
-        [packet + j * 18 + 4] = w(w[poly + 4]);
-        [packet + j * 18 + 7] = b(28);
+        [packet + 3] = b(5);
+        [packet + 4] = w(w[poly + 4]);
+        [packet + 7] = b(28);
         poly = poly + 8;
+        packet = packet + 18;
     }
-    packet = packet + quad_m * 18;
 
     // shaded three-point polygon, opaque
     for( int j = 0; j < triangle; ++ j )
     {
-        [packet + j * 1c + 3] = b(6);
-        [packet + j * 1c + 4] = w(w[poly + 4]);
-        [packet + j * 1c + 7] = b(30);
-        [packet + j * 1c + c] = w(w[poly + 8]);
-        [packet + j * 1c + 14] = w(w[poly + c]);
+        [packet + 3] = b(6);
+        [packet + 4] = w(w[poly + 4]);
+        [packet + 7] = b(30);
+        [packet + c] = w(w[poly + 8]);
+        [packet + 14] = w(w[poly + c]);
         poly = poly + 10;
+        packet = packet + 1c;
     }
-    packet = packet + triangle * 1c;
 
     // shaded four-point polygon, opaque
     for( int j = 0; j < quads; ++j )
     {
-        [packet + j * 24 + 3] = b(8);
-        [packet + j * 24 + 4] = w(w[poly + 4]);
-        [packet + j * 24 + 7] = b(38);
-        [packet + j * 24 + c] = w(w[poly + 8]);
-        [packet + j * 24 + 14] = w(w[poly + c]);
-        [packet + j * 24 + 1c] = w(w[poly + 10]);
+        [packet + 3] = b(8);
+        [packet + 4] = w(w[poly + 4]);
+        [packet + 7] = b(38);
+        [packet + c] = w(w[poly + 8]);
+        [packet + 14] = w(w[poly + c]);
+        [packet + 1c] = w(w[poly + 10]);
         poly = poly + 14;
+        packet = packet + 24;
     }
 }
 
-return packet + packets_size * 2;
+return packet_start + packets_size * 2;
 ////////////////////////////////
 
 
@@ -19051,14 +18953,14 @@ for( int i = 0; i < number_of_frames_translation; ++i )
 {
     for( int j = 0; j < number_of_frames; ++j )
     {
-        [1f800000] = h(hu[animation_data + frames_translation_data + number_of_frames * i * 2 + j * 2 + 0]);
+        [1f800000] = h(hu[animation_data + frames_translation_data + number_of_frames * i * 2 + j * 2]);
         VXY0 = w[1f800000];
         VZ0 = w[1f800004];
         gte_rtv0tr(); // v0 * rotmatrix + tr vector
         [1f800008] = w(MAC1);
         [1f80000c] = w(MAC2);
         [1f800010] = w(MAC3);
-        [animation_data + frames_translation_data + number_of_frames * i * 2 + j * 2 + 0] = h(hu[1f800008]);
+        [animation_data + frames_translation_data + number_of_frames * i * 2 + j * 2] = h(hu[1f800008]);
     }
 }
 

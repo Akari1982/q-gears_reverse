@@ -418,6 +418,26 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func18t1,dqb$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_rtir12(); // ir * rotmatrix";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func18t0,l33$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_rtv0(); // v0 * rotmatrix";
+            str = ss.str();
+        }
+
         e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func19t8,r11r12$";
         if( std::regex_match( str ,e ) )
         {
@@ -505,6 +525,36 @@ int main( int argc, char *argv[] )
 
             std::stringstream ss;
             ss << m0 << "gte_op12(); // Outer product";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func28t8,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_gpf12(); // General purpose interpolation";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func28s0,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_GPF(); // General Purpose Interpolation";
+            str = ss.str();
+        }
+
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func29zero,r11r12$";
+        if( std::regex_match( str ,e ) )
+        {
+            std::string m0 = std::regex_replace( str, e, "$1" );
+
+            std::stringstream ss;
+            ss << m0 << "gte_gpl12(); // General purpose interpolation";
             str = ss.str();
         }
 
