@@ -27,9 +27,16 @@ TEXTURES
         + 8 [][][][] local pointer to data (from TEXTURES)
 
 MODELS
+    + 0 []       ???
     + 2 []       number of BONES.
     + 3 []       number of PARTS.
     + 4 []       number of ANIMATIONS.
+    + 5 []
+    + 6 []
+    + 7 []
+    + 8 [][]     ???
+    + c [][]     ???
+    +10 [][][][] ???
     +16 [][]     scale.
     +18 [][]     local offset to PARTS.
     +1a [][]     local offset to ANIMATIONS.
