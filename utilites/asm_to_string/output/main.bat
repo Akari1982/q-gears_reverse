@@ -1,1 +1,1 @@
-main WORLD.BIN_functions.cpp
+main 1.txt

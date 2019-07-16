@@ -31,9 +31,9 @@ MODELS
     + 2 []       number of BONES.
     + 3 []       number of PARTS.
     + 4 []       number of ANIMATIONS.
-    + 5 []
-    + 6 []
-    + 7 []
+    + 5 []       
+    + 6 []       
+    + 7 []       
     + 8 [][]     ???
     + c [][]     ???
     +10 [][][][] ???
@@ -46,7 +46,8 @@ MODELS
 BONES
     // array of bones (0x4 size)
     + 0 [][]     length.
-    + 2 [][]     parent.
+    + 2 []       parent.
+    + 3 []       ???
 
 PARTS
     // description for parts (0x2 size)
@@ -148,7 +149,7 @@ ANIMATIONS
     + 5 []       number of frames rotation.
     + 6 [][]     local offset to FRAMES_TRANSLATION data.
     + 8 [][]     local offset to STATIC_TRANSLATION data.
-    + a [][]     local offset to frames rotation data.
+    + a [][]     local offset to FRAMES_ROTATION data.
     + c [][][][] global offset to ANIMATION_DATA.
 
 ANIMATION_DATA
