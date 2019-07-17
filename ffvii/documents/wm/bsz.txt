@@ -31,9 +31,9 @@ MODELS
     + 2 []       number of BONES.
     + 3 []       number of PARTS.
     + 4 []       number of ANIMATIONS.
-    + 5 []       
-    + 6 []       
-    + 7 []       
+    + 5 []       root x rotation.
+    + 6 []       root y rotation.
+    + 7 []       root z rotation.
     + 8 [][]     ???
     + c [][]     ???
     +10 [][][][] ???
@@ -47,7 +47,7 @@ BONES
     // array of bones (0x4 size)
     + 0 [][]     length.
     + 2 []       parent.
-    + 3 []       ???
+    + 3 []       has model (0 - false, 1 - true).
 
 PARTS
     // description for parts (0x2 size)
@@ -154,6 +154,10 @@ ANIMATIONS
 
 ANIMATION_DATA
     + 0 [][][][] set to 1 when we scaled animation translations.
+    // start of STATIC_ROTATION data (0x8 size).
+    + 1 []       rotation x.
+    + 2 []       rotation y.
+    + 3 []       rotation z.
 
 FRAMES_TRANSLATION
     // each frame translation contain translation for each frame in animation.

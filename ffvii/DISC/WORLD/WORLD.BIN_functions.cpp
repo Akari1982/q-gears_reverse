@@ -9009,7 +9009,7 @@ A3 = S6 << 10;
 [1f800000] = w(3);
 
 A3 = A3 >> 10;
-funcc1490();
+wm_calculate_bone_matrixes();
 
 V1 = w[S2 + 0020];
 V0 = w[SP + 0010];
@@ -9049,7 +9049,7 @@ A2 = S5 << 10;
 A2 = A2 >> 10;
 A3 = S6 << 10;
 A3 = A3 >> 10;
-funcc1490();
+wm_calculate_bone_matrixes();
 
 Lb6060:	; 800B6060
 800B6060	beq    s1, zero, Lb6120 [$800b6120]
@@ -9496,13 +9496,15 @@ model = A0;
 [SP + 28] = w(0);
 [SP + 2c] = w(0);
 
-[1f800000] = w(1); // use given root matrix
+// not use inmodel rotation
+// apply translation from animation
+[1f800000] = w(1);
 
 A0 = model;
-A1 = SP + 10;
+A1 = SP + 10; // root matrix
 A2 = 0; // animation id
 A3 = 0; // frame id
-funcc1490();
+wm_calculate_bone_matrixes();
 
 [1f800000] = b(40);
 [1f800001] = b(40);
@@ -9538,7 +9540,7 @@ funcc1490();
 
 A0 = model;
 A0 = 1f800000;
-800B68D8	jal    funcc31f0 [$800c31f0]
+funcc31f0();
 
 [1f800000] = b(0);
 [1f800001] = b(0);
@@ -18158,7 +18160,7 @@ Lc1460:	; 800C1460
 
 
 ////////////////////////////////
-// funcc1490()
+// wm_calculate_bone_matrixes()
 
 model = A0;
 root_matrix = A1;
@@ -18189,80 +18191,74 @@ if( w[1f800000] & 2 )
     [1f800038] = w(IR2);
     [1f80003c] = w(IR3);
 
-    V0 = b[model + 5];
-    x = w[800c7538 + V0 * 4];
-    x2 = x >> 10;
-    V0 = b[model + 6];
-    y = w[800c7538 + V0 * 4];
-    y1 = y & ffff;
-    y2 = (y >> 10) & ffff;
-    V0 = b[model + 7];
-    z = w[800c7538 + V0 * 4];
-    z2 = z >> 10;
+    rot_x = b[model + 5];
+    sin_x = h[800c7538 + rot_x * 4 + 0];
+    cos_x = h[800c7538 + rot_x * 4 + 2];
+    rot_y = b[model + 6];
+    sin_y = h[800c7538 + rot_y * 4 + 0];
+    cos_y = h[800c7538 + rot_y * 4 + 2];
+    rot_z = b[model + 7];
+    sin_z = h[800c7538 + rot_z * 4 + 0];
+    cos_z = h[800c7538 + rot_z * 4 + 2];
 
-    IR0 = 0 - x2;
-    IR1 = y1;
-    IR2 = y2;
+    IR0 = -cos_x;
+    IR1 = sin_y;
+    IR2 = cos_y;
     gte_gpf12(); // General purpose interpolation
 
-    IR1 = MAC1 & ffff;
-    IR2 = x & ffff;
-    IR3 = MAC2 & ffff;
+    IR1 = MAC1 & ffff; // -cos_x * sin_y + MAC1
+    IR2 = sin_x;
+    IR3 = MAC2 & ffff; // -cos_x * cos_y + MAC2
     gte_rtir12(); // ir * rotmatrix
     [1f800022] = h(IR1);
     [1f800028] = h(IR2);
     [1f80002e] = h(IR3);
 
-    IR0 = x;
-    IR1 = y1;
-    IR2 = y2;
+    IR0 = sin_x;
+    IR1 = sin_y;
+    IR2 = cos_y;
     gte_gpf12(); // General purpose interpolation
+    T1 = MAC1 & ffff; // sin_x * sin_y + MAC1
+    T2 = MAC2 & ffff; // sin_x * cos_y + MAC2
 
-    T1 = MAC1 & ffff;
-    T2 = MAC2 & ffff;
-
-    IR0 = z;
+    IR0 = sin_z;
     IR1 = T1;
-    IR2 = x2;
+    IR2 = cos_x;
     IR3 = T2;
     gte_GPF(); // General Purpose Interpolation
+    // MAC1 = sin_z * T1
+    // MAC2 = sin_z * cos_x
+    // MAC3 = sin_z * T2
 
-    IR0 = z2;
-    IR1 = y2;
+    IR0 = cos_z;
+    IR1 = cos_y;
     IR2 = 0;
-    IR3 = (0 - y) & ffff;
+    IR3 = -sin_y;
     gte_gpl12(); // General purpose interpolation
 
-    IR1 = (MAC1 >> c) & ffff;
-    IR2 = (MAC2 >> c) & ffff;
-    IR3 = (MAC3 >> c) & ffff;
+    IR1 = (MAC1 >> c) & ffff; // sin_z * T1 + cos_z * cos_y
+    IR2 = (MAC2 >> c) & ffff; // sin_z * cos_x
+    IR3 = (MAC3 >> c) & ffff; // sin_z * T2 + cos_z * -sin_y
     gte_rtir12(); // ir * rotmatrix
     [1f800020] = h(IR1);
     [1f800026] = h(IR2);
     [1f80002c] = h(IR3);
 
-    IR0 = z2;
+    IR0 = cos_z;
     IR1 = T1;
-    IR2 = x2;
+    IR2 = cos_x;
     IR3 = T2;
     gte_GPF(); // General Purpose Interpolation
 
-[MAC1,MAC2,MAC3] = [0,0,0]                            ;<--- for GPF only
-[MAC1,MAC2,MAC3] = (([IR1,IR2,IR3] * IR0) + [MAC1,MAC2,MAC3]) SAR (sf*12)
-
-    IR0 = 0 - ((z << 10) >> 10);
-    IR1 = y2;
+    IR0 = -sin_z;
+    IR1 = cos_y;
     IR2 = 0;
-    IR3 = (0 - y) & ffff;
+    IR3 = -sin_y;
     gte_gpl12(); // General purpose interpolation
 
-
-[MAC1,MAC2,MAC3] = [MAC1,MAC2,MAC3] SHL (sf*12)       ;<--- for GPL only
-[MAC1,MAC2,MAC3] = (([IR1,IR2,IR3] * IR0) + [MAC1,MAC2,MAC3]) SAR (sf*12)
-
-    IR1 = (MAC1 >> c) & ffff;
-    IR2 = (MAC2 >> c) & ffff;
-    IR3 = (MAC3 >> c) & ffff;
+    IR1 = (MAC1 >> c) & ffff; // cos_z * T1 - sin_z * cos_y
+    IR2 = (MAC2 >> c) & ffff; // cos_z * cos_x
+    IR3 = (MAC3 >> c) & ffff; // cos_z * T2 + sin_z * sin_y
     gte_rtir12(); // ir * rotmatrix
     [1f800024] = h(IR1);
     [1f80002a] = h(IR2);
@@ -18295,11 +18291,12 @@ for( int i = 0; i < number_of_bones; ++i )
     bones = w[model + 1c];
     length = h[bones + i * 4 + 0];
     parent_id = b[bones + i * 4 + 2]; // may use -1
+    has_part = b[bones + i * 4 + 3];
 
-    // unk
-    if( b[bones + i * 4 + 3] != 0 )
+    if( has_part != 0 )
     {
-        T3 = w[model + 20] + i * 20;
+        // if this bone has part then we need to store matrix for it's render
+        T3 = w[model + 20] + i * 20; 
     }
     else
     {
@@ -18320,48 +18317,43 @@ for( int i = 0; i < number_of_bones; ++i )
     TRY = w[1f800040 + parent_id * 20 + 18];
     TRZ = w[1f800040 + parent_id * 20 + 1c];
 
-    A0 = w[anim_data + 4 + i * 8 + 0];
-    A2 = (A0 << 10) >> 18;
-    V1 = (A0 << 8) >> 18;
-    T2 = A0 >> 18;
+    rot_x = b[anim_data + 4 + i * 8 + 1];
+    rot_y = b[anim_data + 4 + i * 8 + 2];
+    rot_z = b[anim_data + 4 + i * 8 + 3];
 
     IR0 = number_of_frames;
-    IR1 = A2;
-    IR2 = V1 & ff;
-    IR3 = T2;
+    IR1 = rot_x;
+    IR2 = rot_y;
+    IR3 = rot_z;
     gte_GPF(); // General Purpose Interpolation
 
     if( A0 & 1 )
     {
-        A2 = bu[frame_rot + MAC1];
+        rot_x = bu[frame_rot + number_of_frames * rot_x];
     }
     if( A0 & 2 )
     {
-        V1 = bu[frame_rot + MAC2];
+        rot_y = bu[frame_rot + number_of_frames * rot_y];
     }
     if( A0 & 4 )
     {
-        T2 = bu[frame_rot + MAC3];
+        rot_z = bu[frame_rot + number_of_frames * rot_z];
     }
 
-    T1 = w[800c7538 + A2 * 4];
-    A2 = w[800c7538 + V1 * 4];
-    A1 = w[800c7538 + T2 * 4];
+    sin_x = h[800c7538 + rot_x * 4 + 0];
+    cos_x = h[800c7538 + rot_x * 4 + 2];
+    sin_y = h[800c7538 + rot_y * 4 + 0];
+    cos_y = h[800c7538 + rot_y * 4 + 2];
+    sin_z = h[800c7538 + rot_z * 4 + 0];
+    cos_z = h[800c7538 + rot_z * 4 + 2];
 
-    S0 = T1 >> 10;
-    T2 = T1;
-    A3 = A2 >> 10;
-    V1 = A2;
-    S2 = A1 >> 10;
-    S1 = A1;
-
-    IR0 = S0;
-    IR1 = V1 & ffff;
-    IR2 = A3;
+    IR0 = cos_x;
+    IR1 = sin_y;
+    IR2 = cos_y;
     gte_gpf12(); // General purpose interpolation
 
     IR1 = MAC1 & ffff;
-    IR2 = (0 - T1) & ffff;
+    IR2 = -sin_x;
     IR3 = MAC2 & ffff;
     gte_rtir12(); // ir * rotmatrix
     [1f800040 + i * 20 + 4] = h(IR1);
@@ -18374,24 +18366,24 @@ for( int i = 0; i < number_of_bones; ++i )
         [T3 + 10] = h(IR3);
     }
 
-    IR0 = T2;
-    IR1 = V1 & ffff;
-    IR2 = A3;
+    IR0 = sin_x;
+    IR1 = sin_y;
+    IR2 = cos_y;
     gte_gpf12(); // General purpose interpolation
 
     T1 = MAC1 & ffff;
     T2 = MAC2 & ffff;
 
-    IR0 = S1;
+    IR0 = sin_z;
     IR1 = T1;
-    IR2 = S0;
+    IR2 = cos_x;
     IR3 = T2;
     gte_GPF(); // General Purpose Interpolation
 
-    IR0 = S2;
-    IR1 = A3;
+    IR0 = cos_z;
+    IR1 = cos_y;
     IR2 = 0;
-    IR3 = (0 - A2) & ffff;
+    IR3 = -sin_y;
     gte_gpl12(); // General purpose interpolation
 
     IR1 = (MAC1 >> c) & ffff;
@@ -18408,23 +18400,22 @@ for( int i = 0; i < number_of_bones; ++i )
         [T3 + c] = h(IR3);
     }
 
-    IR0 = S2;
+    IR0 = cos_z;
     IR1 = T1;
-    IR2 = S0;
+    IR2 = cos_x;
     IR3 = T2;
     gte_GPF(); // General Purpose Interpolation
 
-    IR0 = S1;
-    IR1 = (0 - ((A3 << 10) >> 10)) & ffff;
+    IR0 = sin_z;
+    IR1 = -cos_y;
     IR2 = 0;
-    IR3 = V1 & ffff;
+    IR3 = sin_y;
     gte_gpl12(); // General purpose interpolation
 
     IR1 = (MAC1 >> c) & ffff;
     IR2 = (MAC2 >> c) & ffff;
     IR3 = (MAC3 >> c) & ffff;
     gte_rtir12(); // ir * rotmatrix
-
     [1f800040 + i * 20 + 2] = h(IR1);
     [1f800040 + i * 20 + 8] = h(IR2);
     [1f800040 + i * 20 + e] = h(IR3);
@@ -18437,17 +18428,13 @@ for( int i = 0; i < number_of_bones; ++i )
 
     if( w[1f800000] & 1 )
     {
-        IR0 = number_of_frames;
-
         tx = bu[anim_data + 4 + i * 8 + 4];
         ty = bu[anim_data + 4 + i * 8 + 5];
         tz = bu[anim_data + 4 + i * 8 + 6];
 
         if( A0 & 10 )
         {
-            IR1 = tx;
-            gte_GPF(); // General Purpose Interpolation
-            [1f800040 + i * 20 + 14] = w(h[frame_trans + MAC1 * 2]);
+            [1f800040 + i * 20 + 14] = w(h[frame_trans + tx * number_of_frames * 2]);
         }
         else if( tx != ff )
         {
@@ -18456,9 +18443,7 @@ for( int i = 0; i < number_of_bones; ++i )
 
         if( A0 & 20 )
         {
-            IR1 = ty;
-            gte_GPF(); // General Purpose Interpolation
-            [1f800040 + i * 20 + 18] = w(h[frame_trans + MAC1 * 2]);
+            [1f800040 + i * 20 + 18] = w(h[frame_trans + ty * number_of_frames * 2]);
         }
         else if( ty != ff )
         {
@@ -18467,9 +18452,7 @@ for( int i = 0; i < number_of_bones; ++i )
 
         if( A0 & 40 )
         {
-            IR1 = tz;
-            gte_GPF(); // General Purpose Interpolation
-            [1f800040 + i * 20 + 1c] = w(w[1f800040 + i * 20 + 1c] + h[frame_trans + MAC1 * 2]);
+            [1f800040 + i * 20 + 1c] = w(w[1f800040 + i * 20 + 1c] + h[frame_trans + tz * number_of_frames * 2]);
         }
         else if( tz != ff )
         {
@@ -19655,20 +19638,16 @@ SP = SP + 0080;
 800C31E8	jr     ra 
 800C31EC	nop
 ////////////////////////////////
-// funcc31f0
-800C31F0	addiu  sp, sp, $ff70 (=-$90)
-[SP + 0080] = w(S4);
-S4 = A0;
-[SP + 008c] = w(RA);
-[SP + 0088] = w(S6);
-[SP + 0084] = w(S5);
-[SP + 007c] = w(S3);
-[SP + 0078] = w(S2);
-[SP + 0074] = w(S1);
-[SP + 0070] = w(S0);
-V1 = hu[S4 + 0018];
-V0 = w[S4 + 001c];
-S1 = w[S4 + 0020];
+
+
+
+////////////////////////////////
+// funcc31f0()
+
+model = A0;
+V1 = hu[model + 0018];
+V0 = w[model + 001c];
+S1 = w[model + 0020];
 A0 = bu[A1 + 0000];
 A2 = V1 + V0;
 V1 = bu[A1 + 0001];
@@ -19679,55 +19658,43 @@ T6 = V0 << 04;
 RBK = T4;
 BBK = T5;
 GBK = T6;
-800C324C	lui    v1, $1f80
 V0 = bu[A1 + 0003];
-V1 = V1 | 0200;
+V1 = 1f800200;
 V0 = V0 << 04;
 [V1 + 0000] = h(V0);
 V0 = bu[A1 + 0004];
 800C3264	nop
 V0 = V0 << 04;
-800C326C	lui    at, $1f80
 [1f800206] = h(V0);
 V0 = bu[A1 + 0005];
 800C3278	nop
 V0 = V0 << 04;
-800C3280	lui    at, $1f80
 [1f80020c] = h(V0);
 V0 = bu[A1 + 0006];
 800C328C	nop
 V0 = V0 << 04;
-800C3294	lui    at, $1f80
 [1f800202] = h(V0);
 V0 = bu[A1 + 0007];
 800C32A0	nop
 V0 = V0 << 04;
-800C32A8	lui    at, $1f80
 [1f800208] = h(V0);
 V0 = bu[A1 + 0008];
 800C32B4	nop
 V0 = V0 << 04;
-800C32BC	lui    at, $1f80
 [1f80020e] = h(V0);
 V0 = bu[A1 + 0009];
 800C32C8	nop
 V0 = V0 << 04;
-800C32D0	lui    at, $1f80
 [1f800204] = h(V0);
 V0 = bu[A1 + 000a];
 800C32DC	nop
 V0 = V0 << 04;
-800C32E4	lui    at, $1f80
 [1f80020a] = h(V0);
 V0 = bu[A1 + 000b];
-800C32F0	lui    at, $1f80
 [1f80021c] = w(0);
-800C32F8	lui    at, $1f80
 [1f800218] = w(0);
-800C3300	lui    at, $1f80
 [1f800214] = w(0);
 V0 = V0 << 04;
-800C330C	lui    at, $1f80
 [1f800210] = h(V0);
 T4 = w[V1 + 0000];
 T5 = w[V1 + 0004];
@@ -19787,355 +19754,289 @@ V1 = bu[A1 + 001c];
 V0 = V0 << 08;
 V1 = V1 | V0;
 [SP + 0020] = h(V1);
-V0 = bu[S4 + 0003];
 S6 = bu[A1 + 001e];
-800C3404	beq    v0, zero, Lc3918 [$800c3918]
-S3 = 0;
-800C340C	lui    s5, $1f80
-S5 = S5 | 0240;
-S2 = SP + 0010;
-S0 = A2;
 
-Lc341c:	; 800C341C
-V0 = bu[S0 + 0000];
-800C3420	nop
-800C3424	beq    v0, zero, Lc38f8 [$800c38f8]
-800C3428	lui    a0, $1f80
-V1 = b[S4 + 0001];
-800C3430	addiu  v0, zero, $ffff (=-$1)
-800C3434	beq    v1, v0, Lc3748 [$800c3748]
-A0 = A0 | 0220;
-T4 = w[S1 + 0000];
-T5 = w[S1 + 0004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[S1 + 0008];
-T5 = w[S1 + 000c];
-T6 = w[S1 + 0010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-V0 = bu[S0 + 0001];
-800C3468	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-T4 = hu[V0 + 0000];
-T5 = hu[V0 + 0006];
-T6 = hu[V0 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C348C	nop
-800C3490	nop
-gte_rtir12(); // ir * rotmatrix
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A0 + 0000] = h(T4);
-[A0 + 0006] = h(T5);
-[A0 + 000c] = h(T6);
-V0 = bu[S0 + 0001];
-800C34B4	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-V0 = V0 + 0002;
-T4 = hu[V0 + 0000];
-T5 = hu[V0 + 0006];
-T6 = hu[V0 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C34DC	nop
-800C34E0	nop
-gte_rtir12(); // ir * rotmatrix
-800C34E8	lui    a3, $1f80
-A3 = A3 | 0222;
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A3 + 0000] = h(T4);
-[A3 + 0006] = h(T5);
-[A3 + 000c] = h(T6);
-V0 = bu[S0 + 0001];
-800C350C	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-V0 = V0 + 0004;
-T4 = hu[V0 + 0000];
-T5 = hu[V0 + 0006];
-T6 = hu[V0 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C3534	nop
-800C3538	nop
-gte_rtir12(); // ir * rotmatrix
-800C3540	lui    a3, $1f80
-A3 = A3 | 0224;
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A3 + 0000] = h(T4);
-[A3 + 0006] = h(T5);
-[A3 + 000c] = h(T6);
-T4 = w[S1 + 0014];
-T5 = w[S1 + 0018];
-TRX = T4;
-T6 = w[S1 + 001c];
-TRY = T5;
-TRZ = T6;
-V0 = bu[S0 + 0001];
-800C357C	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-V0 = V0 + 0014;
-T5 = hu[V0 + 0004];
-T4 = hu[V0 + 0000];
-T5 = T5 << 10;
-T4 = T4 | T5;
-VXY0 = T4;
-VZ0 = w[V0 + 0008];
-800C35A4	nop
-800C35A8	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-800C35B0	lui    a3, $1f80
-A3 = A3 | 0234;
-[A3 + 0000] = w(IR1);
-[A3 + 0004] = w(IR2);
-[A3 + 0008] = w(IR3);
-T4 = w[S2 + 0000];
-T5 = w[S2 + 0004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[S2 + 0008];
-T5 = w[S2 + 000c];
-T6 = w[S2 + 0010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-T4 = hu[A0 + 0000];
-T5 = hu[A0 + 0006];
-T6 = hu[A0 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C3604	nop
-800C3608	nop
-gte_rtir12(); // ir * rotmatrix
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[S5 + 0000] = h(T4);
-[S5 + 0006] = h(T5);
-[S5 + 000c] = h(T6);
-800C3628	lui    a3, $1f80
-A3 = A3 | 0222;
-T4 = hu[A3 + 0000];
-T5 = hu[A3 + 0006];
-T6 = hu[A3 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C3648	nop
-800C364C	nop
-gte_rtir12(); // ir * rotmatrix
-800C3654	lui    a3, $1f80
-A3 = A3 | 0242;
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A3 + 0000] = h(T4);
-[A3 + 0006] = h(T5);
-[A3 + 000c] = h(T6);
-800C3674	lui    a3, $1f80
-A3 = A3 | 0224;
-T4 = hu[A3 + 0000];
-T5 = hu[A3 + 0006];
-T6 = hu[A3 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C3694	nop
-800C3698	nop
-gte_rtir12(); // ir * rotmatrix
-800C36A0	lui    a3, $1f80
-A3 = A3 | 0244;
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A3 + 0000] = h(T4);
-[A3 + 0006] = h(T5);
-[A3 + 000c] = h(T6);
-T4 = w[S2 + 0014];
-T5 = w[S2 + 0018];
-TRX = T4;
-T6 = w[S2 + 001c];
-TRY = T5;
-TRZ = T6;
-800C36D8	lui    a3, $1f80
-A3 = A3 | 0234;
-T5 = hu[A3 + 0004];
-T4 = hu[A3 + 0000];
-T5 = T5 << 10;
-T4 = T4 | T5;
-VXY0 = T4;
-VZ0 = w[A3 + 0008];
-800C36F8	nop
-800C36FC	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-800C3704	lui    a3, $1f80
-A3 = A3 | 0254;
-[A3 + 0000] = w(IR1);
-[A3 + 0004] = w(IR2);
-[A3 + 0008] = w(IR3);
-T4 = w[S5 + 0000];
-T5 = w[S5 + 0004];
-L11L12 = T4;
-L13L21 = T5;
-T4 = w[S5 + 0008];
-T5 = w[S5 + 000c];
-T6 = w[S5 + 0010];
-L22L23 = T4;
-L31L32 = T5;
-L33 = T6;
-800C3740	j      Lc38fc [$800c38fc]
-A0 = S0;
+V0 = bu[model + 3];
+if( V0 != 0 )
+{
+    S3 = 0;
+    S5 = 1f800240;
+    S2 = SP + 0010;
+    S0 = A2;
 
-Lc3748:	; 800C3748
-T4 = w[S2 + 0000];
-T5 = w[S2 + 0004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[S2 + 0008];
-T5 = w[S2 + 000c];
-T6 = w[S2 + 0010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-V0 = bu[S0 + 0001];
-800C3774	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-T4 = hu[V0 + 0000];
-T5 = hu[V0 + 0006];
-T6 = hu[V0 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C3798	nop
-800C379C	nop
-gte_rtir12(); // ir * rotmatrix
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A0 + 0000] = h(T4);
-[A0 + 0006] = h(T5);
-[A0 + 000c] = h(T6);
-V0 = bu[S0 + 0001];
-800C37C0	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-V0 = V0 + 0002;
-T4 = hu[V0 + 0000];
-T5 = hu[V0 + 0006];
-T6 = hu[V0 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C37E8	nop
-800C37EC	nop
-gte_rtir12(); // ir * rotmatrix
-800C37F4	lui    a3, $1f80
-A3 = A3 | 0222;
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A3 + 0000] = h(T4);
-[A3 + 0006] = h(T5);
-[A3 + 000c] = h(T6);
-V0 = bu[S0 + 0001];
-800C3818	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-V0 = V0 + 0004;
-T4 = hu[V0 + 0000];
-T5 = hu[V0 + 0006];
-T6 = hu[V0 + 000c];
-IR1 = T4;
-IR2 = T5;
-IR3 = T6;
-800C3840	nop
-800C3844	nop
-gte_rtir12(); // ir * rotmatrix
-800C384C	lui    a3, $1f80
-A3 = A3 | 0224;
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[A3 + 0000] = h(T4);
-[A3 + 0006] = h(T5);
-[A3 + 000c] = h(T6);
-T4 = w[S2 + 0014];
-T5 = w[S2 + 0018];
-TRX = T4;
-T6 = w[S2 + 001c];
-TRY = T5;
-TRZ = T6;
-V0 = bu[S0 + 0001];
-800C3888	nop
-V0 = V0 << 05;
-V0 = S1 + V0;
-V0 = V0 + 0014;
-T5 = hu[V0 + 0004];
-T4 = hu[V0 + 0000];
-T5 = T5 << 10;
-T4 = T4 | T5;
-VXY0 = T4;
-VZ0 = w[V0 + 0008];
-800C38B0	nop
-800C38B4	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-800C38BC	lui    a3, $1f80
-A3 = A3 | 0234;
-[A3 + 0000] = w(IR1);
-[A3 + 0004] = w(IR2);
-[A3 + 0008] = w(IR3);
-T4 = w[A0 + 0000];
-T5 = w[A0 + 0004];
-L11L12 = T4;
-L13L21 = T5;
-T4 = w[A0 + 0008];
-T5 = w[A0 + 000c];
-T6 = w[A0 + 0010];
-L22L23 = T4;
-L31L32 = T5;
-L33 = T6;
+    Lc341c:	; 800C341C
+        V0 = bu[S0 + 0000];
+        if( V0 != 0 )
+        {
+            V1 = b[model + 1];
+            800C3430	addiu  v0, zero, $ffff (=-$1)
+            800C3434	beq    v1, v0, Lc3748 [$800c3748]
+            A0 = 1f800220;
+            T4 = w[S1 + 0000];
+            T5 = w[S1 + 0004];
+            R11R12 = T4;
+            R13R21 = T5;
+            T4 = w[S1 + 0008];
+            T5 = w[S1 + 000c];
+            T6 = w[S1 + 0010];
+            R22R23 = T4;
+            R31R32 = T5;
+            R33 = T6;
+            V0 = bu[S0 + 0001];
+            800C3468	nop
+            V0 = V0 << 05;
+            V0 = S1 + V0;
+            T4 = hu[V0 + 0000];
+            T5 = hu[V0 + 0006];
+            T6 = hu[V0 + 000c];
+            IR1 = T4;
+            IR2 = T5;
+            IR3 = T6;
+            800C348C	nop
+            800C3490	nop
+            gte_rtir12(); // ir * rotmatrix
+            T4 = IR1;
+            T5 = IR2;
+            T6 = IR3;
+            [A0 + 0000] = h(T4);
+            [A0 + 0006] = h(T5);
+            [A0 + 000c] = h(T6);
+            V0 = bu[S0 + 0001];
+            800C34B4	nop
+            V0 = V0 << 05;
+            V0 = S1 + V0;
+            V0 = V0 + 0002;
+            T4 = hu[V0 + 0000];
+            T5 = hu[V0 + 0006];
+            T6 = hu[V0 + 000c];
+            IR1 = T4;
+            IR2 = T5;
+            IR3 = T6;
+            800C34DC	nop
+            800C34E0	nop
+            gte_rtir12(); // ir * rotmatrix
+            800C34E8	lui    a3, $1f80
+            A3 = A3 | 0222;
+            T4 = IR1;
+            T5 = IR2;
+            T6 = IR3;
+            [A3 + 0000] = h(T4);
+            [A3 + 0006] = h(T5);
+            [A3 + 000c] = h(T6);
+            V0 = bu[S0 + 0001];
+            800C350C	nop
+            V0 = V0 << 05;
+            V0 = S1 + V0;
+            V0 = V0 + 0004;
+            T4 = hu[V0 + 0000];
+            T5 = hu[V0 + 0006];
+            T6 = hu[V0 + 000c];
+            IR1 = T4;
+            IR2 = T5;
+            IR3 = T6;
+            800C3534	nop
+            800C3538	nop
+            gte_rtir12(); // ir * rotmatrix
+            800C3540	lui    a3, $1f80
+            A3 = A3 | 0224;
+            T4 = IR1;
+            T5 = IR2;
+            T6 = IR3;
+            [A3 + 0000] = h(T4);
+            [A3 + 0006] = h(T5);
+            [A3 + 000c] = h(T6);
+            T4 = w[S1 + 0014];
+            T5 = w[S1 + 0018];
+            TRX = T4;
+            T6 = w[S1 + 001c];
+            TRY = T5;
+            TRZ = T6;
+            V0 = bu[S0 + 0001];
+            800C357C	nop
+            V0 = V0 << 05;
+            V0 = S1 + V0;
+            V0 = V0 + 0014;
+            T5 = hu[V0 + 0004];
+            T4 = hu[V0 + 0000];
+            T5 = T5 << 10;
+            T4 = T4 | T5;
+            VXY0 = T4;
+            VZ0 = w[V0 + 0008];
+            800C35A4	nop
+            800C35A8	nop
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            800C35B0	lui    a3, $1f80
+            A3 = A3 | 0234;
+            [A3 + 0000] = w(IR1);
+            [A3 + 0004] = w(IR2);
+            [A3 + 0008] = w(IR3);
+            T4 = w[S2 + 0000];
+            T5 = w[S2 + 0004];
+            R11R12 = T4;
+            R13R21 = T5;
+            T4 = w[S2 + 0008];
+            T5 = w[S2 + 000c];
+            T6 = w[S2 + 0010];
+            R22R23 = T4;
+            R31R32 = T5;
+            R33 = T6;
+            T4 = hu[A0 + 0000];
+            T5 = hu[A0 + 0006];
+            T6 = hu[A0 + 000c];
+            IR1 = T4;
+            IR2 = T5;
+            IR3 = T6;
+            800C3604	nop
+            800C3608	nop
+            gte_rtir12(); // ir * rotmatrix
+            T4 = IR1;
+            T5 = IR2;
+            T6 = IR3;
+            [S5 + 0000] = h(T4);
+            [S5 + 0006] = h(T5);
+            [S5 + 000c] = h(T6);
+            800C3628	lui    a3, $1f80
+            A3 = A3 | 0222;
+            T4 = hu[A3 + 0000];
+            T5 = hu[A3 + 0006];
+            T6 = hu[A3 + 000c];
+            IR1 = T4;
+            IR2 = T5;
+            IR3 = T6;
+            800C3648	nop
+            800C364C	nop
+            gte_rtir12(); // ir * rotmatrix
+            800C3654	lui    a3, $1f80
+            A3 = A3 | 0242;
+            T4 = IR1;
+            T5 = IR2;
+            T6 = IR3;
+            [A3 + 0000] = h(T4);
+            [A3 + 0006] = h(T5);
+            [A3 + 000c] = h(T6);
+            800C3674	lui    a3, $1f80
+            A3 = A3 | 0224;
+            T4 = hu[A3 + 0000];
+            T5 = hu[A3 + 0006];
+            T6 = hu[A3 + 000c];
+            IR1 = T4;
+            IR2 = T5;
+            IR3 = T6;
+            800C3694	nop
+            800C3698	nop
+            gte_rtir12(); // ir * rotmatrix
+            800C36A0	lui    a3, $1f80
+            A3 = A3 | 0244;
+            T4 = IR1;
+            T5 = IR2;
+            T6 = IR3;
+            [A3 + 0000] = h(T4);
+            [A3 + 0006] = h(T5);
+            [A3 + 000c] = h(T6);
+            T4 = w[S2 + 0014];
+            T5 = w[S2 + 0018];
+            TRX = T4;
+            T6 = w[S2 + 001c];
+            TRY = T5;
+            TRZ = T6;
+            800C36D8	lui    a3, $1f80
+            A3 = A3 | 0234;
+            T5 = hu[A3 + 0004];
+            T4 = hu[A3 + 0000];
+            T5 = T5 << 10;
+            T4 = T4 | T5;
+            VXY0 = T4;
+            VZ0 = w[A3 + 0008];
+            800C36F8	nop
+            800C36FC	nop
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            800C3704	lui    a3, $1f80
+            A3 = A3 | 0254;
+            [A3 + 0000] = w(IR1);
+            [A3 + 0004] = w(IR2);
+            [A3 + 0008] = w(IR3);
+            T4 = w[S5 + 0000];
+            T5 = w[S5 + 0004];
+            L11L12 = T4;
+            L13L21 = T5;
+            T4 = w[S5 + 0008];
+            T5 = w[S5 + 000c];
+            T6 = w[S5 + 0010];
+            L22L23 = T4;
+            L31L32 = T5;
+            L33 = T6;
+            800C3740	j      Lc38fc [$800c38fc]
 
-Lc38f8:	; 800C38F8
-A0 = S0;
+            Lc3748:	; 800C3748
+            R11R12 = w[S2 + 0];
+            R13R21 = w[S2 + 4];
+            R22R23 = w[S2 + 8];
+            R31R32 = w[S2 + c];
+            R33 = w[S2 + 10];
 
-Lc38fc:	; 800C38FC
-800C38FC	jal    funcc3948 [$800c3948]
-A1 = S6;
-V0 = bu[S4 + 0003];
-S3 = S3 + 0001;
-V0 = S3 < V0;
-800C3910	bne    v0, zero, Lc341c [$800c341c]
-S0 = S0 + 0020;
+            V0 = bu[S0 + 1];
+            IR1 = hu[S1 + V0 * 20 + 0];
+            IR2 = hu[S1 + V0 * 20 + 6];
+            IR3 = hu[S1 + V0 * 20 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [A0 + 0] = h(IR1);
+            [A0 + 6] = h(IR2);
+            [A0 + c] = h(IR3);
 
-Lc3918:	; 800C3918
-V0 = 0001;
-RA = w[SP + 008c];
-S6 = w[SP + 0088];
-S5 = w[SP + 0084];
-S4 = w[SP + 0080];
-S3 = w[SP + 007c];
-S2 = w[SP + 0078];
-S1 = w[SP + 0074];
-S0 = w[SP + 0070];
-SP = SP + 0090;
-800C3940	jr     ra 
-800C3944	nop
+            V0 = bu[S0 + 1];
+            IR1 = hu[S1 + V0 * 20 + 2];
+            IR2 = hu[S1 + V0 * 20 + 8];
+            IR3 = hu[S1 + V0 * 20 + e];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800222] = h(IR1);
+            [1f800228] = h(IR2);
+            [1f80022e] = h(IR3);
+
+            V0 = bu[S0 + 1];
+            IR1 = hu[S1 + V0 * 20 + 4];
+            IR2 = hu[S1 + V0 * 20 + a];
+            IR3 = hu[S1 + V0 * 20 + 10];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800224] = h(IR1);
+            [1f80022a] = h(IR2);
+            [1f800230] = h(IR3);
+
+            TRX = w[S2 + 14];
+            TRY = w[S2 + 18];
+            TRZ = w[S2 + 1c];
+
+            V0 = bu[S0 + 1];
+            VXY0 = (hu[S1 + V0 * 20 + 18] << 10) | hu[S1 + V0 * 20 + 14];
+            VZ0 = w[S1 + V0 * 20 + 1с];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            [1f800234] = w(IR1);
+            [1f800238] = w(IR2);
+            [1f80023c] = w(IR3);
+
+            L11L12 = w[A0 + 0];
+            L13L21 = w[A0 + 4];
+            L22L23 = w[A0 + 8];
+            L31L32 = w[A0 + c];
+            L33 = w[A0 + 10];
+        }
+
+        Lc38f8:	; 800C38F8
+        Lc38fc:	; 800C38FC
+        A0 = S0;
+        A1 = S6;
+        800C38FC	jal    funcc3948 [$800c3948]
+
+        S3 = S3 + 1;
+        S0 = S0 + 20;
+        V0 = S3 < bu[model + 3];
+    800C3910	bne    v0, zero, Lc341c [$800c341c]
+}
+
+return 1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcc3948
 800C3948	addiu  sp, sp, $ffc0 (=-$40)
