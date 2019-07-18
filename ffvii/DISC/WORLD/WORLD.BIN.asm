@@ -1365,10 +1365,10 @@
 // funcc2524
 800C2524-800C31EC
 ////////////////////////////////
-// funcc31f0
+// wm_calculate_model_lighting
 800C31F0-800C3944
 ////////////////////////////////
-// funcc3948
+// wm_calculate_part_lighting
 800C3948-800C3DAC
 ////////////////////////////////
 // funcc3db0

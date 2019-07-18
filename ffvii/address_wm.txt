@@ -42,7 +42,11 @@
     +0 [][][][] sector for MAP files.
     +4 [][][][] size.
 
-800c7538 some array
+800c7538 sin cos array
+800c7938 normals array by gpu packets (0x8 size)
+    + 0 [][]     x.
+    + 2 [][]     y.
+    + 4 [][]     z.
 
 800c84f4 draw env struct for buffer 1.
 800c8550 display env struct for buffer 1.

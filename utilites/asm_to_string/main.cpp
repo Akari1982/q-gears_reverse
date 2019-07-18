@@ -299,40 +299,39 @@ int main( int argc, char *argv[] )
             else if( m3 == "ZSF4"   ) m3 = "LZCS";  // 30
             else if( m3 == "FLAG"   ) m3 = "LZCR";  // 31
 
-
             // ctc cfc
-            else if( m3 == "VXY0"  ) m3 = "R11R12"; // 0
-            else if( m3 == "VZ0"   ) m3 = "R13R21"; // 1
-            else if( m3 == "VXY1"  ) m3 = "R22R23"; // 2
-            else if( m3 == "VZ1"   ) m3 = "R31R32"; // 3
-            else if( m3 == "VXY2"  ) m3 = "R33";    // 4
-            else if( m3 == "VZ2"   ) m3 = "TRX";    // 5
-            else if( m3 == "RGB"   ) m3 = "TRY";    // 6
-            else if( m3 == "OTZ"   ) m3 = "TRZ";    // 7
-            else if( m3 == "IR0"   ) m3 = "L11L12"; // 8
-            else if( m3 == "IR1"   ) m3 = "L13L21"; // 9
-            else if( m3 == "IR2"   ) m3 = "L22L23"; // 10
-            else if( m3 == "IR3"   ) m3 = "L31L32"; // 11
-            else if( m3 == "SXY0"  ) m3 = "L33";    // 12
-            else if( m3 == "SXY1"  ) m3 = "RBK";    // 13
-            else if( m3 == "SXY2"  ) m3 = "BBK";    // 14
-            else if( m3 == "SXY2P" ) m3 = "GBK";    // 15
-            else if( m3 == "SZ0"   ) m3 = "LR1LR2"; // 16
-            else if( m3 == "SZ1"   ) m3 = "LR3LG1"; // 17
-            else if( m3 == "SZ2"   ) m3 = "LG2LG3"; // 18
-            else if( m3 == "SZ3"   ) m3 = "LB1LB2"; // 19
-            else if( m3 == "RGB0"  ) m3 = "LB3";    // 20
-            else if( m3 == "RGB1"  ) m3 = "RFC";    // 21
-            else if( m3 == "RGB2"  ) m3 = "GFC";    // 22
-            else if( m3 == "17"    )  m3 = "BFC";    // 23
-            else if( m3 == "MAC0"  ) m3 = "OFX";    // 24
-            else if( m3 == "MAC1"  ) m3 = "OFY";    // 25
-            else if( m3 == "MAC2"  ) m3 = "H";      // 26
-            else if( m3 == "MAC3"  ) m3 = "DQA";    // 27
-            else if( m3 == "IRGB"  ) m3 = "DQB";    // 28
-            else if( m3 == "ORGB"  ) m3 = "ZSF3";   // 29
-            else if( m3 == "LZCS"  ) m3 = "ZSF4";   // 30
-            else if( m3 == "LZCR"  ) m3 = "FLAG";   // 31
+            else if( m3 == "VXY0"   ) m3 = "R11R12"; // 0
+            else if( m3 == "VZ0"    ) m3 = "R13R21"; // 1
+            else if( m3 == "VXY1"   ) m3 = "R22R23"; // 2
+            else if( m3 == "VZ1"    ) m3 = "R31R32"; // 3
+            else if( m3 == "VXY2"   ) m3 = "R33";    // 4
+            else if( m3 == "VZ2"    ) m3 = "TRX";    // 5
+            else if( m3 == "RGB"    ) m3 = "TRY";    // 6
+            else if( m3 == "OTZ"    ) m3 = "TRZ";    // 7
+            else if( m3 == "IR0"    ) m3 = "L11L12"; // 8
+            else if( m3 == "IR1"    ) m3 = "L13L21"; // 9
+            else if( m3 == "IR2"    ) m3 = "L22L23"; // 10
+            else if( m3 == "IR3"    ) m3 = "L31L32"; // 11
+            else if( m3 == "SXY0"   ) m3 = "L33";    // 12
+            else if( m3 == "SXY1"   ) m3 = "RBK";    // 13
+            else if( m3 == "SXY2"   ) m3 = "BBK";    // 14
+            else if( m3 == "SXY2P"  ) m3 = "GBK";    // 15
+            else if( m3 == "SZ0"    ) m3 = "LR1LR2"; // 16
+            else if( m3 == "SZ1"    ) m3 = "LR3LG1"; // 17
+            else if( m3 == "SZ2"    ) m3 = "LG2LG3"; // 18
+            else if( m3 == "SZ3"    ) m3 = "LB1LB2"; // 19
+            else if( m3 == "RGB0"   ) m3 = "LB3";    // 20
+            else if( m3 == "RGB1"   ) m3 = "RFC";    // 21
+            else if( m3 == "RGB2"   ) m3 = "GFC";    // 22
+            else if( m3 == "17"     ) m3 = "BFC";    // 23
+            else if( m3 == "MAC0"   ) m3 = "OFX";    // 24
+            else if( m3 == "MAC1"   ) m3 = "OFY";    // 25
+            else if( m3 == "MAC2"   ) m3 = "H";      // 26
+            else if( m3 == "MAC3"   ) m3 = "DQA";    // 27
+            else if( m3 == "IRGB"   ) m3 = "DQB";    // 28
+            else if( m3 == "ORGB"   ) m3 = "ZSF3";   // 29
+            else if( m3 == "LZCS"   ) m3 = "ZSF4";   // 30
+            else if( m3 == "LZCR"   ) m3 = "FLAG";   // 31
 
             std::stringstream ss;
             ss << m0;
@@ -357,22 +356,38 @@ int main( int argc, char *argv[] )
             std::string m3 = std::regex_replace( str, e, "$4" ); std::transform( m3.begin(), m3.end(), m3.begin(), ::tolower );
             std::string m4 = std::regex_replace( str, e, "$5" ); std::transform( m4.begin(), m4.end(), m4.begin(), ::toupper );
 
-            if( m2 == "ZERO" ) m2 = "VXY0"; // 0
-            if( m2 == "AT" ) m2 = "VZ0"; // 1
-            if( m2 == "V0" ) m2 = "VXY1"; // 2
-            if( m2 == "V1" ) m2 = "VZ1"; // 3
-            if( m2 == "A0" ) m2 = "VXY2"; // 4
-            if( m2 == "A1" ) m2 = "VZ2"; // 5
-            if( m2 == "T0" ) m2 = "IR0"; // 8
-            if( m2 == "T1" ) m2 = "IR1"; // 9
-            if( m2 == "T2" ) m2 = "IR2"; // 10
-            if( m2 == "T3" ) m2 = "IR3"; // 11
-            if( m2 == "T4" ) m2 = "SXY0"; // 12
-            if( m2 == "T5" ) m2 = "SXY1"; // 13
-            if( m2 == "T6" ) m2 = "SXY2"; // 14
-            if( m2 == "T9" ) m2 = "MAC1"; // 25
-            if( m2 == "K0" ) m2 = "MAC2"; // 26
-            if( m2 == "K1" ) m2 = "MAC3"; // 27
+            // lwc2 swc2
+            if( m2 == "ZERO" )    m2 = "VXY0";  // 0
+            else if( m2 == "AT" ) m2 = "VZ0";   // 1
+            else if( m2 == "V0" ) m2 = "VXY1";  // 2
+            else if( m2 == "V1" ) m2 = "VZ1";   // 3
+            else if( m2 == "A0" ) m2 = "VXY2";  // 4
+            else if( m2 == "A1" ) m2 = "VZ2";   // 5
+            else if( m2 == "A2" ) m2 = "RGB";   // 6
+            else if( m2 == "A3" ) m2 = "OTZ";   // 7
+            else if( m2 == "T0" ) m2 = "IR0";   // 8
+            else if( m2 == "T1" ) m2 = "IR1";   // 9
+            else if( m2 == "T2" ) m2 = "IR2";   // 10
+            else if( m2 == "T3" ) m2 = "IR3";   // 11
+            else if( m2 == "T4" ) m2 = "SXY0";  // 12
+            else if( m2 == "T5" ) m2 = "SXY1";  // 13
+            else if( m2 == "T6" ) m2 = "SXY2";  // 14
+            else if( m2 == "T7" ) m2 = "SXY2P"; // 15
+            else if( m2 == "S0" ) m2 = "SZ0";   // 16
+            else if( m2 == "S1" ) m2 = "SZ1";   // 17
+            else if( m2 == "S2" ) m2 = "SZ2";   // 18
+            else if( m2 == "S3" ) m2 = "SZ3";   // 19
+            else if( m2 == "S4" ) m2 = "RGB0";  // 20
+            else if( m2 == "S5" ) m2 = "RGB1";  // 21
+            else if( m2 == "S6" ) m2 = "RGB2";  // 22
+            else if( m2 == "T8" ) m2 = "MAC0";  // 24
+            else if( m2 == "T9" ) m2 = "MAC1";  // 25
+            else if( m2 == "K0" ) m2 = "MAC2";  // 26
+            else if( m2 == "K1" ) m2 = "MAC3";  // 27
+            else if( m2 == "GP" ) m2 = "IRGB";  // 28
+            else if( m2 == "SP" ) m2 = "ORGB";  // 29
+            else if( m2 == "FP" ) m2 = "LZCS";  // 30
+            else if( m2 == "RA" ) m2 = "LZCR";  // 21
 
             std::stringstream ss;
             ss << m0;

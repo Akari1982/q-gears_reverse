@@ -28,6 +28,7 @@ TEXTURES
 
 MODELS
     + 0 []       ???
+    + 1 []       -1 = don't use root model matrix for lighting.
     + 2 []       number of BONES.
     + 3 []       number of PARTS.
     + 4 []       number of ANIMATIONS.
@@ -135,7 +136,7 @@ TEXTURE_CONTROL
                  0x60 - semi transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4).
 
 VERTEXES
-    + 0 [][][][] set to 1 when we scaled vertexes.
+    + 0 [][][][] set to 1 when we scaled vertexes. Add 0x2 bit when we calculated lighting.
     // array of vertexes for part (0x8 size)
     + 0 [][]     x.
     + 2 [][]     y.
