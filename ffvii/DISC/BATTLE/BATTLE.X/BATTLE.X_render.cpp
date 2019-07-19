@@ -74,7 +74,7 @@ funcbc8b0; // copy data to camera vectors
 A0 = 0;
 A1 = 0;
 A2 = 0;
-system_set_far_color_to_GTE();
+system_gte_set_far_colour();
 
 800B8590	jal    funcbc538 [$800bc538]
 800B8594	nop

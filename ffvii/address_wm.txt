@@ -1,5 +1,25 @@
 800c6770 buffer for skybox overlay render (0x2 items 0x24 size).
 
+800c6808 lighting matrix.
+800c6828 lighting matrix when 800e5634 == 2.
+800c6848 light colour matrix.
+
+800c70dc type colour array (0x8 size 0x7 items)
+    // 3200 3200 E2FF 0000   0 - yellow chocobo
+    // E2FF 3200 E2FF 0000   1 - green chocobo
+    // E2FF 3200 3200 0000   2 - blue chocobo
+    // B0FF B0FF B0FF 0000   3 - black chocobo
+    // 4500 1100 6DFF 0000   4 - gold chocobo
+    // 0000 01FF 01FF 0000   5 - red submarine
+    // EFFF F1FF 0A00 0000   6 - blue submarine
+    + 0 [][]     r.
+    + 2 [][]     g.
+    + 4 [][]     b.
+
+
+
+
+
 800c744c array with .TXZ files cd data (0x8 size).
     000015D2 00028597 WORLD\WM0S.TXZ
     00001623 0002A65A WORLD\WM1S.TXZ
@@ -42,6 +62,8 @@
     +0 [][][][] sector for MAP files.
     +4 [][][][] size.
 
+800c752c current write into buffer bit (into this we write data).
+
 800c7538 sin cos array
 800c7938 normals array by gpu packets (0x8 size)
     + 0 [][]     x.
@@ -54,6 +76,9 @@
 800cc5c4 display env struct for buffer 2.
 
 800e5608 [][][][] maybe initial camera rotation.
+
+800e5634 [][][][] byte from savemap 8009c6e4 + fa2.
+
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 

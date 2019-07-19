@@ -28,7 +28,7 @@ TEXTURES
 
 MODELS
     + 0 []       ???
-    + 1 []       -1 = don't use root model matrix for lighting.
+    + 1 []       -1 = don't use root model matrix for lighting. Set to 2 when we apply colour to model (for chokobo).
     + 2 []       number of BONES.
     + 3 []       number of PARTS.
     + 4 []       number of ANIMATIONS.

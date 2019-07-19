@@ -1630,10 +1630,10 @@ switch( opcode )
         S0 = V0;
 
         A0 = S0;
-        funca45e4;
+        funca45e4();
 
         A0 = 13;
-        A1 = (S0 << 10) >> 10;
+        A1 = (S0 << 10) >> 10; // colour id
         funcb624c();
 
         return 0;
@@ -1645,8 +1645,8 @@ switch( opcode )
         wm_script_pop_stack();
 
         A0 = d;
-        A1 = ((V0 + 5) << 10) >> 10;
-        800AD168	jal    funcb624c [$800b624c]
+        A1 = ((V0 + 5) << 10) >> 10; // colour id
+        funcb624c();
 
         return 0;
     }

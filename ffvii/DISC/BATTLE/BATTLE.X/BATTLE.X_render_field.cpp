@@ -12,7 +12,7 @@ if ((bu[800f8380] & 08) == 0 && hu[8016360c + 8] == 3a) // if battle location ==
 A0 = bu[800f5b70];
 A1 = bu[800f5b71];
 A2 = bu[800f5b72];
-system_set_far_color_to_GTE;
+system_gte_set_far_colour;
 
 
 

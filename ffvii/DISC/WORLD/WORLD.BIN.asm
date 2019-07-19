@@ -750,7 +750,7 @@
 // funcaf0b0
 800AF0B0-800AF10C
 ////////////////////////////////
-// funcaf110
+// wm_set_gte_colour_settings
 800AF110-800AF1A4
 ////////////////////////////////
 // wm_set_point_as_active
@@ -1008,7 +1008,7 @@
 // funcb667c
 800B667C-800B6720
 ////////////////////////////////
-// funcb6724
+// wm_calculate_bones_and_lighting
 800B6724-800B69A0
 ////////////////////////////////
 // wm_load_pc_character_model_file
@@ -1359,10 +1359,10 @@
 // wm_scale_model_animations
 800C2130-800C244C
 ////////////////////////////////
-// funcc2450
+// wm_apply_model_lighting_to_packet
 800C2450-800C2520
 ////////////////////////////////
-// funcc2524
+// wm_apply_poly_lighting_to_packet
 800C2524-800C31EC
 ////////////////////////////////
 // wm_calculate_model_lighting

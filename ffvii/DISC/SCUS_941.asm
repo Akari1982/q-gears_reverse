@@ -3474,7 +3474,7 @@ SP = SP + 0020;
 // system_gte_set_rotation_matrix
 8003B48C-8003B4B8
 ////////////////////////////////
-// func3b4bc
+// system_gte_set_lighting_matrix
 8003B4BC-8003B4E8
 ////////////////////////////////
 // system_gte_set_light_colour_matrix
@@ -3534,10 +3534,10 @@ SP = SP + 0020;
 // func3b66c
 8003B66C-8003B678
 ////////////////////////////////
-// func3b67c
+// system_gte_set_background_colour
 8003B67C-8003B698
 ////////////////////////////////
-// system_set_far_color_to_GTE
+// system_gte_set_far_colour
 8003B69C-8003B6B8
 ////////////////////////////////
 // system_set_screen_offset_to_GTE
