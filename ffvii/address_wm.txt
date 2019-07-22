@@ -197,6 +197,10 @@
 
 801159e8 array of some data (0x2b items 0x1 size).
 
+80115a40 [][][][] pointer to some model related struct
+    +10 [][][][] pointer to start of models.
+80115a44 [][][][] current end of all render packets for models.
+
 80115a5c [][][][] PC character model id.
 80115a60 [][][][] is PC character model loaded into 8014a600.
 

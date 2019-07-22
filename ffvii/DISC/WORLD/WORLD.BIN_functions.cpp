@@ -1437,20 +1437,11 @@ SP = SP + 0178;
 ////////////////////////////////
 // funcaf0b0()
 
-A0 = 0;
-V1 = 0;
-
-loopaf0c0:	; 800AF0C0
-    AT = 8010b18b;
-    AT = AT + V1;
-    [AT + 0000] = b(0);
-    AT = 8010b17c;
-    AT = AT + V1;
-    [AT + 0000] = w(0);
-    A0 = A0 + 0001;
-    V1 = V1 + 0024;
-    V0 = A0 < 0010;
-800AF0E8	bne    v0, zero, loopaf0c0 [$800af0c0]
+for( int i = 0; i < 10; ++i )
+{
+    [8010b18b + i * 24] = b(0);
+    [8010b17c + i * 24] = w(0);
+}
 
 
 [8010b3b8] = w(0);
@@ -9731,7 +9722,7 @@ if( w[80115a60] == 0 )
 {
     800B6C98	jal    funca7f38 [$800a7f38]
 
-    A0 = 0002;
+    A0 = 2;
     funca86c4();
 
     [80115a40] = w(V0);
@@ -9948,19 +9939,18 @@ if( w[80115a50] == 0 )
     return 0;
 }
 
-V0 = b[801159e8 + model_id];
-V1 = b[80115a14 + model_id];
-S2 = V0 - d;
+S2 = b[801159e8 + model_id] - d;
 
-if( V1 == 0 )
+// if not inited
+if( b[80115a14 + model_id] == 0 )
 {
     V1 = w[80115a40];
-    S1 = w[V1 + 10] + S2 * 24;
+    model = w[V1 + 10] + S2 * 24;
 
-    A0 = S1;
-    800B7050	jal    funcc6598 [$800c6598]
+    A0 = model;
+    wm_get_model_total_render_packets_size(); // not needed
 
-    A0 = S1;
+    A0 = model;
     A1 = w[80115a44];
     A2 = S2;
     wm_load_model_packets_and_scale();
@@ -9969,7 +9959,7 @@ if( V1 == 0 )
 
     if( model_id < 29 )
     {
-        A0 = S1;
+        A0 = model;
         wm_calculate_bones_and_lighting();
     }
 
@@ -22466,30 +22456,25 @@ SP = SP + 0040;
 800C6590	jr     ra 
 800C6594	nop
 ////////////////////////////////
-// funcc6598
-800C6598	addiu  sp, sp, $fff8 (=-$8)
-A1 = 0;
-V0 = bu[A0 + 0002];
-V1 = hu[A0 + 0018];
-A2 = V0 << 05;
-V0 = w[A0 + 001c];
-A0 = bu[A0 + 0003];
-800C65B4	nop
-800C65B8	beq    a0, zero, Lc65dc [$800c65dc]
-V1 = V1 + V0;
 
-loopc65c0:	; 800C65C0
-V0 = hu[V1 + 0016];
-A1 = A1 + 0001;
-V0 = V0 << 01;
-A2 = A2 + V0;
-V0 = A1 < A0;
-800C65D4	bne    v0, zero, loopc65c0 [$800c65c0]
-V1 = V1 + 0020;
 
-Lc65dc:	; 800C65DC
-V0 = A2;
-SP = SP + 0008;
-800C65E4	jr     ra 
-800C65E8	nop
+
+////////////////////////////////
+// wm_get_model_total_render_packets_size()
+
+model = A0;
+
+number_of_bones = bu[model + 2];
+number_of_parts = bu[model + 3];
+
+ret = number_of_bones * 20;
+
+part = w[model + 1c] + hu[model + 18];
+
+for( int i = 0; i < number_of_parts; ++i )
+{
+    ret = ret + hu[part + i * 20 + 16] * 2; // add size of both render packets size
+}
+
+return ret;
 ////////////////////////////////
