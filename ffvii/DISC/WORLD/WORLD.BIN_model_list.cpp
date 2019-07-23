@@ -3360,7 +3360,7 @@ if( V0 != 0 )
 ////////////////////////////////
 // funcab988()
 
-S0 = A0;
+model_id = A0;
 S1 = A1;
 
 wm_set_active_entity_with_model_id();
@@ -3372,7 +3372,7 @@ if( active_model != 0 )
     if( ( bu[active_model + 51] & 10 ) == 0 )
     {
 
-        V1 = S0 << 08;
+        V1 = model_id << 08;
         V1 = V1 & 3f00;
         V0 = S1 & 00ff;
         V0 = V0 | 4000;

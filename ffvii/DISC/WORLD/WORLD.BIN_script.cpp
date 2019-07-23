@@ -783,19 +783,19 @@ switch( opcode )
     case 300: // load model
     {
         wm_script_pop_stack(); // get value from stack
-        S0 = V0;
+        model_id = V0;
 
-        A0 = S0;
+        A0 = model_id;
         wm_set_active_entity_with_model_id();
 
         if( V0 == 0 ) // entity not found
         {
             wm_insert_in_model_struct_list();
 
-            A0 = S0;
+            A0 = model_id;
             wm_init_model_struct_list_element();
 
-            A0 = S0;
+            A0 = model_id;
             A1 = 0;
             funcab988();
         }

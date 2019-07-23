@@ -291,7 +291,7 @@ if( w[8010ae54] < ( 1 << S0 ) )
 {
     if( w[8010ae54] == A0 )
     {
-        800ADCF0	jal    funca7f38 [$800a7f38]
+        funca7f38();
     }
     else if( w[8010ae54] & 4 )
     {
@@ -9411,52 +9411,31 @@ SP = SP + 0018;
 800B6674	jr     ra 
 800B6678	nop
 ////////////////////////////////
-// funcb667c
-800B667C
-V1 = 0;
-800B6680	addiu  a0, zero, $ffff (=-$1)
 
-loopb6684:	; 800B6684
-800B6684	lui    at, $8011
-AT = AT + 59e8;
-AT = AT + V1;
-[AT + 0000] = b(A0);
-800B6694	lui    at, $8011
-AT = AT + 5a14;
-AT = AT + V1;
-[AT + 0000] = b(0);
-V1 = V1 + 0001;
-V0 = V1 < 002b;
-800B66AC	bne    v0, zero, loopb6684 [$800b6684]
-800B66B0	nop
-800B66B4	lui    v0, $8011
-V0 = V0 + 5a6c;
-800B66BC	lui    at, $8011
-[AT + 5a40] = w(0);
-800B66C4	lui    at, $8011
-[AT + 5a44] = w(0);
-800B66CC	lui    at, $8011
-[AT + 5a50] = w(0);
-800B66D4	lui    at, $8011
-[AT + 5a4c] = w(0);
-800B66DC	lui    at, $8011
-[AT + 5a48] = w(0);
-800B66E4	lui    at, $8011
-[AT + 5a54] = w(0);
-800B66EC	lui    at, $8011
-[AT + 5a64] = w(0);
-800B66F4	lui    at, $8011
-[AT + 5a5c] = w(0);
-800B66FC	lui    at, $8011
-[AT + 5a60] = w(0);
-800B6704	lui    at, $8011
-[AT + 5a58] = w(0);
-800B670C	lui    at, $8011
-[AT + 5a68] = w(0);
-800B6714	lui    at, $800d
-[AT + 80bc] = w(V0);
-800B671C	jr     ra 
-800B6720	nop
+
+
+////////////////////////////////
+// wm_init_model_variables_and_array()
+
+for( int i = 0; i < 2b; ++i )
+{
+    [801159e8 + i] = b(-1);
+    [80115a14 + i] = b(0);
+}
+
+[80115a40] = w(0); // pointer to WM3.BSZ
+[80115a44] = w(0); // render packets for models
+[80115a48] = w(0);
+[80115a4c] = w(0);
+[80115a50] = w(0);
+[80115a54] = w(0);
+[80115a58] = w(0);
+[80115a5c] = w(0); // PC character model id
+[80115a60] = w(0); // PC character loaded
+[80115a64] = w(0);
+[80115a68] = w(0);
+
+[800с80bc] = w(80115a6c);
 ////////////////////////////////
 
 
@@ -9608,10 +9587,12 @@ wm_calculate_bones_and_lighting();
 
 [80115a48] = w(1);
 
-[801159ea] = b(-1);
-[801159e9] = b(-1);
-[801159e8] = b(-1);
+// unset all pc models
+[801159e8 + 0] = b(-1);
+[801159e8 + 1] = b(-1);
+[801159e8 + 2] = b(-1);
 
+// set new pc model
 model_id = w[80115a5c];
 [801159e8 + model_id] = b(0);
 ////////////////////////////////
@@ -9637,78 +9618,44 @@ if( w[80115a60] != 0 )
 ////////////////////////////////
 // funcb6b28()
 
-800B6B2C	lui    a1, $8011
-800B6B30	lui    v0, $8014
-V0 = bu[V0 + a800];
-A1 = A1 | 7000;
-S3 = 0;
-800B6B54	blez   v0, Lb6b94 [$800b6b94]
+A1 = 80117000;
+for( int i = 0; i < bu[8013a800]; ++i )
+{
+    A0 = w[8013a804] + i * 24; // model
+    A2 = i;
+    wm_load_model_packets_and_scale();
 
-S0 = 0;
+    A1 = V0;
+}
 
-loopb6b60:	; 800B6B60
-A2 = S3;
-A0 = w[8013a804];
-S3 = S3 + 0001;
-A0 = S0 + A0;
+for( int i = 3; i < 20; ++i )
+{
+    V0 = w[80115a58];
+    [801159e8 + i] = b(bu[800c7114 + V0 * 20 + i]);
 
-wm_load_model_packets_and_scale();
+    if( b[801159e8 + i] >= 0 )
+    {
+        if( i == 18 )
+        {
+            V1 = b[80115a00];
 
-A1 = V0;
-V0 = bu[8013a800];
+            V0 = V1 * 24;
+            V1 = w[8013a804];
+            S1 = V1 + V0 - 24;
+            A0 = hu[S1 + 0018];
+            V0 = w[S1 + 001c];
 
-V0 = S3 < V0;
-800B6B8C	bne    v0, zero, loopb6b60 [$800b6b60]
-S0 = S0 + 0024;
+            S0 = A0 + V0;
 
-Lb6b94:	; 800B6B94
-S3 = 0003;
-800B6B98	lui    s4, $800c
-S4 = S4 + 7114;
-
-loopb6ba0:	; 800B6BA0
-V0 = w[80115a58];
-V0 = V0 << 05;
-V0 = V0 + S4;
-V0 = V0 + S3;
-V0 = bu[V0 + 0000];
-[801159e8 + S3] = b(V0);
-V0 = V0 << 18;
-800B6BD4	bltz   v0, Lb6c48 [$800b6c48]
-V0 = 0018;
-800B6BDC	bne    s3, v0, Lb6c48 [$800b6c48]
-800B6BE0	nop
-V1 = b[80115a00];
-S2 = 0;
-V0 = V1 << 03;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800B6BFC	lui    v1, $8014
-V1 = w[V1 + a804];
-800B6C04	addiu  v0, v0, $ffdc (=-$24)
-S1 = V0 + V1;
-A0 = hu[S1 + 0018];
-V0 = w[S1 + 001c];
-V1 = bu[S1 + 0003];
-800B6C18	nop
-800B6C1C	blez   v1, Lb6c48 [$800b6c48]
-A0 = A0 + V0;
-S0 = A0;
-
-loopb6c28:	; 800B6C28
-A0 = S0;
-800B6C2C	jal    funcc3db0 [$800c3db0]
-A1 = 0001;
-V0 = bu[S1 + 0003];
-S2 = S2 + 0001;
-V0 = S2 < V0;
-800B6C40	bne    v0, zero, loopb6c28 [$800b6c28]
-S0 = S0 + 0020;
-
-Lb6c48:	; 800B6C48
-S3 = S3 + 0001;
-V0 = S3 < 0020;
-800B6C50	bne    v0, zero, loopb6ba0 [$800b6ba0]
+            for( int j = 0; j < bu[S1 + 3]; ++j )
+            {
+                A0 = S0 + j * 20;
+                A1 = 1;
+                funcc3db0();
+            }
+        }
+    }
+}
 
 [80115a4c] = w(1);
 ////////////////////////////////
@@ -9720,7 +9667,7 @@ V0 = S3 < 0020;
 
 if( w[80115a60] == 0 )
 {
-    800B6C98	jal    funca7f38 [$800a7f38]
+    funca7f38();
 
     A0 = 2;
     funca86c4();
@@ -9735,7 +9682,7 @@ if( w[80115a60] == 0 )
         // 00003D02 0001948D WM3.BSZ
         A0 = w[800c74c4 + 3 * 8 + 0];
         A1 = w[800c74c4 + 3 * 8 + 4];
-        A2 = w[80115a40];
+        A2 = w[80115a40]; // buffer
         A3 = 800b6dcc; // funcb6dcc()
         system_cdrom_start_load_lzs();
 
@@ -9812,54 +9759,39 @@ if( w[80115a60] != 0 )
 
 
 ////////////////////////////////
-// funcb6e08
-800B6E08	lui    v0, $8011
-V0 = w[V0 + 5a50];
-800B6E10	nop
-800B6E14	beq    v0, zero, Lb6e70 [$800b6e70]
-V0 = 0003;
-V1 = 002a;
-800B6E20	lui    a0, $8011
-A0 = A0 + 5a3e;
-800B6E28	lui    at, $8011
-[AT + 5a50] = w(0);
-800B6E30	lui    at, $8011
-[AT + 5a64] = w(V0);
+// funcb6e08()
 
-loopb6e38:	; 800B6E38
-[A0 + 0000] = b(0);
-800B6E3C	addiu  v1, v1, $ffff (=-$1)
-800B6E40	bgez   v1, loopb6e38 [$800b6e38]
-800B6E44	addiu  a0, a0, $ffff (=-$1)
-V1 = 0020;
-800B6E4C	addiu  a0, zero, $ffff (=-$1)
+if( w[80115a50] != 0 )
+{
+    [80115a50] = w(0);
+    [80115a64] = w(3);
 
-loopb6e50:	; 800B6E50
-800B6E50	lui    at, $8011
-AT = AT + 59e8;
-AT = AT + V1;
-[AT + 0000] = b(A0);
-V1 = V1 + 0001;
-V0 = V1 < 002b;
-800B6E68	bne    v0, zero, loopb6e50 [$800b6e50]
-800B6E6C	nop
+    for( int i = 0; i < 2b; ++i )
+    {
+        [80115a14 + i] = b(0);
+    }
 
-Lb6e70:	; 800B6E70
-800B6E70	jr     ra 
-800B6E74	nop
+    for( int i = 20; i < 2b; ++i )
+    {
+        [801159e8 + i] = b(-1);
+    }
+}
 ////////////////////////////////
-// funcb6e78
-800B6E78	lui    v0, $8011
-V0 = w[V0 + 5a60];
-800B6E80	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// funcb6e78()
+
+V0 = w[80115a60];
+
 800B6E84	beq    v0, zero, Lb6e94 [$800b6e94]
-[SP + 0010] = w(RA);
-800B6E8C	jal    $system_cdrom_read_chain
-800B6E90	nop
+
+system_cdrom_read_chain();
+
 
 Lb6e94:	; 800B6E94
-800B6E94	lui    v0, $8011
-V0 = w[V0 + 5a50];
+V0 = w[80115a50];
 800B6E9C	nop
 800B6EA0	beq    v0, zero, Lb6ec0 [$800b6ec0]
 800B6EA4	nop
@@ -9871,13 +9803,12 @@ V0 = w[V0 + 5a50];
 800B6EBC	nop
 
 Lb6ec0:	; 800B6EC0
-800B6EC0	lui    v0, $8011
-V0 = w[V0 + 5a64];
+V0 = w[80115a64];
 800B6EC8	nop
 800B6ECC	beq    v0, zero, Lb6eec [$800b6eec]
 800B6ED0	addiu  v0, v0, $ffff (=-$1)
-800B6ED4	lui    at, $8011
-[AT + 5a64] = w(V0);
+
+[80115a64] = w(V0);
 800B6EDC	bne    v0, zero, Lb6eec [$800b6eec]
 800B6EE0	nop
 800B6EE4	jal    funca8048 [$800a8048]
@@ -9898,6 +9829,7 @@ if( model_id >= 2b )
     model_id = 0;
 }
 
+// if not inited
 if( b[801159e8 + model_id] < 0 )
 {
     if( model_id >= 3 ) // if npc
@@ -9939,13 +9871,13 @@ if( w[80115a50] == 0 )
     return 0;
 }
 
+wm3 = w[80115a40];
 S2 = b[801159e8 + model_id] - d;
 
 // if not inited
 if( b[80115a14 + model_id] == 0 )
 {
-    V1 = w[80115a40];
-    model = w[V1 + 10] + S2 * 24;
+    model = w[wm3 + 10] + S2 * 24;
 
     A0 = model;
     wm_get_model_total_render_packets_size(); // not needed
@@ -9963,11 +9895,10 @@ if( b[80115a14 + model_id] == 0 )
         wm_calculate_bones_and_lighting();
     }
 
-    [80115a14 + model_id] = b(1);
+    [80115a14 + model_id] = b(1); // inited
 }
 
-V1 = w[80115a40];
-return w[V1 + 10] + S2 * 24;
+return w[wm3 + 10] + S2 * 24;
 ////////////////////////////////
 
 
@@ -9984,16 +9915,10 @@ funcb6b28();
 
 ////////////////////////////////
 // funcb7134
-800B7134	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 800B713C	jal    $8003408c
-800B7140	nop
-800B7144	lui    at, $8011
-[AT + 5a60] = w(0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B7154	jr     ra 
-800B7158	nop
+
+[80115a60] = w(0);
 ////////////////////////////////
 
 
@@ -19595,7 +19520,7 @@ for( int i = 0; i < bu[part + b]; ++i )
 
 ////////////////////////////////
 // funcc3db0
-800C3DB0	addiu  sp, sp, $ffc0 (=-$40)
+
 T1 = 0;
 
 Lc3db8:	; 800C3DB8
@@ -19923,10 +19848,10 @@ Lc412c:	; 800C412C
 T1 = T1 + 0001;
 V0 = T1 < 0002;
 800C4134	bne    v0, zero, Lc3db8 [$800c3db8]
-800C4138	nop
-SP = SP + 0040;
-800C4140	jr     ra 
-800C4144	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcc4148
 800C4148	addiu  sp, sp, $ff68 (=-$98)
@@ -21647,8 +21572,6 @@ A0 = w[A1 + 0000];
 SXY0 = V0;
 SXY2P = A0;
 SXY1 = V1;
-800C5A58	nop
-800C5A5C	nop
 gte_NCLIP(); // Normal clipping
 [T2 + fff0] = w(V0);
 [T2 + fff8] = w(V1);

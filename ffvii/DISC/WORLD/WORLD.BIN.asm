@@ -1005,7 +1005,7 @@
 // funcb65e0
 800B65E0-800B6678
 ////////////////////////////////
-// funcb667c
+// wm_init_model_variables_and_array
 800B667C-800B6720
 ////////////////////////////////
 // wm_calculate_bones_and_lighting

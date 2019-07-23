@@ -183,78 +183,61 @@ else
     }
 }
 
---800ac564 : SH      000000c6 (s0), 0046 (80109d74 (v0)) [80109dba]
 --0c6 0001 1B01 0500 1001 0000 7000 0102 3F08
 if (w[8011626c] == 0x00)
 {
-    --800ac530 : SH      000000ce (v1), 0046 (80109d74 (a0)) [80109dba]
     --0ce 0001 1401 DB03 1700 0102 DD00
-    if ((savemap1_bu(0x7b) & 0x08) == 0)
+    if ((savemap1_bu(0x7b) & 0x08) == 0) -- 0x0C1F 0x08: Ruby Weapon killed
     {
-        --800ac530 : SH      000000d4 (v1), 0046 (80109d74 (a0)) [80109dba]
         --0d4 0001 1401 3C1C 0102 DD00
-        if (savemap13_bu(0x87) & 0x10) -- activate weapon?
+        if (savemap13_bu(0x87) & 0x10) -- 0x0F2B 0x20: World map Ruby Weapon form. bit=0: Small Form (before first encounter). bit=1: Big Form (after first encounter). 
         {
             0d9 0001 1001 1D00 0003
         }
     }
 
-    --800ac564 : SH      000000dd (s0), 0046 (80109d74 (v0)) [80109dba]
     --0dd 0001 1401 D003 1700 0102 E700
-    if ((savemap1_bu(0x7a) & 0x01) == 0) -- cannon in junon
+    if ((savemap1_bu(0x7a) & 0x01) == 0) -- 0x0C1E cannon in junon
     {
-        --800ac530 : SH      000000e3 (v1), 0046 (80109d74 (a0)) [80109dba]
         0e3 0001 1001 0700 0003
     }
 
-    --800ad688 : SH      000000e7 (v1), 0046 (80109d74 (a0)) [80109dba]
     --0e7 0001 1401 D303 0102 F000
-    if (savemap1_bu(0x7a) & 0x08)
+    if (savemap1_bu(0x7a) & 0x08) -- 0x0C1E 0x08: Forgotten City Animation displayed {loslake1/ev1/s3}
     {
         0ec 0001 1001 1400 0003
     }
 
-    --800ac564 : SH      000000f0 (s0), 0046 (80109d74 (v0)) [80109dba]
     --0f0 0001 1401 D103 1700 0102 FA00
-    if ((savemap1_bu(0x7a) & 0x02) == 0) -- rocket
+    if ((savemap1_bu(0x7a) & 0x02) == 0) -- 0x0C1E rocket
     {
-        --800ac530 : SH      000000f6 (v1), 0046 (80109d74 (a0)) [80109dba]
         0f6 0001 1001 0F00 0003
     }
 
-    --800ad688 : SH      000000fa (v1), 0046 (80109d74 (a0)) [80109dba]
     --0fa 0001 1801 5103 1700 0102 0401
-    if ((savemap1_bu(0x6a) & 0x02) == 0) -- phoenix
+    if ((savemap1_bu(0x6a) & 0x02) == 0) -- 0x0C0E phoenix
     {
-        --800ac530 : SH      00000100 (v1), 0046 (80109d74 (a0)) [80109dba]
         100 0001 1001 0C00 0003
     }
 
-    --800ad688 : SH      00000104 (v1), 0046 (80109d74 (a0)) [80109dba]
     --104 0001 1C01 0000 1001 2C06 6000 0102 1001
     if (savemap2_hu(0x00) < 0x62c) -- north crater dome
     {
-        --800ac530 : SH      0000010c (v1), 0046 (80109d74 (a0)) [80109dba]
         10c 0001 1001 1800 0003
     }
 
-    --800ad688 : SH      00000110 (v1), 0046 (80109d74 (a0)) [80109dba]
     -- cold saucer
     110 0001 1001 0E00 0003
 
-    --800ad688 : SH      00000114 (v1), 0046 (80109d74 (a0)) [80109dba]
     -- rocket launch pad
     114 0001 1001 1000 0003
 
-    --800ad688 : SH      00000118 (v1), 0046 (80109d74 (a0)) [80109dba]
     -- ancient forest
     118 0001 1001 1900 0003
 
-    --800ad688 : SH      0000011c (v1), 0046 (80109d74 (a0)) [80109dba]
     --11c 0001 1401 D803 1700 0102 2E01
-    if ((savemap1_bu(0x7b) & 0x01) == 0)
+    if ((savemap1_bu(0x7b) & 0x01) == 0) -- 0x01: Ultimate Weapon killed (enables Special Battles at Battle Sq) {COLOIN1/s2/s1}
     {
-        --800ac530 : SH      00000122 (v1), 0046 (80109d74 (a0)) [80109dba]
         --122 0001 1C01 0000 1001 2C06 6300 0102 2E01
         if (savemap2_hu(0x00) >= 0x62e)
         {
@@ -262,60 +245,51 @@ if (w[8011626c] == 0x00)
         }
     }
 
-    --800ac564 : SH      0000012e (s0), 0046 (80109d74 (v0)) [80109dba]
     --12e 0001 1401 931A 0102 3701
-    if (savemap13_bu(0x62) & 0x08)
+    if (savemap13_bu(0x62) & 0x08) -- 0x0F06
     {
         133 0001 1001 0A00 0003
     }
 
-    --800ac564 : SH      00000137 (s0), 0046 (80109d74 (v0)) [80109dba]
     --137 0001 1401 F003 0102 4001
-    if (savemap1_bu(0x7e) & 0x01) -- yellow chokobo
+    if (savemap1_bu(0x7e) & 0x01) -- 0x0C22 wild chokobo
     {
         13c 0001 1001 0400 0003
     }
 
-    --800ac564 : SH      00000140 (s0), 0046 (80109d74 (v0)) [80109dba]
     --140 0001 1401 F203 0102 4901
-    if (savemap1_bu(0x7e) & 0x04)
+    if (savemap1_bu(0x7e) & 0x04) -- 0x0C22 yellow chokobo
     {
         145 0001 1001 1300 0003
     }
 
-    --800ac564 : SH      00000149 (s0), 0046 (80109d74 (v0)) [80109dba]
     --149 0001 1401 F303 0102 5201
-    if (savemap1_bu(0x7e) & 0x08)
+    if (savemap1_bu(0x7e) & 0x08) -- 0x0C22 green chokobo
     {
         14e 0001 1001 1300 0003
     }
 
-    --800ac564 : SH      00000152 (s0), 0046 (80109d74 (v0)) [80109dba]
     --152 0001 1401 F403 0102 5B01
-    if (savemap1_bu(0x7e) & 0x10)
+    if (savemap1_bu(0x7e) & 0x10) -- 0x0C22 blue chokobo
     {
         157 0001 1001 1300 0003
     }
 
-    --800ac564 : SH      0000015b (s0), 0046 (80109d74 (v0)) [80109dba]
     --15b 0001 1401 F503 0102 6401
-    if (savemap1_bu(0x7e) & 0x20)
+    if (savemap1_bu(0x7e) & 0x20) -- 0x0C22 black chokobo
     {
         160 0001 1001 1300 0003
     }
 
-    --800ac564 : SH      00000164 (s0), 0046 (80109d74 (v0)) [80109dba]
     --164 0001 1401 F603 0102 6D01
-    if (savemap1_bu(0x7e) & 0x40)
+    if (savemap1_bu(0x7e) & 0x40) -- 0x0C22 gold chokobo
     {
         169 0001 1001 1300 0003
     }
 
-    --800ac564 : SH      0000016d (s0), 0046 (80109d74 (v0)) [80109dba]
     --16d 0001 1401 7F0E 1700 0102 7C01
     if ((savemap3_bu(0xcf) & 0x80) == 0)
     {
-        --800ac530 : SH      00000173 (v1), 0046 (80109d74 (a0)) [80109dba]
         --173 0001 1401 F803 0102 7C01
         if (savemap1_bu(0x7f) & 0x01) -- buggy
         {
@@ -323,29 +297,26 @@ if (w[8011626c] == 0x00)
         }
     }
 
-    --800ac564 : SH      0000017c (s0), 0046 (80109d74 (v0)) [80109dba]
     --17c 0001 1401 FA03 0102 8501
     if (savemap1_bu(0x7f) & 0x04) -- tiny bronco
     {
         181 0001 1001 0500 0003
     }
 
-    --800ac564 : SH      00000185 (s0), 0046 (80109d74 (v0)) [80109dba]
     --185 0001 1401 FC03 0102 8E01
     if (savemap1_bu(0x7f) & 0x10) -- highwind
     {
         18a 0001 1001 0300 0003
     }
 
-    --800ac564 : SH      0000018e (s0), 0046 (80109d74 (v0)) [80109dba]
     --18e 0001 1401 831A 0102 9701
-    if (savemap13_bu(0x50) & 0x08)
+    if (savemap13_bu(0x50) & 0x08) -- 0x0EF4 0x08: Gray Submarine (bit = 1)/ Red Submarine (bit = 0) (Liked with 0x0EF6[2])
     {
         193 0001 1001 0D00 0003
     }
 
     --197 0001 1401 921A 0102 A001
-    if (savemap13_bu(0x52) & 0x04)
+    if (savemap13_bu(0x52) & 0x04) -- 0x0EF6 0x04: Grey Submarine Ignored / Red Submarine bit = 1 (Linked with 0x0EF4[3])
     {
         19c 0001 1001 0D00 0003
     }
