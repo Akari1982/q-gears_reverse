@@ -9824,7 +9824,7 @@ if( model_id < 20 )
 {
     if( w[80115a4c] != 0 )
     {
-        return w[8013a804] + (b[801159e8 + model_id] - 1) * 24;
+        return w[8013a804] + (b[801159e8 + model_id] - 1) * 24; // model from pack offset
     }
     return 0;
 }
