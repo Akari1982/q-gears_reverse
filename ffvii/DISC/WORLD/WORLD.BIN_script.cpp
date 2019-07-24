@@ -806,33 +806,32 @@ switch( opcode )
     case 343:
     {
         V0 = w[8010ad3c];
-        800AC7A4	nop
-        A0 = bu[V0 + 0050];
-        800AC7AC	jal    funcbb9a0 [$800bb9a0]
-        800AC7B0	nop
-        S1 = w[8010ad3c];
-        800AC7BC	jal    funca8b30 [$800a8b30]
-        A0 = S1;
-        800AC7C4	jal    wm_script_pop_stack [$800abb24]
-        800AC7C8	nop
-        S0 = V0;
-        800AC7D0	jal    wm_set_active_entity_with_model_id [$800a993c]
-        A0 = S0;
-        800AC7D8	bne    v0, zero, Lac7f0 [$800ac7f0]
-        800AC7DC	nop
-        800AC7E0	jal    wm_insert_in_model_struct_list [$800a8a1c]
-        800AC7E4	nop
-        800AC7E8	jal    wm_init_model_struct_list_element [$800a9334]
-        A0 = S0;
+        A0 = bu[V0 + 50];
+        wm_script_push_to_store_stack();
 
-        Lac7f0:	; 800AC7F0
+        S1 = w[8010ad3c];
+        A0 = S1;
+        funca8b30();
+
+        wm_script_pop_stack();
+        S0 = V0;
+
+        A0 = S0;
+        wm_set_active_entity_with_model_id();
+
+        if( V0 == 0 )
+        {
+            wm_insert_in_model_struct_list();
+
+            A0 = S0;
+            wm_init_model_struct_list_element();
+        }
+
         V1 = w[8010ad3c];
-        800AC7F8	nop
-        V0 = bu[V1 + 0051];
-        [V1 + 0008] = w(S1);
-        V0 = V0 | 0002;
-        800AC808	j      Lad61c [$800ad61c]
-        [V1 + 0051] = b(V0);
+        [V1 + 8] = w(S1);
+        [V1 + 51] = b(bu[V1 + 51] | 02);
+
+        return 0;
     }
     break;
 

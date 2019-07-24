@@ -18,20 +18,20 @@
 
 
 
-800c7114 some model settings
-000000 FF 01 02 03 09 FF FF FF FF 05 FF 08 06 07 FFFFFFFFFFFFFF040AFFFFFFFFFFFF
-000000 03 01 FF FF 09 FF 0A 0C FF 05 04 08 06 07 FFFF02FFFFFFFF0B0DFFFFFFFFFFFF
-000000 03 01 FF FF FF FF 0A 0C FF 05 04 08 06 07 FFFF0209FFFFFF0B0DFFFFFFFFFFFF
-000000 03 01 FF FF 09 FF 0A 0C FF 05 04 08 06 07 FFFF02FFFFFFFF0B0DFFFFFFFFFFFF
-000000 03 01 FF FF FF FF 0A 0C FF 05 04 08 06 07 FFFF0209FFFFFF0B0DFFFFFFFFFFFF
-000000 03 01 FF FF FF FF 0A FF 0C 05 04 08 06 07 FFFF0209FFFFFF0B0DFFFFFFFFFFFF
-000000 03 01 FF FF FF FF 0A FF 0C 05 04 08 06 07 FFFF0209FFFFFF0B0DFFFFFFFFFFFF
-000000 03 01 FF FF FF FF 0A FF FF 05 04 08 06 07 FFFF0209FFFFFFFF0CFFFFFF0BFFFF
-000000 03 01 FF FF FF FF 0A FF FF 05 04 08 06 07 FFFF0209FFFFFFFF0CFFFFFF0BFFFF
-000000 FF FF FF FF 02 01 FF FF FF FF FF FF FF FF FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-000000 FF FF FF FF 02 01 FF FF FF FF FF FF FF FF FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-000000 FF FF FF FF FF FF FF FF FF FF 01 FF FF FF 0203FFFFFFFFFFFFFF040506FF07FF
-000000 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FFFFFFFF010203FFFFFFFFFFFFFFFF
+800c7114 some model settings for model is 0x00-0x1f
+000000 FF 01 02 03 09 FF FF FF FF 05 FF 08 06 07 FF FF FF FF FF FF FF 04 0A FF FF FF FF FF FF
+000000 03 01 FF FF 09 FF 0A 0C FF 05 04 08 06 07 FF FF 02 FF FF FF FF 0B 0D FF FF FF FF FF FF
+000000 03 01 FF FF FF FF 0A 0C FF 05 04 08 06 07 FF FF 02 09 FF FF FF 0B 0D FF FF FF FF FF FF
+000000 03 01 FF FF 09 FF 0A 0C FF 05 04 08 06 07 FF FF 02 FF FF FF FF 0B 0D FF FF FF FF FF FF
+000000 03 01 FF FF FF FF 0A 0C FF 05 04 08 06 07 FF FF 02 09 FF FF FF 0B 0D FF FF FF FF FF FF
+000000 03 01 FF FF FF FF 0A FF 0C 05 04 08 06 07 FF FF 02 09 FF FF FF 0B 0D FF FF FF FF FF FF
+000000 03 01 FF FF FF FF 0A FF 0C 05 04 08 06 07 FF FF 02 09 FF FF FF 0B 0D FF FF FF FF FF FF
+000000 03 01 FF FF FF FF 0A FF FF 05 04 08 06 07 FF FF 02 09 FF FF FF FF 0C FF FF FF 0B FF FF
+000000 03 01 FF FF FF FF 0A FF FF 05 04 08 06 07 FF FF 02 09 FF FF FF FF 0C FF FF FF 0B FF FF
+000000 FF FF FF FF 02 01 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+000000 FF FF FF FF 02 01 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+000000 FF FF FF FF FF FF FF FF FF FF 01 FF FF FF 02 03 FF FF FF FF FF FF FF 04 05 06 FF 07 FF
+000000 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 01 02 03 FF FF FF FF FF FF FF FF
 
 800c744c array with .TXZ files cd data (0x8 size).
     000015D2 00028597 WORLD\WM0S.TXZ
@@ -129,6 +129,7 @@
 80109e54 some entity struct.
 80109f34 start of entity struct linked list. (0x0e items 0xe0 size)
 +00 [][][][] pointer to previous entity.
++08 [][][][] ??? ptr to some entity struct
 +0c [][][][] x
 +10 [][][][] y
 +14 [][][][] z
@@ -228,6 +229,8 @@
 8010ade4 [][][][] pointer to some wm script struct.
     +46 [][]     current script pair (we read 2 bytes at once).
 
+8010ae54
+
 8010b068 buffer for skybox overlay texture settings buffer (0x2 items 0xc size).
 
 8010b174 [][][][] store 1 here at start of map if progress less or greater than 0x3e8. Meteor in the sky?
@@ -301,18 +304,21 @@
 80115a40 [][][][] pointer to loaded WM3.BSZ with all models except PC.
 80115a44 [][][][] current end of all render packets for models.
 80115a48 [][][][] init with 0. Set to 1 after PC character loaded.
-80115a4c [][][][] init with 0.
+80115a4c [][][][] WM3.BSZ model pack loaded.
 80115a50 [][][][] init with 0.
 80115a54 [][][][] init with 0.
 80115a58 [][][][] init with 0.
 80115a5c [][][][] PC character model id.
-80115a60 [][][][] is PC character model loaded into 8014a600.
+80115a60 [][][][] PC character model loaded.
 80115a64 [][][][] init with 0.
 80115a68 [][][][] init with 0.
 
 8011626c [][][][] we get value from here in 0x05 of 0x11b opcode. If 1 then place snow pole on map or remove their coords from savemap otherwise.
 
 80116278 [][][][] init with 0.
+
+801163e0 stack of script 1 byte values.
+801163e8 [][][][] pointer to current 801163e0 stack position.
 
 801164f8 [][][][] cam rotation.
 801164fc [][][][] copy 801164f8 here if pc model if != 3 (highwind)
@@ -321,8 +327,10 @@
 
 8013a7cc load textures WM0.TXZ here.
 
+8013a804 
+
 8014a600 place for BSZ PC character model file.
-8014a610 ???
+8014a610 pc model global offset (in loaded file)
 
 
 80190000 we load textures WM0S.TXZ here.

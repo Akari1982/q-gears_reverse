@@ -115,14 +115,16 @@ V0 = w[8010ad34];
 ////////////////////////////////
 // funca8b30()
 
-struct = A0;
+entity = A0;
 
-if( struct == w[8010ad3c] )
+// if this entity is active entity - unset active
+if( entity == w[8010ad3c] )
 {
     [8010ad3c] = w(0);
 }
 
-if( struct == w[8010ad40] )
+// if this entity is pc entity - unset pc
+if( entity == w[8010ad40] )
 {
     [8010ad40] = w(0);
 }
@@ -130,65 +132,66 @@ if( struct == w[8010ad40] )
 V1 = w[8010ad38];
 if( V1 != 0 )
 {
-    A0 = 0;
-
+    // go through all linked entities and un
     loopa8b84:	; 800A8B84
         V0 = w[V1 + 4];
-        if( V0 == struct )
+        if( V0 == entity )
         {
             [V1 + 4] = w(0);
         }
         V0 = w[V1 + 8];
-        if( V0 == struct )
+        if( V0 == entity )
         {
             [V1 + 8] = w(0);
         }
         V1 = w[V1 + 0];
     800A8BB4	bne    v1, zero, loopa8b84 [$800a8b84]
 
-    V1 = w[8010ad38];
+    // find entity linked to given entity
     A0 = 0;
+    V1 = w[8010ad38];
+    while( V1 != 0 )
+    {
+        if( V1 == entity )
+        {
+            break;
+        }
+        A0 = V1;
+        V1 = w[V1 + 0];
+    }
+
+    // if we found given entity
     if( V1 != 0 )
     {
-        loopa8bd0:	; 800A8BD0
-            if( V1 == struct )
-            {
-                break;
-            }
-            A0 = V1;
-            V1 = w[V1 + 0];
-        800A8BE4	bne    v1, zero, loopa8bd0 [$800a8bd0]
-
-        if( V1 != 0 )
+        // if this is not last entity
+        if( A0 != 0 )
         {
-            if( A0 != 0 )
-            {
-                [A0 + 0] = w(w[V1 + 0]);
-                [V1 + 0] = w(0);
-            }
-            else
-            {
-                [8010ad38] = w(w[V1 + 0]);
-
-                if( V1 != 0 )
-                {
-                    [V1 + 0] = w(0);
-                }
-            }
+            // remove entity and link others
+            [A0 + 0] = w(w[V1 + 0]);
         }
+        // if this is last entity
+        else
+        {
+            [8010ad38] = w(w[V1 + 0]);
+        }
+        [V1 + 0] = w(0);
     }
 }
 
-A0 = bu[struct + 50]; // model
+// we removed given entity from everywhere
+
+A0 = bu[entity + 50]; // model id
 funcb6efc();
+model = V0;
 
-if( V0 != 0 )
+if( model != 0 )
 {
-    if( b[V0 + 0001] == c )
+    if( b[model + 1] == c )
     {
-        800A8C4C	jal    funcb5dd8 [$800b5dd8]
+        A0 = model;
+        wm_set_calculate_all_parts_lighting();
 
-        [struct + 5e] = b(-1);
+        [entity + 5e] = b(-1);
     }
 }
 ////////////////////////////////
@@ -198,15 +201,15 @@ if( V0 != 0 )
 ////////////////////////////////
 // wm_insert_struct_in_model_struct_list()
 
-struct = A0;
+model = A0;
 
-if( struct != 0 )
+if( model != 0 )
 {
-    if( w[struct + 0] == 0 )
+    if( w[model + 0] == 0 )
     {
         last_model = w[8010ad38];
-        [8010ad38] = w(struct);
-        [struct + 0] = w(last_model);
+        [8010ad38] = w(model);
+        [model + 0] = w(last_model);
     }
 }
 ////////////////////////////////

@@ -311,7 +311,7 @@ return 0;
 ////////////////////////////////
 // funcadd4c()
 
-S0 = A0;
+S0 = A0; // 2
 
 // debug thing
 if( ( w[8010ae54] & (ffffffff << (S0 + 1)) ) || ( ( (w[8010ae54] >> A0) & 1 ) == 0 ) )
@@ -8849,31 +8849,22 @@ SP = SP + 0030;
 800B5DD0	jr     ra 
 800B5DD4	nop
 ////////////////////////////////
-// funcb5dd8
-V1 = hu[A0 + 0018];
-V0 = w[A0 + 001c];
-800B5DE0	nop
-V1 = V1 + V0;
-800B5DE8	beq    v1, zero, Lb5e1c [$800b5e1c]
-800B5DEC	addiu  sp, sp, $fff8 (=-$8)
-V0 = bu[A0 + 0003];
-800B5DF4	nop
-800B5DF8	blez   v0, Lb5e1c [$800b5e1c]
-A1 = 0;
-A2 = 0001;
 
-loopb5e04:	; 800B5E04
-[V1 + 0000] = b(A2);
-V0 = bu[A0 + 0003];
-A1 = A1 + 0001;
-V0 = A1 < V0;
-800B5E14	bne    v0, zero, loopb5e04 [$800b5e04]
-V1 = V1 + 0020;
 
-Lb5e1c:	; 800B5E1C
-SP = SP + 0008;
-800B5E20	jr     ra 
-800B5E24	nop
+
+////////////////////////////////
+// wm_set_calculate_all_parts_lighting()
+
+model = A0;
+part = w[model + 1c] + hu[model + 18];
+
+if( part != 0 )
+{
+    for( int i = 0; i < bu[model + 3]; ++i )
+    {
+        [part + i * 20 + 0] = b(1);
+    }
+}
 ////////////////////////////////
 
 
@@ -8949,9 +8940,10 @@ V1 = b[S1 + 005e];
 V0 = b[S2 + 0001];
 800B5F1C	nop
 800B5F20	bgtz   v0, Lb5f30 [$800b5f30]
-800B5F24	nop
-800B5F28	jal    funcb5dd8 [$800b5dd8]
+
 A0 = S2;
+wm_set_calculate_all_parts_lighting();
+
 
 Lb5f30:	; 800B5F30
 800B5F30	beq    s1, zero, Lb5f44 [$800b5f44]
@@ -9426,7 +9418,7 @@ for( int i = 0; i < 2b; ++i )
 [80115a40] = w(0); // pointer to WM3.BSZ
 [80115a44] = w(0); // render packets for models
 [80115a48] = w(0);
-[80115a4c] = w(0);
+[80115a4c] = w(0); // WM3.BZS model pack loaded.
 [80115a50] = w(0);
 [80115a54] = w(0);
 [80115a58] = w(0);
@@ -9577,12 +9569,12 @@ if( w[80115a60] == 0 )
 A0 = 8014a604 + ((w[8014a608] >> 2) << 2); // texture global offset
 wm_load_textures_to_vram();
 
-A0 = w[8014a610]; // model global offset
+A0 = w[8014a610]; // pc model global offset
 A1 = 8014fc00;
 A2 = 0;
 wm_load_model_packets_and_scale();
 
-A0 = w[8014a610]; // model global offset
+A0 = w[8014a610]; // pc model global offset
 wm_calculate_bones_and_lighting();
 
 [80115a48] = w(1);
@@ -9683,7 +9675,7 @@ if( w[80115a60] == 0 )
         A0 = w[800c74c4 + 3 * 8 + 0];
         A1 = w[800c74c4 + 3 * 8 + 4];
         A2 = w[80115a40]; // buffer
-        A3 = 800b6dcc; // funcb6dcc()
+        A3 = 800b6dcc; // wm_pack_model_load_file_callback()
         system_cdrom_start_load_lzs();
 
         system_cdrom_read_chain();
@@ -9699,51 +9691,23 @@ if( w[80115a60] == 0 )
 ////////////////////////////////
 // funcb6d10()
 
-V0 = w[80115a40];
+[80115a44] = w(w[80115a40] + ((w[V0 + 8] >> 2) << 2) + 4); // textures
+[80115a50] = w(1);
 
+for( int i = 20; i < 2b; ++i )
+{
+    [801159e8 + i] = b(i - 13);
 
-S0 = 0020;
-800B6D28	addiu  s1, zero, $fff7 (=-$9)
-800B6D30	lui    s2, $0d00
-V1 = w[V0 + 0008];
-A0 = 0001;
-[80115a50] = w(A0);
-V1 = V1 >> 02;
-V1 = V1 << 02;
-V1 = V1 + 0004;
-V1 = V1 + V0;
-[80115a44] = w(V1);
-
-loopb6d60:	; 800B6D60
-    800B6D60	addiu  v0, s0, $ffed (=-$13)
-    800B6D64	lui    at, $8011
-    AT = AT + 5a11;
-    AT = AT + S1;
-    [AT + 0000] = b(V0);
-    800B6D74	bltz   s2, Lb6d9c [$800b6d9c]
-    800B6D78	lui    v0, $0100
-    V0 = S1 < 0002;
-    800B6D80	beq    v0, zero, Lb6d9c [$800b6d9c]
-    800B6D84	lui    v0, $0100
-    A0 = S0 << 10;
-    A0 = A0 >> 10;
-    800B6D90	jal    funcb624c [$800b624c]
+    A0 = i;
     A1 = 0;
-    800B6D98	lui    v0, $0100
-
-    Lb6d9c:	; 800B6D9C
-    S2 = S2 + V0;
-    S0 = S0 + 0001;
-    S1 = S1 + 0001;
-    V0 = S0 < 002b;
-800B6DA8	bne    v0, zero, loopb6d60 [$800b6d60]
-
+    funcb624c();
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb6dcc()
+// wm_pack_model_load_file_callback()
 
 if( w[80115a60] != 0 )
 {
@@ -9836,7 +9800,7 @@ if( b[801159e8 + model_id] < 0 )
     {
         if( model_id < 20 )
         {
-            return 0;
+            return 0; // this models will load automaticly
         }
     }
     else // pc
@@ -9848,21 +9812,20 @@ if( b[801159e8 + model_id] < 0 )
 
 if( model_id < 3 ) // pc
 {
-    if( w[80115a48] != 0 )
+    if( w[80115a48] != 0 ) // if pc loaded
     {
-        return w[8014a610];
+        return w[8014a610]; // pc model global offset
     }
-
     return 0;
 }
 
+// this must be loaded automaticly
 if( model_id < 20 )
 {
     if( w[80115a4c] != 0 )
     {
         return w[8013a804] + (b[801159e8 + model_id] - 1) * 24;
     }
-
     return 0;
 }
 
@@ -10176,7 +10139,7 @@ wm_get_model_id_from_pc_entity();
 
 if( bu[8009c6e4 + fa1] == 3 ) // on Highwind
 {
-    funcbba0c(); // get some model id
+    wm_script_get_top_from_store_stack(); // get some model id
 
     A0 = V0 & ff;
     funca92f8();
@@ -10550,7 +10513,7 @@ wm_get_pc_character_model_from_party();
 
 S0 = V0; // model id
 
-800B7A84	jal    funcbba44 [$800bba44]
+800B7A84	jal    wm_script_is_data_in_store_stack [$800bba44]
 
 V1 = 800a9a04;
 800B7A94	beq    v0, zero, Lb7aa4 [$800b7aa4]
@@ -15110,86 +15073,71 @@ wm_move_active_model();
 
 
 ////////////////////////////////
-// funcbb9a0
-800BB9A0	lui    v1, $8011
-V1 = w[V1 + 63e8];
-800BB9A8	lui    v0, $8011
-V0 = V0 + 63e8;
-V0 = V1 < V0;
-800BB9B4	beq    v0, zero, Lbb9c8 [$800bb9c8]
-V0 = V1 + 0001;
-800BB9BC	lui    at, $8011
-[AT + 63e8] = w(V0);
-[V1 + 0000] = b(A0);
-
-Lbb9c8:	; 800BB9C8
-800BB9C8	jr     ra 
-800BB9CC	nop
-////////////////////////////////
-// funcbb9d0
-800BB9D0	lui    v1, $8011
-V1 = w[V1 + 63e8];
-800BB9D8	lui    v0, $8011
-V0 = V0 + 63e0;
-V0 = V0 < V1;
-800BB9E4	beq    v0, zero, Lbba00 [$800bba00]
-800BB9E8	addiu  v0, v1, $ffff (=-$1)
-800BB9EC	lui    at, $8011
-[AT + 63e8] = w(V0);
-V0 = bu[V1 + ffff];
-800BB9F8	j      Lbba04 [$800bba04]
-800BB9FC	nop
-
-Lbba00:	; 800BBA00
-V0 = 0;
-
-Lbba04:	; 800BBA04
-800BBA04	jr     ra 
-800BBA08	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbba0c()
+// wm_script_push_to_store_stack()
 
 V1 = w[801163e8];
+if( V1 < 801163e8 )
+{
+    [801163e8] = w(V1 + 1);
+    [V1] = b(A0);
+}
+////////////////////////////////
 
+
+
+////////////////////////////////
+// wm_script_pop_from_store_stack()
+
+V1 = w[801163e8];
 if( V1 > 801163e0 )
 {
+    [801163e8] = w(V1 - 1);
     return bu[V1 - 1];
 }
-
 return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbba34
-800BBA34	lui    at, $8011
-[AT + 63e0] = b(A0);
-800BBA3C	jr     ra 
-800BBA40	nop
+// wm_script_get_top_from_store_stack()
+
+V1 = w[801163e8];
+if( V1 > 801163e0 )
+{
+    return bu[V1 - 1];
+}
+return 0;
 ////////////////////////////////
-// funcbba44
-800BBA44	lui    v1, $8011
-V1 = w[V1 + 63e8];
-800BBA4C	lui    v0, $8011
-V0 = V0 + 63e0;
-800BBA54	jr     ra 
-V0 = V0 < V1;
+
+
+
+////////////////////////////////
+// wm_script_set_first_to_store_stack()
+
+[801163e0] = b(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// wm_script_is_data_in_store_stack()
+
+V1 = w[801163e8];
+return V1 > 801163e0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbba5c
-800BBA5C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0024] = w(RA);
+
 800BBA64	jal    wm_get_model_id_from_pc_entity [$800a9174]
-[SP + 0020] = w(S0);
+
 V1 = 0005;
 800BBA70	bne    v0, v1, Lbbaa4 [$800bbaa4]
-800BBA74	nop
-800BBA78	lui    v0, $8011
-V0 = w[V0 + 63ec];
+
+V0 = w[801163ec];
 800BBA80	nop
 800BBA84	beq    v0, zero, Lbbaa4 [$800bbaa4]
 800BBA88	nop
@@ -15204,22 +15152,26 @@ Lbbaa4:	; 800BBAA4
 800BBAA4	jal    funca99bc [$800a99bc]
 800BBAA8	nop
 800BBAAC	beq    v0, zero, Lbbb9c [$800bbb9c]
-800BBAB0	nop
-800BBAB4	jal    wm_get_position_from_active_model [$800aa098]
-A0 = SP + 0010;
-800BBABC	jal    wm_get_model_id_from_active_entity [$800a9154]
+
+A0 = SP + 10;
+wm_get_position_from_active_model();
+
 S0 = 0003;
+wm_get_model_id_from_active_entity();
+
 800BBAC4	bne    v0, s0, Lbbad0 [$800bbad0]
 A1 = 0001;
 800BBACC	addiu  a1, zero, $ffff (=-$1)
 
 Lbbad0:	; 800BBAD0
+A0 = SP + 10;
 800BBAD0	jal    funca6994 [$800a6994]
-A0 = SP + 0010;
-800BBAD8	jal    wm_get_model_id_from_pc_entity [$800a9174]
-800BBADC	nop
-800BBAE0	jal    funcbb9a0 [$800bb9a0]
+
+wm_get_model_id_from_pc_entity();
+
 A0 = V0 & 00ff;
+wm_script_push_to_store_stack();
+
 800BBAE8	jal    funca929c [$800a929c]
 800BBAEC	nop
 800BBAF0	beq    v0, zero, Lbbb14 [$800bbb14]
@@ -15275,11 +15227,10 @@ Lbbb94:	; 800BBB94
 A0 = 01ec;
 
 Lbbb9c:	; 800BBB9C
-RA = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0028;
-800BBBA8	jr     ra 
-800BBBAC	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbbbb0
 800BBBB0	addiu  sp, sp, $ffe8 (=-$18)
@@ -15577,7 +15528,7 @@ V0 = V0 << 10;
 S0 = V0 >> 10;
 800BBF80	jal    wm_set_active_entity_direction_and_rotation [$800a9480]
 A0 = S0;
-800BBF88	jal    funcbb9d0 [$800bb9d0]
+800BBF88	jal    wm_script_pop_from_store_stack [$800bb9d0]
 S2 = S1 < 0029;
 800BBF90	jal    funca8e50 [$800a8e50]
 800BBF94	nop
@@ -15622,14 +15573,14 @@ V0 = S4 & 0040;
 Lbc014:	; 800BC014
 800BC014	jal    wm_insert_in_model_struct_list [$800a8a1c]
 800BC018	nop
-800BC01C	jal    funcbb9d0 [$800bb9d0]
+800BC01C	jal    wm_script_pop_from_store_stack [$800bb9d0]
 800BC020	nop
 S0 = V0 & 00ff;
 800BC028	jal    funca92f8 [$800a92f8]
 A0 = S0;
 800BC030	beq    v0, zero, Lbc070 [$800bc070]
 800BC034	nop
-800BC038	jal    funcbba0c [$800bba0c]
+800BC038	jal    wm_script_get_top_from_store_stack [$800bba0c]
 800BC03C	nop
 800BC040	jal    wm_init_model_struct_list_element [$800a9334]
 A0 = V0 & 00ff;

@@ -966,7 +966,7 @@
 // funcb5c7c
 800B5C7C-800B5DD4
 ////////////////////////////////
-// funcb5dd8
+// wm_set_calculate_all_parts_lighting
 800B5DD8-800B5E24
 ////////////////////////////////
 // funcb5e28
@@ -1029,7 +1029,7 @@
 // funcb6d10
 800B6D10-800B6DC8
 ////////////////////////////////
-// funcb6dcc
+// wm_pack_model_load_file_callback
 800B6DCC-800B6E04
 ////////////////////////////////
 // funcb6e08
@@ -1269,19 +1269,19 @@
 // funcbb8e8
 800BB8E8-800BB99C
 ////////////////////////////////
-// funcbb9a0
+// wm_script_push_to_store_stack
 800BB9A0-800BB9CC
 ////////////////////////////////
-// funcbb9d0
+// wm_script_pop_from_store_stack
 800BB9D0-800BBA08
 ////////////////////////////////
-// funcbba0c
+// wm_script_get_top_from_store_stack
 800BBA0C-800BBA30
 ////////////////////////////////
-// funcbba34
+// wm_script_set_first_to_store_stack
 800BBA34-800BBA40
 ////////////////////////////////
-// funcbba44
+// wm_script_is_data_in_store_stack
 800BBA44-800BBA58
 ////////////////////////////////
 // funcbba5c
