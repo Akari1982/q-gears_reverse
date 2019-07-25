@@ -9357,51 +9357,34 @@ SP = SP + 0018;
 800B65D8	jr     ra 
 800B65DC	nop
 ////////////////////////////////
-// funcb65e0
-800B65E0	lui    v1, $8011
-V1 = w[V1 + cb20];
-800B65E8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-V0 = V1 < A0;
-800B65F4	beq    v0, zero, Lb662c [$800b662c]
-[SP + 0010] = w(S0);
-V0 = 0020;
-800B6600	lui    at, $800a
-[AT + a000] = h(V0);
-V0 = 0040;
-800B660C	lui    at, $8011
-[AT + cb20] = w(A0);
-800B6614	lui    at, $800a
-[AT + a004] = w(V0);
-800B661C	lui    at, $800a
-[AT + a008] = w(A0);
-800B6624	j      Lb6660 [$800b6660]
-800B6628	nop
 
-Lb662c:	; 800B662C
-V0 = 0 - V1;
-800B6630	bne    a0, v0, Lb6668 [$800b6668]
-V0 = 00f1;
-S0 = 8009a000;
-800B6640	lui    at, $8011
-[AT + cb20] = w(0);
-800B6648	jal    system_execute_AKAO
-[S0 + 0000] = h(V0);
-V0 = 00bc;
-[S0 + 0000] = h(V0);
-800B6658	lui    at, $800a
-[AT + a004] = w(0);
 
-Lb6660:	; 800B6660
-800B6660	jal    system_execute_AKAO
-800B6664	nop
 
-Lb6668:	; 800B6668
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800B6674	jr     ra 
-800B6678	nop
+////////////////////////////////
+// funcb65e0()
+
+V1 = w[8010cb20];
+
+if( V1 < A0 )
+{
+    [8010cb20] = w(A0);
+
+    [8009a000] = h(20);
+    [8009a004] = w(40);
+    [8009a008] = w(A0);
+    system_execute_AKAO();
+}
+else if( A0 == -V1 )
+{
+    [8010cb20] = w(0);
+
+    [8009a000] = h(f1);
+    system_execute_AKAO();
+
+    [8009a000] = h(bc);
+    [8009a004] = w(0);
+    system_execute_AKAO();
+}
 ////////////////////////////////
 
 
@@ -15130,103 +15113,103 @@ return V1 > 801163e0;
 
 
 ////////////////////////////////
-// funcbba5c
-
-800BBA64	jal    wm_get_model_id_from_pc_entity [$800a9174]
-
-V1 = 0005;
-800BBA70	bne    v0, v1, Lbbaa4 [$800bbaa4]
-
-V0 = w[801163ec];
-800BBA80	nop
-800BBA84	beq    v0, zero, Lbbaa4 [$800bbaa4]
-800BBA88	nop
-800BBA8C	jal    funca98a4 [$800a98a4]
-A0 = 0001;
-800BBA94	jal    funca368c [$800a368c]
-A0 = 0001;
-800BBA9C	j      Lbbb9c [$800bbb9c]
-800BBAA0	nop
-
-Lbbaa4:	; 800BBAA4
-800BBAA4	jal    funca99bc [$800a99bc]
-800BBAA8	nop
-800BBAAC	beq    v0, zero, Lbbb9c [$800bbb9c]
-
-A0 = SP + 10;
-wm_get_position_from_active_model();
-
-S0 = 0003;
-wm_get_model_id_from_active_entity();
-
-800BBAC4	bne    v0, s0, Lbbad0 [$800bbad0]
-A1 = 0001;
-800BBACC	addiu  a1, zero, $ffff (=-$1)
-
-Lbbad0:	; 800BBAD0
-A0 = SP + 10;
-800BBAD0	jal    funca6994 [$800a6994]
+// funcbba5c()
 
 wm_get_model_id_from_pc_entity();
 
-A0 = V0 & 00ff;
-wm_script_push_to_store_stack();
+if( V0 == 5 )
+{
+    if( w[801163ec] != 0 )
+    {
+        A0 = 1;
+        funca98a4(); // recalculate move pos
 
-800BBAE8	jal    funca929c [$800a929c]
-800BBAEC	nop
-800BBAF0	beq    v0, zero, Lbbb14 [$800bbb14]
-800BBAF4	nop
-800BBAF8	jal    funca8ce4 [$800a8ce4]
-800BBAFC	nop
-A0 = 0002;
+        A0 = 1;
+        funca368c();
 
-loopbbb04:	; 800BBB04
-800BBB04	jal    funcb63f0 [$800b63f0]
-800BBB08	nop
-800BBB0C	j      Lbbb9c [$800bbb9c]
-800BBB10	nop
+        return;
+    }
+}
 
-Lbbb14:	; 800BBB14
-800BBB14	jal    funca8fcc [$800a8fcc]
-800BBB18	nop
-800BBB1C	jal    funca8f74 [$800a8f74]
+funca99bc();
 
-wm_set_active_entity_as_pc_entity();
+if( V0 != 0 )
+{
+    A0 = SP + 10;
+    wm_get_position_from_active_model();
 
-wm_get_model_id_from_pc_entity();
+    S0 = 3;
+    wm_get_model_id_from_active_entity();
 
-V1 = V0;
-800BBB38	beq    v1, s0, Lbbb50 [$800bbb50]
-V0 = 0006;
-800BBB40	beq    v1, v0, Lbbb94 [$800bbb94]
-800BBB44	nop
-800BBB48	j      Lbbb9c [$800bbb9c]
-800BBB4C	nop
+    A1 = 0001;
 
-Lbbb50:	; 800BBB50
-800BBB50	jal    funca98a4 [$800a98a4]
-A0 = 0001;
-800BBB58	jal    funca368c [$800a368c]
-A0 = 0001;
-800BBB60	jal    funcb5274 [$800b5274]
-800BBB64	nop
-800BBB68	jal    funcb64c8 [$800b64c8]
-800BBB6C	nop
-V0 = V0 < 0006;
-800BBB74	beq    v0, zero, Lbbb9c [$800bbb9c]
-800BBB78	nop
-800BBB7C	jal    funcb7200 [$800b7200]
-800BBB80	nop
-800BBB84	beq    v0, zero, loopbbb04 [$800bbb04]
-A0 = 0003;
-800BBB8C	j      loopbbb04 [$800bbb04]
-A0 = 0001;
+    if( V0 == S0 )
+    {
+        A1 = -1;
+    }
 
-Lbbb94:	; 800BBB94
-800BBB94	jal    funcb65e0 [$800b65e0]
-A0 = 01ec;
+    A0 = SP + 10;
+    800BBAD0	jal    funca6994 [$800a6994]
 
-Lbbb9c:	; 800BBB9C
+    wm_get_model_id_from_pc_entity();
+
+    A0 = V0 & 00ff;
+    wm_script_push_to_store_stack();
+
+    800BBAE8	jal    funca929c [$800a929c]
+    800BBAEC	nop
+    800BBAF0	beq    v0, zero, Lbbb14 [$800bbb14]
+
+    800BBAF8	jal    funca8ce4 [$800a8ce4]
+
+    A0 = 0002;
+
+    loopbbb04:	; 800BBB04
+    800BBB04	jal    funcb63f0 [$800b63f0]
+
+    return;
+
+    Lbbb14:	; 800BBB14
+    800BBB14	jal    funca8fcc [$800a8fcc]
+
+    800BBB1C	jal    funca8f74 [$800a8f74]
+
+    wm_set_active_entity_as_pc_entity();
+
+    wm_get_model_id_from_pc_entity();
+
+    V1 = V0;
+    800BBB38	beq    v1, s0, Lbbb50 [$800bbb50]
+
+    800BBB40	beq    v1, 6, Lbbb94 [$800bbb94]
+
+    return;
+
+    Lbbb50:	; 800BBB50
+    A0 = 1;
+    800BBB50	jal    funca98a4 [$800a98a4]
+
+    A0 = 1;
+    800BBB58	jal    funca368c [$800a368c]
+
+    800BBB60	jal    funcb5274 [$800b5274]
+
+    800BBB68	jal    funcb64c8 [$800b64c8]
+
+    if( V0 < 6 )
+    {
+        800BBB7C	jal    funcb7200 [$800b7200]
+        800BBB80	nop
+        800BBB84	beq    v0, zero, loopbbb04 [$800bbb04]
+        A0 = 0003;
+        800BBB8C	j      loopbbb04 [$800bbb04]
+        A0 = 0001;
+
+        Lbbb94:	; 800BBB94
+        A0 = 1ec;
+        funcb65e0(); // sound
+    }
+}
 ////////////////////////////////
 
 
