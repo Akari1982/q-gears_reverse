@@ -8753,101 +8753,79 @@ SP = SP + 00b0;
 800B5C74	jr     ra 
 800B5C78	nop
 ////////////////////////////////
-// funcb5c7c
-800B5C7C	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 001c] = w(S1);
-S1 = A0;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 0018] = w(S0);
-V0 = h[S1 + 0048];
-V1 = w[S1 + 0010];
-800B5CA0	nop
+
+
+
+////////////////////////////////
+// funcb5c7c()
+
+model = S1 = A0;
+
+V0 = h[model + 48];
+V1 = w[model + 10];
 V1 = V1 - V0;
 V1 = V1 >> 08;
-V0 = 0020;
-S0 = V0 - V1;
-800B5CB4	bgez   s0, Lb5cc0 [$800b5cc0]
-800B5CB8	nop
-S0 = 0;
+S0 = 20 - V1;
+if( S0 < 0 )
+{
+    S0 = 0;
+}
 
-Lb5cc0:	; 800B5CC0
-800B5CC0	jal    wm_get_current_render_buffer_id [$800a0bd4]
-800B5CC4	nop
+wm_get_current_render_buffer_id();
+
 V1 = V0 << 02;
 V1 = V1 + V0;
 V1 = V1 << 03;
-V1 = V1 + 0090;
-S3 = S1 + V1;
-V0 = S0;
-[S3 + 0006] = b(V0);
-[S3 + 0005] = b(V0);
-[S3 + 0004] = b(V0);
-V1 = h[S1 + 0048];
-V0 = w[S1 + 0010];
-A0 = bu[S1 + 0050];
+V1 = V1 + 90;
+S3 = model + V1;
+[S3 + 6] = b(S0);
+[S3 + 5] = b(S0);
+[S3 + 4] = b(S0);
+V1 = h[model + 48];
+V0 = w[model + 10];
 V0 = V0 - V1;
 V0 = V0 >> 06;
 V1 = 0064;
 S0 = V1 - V0;
-800B5D08	addiu  a0, a0, $fffd (=-$3)
-V0 = A0 < 0028;
-800B5D10	beq    v0, zero, Lb5d6c [$800b5d6c]
-V0 = A0 << 02;
-800B5D18	lui    at, $800a
-AT = AT + 0828;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800B5D28	nop
-800B5D2C	jr     v0 
-800B5D30	nop
 
-V0 = S0 << 01;
-V0 = V0 + S0;
-800B5D3C	j      Lb5d6c [$800b5d6c]
-S0 = V0 >> 01;
-V0 = S0 << 01;
-S2 = V0;
-V0 = V0 + S0;
-800B5D50	j      Lb5d70 [$800b5d70]
-S0 = V0 << 01;
-V0 = S0 << 01;
-V0 = V0 + S0;
-S2 = V0 << 01;
-800B5D64	j      Lb5d70 [$800b5d70]
-S0 = V0 << 02;
+switch( bu[model + 50] )
+{
+    case 4 13 29 2a:
+    {
+        S0 = ((S0 << 1) + S0) >> 01;
+        S2 = S0;
+    }
+    break;
 
-Lb5d6c:	; 800B5D6C
-S2 = S0;
+    case 3:
+    {
+        S2 = S0 * 2;
+        S0 = S0 * 6;
+    }
+    break;
 
-Lb5d70:	; 800B5D70
+    case b:
+    {
+        S2 = S0 * 6;
+        S0 = S0 * c;
+    }
+    break;
+
+    default:
+    {
+        S2 = S0;
+    }
+}
+
 800B5D70	jal    funca1dc0 [$800a1dc0]
-800B5D74	nop
-V0 = V0 << 02;
-A0 = S2 << 10;
-A1 = S0 << 10;
-A0 = A0 >> 10;
-V1 = hu[S1 + 003e];
-A3 = hu[S1 + 003c];
-A2 = h[S1 + 0048];
-A1 = A1 >> 10;
-[SP + 0010] = w(S3);
-[SP + 0014] = w(0);
-V1 = V1 + 0800;
-A3 = A3 + V1;
-A3 = A3 + V0;
-A3 = A3 << 10;
+
+A0 = (S2 << 10) >> 10;
+A1 = (S0 << 10) >> 10;
+A2 = h[model + 48];
+A3 = ((hu[model + 3c] + hu[model + 3e] + 800 + V0 * 4) << 10) >> 10;
+A4 = S3;
+A5 = 0;
 800B5DB0	jal    funcb59f4 [$800b59f4]
-A3 = A3 >> 10;
-RA = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-800B5DD0	jr     ra 
-800B5DD4	nop
 ////////////////////////////////
 
 
@@ -9211,97 +9189,70 @@ for( int i = 0; i < 7; ++i )
 
 
 ////////////////////////////////
-// funcb63e0
-800B63E0	lui    at, $8011
-[AT + 59dc] = w(A0);
-800B63E8	jr     ra 
-800B63EC	nop
-////////////////////////////////
-// funcb63f0
-800B63F0	lui    v0, $8011
-V0 = w[V0 + 59dc];
-800B63F8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-800B6404	beq    v0, zero, Lb6474 [$800b6474]
-[SP + 0014] = w(RA);
-A1 = 8009a000;
-A0 = 0001;
-800B6418	beq    s0, a0, Lb6440 [$800b6440]
-V0 = 0018;
-800B6420	lui    v0, $8011
-V0 = w[V0 + 59e0];
-800B6428	nop
-800B642C	bne    v0, a0, Lb6438 [$800b6438]
-V1 = 0010;
-V1 = 0014;
+// funcb63e0()
 
-Lb6438:	; 800B6438
-800B6438	j      Lb6444 [$800b6444]
-[A1 + 0000] = h(V1);
-
-Lb6440:	; 800B6440
-[A1 + 0000] = h(V0);
-
-Lb6444:	; 800B6444
-V0 = S0 << 02;
-800B6448	lui    at, $8011
-AT = AT + 59bc;
-AT = AT + V0;
-V1 = w[AT + 0000];
-V0 = 0004;
-800B645C	lui    at, $800a
-[AT + a008] = w(V0);
-800B6464	lui    at, $800a
-[AT + a004] = w(V1);
-800B646C	jal    system_execute_AKAO
-800B6470	nop
-
-Lb6474:	; 800B6474
-800B6474	lui    v0, $8011
-V0 = w[V0 + 59e0];
-800B647C	lui    at, $8011
-[AT + 59e0] = w(S0);
-800B6484	lui    at, $8011
-[AT + 6510] = w(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800B6498	jr     ra 
-800B649C	nop
+[801159dc] = w(A0);
 ////////////////////////////////
-// funcb64a0
-800B64A0	lui    a0, $8011
-A0 = w[A0 + 59e0];
-800B64A8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800B64B0	jal    funcb63f0 [$800b63f0]
-800B64B4	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B64C0	jr     ra 
-800B64C4	nop
+
+
+
 ////////////////////////////////
-// funcb64c8
-800B64C8	lui    v0, $8011
-V0 = w[V0 + 59e0];
-800B64D0	jr     ra 
-800B64D4	nop
+// funcb63f0()
+
+if( w[801159dc] != 0 )
+{
+    if( A0 != 1 )
+    {
+        if( w[801159e0] == 1 )
+        {
+            [8009a000] = h(14);
+        }
+        else
+        {
+            [8009a000] = h(10);
+        }
+    }
+    else
+    {
+        [8009a000] = h(18);
+    }
+
+    [8009a008] = w(4);
+    [8009a004] = w(w[801159bc + A0 * 4]);
+    system_execute_AKAO();
+}
+
+V0 = w[801159e0];
+[801159e0] = w(A0);
+[80116510] = w(V0);
 ////////////////////////////////
-// funcb64d8
-800B64D8	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 0030;
-[SP + 0010] = w(RA);
-800B64E4	lui    at, $800a
-[AT + a000] = h(V0);
-800B64EC	lui    at, $800a
-[AT + a004] = w(A0);
-800B64F4	jal    system_execute_AKAO
-800B64F8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B6504	jr     ra 
-800B6508	nop
+
+
+
+////////////////////////////////
+// funcb64a0()
+
+A0 = w[801159e0];
+
+funcb63f0();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb64c8()
+
+return w[801159e0];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb64d8()
+
+[8009a000] = h(30);
+[8009a004] = w(A0);
+system_execute_AKAO();
 ////////////////////////////////
 
 
@@ -9325,37 +9276,22 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// funcb6570
-800B6570	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 00c0;
-[SP + 0010] = w(RA);
-800B657C	lui    at, $800a
-[AT + a000] = h(V0);
-800B6584	lui    at, $800a
-[AT + a004] = w(A0);
-800B658C	jal    system_execute_AKAO
-800B6590	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B659C	jr     ra 
-800B65A0	nop
+// funcb6570()
+
+[8009a000] = h(c0);
+[8009a004] = w(A0);
+system_execute_AKAO();
 ////////////////////////////////
-// funcb65a4
-800B65A4	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 00bd;
-[SP + 0010] = w(RA);
-800B65B0	lui    at, $800a
-[AT + a000] = h(V0);
-800B65B8	lui    at, $800a
-[AT + a004] = w(A0);
-800B65C0	lui    at, $800a
-[AT + a008] = w(A1);
-800B65C8	jal    system_execute_AKAO
-800B65CC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B65D8	jr     ra 
-800B65DC	nop
+
+
+
+////////////////////////////////
+// funcb65a4()
+
+[8009a000] = h(bd);
+[8009a004] = w(A0);
+[8009a008] = w(A1);
+system_execute_AKAO();
 ////////////////////////////////
 
 
