@@ -717,10 +717,10 @@
 // wm_rotate_vector_by_y_angle
 800AE0BC-800AE17C
 ////////////////////////////////
-// funcae180
+// wm_get_rotation_from_vector
 800AE180-800AE478
 ////////////////////////////////
-// funcae47c
+// wm_get_rotation_from_entity_to_entity
 800AE47C-800AE4B4
 ////////////////////////////////
 // wm_create_skybox_overlay_render_buffers
@@ -996,7 +996,7 @@
 // funcb650c
 800B650C-800B656C
 ////////////////////////////////
-// funcb6570
+// wm_set_music_volume
 800B6570-800B65A0
 ////////////////////////////////
 // funcb65a4

@@ -4242,7 +4242,7 @@ La4668:	; 800A4668
     800A4860	jal    funcbb8b0 [$800bb8b0]
 
     A0 = 7f;
-    800A4868	jal    funcb6570 [$800b6570]
+    wm_set_music_volume();
 
     A0 = 800d05ec;
     800A4878	jal    funcab5e4 [$800ab5e4]

@@ -1409,10 +1409,10 @@ return 0;
 ////////////////////////////////
 // funca9c64()
 
-model_struct = A0;
+entity = A0;
 coords = A1;
 
-if( coords == 0 || model_struct == 0 )
+if( coords == 0 || entity == 0 )
 {
     return;
 }
@@ -1420,33 +1420,33 @@ if( coords == 0 || model_struct == 0 )
 A0 = coords;
 wm_loop_coords_around_world();
 
-if( bu[model_struct + 51] & 80 )
+if( bu[entity + 51] & 80 )
 {
-    [model_struct + c] = w(w[coords + 0]);
-    [model_struct + 14] = w(w[coords + 8]);
+    [entity + c] = w(w[coords + 0]);
+    [entity + 14] = w(w[coords + 8]);
 }
 else
 {
-    [model_struct + c] = w(w[coords + 0]);
-    [model_struct + 10] = w(w[coords + 4]);
-    [model_struct + 14] = w(w[coords + 8]);
-    [model_struct + 18] = w(w[coords + c]);
+    [entity + c] = w(w[coords + 0]);
+    [entity + 10] = w(w[coords + 4]);
+    [entity + 14] = w(w[coords + 8]);
+    [entity + 18] = w(w[coords + c]);
 
-    A0 = h[model_struct + 4a];
-    A1 = bu[model_struct + 50]; // model id
+    A0 = h[entity + 4a];
+    A1 = bu[entity + 50]; // model id
     funca9b04(); // get Y pos modifier.
-    [model_struct + 10] = w(w[model_struct + 10] + V0);
+    [entity + 10] = w(w[entity + 10] + V0);
 }
 
-[model_struct + 42] = h(hu[coords + 4]);
+[entity + 42] = h(hu[coords + 4]);
 
-if( ( w[model_struct + c] != w[model_struct + 1c] ) || ( w[model_struct + 14] != w[model_struct + 24] ) )
+if( ( w[entity + c] != w[entity + 1c] ) || ( w[entity + 14] != w[entity + 24] ) )
 {
-    [model_struct + 51] = b(bu[model_struct + 51] | 01);
+    [entity + 51] = b(bu[entity + 51] | 01);
 }
 else
 {
-    [model_struct + 51] = b(bu[model_struct + 51] & fe);
+    [entity + 51] = b(bu[entity + 51] & fe);
 }
 ////////////////////////////////
 
@@ -1456,7 +1456,7 @@ else
 // funca9d5c()
 
 A1 = A0; // coords;
-A0 = w[8010ad3c]; // model_struct
+A0 = w[8010ad3c]; // entity
 funca9c64();
 ////////////////////////////////
 
@@ -1466,7 +1466,7 @@ funca9c64();
 // funca9d88()
 
 A1 = A0; // coords;
-A0 = w[8010ad40]; // model_struct
+A0 = w[8010ad40]; // entity
 funca9c64();
 ////////////////////////////////
 
@@ -1477,28 +1477,16 @@ funca9c64();
 
 A1 = A0;
 A0 = w[8010ad40];
-
 funca9c64();
 
-800A9DD0	lui    a2, $8011
-A2 = w[A2 + ad40];
-800A9DD8	nop
-800A9DDC	beq    a2, zero, La9e04 [$800a9e04]
-800A9DE0	nop
-V0 = w[A2 + 000c];
-V1 = w[A2 + 0010];
-A0 = w[A2 + 0014];
-A1 = w[A2 + 0018];
-[A2 + 001c] = w(V0);
-[A2 + 0020] = w(V1);
-[A2 + 0024] = w(A0);
-[A2 + 0028] = w(A1);
-
-La9e04:	; 800A9E04
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A9E0C	jr     ra 
-800A9E10	nop
+A2 = w[8010ad40];
+if( A2 != 0 )
+{
+    [A2 + 1c] = w(w[A2 + c]);
+    [A2 + 20] = w(w[A2 + 10]);
+    [A2 + 24] = w(w[A2 + 14]);
+    [A2 + 28] = w(w[A2 + 18]);
+}
 ////////////////////////////////
 
 
@@ -2718,7 +2706,7 @@ if( A0 == 6 )
 
             A0 = w[SP + 38];
             A1 = 0 - w[SP + 34];
-            800AB008	jal    funcae180 [$800ae180]
+            wm_get_rotation_from_vector();
 
             V0 = V0 << 10;
             V0 = V0 >> 10;
@@ -2732,7 +2720,7 @@ if( A0 == 6 )
             [8010ad54] = w(V1);
 
             A1 = 0 - A1;
-            800AB044	jal    funcae180 [$800ae180]
+            wm_get_rotation_from_vector();
 
             V0 = V0 << 10;
             V0 = V0 >> 10;

@@ -138,7 +138,7 @@
 
 80062f00 [][][][] 
 
-80062f5e [][]     flobal volume?
+80062f5e [][]     global volume?
 
 80062f70 [][]     global left right reverberation pan.
 80062f74 [][][][] pointer to 80089580. AKAO scripts. EFFECT.ALL offsets.
@@ -336,6 +336,7 @@
                     0x00000020 - use prev channel pitch for volume mod.
                     0x00000100 - ???
                     0x00000200 - ???
+    +03c [][]     ???
     +03d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
     +040 [][][][] ???
     +044 [][][][] volume level. Often used as 2 top bytes.
@@ -345,6 +346,7 @@
     +054 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
     +056 [][]     pause. Set to 0x204 in case of 0x30 command. Set to 0x101.
     +058 [][]     current instrument.
+    +05a [][]     ???
     +05c [][]     init with 0.
     +05e [][]     ???
     +060 [][]     base volume pan. Store 0x4000 here in case of playing system sound 0x30.
