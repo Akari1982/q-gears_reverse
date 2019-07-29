@@ -387,7 +387,7 @@ int main( int argc, char *argv[] )
             else if( m2 == "GP" ) m2 = "IRGB";  // 28
             else if( m2 == "SP" ) m2 = "ORGB";  // 29
             else if( m2 == "FP" ) m2 = "LZCS";  // 30
-            else if( m2 == "RA" ) m2 = "LZCR";  // 21
+            else if( m2 == "RA" ) m2 = "LZCR";  // 31
 
             std::stringstream ss;
             ss << m0;

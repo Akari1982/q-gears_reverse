@@ -1,1 +1,1 @@
-main 1.txt
+main WORLD.BIN_main.cpp
