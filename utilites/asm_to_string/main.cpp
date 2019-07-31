@@ -347,7 +347,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(zero|at|v0|v1|a0|a1|t0|t1|t2|t3|t4|t5|t6|t9|k0|k1), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(zero|at|v0|v1|a0|a1|a2|a3|t0|t1|t2|t3|t4|t5|t6|t7|s0|s1|s2|s3|s4|s5|s6|t8|t9|k0|k1|gp|sp|fp|ra), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );

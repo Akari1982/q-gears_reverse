@@ -208,9 +208,9 @@
     +24 [][]     uv3.
 
 8010ad34 [][][][] next free model pointer.
-8010ad38 [][][][] pointer to last inserted model.
-8010ad3c [][][][] pointer to active model.
-8010ad40 [][][][] pointer to pc character model.
+8010ad38 [][][][] pointer to last inserted entity.
+8010ad3c [][][][] pointer to active entity.
+8010ad40 [][][][] pointer to pc character entity.
 
 8010ad44 [][]     init with 0.
 8010ad48 [][]     init with 0.
