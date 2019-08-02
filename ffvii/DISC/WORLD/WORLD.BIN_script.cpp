@@ -219,11 +219,15 @@ V1 = hu[A0 + 0004];
 V0 = V0 & 0003;
 V0 = V0 << 02;
 V1 = V1 & fffc;
-AT = 8010ad94;
-AT = AT + V0;
-S0 = w[AT + 0000];
-V0 = 0118;
-800ABECC	beq    v1, v0, Labf44 [$800abf44]
+S0 = w[8010ad94 + V0];
+
+if( V1 == 118 )
+{
+    V0 = w[A0 + 0];
+    [V0 + S0] = b(S1);
+    800ABF50	j      Labf88 [$800abf88]
+}
+
 V0 = V1 < 0119;
 800ABED4	beq    v0, zero, Labeec [$800abeec]
 V0 = 0114;
@@ -241,36 +245,25 @@ V0 = 011c;
 
 Labf00:	; 800ABF00
 V0 = w[A0 + 0000];
-800ABF04	nop
 V1 = V0 >> 03;
 S0 = S0 + V1;
-V0 = V0 & 0007;
-V1 = 0001;
-A0 = V1 << V0;
-V0 = bu[S0 + 0000];
+V0 = V0 & 7;
+A0 = 1 << V0;
+V0 = bu[S0 + 0];
 V1 = 0 NOR A0;
 V0 = V0 & V1;
 [S0 + 0000] = b(V0);
 V0 = bu[S0 + 0000];
-800ABF30	beq    s1, zero, Labf3c [$800abf3c]
-800ABF34	nop
-V0 = V0 | A0;
+if( S1 != 0 )
+{
+    V0 = V0 | A0;
+}
 
-Labf3c:	; 800ABF3C
 800ABF3C	j      Labf88 [$800abf88]
 [S0 + 0000] = b(V0);
 
-Labf44:	; 800ABF44
-V0 = w[A0 + 0000];
-800ABF48	nop
-V0 = S0 + V0;
-800ABF50	j      Labf88 [$800abf88]
-[V0 + 0000] = b(S1);
-
 Labf58:	; 800ABF58
-V0 = w[A0 + 0000];
-800ABF5C	nop
-S0 = S0 + V0;
+S0 = w[A0 + 0] + S0;
 V0 = S0 & 0001;
 
 if( V0 != 0 )
@@ -288,8 +281,8 @@ funca0b40(); // error
 
 Labf88:	; 800ABF88
 V0 = w[8010ad90];
-[V0 + 0000] = w(S1);
-[V0 + 0004] = h(110);
+[V0 + 0] = w(S1);
+[V0 + 4] = h(110);
 [8010ad90] = w(V0 + 8);
 ////////////////////////////////
 
@@ -1758,7 +1751,7 @@ switch( opcode )
         [SP + 18] = h(V0);
 
         A0 = SP + 18;
-        funcb86e8();
+        wm_window_set_position_and_size_for_id_0();
 
         return 0;
     }
@@ -1771,9 +1764,9 @@ switch( opcode )
 
         wm_script_pop_stack();
 
-        A0 = V0;
-        A1 = S1;
-        800AD318	jal    funcb8720 [$800b8720]
+        A0 = V0; // mode
+        A1 = S1; // permanency
+        wm_window_set_mode_and_permanency_for_id_0();
 
         return 0;
     }
@@ -1784,7 +1777,7 @@ switch( opcode )
         wm_script_pop_stack();
 
         A0 = (V0 << 10) >> 10;
-        800AD334	jal    funcb84d8 [$800b84d8]
+        funcb84d8();
 
         return 0;
     }

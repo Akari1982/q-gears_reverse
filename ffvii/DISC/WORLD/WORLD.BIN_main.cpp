@@ -4254,8 +4254,8 @@ La4668:	; 800A4668
 
     800A4828	jal    funca4138 [$800a4138]
 
-    A0 = 800be5e8;
-    800A4838	jal    funcb8488 [$800b8488]
+    A0 = 800be5e8; // offset to string (in binary)
+    wm_windows_init();
 
     800A4840	jal    funcb04ac [$800b04ac]
 

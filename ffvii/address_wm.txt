@@ -1,3 +1,5 @@
+800a0000 start of world map binary.
+
 800be1e8 to rotation array (0x2 size)
 
 
@@ -322,6 +324,12 @@
 8011626c [][][][] we get value from here in 0x05 of 0x11b opcode. If 1 then place snow pole on map or remove their coords from savemap otherwise.
 
 80116278 [][][][] init with 0.
+
+80116290 [][]     ???
+80116298 [][][][] poinret to offsets to strings in binary. Each offset 0x2 size.
+
+801163d0 array of window related thing. Only window 0 used (0x2 size).
+    + 0 [][]     init with 0.
 
 801163e0 stack of script 1 byte values.
 801163e8 [][][][] pointer to current 801163e0 stack position.
