@@ -2280,9 +2280,8 @@ SP = SP + 0038;
 ////////////////////////////////
 // func1f1bc()
 
-window_data = A0;
+windows = A0;
 number_to_render = A1; // 4 in field, 1 in wm
-current_messege = 0;
 S6 = A2;
 S0 = A3;
 
@@ -2291,177 +2290,166 @@ S0 = A3;
 [GP + 280] = w(S6);
 [80062f24] = w(80077f64 + S0 * 3400);
 
-
-
-
-if( number_to_render <= 0 )
-{
-    return;
-}
-
 S4 = 1;
 S5 = S0;
 
-L1f25c:	; 8001F25C
-    if( h[window_data + current_messege * 30 + 2c] != 0 ) // if window state not 0
+for( int i = 0; i < number_to_render; ++i )
+{
+    if( h[windows + i * 30 + 2c] != 0 ) // state
     {
         [GP + 80] = w(0);
         [GP + 258] = w(0);
         [GP + 2ac] = w(0);
 
-        if( bu[window_data + current_messege * 30 + 1a] ) // show pointer
+        if( bu[windows + i * 30 + 1a] ) // show pointer
         {
-            A0 = h[window_data + current_messege * 30 + 24]; // pointer X
-            A1 = h[window_data + current_messege * 30 + 26]; // pointer Y
+            A0 = h[windows + i * 30 + 24]; // pointer X
+            A1 = h[windows + i * 30 + 26]; // pointer Y
             8001F2A8	jal    func1eb2c [$8001eb2c]
         }
 
-        V1 = bu[window_data + current_messege * 30 + 1b]; // WSPCL type
+        V1 = bu[windows + i * 30 + 1b]; // WSPCL type
         if( V1 == 1 )
         {
-            A0 = h[window_data + current_messege * 30 + 28]; // WSPCL x
-            A1 = h[window_data + current_messege * 30 + 2a]; // WSPCL y
+            A0 = h[windows + i * 30 + 28]; // WSPCL x
+            A1 = h[windows + i * 30 + 2a]; // WSPCL y
             A2 = w[8009c6e4 + b84];
             func1ec70;
         }
         else if( V1 == 2 )
         {
-            A0 = h[window_data + current_messege * 30 + 28]; // WSPCL x
-            A1 = h[window_data + current_messege * 30 + 2a]; // WSPCL y
-            A2 = w[window_data + current_messege * 30 + 20]; // WNUMB number
-            A3 = bu[window_data + current_messege * 30 + 1d]; // WNUMB number of digits in number
-            [SP + 10] = w(bu[window_data + current_messege * 30 + 1c]); // ????
+            A0 = h[windows + i * 30 + 28]; // WSPCL x
+            A1 = h[windows + i * 30 + 2a]; // WSPCL y
+            A2 = w[windows + i * 30 + 20]; // WNUMB number
+            A3 = bu[windows + i * 30 + 1d]; // WNUMB number of digits in number
+            [SP + 10] = w(bu[windows + i * 30 + 1c]); // ????
             8001F30C	jal    func1ef84 [$8001ef84]
         }
 
 
 
         A0 = 8; // start of string
-        A1 = h[window_data + current_messege * 30 + 10] + 6; // text scrolling value
-        A2 = h[window_data + current_messege * 30 + 8] - 3; // dialog width
-        A3 = w[window_data + current_messege * 30 + 0];
+        A1 = h[windows + i * 30 + 10] + 6; // text scrolling value
+        A2 = h[windows + i * 30 + 8] - 3; // dialog width
+        A3 = w[windows + i * 30 + 0];
 
         [GP + 70] = h(7);
         [GP + 72] = h(0);
         [GP + 74] = h(0);
-        [GP + 78] = h(hu[window_data + current_messege * 30 + 12]); // number of letters in window string
-        [GP + 7c] = w((bu[window_data + current_messege * 30 + 19] >> 2) & 1); // WMODE style
+        [GP + 78] = h(hu[windows + i * 30 + 12]); // number of letters in window string
+        [GP + 7c] = w((bu[windows + i * 30 + 19] >> 2) & 1); // WMODE style
 
         func1d6a8; // render font
 
-        if (h[window_data + current_messege * 30 + 0a] - 3 < V0 + 10)
+        if (h[windows + i * 30 + 0a] - 3 < V0 + 10)
         {
-            [window_data + current_messege * 30 + 18] = b(1);
+            [windows + i * 30 + 18] = b(1);
         }
         else
         {
-            [window_data + current_messege * 30 + 18] = b(0);
+            [windows + i * 30 + 18] = b(0);
         }
 
-        V0 = window_data + current_messege * 30;
-A1 = h[V0 + 0004];
-A2 = h[V0 + 0006];
-8001F3BC	beq    s5, zero, L1f3cc [$8001f3cc]
-8001F3C0	nop
-8001F3C4	j      L1f3d0 [$8001f3d0]
-A2 = A2 + 0008;
-
-        L1f3cc:	; 8001F3CC
-A2 = A2 + 00f0;
-
-L1f3d0:	; 8001F3D0
-S0 = window_data + current_messege * 30;
-A3 = h[S0 + 0008];
-V0 = h[S0 + 000a];
-A0 = SP + 0018;
-8001F3F4	jal    system_graphic_create_draw_env_struct [$80043814]
-[SP + 0010] = w(V0);
-[SP + 0030] = b(0);
-[SP + 002f] = b(S4);
-V0 = hu[S0 + 0008];
-A0 = hu[S0 + 0004];
-V1 = hu[S0 + 000c];
-V0 = V0 << 10;
-V0 = V0 >> 11;
-V0 = V0 + 0003;
-A0 = A0 + V0;
-V1 = V1 << 10;
-V1 = V1 >> 11;
-A0 = A0 - V1;
-[SP + 0018] = h(A0);
-V0 = hu[S0 + 000a];
-V1 = hu[S0 + 000e];
-A0 = h[S0 + 0006];
-V0 = V0 << 10;
-V0 = V0 >> 11;
-V1 = V1 << 10;
-8001F448	beq    s5, zero, L1f458 [$8001f458]
-V1 = V1 >> 11;
-8001F450	j      L1f45c [$8001f45c]
-V0 = V0 + 000b;
-
-L1f458:	; 8001F458
-V0 = V0 + 00f3;
-
-L1f45c:	; 8001F45C
-V0 = A0 + V0;
-V0 = V0 - V1;
-[SP + 001a] = h(V0);
-A1 = SP + 0018;
-S0 = window_data + current_messege * 30;
-V0 = hu[S0 + 000c];
-8001F488	lui    a0, $8006
-A0 = w[A0 + 2f24];
-8001F490	addiu  v0, v0, $fffa (=-$6)
-[SP + 001c] = h(V0);
-V1 = hu[S0 + 000e];
-V0 = 005f;
-[SP + 002c] = h(V0);
-8001F4A4	addiu  v1, v1, $fffa (=-$6)
-[SP + 001e] = h(V1);
-system_prepare_draw_env_packets;
-
-8001F4B0	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001F4B8	jal    system_add_render_packet_to_queue [$80046794]
-A0 = S6;
-8001F4C0	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001F4C8	nop
-V0 = V0 + 0040;
-8001F4D0	lui    at, $8006
-[AT + 2f24] = w(V0);
-V0 = bu[S0 + 0019];
-8001F4DC	nop
-V0 = V0 & 0002;
-8001F4E4	beq    v0, zero, L1f4f8 [$8001f4f8]
-
-[GP + 0084] = w(S4);
-8001F4F0	j      L1f4fc [$8001f4fc]
-8001F4F4	nop
-
-L1f4f8:	; 8001F4F8
-[GP + 0084] = w(0);
-
-        L1f4fc:	; 8001F4FC
-        // render window
-        if( ( bu[window_data + current_messege * 30 + 19] & 01 ) == 0 ) // with window
+        V0 = windows + i * 30;
+        A1 = h[V0 + 0004];
+        A2 = h[V0 + 0006];
+        if( S5 != 0 )
         {
-            V1 = w[window_data + current_messege * 30 + 08];
-            V0 = w[window_data + current_messege * 30 + 0c];
+            A2 = A2 + 8;
+        }
+        else
+        {
+            A2 = A2 + f0;
+        }
+
+        S0 = windows + i * 30;
+        A3 = h[S0 + 0008];
+        V0 = h[S0 + 000a];
+        A0 = SP + 0018;
+        [SP + 0010] = w(V0);
+
+        system_graphic_create_draw_env_struct();
+
+        [SP + 0030] = b(0);
+        [SP + 002f] = b(S4);
+        V0 = hu[S0 + 0008];
+        A0 = hu[S0 + 0004];
+        V1 = hu[S0 + 000c];
+        V0 = V0 << 10;
+        V0 = V0 >> 11;
+        V0 = V0 + 0003;
+        A0 = A0 + V0;
+        V1 = V1 << 10;
+        V1 = V1 >> 11;
+        A0 = A0 - V1;
+        [SP + 0018] = h(A0);
+        V0 = hu[S0 + 000a];
+        V1 = hu[S0 + 000e];
+        A0 = h[S0 + 0006];
+        V0 = V0 << 10;
+        V0 = V0 >> 11;
+        V1 = V1 << 10;
+        V1 = V1 >> 11;
+
+        if( S5 != 0 )
+        {
+            V0 = V0 + b;
+        }
+        else
+        {
+            V0 = V0 + f3;
+        }
+
+        V0 = A0 + V0;
+        V0 = V0 - V1;
+        [SP + 1a] = h(V0);
+        A1 = SP + 0018;
+        S0 = windows + i * 30;
+        V0 = hu[S0 + 000c];
+        A0 = w[80062f24];
+        8001F490	addiu  v0, v0, $fffa (=-$6)
+        [SP + 001c] = h(V0);
+        V1 = hu[S0 + 000e];
+        V0 = 005f;
+        [SP + 002c] = h(V0);
+        8001F4A4	addiu  v1, v1, $fffa (=-$6)
+        [SP + 001e] = h(V1);
+        system_prepare_draw_env_packets();
+
+        A0 = S6;
+        A1 = w[80062f24];
+        system_add_render_packet_to_queue();
+
+        [80062f24] = w(w[80062f24] + 40);
+
+        V0 = bu[S0 + 19];
+        if( V0 & 2 )
+        {
+            [GP + 84] = w(S4);
+        }
+        else
+        {
+            [GP + 84] = w(0);
+        }
+
+        // render window
+        if( ( bu[windows + i * 30 + 19] & 01 ) == 0 ) // with window
+        {
+            V1 = w[windows + i * 30 + 08];
+            V0 = w[windows + i * 30 + 0c];
             if( V1 != V0 )
             {
-                A1 = ( h[window_data + current_messege * 30 + 08] - h[window_data + current_messege * 30 + 0c] ) / 2;
-                A2 = ( hu[window_data + current_messege * 30 + 0a] - h[window_data + current_messege * 30 + e] ) / 2;
-                A3 = h[window_data + current_messege * 30 + 0c];
-                V0 = h[window_data + current_messege * 30 + 0e];
+                A1 = ( h[windows + i * 30 + 08] - h[windows + i * 30 + c] ) / 2;
+                A2 = ( hu[windows + i * 30 + 0a] - h[windows + i * 30 + e] ) / 2;
+                A3 = h[windows + i * 30 + 0c];
+                V0 = h[windows + i * 30 + 0e];
             }
             else
             {
                 A1 = 0;
                 A2 = 0;
-                A3 = h[window_data + current_messege * 30 + 08];
-                V0 = h[window_data + current_messege * 30 + 0a];
+                A3 = h[windows + i * 30 + 08];
+                V0 = h[windows + i * 30 + 0a];
             }
 
             [SP + 78 + 0] = h(A1);
@@ -2475,8 +2463,8 @@ L1f4f8:	; 8001F4F8
 
 
         A0 = SP + 18;
-        A1 = h[window_data + current_messege * 30 + 04]; // WINDOW x
-        A2 = h[window_data + current_messege * 30 + 06]; // WINDOW y
+        A1 = h[windows + i * 30 + 04]; // WINDOW x
+        A2 = h[windows + i * 30 + 06]; // WINDOW y
         if( S5 == 0 )
         {
             A2 = A2 + f0;
@@ -2486,8 +2474,8 @@ L1f4f8:	; 8001F4F8
             A2 = A2 + 8;
         }
 
-        A3 = h[window_data + current_messege * 30 + 08]; // WINDOW width
-        A4 = h[window_data + current_messege * 30 + 0a]; // WINDOW height
+        A3 = h[windows + i * 30 + 08]; // WINDOW width
+        A4 = h[windows + i * 30 + 0a]; // WINDOW height
         system_graphic_create_draw_env_struct();
 
         A0 = w[80062f24];
@@ -2503,33 +2491,31 @@ L1f4f8:	; 8001F4F8
 
         [GP + 84] = w(0);
         [80062f24] = w(w[80062f24] + 40);
-        [window_data + current_messege * 30 + 14] = h(w[GP + 2ac]);
-        [window_data + current_messege * 30 + 16] = h(w[GP + 258]);
+        [windows + i * 30 + 14] = h(w[GP + 2ac]);
+        [windows + i * 30 + 16] = h(w[GP + 258]);
     }
-
-    current_messege = current_messege + 1;
-    V1 = current_messege < number_to_render;
-8001F674	bne    v1, zero, L1f25c [$8001f25c]
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1f6ac
-8001F6AC	jr     ra 
-8001F6B0	nop
-////////////////////////////////
-// func1f6b4
-8001F6B4
-V0 = bu[GP + 0097];
-8001F6B8	jr     ra 
-8001F6BC	nop
+// func1f6ac()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1f6c0
+// func1f6b4()
+
+return bu[GP + 97];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1f6c0()
+
 [GP + 97] = b(1);
 [GP + 98] = b(A1);
 [GP + 9c] = w(28);

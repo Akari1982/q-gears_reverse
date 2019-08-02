@@ -65,17 +65,13 @@ V0 = 0 < h[80083274 + 0 * 30 + 2c];
 // funcb858c
 
 V1 = h[80083274 + 0 * 30 + 2c]; // state
+if( ( V1 != 0 ) && ( V1 != 7 ) )
+{
+    A0 = 0;
+    funcb89c4();
+}
 
-800B8598	beq    v1, zero, Lb85b4 [$800b85b4]
-
-V0 = 0007;
-800B85A4	beq    v1, v0, Lb85b4 [$800b85b4]
-800B85A8	nop
-800B85AC	jal    funcb89c4 [$800b89c4]
-A0 = 0;
-
-Lb85b4:	; 800B85B4
-V0 = 0 < h[80083274 + 0 * 30 + 2c]; // state
+return 0 < h[80083274 + 0 * 30 + 2c]; // state
 ////////////////////////////////
 
 
@@ -84,66 +80,46 @@ V0 = 0 < h[80083274 + 0 * 30 + 2c]; // state
 // funcb85d4()
 
 V0 = h[80083274 + 0 * 30 + 2c];
+if( V0 != 0 )
+{
+    system_get_buttons_with_config_remap();
+    A1 = V0;
+    A0 = w[8009c6e0];
+    V1 = w[A0 + 68]; // buttons
+    [A0 + 68] = w(A1);
+    [A0 + 70] = w(A1 & (0 NOR V1));
 
-800B85E0	beq    v0, zero, Lb86b4 [$800b86b4]
+    system_get_buttons_with_config_remap();
+    A1 = V0;
+    A0 = w[8009c6e0];
+    V1 = w[A0 + 78];
+    [A0 + 78] = w(A1);
+    [A0 + 80] = w(A1 & (0 NOR V1));
 
-800B85E8	jal    $8001c8d4
+    if( ( h[80116288] != 0 ) && ( h[8011628c] != 0 ) )
+    {
+        A0 = 0;
+        A1 = 0;
+        A2 = bu[80116288];
+        A3 = bu[8011628c];
+        A4 = 80116290;
+        funcb90c0()
+    }
+    else
+    {
+        A0 = 0;
+        A1 = 0;
+        funcb8d4c();
+    }
 
-A0 = w[8009c6e0];
-V1 = w[A0 + 68]; // buttons
-A1 = V0;
-[A0 + 0068] = w(A1);
-V1 = 0 NOR V1;
-V1 = A1 & V1;
-800B8610	jal    $8001c8d4
-[A0 + 0070] = w(V1);
-A1 = V0;
+    wm_get_current_render_buffer_id();
 
-A0 = w[8009c6e0];
-800B8624	lui    v0, $8011
-V0 = h[V0 + 6288];
-V1 = w[A0 + 0078];
-[A0 + 0078] = w(A1);
-V1 = 0 NOR V1;
-V1 = A1 & V1;
-800B863C	bne    v0, zero, Lb8658 [$800b8658]
-[A0 + 0080] = w(V1);
-800B8644	lui    v0, $8011
-V0 = h[V0 + 628c];
-800B864C	nop
-800B8650	beq    v0, zero, Lb8688 [$800b8688]
-A0 = 0;
-
-Lb8658:	; 800B8658
-A0 = 0;
-A1 = 0;
-800B8660	lui    a2, $8011
-A2 = bu[A2 + 6288];
-800B8668	lui    a3, $8011
-A3 = bu[A3 + 628c];
-800B8670	lui    v0, $8011
-V0 = V0 + 6290;
-800B8678	jal    funcb90c0 [$800b90c0]
-[SP + 0010] = w(V0);
-800B8680	j      Lb8690 [$800b8690]
-800B8684	nop
-
-Lb8688:	; 800B8688
-A1 = 0;
-funcb8d4c();
-
-Lb8690:	; 800B8690
-800B8690	jal    wm_get_current_render_buffer_id [$800a0bd4]
-800B8694	nop
-800B8698	lui    a0, $8008
-A0 = A0 + 3274;
-A1 = 0001;
-800B86A4	lui    a2, $800c
-A2 = w[A2 + d130];
-800B86AC	jal    $8001f1bc
-A3 = V0 < 0001;
-
-Lb86b4:	; 800B86B4
+    A0 = 80083274;
+    A1 = 1;
+    A2 = w[800bd130];
+    A3 = V0 < 1;
+    func1f1bc(); // render window
+}
 ////////////////////////////////
 
 
@@ -273,49 +249,24 @@ if( bu[8009d820] & 3 )
 
 
 ////////////////////////////////
-// funcb89c4
-800B89C4
-V1 = A0 << 10;
-V1 = V1 >> 10;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 04;
-AT = 80083274 + 0 * 30 + 2c;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-800B89E8	nop
-800B89EC	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 << 10;
-V1 = V0 >> 10;
-V0 = V1 < 000d;
-800B89FC	beq    v0, zero, Lb8a50 [$800b8a50]
-V0 = V1 << 02;
-800B8A04	lui    at, $800a
-AT = AT + 08d8;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800B8A14	nop
-800B8A18	jr     v0 
-800B8A1C	nop
+// funcb89c4()
 
-800B8A20	j      Lb8a54 [$800b8a54]
-V0 = 0;
-V0 = A0 << 10;
-V0 = V0 >> 10;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 04;
-V0 = 0007;
-AT = 80083274 + 0 * 30 + 2c;
-AT = AT + V1;
-[AT + 0000] = h(V0);
+window_id = A0;
 
-Lb8a50:	; 800B8A50
-V0 = 0001;
+switch( hu[80083274 + window_id * 30 + 2c] ) // state
+{
+    case 1:
+    {
+        return 0;
+    }
 
-Lb8a54:	; 800B8A54
-800B8A54	jr     ra 
-800B8A58	nop
+    case 2 4 6 8 b d:
+    {
+        [80083274 + window_id * 30 + 2c] = h(7);
+        return 1;
+    }
+}
+return 1;
 ////////////////////////////////
 
 
@@ -440,214 +391,164 @@ if( ( y + height ) >= e1 )
 // funcb8d4c
 
 window_id = A0;
-V1 = h[80083274 + window_id * 30 + 2c];
-V0 = V1 < f;
-800B8D7C	beq    v0, zero, Lb90ac [$800b90ac]
-V0 = V1 << 02;
-AT = 800a0930;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800B8D94	nop
-800B8D98	jr     v0 
-800B8D9C	nop
 
-A0 = A0 & 00ff;
-800B8DA4	jal    funcb962c [$800b962c]
-A1 = A1 & 00ff;
-800B8DAC	j      Lb90a4 [$800b90a4]
-800B8DB0	nop
-800B8DB4	jal    funcb98f0 [$800b98f0]
-A0 = A0 & 00ff;
-800B8DBC	j      Lb90b0 [$800b90b0]
-V0 = 0;
-800B8DC4	jal    funcb9b2c [$800b9b2c]
-A0 = A0 & 00ff;
-800B8DCC	j      Lb90b0 [$800b90b0]
-V0 = 0;
-800B8DD4	jal    funcba938 [$800ba938]
-A0 = A0 & 00ff;
-800B8DDC	j      Lb90b0 [$800b90b0]
-V0 = 0;
-800B8DE4	jal    funcbaa00 [$800baa00]
-A0 = A0 & 00ff;
-800B8DEC	j      Lb90b0 [$800b90b0]
-V0 = 0;
-V0 = w[8009c6e0];
-V0 = w[V0 + 80];
-V0 = V0 & 0020;
-800B8E0C	beq    v0, zero, Lb90ac [$800b90ac]
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 04;
-[80083274 + V1 + 2c] = h(2);
-800B8E34	j      Lb90b0 [$800b90b0]
-V0 = 0;
-V1 = A0 & 00ff;
-800B8E40	lui    v0, $8011
-V0 = V0 + 63d0;
-A2 = V1 << 01;
-A3 = A2 + V0;
-V0 = h[A3 + 0000];
-800B8E54	nop
-800B8E58	bne    v0, zero, Lb8e84 [$800b8e84]
-A1 = V0;
-V0 = A2 + V1;
-V0 = V0 << 04;
-V1 = 0002;
-AT = 80083274 + 0 * 30 + 2c;
-AT = AT + V0;
-[AT + 0000] = h(V1);
-800B8E7C	j      Lb90b0 [$800b90b0]
-V0 = 0;
+switch( h[80083274 + window_id * 30 + 2c] ) // state
+{
+    case 0:
+    {
+        A0 = window_id;
+        A1 = A1 & 00ff;
+        800B8DA4	jal    funcb962c [$800b962c]
 
-Lb8e84:	; 800B8E84
-800B8E84	addiu  v0, a1, $ffff (=-$1)
-800B8E88	j      Lb90ac [$800b90ac]
-[A3 + 0000] = h(V0);
-800B8E90	lui    v0, $800a
-V0 = w[V0 + c6e0];
-800B8E98	nop
-V0 = w[V0 + 0080];
-800B8EA0	nop
-V0 = V0 & 0020;
-800B8EA8	beq    v0, zero, Lb90ac [$800b90ac]
-V0 = A0 & 00ff;
-A1 = V0 << 01;
-V0 = A1 + V0;
-A0 = V0 << 04;
-800B8EBC	lui    at, $8008
-AT = AT + 327e;
-AT = AT + A0;
-V0 = h[AT + 0000];
-800B8ECC	lui    at, $8008
-AT = AT + 328a;
-AT = AT + A0;
-A2 = h[AT + 0000];
-800B8EDC	addiu  v1, v0, $fff7 (=-$9)
-800B8EE0	bgez   v1, Lb8eec [$800b8eec]
-800B8EE4	nop
-V1 = V0 + 0006;
+        if( V0 != 0 )
+        {
+            return 1;
+        }
+    }
+    break;
 
-Lb8eec:	; 800B8EEC
-800B8EEC	lui    v0, $8011
-V0 = V0 + 62a4;
-A1 = A1 + V0;
-V0 = h[A1 + 0000];
-V1 = V1 >> 04;
-800B8F00	addiu  v0, v0, $ffff (=-$1)
-V1 = V1 + V0;
-800B8F08	bne    a2, v1, Lb90b0 [$800b90b0]
-V0 = 0;
-800B8F10	lui    at, $8008
-AT = AT + 3284;
-AT = AT + A0;
-V0 = hu[AT + 0000];
-V1 = 0008;
-AT = 80083274 + 0 * 30 + 2c;
-AT = AT + A0;
-[AT + 0000] = h(V1);
-800B8F34	addiu  v0, v0, $fffe (=-$2)
-800B8F38	lui    at, $8008
-AT = AT + 3284;
-AT = AT + A0;
-[AT + 0000] = h(V0);
-V0 = hu[A1 + 0000];
-800B8F4C	nop
-V0 = V0 + 0001;
-800B8F54	j      Lb90ac [$800b90ac]
-[A1 + 0000] = h(V0);
-V0 = A0 & 00ff;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 04;
-800B8F6C	lui    at, $8008
-AT = AT + 32a2;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-800B8F7C	nop
-V0 = V0 & 0001;
-800B8F84	bne    v0, zero, Lb90b0 [$800b90b0]
-V0 = 0;
-800B8F8C	lui    v0, $800a
-V0 = w[V0 + c6e0];
-800B8F94	nop
-V0 = w[V0 + 0080];
-800B8F9C	nop
-V0 = V0 & 0020;
-800B8FA4	beq    v0, zero, Lb90ac [$800b90ac]
-V0 = 0007;
-AT = 80083274 + 0 * 30 + 2c;
-AT = AT + V1;
-[AT + 0000] = h(V0);
-800B8FBC	jal    funcbac70 [$800bac70]
-A0 = A0 & 00ff;
-800B8FC4	j      Lb90b0 [$800b90b0]
-V0 = 0;
-800B8FCC	lui    v0, $800a
-V0 = w[V0 + c6e0];
-800B8FD4	nop
-V0 = w[V0 + 0080];
-800B8FDC	nop
-V0 = V0 & 0020;
-800B8FE4	beq    v0, zero, Lb90b0 [$800b90b0]
-V0 = 0;
-800B8FEC	j      Lb908c [$800b908c]
-800B8FF0	nop
-800B8FF4	lui    v0, $800a
-V0 = w[V0 + c6e0];
-800B8FFC	nop
-V0 = w[V0 + 0080];
-800B9004	nop
-V0 = V0 & 0020;
-800B900C	beq    v0, zero, Lb90ac [$800b90ac]
-V1 = A0 & 00ff;
-A1 = V1 << 01;
-V1 = A1 + V1;
-V1 = V1 << 04;
-800B9020	lui    at, $8008
-AT = AT + 328a;
-AT = AT + V1;
-V0 = h[AT + 0000];
-A0 = 000c;
-AT = 80083274 + 0 * 30 + 2c;
-AT = AT + V1;
-[AT + 0000] = h(A0);
-V0 = V0 << 04;
-V0 = V0 + 0011;
-800B904C	lui    at, $8011
-AT = AT + 62a8;
-AT = AT + A1;
-[AT + 0000] = h(V0);
-800B905C	lui    at, $8008
-AT = AT + 3284;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-800B906C	nop
-800B9070	addiu  v0, v0, $fffe (=-$2)
-800B9074	lui    at, $8008
-AT = AT + 3284;
-AT = AT + V1;
-[AT + 0000] = h(V0);
-800B9084	j      Lb90b0 [$800b90b0]
-V0 = 0;
+    case 1:
+    {
+        A0 = window_id;
+        800B8DB4	jal    funcb98f0 [$800b98f0]
+    }
+    break;
 
-Lb908c:	; 800B908C
-800B908C	jal    funcbab60 [$800bab60]
-A0 = A0 & 00ff;
-800B9094	j      Lb90b0 [$800b90b0]
-V0 = 0;
-800B909C	jal    funcbac70 [$800bac70]
-A0 = A0 & 00ff;
+    case 2:
+    {
+        A0 = window_id;
+        800B8DC4	jal    funcb9b2c [$800b9b2c]
+    }
+    break;
 
-Lb90a4:	; 800B90A4
-800B90A4	bne    v0, zero, Lb90b0 [$800b90b0]
-V0 = 0001;
+    case 8:
+    {
+        A0 = window_id;
+        800B8DD4	jal    funcba938 [$800ba938]
+    }
+    break;
 
-Lb90ac:	; 800B90AC
-V0 = 0;
+    case c:
+    {
+        A0 = window_id;
+        800B8DE4	jal    funcbaa00 [$800baa00]
+    }
+    break;
 
-Lb90b0:	; 800B90B0
+    case d:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 20 )
+        {
+            [80083274 + window_id * 30 + 2c] = h(2);
+        }
+    }
+    break;
+
+    case 3:
+    {
+        if( h[801163d0 + window_id * 2] == 0 )
+        {
+            [80083274 + window_id * 30 + 2c] = h(1);
+        }
+        else
+        {
+            [801163d0 + window_id * 2] = h(h[801163d0 + window_id * 2] - 1);
+        }
+    }
+    break;
+
+    case 4:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 20 )
+        {
+            V0 = h[8008327e + window_id * 30];
+            A2 = h[8008328a + window_id * 30];
+            V1 = V0 - 9;
+            if( V1 < 0 )
+            {
+                V1 = V0 + 6;
+            }
+
+            V0 = h[801162a4 + window_id * 2];
+            V1 = V1 >> 4;
+            V0 = V0 - 1;
+            V1 = V1 + V0;
+            if( A2 == V1 )
+            {
+                [80083274 + window_id * 30 + 2c] = h(8);
+                [80083284 + window_id * 30] = h(hu[80083284 + window_id * 30] - 2);
+                [801162a4 + window_id * 2] = h(hu[801162a4 + window_id * 2] + 1);
+            }
+        }
+    }
+    break;
+
+    case 6:
+    {
+        if( hu[800832a2 + window_id * 30] & 1 )
+        {
+            return 0;
+        }
+
+        V0 = w[8009c6e0];
+        if( ( w[V0 + 80] & 20 ) == 0 )
+        {
+            return 0;
+        }
+
+        [80083274 + window_id * 30 + 2c] = h(7);
+
+        A0 = window_id;
+        800B8FBC	jal    funcbac70 [$800bac70]
+    }
+    break;
+
+    case e:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 20 )
+        {
+            A0 = window_id;
+            800B908C	jal    funcbab60 [$800bab60]
+        }
+    }
+    break;
+
+    case b:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 20 )
+        {
+            [80083274 + window_id * 30 + 2c] = h(c);
+            [801162a8 + window_id * 2] = h((h[8008328a + window_id * 30] * 10) + 11);
+            [80083284 + window_id * 30] = h(hu[80083284 + window_id * 30] - 2);
+        }
+    }
+    break;
+
+    case 9:
+    {
+        A0 = window_id;
+        800B908C	jal    funcbab60 [$800bab60]
+    }
+    break;
+
+    case 5 7:
+    {
+        A0 = window_id;
+        800B909C	jal    funcbac70 [$800bac70]
+
+        if( V0 != 0 )
+        {
+            return 1;
+        }
+    }
+    break;
+}
+
+return 0;
 ////////////////////////////////
 
 
