@@ -313,7 +313,7 @@
 80082268 player ai and some data in kernel (3rd file).
     +61c player ai script.
 
-8008326c []       arrays of windows parent entity (size 0x01).
+8008326c arrays of windows parent entity (size 0x01).
 80083274  windows data (size 0x30).
 +00 [][][][] pointer to dialog string.
 +04 [][]     WINDOW x.

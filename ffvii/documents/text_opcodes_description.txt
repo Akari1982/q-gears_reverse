@@ -88,16 +88,16 @@ FF - end string copying. Write FF to string. Set window state to 0x6. Write 0x00
 2 - text appears.
 3 - pause string output. (next part of sting will be added to outputed string after time).
 4 - wait for next row (next row of text will show after OK button).
-5
+5 - window closing (not used).
 6 - window completly shown (window will close after OK button press).
 7 - window closing.
 8 - scroll to next row.
 9 - init next window.
-A
-B - pause string output. (text will be scrolled to next window while you hold OK button).
-C - scroll to next row during OK button press.
-D - pause string output. (next part of string will be added to outputed string after OK button).
-E - wait for next window (next block of text will show after this). Opcodes 0xE8 0xE9.
+a
+b - pause string output. (text will be scrolled to next window while you hold OK button).
+c - scroll to next row during OK button press.
+d - pause string output. (next part of string will be added to outputed string after OK button).
+e - wait for next window (next block of text will show after this). Opcodes 0xE8 0xE9.
 
 
 

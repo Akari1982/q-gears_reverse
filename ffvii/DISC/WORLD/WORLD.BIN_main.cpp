@@ -4438,7 +4438,7 @@ La4668:	; 800A4668
         V0 = w[800e566c] < 0009;
         800A4ADC	beq    v0, zero, La4aec [$800a4aec]
 
-        800A4AE4	jal    funcb85d4 [$800b85d4]
+        funcb85d4(); // render windows
 
         La4aec:	; 800A4AEC
         800A4AEC	jal    funcb3828 [$800b3828]

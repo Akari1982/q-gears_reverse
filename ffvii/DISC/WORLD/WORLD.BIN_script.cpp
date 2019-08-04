@@ -138,10 +138,9 @@ else
 
         case c:
         {
-            800ABDB0	jal    funcb86c4 [$800b86c4]
+            wm_window_get_ask_result()
 
-            V0 = V0 << 10;
-            return V0 >> 10;
+            return V0;
         }
         break;
 
@@ -1776,40 +1775,39 @@ switch( opcode )
     {
         wm_script_pop_stack();
 
-        A0 = (V0 << 10) >> 10;
-        funcb84d8();
+        A0 = V0; // message id
+        wm_window_set_message_to_show_for_id_0();
 
         return 0;
     }
     break;
 
-    case 326: // set window prompt
+    case 326: // set window ask
     {
         wm_script_pop_stack();
-        S2 = V0;
+        last_pos = V0;
 
         wm_script_pop_stack();
-        S1 = V0;
+        first_pos = V0;
 
         wm_script_pop_stack();
 
-        A0 = (V0 << 10) >> 10;
-        A1 = (S1 << 10) >> 10;
-        A2 = (S2 << 10) >> 10;
-        800AD370	jal    funcb851c [$800b851c]
+        A0 = V0; // message id
+        A1 = first_pos;
+        A2 = last_pos;
+        wm_window_set_ask_to_show_for_id_0();
 
         return 0;
     }
     break;
 
-    case 327: // wait for prompt acknowledge?
+    case 327: // wait for ask closed and get result
     {
-        800AD380	jal    funcb86c4 [$800b86c4]
+        wm_window_get_ask_result();
 
-        V0 = V0 << 10;
-        if( V0 < 0 )
+        if( V0 < 0 ) // not closed
         {
-            if( w[8010adec] == 0 )
+            if( w[8010ade4 + 8] == 0 )
             {
                 A0 = w[8010ad3c];
                 [A0 + 46] = h(hu[A0 + 46] - 1);
@@ -1820,54 +1818,51 @@ switch( opcode )
     }
     break;
 
-    case 32d: // wait for window ready
+    case 32d: // wait for window closed
     {
-        V0 = w[8010adec];
-        800AD3C4	bne    v0, zero, Lad620 [$800ad620]
-        V0 = 0;
-        800AD3CC	jal    funcb858c [$800b858c]
+        if( w[8010ade4 + 8] == 0 )
+        {
+            wm_window_set_window_with_id_0_to_close();
 
-        A0 = w[8010ad3c];
-        800AD3DC	j      Lad4f4 [$800ad4f4]
-        S0 = V0;
+            A0 = w[8010ad3c];
+            [A0 + 46] = h(hu[A0 + 46] - V0);
+            return V0;
+        }
+        return 0;
     }
     break;
 
-    case 32e: // wait for message acknowledge
+    case 32e: // wait while window showing
     {
-        V0 = w[8010adec];
-        800AD3EC	nop
-        800AD3F0	bne    v0, zero, Lad620 [$800ad620]
-        V0 = 0;
-        800AD3F8	jal    funcb857c [$800b857c]
-        800AD3FC	nop
-        A0 = w[8010ad3c];
-        800AD408	j      Lad4f4 [$800ad4f4]
-        S0 = V0;
+        if( w[8010ade4 + 8] == 0 )
+        {
+            wm_window_is_window_with_id_0_showing();
+
+            A0 = w[8010ad3c];
+            [A0 + 46] = h(hu[A0 + 46] - V0);
+            return V0;
+        }
+        return 0;
     }
     break;
 
     case 334:
     {
-        V0 = w[8010adec];
-        800AD418	nop
-        800AD41C	bne    v0, zero, Lad620 [$800ad620]
-        V0 = 0;
-        V0 = w[8010ade4];
-        800AD42C	nop
-        A0 = bu[V0 + 0052];
-        S1 = w[8010ad3c];
-        800AD43C	jal    wm_set_active_entity_with_model_id [$800a993c]
-        800AD440	nop
-        V0 = w[8010ad3c];
-        V1 = hu[S1 + 0046];
-        V0 = bu[V0 + 0057];
-        [8010ad3c] = w(S1);
-        S0 = 0 < V0;
-        V0 = S0;
-        V1 = V1 - V0;
-        800AD468	j      Lad620 [$800ad620]
-        [S1 + 0046] = h(V1);
+        if( w[8010ade4 + 8] == 0 )
+        {
+            V0 = w[8010ade4];
+            A0 = bu[V0 + 52];
+            S1 = w[8010ad3c];
+            wm_set_active_entity_with_model_id();
+
+            V0 = w[8010ad3c];
+            V1 = hu[S1 + 46];
+            [8010ad3c] = w(S1);
+            V0 = 0 < bu[V0 + 57];
+            [S1 + 46] = h(V1 - V0);
+            return V0;
+        }
+        return 0;
     }
     break;
 
@@ -1882,7 +1877,7 @@ switch( opcode )
 
     case 341:
     {
-        V0 = w[8010adec];
+        V0 = w[8010ade4 + 8];
         800AD488	nop
         800AD48C	bne    v0, zero, Lad61c [$800ad61c]
         800AD490	nop
@@ -1909,7 +1904,7 @@ switch( opcode )
 
     case 342:
     {
-        V0 = w[8010adec];
+        V0 = w[8010ade4 + 8];
         800AD4D4	nop
         800AD4D8	bne    v0, zero, Lad620 [$800ad620]
         V0 = 0;

@@ -148,6 +148,7 @@
 +40 [][]     rotation of model (set using opcode 304).
 +42 [][]     original Y pos here (before modification).
 +44 [][]     y offset.
++46 [][]
 +4a [][]     init with 0.
 +4c [][]     direction of movement (set using opcode 304 328).
 +50 []       model id.
@@ -232,6 +233,7 @@
 8010ad90 [][][][] stack pointer. We store here 8010ad70.
 
 8010ade4 [][][][] pointer to some wm script struct.
+    + 8
     +46 [][]     current script pair (we read 2 bytes at once).
     +56 []       wait value.
 
@@ -325,11 +327,20 @@
 
 80116278 [][][][] init with 0.
 
-80116290 [][]     ???
-80116298 [][][][] poinret to offsets to strings in binary. Each offset 0x2 size.
-
-801163d0 array of window related thing. Only window 0 used (0x2 size).
-    + 0 [][]     init with 0.
+80116288 [][]     cursor first position.
+8011628c [][]     cursor last position.
+80116290 [][]     cursor final position.
+80116298 [][][][] pointer to offsets to strings in binary. Each offset 0x2 size.
+8011629c array of window scroll speed (0x2 size).
+801162a0 array of something (0x2 size).
+801162a4 array of some data to windows (0x2 size). Set to 0 when start srting show.
+801162a8 array of window total height including scroll (0x2 size).
+801162ac array of something (0x2 size).
+801162b0 array of pointers to string for window
+801162b4 array of window copied text (0x100 size).
+801162c0 array of something (0x2 size).
+801162c4 array of something (0x2 size).
+801163d0 array of window pause value (0x2 size).
 
 801163e0 stack of script 1 byte values.
 801163e8 [][][][] pointer to current 801163e0 stack position.

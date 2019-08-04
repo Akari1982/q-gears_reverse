@@ -1166,22 +1166,22 @@
 // wm_windows_init
 800B8488-800B84D4
 ////////////////////////////////
-// funcb84d8
+// wm_window_set_message_to_show_for_id_0
 800B84D8-800B8518
 ////////////////////////////////
-// funcb851c
+// wm_window_set_ask_to_show_for_id_0
 800B851C-800B8578
 ////////////////////////////////
-// funcb857c
+// wm_window_is_window_with_id_0_showing
 800B857C-800B8588
 ////////////////////////////////
-// funcb858c
+// wm_window_set_window_with_id_0_to_close
 800B858C-800B85D0
 ////////////////////////////////
 // funcb85d4
 800B85D4-800B86C0
 ////////////////////////////////
-// funcb86c4
+// wm_window_get_ask_result
 800B86C4-800B86E4
 ////////////////////////////////
 // wm_window_set_position_and_size_for_id_0
@@ -1202,7 +1202,7 @@
 // wm_window_reset
 800B87D8-800B89C0
 ////////////////////////////////
-// funcb89c4
+// wm_window_set_window_to_close_if_possible
 800B89C4-800B8A58
 ////////////////////////////////
 // wm_window_set_mode_and_permanency
@@ -1220,34 +1220,34 @@
 // wm_window_set_height
 800B8D20-800B8D48
 ////////////////////////////////
-// funcb8d4c
+// wm_window_set_message_to_show
 800B8D4C-800B90BC
 ////////////////////////////////
-// funcb90c0
+// wm_window_set_ask_to_show
 800B90C0-800B95E4
 ////////////////////////////////
-// funcb95e8
+// wm_window_play_sound
 800B95E8-800B9628
 ////////////////////////////////
-// funcb962c
+// wm_window_init_window
 800B962C-800B98EC
 ////////////////////////////////
-// funcb98f0
+// wm_window_inscrease_window
 800B98F0-800B9B28
 ////////////////////////////////
 // funcb9b2c
 800B9B2C-800BA934
 ////////////////////////////////
-// funcba938
+// wm_window_text_scroll_by_row
 800BA938-800BA9FC
 ////////////////////////////////
-// funcbaa00
+// wm_window_text_scroll_during_ok
 800BAA00-800BAB5C
 ////////////////////////////////
-// funcbab60
+// wm_window_start_text
 800BAB60-800BAC6C
 ////////////////////////////////
-// funcbac70
+// wm_window_discrease_window
 800BAC70-800BAE5C
 ////////////////////////////////
 // funcbae60
@@ -1265,7 +1265,7 @@
 // funcbb650
 800BB650-800BB7D8
 ////////////////////////////////
-// funcbb7dc
+// wm_window_copy_string_into_character_name
 800BB7DC-800BB8AC
 ////////////////////////////////
 
