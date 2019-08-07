@@ -93,6 +93,8 @@
 800cc568 draw env struct for buffer 2.
 800cc5c4 display env struct for buffer 2.
 
+800d05ec script data from .TXZ file (.EV file data).
+
 800e5608 [][][][] maybe initial camera rotation.
 
 800e5634 [][][][] byte from savemap 8009c6e4 + fa2.
@@ -148,7 +150,7 @@
 +40 [][]     rotation of model (set using opcode 304).
 +42 [][]     original Y pos here (before modification).
 +44 [][]     y offset.
-+46 [][]
++46 [][]     current script position (multiplied by 2 t get real because we read 2 bytes at once).
 +4a [][]     init with 0.
 +4c [][]     direction of movement (set using opcode 304 328).
 +50 []       model id.
@@ -189,8 +191,10 @@
                 0x40 - use walkmesh collision.
                 0x80 - set if position was changed and needs to be recalculated.
 +53 []       init with 0 when start animation. Maybe current frame.
++54 []       ???
 +55 []       move speed.
-+56 []       we stop wait in script if this is 0.
++56 []       wait value.
++57 []       ???
 +58 []       ???
 +5c []       we discrease +44 by this value during movement.
 +5d []       animation id.
@@ -225,20 +229,35 @@
 8010ad60 [][][][] init with 0.
 8010ad64 [][][][] init with 0. Store height addition here.
 
+8010ad68 [][][][] pointer to 800d05ec (call table of EV file).
 8010ad6c [][][][] pointer to start of script. Each opcode or param takes 2 bytes.
 8010ad70 start of stack. (0x8 size)
 +00 [][][][] we store here byte next to opcode.
 +04 [][][][] we store current opcode here (from 0x101 to 0x1ff)
 
 8010ad90 [][][][] stack pointer. We store here 8010ad70.
+8010ad94 [][][][] pointer to game progress in savedata.
+8010ad98 [][][][] init with 8010ada4.
+8010ad9c [][][][] init with 8010ada4.
+8010ada0 [][][][] init with 8010ada4.
+8010ada4 array of something script related (0x40 items 0x size).
 
-8010ade4 [][][][] pointer to some wm script struct.
-    + 8
-    +46 [][]     current script pair (we read 2 bytes at once).
-    +56 []       wait value.
+8010ade4 [][][][] pointer to entity struct. Init with 0.
+8010ade8 [][][][] init with 0.
+8010adec [][][][] init with 0.
 
-8010adf4 array of stored pos for PC entities. 0x10 size 0x3 items
-8010ae34 some pos
+8010adf0 [][]     init with 0.
+
+8010adf4 array of stored pos for PC entities (0x10 size 0x3 items)
+
+8010ae24 [][][][] init with 0.
+8010ae28 [][][][] init with 0.
+8010ae2c [][][][] init with 0.
+8010ae30 [][][][] init with 0.
+8010ae34 [][][][] init with 0. Some pos.
+8010ae38 [][][][] init with 0.
+8010ae3c [][][][] init with 0.
+
 8010ae54
 
 8010b068 buffer for skybox overlay texture settings buffer (0x2 items 0xc size).

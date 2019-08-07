@@ -1,4 +1,275 @@
 ////////////////////////////////
+// wm_script_init_variables()
+
+[8010ad68] = w(A0); // pointer to call table
+[8010ad6c] = w(A0 + 400); // pointer to start of script
+
+[8010ad90] = w(8010ad70); // script stack pointer
+[8010ad94] = w(8009c6e4 + ba4); // pointer to game progress in savedata
+[8010ad98] = w(8010ada4);
+[8010ad9c] = w(8010ada4);
+[8010ada0] = w(8010ada4);
+
+for( int i = 0; i < 40; ++i )
+{
+    [8010ada4 + i] = b(0);
+}
+
+[8010ade4] = w(0);
+[8010ade8] = w(0);
+[8010adec] = w(0);
+[8010adf0] = h(0);
+
+// init stored pos for PC entities
+for( int i = 0; i < 3; ++i )
+{
+    [8010adf4 + i * 10 + 0] = w(0);
+    [8010adf4 + i * 10 + 4] = w(0);
+    [8010adf4 + i * 10 + 8] = w(0);
+}
+
+[8010ae24] = w(0);
+[8010ae28] = w(0);
+[8010ae2c] = w(0);
+[8010ae30] = w(0);
+[8010ae34] = w(0);
+[8010ae38] = w(0);
+[8010ae3c] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab6e4()
+
+S0 = A0;
+S1 = A1;
+
+active_entity = w[8010ad3c];
+
+S2 = 0;
+if( active_entity != 0 )
+{
+    A0 = bu[active_entity + 57];
+    V0 = A0 < S1;
+    if( ( V0 == 0 ) && ( ( A0 != S1 ) || ( S1 != 3 ) ) )
+    {
+        if( h[active_entity + 46] != 0 )
+        {
+            return;
+        }
+    }
+
+    if( h[active_entity + 46] != 0 )
+    {
+        V0 = bu[active_entity + 54];
+        [active_entity + 54] = b(V0 + 1);
+        [active_entity + 2c + V0 * 4 + 0] = h(hu[active_entity + 46]);
+        [active_entity + 2c + V0 * 4 + 2] = b(bu[active_entity + 56]);
+        [active_entity + 2c + V0 * 4 + 3] = b(bu[active_entity + 57]);
+        S2 = 1;
+    }
+
+    V1 = 40;
+    A0 = w[8010ad68] + 200; // call table + 200
+
+    while( V1 != 0 )
+    {
+        if( hu[A0 + 0] == S0 )
+        {
+            break;
+        }
+        if( hu[A0 + 0] < S0 )
+        {
+            A0 = A0 + V1 * 4;
+        }
+        else
+        {
+            A0 = A0 - V1 * 4;
+        }
+
+        V1 = V1 >> 1;
+    }
+
+    if( hu[A0 + 0] == S0 )
+    {
+        [active_entity + 46] = h(hu[A0 + 2]); // script position
+        [active_entity + 57] = b(S1);
+    }
+    else
+    {
+        [active_entity + 46] = h(0); // script position
+        [active_entity + 57] = b(0);
+    }
+
+    if( S2 != 0 )
+    {
+        if( h[active_entity + 46] == 0 ) // script position
+        {
+            [active_entity + 54] = b(bu[active_entity + 54] - 1);
+
+            V0 = bu[active_entity + 54];
+            [active_entity + 46] = h(hu[active_entity + 2c + V0 * 4 + 0]); // script position
+            [active_entity + 56] = b(bu[active_entity + 2c + V0 * 4 + 2]); // wait value
+            [active_entity + 57] = b(bu[active_entity + 2c + V0 * 4 + 3]);
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab8ec
+800AB8EC	lui    v1, $8011
+V1 = w[V1 + ad40];
+800AB8F4	nop
+800AB8F8	beq    v1, zero, Lab924 [$800ab924]
+800AB8FC	nop
+800AB900	beq    a0, zero, Lab914 [$800ab914]
+800AB904	nop
+V0 = bu[V1 + 0051];
+800AB90C	j      Lab920 [$800ab920]
+V0 = V0 | 0010;
+
+Lab914:	; 800AB914
+V0 = bu[V1 + 0051];
+800AB918	nop
+V0 = V0 & 00ef;
+
+Lab920:	; 800AB920
+[V1 + 0051] = b(V0);
+
+Lab924:	; 800AB924
+800AB924	jr     ra 
+800AB928	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab92c()
+
+V0 = w[8010ad3c];
+if( V0 != 0 )
+{
+    A1 = A0 - 2;
+    if( ( bu[V0 + 51] & 10 ) == 0 )
+    {
+        if( A1 < 0 )
+        {
+            A1 = 0;
+        }
+        if( A1 >= 4 )
+        {
+            A1 = 3;
+        }
+
+        A0 = A0 & ff;
+        funcab6e4();
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcab988()
+
+model_id = A0;
+S1 = A1;
+
+wm_set_active_entity_with_model_id();
+
+active_entity = w[8010ad3c];
+if( active_entity != 0 )
+{
+    A1 = S1 - 2;
+    if( ( bu[active_entity + 51] & 10 ) == 0 )
+    {
+
+        V1 = model_id << 08;
+        V1 = V1 & 3f00;
+        V0 = S1 & 00ff;
+        V0 = V0 | 4000;
+        A0 = V1 | V0;
+        if( A1 < 0 )
+        {
+            A1 = 0;
+        }
+        if( A1 >= 4 )
+        {
+            A1 = 3;
+        }
+
+        funcab6e4();
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcaba18()
+
+[8010ad3c] = w(80109d74);
+if( A0 == 1 )
+{
+    [8010adec] = w(1);
+}
+
+A1 = A0 - 2;
+if( A1 < 0 )
+{
+    A1 = 0;
+}
+if( A1 >= 4 )
+{
+    A1 = 3;
+}
+
+A0 = A0 & ff;
+funcab6e4();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcaba78()
+
+S0 = A0;
+S1 = A1;
+
+[8010ad3c] = w(80109d74);
+
+A0 = w[8010ad40] + c;
+A1 = 0;
+A2 = SP + 10;
+A3 = SP + 12;
+wm_extract_loop_coords_top_bottom_parts();
+
+S0 = S0 << 10;
+S0 = S0 >> 10;
+S1 = S1 << 10;
+S1 = S1 >> 10;
+
+A0 = (((h[SP + 12] * 24) + h[SP + 10]) << 4) & 3ff0;
+
+V0 = S1 << 02;
+V0 = V0 + S1;
+
+S0 = S0 + V0;
+S0 = S0 & f;
+
+
+A0 = A0 | S0 | 8000;
+A1 = 3;
+funcab6e4();
+////////////////////////////////
+
+
+
+////////////////////////////////
 // wm_script_pop_stack()
 
 [8010ad90] = w(w[8010ad90] - 8);
@@ -200,13 +471,11 @@ return 0;
 ////////////////////////////////
 // funcabe58()
 
-V1 = w[8010ad90] - 8;
-V0 = 8010ad68;
-
-[8010ad90] = w(V1);
-
 S1 = A0;
-if( V0 >= V1 )
+
+[8010ad90] = w(w[8010ad90] - 8);
+
+if( w[8010ad90] <= 8010ad68 )
 {
     A0 = 3e;
     funca0b40(); // error
@@ -642,37 +911,32 @@ else
 S0 = A0;
 if( A0 == 200 ) // jump
 {
-    A0 = w[8010ade4];
-    V0 = hu[A0 + 46];
-    [A0 + 46] = h(V0 + 1);
+    entity = w[8010ade4];
+    [entity + 46] = h(hu[entity + 46] + 1);
 
-    V0 = w[8010ad6c] + V0 * 2;
-    S0 = hu[V0];
-    [A0 + 46] = h(S0);
+    V0 = w[8010ad6c] + hu[entity + 46] * 2;
+    [entity + 46] = h(hu[V0]);
 
     return 0;
 }
 else if( A0 == 201 ) // jump if false
 {
-    struct = w[8010ade4];
-    V0 = hu[struct + 46];
-    [struct + 46] = h(V0 + 1);
+    entity = w[8010ade4];
+    [entity + 46] = h(hu[entity + 46] + 1);
 
-    V1 = w[8010ad6c] + V0 * 2;
+    V1 = w[8010ad6c] + hu[entity + 46] * 2;
     S0 = hu[V0];
-
 
     wm_script_pop_stack();
     if( V0 == 0 )
     {
-        [struct + 46] = h(S0);
+        [entity + 46] = h(S0);
     }
     return 0;
 }
 else if( A0 == 203 ) // return
 {
     V1 = w[8010ade4];
-    800AC570	nop
     V0 = bu[V1 + 0054];
     800AC578	nop
     if (V0 != 0)
@@ -1986,19 +2250,20 @@ Lad620:	; 800AD620
 ////////////////////////////////
 // wm_script_run_one()
 
-S1 = A0;
+entity = A0;
 
 [8010ade8] = w(0);
 
-script_data = w[8010ade4];
+entity_1 = w[8010ade4];
 script_start = w[8010ad6c];
 
-if( h[script_data + 46] != 0 )
+// run opcodes cycle
+if( h[entity_1 + 46] != 0 ) // script pos
 {
     S0 = 0;
     loopad66c:	; 800AD66C
-        V0 = h[script_data + 46];
-        [script_data + 46] = h(V0 + 1);
+        V0 = h[entity_1 + 46];
+        [entity_1 + 46] = h(V0 + 1);
 
         A0 = hu[script_start + V0 * 2];
         if( A0 < 100 )
@@ -2022,10 +2287,10 @@ if( h[script_data + 46] != 0 )
     800AD6FC	beq    s0, zero, loopad66c [$800ad66c]
 }
 
-A0 = h[S1 + 40];
+A0 = h[entity + 40];
 funca9678();
 
-if( w[S1 + 4] != 0 )
+if( w[entity + 4] != 0 )
 {
     V0 = w[8010adec];
     if( V0 == 0 )
@@ -2036,7 +2301,7 @@ if( w[S1 + 4] != 0 )
         {
             system_get_buttons_with_config_remap();
 
-            if( V0 & 0020 )
+            if( V0 & 0020 ) // circle button pressed
             {
                 A1 = 4;
             }
@@ -2045,7 +2310,7 @@ if( w[S1 + 4] != 0 )
                 A1 = 3;
             }
 
-            V0 = w[S1 + 4];
+            V0 = w[entity + 4];
             A0 = bu[V0 + 50];
             funcab988();
         }
@@ -2060,7 +2325,8 @@ if( w[S1 + 4] != 0 )
 
 // run main script
 [8010ade4] = w(80109d74);
-[8010ad3c] = w(80109d74);
+[8010ad3c] = w(80109d74); // active entity
+
 A0 = 80109d74;
 wm_script_run_one();
 
@@ -2068,8 +2334,9 @@ wm_script_run_one();
 S0 = w[8010ad38];
 while( S0 != 0 )
 {
-    [8010ad3c] = w(S0);
     [8010ade4] = w(S0);
+    [8010ad3c] = w(S0); // active entity
+
     A0 = S0;
     wm_script_run_one();
 

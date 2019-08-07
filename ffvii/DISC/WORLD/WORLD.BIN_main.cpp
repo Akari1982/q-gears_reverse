@@ -55,7 +55,7 @@ return S0;
 
 
 ////////////////////////////////
-// wm_load_texture()
+// wm_load_txz_file()
 
 sector = A0;
 size = A1;
@@ -191,9 +191,9 @@ if( A0 != 0 )
     // a 16190000 3F0F0200 WORLD\WMAS.TXZ
     A0 = w[800c744c + S2 * 8 + 0];
     A1 = w[800c744c + S2 * 8 + 4];
-    A2 = 80190000;
+    A2 = 80190000; // dst
     A3 = 1; // lzs
-    wm_load_texture();
+    wm_load_txz_file();
 
     loopa0ea0:	; 800A0EA0
         V0 = hu[80095dd4];
@@ -213,14 +213,15 @@ if( A0 != 0 )
         800A0EF0	bne    v0, zero, loopa0ecc [$800a0ecc]
     }
 
-    S2 = 80190004;
+    txz_data = 80190004;
+
     [800e567c] = w(0);
 
     A0 = 0;
     system_psyq_draw_sync();
 
     A0 = 0;
-    S0 = S2 + (w[S2] >> 2) << 2;
+    S0 = txz_data + (w[txz_data] >> 2) << 2;
     while( S0 < ( S0 + (w[80190008] >> 2) << 2 ) )
     {
         [8013a800 + A0 * 4] = w(w[S0 + A0 * 4]);
@@ -244,29 +245,29 @@ else
     // c BC150000 DCAE0000 WORLD\WMC.TXZ
     A0 = w[800c73e4 + S2 * 8 + 0];
     A1 = w[800c73e4 + S2 * 8 + 4];
-    A2 = 8013a7cc;
+    A2 = 8013a7cc; // dst
     A3 = 1; // lzs
-    wm_load_texture();
+    wm_load_txz_file();
 
     loopa0f90:	; 800A0F90
         V0 = hu[80095dd4];
     800A0F9C	bne    v0, zero, loopa0f90 [$800a0f90]
 
-    S2 = 8013a7d0;
+    txz_data = 8013a7d0;
 }
 
-
-S0 = S2 + (w[S2 + 8] >> 2) << 2;
+// block 2
+txz_wm_tex = S0 = txz_data + (w[txz_data + 8] >> 2) << 2;
 
 V1 = 800bd148;
 loopa0fd0:	; 800A0FD0
     [V1] = w(w[S0]);
     S0 = S0 + 4;
     V1 = V1 + 4;
-    V0 = S0 < (S2 + ((w[S2 + 8] >> 2) << 2) + 800);
+    V0 = S0 < (txz_data + ((w[txz_data + 8] >> 2) << 2) + 800);
 800A0FF8	bne    v0, zero, loopa0fd0 [$800a0fd0]
 
-S0 = S2 + ((w[S2 + 8] >> 2) << 2) + 800;
+S0 = txz_data + ((w[txz_data + 8] >> 2) << 2) + 800;
 if( w[S0] != 0 )
 {
     loopa102c:	; 800A102C
@@ -279,7 +280,8 @@ if( w[S0] != 0 )
     800A1050	bne    v0, zero, loopa102c [$800a102c]
 }
 
-S0 = S2 + ((w[S2 + c] >> 2) << 2);
+// block 3
+S0 = txz_data + ((w[txz_data + c] >> 2) << 2);
 for( int i = 0; i < 3800; ++i )
 {
     [800d75ec + i * 4] = w(w[S0 + i * 4]);
@@ -290,13 +292,14 @@ if( w[800e5634] >= 2 )
     [800d75ec] = w(0);
 }
 
-S0 = S2 + ((w[S2 + 10] >> 2) << 2);
+// block 4
+script = txz_data + ((w[txz_data + 10] >> 2) << 2);
 for( int i = 0; i < 1c00; ++i )
 {
-    [800d05ec + i * 4] = w(w[S0 + i * 4]);
+    [800d05ec + i * 4] = w(w[script + i * 4]);
 }
 
-A0 = S2;
+A0 = txz_data;
 funcb6348();
 
 wm_init_model_variables_and_array();
@@ -305,7 +308,9 @@ wm_init_model_variables_and_array();
 
 funcb6b28();
 
-A0 = S2 + ((w[S2 + 4] >> 2) << 2);
+// block 1
+// texture data for direct VRAM upload, same format as section 2 but contains only a single block
+A0 = txz_data + ((w[txz_data + 4] >> 2) << 2);
 wm_load_textures_to_vram();
 
 [SP + 18] = h(0);
@@ -3753,55 +3758,50 @@ La4130:	; 800A4130
 800A4130	jr     ra 
 800A4134	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca4138
-800A4138	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S2);
+
 S2 = 0;
-[SP + 001c] = w(S1);
 S1 = 0;
-[SP + 0018] = w(S0);
-800A4150	lui    s0, $800c
-S0 = S0 + 6648;
-[SP + 0024] = w(RA);
-800A415C	lui    at, $800e
-[AT + 56f4] = w(0);
+S0 = 800c6648;
+[800e56f4] = w(0);
 
 loopa4164:	; 800A4164
-V0 = 0004;
-[S0 + 0003] = b(V0);
-V0 = 0064;
-800A4170	jal    $80043cc0
-[S0 + 0007] = b(V0);
-V1 = 0001;
-800A417C	beq    v0, v1, La419c [$800a419c]
-A3 = 0029;
-800A4184	jal    $80043cc0
-800A4188	nop
-V1 = 0002;
-800A4190	bne    v0, v1, La419c [$800a419c]
-A3 = 0019;
-A3 = 0029;
+    V0 = 0004;
+    [S0 + 0003] = b(V0);
+    V0 = 0064;
+    [S0 + 0007] = b(V0);
+    800A4170	jal    $80043cc0
 
-La419c:	; 800A419C
-[SP + 0010] = w(0);
-800A41A0	lui    a0, $800e
-A0 = A0 + 56dc;
-A0 = S1 + A0;
-A1 = 0;
-800A41B0	jal    $80044a68
-A2 = 0;
-S1 = S1 + 000c;
-S2 = S2 + 0001;
-V0 = S2 < 0002;
+    V1 = 0001;
+    800A417C	beq    v0, v1, La419c [$800a419c]
+    A3 = 0029;
+    800A4184	jal    $80043cc0
+    800A4188	nop
+    V1 = 0002;
+    800A4190	bne    v0, v1, La419c [$800a419c]
+    A3 = 0019;
+    A3 = 0029;
+
+    La419c:	; 800A419C
+    [SP + 0010] = w(0);
+    A0 = 800e56dc + S1;
+    A1 = 0;
+    A2 = 0;
+    800A41B0	jal    $80044a68
+
+    S1 = S1 + 000c;
+    S2 = S2 + 0001;
+    S0 = S0 + 0014;
+    V0 = S2 < 0002;
 800A41C4	bne    v0, zero, loopa4164 [$800a4164]
-S0 = S0 + 0014;
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800A41E0	jr     ra 
-800A41E4	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca41e8
 800A41E8	addiu  sp, sp, $ffe8 (=-$18)
@@ -4219,7 +4219,7 @@ La4668:	; 800A4668
 
     funcbc1cc(); // prepare some packets
 
-    800A47A0	jal    funca7ea4 [$800a7ea4]
+    funca7ea4();
 
     A0 = S2;
     A1 = S4;
@@ -4235,7 +4235,7 @@ La4668:	; 800A4668
 
     [800e5604] = w(0);
 
-    800A47E8	jal    funca31f8 [$800a31f8]
+    funca31f8();
 
     funca12ac(); // we create render buffer for skybox and skybox overlay here
 
@@ -4243,38 +4243,38 @@ La4668:	; 800A4668
 
     funcaf0b0();
 
-    800A4808	jal    funcaf9dc [$800af9dc]
+    funcaf9dc();
 
-    800A4810	jal    funcb104c [$800b104c]
+    funcb104c();
 
-    800A4818	jal    funcb7c1c [$800b7c1c]
+    funcb7c1c();
 
     A0 = 1;
-    800A4820	jal    funcb7c6c [$800b7c6c]
+    funcb7c6c();
 
-    800A4828	jal    funca4138 [$800a4138]
+    funca4138();
 
     A0 = 800be5e8; // offset to string (in binary)
     wm_windows_init();
 
-    800A4840	jal    funcb04ac [$800b04ac]
+    funcb04ac();
 
-    800A4848	jal    funcae8ac [$800ae8ac]
+    funcae8ac(); // create some packets
 
-    800A4850	jal    funcb392c [$800b392c]
+    funcb392c();
 
-    800A4858	jal    funca8a88 [$800a8a88]
+    funca8a88();
 
-    800A4860	jal    funcbb8b0 [$800bb8b0]
+    funcbb8b0();
 
     A0 = 7f;
     wm_set_music_volume();
 
-    A0 = 800d05ec;
-    800A4878	jal    funcab5e4 [$800ab5e4]
+    A0 = 800d05ec; // .EV file
+    wm_script_init_variables();
 
     A0 = 0;
-    800A4880	jal    funcaba18 [$800aba18]
+    funcaba18();
 
 
     wm_script_run_all();
@@ -6069,8 +6069,12 @@ La60d0:	; 800A60D0
 800A60D0	jr     ra 
 V0 = A3;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca60d8
-800A60D8
+
 A0 = 0;
 A1 = 80109a50;
 
@@ -6103,8 +6107,10 @@ V0 = 80109a38;
 [AT + 9d40] = w(0);
 800A6158	lui    at, $8011
 [AT + 9d3c] = w(0);
-800A6160	jr     ra 
-800A6164	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca6168
 800A6168	addiu  sp, sp, $ff20 (=-$e0)
@@ -7508,9 +7514,7 @@ S6 = 0001;
 
 La74f8:	; 800A74F8
 V0 = w[S3 + 0000];
-800A74FC	nop
 V0 = hu[V0 + 0020];
-800A7504	nop
 [SP + 1004] = h(V0);
 V0 = w[S3 + 0000];
 800A7510	nop
