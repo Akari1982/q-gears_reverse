@@ -340,6 +340,8 @@
 +2a [][]     WSPCL y.
 +2c [][]     window state.
 +2e []       WMODE cbc.
+                0x01 permanency.
+                0x02 show all text immediately.
 +2f []
 
 80083580 we copy here akao sequence data when init music 0x10.
@@ -753,7 +755,7 @@
                         0x0001 - sound (0x0000-mono,0x0001-stereo)
     +10dc array of button remap. Each record represent one button in buttons mask (0x10 items 0x1 size)
         +00 [] new button bit
-8009d7d0 []       savemap message speed.
+    +10ec []       savemap message speed.
 
 
 

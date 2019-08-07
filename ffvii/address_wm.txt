@@ -332,7 +332,7 @@
 80116290 [][]     cursor final position.
 80116298 [][][][] pointer to offsets to strings in binary. Each offset 0x2 size.
 8011629c array of window scroll speed (0x2 size).
-801162a0 array of something (0x2 size).
+801162a0 array of pool for showing letter in string (0x2 size).
 801162a4 array of some data to windows (0x2 size). Set to 0 when start srting show.
 801162a8 array of window total height including scroll (0x2 size).
 801162ac array of something (0x2 size).
@@ -340,6 +340,8 @@
 801162b4 array of window copied text (0x100 size).
 801162c0 array of something (0x2 size).
 801162c4 array of something (0x2 size).
+
+801163c4 array of something fow windows (0x2 size).
 801163d0 array of window pause value (0x2 size).
 
 801163e0 stack of script 1 byte values.

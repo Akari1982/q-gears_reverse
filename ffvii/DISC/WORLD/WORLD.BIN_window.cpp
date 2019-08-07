@@ -898,191 +898,153 @@ if( bu[8008326c + window_id] != bu[800722c4] )
     return;
 }
 
-V1 = window_id * 2;
-
-V0 = hu[800832a2 + window_id * 30] & 2;
-if( V0 != 0 )
+if( hu[80083274 + window_id * 30 + 2e] & 2 )
 {
-    A1 = 0100;
-    S5 = 1;
-    800B9BE0	j      Lb9cec [$800b9cec]
-}
-
-V0 = w[8009c6e0];
-if( w[V0 + 78] & 0020 ) // ok button pressed
-{
-    [8011629c + V1] = h(h[8011629c + V1] + 1);
-
-    if( h[8011629c + V1] >= 81 )
-    {
-        [8011629c + V1] = h(80);
-    }
+    letter_add = 100;
+    letter_cost = 1;
 }
 else
 {
-    [8011629c + V1] = h(h[8011629c + V1] - 1);
-
-    if( h[8011629c + V1] < 2 )
+    V0 = w[8009c6e0];
+    if( w[V0 + 78] & 0020 ) // ok button pressed (faster)
     {
-        [8011629c + V1] = h(1);
-    }
-}
+        [8011629c + window_id * 2] = h(h[8011629c + window_id * 2] + 1);
 
-V1 = bu[8009d7d0];
-if( V1 < 80 )
-{
-    A1 = ((80 - V1) >> 5) + 2;
-    S5 = 1;
-}
-else
-{
-    A1 = 2;
-    S5 = ((V1 - 80) >> 5) + 1;
-}
-
-V0 = h[8011629c + window_id * 2] / 10;
-V0 = S5 * V0;
-A0 = 801162a0 + window_id * 2;
-V1 = hu[A0 + 0000];
-
-V0 = A1 + V0;
-V1 = V1 + V0;
-[A0 + 0000] = h(V1);
-V1 = V1 << 10;
-V1 = V1 >> 10;
-V0 = S5 << 10;
-V0 = V0 >> 10;
-V0 = V0 < V1;
-if( V0 != 0 )
-{
-    S7 = 801162a0;
-    S3 = window_id;
-    FP = window_id * 2;
-    V0 = S3 + window_id * 2;
-    S6 = V0 << 04;
-    V1 = 801162b4;
-    V0 = S3 << 08;
-    S4 = V0 + V1;
-    V0 = S3 << 02;
-    T3 = 801162b0;
-    S2 = V0 + T3;
-
-    Lb9d94:	; 800B9D94
-        V0 = window_id << 10 >> 0e;
-        T3 = 801162b0;
-        V0 = w[801162b0 + V0];
-        V0 = bu[V0];
-
-        switch( V0 )
+        if( h[8011629c + window_id * 2] >= 81 )
         {
-            case ff:
+            [8011629c + window_id * 2] = h(80);
+        }
+    }
+    else
+    {
+        [8011629c + window_id * 2] = h(h[8011629c + window_id * 2] - 1);
+
+        if( h[8011629c + window_id * 2] < 2 )
+        {
+            [8011629c + window_id * 2] = h(1);
+        }
+    }
+
+    V1 = b[8009c6e4 + 10ec]; // savemap message speed (greater is slower)
+    if( V1 < 80 )
+    {
+        letter_add = ((80 - V1) / 20) + 2;
+        letter_cost = 1;
+    }
+    else // slower
+    {
+        letter_add = 2;
+        letter_cost = ((V1 - 80) / 20) + 1;
+    }
+}
+
+// letter pool
+[801162a0 + window_id * 2] = h(h[801162a0 + window_id * 2] + letter_add + letter_cost * (h[8011629c + window_id * 2] / 10));
+
+while( letter_cost < h[801162a0 + window_id * 2] )
+{
+    V0 = w[801162b0 + window_id * 4];
+    switch( bu[V0] )
+    {
+        case ff:
+        {
+            [80083274 + window_id * 30 + 2c] = h(6); // state "window completly shown"
+            [801162a0 + window_id * 2] = h(0);
+            V0 = h[80083288 + window_id * 30];
+            [801162b4 + window_id * 100 + V0] = b(-1);
+        }
+        break;
+
+        case e7:
+        {
+            V0 = h[8008327e + window_id * 30];
+            V1 = V0 - 9;
+            if( V1 < 0 )
             {
-                [80083274 + 0 * 30 + 2c + S6] = h(6);
-                [FP + S7] = h(0);
-                800B9DF4	j      Lba8c0 [$800ba8c0]
-            }
-            break;
-
-            case e7:
-            {
-                V0 = h[8008327e + S6];
-                V1 = V0 - 9;
-                if( V1 < 0 )
-                {
-                    V1 = V0 + 6;
-                }
-
-                A0 = h[8008328a + S6];
-                V0 = h[801162a4 + FP] - 1;
-                V1 = V1 >> 04;
-                V1 = V1 + V0;
-                if( A0 == V1 )
-                {
-                    [80083274 + 0 * 30 + 2c + S6] = h(4);
-                    V0 = 0001;
-                    [8011629c + FP] = h(V0);
-                    [801162a0 + FP] = h(0);
-                    800B9CD4	j      Lba8c0 [$800ba8c0]
-                }
-
-                V1 = w[S2 + 0000];
-                AT = 80083288;
-                AT = AT + S6;
-                V0 = h[AT + 0000];
-                V1 = bu[V1 + 0000];
-                V0 = S4 + V0;
-                [V0 + 0000] = b(V1);
-                [S2 + 0000] = w(w[S2 + 0000] + 1);
-                V0 = hu[80083288 + S6];
-                V1 = 80083274 + S6;
-                [V1 + 14] = h(V0 + 1);
-                V0 = hu[8008328a + S6] + 1;
-                800B9EB8	j      Lba894 [$800ba894]
-                [V1 + 16] = h(V0);
-            }
-
-            case e8 e9:
-            {
-                A0 = S3 << 01;
-                [S2 + 0000] = w(w[S2 + 0000] + 0001);
-                V0 = A0 + S3;
-                V0 = V0 << 04;
-                [80083274 + 0 * 30 + 2c + V0] = h(e);
-                V0 = 1;
-                800B9EEC	j      Lba2b4 [$800ba2b4]
+                V1 = V0 + 6;
             }
 
-            case ea eb ec ed ee ef f0 f1 f2:
+            A0 = h[8008328a + window_id * 30];
+            V0 = h[801162a4 + window_id * 2] - 1;
+            V1 = V1 >> 04;
+            V1 = V1 + V0;
+            if( A0 == V1 )
             {
-                V0 = w[S2 + 0000];
-                V0 = bu[V0 + 0000];
-                800B9F04	addiu  s0, v0, $ff16 (=-$ea)
-                A0 = S0 & ffff;
-                800B9F08	jal    $800257cc
-
-                A3 = S3 << 01;
-                A2 = 801162ac + A3;
-                A0 = h[A2 + 0000];
-                A1 = V0 + A0;
-                V1 = bu[A1 + 0000];
-                V0 = 00ff;
-                800B9F34	beq    v1, v0, Lb9f44 [$800b9f44]
-                V0 = A0 < 0009;
-                800B9F3C	bne    v0, zero, Lb9f5c [$800b9f5c]
-                A0 = A3 + S3;
-
-                Lb9f44:	; 800B9F44
-                V0 = w[S2 + 0000] + 1;
-                [S2 + 0000] = w(V0);
-                800B9F54	j      Lba894 [$800ba894]
-                [A2 + 0000] = h(0);
-
-                Lb9f5c:	; 800B9F5C
-                A0 = A0 << 04;
-                V0 = h[80083288 + A0];
-                V1 = bu[A1 + 0000];
-                V0 = S4 + V0;
-                [V0 + 0000] = b(V1);
-                V1 = 80083274 + A0;
-                [V1 + 0014] = h(hu[80083288 + A0] + 1);
-                [A2 + 0000] = h(hu[A2 + 0000] + 1);
-                [V1 + 0012] = h(hu[80083286 + A0] + 1);
-                V1 = A3 + S7;
-                800B9FCC	j      Lba648 [$800ba648]
+                [80083274 + window_id * 30 + 2c] = h(4);
+                [8011629c + window_id * 2] = h(1);
+                [801162a0 + window_id * 2] = h(0);
+                V0 = h[80083288 + window_id * 30];
+                [801162b4 + window_id * 100 + V0] = b(-1);
             }
 
-            800B9FD4 f3 f4 f5
+            V1 = w[801162b0 + window_id * 4];
+            V0 = h[80083288 + window_id * 30];
+            [801162b4 + window_id * 100 + V0] = b(bu[V1]);
+            [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+            [80083274 + window_id * 30 + 14] = h(hu[80083288 + window_id * 30] + 1);
+            [80083274 + window_id * 30 + 16] = h(hu[8008328a + window_id * 30] + 1);
+            800B9EB8	j      Lba894 [$800ba894]
+        }
 
-            V1 = w[S2 + 0000];
-            800B9FD8	nop
+        case e8 e9:
+        {
+            [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+            [80083274 + window_id * 30 + 2c] = h(e);
+            [8011629c + window_id * 2] = h(1);
+            [801162a0 + window_id * 2] = h(0);
+
+            V0 = h[80083288 + window_id * 30];
+            [801162b4 + window_id * 100 + V0] = b(-1);
+            return;
+        }
+
+        case ea eb ec ed ee ef f0 f1 f2:
+        {
+            V0 = w[801162b0 + window_id * 4];
+            V0 = bu[V0];
+            800B9F04	addiu  s0, v0, $ff16 (=-$ea)
+            A0 = S0 & ffff;
+            800B9F08	jal    $800257cc
+
+            A3 = window_id << 01;
+            A2 = 801162ac + A3;
+            A0 = h[A2 + 0000];
+            A1 = V0 + A0;
+            V1 = bu[A1 + 0000];
+            800B9F34	beq    v1, ff, Lb9f44 [$800b9f44]
+            V0 = A0 < 0009;
+            800B9F3C	bne    v0, zero, Lb9f5c [$800b9f5c]
+            A0 = A3 + window_id;
+
+            Lb9f44:	; 800B9F44
+            V0 = w[801162b0 + window_id * 4] + 1;
+            [801162b0 + window_id * 4] = w(V0);
+            800B9F54	j      Lba894 [$800ba894]
+            [A2 + 0000] = h(0);
+
+            Lb9f5c:	; 800B9F5C
+            A0 = A0 << 04;
+            V0 = h[80083288 + A0];
+            V1 = bu[A1 + 0000];
+            V0 = 801162b4 + window_id * 100 + V0;
+            [V0 + 0000] = b(V1);
+            V1 = 80083274 + A0;
+            [V1 + 0014] = h(hu[80083288 + A0] + 1);
+            [A2 + 0000] = h(hu[A2 + 0000] + 1);
+            [V1 + 0012] = h(hu[80083286 + A0] + 1);
+            V1 = 801162a0 + A3;
+            [V1] = h(hu[V1] - letter_cost);
+            800BA654	j      Lba894 [$800ba894]
+        }
+
+        case f3 f4 f5:
+        {
+            V1 = w[801162b0 + window_id * 4];
             V0 = bu[V1 + 0000];
-            800B9FE0	nop
-            AT = 8009d29e;
-            AT = AT + V0;
-            A0 = bu[AT + 0000];
+            A0 = bu[8009d29e + V0];
             S0 = 00ff;
             800B9FF8	bne    a0, s0, Lba0a0 [$800ba0a0]
-            A2 = S3 << 01;
+            A2 = window_id << 01;
             800BA000	lui    v0, $8011
             V0 = V0 + 62ac;
             A1 = A2 + V0;
@@ -1090,550 +1052,317 @@ if( V0 != 0 )
             800BA010	nop
             V0 = V0 < 0009;
             800BA018	bne    v0, zero, Lba028 [$800ba028]
-            A0 = A2 + S3;
+            A0 = A2 + window_id;
             800BA020	j      Lba0e8 [$800ba0e8]
             V0 = V1 + 0001;
 
             Lba028:	; 800BA028
             A0 = A0 << 04;
-            800BA02C	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + A0;
-            V0 = h[AT + 0000];
-            V1 = 00d2;
-            V0 = S4 + V0;
-            [V0 + 0000] = b(V1);
-            800BA048	lui    v1, $8008
-            V1 = V1 + 3274;
-            800BA050	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + A0;
-            V0 = hu[AT + 0000];
-            V1 = A0 + V1;
-            V0 = V0 + 0001;
+            V0 = h[80083288 + A0];
+            V0 = 801162b4 + window_id * 100 + V0;
+            [V0 + 0000] = b(d2);
+            V0 = hu[80083288 + A0] + 1;
+            V1 = 80083274 + A0;
             [V1 + 0014] = h(V0);
-            V0 = hu[A1 + 0000];
-            800BA070	nop
-            V0 = V0 + 0001;
+            V0 = hu[A1 + 0000] + 1;
             [A1 + 0000] = h(V0);
-            800BA07C	lui    at, $8008
-            AT = AT + 3286;
-            AT = AT + A0;
-            V0 = hu[AT + 0000];
-            800BA08C	nop
-            V0 = V0 + 0001;
+            V0 = hu[80083286 + A0] + 1;
             [V1 + 0012] = h(V0);
-            800BA098	j      Lba648 [$800ba648]
-            V1 = A2 + S7;
+            V1 = 801162a0 + A2;
+            [V1] = h(hu[V1] - letter_cost);
+            800BA654	j      Lba894 [$800ba894]
 
             Lba0a0:	; 800BA0A0
             800BA0A0	jal    $800257cc
-            800BA0A4	nop
-            800BA0A8	lui    v1, $8011
-            V1 = V1 + 62ac;
-            A2 = S3 << 01;
+
+            V1 = 801162ac;
+            A2 = window_id << 01;
             A1 = A2 + V1;
             A0 = h[A1 + 0000];
-            800BA0BC	nop
             V1 = V0 + A0;
             V0 = bu[V1 + 0000];
             800BA0C8	nop
             800BA0CC	beq    v0, s0, Lba0dc [$800ba0dc]
             V0 = A0 < 0009;
             800BA0D4	bne    v0, zero, Lba0f4 [$800ba0f4]
-            A0 = A2 + S3;
+            A0 = A2 + window_id;
 
             Lba0dc:	; 800BA0DC
-            V0 = w[S2 + 0000];
-            800BA0E0	nop
-            V0 = V0 + 0001;
+            V0 = w[801162b0 + window_id * 4] + 1;
 
             Lba0e8:	; 800BA0E8
-            [S2 + 0000] = w(V0);
+            [801162b0 + window_id * 4] = w(V0);
             800BA0EC	j      Lba894 [$800ba894]
             [A1 + 0000] = h(0);
 
             Lba0f4:	; 800BA0F4
             A0 = A0 << 04;
-            800BA0F8	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + A0;
-            V0 = h[AT + 0000];
+            V0 = h[80083288 + A0];
             V1 = bu[V1 + 0000];
-            V0 = S4 + V0;
+            V0 = 801162b4 + window_id * 100 + V0;
             [V0 + 0000] = b(V1);
-            800BA114	lui    v1, $8008
-            V1 = V1 + 3274;
-            800BA11C	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + A0;
-            V0 = hu[AT + 0000];
-            V1 = A0 + V1;
-            V0 = V0 + 0001;
-            [V1 + 0014] = h(V0);
-            V0 = hu[A1 + 0000];
-            800BA13C	nop
-            V0 = V0 + 0001;
-            [A1 + 0000] = h(V0);
-            800BA148	lui    at, $8008
-            AT = AT + 3286;
-            AT = AT + A0;
-            V0 = hu[AT + 0000];
-            800BA158	nop
-            V0 = V0 + 0001;
-            [V1 + 0012] = h(V0);
-            800BA164	j      Lba648 [$800ba648]
-            V1 = A2 + S7;
-
-            800BA16C fe
-
-            V1 = S3 << 01;
-            V1 = V1 + S3;
-            V1 = V1 << 04;
-            A0 = w[S2 + 0000];
-            800BA17C	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + V1;
-            V0 = h[AT + 0000];
-            A0 = bu[A0 + 0000];
-            V0 = S4 + V0;
-            [V0 + 0000] = b(A0);
-            V0 = w[S2 + 0000];
-            800BA19C	nop
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
-            800BA1A8	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + V1;
-            V0 = hu[AT + 0000];
-            800BA1B8	nop
-            V0 = V0 + 0001;
-            800BA1C0	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + V1;
-            [AT + 0000] = h(V0);
-            V0 = w[S2 + 0000];
-            800BA1D4	nop
-            V0 = bu[V0 + 0000];
-            800BA1DC	nop
-            800BA1E0	addiu  v1, v0, $ff2e (=-$d2)
-            V0 = V1 < 0018;
-            800BA1E8	beq    v0, zero, Lba80c [$800ba80c]
-            V0 = V1 << 02;
-            800BA1F0	lui    at, $800a
-            AT = AT + 0a48;
-            AT = AT + V0;
-            V0 = w[AT + 0000];
-            800BA200	nop
-            800BA204	jr     v0 
-            800BA208	nop
-
-            A0 = S3 << 01;
-            V1 = A0 + S3;
-            V1 = V1 << 04;
-            800BA218	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + V1;
-            V0 = hu[AT + 0000];
-            800BA228	nop
-            800BA22C	addiu  v0, v0, $ffff (=-$1)
-            800BA230	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + V1;
-            [AT + 0000] = h(V0);
-            V0 = w[S2 + 0000];
-            800BA244	nop
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
-            800BA250	j      Lba2a0 [$800ba2a0]
-            V0 = 000d;
-            A0 = S3 << 01;
-            V1 = A0 + S3;
-            V1 = V1 << 04;
-            800BA264	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + V1;
-            V0 = hu[AT + 0000];
-            800BA274	nop
-            800BA278	addiu  v0, v0, $ffff (=-$1)
-            800BA27C	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + V1;
-            [AT + 0000] = h(V0);
-            V0 = w[S2 + 0000];
-            800BA290	nop
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
-            V0 = 000b;
-
-            Lba2a0:	; 800BA2A0
-            AT = 80083274 + 0 * 30 + 2c;
-            AT = AT + V1;
-            [AT + 0000] = h(V0);
-            V0 = 0001;
-
-            Lba2b4:	; 800BA2B4
-            800BA2B4	lui    at, $8011
-            AT = AT + 629c;
-            AT = AT + A0;
-            [AT + 0000] = h(V0);
-            A0 = A0 + S7;
-            800BA2C8	j      Lba8c0 [$800ba8c0]
-            [A0 + 0000] = h(0);
-            T1 = S3 << 01;
-            V0 = T1 + S3;
-            A3 = V0 << 04;
-            V0 = 80083274;
-            V1 = hu[80083288 + A3];
-            T0 = A3 + V0;
-            800BA2F8	addiu  v1, v1, $ffff (=-$1)
-            [T0 + 0014] = h(V1);
-            T2 = w[S2 + 0000];
-            800BA304	nop
-            800BA308	addiu  v0, t2, $ffff (=-$1)
-            [S2 + 0000] = w(V0);
-            800BA310	lui    v0, $8011
-            V0 = V0 + 63c4;
-            A2 = T1 + V0;
-            A0 = h[A2 + 0000];
-            800BA320	addiu  v0, zero, $ffff (=-$1)
-            800BA324	bne    a0, v0, Lba3fc [$800ba3fc]
-            V0 = S3 << 03;
-            800BA32C	jal    funcbae60 [$800bae60]
-            A0 = S3;
-
-            S0 = V0;
-            if( bu[8009d820] & 3 )
-            {
-                A0 = 800a09c8; // "mpara="
-                A1 = S0 & ffff;
-                A2 = 4;
-                funcb8750();
-            }
-
-            Lba360:	; 800BA360
-            V0 = w[S2 + 0000];
-            800BA364	nop
-            V1 = bu[V0 + 0001];
-            V0 = 00df;
-            800BA370	beq    v1, v0, Lba3dc [$800ba3dc]
-            V0 = V1 < 00e0;
-            800BA378	beq    v0, zero, Lba390 [$800ba390]
-            V0 = 00de;
-            800BA380	beq    v1, v0, Lba3a4 [$800ba3a4]
-            A0 = S0 & ffff;
-            800BA388	j      Lba590 [$800ba590]
-            800BA38C	nop
-
-            Lba390:	; 800BA390
-            V0 = 00e1;
-            800BA394	beq    v1, v0, Lba3c0 [$800ba3c0]
-            A0 = S0 & ffff;
-            800BA39C	j      Lba590 [$800ba590]
-            800BA3A0	nop
-
-            Lba3a4:	; 800BA3A4
-            V0 = S3 << 03;
-            800BA3A8	lui    a1, $8011
-            A1 = A1 + 63c8;
-            800BA3B0	jal    funcbb350 [$800bb350]
-            A1 = V0 + A1;
-            800BA3B8	j      Lba590 [$800ba590]
-            800BA3BC	nop
-
-            Lba3c0:	; 800BA3C0
-            V0 = S3 << 03;
-            800BA3C4	lui    a1, $8011
-            A1 = A1 + 63c8;
-            800BA3CC	jal    funcbb450 [$800bb450]
-            A1 = V0 + A1;
-            800BA3D4	j      Lba590 [$800ba590]
-            800BA3D8	nop
-
-            Lba3dc:	; 800BA3DC
-            A0 = S0 & ffff;
-            V0 = S3 << 03;
-            800BA3E4	lui    a1, $8011
-            A1 = A1 + 63c8;
-            800BA3EC	jal    funcbb568 [$800bb568]
-            A1 = V0 + A1;
-            800BA3F4	j      Lba590 [$800ba590]
-            800BA3F8	nop
-
-            Lba3fc:	; 800BA3FC
-            800BA3FC	lui    v1, $8011
-            V1 = V1 + 63c8;
-            V0 = V0 + V1;
-            A1 = V0 + A0;
-            V1 = bu[A1 + 0000];
-            V0 = 00ff;
-            800BA414	beq    v1, v0, Lba424 [$800ba424]
-            V0 = A0 < 0008;
-            800BA41C	bne    v0, zero, Lba5e4 [$800ba5e4]
-            800BA420	nop
-
-            Lba424:	; 800BA424
-            V0 = T2 + 0001;
-            [S2 + 0000] = w(V0);
-            800BA42C	addiu  v0, zero, $ffff (=-$1)
-            800BA430	lui    v1, $8011
-            V1 = V1 + 63c0;
-            V1 = T1 + V1;
-            800BA43C	j      Lba5a0 [$800ba5a0]
-            [A2 + 0000] = h(V0);
-            T1 = S3 << 01;
-            V0 = T1 + S3;
-            A3 = V0 << 04;
-            800BA450	lui    v0, $8008
-            V0 = V0 + 3274;
-            800BA458	lui    at, $8008
-            AT = AT + 3288;
-            AT = AT + A3;
-            V1 = hu[AT + 0000];
-            T0 = A3 + V0;
-            800BA46C	addiu  v1, v1, $ffff (=-$1)
-            [T0 + 0014] = h(V1);
-            A0 = w[S2 + 0000];
-            800BA478	nop
-            800BA47C	addiu  v0, a0, $ffff (=-$1)
-            [S2 + 0000] = w(V0);
-            800BA484	lui    v0, $8011
-            V0 = V0 + 63c4;
-            A2 = T1 + V0;
-            A1 = h[A2 + 0000];
-            800BA494	addiu  v0, zero, $ffff (=-$1)
-            800BA498	bne    a1, v0, Lba5b4 [$800ba5b4]
-            V0 = S3 << 03;
-            S0 = bu[A0 + 0001];
-            V0 = bu[A0 + 0002];
-            S1 = bu[A0 + 0003];
-            V1 = bu[A0 + 0004];
-            V0 = V0 << 08;
-            S0 = S0 | V0;
-            V1 = V1 << 08;
-            S1 = S1 | V1;
-
-            if( bu[8009d820] & 3 )
-            {
-                A0 = 800a09d0; // "gstr="
-                A1 = S0;
-                A2 = 4;
-                funcb8750();
-
-                A0 = 800a09d8; // "glen="
-                A1 = S1;
-                A2 = 4;
-                funcb8750();
-            }
-
-            A1 = S1 & ffff;
-            800BA514	beq    a1, zero, Lba56c [$800ba56c]
-            A2 = 0;
-            800BA51C	lui    v1, $8011
-            V1 = V1 + 63c8;
-            V0 = S3 << 03;
-            T0 = V0 + V1;
-            A3 = S0 & ffff;
-            T1 = 8009d288;
-
-            loopba538:	; 800BA538
-            V1 = A2 << 10;
-            A0 = A2 + 0001;
-            A2 = A0;
-            V1 = V1 >> 10;
-            V0 = A3 + V1;
-            V0 = V0 + T1;
-            V1 = T0 + V1;
-            A0 = A0 << 10;
-            A0 = A0 >> 10;
-            V0 = bu[V0 + 0000];
-            A0 = A0 < A1;
-            800BA564	bne    a0, zero, loopba538 [$800ba538]
-            [V1 + 0000] = b(V0);
-
-            Lba56c:	; 800BA56C
-            800BA56C	lui    v0, $8011
-            V0 = V0 + 63c8;
-            V1 = S3 << 03;
-            V1 = V1 + V0;
-            V0 = A2 << 10;
-            V0 = V0 >> 10;
-            V1 = V1 + V0;
-            V0 = 00ff;
-            [V1 + 0000] = b(V0);
-
-            Lba590:	; 800BA590
-            800BA590	lui    v0, $8011
-            V0 = V0 + 63c4;
-            V1 = S3 << 01;
-            V1 = V1 + V0;
-
-            Lba5a0:	; 800BA5A0
-            V0 = hu[V1 + 0000];
-            800BA5A4	nop
-            V0 = V0 + 0001;
-            800BA5AC	j      Lba894 [$800ba894]
-            [V1 + 0000] = h(V0);
-
-            Lba5b4:	; 800BA5B4
-            800BA5B4	lui    v1, $8011
-            V1 = V1 + 63c8;
-            V0 = V0 + V1;
-            A1 = V0 + A1;
-            V1 = bu[A1 + 0000];
-            V0 = 00ff;
-            800BA5CC	bne    v1, v0, Lba5e4 [$800ba5e4]
-            V0 = A0 + 0005;
-            [S2 + 0000] = w(V0);
-            800BA5D8	addiu  v0, zero, $ffff (=-$1)
-            800BA5DC	j      Lba894 [$800ba894]
-            [A2 + 0000] = h(V0);
-
-            Lba5e4:	; 800BA5E4
-            800BA5E4	lui    at, $8008
-            AT = 80083288;
-            AT = AT + A3;
-            V0 = h[AT + 0000];
-            V1 = bu[A1 + 0000];
-            V0 = S4 + V0;
-            [V0 + 0000] = b(V1);
-            V0 = hu[80083288 + A3] + 1;
-            [T0 + 0014] = h(V0);
-            V0 = hu[A2 + 0000] + 1;
-            [A2 + 0000] = h(V0);
-            V0 = hu[80083286 + A3];
-            V1 = T1 + S7;
-            V0 = V0 + 0001;
-            [T0 + 0012] = h(V0);
-
-            Lba648:	; 800BA648
-            V0 = hu[V1 + 0000] - S5;
-            800BA654	j      Lba894 [$800ba894]
-            [V1 + 0000] = h(V0);
-            V1 = S3 << 01;
-            V1 = V1 + S3;
-            V1 = V1 << 04;
-            A0 = w[S2 + 0000];
-            V0 = h[80083288 + V1];
-            A0 = bu[A0 + 0000];
-            V0 = S4 + V0;
-            [V0 + 0000] = b(A0);
-            V0 = w[S2 + 0000];
-            800BA68C	nop
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
-            V0 = hu[80083288 + V1] + 1;
-            [80083288 + V1] = h(V0);
-            800BA6C0	j      Lba894 [$800ba894]
-            800BA6C4	nop
-            A1 = S3 << 01;
-            A0 = A1 + S3;
-            A0 = A0 << 04;
-            V0 = 0003;
-            AT = 80083274 + 0 * 30 + 2c;
-            AT = AT + A0;
-            [AT + 0000] = h(V0);
-            V0 = w[S2 + 0000];
-            A2 = 80083274;
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
-            V0 = hu[80083288 + A0];
-            A2 = A0 + A2;
-            V0 = V0 + 0001;
-            [A2 + 0014] = h(V0);
-            V0 = w[S2 + 0000];
-            V1 = 801163d0;
-            V0 = bu[V0 + 0000];
-            A1 = A1 + V1;
-            [A1 + 0000] = h(V0);
-            V0 = w[S2 + 0000];
-            800BA734	nop
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
             V0 = hu[80083288 + A0] + 1;
-            [A2 + 0014] = h(V0);
-            V0 = w[S2 + 0000];
-            V0 = bu[V0 + 0000];
-            V1 = hu[A1 + 0000];
-            V0 = V0 << 08;
-            V1 = V1 | V0;
-            [A1 + 0000] = h(V1);
-            V0 = w[S2 + 0000];
-            800BA77C	nop
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
-            V0 = hu[80083288 + A0];
-            V0 = V0 + 0001;
-            800BA7A0	j      Lba8c0 [$800ba8c0]
-            [A2 + 0014] = h(V0);
-
-            800BA7A8 fa fb fc fd
-
-            V1 = S3 << 01;
-            V1 = V1 + S3;
-            V1 = V1 << 04;
-            A0 = w[S2 + 0000];
-            V0 = h[80083288 + V1];
-            A0 = bu[A0 + 0000];
-            V0 = S4 + V0;
-            [V0 + 0000] = b(A0);
-            V0 = w[S2 + 0000];
-            800BA7D8	nop
-            V0 = V0 + 0001;
-            [S2 + 0000] = w(V0);
-            V0 = hu[80083288 + V1];
-            800BA7F4	nop
-            V0 = V0 + 0001;
-            AT = 80083288;
-            AT = AT + V1;
-            [AT + 0000] = h(V0);
-
-            800BA80C f6 f7 f8 f9
+            V1 = 80083274 + A0;
+            [V1 + 0014] = h(V0);
+            V0 = hu[A1 + 0000] + 1;
+            [A1 + 0000] = h(V0);
+            V0 = hu[80083286 + A0] + 1;
+            [V1 + 0012] = h(V0);
+            V1 = 801162a0 + A2;
+            [V1] = h(hu[V1] - letter_cost);
+            800BA654	j      Lba894 [$800ba894]
         }
 
-        Lba80c:	; 800BA80C
-        A1 = S3 << 01;
-        A0 = A1 + S3;
-        A0 = A0 << 04;
-        V1 = w[S2 + 0000];
-        AT = 80083288;
-        AT = AT + A0;
-        V0 = h[AT + 0000];
-        V1 = bu[V1 + 0000];
-        V0 = S4 + V0;
-        [V0 + 0000] = b(V1);
-        V0 = w[S2 + 0000];
-        V1 = 80083274;
-        V0 = V0 + 0001;
-        [S2 + 0000] = w(V0);
-        AT = 80083288;
-        AT = AT + A0;
-        V0 = hu[AT + 0000];
-        V1 = A0 + V1;
-        V0 = V0 + 0001;
-        [V1 + 0014] = h(V0);
-        AT = 80083286;
-        AT = AT + A0;
-        V0 = hu[AT + 0000];
-        A1 = A1 + S7;
-        V0 = V0 + 0001;
-        [V1 + 0012] = h(V0);
-        V0 = hu[A1 + 0000];
-        800BA888	nop
-        V0 = V0 - S5;
-        [A1 + 0000] = h(V0);
+        case fe:
+        {
+            A0 = w[801162b0 + window_id * 4];
+            V0 = h[80083288 + window_id * 30];
+            A0 = bu[A0];
+            [801162b4 + window_id * 100 + V0] = b(A0);
+            [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+            [80083288 + window_id * 30] = h(hu[80083288 + window_id * 30] + 1);
+            V0 = w[801162b0 + window_id * 4];
 
-        Lba894:	; 800BA894
-        A2 = window_id << 10;
-        V0 = A2 >> 0f;
-        V0 = V0 + S7;
-        V1 = h[V0 + 0000];
-        V0 = S5 << 10;
-        V0 = V0 >> 10;
-        V0 = V0 < V1;
-    800BA8B8	bne    v0, zero, Lb9d94 [$800b9d94]
+            switch( bu[V0] )
+            {
+                case dc:
+                {
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1); // size of dst
+                    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1); // src ptr
+                    [80083274 + window_id * 30 + 2c] = h(d); // state "pause string output"
+
+                    [8011629c + window_id * 2] = h(1);
+                    [801162a0 + window_id * 2] = h(0);
+
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    [801162b4 + window_id * 100 + V0] = b(-1); // write end of str
+                    return;
+                }
+
+                case e0:
+                {
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1); // size of dst
+                    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1); // src ptr
+                    [80083274 + window_id * 30 + 2c] = h(b); // state "pause string output"
+
+                    [8011629c + window_id * 2] = h(1);
+                    [801162a0 + window_id * 2] = h(0);
+
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    [801162b4 + window_id * 100 + V0] = b(-1);
+                    return;
+                }
+
+                case de df e1:
+                {
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1); // size of dst
+                    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] - 1); // src ptr
+
+                    A0 = h[801163c4 + window_id * 2];
+                    if( A0 == -1 )
+                    {
+                        A0 = window_id;
+                        800BA32C	jal    funcbae60 [$800bae60]
+                        S0 = V0;
+
+                        if( bu[8009d820] & 3 )
+                        {
+                            A0 = 800a09c8; // "mpara="
+                            A1 = S0 & ffff;
+                            A2 = 4;
+                            funcb8750();
+                        }
+
+                        V0 = w[801162b0 + window_id * 4];
+                        V1 = bu[V0 + 1];
+                        if( V1 == fe )
+                        {
+                            A0 = S0 & ffff;
+                            A1 = 801163c8 + window_id * 8;
+                            800BA3B0	jal    funcbb350 [$800bb350]
+                        }
+                        else if( V1 == df )
+                        {
+                            A0 = S0 & ffff;
+                            A1 = 801163c8 + window_id * 8;
+                            800BA3EC	jal    funcbb568 [$800bb568]
+                        }
+                        else if( V1 == e1 )
+                        {
+                            A0 = S0 & ffff;
+                            A1 = 801163c8 + window_id * 8;
+                            800BA3CC	jal    funcbb450 [$800bb450]
+                        }
+
+                        [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
+                    }
+                    else
+                    {
+                        if( ( bu[801163c8 + window_id * 8 + A0] != ff ) && ( A0 < 8 ) )
+                        {
+                            V0 = h[80083274 + window_id * 30 + 14];
+                            [801162b4 + window_id * 100 + V0] = b(bu[801163c8 + window_id * 8 + A0]);
+                            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                            [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
+                            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                            [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
+                        }
+                        else
+                        {
+                            [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+                            [801163c4 + window_id * 2] = h(-1);
+                            [801163c0 + window_id * 2] = h(hu[801163c0 + window_id * 2] + 1);
+                        }
+                    }
+                    800BA5AC	j      Lba894 [$800ba894]
+                }
+
+                case e2:
+                {
+                    V1 = hu[80083288 + window_id * 30] - 1;
+                    T0 = 80083274 + window_id * 30;
+                    [T0 + 14] = h(V1);
+                    A0 = w[801162b0 + window_id * 4];
+                    800BA47C	addiu  v0, a0, $ffff (=-$1)
+                    [801162b0 + window_id * 4] = w(V0);
+                    A2 = 801163c4 + window_id * 2;
+                    A1 = h[A2 + 0000];
+                    800BA494	addiu  v0, zero, $ffff (=-$1)
+                    800BA498	bne    a1, v0, Lba5b4 [$800ba5b4]
+                    V0 = window_id << 03;
+                    S0 = bu[A0 + 0001];
+                    V0 = bu[A0 + 0002];
+                    S1 = bu[A0 + 0003];
+                    V1 = bu[A0 + 0004];
+                    V0 = V0 << 08;
+                    S0 = S0 | V0;
+                    V1 = V1 << 08;
+                    S1 = S1 | V1;
+
+                    if( bu[8009d820] & 3 )
+                    {
+                        A0 = 800a09d0; // "gstr="
+                        A1 = S0;
+                        A2 = 4;
+                        funcb8750();
+
+                        A0 = 800a09d8; // "glen="
+                        A1 = S1;
+                        A2 = 4;
+                        funcb8750();
+                    }
+
+                    A1 = S1 & ffff;
+                    800BA514	beq    a1, zero, Lba56c [$800ba56c]
+                    A2 = 0;
+                    V1 = 801163c8;
+                    V0 = window_id << 03;
+                    T0 = V0 + V1;
+                    A3 = S0 & ffff;
+                    T1 = 8009d288;
+
+                    loopba538:	; 800BA538
+                        V1 = A2 << 10;
+                        A0 = A2 + 0001;
+                        A2 = A0;
+                        V1 = V1 >> 10;
+                        V0 = A3 + V1;
+                        V0 = V0 + T1;
+                        V1 = T0 + V1;
+                        A0 = A0 << 10;
+                        A0 = A0 >> 10;
+                        V0 = bu[V0 + 0000];
+                        [V1 + 0000] = b(V0);
+                        A0 = A0 < A1;
+                    800BA564	bne    a0, zero, loopba538 [$800ba538]
+
+
+                    Lba56c:	; 800BA56C
+                    V0 = 801163c8;
+                    V1 = window_id << 03;
+                    V1 = V1 + V0;
+                    V0 = A2 << 10;
+                    V0 = V0 >> 10;
+                    V1 = V1 + V0;
+                    V0 = 00ff;
+                    [V1 + 0000] = b(V0);
+
+                    Lba590:	; 800BA590
+                    [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
+                    800BA5AC	j      Lba894 [$800ba894]
+
+                    Lba5b4:	; 800BA5B4
+                    A1 = 801163c8 + V0 + A1;
+                    V1 = bu[A1 + 0000];
+                    800BA5CC	bne    v1, ff, Lba5e4 [$800ba5e4]
+                    V0 = A0 + 0005;
+                    [801162b0 + window_id * 4] = w(V0);
+                    800BA5D8	addiu  v0, zero, $ffff (=-$1)
+                    800BA5DC	j      Lba894 [$800ba894]
+                    [A2 + 0000] = h(V0);
+
+                    Lba5e4:	; 800BA5E4
+                    V0 = h[80083288 + window_id * 30];
+                    [801162b4 + window_id * 100 + V0] = b(bu[A1]);
+                    [T0 + 14] = h(hu[80083288 + window_id * 30] + 1);
+                    [A2] = h(hu[A2] + 1);
+                    [T0 + 12] = h(hu[80083286 + window_id * 30] + 1);
+                    V1 = 801162a0 + window_id * 2;
+                    [V1] = h(hu[V1] - letter_cost);
+                    800BA654	j      Lba894 [$800ba894]
+                }
+
+                case d2-db e9:
+                {
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    A0 = w[801162b0 + window_id * 4];
+                    [801162b4 + window_id * 100 + V0] = b(bu[A0]);
+                    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                    800BA6C0	j      Lba894 [$800ba894]
+                }
+
+                case dd:
+                {
+                    [80083274 + window_id * 30 + 2c] = h(3); // state "pause string output"
+                    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+                    V0 = w[801162b0 + window_id * 4];
+                    [801163d0 + window_id * 2] = h(hu[V0]); // wait value
+                    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 2);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2); // bytes in window string
+
+                    V0 = h[80083288 + window_id * 30];
+                    [801162b4 + window_id * 100 + V0] = b(-1);
+                    return;
+                }
+            }
+        }
+
+        case fa fb fc fd:
+        {
+            A0 = w[801162b0 + window_id * 4];
+            V0 = h[80083288 + window_id * 30];
+            [801162b4 + window_id * 100 + V0] = b(bu[A0]);
+            [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+            [80083288 + window_id * 30] = h(hu[80083288 + window_id * 30] + 1);
+        }
+// fe
+800BA80C e3-e8
+
+        800BA80C f6 f7 f8 f9
+    }
+
+    V1 = w[801162b0 + window_id * 4];
+    V0 = h[80083288 + window_id * 30];
+    [801162b4 + window_id * 100 + V0] = b(bu[V1]);
+    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+    [80083274 + window_id * 30 + 14] = h(hu[80083288 + window_id * 30] + 1);
+    [80083274 + window_id * 30 + 12] = h(hu[80083286 + window_id * 30] + 1);
+    [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
+
+    Lba894:	; 800BA894
 }
-Lba8c0:	; 800BA8C0
+
 V0 = h[80083288 + window_id * 30];
 [801162b4 + window_id * 100 + V0] = b(-1);
 ////////////////////////////////
