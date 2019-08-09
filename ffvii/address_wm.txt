@@ -88,6 +88,8 @@
     + 2 [][]     y.
     + 4 [][]     z.
 
+800c84c8 [][][][] store prev buttons state here.
+
 800c84f4 draw env struct for buffer 1.
 800c8550 display env struct for buffer 1.
 800c8564 [][][][] OT for dialog render for buffer 1.
@@ -143,39 +145,45 @@
 +0c [][][][] x
 +10 [][][][] y
 +14 [][][][] z
-+18 [][][][] ???
-+1c [][][][] X
-+20 [][][][] Y
-+24 [][][][] Z
-+28 [][][][] ???
++18 [][]     ???
++1a [][]     terrain id.
++1c [][][][] x
++20 [][][][] y
++24 [][][][] z
++28 [][]     ???
++2a [][]     terrain id.
++2c array of script call stack (0x4 items 0x4 size).
+    + 0 [][]     script position.
+    + 2 []       wait value.
+    + 3 []       priority.
 +3c [][]     rotation.
 +3e [][]     init with 0.
 +40 [][]     rotation of model (set using opcode 304).
 +42 [][]     original Y pos here (before modification).
 +44 [][]     y offset.
 +46 [][]     current script position (multiplied by 2 t get real because we read 2 bytes at once).
-+4a [][]     init with 0.
++4a [][]     terrain id.
 +4c [][]     direction of movement (set using opcode 304 328).
 +50 []       model id.
-                0x00 cloud
-                0x01 tifa
-                0x02 cid
-                0x03 highwind
-                0x04 wild chocobo
-                0x05 tiny bronco
-                0x06 buggy
-                0x07 canon in juno
-                0x08 cargo ship
-                0x09
-                0x0a
-                0x0b ultimate weapon
-                0x0c phoenix
-                0x0d submarine (colours set independantly)
-                0x0e gold saucer
-                0x0f rocket in rocket town
+                0x00 0x0001 cloud
+                0x01 0x0002 tifa
+                0x02 0x0004 cid
+                0x03 0x0008 highwind
+                0x04 0x0010 wild chocobo
+                0x05 0x0020 tiny bronco
+                0x06 0x0040 buggy
+                0x07 0x0080 canon in juno
+                0x08 0x0100 cargo ship
+                0x09 0x0200
+                0x0a 0x0400
+                0x0b 0x0800 ultimate weapon
+                0x0c 0x1000 phoenix
+                0x0d 0x2000 submarine (colours set independantly)
+                0x0e 0x4000 gold saucer
+                0x0f 0x8000 rocket in rocket town
                 0x10 rocket launch pad
-                0x11
-                0x12
+                0x11 
+                0x12 
                 0x13 player chocobo (colours set independantly)
                 0x14 forgotten city animation displayed???
                 0x15 snow pole 1
@@ -183,27 +191,30 @@
                 0x17 snow pole 3
                 0x18 north crater dome
                 0x19 ancient forest
-                0x1a
-                0x1b
-                0x1c
+                0x1a 
+                0x1b 
+                0x1c 
                 0x1d ruby weapon
                 >0x20 ???
 +51 []       some flags.
                 0x01 - set flag if +c or +14 pos != +1c or +24 pos. Else remove flag.
+                0x08 - disable something.
+                0x10 - disable script. If this is 0 then run script.
                 0x20 - animation loop (maybe indicates loop or indicates play once).
                 0x40 - use walkmesh collision.
                 0x80 - set if position was changed and needs to be recalculated.
 +52 []       some model id.
 +53 []       init with 0 when start animation. Maybe current frame.
-+54 []       ???
++54 []       script call stack position.
 +55 []       move speed.
 +56 []       wait value.
-+57 []       ???
++57 []       current script priority.
 +58 []       ???
 +5c []       we discrease +44 by this value during movement.
 +5d []       animation id.
 +5e []       init with -1.
 +5f []       we increase +10 by this value during movement.
++60 unknown block
 +90 start of packet for buffer 1.
 +a8 start of packet for buffer 2
     +03 []       store 0x09 here.
@@ -244,7 +255,7 @@
 8010ad98 [][][][] init with 8010ada4.
 8010ad9c [][][][] init with 8010ada4.
 8010ada0 [][][][] init with 8010ada4.
-8010ada4 array of something script related (0x40 items 0x size).
+8010ada4 array of temp script bank for store data (0x40 items 0x1 size).
 
 8010ade4 [][][][] pointer to entity struct. Init with 0.
 8010ade8 [][][][] init with 0.
@@ -363,10 +374,11 @@
 801162b4 array of dialog copied text (0x100 size).
 801162c0 array of something (0x2 size).
 801162c4 array of something (0x2 size).
-
 801163c4 array of stored digit copy position for dialog (0x2 size).
 801163c8 array of stored digit string for dialog (0x8 size).
 801163d0 array of dialog pause value (0x2 size).
+
+801163d4 [][][][] ???
 
 801163e0 stack of script 1 byte values.
 801163e8 [][][][] pointer to current 801163e0 stack position.

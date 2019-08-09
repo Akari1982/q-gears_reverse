@@ -422,7 +422,7 @@
 // funca9194
 800A9194-800A91A0
 ////////////////////////////////
-// funca91a4
+// wm_is_pc_entity_model_in_mask
 800A91A4-800A91DC
 ////////////////////////////////
 // funca91e0
@@ -503,10 +503,10 @@
 // funca9a04
 800A9A04-800A9A20
 ////////////////////////////////
-// funca9a24
+// wm_set_pc_entity_terrain_data
 800A9A24-800A9A40
 ////////////////////////////////
-// funca9a44
+// wm_get_pc_entity_terrain_id
 800A9A44-800A9A6C
 ////////////////////////////////
 // funca9a70
@@ -625,28 +625,28 @@
 // wm_script_init_variables
 800AB5E4-800AB6E0
 ////////////////////////////////
-// funcab6e4
+// wm_script_run_function
 800AB6E4-800AB8E8
 ////////////////////////////////
-// funcab8ec
+// wm_script_disable_for_pc_entity
 800AB8EC-800AB928
 ////////////////////////////////
-// funcab92c
+// wm_script_run_system_function_on_active_entity
 800AB92C-800AB984
 ////////////////////////////////
-// funcab988
+// wm_script_run_model_function_on_entity_with_model_id
 800AB988-800ABA14
 ////////////////////////////////
-// funcaba18
+// wm_script_run_system_function_on_system_entity
 800ABA18-800ABA74
 ////////////////////////////////
-// funcaba78
+// wm_script_run_mesh_function_on_system_entity
 800ABA78-800ABB20
 ////////////////////////////////
 // wm_script_pop_stack
 800ABB24-800ABE54
 ////////////////////////////////
-// funcabe58
+// wm_script_write_bank
 800ABE58-800ABFBC
 ////////////////////////////////
 // wm_script_opcode_000_handle
@@ -667,16 +667,16 @@
 // wm_script_run_all
 800AD788-800AD800
 ////////////////////////////////
+// funcad804
+800AD804-800AD924
+////////////////////////////////
+// wm_script_is_any_script_runs
+800AD928-800AD96C
+////////////////////////////////
 
 
 
 // WORLD.BIN_functions.cpp
-////////////////////////////////
-// funcad804
-800AD804-800AD924
-////////////////////////////////
-// funcad928
-800AD928-800AD96C
 ////////////////////////////////
 // funcad970
 800AD970-800ADA04

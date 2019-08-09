@@ -547,22 +547,23 @@ return 0;
 ////////////////////////////////
 // wm_is_terrain_passable_by_model()
 
-terrain_id = A0;
+terrain_data = A0;
 model_id = A1;
-S2 = terrain_id & e0;
-V0 = S2 ^ e0;
-S2 = 0 < V0;
+S2 = 0 < ((terrain_data & e0) ^ e0);
 
-S1 = 0;
+on_bridge = 0;
 
-funca9a44(); // get some +4a from PC entity
+wm_get_pc_entity_terrain_id();
 
+// pc entity can't go off the bridge, inly via "Bridgehead"
+// 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
+// 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
 if( ( V0 == d ) || ( V0 == e ) )
 {
     wm_get_model_id_from_pc_entity();
     if( V0 == model_id )
     {
-        S1 = 1;
+        on_bridge = 1;
     }
 }
 
@@ -570,12 +571,12 @@ switch( model_id )
 {
     case 0-2: // cloud tifa cid
     {
-        if( S1 != 0 )
+        if( on_bridge != 0 )
         {
             // 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
             // 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
             // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-            return (20006000 >> (terrain_id & 1f)) & 1;
+            return (20006000 >> (terrain_data & 1f)) & 1;
         }
         else
         {
@@ -596,7 +597,7 @@ switch( model_id )
             // 0x10000000 28 Gold Saucer Desert Border    Narrow strip of land surrounding the golden saucer desert. Probably related to the "quicksand" script.
             // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
             // 0x40000000 30 Back Entrance                Special type that can be set unwalkable from the script.
-            return (721b6f83 >> (terrain_id & 1f)) & 1;
+            return (721b6f83 >> (terrain_data & 1f)) & 1;
         }
     }
     break;
@@ -607,12 +608,12 @@ switch( model_id )
 
         if( V0 == 2 )
         {
-            if( S1 != 0 )
+            if( on_bridge != 0 )
             {
                 // 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
                 // 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
                 // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-                if( ( 20006000 >> (terrain_id & 1f ) ) & 1 )
+                if( ( 20006000 >> (terrain_data & 1f ) ) & 1 )
                 {
                     if( S2 != 0 )
                     {
@@ -638,23 +639,23 @@ switch( model_id )
             // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
             // 0x10000000 28 Gold Saucer Desert Border    Narrow strip of land surrounding the golden saucer desert. Probably related to the "quicksand" script.
             // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-            if( ( ( 321b6f83 >> ( terrain_id & 1f ) ) & 1 ) == 0 )
+            if( ( ( 321b6f83 >> ( terrain_data & 1f ) ) & 1 ) == 0 )
             {
                 return 0;
             }
-            if( S2 == 0 )
+            if( S2 != 0 )
             {
-                return 0;
+                return 1;
             }
-            return 1;
+            return 0;
         }
 
-        if( S1 != 0 )
+        if( on_bridge != 0 )
         {
             // 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
             // 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
             // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-            return (20006000 >> (terrain_id & 1f)) & 1;
+            return (20006000 >> (terrain_data & 1f)) & 1;
         }
 
         // 0x00000001  0 Grass                        Most things can go here.
@@ -673,7 +674,7 @@ switch( model_id )
         // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
         // 0x10000000 28 Gold Saucer Desert Border    Narrow strip of land surrounding the golden saucer desert. Probably related to the "quicksand" script.
         // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-        return (321b6f83 >> (terrain_id & 1f)) & 1;
+        return (321b6f83 >> (terrain_data & 1f)) & 1;
     }
     break;
 
@@ -683,12 +684,12 @@ switch( model_id )
 
         if( V0 == 2 )
         {
-            if( S1 != 0 )
+            if( on_bridge != 0 )
             {
                 // 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
                 // 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
                 // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-                if( ( 20006000 >> ( terrain_id & 1f ) ) & 1 )
+                if( ( 20006000 >> ( terrain_data & 1f ) ) & 1 )
                 {
                     if( S2 != 0 )
                     {
@@ -714,28 +715,28 @@ switch( model_id )
             // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
             // 0x10000000 28 Gold Saucer Desert Border    Narrow strip of land surrounding the golden saucer desert. Probably related to the "quicksand" script.
             // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-            if( ( ( 321b6f83 >> ( terrain_id & 1f ) ) & 1 ) == 0 )
+            if( ( ( 321b6f83 >> ( terrain_data & 1f ) ) & 1 ) == 0 )
             {
                 return 0;
             }
-            if( S2 == 0 )
+            if( S2 != 0 )
             {
-                return 0;
+                return 1;
             }
-            return 1;
+            return 0;
         }
 
-        if( S1 != 0 )
+        if( on_bridge != 0 )
         {
             // 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
             // 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
             // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-            return (20006000 >> (terrain_id & 1f)) & 1;
+            return (20006000 >> (terrain_data & 1f)) & 1;
         }
 
         800A1878	jal    funca45f4 [$800a45f4]
 
-        return (w[800c6614 + V0 * 4] >> (terrain_id & 1f)) & 1;
+        return (w[800c6614 + V0 * 4] >> (terrain_data & 1f)) & 1;
     }
     break;
 
@@ -759,7 +760,7 @@ switch( model_id )
             // 0x00080000 19 Canyon                       The ground in cosmo canyon has this type, walkability seems to be the same as wasteland.
             // 0x00100000 20 Mountain Pass                The small path through the mountains connecting Costa del Sol and Corel.
             // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
-            if( ( ( 021b6f83 >> ( terrain_id & 1f ) ) & 1 ) != 0 )
+            if( ( ( 021b6f83 >> ( terrain_data & 1f ) ) & 1 ) != 0 )
             {
                 return 0 < S2;
             }
@@ -771,7 +772,7 @@ switch( model_id )
             return 1;
         }
 
-        return (terrain_id & 1f) < 1;
+        return (terrain_data & 1f) < 1;
     }
     break;
 
@@ -799,13 +800,13 @@ switch( model_id )
             {
                 // 0x00000800 11 Riverside                    Beach-like area where river and land meet.
                 // 0x00020000 17 Beach                        Where land and shallow water meets.
-                return (00020800 >> (terrain_id & 1f)) & 1;
+                return (00020800 >> (terrain_data & 1f)) & 1;
             }
         }
         // 0x00000010  4 River Crossing               Buggy, tiny bronco and water-capable chocobos.
         // 0x00000020  5 River                        Tiny bronco and chocobos.
         // 0x00000040  6 Water                        Shallow water, same as above.
-        return (00000070 >> (terrain_id & 1f)) & 1;
+        return (00000070 >> (terrain_data & 1f)) & 1;
     }
     break;
 
@@ -829,7 +830,7 @@ switch( model_id )
             // 0x00080000 19 Canyon                       The ground in cosmo canyon has this type, walkability seems to be the same as wasteland.
             // 0x00100000 20 Mountain Pass                The small path through the mountains connecting Costa del Sol and Corel.
             // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
-            if( ( ( 021b6f83 >> ( terrain_id & 1f ) ) & 1 ) != 0 )
+            if( ( ( 021b6f83 >> ( terrain_data & 1f ) ) & 1 ) != 0 )
             {
                 return 0 < S2;
             }
@@ -853,7 +854,7 @@ switch( model_id )
         // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
         // 0x10000000 28 Gold Saucer Desert Border    Narrow strip of land surrounding the golden saucer desert. Probably related to the "quicksand" script.
         // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-        return (331b6f13 >> (terrain_id & 1f)) & 1;
+        return (331b6f13 >> (terrain_data & 1f)) & 1;
     }
     break;
 
@@ -867,7 +868,7 @@ switch( model_id )
             // 0x00008000 15 Unused                       Doesn't seem to be used anywhere in the original data.
             // 0x00040000 18 Sub Pen                      Only place where you can enter/exit the submarine.
             // 0x04000000 26 Sea (2)                      Special type of deep water, only used in one small spot next to HP-MP cave, possibly related to the underwater map/submarine.
-            return (04048008 >> (terrain_id & 1f)) & 1;
+            return (04048008 >> (terrain_data & 1f)) & 1;
         }
 
         // 0x00000001  0 Grass                        Most things can go here.
@@ -884,7 +885,7 @@ switch( model_id )
         // 0x00080000 19 Canyon                       The ground in cosmo canyon has this type, walkability seems to be the same as wasteland.
         // 0x00100000 20 Mountain Pass                The small path through the mountains connecting Costa del Sol and Corel.
         // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
-        if( ( ( 021b6f83 >> ( terrain_id & 1f ) ) & 1 ) != 0 )
+        if( ( ( 021b6f83 >> ( terrain_data & 1f ) ) & 1 ) != 0 )
         {
             return 0 < S2;
         }
@@ -897,13 +898,13 @@ switch( model_id )
         // 0x00000008  3 Sea                          Deep water, only gold chocobo and submarine can go here.
         // 0x00040000 18 Sub Pen                      Only place where you can enter/exit the submarine.
         // 0x04000000 26 Sea (2)                      Special type of deep water, only used in one small spot next to HP-MP cave, possibly related to the underwater map/submarine.
-        return (04040008 >> (terrain_id & 1f)) & 1;
+        return (04040008 >> (terrain_data & 1f)) & 1;
     }
     break;
 
     case 64:
     {
-        return ((terrain_id & 1f) ^ 7) < 1;
+        return ((terrain_data & 1f) ^ 7) < 1;
     }
     break;
 }
@@ -949,12 +950,13 @@ if( S1 != 0 )
 
                 if( V0 != 0 )
                 {
-                    V0 = w[S0 + 0];
                     S2 = -1;
                     [SP + 30] = w(w[SP + 10]);
-                    S6 = (bu[V0 + b] << 8) | bu[V0 + 3];
 
-                    A0 = S6;
+                    V0 = w[S0 + 0];
+                    terrain_data = (bu[V0 + b] << 8) | bu[V0 + 3]; // texture | walk_id
+
+                    A0 = terrain_data;
                     A1 = model_id;
                     wm_is_terrain_passable_by_model();
 
@@ -1005,7 +1007,7 @@ if( S2 == 0 )
                 S2 = S2 + 1;
                 S5 = S0;
                 T0 = w[SP + 10];
-                S6 = A0;
+                terrain_data = A0;
                 [SP + 28] = w(V1);
                 [SP + 30] = w(T0);
             }
@@ -1040,7 +1042,7 @@ if( S2 == 0 )
             }
         }
 
-        A0 = S6;
+        A0 = terrain_data;
         A1 = model_id;
         wm_is_terrain_passable_by_model();
 
@@ -1054,7 +1056,7 @@ if( S2 == 0 )
 
 if( A5 != 0 )
 {
-    [A5] = h(S6);
+    [A5] = h(terrain_data);
 }
 
 T1 = w[SP + 18];
@@ -1423,17 +1425,17 @@ return w[800e55fc];
 
 ////////////////////////////////
 // funca21b4()
+// button handle
 
 [SP + 64] = w(0);
 [SP + 68] = w(0);
 
-800A21D8	jal    wm_set_pc_entity_as_active_entity [$800a90ec]
+wm_set_pc_entity_as_active_entity();
 
-800A21E0	jal    wm_get_model_id_from_pc_entity [$800a9174]
+wm_get_model_id_from_pc_entity();
+model_id = V0;
 
 V1 = w[800e55fc];
-
-S5 = V0;
 
 800A21F4	beq    v1, zero, La3090 [$800a3090]
 
@@ -1446,13 +1448,13 @@ V0 = w[800e5628];
 800A2218	beq    v0, zero, La307c [$800a307c]
 
 system_get_buttons_with_config_remap();
-S0 = V0;
+buttons = V0;
 
 if( ( w[800e5648] - 2 ) >= 2 )
 {
     if( w[800e5634] != 3 )
     {
-        if( S0 & 000c )
+        if( buttons & 000c ) // L1 R1
         {
             A0 = 2;
             funca2088();
@@ -1460,17 +1462,17 @@ if( ( w[800e5648] - 2 ) >= 2 )
     }
 }
 
-if( S5 == 5 )
+if( model_id == 5 )
 {
     // if cross is pressed
-    if( S0 & 0040 )
+    if( buttons & 0040 )
     {
-        S0 = S0 & ffff0fff; // remove directional buttons
+        buttons = buttons & 0fff; // remove directional buttons
     }
 }
 
-A0 = 2000;
-800A2284	jal    funca91a4 [$800a91a4]
+A0 = 2000; // submarine
+wm_is_pc_entity_model_in_mask();
 
 if( V0 != 0 )
 {
@@ -1479,78 +1481,40 @@ if( V0 != 0 )
         if( w[800e5648] != w[800e5634] )
         {
             // if circle is pressed
-            if( S0 & 0020 )
+            if( buttons & 0020 )
             {
-                S0 = S0 & ffffbfff; // remove down button
+                buttons = buttons & bfff; // remove down button
             }
         }
     }
 }
 
-800A22C8	jal    funca9240 [$800a9240]
+funca9240();
 
-800A22D0	bne    v0, zero, La2328 [$800a2328]
-V0 = 0005;
-800A22D8	beq    s5, v0, La2328 [$800a2328]
-V0 = S5 < 0006;
-800A22E0	beq    v0, zero, La22f8 [$800a22f8]
-V0 = 0003;
-800A22E8	beq    s5, v0, La230c [$800a230c]
-800A22EC	nop
-800A22F0	j      La2364 [$800a2364]
-800A22F4	nop
+if( ( V0 != 0 ) || ( model_id == 5 ) ) // tiny bronco
+{
+    S1 = w[8011650c] * 3c;
+}
+else if( model_id == 3 ) // highwind
+{
+    S1 = w[8011650c] * 78;
+}
+else if( model_id == 6 ) // buggy
+{
+    S1 = w[8011650c] * 2d;
+}
+else
+{
+    S1 = w[8011650c] * 1e;
+}
 
-La22f8:	; 800A22F8
-V0 = 0006;
-800A22FC	beq    s5, v0, La2344 [$800a2344]
-800A2300	nop
-800A2304	j      La2364 [$800a2364]
-800A2308	nop
-
-La230c:	; 800A230C
-800A230C	lui    v1, $8011
-V1 = w[V1 + 650c];
-800A2314	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-800A2320	j      La237c [$800a237c]
-S1 = V0 << 03;
-
-La2328:	; 800A2328
-800A2328	lui    v1, $8011
-V1 = w[V1 + 650c];
-800A2330	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-800A233C	j      La237c [$800a237c]
-S1 = V0 << 02;
-
-La2344:	; 800A2344
-800A2344	lui    v0, $8011
-V0 = w[V0 + 650c];
-800A234C	nop
-V1 = V0 << 01;
-V1 = V1 + V0;
-V0 = V1 << 04;
-800A235C	j      La237c [$800a237c]
-S1 = V0 - V1;
-
-La2364:	; 800A2364
-800A2364	lui    v1, $8011
-V1 = w[V1 + 650c];
-800A236C	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-S1 = V0 << 01;
-
-La237c:	; 800A237C
-V0 = S0 & 0001;
+V0 = buttons & 0001;
 800A2380	beq    v0, zero, La23a0 [$800a23a0]
-V0 = S0 & 0002;
+V0 = buttons & 0002;
 V0 = w[800c84c8];
 V0 = V0 & 0001;
 800A2398	beq    v0, zero, La23c0 [$800a23c0]
-V0 = S0 & 0002;
+V0 = buttons & 0002;
 
 La23a0:	; 800A23A0
 800A23A0	beq    v0, zero, La242c [$800a242c]
@@ -1581,23 +1545,23 @@ La2424:	; 800A2424
 [800e564c] = w(V1);
 
 La242c:	; 800A242C
-800A242C	jal    funca91a4 [$800a91a4]
-A0 = 2000;
+A0 = 2000; // submarine
+wm_is_pc_entity_model_in_mask();
+
 800A2434	beq    v0, zero, La2470 [$800a2470]
 V0 = 0002;
-800A243C	lui    v1, $800e
-V1 = w[V1 + 5648];
+V1 = w[800e5648];
 800A2444	nop
 800A2448	bne    v1, v0, La2474 [$800a2474]
 800A244C	addiu  v0, zero, $ffff (=-$1)
-800A2450	lui    v0, $800e
-V0 = w[V0 + 5634];
+
+V0 = w[800e5634];
 800A2458	nop
 800A245C	beq    v0, v1, La2470 [$800a2470]
-V0 = S0 & 0020;
+V0 = buttons & 0020;
 800A2464	beq    v0, zero, La2474 [$800a2474]
 800A2468	addiu  v0, zero, $ffff (=-$1)
-S0 = S0 | 1000;
+buttons = buttons | 1000;
 
 La2470:	; 800A2470
 800A2470	addiu  v0, zero, $ffff (=-$1)
@@ -1605,19 +1569,19 @@ La2470:	; 800A2470
 La2474:	; 800A2474
 [800c84cc] = h(V0);
 
-if( S0 & 8000 ) // if left is pressed
+if( buttons & 8000 ) // if left is pressed
 {
     [SP + 64] = w(-S1);
     [800c84cc] = h(-400);
 }
 
-if( S0 & 2000 ) // if right is pressed
+if( buttons & 2000 ) // if right is pressed
 {
     [SP + 64] = w(S1);
     [800c84cc] = h(400);
 }
 
-if( S0 & 1000 ) // if up is pressed
+if( buttons & 1000 ) // if up is pressed
 {
     A1 = hu[800c84cc];
     A0 = A1 << 10;
@@ -1645,7 +1609,7 @@ if( S0 & 1000 ) // if up is pressed
     }
 }
 
-if( S0 & 4000 ) // if down is pressed
+if( buttons & 4000 ) // if down is pressed
 {
     A1 = hu[800c84cc];
     A0 = A1 << 10;
@@ -1689,7 +1653,7 @@ V0 = 0003;
 La25c4:	; 800A25C4
 A0 = 0003;
 800A25C8	bne    a1, a0, La25d4 [$800a25d4]
-V0 = S0 & 0080;
+V0 = buttons & 0080;
 S4 = 0 < V0;
 
 La25d4:	; 800A25D4
@@ -1697,10 +1661,10 @@ La25d4:	; 800A25D4
 V1 = w[V1 + 5634];
 800A25DC	nop
 800A25E0	bne    v1, a0, La2620 [$800a2620]
-V0 = S0 & 0020;
+V0 = buttons & 0020;
 A1 = 0;
 800A25EC	beq    v0, zero, La2608 [$800a2608]
-A0 = S0 & f000;
+A0 = buttons & f000;
 800A25F4	lui    v0, $800d
 V0 = w[V0 + 84c8];
 800A25FC	nop
@@ -1719,17 +1683,17 @@ V0 = V0 + V1;
 
 La2620:	; 800A2620
 800A2620	bne    s4, zero, La2788 [$800a2788]
-A0 = S0 >> 02;
+A0 = buttons >> 02;
 V0 = 0002;
 800A262C	bne    a1, v0, La2644 [$800a2644]
 A0 = A0 & 0001;
 800A2634	beq    v1, a1, La2644 [$800a2644]
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 800A263C	bne    v0, zero, La2648 [$800a2648]
-V1 = S0 >> 0d;
+V1 = buttons >> 0d;
 
 La2644:	; 800A2644
-V1 = S0 >> 0f;
+V1 = buttons >> 0f;
 
 La2648:	; 800A2648
 V1 = V1 & 0001;
@@ -1747,11 +1711,11 @@ V0 = w[V0 + 5634];
 800A2678	mflo   a1
 800A267C	bne    v0, v1, La268c [$800a268c]
 A0 = 0;
-V0 = S0 & 0004;
+V0 = buttons & 0004;
 A0 = V0 < 0001;
 
 La268c:	; 800A268C
-V0 = S0 & 5000;
+V0 = buttons & 5000;
 800A2690	beq    v0, zero, La26b8 [$800a26b8]
 V1 = A1 >> A0;
 800A2698	lui    v0, $800e
@@ -1761,7 +1725,7 @@ V0 = V0 - V1;
 800A26A8	lui    at, $800e
 [AT + 5608] = w(V0);
 800A26B0	j      La26d8 [$800a26d8]
-A0 = S0 >> 03;
+A0 = buttons >> 03;
 
 La26b8:	; 800A26B8
 V0 = A1 << 01;
@@ -1774,7 +1738,7 @@ V1 = V1 - V0;
 [800e5608] = w(V1);
 
 La26d4:	; 800A26D4
-A0 = S0 >> 03;
+A0 = buttons >> 03;
 
 La26d8:	; 800A26D8
 V1 = w[800e5648];
@@ -1784,12 +1748,12 @@ A0 = A0 & 0001;
 V0 = w[800e5634];
 800A26F4	nop
 800A26F8	beq    v0, v1, La2708 [$800a2708]
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 800A2700	bne    v0, zero, La270c [$800a270c]
-V1 = S0 >> 0f;
+V1 = buttons >> 0f;
 
 La2708:	; 800A2708
-V1 = S0 >> 0d;
+V1 = buttons >> 0d;
 
 La270c:	; 800A270C
 V1 = V1 & 0001;
@@ -1803,11 +1767,11 @@ V0 = w[800e5634];
 800A273C	mflo   a1
 800A2740	bne    v0, v1, La2750 [$800a2750]
 A0 = 0;
-V0 = S0 & 0008;
+V0 = buttons & 0008;
 A0 = V0 < 0001;
 
 La2750:	; 800A2750
-V0 = S0 & 5000;
+V0 = buttons & 5000;
 800A2754	beq    v0, zero, La276c [$800a276c]
 V0 = A1 >> A0;
 
@@ -1834,12 +1798,12 @@ V0 = V1 + 1000;
 
 La27a4:	; 800A27A4
 800A27A4	bne    v0, zero, La27bc [$800a27bc]
-V0 = S0 & 8000;
+V0 = buttons & 8000;
 800A27AC	addiu  v0, v1, $f000 (=-$1000)
 
 La27b0:	; 800A27B0
 [800e5608] = w(V0);
-V0 = S0 & 8000;
+V0 = buttons & 8000;
 
 La27bc:	; 800A27BC
 800A27BC	beq    v0, zero, La27cc [$800a27cc]
@@ -1848,7 +1812,7 @@ S3 = 0;
 S3 = 0080;
 
 La27cc:	; 800A27CC
-V0 = S0 & 2000;
+V0 = buttons & 2000;
 800A27D0	beq    v0, zero, La27dc [$800a27dc]
 800A27D4	nop
 800A27D8	addiu  s3, zero, $ff80 (=-$80)
@@ -1865,14 +1829,14 @@ V1 = w[800e5634];
 
 La2804:	; 800A2804
 800A2804	beq    s4, zero, La281c [$800a281c]
-V0 = S0 & f000;
+V0 = buttons & f000;
 800A280C	bne    v0, zero, La282c [$800a282c]
 A0 = S1;
 800A2814	j      La282c [$800a282c]
 A0 = 0;
 
 La281c:	; 800A281C
-V0 = S0 & 0020;
+V0 = buttons & 0020;
 800A2820	bne    v0, zero, La282c [$800a282c]
 A0 = S1;
 A0 = 0;
@@ -1892,10 +1856,9 @@ V0 = V0 + A0;
 V1 = V0 >> 02;
 
 La285c:	; 800A285C
-800A285C	lui    at, $800d
-[AT + 84d0] = h(V1);
+[800c84d0] = h(V1);
 800A2864	beq    s4, zero, La28e0 [$800a28e0]
-V0 = S0 & 8000;
+V0 = buttons & 8000;
 800A286C	beq    v0, zero, La2884 [$800a2884]
 V0 = V1 << 10;
 V0 = V0 >> 10;
@@ -1904,7 +1867,7 @@ V0 = 0 - V0;
 [SP + 0064] = w(V0);
 
 La2884:	; 800A2884
-V0 = S0 & 2000;
+V0 = buttons & 2000;
 800A2888	beq    v0, zero, La289c [$800a289c]
 V0 = V1 << 10;
 V0 = V0 >> 10;
@@ -1915,16 +1878,15 @@ La289c:	; 800A289C
 [SP + 0064] = w(0);
 
 La28a0:	; 800A28A0
-V0 = S0 & 1000;
+V0 = buttons & 1000;
 800A28A4	beq    v0, zero, La28bc [$800a28bc]
 800A28A8	nop
-800A28AC	lui    v0, $800d
-V0 = h[V0 + 84d0];
+V0 = h[800c84d0];
 800A28B4	j      La28f0 [$800a28f0]
 V0 = 0 - V0;
 
 La28bc:	; 800A28BC
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 800A28C0	beq    v0, zero, La28d8 [$800a28d8]
 800A28C4	nop
 800A28C8	lui    v0, $800d
@@ -1946,7 +1908,7 @@ La28f0:	; 800A28F0
 [SP + 0068] = w(V0);
 
 La28f4:	; 800A28F4
-V0 = S0 & 0020;
+V0 = buttons & 0020;
 800A28F8	bne    v0, zero, La2938 [$800a2938]
 800A28FC	nop
 800A2900	j      La2938 [$800a2938]
@@ -1970,8 +1932,7 @@ La2938:	; 800A2938
 A0 = SP + 0038;
 V1 = hu[SP + 0064];
 A2 = hu[SP + 0068];
-800A2944	lui    v0, $800e
-V0 = hu[V0 + 5608];
+V0 = hu[800e5608];
 A1 = SP + 0010;
 [SP + 0032] = h(0);
 [SP + 003c] = h(0);
@@ -1979,23 +1940,29 @@ A1 = SP + 0010;
 V0 = 0 - V0;
 [SP + 0030] = h(V1);
 [SP + 0034] = h(A2);
-800A2968	jal    system_gte_rotation_matrix_from_xyz [$system_gte_rotation_matrix_from_xyz]
 [SP + 003a] = h(V0);
+
+system_gte_rotation_matrix_from_xyz();
+
 A0 = SP + 0010;
 S1 = SP + 0050;
 A1 = S1;
 [SP + 0058] = w(0);
 [SP + 0054] = w(0);
-800A2984	jal    func3b32c [$system_gte_copy_matrix_translation_part]
 [SP + 0050] = w(0);
-800A298C	jal    func3b48c [$system_gte_set_rotation_matrix]
+system_gte_copy_matrix_translation_part();
+
 A0 = SP + 0010;
-800A2994	jal    func3b51c [$system_gte_set_translation_vector]
+system_gte_set_rotation_matrix();
+
 A0 = SP + 0010;
+system_gte_set_translation_vector();
+
 A0 = SP + 0030;
 A1 = SP + 0040;
-800A29A4	jal    func3bc6c [$system_gte_rotate_and_translate_vector]
 A2 = SP + 0060;
+system_gte_rotate_and_translate_vector();
+
 V1 = w[SP + 0048];
 V0 = w[SP + 0040];
 [SP + 0068] = w(V1);
@@ -2009,7 +1976,7 @@ S2 = 0;
 800A29D4	nop
 800A29D8	jal    wm_get_position_from_pc_model [$800aa0e0]
 A0 = S1;
-V0 = S0 & 1000;
+V0 = buttons & 1000;
 800A29E4	beq    v0, zero, La2a28 [$800a2a28]
 800A29E8	nop
 V0 = w[SP + 0054];
@@ -2022,7 +1989,7 @@ V0 = w[V0 + 55f8];
 800A2A08	nop
 800A2A0C	beq    v0, zero, La2a28 [$800a2a28]
 800A2A10	nop
-800A2A14	jal    funca9a44 [$800a9a44]
+800A2A14	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800A2A18	nop
 V1 = 001b;
 800A2A20	bne    v0, v1, La2a44 [$800a2a44]
@@ -2035,7 +2002,7 @@ A1 = w[A1 + 5640];
 800A2A34	nop
 V0 = A1 < A2;
 800A2A3C	beq    v0, zero, La2a74 [$800a2a74]
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 
 La2a44:	; 800A2A44
 800A2A44	lui    v0, $8011
@@ -2077,19 +2044,19 @@ V0 = 0002;
 800A2AC4	nop
 800A2AC8	jal    wm_get_position_from_pc_model [$800aa0e0]
 A0 = SP + 0050;
-V0 = S0 & 1000;
+V0 = buttons & 1000;
 800A2AD4	beq    v0, zero, La2b28 [$800a2b28]
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 V0 = w[SP + 0054];
 800A2AE0	nop
 V0 = V0 < ec79;
 800A2AE8	bne    v0, zero, La2b28 [$800a2b28]
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 800A2AF0	lui    v0, $800e
 V0 = w[V0 + 55f8];
 800A2AF8	nop
 800A2AFC	beq    v0, zero, La2b28 [$800a2b28]
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 800A2B04	lui    v0, $8011
 V0 = w[V0 + 650c];
 S2 = 000a;
@@ -2100,7 +2067,7 @@ A0 = A0 - V0;
 A0 = A0 << 01;
 800A2B1C	jal    funca9820 [$800a9820]
 A0 = 0 - A0;
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 
 La2b28:	; 800A2B28
 800A2B28	beq    v0, zero, La2b60 [$800a2b60]
@@ -2230,11 +2197,10 @@ V0 = V0 << 10;
 V0 = V0 >> 10;
 V0 = V0 < 0801;
 800A2CDC	bne    v0, zero, La2cf4 [$800a2cf4]
-V0 = S0 & 4000;
+V0 = buttons & 4000;
 800A2CE4	addiu  v0, a0, $f800 (=-$800)
-800A2CE8	lui    at, $800d
-[AT + 84cc] = h(V0);
-V0 = S0 & 4000;
+[800c84cc] = h(V0);
+V0 = buttons & 4000;
 
 La2cf4:	; 800A2CF4
 800A2CF4	bne    v0, zero, La2d18 [$800a2d18]
@@ -2244,31 +2210,21 @@ V0 = hu[V0 + 84cc];
 800A2D04	nop
 V0 = V0 << 10;
 V0 = V0 >> 11;
-800A2D10	lui    at, $800d
-[AT + 84cc] = h(V0);
+[800c84cc] = h(V0);
 
 La2d18:	; 800A2D18
-800A2D18	lui    v0, $800d
-V0 = h[V0 + 84cc];
-800A2D20	nop
-800A2D24	lui    at, $800e
-[AT + 5668] = w(V0);
+V0 = h[800c84cc];
+[800e5668] = w(V0);
 800A2D2C	j      La2d4c [$800a2d4c]
-800A2D30	nop
 
 La2d34:	; 800A2D34
-800A2D34	lui    v0, $800e
-V0 = hu[V0 + 5668];
-800A2D3C	nop
-800A2D40	lui    at, $800d
-[AT + 84cc] = h(V0);
+V0 = hu[800e5668];
+[800c84cc] = h(V0);
 V1 = 0800;
 
 La2d4c:	; 800A2D4C
-800A2D4C	lui    v0, $800e
-V0 = w[V0 + 5608];
-800A2D54	lui    a0, $800e
-A0 = w[A0 + 5648];
+V0 = w[800e5608];
+A0 = w[800e5648];
 V1 = V1 - V0;
 V0 = 0002;
 800A2D64	bne    a0, v0, La2d90 [$800a2d90]
@@ -2302,8 +2258,8 @@ La2dcc:	; 800A2DCC
 V0 = 0006;
 
 La2dd0:	; 800A2DD0
-800A2DD0	bne    s5, v0, La2e24 [$800a2e24]
-V0 = S0 & f000;
+800A2DD0	bne    model_id, v0, La2e24 [$800a2e24]
+V0 = buttons & f000;
 800A2DD8	beq    v0, zero, La2e00 [$800a2e00]
 
 V0 = w[800c84c8] & f000;
@@ -2326,21 +2282,22 @@ La2e1c:	; 800A2E1C
 800A2E20	nop
 
 La2e24:	; 800A2E24
-800A2E24	jal    funca91a4 [$800a91a4]
-A0 = 2000;
+A0 = 2000; // submarine
+wm_is_pc_entity_model_in_mask();
+
 800A2E2C	beq    v0, zero, La2ea8 [$800a2ea8]
-V0 = S0 & 0040;
+V0 = buttons & 0040;
 800A2E34	beq    v0, zero, La2eac [$800a2eac]
-V0 = S0 & 0800;
+V0 = buttons & 0800;
 V0 = w[800с84c8];
 V0 = V0 & 0040;
 800A2E4C	bne    v0, zero, La2eac [$800a2eac]
-V0 = S0 & 0800;
+V0 = buttons & 0800;
 V1 = w[800e5634];
 V0 = 0002;
 800A2E60	bne    v1, v0, La2e8c [$800a2e8c]
 800A2E64	nop
-800A2E68	jal    funca9a44 [$800a9a44]
+800A2E68	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800A2E6C	nop
 V1 = 0003;
 800A2E74	bne    v0, v1, La2e8c [$800a2e8c]
@@ -2348,39 +2305,37 @@ V1 = 0003;
 800A2E7C	jal    funca3dfc [$800a3dfc]
 800A2E80	nop
 800A2E84	j      La2eac [$800a2eac]
-V0 = S0 & 0800;
+V0 = buttons & 0800;
 
 La2e8c:	; 800A2E8C
-800A2E8C	jal    funca9a44 [$800a9a44]
+800A2E8C	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800A2E90	nop
 V1 = 0003;
 800A2E98	bne    v0, v1, La2eac [$800a2eac]
-V0 = S0 & 0800;
+V0 = buttons & 0800;
 800A2EA0	jal    funca3e4c [$800a3e4c]
 800A2EA4	nop
 
 La2ea8:	; 800A2EA8
-V0 = S0 & 0800;
+V0 = buttons & 0800;
 
 La2eac:	; 800A2EAC
 800A2EAC	beq    v0, zero, La2ecc [$800a2ecc]
-V0 = S0 & 0100;
+V0 = buttons & 0100;
 800A2EB4	lui    v0, $800d
 V0 = w[V0 + 84c8];
 800A2EBC	nop
 V0 = V0 & 0800;
 800A2EC4	beq    v0, zero, La2eec [$800a2eec]
-V0 = S0 & 0100;
+V0 = buttons & 0100;
 
 La2ecc:	; 800A2ECC
 800A2ECC	beq    v0, zero, La2f64 [$800a2f64]
-V0 = S0 & 0010;
-800A2ED4	lui    v0, $800d
-V0 = w[V0 + 84c8];
+
+V0 = w[800c84c8];
 800A2EDC	nop
 V0 = V0 & 0100;
 800A2EE4	bne    v0, zero, La2f64 [$800a2f64]
-V0 = S0 & 0010;
 
 La2eec:	; 800A2EEC
 V0 = w[800e5634];
@@ -2412,109 +2367,95 @@ A0 = V0 << 01;
 
 La2f58:	; 800A2F58
 800A2F58	jal    funcbc9e8 [$800bc9e8]
-800A2F5C	nop
-V0 = S0 & 0010;
 
 La2f64:	; 800A2F64
-800A2F64	beq    v0, zero, La2ffc [$800a2ffc]
-V0 = S0 & a00c;
-800A2F6C	lui    v0, $800d
-V0 = w[V0 + 84c8];
-800A2F74	nop
-V0 = V0 & 0010;
-800A2F7C	bne    v0, zero, La2ffc [$800a2ffc]
-V0 = S0 & a00c;
-V1 = w[800e566c];
-V0 = 0001;
-800A2F90	bne    v1, v0, La2ffc [$800a2ffc]
-V0 = S0 & a00c;
-V0 = 0003;
-800A2F9C	bne    s5, v0, La2fb4 [$800a2fb4]
-800A2FA0	nop
-800A2FA4	jal    funcaba18 [$800aba18]
-A0 = 0006;
-800A2FAC	j      La2ffc [$800a2ffc]
-V0 = S0 & a00c;
+if( buttons & 0010 ) // triangle pressed
+{
+    if( ( w[800c84c8] & 0010 ) == 0 ) // and was not pressed before
+    {
+        if( w[800e566c] == 1 )
+        {
+            if( model_id == 3 ) // highwind
+            {
+                A0 = 6;
+                wm_script_run_system_function_on_system_entity();
+            }
+            else
+            {
+                A0 = 47; // cloud tifa cid buggy
+                wm_is_pc_entity_model_in_mask();
+                if( V0 != 0 )
+                {
+                    wm_get_pc_entity_terrain_id();
+                    if( V0 != e ) // Wutai Bridge Rickety rope bridges south of Wutai.
+                    {
+                        A0 = 10;
+                        A1 = 1;
+                        800A2FD8	jal    funcb0098 [$800b0098]
 
-La2fb4:	; 800A2FB4
-800A2FB4	jal    funca91a4 [$800a91a4]
-A0 = 0047;
-800A2FBC	beq    v0, zero, La2ffc [$800a2ffc]
-V0 = S0 & a00c;
-800A2FC4	jal    funca9a44 [$800a9a44]
-800A2FC8	nop
-V1 = 000e;
-800A2FD0	beq    v0, v1, La2ff8 [$800a2ff8]
-A0 = 0010;
-800A2FD8	jal    funcb0098 [$800b0098]
-A1 = 0001;
-A0 = 0;
-800A2FE4	jal    funca2108 [$800a2108]
-A1 = 0001;
-V0 = 0002;
-800A2FF0	lui    at, $800e
-[AT + 566c] = w(V0);
+                        A0 = 0;
+                        A1 = 1;
+                        800A2FE4	jal    funca2108 [$800a2108]
 
-La2ff8:	; 800A2FF8
-V0 = S0 & a00c;
+                        [800e566c] = w(2);
+                    }
+                }
+            }
+        }
+    }
+}
 
-La2ffc:	; 800A2FFC
-800A2FFC	beq    v0, zero, La300c [$800a300c]
-800A3000	nop
-800A3004	jal    funcadfc0 [$800adfc0]
-800A3008	nop
+if( buttons & a00c ) // left right L1 R1
+{
+    800A3004	jal    funcadfc0 [$800adfc0]
+}
+[800c84c8] = w(buttons);
 
-La300c:	; 800A300C
-800A300C	lui    at, $800d
-[AT + 84c8] = w(S0);
-800A3014	jal    funca9a44 [$800a9a44]
-800A3018	nop
-V1 = 000e;
-800A3020	bne    v0, v1, La3038 [$800a3038]
-V0 = 0005;
-A0 = SP + 0064;
-800A302C	jal    Lb37e0 [$800b37e0]
-A1 = SP + 0068;
-V0 = 0005;
+wm_get_pc_entity_terrain_id();
 
-La3038:	; 800A3038
-800A3038	bne    s5, v0, La3064 [$800a3064]
-800A303C	nop
-V0 = w[SP + 0064];
-V1 = w[SP + 0068];
-800A3048	nop
-V0 = V0 | V1;
-800A3050	beq    v0, zero, La305c [$800a305c]
-800A3054	addiu  a0, zero, $fe13 (=-$1ed)
-A0 = 01ed;
+if( V0 == e ) // Wutai Bridge Rickety rope bridges south of Wutai.
+{
+    A0 = SP + 64;
+    A1 = SP + 68;
+    800A302C	jal    funcb37e0 [$800b37e0]
+}
 
-La305c:	; 800A305C
-800A305C	jal    funcb65e0 [$800b65e0]
-800A3060	nop
+if( model_id == 5 ) // tiny bronco
+{
+    V0 = w[SP + 64] | w[SP + 68];
 
-La3064:	; 800A3064
+    if( V0 != 0 )
+    {
+        A0 = 01ed;
+    }
+    else
+    {
+        A0 = -1ed;
+    }
+
+    800A305C	jal    funcb65e0 [$800b65e0]
+}
+
 A0 = w[SP + 0064];
 A1 = w[SP + 0068];
 wm_move_active_model();
 
 800A3074	jal    funcaa640 [$800aa640]
-800A3078	nop
 
 La307c:	; 800A307C
-800A307C	lui    v0, $800e
-V0 = w[V0 + 55fc];
-800A3084	nop
+V0 = w[800e55fc];
 800A3088	bne    v0, zero, La30c4 [$800a30c4]
 800A308C	nop
 
 La3090:	; 800A3090
-800A3090	jal    funca9a44 [$800a9a44]
+800A3090	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800A3094	nop
 V1 = 000e;
 800A309C	bne    v0, v1, La30c4 [$800a30c4]
 A0 = SP + 0064;
-800A30A4	jal    Lb37e0 [$800b37e0]
+800A30A4	jal    funcb37e0 [$800b37e0]
 A1 = SP + 0068;
+
 A0 = w[SP + 0064];
 A1 = w[SP + 0068];
 wm_move_active_model();
@@ -3773,15 +3714,16 @@ SP = SP + 0018;
 800A4260	jr     ra 
 800A4264	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca4268
-800A4268	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-800A4274	jal    wm_get_current_render_buffer_id [$800a0bd4]
-[SP + 0010] = w(S0);
-800A427C	lui    v1, $800e
-V1 = w[V1 + 56f4];
-S1 = 0002;
+
+wm_get_current_render_buffer_id();
+
+V1 = w[800e56f4];
+S1 = 2;
 800A4288	beq    v1, s1, La42e0 [$800a42e0]
 S0 = V0;
 V0 = V1 < 0003;
@@ -3918,30 +3860,34 @@ V1 = V1 | V0;
 [A2 + 0000] = w(V1);
 
 La447c:	; 800A447C
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800A448C	jr     ra 
-800A4490	nop
 ////////////////////////////////
-// funca4494
-800A4494	lui    at, $800e
-[AT + 561c] = w(A0);
-800A449C	jr     ra 
-800A44A0	nop
+
+
+
 ////////////////////////////////
-// funca44a4
-800A44A4	lui    at, $800e
-[AT + 5620] = w(A0);
-800A44AC	jr     ra 
-800A44B0	nop
+// funca4494()
+
+[800e561c] = w(A0);
 ////////////////////////////////
-// funca44b4
-800A44B4	lui    at, $800e
-[AT + 5624] = w(A0);
-800A44BC	jr     ra 
-800A44C0	nop
+
+
+
+////////////////////////////////
+// funca44a4()
+
+[800e5620] = w(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca44b4()
+
+[800e5624] = w(A0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca44c4
 800A44C4	lui    v1, $800e
@@ -4203,8 +4149,7 @@ La4668:	; 800A4668
     wm_script_init_variables();
 
     A0 = 0;
-    funcaba18();
-
+    wm_script_run_system_function_on_system_entity();
 
     wm_script_run_all();
 
@@ -4358,7 +4303,7 @@ La4668:	; 800A4668
         A1 = 1;
         funca806c(); // we load .MAP inside
 
-        800A4AB4	jal    funcad804 [$800ad804]
+        funcad804();
 
         800A4ABC	jal    funca3c74 [$800a3c74]
 
@@ -4408,8 +4353,8 @@ La4668:	; 800A4668
 
         800A4B7C	bne    v0, zero, La4bdc [$800a4bdc]
 
-        A0 = 2000;
-        funca91a4();
+        A0 = 2000; // submarine
+        wm_is_pc_entity_model_in_mask();
 
         A0 = S0;
         800A4B8C	beq    v0, zero, La4ba8 [$800a4ba8]
@@ -4503,21 +4448,20 @@ La4668:	; 800A4668
     800A4D04	bne    v0, zero, La49a4 [$800a49a4]
 
     A0 = 1;
-    800A4D0C	jal    funcaba18 [$800aba18]
+    wm_script_run_system_function_on_system_entity();
 
+    // finish all scripts
     while( true )
     {
-        800A4D14	jal    funcad928 [$800ad928]
-
+        wm_script_is_any_script_runs();
         if( V0 == 0 )
         {
             break;
         }
-
         wm_script_run_all();
     }
 
-    800A4D34	jal    funca7f18 [$800a7f18]
+    funca7f18();
 
     A0 = S2;
     A1 = S4;
@@ -6801,44 +6745,33 @@ La6bc4:	; 800A6BC4
 
 
 ////////////////////////////////
-// funca6bcc
-800A6BCC	addiu  sp, sp, $ffe8 (=-$18)
+// funca6bcc()
+
 A1 = A0;
 800A6BD4	beq    a1, zero, La6bf0 [$800a6bf0]
-[SP + 0010] = w(RA);
+
 A0 = 80109d44;
 A2 = 0;
 A3 = 0;
 wm_extract_loop_coords_top_bottom_parts();
 
 La6bf0:	; 800A6BF0
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A6BF8	jr     ra 
-800A6BFC	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca6c00
-800A6C00	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
+// funca6c00()
+
 800A6C0C	jal    funca1db0 [$800a1db0]
 S0 = A0;
 V1 = 0002;
 800A6C18	beq    v0, v1, La6c28 [$800a6c28]
-800A6C1C	nop
-800A6C20	jal    wm_set_translation_vector_in_screen_space [$800a1fac]
+
 A0 = S0;
+wm_set_translation_vector_in_screen_space();
 
 La6c28:	; 800A6C28
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800A6C34	jr     ra 
-800A6C38	nop
 ////////////////////////////////
 
 
@@ -6857,8 +6790,7 @@ wm_get_position_from_pc_model();
 
 S0 = S2;
 
-800A6C84	jal    funca9134 [$800a9134]
-
+funca9134();
 [SP + 40] = w(V0);
 
 wm_get_model_id_from_active_entity();
@@ -6909,7 +6841,7 @@ A1 = S1 + 10;
 A2 = w[SP + 40];
 A3 = S1 + 28;
 A4 = S1 + 1c;
-A5 = S1 + 2a;
+A5 = S1 + 2a; // terrain id
 A6 = active_model_id;
 funca19fc();
 
@@ -7029,7 +6961,7 @@ loopa6e5c:	; 800A6E5C
                     A2 = w[SP + 40];
                     A3 = S1 + 28;
                     A4 = S1 + 1c;
-                    A5 = S1 + 2a;
+                    A5 = S1 + 2a; // terrain id
                     A6 = active_model_id;
                     funca19fc();
 
@@ -7798,7 +7730,7 @@ V0 = h[S1 + 0028];
 [AT + 5700] = w(V0);
 A0 = h[S1 + 002a];
 S7 = S0;
-800A798C	jal    funca9a24 [$800a9a24]
+800A798C	jal    wm_set_pc_entity_terrain_data [$800a9a24]
 
 800A7994	jal    funca9e14 [$800a9e14]
 A0 = S0;
@@ -7925,7 +7857,7 @@ V0 = h[S1 + 0028];
 [AT + 5700] = w(V0);
 A0 = h[S1 + 002a];
 S7 = S0;
-800A7B38	jal    funca9a24 [$800a9a24]
+800A7B38	jal    wm_set_pc_entity_terrain_data [$800a9a24]
 
 800A7B40	jal    funca9e14 [$800a9e14]
 A0 = S0;
@@ -8001,7 +7933,7 @@ La7c30:	; 800A7C30
 S1 = 0;
 800A7C38	jal    funcaa238 [$800aa238]
 800A7C3C	nop
-800A7C40	jal    funca9a44 [$800a9a44]
+800A7C40	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800A7C44	nop
 V1 = 000e;
 800A7C4C	bne    v0, v1, La7c64 [$800a7c64]
@@ -8204,7 +8136,7 @@ funca4ddc();
 
 
 ////////////////////////////////
-// funca7f18
+// funca7f18()
 
 funca7f38();
 ////////////////////////////////

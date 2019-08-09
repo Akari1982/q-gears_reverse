@@ -145,10 +145,10 @@
                     0x0080 - square.
                     0x0100 - select.
                     0x0800 - start.
-                    0x1000 - up button.
-                    0x2000 - right button
-                    0x4000 - down button.
-                    0x8000 - left button
+                    0x1000 - up.
+                    0x2000 - right.
+                    0x4000 - down.
+                    0x8000 - left.
 
 80062d98 []       if this is not 0 we will not render effect?
 

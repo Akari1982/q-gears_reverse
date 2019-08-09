@@ -1,100 +1,4 @@
 ////////////////////////////////
-// funcad804()
-
-if( w[8010adec] == 0 )
-{
-    pc_entity = w[8010ad40];
-
-    if( ( bu[pc_entity + 51] & 08 ) == 0 )
-    {
-        A0 = 2000;
-        800AD83C	jal    funca91a4 [$800a91a4]
-
-        if( V0 != 0 )
-        {
-            // y - original_y
-            if( ( w[pc_entity + 10] - h[pc_entity + 42] ) >= 1f4 )
-            {
-                return;
-            }
-        }
-        else
-        {
-            if( bu[pc_entity + 51] & 80 )
-            {
-                return;
-            }
-        }
-
-        funca9ad0();
-        S0 = V0;
-
-        if( S0 >= 3 )
-        {
-            V0 = h[8010adf0];
-            A0 = S0 - 3;
-
-            if( V0 != S0 )
-            {
-                [8010adf0] = h(S0);
-
-                A0 = A0 << 10;
-                A0 = A0 >> 10;
-                A1 = 0;
-                funcaba78();
-
-            }
-
-            if( S0 == 7 )
-            {
-                A0 = 2000;
-                800AD8EC	jal    funca91a4 [$800a91a4]
-
-                if( V0 == 0 )
-                {
-                    800AD8FC	jal    funcaa238 [$800aa238]
-                }
-            }
-        }
-        else
-        {
-            [8010adf0] = h(0);
-        }
-    }
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcad928
-
-V0 = h[80109dba];
-
-V1 = w[8010ad38];
-
-800AD93C	beq    v1, zero, Lad968 [$800ad968]
-A0 = 0 < V0;
-800AD944	bne    a0, zero, Lad968 [$800ad968]
-800AD948	nop
-
-loopad94c:	; 800AD94C
-V0 = h[V1 + 0046];
-V1 = w[V1 + 0000];
-V0 = 0 < V0;
-800AD958	beq    v1, zero, Lad968 [$800ad968]
-A0 = A0 | V0;
-800AD960	beq    a0, zero, loopad94c [$800ad94c]
-800AD964	nop
-
-Lad968:	; 800AD968
-800AD968	jr     ra 
-V0 = A0;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcad970()
 
 entity = A0;
@@ -888,17 +792,12 @@ loopae8f4:	; 800AE8F4
 
 ////////////////////////////////
 // funcaea48
-800AEA48	addiu  sp, sp, $fe88 (=-$178)
-[SP + 0160] = w(S2);
+
 S2 = A0;
-[SP + 0168] = w(S4);
 S4 = S2;
-[SP + 0170] = w(RA);
-[SP + 016c] = w(S5);
-[SP + 0164] = w(S3);
-[SP + 015c] = w(S1);
-800AEA6C	jal    wm_get_current_render_buffer_id [$800a0bd4]
-[SP + 0158] = w(S0);
+
+wm_get_current_render_buffer_id();
+
 S5 = V0;
 V0 = S5 << 04;
 V0 = V0 - S5;
@@ -983,19 +882,6 @@ A0 = A0 << 04;
 A0 = A0 + V1;
 A0 = A0 << 04;
 800AEB8C	div    a0, s0
-800AEB90	bne    s0, zero, Laeb9c [$800aeb9c]
-800AEB94	nop
-800AEB98	break   $01c00
-
-Laeb9c:	; 800AEB9C
-800AEB9C	addiu  at, zero, $ffff (=-$1)
-800AEBA0	bne    s0, at, Laebb4 [$800aebb4]
-800AEBA4	lui    at, $8000
-800AEBA8	bne    a0, at, Laebb4 [$800aebb4]
-800AEBAC	nop
-800AEBB0	break   $01800
-
-Laebb4:	; 800AEBB4
 800AEBB4	mflo   a0
 800AEBB8	addiu  a1, t1, $ffc0 (=-$40)
 800AEBBC	lui    t0, $68db
@@ -1310,16 +1196,6 @@ V0 = V0 | V1;
 [S3 + 0000] = w(V0);
 
 Laf078:	; 800AF078
-RA = w[SP + 0170];
-S5 = w[SP + 016c];
-S4 = w[SP + 0168];
-S3 = w[SP + 0164];
-S2 = w[SP + 0160];
-S1 = w[SP + 015c];
-S0 = w[SP + 0158];
-SP = SP + 0178;
-800AF098	jr     ra 
-800AF09C	nop
 ////////////////////////////////
 
 
@@ -2101,75 +1977,70 @@ SP = SP + 0030;
 800B0090	jr     ra 
 800B0094	nop
 ////////////////////////////////
-// funcb0098
-800B0098	lui    v0, $8011
-V0 = w[V0 + b488];
-800B00A0	lui    v1, $8011
-V1 = w[V1 + b494];
-800B00A8	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S2);
+
+
+
+////////////////////////////////
+// funcb0098()
+
+V0 = w[8010b488];
+V1 = w[8010b494];
+
 S2 = A1;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S3);
-[SP + 001c] = w(S1);
 V0 = V0 < V1;
 800B00C4	beq    v0, zero, Lb0154 [$800b0154]
-[SP + 0018] = w(S0);
-800B00CC	lui    at, $8011
-[AT + b47c] = w(A0);
+
+[8010b47c] = w(A0);
 S1 = 0;
 S3 = 0001;
 S0 = 0;
 
 loopb00e0:	; 800B00E0
-800B00E0	jal    $func43cc0
-800B00E4	nop
-800B00E8	beq    v0, s3, Lb0104 [$800b0104]
-800B00EC	nop
-800B00F0	jal    $func43cc0
-800B00F4	nop
-V1 = 0002;
-800B00FC	bne    v0, v1, Lb0114 [$800b0114]
-800B0100	nop
+    800B00E0	jal    $func43cc0
 
-Lb0104:	; 800B0104
-800B0104	bne    s2, s3, Lb0120 [$800b0120]
-A3 = 00a6;
-800B010C	j      Lb0120 [$800b0120]
-A3 = 0126;
+    800B00E8	beq    v0, s3, Lb0104 [$800b0104]
+    800B00EC	nop
+    800B00F0	jal    $func43cc0
+    800B00F4	nop
+    V1 = 0002;
+    800B00FC	bne    v0, v1, Lb0114 [$800b0114]
+    800B0100	nop
 
-Lb0114:	; 800B0114
-800B0114	bne    s2, s3, Lb0120 [$800b0120]
-A3 = 0036;
-A3 = 0056;
+    Lb0104:	; 800B0104
+    800B0104	bne    s2, s3, Lb0120 [$800b0120]
+    A3 = 00a6;
+    800B010C	j      Lb0120 [$800b0120]
+    A3 = 0126;
 
-Lb0120:	; 800B0120
-[SP + 0010] = w(0);
-A0 = 8010b434;
-A0 = S0 + A0;
-A1 = 0;
-800B0134	jal    $system_gpu_create_texture_setting_packet
-A2 = 0001;
-S1 = S1 + 0001;
-V0 = S1 < 0002;
+    Lb0114:	; 800B0114
+    800B0114	bne    s2, s3, Lb0120 [$800b0120]
+    A3 = 0036;
+    A3 = 0056;
+
+    Lb0120:	; 800B0120
+    [SP + 0010] = w(0);
+    A0 = 8010b434;
+    A0 = S0 + A0;
+    A1 = 0;
+    A2 = 0001;
+    system_gpu_create_texture_setting_packet();
+
+    S1 = S1 + 0001;
+    V0 = S1 < 0002;
+    S0 = S0 + 0024;
 800B0144	bne    v0, zero, loopb00e0 [$800b00e0]
-S0 = S0 + 0024;
+
 800B014C	j      Lb015c [$800b015c]
 800B0150	nop
 
 Lb0154:	; 800B0154
-800B0154	lui    at, $8011
-[AT + b47c] = w(0);
+[8010b47c] = w(0);
 
 Lb015c:	; 800B015C
-RA = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-800B0174	jr     ra 
-800B0178	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb017c
 800B017C
@@ -2626,14 +2497,16 @@ V1 = hu[SP + 0010];
 V0 = V0 + V1;
 [S0 + 0000] = h(V0);
 V0 = hu[A0 + 0002];
-A0 = 0007;
 A1 = hu[SP + 0014];
 800B0888	lui    v1, $8011
 V1 = hu[V1 + c7f0];
 V0 = V0 + A1;
 [S0 + 0004] = h(V1);
-800B0898	jal    funca91a4 [$800a91a4]
 [S0 + 0002] = h(V0);
+
+A0 = 7; // cloud tifa cid
+wm_is_pc_entity_model_in_mask();
+
 800B08A0	bne    v0, zero, Lb08b8 [$800b08b8]
 800B08A4	nop
 800B08A8	jal    funca9240 [$800a9240]
@@ -2642,7 +2515,7 @@ V0 = V0 + A1;
 800B08B4	nop
 
 Lb08b8:	; 800B08B8
-800B08B8	jal    funca9a44 [$800a9a44]
+800B08B8	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800B08BC	nop
 V1 = 0007;
 800B08C4	bne    v0, v1, Lb0b38 [$800b0b38]
@@ -3114,9 +2987,10 @@ V0 = V0 - V1;
 Lb0f74:	; 800B0F74
 V0 = V0 < 00c9;
 800B0F78	beq    v0, zero, Lb0fa0 [$800b0fa0]
-800B0F7C	nop
-800B0F80	jal    funca91a4 [$800a91a4]
-A0 = 0007;
+
+A0 = 7; // cloud tifa cid
+wm_is_pc_entity_model_in_mask();
+
 800B0F88	bne    v0, zero, Lb0fb0 [$800b0fb0]
 800B0F8C	nop
 800B0F90	jal    funca9240 [$800a9240]
@@ -3131,8 +3005,9 @@ Lb0fa0:	; 800B0FA0
 800B0FAC	nop
 
 Lb0fb0:	; 800B0FB0
-800B0FB0	jal    funcaba18 [$800aba18]
-A0 = 0007;
+A0 = 7;
+wm_script_run_system_function_on_system_entity();
+
 [8010c804] = w(0);
 
 Lb0fc0:	; 800B0FC0
@@ -3140,7 +3015,7 @@ Lb0fc0:	; 800B0FC0
 800B0FC4	nop
 
 Lb0fc8:	; 800B0FC8
-800B0FC8	jal    funca9a44 [$800a9a44]
+800B0FC8	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800B0FCC	nop
 800B0FD0	jal    wm_get_model_id_from_pc_entity [$800a9174]
 S0 = V0 & 001f;
@@ -5031,8 +4906,9 @@ Lb2990:	; 800B2990
 800B2990	jal    wm_get_model_id_from_active_entity [$800a9154]
 800B2994	nop
 A0 = V0;
-800B299C	jal    funcab988 [$800ab988]
-A1 = 0005;
+A1 = 5;
+wm_script_run_model_function_on_entity_with_model_id();
+
 800B29A4	j      Lb29bc [$800b29bc]
 800B29A8	nop
 
@@ -5400,7 +5276,7 @@ if( w[8010caf4] != 0 )
         800B2F04	jal    funca45d4 [$800a45d4]
 
         A0 = 8;
-        800B2F0C	jal    funcaba18 [$800aba18]
+        wm_script_run_system_function_on_system_entity();
 
         [8010caf4] = w(0);
     }
@@ -6072,7 +5948,7 @@ Lb3820:	; 800B3820
 [SP + 003c] = w(RA);
 [SP + 0038] = w(S2);
 [SP + 0034] = w(S1);
-800B3838	jal    funca9a44 [$800a9a44]
+800B3838	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 [SP + 0030] = w(S0);
 V1 = 000e;
 800B3844	bne    v0, v1, Lb38bc [$800b38bc]
@@ -7048,7 +6924,7 @@ V1 = h[S2 + 003c];
 V0 = h[S2 + 003e];
 S3 = 1f800010;
 S6 = V1 + V0;
-V0 = hu[S2 + 004a];
+V0 = hu[S2 + 4a];
 800B4624	lui    s1, $1f80
 [1f800020] = h(S6);
 V1 = w[S2 + 001c];
@@ -8695,7 +8571,7 @@ V0 = S4 ^ V0;
 A3 = V0 < 0001;
 800B5E90	beq    s1, zero, Lb5ea4 [$800b5ea4]
 V1 = 0;
-V0 = hu[S1 + 004a];
+V0 = hu[S1 + 4a];
 800B5E9C	nop
 V1 = V0 & 001f;
 
@@ -10457,7 +10333,7 @@ S6 = 0;
 [SP + 002c] = w(RA);
 [SP + 001c] = w(S3);
 [SP + 0014] = w(S1);
-800B7CAC	jal    funca9a44 [$800a9a44]
+800B7CAC	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 [SP + 0010] = w(S0);
 800B7CB4	jal    funca9a70 [$800a9a70]
 S0 = V0;
@@ -10598,12 +10474,12 @@ V1 = bu[AT + 0000];
 V0 = V0 < V1;
 800B7E74	beq    v0, zero, Lb7f3c [$800b7f3c]
 800B7E78	nop
-800B7E7C	jal    funca9a44 [$800a9a44]
+800B7E7C	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800B7E80	nop
 V1 = 0001;
 800B7E88	beq    v0, v1, Lb7ea4 [$800b7ea4]
 800B7E8C	nop
-800B7E90	jal    funca9a44 [$800a9a44]
+800B7E90	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800B7E94	nop
 V1 = 0019;
 800B7E9C	bne    v0, v1, Lb7f3c [$800b7f3c]
@@ -10644,7 +10520,7 @@ Lb7f0c:	; 800B7F0C
 AT = 800bd94a;
 AT = AT + V0;
 S0 = hu[AT + 0000];
-800B7F1C	jal    funca9a44 [$800a9a44]
+800B7F1C	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 S0 = S0 & 03ff;
 V1 = 0019;
 800B7F28	bne    v0, v1, Lb7f34 [$800b7f34]
@@ -10665,9 +10541,10 @@ Lb7f3c:	; 800B7F3C
 800B7F54	jal    funcb7bb0 [$800b7bb0]
 800B7F58	nop
 800B7F5C	beq    v0, zero, Lb80a0 [$800b80a0]
-800B7F60	nop
-800B7F64	jal    funca91a4 [$800a91a4]
-A0 = 0007;
+
+A0 = 7; // cloud tifa cid
+wm_is_pc_entity_model_in_mask();
+
 800B7F6C	beq    v0, zero, Lb80a0 [$800b80a0]
 800B7F70	nop
 800B7F74	jal    funcadfc0 [$800adfc0]
@@ -10993,8 +10870,10 @@ A0 = SP + 0010;
 S0 = V0;
 800B8390	jal    funcaa170 [$800aa170]
 A0 = SP + 0020;
-800B8398	jal    funca91a4 [$800a91a4]
-A0 = 0047;
+
+A0 = 47; // cloud tifa cid buggy
+wm_is_pc_entity_model_in_mask();
+
 800B83A0	beq    v0, zero, Lb846c [$800b846c]
 800B83A4	nop
 V0 = w[80116280];

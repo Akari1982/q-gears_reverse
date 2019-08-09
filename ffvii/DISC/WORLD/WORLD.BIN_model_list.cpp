@@ -21,15 +21,15 @@ loopa8940:	; 800A8940
 [8010ad3c] = w(0);
 [8010ad40] = w(0);
 
-A0 = 80109d74; // some model struct
+A0 = 80109d74; // some entity struct
 wm_clean_model_struct();
 [80109e54 + 0] = w(0); // link to nothing
 
-A0 = 80109e54; // some model struct
+A0 = 80109e54; // some entity struct
 wm_clean_model_struct();
 [80109d74 + 0] = w(0); // link to nothing
 
-[80109e54 + 50] = b(9); // set id
+[80109e54 + 50] = b(9); // set model id
 
 [8010ad44] = h(0);
 [8010ad48] = h(0);
@@ -483,10 +483,10 @@ if( V0 != 0 )
 ////////////////////////////////
 // funca9134
 
-V1 = w[8010ad40];
-if( V1 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    return V1 + 60;
+    return pc_entity + 60;
 }
 return 0;
 ////////////////////////////////
@@ -528,14 +528,14 @@ return w[8010ad3c];
 
 
 ////////////////////////////////
-// funca91a4()
+// wm_is_pc_entity_model_in_mask()
 
-V0 = w[8010ad40];
-if( V0 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    if( bu[V0 + 50] < 20 )
+    if( bu[pc_entity + 50] < 20 )
     {
-        return (A0 >> bu[V0 + 50]) & 1;
+        return (A0 >> bu[pc_entity + 50]) & 1;
     }
 }
 return 0;
@@ -590,36 +590,29 @@ La9238:	; 800A9238
 
 
 ////////////////////////////////
-// funca9240
-800A9240	lui    v1, $8011
-V1 = w[V1 + ad40];
-800A9248	nop
-800A924C	beq    v1, zero, La9290 [$800a9290]
-800A9250	nop
-A0 = bu[V1 + 0050];
-V0 = 0004;
-800A925C	beq    a0, v0, La9288 [$800a9288]
-A1 = 0;
-V0 = 0013;
-800A9268	beq    a0, v0, La9288 [$800a9288]
-800A926C	nop
-V0 = bu[V1 + 0050];
-800A9274	nop
-800A9278	addiu  v0, v0, $ffd7 (=-$29)
-V0 = V0 < 0002;
-800A9280	beq    v0, zero, La9294 [$800a9294]
-800A9284	nop
+// funca9240()
 
-La9288:	; 800A9288
-800A9288	j      La9294 [$800a9294]
-A1 = 0001;
+V1 = w[8010ad40];
+if( V1 != 0 )
+{
+    model_id = bu[V1 + 50];
 
-La9290:	; 800A9290
-A1 = 0;
+    if( model_id == 4 ) // wild chocobo
+    {
+        return 1;
+    }
 
-La9294:	; 800A9294
-800A9294	jr     ra 
-V0 = A1;
+    if( model_id == 13 ) // player chocobo
+    {
+        return 1;
+    }
+
+    if( ( model_id - 29 ) < 2 )
+    {
+        return 1;
+    }
+}
+return 0;
 ////////////////////////////////
 
 
@@ -1240,24 +1233,24 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funca9a24()
+// wm_set_pc_entity_terrain_data()
 
-V0 = w[8010ad40];
-if( V0 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    [V0 + 4a] = h(A0);
+    [pc_entity + 4a] = h(A0);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca9a44()
+// wm_get_pc_entity_terrain_id()
 
-V0 = w[8010ad40];
-if( V0 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    return hu[V0 + 4a] & 1f;
+    return hu[pc_entity + 4a] & 1f;
 }
 else
 {
@@ -1270,10 +1263,10 @@ else
 ////////////////////////////////
 // funca9a70()
 
-V0 = w[8010ad40];
-if( V0 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    V0 = (hu[V0 + 4a] >> 9) & 1f;
+    return (hu[pc_entity + 4a] >> 9) & 1f;
 }
 else
 {
@@ -1286,10 +1279,10 @@ else
 ////////////////////////////////
 // funca9aa4()
 
-V0 = w[8010ad40];
-if( V0 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    return hu[V0 + 4a] >> f;
+    return hu[pc_entity + 4a] >> f;
 }
 else
 {
@@ -1483,7 +1476,7 @@ if( A2 != 0 )
 
 S0 = A0;
 
-800A9E24	jal    funca9a44 [$800a9a44]
+800A9E24	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 
 S1 = V0;
 A0 = w[8010ad40];
@@ -1757,22 +1750,22 @@ if( A2 != 0 )
 ////////////////////////////////
 // funcaa238()
 
-A2 = w[8010ad40];
-if( A2 != 0 )
+pc_entity = w[8010ad40];
+if( pc_entity != 0 )
 {
-    if( bu[A2 + 51] & 04 )
+    if( bu[pc_entity + 51] & 04 )
     {
-        [A2 + c] = w(w[A2 + 1c]);
-        [A2 + 14] = w(w[A2 + 24]);
+        [pc_entity + c] = w(w[pc_entity + 1c]);
+        [pc_entity + 14] = w(w[pc_entity + 24]);
     }
     else
     {
-        [A2 + c] = w(w[A2 + 1c]);
-        [A2 + 10] = w(w[A2 + 20]);
-        [A2 + 14] = w(w[A2 + 24]);
-        [A2 + 18] = w(w[A2 + 28]);
+        [pc_entity + c] = w(w[pc_entity + 1c]);
+        [pc_entity + 10] = w(w[pc_entity + 20]);
+        [pc_entity + 14] = w(w[pc_entity + 24]);
+        [pc_entity + 18] = w(w[pc_entity + 28]);
     }
-    [A2 + 51] = b(bu[A2 + 51] & fe);
+    [pc_entity + 51] = b(bu[pc_entity + 51] & fe);
 }
 ////////////////////////////////
 
@@ -2111,7 +2104,7 @@ while( S0 != 0 )
         A0 = S0 + c; // coords src
         A1 = SP + 20; // bottom 0xd bits of coords
         A2 = SP + 28; // top X bits cycled
-        A3 = SP + 2a; // top Y bits cycled
+        A3 = SP + 2a; // top Z bits cycled
         wm_extract_loop_coords_top_bottom_parts();
 
         if( ( h[SP + 28] == h[S1 + 10] ) && ( h[SP + 2a] == h[S1 + 12] ) )
@@ -2121,9 +2114,9 @@ while( S0 != 0 )
             A2 = S0 + 60;
             A3 = S0 + 42; // Y pos before modification
             A4 = 0;
-            A5 = S0 + 4a;
+            A5 = S0 + 4a; // terrain id
             A6 = bu[S0 + 50];
-            800AA758	jal    funca19fc [$800a19fc]
+            funca19fc();
 
             if( ( bu[S0 + 51] & 80 ) == 0 )
             {
@@ -2276,7 +2269,7 @@ SP = SP + 0030;
 S1 = w[80109d70];
 S0 = A0;
 
-800AAA18	jal    funca9a44 [$800a9a44]
+800AAA18	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 
 V1 = w[80109d70];
 A1 = 0002;
@@ -2351,7 +2344,7 @@ Laab00:	; 800AAB00
 ////////////////////////////////
 // funcaab18()
 
-entity = S0 = A0;
+entity = A0;
 
 if( entity == 0 )
 {
@@ -2886,7 +2879,7 @@ if( S0 != 0 )
             800AB438	nop
 
             Lab43c:	; 800AB43C
-            V0 = hu[S0 + 004a];
+            V0 = hu[S0 + 4a];
             V1 = V1 | 6f05;
             V0 = V0 & 001f;
             V1 = V1 >> V0;

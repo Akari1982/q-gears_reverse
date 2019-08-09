@@ -40,19 +40,22 @@ for( int i = 0; i < 3; ++i )
 
 
 ////////////////////////////////
-// funcab6e4()
+// wm_script_run_function()
 
-S0 = A0;
-S1 = A1;
+func_id = A0;
+priority = A1;
 
 active_entity = w[8010ad3c];
 
-S2 = 0;
+store = 0;
+
 if( active_entity != 0 )
 {
-    A0 = bu[active_entity + 57];
-    V0 = A0 < S1;
-    if( ( V0 == 0 ) && ( ( A0 != S1 ) || ( S1 != 3 ) ) )
+    cur_priority = bu[active_entity + 57];
+
+    // if we try to run script with same or lower priority and current
+    // script doesn't finished then return.
+    if( ( cur_priority >= priority ) && ( ( cur_priority != priority ) || ( priority != 3 ) ) )
     {
         if( h[active_entity + 46] != 0 )
         {
@@ -60,26 +63,28 @@ if( active_entity != 0 )
         }
     }
 
+    // if script not finished yet - store it to call stack
     if( h[active_entity + 46] != 0 )
     {
         V0 = bu[active_entity + 54];
-        [active_entity + 54] = b(V0 + 1);
         [active_entity + 2c + V0 * 4 + 0] = h(hu[active_entity + 46]);
         [active_entity + 2c + V0 * 4 + 2] = b(bu[active_entity + 56]);
-        [active_entity + 2c + V0 * 4 + 3] = b(bu[active_entity + 57]);
-        S2 = 1;
+        [active_entity + 2c + V0 * 4 + 3] = b(cur_priority);
+        [active_entity + 54] = b(V0 + 1);
+
+        store = 1;
     }
 
+    // binary search for given func_id
     A0 = w[8010ad68] + 200; // call table + 200
-
     V1 = 40;
     while( V1 != 0 )
     {
-        if( hu[A0 + 0] == S0 )
+        if( hu[A0 + 0] == func_id )
         {
             break;
         }
-        if( hu[A0 + 0] < S0 )
+        if( hu[A0 + 0] < func_id )
         {
             A0 = A0 + V1 * 4;
         }
@@ -87,14 +92,14 @@ if( active_entity != 0 )
         {
             A0 = A0 - V1 * 4;
         }
-
         V1 = V1 >> 1;
     }
 
-    if( hu[A0 + 0] == S0 )
+    // if we found requested function in scripts
+    if( hu[A0 + 0] == func_id )
     {
         [active_entity + 46] = h(hu[A0 + 2]); // script position
-        [active_entity + 57] = b(S1);
+        [active_entity + 57] = b(priority);
     }
     else
     {
@@ -102,17 +107,15 @@ if( active_entity != 0 )
         [active_entity + 57] = b(0);
     }
 
-    if( S2 != 0 )
+    // if we store sctipt, but script was not found then restore
+    if( ( store != 0 ) && ( h[active_entity + 46] == 0 ) )
     {
-        if( h[active_entity + 46] == 0 ) // script position
-        {
-            [active_entity + 54] = b(bu[active_entity + 54] - 1);
+        [active_entity + 54] = b(bu[active_entity + 54] - 1);
 
-            V0 = bu[active_entity + 54];
-            [active_entity + 46] = h(hu[active_entity + 2c + V0 * 4 + 0]); // script position
-            [active_entity + 56] = b(bu[active_entity + 2c + V0 * 4 + 2]); // wait value
-            [active_entity + 57] = b(bu[active_entity + 2c + V0 * 4 + 3]);
-        }
+        V0 = bu[active_entity + 54];
+        [active_entity + 46] = h(hu[active_entity + 2c + V0 * 4 + 0]); // script position
+        [active_entity + 56] = b(bu[active_entity + 2c + V0 * 4 + 2]); // wait value
+        [active_entity + 57] = b(bu[active_entity + 2c + V0 * 4 + 3]); // priority
     }
 }
 ////////////////////////////////
@@ -120,42 +123,35 @@ if( active_entity != 0 )
 
 
 ////////////////////////////////
-// funcab8ec
-800AB8EC	lui    v1, $8011
-V1 = w[V1 + ad40];
-800AB8F4	nop
-800AB8F8	beq    v1, zero, Lab924 [$800ab924]
-800AB8FC	nop
-800AB900	beq    a0, zero, Lab914 [$800ab914]
-800AB904	nop
-V0 = bu[V1 + 0051];
-800AB90C	j      Lab920 [$800ab920]
-V0 = V0 | 0010;
+// wm_script_disable_for_pc_entity()
 
-Lab914:	; 800AB914
-V0 = bu[V1 + 0051];
-800AB918	nop
-V0 = V0 & 00ef;
-
-Lab920:	; 800AB920
-[V1 + 0051] = b(V0);
-
-Lab924:	; 800AB924
-800AB924	jr     ra 
-800AB928	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcab92c()
-
-V0 = w[8010ad3c];
-if( V0 != 0 )
+V1 = w[8010ad40];
+if( V1 != 0 )
 {
-    A1 = A0 - 2;
-    if( ( bu[V0 + 51] & 10 ) == 0 )
+    if( A0 != 0 )
     {
+        [V1 + 51] = b(bu[V1 + 51] | 10);
+    }
+    else
+    {
+        [V1 + 51] = b(bu[V1 + 51] & ef);
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// wm_script_run_system_function_on_active_entity()
+
+func_id = A0;
+
+active_entity = w[8010ad3c];
+if( active_entity != 0 )
+{
+    if( ( bu[active_entity + 51] & 10 ) == 0 )
+    {
+        A1 = func_id - 2; // priority
         if( A1 < 0 )
         {
             A1 = 0;
@@ -165,8 +161,8 @@ if( V0 != 0 )
             A1 = 3;
         }
 
-        A0 = A0 & ff;
-        funcab6e4();
+        A0 = func_id & ff;
+        wm_script_run_function();
     }
 }
 ////////////////////////////////
@@ -174,25 +170,20 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funcab988()
+// wm_script_run_model_function_on_entity_with_model_id()
 
 model_id = A0;
-S1 = A1;
+func_id = A1;
 
+A0 = model_id;
 wm_set_active_entity_with_model_id();
 
 active_entity = w[8010ad3c];
 if( active_entity != 0 )
 {
-    A1 = S1 - 2;
     if( ( bu[active_entity + 51] & 10 ) == 0 )
     {
-
-        V1 = model_id << 08;
-        V1 = V1 & 3f00;
-        V0 = S1 & 00ff;
-        V0 = V0 | 4000;
-        A0 = V1 | V0;
+        A1 = func_id - 2; // priority
         if( A1 < 0 )
         {
             A1 = 0;
@@ -202,7 +193,8 @@ if( active_entity != 0 )
             A1 = 3;
         }
 
-        funcab6e4();
+        A0 = 4000 | ((model_id << 8) & 3f00) | (func_id & ff);
+        wm_script_run_function();
     }
 }
 ////////////////////////////////
@@ -210,15 +202,18 @@ if( active_entity != 0 )
 
 
 ////////////////////////////////
-// funcaba18()
+// wm_script_run_system_function_on_system_entity()
 
-[8010ad3c] = w(80109d74);
-if( A0 == 1 )
+func_id = A0;
+
+[8010ad3c] = w(80109d74); // active entity
+
+if( func_id == 1 )
 {
     [8010adec] = w(1);
 }
 
-A1 = A0 - 2;
+A1 = func_id - 2; // priority
 if( A1 < 0 )
 {
     A1 = 0;
@@ -228,43 +223,29 @@ if( A1 >= 4 )
     A1 = 3;
 }
 
-A0 = A0 & ff;
-funcab6e4();
+A0 = func_id & ff;
+wm_script_run_function();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcaba78()
+// wm_script_run_mesh_function_on_system_entity()
 
 S0 = A0;
 S1 = A1;
 
-[8010ad3c] = w(80109d74);
+[8010ad3c] = w(80109d74); // active entity
 
-A0 = w[8010ad40] + c;
-A1 = 0;
-A2 = SP + 10;
-A3 = SP + 12;
+A0 = w[8010ad40] + c; // coords src
+A1 = 0; // bottom 0xd bits of coords
+A2 = SP + 10; // top X bits cycled
+A3 = SP + 12; // top Z bits cycled
 wm_extract_loop_coords_top_bottom_parts();
 
-S0 = S0 << 10;
-S0 = S0 >> 10;
-S1 = S1 << 10;
-S1 = S1 >> 10;
-
-A0 = (((h[SP + 12] * 24) + h[SP + 10]) << 4) & 3ff0;
-
-V0 = S1 << 02;
-V0 = V0 + S1;
-
-S0 = S0 + V0;
-S0 = S0 & f;
-
-
-A0 = A0 | S0 | 8000;
-A1 = 3;
-funcab6e4();
+A0 = 8000 | (((h[SP + 10] + h[SP + 12] * 24) << 4) & 3ff0) | ((S0 + S1 * 5) & f); // func id
+A1 = 3; // priority
+wm_script_run_function();
 ////////////////////////////////
 
 
@@ -376,13 +357,6 @@ else
         }
         break;
 
-        case f:
-        {
-            V0 = w[8010ad3c];
-            return bu[V0 + 50];
-        }
-        break;
-
         case 9:
         {
             800ABD80	jal    funcb7b2c [$800b7b2c]
@@ -410,7 +384,6 @@ else
         case c:
         {
             wm_dialog_get_ask_result()
-
             return V0;
         }
         break;
@@ -426,6 +399,13 @@ else
         {
             wm_get_pc_character_model_from_party();
             return V0; // model id
+        }
+        break;
+
+        case f:
+        {
+            V0 = w[8010ad3c];
+            return bu[V0 + 50];
         }
         break;
 
@@ -469,11 +449,11 @@ return 0;
 
 
 ////////////////////////////////
-// funcabe58()
+// wm_script_write_bank()
 
-S1 = A0;
+value = A0;
 
-[8010ad90] = w(w[8010ad90] - 8);
+[8010ad90] = w(w[8010ad90] - 8);// pop stack
 
 if( w[8010ad90] <= 8010ad68 )
 {
@@ -482,74 +462,47 @@ if( w[8010ad90] <= 8010ad68 )
 }
 
 A0 = w[8010ad90];
-V0 = hu[A0 + 0004];
-V1 = hu[A0 + 0004];
-V0 = V0 & 0003;
-V0 = V0 << 02;
-V1 = V1 & fffc;
-S0 = w[8010ad94 + V0];
+V0 = hu[A0 + 4] & 3;
+V1 = hu[A0 + 4] & fffc;
+S0 = w[8010ad94 + V0 * 4]; // 0 - memory bank 1_2, 1-3 - temp array
 
-if( V1 == 118 )
+if( V1 == 114 ) // bit
+{
+    S0 = S0 + (w[A0] >> 3);
+    A0 = 1 << (w[A0] & 7);
+
+    [S0] = b(bu[S0] & (0 NOR A0)); // remove bit
+
+    if( value != 0 )
+    {
+        [S0] = b(bu[S0] | A0); // add bit
+    }
+
+}
+else if( V1 == 118 ) // byte
 {
     V0 = w[A0 + 0];
-    [V0 + S0] = b(S1);
-    800ABF50	j      Labf88 [$800abf88]
+    [V0 + S0] = b(value);
 }
-
-V0 = V1 < 0119;
-800ABED4	beq    v0, zero, Labeec [$800abeec]
-V0 = 0114;
-800ABEDC	beq    v1, v0, Labf00 [$800abf00]
-800ABEE0	nop
-800ABEE4	j      Labf80 [$800abf80]
-800ABEE8	nop
-
-Labeec:	; 800ABEEC
-V0 = 011c;
-800ABEF0	beq    v1, v0, Labf58 [$800abf58]
-800ABEF4	nop
-800ABEF8	j      Labf80 [$800abf80]
-800ABEFC	nop
-
-Labf00:	; 800ABF00
-V0 = w[A0 + 0000];
-V1 = V0 >> 03;
-S0 = S0 + V1;
-V0 = V0 & 7;
-A0 = 1 << V0;
-V0 = bu[S0 + 0];
-V1 = 0 NOR A0;
-V0 = V0 & V1;
-[S0 + 0000] = b(V0);
-V0 = bu[S0 + 0000];
-if( S1 != 0 )
+else if( V1 == 11c ) // two bytes
 {
-    V0 = V0 | A0;
+    S0 = w[A0 + 0] + S0;
+    if( S0 & 1 )
+    {
+        A0 = 3f;
+        funca0b40(); // error
+    }
+    [S0] = h(value);
 }
-
-800ABF3C	j      Labf88 [$800abf88]
-[S0 + 0000] = b(V0);
-
-Labf58:	; 800ABF58
-S0 = w[A0 + 0] + S0;
-V0 = S0 & 0001;
-
-if( V0 != 0 )
+else
 {
-    A0 = 3f;
+    A0 = 40;
     funca0b40(); // error
 }
 
-[S0 + 0000] = h(S1);
-800ABF78	j      Labf88 [$800abf88]
-
-Labf80:	; 800ABF80
-A0 = 40;
-funca0b40(); // error
-
-Labf88:	; 800ABF88
+// push value to stack
 V0 = w[8010ad90];
-[V0 + 0] = w(S1);
+[V0 + 0] = w(value);
 [V0 + 4] = h(110);
 [8010ad90] = w(V0 + 8);
 ////////////////////////////////
@@ -778,7 +731,7 @@ switch( A0 )
         wm_script_pop_stack();
 
         A0 = V0;
-        funcabe58();
+        wm_script_write_bank();
     }
     break;
 
@@ -882,13 +835,14 @@ V0 = w[8010ad90];
 
 ////////////////////////////////
 // wm_script_opcode_100_handle()
+
 S0 = A0;
 V1 = S0 & ffff;
 if( A0 == 100 )
 {
     [8010ad90] = w(8010ad70);
 }
-else
+else // push value and opcode to stack
 {
     A1 = w[8010ad90];
     A0 = w[8010ade4];
@@ -896,9 +850,8 @@ else
     [A0 + 46] = h(V0 + 1);
 
     V1 = w[8010ad6c];
-    [A1 + 0] = w(hu[V1 + V0 * 2]);
-    [A1 + 4] = h(S0);
-
+    [A1 + 0] = w(hu[V1 + V0 * 2]); // value
+    [A1 + 4] = h(S0); // opcode
     [8010ad90] = w(A1 + 8);
 }
 ////////////////////////////////
@@ -908,8 +861,9 @@ else
 ////////////////////////////////
 // wm_script_opcode_200_handle()
 
-S0 = A0;
-if( A0 == 200 ) // jump
+opcode = A0;
+
+if( opcode == 200 ) // jump
 {
     entity = w[8010ade4];
     [entity + 46] = h(hu[entity + 46] + 1);
@@ -919,7 +873,7 @@ if( A0 == 200 ) // jump
 
     return 0;
 }
-else if( A0 == 201 ) // jump if false
+else if( opcode == 201 ) // jump if false
 {
     entity = w[8010ade4];
     [entity + 46] = h(hu[entity + 46] + 1);
@@ -934,7 +888,7 @@ else if( A0 == 201 ) // jump if false
     }
     return 0;
 }
-else if( A0 == 203 ) // return
+else if( opcode == 203 ) // return
 {
     V1 = w[8010ade4];
     V0 = bu[V1 + 0054];
@@ -974,9 +928,9 @@ else if( A0 == 203 ) // return
                 S0 = w[8010ad38];
                 while( S0 != 0 )
                 {
-                    A0 = bu[S0 + 50];
+                    A0 = bu[S0 + 50]; // model id
                     A1 = 1;
-                    funcab988();
+                    wm_script_run_model_function_on_entity_with_model_id();
 
                     S0 = w[S0 + 0];
                 }
@@ -987,13 +941,13 @@ else if( A0 == 203 ) // return
             if (w[8010ade4] == 80109d74)
             {
                 A0 = 2;
-                funcaba18();
+                wm_script_run_system_function_on_system_entity();
             }
             else
             {
-                A0 = bu[V1 + 0050];
+                A0 = bu[V1 + 50]; // model id
                 A1 = 2;
-                funcab988();
+                wm_script_run_model_function_on_entity_with_model_id();
             }
         }
     }
@@ -1002,26 +956,24 @@ else if( A0 == 203 ) // return
 else // run function
 {
     wm_script_pop_stack();
+    model_id = V0;
 
-    V1 = w[8010ade4];
-    [V1 + 0052] = b(V0);
-    V1 = w[8010ade4];
-    A0 = bu[V1 + 0052];
-    A1 = S0 & ffff;
-    if( A0 < 40 )
+    entity = w[8010ade4];
+    [entity + 52] = b(model_id);
+
+    if( model_id < 40 )
     {
-        A1 = A1 - 204;
-        funcab988();
+        A0 = model_id;
+        A1 = opcode - 204;
+        wm_script_run_model_function_on_entity_with_model_id();
     }
     else
     {
-        V0 = w[8010ad3c];
-        A0 = S0 & ffff;
-        V0 = bu[V0 + 0050];
-        [V1 + 0052] = b(V0);
+        active_entity = w[8010ad3c];
+        [entity + 52] = b(bu[active_entity + 50]);
 
-        A0 = A0 - 204;
-        funcab92c();
+        A0 = opcode - 204;
+        wm_script_run_system_function_on_active_entity();
     }
     return 1;
 }
@@ -1053,7 +1005,7 @@ switch( opcode )
 
             A0 = model_id;
             A1 = 0;
-            funcab988();
+            wm_script_run_model_function_on_entity_with_model_id();
         }
         return 0;
     }
@@ -2068,7 +2020,6 @@ switch( opcode )
     case 327: // wait for ask closed and get result
     {
         wm_dialog_get_ask_result();
-
         if( V0 < 0 ) // not closed
         {
             if( w[8010ade4 + 8] == 0 )
@@ -2310,8 +2261,8 @@ if( w[entity + 4] != 0 )
             }
 
             V0 = w[entity + 4];
-            A0 = bu[V0 + 50];
-            funcab988();
+            A0 = bu[V0 + 50]; // model id
+            wm_script_run_model_function_on_entity_with_model_id();
         }
     }
 }
@@ -2341,4 +2292,85 @@ while( S0 != 0 )
 
     S0 = w[S0];
 }
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcad804()
+
+if( w[8010adec] == 0 )
+{
+    pc_entity = w[8010ad40];
+
+    if( ( bu[pc_entity + 51] & 08 ) == 0 )
+    {
+        A0 = 2000; // submarine
+        wm_is_pc_entity_model_in_mask();
+        if( V0 != 0 )
+        {
+            // y - original_y
+            if( ( w[pc_entity + 10] - h[pc_entity + 42] ) >= 1f4 )
+            {
+                return;
+            }
+        }
+        else
+        {
+            if( bu[pc_entity + 51] & 80 )
+            {
+                return;
+            }
+        }
+
+        funca9ad0();
+        S0 = V0;
+
+        if( S0 >= 3 )
+        {
+            A0 = S0 - 3;
+
+            if( h[8010adf0] != S0 )
+            {
+                [8010adf0] = h(S0);
+
+                A0 = (A0 << 10) >> 10;
+                A1 = 0;
+                wm_script_run_mesh_function_on_system_entity();
+
+            }
+
+            if( S0 == 7 )
+            {
+                A0 = 2000; // submarine
+                wm_is_pc_entity_model_in_mask();
+                if( V0 == 0 )
+                {
+                    funcaa238(); // set final position from temp
+                }
+            }
+        }
+        else
+        {
+            [8010adf0] = h(0);
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// wm_script_is_any_script_runs()
+
+entity = w[8010ad38];
+A0 = 0 < h[80109dba];
+
+while( ( A0 == 0 ) && ( entity != 0 ) )
+{
+    A0 = A0 | (0 < h[entity + 46]);
+    entity = w[entity + 0]; // go to next entity
+}
+
+return A0;
 ////////////////////////////////

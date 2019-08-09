@@ -230,7 +230,7 @@ if( V0 != 0 )
 // funcbbbb0
 800BBBB0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
-800BBBB8	jal    funca9a44 [$800a9a44]
+800BBBB8	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 [SP + 0010] = w(S0);
 800BBBC0	jal    funca9240 [$800a9240]
 S0 = V0;
@@ -320,18 +320,19 @@ Lbbcbc:	; 800BBCBC
 800BBCC4	addiu  v0, s0, $fffd (=-$3)
 V0 = V0 < 0002;
 800BBCCC	beq    v0, zero, Lbbcdc [$800bbcdc]
-800BBCD0	nop
-800BBCD4	jal    funcab8ec [$800ab8ec]
-A0 = 0001;
+
+A0 = 1;
+wm_script_disable_for_pc_entity();
+
 
 Lbbcdc:	; 800BBCDC
-800BBCDC	jal    funca9a44 [$800a9a44]
+800BBCDC	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800BBCE0	nop
 V1 = 001b;
 800BBCE8	bne    v0, v1, Lbbcf8 [$800bbcf8]
-800BBCEC	nop
-800BBCF0	jal    funcaba18 [$800aba18]
-A0 = 0009;
+
+A0 = 9;
+wm_script_run_system_function_on_system_entity();
 
 Lbbcf8:	; 800BBCF8
 ////////////////////////////////
@@ -401,19 +402,18 @@ V0 = S4 & 0040;
 
 Lbbdf0:	; 800BBDF0
 800BBDF0	bne    v0, zero, Lbbe48 [$800bbe48]
-800BBDF4	nop
-800BBDF8	lui    v0, $8011
-V0 = w[V0 + 63dc];
-800BBE00	nop
-800BBE04	addiu  v0, v0, $ffff (=-$1)
+
+V0 = w[801163dc] - 1;
 V0 = V0 < 000e;
 800BBE0C	beq    v0, zero, Lbbe48 [$800bbe48]
 800BBE10	nop
-800BBE14	jal    funca91a4 [$800a91a4]
-A0 = 2000;
+
+A0 = 2000; // submarine
+wm_is_pc_entity_model_in_mask();
+
 800BBE1C	beq    v0, zero, Lbbe38 [$800bbe38]
 800BBE20	nop
-800BBE24	jal    funca9a44 [$800a9a44]
+800BBE24	jal    wm_get_pc_entity_terrain_id [$800a9a44]
 800BBE28	nop
 V1 = 0012;
 800BBE30	bne    v0, v1, Lbbe48 [$800bbe48]
@@ -469,8 +469,10 @@ Lbbed4:	; 800BBED4
 800BBEE0	nop
 800BBEE4	jal    funca98a4 [$800a98a4]
 A0 = 0;
-800BBEEC	jal    funcab8ec [$800ab8ec]
+
 A0 = 0;
+wm_script_disable_for_pc_entity();
+
 
 Lbbef4:	; 800BBEF4
 800BBEF4	jal    funcaa1b8 [$800aa1b8]
@@ -492,17 +494,21 @@ V0 = S4 & 0040;
 Lbbf30:	; 800BBF30
 800BBF30	bne    s1, s3, Lbbf44 [$800bbf44]
 A0 = S1;
-800BBF38	jal    funcab8ec [$800ab8ec]
+
 A0 = 0;
+wm_script_disable_for_pc_entity();
+
 A0 = S1;
 
 Lbbf44:	; 800BBF44
-800BBF44	jal    funcab988 [$800ab988]
-A1 = 0005;
+A1 = 5;
+wm_script_run_model_function_on_entity_with_model_id();
+
 800BBF4C	bne    s1, s3, Lbbf5c [$800bbf5c]
-800BBF50	nop
-800BBF54	jal    funcab8ec [$800ab8ec]
-A0 = 0001;
+
+A0 = 1;
+wm_script_disable_for_pc_entity();
+
 
 Lbbf5c:	; 800BBF5C
 800BBF5C	jal    funca929c [$800a929c]
@@ -642,8 +648,9 @@ V1 = 0004;
 800BC114	nop
 
 Lbc118:	; 800BC118
-800BC118	jal    funcab8ec [$800ab8ec]
 A0 = 0;
+wm_script_disable_for_pc_entity();
+
 
 Lbc120:	; 800BC120
 800BC120	bne    s2, zero, Lbc14c [$800bc14c]
