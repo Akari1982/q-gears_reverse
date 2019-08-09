@@ -70,9 +70,9 @@ if( active_entity != 0 )
         S2 = 1;
     }
 
-    V1 = 40;
     A0 = w[8010ad68] + 200; // call table + 200
 
+    V1 = 40;
     while( V1 != 0 )
     {
         if( hu[A0 + 0] == S0 )
@@ -409,7 +409,7 @@ else
 
         case c:
         {
-            wm_window_get_ask_result()
+            wm_dialog_get_ask_result()
 
             return V0;
         }
@@ -1999,7 +1999,7 @@ switch( opcode )
     }
     break;
 
-    case 324: // set window dimensions
+    case 324: // set dialog dimensions
     {
         wm_script_pop_stack();
         [SP + 1e] = h(V0);
@@ -2014,13 +2014,13 @@ switch( opcode )
         [SP + 18] = h(V0);
 
         A0 = SP + 18;
-        wm_window_set_position_and_size_for_id_0();
+        wm_dialog_set_position_and_size_for_id_0();
 
         return 0;
     }
     break;
 
-    case 32c: // set window parameters
+    case 32c: // set dialog parameters
     {
         wm_script_pop_stack();
         S1 = V0;
@@ -2029,24 +2029,24 @@ switch( opcode )
 
         A0 = V0; // mode
         A1 = S1; // permanency
-        wm_window_set_mode_and_permanency_for_id_0();
+        wm_dialog_set_mode_and_permanency_for_id_0();
 
         return 0;
     }
     break;
 
-    case 325: // set window message
+    case 325: // set dialog message
     {
         wm_script_pop_stack();
 
         A0 = V0; // message id
-        wm_window_set_message_to_show_for_id_0();
+        wm_dialog_set_message_to_show_for_id_0();
 
         return 0;
     }
     break;
 
-    case 326: // set window ask
+    case 326: // set dialog ask
     {
         wm_script_pop_stack();
         last_pos = V0;
@@ -2059,7 +2059,7 @@ switch( opcode )
         A0 = V0; // message id
         A1 = first_pos;
         A2 = last_pos;
-        wm_window_set_ask_to_show_for_id_0();
+        wm_dialog_set_ask_to_show_for_id_0();
 
         return 0;
     }
@@ -2067,7 +2067,7 @@ switch( opcode )
 
     case 327: // wait for ask closed and get result
     {
-        wm_window_get_ask_result();
+        wm_dialog_get_ask_result();
 
         if( V0 < 0 ) // not closed
         {
@@ -2082,11 +2082,11 @@ switch( opcode )
     }
     break;
 
-    case 32d: // wait for window closed
+    case 32d: // wait for dialog closed
     {
         if( w[8010ade4 + 8] == 0 )
         {
-            wm_window_set_window_with_id_0_to_close();
+            wm_dialog_set_window_with_id_0_to_close();
 
             A0 = w[8010ad3c];
             [A0 + 46] = h(hu[A0 + 46] - V0);
@@ -2096,14 +2096,14 @@ switch( opcode )
     }
     break;
 
-    case 32e: // wait while window showing
+    case 32e: // wait while dialog showing
     {
         if( w[8010ade4 + 8] == 0 )
         {
-            wm_window_is_window_with_id_0_showing();
+            wm_dialog_is_window_with_id_0_showing();
 
             A0 = w[8010ad3c];
-            [A0 + 46] = h(hu[A0 + 46] - V0);
+            [A0 + 46] = h(hu[A0 + 46] - V0); // repeat same opcode
             return V0;
         }
         return 0;
@@ -2114,16 +2114,16 @@ switch( opcode )
     {
         if( w[8010ade4 + 8] == 0 )
         {
-            V0 = w[8010ade4];
-            A0 = bu[V0 + 52];
             S1 = w[8010ad3c];
+
+            V0 = w[8010ade4 + 0]; // prev entity
+            A0 = bu[V0 + 52];
             wm_set_active_entity_with_model_id();
 
             V0 = w[8010ad3c];
-            V1 = hu[S1 + 46];
+            [S1 + 46] = h(hu[S1 + 46] - (0 < bu[V0 + 57])); // repeat same opcode
+
             [8010ad3c] = w(S1);
-            V0 = 0 < bu[V0 + 57];
-            [S1 + 46] = h(V1 - V0);
             return V0;
         }
         return 0;
@@ -2133,9 +2133,8 @@ switch( opcode )
     case 33f:
     {
         800AD470	jal    funca82dc [$800a82dc]
-        800AD474	nop
-        800AD478	j      Lad620 [$800ad620]
-        V0 = 0;
+
+        return 0;
     }
     break;
 

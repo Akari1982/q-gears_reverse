@@ -7,6 +7,21 @@
 
 800491d0 character id -> savemap block assosiation id. (0-0, 1-1, 2-2, 3-3, 4-4, 5-5, 6-6, 7-7, 8-8, 9-6, A-7)
 
+80049214 array of mm:ss timer divider (0x4 items 0x4 size).
+    00000258 600 X0:00
+    0000003C  60 0X:00
+    0000000A  10 00:X0
+    00000001   1 00:0X
+80049224
+    00989680 10000000
+    000F4240  1000000
+    000186A0   100000
+    00002710    10000
+    000003E8     1000
+    00000064      100
+    0000000A       10
+    00000001        1
+
 800498a8 size of opcodes.
 80049c28 pause table.
 80049c40 default AKAO sequence (only A0 here).
@@ -95,6 +110,7 @@
                     0 - 
                     1 - enabled
                     2 - 
++280 (80062fc4) [][][][] OT for render.
 +2b8 []       we store magic number here according to added materia. (0x11 in case Underwater or HP<->MP)
 +2dc []       0 - we load battle, 1 - we load menu.
 
@@ -137,6 +153,8 @@
 80062d98 []       if this is not 0 we will not render effect?
 
 80062f00 [][][][] 
+
+80062f24 [][][][] place in memory for dialog packets creation (80077f64 + buffer_id * 3400).
 
 80062f5e [][]     global volume?
 

@@ -6,13 +6,13 @@
 battle_id = A0;
 
 A0 = -1;
-func3cedc(); // wait
+system_psyq_wait_frames(); // wait
 
 A0 = V0;
 func14c44(); // store tome to GP
 
 A0 = -1;
-func3cedc(); // wait
+system_psyq_wait_frames(); // wait
 
 // init player
 // init data in player structure

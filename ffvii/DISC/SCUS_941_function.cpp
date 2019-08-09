@@ -39,65 +39,66 @@ return V0;
 
 
 ////////////////////////////////
-// func3cedc()
-// wait few times
+// system_psyq_wait_frames()
 
-V0 = w[8005049c];
-V1 = w[800504a0];
-S0 = w[V0];
-S1 = (w[V1] - w[800504a4]) & ffff;
+// if A0 == -1 - return value from 80051568
+// if A0 == 1 - return delta time from prev update
+// if A0 == 2 and greater - wait number of frames
+
+gpustat = w[8005049c]; // 1f801814 GPUSTAT Read GPU Status Register
+timer1_value = w[800504a0]; // 1f801110 Timer 1 Current Counter Value
+
+S0 = w[gpustat];
+
+delta = w[timer1_value] - w[800504a4];
 
 if( A0 < 0 )
 {
     return w[80051568];
 }
-
-if( A0 == 1 )
+else if( A0 != 1 )
 {
-    return S1;
-}
-
-if( A0 > 0 )
-{
-    V0 = w[800504a8] - 1 + A0;
-}
-else
-{
-    V0 = w[800504a8];
-}
-
-A1 = 0;
-if( A0 > 0 )
-{
-    A1 = A0 - 1;
-}
-
-A0 = V0;
-func3d024(); // wait A1
-
-V0 = w[8005049c];
-S0 = w[V0];
-
-A0 = w[80051568] + 1;
-A1 = 1;
-func3d024(); // wait A1
-
-if( S0 & 00080000 )
-{
-    V1 = w[8005049c];
-    if( ( S0 ^ w[V1] ) > 0 )
+    if( A0 > 0 )
     {
-        loop3cfcc:	; 8003CFCC
-            V0 = (S0 ^ w[V1]) & 80000000;
-        8003CFDC	beq    v0, zero, loop3cfcc [$8003cfcc]
+        V0 = w[800504a8] - 1 + A0;
     }
+    else
+    {
+        V0 = w[800504a8];
+    }
+
+    A1 = 0;
+    if( A0 > 0 )
+    {
+        A1 = A0 - 1;
+    }
+
+    A0 = V0;
+    A1 = A1; // wait timer
+    func3d024();
+
+    S0 = w[gpustat];
+
+    // wait one cycle
+    A0 = w[80051568] + 1;
+    A1 = 1;
+    func3d024();
+
+    if( S0 & 00080000 )
+    {
+        if( ( S0 ^ w[gpustat] ) > 0 )
+        {
+            loop3cfcc:	; 8003CFCC
+                V0 = (S0 ^ w[gpustat]) & 80000000;
+            8003CFDC	beq    v0, zero, loop3cfcc [$8003cfcc]
+        }
+    }
+
+    [800504a8] = w(w[80051568]);
+    [800504a4] = w(w[timer1_value]);
 }
 
-[800504a8] = w(w[80051568]);
-V1 = w[800504a0];
-[800504a4] = w(w[V1]);
-
-return S1;
+return delta;
 ////////////////////////////////
 
 

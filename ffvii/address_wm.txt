@@ -90,8 +90,11 @@
 
 800c84f4 draw env struct for buffer 1.
 800c8550 display env struct for buffer 1.
+800c8564 [][][][] OT for dialog render for buffer 1.
+
 800cc568 draw env struct for buffer 2.
 800cc5c4 display env struct for buffer 2.
+800cc5d8 [][][][] OT for dialog render for buffer 2.
 
 800d05ec script data from .TXZ file (.EV file data).
 
@@ -190,6 +193,7 @@
                 0x20 - animation loop (maybe indicates loop or indicates play once).
                 0x40 - use walkmesh collision.
                 0x80 - set if position was changed and needs to be recalculated.
++52 []       some model id.
 +53 []       init with 0 when start animation. Maybe current frame.
 +54 []       ???
 +55 []       move speed.
@@ -350,18 +354,19 @@
 8011628c [][]     cursor last position.
 80116290 [][]     cursor final position.
 80116298 [][][][] pointer to offsets to strings in binary. Each offset 0x2 size.
-8011629c array of window scroll speed (0x2 size).
+8011629c array of dialog scroll speed (0x2 size).
 801162a0 array of pool for showing letter in string (0x2 size).
-801162a4 array of some data to windows (0x2 size). Set to 0 when start srting show.
-801162a8 array of window total height including scroll (0x2 size).
+801162a4 array of some data to dialog (0x2 size). Set to 0 when start srting show.
+801162a8 array of dialog total height including scroll (0x2 size).
 801162ac array of something (0x2 size).
-801162b0 array of pointers to string for window
-801162b4 array of window copied text (0x100 size).
+801162b0 array of pointers to string for dialog.
+801162b4 array of dialog copied text (0x100 size).
 801162c0 array of something (0x2 size).
 801162c4 array of something (0x2 size).
 
-801163c4 array of something fow windows (0x2 size).
-801163d0 array of window pause value (0x2 size).
+801163c4 array of stored digit copy position for dialog (0x2 size).
+801163c8 array of stored digit string for dialog (0x8 size).
+801163d0 array of dialog pause value (0x2 size).
 
 801163e0 stack of script 1 byte values.
 801163e8 [][][][] pointer to current 801163e0 stack position.

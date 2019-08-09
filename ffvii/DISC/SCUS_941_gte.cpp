@@ -1603,7 +1603,7 @@ BFC = A2 << 4;
 
 
 ////////////////////////////////
-// system_set_screen_offset_to_GTE()
+// system_gte_set_screen_offset()
 
 OFX = A0 << 10;
 OFY = A1 << 10;
@@ -1612,7 +1612,7 @@ OFY = A1 << 10;
 
 
 ////////////////////////////////
-// system_set_proj_plane_dist_to_GTE()
+// system_gte_set_proj_plane_dist()
 
 H = A0;
 ////////////////////////////////

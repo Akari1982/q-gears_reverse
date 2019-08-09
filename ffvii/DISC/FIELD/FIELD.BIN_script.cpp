@@ -111,7 +111,7 @@ if( bu[80071e2c] ) // if at least 1 window is opened
     A2 = S0;
     V0 = w[8009c6e0]; // 8009abf4 start of game data
     A3 = bu[V0 + 0] XOR 1;
-    func1f1bc(); // render dialog
+    system_menu_add_dialog_to_render();
 }
 
 A0 = S0;

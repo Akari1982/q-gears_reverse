@@ -15640,7 +15640,7 @@ funcb383c(); // we load camera and battle field here.
 funcb430c(); // we read first block of battle field here and set scrolling.
 
 A0 = 0;
-func3cedc(); // wait
+system_psyq_wait_frames(); // wait
 
 A0 = 0; // not displayed on screen
 system_psyq_set_disp_mask();
@@ -19389,7 +19389,7 @@ A3 = w[V0 + 0000];
 A0 = A0 + 40e4;
 
 Lb81a8:	; 800B81A8
-800B81A8	jal    func3cedc [$8003cedc]
+800B81A8	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0001;
 [800fa9b8] = w(V0);
 800B81B8	jal    funcd25e8 [$800d25e8]
@@ -19400,7 +19400,7 @@ funcb7fb4();
 800B81CC	nop
 A0 = h[80162084];
 [80158d08] = w(V0);
-800B81E0	jal    system_set_proj_plane_dist_to_GTE [$8003b6dc]
+800B81E0	jal    system_gte_set_proj_plane_dist [$8003b6dc]
 800B81E4	nop
 V0 = bu[801516f4];
 800B81F0	nop

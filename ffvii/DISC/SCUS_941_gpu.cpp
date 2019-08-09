@@ -370,7 +370,7 @@ L44170:	; 80044170
 // func462b0()
 
 A0 = -1;
-func3cedc(); // wait
+system_psyq_wait_frames(); // wait
 
 [80062d18] = w(V0 + f0);
 [80062d1c] = w(0);
@@ -390,7 +390,7 @@ dma2_base_address = w[80062cd8]; // 1f8010a0
 dma2_channel_control = w[80062ce0]; // 1f8010a8
 
 A0 = -1;
-func3cedc(); // wait
+system_psyq_wait_frames(); // wait
 
 if( V0 <= w[80062d18] )
 {
@@ -843,17 +843,20 @@ return 3;
 // system_gpu_create_texture_setting_packet()
 
 buffer = A0;
+display_area = A1;
+dithering = A2;
+init_value = A3;
+window_rect = A4;
 
 [buffer + 3] = b(2);
-S1 = A4;
 
-A0 = A1; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
-A1 = A2; // dithering processing flag. 0: off; 1: on
-A2 = A3; // initial values of texture page
+A0 = display_area; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
+A1 = dithering; // dithering processing flag. 0: off; 1: on
+A2 = init_value; // initial values of texture page
 system_gpu_get_draw_mode_setting_command(); // prepare tex page settings packet
 [buffer + 4] = w(V0);
 
-A0 = S1; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
+A0 = window_rect; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
 system_gpu_get_texture_window_setting_command(); // prepare texture window rect packet
 [buffer + 8] = w(V0);
 ////////////////////////////////
@@ -1078,9 +1081,9 @@ return ((y << 6) | ((x >> 4) & 3f)) & ffff
 ot = A0;
 buf = A1;
 
-// left priority in buf and add pointer to first OT
+// left size in buf and add pointer to first OT
 [buf + 0] = w((w[buf + 0] & ff000000) | (w[ot] & 00ffffff));
-// left priority in OT and add pointer to buf
+// left size in OT and add pointer to buf
 [ot] = w((w[ot] & ff000000) | (buf & 00ffffff));
 ////////////////////////////////
 

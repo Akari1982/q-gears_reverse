@@ -27,7 +27,7 @@
 // funca1370
 800A1370-800A1418
 ////////////////////////////////
-// funca141c
+// wm_render_all
 800A141C-800A16CC
 ////////////////////////////////
 // funca16d0
@@ -1161,111 +1161,111 @@
 
 
 
-// WORLD.BIN_window.cpp
+// WORLD.BIN_dialog.cpp
 ////////////////////////////////
-// wm_windows_init
+// wm_dialogs_init
 800B8488-800B84D4
 ////////////////////////////////
-// wm_window_set_message_to_show_for_id_0
+// wm_dialog_set_message_to_show_for_id_0
 800B84D8-800B8518
 ////////////////////////////////
-// wm_window_set_ask_to_show_for_id_0
+// wm_dialog_set_ask_to_show_for_id_0
 800B851C-800B8578
 ////////////////////////////////
-// wm_window_is_window_with_id_0_showing
+// wm_dialog_is_window_with_id_0_showing
 800B857C-800B8588
 ////////////////////////////////
-// wm_window_set_window_with_id_0_to_close
+// wm_dialog_set_window_with_id_0_to_close
 800B858C-800B85D0
 ////////////////////////////////
-// funcb85d4
+// wm_dialog_update
 800B85D4-800B86C0
 ////////////////////////////////
-// wm_window_get_ask_result
+// wm_dialog_get_ask_result
 800B86C4-800B86E4
 ////////////////////////////////
-// wm_window_set_position_and_size_for_id_0
+// wm_dialog_set_position_and_size_for_id_0
 800B86E8-800B871C
 ////////////////////////////////
-// wm_window_set_mode_and_permanency_for_id_0
+// wm_dialog_set_mode_and_permanency_for_id_0
 800B8720-800B874C
 ////////////////////////////////
-// funcb8750
+// wm_dialog_print_param
 800B8750-800B8754
 ////////////////////////////////
-// funcb8758
+// wm_dialog_print_no_param
 800B8758-800B875C
 ////////////////////////////////
-// wm_window_0_reset_and_pointer_init
+// wm_dialog_0_reset_and_pointer_init
 800B8760-800B87D4
 ////////////////////////////////
-// wm_window_reset
+// wm_dialog_reset
 800B87D8-800B89C0
 ////////////////////////////////
-// wm_window_set_window_to_close_if_possible
+// wm_dialog_set_window_to_close_if_possible
 800B89C4-800B8A58
 ////////////////////////////////
-// wm_window_set_mode_and_permanency
+// wm_dialog_set_mode_and_permanency
 800B8A5C-800B8A94
 ////////////////////////////////
-// wm_windows_reset
+// wm_dialogs_reset
 800B8A98-800B8AFC
 ////////////////////////////////
-// wm_window_set_position_and_size
+// wm_dialog_set_position_and_size
 800B8B00-800B8CB8
 ////////////////////////////////
-// wm_window_add_pos
+// wm_dialog_add_pos
 800B8CBC-800B8D1C
 ////////////////////////////////
-// wm_window_set_height
+// wm_dialog_set_height
 800B8D20-800B8D48
 ////////////////////////////////
-// wm_window_set_message_to_show
+// wm_dialog_set_message_to_show
 800B8D4C-800B90BC
 ////////////////////////////////
-// wm_window_set_ask_to_show
+// wm_dialog_set_ask_to_show
 800B90C0-800B95E4
 ////////////////////////////////
-// wm_window_play_sound
+// wm_dialog_play_sound
 800B95E8-800B9628
 ////////////////////////////////
-// wm_window_init_window
+// wm_dialog_init_window
 800B962C-800B98EC
 ////////////////////////////////
-// wm_window_inscrease_window
+// wm_dialog_inscrease_window
 800B98F0-800B9B28
 ////////////////////////////////
-// funcb9b2c
+// wm_dialog_string_output
 800B9B2C-800BA934
 ////////////////////////////////
-// wm_window_text_scroll_by_row
+// wm_dialog_text_scroll_by_row
 800BA938-800BA9FC
 ////////////////////////////////
-// wm_window_text_scroll_during_ok
+// wm_dialog_text_scroll_during_ok
 800BAA00-800BAB5C
 ////////////////////////////////
-// wm_window_start_text
+// wm_dialog_start_text
 800BAB60-800BAC6C
 ////////////////////////////////
-// wm_window_discrease_window
+// wm_dialog_discrease_window
 800BAC70-800BAE5C
 ////////////////////////////////
 // funcbae60
 800BAE60-800BB34C
 ////////////////////////////////
-// funcbb350
+// wm_dialog_add_digit_without_leading_space
 800BB350-800BB44C
 ////////////////////////////////
-// funcbb450
+// wm_dialog_add_digit_with_leading_space
 800BB450-800BB564
 ////////////////////////////////
-// funcbb568
+// wm_dialog_add_hex_digit_without_leading_space
 800BB568-800BB64C
 ////////////////////////////////
 // funcbb650
 800BB650-800BB7D8
 ////////////////////////////////
-// wm_window_copy_string_into_character_name
+// wm_dialog_copy_string_into_character_name
 800BB7DC-800BB8AC
 ////////////////////////////////
 

@@ -608,7 +608,7 @@
 // func1d56c
 8001D56C-8001D6A4
 ////////////////////////////////
-// func1d6a8
+// system_menu_add_dialog_string_to_render
 8001D6A8-8001DE08
 ////////////////////////////////
 // func1de0c
@@ -626,22 +626,22 @@
 // func1def0
 8001DEF0-8001DF20
 ////////////////////////////////
-// func1df24
+// system_menu_add_colored_rect_to_render
 8001DF24-8001E03C
 ////////////////////////////////
-// func1e040
+// system_menu_add_window_to_render
 8001E040-8001EB28
 ////////////////////////////////
-// func1eb2c
+// system_menu_add_cursor_to_render
 8001EB2C-8001EC6C
 ////////////////////////////////
-// func1ec70
+// system_menu_add_timer_to_render
 8001EC70-8001EF80
 ////////////////////////////////
-// func1ef84
+// system_menu_add_digits_to_render
 8001EF84-8001F1B8
 ////////////////////////////////
-// func1f1bc
+// system_menu_add_dialog_to_render
 8001F1BC-8001F6A8
 ////////////////////////////////
 // func1f6ac
@@ -977,7 +977,7 @@
 // func26a20
 80026A20-80026A30
 ////////////////////////////////
-// func26a34
+// system_menu_create_and_add_texture_setting_packet
 80026A34-80026A90
 ////////////////////////////////
 // func26a94
@@ -1866,7 +1866,7 @@ L33f08:	; 80033F08
 80033F0C	nop
 80033F10	beq    v0, zero, L33f28 [$80033f28]
 V0 = 0;
-80033F18	jal    func3cedc [$8003cedc]
+80033F18	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0;
 80033F20	j      L33f08 [$80033f08]
 80033F24	nop
@@ -1913,7 +1913,7 @@ L34008:	; 80034008
 8003400C	nop
 80034010	beq    v0, zero, L34028 [$80034028]
 V0 = 0;
-80034018	jal    func3cedc [$8003cedc]
+80034018	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0;
 80034020	j      L34008 [$80034008]
 80034024	nop
@@ -1947,7 +1947,7 @@ A1 = 0;
 [SP + 0010] = w(RA);
 80034114	jal    func3e100 [$8003e100]
 A2 = 0;
-8003411C	jal    func3cedc [$8003cedc]
+8003411C	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0003;
 A0 = 0008;
 A1 = 0;
@@ -1989,7 +1989,7 @@ A1 = 0;
 A2 = 0;
 
 loop341a8:	; 800341A8
-800341A8	jal    func3cedc [$8003cedc]
+800341A8	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0;
 800341B0	addiu  s0, s0, $ffff (=-$1)
 800341B4	beq    s0, zero, L34328 [$80034328]
@@ -2075,7 +2075,7 @@ A0 = 000e;
 A1 = 0080;
 800342C8	jal    func3e100 [$8003e100]
 A2 = SP + 0010;
-800342D0	jal    func3cedc [$8003cedc]
+800342D0	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0003;
 800342D8	lui    at, $8007
 [AT + 1a60] = w(0);
@@ -2294,7 +2294,7 @@ V0 = 0030;
 [AT + a008] = w(A0);
 80034CD0	jal    system_execute_AKAO [$8002da7c]
 80034CD4	nop
-80034CD8	jal    func3cedc [$8003cedc]
+80034CD8	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 003c;
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -2527,7 +2527,7 @@ A1 = SP + 0010;
 A2 = 0;
 80035D30	beq    v0, zero, loop35d24 [$80035d24]
 A0 = 000e;
-80035D38	jal    func3cedc [$8003cedc]
+80035D38	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0003;
 80035D40	jal    func40594 [$80040594]
 A0 = 01e0;
@@ -3540,10 +3540,10 @@ SP = SP + 0020;
 // system_gte_set_far_colour
 8003B69C-8003B6B8
 ////////////////////////////////
-// system_set_screen_offset_to_GTE
+// system_gte_set_screen_offset
 8003B6BC-8003B6D8
 ////////////////////////////////
-// system_set_proj_plane_dist_to_GTE
+// system_gte_set_proj_plane_dist
 8003B6DC-8003B6E8
 ////////////////////////////////
 // func3b6ec
@@ -3740,7 +3740,7 @@ SP = SP + 0018;
 // func3cebc
 8003CEBC-8003CED8
 ////////////////////////////////
-// func3cedc
+// system_psyq_wait_frames
 8003CEDC-8003D020
 ////////////////////////////////
 // func3d024
@@ -4398,7 +4398,7 @@ S2 = A0;
 [SP + 0028] = w(RA);
 [SP + 0024] = w(S3);
 [SP + 001c] = w(S1);
-8003F84C	jal    func3cedc [$8003cedc]
+8003F84C	jal    system_psyq_wait_frames [$8003cedc]
 [SP + 0018] = w(S0);
 8003F854	lui    s3, $8005
 S3 = S3 + 164c;
@@ -4417,7 +4417,7 @@ V0 = V0 + 08b4;
 [AT + e140] = w(V0);
 
 loop3f890:	; 8003F890
-8003F890	jal    func3cedc [$8003cedc]
+8003F890	jal    system_psyq_wait_frames [$8003cedc]
 8003F894	addiu  a0, zero, $ffff (=-$1)
 8003F898	lui    v1, $8007
 V1 = w[V1 + e138];
@@ -5302,7 +5302,7 @@ V0 = bu[SP + 0010];
 V0 = 0002;
 
 L406f0:	; 800406F0
-800406F0	jal    func3cedc [$8003cedc]
+800406F0	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 001e;
 A0 = 0013;
 A1 = 0;
@@ -5318,7 +5318,7 @@ V0 = 0002;
 80040724	nop
 
 L40728:	; 80040728
-80040728	jal    func3cedc [$8003cedc]
+80040728	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 001e;
 A0 = 0013;
 A1 = 0;
@@ -6716,7 +6716,7 @@ V1 = V1 + 1a34;
 [V1 + 0000] = w(V0);
 
 L419ec:	; 800419EC
-800419EC	jal    func3cedc [$8003cedc]
+800419EC	jal    system_psyq_wait_frames [$8003cedc]
 800419F0	addiu  a0, zero, $ffff (=-$1)
 800419F4	lui    v1, $8005
 V1 = V1 + 1a38;
@@ -6730,7 +6730,7 @@ V0 = w[V0 + 1a34];
 A0 = 0001;
 
 L41a1c:	; 80041A1C
-80041A1C	jal    func3cedc [$8003cedc]
+80041A1C	jal    system_psyq_wait_frames [$8003cedc]
 80041A20	addiu  a0, zero, $ffff (=-$1)
 80041A24	lui    v1, $8005
 V1 = w[V1 + 1a3c];
@@ -6748,7 +6748,7 @@ V0 = w[V0 + 1a34];
 80041A50	nop
 80041A54	beq    v0, zero, L41a80 [$80041a80]
 80041A58	nop
-80041A5C	jal    func3cedc [$8003cedc]
+80041A5C	jal    system_psyq_wait_frames [$8003cedc]
 80041A60	addiu  a0, zero, $ffff (=-$1)
 80041A64	lui    v1, $8005
 V1 = w[V1 + 1a3c];
@@ -6811,7 +6811,7 @@ A0 = 0;
 V0 = V0 & 0010;
 80041B2C	beq    v0, zero, L41b8c [$80041b8c]
 80041B30	nop
-80041B34	jal    func3cedc [$8003cedc]
+80041B34	jal    system_psyq_wait_frames [$8003cedc]
 80041B38	addiu  a0, zero, $ffff (=-$1)
 V0 = V0 & 003f;
 80041B40	bne    v0, zero, L41b5c [$80041b5c]
@@ -6823,7 +6823,7 @@ L41b5c:	; 80041B5C
 A0 = 0001;
 80041B5C	jal    func3dfd4 [$8003dfd4]
 A1 = 0;
-80041B64	jal    func3cedc [$8003cedc]
+80041B64	jal    system_psyq_wait_frames [$8003cedc]
 80041B68	addiu  a0, zero, $ffff (=-$1)
 80041B6C	lui    v1, $8005
 V1 = V1 + 1a3c;
@@ -6911,7 +6911,7 @@ V0 = w[V0 + 1a20];
 80041C98	addiu  a0, zero, $ffff (=-$1)
 80041C9C	lui    at, $8005
 [AT + 1a34] = w(V0);
-80041CA4	jal    func3cedc [$8003cedc]
+80041CA4	jal    system_psyq_wait_frames [$8003cedc]
 80041CA8	nop
 80041CAC	lui    at, $8005
 [AT + 1a38] = w(V0);

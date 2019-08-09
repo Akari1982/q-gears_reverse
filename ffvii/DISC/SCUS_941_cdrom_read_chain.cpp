@@ -200,7 +200,7 @@ L33f84:	; 80033F84
     }
 
     A0 = 0;
-    func3cedc();
+    system_psyq_wait_frames();
 80033F9C	j      L33f84 [$80033f84]
 ////////////////////////////////
 
@@ -271,7 +271,7 @@ A2 = 0; // 0: Normal speed.
 func3e100();
 
 A0 = 3;
-func3cedc();
+system_psyq_wait_frames();
 
 // load "\MINT\DISKINFO.CNF;1" into 800698f0
 // and return bu[800698f7] - 30 (disk number)
@@ -411,7 +411,7 @@ else if( V0 == 5 ) // CdlDiskError
 else
 {
     A0 = -1;
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     if( w[8006e0f0] != V0 )
     {
@@ -478,7 +478,7 @@ else if( V0 == 5 )
 else
 {
     A0 = -1;
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     if( w[8006e0f0] != V0 )
     {
@@ -997,7 +997,7 @@ else if( V0 == 5 )
 else
 {
     A0 = -1;
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     if( w[8006e0f0] != V0 )
     {
@@ -1266,7 +1266,7 @@ else if( V0 == 5 )
 else
 {
     A0 = -1;
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     if( w[8006e0f0] != V0 )
     {

@@ -40,7 +40,7 @@ S3 = A1;
 S1 = 80051a3c;
 
 loop41e58:	; 80041E58
-80041E58	jal    func3cedc [$8003cedc]
+80041E58	jal    system_psyq_wait_frames [$8003cedc]
 80041E5C	addiu  a0, zero, $ffff (=-$1)
 V1 = w[S1 + 0000];
 80041E64	nop
@@ -52,7 +52,7 @@ V0 = w[S1 + fff8];
 80041E7C	nop
 80041E80	bltz   v0, L41ea8 [$80041ea8]
 80041E84	nop
-80041E88	jal    func3cedc [$8003cedc]
+80041E88	jal    system_psyq_wait_frames [$8003cedc]
 80041E8C	addiu  a0, zero, $ffff (=-$1)
 V1 = w[S1 + fffc];
 80041E94	nop
@@ -401,7 +401,7 @@ A0 = 0;
 80041DD8	addiu  a0, zero, $ffff (=-$1)
 80041DDC	lui    at, $8005
 [AT + 1a48] = w(V0);
-80041DE4	jal    func3cedc [$8003cedc]
+80041DE4	jal    system_psyq_wait_frames [$8003cedc]
 
 [80051a3c] = w(V0);
 80041DF4	jal    func3dcd8 [$8003dcd8]
@@ -1151,7 +1151,7 @@ if( S0 != 0 )
 
 
 A0 = -1;
-func3cedc();
+system_psyq_wait_frames();
 [8007e138] = w(V0 + 3c0);
 [8006e13c] = w(0);
 
@@ -1165,7 +1165,7 @@ if( bu[80051904] == 0 )
 {
     loop3f14c:	; 8003F14C
         A0 = -1;
-        func3cedc();
+        system_psyq_wait_frames();
 
         V1 = w[8006e138] < V0;
         8003F164	bne    v1, zero, L3f194 [$8003f194]
@@ -1555,7 +1555,7 @@ mode = S5 = A0; // If mode is 0, the wait for a data transfer to be completed. I
 result_ptr = S6 = A1;
 
 A0 = -1;
-func3cedc();
+system_psyq_wait_frames();
 [8006e138] = w(V0 + 3c0);
 [8006e13c] = w(0);
 [8006e140] = w(80010834); // "CD_sync"
@@ -1564,7 +1564,7 @@ func3cedc();
 
 L3ea48:	; 8003EA48
     A0 = -1;
-    8003EA48	jal    func3cedc [$8003cedc]
+    8003EA48	jal    system_psyq_wait_frames [$8003cedc]
 
     V1 = w[8006e138] < V0;
     8003EA60	bne    v1, zero, L3ea90 [$8003ea90]
@@ -1671,7 +1671,7 @@ return (((mm * 3c) + ss) * 4b) + se - 96; // (mm * 60 + ss) * 75 + se - 150
 S7 = A0;
 S4 = A1;
 8003EC74	addiu  a0, zero, $ffff (=-$1)
-8003EC90	jal    func3cedc [$8003cedc]
+8003EC90	jal    system_psyq_wait_frames [$8003cedc]
 
 8003EC98	lui    s5, $8005
 S5 = S5 + 16cc;
@@ -1689,7 +1689,7 @@ V0 = 8001083c; // "CD_ready"
 [AT + e140] = w(V0);
 
 L3ecd4:	; 8003ECD4
-8003ECD4	jal    func3cedc [$8003cedc]
+8003ECD4	jal    system_psyq_wait_frames [$8003cedc]
 8003ECD8	addiu  a0, zero, $ffff (=-$1)
 8003ECDC	lui    v1, $8007
 V1 = w[V1 + e138];

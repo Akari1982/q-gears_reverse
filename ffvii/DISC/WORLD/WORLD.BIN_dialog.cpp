@@ -1,5 +1,5 @@
 ////////////////////////////////
-// wm_windows_init()
+// wm_dialogs_init()
 
 [8008326c + 0] = b(-1); // window 0 parent entity
 [800722c4] = b(-1); // current entity
@@ -7,7 +7,7 @@
 [8009c6dc] = w(A0); // pointer to string
 [A0 + 4] = h(8);
 
-wm_window_0_reset_and_pointer_init();
+wm_dialog_0_reset_and_pointer_init();
 
 [8009c6e0] = w(8009abf4); // struct with buttons data
 ////////////////////////////////
@@ -15,7 +15,7 @@ wm_window_0_reset_and_pointer_init();
 
 
 ////////////////////////////////
-// wm_window_set_message_to_show_for_id_0()
+// wm_dialog_set_message_to_show_for_id_0()
 
 message_id = A0;
 
@@ -26,14 +26,14 @@ if( h[80083274 + 0 * 30 + 2c] == 0 ) // state
 
     A0 = 0; // window id
     A1 = message_id;
-    wm_window_set_message_to_show();
+    wm_dialog_set_message_to_show();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// wm_window_set_ask_to_show_for_id_0()
+// wm_dialog_set_ask_to_show_for_id_0()
 
 message_id = A0;
 first_pos = A1;
@@ -49,14 +49,14 @@ if( h[80083274 + 0 * 30 + 2c] == 0 ) // state
     A2 = first_pos;
     A3 = last_pos;
     A4 = 80116290;
-    wm_window_set_ask_to_show();
+    wm_dialog_set_ask_to_show();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// wm_window_is_window_with_id_0_showing()
+// wm_dialog_is_window_with_id_0_showing()
 
 return h[80083274 + 0 * 30 + 2c] > 0;
 ////////////////////////////////
@@ -64,13 +64,13 @@ return h[80083274 + 0 * 30 + 2c] > 0;
 
 
 ////////////////////////////////
-// wm_window_set_window_with_id_0_to_close()
+// wm_dialog_set_window_with_id_0_to_close()
 
 V1 = h[80083274 + 0 * 30 + 2c]; // state
 if( ( V1 != 0 ) && ( V1 != 7 ) )
 {
     A0 = 0;
-    wm_window_set_window_to_close_if_possible();
+    wm_dialog_set_window_to_close_if_possible();
 }
 
 return h[80083274 + 0 * 30 + 2c] > 0; // is showing
@@ -79,7 +79,7 @@ return h[80083274 + 0 * 30 + 2c] > 0; // is showing
 
 
 ////////////////////////////////
-// funcb85d4()
+// wm_dialog_update()
 
 V0 = h[80083274 + 0 * 30 + 2c];
 if( V0 != 0 )
@@ -108,29 +108,29 @@ if( V0 != 0 )
         A2 = bu[80116288]; // start row
         A3 = bu[8011628c]; // end row
         A4 = 80116290; // ask res
-        wm_window_set_ask_to_show()
+        wm_dialog_set_ask_to_show()
     }
     else
     {
         A0 = 0; // window id
         A1 = 0; // message id
-        wm_window_set_message_to_show();
+        wm_dialog_set_message_to_show();
     }
 
     wm_get_current_render_buffer_id();
 
     A0 = 80083274;
     A1 = 1;
-    A2 = w[800bd130];
+    A2 = w[800bd130]; // OT for render
     A3 = V0 < 1;
-    func1f1bc(); // render window
+    system_menu_add_dialog_to_render();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// wm_window_get_ask_result()
+// wm_dialog_get_ask_result()
 
 if( h[80083274 + 0 * 30 + 2c] == 0 ) // state
 {
@@ -142,7 +142,7 @@ return -1;
 
 
 ////////////////////////////////
-// wm_window_set_position_and_size_for_id_0()
+// wm_dialog_set_position_and_size_for_id_0()
 
 if( A0 != 0 )
 {
@@ -151,14 +151,14 @@ if( A0 != 0 )
     A2 = h[A0 + 2];
     A3 = h[A0 + 4];
     A4 = h[A0 + 6];
-    wm_window_set_position_and_size();
+    wm_dialog_set_position_and_size();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// wm_window_set_mode_and_permanency_for_id_0()
+// wm_dialog_set_mode_and_permanency_for_id_0()
 
 mode = A0;
 permanency = A1;
@@ -166,30 +166,30 @@ permanency = A1;
 A0 = 0;
 A1 = mode;
 A2 = permanency;
-wm_window_set_mode_and_permanency();
+wm_dialog_set_mode_and_permanency();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb8750()
+// wm_dialog_print_param()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb8758()
+// wm_dialog_print_no_param()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// wm_window_0_reset_and_pointer_init()
+// wm_dialog_0_reset_and_pointer_init()
 
 [80071e2c] = b(0); // num of opened windows
 
 A0 = 0;
-wm_window_reset();
+wm_dialog_reset();
 
 V1 = w[8009c6dc]; // current field file offset
 if( hu[V1 + 4] != 0 )
@@ -205,7 +205,7 @@ else
 
 
 ////////////////////////////////
-// wm_window_reset()
+// wm_dialog_reset()
 
 window_id = A0;
 
@@ -247,14 +247,14 @@ if( bu[8009d820] & 3 )
     A0 = 800a08c8; // "mes reset="
     A1 = window_id;
     A2 = 1;
-    funcb8750();
+    wm_dialog_print_param();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// wm_window_set_window_to_close_if_possible()
+// wm_dialog_set_window_to_close_if_possible()
 
 window_id = A0;
 
@@ -276,7 +276,7 @@ return 1;
 
 
 ////////////////////////////////
-// wm_window_set_mode_and_permanency()
+// wm_dialog_set_mode_and_permanency()
 
 A0 = window_id;
 A1 = mode;
@@ -289,7 +289,7 @@ A2 = permanency;
 
 
 ////////////////////////////////
-// wm_windows_reset()
+// wm_dialogs_reset()
 
 window_id = 0;
 
@@ -307,7 +307,7 @@ window_id = 0;
 
 
 ////////////////////////////////
-// wm_window_set_position_and_size()
+// wm_dialog_set_position_and_size()
 
 window_id = A0;
 x = A1;
@@ -324,7 +324,7 @@ if( x < 8 )
         A0 = 800a090c; // "win limit x="
         A1 = x;
         A2 = 2;
-        funcb8750();
+        wm_dialog_print_param();
     }
 }
 
@@ -335,7 +335,7 @@ if( ( x + width ) >= 139 )
         A0 = 800a090c; // "win limit x="
         A1 = x + width;
         A2 = 3;
-        funcb8750();
+        wm_dialog_print_param();
     }
 
     x = 138 - width;
@@ -350,7 +350,7 @@ if( y < 8 )
         A0 = 800a091c; // "win limit y="
         A1 = y;
         A2 = 2;
-        funcb8750();
+        wm_dialog_print_param();
     }
 }
 
@@ -361,7 +361,7 @@ if( ( y + height ) >= e1 )
         A0 = 800a091c; // "win limit y="
         A1 = y + height;
         A2 = 3;
-        funcb8750();
+        wm_dialog_print_param();
     }
     y = e0 - height;
 }
@@ -375,7 +375,7 @@ if( ( y + height ) >= e1 )
 
 
 ////////////////////////////////
-// wm_window_add_pos()
+// wm_dialog_add_pos()
 
 [80083274 + A0 * 30 + 4] = h(hu[80083274 + A0 * 30 + 4] + A1); // x
 [80083274 + A0 * 30 + 6] = h(hu[80083274 + A0 * 30 + 6] + A2); // y
@@ -384,7 +384,7 @@ if( ( y + height ) >= e1 )
 
 
 ////////////////////////////////
-// wm_window_set_height()
+// wm_dialog_set_height()
 
 [80083274 + A0 * 30 + a] = h(A1); // height
 ////////////////////////////////
@@ -392,7 +392,7 @@ if( ( y + height ) >= e1 )
 
 
 ////////////////////////////////
-// wm_window_set_message_to_show()
+// wm_dialog_set_message_to_show()
 
 window_id = A0;
 message_id = A1;
@@ -403,7 +403,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     {
         A0 = window_id;
         A1 = message_id;
-        wm_window_init_window();
+        wm_dialog_init_window();
         if( V0 != 0 )
         {
             return 1;
@@ -414,14 +414,14 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case 1: // window appears
     {
         A0 = window_id;
-        wm_window_inscrease_window();
+        wm_dialog_inscrease_window();
     }
     break;
 
     case 2: // text appears
     {
         A0 = window_id;
-        funcb9b2c();
+        wm_dialog_string_output();
     }
     break;
 
@@ -463,7 +463,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case 5 7: // window closing
     {
         A0 = window_id;
-        wm_window_discrease_window();
+        wm_dialog_discrease_window();
 
         if( V0 != 0 )
         {
@@ -485,7 +485,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
             [80083274 + window_id * 30 + 2c] = h(7);
 
             A0 = window_id;
-            wm_window_discrease_window();
+            wm_dialog_discrease_window();
         }
     }
     break;
@@ -493,14 +493,14 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case 8: // scroll to next row.
     {
         A0 = window_id;
-        wm_window_text_scroll_by_row();
+        wm_dialog_text_scroll_by_row();
     }
     break;
 
     case 9: // init next window
     {
         A0 = window_id;
-        wm_window_start_text();
+        wm_dialog_start_text();
     }
     break;
 
@@ -519,7 +519,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case c: // scroll to next row during OK button press
     {
         A0 = window_id;
-        wm_window_text_scroll_during_ok();
+        wm_dialog_text_scroll_during_ok();
     }
     break;
 
@@ -539,7 +539,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
         if( w[V0 + 80] & 0020 ) // ok button pressed
         {
             A0 = window_id;
-            wm_window_start_text();
+            wm_dialog_start_text();
         }
     }
     break;
@@ -551,7 +551,7 @@ return 0;
 
 
 ////////////////////////////////
-// wm_window_set_ask_to_show()
+// wm_dialog_set_ask_to_show()
 
 window_id = A0;
 message_id = A1;
@@ -565,7 +565,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     {
         A0 = window_id;
         A1 = message_id;
-        wm_window_init_window();
+        wm_dialog_init_window();
         if( V0 != 0 )
         {
             return 1;
@@ -576,14 +576,14 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case 1: // window appears
     {
         A0 = window_id;
-        wm_window_inscrease_window();
+        wm_dialog_inscrease_window();
     }
     break;
 
     case 2: // text appears
     {
         A0 = window_id;
-        funcb9b2c();
+        wm_dialog_string_output();
     }
     break;
 
@@ -625,7 +625,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case 5 7: // window closing
     {
         A0 = window_id;
-        wm_window_discrease_window();
+        wm_dialog_discrease_window();
 
         if( V0 != 0 ) // window completly closed
         {
@@ -647,7 +647,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
             {
                 if( first_pos < h[ask_res] )
                 {
-                    wm_window_play_sound();
+                    wm_dialog_play_sound();
                 }
                 [ask_res] = h(hu[ask_res] - 1);
             }
@@ -655,7 +655,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
             {
                 if( h[ask_res] < last_pos )
                 {
-                    wm_window_play_sound();
+                    wm_dialog_play_sound();
                 }
                 [ask_res] = h(hu[ask_res] + 1);
             }
@@ -675,12 +675,12 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
             V1 = w[8009c6e0];
             if( w[V1 + 80] & 0020 ) // ok button pressed
             {
-                wm_window_play_sound();
+                wm_dialog_play_sound();
 
                 [80083274 + window_id * 30 + 2c] = h(7); // state "window closing"
 
                 A0 = window_id;
-                wm_window_discrease_window();
+                wm_dialog_discrease_window();
             }
         }
     }
@@ -689,14 +689,14 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case 8: // scroll to next row
     {
         A0 = window_id;
-        wm_window_text_scroll_by_row();
+        wm_dialog_text_scroll_by_row();
     }
     break;
 
     case 9: // init next window
     {
         A0 = window_id;
-        wm_window_start_text();
+        wm_dialog_start_text();
     }
     break;
 
@@ -716,7 +716,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
     case c: // scroll to next row during OK button press
     {
         A0 = window_id;
-        wm_window_text_scroll_during_ok();
+        wm_dialog_text_scroll_during_ok();
     }
     break;
 
@@ -736,7 +736,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
         if( w[V0 + 80] & 0020 ) // ok button pressed
         {
             A0 = window_id;
-            wm_window_start_text();
+            wm_dialog_start_text();
         }
     }
     break;
@@ -746,7 +746,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
 
 
 ////////////////////////////////
-// wm_window_play_sound()
+// wm_dialog_play_sound()
 
 [8009a000] = h(30);
 [8009a004] = w(1);
@@ -757,7 +757,7 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// wm_window_init_window()
+// wm_dialog_init_window()
 
 window_id = A0;
 message_id = A1;
@@ -766,7 +766,7 @@ message_id = A1;
 if( w[80116298] == 0 )
 {
     A0 = 800a09ac; // "No mes data!"
-    funcb8758();
+    wm_dialog_print_no_param();
 
     return 1;
 }
@@ -779,7 +779,7 @@ if( b[8008326c + window_id] != -1 )
         A0 = 800a09bc; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcb8750();
+        wm_dialog_print_param();
     }
     return 0;
 }
@@ -832,7 +832,7 @@ return 0;
 
 
 ////////////////////////////////
-// wm_window_inscrease_window()
+// wm_dialog_inscrease_window()
 
 window_id = A0;
 
@@ -844,7 +844,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a09bc; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcb8750();
+        wm_dialog_print_param();
     }
     return;
 }
@@ -881,7 +881,7 @@ if( ( h[80083274 + window_id * 30 + c] == h[80083274 + window_id * 30 + 8] ) && 
 
 
 ////////////////////////////////
-// funcb9b2c()
+// wm_dialog_string_output()
 
 window_id = A0;
 
@@ -893,7 +893,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a09bc; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcb8750();
+        wm_dialog_print_param();
     }
     return;
 }
@@ -952,6 +952,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
             [801162a0 + window_id * 2] = h(0);
             V0 = h[80083288 + window_id * 30];
             [801162b4 + window_id * 100 + V0] = b(-1);
+            return;
         }
         break;
 
@@ -964,11 +965,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
                 V1 = V0 + 6;
             }
 
-            A0 = h[8008328a + window_id * 30];
-            V0 = h[801162a4 + window_id * 2] - 1;
-            V1 = V1 >> 04;
-            V1 = V1 + V0;
-            if( A0 == V1 )
+            if( h[8008328a + window_id * 30] == ( V1 / 10 + h[801162a4 + window_id * 2] - 1 ) )
             {
                 [80083274 + window_id * 30 + 2c] = h(4);
                 [8011629c + window_id * 2] = h(1);
@@ -983,7 +980,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
             [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
             [80083274 + window_id * 30 + 14] = h(hu[80083288 + window_id * 30] + 1);
             [80083274 + window_id * 30 + 16] = h(hu[8008328a + window_id * 30] + 1);
-            800B9EB8	j      Lba894 [$800ba894]
+            continue;
         }
 
         case e8 e9:
@@ -1001,116 +998,79 @@ while( letter_cost < h[801162a0 + window_id * 2] )
         case ea eb ec ed ee ef f0 f1 f2:
         {
             V0 = w[801162b0 + window_id * 4];
-            V0 = bu[V0];
-            800B9F04	addiu  s0, v0, $ff16 (=-$ea)
-            A0 = S0 & ffff;
-            800B9F08	jal    $800257cc
+            S0 = bu[V0] - ea;
 
-            A3 = window_id << 01;
-            A2 = 801162ac + A3;
-            A0 = h[A2 + 0000];
-            A1 = V0 + A0;
-            V1 = bu[A1 + 0000];
-            800B9F34	beq    v1, ff, Lb9f44 [$800b9f44]
-            V0 = A0 < 0009;
-            800B9F3C	bne    v0, zero, Lb9f5c [$800b9f5c]
-            A0 = A3 + window_id;
+            A0 = S0;
+            system_get_character_name_offset();
 
-            Lb9f44:	; 800B9F44
-            V0 = w[801162b0 + window_id * 4] + 1;
-            [801162b0 + window_id * 4] = w(V0);
-            800B9F54	j      Lba894 [$800ba894]
-            [A2 + 0000] = h(0);
+            A0 = h[801162ac + window_id * 2];
+            char_data = V0 + A0;
 
-            Lb9f5c:	; 800B9F5C
-            A0 = A0 << 04;
-            V0 = h[80083288 + A0];
-            V1 = bu[A1 + 0000];
-            V0 = 801162b4 + window_id * 100 + V0;
-            [V0 + 0000] = b(V1);
-            V1 = 80083274 + A0;
-            [V1 + 0014] = h(hu[80083288 + A0] + 1);
-            [A2 + 0000] = h(hu[A2 + 0000] + 1);
-            [V1 + 0012] = h(hu[80083286 + A0] + 1);
-            V1 = 801162a0 + A3;
-            [V1] = h(hu[V1] - letter_cost);
-            800BA654	j      Lba894 [$800ba894]
+            if( ( b[char_data] == -1 ) || ( A0 >= 9 ) )
+            {
+                [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+                [801162ac + window_id * 2] = h(0);
+            }
+            else
+            {
+                V0 = h[80083288 + window_id * 30];
+                [801162b4 + window_id * 100 + V0] = b(bu[char_data]);
+                [80083274 + window_id * 30 + 14] = h(hu[80083288 + window_id * 30] + 1);
+                [801162ac + window_id * 2] = h(hu[801162ac + window_id * 2] + 1);
+                [80083274 + window_id * 30 + 12] = h(hu[80083286 + window_id * 30] + 1);
+                [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
+            }
+            continue;
         }
 
         case f3 f4 f5:
         {
             V1 = w[801162b0 + window_id * 4];
-            V0 = bu[V1 + 0000];
-            A0 = bu[8009d29e + V0];
-            S0 = 00ff;
-            800B9FF8	bne    a0, s0, Lba0a0 [$800ba0a0]
-            A2 = window_id << 01;
-            800BA000	lui    v0, $8011
-            V0 = V0 + 62ac;
-            A1 = A2 + V0;
-            V0 = h[A1 + 0000];
-            800BA010	nop
-            V0 = V0 < 0009;
-            800BA018	bne    v0, zero, Lba028 [$800ba028]
-            A0 = A2 + window_id;
-            800BA020	j      Lba0e8 [$800ba0e8]
-            V0 = V1 + 0001;
+            V0 = bu[V1];
+            A0 = b[8009d29e + V0];
 
-            Lba028:	; 800BA028
-            A0 = A0 << 04;
-            V0 = h[80083288 + A0];
-            V0 = 801162b4 + window_id * 100 + V0;
-            [V0 + 0000] = b(d2);
-            V0 = hu[80083288 + A0] + 1;
-            V1 = 80083274 + A0;
-            [V1 + 0014] = h(V0);
-            V0 = hu[A1 + 0000] + 1;
-            [A1 + 0000] = h(V0);
-            V0 = hu[80083286 + A0] + 1;
-            [V1 + 0012] = h(V0);
-            V1 = 801162a0 + A2;
-            [V1] = h(hu[V1] - letter_cost);
-            800BA654	j      Lba894 [$800ba894]
+            if( A0 == -1 )
+            {
+                if( h[801162ac + window_id * 2] >= 9 )
+                {
+                    [801162b0 + window_id * 4] = w(V1 + 1);
+                    [801162ac + window_id * 2] = h(0);
+                }
+                else
+                {
+                    V0 = h[80083288 + window_id * 30];
+                    [801162b4 + window_id * 100 + V0] = b(d2);
 
-            Lba0a0:	; 800BA0A0
-            800BA0A0	jal    $800257cc
+                    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
 
-            V1 = 801162ac;
-            A2 = window_id << 01;
-            A1 = A2 + V1;
-            A0 = h[A1 + 0000];
-            V1 = V0 + A0;
-            V0 = bu[V1 + 0000];
-            800BA0C8	nop
-            800BA0CC	beq    v0, s0, Lba0dc [$800ba0dc]
-            V0 = A0 < 0009;
-            800BA0D4	bne    v0, zero, Lba0f4 [$800ba0f4]
-            A0 = A2 + window_id;
+                    [801162ac + window_id * 2] = h(hu[801162ac + window_id * 2] + 1);
+                    [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
+                }
+            }
+            else
+            {
+                system_get_character_name_offset();
 
-            Lba0dc:	; 800BA0DC
-            V0 = w[801162b0 + window_id * 4] + 1;
+                A0 = h[801162ac + window_id * 2];
+                char_data = V0 + A0;
 
-            Lba0e8:	; 800BA0E8
-            [801162b0 + window_id * 4] = w(V0);
-            800BA0EC	j      Lba894 [$800ba894]
-            [A1 + 0000] = h(0);
-
-            Lba0f4:	; 800BA0F4
-            A0 = A0 << 04;
-            V0 = h[80083288 + A0];
-            V1 = bu[V1 + 0000];
-            V0 = 801162b4 + window_id * 100 + V0;
-            [V0 + 0000] = b(V1);
-            V0 = hu[80083288 + A0] + 1;
-            V1 = 80083274 + A0;
-            [V1 + 0014] = h(V0);
-            V0 = hu[A1 + 0000] + 1;
-            [A1 + 0000] = h(V0);
-            V0 = hu[80083286 + A0] + 1;
-            [V1 + 0012] = h(V0);
-            V1 = 801162a0 + A2;
-            [V1] = h(hu[V1] - letter_cost);
-            800BA654	j      Lba894 [$800ba894]
+                if( ( b[char_data] == -1 ) || ( A0 >= 9 ) )
+                {
+                    [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
+                    [801162ac + window_id * 2] = h(0);
+                }
+                else
+                {
+                    V0 = h[80083288 + window_id * 30];
+                    [801162b4 + window_id * 100 + V0] = b(bu[char_data]);
+                    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                    [801162ac + window_id * 2] = h(hu[801162ac + window_id * 2] + 1);
+                    [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
+                }
+            }
+            continue;
         }
 
         case fe:
@@ -1162,7 +1122,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
                     if( A0 == -1 )
                     {
                         A0 = window_id;
-                        800BA32C	jal    funcbae60 [$800bae60]
+                        funcbae60();
                         S0 = V0;
 
                         if( bu[8009d820] & 3 )
@@ -1170,28 +1130,28 @@ while( letter_cost < h[801162a0 + window_id * 2] )
                             A0 = 800a09c8; // "mpara="
                             A1 = S0 & ffff;
                             A2 = 4;
-                            funcb8750();
+                            wm_dialog_print_param();
                         }
 
                         V0 = w[801162b0 + window_id * 4];
                         V1 = bu[V0 + 1];
-                        if( V1 == fe )
+                        if( V1 == de )
                         {
                             A0 = S0 & ffff;
                             A1 = 801163c8 + window_id * 8;
-                            800BA3B0	jal    funcbb350 [$800bb350]
+                            wm_dialog_add_digit_without_leading_space();
                         }
                         else if( V1 == df )
                         {
                             A0 = S0 & ffff;
                             A1 = 801163c8 + window_id * 8;
-                            800BA3EC	jal    funcbb568 [$800bb568]
+                            wm_dialog_add_hex_digit_without_leading_space();
                         }
                         else if( V1 == e1 )
                         {
                             A0 = S0 & ffff;
                             A1 = 801163c8 + window_id * 8;
-                            800BA3CC	jal    funcbb450 [$800bb450]
+                            wm_dialog_add_digit_with_leading_space();
                         }
 
                         [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
@@ -1202,9 +1162,9 @@ while( letter_cost < h[801162a0 + window_id * 2] )
                         {
                             V0 = h[80083274 + window_id * 30 + 14];
                             [801162b4 + window_id * 100 + V0] = b(bu[801163c8 + window_id * 8 + A0]);
+                            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
                             [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
                             [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
-                            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
                             [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
                         }
                         else
@@ -1214,102 +1174,67 @@ while( letter_cost < h[801162a0 + window_id * 2] )
                             [801163c0 + window_id * 2] = h(hu[801163c0 + window_id * 2] + 1);
                         }
                     }
-                    800BA5AC	j      Lba894 [$800ba894]
+                    continue;
                 }
 
                 case e2:
                 {
-                    V1 = hu[80083288 + window_id * 30] - 1;
-                    T0 = 80083274 + window_id * 30;
-                    [T0 + 14] = h(V1);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1);
                     A0 = w[801162b0 + window_id * 4];
-                    800BA47C	addiu  v0, a0, $ffff (=-$1)
-                    [801162b0 + window_id * 4] = w(V0);
-                    A2 = 801163c4 + window_id * 2;
-                    A1 = h[A2 + 0000];
-                    800BA494	addiu  v0, zero, $ffff (=-$1)
-                    800BA498	bne    a1, v0, Lba5b4 [$800ba5b4]
-                    V0 = window_id << 03;
-                    S0 = bu[A0 + 0001];
-                    V0 = bu[A0 + 0002];
-                    S1 = bu[A0 + 0003];
-                    V1 = bu[A0 + 0004];
-                    V0 = V0 << 08;
-                    S0 = S0 | V0;
-                    V1 = V1 << 08;
-                    S1 = S1 | V1;
-
-                    if( bu[8009d820] & 3 )
+                    [801162b0 + window_id * 4] = w(A0 - 1);
+                    A1 = h[801163c4 + window_id * 2];
+                    if( A1 == -1 )
                     {
-                        A0 = 800a09d0; // "gstr="
-                        A1 = S0;
-                        A2 = 4;
-                        funcb8750();
+                        S0 = hu[A0 + 1];
+                        S1 = hu[A0 + 3];
 
-                        A0 = 800a09d8; // "glen="
+                        if( bu[8009d820] & 3 )
+                        {
+                            A0 = 800a09d0; // "gstr="
+                            A1 = S0;
+                            A2 = 4;
+                            wm_dialog_print_param();
+
+                            A0 = 800a09d8; // "glen="
+                            A1 = S1;
+                            A2 = 4;
+                            wm_dialog_print_param();
+                        }
+
                         A1 = S1;
-                        A2 = 4;
-                        funcb8750();
+                        A2 = 0;
+                        if( A1 != 0 )
+                        {
+                            A3 = S0;
+
+                            loopba538:	; 800BA538
+                                [801163c8 + window_id * 8 + A2] = b(bu[8009d288 + A3 + A2]);
+                                A2 = A2 + 1;
+                                A0 = A2 < A1;
+                            800BA564	bne    a0, zero, loopba538 [$800ba538]
+                        }
+
+                        [801163c8 + window_id * 8 + A2] = b(-1);
+                        [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
                     }
-
-                    A1 = S1 & ffff;
-                    800BA514	beq    a1, zero, Lba56c [$800ba56c]
-                    A2 = 0;
-                    V1 = 801163c8;
-                    V0 = window_id << 03;
-                    T0 = V0 + V1;
-                    A3 = S0 & ffff;
-                    T1 = 8009d288;
-
-                    loopba538:	; 800BA538
-                        V1 = A2 << 10;
-                        A0 = A2 + 0001;
-                        A2 = A0;
-                        V1 = V1 >> 10;
-                        V0 = A3 + V1;
-                        V0 = V0 + T1;
-                        V1 = T0 + V1;
-                        A0 = A0 << 10;
-                        A0 = A0 >> 10;
-                        V0 = bu[V0 + 0000];
-                        [V1 + 0000] = b(V0);
-                        A0 = A0 < A1;
-                    800BA564	bne    a0, zero, loopba538 [$800ba538]
-
-
-                    Lba56c:	; 800BA56C
-                    V0 = 801163c8;
-                    V1 = window_id << 03;
-                    V1 = V1 + V0;
-                    V0 = A2 << 10;
-                    V0 = V0 >> 10;
-                    V1 = V1 + V0;
-                    V0 = 00ff;
-                    [V1 + 0000] = b(V0);
-
-                    Lba590:	; 800BA590
-                    [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
-                    800BA5AC	j      Lba894 [$800ba894]
-
-                    Lba5b4:	; 800BA5B4
-                    A1 = 801163c8 + V0 + A1;
-                    V1 = bu[A1 + 0000];
-                    800BA5CC	bne    v1, ff, Lba5e4 [$800ba5e4]
-                    V0 = A0 + 0005;
-                    [801162b0 + window_id * 4] = w(V0);
-                    800BA5D8	addiu  v0, zero, $ffff (=-$1)
-                    800BA5DC	j      Lba894 [$800ba894]
-                    [A2 + 0000] = h(V0);
-
-                    Lba5e4:	; 800BA5E4
-                    V0 = h[80083288 + window_id * 30];
-                    [801162b4 + window_id * 100 + V0] = b(bu[A1]);
-                    [T0 + 14] = h(hu[80083288 + window_id * 30] + 1);
-                    [A2] = h(hu[A2] + 1);
-                    [T0 + 12] = h(hu[80083286 + window_id * 30] + 1);
-                    V1 = 801162a0 + window_id * 2;
-                    [V1] = h(hu[V1] - letter_cost);
-                    800BA654	j      Lba894 [$800ba894]
+                    else
+                    {
+                        if( b[801163c8 + window_id * 8 + A1] == -1 )
+                        {
+                            [801162b0 + window_id * 4] = w(A0 + 5);
+                            [801163c4 + window_id * 2] = h(-1);
+                        }
+                        else
+                        {
+                            V0 = h[80083288 + window_id * 30];
+                            [801162b4 + window_id * 100 + V0] = b(bu[801163c8 + window_id * 8 + A1]);
+                            [80083274 + window_id * 30 + 14] = h(hu[80083288 + window_id * 30] + 1);
+                            [801163c4 + window_id * 2] = h(hu[801163c4 + window_id * 2] + 1);
+                            [80083274 + window_id * 30 + 12] = h(hu[80083286 + window_id * 30] + 1);
+                            [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
+                        }
+                    }
+                    continue;
                 }
 
                 case d2-db e9:
@@ -1319,7 +1244,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
                     [801162b4 + window_id * 100 + V0] = b(bu[A0]);
                     [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
                     [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
-                    800BA6C0	j      Lba894 [$800ba894]
+                    continue;
                 }
 
                 case dd:
@@ -1337,6 +1262,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
                 }
             }
         }
+        break;
 
         case fa fb fc fd:
         {
@@ -1346,10 +1272,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
             [801162b0 + window_id * 4] = w(w[801162b0 + window_id * 4] + 1);
             [80083288 + window_id * 30] = h(hu[80083288 + window_id * 30] + 1);
         }
-// fe
-800BA80C e3-e8
-
-        800BA80C f6 f7 f8 f9
+        break;
     }
 
     V1 = w[801162b0 + window_id * 4];
@@ -1359,8 +1282,6 @@ while( letter_cost < h[801162a0 + window_id * 2] )
     [80083274 + window_id * 30 + 14] = h(hu[80083288 + window_id * 30] + 1);
     [80083274 + window_id * 30 + 12] = h(hu[80083286 + window_id * 30] + 1);
     [801162a0 + window_id * 2] = h(hu[801162a0 + window_id * 2] - letter_cost);
-
-    Lba894:	; 800BA894
 }
 
 V0 = h[80083288 + window_id * 30];
@@ -1370,7 +1291,7 @@ V0 = h[80083288 + window_id * 30];
 
 
 ////////////////////////////////
-// wm_window_text_scroll_by_row()
+// wm_dialog_text_scroll_by_row()
 
 window_id = A0;
 
@@ -1382,7 +1303,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a09bc; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcb8750();
+        wm_dialog_print_param();
     }
     return;
 }
@@ -1399,7 +1320,7 @@ if( A0 & f )
 
 
 ////////////////////////////////
-// wm_window_text_scroll_during_ok()
+// wm_dialog_text_scroll_during_ok()
 
 window_id = A0;
 
@@ -1411,7 +1332,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a09bc; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcb8750();
+        wm_dialog_print_param();
     }
     return;
 }
@@ -1449,7 +1370,7 @@ else
 
 
 ////////////////////////////////
-// wm_window_start_text()
+// wm_dialog_start_text()
 
 window_id = A0;
 
@@ -1461,7 +1382,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a09bc; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcb8750();
+        wm_dialog_print_param();
     }
     return;
 }
@@ -1480,7 +1401,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
 
 
 ////////////////////////////////
-// wm_window_discrease_window()
+// wm_dialog_discrease_window()
 
 window_id = A0;
 
@@ -1492,7 +1413,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a09bc; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcb8750();
+        wm_dialog_print_param();
     }
     return 1;
 }
@@ -1537,7 +1458,7 @@ return 0;
 
 
 ////////////////////////////////
-// funcbae60
+// funcbae60()
 
 V0 = A0 << 10;
 V0 = V0 >> 10;
@@ -1832,10 +1753,7 @@ V1 = hu[V0 + 0000];
 AT = AT + 5e25;
 AT = AT + V1;
 V0 = bu[AT + 0000];
-800BB328	lui    at, $8007
-AT = AT + 5e24;
-AT = AT + V1;
-V1 = bu[AT + 0000];
+V1 = bu[80075e24 + V1];
 V0 = V0 << 08;
 
 Lbb33c:	; 800BB33C
@@ -1852,149 +1770,104 @@ V0 = V1;
 
 
 ////////////////////////////////
-// funcbb350
+// wm_dialog_add_digit_without_leading_space()
 
-T0 = A0;
-T1 = 0;
-A2 = 2710;
-A3 = 0;
-800BB360	lui    t2, $6666
-T2 = T2 | 6667;
+value = A0;
+dst = A1;
+
+not_skip = 0;
+divisor = 2710;
+pos = 0;
 
 loopbb368:	; 800BB368
-V0 = T0 & ffff;
-V1 = A2 << 10;
-V1 = V1 >> 10;
-800BB374	div    v0, v1
-800BB39C	mflo   v1
-800BB3A0	bne    t1, zero, Lbb3b4 [$800bb3b4]
-A0 = V1;
-V0 = V1 << 10;
-800BB3AC	beq    v0, zero, Lbb3e8 [$800bb3e8]
-800BB3B0	mult   a0, a2
+    A0 = value / divisor;
 
-Lbb3b4:	; 800BB3B4
-T1 = 0001;
-V0 = A3 << 10;
-A3 = A3 + 0001;
-V0 = V0 >> 10;
-V1 = V1 << 10;
-V1 = V1 >> 10;
-800BB3CC	lui    at, $800c
-AT = AT + 7304;
-AT = AT + V1;
-V1 = bu[AT + 0000];
-V0 = A1 + V0;
-[V0 + 0000] = b(V1);
-800BB3E4	mult   a0, a2
+    if( ( not_skip != 0 ) || ( A0 != 0 ) )
+    {
+        not_skip = 1;
+        [dst + pos] = b(bu[800c7304 + A0]);
+        pos = pos + 1;
+    }
 
-Lbb3e8:	; 800BB3E8
-800BB3E8	mflo   a0
-V1 = A2 << 10;
-V0 = V1 >> 10;
-800BB3F4	mult   v0, t2
-V1 = V1 >> 1f;
-800BB3FC	mfhi   v0
-V0 = V0 >> 02;
-V0 = V0 - V1;
-A2 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0002;
+    value = value - A0 * divisor;
+
+    divisor = divisor / a;
+    V0 = divisor < 2;
 800BB418	beq    v0, zero, loopbb368 [$800bb368]
-T0 = T0 - A0;
-V0 = A3 << 10;
-V0 = V0 >> 10;
-V0 = A1 + V0;
-V1 = T0 & ffff;
-800BB430	lui    at, $800c
-AT = AT + 7304;
-AT = AT + V1;
-A0 = bu[AT + 0000];
-V1 = 00ff;
-[V0 + 0001] = b(V1);
-[V0 + 0000] = b(A0);
+
+[dst + pos + 0] = b(bu[800c7304 + value]); // last digit
+[dst + pos + 1] = b(-1); // end of string
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbb450
+// wm_dialog_add_digit_with_leading_space()
 
 T0 = A0;
 T1 = 0;
 A3 = 2710;
 A2 = 0;
-T3 = 003f;
-800BB464	lui    t2, $6666
-T2 = T2 | 6667;
+
+T2 = 66666667;
 
 loopbb46c:	; 800BB46C
-V0 = T0 & ffff;
-V1 = A3 << 10;
-V1 = V1 >> 10;
-800BB478	div    v0, v1
-800BB4A0	mflo   v1
-800BB4A4	bne    t1, zero, Lbb4b8 [$800bb4b8]
-A0 = V1;
-V0 = V1 << 10;
-800BB4B0	beq    v0, zero, Lbb4ec [$800bb4ec]
-V0 = A2 << 10;
+    V0 = T0 & ffff;
+    V1 = A3 << 10;
+    V1 = V1 >> 10;
+    V1 = V0 / V1;
+    800BB4A4	bne    t1, zero, Lbb4b8 [$800bb4b8]
+    A0 = V1;
+    V0 = V1 << 10;
+    800BB4B0	beq    v0, zero, Lbb4ec [$800bb4ec]
+    V0 = A2 << 10;
 
-Lbb4b8:	; 800BB4B8
-T1 = 0001;
-V0 = A2 << 10;
-A2 = A2 + 0001;
-V0 = V0 >> 10;
-V1 = V1 << 10;
-V1 = V1 >> 10;
-800BB4D0	lui    at, $800c
-AT = AT + 7304;
-AT = AT + V1;
-V1 = bu[AT + 0000];
-V0 = A1 + V0;
-800BB4E4	j      Lbb4fc [$800bb4fc]
-[V0 + 0000] = b(V1);
+    Lbb4b8:	; 800BB4B8
+    T1 = 1;
+    V0 = A2 << 10;
+    A2 = A2 + 0001;
+    V0 = V0 >> 10;
+    V1 = V1 << 10;
+    V1 = V1 >> 10;
+    V1 = bu[800c7304 + V1];
+    V0 = A1 + V0;
+    800BB4E4	j      Lbb4fc [$800bb4fc]
+    [V0 + 0000] = b(V1);
 
-Lbb4ec:	; 800BB4EC
-V0 = V0 >> 10;
-V0 = A1 + V0;
-[V0 + 0000] = b(T3);
-A2 = A2 + 0001;
+    Lbb4ec:	; 800BB4EC
+    V0 = V0 >> 10;
+    V0 = A1 + V0;
+    [V0 + 0000] = b(3f);
+    A2 = A2 + 0001;
 
-Lbb4fc:	; 800BB4FC
-800BB4FC	mult   a0, a3
-800BB500	mflo   a0
-V1 = A3 << 10;
-V0 = V1 >> 10;
-800BB50C	mult   v0, t2
-V1 = V1 >> 1f;
-800BB514	mfhi   v0
-V0 = V0 >> 02;
-V0 = V0 - V1;
-A3 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0002;
+    Lbb4fc:	; 800BB4FC
+    A0 = A0 * A3;
+    V1 = A3 << 10;
+    V0 = V1 >> 10;
+    V1 = V1 >> 1f;
+    V0 = V0 % T2;
+    V0 = V0 >> 02;
+    V0 = V0 - V1;
+    A3 = V0;
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    V0 = V0 < 0002;
+    T0 = T0 - A0;
 800BB530	beq    v0, zero, loopbb46c [$800bb46c]
-T0 = T0 - A0;
+
 V0 = A2 << 10;
 V0 = V0 >> 10;
 V0 = A1 + V0;
 V1 = T0 & ffff;
-800BB548	lui    at, $800c
-AT = AT + 7304;
-AT = AT + V1;
-A0 = bu[AT + 0000];
-V1 = 00ff;
-[V0 + 0001] = b(V1);
-[V0 + 0000] = b(A0);
+
+[V0 + 0] = b(bu[800c7304 + V1]);
+[V0 + 1] = b(-1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbb568
+// wm_dialog_add_hex_digit_without_leading_space()
 
 T1 = 0;
 A2 = 1000;
@@ -2019,10 +1892,7 @@ A3 = A3 + 0001;
 V0 = V0 >> 10;
 V1 = V1 << 10;
 V1 = V1 >> 10;
-800BB5D8	lui    at, $800c
-AT = AT + 7304;
-AT = AT + V1;
-V1 = bu[AT + 0000];
+V1 = bu[800c7304 + V1];
 V0 = A1 + V0;
 [V0 + 0000] = b(V1);
 800BB5F0	mult   t0, a2
@@ -2060,16 +1930,14 @@ V1 = 00ff;
 // funcbb650()
 
 V1 = w[80116298];
-800BB668	bne    v1, zero, Lbb688 [$800bb688]
+if( V1 == 0 )
+{
+    A0 = 800a09ac; // "No mes data!"
+    wm_dialog_print_no_param();
 
+    return 0;
+}
 
-A0 = 800a09ac; // "No mes data!"
-funcb8758();
-
-800BB680	j      Lbb7c0 [$800bb7c0]
-V0 = 0;
-
-Lbb688:	; 800BB688
 S0 = V1;
 S2 = 0;
 S1 = 0;
@@ -2090,8 +1958,8 @@ V0 = bu[S0 + 0000];
 V0 = V1 < 0016;
 800BB6C8	beq    v0, zero, Lbb768 [$800bb768]
 V0 = V1 << 02;
-800BB6D0	lui    at, $800a
-AT = AT + 0ae8;
+
+AT = 800a0ae8;
 AT = AT + V0;
 V0 = w[AT + 0000];
 800BB6E0	nop
@@ -2158,15 +2026,14 @@ V1 = 00ff;
 AT = 8009d5f0;
 AT = AT + V0;
 [AT + 0000] = b(V1);
-V0 = 0001;
 
-Lbb7c0:	; 800BB7C0
+return 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// wm_window_copy_string_into_character_name()
+// wm_dialog_copy_string_into_character_name()
 
 char_id = A0;
 message_id = A1;
@@ -2175,7 +2042,7 @@ mes_data = w[80116298];
 if( mes_data == 0 )
 {
     A0 = 800a09ac; // "No mes data!"
-    funcb8758();
+    wm_dialog_print_no_param();
 
     return;
 }

@@ -10,7 +10,7 @@
 buffer_id = w[800d05e8];
 [800d05e8] = w(buffer_id < 1);
 
-[800bd130] = w(800c8564 + buffer_id * 4074);
+[800bd130] = w(800c8564 + buffer_id * 4074); // dialog OT for render
 [800c752c] = b(bu[800d05e8]); // render buffer id
 [800d05e0] = w(w[800cc564 + buffer_id * 4074]); // pointer to polygon buffer
 [800d05e4] = w(800c84f4 + buffer_id * 4074);
@@ -95,7 +95,7 @@ while( true )
             }
 
             A0 = 0;
-            func3cedc(); // wait
+            system_psyq_wait_frames(); // wait
         }
     }
 
@@ -403,13 +403,11 @@ wm_create_skybox_overlay_render_buffers();
 
 funca0b48();
 
-800A1380	lui    a0, $800c
-A0 = w[A0 + 65ec];
-800A1388	jal    $8003b6dc
-800A138C	nop
-800A1390	lui    v0, $800e
-V0 = w[V0 + 5630];
-800A1398	nop
+A0 = w[800c65ec];
+system_gte_set_proj_plane_dist();
+
+V0 = w[800e5630];
+
 800A139C	beq    v0, zero, La13d4 [$800a13d4]
 A0 = 00a0;
 800A13A4	jal    funcadfc0 [$800adfc0]
@@ -426,170 +424,102 @@ A1 = w[A1 + 55f0];
 A1 = V0 + A1;
 
 La13d4:	; 800A13D4
-800A13D4	lui    a1, $800e
-A1 = w[A1 + 55f0];
+A1 = w[800e55f0];
 
 La13dc:	; 800A13DC
-800A13DC	jal    $8003b6bc
-800A13E0	nop
-800A13E4	lui    a0, $800c
-A0 = w[A0 + d130];
-V0 = 000c;
-800A13F0	lui    at, $800c
-[AT + 752d] = b(V0);
-800A13F8	lui    at, $800c
-[AT + 7530] = w(A0);
-800A1400	jal    $80044244
+system_gte_set_screen_offset();
+
+A0 = w[800bd130];
+[800c752d] = b(c);
+[800c7530] = w(A0);
 A1 = 1000;
+system_psyq_clear_o_tag_r();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca141c()
+// wm_render_all()
 
 S4 = A0;
+
 wm_get_current_render_buffer_id();
+buffer_id = V0;
 
-800A1444	lui    s1, $00ff
-S1 = S1 | ffff;
-800A144C	lui    s0, $800e
-S0 = S0 + 5680;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V1 = V1 + S0;
-800A1464	lui    s2, $ff00
-800A1468	lui    v0, $800c
-V0 = w[V0 + d130];
-A0 = w[V1 + 0000];
-V0 = w[V0 + 2710];
-A0 = A0 & S2;
-V0 = V0 & S1;
-A0 = A0 | V0;
-800A1484	jal    wm_get_current_render_buffer_id [$800a0bd4]
-[V1 + 0000] = w(A0);
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V1 = V1 + S0;
-V1 = V1 & S1;
-800A14A0	lui    a1, $800c
-A1 = w[A1 + d130];
-S5 = 09c4;
-A0 = w[A1 + 2710];
-800A14B0	lui    v0, $800e
-V0 = w[V0 + 55f4];
-A0 = A0 & S2;
-A0 = A0 | V1;
-800A14C0	beq    v0, zero, La155c [$800a155c]
-[A1 + 2710] = w(A0);
-wm_get_skybox_overlay_current_render_buffer();
+V0 = w[800bd130];
+[800e5680 + buffer_id * c] = w((w[800e5680 + buffer_id * c] & ff000000) | (w[V0 + 2710] & 00ffffff));
+[V0 + 2710] = w((w[V0 + 2710] & ff000000) | ((800e5680 + buffer_id * c) & 00ffffff));
 
-V1 = w[800bd130];
-A0 = w[V0 + 0000];
-V1 = w[V1 + 2710];
-A0 = A0 & S2;
-V1 = V1 & S1;
-A0 = A0 | V1;
-[V0 + 0000] = w(A0);
-wm_get_skybox_overlay_current_render_buffer();
+if( w[800e55f4] != 0 )
+{
+    wm_get_skybox_overlay_current_render_buffer();
+    V1 = w[800bd130];
+    [V0 + 0000] = w((w[V0 + 0000] & ff000000) | (w[V1 + 2710] & 00ffffff));
+    [V1 + 2710] = w((w[V1 + 2710] & ff000000) | (V0 & 00ffffff));
 
-A0 = w[800bd130];
-V1 = w[A0 + 2710];
-V0 = V0 & S1;
-V1 = V1 & S2;
-V1 = V1 | V0;
-[A0 + 2710] = w(V1);
-wm_get_skybox_overlay_current_texture_setting_buffer();
+    wm_get_skybox_overlay_current_texture_setting_buffer();
+    V1 = w[800bd130];
+    [V0] = w((w[V0] & ff000000) | (w[V1 + 2710] & 00ffffff));
+    [V1 + 2710] = w((w[V1 + 2710] & ff000000) | (V0 & 00ffffff));
+}
 
-V1 = w[800bd130];
-A0 = w[V0 + 0000];
-V1 = w[V1 + 2710];
-A0 = A0 & S2;
-V1 = V1 & S1;
-A0 = A0 | V1;
-[V0 + 0000] = w(A0);
-wm_get_skybox_overlay_current_texture_setting_buffer();
+A0 = 1;
+system_psyq_wait_frames();
 
-A0 = w[800bd130];
-800A1544	nop
-V1 = w[A0 + 2710];
-V0 = V0 & S1;
-V1 = V1 & S2;
-V1 = V1 | V0;
-[A0 + 2710] = w(V1);
+if(  w[800d75ec] != 0 )
+{
+    S1 = 800d75f0;
+    S3 = 800d75f0 - 4;
+    S0 = 800d75f0 + 6;
+    S2 = 0;
 
-La155c:	; 800A155C
-800A155C	jal    $func3cedc
-A0 = 0001;
-800A1564	lui    s1, $800d
-S1 = S1 + 75f0;
-800A156C	lui    v0, $800d
-V0 = w[V0 + 75ec];
-800A1574	nop
-800A1578	beq    v0, zero, La164c [$800a164c]
-S2 = 0;
-800A1580	addiu  s3, s1, $fffc (=-$4)
-S0 = S1 + 0006;
+    loopa1588:	; 800A1588
+        A0 = -1;
+        system_psyq_wait_frames();
 
-loopa1588:	; 800A1588
-800A1588	jal    $func3cedc
-800A158C	addiu  a0, zero, $ffff (=-$1)
-V1 = bu[S0 + 0001];
-800A1594	nop
-800A1598	div    v0, v1
-800A15C0	mflo   v0
-V1 = bu[S0 + 0000];
-800A15C8	nop
-800A15CC	div    v0, v1
-800A15F4	mfhi   v1
-V0 = hu[S0 + fffe];
-800A15FC	nop
-V0 = V0 >> 02;
-800A1604	mult   v0, v1
-A1 = w[S1 + 0000];
-S1 = S1 + 0008;
-A1 = A1 >> 02;
-A1 = A1 << 02;
-S0 = S0 + 0008;
-800A161C	mflo   v0
-V0 = V0 << 02;
-V0 = V0 + S3;
-A1 = A1 + V0;
-A0 = A1 + 0004;
-800A1630	jal    $80044000
-A1 = A1 + 000c;
-V0 = w[S3 + 0000];
-S2 = S2 + 0001;
-V0 = S2 < V0;
-800A1644	bne    v0, zero, loopa1588 [$800a1588]
-800A1648	nop
+        V1 = bu[S0 + 1];
+        V0 = V0 / V1;
+        V1 = bu[S0 + 0];
+        V1 = V0 % V1;
+        V0 = hu[S0 - 2];
+        V0 = V0 >> 02;
+        V0 = V0 * V1;
+        A1 = w[S1 + 0000];
+        S1 = S1 + 8;
+        A1 = A1 >> 2;
+        A1 = A1 << 2;
+        S0 = S0 + 8;
+        V0 = V0 << 02;
+        V0 = V0 + S3;
+        A1 = A1 + V0;
+        A0 = A1 + 4;
+        A1 = A1 + c;
+        system_psyq_load_image();
 
-La164c:	; 800A164C
-800A164C	jal    $80043dd8
+        S2 = S2 + 1;
+        V0 = S2 < w[S3];
+    800A1644	bne    v0, zero, loopa1588 [$800a1588]
+}
+
 A0 = 0;
-V0 = S4 << 10;
-V0 = V0 >> 10;
-A0 = V0 ^ 0001;
-A0 = A0 < 0001;
-800A1664	jal    $func3cedc
-A0 = V0 - A0;
-800A166C	jal    $80043938
-A0 = 0001;
-800A1674	lui    a0, $800d
-A0 = w[A0 + 05e4];
-800A167C	jal    $800443b0
-800A1680	nop
-800A1684	lui    a0, $800d
-A0 = w[A0 + 05e4];
-800A168C	jal    $800444ac
-A0 = A0 + 005c;
-800A1694	lui    v0, $800c
-V0 = w[V0 + d130];
-A0 = S5 << 02;
-800A16A0	jal    $8004433c
-A0 = A0 + V0;
+system_psyq_draw_sync();
+
+A0 = S4 ^ 1;
+A0 = A0 < 1;
+A0 = S4 - A0;
+system_psyq_wait_frames();
+
+A0 = 1;
+system_psyq_reset_graph();
+
+A0 = w[800d05e4];
+system_psyq_put_draw_env();
+
+A0 = w[800d05e4] + 5c;
+system_psyq_put_disp_env();
+
+A0 = w[800bd130] + 2710;
+system_psyq_draw_otag();
 ////////////////////////////////
 
 
@@ -3165,7 +3095,7 @@ La3918:	; 800A3918
 800A391C	nop
 800A3920	bne    v0, s0, La3938 [$800a3938]
 800A3924	nop
-800A3928	jal    $func3cedc
+800A3928	jal    $system_psyq_wait_frames
 A0 = 0;
 800A3930	j      La3918 [$800a3918]
 800A3934	nop
@@ -3880,7 +3810,7 @@ La42c0:	; 800A42C0
 800A42DC	nop
 
 La42e0:	; 800A42E0
-800A42E0	jal    $func3cedc
+800A42E0	jal    $system_psyq_wait_frames
 800A42E4	addiu  a0, zero, $ffff (=-$1)
 800A42E8	lui    t0, $00ff
 T0 = T0 | ffff;
@@ -3899,8 +3829,7 @@ AT = AT + A1;
 V0 = V0 + 6648;
 A1 = A1 + V0;
 800A4328	lui    a3, $ff00
-800A432C	lui    a2, $800c
-A2 = w[A2 + d130];
+A2 = w[800bd130];
 V1 = w[A1 + 0000];
 V0 = w[A2 + 0000];
 V1 = V1 & A3;
@@ -3959,7 +3888,7 @@ V0 = V0 + 6648;
 A0 = A0 + V0;
 800A4404	lui    a3, $ff00
 800A4408	lui    a2, $800c
-A2 = w[A2 + d130];
+A2 = w[800bd130];
 V1 = w[A0 + 0000];
 V0 = w[A2 + 0000];
 V1 = V1 & A3;
@@ -4255,7 +4184,7 @@ La4668:	; 800A4668
     funca4138();
 
     A0 = 800be5e8; // offset to string (in binary)
-    wm_windows_init();
+    wm_dialogs_init();
 
     funcb04ac();
 
@@ -4438,7 +4367,7 @@ La4668:	; 800A4668
         V0 = w[800e566c] < 0009;
         800A4ADC	beq    v0, zero, La4aec [$800a4aec]
 
-        funcb85d4(); // render windows
+        wm_dialog_update();
 
         La4aec:	; 800A4AEC
         800A4AEC	jal    funcb3828 [$800b3828]
@@ -4536,7 +4465,7 @@ La4668:	; 800A4668
         800A4C44	jal    funcb2e90 [$800b2e90]
 
         A0 = w[800c65ec];
-        system_set_proj_plane_dist_to_GTE();
+        system_gte_set_proj_plane_dist();
 
         if( w[800e566c] >= 0 )
         {
@@ -4561,7 +4490,7 @@ La4668:	; 800A4668
         {
             A0 = A0 - 1;
         }
-        800A4CCC	jal    funca141c [$800a141c]
+        wm_render_all();
 
         system_get_current_pad_buttons();
 
@@ -7873,15 +7802,14 @@ S7 = S0;
 
 800A7994	jal    funca9e14 [$800a9e14]
 A0 = S0;
-800A799C	lui    v0, $8011
-V0 = w[V0 + 9d54];
+
+V0 = w[80109d54];
 800A79A4	nop
 800A79A8	beq    v0, zero, La79c8 [$800a79c8]
 800A79AC	nop
 A0 = w[S1 + 0018];
 A1 = w[S1 + 001c];
-800A79B8	lui    at, $8011
-[AT + 9d54] = w(0);
+[80109d54] = w(0);
 800A79C0	jal    funcb21e4 [$800b21e4]
 800A79C4	nop
 
@@ -8001,15 +7929,13 @@ S7 = S0;
 
 800A7B40	jal    funca9e14 [$800a9e14]
 A0 = S0;
-800A7B48	lui    v0, $8011
-V0 = w[V0 + 9d54];
+V0 = w[80109d54];
 800A7B50	nop
 800A7B54	beq    v0, zero, La7b74 [$800a7b74]
 800A7B58	nop
 A0 = w[S1 + 0018];
 A1 = w[S1 + 001c];
-800A7B64	lui    at, $8011
-[AT + 9d54] = w(0);
+[80109d54] = w(0);
 800A7B6C	jal    funcb21e4 [$800b21e4]
 800A7B70	nop
 

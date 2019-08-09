@@ -909,7 +909,7 @@ SP = SP + 0018;
 [SP + 0030] = w(S0);
 80014120	lui    at, $8009
 [AT + 5dd4] = h(0);
-80014128	jal    func3cedc [$8003cedc]
+80014128	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0;
 80014130	lui    a0, $8019
 80014134	jal    func448d0 [$800448d0]
@@ -956,9 +956,9 @@ A0 = A0 | da80;
 800141D8	jal    system_psyq_put_draw_env [$800443b0]
 A0 = A0 | da24;
 A0 = 009f;
-800141E4	jal    system_set_screen_offset_to_GTE [$8003b6bc]
+800141E4	jal    system_gte_set_screen_offset [$8003b6bc]
 A1 = 0077;
-800141EC	jal    system_set_proj_plane_dist_to_GTE [$8003b6dc]
+800141EC	jal    system_gte_set_proj_plane_dist [$8003b6dc]
 A0 = 01e0;
 800141F4	lui    v0, $8007
 V0 = hu[V0 + 5dec];

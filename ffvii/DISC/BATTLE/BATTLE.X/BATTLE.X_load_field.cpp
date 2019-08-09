@@ -16,10 +16,10 @@ system_gte_init_geom();
 
 A0 = screen_size_x / 2;
 A1 = screen_size_y / 2;
-system_set_screen_offset_to_GTE();
+system_gte_set_screen_offset();
 
 A0 = proj_plane_dist;
-system_set_proj_plane_dist_to_GTE();
+system_gte_set_proj_plane_dist();
 
 A0 = 800faff4;
 A1 = 0; // clip rect x
@@ -35,7 +35,7 @@ A0 = 800faff4;
 system_psyq_put_draw_env();
 
 A0 = 0;
-func3cedc(); // wait
+system_psyq_wait_frames(); // wait
 
 A0 = 800faff4;
 A1 = 0;

@@ -6760,7 +6760,7 @@ A0 = f2000002;
 80030250	jal    func42c60 [$80042c60]
 
 S1 = V0;
-8003025C	jal    func3cedc [$8003cedc]
+8003025C	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0001;
 80030264	lui    v1, $8006
 V1 = hu[V1 + 2f78];

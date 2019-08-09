@@ -511,19 +511,19 @@ SP = SP + 0028;
 8001D564	jr     ra 
 8001D568	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func1d56c
-8001D56C	addiu  sp, sp, $ffd8 (=-$28)
+
 V0 = h[SP + 0038];
-[SP + 0010] = w(S0);
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
-[SP + 0018] = w(S2);
 S2 = A2;
-[SP + 001c] = w(S3);
 S3 = A3;
 8001D594	beq    v0, zero, L1d5dc [$8001d5dc]
-[SP + 0020] = w(RA);
+
 8001D59C	lui    a0, $8006
 A0 = w[A0 + 2f24];
 8001D5A4	jal    func469c4 [$800469c4]
@@ -587,423 +587,401 @@ V0 = w[V0 + 2f24];
 V0 = V0 + 0010;
 8001D680	lui    at, $8006
 [AT + 2f24] = w(V0);
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-8001D6A0	jr     ra 
-8001D6A4	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d6a8()
+// system_menu_add_dialog_string_to_render()
 
-dialog_width = h(A2);
-[SP + 28] = h(0);
-index = 0;
-
-message = A3; // message address
 pos_x = A0;
 pos_y = A1;
+dialog_width = A2;
+message = A3; // message address
+
+[SP + 28] = h(0);
+index = 0;
 
 L1d6ec:	; 8001D6EC
     A0 = bu[message];
 
-    if (h[GP + 78] != 0) // if number of letter != 0
+    if( h[GP + 78] == 0 ) // number of letter
     {
-        if (A0 != ff) // if not end of string
+        break;
+    }
+
+    if( A0 == ff ) // end of string
+    {
+        break;
+    }
+
+    if( ( A0 == e8 ) || ( A0 == e9 ) )
+    {
+        break;
+    }
+
+    if( A0 == e7 ) // new line
+    {
+        pos_x = 8;
+        pos_y = pos_y + 10;
+        message = message + 1;
+        [GP + 0258] = w(w[GP + 0258] + 1);
+        [GP + 02ac] = w(w[GP + 02ac] + 1);
+    }
+    else
+    {
+        if (A0 == fa || A0 == fb || A0 == fc || A0 == fd || A0 == fe) // FA FB FC FD FE
         {
-            if (A0 != e8 && A0 != e9) // if E8 or E9 - finish execution
+            S3 = 0;
+
+            switch( A0 )
             {
-                if (A0 == e7) // new line
+                case fa:
                 {
-                    pos_x = 8;
-                    pos_y = pos_y + 10;
                     message = message + 1;
-                    [GP + 0258] = w(w[GP + 0258] + 1);
-                    [GP + 02ac] = w(w[GP + 02ac] + 1);
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    S4 = 84;
+                    S7 = e7;
+                    8001D7CC	j      L1dab0 [$8001dab0]
                 }
-                else
+                break;
+
+                case fb:
                 {
-                    if (A0 == fa || A0 == fb || A0 == fc || A0 == fd || A0 == fe) // FA FB FC FD FE
+                    message = message + 1;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    S4 = 0;
+                    S7 = 1b9;
+                    S3 = 10
+                    8001D7CC	j      L1dab0 [$8001dab0]
+                }
+                break;
+
+                case fc:
+                {
+                    message = message + 1;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    S4 = 84;
+                    S7 = 2a0;
+                    S3 = 10
+                    8001D7CC	j      L1dab0 [$8001dab0]
+                }
+                break;
+
+                case fd:
+                {
+                    message = message + 1;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    S4 = 84;
+                    S7 = 372;
+                    8001D7CC	j      L1dab0 [$8001dab0]
+                }
+                break;
+
+                case fe:
+                {
+                    message = message + 1;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+
+                    V0 = bu[message];
+                    if (V0 >= d2)
                     {
-                        S3 = 0;
+                        [GP + 2ac] = w(w[GP + 2ac] + 1);
 
-                        switch( A0 )
+                        A0 = bu[message];
+                        V1 = A0 & ff;
+                        if (V1 < da)
                         {
-                            case fa:
-                            {
-                                message = message + 1;
-                                [GP + 2ac] = w(w[GP + 2ac] + 1);
-                                S4 = 84;
-                                S7 = e7;
-                                8001D7CC	j      L1dab0 [$8001dab0]
-                            }
-                            break;
-
-                            case fb:
-                            {
-                                message = message + 1;
-                                [GP + 2ac] = w(w[GP + 2ac] + 1);
-                                S4 = 0;
-                                S7 = 1b9;
-                                S3 = 10
-                                8001D7CC	j      L1dab0 [$8001dab0]
-                            }
-                            break;
-
-                            case fc:
-                            {
-                                message = message + 1;
-                                [GP + 2ac] = w(w[GP + 2ac] + 1);
-                                S4 = 84;
-                                S7 = 2a0;
-                                S3 = 10
-                                8001D7CC	j      L1dab0 [$8001dab0]
-                            }
-                            break;
-
-                            case fd:
-                            {
-                                message = message + 1;
-                                [GP + 2ac] = w(w[GP + 2ac] + 1);
-                                S4 = 84;
-                                S7 = 372;
-                                8001D7CC	j      L1dab0 [$8001dab0]
-                            }
-                            break;
-
-                            case fe:
-                            {
-                                message = message + 1;
-                                [GP + 2ac] = w(w[GP + 2ac] + 1);
-
-                                V0 = bu[message];
-                                if (V0 >= d2)
-                                {
-                                    [GP + 2ac] = w(w[GP + 2ac] + 1);
-
-                                    A0 = bu[message];
-                                    V1 = A0 & ff;
-                                    if (V1 < da)
-                                    {
-                                        [GP + 70] = h(A0 - d2);
-                                        message = message + 1;
-                                        8001D828	j      L1dd68 [$8001dd68]
-                                    }
-                                    if (V1 == da)
-                                    {
-                                        [GP + 72] = hu(hu[GP + 72] ^ 1);
-                                        message = message + 1;
-                                        8001D86C	j      L1dd68 [$8001dd68]
-                                    }
-                                    else if (V1 == db)
-                                    {
-                                        [GP + 74] = hu(hu[GP + 74] ^ 1);
-                                        message = message + 1;
-                                        8001D86C	j      L1dd68 [$8001dd68]
-                                    }
-                                    else if (V1 == e9)
-                                    {
-                                        [GP + 80] = w(w[GP + 80] ^ 1);
-                                        message = message + 1;
-                                    }
-                                }
-                                else
-                                {
-                                    S4 = 84;
-                                    S3 = 10;
-                                    S7 = 444;
-                                    8001D800	j      L1dab0 [$8001dab0]
-                                }
-                            }
-                            break;
+                            [GP + 70] = h(A0 - d2);
+                            message = message + 1;
+                            8001D828	j      L1dd68 [$8001dd68]
+                        }
+                        if (V1 == da)
+                        {
+                            [GP + 72] = hu(hu[GP + 72] ^ 1);
+                            message = message + 1;
+                            8001D86C	j      L1dd68 [$8001dd68]
+                        }
+                        else if (V1 == db)
+                        {
+                            [GP + 74] = hu(hu[GP + 74] ^ 1);
+                            message = message + 1;
+                            8001D86C	j      L1dd68 [$8001dd68]
+                        }
+                        else if (V1 == e9)
+                        {
+                            [GP + 80] = w(w[GP + 80] ^ 1);
+                            message = message + 1;
                         }
                     }
                     else
                     {
-                        S3 = 0;
-
-                        if (A0 == f6 || A0 == f7 || A0 == f8 || A0 == f9) // F6 F7 F8 F9
-                        {
-                            A0 = 0;
-                            8001D8A4	addu   a0, zero, zero
-                            8001D8A8	ori    a1, zero, $0001
-                            8001D8AC	ori    a2, zero, $0380
-                            8001D8B0	ori    a3, zero, $0100
-                            8001D8B4	ori    v0, zero, $0100
-                            8001D8B8	sh     zero, $0010(sp)
-                            8001D8BC	sh     zero, $0012(sp)
-                            8001D8C0	sh     v0, $0014(sp)
-                            8001D8C4	jal    system_create_texture_page_settings_for_packet [$8004656c]
-                            8001D8C8	sh     v0, $0016(sp)
-                            8001D8CC	addu   a0, zero, zero
-                            8001D8D0	ori    a1, zero, $0001
-                            8001D8D4	andi   a2, v0, $ffff
-                            8001D8D8	jal    func26a34 [$80026a34]
-                            8001D8DC	addiu  a3, sp, $0010
-                            8001D8E0	lui    v1, $8006
-                            8001D8E4	lw     v1, $2f24(v1)
-                            8001D8E8	ori    v0, zero, $0004
-                            8001D8EC	sb     v0, $0003(v1)
-                            8001D8F0	lui    v1, $8006
-                            8001D8F4	lw     v1, $2f24(v1)
-                            8001D8F8	ori    v0, zero, $0064
-                            8001D8FC	sb     v0, $0007(v1)
-                            8001D900	lui    a0, $8006
-                            8001D904	lw     a0, $2f24(a0)
-                            8001D908	jal    system_change_brightness_calculation_in_packet [$80046870]
-                            8001D90C	ori    a1, zero, $0001
-                            8001D910	lw     v0, $007c(gp)
-                            8001D914	nop
-                            8001D918	beq    v0, zero, L1d930 [$8001d930]
-                            8001D91C	nop
-                            8001D920	lui    a0, $8006
-                            8001D924	lw     a0, $2f24(a0)
-                            A1 = 1;
-                            system_change_semi_transparency_in_packet;
-
-
-                            L1d930:	; 8001D930
-                            8001D930	lui    v0, $8006
-                            8001D934	lw     v0, $2f24(v0)
-                            8001D938	nop
-                            [V0 + 8] = h(pos_x);
-                            8001D940	lui    v1, $8006
-                            8001D944	lw     v1, $2f24(v1)
-                            V0 = pos_y - 2
-                            8001D94C	sh     v0, $000a(v1)
-                            V0 = bu[message];
-                            8001D958	addiu  v1, v0, $ff0a (=-$f6)
-                            8001D95C	ori    v0, zero, $0001
-                            8001D960	beq    v1, v0, L1d9ac [$8001d9ac]
-                            8001D964	slti   v0, v1, $0002
-                            8001D968	beq    v0, zero, L1d980 [$8001d980]
-                            8001D96C	nop
-                            8001D970	beq    v1, zero, L1d99c [$8001d99c]
-                            8001D974	ori    a0, zero, $0100
-                            8001D978	j      L1d9f0 [$8001d9f0]
-                            8001D97C	nop
-
-                            L1d980:	; 8001D980
-                            8001D980	ori    v0, zero, $0002
-                            8001D984	beq    v1, v0, L1d9bc [$8001d9bc]
-                            8001D988	ori    v0, zero, $0003
-                            8001D98C	beq    v1, v0, L1d9cc [$8001d9cc]
-                            8001D990	ori    v1, zero, $0070
-                            8001D994	j      L1d9f0 [$8001d9f0]
-                            8001D998	ori    a0, zero, $0100
-
-                            L1d99c:	; 8001D99C
-                            8001D99C	lui    v0, $8006
-                            8001D9A0	lw     v0, $2f24(v0)
-                            8001D9A4	j      L1d9d4 [$8001d9d4]
-                            8001D9A8	ori    v1, zero, $0060
-
-                            L1d9ac:	; 8001D9AC
-                            8001D9AC	lui    v0, $8006
-                            8001D9B0	lw     v0, $2f24(v0)
-                            8001D9B4	j      L1d9d4 [$8001d9d4]
-                            8001D9B8	ori    v1, zero, $0090
-
-                            L1d9bc:	; 8001D9BC
-                            8001D9BC	lui    v0, $8006
-                            8001D9C0	lw     v0, $2f24(v0)
-                            8001D9C4	j      L1d9d4 [$8001d9d4]
-                            8001D9C8	ori    v1, zero, $0080
-
-                            L1d9cc:	; 8001D9CC
-                            8001D9CC	lui    v0, $8006
-                            8001D9D0	lw     v0, $2f24(v0)
-
-                            L1d9d4:	; 8001D9D4
-                            8001D9D4	nop
-                            8001D9D8	sb     v1, $000c(v0)
-                            8001D9DC	lui    v0, $8006
-                            8001D9E0	lw     v0, $2f24(v0)
-                            8001D9E4	ori    t0, zero, $0040
-                            8001D9E8	sb     t0, $000d(v0)
-                            8001D9EC	ori    a0, zero, $0100
-
-                            L1d9f0:	; 8001D9F0
-                            8001D9F0	lui    v0, $8006
-                            8001D9F4	lw     v0, $2f24(v0)
-                            8001D9F8	ori    v1, zero, $0010
-                            8001D9FC	sh     v1, $0010(v0)
-                            8001DA00	lui    v0, $8006
-                            8001DA04	lw     v0, $2f24(v0)
-                            8001DA08	ori    a1, zero, $01ea
-                            8001DA0C	jal    system_create_clut_for_packet [$80046634]
-                            8001DA10	sh     v1, $0012(v0)
-                            8001DA14	lui    v1, $8006
-                            8001DA18	lw     v1, $2f24(v1)
-                            8001DA1C	nop
-                            8001DA20	sh     v0, $000e(v1)
-                            8001DA24	lui    a1, $8006
-                            8001DA28	lw     a1, $2f24(a1)
-                            8001DA2C	lui    a0, $8006
-                            8001DA30	lw     a0, $2fc4(a0)
-                            8001DA34	addiu  v0, a1, $0014
-                            [80062f24] = w(V0);
-
-                            message = message + 1;
-                            system_add_render_packet_to_queue;
-
-                            A0 = 0;
-                            A1 = 1;
-                            A2 = 3c0;
-                            A3 = 100;
-                            [SP + 10] = h(0);
-                            [SP + 12] = h(0);
-                            [SP + 14] = h(100);
-                            [SP + 16] = h(100);
-
-                            [GP + 78] = h(h[GP + 78] - 1);
-                            system_create_texture_page_settings_for_packet;
-
-                            8001DA7C	addu   a0, zero, zero
-                            8001DA80	ori    a1, zero, $0001
-                            8001DA84	andi   a2, v0, $ffff
-                            8001DA88	jal    func26a34 [$80026a34]
-                            8001DA8C	addiu  a3, sp, $0010
-
-                            [GP + 2ac] = w(w[GP + 2ac] + 1);
-                            pos_x = pos_x + 10;
-                        }
-                        else
-                        {
-                            A0 = 0;
-                            S7 = 0;
-                            S4 = 0;
-
-                            L1dab0:	; 8001DAB0
-                            if h[GP + 74] == 0 && h[GP + 72] == 0)
-                            {
-                                S1 = h[GP + 70] + 01f0;
-                            }
-                            else if (h[GP + 72] == 0 && hu[GP + 74] == 0)
-                            {
-                                if ((hu[GP + 76] >> 2) & 1)
-                                {
-                                    S1 = h[GP + 70] + 01f0;
-                                }
-                                else if (h[GP + 70] != 0)
-                                {
-                                    S1 = 01f0;
-                                }
-                                else
-                                {
-                                    pos_x = pos_x + S3;
-                                    8001DB3C	j      L1dd68 [$8001dd68]
-                                }
-                            }
-                            else
-                            {
-                                S1 = ((h[GP + 76] / 4 - hu[SP + 28]) & 7) | 1f0;
-                            }
-
-                            letter = bu[message];
-                            S6 = (letter % 15) * 0c; // x in texture
-                            S4 = S4 + (letter / 15) * 0c; // y in texture
-                            S5 = letter + S7; // opcode + offset in table if extended opcode used
-                            A1 = w[800707c0] + S5; // offset to font padding
-
-                            if( dialog_width < pos_x + ( bu[A1] >> 5 ) + ( bu[A1] & 1f ) ) // if this letter is on next row
-                            {
-                                pos_x = 8;
-                                pos_y = pos_y + 10;
-                                [GP + 258] = w(w[GP + 258] + 1);
-                            }
-
-                            if( w[GP + 80] == 0 ) // if not monowidth
-                            {
-                                pos_x = pos_x + ( bu[A1] >> 5 );
-                            }
-
-                            V1 = w[80062f24];
-                            [V1 + 03] = b(4);
-                            [V1 + 07] = b(64); // draw sprite
-
-                            A0 = w[80062f24];
-                            A1 = 1;
-                            system_change_brightness_calculation_in_packet;
-
-                            V0 = [GP + 7c];
-
-                            if (V0 != 0)
-                            {
-                                A0 = w[80062f24];
-                                A1 = 0;
-                                system_change_semi_transparency_in_packet;
-                            }
-
-                            V0 = w[80062f24];
-                            [V0 + 08] = pos_x;
-                            [V0 + 0a] = pos_y;
-                            [V0 + 0c] = S6;
-                            [V0 + 0d] = S4;
-                            [V0 + 10] = h(0c);
-                            [V0 + 12] = h(0c);
-
-                            A0 = S3 | 0100; // clut X
-                            A1 = S1; // clut Y
-                            system_create_clut_for_packet;
-
-                            V1 = w[80062f24];
-                            [V1 + 0e] = h(V0);
-
-                            A0 = [80062fc4];
-                            A1 = w[80062f24];
-                            [80062f24] = w(w[80062f24] + 14);
-                            system_add_render_packet_to_queue;
-
-                            if ([GP + 80] == 0) // if not monowidth
-                            {
-                                V0 = [800707c0];
-                                pos_x = pos_x + (bu[V0 + S5] & 1f);
-                            }
-                            else
-                            {
-                                pos_x = pos_x + d;
-                            }
-
-                            message = message + 1;
-                            [GP + 78] = h([GP + 78] - 1); // numbers of letter
-                            [GP + 02ac] = [GP + 02ac] + 1;
-                        }
+                        S4 = 84;
+                        S3 = 10;
+                        S7 = 444;
+                        8001D800	j      L1dab0 [$8001dab0]
                     }
                 }
+                break;
+            }
+        }
+        else
+        {
+            S3 = 0;
 
-                L1dd68:	; 8001DD68
-                [SP + 28] = h(h[SP + 28] + 1);
+            if( ( A0 == f6 ) || ( A0 == f7 ) || ( A0 == f8 ) || ( A0 == f9 ) )
+            {
+                A0 = 0;
+                A1 = 1;
+                A2 = 380;
+                A3 = 100;
+                system_create_texture_page_settings_for_packet();
 
-                index = index + 1;
-                V0 = index < 400;
-                8001DD8C	bne    v0, zero, L1d6ec [$8001d6ec]
+                [SP + 10] = h(0);
+                [SP + 12] = h(0);
+                [SP + 14] = h(100);
+                [SP + 16] = h(100);
+
+                A0 = 0;
+                A1 = 1;
+                A2 = V0 & ffff;
+                A3 = SP + 10;
+                system_menu_create_and_add_texture_setting_packet();
+
+                V1 = w[80062f24];
+                [V1 + 3] = b(4);
+                [V1 + 7] = b(64);
+
+                A0 = w[80062f24];
+                A1 = 1;
+                system_change_brightness_calculation_in_packet();
+
+                V0 = w[GP + 007c];
+                if( V0 != 0 )
+                {
+                    A0 = w[80062f24];
+                    A1 = 1;
+                    system_change_semi_transparency_in_packet();
+                }
+
+                V0 = w[80062f24];
+                [V0 + 8] = h(pos_x);
+                [V0 + a] = h(pos_y - 2);
+
+                V0 = bu[message];
+                8001D958	addiu  v1, v0, $ff0a (=-$f6)
+                V0 = 0001;
+                8001D960	beq    v1, v0, L1d9ac [$8001d9ac]
+                V0 = V1 < 0002;
+                8001D968	beq    v0, zero, L1d980 [$8001d980]
+                8001D96C	nop
+                8001D970	beq    v1, zero, L1d99c [$8001d99c]
+                A0 = 0100;
+                8001D978	j      L1d9f0 [$8001d9f0]
+                8001D97C	nop
+
+                L1d980:	; 8001D980
+                V0 = 0002;
+                8001D984	beq    v1, v0, L1d9bc [$8001d9bc]
+                V0 = 0003;
+                8001D98C	beq    v1, v0, L1d9cc [$8001d9cc]
+                V1 = 0070;
+                8001D994	j      L1d9f0 [$8001d9f0]
+                A0 = 0100;
+
+                L1d99c:	; 8001D99C
+                V0 = w[80062f24];
+                8001D9A4	j      L1d9d4 [$8001d9d4]
+                V1 = 0060;
+
+                L1d9ac:	; 8001D9AC
+                V0 = w[80062f24];
+                8001D9B4	j      L1d9d4 [$8001d9d4]
+                V1 = 0090;
+
+                L1d9bc:	; 8001D9BC
+                V0 = w[80062f24];
+                8001D9C4	j      L1d9d4 [$8001d9d4]
+                V1 = 0080;
+
+                L1d9cc:	; 8001D9CC
+                V0 = w[80062f24];
+
+                L1d9d4:	; 8001D9D4
+                8001D9D4	nop
+                [V0 + 000c] = b(V1);
+                V0 = w[80062f24];
+                T0 = 0040;
+                [V0 + 000d] = b(T0);
+                A0 = 0100;
+
+                L1d9f0:	; 8001D9F0
+                V0 = w[80062f24];
+                V1 = 0010;
+                [V0 + 0010] = h(V1);
+                V0 = w[80062f24];
+                A1 = 01ea;
+                8001DA0C	jal    system_create_clut_for_packet [$80046634]
+                [V0 + 0012] = h(V1);
+                V1 = w[80062f24];
+                8001DA1C	nop
+                [V1 + 000e] = h(V0);
+                A1 = w[80062f24];
+                A0 = w[80062fc4];
+                V0 = A1 + 0014;
+                [80062f24] = w(V0);
+
+                message = message + 1;
+                system_add_render_packet_to_queue();
+
+                A0 = 0;
+                A1 = 1;
+                A2 = 3c0;
+                A3 = 100;
+                [SP + 10] = h(0);
+                [SP + 12] = h(0);
+                [SP + 14] = h(100);
+                [SP + 16] = h(100);
+
+                [GP + 78] = h(h[GP + 78] - 1);
+                system_create_texture_page_settings_for_packet();
+
+                A0 = 0;
+                A1 = 0001;
+                A2 = V0 & ffff;
+                A3 = SP + 0010;
+                system_menu_create_and_add_texture_setting_packet();
+
+                [GP + 2ac] = w(w[GP + 2ac] + 1);
+                pos_x = pos_x + 10;
+            }
+            else
+            {
+                A0 = 0;
+                S7 = 0;
+                S4 = 0;
+
+                L1dab0:	; 8001DAB0
+                if h[GP + 74] == 0 && h[GP + 72] == 0)
+                {
+                    S1 = h[GP + 70] + 01f0;
+                }
+                else if (h[GP + 72] == 0 && hu[GP + 74] == 0)
+                {
+                    if ((hu[GP + 76] >> 2) & 1)
+                    {
+                        S1 = h[GP + 70] + 1f0;
+                    }
+                    else if (h[GP + 70] != 0)
+                    {
+                        S1 = 01f0;
+                    }
+                    else
+                    {
+                        pos_x = pos_x + S3;
+                        8001DB3C	j      L1dd68 [$8001dd68]
+                    }
+                }
+                else
+                {
+                    S1 = ((h[GP + 76] / 4 - hu[SP + 28]) & 7) | 1f0;
+                }
+
+                letter = bu[message];
+                S6 = (letter % 15) * c; // x in texture
+                S4 = S4 + (letter / 15) * c; // y in texture
+                S5 = letter + S7; // opcode + offset in table if extended opcode used
+                A1 = w[800707c0] + S5; // offset to font padding
+
+                if( dialog_width < pos_x + ( bu[A1] >> 5 ) + ( bu[A1] & 1f ) ) // if this letter is on next row
+                {
+                    pos_x = 8;
+                    pos_y = pos_y + 10;
+                    [GP + 258] = w(w[GP + 258] + 1);
+                }
+
+                if( w[GP + 80] == 0 ) // if not monowidth
+                {
+                    pos_x = pos_x + ( bu[A1] >> 5 );
+                }
+
+                V1 = w[80062f24];
+                [V1 + 3] = b(4);
+                [V1 + 7] = b(64); // draw sprite
+
+                A0 = w[80062f24];
+                A1 = 1;
+                system_change_brightness_calculation_in_packet();
+
+                V0 = [GP + 7c];
+
+                if (V0 != 0)
+                {
+                    A0 = w[80062f24];
+                    A1 = 0;
+                    system_change_semi_transparency_in_packet();
+                }
+
+                V0 = w[80062f24];
+                [V0 + 8] = pos_x;
+                [V0 + a] = pos_y;
+                [V0 + c] = S6;
+                [V0 + d] = S4;
+                [V0 + 10] = h(c);
+                [V0 + 12] = h(c);
+
+                A0 = S3 | 0100; // clut X
+                A1 = S1; // clut Y
+                system_create_clut_for_packet();
+
+                V1 = w[80062f24];
+                [V1 + e] = h(V0);
+
+                A0 = [80062fc4];
+                A1 = w[80062f24];
+                [80062f24] = w(A1 + 14);
+                system_add_render_packet_to_queue();
+
+                if( w[GP + 80] == 0 ) // if not monowidth
+                {
+                    V0 = w[800707c0];
+                    pos_x = pos_x + (bu[V0 + S5] & 1f);
+                }
+                else
+                {
+                    pos_x = pos_x + d;
+                }
+
+                message = message + 1;
+                [GP + 78] = h([GP + 78] - 1); // numbers of letter
+                [GP + 02ac] = w[GP + 02ac] + 1;
             }
         }
     }
-}
 
-8001DD94	addu   a0, zero, zero
-8001DD98	ori    a1, zero, $0001
-8001DD9C	ori    a2, zero, $0380
-8001DDA0	ori    a3, zero, $0100
-8001DDA4	ori    v0, zero, $0100
-8001DDA8	sh     zero, $0010(sp)
-8001DDAC	sh     zero, $0012(sp)
-8001DDB0	sh     v0, $0014(sp)
-8001DDB4	jal    system_create_texture_page_settings_for_packet [$8004656c]
-8001DDB8	sh     v0, $0016(sp)
-8001DDBC	addu   a0, zero, zero
-8001DDC0	ori    a1, zero, $0001
-8001DDC4	andi   a2, v0, $ffff
-8001DDC8	jal    func26a34 [$80026a34]
-8001DDCC	addiu  a3, sp, $0010
+    L1dd68:	; 8001DD68
+    [SP + 28] = h(h[SP + 28] + 1);
+
+    index = index + 1;
+    V0 = index < 400;
+8001DD8C	bne    v0, zero, L1d6ec [$8001d6ec]
+
+A0 = 0;
+A1 = 1;
+A2 = 380;
+A3 = 100;
+system_create_texture_page_settings_for_packet();
+
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(100);
+[SP + 16] = h(100);
+
+A0 = 0;
+A1 = 1;
+A2 = V0 & ffff;
+A3 = SP + 10;
+system_menu_create_and_add_texture_setting_packet();
 
 return pos_y;
 ////////////////////////////////
@@ -1050,13 +1028,11 @@ V0 = hu[A1 + 0006];
 V1 = 0;
 
 loop1de74:	; 8001DE74
-8001DE74	lui    at, $8005
-8001DE78	addiu  at, at, $9208 (=-$6df8)
+AT = 80049208;
 AT = AT + V1;
 V0 = bu[AT + 0000];
 8001DE84	nop
-8001DE88	lui    at, $8007
-8001DE8C	addiu  at, at, $96f0 (=-$6910)
+AT = 800696f0;
 AT = AT + V1;
 [AT + 0000] = b(V0);
 V1 = V1 + 0001;
@@ -1071,13 +1047,11 @@ V0 = V1 < 000c;
 V1 = 0;
 
 loop1deb4:	; 8001DEB4
-8001DEB4	lui    at, $8007
-8001DEB8	addiu  at, at, $96f0 (=-$6910)
+AT = 800696f0;
 AT = AT + V1;
 V0 = bu[AT + 0000];
 8001DEC4	nop
-8001DEC8	lui    at, $8005
-8001DECC	addiu  at, at, $9208 (=-$6df8)
+AT = 80049208;
 AT = AT + V1;
 [AT + 0000] = b(V0);
 V1 = V1 + 0001;
@@ -1094,8 +1068,7 @@ V1 = 0;
 loop1def4:	; 8001DEF4
 V0 = bu[A0 + 0000];
 8001DEF8	nop
-8001DEFC	lui    at, $8005
-8001DF00	addiu  at, at, $9208 (=-$6df8)
+AT = 80049208;
 AT = AT + V1;
 [AT + 0000] = b(V0);
 V1 = V1 + 0001;
@@ -1105,102 +1078,62 @@ A0 = A0 + 0001;
 8001DF1C	jr     ra 
 8001DF20	nop
 ////////////////////////////////
-// func1df24
-8001DF24	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 001c] = w(S3);
-S3 = A1;
-A1 = 0001;
-8001DF3C	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0003;
-[SP + 0014] = w(S1);
-S1 = A2;
-[SP + 0020] = w(RA);
-[SP + 0018] = w(S2);
-[V1 + 0003] = b(V0);
-8001DF5C	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0060;
-[V1 + 0007] = b(V0);
-8001DF6C	lui    a0, $8006
-A0 = w[A0 + 2f24];
-8001DF74	jal    system_change_brightness_calculation_in_packet [$80046870]
-S2 = A3;
-8001DF7C	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = hu[S0 + 0000];
-8001DF88	nop
-[V1 + 0008] = h(V0);
-8001DF90	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = hu[S0 + 0002];
-8001DF9C	nop
-[V1 + 000a] = h(V0);
-8001DFA4	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = hu[S0 + 0004];
-8001DFB0	nop
-[V1 + 000c] = h(V0);
-8001DFB8	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = hu[S0 + 0006];
-8001DFC4	nop
-[V1 + 000e] = h(V0);
-8001DFCC	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001DFD4	nop
-[V0 + 0004] = b(S3);
-8001DFDC	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001DFE4	nop
-[V0 + 0005] = b(S1);
-8001DFEC	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001DFF4	nop
-[V0 + 0006] = b(S2);
-8001DFFC	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001E004	lui    a0, $8006
-A0 = w[A0 + 2fc4];
-V0 = A1 + 0010;
-8001E010	lui    at, $8006
-[AT + 2f24] = w(V0);
-8001E018	jal    system_add_render_packet_to_queue [$80046794]
-8001E01C	nop
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-8001E038	jr     ra 
-8001E03C	nop
+
+
+
+////////////////////////////////
+// system_menu_add_colored_rect_to_render()
+
+rect = A0;
+r = A1;
+g = A2;
+b = A3;
+
+V1 = w[80062f24];
+[V1 + 3] = b(3);
+[V1 + 7] = b(60);
+
+A0 = w[80062f24];
+A1 = 1;
+system_change_brightness_calculation_in_packet();
+
+V1 = w[80062f24];
+[V1 + 4] = b(r);
+[V1 + 5] = b(g);
+[V1 + 6] = b(b);
+[V1 + 8] = h(hu[rect + 0]);
+[V1 + a] = h(hu[rect + 2]);
+[V1 + c] = h(hu[rect + 4]);
+[V1 + e] = h(hu[rect + 6]);
+
+A0 = w[80062fc4];
+A1 = w[80062f24];
+[80062f24] = w(A1 + 10);
+system_add_render_packet_to_queue();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1e040
+// system_menu_add_window_to_render()
+
 S5 = A0;
-V0 = h[S5 + 0004];
-8001E068	nop
-V0 = V0 < 0009;
+
+S2 = 4;
+S1 = 64;
+
+V0 = ;
+V0 = h[S5 + 4] < 9;
 8001E070	bne    v0, zero, L1e2a4 [$8001e2a4]
-S2 = 0004;
-8001E078	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E080	nop
-[V0 + 0003] = b(S2);
-8001E088	lui    v0, $8006
-V0 = w[V0 + 2f24];
-S1 = 0064;
-[V0 + 0007] = b(S1);
-8001E098	lui    a0, $8006
-A0 = w[A0 + 2f24];
-8001E0A0	jal    system_change_brightness_calculation_in_packet [$80046870]
-A1 = 0001;
+
+V0 = w[80062f24];
+[V0 + 3] = b(4);
+[V0 + 7] = b(64);
+
+A0 = w[80062f24];
+A1 = 1;
+system_change_brightness_calculation_in_packet();
+
 V0 = hu[S5 + 0000];
 8001E0AC	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -1255,8 +1188,9 @@ V0 = 00e0;
 A0 = 0;
 A1 = 0001;
 A2 = V0 & ffff;
-8001E180	jal    func26a34 [$80026a34]
 A3 = SP + 0010;
+system_menu_create_and_add_texture_setting_packet();
+
 8001E188	lui    v0, $8006
 V0 = w[V0 + 2f24];
 8001E190	nop
@@ -1326,8 +1260,8 @@ V0 = 00e8;
 A0 = 0;
 A1 = 0001;
 A2 = V0 & ffff;
-8001E29C	jal    func26a34 [$80026a34]
 A3 = SP + 0010;
+system_menu_create_and_add_texture_setting_packet();
 
 L1e2a4:	; 8001E2A4
 V0 = h[S5 + 0006];
@@ -1389,90 +1323,72 @@ A0 = w[A0 + 2fc4];
 V0 = A1 + 0014;
 8001E388	lui    at, $8006
 [AT + 2f24] = w(V0);
-8001E390	jal    system_add_render_packet_to_queue [$80046794]
-S0 = 0010;
+system_add_render_packet_to_queue();
+
+S0 = 10;
+S1 = f0;
+
 A0 = 0;
-A1 = 0001;
-A2 = 03c0;
-A3 = 0100;
-S1 = 00f0;
-[SP + 0010] = h(S0);
-[SP + 0012] = h(S1);
-[SP + 0014] = h(S0);
-8001E3B8	jal    system_create_texture_page_settings_for_packet [$8004656c]
-[SP + 0016] = h(S0);
+A1 = 1;
+A2 = 3c0;
+A3 = 100;
+system_create_texture_page_settings_for_packet();
+
+[SP + 10] = h(S0);
+[SP + 12] = h(f0);
+[SP + 14] = h(S0);
+[SP + 16] = h(S0);
+
 A0 = 0;
-A1 = 0001;
+A1 = 1;
 A2 = V0 & ffff;
-8001E3CC	jal    func26a34 [$80026a34]
-A3 = SP + 0010;
-8001E3D4	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E3DC	nop
-[V0 + 0003] = b(S4);
-8001E3E4	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E3EC	nop
-[V0 + 0007] = b(S3);
-8001E3F4	lui    a0, $8006
-A0 = w[A0 + 2f24];
-8001E3FC	jal    system_change_brightness_calculation_in_packet [$80046870]
-A1 = 0001;
-8001E404	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = hu[S5 + 0000];
-8001E410	nop
-[V1 + 0008] = h(V0);
-V0 = hu[S5 + 0002];
-8001E41C	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = V0 + 0004;
-[V1 + 000a] = h(V0);
-8001E42C	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E434	nop
-[V0 + 0010] = h(S2);
-V0 = hu[S5 + 0006];
-8001E440	lui    v1, $8006
-V1 = w[V1 + 2f24];
-8001E448	addiu  v0, v0, $fff8 (=-$8)
-[V1 + 0012] = h(V0);
-8001E450	lui    v0, $8006
-V0 = w[V0 + 2f24];
-A0 = 0100;
-[V0 + 000c] = b(0);
-8001E460	lui    v0, $8006
-V0 = w[V0 + 2f24];
-A1 = 01e0;
-8001E46C	jal    system_create_clut_for_packet [$80046634]
-[V0 + 000d] = b(0);
-8001E474	lui    v1, $8006
-V1 = w[V1 + 2f24];
-8001E47C	nop
-[V1 + 000e] = h(V0);
-8001E484	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001E48C	lui    a0, $8006
-A0 = w[A0 + 2fc4];
-V0 = A1 + 0014;
-8001E498	lui    at, $8006
-[AT + 2f24] = w(V0);
-8001E4A0	jal    system_add_render_packet_to_queue [$80046794]
-8001E4A4	nop
+A3 = SP + 10;
+system_menu_create_and_add_texture_setting_packet();
+
+V0 = w[80062f24];
+[V0 + 3] = b(S4);
+[V0 + 7] = b(S3);
+
+A0 = w[80062f24];
+A1 = 1;
+system_change_brightness_calculation_in_packet();
+
+V1 = w[80062f24];
+[V1 + 8] = h(hu[S5 + 0]);
+[V1 + a] = h(hu[S5 + 2] + 4);
+[V1 + c] = b(0);
+[V1 + d] = b(0);
+[V1 + 10] = h(S2);
+[V1 + 12] = h(hu[S5 + 6] - 8);
+
+A0 = 100;
+A1 = 1e0;
+system_create_clut_for_packet();
+
+V1 = w[80062f24];
+[V1 + e] = h(V0);
+
+A0 = w[80062fc4];
+A1 = w[80062f24];
+[80062f24] = w(A1 + 14);
+system_add_render_packet_to_queue();
+
 A0 = 0;
-A1 = 0001;
-A2 = 03c0;
-A3 = 0100;
-[SP + 0010] = h(0);
-[SP + 0012] = h(S1);
-[SP + 0014] = h(S0);
-8001E4C4	jal    system_create_texture_page_settings_for_packet [$8004656c]
-[SP + 0016] = h(S0);
+A1 = 1;
+A2 = 3c0;
+A3 = 100;
+system_create_texture_page_settings_for_packet();
+
+[SP + 10] = h(0);
+[SP + 12] = h(f0);
+[SP + 14] = h(S0);
+[SP + 16] = h(S0);
+
 A0 = 0;
-A1 = 0001;
+A1 = 1;
 A2 = V0 & ffff;
-8001E4D8	jal    func26a34 [$80026a34]
-A3 = SP + 0010;
+A3 = SP + 10;
+system_menu_create_and_add_texture_setting_packet();
 
 L1e4e0:	; 8001E4E0
 8001E4E0	lui    v0, $8006
@@ -1487,30 +1403,22 @@ S1 = 0064;
 A0 = w[A0 + 2f24];
 8001E508	jal    system_change_brightness_calculation_in_packet [$80046870]
 A1 = 0001;
-8001E510	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 V0 = hu[S5 + 0000];
-8001E51C	nop
 [V1 + 0008] = h(V0);
-8001E524	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 V0 = hu[S5 + 0002];
-8001E530	nop
 [V1 + 000a] = h(V0);
-8001E538	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 A0 = 0100;
 [V0 + 000c] = b(0);
-8001E548	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 S3 = 00e8;
 [V0 + 000d] = b(S3);
-8001E558	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 S0 = 0004;
 [V0 + 0010] = h(S0);
-8001E568	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 A1 = 01e0;
 8001E574	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S0);
@@ -1601,113 +1509,90 @@ V0 = hu[S5 + 0002];
 V1 = hu[S5 + 0006];
 8001E6D0	nop
 V0 = V0 + V1;
-8001E6D8	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E6E0	addiu  v0, v0, $fffc (=-$4)
 [V1 + 000a] = h(V0);
-8001E6E8	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 V0 = 0010;
 [V1 + 000c] = b(V0);
-8001E6F8	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E700	nop
+V0 = w[80062f24];
 [V0 + 000d] = b(S3);
-8001E708	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 A0 = 0100;
 [V0 + 0010] = h(S0);
-8001E718	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 A1 = 01e0;
 8001E724	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S0);
-8001E72C	lui    v1, $8006
-V1 = w[V1 + 2f24];
-8001E734	lui    a0, $8006
-A0 = w[A0 + 2fc4];
+V1 = w[80062f24];
+A0 = w[80062fc4];
 [V1 + 000e] = h(V0);
-8001E740	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001E748	jal    system_add_render_packet_to_queue [$80046794]
-8001E74C	nop
-8001E750	lui    v1, $8006
-V1 = w[V1 + 2f24];
-8001E758	nop
+A1 = w[80062f24];
+system_add_render_packet_to_queue();
+
+V1 = w[80062f24];
 V0 = V1 + 0014;
-8001E760	lui    at, $8006
-[AT + 2f24] = w(V0);
+[80062f24] = w(V0);
 [V1 + 0017] = b(S2);
-8001E76C	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 8001E774	nop
 [V0 + 0007] = b(S1);
-8001E77C	lui    a0, $8006
-A0 = w[A0 + 2f24];
-8001E784	jal    system_change_brightness_calculation_in_packet [$80046870]
+A0 = w[80062f24];
 A1 = 0001;
+8001E784	jal    system_change_brightness_calculation_in_packet [$80046870]
+
 V0 = hu[S5 + 0000];
 V1 = hu[S5 + 0004];
 8001E794	nop
 V0 = V0 + V1;
-8001E79C	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E7A4	addiu  v0, v0, $fffc (=-$4)
 [V1 + 0008] = h(V0);
 V0 = hu[S5 + 0002];
 V1 = hu[S5 + 0006];
 8001E7B4	nop
 V0 = V0 + V1;
-8001E7BC	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E7C4	addiu  v0, v0, $fffc (=-$4)
 [V1 + 000a] = h(V0);
-8001E7CC	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 V0 = 001c;
 [V1 + 000c] = b(V0);
-8001E7DC	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E7E4	nop
+V0 = w[80062f24];
 [V0 + 000d] = b(S3);
-8001E7EC	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 A0 = 0100;
 [V0 + 0010] = h(S0);
-8001E7FC	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 A1 = 01e0;
-8001E808	jal    system_create_clut_for_packet [$80046634]
 [V0 + 0012] = h(S0);
-8001E810	lui    v1, $8006
-V1 = w[V1 + 2f24];
-8001E818	lui    a0, $8006
-A0 = w[A0 + 2fc4];
+system_create_clut_for_packet();
+
+V1 = w[80062f24];
+A0 = w[80062fc4];
 [V1 + 000e] = h(V0);
-8001E824	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001E82C	jal    system_add_render_packet_to_queue [$80046794]
-8001E830	nop
+A1 = w[80062f24];
+system_add_render_packet_to_queue();
+
 A0 = 0;
 A1 = 0001;
 A2 = 03c0;
-8001E840	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 V1 = 0100;
 [SP + 0010] = h(0);
 [SP + 0012] = h(0);
 [SP + 0014] = h(V1);
 [SP + 0016] = h(V1);
 V0 = V0 + 0014;
-8001E860	lui    at, $8006
-[AT + 2f24] = w(V0);
+[80062f24] = w(V0);
 8001E868	jal    system_create_texture_page_settings_for_packet [$8004656c]
 A3 = 0100;
 A0 = 0;
 A1 = 0001;
 A2 = V0 & ffff;
-8001E87C	jal    func26a34 [$80026a34]
 A3 = SP + 0010;
+system_menu_create_and_add_texture_setting_packet();
+
 A3 = h[S5 + 0004];
 8001E888	nop
 V0 = A3 < 0007;
@@ -1740,136 +1625,94 @@ A0 = w[A0 + 2f24];
 A1 = 0001;
 
 L1e8fc:	; 8001E8FC
-8001E8FC	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E904	nop
+V0 = w[80062f24];
 [V0 + 0008] = h(S0);
-8001E90C	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E914	nop
+V0 = w[80062f24];
 [V0 + 000a] = h(S1);
-8001E91C	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 A0 = S0 + S2;
 [V0 + 0010] = h(A0);
-8001E92C	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E934	nop
+V0 = w[80062f24];
 [V0 + 0012] = h(S1);
-8001E93C	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E944	nop
+V0 = w[80062f24];
 [V0 + 0018] = h(S0);
-8001E94C	lui    v0, $8006
-V0 = w[V0 + 2f24];
+V0 = w[80062f24];
 V1 = S1 + S3;
 [V0 + 001a] = h(V1);
-8001E95C	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E964	nop
+V0 = w[80062f24];
 [V0 + 0020] = h(A0);
-8001E96C	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001E974	nop
+V0 = w[80062f24];
 [V0 + 0022] = h(V1);
-8001E97C	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E984	lui    v0, $8005
 V0 = bu[V0 + 9208];
-8001E98C	nop
 [V1 + 0004] = b(V0);
-8001E994	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E99C	lui    v0, $8005
 V0 = bu[V0 + 9209];
-8001E9A4	nop
 [V1 + 0005] = b(V0);
-8001E9AC	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E9B4	lui    v0, $8005
 V0 = bu[V0 + 920a];
-8001E9BC	nop
 [V1 + 0006] = b(V0);
-8001E9C4	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E9CC	lui    v0, $8005
 V0 = bu[V0 + 920b];
-8001E9D4	nop
 [V1 + 000c] = b(V0);
-8001E9DC	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E9E4	lui    v0, $8005
 V0 = bu[V0 + 920c];
-8001E9EC	nop
 [V1 + 000d] = b(V0);
-8001E9F4	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001E9FC	lui    v0, $8005
 V0 = bu[V0 + 920d];
-8001EA04	nop
 [V1 + 000e] = b(V0);
-8001EA0C	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001EA14	lui    v0, $8005
 V0 = bu[V0 + 920e];
-8001EA1C	nop
 [V1 + 0014] = b(V0);
-8001EA24	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001EA2C	lui    v0, $8005
 V0 = bu[V0 + 920f];
-8001EA34	nop
 [V1 + 0015] = b(V0);
-8001EA3C	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001EA44	lui    v0, $8005
 V0 = bu[V0 + 9210];
-8001EA4C	nop
 [V1 + 0016] = b(V0);
-8001EA54	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001EA5C	lui    v0, $8005
 V0 = bu[V0 + 9211];
-8001EA64	nop
 [V1 + 001c] = b(V0);
-8001EA6C	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001EA74	lui    v0, $8005
 V0 = bu[V0 + 9212];
-8001EA7C	nop
 [V1 + 001d] = b(V0);
-8001EA84	lui    v1, $8006
-V1 = w[V1 + 2f24];
+V1 = w[80062f24];
 8001EA8C	lui    v0, $8005
 V0 = bu[V0 + 9213];
-8001EA94	nop
 [V1 + 001e] = b(V0);
-8001EA9C	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001EAA4	lui    a0, $8006
-A0 = w[A0 + 2fc4];
+A1 = w[80062f24];
+A0 = w[80062fc4];
 V0 = A1 + 0024;
-8001EAB0	lui    at, $8006
-[AT + 2f24] = w(V0);
-8001EAB8	jal    system_add_render_packet_to_queue [$80046794]
-8001EABC	nop
+[80062f24] = w(V0);
+system_add_render_packet_to_queue();
+
 A0 = 0;
 A1 = 0;
 A2 = 03c0;
 A3 = 0100;
-V0 = 0060;
-[SP + 0010] = h(V0);
-V0 = 00e0;
-[SP + 0012] = h(V0);
-V0 = 0020;
-[SP + 0014] = h(V0);
-8001EAE8	jal    system_create_texture_page_settings_for_packet [$8004656c]
-[SP + 0016] = h(V0);
+system_create_texture_page_settings_for_packet();
+
+[SP + 10] = h(60);
+[SP + 12] = h(e0);
+[SP + 14] = h(20);
+[SP + 16] = h(20);
+
 A0 = 0;
-A1 = 0001;
+A1 = 1;
 A2 = V0 & ffff;
-8001EAFC	jal    func26a34 [$80026a34]
-A3 = SP + 0010;
+A3 = SP + 10;
+system_menu_create_and_add_texture_setting_packet();
 
 L1eb04:	; 8001EB04
 ////////////////////////////////
@@ -1877,24 +1720,25 @@ L1eb04:	; 8001EB04
 
 
 ////////////////////////////////
-// func1eb2c()
+// system_menu_add_cursor_to_render()
 
-S0 = A0;
-S1 = A1;
+x = A0;
+y = A1;
+
 packet = w[80062f24];
 [packet + 3] = b(4);
 [packet + 7] = b(64);
 
 A0 = packet;
 A1 = 1;
-system_change_semi_transparency_in_packet;
+system_change_semi_transparency_in_packet();
 
 A0 = packet;
 A1 = 1;
-system_change_brightness_calculation_in_packet;
+system_change_brightness_calculation_in_packet();
 
-[packet + 8] = h(S0);
-[packet + a] = h(S1);
+[packet + 8] = h(x);
+[packet + a] = h(y);
 [packet + c] = b(e0);
 [packet + d] = b(8);
 [packet + 10] = h(18);
@@ -1902,396 +1746,245 @@ system_change_brightness_calculation_in_packet;
 
 A0 = 100;
 A1 = 1e1;
-system_create_clut_for_packet;
-
+system_create_clut_for_packet();
 [packet + e] = h(V0);
 
-8001EBF8	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001EC00	lui    a0, $8006
-A0 = w[A0 + 2fc4];
-V0 = A1 + 0014;
-8001EC0C	lui    at, $8006
-[AT + 2f24] = w(V0);
-8001EC14	jal    system_add_render_packet_to_queue [$80046794]
-8001EC18	nop
-A0 = 0;
-A1 = 0002;
-A2 = 03c0;
-A3 = 0100;
-V0 = 00ff;
-[SP + 0010] = h(0);
-[SP + 0012] = h(0);
-[SP + 0014] = h(V0);
-8001EC3C	jal    system_create_texture_page_settings_for_packet [$8004656c]
-[SP + 0016] = h(V0);
-A0 = 0;
-A1 = 0001;
-A2 = V0 & ffff;
-8001EC50	jal    func26a34 [$80026a34]
-A3 = SP + 0010;
+A0 = w[80062fc4]; // OT for render
+A1 = w[80062f24];
+[80062f24] = w(A1 + 14);
+system_add_render_packet_to_queue();
+
+A0 = 0; // tp
+A1 = 2; // abr
+A2 = 3c0; // vram x
+A3 = 100; // vram y
+system_create_texture_page_settings_for_packet();
+
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(ff);
+[SP + 16] = h(ff);
+
+A0 = 0; // drawing to display area is blocked
+A1 = 1; // dithering on
+A2 = V0 & ffff; // init value
+A3 = SP + 10; // window rect
+system_menu_create_and_add_texture_setting_packet();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1ec70()
-// draw timer
+// system_menu_add_timer_to_render()
 
-8001EC78	addu   s4, a0, zero
-8001EC80	addu   s5, a1, zero
-S3 = A2;
-8001EC8C	lui    v1, $8006
-8001EC90	lw     v1, $2f24(v1)
-8001EC94	ori    v0, zero, $0004
-8001ECA8	sb     v0, $0003(v1)
-8001ECAC	lui    v1, $8006
-8001ECB0	lw     v1, $2f24(v1)
-8001ECB4	ori    v0, zero, $0064
-8001ECB8	sb     v0, $0007(v1)
-8001ECBC	lui    a0, $8006
-8001ECC0	lw     a0, $2f24(a0)
-8001ECC4	jal    system_change_brightness_calculation_in_packet [$80046870]
-8001ECC8	ori    a1, zero, $0001
-8001ECCC	lui    v1, $8006
-8001ECD0	lw     v1, $2f24(v1)
-8001ECD4	addiu  v0, s4, $0020
-8001ECD8	sh     v0, $0008(v1)
-8001ECDC	lui    v0, $8006
-8001ECE0	lw     v0, $2f24(v0)
-8001ECE4	nop
-8001ECE8	sh     s5, $000a(v0)
-8001ECF0	lui    v1, $8006
-8001ECF4	lw     v1, $2f24(v1)
-if( ( S3 & 1 ) == 0 )
+x = A0;
+y = A1;
+value = A2;
+
+// draw ":" divider for timer
+V1 = w[80062f24];
+[V1 + 3] = b(4);
+[V1 + 7] = b(64);
+
+A0 = w[80062f24];
+A1 = 1;
+system_change_brightness_calculation_in_packet();
+
+V1 = w[80062f24];
+[V1 + 8] = h(x + 20);
+[V1 + a] = h(y);
+
+if( ( value & 1 ) == 0 )
 {
-    V0 = a0;
+    [V1 + c] = b(a0);
 }
 else
 {
-    V0 = a8;
+    [V1 + c] = b(a8);
 }
 
-8001ED04	sb     v0, $000c(v1)
-8001ED08	ori    a0, zero, $0100
-8001ED0C	ori    a1, zero, $01ec
-8001ED10	lui    v1, $8006
-8001ED14	lw     v1, $2f24(v1)
-8001ED18	ori    v0, zero, $0050
-8001ED1C	sb     v0, $000d(v1)
-8001ED20	lui    v1, $8006
-8001ED24	lw     v1, $2f24(v1)
-8001ED28	ori    v0, zero, $0008
-8001ED2C	sh     v0, $0010(v1)
-8001ED30	lui    v1, $8006
-8001ED34	lw     v1, $2f24(v1)
-8001ED38	ori    v0, zero, $0015
-8001ED3C	jal    system_create_clut_for_packet [$80046634]
-8001ED40	sh     v0, $0012(v1)
-8001ED44	lui    v1, $8006
-8001ED48	lw     v1, $2f24(v1)
-8001ED4C	nop
-8001ED50	sh     v0, $000e(v1)
-8001ED54	lui    a1, $8006
-8001ED58	lw     a1, $2f24(a1)
-8001ED5C	lui    a0, $8006
-8001ED60	lw     a0, $2fc4(a0)
-8001ED64	addiu  v0, a1, $0014
-8001ED68	lui    at, $8006
-8001ED6C	sw     v0, $2f24(at)
-8001ED70	jal    system_add_render_packet_to_queue [$80046794]
-8001ED74	nop
+[V1 + d] = b(50);
+[V1 + 10] = h(8);
+[V1 + 12] = h(15);
 
-S2 = 0;
-if( S3 >= 1770 )
+A0 = 100;
+A1 = 1ec;
+system_create_clut_for_packet();
+
+V1 = w[80062f24];
+[V1 + e] = h(V0);
+
+A0 = w[80062fc4];
+A1 = w[80062f24];
+[80062f24] = w(A1 + 14);
+system_add_render_packet_to_queue();
+
+// set cap for timer
+if( value >= 1770 )
 {
-    S3 = 176f; // 99min 59sec
+    value = 176f; // 99min 59sec
 }
 
-S1 = 80049214;
+// draw all digits
+for( int i = 0; i < 4; ++i )
+{
+    digit = value / w[80049214 + i * 4];
 
-loop1ed90:	; 8001ED90
-    S0 = w[S1];
-    S0 = S3 / S0;
+    V1 = w[80062f24];
+    [V1 + 3] = b(4);
+    [V1 + 7] = b(64);
 
-    8001EDC4	lui    v1, $8006
-    8001EDC8	lw     v1, $2f24(v1)
-    8001EDCC	ori    v0, zero, $0004
-    8001EDD0	sb     v0, $0003(v1)
-    8001EDD4	lui    v1, $8006
-    8001EDD8	lw     v1, $2f24(v1)
-    8001EDDC	ori    v0, zero, $0064
-    8001EDE0	sb     v0, $0007(v1)
-    8001EDE4	lui    a0, $8006
-    8001EDE8	lw     a0, $2f24(a0)
-    8001EDEC	jal    system_change_brightness_calculation_in_packet [$80046870]
-    8001EDF0	ori    a1, zero, $0001
-    8001EDF4	lui    v0, $6666
-    8001EDF8	ori    v0, v0, $6667
-    8001EDFC	mult   s0, v0
-    8001EE00	lui    v0, $8006
-    8001EE04	lw     v0, $2f24(v0)
-    8001EE08	nop
-    8001EE0C	sh     s4, $0008(v0)
-    8001EE10	lui    v0, $8006
-    8001EE14	lw     v0, $2f24(v0)
-    8001EE18	nop
-    8001EE1C	sh     s5, $000a(v0)
-    8001EE20	sra    v0, s0, $1f
-    8001EE24	mfhi   t0
-    8001EE28	sra    v1, t0, $01
-    8001EE2C	subu   v1, v1, v0
+    A0 = w[80062f24];
+    A1 = 1;
+    system_change_brightness_calculation_in_packet();
 
-    8001EE30	sll    v0, v1, $02
-    8001EE34	addu   v0, v0, v1
-    8001EE38	subu   v0, s0, v0
-    8001EE3C	sll    v0, v0, $04
-    V0 = V0 - 50;
+    V1 = w[80062f24];
+    [V1 + 8] = h(x);
+    [V1 + a] = h(y);
+    [V1 + c] = b(((digit - ((digit / a) * 3)) * 10) - 50);
 
-    8001EE44	lui    v1, $8006
-    8001EE48	lw     v1, $2f24(v1)
-    8001EE4C	slti   s0, s0, $0005
-    8001EE50	sb     v0, $000c(v1)
-    8001EE54	lui    v1, $8006
-    8001EE58	lw     v1, $2f24(v1)
-    8001EE5C	bne    s0, zero, L1ee68 [$8001ee68]
-    8001EE60	ori    v0, zero, $0050
-    8001EE64	ori    v0, zero, $0068
-
-    L1ee68:	; 8001EE68
-    8001EE68	sb     v0, $000d(v1)
-    8001EE6C	ori    a0, zero, $0100
-    8001EE70	ori    a1, zero, $01ec
-    8001EE74	lui    v1, $8006
-    8001EE78	lw     v1, $2f24(v1)
+    if( digit >= 5 )
+    {
+        [V1 + d] = b(68);
+    }
+    else
+    {
+        [V1 + d] = b(50);
+    }
     [V1 + 10] = h(10);
     [V1 + 12] = h(15);
 
-    8001EE90	jal    system_create_clut_for_packet [$80046634]
-    8001EE98	lui    v1, $8006
-    8001EE9C	lw     v1, $2f24(v1)
-    8001EEA0	nop
-    8001EEA4	sh     v0, $000e(v1)
-    8001EEA8	lui    a1, $8006
-    8001EEAC	lw     a1, $2f24(a1)
-    8001EEB0	lui    a0, $8006
-    8001EEB4	lw     a0, $2fc4(a0)
-    8001EEB8	addiu  v0, a1, $0014
-    8001EEBC	lui    at, $8006
-    8001EEC0	sw     v0, $2f24(at)
-    8001EEC4	jal    system_add_render_packet_to_queue [$80046794]
-    8001EEC8	nop
-    8001EECC	ori    v0, zero, $0001
-    8001EED0	bne    s2, v0, L1eedc [$8001eedc]
-    8001EED4	nop
-    8001EED8	addiu  s4, s4, $0008
+    A0 = 100;
+    A1 = 1ec;
+    system_create_clut_for_packet();
 
-    L1eedc:	; 8001EEDC
-    8001EEDC	addiu  s4, s4, $0010
-    8001EEE0	lw     v0, $0000(s1)
-    8001EEE4	addiu  s2, s2, $0001
-    8001EEE8	div    s3, v0
-    8001EF10	mfhi   s3
-    8001EF14	slti   v0, s2, $0004
-    8001EF1C	addiu  s1, s1, $0004
-8001EF18	bne    v0, zero, loop1ed90 [$8001ed90]
+    V1 = w[80062f24];
+    [V1 + 000e] = h(V0);
 
-8001EF20	addu   a0, zero, zero
-8001EF24	ori    a1, zero, $0001
-8001EF28	ori    a2, zero, $03c0
-8001EF2C	ori    a3, zero, $0100
-8001EF30	ori    v0, zero, $00ff
-8001EF34	sh     zero, $0010(sp)
-8001EF38	sh     zero, $0012(sp)
-8001EF3C	sh     v0, $0014(sp)
-8001EF40	jal    system_create_texture_page_settings_for_packet [$8004656c]
-8001EF44	sh     v0, $0016(sp)
-8001EF48	addu   a0, zero, zero
-8001EF4C	ori    a1, zero, $0001
-8001EF50	andi   a2, v0, $ffff
-8001EF54	jal    func26a34 [$80026a34]
-8001EF58	addiu  a3, sp, $0010
-////////////////////////////////
+    A0 = w[80062fc4];
+    A1 = w[80062f24];
+    [80062f24] = w(A1 + 14);
+    system_add_render_packet_to_queue();
 
+    if( i == 1 )
+    {
+        x = x + 8;
+    }
+    x = x + 10;
+    value = value % w[80049214 + i * 4];
+}
 
-
-////////////////////////////////
-// func1ef84
-8001EF84	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0028] = w(S4);
-S4 = A0;
-[SP + 002c] = w(S5);
-S5 = A1;
-[SP + 001c] = w(S1);
-S1 = A2;
-[SP + 0030] = w(S6);
-S6 = A3;
-[SP + 0024] = w(S3);
-S3 = 0;
-[SP + 0020] = w(S2);
-8001EFB4	lui    s2, $8005
-8001EFB8	addiu  s2, s2, $9224 (=-$6ddc)
-[SP + 0034] = w(RA);
-[SP + 0018] = w(S0);
-
-loop1efc4:	; 8001EFC4
-S0 = w[S2 + 0000];
-8001EFC8	nop
-8001EFCC	div    s1, s0
-8001EFD0	bne    s0, zero, L1efdc [$8001efdc]
-8001EFD4	nop
-8001EFD8	break   $01c00
-
-L1efdc:	; 8001EFDC
-8001EFDC	addiu  at, zero, $ffff (=-$1)
-8001EFE0	bne    s0, at, L1eff4 [$8001eff4]
-8001EFE4	lui    at, $8000
-8001EFE8	bne    s1, at, L1eff4 [$8001eff4]
-8001EFEC	nop
-8001EFF0	break   $01800
-
-L1eff4:	; 8001EFF4
-8001EFF4	mflo   s0
-8001EFF8	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0004;
-[V1 + 0003] = b(V0);
-8001F008	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0064;
-[V1 + 0007] = b(V0);
-8001F018	lui    a0, $8006
-A0 = w[A0 + 2f24];
-8001F020	jal    system_change_brightness_calculation_in_packet [$80046870]
-A1 = 0001;
-8001F028	lui    v0, $6666
-V0 = V0 | 6667;
-8001F030	mult   s0, v0
-8001F034	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001F03C	nop
-[V0 + 0008] = h(S4);
-8001F044	lui    v0, $8006
-V0 = w[V0 + 2f24];
-8001F04C	nop
-[V0 + 000a] = h(S5);
-V0 = S0 >> 1f;
-8001F058	mfhi   t0
-V1 = T0 >> 01;
-V1 = V1 - V0;
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = S0 - V0;
-V0 = V0 << 04;
-8001F074	addiu  v0, v0, $ffb0 (=-$50)
-8001F078	lui    v1, $8006
-V1 = w[V1 + 2f24];
-S0 = S0 < 0005;
-[V1 + 000c] = b(V0);
-8001F088	lui    v1, $8006
-V1 = w[V1 + 2f24];
-8001F090	bne    s0, zero, L1f09c [$8001f09c]
-V0 = 0050;
-V0 = 0068;
-
-L1f09c:	; 8001F09C
-[V1 + 000d] = b(V0);
-A0 = 0100;
-A1 = 01ec;
-8001F0A8	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0010;
-[V1 + 0010] = h(V0);
-8001F0B8	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0015;
-8001F0C4	jal    system_create_clut_for_packet [$80046634]
-[V1 + 0012] = h(V0);
-8001F0CC	lui    v1, $8006
-V1 = w[V1 + 2f24];
-8001F0D4	nop
-[V1 + 000e] = h(V0);
-V0 = 0008;
-V0 = V0 - S3;
-8001F0E4	slt    v0, s6, v0
-8001F0E8	bne    v0, zero, L1f114 [$8001f114]
-8001F0EC	nop
-8001F0F0	lui    a1, $8006
-A1 = w[A1 + 2f24];
-8001F0F8	lui    a0, $8006
-A0 = w[A0 + 2fc4];
-V0 = A1 + 0014;
-8001F104	lui    at, $8006
-[AT + 2f24] = w(V0);
-8001F10C	jal    system_add_render_packet_to_queue [$80046794]
-S4 = S4 + 0010;
-
-L1f114:	; 8001F114
-V0 = w[S2 + 0000];
-S3 = S3 + 0001;
-8001F11C	div    s1, v0
-8001F120	bne    v0, zero, L1f12c [$8001f12c]
-8001F124	nop
-8001F128	break   $01c00
-
-L1f12c:	; 8001F12C
-8001F12C	addiu  at, zero, $ffff (=-$1)
-8001F130	bne    v0, at, L1f144 [$8001f144]
-8001F134	lui    at, $8000
-8001F138	bne    s1, at, L1f144 [$8001f144]
-8001F13C	nop
-8001F140	break   $01800
-
-L1f144:	; 8001F144
-8001F144	mfhi   s1
-V0 = S3 < 0008;
-8001F14C	bne    v0, zero, loop1efc4 [$8001efc4]
-S2 = S2 + 0004;
 A0 = 0;
-A1 = 0001;
-A2 = 03c0;
-A3 = 0100;
-V0 = 00ff;
-[SP + 0010] = h(0);
-[SP + 0012] = h(0);
-[SP + 0014] = h(V0);
-8001F174	jal    system_create_texture_page_settings_for_packet [$8004656c]
-[SP + 0016] = h(V0);
+A1 = 1;
+A2 = 3c0;
+A3 = 100;
+system_create_texture_page_settings_for_packet();
+
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(ff);
+[SP + 16] = h(ff);
+
 A0 = 0;
-A1 = 0001;
+A1 = 1;
 A2 = V0 & ffff;
-8001F188	jal    func26a34 [$80026a34]
-A3 = SP + 0010;
-RA = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-8001F1B4	jr     ra 
-8001F1B8	nop
+A3 = SP + 10;
+system_menu_create_and_add_texture_setting_packet();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1f1bc()
+// system_menu_add_digits_to_render()
+
+x = A0;
+y = A1;
+value = A2;
+num = A3;
+
+// add all digits
+for( int i = 0 i < 8; +i )
+{
+    digit = value / w[80049224 + i * 4];
+
+    V1 = w[80062f24];
+    [V1 + 3] = b(4);
+    [V1 + 7] = b(64);
+
+    A0 = w[80062f24];
+    A1 = 1;
+    system_change_brightness_calculation_in_packet();
+
+    V1 = w[80062f24];
+    [V1 + 8] = h(x);
+    [V1 + a] = h(y);
+    [V1 + c] = b((digit - ((digit / a) * 3)) * 10 - 50);
+
+    if( digit >= 5 )
+    {
+        [V1 + d] = b(68);
+    }
+    else
+    {
+        [V1 + d] = b(50);
+    }
+    [V1 + 10] = h(10);
+    [V1 + 12] = h(15);
+
+    A0 = 100;
+    A1 = 1ec;
+    system_create_clut_for_packet();
+
+    V1 = w[80062f24];
+    [V1 + e] = h(V0);
+
+    if( num >= ( 8 - i ) )
+    {
+        A0 = w[80062fc4];
+        A1 = w[80062f24];
+        [80062f24] = w(A1 + 14);
+        system_add_render_packet_to_queue();
+
+        x = x + 10;
+    }
+
+    value = value % w[80049224 + i * 4];
+}
+
+A0 = 0;
+A1 = 1;
+A2 = 3c0;
+A3 = 100;
+system_create_texture_page_settings_for_packet();
+
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(ff);
+[SP + 16] = h(ff);
+
+A0 = 0;
+A1 = 1;
+A2 = V0 & ffff;
+A3 = SP + 10;
+system_menu_create_and_add_texture_setting_packet();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_menu_add_dialog_to_render()
 
 windows = A0;
 number_to_render = A1; // 4 in field, 1 in wm
-S6 = A2;
-S0 = A3;
+buffer = A2;
+buffer_id = A3;
 
 [80062dfd] = b(1);
 [GP + 76] = h(hu[GP + 76] + 1);
-[GP + 280] = w(S6);
-[80062f24] = w(80077f64 + S0 * 3400);
+[GP + 280] = w(buffer);
+[80062f24] = w(80077f64 + buffer_id * 3400);
 
 S4 = 1;
-S5 = S0;
 
 for( int i = 0; i < number_to_render; ++i )
 {
@@ -2303,9 +1996,9 @@ for( int i = 0; i < number_to_render; ++i )
 
         if( bu[windows + i * 30 + 1a] ) // show pointer
         {
-            A0 = h[windows + i * 30 + 24]; // pointer X
-            A1 = h[windows + i * 30 + 26]; // pointer Y
-            8001F2A8	jal    func1eb2c [$8001eb2c]
+            A0 = h[windows + i * 30 + 24]; // x
+            A1 = h[windows + i * 30 + 26]; // y
+            system_menu_add_cursor_to_render();
         }
 
         V1 = bu[windows + i * 30 + 1b]; // WSPCL type
@@ -2314,7 +2007,7 @@ for( int i = 0; i < number_to_render; ++i )
             A0 = h[windows + i * 30 + 28]; // WSPCL x
             A1 = h[windows + i * 30 + 2a]; // WSPCL y
             A2 = w[8009c6e4 + b84];
-            func1ec70;
+            system_menu_add_timer_to_render();
         }
         else if( V1 == 2 )
         {
@@ -2322,11 +2015,9 @@ for( int i = 0; i < number_to_render; ++i )
             A1 = h[windows + i * 30 + 2a]; // WSPCL y
             A2 = w[windows + i * 30 + 20]; // WNUMB number
             A3 = bu[windows + i * 30 + 1d]; // WNUMB number of digits in number
-            [SP + 10] = w(bu[windows + i * 30 + 1c]); // ????
-            8001F30C	jal    func1ef84 [$8001ef84]
+            A4 = bu[windows + i * 30 + 1c]; // not used
+            system_menu_add_digits_to_render();
         }
-
-
 
         A0 = 8; // start of string
         A1 = h[windows + i * 30 + 10] + 6; // text scrolling value
@@ -2339,9 +2030,9 @@ for( int i = 0; i < number_to_render; ++i )
         [GP + 78] = h(hu[windows + i * 30 + 12]); // number of letters in window string
         [GP + 7c] = w((bu[windows + i * 30 + 19] >> 2) & 1); // WMODE style
 
-        func1d6a8; // render font
+        system_menu_add_dialog_string_to_render();
 
-        if (h[windows + i * 30 + 0a] - 3 < V0 + 10)
+        if (h[windows + i * 30 + a] - 3 < V0 + 10)
         {
             [windows + i * 30 + 18] = b(1);
         }
@@ -2350,10 +2041,10 @@ for( int i = 0; i < number_to_render; ++i )
             [windows + i * 30 + 18] = b(0);
         }
 
-        V0 = windows + i * 30;
-        A1 = h[V0 + 0004];
-        A2 = h[V0 + 0006];
-        if( S5 != 0 )
+        A1 = h[windows + i * 30 + 4];
+        A2 = h[windows + i * 30 + 6];
+
+        if( buffer_id != 0 )
         {
             A2 = A2 + 8;
         }
@@ -2362,19 +2053,16 @@ for( int i = 0; i < number_to_render; ++i )
             A2 = A2 + f0;
         }
 
-        S0 = windows + i * 30;
-        A3 = h[S0 + 0008];
-        V0 = h[S0 + 000a];
-        A0 = SP + 0018;
-        [SP + 0010] = w(V0);
-
+        A0 = SP + 18;
+        A3 = h[windows + i * 30 + 8];
+        A4 = h[windows + i * 30 + a];
         system_graphic_create_draw_env_struct();
 
         [SP + 0030] = b(0);
         [SP + 002f] = b(S4);
-        V0 = hu[S0 + 0008];
-        A0 = hu[S0 + 0004];
-        V1 = hu[S0 + 000c];
+        V0 = hu[windows + i * 30 + 8];
+        A0 = hu[windows + i * 30 + 4];
+        V1 = hu[windows + i * 30 + c];
         V0 = V0 << 10;
         V0 = V0 >> 11;
         V0 = V0 + 0003;
@@ -2383,15 +2071,15 @@ for( int i = 0; i < number_to_render; ++i )
         V1 = V1 >> 11;
         A0 = A0 - V1;
         [SP + 0018] = h(A0);
-        V0 = hu[S0 + 000a];
-        V1 = hu[S0 + 000e];
-        A0 = h[S0 + 0006];
+        V0 = hu[windows + i * 30 + a];
+        V1 = hu[windows + i * 30 + e];
+        A0 = h[windows + i * 30 + 6];
         V0 = V0 << 10;
         V0 = V0 >> 11;
         V1 = V1 << 10;
         V1 = V1 >> 11;
 
-        if( S5 != 0 )
+        if( buffer_id != 0 )
         {
             V0 = V0 + b;
         }
@@ -2400,29 +2088,22 @@ for( int i = 0; i < number_to_render; ++i )
             V0 = V0 + f3;
         }
 
-        V0 = A0 + V0;
-        V0 = V0 - V1;
-        [SP + 1a] = h(V0);
-        A1 = SP + 0018;
-        S0 = windows + i * 30;
-        V0 = hu[S0 + 000c];
+        [SP + 1a] = h(A0 + V0 - V1);
+        [SP + 1c] = h(hu[windows + i * 30 + c] - 6);
+        [SP + 1e] = h(hu[windows + i * 30 + e] - 6);
+        [SP + 2c] = h(5f);
+
         A0 = w[80062f24];
-        8001F490	addiu  v0, v0, $fffa (=-$6)
-        [SP + 001c] = h(V0);
-        V1 = hu[S0 + 000e];
-        V0 = 005f;
-        [SP + 002c] = h(V0);
-        8001F4A4	addiu  v1, v1, $fffa (=-$6)
-        [SP + 001e] = h(V1);
+        A1 = SP + 18;
         system_prepare_draw_env_packets();
 
-        A0 = S6;
+        A0 = buffer;
         A1 = w[80062f24];
         system_add_render_packet_to_queue();
 
         [80062f24] = w(w[80062f24] + 40);
 
-        V0 = bu[S0 + 19];
+        V0 = bu[windows + i * 30 + 19];
         if( V0 & 2 )
         {
             [GP + 84] = w(S4);
@@ -2439,33 +2120,32 @@ for( int i = 0; i < number_to_render; ++i )
             V0 = w[windows + i * 30 + 0c];
             if( V1 != V0 )
             {
-                A1 = ( h[windows + i * 30 + 08] - h[windows + i * 30 + c] ) / 2;
-                A2 = ( hu[windows + i * 30 + 0a] - h[windows + i * 30 + e] ) / 2;
-                A3 = h[windows + i * 30 + 0c];
-                V0 = h[windows + i * 30 + 0e];
+                A1 = ( h[windows + i * 30 + 8] - h[windows + i * 30 + c] ) / 2;
+                A2 = ( hu[windows + i * 30 + a] - h[windows + i * 30 + e] ) / 2;
+                A3 = h[windows + i * 30 + c];
+                V0 = h[windows + i * 30 + e];
             }
             else
             {
                 A1 = 0;
                 A2 = 0;
-                A3 = h[windows + i * 30 + 08];
-                V0 = h[windows + i * 30 + 0a];
+                A3 = h[windows + i * 30 + 8];
+                V0 = h[windows + i * 30 + a];
             }
 
             [SP + 78 + 0] = h(A1);
             [SP + 78 + 2] = h(A2);
             [SP + 78 + 4] = h(A3);
             [SP + 78 + 6] = h(V0);
+
             A0 = SP + 78;
-            func1e040();
+            system_menu_add_window_to_render();
         }
 
-
-
         A0 = SP + 18;
-        A1 = h[windows + i * 30 + 04]; // WINDOW x
-        A2 = h[windows + i * 30 + 06]; // WINDOW y
-        if( S5 == 0 )
+        A1 = h[windows + i * 30 + 4]; // WINDOW x
+        A2 = h[windows + i * 30 + 6]; // WINDOW y
+        if( buffer_id == 0 )
         {
             A2 = A2 + f0;
         }
@@ -2474,8 +2154,8 @@ for( int i = 0; i < number_to_render; ++i )
             A2 = A2 + 8;
         }
 
-        A3 = h[windows + i * 30 + 08]; // WINDOW width
-        A4 = h[windows + i * 30 + 0a]; // WINDOW height
+        A3 = h[windows + i * 30 + 8]; // WINDOW width
+        A4 = h[windows + i * 30 + a]; // WINDOW height
         system_graphic_create_draw_env_struct();
 
         A0 = w[80062f24];
@@ -2483,9 +2163,9 @@ for( int i = 0; i < number_to_render; ++i )
         [SP + 30] = b(0);
         [SP + 2f] = b(1);
         [SP + 2c] = h(5f);
-        system_prepare_draw_env_packets;
+        system_prepare_draw_env_packets();
 
-        A0 = S6;
+        A0 = buffer;
         A1 = w[80062f24];
         system_add_render_packet_to_queue();
 
@@ -2556,47 +2236,46 @@ S2 = V0;
 V1 = bu[GP + 97];
 if( V1 == 1 )
 {
-    8001F758	lui    v0, $5555
-    8001F778	ori    v0, v0, $5556
+    V0 = 55555556;
     8001F77C	mult   s2, v0
-    8001F780	sra    v0, s2, $1f
+    V0 = S2 >> 1f;
     8001F784	mfhi   t0
-    8001F788	lbu    a0, $00a1(gp)
-    8001F78C	subu   v0, t0, v0
+    A0 = bu[GP + 00a1];
+    V0 = T0 - V0;
     8001F790	mult   v0, a0
-    8001F794	lbu    v1, $00a0(gp)
+    V1 = bu[GP + 00a0];
     8001F798	mflo   a3
     if( V1 != 0 )
     {
-        8001F7A0	sll    a2, a0, $03
-        8001F7CC	addiu  a0, sp, $0018
-        8001F7D0	addiu  a1, s2, $0010
-        8001F7D4	srl    v0, a1, $1f
-        8001F7D8	addu   a1, a1, v0
-        8001F7DC	sra    a1, a1, $01
-        8001F7E0	srl    v0, a3, $1f
-        8001F7E4	addu   v0, a3, v0
-        8001F7E8	sra    v0, v0, $01
-        8001F7EC	sw     a2, $0010(sp)
-        8001F7F0	srl    a2, a2, $01
+        A2 = A0 << 03;
+        A0 = SP + 0018;
+        A1 = S2 + 0010;
+        V0 = A1 >> 1f;
+        A1 = A1 + V0;
+        A1 = A1 >> 01;
+        V0 = A3 >> 1f;
+        V0 = A3 + V0;
+        V0 = V0 >> 01;
+        [SP + 0010] = w(A2);
+        A2 = A2 >> 01;
         8001F7F4	addiu  a2, a2, $fff4 (=-$c)
-        8001F7F8	lh     s1, $00a2(gp)
-        8001F7FC	lh     s0, $00a4(gp)
-        8001F800	addu   a1, s1, a1
-        8001F804	subu   a1, a1, v0
+        S1 = h[GP + 00a2];
+        S0 = h[GP + 00a4];
+        A1 = S1 + A1;
+        A1 = A1 - V0;
     }
     else
     {
-        8001F7A0	sll    a2, a0, $03
-        8001F7A4	ori    s1, zero, $00b4
-        8001F7A8	ori    s0, zero, $0068
-        8001F7AC	sw     a2, $0010(sp)
-        8001F7B0	addiu  a0, sp, $0018
-        8001F7B4	srl    a1, a3, $1f
-        8001F7B8	addu   a1, a3, a1
-        8001F7BC	sra    a1, a1, $01
-        8001F7C0	subu   a1, s1, a1
-        8001F7C8	srl    a2, a2, $01
+        A2 = A0 << 03;
+        S1 = 00b4;
+        S0 = 0068;
+        [SP + 0010] = w(A2);
+        A0 = SP + 0018;
+        A1 = A3 >> 1f;
+        A1 = A3 + A1;
+        A1 = A1 >> 01;
+        A1 = S1 - A1;
+        A2 = A2 >> 01;
     }
 
     A2 = S0 - A2;
@@ -2672,50 +2351,49 @@ else if( V1 == 2 )
 }
 else if( V1 == 3 )
 {
-    8001F76C	lui    v0, $5555
-    8001F92C	ori    v0, v0, $5556
+    V0 = 55555556;
     8001F930	mult   s2, v0
-    8001F934	sra    v0, s2, $1f
+    V0 = S2 >> 1f;
     8001F938	mfhi   t0
-    8001F93C	lbu    a0, $00a1(gp)
-    8001F940	subu   v0, t0, v0
+    A0 = bu[GP + 00a1];
+    V0 = T0 - V0;
     8001F944	mult   v0, a0
-    8001F948	lbu    v1, $00a0(gp)
+    V1 = bu[GP + 00a0];
     8001F94C	mflo   a3
     if( V1 == 0 )
     {
-        8001F954	sll    a2, a0, $03
-        8001F958	ori    s1, zero, $00b4
-        8001F95C	ori    s0, zero, $0068
-        8001F960	sw     a2, $0010(sp)
-        8001F964	addiu  a0, sp, $0018
-        8001F968	srl    a1, a3, $1f
-        8001F96C	addu   a1, a3, a1
-        8001F970	sra    a1, a1, $01
-        8001F974	subu   a1, s1, a1
-        8001F97C	srl    a2, a2, $01
+        A2 = A0 << 03;
+        S1 = 00b4;
+        S0 = 0068;
+        [SP + 0010] = w(A2);
+        A0 = SP + 0018;
+        A1 = A3 >> 1f;
+        A1 = A3 + A1;
+        A1 = A1 >> 01;
+        A1 = S1 - A1;
+        A2 = A2 >> 01;
     }
     else
     {
-        8001F954	sll    a2, a0, $03
+        A2 = A0 << 03;
         A0 = SP + 18;
-        8001F984	addiu  a1, s2, $0010
-        8001F988	srl    v0, a1, $1f
-        8001F98C	addu   a1, a1, v0
-        8001F990	sra    a1, a1, $01
-        8001F994	srl    v0, a3, $1f
-        8001F998	addu   v0, a3, v0
-        8001F99C	sra    v0, v0, $01
-        8001F9A0	sw     a2, $0010(sp)
-        8001F9A4	srl    a2, a2, $01
+        A1 = S2 + 0010;
+        V0 = A1 >> 1f;
+        A1 = A1 + V0;
+        A1 = A1 >> 01;
+        V0 = A3 >> 1f;
+        V0 = A3 + V0;
+        V0 = V0 >> 01;
+        [SP + 0010] = w(A2);
+        A2 = A2 >> 01;
         8001F9A8	addiu  a2, a2, $fff4 (=-$c)
-        8001F9AC	lh     s1, $00a2(gp)
-        8001F9B0	lh     s0, $00a4(gp)
-        8001F9B4	addu   a1, s1, a1
-        8001F9B8	subu   a1, a1, v0
+        S1 = h[GP + 00a2];
+        S0 = h[GP + 00a4];
+        A1 = S1 + A1;
+        A1 = A1 - V0;
     }
 
-    8001F9C0	subu   a2, s0, a2
+    A2 = S0 - A2;
     [A0 + 0] = h(A1);
     [A0 + 2] = h(A2);
     [A0 + 4] = h(A3);
@@ -2740,7 +2418,7 @@ A0 = 80049384;
 8001F9F4	jal    func1def0 [$8001def0]
 
 A0 = SP + 18;
-func1e040; // draw window
+system_menu_add_window_to_render();
 
 8001FA04	jal    func1deb0 [$8001deb0]
 ////////////////////////////////
@@ -3161,48 +2839,35 @@ if( char_id != ff )
 
 ////////////////////////////////
 // func206e4
-800206E4	addiu  sp, sp, $ff90 (=-$70)
-[SP + 0064] = w(S7);
+
 S7 = A0;
-[SP + 0060] = w(S6);
 S6 = A1;
-[SP + 0068] = w(FP);
 FP = A2;
 T0 = S7 + 0012;
 [SP + 0040] = w(T0);
 V0 = S6 + 001f;
-[SP + 0058] = w(S4);
 S4 = 003c;
-[SP + 0054] = w(S3);
 S3 = 0001;
 [SP + 002a] = h(V0);
 V0 = FP << 05;
 T0 = hu[SP + 0040];
 V0 = V0 + FP;
-[SP + 005c] = w(S5);
 S5 = V0 << 02;
-[SP + 0050] = w(S2);
 S2 = SP + 0028;
-[SP + 006c] = w(RA);
-[SP + 004c] = w(S1);
-[SP + 0048] = w(S0);
 [SP + 002c] = h(S4);
 [SP + 002e] = h(S3);
 [SP + 0028] = h(T0);
-80020754	lui    at, $800a
-80020758	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + S5;
 V0 = hu[AT + 0000];
 A0 = S2;
 [SP + 0030] = h(V0);
-8002076C	lui    at, $800a
-80020770	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + S5;
 V0 = hu[AT + 0000];
 S1 = 0080;
 [SP + 0036] = h(V0);
-80020784	lui    at, $800a
-80020788	addiu  at, at, $c770 (=-$3890)
+AT = 8009c770;
 AT = AT + S5;
 V0 = hu[AT + 0000];
 S0 = 00ff;
@@ -3218,20 +2883,17 @@ V0 = S6 + 0029;
 [SP + 002c] = h(S4);
 [SP + 002e] = h(S3);
 [SP + 0028] = h(T0);
-800207C8	lui    at, $800a
-800207CC	addiu  at, at, $c768 (=-$3898)
+AT = 8009c768;
 AT = AT + S5;
 V0 = hu[AT + 0000];
 800207D8	nop
 [SP + 0030] = h(V0);
-800207E0	lui    at, $800a
-800207E4	addiu  at, at, $c768 (=-$3898)
+AT = 8009c768;
 AT = AT + S5;
 V0 = hu[AT + 0000];
 S3 = 0006;
 [SP + 0036] = h(V0);
-800207F8	lui    at, $800a
-800207FC	addiu  at, at, $c772 (=-$388e)
+AT = 8009c772;
 AT = AT + S5;
 V0 = hu[AT + 0000];
 A0 = S2;
@@ -3241,12 +2903,10 @@ A0 = S2;
 [SP + 003a] = b(S1);
 8002081C	jal    func27408 [$80027408]
 [SP + 0032] = h(V0);
-80020824	lui    at, $800a
-80020828	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + S5;
 V1 = hu[AT + 0000];
-80020834	lui    at, $800a
-80020838	addiu  at, at, $c770 (=-$3890)
+AT = 8009c770;
 AT = AT + S5;
 V0 = hu[AT + 0000];
 80020844	nop
@@ -3257,12 +2917,10 @@ S1 = V1 < 0001;
 S3 = 0007;
 
 L2085c:	; 8002085C
-8002085C	lui    at, $800a
-80020860	addiu  at, at, $c772 (=-$388e)
+AT = 8009c772;
 AT = AT + S5;
 V0 = hu[AT + 0000];
-8002086C	lui    at, $800a
-80020870	addiu  at, at, $c768 (=-$3898)
+AT = 8009c768;
 AT = AT + S5;
 V1 = hu[AT + 0000];
 V0 = V0 >> 02;
@@ -3272,8 +2930,7 @@ S2 = 0006;
 S2 = 0007;
 
 L20890:	; 80020890
-80020890	lui    at, $800a
-80020894	addiu  at, at, $c757 (=-$38a9)
+AT = 8009c757;
 AT = AT + S5;
 V0 = bu[AT + 0000];
 800208A0	nop
@@ -3281,14 +2938,12 @@ V0 = V0 & 0010;
 800208A8	beq    v0, zero, L208c4 [$800208c4]
 A0 = S7 + 0024;
 A1 = S6 + 000b;
-800208B4	lui    a2, $8005
-800208B8	addiu  a2, a2, $9350 (=-$6cb0)
+A2 = 80049350;
 800208BC	jal    func26f44 [$80026f44]
 A3 = 0003;
 
 L208c4:	; 800208C4
-800208C4	lui    at, $800a
-800208C8	addiu  at, at, $c757 (=-$38a9)
+AT = 8009c757;
 AT = AT + S5;
 V0 = bu[AT + 0000];
 800208D4	nop
@@ -3296,15 +2951,13 @@ V0 = V0 & 0020;
 800208DC	beq    v0, zero, L208f8 [$800208f8]
 A0 = S7 + 0024;
 A1 = S6 + 000b;
-800208E8	lui    a2, $8005
-800208EC	addiu  a2, a2, $9344 (=-$6cbc)
+A2 = 80049344;
 800208F0	jal    func26f44 [$80026f44]
 A3 = 0003;
 
 L208f8:	; 800208F8
 A3 = 0007;
-800208FC	lui    v0, $800a
-80020900	addiu  v0, v0, $c748 (=-$38b8)
+V0 = 8009c748;
 80020904	beq    s1, zero, L20910 [$80020910]
 A2 = S5 + V0;
 A3 = 0002;
@@ -3316,13 +2969,11 @@ A1 = S6;
 A0 = S7;
 S0 = S6 + 000d;
 A1 = S0;
-80020928	lui    a2, $8005
-8002092C	addiu  a2, a2, $93a0 (=-$6c60)
+A2 = 800493a0;
 80020930	jal    system_draw_menu_8width_font [$80027354]
 A3 = 0005;
 A0 = w[SP + 0040];
-8002093C	lui    at, $800a
-80020940	addiu  at, at, $c739 (=-$38c7)
+AT = 8009c739;
 AT = AT + S5;
 A2 = bu[AT + 0000];
 8002094C	beq    s1, zero, L2095c [$8002095c]
@@ -3339,16 +2990,14 @@ L20960:	; 80020960
 A3 = 0002;
 A0 = S7;
 A1 = S6 + 0018;
-80020974	lui    a2, $8005
-80020978	addiu  a2, a2, $9390 (=-$6c70)
+A2 = 80049390;
 8002097C	jal    system_draw_menu_8width_font [$80027354]
 A3 = 0005;
 A0 = S7 + 0012;
 V0 = FP << 05;
 V0 = V0 + FP;
 V0 = V0 << 02;
-80020994	lui    at, $800a
-80020998	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + V0;
 A2 = hu[AT + 0000];
 800209A4	bne    s1, zero, L209b4 [$800209b4]
@@ -3367,8 +3016,7 @@ A0 = S7 + 0032;
 V0 = FP << 05;
 V0 = V0 + FP;
 V0 = V0 << 02;
-800209D4	lui    at, $800a
-800209D8	addiu  at, at, $c770 (=-$3890)
+AT = 8009c770;
 AT = AT + V0;
 A2 = hu[AT + 0000];
 800209E4	beq    s1, zero, L209f4 [$800209f4]
@@ -3385,16 +3033,14 @@ L209f8:	; 800209F8
 A3 = 0004;
 A0 = S7;
 A1 = S6 + 0022;
-80020A0C	lui    a2, $8005
-80020A10	addiu  a2, a2, $9398 (=-$6c68)
+A2 = 80049398;
 80020A14	jal    system_draw_menu_8width_font [$80027354]
 A3 = 0005;
 A0 = S7 + 0012;
 V0 = FP << 05;
 V0 = V0 + FP;
 V0 = V0 << 02;
-80020A2C	lui    at, $800a
-80020A30	addiu  at, at, $c768 (=-$3898)
+AT = 8009c768;
 AT = AT + V0;
 A2 = hu[AT + 0000];
 80020A3C	bne    s1, zero, L20a4c [$80020a4c]
@@ -3413,8 +3059,7 @@ A0 = S7 + 0032;
 V0 = FP << 05;
 V0 = V0 + FP;
 V0 = V0 << 02;
-80020A6C	lui    at, $800a
-80020A70	addiu  at, at, $c772 (=-$388e)
+AT = 8009c772;
 AT = AT + V0;
 A2 = hu[AT + 0000];
 80020A7C	beq    s1, zero, L20a8c [$80020a8c]
@@ -3465,21 +3110,8 @@ V0 = 0100;
 [SP + 0020] = h(0);
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
-80020B2C	jal    func26a34 [$80026a34]
 [SP + 0026] = h(V0);
-RA = w[SP + 006c];
-FP = w[SP + 0068];
-S7 = w[SP + 0064];
-S6 = w[SP + 0060];
-S5 = w[SP + 005c];
-S4 = w[SP + 0058];
-S3 = w[SP + 0054];
-S2 = w[SP + 0050];
-S1 = w[SP + 004c];
-S0 = w[SP + 0048];
-SP = SP + 0070;
-80020B60	jr     ra 
-80020B64	nop
+system_menu_create_and_add_texture_setting_packet();
 ////////////////////////////////
 
 
@@ -3530,22 +3162,22 @@ A0 = SP + 28;
 
 V1 = h[8009d85c + FP * 440];
 V0 = h[8009d85e + FP * 440];
-80020CF8	sltiu  s2, v1, $0001
+S2 = V1 < 0001;
 
-80020D00	sra    v0, v0, $02
-80020D04	slt    v0, v0, v1
-80020D0C	ori    s3, zero, $0006
+V0 = V0 >> 02;
+V0 = V0 < V1;
+S3 = 0006;
 80020D08	beq    v0, zero, L20d14 [$80020d14]
 
-80020D10	ori    s3, zero, $0007
+S3 = 0007;
 
 L20d14:	; 80020D14
 V0 = h[8009d862 + FP * 440];
 V1 = h[8009d860 + FP * 440];
 
-80020D44	sra    v0, v0, $02
-80020D48	slt    v0, v0, v1
-80020D50	ori    s4, zero, $0006
+V0 = V0 >> 02;
+V0 = V0 < V1;
+S4 = 0006;
 if (V0 != 0)
 {
     S4 = 7;
@@ -3716,16 +3348,16 @@ A7 = 0;
 
 
 
-80020FE8	addu   a0, zero, zero
-80020FEC	ori    a1, zero, $0001
-80020FF0	ori    a2, zero, $007f
-80020FF4	addiu  a3, sp, $0020
-80020FF8	ori    v0, zero, $0100
-80020FFC	sh     zero, $0020(sp)
-80021000	sh     zero, $0022(sp)
-80021004	sh     v0, $0024(sp)
-8002100C	sh     v0, $0026(sp)
-80021008	jal    func26a34 [$80026a34]
+A0 = 0;
+A1 = 0001;
+A2 = 007f;
+A3 = SP + 0020;
+V0 = 0100;
+[SP + 0020] = h(0);
+[SP + 0022] = h(0);
+[SP + 0024] = h(V0);
+[SP + 0026] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
 ////////////////////////////////
 
 
@@ -3741,7 +3373,7 @@ A0 = 0;
 [SP + 002c] = w(RA);
 [SP + 0020] = w(S2);
 [SP + 001c] = w(S1);
-80021068	jal    func3cedc [$8003cedc]
+80021068	jal    system_psyq_wait_frames [$8003cedc]
 [SP + 0018] = w(S0);
 A0 = S3;
 A1 = 0;
@@ -3755,7 +3387,7 @@ S0 = 0001;
 [S3 + 0017] = b(S0);
 80021098	jal    system_psyq_put_draw_env [$800443b0]
 [S3 + 0018] = b(S0);
-800210A0	jal    func3cedc [$8003cedc]
+800210A0	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0;
 A0 = S3;
 A1 = 0;
@@ -3810,7 +3442,7 @@ V0 = 00af;
 L2116c:	; 8002116C
 A0 = 0;
 [S2 + 0014] = h(V0);
-80021174	jal    func3cedc [$8003cedc]
+80021174	jal    system_psyq_wait_frames [$8003cedc]
 [S3 + 0014] = h(V0);
 8002117C	jal    system_psyq_put_disp_env [$800444ac]
 A0 = S4;
@@ -3918,14 +3550,12 @@ V1 = b[V1 + 97f7];
 80021300	nop
 80021304	jal    system_menu_sound [$8001fa28]
 A0 = 0001;
-8002130C	lui    a1, $800a
-80021310	addiu  a1, a1, $d7e0 (=-$2820)
+A1 = 8009d7e0;
 A0 = w[A1 + 0000];
 80021318	nop
 8002131C	beq    a0, zero, L2133c [$8002133c]
 80021320	nop
-80021324	lui    v1, $800a
-80021328	addiu  v1, v1, $d260 (=-$2da0)
+V1 = 8009d260;
 V0 = w[V1 + 0000];
 [A1 + 0000] = w(0);
 V0 = V0 + A0;
@@ -3963,8 +3593,7 @@ V0 = w[GP + 015c];
 8002139C	nop
 800213A0	beq    v0, zero, L21534 [$80021534]
 800213A4	nop
-800213A8	lui    s1, $8007
-800213AC	addiu  s1, s1, $97f7 (=-$6809)
+S1 = 800697f7;
 S0 = bu[S1 + 0000];
 800213B4	addiu  a0, s1, $fff5 (=-$b)
 S0 = S0 << 18;
@@ -3992,8 +3621,7 @@ A0 = b[S0 + 0000];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 01;
-80021414	lui    at, $800a
-80021418	addiu  at, at, $d808 (=-$27f8)
+AT = 8009d808;
 AT = AT + V0;
 V0 = h[AT + 0000];
 80021424	nop
@@ -4015,8 +3643,7 @@ V1 = V0 & 0820;
 V0 = V0 & V1;
 80021460	beq    v0, zero, L21534 [$80021534]
 80021464	nop
-80021468	lui    s0, $8007
-8002146C	addiu  s0, s0, $97f7 (=-$6809)
+S0 = 800697f7;
 V1 = b[S0 + 0000];
 80021474	nop
 80021478	bne    v1, zero, L214e4 [$800214e4]
@@ -4032,8 +3659,7 @@ V1 = V1 >> 10;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 01;
-800214A4	lui    at, $800a
-800214A8	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + V0;
 [AT + 0000] = h(A0);
 V0 = S2 + 0001;
@@ -4060,26 +3686,22 @@ V0 = b[S0 + 0000];
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 01;
-8002150C	lui    at, $800a
-80021510	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + V1;
 V0 = hu[AT + 0000];
 8002151C	nop
 V0 = V0 ^ 0001;
-80021524	lui    at, $800a
-80021528	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + V1;
 [AT + 0000] = h(V0);
 
 L21534:	; 80021534
-80021534	lui    v1, $800a
-80021538	addiu  v1, v1, $d7e0 (=-$2820)
+V1 = 8009d7e0;
 V0 = w[V1 + 0000];
 80021540	nop
 80021544	beq    v0, zero, L21670 [$80021670]
 80021548	addiu  v0, v0, $ffff (=-$1)
-8002154C	lui    a0, $800a
-80021550	addiu  a0, a0, $d260 (=-$2da0)
+A0 = 8009d260;
 [V1 + 0000] = w(V0);
 V0 = w[A0 + 0000];
 V1 = bu[GP + 02a8];
@@ -4094,8 +3716,7 @@ A0 = 0150;
 
 L21580:	; 80021580
 A0 = w[GP + 0214];
-80021584	lui    s0, $8007
-80021588	addiu  s0, s0, $96fc (=-$6904)
+S0 = 800696fc;
 A0 = A0 << 04;
 80021590	jal    func469b0 [$800469b0]
 A0 = A0 + S0;
@@ -4138,8 +3759,9 @@ V0 = 0100;
 [SP + 0020] = h(0);
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
-80021634	jal    func26a34 [$80026a34]
 [SP + 0026] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
+
 V0 = h[GP + 0168];
 80021640	nop
 V0 = V0 < 0100;
@@ -4245,8 +3867,7 @@ A0 = V0 >> 10;
 V0 = A0 << 01;
 V0 = V0 + A0;
 A2 = V0 << 01;
-800217A8	lui    at, $800a
-800217AC	addiu  at, at, $d808 (=-$27f8)
+AT = 8009d808;
 AT = AT + A2;
 V1 = h[AT + 0000];
 800217B8	addiu  v0, zero, $ffff (=-$1)
@@ -4254,12 +3875,10 @@ V1 = h[AT + 0000];
 V0 = S2 + 0001;
 V0 = A0 << 05;
 A1 = V0 + 0055;
-800217CC	lui    at, $800a
-800217D0	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + A2;
 V0 = hu[AT + 0000];
-800217DC	lui    at, $800a
-800217E0	addiu  at, at, $d80a (=-$27f6)
+AT = 8009d80a;
 AT = AT + A2;
 A2 = h[AT + 0000];
 800217EC	bne    v0, zero, L217fc [$800217fc]
@@ -4279,8 +3898,7 @@ A1 = V0 >> 10;
 V0 = A1 << 01;
 V0 = V0 + A1;
 V1 = V0 << 01;
-80021820	lui    at, $800a
-80021824	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + V1;
 V0 = hu[AT + 0000];
 80021830	nop
@@ -4289,8 +3907,7 @@ V0 = S2 + 0001;
 A0 = 014c;
 A1 = A1 << 05;
 A1 = A1 + 0055;
-80021848	lui    at, $800a
-8002184C	addiu  at, at, $d80a (=-$27f6)
+AT = 8009d80a;
 AT = AT + V1;
 A2 = h[AT + 0000];
 A3 = 0002;
@@ -4315,8 +3932,9 @@ V0 = 0100;
 [SP + 0020] = h(0);
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
-800218A0	jal    func26a34 [$80026a34]
 [SP + 0026] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
+
 A0 = 0008;
 A1 = 0018;
 800218B0	jal    func15248 [$80015248]
@@ -4382,8 +4000,7 @@ S0 = V0 >> 10;
 V0 = S0 << 01;
 V0 = V0 + S0;
 S1 = V0 << 01;
-800219A4	lui    at, $800a
-800219A8	addiu  at, at, $d808 (=-$27f8)
+AT = 8009d808;
 AT = AT + S1;
 A1 = h[AT + 0000];
 800219B4	addiu  v0, zero, $ffff (=-$1)
@@ -4396,8 +4013,7 @@ A0 = 0030;
 V1 = S0 << 05;
 S0 = V1 + 0053;
 A1 = S0;
-800219DC	lui    at, $800a
-800219E0	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + S1;
 A3 = hu[AT + 0000];
 A2 = V0;
@@ -4405,16 +4021,14 @@ A3 = A3 < 0001;
 A3 = 0 - A3;
 800219F8	jal    func26f44 [$80026f44]
 A3 = A3 & 0007;
-80021A00	lui    at, $800a
-80021A04	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + S1;
 V0 = hu[AT + 0000];
 80021A10	nop
 80021A14	beq    v0, zero, L21a50 [$80021a50]
 V0 = S2 + 0001;
 A0 = 0004;
-80021A20	lui    at, $800a
-80021A24	addiu  at, at, $d808 (=-$27f8)
+AT = 8009d808;
 AT = AT + S1;
 A1 = h[AT + 0000];
 80021A30	jal    func15248 [$80015248]
@@ -4465,8 +4079,10 @@ A3 = 016c;
 V0 = 0020;
 80021AD0	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80021AD8	jal    func1e040 [$8001e040]
+
 A0 = S1;
+system_menu_add_window_to_render();
+
 A0 = S1;
 A1 = 0;
 A2 = 0020;
@@ -4474,7 +4090,7 @@ A3 = 00b8;
 S0 = 0018;
 80021AF4	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S0);
-80021AFC	jal    func1e040 [$8001e040]
+80021AFC	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S1;
 A0 = S1;
 A1 = 00b0;
@@ -4482,7 +4098,7 @@ A2 = 0020;
 A3 = 00bc;
 80021B14	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S0);
-80021B1C	jal    func1e040 [$8001e040]
+80021B1C	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S1;
 V0 = w[GP + 015c];
 80021B28	nop
@@ -4494,7 +4110,7 @@ A3 = 00b8;
 S0 = 00a8;
 80021B44	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S0);
-80021B4C	jal    func1e040 [$8001e040]
+80021B4C	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S1;
 A0 = S1;
 A1 = 00b0;
@@ -4513,7 +4129,7 @@ A3 = 016c;
 L21b80:	; 80021B80
 80021B80	jal    func1de0c [$8001de0c]
 80021B84	nop
-80021B88	jal    func1e040 [$8001e040]
+80021B88	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S1;
 RA = w[SP + 0044];
 S2 = w[SP + 0040];
@@ -4539,12 +4155,12 @@ V0 = 0100;
 [SP + 0018] = h(0);
 [SP + 001a] = h(0);
 [SP + 001c] = h(V0);
-80021BE8	jal    func26a34 [$80026a34]
 [SP + 001e] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
+
 A0 = S1 + 0008;
 A1 = S2 + 0006;
-80021BF8	lui    a2, $8005
-80021BFC	addiu  a2, a2, $9338 (=-$6cc8)
+A2 = 80049338;
 80021C00	jal    func26f44 [$80026f44]
 A3 = 0006;
 S0 = SP + 0020;
@@ -4555,7 +4171,7 @@ A3 = 0050;
 V0 = 0014;
 80021C20	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80021C28	jal    func1e040 [$8001e040]
+80021C28	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S0;
 RA = w[SP + 0034];
 S2 = w[SP + 0030];
@@ -4601,8 +4217,9 @@ V0 = 0100;
 [SP + 0020] = h(0);
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
-80021CD8	jal    func26a34 [$80026a34]
 [SP + 0026] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
+
 80021CE0	jal    func21258 [$80021258]
 A0 = S3;
 A0 = S1 + 0018;
@@ -4612,8 +4229,7 @@ A2 = V0;
 A3 = 0007;
 A0 = S1 + 0038;
 A1 = S2 + 0012;
-80021D04	lui    a2, $8005
-80021D08	addiu  a2, a2, $9338 (=-$6cc8)
+A2 = 80049338;
 80021D0C	jal    func26f44 [$80026f44]
 A3 = 0006;
 S0 = SP + 0028;
@@ -4624,7 +4240,7 @@ A3 = 0082;
 V0 = 0020;
 80021D2C	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80021D34	jal    func1e040 [$8001e040]
+80021D34	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S0;
 RA = w[SP + 0040];
 S3 = w[SP + 003c];
@@ -4669,8 +4285,9 @@ V0 = 0100;
 [SP + 0020] = h(0);
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
-80021DE0	jal    func26a34 [$80026a34]
 [SP + 0026] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
+
 A0 = 0008;
 A1 = 0025;
 80021DF0	jal    func15248 [$80015248]
@@ -4696,7 +4313,7 @@ A3 = 0082;
 V0 = 0023;
 80021E44	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80021E4C	jal    func1e040 [$8001e040]
+80021E4C	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S0;
 RA = w[SP + 003c];
 S2 = w[SP + 0038];
@@ -4706,34 +4323,32 @@ SP = SP + 0040;
 80021E68	jr     ra 
 80021E6C	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func21e70
-80021E70	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 002c] = w(S1);
+
 S1 = A0;
-[SP + 0030] = w(S2);
 S2 = A1;
-[SP + 0028] = w(S0);
 S0 = A2;
-[SP + 0034] = w(S3);
 S3 = A3;
 A0 = 0008;
 A1 = 0024;
-[SP + 0038] = w(RA);
-80021EA0	jal    func15248 [$80015248]
 A2 = 0008;
+80021EA0	jal    func15248 [$80015248]
+
 A0 = S1 + 002f;
 A1 = S2 + 0012;
 A2 = V0;
 80021EB4	jal    func26f44 [$80026f44]
 A3 = 0007;
-80021EBC	lui    at, $800a
-80021EC0	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 80021ECC	nop
 V0 = V0 << 02;
-80021ED4	lui    at, $8005
-80021ED8	addiu  at, at, $91d0 (=-$6e30)
+AT = 800491d0;
 AT = AT + V0;
 A0 = w[AT + 0000];
 80021EE4	jal    system_get_limit_command_id [$80015afc]
@@ -4755,16 +4370,13 @@ A3 = 0082;
 V0 = 0023;
 80021F28	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80021F30	jal    func1e040 [$8001e040]
+
 A0 = S0;
-RA = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0040;
-80021F50	jr     ra 
-80021F54	nop
+system_menu_add_window_to_render();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func21f58
 V0 = bu[GP + 0096];
@@ -4838,8 +4450,7 @@ V1 = bu[GP + 0180];
 V0 = 0096;
 [GP + 0184] = b(V0);
 V0 = V1 & 00ff;
-8002206C	lui    at, $8007
-80022070	addiu  at, at, $9800 (=-$6800)
+AT = 80069800;
 AT = AT + V0;
 V0 = bu[AT + 0000];
 V1 = V1 + 0001;
@@ -4882,8 +4493,7 @@ A3 = 0009;
 S6 = 0;
 800220FC	lui    a2, $800a
 A2 = w[A2 + d7d8];
-80022104	lui    fp, $8007
-80022108	addiu  fp, fp, $9830 (=-$67d0)
+FP = 80069830;
 8002210C	jal    func28e00 [$80028e00]
 [SP + 0010] = w(S1);
 A0 = S4 + 009e;
@@ -4919,8 +4529,9 @@ V0 = 0100;
 A0 = 0;
 A1 = 0001;
 A2 = V0 & ffff;
-80022198	jal    func26a34 [$80026a34]
 A3 = SP + 0028;
+system_menu_create_and_add_texture_setting_packet();
+
 A0 = 0008;
 A1 = 0010;
 800221A8	jal    func15248 [$80015248]
@@ -4957,7 +4568,7 @@ A3 = 016c;
 V0 = 0020;
 80022228	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80022230	jal    func1e040 [$8001e040]
+80022230	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S0;
 A0 = S0;
 A1 = S3;
@@ -4966,7 +4577,7 @@ A3 = 00b8;
 S1 = 0018;
 8002224C	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S1);
-80022254	jal    func1e040 [$8001e040]
+80022254	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S0;
 A0 = S0;
 A1 = S4;
@@ -4974,7 +4585,7 @@ A2 = 0020;
 A3 = 00bc;
 8002226C	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S1);
-80022274	jal    func1e040 [$8001e040]
+80022274	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S0;
 V0 = S6 << 10;
 
@@ -4990,14 +4601,12 @@ V0 = V0 + 0038;
 800222A0	lui    v1, $6666
 V1 = V1 | 6667;
 800222A8	mult   v0, v1
-800222AC	lui    at, $800a
-800222B0	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + A2;
 A0 = bu[AT + 0000];
 800222BC	nop
 A1 = A0 << 02;
-800222C4	lui    at, $8005
-800222C8	addiu  at, at, $91d0 (=-$6e30)
+AT = 800491d0;
 AT = AT + A1;
 S3 = bu[AT + 0000];
 V0 = V0 >> 1f;
@@ -5010,15 +4619,13 @@ S7 = S1;
 V0 = A2 << 01;
 V0 = V0 + A2;
 S2 = V0 << 02;
-800222FC	lui    at, $800a
-80022300	addiu  at, at, $d7ed (=-$2813)
+AT = 8009d7ed;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 8002230C	nop
 80022310	beq    v1, zero, L22998 [$80022998]
 S0 = V0 << 01;
-80022318	lui    at, $8007
-8002231C	addiu  at, at, $9830 (=-$67d0)
+AT = 80069830;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 80022328	nop
@@ -5027,14 +4634,12 @@ V0 = bu[AT + 0000];
 80022334	jal    system_menu_sound [$8001fa28]
 A0 = 0180;
 V0 = 0050;
-80022340	lui    at, $8007
-80022344	addiu  at, at, $9833 (=-$67cd)
+AT = 80069833;
 AT = AT + S0;
 [AT + 0000] = b(V0);
 
 L22350:	; 80022350
-80022350	lui    at, $8007
-80022354	addiu  at, at, $9833 (=-$67cd)
+AT = 80069833;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 80022360	nop
@@ -5044,8 +4649,7 @@ A1 = S1 << 10;
 A1 = A1 >> 10;
 80022374	jal    func21bac [$80021bac]
 A1 = A1 + 001e;
-8002237C	lui    at, $8007
-80022380	addiu  at, at, $9833 (=-$67cd)
+AT = 80069833;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 V1 = S0 + FP;
@@ -5053,21 +4657,18 @@ V1 = S0 + FP;
 [V1 + 0003] = b(V0);
 
 L22398:	; 80022398
-80022398	lui    at, $800a
-8002239C	addiu  at, at, $d7ed (=-$2813)
+AT = 8009d7ed;
 AT = AT + S2;
 V0 = bu[AT + 0000];
 800223A8	nop
-800223AC	lui    at, $8007
-800223B0	addiu  at, at, $9830 (=-$67d0)
+AT = 80069830;
 AT = AT + S0;
 [AT + 0000] = b(V0);
 V0 = bu[GP + 0096];
 800223C0	nop
 800223C4	beq    v0, zero, L22598 [$80022598]
 V0 = S6 << 10;
-800223CC	lui    at, $8007
-800223D0	addiu  at, at, $9832 (=-$67ce)
+AT = 80069832;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 800223DC	nop
@@ -5080,8 +4681,7 @@ V0 = V0 >> 10;
 V1 = V0 << 01;
 V0 = V1 + V0;
 S0 = V0 << 01;
-800223FC	lui    at, $8007
-80022400	addiu  at, at, $9831 (=-$67cf)
+AT = 80069831;
 AT = AT + S0;
 A1 = bu[AT + 0000];
 V0 = 0010;
@@ -5093,7 +4693,7 @@ V0 = V0 + 2f34;
 S1 = V1 + V0;
 V0 = hu[S1 + 0000];
 8002242C	nop
-80022430	srav   v0, a0, v0
+V0 = V0 >> A0;
 V0 = V0 & 0001;
 80022438	bne    v0, zero, L2244c [$8002244c]
 V1 = A1 + 0001;
@@ -5104,13 +4704,11 @@ V0 = S0 + FP;
 L2244c:	; 8002244C
 8002244C	jal    func1faac [$8001faac]
 A0 = 01e1;
-80022454	lui    at, $8007
-80022458	addiu  at, at, $9831 (=-$67cf)
+AT = 80069831;
 AT = AT + S0;
 V1 = bu[AT + 0000];
 V0 = 0050;
-80022468	lui    at, $8007
-8002246C	addiu  at, at, $9832 (=-$67ce)
+AT = 80069832;
 AT = AT + S0;
 [AT + 0000] = b(V0);
 V0 = 0001;
@@ -5119,8 +4717,7 @@ V1 = hu[S1 + 0000];
 V0 = 0 NOR V0;
 V1 = V1 & V0;
 [S1 + 0000] = h(V1);
-80022490	lui    at, $8007
-80022494	addiu  at, at, $9831 (=-$67cf)
+AT = 80069831;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 V1 = S0 + FP;
@@ -5133,15 +4730,13 @@ V0 = V0 >> 10;
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 01;
-800224C0	lui    at, $8007
-800224C4	addiu  at, at, $9835 (=-$67cb)
+AT = 80069835;
 AT = AT + V1;
 V0 = bu[AT + 0000];
 800224D0	nop
 800224D4	bne    v0, zero, L22598 [$80022598]
 V0 = S6 << 10;
-800224DC	lui    at, $8007
-800224E0	addiu  at, at, $9832 (=-$67ce)
+AT = 80069832;
 AT = AT + V1;
 V0 = bu[AT + 0000];
 800224EC	nop
@@ -5154,20 +4749,18 @@ V0 = V0 >> 10;
 V1 = V0 << 01;
 V1 = V1 + V0;
 S0 = V1 << 01;
-8002250C	lui    at, $8007
-80022510	addiu  at, at, $9834 (=-$67cc)
+AT = 80069834;
 AT = AT + S0;
 A1 = bu[AT + 0000];
 V0 = 000a;
 A0 = A1 & 00ff;
 80022524	beq    a0, v0, L22594 [$80022594]
 V0 = V1 << 02;
-8002252C	lui    at, $800a
-80022530	addiu  at, at, $d7ee (=-$2812)
+AT = 8009d7ee;
 AT = AT + V0;
 V0 = hu[AT + 0000];
 8002253C	nop
-80022540	srav   v0, a0, v0
+V0 = V0 >> A0;
 V0 = V0 & 0001;
 80022548	bne    v0, zero, L2255c [$8002255c]
 V1 = A1 + 0001;
@@ -5178,13 +4771,11 @@ V0 = S0 + FP;
 L2255c:	; 8002255C
 8002255C	jal    func1faac [$8001faac]
 A0 = 01e1;
-80022564	lui    at, $8007
-80022568	addiu  at, at, $9834 (=-$67cc)
+AT = 80069834;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 V1 = 0050;
-80022578	lui    at, $8007
-8002257C	addiu  at, at, $9835 (=-$67cb)
+AT = 80069835;
 AT = AT + S0;
 [AT + 0000] = b(V1);
 V1 = S0 + FP;
@@ -5199,8 +4790,7 @@ V0 = V0 >> 10;
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 01;
-800225A8	lui    at, $8007
-800225AC	addiu  at, at, $9832 (=-$67ce)
+AT = 80069832;
 AT = AT + V1;
 V0 = bu[AT + 0000];
 800225B8	nop
@@ -5212,15 +4802,13 @@ V0 = V0 >> 10;
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 01;
-800225D4	lui    at, $8007
-800225D8	addiu  at, at, $9831 (=-$67cf)
+AT = 80069831;
 AT = AT + V1;
 V1 = bu[AT + 0000];
 V0 = S3 << 05;
 V0 = V0 + S3;
 V0 = V0 << 02;
-800225F0	lui    a0, $800a
-800225F4	addiu  a0, a0, $c774 (=-$388c)
+A0 = 8009c774;
 V1 = V1 << 02;
 V1 = V1 + A0;
 V1 = V1 + V0;
@@ -5235,8 +4823,7 @@ V1 = V1 >> 10;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 01;
-80022630	lui    at, $8007
-80022634	addiu  at, at, $9832 (=-$67ce)
+AT = 80069832;
 AT = AT + V0;
 V1 = bu[AT + 0000];
 V0 = V0 + FP;
@@ -5249,8 +4836,7 @@ S1 = V0 >> 10;
 V0 = S1 << 01;
 V0 = V0 + S1;
 S0 = V0 << 01;
-80022660	lui    at, $8007
-80022664	addiu  at, at, $9835 (=-$67cb)
+AT = 80069835;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 80022670	nop
@@ -5259,15 +4845,13 @@ A0 = 0075;
 A1 = S7 << 10;
 A1 = A1 >> 10;
 A1 = A1 + 0004;
-80022688	lui    at, $8007
-8002268C	addiu  at, at, $9834 (=-$67cc)
+AT = 80069834;
 AT = AT + S0;
 A3 = bu[AT + 0000];
 A2 = S1;
 8002269C	jal    func21e70 [$80021e70]
 800226A0	addiu  a3, a3, $ffff (=-$1)
-800226A4	lui    at, $8007
-800226A8	addiu  at, at, $9835 (=-$67cb)
+AT = 80069835;
 AT = AT + S0;
 V0 = bu[AT + 0000];
 V1 = S0 + FP;
@@ -5278,15 +4862,13 @@ L226c0:	; 800226C0
 V0 = S1 << 04;
 V0 = V0 + S1;
 V0 = V0 << 06;
-800226CC	lui    at, $800a
-800226D0	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + V0;
 V1 = h[AT + 0000];
 800226DC	nop
 800226E0	beq    v1, zero, L2271c [$8002271c]
 S2 = 0002;
-800226E8	lui    at, $800a
-800226EC	addiu  at, at, $d85e (=-$27a2)
+AT = 8009d85e;
 AT = AT + V0;
 V0 = h[AT + 0000];
 800226F8	nop
@@ -5296,7 +4878,7 @@ V0 = V0 + 0003;
 
 L22708:	; 80022708
 V0 = V0 >> 02;
-8002270C	slt    v0, v1, v0
+V0 = V1 < V0;
 80022710	beq    v0, zero, L2271c [$8002271c]
 S2 = 0007;
 S2 = 0006;
@@ -5337,8 +4919,7 @@ A1 = S4 + 000b;
 A2 = S3 << 05;
 A2 = A2 + S3;
 A2 = A2 << 02;
-800227A8	lui    v0, $800a
-800227AC	addiu  v0, v0, $c748 (=-$38b8)
+V0 = 8009c748;
 A2 = A2 + V0;
 800227B4	jal    func26f44 [$80026f44]
 A3 = S2;
@@ -5350,8 +4931,7 @@ S3 = S3 >> 10;
 S1 = S3 << 01;
 S1 = S1 + S3;
 S5 = S1 << 02;
-800227DC	lui    at, $800a
-800227E0	addiu  at, at, $d7ec (=-$2814)
+AT = 8009d7ec;
 AT = AT + S5;
 A2 = bu[AT + 0000];
 V0 = 0080;
@@ -5400,8 +4980,7 @@ T0 = 0008;
 [SP + 001c] = w(0);
 A0 = 010b;
 A1 = S4 + 000c;
-800228A4	lui    at, $800a
-800228A8	addiu  at, at, $d7e8 (=-$2818)
+AT = 8009d7e8;
 AT = AT + S5;
 A2 = w[AT + 0000];
 A3 = 000a;
@@ -5410,8 +4989,7 @@ A3 = 000a;
 A0 = 010b;
 S0 = S4 + 0024;
 A1 = S0;
-800228CC	lui    at, $800a
-800228D0	addiu  at, at, $d7e4 (=-$281c)
+AT = 8009d7e4;
 AT = AT + S5;
 A2 = w[AT + 0000];
 A3 = 000a;
@@ -5419,8 +4997,7 @@ A3 = 000a;
 [SP + 0010] = w(S2);
 A0 = 0091;
 A1 = S0;
-800228F0	lui    at, $800a
-800228F4	addiu  at, at, $d7ed (=-$2813)
+AT = 8009d7ed;
 AT = AT + S5;
 A2 = bu[AT + 0000];
 A3 = 0002;
@@ -5434,8 +5011,9 @@ T0 = 0100;
 [SP + 002c] = h(T0);
 [SP + 0028] = h(0);
 [SP + 002a] = h(0);
-8002292C	jal    func26a34 [$80026a34]
 [SP + 002e] = h(T0);
+system_menu_create_and_add_texture_setting_packet();
+
 A0 = 0016;
 A1 = S4 + 0004;
 A2 = 0030;
@@ -5459,8 +5037,8 @@ T0 = 0100;
 [SP + 002c] = h(T0);
 [SP + 0028] = h(0);
 [SP + 002a] = h(0);
-80022990	jal    func26a34 [$80026a34]
 [SP + 002e] = h(T0);
+system_menu_create_and_add_texture_setting_packet();
 
 L22998:	; 80022998
 V0 = 0038;
@@ -5472,7 +5050,7 @@ A2 = S7 << 10;
 A2 = A2 >> 10;
 800229B4	jal    func1de0c [$8001de0c]
 A3 = 016c;
-800229BC	jal    func1e040 [$8001e040]
+800229BC	jal    system_menu_add_window_to_render [$8001e040]
 A0 = S0;
 V0 = S6 + 0001;
 S6 = V0;
@@ -5535,8 +5113,7 @@ V1 = V1 >> 10;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 01;
-80022AA8	lui    at, $800a
-80022AAC	addiu  at, at, $d80c (=-$27f4)
+AT = 8009d80c;
 AT = AT + V0;
 [AT + 0000] = h(0);
 V0 = S6 + 0001;
@@ -5656,8 +5233,7 @@ V0 = w[GP + 0214];
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-80022C54	lui    v0, $8007
-80022C58	addiu  v0, v0, $974c (=-$68b4)
+V0 = 8006974c;
 A0 = A0 + V0;
 [GP + 0160] = w(A0);
 80022C64	jal    system_psyq_clear_o_tag [$8004418c]
@@ -5700,8 +5276,7 @@ V0 = w[AT + 0000];
 80022CF4	j      L22dc0 [$80022dc0]
 80022CF8	nop
 A0 = w[GP + 0214];
-80022D00	lui    s0, $8007
-80022D04	addiu  s0, s0, $96fc (=-$6904)
+S0 = 800696fc;
 A0 = A0 << 04;
 80022D0C	jal    func469b0 [$800469b0]
 A0 = A0 + S0;
@@ -5744,8 +5319,9 @@ A3 = SP + 0010;
 [SP + 0010] = h(0);
 [SP + 0012] = h(0);
 [SP + 0014] = h(V0);
-80022DB0	jal    func26a34 [$80026a34]
 [SP + 0016] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
+
 V0 = 0005;
 [GP + 0094] = h(V0);
 
@@ -5778,34 +5354,27 @@ V1 = 0;
 [GP + 0184] = b(0);
 
 loop22e18:	; 80022E18
-80022E18	lui    at, $800a
-80022E1C	addiu  at, at, $d7ed (=-$2813)
+AT = 8009d7ed;
 AT = AT + A1;
 V0 = bu[AT + 0000];
 A1 = A1 + 000c;
 A0 = A0 + 0001;
-80022E30	lui    at, $8007
-80022E34	addiu  at, at, $9831 (=-$67cf)
+AT = 80069831;
 AT = AT + V1;
 [AT + 0000] = b(0);
-80022E40	lui    at, $8007
-80022E44	addiu  at, at, $9832 (=-$67ce)
+AT = 80069832;
 AT = AT + V1;
 [AT + 0000] = b(0);
-80022E50	lui    at, $8007
-80022E54	addiu  at, at, $9833 (=-$67cd)
+AT = 80069833;
 AT = AT + V1;
 [AT + 0000] = b(0);
-80022E60	lui    at, $8007
-80022E64	addiu  at, at, $9834 (=-$67cc)
+AT = 80069834;
 AT = AT + V1;
 [AT + 0000] = b(0);
-80022E70	lui    at, $8007
-80022E74	addiu  at, at, $9835 (=-$67cb)
+AT = 80069835;
 AT = AT + V1;
 [AT + 0000] = b(0);
-80022E80	lui    at, $8007
-80022E84	addiu  at, at, $9830 (=-$67d0)
+AT = 80069830;
 AT = AT + V1;
 [AT + 0000] = b(V0);
 V0 = A0 < 0003;
@@ -5834,14 +5403,12 @@ A1 = 0;
 V0 = V1 << 02;
 V0 = V0 + V1;
 V0 = V0 << 04;
-80022EF8	lui    v1, $8007
-80022EFC	addiu  v1, v1, $974c (=-$68b4)
+V1 = 8006974c;
 V0 = V0 + V1;
 [GP + 0160] = w(V0);
 
 loop22f08:	; 80022F08
-80022F08	lui    at, $800a
-80022F0C	addiu  at, at, $d808 (=-$27f8)
+AT = 8009d808;
 AT = AT + A1;
 V0 = h[AT + 0000];
 80022F18	nop
@@ -5890,7 +5457,7 @@ V0 = V0 & 0005;
 [AT + 97f7] = b(V0);
 80022FC0	jal    system_psyq_set_disp_mask [$80043d3c]
 A0 = 0001;
-80022FC8	jal    func3cedc [$8003cedc]
+80022FC8	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0028;
 RA = w[SP + 0018];
 SP = SP + 0020;
@@ -5962,140 +5529,136 @@ else if( A0 == 5 )
 
 ////////////////////////////////
 // func230c4
-800230CC	addu   s3, a0, zero
+S3 = A0;
 system_cdrom_read_chain();
 
-800230E8	sll    a0, s3, $01
-800230EC	addu   a0, a0, s3
-800230F0	sll    a0, a0, $03
-800230F4	subu   a0, a0, s3
-800230F8	sll    a0, a0, $02
-800230FC	lui    v1, $8007
-80023100	addiu  v1, v1, $06a4
-80023104	addu   a0, a0, v1
-80023108	addiu  a1, sp, $0018
-8002310C	ori    v1, zero, $0005
-80023110	sh     v1, $001a(sp)
-80023114	ori    v1, zero, $016c
-80023118	sh     v1, $001c(sp)
-8002311C	ori    v1, zero, $00db
-80023120	addu   s0, v0, zero
-80023124	sh     zero, $0018(sp)
+A0 = S3 << 01;
+A0 = A0 + S3;
+A0 = A0 << 03;
+A0 = A0 - S3;
+A0 = A0 << 02;
+V1 = 800706a4;
+A0 = A0 + V1;
+A1 = SP + 0018;
+V1 = 0005;
+[SP + 001a] = h(V1);
+V1 = 016c;
+[SP + 001c] = h(V1);
+V1 = 00db;
+S0 = V0;
+[SP + 0018] = h(0);
 80023128	jal    func26a94 [$80026a94]
-8002312C	sh     v1, $001e(sp)
+[SP + 001e] = h(V1);
 V1 = w[GP + b4];
 
-80023138	sltiu  v0, v1, $0007
+V0 = V1 < 0007;
 S4 = 0;
 8002313C	beq    v0, zero, L234c8 [$800234c8]
 
-80023144	sll    v0, v1, $02
-80023148	lui    at, $8001
-8002314C	addiu  at, at, $0344
-80023150	addu   at, at, v0
-80023154	lw     v0, $0000(at)
+V0 = V1 << 02;
+AT = 80010344;
+AT = AT + V0;
+V0 = w[AT + 0000];
 80023158	nop
 8002315C	jr     v0 
 80023160	nop
 
-80023164	lw     v0, $01dc(gp)
+V0 = w[GP + 01dc];
 80023168	nop
 8002316C	beq    v0, zero, L23180 [$80023180]
 80023170	addiu  v0, v0, $ffff (=-$1)
-80023174	sw     v0, $01dc(gp)
+[GP + 01dc] = w(V0);
 80023178	j      L231b8 [$800231b8]
 8002317C	nop
 
 L23180:	; 80023180
 80023180	bne    s0, zero, L231b8 [$800231b8]
 80023184	nop
-80023188	lw     v0, $0090(gp)
+V0 = w[GP + 0090];
 8002318C	nop
-80023190	sll    v0, v0, $02
-80023194	lui    at, $8005
-80023198	addiu  at, at, $93a8 (=-$6c58)
-8002319C	addu   at, at, v0
-800231A0	lw     v0, $0000(at)
+V0 = V0 << 02;
+AT = 800493a8;
+AT = AT + V0;
+V0 = w[AT + 0000];
 800231A4	nop
 800231A8	jalr   v0 ra
-800231AC	addu   a0, zero, zero
+A0 = 0;
 [GP + b4] = w(3);
 
 L231b8:	; 800231B8
-800231B8	lw     v1, $01dc(gp)
+V1 = w[GP + 01dc];
 800231BC	nop
-800231C0	sll    v0, v1, $01
-800231C4	addu   v0, v0, v1
-800231C8	lw     v1, $0250(gp)
-800231CC	sll    v0, v0, $02
+V0 = V1 << 01;
+V0 = V0 + V1;
+V1 = w[GP + 0250];
+V0 = V0 << 02;
 800231D0	mult   v1, v0
 800231D4	mflo   a1
 800231D8	bgez   a1, L231e4 [$800231e4]
 800231DC	nop
-800231E0	addiu  a1, a1, $000f
+A1 = A1 + 000f;
 
 L231e4:	; 800231E4
-800231E4	sra    a1, a1, $04
+A1 = A1 >> 04;
 A0 = 126;
 A1 = A1 + b;
 A2 = 80049248 + V1 * c; // text "Item"
 A3 = 7;
 func26f44;
 
-80023210	lw     v1, $01dc(gp)
+V1 = w[GP + 01dc];
 80023214	nop
-80023218	sll    v0, v1, $03
-8002321C	subu   v0, v0, v1
-80023220	sll    v0, v0, $02
-80023224	subu   v0, v0, v1
-80023228	sll    v0, v0, $02
+V0 = V1 << 03;
+V0 = V0 - V1;
+V0 = V0 << 02;
+V0 = V0 - V1;
+V0 = V0 << 02;
 8002322C	bgez   v0, L23238 [$80023238]
 80023230	nop
-80023234	addiu  v0, v0, $000f
+V0 = V0 + 000f;
 
 L23238:	; 80023238
-80023238	sra    v0, v0, $04
-8002323C	addiu  v0, v0, $0018
-80023240	sw     v0, $00ac(gp)
+V0 = V0 >> 04;
+V0 = V0 + 0018;
+[GP + 00ac] = w(V0);
 80023244	j      L234c8 [$800234c8]
 80023248	nop
-8002324C	lw     v0, $01dc(gp)
+V0 = w[GP + 01dc];
 80023250	nop
 80023254	beq    v0, zero, L23268 [$80023268]
 80023258	addiu  v0, v0, $ffff (=-$1)
-8002325C	sw     v0, $01dc(gp)
+[GP + 01dc] = w(V0);
 80023260	j      L233d4 [$800233d4]
 
 L23268:	; 80023268
-80023268	lw     v0, $0090(gp)
+V0 = w[GP + 0090];
 8002326C	nop
-80023270	sll    v0, v0, $02
-80023274	lui    at, $8005
-80023278	addiu  at, at, $93a8 (=-$6c58)
-8002327C	addu   at, at, v0
-80023280	lw     v1, $0000(at)
-80023284	ori    v0, zero, $0003
-80023288	sw     v0, $00b4(gp)
+V0 = V0 << 02;
+AT = 800493a8;
+AT = AT + V0;
+V1 = w[AT + 0000];
+V0 = 0003;
+[GP + 00b4] = w(V0);
 8002328C	jalr   v1 ra
 80023290	nop
 80023294	j      L233d4 [$800233d4]
 
-8002329C	lw     v1, $01dc(gp)
+V1 = w[GP + 01dc];
 800232A0	nop
-800232A4	slti   v0, v1, $000f
+V0 = V1 < 000f;
 800232A8	beq    v0, zero, L232bc [$800232bc]
-800232AC	addiu  v0, v1, $0001
-800232B0	sw     v0, $01dc(gp)
+V0 = V1 + 0001;
+[GP + 01dc] = w(V0);
 800232B4	j      L232c4 [$800232c4]
-800232B8	ori    a0, zero, $0126
+A0 = 0126;
 
 L232bc:	; 800232BC
-800232BC	sw     zero, $00b4(gp)
-800232C0	ori    a0, zero, $0126
+[GP + 00b4] = w(0);
+A0 = 0126;
 
 L232c4:	; 800232C4
 
-800232CC	lw     v1, $0250(gp)
+V1 = w[GP + 0250];
 [GP + ac] = w(18);
 
 A1 = b;
@@ -6105,7 +5668,7 @@ func26f44;
 
 800232F4	j      L234c8 [$800234c8]
 800232F8	nop
-800232FC	lw     v1, $027c(gp)
+V1 = w[GP + 027c];
 [GP + ac] = w(84);
 
 if (V1 != 1)
@@ -6137,124 +5700,122 @@ loop23334:	; 80023334
 
 80023384	j      L234c8 [$800234c8]
 80023388	nop
-8002338C	lw     v0, $01dc(gp)
+V0 = w[GP + 01dc];
 80023390	nop
 80023394	beq    v0, zero, L233c8 [$800233c8]
 80023398	addiu  v0, v0, $ffff (=-$1)
-8002339C	sw     v0, $01dc(gp)
+[GP + 01dc] = w(V0);
 800233A0	bne    v0, zero, L233d4 [$800233d4]
 
-800233A8	lw     v1, $027c(gp)
-800233AC	ori    v0, zero, $0002
+V1 = w[GP + 027c];
+V0 = 0002;
 800233B0	bne    v1, v0, L233d8 [$800233d8]
 
 800233B8	addiu  v0, zero, $ffff (=-$1)
-800233BC	sw     v0, $027c(gp)
+[GP + 027c] = w(V0);
 800233C0	j      L233cc [$800233cc]
-800233C4	ori    v0, zero, $0001
+V0 = 0001;
 
 L233c8:	; 800233C8
-800233C8	ori    v0, zero, $0006
+V0 = 0006;
 
 L233cc:	; 800233CC
-800233CC	sw     v0, $00b4(gp)
+[GP + 00b4] = w(V0);
 
 L233d4:	; 800233D4
-800233D0	ori    a0, zero, $0126
+A0 = 0126;
 
 L233d8:	; 800233D8
-800233D8	lw     v0, $01c8(gp)
+V0 = w[GP + 01c8];
 
 A1 = b;
 A2 = 90049248 + V0 * c;
 A3 = 7;
 func26f44;
 
-800233FC	ori    v0, zero, $0018
-80023400	sw     v0, $00ac(gp)
+V0 = 0018;
+[GP + 00ac] = w(V0);
 80023404	j      L234c8 [$800234c8]
 80023408	nop
-8002340C	lw     v1, $01dc(gp)
+V1 = w[GP + 01dc];
 80023410	nop
-80023414	slti   v0, v1, $000f
+V0 = V1 < 000f;
 80023418	beq    v0, zero, L2342c [$8002342c]
-8002341C	addiu  v0, v1, $0001
-80023420	sw     v0, $01dc(gp)
+V0 = V1 + 0001;
+[GP + 01dc] = w(V0);
 80023424	j      L23434 [$80023434]
 80023428	nop
 
 L2342c:	; 8002342C
-8002342C	ori    v0, zero, $0001
-80023430	sw     v0, $00b4(gp)
+V0 = 0001;
+[GP + 00b4] = w(V0);
 
 L23434:	; 80023434
-80023434	lw     v1, $0188(gp)
+V1 = w[GP + 0188];
 80023438	nop
-8002343C	sll    v0, v1, $01
-80023440	addu   v0, v0, v1
-80023444	lw     v1, $01c8(gp)
-80023448	sll    v0, v0, $02
+V0 = V1 << 01;
+V0 = V0 + V1;
+V1 = w[GP + 01c8];
+V0 = V0 << 02;
 8002344C	mult   v1, v0
 80023450	mflo   a1
 80023454	bgez   a1, L23460 [$80023460]
 80023458	nop
-8002345C	addiu  a1, a1, $000f
+A1 = A1 + 000f;
 
 L23460:	; 80023460
-80023460	sra    a1, a1, $04
-80023464	ori    a0, zero, $0126
-80023468	addiu  a1, a1, $000b
-8002346C	sll    a2, v1, $01
-80023470	addu   a2, a2, v1
-80023474	sll    a2, a2, $02
-80023478	lui    v0, $8005
-8002347C	addiu  v0, v0, $9248 (=-$6db8)
-80023480	addu   a2, a2, v0
+A1 = A1 >> 04;
+A0 = 0126;
+A1 = A1 + 000b;
+A2 = V1 << 01;
+A2 = A2 + V1;
+A2 = A2 << 02;
+V0 = 80049248;
+A2 = A2 + V0;
 80023484	jal    func26f44 [$80026f44]
-80023488	ori    a3, zero, $0007
-8002348C	lw     v1, $0188(gp)
+A3 = 0007;
+V1 = w[GP + 0188];
 80023490	nop
-80023494	sll    v0, v1, $03
-80023498	subu   v0, v0, v1
-8002349C	sll    v0, v0, $02
-800234A0	subu   v0, v0, v1
-800234A4	sll    v0, v0, $02
+V0 = V1 << 03;
+V0 = V0 - V1;
+V0 = V0 << 02;
+V0 = V0 - V1;
+V0 = V0 << 02;
 800234A8	bgez   v0, L234b4 [$800234b4]
 800234AC	nop
-800234B0	addiu  v0, v0, $000f
+V0 = V0 + 000f;
 
 L234b4:	; 800234B4
-800234B4	sra    v0, v0, $04
-800234B8	addiu  v0, v0, $0018
-800234BC	sw     v0, $00ac(gp)
-800234C0	addiu  v0, v1, $0001
-800234C4	sw     v0, $0188(gp)
+V0 = V0 >> 04;
+V0 = V0 + 0018;
+[GP + 00ac] = w(V0);
+V0 = V1 + 0001;
+[GP + 0188] = w(V0);
 
 L234c8:	; 800234C8
-800234C8	lw     v1, $027c(gp)
-800234CC	ori    v0, zero, $0001
+V1 = w[GP + 027c];
+V0 = 0001;
 800234D0	bne    v1, v0, L23528 [$80023528]
-800234D4	addiu  s0, sp, $0020
-800234D8	sll    a0, s3, $01
-800234DC	addu   a0, a0, s3
-800234E0	sll    a0, a0, $03
-800234E4	subu   a0, a0, s3
-800234E8	sll    a0, a0, $02
-800234EC	lui    v0, $8007
-800234F0	addiu  v0, v0, $06a4
-800234F4	addu   a0, a0, v0
-800234F8	addiu  a1, sp, $0018
-800234FC	ori    v0, zero, $011a
-80023500	sh     v0, $0018(sp)
-80023504	addiu  v0, s4, $0008
-80023508	sh     v0, $001a(sp)
-8002350C	lw     v0, $00ac(gp)
-80023510	ori    v1, zero, $0056
-80023514	sh     v1, $001c(sp)
+S0 = SP + 0020;
+A0 = S3 << 01;
+A0 = A0 + S3;
+A0 = A0 << 03;
+A0 = A0 - S3;
+A0 = A0 << 02;
+V0 = 800706a4;
+A0 = A0 + V0;
+A1 = SP + 0018;
+V0 = 011a;
+[SP + 0018] = h(V0);
+V0 = S4 + 0008;
+[SP + 001a] = h(V0);
+V0 = w[GP + 00ac];
+V1 = 0056;
+[SP + 001c] = h(V1);
 80023518	addiu  v0, v0, $fffa (=-$6)
 8002351C	jal    func26a94 [$80026a94]
-80023520	sh     v0, $001e(sp)
-80023524	addiu  s0, sp, $0020
+[SP + 001e] = h(V0);
+S0 = SP + 0020;
 
 L23528:	; 80023528
 [S0 + 0] = h(116);
@@ -6263,81 +5824,80 @@ L23528:	; 80023528
 [S0 + 6] = h(w[GP + ac]);
 
 A0 = S0;
-func1e040;
+system_menu_add_window_to_render();
 
-8002354C	lw     v0, $00b4(gp)
+V0 = w[GP + 00b4];
 80023550	nop
-80023554	sltiu  v0, v0, $0002
+V0 = V0 < 0002;
 80023558	bne    v0, zero, L235f8 [$800235f8]
-8002355C	ori    s0, zero, $00ff
-80023560	lui    s1, $8007
-80023564	addiu  s1, s1, $96fc (=-$6904)
-80023568	lw     a0, $0214(gp)
-8002356C	lw     v0, $01dc(gp)
-80023570	sll    a0, a0, $04
-80023574	addu   a0, a0, s1
-80023578	sll    v0, v0, $04
+S0 = 00ff;
+S1 = 800696fc;
+A0 = w[GP + 0214];
+V0 = w[GP + 01dc];
+A0 = A0 << 04;
+A0 = A0 + S1;
+V0 = V0 << 04;
 8002357C	jal    func469b0 [$800469b0]
-80023580	subu   s0, s0, v0
-80023584	lw     a0, $0214(gp)
-80023588	ori    a1, zero, $0001
-8002358C	sll    a0, a0, $04
+S0 = S0 - V0;
+A0 = w[GP + 0214];
+A1 = 0001;
+A0 = A0 << 04;
 80023590	jal    system_change_semi_transparency_in_packet [$80046848]
-80023594	addu   a0, a0, s1
-80023598	lw     v0, $0214(gp)
-8002359C	ori    v1, zero, $0180
-800235A0	sll    v0, v0, $04
-800235A4	addu   v0, v0, s1
-800235A8	sh     v1, $000c(v0)
-800235AC	sb     s0, $0004(v0)
-800235B0	lw     v1, $0214(gp)
-800235B4	ori    a0, zero, $00e0
-800235B8	sh     zero, $0008(v0)
-800235BC	sh     zero, $000a(v0)
-800235C0	sh     a0, $000e(v0)
-800235C4	sll    v1, v1, $04
-800235C8	addu   v1, v1, s1
-800235CC	sb     s0, $0005(v1)
-800235D0	lw     v0, $0214(gp)
+A0 = A0 + S1;
+V0 = w[GP + 0214];
+V1 = 0180;
+V0 = V0 << 04;
+V0 = V0 + S1;
+[V0 + 000c] = h(V1);
+[V0 + 0004] = b(S0);
+V1 = w[GP + 0214];
+A0 = 00e0;
+[V0 + 0008] = h(0);
+[V0 + 000a] = h(0);
+[V0 + 000e] = h(A0);
+V1 = V1 << 04;
+V1 = V1 + S1;
+[V1 + 0005] = b(S0);
+V0 = w[GP + 0214];
 800235D4	nop
-800235D8	sll    v0, v0, $04
-800235DC	addu   v0, v0, s1
-800235E0	sb     s0, $0006(v0)
-800235E4	lw     a1, $0214(gp)
-800235E8	lw     a0, $0160(gp)
-800235EC	sll    a1, a1, $04
+V0 = V0 << 04;
+V0 = V0 + S1;
+[V0 + 0006] = b(S0);
+A1 = w[GP + 0214];
+A0 = w[GP + 0160];
+A1 = A1 << 04;
 800235F0	jal    system_add_render_packet_to_queue [$80046794]
-800235F4	addu   a1, a1, s1
+A1 = A1 + S1;
 
 L235f8:	; 800235F8
-800235F8	addu   a0, zero, zero
-800235FC	ori    a1, zero, $0001
-80023600	ori    a2, zero, $005f
-80023604	addiu  a3, sp, $0018
-80023608	ori    v0, zero, $00ff
-8002360C	sh     zero, $0018(sp)
-80023610	sh     zero, $001a(sp)
-80023614	sh     v0, $001c(sp)
-80023618	jal    func26a34 [$80026a34]
-8002361C	sh     v0, $001e(sp)
-80023620	addiu  a1, sp, $0018
-80023624	lw     v1, $0214(gp)
-80023628	ori    v0, zero, $0005
-8002362C	sh     v0, $001a(sp)
-80023630	ori    v0, zero, $016c
-80023634	sh     v0, $001c(sp)
-80023638	ori    v0, zero, $00db
-8002363C	sh     v0, $001e(sp)
-80023640	lui    v0, $8007
-80023644	addiu  v0, v0, $06a4
-80023648	sh     zero, $0018(sp)
-8002364C	sll    a0, v1, $01
-80023650	addu   a0, a0, v1
-80023654	sll    a0, a0, $03
-80023658	subu   a0, a0, v1
-8002365C	sll    a0, a0, $02
+A0 = 0;
+A1 = 0001;
+A2 = 005f;
+A3 = SP + 0018;
+V0 = 00ff;
+[SP + 0018] = h(0);
+[SP + 001a] = h(0);
+[SP + 001c] = h(V0);
+[SP + 001e] = h(V0);
+system_menu_create_and_add_texture_setting_packet();
+
+A1 = SP + 0018;
+V1 = w[GP + 0214];
+V0 = 0005;
+[SP + 001a] = h(V0);
+V0 = 016c;
+[SP + 001c] = h(V0);
+V0 = 00db;
+[SP + 001e] = h(V0);
+V0 = 800706a4;
+[SP + 0018] = h(0);
+A0 = V1 << 01;
+A0 = A0 + V1;
+A0 = A0 << 03;
+A0 = A0 - V1;
+A0 = A0 << 02;
 80023660	jal    func26a94 [$80026a94]
-80023664	addu   a0, a0, v0
+A0 = A0 + V0;
 ////////////////////////////////
 
 
@@ -6346,8 +5906,7 @@ L235f8:	; 800235F8
 // func2368c
 8002368C	addiu  sp, sp, $ffb8 (=-$48)
 [SP + 0040] = w(S2);
-80023694	lui    s2, $800a
-80023698	addiu  s2, s2, $a0c8 (=-$5f38)
+S2 = 8009a0c8;
 A0 = S2;
 A1 = 0;
 A2 = 0;
@@ -6715,21 +6274,21 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     [SP + 32] = h(V0);
                     system_psyq_store_image();
 
-                    800240C0	addu   a0, s2, zero
-                    800240C4	ori    a1, zero, $0340
-                    800240C8	ori    a2, zero, $0100
-                    800240CC	ori    s4, zero, $03c0
-                    800240D0	ori    s1, zero, $0018
-                    800240D4	lw     v1, $02d8(gp)
-                    800240D8	ori    s0, zero, $0030
-                    800240DC	sh     s4, $0030(sp)
-                    800240E0	sh     s1, $0034(sp)
-                    800240E4	sh     s0, $0036(sp)
-                    800240E8	sll    v0, v1, $01
-                    800240EC	addu   v0, v0, v1
-                    800240F0	sll    v0, v0, $04
-                    800240F4	addiu  v0, v0, $0138
-                    800240FC	sh     v0, $0032(sp)
+                    A0 = S2;
+                    A1 = 0340;
+                    A2 = 0100;
+                    S4 = 03c0;
+                    S1 = 0018;
+                    V1 = w[GP + 02d8];
+                    S0 = 0030;
+                    [SP + 0030] = h(S4);
+                    [SP + 0034] = h(S1);
+                    [SP + 0036] = h(S0);
+                    V0 = V1 << 01;
+                    V0 = V0 + V1;
+                    V0 = V0 << 04;
+                    V0 = V0 + 0138;
+                    [SP + 0032] = h(V0);
                     800240F8	jal    system_psyq_move_image [$800440c8]
 
                     A0 = 0;
@@ -6781,7 +6340,7 @@ if( w[GP + b4] == 1 )
         {
             A0 = 10b;
             A1 = b[8009a0c8 + b] * c + d;
-            func1eb2c; // cursor
+            system_menu_add_cursor_to_render();
         }
         else if( w[GP + 220] == 1 )
         {
@@ -6789,13 +6348,13 @@ if( w[GP + b4] == 1 )
             {
                 A0 = 10b;
                 A1 = b[8009a0c8 + b] * c + d;
-                func1eb2c; // cursor
+                system_menu_add_cursor_to_render();
             }
 
             V1 = w[GP + 220];
             A0 = 0;
             A1 = b[8009a0c8 + V1 * 24 + b] * 3c + 2f;
-            func1eb2c; // cursor
+            system_menu_add_cursor_to_render();
         }
         else if( w[GP + 220] == 2 )
         {
@@ -6805,43 +6364,42 @@ if( w[GP + b4] == 1 )
                 {
                     A0 = -4;
                     A1 = w[GP + 2d8] * 3c + 2b;
-                    func1eb2c; // cursor
+                    system_menu_add_cursor_to_render();
                 }
 
                 A0 = 10b;
                 A1 = b[8009a0c8 + b] * c + d;
-                func1eb2c; // cursor
+                system_menu_add_cursor_to_render();
             }
 
             V1 = w[GP + 220];
             A0 = 0;
             A1 = b[8009a0d3 + V1 * 24] * 3c + 2f;
-            func1eb2c; // cursor
+            system_menu_add_cursor_to_render();
         }
     }
 }
 
 
 
-80024310	addiu  s2, sp, $0030
-80024314	addu   a1, s2, zero
-80024318	lw     v1, $0214(gp)
-8002431C	ori    v0, zero, $0005
-80024320	sh     v0, $0032(sp)
-80024324	ori    v0, zero, $016c
-80024328	sh     v0, $0034(sp)
-8002432C	ori    v0, zero, $00db
-80024330	sh     v0, $0036(sp)
-80024334	lui    v0, $8007
-80024338	addiu  v0, v0, $06a4
-8002433C	sh     zero, $0030(sp)
-80024340	sll    a0, v1, $01
-80024344	addu   a0, a0, v1
-80024348	sll    a0, a0, $03
-8002434C	subu   a0, a0, v1
-80024350	sll    a0, a0, $02
+S2 = SP + 0030;
+A1 = S2;
+V1 = w[GP + 0214];
+V0 = 0005;
+[SP + 0032] = h(V0);
+V0 = 016c;
+[SP + 0034] = h(V0);
+V0 = 00db;
+[SP + 0036] = h(V0);
+V0 = 800706a4;
+[SP + 0030] = h(0);
+A0 = V1 << 01;
+A0 = A0 + V1;
+A0 = A0 << 03;
+A0 = A0 - V1;
+A0 = A0 << 02;
 80024354	jal    func26a94 [$80026a94]
-80024358	addu   a0, a0, v0
+A0 = A0 + V0;
 
 A0 = w[GP + 214];
 func230c4; // draw menu
@@ -6861,7 +6419,7 @@ func26f44;
 [SP + 2e] = h(18);
 
 A0 = SP + 28;
-func1e040;
+system_menu_add_window_to_render();
 
 
 
@@ -6937,15 +6495,16 @@ A3 = a;
 A4 = 7;
 func28e00;
 
-A0 = 0;
-A1 = 1;
-A2 = 7f;
-A3 = SP + 30;
 [SP + 30] = h(0);
 [SP + 32] = h(0);
 [SP + 34] = h(100);
 [SP + 36] = h(100);
-func26a34;
+
+A0 = 0;
+A1 = 1;
+A2 = 7f;
+A3 = SP + 30;
+system_menu_create_and_add_texture_setting_packet();
 
 
 [SP + 28] = h(S3);
@@ -6954,7 +6513,7 @@ func26a34;
 [SP + 2e] = h(24);
 
 A0 = SP + 28
-func1e040;
+system_menu_add_window_to_render();
 
 
 
@@ -7001,42 +6560,34 @@ L245bc:	; 800245BC
         V0 = bu[8009c6e4 + 0054 + S1 + f]; // limit progress bar
         if (V0 == ff)
         {
-            800246C0	lw     t3, $0478(sp)
+            T3 = w[SP + 0478];
             800246C4	nop
-            800246C8	sra    v0, t3, $01
-            800246CC	andi   v0, v0, $0007
-            800246D0	sll    v1, v0, $01
-            800246D4	addu   v1, v1, v0
+            V0 = T3 >> 01;
+            V0 = V0 & 0007;
+            V1 = V0 << 01;
+            V1 = V1 + V0;
             T2 = bu[8004948c + V1];
-            800246E8	lui    at, $8005
-            800246EC	addiu  at, at, $948d (=-$6b73)
-            800246F0	addu   at, at, v1
-            800246F4	lbu    t1, $0000(at)
-            800246F8	lui    at, $8005
-            800246FC	addiu  at, at, $948e (=-$6b72)
-            80024700	addu   at, at, v1
-            80024704	lbu    t0, $0000(at)
+            AT = 8004948d;
+            AT = AT + V1;
+            T1 = bu[AT + 0000];
+            AT = 8004948e;
+            AT = AT + V1;
+            T0 = bu[AT + 0000];
         }
         else
         {
             V1 = b[8009c757 + S1];
             if (V1 & 10)
             {
-                80024730	lui    t2, $8005
-                80024734	lbu    t2, $948c(t2)
-                80024738	lui    t1, $8005
-                8002473C	lbu    t1, $948d(t1)
-                80024740	lui    t0, $8005
-                80024744	lbu    t0, $948e(t0)
+                T2 = bu[8004948c];
+                T1 = bu[8004948d];
+                T0 = bu[8004948e];
             }
             else if (V1 & 20)
             {
-                80024758	lui    t2, $8005
-                8002475C	lbu    t2, $9492(t2)
-                80024760	lui    t1, $8005
-                80024764	lbu    t1, $9493(t1)
-                80024768	lui    t0, $8005
-                8002476C	lbu    t0, $9494(t0)
+                T2 = bu[80049492];
+                T1 = bu[80049493];
+                T0 = bu[80049494];
             }
             else
             {
@@ -7046,9 +6597,9 @@ L245bc:	; 800245BC
             }
         }
 
-        80024780	sll    v0, s5, $05
-        80024784	addu   v0, v0, s5
-        80024788	sll    v0, v0, $02
+        V0 = S5 << 05;
+        V0 = V0 + S5;
+        V0 = V0 << 02;
         V0 = b[8009c747 + V0] * 3d;
         A1 = y_pos + 32;
         A2 = V0 >> 8;
@@ -7070,30 +6621,28 @@ L245bc:	; 800245BC
         A7 = 0;
         80024814	jal    func28ca0 [$80028ca0]
 
-        8002481C	addu   a0, s0, zero
+        A0 = S0;
         A1 = y_pos + 31;
-        8002482C	ori    a2, zero, $0088
-        80024830	ori    a3, zero, $0008
-        80024834	ori    t3, zero, $0040
-        80024838	sw     t3, $0010(sp)
-        8002483C	ori    t3, zero, $0008
-        80024840	sw     t3, $0014(sp)
-        80024844	ori    t3, zero, $0007
-        80024848	sw     t3, $0018(sp)
+        A2 = 0088;
+        A3 = 0008;
+        T3 = 0040;
+        [SP + 0010] = w(T3);
+        T3 = 0008;
+        [SP + 0014] = w(T3);
+        T3 = 0007;
+        [SP + 0018] = w(T3);
         8002484C	jal    func28ca0 [$80028ca0]
-        80024850	sw     zero, $001c(sp)
+        [SP + 001c] = w(0);
 
         A0 = S3 + fa;
-        80024858	lui    t3, $8005
-        8002485C	addiu  t3, t3, $91d0 (=-$6e30)
-        80024860	lui    at, $800a
-        80024864	addiu  at, at, $cbdc (=-$3424)
-        80024868	addu   at, at, s2
-        8002486C	lbu    v0, $0000(at)
+        T3 = 800491d0;
+        AT = 8009cbdc;
+        AT = AT + S2;
+        V0 = bu[AT + 0000];
         A1 = y_pos + 28;
-        80024874	sll    v0, v0, $02
-        80024878	addu   v0, v0, t3
-        8002487C	lw     v1, $0000(v0)
+        V0 = V0 << 02;
+        V0 = V0 + T3;
+        V1 = w[V0 + 0000];
 
         A2 = bu[8009c6e4 + 0054 + V1 * 84 + e]; // current limit level
         A3 = 1;
@@ -7103,17 +6652,16 @@ L245bc:	; 800245BC
 
 
 
-        800248AC	addu   a0, zero, zero
-        800248B0	ori    a1, zero, $0001
-        800248B4	ori    a2, zero, $003f
-        800248B8	addiu  a3, sp, $0030
-        800248BC	ori    v0, zero, $0100
-        800248C0	sh     zero, $0030(sp)
-        800248C4	sh     zero, $0032(sp)
-        800248C8	sh     v0, $0034(sp)
-        800248D0	sh     v0, $0036(sp)
-        800248CC	jal    func26a34 [$80026a34]
-
+        A0 = 0;
+        A1 = 0001;
+        A2 = 003f;
+        A3 = SP + 0030;
+        V0 = 0100;
+        [SP + 0030] = h(0);
+        [SP + 0032] = h(0);
+        [SP + 0034] = h(V0);
+        [SP + 0036] = h(V0);
+        system_menu_create_and_add_texture_setting_packet();
 
         A0 = S3 + ba;
         A1 = y_pos + 11;
@@ -7130,8 +6678,8 @@ L245bc:	; 800245BC
 
     y_pos = y_pos + 3c;
 
-    80024914	addiu  s2, s2, $0001
-    8002491C	slti   v0, s2, $0003
+    S2 = S2 + 0001;
+    V0 = S2 < 0003;
 80024924	bne    v0, zero, L245bc [$800245bc]
 
 [SP + 28] = h(S3);
@@ -7140,12 +6688,12 @@ L245bc:	; 800245BC
 [SP + 2e] = h(be);
 
 A0 = SP + 28;
-func1e040;
+system_menu_add_window_to_render();
 
-80024950	lw     v0, $027c(gp)
+V0 = w[GP + 027c];
 80024954	nop
 80024958	beq    v0, zero, L24970 [$80024970]
-8002495C	ori    s0, zero, $0002
+S0 = 0002;
 80024960	beq    v0, s0, L249a4 [$800249a4]
 80024964	nop
 80024968	j      L249d0 [$800249d0]
@@ -7156,27 +6704,27 @@ V0 = h[GP + 164];
 V1 = h[GP + 2b0];
 [GP + 164] = h(V0 + V1);
 
-8002498C	slti   v0, v0, $0014
+V0 = V0 < 0014;
 80024990	beq    v0, zero, L249d0 [$800249d0]
-80024994	ori    v0, zero, $0014
-80024998	sh     v0, $0164(gp)
+V0 = 0014;
+[GP + 0164] = h(V0);
 8002499C	j      L249cc [$800249cc]
-800249A0	ori    v0, zero, $0001
+V0 = 0001;
 
 L249a4:	; 800249A4
-800249A4	lhu    v0, $0164(gp)
-800249A8	lhu    v1, $02b0(gp)
+V0 = hu[GP + 0164];
+V1 = hu[GP + 02b0];
 800249AC	nop
-800249B0	addu   v0, v0, v1
-800249B4	sh     v0, $0164(gp)
-800249B8	sll    v0, v0, $10
-800249BC	sra    v0, v0, $10
-800249C0	slti   v0, v0, $0065
+V0 = V0 + V1;
+[GP + 0164] = h(V0);
+V0 = V0 << 10;
+V0 = V0 >> 10;
+V0 = V0 < 0065;
 800249C4	bne    v0, zero, L249d0 [$800249d0]
 800249C8	addiu  v0, zero, $ffff (=-$1)
 
 L249cc:	; 800249CC
-800249CC	sw     v0, $027c(gp)
+[GP + 027c] = w(V0);
 
 L249d0:	; 800249D0
 ////////////////////////////////
@@ -7208,23 +6756,21 @@ SP = SP + 0018;
 // A0 - pointer to tutorial settings
 [GP + b4] = w(1);
 
-80024A60	sw     zero, $027c(gp)
-80024A64	sw     zero, $01c8(gp)
-80024A68	sw     zero, $0250(gp)
+[GP + 027c] = w(0);
+[GP + 01c8] = w(0);
+[GP + 0250] = w(0);
 
 [GP + 8c] = w(0);
 [GP + 90] = w(0);
 
-80024A74	lui    at, $8006
-80024A78	sb     zero, $2dfd(at)
+[80062dfd] = b(0);
 if( A0 == 0 )
 {
-    80024A80	addu   a1, zero, zero
-    80024A84	addu   a0, zero, zero
+    A1 = 0;
+    A0 = 0;
     80024A88	jal    func1f6e4 [$8001f6e4]
-    80024A8C	addu   a2, zero, zero
-    80024A90	lui    at, $8006
-    80024A94	sw     zero, $2fa0(at)
+    A2 = 0;
+    [80062fa0] = w(0);
 }
 else
 {
@@ -7233,66 +6779,61 @@ else
     [80062fa0] = w(1); // tutorial ON
 }
 
-80024AB0	lui    s0, $800a
-80024AB4	lbu    s0, $d2a4(s0)
+S0 = bu[8009d2a4];
 80024AB8	nop
-80024ABC	andi   v0, s0, $0004
+V0 = S0 & 0004;
 80024AC0	beq    v0, zero, L24ad4 [$80024ad4]
-80024AC4	ori    v0, zero, $0001
-80024AC8	sb     v0, $02e0(gp)
+V0 = 0001;
+[GP + 02e0] = b(V0);
 80024ACC	j      L24adc [$80024adc]
-80024AD0	addu   s0, zero, zero
+S0 = 0;
 
 L24ad4:	; 80024AD4
-80024AD4	sb     zero, $02e0(gp)
-80024AD8	addu   s0, zero, zero
+[GP + 02e0] = b(0);
+S0 = 0;
 
 L24adc:	; 80024ADC
-80024ADC	ori    s1, zero, $00ff
+S1 = 00ff;
 
 loop24ae0:	; 80024AE0
-80024AE0	andi   a0, s0, $ffff
-80024AE4	lui    at, $800a
-80024AE8	addiu  at, at, $cbdc (=-$3424)
-80024AEC	addu   at, at, a0
-80024AF0	lbu    v0, $0000(at)
+A0 = S0 & ffff;
+AT = 8009cbdc;
+AT = AT + A0;
+V0 = bu[AT + 0000];
 80024AF4	nop
 80024AF8	beq    v0, s1, L24b18 [$80024b18]
 80024AFC	nop
 80024B00	jal    system_init_player_stat_from_equip [$80020058]
 80024B04	nop
 80024B08	jal    system_init_player_stat_from_materia [$8001786c]
-80024B0C	andi   a0, s0, $00ff
+A0 = S0 & 00ff;
 80024B10	jal    system_calculate_total_lure_gil_preemptive_value [$80017678]
 80024B14	nop
 
 L24b18:	; 80024B18
-80024B18	addiu  s0, s0, $0001
-80024B1C	andi   v0, s0, $ffff
-80024B20	sltiu  v0, v0, $0003
+S0 = S0 + 0001;
+V0 = S0 & ffff;
+V0 = V0 < 0003;
 80024B24	bne    v0, zero, loop24ae0 [$80024ae0]
 80024B28	nop
-80024B2C	lui    a0, $8007
-80024B30	addiu  a0, a0, $06a4
-80024B34	lui    a1, $8007
-80024B38	addiu  a1, a1, $075c
+A0 = 800706a4;
+A1 = 8007075c;
 80024B3C	jal    func21044 [$80021044]
-80024B40	addu   s0, zero, zero
+S0 = 0;
 [GP + 164] = h(64);
 [GP + 2b0] = h(-3);
 
 80024B54	jal    func25cd4 [$80025cd4]
-80024B58	addiu  a0, sp, $0020
-80024B5C	lui    a0, $8007
-80024B60	addiu  a0, a0, $56f8
+A0 = SP + 0020;
+A0 = 800756f8;
 80024B64	jal    func25c94 [$80025c94]
 80024B68	addiu  s4, zero, $ffff (=-$1)
-80024B6C	sw     zero, $027c(gp)
+[GP + 027c] = w(0);
 80024B70	jal    func2368c [$8002368c]
 80024B74	nop
 
-80024B80	addiu  s1, sp, $0720
-80024B8C	sw     zero, $0214(gp)
+S1 = SP + 0720;
+[GP + 0214] = w(0);
 
 L24b90:	; 80024B90
     func1cb48(); // update pressed repeated buttons mask
@@ -7327,7 +6868,7 @@ L24b90:	; 80024B90
                 [S1 + 6] = h(18); // height
 
                 A0 = S1;
-                func1e040;
+                system_menu_add_window_to_render();
             }
         }
     }
@@ -7375,47 +6916,44 @@ D00B1D80
     system_psyq_draw_sync();
 
     A0 = 0;
-    80024CC4	jal    func3cedc [$8003cedc]
+    80024CC4	jal    system_psyq_wait_frames [$8003cedc]
 
-    80024CCC	lw     v0, $0214(gp)
+    V0 = w[GP + 0214];
     80024CD0	nop
-    80024CD4	sll    a0, v0, $02
-    80024CD8	addu   a0, a0, v0
-    80024CDC	sll    a0, a0, $02
-    80024CE0	lui    v0, $8007
-    80024CE4	addiu  v0, v0, $075c
+    A0 = V0 << 02;
+    A0 = A0 + V0;
+    A0 = A0 << 02;
+    V0 = 8007075c;
     80024CE8	jal    system_psyq_put_disp_env [$800444ac]
-    80024CEC	addu   a0, a0, v0
-    80024CF0	lw     v0, $0214(gp)
+    A0 = A0 + V0;
+    V0 = w[GP + 0214];
     80024CF4	nop
-    80024CF8	sll    a0, v0, $01
-    80024CFC	addu   a0, a0, v0
-    80024D00	sll    a0, a0, $03
-    80024D04	subu   a0, a0, v0
-    80024D08	sll    a0, a0, $02
-    80024D0C	lui    v0, $8007
-    80024D10	addiu  v0, v0, $06a4
+    A0 = V0 << 01;
+    A0 = A0 + V0;
+    A0 = A0 << 03;
+    A0 = A0 - V0;
+    A0 = A0 << 02;
+    V0 = 800706a4;
     80024D14	jal    system_psyq_put_draw_env [$800443b0]
-    80024D18	addu   a0, a0, v0
-    80024D1C	lw     a0, $0160(gp)
+    A0 = A0 + V0;
+    A0 = w[GP + 0160];
     80024D20	jal    system_psyq_draw_otag [$8004433c]
-    80024D24	addiu  s0, s0, $0001
-    80024D28	lw     v0, $0214(gp)
-    80024D2C	lw     v1, $027c(gp)
-    80024D30	xori   v0, v0, $0001
-    80024D34	sw     v0, $0214(gp)
+    S0 = S0 + 0001;
+    V0 = w[GP + 0214];
+    V1 = w[GP + 027c];
+    V0 = V0 ^ 0001;
+    [GP + 0214] = w(V0);
 80024D38	bne    v1, s4, L24b90 [$80024b90]
 
 
 
 80024D40	jal    func25c94 [$80025c94]
-80024D44	addiu  a0, sp, $0020
+A0 = SP + 0020;
 80024D48	jal    func24a04 [$80024a04]
 80024D4C	nop
-80024D50	lui    at, $8006
-80024D54	sw     zero, $2fa0(at)
-80024D58	jal    func3cedc [$8003cedc]
-80024D5C	ori    a0, zero, $0004
+[80062fa0] = w(0);
+80024D58	jal    system_psyq_wait_frames [$8003cedc]
+A0 = 0004;
 return 0;
 ////////////////////////////////
 
@@ -7435,7 +6973,7 @@ loop24da0:	; 80024DA0
 80024DA4	nop
 80024DA8	bne    v0, zero, loop24da0 [$80024da0]
 80024DAC	nop
-80024DB0	jal    func3cedc [$8003cedc]
+80024DB0	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 001e;
 80024DB8	jal    $801d131c
 A0 = S0;
@@ -7643,28 +7181,24 @@ SP = SP + 0018;
 // func25040
 80025040
 A0 = 0;
-80025044	lui    a2, $800a
-80025048	addiu  a2, a2, $d78a (=-$2876)
-8002504C	lui    a1, $8005
-80025050	addiu  a1, a1, $9500 (=-$6b00)
+A2 = 8009d78a;
+A1 = 80049500;
 
 loop25054:	; 80025054
 V0 = hu[A2 + 0000];
 V1 = w[A1 + 0000];
 8002505C	nop
-80025060	srav   v0, v1, v0
+V0 = V0 >> V1;
 V0 = V0 & 0001;
 80025068	beq    v0, zero, L2509c [$8002509c]
 V0 = V1 << 05;
 V0 = V0 + V1;
 V0 = V0 << 02;
-80025078	lui    at, $800a
-8002507C	addiu  at, at, $c739 (=-$38c7)
+AT = 8009c739;
 AT = AT + V0;
 V0 = bu[AT + 0000];
 80025088	nop
-8002508C	lui    at, $800a
-80025090	addiu  at, at, $d44c (=-$2bb4)
+AT = 8009d44c;
 AT = AT + A0;
 [AT + 0000] = b(V0);
 
@@ -7755,8 +7289,7 @@ L251a4:	; 800251A4
 V0 = V1 & 0001;
 800251AC	jal    func24e5c [$80024e5c]
 S0 = 0;
-800251B4	lui    a3, $800a
-800251B8	addiu  a3, a3, $cbe0 (=-$3420)
+A3 = 8009cbe0;
 800251BC	addiu  a2, zero, $c600 (=-$3a00)
 A1 = 013f;
 
@@ -7832,8 +7365,7 @@ V0 = A0 & ffff;
 T1 = V0 >> 09;
 V0 = T1 << 09;
 A0 = A0 | V0;
-800252A8	lui    a2, $800a
-800252AC	addiu  a2, a2, $cbe0 (=-$3420)
+A2 = 8009cbe0;
 
 loop252b0:	; 800252B0
 V1 = hu[A2 + 0000];
@@ -7843,7 +7375,7 @@ A1 = V1 & ffff;
 V0 = V1 & 01ff;
 800252C4	bne    t2, v0, L252f8 [$800252f8]
 A1 = A1 >> 09;
-800252CC	slt    v0, t1, a1
+V0 = T1 < A1;
 800252D0	beq    v0, zero, L252ec [$800252ec]
 A3 = A0;
 V0 = A1 - T1;
@@ -7872,8 +7404,7 @@ A0 = A0 & 01ff;
 T0 = ffff;
 A2 = 0;
 A3 = ffff;
-80025320	lui    a1, $800a
-80025324	addiu  a1, a1, $cbe0 (=-$3420)
+A1 = 8009cbe0;
 
 loop25328:	; 80025328
 V0 = hu[A1 + 0000];
@@ -7911,8 +7442,7 @@ V0 = A0 & ffff;
 A2 = V0 >> 09;
 A1 = 0;
 T1 = ffff;
-80025394	lui    a3, $800a
-80025398	addiu  a3, a3, $cbe0 (=-$3420)
+A3 = 8009cbe0;
 
 loop2539c:	; 8002539C
 V0 = hu[A3 + 0000];
@@ -7941,8 +7471,7 @@ V0 = A1 < 0140;
 A3 = A3 + 0002;
 A1 = 0;
 A2 = ffff;
-800253F4	lui    v1, $800a
-800253F8	addiu  v1, v1, $cbe0 (=-$3420)
+V1 = 8009cbe0;
 
 loop253fc:	; 800253FC
 V0 = hu[V1 + 0000];
@@ -7969,8 +7498,7 @@ A1 = 0;
 [SP + 0014] = w(S1);
 S1 = A0 & 00ff;
 [SP + 0010] = w(S0);
-80025444	lui    s0, $800a
-80025448	addiu  s0, s0, $ce60 (=-$31a0)
+S0 = 8009ce60;
 V1 = S0;
 [SP + 0018] = w(RA);
 
@@ -8026,8 +7554,7 @@ SP = SP + 0020;
 800254E4
 V0 = bu[GP + 0178];
 800254E8	nop
-800254EC	lui    at, $8007
-800254F0	addiu  at, at, $9800 (=-$6800)
+AT = 80069800;
 AT = AT + V0;
 [AT + 0000] = b(A0);
 V0 = bu[GP + 0178];
@@ -8043,8 +7570,7 @@ A2 = 0;
 [SP + 0014] = w(S1);
 S1 = A0 & 00ff;
 [SP + 0010] = w(S0);
-80025528	lui    s0, $800a
-8002552C	addiu  s0, s0, $ce60 (=-$31a0)
+S0 = 8009ce60;
 A1 = S0;
 [SP + 0018] = w(RA);
 
@@ -8086,15 +7612,13 @@ A1 = A1 + 0004;
 800255A8	addiu  t1, zero, $ffff (=-$1)
 T0 = 00ff;
 A2 = 0;
-800255B4	lui    a3, $800a
-800255B8	addiu  a3, a3, $ce60 (=-$31a0)
+A3 = 8009ce60;
 
 loop255bc:	; 800255BC
 A1 = w[A3 + 0000];
 800255C0	nop
 V0 = A1 & 00ff;
-800255C8	lui    at, $8005
-800255CC	addiu  at, at, $94a4 (=-$6b5c)
+AT = 800494a4;
 AT = AT + V0;
 V1 = bu[AT + 0000];
 800255D8	nop
@@ -8110,8 +7634,7 @@ V0 = A2 < 00c8;
 800255F8	bne    v0, zero, loop255bc [$800255bc]
 A3 = A3 + 0004;
 A2 = 0;
-80025604	lui    v1, $800a
-80025608	addiu  v1, v1, $ce60 (=-$31a0)
+V1 = 8009ce60;
 
 loop2560c:	; 8002560C
 V0 = w[V1 + 0000];
@@ -8170,24 +7693,21 @@ if( char_id != ff )
 
 ////////////////////////////////
 // func256dc
-800256DC	lui    at, $800a
-800256E0	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + A0;
 V1 = bu[AT + 0000];
 V0 = 00ff;
 800256F0	beq    v1, v0, L25750 [$80025750]
 800256F4	nop
 V0 = V1 << 02;
-800256FC	lui    at, $8005
-80025700	addiu  at, at, $91d0 (=-$6e30)
+AT = 800491d0;
 AT = AT + V0;
 V1 = w[AT + 0000];
 8002570C	nop
 V0 = V1 << 05;
 V0 = V0 + V1;
 V0 = V0 << 02;
-8002571C	lui    at, $800a
-80025720	addiu  at, at, $c754 (=-$38ac)
+AT = 8009c754;
 AT = AT + V0;
 V1 = bu[AT + 0000];
 8002572C	nop
@@ -8256,8 +7776,7 @@ V0 = 8009C748 + V1 * 84;
 
 ////////////////////////////////
 // func25800
-80025800	lui    at, $800a
-80025804	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + A0;
 V1 = bu[AT + 0000];
 V0 = 00ff;
@@ -8266,27 +7785,23 @@ V0 = A0 << 04;
 V0 = V0 + A0;
 A2 = V0 << 06;
 V1 = V1 << 02;
-80025828	lui    at, $800a
-8002582C	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + A2;
 V0 = h[AT + 0000];
-80025838	lui    at, $8005
-8002583C	addiu  at, at, $91d0 (=-$6e30)
+AT = 800491d0;
 AT = AT + V1;
 V1 = w[AT + 0000];
 V0 = V0 - A1;
 8002584C	bgez   v0, L2586c [$8002586c]
 80025850	nop
-80025854	lui    at, $800a
-80025858	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + A2;
 [AT + 0000] = h(0);
 80025864	j      L25880 [$80025880]
 V0 = V1 << 05;
 
 L2586c:	; 8002586C
-8002586C	lui    at, $800a
-80025870	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + A2;
 [AT + 0000] = h(V0);
 V0 = V1 << 05;
@@ -8296,13 +7811,11 @@ V0 = V0 + V1;
 V1 = A0 << 04;
 V1 = V1 + A0;
 V1 = V1 << 06;
-80025890	lui    at, $800a
-80025894	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + V1;
 V1 = hu[AT + 0000];
 V0 = V0 << 02;
-800258A4	lui    at, $800a
-800258A8	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + V0;
 [AT + 0000] = h(V1);
 
@@ -8311,8 +7824,7 @@ L258b4:	; 800258B4
 800258B8	nop
 ////////////////////////////////
 // func258bc
-800258BC	lui    at, $800a
-800258C0	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + A0;
 V1 = bu[AT + 0000];
 V0 = 00ff;
@@ -8322,43 +7834,36 @@ V1 = V1 << 02;
 V0 = A0 << 04;
 V0 = V0 + A0;
 A0 = V0 << 06;
-800258E8	lui    at, $800a
-800258EC	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + A0;
 V0 = hu[AT + 0000];
-800258F8	lui    at, $8005
-800258FC	addiu  at, at, $91d0 (=-$6e30)
+AT = 800491d0;
 AT = AT + V1;
 A2 = w[AT + 0000];
-80025908	lui    at, $800a
-8002590C	addiu  at, at, $d85e (=-$27a2)
+AT = 8009d85e;
 AT = AT + A0;
 V1 = h[AT + 0000];
 V0 = V0 + A1;
-8002591C	lui    at, $800a
-80025920	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + A0;
 [AT + 0000] = h(V0);
 V0 = V0 << 10;
 V0 = V0 >> 10;
 A1 = V1;
-80025938	slt    v1, v1, v0
+V1 = V1 < V0;
 8002593C	beq    v1, zero, L25954 [$80025954]
 V0 = A2 << 05;
-80025944	lui    at, $800a
-80025948	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + A0;
 [AT + 0000] = h(A1);
 
 L25954:	; 80025954
 V0 = V0 + A2;
-80025958	lui    at, $800a
-8002595C	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + A0;
 V1 = hu[AT + 0000];
 V0 = V0 << 02;
-8002596C	lui    at, $800a
-80025970	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + V0;
 [AT + 0000] = h(V1);
 
@@ -8368,8 +7873,7 @@ SP = SP + 0008;
 80025984	nop
 ////////////////////////////////
 // func25988
-80025988	lui    at, $800a
-8002598C	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + A0;
 V1 = bu[AT + 0000];
 V0 = 00ff;
@@ -8378,27 +7882,23 @@ V0 = A0 << 04;
 V0 = V0 + A0;
 A2 = V0 << 06;
 V1 = V1 << 02;
-800259B0	lui    at, $800a
-800259B4	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + A2;
 V0 = h[AT + 0000];
-800259C0	lui    at, $8005
-800259C4	addiu  at, at, $91d0 (=-$6e30)
+AT = 800491d0;
 AT = AT + V1;
 V1 = w[AT + 0000];
 V0 = V0 - A1;
 800259D4	bgez   v0, L259f4 [$800259f4]
 800259D8	nop
-800259DC	lui    at, $800a
-800259E0	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + A2;
 [AT + 0000] = h(0);
 800259EC	j      L25a08 [$80025a08]
 V0 = V1 << 05;
 
 L259f4:	; 800259F4
-800259F4	lui    at, $800a
-800259F8	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + A2;
 [AT + 0000] = h(V0);
 V0 = V1 << 05;
@@ -8408,13 +7908,11 @@ V0 = V0 + V1;
 V1 = A0 << 04;
 V1 = V1 + A0;
 V1 = V1 << 06;
-80025A18	lui    at, $800a
-80025A1C	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + V1;
 V1 = hu[AT + 0000];
 V0 = V0 << 02;
-80025A2C	lui    at, $800a
-80025A30	addiu  at, at, $c768 (=-$3898)
+AT = 8009c768;
 AT = AT + V0;
 [AT + 0000] = h(V1);
 
@@ -8423,8 +7921,7 @@ L25a3c:	; 80025A3C
 80025A40	nop
 ////////////////////////////////
 // func25a44
-80025A44	lui    at, $800a
-80025A48	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + A0;
 V1 = bu[AT + 0000];
 V0 = 00ff;
@@ -8434,43 +7931,36 @@ V1 = V1 << 02;
 V0 = A0 << 04;
 V0 = V0 + A0;
 A0 = V0 << 06;
-80025A70	lui    at, $800a
-80025A74	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + A0;
 V0 = hu[AT + 0000];
-80025A80	lui    at, $8005
-80025A84	addiu  at, at, $91d0 (=-$6e30)
+AT = 800491d0;
 AT = AT + V1;
 A2 = w[AT + 0000];
-80025A90	lui    at, $800a
-80025A94	addiu  at, at, $d862 (=-$279e)
+AT = 8009d862;
 AT = AT + A0;
 V1 = h[AT + 0000];
 V0 = V0 + A1;
-80025AA4	lui    at, $800a
-80025AA8	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + A0;
 [AT + 0000] = h(V0);
 V0 = V0 << 10;
 V0 = V0 >> 10;
 A1 = V1;
-80025AC0	slt    v1, v1, v0
+V1 = V1 < V0;
 80025AC4	beq    v1, zero, L25adc [$80025adc]
 V0 = A2 << 05;
-80025ACC	lui    at, $800a
-80025AD0	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + A0;
 [AT + 0000] = h(A1);
 
 L25adc:	; 80025ADC
 V0 = V0 + A2;
-80025AE0	lui    at, $800a
-80025AE4	addiu  at, at, $d860 (=-$27a0)
+AT = 8009d860;
 AT = AT + A0;
 V1 = hu[AT + 0000];
 V0 = V0 << 02;
-80025AF4	lui    at, $800a
-80025AF8	addiu  at, at, $c768 (=-$3898)
+AT = 8009c768;
 AT = AT + V0;
 [AT + 0000] = h(V1);
 
@@ -8480,8 +7970,7 @@ SP = SP + 0008;
 80025B0C	nop
 ////////////////////////////////
 // func25b10
-80025B10	lui    a1, $800a
-80025B14	addiu  a1, a1, $d260 (=-$2da0)
+A1 = 8009d260;
 V1 = w[A1 + 0000];
 80025B1C	nop
 V0 = V1 < A0;
@@ -8500,8 +7989,7 @@ L25b40:	; 80025B40
 80025B44	nop
 ////////////////////////////////
 // func25b48
-80025B48	lui    a1, $800a
-80025B4C	addiu  a1, a1, $d260 (=-$2da0)
+A1 = 8009d260;
 V0 = w[A1 + 0000];
 80025B54	nop
 V1 = V0 + A0;
@@ -8711,8 +8199,7 @@ SP = SP + 0040;
 S0 = 0;
 [SP + 102c] = w(S3);
 S3 = SP + 0020;
-80025E0C	lui    v0, $8005
-80025E10	addiu  v0, v0, $8fe8 (=-$7018)
+V0 = 80048fe8;
 [SP + 1028] = w(S2);
 S2 = V0 + 0004;
 [SP + 1024] = w(S1);
@@ -8782,8 +8269,7 @@ S1 = 01ed;
 S2 = 0138;
 
 loop25f10:	; 80025F10
-80025F10	lui    at, $800a
-80025F14	addiu  at, at, $c9ef (=-$3611)
+AT = 8009c9ef;
 AT = AT + S1;
 S0 = bu[AT + 0000];
 80025F20	addiu  v0, zero, $ffff (=-$1)
@@ -8878,13 +8364,11 @@ AT = AT + V0;
 V0 = bu[AT + 0000];
 8002605C	nop
 V0 = V0 & 000f;
-80026064	lui    at, $8005
-80026068	addiu  at, at, $9528 (=-$6ad8)
+AT = 80049528;
 AT = AT + V0;
 V0 = bu[AT + 0000];
 80026074	nop
-80026078	lui    at, $8005
-8002607C	addiu  at, at, $9520 (=-$6ae0)
+AT = 80049520;
 AT = AT + V0;
 V0 = bu[AT + 0000];
 80026088	jr     ra 
@@ -8937,15 +8421,13 @@ A0 = SP + 0020;
 8002611C	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
 S0 = 0;
-80026128	lui    s4, $8005
-8002612C	addiu  s4, s4, $8fe8 (=-$7018)
+S4 = 80048fe8;
 S5 = S4 + 0004;
 S3 = SP + 1220;
 S2 = 0138;
 
 loop2613c:	; 8002613C
-8002613C	lui    at, $800a
-80026140	addiu  at, at, $cbdc (=-$3424)
+AT = 8009cbdc;
 AT = AT + S0;
 S1 = bu[AT + 0000];
 V0 = 00ff;
@@ -8996,7 +8478,7 @@ A0 = 0;
 A0 = SP + 0020;
 800261FC	jal    system_psyq_draw_sync [$80043dd8]
 A0 = 0;
-80026204	jal    func3cedc [$8003cedc]
+80026204	jal    system_psyq_wait_frames [$8003cedc]
 A0 = 0006;
 8002620C	addiu  s0, zero, $ffff (=-$1)
 
@@ -9035,8 +8517,7 @@ SP = SP + 2240;
 8002627C	jal    func260dc [$800260dc]
 80026280	nop
 A0 = 000f;
-80026288	lui    v0, $800a
-8002628C	addiu  v0, v0, $d7bc (=-$2844)
+V0 = 8009d7bc;
 A1 = V0 + 0013;
 V1 = 0080;
 [V0 + 0000] = b(V1);
@@ -9063,11 +8544,9 @@ SP = SP + 0018;
 [SP + 0020] = w(S2);
 S2 = 0;
 [SP + 0024] = w(S3);
-800262E8	lui    s3, $8005
-800262EC	addiu  s3, s3, $91d0 (=-$6e30)
+S3 = 800491d0;
 [SP + 001c] = w(S1);
-800262F4	lui    s1, $800a
-800262F8	addiu  s1, s1, $cbdc (=-$3424)
+S1 = 8009cbdc;
 [SP + 0018] = w(S0);
 S0 = 0;
 [SP + 0028] = w(RA);
@@ -9083,8 +8562,7 @@ V1 = w[V0 + 0000];
 V0 = V1 << 05;
 V0 = V0 + V1;
 V0 = V0 << 02;
-80026330	lui    at, $800a
-80026334	addiu  at, at, $c756 (=-$38aa)
+AT = 8009c756;
 AT = AT + V0;
 V0 = bu[AT + 0000];
 V1 = 013b;
@@ -9093,20 +8571,17 @@ V0 = V0 + 0120;
 A0 = S2;
 80026350	jal    func258bc [$800258bc]
 A1 = 0003;
-80026358	lui    at, $800a
-8002635C	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + S0;
 V1 = h[AT + 0000];
-80026368	lui    at, $800a
-8002636C	addiu  at, at, $d85e (=-$27a2)
+AT = 8009d85e;
 AT = AT + S0;
 V0 = h[AT + 0000];
 80026378	nop
 8002637C	beq    v1, v0, L263d4 [$800263d4]
 A0 = V1;
 V0 = A0 & fffe;
-80026388	lui    at, $800a
-8002638C	addiu  at, at, $d85c (=-$27a4)
+AT = 8009d85c;
 AT = AT + S0;
 [AT + 0000] = h(V0);
 V0 = bu[S1 + 0000];
@@ -9114,14 +8589,12 @@ V0 = bu[S1 + 0000];
 V1 = V0 << 05;
 V1 = V1 + V0;
 V1 = V1 << 02;
-800263AC	lui    at, $800a
-800263B0	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + V1;
 V0 = hu[AT + 0000];
 800263BC	nop
 V0 = V0 & fffe;
-800263C4	lui    at, $800a
-800263C8	addiu  at, at, $c764 (=-$389c)
+AT = 8009c764;
 AT = AT + V1;
 [AT + 0000] = h(V0);
 
@@ -9481,12 +8954,18 @@ V0 = w[GP + 02c8];
 
 
 ////////////////////////////////
-// func26a34
-A4 = A3;
-A3 = A2;
-A2 = A1
-A1 = A0;
-A0 = w[80062f24];
+// system_menu_create_and_add_texture_setting_packet()
+
+display_area = A0;
+dithering = A1
+init_value = A2;
+window_rect = A3;
+
+A0 = w[80062f24]; // buffer
+A1 = display_area;
+A2 = dithering;
+A3 = init_value;
+A4 = window_rect;
 system_gpu_create_texture_setting_packet();
 
 A0 = w[GP + 280];
@@ -9715,136 +9194,118 @@ else
     S5 = 0;
 }
 
-80026D3C	ori    a1, zero, $0001
-80026D40	lui    a2, $8618
-80026D44	ori    a2, a2, $6187
-80026D48	lbu    a3, $0000(v1)
-80026D4C	lui    v0, $8007
-80026D50	lw     v0, $07c0(v0)
-80026D54	lui    a0, $8006
-80026D58	lw     a0, $2f24(a0)
-80026D5C	sh     a3, $0020(sp)
-80026D60	andi   a3, a3, $ffff
+A1 = 0001;
+A2 = 86186187;
+A3 = bu[V1 + 0000];
+V0 = w[800707c0];
+A0 = w[80062f24];
+[SP + 0020] = h(A3);
+A3 = A3 & ffff;
 80026D64	multu  a3, a2
-80026D68	addu   v1, a3, s1
-80026D6C	addu   v0, v0, v1
-80026D70	lbu    v1, $0000(v0)
-80026D74	ori    v0, zero, $0004
-80026D78	sb     v0, $0003(a0)
-80026D7C	srl    v1, v1, $05
-80026D80	addu   s3, s3, v1
-80026D84	lui    v1, $8006
-80026D88	lw     v1, $2f24(v1)
-80026D8C	ori    v0, zero, $0064
-80026D90	sb     v0, $0007(v1)
-80026D94	lui    a0, $8006
-80026D98	lw     a0, $2f24(a0)
+V1 = A3 + S1;
+V0 = V0 + V1;
+V1 = bu[V0 + 0000];
+V0 = 0004;
+[A0 + 0003] = b(V0);
+V1 = V1 >> 05;
+S3 = S3 + V1;
+V1 = w[80062f24];
+V0 = 0064;
+[V1 + 0007] = b(V0);
+A0 = w[80062f24];
 80026D9C	mfhi   a2
-80026DA0	subu   v0, a3, a2
-80026DA4	srl    v0, v0, $01
-80026DA8	addu   a2, a2, v0
-80026DAC	srl    a2, a2, $04
-80026DB0	sll    v0, a2, $02
-80026DB4	addu   v0, v0, a2
-80026DB8	sll    v0, v0, $02
-80026DBC	addu   v0, v0, a2
-80026DC0	subu   a3, a3, v0
-80026DC4	andi   a3, a3, $ffff
-80026DC8	sll    s0, a3, $01
-80026DCC	addu   s0, s0, a3
-80026DD0	sll    s0, s0, $02
-80026DD4	andi   a2, a2, $ffff
-80026DD8	sll    v0, a2, $01
-80026DDC	addu   v0, v0, a2
-80026DE0	sll    v0, v0, $02
+V0 = A3 - A2;
+V0 = V0 >> 01;
+A2 = A2 + V0;
+A2 = A2 >> 04;
+V0 = A2 << 02;
+V0 = V0 + A2;
+V0 = V0 << 02;
+V0 = V0 + A2;
+A3 = A3 - V0;
+A3 = A3 & ffff;
+S0 = A3 << 01;
+S0 = S0 + A3;
+S0 = S0 << 02;
+A2 = A2 & ffff;
+V0 = A2 << 01;
+V0 = V0 + A2;
+V0 = V0 << 02;
 80026DE4	jal    system_change_brightness_calculation_in_packet [$80046870]
-80026DE8	addu   s2, s2, v0
-80026DEC	lui    v0, $8006
-80026DF0	lw     v0, $2f24(v0)
+S2 = S2 + V0;
+V0 = w[80062f24];
 80026DF4	nop
-80026DF8	sh     s3, $0008(v0)
-80026DFC	lui    v0, $8006
-80026E00	lw     v0, $2f24(v0)
-80026E04	sll    a0, s4, $10
-80026E08	sh     s6, $000a(v0)
-80026E0C	lui    v0, $8006
-80026E10	lw     v0, $2f24(v0)
-80026E14	sra    a0, a0, $10
-80026E18	sb     s0, $000c(v0)
-80026E1C	lui    v0, $8006
-80026E20	lw     v0, $2f24(v0)
-80026E24	ori    a0, a0, $0100
-80026E28	sb     s2, $000d(v0)
-80026E2C	lui    v0, $8006
-80026E30	lw     v0, $2f24(v0)
-80026E34	ori    v1, zero, $000c
-80026E38	sh     v1, $0010(v0)
-80026E3C	lui    v0, $8006
-80026E40	lw     v0, $2f24(v0)
-80026E44	addiu  a1, s7, $01f0
+[V0 + 0008] = h(S3);
+V0 = w[80062f24];
+A0 = S4 << 10;
+[V0 + 000a] = h(S6);
+V0 = w[80062f24];
+A0 = A0 >> 10;
+[V0 + 000c] = b(S0);
+V0 = w[80062f24];
+A0 = A0 | 0100;
+[V0 + 000d] = b(S2);
+V0 = w[80062f24];
+V1 = 000c;
+[V0 + 0010] = h(V1);
+V0 = w[80062f24];
+A1 = S7 + 01f0;
 80026E48	jal    system_create_clut_for_packet [$80046634]
-80026E4C	sh     v1, $0012(v0)
-80026E50	lui    v1, $8006
-80026E54	lw     v1, $2f24(v1)
+[V0 + 0012] = h(V1);
+V1 = w[80062f24];
 80026E58	nop
-80026E5C	sh     v0, $000e(v1)
-80026E60	lui    a1, $8006
-80026E64	lw     a1, $2f24(a1)
-80026E68	lw     a0, $0280(gp)
-80026E6C	addiu  v0, a1, $0014
-80026E70	lui    at, $8006
-80026E74	sw     v0, $2f24(at)
+[V1 + 000e] = h(V0);
+A1 = w[80062f24];
+A0 = w[GP + 0280];
+V0 = A1 + 0014;
+[80062f24] = w(V0);
 80026E78	jal    system_add_render_packet_to_queue [$80046794]
 80026E7C	nop
-80026E80	lhu    v0, $0020(sp)
-80026E84	lui    v1, $8007
-80026E88	lw     v1, $07c0(v1)
-80026E8C	addu   v0, v0, s1
-80026E90	addu   v1, v1, v0
-80026E94	lbu    v0, $0000(v1)
-80026E98	lbu    v1, $00b9(gp)
-80026E9C	andi   v0, v0, $001f
+V0 = hu[SP + 0020];
+V1 = w[800707c0];
+V0 = V0 + S1;
+V1 = V1 + V0;
+V0 = bu[V1 + 0000];
+V1 = bu[GP + 00b9];
+V0 = V0 & 001f;
 80026EA0	bne    v1, zero, L26f10 [$80026f10]
-80026EA4	addu   s3, s3, v0
-80026EA8	addu   a1, zero, zero
-80026EAC	ori    v0, zero, $00ff
-80026EB0	sh     v0, $001c(sp)
-80026EB4	sh     v0, $001e(sp)
-80026EB8	addiu  v0, sp, $0018
-80026EBC	sll    a3, s5, $10
-80026EC0	sra    a3, a3, $10
-80026EC4	addiu  a3, a3, $0380
-80026EC8	andi   a3, a3, $03ff
-80026ECC	sra    a3, a3, $06
-80026ED0	ori    a2, zero, $0001
-80026ED4	lui    a0, $8006
-80026ED8	lw     a0, $2f24(a0)
-80026EDC	ori    a3, a3, $0030
-80026EE0	sh     zero, $0018(sp)
-80026EE4	sh     zero, $001a(sp)
+S3 = S3 + V0;
+A1 = 0;
+V0 = 00ff;
+[SP + 001c] = h(V0);
+[SP + 001e] = h(V0);
+V0 = SP + 0018;
+A3 = S5 << 10;
+A3 = A3 >> 10;
+A3 = A3 + 0380;
+A3 = A3 & 03ff;
+A3 = A3 >> 06;
+A2 = 0001;
+A0 = w[80062f24];
+A3 = A3 | 0030;
+[SP + 0018] = h(0);
+[SP + 001a] = h(0);
 80026EE8	jal    system_gpu_create_texture_setting_packet [$80044a68]
-80026EEC	sw     v0, $0010(sp)
-80026EF0	lui    a1, $8006
-80026EF4	lw     a1, $2f24(a1)
-80026EF8	lw     a0, $0280(gp)
-80026EFC	addiu  v0, a1, $000c
-80026F00	lui    at, $8006
-80026F04	sw     v0, $2f24(at)
+[SP + 0010] = w(V0);
+A1 = w[80062f24];
+A0 = w[GP + 0280];
+V0 = A1 + 000c;
+[80062f24] = w(V0);
 80026F08	jal    system_add_render_packet_to_queue [$80046794]
 80026F0C	nop
 
 L26f10:	; 80026F10
-80026F10	addu   v0, s3, zero
-80026F14	lw     ra, $0048(sp)
-80026F18	lw     s7, $0044(sp)
-80026F1C	lw     s6, $0040(sp)
-80026F20	lw     s5, $003c(sp)
-80026F24	lw     s4, $0038(sp)
-80026F28	lw     s3, $0034(sp)
-80026F2C	lw     s2, $0030(sp)
-80026F30	lw     s1, $002c(sp)
-80026F34	lw     s0, $0028(sp)
-80026F38	addiu  sp, sp, $0050
+V0 = S3;
+RA = w[SP + 0048];
+S7 = w[SP + 0044];
+S6 = w[SP + 0040];
+S5 = w[SP + 003c];
+S4 = w[SP + 0038];
+S3 = w[SP + 0034];
+S2 = w[SP + 0030];
+S1 = w[SP + 002c];
+S0 = w[SP + 0028];
+SP = SP + 0050;
 80026F3C	jr     ra 
 80026F40	nop
 ////////////////////////////////
@@ -9855,14 +9316,14 @@ L26f10:	; 80026F10
 // func26f44()
 
 S0 = A2;
-80026F54	addu   s3, a3, zero
+S3 = A3;
 80026F60	beq    s0, zero, L2706c [$8002706c]
 
-80026F68	lbu    v0, $00b8(gp)
+V0 = bu[GP + 00b8];
 80026F6C	nop
 80026F70	beq    v0, zero, L2700c [$8002700c]
-80026F74	addu   s2, zero, zero
-80026F78	sll    s1, a1, $10
+S2 = 0;
+S1 = A1 << 10;
 
 loop26f7c:	; 80026F7C
 opcode = [S0];
@@ -9891,39 +9352,36 @@ if (opcode != FF)
 
     80026FE0	jal    func26c5c [$80026c5c]
     80026FE4	nop
-    80026FE8	addu   a0, v0, zero
-    80026FEC	addiu  v0, s2, $0001
-    80026FF0	addu   s2, v0, zero
-    80026FF4	sll    v0, v0, $10
-    80026FF8	lbu    v1, $00b8(gp)
-    80026FFC	sra    v0, v0, $10
-    80027000	slt    v0, v0, v1
+    A0 = V0;
+    V0 = S2 + 0001;
+    S2 = V0;
+    V0 = V0 << 10;
+    V1 = bu[GP + 00b8];
+    V0 = V0 >> 10;
+    V0 = V0 < V1;
     80027004	bne    v0, zero, loop26f7c [$80026f7c]
     80027008	nop
 }
 
-8002700C	lbu    v0, $00b9(gp)
+V0 = bu[GP + 00b9];
 80027010	nop
 80027014	beq    v0, zero, L2706c [$8002706c]
-80027018	addu   a1, zero, zero
-8002701C	ori    a2, zero, $0001
-80027020	ori    a3, zero, $003e
-80027024	lui    a0, $8006
-80027028	lw     a0, $2f24(a0)
-8002702C	ori    v0, zero, $00ff
-80027030	sh     v0, $001c(sp)
-80027034	sh     v0, $001e(sp)
-80027038	addiu  v0, sp, $0018
-8002703C	sh     zero, $0018(sp)
-80027040	sh     zero, $001a(sp)
+A1 = 0;
+A2 = 0001;
+A3 = 003e;
+A0 = w[80062f24];
+V0 = 00ff;
+[SP + 001c] = h(V0);
+[SP + 001e] = h(V0);
+V0 = SP + 0018;
+[SP + 0018] = h(0);
+[SP + 001a] = h(0);
 80027044	jal    system_gpu_create_texture_setting_packet [$80044a68]
-80027048	sw     v0, $0010(sp)
-8002704C	lui    a1, $8006
-80027050	lw     a1, $2f24(a1)
-80027054	lw     a0, $0280(gp)
-80027058	addiu  v0, a1, $000c
-8002705C	lui    at, $8006
-80027060	sw     v0, $2f24(at)
+[SP + 0010] = w(V0);
+A1 = w[80062f24];
+A0 = w[GP + 0280];
+V0 = A1 + 000c;
+[80062f24] = w(V0);
 80027064	jal    system_add_render_packet_to_queue [$80046794]
 80027068	nop
 
@@ -10096,9 +9554,8 @@ S4 = hu[S1 + 0];
 S5 = hu[S1 + 2];
 height = hu[S1 + 6];
 
-800274D0	addu   fp, v1, zero
-800274D4	lui    a0, $8006
-800274D8	lw     a0, $2f24(a0)
+FP = V1;
+A0 = w[80062f24];
 S7 = A1;
 
 800274DC	jal    func46910 [$80046910]
@@ -10114,9 +9571,9 @@ packet = w[80062f24];
 [packet + 20] = h(S4 + width));
 [packet + 22] = h(S5 + height);
 
-80027564	lbu    s0, $0010(s1)
-80027570	lbu    s2, $0011(s1)
-80027574	lbu    s3, $0012(s1)
+S0 = bu[S1 + 0010];
+S2 = bu[S1 + 0011];
+S3 = bu[S1 + 0012];
 
 [packet + 4] = b(S0);
 [packet + 5] = b(S2);
@@ -10132,12 +9589,10 @@ packet = w[80062f24];
 [packet + 1e] = b(c8);
 
 
-8002762C	lui    a1, $8006
-80027630	lw     a1, $2f24(a1)
-80027634	lw     a0, $0280(gp)
-80027638	addiu  v0, a1, $0024
-8002763C	lui    at, $8006
-80027640	sw     v0, $2f24(at)
+A1 = w[80062f24];
+A0 = w[GP + 0280];
+V0 = A1 + 0024;
+[80062f24] = w(V0);
 80027644	jal    system_add_render_packet_to_queue [$80046794]
 80027648	nop
 
@@ -10157,42 +9612,33 @@ if (A0 != 0)
         S3 = 0;
     }
 
-    8002767C	lui    a0, $8006
-    80027680	lw     a0, $2f24(a0)
+    A0 = w[80062f24];
     80027684	jal    func46910 [$80046910]
     80027688	nop
-    8002768C	lui    v0, $8006
-    80027690	lw     v0, $2f24(v0)
+    V0 = w[80062f24];
     80027694	nop
-    80027698	sh     s4, $0008(v0)
-    8002769C	lui    v0, $8006
-    800276A0	lw     v0, $2f24(v0)
+    [V0 + 0008] = h(S4);
+    V0 = w[80062f24];
     800276A4	nop
-    800276A8	sh     s5, $000a(v0)
-    800276AC	lui    v0, $8006
-    800276B0	lw     v0, $2f24(v0)
-    800276B4	addu   a0, s4, s7
-    800276B8	sh     a0, $0010(v0)
-    800276BC	lui    v0, $8006
-    800276C0	lw     v0, $2f24(v0)
+    [V0 + 000a] = h(S5);
+    V0 = w[80062f24];
+    A0 = S4 + S7;
+    [V0 + 0010] = h(A0);
+    V0 = w[80062f24];
     800276C4	nop
-    800276C8	sh     s5, $0012(v0)
-    800276CC	lui    v0, $8006
-    800276D0	lw     v0, $2f24(v0)
+    [V0 + 0012] = h(S5);
+    V0 = w[80062f24];
     800276D4	nop
-    800276D8	sh     s4, $0018(v0)
-    800276DC	lui    v0, $8006
-    800276E0	lw     v0, $2f24(v0)
-    800276E4	addu   v1, s5, s6
-    800276E8	sh     v1, $001a(v0)
-    800276EC	lui    v0, $8006
-    800276F0	lw     v0, $2f24(v0)
+    [V0 + 0018] = h(S4);
+    V0 = w[80062f24];
+    V1 = S5 + S6;
+    [V0 + 001a] = h(V1);
+    V0 = w[80062f24];
     800276F4	nop
-    800276F8	sh     a0, $0020(v0)
-    800276FC	lui    v0, $8006
-    80027700	lw     v0, $2f24(v0)
+    [V0 + 0020] = h(A0);
+    V0 = w[80062f24];
     80027704	nop
-    80027708	sh     v1, $0022(v0)
+    [V0 + 0022] = h(V1);
 
     [packet + 4] = b(S0);
     [packet + 5] = b(S2);
@@ -10201,76 +9647,59 @@ if (A0 != 0)
     [packet + d] = b(S2);
     [packet + e] = b(S3);
 
-    8002776C	lui    v0, $8006
-    80027770	lw     v0, $2f24(v0)
+    V0 = w[80062f24];
     80027774	nop
-    80027778	sb     s0, $0014(v0)
-    8002777C	lui    v0, $8006
-    80027780	lw     v0, $2f24(v0)
+    [V0 + 0014] = b(S0);
+    V0 = w[80062f24];
     80027784	nop
-    80027788	sb     s2, $0015(v0)
-    8002778C	lui    v0, $8006
-    80027790	lw     v0, $2f24(v0)
+    [V0 + 0015] = b(S2);
+    V0 = w[80062f24];
     80027794	nop
-    80027798	sb     s3, $0016(v0)
-    8002779C	lui    v0, $8006
-    800277A0	lw     v0, $2f24(v0)
+    [V0 + 0016] = b(S3);
+    V0 = w[80062f24];
     800277A4	nop
-    800277A8	sb     s0, $001c(v0)
-    800277AC	lui    v0, $8006
-    800277B0	lw     v0, $2f24(v0)
+    [V0 + 001c] = b(S0);
+    V0 = w[80062f24];
     800277B4	nop
-    800277B8	sb     s2, $001d(v0)
-    800277BC	lui    v0, $8006
-    800277C0	lw     v0, $2f24(v0)
+    [V0 + 001d] = b(S2);
+    V0 = w[80062f24];
     800277C4	nop
-    800277C8	sb     s3, $001e(v0)
-    800277CC	lui    a1, $8006
-    800277D0	lw     a1, $2f24(a1)
-    800277D4	lw     a0, $0280(gp)
-    800277D8	addiu  v0, a1, $0024
-    800277DC	lui    at, $8006
-    800277E0	sw     v0, $2f24(at)
+    [V0 + 001e] = b(S3);
+    A1 = w[80062f24];
+    A0 = w[GP + 0280];
+    V0 = A1 + 0024;
+    [80062f24] = w(V0);
     800277E4	jal    system_add_render_packet_to_queue [$80046794]
     800277E8	nop
 }
 
-800277EC	lui    a0, $8006
-800277F0	lw     a0, $2f24(a0)
+A0 = w[80062f24];
 800277F4	jal    func46910 [$80046910]
 800277F8	nop
-800277FC	lui    v0, $8006
-80027800	lw     v0, $2f24(v0)
+V0 = w[80062f24];
 80027804	nop
-80027808	sh     s4, $0008(v0)
-8002780C	lui    v0, $8006
-80027810	lw     v0, $2f24(v0)
+[V0 + 0008] = h(S4);
+V0 = w[80062f24];
 80027814	nop
-80027818	sh     s5, $000a(v0)
-8002781C	lui    v0, $8006
-80027820	lw     v0, $2f24(v0)
-80027824	addu   a0, s4, fp
-80027828	sh     a0, $0010(v0)
-8002782C	lui    v0, $8006
-80027830	lw     v0, $2f24(v0)
+[V0 + 000a] = h(S5);
+V0 = w[80062f24];
+A0 = S4 + FP;
+[V0 + 0010] = h(A0);
+V0 = w[80062f24];
 80027834	nop
-80027838	sh     s5, $0012(v0)
-8002783C	lui    v0, $8006
-80027840	lw     v0, $2f24(v0)
-80027844	addu   v1, s5, s6
-80027848	sh     s4, $0018(v0)
-8002784C	lui    v0, $8006
-80027850	lw     v0, $2f24(v0)
-80027854	addiu  v1, v1, $0001
-80027858	sh     v1, $001a(v0)
-8002785C	lui    v0, $8006
-80027860	lw     v0, $2f24(v0)
+[V0 + 0012] = h(S5);
+V0 = w[80062f24];
+V1 = S5 + S6;
+[V0 + 0018] = h(S4);
+V0 = w[80062f24];
+V1 = V1 + 0001;
+[V0 + 001a] = h(V1);
+V0 = w[80062f24];
 80027864	nop
-80027868	sh     a0, $0020(v0)
-8002786C	lui    v0, $8006
-80027870	lw     v0, $2f24(v0)
+[V0 + 0020] = h(A0);
+V0 = w[80062f24];
 80027874	nop
-80027878	sh     v1, $0022(v0)
+[V0 + 0022] = h(V1);
 
 [packet + 4] = b(50);
 [packet + 5] = b(0);
@@ -10285,12 +9714,10 @@ if (A0 != 0)
 [packet + 1d] = b(0);
 [packet + 1e] = b(0);
 
-8002793C	lui    a1, $8006
-80027940	lw     a1, $2f24(a1)
-80027944	lw     a0, $0280(gp)
-80027948	addiu  v0, a1, $0024
-8002794C	lui    at, $8006
-80027950	sw     v0, $2f24(at)
+A1 = w[80062f24];
+A0 = w[GP + 0280];
+V0 = A1 + 0024;
+[80062f24] = w(V0);
 80027954	jal    system_add_render_packet_to_queue [$80046794]
 80027958	nop
 
@@ -10731,13 +10158,9 @@ SP = SP + 0028;
 // func28030
 80028030	lui    v0, $8006
 V0 = w[V0 + 2f24];
-80028038	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
 S0 = A0;
-[SP + 0018] = w(S2);
+
 S2 = 0003;
-[SP + 001c] = w(RA);
-[SP + 0014] = w(S1);
 [V0 + 0003] = b(S2);
 80028058	lui    v0, $8006
 V0 = w[V0 + 2f24];
@@ -10998,20 +10421,10 @@ V0 = A1 + 0010;
 80028458	lui    at, $8006
 [AT + 2f24] = w(V0);
 80028460	jal    system_add_render_packet_to_queue [$80046794]
-80028464	nop
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8002847C	jr     ra 
-80028480	nop
 ////////////////////////////////
 // func28484
-80028484	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
+
 S0 = A0;
-[SP + 001c] = w(RA);
 A0 = h[S0 + 000c];
 V0 = h[S0 + 0004];
 8002849C	nop
@@ -11020,38 +10433,12 @@ V0 = h[S0 + 0004];
 V1 = h[S0 + 0002];
 800284AC	nop
 800284B0	div    v0, v1
-800284B4	bne    v1, zero, L284c0 [$800284c0]
-800284B8	nop
-800284BC	break   $01c00
-
-L284c0:	; 800284C0
-800284C0	addiu  at, zero, $ffff (=-$1)
-800284C4	bne    v1, at, L284d8 [$800284d8]
-800284C8	lui    at, $8000
-800284CC	bne    v0, at, L284d8 [$800284d8]
-800284D0	nop
-800284D4	break   $01800
-
-L284d8:	; 800284D8
 800284D8	mflo   a1
 V0 = h[S0 + 0000];
 800284E0	nop
 800284E4	mult   a0, v0
 800284E8	mflo   v0
 800284EC	div    v0, v1
-800284F0	bne    v1, zero, L284fc [$800284fc]
-800284F4	nop
-800284F8	break   $01c00
-
-L284fc:	; 800284FC
-800284FC	addiu  at, zero, $ffff (=-$1)
-80028500	bne    v1, at, L28514 [$80028514]
-80028504	lui    at, $8000
-80028508	bne    v0, at, L28514 [$80028514]
-8002850C	nop
-80028510	break   $01800
-
-L28514:	; 80028514
 80028514	mflo   v1
 V0 = hu[S0 + 0006];
 8002851C	nop
@@ -11083,13 +10470,8 @@ A0 = SP + 0010;
 A0 = 0;
 A1 = 0001;
 A2 = 001f;
-80028590	jal    func26a34 [$80026a34]
 A3 = 0;
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-800285A4	jr     ra 
-800285A8	nop
+system_menu_create_and_add_texture_setting_packet();
 ////////////////////////////////
 
 
@@ -11491,18 +10873,18 @@ number_of_digits = A3; // number of digits
 A0 = number_of_digits;
 colour = A4;
 
-80028E40	slt    v0, s0, a0
+V0 = S0 < A0;
 80028E4C	beq    v0, zero, L28e7c [$80028e7c]
 
 loop28e58:	; 80028E58
-    80028E54	sll    v0, s0, $02
-    80028E58	addu   v0, v0, s0
-    80028E5C	sll    s0, v0, $01
-    80028E60	addiu  v0, s2, $0001
-    80028E64	addu   s2, v0, zero
-    80028E68	sll    v0, v0, $10
-    80028E6C	sra    v0, v0, $10
-    80028E70	slt    v0, v0, a0
+    V0 = S0 << 02;
+    V0 = V0 + S0;
+    S0 = V0 << 01;
+    V0 = S2 + 0001;
+    S2 = V0;
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    V0 = V0 < A0;
 80028E74	bne    v0, zero, loop28e58 [$80028e58]
 
 
@@ -11549,45 +10931,38 @@ loop28ea8:	; 80028EA8
     if (S5 == 0 || S3 != 0)
     {
         S5 = 0;
-        80028F8C	lw     a0, $0280(gp)
-        80028F90	lui    a1, $8006
-        80028F94	lw     a1, $2f24(a1)
+        A0 = w[GP + 0280];
+        A1 = w[80062f24];
         80028F98	jal    system_add_render_packet_to_queue [$80046794]
 
-        80028FA0	lui    v0, $8006
-        80028FA4	lw     v0, $2f24(v0)
+        V0 = w[80062f24];
         80028FA8	nop
-        80028FAC	addiu  v0, v0, $0014
-        80028FB0	lui    at, $8006
-        80028FB4	sw     v0, $2f24(at)
+        V0 = V0 + 0014;
+        [80062f24] = w(V0);
     }
 
-    80028FB8	lui    v0, $cccc
-    80028FBC	ori    v0, v0, $cccd
+    V0 = cccccccd;
     80028FC0	multu  s0, v0
     S2 = S2 + 1;
     80028FCC	mfhi   a0
     80028FD8	divu   s1, s0
     80028FE8	mfhi   s1
-    80028FEC	srl    s0, a0, $03
+    S0 = A0 >> 03;
 
     L28ff0:	; 80028FF0
     V0 = S2 < number_of_digits;
 80028FF8	bne    v0, zero, loop28ea8 [$80028ea8]
 
-80028FFC	ori    v0, zero, $0004
-80029000	lui    v1, $8006
-80029004	lw     v1, $2f24(v1)
+V0 = 0004;
+V1 = w[80062f24];
 80029008	nop
-8002900C	sb     v0, $0003(v1)
-80029010	lui    v1, $8006
-80029014	lw     v1, $2f24(v1)
-80029018	ori    v0, zero, $0064
-8002901C	sb     v0, $0007(v1)
-80029020	lui    a0, $8006
-80029024	lw     a0, $2f24(a0)
+[V1 + 0003] = b(V0);
+V1 = w[80062f24];
+V0 = 0064;
+[V1 + 0007] = b(V0);
+A0 = w[80062f24];
 80029028	jal    system_change_brightness_calculation_in_packet [$80046870]
-8002902C	ori    a1, zero, $0001
+A1 = 0001;
 
 [packet + 8] = h(x_pos + (number_of_digits - 1) * 7);
 [packet + a] = h(y_pos);
@@ -11598,29 +10973,23 @@ loop28ea8:	; 80028EA8
 A0 = 100;
 A1 = colour + 1e0;
 
-80029084	lui    v1, $8006
-80029088	lw     v1, $2f24(v1)
-8002908C	ori    v0, zero, $0007
-80029090	sh     v0, $0010(v1)
-80029094	lui    v1, $8006
-80029098	lw     v1, $2f24(v1)
-8002909C	ori    v0, zero, $0008
+V1 = w[80062f24];
+V0 = 0007;
+[V1 + 0010] = h(V0);
+V1 = w[80062f24];
+V0 = 0008;
 800290A0	jal    system_create_clut_for_packet [$80046634]
-800290A4	sh     v0, $0012(v1)
-800290A8	lui    v1, $8006
-800290AC	lw     v1, $2f24(v1)
-800290B0	lw     a0, $0280(gp)
-800290B4	sh     v0, $000e(v1)
-800290B8	lui    a1, $8006
-800290BC	lw     a1, $2f24(a1)
+[V1 + 0012] = h(V0);
+V1 = w[80062f24];
+A0 = w[GP + 0280];
+[V1 + 000e] = h(V0);
+A1 = w[80062f24];
 800290C0	jal    system_add_render_packet_to_queue [$80046794]
 800290C4	nop
-800290C8	lui    v0, $8006
-800290CC	lw     v0, $2f24(v0)
+V0 = w[80062f24];
 800290D0	nop
-800290D4	addiu  v0, v0, $0014
-800290D8	lui    at, $8006
-800290DC	sw     v0, $2f24(at)
+V0 = V0 + 0014;
+[80062f24] = w(V0);
 ////////////////////////////////
 
 
@@ -11641,7 +11010,7 @@ S3 = A3;
 V1 = S3 & 00ff;
 [SP + 0028] = w(S6);
 S6 = bu[SP + 0040];
-8002914C	slt    v0, s1, v1
+V0 = S1 < V1;
 [SP + 002c] = w(RA);
 80029154	beq    v0, zero, L29184 [$80029184]
 [SP + 0010] = w(S0);
@@ -11654,7 +11023,7 @@ V0 = S2 + 0001;
 S2 = V0;
 V0 = V0 << 10;
 V0 = V0 >> 10;
-80029178	slt    v0, v0, v1
+V0 = V0 < V1;
 8002917C	bne    v0, zero, loop29160 [$80029160]
 V0 = S1 << 02;
 
@@ -11662,7 +11031,7 @@ L29184:	; 80029184
 S0 = A2;
 V0 = 0001;
 V1 = S3 & 00ff;
-80029190	slt    v0, v0, v1
+V0 = V0 < V1;
 80029194	beq    v0, zero, L292c4 [$800292c4]
 S2 = 0001;
 
@@ -11739,7 +11108,7 @@ V0 = V0 + 0014;
 800292A8	lui    at, $8006
 [AT + 2f24] = w(V0);
 V0 = S3 & 00ff;
-800292B4	slt    v1, v1, v0
+V1 = V1 < V0;
 800292B8	mfhi   t0
 800292BC	bne    v1, zero, loop2919c [$8002919c]
 S1 = T0 >> 03;
@@ -11827,8 +11196,7 @@ SP = SP + 0018;
 // func293f4
 800293F4	addiu  sp, sp, $ffe8 (=-$18)
 V0 = 0001;
-800293FC	lui    a0, $8003
-80029400	addiu  a0, a0, $93d0 (=-$6c30)
+A0 = 800293d0;
 [SP + 0010] = w(RA);
 [GP + 00c4] = h(V0);
 8002940C	jal    func38fec [$80038fec]

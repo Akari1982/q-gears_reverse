@@ -449,7 +449,7 @@ La1af8:	; 800A1AF8
     800A1FEC	bne    v0, zero, loopa1fe4 [$800a1fe4]
 
     A0 = 1;
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     [8007eb79] = b(0);
     [8007eb8d] = b(0);
@@ -467,7 +467,7 @@ La1af8:	; 800A1AF8
     if( ( bu[8009abf4 + 1] == a ) || ( bu[8009abf4 + 1] == 1a ) || ( bu[8009abf4 + 1] == 5 ) )
     {
         A0 = 0;
-        func3cedc(); // wait
+        system_psyq_wait_frames(); // wait
 
         return;
     }
@@ -495,7 +495,7 @@ La1af8:	; 800A1AF8
             [80095dd4] = h(1);
 
             A0 = 0;
-            func3cedc(); // wait
+            system_psyq_wait_frames(); // wait
 
             return;
         }
@@ -517,7 +517,7 @@ La1af8:	; 800A1AF8
             case 6: [8009c560] = h(e); break;
         }
         A0 = 0;
-        func3cedc(); // wait
+        system_psyq_wait_frames(); // wait
 
         return;
     }
@@ -525,7 +525,7 @@ La1af8:	; 800A1AF8
     if( ( bu[8009abf4 + 1] == 2 ) || ( bu[8009abf4 + 1] == d ) )
     {
         A0 = 0;
-        func3cedc(); // wait
+        system_psyq_wait_frames(); // wait
 
         return;
     }
@@ -541,7 +541,7 @@ La1af8:	; 800A1AF8
         [80095dd4] = h(1);
 
         A0 = 0;
-        func3cedc(); // wait
+        system_psyq_wait_frames(); // wait
 
         return;
     }
@@ -549,7 +549,7 @@ La1af8:	; 800A1AF8
     if( ( bu[8009c560] == d ) || ( bu[8009c560] == 10 ) )
     {
         A0 = 0;
-        func3cedc(); // wait
+        system_psyq_wait_frames(); // wait
 
         return;
     }
@@ -804,7 +804,7 @@ La25bc:	; 800A25BC
     800A2A08	jal    func138ec [$800138ec]
 
     A0 = 1;
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     [80114478] = w(V0);
 
@@ -814,7 +814,7 @@ La25bc:	; 800A25BC
     800A2A28	bne    v0, zero, loopa2a20 [$800a2a20]
 
     A0 = 1;
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     V1 = hu[80114488];
     [8011447c] = w(V0);
@@ -827,7 +827,7 @@ La25bc:	; 800A25BC
     A0 = 3;
 
     La2a68:	; 800A2A68
-    func3cedc(); // wait
+    system_psyq_wait_frames(); // wait
 
     V0 = S3 << 10;
     800A2A74	beq    v0, zero, La2a94 [$800a2a94]
@@ -2699,7 +2699,7 @@ offset_to_camera = w[80071e40];
 [offset_to_triggers + 26] = h((hu[offset_to_triggers + 26] + hu[8009abf4 + ac]) % (h[offset_to_triggers + 1e] * 10)); // add y scroll for 3nd background
 
 A0 = h[offset_to_camera + 24];
-system_set_proj_plane_dist_to_GTE;
+system_gte_set_proj_plane_dist;
 
 if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 {
