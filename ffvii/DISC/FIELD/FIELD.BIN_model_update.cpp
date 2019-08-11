@@ -1704,8 +1704,7 @@ Lacd30:	; 800ACD30
             clut_x = (S1 >> 10) & 3f;
             [S5 + e] = h((clut_y << 6) | clut_x);
 
-            // get texture page data
-            func43cc0;
+            system_gpu_get_type();
             if (V0 != 1 && V0 != 2)
             {
                 clut_type = (S1 & 000000c0) << 1; // clut type
@@ -1830,7 +1829,7 @@ Lacd30:	; 800ACD30
             V1 = V1 | V0;
             [S0 + 0007] = h(V1);
 
-            func43cc0;
+            system_gpu_get_type();
             if (V0 != 1 && V0 != 2)
             {
                 clut_type = (S1 & 000000c0) << 1; // clut type
@@ -1964,7 +1963,7 @@ Lacd30:	; 800ACD30
         V1 = V1 | V0;
         [S0 + 0007] = h(V1);
 
-            func43cc0;
+            system_gpu_get_type();
             if (V0 != 1 && V0 != 2)
             {
                 clut_type = (S1 & 000000c0) << 1; // clut type
@@ -2095,7 +2094,7 @@ Lacd30:	; 800ACD30
         V1 = V1 | V0;
         [S0 + 0007] = h(V1);
 
-            func43cc0;
+            system_gpu_get_type();
             if (V0 != 1 && V0 != 2)
             {
                 clut_type = (S1 & 000000c0) << 1; // clut type
@@ -10423,12 +10422,12 @@ V0 = w[800e0200];
 V1 = V1 << 03;
 S0 = V1 + V0;
 
-800B69FC	jal    $func43cc0
+800B69FC	jal    $system_gpu_get_type
 
 V1 = 0001;
 800B6A08	beq    v0, v1, Lb6a24 [$800b6a24]
 S1 = 6c2c;
-800B6A10	jal    $func43cc0
+800B6A10	jal    $system_gpu_get_type
 800B6A14	nop
 V1 = 0002;
 800B6A1C	bne    v0, v1, Lb6a28 [$800b6a28]

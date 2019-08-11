@@ -1,4 +1,298 @@
 ////////////////////////////////
+// system_get_sin
+if (A0 >= 0)
+{
+    A0 = A0 & 0fff;
+    func39ab0;
+    return V0;
+}
+else
+{
+    A0 = 0 - A0;
+    A0 = 0 - A0;
+    func39ab0;
+    return -V0;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func39ab0
+if (A0 >= 801)
+{
+    if (A0 < c01)
+    {
+        return -h[80049e54 + A0 * 2];
+    }
+    else
+    {
+        return -h[8004ae54 + (1000 - A0) * 2];
+    }
+}
+else if (A0 >= 401)
+{
+    return h[8004ae54 + (800 - A0) * 2];
+}
+else
+{
+    return h[8004ae54 + A0 * 2];
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_cos
+
+if( A0 < 0 )
+{
+    A0 = 0 - A0;
+}
+
+A0 = A0 & 0fff;
+if (A0 < 801)
+{
+    if (A0 < 401)
+    {
+        V0 = 400;
+        V0 = V0 - A0;
+        V0 = V0 * 2;
+        V0 = h[8004AE54 + V0];
+    }
+    else
+    {
+        V0 = A0 * 2;
+        V0 = h[8004A654 + V0];
+        V0 = 0 - V0;
+    }
+}
+else
+{
+    if (A0 >= c01)
+    {
+        V0 = h[8004a654 + A0 * 2];
+    }
+    else
+    {
+        V0 = c00;
+        V0 = V0 - A0;
+        V0 = V0 * 2;
+        V0 = h[8004ae54 + V0];
+        V0 = 0 - V0;
+    }
+}
+
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func39be0
+80039BE0	addiu  sp, sp, $ffe8 (=-$18)
+A3 = A1 - A0;
+V0 = A3 < 0064;
+[SP + 0014] = w(RA);
+80039BF0	bne    v0, zero, L39cd8 [$80039cd8]
+[SP + 0010] = w(S0);
+V0 = 0 - A0;
+80039BFC	mult   v0, a1
+80039C00	mflo   v0
+80039C04	nop
+80039C08	nop
+80039C0C	div    v0, a3
+80039C34	mflo   v0
+V1 = A1 << 0c;
+80039C3C	nop
+80039C40	div    v1, a3
+80039C68	mflo   v1
+V0 = V0 << 08;
+80039C70	nop
+80039C74	div    v0, a2
+80039C9C	mflo   a0
+80039CA0	nop
+80039CA4	slti   v0, a0, $8000 (=-$8000)
+80039CA8	beq    v0, zero, L39cb4 [$80039cb4]
+S0 = V1 << 0c;
+80039CB0	addiu  a0, zero, $8000 (=-$8000)
+
+L39cb4:	; 80039CB4
+V0 = 7fff;
+80039CB8	slt    v0, v0, a0
+80039CBC	beq    v0, zero, L39cc8 [$80039cc8]
+80039CC0	nop
+A0 = 7fff;
+
+L39cc8:	; 80039CC8
+80039CC8	jal    func3b634 [$8003b634]
+80039CCC	nop
+80039CD0	jal    func3b640 [$8003b640]
+A0 = S0;
+
+L39cd8:	; 80039CD8
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+80039CE4	jr     ra 
+80039CE8	nop
+////////////////////////////////
+// func39cec
+80039CEC	addiu  sp, sp, $ffc0 (=-$40)
+80039CF0	lui    v1, $005d
+V1 = V1 | 50ad;
+A3 = 0001;
+T0 = SP + 0024;
+A2 = SP + 0004;
+V0 = A0 + V1;
+A0 = A0 - V1;
+[SP + 0004] = w(V0);
+[SP + 0024] = w(A0);
+
+loop39d14:	; 80039D14
+V0 = 0004;
+80039D18	beq    a3, v0, L39d88 [$80039d88]
+80039D1C	nop
+A0 = w[A2 + 0020];
+80039D24	nop
+80039D28	bltz   a0, L39d5c [$80039d5c]
+A1 = A3 << 02;
+80039D30	srav   v1, a3, a0
+V0 = w[A2 + 0000];
+A0 = T0 + A1;
+V0 = V0 - V1;
+[A2 + 0004] = w(V0);
+V0 = w[A2 + 0000];
+V1 = w[A2 + 0020];
+80039D4C	srav   v0, a3, v0
+V1 = V1 - V0;
+80039D54	j      L39e20 [$80039e20]
+[A0 + 0000] = w(V1);
+
+L39d5c:	; 80039D5C
+80039D5C	srav   v0, a3, a0
+V1 = w[A2 + 0000];
+A0 = T0 + A1;
+V0 = V0 + V1;
+[A2 + 0004] = w(V0);
+V0 = w[A2 + 0000];
+V1 = w[A2 + 0020];
+80039D78	srav   v0, a3, v0
+V0 = V0 + V1;
+80039D80	j      L39e20 [$80039e20]
+[A0 + 0000] = w(V0);
+
+L39d88:	; 80039D88
+A0 = w[SP + 0030];
+80039D8C	nop
+80039D90	bltz   a0, L39dd0 [$80039dd0]
+V0 = A0 >> 04;
+V1 = w[SP + 0010];
+80039D9C	nop
+A1 = V1 - V0;
+V0 = V1 >> 04;
+V1 = A0 - V0;
+[SP + 0010] = w(A1);
+80039DB0	bltz   v1, L39e08 [$80039e08]
+[SP + 0030] = w(V1);
+V0 = V1 >> 04;
+V0 = A1 - V0;
+[SP + 0014] = w(V0);
+V0 = A1 >> 04;
+80039DC8	j      L39e1c [$80039e1c]
+V0 = V1 - V0;
+
+L39dd0:	; 80039DD0
+V1 = w[SP + 0010];
+80039DD4	nop
+A1 = V0 + V1;
+V0 = V1 >> 04;
+V1 = V0 + A0;
+[SP + 0010] = w(A1);
+80039DE8	bltz   v1, L39e08 [$80039e08]
+[SP + 0030] = w(V1);
+V0 = V1 >> 04;
+V0 = A1 - V0;
+[SP + 0014] = w(V0);
+V0 = A1 >> 04;
+80039E00	j      L39e1c [$80039e1c]
+V0 = V1 - V0;
+
+L39e08:	; 80039E08
+V0 = V1 >> 04;
+V0 = V0 + A1;
+[SP + 0014] = w(V0);
+V0 = A1 >> 04;
+V0 = V0 + V1;
+
+L39e1c:	; 80039E1C
+[SP + 0034] = w(V0);
+
+L39e20:	; 80039E20
+A3 = A3 + 0001;
+V0 = A3 < 0007;
+80039E28	bne    v0, zero, loop39d14 [$80039d14]
+A2 = A2 + 0004;
+V0 = w[SP + 001c];
+SP = SP + 0040;
+80039E38	jr     ra 
+80039E3C	nop
+////////////////////////////////
+// func39e40
+80039E40	addiu  sp, sp, $ffe0 (=-$20)
+[SP + 0014] = w(S1);
+S1 = A0;
+[SP + 0018] = w(RA);
+80039E50	bne    s1, zero, L39e60 [$80039e60]
+[SP + 0010] = w(S0);
+80039E58	j      L39ec4 [$80039ec4]
+V0 = 0;
+
+L39e60:	; 80039E60
+80039E60	jal    func3bac0 [$8003bac0]
+A0 = S1;
+V1 = 0008;
+V0 = V1 - V0;
+80039E70	bltz   v0, L39e84 [$80039e84]
+S0 = V0 >> 01;
+V0 = S0 << 01;
+80039E7C	j      L39e98 [$80039e98]
+80039E80	srav   a0, v0, s1
+
+L39e84:	; 80039E84
+V0 = V0 >> 01;
+S0 = V0 + 0001;
+V0 = S0 << 01;
+V0 = 0 - V0;
+A0 = S1 << V0;
+
+L39e98:	; 80039E98
+80039E98	addiu  s0, s0, $fffa (=-$6)
+80039E9C	bgez   s0, L39eb8 [$80039eb8]
+80039EA0	nop
+80039EA4	jal    func39cec [$80039cec]
+80039EA8	nop
+V1 = 0 - S0;
+80039EB0	j      L39ec4 [$80039ec4]
+80039EB4	srav   v0, v1, v0
+
+L39eb8:	; 80039EB8
+80039EB8	jal    func39cec [$80039cec]
+80039EBC	nop
+V0 = V0 << S0;
+
+L39ec4:	; 80039EC4
+RA = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0020;
+80039ED4	jr     ra 
+80039ED8	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_gte_init_geom()
 
 [8004b658] = w(RA);
@@ -2992,4 +3286,33 @@ V0 = V1;
 L3cd94:	; 8003CD94
 8003CD94	jr     ra 
 8003CD98	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3cd9c()
+// patch C(06h) - ExceptionHandler()
+
+[80062ed0] = w(RA);
+
+system_bios_enter_critical_section();
+
+T2 = 00b0;
+T1 = 0056;
+8003CDB0	jalr   t2 ra // B(56h) GetC0Table()
+
+V0 = w[V0 + 18];
+T2 = 8003ce04; // new ExceptionHandler() func
+loop3cdcc:	; 8003CDCC
+    [V0] = w(w[T2]);
+    V0 = V0 + 4;
+    T2 = T2 + 4;
+8003CDD8	bne    t2, 8003ce3c, loop3cdcc [$8003cdcc]
+
+system_bios_flush_cache();
+
+system_bios_exit_critical_section();
+
+RA = w[80062ed0];
 ////////////////////////////////

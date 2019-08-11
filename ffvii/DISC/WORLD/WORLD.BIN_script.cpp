@@ -891,14 +891,12 @@ else if( opcode == 201 ) // jump if false
 else if( opcode == 203 ) // return
 {
     V1 = w[8010ade4];
-    V0 = bu[V1 + 0054];
-    800AC578	nop
+    V0 = bu[V1 + 54];
     if (V0 != 0)
     {
-        V0 = bu[V1 + 0054];
-        800AC588	nop
-        800AC58C	addiu  v0, v0, $ffff (=-$1)
-        [V1 + 0054] = b(V0);
+        V0 = bu[V1 + 54] - 1;
+        [V1 + 54] = b(V0);
+
         V0 = V0 & 00ff;
         V0 = V0 << 02;
         A0 = w[8010ade4];
@@ -1081,7 +1079,7 @@ switch( opcode )
         wm_script_pop_stack();
 
         A0 = V0;
-        A1 = 0003;
+        A1 = 3;
         800AC874	jal    funca2108 [$800a2108]
 
         return 0;
@@ -1142,7 +1140,7 @@ switch( opcode )
         S1 = w[8010ad3c];
 
         wm_script_pop_stack();
-        S0 = V0 << 4;
+        S0 = V0 * 10;
 
         if( w[8010ad3c] != 0 )
         {
@@ -1397,29 +1395,31 @@ switch( opcode )
 
     case 348: // fade in?
     {
-        800ACD68	jal    wm_script_pop_stack [$800abb24]
-        800ACD6C	nop
-        800ACD70	jal    wm_script_pop_stack [$800abb24]
+        wm_script_pop_stack();
         S1 = V0;
+
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACD7C	jal    funcaffbc [$800affbc]
         A1 = S1;
-        800ACD84	j      Lad620 [$800ad620]
-        V0 = 0;
+        800ACD7C	jal    funcaffbc [$800affbc]
+
+        return 0;
     }
     break;
 
     case 33b: // fade out?
     {
-        800ACD8C	jal    wm_script_pop_stack [$800abb24]
-        800ACD90	nop
-        800ACD94	jal    wm_script_pop_stack [$800abb24]
+        wm_script_pop_stack();
         S1 = V0;
+
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACDA0	jal    funcb0098 [$800b0098]
         A1 = S1;
-        800ACDA8	j      Lad620 [$800ad620]
-        V0 = 0;
+        800ACDA0	jal    funcb0098 [$800b0098]
+
+        return 0;
     }
     break;
 
@@ -1620,12 +1620,12 @@ switch( opcode )
 
     case 31d: // play sound effect
     {
-        800ACF7C	jal    wm_script_pop_stack [$800abb24]
-        800ACF80	nop
-        800ACF84	jal    funcb64d8 [$800b64d8]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACF8C	j      Lad620 [$800ad620]
-        V0 = 0;
+        funcb64d8();
+
+        return 0;
     }
     break;
 
@@ -1639,38 +1639,40 @@ switch( opcode )
 
     case 317: // trigger battle
     {
+        A0 = 1;
         800ACFA4	jal    funcb63e0 [$800b63e0]
-        A0 = 0001;
+
+        A0 = 4;
         800ACFAC	jal    funcb63f0 [$800b63f0]
-        A0 = 0004;
-        800ACFB4	jal    wm_script_pop_stack [$800abb24]
-        800ACFB8	nop
-        800ACFBC	jal    funca3f4c [$800a3f4c]
+
+        wm_script_pop_stack()
+
         A0 = V0;
-        800ACFC4	j      Lad620 [$800ad620]
-        V0 = 0;
+        800ACFBC	jal    funca3f4c [$800a3f4c]
+
+        return 0;
     }
     break;
 
     case 355:
     {
-        800ACFCC	jal    wm_script_pop_stack [$800abb24]
-        800ACFD0	nop
-        800ACFD4	jal    funcb77f4 [$800b77f4]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACFDC	j      Lad620 [$800ad620]
-        V0 = 0;
+        800ACFD4	jal    funcb77f4 [$800b77f4]
+
+        return 0;
     }
     break;
 
     case 32b: // set battle lock
     {
-        800ACFE4	jal    wm_script_pop_stack [$800abb24]
-        800ACFE8	nop
-        800ACFEC	jal    funcb7c6c [$800b7c6c]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACFF4	j      Lad620 [$800ad620]
-        V0 = 0;
+        800ACFEC	jal    funcb7c6c [$800b7c6c]
+
+        return 0;
     }
     break;
 
@@ -1682,7 +1684,7 @@ switch( opcode )
         wm_script_pop_stack();
 
         A0 = (V0 << 8) | S1;
-        800AD010	jal    funca3ec8 [$800a3ec8]
+        funca3ec8();
 
         return 0;
     }
@@ -1690,12 +1692,12 @@ switch( opcode )
 
     case 33d: // set field entry point2?
     {
-        800AD020	jal    wm_script_pop_stack [$800abb24]
-        800AD024	nop
-        800AD028	jal    funca3e9c [$800a3e9c]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800AD030	j      Lad620 [$800ad620]
-        V0 = 0;
+        800AD028	jal    funca3e9c [$800a3e9c]
+
+        return 0;
     }
     break;
 

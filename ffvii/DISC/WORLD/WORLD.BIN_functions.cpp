@@ -735,12 +735,12 @@ loopae8f4:	; 800AE8F4
         [S0 + 0007] = b(FP);
         [S0 + fff8] = h(V0);
         V1 = V1 | 0002;
-        800AE954	jal    $func43cc0
+        800AE954	jal    $system_gpu_get_type
         [S0 + fff1] = b(V1);
         V1 = 0001;
         800AE960	beq    v0, v1, Lae980 [$800ae980]
         V0 = 00a9;
-        800AE968	jal    $func43cc0
+        800AE968	jal    $system_gpu_get_type
         800AE96C	nop
         V1 = 0002;
         800AE974	bne    v0, v1, Lae980 [$800ae980]
@@ -762,12 +762,12 @@ loopae8f4:	; 800AE8F4
     [V1 + 3] = b(9);
     [V1 + 7] = b(2e);
 
-    800AE9B8	jal    $func43cc0
+    800AE9B8	jal    $system_gpu_get_type
 
     V1 = 0001;
     800AE9C4	beq    v0, v1, Lae9e0 [$800ae9e0]
     S0 = S3;
-    800AE9CC	jal    $func43cc0
+    800AE9CC	jal    $system_gpu_get_type
     800AE9D0	nop
     V1 = 0002;
     800AE9D8	bne    v0, v1, Lae9e4 [$800ae9e4]
@@ -1580,12 +1580,14 @@ AT = AT + S0;
 V1 = 0062;
 [V0 + 000c] = h(FP);
 [V0 + 000e] = h(S7);
-800AFA6C	jal    $func43cc0
 [V0 + 0007] = b(V1);
+
+system_gpu_get_type();
+
 800AFA74	beq    v0, s6, Lafa90 [$800afa90]
 A3 = 0100;
-800AFA7C	jal    $func43cc0
-800AFA80	nop
+system_gpu_get_type();
+
 800AFA84	bne    v0, s5, Lafa90 [$800afa90]
 A3 = 0040;
 A3 = 0100;
@@ -1594,9 +1596,10 @@ Lafa90:	; 800AFA90
 A0 = 8010b434;
 A0 = S1 + A0;
 A1 = 0;
-A2 = 0001;
-800AFAA4	jal    $system_gpu_create_texture_setting_packet
-[SP + 0010] = w(0);
+A2 = 1;
+A4 = 0;
+system_gpu_create_texture_setting_packet();
+
 T0 = 0004;
 A0 = 0066;
 [S2 + 0003] = b(T0);
@@ -1643,11 +1646,11 @@ AT = AT + S0;
 AT = 8010b3f6;
 AT = AT + S0;
 [AT + 0000] = h(S7);
-800AFB90	jal    $func43cc0
+800AFB90	jal    $system_gpu_get_type
 800AFB94	nop
 800AFB98	beq    v0, s6, Lafbb4 [$800afbb4]
 A3 = 00a6;
-800AFBA0	jal    $func43cc0
+800AFBA0	jal    $system_gpu_get_type
 800AFBA4	nop
 800AFBA8	bne    v0, s5, Lafbb4 [$800afbb4]
 A3 = 0036;
@@ -1660,11 +1663,11 @@ A0 = S1 + A0;
 A1 = 0;
 800AFBC8	jal    $system_gpu_create_texture_setting_packet
 A2 = 0001;
-800AFBD0	jal    $func43cc0
+800AFBD0	jal    $system_gpu_get_type
 800AFBD4	nop
 800AFBD8	beq    v0, s6, Lafbf4 [$800afbf4]
 A3 = 00a7;
-800AFBE0	jal    $func43cc0
+800AFBE0	jal    $system_gpu_get_type
 800AFBE4	nop
 800AFBE8	bne    v0, s5, Lafbf4 [$800afbf4]
 A3 = 0037;
@@ -1675,8 +1678,9 @@ Lafbf4:	; 800AFBF4
 A0 = 8010b44c;
 A0 = S1 + A0;
 A1 = 0;
-800AFC08	jal    $system_gpu_create_texture_setting_packet
-A2 = 0001;
+A2 = 1;
+system_gpu_create_texture_setting_packet();
+
 S1 = S1 + 0024;
 S3 = S3 + 003c;
 S2 = S2 + 003c;
@@ -1684,32 +1688,19 @@ S4 = S4 + 0001;
 V0 = S4 < 0002;
 800AFC24	bne    v0, zero, Lafa38 [$800afa38]
 S0 = S0 + 003c;
-V0 = 00ff;
-800AFC30	lui    at, $8011
-[AT + b488] = w(V0);
-800AFC38	lui    at, $8011
-[AT + b494] = w(V0);
-V0 = 0080;
-800AFC44	lui    at, $8011
-[AT + b484] = w(0);
-800AFC4C	lui    at, $8011
-[AT + b480] = w(0);
-800AFC54	lui    at, $8011
-[AT + b47c] = w(0);
-800AFC5C	lui    at, $8011
-[AT + b4a8] = w(0);
-800AFC64	lui    at, $8011
-[AT + b4a4] = w(0);
-800AFC6C	lui    at, $8011
-[AT + b4a0] = w(0);
-800AFC74	lui    at, $8011
-[AT + b490] = w(0);
-800AFC7C	lui    at, $8011
-[AT + b48c] = w(0);
-800AFC84	lui    at, $8011
-[AT + b49c] = w(V0);
-800AFC8C	lui    at, $8011
-[AT + b498] = w(V0);
+
+[8010b488] = w(ff);
+[8010b494] = w(ff);
+[8010b484] = w(0);
+[8010b480] = w(0);
+[8010b47c] = w(0);
+[8010b4a8] = w(0);
+[8010b4a4] = w(0);
+[8010b4a0] = w(0);
+[8010b490] = w(0);
+[8010b48c] = w(0);
+[8010b49c] = w(80);
+[8010b498] = w(80);
 ////////////////////////////////
 
 
@@ -1928,11 +1919,11 @@ S3 = 0001;
 S0 = 0;
 
 loopafffc:	; 800AFFFC
-800AFFFC	jal    $func43cc0
+800AFFFC	jal    $system_gpu_get_type
 800B0000	nop
 800B0004	beq    v0, s3, Lb0020 [$800b0020]
 800B0008	nop
-800B000C	jal    $func43cc0
+800B000C	jal    $system_gpu_get_type
 800B0010	nop
 V1 = 0002;
 800B0018	bne    v0, v1, Lb0030 [$800b0030]
@@ -1983,82 +1974,64 @@ SP = SP + 0030;
 ////////////////////////////////
 // funcb0098()
 
-V0 = w[8010b488];
-V1 = w[8010b494];
-
 S2 = A1;
-V0 = V0 < V1;
-800B00C4	beq    v0, zero, Lb0154 [$800b0154]
 
-[8010b47c] = w(A0);
-S1 = 0;
-S3 = 0001;
-S0 = 0;
+if( w[8010b488] < w[8010b494] )
+{
 
-loopb00e0:	; 800B00E0
-    800B00E0	jal    $func43cc0
+    [8010b47c] = w(A0);
 
-    800B00E8	beq    v0, s3, Lb0104 [$800b0104]
-    800B00EC	nop
-    800B00F0	jal    $func43cc0
-    800B00F4	nop
-    V1 = 0002;
-    800B00FC	bne    v0, v1, Lb0114 [$800b0114]
-    800B0100	nop
+    for( int i = 0; i < 2; ++i )
+    {
+        system_gpu_get_type();
 
-    Lb0104:	; 800B0104
-    800B0104	bne    s2, s3, Lb0120 [$800b0120]
-    A3 = 00a6;
-    800B010C	j      Lb0120 [$800b0120]
-    A3 = 0126;
+        if( ( V0 == 1 ) || ( V0 == 2 ) ) // check old GPU support
+        {
+            if( S2 == 1 )
+            {
+                A3 = 126;
+            }
+            else
+            {
+                A3 = a6;
+            }
+        }
+        else
+        {
+            if( S2 == 1 )
+            {
+                A3 = 56;
+            }
+            else
+            {
+                A3 = 36;
+            }
+        }
 
-    Lb0114:	; 800B0114
-    800B0114	bne    s2, s3, Lb0120 [$800b0120]
-    A3 = 0036;
-    A3 = 0056;
+        A0 = 8010b434 + i * 24; // buffer
+        A1 = 0; // display area
+        A2 = 1; // init value
+        A4 = 0; // window rect
+        system_gpu_create_texture_setting_packet();
+    }
+    return;
+}
 
-    Lb0120:	; 800B0120
-    [SP + 0010] = w(0);
-    A0 = 8010b434;
-    A0 = S0 + A0;
-    A1 = 0;
-    A2 = 0001;
-    system_gpu_create_texture_setting_packet();
-
-    S1 = S1 + 0001;
-    V0 = S1 < 0002;
-    S0 = S0 + 0024;
-800B0144	bne    v0, zero, loopb00e0 [$800b00e0]
-
-800B014C	j      Lb015c [$800b015c]
-800B0150	nop
-
-Lb0154:	; 800B0154
 [8010b47c] = w(0);
-
-Lb015c:	; 800B015C
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb017c
-800B017C
-A0 = A0 << 02;
-AT = 8010b488;
-AT = AT + A0;
-V0 = w[AT + 0000];
-AT = 8010b494;
-AT = AT + A0;
-V1 = w[AT + 0000];
-800B01A0	nop
-V0 = V0 < V1;
-V0 = V0 << 04;
-AT = 8010b47c;
-AT = AT + A0;
-[AT + 0000] = w(V0);
-800B01BC	jr     ra 
-800B01C0	nop
+// funcb017c()
+
+V0 = w[8010b488 + A0 * 4] < w[8010b494 + A0 * 4];
+
+[8010b47c + A0 * 4] = w(V0 << 4);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb01c4
 800B01C4
@@ -2304,12 +2277,12 @@ Lb0548:	; 800B0548
 V0 = 7904;
 
 Lb054c:	; 800B054C
-800B054C	jal    $func43cc0
+800B054C	jal    $system_gpu_get_type
 [S0 + 000e] = h(V0);
 V1 = 0001;
 800B0558	beq    v0, v1, Lb056c [$800b056c]
 V0 = 000f;
-800B0560	jal    $func43cc0
+800B0560	jal    $system_gpu_get_type
 800B0564	nop
 V0 = 000f;
 
@@ -6378,12 +6351,12 @@ V0 = bu[S3 + 0007];
 [S2 + 0025] = b(V0);
 [S2 + 001d] = b(V0);
 V0 = hu[S3 + 0008];
-800B3E8C	jal    $func43cc0
+800B3E8C	jal    $system_gpu_get_type
 [S2 + 000e] = h(V0);
 V1 = 0001;
 800B3E98	beq    v0, v1, Lb3eb4 [$800b3eb4]
 800B3E9C	nop
-800B3EA0	jal    $func43cc0
+800B3EA0	jal    $system_gpu_get_type
 800B3EA4	nop
 V1 = 0002;
 800B3EAC	bne    v0, v1, Lb3ecc [$800b3ecc]
@@ -9899,85 +9872,52 @@ if( A0 >= 3 ) // if not player models
 
 
 ////////////////////////////////
-// funcb7714
-800B7714
-V0 = A0 >> 08;
-800B7718	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 << 01;
-V0 = V0 & 01fe;
-V1 = A0 & 0001;
-V0 = V0 | V1;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V0 = 800bf5f0;
-V1 = V1 + V0;
-V0 = hu[V1 + 0006];
-800B7748	nop
-800B774C	lui    at, $800a
-[AT + abf6] = h(V0);
-V0 = hu[V1 + 0000];
-800B7758	nop
-800B775C	lui    at, $800a
-[AT + abf8] = h(V0);
-V0 = hu[V1 + 0002];
-800B7768	nop
-800B776C	lui    at, $800a
-[AT + abfa] = h(V0);
-V0 = hu[V1 + 0004];
-800B7778	lui    at, $8011
-[AT + 626c] = w(0);
-800B7780	lui    at, $8011
-[AT + 6270] = w(A0);
-800B7788	lui    at, $800a
-[AT + ac16] = h(V0);
-V0 = bu[V1 + 0008];
-800B7794	nop
-800B7798	lui    at, $800a
-[AT + ac18] = h(V0);
-800B77A0	jr     ra 
-800B77A4	nop
-////////////////////////////////
-// funcb77a8
-800B77A8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-800B77B4	lui    v0, $4000
-V0 = S0 & V0;
-800B77BC	beq    v0, zero, Lb77cc [$800b77cc]
-[SP + 0014] = w(RA);
-800B77C4	jal    funcb7714 [$800b7714]
-A0 = 2100;
+// wm_set_map_to_load()
 
-Lb77cc:	; 800B77CC
-V0 = 0001;
-800B77D0	lui    at, $8011
-[AT + 626c] = w(V0);
-800B77D8	lui    at, $8011
-[AT + 6274] = w(S0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800B77EC	jr     ra 
-800B77F0	nop
+gate_id = ((((A0 >> 8) - 1) << 1) & 01fe) | (A0 & 1);
+
+[8009abf4 + 2] = h(hu[800bf5f0 + gate_id * c + 6]); // map to load
+[8009abf4 + 4] = h(hu[800bf5f0 + gate_id * c + 0]); // destination x during map load
+[8009abf4 + 6] = h(hu[800bf5f0 + gate_id * c + 2]); // destination y during map load
+[8009abf4 + 22] = h(hu[800bf5f0 + gate_id * c + 4]); // destination z during map load
+[8009abf4 + 24] = h(bu[800bf5f0 + gate_id * c + 8]); // rotation for manual entity during map load
+
+[8011626c] = w(0);
+[80116270] = w(A0);
 ////////////////////////////////
-// funcb77f4
-V0 = 8009d268;
-[V0 + 0000] = w(A0);
-V0 = 0001;
-800B7804	lui    at, $8011
-[AT + 6278] = w(V0);
-V0 = 0001;
-800B7810	lui    at, $800a
-[AT + d2e7] = b(V0);
-800B7818	jr     ra 
-800B781C	nop
+
+
+
+////////////////////////////////
+// funcb77a8()
+
+S0 = A0;
+
+if( S0 & 40000000 )
+{
+    A0 = 2100; // record 21, scenario 0
+    wm_set_map_to_load();
+}
+
+[8011626c] = w(1);
+[80116274] = w(S0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb77f4()
+
+[8009d268] = w(A0);
+[80116278] = w(1);
+[8009d2e7] = b(1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcb7820()
+
 [80116278] = w(0);
 [8009c6e4 + c03] = b(0);
 ////////////////////////////////
@@ -9985,17 +9925,11 @@ V0 = 0001;
 
 
 ////////////////////////////////
-// funcb7838
-800B7838
-V0 = 0002;
-800B783C	lui    at, $8011
-[AT + 626c] = w(V0);
-800B7844	lui    at, $8011
-[AT + 6270] = w(0);
-800B784C	lui    at, $8011
-[AT + 6274] = w(0);
-800B7854	jr     ra 
-800B7858	nop
+// funcb7838()
+
+[8011626c] = w(2);
+[80116270] = w(0);
+[80116274] = w(0);
 ////////////////////////////////
 
 
@@ -10008,11 +9942,9 @@ return w[8011626c];
 
 
 ////////////////////////////////
-// funcb786c
-800B786C	lui    v0, $8011
-V0 = w[V0 + 6270];
-800B7874	jr     ra 
-800B7878	nop
+// funcb786c()
+
+return w[80116270];
 ////////////////////////////////
 
 

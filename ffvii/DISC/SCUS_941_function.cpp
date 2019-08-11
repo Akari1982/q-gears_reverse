@@ -1,33 +1,4 @@
 ﻿////////////////////////////////
-// func3cd9c()
-// patch C(06h) - ExceptionHandler()
-
-[80062ed0] = w(RA);
-
-system_bios_enter_critical_section();
-
-T2 = 00b0;
-T1 = 0056;
-8003CDB0	jalr   t2 ra // B(56h) GetC0Table()
-
-V0 = w[V0 + 18];
-T2 = 8003ce04; // new ExceptionHandler() func
-loop3cdcc:	; 8003CDCC
-    [V0] = w(w[T2]);
-    V0 = V0 + 4;
-    T2 = T2 + 4;
-8003CDD8	bne    t2, 8003ce3c, loop3cdcc [$8003cdcc]
-
-system_bios_flush_cache();
-
-system_bios_exit_critical_section();
-
-RA = w[80062ed0];
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_set_interrupt_mask_register()
 
 i_mask = w[8005153c]; // 1f801074 I_MASK - Interrupt mask register
