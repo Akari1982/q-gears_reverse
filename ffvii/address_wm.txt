@@ -186,7 +186,7 @@
 800e56b8 looks like main camera translation vector.
 
 
-800e5714 pointer to 80156000. We load MAP and BOT here (looks like block related).
+800e5714 pointer to 80156000. We load .MAP and .BOT here.
 800e5718 linked array (0x8 items 0x8 size).
     + 0 [][][][] next element. Last item ptr == 0.
 
