@@ -1454,7 +1454,7 @@ if( ( w[800e5648] - 2 ) >= 2 )
 {
     if( w[800e5634] != 3 )
     {
-        if( buttons & 000c ) // L1 R1
+        if( buttons & 000c ) // L1 R1 (rotate world map?)
         {
             A0 = 2;
             funca2088();
@@ -1464,8 +1464,7 @@ if( ( w[800e5648] - 2 ) >= 2 )
 
 if( model_id == 5 )
 {
-    // if cross is pressed
-    if( buttons & 0040 )
+    if( buttons & 0040 ) // cross
     {
         buttons = buttons & 0fff; // remove directional buttons
     }
@@ -1480,8 +1479,7 @@ if( V0 != 0 )
     {
         if( w[800e5648] != w[800e5634] )
         {
-            // if circle is pressed
-            if( buttons & 0020 )
+            if( buttons & 0020 ) // circle
             {
                 buttons = buttons & bfff; // remove down button
             }
@@ -1511,63 +1509,60 @@ else
 V0 = buttons & 0001;
 800A2380	beq    v0, zero, La23a0 [$800a23a0]
 V0 = buttons & 0002;
-V0 = w[800c84c8];
-V0 = V0 & 0001;
+V0 = ;
+V0 = w[800c84c8] & 1;
 800A2398	beq    v0, zero, La23c0 [$800a23c0]
 V0 = buttons & 0002;
 
 La23a0:	; 800A23A0
 800A23A0	beq    v0, zero, La242c [$800a242c]
 
-V0 = w[800c84c8] & 0002;
+V0 = w[800c84c8] & 2;
 800A23B8	bne    v0, zero, La242c [$800a242c]
 
 La23c0:	; 800A23C0
 A0 = w[800e5648];
-V0 = 0003;
-800A23CC	beq    a0, v0, La242c [$800a242c]
+if( A0 != 3 )
+{
+    if( w[800e563c] == 0 )
+    {
+        if( ( w[800e5634] - 2 ) >= 2 )
+        {
+            A0 = A0 < 1;
+            A0 = A0 * 2;
+            funca2088();
 
-V0 = w[800e563c];
-800A23E0	bne    v0, zero, La242c [$800a242c]
-
-V0 = w[800e5634] - 2;
-V0 = V0 < 0002;
-800A23FC	bne    v0, zero, La242c [$800a242c]
-A0 = A0 < 0001;
-800A2404	jal    funca2088 [$800a2088]
-A0 = A0 << 01;
-V0 = w[800e5648];
-800A2418	bne    v0, zero, La2424 [$800a2424]
-V1 = 00a0;
-V1 = 0078;
-
-La2424:	; 800A2424
-[800e564c] = w(V1);
+            if( w[800e5648] == 0 )
+            {
+                [800e564c] = w(78);
+            }
+            else
+            {
+                [800e564c] = w(a0);
+            }
+        }
+    }
+}
 
 La242c:	; 800A242C
 A0 = 2000; // submarine
 wm_is_pc_entity_model_in_mask();
 
-800A2434	beq    v0, zero, La2470 [$800a2470]
-V0 = 0002;
-V1 = w[800e5648];
-800A2444	nop
-800A2448	bne    v1, v0, La2474 [$800a2474]
-800A244C	addiu  v0, zero, $ffff (=-$1)
+if( V0 != 0 )
+{
+    if( w[800e5648] == 2 )
+    {
+        if( w[800e5634] != 2 )
+        {
+            if( buttons & 0020 ) // circle
+            {
+                buttons = buttons | 1000;
+            }
+        }
+    }
+}
 
-V0 = w[800e5634];
-800A2458	nop
-800A245C	beq    v0, v1, La2470 [$800a2470]
-V0 = buttons & 0020;
-800A2464	beq    v0, zero, La2474 [$800a2474]
-800A2468	addiu  v0, zero, $ffff (=-$1)
-buttons = buttons | 1000;
-
-La2470:	; 800A2470
-800A2470	addiu  v0, zero, $ffff (=-$1)
-
-La2474:	; 800A2474
-[800c84cc] = h(V0);
+[800c84cc] = h(-1);
 
 if( buttons & 8000 ) // if left is pressed
 {
@@ -1674,52 +1669,49 @@ V0 = V0 + V1;
 
 La2620:	; 800A2620
 800A2620	bne    s4, zero, La2788 [$800a2788]
-A0 = buttons >> 02;
+A0 = buttons >> 2;
 V0 = 0002;
 800A262C	bne    a1, v0, La2644 [$800a2644]
 A0 = A0 & 0001;
 800A2634	beq    v1, a1, La2644 [$800a2644]
 V0 = buttons & 4000;
-800A263C	bne    v0, zero, La2648 [$800a2648]
 V1 = buttons >> 0d;
+800A263C	bne    v0, zero, La2648 [$800a2648]
 
 La2644:	; 800A2644
 V1 = buttons >> 0f;
 
 La2648:	; 800A2648
-V1 = V1 & 0001;
-V1 = V1 + A0;
-800A2650	beq    v1, zero, La26d4 [$800a26d4]
+V1 = (V1 & 1) + A0;
+if( V1 != 0 )
+{
+    A1 = w[8011650c] * 8 * V1;
 
-V0 = w[8011650c];
-800A2660	nop
-V0 = V0 << 03;
-A1 = V0 * V1;
-V1 = 0002;
-V0 = w[800e5634];
-800A267C	bne    v0, v1, La268c [$800a268c]
-A0 = 0;
-V0 = buttons & 0004;
-A0 = V0 < 0001;
+    if( w[800e5634] == 2 )
+    {
+        if( buttons & 0004 ) // L1
+        {
+            A0 = 1;
+        }
+        else
+        {
+            A0 = 0;
+        }
+    }
+    else
+    {
+        A0 = 0;
+    }
 
-La268c:	; 800A268C
-V0 = buttons & 5000;
-800A2690	beq    v0, zero, La26b8 [$800a26b8]
-V1 = A1 >> A0;
-V0 = w[800e5608];
-800A26A0	nop
-V0 = V0 - V1;
-[800e5608] = w(V0);
-800A26B0	j      La26d8 [$800a26d8]
-
-La26b8:	; 800A26B8
-V0 = A1 << 1;
-V0 = V0 >> A0;
-V1 = w[800e5608] - V0;
-[800e5608] = w(V1);
-
-La26d4:	; 800A26D4
-La26d8:	; 800A26D8
+    if( buttons & 5000 ) // up down
+    {
+        [800e5608] = w(w[800e5608] - (A1 >> A0)); // camera rotation
+    }
+    else
+    {
+        [800e5608] = w(w[800e5608] - ((A1 * 2) >> A0));
+    }
+}
 
 A0 = buttons >> 03;
 V1 = w[800e5648];
@@ -2013,8 +2005,7 @@ V0 = A2 < V0;
 800A2AB0	addiu  s2, zero, $fff6 (=-$a)
 
 La2ab4:	; 800A2AB4
-800A2AB4	lui    v1, $800e
-V1 = w[V1 + 5634];
+V1 = w[800e5634];
 V0 = 0002;
 800A2AC0	bne    v1, v0, La2b60 [$800a2b60]
 
@@ -2572,7 +2563,7 @@ V0 = w[800e565c];
 800A332C	blez   v1, La335c [$800a335c]
 
 A0 = 3;
-800A3334	jal    funca2088 [$800a2088]
+funca2088();
 
 wm_get_model_id_from_pc_entity();
 
@@ -3053,8 +3044,7 @@ V1 = V1 >> 01;
 V0 = V0 < V1;
 800A39E4	bne    v0, zero, La3a08 [$800a3a08]
 V0 = 0002;
-800A39EC	lui    v1, $800e
-V1 = w[V1 + 5634];
+V1 = w[800e5634];
 800A39F4	nop
 800A39F8	beq    v1, v0, La3a08 [$800a3a08]
 V0 = 0001;
@@ -3107,8 +3097,7 @@ V1 = V1 + 0003;
 V1 = V1 < V0;
 800A3AA4	bne    v1, zero, La3c64 [$800a3c64]
 V0 = 0002;
-800A3AAC	lui    v1, $800e
-V1 = w[V1 + 5634];
+V1 = w[800e5634];
 800A3AB4	lui    at, $800e
 [AT + 563c] = w(0);
 800A3ABC	beq    v1, v0, La3acc [$800a3acc]
@@ -3232,14 +3221,12 @@ La3c64:	; 800A3C64
 
 ////////////////////////////////
 // funca3c74
-800A3C74	addiu  sp, sp, $ffe8 (=-$18)
-800A3C78	lui    v1, $800e
-V1 = w[V1 + 566c];
+
+V1 = w[800e566c];
 V0 = 0001;
 800A3C84	bne    v1, v0, La3dec [$800a3dec]
-[SP + 0010] = w(RA);
-800A3C8C	lui    v1, $800e
-V1 = w[V1 + 5634];
+
+V1 = w[800e5634];
 V0 = 0002;
 800A3C98	beq    v1, v0, La3dec [$800a3dec]
 
@@ -5568,11 +5555,10 @@ while( true )
 // funca5d00()
 
 S1 = A0;
-800A5D0C	lui    v0, $800e
-V0 = V0 + 5718;
-A1 = A1 - V0;
+A1 = A1 - 800e5718;
 A1 = A1 >> 03;
 A2 = A1 << 01;
+
 A2 = A2 + A1;
 A2 = A2 << 03;
 A2 = A2 - A1;
@@ -5581,7 +5567,6 @@ V1 = 80109a38;
 V1 = S1 - V1;
 V0 = w[800e5714]; // .MAP and .BOT file
 
-A1 = 800e5a38;
 A2 = A2 + V0;
 V0 = V1 << 02;
 V0 = V0 + V1;
@@ -5596,7 +5581,7 @@ V0 = V0 >> 03;
 S0 = V0 << 03;
 S0 = S0 + V0;
 S0 = S0 << 09;
-S0 = S0 + A1;
+S0 = S0 + 800e5a38;
 V0 = hu[S1 + 0012];
 V1 = hu[S1 + 0010];
 V0 = V0 & 0003;
@@ -5609,8 +5594,9 @@ A0 = w[V0 + 0000];
 A1 = S0;
 A0 = A0 >> 02;
 A0 = A0 << 02;
-800A5DC0	jal    funca5c08 [$800a5c08]
 A0 = A2 + A0;
+800A5DC0	jal    funca5c08 [$800a5c08]
+
 V0 = S0 + 0004;
 [S1 + 0004] = w(V0);
 V0 = hu[S0 + 0000];
@@ -8429,98 +8415,31 @@ loopa8538:	; 800A8538
     system_cdrom_read_chain();
 800A8540	bne    v0, zero, loopa8538 [$800a8538]
 
-T1 = 0;
-T4 = 92492493;
 [800e5760] = w(800e5738);
 [800e5764] = w(800e5738 - 20);
 [800e5730] = w(0);
-A2 = z_pos + T1;
 
-loopa8578:	; 800A8578
-    800A8578	mult   a2, t4
-    T0 = 0;
-    V1 = A2 & 0001;
-    V0 = V1 << 03;
-    T3 = V0 + V1;
-    A1 = x_pos;
-    V1 = A2 >> 1f;
-    800A8594	mfhi   v0
-    V0 = V0 + A2;
-    V0 = V0 >> 02;
-    V0 = V0 - V1;
-    V1 = V0 << 03;
-    V1 = V1 - V0;
-    V1 = A2 - V1;
-
-    V0 = V1 << 03;
-    T2 = V0 + V1;
-
-    loopa85b8:	; 800A85B8
-        V0 = T1 << 01;
-        V0 = V0 + T0;
-        A3 = V0 << 03;
+for( int i = 0; i < 2; ++i )
+{
+    for( int j = 0; j < 2; ++j )
+    {
+        A2 = z_pos + i;
+        A1 = x_pos + j;
 
         if( S2 == 2 )
         {
-            V1 = A2;
-            if( A2 < 0 )
-            {
-                V1 = A2 + 3;
-            }
-
-            V0 = 55555556;
-            800A85E4	mult   a1, v0
-            V0 = V1 >> 02;
-            V0 = V0 << 02;
-            V0 = A2 - V0;
-            V0 = V0 + 2;
-            A0 = V0 << 03;
-            A0 = A0 + V0;
-            V0 = A1 >> 1f;
-            800A8604	mfhi   v1
-            V1 = V1 - V0;
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = A1 - V0;
-            A0 = A0 + V0 + 3;
-            AT = 800e571c;
-            AT = AT + A3;
-            [AT + 0000] = h(A0);
+            [800e571c + i * 10 + j * 8] = h(((A2 - ((A2 / 4) * 4)) + 2) * 9 + A1 - ((A1 / 3) * 3) + 3);
+        }
+        else if( S2 == 3 )
+        {
+            [800e571c + i * 10 + j * 8] = h((A2 & 1) * 8 + (A1 & 1));
         }
         else
         {
-            V0 = 0003;
-            if( S2 == 3 )
-            {
-                V0 = A1 & 0001;
-                V0 = T3 + V0;
-            }
-            else
-            {
-                V0 = 38e38e39;
-                800A8654	mult   a1, v0
-                V0 = A1 >> 1f;
-                800A865C	mfhi   v1
-                V1 = V1 >> 01;
-                V1 = V1 - V0;
-                V0 = V1 << 03;
-                V0 = V0 + V1;
-                V0 = A1 - V0;
-                V0 = T2 + V0;
-            }
-
-            [800e571c + A3] = h(V0);
+            [800e571c + i * 10 + j * 8] = h((A2 - ((A2 / 7) * 7)) * 9 + A1 - ((A1 / 9) * 9));
         }
-
-        T0 = T0 + 0001;
-        A1 = A1 + 0001;
-        V0 = T0 < 0002;
-    800A8690	bne    v0, zero, loopa85b8 [$800a85b8]
-
-    T1 = T1 + 0001;
-    V0 = T1 < 0002;
-    A2 = z_pos + T1;
-800A86A0	bne    v0, zero, loopa8578 [$800a8578]
+    }
+}
 ////////////////////////////////
 
 
