@@ -1174,20 +1174,20 @@ return w[800e5634];
 
 ////////////////////////////////
 // funca1df0
-800A1DF0	addiu  sp, sp, $ff70 (=-$90)
-[SP + 0088] = w(S2);
+
 S2 = A0;
-[SP + 008c] = w(RA);
-[SP + 0084] = w(S1);
+
 800A1E04	jal    funca3304 [$800a3304]
-[SP + 0080] = w(S0);
+
 A0 = SP + 0010;
 S0 = SP + 0038;
 A1 = S0;
 [SP + 0010] = h(V0);
 [SP + 0014] = h(0);
-800A1E20	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0012] = h(0);
+
+system_gte_rotation_matrix_from_xyz();
+
 A0 = S0;
 S1 = SP + 0018;
 A1 = S1;
@@ -1228,19 +1228,6 @@ V0 = w[SP + 0030];
 V1 = V1 << 08;
 V0 = V0 << 04;
 800A1EC4	div    v1, v0
-800A1EC8	bne    v0, zero, La1ed4 [$800a1ed4]
-800A1ECC	nop
-800A1ED0	break   $01c00
-
-La1ed4:	; 800A1ED4
-800A1ED4	addiu  at, zero, $ffff (=-$1)
-800A1ED8	bne    v0, at, La1eec [$800a1eec]
-800A1EDC	lui    at, $8000
-800A1EE0	bne    v1, at, La1eec [$800a1eec]
-800A1EE4	nop
-800A1EE8	break   $01800
-
-La1eec:	; 800A1EEC
 800A1EEC	mflo   v1
 800A1EF0	nop
 800A1EF4	bgez   v1, La1f04 [$800a1f04]
@@ -1285,15 +1272,8 @@ A1 = S0;
 A0 = S0;
 800A1F80	lui    a2, $800e
 A2 = A2 + 5698;
-800A1F88	jal    $8003a79c
 A1 = S1;
-RA = w[SP + 008c];
-S2 = w[SP + 0088];
-S1 = w[SP + 0084];
-S0 = w[SP + 0080];
-SP = SP + 0090;
-800A1FA4	jr     ra 
-800A1FA8	nop
+800A1F88	jal    $8003a79c
 ////////////////////////////////
 
 
@@ -1848,34 +1828,28 @@ La289c:	; 800A289C
 [SP + 0064] = w(0);
 
 La28a0:	; 800A28A0
-V0 = buttons & 1000;
-800A28A4	beq    v0, zero, La28bc [$800a28bc]
-800A28A8	nop
-V0 = h[800c84d0];
-800A28B4	j      La28f0 [$800a28f0]
-V0 = 0 - V0;
-
-La28bc:	; 800A28BC
-V0 = buttons & 4000;
-800A28C0	beq    v0, zero, La28d8 [$800a28d8]
-800A28C4	nop
-800A28C8	lui    v0, $800d
-V0 = h[V0 + 84d0];
-800A28D0	j      La28f4 [$800a28f4]
-[SP + 0068] = w(V0);
-
-La28d8:	; 800A28D8
+if( buttons & 1000 ) // up
+{
+    [SP + 68] = w(0 - h[800c84d0]);
+}
+else if( buttons & 4000 ) // down
+{
+    [SP + 68] = w(h[800с84d0]);
+}
+else
+{
+    [SP + 68] = w(0);
+}
 800A28D8	j      La28f4 [$800a28f4]
-[SP + 0068] = w(0);
 
 La28e0:	; 800A28E0
 V0 = V1 << 10;
 V0 = V0 >> 10;
 V0 = 0 - V0;
-[SP + 0064] = w(0);
+[SP + 64] = w(0);
 
 La28f0:	; 800A28F0
-[SP + 0068] = w(V0);
+[SP + 68] = w(V0);
 
 La28f4:	; 800A28F4
 V0 = buttons & 0020;
@@ -1885,39 +1859,27 @@ V0 = buttons & 0020;
 S3 = 0;
 
 La2908:	; 800A2908
-800A2908	lui    v1, $800d
-V1 = h[V1 + 84cc];
-800A2910	nop
-800A2914	beq    v1, v0, La2938 [$800a2938]
-A1 = V1;
-800A291C	lui    a0, $800e
-A0 = hu[A0 + 5608];
-800A2924	nop
-A0 = A1 - A0;
-A0 = A0 << 10;
-800A2930	jal    funca94d0 [$800a94d0]
-A0 = A0 >> 10;
+if( h[800c84cc] != V0 )
+{
+    A0 = ((h[800c84cc] - hu[800e5608]) << 10) >> 10;
+    funca94d0(); // set active entity direction and rotation
+}
 
 La2938:	; 800A2938
-A0 = SP + 0038;
-V1 = hu[SP + 0064];
-A2 = hu[SP + 0068];
-V0 = hu[800e5608];
-A1 = SP + 0010;
-[SP + 0032] = h(0);
-[SP + 003c] = h(0);
-[SP + 0038] = h(0);
-V0 = 0 - V0;
-[SP + 0030] = h(V1);
-[SP + 0034] = h(A2);
-[SP + 003a] = h(V0);
+[SP + 30] = h(hu[SP + 64]); // x movement
+[SP + 32] = h(0);
+[SP + 34] = h(hu[SP + 68]); // z movement
 
+[SP + 38] = h(0);
+[SP + 3a] = h(0 - hu[800e5608]); // camera rotation
+[SP + 3c] = h(0);
+A0 = SP + 38;
+A1 = SP + 10;
 system_gte_rotation_matrix_from_xyz();
 
-[SP + 0050] = w(0);
-[SP + 0054] = w(0);
-[SP + 0058] = w(0);
-
+[SP + 50] = w(0);
+[SP + 54] = w(0);
+[SP + 58] = w(0);
 A0 = SP + 10;
 A1 = SP + 50;
 system_gte_copy_matrix_translation_part();
@@ -1928,16 +1890,15 @@ system_gte_set_rotation_matrix();
 A0 = SP + 10;
 system_gte_set_translation_vector();
 
-A0 = SP + 30;
-A1 = SP + 40;
-A2 = SP + 60;
+A0 = SP + 30; // movement
+A1 = SP + 40; // result
+A2 = SP + 60; // ret flag
 system_gte_rotate_and_translate_vector();
 
-V1 = w[SP + 0048];
-V0 = w[SP + 0040];
-[SP + 0068] = w(V1);
+[SP + 64] = w(w[SP + 40]); // new movement x
+[SP + 68] = w(w[SP + 48]); // new movement z
+
 V1 = w[800e5648];
-[SP + 0064] = w(V0);
 V0 = 0003;
 800A29C8	bne    v1, v0, La2ab4 [$800a2ab4]
 S2 = 0;
@@ -1953,14 +1914,13 @@ V0 = w[SP + 0054];
 800A29F0	nop
 V0 = V0 < 01f5;
 800A29F8	bne    v0, zero, La2a28 [$800a2a28]
-800A29FC	nop
-800A2A00	lui    v0, $800e
-V0 = w[V0 + 55f8];
-800A2A08	nop
+
+V0 = w[800e55f8];
+
 800A2A0C	beq    v0, zero, La2a28 [$800a2a28]
-800A2A10	nop
-800A2A14	jal    wm_get_pc_entity_terrain_id [$800a9a44]
-800A2A18	nop
+
+wm_get_pc_entity_terrain_id();
+
 V1 = 001b;
 800A2A20	bne    v0, v1, La2a44 [$800a2a44]
 800A2A24	nop
@@ -2225,10 +2185,7 @@ A0 = 0008;
 A1 = 0020;
 
 La2e00:	; 800A2E00
-800A2E00	lui    v0, $800d
-V0 = w[V0 + 84c8];
-800A2E08	nop
-V0 = V0 & f000;
+V0 = w[800c84c8] & f000;
 800A2E10	beq    v0, zero, La2e24 [$800a2e24]
 A0 = 0008;
 A1 = 0;
@@ -2257,9 +2214,9 @@ wm_get_pc_entity_terrain_id();
 
 V1 = 0003;
 800A2E74	bne    v0, v1, La2e8c [$800a2e8c]
-800A2E78	nop
+
 800A2E7C	jal    funca3dfc [$800a3dfc]
-800A2E80	nop
+
 800A2E84	j      La2eac [$800a2eac]
 
 La2e8c:	; 800A2E8C
@@ -2367,16 +2324,14 @@ wm_get_pc_entity_terrain_id();
 
 if( V0 == e ) // Wutai Bridge Rickety rope bridges south of Wutai.
 {
-    A0 = SP + 64;
-    A1 = SP + 68;
-    800A302C	jal    funcb37e0 [$800b37e0]
+    A0 = SP + 64; // movement x
+    A1 = SP + 68; // movement z
+    funcb37e0(); // do some x z movement addition
 }
 
 if( model_id == 5 ) // tiny bronco
 {
-    V0 = w[SP + 64] | w[SP + 68];
-
-    if( V0 != 0 )
+    if( ( w[SP + 64] | w[SP + 68] ) != 0 ) // if we do some movement
     {
         A0 = 1ed;
     }
@@ -2384,13 +2339,12 @@ if( model_id == 5 ) // tiny bronco
     {
         A0 = -1ed;
     }
-
-    800A305C	jal    funcb65e0 [$800b65e0]
+    funcb65e0(); // play some sound
 }
 
-A0 = w[SP + 0064];
-A1 = w[SP + 0068];
-wm_move_active_model();
+A0 = w[SP + 64];
+A1 = w[SP + 68];
+wm_move_active_entity(); // z needs to be recalculated
 
 800A3074	jal    funcaa640 [$800aa640]
 
@@ -2404,14 +2358,13 @@ wm_get_pc_entity_terrain_id();
 
 if( V0 == e ) // Wutai Bridge Rickety rope bridges south of Wutai.
 {
-    A0 = SP + 64;
-    A1 = SP + 68;
-    800A30A4	jal    funcb37e0 [$800b37e0]
-
+    A0 = SP + 64; // movement x
+    A1 = SP + 68; // movement z
+    funcb37e0(); // do some x z movement addition
 
     A0 = w[SP + 64];
     A1 = w[SP + 68];
-    wm_move_active_model();
+    wm_move_active_entity(); // z needs to be recalculated
 
     800A30BC	jal    funcaa640 [$800aa640]
 }
@@ -3798,9 +3751,9 @@ La447c:	; 800A447C
 
 
 ////////////////////////////////
-// funca44c4
-800A44C4	lui    v1, $800e
-V1 = w[V1 + 5618];
+// funca44c4()
+
+V1 = w[800e5618];
 800A44CC	nop
 800A44D0	beq    v1, zero, La44e8 [$800a44e8]
 V0 = 0001;
@@ -4193,7 +4146,7 @@ La4668:	; 800A4668
         [80116508] = w(V0);
 
         La4a74:	; 800A4A74
-        funca21b4();
+        funca21b4(); // button handle
 
         800A4A7C	jal    funca44c4 [$800a44c4]
 
@@ -4205,7 +4158,7 @@ La4668:	; 800A4668
 
         wm_script_run_all();
 
-        A0 = h[S3 + 0000];
+        A0 = h[S3];
         800A4AA0	jal    funca1df0 [$800a1df0]
 
         A0 = h[S3 + 0];

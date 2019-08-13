@@ -790,18 +790,14 @@ La94c8:	; 800A94C8
 
 
 ////////////////////////////////
-// funca94d0
-800A94D0	lui    v0, $8011
-V0 = w[V0 + ad3c];
-800A94D8	nop
-800A94DC	beq    v0, zero, La94ec [$800a94ec]
-800A94E0	nop
-[V0 + 0040] = h(A0);
-[V0 + 004c] = h(A0);
+// funca94d0()
 
-La94ec:	; 800A94EC
-800A94EC	jr     ra 
-800A94F0	nop
+active_entity = w[8010ad3c];
+if( active_entity != 0 )
+{
+    [active_entity + 40] = h(A0); // rotation of model
+    [active_entity + 4c] = h(A0); // direction of movement
+}
 ////////////////////////////////
 
 
@@ -1796,16 +1792,17 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funcaa304
-800AA304
-T0 = A0;
-800AA308	beq    t0, zero, Laa578 [$800aa578]
+// funcaa304()
+// height calculation?
+
+active_entity = T0 = A0;
+800AA308	beq    active_entity, zero, Laa578 [$800aa578]
 T1 = 0;
 800AA310	beq    a1, zero, Laa578 [$800aa578]
 800AA314	nop
-800AA318	beq    t0, a1, Laa578 [$800aa578]
+800AA318	beq    active_entity, a1, Laa578 [$800aa578]
 800AA31C	nop
-V0 = bu[T0 + 0051];
+V0 = bu[active_entity + 0051];
 800AA324	nop
 V0 = V0 & 0080;
 800AA32C	bne    v0, zero, Laa578 [$800aa578]
@@ -1815,7 +1812,7 @@ V0 = bu[A1 + 0051];
 V0 = V0 & 0080;
 800AA340	bne    v0, zero, Laa578 [$800aa578]
 800AA344	nop
-V0 = bu[T0 + 0050];
+V0 = bu[active_entity + 0050];
 800AA34C	nop
 V0 = V0 < 001a;
 800AA354	beq    v0, zero, Laa578 [$800aa578]
@@ -1836,7 +1833,7 @@ V0 = 0017;
 800AA390	nop
 800AA394	lui    v0, $0002
 A0 = w[A1 + 000c];
-V1 = w[T0 + 000c];
+V1 = w[active_entity + 000c];
 V0 = V0 | 4000;
 A2 = A0 - V1;
 V0 = V0 < A2;
@@ -1855,7 +1852,7 @@ A2 = A2 + V0;
 Laa3d0:	; 800AA3D0
 800AA3D0	lui    v0, $0001
 A0 = w[A1 + 0014];
-V1 = w[T0 + 0014];
+V1 = w[active_entity + 0014];
 V0 = V0 | c000;
 V1 = A0 - V1;
 V0 = V0 < V1;
@@ -1898,7 +1895,7 @@ A3 = A3 + A0;
 V0 = V1 < 0008;
 800AA45C	beq    v0, zero, Laa578 [$800aa578]
 800AA460	nop
-V0 = bu[T0 + 0050];
+V0 = bu[active_entity + 0050];
 800AA468	lui    a0, $800c
 A0 = A0 + 6678;
 V0 = V0 << 03;
@@ -1932,7 +1929,7 @@ Laa4cc:	; 800AA4CC
 800AA4D0	nop
 800AA4D4	lui    v0, $0002
 A0 = w[A1 + 000c];
-V1 = w[T0 + 001c];
+V1 = w[active_entity + 1c];
 V0 = V0 | 4000;
 A2 = A0 - V1;
 V0 = V0 < A2;
@@ -1951,7 +1948,7 @@ A2 = A2 + V0;
 Laa510:	; 800AA510
 800AA510	lui    v0, $0001
 A0 = w[A1 + 0014];
-V1 = w[T0 + 0024];
+V1 = w[active_entity + 24];
 V0 = V0 | c000;
 V1 = A0 - V1;
 V0 = V0 < V1;
@@ -1992,73 +1989,63 @@ V0 = T1;
 
 
 ////////////////////////////////
-// funcaa580
+// funcaa580()
 
-V0 = w[8010ad3c];
+active_entity = w[8010ad3c];
 
-[SP + 0014] = w(S1);
 S1 = 0;
-[SP + 0010] = w(S0);
 S0 = 0;
-800AA59C	beq    v0, zero, Laa61c [$800aa61c]
-[SP + 0018] = w(RA);
-V1 = bu[V0 + 0050];
-V0 = 000d;
-800AA5AC	bne    v1, v0, Laa5c4 [$800aa5c4]
-800AA5B0	nop
-800AA5B4	jal    funca1de0 [$800a1de0]
-800AA5B8	nop
-800AA5BC	beq    v0, zero, Laa620 [$800aa620]
-V0 = S1 < 0002;
+if( active_entity != 0 )
+{
+    if( bu[active_entity + 50] == d ) // submarine
+    {
+        funca1de0();
 
-Laa5c4:	; 800AA5C4
-800AA5C4	lui    s0, $8011
-S0 = w[S0 + ad38];
-800AA5CC	nop
-800AA5D0	beq    s0, zero, Laa620 [$800aa620]
-V0 = S1 < 0002;
+        if( V0 == 0 )
+        {
+            return S0 & (0 - (S1 < 2));
+        }
+    }
 
-loopaa5d8:	; 800AA5D8
-800AA5D8	lui    a0, $8011
-A0 = w[A0 + ad3c];
-800AA5E0	jal    funcaa304 [$800aa304]
-A1 = S0;
-S1 = V0;
-800AA5EC	bne    s1, zero, Laa604 [$800aa604]
-800AA5F0	nop
-S0 = w[S0 + 0000];
-800AA5F8	nop
-800AA5FC	bne    s0, zero, loopaa5d8 [$800aa5d8]
-800AA600	nop
+    S0 = w[8010ad38];
+    if( S0 != 0 )
+    {
+        loopaa5d8:	; 800AA5D8
+            A0 = active_entity;
+            A1 = S0;
+            800AA5E0	jal    funcaa304 [$800aa304]
 
-Laa604:	; 800AA604
-800AA604	beq    s0, zero, Laa620 [$800aa620]
-V0 = S1 < 0002;
-800AA60C	lui    v0, $8011
-V0 = w[V0 + ad3c];
-800AA614	nop
-[V0 + 0004] = w(S0);
+            S1 = V0;
+            if( S1 != 0 )
+            {
+                break;
+            }
 
-Laa61c:	; 800AA61C
-V0 = S1 < 0002;
+            S0 = w[S0 + 0];
+        800AA5FC	bne    s0, zero, loopaa5d8 [$800aa5d8]
 
-Laa620:	; 800AA620
-V0 = 0 - V0;
-V0 = S0 & V0;
+        if( S0 != 0 )
+        {
+            [active_entity + 4] = w(S0);
+        }
+    }
+}
+
+return S0 & (0 - (S1 < 2));
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcaa640
+// funcaa640()
 
 A0 = w[8010ad3c];
-800AA650	jal    funcaa580 [$800aa580]
+funcaa580()
 
 S0 = V0;
 if( S0 != 0 )
 {
-    800AA664	jal    funcaa1b8 [$800aa1b8]
+    funcaa1b8();
 }
 
 return S0;
@@ -2143,7 +2130,7 @@ A0 = S1;
 
 
 ////////////////////////////////
-// wm_move_active_model()
+// wm_move_active_entity()
 
 V1 = w[8010ad3c];
 if( V1 != 0 )

@@ -587,7 +587,7 @@
 // funcaa6d0
 800AA6D0-800AA7D8
 ////////////////////////////////
-// wm_move_active_model
+// wm_move_active_entity
 800AA7DC-800AA8D4
 ////////////////////////////////
 // funcaa8d8

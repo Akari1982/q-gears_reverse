@@ -370,6 +370,9 @@
 
 8010b3b8 [][][][] pointer to active point structure.
 
+8010cb18 [][][][] some x movement addition.
+8010cb1c [][][][] some z movement addition.
+
 801159e8 array of some data (0x2b items 0x1 size).
          -1 - not loaded.
           0 - pc character

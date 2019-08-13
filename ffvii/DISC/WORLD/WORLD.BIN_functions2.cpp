@@ -62,7 +62,7 @@ wm_rotate_vector_by_y_angle();
 
 A0 = h[SP + 10];
 A1 = h[SP + 14];
-wm_move_active_model();
+wm_move_active_entity();
 ////////////////////////////////
 
 
@@ -848,17 +848,21 @@ V0 = 0008;
 
 
 ////////////////////////////////
-// funcbc420
+// funcbc420()
 
 V1 = w[801164f8];
-V0 = V1 < 0002;
-800BC458	beq    v0, zero, Lbc9b4 [$800bc9b4]
-[SP + 0058] = h(A0);
-V0 = 0001;
+if( V1 >= 2 )
+{
+    return;
+}
+
+[SP + 58] = h(A0);
+
+V0 = 1;
 800BC464	bne    v1, v0, Lbc480 [$800bc480]
 A0 = 0008;
 800BC46C	jal    funca1de0 [$800a1de0]
-800BC470	nop
+
 800BC474	bne    v0, zero, Lbc480 [$800bc480]
 A0 = 0008;
 A0 = 0018;
@@ -869,54 +873,48 @@ V0 = A0 << 01;
 V0 = V0 + A0;
 V0 = V0 << 02;
 V0 = V0 - A0;
-V1 = 013c;
-S6 = V1 - V0;
-V1 = A0 << 03;
-V0 = 00dc;
-800BC4A8	jal    wm_get_current_render_buffer_id [$800a0bd4]
-S7 = V0 - V1;
-800BC4B0	jal    wm_get_model_id_from_pc_entity [$800a9174]
-S5 = V0;
-FP = V0;
+S6 = 13c - V0;
+V1 = A0 << 3;
+S7 = dc - V1;
+
+wm_get_current_render_buffer_id();
+buffer_id = V0;
+
+wm_get_model_id_from_pc_entity();
+model_id = V0;
+
 S1 = 0;
-V0 = S5 << 01;
-V0 = V0 + S5;
-S4 = V0 << 05;
-800BC4CC	lui    s2, $00ff
-S2 = S2 | ffff;
-800BC4D4	lui    s3, $ff00
+S4 = buffer_id * 60;
+S2 = 00ffffff;
+S3 = ff000000;
 
 loopbc4d8:	; 800BC4D8
 800BC4D8	beq    s1, zero, Lbc514 [$800bc514]
-800BC4DC	nop
-800BC4E0	lui    at, $800c
-AT = AT + 73dc;
-AT = AT + S1;
-A0 = bu[AT + 0000];
-800BC4F0	nop
-800BC4F4	beq    a0, fp, Lbc5f8 [$800bc5f8]
-800BC4F8	nop
-800BC4FC	jal    wm_set_active_entity_with_model_id [$800a993c]
-800BC500	nop
+
+A0 = bu[800c73dc + S1];
+
+800BC4F4	beq    a0, model_id, Lbc5f8 [$800bc5f8]
+
+wm_set_active_entity_with_model_id();
+
 800BC504	bne    v0, zero, Lbc51c [$800bc51c]
 800BC508	nop
 800BC50C	j      Lbc5fc [$800bc5fc]
 S1 = S1 + 0001;
 
 Lbc514:	; 800BC514
-800BC514	jal    wm_set_pc_entity_as_active_entity [$800a90ec]
-800BC518	nop
+wm_set_pc_entity_as_active_entity();
 
 Lbc51c:	; 800BC51C
-800BC51C	jal    wm_get_position_from_active_model [$800aa098]
-A0 = SP + 0028;
-800BC524	lui    a0, $8011
-A0 = w[A0 + 6500];
+A0 = SP + 28;
+wm_get_position_from_active_model();
+
+
+A0 = w[80116500];
 V0 = w[SP + 0028];
 800BC530	nop
 800BC534	mult   a0, v0
-800BC538	lui    v1, $8011
-V1 = V1 + 63f0;
+V1 = 801163f0;
 V0 = S1 << 04;
 V0 = V0 + V1;
 S0 = S4 + V0;
@@ -933,8 +931,10 @@ V0 = w[SP + 0030];
 V0 = V0 >> 0f;
 V0 = S7 + V0;
 800BC57C	addiu  v0, v0, $fffc (=-$4)
-800BC580	jal    $8003cedc
 [S0 + 000a] = h(V0);
+
+800BC580	jal    $8003cedc
+
 V1 = S1 << 02;
 800BC58C	beq    s1, zero, Lbc598 [$800bc598]
 V0 = V0 + V1;
@@ -942,8 +942,7 @@ V0 = V0 >> 01;
 
 Lbc598:	; 800BC598
 V1 = V0 & 0010;
-800BC59C	lui    v0, $8011
-V0 = w[V0 + 6500];
+V0 = w[80116500];
 800BC5A4	nop
 V0 = V0 < 0009;
 800BC5AC	bne    v0, zero, Lbc5bc [$800bc5bc]
@@ -956,8 +955,7 @@ V0 = V1 + 0004;
 
 Lbc5c0:	; 800BC5C0
 [S0 + 000d] = b(V0);
-800BC5C4	lui    a0, $800c
-A0 = w[A0 + d130];
+A0 = w[800bd130];
 V1 = w[S0 + 0000];
 V0 = w[A0 + 0000];
 V1 = V1 & S3;
@@ -976,16 +974,13 @@ S1 = S1 + 0001;
 Lbc5fc:	; 800BC5FC
 V0 = S1 < 0006;
 800BC600	bne    v0, zero, loopbc4d8 [$800bc4d8]
-V0 = S5 << 01;
-800BC608	lui    s3, $00ff
-S3 = S3 | ffff;
-800BC610	lui    a0, $8011
-A0 = A0 + 64c8;
-V0 = V0 + S5;
+V0 = buffer_id << 01;
+S3 = 00ffffff;
+A0 = 801164c8;
+V0 = V0 + buffer_id;
 V0 = V0 << 02;
 A0 = V0 + A0;
-800BC624	lui    a1, $800c
-A1 = w[A1 + d130];
+A1 = w[800bd130];
 800BC62C	lui    fp, $ff00
 [SP + 0060] = w(V0);
 V1 = w[A0 + 0000];
@@ -1010,18 +1005,14 @@ V1 = 0003;
 800BC680	nop
 
 Lbc684:	; 800BC684
-A0 = SP + 0028;
-V0 = S5 << 03;
-V0 = V0 - S5;
-V0 = V0 << 02;
-800BC694	lui    v1, $800c
-V1 = V1 + 738c;
-800BC69C	jal    wm_get_position_from_pc_model [$800aa0e0]
-S2 = V0 + V1;
-800BC6A4	lui    v1, $8011
-V1 = w[V1 + 6500];
-V0 = w[SP + 0028];
-800BC6B0	nop
+S2 = 800c738c + buffer_id * 1c;
+
+A0 = SP + 28;
+wm_get_position_from_pc_model();
+
+V1 = w[80116500];
+V0 = w[SP + 28];
+
 800BC6B4	mult   v1, v0
 800BC6B8	mflo   v0
 V0 = V0 >> 0f;
@@ -1040,21 +1031,26 @@ V0 = S7 + V0;
 T1 = hu[SP + 0058];
 [SP + 0012] = h(0);
 [SP + 0010] = h(0);
-800BC6FC	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0014] = h(T1);
+
+system_gte_rotation_matrix_from_xyz();
+
 A0 = S0;
 S4 = SP + 0018;
 A1 = S4;
 [SP + 0020] = w(0);
 [SP + 001c] = w(0);
-800BC718	jal    $system_gte_copy_matrix_translation_part
 [SP + 0018] = w(0);
-800BC720	jal    $system_gte_set_rotation_matrix
+
+system_gte_copy_matrix_translation_part();
+
 A0 = S0;
-800BC728	jal    $system_gte_set_translation_vector
+system_gte_set_rotation_matrix();
+
 A0 = S0;
-800BC730	lui    v1, $8011
-V1 = w[V1 + 6500];
+system_gte_set_translation_vector();
+
+V1 = w[80116500];
 V0 = 0008;
 800BC73C	bne    v1, v0, Lbc748 [$800bc748]
 A0 = SP + 0010;
@@ -1105,8 +1101,7 @@ V0 = V0 + V1;
 [S2 + 0018] = h(V0);
 V0 = hu[S2 + 000a];
 V1 = hu[SP + 001c];
-800BC7F8	lui    a1, $800c
-A1 = w[A1 + d130];
+A1 = w[800bd130];
 V0 = V0 + V1;
 V1 = w[S2 + 0000];
 [S2 + 001a] = h(V0);
@@ -1121,9 +1116,7 @@ V1 = V1 & FP;
 V1 = V1 | V0;
 [A1 + 0000] = w(V1);
 T1 = w[SP + 0060];
-800BC838	lui    a0, $8011
-A0 = A0 + 64e0;
-A0 = T1 + A0;
+A0 = 801164e0 + T1;
 V0 = w[A0 + 0000];
 V1 = V1 & S3;
 V0 = V0 & FP;
@@ -1136,92 +1129,36 @@ V0 = V0 | A0;
 [A1 + 0000] = w(V0);
 
 Lbc86c:	; 800BC86C
-800BC86C	lui    v1, $8011
-V1 = w[V1 + 6500];
-V0 = 0008;
-800BC878	bne    v1, v0, Lbc924 [$800bc924]
-A0 = V1 << 03;
-800BC880	lui    t0, $00ff
-T0 = T0 | ffff;
-A0 = S5 << 02;
-A0 = A0 + S5;
-A0 = A0 << 02;
-800BC894	lui    v0, $800c
-V0 = V0 + 7364;
-A0 = A0 + V0;
-800BC8A0	lui    a2, $800c
-A2 = w[A2 + d130];
-V1 = w[A0 + 0000];
-800BC8AC	lui    a3, $ff00
-[A0 + 0008] = h(S6);
-[A0 + 000a] = h(S7);
-V0 = w[A2 + 0000];
-V1 = V1 & A3;
-V0 = V0 & T0;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-A0 = A0 & T0;
-800BC8D0	lui    v1, $8011
-V1 = V1 + 64b0;
-V0 = S5 << 01;
-V0 = V0 + S5;
-V0 = V0 << 02;
-A1 = w[A2 + 0000];
-V0 = V0 + V1;
-A1 = A1 & A3;
-A1 = A1 | A0;
-[A2 + 0000] = w(A1);
-V1 = w[V0 + 0000];
-A1 = A1 & T0;
-V1 = V1 & A3;
-V1 = V1 | A1;
-[V0 + 0000] = w(V1);
-V1 = w[A2 + 0000];
-V0 = V0 & T0;
-V1 = V1 & A3;
-V1 = V1 | V0;
-800BC91C	j      Lbc9b4 [$800bc9b4]
-[A2 + 0000] = w(V1);
+V1 = w[80116500];
+if( V1 == 8 )
+{
+    [800c7364 + buffer_id * 14 + 8] = h(S6);
+    [800c7364 + buffer_id * 14 + a] = h(S7);
 
-Lbc924:	; 800BC924
-A1 = A0 + V1;
-A1 = S6 + A1;
-A0 = A0 - V1;
-A0 = S7 + A0;
-800BC934	lui    a3, $00ff
-A3 = A3 | ffff;
-V0 = S5 << 02;
-V0 = V0 + S5;
-V0 = V0 << 03;
-800BC948	lui    v1, $800c
-V1 = V1 + 7314;
-V0 = V0 + V1;
-[V0 + 0010] = h(A1);
-[V0 + 0020] = h(A1);
-800BC95C	lui    a1, $800c
-A1 = w[A1 + d130];
-V1 = S6;
-[V0 + 0008] = h(V1);
-[V0 + 0018] = h(V1);
-V1 = S7;
-[V0 + 001a] = h(A0);
-[V0 + 0022] = h(A0);
-A0 = w[V0 + 0000];
-800BC980	lui    a2, $ff00
-[V0 + 000a] = h(V1);
-[V0 + 0012] = h(V1);
-V1 = w[A1 + 0000];
-A0 = A0 & A2;
-V1 = V1 & A3;
-A0 = A0 | V1;
-[V0 + 0000] = w(A0);
-V1 = w[A1 + 0000];
-V0 = V0 & A3;
-V1 = V1 & A2;
-V1 = V1 | V0;
-[A1 + 0000] = w(V1);
+    A2 = w[800bd130];
+    [800c7364 + buffer_id * 14 + 0] = w((w[800c7364 + buffer_id * 14 + 0] & ff000000) | (w[A2] & 00ffffff));
+    A1 = (w[A2] & ff000000) | ((800c7364 + buffer_id * 14) & 00ffffff);
+    [A2] = w(A1);
 
-Lbc9b4:	; 800BC9B4
+    [801164b0 + buffer_id * с + 0] = w((w[801164b0 + buffer_id * с + 0] & ff000000) | (A1 & 00ffffff));
+    [A2] = w((w[A2] & ff000000) | ((801164b0 + buffer_id * с) & 00ffffff));
+}
+else
+{
+    A0 = V1 << 03;
+    [800c7314 + buffer_id * 28 + 8] = h(S6);
+    [800c7314 + buffer_id * 28 + a] = h(S7);
+    [800c7314 + buffer_id * 28 + 10] = h(S6 + A0 + V1);
+    [800c7314 + buffer_id * 28 + 12] = h(S7);
+    [800c7314 + buffer_id * 28 + 18] = h(S6);
+    [800c7314 + buffer_id * 28 + 1a] = h(S7 + A0 - V1);
+    [800c7314 + buffer_id * 28 + 20] = h(S6 + A0 + V1);
+    [800c7314 + buffer_id * 28 + 22] = h(S7 + A0 - V1);
+
+    A1 = w[800bd130];
+    [800c7314 + buffer_id * 28 + 0] = w((w[800c7314 + buffer_id * 28 + 0] & ff000000) | (w[A1] & 00ffffff));
+    [A1] = w((w[A1] & ff000000) | ((800c7314 + buffer_id * 28) & 00ffffff));
+}
 ////////////////////////////////
 
 
@@ -1232,7 +1169,7 @@ Lbc9b4:	; 800BC9B4
 [801164f8] = w((A0 << 10) >> 10);
 
 wm_get_model_id_from_pc_entity();
-if( V0 != 3 )
+if( V0 != 3 ) // not highwind
 {
     [801164fc] = w(w[801164f8]);
 }

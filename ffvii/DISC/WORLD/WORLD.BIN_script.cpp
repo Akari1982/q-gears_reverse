@@ -2181,7 +2181,7 @@ switch( opcode )
 
         A0 = h[SP + 10];
         A1 = h[SP + 14];
-        wm_move_active_model();
+        wm_move_active_entity();
 
         A0 = w[8010ad3c];
         [A0 + 44] = h(hu[A0 + 44] - b[A0 + 5c]);
