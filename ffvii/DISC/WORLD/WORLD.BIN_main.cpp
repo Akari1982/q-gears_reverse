@@ -1486,45 +1486,32 @@ else
     S1 = w[8011650c] * 1e;
 }
 
-V0 = buttons & 0001;
-800A2380	beq    v0, zero, La23a0 [$800a23a0]
-V0 = buttons & 0002;
-V0 = ;
-V0 = w[800c84c8] & 1;
-800A2398	beq    v0, zero, La23c0 [$800a23c0]
-V0 = buttons & 0002;
-
-La23a0:	; 800A23A0
-800A23A0	beq    v0, zero, La242c [$800a242c]
-
-V0 = w[800c84c8] & 2;
-800A23B8	bne    v0, zero, La242c [$800a242c]
-
-La23c0:	; 800A23C0
-A0 = w[800e5648];
-if( A0 != 3 )
+if( ( ( buttons & 0001 ) && ( ( w[800c84c8] & 0001 ) == 0 ) ) || ( ( buttons & 0002 ) && ( ( w[800c84c8] & 0002 ) == 0 ) ) ) // L2 R2
 {
-    if( w[800e563c] == 0 )
+    A0 = w[800e5648];
+    if( A0 != 3 )
     {
-        if( ( w[800e5634] - 2 ) >= 2 )
+        if( w[800e563c] == 0 )
         {
-            A0 = A0 < 1;
-            A0 = A0 * 2;
-            funca2088();
+            if( ( w[800e5634] - 2 ) >= 2 )
+            {
+                A0 = A0 < 1;
+                A0 = A0 * 2;
+                funca2088();
 
-            if( w[800e5648] == 0 )
-            {
-                [800e564c] = w(78);
-            }
-            else
-            {
-                [800e564c] = w(a0);
+                if( w[800e5648] == 0 )
+                {
+                    [800e564c] = w(78);
+                }
+                else
+                {
+                    [800e564c] = w(a0);
+                }
             }
         }
     }
 }
 
-La242c:	; 800A242C
 A0 = 2000; // submarine
 wm_is_pc_entity_model_in_mask();
 
@@ -1544,19 +1531,19 @@ if( V0 != 0 )
 
 [800c84cc] = h(-1);
 
-if( buttons & 8000 ) // if left is pressed
+if( buttons & 8000 ) // left
 {
     [SP + 64] = w(-S1);
     [800c84cc] = h(-400);
 }
 
-if( buttons & 2000 ) // if right is pressed
+if( buttons & 2000 ) // right
 {
     [SP + 64] = w(S1);
     [800c84cc] = h(400);
 }
 
-if( buttons & 1000 ) // if up is pressed
+if( buttons & 1000 ) // up
 {
     A1 = hu[800c84cc];
     A0 = A1 << 10;
@@ -1584,7 +1571,7 @@ if( buttons & 1000 ) // if up is pressed
     }
 }
 
-if( buttons & 4000 ) // if down is pressed
+if( buttons & 4000 ) // down
 {
     A1 = hu[800c84cc];
     A0 = A1 << 10;
@@ -1622,56 +1609,138 @@ V0 = 0003;
 800A25BC	bne    v1, v0, La2d9c [$800a2d9c]
 
 La25c4:	; 800A25C4
-A0 = 0003;
-800A25C8	bne    a1, a0, La25d4 [$800a25d4]
-V0 = buttons & 0080;
-S4 = 0 < V0;
+if( A1 == 3 )
+{
+    S4 = 0 < (buttons & 0080); // square
+}
 
-La25d4:	; 800A25D4
-V1 = w[800e5634];
-800A25E0	bne    v1, a0, La2620 [$800a2620]
-V0 = buttons & 0020;
-A1 = 0;
-800A25EC	beq    v0, zero, La2608 [$800a2608]
-A0 = buttons & f000;
-V0 = w[800c84c8];
-V0 = V0 & 0020;
+if( w[800e5634] == 3 )
+{
+    if( buttons & 0020 ) // circle
+    {
+        A1 = (w[800c84c8] & 0020) < 1; // circle
+    }
+    else
+    {
+        A1 = 0;
+    }
 
-La2604:	; 800A2604
-A1 = V0 < 0001;
+    A0 = buttons & f000;
+    800A2608	jal    funcb307c [$800b307c]
 
-La2608:	; 800A2608
-800A2608	jal    funcb307c [$800b307c]
+    [800e5608] = w(w[800e5608] + V0);
+}
+else
+{
+    if( S4 == 0 )
+    {
+        if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
+        {
+            V1 = (buttons >> d) & 1; // right
+        }
+        else
+        {
+            V1 = (buttons >> f) & 1; // left
+        }
+
+        A0 = (buttons >> 2) & 1; // L1
+        V1 = V1 + A0;
+        if( V1 != 0 )
+        {
+            A1 = w[8011650c] * 8 * V1;
+
+            if( w[800e5634] == 2 )
+            {
+                if( buttons & 0004 ) // L1
+                {
+                    A0 = 1;
+                }
+                else
+                {
+                    A0 = 0;
+                }
+            }
+            else
+            {
+                A0 = 0;
+            }
+
+            if( buttons & 5000 ) // up down
+            {
+                [800e5608] = w(w[800e5608] - (A1 >> A0)); // camera rotation
+            }
+            else
+            {
+                [800e5608] = w(w[800e5608] - ((A1 * 2) >> A0));
+            }
+        }
+
+        if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
+        {
+            V1 = (buttons >> f) & 1; // left
+        }
+        else
+        {
+            V1 = (buttons >> d) & 1; // right
+        }
+
+        A0 = (buttons >> 3) & 1; // R1
+        V1 = V1 + A0;
+        if( V1 != 0 )
+        {
+            A1 = w[8011650c] * 8 * V1;
+
+            if( w[800e5634] == 2 )
+            {
+                A0 = (buttons & 0008) < 1;
+            }
+            else
+            {
+                A0 = 0;
+            }
+
+            if( buttons & 5000 ) // up down
+            {
+                [800e5608] = w(w[800e5608] + (A1 >> A0));
+            }
+            else
+            {
+                [800e5608] = w(w[800e5608] + ((A1 << 1) >> A0));
+            }
+        }
+    }
+}
 
 V1 = w[800e5608];
-V0 = V0 + V1;
-800A2618	j      La2780 [$800a2780]
-
-La2620:	; 800A2620
-800A2620	bne    s4, zero, La2788 [$800a2788]
-A0 = buttons >> 2;
-V0 = 0002;
-800A262C	bne    a1, v0, La2644 [$800a2644]
-A0 = A0 & 0001;
-800A2634	beq    v1, a1, La2644 [$800a2644]
-V0 = buttons & 4000;
-V1 = buttons >> 0d;
-800A263C	bne    v0, zero, La2648 [$800a2648]
-
-La2644:	; 800A2644
-V1 = buttons >> 0f;
-
-La2648:	; 800A2648
-V1 = (V1 & 1) + A0;
-if( V1 != 0 )
+if( V1 < 0 )
 {
-    A1 = w[8011650c] * 8 * V1;
+    [800e5608] = w(V1 + 1000);
+}
+else if( V1 >= 1000 )
+{
+    [800e5608] = w(V1 - 1000);
+}
 
-    if( w[800e5634] == 2 )
+if( buttons & 8000 ) // left
+{
+    S3 = 80;
+}
+else if( buttons & 2000 ) // right
+{
+    S3 = -80;
+}
+else
+{
+    S3 = 0;
+}
+
+if( ( w[800e5648] == 3 ) || ( w[800e5634] == 2 ) )
+{
+    if( S4 != 0 )
     {
-        if( buttons & 0004 ) // L1
+        if( buttons & f000 ) // up down left right
         {
-            A0 = 1;
+            A0 = S1;
         }
         else
         {
@@ -1680,192 +1749,74 @@ if( V1 != 0 )
     }
     else
     {
-        A0 = 0;
+        if( buttons & 0020 ) // circle
+        {
+            A0 = S1;
+        }
+        else
+        {
+            A0 = 0;
+        }
     }
 
-    if( buttons & 5000 ) // up down
+    if( w[800e5634] != 2 )
     {
-        [800e5608] = w(w[800e5608] - (A1 >> A0)); // camera rotation
+        [800c84d0] = h((A0 + h[800c84d0] * 3) >> 2);
     }
     else
     {
-        [800e5608] = w(w[800e5608] - ((A1 * 2) >> A0));
+        [800c84d0] = h(A0);
     }
-}
 
-A0 = buttons >> 03;
-V1 = w[800e5648];
-V0 = 0002;
-800A26E4	bne    v1, v0, La2708 [$800a2708]
-A0 = A0 & 0001;
-V0 = w[800e5634];
-800A26F4	nop
-800A26F8	beq    v0, v1, La2708 [$800a2708]
-V0 = buttons & 4000;
-800A2700	bne    v0, zero, La270c [$800a270c]
-V1 = buttons >> 0f;
+    // movement
+    if( S4 != 0 )
+    {
+        if( buttons & 8000 ) // left
+        {
+            [SP + 64] = w(0 - ((V1 << 10) >> 10));
+        }
+        else if( buttons & 2000 ) // right
+        {
+            [SP + 64] = w((V1 << 10) >> 10);
+        }
+        else
+        {
+            [SP + 64] = w(0);
+        }
 
-La2708:	; 800A2708
-V1 = buttons >> 0d;
+        if( buttons & 1000 ) // up
+        {
+            [SP + 68] = w(0 - h[800c84d0]);
+        }
+        else if( buttons & 4000 ) // down
+        {
+            [SP + 68] = w(h[800с84d0]);
+        }
+        else
+        {
+            [SP + 68] = w(0);
+        }
+    }
+    else
+    {
+        [SP + 64] = w(0);
+        [SP + 68] = w(0 - ((V1 << 10) >> 10));
+    }
 
-La270c:	; 800A270C
-V1 = V1 & 0001;
-V1 = V1 + A0;
-800A2714	beq    v1, zero, La2788 [$800a2788]
-
-V0 = w[8011650c] << 03;
-800A272C	mult   v0, v1
-V1 = 0002;
-V0 = w[800e5634];
-800A273C	mflo   a1
-800A2740	bne    v0, v1, La2750 [$800a2750]
-A0 = 0;
-V0 = buttons & 0008;
-A0 = V0 < 0001;
-
-La2750:	; 800A2750
-V0 = buttons & 5000;
-800A2754	beq    v0, zero, La276c [$800a276c]
-V0 = A1 >> A0;
-
-La275c:	; 800A275C
-V1 = w[800e5608];
-800A2764	j      La2780 [$800a2780]
-V0 = V0 + V1;
-
-La276c:	; 800A276C
-V0 = A1 << 01;
-V1 = w[800e5608];
-V0 = V0 >> A0;
-V0 = V0 + V1;
-
-La2780:	; 800A2780
-[800e5608] = w(V0);
-
-La2788:	; 800A2788
-V1 = w[800e5608];
-800A2794	bgez   v1, La27a4 [$800a27a4]
-V0 = V1 < 1000;
-800A279C	j      La27b0 [$800a27b0]
-V0 = V1 + 1000;
-
-La27a4:	; 800A27A4
-800A27A4	bne    v0, zero, La27bc [$800a27bc]
-V0 = buttons & 8000;
-800A27AC	addiu  v0, v1, $f000 (=-$1000)
-
-La27b0:	; 800A27B0
-[800e5608] = w(V0);
-V0 = buttons & 8000;
-
-La27bc:	; 800A27BC
-800A27BC	beq    v0, zero, La27cc [$800a27cc]
-S3 = 0;
-800A27C4	j      La27dc [$800a27dc]
-S3 = 0080;
-
-La27cc:	; 800A27CC
-V0 = buttons & 2000;
-800A27D0	beq    v0, zero, La27dc [$800a27dc]
-800A27D4	nop
-800A27D8	addiu  s3, zero, $ff80 (=-$80)
-
-La27dc:	; 800A27DC
-V1 = w[800e5648];
-V0 = 0003;
-800A27E8	beq    v1, v0, La2804 [$800a2804]
-V0 = 0002;
-V1 = w[800e5634];
-800A27F8	nop
-800A27FC	bne    v1, v0, La2908 [$800a2908]
-800A2800	addiu  v0, zero, $ffff (=-$1)
-
-La2804:	; 800A2804
-800A2804	beq    s4, zero, La281c [$800a281c]
-V0 = buttons & f000;
-800A280C	bne    v0, zero, La282c [$800a282c]
-A0 = S1;
-800A2814	j      La282c [$800a282c]
-A0 = 0;
-
-La281c:	; 800A281C
-V0 = buttons & 0020;
-800A2820	bne    v0, zero, La282c [$800a282c]
-A0 = S1;
-A0 = 0;
-
-La282c:	; 800A282C
-V1 = w[800e5634];
-V0 = 0002;
-800A2838	beq    v1, v0, La285c [$800a285c]
-V1 = A0;
-V1 = h[800c84d0];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 + A0;
-V1 = V0 >> 02;
-
-La285c:	; 800A285C
-[800c84d0] = h(V1);
-800A2864	beq    s4, zero, La28e0 [$800a28e0]
-V0 = buttons & 8000;
-800A286C	beq    v0, zero, La2884 [$800a2884]
-V0 = V1 << 10;
-V0 = V0 >> 10;
-V0 = 0 - V0;
-800A287C	j      La28a0 [$800a28a0]
-[SP + 0064] = w(V0);
-
-La2884:	; 800A2884
-V0 = buttons & 2000;
-800A2888	beq    v0, zero, La289c [$800a289c]
-V0 = V1 << 10;
-V0 = V0 >> 10;
-800A2894	j      La28a0 [$800a28a0]
-[SP + 0064] = w(V0);
-
-La289c:	; 800A289C
-[SP + 0064] = w(0);
-
-La28a0:	; 800A28A0
-if( buttons & 1000 ) // up
-{
-    [SP + 68] = w(0 - h[800c84d0]);
-}
-else if( buttons & 4000 ) // down
-{
-    [SP + 68] = w(h[800с84d0]);
+    if( ( buttons & 0020 ) == 0 )
+    {
+        S3 = 0;
+    }
 }
 else
 {
-    [SP + 68] = w(0);
-}
-800A28D8	j      La28f4 [$800a28f4]
-
-La28e0:	; 800A28E0
-V0 = V1 << 10;
-V0 = V0 >> 10;
-V0 = 0 - V0;
-[SP + 64] = w(0);
-
-La28f0:	; 800A28F0
-[SP + 68] = w(V0);
-
-La28f4:	; 800A28F4
-V0 = buttons & 0020;
-800A28F8	bne    v0, zero, La2938 [$800a2938]
-800A28FC	nop
-800A2900	j      La2938 [$800a2938]
-S3 = 0;
-
-La2908:	; 800A2908
-if( h[800c84cc] != V0 )
-{
-    A0 = ((h[800c84cc] - hu[800e5608]) << 10) >> 10;
-    funca94d0(); // set active entity direction and rotation
+    if( h[800c84cc] != -1 )
+    {
+        A0 = ((h[800c84cc] - hu[800e5608]) << 10) >> 10;
+        funca94d0(); // set active entity direction and rotation
+    }
 }
 
-La2938:	; 800A2938
 [SP + 30] = h(hu[SP + 64]); // x movement
 [SP + 32] = h(0);
 [SP + 34] = h(hu[SP + 68]); // z movement
@@ -1933,25 +1884,22 @@ V0 = A1 < A2;
 V0 = buttons & 4000;
 
 La2a44:	; 800A2A44
-800A2A44	lui    v0, $8011
-V0 = w[V0 + 650c];
-S2 = 000a;
+V0 = w[8011650c];
+S2 = a;
 A0 = V0 << 01;
 A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 + V0;
 A0 = A0 << 01;
-800A2A64	jal    funca9820 [$800a9820]
 A0 = 0 - A0;
+800A2A64	jal    funca9820 [$800a9820]
+
 800A2A6C	j      La2ab4 [$800a2ab4]
-800A2A70	nop
 
 La2a74:	; 800A2A74
 800A2A74	beq    v0, zero, La2ab4 [$800a2ab4]
-800A2A78	nop
-800A2A7C	lui    v0, $8011
-V0 = w[V0 + 650c];
-800A2A84	nop
+
+V0 = w[8011650c];
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 03;
@@ -1959,10 +1907,12 @@ V1 = V1 + V0;
 A0 = V1 << 01;
 V0 = A1 - A0;
 V0 = A2 < V0;
-800A2AA4	beq    v0, zero, La2ab4 [$800a2ab4]
-800A2AA8	nop
-800A2AAC	jal    funca9820 [$800a9820]
-800A2AB0	addiu  s2, zero, $fff6 (=-$a)
+if( V0 != 0 )
+{
+    800A2AB0	addiu  s2, zero, $fff6 (=-$a)
+
+    800A2AAC	jal    funca9820 [$800a9820]
+}
 
 La2ab4:	; 800A2AB4
 V1 = w[800e5634];
@@ -1974,19 +1924,15 @@ wm_get_position_from_pc_model();
 
 V0 = buttons & 1000;
 800A2AD4	beq    v0, zero, La2b28 [$800a2b28]
-V0 = buttons & 4000;
-V0 = w[SP + 0054];
-800A2AE0	nop
-V0 = V0 < ec79;
+
+V0 = w[SP + 54] < ec79;
 800A2AE8	bne    v0, zero, La2b28 [$800a2b28]
-V0 = buttons & 4000;
-800A2AF0	lui    v0, $800e
-V0 = w[V0 + 55f8];
+
+V0 = w[800e55f8];
 800A2AF8	nop
 800A2AFC	beq    v0, zero, La2b28 [$800a2b28]
-V0 = buttons & 4000;
-800A2B04	lui    v0, $8011
-V0 = w[V0 + 650c];
+
+V0 = w[8011650c];
 S2 = 000a;
 A0 = V0 << 04;
 
@@ -1996,42 +1942,35 @@ A0 = A0 << 01;
 A0 = 0 - A0;
 800A2B1C	jal    funca9820 [$800a9820]
 
-V0 = buttons & 4000;
-
 La2b28:	; 800A2B28
-800A2B28	beq    v0, zero, La2b60 [$800a2b60]
-800A2B2C	nop
-V0 = w[SP + 0054];
-800A2B34	nop
-V0 = V0 < f448;
-800A2B3C	beq    v0, zero, La2b60 [$800a2b60]
-800A2B40	nop
-800A2B44	lui    v0, $8011
-V0 = w[V0 + 650c];
-800A2B4C	addiu  s2, zero, $fff6 (=-$a)
-A0 = V0 << 04;
-A0 = A0 - V0;
-800A2B58	jal    funca9820 [$800a9820]
-A0 = A0 << 01;
+if( buttons & 4000 ) // down
+{
+    if( w[SP + 54] < f448 )
+    {
+        V0 = w[8011650c];
+        800A2B4C	addiu  s2, zero, $fff6 (=-$a)
+        A0 = V0 << 04;
+        A0 = A0 - V0;
+        A0 = A0 << 01;
+        800A2B58	jal    funca9820 [$800a9820]
+    }
+}
 
 La2b60:	; 800A2B60
-800A2B60	lui    v1, $800e
-V1 = w[V1 + 5648];
+V1 = w[800e5648];
 V0 = 0003;
 800A2B6C	bne    v1, v0, La2c68 [$800a2c68]
 800A2B70	nop
 800A2B74	jal    funca984c [$800a984c]
 S1 = 0;
 800A2B7C	beq    v0, zero, La2ba8 [$800a2ba8]
-800A2B80	nop
-800A2B84	lui    v0, $800e
-V0 = w[V0 + 5654];
-800A2B8C	nop
-800A2B90	bgez   v0, La2b9c [$800a2b9c]
-800A2B94	nop
-V0 = 0 - V0;
 
-La2b9c:	; 800A2B9C
+V0 = w[800e5654];
+if( V0 < 0 )
+{
+    V0 = 0 - V0;
+}
+
 V0 = V0 < 0010;
 800A2BA0	beq    v0, zero, La2bb0 [$800a2bb0]
 800A2BA4	nop
@@ -2044,20 +1983,19 @@ La2bb0:	; 800A2BB0
 S1 = 0001;
 
 La2bb4:	; 800A2BB4
-V1 = w[8011650c];
-V0 = 0001;
-800A2BC0	bne    v1, v0, La2bd4 [$800a2bd4]
-A0 = S1 << 01;
-V0 = A0 | 0001;
-A1 = V0 + 0003;
-800A2BCC	j      La2bd8 [$800a2bd8]
+if( w[8011650c] == 1 )
+{
+    A0 = S1 << 01;
+    V0 = A0 | 0001;
+    A1 = V0 + 0003;
+}
+else
+{
+    A0 = S1 << 01;
+    A1 = A0 + 0003;
+}
 
-La2bd4:	; 800A2BD4
-A1 = A0 + 0003;
-
-La2bd8:	; 800A2BD8
-A0 = 0001;
-V0 = A0 << A1;
+V0 = 1 << A1;
 V1 = w[800e5654];
 800A2BE8	addiu  v0, v0, $ffff (=-$1)
 800A2BEC	mult   v0, v1
@@ -2067,7 +2005,7 @@ V0 = V0 + V1;
 V0 = V0 + S2;
 V0 = V0 >> 02;
 800A2C0C	addiu  v1, a1, $ffff (=-$1)
-A0 = A0 << V1;
+A0 = 1 << V1;
 [800c84c4] = w(V0);
 800A2C1C	mflo   v0
 V0 = V0 + S3;
@@ -2107,55 +2045,48 @@ V0 = 0003;
 800A2CAC	addiu  v0, zero, $ffff (=-$1)
 V1 = h[800c84cc];
 800A2CB8	nop
-800A2CBC	beq    v1, v0, La2d34 [$800a2d34]
-A0 = V1;
-V0 = A0 + 800;
-[800c84cc] = h(V0);
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0801;
-800A2CDC	bne    v0, zero, La2cf4 [$800a2cf4]
-V0 = buttons & 4000;
-800A2CE4	addiu  v0, a0, $f800 (=-$800)
-[800c84cc] = h(V0);
-V0 = buttons & 4000;
 
-La2cf4:	; 800A2CF4
-800A2CF4	bne    v0, zero, La2d18 [$800a2d18]
-V1 = 0800;
-V0 = hu[800c84cc];
-V0 = V0 << 10;
-V0 = V0 >> 11;
-[800c84cc] = h(V0);
+if( V1 != V0 )
+{
+    A0 = V1;
+    V0 = A0 + 800;
+    [800c84cc] = h(V0);
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
 
-La2d18:	; 800A2D18
-V0 = h[800c84cc];
-[800e5668] = w(V0);
-800A2D2C	j      La2d4c [$800a2d4c]
+    if( V0 >= 801 )
+    {
+        800A2CE4	addiu  v0, a0, $f800 (=-$800)
+        [800c84cc] = h(V0);
+    }
 
-La2d34:	; 800A2D34
-V0 = hu[800e5668];
-[800c84cc] = h(V0);
-V1 = 0800;
+    V0 = buttons & 4000;
+    if( V0 == 0 )
+    {
+        [800c84cc] = h(h[800c84cc] >> 1);
+    }
 
-La2d4c:	; 800A2D4C
-V0 = w[800e5608];
-A0 = w[800e5648];
-V1 = V1 - V0;
-V0 = 0002;
-800A2D64	bne    a0, v0, La2d90 [$800a2d90]
+    [800e5668] = w(h[800c84cc]);
+}
+else
+{
+    [800c84cc] = h(hu[800e5668]);
+}
 
-V0 = w[800e5634];
+V1 = 800 - w[800e5608];
 
-800A2D78	beq    v0, a0, La2d90 [$800a2d90]
+if( w[800e5648] == 2 )
+{
+    if( w[800e5634] != 2 )
+    {
+        V0 = h[800c84cc];
+        V1 = V1 + V0;
+    }
+}
 
-V0 = h[800c84cc];
-V1 = V1 + V0;
-
-La2d90:	; 800A2D90
 A0 = V1 << 10;
-800A2D94	j      La2dc4 [$800a2dc4]
 A0 = A0 >> 10;
+800A2D94	j      La2dc4 [$800a2dc4]
 
 La2d9c:	; 800A2D9C
 V0 = w[800e5654];
@@ -2229,55 +2160,40 @@ if( V0 == 3 ) // Sea Deep water, only gold chocobo and submarine can go here.
 
 La2ea8:	; 800A2EA8
 La2eac:	; 800A2EAC
-V0 = buttons & 0800;
 
-800A2EAC	beq    v0, zero, La2ecc [$800a2ecc]
-V0 = buttons & 0100;
-V0 = w[800c84c8];
-V0 = V0 & 0800;
-800A2EC4	beq    v0, zero, La2eec [$800a2eec]
-V0 = buttons & 0100;
+if( ( ( buttons & 0800 ) && ( ( w[800c84c8] & 0800 ) == 0 ) ) || ( ( buttons & 0100 ) && ( ( w[800c84c8] & 0100 ) == 0 ) ) ) // L2 R2
+{
+    V0 = w[800e5634];
+    if( V0 == 0 )
+    {
+        800A2F00	jal    funcbca38 [$800bca38]
 
-La2ecc:	; 800A2ECC
-800A2ECC	beq    v0, zero, La2f64 [$800a2f64]
+        V1 = 55555556;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        V0 = V0 + 0001;
+        800A2F1C	mult   v0, v1
+        V1 = V0 >> 1f;
+        800A2F24	mfhi   a0
+        A0 = A0 - V1;
+        V1 = A0 << 01;
+        V1 = V1 + A0;
+        V0 = V0 - V1;
+        V0 = V0 << 10;
+        A0 = V0 >> 10;
+    }
+    else
+    {
+        800A2F44	jal    funcbca38 [$800bca38]
 
-V0 = w[800c84c8];
-800A2EDC	nop
-V0 = V0 & 0100;
-800A2EE4	bne    v0, zero, La2f64 [$800a2f64]
+        V0 = V0 << 10;
+        V0 = V0 < 1;
+        A0 = V0 << 01;
+    }
 
-La2eec:	; 800A2EEC
-V0 = w[800e5634];
-800A2EF8	bne    v0, zero, La2f44 [$800a2f44]
+    800A2F58	jal    funcbc9e8 [$800bc9e8]
+}
 
-800A2F00	jal    funcbca38 [$800bca38]
-
-V1 = 55555556;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 + 0001;
-800A2F1C	mult   v0, v1
-V1 = V0 >> 1f;
-800A2F24	mfhi   a0
-A0 = A0 - V1;
-V1 = A0 << 01;
-V1 = V1 + A0;
-V0 = V0 - V1;
-V0 = V0 << 10;
-800A2F3C	j      La2f58 [$800a2f58]
-A0 = V0 >> 10;
-
-La2f44:	; 800A2F44
-800A2F44	jal    funcbca38 [$800bca38]
-800A2F48	nop
-V0 = V0 << 10;
-V0 = V0 < 0001;
-A0 = V0 << 01;
-
-La2f58:	; 800A2F58
-800A2F58	jal    funcbc9e8 [$800bc9e8]
-
-La2f64:	; 800A2F64
 if( buttons & 0010 ) // triangle pressed
 {
     if( ( w[800c84c8] & 0010 ) == 0 ) // and was not pressed before
@@ -2375,42 +2291,35 @@ if( w[800e5648] != 3 )
     [800e55f0] = w(((w[800e55f0] * 3) + w[800e564c]) / 4);
 }
 
-A0 = w[800e5608];
-V1 = w[800e560c];
-800A3110	addiu  v0, a0, $f800 (=-$800)
-V0 = V1 < V0;
-800A3118	bne    v0, zero, La3130 [$800a3130]
-V0 = V1 + 1000;
-V0 = A0 + 0800;
-V0 = V0 < V1;
-800A3128	beq    v0, zero, La3138 [$800a3138]
-800A312C	addiu  v0, v1, $f000 (=-$1000)
+if( ( w[800e5608] - 800 ) > w[800e560c] )
+{
+    [800e560c] = w(w[800e560c] + 1000);
+}
+else if( ( w[800e5608] + 800 ) < w[800e560c] )
+{
+    [800e560c] = w(w[800e560c] - 1000);
+}
 
-La3130:	; 800A3130
-[800e560c] = w(V0);
-
-La3138:	; 800A3138
-V1 = w[8011650c];
-if( V1 == 1 )
+if( w[8011650c] == 1 )
 {
     V0 = w[800e560c];
     A0 = w[800e5608];
     V1 = V0 << 05;
     V1 = V1 - V0;
     V1 = V1 + A0;
-    V1 = V1 >> 05;
+    V1 = V1 >> 5;
+    [800e560c] = w(V1);
 }
 else
 {
     V0 = w[800e560c];
     A0 = w[800e5608];
-    V1 = V0 << 04;
+    V1 = V0 << 4;
     V1 = V1 - V0;
     V1 = V1 + A0;
-    V1 = V1 >> 04;
+    V1 = V1 >> 4;
+    [800e560c] = w(V1);
 }
-
-[800e560c] = w(V1);
 ////////////////////////////////
 
 
