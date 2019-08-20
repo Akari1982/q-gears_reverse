@@ -1404,8 +1404,7 @@ return w[800e55fc];
 
 
 ////////////////////////////////
-// funca21b4()
-// button handle
+// wm_handle_buttons()
 
 [SP + 64] = w(0);
 [SP + 68] = w(0);
@@ -1415,877 +1414,809 @@ wm_set_pc_entity_as_active_entity();
 wm_get_model_id_from_pc_entity();
 model_id = V0;
 
-V1 = w[800e55fc];
-
-800A21F4	beq    v1, zero, La3090 [$800a3090]
-
-V0 = w[800e5628];
-
-800A2208	bgtz   v0, La307c [$800a307c]
-
-800A2210	jal    funca82f0 [$800a82f0]
-
-800A2218	beq    v0, zero, La307c [$800a307c]
-
-system_get_buttons_with_config_remap();
-buttons = V0;
-
-if( ( w[800e5648] - 2 ) >= 2 )
+if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 {
-    if( w[800e5634] != 3 )
+    800A2210	jal    funca82f0 [$800a82f0]
+
+    if( V0 != 0 )
     {
-        if( buttons & 000c ) // L1 R1 (rotate world map?)
+        system_get_buttons_with_config_remap();
+        buttons = V0;
+
+        if( ( w[800e5648] - 2 ) >= 2 )
         {
-            A0 = 2;
-            funca2088();
-        }
-    }
-}
-
-if( model_id == 5 )
-{
-    if( buttons & 0040 ) // cross
-    {
-        buttons = buttons & 0fff; // remove directional buttons
-    }
-}
-
-A0 = 2000; // submarine
-wm_is_pc_entity_model_in_mask();
-
-if( V0 != 0 )
-{
-    if( w[800e5648] == 2 )
-    {
-        if( w[800e5648] != w[800e5634] )
-        {
-            if( buttons & 0020 ) // circle
+            if( w[800e5634] != 3 )
             {
-                buttons = buttons & bfff; // remove down button
-            }
-        }
-    }
-}
-
-funca9240(); // check chokobo models and some else
-
-if( ( V0 != 0 ) || ( model_id == 5 ) ) // tiny bronco
-{
-    S1 = w[8011650c] * 3c;
-}
-else if( model_id == 3 ) // highwind
-{
-    S1 = w[8011650c] * 78;
-}
-else if( model_id == 6 ) // buggy
-{
-    S1 = w[8011650c] * 2d;
-}
-else
-{
-    S1 = w[8011650c] * 1e;
-}
-
-if( ( ( buttons & 0001 ) && ( ( w[800c84c8] & 0001 ) == 0 ) ) || ( ( buttons & 0002 ) && ( ( w[800c84c8] & 0002 ) == 0 ) ) ) // L2 R2
-{
-    A0 = w[800e5648];
-    if( A0 != 3 )
-    {
-        if( w[800e563c] == 0 )
-        {
-            if( ( w[800e5634] - 2 ) >= 2 )
-            {
-                A0 = A0 < 1;
-                A0 = A0 * 2;
-                funca2088();
-
-                if( w[800e5648] == 0 )
+                if( buttons & 000c ) // L1 R1 (rotate world map?)
                 {
-                    [800e564c] = w(78);
-                }
-                else
-                {
-                    [800e564c] = w(a0);
+                    A0 = 2;
+                    funca2088();
                 }
             }
         }
-    }
-}
 
-A0 = 2000; // submarine
-wm_is_pc_entity_model_in_mask();
-
-if( V0 != 0 )
-{
-    if( w[800e5648] == 2 )
-    {
-        if( w[800e5634] != 2 )
+        if( model_id == 5 )
         {
-            if( buttons & 0020 ) // circle
+            if( buttons & 0040 ) // cross
             {
-                buttons = buttons | 1000;
+                buttons = buttons & 0fff; // remove directional buttons
             }
         }
-    }
-}
 
-[800c84cc] = h(-1);
+        A0 = 2000; // submarine
+        wm_is_pc_entity_model_in_mask();
 
-if( buttons & 8000 ) // left
-{
-    [SP + 64] = w(-S1);
-    [800c84cc] = h(-400);
-}
-
-if( buttons & 2000 ) // right
-{
-    [SP + 64] = w(S1);
-    [800c84cc] = h(400);
-}
-
-if( buttons & 1000 ) // up
-{
-    A1 = hu[800c84cc];
-    A0 = A1 << 10;
-    V1 = A0 >> 10;
-    if( V1 == -1 )
-    {
-        [SP + 68] = w(-S1);
-        [800c84cc] = h(800);
-    }
-    else
-    {
-        V0 = S1 * 3;
-        V0 = 0 - V0;
-        V0 = V0 >> 02;
-        [SP + 68] = w(V0);
-        V0 = A0 >> 11;
-        V0 = A1 + V0;
-        [800c84cc] = h(V0);
-
-        V1 = w[SP + 64]
-        V0 = V1 << 01;
-        V0 = V0 + V1;
-        V0 = V0 >> 02;
-        [SP + 64] = w(V0);
-    }
-}
-
-if( buttons & 4000 ) // down
-{
-    A1 = hu[800c84cc];
-    A0 = A1 << 10;
-    V1 = A0 >> 10;
-
-    if( V1 == -1 )
-    {
-        [SP + 68] = w(S1);
-        [800c84cc] = h(0);
-    }
-    else
-    {
-        V0 = S1 << 01;
-        V0 = V0 + S1;
-        V0 = V0 >> 02;
-        [SP + 0068] = w(V0);
-        V0 = A0 >> 11;
-        V1 = w[SP + 0064];
-        V0 = A1 - V0;
-        [800c84cc] = h(V0);
-        V0 = V1 << 01;
-        V0 = V0 + V1;
-        V0 = V0 >> 02;
-        [SP + 0064] = w(V0);
-    }
-}
-
-A1 = w[800e5648];
-800A25A0	addiu  v0, a1, $fffe (=-$2)
-V0 = V0 < 0002;
-800A25A8	bne    v0, zero, La25c4 [$800a25c4]
-S4 = 0;
-V1 = w[800e5634];
-V0 = 0003;
-800A25BC	bne    v1, v0, La2d9c [$800a2d9c]
-
-La25c4:	; 800A25C4
-if( A1 == 3 )
-{
-    S4 = 0 < (buttons & 0080); // square
-}
-
-if( w[800e5634] == 3 )
-{
-    if( buttons & 0020 ) // circle
-    {
-        A1 = (w[800c84c8] & 0020) < 1; // circle
-    }
-    else
-    {
-        A1 = 0;
-    }
-
-    A0 = buttons & f000;
-    800A2608	jal    funcb307c [$800b307c]
-
-    [800e5608] = w(w[800e5608] + V0);
-}
-else
-{
-    if( S4 == 0 )
-    {
-        if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
+        if( V0 != 0 )
         {
-            V1 = (buttons >> d) & 1; // right
-        }
-        else
-        {
-            V1 = (buttons >> f) & 1; // left
-        }
-
-        A0 = (buttons >> 2) & 1; // L1
-        V1 = V1 + A0;
-        if( V1 != 0 )
-        {
-            A1 = w[8011650c] * 8 * V1;
-
-            if( w[800e5634] == 2 )
+            if( w[800e5648] == 2 )
             {
-                if( buttons & 0004 ) // L1
+                if( w[800e5648] != w[800e5634] )
                 {
-                    A0 = 1;
-                }
-                else
-                {
-                    A0 = 0;
-                }
-            }
-            else
-            {
-                A0 = 0;
-            }
-
-            if( buttons & 5000 ) // up down
-            {
-                [800e5608] = w(w[800e5608] - (A1 >> A0)); // camera rotation
-            }
-            else
-            {
-                [800e5608] = w(w[800e5608] - ((A1 * 2) >> A0));
-            }
-        }
-
-        if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
-        {
-            V1 = (buttons >> f) & 1; // left
-        }
-        else
-        {
-            V1 = (buttons >> d) & 1; // right
-        }
-
-        A0 = (buttons >> 3) & 1; // R1
-        V1 = V1 + A0;
-        if( V1 != 0 )
-        {
-            A1 = w[8011650c] * 8 * V1;
-
-            if( w[800e5634] == 2 )
-            {
-                A0 = (buttons & 0008) < 1;
-            }
-            else
-            {
-                A0 = 0;
-            }
-
-            if( buttons & 5000 ) // up down
-            {
-                [800e5608] = w(w[800e5608] + (A1 >> A0));
-            }
-            else
-            {
-                [800e5608] = w(w[800e5608] + ((A1 << 1) >> A0));
-            }
-        }
-    }
-}
-
-V1 = w[800e5608];
-if( V1 < 0 )
-{
-    [800e5608] = w(V1 + 1000);
-}
-else if( V1 >= 1000 )
-{
-    [800e5608] = w(V1 - 1000);
-}
-
-if( buttons & 8000 ) // left
-{
-    S3 = 80;
-}
-else if( buttons & 2000 ) // right
-{
-    S3 = -80;
-}
-else
-{
-    S3 = 0;
-}
-
-if( ( w[800e5648] == 3 ) || ( w[800e5634] == 2 ) )
-{
-    if( S4 != 0 )
-    {
-        if( buttons & f000 ) // up down left right
-        {
-            A0 = S1;
-        }
-        else
-        {
-            A0 = 0;
-        }
-    }
-    else
-    {
-        if( buttons & 0020 ) // circle
-        {
-            A0 = S1;
-        }
-        else
-        {
-            A0 = 0;
-        }
-    }
-
-    if( w[800e5634] != 2 )
-    {
-        [800c84d0] = h((A0 + h[800c84d0] * 3) >> 2);
-    }
-    else
-    {
-        [800c84d0] = h(A0);
-    }
-
-    // movement
-    if( S4 != 0 )
-    {
-        if( buttons & 8000 ) // left
-        {
-            [SP + 64] = w(0 - ((V1 << 10) >> 10));
-        }
-        else if( buttons & 2000 ) // right
-        {
-            [SP + 64] = w((V1 << 10) >> 10);
-        }
-        else
-        {
-            [SP + 64] = w(0);
-        }
-
-        if( buttons & 1000 ) // up
-        {
-            [SP + 68] = w(0 - h[800c84d0]);
-        }
-        else if( buttons & 4000 ) // down
-        {
-            [SP + 68] = w(h[800с84d0]);
-        }
-        else
-        {
-            [SP + 68] = w(0);
-        }
-    }
-    else
-    {
-        [SP + 64] = w(0);
-        [SP + 68] = w(0 - ((V1 << 10) >> 10));
-    }
-
-    if( ( buttons & 0020 ) == 0 )
-    {
-        S3 = 0;
-    }
-}
-else
-{
-    if( h[800c84cc] != -1 )
-    {
-        A0 = ((h[800c84cc] - hu[800e5608]) << 10) >> 10;
-        funca94d0(); // set active entity direction and rotation
-    }
-}
-
-[SP + 30] = h(hu[SP + 64]); // x movement
-[SP + 32] = h(0);
-[SP + 34] = h(hu[SP + 68]); // z movement
-
-[SP + 38] = h(0);
-[SP + 3a] = h(0 - hu[800e5608]); // camera rotation
-[SP + 3c] = h(0);
-A0 = SP + 38;
-A1 = SP + 10;
-system_gte_rotation_matrix_from_xyz();
-
-[SP + 50] = w(0);
-[SP + 54] = w(0);
-[SP + 58] = w(0);
-A0 = SP + 10;
-A1 = SP + 50;
-system_gte_copy_matrix_translation_part();
-
-A0 = SP + 10;
-system_gte_set_rotation_matrix();
-
-A0 = SP + 10;
-system_gte_set_translation_vector();
-
-A0 = SP + 30; // movement
-A1 = SP + 40; // result
-A2 = SP + 60; // ret flag
-system_gte_rotate_and_translate_vector();
-
-[SP + 64] = w(w[SP + 40]); // new movement x
-[SP + 68] = w(w[SP + 48]); // new movement z
-
-V1 = w[800e5648];
-V0 = 0003;
-800A29C8	bne    v1, v0, La2ab4 [$800a2ab4]
-S2 = 0;
-800A29D0	bne    s4, zero, La2ab4 [$800a2ab4]
-
-A0 = SP + 50;
-wm_get_position_from_pc_model();
-
-V0 = buttons & 1000;
-800A29E4	beq    v0, zero, La2a28 [$800a2a28]
-800A29E8	nop
-V0 = w[SP + 0054];
-800A29F0	nop
-V0 = V0 < 01f5;
-800A29F8	bne    v0, zero, La2a28 [$800a2a28]
-
-V0 = w[800e55f8];
-
-800A2A0C	beq    v0, zero, La2a28 [$800a2a28]
-
-wm_get_pc_entity_terrain_id();
-
-V1 = 001b;
-800A2A20	bne    v0, v1, La2a44 [$800a2a44]
-800A2A24	nop
-
-La2a28:	; 800A2A28
-A2 = w[SP + 0054];
-A1 = w[800e5640];
-V0 = A1 < A2;
-800A2A3C	beq    v0, zero, La2a74 [$800a2a74]
-V0 = buttons & 4000;
-
-La2a44:	; 800A2A44
-V0 = w[8011650c];
-S2 = a;
-A0 = V0 << 01;
-A0 = A0 + V0;
-A0 = A0 << 03;
-A0 = A0 + V0;
-A0 = A0 << 01;
-A0 = 0 - A0;
-800A2A64	jal    funca9820 [$800a9820]
-
-800A2A6C	j      La2ab4 [$800a2ab4]
-
-La2a74:	; 800A2A74
-800A2A74	beq    v0, zero, La2ab4 [$800a2ab4]
-
-V0 = w[8011650c];
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 + V0;
-A0 = V1 << 01;
-V0 = A1 - A0;
-V0 = A2 < V0;
-if( V0 != 0 )
-{
-    800A2AB0	addiu  s2, zero, $fff6 (=-$a)
-
-    800A2AAC	jal    funca9820 [$800a9820]
-}
-
-La2ab4:	; 800A2AB4
-V1 = w[800e5634];
-V0 = 0002;
-800A2AC0	bne    v1, v0, La2b60 [$800a2b60]
-
-A0 = SP + 50;
-wm_get_position_from_pc_model();
-
-V0 = buttons & 1000;
-800A2AD4	beq    v0, zero, La2b28 [$800a2b28]
-
-V0 = w[SP + 54] < ec79;
-800A2AE8	bne    v0, zero, La2b28 [$800a2b28]
-
-V0 = w[800e55f8];
-800A2AF8	nop
-800A2AFC	beq    v0, zero, La2b28 [$800a2b28]
-
-V0 = w[8011650c];
-S2 = 000a;
-A0 = V0 << 04;
-
-La2b14:	; 800A2B14
-A0 = A0 - V0;
-A0 = A0 << 01;
-A0 = 0 - A0;
-800A2B1C	jal    funca9820 [$800a9820]
-
-La2b28:	; 800A2B28
-if( buttons & 4000 ) // down
-{
-    if( w[SP + 54] < f448 )
-    {
-        V0 = w[8011650c];
-        800A2B4C	addiu  s2, zero, $fff6 (=-$a)
-        A0 = V0 << 04;
-        A0 = A0 - V0;
-        A0 = A0 << 01;
-        800A2B58	jal    funca9820 [$800a9820]
-    }
-}
-
-La2b60:	; 800A2B60
-V1 = w[800e5648];
-V0 = 0003;
-800A2B6C	bne    v1, v0, La2c68 [$800a2c68]
-800A2B70	nop
-800A2B74	jal    funca984c [$800a984c]
-S1 = 0;
-800A2B7C	beq    v0, zero, La2ba8 [$800a2ba8]
-
-V0 = w[800e5654];
-if( V0 < 0 )
-{
-    V0 = 0 - V0;
-}
-
-V0 = V0 < 0010;
-800A2BA0	beq    v0, zero, La2bb0 [$800a2bb0]
-800A2BA4	nop
-
-La2ba8:	; 800A2BA8
-800A2BA8	beq    s3, zero, La2bb4 [$800a2bb4]
-800A2BAC	nop
-
-La2bb0:	; 800A2BB0
-S1 = 0001;
-
-La2bb4:	; 800A2BB4
-if( w[8011650c] == 1 )
-{
-    A0 = S1 << 01;
-    V0 = A0 | 0001;
-    A1 = V0 + 0003;
-}
-else
-{
-    A0 = S1 << 01;
-    A1 = A0 + 0003;
-}
-
-V0 = 1 << A1;
-V1 = w[800e5654];
-800A2BE8	addiu  v0, v0, $ffff (=-$1)
-800A2BEC	mult   v0, v1
-V1 = w[800c84c4];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 + S2;
-V0 = V0 >> 02;
-800A2C0C	addiu  v1, a1, $ffff (=-$1)
-A0 = 1 << V1;
-[800c84c4] = w(V0);
-800A2C1C	mflo   v0
-V0 = V0 + S3;
-V0 = V0 + A0;
-A0 = hu[800c84c4];
-V0 = V0 >> A1;
-[800e5654] = w(V0);
-A2 = hu[800e5654];
-A0 = A0 + 0004;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-A1 = A2 << 12;
-A1 = A1 >> 10;
-A2 = 0 - A2;
-A2 = A2 << 11;
-A2 = A2 >> 10;
-800A2C60	jal    funcaa8d8 [$800aa8d8]
-
-La2c68:	; 800A2C68
-if( S3 == 0 )
-{
-    V0 = w[800e5654];
-    if( V0 < 0 )
-    {
-        V0 = 0 - V0;
-    }
-
-    if( V0 < 5 )
-    {
-        [800e5654] = w(0);
-    }
-}
-
-V1 = w[800e5634];
-V0 = 0003;
-800A2CA8	beq    v1, v0, La2dcc [$800a2dcc]
-800A2CAC	addiu  v0, zero, $ffff (=-$1)
-V1 = h[800c84cc];
-800A2CB8	nop
-
-if( V1 != V0 )
-{
-    A0 = V1;
-    V0 = A0 + 800;
-    [800c84cc] = h(V0);
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-
-    if( V0 >= 801 )
-    {
-        800A2CE4	addiu  v0, a0, $f800 (=-$800)
-        [800c84cc] = h(V0);
-    }
-
-    V0 = buttons & 4000;
-    if( V0 == 0 )
-    {
-        [800c84cc] = h(h[800c84cc] >> 1);
-    }
-
-    [800e5668] = w(h[800c84cc]);
-}
-else
-{
-    [800c84cc] = h(hu[800e5668]);
-}
-
-V1 = 800 - w[800e5608];
-
-if( w[800e5648] == 2 )
-{
-    if( w[800e5634] != 2 )
-    {
-        V0 = h[800c84cc];
-        V1 = V1 + V0;
-    }
-}
-
-A0 = V1 << 10;
-A0 = A0 >> 10;
-800A2D94	j      La2dc4 [$800a2dc4]
-
-La2d9c:	; 800A2D9C
-V0 = w[800e5654];
-A0 = h[800c84cc];
-V0 = V0 >> 01;
-[800e5654] = w(V0);
-800A2DB8	addiu  v0, zero, $ffff (=-$1)
-800A2DBC	beq    a0, v0, La2dd0 [$800a2dd0]
-V0 = 0006;
-
-La2dc4:	; 800A2DC4
-800A2DC4	jal    funca94d0 [$800a94d0]
-800A2DC8	nop
-
-La2dcc:	; 800A2DCC
-V0 = 0006;
-
-La2dd0:	; 800A2DD0
-800A2DD0	bne    model_id, v0, La2e24 [$800a2e24]
-V0 = buttons & f000;
-800A2DD8	beq    v0, zero, La2e00 [$800a2e00]
-
-V0 = w[800c84c8] & f000;
-800A2DF0	bne    v0, zero, La2e24 [$800a2e24]
-A0 = 0008;
-800A2DF8	j      La2e1c [$800a2e1c]
-A1 = 0020;
-
-La2e00:	; 800A2E00
-V0 = w[800c84c8] & f000;
-800A2E10	beq    v0, zero, La2e24 [$800a2e24]
-A0 = 0008;
-A1 = 0;
-
-La2e1c:	; 800A2E1C
-800A2E1C	jal    funcb65a4 [$800b65a4]
-800A2E20	nop
-
-La2e24:	; 800A2E24
-A0 = 2000; // submarine
-wm_is_pc_entity_model_in_mask();
-
-800A2E2C	beq    v0, zero, La2ea8 [$800a2ea8]
-V0 = buttons & 0040;
-800A2E34	beq    v0, zero, La2eac [$800a2eac]
-
-V0 = w[800с84c8];
-V0 = V0 & 0040;
-800A2E4C	bne    v0, zero, La2eac [$800a2eac]
-
-V1 = w[800e5634];
-V0 = 0002;
-800A2E60	bne    v1, v0, La2e8c [$800a2e8c]
-
-wm_get_pc_entity_terrain_id();
-
-V1 = 0003;
-800A2E74	bne    v0, v1, La2e8c [$800a2e8c]
-
-800A2E7C	jal    funca3dfc [$800a3dfc]
-
-800A2E84	j      La2eac [$800a2eac]
-
-La2e8c:	; 800A2E8C
-wm_get_pc_entity_terrain_id();
-
-if( V0 == 3 ) // Sea Deep water, only gold chocobo and submarine can go here.
-{
-    funca3e4c();
-}
-
-La2ea8:	; 800A2EA8
-La2eac:	; 800A2EAC
-
-if( ( ( buttons & 0800 ) && ( ( w[800c84c8] & 0800 ) == 0 ) ) || ( ( buttons & 0100 ) && ( ( w[800c84c8] & 0100 ) == 0 ) ) ) // L2 R2
-{
-    V0 = w[800e5634];
-    if( V0 == 0 )
-    {
-        800A2F00	jal    funcbca38 [$800bca38]
-
-        V1 = 55555556;
-        V0 = V0 << 10;
-        V0 = V0 >> 10;
-        V0 = V0 + 0001;
-        800A2F1C	mult   v0, v1
-        V1 = V0 >> 1f;
-        800A2F24	mfhi   a0
-        A0 = A0 - V1;
-        V1 = A0 << 01;
-        V1 = V1 + A0;
-        V0 = V0 - V1;
-        V0 = V0 << 10;
-        A0 = V0 >> 10;
-    }
-    else
-    {
-        800A2F44	jal    funcbca38 [$800bca38]
-
-        V0 = V0 << 10;
-        V0 = V0 < 1;
-        A0 = V0 << 01;
-    }
-
-    800A2F58	jal    funcbc9e8 [$800bc9e8]
-}
-
-if( buttons & 0010 ) // triangle pressed
-{
-    if( ( w[800c84c8] & 0010 ) == 0 ) // and was not pressed before
-    {
-        if( w[800e566c] == 1 )
-        {
-            if( model_id == 3 ) // highwind
-            {
-                A0 = 6;
-                wm_script_run_system_function_on_system_entity();
-            }
-            else
-            {
-                A0 = 47; // cloud tifa cid buggy
-                wm_is_pc_entity_model_in_mask();
-                if( V0 != 0 )
-                {
-                    wm_get_pc_entity_terrain_id();
-                    if( V0 != e ) // Wutai Bridge Rickety rope bridges south of Wutai.
+                    if( buttons & 0020 ) // circle
                     {
-                        A0 = 10;
-                        A1 = 1;
-                        800A2FD8	jal    funcb0098 [$800b0098]
-
-                        A0 = 0;
-                        A1 = 1;
-                        800A2FE4	jal    funca2108 [$800a2108]
-
-                        [800e566c] = w(2);
+                        buttons = buttons & bfff; // remove down button
                     }
                 }
             }
         }
+
+        funca9240(); // check chokobo models and some else
+
+        if( ( V0 != 0 ) || ( model_id == 5 ) ) // tiny bronco
+        {
+            S1 = w[8011650c] * 3c;
+        }
+        else if( model_id == 3 ) // highwind
+        {
+            S1 = w[8011650c] * 78;
+        }
+        else if( model_id == 6 ) // buggy
+        {
+            S1 = w[8011650c] * 2d;
+        }
+        else
+        {
+            S1 = w[8011650c] * 1e;
+        }
+
+        if( ( ( buttons & 0001 ) && ( ( w[800c84c8] & 0001 ) == 0 ) ) || ( ( buttons & 0002 ) && ( ( w[800c84c8] & 0002 ) == 0 ) ) ) // L2 R2
+        {
+            A0 = w[800e5648];
+            if( A0 != 3 )
+            {
+                if( w[800e563c] == 0 )
+                {
+                    if( ( w[800e5634] - 2 ) >= 2 )
+                    {
+                        A0 = A0 < 1;
+                        A0 = A0 * 2;
+                        funca2088();
+
+                        if( w[800e5648] == 0 )
+                        {
+                            [800e564c] = w(78);
+                        }
+                        else
+                        {
+                            [800e564c] = w(a0);
+                        }
+                    }
+                }
+            }
+        }
+
+        A0 = 2000; // submarine
+        wm_is_pc_entity_model_in_mask();
+
+        if( V0 != 0 )
+        {
+            if( w[800e5648] == 2 )
+            {
+                if( w[800e5634] != 2 )
+                {
+                    if( buttons & 0020 ) // circle
+                    {
+                        buttons = buttons | 1000;
+                    }
+                }
+            }
+        }
+
+        [800c84cc] = h(-1);
+
+        if( buttons & 8000 ) // left
+        {
+            [SP + 64] = w(-S1);
+            [800c84cc] = h(-400);
+        }
+
+        if( buttons & 2000 ) // right
+        {
+            [SP + 64] = w(S1);
+            [800c84cc] = h(400);
+        }
+
+        if( buttons & 1000 ) // up
+        {
+            A1 = h[800c84cc];
+            if( A1 == -1 )
+            {
+                [SP + 68] = w(-S1);
+                [800c84cc] = h(800);
+            }
+            else
+            {
+                [SP + 64] = w((w[SP + 64] * 3) / 4);
+                [SP + 68] = w((0 - S1 * 3) / 4);
+                [800c84cc] = h(A1 + A1 / 2);
+            }
+        }
+
+        if( buttons & 4000 ) // down
+        {
+            A1 = h[800c84cc];
+            if( A1 == -1 )
+            {
+                [SP + 68] = w(S1);
+                [800c84cc] = h(0);
+            }
+            else
+            {
+                [SP + 64] = w((w[SP + 64] * 3) / 4);
+                [SP + 68] = w((S1 * 3) / 4);
+                [800c84cc] = h(A1 - A1 / 2);
+            }
+        }
+
+        S4 = 0;
+        A1 = w[800e5648];
+
+        if( ( ( A1 - 2 ) >= 2 ) && ( w[800e5634] != 3 ) )
+        {
+            [800e5654] = w(w[800e5654] >> 1);
+
+            A0 = h[800c84cc];
+            if( A0 != -1 )
+            {
+                800A2DC4	jal    funca94d0 [$800a94d0]
+            }
+        }
+        else
+        {
+            if( A1 == 3 )
+            {
+                S4 = 0 < (buttons & 0080); // square
+            }
+
+            if( w[800e5634] == 3 )
+            {
+                if( buttons & 0020 ) // circle
+                {
+                    A1 = (w[800c84c8] & 0020) < 1; // circle
+                }
+                else
+                {
+                    A1 = 0;
+                }
+
+                A0 = buttons & f000;
+                800A2608	jal    funcb307c [$800b307c]
+
+                [800e5608] = w(w[800e5608] + V0);
+            }
+            else
+            {
+                if( S4 == 0 )
+                {
+                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
+                    {
+                        V1 = (buttons >> d) & 1; // right
+                    }
+                    else
+                    {
+                        V1 = (buttons >> f) & 1; // left
+                    }
+
+                    A0 = (buttons >> 2) & 1; // L1
+                    V1 = V1 + A0;
+                    if( V1 != 0 )
+                    {
+                        A1 = w[8011650c] * 8 * V1;
+
+                        if( w[800e5634] == 2 )
+                        {
+                            if( buttons & 0004 ) // L1
+                            {
+                                A0 = 1;
+                            }
+                            else
+                            {
+                                A0 = 0;
+                            }
+                        }
+                        else
+                        {
+                            A0 = 0;
+                        }
+
+                        if( buttons & 5000 ) // up down
+                        {
+                            [800e5608] = w(w[800e5608] - (A1 >> A0)); // camera rotation
+                        }
+                        else
+                        {
+                            [800e5608] = w(w[800e5608] - ((A1 * 2) >> A0));
+                        }
+                    }
+
+                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
+                    {
+                        V1 = (buttons >> f) & 1; // left
+                    }
+                    else
+                    {
+                        V1 = (buttons >> d) & 1; // right
+                    }
+
+                    A0 = (buttons >> 3) & 1; // R1
+                    V1 = V1 + A0;
+                    if( V1 != 0 )
+                    {
+                        A1 = w[8011650c] * 8 * V1;
+
+                        if( w[800e5634] == 2 )
+                        {
+                            A0 = (buttons & 0008) < 1;
+                        }
+                        else
+                        {
+                            A0 = 0;
+                        }
+
+                        if( buttons & 5000 ) // up down
+                        {
+                            [800e5608] = w(w[800e5608] + (A1 >> A0));
+                        }
+                        else
+                        {
+                            [800e5608] = w(w[800e5608] + ((A1 << 1) >> A0));
+                        }
+                    }
+                }
+            }
+
+            V1 = w[800e5608];
+            if( V1 < 0 )
+            {
+                [800e5608] = w(V1 + 1000);
+            }
+            else if( V1 >= 1000 )
+            {
+                [800e5608] = w(V1 - 1000);
+            }
+
+            if( buttons & 8000 ) // left
+            {
+                S3 = 80;
+            }
+            else if( buttons & 2000 ) // right
+            {
+                S3 = -80;
+            }
+            else
+            {
+                S3 = 0;
+            }
+
+            if( ( w[800e5648] == 3 ) || ( w[800e5634] == 2 ) )
+            {
+                if( S4 != 0 )
+                {
+                    if( buttons & f000 ) // up down left right
+                    {
+                        A0 = S1;
+                    }
+                    else
+                    {
+                        A0 = 0;
+                    }
+                }
+                else
+                {
+                    if( buttons & 0020 ) // circle
+                    {
+                        A0 = S1;
+                    }
+                    else
+                    {
+                        A0 = 0;
+                    }
+                }
+
+                if( w[800e5634] != 2 )
+                {
+                    [800c84d0] = h((A0 + h[800c84d0] * 3) >> 2);
+                }
+                else
+                {
+                    [800c84d0] = h(A0);
+                }
+
+                // movement
+                if( S4 != 0 )
+                {
+                    if( buttons & 8000 ) // left
+                    {
+                        [SP + 64] = w(0 - ((V1 << 10) >> 10));
+                    }
+                    else if( buttons & 2000 ) // right
+                    {
+                        [SP + 64] = w((V1 << 10) >> 10);
+                    }
+                    else
+                    {
+                        [SP + 64] = w(0);
+                    }
+
+                    if( buttons & 1000 ) // up
+                    {
+                        [SP + 68] = w(0 - h[800c84d0]);
+                    }
+                    else if( buttons & 4000 ) // down
+                    {
+                        [SP + 68] = w(h[800с84d0]);
+                    }
+                    else
+                    {
+                        [SP + 68] = w(0);
+                    }
+                }
+                else
+                {
+                    [SP + 64] = w(0);
+                    [SP + 68] = w(0 - ((V1 << 10) >> 10));
+                }
+
+                if( ( buttons & 0020 ) == 0 )
+                {
+                    S3 = 0;
+                }
+            }
+            else
+            {
+                if( h[800c84cc] != -1 )
+                {
+                    A0 = ((h[800c84cc] - hu[800e5608]) << 10) >> 10;
+                    funca94d0(); // set active entity direction and rotation
+                }
+            }
+
+            [SP + 30] = h(hu[SP + 64]); // x movement
+            [SP + 32] = h(0);
+            [SP + 34] = h(hu[SP + 68]); // z movement
+
+            [SP + 38] = h(0);
+            [SP + 3a] = h(0 - hu[800e5608]); // camera rotation
+            [SP + 3c] = h(0);
+            A0 = SP + 38;
+            A1 = SP + 10;
+            system_gte_rotation_matrix_from_xyz();
+
+            [SP + 50] = w(0);
+            [SP + 54] = w(0);
+            [SP + 58] = w(0);
+            A0 = SP + 10;
+            A1 = SP + 50;
+            system_gte_copy_matrix_translation_part();
+
+            A0 = SP + 10;
+            system_gte_set_rotation_matrix();
+
+            A0 = SP + 10;
+            system_gte_set_translation_vector();
+
+            A0 = SP + 30; // movement
+            A1 = SP + 40; // result
+            A2 = SP + 60; // ret flag
+            system_gte_rotate_and_translate_vector();
+
+            [SP + 64] = w(w[SP + 40]); // new movement x
+            [SP + 68] = w(w[SP + 48]); // new movement z
+
+            S2 = 0;
+
+            V1 = w[800e5648];
+            if( V1 == 3 )
+            {
+                if( S4 == 0 )
+                {
+                    A0 = SP + 50;
+                    wm_get_position_from_pc_model();
+
+                    V0 = buttons & 1000;
+                    800A29E4	beq    v0, zero, La2a28 [$800a2a28]
+
+                    V0 = w[SP + 54] < 1f5;
+                    800A29F8	bne    v0, zero, La2a28 [$800a2a28]
+
+                    V0 = w[800e55f8];
+
+                    800A2A0C	beq    v0, zero, La2a28 [$800a2a28]
+
+                    wm_get_pc_entity_terrain_id();
+
+                    V1 = 1b;
+                    800A2A20	bne    v0, v1, La2a44 [$800a2a44]
+
+                    La2a28:	; 800A2A28
+                    A2 = w[SP + 54];
+                    A1 = w[800e5640];
+                    V0 = A1 < A2;
+                    800A2A3C	beq    v0, zero, La2a74 [$800a2a74]
+
+                    La2a44:	; 800A2A44
+                    S2 = a;
+                    V0 = w[8011650c];
+                    A0 = V0 << 01;
+                    A0 = A0 + V0;
+                    A0 = A0 << 03;
+                    A0 = A0 + V0;
+                    A0 = A0 << 01;
+                    A0 = 0 - A0;
+                    800A2A64	jal    funca9820 [$800a9820]
+
+                    800A2A6C	j      La2ab4 [$800a2ab4]
+
+                    La2a74:	; 800A2A74
+                    if( buttons & 4000 )
+                    {
+                        V0 = w[8011650c];
+                        V1 = V0 << 01;
+                        V1 = V1 + V0;
+                        V1 = V1 << 03;
+                        V1 = V1 + V0;
+                        A0 = V1 << 01;
+                        V0 = A1 - A0;
+                        if( A2 < V0 )
+                        {
+                            800A2AB0	addiu  s2, zero, $fff6 (=-$a)
+
+                            800A2AAC	jal    funca9820 [$800a9820]
+                        }
+                    }
+                }
+            }
+
+            La2ab4:	; 800A2AB4
+
+            if( w[800e5634] == 2 )
+            {
+                A0 = SP + 50;
+                wm_get_position_from_pc_model();
+
+                if( buttons & 1000 ) // up
+                {
+                    if( w[SP + 54] >= ec79 )
+                    {
+                        if( w[800e55f8] != 0 )
+                        {
+                            S2 = a;
+                            A0 = 0 - w[8011650c] * 1e;
+                            800A2B1C	jal    funca9820 [$800a9820]
+                        }
+                    }
+                }
+
+                if( buttons & 4000 ) // down
+                {
+                    if( w[SP + 54] < f448 )
+                    {
+                        S2 = -a;
+                        A0 = w[8011650c] * 1e;
+                        800A2B58	jal    funca9820 [$800a9820]
+                    }
+                }
+            }
+
+            if( w[800e5648] == 3 )
+            {
+                S1 = 0;
+
+                800A2B74	jal    funca984c [$800a984c]
+
+                800A2B7C	beq    v0, zero, La2ba8 [$800a2ba8]
+
+                V0 = w[800e5654];
+                if( V0 < 0 )
+                {
+                    V0 = 0 - V0;
+                }
+
+                V0 = V0 < 10;
+                800A2BA0	beq    v0, zero, La2bb0 [$800a2bb0]
+                800A2BA4	nop
+
+                La2ba8:	; 800A2BA8
+                800A2BA8	beq    s3, zero, La2bb4 [$800a2bb4]
+                800A2BAC	nop
+
+                La2bb0:	; 800A2BB0
+                S1 = 0001;
+
+                La2bb4:	; 800A2BB4
+                if( w[8011650c] == 1 )
+                {
+                    A0 = S1 << 1;
+                    V0 = A0 | 1;
+                    A1 = V0 + 3;
+                }
+                else
+                {
+                    A0 = S1 << 1;
+                    A1 = A0 + 3;
+                }
+
+                V0 = 1 << A1;
+                V1 = w[800e5654];
+                800A2BE8	addiu  v0, v0, $ffff (=-$1)
+                800A2BEC	mult   v0, v1
+                V1 = w[800c84c4];
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 + S2;
+                V0 = V0 >> 02;
+                800A2C0C	addiu  v1, a1, $ffff (=-$1)
+                A0 = 1 << V1;
+                [800c84c4] = w(V0);
+                800A2C1C	mflo   v0
+                V0 = V0 + S3;
+                V0 = V0 + A0;
+                A0 = hu[800c84c4];
+                V0 = V0 >> A1;
+                [800e5654] = w(V0);
+                A2 = hu[800e5654];
+                A0 = A0 + 0004;
+                A0 = A0 << 10;
+                A0 = A0 >> 10;
+                A1 = A2 << 12;
+                A1 = A1 >> 10;
+                A2 = 0 - A2;
+                A2 = A2 << 11;
+                A2 = A2 >> 10;
+                800A2C60	jal    funcaa8d8 [$800aa8d8]
+            }
+
+            if( S3 == 0 )
+            {
+                V0 = w[800e5654];
+                if( V0 < 0 )
+                {
+                    V0 = 0 - V0;
+                }
+
+                if( V0 < 5 )
+                {
+                    [800e5654] = w(0);
+                }
+            }
+
+            V1 = w[800e5634];
+            if( V1 != 3 )
+            {
+                V1 = h[800c84cc];
+                if( V1 != -1 )
+                {
+                    A0 = V1;
+                    V0 = A0 + 800;
+                    [800c84cc] = h(V0);
+                    V0 = V0 << 10;
+                    V0 = V0 >> 10;
+
+                    if( V0 >= 801 )
+                    {
+                        [800c84cc] = h(A0 - 800);
+                    }
+
+                    if( ( buttons & 4000 ) == 0 )
+                    {
+                        [800c84cc] = h(h[800c84cc] >> 1);
+                    }
+
+                    [800e5668] = w(h[800c84cc]);
+                }
+                else
+                {
+                    [800c84cc] = h(hu[800e5668]);
+                }
+
+                V1 = 800 - w[800e5608];
+
+                if( w[800e5648] == 2 )
+                {
+                    if( w[800e5634] != 2 )
+                    {
+                        V0 = h[800c84cc];
+                        V1 = V1 + V0;
+                    }
+                }
+
+                A0 = V1 << 10;
+                A0 = A0 >> 10;
+                800A2DC4	jal    funca94d0 [$800a94d0]
+            }
+        }
+
+        if( model_id == 6 )
+        {
+            if( buttons & f000 )
+            {
+                if( ( w[800c84c8] & f000 ) == 0 )
+                {
+                    A0 = 8;
+                    A1 = 20;
+                    800A2E1C	jal    funcb65a4 [$800b65a4]
+                }
+            }
+            else
+            {
+                if( w[800c84c8] & f000 )
+                {
+
+                    A0 = 8;
+                    A1 = 0;
+                    800A2E1C	jal    funcb65a4 [$800b65a4]
+                }
+            }
+        }
+
+        A0 = 2000; // submarine
+        wm_is_pc_entity_model_in_mask();
+
+        if( V0 != 0 )
+        {
+            if( buttons & 0040 )
+            {
+                if( ( w[800с84c8] & 0040 ) == 0 )
+                {
+                    wm_get_pc_entity_terrain_id();
+                    if( V0 == 3 ) // Sea Deep water, only gold chocobo and submarine can go here.
+                    {
+                        if( w[800e5634] == 2 )
+                        {
+                            funca3dfc();
+                        }
+                        else
+                        {
+                            funca3e4c();
+                        }
+                    }
+                }
+            }
+        }
+
+        if( ( ( buttons & 0800 ) && ( ( w[800c84c8] & 0800 ) == 0 ) ) || ( ( buttons & 0100 ) && ( ( w[800c84c8] & 0100 ) == 0 ) ) ) // L2 R2
+        {
+            V0 = w[800e5634];
+            if( V0 == 0 )
+            {
+                800A2F00	jal    funcbca38 [$800bca38]
+
+                V1 = 55555556;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                V0 = V0 + 0001;
+                800A2F1C	mult   v0, v1
+                V1 = V0 >> 1f;
+                800A2F24	mfhi   a0
+                A0 = A0 - V1;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V0 - V1;
+                V0 = V0 << 10;
+                A0 = V0 >> 10;
+            }
+            else
+            {
+                800A2F44	jal    funcbca38 [$800bca38]
+
+                V0 = V0 << 10;
+                V0 = V0 < 1;
+                A0 = V0 << 1;
+            }
+
+            800A2F58	jal    funcbc9e8 [$800bc9e8]
+        }
+
+        if( buttons & 0010 ) // triangle pressed
+        {
+            if( ( w[800c84c8] & 0010 ) == 0 ) // and was not pressed before
+            {
+                if( w[800e566c] == 1 )
+                {
+                    if( model_id == 3 ) // highwind
+                    {
+                        A0 = 6;
+                        wm_script_run_system_function_on_system_entity();
+                    }
+                    else
+                    {
+                        A0 = 47; // cloud tifa cid buggy
+                        wm_is_pc_entity_model_in_mask();
+                        if( V0 != 0 )
+                        {
+                            wm_get_pc_entity_terrain_id();
+                            if( V0 != e ) // Wutai Bridge Rickety rope bridges south of Wutai.
+                            {
+                                A0 = 10;
+                                A1 = 1;
+                                800A2FD8	jal    funcb0098 [$800b0098]
+
+                                A0 = 0;
+                                A1 = 1;
+                                800A2FE4	jal    funca2108 [$800a2108]
+
+                                [800e566c] = w(2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if( buttons & a00c ) // left right L1 R1
+        {
+            800A3004	jal    funcadfc0 [$800adfc0]
+        }
+        [800c84c8] = w(buttons);
+
+        wm_get_pc_entity_terrain_id();
+
+        if( V0 == e ) // Wutai Bridge Rickety rope bridges south of Wutai.
+        {
+            A0 = SP + 64; // movement x
+            A1 = SP + 68; // movement z
+            funcb37e0(); // do some x z movement addition
+        }
+
+        if( model_id == 5 ) // tiny bronco
+        {
+            if( ( w[SP + 64] | w[SP + 68] ) != 0 ) // if we do some movement
+            {
+                A0 = 1ed;
+            }
+            else
+            {
+                A0 = -1ed;
+            }
+            funcb65e0(); // play some sound
+        }
+
+        A0 = w[SP + 64];
+        A1 = w[SP + 68];
+        wm_move_active_entity(); // z needs to be recalculated
+
+        800A3074	jal    funcaa640 [$800aa640]
     }
 }
 
-if( buttons & a00c ) // left right L1 R1
+if( w[800e55fc] == 0 )
 {
-    800A3004	jal    funcadfc0 [$800adfc0]
-}
-[800c84c8] = w(buttons);
+    wm_get_pc_entity_terrain_id();
 
-wm_get_pc_entity_terrain_id();
-
-if( V0 == e ) // Wutai Bridge Rickety rope bridges south of Wutai.
-{
-    A0 = SP + 64; // movement x
-    A1 = SP + 68; // movement z
-    funcb37e0(); // do some x z movement addition
-}
-
-if( model_id == 5 ) // tiny bronco
-{
-    if( ( w[SP + 64] | w[SP + 68] ) != 0 ) // if we do some movement
+    if( V0 == e ) // Wutai Bridge Rickety rope bridges south of Wutai.
     {
-        A0 = 1ed;
+        A0 = SP + 64; // movement x
+        A1 = SP + 68; // movement z
+        funcb37e0(); // do some x z movement addition
+
+        A0 = w[SP + 64];
+        A1 = w[SP + 68];
+        wm_move_active_entity(); // z needs to be recalculated
+
+        800A30BC	jal    funcaa640 [$800aa640]
     }
-    else
-    {
-        A0 = -1ed;
-    }
-    funcb65e0(); // play some sound
 }
 
-A0 = w[SP + 64];
-A1 = w[SP + 68];
-wm_move_active_entity(); // z needs to be recalculated
-
-800A3074	jal    funcaa640 [$800aa640]
-
-La307c:	; 800A307C
-V0 = w[800e55fc];
-800A3088	bne    v0, zero, La30c4 [$800a30c4]
-800A308C	nop
-
-La3090:	; 800A3090
-wm_get_pc_entity_terrain_id();
-
-if( V0 == e ) // Wutai Bridge Rickety rope bridges south of Wutai.
-{
-    A0 = SP + 64; // movement x
-    A1 = SP + 68; // movement z
-    funcb37e0(); // do some x z movement addition
-
-    A0 = w[SP + 64];
-    A1 = w[SP + 68];
-    wm_move_active_entity(); // z needs to be recalculated
-
-    800A30BC	jal    funcaa640 [$800aa640]
-}
-
-La30c4:	; 800A30C4
 if( w[800e5648] != 3 )
 {
     [800e55f0] = w(((w[800e55f0] * 3) + w[800e564c]) / 4);
@@ -3978,7 +3909,7 @@ La4668:	; 800A4668
     800A4988	jal    funcb63f0 [$800b63f0]
 
     La4990:	; 800A4990
-    funca21b4();
+    wm_handle_buttons();
 
     800A4998	addiu  v0, zero, $fff1 (=-$f)
 
@@ -3992,7 +3923,7 @@ La4668:	; 800A4668
         800A49B4	jal    funcab4f4 [$800ab4f4]
 
         A0 = SP + 10;
-        800A49BC	jal    wm_get_position_from_pc_model [$800aa0e0]
+        wm_get_position_from_pc_model();
 
         V1 = w[SP + 0014];
         V0 = w[80116508];
@@ -4043,7 +3974,7 @@ La4668:	; 800A4668
         [80116508] = w(V0);
 
         La4a74:	; 800A4A74
-        funca21b4(); // button handle
+        wm_handle_buttons();
 
         800A4A7C	jal    funca44c4 [$800a44c4]
 
