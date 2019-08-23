@@ -744,7 +744,7 @@ switch( A0 )
         wm_set_point_as_active();
 
         A0 = SP + 10;
-        wm_get_position_from_active_model();
+        wm_get_position_from_active_entity();
 
         A0 = SP + 10;
         wm_get_distance_to_active_point();
@@ -817,7 +817,7 @@ switch( A0 )
         wm_set_point_as_active();
 
         A0 = SP + 10;
-        wm_get_position_from_active_model();
+        wm_get_position_from_active_entity();
 
         A0 = SP + 10;
         800AC374	jal    funcaf9a0 [$800af9a0]
@@ -1843,7 +1843,7 @@ switch( opcode )
 
         S0 = SP + 20;
         A0 = S0;
-        wm_get_position_from_active_model();
+        wm_get_position_from_active_entity();
 
         800AD1AC	jal    funcaf9a0 [$800af9a0]
         A0 = S0;

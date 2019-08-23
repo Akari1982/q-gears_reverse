@@ -148,7 +148,7 @@ funca99bc();
 if( V0 != 0 )
 {
     A0 = SP + 10;
-    wm_get_position_from_active_model();
+    wm_get_position_from_active_entity();
 
     S0 = 3;
     wm_get_model_id_from_active_entity();
@@ -444,9 +444,9 @@ wm_get_model_id_from_active_entity();
 S1 = V0;
 
 A0 = SP + 0010;
-wm_get_position_from_active_model();
+wm_get_position_from_active_entity();
 
-800BBE98	jal    funcaa128 [$800aa128]
+800BBE98	jal    wm_get_position2_from_active_entity [$800aa128]
 A0 = SP + 0020;
 A0 = 0001;
 800BBEA4	jal    funca2108 [$800a2108]
@@ -907,7 +907,7 @@ wm_set_pc_entity_as_active_entity();
 
 Lbc51c:	; 800BC51C
 A0 = SP + 28;
-wm_get_position_from_active_model();
+wm_get_position_from_active_entity();
 
 
 A0 = w[80116500];
@@ -1008,7 +1008,7 @@ Lbc684:	; 800BC684
 S2 = 800c738c + buffer_id * 1c;
 
 A0 = SP + 28;
-wm_get_position_from_pc_model();
+wm_get_position_from_pc_entity();
 
 V1 = w[80116500];
 V0 = w[SP + 28];

@@ -2349,7 +2349,7 @@ loopb062c:	; 800B062C
 // funcb0670
 
 A0 = SP + 10;
-wm_get_position_from_pc_model();
+wm_get_position_from_pc_entity();
 
 A0 = 8010c2ac;
 A1 = A0 + 180;
@@ -2401,7 +2401,7 @@ if (w[8010c804] == 0)
 // funcb0794
 800B0794	addiu  sp, sp, $ffd8 (=-$28)
 [SP + 0020] = w(RA);
-800B079C	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B079C	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
 800B07A4	lui    v0, $8011
 V0 = w[V0 + c804];
@@ -2493,7 +2493,7 @@ Lb08b8:	; 800B08B8
 V1 = 0007;
 800B08C4	bne    v0, v1, Lb0b38 [$800b0b38]
 800B08C8	nop
-800B08CC	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B08CC	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0018;
 800B08D4	lui    v1, $fffc
 V0 = w[SP + 0018];
@@ -2893,7 +2893,7 @@ SP = SP + 0050;
 800B0E84	addiu  sp, sp, $ffd8 (=-$28)
 A0 = SP + 0010;
 [SP + 0024] = w(RA);
-800B0E90	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B0E90	jal    wm_get_position_from_pc_entity [$800aa0e0]
 [SP + 0020] = w(S0);
 800B0E98	jal    funcb0794 [$800b0794]
 800B0E9C	nop
@@ -3575,7 +3575,7 @@ V0 = A3 + V0;
 V0 = A1 < V0;
 
 Lb17c8:	; 800B17C8
-800B17C8	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B17C8	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
 V0 = S1 & 00ff;
 V0 = V0 << 03;
@@ -4361,7 +4361,7 @@ Lb2278:	; 800B2278
 [AT + d144] = w(0);
 800B2280	lui    at, $8011
 [AT + ca8c] = w(V0);
-800B2288	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B2288	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
 800B2290	lui    v1, $fffc
 V1 = V1 | a000;
@@ -4943,7 +4943,7 @@ A0 = 0004;
 Lb2a60:	; 800B2A60
 800B2A60	jal    wm_set_active_entity_with_model_id [$800a993c]
 800B2A64	nop
-800B2A68	jal    wm_get_position_from_active_model [$800aa098]
+800B2A68	jal    wm_get_position_from_active_entity [$800aa098]
 A0 = S5;
 V1 = w[S2 + 0000];
 800B2A74	nop
@@ -5493,7 +5493,7 @@ A1 = A1 - V0;
 A1 = S0;
 wm_rotate_vector_by_y_angle();
 
-800B3268	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B3268	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
 A0 = SP + 0010;
 V0 = h[SP + 0020];
@@ -5725,7 +5725,7 @@ V0 = A2 < A3;
 
 Lb35b4:	; 800B35B4
 S0 = SP + 0020;
-800B35B8	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B35B8	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = S0;
 A0 = S0;
 A1 = SP + 0018;
@@ -5927,7 +5927,7 @@ V1 = 000e;
 V0 = V0 & f000;
 800B3858	beq    v0, zero, Lb38bc [$800b38bc]
 800B385C	nop
-800B3860	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B3860	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
 A0 = SP + 0010;
 A1 = 0;
@@ -7769,7 +7769,7 @@ V0 = 0032;
 [1f800014] = h(0);
 800B5298	lui    at, $1f80
 [1f800020] = h(0);
-800B52A0	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B52A0	jal    wm_get_position_from_pc_entity [$800aa0e0]
 800B52A4	lui    a0, $1f80
 A0 = 0;
 A1 = 0;
@@ -9761,7 +9761,7 @@ if( bu[8009c6e4 + fa2] == 3 )
         if( V0 != 0 )
         {
             A0 = SP + 10;
-            wm_get_position_from_active_model();
+            wm_get_position_from_active_entity();
 
             [8009c6e4 + f8c + i * 4] = w((w[SP + 18] << 10) | hu[SP + 10]);
         }
@@ -10793,9 +10793,9 @@ V0 = 0002;
 800B837C	jal    funca9ad0 [$800a9ad0]
 800B8380	nop
 A0 = SP + 0010;
-800B8388	jal    wm_get_position_from_pc_model [$800aa0e0]
+800B8388	jal    wm_get_position_from_pc_entity [$800aa0e0]
 S0 = V0;
-800B8390	jal    funcaa170 [$800aa170]
+800B8390	jal    wm_get_position2_from_pc_entity [$800aa170]
 A0 = SP + 0020;
 
 A0 = 47; // cloud tifa cid buggy

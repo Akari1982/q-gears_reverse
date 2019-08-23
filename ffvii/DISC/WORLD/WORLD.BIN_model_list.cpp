@@ -1648,7 +1648,7 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// wm_get_position_from_active_model()
+// wm_get_position_from_active_entity()
 
 if( A0 != 0 )
 {
@@ -1666,7 +1666,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// wm_get_position_from_pc_model()
+// wm_get_position_from_pc_entity()
 
 if( A0 != 0 )
 {
@@ -1684,7 +1684,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// funcaa128()
+// wm_get_position2_from_active_entity()
 
 if( A0 != 0 )
 {
@@ -1702,7 +1702,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// funcaa170()
+// wm_get_position2_from_pc_entity()
 
 if( A0 != 0 )
 {

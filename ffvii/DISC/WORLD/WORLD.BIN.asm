@@ -545,16 +545,16 @@
 // funcaa078
 800AA078-800AA094
 ////////////////////////////////
-// wm_get_position_from_active_model
+// wm_get_position_from_active_entity
 800AA098-800AA0DC
 ////////////////////////////////
-// wm_get_position_from_pc_model
+// wm_get_position_from_pc_entity
 800AA0E0-800AA124
 ////////////////////////////////
-// funcaa128
+// wm_get_position2_from_active_entity
 800AA128-800AA16C
 ////////////////////////////////
-// funcaa170
+// wm_get_position2_from_pc_entity
 800AA170-800AA1B4
 ////////////////////////////////
 // funcaa1b8

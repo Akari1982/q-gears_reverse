@@ -1375,7 +1375,7 @@ if( A0 != 0 )
     [800e55fc] = w(1);
 
     A0 = SP + 10;
-    wm_get_position_from_pc_model();
+    wm_get_position_from_pc_entity();
 
     A1 = 0;
     if( ( S0 != 3 ) || ( w[800e5600] == 6 ) )
@@ -1831,7 +1831,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 if( S4 == 0 )
                 {
                     A0 = SP + 50;
-                    wm_get_position_from_pc_model();
+                    wm_get_position_from_pc_entity();
 
                     V0 = buttons & 1000;
                     800A29E4	beq    v0, zero, La2a28 [$800a2a28]
@@ -1892,7 +1892,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             if( w[800e5634] == 2 )
             {
                 A0 = SP + 50;
-                wm_get_position_from_pc_model();
+                wm_get_position_from_pc_entity();
 
                 if( buttons & 1000 ) // up
                 {
@@ -2417,10 +2417,12 @@ V0 = 0100;
 La341c:	; 800A341C
 800A341C	jal    funca31f8 [$800a31f8]
 800A3420	nop
-800A3424	jal    wm_get_position_from_pc_model [$800aa0e0]
+800A3424	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
-800A342C	jal    funcaa170 [$800aa170]
-A0 = SP + 0020;
+
+A0 = SP + 20;
+wm_get_position2_from_pc_entity();
+
 800A3434	jal    wm_get_pc_entity_original_y [$800a9910]
 800A3438	nop
 800A343C	lui    v1, $800e
@@ -2935,7 +2937,7 @@ La3b70:	; 800A3B70
 [AT + 566c] = w(V0);
 800A3B78	j      La3c64 [$800a3c64]
 800A3B7C	nop
-800A3B80	jal    wm_get_position_from_pc_model [$800aa0e0]
+800A3B80	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
 V0 = w[SP + 0014];
 800A3B8C	lui    a0, $800e
@@ -3923,7 +3925,7 @@ La4668:	; 800A4668
         800A49B4	jal    funcab4f4 [$800ab4f4]
 
         A0 = SP + 10;
-        wm_get_position_from_pc_model();
+        wm_get_position_from_pc_entity();
 
         V1 = w[SP + 0014];
         V0 = w[80116508];
@@ -3979,7 +3981,7 @@ La4668:	; 800A4668
         800A4A7C	jal    funca44c4 [$800a44c4]
 
         A0 = SP + 10;
-        wm_get_position_from_pc_model();
+        wm_get_position_from_pc_entity();
 
         A0 = SP + 10;
         wm_update_lighting_from_points();
@@ -4027,7 +4029,7 @@ La4668:	; 800A4668
 
         La4b40:	; 800A4B40
         A0 = SP + 10;
-        wm_get_position_from_pc_model();
+        wm_get_position_from_pc_entity();
 
         wm_get_pc_entity_original_y();
         S1 = V0;
@@ -4254,17 +4256,12 @@ V0 = V0 << 10;
 800A4F70	jr     ra 
 V0 = V0 >> 10;
 ////////////////////////////////
-// funca4f78
-800A4F78	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0030] = w(RA);
-[SP + 002c] = w(S7);
-[SP + 0028] = w(S6);
-[SP + 0024] = w(S5);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// funca4f78()
+
 A1 = w[A0 + 0000];
 800A4FA4	nop
 800A4FA8	addiu  v0, a1, $c000 (=-$4000)
@@ -4306,8 +4303,7 @@ S1 = S7;
 S4 = S2 << 10;
 
 loopa5014:	; 800A5014
-800A5014	lui    s0, $800e
-S0 = w[S0 + 580c];
+S0 = w[800e580c];
 800A501C	nop
 800A5020	bne    s0, zero, La5030 [$800a5030]
 800A5024	nop
@@ -4400,8 +4396,7 @@ La5128:	; 800A5128
 S0 = S3;
 
 La5134:	; 800A5134
-800A5134	lui    a0, $800e
-A0 = w[A0 + 5768];
+A0 = w[800e5768];
 800A513C	nop
 800A5140	beq    a0, zero, La51bc [$800a51bc]
 S0 = S3;
@@ -4435,10 +4430,8 @@ La5194:	; 800A5194
 S3 = w[S0 + 0000];
 
 La5198:	; 800A5198
-800A5198	lui    v0, $800e
-V0 = w[V0 + 580c];
-800A51A0	lui    at, $800e
-[AT + 580c] = w(S0);
+V0 = w[800e580c];
+[800e580c] = w(S0);
 [S0 + 0000] = w(V0);
 
 La51ac:	; 800A51AC
@@ -4459,18 +4452,10 @@ S0 = V0;
 800A51D4	nop
 
 La51d8:	; 800A51D8
-RA = w[SP + 0030];
-S7 = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0038;
-800A5200	jr     ra 
-800A5204	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca5208
 800A5208	addiu  sp, sp, $ffe8 (=-$18)
@@ -5526,105 +5511,97 @@ SP = SP + 0020;
 800A5FAC	jr     ra 
 800A5FB0	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca5fb4
-800A5FB4
+
 A3 = 0;
-800A5FB8	lui    a0, $8011
-A0 = w[A0 + 9d40];
-800A5FC0	nop
-800A5FC4	beq    a0, zero, La60d0 [$800a60d0]
+A0 = w[80109d40];
 A2 = 0;
 
-loopa5fcc:	; 800A5FCC
-V0 = hu[A0 + 0016];
-800A5FD0	nop
-V1 = V0 + 0001;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0096;
-800A5FE4	bne    v0, zero, La60bc [$800a60bc]
-[A0 + 0016] = h(V1);
-800A5FEC	beq    a2, zero, La6000 [$800a6000]
-800A5FF0	nop
-V0 = w[A0 + 0000];
-800A5FF8	j      La6010 [$800a6010]
-[A2 + 0000] = w(V0);
+if( A0 != 0 )
+{
+    loopa5fcc:	; 800A5FCC
+        V0 = hu[A0 + 0016];
+        800A5FD0	nop
+        V1 = V0 + 0001;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        V0 = V0 < 0096;
+        800A5FE4	bne    v0, zero, La60bc [$800a60bc]
+        [A0 + 0016] = h(V1);
+        800A5FEC	beq    a2, zero, La6000 [$800a6000]
+        800A5FF0	nop
+        V0 = w[A0 + 0000];
+        800A5FF8	j      La6010 [$800a6010]
+        [A2 + 0000] = w(V0);
 
-La6000:	; 800A6000
-V0 = w[A0 + 0000];
-800A6004	nop
-800A6008	lui    at, $8011
-[AT + 9d40] = w(V0);
+        La6000:	; 800A6000
+        V0 = w[A0 + 0000];
+        [80109d40] = w(V0);
 
-La6010:	; 800A6010
-800A6010	lui    v1, $800e
-V1 = w[V1 + 5a2c];
-800A6018	lui    v0, $8011
-V0 = w[V0 + 9d38];
-A1 = 0;
-800A6024	lui    at, $8011
-[AT + 9d38] = w(A0);
-800A602C	beq    v1, zero, La6098 [$800a6098]
-[A0 + 0000] = w(V0);
+        La6010:	; 800A6010
+        V1 = w[800e5a2c];
+        V0 = w[80109d38];
+        A1 = 0;
+        [80109d38] = w(A0);
+        [A0 + 0000] = w(V0);
 
-loopa6034:	; 800A6034
-V0 = w[V1 + 0004];
-800A6038	nop
-800A603C	beq    v0, a0, La6058 [$800a6058]
-800A6040	nop
-A1 = V1;
-V1 = w[V1 + 0000];
-800A604C	nop
-800A6050	bne    v1, zero, loopa6034 [$800a6034]
-800A6054	nop
+        800A602C	beq    v1, zero, La6098 [$800a6098]
 
-La6058:	; 800A6058
-800A6058	beq    v1, zero, La6098 [$800a6098]
-800A605C	nop
-800A6060	beq    a1, zero, La6074 [$800a6074]
-800A6064	nop
-V0 = w[V1 + 0000];
-800A606C	j      La6084 [$800a6084]
-[A1 + 0000] = w(V0);
+        loopa6034:	; 800A6034
+        V0 = w[V1 + 0004];
+        800A6038	nop
+        800A603C	beq    v0, a0, La6058 [$800a6058]
+        800A6040	nop
+        A1 = V1;
+        V1 = w[V1 + 0000];
+        800A604C	nop
+        800A6050	bne    v1, zero, loopa6034 [$800a6034]
+        800A6054	nop
 
-La6074:	; 800A6074
-V0 = w[V1 + 0000];
-800A6078	nop
-800A607C	lui    at, $800e
-[AT + 5a2c] = w(V0);
+        La6058:	; 800A6058
+        800A6058	beq    v1, zero, La6098 [$800a6098]
+        800A605C	nop
+        800A6060	beq    a1, zero, La6074 [$800a6074]
+        800A6064	nop
+        V0 = w[V1 + 0000];
+        800A606C	j      La6084 [$800a6084]
+        [A1 + 0000] = w(V0);
 
-La6084:	; 800A6084
-800A6084	lui    v0, $800e
-V0 = w[V0 + 5a30];
-800A608C	lui    at, $800e
-[AT + 5a30] = w(V1);
-[V1 + 0000] = w(V0);
+        La6074:	; 800A6074
+        V0 = w[V1 + 0000];
+        [800e5a2c] = w(V0);
 
-La6098:	; 800A6098
-800A6098	beq    a2, zero, La60ac [$800a60ac]
-800A609C	nop
-A0 = w[A2 + 0000];
-800A60A4	j      La60c8 [$800a60c8]
-800A60A8	nop
+        La6084:	; 800A6084
+        V0 = w[800e5a30];
+        [800e5a30] = w(V1);
+        [V1 + 0000] = w(V0);
 
-La60ac:	; 800A60AC
-800A60AC	lui    a0, $8011
-A0 = w[A0 + 9d40];
-800A60B4	j      La60c8 [$800a60c8]
-800A60B8	nop
+        La6098:	; 800A6098
+        800A6098	beq    a2, zero, La60ac [$800a60ac]
+        800A609C	nop
+        A0 = w[A2 + 0000];
+        800A60A4	j      La60c8 [$800a60c8]
+        800A60A8	nop
 
-La60bc:	; 800A60BC
-A2 = A0;
-A0 = w[A0 + 0000];
-A3 = A3 + 0001;
+        La60ac:	; 800A60AC
+        A0 = w[80109d40];
+        800A60B4	j      La60c8 [$800a60c8]
+        800A60B8	nop
 
-La60c8:	; 800A60C8
-800A60C8	bne    a0, zero, loopa5fcc [$800a5fcc]
-800A60CC	nop
+        La60bc:	; 800A60BC
+        A2 = A0;
+        A0 = w[A0 + 0000];
+        A3 = A3 + 0001;
 
-La60d0:	; 800A60D0
-800A60D0	jr     ra 
-V0 = A3;
+        La60c8:	; 800A60C8
+    800A60C8	bne    a0, zero, loopa5fcc [$800a5fcc]
+}
+
+return A3;
 ////////////////////////////////
 
 
@@ -5919,20 +5896,25 @@ V0 = V1;
 
 
 ////////////////////////////////
-// funca64ac
+// funca64ac()
 
-S0 = A0;
+pos = S0 = A0;
 S1 = A1;
+
 800A64C8	jal    funca5fb4 [$800a5fb4]
 
-V0 = V0 < 0010;
-800A64D4	beq    v0, zero, La6788 [$800a6788]
-A0 = S0;
+if( V0 >= 10 )
+{
+    return;
+}
+
+A0 = pos;
 A1 = 0;
-A2 = SP + 0080;
-800A64E4	jal    wm_extract_loop_coords_top_bottom_parts [$800a6884]
-A3 = SP + 0082;
-A0 = S0;
+A2 = SP + 80;
+A3 = SP + 82;
+wm_extract_loop_coords_top_bottom_parts();
+
+A0 = pos;
 A1 = S1 << 10;
 A1 = A1 >> 10;
 800A64F8	jal    funca6168 [$800a6168]
@@ -6439,7 +6421,7 @@ S6 = 0;
 [SP + 30] = w(A1);
 
 A0 = SP + 20;
-wm_get_position_from_pc_model();
+wm_get_position_from_pc_entity();
 
 S0 = S2;
 
@@ -7865,10 +7847,10 @@ S2 = A1;
 wm_set_pc_entity_as_active_entity();
 
 A0 = SP + 10;
-wm_get_position_from_pc_model();
+wm_get_position_from_pc_entity();
 
 A0 = SP + 30;
-funcaa170(); // copy pc entity pos into buf
+wm_get_position2_from_pc_entity();
 
 S1 = S0;
 
@@ -7906,12 +7888,11 @@ if( w[800e5828] != 0 )
 
     S0 = SP + 48;
     A0 = S0;
-    800A8160	jal    funca4f78 [$800a4f78]
+    funca4f78();
 
     A0 = SP + 10;
-    A1 = S1 << 10;
-    A1 = A1 >> 10;
-    800A8170	jal    funca64ac [$800a64ac]
+    A1 = (S1 << 10) >> 10;
+    funca64ac();
 
     A0 = S0;
     A1 = 0;
@@ -7976,7 +7957,7 @@ else
 S0 = SP + 20;
 
 A0 = S0;
-wm_get_position_from_pc_model();
+wm_get_position_from_pc_entity();
 
 [800bd134] = w(157c);
 
@@ -8061,7 +8042,7 @@ return 0 < V1;
 // funca835c()
 
 A0 = SP + 10;
-wm_get_position_from_pc_model();
+wm_get_position_from_pc_entity();
 
 x_pos = (w[SP + 10] - 4000) >> f;
 z_pos = (w[SP + 18] - 4000) >> f;
