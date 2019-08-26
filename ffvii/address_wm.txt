@@ -207,6 +207,7 @@
 800e5824 [][][][] init with 0.
 800e5828 [][][][] ???
 
+80109a38 some linked array (0x18 size 0x20 items).
 
 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
