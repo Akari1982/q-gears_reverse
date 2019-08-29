@@ -1859,12 +1859,12 @@ switch( opcode )
 
     case 349: // set world progress
     {
-        800AD1D4	jal    wm_script_pop_stack [$800abb24]
-        800AD1D8	nop
-        800AD1DC	jal    funca8888 [$800a8888]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800AD1E4	j      Lad620 [$800ad620]
-        V0 = 0;
+        wm_set_world_progress();
+
+        return 0;
     }
     break;
 

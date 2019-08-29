@@ -369,7 +369,7 @@ Lbbd70:	; 800BBD70
 800BBD74	nop
 800BBD78	bne    v0, zero, Lbc188 [$800bc188]
 800BBD7C	nop
-800BBD80	jal    funca1de0 [$800a1de0]
+800BBD80	jal    wm_get_wm_id [$800a1de0]
 800BBD84	nop
 V1 = 0003;
 800BBD8C	beq    v0, v1, Lbc188 [$800bc188]
@@ -861,7 +861,7 @@ if( V1 >= 2 )
 V0 = 1;
 800BC464	bne    v1, v0, Lbc480 [$800bc480]
 A0 = 0008;
-800BC46C	jal    funca1de0 [$800a1de0]
+800BC46C	jal    wm_get_wm_id [$800a1de0]
 
 800BC474	bne    v0, zero, Lbc480 [$800bc480]
 A0 = 0008;

@@ -1227,7 +1227,7 @@ wm_set_gte_colour_settings();
 ////////////////////////////////
 // wm_set_gte_colour_settings()
 
-funca1de0();
+wm_get_wm_id();
 
 if( V0 == 2 )
 {
@@ -1240,7 +1240,7 @@ else
     system_gte_set_lighting_matrix();
 }
 
-funca1de0();
+wm_get_wm_id();
 
 if( V0 == 2 )
 {
@@ -7228,7 +7228,7 @@ V0 = 000a;
 Lb4aec:	; 800B4AEC
 800B4AEC	bne    s7, v0, Lb4bec [$800b4bec]
 800B4AF0	nop
-800B4AF4	jal    funca1de0 [$800a1de0]
+800B4AF4	jal    wm_get_wm_id [$800a1de0]
 800B4AF8	nop
 V1 = 0003;
 800B4B00	beq    v0, v1, Lb4bec [$800b4bec]
@@ -7645,7 +7645,7 @@ A3 = 000a;
 Lb50c0:	; 800B50C0
 800B50C0	bne    v1, v0, Lb5170 [$800b5170]
 800B50C4	lui    v1, $0f00
-800B50C8	jal    funca1de0 [$800a1de0]
+800B50C8	jal    wm_get_wm_id [$800a1de0]
 800B50CC	nop
 V1 = 0002;
 800B50D4	bne    v0, v1, Lb5128 [$800b5128]
@@ -7671,7 +7671,7 @@ V0 = 0032;
 A3 = 0;
 
 Lb5128:	; 800B5128
-800B5128	jal    funca1de0 [$800a1de0]
+800B5128	jal    wm_get_wm_id [$800a1de0]
 800B512C	nop
 800B5130	bne    v0, zero, Lb5244 [$800b5244]
 A0 = S6 << 10;
@@ -8553,7 +8553,7 @@ V0 = V0 >> V1;
 V0 = V0 & 0001;
 800B5EBC	beq    v0, zero, Lb5ef0 [$800b5ef0]
 V1 = S4 & 00ff;
-800B5EC4	jal    funca1de0 [$800a1de0]
+800B5EC4	jal    wm_get_wm_id [$800a1de0]
 800B5EC8	nop
 V1 = 0002;
 800B5ED0	beq    v0, v1, Lb5eec [$800b5eec]
@@ -9690,7 +9690,7 @@ else
 
 if( V0 == 0 )
 {
-    800B749C	jal    funca1de0 [$800a1de0]
+    800B749C	jal    wm_get_wm_id [$800a1de0]
 
     if( V0 != 3 )
     {
@@ -9737,7 +9737,7 @@ if( bu[8009c6e4 + fa1] == 3 ) // on Highwind
 
 800B7534	jal    funcada08 [$800ada08]
 
-800B753C	jal    funca1de0 [$800a1de0]
+800B753C	jal    wm_get_wm_id [$800a1de0]
 
 [8009c6e4 + fa2] = b(V0);
 
@@ -10049,14 +10049,14 @@ return 0;
 ////////////////////////////////
 // funcb7a40
 
-800B7A48	jal    funca1de0 [$800a1de0]
+800B7A48	jal    wm_get_wm_id [$800a1de0]
 
 A0 = 8009d391;
 V0 = V0 ^ 0002;
 800B7A5C	addiu  a1, a0, $f84b (=-$7b5)
 800B7A60	jal    funcb787c [$800b787c]
 A2 = 0 < V0;
-800B7A68	jal    funca1de0 [$800a1de0]
+800B7A68	jal    wm_get_wm_id [$800a1de0]
 800B7A6C	nop
 V1 = 0002;
 800B7A74	beq    v0, v1, Lb7aac [$800b7aac]
@@ -10772,7 +10772,7 @@ SP = SP + 0030;
 // funcb832c
 800B832C	addiu  sp, sp, $ffc8 (=-$38)
 [SP + 0034] = w(RA);
-800B8334	jal    funca1de0 [$800a1de0]
+800B8334	jal    wm_get_wm_id [$800a1de0]
 [SP + 0030] = w(S0);
 800B833C	lui    v1, $800a
 V1 = bu[V1 + ac2f];

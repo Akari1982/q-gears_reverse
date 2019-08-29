@@ -1989,7 +1989,7 @@ if( active_entity != 0 )
 {
     if( bu[active_entity + 50] == d ) // submarine
     {
-        funca1de0();
+        wm_get_wm_id();
 
         if( V0 == 0 )
         {

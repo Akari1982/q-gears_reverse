@@ -1165,7 +1165,7 @@ return  w[800e5654];
 
 
 ////////////////////////////////
-// funca1de0()
+// wm_get_wm_id()
 
 return w[800e5634];
 ////////////////////////////////
@@ -1333,7 +1333,7 @@ return h[800e56d8];
 
 if( A0 < 2 )
 {
-    if( w[800e5634] != 3 )
+    if( w[800e5634] != 3 ) // snowfield
     {
         [800e5608] = w(0);
     }
@@ -1425,7 +1425,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
         if( ( w[800e5648] - 2 ) >= 2 )
         {
-            if( w[800e5634] != 3 )
+            if( w[800e5634] != 3 ) // snowfield
             {
                 if( buttons & 000c ) // L1 R1 (rotate world map?)
                 {
@@ -1450,7 +1450,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
         {
             if( w[800e5648] == 2 )
             {
-                if( w[800e5648] != w[800e5634] )
+                if( w[800e5648] != w[800e5634] ) // world id
                 {
                     if( buttons & 0020 ) // circle
                     {
@@ -1486,7 +1486,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             {
                 if( w[800e563c] == 0 )
                 {
-                    if( ( w[800e5634] - 2 ) >= 2 )
+                    if( ( w[800e5634] - 2 ) >= 2 ) // underwater of snowfield
                     {
                         A0 = A0 < 1;
                         A0 = A0 * 2;
@@ -1512,7 +1512,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
         {
             if( w[800e5648] == 2 )
             {
-                if( w[800e5634] != 2 )
+                if( w[800e5634] != 2 ) // underwater
                 {
                     if( buttons & 0020 ) // circle
                     {
@@ -1571,7 +1571,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
         S4 = 0;
         A1 = w[800e5648];
 
-        if( ( ( A1 - 2 ) >= 2 ) && ( w[800e5634] != 3 ) )
+        if( ( ( A1 - 2 ) >= 2 ) && ( w[800e5634] != 3 ) ) // 3 - snowfield
         {
             [800e5654] = w(w[800e5654] >> 1);
 
@@ -1588,7 +1588,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 S4 = 0 < (buttons & 0080); // square
             }
 
-            if( w[800e5634] == 3 )
+            if( w[800e5634] == 3 ) // snowfield
             {
                 if( buttons & 0020 ) // circle
                 {
@@ -1608,7 +1608,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             {
                 if( S4 == 0 )
                 {
-                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
+                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // not underwater and down
                     {
                         V1 = (buttons >> d) & 1; // right
                     }
@@ -1623,7 +1623,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                     {
                         A1 = w[8011650c] * 8 * V1;
 
-                        if( w[800e5634] == 2 )
+                        if( w[800e5634] == 2 ) // underwater
                         {
                             if( buttons & 0004 ) // L1
                             {
@@ -1649,7 +1649,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                         }
                     }
 
-                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // down
+                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // not underwater and down
                     {
                         V1 = (buttons >> f) & 1; // left
                     }
@@ -1664,7 +1664,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                     {
                         A1 = w[8011650c] * 8 * V1;
 
-                        if( w[800e5634] == 2 )
+                        if( w[800e5634] == 2 ) // underwater
                         {
                             A0 = (buttons & 0008) < 1;
                         }
@@ -1708,7 +1708,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 S3 = 0;
             }
 
-            if( ( w[800e5648] == 3 ) || ( w[800e5634] == 2 ) )
+            if( ( w[800e5648] == 3 ) || ( w[800e5634] == 2 ) ) // underwater
             {
                 if( S4 != 0 )
                 {
@@ -1733,7 +1733,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                     }
                 }
 
-                if( w[800e5634] != 2 )
+                if( w[800e5634] != 2 ) // not underwater
                 {
                     [800c84d0] = h((A0 + h[800c84d0] * 3) >> 2);
                 }
@@ -1889,7 +1889,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
             La2ab4:	; 800A2AB4
 
-            if( w[800e5634] == 2 )
+            if( w[800e5634] == 2 ) // underwater
             {
                 A0 = SP + 50;
                 wm_get_position_from_pc_entity();
@@ -2000,8 +2000,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 }
             }
 
-            V1 = w[800e5634];
-            if( V1 != 3 )
+            if( w[800e5634] != 3 ) // not snowfield
             {
                 V1 = h[800c84cc];
                 if( V1 != -1 )
@@ -2033,7 +2032,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
                 if( w[800e5648] == 2 )
                 {
-                    if( w[800e5634] != 2 )
+                    if( w[800e5634] != 2 ) // not underwater
                     {
                         V0 = h[800c84cc];
                         V1 = V1 + V0;
@@ -2081,7 +2080,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                     wm_get_pc_entity_terrain_id();
                     if( V0 == 3 ) // Sea Deep water, only gold chocobo and submarine can go here.
                     {
-                        if( w[800e5634] == 2 )
+                        if( w[800e5634] == 2 ) // underwater
                         {
                             funca3dfc();
                         }
@@ -2096,8 +2095,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
         if( ( ( buttons & 0800 ) && ( ( w[800c84c8] & 0800 ) == 0 ) ) || ( ( buttons & 0100 ) && ( ( w[800c84c8] & 0100 ) == 0 ) ) ) // L2 R2
         {
-            V0 = w[800e5634];
-            if( V0 == 0 )
+            if( w[800e5634] == 0 ) // planet
             {
                 800A2F00	jal    funcbca38 [$800bca38]
 
@@ -3734,12 +3732,12 @@ La4668:	; 800A4668
             }
             else
             {
-                [800e5634] = w(0);
+                [800e5634] = w(0); // planet
             }
         }
         else
         {
-            [800e5634] = w(2);
+            [800e5634] = w(2); // underwater
         }
     }
 
@@ -3759,7 +3757,7 @@ La4668:	; 800A4668
     }
     else
     {
-        if( w[800e5634] != 0 )
+        if( w[800e5634] != 0 ) // not planet
         {
             A0 = h[800e5634] + 9;
         }
@@ -4212,16 +4210,16 @@ for( int i = 0; i < 13; ++i )
 [800e5818] = w(0);
 [800e581c] = w(0);
 [800e5820] = w(-1);
-[800e5824] = w(0);
+[800e5824] = w(0); // set initial world progress (will be changed from script)
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca4f08()
+// wm_get_block_id_by_x_z_for_planet()
 
 x = A0;
-y = A1;
+z = A1;
 
 if( x < 0 )
 {
@@ -4232,16 +4230,16 @@ else if( x >= 9 )
     x = x - 9;
 }
 
-if( y < 0 )
+if( z < 0 )
 {
-    y = y + 7;
+    z = z + 7;
 }
-else if( y >= 7 )
+else if( z >= 7 )
 {
-    y = y - 7;
+    z = z - 7;
 }
 
-return x + y * 9;
+return x + z * 9;
 ////////////////////////////////
 
 
@@ -4258,13 +4256,13 @@ xa = (x + 4000) / 8000;
 za = (z + 4000) / 8000;
 
 S3 = 0;
-
-for( ; zm <= za; ++zm )
+zc = zm;
+for( ; zc <= za; ++zc )
 {
-    for( xm <= xa; ++ xm )
+    xc = xm;
+    for( xc <= xa; ++xc )
     {
         S0 = w[800e580c];
-
         if( S0 == 0 )
         {
             A0 = a;
@@ -4277,65 +4275,60 @@ for( ; zm <= za; ++zm )
 
         S3 = S0;
 
-        A0 = (xm << 10) >> 10;
-        A1 = (zm << 10) >> 10;
-        funca4f08(); // warp around
-
-        [S3 + 4] = h(V0);
+        A0 = (xc << 10) >> 10;
+        A1 = (zc << 10) >> 10;
+        wm_get_block_id_by_x_z_for_planet(); // warp using planet map size
+        [S0 + 4] = h(V0);
     }
 }
 
-A2 = 0;
-
-A0 = w[800e5764];
-while( A0 != 0 )
+prev = 0;
+curr = w[800e5764];
+while( curr != 0 )
 {
     S0 = S3;
     if( S0 != 0 )
     {
         V1 = 0;
-        A1 = h[A0 + 0004];
-
         loopa509c:	; 800A509C
-            V0 = h[S0 + 0004];
-            if( V0 == A1 )
+            if( h[S0 + 4] == h[curr + 4] )
             {
                 break;
             }
             V1 = S0;
-            S0 = w[S0 + 0000];
+            S0 = w[S0 + 0];
         800A50B8	bne    s0, zero, loopa509c [$800a509c]
 
         if( S0 != 0 )
         {
             if( V1 != 0 )
             {
-                [V1 + 0000] = w(w[S0 + 0000]);
+                [V1 + 0] = w(w[S0 + 0]);
             }
             else
             {
-                S3 = w[S0 + 0000];
+                S3 = w[S0 + 0];
             }
 
             V0 = w[800e580c];
             [800e580c] = w(S0);
-            [S0 + 0000] = w(V0);
+            [S0 + 0] = w(V0);
 
-            if( A2 != 0 )
+            if( prev != 0 )
             {
-                V0 = w[A0 + 0000];
+                V0 = w[curr + 0];
                 V1 = w[800e5764];
-                [800e5764] = w(A0);
-                [A2 + 0000] = w(V0);
-                [A0 + 0000] = w(V1);
-                A0 = w[A2 + 0000];
+                [800e5764] = w(curr);
+                [prev + 0] = w(V0);
+                [curr + 0] = w(V1);
+                curr = w[prev + 0];
                 continue;
             }
         }
     }
 
-    A2 = A0;
-    A0 = w[A0 + 0000];
+    prev = curr;
+    curr = w[curr + 0];
 }
 
 A0 = w[800e5768];
@@ -4344,43 +4337,43 @@ while( A0 != 0 )
     if( S0 != 0 )
     {
         V1 = 0;
-        A1 = h[A0 + 0004];
+        A1 = h[A0 + 4];
 
         loopa5154:	; 800A5154
-            V0 = h[S0 + 0004];
+            V0 = h[S0 + 4];
             if( V0 == A1 )
             {
                 break;
             }
             V1 = S0;
-            S0 = w[S0 + 0000];
+            S0 = w[S0 + 0];
         800A5170	bne    s0, zero, loopa5154 [$800a5154]
 
         if( S0 != 0 )
         {
             if( V1 != 0 )
             {
-                [V1 + 0000] = w(w[S0 + 0000]);
+                [V1 + 0] = w(w[S0 + 0]);
             }
             else
             {
-                S3 = w[S0 + 0000];
+                S3 = w[S0 + 0];
             }
 
             V0 = w[800e580c];
             [800e580c] = w(S0);
-            [S0 + 0000] = w(V0);
+            [S0 + 0] = w(V0);
         }
     }
 
-    A0 = w[A0 + 0000];
+    A0 = w[A0 + 0];
 }
 
 S0 = S3;
 while( S0 != 0 )
 {
     A0 = S0;
-    800A51C4	jal    funca5208 [$800a5208]
+    funca5208();
 
     S0 = V0;
 }
@@ -4393,89 +4386,82 @@ while( S0 != 0 )
 
 S0 = A0;
 
-800A5214	jal    funca52a4 [$800a52a4]
-
+funca52a4();
 V1 = V0;
-800A5220	beq    v1, zero, La5274 [$800a5274]
 
-V0 = 800e5718;
-V0 = V1 - V0;
-V0 = V0 >> 03;
-[S0 + 0006] = h(V0);
-V0 = V0 << 10;
-V1 = hu[S0 + 0004];
-V0 = V0 >> 0d;
-AT = 800e571c;
-AT = AT + V0;
-[AT + 0000] = h(V1);
-V1 = w[S0 + 0000];
-V0 = w[800e5810];
-[800e5810] = w(S0);
-800A526C	j      La528c [$800a528c]
-[S0 + 0000] = w(V0);
+if( V1 != 0 )
+{
+    id = (V1 - 800e5718) / 8;
+    [S0 + 6] = h(id);
 
-La5274:	; 800A5274
-V1 = w[S0 + 0000];
-V0 = w[800e580c];
-[800e580c] = w(S0);
-[S0 + 0000] = w(V0);
+    [800e5718 + id * 8 + 4] = h(hu[S0 + 4]);
+    V1 = w[S0 + 0];
+    V0 = w[800e5810];
+    [800e5810] = w(S0);
+    [S0 + 0] = w(V0);
+}
+else
+{
+    V1 = w[S0 + 0];
+    V0 = w[800e580c];
+    [800e580c] = w(S0);
+    [S0 + 0] = w(V0);
+}
 
-La528c:	; 800A528C
 return V1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca52a4
+// funca52a4()
 
-V0 = w[800e5760];
+curr_0 = w[800e5760];
 
-800A52B0	beq    v0, zero, La52d0 [$800a52d0]
-V1 = V0;
-V0 = w[V1 + 0000];
-[800e5760] = w(V0);
-800A52C8	j      La5324 [$800a5324]
-800A52CC	nop
+if( curr_0 != 0 )
+{
+    next = w[curr_0 + 0];
+    [800e5760] = w(next);
+    first_8 = w[800e5768];
+    [800e5768] = w(curr_0);
+    [first0 + 0] = w(first_8);
+    return curr_0;
+}
+else
+{
+    curr_4 = w[800e5764];
+    if( curr_4 == 0 )
+    {
+        return 0;
+    }
 
-La52d0:	; 800A52D0
-800A52D0	lui    v1, $800e
-V1 = w[V1 + 5764];
-800A52D8	nop
-800A52DC	beq    v1, zero, La5340 [$800a5340]
-800A52E0	nop
-V0 = w[V1 + 0000];
-800A52E8	nop
-800A52EC	beq    v0, zero, La5310 [$800a5310]
-A0 = 0;
+    prev_4 = 0;
+    next_4 = w[curr_4 + 0];
+    while( next_4 != 0 )
+    {
+        prev_4 = curr_4;
+        curr_4 = w[curr_4 + 0];
+        next_4 = w[curr_4 + 0];
+    }
 
-loopa52f4:	; 800A52F4
-A0 = V1;
-V1 = w[V1 + 0000];
-800A52FC	nop
-V0 = w[V1 + 0000];
-800A5304	nop
-800A5308	bne    v0, zero, loopa52f4 [$800a52f4]
-800A530C	nop
+    if( prev_4 != 0 )
+    {
+        [prev_4 + 0] = w(0);
+    }
+    else
+    {
+        return 0;
+    }
 
-La5310:	; 800A5310
-800A5310	beq    a0, zero, La5320 [$800a5320]
-800A5314	nop
-800A5318	j      La5324 [$800a5324]
-[A0 + 0000] = w(0);
+    if( curr_4 != 0 )
+    {
+        first_8 = w[800e5768];
+        [800e5768] = w(curr_4);
+        [curr_4 + 0] = w(first_8);
+    }
 
-La5320:	; 800A5320
-V1 = 0;
-
-La5324:	; 800A5324
-800A5324	beq    v1, zero, La5340 [$800a5340]
-
-V0 = w[800e5768];
-[800e5768] = w(V1);
-[V1 + 0000] = w(V0);
-
-La5340:	; 800A5340
-return V1;
+    return curr_4;
+}
 ////////////////////////////////
 
 
@@ -4498,7 +4484,7 @@ funca54f0(); // .MAP loader
 
 V0 = w[800e580c];
 [800e580c] = w(S0);
-[S0] = w(V0);
+[S0 + 0] = w(V0);
 ////////////////////////////////
 
 
@@ -4601,78 +4587,54 @@ La54d0:	; 800A54D0
 ////////////////////////////////
 // funca54f0()
 
-800A54FC	jal    funca1de0 [$800a1de0]
 S0 = A0;
-A2 = V0;
-800A5508	bne    a2, zero, La55b8 [$800a55b8]
 
-A0 = w[800e5824];
-800A5518	nop
-800A551C	blez   a0, La5534 [$800a5534]
-V0 = 0032;
-V1 = h[S0 + 0004];
-800A5528	nop
-800A552C	beq    v1, v0, La55bc [$800a55bc]
-V0 = 003f;
+wm_get_wm_id();
+wm_id = V0;
 
-La5534:	; 800A5534
-V0 = A0 < 0002;
-800A5538	bne    v0, zero, La5558 [$800a5558]
-V0 = A0 < 0003;
-V1 = h[S0 + 0004];
-V0 = 0029;
-800A5548	beq    v1, v0, La55b0 [$800a55b0]
-V0 = 002a;
-800A5550	beq    v1, v0, La55a8 [$800a55a8]
-V0 = A0 < 0003;
+if( wm_id == 0 ) // planet map
+{
+    A0 = w[800e5824]; // world progress
 
-La5558:	; 800A5558
-800A5558	bne    v0, zero, La5570 [$800a5570]
-V0 = A0 < 0004;
-V1 = h[S0 + 0004];
-V0 = 003c;
-800A5568	beq    v1, v0, La55a0 [$800a55a0]
-V0 = A0 < 0004;
+    if( ( h[S0 + 4] == 32 ) && ( A0 >= 1 ) ) // after temple of the ancients
+    {
+        V0 = 3f;
+    }
+    else if( ( h[S0 + 4] == 29 ) && ( A0 >= 2 ) ) // after ultimate weapon appears
+    {
+        V0 = 40;
+    }
+    else if( ( h[S0 + 4] == 2a ) && ( A0 >= 2 ) ) // after ultimate weapon appears
+    {
+        V0 = 41;
+    }
+    else if( ( h[S0 + 4] == 3c ) && ( A0 >= 3 ) ) // after mideel
+    {
+        V0 = 42;
+    }
+    else if( ( h[S0 + 4] == 2f ) && ( A0 >= 4 ) ) // after ultimate weapon killed
+    {
+        V0 = 43;
+    }
+    else if( ( h[S0 + 4] == 30 ) && ( A0 >= 4 ) ) // after ultimate weapon killed
+    {
+        V0 = 44;
+    }
+    else
+    {
+        V0 = h[S0 + 4];
+    }
+}
+else
+{
+    V0 = h[S0 + 4];
+}
 
-La5570:	; 800A5570
-800A5570	bne    v0, zero, La55b8 [$800a55b8]
-V0 = 002f;
-V1 = h[S0 + 0004];
-800A557C	nop
-800A5580	beq    v1, v0, La5598 [$800a5598]
-V0 = 0030;
-800A5588	bne    v1, v0, La55b8 [$800a55b8]
-V0 = 0044;
-800A5590	j      La55bc [$800a55bc]
-800A5594	nop
+[800e581c] = w(V0);
 
-La5598:	; 800A5598
-800A5598	j      La55bc [$800a55bc]
-V0 = 0043;
-
-La55a0:	; 800A55A0
-800A55A0	j      La55bc [$800a55bc]
-V0 = 0042;
-
-La55a8:	; 800A55A8
-800A55A8	j      La55bc [$800a55bc]
-V0 = 0041;
-
-La55b0:	; 800A55B0
-800A55B0	j      La55bc [$800a55bc]
-V0 = 0040;
-
-La55b8:	; 800A55B8
-V0 = h[S0 + 0004];
-
-La55bc:	; 800A55BC
-800A55BC	nop
-800A55C0	lui    at, $800e
-[AT + 581c] = w(V0);
-800A55C8	lui    a1, $800e
-A1 = w[A1 + 581c];
+A1 = w[800e581c];
 V0 = 0002;
-800A55D4	bne    a2, v0, La5678 [$800a5678]
+800A55D4	bne    wm_id, v0, La5678 [$800a5678]
 V0 = 0003;
 800A55DC	lui    v0, $38e3
 V0 = V0 | 8e39;
@@ -4696,8 +4658,7 @@ La5618:	; 800A5618
 800A5618	lui    v0, $38e3
 
 La561c:	; 800A561C
-800A561C	lui    a0, $800e
-A0 = w[A0 + 581c];
+A0 = w[800e581c];
 V0 = V0 | 8e39;
 800A5628	mult   a0, v0
 V0 = A0 >> 1f;
@@ -4708,12 +4669,12 @@ V0 = V1 << 03;
 V0 = V0 + V1;
 A0 = A0 - V0;
 800A5648	addiu  v1, a0, $fffd (=-$3)
-800A564C	bgez   v1, La565c [$800a565c]
-800A5650	nop
-800A5654	j      La566c [$800a566c]
-V1 = A0;
+if( V1 < 0 )
+{
+    V1 = A0;
+    800A5654	j      La566c [$800a566c]
+}
 
-La565c:	; 800A565C
 V0 = V1 < 0003;
 800A5660	bne    v0, zero, La566c [$800a566c]
 800A5664	nop
@@ -4725,8 +4686,8 @@ V0 = A1 << 01;
 V0 = V0 + A1;
 
 La5678:	; 800A5678
-800A5678	bne    a2, v0, La5730 [$800a5730]
-V1 = A2 << 03;
+800A5678	bne    wm_id, v0, La5730 [$800a5730]
+
 800A5680	lui    v0, $38e3
 V0 = V0 | 8e39;
 800A5688	mult   a1, v0
@@ -4754,8 +4715,7 @@ La56c8:	; 800A56C8
 800A56C8	lui    v0, $38e3
 
 La56cc:	; 800A56CC
-800A56CC	lui    a0, $800e
-A0 = w[A0 + 581c];
+A0 = w[800e5818 + 4];
 V0 = V0 | 8e39;
 800A56D8	mult   a0, v0
 V1 = A0 >> 1f;
@@ -4766,17 +4726,19 @@ V0 = V1 << 03;
 V0 = V0 + V1;
 V1 = A0 - V0;
 V0 = V1 < 0004;
-800A56FC	bne    v0, zero, La5708 [$800a5708]
-800A5700	nop
-800A5704	addiu  v1, v1, $fff7 (=-$9)
 
-La5708:	; 800A5708
-800A5708	bgez   v1, La5718 [$800a5718]
+if( V0 == 0 )
+{
+    V1 = V1 - 9;
+}
+
+if( V1 < 0 )
+{
+    V1 = V1 + 2;
+    800A5710	j      La5724 [$800a5724]
+}
+
 V0 = V1 < 0002;
-800A5710	j      La5724 [$800a5724]
-V1 = V1 + 0002;
-
-La5718:	; 800A5718
 800A5718	bne    v0, zero, La5728 [$800a5728]
 V0 = A1 << 01;
 800A5720	addiu  v1, v1, $fffe (=-$2)
@@ -4786,7 +4748,6 @@ V0 = A1 << 01;
 
 La5728:	; 800A5728
 A1 = V0 + V1;
-V1 = A2 * 8;
 
 La5730:	; 800A5730
 A0 = A1 << 01;
@@ -4798,7 +4759,7 @@ A0 = A0 - A1;
 // 00004368 00000002 WORLD\WM1.MAP
 // 00004369 0008A000 WORLD\WM2.MAP
 // 0000447D 0002E000 WORLD\WM3.MAP
-A0 = w[800c74e4 + V1] + A0; // sector
+A0 = w[800c74e4 + wm_id * 8] + A0; // sector
 A1 = b800; // size
 A2 = w[800e5714] + h[S0 + 6] * b800; // buffer
 A3 = 800a5924; // funca5924() callback
@@ -4844,8 +4805,7 @@ V1 = w[V1 + 5820];
 800A582C	nop
 800A5830	bltz   v1, La58d4 [$800a58d4]
 800A5834	nop
-800A5838	lui    s0, $800e
-S0 = w[S0 + 5768];
+S0 = w[800e5768];
 800A5840	nop
 800A5844	beq    s0, zero, La5880 [$800a5880]
 S1 = 0;
@@ -4880,16 +4840,12 @@ V0 = w[S0 + 0000];
 
 La589c:	; 800A589C
 V0 = w[S0 + 0000];
-800A58A0	nop
-800A58A4	lui    at, $800e
-[AT + 5768] = w(V0);
+[800e5768] = w(V0);
 
 La58ac:	; 800A58AC
-800A58AC	lui    v0, $800e
-V0 = w[V0 + 5764];
+V0 = w[800e5764];
 A0 = S0;
-800A58B8	lui    at, $800e
-[AT + 5764] = w(A0);
+[800e5764] = w(A0);
 800A58C0	jal    funca5b88 [$800a5b88]
 [A0 + 0000] = w(V0);
 800A58C8	addiu  v0, zero, $ffff (=-$1)
@@ -4943,9 +4899,13 @@ SP = SP + 0018;
 800A5968	jr     ra 
 800A596C	nop
 ////////////////////////////////
-// funca5970
-800A5970	lui    v1, $800e
-V1 = w[V1 + 5768];
+
+
+
+////////////////////////////////
+// funca5970()
+
+V1 = w[800e5768];
 800A5978	nop
 800A597C	beq    v1, zero, La5994 [$800a5994]
 V0 = 0;
@@ -4958,8 +4918,7 @@ V0 = V0 + 0001;
 
 La5994:	; 800A5994
 V0 = V0 << 10;
-800A5998	jr     ra 
-V0 = V0 >> 10;
+return V0 >> 10;
 ////////////////////////////////
 
 
@@ -5006,55 +4965,47 @@ V0 = V0 + 582c;
 
 
 ////////////////////////////////
-// funca5a20
+// wm_get_element_with_block_id_and_set_it_first()
 
-A1 = w[800e5764];
-if( A1 != 0 )
+block_id = A0;
+
+prev = 0;
+curr = w[800e5764];
+while( curr != 0 )
 {
-    A2 = 0;
-    V0 = A0 << 10;
-    V1 = V0 >> 10;
-
-    loopa5a3c:	; 800A5A3C
-        V0 = h[A1 + 4];
-        if( V0 == V1 )
-        {
-            break;
-        }
-        A2 = A1;
-        A1 = w[A1 + 0];
-    800A5A58	bne    a1, zero, loopa5a3c [$800a5a3c]
-
-    if( A1 != 0 )
+    if( h[curr + 4] == block_id )
     {
-        if( A2 != 0 )
+        if( prev != 0 )
         {
-            V0 = w[A1 + 0000];
-            V1 = w[800e5764];
-            [800e5764] = w(A1);
-            [A2 + 0000] = w(V0);
-            [A1 + 0000] = w(V1);
+            next = w[curr + 0];
+            first = w[800e5764];
+            [800e5764] = w(curr); // make current block as first block
+            [prev + 0] = w(next);
+            [curr + 0] = w(first);
         }
+        return curr;
     }
+    prev = curr;
+    curr = w[curr + 0];
 }
-return A1;
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca5a94
-800A5A94	lui    v1, $800e
-V1 = w[V1 + 5768];
-800A5A9C	nop
+// funca5a94()
+
+V1 = w[800e5768];
+
 800A5AA0	beq    v1, zero, La5ad0 [$800a5ad0]
-800A5AA4	nop
+
 V0 = A0 << 10;
 A0 = V0 >> 10;
 
 loopa5ab0:	; 800A5AB0
 V0 = h[V1 + 0004];
-800A5AB4	nop
+
 800A5AB8	beq    v0, a0, La5ad0 [$800a5ad0]
 800A5ABC	nop
 V1 = w[V1 + 0000];
@@ -5063,18 +5014,19 @@ V1 = w[V1 + 0000];
 800A5ACC	nop
 
 La5ad0:	; 800A5AD0
-800A5AD0	jr     ra 
-V0 = 0 < V1;
+return 0 < V1;
 ////////////////////////////////
-// funca5ad8
-800A5AD8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// funca5ad8()
+
 S0 = A0;
-800A5AE4	lui    a0, $800e
-A0 = w[A0 + 5a2c];
+A0 = w[800e5a2c];
 800A5AEC	nop
 800A5AF0	beq    a0, zero, La5b2c [$800a5b2c]
-[SP + 0014] = w(RA);
+
 V1 = w[S0 + 0010];
 
 loopa5afc:	; 800A5AFC
@@ -5916,46 +5868,43 @@ V0 = V0 >> 12;
 V1 = V1 + V0;
 V0 = V1 << 10;
 S0 = V0 >> 10;
-A0 = S0;
 [S1 + 0012] = h(S2);
 S2 = V1;
-800A66D0	jal    funca5a20 [$800a5a20]
 [S1 + 0010] = h(S3);
-800A66D8	beq    v0, zero, La66f0 [$800a66f0]
-800A66DC	nop
-800A66E0	jal    funca5ad8 [$800a5ad8]
-A0 = S1;
-800A66E8	j      La6740 [$800a6740]
-800A66EC	nop
 
-La66f0:	; 800A66F0
-800A66F0	jal    funca5a94 [$800a5a94]
 A0 = S0;
-800A66F8	bne    v0, zero, La6740 [$800a6740]
-800A66FC	nop
-800A6700	lui    v0, $800e
-V0 = w[V0 + 580c];
-800A6708	nop
-800A670C	bne    v0, zero, La671c [$800a671c]
-800A6710	nop
-800A6714	jal    funca0b40 [$800a0b40]
-A0 = 000f;
+wm_get_element_with_block_id_and_set_it_first();
 
-La671c:	; 800A671C
-800A671C	lui    a0, $800e
-A0 = w[A0 + 580c];
-800A6724	nop
-V0 = w[A0 + 0000];
-[A0 + 0004] = h(S2);
-800A6730	lui    at, $800e
-[AT + 580c] = w(V0);
-800A6738	jal    funca5208 [$800a5208]
-800A673C	nop
+if( V0 != 0 )
+{
+    A0 = S1;
+    800A66E0	jal    funca5ad8 [$800a5ad8]
+}
+else
+{
+    A0 = S0;
+    800A66F0	jal    funca5a94 [$800a5a94]
+
+    if( V0 == 0 )
+    {
+        V0 = w[800e580c];
+        if( V0 == 0 )
+        {
+            A0 = f;
+            800A6714	jal    funca0b40 [$800a0b40]
+        }
+
+        A0 = w[800e580c];
+        V0 = w[A0 + 0000];
+        [A0 + 0004] = h(S2);
+        [800e580c] = w(V0);
+
+        funca5208();
+    }
+}
 
 La6740:	; 800A6740
-V0 = hu[SP + 0084];
-800A6744	nop
-V0 = V0 + 0001;
+V0 = hu[SP + 0084] + 1;
 [SP + 0084] = h(V0);
 V0 = V0 << 10;
 V0 = V0 >> 10;
@@ -7692,7 +7641,7 @@ return w[800e5828];
 ////////////////////////////////
 // funca806c()
 
-S0 = A0; // cam related
+S0 = A0; // cam angle
 S2 = A1;
 
 wm_set_pc_entity_as_active_entity();
@@ -7709,16 +7658,18 @@ if( w[800e5828] != 0 )
 {
     [SP + 40] = h(0);
     [SP + 42] = h(0);
-    [SP + 44] = h(-2000);
+    [SP + 44] = h(-2000); // view dist
 
     A0 = SP + 40;
     A1 = ((0 - S0) << 10) >> 10;
     wm_rotate_vector_by_y_angle();
 
+    // position along view sight
     [SP + 48] = w(w[SP + 10] + h[SP + 40]);
     [SP + 4c] = w(w[SP + 14]);
     [SP + 50] = w(w[SP + 18] + h[SP + 44]);
 
+    // warp new point around world
     if( w[SP + 48] < 0 )
     {
         [SP + 48] = w(w[SP + 48] + 48000);
@@ -7727,7 +7678,6 @@ if( w[800e5828] != 0 )
     {
         [SP + 48] = w(w[SP + 48] - 48000);
     }
-
     if( w[SP + 50] < 0 )
     {
         [SP + 50] = w(w[SP + 50] + 38000);
@@ -7811,7 +7761,7 @@ wm_get_position_from_pc_entity();
 
 [800bd134] = w(157c);
 
-800A826C	jal    funca1de0 [$800a1de0]
+wm_get_wm_id();
 
 V0 = V0 ^ 2;
 V0 = V0 < 1;
@@ -7894,73 +7844,61 @@ return 0 < V1;
 A0 = SP + 10;
 wm_get_position_from_pc_entity();
 
-x_pos = (w[SP + 10] - 4000) >> f;
-z_pos = (w[SP + 18] - 4000) >> f;
+block_x = (w[SP + 10] - 4000) / 8000;
+block_z = (w[SP + 18] - 4000) / 8000;
 
-funca1de0();
-S2 = V0;
+wm_get_wm_id();
+wm_id = V0;
 
-if( S2 == 2 )
+if( wm_id == 2 ) // underwater
 {
-    x_pos = x_pos - 3;
-    z_pos = z_pos - 2
+    block_x = block_x - 3;
+    block_z = block_z - 2
 }
 
-if( x_pos < 0 )
+if( block_x < 0 )
 {
-    x_pos = x_pos + bu[800c6670 + S2];
+    block_x = block_x + bu[800c6670 + wm_id];
 }
 
-if( z_pos < 0 )
+if( block_z < 0 )
 {
-    z_pos = z_pos + bu[800c6674 + S2];
+    block_z = block_z + bu[800c6674 + wm_id];
 }
 
-A2 = x_pos + bu[800c6670 + S2] * z_pos;
+block_id = block_x + bu[800c6670 + wm_id] * block_z;
 
-if( S2 == 0 )
+if( wm_id == 0 ) // planet
 {
-    if( w[800e5824] > 0 )
+    if( w[800e5824] >= 1 ) // after temple of the ancients
     {
-        if( ( x_pos - 4 ) < 2 )
+        if( ( ( block_x - 4 ) < 2 ) && ( ( block_z - 4 ) < 2 ) )
         {
-            if( ( z_pos - 4 ) < 2 )
-            {
-                A2 = x_pos + 3b + (z_pos - 4) * 2;
-            }
+            block_id = block_x + 3b + (block_z - 4) * 2;
         }
     }
 
-    if( w[800e5824] >= 2 )
+    if( w[800e5824] >= 2 ) // after ultimate weapon appears
     {
-        if( ( x_pos - 4 ) < 3 )
+        if( ( ( block_x - 4 ) < 3 ) && ( ( block_z - 3 ) < 2 ) )
         {
-            if( ( z_pos - 3 ) < 2 )
-            {
-                A2 = x_pos + 3f + (z_pos - 3) * 3;
-            }
+            block_id = block_x + 3f + (block_z - 3) * 3;
         }
     }
 
-    if( w[800e5824] >= 3 )
+    if( w[800e5824] >= 3 ) // after mideel
     {
-        if( ( x_pos - 5 ) < 2 )
+        if( ( ( block_x - 5 ) < 2 ) && ( block_z >= 5 ) )
         {
-            if( z_pos >= 5 )
-            {
-                A2 = x_pos + 3a + z_pos * 2;
-            }
+            block_id = block_x + 3a + block_z * 2;
         }
     }
 
-    if( w[800e5824] >= 4 )
+    if( w[800e5824] >= 4 ) // after ultimate weapon killed
     {
-        if( ( x_pos - 1 ) < 3 )
+        if( ( ( block_x - 1 ) < 3 ) && ( ( block_z - 4 ) < 2 ) )
         {
-            if( ( z_pos - 4 ) < 2 )
-            {
-                A2 = x_pos + 4c + (z_pos - 4) * 3
-            }
+            block_id = block_x + 4c + (block_z - 4) * 3
         }
     }
 }
@@ -7969,7 +7907,7 @@ if( S2 == 0 )
 // 0000372C 00000002 WM1.BOT
 // 0000372D 00228000 WM2.BOT
 // 00003B7D 000B8000 WM3.BOT
-A0 = w[800c74a4 + S2 * 8] + A2 * 7c; // sector for .BOT
+A0 = w[800c74a4 + wm_id * 8] + block_id * 7c; // sector for .BOT
 A1 = 2e000; // size
 A2 = w[800e5714]; // buffer
 A3 = 0; // callback
@@ -7979,28 +7917,28 @@ loopa8538:	; 800A8538
     system_cdrom_read_chain();
 800A8540	bne    v0, zero, loopa8538 [$800a8538]
 
-[800e5760] = w(800e5738);
-[800e5764] = w(800e5738 - 20);
+[800e5760] = w(800e5718 + 4 * 8);
+[800e5764] = w(800e5718);
 [800e5730] = w(0);
 
 for( int i = 0; i < 2; ++i )
 {
     for( int j = 0; j < 2; ++j )
     {
-        A2 = z_pos + i;
-        A1 = x_pos + j;
+        x = block_x + j;
+        z = block_z + i;
 
-        if( S2 == 2 )
+        if( wm_id == 2 ) // underwater
         {
-            [800e571c + i * 10 + j * 8] = h(((A2 - ((A2 / 4) * 4)) + 2) * 9 + A1 - ((A1 / 3) * 3) + 3);
+            [800e5718 + i * 10 + j * 8 + 4] = h(((z - ((z / 4) * 4)) + 2) * 9 + x - ((x / 3) * 3) + 3); // block id with warp around world if needed
         }
-        else if( S2 == 3 )
+        else if( wm_id == 3 ) // snowfield
         {
-            [800e571c + i * 10 + j * 8] = h((A2 & 1) * 8 + (A1 & 1));
+            [800e5718 + i * 10 + j * 8 + 4] = h((z & 1) * 8 + (x & 1)); // block id with warp around world if needed
         }
         else
         {
-            [800e571c + i * 10 + j * 8] = h((A2 - ((A2 / 7) * 7)) * 9 + A1 - ((A1 / 9) * 9));
+            [800e5718 + i * 10 + j * 8 + 4] = h((z - ((z / 7) * 7)) * 9 + x - ((x / 9) * 9)); // block id with warp around world if needed
         }
     }
 }
@@ -8053,46 +7991,40 @@ if( A1 != 0 )
     [800e5760] = w(V1);
 }
 
-A0 = w[800e5764];
-if( A0 != 0 )
+
+prev = 0;
+curr = w[800e5764];
+while( curr != 0 )
 {
-    A1 = 0;
-    V1 = 800e5718 + S0 * 8;
-    V0 = A0 < V1;
-
-    loopa87bc:	; 800A87BC
-        if( V0 == 0 )
+    if( curr >= 800e5718 + S0 * 8 )
+    {
+        if( prev != 0 )
         {
-            if( A1 != 0 )
-            {
-                [A1 + 0000] = w(w[A0 + 0000]);
-            }
-            else
-            {
-                [800e5764] = w(w[A0 + 0000]);
-            }
-
-            V0 = w[800e5760];
-            [800e5760] = w(A0);
-            [A0 + 0] = w(V0);
-
-            if( A1 != 0 )
-            {
-                A0 = w[A1 + 0000];
-            }
-            else
-            {
-                A0 = w[800e5764];
-            }
+            [prev + 0] = w(w[curr + 0]);
         }
         else
         {
-            A1 = A0;
-            A0 = w[A0 + 0];
+            [800e5764] = w(w[curr + 0]);
         }
 
-        V0 = A0 < V1;
-    800A8828	bne    a0, zero, loopa87bc [$800a87bc]
+        V0 = w[800e5760];
+        [800e5760] = w(curr);
+        [curr + 0] = w(V0);
+
+        if( prev != 0 )
+        {
+            curr = w[prev + 0];
+        }
+        else
+        {
+            curr = w[800e5764];
+        }
+    }
+    else
+    {
+        prev = curr;
+        curr = w[curr + 0];
+    }
 }
 
 return w[800e5714] + S0 * b800;
@@ -8109,7 +8041,7 @@ return w[800e5714] + S0 * b800;
 
 
 ////////////////////////////////
-// funca8888()
+// wm_set_world_progress()
 
 [800e5824] = w(A0);
 ////////////////////////////////
