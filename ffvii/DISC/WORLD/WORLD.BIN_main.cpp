@@ -3784,7 +3784,7 @@ La4668:	; 800A4668
 
     funcbc1cc(); // prepare some packets
 
-    funca7ea4();
+    funca7ea4(); // init some lists
 
     A0 = S2;
     A1 = S4;
@@ -3845,12 +3845,14 @@ La4668:	; 800A4668
 
     wm_get_model_id_from_pc_entity();
 
-    800A4898	bne    v0, s5, La48a4 [$800a48a4]
-    V1 = 07d0;
-    V1 = 0fa0;
-
-    La48a4:	; 800A48A4
-    [800e5640] = w(V1);
+    if( V0 == S5 )
+    {
+        [800e5640] = w(fa0);
+    }
+    else
+    {
+        [800e5640] = w(7d0);
+    }
 
     V0 = (w[S2] - 1) < 0002;
     800A48BC	bne    v0, zero, La48e0 [$800a48e0]
@@ -3862,22 +3864,23 @@ La4668:	; 800A4668
     800A48E0	jal    funcb76a8 [$800b76a8]
 
     V0 = (w[800e566c] - 6) < 2;
-    800A48FC	beq    v0, zero, La490c [$800a490c]
-
-    A0 = 0bb8;
-    800A4904	jal    funca886c [$800a886c]
+    if( V0 != 0 )
+    {
+        A0 = bb8;
+        800A4904	jal    funca886c [$800a886c]
+    }
 
     La490c:	; 800A490C
     V0 = w[800e5634];
-    800A4918	bne    v0, s6, La4930 [$800a4930]
+    if( V0 == S6 )
+    {
+        A0 = 1;
+        800A4920	jal    funca98a4 [$800a98a4]
 
-    A0 = 0001;
-    800A4920	jal    funca98a4 [$800a98a4]
+        A0 = -bb8;
+        800A4928	jal    funcaa02c [$800aa02c]
+    }
 
-    800A492C	addiu  a0, zero, $f448 (=-$bb8)
-    800A4928	jal    funcaa02c [$800aa02c]
-
-    La4930:	; 800A4930
     funca835c(); // .BOT loader
 
     wm_get_pc_character_model_from_party();
@@ -3887,28 +3890,24 @@ La4668:	; 800A4668
 
     800A494C	jal    funcb64c8 [$800b64c8]
 
-    V0 = V0 < 0006;
-    800A4958	beq    v0, zero, La4968 [$800a4968]
+    if( V0 < 6 )
+    {
+        A0 = 1;
+        800A4960	jal    funcb63e0 [$800b63e0]
+    }
 
-    A0 = 1;
-    800A4960	jal    funcb63e0 [$800b63e0]
-
-
-    La4968:	; 800A4968
     800A4968	jal    funcb64c8 [$800b64c8]
 
-    800A4970	beq    v0, zero, La4988 [$800a4988]
+    if( V0 != 0 )
+    {
+        800A4978	jal    funcb64a0 [$800b64a0]
+    }
+    else
+    {
+        A0 = 1;
+        800A4988	jal    funcb63f0 [$800b63f0]
+    }
 
-    800A4978	jal    funcb64a0 [$800b64a0]
-
-    800A4980	j      La4990 [$800a4990]
-
-
-    La4988:	; 800A4988
-    A0 = 1;
-    800A4988	jal    funcb63f0 [$800b63f0]
-
-    La4990:	; 800A4990
     wm_handle_buttons();
 
     800A4998	addiu  v0, zero, $fff1 (=-$f)
@@ -3954,21 +3953,21 @@ La4668:	; 800A4668
         V0 = V1 >> 03;
 
         La4a34:	; 800A4A34
-        V0 = S0 < 0033;
-        800A4A38	bne    v0, zero, La4a64 [$800a4a64]
-        800A4A3C	nop
-        V0 = w[SP + 0014];
-        800A4A44	lui    v1, $8011
-        V1 = w[V1 + 6508];
-        800A4A4C	nop
-        V0 = V1 < V0;
-        800A4A54	bne    v0, zero, La4a68 [$800a4a68]
-        V0 = V1 + 0032;
-        800A4A5C	j      La4a68 [$800a4a68]
-        800A4A60	addiu  v0, v1, $ffce (=-$32)
-
-        La4a64:	; 800A4A64
-        V0 = w[SP + 14];
+        if( S0 >= 33 )
+        {
+            V1 = w[80116508];
+            if( V1 >= w[SP + 14] )
+            {
+                V0 = V1 - 32;
+            else
+            {
+                V0 = V1 + 32;
+            }
+        }
+        else
+        {
+            V0 = w[SP + 14];
+        }
 
         La4a68:	; 800A4A68
         [80116508] = w(V0);
@@ -3991,7 +3990,7 @@ La4668:	; 800A4668
 
         A0 = h[S3];
         A1 = 1;
-        funca806c(); // we load .MAP inside
+        funca806c(); // load map blocks and calculate height
 
         funcad804();
 
@@ -3999,12 +3998,11 @@ La4668:	; 800A4668
 
         funca3964();
 
-        V0 = w[800e566c] < 0009;
-        800A4ADC	beq    v0, zero, La4aec [$800a4aec]
+        if( w[800e566c] < 9 )
+        {
+            wm_dialog_update();
+        }
 
-        wm_dialog_update();
-
-        La4aec:	; 800A4AEC
         800A4AEC	jal    funcb3828 [$800b3828]
 
         V0 = w[800e5648];
@@ -4047,16 +4045,15 @@ La4668:	; 800A4668
         wm_is_pc_entity_model_in_mask();
 
         A0 = S0;
-        800A4B8C	beq    v0, zero, La4ba8 [$800a4ba8]
-
-        V0 = A0 < f449;
-        if( V0 == 0 )
+        if( V0 != 0 )
         {
-            800A4BA4	addiu  a0, zero, $f448 (=-$bb8)
+            if( A0 >= f449 )
+            {
+                800A4BA4	addiu  a0, zero, $f448 (=-$bb8)
+            }
+            800A4BA0	j      La4bc4 [$800a4bc4]
         }
-        800A4BA0	j      La4bc4 [$800a4bc4]
 
-        La4ba8:	; 800A4BA8
         wm_get_model_id_from_pc_entity();
 
         A0 = S0;
@@ -4184,7 +4181,7 @@ wm_get_current_render_buffer_id();
 
 
 ////////////////////////////////
-// funca4ddc()
+// wm_init_load_map_file_struct()
 
 [800e5714] = w(80156000);
 
@@ -4470,17 +4467,18 @@ else
 // funca5348()
 
 S0 = A0;
+
 if( A1 != 0 )
 {
-    [A1] = w(w[S0]);
+    [A1 + 0] = w(w[S0 + 0]);
 }
 else
 {
-    [800e5810] = w(w[S0]);
+    [800e5810] = w(w[S0 + 0]);
 }
 
-A0 = S0;
-funca54f0(); // .MAP loader
+A0 = S0; // block to load
+wm_load_map_file_block(); // .MAP loader
 
 V0 = w[800e580c];
 [800e580c] = w(S0);
@@ -4490,102 +4488,86 @@ V0 = w[800e580c];
 
 
 ////////////////////////////////
-// funca53a8()
+// wm_load_closest_map_file_block()
 
-V0 = w[800e5814];
-S2 = A0;
-S3 = A1;
-800A53CC	bne    v0, zero, La54d0 [$800a54d0]
+mesh_x = A0;
+mesh_z = A1;
 
-800A53D4	lui    v0, $800e
-V0 = w[V0 + 5810];
-800A53DC	nop
-800A53E0	beq    v0, zero, La54d0 [$800a54d0]
-800A53E4	nop
-800A53E8	jal    funcadc80 [$800adc80]
+if( w[800e5814] != 0 )
+{
+    return;
+}
+
+if( w[800e5810] == 0 )
+{
+    return;
+}
+
 A0 = 0;
-800A53F0	beq    v0, zero, La54d0 [$800a54d0]
-S1 = 0;
-S0 = 0;
-T2 = 7fff;
-800A5400	lui    a2, $800e
-A2 = w[A2 + 5810];
-800A5408	nop
-800A540C	beq    a2, zero, La54b4 [$800a54b4]
-T1 = 0;
-V0 = S2 << 10;
-T0 = V0 >> 10;
-T3 = 0024;
-V0 = S3 << 10;
-A3 = V0 >> 10;
+funcadc80();
 
-loopa5428:	; 800A5428
-V1 = h[A2 + 0004];
-800A542C	nop
-800A5430	bgez   v1, La543c [$800a543c]
-V0 = V1;
-V0 = V1 + 0003;
+if( V0 == 0 )
+{
+    return;
+}
 
-La543c:	; 800A543C
-A1 = V0 >> 02;
-V0 = A1 << 02;
-V0 = V1 - V0;
-A0 = V0 - T0;
-800A544C	bgtz   a0, La5458 [$800a5458]
-800A5450	nop
-A0 = T0 - V0;
+dist = 7fff;
 
-La5458:	; 800A5458
-V0 = A0 < 0013;
-800A545C	bne    v0, zero, La5468 [$800a5468]
-V1 = A1 - A3;
-A0 = T3 - A0;
+closest_prev = 0;
+closest = 0;
+prev = 0;
+curr = w[800e5810];
+while( curr != 0 )
+{
+    block_id = h[curr + 4];
+    x = (block_id % 4) - mesh_x;
 
-La5468:	; 800A5468
-800A5468	bgtz   v1, La5478 [$800a5478]
-V0 = V1 < 000f;
-V1 = A3 - A1;
-V0 = V1 < 000f;
+    if( x <= 0 )
+    {
+        x = mesh_x - (block_id % 4);
+    }
+    if( x >= 13 )
+    {
+        x = 24 - x;
+    }
 
-La5478:	; 800A5478
-800A5478	bne    v0, zero, La5484 [$800a5484]
-V0 = 001c;
-V1 = V0 - V1;
+    z = block_id / 4 - mesh_z;
+    if( z <= 0 )
+    {
+        z = mesh_z - block_id / 4;
+    }
+    if( z >= f )
+    {
+        z = 1c - z;
+    }
 
-La5484:	; 800A5484
-V1 = A0 + V1;
-V0 = V1 < T2;
-800A548C	beq    v0, zero, La54a0 [$800a54a0]
-800A5490	nop
-T2 = V1;
-S0 = A2;
-S1 = T1;
+    // get closest block
+    if( ( x + z ) < dist )
+    {
+        dist = x + z;
+        closest = curr;
+        closest_prev = prev;
+    }
 
-La54a0:	; 800A54A0
-T1 = A2;
-A2 = w[A2 + 0000];
-800A54A8	nop
-800A54AC	bne    a2, zero, loopa5428 [$800a5428]
-800A54B0	nop
+    prev = curr;
+    curr = w[curr + 0];
+}
 
-La54b4:	; 800A54B4
-800A54B4	bne    s0, zero, La54c8 [$800a54c8]
-A0 = S0;
-800A54BC	jal    funca0b40 [$800a0b40]
-A0 = 0022;
-A0 = S0;
+if( closest == 0 )
+{
+    A0 = 22;
+    funca0b40(); // error
+}
 
-La54c8:	; 800A54C8
-A1 = S1;
+A0 = closest; // block struct
+A1 = closest_prev;
 funca5348(); // we load .MAP inside
-
-La54d0:	; 800A54D0
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca54f0()
+// wm_load_map_file_block()
 
 S0 = A0;
 
@@ -4598,168 +4580,114 @@ if( wm_id == 0 ) // planet map
 
     if( ( h[S0 + 4] == 32 ) && ( A0 >= 1 ) ) // after temple of the ancients
     {
-        V0 = 3f;
+        block_id = 3f;
     }
     else if( ( h[S0 + 4] == 29 ) && ( A0 >= 2 ) ) // after ultimate weapon appears
     {
-        V0 = 40;
+        block_id = 40;
     }
     else if( ( h[S0 + 4] == 2a ) && ( A0 >= 2 ) ) // after ultimate weapon appears
     {
-        V0 = 41;
+        block_id = 41;
     }
     else if( ( h[S0 + 4] == 3c ) && ( A0 >= 3 ) ) // after mideel
     {
-        V0 = 42;
+        block_id = 42;
     }
     else if( ( h[S0 + 4] == 2f ) && ( A0 >= 4 ) ) // after ultimate weapon killed
     {
-        V0 = 43;
+        block_id = 43;
     }
     else if( ( h[S0 + 4] == 30 ) && ( A0 >= 4 ) ) // after ultimate weapon killed
     {
-        V0 = 44;
+        block_id = 44;
     }
     else
     {
-        V0 = h[S0 + 4];
+        block_id = h[S0 + 4];
     }
 }
 else
 {
-    V0 = h[S0 + 4];
+    block_id = h[S0 + 4];
 }
 
-[800e581c] = w(V0);
+[800e5818 + 4] = w(block_id);
 
-A1 = w[800e581c];
-V0 = 0002;
-800A55D4	bne    wm_id, v0, La5678 [$800a5678]
-V0 = 0003;
-800A55DC	lui    v0, $38e3
-V0 = V0 | 8e39;
-800A55E4	mult   a1, v0
-V1 = A1 >> 1f;
-800A55EC	mfhi   v0
-V0 = V0 >> 01;
-V1 = V0 - V1;
-800A55F8	addiu  a1, v1, $fffe (=-$2)
-800A55FC	bgez   a1, La560c [$800a560c]
-V0 = A1 < 0004;
-800A5604	j      La5618 [$800a5618]
-A1 = V1 + 0002;
-
-La560c:	; 800A560C
-800A560C	bne    v0, zero, La561c [$800a561c]
-800A5610	lui    v0, $38e3
-800A5614	addiu  a1, v1, $fffa (=-$6)
-
-La5618:	; 800A5618
-800A5618	lui    v0, $38e3
-
-La561c:	; 800A561C
-A0 = w[800e581c];
-V0 = V0 | 8e39;
-800A5628	mult   a0, v0
-V0 = A0 >> 1f;
-800A5630	mfhi   v1
-V1 = V1 >> 01;
-V1 = V1 - V0;
-V0 = V1 << 03;
-V0 = V0 + V1;
-A0 = A0 - V0;
-800A5648	addiu  v1, a0, $fffd (=-$3)
-if( V1 < 0 )
+if( wm_id == 2 ) // underwater
 {
-    V1 = A0;
-    800A5654	j      La566c [$800a566c]
+    V1 = block_id / 9;
+    A1 = V1 - 2;
+
+    if( A1 < 0 )
+    {
+        A1 = V1 + 2;
+    }
+    else if( A1 >= 4 )
+    {
+        A1 = V1 - 6;
+    }
+
+    A0 = block_id % 9;
+    V1 = A0 - 3;
+
+    if( V1 < 0 )
+    {
+        V1 = A0;
+    }
+    else if( V1 >= 3 )
+    {
+        V1 = A0 - 6;
+    }
+
+    V0 = A1 << 01;
+    V0 = V0 + A1;
+    A1 = V0 + V1;
 }
-
-V0 = V1 < 0003;
-800A5660	bne    v0, zero, La566c [$800a566c]
-800A5664	nop
-800A5668	addiu  v1, a0, $fffa (=-$6)
-
-La566c:	; 800A566C
-V0 = A1 << 01;
-800A5670	j      La5728 [$800a5728]
-V0 = V0 + A1;
-
-La5678:	; 800A5678
-800A5678	bne    wm_id, v0, La5730 [$800a5730]
-
-800A5680	lui    v0, $38e3
-V0 = V0 | 8e39;
-800A5688	mult   a1, v0
-V1 = A1 >> 1f;
-800A5690	mfhi   v0
-V0 = V0 >> 01;
-A1 = V0 - V1;
-V0 = A1 < 0003;
-800A56A0	bne    v0, zero, La56ac [$800a56ac]
-800A56A4	nop
-800A56A8	addiu  a1, a1, $fff9 (=-$7)
-
-La56ac:	; 800A56AC
-800A56AC	bgez   a1, La56bc [$800a56bc]
-V0 = A1 < 0002;
-800A56B4	j      La56c8 [$800a56c8]
-A1 = A1 + 0002;
-
-La56bc:	; 800A56BC
-800A56BC	bne    v0, zero, La56cc [$800a56cc]
-800A56C0	lui    v0, $38e3
-800A56C4	addiu  a1, a1, $fffe (=-$2)
-
-La56c8:	; 800A56C8
-800A56C8	lui    v0, $38e3
-
-La56cc:	; 800A56CC
-A0 = w[800e5818 + 4];
-V0 = V0 | 8e39;
-800A56D8	mult   a0, v0
-V1 = A0 >> 1f;
-800A56E0	mfhi   v0
-V0 = V0 >> 01;
-V1 = V0 - V1;
-V0 = V1 << 03;
-V0 = V0 + V1;
-V1 = A0 - V0;
-V0 = V1 < 0004;
-
-if( V0 == 0 )
+else if( wm_if == 3 ) // snowfield
 {
-    V1 = V1 - 9;
+    A1 = block_id / 9;
+
+    if( A1 >= 3 )
+    {
+        A1 = A1 - 7;
+    }
+
+    if( A1 < 0 )
+    {
+        A1 = A1 + 2;
+    }
+    else if( A1 >= 2 )
+    {
+        A1 = A1 - 2;
+    }
+
+    V1 = block_id % 9;
+
+    if( V1 >= 4 )
+    {
+        V1 = V1 - 9;
+    }
+
+    if( V1 < 0 )
+    {
+        V1 = V1 + 2;
+    }
+    else if( V1 >= 2 )
+    {
+        V1 = V1 - 2;
+    }
+
+    V0 = A1 << 01;
+    A1 = V0 + V1;
 }
 
-if( V1 < 0 )
-{
-    V1 = V1 + 2;
-    800A5710	j      La5724 [$800a5724]
-}
-
-V0 = V1 < 0002;
-800A5718	bne    v0, zero, La5728 [$800a5728]
-V0 = A1 << 01;
-800A5720	addiu  v1, v1, $fffe (=-$2)
-
-La5724:	; 800A5724
-V0 = A1 << 01;
-
-La5728:	; 800A5728
-A1 = V0 + V1;
-
-La5730:	; 800A5730
-A0 = A1 << 01;
-A0 = A0 + A1;
-A0 = A0 << 03;
-A0 = A0 - A1;
-
+// MAP contains only ordered blocks for loading one by one as needed
 // 00003D35 00319800 WORLD\WM0.MAP
 // 00004368 00000002 WORLD\WM1.MAP
 // 00004369 0008A000 WORLD\WM2.MAP
 // 0000447D 0002E000 WORLD\WM3.MAP
-A0 = w[800c74e4 + wm_id * 8] + A0; // sector
+A0 = w[800c74e4 + wm_id * 8] + A1 * 17; // sector
 A1 = b800; // size
 A2 = w[800e5714] + h[S0 + 6] * b800; // buffer
 A3 = 800a5924; // funca5924() callback
@@ -4775,43 +4703,34 @@ system_cdrom_read_chain();
 
 ////////////////////////////////
 // funca57c8
-800A57C8	lui    v0, $8011
-V0 = w[V0 + 650c];
-800A57D0	lui    a0, $800e
-A0 = w[A0 + 5814];
-800A57D8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
+
+V0 = w[8011650c];
+A0 = w[800e5814];
 V1 = V0 << 02;
 V1 = V1 + V0;
 A0 = A0 < V1;
-800A57F0	bne    a0, zero, La5800 [$800a5800]
-[SP + 0010] = w(S0);
-800A57F8	jal    $system_cdrom_read_chain
-800A57FC	nop
+if( A0 == 0 )
+{
+    system_cdrom_read_chain();
+}
 
-La5800:	; 800A5800
-800A5800	lui    v0, $8011
-V0 = w[V0 + 650c];
-800A5808	lui    a0, $800e
-A0 = w[A0 + 5814];
+V0 = w[8011650c];
+A0 = w[800e5814];
 V1 = V0 << 02;
 V1 = V1 + V0;
 A0 = A0 < V1;
 800A581C	beq    a0, zero, La58d4 [$800a58d4]
-800A5820	nop
-800A5824	lui    v1, $800e
-V1 = w[V1 + 5820];
-800A582C	nop
+
+V1 = w[800e5820];
+
 800A5830	bltz   v1, La58d4 [$800a58d4]
-800A5834	nop
+
 S0 = w[800e5768];
-800A5840	nop
+
 800A5844	beq    s0, zero, La5880 [$800a5880]
 S1 = 0;
 V1 = V1 << 03;
-800A5850	lui    v0, $800e
-V0 = V0 + 5718;
+V0 = 800e5718;
 V1 = V1 + V0;
 
 loopa585c:	; 800A585C
@@ -4853,51 +4772,36 @@ A0 = S0;
 [AT + 5820] = w(V0);
 
 La58d4:	; 800A58D4
-800A58D4	lui    a0, $800e
-A0 = w[A0 + 5814];
-800A58DC	nop
+A0 = w[800e5814];
+
 800A58E0	beq    a0, zero, La5900 [$800a5900]
 V0 = 0;
-800A58E8	lui    v1, $8011
-V1 = w[V1 + 650c];
-800A58F0	nop
+V1 = w[8011650c];
+
 V0 = V1 << 02;
 V0 = V0 + V1;
 V0 = A0 < V0;
 
 La5900:	; 800A5900
-V0 = A0 - V0;
-800A5904	lui    at, $800e
-[AT + 5814] = w(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800A591C	jr     ra 
-800A5920	nop
+[800e5814] = w(A0 - V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca5924
-800A5924	lui    v0, $800e
-V0 = w[V0 + 5820];
-800A592C	addiu  sp, sp, $ffe8 (=-$18)
-800A5930	bltz   v0, La5960 [$800a5960]
-[SP + 0010] = w(RA);
-800A5938	lui    v1, $8011
-V1 = w[V1 + 650c];
-800A5940	nop
-V0 = V1 << 02;
-V0 = V0 + V1;
-800A594C	addiu  v0, v0, $ffff (=-$1)
-800A5950	lui    at, $800e
-[AT + 5814] = w(V0);
-800A5958	jal    funcadd4c [$800add4c]
-A0 = 0;
 
-La5960:	; 800A5960
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A5968	jr     ra 
-800A596C	nop
+V0 = w[800e5820];
+if( V0 >= 0 )
+{
+    V1 = w[8011650c];
+    V0 = V1 << 02;
+    V0 = V0 + V1;
+    [800e5814] = w(V0 - 1);
+
+    A0 = 0;
+    800A5958	jal    funcadd4c [$800add4c]
+}
 ////////////////////////////////
 
 
@@ -4924,42 +4828,17 @@ return V0 >> 10;
 
 
 ////////////////////////////////
-// funca59a0
+// funca59a0()
 
-A0 = 0;
-800A59A4	lui    a1, $800e
-A1 = A1 + 5834;
-V0 = A0 << 10;
+for( int i = 0; i < 3f; ++i )
+{
+    [800e582c + A0 * 8] = w(800e582c + (A0 + 1) * 8);
+}
+[800e582c + 3f * 8] = w(0);
 
-loopa59b0:	; 800A59B0
-V0 = V0 >> 0d;
-V1 = V0 + A1;
-800A59B8	lui    at, $800e
-AT = AT + 582c;
-AT = AT + V0;
-[AT + 0000] = w(V1);
-V0 = A0 + 0001;
-A0 = V0;
-V0 = V0 << 10;
-V1 = V0 >> 10;
-V0 = V1 < 003f;
-800A59DC	bne    v0, zero, loopa59b0 [$800a59b0]
-V0 = A0 << 10;
-V0 = V1 << 03;
-800A59E8	lui    at, $800e
-AT = AT + 582c;
-AT = AT + V0;
-[AT + 0000] = w(0);
-800A59F8	lui    v0, $800e
-V0 = V0 + 582c;
-800A5A00	lui    at, $800e
-[AT + 5a30] = w(V0);
-800A5A08	lui    at, $800e
-[AT + 5a2c] = w(0);
-800A5A10	lui    at, $800e
-[AT + 5a34] = w(0);
-800A5A18	jr     ra 
-800A5A1C	nop
+[800e5a30] = w(800e582c);
+[800e5a2c] = w(0);
+[800e5a34] = w(0);
 ////////////////////////////////
 
 
@@ -5461,12 +5340,11 @@ return A3;
 ////////////////////////////////
 // funca60d8()
 
-int i = 0;
-for( ; i < 1f; ++i )
+for( int i = 0; i < 1f; ++i )
 {
     [80109a38 + i * 18 + 0] = w(80109a38 + (i + 1) * 18 + 0);
 }
-[80109a38 + i * 18 + 0] = w(0);
+[80109a38 + 1f * 18 + 0] = w(0);
 
 [80109d38] = w(80109a38);
 [80109d40] = w(0);
@@ -5983,7 +5861,7 @@ return S0;
 
 if( A2 != 0 )
 {
-    [A2 + 0] = h(w[A0 + 0] >> d);
+    [A2 + 0] = h(w[A0 + 0] / 2000);
 
     if( hu[A2 + 0] < 0 )
     {
@@ -5997,7 +5875,7 @@ if( A2 != 0 )
 
 if( A3 != 0 )
 {
-    [A3 + 0] = h(w[A0 + 8] >> d);
+    [A3 + 0] = h(w[A0 + 8] / 2000);
 
     if( hu[A3 + 0] < 0 )
     {
@@ -7538,11 +7416,11 @@ return w[80109d6c];
 ////////////////////////////////
 // funca7ea4()
 
-funca4ddc();
+wm_init_load_map_file_struct();
 
-800A7EB4	jal    funca59a0 [$800a59a0]
+funca59a0();
 
-800A7EBC	jal    funca60d8 [$800a60d8]
+funca60d8();
 
 [80109d54] = w(0);
 [80109d58] = w(0);
@@ -7696,13 +7574,13 @@ if( w[800e5828] != 0 )
 
     A0 = SP + 48;
     A1 = 0;
-    A2 = SP + 58;
-    A3 = SP + 5a;
+    A2 = SP + 58; // mesh x
+    A3 = SP + 5a; // mesh z
     wm_extract_loop_coords_top_bottom_parts();
 
     A0 = h[SP + 58];
     A1 = h[SP + 5a];
-    funca53a8(); // we load .MAP inside
+    wm_load_closest_map_file_block();
 
     800A819C	jal    funca57c8 [$800a57c8]
 
@@ -7903,11 +7781,12 @@ if( wm_id == 0 ) // planet
     }
 }
 
+// BOT contains blocks grouped by 4 adjacent blocks for initial load
 // 00001958 00EEA000 WM0.BOT
 // 0000372C 00000002 WM1.BOT
 // 0000372D 00228000 WM2.BOT
 // 00003B7D 000B8000 WM3.BOT
-A0 = w[800c74a4 + wm_id * 8] + block_id * 7c; // sector for .BOT
+A0 = w[800c74a4 + wm_id * 8] + block_id * 5c; // sector for .BOT
 A1 = 2e000; // size
 A2 = w[800e5714]; // buffer
 A3 = 0; // callback

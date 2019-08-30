@@ -195,7 +195,7 @@
 // wm_main
 800A460C-800A4DD8
 ////////////////////////////////
-// funca4ddc
+// wm_init_load_map_file_struct
 800A4DDC-800A4F04
 ////////////////////////////////
 // wm_get_block_id_by_x_z_for_planet
@@ -213,10 +213,10 @@
 // funca5348
 800A5348-800A53A4
 ////////////////////////////////
-// funca53a8
+// wm_load_closest_map_file_block
 800A53A8-800A54EC
 ////////////////////////////////
-// funca54f0
+// wm_load_map_file_block
 800A54F0-800A57C4
 ////////////////////////////////
 // funca57c8
