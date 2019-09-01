@@ -2469,14 +2469,15 @@ La34cc:	; 800A34CC
 V0 = w[V0 + 5658];
 800A34D4	nop
 800A34D8	bgez   v0, La34fc [$800a34fc]
-800A34DC	nop
-800A34E0	lui    a0, $800e
-A0 = w[A0 + 5650];
+
+
+A0 = w[800e5650];
 800A34E8	jal    funca2088 [$800a2088]
-800A34EC	nop
+
 A0 = 0;
+A1 = 2;
 800A34F4	jal    funca2108 [$800a2108]
-A1 = 0002;
+
 
 La34fc:	; 800A34FC
 800A34FC	lui    at, $800e
