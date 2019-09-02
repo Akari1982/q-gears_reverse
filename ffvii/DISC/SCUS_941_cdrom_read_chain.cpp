@@ -350,6 +350,7 @@ system_cdrom_read_chain();
 
 ////////////////////////////////
 // func3408c()
+// abort loading??
 
 switch( w[80071a60] )
 {

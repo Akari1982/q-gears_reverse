@@ -216,13 +216,13 @@
 // wm_load_closest_map_file_block
 800A53A8-800A54EC
 ////////////////////////////////
-// wm_load_map_file_block
+// wm_start_loading_map_file_block
 800A54F0-800A57C4
 ////////////////////////////////
 // funca57c8
 800A57C8-800A5920
 ////////////////////////////////
-// funca5924
+// wm_map_load_finished_callback
 800A5924-800A596C
 ////////////////////////////////
 // funca5970

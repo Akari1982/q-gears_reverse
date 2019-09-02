@@ -252,7 +252,7 @@ system_gte_copy_matrix_translation_part();
 // multiply field matrix
 A0 = S1;
 A1 = S0;
-system_matrixes_multiply;
+system_gte_matrixes_multiply_A0_A1_to_A1;
 
 // multiply field translation vector
 A0 = S1;

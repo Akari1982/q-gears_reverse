@@ -9138,7 +9138,7 @@ if( w[80115a60] == 0 )
         A3 = 800b6aec; // wm_pc_character_model_load_file_callback()
         system_cdrom_start_load_lzs();
 
-        system_cdrom_read_chain(); // finish loading and extraction
+        system_cdrom_read_chain(); // start loading and extraction
 
         [80115a60] = w(1);
     }

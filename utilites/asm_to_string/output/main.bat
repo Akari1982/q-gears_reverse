@@ -1,1 +1,1 @@
-main SCUS_941_menu.cpp
+main SCUS_941_gte.cpp

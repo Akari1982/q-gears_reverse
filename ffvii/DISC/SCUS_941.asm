@@ -2176,7 +2176,7 @@
 // system_transformation_data_multiply
 8003A63C-8003A798
 ////////////////////////////////
-// func3a79c
+// system_gte_matrixes_multiply_A0_A1_to_A2
 8003A79C-8003A8A4
 ////////////////////////////////
 // func3a8a8
@@ -2215,7 +2215,7 @@
 // func3b05c
 8003B05C-8003B168
 ////////////////////////////////
-// system_matrixes_multiply
+// system_gte_matrixes_multiply_A0_A1_to_A1
 8003B16C-8003B278
 ////////////////////////////////
 // func3b27c

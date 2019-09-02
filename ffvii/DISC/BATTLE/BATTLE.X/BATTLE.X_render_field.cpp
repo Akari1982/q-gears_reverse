@@ -627,7 +627,7 @@ V0 = w[S0 + 30]; // camera data
 
 A0 = 1f800024; // camera matrix
 A1 = S0; // part matrix
-system_matrixes_multiply;
+system_gte_matrixes_multiply_A0_A1_to_A1;
 
 A0 = 1f800024;
 system_gte_set_rotation_matrix();

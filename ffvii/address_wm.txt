@@ -201,33 +201,33 @@
 800e56b8 looks like main camera translation vector.
 
 
-800e5714 pointer to 80156000. We load .MAP and .BOT here.
-800e5718 linked of blocks (0x8 items 0x8 size).
-         looks like 0-3 are blocks after fists load and 4-7 are later loaded blocks?
+800e5714 pointer to mapblock data (80156000). We load .MAP and .BOT here. Each block 0xb800 size.
+800e5718 linked list of map blocks (0x8 items 0x8 size).
+         initially we load 4 blocks. And after we load block one by one.
          0 - current block
          1 - block with x+1
          2 - block with y+1
          3 - block with x+1 y+1
     + 0 [][][][] next element. Last item ptr == 0.
     + 4 [][]     block id (block_z * map_width + block_x).
-    + 6 [][]     
+    + 6 [][]     memory block id.
 
-800e5760 [][][][] init with 800e5718 + 4 * 8. Pointer to 800e5718 list.
-800e5764 [][][][] init with 800e5718. Pointer to 800e5718 list.
-800e5768 [][][][] init with 0.
+800e5760 [][][][] next free slot for map block to load. Pointer to 800e5718 list.
+800e5764 [][][][] current of first map block. Pointer to 800e5718 list.
+800e5768 [][][][] removed after loading complete. Pointer to 800e5718 list.
 
 800e576c linked array (0x13 items 0x8 size).
          initially 1st linked to 2nd, 2nd to 3rd and so on.
     + 0 [][][][] next element. Last item ptr == 0.
     + 4 [][]     block id (block_z * map_width + block_x).
-    + 6 [][]
+    + 6 [][]     memory block id.
 
 800e580c [][][][] pointer to first element in 800e576c list.
 800e5810 [][][][] init with 0.
 800e5814 [][][][] init with 0.
 800e5818 [][][][] init with 0.
 800e581c [][][][] init with 0.
-800e5820 [][][][] init with -1.
+800e5820 [][][][] init with -1. Currently loading map memory block id.
 800e5824 [][][][] world progress.
                   0 - before temple of the ancients.
                   1 - after temple of the ancients.
