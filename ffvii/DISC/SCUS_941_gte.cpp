@@ -2125,37 +2125,13 @@ V0 = OTZ;
 8003BA08	jr     ra 
 8003BA0C	nop
 ////////////////////////////////
-// func3ba10
-T5 = R11R12;
-T6 = R22R23;
-T7 = R33;
-T0 = w[A0 + 0000];
-T1 = w[A0 + 0004];
-T2 = w[A0 + 0008];
-R11R12 = T0;
-R22R23 = T1;
-R33 = T2;
-IR3 = w[A1 + 0008];
-IR1 = w[A1 + 0000];
-IR2 = w[A1 + 0004];
-8003BA40	nop
-gte_op12(); // Outer product
-[A2 + 0000] = w(MAC1);
-[A2 + 0004] = w(MAC2);
-[A2 + 0008] = w(MAC3);
-R11R12 = T5;
-R22R23 = T6;
-R33 = T7;
-8003BA60	jr     ra 
-8003BA64	nop
-////////////////////////////////
 
 
 
 ////////////////////////////////
-// OuterProduct0()
+// system_gte_outer_product_12()
 
-// save rot matrix
+// store
 T5 = R11R12;
 T6 = R22R23;
 T7 = R33;
@@ -2163,7 +2139,33 @@ T7 = R33;
 R11R12 = w[A0 + 0];
 R22R23 = w[A0 + 4];
 R33 = w[A0 + 8];
+IR1 = w[A1 + 0];
+IR2 = w[A1 + 4];
+IR3 = w[A1 + 8];
+gte_op12(); // Outer product
+[A2 + 0] = w(MAC1);
+[A2 + 4] = w(MAC2);
+[A2 + 8] = w(MAC3);
 
+// restore
+R11R12 = T5;
+R22R23 = T6;
+R33 = T7;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gte_outer_product_0()
+
+// store
+T5 = R11R12;
+T6 = R22R23;
+T7 = R33;
+
+R11R12 = w[A0 + 0];
+R22R23 = w[A0 + 4];
+R33 = w[A0 + 8];
 IR1 = w[A1 + 0];
 IR2 = w[A1 + 4];
 IR3 = w[A1 + 8];
@@ -2172,7 +2174,7 @@ gte_OP(); // Outer Product
 [A2 + 4] = w(MAC2);
 [A2 + 8] = w(MAC3);
 
-// restore rot matrix
+// restore
 R11R12 = T5;
 R22R23 = T6;
 R33 = T7;

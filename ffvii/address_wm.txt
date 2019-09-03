@@ -222,8 +222,8 @@
     + 4 [][]     block id (block_z * map_width + block_x).
     + 6 [][]     memory block id.
 
-800e580c [][][][] pointer to first element in 800e576c list.
-800e5810 [][][][] init with 0.
+800e580c [][][][] free load request block list (800e576c).
+800e5810 [][][][] load block list with appointed 800e5768 (800e576c).
 800e5814 [][][][] init with 0.
 800e5818 [][][][] init with 0.
 800e581c [][][][] init with 0.
@@ -237,7 +237,11 @@
 800e5828 [][][][] ???
 
 80109a38 some linked array (0x18 size 0x20 items).
+    + 0 [][][][] pointer to next.
+    +16 [][]     some wait?
 
+80109d38 pointer to 80109a38.
+80109d40 pointer to 80109a38.
 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 

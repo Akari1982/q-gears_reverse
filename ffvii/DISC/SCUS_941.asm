@@ -2365,10 +2365,10 @@
 // func3b9ec
 8003B9EC-8003BA0C
 ////////////////////////////////
-// func3ba10
+// system_gte_outer_product_12
 8003BA10-8003BA64
 ////////////////////////////////
-// OuterProduct0
+// system_gte_outer_product_0
 8003BA68-8003BABC
 ////////////////////////////////
 // func3bac0

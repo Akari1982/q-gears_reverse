@@ -4479,23 +4479,23 @@ Ax = h[id_block_offset + current_triangle * 18 + 00];
 Ay = h[id_block_offset + current_triangle * 18 + 02];
 Az = h[id_block_offset + current_triangle * 18 + 04];
 Bx = h[id_block_offset + current_triangle * 18 + 08];
-By = h[id_block_offset + current_triangle * 18 + 0A];
-Bz = h[id_block_offset + current_triangle * 18 + 0C];
+By = h[id_block_offset + current_triangle * 18 + 0a];
+Bz = h[id_block_offset + current_triangle * 18 + 0c];
 Cx = h[id_block_offset + current_triangle * 18 + 10];
 Cy = h[id_block_offset + current_triangle * 18 + 12];
 Cz = h[id_block_offset + current_triangle * 18 + 14];
 
-[1F800040] = w(Bx - Ax);
-[1F800044] = w(By - Ay);
-[1F800048] = w(Bz - Az);
-[1F800050] = w(Cx - Bx);
-[1F800054] = w(Cy - By);
-[1F800058] = w(Cz - Bz);
+[1f800040] = w(Bx - Ax);
+[1f800044] = w(By - Ay);
+[1f800048] = w(Bz - Az);
+[1f800050] = w(Cx - Bx);
+[1f800054] = w(Cy - By);
+[1f800058] = w(Cz - Bz);
 
-A0 = 1F800040;
-A1 = 1F800050;
-A2 = 1F800060;
-OuterProduct0;
+A0 = 1f800040;
+A1 = 1f800050;
+A2 = 1f800060;
+system_gte_outer_product_0;
 
 [1f800060] = w(w[1f800060] >> 8);
 
