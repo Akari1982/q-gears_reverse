@@ -6735,6 +6735,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // func24a3c
 // A0 - pointer to tutorial settings
+
 [GP + b4] = w(1);
 
 [GP + 027c] = w(0);
@@ -8380,110 +8381,92 @@ loop260b0:	; 800260B0
 
 
 ////////////////////////////////
-// func260dc
-800260DC	addiu  sp, sp, $ddc0 (=-$2240)
-[SP + 2238] = w(RA);
-[SP + 2234] = w(S5);
-[SP + 2230] = w(S4);
-[SP + 222c] = w(S3);
-[SP + 2228] = w(S2);
-[SP + 2224] = w(S1);
-[SP + 2220] = w(S0);
+// func260dc()
 
 loop260fc:	; 800260FC
-800260FC	jal    system_cdrom_read_chain [$80034b44]
-80026100	nop
+    system_cdrom_read_chain();
 80026104	bne    v0, zero, loop260fc [$800260fc]
-80026108	nop
-8002610C	jal    system_psyq_draw_sync [$80043dd8]
+
 A0 = 0;
+system_psyq_draw_sync();
+
+A0 = SP + 20;
 80026114	jal    func25c14 [$80025c14]
-A0 = SP + 0020;
-8002611C	jal    system_psyq_draw_sync [$80043dd8]
+
 A0 = 0;
+system_psyq_draw_sync();
+
 S0 = 0;
-S4 = 80048fe8;
-S5 = S4 + 0004;
 S3 = SP + 1220;
 S2 = 0138;
 
 loop2613c:	; 8002613C
-AT = 8009cbdc;
-AT = AT + S0;
-S1 = bu[AT + 0000];
-V0 = 00ff;
-80026150	beq    s1, v0, L261b0 [$800261b0]
-80026154	nop
-80026158	jal    system_init_player_stat_from_equip [$80020058]
-A0 = S0;
-80026160	jal    func1786c [$8001786c]
-A0 = S0 & 00ff;
-80026168	jal    system_calculate_total_lure_gil_preemptive_value [$80017678]
-8002616C	nop
-A2 = S3;
-V1 = S1 << 03;
-V0 = V1 + S4;
-V1 = V1 + S5;
-A0 = w[V0 + 0000];
-A1 = w[V1 + 0000];
-80026188	jal    func33f40 [$80033f40]
-A3 = 0;
-A0 = S3;
-A1 = 03c0;
-A2 = S2;
-A3 = 0180;
-800261A0	jal    func25d14 [$80025d14]
-[SP + 0010] = w(S0);
-800261A8	jal    system_psyq_draw_sync [$80043dd8]
-A0 = 0;
+    S1 = bu[8009cbdc + S0];
+    if( S1 != ff )
+    {
+        A0 = S0;
+        system_init_player_stat_from_equip();
 
-L261b0:	; 800261B0
-S0 = S0 + 0001;
-V0 = S0 < 0003;
+        A0 = S0 & ff;
+        80026160	jal    func1786c [$8001786c]
+
+        system_calculate_total_lure_gil_preemptive_value();
+
+        A0 = w[80048fe8 + S1 * 8 + 0];
+        A1 = w[80048fe8 + S1 * 8 + 4];
+        A2 = S3;
+        A3 = 0;
+        80026188	jal    func33f40 [$80033f40]
+
+        A0 = S3;
+        A1 = 3c0;
+        A2 = S2;
+        A3 = 180;
+        A4 = S0;
+        800261A0	jal    func25d14 [$80025d14]
+
+        A0 = 0;
+        system_psyq_draw_sync();
+    }
+
+    S2 = S2 + 0030;
+    S0 = S0 + 0001;
+    V0 = S0 < 0003;
 800261B8	bne    v0, zero, loop2613c [$8002613c]
-S2 = S2 + 0030;
-A0 = SP + 0018;
-800261C4	lui    a1, $8007
-A1 = A1 + 56f8;
-V0 = 0180;
-[SP + 0018] = h(V0);
-V0 = 0100;
-[SP + 001c] = h(V0);
-V0 = 0003;
-[SP + 001a] = h(0);
-800261E4	jal    system_psyq_store_image [$80044064]
-[SP + 001e] = h(V0);
-800261EC	jal    system_psyq_draw_sync [$80043dd8]
+
+[SP + 18] = h(180);
+[SP + 1c] = h(100);
+[SP + 1a] = h(0);
+[SP + 1e] = h(3);
+
+A0 = SP + 18;
+A1 = 800756f8;
+system_psyq_store_image();
+
 A0 = 0;
+system_psyq_draw_sync();
+
+A0 = SP + 20;
 800261F4	jal    func25c54 [$80025c54]
-A0 = SP + 0020;
-800261FC	jal    system_psyq_draw_sync [$80043dd8]
+
 A0 = 0;
-80026204	jal    system_psyq_wait_frames [$8003cedc]
+system_psyq_draw_sync();
+
 A0 = 0006;
-8002620C	addiu  s0, zero, $ffff (=-$1)
+system_psyq_wait_frames();
 
 loop26210:	; 80026210
-80026210	jal    func484a8 [$800484a8]
-80026214	nop
-80026218	beq    v0, s0, loop26210 [$80026210]
-8002621C	nop
+    80026210	jal    func484a8 [$800484a8]
+80026218	beq    v0, -1, loop26210 [$80026210]
 
 loop26220:	; 80026220
-80026220	jal    func48540 [$80048540]
-A0 = 0001;
+    A0 = 1;
+    80026220	jal    func48540 [$80048540]
 80026228	bne    v0, zero, loop26220 [$80026220]
-8002622C	nop
-RA = w[SP + 2238];
-S5 = w[SP + 2234];
-S4 = w[SP + 2230];
-S3 = w[SP + 222c];
-S2 = w[SP + 2228];
-S1 = w[SP + 2224];
-S0 = w[SP + 2220];
-SP = SP + 2240;
-80026250	jr     ra 
-80026254	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func26258
 80026258	addiu  sp, sp, $ffe8 (=-$18)

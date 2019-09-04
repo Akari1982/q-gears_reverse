@@ -172,30 +172,32 @@ if( A3 < 2 )
 
 
 ////////////////////////////////
-// funcadc80()
+// wm_add_mutex_priority()
 
-S0 = A0;
+priority = A0;
 
-if( ( w[8010ae54] >> S0 ) & 1 )
+if( ( w[8010ae54] >> priority ) & 1 ) // murex set already
 {
-    if( ( ( ffffffff << ( S0 + 1 ) ) & w[8010ae54] ) == 0 )
+    // if more primary mutex not set
+    if( ( ( ffffffff << ( priority + 1 ) ) & w[8010ae54] ) == 0 )
     {
         return 1;
     }
 }
 
-if( w[8010ae54] < ( 1 << S0 ) )
+// if new mutex has higher priority than existed
+if( w[8010ae54] < ( 1 << priority ) )
 {
-    if( w[8010ae54] == A0 )
+    if( w[8010ae54] == 1 )
     {
-        funca7f38();
+        wm_abort_map_loading();
     }
-    else if( w[8010ae54] & 4 )
+    else if( w[8010ae54] & 4 ) // priority 3
     {
-        800ADD08	jal    funcb7134 [$800b7134]
+        wm_abort_model_loading();
     }
 
-    [8010ae54] = w(w[8010ae54] | (1 << S0));
+    [8010ae54] = w(w[8010ae54] | (1 << priority)); // add mutex
 
     return 1;
 }
@@ -206,54 +208,46 @@ return 0;
 
 
 ////////////////////////////////
-// funcadd4c()
+// wm_remove_mutex_priority()
 
-S0 = A0; // 2
+priority = A0;
 
-// debug thing
-if( ( w[8010ae54] & (ffffffff << (S0 + 1)) ) || ( ( (w[8010ae54] >> A0) & 1 ) == 0 ) )
+// if higher priority exist or this priority not exist then exception
+if( ( w[8010ae54] & (ffffffff << ( priority + 1 ) ) ) || ( ( (w[8010ae54] >> priority ) & 1 ) == 0 ) )
 {
     A0 = 50;
     funca0b40(); // does nothing
 }
 
-A1 = w[8010ae54] & (0 NOR (1 << S0));
+[8010ae54] = w(w[8010ae54] & (0 NOR (1 << priority))); // remove this priority
 
-[8010ae54] = w(A1);
-
-if( S0 == 0 )
+// if this was not minimal priority
+if( priority != 0 )
 {
-    return;
-}
-
-V1 = 1 << (S0 - 1);
-if( V1 != 0 )
-{
-    if( ( V1 & A1 ) == 0 )
+    V1 = 1 << (priority - 1);
+    if( V1 != 0 )
     {
-        V1 = V1 >> 01;
-        if( V1 != 0 )
+        if( ( V1 & w[8010ae54] ) == 0 )
         {
-            if( ( V1 & A1 ) == 0 )
+            V1 = V1 >> 1;
+            if( V1 != 0 )
             {
-                A0 = A1;
-
-                loopaddf4:	; 800ADDF4
-                    V1 = V1 >> 01;
+                while( ( V1 & w[8010ae54] ) == 0 )
+                {
+                    V1 = V1 >> 1;
                     if( V1 == 0 )
                     {
                         break;
                     }
-                    V0 = V1 & A0;
-                800ADE00	beq    v0, zero, loopaddf4 [$800addf4]
+                }
             }
         }
     }
-}
 
-if( V1 == 1 )
-{
-    [800e5828] = w(1);
+    if( V1 == 1 )
+    {
+        [800e5828] = w(1);
+    }
 }
 ////////////////////////////////
 
@@ -9003,7 +8997,7 @@ for( int i = 0; i < 2b; ++i )
 
 [80115a40] = w(0); // pointer to WM3.BSZ
 [80115a44] = w(0); // render packets for models
-[80115a48] = w(0);
+[80115a48] = w(0); // PC character loaded.
 [80115a4c] = w(0); // WM3.BZS model pack loaded.
 [80115a50] = w(0);
 [80115a54] = w(0);
@@ -9123,7 +9117,7 @@ model_id = A0;
 if( w[80115a60] == 0 )
 {
     A0 = 2;
-    funcadc80();
+    wm_add_mutex_priority();
 
     if( V0 != 0 )
     {
@@ -9185,7 +9179,7 @@ if( w[80115a60] != 0 )
     [80115a60] = w(0);
 
     A0 = 2;
-    funcadd4c();
+    wm_remove_mutex_priority();
 
     wm_load_pc_character_model_into_memory();
 }
@@ -9245,7 +9239,7 @@ for( int i = 3; i < 20; ++i )
 
 if( w[80115a60] == 0 )
 {
-    funca7f38();
+    wm_abort_map_loading();
 
     A0 = 2;
     funca86c4();
@@ -9253,7 +9247,7 @@ if( w[80115a60] == 0 )
     [80115a40] = w(V0);
 
     A0 = 2;
-    funcadc80();
+    wm_add_mutex_priority();
 
     if( V0 != 0 )
     {
@@ -9300,7 +9294,7 @@ if( w[80115a60] != 0 )
     [80115a60] = w(0);
 
     A0 = 2;
-    funcadd4c();
+    wm_remove_mutex_priority();
 
     funcb6d10();
 }
@@ -9333,38 +9327,30 @@ if( w[80115a50] != 0 )
 ////////////////////////////////
 // funcb6e78()
 
-V0 = w[80115a60];
+if( w[80115a60] != 0 ) // if PC character model loading
+{
+    system_cdrom_read_chain();
+}
 
-800B6E84	beq    v0, zero, Lb6e94 [$800b6e94]
+if( w[80115a50] != 0 )
+{
+    800B6EA8	jal    funca8ca4 [$800a8ca4]
 
-system_cdrom_read_chain();
+    if( V0 == 0 )
+    {
+        800B6EB8	jal    funcb6e08 [$800b6e08]
+    }
+}
 
+if( w[80115a64] != 0 )
+{
+    [80115a64] = w(w[80115a64] - 1);
 
-Lb6e94:	; 800B6E94
-V0 = w[80115a50];
-800B6E9C	nop
-800B6EA0	beq    v0, zero, Lb6ec0 [$800b6ec0]
-800B6EA4	nop
-800B6EA8	jal    funca8ca4 [$800a8ca4]
-800B6EAC	nop
-800B6EB0	bne    v0, zero, Lb6ec0 [$800b6ec0]
-800B6EB4	nop
-800B6EB8	jal    funcb6e08 [$800b6e08]
-800B6EBC	nop
-
-Lb6ec0:	; 800B6EC0
-V0 = w[80115a64];
-800B6EC8	nop
-800B6ECC	beq    v0, zero, Lb6eec [$800b6eec]
-800B6ED0	addiu  v0, v0, $ffff (=-$1)
-
-[80115a64] = w(V0);
-800B6EDC	bne    v0, zero, Lb6eec [$800b6eec]
-800B6EE0	nop
-800B6EE4	jal    funca8048 [$800a8048]
-800B6EE8	nop
-
-Lb6eec:	; 800B6EEC
+    if( w[80115a64] == 0 )
+    {
+        funca8048(); // allow map loading
+    }
+}
 ////////////////////////////////
 
 
@@ -9463,9 +9449,9 @@ funcb6b28();
 
 
 ////////////////////////////////
-// funcb7134
+// wm_abort_model_loading()
 
-800B713C	jal    $8003408c
+system_cdrom_abort_loading();
 
 [80115a60] = w(0);
 ////////////////////////////////
@@ -9868,7 +9854,7 @@ if( A0 >= 3 ) // if not player models
 
 
 ////////////////////////////////
-// wm_set_map_to_load()
+// wm_set_field_to_load()
 
 gate_id = ((((A0 >> 8) - 1) << 1) & 01fe) | (A0 & 1);
 
@@ -9892,7 +9878,7 @@ S0 = A0;
 if( S0 & 40000000 )
 {
     A0 = 2100; // record 21, scenario 0
-    wm_set_map_to_load();
+    wm_set_field_to_load();
 }
 
 [8011626c] = w(1);

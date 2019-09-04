@@ -33,24 +33,21 @@ func34f5c();
 
 ////////////////////////////////
 // func33be0
-80033BE0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80033BE8	jal    func3408c [$8003408c]
-80033BEC	nop
+
+system_cdrom_abort_loading();
 
 loop33bf0:	; 80033BF0
-80033BF0	jal    system_cdrom_read_chain [$80034b44]
-80033BF4	nop
+    system_cdrom_read_chain();
 80033BF8	bne    v0, zero, loop33bf0 [$80033bf0]
-80033BFC	nop
+
 80033C00	jal    func3dd84 [$8003dd84]
-80033C04	nop
-80033C08	jal    func3dd18 [$8003dd18]
+
 A0 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80033C18	jr     ra 
-80033C1C	nop
+80033C08	jal    func3dd18 [$8003dd18]
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func33c20
 80033C20	lui    v0, $800a
@@ -349,8 +346,7 @@ system_cdrom_read_chain();
 
 
 ////////////////////////////////
-// func3408c()
-// abort loading??
+// system_cdrom_abort_loading()
 
 switch( w[80071a60] )
 {

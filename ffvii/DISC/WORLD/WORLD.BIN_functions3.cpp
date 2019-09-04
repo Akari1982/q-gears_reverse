@@ -4571,8 +4571,6 @@ A1 = w[A1 + 0004];
 SZ1 = A3;
 SZ2 = A2;
 SZ3 = A1;
-800C5814	nop
-800C5818	nop
 gte_AVSZ3(); // Average of three Z values
 A0 = OTZ;
 800C5824	nop

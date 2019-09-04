@@ -222,9 +222,9 @@
     + 4 [][]     block id (block_z * map_width + block_x).
     + 6 [][]     memory block id.
 
-800e580c [][][][] free load request block list (800e576c).
-800e5810 [][][][] load block list with appointed 800e5768 (800e576c).
-800e5814 [][][][] init with 0.
+800e580c [][][][] free load request block list (800e576c). Add block here when we start loading.
+800e5810 [][][][] load block list with appointed 800e5768 (800e576c). Remove block from here when we start load map.
+800e5814 [][][][] init with 0. Set when start map loading.
 800e5818 [][][][] init with 0.
 800e581c [][][][] init with 0.
 800e5820 [][][][] init with -1. Currently loading map memory block id.
@@ -381,7 +381,7 @@
 8010ae38 [][][][] init with 0.
 8010ae3c [][][][] init with 0.
 
-8010ae54
+8010ae54 [][][][] mutex mask (0 - load map, 2 - load model, 3 - ???).
 
 8010b068 buffer for skybox overlay texture settings buffer (0x2 items 0xc size).
 
@@ -458,13 +458,13 @@
 
 80115a40 [][][][] pointer to loaded WM3.BSZ with all models except PC.
 80115a44 [][][][] current end of all render packets for models.
-80115a48 [][][][] init with 0. Set to 1 after PC character loaded.
+80115a48 [][][][] PC character loaded. Init with 0 and set to 1 after load complete.
 80115a4c [][][][] WM3.BSZ model pack loaded.
-80115a50 [][][][] init with 0.
+80115a50 [][][][] init with 0. Set to 0 when WM3.BSZ loading. Set to 1 when loaded.
 80115a54 [][][][] init with 0.
 80115a58 [][][][] init with 0.
 80115a5c [][][][] PC character model id.
-80115a60 [][][][] PC character model loaded.
+80115a60 [][][][] model currently loading.
 80115a64 [][][][] init with 0.
 80115a68 [][][][] init with 0.
 

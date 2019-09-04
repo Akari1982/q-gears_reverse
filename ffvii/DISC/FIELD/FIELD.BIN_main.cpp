@@ -54,9 +54,10 @@ V1 = w[80070784];
 
 ////////////////////////////////
 // field_stop_load_background_in_advance()
+
 if( h[800965e8] == 1 )
 {
-    func3408c(); // stop background loading
+    system_cdrom_abort_loading(); // stop background loading
 }
 [80071a5c] = h(0);
 [800965e8] = h(0);

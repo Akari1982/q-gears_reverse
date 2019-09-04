@@ -1695,7 +1695,7 @@ switch( opcode )
         wm_script_pop_stack();
 
         A0 = V0;
-        800AD028	jal    funca3e9c [$800a3e9c]
+        funca3e9c();
 
         return 0;
     }
