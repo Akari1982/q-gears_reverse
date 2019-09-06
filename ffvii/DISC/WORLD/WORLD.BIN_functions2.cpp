@@ -11,25 +11,25 @@
 
 
 ////////////////////////////////
-// funcbb8e8()
+// wm_move_pc_entity_by_distance()
 
-S0 = A0;
+move_z = A0;
 
 funcaa238(); // set final position from temp
 
 wm_set_pc_entity_as_active_entity();
 
-[SP + 12] = h(0);
 [SP + 10] = h(0);
+[SP + 12] = h(0);
 
 wm_get_model_id_from_pc_entity();
 model_id = V0;
 
-if( ( model_id == 5 ) || ( model_id == d ) ) // something or submarine
+if( ( model_id == 5 ) || ( model_id == d ) ) // tiny bronco or submarine
 {
-    if( S0 != 0 )
+    if( move_z != 0 )
     {
-        [SP + 14] = h(S0);
+        [SP + 14] = h(move_z);
     }
     else
     {
@@ -46,22 +46,22 @@ if( ( model_id == 5 ) || ( model_id == d ) ) // something or submarine
     }
 
     wm_get_pc_entity_total_rotation();
+    rot = V0;
 }
 else
 {
     [SP + 14] = h(12c);
 
     wm_get_pc_entity_total_rotation();
-
-    V0 = V0 + 400;
+    rot = V0 + 400;
 }
 
 A0 = SP + 10;
-A1 = (V0 << 10) >> 10;
+A1 = (rot << 10) >> 10;
 wm_rotate_vector_by_y_angle();
 
-A0 = h[SP + 10];
-A1 = h[SP + 14];
+A0 = h[SP + 10]; // add x
+A1 = h[SP + 14]; // add z
 wm_move_active_entity();
 ////////////////////////////////
 
@@ -308,16 +308,15 @@ A0 = -1;
 800BBCA0	jal    funca368c [$800a368c]
 
 800BBCA8	j      Lbbcbc [$800bbcbc]
-V0 = 0001;
 
 Lbbcb0:	; 800BBCB0
 800BBCB0	jal    funca2108 [$800a2108]
 A1 = 0002;
-V0 = 0001;
 
 Lbbcbc:	; 800BBCBC
-[801163d4] = w(V0);
-800BBCC4	addiu  v0, s0, $fffd (=-$3)
+[801163d4] = w(1);
+
+V0 = S0 - 3;
 V0 = V0 < 0002;
 800BBCCC	beq    v0, zero, Lbbcdc [$800bbcdc]
 
@@ -351,56 +350,62 @@ Lbbcf8:	; 800BBCF8
 // funcbbd20()
 
 S0 = A0;
+
 wm_get_model_id_from_pc_entity();
 
-V0 = V0 ^ 0003;
-V1 = w[801163d8];
+V0 = V0 ^ 3;
+S2 = V0 < 1;
 
-800BBD54	beq    v1, zero, Lbbd70 [$800bbd70]
-S2 = V0 < 0001;
-800BBD5C	addiu  v0, v1, $ffff (=-$1)
-800BBD60	lui    at, $8011
-[AT + 63d8] = w(V0);
-800BBD68	j      Lbc188 [$800bc188]
-800BBD6C	nop
+if( w[801163d8] != 0 )
+{
+    [801163d8] = w(w[801163d8] - 1);
+    return;
+}
 
-Lbbd70:	; 800BBD70
 800BBD70	jal    funca369c [$800a369c]
-800BBD74	nop
-800BBD78	bne    v0, zero, Lbc188 [$800bc188]
-800BBD7C	nop
-800BBD80	jal    wm_get_wm_id [$800a1de0]
-800BBD84	nop
-V1 = 0003;
-800BBD8C	beq    v0, v1, Lbc188 [$800bc188]
+
+if( V0 != 0 )
+{
+    return;
+}
+
+wm_get_wm_id();
+
+if( V0 == 3 ) // snowfield
+{
+    return;
+}
 
 system_get_buttons_with_config_remap();
-S4 = V0;
+buttons = V0;
 
 V1 = w[801163d4];
 
-800BBDA8	bne    v1, zero, Lbbdcc [$800bbdcc]
+if( V1 == 0 )
+{
+    if( S0 == 1 )
+    {
+        800BBDBC	jal    funcbba5c [$800bba5c]
 
-V0 = 0001;
-800BBDB4	bne    s0, v0, Lbbdcc [$800bbdcc]
-800BBDB8	nop
-800BBDBC	jal    funcbba5c [$800bba5c]
-800BBDC0	nop
-800BBDC4	j      Lbc158 [$800bc158]
-V0 = S4 & 0040;
+        800BBDC4	j      Lbc158 [$800bc158]
+    }
+}
 
-Lbbdcc:	; 800BBDCC
 800BBDCC	jal    funca21a4 [$800a21a4]
-800BBDD0	nop
-800BBDD4	beq    v0, zero, Lbbe48 [$800bbe48]
-800BBDD8	nop
-800BBDDC	jal    funca9240 [$800a9240]
-800BBDE0	nop
-800BBDE4	bne    v0, zero, Lbbdf0 [$800bbdf0]
-V0 = S4 & f040;
-V0 = S4 & 0040;
 
-Lbbdf0:	; 800BBDF0
+800BBDD4	beq    v0, zero, Lbbe48 [$800bbe48]
+
+800BBDDC	jal    funca9240 [$800a9240]
+
+if( V0 == 0 )
+{
+    V0 = buttons & 0040; // cross
+}
+else
+{
+    V0 = buttons & f040; // cross or directional buttons
+}
+
 800BBDF0	bne    v0, zero, Lbbe48 [$800bbe48]
 
 V0 = w[801163dc] - 1;
@@ -412,281 +417,263 @@ A0 = 2000; // submarine
 wm_is_pc_entity_model_in_mask();
 
 800BBE1C	beq    v0, zero, Lbbe38 [$800bbe38]
-800BBE20	nop
-800BBE24	jal    wm_get_pc_entity_terrain_id [$800a9a44]
-800BBE28	nop
-V1 = 0012;
-800BBE30	bne    v0, v1, Lbbe48 [$800bbe48]
+
+wm_get_pc_entity_terrain_id();
+
+800BBE30	bne    v0, 12, Lbbe48 [$800bbe48]
 800BBE34	nop
 
 Lbbe38:	; 800BBE38
 800BBE38	jal    funcbbc4c [$800bbc4c]
-800BBE3C	nop
+
 800BBE40	j      Lbc158 [$800bc158]
-V0 = S4 & 0040;
 
 Lbbe48:	; 800BBE48
 V1 = w[801163d4];
-V0 = 0001;
-800BBE54	bne    v1, v0, Lbbe6c [$800bbe6c]
-V0 = 0002;
-[801163d4] = w(V0);
-800BBE64	j      Lbc158 [$800bc158]
-V0 = S4 & 0040;
+if( V1 == 1 )
+{
+    [801163d4] = w(2);
 
-Lbbe6c:	; 800BBE6C
+    800BBE64	j      Lbc158 [$800bc158]
+}
+
+V0 = 0002;
 800BBE6C	bne    v1, v0, Lbc158 [$800bc158]
-V0 = S4 & 0040;
+
 [801163d4] = w(0);
+
 wm_set_pc_entity_as_active_entity();
 
 wm_get_model_id_from_active_entity();
 S1 = V0;
 
-A0 = SP + 0010;
+A0 = SP + 10;
 wm_get_position_from_active_entity();
 
-800BBE98	jal    wm_get_position2_from_active_entity [$800aa128]
-A0 = SP + 0020;
-A0 = 0001;
-800BBEA4	jal    funca2108 [$800a2108]
-A1 = 0002;
-V1 = w[SP + 0010];
-V0 = w[SP + 0020];
-800BBEB4	nop
-800BBEB8	bne    v1, v0, Lbbed4 [$800bbed4]
-800BBEBC	nop
-V1 = w[SP + 0018];
-V0 = w[SP + 0028];
-800BBEC8	nop
-800BBECC	beq    v1, v0, Lbc0f0 [$800bc0f0]
-800BBED0	nop
-
-Lbbed4:	; 800BBED4
-800BBED4	jal    funcb7c58 [$800b7c58]
-800BBED8	nop
-800BBEDC	beq    s2, zero, Lbbef4 [$800bbef4]
-800BBEE0	nop
-800BBEE4	jal    funca98a4 [$800a98a4]
-A0 = 0;
-
-A0 = 0;
-wm_script_disable_for_pc_entity();
-
-
-Lbbef4:	; 800BBEF4
-800BBEF4	jal    funcaa1b8 [$800aa1b8]
-800BBEF8	nop
-800BBEFC	jal    funca1dd0 [$800a1dd0]
-A0 = 0;
-V0 = 0005;
-800BBF08	bne    s1, v0, Lbbf30 [$800bbf30]
-S3 = 0004;
-800BBF10	jal    wm_is_pc_entity_pos_need_recalculation [$800a98e4]
-800BBF14	nop
-800BBF18	beq    v0, zero, Lbbf30 [$800bbf30]
-800BBF1C	nop
-800BBF20	jal    funca98a4 [$800a98a4]
-A0 = 0;
-800BBF28	j      Lbc158 [$800bc158]
-V0 = S4 & 0040;
-
-Lbbf30:	; 800BBF30
-800BBF30	bne    s1, s3, Lbbf44 [$800bbf44]
-A0 = S1;
-
-A0 = 0;
-wm_script_disable_for_pc_entity();
-
-A0 = S1;
-
-Lbbf44:	; 800BBF44
-A1 = 5;
-wm_script_run_model_function_on_entity_with_model_id();
-
-800BBF4C	bne    s1, s3, Lbbf5c [$800bbf5c]
+A0 = SP + 20;
+wm_get_position2_from_active_entity();
 
 A0 = 1;
-wm_script_disable_for_pc_entity();
+A1 = 2;
+funca2108();
+
+if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
+{
+    800BBED4	jal    funcb7c58 [$800b7c58]
+
+    if( S2 != 0 )
+    {
+        A0 = 0;
+        800BBEE4	jal    funca98a4 [$800a98a4]
 
 
-Lbbf5c:	; 800BBF5C
-800BBF5C	jal    funca929c [$800a929c]
-800BBF60	nop
-800BBF64	beq    v0, zero, Lbc014 [$800bc014]
-A0 = SP + 0020;
-A1 = SP + 0010;
-wm_get_rotation_from_entity_to_entity();
+        A0 = 0;
+        wm_script_disable_for_pc_entity();
+    }
 
-800BBF74	addiu  v0, v0, $fc00 (=-$400)
-V0 = V0 << 10;
-S0 = V0 >> 10;
-800BBF80	jal    wm_set_active_entity_direction_and_rotation [$800a9480]
-A0 = S0;
-800BBF88	jal    wm_script_pop_from_store_stack [$800bb9d0]
-S2 = S1 < 0029;
-800BBF90	jal    funca8e50 [$800a8e50]
-800BBF94	nop
-800BBF98	beq    s2, zero, Lbbfa8 [$800bbfa8]
-800BBF9C	nop
-800BBFA0	jal    wm_set_active_entity_as_pc_entity [$800a9110]
-800BBFA4	nop
+    800BBEF4	jal    funcaa1b8 [$800aa1b8]
 
-Lbbfa8:	; 800BBFA8
-800BBFA8	jal    funcaa2e4 [$800aa2e4]
-A0 = 0002;
-800BBFB0	jal    wm_set_active_entity_direction_and_rotation [$800a9480]
-A0 = S0;
-800BBFB8	jal    funcb63f0 [$800b63f0]
-A0 = 0001;
-A0 = 0;
-800BBFC4	jal    funca2108 [$800a2108]
-A1 = 0006;
-800BBFCC	bne    s1, s3, Lbbfe4 [$800bbfe4]
-800BBFD0	nop
-800BBFD4	jal    funca82dc [$800a82dc]
-800BBFD8	nop
-800BBFDC	j      Lbc004 [$800bc004]
-800BBFE0	nop
+    A0 = 0;
+    800BBEFC	jal    funca1dd0 [$800a1dd0]
 
-Lbbfe4:	; 800BBFE4
-800BBFE4	bne    s2, zero, Lbc004 [$800bc004]
+    if( S1 == 5 )
+    {
+        wm_is_pc_entity_pos_need_recalculation();
 
-wm_get_pc_character_model_from_party();
+        if( V0 != 0 )
+        {
+            A0 = 0;
+            800BBF20	jal    funca98a4 [$800a98a4]
 
-A0 = V0; // model id
-wm_set_active_entity_with_model_id();
+            800BBF28	j      Lbc158 [$800bc158]
+        }
+    }
 
-wm_set_active_entity_as_pc_entity();
+    if( S1 == 4 )
+    {
+        A0 = 0;
+        wm_script_disable_for_pc_entity();
+    }
 
-Lbc004:	; 800BC004
-A0 = SP + 10;
-funcadc3c();
+    A0 = S1;
+    A1 = 5;
+    wm_script_run_model_function_on_entity_with_model_id();
 
-800BC00C	j      Lbc158 [$800bc158]
-V0 = S4 & 0040;
+    if( S1 == 4 )
+    {
+        A0 = 1;
+        wm_script_disable_for_pc_entity();
+    }
 
-Lbc014:	; 800BC014
-800BC014	jal    wm_insert_in_model_struct_list [$800a8a1c]
-800BC018	nop
-800BC01C	jal    wm_script_pop_from_store_stack [$800bb9d0]
-800BC020	nop
-S0 = V0 & 00ff;
-800BC028	jal    funca92f8 [$800a92f8]
-A0 = S0;
-800BC030	beq    v0, zero, Lbc070 [$800bc070]
-800BC034	nop
-800BC038	jal    wm_script_get_top_from_store_stack [$800bba0c]
-800BC03C	nop
-800BC040	jal    wm_init_model_struct_list_element [$800a9334]
-A0 = V0 & 00ff;
-800BC048	jal    wm_set_active_entity_as_pc_entity [$800a9110]
-800BC04C	nop
-800BC050	jal    wm_insert_in_model_struct_list [$800a8a1c]
-800BC054	nop
-800BC058	jal    wm_init_model_struct_list_element [$800a9334]
-A0 = S0;
-800BC060	jal    funca8ce4 [$800a8ce4]
-800BC064	nop
-800BC068	j      Lbc090 [$800bc090]
-800BC06C	nop
+    800BBF5C	jal    funca929c [$800a929c]
 
-Lbc070:	; 800BC070
-800BC070	jal    wm_init_model_struct_list_element [$800a9334]
-A0 = S0;
-800BC078	jal    wm_set_active_entity_as_pc_entity [$800a9110]
-800BC07C	nop
-800BC080	beq    s2, zero, Lbc090 [$800bc090]
-800BC084	nop
-800BC088	jal    funcbca48 [$800bca48]
-800BC08C	nop
+    if( V0 == 0 )
+    {
+        wm_insert_in_model_struct_list();
 
-Lbc090:	; 800BC090
-800BC090	jal    funca9db4 [$800a9db4]
-A0 = SP + 0010;
-800BC098	jal    funca9240 [$800a9240]
-800BC09C	nop
-800BC0A0	beq    v0, zero, Lbc0ac [$800bc0ac]
-A0 = 0001;
-A0 = 0002;
+        wm_script_pop_from_store_stack();
 
-Lbc0ac:	; 800BC0AC
-800BC0AC	jal    funcb63f0 [$800b63f0]
-800BC0B0	nop
-V0 = 0006;
-800BC0B8	bne    s1, v0, Lbc0c8 [$800bc0c8]
-V0 = 0005;
-800BC0C0	j      Lbc0d4 [$800bc0d4]
-800BC0C4	addiu  a0, zero, $fe14 (=-$1ec)
+        S0 = V0 & 00ff;
+        A0 = S0;
+        800BC028	jal    funca92f8 [$800a92f8]
 
-Lbc0c8:	; 800BC0C8
-800BC0C8	bne    s1, v0, Lbc0e0 [$800bc0e0]
-A0 = SP + 0010;
-800BC0D0	addiu  a0, zero, $fe13 (=-$1ed)
+        if( V0 != 0 )
+        {
+            wm_script_get_top_from_store_stack();
 
-Lbc0d4:	; 800BC0D4
-800BC0D4	jal    funcb65e0 [$800b65e0]
-800BC0D8	nop
-A0 = SP + 0010;
+            A0 = V0 & ff;
+            wm_init_model_struct_list_element();
 
-Lbc0e0:	; 800BC0E0
-800BC0E0	jal    funca6994 [$800a6994]
-A1 = 0001;
-800BC0E8	j      Lbc158 [$800bc158]
-V0 = S4 & 0040;
+            wm_set_active_entity_as_pc_entity();
 
-Lbc0f0:	; 800BC0F0
-800BC0F0	jal    wm_get_model_id_from_pc_entity [$800a9174]
-800BC0F4	nop
-V1 = 0003;
-800BC0FC	beq    v0, v1, Lbc118 [$800bc118]
-800BC100	nop
-800BC104	jal    wm_get_model_id_from_pc_entity [$800a9174]
-800BC108	nop
-V1 = 0004;
-800BC110	bne    v0, v1, Lbc120 [$800bc120]
-800BC114	nop
+            wm_insert_in_model_struct_list();
 
-Lbc118:	; 800BC118
-A0 = 0;
-wm_script_disable_for_pc_entity();
+            A0 = S0;
+            wm_init_model_struct_list_element();
 
+            800BC060	jal    funca8ce4 [$800a8ce4]
+        }
+        else
+        {
+            A0 = S0;
+            wm_init_model_struct_list_element();
 
-Lbc120:	; 800BC120
-800BC120	bne    s2, zero, Lbc14c [$800bc14c]
-800BC124	nop
-800BC128	jal    wm_get_model_id_from_pc_entity [$800a9174]
-800BC12C	nop
-V1 = 0005;
-800BC134	bne    v0, v1, Lbc158 [$800bc158]
-V0 = S4 & 0040;
-800BC13C	jal    wm_is_pc_entity_pos_need_recalculation [$800a98e4]
-800BC140	nop
-800BC144	beq    v0, zero, Lbc158 [$800bc158]
-V0 = S4 & 0040;
+            wm_set_active_entity_as_pc_entity();
 
-Lbc14c:	; 800BC14C
-800BC14C	jal    funca368c [$800a368c]
-A0 = 0001;
-V0 = S4 & 0040;
+            if( S2 != 0 )
+            {
+                800BC088	jal    funcbca48 [$800bca48]
+            }
+        }
+
+        A0 = SP + 10;
+        800BC090	jal    funca9db4 [$800a9db4]
+
+        800BC098	jal    funca9240 [$800a9240]
+
+        if( V0 != 0 )
+        {
+            A0 = 2;
+        }
+        else
+        {
+            A0 = 1;
+        }
+
+        800BC0AC	jal    funcb63f0 [$800b63f0]
+
+        if( S1 == 6 )
+        {
+            A0 = -1ec;
+            800BC0D4	jal    funcb65e0 [$800b65e0]
+        }
+        else if( S1 == 5 )
+        {
+            A0 = -1ed;
+            800BC0D4	jal    funcb65e0 [$800b65e0]
+        }
+
+        A0 = SP + 10;
+        A1 = 1;
+        800BC0E0	jal    funca6994 [$800a6994]
+    }
+    else
+    {
+        A0 = SP + 20;
+        A1 = SP + 10;
+        wm_get_rotation_from_entity_to_entity();
+
+        V0 = V0 - 400;
+        V0 = V0 << 10;
+        S0 = V0 >> 10;
+
+        A0 = S0;
+        wm_set_active_entity_direction_and_rotation();
+
+        wm_script_pop_from_store_stack();
+
+        800BBF90	jal    funca8e50 [$800a8e50]
+
+        if( S1 < 29 )
+        {
+            wm_set_active_entity_as_pc_entity();
+        }
+
+        A0 = 2;
+        800BBFA8	jal    funcaa2e4 [$800aa2e4]
+
+        A0 = S0;
+        wm_set_active_entity_direction_and_rotation();
+
+        A0 = 1;
+        800BBFB8	jal    funcb63f0 [$800b63f0]
+
+        A0 = 0;
+        A1 = 6;
+        800BBFC4	jal    funca2108 [$800a2108]
+
+        if( S1 == 4 )
+        {
+            800BBFD4	jal    funca82dc [$800a82dc]
+        }
+        else
+        {
+            if( S1 >= 29 )
+            {
+                wm_get_pc_character_model_from_party();
+
+                A0 = V0; // model id
+                wm_set_active_entity_with_model_id();
+
+                wm_set_active_entity_as_pc_entity();
+            }
+        }
+
+        A0 = SP + 10;
+        funcadc3c();
+    }
+}
+else
+{
+    wm_get_model_id_from_pc_entity();
+
+    if( ( V0 == 3 ) || ( V0 == 4 ) ) // highwind or wild chocobo
+    {
+        A0 = 0;
+        wm_script_disable_for_pc_entity();
+    }
+
+    if( S2 != 0 )
+    {
+        A0 = 1;
+        800BC14C	jal    funca368c [$800a368c]
+    }
+    else
+    {
+        wm_get_model_id_from_pc_entity();
+
+        if( V0 == 5 )
+        {
+            wm_is_pc_entity_pos_need_recalculation();
+
+            if( V0 != 0 )
+            {
+                A0 = 1;
+                800BC14C	jal    funca368c [$800a368c]
+            }
+        }
+    }
+}
 
 Lbc158:	; 800BC158
-800BC158	beq    v0, zero, Lbc180 [$800bc180]
-800BC15C	nop
-800BC160	lui    v0, $8011
-V0 = w[V0 + 63dc];
-800BC168	nop
-V0 = V0 + 0001;
-800BC170	lui    at, $8011
-[AT + 63dc] = w(V0);
-800BC178	j      Lbc188 [$800bc188]
-800BC17C	nop
-
-Lbc180:	; 800BC180
-800BC180	lui    at, $8011
-[AT + 63dc] = w(0);
-
-Lbc188:	; 800BC188
+if( buttons & 0040 ) // cross
+{
+    [801163dc] = w(w[801163dc] + 1);
+}
+else
+{
+    [801163dc] = w(0);
+}
 ////////////////////////////////
 
 
@@ -861,7 +848,7 @@ if( V1 >= 2 )
 V0 = 1;
 800BC464	bne    v1, v0, Lbc480 [$800bc480]
 A0 = 0008;
-800BC46C	jal    wm_get_wm_id [$800a1de0]
+wm_get_wm_id();
 
 800BC474	bne    v0, zero, Lbc480 [$800bc480]
 A0 = 0008;

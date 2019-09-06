@@ -2122,13 +2122,16 @@ A0 = S1;
 ////////////////////////////////
 // wm_move_active_entity()
 
+add_x = A0;
+add_z = A1;
+
 V1 = w[8010ad3c];
 if( V1 != 0 )
 {
-    if( ( A0 != 0 ) || ( A1 != 0 ) )
+    if( ( add_x != 0 ) || ( add_z != 0 ) )
     {
-        [V1 + c] = w(w[V1 + c] + A0);
-        [V1 + 14] = w(w[V1 + 14] + A1);
+        [V1 + c] = w(w[V1 + c] + add_x);
+        [V1 + 14] = w(w[V1 + 14] + add_z);
 
         if( w[V1 + c] < 0 )
         {
@@ -2147,6 +2150,7 @@ if( V1 != 0 )
             [V1 + 14] = w(w[V1 + 14] - 38000);
         }
 
+        // set flag to recalculate height
         [V1 + 51] = b(bu[V1 + 51] | 01);
     }
 }

@@ -1276,7 +1276,7 @@
 // funcbb8b0
 800BB8B0-800BB8E4
 ////////////////////////////////
-// funcbb8e8
+// wm_move_pc_entity_by_distance
 800BB8E8-800BB99C
 ////////////////////////////////
 // wm_script_push_to_store_stack

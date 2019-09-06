@@ -180,6 +180,8 @@
 800e5608 [][][][] maybe initial camera rotation.
 800e560c [][][][] 
 
+800e5618 [][][][] init with 0.
+
 800e5634 [][][][] map id to use.
                   0 - WM0.BOT planet
                   1 - WM1.BOT
@@ -190,6 +192,7 @@
 800e5648 [][][][]
 800e564c [][][][]
 800e5650
+800e5654 [][][][] ???
 800e5660
 
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
@@ -243,6 +246,8 @@
 80109d38 pointer to 80109a38.
 80109d40 pointer to 80109a38.
 
+80109d64 [][][][] set to 2
+80109d68 [][][][] set to 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 
 80109d74 some entity struct.

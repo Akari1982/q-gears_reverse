@@ -5183,8 +5183,9 @@ A0 = 002a;
 800B2E30	nop
 
 Lb2e34:	; 800B2E34
-800B2E34	jal    funca1d54 [$800a1d54]
 A0 = 0;
+funca1d54();
+
 A0 = 0001;
 800B2E40	jal    funca2108 [$800a2108]
 A1 = 0005;
@@ -5234,7 +5235,7 @@ if( w[8010caf4] != 0 )
     else if( V1 == 2 )
     {
         A0 = 1;
-        800B2EF4	jal    funca1d54 [$800a1d54]
+        funca1d54();
 
         A0 = 1770;
         800B2EFC	jal    funca45c4 [$800a45c4]

@@ -1543,12 +1543,12 @@ switch( opcode )
 
     case 31c:
     {
-        800ACED4	jal    wm_script_pop_stack [$800abb24]
-        800ACED8	nop
-        800ACEDC	jal    funca1d54 [$800a1d54]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACEE4	j      Lad620 [$800ad620]
-        V0 = 0;
+        funca1d54();
+
+        return 0;
     }
     break;
 
