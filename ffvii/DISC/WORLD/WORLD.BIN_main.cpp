@@ -5,16 +5,16 @@
 
 
 ////////////////////////////////
-// funca0b48
+// wm_set_render_buffers()
 
 buffer_id = w[800d05e8];
 [800d05e8] = w(buffer_id < 1);
 
 [800bd130] = w(800c8564 + buffer_id * 4074); // dialog OT for render
 [800c752c] = b(bu[800d05e8]); // render buffer id
+[800d05dc] = w(w[800cc564 + buffer_id * 4074]); // pointer to polygon buffer
 [800d05e0] = w(w[800cc564 + buffer_id * 4074]); // pointer to polygon buffer
 [800d05e4] = w(800c84f4 + buffer_id * 4074);
-[800d05dc] = w(w[800cc564 + buffer_id * 4074]); // pointer to polygon buffer
 ////////////////////////////////
 
 
@@ -28,20 +28,14 @@ return w[800d05e8];
 
 
 ////////////////////////////////
-// funca0be4
+// funca0be4()
 
-V1 = A0 << 02;
-V1 = V1 + A0;
-A0 = w[800d05e0];
-V0 = w[800d05dc];
-V1 = V1 << 03;
+V1 = w[800d05e0] + A0 * 28;
 
-V1 = V1 + A0;
-V0 = V0 + 20800;
-if( V1 < V0 )
+if( V1 < ( w[800d05dc] + 20800 ) )
 {
+    S0 = w[800d05e0];
     [800d05e0] = w(V1);
-    S0 = A0;
 }
 else
 {
@@ -399,34 +393,35 @@ wm_create_skybox_overlay_render_buffers();
 
 
 ////////////////////////////////
-// funca1370
+// funca1370()
 
-funca0b48();
+wm_set_render_buffers();
 
 A0 = w[800c65ec];
 system_gte_set_proj_plane_dist();
 
 V0 = w[800e5630];
-
-800A139C	beq    v0, zero, La13d4 [$800a13d4]
 A0 = 00a0;
-800A13A4	jal    funcadfc0 [$800adfc0]
-800A13A8	nop
-S0 = V0 >> 06;
-800A13B0	jal    funcadfc0 [$800adfc0]
-S0 = S0 + 009e;
-A0 = S0;
-V0 = V0 >> 06;
-800A13C0	lui    a1, $800e
-A1 = w[A1 + 55f0];
-800A13C8	addiu  v0, v0, $fffe (=-$2)
-800A13CC	j      La13dc [$800a13dc]
-A1 = V0 + A1;
 
-La13d4:	; 800A13D4
-A1 = w[800e55f0];
+if( V0 != 0 )
+{
+    800A13A4	jal    funcadfc0 [$800adfc0]
 
-La13dc:	; 800A13DC
+    S0 = V0 >> 6;
+    S0 = S0 + 9e;
+    800A13B0	jal    funcadfc0 [$800adfc0]
+
+    A0 = S0;
+    V0 = V0 >> 06;
+    A1 = w[800e55f0];
+    V0 = V0 - 2;
+    A1 = V0 + A1;
+}
+else
+{
+    A1 = w[800e55f0];
+}
+
 system_gte_set_screen_offset();
 
 A0 = w[800bd130];
@@ -466,39 +461,23 @@ if( w[800e55f4] != 0 )
 A0 = 1;
 system_psyq_wait_frames();
 
-if(  w[800d75ec] != 0 )
+for( int i = 0; i < w[800d75ec]; ++i )
 {
-    S1 = 800d75f0;
-    S3 = 800d75f0 - 4;
-    S0 = 800d75f0 + 6;
-    S2 = 0;
+    A0 = -1;
+    system_psyq_wait_frames();
 
-    loopa1588:	; 800A1588
-        A0 = -1;
-        system_psyq_wait_frames();
-
-        V1 = bu[S0 + 1];
-        V0 = V0 / V1;
-        V1 = bu[S0 + 0];
-        V1 = V0 % V1;
-        V0 = hu[S0 - 2];
-        V0 = V0 >> 02;
-        V0 = V0 * V1;
-        A1 = w[S1 + 0000];
-        S1 = S1 + 8;
-        A1 = A1 >> 2;
-        A1 = A1 << 2;
-        S0 = S0 + 8;
-        V0 = V0 << 02;
-        V0 = V0 + S3;
-        A1 = A1 + V0;
-        A0 = A1 + 4;
-        A1 = A1 + c;
-        system_psyq_load_image();
-
-        S2 = S2 + 1;
-        V0 = S2 < w[S3];
-    800A1644	bne    v0, zero, loopa1588 [$800a1588]
+    V1 = bu[800d75f0 + i * 8 + 7];
+    V0 = V0 / V1;
+    V1 = bu[800d75f0 + i * 8 + 6];
+    V1 = V0 % V1;
+    V0 = hu[800d75f0 + i * 8 + 4];
+    V0 = V0 >> 2;
+    V0 = V0 * V1;
+    A1 = (w[800d75f0 + i * 8 + 0] >> 2) << 2;
+    V0 = V0 << 2;
+    A0 = 800d75ec + A1 + V0 + 4; // rect
+    A1 = 800d75ec + A1 + V0 + c; // pointer in memory
+    system_psyq_load_image();
 }
 
 A0 = 0;
@@ -2247,62 +2226,20 @@ return w[800e5628] < 1;
 ////////////////////////////////
 // funca31f8()
 
-V0 = w[800e5650];
-800A3200	nop
-800A3204	bne    v0, zero, La3230 [$800a3230]
-
-V0 = w[800e5660];
-V1 = V0 << 04;
-V1 = V1 - V0;
-V1 = V1 << 01;
-V1 = V1 >> 08;
-800A3228	j      La3258 [$800a3258]
-V0 = 0078;
-
-La3230:	; 800A3230
-V0 = w[800e5660];
-800A3238	nop
-V1 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V1 = V1 - V0;
-V1 = V1 << 01;
-V1 = V1 >> 08;
-V0 = 00a0;
-
-La3258:	; 800A3258
-V0 = V0 - V1;
 A1 = w[800e5660];
-A0 = 0190;
-[800e55f0] = w(V0);
-V1 = A1 << 01;
-V1 = V1 + A1;
-V0 = V1 << 03;
-V0 = V0 + A1;
-V0 = V0 << 03;
-V0 = V0 >> 08;
-A0 = A0 - V0;
-V1 = V1 << 04;
-V1 = V1 - A1;
-V1 = V1 << 03;
-V1 = V1 - A1;
-V1 = V1 << 04;
-V1 = V1 >> 08;
-V0 = 2710;
-V0 = V0 - V1;
-[800e5614] = w(V0);
-V0 = A1 << 02;
-V0 = V0 + A1;
-V0 = V0 << 03;
-V0 = V0 - A1;
-V0 = V0 << 04;
-V0 = V0 + A1;
-V0 = V0 << 02;
-V0 = V0 >> 08;
-V1 = 1388;
-V1 = V1 - V0;
-[800c65ec] = w(A0);
-[800e5678] = w(V1);
+
+if( w[800e5650] == 0 )
+{
+    [800e55f0] = w(78 - ((A1 * 1e) >> 8));
+}
+else
+{
+    [800e55f0] = w(a0 - ((A1 * 46) >> 8));
+}
+
+[800c65ec] = w(190 - ((A1 * c8 >> 8)); // calculate projection plane distance
+[800e5614] = w(2710 - ((A1 * 1770) >> 8));
+[800e5678] = w(1388 - ((A1 * 9c4) >> 8));
 ////////////////////////////////
 
 
@@ -2400,8 +2337,8 @@ V0 = 0100;
 [AT + 5660] = w(V0);
 
 La341c:	; 800A341C
-800A341C	jal    funca31f8 [$800a31f8]
-800A3420	nop
+funca31f8();
+
 800A3424	jal    wm_get_position_from_pc_entity [$800aa0e0]
 A0 = SP + 0010;
 
@@ -3831,7 +3768,7 @@ La4668:	; 800A4668
     [800e566c] = w(V0);
 
     La49a4:	; 800A49A4
-        800A49A4	jal    funca1370 [$800a1370]
+        funca1370(); // prepare render
 
         [800bd13c] = w(0);
 
@@ -6731,7 +6668,7 @@ wm_set_translation_vector_in_screen_space();
 800A7848	jal    funcbcb2c [$800bcb2c]
 
 A0 = h[S0 + 14];
-800A7854	jal    funca0be4 [$800a0be4]
+funca0be4();
 
 A3 = V0;
 A2 = w[S0 + 000c];
@@ -7081,10 +7018,10 @@ A0 = S0;
 800A7D64	jal    wm_set_translation_vector_in_screen_space [$800a1fac]
 A0 = S2;
 800A7D6C	jal    funcbcb2c [$800bcb2c]
-800A7D70	nop
-A0 = h[S0 + 0014];
-800A7D78	jal    funca0be4 [$800a0be4]
-800A7D7C	nop
+
+A0 = h[S0 + 14];
+funca0be4();
+
 A3 = V0;
 A2 = w[S0 + 000c];
 V0 = h[S0 + 0014];

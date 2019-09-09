@@ -3,7 +3,7 @@
 // funca0b40
 800A0B40-800A0B44
 ////////////////////////////////
-// funca0b48
+// wm_set_render_buffers
 800A0B48-800A0BD0
 ////////////////////////////////
 // wm_get_current_render_buffer_id

@@ -1,5 +1,7 @@
 800a0000 start of world map binary.
 
+800bd130 [][][][] pointer to 800c8564 (+2710 - pointer to current render buffer)
+
 800be1e8 to rotation array (0x2 size)
 
 800bf5f0 gateways array (in binary) (0x64 * 2 records)
@@ -73,6 +75,8 @@
     + 4 [][]     z.
     + 6 [][]     map id.
     + 8 []       rotation.
+
+800c65ec [][][][] projection plane distance.
 
 800c6670 array of x size of wm block (0x4 items 0x1 size).
          09 09 03 02
@@ -174,6 +178,9 @@
 800cc5c4 display env struct for buffer 2.
 800cc5d8 [][][][] OT for dialog render for buffer 2.
 
+800d05dc [][][][] pointer to 800cc564 buffer.
+800d05e0 [][][][] pointer to 800cc564 buffer.
+800d05e4 [][][][] pointer to 800c84f4 buffer.
 800d05ec script data from .TXZ file (.EV file data).
 
 800e5604 [][][][] 
