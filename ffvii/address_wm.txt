@@ -1,6 +1,8 @@
 800a0000 start of world map binary.
 
-800bd130 [][][][] pointer to 800c8564 (+2710 - pointer to current render buffer)
+800bd130 [][][][] pointer to 800c8564 (+2710 - pointer to current render buffer). Render everything from here.
+
+800bd13c [][][][] set to 0 at start of frame.
 
 800be1e8 to rotation array (0x2 size)
 
@@ -161,6 +163,8 @@
     +4 [][][][] size.
 
 800c752c current write into buffer bit (into this we write data).
+800c752d []       set to 0xc when clear buffer 800bd130.
+800c7530 [][][][] store here cleared buffer 800bd130.
 
 800c7538 sin cos array
 800c7938 normals array by gpu packets (0x8 size)
@@ -183,12 +187,15 @@
 800d05e4 [][][][] pointer to 800c84f4 buffer.
 800d05ec script data from .TXZ file (.EV file data).
 
+800e55f0 [][][][] base screen offset Y.
+
 800e5604 [][][][] 
 800e5608 [][][][] maybe initial camera rotation.
 800e560c [][][][] 
 
 800e5618 [][][][] init with 0.
 
+800e5630 [][][][] shake enabled
 800e5634 [][][][] map id to use.
                   0 - WM0.BOT planet
                   1 - WM1.BOT
@@ -261,17 +268,18 @@
 80109e54 some entity struct.
 80109f34 start of entity struct linked list. (0x0e items 0xe0 size)
 +00 [][][][] pointer to previous entity.
++04 [][][][] pointer to some related entity.
 +08 [][][][] ??? ptr to some entity struct
 +0c [][][][] x
 +10 [][][][] y
 +14 [][][][] z
 +18 [][]     ???
 +1a [][]     terrain id.
-+1c [][][][] x
-+20 [][][][] y
-+24 [][][][] z
-+28 [][]     ???
-+2a [][]     terrain id.
++1c [][][][] prev x. Copied at start of frame.
++20 [][][][] prev y. Copied at start of frame.
++24 [][][][] prev z. Copied at start of frame.
++28 [][]     prev ???. Copied at start of frame.
++2a [][]     prev terrain id. Copied at start of frame.
 +2c array of script call stack (0x4 items 0x4 size).
     + 0 [][]     script position.
     + 2 []       wait value.
@@ -394,6 +402,9 @@
 8010ae3c [][][][] init with 0.
 
 8010ae54 [][][][] mutex mask (0 - load map, 2 - load model, 3 - ???).
+
+8010ae58 [][][][] current random position.
+8010ae5c array of somethins (0x1 size 0x20 items)
 
 8010b068 buffer for skybox overlay texture settings buffer (0x2 items 0xc size).
 

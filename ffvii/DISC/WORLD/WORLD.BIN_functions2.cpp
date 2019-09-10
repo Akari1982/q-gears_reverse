@@ -1415,9 +1415,8 @@ T5 = T5 | T7;
 T4 = T4 & T5;
 T0 = 0001;
 800BCDA8	beq    t4, zero, Lbcdb8 [$800bcdb8]
-800BCDAC	nop
-800BCDB0	lui    at, $800c
-[AT + d13c] = w(T0);
+
+[800bd13c] = w(T0);
 
 Lbcdb8:	; 800BCDB8
 [A3 + 0008] = w(SXY0);

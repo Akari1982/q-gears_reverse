@@ -2889,76 +2889,47 @@ Lab478:	; 800AB478
 
 
 ////////////////////////////////
-// funcab48c
-800AB48C
-A2 = A0;
-V1 = w[A2 + 0004];
-800AB494	nop
-800AB498	beq    v1, zero, Lab4cc [$800ab4cc]
-800AB49C	nop
-V0 = bu[A2 + 0051];
-800AB4A4	nop
-V0 = V0 & 0001;
-800AB4AC	bne    v0, zero, Lab4c8 [$800ab4c8]
-800AB4B0	nop
-V0 = bu[V1 + 0051];
-800AB4B8	nop
-V0 = V0 & 0001;
-800AB4C0	beq    v0, zero, Lab4cc [$800ab4cc]
-800AB4C4	nop
+// funcab48c()
 
-Lab4c8:	; 800AB4C8
-[A2 + 0004] = w(0);
+entity = A0;
+related = w[entity + 4];
+if( related != 0 )
+{
+    if( ( ( bu[entity + 51] & 01 ) != 0 ) || ( ( bu[related + 51] & 01 ) != 0 ) )
+    {
+        [entity + 4] = w(0);
+    }
+}
 
-Lab4cc:	; 800AB4CC
-V0 = w[A2 + 000c];
-V1 = w[A2 + 0010];
-A0 = w[A2 + 0014];
-A1 = w[A2 + 0018];
-[A2 + 001c] = w(V0);
-[A2 + 0020] = w(V1);
-[A2 + 0024] = w(A0);
-[A2 + 0028] = w(A1);
-800AB4EC	jr     ra 
-800AB4F0	nop
+[entity + 1c] = w(w[entity + c]);
+[entity + 20] = w(w[entity + 10]);
+[entity + 24] = w(w[entity + 14]);
+[entity + 28] = w(w[entity + 18]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcab4f4()
+// wm_prepare_entities()
 
+// go through all entity
 S0 = w[8010ad38];
-800AB504	nop
-800AB508	beq    s0, zero, Lab528 [$800ab528]
+while( S0 != 0 )
+{
+    A0 = S0;
+    funcab48c();
 
+    S0 = w[S0 + 0];
+}
 
-loopab510:	; 800AB510
-800AB510	jal    funcab48c [$800ab48c]
-A0 = S0;
-S0 = w[S0 + 0000];
-800AB51C	nop
-800AB520	bne    s0, zero, loopab510 [$800ab510]
-800AB524	nop
+// go through all entity
+S0 = w[8010ad38];
+while( S0 != 0 )
+{
+    [S0 + 51] = b(bu[S0 + 51] & f8); // remove 0x07 flags
 
-Lab528:	; 800AB528
-800AB528	lui    s0, $8011
-S0 = w[S0 + ad38];
-800AB530	nop
-800AB534	beq    s0, zero, Lab55c [$800ab55c]
-800AB538	nop
-
-loopab53c:	; 800AB53C
-V0 = bu[S0 + 0051];
-800AB540	nop
-V0 = V0 & 00f8;
-[S0 + 0051] = b(V0);
-S0 = w[S0 + 0000];
-800AB550	nop
-800AB554	bne    s0, zero, loopab53c [$800ab53c]
-800AB558	nop
-
-Lab55c:	; 800AB55C
+    S0 = w[S0 + 0];
+}
 ////////////////////////////////
 
 

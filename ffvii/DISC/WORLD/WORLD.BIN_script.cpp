@@ -409,10 +409,9 @@ else
         }
         break;
 
-        case 10:
+        case 10: // random
         {
-            800ABDF4	jal    funcadfc0 [$800adfc0]
-
+            wm_random_get();
             return V0;
         }
         break;
@@ -1598,23 +1597,23 @@ switch( opcode )
 
     case 32a:
     {
-        800ACF4C	jal    wm_script_pop_stack [$800abb24]
-        800ACF50	nop
-        800ACF54	jal    funca44b4 [$800a44b4]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACF5C	j      Lad620 [$800ad620]
-        V0 = 0;
+        800ACF54	jal    funca44b4 [$800a44b4]
+
+        return 0;
     }
     break;
 
     case 352: // shake camera on/off
     {
-        800ACF64	jal    wm_script_pop_stack [$800abb24]
-        800ACF68	nop
-        800ACF6C	jal    funca16d0 [$800a16d0]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800ACF74	j      Lad620 [$800ad620]
-        V0 = 0;
+        wm_set_shaking();
+
+        return 0;
     }
     break;
 

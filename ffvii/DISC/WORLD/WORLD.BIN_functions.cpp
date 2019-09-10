@@ -254,81 +254,52 @@ if( priority != 0 )
 
 
 ////////////////////////////////
-// funcade30
+// wm_random_twiddle()
 
-A0 = 0;
-loopade3c:	; 800ADE3C
-    [8010ae5c + A0] = b(bu[8010ae5c + A0] ^ bu[8010b045 + A0]);
-    A0 = A0 + 1;
-    V0 = A0 < 20;
-800ADE60	bne    v0, zero, loopade3c [$800ade3c]
+for( int i = 0; i < 20; ++i )
+{
+    [8010ae5c + i] = b(bu[8010ae5c + i] ^ bu[8010b045 + i]);
+}
 
-A0 = 20;
-loopade74:	; 800ADE74
-    [8010ae7c + A0] = b(bu[8010ae7c + A0] ^ bu[8010ae3c + A0]);
-    A0 = A0 + 1;
-    V0 = A0 < 209;
-800ADE98	bne    v0, zero, loopade74 [$800ade74]
+for( int i = 20; i < 209; ++i )
+{
+    [8010ae7c + i] = b(bu[8010ae7c + i] ^ bu[8010ae3c + i]);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcadea8()
+// wm_random_init()
+
+sec = A0;
 
 A3 = 0;
-A2 = 0;
+for( int i = 0; i < 11; ++i )
+{
+    for( int j = 0; j < 20; ++i )
+    {
+        A3 = (A3 >> 1) | (((sec * 5d588b65) + 1) & 80000000);
+    }
+    [SP + 10 + i * 4] = w(A3);
+}
+[SP + 10 + 10 * 4] = w((w[SP + 10 + 10 * 4] << 17) ^ (w[SP + 10] >> 9) ^ w[SP + 10 + f * 4]);
 
-loopadec4:	; 800ADEC4
-    A1 = 1f;
+for( int i = 11; i < 209; ++i )
+{
+    [SP + 10 + 11 * 4 + i * 4] = w((w[SP + 10 + i * 4] << 17) ^ (w[SP + 10 + 1 * 4 + i * 4] >> 9) ^ w[SP + 10 + 10 * 4 + i * 4]);
+}
 
-    loopadec8:	; 800ADEC8
-        V0 = A0 * 5d588b65;
-        800ADECC	addiu  a1, a1, $ffff (=-$1)
-        V1 = A3 >> 01;
-        A0 = A0 + 0001;
-        V0 = A0 & 80000000;
-        A3 = V1 | V0;
-    800ADEE0	bgez   a1, loopadec8 [$800adec8]
+for( int i = 0; i < 209; ++i )
+{
+    [8010ae5c + i] = b(bu[SP + 10 + i * 4]);
+}
 
-    [SP + 10 + A2 * 4] = w(A3);
-    A2 = A2 + 1;
-    V0 = A2 < 11;
-800ADF00	bne    v0, zero, loopadec4 [$800adec4]
+wm_random_twiddle();
 
-A1 = SP + 0054;
-A0 = w[SP + 4c];
-V1 = w[SP + 10] >> 9;
-V0 = (w[SP + 50] << 17) ^ V1;
-V0 = V0 ^ A0;
-[SP + 0050] = w(V0);
+wm_random_twiddle();
 
-A2 = 11;
-loopadf2c:	; 800ADF2C
-    A2 = A2 + 0001;
-    V0 = w[A1 + ffbc];
-    V1 = w[A1 + ffc0];
-    A0 = w[A1 + fffc];
-    V0 = V0 << 17;
-    V1 = V1 >> 09;
-    V0 = V0 ^ V1 ^ A0;
-    [A1 + 0000] = w(V0);
-    A1 = A1 + 0004;
-    V0 = A2 < 0209;
-800ADF54	bne    v0, zero, loopadf2c [$800adf2c]
-
-A2 = 0;
-loopadf64:	; 800ADF64
-    [8010ae5c + A2] = b(bu[SP + 10 + A2 * 4]);
-    A2 = A2 + 1;
-    V0 = A2 < 209;
-800ADF84	bne    v0, zero, loopadf64 [$800adf64]
-
-800ADF8C	jal    funcade30 [$800ade30]
-
-800ADF94	jal    funcade30 [$800ade30]
-
-800ADF9C	jal    funcade30 [$800ade30]
+wm_random_twiddle();
 
 [8010ae58] = w(208);
 ////////////////////////////////
@@ -336,13 +307,13 @@ loopadf64:	; 800ADF64
 
 
 ////////////////////////////////
-// funcadfc0()
+// wm_random_get()
 
 [8010ae58] = w(w[8010ae58] + 1);
 
 if( w[8010ae58] >= 209 )
 {
-    800ADFE8	jal    funcade30 [$800ade30]
+    wm_random_twiddle();
 
     [8010ae58] = w(0);
 }
@@ -2114,8 +2085,10 @@ S1 = 0;
 S0 = 8010bcac;
 
 loopb0300:	; 800B0300
-800B0300	jal    funcadfc0 [$800adfc0]
 S1 = S1 + 0001;
+
+wm_random_get();
+
 V0 = V0 << 02;
 [S0 + 0000] = w(V0);
 V0 = S1 < 0100;
@@ -2663,15 +2636,14 @@ V0 = V0 << 10;
 800B0B4C	lui    at, $8011
 [AT + c7f4] = h(V1);
 800B0B54	bgtz   v0, Lb0b8c [$800b0b8c]
-800B0B58	nop
-800B0B5C	jal    funcadfc0 [$800adfc0]
-800B0B60	nop
+
+wm_random_get();
+
 V0 = V0 + 0040;
 V0 = V0 >> 02;
-800B0B6C	lui    at, $8011
-[AT + c7f4] = h(V0);
-800B0B74	jal    funcadfc0 [$800adfc0]
-800B0B78	nop
+[8010c7f4] = h(V0);
+wm_random_get();
+
 800B0B7C	addiu  v0, v0, $ff80 (=-$80)
 V0 = V0 >> 02;
 800B0B84	lui    at, $8011
@@ -5417,22 +5389,22 @@ V0 = V0 - A0;
 [AT + cb04] = h(V0);
 V0 = V0 << 10;
 800B315C	bgtz   v0, Lb31b4 [$800b31b4]
-800B3160	nop
-800B3164	jal    funcadfc0 [$800adfc0]
-800B3168	nop
+
+wm_random_get();
+
 V0 = V0 + 0080;
 800B3170	lui    at, $8011
 [AT + cb0c] = h(V0);
 800B3178	lui    at, $8011
 [AT + cb04] = h(V0);
-800B3180	jal    funcadfc0 [$800adfc0]
-800B3184	nop
+wm_random_get();
+
 V0 = V0 >> 03;
 V0 = V0 + 0040;
 800B3190	lui    at, $8011
 [AT + cb08] = h(V0);
-800B3198	jal    funcadfc0 [$800adfc0]
-800B319C	nop
+wm_random_get();
+
 V0 = V0 & 0002;
 800B31A4	addiu  v0, v0, $ffff (=-$1)
 V0 = V0 << 04;
@@ -7964,9 +7936,9 @@ A3 = 0;
 800B5598	jal    funcb39b4 [$800b39b4]
 [S4 + 0000] = h(S6);
 800B55A0	j      Lb5768 [$800b5768]
-800B55A4	nop
-800B55A8	jal    funcadfc0 [$800adfc0]
-800B55AC	nop
+
+wm_random_get();
+
 S0 = V0;
 800B55B4	jal    $80039b40
 A0 = S0 << 04;
@@ -7981,26 +7953,23 @@ V0 = 0078;
 800B55DC	lui    at, $1f80
 [1f800012] = h(V0);
 V0 = 01f4;
-800B55E8	lui    at, $1f80
 [1f80001c] = h(V0);
 800B55F0	jal    funcb39b4 [$800b39b4]
 A3 = 0014;
 800B55F8	j      Lb5768 [$800b5768]
 800B55FC	nop
 V0 = 012c;
-800B5604	lui    at, $1f80
 [1f80001a] = h(V0);
 800B560C	addiu  v0, zero, $fc18 (=-$3e8)
-800B5610	lui    at, $1f80
+
 [1f80001c] = h(V0);
 V0 = 0014;
-800B561C	lui    at, $1f80
 [1f800012] = h(V0);
 800B5624	addiu  v0, zero, $fff6 (=-$a)
-800B5628	lui    at, $1f80
+
 [1f800014] = h(V0);
-800B5630	jal    funcadfc0 [$800adfc0]
-800B5634	nop
+wm_random_get();
+
 A2 = 0038;
 A3 = 0001;
 800B5640	addiu  v0, v0, $ff80 (=-$80)
@@ -8824,7 +8793,7 @@ if( model != 0 )
         A1 = 1f800000;
         wm_apply_model_lighting_to_packet();
 
-        [800c752c] = b(bu[800c752c] < 1); // invert
+        [800c752c] = b(bu[800c752c] < 1); // switch write buffer
     }
 }
 ////////////////////////////////
@@ -9592,7 +9561,7 @@ A2 = 0;
 funcb787c();
 
 A0 = w[8009c6e4 + b80]; // total number of seconds played
-funcadea8();
+wm_random_init();
 
 [800c68ee] = h(w[8009c6e4 + f98] & 00ff);
 [800c6902] = h((w[8009c6e4 + f98] >> 08) & 00ff);
@@ -10364,8 +10333,8 @@ V0 = V0 + 7fff;
 Lb7e14:	; 800B7E14
 800B7E14	lui    at, $8011
 [AT + 6284] = w(V0);
-800B7E1C	jal    funcadfc0 [$800adfc0]
-800B7E20	nop
+wm_random_get();
+
 800B7E24	lui    v1, $8011
 V1 = w[V1 + 6284];
 800B7E2C	nop
@@ -10378,8 +10347,8 @@ V0 = hu[S1 + 0000];
 V0 = V0 & 0001;
 800B7E4C	beq    v0, zero, Lb82c4 [$800b82c4]
 800B7E50	addiu  v0, zero, $ffff (=-$1)
-800B7E54	jal    funcadfc0 [$800adfc0]
-800B7E58	nop
+wm_random_get();
+
 800B7E5C	lui    at, $800c
 AT = AT + 72f4;
 AT = AT + S3;
@@ -10460,9 +10429,9 @@ A0 = 7; // cloud tifa cid
 wm_is_pc_entity_model_in_mask();
 
 800B7F6C	beq    v0, zero, Lb80a0 [$800b80a0]
-800B7F70	nop
-800B7F74	jal    funcadfc0 [$800adfc0]
-800B7F78	nop
+
+wm_random_get();
+
 800B7F7C	jal    funcb7bb0 [$800b7bb0]
 S0 = V0;
 S0 = S0 << 0c;
@@ -10556,8 +10525,8 @@ V0 = 0 NOR S2;
 S5 = 0 < V0;
 
 Lb80a0:	; 800B80A0
-800B80A0	jal    funcadfc0 [$800adfc0]
-800B80A4	nop
+wm_random_get();
+
 800B80A8	jal    funcb7b78 [$800b7b78]
 S0 = V0;
 S4 = S0 < V0;
@@ -10568,9 +10537,9 @@ S4 = S0 < V0;
 800B80C4	beq    v0, zero, Lb812c [$800b812c]
 800B80C8	nop
 800B80CC	bgez   s2, Lb812c [$800b812c]
-800B80D0	nop
-800B80D4	jal    funcadfc0 [$800adfc0]
-800B80D8	nop
+
+wm_random_get();
+
 800B80DC	jal    funcb7ba0 [$800b7ba0]
 S0 = V0;
 V1 = hu[S1 + 000e];
@@ -10600,9 +10569,9 @@ Lb812c:	; 800B812C
 800B8134	beq    v0, zero, Lb816c [$800b816c]
 800B8138	nop
 800B813C	bgez   s2, Lb816c [$800b816c]
-800B8140	nop
-800B8144	jal    funcadfc0 [$800adfc0]
-800B8148	nop
+
+wm_random_get();
+
 V1 = hu[S1 + 0012];
 S0 = V0 << 08;
 V0 = S0 < V1;
@@ -10619,8 +10588,8 @@ Lb816c:	; 800B816C
 800B8178	nop
 800B817C	bgez   s2, Lb82c4 [$800b82c4]
 800B8180	addiu  v0, zero, $ffff (=-$1)
-800B8184	jal    funcadfc0 [$800adfc0]
-800B8188	nop
+wm_random_get();
+
 800B818C	jal    funcb7ba0 [$800b7ba0]
 S0 = V0;
 V1 = hu[S1 + 0014];
@@ -10639,8 +10608,8 @@ Lb81b8:	; 800B81B8
 S3 = 0;
 
 loopb81c4:	; 800B81C4
-800B81C4	jal    funcadfc0 [$800adfc0]
-800B81C8	nop
+wm_random_get();
+
 V1 = hu[S1 + 0002];
 S0 = V0 << 08;
 V0 = S0 < V1;

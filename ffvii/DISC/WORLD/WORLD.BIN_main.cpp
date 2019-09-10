@@ -10,7 +10,7 @@
 buffer_id = w[800d05e8];
 [800d05e8] = w(buffer_id < 1);
 
-[800bd130] = w(800c8564 + buffer_id * 4074); // dialog OT for render
+[800bd130] = w(800c8564 + buffer_id * 4074); // OT for render
 [800c752c] = b(bu[800d05e8]); // render buffer id
 [800d05dc] = w(w[800cc564 + buffer_id * 4074]); // pointer to polygon buffer
 [800d05e0] = w(w[800cc564 + buffer_id * 4074]); // pointer to polygon buffer
@@ -393,40 +393,35 @@ wm_create_skybox_overlay_render_buffers();
 
 
 ////////////////////////////////
-// funca1370()
+// wm_prepare_for_render()
 
 wm_set_render_buffers();
 
 A0 = w[800c65ec];
 system_gte_set_proj_plane_dist();
 
-V0 = w[800e5630];
-A0 = 00a0;
-
-if( V0 != 0 )
+if( w[800e5630] != 0 ) // shake enabled
 {
-    800A13A4	jal    funcadfc0 [$800adfc0]
+    wm_random_get();
+    S0 = 9e + (V0 >> 6);
 
-    S0 = V0 >> 6;
-    S0 = S0 + 9e;
-    800A13B0	jal    funcadfc0 [$800adfc0]
+    wm_random_get();
 
     A0 = S0;
-    V0 = V0 >> 06;
-    A1 = w[800e55f0];
-    V0 = V0 - 2;
-    A1 = V0 + A1;
+    A1 = w[800e55f0] - 2 + (V0 >> 6);
 }
 else
 {
+    A0 = a0;
     A1 = w[800e55f0];
 }
 
 system_gte_set_screen_offset();
 
-A0 = w[800bd130];
 [800c752d] = b(c);
-[800c7530] = w(A0);
+[800c7530] = w(w[800bd130]);
+
+A0 = w[800bd130];
 A1 = 1000;
 system_psyq_clear_o_tag_r();
 ////////////////////////////////
@@ -504,7 +499,7 @@ system_psyq_draw_otag();
 
 
 ////////////////////////////////
-// funca16d0()
+// wm_set_shaking()
 
 [800e5630] = w(A0);
 ////////////////////////////////
@@ -516,7 +511,7 @@ system_psyq_draw_otag();
 
 if( w[800e55f4] != 0 )
 {
-    return w[800bd130] + 2710;
+    return w[800bd130] + 2710; // main render
 }
 return 0;
 ////////////////////////////////
@@ -2129,8 +2124,9 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
         if( buttons & a00c ) // left right L1 R1
         {
-            800A3004	jal    funcadfc0 [$800adfc0]
+            wm_random_get();
         }
+
         [800c84c8] = w(buttons);
 
         wm_get_pc_entity_terrain_id();
@@ -2709,88 +2705,86 @@ V0 = w[AT + 0000];
 800A3994	jr     v0 
 800A3998	nop
 
-800A399C 0
+    case 0:
+    {
+        A0 = w[800e5638];
+        800A39A4	nop
+        800A39A8	beq    a0, zero, La3a5c [$800a3a5c]
+        800A39AC	nop
+        V0 = w[800e5648];
+        V0 = V0 << 02;
+        AT = 800c6638;
+        AT = AT + V0;
+        V1 = w[AT + 0000];
+        V0 = A0 + 0050;
+        [800e5638] = w(V0);
+        V1 = V1 >> 01;
+        V0 = V0 < V1;
+        800A39E4	bne    v0, zero, La3a08 [$800a3a08]
+        V0 = 0002;
+        V1 = w[800e5634];
+        800A39F4	nop
+        800A39F8	beq    v1, v0, La3a08 [$800a3a08]
+        V0 = 0001;
+        [800e55f4] = w(V0);
 
-    A0 = w[800e5638];
-    800A39A4	nop
-    800A39A8	beq    a0, zero, La3a5c [$800a3a5c]
-    800A39AC	nop
-    V0 = w[800e5648];
-    V0 = V0 << 02;
-    AT = 800c6638;
-    AT = AT + V0;
-    V1 = w[AT + 0000];
-    V0 = A0 + 0050;
-    [800e5638] = w(V0);
-    V1 = V1 >> 01;
-    V0 = V0 < V1;
-    800A39E4	bne    v0, zero, La3a08 [$800a3a08]
-    V0 = 0002;
-    V1 = w[800e5634];
-    800A39F4	nop
-    800A39F8	beq    v1, v0, La3a08 [$800a3a08]
-    V0 = 0001;
-    [800e55f4] = w(V0);
+        La3a08:	; 800A3A08
+        V0 = w[800e5648];
+        V1 = w[800e5638];
+        V0 = V0 << 02;
+        AT = 800c6638;
+        AT = AT + V0;
+        V0 = w[AT + 0000];
+        800A3A2C	nop
+        V1 = V1 < V0;
+        800A3A34	bne    v1, zero, La3a5c [$800a3a5c]
+        800A3A38	nop
+        800A3A3C	lui    v0, $800e
+        V0 = w[V0 + 563c];
+        800A3A44	lui    at, $800e
+        [AT + 5638] = w(0);
+        800A3A4C	bne    v0, zero, La3a70 [$800a3a70]
+        V0 = 0001;
+        800A3A54	lui    at, $800e
+        [AT + 566c] = w(V0);
 
-    La3a08:	; 800A3A08
-    V0 = w[800e5648];
-    V1 = w[800e5638];
-    V0 = V0 << 02;
-    AT = 800c6638;
-    AT = AT + V0;
-    V0 = w[AT + 0000];
-    800A3A2C	nop
-    V1 = V1 < V0;
-    800A3A34	bne    v1, zero, La3a5c [$800a3a5c]
-    800A3A38	nop
-    800A3A3C	lui    v0, $800e
-    V0 = w[V0 + 563c];
-    800A3A44	lui    at, $800e
-    [AT + 5638] = w(0);
-    800A3A4C	bne    v0, zero, La3a70 [$800a3a70]
-    V0 = 0001;
-    800A3A54	lui    at, $800e
-    [AT + 566c] = w(V0);
+        La3a5c:	; 800A3A5C
+        800A3A5C	lui    v0, $800e
+        V0 = w[V0 + 563c];
+        800A3A64	nop
+        800A3A68	beq    v0, zero, La3c64 [$800a3c64]
+        800A3A6C	nop
 
-    La3a5c:	; 800A3A5C
-    800A3A5C	lui    v0, $800e
-    V0 = w[V0 + 563c];
-    800A3A64	nop
-    800A3A68	beq    v0, zero, La3c64 [$800a3c64]
-    800A3A6C	nop
+        La3a70:	; 800A3A70
+        800A3A70	lui    v0, $800e
+        V0 = w[V0 + 5648];
+        800A3A78	lui    v1, $800e
+        V1 = w[V1 + 563c];
+        V0 = V0 << 02;
+        800A3A84	lui    at, $800c
+        AT = AT + 6628;
+        AT = AT + V0;
+        V0 = w[AT + 0000];
+        V1 = V1 + 0003;
+        [800e563c] = w(V1);
+        V1 = V1 < V0;
+        800A3AA4	bne    v1, zero, La3c64 [$800a3c64]
+        V0 = 0002;
+        V1 = w[800e5634];
+        [800e563c] = w(0);
+        800A3ABC	beq    v1, v0, La3acc [$800a3acc]
+        V0 = 0001;
+        [800e55f4] = w(V0);
 
-    La3a70:	; 800A3A70
-    800A3A70	lui    v0, $800e
-    V0 = w[V0 + 5648];
-    800A3A78	lui    v1, $800e
-    V1 = w[V1 + 563c];
-    V0 = V0 << 02;
-    800A3A84	lui    at, $800c
-    AT = AT + 6628;
-    AT = AT + V0;
-    V0 = w[AT + 0000];
-    V1 = V1 + 0003;
-    800A3A98	lui    at, $800e
-    [AT + 563c] = w(V1);
-    V1 = V1 < V0;
-    800A3AA4	bne    v1, zero, La3c64 [$800a3c64]
-    V0 = 0002;
-    V1 = w[800e5634];
-    800A3AB4	lui    at, $800e
-    [AT + 563c] = w(0);
-    800A3ABC	beq    v1, v0, La3acc [$800a3acc]
-    V0 = 0001;
-    800A3AC4	lui    at, $800e
-    [AT + 55f4] = w(V0);
-
-    La3acc:	; 800A3ACC
-    800A3ACC	lui    v0, $800e
-    V0 = w[V0 + 5638];
-    800A3AD4	nop
-    800A3AD8	bne    v0, zero, La3c64 [$800a3c64]
-    V0 = 0001;
-    [800e566c] = w(V0);
-    800A3B78	j      La3c64 [$800a3c64]
+        La3acc:	; 800A3ACC
+        V0 = w[800e5638];
+        800A3AD4	nop
+        800A3AD8	bne    v0, zero, La3c64 [$800a3c64]
+        V0 = 0001;
+        [800e566c] = w(V0);
+        800A3B78	j      La3c64 [$800a3c64]
+    }
+    break;
 
     case 2:
     {
@@ -2825,7 +2819,7 @@ V0 = w[AT + 0000];
 
             800A3B50	jal    funca12ac [$800a12ac]
 
-            800A3B58	jal    funca1370 [$800a1370]
+            wm_prepare_for_render();
 
             A0 = 10;
             A1 = 1;
@@ -2910,8 +2904,8 @@ V0 = 0002;
 800A3C98	beq    v1, v0, La3dec [$800a3dec]
 
 V0 = w[800c84e4];
-800A3CA8	lui    a0, $800c
-A0 = w[A0 + d13c];
+
+A0 = w[800bd13c];
 V1 = V0 << 03;
 V1 = V1 - V0;
 A0 = A0 << 08;
@@ -3768,23 +3762,21 @@ La4668:	; 800A4668
     [800e566c] = w(V0);
 
     La49a4:	; 800A49A4
-        funca1370(); // prepare render
+        wm_prepare_for_render();
 
         [800bd13c] = w(0);
 
-        800A49B4	jal    funcab4f4 [$800ab4f4]
+        wm_prepare_entities();
 
         A0 = SP + 10;
         wm_get_position_from_pc_entity();
 
-        V1 = w[SP + 0014];
-        V0 = w[80116508];
-        S0 = V1 - V0;
-        800A49D8	bgtz   s0, La49e4 [$800a49e4]
+        S0 = w[SP + 14] - w[80116508];
+        if( S0 <= 0)
+        {
+            S0 = w[80116508] - w[SP + 14];
+        }
 
-        S0 = V0 - V1;
-
-        La49e4:	; 800A49E4
         V0 = w[800e5618];
         if( V0 != S6 )
         {

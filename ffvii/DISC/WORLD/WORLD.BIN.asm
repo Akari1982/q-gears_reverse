@@ -24,13 +24,13 @@
 // funca12ac
 800A12AC-800A136C
 ////////////////////////////////
-// funca1370
+// wm_prepare_for_render
 800A1370-800A1418
 ////////////////////////////////
 // wm_render_all
 800A141C-800A16CC
 ////////////////////////////////
-// funca16d0
+// wm_set_shaking
 800A16D0-800A16DC
 ////////////////////////////////
 // funca16e0
@@ -611,7 +611,7 @@
 // funcab48c
 800AB48C-800AB4F0
 ////////////////////////////////
-// funcab4f4
+// wm_prepare_entities
 800AB4F4-800AB56C
 ////////////////////////////////
 // funcab570
@@ -702,13 +702,13 @@
 // wm_remove_mutex_priority
 800ADD4C-800ADE2C
 ////////////////////////////////
-// funcade30
+// wm_random_twiddle
 800ADE30-800ADEA4
 ////////////////////////////////
-// funcadea8
+// wm_random_init
 800ADEA8-800ADFBC
 ////////////////////////////////
-// funcadfc0
+// wm_random_get
 800ADFC0-800AE020
 ////////////////////////////////
 // wm_get_distance_between_points
