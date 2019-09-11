@@ -1131,119 +1131,96 @@ return w[800e5634];
 
 
 ////////////////////////////////
-// funca1df0
+// funca1df0()
 
 S2 = A0;
 
-800A1E04	jal    funca3304 [$800a3304]
+funca3304();
 
-A0 = SP + 0010;
-S0 = SP + 0038;
-A1 = S0;
-[SP + 0010] = h(V0);
-[SP + 0014] = h(0);
-[SP + 0012] = h(0);
+[SP + 10] = h(V0);
+[SP + 12] = h(0);
+[SP + 14] = h(0);
 
+A0 = SP + 10;
+A1 = SP + 38;
 system_gte_rotation_matrix_from_xyz();
 
-A0 = S0;
-S1 = SP + 0018;
-A1 = S1;
-[SP + 0020] = w(0);
-[SP + 001c] = w(0);
-[SP + 0018] = w(0);
+[SP + 18] = w(0);
+[SP + 1c] = w(0);
+[SP + 20] = w(0);
+
+A0 = SP + 38;
+A1 = SP + 18;
 system_gte_copy_matrix_translation_part();
 
-A0 = S0;
+A0 = SP + 38;
 system_gte_set_rotation_matrix();
 
-A0 = S0;
+A0 = SP + 38;
 system_gte_set_translation_vector();
 
-A0 = SP + 0010;
-A1 = SP + 0028;
-V0 = hu[800e5614];
-A2 = SP + 0078;
-[SP + 0012] = h(0);
-[SP + 0010] = h(0);
-[SP + 0014] = h(V0);
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(hu[800e5614]);
 
+A0 = SP + 10;
+A1 = SP + 28;
+A2 = SP + 78;
 system_gte_rotate_and_translate_vector();
 
+[SP + 78] = w((w[SP + 2c] * 10) - w[80116508]);
+
+[SP + 18] = w(0);
+[SP + 1c] = w(0);
+[SP + 20] = w(w[800e5614]);
+
 A0 = 800e56b8;
-V0 = w[SP + 002c];
-
-V1 = w[80116508];
-
-A2 = w[800e5614];
-A1 = S1;
-[SP + 0018] = w(0);
-[SP + 001c] = w(0);
-V0 = V0 << 04;
-V0 = V0 - V1;
-[SP + 0078] = w(V0);
-[SP + 0020] = w(A2);
-
+A1 = SP + 18;
 system_gte_copy_matrix_translation_part();
 
-V1 = w[SP + 0078];
-V0 = w[SP + 0030];
-V1 = V1 << 08;
-V0 = V0 << 04;
-800A1EC4	div    v1, v0
-800A1EEC	mflo   v1
-800A1EF0	nop
-800A1EF4	bgez   v1, La1f04 [$800a1f04]
-[SP + 0078] = w(V1);
-800A1EFC	j      La1f18 [$800a1f18]
-[SP + 0078] = w(0);
+[SP + 78] = w((w[SP + 78] * 100) / (w[SP + 30] * 10));
 
-La1f04:	; 800A1F04
-V0 = V1 < 0200;
-if( V0 == 0 )
+if( w[SP + 78] < 0 )
 {
-    [SP + 0078] = w(1ff);
+    [SP + 78] = w(0);
+}
+else if( w[SP + 78] >= 200 )
+{
+    [SP + 78] = w(1ff);
 }
 
-La1f18:	; 800A1F18
+V0 = w[SP + 78];
+[800e56d8] = h(hu[800be1e8 + V0 * 2] + 800);
+[SP + 10] = h(hu[800be1e8 + V0 * 2] + 800);
+[SP + 12] = h(S2);
+[SP + 14] = h(0);
 
-A0 = SP + 0010;
-V0 = w[SP + 0078];
-S1 = SP + 0038;
-V0 = V0 << 01;
-AT = 800be1e8;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-[SP + 0012] = h(S2);
-[SP + 0014] = h(0);
-V0 = V0 + 0800;
-[SP + 0010] = h(V0);
-[800e56d8] = h(V0);
-A1 = S1;
+A0 = SP + 10;
+A1 = SP + 38;
 system_gte_rotation_matrix_from_xyz();
 
-A0 = SP + 0010;
-S0 = SP + 0058;
-V0 = hu[800e5654];
-A1 = S0;
-[SP + 0012] = h(0);
-[SP + 0010] = h(0);
-[SP + 0014] = h(V0);
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(hu[800e5654]);
+
+A0 = SP + 10;
+A1 = SP + 58;
 system_gte_rotation_matrix_from_xyz();
 
-A0 = S0;
-A1 = S1;
+A0 = SP + 58;
+A1 = SP + 38;
 A2 = 800e5698;
 system_gte_matrixes_multiply_A0_A1_to_A2();
 ////////////////////////////////
+
 
 
 ////////////////////////////////
 // wm_set_translation_vector_in_screen_space()
 
 [SP + 30] = w(w[A0 + 0]);
-[SP + 34] = w(w[A0 + 4]);
 [SP + 32] = h(0 - hu[80116508]);
+[SP + 34] = w(w[A0 + 4]);
 
 A0 = 800e5698;
 system_gte_set_rotation_matrix();
@@ -1377,7 +1354,7 @@ model_id = V0;
 
 if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 {
-    800A2210	jal    funca82f0 [$800a82f0]
+    funca82f0();
 
     if( V0 != 0 )
     {
@@ -2251,244 +2228,143 @@ return w[800e5678];
 ////////////////////////////////
 // funca3304()
 
-V1 = w[800e5658];
+if( w[800e5658] != 0 )
+{
+    if( w[800e565c] == 0 )
+    {
+        if( w[800e5658] > 0 )
+        {
+            A0 = 3;
+            funca2088();
 
-800A3310	beq    v1, zero, La3504 [$800a3504]
+            wm_get_model_id_from_pc_entity();
 
-V0 = w[800e565c];
-800A3320	nop
-800A3324	bne    v0, zero, La3384 [$800a3384]
-800A3328	nop
-800A332C	blez   v1, La335c [$800a335c]
+            if( V0 == 3 )
+            {
+                [800e5640] = w(fa0);
+            }
+            else
+            {
+                [800e5640] = w(7d0);
+            }
+        }
 
-A0 = 3;
-funca2088();
+        [800c84d4] = w(w[800e5608]);
 
-wm_get_model_id_from_pc_entity();
+        if( w[800c84d4] >= 800 )
+        {
+            [800c84d4] = w(w[800c84d4] - 1000);
+        }
+    }
 
-V1 = 0003;
-800A3348	bne    v0, v1, La3354 [$800a3354]
-A0 = 07d0;
-A0 = 0fa0;
+    if( w[800e5660] < 80 )
+    {
+        [800e565c] = w(w[800e565c] + w[8011650c]);
+    }
+    else
+    {
+        [800e565c] = w(w[800e565c] - w[8011650c]);
+    }
 
-La3354:	; 800A3354
-[800e5640] = w(A0);
+    if( w[800e565c] != 0 )
+    {
+        [800e5660] = w(w[800e5660] + w[800e565c]);
 
-La335c:	; 800A335C
-800A335C	lui    v1, $800e
-V1 = w[V1 + 5608];
-800A3364	nop
-V0 = V1 < 0800;
-800A336C	lui    at, $800d
-[AT + 84d4] = w(V1);
-800A3374	bne    v0, zero, La3384 [$800a3384]
-800A3378	addiu  v0, v1, $f000 (=-$1000)
-800A337C	lui    at, $800d
-[AT + 84d4] = w(V0);
+        if( w[800e5660] < 0 )
+        {
+            [800e5660] = w(0);
+        }
+        else if( w[800e5660] >= 101 )
+        {
+            [800e5660] = w(100);
+        }
 
-La3384:	; 800A3384
-800A3384	lui    v0, $800e
-V0 = w[V0 + 5660];
-800A338C	nop
-V0 = V0 < 0080;
-800A3394	beq    v0, zero, La33b4 [$800a33b4]
-800A3398	nop
-800A339C	lui    v1, $800e
-V1 = w[V1 + 565c];
-800A33A4	lui    v0, $8011
-V0 = w[V0 + 650c];
-800A33AC	j      La33cc [$800a33cc]
-V1 = V1 + V0;
+        funca31f8();
 
-La33b4:	; 800A33B4
-800A33B4	lui    v1, $8011
-V1 = w[V1 + 650c];
-800A33BC	lui    v0, $800e
-V0 = w[V0 + 565c];
-800A33C4	nop
-V1 = V0 - V1;
-
-La33cc:	; 800A33CC
-800A33CC	lui    at, $800e
-[AT + 565c] = w(V1);
-800A33D4	beq    v1, zero, La34cc [$800a34cc]
-800A33D8	nop
-800A33DC	lui    v0, $800e
-V0 = w[V0 + 5660];
-800A33E4	nop
-V0 = V0 + V1;
-800A33EC	lui    at, $800e
-[AT + 5660] = w(V0);
-800A33F4	bgez   v0, La340c [$800a340c]
-V0 = V0 < 0101;
-800A33FC	lui    at, $800e
-[AT + 5660] = w(0);
-800A3404	j      La341c [$800a341c]
-800A3408	nop
-
-La340c:	; 800A340C
-800A340C	bne    v0, zero, La341c [$800a341c]
-V0 = 0100;
-800A3414	lui    at, $800e
-[AT + 5660] = w(V0);
-
-La341c:	; 800A341C
-funca31f8();
-
-800A3424	jal    wm_get_position_from_pc_entity [$800aa0e0]
-A0 = SP + 0010;
-
-A0 = SP + 20;
-wm_get_position2_from_pc_entity();
-
-800A3434	jal    wm_get_pc_entity_original_y [$800a9910]
-800A3438	nop
-800A343C	lui    v1, $800e
-V1 = w[V1 + 5658];
-800A3444	nop
-800A3448	blez   v1, La3460 [$800a3460]
-A0 = V0;
-800A3450	lui    v0, $800e
-V0 = w[V0 + 5640];
-800A3458	j      La3464 [$800a3464]
-800A345C	nop
-
-La3460:	; 800A3460
-V0 = w[SP + 0024];
-
-La3464:	; 800A3464
-800A3464	lui    v1, $800e
-V1 = w[V1 + 5660];
-V0 = V0 - A0;
-800A3470	mult   v0, v1
-800A3474	mflo   v0
-V0 = V0 >> 08;
-800A347C	jal    funcaa04c [$800aa04c]
-A0 = A0 + V0;
-800A3484	lui    v0, $800e
-V0 = w[V0 + 5650];
-800A348C	nop
-V0 = V0 < 0002;
-800A3494	beq    v0, zero, La3504 [$800a3504]
-800A3498	nop
-800A349C	lui    v1, $800e
-V1 = w[V1 + 5660];
-800A34A4	lui    v0, $800d
-V0 = w[V0 + 84d4];
-800A34AC	nop
-800A34B0	mult   v1, v0
-800A34B4	mflo   v0
-V0 = V0 >> 08;
-800A34BC	lui    at, $800e
-[AT + 5608] = w(V0);
-800A34C4	j      La3504 [$800a3504]
-800A34C8	nop
-
-La34cc:	; 800A34CC
-V0 = w[800e5658];
-800A34D4	nop
-800A34D8	bgez   v0, La34fc [$800a34fc]
+        A0 = SP + 10;
+        wm_get_position_from_pc_entity();
 
 
-A0 = w[800e5650];
-800A34E8	jal    funca2088 [$800a2088]
+        A0 = SP + 20;
+        wm_get_position2_from_pc_entity();
 
-A0 = 0;
-A1 = 2;
-funca2108();
+        wm_get_pc_entity_original_y();
+        A0 = V0;
 
+        if( w[800e5658] > 0 )
+        {
+            V0 = w[800e5640];
+        }
+        else
+        {
 
-La34fc:	; 800A34FC
-[800e5658] = w(0);
+            V0 = w[SP + 24];
+        }
 
-La3504:	; 800A3504
-V0 = w[800e5658];
+        A0 = A0 + (((V0 - A0) * w[800e5660]) / 100);
+        funcaa04c(); // set Y for PC entity
 
-800A3510	bgez   v0, La352c [$800a352c]
+        if( w[800e5650] < 2 )
+        {
+            [800e5608] = w((w[800e5660] * w[800c84d4]) / 100);
+        }
+    }
+    else
+    {
+        if( w[800e5658] < 0 )
+        {
+            A0 = w[800e5650];
+            funca2088();
 
-V0 = w[800e5650];
+            A0 = 0;
+            A1 = 2;
+            funca2108();
+        }
 
-800A3524	beq    v0, zero, La3534 [$800a3534]
-A1 = 0;
+        [800e5658] = w(0);
+    }
+}
 
-La352c:	; 800A352C
-A1 = w[800e5648];
+if( ( w[800e5658] >= 0 ) || ( w[800e5650] != 0 ) )
+{
+    A1 = w[800e5648];
+}
+else
+{
+    A1 = 0;
+}
 
-La3534:	; 800A3534
 A0 = w[800e563c];
+if( A0 == 0 )
+{
+    A0 = w[800c6628 + A1 * 4] + w[800e5664];
+}
 
-800A3540	bne    a0, zero, La3568 [$800a3568]
-V0 = A1 << 02;
-AT = 800c6628;
-AT = AT + V0;
-V1 = w[AT + 0000];
-V0 = w[800e5664];
-800A3560	nop
-A0 = V1 + V0;
+if( w[8011650c] == 1 )
+{
+    [800e5610] = w((w[800e5610] * 7 + A0) / 8);
+}
+else
+{
+    [800e5610] = w((w[800e5610] * 3 + A0) / 4);
+}
 
-La3568:	; 800A3568
-V1 = w[8011650c];
-V0 = 0001;
-800A3574	bne    v1, v0, La359c [$800a359c]
-
-V1 = w[800e5610];
-V0 = V1 << 03;
-V0 = V0 - V1;
-V0 = V0 + A0;
-800A3594	j      La35b8 [$800a35b8]
-V0 = V0 >> 03;
-
-La359c:	; 800A359C
-V1 = w[800e5610];
-800A35A4	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 + A0;
-V0 = V0 >> 02;
-
-La35b8:	; 800A35B8
 A0 = w[800e5638];
-[800e5610] = w(V0);
-800A35C8	bne    a0, zero, La35e0 [$800a35e0]
-V0 = A1 << 02;
-A0 = w[800c6638 + V0];
+if( A0 == 0 )
+{
+    A0 = w[800c6638 + A1 * 4];
+}
 
-La35e0:	; 800A35E0
-V1 = w[8011650c];
-V0 = 0001;
-800A35EC	bne    v1, v0, La3614 [$800a3614]
+if( w[8011650c] == 1 )
+{
+    [800e5614] = w((w[800e5614] * 7 + A0) / 8);
+}
+else
+{
+    [800e5614] = w((w[800e5614] * 3 + A0) / 4);
+}
 
-V1 = w[800e5614];
-800A35FC	nop
-V0 = V1 << 03;
-V0 = V0 - V1;
-V0 = V0 + A0;
-800A360C	j      La3630 [$800a3630]
-A2 = V0 >> 03;
-
-La3614:	; 800A3614
-V1 = w[800e5614];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 + A0;
-A2 = V0 >> 02;
-
-La3630:	; 800A3630
-V0 = w[80116508];
-A1 = w[800e5660];
-V0 = V0 >> 05;
-V0 = V0 + 06d6;
-800A3648	mult   v0, a1
-V1 = 0100;
-800A3650	mflo   v0
-A0 = w[800e5610];
-V1 = V1 - A1;
-800A3660	mult   v1, a0
-[800e5614] = w(A2);
-800A366C	mflo   v1
-V0 = V0 + V1;
-V0 = V0 << 08;
-V0 = V0 >> 10;
+return (((((w[80116508] / 20) + 6d6) * w[800e5660]) + ((100 - w[800e5660]) * w[800e5610])) << 8) >> 10;
 ////////////////////////////////
 
 
@@ -3463,56 +3339,37 @@ La447c:	; 800A447C
 ////////////////////////////////
 // funca44c4()
 
-V1 = w[800e5618];
-
-if( V1 == 0 )
+if( w[800e5618] == 0 )
 {
     [800e5608] = w(w[800e5608] + w[800e561c]);
 
     [800e5638] = w(0);
     [800e563c] = w(0);
 }
-else if( V1 == 1 )
+else if( w[800e5618] == 1 )
 {
-    V0 = w[800e5608];
-    V1 = w[800e561c];
-    A1 = w[800e5638];
-    A0 = w[800e5624];
-    V0 = V0 + V1;
-    A1 = A1 + A0;
-    [800e5608] = w(V0);
-    V0 = A1 < 3a99;
-    [800e5638] = w(A1);
-    800A4558	bne    v0, zero, La4568 [$800a4568]
-    V0 = A1 < 03e8;
-    800A4560	j      La4570 [$800a4570]
-    V0 = 3a98;
+    [800e5608] = w(w[800e5608] + w[800e561c]);
 
-    La4568:	; 800A4568
-    800A4568	beq    v0, zero, La4578 [$800a4578]
-    V0 = 03e8;
+    [800e5638] = w(w[800e5638] + w[800e5624]);
+    if( w[800e5638] >= 3a99 )
+    {
+        [800e5638] = w(3a98);
+    }
+    else if( w[800e5638] < 3e8 )
+    {
+        [800e5638] = w(3e8);
+    }
 
-    La4570:	; 800A4570
-    [800e5638] = w(V0);
-
-    La4578:	; 800A4578
-    V1 = w[800e5620];
-    V1 = w[800e563c] + V1;
-    V0 = V1 < 0781;
-    [800e563c] = w(V1);
-    800A459C	bne    v0, zero, La45ac [$800a45ac]
-    V0 = V1 < 0480;
-    800A45A4	j      La45b4 [$800a45b4]
-    V0 = 0780;
-
-    La45ac:	; 800A45AC
-    800A45AC	beq    v0, zero, La45bc [$800a45bc]
-    V0 = 0480;
-
-    La45b4:	; 800A45B4
-    [800e563c] = w(V0);
+    [800e563c] = w(w[800e563c] + w[800e5620]);
+    if( w[800e563c] >= 781 )
+    {
+        [800e563c] = w(780);
+    }
+    else if( w[800e563c] < 480 )
+    {
+        [800e563c] = w(480);
+    }
 }
-La45bc:	; 800A45BC
 ////////////////////////////////
 
 
@@ -3561,10 +3418,6 @@ return w[800e5674];
 S2 = A0; // 80071e28
 S4 = A1; // 800730cc
 S7 = A2; // 80095ddc
-
-S6 = 2;
-S5 = 3;
-S3 = 800e560c;
 
 [800e566c] = w(0);
 [800e567c] = w(A3);
@@ -3645,7 +3498,7 @@ La4668:	; 800A4668
     A2 = 0 < A2;
     funcb7228(); // we init models here
 
-    if( w[800e5634] == S6 )
+    if( w[800e5634] == 2 )
     {
         A0 = 2;
         funca2088();
@@ -3698,7 +3551,7 @@ La4668:	; 800A4668
 
     wm_get_model_id_from_pc_entity();
 
-    if( V0 == S5 )
+    if( V0 == 3 )
     {
         [800e5640] = w(fa0);
     }
@@ -3719,7 +3572,7 @@ La4668:	; 800A4668
     }
 
     V0 = w[800e5634];
-    if( V0 == S6 )
+    if( V0 == 2 )
     {
         A0 = 1;
         800A4920	jal    funca98a4 [$800a98a4]
@@ -3772,50 +3625,38 @@ La4668:	; 800A4668
         wm_get_position_from_pc_entity();
 
         S0 = w[SP + 14] - w[80116508];
-        if( S0 <= 0)
+        if( S0 <= 0 )
         {
             S0 = w[80116508] - w[SP + 14];
         }
 
-        V0 = w[800e5618];
-        if( V0 != S6 )
+        if( w[800e5618] != 2 )
         {
-            800A49F8	jal    funca9878 [$800a9878]
+            funca9878();
 
             if( ( V0 != 0 ) || ( S0 >= c9 ) )
             {
-                V0 = w[80116508];
-                A0 = w[SP + 14];
-                V1 = V0 << 03;
-                V1 = V1 - V0;
-                V1 = V1 + A0;
-                V0 = V1 >> 03;
+                [80116508] = w((w[80116508] * 7 + w[SP + 14]) / 8);
+            }
+            else if( S0 >= 33 )
+            {
+                if( w[80116508] >= w[SP + 14] )
+                {
+                    [80116508] = w(w[80116508] - 32);
+                else
+                {
+                    [80116508] = w(w[80116508] + 32);
+                }
             }
             else
             {
-                if( S0 >= 33 )
-                {
-                    V1 = w[80116508];
-                    if( V1 >= w[SP + 14] )
-                    {
-                        V0 = V1 - 32;
-                    else
-                    {
-                        V0 = V1 + 32;
-                    }
-                }
-                else
-                {
-                    V0 = w[SP + 14];
-                }
+                [80116508] = w(w[SP + 14]);
             }
-
-            [80116508] = w(V0);
         }
 
         wm_handle_buttons();
 
-        800A4A7C	jal    funca44c4 [$800a44c4]
+        funca44c4();
 
         A0 = SP + 10;
         wm_get_position_from_pc_entity();
@@ -3825,10 +3666,10 @@ La4668:	; 800A4668
 
         wm_script_run_all();
 
-        A0 = h[S3];
+        A0 = h[800e560c];
         funca1df0();
 
-        A0 = h[S3];
+        A0 = h[800e560c];
         A1 = 1;
         funca806c(); // load map blocks and calculate height
 
@@ -3847,7 +3688,7 @@ La4668:	; 800A4668
 
         V0 = w[800e5648];
 
-        800A4B00	bne    v0, s5, La4b1c [$800a4b1c]
+        800A4B00	bne    v0, 3, La4b1c [$800a4b1c]
 
         V0 = w[800e5658];
 
@@ -3856,7 +3697,7 @@ La4668:	; 800A4668
         La4b1c:	; 800A4B1C
         V0 = w[800e5634];
         800A4B24	nop
-        800A4B28	bne    v0, s6, La4bdc [$800a4bdc]
+        800A4B28	bne    v0, 2, La4bdc [$800a4bdc]
         800A4B2C	nop
         800A4B30	jal    funca82f0 [$800a82f0]
         800A4B34	nop
@@ -3897,7 +3738,7 @@ La4668:	; 800A4668
         wm_get_model_id_from_pc_entity();
 
         A0 = S0;
-        800A4BB0	beq    v0, s5, La4bc4 [$800a4bc4]
+        800A4BB0	beq    v0, 3, La4bc4 [$800a4bc4]
 
         V0 = S1 < 07d0;
 
@@ -3912,10 +3753,10 @@ La4668:	; 800A4668
         800A4BD4	jal    funcaa238 [$800aa238]
 
         La4bdc:	; 800A4BDC
-        A0 = h[S3 + 0];
+        A0 = h[800e560c];
         wm_update_skybox_overlay_vertexes();
 
-        A0 = h[S3 + 0];
+        A0 = h[800e560c];
         800A4BEC	jal    funcaea48 [$800aea48]
 
         800A4BF4	jal    funca4268 [$800a4268]
@@ -3924,9 +3765,9 @@ La4668:	; 800A4668
 
         if( w[800e566c] < 9 )
         {
-            if( w[800e5634] != S5 )
+            if( w[800e5634] != 3 )
             {
-                A0 = h[S3];
+                A0 = h[800e560c];
                 800A4C34	jal    funcbc420 [$800bc420]
             }
         }
@@ -6278,30 +6119,17 @@ La73ac:	; 800A73AC
 [SP + 0f60] = h(V0);
 
 La73b0:	; 800A73B0
-A0 = h[SP + 1006];
-V1 = h[SP + 1002];
-800A73B8	nop
-V0 = V1 < A0;
-800A73C0	beq    v0, zero, La73d4 [$800a73d4]
-800A73C4	nop
-V0 = hu[SP + 0f64];
-800A73CC	j      La73ec [$800a73ec]
-V0 = V0 + 2000;
+if( h[SP + 1002] < h[SP + 1006] )
+{
+    [SP + f64] = h(hu[SP + f64] + 2000);
+}
+else if( h[SP + 1006] < h[SP + 1002] )
+{
+    [SP + f64] = h(hu[SP + f64] - 2000);
+}
+[SP + f4a] = h(0);
 
-La73d4:	; 800A73D4
-V0 = A0 < V1;
-800A73D8	beq    v0, zero, La73f0 [$800a73f0]
-800A73DC	nop
-V0 = hu[SP + 0f64];
-800A73E4	nop
-800A73E8	addiu  v0, v0, $e000 (=-$2000)
-
-La73ec:	; 800A73EC
-[SP + 0f64] = h(V0);
-
-La73f0:	; 800A73F0
-[SP + 0f4a] = h(0);
-A0 = SP + 0f78;
+A0 = SP + f78;
 system_gte_set_translation_vector();
 
 S0 = 00c8;
@@ -6890,8 +6718,7 @@ La7bc0:	; 800A7BC0
 A0 = 0001;
 
 La7bc4:	; 800A7BC4
-800A7BC4	lui    at, $8011
-[AT + 9d58] = w(A0);
+[80109d58] = w(A0);
 800A7BCC	beq    s7, zero, La7bf8 [$800a7bf8]
 V0 = 0002;
 800A7BD4	lui    v0, $8011
@@ -7358,7 +7185,7 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funca82f0
+// funca82f0()
 
 return w[80109d58];
 ////////////////////////////////

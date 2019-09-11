@@ -80,6 +80,9 @@
 
 800c65ec [][][][] projection plane distance.
 
+800c6628 array of something for 800e563c.
+800c6638 array of something for 800e5638.
+
 800c6670 array of x size of wm block (0x4 items 0x1 size).
          09 09 03 02
 800c6674 array of z size of wm block (0x4 items 0x1 size).
@@ -191,9 +194,12 @@
 
 800e5604 [][][][] 
 800e5608 [][][][] maybe initial camera rotation.
-800e560c [][][][] 
+800e560c [][][][] some rotation value.
 
 800e5618 [][][][] init with 0.
+800e561c [][][][] addition to 800e5608.
+800e5620 [][][][] addition to 800e563c.
+800e5624 [][][][] addition to 800e5638.
 
 800e5630 [][][][] shake enabled
 800e5634 [][][][] map id to use.
@@ -202,8 +208,10 @@
                   2 - WM2.BOT underwater
                   3 - WM3.BOT snowfield
                   byte from savemap 8009c6e4 + fa2.
+800e5638 [][][][] ??? (3e8-3a98)
+800e563c [][][][] ??? (480-780)
 
-800e5648 [][][][]
+800e5648 [][][][] index into 800c6628 and 800c6638.
 800e564c [][][][]
 800e5650
 800e5654 [][][][] ???
@@ -259,6 +267,8 @@
 
 80109d38 pointer to 80109a38.
 80109d40 pointer to 80109a38.
+
+80109d58
 
 80109d64 [][][][] set to 2
 80109d68 [][][][] set to 
