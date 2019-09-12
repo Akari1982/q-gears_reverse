@@ -441,6 +441,8 @@
 
 8010b3b8 [][][][] pointer to active point structure.
 
+8010ca8c [][][][] ???
+
 8010cb18 [][][][] some x movement addition.
 8010cb1c [][][][] some z movement addition.
 
