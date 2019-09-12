@@ -353,8 +353,14 @@ S0 = A0;
 
 wm_get_model_id_from_pc_entity();
 
-V0 = V0 ^ 3;
-S2 = V0 < 1;
+if( V0 == 3 ) // highwind
+{
+    is_highwind = 1;
+}
+else
+{
+    is_highwind = 0;
+}
 
 if( w[801163d8] != 0 )
 {
@@ -391,7 +397,7 @@ if( V1 == 0 )
     }
 }
 
-800BBDCC	jal    funca21a4 [$800a21a4]
+wm_is_manual_control();
 
 800BBDD4	beq    v0, zero, Lbbe48 [$800bbe48]
 
@@ -461,7 +467,7 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
 {
     800BBED4	jal    funcb7c58 [$800b7c58]
 
-    if( S2 != 0 )
+    if( is_highwind != 0 )
     {
         A0 = 0;
         800BBEE4	jal    funca98a4 [$800a98a4]
@@ -540,9 +546,9 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
 
             wm_set_active_entity_as_pc_entity();
 
-            if( S2 != 0 )
+            if( is_highwind != 0 )
             {
-                800BC088	jal    funcbca48 [$800bca48]
+                funcbca48();
             }
         }
 
@@ -643,7 +649,7 @@ else
         wm_script_disable_for_pc_entity();
     }
 
-    if( S2 != 0 )
+    if( is_highwind != 0 )
     {
         A0 = 1;
         800BC14C	jal    funca368c [$800a368c]
@@ -824,12 +830,9 @@ V0 = S1 < 0002;
 800BC3CC	bne    v0, zero, Lbc218 [$800bc218]
 S2 = S2 + 0028;
 V0 = 0008;
-800BC3D8	lui    at, $8011
-[AT + 64fc] = w(0);
-800BC3E0	lui    at, $8011
-[AT + 64f8] = w(0);
-800BC3E8	lui    at, $8011
-[AT + 6500] = w(V0);
+[801164fc] = w(0);
+[801164f8] = w(0);
+[80116500] = w(V0);
 ////////////////////////////////
 
 
@@ -1151,7 +1154,7 @@ else
 
 
 ////////////////////////////////
-// funcbc9e8()
+// wm_set_camera_mode()
 
 [801164f8] = w((A0 << 10) >> 10);
 
@@ -1165,27 +1168,24 @@ if( V0 != 3 ) // not highwind
 
 
 ////////////////////////////////
-// funcbca38
-800BCA38	lui    v0, $8011
-V0 = h[V0 + 64f8];
-800BCA40	jr     ra 
-800BCA44	nop
-////////////////////////////////
-// funcbca48
-800BCA48	lui    v1, $8011
-V1 = w[V1 + 64f8];
-V0 = 0001;
-800BCA54	bne    v1, v0, Lbca70 [$800bca70]
-800BCA58	nop
-800BCA5C	lui    v0, $8011
-V0 = w[V0 + 64fc];
-800BCA64	nop
-800BCA68	lui    at, $8011
-[AT + 64f8] = w(V0);
+// wm_get_camera_mode()
 
-Lbca70:	; 800BCA70
-800BCA70	jr     ra 
-800BCA74	nop
+return h[801164f8];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbca48()
+
+if( w[801164f8] == 1 )
+{
+    [801164f8] = w(w[801164fc]);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbca78
 800BCA78	lui    t7, $1f80

@@ -333,7 +333,7 @@ if( w[800e5634] == 2 )
 }
 
 [8011650c] = w(2);
-[800e55fc] = w(1);
+[800e55fc] = w(1); // manual control
 [800e564c] = w(a0);
 [800e55f0] = w(a0);
 [800e5610] = w(5dc);
@@ -1277,7 +1277,7 @@ if( A0 < 2 )
     }
 }
 
-if( w[800e5648] == 0 )
+if( A0 == 0 )
 {
     [800e564c] = w(78);
 }
@@ -1286,7 +1286,7 @@ else
     [800e564c] = w(a0);
 }
 
-if( w[800e5648] == 3 )
+if( A0 == 3 )
 {
     [800e5604] = w(0);
 }
@@ -1310,7 +1310,7 @@ if( A0 != 0 )
         return;
     }
 
-    [800e55fc] = w(1);
+    [800e55fc] = w(1); // manual control
 
     A0 = SP + 10;
     wm_get_position_from_pc_entity();
@@ -1326,7 +1326,7 @@ if( A0 != 0 )
 }
 else
 {
-    [800e55fc] = w(0);
+    [800e55fc] = w(0); // input disabled
     [800e5600] = w(S0);
 }
 ////////////////////////////////
@@ -1334,7 +1334,7 @@ else
 
 
 ////////////////////////////////
-// funca21a4()
+// wm_is_manual_control()
 
 return w[800e55fc];
 ////////////////////////////////
@@ -1373,7 +1373,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             }
         }
 
-        if( model_id == 5 )
+        if( model_id == 5 ) // tiny bronco
         {
             if( buttons & 0040 ) // cross
             {
@@ -1388,11 +1388,12 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
         {
             if( w[800e5648] == 2 )
             {
-                if( w[800e5648] != w[800e5634] ) // world id
+                if(w[800e5634] != 2 ) // underwater
                 {
                     if( buttons & 0020 ) // circle
                     {
-                        buttons = buttons & bfff; // remove down button
+                        // remove down button because on planet submarine can't go down and up
+                        buttons = buttons & bfff;
                     }
                 }
             }
@@ -1417,14 +1418,14 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             S1 = w[8011650c] * 1e;
         }
 
-        if( ( ( buttons & 0001 ) && ( ( w[800c84c8] & 0001 ) == 0 ) ) || ( ( buttons & 0002 ) && ( ( w[800c84c8] & 0002 ) == 0 ) ) ) // L2 R2
+        if( ( ( buttons & 0001 ) && ( ( w[800c84c8] & 0001 ) == 0 ) ) || ( ( buttons & 0002 ) && ( ( w[800c84c8] & 0002 ) == 0 ) ) ) // L2 or R2 just pressed
         {
             A0 = w[800e5648];
             if( A0 != 3 )
             {
                 if( w[800e563c] == 0 )
                 {
-                    if( ( w[800e5634] - 2 ) >= 2 ) // underwater of snowfield
+                    if( ( w[800e5634] - 2 ) >= 2 ) // underwater or snowfield
                     {
                         A0 = A0 < 1;
                         A0 = A0 * 2;
@@ -1454,6 +1455,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 {
                     if( buttons & 0020 ) // circle
                     {
+                        // add up button because submarine goes forward when circle is pressed
                         buttons = buttons | 1000;
                     }
                 }
@@ -1542,9 +1544,9 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
                 [800e5608] = w(w[800e5608] + V0);
             }
-            else
+            else // planet or underwater
             {
-                if( S4 == 0 )
+                if( S4 == 0 ) // square not pressed
                 {
                     if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // not underwater and down
                     {
@@ -2011,56 +2013,43 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
         if( V0 != 0 )
         {
-            if( buttons & 0040 )
+            if( ( buttons & 0040 ) && ( ( w[800с84c8] & 0040 ) == 0 ) ) // cross just pressed
             {
-                if( ( w[800с84c8] & 0040 ) == 0 )
+                wm_get_pc_entity_terrain_id();
+                if( V0 == 3 ) // Sea Deep water, only gold chocobo and submarine can go here.
                 {
-                    wm_get_pc_entity_terrain_id();
-                    if( V0 == 3 ) // Sea Deep water, only gold chocobo and submarine can go here.
+                    if( w[800e5634] == 2 ) // underwater
                     {
-                        if( w[800e5634] == 2 ) // underwater
-                        {
-                            funca3dfc();
-                        }
-                        else
-                        {
-                            funca3e4c();
-                        }
+                        wm_submarine_float_to_planet();
+                    }
+                    else
+                    {
+                        wm_submarine_submerge_underwater();
                     }
                 }
             }
         }
 
-        if( ( ( buttons & 0800 ) && ( ( w[800c84c8] & 0800 ) == 0 ) ) || ( ( buttons & 0100 ) && ( ( w[800c84c8] & 0100 ) == 0 ) ) ) // L2 R2
+        if( ( ( buttons & 0800 ) && ( ( w[800c84c8] & 0800 ) == 0 ) ) || ( ( buttons & 0100 ) && ( ( w[800c84c8] & 0100 ) == 0 ) ) ) // L2 or R2 just pressed
         {
+            wm_get_camera_mode();
+
             if( w[800e5634] == 0 ) // planet
             {
-                800A2F00	jal    funcbca38 [$800bca38]
-
-                V1 = 55555556;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                V0 = V0 + 0001;
-                800A2F1C	mult   v0, v1
-                V1 = V0 >> 1f;
-                800A2F24	mfhi   a0
-                A0 = A0 - V1;
-                V1 = A0 << 01;
-                V1 = V1 + A0;
-                V0 = V0 - V1;
-                V0 = V0 << 10;
-                A0 = V0 >> 10;
+                A0 = (V0 + 1) % 3;
             }
             else
             {
-                800A2F44	jal    funcbca38 [$800bca38]
-
-                V0 = V0 << 10;
-                V0 = V0 < 1;
-                A0 = V0 << 1;
+                if( V0 == 0 )
+                {
+                    A0 = 2;
+                }
+                else
+                {
+                    A0 = 0;
+                }
             }
-
-            800A2F58	jal    funcbc9e8 [$800bc9e8]
+            wm_set_camera_mode();
         }
 
         if( buttons & 0010 ) // triangle pressed
@@ -2136,7 +2125,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
     }
 }
 
-if( w[800e55fc] == 0 )
+if( w[800e55fc] == 0 ) // input disabled
 {
     wm_get_pc_entity_terrain_id();
 
@@ -2871,7 +2860,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// funca3dfc
+// wm_submarine_float_to_planet()
 
 [800e566c] = w(5);
 [800e5644] = w(14);
@@ -2891,7 +2880,7 @@ A1 = 1;
 
 
 ////////////////////////////////
-// funca3e4c()
+// wm_submarine_submerge_underwater()
 
 [800e566c] = w(4);
 [800e5644] = w(-14);
@@ -3031,13 +3020,9 @@ if( w[800e566c] == 1 )
 ////////////////////////////////
 // funca4080()
 
-800A4088	jal    funcbca38 [$800bca38]
+wm_get_camera_mode();
 
-V0 = V0 << 02;
-V1 = w[800e5648];
-V0 = V0 & 000c;
-V1 = V1 & 0003;
-V0 = V1 | V0;
+return ((V0 << 2) & c) | (w[800e5648] & 3);
 ////////////////////////////////
 
 
@@ -3046,12 +3031,12 @@ V0 = V1 | V0;
 // funca40b8()
 
 S0 = A0;
-A0 = S0 & 0003;
+
+A0 = S0 & 3;
 funca2088();
 
-S0 = S0 >> 02;
-A0 = S0 & 0003;
-800A40D4	jal    funcbc9e8 [$800bc9e8]
+A0 = (S0 >> 2) & 3;
+wm_set_camera_mode();
 ////////////////////////////////
 
 
@@ -3730,7 +3715,7 @@ La4668:	; 800A4668
         {
             if( A0 >= f449 )
             {
-                800A4BA4	addiu  a0, zero, $f448 (=-$bb8)
+                A0 = -bb8;
             }
             800A4BA0	j      La4bc4 [$800a4bc4]
         }
@@ -5649,7 +5634,7 @@ S4 = 0;
 
 800A6CA4	bne    v0, 2, La6e34 [$800a6e34]
 
-800A6CAC	jal    funca9240 [$800a9240]
+funca9240();
 
 800A6CB4	beq    v0, zero, La6e34 [$800a6e34]
 V0 = S2 << 10;
@@ -5991,7 +5976,7 @@ A0 = w[A2 + 0000];
 V1 = w[T0 + 0000];
 V0 = V0 | c000;
 
-[80109d58] = w(0);
+[80109d58] = w(0); // input disabled
 S0 = A0 - V1;
 V0 = S0 < V0;
 800A724C	beq    v0, zero, La725c [$800a725c]
@@ -6584,7 +6569,6 @@ A1 = w[S1 + 1c];
 800A79F0	jal    funca96d0 [$800a96d0]
 
 800A79F8	j      La7bc4 [$800a7bc4]
-A0 = 0001;
 
 La7a00:	; 800A7A00
 800A7A00	lui    v0, $800e
@@ -6592,7 +6576,7 @@ V0 = w[V0 + 5710];
 800A7A08	nop
 V0 = V0 < 0008;
 800A7A10	bne    v0, zero, La7bc4 [$800a7bc4]
-A0 = 0001;
+
 S1 = SP + 0018;
 800A7A1C	lui    a0, $800e
 A0 = w[A0 + 570c];
@@ -6658,7 +6642,6 @@ V0 = S1 < V0;
 800A7AE0	bne    v0, zero, La7afc [$800a7afc]
 800A7AE4	nop
 800A7AE8	j      La7bc4 [$800a7bc4]
-A0 = 0001;
 
 La7af0:	; 800A7AF0
 V0 = S1 < V0;
@@ -6666,8 +6649,7 @@ V0 = S1 < V0;
 800A7AF8	nop
 
 La7afc:	; 800A7AFC
-800A7AFC	lui    s0, $800e
-S0 = S0 + 56fc;
+S0 = 800e56fc;
 V0 = w[S1 + 0000];
 V1 = w[S1 + 0004];
 A0 = w[S1 + 0008];
@@ -6677,9 +6659,7 @@ A1 = w[S1 + 000c];
 [S0 + 0008] = w(A0);
 [S0 + 000c] = w(A1);
 V0 = h[S1 + 0028];
-800A7B28	nop
-800A7B2C	lui    at, $800e
-[AT + 5700] = w(V0);
+[800e5700] = w(V0);
 A0 = h[S1 + 002a];
 S7 = S0;
 wm_set_pc_entity_terrain_data();
@@ -6705,20 +6685,14 @@ A1 = w[S1 + 001c];
 [80109d60] = w(V1);
 [800bd140] = w(A1);
 800A7B9C	jal    funca96d0 [$800a96d0]
-800A7BA0	nop
-800A7BA4	lui    v0, $800e
-V0 = w[V0 + 570c];
-800A7BAC	lui    at, $800e
-[AT + 5710] = w(0);
-V0 = V0 < 0001;
-800A7BB8	lui    at, $800e
-[AT + 570c] = w(V0);
+
+[800e5710] = w(0);
+[800e570c] = w(w[800e570c] < 1);
 
 La7bc0:	; 800A7BC0
-A0 = 0001;
-
 La7bc4:	; 800A7BC4
-[80109d58] = w(A0);
+[80109d58] = w(1); // input enabled
+
 800A7BCC	beq    s7, zero, La7bf8 [$800a7bf8]
 V0 = 0002;
 800A7BD4	lui    v0, $8011
@@ -6944,7 +6918,7 @@ funca59a0();
 funca60d8();
 
 [80109d54] = w(0);
-[80109d58] = w(0);
+[80109d58] = w(0); // input disabled
 [80109d5c] = w(0);
 [80109d60] = w(0);
 [800e5828] = w(1);

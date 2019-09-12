@@ -192,7 +192,9 @@
 
 800e55f0 [][][][] base screen offset Y.
 
-800e5604 [][][][] 
+800e55fc [][][][] manual control of PC entity. If set then we handle buttons.
+
+800e5604 [][][][] camera related.
 800e5608 [][][][] maybe initial camera rotation.
 800e560c [][][][] some rotation value.
 
@@ -200,6 +202,7 @@
 800e561c [][][][] addition to 800e5608.
 800e5620 [][][][] addition to 800e563c.
 800e5624 [][][][] addition to 800e5638.
+800e5628 [][][][] this needs to be 0 or less for input handling. Always 0.
 
 800e5630 [][][][] shake enabled
 800e5634 [][][][] map id to use.
@@ -211,9 +214,9 @@
 800e5638 [][][][] ??? (3e8-3a98)
 800e563c [][][][] ??? (480-780)
 
-800e5648 [][][][] index into 800c6628 and 800c6638.
-800e564c [][][][]
-800e5650
+800e5648 [][][][] camera mode.  Top-down view or Dynamic.
+800e564c [][][][] camera related.
+800e5650 [][][][] same as 800e5648.
 800e5654 [][][][] ???
 800e5660
 
@@ -268,7 +271,7 @@
 80109d38 pointer to 80109a38.
 80109d40 pointer to 80109a38.
 
-80109d58
+80109d58 [][][][] in not 0 then input enabled.
 
 80109d64 [][][][] set to 2
 80109d68 [][][][] set to 
@@ -527,8 +530,8 @@
 801163e0 stack of script 1 byte values.
 801163e8 [][][][] pointer to current 801163e0 stack position.
 
-801164f8 [][][][] cam rotation.
-801164fc [][][][] copy 801164f8 here if pc model if != 3 (highwind)
+801164f8 [][][][] desired? camera mode. Top-down view or Dynamic.
+801164fc [][][][] copy of camera mode for not highwind.
 
 80116508 [][]     some length. Used to render skybox?
 

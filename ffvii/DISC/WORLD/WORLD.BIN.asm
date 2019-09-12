@@ -129,10 +129,10 @@
 // funca3c74
 800A3C74-800A3DF8
 ////////////////////////////////
-// funca3dfc
+// wm_submarine_float_to_planet
 800A3DFC-800A3E48
 ////////////////////////////////
-// funca3e4c
+// wm_submarine_submerge_underwater
 800A3E4C-800A3E98
 ////////////////////////////////
 // funca3e9c
@@ -1321,10 +1321,10 @@
 // funcbc420
 800BC420-800BC9E4
 ////////////////////////////////
-// funcbc9e8
+// wm_set_camera_mode
 800BC9E8-800BCA34
 ////////////////////////////////
-// funcbca38
+// wm_get_camera_mode
 800BCA38-800BCA44
 ////////////////////////////////
 // funcbca48

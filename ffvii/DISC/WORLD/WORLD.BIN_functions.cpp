@@ -9552,8 +9552,8 @@ else if( ( w[80116270] == 0 ) || ( w[8011626c] - 1 < 2 ) )
     [800e560c] = w(hu[8009c6e4 + f9c] & fff);
 }
 
-A0 = hu[8009c6e4 + f9c] >> e; // cam rotation
-funcbc9e8();
+A0 = hu[8009c6e4 + f9c] >> e; // cam angle 0xc000
+wm_set_camera_mode();
 
 A0 = 8009c6e4 + cad; // party member in slot 1-3
 A1 = 8009c6e4 + 4f8; // party member in slot 1-4
@@ -9663,7 +9663,7 @@ S0 = V0;
 
 S1 = V0;
 
-800B74C8	jal    funcbca38 [$800bca38]
+wm_get_camera_mode();
 
 S0 = S0 & 0fff;
 S1 = S1 << 0c;
@@ -10725,13 +10725,11 @@ SP = SP + 0030;
 
 
 ////////////////////////////////
-// funcb832c
-800B832C	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0034] = w(RA);
-800B8334	jal    wm_get_wm_id [$800a1de0]
-[SP + 0030] = w(S0);
-800B833C	lui    v1, $800a
-V1 = bu[V1 + ac2f];
+// funcb832c()
+
+wm_get_wm_id();
+
+V1 = bu[8009ac2f];
 800B8344	nop
 800B8348	bne    v1, zero, Lb8474 [$800b8474]
 A0 = V0;
@@ -10741,9 +10739,9 @@ V0 = 0002;
 800B835C	jal    funcb2fd0 [$800b2fd0]
 800B8360	nop
 800B8364	bne    v0, zero, Lb8474 [$800b8474]
-800B8368	nop
-800B836C	jal    funca21a4 [$800a21a4]
-800B8370	nop
+
+wm_is_manual_control();
+
 800B8374	beq    v0, zero, Lb8474 [$800b8474]
 800B8378	nop
 800B837C	jal    funca9ad0 [$800a9ad0]

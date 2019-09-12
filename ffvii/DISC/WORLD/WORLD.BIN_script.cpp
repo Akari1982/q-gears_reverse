@@ -344,7 +344,7 @@ else
 
         case 7:
         {
-            800ABD48	jal    funca4080 [$800a4080]
+            funca4080();
 
             return V0;
         }
@@ -1702,12 +1702,12 @@ switch( opcode )
 
     case 319:
     {
-        800AD038	jal    wm_script_pop_stack [$800abb24]
-        800AD03C	nop
-        800AD040	jal    funca40b8 [$800a40b8]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800AD048	j      Lad620 [$800ad620]
-        V0 = 0;
+        funca40b8();
+
+        return 0;
     }
     break;
 
@@ -1735,10 +1735,9 @@ switch( opcode )
 
     case 33c: // set field entry point?
     {
-        800AD078	jal    funca3dfc [$800a3dfc]
-        800AD07C	nop
-        800AD080	j      Lad620 [$800ad620]
-        V0 = 0;
+        wm_submarine_float_to_planet();
+
+        return 0;
     }
     break;
 
@@ -2246,7 +2245,7 @@ if( w[entity + 4] != 0 )
     V0 = w[8010adec];
     if( V0 == 0 )
     {
-        800AD734	jal    funca21a4 [$800a21a4]
+        wm_is_manual_control();
 
         if( V0 != 0 )
         {
