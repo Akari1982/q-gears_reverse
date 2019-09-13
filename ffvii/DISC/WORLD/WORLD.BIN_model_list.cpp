@@ -957,8 +957,7 @@ V0 = w[V0 + ad3c];
 800A96D8	nop
 800A96DC	beq    v0, zero, La97a0 [$800a97a0]
 A1 = V0;
-800A96E4	lui    v1, $8011
-V1 = w[V1 + 650c];
+V1 = w[8011650c];
 V0 = 0001;
 800A96F0	bne    v1, v0, La9754 [$800a9754]
 800A96F4	nop

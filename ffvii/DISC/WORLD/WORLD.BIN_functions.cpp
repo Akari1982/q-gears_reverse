@@ -5313,16 +5313,12 @@ Lb303c:	; 800B303C
 
 
 ////////////////////////////////
-// funcb307c
-800B307C	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 002c] = w(S1);
+// funcb307c()
+
 S1 = A0;
-[SP + 0030] = w(S2);
 S2 = A1;
-[SP + 0038] = w(RA);
-[SP + 0034] = w(S3);
 800B3098	jal    funca1d14 [$800a1d14]
-[SP + 0028] = w(S0);
+
 S0 = V0;
 800B30A4	lui    v0, $8011
 V0 = h[V0 + cb04];
@@ -5481,14 +5477,6 @@ Lb32c8:	; 800B32C8
 V0 = h[V0 + cb00];
 
 Lb32d0:	; 800B32D0
-RA = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0040;
-800B32E8	jr     ra 
-800B32EC	nop
 ////////////////////////////////
 
 
@@ -9521,25 +9509,25 @@ else
     [80116270] = w(0);
 }
 
-A0 = (hu[8009c6e4 + f9c] >> c) & 3; // Angle of the world. The viewing direction of the camera onto the world map. For top-view (ca. 45°) this value should be 0.
+A0 = (hu[8009c6e4 + f9c] >> c) & 3; // camera view.
 if( A0 == 3 )
 {
     A0 = 0;
 }
-funca2088();
+wm_set_camera_view();
 
 if( w[8011626c] != 0 )
 {
     if( w[8011626c] - 1 < 2 )
     {
-        [800e5608] = w(hu[8009c6e4 + f9c] & fff);
-        [800e560c] = w(hu[8009c6e4 + f9c] & fff);
+        [800e5608] = w(hu[8009c6e4 + f9c] & fff); // desired camera rotation
+        [800e560c] = w(hu[8009c6e4 + f9c] & fff); // real camera rotation
     }
 }
 else if( ( w[80116270] == 0 ) || ( w[8011626c] - 1 < 2 ) )
 {
-    [800e5608] = w(hu[8009c6e4 + f9c] & fff);
-    [800e560c] = w(hu[8009c6e4 + f9c] & fff);
+    [800e5608] = w(hu[8009c6e4 + f9c] & fff); // desired camera rotation
+    [800e560c] = w(hu[8009c6e4 + f9c] & fff); // real camera rotation
 }
 
 A0 = hu[8009c6e4 + f9c] >> e; // cam angle 0xc000
@@ -9637,11 +9625,10 @@ else
 if( V0 == 0 )
 {
     wm_get_wm_id();
-
-    if( V0 != 3 )
+    if( V0 != 3 ) // not snowfield
     {
         A0 = 0;
-        800B74B0	jal    funca1d38 [$800a1d38]
+        wm_set_camera_rotation();
     }
 }
 
@@ -9669,7 +9656,7 @@ S0 = S0 | V0;
 wm_get_model_id_from_pc_entity();
 [8009c6e4 + fa1] = b(V0); // model id for pc
 
-if( bu[8009c6e4 + fa1] == 3 ) // on Highwind
+if( bu[8009c6e4 + fa1] == 3 ) // on highwind
 {
     wm_script_get_top_from_store_stack(); // get some model id
 
@@ -9683,8 +9670,7 @@ if( bu[8009c6e4 + fa1] == 3 ) // on Highwind
 
 800B7534	jal    funcada08 [$800ada08]
 
-800B753C	jal    wm_get_wm_id [$800a1de0]
-
+wm_get_wm_id();
 [8009c6e4 + fa2] = b(V0);
 
 funcb3350();

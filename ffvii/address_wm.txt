@@ -190,14 +190,15 @@
 800d05e4 [][][][] pointer to 800c84f4 buffer.
 800d05ec script data from .TXZ file (.EV file data).
 
-800e55f0 [][][][] base screen offset Y.
+800e55f0 [][][][] screen offset Y.
 
 800e55fc [][][][] manual control of PC entity. If set then we handle buttons.
 
-800e5604 [][][][] camera related.
-800e5608 [][][][] maybe initial camera rotation.
-800e560c [][][][] some rotation value.
+800e5604 [][][][] not used.
+800e5608 [][][][] desired camera rotation. Set to 0 when switching to top down view.
+800e560c [][][][] real camera rotation.
 
+800e5614 [][][][]
 800e5618 [][][][] init with 0.
 800e561c [][][][] addition to 800e5608.
 800e5620 [][][][] addition to 800e563c.
@@ -212,15 +213,18 @@
                   3 - WM3.BOT snowfield
                   byte from savemap 8009c6e4 + fa2.
 800e5638 [][][][] ??? (3e8-3a98)
-800e563c [][][][] ??? (480-780)
+800e563c [][][][] maybe camera view switching progress (480-780)
 
-800e5648 [][][][] camera mode.  Top-down view or Dynamic.
-800e564c [][][][] camera related.
+800e5648 [][][][] camera view (top-down or front view).
+800e564c [][][][] desired screen offset Y.
 800e5650 [][][][] same as 800e5648.
 800e5654 [][][][] ???
 800e5660
 
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
+800e566c [][][][] id of automation sequence:
+                    4 - submerge underwater
+                    5 - float to planet
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
 800e5680 buffer for skybox texture settings (0x2 items 0xc size).
@@ -536,6 +540,7 @@
 801164fc [][][][] copy of camera mode for not highwind.
 
 80116508 [][]     some length. Used to render skybox?
+8011650c [][][][] world speed (related with movement, camera rotation, loading and a lot of other things).
 
 8013a7cc load textures WM0.TXZ here.
 

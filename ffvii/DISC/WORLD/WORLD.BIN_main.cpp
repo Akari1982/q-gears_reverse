@@ -334,7 +334,7 @@ if( w[800e5634] == 2 )
 
 [8011650c] = w(2);
 [800e55fc] = w(1); // manual control
-[800e564c] = w(a0);
+[800e564c] = w(a0); // desired screen offset Y
 [800e55f0] = w(a0);
 [800e5610] = w(5dc);
 [800e5614] = w(2710);
@@ -347,7 +347,7 @@ if( w[800e5634] == 2 )
 [800e565c] = w(0);
 [800e5660] = w(0);
 [800e5654] = w(0);
-[800e5604] = w(0);
+[800e5604] = w(0); // not used
 [800e560c] = w(0);
 [800e5608] = w(0);
 [80116508] = w(0);
@@ -1066,7 +1066,7 @@ return w[800e560c] & fff;
 
 
 ////////////////////////////////
-// funca1d24()
+// wm_set_desired_camera_rotation()
 
 [800e5608] = w(A0 & fff);
 ////////////////////////////////
@@ -1074,7 +1074,7 @@ return w[800e560c] & fff;
 
 
 ////////////////////////////////
-// funca1d38()
+// wm_set_camera_rotation()
 
 A0 = A0 & fff;
 [800e5608] = w(A0);
@@ -1264,35 +1264,38 @@ return h[800e56d8];
 
 
 ////////////////////////////////
-// funca2088()
+// wm_set_camera_view()
+// 0 1 top-down view
+// 2 - front view
 
 [800e5648] = w(A0);
 [800e5650] = w(A0);
 
+// if we set top-down view not on snowfield
 if( A0 < 2 )
 {
     if( w[800e5634] != 3 ) // snowfield
     {
-        [800e5608] = w(0);
+        [800e5608] = w(0); // desired camera rotation
     }
 }
 
-if( A0 == 0 )
+if( A0 == 0 ) // top down
 {
-    [800e564c] = w(78);
+    [800e564c] = w(78); // desired screen offset Y
 }
 else
 {
-    [800e564c] = w(a0);
+    [800e564c] = w(a0); // desired screen offset Y
 }
 
 if( A0 == 3 )
 {
-    [800e5604] = w(0);
+    [800e5604] = w(0); // not used
 }
 else
 {
-    [800e5604] = w(78);
+    [800e5604] = w(78); // not used
 }
 ////////////////////////////////
 
@@ -1361,18 +1364,21 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
         system_get_buttons_with_config_remap();
         buttons = V0;
 
-        if( ( w[800e5648] - 2 ) >= 2 )
+        // if this is top-down view on planet then when rotation
+        // buttons pressed we switch to front view
+        if( ( w[800e5648] == 0 ) || ( w[800e5648] == 1 ) )
         {
             if( w[800e5634] != 3 ) // snowfield
             {
                 if( buttons & 000c ) // L1 R1 (rotate world map?)
                 {
-                    A0 = 2;
-                    funca2088();
+                    A0 = 2; // front view
+                    wm_set_camera_view();
                 }
             }
         }
 
+        // ????????????????????
         if( model_id == 5 ) // tiny bronco
         {
             if( buttons & 0040 ) // cross
@@ -1381,18 +1387,18 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             }
         }
 
+        // in submarine if this is front view and we are on planet
+        // then remove down button we can't go above
         A0 = 2000; // submarine
         wm_is_pc_entity_model_in_mask();
-
         if( V0 != 0 )
         {
-            if( w[800e5648] == 2 )
+            if( w[800e5648] == 2 ) // front view
             {
-                if(w[800e5634] != 2 ) // underwater
+                if( w[800e5634] != 2 ) // underwater
                 {
                     if( buttons & 0020 ) // circle
                     {
-                        // remove down button because on planet submarine can't go down and up
                         buttons = buttons & bfff;
                     }
                 }
@@ -1418,44 +1424,49 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             S1 = w[8011650c] * 1e;
         }
 
+        // switch view for planet map
         if( ( ( buttons & 0001 ) && ( ( w[800c84c8] & 0001 ) == 0 ) ) || ( ( buttons & 0002 ) && ( ( w[800c84c8] & 0002 ) == 0 ) ) ) // L2 or R2 just pressed
         {
-            A0 = w[800e5648];
-            if( A0 != 3 )
+            if( w[800e5648] != 3 )
             {
-                if( w[800e563c] == 0 )
+                if( w[800e563c] == 0 ) // looks like switching progress
                 {
-                    if( ( w[800e5634] - 2 ) >= 2 ) // underwater or snowfield
+                    if( ( w[800e5634] == 0 ) || ( w[800e5634] == 1 ) ) // planet
                     {
-                        A0 = A0 < 1;
-                        A0 = A0 * 2;
-                        funca2088();
-
-                        if( w[800e5648] == 0 )
+                        if( w[800e5648] == 0 ) // top-down
                         {
-                            [800e564c] = w(78);
+                            A0 = 2; // front
                         }
-                        else
+                        else // front
                         {
-                            [800e564c] = w(a0);
+                            A0 = 0; // top-down
+                        }
+                        wm_set_camera_view();
+
+                        if( w[800e5648] == 0 ) // top-down
+                        {
+                            [800e564c] = w(78); // desired screen offset Y
+                        }
+                        else // front
+                        {
+                            [800e564c] = w(a0); // desired screen offset Y
                         }
                     }
                 }
             }
         }
 
+        // in front view if we press circle - we go forward
         A0 = 2000; // submarine
         wm_is_pc_entity_model_in_mask();
-
         if( V0 != 0 )
         {
-            if( w[800e5648] == 2 )
+            if( w[800e5648] == 2 ) // front view
             {
                 if( w[800e5634] != 2 ) // underwater
                 {
                     if( buttons & 0020 ) // circle
                     {
-                        // add up button because submarine goes forward when circle is pressed
                         buttons = buttons | 1000;
                     }
                 }
@@ -1494,8 +1505,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
         if( buttons & 4000 ) // down
         {
-            A1 = h[800c84cc];
-            if( A1 == -1 )
+            if( h[800c84cc] == -1 )
             {
                 [SP + 68] = w(S1);
                 [800c84cc] = h(0);
@@ -1504,25 +1514,25 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             {
                 [SP + 64] = w((w[SP + 64] * 3) / 4);
                 [SP + 68] = w((S1 * 3) / 4);
-                [800c84cc] = h(A1 - A1 / 2);
+                [800c84cc] = h(h[800c84cc] - h[800c84cc] / 2);
             }
         }
 
         S4 = 0;
-        A1 = w[800e5648];
 
-        if( ( ( A1 - 2 ) >= 2 ) && ( w[800e5634] != 3 ) ) // 3 - snowfield
+        if( ( ( w[800e5648] == 0 ) || ( w[800e5648] == 1 ) ) && ( w[800e5634] != 3 ) ) // top-down view not on snowfield
         {
             [800e5654] = w(w[800e5654] >> 1);
 
             A0 = h[800c84cc];
             if( A0 != -1 )
             {
-                800A2DC4	jal    funca94d0 [$800a94d0]
+                funca94d0(); // set active entity direction and rotation
             }
         }
         else
         {
+            A1 = w[800e5648];
             if( A1 == 3 )
             {
                 S4 = 0 < (buttons & 0080); // square
@@ -1540,7 +1550,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 }
 
                 A0 = buttons & f000;
-                800A2608	jal    funcb307c [$800b307c]
+                funcb307c();
 
                 [800e5608] = w(w[800e5608] + V0);
             }
@@ -1548,7 +1558,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             {
                 if( S4 == 0 ) // square not pressed
                 {
-                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // not underwater and down
+                    if( ( w[800e5648] == 2 ) && ( w[800e5634] != 2 ) && ( buttons & 4000 ) ) // front view not underwater and down
                     {
                         V1 = (buttons >> d) & 1; // right
                     }
@@ -1581,7 +1591,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
                         if( buttons & 5000 ) // up down
                         {
-                            [800e5608] = w(w[800e5608] - (A1 >> A0)); // camera rotation
+                            [800e5608] = w(w[800e5608] - (A1 >> A0)); // desired camera rotation
                         }
                         else
                         {
@@ -1625,14 +1635,13 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 }
             }
 
-            V1 = w[800e5608];
-            if( V1 < 0 )
+            if( w[800e5608] < 0 )
             {
-                [800e5608] = w(V1 + 1000);
+                [800e5608] = w(w[800e5608] + 1000);
             }
-            else if( V1 >= 1000 )
+            else if( w[800e5608] >= 1000 )
             {
-                [800e5608] = w(V1 - 1000);
+                [800e5608] = w(w[800e5608] - 1000);
             }
 
             if( buttons & 8000 ) // left
@@ -1765,69 +1774,48 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
             S2 = 0;
 
-            V1 = w[800e5648];
-            if( V1 == 3 )
+            if( w[800e5648] == 3 )
             {
                 if( S4 == 0 )
                 {
                     A0 = SP + 50;
                     wm_get_position_from_pc_entity();
 
-                    V0 = buttons & 1000;
-                    800A29E4	beq    v0, zero, La2a28 [$800a2a28]
-
-                    V0 = w[SP + 54] < 1f5;
-                    800A29F8	bne    v0, zero, La2a28 [$800a2a28]
-
-                    V0 = w[800e55f8];
-
-                    800A2A0C	beq    v0, zero, La2a28 [$800a2a28]
-
                     wm_get_pc_entity_terrain_id();
 
-                    V1 = 1b;
-                    800A2A20	bne    v0, v1, La2a44 [$800a2a44]
-
-                    La2a28:	; 800A2A28
-                    A2 = w[SP + 54];
-                    A1 = w[800e5640];
-                    V0 = A1 < A2;
-                    800A2A3C	beq    v0, zero, La2a74 [$800a2a74]
-
-                    La2a44:	; 800A2A44
-                    S2 = a;
-                    V0 = w[8011650c];
-                    A0 = V0 << 01;
-                    A0 = A0 + V0;
-                    A0 = A0 << 03;
-                    A0 = A0 + V0;
-                    A0 = A0 << 01;
-                    A0 = 0 - A0;
-                    800A2A64	jal    funca9820 [$800a9820]
-
-                    800A2A6C	j      La2ab4 [$800a2ab4]
-
-                    La2a74:	; 800A2A74
-                    if( buttons & 4000 )
+                    if( ( ( buttons & 1000 ) == 0 ) || ( w[SP + 54] < 1f5 ) || ( w[800e55f8] = 0 ) || ( V0 == 1b ) )
                     {
-                        V0 = w[8011650c];
-                        V1 = V0 << 01;
-                        V1 = V1 + V0;
-                        V1 = V1 << 03;
-                        V1 = V1 + V0;
-                        A0 = V1 << 01;
-                        V0 = A1 - A0;
-                        if( A2 < V0 )
+                        A2 = w[SP + 54];
+                        A1 = w[800e5640];
+                        if( A1 >= A2 )
                         {
-                            800A2AB0	addiu  s2, zero, $fff6 (=-$a)
-
-                            800A2AAC	jal    funca9820 [$800a9820]
+                            if( buttons & 4000 )
+                            {
+                                V0 = w[8011650c];
+                                A0 = V0 * 32;
+                                V0 = A1 - A0;
+                                if( A2 < V0 )
+                                {
+                                    S2 = -a;
+                                    funca9820(); // add Y to active entity
+                                }
+                            }
                         }
+                        else
+                        {
+                            S2 = a;
+                            A0 = 0 - w[8011650c] * 32;
+                            funca9820(); // add Y to active entity
+                        }
+                    }
+                    else
+                    {
+                        S2 = a;
+                        A0 = 0 - w[8011650c] * 32;
+                        funca9820(); // add Y to active entity
                     }
                 }
             }
-
-            La2ab4:	; 800A2AB4
 
             if( w[800e5634] == 2 ) // underwater
             {
@@ -1842,7 +1830,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                         {
                             S2 = a;
                             A0 = 0 - w[8011650c] * 1e;
-                            800A2B1C	jal    funca9820 [$800a9820]
+                            funca9820();
                         }
                     }
                 }
@@ -1853,7 +1841,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                     {
                         S2 = -a;
                         A0 = w[8011650c] * 1e;
-                        800A2B58	jal    funca9820 [$800a9820]
+                        funca9820();
                     }
                 }
             }
@@ -1981,11 +1969,11 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
                 A0 = V1 << 10;
                 A0 = A0 >> 10;
-                800A2DC4	jal    funca94d0 [$800a94d0]
+                funca94d0(); // set active entity direction and rotation
             }
         }
 
-        if( model_id == 6 )
+        if( model_id == 6 ) // buggy
         {
             if( buttons & f000 )
             {
@@ -2008,9 +1996,9 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             }
         }
 
+        // if we are on deep water then submarine can float or submerge
         A0 = 2000; // submarine
         wm_is_pc_entity_model_in_mask();
-
         if( V0 != 0 )
         {
             if( ( buttons & 0040 ) && ( ( w[800с84c8] & 0040 ) == 0 ) ) // cross just pressed
@@ -2052,36 +2040,33 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             wm_set_camera_mode();
         }
 
-        if( buttons & 0010 ) // triangle pressed
+        if( ( buttons & 0010 ) && ( ( w[800c84c8] & 0010 ) == 0 ) ) // if triangle just pressed
         {
-            if( ( w[800c84c8] & 0010 ) == 0 ) // and was not pressed before
+            if( w[800e566c] == 1 )
             {
-                if( w[800e566c] == 1 )
+                if( model_id == 3 ) // highwind
                 {
-                    if( model_id == 3 ) // highwind
+                    A0 = 6;
+                    wm_script_run_system_function_on_system_entity();
+                }
+                else
+                {
+                    A0 = 47; // cloud tifa cid buggy
+                    wm_is_pc_entity_model_in_mask();
+                    if( V0 != 0 )
                     {
-                        A0 = 6;
-                        wm_script_run_system_function_on_system_entity();
-                    }
-                    else
-                    {
-                        A0 = 47; // cloud tifa cid buggy
-                        wm_is_pc_entity_model_in_mask();
-                        if( V0 != 0 )
+                        wm_get_pc_entity_terrain_id();
+                        if( V0 != e ) // Wutai Bridge Rickety rope bridges south of Wutai.
                         {
-                            wm_get_pc_entity_terrain_id();
-                            if( V0 != e ) // Wutai Bridge Rickety rope bridges south of Wutai.
-                            {
-                                A0 = 10;
-                                A1 = 1;
-                                800A2FD8	jal    funcb0098 [$800b0098]
+                            A0 = 10;
+                            A1 = 1;
+                            800A2FD8	jal    funcb0098 [$800b0098]
 
-                                A0 = 0;
-                                A1 = 1;
-                                funca2108();
+                            A0 = 0;
+                            A1 = 1;
+                            funca2108();
 
-                                [800e566c] = w(2);
-                            }
+                            [800e566c] = w(2);
                         }
                     }
                 }
@@ -2143,11 +2128,13 @@ if( w[800e55fc] == 0 ) // input disabled
     }
 }
 
-if( w[800e5648] != 3 )
+// auto move desired screen offset Y
+if( w[800e5648] != 3 ) // not vamera view 3
 {
     [800e55f0] = w(((w[800e55f0] * 3) + w[800e564c]) / 4);
 }
 
+// warp camera around circle
 if( ( w[800e5608] - 800 ) > w[800e560c] )
 {
     [800e560c] = w(w[800e560c] + 1000);
@@ -2157,13 +2144,14 @@ else if( ( w[800e5608] + 800 ) < w[800e560c] )
     [800e560c] = w(w[800e560c] - 1000);
 }
 
+// auto rotate camera to desired position
 if( w[8011650c] == 1 )
 {
-    [800e560c] = w((w[800e560c] * 1f + w[800e5608]) >> 5);
+    [800e560c] = w(((w[800e560c] * 1f) + w[800e5608]) / 20);
 }
 else
 {
-    [800e560c] = w((w[800e560c] * f + w[800e5608]) >> 4);
+    [800e560c] = w(((w[800e560c] * f) + w[800e5608]) / 10);
 }
 ////////////////////////////////
 
@@ -2224,7 +2212,7 @@ if( w[800e5658] != 0 )
         if( w[800e5658] > 0 )
         {
             A0 = 3;
-            funca2088();
+            wm_set_camera_view();
 
             wm_get_model_id_from_pc_entity();
 
@@ -2303,7 +2291,7 @@ if( w[800e5658] != 0 )
         if( w[800e5658] < 0 )
         {
             A0 = w[800e5650];
-            funca2088();
+            wm_set_camera_view();
 
             A0 = 0;
             A1 = 2;
@@ -2554,100 +2542,58 @@ La3950:	; 800A3950
 ////////////////////////////////
 
 
+
 ////////////////////////////////
 // funca3964()
 
-V1 = w[800e566c];
-
-V0 = V1 < 0006;
-800A3974	beq    v0, zero, La3c04 [$800a3c04]
-
-V0 = V1 << 02;
-AT = 800a01c0;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800A3990	nop
-800A3994	jr     v0 
-800A3998	nop
-
+switch( w[800e566c] )
+{
     case 0:
     {
-        A0 = w[800e5638];
-        800A39A4	nop
-        800A39A8	beq    a0, zero, La3a5c [$800a3a5c]
-        800A39AC	nop
-        V0 = w[800e5648];
-        V0 = V0 << 02;
-        AT = 800c6638;
-        AT = AT + V0;
-        V1 = w[AT + 0000];
-        V0 = A0 + 0050;
-        [800e5638] = w(V0);
-        V1 = V1 >> 01;
-        V0 = V0 < V1;
-        800A39E4	bne    v0, zero, La3a08 [$800a3a08]
-        V0 = 0002;
-        V1 = w[800e5634];
-        800A39F4	nop
-        800A39F8	beq    v1, v0, La3a08 [$800a3a08]
-        V0 = 0001;
-        [800e55f4] = w(V0);
+        cam_view = w[800e5648];
 
-        La3a08:	; 800A3A08
-        V0 = w[800e5648];
-        V1 = w[800e5638];
-        V0 = V0 << 02;
-        AT = 800c6638;
-        AT = AT + V0;
-        V0 = w[AT + 0000];
-        800A3A2C	nop
-        V1 = V1 < V0;
-        800A3A34	bne    v1, zero, La3a5c [$800a3a5c]
-        800A3A38	nop
-        800A3A3C	lui    v0, $800e
-        V0 = w[V0 + 563c];
-        800A3A44	lui    at, $800e
-        [AT + 5638] = w(0);
-        800A3A4C	bne    v0, zero, La3a70 [$800a3a70]
-        V0 = 0001;
-        800A3A54	lui    at, $800e
-        [AT + 566c] = w(V0);
+        if( w[800e5638] != 0 )
+        {
+            [800e5638] = w(w[800e5638] + 50);
 
-        La3a5c:	; 800A3A5C
-        800A3A5C	lui    v0, $800e
-        V0 = w[V0 + 563c];
-        800A3A64	nop
-        800A3A68	beq    v0, zero, La3c64 [$800a3c64]
-        800A3A6C	nop
+            if( w[800e5638] >= ( w[800c6638 + cam_view * 4] / 2 ) )
+            {
+                if( w[800e5634] != 2 )
+                {
+                    [800e55f4] = w(1);
+                }
+            }
 
-        La3a70:	; 800A3A70
-        800A3A70	lui    v0, $800e
-        V0 = w[V0 + 5648];
-        800A3A78	lui    v1, $800e
-        V1 = w[V1 + 563c];
-        V0 = V0 << 02;
-        800A3A84	lui    at, $800c
-        AT = AT + 6628;
-        AT = AT + V0;
-        V0 = w[AT + 0000];
-        V1 = V1 + 0003;
-        [800e563c] = w(V1);
-        V1 = V1 < V0;
-        800A3AA4	bne    v1, zero, La3c64 [$800a3c64]
-        V0 = 0002;
-        V1 = w[800e5634];
-        [800e563c] = w(0);
-        800A3ABC	beq    v1, v0, La3acc [$800a3acc]
-        V0 = 0001;
-        [800e55f4] = w(V0);
+            if( w[800e5638] >= w[800c6638 + cam_view * 4] )
+            {
+                [800e5638] = w(0);
 
-        La3acc:	; 800A3ACC
-        V0 = w[800e5638];
-        800A3AD4	nop
-        800A3AD8	bne    v0, zero, La3c64 [$800a3c64]
-        V0 = 0001;
-        [800e566c] = w(V0);
-        800A3B78	j      La3c64 [$800a3c64]
+                if( w[800e563c] == 0 )
+                {
+                    [800e566c] = w(1);
+                }
+            }
+        }
+
+        if( w[800e563c] != 0 )
+        {
+            [800e563c] = w(w[800e563c] + 3);
+
+            if( w[800e563c] >= w[800c6628 + cam_view * 4] )
+            {
+                [800e563c] = w(0);
+
+                if( w[800e5634] != 2 )
+                {
+                    [800e55f4] = w(1);
+                }
+
+                if( w[800e5638] == 0 )
+                {
+                    [800e566c] = w(1);
+                }
+            }
+        }
     }
     break;
 
@@ -2692,66 +2638,71 @@ V0 = w[AT + 0000];
 
             [800e566c] = w(1);
         }
-        800A3B78	j      La3c64 [$800a3c64]
     }
     break;
 
-800A3B80 4 5
+    case 4 5:
+    {
+        A0 = SP + 10;
+        wm_get_position_from_pc_entity();
 
-    A0 = SP + 10;
-    wm_get_position_from_pc_entity();
+        V0 = w[SP + 0014];
+        A0 = w[800e5644];
+        A0 = V0 + A0;
+        800A3B94	jal    funcaa02c [$800aa02c]
 
-    V0 = w[SP + 0014];
-    A0 = w[800e5644];
-    A0 = V0 + A0;
-    800A3B94	jal    funcaa02c [$800aa02c]
+        V1 = w[800e5644];
+        V0 = V1 >> 02;
+        V0 = V0 + V1;
+        [800e5644] = w(V0);
+        800A3BB8	jal    funcb0240 [$800b0240]
 
-    V1 = w[800e5644];
-    V0 = V1 >> 02;
-    V0 = V0 + V1;
-    [800e5644] = w(V0);
-    800A3BB8	jal    funcb0240 [$800b0240]
-    800A3BBC	nop    800A3BC0	beq    v0, zero, La3c64 [$800a3c64]
-    V0 = 0004;
-    V1 = w[800e566c];
-    800A3BD0	nop
-    800A3BD4	bne    v1, v0, La3be0 [$800a3be0]
-    A0 = 0007;
-    A0 = 0006;
+        if( V0 != 0 )
+        {
+            if( w[800e566c] == 4 )
+            {
+                [800e566c] = w(6);
+            }
+            else
+            {
+                [800e566c] = w(7);
+            }
+        }
+    }
 
-    La3be0:	; 800A3BE0
-    [800e566c] = w(A0);
-    800A3BE8	j      La3c64 [$800a3c64]
+    case 3:
+    {
+        [800e566c] = w(9);
+    }
+    break;
 
-800A3BF0 3
+    default:
+    {
+        V0 = w[800e566c];
+        if( V0 < 0 )
+        {
+            V0 = V0 + 1;
+            [800e566c] = w(V0);
 
-    [800e566c] = w(9);
-    800A3BFC	j      La3c64 [$800a3c64]
+            if( V0 == 0 )
+            {
+                A0 = 1;
+                system_psyq_set_disp_mask();
 
-800A3C04 1
+                if( w[800e5634] != 2 )
+                {
+                    [800e55f4] = w(1);
+                }
 
-La3c04:	; 800A3C04
-V0 = w[800e566c];
+                [800e566c] = w(1);
 
-800A3C10	bgez   v0, La3c64 [$800a3c64]
-V0 = V0 + 0001;
-[800e566c] = w(V0);
-800A3C20	bne    v0, zero, La3c64 [$800a3c64]
-
-A0 = 1;
-system_psyq_set_disp_mask();
-
-V1 = w[800e5634];
-V0 = 0002;
-800A3C3C	beq    v1, v0, La3c50 [$800a3c50]
-A0 = 0010;
-[800e55f4] = w(1);
-
-La3c50:	; 800A3C50
-[800e566c] = w(1);
-A1 = 0001;
-800A3C5C	jal    funcaffbc [$800affbc]
-
+                A0 = 10;
+                A1 = 1;
+                800A3C5C	jal    funcaffbc [$800affbc]
+            }
+        }
+    }
+}
 La3c64:	; 800A3C64
 ////////////////////////////////
 
@@ -2941,37 +2892,30 @@ if( w[800e566c] == 1 )
 
 ////////////////////////////////
 // funca3f4c
-800A3F4C	lui    v0, $800e
-V0 = w[V0 + 566c];
+
+V0 = w[800e566c];
 S0 = A0;
 800A3F60	bgtz   v0, La3f8c [$800a3f8c]
 
-V0 = 0001;
-800A3F6C	lui    at, $800e
-[AT + 563c] = w(0);
-800A3F74	lui    at, $800e
-[AT + 5638] = w(0);
-800A3F7C	lui    at, $800e
-[AT + 55f4] = w(V0);
-800A3F84	lui    at, $800e
-[AT + 566c] = w(V0);
+[800e563c] = w(0);
+[800e5638] = w(0);
+[800e55f4] = w(1);
+[800e566c] = w(1);
 
 La3f8c:	; 800A3F8C
-800A3F8C	lui    v0, $800e
-V0 = w[V0 + 566c];
+V0 = w[800e566c];
 800A3F94	nop
 800A3F98	addiu  v0, v0, $ffff (=-$1)
 V0 = V0 < 0002;
 800A3FA0	beq    v0, zero, La3ff4 [$800a3ff4]
-800A3FA4	nop
-800A3FA8	lui    v0, $8007
-V0 = bu[V0 + 1e30];
+
+V0 = bu[80071e30];
 800A3FB0	nop
 800A3FB4	bne    v0, zero, La3fe4 [$800a3fe4]
 V0 = 001e;
-V0 = 0003;
-800A3FC0	lui    at, $800e
-[AT + 566c] = w(V0);
+
+[800e566c] = w(3);
+
 A0 = 0;
 A1 = 0;
 funca2108();
@@ -3033,7 +2977,7 @@ return ((V0 << 2) & c) | (w[800e5648] & 3);
 S0 = A0;
 
 A0 = S0 & 3;
-funca2088();
+wm_set_camera_view();
 
 A0 = (S0 >> 2) & 3;
 wm_set_camera_mode();
@@ -3406,7 +3350,6 @@ S7 = A2; // 80095ddc
 
 [800e566c] = w(0);
 [800e567c] = w(A3);
-[800e566c] = w(0);
 
 La4668:	; 800A4668
     if( w[S2] != 0 )
@@ -3486,10 +3429,10 @@ La4668:	; 800A4668
     if( w[800e5634] == 2 )
     {
         A0 = 2;
-        funca2088();
+        wm_set_camera_view();
     }
 
-    [800e5604] = w(0);
+    [800e5604] = w(0); // not used
 
     funca31f8();
 
@@ -3595,9 +3538,7 @@ La4668:	; 800A4668
 
     wm_handle_buttons();
 
-    800A4998	addiu  v0, zero, $fff1 (=-$f)
-
-    [800e566c] = w(V0);
+    [800e566c] = w(-f);
 
     La49a4:	; 800A49A4
         wm_prepare_for_render();
@@ -3662,7 +3603,7 @@ La4668:	; 800A4668
 
         800A4ABC	jal    funca3c74 [$800a3c74]
 
-        funca3964();
+        funca3964(); // update automation sequence
 
         if( w[800e566c] < 9 )
         {
@@ -3770,21 +3711,19 @@ La4668:	; 800A4668
             funcab570();
         }
 
-        S0 = 1;
-
         800A4C78	jal    funcb57dc [$800b57dc]
 
         800A4C80	jal    funcb0e84 [$800b0e84]
 
         funcb6e78(); // PC char model loading
 
-        if( w[800e566c] == S0 )
+        if( w[800e566c] == 1 )
         {
             800A4CA4	jal    funcb832c [$800b832c]
         }
 
         A0 = h[8011650c];
-        if( w[8011650c] == S0 )
+        if( w[8011650c] == 1 )
         {
             A0 = A0 - 1;
         }

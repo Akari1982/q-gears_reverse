@@ -1556,7 +1556,7 @@ switch( opcode )
         wm_script_pop_stack();
 
         A0 = V0 << 4;
-        800ACEF4	jal    funca1d24 [$800a1d24]
+        wm_set_desired_camera_rotation();
 
         return 0;
     }
@@ -1564,12 +1564,12 @@ switch( opcode )
 
     case 32f:
     {
-        800ACF04	jal    wm_script_pop_stack [$800abb24]
-        800ACF08	nop
-        800ACF0C	jal    funca1d38 [$800a1d38]
-        A0 = V0 << 04;
-        800ACF14	j      Lad620 [$800ad620]
-        V0 = 0;
+        wm_script_pop_stack();
+
+        A0 = V0 << 4;
+        wm_set_camera_rotation();
+
+        return 0;
     }
     break;
 
