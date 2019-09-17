@@ -445,6 +445,10 @@
 
 8010b3b8 [][][][] pointer to active point structure.
 
+8010b47c [][][][] number of frames to fade (fadein -X, fadeout +X).
+8010b488 [][][][] current fade value.
+8010b494 [][][][] max fade value.
+
 8010ca8c [][][][] ???
 
 8010cb18 [][][][] some x movement addition.

@@ -1392,7 +1392,7 @@ switch( opcode )
     }
     break;
 
-    case 348: // fade in?
+    case 348: // fade in
     {
         wm_script_pop_stack();
         S1 = V0;
@@ -1401,13 +1401,13 @@ switch( opcode )
 
         A0 = V0;
         A1 = S1;
-        800ACD7C	jal    funcaffbc [$800affbc]
+        wm_set_fade_in();
 
         return 0;
     }
     break;
 
-    case 33b: // fade out?
+    case 33b: // fade out
     {
         wm_script_pop_stack();
         S1 = V0;
@@ -1416,7 +1416,7 @@ switch( opcode )
 
         A0 = V0;
         A1 = S1;
-        800ACDA0	jal    funcb0098 [$800b0098]
+        wm_set_fade_out();
 
         return 0;
     }

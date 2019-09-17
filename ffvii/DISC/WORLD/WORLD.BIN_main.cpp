@@ -1616,7 +1616,14 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
                         if( w[800e5634] == 2 ) // underwater
                         {
-                            A0 = (buttons & 0008) < 1;
+                            if( buttons & 0008 ) // R1
+                            {
+                                A0 = 0;
+                            }
+                            else
+                            {
+                                A0 = 1;
+                            }
                         }
                         else
                         {
@@ -2059,8 +2066,8 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                         if( V0 != e ) // Wutai Bridge Rickety rope bridges south of Wutai.
                         {
                             A0 = 10;
-                            A1 = 1;
-                            800A2FD8	jal    funcb0098 [$800b0098]
+                            A1 = 1; // subtract
+                            wm_set_fade_out();
 
                             A0 = 0;
                             A1 = 1;
@@ -2395,8 +2402,8 @@ A1 = SP + 0010;
 A2 = S2;
 system_gte_matrixes_multiply_A0_A1_to_A2();
 
-800A3738	jal    $system_gte_set_rotation_matrix
 A0 = S0;
+system_gte_set_rotation_matrix();
 
 A1 = w[800e5670];
 800A3748	nop
@@ -2633,8 +2640,8 @@ switch( w[800e566c] )
             wm_prepare_for_render();
 
             A0 = 10;
-            A1 = 1;
-            800A3B64	jal    funcaffbc [$800affbc]
+            A1 = 1; // subtract
+            wm_set_fade_in();
 
             [800e566c] = w(1);
         }
@@ -2697,8 +2704,8 @@ switch( w[800e566c] )
                 [800e566c] = w(1);
 
                 A0 = 10;
-                A1 = 1;
-                800A3C5C	jal    funcaffbc [$800affbc]
+                A1 = 1; // subtract
+                wm_set_fade_in();
             }
         }
     }
@@ -2824,8 +2831,8 @@ A1 = 0;
 funca2108();
 
 A0 = 10;
-A1 = 1;
-800A3E34	jal    funcb0098 [$800b0098]
+A1 = 1; // subtract
+wm_set_fade_out();
 ////////////////////////////////
 
 
@@ -2844,8 +2851,8 @@ A1 = 0;
 funca2108();
 
 A0 = 10;
-A1 = 1;
-800A3E84	jal    funcb0098 [$800b0098]
+A1 = 1; // subtract
+wm_set_fade_out();
 ////////////////////////////////
 
 
@@ -3055,40 +3062,33 @@ loopa4164:	; 800A4164
 
 
 ////////////////////////////////
-// funca41e8
+// funca41e8()
 
 S0 = A0;
-V0 = 0001;
-800A41F8	beq    s0, v0, La4214 [$800a4214]
 
-V0 = 0004;
-800A4204	beq    s0, v0, La4234 [$800a4234]
-A0 = 0001;
-800A420C	j      La424c [$800a424c]
-800A4210	nop
+if( S0 == 1 )
+{
+    A0 = 0;
+    A1 = 4;
+    funca2108();
 
-La4214:	; 800A4214
-A0 = 0;
-A1 = 4;
-funca2108();
+    A0 = 4;
+    A1 = 1; // subtract
+    wm_set_fade_out();
+}
+else if( S0 == 4 )
+{
+    A0 = 1;
+    A1 = 4;
+    funca2108();
 
-A0 = 0004;
-800A4224	jal    funcb0098 [$800b0098]
-A1 = 0001;
-800A422C	j      La424c [$800a424c]
-800A4230	nop
+    A0 = 10;
+    A1 = 1; // subtract
+    wm_set_fade_in();
 
-La4234:	; 800A4234
-A1 = 4;
-funca2108();
+    S0 = 0;
+}
 
-A0 = 10;
-A1 = 1;
-800A4240	jal    funcaffbc [$800affbc]
-
-S0 = 0;
-
-La424c:	; 800A424C
 [800e56f4] = w(S0);
 ////////////////////////////////
 
@@ -3687,7 +3687,7 @@ La4668:	; 800A4668
 
         800A4BF4	jal    funca4268 [$800a4268]
 
-        800A4BFC	jal    funcafcc8 [$800afcc8]
+        funcafcc8(); // render fade?
 
         if( w[800e566c] < 9 )
         {
@@ -7029,13 +7029,13 @@ if( w[800e5828] != 0 )
         if( w[800e5818] >= 12c )
         {
             A0 = 1;
-            800A820C	jal    funca41e8 [$800a41e8]
+            funca41e8();
         }
     }
     else
     {
         A0 = 4;
-        800A820C	jal    funca41e8 [$800a41e8]
+        funca41e8();
     }
 }
 
