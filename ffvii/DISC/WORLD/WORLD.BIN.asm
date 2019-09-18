@@ -786,10 +786,10 @@
 // funcaf9a0
 800AF9A0-800AF9D8
 ////////////////////////////////
-// funcaf9dc
+// wm_fade_init
 800AF9DC-800AFCC4
 ////////////////////////////////
-// funcafcc8
+// wm_fade_render
 800AFCC8-800AFFB8
 ////////////////////////////////
 // wm_set_fade_in

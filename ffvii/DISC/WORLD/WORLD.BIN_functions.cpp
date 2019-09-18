@@ -1520,303 +1520,169 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// funcaf9dc()
+// wm_fade_init()
 
-S4 = 0;
-FP = 0140;
-S7 = 00f0;
-S6 = 0001;
-S5 = 0002;
-S1 = 0;
-T0 = 8010b3d0;
-S3 = T0 + 0014;
-S2 = 8010b3d0;
-S0 = 0;
+for( int i = 0; i < 2; ++i )
+{
+    [8010b3bc + i * 3c + 3] = b(3);
+    [8010b3bc + i * 3c + 7] = b(62); // Monochrome Rectangle (variable size) (semi-transparent)
+    [8010b3bc + i * 3c + 8] = h(0); // x
+    [8010b3bc + i * 3c + a] = h(0); // y
+    [8010b3bc + i * 3c + c] = h(140); // width
+    [8010b3bc + i * 3c + e] = h(f0); // height
 
-Lafa38:	; 800AFA38
-V0 = 8010b3bc;
-V0 = S0 + V0;
-V1 = 0003;
-[V0 + 000a] = h(0);
-AT = 8010b3c4;
-AT = AT + S0;
-[AT + 0000] = h(0);
-[V0 + 0003] = b(V1);
-V1 = 0062;
-[V0 + 000c] = h(FP);
-[V0 + 000e] = h(S7);
-[V0 + 0007] = b(V1);
+    [8010b3bc + 1 * 14 + i * 3c + 3] = b(4);
+    [8010b3bc + 1 * 14 + i * 3c + 7] = b(66); // Textured Rectangle, variable size, semi-transp, texture-blending
+    [8010b3bc + 1 * 14 + i * 3c + 8] = h(0); // x
+    [8010b3bc + 1 * 14 + i * 3c + a] = h(0); // y
+    [8010b3bc + 1 * 14 + i * 3c + c] = b(0); // tx
+    [8010b3bc + 1 * 14 + i * 3c + d] = b(0); // ty
+    [8010b3bc + 1 * 14 + i * 3c + e] = h(780e); // clut
+    [8010b3bc + 1 * 14 + i * 3c + 10] = h(140); // width
+    [8010b3bc + 1 * 14 + i * 3c + 12] = h(f0); // height
 
-system_gpu_get_type();
+    [8010b3bc + 2 * 14 + i * 3c + 3] = b(4);
+    [8010b3bc + 2 * 14 + i * 3c + 7] = b(66); // Textured Rectangle, variable size, semi-transp, texture-blending
+    [8010b3bc + 2 * 14 + i * 3c + 8] = h(0); // x
+    [8010b3bc + 2 * 14 + i * 3c + a] = h(0); // y
+    [8010b3bc + 2 * 14 + i * 3c + c] = b(0); // tx
+    [8010b3bc + 2 * 14 + i * 3c + d] = b(0); // ty
+    [8010b3bc + 2 * 14 + i * 3c + e] = h(780f); // clut
+    [8010b3bc + 2 * 14 + i * 3c + 10] = h(140); // width
+    [8010b3bc + 2 * 14 + i * 3c + 12] = h(f0); // height
 
-800AFA74	beq    v0, s6, Lafa90 [$800afa90]
-A3 = 0100;
-system_gpu_get_type();
+    system_gpu_get_type();
+    gpu_type = V0;
 
-800AFA84	bne    v0, s5, Lafa90 [$800afa90]
-A3 = 0040;
-A3 = 0100;
+    if( ( gpu_type == 1 ) || ( gpu_type == 2 ) )
+    {
+        p1 = 100;
+        p2 = a6;
+        p3 = a7;
+    }
+    else
+    {
+        p1 = 40;
+        p2 = 36;
+        p3 = 37;
+    }
 
-Lafa90:	; 800AFA90
-A0 = 8010b434;
-A0 = S1 + A0;
-A1 = 0;
-A2 = 1;
-A4 = 0;
-system_gpu_create_texture_setting_packet();
+    A0 = 8010b434 + i * 24;
+    A1 = 0;
+    A2 = 1;
+    A3 = p1;
+    A4 = 0;
+    system_gpu_create_texture_setting_packet();
 
-T0 = 0004;
-A0 = 0066;
-[S2 + 0003] = b(T0);
-T0 = 8010b3d0;
-800AFAC0	addiu  v1, t0, $ffec (=-$14)
-V1 = S0 + V1;
-V0 = 780e;
-[S2 + 0007] = b(A0);
-[V1 + 001e] = h(0);
-AT = 8010b3d8;
-AT = AT + S0;
-[AT + 0000] = h(0);
-[V1 + 0021] = b(0);
-AT = 8010b3dc;
-AT = AT + S0;
-[AT + 0000] = b(0);
-AT = 8010b3de;
-AT = AT + S0;
-[AT + 0000] = h(V0);
-AT = 8010b3e0;
-AT = AT + S0;
-[AT + 0000] = h(FP);
-AT = 8010b3e2;
-AT = AT + S0;
-[AT + 0000] = h(S7);
-T0 = 0004;
-V0 = 780f;
-[S3 + 0003] = b(T0);
-[S3 + 0007] = b(A0);
-[V1 + 0032] = h(0);
-AT = 8010b3ec;
-AT = AT + S0;
-[AT + 0000] = h(0);
-[V1 + 0035] = b(0);
-AT = 8010b3f0;
-AT = AT + S0;
-[AT + 0000] = b(0);
-AT = 8010b3f2;
-AT = AT + S0;
-[AT + 0000] = h(V0);
-AT = 8010b3f4;
-AT = AT + S0;
-[AT + 0000] = h(FP);
-AT = 8010b3f6;
-AT = AT + S0;
-[AT + 0000] = h(S7);
-800AFB90	jal    $system_gpu_get_type
-800AFB94	nop
-800AFB98	beq    v0, s6, Lafbb4 [$800afbb4]
-A3 = 00a6;
-800AFBA0	jal    $system_gpu_get_type
-800AFBA4	nop
-800AFBA8	bne    v0, s5, Lafbb4 [$800afbb4]
-A3 = 0036;
-A3 = 00a6;
+    A0 = 8010b440 + i * 24;
+    A1 = 0;
+    A2 = 1;
+    A3 = p2;
+    A4 = 0;
+    system_gpu_create_texture_setting_packet();
 
-Lafbb4:	; 800AFBB4
-[SP + 0010] = w(0);
-A0 = 8010b440;
-A0 = S1 + A0;
-A1 = 0;
-800AFBC8	jal    $system_gpu_create_texture_setting_packet
-A2 = 0001;
-800AFBD0	jal    $system_gpu_get_type
-800AFBD4	nop
-800AFBD8	beq    v0, s6, Lafbf4 [$800afbf4]
-A3 = 00a7;
-800AFBE0	jal    $system_gpu_get_type
-800AFBE4	nop
-800AFBE8	bne    v0, s5, Lafbf4 [$800afbf4]
-A3 = 0037;
-A3 = 00a7;
-
-Lafbf4:	; 800AFBF4
-[SP + 0010] = w(0);
-A0 = 8010b44c;
-A0 = S1 + A0;
-A1 = 0;
-A2 = 1;
-system_gpu_create_texture_setting_packet();
-
-S1 = S1 + 0024;
-S3 = S3 + 003c;
-S2 = S2 + 003c;
-S4 = S4 + 0001;
-V0 = S4 < 0002;
-800AFC24	bne    v0, zero, Lafa38 [$800afa38]
-S0 = S0 + 003c;
+    A0 = 8010b44c + i * 24;
+    A1 = 0;
+    A2 = 1;
+    A3 = p3;
+    A4 = 0;
+    system_gpu_create_texture_setting_packet();
+}
 
 [8010b488] = w(ff);
-[8010b494] = w(ff);
-[8010b484] = w(0);
-[8010b480] = w(0);
-[8010b47c] = w(0);
-[8010b4a8] = w(0);
-[8010b4a4] = w(0);
-[8010b4a0] = w(0);
-[8010b490] = w(0);
 [8010b48c] = w(0);
-[8010b49c] = w(80);
+[8010b490] = w(0);
+
+[8010b47c] = w(0);
+[8010b480] = w(0);
+[8010b484] = w(0);
+
+[8010b4a0] = w(0);
+[8010b4a4] = w(0);
+[8010b4a8] = w(0);
+
+[8010b494] = w(ff);
 [8010b498] = w(80);
+[8010b49c] = w(80);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcafcc8()
+// wm_fade_render()
 
 wm_get_current_render_buffer_id();
+buffer_id = V0;
 
-S4 = 0;
-S5 = 0;
-FP = 8010b3bc;
-S6 = V0;
-V0 = S6 << 04;
-V0 = V0 - S6;
-V0 = V0 << 02;
-S0 = 8010b488;
-S1 = 0;
-T0 = 8010b47c;
-S7 = T0;
-[SP + 0010] = w(V0);
-S3 = w[SP + 0010];
+for( int i = 0 i < 3; ++i )
+{
+    V0 = bu[8010b488 + i * 4];
+    [8010b3bc + buffer_id * 3c + i * 14 + 4] = b(V0); // r
+    [8010b3bc + buffer_id * 3c + i * 14 + 5] = b(V0); // g
+    [8010b3bc + buffer_id * 3c + i * 14 + 6] = b(V0); // b
 
-Lafd48:	; 800AFD48
-    V0 = bu[S0 + 0000];
-    V1 = S3 + 8010b3bc;
-    [V1 + 0006] = b(V0);
-    [V1 + 0005] = b(V0);
-    AT = 8010b3c0;
-    AT = AT + S3;
-    [AT + 0000] = b(V0);
-    V0 = w[S7 + 0000];
-    800AFD6C	nop
-    800AFD70	beq    v0, zero, Lafdec [$800afdec]
-    800AFD74	nop
-    A0 = w[S0 + 0000];
-    V0 = A0 + V0;
-    if( S4 == 0 )
+    if( w[8010b47c + i * 4] != 0 )
     {
-        V0 = w[8010b488];
-        V1 = w[T0 + 0000];
-        V0 = V0 + 0080;
-        V0 = V0 * V1;
-        V0 = V0 >> 08;
-        V0 = A0 + V0;
-    }
-
-    [S0 + 0000] = w(V0);
-    V0 = w[S0 + 0000];
-    if( V0 <= 0 )
-    {
-        V0 = S1 + T0;
-        [S0 + 0000] = w(0);
-        800AFDBC	j      Lafde8 [$800afde8]
-    }
-
-    V1 = w[8010b494 + S1];
-    V0 = V0 < V1;
-    800AFDDC	bne    v0, zero, Lafdec [$800afdec]
-    V0 = S1 + T0;
-    [S0 + 0000] = w(V1);
-
-    Lafde8:	; 800AFDE8
-    [V0 + 0000] = w(0);
-
-    Lafdec:	; 800AFDEC
-    V0 = w[S0 + 0000];
-    A0 = S3 + 8010b3bc;
-    if( V0 != 0 )
-    {
-        A2 = 8010b434;
-        A3 = w[800bd130];
-        V1 = w[A0 + 0000];
-        V0 = w[A3 + 0000];
-        V1 = V1 & ff000000;
-        V0 = V0 & 00ffffff;
-        V1 = V1 | V0;
-        [A0 + 0000] = w(V1);
-        V1 = S6 << 03;
-        V1 = V1 + S6;
-        V1 = V1 << 02;
-        A0 = V1 + S5;
-        A0 = A0 + A2;
-        A2 = S5 + A2;
-        V1 = V1 + A2;
-        A1 = w[A3 + 0000];
-        T3 = w[SP + 0010];
-        A1 = A1 & ff000000;
-        V0 = T3 + FP;
-        V0 = V0 & 00ffffff;
-        A1 = A1 | V0;
-        [A3 + 0000] = w(A1);
-        V0 = w[A0 + 0000];
-        A1 = A1 & 00ffffff;
-        V0 = V0 & ff000000;
-        V0 = V0 | A1;
-        [A0 + 0000] = w(V0);
-        V0 = w[A3 + 0000];
-        V1 = V1 & 00ffffff;
-        V0 = V0 & ff000000;
-        V0 = V0 | V1;
-        [A3 + 0000] = w(V0);
-    }
-
-    V0 = 8010b4a0;
-    V1 = S1 + V0;
-    V0 = w[V1 + 0000];
-    S5 = S5 + 000c;
-    if( V0 != 0 )
-    {
-        V0 = V0 - 1;
-        [V1 + 0000] = w(V0);
-        if( V0 == 0 )
+        if( i == 0 )
         {
-            A0 = S4;
-            800AFEB8	jal    funcb01c4 [$800b01c4]
+            [8010b488 + i * 4] = w(w[8010b488 + i * 4] + (((w[8010b488] + 80) * w[8010b47c]) / 100));
+        }
+        else
+        {
+            [8010b488 + i * 4] = w(w[8010b488 + i * 4] + w[8010b47c + i * 4]);
+        }
+
+        if( w[8010b488 + i * 4] <= 0 )
+        {
+            [8010b488 + i * 4] = w(0);
+            [8010b47c + i * 4] = w(0);
+        }
+        else if( w[8010b488 + i * 4] >= w[8010b494 + i * 4] )
+        {
+            [8010b488 + i * 4] = w(w[8010b494 + i * 4]);
+            [8010b47c + i * 4] = w(0);
         }
     }
 
-    FP = FP + 0014;
-    S3 = S3 + 0014;
-    S0 = S0 + 0004;
-    S1 = S1 + 0004;
-    S4 = S4 + 0001;
-    S7 = S7 + 0004;
-    V0 = S4 < 0003;
-800AFEE4	bne    v0, zero, Lafd48 [$800afd48]
+    if( w[8010b488 + i * 4] != 0 )
+    {
+        A3 = w[800bd130];
+        [8010b3bc + buffer_id * 3c + i * 14] = w((w[8010b3bc + buffer_id * 3c + i * 14] & ff000000) | (w[A3] & 00ffffff));
+        A1 = (w[A3] & ff000000) | ((8010b3bc + buffer_id * 3c + i * 14) & 00ffffff);
+        [A3] = w(A1);
+        [8010b434 + buffer_id * 24 + i * c] = w((w[8010b434 + buffer_id * 24 + i * c] & ff000000) | (A1 & 00ffffff));
+        [A3] = w((w[A3] & ff000000) | ((8010b434 + buffer_id * 24 + i * c) & 00ffffff));
+    }
+
+    if( w[8010b4a0 + i * 4] != 0 )
+    {
+        [V1] = w(w[8010b4a0 + i * 4] - 1);
+
+        if( w[V1] == 0 )
+        {
+            A0 = i;
+            funcb01c4();
+        }
+    }
+}
 
 A0 = -1;
 system_psyq_wait_frames();
 
-V0 = V0 << 04;
-A0 = V0 & 0ff0;
+A0 = (V0 << 4) & ff0;
 system_get_sin();
 
-S0 = S6 << 04;
-S0 = S0 - S6;
-S0 = S0 << 02;
-V0 = V0 >> 03;
-[8010b3dc + S0] = b(V0);
-[8010b3dd + S0] = b(bu[8010b4a4] << 3);
+[8010b3bc + buffer_id * 3c + 1 * 14 + c] = b(V0 >> 3); // tx
+[8010b3bc + buffer_id * 3c + 1 * 14 + d] = b(bu[8010b4a0 + 1 * 4] << 3); // ty
 
 A0 = -1;
 system_psyq_wait_frames();
 
-V0 = V0 << 04;
-A0 = V0 & 0ff0;
+A0 = (V0 << 4) & ff0;
 system_get_cos();
 
-[8010b3f0 + S0] = b(V0 >> 4);
-[8010b3f1 + S0] = b(bu[8010b4a8] << 2);
+[8010b3bc + buffer_id * 3c + 2 * 14 + c] = b(V0 >> 4); // tx
+[8010b3bc + buffer_id * 3c + 2 * 14 + d] = b(bu[8010b4a0 + 2 * 4] << 2); // ty
 ////////////////////////////////
 
 
@@ -1943,11 +1809,14 @@ V0 = w[8010b488 + A0 * 4] < w[8010b494 + A0 * 4];
 ////////////////////////////////
 // funcb01c4()
 
-V0 = w[8010b488 + A0 * 4];
-V0 = 0 < V0;
-V0 = 0 - V0;
-V0 = V0 & fffffff0;
-[8010b47c + A0 * 4] = w(V0);
+if( w[8010b488 + A0 * 4] > 0 )
+{
+    [8010b47c + A0 * 4] = w(fffffff0);
+}
+else
+{
+    [8010b47c + A0 * 4] = w(0);
+}
 ////////////////////////////////
 
 
@@ -1957,7 +1826,7 @@ V0 = V0 & fffffff0;
 
 S0 = A0;
 
-800B020C	jal    funcb017c [$800b017c]
+funcb017c();
 
 [8010b4a0 + S0 * 4] = w(64);
 ////////////////////////////////

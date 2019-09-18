@@ -3442,7 +3442,7 @@ La4668:	; 800A4668
 
     funcaf0b0();
 
-    funcaf9dc();
+    wm_fade_init();
 
     funcb104c();
 
@@ -3687,7 +3687,7 @@ La4668:	; 800A4668
 
         800A4BF4	jal    funca4268 [$800a4268]
 
-        funcafcc8(); // render fade?
+        wm_fade_render();
 
         if( w[800e566c] < 9 )
         {
