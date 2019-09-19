@@ -446,17 +446,17 @@
 8010b3b8 [][][][] pointer to active point structure.
 
 8010b47c [][][][] add value for fade.
-8010b480 [][][][] add value for texture 1 fade.
-8010b484 [][][][] add value for texture 2 fade.
+8010b480 [][][][] add value for texture 1 fade (snow).
+8010b484 [][][][] add value for texture 2 fade (snow).
 8010b488 [][][][] current fade value. 0 - no need to draw.
-8010b48c [][][][] current texture 1 fade value. 0 - no need to draw.
-8010b490 [][][][] current texture 2 fade value. 0 - no need to draw.
+8010b48c [][][][] current texture 1 fade value (snow). 0 - no need to draw.
+8010b490 [][][][] current texture 2 fade value (snow). 0 - no need to draw.
 8010b494 [][][][] max fade value.
-8010b498 [][][][] max texture 1 fade value.
-8010b49с [][][][] max texture 2 fade value.
+8010b498 [][][][] max texture 1 fade value (snow).
+8010b49с [][][][] max texture 2 fade value (snow).
 8010b4a0 [][][][] some texture move y for fade.
-8010b4a4 [][][][] some texture move y for texture 1 fade.
-8010b4a8 [][][][] some texture move y for texture 2 fade.
+8010b4a4 [][][][] some texture move y for texture 1 fade (snow).
+8010b4a8 [][][][] some texture move y for texture 2 fade (snow).
 
 8010ca8c [][][][] ???
 

@@ -1623,11 +1623,11 @@ for( int i = 0 i < 3; ++i )
 
     if( w[8010b47c + i * 4] != 0 )
     {
-        if( i == 0 )
+        if( i == 0 ) // for fade we use smooth show/hide
         {
             [8010b488 + i * 4] = w(w[8010b488 + i * 4] + (((w[8010b488] + 80) * w[8010b47c]) / 100));
         }
-        else
+        else // for snow we use linear show/hide
         {
             [8010b488 + i * 4] = w(w[8010b488 + i * 4] + w[8010b47c + i * 4]);
         }
@@ -1644,6 +1644,7 @@ for( int i = 0 i < 3; ++i )
         }
     }
 
+    // add to render if current fade not 0
     if( w[8010b488 + i * 4] != 0 )
     {
         A3 = w[800bd130];
@@ -1654,31 +1655,32 @@ for( int i = 0 i < 3; ++i )
         [A3] = w((w[A3] & ff000000) | ((8010b434 + buffer_id * 24 + i * c) & 00ffffff));
     }
 
+    // when snow texture movement y offset is 0 then we start hiding it
     if( w[8010b4a0 + i * 4] != 0 )
     {
-        [V1] = w(w[8010b4a0 + i * 4] - 1);
+        [8010b4a0 + i * 4] = w(w[8010b4a0 + i * 4] - 1);
 
-        if( w[V1] == 0 )
+        if( w[8010b4a0 + i * 4] == 0 )
         {
             A0 = i;
-            funcb01c4();
+            wm_fade_out_snow();
         }
     }
 }
 
+// add syn and cos movement to snow texture
+// it always moving down the screen just shifting left and right
 A0 = -1;
 system_psyq_wait_frames();
+frame = V0;
 
-A0 = (V0 << 4) & ff0;
+A0 = (frame << 4) & ff0;
 system_get_sin();
 
 [8010b3bc + buffer_id * 3c + 1 * 14 + c] = b(V0 >> 3); // tx
 [8010b3bc + buffer_id * 3c + 1 * 14 + d] = b(bu[8010b4a0 + 1 * 4] << 3); // ty
 
-A0 = -1;
-system_psyq_wait_frames();
-
-A0 = (V0 << 4) & ff0;
+A0 = (frame << 4) & ff0;
 system_get_cos();
 
 [8010b3bc + buffer_id * 3c + 2 * 14 + c] = b(V0 >> 4); // tx
@@ -1797,36 +1799,41 @@ for( int i = 0; i < 2; ++i )
 
 
 ////////////////////////////////
-// funcb017c()
+// wm_fade_in_snow()
 
-V0 = w[8010b488 + A0 * 4] < w[8010b494 + A0 * 4];
-
-[8010b47c + A0 * 4] = w(V0 << 4);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcb01c4()
-
-if( w[8010b488 + A0 * 4] > 0 )
+if( w[8010b488 + A0 * 4] < w[8010b494 + A0 * 4] ) // not max
 {
-    [8010b47c + A0 * 4] = w(fffffff0);
+    [8010b47c + A0 * 4] = w(10); // add
 }
 else
 {
-    [8010b47c + A0 * 4] = w(0);
+    [8010b47c + A0 * 4] = w(0); // stop
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb0200()
+// wm_fade_out_snow()
+
+if( w[8010b488 + A0 * 4] > 0 ) // current fade
+{
+    [8010b47c + A0 * 4] = w(-10); // add
+}
+else
+{
+    [8010b47c + A0 * 4] = w(0); // stop
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// wm_fade_start_snow()
 
 S0 = A0;
 
-funcb017c();
+wm_fade_in_snow();
 
 [8010b4a0 + S0 * 4] = w(64);
 ////////////////////////////////
@@ -4176,7 +4183,7 @@ S2 = A0;
 V0 = w[S2 + 0000];
 S0 = w[S2 + 0004];
 S1 = w[V0 + 0008];
-800B2334	jal    funca1d14 [$800a1d14]
+800B2334	jal    wm_get_real_camera_rotation [$800a1d14]
 S5 = 0001;
 800B233C	lui    a1, $5555
 A1 = A1 | 5556;
@@ -4247,7 +4254,7 @@ V0 = V0 << 10;
 S4 = V0 >> 10;
 
 Lb2440:	; 800B2440
-800B2440	jal    funca1d14 [$800a1d14]
+800B2440	jal    wm_get_real_camera_rotation [$800a1d14]
 800B2444	nop
 S4 = V0;
 
@@ -5120,29 +5127,30 @@ Lb303c:	; 800B303C
 ////////////////////////////////
 // funcb307c()
 
-S1 = A0;
-S2 = A1;
-800B3098	jal    funca1d14 [$800a1d14]
+S1 = A0; // direction buttons mask
+S2 = A1; // circle just pressed
 
+wm_get_real_camera_rotation();
 S0 = V0;
-800B30A4	lui    v0, $8011
-V0 = h[V0 + cb04];
-800B30AC	lui    v1, $8011
-V1 = h[V1 + cb08];
-800B30B4	nop
-800B30B8	bne    v0, v1, Lb30ec [$800b30ec]
+
+V0 = h[8010cb04];
+V1 = h[8010cb08];
 S3 = S0;
-800B30C0	jal    funca97a8 [$800a97a8]
-800B30C4	nop
-V0 = V0 + S0;
-800B30CC	lui    at, $8011
-[AT + cb10] = h(V0);
-800B30D4	jal    funcb0200 [$800b0200]
-A0 = 0001;
-800B30DC	jal    funcb0200 [$800b0200]
-A0 = 0002;
-800B30E4	j      Lb3114 [$800b3114]
-800B30E8	nop
+
+if( V0 == V1 )
+{
+    funca97a8();
+
+    [8010cb10] = h(V0 + S0);
+
+    A0 = 1;
+    wm_fade_start_snow();
+
+    A0 = 2;
+    wm_fade_start_snow();
+
+    800B30E4	j      Lb3114 [$800b3114]
+}
 
 Lb30ec:	; 800B30EC
 V0 = V0 < V1;
@@ -5251,8 +5259,9 @@ A1 = A1 - V0;
 A1 = S0;
 wm_rotate_vector_by_y_angle();
 
+A0 = SP + 10;
 800B3268	jal    wm_get_position_from_pc_entity [$800aa0e0]
-A0 = SP + 0010;
+
 A0 = SP + 0010;
 V0 = h[SP + 0020];
 A1 = w[SP + 0010];
@@ -5278,8 +5287,7 @@ V0 = V0 < V1;
 V0 = 0;
 
 Lb32c8:	; 800B32C8
-800B32C8	lui    v0, $8011
-V0 = h[V0 + cb00];
+V0 = h[8010cb00];
 
 Lb32d0:	; 800B32D0
 ////////////////////////////////
@@ -6258,7 +6266,7 @@ SP = SP + 00a0;
 [SP + 0098] = w(S2);
 [SP + 0094] = w(S1);
 [SP + 0090] = w(S0);
-800B40D0	jal    funca1d14 [$800a1d14]
+800B40D0	jal    wm_get_real_camera_rotation [$800a1d14]
 [SP + 0028] = h(0);
 S0 = SP + 0028;
 A0 = S0;
@@ -6850,19 +6858,14 @@ A0 = A0 - V0;
 A0 = A0 & 00ff;
 800B4924	bne    a0, zero, Lb5244 [$800b5244]
 V0 = 0032;
-800B492C	lui    at, $1f80
 [1f80001c] = h(0);
-800B4934	lui    at, $1f80
 [1f80001a] = h(0);
-800B493C	lui    at, $1f80
 [1f800018] = h(0);
 V1 = w[S2 + 000c];
 A0 = w[S2 + 001c];
-800B494C	lui    at, $1f80
 [1f800012] = h(V0);
 V1 = V1 - A0;
 V1 = V1 >> 01;
-800B495C	lui    at, $1f80
 [1f800010] = h(V1);
 V1 = V1 << 10;
 T1 = V1 >> 10;
@@ -6875,7 +6878,6 @@ V1 = 0 - V1;
 Lb4980:	; 800B4980
 V0 = V0 - A0;
 V0 = V0 >> 01;
-800B4988	lui    at, $1f80
 [1f800014] = h(V0);
 V0 = V0 << 10;
 T2 = V0 >> 10;
@@ -9438,7 +9440,7 @@ if( V0 == 0 )
     }
 }
 
-800B74B8	jal    funca1d14 [$800a1d14]
+800B74B8	jal    wm_get_real_camera_rotation [$800a1d14]
 
 S0 = V0;
 
@@ -9596,7 +9598,7 @@ if( A0 >= 3 ) // if not player models
 
     800B76E8	jal    funcbba5c [$800bba5c]
 
-    800B76F0	jal    funca97a8 [$800a97a8]
+    funca97a8();
 
     A0 = (V0 << 10) >> 10;
     funca31c0();

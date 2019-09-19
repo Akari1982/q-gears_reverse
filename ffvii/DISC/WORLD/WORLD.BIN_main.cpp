@@ -1058,7 +1058,7 @@ return w[800e5648];
 
 
 ////////////////////////////////
-// funca1d14()
+// wm_get_real_camera_rotation()
 
 return w[800e560c] & fff;
 ////////////////////////////////
@@ -1540,16 +1540,16 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
             if( w[800e5634] == 3 ) // snowfield
             {
-                if( buttons & 0020 ) // circle
+                if( ( buttons & 0020 ) && ( ( w[800c84c8] & 0020 ) == 0 ) ) // circle just pressed
                 {
-                    A1 = (w[800c84c8] & 0020) < 1; // circle
+                    A1 = 1;
                 }
                 else
                 {
                     A1 = 0;
                 }
 
-                A0 = buttons & f000;
+                A0 = buttons & f000; // direction buttons
                 funcb307c();
 
                 [800e5608] = w(w[800e5608] + V0);
