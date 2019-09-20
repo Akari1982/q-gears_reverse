@@ -1841,7 +1841,7 @@ wm_fade_in_snow();
 
 
 ////////////////////////////////
-// funcb0240()
+// wm_fade_is_stopped()
 
 return w[8010b47c] < 1;
 ////////////////////////////////
@@ -4669,24 +4669,19 @@ SP = SP + 0018;
 800B29C4	jr     ra 
 800B29C8	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funcb29cc
-800B29CC	addiu  sp, sp, $ffa0 (=-$60)
-[SP + 0044] = w(S3);
+
 S3 = 0;
-[SP + 004c] = w(S5);
 S5 = SP + 0018;
-[SP + 0050] = w(S6);
 S6 = 8010cac0;
-[SP + 0054] = w(S7);
 S7 = 8010cacc;
-[SP + 0040] = w(S2);
 S2 = S7;
-[SP + 003c] = w(S1);
 S1 = 0;
-[SP + 0048] = w(S4);
 S4 = 0;
-[SP + 0058] = w(RA);
-[SP + 0038] = w(S0);
 
 Lb2a18:	; 800B2A18
 V0 = w[S2 + 0000];
@@ -4964,9 +4959,9 @@ Lb2e34:	; 800B2E34
 A0 = 0;
 funca1d54();
 
-A0 = 0001;
-800B2E40	jal    funca2108 [$800a2108]
-A1 = 0005;
+A0 = 1; // unlock
+A1 = 5;
+wm_set_pc_manual_input();
 
 Lb2e48:	; 800B2E48
 S2 = S2 + 0004;
@@ -4977,18 +4972,6 @@ S3 = S3 + 0001;
 V0 = S3 < 0003;
 800B2E58	bne    v0, zero, Lb2a18 [$800b2a18]
 S4 = S4 + 0010;
-RA = w[SP + 0058];
-S7 = w[SP + 0054];
-S6 = w[SP + 0050];
-S5 = w[SP + 004c];
-S4 = w[SP + 0048];
-S3 = w[SP + 0044];
-S2 = w[SP + 0040];
-S1 = w[SP + 003c];
-S0 = w[SP + 0038];
-SP = SP + 0060;
-800B2E88	jr     ra 
-800B2E8C	nop
 ////////////////////////////////
 
 
@@ -5006,9 +4989,9 @@ if( w[8010caf4] != 0 )
         [8010caf4] = w(0);
         [8010ca8c] = w(0);
 
-        A0 = 1;
+        A0 = 1; // unlock
         A1 = 5;
-        800B2EDC	jal    funca2108 [$800a2108]
+        wm_set_pc_manual_input();
     }
     else if( V1 == 2 )
     {
@@ -5097,199 +5080,133 @@ Lb3010:	; 800B3010
 800B3010	jr     ra 
 V0 = V1;
 ////////////////////////////////
-// funcb3018
+
+
+
+////////////////////////////////
+// funcb3018()
 
 V1 = w[8010ca8c];
-V0 = 0001;
-[8010caf4] = w(V0);
-800B302C	beq    v1, v0, Lb303c [$800b303c]
 
-[8010ca8c] = w(0);
-
-Lb303c:	; 800B303C
+[8010caf4] = w(1);
+if( V1 != 1 )
+{
+    [8010ca8c] = w(0);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb3044()
+// wm_snow_reset()
 
-[8010cafc] = h(A0);
-[8010cb10] = h(0);
+[8010cafc] = h(A0); // current snowpole
+[8010cb00] = h(0); // camera rotation speed while snow
+[8010cb04] = h(0); // snow value
+[8010cb08] = h(0); // snow mark
 [8010cb0c] = h(0);
-[8010cb08] = h(0);
-[8010cb04] = h(0);
-[8010cb00] = h(0);
+[8010cb10] = h(0); // rotation value
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb307c()
+// wm_snow_update()
 
-S1 = A0; // direction buttons mask
-S2 = A1; // circle just pressed
+moving = A0; // direction buttons mask
+pole_add = A1; // circle just pressed
 
 wm_get_real_camera_rotation();
-S0 = V0;
+cam_rot = V0;
 
-V0 = h[8010cb04];
-V1 = h[8010cb08];
-S3 = S0;
-
-if( V0 == V1 )
+// start snow, save model base rotation
+// because we want model stay in same direction while camera rotating
+if( h[8010cb04] == h[8010cb08] )
 {
-    funca97a8();
-
-    [8010cb10] = h(V0 + S0);
+    funca97a8(); // get model rot
+    [8010cb10] = h(V0 + cam_rot);
 
     A0 = 1;
     wm_fade_start_snow();
 
     A0 = 2;
     wm_fade_start_snow();
-
-    800B30E4	j      Lb3114 [$800b3114]
+}
+// fix model rotation because of snow rotation
+else if( h[8010cb04] < h[8010cb08] )
+{
+    A0 = h[8010cb10] - cam_rot;
+    funca94d0(); // set active entity direction and rotation
 }
 
-Lb30ec:	; 800B30EC
-V0 = V0 < V1;
-800B30F0	beq    v0, zero, Lb3114 [$800b3114]
-800B30F4	nop
-800B30F8	lui    a0, $8011
-A0 = hu[A0 + cb10];
-800B3100	nop
-A0 = A0 - S0;
-A0 = A0 << 10;
-800B310C	jal    funca94d0 [$800a94d0]
-A0 = A0 >> 10;
+// if player is moving or it's snowing
+// snow cant start while we stand
+if( ( moving != 0 ) || ( h[8010cb04] < h[8010cb08] ) )
+{
+    [8010cb04] = h(h[8010cb04] - 1); // current snow value
+}
 
-Lb3114:	; 800B3114
-800B3114	bne    s1, zero, Lb313c [$800b313c]
-A0 = 0;
-800B311C	lui    v0, $8011
-V0 = h[V0 + cb04];
-800B3124	lui    v1, $8011
-V1 = h[V1 + cb08];
-800B312C	nop
-V0 = V0 < V1;
-800B3134	beq    v0, zero, Lb3140 [$800b3140]
-800B3138	nop
+// reset snow cycle
+if( h[8010cb04] <= 0 )
+{
+    wm_random_get();
+    [8010cb04] = h(V0 + 80); // current snow value 80 - 17f
+    [8010cb0c] = h(V0 + 80); // 80 - 17f
 
-Lb313c:	; 800B313C
-A0 = 0001;
+    wm_random_get();
+    [8010cb08] = h((V0 / 8) + 40); // snow mark 40 - 5f
 
-Lb3140:	; 800B3140
-800B3140	lui    v0, $8011
-V0 = hu[V0 + cb04];
-800B3148	nop
-V0 = V0 - A0;
-800B3150	lui    at, $8011
-[AT + cb04] = h(V0);
-V0 = V0 << 10;
-800B315C	bgtz   v0, Lb31b4 [$800b31b4]
+    wm_random_get();
+    [8010cb00] = h(((V0 & 2) - 1) * 10);
+}
 
-wm_random_get();
+// if it's snow - return add rotation
+if( h[8010cb04] < h[8010cb08] )
+{
+    return h[8010cb00];
+}
 
-V0 = V0 + 0080;
-800B3170	lui    at, $8011
-[AT + cb0c] = h(V0);
-800B3178	lui    at, $8011
-[AT + cb04] = h(V0);
-wm_random_get();
+if( pole_add != 0 )
+{
+    A0 = h[8010cafc] + 15; // get current snowpole
+    wm_set_active_entity_with_model_id();
 
-V0 = V0 >> 03;
-V0 = V0 + 0040;
-800B3190	lui    at, $8011
-[AT + cb08] = h(V0);
-wm_random_get();
+    // if this snowpole not shown on field add it
+    if( V0 == 0 )
+    {
+        wm_insert_in_model_struct_list();
 
-V0 = V0 & 0002;
-800B31A4	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 << 04;
-800B31AC	lui    at, $8011
-[AT + cb00] = h(V0);
+        A0 = h[8010cafc] + 15;
+        wm_init_model_struct_list_element();
+    }
 
-Lb31b4:	; 800B31B4
-800B31B4	lui    v0, $8011
-V0 = h[V0 + cb04];
-800B31BC	lui    v1, $8011
-V1 = h[V1 + cb08];
-800B31C4	nop
-V0 = V0 < V1;
-800B31CC	bne    v0, zero, Lb32c8 [$800b32c8]
-800B31D0	nop
-800B31D4	beq    s2, zero, Lb32a8 [$800b32a8]
-800B31D8	nop
-800B31DC	lui    a0, $8011
-A0 = h[A0 + cafc];
-800B31E4	jal    wm_set_active_entity_with_model_id [$800a993c]
-A0 = A0 + 0015;
-800B31EC	bne    v0, zero, Lb320c [$800b320c]
-S0 = 0 - S3;
-800B31F4	jal    wm_insert_in_model_struct_list [$800a8a1c]
-800B31F8	nop
-800B31FC	lui    a0, $8011
-A0 = h[A0 + cafc];
-800B3204	jal    wm_init_model_struct_list_element [$800a9334]
-A0 = A0 + 0015;
+    [8010cafc] = h((h[8010cafc] + 1) % 3); // move ti next snowpole
 
-Lb320c:	; 800B320C
-800B320C	lui    v0, $5555
-800B3210	lui    a1, $8011
-A1 = h[A1 + cafc];
-V0 = V0 | 5556;
-A1 = A1 + 0001;
-800B3220	mult   a1, v0
-A0 = SP + 0020;
-S0 = S0 << 10;
-S0 = S0 >> 10;
-[SP + 0022] = h(0);
-[SP + 0020] = h(0);
-V0 = 012c;
-[SP + 0024] = h(V0);
-V0 = A1 >> 1f;
-800B3244	mfhi   v1
-V1 = V1 - V0;
-V0 = V1 << 01;
-V0 = V0 + V1;
-A1 = A1 - V0;
-800B3258	lui    at, $8011
-[AT + cafc] = h(A1);
-A1 = S0;
-wm_rotate_vector_by_y_angle();
+    [SP + 20] = h(0);
+    [SP + 22] = h(0);
+    [SP + 24] = h(12c);
 
-A0 = SP + 10;
-800B3268	jal    wm_get_position_from_pc_entity [$800aa0e0]
+    A0 = SP + 20;
+    A1 = -cam_rot;
+    wm_rotate_vector_by_y_angle();
 
-A0 = SP + 0010;
-V0 = h[SP + 0020];
-A1 = w[SP + 0010];
-V1 = h[SP + 0024];
-A2 = w[SP + 0018];
-V0 = V0 + A1;
-V1 = V1 + A2;
-[SP + 0010] = w(V0);
-800B3290	jal    funca9d5c [$800a9d5c]
-[SP + 0018] = w(V1);
-800B3298	jal    funca94f4 [$800a94f4]
-A0 = S0;
-wm_set_pc_entity_as_active_entity();
+    A0 = SP + 10;
+    wm_get_position_from_pc_entity();
 
-Lb32a8:	; 800B32A8
-800B32A8	lui    v0, $8011
-V0 = h[V0 + cb04];
-800B32B0	lui    v1, $8011
-V1 = h[V1 + cb08];
-800B32B8	nop
-V0 = V0 < V1;
-800B32C0	beq    v0, zero, Lb32d0 [$800b32d0]
-V0 = 0;
+    [SP + 10] = w(w[SP + 10] + h[SP + 20]);
+    [SP + 18] = w(w[SP + 18] + h[SP + 24]);
 
-Lb32c8:	; 800B32C8
-V0 = h[8010cb00];
+    A0 = SP + 10; // position
+    funca9d5c(); // set position
 
-Lb32d0:	; 800B32D0
+    A0 = -cam_rot;
+    funca94f4(); // set all kinds of rotation to snowpole
+
+    // set pc entity as active again
+    wm_set_pc_entity_as_active_entity();
+}
+
+return 0;
 ////////////////////////////////
 
 
@@ -9372,39 +9289,34 @@ else
     // 00: 1st pole address
     // 01: 2nd pole address
     // 02: 3rd pole address 
-    [8010cafc] = h(bu[8009c6e4 + f9f]);
-    [8010cb10] = h(0);
+    [8010cafc] = h(bu[8009c6e4 + f9f]); // current snowpole
+    [8010cb00] = h(0); // add camera rotation
+    [8010cb04] = h(0); // snow value
+    [8010cb08] = h(0); // snow mark
     [8010cb0c] = h(0);
-    [8010cb08] = h(0);
-    [8010cb04] = h(0);
-    [8010cb00] = h(0);
+    [8010cb10] = h(0); // stored pc rotation
 
     // set snow pole
     if( w[8011626c] == 1 )
     {
-        S0 = 0;
-        S1 = 8009c6e4 + f8c; // snow pole coordinate. 
-        loopb73f0:	; 800B73F0
-            if( w[S1 + 0] != 0 )
+        for( int i = 0; i < 3; ++i )
+        {
+            if( w[8009c6e4 + f8c + i * 4] != 0 )
             {
                 wm_insert_in_model_struct_list();
 
-                A0 = S0 + 15;
+                A0 = i + 15;
                 wm_init_model_struct_list_element();
 
-                [SP + 10] = w(hu[S1 + 0]); // x
+                [SP + 10] = w(hu[8009c6e4 + f8c + i * 4 + 0]); // x
                 [SP + 14] = w(0);
-                [SP + 18] = w(hu[S1 + 2]); // y
+                [SP + 18] = w(hu[8009c6e4 + f8c + i * 4 + 2]); // y
 
                 A0 = w[8010ad3c];
                 A1 = SP + 10;
                 funca9c64(); // set pos here
             }
-
-            S0 = S0 + 1;
-            S1 = S1 + 4;
-            V0 = S0 < 3;
-        800B7434	bne    v0, zero, loopb73f0 [$800b73f0]
+        }
     }
     // remove snow pole
     else

@@ -310,8 +310,9 @@ A0 = -1;
 800BBCA8	j      Lbbcbc [$800bbcbc]
 
 Lbbcb0:	; 800BBCB0
-800BBCB0	jal    funca2108 [$800a2108]
-A1 = 0002;
+A1 = 2;
+wm_set_pc_manual_input();
+
 
 Lbbcbc:	; 800BBCBC
 [801163d4] = w(1);
@@ -461,7 +462,7 @@ wm_get_position2_from_active_entity();
 
 A0 = 1;
 A1 = 2;
-funca2108();
+wm_set_pc_manual_input();
 
 if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
 {
@@ -616,7 +617,7 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
 
         A0 = 0;
         A1 = 6;
-        800BBFC4	jal    funca2108 [$800a2108]
+        wm_set_pc_manual_input();
 
         if( S1 == 4 )
         {

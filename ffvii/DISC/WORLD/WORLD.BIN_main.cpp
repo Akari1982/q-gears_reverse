@@ -1302,35 +1302,38 @@ else
 
 
 ////////////////////////////////
-// funca2108()
+// wm_set_pc_manual_input()
 
-S0 = A1;
+manual = A0;
+reason = A1;
 
-if( A0 != 0 )
+if( manual != 0 )
 {
-    if( ( w[800e5600] != S0 ) && ( w[800e5600] != 6 ) )
+    // if lock and unlock reason don't match then don't unlock
+    if( ( w[800e5600] == reason ) || ( w[800e5600] == 6 ) )
     {
-        return;
+        [800e55fc] = w(1); // manual control
+
+        A0 = SP + 10;
+        wm_get_position_from_pc_entity();
+
+        if( ( reason != 3 ) || ( w[800e5600] == 6 ) )
+        {
+            A1 = 1;
+        }
+        else
+        {
+            A1 = 0;
+        }
+
+        A0 = SP + 10;
+        funca6994();
     }
-
-    [800e55fc] = w(1); // manual control
-
-    A0 = SP + 10;
-    wm_get_position_from_pc_entity();
-
-    A1 = 0;
-    if( ( S0 != 3 ) || ( w[800e5600] == 6 ) )
-    {
-        A1 = 1;
-    }
-
-    A0 = SP + 10;
-    800A2170	jal    funca6994 [$800a6994]
 }
 else
 {
     [800e55fc] = w(0); // input disabled
-    [800e5600] = w(S0);
+    [800e5600] = w(reason);
 }
 ////////////////////////////////
 
@@ -1548,11 +1551,10 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                 {
                     A1 = 0;
                 }
-
                 A0 = buttons & f000; // direction buttons
-                funcb307c();
+                wm_snow_update();
 
-                [800e5608] = w(w[800e5608] + V0);
+                [800e5608] = w(w[800e5608] + V0); // add camera rotation
             }
             else // planet or underwater
             {
@@ -2069,9 +2071,9 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
                             A1 = 1; // subtract
                             wm_set_fade_out();
 
-                            A0 = 0;
+                            A0 = 0; // lock
                             A1 = 1;
-                            funca2108();
+                            wm_set_pc_manual_input();
 
                             [800e566c] = w(2);
                         }
@@ -2300,9 +2302,9 @@ if( w[800e5658] != 0 )
             A0 = w[800e5650];
             wm_set_camera_view();
 
-            A0 = 0;
+            A0 = 0; // lock
             A1 = 2;
-            funca2108();
+            wm_set_pc_manual_input();
         }
 
         [800e5658] = w(0);
@@ -2606,7 +2608,7 @@ switch( w[800e566c] )
 
     case 2:
     {
-        800A3AE8	jal    funcb0240 [$800b0240]
+        wm_fade_is_stopped();
         if( V0 != 0 )
         {
             800A3AF8	jal    funca9a70 [$800a9a70]
@@ -2629,9 +2631,9 @@ switch( w[800e566c] )
             A0 = 3;
             wm_remove_mutex_priority();
 
-            A0 = 1;
+            A0 = 1; // unlock
             A1 = 1;
-            funca2108();
+            wm_set_pc_manual_input();
 
             800A3B48	jal    funcb7a40 [$800b7a40]
 
@@ -2648,23 +2650,24 @@ switch( w[800e566c] )
     }
     break;
 
-    case 4 5:
+    case 3: // battle
+    {
+        [800e566c] = w(9);
+    }
+    break;
+
+    case 4 5: // submarine float submerge
     {
         A0 = SP + 10;
         wm_get_position_from_pc_entity();
 
-        V0 = w[SP + 0014];
-        A0 = w[800e5644];
-        A0 = V0 + A0;
-        800A3B94	jal    funcaa02c [$800aa02c]
+        A0 = w[SP + 14] + w[800e5644];
+        funcaa02c(); // set y
 
-        V1 = w[800e5644];
-        V0 = V1 >> 02;
-        V0 = V0 + V1;
-        [800e5644] = w(V0);
-        800A3BB8	jal    funcb0240 [$800b0240]
+        [800e5644] = w(w[800e5644] + w[800e5644] / 4); // speed up
 
-        if( V0 != 0 )
+        wm_fade_is_stopped();
+        if( V0 != 0 ) // fade stopped
         {
             if( w[800e566c] == 4 )
             {
@@ -2676,12 +2679,6 @@ switch( w[800e566c] )
             }
         }
     }
-
-    case 3:
-    {
-        [800e566c] = w(9);
-    }
-    break;
 
     default:
     {
@@ -2710,7 +2707,6 @@ switch( w[800e566c] )
         }
     }
 }
-La3c64:	; 800A3C64
 ////////////////////////////////
 
 
@@ -2826,9 +2822,9 @@ SP = SP + 0018;
 A0 = 0;
 wm_set_field_to_load();
 
-A0 = 0;
+A0 = 0; // lock
 A1 = 0;
-funca2108();
+wm_set_pc_manual_input();
 
 A0 = 10;
 A1 = 1; // subtract
@@ -2846,9 +2842,9 @@ wm_set_fade_out();
 A0 = 0;
 wm_set_field_to_load();
 
-A0 = 0;
+A0 = 0; // lock
 A1 = 0;
-funca2108();
+wm_set_pc_manual_input();
 
 A0 = 10;
 A1 = 1; // subtract
@@ -2872,8 +2868,7 @@ wm_set_field_to_load();
 
 S0 = A0;
 
-V0 = w[800e566c];
-if( V0 <= 0 )
+if( w[800e566c] <= 0 )
 {
     [800e563c] = w(0);
     [800e5638] = w(0);
@@ -2885,10 +2880,9 @@ if( w[800e566c] == 1 )
 {
     [800e566c] = w(3);
 
-    A0 = 0;
+    A0 = 0; // lock
     A1 = 0;
-    funca2108();
-
+    wm_set_pc_manual_input();
 
     A0 = S0;
     wm_set_field_to_load();
@@ -2898,21 +2892,21 @@ if( w[800e566c] == 1 )
 
 
 ////////////////////////////////
-// funca3f4c
+// funca3f4c()
+// trigger battle
 
 V0 = w[800e566c];
 S0 = A0;
-800A3F60	bgtz   v0, La3f8c [$800a3f8c]
 
-[800e563c] = w(0);
-[800e5638] = w(0);
-[800e55f4] = w(1);
-[800e566c] = w(1);
+if( V0 <= 0 )
+{
+    [800e563c] = w(0);
+    [800e5638] = w(0);
+    [800e55f4] = w(1);
+    [800e566c] = w(1);
+}
 
-La3f8c:	; 800A3F8C
-V0 = w[800e566c];
-800A3F94	nop
-800A3F98	addiu  v0, v0, $ffff (=-$1)
+V0 = w[800e566c] - 1;
 V0 = V0 < 0002;
 800A3FA0	beq    v0, zero, La3ff4 [$800a3ff4]
 
@@ -2921,11 +2915,11 @@ V0 = bu[80071e30];
 800A3FB4	bne    v0, zero, La3fe4 [$800a3fe4]
 V0 = 001e;
 
-[800e566c] = w(3);
+[800e566c] = w(3); // set battle state
 
-A0 = 0;
+A0 = 0; // lock
 A1 = 0;
-funca2108();
+wm_set_pc_manual_input();
 
 800A3FD4	jal    funcb77a8 [$800b77a8]
 A0 = S0;
@@ -2933,10 +2927,8 @@ A0 = S0;
 800A3FE0	nop
 
 La3fe4:	; 800A3FE4
-800A3FE4	lui    at, $800e
-[AT + 5670] = w(V0);
+[800e5670] = w(V0);
 800A3FEC	jal    funcb7c44 [$800b7c44]
-800A3FF0	nop
 
 La3ff4:	; 800A3FF4
 ////////////////////////////////
@@ -2958,9 +2950,9 @@ if( w[800e566c] == 1 )
 {
     [800e566c] = w(3);
 
-    A0 = 0;
+    A0 = 0; // lock
     A1 = 0;
-    funca2108();
+    wm_set_pc_manual_input();
 
     800A4068	jal    funcb7838 [$800b7838]
 }
@@ -2994,7 +2986,7 @@ wm_set_camera_mode();
 
 ////////////////////////////////
 // funca40f0
-800A40F0
+
 A0 = A0 << 10;
 A0 = A0 >> 10;
 800A40F8	bltz   a0, La4130 [$800a4130]
@@ -3014,8 +3006,6 @@ La412c:	; 800A412C
 V0 = 0;
 
 La4130:	; 800A4130
-800A4130	jr     ra 
-800A4134	nop
 ////////////////////////////////
 
 
@@ -3068,9 +3058,9 @@ S0 = A0;
 
 if( S0 == 1 )
 {
-    A0 = 0;
+    A0 = 0; // lock
     A1 = 4;
-    funca2108();
+    wm_set_pc_manual_input();
 
     A0 = 4;
     A1 = 1; // subtract
@@ -3078,9 +3068,9 @@ if( S0 == 1 )
 }
 else if( S0 == 4 )
 {
-    A0 = 1;
+    A0 = 1; // unlock
     A1 = 4;
-    funca2108();
+    wm_set_pc_manual_input();
 
     A0 = 10;
     A1 = 1; // subtract
@@ -3119,8 +3109,8 @@ V0 = 0003;
 800A42BC	nop
 
 La42c0:	; 800A42C0
-800A42C0	jal    funcb0240 [$800b0240]
-800A42C4	nop
+wm_fade_is_stopped();
+
 800A42C8	beq    v0, zero, La447c [$800a447c]
 800A42CC	nop
 800A42D0	lui    at, $800e
@@ -3719,7 +3709,7 @@ La4668:	; 800A4668
 
         if( w[800e566c] == 1 )
         {
-            800A4CA4	jal    funcb832c [$800b832c]
+            funcb832c();
         }
 
         A0 = h[8011650c];

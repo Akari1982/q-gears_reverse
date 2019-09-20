@@ -2034,7 +2034,7 @@ La25d4:	; 800A25D4
 800A2604	sltiu  a1, v0, $0001
 
 La2608:	; 800A2608
-800A2608	jal    funcb307c [$800b307c]
+800A2608	jal    wm_snow_update [$800b307c]
 800A260C	nop
 800A2610	lui    v1, $800e
 800A2614	lw     v1, $5608(v1)
@@ -22443,7 +22443,7 @@ funcb3044:	; 800B3044
 800B3078	nop
 
 
-funcb307c:	; 800B307C
+wm_snow_update:	; 800B307C
 800B307C	addiu  sp, sp, $ffc0 (=-$40)
 800B3080	sw     s1, $002c(sp)
 800B3084	addu   s1, a0, zero

@@ -1079,7 +1079,7 @@ switch( opcode )
 
         A0 = V0;
         A1 = 3;
-        800AC874	jal    funca2108 [$800a2108]
+        wm_set_pc_manual_input();
 
         return 0;
     }

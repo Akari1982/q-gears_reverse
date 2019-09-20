@@ -194,6 +194,7 @@
 
 800e55fc [][][][] manual control of PC entity. If set then we handle buttons.
 
+800e5600 [][][][] pc control lock reason (0 - map/field/battle load, 3 - script).
 800e5604 [][][][] not used.
 800e5608 [][][][] desired camera rotation. Set to 0 when switching to top down view.
 800e560c [][][][] real camera rotation.
@@ -215,6 +216,7 @@
 800e5638 [][][][] ??? (3e8-3a98)
 800e563c [][][][] maybe camera view switching progress (480-780)
 
+800e5644 [][][][] submarine auto float/submerge speed.
 800e5648 [][][][] camera view (top-down or front view).
 800e564c [][][][] desired screen offset Y.
 800e5650 [][][][] same as 800e5648.
@@ -223,8 +225,12 @@
 
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
 800e566c [][][][] id of automation sequence:
-                    4 - submerge underwater
-                    5 - float to planet
+                    3 - start battle
+                    4 - submerge underwater.
+                    5 - float to planet.
+                    6 - load underwater after submerge.
+                    7 - load planet after float.
+                    9 - finish map and load battle.
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
 800e5680 buffer for skybox texture settings (0x2 items 0xc size).
@@ -459,6 +465,12 @@
 8010b4a8 [][][][] some texture move y for texture 2 fade (snow).
 
 8010ca8c [][][][] ???
+
+8010cafc [][][][] current snowpole.
+8010cb00 [][][][] add camera rotation during snow.
+8010cb04 [][][][] snow value ( snow and rotate camera while 8010cb04 <= 8010cb08 ).
+8010cb08 [][][][] snow mark.
+8010cb10 [][][][] store here model rot + camera rot.
 
 8010cb18 [][][][] some x movement addition.
 8010cb1c [][][][] some z movement addition.
