@@ -191,6 +191,7 @@
 800d05ec script data from .TXZ file (.EV file data).
 
 800e55f0 [][][][] screen offset Y.
+800e55f4 [][][][] ???
 
 800e55fc [][][][] manual control of PC entity. If set then we handle buttons.
 
@@ -225,7 +226,9 @@
 
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
 800e566c [][][][] id of automation sequence:
-                    3 - start battle
+                   -f - init value before inner cycle
+                    0 - init value before map cycle.
+                    3 - start battle.
                     4 - submerge underwater.
                     5 - float to planet.
                     6 - load underwater after submerge.
@@ -233,6 +236,7 @@
                     9 - finish map and load battle.
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
+800e567c [][][][] pointer to loaded texture prior to start world mat then use this data.
 800e5680 buffer for skybox texture settings (0x2 items 0xc size).
 
 800e5698 looks like main camera rotation matrix.
@@ -536,7 +540,8 @@
 80115a68 [][][][] init with 0.
 
 8011626c [][][][] we get value from here in 0x05 of 0x11b opcode. If 1 then place snow pole on map or remove their coords from savemap otherwise.
-
+80116270 [][][][] set to 0 when reset game from WM.
+80116274 [][][][] set to 0 when reset game from WM.
 80116278 [][][][] init with 0.
 
 80116288 [][]     cursor first position.

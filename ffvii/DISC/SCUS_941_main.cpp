@@ -551,8 +551,9 @@ A3 = 0;
 loop1195c:	; 8001195C
 8001195C	jal    system_cdrom_read_chain [$80034b44]
 80011960	nop
+A2 = 801b0000;
 80011964	bne    v0, zero, loop1195c [$8001195c]
-80011968	lui    a2, $801b
+
 8001196C	lui    a0, $8005
 A0 = w[A0 + 8d04];
 80011974	lui    a1, $8005
@@ -562,7 +563,7 @@ A3 = 0;
 
 loop11984:	; 80011984
 80011984	jal    system_cdrom_read_chain [$80034b44]
-80011988	nop
+
 8001198C	bne    v0, zero, loop11984 [$80011984]
 80011990	lui    a2, $801b
 A2 = A2 | c800;
@@ -962,18 +963,17 @@ L11cf8:	; 80011CF8
 
             func112e8(); // load "WORLD\WORLD.BIN"
 
-            V1 = w[80071e28];
-            if( V1 == 0 )
+            if( w[80071e28] == 0 )
             {
                 [800965ec] = h(3);
                 [8009c560] = h(1);
             }
-            else if( V1 == 1 )
+            else if( w[80071e28] == 1 )
             {
                 [800965ec] = h(3);
                 [8009c560] = h(2);
             }
-            else if( V1 == 2 )
+            else if( w[80071e28] == 2 )
             {
                 [8009abf5] = b(a);
             }

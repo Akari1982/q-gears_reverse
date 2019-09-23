@@ -251,7 +251,7 @@ else
 }
 
 // block 2
-txz_wm_tex = S0 = txz_data + (w[txz_data + 8] >> 2) << 2;
+S0 = txz_data + (w[txz_data + 8] >> 2) << 2;
 
 V1 = 800bd148;
 loopa0fd0:	; 800A0FD0
@@ -281,7 +281,7 @@ for( int i = 0; i < 3800; ++i )
     [800d75ec + i * 4] = w(w[S0 + i * 4]);
 }
 
-if( w[800e5634] >= 2 )
+if( w[800e5634] >= 2 ) // underwater or snowfield
 {
     [800d75ec] = w(0);
 }
@@ -318,14 +318,14 @@ A2 = 0;
 A3 = 0;
 system_psyq_clear_image();
 
-if( w[800e5634] == 2 )
+if( w[800e5634] == 2 ) // underwater
 {
-    800A1158	jal    funcb0250 [$800b0250]
+    funcb0250();
 
     for( int i = 1; i < 10; ++i )
     {
         A0 = i;
-        800A1160	jal    funcb0334 [$800b0334]
+        funcb0334();
 
         A0 = 0;
         system_psyq_draw_sync();
@@ -2682,18 +2682,16 @@ switch( w[800e566c] )
 
     default:
     {
-        V0 = w[800e566c];
-        if( V0 < 0 )
+        if( w[800e566c] < 0 )
         {
-            V0 = V0 + 1;
-            [800e566c] = w(V0);
+            [800e566c] = w(w[800e566c] + 1);
 
-            if( V0 == 0 )
+            if( w[800e566c] == 0 )
             {
                 A0 = 1;
                 system_psyq_set_disp_mask();
 
-                if( w[800e5634] != 2 )
+                if( w[800e5634] != 2 ) // not underwater
                 {
                     [800e55f4] = w(1);
                 }
@@ -2936,7 +2934,7 @@ La3ff4:	; 800A3FF4
 
 
 ////////////////////////////////
-// funca4008()
+// wm_reset_game()
 
 if( w[800e566c] <= 0 )
 {
@@ -2954,7 +2952,7 @@ if( w[800e566c] == 1 )
     A1 = 0;
     wm_set_pc_manual_input();
 
-    800A4068	jal    funcb7838 [$800b7838]
+    funcb7838();
 }
 ////////////////////////////////
 
@@ -3337,11 +3335,12 @@ return w[800e5674];
 S2 = A0; // 80071e28
 S4 = A1; // 800730cc
 S7 = A2; // 80095ddc
+[800e567c] = w(A3); // already loaded data
 
 [800e566c] = w(0);
-[800e567c] = w(A3);
 
-La4668:	; 800A4668
+while( w[800e566c] < 9 )
+{
     if( w[S2] != 0 )
     {
         [800e5634] = w(bu[8009c6e4 + fa2]);
@@ -3412,11 +3411,11 @@ La4668:	; 800A4668
 
     A0 = S2;
     A1 = S4;
-    A2 = w[800e5634] ^ 3;
+    A2 = w[800e5634] ^ 3; // world id
     A2 = 0 < A2;
     funcb7228(); // we init models here
 
-    if( w[800e5634] == 2 )
+    if( w[800e5634] == 2 ) // world id
     {
         A0 = 2;
         wm_set_camera_view();
@@ -3489,7 +3488,7 @@ La4668:	; 800A4668
         }
     }
 
-    V0 = w[800e5634];
+    V0 = w[800e5634]; // world id
     if( V0 == 2 )
     {
         A0 = 1;
@@ -3530,7 +3529,8 @@ La4668:	; 800A4668
 
     [800e566c] = w(-f);
 
-    La49a4:	; 800A49A4
+    while( w[800e566c] < 6 )
+    {
         wm_prepare_for_render();
 
         [800bd13c] = w(0);
@@ -3611,7 +3611,7 @@ La4668:	; 800A4668
         800A4B14	beq    v0, zero, La4b40 [$800a4b40]
 
         La4b1c:	; 800A4B1C
-        V0 = w[800e5634];
+        V0 = w[800e5634]; // world id
         800A4B24	nop
         800A4B28	bne    v0, 2, La4bdc [$800a4bdc]
         800A4B2C	nop
@@ -3723,11 +3723,9 @@ La4668:	; 800A4668
 
         if( ( V0 & 090f ) == 090f ) // reset game if all shifts and start + select pressed
         {
-            800A4CEC	jal    funca4008 [$800a4008]
+            wm_reset_game();
         }
-
-        V0 = w[800e566c] < 6;
-    800A4D04	bne    v0, zero, La49a4 [$800a49a4]
+    }
 
     A0 = 1;
     wm_script_run_system_function_on_system_entity();
@@ -3766,9 +3764,7 @@ La4668:	; 800A4668
     800A4D7C	bne    v0, zero, loopa4d74 [$800a4d74]
 
     800A4D84	jal    funca3908 [$800a3908]
-
-    V0 = w[800e566c] < 9;
-800A4D9C	bne    v0, zero, La4668 [$800a4668]
+}
 
 wm_get_current_render_buffer_id();
 ////////////////////////////////

@@ -283,6 +283,7 @@
 
 80071c24 accessory data in kernel (0x10 size).
 
+80071e28 [][][][] some data world map related.
 80071e2c number of opened windows. Increment this during window initialization. Decrement during closing.
 
 80071e44 armor data in kernel (0x24 size).
@@ -669,6 +670,7 @@
 + b2          triangle lock array (bit per triangle)
 + f2          array of background state.
 
+
 8009c564 [][][][] store here which reverb channel to update (6 - left and right) in spu update.
 8009c56c [][]     store here reverb depth left in spu update.
 8009c56e [][]     store here reverb depth right in spu update.
@@ -759,6 +761,7 @@
                      0xfffc0000 y.
     +0f98 [][][][] ???
     +0f9c [][]
+    +0fa2 []       set id from here as world map to load (planet, underwater, snowfield)
     +0fa4 savemap memory bank 7/f start
     +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
     +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
