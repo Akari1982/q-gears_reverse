@@ -227,56 +227,38 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funcbbbb0
-800BBBB0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-800BBBB8	jal    wm_get_pc_entity_terrain_id [$800a9a44]
-[SP + 0010] = w(S0);
-800BBBC0	jal    funca9240 [$800a9240]
+// funcbbbb0()
+
+wm_get_pc_entity_terrain_id();
 S0 = V0;
-800BBBC8	beq    v0, zero, Lbbbd8 [$800bbbd8]
-800BBBCC	lui    v0, $221b
-800BBBD0	j      Lbbc30 [$800bbc30]
-V0 = V0 | 0f03;
 
-Lbbbd8:	; 800BBBD8
-800BBBD8	jal    wm_get_model_id_from_pc_entity [$800a9174]
-800BBBDC	nop
+funca9240(); // check chokobo models and some else
+
+if( V0 != 0 )
+{
+    return (221b0f03 >> S0) & 1;
+}
+
+wm_get_model_id_from_pc_entity();
 V1 = V0;
-V0 = 0005;
-800BBBE8	beq    v1, v0, Lbbc30 [$800bbc30]
-V0 = 0070;
-V0 = V1 < 0006;
-800BBBF4	beq    v0, zero, Lbbc0c [$800bbc0c]
-V0 = 0003;
-800BBBFC	beq    v1, v0, Lbbc38 [$800bbc38]
-V0 = S0 < 0001;
-800BBC04	j      Lbbc38 [$800bbc38]
-V0 = 0;
 
-Lbbc0c:	; 800BBC0C
-V0 = 0006;
-800BBC10	beq    v1, v0, Lbbc2c [$800bbc2c]
-800BBC14	lui    v0, $221b
-V0 = 000d;
-800BBC1C	beq    v1, v0, Lbbc38 [$800bbc38]
-V0 = 0001;
-800BBC24	j      Lbbc38 [$800bbc38]
-V0 = 0;
-
-Lbbc2c:	; 800BBC2C
-V0 = V0 | 0f83;
-
-Lbbc30:	; 800BBC30
-V0 = V0 >> S0;
-V0 = V0 & 0001;
-
-Lbbc38:	; 800BBC38
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800BBC44	jr     ra 
-800BBC48	nop
+if( V1 == 3 )
+{
+    return S0 < 1;
+}
+else if( V1 == 5 )
+{
+    return (00000070 >> S0) & 1;
+}
+else if( V1 == 6 )
+{
+    return (221b0f83 >> S0) & 1;
+}
+else if( V1 == d )
+{
+    return 1;
+}
+return 0;
 ////////////////////////////////
 
 
@@ -287,54 +269,58 @@ SP = SP + 0018;
 wm_get_model_id_from_pc_entity();
 
 V1 = w[801163d4];
+if( V1 == 0 )
+{
+    S0 = V0;
+    funcbbbb0();
 
-800BBC68	bne    v1, zero, Lbbcf8 [$800bbcf8]
-S0 = V0;
-800BBC70	jal    funcbbbb0 [$800bbbb0]
-800BBC74	nop
-800BBC78	beq    v0, zero, Lbbcdc [$800bbcdc]
-V0 = 0003;
-800BBC80	beq    s0, v0, Lbbca0 [$800bbca0]
-V0 = 0005;
-800BBC88	bne    s0, v0, Lbbcb0 [$800bbcb0]
-A0 = 0;
-wm_is_pc_entity_pos_need_recalculation()
+    if( V0 != 0 )
+    {
+        if( S0 == 3 )
+        {
+            A0 = -1;
+            funca368c();
+        }
+        else if( S0 != 5 )
+        {
+            A0 = 0;
+            A1 = 2;
+            wm_set_pc_manual_input();
+        }
+        else
+        {
+            wm_is_pc_entity_pos_need_recalculation()
 
-800BBC98	beq    v0, zero, Lbbcb0 [$800bbcb0]
-A0 = 0;
+            if( V0 == 0 )
+            {
+                A0 = 0;
+                A1 = 2;
+                wm_set_pc_manual_input();
+            }
+            else
+            {
+                A0 = -1;
+                funca368c();
+            }
+        }
 
-Lbbca0:	; 800BBCA0
-A0 = -1;
-800BBCA0	jal    funca368c [$800a368c]
+        [801163d4] = w(1);
 
-800BBCA8	j      Lbbcbc [$800bbcbc]
+        if( ( S0 - 3 ) < 2 )
+        {
+            A0 = 1;
+            wm_script_disable_for_pc_entity();
+        }
+    }
 
-Lbbcb0:	; 800BBCB0
-A1 = 2;
-wm_set_pc_manual_input();
+    wm_get_pc_entity_terrain_id();
 
-
-Lbbcbc:	; 800BBCBC
-[801163d4] = w(1);
-
-V0 = S0 - 3;
-V0 = V0 < 0002;
-800BBCCC	beq    v0, zero, Lbbcdc [$800bbcdc]
-
-A0 = 1;
-wm_script_disable_for_pc_entity();
-
-
-Lbbcdc:	; 800BBCDC
-800BBCDC	jal    wm_get_pc_entity_terrain_id [$800a9a44]
-800BBCE0	nop
-V1 = 001b;
-800BBCE8	bne    v0, v1, Lbbcf8 [$800bbcf8]
-
-A0 = 9;
-wm_script_run_system_function_on_system_entity();
-
-Lbbcf8:	; 800BBCF8
+    if( V0 == 1b )
+    {
+        A0 = 9;
+        wm_script_run_system_function_on_system_entity();
+    }
+}
 ////////////////////////////////
 
 

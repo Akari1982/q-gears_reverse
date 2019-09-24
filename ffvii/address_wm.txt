@@ -200,6 +200,7 @@
 800e5608 [][][][] desired camera rotation. Set to 0 when switching to top down view.
 800e560c [][][][] real camera rotation.
 
+800e5610 [][][][] camera related.
 800e5614 [][][][]
 800e5618 [][][][] init with 0.
 800e561c [][][][] addition to 800e5608.
@@ -222,6 +223,7 @@
 800e564c [][][][] desired screen offset Y.
 800e5650 [][][][] same as 800e5648.
 800e5654 [][][][] ???
+800e5658 [][][][] ???
 800e5660
 
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.

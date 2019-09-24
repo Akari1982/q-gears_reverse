@@ -3111,14 +3111,15 @@ wm_fade_is_stopped();
 
 800A42C8	beq    v0, zero, La447c [$800a447c]
 800A42CC	nop
-800A42D0	lui    at, $800e
-[AT + 56f4] = w(S1);
+
+[800e56f4] = w(S1);
 800A42D8	j      La447c [$800a447c]
 800A42DC	nop
 
 La42e0:	; 800A42E0
-800A42E0	jal    $system_psyq_wait_frames
-800A42E4	addiu  a0, zero, $ffff (=-$1)
+A0 = -1;
+system_psyq_wait_frames();
+
 800A42E8	lui    t0, $00ff
 T0 = T0 | ffff;
 T1 = V0;

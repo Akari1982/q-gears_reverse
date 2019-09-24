@@ -760,7 +760,9 @@
         +04 [][][][] 0x0003ffff z.
                      0xfffc0000 y.
     +0f98 [][][][] ???
-    +0f9c [][]
+    +0f9c [][]     0x0fff camera rotation.
+                   0x3000 camera view.
+                   0xc000 camera mode.
     +0fa2 []       set id from here as world map to load (planet, underwater, snowfield)
     +0fa4 savemap memory bank 7/f start
     +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
