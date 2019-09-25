@@ -877,7 +877,7 @@ else if( opcode == 201 ) // jump if false
     entity = w[8010ade4];
     [entity + 46] = h(hu[entity + 46] + 1);
 
-    V1 = w[8010ad6c] + hu[entity + 46] * 2;
+    V0 = w[8010ad6c] + hu[entity + 46] * 2;
     S0 = hu[V0];
 
     wm_script_pop_stack();
@@ -1060,7 +1060,7 @@ switch( opcode )
     }
     break;
 
-    case 307: // set control lock
+    case 307: // set pc manual input
     {
         wm_script_pop_stack();
 
