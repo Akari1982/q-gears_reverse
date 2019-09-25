@@ -459,7 +459,6 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
         A0 = 0;
         800BBEE4	jal    funca98a4 [$800a98a4]
 
-
         A0 = 0;
         wm_script_disable_for_pc_entity();
     }
@@ -502,7 +501,7 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
 
     if( V0 == 0 )
     {
-        wm_insert_in_model_struct_list();
+        wm_insert_in_entity_struct_list();
 
         wm_script_pop_from_store_stack();
 
@@ -515,21 +514,21 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
             wm_script_get_top_from_store_stack();
 
             A0 = V0 & ff;
-            wm_init_model_struct_list_element();
+            wm_init_active_entity_struct();
 
             wm_set_active_entity_as_pc_entity();
 
-            wm_insert_in_model_struct_list();
+            wm_insert_in_entity_struct_list();
 
             A0 = S0;
-            wm_init_model_struct_list_element();
+            wm_init_active_entity_struct();
 
             800BC060	jal    funca8ce4 [$800a8ce4]
         }
         else
         {
             A0 = S0;
-            wm_init_model_struct_list_element();
+            wm_init_active_entity_struct();
 
             wm_set_active_entity_as_pc_entity();
 

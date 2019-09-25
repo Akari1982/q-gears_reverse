@@ -1,0 +1,172 @@
+EV file is block 5 of TXZ file. In directory there is separate EV file though it is not used ingame.
+
+Size - always 0x7000.
+
+First 0x400 bytes are call table.
+
+CALL TABLE
+array of records (0x4 size, 0x100 items)
++ 0 [][]     function id
+             0xc000 type
+             0x3fff data:
+                0 - 
+                1 - 
+                2 - 
++ 2 [][]     offset in OPCODES block.
+
+
+
+HEADER
+    + 0 [][][][] 0x00000002.
+    + 8 [][][][] local offset to TEXTURES (from HEADER + 4).
+    +10 [][][][] global offset to MODELS.
+
+TEXTURES
+    + 4 []       number of textures.
+    + 8 start of texture description (0xc size)
+        + 0 [][]     width
+        + 2 [][]     height
+        + 4 [][]     x
+        + 6 [][]     y
+        + 8 [][][][] local pointer to data (from TEXTURES)
+
+MODELS
+    + 0 []       ???
+    + 1 []       -1 = don't use root model matrix for lighting. Set to 2 when we apply colour to model (for chokobo).
+    + 2 []       number of BONES.
+    + 3 []       number of PARTS.
+    + 4 []       number of ANIMATIONS.
+    + 5 []       root x rotation.
+    + 6 []       root y rotation.
+    + 7 []       root z rotation.
+    + 8 [][]     ???
+    + c [][]     ???
+    +10 [][][][] ???
+    +16 [][]     scale.
+    +18 [][]     local offset to PARTS.
+    +1a [][]     local offset to ANIMATIONS.
+    +1c [][][][] global offset to BONES (start of data).
+    +20 [][][][] store here pointer to bone matrixes.
+
+BONES
+    // array of bones (0x4 size)
+    + 0 [][]     length.
+    + 2 []       parent.
+    + 3 []       has model (0 - false, 1 - true).
+
+PARTS
+    // description for parts (0x2 size)
+    + 0 []       0 - not calculate stage lighting and color. 1 - calculate
+    + 1 []       bone id.
+    + 2 []       number of VERTEXES.
+    + 3 []       number of TEXTURE_COORDS.
+    + 4 []       number of shaded textured four-point polygon, opaque/semi-transparent, texture-blending.
+    + 5 []       number of shaded textured three-point polygon, opaque/semi-transparent, texture-blending.
+    + 6 []       number of textured four-point polygon, opaque/semi-transparent, texture-blending.
+    + 7 []       number of textured three-point polygon, opaque/semi-transparent, texture-blending.
+    + 8 []       number of monochrome three-point polygon, opaque.
+    + 9 []       number of monochrome four-point polygon, opaque.
+    + a []       number of shaded three-point polygon, opaque.
+    + b []       number of shaded four-point polygon, opaque.
+    + c [][]     number of data in TEXTURE_CONTROL.
+    + e [][]     local offset to POLYGON_SETTINGS.
+    +10 [][]     local offset to TEXTURE_COORDS.
+    +12 [][]     local offset to TEXTURE_SETTINGS.
+    +14 [][]     local offset to TEXTURE_CONTROL.
+    +16 [][]     size of all packets in one buffer.
+    +18 [][][][] global pointer to VERTEXES.
+    +1c [][][][] pointer to packets (after creation).
+
+POLYGON_SETTINGS
+    // shaded textured four-point polygon (0x18 size)
+    + 4 [][][][] colour 1
+    + 8 [][][][] colour 2
+    + c [][][][] colour 3
+    +10 [][][][] colour 4
+    +14 []       TEXTURE_COORDS id 1
+    +15 []       TEXTURE_COORDS id 2
+    +16 []       TEXTURE_COORDS id 3
+    +17 []       TEXTURE_COORDS id 4
+    // shaded textured three-point polygon (0x14 size)
+    + 4 [][][][] colour 1
+    + 8 [][][][] colour 2
+    + c [][][][] colour 3
+    +10 []       TEXTURE_COORDS id 1
+    +11 []       TEXTURE_COORDS id 2
+    +12 []       TEXTURE_COORDS id 3
+    // textured four-point polygon (0xс size)
+    + 4 [][][][] colour
+    + 8 []       TEXTURE_COORDS id 1
+    + 9 []       TEXTURE_COORDS id 2
+    + a []       TEXTURE_COORDS id 3
+    + b []       TEXTURE_COORDS id 4
+    // textured three-point polygon (0xс size)
+    + 4 [][][][] colour
+    + 8 []       TEXTURE_COORDS id 1
+    + 9 []       TEXTURE_COORDS id 2
+    + a []       TEXTURE_COORDS id 3
+    // monochrome three-point polygon (0x8 size)
+    + 4 [][][][] colour
+    // monochrome four-point polygon (0x8 size)
+    + 4 [][][][] colour
+    // shaded three-point polygon (0x10 size)
+    + 4 [][][][] colour 1
+    + 8 [][][][] colour 2
+    + c [][][][] colour 3
+    // shaded four-point polygon (0x14 size)
+    + 4 [][][][] colour 1
+    + 8 [][][][] colour 2
+    + c [][][][] colour 3
+    +10 [][][][] colour 4
+
+TEXTURE_COORDS
+    // array of texture coords (0x2 size).
+    + 0 []       u
+    + 1 []       v
+
+TEXTURE_SETTINGS
+    // array of texture settings (0x4 size)
+    + 0 [][][][] 0x0000003f 
+                 0x000000c0 tex page bits (0=4bit, 1=8bit, 2=15bit, 3=Reserved).
+                 0x00000f00 tex page X base.
+                 0x00001000 tex page Y base.
+                 0x003f0000 clut x.
+                 0x00400000 clut y.
+
+TEXTURE_CONTROL
+    // stream control for texture settings (0x1 size)
+    + 0 []       0x0f - TEXTURE_SETTINGS id.
+                 0x10 - semi transparency (1=on/0=off).
+                 0x60 - semi transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4).
+
+VERTEXES
+    + 0 [][][][] set to 1 when we scaled vertexes. Add 0x2 bit when we calculated lighting.
+    // array of vertexes for part (0x8 size)
+    + 0 [][]     x.
+    + 2 [][]     y.
+    + 4 [][]     z.
+
+ANIMATIONS
+    // descriptions for animations (0x10 size)
+    + 0 [][]     number of frames.
+    + 3 []       number of FRAMES_TRANSLATION.
+    + 4 []       number of STATIC_TRANSLATION.
+    + 5 []       number of frames rotation.
+    + 6 [][]     local offset to FRAMES_TRANSLATION data.
+    + 8 [][]     local offset to STATIC_TRANSLATION data.
+    + a [][]     local offset to FRAMES_ROTATION data.
+    + c [][][][] global offset to ANIMATION_DATA.
+
+ANIMATION_DATA
+    + 0 [][][][] set to 1 when we scaled animation translations.
+    // start of STATIC_ROTATION data (0x8 size).
+    + 1 []       rotation x.
+    + 2 []       rotation y.
+    + 3 []       rotation z.
+
+FRAMES_TRANSLATION
+    // each frame translation contain translation for each frame in animation.
+    + 0 [][]     translation value.
+
+STATIC_TRANSLATION
+    + 0 [][]     translation value.

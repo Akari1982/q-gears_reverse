@@ -4614,9 +4614,8 @@ V0 = w[S2 + 0000];
 800B2A1C	nop
 800B2A20	beq    v0, zero, Lb2e48 [$800b2e48]
 V0 = 0003;
-800B2A28	lui    v1, $8011
-V1 = w[V1 + caf0];
-800B2A30	nop
+V1 = w[8010caf0];
+
 800B2A34	beq    v1, v0, Lb2a5c [$800b2a5c]
 V0 = 0001;
 800B2A3C	beq    s3, v0, Lb2a54 [$800b2a54]
@@ -4634,17 +4633,17 @@ Lb2a5c:	; 800B2A5C
 A0 = 0004;
 
 Lb2a60:	; 800B2A60
-800B2A60	jal    wm_set_active_entity_with_model_id [$800a993c]
-800B2A64	nop
-800B2A68	jal    wm_get_position_from_active_entity [$800aa098]
+wm_set_active_entity_with_model_id();
+
 A0 = S5;
+wm_get_position_from_active_entity();
+
 V1 = w[S2 + 0000];
-800B2A74	nop
 V0 = V1 & 0004;
 800B2A7C	beq    v0, zero, Lb2ad4 [$800b2ad4]
 V0 = V1 & 0008;
 V0 = w[SP + 0018];
-800B2A88	nop
+
 800B2A8C	bne    v0, zero, Lb2ac0 [$800b2ac0]
 800B2A90	nop
 V0 = w[SP + 0020];
@@ -4851,8 +4850,7 @@ V0 = V0 < 07d0;
 [S2 + 0000] = w(0);
 
 Lb2dc8:	; 800B2DC8
-800B2DC8	lui    v0, $0002
-V0 = V0 | 195f;
+V0 = 0002195f;
 V0 = V1 + V0;
 V0 = V0 - A0;
 V0 = V0 < 07d0;
@@ -4867,8 +4865,7 @@ V0 = w[S2 + 0000];
 800B2DF4	nop
 800B2DF8	jal    funcb28cc [$800b28cc]
 A0 = S3;
-800B2E00	lui    v1, $8011
-V1 = w[V1 + caf0];
+V1 = w[8010caf0];
 V0 = 0002;
 800B2E0C	bne    v1, v0, Lb2e48 [$800b2e48]
 800B2E10	nop
@@ -5100,10 +5097,10 @@ if( pole_add != 0 )
     // if this snowpole not shown on field add it
     if( V0 == 0 )
     {
-        wm_insert_in_model_struct_list();
+        wm_insert_in_entity_struct_list();
 
         A0 = h[8010cafc] + 15;
-        wm_init_model_struct_list_element();
+        wm_init_active_entity_struct();
     }
 
     [8010cafc] = h((h[8010cafc] + 1) % 3); // move ti next snowpole
@@ -9202,7 +9199,7 @@ wm_random_init();
 [80109d6c] = w(hu[8009c6e4 + f5a]);
 
 A0 = 8009c6e4 + f5c; // Party leader's coordinates on world map
-wm_clean_all_model_structs();
+wm_init_all_entity_structs();
 
 if( S3 != 0 )
 {
@@ -9229,10 +9226,10 @@ else
         {
             if( w[8009c6e4 + f8c + i * 4] != 0 )
             {
-                wm_insert_in_model_struct_list();
+                wm_insert_in_entity_struct_list();
 
                 A0 = i + 15;
-                wm_init_model_struct_list_element();
+                wm_init_active_entity_struct();
 
                 [SP + 10] = w(hu[8009c6e4 + f8c + i * 4 + 0]); // x
                 [SP + 14] = w(0);

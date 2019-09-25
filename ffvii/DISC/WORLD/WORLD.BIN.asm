@@ -351,18 +351,18 @@
 
 
 
-// WORLD.BIN_model_list.cpp
+// WORLD.BIN_entity_list.cpp
 ////////////////////////////////
-// wm_clean_all_model_structs
+// wm_init_all_entity_structs
 800A891C-800A8A18
 ////////////////////////////////
-// wm_insert_in_model_struct_list
+// wm_insert_in_entity_struct_list
 800A8A1C-800A8A84
 ////////////////////////////////
 // funca8a88
 800A8A88-800A8AB8
 ////////////////////////////////
-// wm_clean_model_struct
+// wm_clean_entity_struct
 800A8ABC-800A8AF0
 ////////////////////////////////
 // funca8af4
@@ -371,7 +371,7 @@
 // funca8b30
 800A8B30-800A8C6C
 ////////////////////////////////
-// wm_insert_struct_in_model_struct_list
+// wm_insert_struct_in_entity_struct_list
 800A8C70-800A8CA0
 ////////////////////////////////
 // funca8ca4
@@ -440,7 +440,7 @@
 // funca92f8
 800A92F8-800A9330
 ////////////////////////////////
-// wm_init_model_struct_list_element
+// wm_init_active_entity_struct
 800A9334-800A947C
 ////////////////////////////////
 // wm_set_active_entity_direction_and_rotation

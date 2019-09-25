@@ -293,8 +293,8 @@
 80109d68 [][][][] set to 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 
-80109d74 some entity struct.
-80109e54 some entity struct.
+80109d74 system entity struct.
+80109e54 entity with mode 0x9 struct.
 80109f34 start of entity struct linked list. (0x0e items 0xe0 size)
 +00 [][][][] pointer to previous entity.
 +04 [][][][] pointer to some related entity.
@@ -386,7 +386,7 @@
     +1c [][]     uv2.
     +24 [][]     uv3.
 
-8010ad34 [][][][] next free model pointer.
+8010ad34 [][][][] next free entity pointer.
 8010ad38 [][][][] pointer to last inserted entity.
 8010ad3c [][][][] pointer to active entity.
 8010ad40 [][][][] pointer to pc character entity.
@@ -394,7 +394,7 @@
 8010ad44 [][]     init with 0.
 8010ad48 [][]     init with 0.
 8010ad4c [][]     init with 0.
-8010ad50 [][][][] init with pointer to player coords on world map (8009c6e4 + f5c).
+8010ad50 [][][][] pointer to player coords on world map (8009c6e4 + f5c).
 8010ad54 [][][][] init with 0.
 8010ad58 [][][][] init with 0.
 8010ad5c [][][][] init with 0.

@@ -1,9 +1,9 @@
 ////////////////////////////////
-// wm_clean_all_model_structs()
+// wm_init_all_entity_structs()
 
 S2 = A0; // 8009c6e4 + f5c
 
-// link all models struct with each other
+// link all entities struct with each other
 V0 = c40;
 V1 = 8010ac54;
 loopa8940:	; 800A8940
@@ -12,22 +12,22 @@ loopa8940:	; 800A8940
     V1 = V1 - e0;
 800A8954	bgez   v0, loopa8940 [$800a8940]
 
-// last model struct has 0 link to next
+// last entity struct has 0 link to next
 [8010ac54 + 0] = w(0);
 
-// first free model pointer
-[8010ad34] = w(80109f34);
-[8010ad38] = w(0);
-[8010ad3c] = w(0);
-[8010ad40] = w(0);
+// first free entity pointer
+[8010ad34] = w(80109f34); // next free slot
+[8010ad38] = w(0); // last inserted entity
+[8010ad3c] = w(0); // active entity
+[8010ad40] = w(0); // pc character entity
 
-A0 = 80109d74; // some entity struct
-wm_clean_model_struct();
-[80109e54 + 0] = w(0); // link to nothing
+A0 = 80109d74; // system entity
+wm_clean_entity_struct();
+[80109d74 + 0] = w(0); // link to nothing
 
 A0 = 80109e54; // some entity struct
-wm_clean_model_struct();
-[80109d74 + 0] = w(0); // link to nothing
+wm_clean_entity_struct();
+[80109e54 + 0] = w(0); // link to nothing
 
 [80109e54 + 50] = b(9); // set model id
 
@@ -45,7 +45,7 @@ wm_clean_model_struct();
 
 
 ////////////////////////////////
-// wm_insert_in_model_struct_list()
+// wm_insert_in_entity_struct_list()
 
 free_struct = w[8010ad34];
 next_struct = w[free_struct + 0];
@@ -53,12 +53,12 @@ prev_last = w[8010ad38];
 
 [8010ad34] = w(next_struct);
 [8010ad38] = w(free_struct); // set last pointer
-[8010ad3c] = w(free_struct); // set current pointer
+[8010ad3c] = w(free_struct); // set active
 
 [free_struct + 0] = w(prev_last); // set pointer to previous
 
 A0 = free_struct;
-wm_clean_model_struct();
+wm_clean_entity_struct();
 
 return free_struct;
 ////////////////////////////////
@@ -81,18 +81,14 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// wm_clean_model_struct()
+// wm_clean_entity_struct()
 
 [A0 + 5e] = b(-1);
 
-V1 = A0 + 4;
-if( V1 < A0 + e0 )
+V1 = 0;
+for( int i = 4; i < e0; i += 4 )
 {
-    loopa8ad8:	; 800A8AD8
-        [V1] = w(0);
-        V1 = V1 + 4;
-        V0 = V1 < A0 + e0;
-    800A8AE4	bne    v0, zero, loopa8ad8 [$800a8ad8]
+    [A0 + i] = w(0);
 }
 ////////////////////////////////
 
@@ -199,7 +195,7 @@ if( model != 0 )
 
 
 ////////////////////////////////
-// wm_insert_struct_in_model_struct_list()
+// wm_insert_struct_in_entity_struct_list()
 
 model = A0;
 
@@ -266,7 +262,7 @@ if( A0 != 0 )
     if( S0 != 0 )
     {
         A0 = S0; // model struct
-        wm_insert_struct_in_model_struct_list();
+        wm_insert_struct_in_entity_struct_list();
 
         V0 = w[8010ad40];
         [S0 + 4] = w(V0);
@@ -305,7 +301,7 @@ if( A0 != 0 )
     if( S0 != 0 )
     {
         A0 = S0; // model struct
-        wm_insert_struct_in_model_struct_list();
+        wm_insert_struct_in_entity_struct_list();
 
         V0 = w[8010ad3c];
         [S0 + 4] = w(V0);
@@ -658,16 +654,16 @@ return 1;
 
 
 ////////////////////////////////
-// wm_init_model_struct_list_element()
+// wm_init_active_entity_struct()
 
-model_struct = w[8010ad3c];
+entity = w[8010ad3c];
 
-if( model_struct == 0 )
+if( entity == 0 )
 {
     return;
 }
 
-[model_struct + 50] = b(A0);
+[entity + 50] = b(A0);
 
 switch( A0 )
 {
@@ -677,7 +673,7 @@ switch( A0 )
         [SP + 12] = h(38);
         [SP + 14] = h(f);
         [SP + 16] = h(f);
-        [model_struct + 58] = b(20);
+        [entity + 58] = b(20);
     }
     break;
 
@@ -687,7 +683,7 @@ switch( A0 )
 
         if (V0 == 0)
         {
-            [model_struct + 8] = w(80109e54);
+            [entity + 8] = w(80109e54);
         }
 
         [SP + 10] = h(18);
@@ -707,7 +703,7 @@ switch( A0 )
         [SP + 12] = h(38);
         [SP + 14] = h(f);
         [SP + 16] = h(f);
-        [model_struct + 58] = b(20);
+        [entity + 58] = b(20);
     }
     break;
 
@@ -722,7 +718,7 @@ switch( A0 )
         [SP + 12] = h(0);
         [SP + 14] = h(f);
         [SP + 16] = h(f);
-        [model_struct + 58] = b(80);
+        [entity + 58] = b(80);
     }
     break;
 
@@ -732,16 +728,16 @@ switch( A0 )
         [SP + 12] = h(38);
         [SP + 14] = h(17);
         [SP + 16] = h(2f);
-        [model_struct + 58] = b(20);
+        [entity + 58] = b(20);
     }
     break;
 }
 
-A0 = model_struct;
+A0 = entity;
 A1 = SP + 10;
 funcb58f8(); // prepare packet
 
-A0 = model_struct;
+A0 = entity;
 funcada64(); // set coords and rotation for controlling models on map
 ////////////////////////////////
 

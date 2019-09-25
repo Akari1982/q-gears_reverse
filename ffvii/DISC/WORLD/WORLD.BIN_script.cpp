@@ -889,34 +889,21 @@ else if( opcode == 201 ) // jump if false
 }
 else if( opcode == 203 ) // return
 {
-    V1 = w[8010ade4];
-    V0 = bu[V1 + 54];
-    if (V0 != 0)
+    entity = w[8010ade4];
+    if( bu[entity + 54] != 0 ) // return to prev function
     {
-        V0 = bu[V1 + 54] - 1;
-        [V1 + 54] = b(V0);
+        [entity + 54] = b(bu[entity + 54] - 1);
 
-        V0 = V0 & 00ff;
-        V0 = V0 << 02;
-        A0 = w[8010ade4];
-        V0 = V0 + 002c;
-        V0 = V0 + A0;
-        V1 = hu[V0 + 0000];
-        800AC5B0	nop
-        [A0 + 0046] = h(V1);
-        V1 = bu[V0 + 0002];
-        800AC5BC	nop
-        [A0 + 0056] = b(V1);
-        V1 = w[8010ade4];
-        V0 = bu[V0 + 0003];
-        [V1 + 0057] = b(V0);
+        V0 = bu[entity + 54];
+        [entity + 46] = h(hu[entity + 2c + V0 * 4 + 0]); // script position
+        [entity + 56] = b(bu[entity + 2c + V0 * 4 + 2]); // wait value
+        [entity + 57] = b(bu[entity + 2c + V0 * 4 + 3]); // priority
         return 0;
     }
-    else
+    else // finish execution
     {
-        Lac5d8:	; 800AC5D8
-        [V1 + 0057] = b(0);
-        [V1 + 0046] = h(0);
+        [entity + 46] = h(0); // script position
+        [entity + 57] = b(0); // priority
 
         if( w[8010adec] != 0 )
         {
@@ -935,14 +922,14 @@ else if( opcode == 203 ) // return
         }
         else
         {
-            if (w[8010ade4] == 80109d74)
+            if( w[8010ade4] == 80109d74 )
             {
                 A0 = 2;
                 wm_script_run_system_function_on_system_entity();
             }
             else
             {
-                A0 = bu[V1 + 50]; // model id
+                A0 = bu[entity + 50]; // model id
                 A1 = 2;
                 wm_script_run_model_function_on_entity_with_model_id();
             }
@@ -995,10 +982,10 @@ switch( opcode )
 
         if( V0 == 0 ) // entity not found
         {
-            wm_insert_in_model_struct_list();
+            wm_insert_in_entity_struct_list();
 
             A0 = model_id;
-            wm_init_model_struct_list_element();
+            wm_init_active_entity_struct();
 
             A0 = model_id;
             A1 = 0;
@@ -1026,10 +1013,10 @@ switch( opcode )
 
         if( V0 == 0 )
         {
-            wm_insert_in_model_struct_list();
+            wm_insert_in_entity_struct_list();
 
             A0 = S0;
-            wm_init_model_struct_list_element();
+            wm_init_active_entity_struct();
         }
 
         V1 = w[8010ad3c];
