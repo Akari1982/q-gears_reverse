@@ -184,10 +184,16 @@ ScriptFile::Export()
                     text->LogW( "    -- push_stack( " + script_stack.back() + " )\n" );
                     offset += 2;
                 }
+                else if( opcode == 0x200 )
+                {
+                    int value = GetU16LE( 0x400 + offset * 2 + 2 );
+                    text->LogW( "    jump( 0x" + HexToString( value * 2, 4, '0' ) + " )\n" );
+                    offset += 2;
+                }
                 else if( opcode == 0x201 )
                 {
                     int value = GetU16LE( 0x400 + offset * 2 + 2 );
-                    text->LogW( "    jump_if_false( " + script_stack.back() + ", " + HexToString( value, 4, '0' ) + " )\n" );
+                    text->LogW( "    jump_if_false( " + script_stack.back() + ", 0x" + HexToString( value * 2, 4, '0' ) + " )\n" );
                     script_stack.pop_back();
                     offset += 2;
                 }
@@ -195,6 +201,13 @@ ScriptFile::Export()
                 {
                     text->LogW( "    return\n" );
                     break;
+                }
+                else if( ( opcode >= 0x204 ) &&  ( opcode < 0x300 ) )
+                {
+                    Ogre::String model_id = script_stack.back();
+                    script_stack.pop_back();
+                    text->LogW( "    run_function( " + model_id + ", 0x" + HexToString( opcode - 0x204, 2, '0' ) + " ) -- model_id, func\n" );
+                    offset += 1;
                 }
                 else if( opcode == 0x303 )
                 {
