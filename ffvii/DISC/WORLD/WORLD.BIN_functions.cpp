@@ -34,42 +34,35 @@ while( S0 != 0 )
 
 
 ////////////////////////////////
-// funcada64()
+// wm_restore_entity_pos_and_dir_from_savemap()
 
-model_struct = A0;
-model_id = bu[model_struct + 50];
+entity = A0;
+model_id = bu[entity + 50];
 
-A1 = w[8010ad50]; // savemap +f5c
-V1 = w[8010ad50] + 30;
-
-loopada84:	; 800ADA84
-    if( ( ( w[A1 + 0] >> 13 ) & 1f ) == model_id )
-    {
-        break;
-    }
-    A1 = A1 + 8;
-    V0 = A1 < V1;
-800ADAA4	bne    v0, zero, loopada84 [$800ada84]
-
-if( A1 < w[8010ad50] + 30 )
+for( int i = 0; i < 6; ++i )
 {
-    if( model_struct != 0 )
+    A1 = w[8010ad50]; // savemap +f5c
+    if( ( ( w[A1 + i * 8 + 0] >> 13 ) & 1f ) == model_id )
     {
-        // x y z
-        [model_struct + c] = w(w[A1 + 0] & 0007ffff);
-        [model_struct + 10] = w(w[A1 + 4] >> 12);
-        [model_struct + 14] = w(w[A1 + 4] & 0003ffff);
+        if( entity != 0 )
+        {
+            // x y z
+            [entity + c] = w(w[A1 + 0] & 0007ffff);
+            [entity + 10] = w(w[A1 + 4] >> 12);
+            [entity + 14] = w(w[A1 + 4] & 0003ffff);
 
-        // x y z
-        [model_struct + 1c] = w(w[A1 + 0] & 0007ffff);
-        [model_struct + 20] = w(w[A1 + 4] >> 12);
-        [model_struct + 24] = w(w[A1 + 4] & 0003ffff);
+            // prev x y z
+            [entity + 1c] = w(w[A1 + 0] & 0007ffff);
+            [entity + 20] = w(w[A1 + 4] >> 12);
+            [entity + 24] = w(w[A1 + 4] & 0003ffff);
 
-        // ditection
-        [model_struct + 3c] = h((w[A1 + 0] >> 14) & 0ff0);
-        [model_struct + 3e] = h(0);
-        [model_struct + 40] = h((w[A1 + 0] >> 14) & 0ff0);
-        [model_struct + 4c] = h((w[A1 + 0] >> 14) & 0ff0);
+            // direction
+            [entity + 3c] = h((w[A1 + 0] >> 14) & 0ff0); // rotation
+            [entity + 3e] = h(0);
+            [entity + 40] = h((w[A1 + 0] >> 14) & 0ff0); // rotation of model
+            [entity + 4c] = h((w[A1 + 0] >> 14) & 0ff0); // direction of movement
+        }
+        break;
     }
 }
 ////////////////////////////////
@@ -7799,7 +7792,7 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funcb58f8()
+// wm_create_shadow_packet()
 
 model_struct = A0;
 tex_coords = A1;
@@ -7809,37 +7802,34 @@ if( model_struct == 0 || tex_coords == 0 )
     return;
 }
 
-S2 = 0;
-loopb5928:	; 800B5928
-    [model_struct + 90 + S2 * 28 + 3] = b(9);
-    [model_struct + 90 + S2 * 28 + 4] = b(20);
-    [model_struct + 90 + S2 * 28 + 5] = b(20);
-    [model_struct + 90 + S2 * 28 + 6] = b(20);
-    [model_struct + 90 + S2 * 28 + 7] = b(2e);
+for( int i = 0; i < 2; ++i )
+{
+    [model_struct + 90 + i * 28 + 3] = b(9);
+    [model_struct + 90 + i * 28 + 4] = b(20);
+    [model_struct + 90 + i * 28 + 5] = b(20);
+    [model_struct + 90 + i * 28 + 6] = b(20);
+    [model_struct + 90 + i * 28 + 7] = b(2e);
 
-    [model_struct + 90 + S2 * 28 + e] = h(7cc4); // clut
+    [model_struct + 90 + i * 28 + e] = h(7cc4); // clut
 
     if( bu[80062c00] == 2 )
     {
-        [model_struct + 90 + S2 * 28 + 16] = h(59); // texpage
+        [model_struct + 90 + i * 28 + 16] = h(59); // texpage
     }
     else
     {
-        [model_struct + 90 + S2 * 28 + 16] = h(129); // texpage
+        [model_struct + 90 + i * 28 + 16] = h(129); // texpage
     }
 
-    [model_struct + 90 + S2 * 28 + 1c] = b(bu[tex_coords + 0]); // u2
-    [model_struct + 90 + S2 * 28 +  c] = b(bu[tex_coords + 0]); // u0
-    [model_struct + 90 + S2 * 28 + 15] = b(bu[tex_coords + 2]); // v1
-    [model_struct + 90 + S2 * 28 +  d] = b(bu[tex_coords + 2]); // v0
-    [model_struct + 90 + S2 * 28 + 24] = b(bu[tex_coords + 0] + bu[tex_coords + 4]); // u3
-    [model_struct + 90 + S2 * 28 + 14] = b(bu[tex_coords + 0] + bu[tex_coords + 4]); // u1
-    [model_struct + 90 + S2 * 28 + 25] = b(bu[tex_coords + 2] + bu[tex_coords + 6]); // v3
-    [model_struct + 90 + S2 * 28 + 1d] = b(bu[tex_coords + 2] + bu[tex_coords + 6]); // v2
-
-    S2 = S2 + 1;
-    V0 = S2 < 2;
-800B59CC	bne    v0, zero, loopb5928 [$800b5928]
+    [model_struct + 90 + i * 28 + 1c] = b(bu[tex_coords + 0]); // u2
+    [model_struct + 90 + i * 28 +  c] = b(bu[tex_coords + 0]); // u0
+    [model_struct + 90 + i * 28 + 15] = b(bu[tex_coords + 2]); // v1
+    [model_struct + 90 + i * 28 +  d] = b(bu[tex_coords + 2]); // v0
+    [model_struct + 90 + i * 28 + 24] = b(bu[tex_coords + 0] + bu[tex_coords + 4]); // u3
+    [model_struct + 90 + i * 28 + 14] = b(bu[tex_coords + 0] + bu[tex_coords + 4]); // u1
+    [model_struct + 90 + i * 28 + 25] = b(bu[tex_coords + 2] + bu[tex_coords + 6]); // v3
+    [model_struct + 90 + i * 28 + 1d] = b(bu[tex_coords + 2] + bu[tex_coords + 6]); // v2
+}
 ////////////////////////////////
 
 
@@ -9063,11 +9053,9 @@ system_cdrom_abort_loading();
 
 
 ////////////////////////////////
-// funcb716c
-800B716C	lui    v0, $8011
-V0 = w[V0 + 5a68];
-800B7174	jr     ra 
-800B7178	nop
+// funcb716c()
+
+return w[80115a68];
 ////////////////////////////////
 
 
@@ -9079,7 +9067,7 @@ progress = hu[8009c6e4 + ba4];
 flag1 = bu[8009c6e4 + c1e] & 1;
 flag2 = bu[8009c6e4 + f2a] & 10;
 
-if( progress < 3e8 )
+if( progress < 3e8 ) // before highwind?
 {
     return 0;
 }

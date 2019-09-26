@@ -294,7 +294,7 @@
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 
 80109d74 system entity struct.
-80109e54 entity with mode 0x9 struct.
+80109e54 entity with model 0x9 struct. Linked as +8 with highwind model.
 80109f34 start of entity struct linked list. (0x0e items 0xe0 size)
 +00 [][][][] pointer to previous entity.
 +04 [][][][] pointer to some related entity.
@@ -372,8 +372,8 @@
 +5e []       init with -1.
 +5f []       we increase +10 by this value during movement.
 +60 unknown block
-+90 start of packet for buffer 1.
-+a8 start of packet for buffer 2
++90 start of packet for buffer 1 (shadow?).
++a8 start of packet for buffer 2 (shadow?).
     +03 []       store 0x09 here.
     +04 []       R
     +05 []       G
@@ -539,7 +539,7 @@
 80115a5c [][][][] PC character model id.
 80115a60 [][][][] model currently loading.
 80115a64 [][][][] init with 0.
-80115a68 [][][][] init with 0.
+80115a68 [][][][] init with 0. Used for highwind.
 
 8011626c [][][][] we get value from here in 0x05 of 0x11b opcode. If 1 then place snow pole on map or remove their coords from savemap otherwise.
 80116270 [][][][] set to 0 when reset game from WM.

@@ -113,7 +113,7 @@ while( true )
 
 
 ////////////////////////////////
-// funca0d2c()
+// wm_load_txz_data_and_init()
 
 S2 = A0;
 
@@ -160,7 +160,6 @@ system_graphic_create_display_env_struct();
 [800cc5c4 + c] = h(8);
 [800cc5c4 + e] = h(e0);
 
-S3 = S2;
 if( S2 >= b )
 {
     [800e567c] = w(0);
@@ -298,7 +297,7 @@ funcb6348();
 
 wm_init_model_variables_and_array();
 
-[80115a58] = w(S3);
+[80115a58] = w(S2);
 
 funcb6b28();
 
@@ -3372,37 +3371,37 @@ while( w[800e566c] < 9 )
     {
         if( S0 > 0 )
         {
-            A0 = a;
+            A0 = a; // progress
         }
         else
         {
-            A0 = 9;
+            A0 = 9; // progress
         }
     }
     else
     {
         if( w[800e5634] != 0 ) // not planet
         {
-            A0 = h[800e5634] + 9;
+            A0 = h[800e5634] + 9; // texture for underwater (b) and snowfield (c)
         }
         else
         {
-            A0 = S0;
+            A0 = S0; // progress
         }
     }
 
-    funca0d2c();
+    wm_load_txz_data_and_init();
 
     funcb650c(); // play some AKAO commands
 
-    A0 = 0;
-
-    if( ( ( S0 - 3 ) < 2 ) || ( S0 == 6 ) || ( S0 == 8 ) )
+    if( ( S0 == 3 ) || ( S0 == 4 ) || ( S0 == 6 ) || ( S0 == 8 ) )
     {
-        A0 = 1;
+        [80115a68] = w(1);
     }
-
-    [80115a68] = w(A0);
+    else
+    {
+        [80115a68] = w(0);
+    }
 
     [800e5648] = w(0);
 

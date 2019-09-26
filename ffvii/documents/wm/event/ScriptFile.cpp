@@ -52,7 +52,7 @@ ScriptFile::Export()
         if( id != 0xffff )
         {
             int offset = GetU16LE( i * 4 + 2 );
-            text->LogW( "Script id=0x" + HexToString( id, 4, '0' ) + " offset=0x" + HexToString( 0x400 + offset * 2, 4, '0' ) + "\n" );
+            text->LogW( "function script_" + HexToString( id, 4, '0' ) + "() -- offset 0x" + HexToString( 0x400 + offset * 2, 4, '0' ) + "\n" );
 
             while( true )
             {
@@ -125,6 +125,15 @@ ScriptFile::Export()
                     script_stack.pop_back();
                     script_stack.push_back( var2 + " || " + var1 );
                     text->LogW( "    -- push_stack( pop_stack() || pop_stack() )\n" );
+                    offset += 1;
+                }
+                else if( opcode == 0xe0 )
+                {
+                    Ogre::String value = script_stack.back();
+                    script_stack.pop_back();
+                    Ogre::String bank = script_stack.back();
+                    script_stack.pop_back();
+                    text->LogW( "    write_bank( " + bank + ", " + value + " ) -- bank, value\n" );
                     offset += 1;
                 }
                 else if( opcode == 0x100 )

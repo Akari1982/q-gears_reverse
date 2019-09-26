@@ -128,7 +128,7 @@ if( entity == w[8010ad40] )
 V1 = w[8010ad38];
 if( V1 != 0 )
 {
-    // go through all linked entities and un
+    // go through all linked entities and unlink them
     loopa8b84:	; 800A8B84
         V0 = w[V1 + 4];
         if( V0 == entity )
@@ -663,25 +663,26 @@ if( entity == 0 )
     return;
 }
 
-[entity + 50] = b(A0);
+[entity + 50] = b(A0); // set model id
 
 switch( A0 )
 {
     case 00 01 02 06 07 08 09 0c 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b:
     {
-        [SP + 10] = h(18);
-        [SP + 12] = h(38);
-        [SP + 14] = h(f);
-        [SP + 16] = h(f);
+        [SP + 10] = h(18); // x
+        [SP + 12] = h(38); // y
+        [SP + 14] = h(f); // width
+        [SP + 16] = h(f); // height
+
         [entity + 58] = b(20);
     }
     break;
 
-    case 03:
+    case 03: // highwind
     {
-        800A9378	jal    funcb716c [$800b716c]
+        funcb716c();
 
-        if (V0 == 0)
+        if( V0 == 0 )
         {
             [entity + 8] = w(80109e54);
         }
@@ -693,7 +694,7 @@ switch( A0 )
     }
     break;
 
-    case 04:
+    case 04: // wild chocobo
     {
         A0 = 4;
         A1 = 0;
@@ -703,31 +704,34 @@ switch( A0 )
         [SP + 12] = h(38);
         [SP + 14] = h(f);
         [SP + 16] = h(f);
+
         [entity + 58] = b(20);
     }
     break;
 
-    case 05 0d 1c:
+    case 05 0d 1c: // tiny bronco, submarine, ???
     {
     }
     break;
 
-    case a:
+    case a: // ???
     {
         [SP + 10] = h(90);
         [SP + 12] = h(0);
         [SP + 14] = h(f);
         [SP + 16] = h(f);
+
         [entity + 58] = b(80);
     }
     break;
 
-    case b:
+    case b: // ultimate weapon
     {
         [SP + 10] = h(0);
         [SP + 12] = h(38);
         [SP + 14] = h(17);
         [SP + 16] = h(2f);
+
         [entity + 58] = b(20);
     }
     break;
@@ -735,10 +739,10 @@ switch( A0 )
 
 A0 = entity;
 A1 = SP + 10;
-funcb58f8(); // prepare packet
+wm_create_shadow_packet();
 
 A0 = entity;
-funcada64(); // set coords and rotation for controlling models on map
+wm_restore_entity_pos_and_dir_from_savemap();
 ////////////////////////////////
 
 

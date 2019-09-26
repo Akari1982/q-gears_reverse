@@ -460,15 +460,15 @@ if( w[8010ad90] <= 8010ad68 )
     funca0b40(); // error
 }
 
-A0 = w[8010ad90];
-V0 = hu[A0 + 4] & 3;
-V1 = hu[A0 + 4] & fffc;
+stack = w[8010ad90];
+V0 = hu[stack + 4] & 3;
+V1 = hu[stack + 4] & fffc;
 S0 = w[8010ad94 + V0 * 4]; // 0 - memory bank 1_2, 1-3 - temp array
 
 if( V1 == 114 ) // bit
 {
-    S0 = S0 + (w[A0] >> 3);
-    A0 = 1 << (w[A0] & 7);
+    S0 = S0 + (w[stack + 0] >> 3);
+    A0 = 1 << (w[stack + 0] & 7);
 
     [S0] = b(bu[S0] & (0 NOR A0)); // remove bit
 

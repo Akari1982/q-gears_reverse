@@ -18,7 +18,7 @@
 // funca0d24
 800A0D1C-800A0D28
 ////////////////////////////////
-// funca0d2c
+// wm_load_txz_data_and_init
 800A0D2C-800A12A8
 ////////////////////////////////
 // funca12ac
@@ -684,7 +684,7 @@
 // funcada08
 800ADA08-800ADA60
 ////////////////////////////////
-// funcada64
+// wm_restore_entity_pos_and_dir_from_savemap
 800ADA64-800ADB2C
 ////////////////////////////////
 // funcadb30
@@ -957,7 +957,7 @@
 // funcb57dc
 800B57DC-800B58F4
 ////////////////////////////////
-// funcb58f8
+// wm_create_shadow_packet
 800B58F8-800B59F0
 ////////////////////////////////
 // funcb59f4
