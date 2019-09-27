@@ -3396,11 +3396,11 @@ while( w[800e566c] < 9 )
 
     if( ( S0 == 3 ) || ( S0 == 4 ) || ( S0 == 6 ) || ( S0 == 8 ) )
     {
-        [80115a68] = w(1);
+        [80115a68] = w(1); // not attach 80109e54 entity to highwind
     }
     else
     {
-        [80115a68] = w(0);
+        [80115a68] = w(0); // attach 80109e54 entity to highwind
     }
 
     [800e5648] = w(0);
