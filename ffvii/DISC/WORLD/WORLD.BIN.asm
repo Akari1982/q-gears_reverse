@@ -693,7 +693,7 @@
 // funcadc3c
 800ADC3C-800ADC6C
 ////////////////////////////////
-// funcadc70
+// wm_mutex_mask_init
 800ADC70-800ADC7C
 ////////////////////////////////
 // wm_add_mutex_priority
@@ -1315,10 +1315,10 @@
 // funcbc1bc
 800BC1BC-800BC1C8
 ////////////////////////////////
-// funcbc1cc
+// wm_ui_map_create
 800BC1CC-800BC41C
 ////////////////////////////////
-// funcbc420
+// wm_ui_map_update
 800BC420-800BC9E4
 ////////////////////////////////
 // wm_set_camera_mode

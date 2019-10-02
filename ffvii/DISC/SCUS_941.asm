@@ -2179,7 +2179,7 @@
 // system_gte_matrixes_multiply_A0_A1_to_A2
 8003A79C-8003A8A4
 ////////////////////////////////
-// func3a8a8
+// system_gte_matrix_multiply_A0_to_A1
 8003A8A8-8003A988
 ////////////////////////////////
 // func3a98c

@@ -131,6 +131,8 @@
     3 60606000 gray (highwind)
     4 60006000 magenta (submarine)
     5 60600000 yellow (chokobo)
+800c73dc array of slot_id/model_id association (0x6 items 0x1 size)
+    00 06 05 03 0D 13
 
 800c744c array with .TXZ files cd data (0x8 size).
     000015D2 00028597 WORLD\WM0S.TXZ
@@ -233,7 +235,7 @@
 800e5650 [][][][] same as 800e5648.
 800e5654 [][][][] ???
 800e5658 [][][][] ???
-800e5660
+800e5660 [][][][] 
 
 800e5668 [][][][] set combination of 800e5608 and pc entity rotation when set pc entity. Maybe camera rotation.
 800e566c [][][][] id of automation sequence:
@@ -253,6 +255,7 @@
 800e5698 looks like main camera rotation matrix.
 800e56b8 looks like main camera translation vector.
 
+800e56f4
 
 800e5714 pointer to mapblock data (80156000). We load .MAP and .BOT here. Each block 0xb800 size.
 800e5718 linked list of map blocks (0x8 items 0x8 size).
@@ -296,6 +299,8 @@
 80109d38 pointer to 80109a38.
 80109d40 pointer to 80109a38.
 
+80109d44
+
 80109d58 [][][][] in not 0 then input enabled.
 
 80109d64 [][][][] set to 2
@@ -328,6 +333,7 @@
 +42 [][]     original Y pos here (before modification).
 +44 [][]     y offset.
 +46 [][]     current script position (multiplied by 2 t get real because we read 2 bytes at once).
++48 [][]     ???
 +4a [][]     terrain id.
 +4c [][]     direction of movement (set using opcode 304 328).
 +50 []       model id.
@@ -479,6 +485,8 @@
 8010b4a4 [][][][] some texture move y for texture 1 fade (snow).
 8010b4a8 [][][][] some texture move y for texture 2 fade (snow).
 
+8010c430 place for packets for something 0xc items. Two buffers.
+
 8010ca8c [][][][] ???
 
 8010cafc [][][][] current snowpole.
@@ -579,6 +587,8 @@
 
 801164f8 [][][][] desired? camera mode. Top-down view or Dynamic.
 801164fc [][][][] copy of camera mode for not highwind.
+
+80116500 [][][][] ui map scaler?
 
 80116508 [][]     some length. Used to render skybox?
 8011650c [][][][] world speed (related with movement, camera rotation, loading and a lot of other things).

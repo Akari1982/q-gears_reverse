@@ -750,6 +750,7 @@
     +0ea4 savemap memory bank d/e start
     +0eaa (+06) [][]     some value that increments each battle check.
     +0f0c field map name for menu (0x17 size).
+    +0f24 
     +0f2a (+86) []       flags
                             0x10 - used in world map
     +0f5a [][]     ????

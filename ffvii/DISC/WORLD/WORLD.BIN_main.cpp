@@ -2264,7 +2264,7 @@ if( w[800e5658] != 0 )
             [800e5660] = w(100);
         }
 
-        funca31f8();
+        funca31f8(); // some camera settings
 
         A0 = SP + 10;
         wm_get_position_from_pc_entity();
@@ -2636,7 +2636,7 @@ switch( w[800e566c] )
 
             800A3B48	jal    funcb7a40 [$800b7a40]
 
-            800A3B50	jal    funca12ac [$800a12ac]
+            funca12ac();
 
             wm_prepare_for_render();
 
@@ -2982,68 +2982,43 @@ wm_set_camera_mode();
 
 
 ////////////////////////////////
-// funca40f0
+// funca40f0()
 
-A0 = A0 << 10;
-A0 = A0 >> 10;
-800A40F8	bltz   a0, La4130 [$800a4130]
-V0 = 0;
-V1 = 800be5f0;
-V0 = h[V1 + 0000];
-800A410C	nop
-V0 = A0 < V0;
-800A4114	beq    v0, zero, La412c [$800a412c]
-V0 = A0 << 01;
-V0 = V1 + V0;
-V0 = h[V0 + 0002];
-800A4124	j      La4130 [$800a4130]
-V0 = V0 + V1;
-
-La412c:	; 800A412C
-V0 = 0;
-
-La4130:	; 800A4130
+if( ( A0 >= 0 ) && ( A0 < h[800be5f0] ) )
+{
+    return 800be5f0 + h[800be5f0 + A0 * 2 + 2];
+}
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca4138
+// funca4138()
 
-S2 = 0;
-S1 = 0;
-S0 = 800c6648;
 [800e56f4] = w(0);
 
-loopa4164:	; 800A4164
-    V0 = 0004;
-    [S0 + 0003] = b(V0);
-    V0 = 0064;
-    [S0 + 0007] = b(V0);
-    800A4170	jal    $80043cc0
+for( int i = 0; i < 2; ++i )
+{
+    [800c6648 + i * 14 + 3] = b(4);
+    [800c6648 + i * 14 + 7] = b(64); // textured Rectangle, variable size, opaque, texture-blending
 
-    V1 = 0001;
-    800A417C	beq    v0, v1, La419c [$800a419c]
-    A3 = 0029;
-    800A4184	jal    $80043cc0
-    800A4188	nop
-    V1 = 0002;
-    800A4190	bne    v0, v1, La419c [$800a419c]
-    A3 = 0019;
-    A3 = 0029;
+    system_gpu_get_type();
 
-    La419c:	; 800A419C
-    [SP + 0010] = w(0);
-    A0 = 800e56dc + S1;
+    A0 = 800e56dc + i * c;
     A1 = 0;
     A2 = 0;
-    800A41B0	jal    $80044a68
-
-    S1 = S1 + 000c;
-    S2 = S2 + 0001;
-    S0 = S0 + 0014;
-    V0 = S2 < 0002;
-800A41C4	bne    v0, zero, loopa4164 [$800a4164]
+    if( ( V0 == 1 ) || ( V0 == 2 ) )
+    {
+        A3 = 29;
+    }
+    else
+    {
+        A3 = 19;
+    }
+    A4 = 0;
+    system_gpu_create_texture_setting_packet();
+}
 ////////////////////////////////
 
 
@@ -3082,149 +3057,66 @@ else if( S0 == 4 )
 
 
 ////////////////////////////////
-// funca4268
+// funca4268()
 
 wm_get_current_render_buffer_id();
+buffer_id = V0;
 
 V1 = w[800e56f4];
-S1 = 2;
-800A4288	beq    v1, s1, La42e0 [$800a42e0]
-S0 = V0;
-V0 = V1 < 0003;
-800A4294	beq    v0, zero, La42ac [$800a42ac]
-V0 = 0001;
-800A429C	beq    v1, v0, La42c0 [$800a42c0]
-800A42A0	nop
-800A42A4	j      La447c [$800a447c]
-800A42A8	nop
 
-La42ac:	; 800A42AC
-V0 = 0003;
-800A42B0	beq    v1, v0, La43d4 [$800a43d4]
-800A42B4	lui    t0, $00ff
-800A42B8	j      La447c [$800a447c]
-800A42BC	nop
+if( V1 == 1 )
+{
+    wm_fade_is_stopped();
 
-La42c0:	; 800A42C0
-wm_fade_is_stopped();
+    if( V0 != 0 )
+    {
+        [800e56f4] = w(2);
+    }
+}
+else if( V1 == 2 )
+{
+    A0 = -1;
+    system_psyq_wait_frames();
+    frame = V0;
 
-800A42C8	beq    v0, zero, La447c [$800a447c]
-800A42CC	nop
+    [800c6648 + buffer_id * 14 + d] = b(((frame / 4) & 10) - 80); // ty
 
-[800e56f4] = w(S1);
-800A42D8	j      La447c [$800a447c]
-800A42DC	nop
+    A1 = 800c6648 + buffer_id * 14;
+    A2 = w[800bd130];
+    V1 = w[A1];
+    V0 = w[A2];
+    V1 = (V1 & ff000000) | (V0 & 00ffffff);
+    [A1] = w(V1);
+    A1 = A1 & 00ffffff;
+    A0 = w[A2 + 0000];
+    V1 = 800e56dc + buffer_id * c;
+    A0 = (A0 & ff000000) | A1;
+    [A2] = w(A0);
 
-La42e0:	; 800A42E0
-A0 = -1;
-system_psyq_wait_frames();
+    [V1] = w((w[V1] & ff000000) | (A0 & 00ffffff));
+    [A2] = w((w[A2] & ff000000) | (V1 & 00ffffff));
 
-800A42E8	lui    t0, $00ff
-T0 = T0 | ffff;
-T1 = V0;
-A1 = S0 << 02;
-A1 = A1 + S0;
-A1 = A1 << 02;
-V0 = T1 >> 02;
-V0 = V0 & 0010;
-800A4308	addiu  v0, v0, $ff80 (=-$80)
-800A430C	lui    at, $800c
-AT = AT + 6655;
-AT = AT + A1;
-[AT + 0000] = b(V0);
-800A431C	lui    v0, $800c
-V0 = V0 + 6648;
-A1 = A1 + V0;
-800A4328	lui    a3, $ff00
-A2 = w[800bd130];
-V1 = w[A1 + 0000];
-V0 = w[A2 + 0000];
-V1 = V1 & A3;
-V0 = V0 & T0;
-V1 = V1 | V0;
-[A1 + 0000] = w(V1);
-A1 = A1 & T0;
-800A4350	lui    v0, $800e
-V0 = V0 + 56dc;
-V1 = S0 << 01;
-V1 = V1 + S0;
-V1 = V1 << 02;
-A0 = w[A2 + 0000];
-V1 = V1 + V0;
-A0 = A0 & A3;
-A0 = A0 | A1;
-[A2 + 0000] = w(A0);
-V0 = w[V1 + 0000];
-A0 = A0 & T0;
-V0 = V0 & A3;
-V0 = V0 | A0;
-[V1 + 0000] = w(V0);
-V1 = V1 & T0;
-A0 = w[A2 + 0000];
-800A4394	lui    v0, $800d
-V0 = w[V0 + 84f0];
-A0 = A0 & A3;
-A0 = A0 | V1;
-V0 = T1 - V0;
-800A43A8	addiu  v0, v0, $fffc (=-$4)
-V0 = V0 < 0002;
-800A43B0	beq    v0, zero, La43c4 [$800a43c4]
-[A2 + 0000] = w(A0);
-V0 = 0003;
-800A43BC	lui    at, $800e
-[AT + 56f4] = w(V0);
+    if( ( frame - w[800c84f0] - 4 ) < 2 )
+    {
+        [800e56f4] = w(3);
+    }
+    [800c84f0] = w(frame);
+}
+else if( V1 == 3 )
+{
+    [800c6648 + buffer_id * 14 + d] = b(a0); // ty
 
-La43c4:	; 800A43C4
-800A43C4	lui    at, $800d
-[AT + 84f0] = w(T1);
-800A43CC	j      La447c [$800a447c]
-800A43D0	nop
+    A0 = 800c6648 + buffer_id * 14;
+    A2 = w[800bd130];
 
-La43d4:	; 800A43D4
-T0 = T0 | ffff;
-A0 = S0 << 02;
-A0 = A0 + S0;
-A0 = A0 << 02;
-V0 = 00a0;
-800A43E8	lui    at, $800c
-AT = AT + 6655;
-AT = AT + A0;
-[AT + 0000] = b(V0);
-800A43F8	lui    v0, $800c
-V0 = V0 + 6648;
-A0 = A0 + V0;
-800A4404	lui    a3, $ff00
-800A4408	lui    a2, $800c
-A2 = w[800bd130];
-V1 = w[A0 + 0000];
-V0 = w[A2 + 0000];
-V1 = V1 & A3;
-V0 = V0 & T0;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-A0 = A0 & T0;
-800A442C	lui    v1, $800e
-V1 = V1 + 56dc;
-V0 = S0 << 01;
-V0 = V0 + S0;
-V0 = V0 << 02;
-A1 = w[A2 + 0000];
-V0 = V0 + V1;
-A1 = A1 & A3;
-A1 = A1 | A0;
-[A2 + 0000] = w(A1);
-V1 = w[V0 + 0000];
-A1 = A1 & T0;
-V1 = V1 & A3;
-V1 = V1 | A1;
-[V0 + 0000] = w(V1);
-V1 = w[A2 + 0000];
-V0 = V0 & T0;
-V1 = V1 & A3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
+    [A0] = w((w[A0] & ff000000) | (w[A2] & 00ffffff));
 
-La447c:	; 800A447C
+    A1 = w[A2];
+    [A2] = w((A1 & ff000000) | (A0 & 00ffffff));
+
+    [800e56dc + buffer_id * c] = w((w[800e56dc + buffer_id * c] & ff000000) | (A1 & 00ffffff));
+    [A2] = w((w[A2] & ff000000) | ((800e56dc + buffer_id * c) & 00ffffff));
+}
 ////////////////////////////////
 
 
@@ -3405,17 +3297,24 @@ while( w[800e566c] < 9 )
 
     [800e5648] = w(0);
 
-    funcbc1cc(); // prepare some packets
+    wm_ui_map_create();
 
-    funca7ea4(); // init some lists
+    funca7ea4(); // init map block lists
 
     A0 = S2;
     A1 = S4;
-    A2 = w[800e5634] ^ 3; // world id
-    A2 = 0 < A2;
-    funcb7228(); // we init models here
+    if( w[800e5634] == 3 ) // snowfield
+    {
+        A2 = 0;
+    }
+    else
+    {
+        A2 = 1;
+    }
+    funcb7228(); // load data from savemap
 
-    if( w[800e5634] == 2 ) // world id
+    // force front view for underwater
+    if( w[800e5634] == 2 )
     {
         A0 = 2;
         wm_set_camera_view();
@@ -3423,11 +3322,11 @@ while( w[800e566c] < 9 )
 
     [800e5604] = w(0); // not used
 
-    funca31f8();
+    funca31f8(); // some camera settings
 
     funca12ac(); // we create render buffer for skybox and skybox overlay here
 
-    funcadc70();
+    wm_mutex_mask_init();
 
     funcaf0b0();
 
@@ -3675,7 +3574,7 @@ while( w[800e566c] < 9 )
         A0 = h[800e560c];
         800A4BEC	jal    funcaea48 [$800aea48]
 
-        800A4BF4	jal    funca4268 [$800a4268]
+        funca4268();
 
         wm_fade_render();
 
@@ -3684,7 +3583,7 @@ while( w[800e566c] < 9 )
             if( w[800e5634] != 3 )
             {
                 A0 = h[800e560c];
-                800A4C34	jal    funcbc420 [$800bc420]
+                wm_ui_map_update();
             }
         }
 
@@ -6998,9 +6897,10 @@ if( w[800e5828] != 0 )
 
     800A81A4	jal    funca5e28 [$800a5e28]
 
+    S0 = w[800e5818];
+
     wm_get_number_of_map_to_load();
 
-    S0 = w[800e5818];
     if( V0 >= 3 )
     {
         [800e5818] = w(w[800e5818] + 1);

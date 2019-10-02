@@ -923,64 +923,38 @@ return A2;
 
 
 ////////////////////////////////
-// func3a8a8
-T0 = hu[A0 + 0000];
-T1 = w[A0 + 0004];
-T2 = w[A0 + 000c];
-8003A8B4	lui    at, $ffff
-T1 = T1 & AT;
-T0 = T0 | T1;
-VXY0 = T0;
-VZ0 = T2;
-8003A8C8	nop
+// system_gte_matrix_multiply_A0_to_A1()
+// multiply matrix A0 with already set rotation matrix and store result to A1
+
+VXY0 = (w[A0 + 4] & ffff0000) | hu[A0 + 0];
+VZ0 = w[A0 + c];
 gte_rtv0(); // v0 * rotmatrix
-T0 = hu[A0 + 0002];
-T1 = w[A0 + 0008];
-T2 = h[A0 + 000e];
-T1 = T1 << 10;
-T0 = T0 | T1;
 T3 = IR1;
 T4 = IR2;
 T5 = IR3;
-VXY0 = T0;
-VZ0 = T2;
-8003A8F8	nop
+
+VXY0 = (w[A0 + 8] << 10) | hu[A0 + 2];
+VZ0 = h[A0 + e];
 gte_rtv0(); // v0 * rotmatrix
-T0 = hu[A0 + 0004];
-T1 = w[A0 + 0008];
-T2 = w[A0 + 0010];
-8003A90C	lui    at, $ffff
-T1 = T1 & AT;
-T0 = T0 | T1;
 T6 = IR1;
 T7 = IR2;
 T8 = IR3;
-VXY0 = T0;
-VZ0 = T2;
-8003A92C	nop
+
+VXY0 = (w[A0 + 8] & ffff0000) | hu[A0 + 4];
+VZ0 = w[A0 + 10];
 gte_rtv0(); // v0 * rotmatrix
-T3 = T3 & ffff;
-T6 = T6 << 10;
-T6 = T6 | T3;
-[A1 + 0000] = w(T6);
-T5 = T5 & ffff;
-T8 = T8 << 10;
-T8 = T8 | T5;
-[A1 + 000c] = w(T8);
-T0 = IR1;
-T1 = IR2;
-T0 = T0 & ffff;
-T4 = T4 << 10;
-T0 = T0 | T4;
-[A1 + 0004] = w(T0);
-T7 = T7 & ffff;
-T1 = T1 << 10;
-T1 = T1 | T7;
-[A1 + 0008] = w(T1);
-[A1 + 0010] = w(IR3);
-V0 = A1;
-8003A984	jr     ra 
-8003A988	nop
+
+[A1 + 0] = w((T6 << 10) | (T3 & ffff));
+[A1 + 4] = w((T4 << 10) | (IR1 & ffff));
+[A1 + 8] = w((IR2 << 10) | (T7 & ffff));
+[A1 + c] = w((T8 << 10) | (T5 & ffff));
+[A1 + 10] = w(IR3);
+
+return A1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3a98c
 T0 = w[A0 + 0000];

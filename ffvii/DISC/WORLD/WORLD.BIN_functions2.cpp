@@ -687,7 +687,7 @@ return w[801163d4];
 
 
 ////////////////////////////////
-// funcbc1cc()
+// wm_ui_map_create()
 
 for( int i = 0; i < 2; ++i )
 {
@@ -776,7 +776,7 @@ for( int i = 0; i < 2; ++i )
 
 
 ////////////////////////////////
-// funcbc420()
+// wm_ui_map_update()
 
 if( w[801164f8] >= 2 )
 {
@@ -797,224 +797,171 @@ else
 }
 
 [80116500] = w(A0);
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V0 = V0 - A0;
-S6 = 13c - V0;
-V1 = A0 << 3;
-S7 = dc - V1;
+
+S6 = 13c - A0 * b;
+S7 = dc - A0 * 8;
 
 wm_get_current_render_buffer_id();
 buffer_id = V0;
 
 wm_get_model_id_from_pc_entity();
-model_id = V0;
+pc_model_id = V0;
 
-S1 = 0;
-S4 = buffer_id * 60;
-S2 = 00ffffff;
-S3 = ff000000;
+for( int i = 0; i < 6; ++i )
+{
+    if( i == 0 )
+    {
+        wm_set_pc_entity_as_active_entity();
+    }
+    else
+    {
+        A0 = bu[800c73dc + i];
+        if( A0 == pc_model_id )
+        {
+            continue;
+        }
 
-loopbc4d8:	; 800BC4D8
-    800BC4D8	beq    s1, zero, Lbc514 [$800bc514]
+        wm_set_active_entity_with_model_id();
 
-    A0 = bu[800c73dc + S1];
+        if( V0 == 0 )
+        {
+            continue;
+        }
+    }
 
-    800BC4F4	beq    a0, model_id, Lbc5f8 [$800bc5f8]
-
-    wm_set_active_entity_with_model_id();
-
-    800BC504	bne    v0, zero, Lbc51c [$800bc51c]
-    800BC508	nop
-    800BC50C	j      Lbc5fc [$800bc5fc]
-
-    Lbc514:	; 800BC514
-    wm_set_pc_entity_as_active_entity();
-
-    Lbc51c:	; 800BC51C
     A0 = SP + 28;
     wm_get_position_from_active_entity();
 
-
-    A0 = w[80116500];
-    S0 = S4 + 801163f0 + S1 * 10;
-    [S0 + 8] = h(S6 + ((A0 * w[SP + 28]) >> f) - 4);
-    [S0 + a] = h(S7 + ((A0 * w[SP + 30]) >> f) - 4);
+    S0 = 801163f0 + buffer_id * 60 + i * 10;
+    [S0 + 8] = h(S6 + ((w[80116500] * w[SP + 28]) / 8000) - 4); // x
+    [S0 + a] = h(S7 + ((w[80116500] * w[SP + 30]) / 8000) - 4); // y
 
     A0 = -1;
     system_psyq_wait_frames();
 
-    V1 = S1 << 02;
-    V0 = V0 + V1;
-    if( S1 != 0 )
+    V0 = V0 + i * 4;
+    if( i != 0 )
     {
-        V0 = V0 >> 01;
+        V0 = V0 / 2;
     }
 
-    V1 = V0 & 0010;
     if( w[80116500] >= 9 )
     {
-        V0 = V1 << 01;
-        V0 = V0 + 0004;
+        [S0 + d] = b(V0 * 2 + 4); // clut x
     }
     else
     {
-        V0 = V1 + 0004;
+        [S0 + d] = b((V0 & 10) + 4); // clut x
     }
 
-    [S0 + 000d] = b(V0);
     A0 = w[800bd130];
-    V1 = w[S0 + 0000];
-    V0 = w[A0 + 0000];
-    V1 = V1 & S3;
-    V0 = V0 & S2;
-    V1 = V1 | V0;
-    [S0 + 0000] = w(V1);
-    V0 = w[A0 + 0000];
-    V1 = S0 & S2;
-    V0 = V0 & S3;
-    V0 = V0 | V1;
-    [A0 + 0000] = w(V0);
-
-    Lbc5f8:	; 800BC5F8
-    Lbc5fc:	; 800BC5FC
-    S1 = S1 + 1;
-    V0 = S1 < 6;
-800BC600	bne    v0, zero, loopbc4d8 [$800bc4d8]
-
-V0 = buffer_id << 01;
-S3 = 00ffffff;
-A0 = 801164c8;
-V0 = V0 + buffer_id;
-V0 = V0 << 02;
-A0 = V0 + A0;
-A1 = w[800bd130];
-[SP + 0060] = w(V0);
-V1 = w[A0 + 0000];
-V0 = w[A1 + 0000];
-V1 = V1 & ff000000;
-V0 = V0 & S3;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-V0 = w[A1 + 0000];
-A0 = A0 & S3;
-V0 = V0 & ff000000;
-V0 = V0 | A0;
-[A1 + 0000] = w(V0);
-800BC65C	jal    funca1d04 [$800a1d04]
-
-S1 = -10;
-800BC668	beq    v0, 2, Lbc684 [$800bc684]
-
-800BC670	jal    funca1d04 [$800a1d04]
-
-800BC67C	bne    v0, 3, Lbc86c [$800bc86c]
-
-Lbc684:	; 800BC684
-S2 = 800c738c + buffer_id * 1c;
-
-A0 = SP + 28;
-wm_get_position_from_pc_entity();
-
-V1 = w[80116500];
-V0 = w[SP + 28];
-V0 = V1 * V0;
-V0 = V0 >> 0f;
-V0 = S6 + V0;
-[S2 + 0008] = h(V0);
-V0 = w[SP + 0030];
-V0 = V1 * V0;
-A0 = SP + 0010;
-S0 = SP + 0038;
-A1 = S0;
-V0 = V0 >> 0f;
-V0 = S7 + V0;
-[S2 + 000a] = h(V0);
-T1 = hu[SP + 0058];
-[SP + 0012] = h(0);
-[SP + 0010] = h(0);
-[SP + 0014] = h(T1);
-
-system_gte_rotation_matrix_from_xyz();
-
-A0 = S0;
-S4 = SP + 0018;
-A1 = S4;
-[SP + 0020] = w(0);
-[SP + 001c] = w(0);
-[SP + 0018] = w(0);
-
-system_gte_copy_matrix_translation_part();
-
-A0 = S0;
-system_gte_set_rotation_matrix();
-
-A0 = S0;
-system_gte_set_translation_vector();
-
-V1 = w[80116500];
-if( V1 == 8 )
-{
-    S1 = -8;
+    [S0] = w((w[S0] & ff000000) | (w[A0] & 00ffffff));
+    [A0] = w((w[A0] & ff000000) | (S0 & 00ffffff));
 }
 
-A0 = SP + 0010;
-V0 = S1 >> 01;
-[SP + 0010] = h(V0);
-[SP + 0012] = h(S1);
-T4 = A0;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S4;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-
-[S2 + 0010] = h(hu[S2 + 0008] + hu[SP + 0018]);
-[S2 + 0012] = h(hu[S2 + 000a] + hu[SP + 001c]);
-
-[SP + 0010] = h(0 - hu[SP + 0010]);
-
-T4 = A0;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S4;
-[T4 + 0] = w(MAC1);
-[T4 + 4] = w(MAC2);
-[T4 + 8] = w(MAC3);
-
-[S2 + 18] = h(hu[S2 + 8] + hu[SP + 18]);
-[S2 + 1a] = h(hu[S2 + a] + hu[SP + 1c]);
-
-V1 = w[S2 + 0000];
+A0 = 801164c8 + buffer_id * c;
 A1 = w[800bd130];
-V0 = w[A1 + 0000];
-V1 = V1 & ff000000;
-V0 = V0 & S3;
-[S2 + 0] = w(V1 | V0);
+[A0] = w((w[A0] & ff000000) | (w[A1] & 00ffffff));
+[A1] = w((w[A1] & ff000000) | (A0 & 00ffffff));
 
-V1 = w[A1 + 0000];
-V0 = S2 & S3;
-V1 = V1 & ff000000;
-V1 = V1 | V0;
-[A1 + 0000] = w(V1);
-T1 = w[SP + 0060];
-A0 = 801164e0 + T1;
-V0 = w[A0 + 0000];
-V1 = V1 & S3;
-V0 = V0 & ff000000;
-V0 = V0 | V1;
-[A0 + 0000] = w(V0);
-V0 = w[A1 + 0000];
-A0 = A0 & S3;
-V0 = V0 & ff000000;
-V0 = V0 | A0;
-[A1 + 0000] = w(V0);
+S1 = -10;
 
-Lbc86c:	; 800BC86C
+funca1d04();
+
+if( ( V0 == 2 ) || ( V0 == 3 ) )
+{
+    S2 = 800c738c + buffer_id * 1c;
+
+    A0 = SP + 28;
+    wm_get_position_from_pc_entity();
+
+    V1 = w[80116500];
+    V0 = w[SP + 28];
+    V0 = V1 * V0;
+    V0 = V0 >> 0f;
+    V0 = S6 + V0;
+    [S2 + 0008] = h(V0);
+    V0 = w[SP + 0030];
+    V0 = V1 * V0;
+    A0 = SP + 0010;
+    S0 = SP + 0038;
+    A1 = S0;
+    V0 = V0 >> 0f;
+    V0 = S7 + V0;
+    [S2 + 000a] = h(V0);
+    T1 = hu[SP + 0058];
+    [SP + 0012] = h(0);
+    [SP + 0010] = h(0);
+    [SP + 0014] = h(T1);
+
+    system_gte_rotation_matrix_from_xyz();
+
+    A0 = S0;
+    S4 = SP + 0018;
+    A1 = S4;
+    [SP + 0020] = w(0);
+    [SP + 001c] = w(0);
+    [SP + 0018] = w(0);
+
+    system_gte_copy_matrix_translation_part();
+
+    A0 = S0;
+    system_gte_set_rotation_matrix();
+
+    A0 = S0;
+    system_gte_set_translation_vector();
+
+    V1 = w[80116500];
+    if( V1 == 8 )
+    {
+        S1 = -8;
+    }
+
+    A0 = SP + 0010;
+    V0 = S1 >> 01;
+    [SP + 0010] = h(V0);
+    [SP + 0012] = h(S1);
+    T4 = A0;
+    VXY0 = w[T4 + 0000];
+    VZ0 = w[T4 + 0004];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    T4 = S4;
+    [T4 + 0000] = w(MAC1);
+    [T4 + 0004] = w(MAC2);
+    [T4 + 0008] = w(MAC3);
+
+    [S2 + 0010] = h(hu[S2 + 0008] + hu[SP + 0018]);
+    [S2 + 0012] = h(hu[S2 + 000a] + hu[SP + 001c]);
+
+    [SP + 0010] = h(0 - hu[SP + 0010]);
+
+    T4 = A0;
+    VXY0 = w[T4 + 0000];
+    VZ0 = w[T4 + 0004];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    T4 = S4;
+    [T4 + 0] = w(MAC1);
+    [T4 + 4] = w(MAC2);
+    [T4 + 8] = w(MAC3);
+
+    [S2 + 18] = h(hu[S2 + 8] + hu[SP + 18]);
+    [S2 + 1a] = h(hu[S2 + a] + hu[SP + 1c]);
+
+    V1 = w[S2 + 0000];
+    A1 = w[800bd130];
+    V0 = w[A1 + 0000];
+    V1 = V1 & ff000000;
+    V0 = V0 & 00ffffff;
+    [S2] = w(V1 | V0);
+
+    V1 = w[A1];
+    [A1] = w((V1 & ff000000) | (S2 & 00ffffff));
+
+    A0 = 801164e0 + buffer_id * c;
+    [A0] = w((w[A0] & ff000000) | (V1 & 00ffffff));
+    [A1] = w((w[A1] & ff000000) | (A0 & 00ffffff));
+}
+
 V1 = w[80116500];
 if( V1 == 8 )
 {
