@@ -3399,7 +3399,7 @@ while( w[800e566c] < 9 )
 
     funca835c(); // .BOT loader
 
-    wm_get_pc_character_model_from_party();
+    wm_get_pc_character_model_id_from_party();
 
     A0 = V0; // model id
     funcb6efc();
@@ -3572,7 +3572,7 @@ while( w[800e566c] < 9 )
         wm_update_skybox_overlay_vertexes();
 
         A0 = h[800e560c];
-        800A4BEC	jal    funcaea48 [$800aea48]
+        funcaea48(); // update meteor?
 
         funca4268();
 
@@ -3602,7 +3602,7 @@ while( w[800e566c] < 9 )
 
         800A4C78	jal    funcb57dc [$800b57dc]
 
-        800A4C80	jal    funcb0e84 [$800b0e84]
+        funcb0e84();
 
         funcb6e78(); // PC char model loading
 

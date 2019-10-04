@@ -397,7 +397,7 @@ else
 
         case e:
         {
-            wm_get_pc_character_model_from_party();
+            wm_get_pc_character_model_id_from_party();
             return V0; // model id
         }
         break;
@@ -1617,7 +1617,7 @@ switch( opcode )
 
     case 320:
     {
-        funcb075c;
+        funcb075c();
 
         return 0;
     }
@@ -1900,10 +1900,10 @@ switch( opcode )
 
     case 350: // set meteor texture on/off
     {
-        wm_script_pop_stack;
+        wm_script_pop_stack();
 
         A0 = V0;
-        funcaf0a0;
+        funcaf0a0();
 
         return 0;
     }

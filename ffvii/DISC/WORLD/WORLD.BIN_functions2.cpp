@@ -612,7 +612,7 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
         {
             if( S1 >= 29 )
             {
-                wm_get_pc_character_model_from_party();
+                wm_get_pc_character_model_id_from_party();
 
                 A0 = V0; // model id
                 wm_set_active_entity_with_model_id();

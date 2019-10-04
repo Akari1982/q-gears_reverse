@@ -556,21 +556,13 @@ La9214:	; 800A9214
 
 
 ////////////////////////////////
-// funca921c
-800A921C
-A1 = A1 & 00ff;
-V0 = A1 < 0020;
-800A9224	beq    v0, zero, La9234 [$800a9234]
-V0 = A0 >> A1;
-800A922C	j      La9238 [$800a9238]
-V0 = V0 & 0001;
+// funca921c()
 
-La9234:	; 800A9234
-V0 = 0;
-
-La9238:	; 800A9238
-800A9238	jr     ra 
-800A923C	nop
+if( A1 < 20 )
+{
+    return (A0 >> A1) & 1;
+}
+return 0;
 ////////////////////////////////
 
 
@@ -2211,79 +2203,60 @@ V0 = V0 >> 02;
 
 
 ////////////////////////////////
-// funcaaa00
+// funcaaa00()
 
 S1 = w[80109d70];
-S0 = A0;
+S0 = A0; // entity + 53
 
-800AAA18	jal    wm_get_pc_entity_terrain_id [$800a9a44]
+wm_get_pc_entity_terrain_id();
+terrain_id = V0;
 
-V1 = w[80109d70];
-A1 = 0002;
-800AAA2C	beq    v1, a1, Laaa84 [$800aaa84]
-A0 = V0;
-V0 = V1 < 0003;
-800AAA38	beq    v0, zero, Laaa50 [$800aaa50]
-V0 = 0001;
-800AAA40	beq    v1, v0, Laaa6c [$800aaa6c]
-V0 = 000b;
-800AAA48	j      Laaad8 [$800aaad8]
-V0 = 0001;
+if( w[80109d70] == 0 )
+{
+    [80109d70] = w(1);
+}
+if( w[80109d70] == 1 )
+{
+    // 0x00000800 11 Riverside                    Beach-like area where river and land meet.
+    else if( terrain_id == b )
+    {
+        [80109d70] = w(2);
+    }
+}
+else if( w[80109d70] == 2 )
+{
+    if( bu[S0] >= 6 )
+    {
+        [80109d70] = w(3);
+    }
+}
+else if( w[80109d70] == 3 )
+{
+    // 0x00000010  4 River Crossing               Buggy, tiny bronco and water-capable chocobos.
+    // 0x00000800 11 Riverside                    Beach-like area where river and land meet.
+    if( ( terrain_id != 4 ) && ( terrain_id != b ) )
+    {
+        [80109d70] = w(4);
+    }
+}
+else if( w[80109d70] == 4 )
+{
+    if( bu[S0] >= 6 )
+    {
+        [80109d70] = w(1);
+    }
+}
+else if( w[80109d70] > 4 )
+{
+    [80109d70] = w(1);
+}
 
-Laaa50:	; 800AAA50
-V0 = 0003;
-800AAA54	beq    v1, v0, Laaaa0 [$800aaaa0]
-V0 = 0004;
-800AAA5C	beq    v1, v0, Laaac4 [$800aaac4]
-V0 = 0001;
-800AAA64	j      Laaad8 [$800aaad8]
-800AAA68	nop
+if( w[80109d70] != S1 )
+{
+    [S0] = b(0);
+}
 
-Laaa6c:	; 800AAA6C
-800AAA6C	bne    a0, v0, Laaae0 [$800aaae0]
-
-[80109d70] = w(A1);
-800AAA7C	j      Laaae0 [$800aaae0]
-800AAA80	nop
-
-Laaa84:	; 800AAA84
-V0 = bu[S0 + 0000];
-800AAA88	nop
-V0 = V0 < 0006;
-800AAA90	bne    v0, zero, Laaae0 [$800aaae0]
-V0 = 0003;
-800AAA98	j      Laaad8 [$800aaad8]
-800AAA9C	nop
-
-Laaaa0:	; 800AAAA0
-V1 = 0004;
-800AAAA4	beq    a0, v1, Laaae0 [$800aaae0]
-V0 = 000b;
-800AAAAC	beq    a0, v0, Laaae0 [$800aaae0]
-
-[80109d70] = w(V1);
-800AAABC	j      Laaae0 [$800aaae0]
-800AAAC0	nop
-
-Laaac4:	; 800AAAC4
-V0 = bu[S0 + 0000];
-800AAAC8	nop
-V0 = V0 < 0006;
-800AAAD0	bne    v0, zero, Laaae0 [$800aaae0]
-V0 = 0001;
-
-Laaad8:	; 800AAAD8
-[80109d70] = w(V0);
-
-Laaae0:	; 800AAAE0
-V0 = w[80109d70];
-800AAAE8	nop
-800AAAEC	beq    v0, s1, Laab00 [$800aab00]
-800AAAF0	nop
-[S0 + 0000] = b(0);
-V0 = w[80109d70];
-
-Laab00:	; 800AAB00
+return w[80109d70];
 ////////////////////////////////
 
 
@@ -2316,7 +2289,7 @@ if( w[8010ad40] == 0 )
 
 A0 = bu[entity + 50]; // model id
 funcb6efc();
-model = S1 = V0;
+model = V0;
 
 if( model == 0 )
 {
@@ -2326,114 +2299,102 @@ if( model == 0 )
 
 S5 = 0;
 
-V0 = w[entity + 0008];
-800AABC4	beq    v0, zero, Laac00 [$800aac00]
-
-A0 = bu[V0 + 50]; // model id
-funcb6efc();
-
-S5 = V0;
-800AABDC	bne    s5, zero, Laac00 [$800aac00]
-800AABE0	nop
-V1 = w[entity + 0008];
-800AABE8	nop
-V0 = bu[V1 + 0051];
-800AABF0	nop
-V0 = V0 & 00fd;
-[V1 + 0051] = b(V0);
-return;
-
-Laac00:	; 800AAC00
-V0 = b[entity + 5d]; // animation id
-
-800AAC08	beq    v0, zero, Laac20 [$800aac20]
-S7 = 0;
-800AAC10	bgez   v0, Laad18 [$800aad18]
-S4 = V0;
-800AAC18	j      Laace4 [$800aace4]
-V0 = 0;
-
-Laac20:	; 800AAC20
-V1 = w[entity + 000c];
-V0 = w[entity + 001c];
-800AAC28	nop
-S2 = V1 - V0;
-800AAC30	bgtz   s2, Laac3c [$800aac3c]
-800AAC34	nop
-S2 = V0 - V1;
-
-Laac3c:	; 800AAC3C
-800AAC3C	lui    v0, $0002
-V0 = V0 | 3fff;
-V0 = V0 < S2;
-800AAC48	beq    v0, zero, Laac58 [$800aac58]
-800AAC4C	lui    v0, $0004
-V0 = V0 | 8000;
-S2 = V0 - S2;
-
-Laac58:	; 800AAC58
-V1 = w[entity + 0014];
-V0 = w[entity + 0024];
-800AAC60	nop
-A0 = V1 - V0;
-800AAC68	bgtz   a0, Laac74 [$800aac74]
-800AAC6C	nop
-A0 = V0 - V1;
-
-Laac74:	; 800AAC74
-800AAC74	lui    v0, $0001
-V0 = V0 | bfff;
-V0 = V0 < A0;
-800AAC80	beq    v0, zero, Laac94 [$800aac94]
-800AAC84	mult   s2, s2
-800AAC88	lui    v0, $0003
-V0 = V0 | 8000;
-A0 = V0 - A0;
-
-Laac94:	; 800AAC94
-800AAC94	mflo   v1
-800AAC98	mult   a0, a0
-A1 = bu[entity + 0050];
-800AACA0	mflo   v0
-S7 = V1 + V0;
-V0 = S7 < 0064;
-S4 = V0 ^ 0001;
-800AACB4	bne    a1, 6, Laacf4 [$800aacf4]
-
-V0 = entity ^ w[8010ad40];
-V0 = V0 < 1;
-V0 = V0 << 5;
-[entity + 58] = b(V0);
-800AACD4	beq    s7, zero, Laacec [$800aacec]
-
-A0 = entity + 53;
-800AACDC	jal    funcaaa00 [$800aaa00]
-
-Laace4:	; 800AACE4
-800AACE4	j      Laad18 [$800aad18]
-S4 = V0;
-
-Laacec:	; 800AACEC
-800AACEC	j      Laad18 [$800aad18]
-S4 = 0;
-
-Laacf4:	; 800AACF4
-A0 = 2000;
-800AACF4	jal    funca921c [$800a921c]
-
+V0 = w[entity + 8];
 if( V0 != 0 )
 {
-    if( S7 > 0 )
+    A0 = bu[V0 + 50]; // model id
+    funcb6efc();
+
+    S5 = V0;
+    if( S5 == 0 )
     {
-        [entity + 58] = b(20);
-    }
-    else
-    {
-        [entity + 58] = b(0);
+        V1 = w[entity + 8];
+        [V1 + 51] = b(bu[V1 + 51] & fd);
+        return;
     }
 }
 
-Laad18:	; 800AAD18
+S7 = 0;
+
+V0 = b[entity + 5d]; // animation id
+
+if( V0 != 0 )
+{
+    S4 = V0;
+    if( V0 <= 0 )
+    {
+        S4 = 0;
+    }
+}
+else
+{
+    S2 = w[entity + c] - w[entity + 1c];
+    if( S2 <= 0 )
+    {
+        S2 = w[entity + 1c] - w[entity + c];
+    }
+
+    if( 23fff < S2 )
+    {
+        S2 = 48000 - S2;
+    }
+
+    A0 = w[entity + 14] - w[entity + 24];
+    if( A0 <= 0 )
+    {
+        A0 = w[entity + 24] - w[entity + 14];
+    }
+
+    if( A0 > 1bfff )
+    {
+        A0 = 38000 - A0;
+    }
+
+    V1 = S2 * S2;
+    V0 = A0 * A0;
+    A1 = bu[entity + 50];
+    S7 = V1 + V0;
+    V0 = S7 < 64;
+    S4 = V0 ^ 1;
+
+    if( A1 == 6 )
+    {
+        V0 = entity ^ w[8010ad40];
+        V0 = V0 < 1;
+        V0 = V0 << 5;
+        [entity + 58] = b(V0);
+
+        if( S7 != 0 )
+        {
+            A0 = entity + 53;
+            funcaaa00();
+
+            S4 = V0;
+        }
+        else
+        {
+            S4 = 0;
+        }
+    }
+    else
+    {
+        A0 = 2000;
+        funca921c();
+
+        if( V0 != 0 )
+        {
+            if( S7 > 0 )
+            {
+                [entity + 58] = b(20);
+            }
+            else
+            {
+                [entity + 58] = b(0);
+            }
+        }
+    }
+}
+
 [model + 1] = b(-1);
 
 V0 = (S4 << 10) >> 10;
@@ -2678,64 +2639,57 @@ A1 = bu[entity + 59] % (bu[entity + 58] >> 4);
 
 Lab1b0:	; 800AB1B0
 V1 = bu[entity + 0050];
-V0 = 0003;
-800AB1B8	bne    v1, v0, Lab250 [$800ab250]
-V0 = 0005;
-V0 = bu[entity + 0051];
-800AB1C4	nop
-V0 = V0 & 0080;
-800AB1CC	bne    v0, zero, Lab1f0 [$800ab1f0]
-V0 = 0020;
-V0 = bu[entity + 0058];
-800AB1D8	nop
-800AB1DC	beq    v0, zero, Lab1f8 [$800ab1f8]
-V0 = S7 < 00c8;
-V0 = bu[entity + 0058];
-800AB1E8	nop
-V0 = V0 + 0001;
 
-Lab1f0:	; 800AB1F0
-[entity + 0058] = b(V0);
-V0 = S7 < 00c8;
-
-Lab1f8:	; 800AB1F8
-800AB1F8	bne    v0, zero, Lab28c [$800ab28c]
-800AB1FC	nop
-V0 = w[entity + 0008];
-800AB204	nop
-800AB208	beq    v0, zero, Lab28c [$800ab28c]
-800AB20C	nop
-V1 = bu[V0 + 0053];
-800AB214	nop
-V1 = V1 + 0001;
-[V0 + 0053] = b(V1);
-A0 = hu[S5 + 001a];
-V0 = w[S5 + 001c];
-800AB228	nop
-V0 = V0 + A0;
-V0 = hu[V0 + 0000];
-V1 = V1 & 00ff;
-V1 = V1 < V0;
-800AB23C	bne    v1, zero, Lab28c [$800ab28c]
-800AB240	nop
-V0 = w[entity + 0008];
-[V0 + 53] = b(0);
-800AB248	j      Lab28c [$800ab28c]
-
-Lab250:	; 800AB250
-if( V1 == V0 )
+if( V1 != 3 )
 {
-    if( entity == w[8010ad40] )
+    if( V1 == 5 )
     {
-        [entity + 58] = b(20);
+        if( entity == w[8010ad40] )
+        {
+            [entity + 58] = b(20);
+        }
+        else if( bu[entity + 58] != 0 )
+        {
+            [entity + 58] = b(bu[entity + 58] + 1);
+        }
     }
-    else if( bu[entity + 58] != 0 )
+}
+else
+{
+    V0 = bu[entity + 51];
+    V0 = V0 & 80;
+    800AB1CC	bne    v0, zero, Lab1f0 [$800ab1f0]
+    V0 = 0020;
+    V0 = bu[entity + 0058];
+
+    800AB1DC	beq    v0, zero, Lab1f8 [$800ab1f8]
+
+    V0 = bu[entity + 58] + 1;
+
+    Lab1f0:	; 800AB1F0
+    [entity + 0058] = b(V0);
+
+    Lab1f8:	; 800AB1F8
+    V0 = S7 < 00c8;
+    if( V0 == 0 )
     {
-        [entity + 58] = b(bu[entity + 58] + 1);
+        V0 = w[entity + 8];
+        if( V0 != 0 )
+        {
+            [V0 + 53] = b(bu[V0 + 53] + 1);
+
+            V0 = w[S5 + 1c] + hu[S5 + 1a];
+            V0 = hu[V0 + 0];
+
+            if( bu[V0 + 53] >= V0 )
+            {
+                V0 = w[entity + 8];
+                [V0 + 53] = b(0);
+            }
+        }
     }
 }
 
-Lab28c:	; 800AB28C
 wm_get_current_render_buffer_id();
 
 S1 = entity + V0 * 28 + 90;
@@ -2797,59 +2751,55 @@ if( S0 != 0 )
     {
         if( bu[S0 + 51] & 02 )
         {
-            A0 = 7;
-            A1 = bu[S0 + 50];
-            800AB3D8	jal    funca921c [$800a921c]
+            A0 = 7; // mask
+            A1 = bu[S0 + 50]; // bit number
+            funca921c;
 
-            800AB3E0	beq    v0, zero, Lab400 [$800ab400]
-            800AB3E4	nop
-            V0 = bu[S0 + 5d] - 2; // animation id
-            V0 = V0 < 0004;
-            800AB3F8	beq    v0, zero, Lab414 [$800ab414]
-            800AB3FC	nop
+            if( ( V0 == 0 ) || ( (bu[S0 + 5d] - 2) < 4 ) )
+            {
+                A0 = bu[S0 + 50];
+                funca92f8();
 
-            Lab400:	; 800AB400
-            A0 = bu[S0 + 0050];
-            800AB404	jal    funca92f8 [$800a92f8]
-            800AB408	nop
-            800AB40C	beq    v0, zero, Lab458 [$800ab458]
-            800AB410	nop
+                if( V0 == 0 )
+                {
+                    if( ( bu[S0 + 50] == 3 ) || ( bu[S0 + 50] == b ) ) // highwind or ultimate weapon
+                    {
+                        A0 = S0;
+                        funcb5c7c();
+                    }
+                    return;
+                }
+            }
 
-            Lab414:	; 800AB414
-            V0 = w[8010ad40];
-            800AB41C	nop
-            800AB420	bne    s0, v0, Lab43c [$800ab43c]
-            800AB424	lui    v1, $311b
-            V0 = w[8010ad5c];
-            800AB430	nop
-            800AB434	bne    v0, zero, Lab458 [$800ab458]
-            800AB438	nop
+            if( S0 == w[8010ad40] )
+            {
+                if( w[8010ad5c] != 0 )
+                {
+                    if( ( bu[S0 + 50] == 3 ) || ( bu[S0 + 50] == b ) ) // highwind or ultimate weapon
+                    {
+                        A0 = S0;
+                        funcb5c7c();
+                    }
+                    return;
+                }
+            }
 
-            Lab43c:	; 800AB43C
-            V0 = hu[S0 + 4a];
-            V1 = V1 | 6f05;
-            V0 = V0 & 001f;
-            V1 = V1 >> V0;
-            V1 = V1 & 0001;
-            800AB450	bne    v1, zero, Lab470 [$800ab470]
-            800AB454	nop
+            if( ( 311b6f05 >> ( hu[S0 + 4a] & 1f ) ) & 1 )
+            {
+                A0 = S0;
+                funcb5c7c();
 
-            Lab458:	; 800AB458
-            V1 = bu[S0 + 0050];
-            V0 = 0003;
-            800AB460	beq    v1, v0, Lab470 [$800ab470]
-            V0 = 000b;
-            800AB468	bne    v1, v0, Lab478 [$800ab478]
-            800AB46C	nop
+                return;
+            }
 
-            Lab470:	; 800AB470
-            A0 = S0;
-            800AB470	jal    funcb5c7c [$800b5c7c]
-
+            if( ( bu[S0 + 50] == 3 ) || ( bu[S0 + 50] == b ) ) // highwind or ultimate weapon
+            {
+                A0 = S0;
+                funcb5c7c();
+            }
         }
     }
 }
-Lab478:	; 800AB478
 ////////////////////////////////
 
 
@@ -2918,7 +2868,7 @@ S0 = w[8010ad38];
 while( S0 != 0 )
 {
     A0 = S0;
-    800AB5B8	jal    funcab398 [$800ab398]
+    funcab398();
 
     S0 = w[S0 + 0];
 }

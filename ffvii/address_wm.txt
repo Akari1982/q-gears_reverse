@@ -307,6 +307,8 @@
 80109d68 [][][][] set to 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 
+80109d70 [][][][] ???
+
 80109d74 system entity struct.
 80109e54 entity with model 0x9 struct. Linked as +8 with highwind model.
 80109f34 start of entity struct linked list. (0x0e items 0xe0 size)
@@ -485,7 +487,17 @@
 8010b4a4 [][][][] some texture move y for texture 1 fade (snow).
 8010b4a8 [][][][] some texture move y for texture 2 fade (snow).
 
+8010c2ac array of 0x30 items 0x8 size.
+    + 0 [][]     ???
+    + 2 [][]     ???
+    + 4 [][]     init with 0.
+    + 6 [][]     init with 0.
+
+8010c42c [][][][] pointer to 8010c2ac.
+
 8010c430 place for packets for something 0xc items. Two buffers.
+
+8010c7f0 [][]     init with 0x0400
 
 8010ca8c [][][][] ???
 

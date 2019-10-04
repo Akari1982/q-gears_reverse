@@ -45,6 +45,7 @@ void
 ScriptFile::Export()
 {
     Logger* text = new Logger( "exported/script.lua" );
+    bool debug = true;
 
     for( u32 i = 0; i < 0x100; ++i )
     {
@@ -56,15 +57,15 @@ ScriptFile::Export()
 
             while( true )
             {
-                int opcode = GetU16LE( 0x400 + offset * 2 );
-
+                int addr = 0x400 + offset * 2;
+                int opcode = GetU16LE( addr );
 
                 if( opcode == 0x17 )
                 {
                     Ogre::String var1 = script_stack.back();
                     script_stack.pop_back();
                     script_stack.push_back( " NOT " + var1 );
-                    text->LogW( "    -- push_stack( ! pop_stack() )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( ! pop_stack() )\n" );
                     offset += 1;
                 }
                 else if( opcode == 0x40 )
@@ -74,7 +75,7 @@ ScriptFile::Export()
                     Ogre::String var2 = script_stack.back();
                     script_stack.pop_back();
                     script_stack.push_back( var2 + " + " + var1 );
-                    text->LogW( "    -- push_stack( pop_stack() + pop_stack() )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( pop_stack() + pop_stack() )\n" );
                     offset += 1;
                 }
                 else if( opcode == 0x41 )
@@ -84,7 +85,7 @@ ScriptFile::Export()
                     Ogre::String var2 = script_stack.back();
                     script_stack.pop_back();
                     script_stack.push_back( var2 + " - " + var1 );
-                    text->LogW( "    -- push_stack( pop_stack() - pop_stack() )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( pop_stack() - pop_stack() )\n" );
                     offset += 1;
                 }
                 else if( opcode == 0x60 )
@@ -94,7 +95,7 @@ ScriptFile::Export()
                     Ogre::String var2 = script_stack.back();
                     script_stack.pop_back();
                     script_stack.push_back( var2 + " < " + var1 );
-                    text->LogW( "    -- push_stack( pop_stack() < pop_stack() )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( pop_stack() < pop_stack() )\n" );
                     offset += 1;
                 }
                 else if( opcode == 0x63 )
@@ -104,7 +105,7 @@ ScriptFile::Export()
                     Ogre::String var2 = script_stack.back();
                     script_stack.pop_back();
                     script_stack.push_back( var2 + " >= " + var1 );
-                    text->LogW( "    -- push_stack( pop_stack() >= pop_stack() )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( pop_stack() >= pop_stack() )\n" );
                     offset += 1;
                 }
                 else if( opcode == 0x70 )
@@ -114,7 +115,7 @@ ScriptFile::Export()
                     Ogre::String var2 = script_stack.back();
                     script_stack.pop_back();
                     script_stack.push_back( var2 + " == " + var1 );
-                    text->LogW( "    -- push_stack( pop_stack() == pop_stack() )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( pop_stack() == pop_stack() )\n" );
                     offset += 1;
                 }
                 else if( opcode == 0xc0 )
@@ -124,7 +125,7 @@ ScriptFile::Export()
                     Ogre::String var2 = script_stack.back();
                     script_stack.pop_back();
                     script_stack.push_back( var2 + " || " + var1 );
-                    text->LogW( "    -- push_stack( pop_stack() || pop_stack() )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( pop_stack() || pop_stack() )\n" );
                     offset += 1;
                 }
                 else if( opcode == 0xe0 )
@@ -139,49 +140,49 @@ ScriptFile::Export()
                 else if( opcode == 0x100 )
                 {
                     script_stack.clear();
-                    text->LogW( "    -- reset_stack()\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " reset_stack()\n" );
                     offset += 1;
                 }
                 else if( opcode == 0x110 )
                 {
                     int value = GetU16LE( 0x400 + offset * 2 + 2 );
                     script_stack.push_back( "0x" + HexToString( value, 4, '0' ) );
-                    text->LogW( "    -- push_stack( " + script_stack.back() + " )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                     offset += 2;
                 }
                 else if( opcode == 0x114 )
                 {
                     int value = GetU16LE( 0x400 + offset * 2 + 2 );
                     script_stack.push_back( "save_bit_" + HexToString( value >> 3, 2, '0' ) + "_" + HexToString( value & 7, 2, '0' ) );
-                    text->LogW( "    -- push_stack( " + script_stack.back() + " )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                     offset += 2;
                 }
                 else if( opcode == 0x118 )
                 {
                     int value = GetU16LE( 0x400 + offset * 2 + 2 );
                     script_stack.push_back( "save_byte_" + HexToString( value, 2, '0' ) );
-                    text->LogW( "    -- push_stack( " + script_stack.back() + " )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                     offset += 2;
                 }
                 else if( opcode == 0x119 )
                 {
                     int value = GetU16LE( 0x400 + offset * 2 + 2 );
                     script_stack.push_back( "temp0_byte_" + HexToString( value, 2, '0' ) );
-                    text->LogW( "    -- push_stack( " + script_stack.back() + " )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                     offset += 2;
                 }
                 else if( opcode == 0x11b )
                 {
                     int value = GetU16LE( 0x400 + offset * 2 + 2 );
                     script_stack.push_back( "temp2_byte_" + HexToString( value, 2, '0' ) );
-                    text->LogW( "    -- push_stack( " + script_stack.back() + " )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                     offset += 2;
                 }
                 else if( opcode == 0x11c )
                 {
                     int value = GetU16LE( 0x400 + offset * 2 + 2 );
                     script_stack.push_back( "save_2bytes_" + HexToString( value, 2, '0' ) );
-                    text->LogW( "    -- push_stack( " + script_stack.back() + " )\n" );
+                    if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                     offset += 2;
                 }
                 else if( opcode == 0x200 )
@@ -309,6 +310,12 @@ ScriptFile::Export()
                 else if( opcode == 0x347 )
                 {
                     text->LogW( "    active_entity_set_pos_from_entity_with_model_id( " + script_stack.back() + " ) -- model_id\n" );
+                    script_stack.pop_back();
+                    offset += 1;
+                }
+                else if( opcode == 0x350 )
+                {
+                    text->LogW( "    set_meteor_enabled( " + script_stack.back() + " )\n" );
                     script_stack.pop_back();
                     offset += 1;
                 }

@@ -1098,7 +1098,7 @@
 // funcb787c
 800B787C-800B79B4
 ////////////////////////////////
-// wm_get_pc_character_model_from_party
+// wm_get_pc_character_model_id_from_party
 800B79B8-800B7A3C
 ////////////////////////////////
 // funcb7a40
