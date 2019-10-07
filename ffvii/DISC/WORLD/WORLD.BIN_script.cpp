@@ -1003,7 +1003,7 @@ switch( opcode )
 
         S1 = w[8010ad3c];
         A0 = S1;
-        funca8b30();
+        wm_unlink_entity_from_all();
 
         wm_script_pop_stack();
         S0 = V0;

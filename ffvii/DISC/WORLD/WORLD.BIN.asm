@@ -365,10 +365,10 @@
 // wm_clean_entity_struct
 800A8ABC-800A8AF0
 ////////////////////////////////
-// funca8af4
+// wm_unlink_entity_and_insert_as_new
 800A8AF4-800A8B2C
 ////////////////////////////////
-// funca8b30
+// wm_unlink_entity_from_all
 800A8B30-800A8C6C
 ////////////////////////////////
 // wm_insert_struct_in_entity_struct_list

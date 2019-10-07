@@ -199,21 +199,21 @@ ScriptFile::Export()
                     else if( v1 == 0x114 )
                     {
                         int value = GetU16LE( 0x400 + offset * 2 + 2 );
-                        script_stack.push_back( "temp" + HexToString( a1, 1, '0' ) + "_bit_" + HexToString( value >> 3, 2, '0' ) + "_" + HexToString( value & 7, 2, '0' ) );
+                        script_stack.push_back( ( ( a1 == 0 ) ? "save0_bit_" + HexToString( 0xba4 + ( value >> 3 ), 2, '0' ) : "temp" + HexToString( a1, 1, '0' ) + "_bit_" + HexToString( value >> 3, 2, '0' ) ) + "_" + HexToString( value & 7, 2, '0' ) );
                         if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                         offset += 2;
                     }
                     else if( v1 == 0x118 )
                     {
                         int value = GetU16LE( 0x400 + offset * 2 + 2 );
-                        script_stack.push_back( "temp" + HexToString( a1, 1, '0' ) + "_byte_" + HexToString( value, 2, '0' ) );
+                        script_stack.push_back( ( ( a1 == 0 ) ? "save0_byte_" + HexToString( 0xba4 + value, 2, '0' ) : "temp" + HexToString( a1, 1, '0' ) + "_byte_" + HexToString( value, 2, '0' ) ) );
                         if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                         offset += 2;
                     }
                     else if( v1 == 0x11c )
                     {
                         int value = GetU16LE( 0x400 + offset * 2 + 2 );
-                        script_stack.push_back( "temp" + HexToString( a1, 1, '0' ) + "_2bytes_" + HexToString( value, 2, '0' ) );
+                        script_stack.push_back( ( ( a1 == 0 ) ? "save0_2bytes_" + HexToString( 0xba4 + value, 2, '0' ) : "temp" + HexToString( a1, 1, '0' ) + "_2bytes_" + HexToString( value, 2, '0' ) ) );
                         if( debug ) text->LogW( "    -- 0x" + HexToString( addr, 4, '0' )  + " push_stack( " + script_stack.back() + " )\n" );
                         offset += 2;
                     }

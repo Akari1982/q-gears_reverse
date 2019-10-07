@@ -129,7 +129,7 @@ return V1 > 801163e0;
 
 wm_get_model_id_from_pc_entity();
 
-if( V0 == 5 )
+if( V0 == 5 ) // tiny bronco
 {
     if( w[801163ec] != 0 )
     {
@@ -150,12 +150,11 @@ if( V0 != 0 )
     A0 = SP + 10;
     wm_get_position_from_active_entity();
 
-    S0 = 3;
     wm_get_model_id_from_active_entity();
 
-    A1 = 0001;
+    A1 = 1;
 
-    if( V0 == S0 )
+    if( V0 == 3 ) // highwind
     {
         A1 = -1;
     }
@@ -165,61 +164,65 @@ if( V0 != 0 )
 
     wm_get_model_id_from_pc_entity();
 
-    A0 = V0 & 00ff;
+    A0 = V0 & ff;
     wm_script_push_to_store_stack();
 
-    800BBAE8	jal    funca929c [$800a929c]
-    800BBAEC	nop
-    800BBAF0	beq    v0, zero, Lbbb14 [$800bbb14]
+    funca929c(); // 1 in case of chokobo
 
-    800BBAF8	jal    funca8ce4 [$800a8ce4]
-
-    A0 = 0002;
-
-    loopbbb04:	; 800BBB04
-    800BBB04	jal    funcb63f0 [$800b63f0]
-
-    return;
-
-    Lbbb14:	; 800BBB14
-    800BBB14	jal    funca8fcc [$800a8fcc]
-
-    800BBB1C	jal    funca8f74 [$800a8f74]
-
-    wm_set_active_entity_as_pc_entity();
-
-    wm_get_model_id_from_pc_entity();
-
-    V1 = V0;
-    800BBB38	beq    v1, s0, Lbbb50 [$800bbb50]
-
-    800BBB40	beq    v1, 6, Lbbb94 [$800bbb94]
-
-    return;
-
-    Lbbb50:	; 800BBB50
-    A0 = 1;
-    800BBB50	jal    funca98a4 [$800a98a4]
-
-    A0 = 1;
-    800BBB58	jal    funca368c [$800a368c]
-
-    800BBB60	jal    funcb5274 [$800b5274]
-
-    800BBB68	jal    funcb64c8 [$800b64c8]
-
-    if( V0 < 6 )
+    if( V0 != 0 )
     {
-        800BBB7C	jal    funcb7200 [$800b7200]
-        800BBB80	nop
-        800BBB84	beq    v0, zero, loopbbb04 [$800bbb04]
-        A0 = 0003;
-        800BBB8C	j      loopbbb04 [$800bbb04]
-        A0 = 0001;
+        funca8ce4(); // unlink pc entity from active entity
 
-        Lbbb94:	; 800BBB94
-        A0 = 1ec;
-        funcb65e0(); // sound
+        A0 = 2;
+        funcb63f0(); // sound
+    }
+    else
+    {
+        800BBB14	jal    funca8fcc [$800a8fcc]
+
+        800BBB1C	jal    funca8f74 [$800a8f74]
+
+        wm_set_active_entity_as_pc_entity();
+
+        wm_get_model_id_from_pc_entity();
+        model_id = V0;
+
+        if( model_id != 3 ) // highwind
+        {
+            if( model_id == 6 ) // buggy
+            {
+                A0 = 1ec;
+                funcb65e0(); // sound
+            }
+        }
+        else
+        {
+            A0 = 1;
+            800BBB50	jal    funca98a4 [$800a98a4]
+
+            A0 = 1;
+            800BBB58	jal    funca368c [$800a368c]
+
+            800BBB60	jal    funcb5274 [$800b5274]
+
+            800BBB68	jal    funcb64c8 [$800b64c8]
+
+            if( V0 < 6 )
+            {
+                800BBB7C	jal    funcb7200 [$800b7200]
+
+                if( V0 != 0 )
+                {
+                    A0 = 1;
+                }
+                else
+                {
+                    A0 = 3;
+                }
+
+                800BBB04	jal    funcb63f0 [$800b63f0]
+            }
+        }
     }
 }
 ////////////////////////////////
@@ -497,7 +500,7 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
         wm_script_disable_for_pc_entity();
     }
 
-    800BBF5C	jal    funca929c [$800a929c]
+    funca929c(); // 1 in case of chokobo
 
     if( V0 == 0 )
     {

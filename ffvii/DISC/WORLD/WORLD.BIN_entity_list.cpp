@@ -95,21 +95,22 @@ for( int i = 4; i < e0; i += 4 )
 
 
 ////////////////////////////////
-// funca8af4
+// wm_unlink_entity_and_insert_as_new()
 
-S0 = A0;
+entity = A0;
 
-funca8b30();
+A0 = entity;
+wm_unlink_entity_from_all();
 
 V0 = w[8010ad34];
-[8010ad34] = w(S0);
-[S0 + 0000] = w(V0);
+[8010ad34] = w(entity);
+[entity + 0] = w(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca8b30()
+// wm_unlink_entity_from_all()
 
 entity = A0;
 
@@ -239,7 +240,7 @@ if( S0 != 0 )
         if( w[V0 + 8] == 0 )
         {
             A0 = S0;
-            800A8D24	jal    funca8b30 [$800a8b30]
+            wm_unlink_entity_from_all();
 
             V0 = w[8010ad3c];
             [V0 + 8] = w(S0);
@@ -352,7 +353,7 @@ else
 A0 = w[8010ad40];
 if( A0 != 0 )
 {
-    800A8F88	jal    funca8af4 [$800a8af4]
+    wm_unlink_entity_and_insert_as_new();
 }
 ////////////////////////////////
 
@@ -364,14 +365,14 @@ if( A0 != 0 )
 A0 = w[8010ad3c];
 if( A0 != 0 )
 {
-    800A8FB4	jal    funca8af4 [$800a8af4]
+    wm_unlink_entity_and_insert_as_new();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca8fcc
+// funca8fcc()
 
 A0 = w[8010ad40];
 if( A0 != 0 )
@@ -379,7 +380,7 @@ if( A0 != 0 )
     A0 = w[A0 + 8];
     if( A0 != 0 )
     {
-        800A8FF0	jal    funca8af4 [$800a8af4]
+        wm_unlink_entity_and_insert_as_new();
 
         V0 = w[8010ad40];
         [V0 + 8] = w(0);
@@ -398,7 +399,7 @@ if( A0 != 0 )
     A0 = w[A0 + 8];
     if( A0 != 0 )
     {
-        800A903C	jal    funca8af4 [$800a8af4]
+        wm_unlink_entity_and_insert_as_new();
 
         V0 = w[8010ad3c];
         [V0 + 8] = w(0);
@@ -596,36 +597,27 @@ return 0;
 
 
 ////////////////////////////////
-// funca929c
-800A929C	lui    v1, $8011
-V1 = w[V1 + ad3c];
-800A92A4	nop
-800A92A8	beq    v1, zero, La92ec [$800a92ec]
-800A92AC	nop
-A0 = bu[V1 + 0050];
-V0 = 0004;
-800A92B8	beq    a0, v0, La92e4 [$800a92e4]
-A1 = 0;
-V0 = 0013;
-800A92C4	beq    a0, v0, La92e4 [$800a92e4]
-800A92C8	nop
-V0 = bu[V1 + 0050];
-800A92D0	nop
-800A92D4	addiu  v0, v0, $ffd7 (=-$29)
-V0 = V0 < 0002;
-800A92DC	beq    v0, zero, La92f0 [$800a92f0]
-800A92E0	nop
+// funca929c()
 
-La92e4:	; 800A92E4
-800A92E4	j      La92f0 [$800a92f0]
-A1 = 0001;
+V1 = w[8010ad3c];
+if( V1 != 0 )
+{
+    if( bu[V1 + 50] == 4 ) // wild chocobo
+    {
+        return 1;
+    }
 
-La92ec:	; 800A92EC
-A1 = 0;
+    if( bu[V1 + 50] == 13 ) // player chocobo
+    {
+        return 1;
+    }
 
-La92f0:	; 800A92F0
-800A92F0	jr     ra 
-V0 = A1;
+    if( ( bu[V1 + 50] == 29 ) || ( bu[V1 + 50] == 2a ) )
+    {
+        return 1;
+    }
+}
+return 0;
 ////////////////////////////////
 
 
