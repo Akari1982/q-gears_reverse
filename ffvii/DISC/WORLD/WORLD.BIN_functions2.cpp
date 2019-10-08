@@ -171,16 +171,16 @@ if( V0 != 0 )
 
     if( V0 != 0 )
     {
-        funca8ce4(); // unlink pc entity from active entity
+        wm_link_pc_to_active_entity();
 
         A0 = 2;
         funcb63f0(); // sound
     }
     else
     {
-        800BBB14	jal    funca8fcc [$800a8fcc]
+        wm_unlink_pc_linked_entity_from_all();
 
-        800BBB1C	jal    funca8f74 [$800a8f74]
+        wm_unlink_pc_entity_from_all();
 
         wm_set_active_entity_as_pc_entity();
 
@@ -198,12 +198,12 @@ if( V0 != 0 )
         else
         {
             A0 = 1;
-            800BBB50	jal    funca98a4 [$800a98a4]
+            funca98a4(); // recalculate move pos
 
             A0 = 1;
-            800BBB58	jal    funca368c [$800a368c]
+            funca368c();
 
-            800BBB60	jal    funcb5274 [$800b5274]
+            funcb5274();
 
             800BBB68	jal    funcb64c8 [$800b64c8]
 
@@ -526,7 +526,7 @@ if( ( w[SP + 10] != w[SP + 20] ) || ( w[SP + 18] != w[SP + 28] ) )
             A0 = S0;
             wm_init_active_entity_struct();
 
-            800BC060	jal    funca8ce4 [$800a8ce4]
+            wm_link_pc_to_active_entity();
         }
         else
         {

@@ -1344,7 +1344,7 @@ switch( opcode )
 
     case 30c: // enter vehicle?
     {
-        800ACCF8	jal    funca99bc [$800a99bc]
+        funca99bc();
 
         if( V0 != 0 )
         {
@@ -1357,7 +1357,7 @@ switch( opcode )
 
     case 31a:
     {
-        800ACD18	jal    funca8fa0 [$800a8fa0]
+        wm_unlink_active_entity_from_all();
 
         return 0;
     }
@@ -1776,12 +1776,12 @@ switch( opcode )
 
     case 337:
     {
-        800AD110	jal    wm_script_pop_stack [$800abb24]
-        800AD114	nop
-        800AD118	jal    funcbc1bc [$800bc1bc]
+        wm_script_pop_stack();
+
         A0 = V0;
-        800AD120	j      Lad620 [$800ad620]
-        V0 = 0;
+        funcbc1bc();
+
+        return 0;
     }
     break;
 

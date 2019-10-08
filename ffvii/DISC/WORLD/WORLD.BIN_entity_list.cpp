@@ -229,7 +229,7 @@ return 0;
 
 
 ////////////////////////////////
-// funca8ce4()
+// wm_link_pc_to_active_entity()
 
 S0 = w[8010ad40];
 if( S0 != 0 )
@@ -348,7 +348,7 @@ else
 
 
 ////////////////////////////////
-// funca8f74
+// wm_unlink_pc_entity_from_all()
 
 A0 = w[8010ad40];
 if( A0 != 0 )
@@ -360,7 +360,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// funca8fa0
+// wm_unlink_active_entity_from_all()
 
 A0 = w[8010ad3c];
 if( A0 != 0 )
@@ -372,7 +372,7 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// funca8fcc()
+// wm_unlink_pc_linked_entity_from_all()
 
 A0 = w[8010ad40];
 if( A0 != 0 )

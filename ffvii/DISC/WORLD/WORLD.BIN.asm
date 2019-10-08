@@ -377,7 +377,7 @@
 // funca8ca4
 800A8CA4-800A8CE0
 ////////////////////////////////
-// funca8ce4
+// wm_link_pc_to_active_entity
 800A8CE4-800A8D54
 ////////////////////////////////
 // funca8d58
@@ -389,13 +389,13 @@
 // funca8f48
 800A8F48-800A8F70
 ////////////////////////////////
-// funca8f74
+// wm_unlink_pc_entity_from_all
 800A8F74-800A8F9C
 ////////////////////////////////
-// funca8fa0
+// wm_unlink_active_entity_from_all
 800A8FA0-800A8FC8
 ////////////////////////////////
-// funca8fcc
+// wm_unlink_pc_linked_entity_from_all
 800A8FCC-800A9014
 ////////////////////////////////
 // funca9018

@@ -3391,7 +3391,7 @@ while( w[800e566c] < 9 )
     if( V0 == 2 )
     {
         A0 = 1;
-        800A4920	jal    funca98a4 [$800a98a4]
+        funca98a4();
 
         A0 = -bb8;
         800A4928	jal    funcaa02c [$800aa02c]
