@@ -178,7 +178,7 @@ if( V1 != 0 )
 // we removed given entity from everywhere
 
 A0 = bu[entity + 50]; // model id
-funcb6efc();
+wm_get_model_data_by_model_id();
 model = V0;
 
 if( model != 0 )
@@ -532,26 +532,18 @@ return 0;
 
 
 ////////////////////////////////
-// funca91e0
-800A91E0	lui    v0, $8011
-V0 = w[V0 + ad3c];
-800A91E8	nop
-800A91EC	beq    v0, zero, La9210 [$800a9210]
-800A91F0	nop
-V1 = bu[V0 + 0050];
-800A91F8	nop
-V0 = V1 < 0020;
-800A9200	beq    v0, zero, La9210 [$800a9210]
-V0 = A0 >> V1;
-800A9208	j      La9214 [$800a9214]
-V0 = V0 & 0001;
+// funca91e0()
 
-La9210:	; 800A9210
-V0 = 0;
+V0 = w[8010ad3c];
+if( V0 != 0 )
+{
+    if( bu[V0 + 50] < 20 )
+    {
+        return (A0 >> bu[V0 + 50]) & 1;
+    }
+}
 
-La9214:	; 800A9214
-800A9214	jr     ra 
-800A9218	nop
+return 0;
 ////////////////////////////////
 
 
@@ -746,19 +738,15 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funca94a8
-800A94A8	lui    v0, $8011
-V0 = w[V0 + ad40];
-800A94B0	nop
-800A94B4	beq    v0, zero, La94c8 [$800a94c8]
-800A94B8	nop
-[V0 + 0040] = h(A0);
-[V0 + 004c] = h(A0);
-[V0 + 003e] = h(0);
+// funca94a8()
 
-La94c8:	; 800A94C8
-800A94C8	jr     ra 
-800A94CC	nop
+V0 = w[8010ad40];
+if( V0 != 0 )
+{
+    [V0 + 3e] = h(0);
+    [V0 + 40] = h(A0);
+    [V0 + 4c] = h(A0);
+}
 ////////////////////////////////
 
 
@@ -2274,13 +2262,13 @@ if( ( bu[entity + 51] & 02 ) == 0 )
     return;
 }
 
-if( w[8010ad40] == 0 )
+if( w[8010ad40] == 0 ) // pc entity not set
 {
     return;
 }
 
 A0 = bu[entity + 50]; // model id
-funcb6efc();
+wm_get_model_data_by_model_id();
 model = V0;
 
 if( model == 0 )
@@ -2289,16 +2277,16 @@ if( model == 0 )
     return;
 }
 
-S5 = 0;
+linked_model = 0;
 
 V0 = w[entity + 8];
 if( V0 != 0 )
 {
     A0 = bu[V0 + 50]; // model id
-    funcb6efc();
+    wm_get_model_data_by_model_id();
+    linked_model = V0;
 
-    S5 = V0;
-    if( S5 == 0 )
+    if( linked_model == 0 )
     {
         V1 = w[entity + 8];
         [V1 + 51] = b(bu[V1 + 51] & fd);
@@ -2425,12 +2413,12 @@ V0 = bu[entity + 51] & 80;
 V0 = w[8010ad40];
 800AADD0	bne    entity, v0, Laae4c [$800aae4c]
 
-[model + 0006] = b(0);
-[model + 0007] = b(0);
-[model + 0008] = w(0);
-[model + 0005] = b(bu[8010ad44] - 40);
-[model + 000c] = w((w[entity + 10] - w[80106508]) / 4);
-[model + 0010] = w(0);
+[model + 6] = b(0);
+[model + 7] = b(0);
+[model + 8] = w(0);
+[model + 5] = b(bu[8010ad44] - 40);
+[model + c] = w((w[entity + 10] - w[80106508]) / 4);
+[model + 10] = w(0);
 
 [SP + 2c] = h(hu[8010ad4c]);
 [SP + 2a] = h(hu[entity + 3c] + hu[entity + 3e] + hu[8010ad48]);
@@ -2484,37 +2472,31 @@ V0 = V0 | 8000;
 S3 = S3 + V0;
 
 Laaee8:	; 800AAEE8
-800AAEE8	bgez   s3, Laaef4 [$800aaef4]
-V0 = S3;
-V0 = S3 + 0003;
+[model + 10] = w(S3 / 4);
 
-Laaef4:	; 800AAEF4
-V1 = w[8010ad40];
-V0 = V0 >> 02;
-[model + 0010] = w(V0);
-800AAF00	beq    entity, v1, Laaf18 [$800aaf18]
+if( entity != w[8010ad40] )
+{
+    A0 = S2;
+    A1 = S3;
+    800AAF0C	jal    funcaa8f8 [$800aa8f8]
 
-A0 = S2;
-A1 = S3;
-800AAF0C	jal    funcaa8f8 [$800aa8f8]
+    FP = V0;
+}
 
-FP = V0;
-
-Laaf18:	; 800AAF18
 [model + 5] = b(с0);
 [model + 6] = b((h[entity + 3c] + h[entity + 3e]) >> 4);
 [model + 7] = b(0);
 [model + c] = w((w[entity + 10] + h[entity + 44] - w[80116508] - FP) / 4);
 
 Laaf68:	; 800AAF68
-if( S5 != 0 )
+if( linked_model != 0 )
 {
-    [S5 + 5] = b(bu[model + 5]);
-    [S5 + 6] = b(bu[model + 6]);
-    [S5 + 7] = b(bu[model + 7]);
-    [S5 + 8] = w(w[model + 8]);
-    [S5 + c] = w(w[model + c]);
-    [S5 + 10] = w(w[model + 10]);
+    [linked_model + 5] = b(bu[model + 5]);
+    [linked_model + 6] = b(bu[model + 6]);
+    [linked_model + 7] = b(bu[model + 7]);
+    [linked_model + 8] = w(w[model + 8]);
+    [linked_model + c] = w(w[model + c]);
+    [linked_model + 10] = w(w[model + 10]);
 }
 
 A0 = bu[entity + 50];
@@ -2578,99 +2560,88 @@ A2 = (S4 << 10) >> 10;
 A4 = SP + 28;
 800AB0BC	jal    funcb5e28 [$800b5e28]
 
-800AB0C4	beq    s5, zero, Lab120 [$800ab120]
-V0 = 0003;
-V1 = bu[entity + 0050];
-800AB0D0	nop
-800AB0D4	bne    v1, v0, Lab0fc [$800ab0fc]
-V0 = S4 << 10;
-V0 = w[entity + 0008];
-800AB0E0	nop
-800AB0E4	beq    v0, zero, Lab120 [$800ab120]
-A0 = S5;
-A1 = 0;
-A3 = bu[V0 + 0053];
-800AB0F4	j      Lab114 [$800ab114]
-A2 = 0;
-
-Lab0fc:	; 800AB0FC
-800AB0FC	beq    v0, zero, Lab108 [$800ab108]
-A2 = 0002;
-A2 = 0003;
-
-Lab108:	; 800AB108
-A0 = S5;
-A1 = 0;
-A3 = bu[entity + 0053];
-
-Lab114:	; 800AB114
-V0 = SP + 0028;
-800AB118	jal    funcb5e28 [$800b5e28]
-[SP + 0010] = w(V0);
-
-Lab120:	; 800AB120
-A1 = bu[entity + 0051];
-A0 = entity;
-800AB128	jal    funcb45dc [$800b45dc]
-A1 = A1 & 0001;
-V0 = bu[entity + 0058];
-800AB134	nop
-V0 = V0 >> 04;
-800AB13C	beq    v0, zero, Lab1b0 [$800ab1b0]
-
-V1 = bu[entity + 59] + bu[8011650c];
-V0 = bu[entity + 58];
-A0 = V1 & 00ff;
-V0 = V0 >> 04;
-A0 = A0 / V0;
-[entity + 59] = b(V1);
-
-A1 = bu[entity + 59] % (bu[entity + 58] >> 4);
-[entity + 0053] = b(bu[entity + 53] + A0);
-[entity + 0059] = b(A1);
-
-Lab1b0:	; 800AB1B0
-V1 = bu[entity + 0050];
-
-if( V1 != 3 )
+if( linked_model != 0 )
 {
-    if( V1 == 5 )
+    if( bu[entity + 50] == 3 ) // highwind
     {
-        if( entity == w[8010ad40] )
+        V0 = w[entity + 8];
+        if( V0 != 0 )
         {
-            [entity + 58] = b(20);
-        }
-        else if( bu[entity + 58] != 0 )
-        {
-            [entity + 58] = b(bu[entity + 58] + 1);
+            A0 = linked_model;
+            A1 = 0;
+            A2 = 0;
+            A3 = bu[V0 + 53];
+            A4 = SP + 28;
+            800AB118	jal    funcb5e28 [$800b5e28]
         }
     }
+    else
+    {
+        if( ( S4 << 10 ) != 0 )
+        {
+            A2 = 3;
+        }
+        else
+        {
+            A2 = 2;
+        }
+
+        A0 = linked_model;
+        A1 = 0;
+        A3 = bu[entity + 53];
+        A4 = SP + 28;
+        800AB118	jal    funcb5e28 [$800b5e28]
+    }
 }
-else
+
+A0 = entity;
+A1 = bu[entity + 0051] & 1;
+800AB128	jal    funcb45dc [$800b45dc]
+
+if( ( bu[entity + 58] >> 4 ) != 0 )
 {
-    V0 = bu[entity + 51];
-    V0 = V0 & 80;
-    800AB1CC	bne    v0, zero, Lab1f0 [$800ab1f0]
-    V0 = 0020;
-    V0 = bu[entity + 0058];
+    V1 = bu[entity + 59] + bu[8011650c];
+    V0 = bu[entity + 58];
+    A0 = V1 & 00ff;
+    V0 = V0 >> 04;
+    A0 = A0 / V0;
+    [entity + 59] = b(V1);
 
-    800AB1DC	beq    v0, zero, Lab1f8 [$800ab1f8]
+    A1 = bu[entity + 59] % (bu[entity + 58] >> 4);
+    [entity + 53] = b(bu[entity + 53] + A0);
+    [entity + 59] = b(A1);
+}
 
-    V0 = bu[entity + 58] + 1;
+if( bu[entity + 50] == 5 )
+{
+    if( entity == w[8010ad40] )
+    {
+        [entity + 58] = b(20);
+    }
+    else if( bu[entity + 58] != 0 )
+    {
+        [entity + 58] = b(bu[entity + 58] + 1);
+    }
+}
+else if( bu[entity + 50] == 3 )
+{
+    if( bu[entity + 51] & 80 )
+    {
+        [entity + 58] = b(20);
+    }
+    else if( bu[entity + 58] != 0 )
+    {
+        [entity + 58] = b(bu[entity + 58] + 1);
+    }
 
-    Lab1f0:	; 800AB1F0
-    [entity + 0058] = b(V0);
-
-    Lab1f8:	; 800AB1F8
-    V0 = S7 < 00c8;
-    if( V0 == 0 )
+    if( S7 >= c8 )
     {
         V0 = w[entity + 8];
         if( V0 != 0 )
         {
             [V0 + 53] = b(bu[V0 + 53] + 1);
 
-            V0 = w[S5 + 1c] + hu[S5 + 1a];
+            V0 = w[linked_model + 1c] + hu[linked_model + 1a];
             V0 = hu[V0 + 0];
 
             if( bu[V0 + 53] >= V0 )
@@ -2688,16 +2659,14 @@ S1 = entity + V0 * 28 + 90;
 [SP + 2c] = h(0);
 [SP + 28] = h(0);
 
-V1 = bu[entity + 50];
-
-if( V1 == 3 )
+if( bu[entity + 50] == 3 ) // highwind
 {
     [SP + 28] = h(-a);
     [SP + 2c] = h(50);
 }
-else if( V1 == b )
+else if( bu[entity + 50] == b ) // ultimate weapon
 {
-    [SP + 002c] = h(-168);
+    [SP + 2c] = h(-168);
 }
 
 funca1dc0();

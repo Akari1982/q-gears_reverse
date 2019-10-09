@@ -8085,7 +8085,7 @@ model_id = A0;
 type = A1;
 
 A0 = model_id;
-funcb6efc(); // load model by model id
+wm_get_model_data_by_model_id();
 model = V0;
 
 if( model != 0 )
@@ -8637,7 +8637,7 @@ if( w[80115a64] != 0 )
 
 
 ////////////////////////////////
-// funcb6efc()
+// wm_get_model_data_by_model_id()
 
 model_id = A0;
 

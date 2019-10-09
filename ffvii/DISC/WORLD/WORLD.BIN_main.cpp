@@ -3402,7 +3402,7 @@ while( w[800e566c] < 9 )
     wm_get_pc_character_model_id_from_party();
 
     A0 = V0; // model id
-    funcb6efc();
+    wm_get_model_data_by_model_id();
 
     800A494C	jal    funcb64c8 [$800b64c8]
 
