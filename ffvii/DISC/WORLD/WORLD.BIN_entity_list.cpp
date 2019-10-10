@@ -2183,7 +2183,7 @@ V0 = V0 >> 02;
 
 
 ////////////////////////////////
-// funcaaa00()
+// wm_get_buggy_move_animation_id()
 
 S1 = w[80109d70];
 S0 = A0; // entity + 53
@@ -2195,6 +2195,7 @@ if( w[80109d70] == 0 )
 {
     [80109d70] = w(1);
 }
+
 if( w[80109d70] == 1 )
 {
     // 0x00000800 11 Riverside                    Beach-like area where river and land meet.
@@ -2205,7 +2206,7 @@ if( w[80109d70] == 1 )
 }
 else if( w[80109d70] == 2 )
 {
-    if( bu[S0] >= 6 )
+    if( bu[S0] >= 6 ) // current frame
     {
         [80109d70] = w(3);
     }
@@ -2221,7 +2222,7 @@ else if( w[80109d70] == 3 )
 }
 else if( w[80109d70] == 4 )
 {
-    if( bu[S0] >= 6 )
+    if( bu[S0] >= 6 ) // current frame
     {
         [80109d70] = w(1);
     }
@@ -2233,7 +2234,7 @@ else if( w[80109d70] > 4 )
 
 if( w[80109d70] != S1 )
 {
-    [S0] = b(0);
+    [S0] = b(0); // current frame
 }
 
 return w[80109d70];
@@ -2294,76 +2295,81 @@ if( V0 != 0 )
     }
 }
 
-S7 = 0;
+move_dist = 0;
 
-V0 = b[entity + 5d]; // animation id
-
-if( V0 != 0 )
+if( b[entity + 5d] != 0 ) // animation id
 {
-    S4 = V0;
-    if( V0 <= 0 )
+    animation_id = b[entity + 5d];
+    if( animation_id <= 0 )
     {
-        S4 = 0;
+        animation_id = 0;
     }
 }
 else
 {
-    S2 = w[entity + c] - w[entity + 1c];
-    if( S2 <= 0 )
+    dx = w[entity + c] - w[entity + 1c];
+    if( dx <= 0 )
     {
-        S2 = w[entity + 1c] - w[entity + c];
+        dx = w[entity + 1c] - w[entity + c];
+    }
+    if( 23fff < dx )
+    {
+        dx = 48000 - dx;
     }
 
-    if( 23fff < S2 )
+    dz = w[entity + 14] - w[entity + 24];
+    if( dz <= 0 )
     {
-        S2 = 48000 - S2;
+        dz = w[entity + 24] - w[entity + 14];
+    }
+    if( dz > 1bfff )
+    {
+        dz = 38000 - dz;
     }
 
-    A0 = w[entity + 14] - w[entity + 24];
-    if( A0 <= 0 )
+    move_dist = (dx * dx) + (dz * dz);
+
+    if( move_dist < 64 )
     {
-        A0 = w[entity + 24] - w[entity + 14];
+        animation_id = 0;
+    }
+    else
+    {
+        animation_id = 1;
     }
 
-    if( A0 > 1bfff )
-    {
-        A0 = 38000 - A0;
-    }
-
-    V1 = S2 * S2;
-    V0 = A0 * A0;
     A1 = bu[entity + 50];
-    S7 = V1 + V0;
-    V0 = S7 < 64;
-    S4 = V0 ^ 1;
-
-    if( A1 == 6 )
+    if( A1 == 6 ) // buggy
     {
-        V0 = entity ^ w[8010ad40];
-        V0 = V0 < 1;
-        V0 = V0 << 5;
-        [entity + 58] = b(V0);
-
-        if( S7 != 0 )
+        if( entity == w[8010ad40] )
         {
-            A0 = entity + 53;
-            funcaaa00();
-
-            S4 = V0;
+            [entity + 58] = b(20);
         }
         else
         {
-            S4 = 0;
+            [entity + 58] = b(0);
+        }
+
+        if( move_dist != 0 )
+        {
+            A0 = entity + 53;
+            wm_get_buggy_move_animation_id();
+            animation_id = V0;
+        }
+        else
+        {
+            animation_id = 0;
         }
     }
     else
     {
-        A0 = 2000;
-        funca921c();
+        A0 = 2000; // mask
+        A1 = A1; // bit number
+        funca921c(); // submarine
 
         if( V0 != 0 )
         {
-            if( S7 > 0 )
+            if( move_dist > 0 )
             {
                 [entity + 58] = b(20);
             }
@@ -2375,120 +2381,91 @@ else
     }
 }
 
-[model + 1] = b(-1);
+[model + 1] = b(-1); // don't use root model matrix for lighting
 
-V0 = (S4 << 10) >> 10;
-
-if( V0 >= bu[model + 4] )
+if( animation_id >= bu[model + 4] ) // number of animations
 {
-    S4 = bu[model + 4] - 1;
+    animation_id = bu[model + 4] - 1;
 }
 
-V1 = (S4 << 10) >> c;
-animation = w[model + 1c] + hu[model + 1a] + V1;
+animation = w[model + 1c] + hu[model + 1a] + animation_id * 10;
 
-// start frame?
 if( bu[entity + 53] >= hu[animation + 0] )
 {
     if( bu[entity + 51] & 20 )
     {
-        [entity + 53] = b(bu[animation + 0] - 1);
+        [entity + 53] = b(bu[animation + 0] - 1); // stay in last frame
     }
     else
     {
-        [entity + 53] = b(0);
+        [entity + 53] = b(0); // start from beginning
     }
 }
 
 S3 = 0;
 S2 = 0;
-[SP + 2c] = h(0);
-[SP + 2a] = h(0);
+
 [SP + 28] = h(0);
+[SP + 2a] = h(0);
+[SP + 2c] = h(0);
+
 FP = 0;
-V0 = bu[entity + 51] & 80;
 
-800AADBC	beq    v0, zero, Laae4c [$800aae4c]
-
-V0 = w[8010ad40];
-800AADD0	bne    entity, v0, Laae4c [$800aae4c]
-
-[model + 6] = b(0);
-[model + 7] = b(0);
-[model + 8] = w(0);
-[model + 5] = b(bu[8010ad44] - 40);
-[model + c] = w((w[entity + 10] - w[80106508]) / 4);
-[model + 10] = w(0);
-
-[SP + 2c] = h(hu[8010ad4c]);
-[SP + 2a] = h(hu[entity + 3c] + hu[entity + 3e] + hu[8010ad48]);
-800AAE44	j      Laaf68 [$800aaf68]
-
-Laae4c:	; 800AAE4C
-A0 = SP + 18;
-800AAE4C	jal    funca6b8c [$800a6b8c]
-
-A0 = w[entity + 000c];
-V1 = w[SP + 18];
-S2 = A0 - V1;
-V0 = S2 < fffdc000;
-800AAE6C	bne    v0, zero, Laae8c [$800aae8c]
-800AAE70	lui    v0, $0004
-
-V0 = 23fff < S2;
-800AAE80	beq    v0, zero, Laae94 [$800aae94]
-800AAE84	nop
-800AAE88	lui    v0, $fffb
-
-Laae8c:	; 800AAE8C
-V0 = V0 | 8000;
-S2 = S2 + V0;
-
-Laae94:	; 800AAE94
-800AAE94	bgez   s2, Laaea0 [$800aaea0]
-V0 = S2;
-V0 = S2 + 0003;
-
-Laaea0:	; 800AAEA0
-800AAEA0	lui    v1, $fffe
-V0 = V0 >> 02;
-[model + 0008] = w(V0);
-A0 = w[entity + 0014];
-V0 = w[SP + 0020];
-V1 = V1 | 4000;
-S3 = A0 - V0;
-V1 = S3 < V1;
-800AAEC0	bne    v1, zero, Laaee0 [$800aaee0]
-800AAEC4	lui    v0, $0003
-800AAEC8	lui    v0, $0001
-V0 = V0 | bfff;
-V0 = V0 < S3;
-800AAED4	beq    v0, zero, Laaee8 [$800aaee8]
-800AAED8	nop
-800AAEDC	lui    v0, $fffc
-
-Laaee0:	; 800AAEE0
-V0 = V0 | 8000;
-S3 = S3 + V0;
-
-Laaee8:	; 800AAEE8
-[model + 10] = w(S3 / 4);
-
-if( entity != w[8010ad40] )
+if( ( bu[entity + 51] & 80 ) && ( entity == w[8010ad40] ) )
 {
-    A0 = S2;
-    A1 = S3;
-    800AAF0C	jal    funcaa8f8 [$800aa8f8]
+    [model + 5] = b(bu[8010ad44] - 40); // root x rotation
+    [model + 6] = b(0); // root y rotation
+    [model + 7] = b(0); // root z rotation
+    [model + 8] = w(0); // root x offset
+    [model + c] = w((w[entity + 10] - w[80106508]) / 4); // root y offset
+    [model + 10] = w(0); // root z offset
 
-    FP = V0;
+    [SP + 2c] = h(hu[8010ad4c]);
+    [SP + 2a] = h(hu[entity + 3c] + hu[entity + 3e] + hu[8010ad48]);
+}
+else
+{
+    A0 = SP + 18;
+    800AAE4C	jal    funca6b8c [$800a6b8c]
+
+    S2 = w[entity + c] - w[SP + 18];
+    if( S2 < -24000 )
+    {
+        S2 = S2 + 48000;
+    }
+    else if( 23fff < S2 )
+    {
+        S2 = S2 - 48000;
+    }
+    [model + 8] = w(S2 / 4); // root x offset
+
+    S3 = w[entity + 14] - w[SP + 20];
+    if( S3 < -1c000 )
+    {
+        S3 = S3 + 38000;
+    }
+    else if( 1bfff < S3 )
+    {
+        S3 = S3 - 38000;
+    }
+    [model + 10] = w(S3 / 4); // root z offset
+
+    if( entity != w[8010ad40] )
+    {
+        A0 = S2;
+        A1 = S3;
+        800AAF0C	jal    funcaa8f8 [$800aa8f8]
+
+        FP = V0;
+    }
+
+    [model + 5] = b(с0); // root x rotation
+    [model + 6] = b((h[entity + 3c] + h[entity + 3e]) >> 4); // root y rotation
+    [model + 7] = b(0); // root z rotation
+    [model + c] = w((w[entity + 10] + h[entity + 44] - w[80116508] - FP) / 4); // root y offset
 }
 
-[model + 5] = b(с0);
-[model + 6] = b((h[entity + 3c] + h[entity + 3e]) >> 4);
-[model + 7] = b(0);
-[model + c] = w((w[entity + 10] + h[entity + 44] - w[80116508] - FP) / 4);
-
-Laaf68:	; 800AAF68
+// copy every translation and rotation to linked model
 if( linked_model != 0 )
 {
     [linked_model + 5] = b(bu[model + 5]);
@@ -2499,13 +2476,12 @@ if( linked_model != 0 )
     [linked_model + 10] = w(w[model + 10]);
 }
 
-A0 = bu[entity + 50];
-if( A0 == 6 )
+if( bu[entity + 50] == 6 ) // buggy
 {
-    S6 = bu[entity + 53];
+    frame_id = bu[entity + 53];
 
     V1 = w[8010ad40];
-    if( bu[V1 + 50] == A0 )
+    if( bu[V1 + 50] == 6 ) // pc buggy
     {
         if( bu[V1 + 51] & 01 )
         {
@@ -2515,50 +2491,29 @@ if( A0 == 6 )
             A0 = w[SP + 38];
             A1 = 0 - w[SP + 34];
             wm_get_rotation_from_vector();
+            [8010ad54] = w((w[8010ad54] * 3 - V0) / 4);
 
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
             A0 = w[SP + 30];
-            A1 = w[SP + 34];
-            A2 = w[8010ad54];
-            V1 = A2 << 01;
-            V1 = V1 + A2;
-            V1 = V1 - V0;
-            V1 = V1 >> 02;
-            [8010ad54] = w(V1);
-
-            A1 = 0 - A1;
+            A1 = 0 - w[SP + 34];
             wm_get_rotation_from_vector();
-
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-
-            A0 = w[8010ad58];
-            V1 = A0 << 01;
-            V1 = V1 + A0;
-
-            V1 = V1 - V0;
-            V1 = V1 >> 02;
-
-            [8010ad58] = w(V1);
+            [8010ad58] = w((w[8010ad58] * 3 - V0) / 4);
         }
     }
 
-    A3 = S6;
-
+    A3 = frame_id;
     [SP + 28] = h(hu[8010ad54]);
     [SP + 2c] = h(hu[8010ad58]);
 }
 else
 {
-    A3 = bu[entity + 53];
+    A3 = bu[entity + 53]; // frame_id
 }
 
 A0 = model;
 A1 = entity;
-A2 = (S4 << 10) >> 10;
+A2 = animation_id;
 A4 = SP + 28;
-800AB0BC	jal    funcb5e28 [$800b5e28]
+funcb5e28();
 
 if( linked_model != 0 )
 {
@@ -2570,14 +2525,14 @@ if( linked_model != 0 )
             A0 = linked_model;
             A1 = 0;
             A2 = 0;
-            A3 = bu[V0 + 53];
+            A3 = bu[V0 + 53]; // frame_id
             A4 = SP + 28;
-            800AB118	jal    funcb5e28 [$800b5e28]
+            funcb5e28();
         }
     }
     else
     {
-        if( ( S4 << 10 ) != 0 )
+        if( animation_id != 0 )
         {
             A2 = 3;
         }
@@ -2588,31 +2543,26 @@ if( linked_model != 0 )
 
         A0 = linked_model;
         A1 = 0;
-        A3 = bu[entity + 53];
+        A3 = bu[entity + 53]; // frame_id
         A4 = SP + 28;
-        800AB118	jal    funcb5e28 [$800b5e28]
+        funcb5e28();
     }
 }
 
 A0 = entity;
-A1 = bu[entity + 0051] & 1;
+A1 = bu[entity + 51] & 1;
 800AB128	jal    funcb45dc [$800b45dc]
 
-if( ( bu[entity + 58] >> 4 ) != 0 )
+if( ( bu[entity + 58] / 10 ) != 0 )
 {
-    V1 = bu[entity + 59] + bu[8011650c];
-    V0 = bu[entity + 58];
-    A0 = V1 & 00ff;
-    V0 = V0 >> 04;
-    A0 = A0 / V0;
-    [entity + 59] = b(V1);
-
-    A1 = bu[entity + 59] % (bu[entity + 58] >> 4);
-    [entity + 53] = b(bu[entity + 53] + A0);
-    [entity + 59] = b(A1);
+    [entity + 59] = b(bu[entity + 59] + bu[8011650c]);
+    [entity + 53] = b(bu[entity + 53] + (bu[entity + 59] / (bu[entity + 58] / 10)));
+    [entity + 59] = b(bu[entity + 59] % (bu[entity + 58] / 10));
 }
 
-if( bu[entity + 50] == 5 )
+// for tiny bronco when we moving on it it has fixed rotation speed
+// after we exit - rotation slows down until it stops
+if( bu[entity + 50] == 5 ) // tiny bronco
 {
     if( entity == w[8010ad40] )
     {
@@ -2623,7 +2573,7 @@ if( bu[entity + 50] == 5 )
         [entity + 58] = b(bu[entity + 58] + 1);
     }
 }
-else if( bu[entity + 50] == 3 )
+else if( bu[entity + 50] == 3 ) // highwind
 {
     if( bu[entity + 51] & 80 )
     {
@@ -2634,7 +2584,7 @@ else if( bu[entity + 50] == 3 )
         [entity + 58] = b(bu[entity + 58] + 1);
     }
 
-    if( S7 >= c8 )
+    if( move_dist >= c8 )
     {
         V0 = w[entity + 8];
         if( V0 != 0 )

@@ -406,6 +406,9 @@ if( S1 != 0 )
 ////////////////////////////////
 // wm_get_rotation_from_vector()
 
+x = A0;
+z = A1;
+
 if( ( x == 0 ) && ( z == 0 ) )
 {
     return 0;
@@ -7789,174 +7792,142 @@ if( part != 0 )
 
 
 ////////////////////////////////
-// funcb5e28
+// funcb5e28()
 
+model = A0;
+entity = A1;
+animation_id = A2;
+frame_id = A3;
 S0 = A4;
-S2 = A0;
-S1 = A1;
-S4 = 00ff;
-S5 = A2;
-S6 = A3;
+
 S3 = 1f800000;
 
-if( S1 != 0 )
+model_id = ff;
+
+if( entity != 0 )
 {
-    S4 = bu[S1 + 50];
+    model_id = bu[entity + 50];
 }
 
 wm_get_model_id_from_pc_entity();
 
-A0 = S2;
+A0 = model;
 A1 = S0;
-A2 = SP + 0010;
-V0 = S4 ^ V0;
-A3 = V0 < 0001;
+A2 = SP + 10;
+A3 = (model_id ^ V0) < 1;
 funca36ac();
 
-800B5E90	beq    s1, zero, Lb5ea4 [$800b5ea4]
 V1 = 0;
-V0 = hu[S1 + 4a];
-800B5E9C	nop
-V1 = V0 & 001f;
 
-Lb5ea4:	; 800B5EA4
-800B5EA4	addiu  v0, zero, $ffff (=-$1)
-[S2 + 0001] = b(V0);
-800B5EAC	lui    v0, $0604
-V0 = V0 | 00fa;
-V0 = V0 >> V1;
-V0 = V0 & 0001;
-800B5EBC	beq    v0, zero, Lb5ef0 [$800b5ef0]
-V1 = S4 & 00ff;
-800B5EC4	jal    wm_get_wm_id [$800a1de0]
-800B5EC8	nop
-V1 = 0002;
-800B5ED0	beq    v0, v1, Lb5eec [$800b5eec]
-V1 = S4 & 00ff;
-V0 = 0003;
-800B5EDC	beq    v1, v0, Lb5ef0 [$800b5ef0]
-V0 = 0019;
-800B5EE4	bne    v1, v0, Lb5efc [$800b5efc]
-V0 = 000c;
+if( entity != 0 )
+{
+    V1 = hu[entity + 4a] & 1f; // terrain id
+}
 
-Lb5eec:	; 800B5EEC
-V1 = S4 & 00ff;
+[model + 1] = b(-1);
 
-Lb5ef0:	; 800B5EF0
-V0 = 001d;
-800B5EF4	bne    v1, v0, Lb5f00 [$800b5f00]
-V0 = 000c;
+V0 = (060400fa >> V1) & 1;
 
-Lb5efc:	; 800B5EFC
-[S2 + 0001] = b(V0);
+if( V0 == 0 )
+{
+    if( model_id == 1d ) // ruby weapon
+    {
+        [model + 1] = b(c);
+    }
+}
+else
+{
+    wm_get_wm_id();
 
-Lb5f00:	; 800B5F00
-800B5F00	beq    s1, zero, Lb5f44 [$800b5f44]
-V0 = 000c;
-V1 = b[S1 + 005e];
-800B5F0C	nop
-800B5F10	bne    v1, v0, Lb5f30 [$800b5f30]
-800B5F14	nop
-V0 = b[S2 + 0001];
-800B5F1C	nop
-800B5F20	bgtz   v0, Lb5f30 [$800b5f30]
+    if( V0 == 2 ) // underwater
+    {
+        if( model_id == 1d ) // ruby weapon
+        {
+            [model + 1] = b(c);
+        }
+    }
+    else
+    {
+        if( model_id != 3 ) // highwind
+        {
+            if( model_id != 19 ) // ancient forest
+            {
+                [model + 1] = b(c);
+            }
+        }
+    }
+}
 
-A0 = S2;
-wm_set_calculate_all_parts_lighting();
+if( entity != 0 )
+{
+    if( b[entity + 5e] == c )
+    {
+        if( b[model + 1] <= 0 )
+        {
+            A0 = model;
+            wm_set_calculate_all_parts_lighting();
+        }
+    }
 
+    if( entity != 0 )
+    {
+        [entity + 5e] = b(bu[model + 1]);
+    }
+}
 
-Lb5f30:	; 800B5F30
-800B5F30	beq    s1, zero, Lb5f44 [$800b5f44]
-800B5F34	nop
-V0 = bu[S2 + 1];
-[S1 + 5e] = b(V0);
+A0 = b[model + 1];
 
-Lb5f44:	; 800B5F44
-A0 = b[S2 + 0001];
-800B5F48	nop
-800B5F4C	blez   a0, Lb6038 [$800b6038]
-V1 = A0;
-V0 = 0004;
-800B5F58	beq    a0, v0, Lb5f7c [$800b5f7c]
-A1 = SP + 0030;
-800B5F60	addiu  v0, v1, $fff8 (=-$8)
-V0 = V0 < 0002;
-800B5F68	bne    v0, zero, Lb5f7c [$800b5f7c]
-800B5F6C	addiu  v0, v1, $fff5 (=-$b)
-V0 = V0 < 0002;
-800B5F74	beq    v0, zero, Lb603c [$800b603c]
-V0 = 0003;
+if( ( A0 == 4 ) || ( ( A0 - 8 ) < 2 ) || ( ( V1 - b ) < 2 ) )
+{
+    [SP + 30] = h(1000);
+    [SP + 32] = h(0);
+    [SP + 34] = h(0);
+    [SP + 36] = h(0);
+    [SP + 38] = h(1000);
+    [SP + 3a] = h(0);
+    [SP + 3c] = h(0);
+    [SP + 3e] = h(0);
+    [SP + 40] = h(1000);
+    [SP + 44] = w(0);
+    [SP + 48] = w(0);
+    [SP + 4c] = w(0);
 
-Lb5f7c:	; 800B5F7C
-A0 = S2;
-A2 = S5 << 10;
-A2 = A2 >> 10;
-A3 = S6 << 10;
-[SP + 0040] = h(1000);
-[SP + 0038] = h(1000);
-[SP + 0030] = h(1000);
-[SP + 004c] = w(0);
-[SP + 0048] = w(0);
-[SP + 0044] = w(0);
-[SP + 003e] = h(0);
-[SP + 003c] = h(0);
-[SP + 003a] = h(0);
-[SP + 0036] = h(0);
-[SP + 0034] = h(0);
-[SP + 0032] = h(0);
-[1f800000] = w(3);
+    [1f800000] = w(3);
 
-A3 = A3 >> 10;
-wm_calculate_bone_matrixes();
+    A0 = model;
+    A1 = SP + 30; // root matrix
+    A2 = animation_id;
+    A3 = frame_id;
+    wm_calculate_bone_matrixes();
 
-V1 = w[S2 + 0020];
-V0 = w[SP + 0010];
-800B5FDC	nop
-[V1 + 0000] = w(V0);
-V0 = w[SP + 0014];
-800B5FE8	nop
-[V1 + 0004] = w(V0);
-V0 = w[SP + 0018];
-800B5FF4	nop
-[V1 + 0008] = w(V0);
-V0 = w[SP + 001c];
-800B6000	nop
-[V1 + 000c] = w(V0);
-V0 = w[SP + 0020];
-800B600C	nop
-[V1 + 0010] = w(V0);
-V0 = w[SP + 0024];
-800B6018	nop
-[V1 + 0014] = w(V0);
-V0 = w[SP + 0028];
-800B6024	nop
-[V1 + 0018] = w(V0);
-V0 = w[SP + 002c];
-800B6030	j      Lb6060 [$800b6060]
-[V1 + 001c] = w(V0);
+    V1 = w[model + 20];
+    [V1 + 0] = w(w[SP + 10]);
+    [V1 + 4] = w(w[SP + 14]);
+    [V1 + 8] = w(w[SP + 18]);
+    [V1 + c] = w(w[SP + 1c]);
+    [V1 + 10] = w(w[SP + 20]);
+    [V1 + 14] = w(w[SP + 24]);
+    [V1 + 18] = w(w[SP + 28]);
+    [V1 + 1c] = w(w[SP + 2c]);
+}
+else
+{
+    [1f800000] = w(3);
 
-Lb6038:	; 800B6038
-V0 = 0003;
+    A0 = model;
+    A1 = SP + 10; // root matrix
+    A2 = animation_id;
+    A3 = frame_id;
+    wm_calculate_bone_matrixes();
+}
 
-Lb603c:	; 800B603C
-800B603C	lui    at, $1f80
-[AT + 0000] = w(V0);
-A0 = S2;
-A1 = SP + 0010;
-A2 = S5 << 10;
-A2 = A2 >> 10;
-A3 = S6 << 10;
-A3 = A3 >> 10;
-wm_calculate_bone_matrixes();
-
-Lb6060:	; 800B6060
-800B6060	beq    s1, zero, Lb6120 [$800b6120]
-V0 = 000c;
-V1 = b[S2 + 0001];
+800B6060	beq    entity, zero, Lb6120 [$800b6120]
+V0 = c;
+V1 = b[model + 0001];
 800B606C	nop
 800B6070	bne    v1, v0, Lb6124 [$800b6124]
-800B6074	addiu  v0, s4, $ffef (=-$11)
-A0 = S2;
+800B6074	addiu  v0, model_id, $ffef (=-$11)
+A0 = model;
 A1 = S3;
 S0 = 0001;
 [S3 + 0000] = b(0);
@@ -7967,17 +7938,17 @@ S0 = 0001;
 [S3 + 0005] = b(0);
 [S3 + 0006] = b(0);
 [S3 + 0007] = b(0);
-A2 = h[S1 + 0042];
-V0 = w[S1 + 0010];
-V1 = h[S1 + 0044];
+A2 = h[entity + 42];
+V0 = w[entity + 10];
+V1 = h[entity + 44];
 V0 = V0 - A2;
 V0 = V0 + V1;
 V0 = V0 >> 02;
 V0 = 0 - V0;
 [S3 + 0008] = b(V0);
-A2 = h[S1 + 0042];
-V0 = w[S1 + 0010];
-V1 = h[S1 + 0044];
+A2 = h[entity + 42];
+V0 = w[entity + 10];
+V1 = h[entity + 44];
 V0 = V0 - A2;
 V0 = V0 + V1;
 V0 = V0 >> 02;
@@ -7985,7 +7956,7 @@ V0 = 0 - V0;
 V0 = V0 >> 08;
 800B60E4	jal    funcc4148 [$800c4148]
 [S3 + 0009] = b(V0);
-A0 = S2;
+A0 = model;
 A1 = S3;
 [S3 + 0000] = b(S0);
 [S3 + 0001] = b(0);
@@ -8000,15 +7971,15 @@ A1 = S3;
 [S3 + 0009] = b(0);
 
 Lb6120:	; 800B6120
-800B6120	addiu  v0, s4, $ffef (=-$11)
+800B6120	addiu  v0, model_id, $ffef (=-$11)
 
 Lb6124:	; 800B6124
 V0 = V0 < 0002;
 800B6128	bne    v0, zero, Lb6150 [$800b6150]
-800B612C	addiu  v0, s4, $ffe6 (=-$1a)
+800B612C	addiu  v0, model_id, $ffe6 (=-$1a)
 V0 = V0 < 0002;
 800B6134	bne    v0, zero, Lb6150 [$800b6150]
-V1 = S4 & 00ff;
+V1 = model_id & 00ff;
 V0 = 001c;
 800B6140	beq    v1, v0, Lb6150 [$800b6150]
 V0 = 001e;
@@ -8027,53 +7998,52 @@ V0 = V1 < 0100;
 V1 = 0;
 
 Lb6174:	; 800B6174
-800B6174	bne    v0, zero, Lb6180 [$800b6180]
-800B6178	nop
-V1 = 00ff;
+if( V0 == 0 )
+{
+    V1 = ff;
+}
 
 Lb6180:	; 800B6180
-A0 = S2;
+A0 = model;
 A1 = S3;
-V0 = 0020;
-[A1 + 0000] = b(V0);
-[A1 + 0001] = b(V0);
-V0 = 0030;
-[A1 + 0002] = b(V0);
-V0 = 00f0;
-[A1 + 0003] = b(V1);
-[A1 + 0004] = b(V1);
-[A1 + 0005] = b(V1);
-[A1 + 0006] = b(0);
-[A1 + 0007] = b(0);
-[A1 + 0008] = b(0);
-[A1 + 0009] = b(0);
-[A1 + 000a] = b(0);
-[A1 + 000b] = b(0);
-[A1 + 000c] = b(0);
-[A1 + 000d] = b(0);
-[A1 + 000e] = b(0);
-[A1 + 000f] = b(V0);
-[A1 + 0010] = b(0);
-[A1 + 0011] = b(0);
-[A1 + 0012] = b(0);
-[A1 + 0013] = b(0);
-[A1 + 0014] = b(0);
-[A1 + 0015] = b(0);
-[A1 + 0016] = b(0);
-[A1 + 0017] = b(0);
-[A1 + 0018] = b(0);
-[A1 + 0019] = b(0);
-[A1 + 001a] = b(0);
-[A1 + 001b] = b(0);
-[A1 + 001c] = b(0);
+[A1 + 0] = b(20);
+[A1 + 1] = b(20);
+[A1 + 2] = b(30);
+[A1 + 3] = b(V1);
+[A1 + 4] = b(V1);
+[A1 + 5] = b(V1);
+[A1 + 6] = b(0);
+[A1 + 7] = b(0);
+[A1 + 8] = b(0);
+[A1 + 9] = b(0);
+[A1 + a] = b(0);
+[A1 + b] = b(0);
+[A1 + c] = b(0);
+[A1 + d] = b(0);
+[A1 + e] = b(0);
+[A1 + f] = b(f0);
+[A1 + 10] = b(0);
+[A1 + 11] = b(0);
+[A1 + 12] = b(0);
+[A1 + 13] = b(0);
+[A1 + 14] = b(0);
+[A1 + 15] = b(0);
+[A1 + 16] = b(0);
+[A1 + 17] = b(0);
+[A1 + 18] = b(0);
+[A1 + 19] = b(0);
+[A1 + 1a] = b(0);
+[A1 + 1b] = b(0);
+[A1 + 1c] = b(0);
+[A1 + 1d] = b(0);
+
 800B6208	jal    funcc5cd4 [$800c5cd4]
-[A1 + 001d] = b(0);
 
 wm_set_gte_colour_settings();
 
 Lb6218:	; 800B6218
+A0 = model;
 800B6218	jal    funcc08a8 [$800c08a8]
-A0 = S2;
 ////////////////////////////////
 
 

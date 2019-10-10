@@ -307,7 +307,7 @@
 80109d68 [][][][] set to 
 80109d6c [][][][] store here value from 8009c6e4 + f5a.
 
-80109d70 [][][][] ???
+80109d70 [][][][] animation id for moving buggy.
 
 80109d74 system entity struct.
 80109e54 entity with model 0x9 struct. Linked as +8 with highwind model.
@@ -374,16 +374,17 @@
                 0x01 - set flag if +c or +14 pos != +1c or +24 pos. Else remove flag.
                 0x08 - disable something.
                 0x10 - disable script. If this is 0 then run script.
-                0x20 - animation loop (maybe indicates loop or indicates play once).
+                0x20 - animation loop (if 0 - start over, if set then stay in last frame).
                 0x40 - use walkmesh collision.
                 0x80 - set if position was changed and needs to be recalculated.
 +52 []       some model id.
-+53 []       init with 0 when start animation. Maybe current frame.
++53 []       current frame.
 +54 []       script call stack position.
 +55 []       move speed.
 +56 []       wait value.
 +57 []       current script priority.
-+58 []       ???
++58 []       animation speed (greater value - slower speed).
++59 []       animation value (increased by 8011650c every update and then discreased by +58 every frame)
 +5c []       we discrease +44 by this value during movement.
 +5d []       animation id.
 +5e []       init with -1.

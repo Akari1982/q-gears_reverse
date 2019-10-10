@@ -35,9 +35,9 @@ MODELS
     + 5 []       root x rotation.
     + 6 []       root y rotation.
     + 7 []       root z rotation.
-    + 8 [][]     ???
-    + c [][]     ???
-    +10 [][][][] ???
+    + 8 [][][][] root x offset.
+    + c [][][][] root y offset.
+    +10 [][][][] root z offset.
     +16 [][]     scale.
     +18 [][]     local offset to PARTS.
     +1a [][]     local offset to ANIMATIONS.

@@ -596,7 +596,7 @@
 // funcaa8f8
 800AA8F8-800AA9FC
 ////////////////////////////////
-// funcaaa00
+// wm_get_buggy_move_animation_id
 800AAA00-800AAB14
 ////////////////////////////////
 // funcaab18
