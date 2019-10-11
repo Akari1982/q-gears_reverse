@@ -1,111 +1,4 @@
 ﻿////////////////////////////////
-// system_set_interrupt_mask_register()
-
-i_mask = w[8005153c]; // 1f801074 I_MASK - Interrupt mask register
-V0 = hu[i_mask];
-[i_mask] = h(A0);
-return V0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_wait_frames()
-
-// if A0 == -1 - return value from 80051568
-// if A0 == 1 - return delta time from prev update
-// if A0 == 2 and greater - wait number of frames
-
-gpustat = w[8005049c]; // 1f801814 GPUSTAT Read GPU Status Register
-timer1_value = w[800504a0]; // 1f801110 Timer 1 Current Counter Value
-
-S0 = w[gpustat];
-
-delta = w[timer1_value] - w[800504a4];
-
-if( A0 < 0 )
-{
-    return w[80051568];
-}
-else if( A0 != 1 )
-{
-    if( A0 > 0 )
-    {
-        V0 = w[800504a8] - 1 + A0;
-    }
-    else
-    {
-        V0 = w[800504a8];
-    }
-
-    A1 = 0;
-    if( A0 > 0 )
-    {
-        A1 = A0 - 1;
-    }
-
-    A0 = V0;
-    A1 = A1; // wait timer
-    func3d024();
-
-    S0 = w[gpustat];
-
-    // wait one cycle
-    A0 = w[80051568] + 1;
-    A1 = 1;
-    func3d024();
-
-    if( S0 & 00080000 )
-    {
-        if( ( S0 ^ w[gpustat] ) > 0 )
-        {
-            loop3cfcc:	; 8003CFCC
-                V0 = (S0 ^ w[gpustat]) & 80000000;
-            8003CFDC	beq    v0, zero, loop3cfcc [$8003cfcc]
-        }
-    }
-
-    [800504a8] = w(w[80051568]);
-    [800504a4] = w(w[timer1_value]);
-}
-
-return delta;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3d024()
-
-A1 = A1 << 0f;
-wait = A1;
-if( w[80051568] < A0 )
-{
-    loop3d04c:	; 8003D04C
-        wait = wait - 1;
-        if( wait == -1 )
-        {
-            A0 = 800105a8; // "VSync: timeout"
-            system_bios_std_out_puts();
-
-            A0 = 0;
-            system_bios_change_clear_pad();
-
-            A0 = 3;
-            A1 = 0;
-            system_bios_change_clear_r_cnt();
-
-            return;
-        }
-
-        V0 = w[80051568] < A0;
-    8003D0A8	bne    v0, zero, loop3d04c [$8003d04c]
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func48c7c
 80048C7C	lui    at, $8006
 [AT + 2ef0] = w(RA);
@@ -368,7 +261,51 @@ return 1;
 
 
 ////////////////////////////////
-// func3cebc()
+// system_psyq_set_disp_mask()
+// Puts display mask into the status specified by mask.
+// mask = 0: not displayed on screen;
+// mask = 1; displayed on screen.
 
-system_bios_stop_pad();
+mask = A0;
+
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010d74; // "SetDispMask(%d)..."
+    A1 = mask;
+    80043D7C	jalr   w[80062bfc] ra // system_bios_printf()
+}
+
+if( mask == 0 )
+{
+    A0 = 80062c6c;
+    A1 = -1;
+    A2 = 14;
+    func46530();
+}
+
+A0 = 03000001;
+if( mask != 0 )
+{
+    A0 = 03000000;
+}
+
+V0 = w[80062bf8];
+V0 = w[V0 + 10];
+80043DB8	jalr   v0 ra
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func46530()
+
+if( A2 != 0 )
+{
+    V0 = A2 - 1;
+    loop46540:	; 80046540
+        [A0] = b(A1);
+        A0 = A0 + 1;
+        V0 = V0 - 1;
+    80046548	bne    v0, -1, loop46540 [$80046540]
+}
 ////////////////////////////////

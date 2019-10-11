@@ -1,103 +1,4 @@
 ////////////////////////////////
-// system_bios_save_state()
-// A(13h) - SaveState(buf)
-// Stores some (not all) CPU registers in the specified buffer (30h bytes):
-// 00h 4    r31 (ra) (aka caller's pc)
-// 04h 4    r29 (sp)
-// 08h 4    r30 (fp)
-// 0Ch 4x8  r16..r23
-// 2Ch 4    r28 (gp)
-// That type of buffer can be used with "ioabort", "RestoreState", and also
-// "SetCustomExitFromException(addr)".
-// The "SaveState" function (initially) returns 0, however, it may return again -
-// to the same return address - with another return value (which should be usually
-// non-zero, to indicate that the state has been restored (eg. ioabort passes 1 as
-// return value).
-80042D58	addiu  t2, zero, $00a0
-80042D5C	jr     t2 
-80042D60	addiu  t1, zero, $0013
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_strcmp()
-// A(17h) - strcmp(str1, str2)
-// Compares the strings up to including ending 00h byte. Returns 0 if they are
-// identical, or otherwise [str1+N]-[str2+N], where N is the location of the first
-// mismatch, the two bytes are sign-expanded to 32bits before doing the
-// subtraction. The function rejects str1/str2 values of 00000000h (and returns
-// 0=both are zero, -1=only str1 is zero, and +1=only str2 is zero).
-80042D68	addiu  t2, zero, $00a0
-80042D6C	jr     t2 
-80042D70	addiu  t1, zero, $0017
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_strncmp()
-// A(18h) - strncmp(str1, str2, maxlen)
-// Same as "strcmp" but stops after comparing "maxlen" characters (and returns 0
-// if they did match). If the strings are shorter, then comparision stops at the
-// ending 00h byte (exactly as for strcmp).
-80042D78	addiu  t2, zero, $00a0
-80042D7C	jr     t2 
-80042D80	addiu  t1, zero, $0018
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_bcopy()
-// A(27h) - bcopy(src, dst, len)
-// Same as "memcpy", but with "src" and "dst" exchanged. That is, the first
-// parameter is "src", the refuse occurs when "src" is 00000000h, and, returns the
-// incoming "src" value (whilst "memcpy" uses "dst" in that places).
-80042D88	addiu  t2, zero, $00a0
-80042D8C	jr     t2 
-80042D90	addiu  t1, zero, $0027
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_memcpy()
-// A(2Ah) - memcpy(dst, src, len)
-// Copies len bytes from [src..src+len-1] to [dst..dst+len-1]. Refuses to copy any
-// data when dst=00000000h or when len>7FFFFFFFh. The return value is always the
-// incoming "dst" value.
-80042D98	addiu  t2, zero, $00a0
-80042D9C	jr     t2 
-80042DA0	addiu  t1, zero, $002a
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_rand()
-// A(2Fh) - rand()
-// Advances the random generator as "x=x*41C64E6Dh+3039h" (aka plus 12345
-// decimal), and returns a 15bit random value "R2=(x/10000h) AND 7FFFh".
-80042DA8	addiu  t2, zero, $00a0
-80042DAC	jr     t2 
-80042DB0	addiu  t1, zero, $002f
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_srand()
-// A(30h) - srand(seed)
-// Changes the current 32bit value of the random generator.
-80042DB8	addiu  t2, zero, $00a0
-80042DBC	jr     t2 
-80042DC0	addiu  t1, zero, $0030
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_bios_init_heap()
 // A(39h) - InitHeap(addr, size)
 // Initializes the address and size of the heap - the BIOS does not automatically do this,
@@ -109,46 +10,6 @@
 T2 = a0;
 T1 = 39;
 80042994	jr     t2 
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_printf()
-// A(3Fh) - Printf(txt,param1,param2,etc.) - Print string to console
-// in:  A0                     Pointer to 0 terminated string
-//      A1,A2,A3,[SP+10h..]    Argument(s)
-// Prints the specified string to the TTY console. Printf does internally use
-// "std_out_putchar" to output the separate characters (and expands char 09h and 0Ah accordingly).
-// The string can contain C-style escape codes (prefixed by "%" each):
-//  c         display ASCII character
-//  s         display ASCII string
-//  i,d,D     display signed Decimal number (d/i=default32bit, D=force32bit)
-//  u,U       display unsigned Decimal number (u=default32bit, U=force32bit)
-//  o,O       display unsigned Octal number (o=default32bit, O=force32bit)
-//  p,x,X     display unsigned Hex number (p=lower/force32bit, x=lower, X=upper)
-//  n         write 32bit/16bit string length to [parameter] (default32bit)
-// Additionally, following prefixes (inserted between "%" and escape code):
-//  + or SPC  show leading plus or space character in positive signed numbers
-//  NNN       fixed width (for padding or so) (first digit must be 1..9) (not 0)
-//  .NNN      fixed width (for clipping or so)
-//  *         variable width (using one of the parameters) (negative=ending_spc)
-//  .*        variable width
-//  -         force ending space padding (in case of width being specified)
-//  #         show leading "0x" or "0X" (hex), or ensure 1 leading zero (octal)
-//  0         show leading zero's
-//  L         unknown/no effect?
-//  h,l       force 16bit (h=halfword), or 32bit (l=long/word)
-// The force32bit codes (D,U,O,p,l) are kinda useless since the PSX defaults to
-// 32bit parameters anyways. The force16bit code (h) may be useful as "%hn"
-// (writeback 16bit value), otherwise it's rather useless, unless signed 16bit
-// parameters have garbage in upper 16bit, for unsigned 16bit parameters it
-// doesn't work at all (accidently sign-expands 16bit to 32bit, and then displays
-// that signed 32bit value as giant unsigned value). Printf supports only octal,
-// decimal, and hex (but not binary).
-80042DC8	addiu  t2, zero, $00a0
-80042DCC	jr     t2 
-80042DD0	addiu  t1, zero, $003f
 ////////////////////////////////
 
 
@@ -167,13 +28,11 @@ T1 = 0044;
 
 
 ////////////////////////////////
-// system_bios_gpu_cw()
-// A(49h) - GPU_cw(gp0cmd)      ;send GP0 command word
-// Calls gpu_sync(), and does then write [1F801810h]=gp0cmd. Returns the return
-// value from the gpu_sync() call.
+// func429b0
 T2 = 00a0;
-T1 = 0049;
-80046560	jr     t2 
+800429B4	jr     t2 
+T1 = 0070;
+800429BC	nop
 ////////////////////////////////
 
 
@@ -214,6 +73,17 @@ T1 = 9f;
 T2 = a0;
 T1 = a1;
 800429E4	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func429f0
+800429F0
+T2 = 00b0;
+800429F4	jr     t2 
+T1 = 0007;
+800429FC	nop
 ////////////////////////////////
 
 
@@ -481,28 +351,85 @@ T1 = 0020;
 
 
 ////////////////////////////////
-// system_bios_exit()
-// A(06h) or B(38h) - exit(exitcode)
-// Terminates the program and returns control to the BIOS; which does then lockup
-// itself via A(3Ah) SystemErrorExit.
-80042D38	addiu  t2, zero, $00b0
-80042D3C	jr     t2 
-80042D40	addiu  t1, zero, $0038
+// system_bios_enter_critical_section()
+// SYS(01h) - EnterCriticalSection() ;syscall with r4=01h
+// Disables interrupts by clearing SR (cop0r12) Bit 2 and 10
+// (of which, Bit2 gets copied to Bit0 once when returning
+// from the syscall exception). Returns 1 if both bits were set,
+// returns 0 if one or both of the bits were already zero.
+80042AF0	addiu  a0, zero, $0001
+80042AF4	syscall $00000
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_bios_std_out_puts()
-// A(3Eh) or B(3Fh) std_out_puts(src) - Write string to TTY
-// in: R4=address of string (terminated by 00h)
-// Like "printf", but doesn't resolve any "%" operands. Empty strings are handled
-// in a special way: If R4 points to a 00h character then nothing is output (as
-// one would expect it), but, if R4 is 00000000h then "<NULL>" is output (only
-// that six letters; without appending any CR or LF).
-80042D48	addiu  t2, zero, $00b0
-80042D4C	jr     t2 
-80042D50	addiu  t1, zero, $003f
+// system_bios_exit_critical_section()
+// SYS(02h) - ExitCriticalSection() ;syscall with r4=02h
+// Enables interrupts by set SR (cop0r12) Bit 2 and 10
+// (of which, Bit2 gets copied to Bit0 once when returning from
+// the syscall exception). There's no return value
+// (all registers except SR and K0 are unchanged).
+80042B00	addiu  a0, zero, $0002
+80042B04	syscall $00000
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func42b10
+V0 = SP;
+80042B14	jr     ra 
+SP = A0;
+80042B1C	nop
+////////////////////////////////
+// func42b20
+T2 = 00b0;
+80042B24	jr     t2 
+T1 = 0032;
+80042B2C	nop
+////////////////////////////////
+// func42b30
+T2 = 00b0;
+80042B34	jr     t2 
+T1 = 0034;
+80042B3C	nop
+////////////////////////////////
+// func42b40
+T2 = 00b0;
+80042B44	jr     t2 
+T1 = 0035;
+80042B4C	nop
+////////////////////////////////
+// func42b50
+T2 = 00b0;
+80042B54	jr     t2 
+T1 = 0036;
+80042B5C	nop
+////////////////////////////////
+// func42b60
+T2 = 00b0;
+80042B64	jr     t2 
+T1 = 0041;
+80042B6C	nop
+////////////////////////////////
+// func42b70
+T2 = 00b0;
+80042B74	jr     t2 
+T1 = 0042;
+80042B7C	nop
+////////////////////////////////
+// func42b80
+T2 = 00b0;
+80042B84	jr     t2 
+T1 = 0043;
+80042B8C	nop
+////////////////////////////////
+// func42b90
+T2 = 00b0;
+80042B94	jr     t2 
+T1 = 0045;
+80042B9C	nop
 ////////////////////////////////
 
 
@@ -531,26 +458,205 @@ T1 = 000a;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////////
-// system_bios_enter_critical_section()
-// SYS(01h) - EnterCriticalSection() ;syscall with r4=01h
-// Disables interrupts by clearing SR (cop0r12) Bit 2 and 10
-// (of which, Bit2 gets copied to Bit0 once when returning
-// from the syscall exception). Returns 1 if both bits were set,
-// returns 0 if one or both of the bits were already zero.
-80042AF0	addiu  a0, zero, $0001
-80042AF4	syscall $00000
+// system_bios_save_state()
+// A(13h) - SaveState(buf)
+// Stores some (not all) CPU registers in the specified buffer (30h bytes):
+// 00h 4    r31 (ra) (aka caller's pc)
+// 04h 4    r29 (sp)
+// 08h 4    r30 (fp)
+// 0Ch 4x8  r16..r23
+// 2Ch 4    r28 (gp)
+// That type of buffer can be used with "ioabort", "RestoreState", and also
+// "SetCustomExitFromException(addr)".
+// The "SaveState" function (initially) returns 0, however, it may return again -
+// to the same return address - with another return value (which should be usually
+// non-zero, to indicate that the state has been restored (eg. ioabort passes 1 as
+// return value).
+80042D58	addiu  t2, zero, $00a0
+80042D5C	jr     t2 
+80042D60	addiu  t1, zero, $0013
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_bios_exit_critical_section()
-// SYS(02h) - ExitCriticalSection() ;syscall with r4=02h
-// Enables interrupts by set SR (cop0r12) Bit 2 and 10
-// (of which, Bit2 gets copied to Bit0 once when returning from
-// the syscall exception). There's no return value
-// (all registers except SR and K0 are unchanged).
-80042B00	addiu  a0, zero, $0002
-80042B04	syscall $00000
+// system_bios_strcmp()
+// A(17h) - strcmp(str1, str2)
+// Compares the strings up to including ending 00h byte. Returns 0 if they are
+// identical, or otherwise [str1+N]-[str2+N], where N is the location of the first
+// mismatch, the two bytes are sign-expanded to 32bits before doing the
+// subtraction. The function rejects str1/str2 values of 00000000h (and returns
+// 0=both are zero, -1=only str1 is zero, and +1=only str2 is zero).
+80042D68	addiu  t2, zero, $00a0
+80042D6C	jr     t2 
+80042D70	addiu  t1, zero, $0017
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_strncmp()
+// A(18h) - strncmp(str1, str2, maxlen)
+// Same as "strcmp" but stops after comparing "maxlen" characters (and returns 0
+// if they did match). If the strings are shorter, then comparision stops at the
+// ending 00h byte (exactly as for strcmp).
+80042D78	addiu  t2, zero, $00a0
+80042D7C	jr     t2 
+80042D80	addiu  t1, zero, $0018
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_bcopy()
+// A(27h) - bcopy(src, dst, len)
+// Same as "memcpy", but with "src" and "dst" exchanged. That is, the first
+// parameter is "src", the refuse occurs when "src" is 00000000h, and, returns the
+// incoming "src" value (whilst "memcpy" uses "dst" in that places).
+80042D88	addiu  t2, zero, $00a0
+80042D8C	jr     t2 
+80042D90	addiu  t1, zero, $0027
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_memcpy()
+// A(2Ah) - memcpy(dst, src, len)
+// Copies len bytes from [src..src+len-1] to [dst..dst+len-1]. Refuses to copy any
+// data when dst=00000000h or when len>7FFFFFFFh. The return value is always the
+// incoming "dst" value.
+80042D98	addiu  t2, zero, $00a0
+80042D9C	jr     t2 
+80042DA0	addiu  t1, zero, $002a
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_rand()
+// A(2Fh) - rand()
+// Advances the random generator as "x=x*41C64E6Dh+3039h" (aka plus 12345
+// decimal), and returns a 15bit random value "R2=(x/10000h) AND 7FFFh".
+80042DA8	addiu  t2, zero, $00a0
+80042DAC	jr     t2 
+80042DB0	addiu  t1, zero, $002f
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_srand()
+// A(30h) - srand(seed)
+// Changes the current 32bit value of the random generator.
+80042DB8	addiu  t2, zero, $00a0
+80042DBC	jr     t2 
+80042DC0	addiu  t1, zero, $0030
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_printf()
+// A(3Fh) - Printf(txt,param1,param2,etc.) - Print string to console
+// in:  A0                     Pointer to 0 terminated string
+//      A1,A2,A3,[SP+10h..]    Argument(s)
+// Prints the specified string to the TTY console. Printf does internally use
+// "std_out_putchar" to output the separate characters (and expands char 09h and 0Ah accordingly).
+// The string can contain C-style escape codes (prefixed by "%" each):
+//  c         display ASCII character
+//  s         display ASCII string
+//  i,d,D     display signed Decimal number (d/i=default32bit, D=force32bit)
+//  u,U       display unsigned Decimal number (u=default32bit, U=force32bit)
+//  o,O       display unsigned Octal number (o=default32bit, O=force32bit)
+//  p,x,X     display unsigned Hex number (p=lower/force32bit, x=lower, X=upper)
+//  n         write 32bit/16bit string length to [parameter] (default32bit)
+// Additionally, following prefixes (inserted between "%" and escape code):
+//  + or SPC  show leading plus or space character in positive signed numbers
+//  NNN       fixed width (for padding or so) (first digit must be 1..9) (not 0)
+//  .NNN      fixed width (for clipping or so)
+//  *         variable width (using one of the parameters) (negative=ending_spc)
+//  .*        variable width
+//  -         force ending space padding (in case of width being specified)
+//  #         show leading "0x" or "0X" (hex), or ensure 1 leading zero (octal)
+//  0         show leading zero's
+//  L         unknown/no effect?
+//  h,l       force 16bit (h=halfword), or 32bit (l=long/word)
+// The force32bit codes (D,U,O,p,l) are kinda useless since the PSX defaults to
+// 32bit parameters anyways. The force16bit code (h) may be useful as "%hn"
+// (writeback 16bit value), otherwise it's rather useless, unless signed 16bit
+// parameters have garbage in upper 16bit, for unsigned 16bit parameters it
+// doesn't work at all (accidently sign-expands 16bit to 32bit, and then displays
+// that signed 32bit value as giant unsigned value). Printf supports only octal,
+// decimal, and hex (but not binary).
+80042DC8	addiu  t2, zero, $00a0
+80042DCC	jr     t2 
+80042DD0	addiu  t1, zero, $003f
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_gpu_cw()
+// A(49h) - GPU_cw(gp0cmd)      ;send GP0 command word
+// Calls gpu_sync(), and does then write [1F801810h]=gp0cmd. Returns the return
+// value from the gpu_sync() call.
+T2 = 00a0;
+T1 = 0049;
+80046560	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_exit()
+// A(06h) or B(38h) - exit(exitcode)
+// Terminates the program and returns control to the BIOS; which does then lockup
+// itself via A(3Ah) SystemErrorExit.
+80042D38	addiu  t2, zero, $00b0
+80042D3C	jr     t2 
+80042D40	addiu  t1, zero, $0038
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_std_out_puts()
+// A(3Eh) or B(3Fh) std_out_puts(src) - Write string to TTY
+// in: R4=address of string (terminated by 00h)
+// Like "printf", but doesn't resolve any "%" operands. Empty strings are handled
+// in a special way: If R4 points to a 00h character then nothing is output (as
+// one would expect it), but, if R4 is 00000000h then "<NULL>" is output (only
+// that six letters; without appending any CR or LF).
+80042D48	addiu  t2, zero, $00b0
+80042D4C	jr     t2 
+80042D50	addiu  t1, zero, $003f
 ////////////////////////////////

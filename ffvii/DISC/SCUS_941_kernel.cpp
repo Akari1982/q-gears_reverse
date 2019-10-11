@@ -129,6 +129,244 @@ return 80063690 + V1 + V0;
 
 
 ////////////////////////////////
+// func14dd0
+80014DD0	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(S0);
+S0 = A2;
+[SP + 0014] = w(RA);
+80014DE0	jal    system_get_pointer_to_text_in_kernel_with_block_and_text_id [$80014d9c]
+A2 = 0;
+A0 = S0;
+A1 = V0;
+80014DF0	jal    func14d58 [$80014d58]
+80014DF4	addiu  a2, zero, $ffff (=-$1)
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+80014E04	jr     ra 
+80014E08	nop
+////////////////////////////////
+// func14e0c
+80014E0C	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(RA);
+A3 = A0;
+A0 = A1;
+A2 = 0;
+80014E20	lui    a1, $800a
+80014E24	addiu  a1, a1, $c748 (=-$38b8)
+V1 = 0;
+
+loop14e2c:	; 80014E2C
+80014E2C	lui    at, $800a
+AT = AT + V1;
+V0 = bu[AT + c738];
+80014E38	nop
+80014E3C	bne    v0, a3, L14e54 [$80014e54]
+A2 = A2 + 0001;
+80014E44	jal    func14d58 [$80014d58]
+A2 = 000c;
+80014E4C	j      L14e64 [$80014e64]
+A0 = V0;
+
+L14e54:	; 80014E54
+A1 = A1 + 0084;
+V0 = A2 < 0009;
+80014E5C	bne    v0, zero, loop14e2c [$80014e2c]
+V1 = V1 + 0084;
+
+L14e64:	; 80014E64
+RA = w[SP + 0010];
+V0 = A0;
+80014E6C	jr     ra 
+SP = SP + 0018;
+////////////////////////////////
+// func14e74
+80014E74	addiu  sp, sp, $ff98 (=-$68)
+[SP + 0060] = w(S4);
+S4 = A0;
+[SP + 0050] = w(S0);
+S0 = S4;
+[SP + 005c] = w(S3);
+S3 = SP + 0010;
+[SP + 0054] = w(S1);
+S1 = A1;
+[SP + 0064] = w(RA);
+[SP + 0058] = w(S2);
+
+L14ea0:	; 80014EA0
+S2 = bu[S1 + 0000];
+80014EA4	nop
+V0 = S2 + 0016;
+V0 = V0 & 00ff;
+V0 = V0 < 0008;
+80014EB4	beq    v0, zero, L1508c [$8001508c]
+S1 = S1 + 0001;
+V0 = bu[S1 + 0000];
+S1 = S1 + 0001;
+V1 = bu[S1 + 0000];
+80014EC8	addiu  a0, s2, $ff16 (=-$ea)
+V0 = V0 << 08;
+V1 = V1 | V0;
+V0 = A0 < 0008;
+80014ED8	beq    v0, zero, L150b0 [$800150b0]
+S1 = S1 + 0001;
+V0 = A0 << 02;
+80014EE4	lui    at, $8001
+AT = AT + V0;
+V0 = w[AT + 0138];
+80014EF0	nop
+80014EF4	jr     v0 
+80014EF8	nop
+
+80014EFC	j      L14fd4 [$80014fd4]
+A0 = V1 & ffff;
+A0 = 0004;
+A1 = V1 & ffff;
+80014F0C	jal    func15248 [$80015248]
+A2 = 0008;
+A0 = S0;
+A1 = V0;
+80014F1C	j      L15028 [$80015028]
+80014F20	addiu  a2, zero, $ffff (=-$1)
+A1 = 0;
+80014F28	lui    a3, $cccc
+A3 = A3 | cccd;
+A2 = S3;
+
+loop14f34:	; 80014F34
+V1 = V1 & ffff;
+80014F38	multu  v1, a3
+A1 = A1 + 0001;
+80014F40	mfhi   t0
+A0 = T0 >> 03;
+V0 = A0 << 02;
+V0 = V0 + A0;
+V0 = V0 << 01;
+V1 = V1 - V0;
+V1 = V1 & ffff;
+[A2 + 0000] = w(V1);
+V1 = A0;
+V0 = V1 & ffff;
+80014F68	beq    v0, zero, L14f7c [$80014f7c]
+A2 = A2 + 0004;
+V0 = A1 < 0010;
+80014F74	bne    v0, zero, loop14f34 [$80014f34]
+80014F78	nop
+
+L14f7c:	; 80014F7C
+80014F7C	blez   a1, L150b4 [$800150b4]
+V1 = S2 & 00ff;
+V0 = A1 << 02;
+A0 = V0 + S3;
+
+loop14f8c:	; 80014F8C
+V0 = w[A0 + fffc];
+80014F90	addiu  a0, a0, $fffc (=-$4)
+80014F94	lui    v1, $8010
+V1 = w[V1 + afd0];
+80014F9C	addiu  a1, a1, $ffff (=-$1)
+V0 = V0 + V1;
+[S0 + 0000] = b(V0);
+80014FA8	bgtz   a1, loop14f8c [$80014f8c]
+S0 = S0 + 0001;
+80014FB0	j      L150b4 [$800150b4]
+V1 = S2 & 00ff;
+V1 = V1 & ffff;
+V0 = V1 < 0003;
+80014FC0	beq    v0, zero, L14fe4 [$80014fe4]
+V0 = V1 << 04;
+80014FC8	lui    at, $8016
+AT = AT + V0;
+A0 = b[AT + 36b8];
+
+L14fd4:	; 80014FD4
+80014FD4	jal    func14e0c [$80014e0c]
+A1 = S0;
+80014FDC	j      L150b0 [$800150b0]
+S0 = V0;
+
+L14fe4:	; 80014FE4
+V0 = V1 < 0004;
+80014FE8	bne    v0, zero, L150b0 [$800150b0]
+A0 = S0;
+80014FF0	addiu  v0, v1, $fffc (=-$4)
+V0 = V0 << 04;
+80014FF8	lui    at, $8016
+AT = AT + V0;
+V0 = h[AT + 3658];
+A2 = 0020;
+A1 = V0 << 01;
+A1 = A1 + V0;
+A1 = A1 << 03;
+A1 = A1 - V0;
+A1 = A1 << 03;
+8001501C	lui    v0, $800f
+V0 = V0 + 5f44;
+A1 = A1 + V0;
+
+L15028:	; 80015028
+80015028	jal    func14d58 [$80014d58]
+8001502C	nop
+80015030	j      L150b0 [$800150b0]
+S0 = V0;
+A0 = 0009;
+8001503C	j      L1507c [$8001507c]
+A1 = V1 & ffff;
+V0 = V1 & ffff;
+V0 = V0 < 001a;
+8001504C	beq    v0, zero, L150b0 [$800150b0]
+80015050	nop
+80015054	lui    v0, $800f
+V0 = w[V0 + 7ed0];
+8001505C	j      L150a8 [$800150a8]
+V0 = V1 + V0;
+A0 = 0010;
+80015068	j      L1507c [$8001507c]
+A1 = V1 & ffff;
+A0 = V1 & ffff;
+A0 = A0 >> 08;
+A1 = V1 & 00ff;
+
+L1507c:	; 8001507C
+8001507C	jal    func14dd0 [$80014dd0]
+A2 = S0;
+80015084	j      L150b0 [$800150b0]
+S0 = V0;
+
+L1508c:	; 8001508C
+[S0 + 0000] = b(S2);
+V1 = S2 & 00ff;
+V0 = 00f9;
+80015098	bne    v1, v0, L150b4 [$800150b4]
+S0 = S0 + 0001;
+V0 = bu[S1 + 0000];
+S1 = S1 + 0001;
+
+L150a8:	; 800150A8
+[S0 + 0000] = b(V0);
+S0 = S0 + 0001;
+
+L150b0:	; 800150B0
+V1 = S2 & 00ff;
+
+L150b4:	; 800150B4
+V0 = 00ff;
+800150B8	bne    v1, v0, L14ea0 [$80014ea0]
+V0 = S4;
+RA = w[SP + 0064];
+S4 = w[SP + 0060];
+S3 = w[SP + 005c];
+S2 = w[SP + 0058];
+S1 = w[SP + 0054];
+S0 = w[SP + 0050];
+SP = SP + 0068;
+800150DC	jr     ra 
+800150E0	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_decompress_kernel_string_with_f9()
 
 src = A0;
