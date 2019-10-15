@@ -186,6 +186,14 @@
     + 2 [][]     y.
     + 4 [][]     z.
 
+800c80bc [][][][] pointer to temp buffer for model vertex calculation. Eacj vertex 0x10 size.
+    + 0 [][]     2d x.
+    + 2 [][]     2d y.
+    + 4 [][][][] 2d depth (z).
+    + 8 [][]     3d x.
+    + a [][]     3d y.
+    + c [][]     3d z.
+
 800c8100
 
 800c84c8 [][][][] store prev buttons state here.
