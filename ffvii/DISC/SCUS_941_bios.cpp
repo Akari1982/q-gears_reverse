@@ -458,30 +458,161 @@ T1 = 000a;
 
 
 
+////////////////////////////////
+// func42bc0
+80042BC0
+T0 = A0 & ffff;
+V0 = T0 < 0003;
+80042BC8	bne    v0, zero, L42bd8 [$80042bd8]
+A3 = 0048;
+80042BD0	j      L42c58 [$80042c58]
+V0 = 0;
+
+L42bd8:	; 80042BD8
+80042BD8	lui    v0, $8006
+V0 = w[V0 + 2b94];
+V1 = T0 << 04;
+V1 = V1 + V0;
+V0 = T0 < 0002;
+[V1 + 0004] = h(0);
+[V1 + 0008] = h(A1);
+80042BF4	beq    v0, zero, L42c18 [$80042c18]
+V0 = A2 & 0010;
+80042BFC	beq    v0, zero, L42c08 [$80042c08]
+V0 = A2 & 0001;
+A3 = 0049;
+
+L42c08:	; 80042C08
+80042C08	bne    v0, zero, L42c34 [$80042c34]
+V0 = A2 & 1000;
+80042C10	j      L42c34 [$80042c34]
+A3 = A3 | 0100;
+
+L42c18:	; 80042C18
+V0 = 0002;
+80042C1C	bne    t0, v0, L42c34 [$80042c34]
+V0 = A2 & 1000;
+V0 = A2 & 0001;
+80042C28	bne    v0, zero, L42c34 [$80042c34]
+V0 = A2 & 1000;
+A3 = 0248;
+
+L42c34:	; 80042C34
+80042C34	beq    v0, zero, L42c40 [$80042c40]
+V1 = T0 << 04;
+A3 = A3 | 0010;
+
+L42c40:	; 80042C40
+V0 = 0001;
+80042C44	lui    a0, $8006
+A0 = w[A0 + 2b94];
+80042C4C	nop
+V1 = V1 + A0;
+[V1 + 0004] = h(A3);
+
+L42c58:	; 80042C58
+80042C58	jr     ra 
+80042C5C	nop
+////////////////////////////////
+// func42c60
+80042C60
+V1 = A0 & ffff;
+V0 = V1 < 0003;
+80042C68	beq    v0, zero, L42c8c [$80042c8c]
+V1 = V1 << 04;
+80042C70	lui    v0, $8006
+V0 = w[V0 + 2b94];
+80042C78	nop
+V1 = V1 + V0;
+V0 = hu[V1 + 0000];
+80042C84	j      L42c90 [$80042c90]
+80042C88	nop
+
+L42c8c:	; 80042C8C
+V0 = 0;
+
+L42c90:	; 80042C90
+80042C90	jr     ra 
+80042C94	nop
+////////////////////////////////
+// func42c98
+80042C98
+V0 = A0 & ffff;
+A0 = V0 << 02;
+80042CA0	lui    a1, $8006
+A1 = w[A1 + 2b90];
+80042CA8	lui    at, $8006
+AT = AT + A0;
+A0 = w[AT + 2b98];
+V1 = w[A1 + 0004];
+V0 = V0 < 0003;
+V1 = V1 | A0;
+[A1 + 0004] = w(V1);
+80042CC4	jr     ra 
+80042CC8	nop
+////////////////////////////////
 
 
 
+////////////////////////////////
+// func42ccc()
+
+A0 = A0 & ffff;
+A1 = w[80062b90];
+[A1 + 4] = w(w[A1 + 4] & (0 NOR w[80062b98 + A0 * 4]));
+return 1;
+////////////////////////////////
 
 
 
+////////////////////////////////
+// func42d00
+V1 = A0 & ffff;
+V0 = V1 < 0003;
+80042D08	beq    v0, zero, L42d2c [$80042d2c]
+V0 = 0001;
+80042D10	lui    a0, $8006
+A0 = w[A0 + 2b94];
+V1 = V1 << 04;
+V1 = V1 + A0;
+[V1 + 0000] = h(0);
+80042D24	j      L42d30 [$80042d30]
+80042D28	nop
+
+L42d2c:	; 80042D2C
+V0 = 0;
+
+L42d30:	; 80042D30
+80042D30	jr     ra 
+80042D34	nop
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_bios_exit()
+// A(06h) or B(38h) - exit(exitcode)
+// Terminates the program and returns control to the BIOS; which does then lockup
+// itself via A(3Ah) SystemErrorExit.
+80042D38	addiu  t2, zero, $00b0
+80042D3C	jr     t2 
+80042D40	addiu  t1, zero, $0038
+////////////////////////////////
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+////////////////////////////////
+// system_bios_std_out_puts()
+// A(3Eh) or B(3Fh) std_out_puts(src) - Write string to TTY
+// in: R4=address of string (terminated by 00h)
+// Like "printf", but doesn't resolve any "%" operands. Empty strings are handled
+// in a special way: If R4 points to a 00h character then nothing is output (as
+// one would expect it), but, if R4 is 00000000h then "<NULL>" is output (only
+// that six letters; without appending any CR or LF).
+80042D48	addiu  t2, zero, $00b0
+80042D4C	jr     t2 
+80042D50	addiu  t1, zero, $003f
+////////////////////////////////
 
 
 
@@ -620,43 +751,4 @@ T1 = 000a;
 80042DC8	addiu  t2, zero, $00a0
 80042DCC	jr     t2 
 80042DD0	addiu  t1, zero, $003f
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_gpu_cw()
-// A(49h) - GPU_cw(gp0cmd)      ;send GP0 command word
-// Calls gpu_sync(), and does then write [1F801810h]=gp0cmd. Returns the return
-// value from the gpu_sync() call.
-T2 = 00a0;
-T1 = 0049;
-80046560	jr     t2 
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_exit()
-// A(06h) or B(38h) - exit(exitcode)
-// Terminates the program and returns control to the BIOS; which does then lockup
-// itself via A(3Ah) SystemErrorExit.
-80042D38	addiu  t2, zero, $00b0
-80042D3C	jr     t2 
-80042D40	addiu  t1, zero, $0038
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_std_out_puts()
-// A(3Eh) or B(3Fh) std_out_puts(src) - Write string to TTY
-// in: R4=address of string (terminated by 00h)
-// Like "printf", but doesn't resolve any "%" operands. Empty strings are handled
-// in a special way: If R4 points to a 00h character then nothing is output (as
-// one would expect it), but, if R4 is 00000000h then "<NULL>" is output (only
-// that six letters; without appending any CR or LF).
-80042D48	addiu  t2, zero, $00b0
-80042D4C	jr     t2 
-80042D50	addiu  t1, zero, $003f
 ////////////////////////////////

@@ -250,17 +250,6 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// func42ccc()
-
-A0 = A0 & ffff;
-A1 = w[80062b90];
-[A1 + 4] = w(w[A1 + 4] & (0 NOR w[80062b98 + A0 * 4]));
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_psyq_set_disp_mask()
 // Puts display mask into the status specified by mask.
 // mask = 0: not displayed on screen;
@@ -308,4 +297,16 @@ if( A2 != 0 )
         V0 = V0 - 1;
     80046548	bne    v0, -1, loop46540 [$80046540]
 }
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_gpu_cw()
+// A(49h) - GPU_cw(gp0cmd)      ;send GP0 command word
+// Calls gpu_sync(), and does then write [1F801810h]=gp0cmd. Returns the return
+// value from the gpu_sync() call.
+T2 = 00a0;
+T1 = 0049;
+80046560	jr     t2 
 ////////////////////////////////
