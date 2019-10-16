@@ -2376,7 +2376,7 @@ return w[800e5658];
 model = A0;
 S0 = A1;
 S2 = A2;
-S3 = A3;
+pc_model = A3;
 
 [SP + 0020] = h(1000);
 [SP + 0018] = h(1000);
@@ -2411,78 +2411,29 @@ A0 = S0;
 system_gte_set_rotation_matrix();
 
 A1 = w[800e5670];
-800A3748	nop
-800A374C	blez   a1, La37d8 [$800a37d8]
-800A3750	nop
-800A3754	beq    s3, zero, La37d8 [$800a37d8]
+if( ( A1 > 0 ) && ( pc_model != 0 ) )
+{
+    [SP + 30] = w(w[800e56cc] / 8);
+    [SP + 34] = w(w[800e56d0] / 8);
+    [SP + 38] = w(w[800e56d4] / 8);
 
-V0 = w[800e56cc];
-800A3764	nop
-800A3768	bgez   v0, La3774 [$800a3774]
+    800A37AC	addiu  v0, a1, $ffff (=-$1)
+    [800e5670] = w(V0);
 
-V0 = V0 + 0007;
+    if( V0 == 0 )
+    {
+        A0 = w[80116510];
+        800A37C8	jal    funcb63f0 [$800b63f0]
+    }
+}
+else
+{
+    [SP + 30] = w(w[800e56cc] / 4);
+    [SP + 34] = w(w[800e56d0] / 4);
+    [SP + 38] = w(w[800e56d4] / 4);
+}
 
-La3774:	; 800A3774
-A0 = w[800e56d0];
-V0 = V0 >> 03;
-800A3780	bgez   a0, La378c [$800a378c]
-[SP + 0030] = w(V0);
-A0 = A0 + 0007;
-
-La378c:	; 800A378C
-V1 = w[800e56d4];
-V0 = A0 >> 03;
-800A3798	bgez   v1, La37a4 [$800a37a4]
-[SP + 0034] = w(V0);
-V1 = V1 + 0007;
-
-La37a4:	; 800A37A4
-V0 = V1 >> 03;
-[SP + 0038] = w(V0);
-800A37AC	addiu  v0, a1, $ffff (=-$1)
-800A37B0	lui    at, $800e
-[AT + 5670] = w(V0);
-800A37B8	bne    v0, zero, La3828 [$800a3828]
-800A37BC	nop
-800A37C0	lui    a0, $8011
-A0 = w[A0 + 6510];
-800A37C8	jal    funcb63f0 [$800b63f0]
-800A37CC	nop
-800A37D0	j      La382c [$800a382c]
 A0 = S2;
-
-La37d8:	; 800A37D8
-800A37D8	lui    v0, $800e
-V0 = w[V0 + 56cc];
-800A37E0	nop
-800A37E4	bgez   v0, La37f0 [$800a37f0]
-800A37E8	nop
-V0 = V0 + 0003;
-
-La37f0:	; 800A37F0
-800A37F0	lui    a0, $800e
-A0 = w[A0 + 56d0];
-V0 = V0 >> 02;
-800A37FC	bgez   a0, La3808 [$800a3808]
-[SP + 0030] = w(V0);
-A0 = A0 + 0003;
-
-La3808:	; 800A3808
-800A3808	lui    v1, $800e
-V1 = w[V1 + 56d4];
-V0 = A0 >> 02;
-800A3814	bgez   v1, La3820 [$800a3820]
-[SP + 0034] = w(V0);
-V1 = V1 + 0003;
-
-La3820:	; 800A3820
-V0 = V1 >> 02;
-[SP + 0038] = w(V0);
-
-La3828:	; 800A3828
-A0 = S2;
-
-La382c:	; 800A382C
 S0 = SP + 0030;
 A1 = S0;
 system_gte_copy_matrix_translation_part();

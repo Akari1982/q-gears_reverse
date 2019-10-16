@@ -7811,10 +7811,18 @@ if( entity != 0 )
 
 wm_get_model_id_from_pc_entity();
 
+if( model_id == V0 )
+{
+    A3 = 1;
+}
+else
+{
+    A3 = 0;
+}
+
 A0 = model;
 A1 = S0;
 A2 = SP + 10;
-A3 = (model_id ^ V0) < 1;
 funca36ac();
 
 V1 = 0;
