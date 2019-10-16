@@ -7892,7 +7892,7 @@ if( ( A0 == 4 ) || ( A0 == 8 ) || ( A0 == 9 ) || ( A0 == b ) || ( A0 == c ) )
     [SP + 48] = w(0);
     [SP + 4c] = w(0);
 
-    [1f800000] = w(3);
+    [1f800000] = w(3); // update rotations and translations
 
     A0 = model;
     A1 = SP + 30; // root matrix
@@ -7912,7 +7912,7 @@ if( ( A0 == 4 ) || ( A0 == 8 ) || ( A0 == 9 ) || ( A0 == b ) || ( A0 == c ) )
 }
 else
 {
-    [1f800000] = w(3);
+    [1f800000] = w(3); // update rotations and translations
 
     A0 = model;
     A1 = SP + 10; // root matrix
@@ -7925,35 +7925,27 @@ if( entity != 0 )
 {
     if( b[model + 1] == c )
     {
-        [S3 + 0] = b(0);
-        [S3 + 1] = b(0);
-        [S3 + 2] = b(0);
-        [S3 + 3] = b(0);
-        [S3 + 4] = b(1);
-        [S3 + 5] = b(0);
-        [S3 + 6] = b(0);
-        [S3 + 7] = b(0);
-        [S3 + 8] = b(0 - ((w[entity + 10] - h[entity + 42] + h[entity + 44]) / 4));
-        [S3 + 9] = b((0 - ((w[entity + 10] - h[entity + 42] + h[entity + 44]) / 4)) >> 8);
+        [S3 + 0] = b(0); // need calculation
+        [S3 + 1] = b(0); // slot with data
+        [S3 + 2] = h(0);
+        [S3 + 4] = h(1);
+        [S3 + 6] = h(0);
+        [S3 + 8] = h(0 - ((w[entity + 10] - h[entity + 42] + h[entity + 44]) / 4)); // rotation
 
         A0 = model;
         A1 = S3;
-        funcc4148();
+        wm_update_model_packets();
 
-        [S3 + 0] = b(1);
-        [S3 + 1] = b(0);
-        [S3 + 2] = b(0);
-        [S3 + 3] = b(0);
-        [S3 + 4] = b(0);
-        [S3 + 5] = b(0);
-        [S3 + 6] = b(0);
-        [S3 + 7] = b(0);
-        [S3 + 8] = b(0);
-        [S3 + 9] = b(0);
+        [S3 + 0] = b(1); // use calculation
+        [S3 + 1] = b(0); // slot with data
+        [S3 + 2] = h(0);
+        [S3 + 4] = h(0);
+        [S3 + 6] = h(0);
+        [S3 + 8] = h(0);
 
         A0 = model;
         A1 = S3;
-        funcc4148();
+        wm_update_model_packets();
     }
 }
 

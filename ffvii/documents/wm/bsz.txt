@@ -108,19 +108,36 @@ POLYGON_SETTINGS
     + a []       TEXTURE_COORDS id 3.
     + b []       TEXTURE_COORDS id 4.
     // textured three-point polygon (0xс size)
+    + 0 []       VERTEXES id 1.
+    + 1 []       VERTEXES id 2.
+    + 2 []       VERTEXES id 3.
     + 4 [][][][] colour
     + 8 []       TEXTURE_COORDS id 1.
     + 9 []       TEXTURE_COORDS id 2.
     + a []       TEXTURE_COORDS id 3.
     // monochrome three-point polygon (0x8 size)
+    + 0 []       VERTEXES id 1.
+    + 1 []       VERTEXES id 2.
+    + 2 []       VERTEXES id 3.
     + 4 [][][][] colour
     // monochrome four-point polygon (0x8 size)
+    + 0 []       VERTEXES id 1.
+    + 1 []       VERTEXES id 2.
+    + 2 []       VERTEXES id 3.
+    + 3 []       VERTEXES id 4.
     + 4 [][][][] colour
     // shaded three-point polygon (0x10 size)
+    + 0 []       VERTEXES id 1.
+    + 1 []       VERTEXES id 2.
+    + 2 []       VERTEXES id 3.
     + 4 [][][][] colour 1
     + 8 [][][][] colour 2
     + c [][][][] colour 3
     // shaded four-point polygon (0x14 size)
+    + 0 []       VERTEXES id 1.
+    + 1 []       VERTEXES id 2.
+    + 2 []       VERTEXES id 3.
+    + 3 []       VERTEXES id 4.
     + 4 [][][][] colour 1
     + 8 [][][][] colour 2
     + c [][][][] colour 3

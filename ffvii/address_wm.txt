@@ -194,7 +194,26 @@
     + a [][]     3d y.
     + c [][]     3d z.
 
-800c8100
+800c8100 array of some data for model rendering (0x3c size).
+    + 0 [][]     axis x.
+    + 2 [][]     axis y.
+    + 4 [][]     axis z.
+    + 6 [][]     model rotation.
+    + 8 [][]     normalized axis x.
+    + a [][]     normalized axis y.
+    + c [][]     normalized axis z.
+    + e [][]     world translation x.
+    +10 [][]     world translation y.
+    +12 [][]     world translation z.
+    +14 [][]     rotation matrix 11.
+    +16 [][]     rotation matrix 12.
+    +18 [][]     rotation matrix 13.
+    +1a [][]     rotation matrix 21.
+    +1c [][]     rotation matrix 22.
+    +1e [][]     rotation matrix 23.
+    +20 [][]     rotation matrix 31.
+    +22 [][]     rotation matrix 32.
+    +24 [][]     rotation matrix 33.
 
 800c84c8 [][][][] store prev buttons state here.
 

@@ -1389,7 +1389,7 @@
 // funcc3db0
 800C3DB0-800C4144
 ////////////////////////////////
-// funcc4148
+// wm_update_model_packets
 800C4148-800C4FB0
 ////////////////////////////////
 // wm_update_packets_for_model_part

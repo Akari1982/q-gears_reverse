@@ -3032,20 +3032,20 @@ V0 = T1 < 0002;
 
 
 ////////////////////////////////
-// funcc4148()
+// wm_update_model_packets()
 
 model = A0;
-// A1 - some struct with data
+// A1 - struct with render details data
 
 A0 = bu[A1 + 0];
 S0 = 800c8100 + bu[A1 + 1] * 3c;
 
 if( A0 == 0 )
 {
-    [S0 + 0] = h(hu[A1 + 2]);
-    [S0 + 2] = h(hu[A1 + 4]);
-    [S0 + 4] = h(hu[A1 + 6]);
-    [S0 + 6] = h(hu[A1 + 8]);
+    [S0 + 0] = h(hu[A1 + 2]); // axis x
+    [S0 + 2] = h(hu[A1 + 4]); // axis y
+    [S0 + 4] = h(hu[A1 + 6]); // axis z
+    [S0 + 6] = h(hu[A1 + 8]); // rotation
 
     [1f800200] = h(hu[S0 + 0]);
     [1f800202] = h(hu[S0 + 2]);
@@ -3054,25 +3054,27 @@ if( A0 == 0 )
 
     A0 = 1f800200;
     A1 = 1f800208;
-    func3a0b8();
+    func3a0b8(); // normalize
 
+    // z vector
     [S0 + 8] = h(hu[1f800208]);
     [S0 + a] = h(hu[1f80020a]);
     [S0 + c] = h(hu[1f80020c]);
 
-    if( h[1f80020c] != 0 )
+    // rotation by axis
+    if( h[1f80020c] != 0 ) // x
     {
         [1f800210] = h(0);
         [1f800212] = h(0);
         [1f800214] = h((h[S0 + 6] * 1000) / h[1f80020c]);
     }
-    else if( h[1f80020a] != 0 )
+    else if( h[1f80020a] != 0 ) // y
     {
         [1f800210] = h(0);
         [1f800212] = h((h[S0 + 6] * 1000) / h[1f80020a]);
         [1f800214] = h(0);
     }
-    else if( h[1f800208] != 0 )
+    else if( h[1f800208] != 0 ) // z
     {
         [1f800210] = h((h[S0 + 6] * 1000) / h[1f800208]);
         [1f800212] = h(0);
@@ -3083,106 +3085,44 @@ if( A0 == 0 )
         return 1;
     }
 
+    // world translation
     [S0 + e] = h(hu[1f800210]);
     [S0 + 10] = h(hu[1f800212]);
     [S0 + 12] = h(hu[1f800214]);
 
     [1f800218] = h(0);
+    [1f80021a] = h(0);
+    [1f80021c] = h(1000);
 
-    V1 = h[1f800208 + 0000];
-    V0 = h[1f800218 + 0000];
+    S6 = ((h[1f80020c] << c) + h[1f800208] * h[1f800218] + h[1f80020a] * h[1f80021a]) / 1000;
 
-    800C43F0	mult   v1, v0
-    V0 = hu[1f800208 + 0002];
-    [1f800218 + 0002] = h(0);
-    V0 = V0 << 10;
-    A2 = V0 >> 10;
-    V0 = hu[1f800218 + 0002];
-    800C4408	mflo   a0
-    V0 = V0 << 10;
-    A1 = V0 >> 10;
-    800C4414	mult   a2, a1
-    S3 = 1000;
-    [1f800218 + 0004] = h(S3);
-    V0 = hu[1f800208 + 0004];
-    800C4424	nop
-    V0 = V0 << 10;
-    800C442C	mflo   v1
-    A0 = A0 + V1;
-    V1 = V0 >> 10;
-    V0 = V1 << 0c;
-    A0 = A0 + V0;
-    800C4444	mult   a1, v1
-    V1 = A2 << 0c;
-    800C4450	mflo   v0
-    A1 = V1 - V0;
-    S6 = A0 / 1000;
-    V0 = hu[1f800208 + 0004];
-    V1 = h[1f800218 + 0000];
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800C4474	mult   v1, v0
-    V0 = hu[1f800218 + 0004];
-    V1 = h[1f800208 + 0000];
-    800C4480	mflo   a0
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800C448C	mult   v1, v0
-    V0 = A1 / 1000;
-    [1f800220 + 0000] = h(V0);
-    800C4498	mflo   v0
-    A1 = A0 - V0;
-    V0 = hu[1f800218 + 0002];
-    V1 = h[1f800208 + 0000];
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800C44BC	mult   v1, v0
-    V0 = hu[1f800208 + 0002];
-    V1 = h[1f800218 + 0000];
-    800C44C8	mflo   a0
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800C44D4	mult   v1, v0
-    V0 = A1 / 1000;
-    [1f800220 + 0002] = h(V0);
-    800C44E0	mflo   v0
-    A0 = A0 - V0;
-    V0 = h[1f800220 + 0000];
-    800C44F8	nop
-    800C44FC	mult   v0, v0
-    V0 = hu[1f800220 + 0002];
-    800C4504	mflo   v1
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800C4510	mult   v0, v0
-    A0 = A0 / 1000;
-    800C4518	mflo   a1
-    V0 = A0 << 10;
-    V0 = V0 >> 10;
-    800C4524	mult   v0, v0
-    [1f800220 + 0004] = h(A0);
-    V1 = V1 + A1;
-    800C4530	mflo   a0
-    A0 = V1 + A0;
+    [1f800220] = h(((h[1f80020a] << c) - (h[1f80021a] * h[1f80020c])) / 1000);
+    [1f800222] = h(((h[1f800218] * h[1f80020c]) - (h[1f800208] * h[1f80021c])) / 1000);
+    [1f800224] = h(((h[1f800208] * h[1f80021a]) - (h[1f800218] * h[1f80020a])) / 1000);
 
+    V1 = h[1f800220];
+    V0 = h[1f800222];
+    A0 = h[1f800224];
+    A0 = V1 * V1 + V0 * V0 + A0 * A0;
     system_square_root();
     S1 = V0;
 
     A0 = 1f800220;
     A1 = 1f800228;
-    func3a0b8();
+    func3a0b8(); // normalize
 
     if( ( h[1f800228] == 0 ) && ( hu[1f80022a] == 0 ) && ( hu[1f80022c] == 0 ) )
     {
-        [S0 + 14] = h(S3);
+        // world rotation
+        [S0 + 14] = h(1000);
         [S0 + 16] = h(0);
         [S0 + 18] = h(0);
         [S0 + 1a] = h(0);
-        [S0 + 1c] = h(S3);
+        [S0 + 1c] = h(1000);
         [S0 + 1e] = h(0);
         [S0 + 20] = h(0);
         [S0 + 22] = h(0);
-        [S0 + 24] = h(S3);
+        [S0 + 24] = h(1000);
     }
     else
     {
@@ -3215,37 +3155,21 @@ if( A0 == 0 )
         [S0 + 24] = h((zz + (A1 * ((1000000 - zz) / 1000))) / 1000);
     }
 
+    // go through all parts
     for( int i = 0; i < bu[model + 3]; ++i )
     {
-        V1 = w[model + 1c] + hu[model + 18];
-        [V1 + i * 20 + 0] = b(0);
+        parts = w[model + 1c] + hu[model + 18];
+        [parts + i * 20 + 0] = b(0); // 0 - not calculate stage lighting and color
     }
     return 1;
 }
 else if( A0 == 1 )
 {
-    [1f800218] = h(1000);
-    [1f800210] = h(1000);
-    [1f800208] = h(1000);
-    [1f800224] = w(0);
-    [1f800220] = w(0);
-    [1f80021c] = w(0);
-    [1f800216] = h(0);
-    [1f800214] = h(0);
-    [1f800212] = h(0);
-    [1f80020e] = h(0);
-    [1f80020c] = h(0);
-    [1f80020a] = h(0);
-    [1f800244] = w(0);
-    [1f800240] = w(0);
-    [1f80023c] = w(0);
-    [1f800264] = w(0);
-    [1f800260] = w(0);
-    [1f80025c] = w(0);
+    // z vector
     [1f800200] = h(hu[S0 + 8]);
     [1f800202] = h(hu[S0 + a]);
-    [1f800206] = h(0);
     [1f800204] = h(hu[S0 + c]);
+    [1f800206] = h(0);
 
     bone_matrixes = w[model + 20];
     parts = w[model + 1c] + hu[model + 18];
@@ -3255,24 +3179,46 @@ else if( A0 == 1 )
     {
         bone_id = bu[parts + i * 20 + 1];
 
-        [1f80021c] = w(0 - h[S0 + e]);
-        [1f800220] = w(0 - h[S0 + 10]);
-        [1f800224] = w(0 - h[S0 + 12]);
-        [1f800228] = h(hu[S0 + 14]);
-        [1f80022a] = h(hu[S0 + 16]);
-        [1f80022c] = h(hu[S0 + 18]);
-        [1f80022e] = h(hu[S0 + 1a]);
-        [1f800230] = h(hu[S0 + 1c]);
-        [1f800232] = h(hu[S0 + 1e]);
-        [1f800234] = h(hu[S0 + 20]);
-        [1f800236] = h(hu[S0 + 22]);
-        [1f800238] = h(hu[S0 + 24]);
+        // translation matrix
+        [1f800208 + 0] = h(1000);
+        [1f800208 + 2] = h(0);
+        [1f800208 + 4] = h(0);
+        [1f800208 + 6] = h(0);
+        [1f800208 + 8] = h(1000);
+        [1f800208 + a] = h(0);
+        [1f800208 + c] = h(0);
+        [1f800208 + e] = h(0);
+        [1f800208 + 10] = h(1000);
+        [1f800208 + 14] = w(0);
+        [1f800208 + 18] = w(0);
+        [1f800208 + 1c] = w(0);
+        [1f800208 + 14] = w(0 - h[S0 + e]);
+        [1f800208 + 18] = w(0 - h[S0 + 10]);
+        [1f800208 + 1c] = w(0 - h[S0 + 12]);
 
-        R11R12 = w[1f800208];
-        R13R21 = w[1f80020c];
-        R22R23 = w[1f800210];
-        R31R32 = w[1f800214];
-        R33 = w[1f800218];
+        // rotation matrix
+        [1f800228 + 0] = h(hu[S0 + 14]);
+        [1f800228 + 2] = h(hu[S0 + 16]);
+        [1f800228 + 4] = h(hu[S0 + 18]);
+        [1f800228 + 6] = h(hu[S0 + 1a]);
+        [1f800228 + 8] = h(hu[S0 + 1c]);
+        [1f800228 + a] = h(hu[S0 + 1e]);
+        [1f800228 + c] = h(hu[S0 + 20]);
+        [1f800228 + e] = h(hu[S0 + 22]);
+        [1f800228 + 10] = h(hu[S0 + 24]);
+        [1f800228 + 14] = w(0);
+        [1f800228 + 18] = w(0);
+        [1f800228 + 1c] = w(0);
+
+        [1f800248 + 14] = w(0);
+        [1f800248 + 18] = w(0);
+        [1f800248 + 1c] = w(0);
+
+        R11R12 = w[1f800208 + 0];
+        R13R21 = w[1f800208 + 4];
+        R22R23 = w[1f800208 + 8];
+        R31R32 = w[1f800208 + c];
+        R33 = w[1f800208 + 10];
 
         IR1 = hu[bone_matrixes + bone_id * 20 + 0];
         IR2 = hu[bone_matrixes + bone_id * 20 + 6];
@@ -3286,73 +3232,73 @@ else if( A0 == 1 )
         IR2 = hu[bone_matrixes + bone_id * 20 + 8];
         IR3 = hu[bone_matrixes + bone_id * 20 + e];
         gte_rtir12(); // ir * rotmatrix
-        [1f80026a + 0] = h(IR1);
-        [1f80026a + 6] = h(IR2);
-        [1f80026a + c] = h(IR3);
+        [1f800268 + 2] = h(IR1);
+        [1f800268 + 8] = h(IR2);
+        [1f800268 + e] = h(IR3);
 
         IR1 = hu[bone_matrixes + bone_id * 20 + 4];
         IR2 = hu[bone_matrixes + bone_id * 20 + a];
         IR3 = hu[bone_matrixes + bone_id * 20 + 10];
         gte_rtir12(); // ir * rotmatrix
-        [1f80026c + 0] = h(IR1);
-        [1f80026c + 6] = h(IR2);
-        [1f80026c + c] = h(IR3);
+        [1f800268 + 4] = h(IR1);
+        [1f800268 + a] = h(IR2);
+        [1f800268 + 10] = h(IR3);
 
-        TRX = w[1f80021c];
-        TRY = w[1f800220];
-        TRZ = w[1f800224];
+        TRX = w[1f800208 + 14];
+        TRY = w[1f800208 + 18];
+        TRZ = w[1f800208 + 1c];
 
         VXY0 = (hu[bone_matrixes + bone_id * 20 + 18] << 10) | (hu[bone_matrixes + bone_id * 20 + 14]);
         VZ0 = w[bone_matrixes + bone_id * 20 + 1c];
         gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [1f80027c] = w(IR1);
-        [1f800280] = w(IR2);
-        [1f800284] = w(IR3);
+        [1f800268 + 14] = w(IR1);
+        [1f800268 + 18] = w(IR2);
+        [1f800268 + 1c] = w(IR3);
 
-        R11R12 = w[1f800228];
-        R13R21 = w[1f80022c];
-        R22R23 = w[1f800230];
-        R31R32 = w[1f800234];
-        R33 = w[1f800238];
+        R11R12 = w[1f800228 + 0];
+        R13R21 = w[1f800228 + 4];
+        R22R23 = w[1f800228 + 8];
+        R31R32 = w[1f800228 + c];
+        R33 = w[1f800228 + 10];
 
         IR1 = hu[1f800268 + 0];
         IR2 = hu[1f800268 + 6];
         IR3 = hu[1f800268 + c];
         gte_rtir12(); // ir * rotmatrix
-        [1f800268 + 0000] = h(IR1);
-        [1f800268 + 0006] = h(IR2);
-        [1f800268 + 000c] = h(IR3);
+        [1f800268 + 0] = h(IR1);
+        [1f800268 + 6] = h(IR2);
+        [1f800268 + c] = h(IR3);
 
-        IR1 = hu[1f80026a];
-        IR2 = hu[1f800270];
-        IR3 = hu[1f800276];
+        IR1 = hu[1f800268 + 2];
+        IR2 = hu[1f800268 + 8];
+        IR3 = hu[1f800268 + e];
         gte_rtir12(); // ir * rotmatrix
-        [1f80026a] = h(IR1);
-        [1f800270] = h(IR2);
-        [1f800276] = h(IR3);
+        [1f800268 + 2] = h(IR1);
+        [1f800268 + 8] = h(IR2);
+        [1f800268 + e] = h(IR3);
 
-        IR1 = hu[1f80026c + 0];
-        IR2 = hu[1f80026c + 6];
-        IR3 = hu[1f80026c + c];
+        IR1 = hu[1f800268 + 4];
+        IR2 = hu[1f800268 + a];
+        IR3 = hu[1f800268 + 10];
         gte_rtir12(); // ir * rotmatrix
-        [1f80026c + 0000] = h(IR1);
-        [1f80026c + 0006] = h(IR2);
-        [1f80026c + 000c] = h(IR3);
+        [1f800268 + 4] = h(IR1);
+        [1f800268 + a] = h(IR2);
+        [1f800268 + 10] = h(IR3);
 
-        TRX = w[1f80023c];
-        TRY = w[1f800240];
-        TRZ = w[1f800244];
+        TRX = w[1f800228 + 14];
+        TRY = w[1f800228 + 18];
+        TRZ = w[1f800228 + 1c];
 
         VXY0 = (hu[1f80027c + 4] << 10) | hu[1f80027c + 0];
         VZ0 = w[1f80027c + 8];
         gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [1f80027c + 0] = w(IR1);
-        [1f80027c + 4] = w(IR2);
-        [1f80027c + 8] = w(IR3);
+        [1f800268 + 14] = w(IR1);
+        [1f800268 + 18] = w(IR2);
+        [1f800268 + 1c] = w(IR3);
 
-        [1f80021c] = w(h[S0 + e]);
-        [1f800220] = w(h[S0 + 10]);
-        [1f800224] = w(h[S0 + 12]);
+        [1f800208 + 14] = w(h[S0 + e]);
+        [1f800208 + 18] = w(h[S0 + 10]);
+        [1f800208 + 1c] = w(h[S0 + 12]);
 
         A0 = 1f800228;
         A1 = 1f800248;
@@ -3364,40 +3310,40 @@ else if( A0 == 1 )
         R31R32 = w[bone_matrixes + c];
         R33 = w[bone_matrixes + 10];
 
-        IR1 = hu[1f800208];
-        IR2 = hu[1f80020e];
-        IR3 = hu[1f800214];
+        IR1 = hu[1f800208 + 0];
+        IR2 = hu[1f800208 + 6];
+        IR3 = hu[1f800208 + c];
         gte_rtir12(); // ir * rotmatrix
         [1f800288 + 0] = h(IR1);
         [1f800288 + 6] = h(IR2);
         [1f800288 + c] = h(IR3);
 
-        IR1 = hu[1f80020a];
-        IR2 = hu[1f800210];
-        IR3 = hu[1f800216];
+        IR1 = hu[1f800208 + 2];
+        IR2 = hu[1f800208 + 8];
+        IR3 = hu[1f800208 + e];
         gte_rtir12(); // ir * rotmatrix
-        [1f80028a + 0] = h(IR1);
-        [1f80028a + 6] = h(IR2);
-        [1f80028a + c] = h(IR3);
+        [1f800288 + 2] = h(IR1);
+        [1f800288 + 8] = h(IR2);
+        [1f800288 + e] = h(IR3);
 
-        IR1 = hu[1f80020c];
-        IR2 = hu[1f800212];
-        IR3 = hu[1f800218];
+        IR1 = hu[1f800208 + 4];
+        IR2 = hu[1f800208 + a];
+        IR3 = hu[1f800208 + 10];
         gte_rtir12(); // ir * rotmatrix
-        [1f80028c + 0] = h(IR1);
-        [1f80028c + 6] = h(IR2);
-        [1f80028c + c] = h(IR3);
+        [1f800288 + 4] = h(IR1);
+        [1f800288 + a] = h(IR2);
+        [1f800288 + 10] = h(IR3);
 
         TRX = w[bone_matrixes + 14];
         TRY = w[bone_matrixes + 18];
         TRZ = w[bone_matrixes + 1c];
 
-        VXY0 = (hu[1f800220] << 10) | hu[1f80021c];
-        VZ0 = w[1f800224];
+        VXY0 = (hu[1f800208 + 18] << 10) | hu[1f800208 + 14];
+        VZ0 = w[1f800208 + 1c];
         gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [1f80029c + 0] = w(IR1);
-        [1f80029c + 4] = w(IR2);
-        [1f80029c + 8] = w(IR3);
+        [1f800288 + 14] = w(IR1);
+        [1f800288 + 18] = w(IR2);
+        [1f800288 + 1c] = w(IR3);
 
         R11R12 = w[1f800288 + 0];
         R13R21 = w[1f800288 + 4];
@@ -3413,37 +3359,37 @@ else if( A0 == 1 )
         [1f800288 + 6] = h(IR2);
         [1f800288 + c] = h(IR3);
 
-        IR1 = hu[1f80024a];
-        IR2 = hu[1f800250];
-        IR3 = hu[1f800256];
+        IR1 = hu[1f800248 + 2];
+        IR2 = hu[1f800248 + 8];
+        IR3 = hu[1f800248 + e];
         gte_rtir12(); // ir * rotmatrix
-        [1f80028a] = h(IR1);
-        [1f800290] = h(IR2);
-        [1f800296] = h(IR3);
+        [1f800288 + 2] = h(IR1);
+        [1f800288 + 8] = h(IR2);
+        [1f800288 + e] = h(IR3);
 
-        IR1 = hu[1f80024c];
-        IR2 = hu[1f800252];
-        IR3 = hu[1f800258];
+        IR1 = hu[1f800248 + 4];
+        IR2 = hu[1f800248 + a];
+        IR3 = hu[1f800248 + 10];
         gte_rtir12(); // ir * rotmatrix
-        [1f80028c] = h(IR1);
-        [1f800292] = h(IR2);
-        [1f800298] = h(IR3);
+        [1f800288 + 4] = h(IR1);
+        [1f800288 + a] = h(IR2);
+        [1f800288 + 10] = h(IR3);
 
         TRX = w[1f800288 + 14];
         TRY = w[1f800288 + 18];
         TRZ = w[1f800288 + 1c];
 
-        VXY0 = (hu[1f800260] << 10) | hu[1f80025c];
-        VZ0 = w[1f800264];
+        VXY0 = (hu[1f800248 + 18] << 10) | hu[1f800248 + 14];
+        VZ0 = w[1f800248 + 1c];
         gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [1f80029c] = w(IR1);
-        [1f8002a0] = w(IR2);
-        [1f8002a4] = w(IR3);
+        [1f800288 + 14] = w(IR1);
+        [1f800288 + 18] = w(IR2);
+        [1f800288 + 1c] = w(IR3);
 
         A0 = parts + i * 20;
-        A1 = 1f800200;
-        A2 = 1f800268;
-        A3 = 1f800288;
+        A1 = 1f800200; // z vector
+        A2 = 1f800268; // view matrix
+        A3 = 1f800288; // projection matrix
         wm_update_packets_for_model_part();
     }
 
@@ -3478,9 +3424,9 @@ T7 = w[800c80bc];
 
 A0 = 0;
 
-if( ( h[A1 + 0] == 0 ) && ( h[A1 + 2] == 0 ) )
+if( ( h[A1 + 0] == 0 ) && ( h[A1 + 2] == 0 ) && ( h[A1 + 4] == -1000 ) )
 {
-    A0 = (h[A1 + 4] ^ fffff000) < 1;
+    A0 = 1;
 }
 
 // make view transformation of vertexes and store
@@ -3606,8 +3552,8 @@ for( int i = 0; i < number_of_poly; ++i )
 
         A0 = buffer + OTZ * 4;
 
-        [T3 + 0] = w((w[T3 + 0] & ff000000) | (w[A0 + 0] & 00ffffff));
-        [A0 + 0] = w((w[A0 + 0] & ff000000) | (T3 & 00ffffff));
+        [packets + 0] = w((w[packets + 0] & ff000000) | (w[A0 + 0] & 00ffffff));
+        [A0 + 0] = w((w[A0 + 0] & ff000000) | (packets & 00ffffff));
     }
 
     packets = packets + 28;
@@ -3649,490 +3595,189 @@ for( int i = 0; i < number_of_poly; ++i )
     polygon = polygon + c;
 }
 
-S2 = w[part + 4];
-T9 = S2 >> 18;
-800C55E8	beq    t9, zero, Lc5728 [$800c5728]
-T1 = 0;
-800C55F0	lui    t5, $ff00
-800C55F4	lui    t4, $00ff
-T4 = T4 | ffff;
-T2 = packets + 0018;
+// textured three-point polygon, opaque/semi-transparent, texture-blending
+number_of_poly = b[part + 7];
+for( int i = 0; i < number_of_poly; ++i )
+{
+    v1 = T7 + bu[polygon + 0] * 10;
+    v2 = T7 + bu[polygon + 1] * 10;
+    v3 = T7 + bu[polygon + 2] * 10;
 
-loopc5600:	; 800C5600
-V1 = w[polygon + 0000];
-T3 = packets;
-V0 = V1 & 00ff;
-V0 = V0 << 04;
-A3 = T7 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 04;
-A2 = T7 + V0;
-V1 = V1 >> 0c;
-V1 = V1 & 0ff0;
-A1 = T7 + V1;
-V0 = w[A3 + 0000];
-V1 = w[A2 + 0000];
-A0 = w[A1 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-800C5644	nop
-800C5648	nop
-gte_NCLIP(); // Normal clipping
-[T2 + fff0] = w(V0);
-[T2 + fff8] = w(V1);
-[T2 + 0000] = w(A0);
-V0 = MAC0;
-800C5660	nop
-800C5664	blez   v0, Lc569c [$800c569c]
-800C5668	nop
-V0 = h[A3 + 000c];
-800C5670	nop
-800C5674	bne    v0, zero, Lc56b0 [$800c56b0]
-800C5678	nop
-V0 = h[A2 + 000c];
-800C5680	nop
-800C5684	bne    v0, zero, Lc56b0 [$800c56b0]
-800C5688	nop
-V0 = h[A1 + 000c];
-800C5690	nop
-800C5694	bne    v0, zero, Lc56b0 [$800c56b0]
-800C5698	nop
+    [packets + 8] = w(w[v1 + 0]);
+    [packets + 10] = w(w[v2 + 0]);
+    [packets + 18] = w(w[v3 + 0]);
 
-Lc569c:	; 800C569C
-V0 = w[packets + 0000];
-800C56A0	nop
-V0 = V0 & T5;
-800C56A8	j      Lc5710 [$800c5710]
-[packets + 0000] = w(V0);
+    SXY0 = w[v1 + 0];
+    SXY2P = w[v3 + 0];
+    SXY1 = w[v2 + 0];
+    gte_NCLIP(); // Normal clipping
 
-Lc56b0:	; 800C56B0
-A3 = w[A3 + 0004];
-A2 = w[A2 + 0004];
-A1 = w[A1 + 0004];
-SZ1 = A3;
-SZ2 = A2;
-SZ3 = A1;
-800C56C8	nop
-800C56CC	nop
-gte_AVSZ3(); // Average of three Z values
-A0 = OTZ;
-800C56D8	nop
-A0 = A0 << 02;
-A0 = A0 + buffer;
-V1 = w[T3 + 0000];
-V0 = w[A0 + 0000];
-V1 = V1 & T5;
-V0 = V0 & T4;
-V1 = V1 | V0;
-[T3 + 0000] = w(V1);
-V0 = w[A0 + 0000];
-V1 = T3 & T4;
-V0 = V0 & T5;
-V0 = V0 | V1;
-[A0 + 0000] = w(V0);
+    if( ( MAC0 <= 0 ) || ( ( h[v1 + c] == 0 ) && ( h[v2 + c] == 0 ) && ( h[v3 + c] == 0 ) && ( h[v4 + c] == 0 ) ) )
+    {
+        [packets + 0] = w(w[packets + 0] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[v1 + 4];
+        SZ2 = w[v2 + 4];
+        SZ3 = w[v3 + 4];
+        gte_AVSZ3(); // Average of three Z values
 
-Lc5710:	; 800C5710
-T1 = T1 + 0001;
-T2 = T2 + 0020;
-packets = packets + 0020;
-V0 = T1 < T9;
-800C5720	bne    v0, zero, loopc5600 [$800c5600]
-polygon = polygon + 000c;
+        A0 = buffer + OTZ * 4;
 
-Lc5728:	; 800C5728
-S2 = w[part + 0008];
-800C572C	nop
-T9 = S2 & 00ff;
-800C5734	beq    t9, zero, Lc5874 [$800c5874]
-T1 = 0;
-800C573C	lui    t5, $ff00
-800C5740	lui    t4, $00ff
-T4 = T4 | ffff;
-T2 = packets + 0010;
+        [packets + 0] = w((w[packets + 0] & ff000000) | (w[A0 + 0] & 00ffffff));
+        [A0 + 0] = w((w[A0 + 0] & ff000000) | (packets & 00ffffff));
+    }
 
-loopc574c:	; 800C574C
-V1 = w[polygon + 0000];
-T3 = packets;
-V0 = V1 & 00ff;
-V0 = V0 << 04;
-A3 = T7 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 04;
-A2 = T7 + V0;
-V1 = V1 >> 0c;
-V1 = V1 & 0ff0;
-A1 = T7 + V1;
-V0 = w[A3 + 0000];
-V1 = w[A2 + 0000];
-A0 = w[A1 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-800C5790	nop
-800C5794	nop
-gte_NCLIP(); // Normal clipping
-[T2 + fff8] = w(V0);
-[T2 + fffc] = w(V1);
-[T2 + 0000] = w(A0);
-V0 = MAC0;
-800C57AC	nop
-800C57B0	blez   v0, Lc57e8 [$800c57e8]
-800C57B4	nop
-V0 = h[A3 + 000c];
-800C57BC	nop
-800C57C0	bne    v0, zero, Lc57fc [$800c57fc]
-800C57C4	nop
-V0 = h[A2 + 000c];
-800C57CC	nop
-800C57D0	bne    v0, zero, Lc57fc [$800c57fc]
-800C57D4	nop
-V0 = h[A1 + 000c];
-800C57DC	nop
-800C57E0	bne    v0, zero, Lc57fc [$800c57fc]
-800C57E4	nop
+    packets = packets + 20;
+    polygon = polygon + c;
+}
 
-Lc57e8:	; 800C57E8
-V0 = w[packets + 0000];
-800C57EC	nop
-V0 = V0 & T5;
-800C57F4	j      Lc585c [$800c585c]
-[packets + 0000] = w(V0);
+// monochrome three-point polygon, opaque
+number_of_poly = b[part + 8];
+for( int i = 0; i < number_of_poly; ++i )
+{
+    v1 = T7 + bu[polygon + 0] * 10;
+    v2 = T7 + bu[polygon + 1] * 10;
+    v3 = T7 + bu[polygon + 2] * 10;
 
-Lc57fc:	; 800C57FC
-A3 = w[A3 + 0004];
-A2 = w[A2 + 0004];
-A1 = w[A1 + 0004];
-SZ1 = A3;
-SZ2 = A2;
-SZ3 = A1;
-gte_AVSZ3(); // Average of three Z values
-A0 = OTZ;
-800C5824	nop
-A0 = A0 << 02;
-A0 = A0 + buffer;
-V1 = w[T3 + 0000];
-V0 = w[A0 + 0000];
-V1 = V1 & T5;
-V0 = V0 & T4;
-V1 = V1 | V0;
-[T3 + 0000] = w(V1);
-V0 = w[A0 + 0000];
-V1 = T3 & T4;
-V0 = V0 & T5;
-V0 = V0 | V1;
-[A0 + 0000] = w(V0);
+    [packets + 8] = w(w[v1 + 0]);
+    [packets + c] = w(w[v2 + 0]);
+    [packets + 10] = w(w[v3 + 0]);
 
-Lc585c:	; 800C585C
-T1 = T1 + 0001;
-T2 = T2 + 0014;
-packets = packets + 0014;
-V0 = T1 < T9;
-800C586C	bne    v0, zero, loopc574c [$800c574c]
-polygon = polygon + 0008;
+    SXY0 = w[v1 + 0];
+    SXY2P = w[v3 + 0];
+    SXY1 = w[v2 + 0];
+    gte_NCLIP(); // Normal clipping
 
-Lc5874:	; 800C5874
-V0 = S2 & ff00;
-T9 = V0 >> 08;
-800C587C	beq    t9, zero, Lc59f4 [$800c59f4]
-T1 = 0;
-800C5884	lui    s1, $ff00
-800C5888	lui    t6, $00ff
-T6 = T6 | ffff;
-T4 = packets + 0014;
+    if( ( MAC0 <= 0 ) || ( ( h[v1 + c] == 0 ) && ( h[v2 + c] == 0 ) && ( h[v3 + c] == 0 ) && ( h[v4 + c] == 0 ) ) )
+    {
+        [packets + 0] = w(w[packets + 0] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[v1 + 4];
+        SZ2 = w[v2 + 4];
+        SZ3 = w[v3 + 4];
+        gte_AVSZ3(); // Average of three Z values
 
-loopc5894:	; 800C5894
-V1 = w[polygon + 0000];
-T5 = packets;
-V0 = V1 & 00ff;
-V0 = V0 << 04;
-T2 = T7 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 04;
-A3 = T7 + V0;
-V0 = V1 >> 0c;
-V0 = V0 & 0ff0;
-A2 = T7 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 04;
-T3 = T7 + V1;
-V0 = w[T2 + 0000];
-V1 = w[A3 + 0000];
-A0 = w[A2 + 0000];
-A1 = w[T3 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-800C58E8	nop
-800C58EC	nop
-gte_NCLIP(); // Normal clipping
-[T4 + fff4] = w(V0);
-[T4 + fff8] = w(V1);
-[T4 + fffc] = w(A0);
-[T4 + 0000] = w(A1);
-V0 = MAC0;
-800C5908	nop
-800C590C	blez   v0, Lc5944 [$800c5944]
-800C5910	nop
-V0 = h[T2 + 000c];
-800C5918	nop
-800C591C	bne    v0, zero, Lc5958 [$800c5958]
-800C5920	nop
-V0 = h[A3 + 000c];
-800C5928	nop
-800C592C	bne    v0, zero, Lc5958 [$800c5958]
-800C5930	nop
-V0 = h[A2 + 000c];
-800C5938	nop
-800C593C	bne    v0, zero, Lc5958 [$800c5958]
-800C5940	nop
+        A0 = buffer + OTZ * 4;
 
-Lc5944:	; 800C5944
-V0 = w[packets + 0000];
-800C5948	nop
-V0 = V0 & S1;
-800C5950	j      Lc59dc [$800c59dc]
-[packets + 0000] = w(V0);
+        [packets + 0] = w((w[packets + 0] & ff000000) | (w[A0 + 0] & 00ffffff));
+        [A0 + 0] = w((w[A0 + 0] & ff000000) | (packets & 00ffffff));
+    }
 
-Lc5958:	; 800C5958
-V0 = w[T2 + 0004];
-V1 = w[A3 + 0004];
-800C5960	nop
-V0 = V0 + V1;
-V1 = w[A2 + 0004];
-A0 = w[T3 + 0004];
-V0 = V0 + V1;
-V0 = V0 + A0;
-V0 = V0 >> 04;
-V0 = V0 << 02;
-V0 = V0 + buffer;
-V1 = w[T5 + 0000];
-V0 = w[V0 + 0000];
-V1 = V1 & S1;
-V0 = V0 & T6;
-V1 = V1 | V0;
-[T5 + 0000] = w(V1);
-V1 = w[T2 + 0004];
-V0 = w[A3 + 0004];
-800C59A4	nop
-V1 = V1 + V0;
-V0 = w[A2 + 0004];
-A0 = w[T3 + 0004];
-V1 = V1 + V0;
-V1 = V1 + A0;
-V1 = V1 >> 04;
-V1 = V1 << 02;
-V1 = V1 + buffer;
-V0 = w[V1 + 0000];
-A0 = T5 & T6;
-V0 = V0 & S1;
-V0 = V0 | A0;
-[V1 + 0000] = w(V0);
+    packets = packets + 14;
+    polygon = polygon + 8;
+}
 
-Lc59dc:	; 800C59DC
-T1 = T1 + 0001;
-T4 = T4 + 0018;
-packets = packets + 0018;
-V0 = T1 < T9;
-800C59EC	bne    v0, zero, loopc5894 [$800c5894]
-polygon = polygon + 0008;
+//  monochrome four-point polygon, opaque
+number_of_poly = b[part + 9];
+for( int i = 0; i < number_of_poly; ++i )
+{
+    v1 = T7 + bu[polygon + 0] * 10;
+    v2 = T7 + bu[polygon + 1] * 10;
+    v3 = T7 + bu[polygon + 2] * 10;
+    v4 = T7 + bu[polygon + 3] * 10;
 
-Lc59f4:	; 800C59F4
-V0 = S2 >> 10;
-T9 = V0 & 00ff;
-800C59FC	beq    t9, zero, Lc5b3c [$800c5b3c]
-T1 = 0;
-800C5A04	lui    t5, $ff00
-800C5A08	lui    t4, $00ff
-T4 = T4 | ffff;
-T2 = packets + 0018;
+    [packets + 8] = w(w[v1 + 0]);
+    [packets + c] = w(w[v2 + 0]);
+    [packets + 10] = w(w[v3 + 0]);
+    [packets + 14] = w(w[v4 + 0]);
 
-loopc5a14:	; 800C5A14
-V1 = w[polygon + 0000];
-T3 = packets;
-V0 = V1 & 00ff;
-V0 = V0 << 04;
-A3 = T7 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 04;
-A2 = T7 + V0;
-V1 = V1 >> 0c;
-V1 = V1 & 0ff0;
-A1 = T7 + V1;
-V0 = w[A3 + 0000];
-V1 = w[A2 + 0000];
-A0 = w[A1 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-gte_NCLIP(); // Normal clipping
-[T2 + fff0] = w(V0);
-[T2 + fff8] = w(V1);
-[T2 + 0000] = w(A0);
-V0 = MAC0;
-800C5A74	nop
-800C5A78	blez   v0, Lc5ab0 [$800c5ab0]
-800C5A7C	nop
-V0 = h[A3 + 000c];
-800C5A84	nop
-800C5A88	bne    v0, zero, Lc5ac4 [$800c5ac4]
-800C5A8C	nop
-V0 = h[A2 + 000c];
-800C5A94	nop
-800C5A98	bne    v0, zero, Lc5ac4 [$800c5ac4]
-800C5A9C	nop
-V0 = h[A1 + 000c];
-800C5AA4	nop
-800C5AA8	bne    v0, zero, Lc5ac4 [$800c5ac4]
-800C5AAC	nop
+    SXY0 = w[v1 + 0];
+    SXY2P = w[v3 + 0];
+    SXY1 = w[v2 + 0];
+    gte_NCLIP(); // Normal clipping
 
-Lc5ab0:	; 800C5AB0
-V0 = w[packets + 0000];
-800C5AB4	nop
-V0 = V0 & T5;
-800C5ABC	j      Lc5b24 [$800c5b24]
-[packets + 0000] = w(V0);
+    if( ( MAC0 <= 0 ) || ( ( h[v1 + c] == 0 ) && ( h[v2 + c] == 0 ) && ( h[v3 + c] == 0 ) ) )
+    {
+        [packets + 0] = w(w[packets + 0] & ff000000);
+    }
+    else
+    {
+        V1 = buffer + (((w[v1 + 4] + w[v2 + 4] + w[v3 + 4] + w[v4 + 4]) / 4) >> 2) << 2;
 
-Lc5ac4:	; 800C5AC4
-A3 = w[A3 + 0004];
-A2 = w[A2 + 0004];
-A1 = w[A1 + 0004];
-SZ1 = A3;
-SZ2 = A2;
-SZ3 = A1;
-800C5ADC	nop
-800C5AE0	nop
-gte_AVSZ3(); // Average of three Z values
-A0 = OTZ;
-800C5AEC	nop
-A0 = A0 << 02;
-A0 = A0 + buffer;
-V1 = w[T3 + 0000];
-V0 = w[A0 + 0000];
-V1 = V1 & T5;
-V0 = V0 & T4;
-V1 = V1 | V0;
-[T3 + 0000] = w(V1);
-V0 = w[A0 + 0000];
-V1 = T3 & T4;
-V0 = V0 & T5;
-V0 = V0 | V1;
-[A0 + 0000] = w(V0);
+        [packets + 0] = w((w[packets + 0] & ff000000) | (w[V1 + 0] & 00ffffff));
+        [V1 + 0] = w((w[V1 + 0] & ff000000) | (packets & 00ffffff));
+    }
 
-Lc5b24:	; 800C5B24
-T1 = T1 + 0001;
-T2 = T2 + 001c;
-packets = packets + 001c;
-V0 = T1 < T9;
-800C5B34	bne    v0, zero, loopc5a14 [$800c5a14]
-polygon = polygon + 0010;
+    packets = packets + 18;
+    polygon = polygon + 8;
+}
 
-Lc5b3c:	; 800C5B3C
-T9 = S2 >> 18;
-800C5B40	beq    t9, zero, Lc5cb8 [$800c5cb8]
-T1 = 0;
-800C5B48	lui    s1, $ff00
-800C5B4C	lui    t6, $00ff
-T6 = T6 | ffff;
-T4 = packets + 0020;
+// shaded three-point polygon, opaque
+number_of_poly = b[part + a];
+for( int i = 0; i < number_of_poly; ++i )
+{
+    v1 = T7 + bu[polygon + 0] * 10;
+    v2 = T7 + bu[polygon + 1] * 10;
+    v3 = T7 + bu[polygon + 2] * 10;
 
-loopc5b58:	; 800C5B58
-V1 = w[polygon + 0000];
-T5 = packets;
-V0 = V1 & 00ff;
-V0 = V0 << 04;
-T2 = T7 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 04;
-A3 = T7 + V0;
-V0 = V1 >> 0c;
-V0 = V0 & 0ff0;
-A2 = T7 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 04;
-T3 = T7 + V1;
-V0 = w[T2 + 0000];
-V1 = w[A3 + 0000];
-A0 = w[A2 + 0000];
-A1 = w[T3 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-800C5BAC	nop
-800C5BB0	nop
-gte_NCLIP(); // Normal clipping
-[T4 + ffe8] = w(V0);
-[T4 + fff0] = w(V1);
-[T4 + fff8] = w(A0);
-[T4 + 0000] = w(A1);
-V0 = MAC0;
-800C5BCC	nop
-800C5BD0	blez   v0, Lc5c08 [$800c5c08]
-800C5BD4	nop
-V0 = h[T2 + 000c];
-800C5BDC	nop
-800C5BE0	bne    v0, zero, Lc5c1c [$800c5c1c]
-800C5BE4	nop
-V0 = h[A3 + 000c];
-800C5BEC	nop
-800C5BF0	bne    v0, zero, Lc5c1c [$800c5c1c]
-800C5BF4	nop
-V0 = h[A2 + 000c];
-800C5BFC	nop
-800C5C00	bne    v0, zero, Lc5c1c [$800c5c1c]
-800C5C04	nop
+    [packets + 8] = w(w[v1 + 0]);
+    [packets + 10] = w(w[v2 + 0]);
+    [packets + 18] = w(w[v3 + 0]);
 
-Lc5c08:	; 800C5C08
-V0 = w[packets + 0000];
-800C5C0C	nop
-V0 = V0 & S1;
-800C5C14	j      Lc5ca0 [$800c5ca0]
-[packets + 0000] = w(V0);
+    SXY0 = w[v1 + 0];
+    SXY2P = w[v3 + 0];
+    SXY1 = w[v2 + 0];
+    gte_NCLIP(); // Normal clipping
 
-Lc5c1c:	; 800C5C1C
-V0 = w[T2 + 0004];
-V1 = w[A3 + 0004];
-800C5C24	nop
-V0 = V0 + V1;
-V1 = w[A2 + 0004];
-A0 = w[T3 + 0004];
-V0 = V0 + V1;
-V0 = V0 + A0;
-V0 = V0 >> 04;
-V0 = V0 << 02;
-V0 = V0 + buffer;
-V1 = w[T5 + 0000];
-V0 = w[V0 + 0000];
-V1 = V1 & S1;
-V0 = V0 & T6;
-V1 = V1 | V0;
-[T5 + 0000] = w(V1);
-V1 = w[T2 + 0004];
-V0 = w[A3 + 0004];
-800C5C68	nop
-V1 = V1 + V0;
-V0 = w[A2 + 0004];
-A0 = w[T3 + 0004];
-V1 = V1 + V0;
-V1 = V1 + A0;
-V1 = V1 >> 04;
-V1 = V1 << 02;
-V1 = V1 + buffer;
-V0 = w[V1 + 0000];
-A0 = T5 & T6;
-V0 = V0 & S1;
-V0 = V0 | A0;
-[V1 + 0000] = w(V0);
+    if( ( MAC0 <= 0 ) || ( ( h[v1 + c] == 0 ) && ( h[v2 + c] == 0 ) && ( h[v3 + c] == 0 ) && ( h[v4 + c] == 0 ) ) )
+    {
+        [packets + 0] = w(w[packets + 0] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[v1 + 4];
+        SZ2 = w[v2 + 4];
+        SZ3 = w[v3 + 4];
+        gte_AVSZ3(); // Average of three Z values
 
-Lc5ca0:	; 800C5CA0
-T1 = T1 + 0001;
-T4 = T4 + 0024;
-packets = packets + 0024;
-V0 = T1 < T9;
-800C5CB0	bne    v0, zero, loopc5b58 [$800c5b58]
-polygon = polygon + 0014;
+        A0 = buffer + OTZ * 4;
 
-Lc5cb8:	; 800C5CB8
+        [packets + 0] = w((w[packets + 0] & ff000000) | (w[A0 + 0] & 00ffffff));
+        [A0 + 0] = w((w[A0 + 0] & ff000000) | (packets & 00ffffff));
+    }
+
+    packets = packets + 1c;
+    polygon = polygon + 10;
+}
+
+// shaded four-point polygon, opaque
+number_of_poly = b[part + b];
+for( int i = 0; i < number_of_poly; ++i )
+{
+    v1 = T7 + bu[polygon + 0] * 10;
+    v2 = T7 + bu[polygon + 1] * 10;
+    v3 = T7 + bu[polygon + 2] * 10;
+    v4 = T7 + bu[polygon + 3] * 10;
+
+    [packets + 8] = w(w[v1 + 0]);
+    [packets + 10] = w(w[v2 + 0]);
+    [packets + 18] = w(w[v3 + 0]);
+    [packets + 20] = w(w[v4 + 0]);
+
+    SXY0 = w[v1 + 0];
+    SXY2P = w[v3 + 0];
+    SXY1 = w[v2 + 0];
+    gte_NCLIP(); // Normal clipping
+
+    if( ( MAC0 <= 0 ) || ( ( h[v1 + c] == 0 ) && ( h[v2 + c] == 0 ) && ( h[v3 + c] == 0 ) ) )
+    {
+        [packets + 0] = w(w[packets + 0] & ff000000);
+    }
+    else
+    {
+        V1 = buffer + (((w[v1 + 4] + w[v2 + 4] + w[v3 + 4] + w[v4 + 4]) / 4) >> 2) << 2;
+
+        [packets + 0] = w((w[packets + 0] & ff000000) | (w[V1 + 0] & 00ffffff));
+        [V1 + 0] = w((w[V1 + 0] & ff000000) | (packets & 00ffffff));
+    }
+
+    packets = packets + 24;
+    polygon = polygon + 14;
+}
 ////////////////////////////////
 
 

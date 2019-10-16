@@ -2371,33 +2371,37 @@ return w[800e5658];
 
 
 ////////////////////////////////
-// funca36ac
+// funca36ac()
 
-S1 = A0;
+model = A0;
 S0 = A1;
 S2 = A2;
 S3 = A3;
-V0 = 1000;
-[SP + 0020] = h(V0);
-[SP + 0018] = h(V0);
-[SP + 0010] = h(V0);
+
+[SP + 0020] = h(1000);
+[SP + 0018] = h(1000);
+[SP + 0010] = h(1000);
 [SP + 001e] = h(0);
 [SP + 001c] = h(0);
 [SP + 001a] = h(0);
 [SP + 0016] = h(0);
 [SP + 0014] = h(0);
 [SP + 0012] = h(0);
+
 A0 = h[S0 + 0000];
+A1 = SP + 0010;
 800A3700	jal    $8003c73c
-A1 = SP + 0010;
+
 A0 = h[S0 + 0004];
+A1 = SP + 0010;
 800A370C	jal    $8003ca7c
-A1 = SP + 0010;
+
 A0 = h[S0 + 0002];
-800A3718	jal    $8003c8dc
 A1 = SP + 0010;
-800A3720	lui    s0, $800e
-S0 = S0 + 5698;
+800A3718	jal    $8003c8dc
+
+S0 = 800e5698;
+
 A0 = S0;
 A1 = SP + 0010;
 A2 = S2;
@@ -2486,9 +2490,9 @@ system_gte_copy_matrix_translation_part();
 A0 = S2;
 system_gte_set_translation_vector();
 
-[SP + 0040] = h(hu[S1 + 0008]);
-[SP + 0042] = h(hu[S1 + 000c]);
-[SP + 0044] = h(hu[S1 + 0010]);
+[SP + 0040] = h(hu[model + 0008]);
+[SP + 0042] = h(hu[model + 000c]);
+[SP + 0044] = h(hu[model + 0010]);
 V0 = SP + 0040;
 T4 = V0;
 VXY0 = w[T4 + 0000];
@@ -2500,9 +2504,9 @@ T4 = S0;
 [T4 + 0008] = w(MAC3);
 A0 = S2;
 A1 = S0;
-[S1 + 0010] = w(0);
-[S1 + 000c] = w(0);
-[S1 + 0008] = w(0);
+[model + 0010] = w(0);
+[model + 000c] = w(0);
+[model + 0008] = w(0);
 system_gte_copy_matrix_translation_part();
 ////////////////////////////////
 
