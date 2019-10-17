@@ -7798,7 +7798,7 @@ model = A0;
 entity = A1;
 animation_id = A2;
 frame_id = A3;
-S0 = A4;
+rot_vec = A4;
 
 S3 = 1f800000;
 
@@ -7821,8 +7821,8 @@ else
 }
 
 A0 = model;
-A1 = S0;
-A2 = SP + 10;
+A1 = rot_vec; // rotation vector
+A2 = SP + 10; // result
 funca36ac();
 
 V1 = 0;

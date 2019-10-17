@@ -2374,56 +2374,52 @@ return w[800e5658];
 // funca36ac()
 
 model = A0;
-S0 = A1;
-S2 = A2;
+rot_vec = A1;
+res = A2;
 pc_model = A3;
 
-[SP + 0020] = h(1000);
-[SP + 0018] = h(1000);
-[SP + 0010] = h(1000);
-[SP + 001e] = h(0);
-[SP + 001c] = h(0);
-[SP + 001a] = h(0);
-[SP + 0016] = h(0);
-[SP + 0014] = h(0);
-[SP + 0012] = h(0);
+[SP + 10] = h(1000);
+[SP + 12] = h(0);
+[SP + 14] = h(0);
+[SP + 16] = h(0);
+[SP + 18] = h(1000);
+[SP + 1a] = h(0);
+[SP + 1c] = h(0);
+[SP + 1e] = h(0);
+[SP + 20] = h(1000);
 
-A0 = h[S0 + 0000];
-A1 = SP + 0010;
-800A3700	jal    $8003c73c
+A0 = h[rot_vec + 0];
+A1 = SP + 10;
+system_gte_rotate_matrix_by_x();
 
-A0 = h[S0 + 0004];
-A1 = SP + 0010;
-800A370C	jal    $8003ca7c
+A0 = h[rot_vec + 4];
+A1 = SP + 10;
+system_gte_rotate_matrix_by_z();
 
-A0 = h[S0 + 0002];
-A1 = SP + 0010;
-800A3718	jal    $8003c8dc
+A0 = h[rot_vec + 2];
+A1 = SP + 10;
+system_gte_rotate_matrix_by_y();
 
-S0 = 800e5698;
-
-A0 = S0;
-A1 = SP + 0010;
-A2 = S2;
+A0 = 800e5698;
+A1 = SP + 10;
+A2 = res;
 system_gte_matrixes_multiply_A0_A1_to_A2();
 
-A0 = S0;
+A0 = 800e5698;
 system_gte_set_rotation_matrix();
 
-A1 = w[800e5670];
-if( ( A1 > 0 ) && ( pc_model != 0 ) )
+if( ( w[800e5670] > 0 ) && ( pc_model != 0 ) )
 {
     [SP + 30] = w(w[800e56cc] / 8);
     [SP + 34] = w(w[800e56d0] / 8);
     [SP + 38] = w(w[800e56d4] / 8);
 
-    800A37AC	addiu  v0, a1, $ffff (=-$1)
-    [800e5670] = w(V0);
+    [800e5670] = w(w[800e5670] - 1);
 
-    if( V0 == 0 )
+    if( w[800e5670] == 0 )
     {
         A0 = w[80116510];
-        800A37C8	jal    funcb63f0 [$800b63f0]
+        funcb63f0(); // play some sound
     }
 }
 else
@@ -2433,31 +2429,31 @@ else
     [SP + 38] = w(w[800e56d4] / 4);
 }
 
-A0 = S2;
-S0 = SP + 0030;
-A1 = S0;
+A0 = res;
+A1 = SP + 30;
 system_gte_copy_matrix_translation_part();
 
-A0 = S2;
+A0 = res;
 system_gte_set_translation_vector();
 
-[SP + 0040] = h(hu[model + 0008]);
-[SP + 0042] = h(hu[model + 000c]);
-[SP + 0044] = h(hu[model + 0010]);
-V0 = SP + 0040;
-T4 = V0;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
+// copy root offset
+[SP + 40] = h(hu[model + 8]);
+[SP + 42] = h(hu[model + c]);
+[SP + 44] = h(hu[model + 10]);
+
+VXY0 = w[SP + 40];
+VZ0 = w[SP + 44];
 gte_rtv0tr(); // v0 * rotmatrix + tr vector
-T4 = S0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-A0 = S2;
-A1 = S0;
-[model + 0010] = w(0);
-[model + 000c] = w(0);
-[model + 0008] = w(0);
+[SP + 30] = w(MAC1);
+[SP + 34] = w(MAC2);
+[SP + 38] = w(MAC3);
+
+[model + 8] = w(0);
+[model + c] = w(0);
+[model + 10] = w(0);
+
+A0 = res;
+A1 = SP + 30;
 system_gte_copy_matrix_translation_part();
 ////////////////////////////////
 

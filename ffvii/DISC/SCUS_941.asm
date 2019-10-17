@@ -2426,13 +2426,13 @@
 // func3c4ac
 8003C4AC-8003C738
 ////////////////////////////////
-// func3c73c
+// system_gte_rotate_matrix_by_x
 8003C73C-8003C8D8
 ////////////////////////////////
-// func3c8dc
+// system_gte_rotate_matrix_by_y
 8003C8DC-8003CA78
 ////////////////////////////////
-// func3ca7c
+// system_gte_rotate_matrix_by_z
 8003CA7C-8003CC18
 ////////////////////////////////
 // func3cc1c

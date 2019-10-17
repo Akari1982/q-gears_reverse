@@ -2813,341 +2813,126 @@ T6 = T9 - T7;
 8003C734	nop
 8003C738	nop
 ////////////////////////////////
-// func3c73c
-T7 = A0;
-V0 = A1;
-8003C744	bgez   t7, L3c780 [$8003c780]
-T9 = T7 & 0fff;
-T7 = 0 - T7;
-8003C750	bgez   t7, L3c758 [$8003c758]
-T7 = T7 & 0fff;
 
-L3c758:	; 8003C758
-T8 = T7 << 02;
-8003C75C	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003C768	nop
-T6 = T9 << 10;
-T6 = T6 >> 10;
-T1 = 0 - T6;
-8003C778	j      L3c7a0 [$8003c7a0]
-T0 = T9 >> 10;
 
-L3c780:	; 8003C780
-T8 = T9 << 02;
-8003C784	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003C790	nop
-T8 = T9 << 10;
-T1 = T8 >> 10;
-T0 = T9 >> 10;
 
-L3c7a0:	; 8003C7A0
-T2 = h[A1 + 0006];
-T5 = h[A1 + 000c];
-8003C7A8	multu  t0, t2
-T3 = h[A1 + 0008];
-T6 = h[A1 + 000e];
-8003C7B4	mflo   t8
-T4 = h[A1 + 000a];
-T7 = h[A1 + 0010];
-8003C7C0	multu  t1, t5
-8003C7C4	nop
-8003C7C8	nop
-8003C7CC	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003C7D8	multu  t0, t3
-[A1 + 0006] = h(T8);
-8003C7E0	nop
-8003C7E4	mflo   t8
-8003C7E8	nop
-8003C7EC	nop
-8003C7F0	multu  t1, t6
-8003C7F4	nop
-8003C7F8	nop
-8003C7FC	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003C808	multu  t0, t4
-[A1 + 0008] = h(T8);
-8003C810	nop
-8003C814	mflo   t8
-8003C818	nop
-8003C81C	nop
-8003C820	multu  t1, t7
-8003C824	nop
-8003C828	nop
-8003C82C	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003C838	multu  t1, t2
-[A1 + 000a] = h(T8);
-8003C840	nop
-8003C844	mflo   t8
-8003C848	nop
-8003C84C	nop
-8003C850	multu  t0, t5
-8003C854	nop
-8003C858	nop
-8003C85C	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-8003C868	multu  t1, t3
-[A1 + 000c] = h(T8);
-8003C870	nop
-8003C874	mflo   t8
-8003C878	nop
-8003C87C	nop
-8003C880	multu  t0, t6
-8003C884	nop
-8003C888	nop
-8003C88C	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-8003C898	multu  t1, t4
-[A1 + 000e] = h(T8);
-8003C8A0	nop
-8003C8A4	mflo   t8
-8003C8A8	nop
-8003C8AC	nop
-8003C8B0	multu  t0, t7
-8003C8B4	nop
-8003C8B8	nop
-8003C8BC	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-[A1 + 0010] = h(T8);
-8003C8CC	jr     ra 
-8003C8D0	nop
-8003C8D4	nop
-8003C8D8	nop
 ////////////////////////////////
-// func3c8dc
-T7 = A0;
-V0 = A1;
-8003C8E4	bgez   t7, L3c91c [$8003c91c]
-T9 = T7 & 0fff;
-T7 = 0 - T7;
-8003C8F0	bgez   t7, L3c8f8 [$8003c8f8]
-T7 = T7 & 0fff;
+// system_gte_rotate_matrix_by_x()
 
-L3c8f8:	; 8003C8F8
-T8 = T7 << 02;
-8003C8FC	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003C908	nop
-T6 = T9 << 10;
-T1 = T6 >> 10;
-8003C914	j      L3c940 [$8003c940]
-T0 = T9 >> 10;
+angle = A0;
 
-L3c91c:	; 8003C91C
-T8 = T9 << 02;
-8003C920	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003C92C	nop
-T8 = T9 << 10;
-T7 = T8 >> 10;
-T1 = 0 - T7;
-T0 = T9 >> 10;
+if( angle < 0 )
+{
+    angle = (0 - angle) & fff;
+    T9 = w[8004bc98 + angle * 4];
+    sin = 0 - (T9 << 10) >> 10;
+    cos = T9 >> 10;
+}
+else
+{
+    angle = angle & fff;
+    T9 = w[8004bc98 + angle * 4];
+    sin = (T9 << 10) >> 10;
+    cos = T9 >> 10;
+}
 
-L3c940:	; 8003C940
-T2 = h[A1 + 0000];
-T5 = h[A1 + 000c];
-8003C948	multu  t0, t2
-T3 = h[A1 + 0002];
-T6 = h[A1 + 000e];
-8003C954	mflo   t8
-T4 = h[A1 + 0004];
-T7 = h[A1 + 0010];
-8003C960	multu  t1, t5
-8003C964	nop
-8003C968	nop
-8003C96C	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003C978	multu  t0, t3
-[A1 + 0000] = h(T8);
-8003C980	nop
-8003C984	mflo   t8
-8003C988	nop
-8003C98C	nop
-8003C990	multu  t1, t6
-8003C994	nop
-8003C998	nop
-8003C99C	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003C9A8	multu  t0, t4
-[A1 + 0002] = h(T8);
-8003C9B0	nop
-8003C9B4	mflo   t8
-8003C9B8	nop
-8003C9BC	nop
-8003C9C0	multu  t1, t7
-8003C9C4	nop
-8003C9C8	nop
-8003C9CC	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003C9D8	multu  t1, t2
-[A1 + 0004] = h(T8);
-8003C9E0	nop
-8003C9E4	mflo   t8
-8003C9E8	nop
-8003C9EC	nop
-8003C9F0	multu  t0, t5
-8003C9F4	nop
-8003C9F8	nop
-8003C9FC	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-8003CA08	multu  t1, t3
-[A1 + 000c] = h(T8);
-8003CA10	nop
-8003CA14	mflo   t8
-8003CA18	nop
-8003CA1C	nop
-8003CA20	multu  t0, t6
-8003CA24	nop
-8003CA28	nop
-8003CA2C	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-8003CA38	multu  t1, t4
-[A1 + 000e] = h(T8);
-8003CA40	nop
-8003CA44	mflo   t8
-8003CA48	nop
-8003CA4C	nop
-8003CA50	multu  t0, t7
-8003CA54	nop
-8003CA58	nop
-8003CA5C	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-[A1 + 0010] = h(T8);
-8003CA6C	jr     ra 
-8003CA70	nop
-8003CA74	nop
-8003CA78	nop
+m21 = h[A1 + 6];
+m22 = h[A1 + 8];
+m23 = h[A1 + a];
+m31 = h[A1 + c];
+m32 = h[A1 + e];
+m33 = h[A1 + 10];
+
+[A1 + 6] = h(((cos * m21) - (sin * m31)) >> c);
+[A1 + 8] = h(((cos * m22) - (sin * m32)) >> c);
+[A1 + a] = h(((cos * m23) - (sin * m33)) >> c);
+[A1 + c] = h(((sin * m21) + (cos * m31)) >> c);
+[A1 + e] = h(((sin * m22) + (cos * m32)) >> c);
+[A1 + 10] = h(((sin * m23) + (cos * m33)) >> c);
+
+return A1;
 ////////////////////////////////
-// func3ca7c
-T7 = A0;
-V0 = A1;
-8003CA84	bgez   t7, L3cac0 [$8003cac0]
-T9 = T7 & 0fff;
-T7 = 0 - T7;
-8003CA90	bgez   t7, L3ca98 [$8003ca98]
-T7 = T7 & 0fff;
 
-L3ca98:	; 8003CA98
-T8 = T7 << 02;
-8003CA9C	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003CAA8	nop
-T6 = T9 << 10;
-T6 = T6 >> 10;
-T1 = 0 - T6;
-8003CAB8	j      L3cae0 [$8003cae0]
-T0 = T9 >> 10;
 
-L3cac0:	; 8003CAC0
-T8 = T9 << 02;
-8003CAC4	lui    t9, $8005
-T9 = T9 + T8;
-T9 = w[T9 + bc98];
-8003CAD0	nop
-T8 = T9 << 10;
-T1 = T8 >> 10;
-T0 = T9 >> 10;
 
-L3cae0:	; 8003CAE0
-T2 = h[A1 + 0000];
-T5 = h[A1 + 0006];
-8003CAE8	multu  t0, t2
-T3 = h[A1 + 0002];
-T6 = h[A1 + 0008];
-8003CAF4	mflo   t8
-T4 = h[A1 + 0004];
-T7 = h[A1 + 000a];
-8003CB00	multu  t1, t5
-8003CB04	nop
-8003CB08	nop
-8003CB0C	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003CB18	multu  t0, t3
-[A1 + 0000] = h(T8);
-8003CB20	nop
-8003CB24	mflo   t8
-8003CB28	nop
-8003CB2C	nop
-8003CB30	multu  t1, t6
-8003CB34	nop
-8003CB38	nop
-8003CB3C	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003CB48	multu  t0, t4
-[A1 + 0002] = h(T8);
-8003CB50	nop
-8003CB54	mflo   t8
-8003CB58	nop
-8003CB5C	nop
-8003CB60	multu  t1, t7
-8003CB64	nop
-8003CB68	nop
-8003CB6C	mflo   t9
-T9 = T8 - T9;
-T8 = T9 >> 0c;
-8003CB78	multu  t1, t2
-[A1 + 0004] = h(T8);
-8003CB80	nop
-8003CB84	mflo   t8
-8003CB88	nop
-8003CB8C	nop
-8003CB90	multu  t0, t5
-8003CB94	nop
-8003CB98	nop
-8003CB9C	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-8003CBA8	multu  t1, t3
-[A1 + 0006] = h(T8);
-8003CBB0	nop
-8003CBB4	mflo   t8
-8003CBB8	nop
-8003CBBC	nop
-8003CBC0	multu  t0, t6
-8003CBC4	nop
-8003CBC8	nop
-8003CBCC	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-8003CBD8	multu  t1, t4
-[A1 + 0008] = h(T8);
-8003CBE0	nop
-8003CBE4	mflo   t8
-8003CBE8	nop
-8003CBEC	nop
-8003CBF0	multu  t0, t7
-8003CBF4	nop
-8003CBF8	nop
-8003CBFC	mflo   t9
-T9 = T8 + T9;
-T8 = T9 >> 0c;
-[A1 + 000a] = h(T8);
-8003CC0C	jr     ra 
-8003CC10	nop
-8003CC14	nop
-8003CC18	nop
+////////////////////////////////
+// system_gte_rotate_matrix_by_y()
+
+angle = A0;
+
+if( angle < 0 )
+{
+    angle = (0 - angle) & fff;
+    T9 = w[8004bc98 + angle * 4];
+    sin = (T9 << 10) >> 10;
+    cos = T9 >> 10;
+}
+else
+{
+    angle = angle & fff;
+    T9 = w[8004bc98 + angle * 4];
+    sin = 0 - ((T9 << 10) >> 10);
+    cos = T9 >> 10;
+}
+
+m11 = h[A1 + 0];
+m12 = h[A1 + 2];
+m13 = h[A1 + 4];
+m31 = h[A1 + c];
+m32 = h[A1 + e];
+m33 = h[A1 + 10];
+
+[A1 + 0] = h(((cos * m11) - (sin * m31)) >> c);
+[A1 + 2] = h(((cos * m12) - (sin * m32)) >> c);
+[A1 + 4] = h(((cos * m13) - (sin * m33)) >> c);
+[A1 + c] = h(((sin * m11) + (cos * m31)) >> c);
+[A1 + e] = h(((sin * m12) + (cos * m32)) >> c);
+[A1 + 10] = h(((sin * m13) + (cos * m33)) >> c);
+
+return A1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gte_rotate_matrix_by_z()
+
+angle = A0;
+
+if( angle < 0 )
+{
+    angle = (0 - angle) & fff;
+    T9 = w[8004bc98 + angle * 4];
+    sin = 0 - ((T9 << 10) >> 10);
+    cos = T9 >> 10;
+}
+else
+{
+    angle = angle & fff;
+    T9 = w[8004bc98 + angle * 4];
+    sin = (T9 << 10) >> 10;
+    cos = T9 >> 10;
+}
+
+m11 = h[A1 + 0];
+m12 = h[A1 + 2];
+m13 = h[A1 + 4];
+m21 = h[A1 + 6];
+m22 = h[A1 + 8];
+m23 = h[A1 + a];
+
+[A1 + 0] = h(((cos * m11) - (sin * m21)) >> c);
+[A1 + 2] = h(((cos * m12) - (sin * m22)) >> c);
+[A1 + 4] = h(((cos * m13) - (sin * m23)) >> c);
+[A1 + 6] = h(((sin * m11) + (cos * m21)) >> c);
+[A1 + 8] = h(((sin * m12) + (cos * m22)) >> c);
+[A1 + a] = h(((sin * m13) + (cos * m23)) >> c);
+
+return A1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3cc1c
 A2 = 0;
