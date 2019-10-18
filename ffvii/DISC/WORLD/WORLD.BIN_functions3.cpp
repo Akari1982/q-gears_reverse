@@ -404,234 +404,132 @@ for( int i = 0; i < bu[tex + 4]; ++i )
 
 
 ////////////////////////////////
-// funcc08a8
-800C08A8	addiu  sp, sp, $ffc4 (=-$3c)
-[SP + 0020] = w(S2);
-S2 = A0;
-[SP + 0038] = w(RA);
-[SP + 0034] = w(S7);
-[SP + 0030] = w(S6);
-[SP + 002c] = w(S5);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
-S5 = w[S2 + 0000];
-800C08D8	nop
-V0 = S5 & 00ff;
-800C08E0	beq    v0, zero, Lc0b18 [$800c0b18]
-800C08E4	nop
-V0 = hu[S2 + 0018];
-V1 = w[S2 + 001c];
-800C08F0	nop
-A0 = V0 + V1;
-V0 = S5 >> 18;
-S1 = w[S2 + 0020];
-800C0900	beq    v0, zero, Lc0b18 [$800c0b18]
-S3 = 0;
-800C0908	lui    s4, $1f80
-S0 = A0;
+// funcc08a8()
 
-Lc0910:	; 800C0910
-S6 = w[S0 + 0000];
-800C0914	nop
-V0 = S6 & 00ff;
-800C091C	beq    v0, zero, Lc0b04 [$800c0b04]
-800C0920	addiu  v0, zero, $ffff (=-$1)
-V1 = S5 << 10;
-V1 = V1 >> 18;
-800C092C	beq    v1, v0, Lc0aac [$800c0aac]
-800C0930	nop
-T5 = w[S1 + 0000];
-T6 = w[S1 + 0004];
-R11R12 = T5;
-R13R21 = T6;
-T5 = w[S1 + 0008];
-T6 = w[S1 + 000c];
-T7 = w[S1 + 0010];
-R22R23 = T5;
-R31R32 = T6;
-R33 = T7;
-T5 = w[S1 + 0014];
-T6 = w[S1 + 0018];
-TRX = T5;
-T7 = w[S1 + 001c];
-TRY = T6;
-TRZ = T7;
-V0 = S6 << 10;
-V0 = V0 >> 13;
-T4 = S1 + V0;
-T5 = hu[T4 + 0000];
-T6 = hu[T4 + 0006];
-T7 = hu[T4 + 000c];
-IR1 = T5;
-IR2 = T6;
-IR3 = T7;
-800C0998	nop
-800C099C	nop
-gte_rtir12(); // ir * rotmatrix
-V0 = IR1;
-A1 = IR2;
-S7 = IR3;
-T5 = hu[T4 + 0002];
-T6 = hu[T4 + 0008];
-T7 = hu[T4 + 000e];
-IR1 = T5;
-IR2 = T6;
-IR3 = T7;
-800C09C8	nop
-800C09CC	nop
-gte_rtir12(); // ir * rotmatrix
-[S4 + 0000] = h(V0);
-[S4 + 0006] = h(A1);
-[S4 + 000c] = h(S7);
-V0 = IR1;
-A1 = IR2;
-S7 = IR3;
-T5 = hu[T4 + 0004];
-T6 = hu[T4 + 000a];
-T7 = hu[T4 + 0010];
-IR1 = T5;
-IR2 = T6;
-IR3 = T7;
-800C0A04	nop
-800C0A08	nop
-gte_rtir12(); // ir * rotmatrix
-[S4 + 0002] = h(V0);
-[S4 + 0008] = h(A1);
-[S4 + 000e] = h(S7);
-V0 = IR1;
-A1 = IR2;
-S7 = IR3;
-T6 = hu[T4 + 0018];
-T5 = hu[T4 + 0014];
-T6 = T6 << 10;
-T5 = T5 | T6;
-VXY0 = T5;
-VZ0 = w[T4 + 001c];
-800C0A40	nop
-800C0A44	nop
-gte_rtv0tr(); // v0 * rotmatrix + tr vector
-[S4 + 0004] = h(V0);
-[S4 + 000a] = h(A1);
-[S4 + 0010] = h(S7);
-[S4 + 0014] = w(IR1);
-[S4 + 0018] = w(IR2);
-[S4 + 001c] = w(IR3);
-T5 = w[S4 + 0000];
-T6 = w[S4 + 0004];
-R11R12 = T5;
-R13R21 = T6;
-T5 = w[S4 + 0008];
-T6 = w[S4 + 000c];
-T7 = w[S4 + 0010];
-R22R23 = T5;
-R31R32 = T6;
-R33 = T7;
-T5 = w[S4 + 0014];
-T6 = w[S4 + 0018];
-TRX = T5;
-T7 = w[S4 + 001c];
-TRY = T6;
-TRZ = T7;
-800C0AA4	j      Lc0afc [$800c0afc]
-800C0AA8	nop
+model = A0;
 
-Lc0aac:	; 800C0AAC
-V0 = S6 & ff00;
-V0 = V0 << 10;
-V0 = V0 >> 13;
-V0 = S1 + V0;
-T5 = w[V0 + 0000];
-T6 = w[V0 + 0004];
-R11R12 = T5;
-R13R21 = T6;
-T5 = w[V0 + 0008];
-T6 = w[V0 + 000c];
-T7 = w[V0 + 0010];
-R22R23 = T5;
-R31R32 = T6;
-R33 = T7;
-T5 = w[V0 + 0014];
-T6 = w[V0 + 0018];
-TRX = T5;
-T7 = w[V0 + 001c];
-TRY = T6;
-TRZ = T7;
+if( b[model + 0] == 0 )
+{
+    return;
+}
 
-Lc0afc:	; 800C0AFC
-800C0AFC	jal    funcc0b48 [$800c0b48]
-A0 = S0;
+bone_matrixes = w[model + 20];
+parts = w[model + 1c] + hu[model + 18];
 
-Lc0b04:	; 800C0B04
-V0 = S5 >> 18;
-S3 = S3 + 0001;
-V0 = S3 < V0;
-800C0B10	bne    v0, zero, Lc0910 [$800c0910]
-S0 = S0 + 0020;
+// go through all parts
+for( int i = 0; i < bu[model + 3]; ++i )
+{
+    if( bu[parts + i * 20 + 0] != 0 ) // calculate stage lighting and color
+    {
+        bone_id = b[parts + i * 20 + 1];
+        bone = bone_matrixes + bone_id * 20;
 
-Lc0b18:	; 800C0B18
-RA = w[SP + 0038];
-S7 = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 003c;
-800C0B40	jr     ra 
-800C0B44	nop
+        if( b[model + 1] != -1 ) // use root model matrix for lighting
+        {
+            R11R12 = w[bone_matrixes + 0];
+            R13R21 = w[bone_matrixes + 4];
+            R22R23 = w[bone_matrixes + 8];
+            R31R32 = w[bone_matrixes + c];
+            R33 = w[bone_matrixes + 10];
+            TRX = w[bone_matrixes + 14];
+            TRY = w[bone_matrixes + 18];
+            TRZ = w[bone_matrixes + 1c];
+
+            IR1 = hu[bone + 0];
+            IR2 = hu[bone + 6];
+            IR3 = hu[bone + c];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800000 + 0] = h(IR1);
+            [1f800000 + 6] = h(IR2);
+            [1f800000 + c] = h(IR3);
+
+            IR1 = hu[bone + 2];
+            IR2 = hu[bone + 8];
+            IR3 = hu[bone + e];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800000 + 2] = h(IR1);
+            [1f800000 + 8] = h(IR2);
+            [1f800000 + e] = h(IR3);
+
+            IR1 = hu[bone + 4];
+            IR2 = hu[bone + a];
+            IR3 = hu[bone + 10];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800000 + 4] = h(IR1);
+            [1f800000 + a] = h(IR2);
+            [1f800000 + 10] = h(IR3);
+
+            VXY0 = (hu[bone + 18] << 10) | hu[bone + 14];
+            VZ0 = w[bone + 1c];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            [1f800000 + 14] = w(IR1);
+            [1f800000 + 18] = w(IR2);
+            [1f800000 + 1c] = w(IR3);
+
+            R11R12 = w[1f800000 + 0];
+            R13R21 = w[1f800000 + 4];
+            R22R23 = w[1f800000 + 8];
+            R31R32 = w[1f800000 + c];
+            R33 = w[1f800000 + 10];
+            TRX = w[1f800000 + 14];
+            TRY = w[1f800000 + 18];
+            TRZ = w[1f800000 + 1c];
+        }
+        else
+        {
+            R11R12 = w[bone + 0];
+            R13R21 = w[bone + 4];
+            R22R23 = w[bone + 8];
+            R31R32 = w[bone + c];
+            R33 = w[bone + 10];
+            TRX = w[bone + 14];
+            TRY = w[bone + 18];
+            TRZ = w[bone + 1c];
+        }
+
+        A0 = parts + i * 20;
+        funcc0b48();
+    }
+}
 ////////////////////////////////
 
 
 ////////////////////////////////
-// funcc0b48
+// funcc0b48()
 
-S7 = A0;
-800C0B54	lui    v1, $aaaa
-A2 = bu[S7 + 0002];
-V1 = V1 | aaab;
+part = A0;
+A2 = bu[part + 0002];
+V1 = aaaaaaab;
 800C0B80	multu  a2, v1
-800C0B84	lui    s0, $1f80
-S0 = S0 | 0008;
-A3 = 0;
-V0 = w[S7 + 0018];
-800C0B94	lui    s2, $800c
-S2 = w[S2 + 7530];
+S0 = 1f800008;
+V0 = w[part + 0018];
+S2 = w[800c7530];
 T0 = V0 + 0004;
 800C0BA0	mfhi   v0
-800C0BA4	lui    a1, $1f80
-A1 = A1 | 0008;
+A1 = 1f800008;
 V0 = V0 >> 01;
 S1 = V0 & 00ff;
-800C0BB4	beq    s1, zero, Lc0c0c [$800c0c0c]
-800C0BB8	nop
 
-loopc0bbc:	; 800C0BBC
-VXY0 = w[T0 + 0000];
-VZ0 = w[T0 + 0004];
-VXY1 = w[T0 + 0008];
-VZ1 = w[T0 + 000c];
-VXY2 = w[T0 + 0010];
-VZ2 = w[T0 + 0014];
-800C0BD4	nop
-800C0BD8	nop
-gte_RTPT(); // Perspective transform on 3 points
-T0 = T0 + 0018;
-A3 = A3 + 0001;
-[A1 + 0000] = w(SXY0);
-[A1 + 0008] = w(SXY1);
-[A1 + 0010] = w(SXY2);
-[A1 + 0004] = w(SZ1);
-[A1 + 000c] = w(SZ2);
-[A1 + 0014] = w(SZ3);
-V0 = A3 < S1;
-800C0C04	bne    v0, zero, loopc0bbc [$800c0bbc]
-A1 = A1 + 0018;
+for( int i = 0; i < S1; ++i )
+{
+    VXY0 = w[T0 + 0];
+    VZ0 = w[T0 + 4];
+    VXY1 = w[T0 + 8];
+    VZ1 = w[T0 + c];
+    VXY2 = w[T0 + 10];
+    VZ2 = w[T0 + 14];
+    gte_RTPT(); // Perspective transform on 3 points
+    [A1 + 0] = w(SXY0);
+    [A1 + 8] = w(SXY1);
+    [A1 + 10] = w(SXY2);
+    [A1 + 4] = w(SZ1);
+    [A1 + c] = w(SZ2);
+    [A1 + 14] = w(SZ3);
 
-Lc0c0c:	; 800C0C0C
+    T0 = T0 + 18;
+    A1 = A1 + 18;
+}
+
 V1 = S1 << 01;
 A3 = V1 + S1;
 V0 = A3 < A2;
@@ -639,30 +537,31 @@ V0 = A3 < A2;
 V0 = A3 << 03;
 
 loopc0c20:	; 800C0C20
-VXY0 = w[T0 + 0000];
-VZ0 = w[T0 + 0004];
-800C0C28	nop
-800C0C2C	nop
-gte_RTPS(); // Perspective transform
-T0 = T0 + 0008;
-A3 = A3 + 0001;
-[A1 + 0000] = w(SXY2);
-[A1 + 0004] = w(SZ3);
-V0 = A3 < A2;
+    VXY0 = w[T0 + 0000];
+    VZ0 = w[T0 + 0004];
+    800C0C28	nop
+    800C0C2C	nop
+    gte_RTPS(); // Perspective transform
+    T0 = T0 + 0008;
+    A3 = A3 + 0001;
+    [A1 + 0000] = w(SXY2);
+    [A1 + 0004] = w(SZ3);
+    A1 = A1 + 0008;
+    V0 = A3 < A2;
 800C0C48	bne    v0, zero, loopc0c20 [$800c0c20]
-A1 = A1 + 0008;
+
 
 Lc0c50:	; 800C0C50
 V0 = bu[800c752c];
-A2 = w[S7 + 001c];
+A2 = w[part + 001c];
 800C0C5C	beq    v0, zero, Lc0c70 [$800c0c70]
 A3 = 0;
-V0 = hu[S7 + 0016];
+V0 = hu[part + 0016];
 800C0C68	nop
 A2 = A2 + V0;
 
 Lc0c70:	; 800C0C70
-FP = w[S7 + 0004];
+FP = w[part + 0004];
 800C0C74	lui    s6, $ff00
 800C0C78	lui    s3, $00ff
 S3 = S3 | ffff;
@@ -672,73 +571,74 @@ V0 = FP & ff00;
 T8 = A2 + 002c;
 
 loopc0c90:	; 800C0C90
-V1 = w[T0 + 0000];
-800C0C94	nop
-V0 = V1 & 00ff;
-V0 = V0 << 03;
-T9 = S0 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 05;
-T3 = S0 + V0;
-V0 = V1 >> 0d;
-V0 = V0 & 07f8;
-T2 = S0 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 03;
-T1 = S0 + V1;
-V0 = w[T9 + 0000];
-V1 = w[T3 + 0000];
-A0 = w[T2 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-A3 = A3 + 0001;
-T0 = T0 + 0018;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + ffdc] = w(V0);
-[T8 + ffe8] = w(V1);
-[T8 + fff4] = w(A0);
-T6 = S4 & S6;
-T8 = T8 + 0034;
-V0 = MAC0;
-800C0D08	nop
-800C0D0C	bgtz   v0, Lc0d1c [$800c0d1c]
-A1 = w[T1 + 0000];
-800C0D14	j      Lc0d78 [$800c0d78]
-[A2 + 0000] = w(T6);
+    V1 = w[T0 + 0000];
+    800C0C94	nop
+    V0 = V1 & 00ff;
+    V0 = V0 << 03;
+    T9 = S0 + V0;
+    V0 = V1 & ff00;
+    V0 = V0 >> 05;
+    T3 = S0 + V0;
+    V0 = V1 >> 0d;
+    V0 = V0 & 07f8;
+    T2 = S0 + V0;
+    V1 = V1 >> 18;
+    V1 = V1 << 03;
+    T1 = S0 + V1;
+    V0 = w[T9 + 0000];
+    V1 = w[T3 + 0000];
+    A0 = w[T2 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    A3 = A3 + 0001;
+    T0 = T0 + 0018;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + ffdc] = w(V0);
+    [T8 + ffe8] = w(V1);
+    [T8 + fff4] = w(A0);
+    T6 = S4 & S6;
+    T8 = T8 + 0034;
+    V0 = MAC0;
+    800C0D08	nop
+    800C0D0C	bgtz   v0, Lc0d1c [$800c0d1c]
+    A1 = w[T1 + 0000];
+    800C0D14	j      Lc0d78 [$800c0d78]
+    [A2 + 0000] = w(T6);
 
-Lc0d1c:	; 800C0D1C
-V1 = w[T9 + 0004];
-[T8 + ffcc] = w(A1);
-S5 = w[T3 + 0004];
-V0 = w[T2 + 0004];
-A0 = w[T1 + 0004];
-V1 = V1 + S5;
-V1 = V1 + V0;
-V0 = V1 + A0;
-800C0D3C	bgez   v0, Lc0d48 [$800c0d48]
-800C0D40	nop
-V0 = V0 + 000f;
+    Lc0d1c:	; 800C0D1C
+    V1 = w[T9 + 0004];
+    [T8 + ffcc] = w(A1);
+    S5 = w[T3 + 0004];
+    V0 = w[T2 + 0004];
+    A0 = w[T1 + 0004];
+    V1 = V1 + S5;
+    V1 = V1 + V0;
+    V0 = V1 + A0;
+    800C0D3C	bgez   v0, Lc0d48 [$800c0d48]
+    800C0D40	nop
+    V0 = V0 + 000f;
 
-Lc0d48:	; 800C0D48
-V0 = V0 >> 04;
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800C0D58	nop
-V0 = T5 & S3;
-V1 = T6 | V0;
-[A2 + 0000] = w(V1);
-A0 = A2 & S3;
-V1 = T5 & S6;
-V1 = V1 | A0;
-[T4 + 0000] = w(V1);
+    Lc0d48:	; 800C0D48
+    V0 = V0 >> 04;
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    T5 = w[T4 + 0000];
+    800C0D58	nop
+    V0 = T5 & S3;
+    V1 = T6 | V0;
+    [A2 + 0000] = w(V1);
+    A0 = A2 & S3;
+    V1 = T5 & S6;
+    V1 = V1 | A0;
+    [T4 + 0000] = w(V1);
 
-Lc0d78:	; 800C0D78
-V0 = A3 < S1;
+    Lc0d78:	; 800C0D78
+    A2 = A2 + 0034;
+    V0 = A3 < S1;
 800C0D7C	bne    v0, zero, loopc0c90 [$800c0c90]
-A2 = A2 + 0034;
+
 V0 = FP & ff00;
 
 Lc0d88:	; 800C0D88
@@ -749,66 +649,66 @@ T8 = A2 + 0020;
 T6 = w[T0 + 0000];
 
 loopc0d9c:	; 800C0D9C
-800C0D9C	nop
-V0 = T6 & 00ff;
-V0 = V0 << 03;
-T3 = S0 + V0;
-V0 = T6 & ff00;
-V0 = V0 >> 05;
-T2 = S0 + V0;
-V1 = T6 >> 0d;
-V1 = V1 & 07f8;
-A1 = S0 + V1;
-V0 = w[T3 + 0000];
-V1 = w[T2 + 0000];
-A0 = w[A1 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-A3 = A3 + 0001;
-T0 = T0 + 0014;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + ffe8] = w(V0);
-[T8 + fff4] = w(V1);
-[T8 + 0000] = w(A0);
-T8 = T8 + 0028;
-V0 = MAC0;
-800C0E00	nop
-800C0E04	bgtz   v0, Lc0e1c [$800c0e1c]
-800C0E08	nop
-V0 = S4 & S6;
-[A2 + 0000] = w(V0);
-800C0E14	j      Lc0e70 [$800c0e70]
-T6 = w[T0 + 0000];
+    800C0D9C	nop
+    V0 = T6 & 00ff;
+    V0 = V0 << 03;
+    T3 = S0 + V0;
+    V0 = T6 & ff00;
+    V0 = V0 >> 05;
+    T2 = S0 + V0;
+    V1 = T6 >> 0d;
+    V1 = V1 & 07f8;
+    A1 = S0 + V1;
+    V0 = w[T3 + 0000];
+    V1 = w[T2 + 0000];
+    A0 = w[A1 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    A3 = A3 + 0001;
+    T0 = T0 + 0014;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + ffe8] = w(V0);
+    [T8 + fff4] = w(V1);
+    [T8 + 0000] = w(A0);
+    T8 = T8 + 0028;
+    V0 = MAC0;
+    800C0E00	nop
+    800C0E04	bgtz   v0, Lc0e1c [$800c0e1c]
+    800C0E08	nop
+    V0 = S4 & S6;
+    [A2 + 0000] = w(V0);
+    800C0E14	j      Lc0e70 [$800c0e70]
+    T6 = w[T0 + 0000];
 
-Lc0e1c:	; 800C0E1C
-SZ1 = w[T3 + 0004];
-SZ2 = w[T2 + 0004];
-SZ3 = w[A1 + 0004];
-800C0E28	nop
-800C0E2C	nop
-gte_AVSZ3(); // Average of three Z values
-T6 = w[T0 + 0000];
-V1 = S4 & S6;
-S5 = A2 & S3;
-V0 = OTZ;
-800C0E44	nop
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800C0E54	nop
-V0 = T5 & S3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = T5 & S6;
-V0 = V0 | S5;
-[T4 + 0000] = w(V0);
+    Lc0e1c:	; 800C0E1C
+    SZ1 = w[T3 + 0004];
+    SZ2 = w[T2 + 0004];
+    SZ3 = w[A1 + 0004];
+    800C0E28	nop
+    800C0E2C	nop
+    gte_AVSZ3(); // Average of three Z values
+    T6 = w[T0 + 0000];
+    V1 = S4 & S6;
+    S5 = A2 & S3;
+    V0 = OTZ;
+    800C0E44	nop
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    T5 = w[T4 + 0000];
+    800C0E54	nop
+    V0 = T5 & S3;
+    V1 = V1 | V0;
+    [A2 + 0000] = w(V1);
+    V0 = T5 & S6;
+    V0 = V0 | S5;
+    [T4 + 0000] = w(V0);
 
-Lc0e70:	; 800C0E70
-V0 = A3 < S1;
+    Lc0e70:	; 800C0E70
+    A2 = A2 + 0028;
+    V0 = A3 < S1;
 800C0E74	bne    v0, zero, loopc0d9c [$800c0d9c]
-A2 = A2 + 0028;
 
 Lc0e7c:	; 800C0E7C
 V0 = FP >> 10;
@@ -818,73 +718,73 @@ A3 = 0;
 T8 = A2 + 0020;
 
 loopc0e90:	; 800C0E90
-V1 = w[T0 + 0000];
-800C0E94	nop
-V0 = V1 & 00ff;
-V0 = V0 << 03;
-T9 = S0 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 05;
-T3 = S0 + V0;
-V0 = V1 >> 0d;
-V0 = V0 & 07f8;
-T2 = S0 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 03;
-T1 = S0 + V1;
-V0 = w[T9 + 0000];
-V1 = w[T3 + 0000];
-A0 = w[T2 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-A3 = A3 + 0001;
-T0 = T0 + 000c;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + ffe8] = w(V0);
-[T8 + fff0] = w(V1);
-[T8 + fff8] = w(A0);
-T6 = S4 & S6;
-T8 = T8 + 0028;
-V0 = MAC0;
-800C0F08	nop
-800C0F0C	bgtz   v0, Lc0f1c [$800c0f1c]
-A1 = w[T1 + 0000];
-800C0F14	j      Lc0f78 [$800c0f78]
-[A2 + 0000] = w(T6);
+    V1 = w[T0 + 0000];
+    800C0E94	nop
+    V0 = V1 & 00ff;
+    V0 = V0 << 03;
+    T9 = S0 + V0;
+    V0 = V1 & ff00;
+    V0 = V0 >> 05;
+    T3 = S0 + V0;
+    V0 = V1 >> 0d;
+    V0 = V0 & 07f8;
+    T2 = S0 + V0;
+    V1 = V1 >> 18;
+    V1 = V1 << 03;
+    T1 = S0 + V1;
+    V0 = w[T9 + 0000];
+    V1 = w[T3 + 0000];
+    A0 = w[T2 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    A3 = A3 + 0001;
+    T0 = T0 + 000c;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + ffe8] = w(V0);
+    [T8 + fff0] = w(V1);
+    [T8 + fff8] = w(A0);
+    T6 = S4 & S6;
+    T8 = T8 + 0028;
+    V0 = MAC0;
+    800C0F08	nop
+    800C0F0C	bgtz   v0, Lc0f1c [$800c0f1c]
+    A1 = w[T1 + 0000];
+    800C0F14	j      Lc0f78 [$800c0f78]
+    [A2 + 0000] = w(T6);
 
-Lc0f1c:	; 800C0F1C
-V1 = w[T9 + 0004];
-[T8 + ffd8] = w(A1);
-S5 = w[T3 + 0004];
-V0 = w[T2 + 0004];
-A0 = w[T1 + 0004];
-V1 = V1 + S5;
-V1 = V1 + V0;
-V0 = V1 + A0;
-800C0F3C	bgez   v0, Lc0f48 [$800c0f48]
-800C0F40	nop
-V0 = V0 + 000f;
+    Lc0f1c:	; 800C0F1C
+    V1 = w[T9 + 0004];
+    [T8 + ffd8] = w(A1);
+    S5 = w[T3 + 0004];
+    V0 = w[T2 + 0004];
+    A0 = w[T1 + 0004];
+    V1 = V1 + S5;
+    V1 = V1 + V0;
+    V0 = V1 + A0;
+    800C0F3C	bgez   v0, Lc0f48 [$800c0f48]
+    800C0F40	nop
+    V0 = V0 + 000f;
 
-Lc0f48:	; 800C0F48
-V0 = V0 >> 04;
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800C0F58	nop
-V0 = T5 & S3;
-V1 = T6 | V0;
-[A2 + 0000] = w(V1);
-A0 = A2 & S3;
-V1 = T5 & S6;
-V1 = V1 | A0;
-[T4 + 0000] = w(V1);
+    Lc0f48:	; 800C0F48
+    V0 = V0 >> 04;
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    T5 = w[T4 + 0000];
+    800C0F58	nop
+    V0 = T5 & S3;
+    V1 = T6 | V0;
+    [A2 + 0000] = w(V1);
+    A0 = A2 & S3;
+    V1 = T5 & S6;
+    V1 = V1 | A0;
+    [T4 + 0000] = w(V1);
 
-Lc0f78:	; 800C0F78
-V0 = A3 < S1;
+    Lc0f78:	; 800C0F78
+    A2 = A2 + 0028;
+    V0 = A3 < S1;
 800C0F7C	bne    v0, zero, loopc0e90 [$800c0e90]
-A2 = A2 + 0028;
 
 Lc0f84:	; 800C0F84
 S1 = FP >> 18;
@@ -894,67 +794,67 @@ T8 = A2 + 0018;
 T6 = w[T0 + 0000];
 
 loopc0f98:	; 800C0F98
-800C0F98	nop
-V0 = T6 & 00ff;
-V0 = V0 << 03;
-T3 = S0 + V0;
-V0 = T6 & ff00;
-V0 = V0 >> 05;
-T2 = S0 + V0;
-V1 = T6 >> 0d;
-V1 = V1 & 07f8;
-A1 = S0 + V1;
-V0 = w[T3 + 0000];
-V1 = w[T2 + 0000];
-A0 = w[A1 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-A3 = A3 + 0001;
-T0 = T0 + 000c;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + fff0] = w(V0);
-[T8 + fff8] = w(V1);
-[T8 + 0000] = w(A0);
-T8 = T8 + 0020;
-V0 = MAC0;
-800C0FFC	nop
-800C1000	bgtz   v0, Lc1018 [$800c1018]
-800C1004	nop
-V0 = S4 & S6;
-[A2 + 0000] = w(V0);
-800C1010	j      Lc1064 [$800c1064]
-T6 = w[T0 + 0000];
+    800C0F98	nop
+    V0 = T6 & 00ff;
+    V0 = V0 << 03;
+    T3 = S0 + V0;
+    V0 = T6 & ff00;
+    V0 = V0 >> 05;
+    T2 = S0 + V0;
+    V1 = T6 >> 0d;
+    V1 = V1 & 07f8;
+    A1 = S0 + V1;
+    V0 = w[T3 + 0000];
+    V1 = w[T2 + 0000];
+    A0 = w[A1 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    A3 = A3 + 0001;
+    T0 = T0 + 000c;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + fff0] = w(V0);
+    [T8 + fff8] = w(V1);
+    [T8 + 0000] = w(A0);
+    T8 = T8 + 0020;
+    V0 = MAC0;
+    800C0FFC	nop
+    800C1000	bgtz   v0, Lc1018 [$800c1018]
+    800C1004	nop
+    V0 = S4 & S6;
+    [A2 + 0000] = w(V0);
+    800C1010	j      Lc1064 [$800c1064]
+    T6 = w[T0 + 0000];
 
-Lc1018:	; 800C1018
-SZ1 = w[T3 + 0004];
-SZ2 = w[T2 + 0004];
-SZ3 = w[A1 + 0004];
-V1 = S4 & S6;
-S5 = A2 & S3;
-gte_AVSZ3(); // Average of three Z values
-T6 = w[T0 + 0000];
-V0 = OTZ;
-800C1038	nop
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800C1048	nop
-V0 = T5 & S3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = T5 & S6;
-V0 = V0 | S5;
-[T4 + 0000] = w(V0);
+    Lc1018:	; 800C1018
+    SZ1 = w[T3 + 0004];
+    SZ2 = w[T2 + 0004];
+    SZ3 = w[A1 + 0004];
+    V1 = S4 & S6;
+    S5 = A2 & S3;
+    gte_AVSZ3(); // Average of three Z values
+    T6 = w[T0 + 0000];
+    V0 = OTZ;
+    800C1038	nop
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    T5 = w[T4 + 0000];
+    800C1048	nop
+    V0 = T5 & S3;
+    V1 = V1 | V0;
+    [A2 + 0000] = w(V1);
+    V0 = T5 & S6;
+    V0 = V0 | S5;
+    [T4 + 0000] = w(V0);
 
-Lc1064:	; 800C1064
-V0 = A3 < S1;
+    Lc1064:	; 800C1064
+    A2 = A2 + 0020;
+    V0 = A3 < S1;
 800C1068	bne    v0, zero, loopc0f98 [$800c0f98]
-A2 = A2 + 0020;
 
 Lc1070:	; 800C1070
-FP = w[S7 + 0008];
+FP = w[part + 0008];
 800C1074	nop
 S1 = FP & 00ff;
 800C107C	beq    s1, zero, Lc1164 [$800c1164]
@@ -963,64 +863,64 @@ T8 = A2 + 0010;
 T6 = w[T0 + 0000];
 
 loopc108c:	; 800C108C
-800C108C	nop
-V0 = T6 & 00ff;
-V0 = V0 << 03;
-T3 = S0 + V0;
-V0 = T6 & ff00;
-V0 = V0 >> 05;
-T2 = S0 + V0;
-V1 = T6 >> 0d;
-V1 = V1 & 07f8;
-A1 = S0 + V1;
-V0 = w[T3 + 0000];
-V1 = w[T2 + 0000];
-A0 = w[A1 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-A3 = A3 + 0001;
-T0 = T0 + 0008;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + fff8] = w(V0);
-[T8 + fffc] = w(V1);
-[T8 + 0000] = w(A0);
-T8 = T8 + 0014;
-V0 = MAC0;
-800C10F0	nop
-800C10F4	bgtz   v0, Lc110c [$800c110c]
-800C10F8	nop
-V0 = S4 & S6;
-[A2 + 0000] = w(V0);
-800C1104	j      Lc1158 [$800c1158]
-T6 = w[T0 + 0000];
+    800C108C	nop
+    V0 = T6 & 00ff;
+    V0 = V0 << 03;
+    T3 = S0 + V0;
+    V0 = T6 & ff00;
+    V0 = V0 >> 05;
+    T2 = S0 + V0;
+    V1 = T6 >> 0d;
+    V1 = V1 & 07f8;
+    A1 = S0 + V1;
+    V0 = w[T3 + 0000];
+    V1 = w[T2 + 0000];
+    A0 = w[A1 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    A3 = A3 + 0001;
+    T0 = T0 + 0008;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + fff8] = w(V0);
+    [T8 + fffc] = w(V1);
+    [T8 + 0000] = w(A0);
+    T8 = T8 + 0014;
+    V0 = MAC0;
+    800C10F0	nop
+    800C10F4	bgtz   v0, Lc110c [$800c110c]
+    800C10F8	nop
+    V0 = S4 & S6;
+    [A2 + 0000] = w(V0);
+    800C1104	j      Lc1158 [$800c1158]
+    T6 = w[T0 + 0000];
 
-Lc110c:	; 800C110C
-SZ1 = w[T3 + 0004];
-SZ2 = w[T2 + 0004];
-SZ3 = w[A1 + 0004];
-V1 = S4 & S6;
-S5 = A2 & S3;
-gte_AVSZ3(); // Average of three Z values
-T6 = w[T0 + 0000];
-V0 = OTZ;
-800C112C	nop
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800C113C	nop
-V0 = T5 & S3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = T5 & S6;
-V0 = V0 | S5;
-[T4 + 0000] = w(V0);
+    Lc110c:	; 800C110C
+    SZ1 = w[T3 + 0004];
+    SZ2 = w[T2 + 0004];
+    SZ3 = w[A1 + 0004];
+    V1 = S4 & S6;
+    S5 = A2 & S3;
+    gte_AVSZ3(); // Average of three Z values
+    T6 = w[T0 + 0000];
+    V0 = OTZ;
+    800C112C	nop
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    T5 = w[T4 + 0000];
+    800C113C	nop
+    V0 = T5 & S3;
+    V1 = V1 | V0;
+    [A2 + 0000] = w(V1);
+    V0 = T5 & S6;
+    V0 = V0 | S5;
+    [T4 + 0000] = w(V0);
 
-Lc1158:	; 800C1158
-V0 = A3 < S1;
+    Lc1158:	; 800C1158
+    A2 = A2 + 0014;
+    V0 = A3 < S1;
 800C115C	bne    v0, zero, loopc108c [$800c108c]
-A2 = A2 + 0014;
 
 Lc1164:	; 800C1164
 V0 = FP & ff00;
@@ -1030,73 +930,73 @@ A3 = 0;
 T8 = A2 + 0014;
 
 loopc1178:	; 800C1178
-V1 = w[T0 + 0000];
-800C117C	nop
-V0 = V1 & 00ff;
-V0 = V0 << 03;
-T9 = S0 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 05;
-T3 = S0 + V0;
-V0 = V1 >> 0d;
-V0 = V0 & 07f8;
-T2 = S0 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 03;
-T1 = S0 + V1;
-V0 = w[T9 + 0000];
-V1 = w[T3 + 0000];
-A0 = w[T2 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-T0 = T0 + 0008;
-A3 = A3 + 0001;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + fff4] = w(V0);
-[T8 + fff8] = w(V1);
-[T8 + fffc] = w(A0);
-T6 = S4 & S6;
-T8 = T8 + 0018;
-V0 = MAC0;
-800C11F0	nop
-800C11F4	bgtz   v0, Lc1204 [$800c1204]
-A1 = w[T1 + 0000];
-800C11FC	j      Lc1260 [$800c1260]
-[A2 + 0000] = w(T6);
+    V1 = w[T0 + 0000];
+    800C117C	nop
+    V0 = V1 & 00ff;
+    V0 = V0 << 03;
+    T9 = S0 + V0;
+    V0 = V1 & ff00;
+    V0 = V0 >> 05;
+    T3 = S0 + V0;
+    V0 = V1 >> 0d;
+    V0 = V0 & 07f8;
+    T2 = S0 + V0;
+    V1 = V1 >> 18;
+    V1 = V1 << 03;
+    T1 = S0 + V1;
+    V0 = w[T9 + 0000];
+    V1 = w[T3 + 0000];
+    A0 = w[T2 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    T0 = T0 + 0008;
+    A3 = A3 + 0001;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + fff4] = w(V0);
+    [T8 + fff8] = w(V1);
+    [T8 + fffc] = w(A0);
+    T6 = S4 & S6;
+    T8 = T8 + 0018;
+    V0 = MAC0;
+    800C11F0	nop
+    800C11F4	bgtz   v0, Lc1204 [$800c1204]
+    A1 = w[T1 + 0000];
+    800C11FC	j      Lc1260 [$800c1260]
+    [A2 + 0000] = w(T6);
 
-Lc1204:	; 800C1204
-V1 = w[T9 + 0004];
-[T8 + ffe8] = w(A1);
-S5 = w[T3 + 0004];
-V0 = w[T2 + 0004];
-A0 = w[T1 + 0004];
-V1 = V1 + S5;
-V1 = V1 + V0;
-V0 = V1 + A0;
-800C1224	bgez   v0, Lc1230 [$800c1230]
-800C1228	nop
-V0 = V0 + 000f;
+    Lc1204:	; 800C1204
+    V1 = w[T9 + 0004];
+    [T8 + ffe8] = w(A1);
+    S5 = w[T3 + 0004];
+    V0 = w[T2 + 0004];
+    A0 = w[T1 + 0004];
+    V1 = V1 + S5;
+    V1 = V1 + V0;
+    V0 = V1 + A0;
+    800C1224	bgez   v0, Lc1230 [$800c1230]
+    800C1228	nop
+    V0 = V0 + 000f;
 
-Lc1230:	; 800C1230
-V0 = V0 >> 04;
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800C1240	nop
-V0 = T5 & S3;
-V1 = T6 | V0;
-[A2 + 0000] = w(V1);
-A0 = A2 & S3;
-V1 = T5 & S6;
-V1 = V1 | A0;
-[T4 + 0000] = w(V1);
+    Lc1230:	; 800C1230
+    V0 = V0 >> 04;
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    T5 = w[T4 + 0000];
+    800C1240	nop
+    V0 = T5 & S3;
+    V1 = T6 | V0;
+    [A2 + 0000] = w(V1);
+    A0 = A2 & S3;
+    V1 = T5 & S6;
+    V1 = V1 | A0;
+    [T4 + 0000] = w(V1);
 
-Lc1260:	; 800C1260
-V0 = A3 < S1;
+    Lc1260:	; 800C1260
+    A2 = A2 + 0018;
+    V0 = A3 < S1;
 800C1264	bne    v0, zero, loopc1178 [$800c1178]
-A2 = A2 + 0018;
 
 Lc126c:	; 800C126C
 V0 = FP >> 10;
@@ -1107,64 +1007,64 @@ T8 = A2 + 0018;
 T6 = w[T0 + 0000];
 
 loopc1284:	; 800C1284
-800C1284	nop
-V0 = T6 & 00ff;
-V0 = V0 << 03;
-T3 = S0 + V0;
-V0 = T6 & ff00;
-V0 = V0 >> 05;
-T2 = S0 + V0;
-V1 = T6 >> 0d;
-V1 = V1 & 07f8;
-A1 = S0 + V1;
-V0 = w[T3 + 0000];
-V1 = w[T2 + 0000];
-A0 = w[A1 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-A3 = A3 + 0001;
-T0 = T0 + 0010;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + fff0] = w(V0);
-[T8 + fff8] = w(V1);
-[T8 + 0000] = w(A0);
-T8 = T8 + 001c;
-V0 = MAC0;
-800C12E8	nop
-800C12EC	bgtz   v0, Lc1304 [$800c1304]
-800C12F0	nop
-V0 = S4 & S6;
-[A2 + 0000] = w(V0);
-800C12FC	j      Lc1350 [$800c1350]
-T6 = w[T0 + 0000];
+    800C1284	nop
+    V0 = T6 & 00ff;
+    V0 = V0 << 03;
+    T3 = S0 + V0;
+    V0 = T6 & ff00;
+    V0 = V0 >> 05;
+    T2 = S0 + V0;
+    V1 = T6 >> 0d;
+    V1 = V1 & 07f8;
+    A1 = S0 + V1;
+    V0 = w[T3 + 0000];
+    V1 = w[T2 + 0000];
+    A0 = w[A1 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    A3 = A3 + 0001;
+    T0 = T0 + 0010;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + fff0] = w(V0);
+    [T8 + fff8] = w(V1);
+    [T8 + 0000] = w(A0);
+    T8 = T8 + 001c;
+    V0 = MAC0;
+    800C12E8	nop
+    800C12EC	bgtz   v0, Lc1304 [$800c1304]
+    800C12F0	nop
+    V0 = S4 & S6;
+    [A2 + 0000] = w(V0);
+    800C12FC	j      Lc1350 [$800c1350]
+    T6 = w[T0 + 0000];
 
-Lc1304:	; 800C1304
-SZ1 = w[T3 + 0004];
-SZ2 = w[T2 + 0004];
-SZ3 = w[A1 + 0004];
-V1 = S4 & S6;
-S5 = A2 & S3;
-gte_AVSZ3(); // Average of three Z values
-T6 = w[T0 + 0000];
-V0 = OTZ;
-800C1324	nop
-V0 = V0 << 02;
-T4 = V0 + S2;
-A0 = w[T4 + 0000];
-800C1334	nop
-V0 = A0 & S3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = A0 & S6;
-V0 = V0 | S5;
-[T4 + 0000] = w(V0);
+    Lc1304:	; 800C1304
+    SZ1 = w[T3 + 0004];
+    SZ2 = w[T2 + 0004];
+    SZ3 = w[A1 + 0004];
+    V1 = S4 & S6;
+    S5 = A2 & S3;
+    gte_AVSZ3(); // Average of three Z values
+    T6 = w[T0 + 0000];
+    V0 = OTZ;
+    800C1324	nop
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    A0 = w[T4 + 0000];
+    800C1334	nop
+    V0 = A0 & S3;
+    V1 = V1 | V0;
+    [A2 + 0000] = w(V1);
+    V0 = A0 & S6;
+    V0 = V0 | S5;
+    [T4 + 0000] = w(V0);
 
-Lc1350:	; 800C1350
-V0 = A3 < S1;
+    Lc1350:	; 800C1350
+    A2 = A2 + 001c;
+    V0 = A3 < S1;
 800C1354	bne    v0, zero, loopc1284 [$800c1284]
-A2 = A2 + 001c;
 
 Lc135c:	; 800C135C
 S1 = FP >> 18;
@@ -1173,73 +1073,73 @@ A3 = 0;
 T8 = A2 + 0020;
 
 loopc136c:	; 800C136C
-V1 = w[T0 + 0000];
-800C1370	nop
-V0 = V1 & 00ff;
-V0 = V0 << 03;
-T9 = S0 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 05;
-T3 = S0 + V0;
-V0 = V1 >> 0d;
-V0 = V0 & 07f8;
-T2 = S0 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 03;
-T1 = S0 + V1;
-V0 = w[T9 + 0000];
-V1 = w[T3 + 0000];
-A0 = w[T2 + 0000];
-SXY0 = V0;
-SXY2P = A0;
-SXY1 = V1;
-A3 = A3 + 0001;
-T0 = T0 + 0014;
-gte_NCLIP(); // Normal clipping
-S4 = w[A2 + 0000];
-[T8 + ffe8] = w(V0);
-[T8 + fff0] = w(V1);
-[T8 + fff8] = w(A0);
-T6 = S4 & S6;
-T8 = T8 + 0024;
-V0 = MAC0;
-800C13E4	nop
-800C13E8	bgtz   v0, Lc13f8 [$800c13f8]
-A1 = w[T1 + 0000];
-800C13F0	j      Lc1454 [$800c1454]
-[A2 + 0000] = w(T6);
+    V1 = w[T0 + 0000];
+    800C1370	nop
+    V0 = V1 & 00ff;
+    V0 = V0 << 03;
+    T9 = S0 + V0;
+    V0 = V1 & ff00;
+    V0 = V0 >> 05;
+    T3 = S0 + V0;
+    V0 = V1 >> 0d;
+    V0 = V0 & 07f8;
+    T2 = S0 + V0;
+    V1 = V1 >> 18;
+    V1 = V1 << 03;
+    T1 = S0 + V1;
+    V0 = w[T9 + 0000];
+    V1 = w[T3 + 0000];
+    A0 = w[T2 + 0000];
+    SXY0 = V0;
+    SXY2P = A0;
+    SXY1 = V1;
+    A3 = A3 + 0001;
+    T0 = T0 + 0014;
+    gte_NCLIP(); // Normal clipping
+    S4 = w[A2 + 0000];
+    [T8 + ffe8] = w(V0);
+    [T8 + fff0] = w(V1);
+    [T8 + fff8] = w(A0);
+    T6 = S4 & S6;
+    T8 = T8 + 0024;
+    V0 = MAC0;
+    800C13E4	nop
+    800C13E8	bgtz   v0, Lc13f8 [$800c13f8]
+    A1 = w[T1 + 0000];
+    800C13F0	j      Lc1454 [$800c1454]
+    [A2 + 0000] = w(T6);
 
-Lc13f8:	; 800C13F8
-V1 = w[T9 + 0004];
-[T8 + ffdc] = w(A1);
-S5 = w[T3 + 0004];
-V0 = w[T2 + 0004];
-A0 = w[T1 + 0004];
-V1 = V1 + S5;
-V1 = V1 + V0;
-V0 = V1 + A0;
-800C1418	bgez   v0, Lc1424 [$800c1424]
-800C141C	nop
-V0 = V0 + 000f;
+    Lc13f8:	; 800C13F8
+    V1 = w[T9 + 0004];
+    [T8 + ffdc] = w(A1);
+    S5 = w[T3 + 0004];
+    V0 = w[T2 + 0004];
+    A0 = w[T1 + 0004];
+    V1 = V1 + S5;
+    V1 = V1 + V0;
+    V0 = V1 + A0;
+    800C1418	bgez   v0, Lc1424 [$800c1424]
+    800C141C	nop
+    V0 = V0 + 000f;
 
-Lc1424:	; 800C1424
-V0 = V0 >> 04;
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800C1434	nop
-V0 = T5 & S3;
-V1 = T6 | V0;
-[A2 + 0000] = w(V1);
-A0 = A2 & S3;
-V1 = T5 & S6;
-V1 = V1 | A0;
-[T4 + 0000] = w(V1);
+    Lc1424:	; 800C1424
+    V0 = V0 >> 04;
+    V0 = V0 << 02;
+    T4 = V0 + S2;
+    T5 = w[T4 + 0000];
+    800C1434	nop
+    V0 = T5 & S3;
+    V1 = T6 | V0;
+    [A2 + 0000] = w(V1);
+    A0 = A2 & S3;
+    V1 = T5 & S6;
+    V1 = V1 | A0;
+    [T4 + 0000] = w(V1);
 
-Lc1454:	; 800C1454
-V0 = A3 < S1;
+    Lc1454:	; 800C1454
+    A2 = A2 + 0024;
+    V0 = A3 < S1;
 800C1458	bne    v0, zero, loopc136c [$800c136c]
-A2 = A2 + 0024;
 
 Lc1460:	; 800C1460
 ////////////////////////////////

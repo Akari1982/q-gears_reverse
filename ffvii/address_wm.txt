@@ -276,6 +276,7 @@
                     6 - load underwater after submerge.
                     7 - load planet after float.
                     9 - finish map and load battle.
+800e5670 [][][][] looks like some initial sequence timer. Play sound after this is 0.
 800e5674 [][][][] store 0 here at start of map in opcode 0x34b.
 
 800e567c [][][][] pointer to loaded texture prior to start world mat then use this data.
@@ -283,6 +284,10 @@
 
 800e5698 looks like main camera rotation matrix.
 800e56b8 looks like main camera translation vector.
+
+800e56cc [][][][] some X offset speed.
+800e56d0 [][][][] some Y offset speed.
+800e56d4 [][][][] some Z offset speed.
 
 800e56f4
 
@@ -634,6 +639,8 @@
 
 80116508 [][]     some length. Used to render skybox?
 8011650c [][][][] world speed (related with movement, camera rotation, loading and a lot of other things).
+
+80116510 [][][][] some world sound.
 
 8013a7cc load textures WM0.TXZ here.
 

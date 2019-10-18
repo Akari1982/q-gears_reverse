@@ -2375,7 +2375,7 @@ return w[800e5658];
 
 model = A0;
 rot_vec = A1;
-res = A2;
+result = A2;
 pc_model = A3;
 
 [SP + 10] = h(1000);
@@ -2402,7 +2402,7 @@ system_gte_rotate_matrix_by_y();
 
 A0 = 800e5698;
 A1 = SP + 10;
-A2 = res;
+A2 = result;
 system_gte_matrixes_multiply_A0_A1_to_A2();
 
 A0 = 800e5698;
@@ -2429,11 +2429,11 @@ else
     [SP + 38] = w(w[800e56d4] / 4);
 }
 
-A0 = res;
+A0 = result;
 A1 = SP + 30;
 system_gte_copy_matrix_translation_part();
 
-A0 = res;
+A0 = result;
 system_gte_set_translation_vector();
 
 // copy root offset
@@ -2452,7 +2452,7 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector
 [model + c] = w(0);
 [model + 10] = w(0);
 
-A0 = res;
+A0 = result;
 A1 = SP + 30;
 system_gte_copy_matrix_translation_part();
 ////////////////////////////////

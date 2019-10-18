@@ -7825,25 +7825,18 @@ A1 = rot_vec; // rotation vector
 A2 = SP + 10; // result
 funca36ac();
 
-V1 = 0;
+[model + 1] = b(-1);
 
 if( entity != 0 )
 {
     V1 = hu[entity + 4a] & 1f; // terrain id
 }
-
-[model + 1] = b(-1);
-
-V0 = (060400fa >> V1) & 1;
-
-if( V0 == 0 )
-{
-    if( model_id == 1d ) // ruby weapon
-    {
-        [model + 1] = b(c);
-    }
-}
 else
+{
+    V1 = 0;
+}
+
+if( ( 060400fa >> V1 ) & 1 )
 {
     wm_get_wm_id();
 
@@ -7863,6 +7856,13 @@ else
                 [model + 1] = b(c);
             }
         }
+    }
+}
+else
+{
+    if( model_id == 1d ) // ruby weapon
+    {
+        [model + 1] = b(c);
     }
 }
 
@@ -7969,7 +7969,7 @@ if( V0 >= 2 )
             if( V1 != 1e )
             {
                 A0 = model;
-                800B6218	jal    funcc08a8 [$800c08a8]
+                funcc08a8();
 
                 return;
             }
@@ -8026,7 +8026,7 @@ A1 = S3;
 wm_set_gte_colour_settings();
 
 A0 = model;
-800B6218	jal    funcc08a8 [$800c08a8]
+funcc08a8();
 ////////////////////////////////
 
 
@@ -8112,8 +8112,8 @@ if( w[801159dc] != 0 )
         [8009a000] = h(18);
     }
 
-    [8009a008] = w(4);
     [8009a004] = w(w[801159bc + A0 * 4]);
+    [8009a008] = w(4);
     system_execute_AKAO();
 }
 
