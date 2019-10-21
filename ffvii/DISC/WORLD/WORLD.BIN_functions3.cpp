@@ -498,650 +498,369 @@ for( int i = 0; i < bu[model + 3]; ++i )
 // funcc0b48()
 
 part = A0;
-A2 = bu[part + 0002];
-V1 = aaaaaaab;
-800C0B80	multu  a2, v1
-S0 = 1f800008;
-V0 = w[part + 0018];
-S2 = w[800c7530];
-T0 = V0 + 0004;
-800C0BA0	mfhi   v0
-A1 = 1f800008;
-V0 = V0 >> 01;
-S1 = V0 & 00ff;
 
-for( int i = 0; i < S1; ++i )
+buffer = w[800c7530];
+
+number_of_vertexes = bu[part + 2];
+vertexes = w[part + 18] + 4;
+polygon = vertexes + number_of_vertexes * 8;
+
+// go through all vertexes
+for( int i = 0; i < number_of_vertexes; ++i )
 {
-    VXY0 = w[T0 + 0];
-    VZ0 = w[T0 + 4];
-    VXY1 = w[T0 + 8];
-    VZ1 = w[T0 + c];
-    VXY2 = w[T0 + 10];
-    VZ2 = w[T0 + 14];
-    gte_RTPT(); // Perspective transform on 3 points
-    [A1 + 0] = w(SXY0);
-    [A1 + 8] = w(SXY1);
-    [A1 + 10] = w(SXY2);
-    [A1 + 4] = w(SZ1);
-    [A1 + c] = w(SZ2);
-    [A1 + 14] = w(SZ3);
-
-    T0 = T0 + 18;
-    A1 = A1 + 18;
+    VXY0 = w[vertexes + i * 8 + 0];
+    VZ0 = w[vertexes + i * 8 + 4];
+    gte_RTPS(); // Perspective transform
+    [1f800008 + i * 8 + 0] = w(SXY2);
+    [1f800008 + i * 8 + 4] = w(SZ3);
 }
 
-V1 = S1 << 01;
-A3 = V1 + S1;
-V0 = A3 < A2;
-800C0C18	beq    v0, zero, Lc0c50 [$800c0c50]
-V0 = A3 << 03;
+A2 = w[part + 1c];
 
-loopc0c20:	; 800C0C20
-    VXY0 = w[T0 + 0000];
-    VZ0 = w[T0 + 0004];
-    800C0C28	nop
-    800C0C2C	nop
-    gte_RTPS(); // Perspective transform
-    T0 = T0 + 0008;
-    A3 = A3 + 0001;
-    [A1 + 0000] = w(SXY2);
-    [A1 + 0004] = w(SZ3);
-    A1 = A1 + 0008;
-    V0 = A3 < A2;
-800C0C48	bne    v0, zero, loopc0c20 [$800c0c20]
+if( bu[800c752c] != 0 )
+{
+    A2 = A2 + hu[part + 16];
+}
 
-
-Lc0c50:	; 800C0C50
-V0 = bu[800c752c];
-A2 = w[part + 001c];
-800C0C5C	beq    v0, zero, Lc0c70 [$800c0c70]
-A3 = 0;
-V0 = hu[part + 0016];
-800C0C68	nop
-A2 = A2 + V0;
-
-Lc0c70:	; 800C0C70
-FP = w[part + 0004];
-800C0C74	lui    s6, $ff00
-800C0C78	lui    s3, $00ff
-S3 = S3 | ffff;
-S1 = FP & 00ff;
-800C0C84	beq    s1, zero, Lc0d88 [$800c0d88]
-V0 = FP & ff00;
-T8 = A2 + 002c;
-
-loopc0c90:	; 800C0C90
-    V1 = w[T0 + 0000];
-    800C0C94	nop
+for( int i = 0; i < b[part + 4]; ++i )
+{
+    V1 = w[polygon + 0];
     V0 = V1 & 00ff;
     V0 = V0 << 03;
-    T9 = S0 + V0;
+    T9 = 1f800008 + V0;
     V0 = V1 & ff00;
     V0 = V0 >> 05;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = V1 >> 0d;
     V0 = V0 & 07f8;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = V1 >> 18;
     V1 = V1 << 03;
-    T1 = S0 + V1;
+    T1 = 1f800008 + V1;
     V0 = w[T9 + 0000];
     V1 = w[T3 + 0000];
     A0 = w[T2 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    A3 = A3 + 0001;
-    T0 = T0 + 0018;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + ffdc] = w(V0);
-    [T8 + ffe8] = w(V1);
-    [T8 + fff4] = w(A0);
-    T6 = S4 & S6;
-    T8 = T8 + 0034;
-    V0 = MAC0;
-    800C0D08	nop
-    800C0D0C	bgtz   v0, Lc0d1c [$800c0d1c]
-    A1 = w[T1 + 0000];
-    800C0D14	j      Lc0d78 [$800c0d78]
-    [A2 + 0000] = w(T6);
+    [A2 + 8] = w(V0);
+    [A2 + 14] = w(V1);
+    [A2 + 20] = w(A0);
+    [A2 + 2c] = w(w[T1 + 0]);
 
-    Lc0d1c:	; 800C0D1C
-    V1 = w[T9 + 0004];
-    [T8 + ffcc] = w(A1);
-    S5 = w[T3 + 0004];
-    V0 = w[T2 + 0004];
-    A0 = w[T1 + 0004];
-    V1 = V1 + S5;
-    V1 = V1 + V0;
-    V0 = V1 + A0;
-    800C0D3C	bgez   v0, Lc0d48 [$800c0d48]
-    800C0D40	nop
-    V0 = V0 + 000f;
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        T4 = buffer + ((((w[T9 + 4] + w[T3 + 4] + w[T2 + 4] + w[T1 + 4]) / 4) >> 2) << 2);
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-    Lc0d48:	; 800C0D48
-    V0 = V0 >> 04;
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    T5 = w[T4 + 0000];
-    800C0D58	nop
-    V0 = T5 & S3;
-    V1 = T6 | V0;
-    [A2 + 0000] = w(V1);
-    A0 = A2 & S3;
-    V1 = T5 & S6;
-    V1 = V1 | A0;
-    [T4 + 0000] = w(V1);
+    polygon = polygon + 18;
+    A2 = A2 + 34;
+}
 
-    Lc0d78:	; 800C0D78
-    A2 = A2 + 0034;
-    V0 = A3 < S1;
-800C0D7C	bne    v0, zero, loopc0c90 [$800c0c90]
-
-V0 = FP & ff00;
-
-Lc0d88:	; 800C0D88
-S1 = V0 >> 08;
-800C0D8C	beq    s1, zero, Lc0e7c [$800c0e7c]
-A3 = 0;
-T8 = A2 + 0020;
-T6 = w[T0 + 0000];
-
-loopc0d9c:	; 800C0D9C
-    800C0D9C	nop
+for( int i = 0; i < b[part + 5]; ++i )
+{
+    T6 = w[polygon + 0];
     V0 = T6 & 00ff;
     V0 = V0 << 03;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = T6 & ff00;
     V0 = V0 >> 05;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = T6 >> 0d;
     V1 = V1 & 07f8;
-    A1 = S0 + V1;
+    A1 = 1f800008 + V1;
     V0 = w[T3 + 0000];
     V1 = w[T2 + 0000];
     A0 = w[A1 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    A3 = A3 + 0001;
-    T0 = T0 + 0014;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + ffe8] = w(V0);
-    [T8 + fff4] = w(V1);
-    [T8 + 0000] = w(A0);
-    T8 = T8 + 0028;
-    V0 = MAC0;
-    800C0E00	nop
-    800C0E04	bgtz   v0, Lc0e1c [$800c0e1c]
-    800C0E08	nop
-    V0 = S4 & S6;
-    [A2 + 0000] = w(V0);
-    800C0E14	j      Lc0e70 [$800c0e70]
-    T6 = w[T0 + 0000];
+    [A2 + 8] = w(V0);
+    [A2 + 14] = w(V1);
+    [A2 + 20] = w(A0);
 
-    Lc0e1c:	; 800C0E1C
-    SZ1 = w[T3 + 0004];
-    SZ2 = w[T2 + 0004];
-    SZ3 = w[A1 + 0004];
-    800C0E28	nop
-    800C0E2C	nop
-    gte_AVSZ3(); // Average of three Z values
-    T6 = w[T0 + 0000];
-    V1 = S4 & S6;
-    S5 = A2 & S3;
-    V0 = OTZ;
-    800C0E44	nop
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    T5 = w[T4 + 0000];
-    800C0E54	nop
-    V0 = T5 & S3;
-    V1 = V1 | V0;
-    [A2 + 0000] = w(V1);
-    V0 = T5 & S6;
-    V0 = V0 | S5;
-    [T4 + 0000] = w(V0);
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[T3 + 4];
+        SZ2 = w[T2 + 4];
+        SZ3 = w[A1 + 4];
+        gte_AVSZ3(); // Average of three Z values
 
-    Lc0e70:	; 800C0E70
-    A2 = A2 + 0028;
-    V0 = A3 < S1;
-800C0E74	bne    v0, zero, loopc0d9c [$800c0d9c]
+        T4 = buffer + OTZ << 2;
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-Lc0e7c:	; 800C0E7C
-V0 = FP >> 10;
-S1 = V0 & 00ff;
-800C0E84	beq    s1, zero, Lc0f84 [$800c0f84]
-A3 = 0;
-T8 = A2 + 0020;
+    polygon = polygon + 14;
+    A2 = A2 + 28;
+}
 
-loopc0e90:	; 800C0E90
-    V1 = w[T0 + 0000];
-    800C0E94	nop
+for( int i = 0; i < b[part + 6]; ++i )
+{
+    V1 = w[polygon + 0];
     V0 = V1 & 00ff;
     V0 = V0 << 03;
-    T9 = S0 + V0;
+    T9 = 1f800008 + V0;
     V0 = V1 & ff00;
     V0 = V0 >> 05;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = V1 >> 0d;
     V0 = V0 & 07f8;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = V1 >> 18;
     V1 = V1 << 03;
-    T1 = S0 + V1;
+    T1 = 1f800008 + V1;
     V0 = w[T9 + 0000];
     V1 = w[T3 + 0000];
     A0 = w[T2 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    A3 = A3 + 0001;
-    T0 = T0 + 000c;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + ffe8] = w(V0);
-    [T8 + fff0] = w(V1);
-    [T8 + fff8] = w(A0);
-    T6 = S4 & S6;
-    T8 = T8 + 0028;
-    V0 = MAC0;
-    800C0F08	nop
-    800C0F0C	bgtz   v0, Lc0f1c [$800c0f1c]
-    A1 = w[T1 + 0000];
-    800C0F14	j      Lc0f78 [$800c0f78]
-    [A2 + 0000] = w(T6);
+    [A2 + 8] = w(V0);
+    [A2 + 10] = w(V1);
+    [A2 + 18] = w(A0);
+    [A2 + 20] = w(w[T1 + 0]);
 
-    Lc0f1c:	; 800C0F1C
-    V1 = w[T9 + 0004];
-    [T8 + ffd8] = w(A1);
-    S5 = w[T3 + 0004];
-    V0 = w[T2 + 0004];
-    A0 = w[T1 + 0004];
-    V1 = V1 + S5;
-    V1 = V1 + V0;
-    V0 = V1 + A0;
-    800C0F3C	bgez   v0, Lc0f48 [$800c0f48]
-    800C0F40	nop
-    V0 = V0 + 000f;
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        T4 = buffer + ((((w[T9 + 4] + w[T3 + 4] + w[T2 + 4] + w[T1 + 4]) / 4) >> 2) << 2);
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-    Lc0f48:	; 800C0F48
-    V0 = V0 >> 04;
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    T5 = w[T4 + 0000];
-    800C0F58	nop
-    V0 = T5 & S3;
-    V1 = T6 | V0;
-    [A2 + 0000] = w(V1);
-    A0 = A2 & S3;
-    V1 = T5 & S6;
-    V1 = V1 | A0;
-    [T4 + 0000] = w(V1);
+    polygon = polygon + c;
+    A2 = A2 + 28;
+}
 
-    Lc0f78:	; 800C0F78
-    A2 = A2 + 0028;
-    V0 = A3 < S1;
-800C0F7C	bne    v0, zero, loopc0e90 [$800c0e90]
-
-Lc0f84:	; 800C0F84
-S1 = FP >> 18;
-800C0F88	beq    s1, zero, Lc1070 [$800c1070]
-A3 = 0;
-T8 = A2 + 0018;
-T6 = w[T0 + 0000];
-
-loopc0f98:	; 800C0F98
-    800C0F98	nop
+for( int i = 0; i < b[part + 7]; ++i )
+{
+    T6 = w[polygon + 0];
     V0 = T6 & 00ff;
     V0 = V0 << 03;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = T6 & ff00;
     V0 = V0 >> 05;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = T6 >> 0d;
     V1 = V1 & 07f8;
-    A1 = S0 + V1;
+    A1 = 1f800008 + V1;
     V0 = w[T3 + 0000];
     V1 = w[T2 + 0000];
     A0 = w[A1 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    A3 = A3 + 0001;
-    T0 = T0 + 000c;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + fff0] = w(V0);
-    [T8 + fff8] = w(V1);
-    [T8 + 0000] = w(A0);
-    T8 = T8 + 0020;
-    V0 = MAC0;
-    800C0FFC	nop
-    800C1000	bgtz   v0, Lc1018 [$800c1018]
-    800C1004	nop
-    V0 = S4 & S6;
-    [A2 + 0000] = w(V0);
-    800C1010	j      Lc1064 [$800c1064]
-    T6 = w[T0 + 0000];
+    [A2 + 8] = w(V0);
+    [A2 + 10] = w(V1);
+    [A2 + 18] = w(A0);
 
-    Lc1018:	; 800C1018
-    SZ1 = w[T3 + 0004];
-    SZ2 = w[T2 + 0004];
-    SZ3 = w[A1 + 0004];
-    V1 = S4 & S6;
-    S5 = A2 & S3;
-    gte_AVSZ3(); // Average of three Z values
-    T6 = w[T0 + 0000];
-    V0 = OTZ;
-    800C1038	nop
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    T5 = w[T4 + 0000];
-    800C1048	nop
-    V0 = T5 & S3;
-    V1 = V1 | V0;
-    [A2 + 0000] = w(V1);
-    V0 = T5 & S6;
-    V0 = V0 | S5;
-    [T4 + 0000] = w(V0);
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[T3 + 4];
+        SZ2 = w[T2 + 4];
+        SZ3 = w[A1 + 4];
+        gte_AVSZ3(); // Average of three Z values
 
-    Lc1064:	; 800C1064
-    A2 = A2 + 0020;
-    V0 = A3 < S1;
-800C1068	bne    v0, zero, loopc0f98 [$800c0f98]
+        T4 = buffer + OTZ << 2;
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-Lc1070:	; 800C1070
-FP = w[part + 0008];
-800C1074	nop
-S1 = FP & 00ff;
-800C107C	beq    s1, zero, Lc1164 [$800c1164]
-A3 = 0;
-T8 = A2 + 0010;
-T6 = w[T0 + 0000];
+    polygon = polygon + c;
+    A2 = A2 + 20;
+}
 
-loopc108c:	; 800C108C
-    800C108C	nop
+for( int i = 0; i < b[part + 8]; +i )
+{
+    T6 = w[polygon + 0];
     V0 = T6 & 00ff;
     V0 = V0 << 03;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = T6 & ff00;
     V0 = V0 >> 05;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = T6 >> 0d;
     V1 = V1 & 07f8;
-    A1 = S0 + V1;
+    A1 = 1f800008 + V1;
     V0 = w[T3 + 0000];
     V1 = w[T2 + 0000];
     A0 = w[A1 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    A3 = A3 + 0001;
-    T0 = T0 + 0008;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + fff8] = w(V0);
-    [T8 + fffc] = w(V1);
-    [T8 + 0000] = w(A0);
-    T8 = T8 + 0014;
-    V0 = MAC0;
-    800C10F0	nop
-    800C10F4	bgtz   v0, Lc110c [$800c110c]
-    800C10F8	nop
-    V0 = S4 & S6;
-    [A2 + 0000] = w(V0);
-    800C1104	j      Lc1158 [$800c1158]
-    T6 = w[T0 + 0000];
+    [A2 + 8] = w(V0);
+    [A2 + c] = w(V1);
+    [A2 + 10] = w(A0);
 
-    Lc110c:	; 800C110C
-    SZ1 = w[T3 + 0004];
-    SZ2 = w[T2 + 0004];
-    SZ3 = w[A1 + 0004];
-    V1 = S4 & S6;
-    S5 = A2 & S3;
-    gte_AVSZ3(); // Average of three Z values
-    T6 = w[T0 + 0000];
-    V0 = OTZ;
-    800C112C	nop
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    T5 = w[T4 + 0000];
-    800C113C	nop
-    V0 = T5 & S3;
-    V1 = V1 | V0;
-    [A2 + 0000] = w(V1);
-    V0 = T5 & S6;
-    V0 = V0 | S5;
-    [T4 + 0000] = w(V0);
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[T3 + 4];
+        SZ2 = w[T2 + 4];
+        SZ3 = w[A1 + 4];
+        gte_AVSZ3(); // Average of three Z values
 
-    Lc1158:	; 800C1158
-    A2 = A2 + 0014;
-    V0 = A3 < S1;
-800C115C	bne    v0, zero, loopc108c [$800c108c]
+        T4 = buffer + OTZ << 2;
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-Lc1164:	; 800C1164
-V0 = FP & ff00;
-S1 = V0 >> 08;
-800C116C	beq    s1, zero, Lc126c [$800c126c]
-A3 = 0;
-T8 = A2 + 0014;
+    polygon = polygon + 8;
+    A2 = A2 + 14;
+}
 
-loopc1178:	; 800C1178
-    V1 = w[T0 + 0000];
-    800C117C	nop
+for( int i = 0; i < b[part + 9]; ++i )
+{
+    V1 = w[polygon + 0];
     V0 = V1 & 00ff;
     V0 = V0 << 03;
-    T9 = S0 + V0;
+    T9 = 1f800008 + V0;
     V0 = V1 & ff00;
     V0 = V0 >> 05;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = V1 >> 0d;
     V0 = V0 & 07f8;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = V1 >> 18;
     V1 = V1 << 03;
-    T1 = S0 + V1;
+    T1 = 1f800008 + V1;
     V0 = w[T9 + 0000];
     V1 = w[T3 + 0000];
     A0 = w[T2 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    T0 = T0 + 0008;
-    A3 = A3 + 0001;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + fff4] = w(V0);
-    [T8 + fff8] = w(V1);
-    [T8 + fffc] = w(A0);
-    T6 = S4 & S6;
-    T8 = T8 + 0018;
-    V0 = MAC0;
-    800C11F0	nop
-    800C11F4	bgtz   v0, Lc1204 [$800c1204]
-    A1 = w[T1 + 0000];
-    800C11FC	j      Lc1260 [$800c1260]
-    [A2 + 0000] = w(T6);
+    [A2 + 8] = w(V0);
+    [A2 + c] = w(V1);
+    [A2 + 10] = w(A0);
+    [A2 + 14] = w(w[T1 + 0]);
 
-    Lc1204:	; 800C1204
-    V1 = w[T9 + 0004];
-    [T8 + ffe8] = w(A1);
-    S5 = w[T3 + 0004];
-    V0 = w[T2 + 0004];
-    A0 = w[T1 + 0004];
-    V1 = V1 + S5;
-    V1 = V1 + V0;
-    V0 = V1 + A0;
-    800C1224	bgez   v0, Lc1230 [$800c1230]
-    800C1228	nop
-    V0 = V0 + 000f;
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        T4 = buffer + ((((w[T9 + 4] + w[T3 + 4] + w[T2 + 4] + w[T1 + 4]) / 4) >> 2) << 2);
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-    Lc1230:	; 800C1230
-    V0 = V0 >> 04;
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    T5 = w[T4 + 0000];
-    800C1240	nop
-    V0 = T5 & S3;
-    V1 = T6 | V0;
-    [A2 + 0000] = w(V1);
-    A0 = A2 & S3;
-    V1 = T5 & S6;
-    V1 = V1 | A0;
-    [T4 + 0000] = w(V1);
+    polygon = polygon + 8;
+    A2 = A2 + 18;
+}
 
-    Lc1260:	; 800C1260
-    A2 = A2 + 0018;
-    V0 = A3 < S1;
-800C1264	bne    v0, zero, loopc1178 [$800c1178]
-
-Lc126c:	; 800C126C
-V0 = FP >> 10;
-S1 = V0 & 00ff;
-800C1274	beq    s1, zero, Lc135c [$800c135c]
-A3 = 0;
-T8 = A2 + 0018;
-T6 = w[T0 + 0000];
-
-loopc1284:	; 800C1284
-    800C1284	nop
+for( int i = 0; i < b[part + a]; ++i )
+{
+    T6 = w[polygon + 0];
     V0 = T6 & 00ff;
     V0 = V0 << 03;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = T6 & ff00;
     V0 = V0 >> 05;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = T6 >> 0d;
     V1 = V1 & 07f8;
-    A1 = S0 + V1;
+    A1 = 1f800008 + V1;
     V0 = w[T3 + 0000];
     V1 = w[T2 + 0000];
     A0 = w[A1 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    A3 = A3 + 0001;
-    T0 = T0 + 0010;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + fff0] = w(V0);
-    [T8 + fff8] = w(V1);
-    [T8 + 0000] = w(A0);
-    T8 = T8 + 001c;
-    V0 = MAC0;
-    800C12E8	nop
-    800C12EC	bgtz   v0, Lc1304 [$800c1304]
-    800C12F0	nop
-    V0 = S4 & S6;
-    [A2 + 0000] = w(V0);
-    800C12FC	j      Lc1350 [$800c1350]
-    T6 = w[T0 + 0000];
+    [A2 + 8] = w(V0);
+    [A2 + 10] = w(V1);
+    [A2 + 18] = w(A0);
 
-    Lc1304:	; 800C1304
-    SZ1 = w[T3 + 0004];
-    SZ2 = w[T2 + 0004];
-    SZ3 = w[A1 + 0004];
-    V1 = S4 & S6;
-    S5 = A2 & S3;
-    gte_AVSZ3(); // Average of three Z values
-    T6 = w[T0 + 0000];
-    V0 = OTZ;
-    800C1324	nop
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    A0 = w[T4 + 0000];
-    800C1334	nop
-    V0 = A0 & S3;
-    V1 = V1 | V0;
-    [A2 + 0000] = w(V1);
-    V0 = A0 & S6;
-    V0 = V0 | S5;
-    [T4 + 0000] = w(V0);
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[T3 + 4];
+        SZ2 = w[T2 + 4];
+        SZ3 = w[A1 + 4];
+        gte_AVSZ3(); // Average of three Z values
 
-    Lc1350:	; 800C1350
-    A2 = A2 + 001c;
-    V0 = A3 < S1;
-800C1354	bne    v0, zero, loopc1284 [$800c1284]
+        T4 = buffer + OTZ << 2;
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-Lc135c:	; 800C135C
-S1 = FP >> 18;
-800C1360	beq    s1, zero, Lc1460 [$800c1460]
-A3 = 0;
-T8 = A2 + 0020;
+    polygon = polygon + 10;
+    A2 = A2 + 1c;
+}
 
-loopc136c:	; 800C136C
-    V1 = w[T0 + 0000];
-    800C1370	nop
+for( int i = 0; i < b[part + b]; ++i )
+{
+    V1 = w[polygon + 0];
     V0 = V1 & 00ff;
     V0 = V0 << 03;
-    T9 = S0 + V0;
+    T9 = 1f800008 + V0;
     V0 = V1 & ff00;
     V0 = V0 >> 05;
-    T3 = S0 + V0;
+    T3 = 1f800008 + V0;
     V0 = V1 >> 0d;
     V0 = V0 & 07f8;
-    T2 = S0 + V0;
+    T2 = 1f800008 + V0;
     V1 = V1 >> 18;
     V1 = V1 << 03;
-    T1 = S0 + V1;
+    T1 = 1f800008 + V1;
     V0 = w[T9 + 0000];
     V1 = w[T3 + 0000];
     A0 = w[T2 + 0000];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    A3 = A3 + 0001;
-    T0 = T0 + 0014;
     gte_NCLIP(); // Normal clipping
-    S4 = w[A2 + 0000];
-    [T8 + ffe8] = w(V0);
-    [T8 + fff0] = w(V1);
-    [T8 + fff8] = w(A0);
-    T6 = S4 & S6;
-    T8 = T8 + 0024;
-    V0 = MAC0;
-    800C13E4	nop
-    800C13E8	bgtz   v0, Lc13f8 [$800c13f8]
-    A1 = w[T1 + 0000];
-    800C13F0	j      Lc1454 [$800c1454]
-    [A2 + 0000] = w(T6);
+    [A2 + 8] = w(V0);
+    [A2 + 10] = w(V1);
+    [A2 + 18] = w(A0);
+    [A2 + 20] = w(w[T1 + 0]);
 
-    Lc13f8:	; 800C13F8
-    V1 = w[T9 + 0004];
-    [T8 + ffdc] = w(A1);
-    S5 = w[T3 + 0004];
-    V0 = w[T2 + 0004];
-    A0 = w[T1 + 0004];
-    V1 = V1 + S5;
-    V1 = V1 + V0;
-    V0 = V1 + A0;
-    800C1418	bgez   v0, Lc1424 [$800c1424]
-    800C141C	nop
-    V0 = V0 + 000f;
+    if( MAC0 <= 0 )
+    {
+        [A2 + 0] = w(w[A2 + 0] & ff000000);
+    }
+    else
+    {
+        T4 = buffer + ((((w[T9 + 4] + w[T3 + 4] + w[T2 + 4] + w[T1 + 4]) / 4) >> 2) << 2);
+        [A2 + 0] = w((w[A2 + 0] & ff000000) | (w[T4 + 0] & 00ffffff));
+        [T4 + 0] = w((w[T4 + 0] & ff000000) | (A2 & 00ffffff));
+    }
 
-    Lc1424:	; 800C1424
-    V0 = V0 >> 04;
-    V0 = V0 << 02;
-    T4 = V0 + S2;
-    T5 = w[T4 + 0000];
-    800C1434	nop
-    V0 = T5 & S3;
-    V1 = T6 | V0;
-    [A2 + 0000] = w(V1);
-    A0 = A2 & S3;
-    V1 = T5 & S6;
-    V1 = V1 | A0;
-    [T4 + 0000] = w(V1);
-
-    Lc1454:	; 800C1454
-    A2 = A2 + 0024;
-    V0 = A3 < S1;
-800C1458	bne    v0, zero, loopc136c [$800c136c]
-
-Lc1460:	; 800C1460
+    polygon = polygon + 14;
+    A2 = A2 + 24;
+}
 ////////////////////////////////
 
 
