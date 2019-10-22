@@ -2513,7 +2513,7 @@ A0 = model;
 A1 = entity;
 A2 = animation_id;
 A4 = SP + 28;
-funcb5e28();
+wm_update_model_by_animation_frame();
 
 if( linked_model != 0 )
 {
@@ -2527,7 +2527,7 @@ if( linked_model != 0 )
             A2 = 0;
             A3 = bu[V0 + 53]; // frame_id
             A4 = SP + 28;
-            funcb5e28();
+            wm_update_model_by_animation_frame();
         }
     }
     else
@@ -2545,7 +2545,7 @@ if( linked_model != 0 )
         A1 = 0;
         A3 = bu[entity + 53]; // frame_id
         A4 = SP + 28;
-        funcb5e28();
+        wm_update_model_by_animation_frame();
     }
 }
 

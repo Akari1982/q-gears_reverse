@@ -969,7 +969,7 @@
 // wm_set_calculate_all_parts_lighting
 800B5DD8-800B5E24
 ////////////////////////////////
-// funcb5e28
+// wm_update_model_by_animation_frame
 800B5E28-800B6248
 ////////////////////////////////
 // funcb624c
@@ -1345,7 +1345,7 @@
 
 
 
-// WORLD.BIN_functions3.cpp
+// WORLD.BIN_model.cpp
 ////////////////////////////////
 // wm_load_model_packets_and_scale
 800BFBF0-800BFCA8
@@ -1356,10 +1356,10 @@
 // wm_load_textures_to_vram
 800C0808-800C08A4
 ////////////////////////////////
-// funcc08a8
+// wm_update_model_packets_2
 800C08A8-800C0B44
 ////////////////////////////////
-// funcc0b48
+// wm_update_packets_for_model_part_without_matrixes
 800C0B48-800C148C
 ////////////////////////////////
 // wm_calculate_bone_matrixes
@@ -1392,13 +1392,13 @@
 // wm_update_model_packets
 800C4148-800C4FB0
 ////////////////////////////////
-// wm_update_packets_for_model_part
+// wm_update_packets_for_model_part_with_matrixes
 800C4FB4-800C5CD0
 ////////////////////////////////
-// funcc5cd4
+// wm_update_model_lighting
 800C5CD4-800C6100
 ////////////////////////////////
-// funcc6104
+// wm_update_part_lighting
 800C6104-800C6594
 ////////////////////////////////
 // wm_get_model_total_render_packets_size

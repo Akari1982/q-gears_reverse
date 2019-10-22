@@ -7792,15 +7792,13 @@ if( part != 0 )
 
 
 ////////////////////////////////
-// funcb5e28()
+// wm_update_model_by_animation_frame()
 
 model = A0;
 entity = A1;
 animation_id = A2;
 frame_id = A3;
 rot_vec = A4;
-
-S3 = 1f800000;
 
 model_id = ff;
 
@@ -7933,46 +7931,40 @@ if( entity != 0 )
 {
     if( b[model + 1] == c )
     {
-        [S3 + 0] = b(0); // need calculation
-        [S3 + 1] = b(0); // slot with data
-        [S3 + 2] = h(0);
-        [S3 + 4] = h(1);
-        [S3 + 6] = h(0);
-        [S3 + 8] = h(0 - ((w[entity + 10] - h[entity + 42] + h[entity + 44]) / 4)); // rotation
+        [1f800000 + 0] = b(0); // need calculation
+        [1f800000 + 1] = b(0); // slot with data
+        [1f800000 + 2] = h(0);
+        [1f800000 + 4] = h(1);
+        [1f800000 + 6] = h(0);
+        [1f800000 + 8] = h(0 - ((w[entity + 10] - h[entity + 42] + h[entity + 44]) / 4)); // rotation
 
         A0 = model;
-        A1 = S3;
+        A1 = 1f800000;
         wm_update_model_packets();
 
-        [S3 + 0] = b(1); // use calculation
-        [S3 + 1] = b(0); // slot with data
-        [S3 + 2] = h(0);
-        [S3 + 4] = h(0);
-        [S3 + 6] = h(0);
-        [S3 + 8] = h(0);
+        [1f800000 + 0] = b(1); // use calculation
+        [1f800000 + 1] = b(0); // slot with data
+        [1f800000 + 2] = h(0);
+        [1f800000 + 4] = h(0);
+        [1f800000 + 6] = h(0);
+        [1f800000 + 8] = h(0);
 
         A0 = model;
-        A1 = S3;
+        A1 = 1f800000;
         wm_update_model_packets();
     }
 }
 
-V0 = model_id - 11;
-if( V0 >= 2 )
+if( model_id >= 1c )
 {
-    V0 = model_id - 1a;
-    if( V0 >= 2 )
+    if( model_id != 1c )
     {
-        V1 = model_id & ff;
-        if( V1 != 1c )
+        if( model_id != 1e )
         {
-            if( V1 != 1e )
-            {
-                A0 = model;
-                funcc08a8();
+            A0 = model;
+            wm_update_model_packets_2();
 
-                return;
-            }
+            return;
         }
     }
 }
@@ -7988,45 +7980,45 @@ else if( V1 >= 100 )
     V1 = ff;
 }
 
-A0 = model;
-A1 = S3;
-[A1 + 0] = b(20);
-[A1 + 1] = b(20);
-[A1 + 2] = b(30);
-[A1 + 3] = b(V1);
-[A1 + 4] = b(V1);
-[A1 + 5] = b(V1);
-[A1 + 6] = b(0);
-[A1 + 7] = b(0);
-[A1 + 8] = b(0);
-[A1 + 9] = b(0);
-[A1 + a] = b(0);
-[A1 + b] = b(0);
-[A1 + c] = b(0);
-[A1 + d] = b(0);
-[A1 + e] = b(0);
-[A1 + f] = b(f0);
-[A1 + 10] = b(0);
-[A1 + 11] = b(0);
-[A1 + 12] = b(0);
-[A1 + 13] = b(0);
-[A1 + 14] = b(0);
-[A1 + 15] = b(0);
-[A1 + 16] = b(0);
-[A1 + 17] = b(0);
-[A1 + 18] = b(0);
-[A1 + 19] = b(0);
-[A1 + 1a] = b(0);
-[A1 + 1b] = b(0);
-[A1 + 1c] = b(0);
-[A1 + 1d] = b(0);
+[1f800000 + 0] = b(20);
+[1f800000 + 1] = b(20);
+[1f800000 + 2] = b(30);
+[1f800000 + 3] = b(V1);
+[1f800000 + 4] = b(V1);
+[1f800000 + 5] = b(V1);
+[1f800000 + 6] = b(0);
+[1f800000 + 7] = b(0);
+[1f800000 + 8] = b(0);
+[1f800000 + 9] = b(0);
+[1f800000 + a] = b(0);
+[1f800000 + b] = b(0);
+[1f800000 + c] = b(0);
+[1f800000 + d] = b(0);
+[1f800000 + e] = b(0);
+[1f800000 + f] = b(f0);
+[1f800000 + 10] = b(0);
+[1f800000 + 11] = b(0);
+[1f800000 + 12] = b(0);
+[1f800000 + 13] = b(0);
+[1f800000 + 14] = b(0);
+[1f800000 + 15] = b(0);
+[1f800000 + 16] = b(0);
+[1f800000 + 17] = b(0);
+[1f800000 + 18] = b(0);
+[1f800000 + 19] = b(0);
+[1f800000 + 1a] = b(0);
+[1f800000 + 1b] = b(0);
+[1f800000 + 1c] = b(0);
+[1f800000 + 1d] = b(0);
 
-800B6208	jal    funcc5cd4 [$800c5cd4]
+A0 = model;
+A1 = 1f800000;
+wm_update_model_lighting();
 
 wm_set_gte_colour_settings();
 
 A0 = model;
-funcc08a8();
+wm_update_model_packets_2();
 ////////////////////////////////
 
 
@@ -8455,7 +8447,7 @@ for( int i = 3; i < 20; ++i )
 
             for( int j = 0; j < bu[S1 + 3]; ++j )
             {
-                A0 = S0 + j * 20;
+                A0 = S0 + j * 20; // part
                 A1 = 1;
                 funcc3db0();
             }
