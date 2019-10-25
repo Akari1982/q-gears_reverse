@@ -1386,7 +1386,7 @@
 // wm_calculate_part_lighting
 800C3948-800C3DAC
 ////////////////////////////////
-// funcc3db0
+// wm_update_part_transparency
 800C3DB0-800C4144
 ////////////////////////////////
 // wm_update_model_packets

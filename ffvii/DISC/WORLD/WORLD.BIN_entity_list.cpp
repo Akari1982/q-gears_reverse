@@ -2551,7 +2551,7 @@ if( linked_model != 0 )
 
 A0 = entity;
 A1 = bu[entity + 51] & 1;
-800AB128	jal    funcb45dc [$800b45dc]
+funcb45dc();
 
 if( ( bu[entity + 58] / 10 ) != 0 )
 {

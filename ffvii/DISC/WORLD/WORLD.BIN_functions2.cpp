@@ -1033,113 +1033,122 @@ if( w[801164f8] == 1 )
 
 
 ////////////////////////////////
-// funcbca78
-800BCA78	lui    t7, $1f80
-800BCA7C	lui    t0, $1f80
-T7 = T7 | 03d0;
+// funcbca78()
+
+T0 = 1f800000;
+
 IR1 = 0;
 IR3 = 0;
-T4 = 0000;
+T4 = 0;
 
 loopbca90:	; 800BCA90
-T1 = w[A0 + 0000];
-T2 = w[A0 + 0004];
-VXY0 = T1;
-VZ0 = T2;
-[T0 + 0000] = w(T1);
-[T0 + 0004] = w(T2);
-gte_RTPS(); // Perspective transform
-A0 = A0 + 0008;
-T4 = T4 - A1;
-T0 = T0 + 0008;
-800BCAB8	blez   t4, Lbcb14 [$800bcb14]
-T3 = T0 - T7;
-T6 = T6 << 10;
-T4 = T4 >> 06;
-T6 = T6 >> 10;
-800BCACC	nop
-800BCAD0	addiu  t6, t6, $ff60 (=-$a0)
-T1 = 0000;
-800BCAD8	bgez   t6, Lbcae8 [$800bcae8]
-800BCADC	nop
-T6 = T1 - T6;
-800BCAE4	nop
+    T1 = w[A0 + 0000];
+    T2 = w[A0 + 0004];
+    VXY0 = T1;
+    VZ0 = T2;
+    [T0 + 0000] = w(T1);
+    [T0 + 0004] = w(T2);
+    gte_RTPS(); // Perspective transform
 
-Lbcae8:	; 800BCAE8
-T6 = T6 >> 05;
-800BCAEC	nop
-T4 = T4 + T6;
-800BCAF4	nop
-800BCAF8	multu  t4, t4
-T5 = h[T0 + fff2];
-800BCB00	mflo   t4
-800BCB04	nop
-T5 = T5 - T4;
-800BCB0C	nop
-[T0 + fff2] = h(T5);
+    A0 = A0 + 0008;
+    T4 = T4 - A1;
+    T0 = T0 + 0008;
 
-Lbcb14:	; 800BCB14
-T4 = SZ3;
-T6 = SXY2P;
+    if( T4 > 0 )
+    {
+        T6 = T6 << 10;
+        T4 = T4 >> 06;
+        T6 = T6 >> 10;
+        800BCACC	nop
+        800BCAD0	addiu  t6, t6, $ff60 (=-$a0)
+        T1 = 0000;
+        if( T6 < 0 )
+        {
+            T6 = T1 - T6;
+        }
+
+        T6 = T6 >> 05;
+        800BCAEC	nop
+        T4 = T4 + T6;
+        800BCAF4	nop
+        800BCAF8	multu  t4, t4
+        T5 = h[T0 + fff2];
+        800BCB00	mflo   t4
+        800BCB04	nop
+        T5 = T5 - T4;
+        800BCB0C	nop
+        [T0 + fff2] = h(T5);
+    }
+
+    T4 = T4 >> 02;
+    T4 = SZ3;
+    T6 = SXY2P;
+
+    T3 = T0 - 1f8003d0;
 800BCB1C	bltz   t3, loopbca90 [$800bca90]
-T4 = T4 >> 02;
-800BCB24	jr     ra 
-800BCB28	nop
 ////////////////////////////////
-// funcbcb2c
-800BCB2C	lui    t0, $1f80
+
+
+
+////////////////////////////////
+// funcbcb2c()
+
+T0 = 1f800000;
 T1 = 002a;
 
 loopbcb34:	; 800BCB34
-VXY0 = w[T0 + 0000];
-VZ0 = w[T0 + 0004];
-VXY1 = w[T0 + 0008];
-VZ1 = w[T0 + 000c];
-VXY2 = w[T0 + 0010];
-VZ2 = w[T0 + 0014];
-800BCB4C	addiu  t1, t1, $ffff (=-$1)
-T2 = T0 & ffff;
-gte_RTPT(); // Perspective transform on 3 points
-800BCB58	beq    t2, zero, Lbcbc0 [$800bcbc0]
-800BCB5C	nop
-T2 = w[T0 + ffe8];
-T4 = w[T0 + fff0];
-T5 = w[T0 + fff8];
-T3 = T2;
-T2 = T2 & ffff;
-T3 = T3 >> 10;
-T2 = T2 < 0140;
-T3 = T3 < 00f0;
-[T0 + ffee] = b(T2);
-[T0 + ffef] = b(T3);
-T3 = T4;
-T4 = T4 & ffff;
-T3 = T3 >> 10;
-T4 = T4 < 0140;
-T3 = T3 < 00f0;
-[T0 + fff6] = b(T4);
-[T0 + fff7] = b(T3);
-T3 = T5;
-T5 = T5 & ffff;
-T3 = T3 >> 10;
-T5 = T5 < 0140;
-T3 = T3 < 00f0;
-[T0 + fffe] = b(T5);
-[T0 + ffff] = b(T3);
+    VXY0 = w[T0 + 0000];
+    VZ0 = w[T0 + 0004];
+    VXY1 = w[T0 + 0008];
+    VZ1 = w[T0 + 000c];
+    VXY2 = w[T0 + 0010];
+    VZ2 = w[T0 + 0014];
+    800BCB4C	addiu  t1, t1, $ffff (=-$1)
+    T2 = T0 & ffff;
+    gte_RTPT(); // Perspective transform on 3 points
+    800BCB58	beq    t2, zero, Lbcbc0 [$800bcbc0]
+    800BCB5C	nop
+    T2 = w[T0 + ffe8];
+    T4 = w[T0 + fff0];
+    T5 = w[T0 + fff8];
+    T3 = T2;
+    T2 = T2 & ffff;
+    T3 = T3 >> 10;
+    T2 = T2 < 0140;
+    T3 = T3 < 00f0;
+    [T0 + ffee] = b(T2);
+    [T0 + ffef] = b(T3);
+    T3 = T4;
+    T4 = T4 & ffff;
+    T3 = T3 >> 10;
+    T4 = T4 < 0140;
+    T3 = T3 < 00f0;
+    [T0 + fff6] = b(T4);
+    [T0 + fff7] = b(T3);
+    T3 = T5;
+    T5 = T5 & ffff;
+    T3 = T3 >> 10;
+    T5 = T5 < 0140;
+    T3 = T3 < 00f0;
+    [T0 + fffe] = b(T5);
+    [T0 + ffff] = b(T3);
 
-Lbcbc0:	; 800BCBC0
-[T0 + 0000] = w(SXY0);
-[T0 + 0004] = w(SZ1);
-[T0 + 0008] = w(SXY1);
-[T0 + 000c] = w(SZ2);
-[T0 + 0010] = w(SXY2);
-[T0 + 0014] = w(SZ3);
+    Lbcbc0:	; 800BCBC0
+    [T0 + 0000] = w(SXY0);
+    [T0 + 0004] = w(SZ1);
+    [T0 + 0008] = w(SXY1);
+    [T0 + 000c] = w(SZ2);
+    [T0 + 0010] = w(SXY2);
+    [T0 + 0014] = w(SZ3);
+    T0 = T0 + 0018;
 800BCBD8	bgtz   t1, loopbcb34 [$800bcb34]
-T0 = T0 + 0018;
-800BCBE0	jr     ra 
-800BCBE4	nop
 ////////////////////////////////
-// funcbcbe8
+
+
+
+////////////////////////////////
+// funcbcbe8()
+
 800BCBE8	addiu  a1, a1, $fff4 (=-$c)
 T1 = w[A0 + 0000];
 

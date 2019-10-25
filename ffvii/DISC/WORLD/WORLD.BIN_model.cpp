@@ -2244,337 +2244,127 @@ for( int i = 0; i < bu[part + b]; ++i )
 
 
 ////////////////////////////////
-// funcc3db0()
+// wm_update_part_transparency()
 
 part = A0;
 
-T1 = 0;
+for( buffer_id = 0; buffer_id < 2; ++buffer_id )
+{
+    A3 = w[A0 + 1c];
 
-Lc3db8:	; 800C3DB8
-A3 = w[A0 + 001c];
-800C3DBC	beq    t1, zero, Lc3dd0 [$800c3dd0]
-A2 = 0;
-V0 = hu[A0 + 0016];
-800C3DC8	nop
-A3 = A3 + V0;
+    if( buffer_id != 0 )
+    {
+        A3 = A3 + hu[A0 + 16];
+    }
 
-Lc3dd0:	; 800C3DD0
-T0 = bu[A0 + 0004];
-800C3DD4	nop
-800C3DD8	beq    t0, zero, Lc3e3c [$800c3e3c]
-800C3DDC	nop
-V1 = A3 + 0007;
+    for( int i = 0; i < bu[A0 + 4]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            // off. (draw texture as is)
+            // Semi transparency on
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            // Brightness calculation at time of texture mapping on
+            // Semi transparency off
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 34;
+    }
 
-loopc3de4:	; 800C3DE4
-800C3DE4	beq    a1, zero, Lc3df8 [$800c3df8]
-800C3DE8	nop
-V0 = bu[V1 + 0000];
-800C3DF0	j      Lc3e04 [$800c3e04]
-V0 = V0 | 0002;
+    for( int i = 0; i < bu[A0 + 5]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 28;
+    }
 
-Lc3df8:	; 800C3DF8
-V0 = bu[V1 + 0000];
-800C3DFC	nop
-V0 = V0 & 00fd;
+    for( int i = 0; i < bu[A0 + 6]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 28;
+    }
 
-Lc3e04:	; 800C3E04
-800C3E04	beq    a1, zero, Lc3e18 [$800c3e18]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C3E10	j      Lc3e24 [$800c3e24]
-V0 = V0 | 0001;
+    for( int i = 0; i < bu[A0 + 7]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 20;
+    }
 
-Lc3e18:	; 800C3E18
-V0 = bu[V1 + 0000];
-800C3E1C	nop
-V0 = V0 & 00fe;
+    for( int i = 0; i < bu[A0 + 8]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 14;
+    }
 
-Lc3e24:	; 800C3E24
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V1 = V1 + 0034;
-V0 = A2 < T0;
-800C3E34	bne    v0, zero, loopc3de4 [$800c3de4]
-A3 = A3 + 0034;
+    for( int i = 0; i < bu[A0 + 9]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 18;
+    }
 
-Lc3e3c:	; 800C3E3C
-T0 = bu[A0 + 0005];
-800C3E40	nop
-800C3E44	beq    t0, zero, Lc3ea8 [$800c3ea8]
-A2 = 0;
-V1 = A3 + 0007;
+    for( int i = 0; i < bu[A0 + a]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 1c;
+    }
 
-loopc3e50:	; 800C3E50
-800C3E50	beq    a1, zero, Lc3e64 [$800c3e64]
-800C3E54	nop
-V0 = bu[V1 + 0000];
-800C3E5C	j      Lc3e70 [$800c3e70]
-V0 = V0 | 0002;
-
-Lc3e64:	; 800C3E64
-V0 = bu[V1 + 0000];
-800C3E68	nop
-V0 = V0 & 00fd;
-
-Lc3e70:	; 800C3E70
-800C3E70	beq    a1, zero, Lc3e84 [$800c3e84]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C3E7C	j      Lc3e90 [$800c3e90]
-V0 = V0 | 0001;
-
-Lc3e84:	; 800C3E84
-V0 = bu[V1 + 0000];
-800C3E88	nop
-V0 = V0 & 00fe;
-
-Lc3e90:	; 800C3E90
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V1 = V1 + 0028;
-V0 = A2 < T0;
-800C3EA0	bne    v0, zero, loopc3e50 [$800c3e50]
-A3 = A3 + 0028;
-
-Lc3ea8:	; 800C3EA8
-T0 = bu[A0 + 0006];
-800C3EAC	nop
-800C3EB0	beq    t0, zero, Lc3f14 [$800c3f14]
-A2 = 0;
-V1 = A3 + 0007;
-
-loopc3ebc:	; 800C3EBC
-800C3EBC	beq    a1, zero, Lc3ed0 [$800c3ed0]
-800C3EC0	nop
-V0 = bu[V1 + 0000];
-800C3EC8	j      Lc3edc [$800c3edc]
-V0 = V0 | 0002;
-
-Lc3ed0:	; 800C3ED0
-V0 = bu[V1 + 0000];
-800C3ED4	nop
-V0 = V0 & 00fd;
-
-Lc3edc:	; 800C3EDC
-800C3EDC	beq    a1, zero, Lc3ef0 [$800c3ef0]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C3EE8	j      Lc3efc [$800c3efc]
-V0 = V0 | 0001;
-
-Lc3ef0:	; 800C3EF0
-V0 = bu[V1 + 0000];
-800C3EF4	nop
-V0 = V0 & 00fe;
-
-Lc3efc:	; 800C3EFC
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V1 = V1 + 0028;
-V0 = A2 < T0;
-800C3F0C	bne    v0, zero, loopc3ebc [$800c3ebc]
-A3 = A3 + 0028;
-
-Lc3f14:	; 800C3F14
-T0 = bu[A0 + 0007];
-800C3F18	nop
-800C3F1C	beq    t0, zero, Lc3f80 [$800c3f80]
-A2 = 0;
-V1 = A3 + 0007;
-
-loopc3f28:	; 800C3F28
-800C3F28	beq    a1, zero, Lc3f3c [$800c3f3c]
-800C3F2C	nop
-V0 = bu[V1 + 0000];
-800C3F34	j      Lc3f48 [$800c3f48]
-V0 = V0 | 0002;
-
-Lc3f3c:	; 800C3F3C
-V0 = bu[V1 + 0000];
-800C3F40	nop
-V0 = V0 & 00fd;
-
-Lc3f48:	; 800C3F48
-800C3F48	beq    a1, zero, Lc3f5c [$800c3f5c]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C3F54	j      Lc3f68 [$800c3f68]
-V0 = V0 | 0001;
-
-Lc3f5c:	; 800C3F5C
-V0 = bu[V1 + 0000];
-
-Lc3f60:	; 800C3F60
-800C3F60	nop
-V0 = V0 & 00fe;
-
-Lc3f68:	; 800C3F68
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V1 = V1 + 0020;
-V0 = A2 < T0;
-800C3F78	bne    v0, zero, loopc3f28 [$800c3f28]
-A3 = A3 + 0020;
-
-Lc3f80:	; 800C3F80
-T0 = bu[A0 + 0008];
-800C3F84	nop
-800C3F88	beq    t0, zero, Lc3fec [$800c3fec]
-A2 = 0;
-V1 = A3 + 0007;
-
-loopc3f94:	; 800C3F94
-800C3F94	beq    a1, zero, Lc3fa8 [$800c3fa8]
-800C3F98	nop
-V0 = bu[V1 + 0000];
-800C3FA0	j      Lc3fb4 [$800c3fb4]
-V0 = V0 | 0002;
-
-Lc3fa8:	; 800C3FA8
-V0 = bu[V1 + 0000];
-800C3FAC	nop
-V0 = V0 & 00fd;
-
-Lc3fb4:	; 800C3FB4
-800C3FB4	beq    a1, zero, Lc3fc8 [$800c3fc8]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C3FC0	j      Lc3fd4 [$800c3fd4]
-V0 = V0 | 0001;
-
-Lc3fc8:	; 800C3FC8
-V0 = bu[V1 + 0000];
-800C3FCC	nop
-V0 = V0 & 00fe;
-
-Lc3fd4:	; 800C3FD4
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V1 = V1 + 0014;
-V0 = A2 < T0;
-800C3FE4	bne    v0, zero, loopc3f94 [$800c3f94]
-A3 = A3 + 0014;
-
-Lc3fec:	; 800C3FEC
-T0 = bu[A0 + 0009];
-800C3FF0	nop
-800C3FF4	beq    t0, zero, Lc4058 [$800c4058]
-A2 = 0;
-V1 = A3 + 0007;
-
-loopc4000:	; 800C4000
-800C4000	beq    a1, zero, Lc4014 [$800c4014]
-800C4004	nop
-V0 = bu[V1 + 0000];
-800C400C	j      Lc4020 [$800c4020]
-V0 = V0 | 0002;
-
-Lc4014:	; 800C4014
-V0 = bu[V1 + 0000];
-800C4018	nop
-V0 = V0 & 00fd;
-
-Lc4020:	; 800C4020
-800C4020	beq    a1, zero, Lc4034 [$800c4034]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C402C	j      Lc4040 [$800c4040]
-V0 = V0 | 0001;
-
-Lc4034:	; 800C4034
-V0 = bu[V1 + 0000];
-800C4038	nop
-V0 = V0 & 00fe;
-
-Lc4040:	; 800C4040
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V1 = V1 + 0018;
-V0 = A2 < T0;
-800C4050	bne    v0, zero, loopc4000 [$800c4000]
-A3 = A3 + 0018;
-
-Lc4058:	; 800C4058
-T0 = bu[A0 + 000a];
-800C405C	nop
-800C4060	beq    t0, zero, Lc40c4 [$800c40c4]
-A2 = 0;
-V1 = A3 + 0007;
-
-loopc406c:	; 800C406C
-800C406C	beq    a1, zero, Lc4080 [$800c4080]
-800C4070	nop
-V0 = bu[V1 + 0000];
-800C4078	j      Lc408c [$800c408c]
-V0 = V0 | 0002;
-
-Lc4080:	; 800C4080
-V0 = bu[V1 + 0000];
-800C4084	nop
-V0 = V0 & 00fd;
-
-Lc408c:	; 800C408C
-800C408C	beq    a1, zero, Lc40a0 [$800c40a0]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C4098	j      Lc40ac [$800c40ac]
-V0 = V0 | 0001;
-
-Lc40a0:	; 800C40A0
-V0 = bu[V1 + 0000];
-800C40A4	nop
-V0 = V0 & 00fe;
-
-Lc40ac:	; 800C40AC
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V1 = V1 + 001c;
-V0 = A2 < T0;
-800C40BC	bne    v0, zero, loopc406c [$800c406c]
-A3 = A3 + 001c;
-
-Lc40c4:	; 800C40C4
-T0 = bu[A0 + 000b];
-800C40C8	nop
-800C40CC	beq    t0, zero, Lc412c [$800c412c]
-A2 = 0;
-V1 = A3 + 0007;
-
-loopc40d8:	; 800C40D8
-800C40D8	beq    a1, zero, Lc40ec [$800c40ec]
-800C40DC	nop
-V0 = bu[V1 + 0000];
-800C40E4	j      Lc40f8 [$800c40f8]
-V0 = V0 | 0002;
-
-Lc40ec:	; 800C40EC
-V0 = bu[V1 + 0000];
-800C40F0	nop
-V0 = V0 & 00fd;
-
-Lc40f8:	; 800C40F8
-800C40F8	beq    a1, zero, Lc410c [$800c410c]
-[V1 + 0000] = b(V0);
-V0 = bu[V1 + 0000];
-800C4104	j      Lc4118 [$800c4118]
-V0 = V0 | 0001;
-
-Lc410c:	; 800C410C
-V0 = bu[V1 + 0000];
-800C4110	nop
-V0 = V0 & 00fe;
-
-Lc4118:	; 800C4118
-[V1 + 0000] = b(V0);
-A2 = A2 + 0001;
-V0 = A2 < T0;
-800C4124	bne    v0, zero, loopc40d8 [$800c40d8]
-V1 = V1 + 0024;
-
-Lc412c:	; 800C412C
-T1 = T1 + 0001;
-V0 = T1 < 0002;
-800C4134	bne    v0, zero, Lc3db8 [$800c3db8]
+    for( int i = 0; i < bu[A0 + b]; ++i )
+    {
+        if( A1 != 0 )
+        {
+            [A3 + 7] = b(bu[A3 + 7] | 03);
+        }
+        else
+        {
+            [A3 + 7] = b(bu[A3 + 7] & fc);
+        }
+        A3 = A3 + 24;
+    }
+}
 ////////////////////////////////
 
 

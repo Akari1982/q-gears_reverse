@@ -6236,32 +6236,27 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funcb45dc
+// funcb45dc()
 
-S2 = A0;
-S0 = A1;
-V1 = h[S2 + 003c];
-V0 = h[S2 + 003e];
-S3 = 1f800010;
-S6 = V1 + V0;
-V0 = hu[S2 + 4a];
-800B4624	lui    s1, $1f80
-[1f800020] = h(S6);
-V1 = w[S2 + 001c];
-A0 = w[S2 + 0020];
-A1 = w[S2 + 0024];
-A2 = w[S2 + 0028];
-[S1 + 0000] = w(V1);
-[S1 + 0004] = w(A0);
-[S1 + 0008] = w(A1);
-[S1 + 000c] = w(A2);
-[1f800014] = h(0);
+entity = A0;
+S0 = A1; // bu[entity + 51] & 1
+
+S6 = h[entity + 3c] + h[entity + 3e];
+V0 = hu[entity + 4a];
+
+[1f800000] = w(w[entity + 1c]);
+[1f800004] = w(w[entity + 20]);
+[1f800008] = w(w[entity + 24]);
+[1f80000c] = w(w[entity + 28]);
+[1f800010] = h(0);
 [1f800012] = h(0);
-[S3 + 0000] = h(0);
-[1f80001c] = h(0);
-[1f80001a] = h(0);
+[1f800014] = h(0);
 [1f800018] = h(0);
-A0 = bu[S2 + 0050];
+[1f80001a] = h(0);
+[1f80001c] = h(0);
+[1f800020] = h(S6);
+
+A0 = bu[entity + 50];
 S7 = V0 & 001f;
 V0 = 0003;
 800B4688	bne    a0, v0, Lb4a0c [$800b4a0c]
@@ -6276,25 +6271,24 @@ V0 = 0003;
 800B46AC	nop
 800B46B0	bltz   v0, Lb48dc [$800b48dc]
 800B46B4	addiu  v0, s7, $fffd (=-$3)
-A0 = w[S2 + 000c];
-V0 = w[S2 + 001c];
+A0 = w[entity + 000c];
+V0 = w[entity + 001c];
 800B46C0	nop
 V1 = A0 - V0;
-800B46C8	bgtz   v1, Lb46d4 [$800b46d4]
-800B46CC	nop
-V1 = V0 - A0;
+if( V1 <= 0 )
+{
+    V1 = V0 - A0;
+}
 
-Lb46d4:	; 800B46D4
-A1 = w[S2 + 0014];
-V0 = w[S2 + 0024];
-800B46DC	nop
+A1 = w[entity + 0014];
+V0 = w[entity + 0024];
 A0 = A1 - V0;
 800B46E4	blez   a0, Lb4704 [$800b4704]
 V0 = V0 - A1;
 V0 = V1 + A0;
 V0 = V0 < 0065;
 800B46F4	beq    v0, zero, Lb4718 [$800b4718]
-800B46F8	lui    v0, $aaaa
+
 800B46FC	j      Lb48dc [$800b48dc]
 800B4700	addiu  v0, s7, $fffd (=-$3)
 
@@ -6303,12 +6297,10 @@ V0 = V1 + V0;
 V0 = V0 < 0065;
 800B470C	bne    v0, zero, Lb48dc [$800b48dc]
 800B4710	addiu  v0, s7, $fffd (=-$3)
-800B4714	lui    v0, $aaaa
 
 Lb4718:	; 800B4718
-800B4718	lui    v1, $8011
-V1 = w[V1 + d9b4];
-V0 = V0 | aaab;
+V1 = w[8010d9b4];
+V0 = aaaaaaab;
 800B4724	multu  v1, v0
 800B4728	mfhi   a0
 S3 = A0 >> 01;
@@ -6322,13 +6314,13 @@ V0 = V0 << 01;
 800B474C	jal    funca1dc0 [$800a1dc0]
 S0 = V1 - V0;
 800B4754	lui    a2, $1f80
-V1 = w[S2 + 000c];
-A0 = w[S2 + 0010];
-A1 = w[S2 + 0014];
+V1 = w[entity + 000c];
+A0 = w[entity + 0010];
+A1 = w[entity + 0014];
 [A2 + 0000] = w(V1);
 [A2 + 0004] = w(A0);
 [A2 + 0008] = w(A1);
-V1 = w[S2 + 0018];
+V1 = w[entity + 0018];
 800B4774	nop
 [A2 + 000c] = w(V1);
 S4 = V0;
@@ -6352,11 +6344,12 @@ V0 = V0 - V1;
 V0 = S1 << 10;
 A0 = V0 >> 10;
 V0 = A1 < 00c8;
-800B47C8	bne    v0, zero, Lb47d4 [$800b47d4]
 A2 = S3 + 0024;
-A2 = S3 + 0027;
+if( V0 == 0 )
+{
+    A2 = S3 + 27;
+}
 
-Lb47d4:	; 800B47D4
 A1 = 0;
 A2 = A2 << 10;
 A2 = A2 >> 10;
@@ -6376,25 +6369,26 @@ funcb39b4();
 800B480C	addiu  v0, zero, $fed4 (=-$12c)
 800B4810	lui    at, $1f80
 [1f800018] = h(V0);
-800B4818	blez   s4, Lb4824 [$800b4824]
 V0 = S4;
-V0 = 0;
+if( S4 > 0 )
+{
+    V0 = 0;
+}
 
-Lb4824:	; 800B4824
 V0 = V0 + 0190;
-800B4828	lui    at, $1f80
 [1f80001a] = h(V0);
 V0 = S4 << 02;
 V0 = V0 < ff39;
-800B4838	bne    v0, zero, Lb4848 [$800b4848]
 A0 = S5;
-800B4840	j      Lb484c [$800b484c]
-A2 = S3 + 0027;
+if( V0 == 0 )
+{
+    A2 = S3 + 27;
+}
+else
+{
+    A2 = S3 + 0024;
+}
 
-Lb4848:	; 800B4848
-A2 = S3 + 0024;
-
-Lb484c:	; 800B484C
 A1 = 0;
 A2 = A2 << 10;
 A2 = A2 >> 10;
@@ -6440,14 +6434,14 @@ Lb48dc:	; 800B48DC
 V0 = V0 < 0005;
 800B48E0	beq    v0, zero, Lb5244 [$800b5244]
 800B48E4	nop
-V0 = h[S2 + 0042];
-V1 = w[S2 + 0010];
+V0 = h[entity + 0042];
+V1 = w[entity + 0010];
 V0 = V0 + 03e8;
 V1 = V1 < V0;
 800B48F8	beq    v1, zero, Lb5244 [$800b5244]
-800B48FC	lui    v0, $aaaa
-A0 = bu[S2 + 0053];
-V0 = V0 | aaab;
+
+A0 = bu[entity + 53];
+V0 = aaaaaaab;
 800B4908	multu  a0, v0
 800B490C	mfhi   v1
 V1 = V1 >> 01;
@@ -6460,16 +6454,16 @@ V0 = 0032;
 [1f80001c] = h(0);
 [1f80001a] = h(0);
 [1f800018] = h(0);
-V1 = w[S2 + 000c];
-A0 = w[S2 + 001c];
+V1 = w[entity + 000c];
+A0 = w[entity + 001c];
 [1f800012] = h(V0);
 V1 = V1 - A0;
 V1 = V1 >> 01;
 [1f800010] = h(V1);
 V1 = V1 << 10;
 T1 = V1 >> 10;
-V0 = w[S2 + 0014];
-A0 = w[S2 + 0024];
+V0 = w[entity + 0014];
+A0 = w[entity + 0024];
 800B4974	bgez   t1, Lb4980 [$800b4980]
 V1 = T1;
 V1 = 0 - V1;
@@ -6499,7 +6493,7 @@ V1 = T2 << 02;
 [T0 + 0000] = w(V0);
 800B49D4	lui    v0, $1f80
 V0 = w[V0 + 0008];
-T0 = h[S2 + 0042];
+T0 = h[entity + 0042];
 V0 = V0 - V1;
 800B49E4	lui    at, $1f80
 [1f800008] = w(V0);
@@ -6520,7 +6514,7 @@ V0 = 000a;
 800B4A18	nop
 800B4A1C	beq    v0, zero, Lb4ae8 [$800b4ae8]
 V0 = 0002;
-V1 = bu[S2 + 0053];
+V1 = bu[entity + 0053];
 800B4A28	nop
 800B4A2C	beq    v1, v0, Lb4a3c [$800b4a3c]
 V0 = 000e;
@@ -6534,16 +6528,16 @@ V0 = V0 >> S7;
 V0 = V0 & 0001;
 800B4A4C	beq    v0, zero, Lb4ae8 [$800b4ae8]
 V0 = 0064;
-V1 = hu[S2 + 000c];
-A0 = hu[S2 + 001c];
+V1 = hu[entity + 000c];
+A0 = hu[entity + 001c];
 800B4A5C	lui    at, $1f80
 [1f800012] = h(V0);
 V1 = V1 - A0;
 [S3 + 0000] = h(V1);
 V1 = V1 << 10;
 V1 = V1 >> 10;
-A0 = hu[S2 + 0014];
-A2 = hu[S2 + 0024];
+A0 = hu[entity + 0014];
+A2 = hu[entity + 0024];
 V0 = w[S1 + 0000];
 800B4A80	lui    a1, $1f80
 A1 = w[A1 + 0004];
@@ -6551,16 +6545,12 @@ V0 = V0 - V1;
 A1 = A1 + 0064;
 A0 = A0 - A2;
 [S1 + 0000] = w(V0);
-800B4A98	lui    at, $1f80
 [1f800014] = h(A0);
 A0 = A0 << 10;
-800B4AA4	lui    v0, $1f80
-V0 = w[V0 + 0008];
+V0 = w[1f800008];
 A0 = A0 >> 10;
-800B4AB0	lui    at, $1f80
 [1f800004] = w(A1);
 V0 = V0 - A0;
-800B4ABC	lui    at, $1f80
 [1f800008] = w(V0);
 V0 = 000a;
 800B4AC8	bne    s7, v0, Lb4ad4 [$800b4ad4]
@@ -6579,20 +6569,20 @@ V0 = 000a;
 
 Lb4aec:	; 800B4AEC
 800B4AEC	bne    s7, v0, Lb4bec [$800b4bec]
-800B4AF0	nop
+
 800B4AF4	jal    wm_get_wm_id [$800a1de0]
-800B4AF8	nop
+
 V1 = 0003;
 800B4B00	beq    v0, v1, Lb4bec [$800b4bec]
 800B4B04	nop
 800B4B08	beq    s0, zero, Lb4bec [$800b4bec]
 800B4B0C	nop
-A1 = bu[S2 + 0050];
+A1 = bu[entity + 0050];
 800B4B14	jal    funca921c [$800a921c]
 A0 = 0007;
 800B4B1C	beq    v0, zero, Lb4b88 [$800b4b88]
 V0 = 0001;
-V1 = bu[S2 + 0053];
+V1 = bu[entity + 0053];
 800B4B28	nop
 800B4B2C	beq    v1, v0, Lb4b3c [$800b4b3c]
 V0 = 0008;
@@ -6600,37 +6590,38 @@ V0 = 0008;
 800B4B38	nop
 
 Lb4b3c:	; 800B4B3C
-V0 = 0028;
-800B4B40	lui    at, $1f80
-[1f80001c] = h(V0);
-V0 = bu[S2 + 0053];
+[1f80001c] = h(28);
+V0 = bu[entity + 0053];
 800B4B4C	nop
 V0 = V0 >> 03;
-800B4B54	bne    v0, zero, Lb4b60 [$800b4b60]
 V1 = S6 + 0400;
-V1 = S6 + 0c00;
+if( V0 == 0 )
+{
+    V1 = S6 + 0c00;
+}
 
-Lb4b60:	; 800B4B60
 A2 = 0003;
 V1 = V1 << 10;
-V0 = bu[S2 + 0053];
+V0 = bu[entity + 0053];
 800B4B6C	nop
 V0 = V0 >> 03;
-800B4B74	beq    v0, zero, Lb4b80 [$800b4b80]
 A0 = V1 >> 10;
-A2 = 0002;
+if( V0 != 0 )
+{
+    A2 = 2;
+}
 
-Lb4b80:	; 800B4B80
-800B4B80	j      Lb5238 [$800b5238]
 A1 = 0;
+800B4B80	j      Lb5238 [$800b5238]
+
 
 Lb4b88:	; 800B4B88
-A0 = bu[S2 + 0050];
+A0 = bu[entity + 0050];
 800B4B8C	jal    funca92f8 [$800a92f8]
 800B4B90	nop
 800B4B94	beq    v0, zero, Lb5244 [$800b5244]
 V0 = 0001;
-V1 = bu[S2 + 0053];
+V1 = bu[entity + 0053];
 800B4BA0	nop
 800B4BA4	beq    v1, v0, Lb4bb4 [$800b4bb4]
 V0 = 000d;
@@ -6639,9 +6630,8 @@ V0 = 000d;
 
 Lb4bb4:	; 800B4BB4
 V0 = 0078;
-800B4BB8	lui    at, $1f80
 [1f80001c] = h(V0);
-V0 = bu[S2 + 0053];
+V0 = bu[entity + 0053];
 800B4BC4	nop
 V0 = V0 >> 03;
 800B4BCC	bne    v0, zero, Lb4bd8 [$800b4bd8]
@@ -6656,7 +6646,7 @@ A1 = 0;
 A2 = 0004;
 
 Lb4bec:	; 800B4BEC
-A1 = bu[S2 + 0050];
+A1 = bu[entity + 0050];
 800B4BF0	jal    funca921c [$800a921c]
 A0 = 0007;
 800B4BF8	beq    v0, zero, Lb4c58 [$800b4c58]
@@ -6668,7 +6658,7 @@ V0 = 001c;
 800B4C10	nop
 
 Lb4c14:	; 800B4C14
-V1 = bu[S2 + 0053];
+V1 = bu[entity + 0053];
 V0 = 0001;
 800B4C1C	beq    v1, v0, Lb4c2c [$800b4c2c]
 A1 = 0;
@@ -6679,17 +6669,14 @@ Lb4c2c:	; 800B4C2C
 A0 = 0;
 A2 = 0008;
 V0 = 0014;
-800B4C38	lui    at, $1f80
 [1f800010] = h(0);
-800B4C40	lui    at, $1f80
 [1f800012] = h(V0);
-800B4C48	lui    at, $1f80
 [1f800014] = h(0);
 800B4C50	j      Lb523c [$800b523c]
 A3 = 0;
 
 Lb4c58:	; 800B4C58
-A1 = bu[S2 + 0050];
+A1 = bu[entity + 0050];
 800B4C5C	jal    funca921c [$800a921c]
 A0 = 0020;
 800B4C64	beq    v0, zero, Lb4cf4 [$800b4cf4]
@@ -6700,7 +6687,7 @@ A0 = 0020;
 800B4C78	nop
 800B4C7C	beq    s0, zero, Lb5244 [$800b5244]
 800B4C80	lui    v0, $aaaa
-A0 = bu[S2 + 0053];
+A0 = bu[entity + 0053];
 V0 = V0 | aaab;
 800B4C8C	multu  a0, v0
 800B4C90	mfhi   v1
@@ -6733,12 +6720,12 @@ A3 = 0;
 Lb4cf4:	; 800B4CF4
 800B4CF4	beq    s0, zero, Lb4d90 [$800b4d90]
 800B4CF8	nop
-A1 = bu[S2 + 0050];
+A1 = bu[entity + 0050];
 800B4D00	jal    funca921c [$800a921c]
 A0 = 0007;
 800B4D08	bne    v0, zero, Lb4d24 [$800b4d24]
 V0 = 0001;
-A0 = bu[S2 + 0050];
+A0 = bu[entity + 0050];
 800B4D14	jal    funca92f8 [$800a92f8]
 800B4D18	nop
 800B4D1C	beq    v0, zero, Lb4d90 [$800b4d90]
@@ -6752,7 +6739,7 @@ V0 = 0019;
 
 Lb4d34:	; 800B4D34
 800B4D34	lui    v0, $aaaa
-A0 = bu[S2 + 0053];
+A0 = bu[entity + 0053];
 V0 = V0 | aaab;
 800B4D40	multu  a0, v0
 800B4D44	mfhi   v1
@@ -6776,7 +6763,7 @@ V0 = V0 + 012c;
 A3 = 0;
 
 Lb4d90:	; 800B4D90
-A1 = bu[S2 + 0050];
+A1 = bu[entity + 0050];
 800B4D94	jal    funca921c [$800a921c]
 A0 = 0007;
 800B4D9C	beq    v0, zero, Lb4e0c [$800b4e0c]
@@ -6785,7 +6772,7 @@ V0 = 0007;
 800B4DA8	nop
 800B4DAC	beq    s0, zero, Lb5244 [$800b5244]
 V0 = 0001;
-V1 = bu[S2 + 0053];
+V1 = bu[entity + 0053];
 800B4DB8	nop
 800B4DBC	beq    v1, v0, Lb4dd0 [$800b4dd0]
 A0 = 0;
@@ -6795,14 +6782,14 @@ V0 = 0008;
 
 Lb4dd0:	; 800B4DD0
 A1 = 0800;
-V0 = hu[S2 + 000c];
-V1 = hu[S2 + 001c];
+V0 = hu[entity + 000c];
+V1 = hu[entity + 001c];
 A2 = 000c;
 V0 = V0 - V1;
 800B4DE4	lui    at, $1f80
 [1f800010] = h(V0);
-V0 = hu[S2 + 0014];
-V1 = hu[S2 + 0024];
+V0 = hu[entity + 0014];
+V1 = hu[entity + 0024];
 800B4DF4	nop
 V0 = V0 - V1;
 800B4DFC	lui    at, $1f80
@@ -6813,7 +6800,7 @@ A3 = 0;
 Lb4e0c:	; 800B4E0C
 800B4E0C	beq    s0, zero, Lb5244 [$800b5244]
 800B4E10	nop
-A0 = bu[S2 + 0050];
+A0 = bu[entity + 0050];
 800B4E18	jal    funca92f8 [$800a92f8]
 800B4E1C	nop
 800B4E20	beq    v0, zero, Lb4e6c [$800b4e6c]
@@ -6821,7 +6808,7 @@ A0 = bu[S2 + 0050];
 V0 = V0 < 0005;
 800B4E2C	beq    v0, zero, Lb4e6c [$800b4e6c]
 V0 = 0001;
-V1 = bu[S2 + 0053];
+V1 = bu[entity + 0053];
 800B4E38	nop
 800B4E3C	beq    v1, v0, Lb4e50 [$800b4e50]
 A0 = S6 << 10;
@@ -6841,7 +6828,7 @@ A2 = 000d;
 Lb4e6c:	; 800B4E6C
 800B4E6C	beq    s0, zero, Lb5244 [$800b5244]
 V0 = 0006;
-V1 = bu[S2 + 0050];
+V1 = bu[entity + 0050];
 800B4E78	nop
 800B4E7C	bne    v1, v0, Lb50c0 [$800b50c0]
 V0 = 000d;
@@ -6853,7 +6840,7 @@ V0 = 0019;
 
 Lb4e98:	; 800B4E98
 800B4E98	lui    v0, $aaaa
-A0 = bu[S2 + 0053];
+A0 = bu[entity + 0053];
 V0 = V0 | aaab;
 800B4EA4	multu  a0, v0
 800B4EA8	mfhi   v1
@@ -6877,7 +6864,7 @@ V0 = V0 + 012c;
 A3 = 0;
 
 Lb4ef4:	; 800B4EF4
-A0 = bu[S2 + 0053];
+A0 = bu[entity + 0053];
 V0 = V0 | aaab;
 800B4EFC	multu  a0, v0
 800B4F00	mfhi   v1
@@ -7004,7 +6991,7 @@ Lb50c0:	; 800B50C0
 V1 = 0002;
 800B50D4	bne    v0, v1, Lb5128 [$800b5128]
 800B50D8	nop
-V0 = bu[S2 + 0053];
+V0 = bu[entity + 0053];
 800B50E0	nop
 V0 = V0 & 0007;
 800B50E8	bne    v0, zero, Lb5128 [$800b5128]
@@ -7045,7 +7032,7 @@ A2 = A2 & 0003;
 A2 = A2 + 002d;
 
 Lb5170:	; 800B5170
-A0 = w[S2 + 0050];
+A0 = w[entity + 0050];
 V1 = V1 | 00ff;
 V0 = 001e;
 V1 = A0 & V1;
@@ -7060,13 +7047,13 @@ A1 = S0;
 A2 = 0011;
 V0 = 0258;
 S3 = 03e8;
-800B51AC	addiu  s2, zero, $fe70 (=-$190)
+800B51AC	addiu  entity, zero, $fe70 (=-$190)
 S1 = 0032;
 [S4 + 0000] = h(V0);
 800B51B8	lui    at, $1f80
 [1f80001a] = h(S3);
 800B51C0	lui    at, $1f80
-[1f80001c] = h(S2);
+[1f80001c] = h(entity);
 800B51C8	lui    at, $1f80
 [1f800012] = h(S1);
 A3 = 0;
@@ -7080,7 +7067,7 @@ A2 = 0011;
 800B51EC	lui    at, $1f80
 [1f80001a] = h(S3);
 800B51F4	lui    at, $1f80
-[1f80001c] = h(S2);
+[1f80001c] = h(entity);
 800B51FC	lui    at, $1f80
 [1f800012] = h(S1);
 800B5204	j      Lb523c [$800b523c]
@@ -8436,20 +8423,15 @@ for( int i = 3; i < 20; ++i )
         if( i == 18 )
         {
             V1 = b[80115a00];
+            model = w[8013a804] + (V1 - 1) * 24;
 
-            V0 = V1 * 24;
-            V1 = w[8013a804];
-            S1 = V1 + V0 - 24;
-            A0 = hu[S1 + 0018];
-            V0 = w[S1 + 001c];
+            parts = w[model + 1c] + hu[model + 18];
 
-            S0 = A0 + V0;
-
-            for( int j = 0; j < bu[S1 + 3]; ++j )
+            for( int j = 0; j < bu[model + 3]; ++j )
             {
-                A0 = S0 + j * 20; // part
-                A1 = 1;
-                funcc3db0();
+                A0 = parts + j * 20; // part
+                A1 = 1; // add transparency
+                wm_update_part_transparency();
             }
         }
     }
