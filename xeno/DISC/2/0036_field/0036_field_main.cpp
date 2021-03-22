@@ -659,20 +659,17 @@ A0 = S0;
 
 system_get_random_2_bytes();
 
-V1 = w[8004e9ac];
-80078188	addiu  v0, zero, $ffff (=-$1)
-8007818C	bne    v1, v0, L781ac [$800781ac]
-80078190	nop
-A0 = w[8004e9c8];
-8007819C	jal    func852a4 [$800852a4]
-800781A0	nop
-[8004e9ac] = w(V0);
-
-L781ac:	; 800781AC
-V0 = w[800ad0f0];
-if( V0 != 0 )
+if( w[8004e9ac] == -1 )
 {
-    [800ad0f0] = w(V0 - 1);
+    A0 = w[8004e9c8];
+    func852a4();
+
+    [8004e9ac] = w(V0);
+}
+
+if( w[800ad0f0] != 0 )
+{
+    [800ad0f0] = w(w[800ad0f0] - 1);
 }
 ////////////////////////////////
 
@@ -1320,61 +1317,53 @@ L78cf8:	; 80078CF8
 
 
 ////////////////////////////////
-// func78d10
-80078D10	addiu  sp, sp, $ffe8 (=-$18)
+// func78d10()
+
 V1 = w[800acfe0];
-80078D1C	lui    a0, $800b
-A0 = A0 + 1970;
-[SP + 0010] = w(RA);
-V1 = V1 + 0001;
+A0 = 800b1970;
+V1 = V1 + 1;
 V0 = V1 >> 1f;
 V0 = V1 + V0;
-V0 = V0 >> 01;
-V0 = V0 << 01;
+V0 = V0 >> 1;
+V0 = V0 << 1;
 V1 = V1 - V0;
-V0 = V1 << 07;
+V0 = V1 << 7;
 V0 = V0 + V1;
-V0 = V0 << 04;
+V0 = V0 << 4;
 V0 = V0 - V1;
-V0 = V0 << 02;
+V0 = V0 << 2;
 V0 = V0 + V1;
 V0 = V0 << 02;
 V0 = V0 + A0;
 [800acfe0] = w(V1);
 [800c3740] = w(V0);
-80078D70	jal    $system_psyq_put_disp_env
-A0 = V0 + 00b8;
+
+A0 = V0 + b8;
+system_psyq_put_disp_env();
+
 A0 = w[800c3740];
-80078D80	jal    system_psyq_put_draw_env
-80078D84	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80078D90	jr     ra 
-80078D94	nop
+system_psyq_put_draw_env();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func78d98
-80078D98	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
-80078DA4	jal    func73670 [$80073670]
+
 S0 = A0;
+
+80078DA4	jal    func73670 [$80073670]
+
 S0 = S0 << 02;
-80078DB0	lui    t0, $00ff
 A0 = 800af328;
-T0 = T0 | ffff;
+T0 = 00ffffff;
 V1 = w[800acfe0];
-80078DC8	lui    a2, $ff00
+A2 = ff000000;
 V1 = V1 << 04;
 V0 = V1 + A0;
 [V0 + 0006] = b(S0);
 [V0 + 0005] = b(S0);
-80078DDC	lui    at, $800b
-AT = AT + V1;
-[AT + f32c] = b(S0);
+[800af32c + V1] = b(S0);
 A3 = w[800acfe0];
 A1 = w[800c3740];
 V1 = A3 << 04;
@@ -1404,27 +1393,22 @@ V1 = w[A1 + 00cc];
 V0 = V0 & T0;
 V1 = V1 & A2;
 V1 = V1 | V0;
-80078E68	jal    field_sync [$80076c88]
 [A1 + 00cc] = w(V1);
+field_sync();
+
 A0 = 800af320;
-A2 = w[800acfe0];
 A1 = 0;
-80078E84	jal    $system_move_image
-A2 = A2 << 08;
+A2 = w[800acfe0] << 8;
+system_move_image();
+
+A0 = w[800c3740] + b8;
+system_psyq_put_disp_env();
+
 A0 = w[800c3740];
-80078E94	jal    $system_psyq_put_disp_env
-A0 = A0 + 00b8;
-A0 = w[800c3740];
-80078EA4	jal    system_psyq_put_draw_env
-80078EA8	nop
-A0 = w[800c3740];
-80078EB4	jal    $system_psyq_draw_otag
-A0 = A0 + 00d0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80078EC8	jr     ra 
-80078ECC	nop
+system_psyq_put_draw_env();
+
+A0 = w[800c3740] + d0;
+system_psyq_draw_otag();
 ////////////////////////////////
 
 
@@ -2576,25 +2560,23 @@ SP = SP + 0048;
 
 ////////////////////////////////
 // func7a26c
-8007A26C	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 003c] = w(S3);
+
 S3 = A0;
-[SP + 0038] = w(S2);
 S2 = A1;
-[SP + 0034] = w(S1);
 S1 = A2;
-[SP + 0030] = w(S0);
 S0 = A3 << 02;
 S0 = S0 + A3;
 S0 = S0 << 03;
 S0 = S0 + 0020;
-[SP + 0040] = w(RA);
-8007A2A0	jal    $800494b4
 S0 = S2 + S0;
+8007A2A0	jal    $800494b4
+
+A0 = S1;
 8007A2A8	jal    $80049da4
+
 A0 = S1;
 8007A2B0	jal    $80049e34
-A0 = S1;
+
 A0 = S2;
 V0 = S0 + 0008;
 [SP + 0010] = w(V0);
@@ -2642,14 +2624,6 @@ V0 = w[S3 + 0004];
 S0 = S0 & A3;
 V0 = V0 & V1;
 V0 = V0 | S0;
-8007A378	jal    $80049554
 [S3 + 0004] = w(V0);
-RA = w[SP + 0040];
-S3 = w[SP + 003c];
-S2 = w[SP + 0038];
-S1 = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0048;
-8007A398	jr     ra 
-8007A39C	nop
+8007A378	jal    $80049554
 ////////////////////////////////

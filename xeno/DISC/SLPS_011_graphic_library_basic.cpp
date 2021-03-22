@@ -359,7 +359,7 @@ L43abc:	; 80043ABC
 
 
 ////////////////////////////////
-// func43b28()
+// system_graphic_textured_quad_header()
 
 [A0 + 3] = b(9);
 [A0 + 7] = b(2c);
@@ -528,35 +528,22 @@ if( A2 != 0 )
 
 
 ////////////////////////////////
-// func43cc4
-T0 = A0;
-V0 = h[A1 + 0004];
-80043CCC	nop
-80043CD0	beq    v0, zero, L43ce8 [$80043ce8]
-A0 = 0005;
-V0 = h[A1 + 0006];
-80043CDC	nop
-80043CE0	bne    v0, zero, L43cf0 [$80043cf0]
-80043CE4	lui    v0, $0100
+// system_graphic_create_copy_rectangle_packet()
 
-L43ce8:	; 80043CE8
-A0 = 0;
-80043CEC	lui    v0, $0100
+if( ( h[A1 + 4] == 0 ) || ( h[A1 + 6] == 0 ) ) // if width or height == 0 then disable
+{
+    [A0 + 3] = b(0);
+}
+else
+{
+    [A0 + 3] = b(5);
+}
 
-L43cf0:	; 80043CF0
-[T0 + 0004] = w(V0);
-80043CF4	lui    v0, $8000
-[T0 + 0008] = w(V0);
-V0 = A3 << 10;
-V1 = A2 & ffff;
-[T0 + 0003] = b(A0);
-A0 = w[A1 + 0000];
-V0 = V0 | V1;
-[T0 + 0010] = w(V0);
-[T0 + 000c] = w(A0);
-V0 = w[A1 + 0004];
-80043D1C	jr     ra 
-[T0 + 0014] = w(V0);
+[A0 + 4] = w(01000000); // clear cache
+[A0 + 8] = w(80000000); // copy rectangle
+[A0 + c] = w(w[A1 + 0]); // source coord
+[A0 + 10] = w((A3 << 10) | (A2 & ffff)); // dest coord
+[A0 + 14] = w(w[A1 + 4]); // width + height
 ////////////////////////////////
 
 

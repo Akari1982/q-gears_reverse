@@ -2336,7 +2336,7 @@ L25ef0:	; 80025EF0
 80025EF4	addu   v0, v0, fp
 80025EF8	sll    v0, v0, $03
 80025EFC	addu   s1, s5, v0
-80025F00	jal    func43b28 [$80043b28]
+80025F00	jal    system_graphic_textured_quad_header [$80043b28]
 80025F04	addu   a0, s1, zero
 80025F08	addu   a0, s1, zero
 80025F0C	jal    system_set_draw_packet_transparency [$80043a74]
@@ -2640,7 +2640,7 @@ L26310:	; 80026310
 
 L26334:	; 80026334
 80026334	addu   a0, s0, zero
-80026338	jal    func43b28 [$80043b28]
+80026338	jal    system_graphic_textured_quad_header [$80043b28]
 8002633C	sra    s4, v0, $0c
 80026340	addu   a0, s0, zero
 80026344	jal    system_set_draw_packet_transparency [$80043a74]
@@ -2878,7 +2878,7 @@ L2664c:	; 8002664C
 
 L26668:	; 80026668
 80026668	srl    s5, v0, $0c
-8002666C	jal    func43b28 [$80043b28]
+8002666C	jal    system_graphic_textured_quad_header [$80043b28]
 80026670	addu   a0, s0, zero
 80026674	addu   a0, s0, zero
 80026678	jal    system_set_draw_packet_transparency [$80043a74]
@@ -3537,7 +3537,7 @@ L26fa8:	; 80026FA8
 80026FBC	addu   s0, s4, zero
 
 loop26fc0:	; 80026FC0
-80026FC0	jal    func43b28 [$80043b28]
+80026FC0	jal    system_graphic_textured_quad_header [$80043b28]
 80026FC4	addu   a0, s0, zero
 80026FC8	addu   a0, s0, zero
 80026FCC	jal    func43a9c [$80043a9c]
@@ -10855,7 +10855,7 @@ L405dc:	; 800405DC
 // func43b14
 80043B14-80043B24
 ////////////////////////////////
-// func43b28
+// system_graphic_textured_quad_header
 80043B28-80043B38
 ////////////////////////////////
 // func43b3c
@@ -10906,7 +10906,7 @@ L405dc:	; 800405DC
 // system_graphic_create_texpage_settings_packet
 80043C98-80043CC0
 ////////////////////////////////
-// func43cc4
+// system_graphic_create_copy_rectangle_packet
 80043CC4-80043D20
 ////////////////////////////////
 // func43d24
@@ -11212,7 +11212,7 @@ L405dc:	; 800405DC
 // func49c44
 80049C44-80049C70
 ////////////////////////////////
-// func49c74
+// system_gte_multiply_matrix_by_vector
 80049C74-80049DA0
 ////////////////////////////////
 // system_gte_set_rotation_matrix

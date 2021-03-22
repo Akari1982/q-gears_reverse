@@ -4352,7 +4352,7 @@ if( hu[struct_164 + 3a] != 0 )
 
     A0 = w[struct_164 + 20] + c;
     A1 = SP + 20;
-    func49c74(); // scaled matrix (row)
+    system_gte_multiply_matrix_by_vector(); // scaled matrix (row)
 }
 ////////////////////////////////
 

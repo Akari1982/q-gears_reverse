@@ -607,7 +607,7 @@ if( number_of_entity > 0 )
 
                             A0 = w[struct_164 + 20] + c;
                             A1 = SP + 20;
-                            80075670	jal    func49c74 [$80049c74]
+                            80075670	jal    system_gte_multiply_matrix_by_vector [$80049c74]
 
                             V0 = w[scruct_5c_p + S6 * 5c + 4c];
 
@@ -1153,7 +1153,7 @@ V0 = A0 >> 0e;
 
 L75f9c:	; 80075F9C
 A0 = S3;
-80075FA0	jal    func49c74 [$80049c74]
+80075FA0	jal    system_gte_multiply_matrix_by_vector [$80049c74]
 A1 = SP + 00b8;
 T4 = w[S3 + 0000];
 T5 = w[S3 + 0004];

@@ -13,7 +13,7 @@
 
 800707be [][]     battle result stored here. Loaded by 0x23 BTRLD.
 
-8007078c []       array of enitys lines data. (size 0x01).
+8007078c []       array of enities lines data. (size 0x01).
 
 800707c0 [][][][] offset to font padding file.
 
@@ -155,7 +155,7 @@
 + 0f []   entity cross LINE. Script call (removed after script call).
 + 10 []   entity move to line. Script call (removed after script call).
 + 11 []   entity talk to LINE. (1 - true/0 - false).
-+ 12 []   entity enter LINE. Script call (removed after script call).
++ 12 []   entity enter LINE (with solid). Script call (removed after script call).
 + 13 []   entity leave LINE. Script call (removed after script call).
 + 14 []   store direction of moving between move vector and line if we move in line.
 + 15 []   entity move to line (for talk check).
