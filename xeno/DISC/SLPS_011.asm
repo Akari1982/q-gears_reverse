@@ -12396,7 +12396,7 @@ L4b098:	; 8004B098
 // func4e270
 8004E270-8004E408
 ////////////////////////////////
-// func4e40c
+// system_bios_wait_event
 8004E40C-8004E418
 ////////////////////////////////
 // system_sound_set_reverb_output_volume

@@ -310,7 +310,7 @@
 80058504 [][][][] init with 0. Set to 4 during sound init.
 80058508 [][][][] init with 0.
 8005850c [][][][] init with 0. Set to 8006f158 during sound init.
-
+80058510 array of some pointers (0xa items 0x4 size)
 
 80058810 GP
     + 14 [][][][] some id for GP + 420 or GP + 418 struct. Increment after inserting new.
@@ -388,6 +388,7 @@
                                     0xe0000000 ???
                     +18 [][][][] prev struct.
 
+80058954 start of working area
 80058954 [][][][] pointer to some func.
 80058958 [][][][] pointer to file loaded via func19a50() (we allocate place for file here).
 8005895c [][][][] store here id of file to load via func19a50().
@@ -954,6 +955,8 @@ First struct is just header struct (0x10 size), later we add more structs differ
                     0x80000000 - disabled.
                     0x40000000 - allocated.
     +4 [][][][] (10000 << shifter) - 1010. size.
+
+8006f17c end of worknig area
 
 8006f180 start of heap region.
     +0 [][][][] pointer to end of heap.

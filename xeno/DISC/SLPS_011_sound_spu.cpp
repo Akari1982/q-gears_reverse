@@ -1355,7 +1355,7 @@ system_sound_spu_update_settings();
 if( S2 != 0 )
 {
     A0 = S0;
-    8004DD40	jal    func4e270 [$8004e270]
+    func4e270(); // reverb related
 }
 
 A0 = d1; // 1a2 sound ram reverb work area start address
@@ -1515,132 +1515,108 @@ if( ( A1 < 1 ) || ( A1 & 80000000 ) )
 
 
 ////////////////////////////////
-// func4e270
-8004E270	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0018] = w(S0);
+// func4e270()
+
 S0 = A0;
-[SP + 002c] = w(S5);
-V0 = S0 < 000a;
-[SP + 0030] = w(RA);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-[SP + 0010] = w(0);
-8004E29C	beq    v0, zero, L4e2c8 [$8004e2c8]
+
+[SP + 10] = w(0);
+
+if( S0 >= a )
+{
+    return -1;
+}
+
 S5 = 0;
-8004E2A4	lui    v1, $8006
-8004E2A8	addiu  v1, v1, $8510 (=-$7af0)
-V0 = S0 << 02;
-S1 = V0 + V1;
-A0 = w[S1 + 0000];
+S1 = 80058510 + S0 * 4;
+
+A0 = w[S1];
 func4d3ac();
 
-8004E2C0	beq    v0, zero, L4e2d0 [$8004e2d0]
-8004E2C4	nop
+if( V0 != 0 ) // Reverb Master Disable
+{
+    return -1;
+}
 
-L4e2c8:	; 8004E2C8
-8004E2C8	j      L4e3e4 [$8004e3e4]
-8004E2CC	addiu  v0, zero, $ffff (=-$1)
+if( S0 == 0 )
+{
+    S1 = 10 << w[800584d0];
+    S2 = fff0 << w[800584d0];
+}
+else
+{
+    A0 = w[S1];
+    S1 = (10000 - A0) << w[800584d0];
+    S2 = A0 << w[800584d0];
+}
 
-L4e2d0:	; 8004E2D0
-8004E2D0	bne    s0, zero, L4e2f4 [$8004e2f4]
-8004E2D4	lui    v0, $0001
-V0 = w[800584d0];
-V1 = 0010;
-S1 = V1 << V0;
-V1 = fff0;
-8004E2EC	j      L4e30c [$8004e30c]
-S2 = V1 << V0;
-
-L4e2f4:	; 8004E2F4
-A0 = w[S1 + 0000];
-V1 = w[800584d0];
-V0 = V0 - A0;
-S1 = V0 << V1;
-S2 = A0 << V1;
-
-L4e30c:	; 8004E30C
 S4 = w[800584c4];
-V0 = 0001;
-8004E318	bne    s4, v0, L4e32c [$8004e32c]
-8004E31C	nop
-[800584c4] = w(0);
-S5 = 0001;
+if( S4 == 1 )
+{
+    [800584c4] = w(0);
+    S5 = 1;
+}
 
-L4e32c:	; 8004E32C
-V0 = w[800584e0];
-8004E334	nop
-8004E338	beq    v0, zero, L4e358 [$8004e358]
-S3 = 0001;
-V0 = w[800584e0];
-8004E348	nop
-[SP + 0010] = w(V0);
-[800584e0] = w(0);
+if( w[800584e0] != 0 )
+{
+    [SP + 10] = w(w[800584e0]);
+    [800584e0] = w(0);
+}
 
-L4e358:	; 8004E358
-V0 = S1 < 0401;
+S3 = 1;
+while( S3 != 0 )
+{
+    S0 = S1;
+    if( S1 >= 401 )
+    {
+        S0 = 400;
+    }
+    else
+    {
+        S3 = 0;
+    }
 
-loop4e35c:	; 8004E35C
-8004E35C	bne    v0, zero, L4e36c [$8004e36c]
-S0 = S1;
-8004E364	j      L4e370 [$8004e370]
-S0 = 0400;
+    // write to spu
 
-L4e36c:	; 8004E36C
-S3 = 0;
+    A0 = 2;
+    A1 = S2;
+    func4cb50(); // set address in spu to write to 0x1f801da6
 
-L4e370:	; 8004E370
-A0 = 0002;
-8004E374	jal    func4cb50 [$8004cb50]
-A1 = S2;
-8004E37C	jal    func4cb50 [$8004cb50]
-A0 = 0001;
-A0 = 0003;
-8004E388	lui    a1, $8006
-8004E38C	addiu  a1, a1, $80a0 (=-$7f60)
-8004E390	jal    func4cb50 [$8004cb50]
-A2 = S0;
-A0 = w[8005803c];
-8004E3A0	addiu  s1, s1, $fc00 (=-$400)
-8004E3A4	jal    func4e40c [$8004e40c]
-S2 = S2 + 0400;
-8004E3AC	bne    s3, zero, loop4e35c [$8004e35c]
-V0 = S1 < 0401;
-8004E3B4	beq    s5, zero, L4e3c4 [$8004e3c4]
-8004E3B8	nop
-[800584c4] = w(S4);
+    A0 = 1;
+    func4cb50(); // wait until spu address is set
 
-L4e3c4:	; 8004E3C4
-V0 = w[SP + 0010];
-8004E3C8	nop
-8004E3CC	beq    v0, zero, L4e3e4 [$8004e3e4]
-V0 = 0;
-V0 = w[SP + 0010];
-[800584e0] = w(V0);
-V0 = 0;
+    A0 = 3;
+    A1 = 800580a0;
+    A2 = S0;
+    func4cb50();
 
-L4e3e4:	; 8004E3E4
-RA = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-8004E404	jr     ra 
-8004E408	nop
+    A0 = w[8005803c];
+    S1 = S1 - 400;
+    S2 = S2 + 400;
+    system_bios_wait_event();
+}
+
+if( S5 != 0 )
+{
+    [800584c4] = w(S4);
+}
+
+if( w[SP + 10] != 0 )
+{
+    [800584e0] = w(w[SP + 10]);
+}
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4e40c
+// system_bios_wait_event()
+// B(0Ah) WaitEvent(event) - releases event from the event table
+// Always returns 1 (even if the event handle is unused or invalid).
 T2 = 00b0;
-8004E410	jr     t2 
 T1 = 000a;
-8004E418	nop
+8004E410	jr     t2
 ////////////////////////////////
 
 
@@ -1660,72 +1636,66 @@ spu = w[800584a8]; // 1f801c00 start of spu registers
 
 ////////////////////////////////
 // func4e448
-8004E448	lui    v1, $8006
-8004E44C	lw     v1, $8058(v1)
-8004E454	slti   v0, v1, $0009
+V1 = w[80058058];
+V0 = V1 < 0009;
 8004E458	beq    v0, zero, L4e550 [$8004e550]
 
-8004E460	slti   v0, v1, $0007
+V0 = V1 < 0007;
 8004E464	bne    v0, zero, L4e550 [$8004e550]
-8004E468	addiu  a2, sp, $0010
-8004E46C	addiu  a1, zero, $0043
-8004E470	lui    v0, $8006
-8004E474	lw     v0, $8058(v0)
+A2 = SP + 0010;
+A1 = 0043;
+V0 = w[80058058];
 8004E478	addiu  a3, zero, $ffff (=-$1)
-8004E47C	sll    v1, v0, $04
-8004E480	addu   v1, v1, v0
-8004E484	sll    v1, v1, $02
-8004E488	lui    v0, $8006
-8004E48C	addiu  v0, v0, $8560 (=-$7aa0)
-8004E490	addu   v1, v1, v0
+V1 = V0 << 04;
+V1 = V1 + V0;
+V1 = V1 << 02;
+V0 = 80058560;
+V1 = V1 + V0;
 
 loop4e494:	; 8004E494
-8004E494	lbu    v0, $0000(v1)
-8004E498	addiu  v1, v1, $0001
+V0 = bu[V1 + 0000];
+V1 = V1 + 0001;
 8004E49C	addiu  a1, a1, $ffff (=-$1)
-8004E4A0	sb     v0, $0000(a2)
+[A2 + 0000] = b(V0);
 8004E4A4	bne    a1, a3, loop4e494 [$8004e494]
-8004E4A8	addiu  a2, a2, $0001
-8004E4AC	lui    v0, $8102
-8004E4B0	ori    v0, v0, $0409
-8004E4B4	sll    v1, a0, $0d
+A2 = A2 + 0001;
+V0 = 81020409;
+V1 = A0 << 0d;
 8004E4B8	mult   v1, v0
-8004E4BC	sll    a1, a0, $0c
+A1 = A0 << 0c;
 8004E4C0	mfhi   a3
-8004E4C4	lui    at, $8006
-8004E4C8	sw     a0, $8060(at)
-8004E4CC	lhu    a0, $0014(sp)
+[80058060] = w(A0);
+A0 = hu[SP + 0014];
 8004E4D0	mult   a1, v0
-8004E4D4	lui    v0, $0c01
-8004E4D8	ori    v0, v0, $1c00
-8004E4DC	sw     v0, $0010(sp)
-8004E4E0	addu   v0, a3, v1
-8004E4E4	sra    v0, v0, $06
-8004E4E8	sra    v1, v1, $1f
-8004E4EC	subu   v0, v0, v1
-8004E4F0	subu   v0, v0, a0
-8004E4F4	sh     v0, $0028(sp)
-8004E4F8	lhu    v0, $0016(sp)
-8004E4FC	lhu    v1, $0036(sp)
+V0 = c011c00;
+[SP + 0010] = w(V0);
+V0 = A3 + V1;
+V0 = V0 >> 06;
+V1 = V1 >> 1f;
+V0 = V0 - V1;
+V0 = V0 - A0;
+[SP + 0028] = h(V0);
+V0 = hu[SP + 0016];
+V1 = hu[SP + 0036];
 8004E500	mfhi   a2
-8004E504	addu   a0, a2, a1
-8004E508	sra    a0, a0, $06
-8004E50C	sra    a1, a1, $1f
-8004E510	subu   a0, a0, a1
-8004E514	subu   v0, a0, v0
-8004E518	sh     v0, $002a(sp)
-8004E51C	lhu    v0, $002e(sp)
-8004E520	addu   v1, v1, a0
-8004E524	sh     v1, $0034(sp)
-8004E528	lhu    v1, $004e(sp)
-8004E52C	addu   v0, v0, a0
-8004E530	sh     v0, $002c(sp)
-8004E534	lhu    v0, $004c(sp)
-8004E538	addu   v1, v1, a0
-8004E53C	sh     v1, $004a(sp)
-8004E540	addu   v0, v0, a0
-8004E544	addiu  a0, sp, $0010
-8004E54C	sh     v0, $0048(sp)
+A0 = A2 + A1;
+A0 = A0 >> 06;
+A1 = A1 >> 1f;
+A0 = A0 - A1;
+V0 = A0 - V0;
+[SP + 002a] = h(V0);
+V0 = hu[SP + 002e];
+V1 = V1 + A0;
+[SP + 0034] = h(V1);
+V1 = hu[SP + 004e];
+V0 = V0 + A0;
+[SP + 002c] = h(V0);
+V0 = hu[SP + 004c];
+V1 = V1 + A0;
+[SP + 004a] = h(V1);
+V0 = V0 + A0;
+A0 = SP + 0010;
+[SP + 0048] = h(V0);
 system_sound_spu_update_settings();
 
 L4e550:	; 8004E550
@@ -1735,49 +1705,44 @@ L4e550:	; 8004E550
 
 ////////////////////////////////
 // func4e560
-8004E560	lui    v1, $8006
-8004E564	lw     v1, $8058(v1)
-8004E56C	slti   v0, v1, $0009
+V1 = w[80058058];
+V0 = V1 < 0009;
 8004E570	beq    v0, zero, L4e60c [$8004e60c]
 
-8004E578	slti   v0, v1, $0007
+V0 = V1 < 0007;
 8004E57C	bne    v0, zero, L4e60c [$8004e60c]
-8004E580	addiu  a2, sp, $0010
-8004E584	addiu  a1, zero, $0043
-8004E588	lui    v0, $8006
-8004E58C	lw     v0, $8058(v0)
+A2 = SP + 0010;
+A1 = 0043;
+V0 = w[80058058];
 8004E590	addiu  a3, zero, $ffff (=-$1)
-8004E594	sll    v1, v0, $04
-8004E598	addu   v1, v1, v0
-8004E59C	sll    v1, v1, $02
-8004E5A0	lui    v0, $8006
-8004E5A4	addiu  v0, v0, $8560 (=-$7aa0)
-8004E5A8	addu   v1, v1, v0
+V1 = V0 << 04;
+V1 = V1 + V0;
+V1 = V1 << 02;
+V0 = 80058560;
+V1 = V1 + V0;
 
 loop4e5ac:	; 8004E5AC
-8004E5AC	lbu    v0, $0000(v1)
-8004E5B0	addiu  v1, v1, $0001
+V0 = bu[V1 + 0000];
+V1 = V1 + 0001;
 8004E5B4	addiu  a1, a1, $ffff (=-$1)
-8004E5B8	sb     v0, $0000(a2)
+[A2 + 0000] = b(V0);
 8004E5BC	bne    a1, a3, loop4e5ac [$8004e5ac]
-8004E5C0	addiu  a2, a2, $0001
-8004E5C4	lui    v1, $8102
-8004E5C8	ori    v1, v1, $0409
-8004E5CC	sll    v0, a0, $07
-8004E5D0	addu   v0, v0, a0
-8004E5D4	sll    v0, v0, $08
+A2 = A2 + 0001;
+V1 = 81020409;
+V0 = A0 << 07;
+V0 = V0 + A0;
+V0 = V0 << 08;
 8004E5D8	mult   v0, v1
-8004E5DC	addiu  v1, zero, $0080
-8004E5E0	lui    at, $8006
-8004E5E4	sw     a0, $8064(at)
-8004E5E8	addiu  a0, sp, $0010
-8004E5EC	sw     v1, $0010(sp)
+V1 = 0080;
+[80058064] = w(A0);
+A0 = SP + 0010;
+[SP + 0010] = w(V1);
 8004E5F0	mfhi   t0
-8004E5F4	addu   v1, t0, v0
-8004E5F8	sra    v1, v1, $06
-8004E5FC	sra    v0, v0, $1f
-8004E600	subu   v1, v1, v0
-8004E608	sh     v1, $0022(sp)
+V1 = T0 + V0;
+V1 = V1 >> 06;
+V0 = V0 >> 1f;
+V1 = V1 - V0;
+[SP + 0022] = h(V1);
 system_sound_spu_update_settings();
 
 L4e60c:	; 8004E60C

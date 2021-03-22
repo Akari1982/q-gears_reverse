@@ -8,8 +8,8 @@
 // are automatically calling FlushCache (so FlushCache is required only
 // when loading program code via "FileRead" or via "CdReadSector").
 800402CC	addiu  t2, zero, $00a0
-800402D0	jr     t2 
 800402D4	addiu  t1, zero, $0044
+800402D0	jr     t2 
 ////////////////////////////////
 
 

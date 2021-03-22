@@ -1,1 +1,1 @@
-main SCUS_941_gte.cpp
+main SLPS_011_sound_spu.cpp
