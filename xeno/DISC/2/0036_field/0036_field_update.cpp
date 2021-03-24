@@ -174,7 +174,7 @@ SP = T0;
 
 func74958(); // update sprite
 
-funca8b60(); // model anim read
+funca8b60(); // update patricle
 
 if( w[800c1b60] == 0 )
 {
