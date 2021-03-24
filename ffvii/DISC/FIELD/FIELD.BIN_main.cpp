@@ -658,7 +658,7 @@ La25bc:	; 800A25BC
     A0 = S0;
 
     [S2 + 0088] = h(V1);
-    funcba65c; // script update here
+    funcba65c(); // script update here
 
     [800965e0] = h(hu[S2 + 2a]);
 
@@ -3522,7 +3522,7 @@ if (number_of_models > 0)
                 pc_entity = h[800965E0];
                 if (S2 == pc_entity)
                 {
-                    A0 = 8007E7AC;
+                    A0 = 8007e7ac;
                     field_line_clear_entity_in_line();
                 }
             }
@@ -3646,7 +3646,7 @@ if (number_of_models > 0)
             pc_entity = h[800965E0];
             if (S2 == pc_entity)
             {
-                A0 = 8007E7AC;
+                A0 = 8007e7ac;
                 field_line_clear_entity_in_line();
             }
         }
@@ -4869,10 +4869,10 @@ else if (((visible_entity_id != h[800965E0]) ||
 }
 
 A0 = 80074EA4 + visible_entity_id * 84 + 72;
-A1 = 1F800070;
-A2 = 1F800090;
-A3 = 1F800040;
-walkmesh_border_cross;
+A1 = 1f800070;
+A2 = 1f800090;
+A3 = 1f800040;
+walkmesh_border_cross();
 last_border_cross  = w(V0);
 
 // if entity we moving is PC entity and we are moving it ourself
@@ -4880,7 +4880,7 @@ if( visible_entity_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
 {
     A0 = 80074ea4 + visible_entity_id * 84;
     A1 = 8007e7ac;
-    A2 = 1F800070;
+    A2 = 1f800070;
     move_line_check();
     [80071c0c] = b(V0);
 
@@ -5019,17 +5019,21 @@ return T2;
 
 
 ////////////////////////////////
-// move_distance_to_line
-A0 = line_offset;
-x1 = h[A0 + 0];
-y1 = h[A0 + 2];
-z1 = h[A0 + 4];
-x2 = h[A0 + 6];
-y2 = h[A0 + 8];
-z2 = h[A0 + A];
-x3 = h[A1 + 0];
-y3 = h[A1 + 4];
-z3 = h[A1 + 8];
+// move_distance_to_line()
+
+line_offset = A0;
+position = A1;
+res = A2;
+
+x1 = h[line_offset + 0];
+y1 = h[line_offset + 2];
+z1 = h[line_offset + 4];
+x2 = h[line_offset + 6];
+y2 = h[line_offset + 8];
+z2 = h[line_offset + a];
+x3 = h[position + 0];
+y3 = h[position + 4];
+z3 = h[position + 8];
 
 V1 = (x1 - x3) * (x2 - x1);
 T1 = (y1 - y3) * (y2 - y1);
@@ -5040,9 +5044,13 @@ A0 = (z2 - z1) * (z2 - z1);
 
 A0 = -(V1 + T1 + A2) / (V0 + A1 + A0);
 
-[A2 + 0] = x = A0 * (x2 - x1) + x1;
-[A2 + 4] = y = A0 * (y2 - y1) + y1;
-[A2 + 8] = z = A0 * (z2 - z1) + z1;
+x = A0 * (x2 - x1) + x1;
+y = A0 * (y2 - y1) + y1;
+z = A0 * (z2 - z1) + z1;
+
+[res + 0] = w[x];
+[res + 4] = w[y];
+[res + 8] = w[z];
 
 if (((x1 >= x && x2 <= x) || (x1 < x && x2 >= x)) &&
     ((y1 >= y && y2 <= y) || (y1 < y && y2 >= y)))
@@ -5057,135 +5065,100 @@ return -1;
 
 
 ////////////////////////////////
-// move_line_check
+// move_line_check()
+
 entity_data_offset = A0;
-line_offset        = A1;
-S6 = 0;
+line_data = A1;
 FP = 0;
 
+[1f800000] = w(w[entity_data_offset + c] >> c); //old position x
+[1f800004] = w(w[entity_data_offset + 10] >> c); //old position y
+[1f800008] = w(w[entity_data_offset + 14] >> c); //old position z
+[1f800010] = w(w[A2 + 0] >> c); //new position x
+[1f800014] = w(w[A2 + 4] >> c); //new position y
+[1f800018] = w(w[entity_data_offset + 14] >> c); //old position z
 
-
-//old position x
-V0 = w[entity_data_offset + C];
-V0 = V0 >> C;
-[1F800000] = w(V0);
-//old position y
-V0 = w[entity_data_offset + 10];
-V0 = V0 >> C;
-[1F800004] = w(V0);
-//old position z
-V0 = w[entity_data_offset + 14];
-V0 = V0 >> C;
-[1F800008] = w(V0);
-
-//new position x
-V0 = w[A2 + 0];
-V0 = V0 >> C;
-[1F800010] = w(V0);
-//new position y
-V0 = w[A2 + 4];
-V0 = V0 >> C;
-[1F800014] = w(V0);
-//old position z
-V0 = w[entity_data_offset + 14];
-V0 = V0 >> C;
-[1F800018] = w(V0);
-
-
-
-La9f9c:	; 800A9F9C
-V0 = bu[line_offset + 0C];
-if (V0 == 1)
+for( int i = 0; i < 20; ++i ) // go through all lines
 {
-    [line_offset + 15] = b(0);
-
-    A0 = line_offset;
-    A1 = 1F800000;
-    A2 = 1F800020;
-    move_distance_to_line;
-
-    V1 = V0;
-    [SP + 10] = w(V1);
-
-    V0 = hu[entity_data_offset + 6C]; // solid range
-    V0 = V0 * V0;
-
-    // if we closer to line than solid range
-    if (V1 != -1 && V1 < V0)
+    if( bu[line_data + i * 18 + c] == 1 ) // if line active
     {
-        V0 = bu[line_offset + 16];
-        if (V0 == 1)
+        [line_data + i * 18 + 15] = b(0);
+
+        A0 = line_data + i * 18;
+        A1 = 1f800000; // old position
+        A2 = 1f800020;
+        move_distance_to_line();
+
+        distance = V1 = V0;
+        [SP + 10] = w(V1);
+
+        solid_range = hu[entity_data_offset + 6c];
+
+        // if we closer to line than solid range
+        if( V1 != -1 && V1 < solid_range * solid_range )
         {
-            FP = 1;
-        }
+            if( bu[line_data + i * 18 + 16] == 1 )
+            {
+                FP = 1;
+            }
 
-        V0 = bu[line_offset + 0E];
-        if (V0 == 0)
-        {
-            [line_offset + 12] = b(1);
-        }
-        [line_offset + 0E] = b(1);
+            if( bu[line_data + i * 18 + e] == 0 )
+            {
+                [line_data + i * 18 + 12] = b(1);
+            }
+            [line_data + i * 18 + e] = b(1);
 
-        x1 = h[line_offset + 00]; // x1
-        y1 = h[line_offset + 02]; // y1
-        x2 = h[line_offset + 06]; // x2
-        y2 = h[line_offset + 08]; // y2
-        old_x = w[1F800000];
-        old_y = w[1F800004];
-        new_x = w[1F800010];
-        new_y = w[1F800014];
+            x1 = h[line_data + i * 18 + 0]; // x1
+            y1 = h[line_data + i * 18 + 2]; // y1
+            x2 = h[line_data + i * 18 + 6]; // x2
+            y2 = h[line_data + i * 18 + 8]; // y2
+            old_x = w[1f800000];
+            old_y = w[1f800004];
+            new_x = w[1f800010];
+            new_y = w[1f800014];
 
-        T0 = ((x2 - x1) * (old_y - y1)) - ((old_x - x1) * (y2 - y1));
-        A0 = ((x2 - x1) * (new_y - y1)) - ((new_x - x1) * (y2 - y1));
+            T0 = ((x2 - x1) * (old_y - y1)) - ((old_x - x1) * (y2 - y1));
+            A0 = ((x2 - x1) * (new_y - y1)) - ((new_x - x1) * (y2 - y1));
 
-        // if we cross the line
-        if ((A0 > 0 && T0 <= 0) || (T0 > 0 && A0 <= 0) || (A0 >= 0 && T0 < 0) || (T0 >= 0 && A0 < 0))
-        {
-            [line_offset + 0F] = b(1);
-        }
+            // if we cross the line
+            if( ( A0 > 0 && T0 <= 0 ) || ( T0 > 0 && A0 <= 0 ) || ( A0 >= 0 && T0 < 0 ) || ( T0 >= 0 && A0 < 0 ) )
+            {
+                [line_data + i * 18 + f] = b(1);
+            }
 
-        // if we not move in line
-        if (w[1F800000] == w[1F800020] && w[1F800004] == w[1F800024])
-        {
-            [line_offset + 10] = b(1);
-            [line_offset + 15] = b(1);
+            // if previously we where stay on line
+            if( w[1f800000] == w[1f800020] && w[1f800004] == w[1f800024] )
+            {
+                [line_data + i * 18 + 10] = b(1);
+                [line_data + i * 18 + 15] = b(1);
+            }
+            else
+            {
+                A0 = 1f800000;
+                A1 = 1f800020;
+                A2 = SP + 10;
+                calculate_direction_by_vectors();
+                [line_data + i * 18 + 14] = b(V0);
+
+                // if we move to line
+                if( ( (bu[line_data + i * 18 + 14] - bu[entity_data_offset + 36] + 40) & ff ) < 80 )
+                {
+                    [line_data + i * 18 + 10] = b(1);
+                    [line_data + i * 18 + 15] = b(1);
+                }
+            }
         }
         else
         {
-            A0 = 1F800000;
-            A1 = 1F800020;
-            A2 = SP + 10;
-            calculate_direction_by_vectors;
-
-            [line_offset + 14] = b(V0);
-
-            V0 = bu[line_offset + 14];
-            V1 = bu[entity_data_offset + 36];
-            V0 = V0 - V1 + 40;
-            V0 = V0 & FF;
-            if (V0 < 80)
+            if( bu[line_data + i * 18 + e] == 1 )
             {
-                [line_offset + 10] = b(1);
-                [line_offset + 15] = b(1);
+                [line_data + i * 18 + 13] = b(1);
             }
-        }
-    }
-    else
-    {
-        V0 = bu[line_offset + 0E];
-        if (V0 == 1)
-        {
-            [line_offset + 13] = b(1);
-        }
 
-        [line_offset + 0E] = b(0);
+            [line_data + i * 18 + e] = b(0);
+        }
     }
 }
-
-S6 = S6 + 1;
-line_offset = line_offset + 18;
-V0 = S6 < 20;
-800AA140	bne    v0, zero, La9f9c [$800a9f9c]
 
 return FP;
 ////////////////////////////////
@@ -5193,83 +5166,60 @@ return FP;
 
 
 ////////////////////////////////
-// move_talk_to_line
+// move_talk_to_line()
+
 model_data = A0;
 line_data = A1;
 
-V0 = w[model_data + C];
-V0 = V0 >> C;
-[1F800000] = w(V0);
-V0 = w[model_data + 10];
-V0 = V0 >> C;
-[1F800004] = w(V0);
-V0 = w[model_data + 14];
-V0 = V0 >> C;
-[1F800008] = w(V0);
+[1f800000] = w(w[model_data + c] >> c);
+[1f800004] = w(w[model_data + 10] >> c);
+[1f800008] = w(w[model_data + 14] >> c);
 
-S4 = 0;
-
-loopaa1fc:	; 800AA1FC
-V0 = bu[line_data + 0C]
-if (V0 == 1)
+for( int i = 0; i < 20; ++i )
 {
-    V0 = bu[model_data + 5D];
-
-    if (V0 == 0)
+    if( bu[line_data + i * 18 + c] == 1 )
     {
-        A0 = line_data;
-        A1 = 1F800000;
-        A2 = 1F800010;
-        move_distance_to_line;
-        V1 = V0;
-
-        V0 = hu[model_data + 6C];
-        V0 = V0 * V0;
-
-        // if we closer to line than solid range
-        if (V1 != -1 && V1 < V0)
+        if( bu[model_data + 5d] == 0 )
         {
-            V0 = bu[line_data + 0E];
-            if (V0 == 0)
-            {
-                [line_data + 12] = b(1);
-            }
-            [line_data + 0E] = b(1);
-        }
-        else
-        {
-            V0 = bu[line_data + 0E];
-            if (V0 == 1)
-            {
-                [line_data + 13] = b(1);
-            }
-            [line_data + 0E] = b(0);
-        }
+            A0 = line_data + i * 18;
+            A1 = 1f800000;
+            A2 = 1f800010;
+            move_distance_to_line();
+            V1 = V0;
 
-        // check if we talk to line
-        V0 = bu[line_data + 15];
-        if (V0 == 1)
-        {
-            V0 = bu[line_data + 14];
-            V1 = bu[model_data + 36];
-            V0 = V0 - V1 + 20;
-            V0 = V0 & FF;
+            solid_range = hu[model_data + 6c];
 
-            if (V0 < 40)
+            if( V1 != -1 && V1 < solid_range * solid_range ) // if we closer to line than solid range
             {
-                if (((w[8009ABF4 + 78] & 20) != 0) && (w[8009ABF4 + 7C] & 20 == 0))
+                if( bu[line_data + i * 18 + e] == 0 )
                 {
-                    [line_data + 11] = b(1);
+                    [line_data + i * 18 + 12] = b(1);
+                }
+                [line_data + i * 18 + e] = b(1);
+            }
+            else
+            {
+                if( bu[line_data + i * 18 + e] == 1 )
+                {
+                    [line_data + i * 18 + 13] = b(1);
+                }
+                [line_data + i * 18 + e] = b(0);
+            }
+
+            // check if we talk to line
+            if( bu[line_data + i * 18 + 15] == 1 )
+            {
+                if( ( ( bu[line_data + i * 18 + 14] - bu[model_data + 36] + 20 ) & ff ) < 40 )
+                {
+                    if( ( ( w[8009abf4 + 78] & 20) != 0 ) && ( w[8009abf4 + 7c] & 20 == 0 ) )
+                    {
+                        [line_data + i * 18 + 11] = b(1);
+                    }
                 }
             }
         }
     }
 }
-
-line_data = line_data + 18;
-S4 = S4 + 1;
-V0 = S4 < 20;
-800AA2F4	bne    v0, zero, loopaa1fc [$800aa1fc]
 ////////////////////////////////
 
 

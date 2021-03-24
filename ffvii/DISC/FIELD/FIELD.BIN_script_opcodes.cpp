@@ -850,100 +850,37 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0xD0 LINE
-V0 = h[80095D84];
-if (V0 < 20)
+
+number_of_lines = h[80095d84];
+
+if( number_of_lines < 20 ) // number of inited lines
 {
-    current_entity = bu[800722C4];
-    V0 = bu[80095D84];
-    A3 = 800831FC;
-    [8007078C + current_entity] = b(V0);
-    A2 = w[8009C6DC];
-    A1 = 800831FC + current_entity * 2;
+    current_entity = bu[800722c4];
+    [8007078c + current_entity] = b(number_of_lines);
+    A2 = w[8009c6dc];
 
-    // x1
-    V0 = hu[A1];
-    V0 = A2 + V0;
-    V1 = bu[V0 + 2];
-    T0 = bu[V0 + 1];
-    V0 = h[80095D84];
-    V1 = V1 << 8;
-    T0 = T0 | V1;
-    A0 = V0 * 18;
-    [8007E7AC + V0 * 18] = h(T0);
+    script_offset = hu[800831fc + current_entity * 2];
 
-    // y1
-    V0 = hu[A1];
-    V0 = A2 + V0;
-    V1 = bu[V0 + 4];
-    T0 = bu[V0 + 3];
-    V1 = V1 << 8;
-    T0 = T0 | V1;
-    [8007E7AC + A0 + 2] = h(T0);
+    [8007e7ac + number_of_lines * 18 + 0] = h(hu[A2 + script_offset + 1]); // x1
+    [8007e7ac + number_of_lines * 18 + 2] = h(hu[A2 + script_offset + 3]); // y1
+    [8007e7ac + number_of_lines * 18 + 4] = h(hu[A2 + script_offset + 5]); // z1
+    [8007e7ac + number_of_lines * 18 + 6] = h(hu[A2 + script_offset + 7]); // x2
+    [8007e7ac + number_of_lines * 18 + 8] = h(hu[A2 + script_offset + 9]); // y2
+    [8007e7ac + number_of_lines * 18 + a] = h(hu[A2 + script_offset + b]); // z2
+    [8007e7ac + number_of_lines * 18 + c] = b(1); // line on
+    [8007e7ac + number_of_lines * 18 + d] = b(current_entity); // parent entity
 
-    // z1
-    V0 = hu[A1];
-    V0 = A2 + V0;
-    V1 = bu[V0 + 6];
-    T0 = bu[V0 + 5];
-    V1 = V1 << 8;
-    T0 = T0 | V1;
-    [8007E7AC + A0 + 4] = h(T0);
+    [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + d);
 
-    // x2
-    V0 = hu[A1];
-    V0 = A2 + V0;
-    V1 = bu[V0 + 8];
-    T0 = bu[V0 + 7];
-    V1 = V1 << 8;
-    T0 = T0 | V1;
-    [8007E7AC + A0 + 6] = h(T0);
-
-    // y2
-    V0 = hu[A1];
-    V0 = A2 + V0;
-    V1 = bu[V0 + A];
-    T0 = bu[V0 + 9];
-    V1 = V1 << 8;
-    T0 = T0 | V1;
-    [8007E7AC + A0 + 8] = h(T0);
-
-    // z2
-    V0 = hu[A1];
-    V0 = A2 + V0;
-    V1 = bu[V0 + C];
-    T0 = bu[V0 + B];
-    V1 = V1 << 8;
-    T0 = T0 | V1;
-    [8007E7AC + A0 + A] = h(T0);
-
-    [8007E7AC + A0 + C] = b(1);
-    A1 = h[80095D84];
-    V1 = bu[800722C4];
-    [8007E7AC + A1 * 18 + D] = b(V1);
-
-    A1 = bu[800722C4];
-    A0 = hu[A1 * 2 + A3];
-    A0 = A0 + D;
-    [A1 * 2 + A3] = h(A0);
-
-    V1 = hu[80095D84];
-    V1 = V1 + 1;
-    [80095D84] = h(V1);
+    [80095d84] = h(number_of_lines + 1);
 }
 else
 {
-    A0 = 800A0618;
-    funcd4848;
+    A0 = 800a0618;
+    funcd4848();
 
-    800C1A84	lui    v0, $8008
-    V0 = V0 + 31fc;
-    800C1A8C	sll    v1, current_entity, $01
-    V1 = V1 + V0;
-    A0 = hu[V1 + 0000];
-    A0 = A0 + 000d;
-    [V1 + 0000] = h(A0);
+    [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + d);
 }
-Lc1aa4:	; 800C1AA4
 return 0;
 ////////////////////////////////
 
@@ -951,66 +888,43 @@ return 0;
 
 ////////////////////////////////
 // 0xD3 SLINE
-A0 = 0001;
-V0 = bu[800722c4];
-800C1AF0	nop
-800C1AF4	lui    at, $8007
-AT = AT + 078c;
-AT = AT + V0;
-S1 = bu[AT + 0000];
-800C1B04	jal    read_memory_block_two_bytes [$800bf908]
-A1 = 0004;
-A0 = 0002;
-S0 = S1 << 01;
-S0 = S0 + S1;
-S0 = S0 << 03;
-800C1B1C	lui    at, $8008
-800C1B20	addiu  at, at, $e7ac (=-$1854)
-AT = AT + S0;
-[AT + 0000] = h(V0);
-800C1B2C	jal    read_memory_block_two_bytes [$800bf908]
-A1 = 0006;
-A0 = 0003;
-800C1B38	lui    at, $8008
-800C1B3C	addiu  at, at, $e7ae (=-$1852)
-AT = AT + S0;
-[AT + 0000] = h(V0);
-800C1B48	jal    read_memory_block_two_bytes [$800bf908]
-A1 = 0008;
-A0 = 0004;
-800C1B54	lui    at, $8008
-800C1B58	addiu  at, at, $e7b0 (=-$1850)
-AT = AT + S0;
-[AT + 0000] = h(V0);
-800C1B64	jal    read_memory_block_two_bytes [$800bf908]
-A1 = 000a;
-A0 = 0005;
-800C1B70	lui    at, $8008
-800C1B74	addiu  at, at, $e7b2 (=-$184e)
-AT = AT + S0;
-[AT + 0000] = h(V0);
-800C1B80	jal    read_memory_block_two_bytes [$800bf908]
-A1 = 000c;
-A0 = 0006;
-800C1B8C	lui    at, $8008
-800C1B90	addiu  at, at, $e7b4 (=-$184c)
-AT = AT + S0;
-[AT + 0000] = h(V0);
-800C1B9C	jal    read_memory_block_two_bytes [$800bf908]
-A1 = 000e;
-A0 = bu[800722c4];
-800C1BAC	lui    at, $8008
-800C1BB0	addiu  at, at, $e7b6 (=-$184a)
-AT = AT + S0;
-[AT + 0000] = h(V0);
-800C1BBC	lui    v0, $8008
-V0 = V0 + 31fc;
-A0 = A0 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-V0 = 0;
-V1 = V1 + 0010;
-[A0 + 0000] = h(V1);
+
+current_entity = bu[800722c4];
+line_id = bu[8007078c + current_entity];
+
+A0 = 1;
+A1 = 4;
+read_memory_block_two_bytes();
+[8007e7ac + line_id * 18 + 0] = h(V0);
+
+A0 = 2;
+A1 = 6;
+read_memory_block_two_bytes();
+[8007e7ac + line_id * 18 + 2] = h(V0);
+
+A0 = 3;
+A1 = 8;
+read_memory_block_two_bytes();
+[8007e7ac + line_id * 18 + 4] = h(V0);
+
+A0 = 4;
+A1 = a;
+read_memory_block_two_bytes();
+[8007e7ac + line_id * 18 + 6] = h(V0);
+
+A0 = 5;
+A1 = c;
+read_memory_block_two_bytes();
+[8007e7ac + line_id * 18 + 8] = h(V0);
+
+A0 = 6;
+A1 = e;
+read_memory_block_two_bytes();
+[8007e7ac + line_id * 18 + a] = h(V0);
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 10);
+
+return 0;
 ////////////////////////////////
 
 

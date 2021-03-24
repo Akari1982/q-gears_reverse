@@ -45,11 +45,11 @@
 
 800acfda [][]     looks like this is timer when we stack during auto slide down.
 
-800acfe0 [][][][] if this 1 then load battle logic wont work.
+800acfe0 [][][][] render buffer index (0 or 1).
 
 800acff4 [][][][] we read something from here during rotation set. We will not set 80115cdc + 108 if this is not 0.
 
-800acffc [][][][] something related to pointers in 800b1588 800b15bc 800b1590 800b1594.
+800acffc [][][][] init flag for buffers 800b1588 800b158c 800b1590 800b1594.
 
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
 
@@ -255,7 +255,7 @@
             + 16 [][]     tex page.
             + 1c [][]     uv 2.
             + 24 [][]     uv 3.
-    +   c some matrix
+    +   c some matrix (looks like move matrix. Created from rotation and speed vectors).
     +  1e          solid range.
     +  20 [][][][] some X data.
     +  24 [][][][] some Y data.
@@ -494,6 +494,28 @@
 800afb8c [][][][] offset to struct 0x5c for current entity in script call.
 
 800b144c copy first 0x100 byte of field file here.
+
+800b154c [][]     activate field distortion effect rendering. Init with 0.
+800b154e [][]     set to finish distorion update after making it normal.
+800b1550 [][]     number of steps.
+800b1554 [][][][] val 1. Init with 0.
+800b1558 [][][][] val 2. Init with 0.
+800b155c [][][][] val 3. Init with 0.
+800b1560 [][][][] val 4. Init with 0.
+800b1564 [][][][] val 5. Init with 0.
+800b1568 [][][][] val 6. Init with 0.
+800b156c [][][][] step size for val 1.
+800b1570 [][][][] step size for val 2.
+800b1574 [][][][] step size for val 3.
+800b1578 [][][][] step size for val 4.
+800b157c [][][][] step size for val 5.
+800b1580 [][][][] step size for val 6.
+800b1584 [][]     ??? Init with 0.
+800b1586 [][]     ??? Init with 0.
+800b1588 pointer to buffer 0 for 0x10 copy rectangle pachets. 0x180 size. 0x18 each packet.
+800b158c pointer to buffer 1 for 0x10 copy rectangle pachets. 0x180 size. 0x18 each packet.
+800b1590 pointer to buffer 0 for 0x11 x 0x14 textured quads render data. 0x3840 size. 0x28 each quad.
+800b1594 pointer to buffer 0 for 0x11 x 0x14 textured quads render data. 0x3840 size. 0x28 each quad.
 
 800b1648 [][][][] activated windows mask. If 1 then we lock all dialog script call.
 

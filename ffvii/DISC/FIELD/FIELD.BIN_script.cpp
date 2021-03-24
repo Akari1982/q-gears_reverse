@@ -605,106 +605,78 @@ if (S2 != 0)
 
 
 
-V0 = h[80095D54]; // number of inited lines
-if (V0 > 0)
+// go through all inited lines
+for( int i = 0; i < h[80095d54]; ++i )
 {
-    S1 = 0;
-    S0 = 0;
-
-    Lbb66c:	; 800BB66C
-        // if we talk to line
-        V0 = bu[8007E7AC + S0 + 11];
-        if (V0 != 0)
+    // talk to line
+    if( bu[8007e7ac + i * 18 + 11] != 0 )
+    {
+        field_struct = w[8009c6e0];
+        if( bu[field_struct + 32] == 0 ) // if PC can perform action
         {
-            field_struct = w[8009C6E0];
-            V0 = bu[field_struct + 32];
-            if (V0 == 0)
-            {
-                A0 = bu[8007E7AC + S0 + 0D];
-                A1 = 1;
-                A2 = 1;
-                script_request_run;
-            }
-
-            [8007E7AC + S0 + 11] = b(0);
-        }
-
-
-
-        // entity move in line
-        V0 = bu[8007E7AC + S0 + 10];
-        if (V0 != 0)
-        {
-            A0 = bu[8007E7AC + S0 + 0D];
+            A0 = bu[8007e7ac + i * 18 + d];
             A1 = 1;
-            A2 = 2;
-            script_request_run;
-
-            [8007E7AC + S0 + 10] = b(0);
+            A2 = 1;
+            script_request_run();
         }
+        [8007e7ac + i * 18 + 11] = b(0);
+    }
 
+    // entity move to line
+    if( bu[8007e7ac + i * 18 + 10] != 0 )
+    {
+        A0 = bu[8007e7ac + i * 18 + d];
+        A1 = 1;
+        A2 = 2;
+        script_request_run();
 
+        [8007e7ac + i * 18 + 10] = b(0);
+    }
 
-        // entity cross line
-        V0 = bu[8007E7AC + S0 + 0F];
-        if (V0 != 0)
-        {
-            A0 = bu[8007E7AC + S0 + 0D];
-            A1 = 1;
-            A2 = 3;
-            script_request_run;
+    // entity cross line
+    if( bu[8007e7ac + i * 18 + f] != 0 )
+    {
+        A0 = bu[8007e7ac + i * 18 + d];
+        A1 = 1;
+        A2 = 3;
+        script_request_run();
 
-            [8007E7AC + S0 + 0F] = b(0);
-        }
+        [8007e7ac + i * 18 + f] = b(0);
+    }
 
+    // entity move inside line
+    if( bu[8007e7ac + i * 18 + e] != 0 )
+    {
+        A0 = bu[8007e7ac + i * 18 + d];
+        A1 = 1;
+        A2 = 4;
+        script_request_run();
+    }
 
+    // entity enter line
+    if( bu[8007e7ac + i * 18 + 12] != 0 )
+    {
+        A0 = bu[8007e7ac + i * 18 + d];
+        A1 = 1;
+        A2 = 5;
+        script_request_run();
 
-        // entity enter line
-        V0 = bu[8007E7AC + S0 + 12];
-        if (V0 != 0)
-        {
-            A0 = bu[8007E7AC + S0 + 0D];
-            A1 = 1;
-            A2 = 5;
-            script_request_run;
+        [8007e7ac + i * 18 + 12] = b(0);
+    }
 
-            [8007E7AC + S0 + 12] = b(0);
-        }
+    // entity leave line
+    if( bu[8007e7ac + i * 18 + 13] != 0 )
+    {
+        A0 = bu[8007e7ac + i * 18 + d];
+        A1 = 1;
+        A2 = 6;
+        script_request_run();
 
-
-
-        // entity leave line
-        V0 = bu[8007E7AC + S0 + 13];
-        if (V0 != 0)
-        {
-            A0 = bu[8007E7AC + S0 + 0D];
-            A1 = 1;
-            A2 = 6;
-            script_request_run;
-
-            [8007E7AC + S0 + 13] = b(0);
-        }
-
-
-
-        // entity inside line
-        V0 = bu[8007E7AC + S0 + 0E];
-        if (V0 != 0)
-        {
-            A0 = bu[8007E7AC + S0 + 0D];
-            A1 = 1;
-            A2 = 4;
-            script_request_run;
-        }
-
-
-
-        S1 = S1 + 1;
-        V0 = h[80095D84];
-        V0 = S1 < V0;
-        S0 = S0 + 18;
-    800BB824	bne    v0, zero, Lbb66c [$800bb66c]
+        [8007e7ac + i * 18 + 13] = b(0);
+    }
 }
+
+
 
 V0 = w[8009C6DC];
 S3 = 5;

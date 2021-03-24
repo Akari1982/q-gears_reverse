@@ -40,7 +40,20 @@ A8AB0880 1B
 C07A0980 1D
 28F10980 1E
 64F30980 1F
-DCF3098078FC098038AC09806CA90980E4A709809CCB0880C4A80880FCA80880C0DA0880ECDA088018DB088044DB088090D4088018D50880A0D5088028D60880
+DCF30980 20
+78FC0980 21
+38AC0980 22
+6CA90980 23
+E4A70980 24
+9CCB0880 25
+C0DA0880 28
+ECDA0880 29
+18DB0880 2a
+44DB0880 2b
+90D40880 2c
+18D50880 2d
+A0D50880 2e
+28D60880 2f
 BCD90880E8D9088014DA088040DA08806CD80880C0D8088014D9088068D9088088D7088004C80880A4C4088038C4088054A708809CA40880ACA50880BCA60880
 1C170980 40
 D8F10980 41
@@ -4943,6 +4956,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0xF1
+
 A0 = 9;
 read_two_bytes_with_80;
 S3 = V0;
@@ -4966,122 +4980,84 @@ A0 = 1;
 A1 = S3;
 A2 = S2;
 A3 = S1;
-[SP + 10] = w(S0);
-[SP + 14] = w(V0);
-func71398;
+A4 = S0;
+A5 = V0;
+func71398();
 
-V1 = w[800AF54C];
-V0 = hu[V1 + CC];
-V0 = V0 + 0B;
-[V1 + CC] = h(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func8a8c4
-8008A8C4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008A8CC	jal    funca3d24 [$800a3d24]
-A0 = 0;
 V1 = w[800af54c];
-8008A8DC	nop
-V0 = hu[V1 + 00cc];
-8008A8E4	nop
-V0 = V0 + 000f;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008A8F4	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + b);
 ////////////////////////////////
-// func8a8fc
+
+
+
+////////////////////////////////
+// 0xFE26_ScreenDistortionSetup()
+
+A0 = 0; // read settings from script
+set_distortion();
+
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + f);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func8a8fc()
+// 0xFE27_ScreenDistortionControl
+
 A1 = w[800af54c];
+A0 = hu[A1 + cc];
 V0 = w[800ad0d8];
-8008A90C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(RA);
-A0 = hu[A1 + 00cc];
-8008A918	nop
-V0 = A0 + V0;
-V1 = bu[V0 + 0001];
-V0 = 0001;
-8008A928	beq    v1, v0, L8a9ac [$8008a9ac]
-V0 = V1 < 0002;
-8008A930	beq    v0, zero, L8a948 [$8008a948]
-8008A934	nop
-8008A938	beq    v1, zero, L8a964 [$8008a964]
-8008A93C	nop
-8008A940	j      L8aa18 [$8008aa18]
-V0 = 0001;
+control = bu[A0 + V0 + 1];
 
-L8a948:	; 8008A948
-V0 = 0002;
-8008A94C	beq    v1, v0, L8a9d4 [$8008a9d4]
-V0 = 0003;
-8008A954	beq    v1, v0, L8a9f0 [$8008a9f0]
-V0 = 0001;
-8008A95C	j      L8aa18 [$8008aa18]
-8008A960	nop
+if( control == 0 ) // finish distortion (make it normal with number of steps and then finish)
+{
+    A0 = 2;
+    read_two_bytes_with_80();
 
-L8a964:	; 8008A964
-8008A964	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0002;
-A0 = 0;
-A1 = 0;
-A2 = 0;
-A3 = 0;
-[SP + 0010] = w(0);
-[SP + 0014] = w(0);
-8008A984	jal    funca419c [$800a419c]
-[SP + 0018] = w(V0);
-V1 = w[800af54c];
-V0 = 0001;
-[800b154e] = h(V0);
-V0 = hu[V1 + 00cc];
-8008A9A4	j      L8aa10 [$8008aa10]
-V0 = V0 + 0004;
+    A0 = 0;
+    A1 = 0;
+    A2 = 0;
+    A3 = 0;
+    A4 = 0;
+    A5 = 0;
+    A6 = V0; // steps
+    setup_distortion_values();
 
-L8a9ac:	; 8008A9AC
-V0 = h[800b154c];
-8008A9B4	nop
-8008A9B8	bne    v0, zero, L8a9cc [$8008a9cc]
-8008A9BC	addiu  v0, a0, $ffff (=-$1)
-V0 = A0 + 0002;
-8008A9C4	j      L8aa14 [$8008aa14]
-[A1 + 00cc] = h(V0);
+    [800b154e] = h(1);
 
-L8a9cc:	; 8008A9CC
-8008A9CC	j      L8aa14 [$8008aa14]
-[A1 + 00cc] = h(V0);
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 4);
+}
+else if( control == 1 ) // wait until distortion finish updates
+{
+    if( h[800b154c] != 0 ) // if we update distortion
+    {
+        [A1 + cc] = h(A0 - 1);
+    }
+    else
+    {
+        [A1 + cc] = h(A0 + 1);
+    }
+}
+else if( control == 2 ) // force finish updates
+{
+    [800b154c] = h(0); // deactivate distortion update
+    [A1 + cc] = h(hu[A1 + cc] + 2);
+}
+else if( control == 3 ) // clear distortion and stop updates
+{
+    clear_distortion_buffers();
 
-L8a9d4:	; 8008A9D4
-[800b154c] = h(0);
-V0 = hu[A1 + 00cc];
-8008A9E0	nop
-V0 = V0 + 0002;
-8008A9E8	j      L8aa14 [$8008aa14]
-[A1 + 00cc] = h(V0);
+    [A1 + cc] = h(hu[A1 + cc] + 2);
+}
 
-L8a9f0:	; 8008A9F0
-8008A9F0	jal    funca3cac [$800a3cac]
-8008A9F4	nop
-V1 = w[800af54c];
-8008AA00	nop
-V0 = hu[V1 + 00cc];
-8008AA08	nop
-V0 = V0 + 0002;
+[800af594] = w(1);
+////////////////////////////////
 
-L8aa10:	; 8008AA10
-[V1 + 00cc] = h(V0);
 
-L8aa14:	; 8008AA14
-V0 = 0001;
 
-L8aa18:	; 8008AA18
-[800af594] = w(V0);
-RA = w[SP + 0020];
-SP = SP + 0028;
-8008AA28	jr     ra 
-8008AA2C	nop
 ////////////////////////////////
 // func8aa30
 V0 = w[800af54c];
@@ -12816,7 +12792,6 @@ if (V0 != 0)
 }
 
 [800AF594] = w(1);
-return;
 ////////////////////////////////
 
 

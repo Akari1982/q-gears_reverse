@@ -233,7 +233,7 @@ if( number_of_entity > 0 )
     8006F858	bne    v0, zero, loop6f7d0 [$8006f7d0]
 }
 
-funca3cac(); // clear something 800acffc related
+clear_distortion_buffers();
 
 A0 = w[800aefe4]; // allocated entity data
 system_memory_mark_removed_alloc();
@@ -480,6 +480,7 @@ system_calculate_rotation_matrix();
 
 ////////////////////////////////
 // func6fc6c
+
 if( w[800c1b60] == 0 )
 {
     func281274; // debug
@@ -518,23 +519,26 @@ func35c84(); // reset system buttons
 [800b1698] = w(0);
 [800b1738] = w(0);
 [800b168c] = w(0);
-
 [800b16a5] = b(0);
 [800b16a4] = b(0);
-[800b1568] = w(0);
-[800b1564] = w(0);
-[800b1560] = w(0);
-[800b155c] = w(0);
-[800b1558] = w(0);
+
+
+// distortion
+[800b154c] = h(0);
 [800b1554] = w(0);
-[800b1586] = h(0);
+[800b1558] = w(0);
+[800b155c] = w(0);
+[800b1560] = w(0);
+[800b1564] = w(0);
+[800b1568] = w(0);
 [800b1584] = h(0);
+[800b1586] = h(0);
+
 [800b173c] = w(0);
 [800b16a2] = b(0);
 [800b1684] = h(0);
 [800b1686] = h(0);
 [800b1682] = h(0);
-[800b154c] = h(0);
 [800b16a1] = b(0);
 [800b1673] = b(0);
 [800b1672] = b(0);
@@ -796,6 +800,7 @@ V1 = V1 + 0006;
 
 ////////////////////////////////
 // func70358()
+
 A1 = 8006f184;
 [SP + 38] = w(w[A1 + 0]);
 [SP + 3c] = w(w[A1 + 4]);
@@ -804,7 +809,7 @@ A1 = 8006f184;
 
 
 
-func6fc6c();
+func6fc6c(); // init values
 
 
 
@@ -1415,7 +1420,7 @@ if( V1 > 0 )
 
 80070FCC	jal    func772f0 [$800772f0]
 
-80070FD4	jal    funca1ca4 [$800a1ca4]
+funca1ca4();
 
 [8004e9d8] = w(-1);
 [8004e9d4] = w(-1);
@@ -1955,8 +1960,9 @@ A0 = S1;
 A1 = S0;
 [SP + 0078] = w(RA);
 [SP + 0074] = w(S3);
-80071808	jal    $8003f5e0
 [SP + 0070] = w(S2);
+system_calculate_rotation_matrix();
+
 80071810	jal    func717d0 [$800717d0]
 A0 = S0;
 A0 = S0;
@@ -1971,14 +1977,16 @@ A1 = S0;
 S3 = S1 + 0084;
 A0 = S3;
 S0 = S1 + 00d4;
-80071848	jal    $8003f5e0
 A1 = S0;
+system_calculate_rotation_matrix();
+
 80071850	jal    func717d0 [$800717d0]
 A0 = S0;
 A0 = S3;
 S0 = S1 + 0094;
-80071860	jal    $8003f5e0
 A1 = S0;
+system_calculate_rotation_matrix();
+
 A0 = S2;
 8007186C	jal    $80049a84
 A1 = S0;
@@ -2014,55 +2022,33 @@ SP = SP + 0080;
 
 
 ////////////////////////////////
-// func718e4
-800718E4	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S0);
-S0 = A0 << 01;
-S0 = S0 + A0;
-S0 = S0 << 03;
-S0 = S0 - A0;
+// func718e4()
+
+entity_id = A0;
+
 V1 = w[800aefe4];
-S0 = S0 << 02;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S1);
-V1 = S0 + V1;
-V0 = w[V1 + 004c];
-80071918	nop
-V0 = h[V0 + 00f4];
-S1 = 800aefe4;
-[SP + 0010] = w(V0);
-V0 = w[V1 + 004c];
-A1 = w[S1 + 0000];
-V0 = h[V0 + 00f6];
-A1 = A1 + S0;
-[SP + 0014] = w(V0);
-V0 = w[V1 + 004c];
-A0 = A1 + 0050;
-V0 = h[V0 + 00f8];
-A1 = A1 + 000c;
-80071950	jal    $8003f5e0
-[SP + 0018] = w(V0);
-A0 = w[S1 + 0000];
-A1 = SP + 0010;
-A0 = A0 + S0;
-80071964	jal    $80049c74
-A0 = A0 + 000c;
-RA = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0030;
-8007197C	jr     ra 
-80071980	nop
+V0 = w[V1 + entity_id * 5c + 4c];
+[SP + 10] = w(h[V0 + f4]); // speed x
+[SP + 14] = w(h[V0 + f6]); // speed y
+[SP + 18] = w(h[V0 + f8]); // speed z
+
+A1 = w[800aefe4];
+A0 = A1 + entity_id * 5c + 50; // x rotation
+A1 = A1 + entity_id * 5c + c; // place for matrix
+system_calculate_rotation_matrix();
+
+A0 = w[800aefe4] + entity_id * 5c + c; // matrix
+A1 = SP + 10; // speed vector
+system_gte_multiply_matrix_by_vector();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func71984
-80071984	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
+
 8007198C	jal    func717e0 [$800717e0]
-[SP + 0010] = w(S0);
+
 S0 = 800aef38;
 8007199C	jal    $80049da4
 A0 = S0;
@@ -2076,11 +2062,6 @@ V0 = w[800c1b60];
 800719C4	nop
 
 L719c8:	; 800719C8
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800719D4	jr     ra 
-800719D8	nop
 ////////////////////////////////
 
 
@@ -3523,8 +3504,9 @@ A0 = S0;
 800739B4	jal    func717d0 [$800717d0]
 [SP + 00b4] = h(0);
 A0 = SP + 00b0;
-800739C0	jal    $8003f5e0
 A1 = S0;
+system_calculate_rotation_matrix();
+
 A0 = S1;
 800739CC	jal    $80049a84
 A1 = S0;
@@ -3603,8 +3585,9 @@ A1 = SP + 0090;
 V0 = 0400;
 [SP + 00b0] = h(V0);
 [SP + 00b2] = h(0);
-80073B0C	jal    $8003f5e0
 [SP + 00b4] = h(0);
+system_calculate_rotation_matrix();
+
 V0 = bu[800b16a5];
 80073B1C	nop
 80073B20	bne    v0, zero, L73c70 [$80073c70]
@@ -3987,8 +3970,9 @@ V0 = hu[V0 + 0070];
 
 L7421c:	; 8007421C
 A0 = SP + 0010;
-80074220	jal    $8003f5e0
 A1 = S3;
+system_calculate_rotation_matrix();
+
 A0 = w[S7 + 0000];
 A1 = S3;
 A0 = A0 + S2;
