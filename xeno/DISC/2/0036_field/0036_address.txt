@@ -111,6 +111,8 @@
 
 800adf08 data for rotation (each 2 bytes)
 
+800ae750 array of particles? data (sprite size and textures). 0x18 size.
+
 800aec3c some data during texture set (func910b0).
 
 800aed04 [][][][] x pos. Set to 0 when shake less than 0.
@@ -492,6 +494,8 @@
 800af594 [][][][] seems like return result from function (wait opcode returns 1). Set to 0 at start of run_script function.
 
 800afb8c [][][][] offset to struct 0x5c for current entity in script call.
+
+800b0984 array of 0x40 bool value. 0x1 size.
 
 800b144c copy first 0x100 byte of field file here.
 
