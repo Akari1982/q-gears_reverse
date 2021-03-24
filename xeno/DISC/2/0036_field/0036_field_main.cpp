@@ -696,64 +696,53 @@ return -1;
 
 
 ////////////////////////////////
-// func78270
+// func78270()
 
-V0 = h[800b1818];
-80078280	beq    v0, zero, L78344 [$80078344]
+if( h[800b1818] != 0 )
+{
+    [800b1986] = b(0);
+    [800b9a7a] = b(0);
 
-A0 = 4000;
-[800b1986] = b(0);
-[800b9a7a] = b(0);
-8007829C	jal    $system_memory_allocate
-A1 = 0;
-A0 = SP + 0010;
-S0 = V0;
-A1 = S0;
-V0 = 01e0;
-[SP + 0012] = h(V0);
-V0 = 0100;
-[SP + 0014] = h(V0);
-V0 = 0020;
-[SP + 0010] = h(0);
-800782C8	jal    $system_store_image
-[SP + 0016] = h(V0);
-800782D0	jal    $system_draw_sync
-A0 = 0;
-A1 = 0;
-800782DC	lui    a3, $ffff
-800782E0	lui    a2, $0c63
-A0 = S0;
+    A0 = 4000;
+    A1 = 0;
+    system_memory_allocate();
+    S0 = V0;
 
-loop782e8:	; 800782E8
-V1 = w[A0 + 0000];
-800782EC	nop
-V0 = V1 & ffff;
-800782F4	beq    v0, zero, L78304 [$80078304]
-V0 = V1 | 0c63;
-[A0 + 0000] = w(V0);
-V1 = w[A0 + 0000];
+    [SP + 10] = h(0);
+    [SP + 12] = h(1e0);
+    [SP + 14] = h(100);
+    [SP + 16] = h(20);
 
-L78304:	; 80078304
-80078304	nop
-V0 = V1 & A3;
-8007830C	beq    v0, zero, L78318 [$80078318]
-V0 = V1 | A2;
-[A0 + 0000] = w(V0);
+    A0 = SP + 10;
+    A1 = S0;
+    system_store_image();
 
-L78318:	; 80078318
-A1 = A1 + 0001;
-V0 = A1 < 1000;
-80078320	bne    v0, zero, loop782e8 [$800782e8]
-A0 = A0 + 0004;
-A0 = SP + 0010;
-8007832C	jal    $system_load_image
-A1 = S0;
-80078334	jal    $system_draw_sync
-A0 = 0;
-8007833C	jal    $system_memory_mark_removed_alloc
-A0 = S0;
+    A0 = 0;
+    system_draw_sync();
 
-L78344:	; 80078344
+    for( int i = 0; i < 1000; ++i )
+    {
+        if( w[S0 + i * 4] & 0000ffff )
+        {
+            [S0 + i * 4] = w(w[S0 + i * 4] | 00000c63);
+        }
+
+        if( w[S0 + i * 4] & ffff0000 )
+        {
+            [S0 + i * 4] = w(w[S0 + i * 4] | 0c630000);
+        }
+    }
+
+    A0 = SP + 10;
+    A1 = S0;
+    system_load_image();
+
+    A0 = 0;
+    system_draw_sync();
+
+    A0 = S0;
+    system_memory_mark_removed_alloc();
+}
 ////////////////////////////////
 
 
@@ -907,8 +896,8 @@ A0 = w[800ad0ec];
 system_memory_mark_removed_alloc();
 
 [800ad038] = w(0);
-800785A4	jal    func78270 [$80078270]
-800785A8	nop
+
+func78270();
 
 L785ac:	; 800785AC
 V1 = bu[80058ac8];

@@ -233,7 +233,7 @@ if( number_of_entity > 0 )
     8006F858	bne    v0, zero, loop6f7d0 [$8006f7d0]
 }
 
-funca3cac(); // clear something 800acffc related
+clear_distortion_buffers();
 
 A0 = w[800aefe4]; // allocated entity data
 system_memory_mark_removed_alloc();
@@ -480,6 +480,7 @@ system_calculate_rotation_matrix();
 
 ////////////////////////////////
 // func6fc6c
+
 if( w[800c1b60] == 0 )
 {
     func281274; // debug
@@ -518,23 +519,26 @@ func35c84(); // reset system buttons
 [800b1698] = w(0);
 [800b1738] = w(0);
 [800b168c] = w(0);
-
 [800b16a5] = b(0);
 [800b16a4] = b(0);
-[800b1568] = w(0);
-[800b1564] = w(0);
-[800b1560] = w(0);
-[800b155c] = w(0);
-[800b1558] = w(0);
+
+
+// distortion
+[800b154c] = h(0);
 [800b1554] = w(0);
-[800b1586] = h(0);
+[800b1558] = w(0);
+[800b155c] = w(0);
+[800b1560] = w(0);
+[800b1564] = w(0);
+[800b1568] = w(0);
 [800b1584] = h(0);
+[800b1586] = h(0);
+
 [800b173c] = w(0);
 [800b16a2] = b(0);
 [800b1684] = h(0);
 [800b1686] = h(0);
 [800b1682] = h(0);
-[800b154c] = h(0);
 [800b16a1] = b(0);
 [800b1673] = b(0);
 [800b1672] = b(0);
@@ -796,6 +800,7 @@ V1 = V1 + 0006;
 
 ////////////////////////////////
 // func70358()
+
 A1 = 8006f184;
 [SP + 38] = w(w[A1 + 0]);
 [SP + 3c] = w(w[A1 + 4]);
@@ -804,7 +809,7 @@ A1 = 8006f184;
 
 
 
-func6fc6c();
+func6fc6c(); // init values
 
 
 

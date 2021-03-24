@@ -187,3 +187,44 @@ v80  variable from memory which can be immediate value if 0x8000 bit is set.
 0xA8 VariableRandom(u16 address, v80 border);
     store random variable (0 - border) to address.
 //////////////////////////////////////////////////////////////////
+
+
+
+
+0x16   SetPlayableCharacter(0x8XXX);
+
+
+
+0x20   SpriteSetSolid(0x8XXX);
+    clear and then sets [801176A4 +  00].
+    0x0001 to bit 19 solid
+    0x0004 to bit 1B
+    0x0008 to bit 1C pushable
+    0x0010 to bit 1D
+    0x0020 to bit 1E
+    0x0040 to bit  5
+
+
+
+0x2C SpritePlayAnimation(0xXX);
+    clear bit 8 in [801176A4 +  04] and store given byte to [801176A4 +  EA]
+
+
+0x5D 0x5D(0xXX)
+    clear bit 8 and 10 in [801176A4 +  04] and store given byte to [801176A4 +  EA]
+
+0xFE45 SpritePlayAnimation2(0xXX)
+    store given byte to [801176A4 +  E6]
+
+
+
+0xFE0D SetAvatar(0x8XXX)
+    get character id grom given magic numbers and store it to [801176A4 +  80]
+
+
+
+
+
+
+0xFE26_ScreenDistortion(v80, v80, v80, v80, v80, v80, v80 steps)
+    add distortion effect to screen.

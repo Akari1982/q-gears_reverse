@@ -181,7 +181,7 @@ if( w[800c1b60] == 0 )
     80074CC0	0C0A051A	....
 }
 
-80074CC8	jal    funca4284 [$800a4284]
+update_distortion();
 
 SP = SP + 4;
 SP = w[SP];

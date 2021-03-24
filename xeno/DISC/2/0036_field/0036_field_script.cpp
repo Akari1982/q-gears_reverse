@@ -623,7 +623,7 @@ if( w[8004e9b0] != 0 )
     if( h[800b154c] != 0 ) // activate field distortion
     {
         A0 = 1;
-        funca3d24();
+        set_distortion();
     }
 
     A0 = 10;
@@ -2492,27 +2492,4 @@ A2 = dest_y;
 system_move_image()
 
 field_sync();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca3cac()
-[800b154c] = h(0);
-if( w[800acffc] != 0 )
-{
-    A0 = w[800b1588];
-    system_memory_mark_removed_alloc();
-
-    A0 = w[800b15bc];
-    system_memory_mark_removed_alloc();
-
-    A0 = w[800b1590];
-    system_memory_mark_removed_alloc();
-
-    A0 = w[800b1594];
-    system_memory_mark_removed_alloc();
-
-    [800acffc] = w(0);
-}
 ////////////////////////////////
