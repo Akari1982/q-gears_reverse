@@ -3398,7 +3398,7 @@ A2 = V1 + A2;
 800A7974	addiu  v1, v1, $ffff (=-$1)
 [SP + 0010] = w(A2);
 [SP + 0018] = w(V1);
-800A7980	jal    func79a60 [$80079a60]
+800A7980	jal    field_set_quad_uv [$80079a60]
 [SP + 0020] = w(V1);
 RA = w[SP + 0040];
 SP = SP + 0048;
@@ -4006,7 +4006,7 @@ La82d0:	; 800A82D0
 [SP + 0014] = w(A1);
 [SP + 0018] = w(V0);
 [SP + 001c] = w(A3);
-800A82E0	jal    func79a60 [$80079a60]
+800A82E0	jal    field_set_quad_uv [$80079a60]
 [SP + 0020] = w(V0);
 A3 = S6;
 
@@ -4055,7 +4055,7 @@ SP = SP + 0050;
 
 
 ////////////////////////////////
-// funca8384()
+// field_particle_create_sprite_packets()
 
 S0 = A0;
 S1 = A1;
@@ -4064,38 +4064,41 @@ tranc = A2;
 A0 = S0 + 50;
 system_graphic_textured_quad_header();
 
-[S0 + a4] = h(0);
-[S0 + ac] = h(0);
-[S0 + b4] = h(0);
-[S0 + bc] = h(0);
 [S0 + 54] = b(80);
 [S0 + 55] = b(80);
 [S0 + 56] = b(80);
 
-A0 = hu[800ae754 + S1 * 18] << 04 - hu[800ae750 + S1 * 18] << 04;
-V0 = hu[800ae756 + S1 * 18] << 04 - hu[800ae752 + S1 * 18] << 04;
-A1 = hu[800ae750 + S1 * 18] << 04 + hu[800ae754 + S1 * 18] << 04;
-A2 = hu[800ae756 + S1 * 18] << 04 + hu[800ae752 + S1 * 18] << 04;
+x1 = hu[800ae750 + S1 * 18 + 4] << 4 - hu[800ae750 + S1 * 18 + 0] << 4;
+y1 = hu[800ae750 + S1 * 18 + 6] << 4 - hu[800ae750 + S1 * 18 + 2] << 4;
+x2 = hu[800ae750 + S1 * 18 + 4] << 4 + hu[800ae750 + S1 * 18 + 0] << 4;
+y2 = hu[800ae750 + S1 * 18 + 6] << 4 + hu[800ae750 + S1 * 18 + 2] << 4;
 
-[S0 + a0] = h(A0);
-[S0 + a2] = h(V0);
-[S0 + a8] = h(A1);
-[S0 + aa] = h(V0);
-[S0 + b0] = h(A0);
-[S0 + b2] = h(A2);
-[S0 + b8] = h(A1);
-[S0 + ba] = h(A2);
+[S0 + a0] = h(x1);
+[S0 + a2] = h(y1);
+[S0 + a4] = h(0);
 
-A0 = S0 + 50;
-A1 = hu[800ae758 + S1 * 18];
-A2 = hu[800ae75a + S1 * 18] + 40;
-A3 = hu[800ae75c + S1 * 18] - 1;
-A4 = hu[800ae75e + S1 * 18] + 40;
-A5 = hu[800ae760 + S1 * 18];
-A6 = hu[800ae762 + S1 * 18] + 3f;
-A7 = hu[800ae764 + S1 * 18] - 1;
-A8 = hu[800ae766 + S1 * 18] + 3f;
-func79a60();
+[S0 + a8] = h(x2);
+[S0 + aa] = h(y1);
+[S0 + ac] = h(0);
+
+[S0 + b0] = h(x1);
+[S0 + b2] = h(y2);
+[S0 + b4] = h(0);
+
+[S0 + b8] = h(x2);
+[S0 + ba] = h(y2);
+[S0 + bc] = h(0);
+
+A0 = S0 + 50; // addr
+A1 = hu[800ae750 + S1 * 18 + 8]; // u1
+A2 = hu[800ae750 + S1 * 18 + a] + 40; // v1
+A3 = hu[800ae750 + S1 * 18 + c] - 1; // u2
+A4 = hu[800ae750 + S1 * 18 + e] + 40; // v2
+A5 = hu[800ae750 + S1 * 18 + 10]; // u3
+A6 = hu[800ae750 + S1 * 18 + 12] + 3f; // v3
+A7 = hu[800ae750 + S1 * 18 + 14] - 1; // u4
+A8 = hu[800ae750 + S1 * 18 + 16] + 3f; // v4
+field_set_quad_uv();
 
 A0 = S0 + 50;
 A1 = 1;
@@ -4251,7 +4254,7 @@ for( int i = 0; i < 40; ++i )
 
 
 ////////////////////////////////
-// funca8784()
+// field_particle_remove()
 
 id = A0;
 
@@ -4316,7 +4319,7 @@ if(  bu[800b0984 + A0] == 1 )
             {
                 for( j = 0; j < h[A1 + i * 78 + 0]; ++j )
                 {
-                    V0 = w[A1 + i * 78 + 0026];
+                    V0 = w[A1 + i * 78 + 26];
                     [V0 + V1 + j * c0 + 4] = h(1);
                 }
             }
@@ -4332,7 +4335,7 @@ if(  bu[800b0984 + A0] == 1 )
 S0 = 0;
 loopa8948:	; 800A8948
     A0 = S0;
-    funca8784();
+    field_particle_remove();
 
     S0 = S0 + 1;
     V0 = S0 < 40;
@@ -4348,58 +4351,52 @@ field_sync();
 
 [800af518] = w(0);
 
-A1 = 0;
-La89a8:	; 800A89A8
-    [800af7a0 + A1 * 78] = h(0);
-    [800af7a2 + A1 * 78] = h(0);
-    [800af7a4 + A1 * 78] = h(80);
-    [800af7a6 + A1 * 78] = h(0);
-    [800af7a8 + A1 * 78] = w(8000);
-    [800af7ac + A1 * 78 + 0] = h(0);
-    [800af7ac + A1 * 78 + 2] = h(0);
-    [800af7ac + A1 * 78 + 4] = h(0);
-    [800af7ac + A1 * 78 + 8] = h(0);
-    [800af7ac + A1 * 78 + a] = h(-3e8);
-    [800af7ac + A1 * 78 + c] = h(0);
+for( int i = 0; i < 8; ++i )
+{
+    [800af7a0 + i * 78 + 0] = h(0);
+    [800af7a0 + i * 78 + 2] = h(0);
+    [800af7a0 + i * 78 + 4] = h(80);
+    [800af7a0 + i * 78 + 6] = h(0);
+    [800af7a0 + i * 78 + 8] = w(8000);
+    [800af7a0 + i * 78 + c] = h(0);
+    [800af7a0 + i * 78 + e] = h(0);
+    [800af7a0 + i * 78 + 10] = h(0);
+    [800af7a0 + i * 78 + 14] = h(0);
+    [800af7a0 + i * 78 + 16] = h(-3e8);
+    [800af7a0 + i * 78 + 18] = h(0);
+    [800af7a0 + i * 78 + 1c] = h(0);
+    [800af7a0 + i * 78 + 1e] = h(0);
+    [800af7a0 + i * 78 + 20] = h(0);
+    [800af7a0 + i * 78 + 24] = h(1);
+    [800af7a0 + i * 78 + 26] = h(0);
+    [800af7a0 + i * 78 + 28] = h(100);
+    [800af7a0 + i * 78 + 2a] = h(0);
 
+    for( int j = 0; j < 8; ++j )
+    {
+        [800af7a0 + i * 78 + 30 + j * 4 + 0] = h(0);
+        [800af7a0 + i * 78 + 30 + j * 4 + 2] = h(0);
+    }
 
-    [800af7f2 + A1 * 78] = h(A0);
-    [800af7f0 + A1 * 78] = h(800);
-    [800af7c4 + A1 * 78] = h(1);
-    [800af7ac + A1 * 78 + 10] = h(0);
-    [800af7ac + A1 * 78 + 12] = h(0);
-    [800af7ac + A1 * 78 + 14] = h(0);
-    [800af7c8 + A1 * 78] = h(100);
-    [800af7f8 + A1 * 78] = h(1c);
-    [800af7c6 + A1 * 78] = h(0);
-    [800af7ca + A1 * 78] = h(0);
-    [800af816 + A1 * 78] = h(0);
-    [800af7f6 + A1 * 78] = h(1);
-    [800af7f4 + A1 * 78] = h(0);
-    [800af7ac + A1 * 78 + 4e] = h(1c8);
-    [800af7ac + A1 * 78 + 50] = h(1c8);
-    [800af7ac + A1 * 78 + 52] = h(1c8);
-    [800af7ac + A1 * 78 + 56 + 0] = h(20);
-    [800af7ac + A1 * 78 + 56 + 2] = h(20);
-    [800af7ac + A1 * 78 + 56 + 4] = h(20);
-    [800af80a + A1 * 78] = b(80);
-    [800af80b + A1 * 78] = b(20);
-    [800af80c + A1 * 78] = b(0);
-    [800af80e + A1 * 78] = b(-4);
-    [800af80f + A1 * 78] = b(-1);
-    [800af810 + A1 * 78] = b(0);
-
-    A3 = 0;
-    loopa8b1c:	; 800A8B1C
-        [800af7d0 + A1 * 78 + A3 * 4] = h(0);
-        [800af7d2 + A1 * 78 + A3 * 4] = h(0);
-        A3 = A3 + 1;
-        V0 = A3 < 8;
-    800A8B3C	bne    v0, zero, loopa8b1c [$800a8b1c]
-
-    A1 = A1 + 1;
-    V0 = A1 < 8;
-800A8B50	bne    v0, zero, La89a8 [$800a89a8]
+    [800af7a0 + i * 78 + 50] = h(800);
+    [800af7a0 + i * 78 + 52] = h(A0);
+    [800af7a0 + i * 78 + 54] = h(0);
+    [800af7a0 + i * 78 + 56] = h(1);
+    [800af7a0 + i * 78 + 58] = h(1c);
+    [800af7a0 + i * 78 + 5a] = h(1c8);
+    [800af7a0 + i * 78 + 5c] = h(1c8);
+    [800af7a0 + i * 78 + 5e] = h(1c8);
+    [800af7a0 + i * 78 + 62] = h(20);
+    [800af7a0 + i * 78 + 64] = h(20);
+    [800af7a0 + i * 78 + 66] = h(20);
+    [800af7a0 + i * 78 + 6a] = b(80);
+    [800af7a0 + i * 78 + 6b] = b(20);
+    [800af7a0 + i * 78 + 6c] = b(0);
+    [800af7a0 + i * 78 + 6e] = b(-4);
+    [800af7a0 + i * 78 + 6f] = b(-1);
+    [800af7a0 + i * 78 + 70] = b(0);
+    [800af7a0 + i * 78 + 76] = h(0);
+}
 ////////////////////////////////
 
 
@@ -4423,79 +4420,71 @@ if( w[800ad00c] == 0 )
     {
         if( bu[800b0984 + i] == 1 )
         {
-            A2 = 0;
-
-            S3 = w[800c2dec + i * 4];
-            S0 = S3 + 2;
+            not_fin = 0;
+            particle_data = w[800c2dec + i * 4];
 
             for( int j = 0; j < 8; ++j )
             {
                 [SP + 30] = w(0);
 
-                if( h[S0 + 4] != 0 )
+                if( h[particle_data + j * 78 + 6] != 0 )
                 {
-                    if( hu[S0 + 0] == 0 )
+                    if( hu[particle_data + j * 78 + 2] == 0 )
                     {
-                        if( h[S0 + 4] > 0 )
+                        for( int k = 0; k < h[particle_data + j * 78 + 6]; ++k )
                         {
-                            for( int k = 0; k < h[S0 + 4]; ++k )
+                            sprite_data = w[particle_data + j * 78 + 2c];
+
+                            if( h[sprite_data + k * c0 + 0] == 0 )
                             {
-                                V0 = w[S0 + 2a];
-                                A1 = V0 + k * c0;
-                                if( h[A1 + 0] == 0 )
+                                if( hu[particle_data + j * 78 + 4] != 0 )
                                 {
-                                    if( hu[S0 + 2] != 0 )
-                                    {
-                                        A0 = S3;
-                                        A2 = SP + 30;
-                                        800A8C60	jal    funca9b8c [$800a9b8c]
+                                    A0 = particle_data + j * 78;
+                                    A1 = sprite_data + k * c0;
+                                    A2 = SP + 30;
+                                    funca9b8c();
 
-                                        A0 = S3;
-                                        A1 = w[S0 + 2a] + k * c0; // data from animation
-                                        A2 = SP + 10;
-                                        800A8C80	jal    funca93f0 [$800a93f0]
-
-                                        A2 = 1;
-                                    }
-                                }
-                                else
-                                {
-                                    A0 = S3;
+                                    A0 = particle_data + j * 78;
+                                    A1 = sprite_data + k * c0;
                                     A2 = SP + 10;
                                     800A8C80	jal    funca93f0 [$800a93f0]
 
-                                    A2 = 1;
+                                    not_fin = 1;
                                 }
+                            }
+                            else
+                            {
+                                A0 = particle_data + j * 78;
+                                A1 = sprite_data + k * c0;
+                                A2 = SP + 10;
+                                800A8C80	jal    funca93f0 [$800a93f0]
+
+                                not_fin = 1;
                             }
                         }
 
-                        A0 = hu[S0 + 0002];
-                        V1 = A0 & ffff;
-                        if( V1 != 0 )
+                        if( hu[particle_data + j * 78 + 4] != 0 )
                         {
-                            if( V1 != 7fff )
+                            if( hu[particle_data + j * 78 + 4] != 7fff )
                             {
-                                [S0 + 2] = h(A0 - 1);
+                                [particle_data + j * 78 + 4] = h(hu[particle_data + j * 78 + 4] - 1);
                             }
-
-                            A2 = 1;
+                            not_fin = 1;
                         }
                     }
                     else
                     {
-                        A2 = 1;
-                        [S0 + 0] = h(V0 - 1);
+                        [particle_data + j * 78 + 2] = h(hu[particle_data + j * 78 + 2] - 1);
+                        not_fin = 1;
                     }
                 }
-
-                S0 = S0 + 78;
-                S3 = S3 + 78;
             }
 
-            if( A2 == 0 )
+            // remove particle if finished
+            if( not_fin == 0 )
             {
                 A0 = i;
-                funca8784();
+                field_particle_remove();
             }
         }
     }
@@ -4511,21 +4500,15 @@ if( w[800ad00c] == 0 )
 
 
 ////////////////////////////////
-// funca8d54
-800A8D54	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
-800A8D60	jal    $8003f8b0
+// funca8d54()
+
 S0 = A0;
-800A8D68	mult   v0, s0
-800A8D6C	mflo   v1
-V0 = V1 + 0001;
-V0 = V0 >> 0f;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800A8D84	jr     ra 
-800A8D88	nop
+
+system_get_random_2_bytes();
+
+V1 = V0 * S0;
+V0 = V1 + 1;
+V0 = V0 >> f;
 ////////////////////////////////
 
 
@@ -4606,7 +4589,7 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// funca8e80()
+// particle_create_instance()
 
 S0 = A0;
 
@@ -4662,7 +4645,7 @@ for( int i = 0; i < 8; ++i )
             A0 = sprite_mem + j * c0; // buffer
             A1 = h[particle_mem + i * 78 + 54]; // particle id
             A2 = (((hu[particle_mem + i * 78 + 2a] << 10) >> 18) + 1) & 3; // transparency
-            funca8384(); // create packets
+            field_particle_create_sprite_packets();
         }
     }
 }
@@ -5461,221 +5444,113 @@ SP = SP + 00d8;
 
 
 ////////////////////////////////
-// funca9b8c
-800A9B8C	addiu  sp, sp, $ffa8 (=-$58)
-[SP + 0040] = w(S0);
-S0 = A0;
-[SP + 0044] = w(S1);
-S1 = A1;
-V0 = 0001;
-[SP + 0050] = w(RA);
-[SP + 004c] = w(S3);
-[SP + 0048] = w(S2);
-[S1 + 0000] = h(V0);
-V1 = w[A2 + 0000];
-V0 = hu[S0 + 0056];
-800A9BBC	nop
-V0 = V0 + V1;
-[S1 + 0002] = h(V0);
-V1 = hu[S0 + 0056];
-V0 = w[A2 + 0000];
-800A9BD0	nop
-V0 = V0 + V1;
-[A2 + 0000] = w(V0);
-V0 = hu[S0 + 0058];
-800A9BE0	nop
-[S1 + 0004] = h(V0);
-V0 = hu[S0 + 002a];
-800A9BEC	nop
-V0 = V0 & 0001;
-800A9BF4	beq    v0, zero, La9c0c [$800a9c0c]
-800A9BF8	nop
-800A9BFC	jal    system_get_random_2_bytes [$8003f8b0]
-800A9C00	nop
-800A9C04	j      La9c10 [$800a9c10]
-V0 = V0 & 0fff;
+// funca9b8c()
 
-La9c0c:	; 800A9C0C
-V0 = hu[S0 + 0076];
+particle_data = A0;
+sprite_data = A1;
 
-La9c10:	; 800A9C10
-800A9C10	nop
-[S1 + 0006] = h(V0);
-V0 = hu[S0 + 002a];
-800A9C1C	nop
-V0 = V0 & 0080;
-800A9C24	bne    v0, zero, La9c40 [$800a9c40]
-800A9C28	nop
-A0 = hu[S0 + 0026];
-800A9C30	jal    funca8d54 [$800a8d54]
-800A9C34	nop
-800A9C38	j      La9c44 [$800a9c44]
-S2 = V0;
+[sprite_data + 0] = h(1);
+[sprite_data + 2] = h(hu[particle_data + 56] + w[A2 + 0]);
+[A2 + 0] = w(w[A2 + 0] + hu[particle_data + 56]);
+[sprite_data + 4] = h(hu[particle_data + 58]);
 
-La9c40:	; 800A9C40
-S2 = hu[S0 + 0026];
+if( hu[particle_data + 2a] & 1 )
+{
+    system_get_random_2_bytes();
+    [sprite_data + 6] = h(V0 & fff);
+}
+else
+{
+    [sprite_data + 6] = h(hu[particle_data + 76]);
+}
 
-La9c44:	; 800A9C44
-800A9C44	jal    funca8d54 [$800a8d54]
-A0 = 0fff;
+if( ( hu[particle_data + 2a] & 80 ) == 0 )
+{
+    A0 = hu[particle_data + 26];
+    funca8d54();
+    S2 = V0;
+}
+else
+{
+    S2 = hu[particle_data + 26];
+}
+
+A0 = fff;
+funca8d54();
 S3 = V0;
+
 A0 = S3;
 system_cos();
+[SP + 20] = w((V0 * S2) >> c);
 
-800A9C58	mult   v0, s2
-800A9C5C	mflo   a3
-V0 = A3 >> 0c;
-[SP + 0020] = w(V0);
-V0 = hu[S0 + 002a];
-800A9C6C	nop
-V0 = V0 & 0040;
-800A9C74	bne    v0, zero, La9c98 [$800a9c98]
-800A9C78	nop
-800A9C7C	jal    system_sin [$8003f758]
-A0 = S3;
-800A9C84	mult   v0, s2
-800A9C88	mflo   a3
-V0 = A3 >> 0c;
-800A9C90	j      La9c9c [$800a9c9c]
-[SP + 0028] = w(V0);
+if( ( hu[particle_data + 2a] & 40 ) == 0 )
+{
+    A0 = S3;
+    system_sin();
 
-La9c98:	; 800A9C98
-[SP + 0028] = w(0);
+    [SP + 28] = w((V0 * S2) >> c);
+}
+else
+{
+    [SP + 0028] = w(0);
+}
 
-La9c9c:	; 800A9C9C
-V1 = h[S0 + 0052];
-800A9CA0	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
+V1 = h[particle_data + 52];
+V0 = V1 * 5c;
 V1 = w[800aefe4];
-V0 = V0 << 02;
 V0 = V0 + V1;
-V1 = w[V0 + 004c];
+V1 = w[V0 + 4c];
 V0 = h[800aee62];
-V1 = h[V1 + 0108];
-800A9CD4	nop
+V1 = h[V1 + 108];
 V0 = V0 + V1;
 V0 = V0 & 0fff;
-V0 = V0 >> 09;
-800A9CE4	lui    at, $800b
-AT = AT + V0;
-A0 = bu[AT + e948];
-V0 = h[S0 + 000c];
-A0 = A0 << 02;
-A0 = S0 + A0;
-V1 = h[A0 + 0030];
-A1 = w[SP + 0020];
-V0 = V0 + V1;
-A1 = A1 + V0;
-[SP + 0020] = w(A1);
-V1 = h[S0 + 0010];
-A0 = h[A0 + 0032];
-V0 = w[SP + 0028];
-V1 = V1 + A0;
-V0 = V0 + V1;
-[SP + 0028] = w(V0);
-V0 = h[S0 + 000e];
-800A9D2C	nop
-[SP + 0024] = w(V0);
-[S1 + 0008] = w(A1);
-V0 = w[SP + 0028];
-800A9D3C	nop
-[S1 + 0010] = w(V0);
-V0 = w[SP + 0024];
-800A9D48	nop
-[S1 + 000c] = w(V0);
-A0 = hu[S0 + 0028];
-800A9D54	jal    funca8d54 [$800a8d54]
-800A9D58	nop
+A0 = bu[800ae948 + V0 * 200];
+A0 = particle_data + A0 * 4;
+
+A1 = w[SP + 20] + h[particle_data + c] + h[A0 + 30];
+[SP + 20] = w(A1);
+
+[SP + 28] = w(w[SP + 28] + h[particle_data + 10] + h[A0 + 32]);
+[SP + 24] = w(h[particle_data + e]);
+
+[sprite_data + 8] = w(A1);
+[sprite_data + 10] = w(w[SP + 28]);
+[sprite_data + c] = w(w[SP + 24]);
+
+A0 = hu[particle_data + 28];
+funca8d54();
+
 S2 = V0;
+
 A0 = S3;
 system_cos();
 
-800A9D68	mult   v0, s2
+[SP + 30] = w(h[particle_data + 14] + ((V0 * S2) >> c));
+
 A0 = S3;
-V0 = h[S0 + 0014];
-800A9D74	mflo   a3
-V1 = A3 >> 0c;
-V0 = V0 + V1;
-800A9D80	jal    system_sin [$8003f758]
-[SP + 0030] = w(V0);
-800A9D88	mult   v0, s2
-V0 = h[S0 + 0018];
-800A9D90	mflo   a3
-V1 = A3 >> 0c;
-V0 = V0 + V1;
-[SP + 0038] = w(V0);
-V0 = w[SP + 0030];
-V1 = w[SP + 0020];
-A0 = h[S0 + 0016];
-V0 = V0 - V1;
-[SP + 0034] = w(A0);
-[S1 + 0018] = w(V0);
-V0 = w[SP + 0034];
-V1 = w[SP + 0024];
-800A9DC0	nop
-V0 = V0 - V1;
-[S1 + 001c] = w(V0);
-V0 = w[SP + 0038];
-V1 = w[SP + 0028];
-800A9DD4	nop
-V0 = V0 - V1;
-[S1 + 0020] = w(V0);
-V0 = h[S0 + 001c];
-800A9DE4	nop
-[S1 + 0028] = w(V0);
-V0 = h[S0 + 001e];
-800A9DF0	nop
-[S1 + 002c] = w(V0);
-V0 = h[S0 + 0020];
-800A9DFC	nop
-[S1 + 0030] = w(V0);
-V0 = hu[S0 + 005a];
-800A9E08	nop
-[S1 + 0038] = h(V0);
-V0 = hu[S0 + 005c];
-800A9E14	nop
-[S1 + 003a] = h(V0);
-V0 = hu[S0 + 005e];
-800A9E20	nop
-[S1 + 003c] = h(V0);
-V0 = hu[S0 + 0062];
-800A9E2C	nop
-[S1 + 0040] = h(V0);
-V0 = hu[S0 + 0064];
-800A9E38	nop
-[S1 + 0042] = h(V0);
-V0 = hu[S0 + 0066];
-800A9E44	nop
-[S1 + 0044] = h(V0);
-V0 = bu[S0 + 006a];
-800A9E50	nop
-[S1 + 0048] = b(V0);
-V0 = bu[S0 + 006b];
-800A9E5C	nop
-[S1 + 0049] = b(V0);
-V0 = bu[S0 + 006c];
-800A9E68	nop
-[S1 + 004a] = b(V0);
-V0 = bu[S0 + 006e];
-800A9E74	nop
-[S1 + 004c] = b(V0);
-V0 = bu[S0 + 006f];
-800A9E80	nop
-[S1 + 004d] = b(V0);
-V0 = bu[S0 + 0070];
-800A9E8C	nop
-[S1 + 004e] = b(V0);
-RA = w[SP + 0050];
-S3 = w[SP + 004c];
-S2 = w[SP + 0048];
-S1 = w[SP + 0044];
-S0 = w[SP + 0040];
-SP = SP + 0058;
-800A9EAC	jr     ra 
-800A9EB0	nop
+system_sin();
+
+[SP + 38] = w(h[particle_data + 18] + ((V0 * S2) >> c));
+[SP + 34] = w(h[particle_data + 16]);
+
+[sprite_data + 18] = w(w[SP + 30] - w[SP + 20]);
+[sprite_data + 1c] = w(w[SP + 34] - w[SP + 24]);
+[sprite_data + 20] = w(w[SP + 38] - w[SP + 28]);
+[sprite_data + 28] = w(h[particle_data + 1c]);
+[sprite_data + 2c] = w(h[particle_data + 1e]);
+[sprite_data + 30] = w(h[particle_data + 20]);
+[sprite_data + 38] = h(hu[particle_data + 5a]);
+[sprite_data + 3a] = h(hu[particle_data + 5c]);
+[sprite_data + 3c] = h(hu[particle_data + 5e]);
+[sprite_data + 40] = h(hu[particle_data + 62]);
+[sprite_data + 42] = h(hu[particle_data + 64]);
+[sprite_data + 44] = h(hu[particle_data + 66]);
+[sprite_data + 48] = b(bu[particle_data + 6a]);
+[sprite_data + 49] = b(bu[particle_data + 6b]);
+[sprite_data + 4a] = b(bu[particle_data + 6c]);
+[sprite_data + 4c] = b(bu[particle_data + 6e]);
+[sprite_data + 4d] = b(bu[particle_data + 6f]);
+[sprite_data + 4e] = b(bu[particle_data + 70]);
 ////////////////////////////////
 
 

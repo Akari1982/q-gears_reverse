@@ -111,7 +111,19 @@
 
 800adf08 data for rotation (each 2 bytes)
 
-800ae750 array of particles? data (sprite size and textures). 0x18 size.
+800ae750 array of particles sprite data (sprite size and textures). 0x18 size.
+    + 00 [][]     half width.
+    + 02 [][]     half height.
+    + 04 [][]     center x.
+    + 06 [][]     center y.
+    + 08 [][]     u1.
+    + 0a [][]     v1.
+    + 0c [][]     u2.
+    + 0e [][]     v2.
+    + 10 [][]     u3.
+    + 12 [][]     v3.
+    + 14 [][]     u4.
+    + 16 [][]     v4.
 
 800aec3c some data during texture set (func910b0).
 
@@ -493,6 +505,8 @@
 
 800af594 [][][][] seems like return result from function (wait opcode returns 1). Set to 0 at start of run_script function.
 
+800af7a0 temp struct for init patricle instance. Description at 800c2dec.
+
 800afb8c [][][][] offset to struct 0x5c for current entity in script call.
 
 800b0984 array of 0x40 bool value. 0x1 size.
@@ -569,95 +583,153 @@
 800c1b68 [][]     pressed button mask for controller 1 (details in 800af370).
 
 800c1b6c dialogs struct (0x498 size)(4 items)
-+ 18 [][]     store 0x64 here in case of new row. Maybe how much symbols in new row we can put.
-+ 1a [][]     index into +40 array.
-+ 1c [][]     position x.
-+ 1e [][]     position y.
-+ 20 [][]     width in pixels.
-+ 22 [][]     width in something (multiply by 4 to get width in pixels).
-+ 24 [][]     height in number of rows.
-+ 26 [][]     texture V (ty).
-+ 28 [][]     some flags. Init with 0.
-                0x0008: wait for player input flag. Add this flag if we met 0x00_Return text opcode and there is no stored pointer or if we met 0x03_Wait text opcode.
-                0x0048: add this flags if we met 0x02_New text opcode.
-                0x0080: stored pointer for text. If set and met 0x00_Return() in text then we remove this flag, and jump to stored pointer +38.
-                0x0200: add this flag in 0x0F0D text opcode.
-+ 2a [][]     width in something + 3.
-+ 2c [][]     row height. Store 0xe here.
-+ 34 [][][][] pointer to current position in text data
-+ 38 [][][][] some pointer.
-+ 40 [][][][] pointer to memory with size number of rows * 0x60.
-    + 00 buffer1 packet for sprite 0x65 (0x14 size).
-    + 14 buffer1 packet for sprite 0x65 (0x14 size).
-    + 28 buffer2 packet for sprite 0x65 (0x14 size).
-    + 3c buffer2 packet for sprite 0x65 (0x14 size).
-    + 50 [][]     texture u.
-    + 52 [][]     texture v.
-    + 54 [][]     dialog_width + 3 in something.
-    + 56 [][]     init with 0xd. texture height.
-    + 58 [][]     init with 0x0. Store here rendered width in something (same as +18 in window)
-    + 5a []       current row & 1.
-    + 5b []       current row.
-    + 5c []       texture v.
-    + 5e [][]     hu[80058c70] or hu[80058ab0].
-+ 44 [][][][] pointer to memory with size (width in something + 3) * 0x1c.
-+ 48 buffer1 packet for render settings 0xe1 and 0xe2 (0xc size).
-+ 54 buffer2 packet for render settings 0xe1 and 0xe2 (0xc size).
-+ 60 buffer1 packet transparent black rectangle (0x10 size).
-+ 70 buffer2 packet transparent black rectangle (0x10 size).
-+ 80 []       default number of letters to read.
-+ 81 []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
-+ 82 []       stored number of letters to read (to restore if we want).
-+ 83 []       state. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
-+ 84 []       if 1 then window needs to be closed. Init with 0.
-+ 85 []       init with 0.
-+ 86 []       init with 0xff.
-+ 88 [][][][] +0016 from memory block.
-+ 8c [][][][] +0018 from memory block.
-+ 90 [][][][] +001a from memory block.
-+ 94 [][][][] +001c from memory block.
-+ 98 [][]     +001c from memory block.
-+ 9a [][]     init with 0. Number of +a4 element in list.
-+ 9c [][]     wait timer. Init with 0.
-+ 9e [][]     store value for 0x0F0E text opcode here.
-+ a0 [][]     store value for 0x0F0E text opcode here.
-+ a4 [][][][] init with 0. Pointer to list of allocated memory for dialog text data.
-    +00 [][][][] pointer to next allocated memory element.
-    +08 [][][][] offset to dialog text data.
-+ a8 [][][][] offset to dialog text data.
-+ ac [][]     dialog x.
-+ ae [][]     dialog y.
-+ b0 [][]     dialog width.
-+ b2 [][]     dialog height.
-+37c [][]     store -1 during dialog init.
-+37e []       sum this and 382 and store to scruct 138 + 81 in entity when circle is pressed. Maybe start pos of cursor in select dialog.
-+382 []       related with +37e. Maybe offset pos of cursor in select dialog.
-+3c4 [][]     we store 0 here if 37c != 0 and 83 != 0 and 28 flag 0x0008 is set
-+40c [][]     some flags.
-+40e [][]     checked if this == 0 when search for dialog.
-+410 [][]     looks like order of dialogs. 0-top. 0xffff if window not inited.
-+412 [][]     ???
-+414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
-+416 [][]     some entity id??? maybe owner.
-+418 [][]     some entity id???
-+450 buffer1 for avatar.
-+478 buffer2 for avatar.
-    +00 []       u0.
-    +01 []       v0.
-    +02 [][]     CLUT.
-    +08 []       u1.
-    +09 []       v1.
-    +10 []       u2.
-    +11 []       v2.
-    +18 []       u3.
-    +19 []       u4.
-+47a [][]     buf2 CLUT for avatar.
-+494 []       1 if we render avatar, 0 otherwise.
-+495 []       store here avatar id from +80 from entity 138 struct.
+    + 18 [][]     store 0x64 here in case of new row. Maybe how much symbols in new row we can put.
+    + 1a [][]     index into +40 array.
+    + 1c [][]     position x.
+    + 1e [][]     position y.
+    + 20 [][]     width in pixels.
+    + 22 [][]     width in something (multiply by 4 to get width in pixels).
+    + 24 [][]     height in number of rows.
+    + 26 [][]     texture V (ty).
+    + 28 [][]     some flags. Init with 0.
+                    0x0008: wait for player input flag. Add this flag if we met 0x00_Return text opcode and there is no stored pointer or if we met 0x03_Wait text opcode.
+                    0x0048: add this flags if we met 0x02_New text opcode.
+                    0x0080: stored pointer for text. If set and met 0x00_Return() in text then we remove this flag, and jump to stored pointer +38.
+                    0x0200: add this flag in 0x0F0D text opcode.
+    + 2a [][]     width in something + 3.
+    + 2c [][]     row height. Store 0xe here.
+    + 34 [][][][] pointer to current position in text data
+    + 38 [][][][] some pointer.
+    + 40 [][][][] pointer to memory with size number of rows * 0x60.
+        + 00 buffer1 packet for sprite 0x65 (0x14 size).
+        + 14 buffer1 packet for sprite 0x65 (0x14 size).
+        + 28 buffer2 packet for sprite 0x65 (0x14 size).
+        + 3c buffer2 packet for sprite 0x65 (0x14 size).
+        + 50 [][]     texture u.
+        + 52 [][]     texture v.
+        + 54 [][]     dialog_width + 3 in something.
+        + 56 [][]     init with 0xd. texture height.
+        + 58 [][]     init with 0x0. Store here rendered width in something (same as +18 in window)
+        + 5a []       current row & 1.
+        + 5b []       current row.
+        + 5c []       texture v.
+        + 5e [][]     hu[80058c70] or hu[80058ab0].
+    + 44 [][][][] pointer to memory with size (width in something + 3) * 0x1c.
+    + 48 buffer1 packet for render settings 0xe1 and 0xe2 (0xc size).
+    + 54 buffer2 packet for render settings 0xe1 and 0xe2 (0xc size).
+    + 60 buffer1 packet transparent black rectangle (0x10 size).
+    + 70 buffer2 packet transparent black rectangle (0x10 size).
+    + 80 []       default number of letters to read.
+    + 81 []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
+    + 82 []       stored number of letters to read (to restore if we want).
+    + 83 []       state. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
+    + 84 []       if 1 then window needs to be closed. Init with 0.
+    + 85 []       init with 0.
+    + 86 []       init with 0xff.
+    + 88 [][][][] +0016 from memory block.
+    + 8c [][][][] +0018 from memory block.
+    + 90 [][][][] +001a from memory block.
+    + 94 [][][][] +001c from memory block.
+    + 98 [][]     +001c from memory block.
+    + 9a [][]     init with 0. Number of +a4 element in list.
+    + 9c [][]     wait timer. Init with 0.
+    + 9e [][]     store value for 0x0F0E text opcode here.
+    + a0 [][]     store value for 0x0F0E text opcode here.
+    + a4 [][][][] init with 0. Pointer to list of allocated memory for dialog text data.
+        +00 [][][][] pointer to next allocated memory element.
+        +08 [][][][] offset to dialog text data.
+    + a8 [][][][] offset to dialog text data.
+    + ac [][]     dialog x.
+    + ae [][]     dialog y.
+    + b0 [][]     dialog width.
+    + b2 [][]     dialog height.
+    +37c [][]     store -1 during dialog init.
+    +37e []       sum this and 382 and store to scruct 138 + 81 in entity when circle is pressed. Maybe start pos of cursor in select dialog.
+    +382 []       related with +37e. Maybe offset pos of cursor in select dialog.
+    +3c4 [][]     we store 0 here if 37c != 0 and 83 != 0 and 28 flag 0x0008 is set
+    +40c [][]     some flags.
+    +40e [][]     checked if this == 0 when search for dialog.
+    +410 [][]     looks like order of dialogs. 0-top. 0xffff if window not inited.
+    +412 [][]     ???
+    +414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
+    +416 [][]     some entity id??? maybe owner.
+    +418 [][]     some entity id???
+    +450 buffer1 for avatar.
+    +478 buffer2 for avatar.
+        +00 []       u0.
+        +01 []       v0.
+        +02 [][]     CLUT.
+        +08 []       u1.
+        +09 []       v1.
+        +10 []       u2.
+        +11 []       v2.
+        +18 []       u3.
+        +19 []       u4.
+    +47a [][]     buf2 CLUT for avatar.
+    +494 []       1 if we render avatar, 0 otherwise.
+    +495 []       store here avatar id from +80 from entity 138 struct.
 
 800c2dcc [][]     pressed button mask for controller 2 (details in 800af370).
 800c2dd4 [][]     repeated button mask for controller 1 (details in 800af370).
 800c2ddc [][]     repeated button mask for controller 2 (details in 800af370).
+
+800c2dec array of pointers to particle data (0x40 items 0x4 size)(same as 800af7a0)
+         each particle data is array of 0x8 items 0x78 size.
+    + 00 [][]     init with 0.
+    + 02 [][]     wait value. Init with 0.
+    + 04 [][]     ttl. Init with 80. If 0x7fff then this particle will not die.
+    + 06 [][]     number of sprites. Init with 0.
+    + 08 [][][][] init with 8000.
+    + 0c [][]     init with 0.
+    + 0e [][]     init with 0.
+    + 10 [][]     init with 0.
+    + 14 [][]     init with 0.
+    + 16 [][]     init with -3e8.
+    + 18 [][]     init with 0.
+    + 1c [][]     init with 0.
+    + 1e [][]     init with 0.
+    + 20 [][]     init with 0.
+    + 24 [][]     init with 1.
+    + 26 [][]     init with 0.
+    + 28 [][]     init with 100.
+    + 2a [][]     render settings. Init with 0.
+    + 2c [][][][] pointer to allocated sprites memory. Size is sprite number * c0.
+        + 00 [][]     init with 0. If this not 0 then we will not kill particle after ttl.
+        + 50 start of quad packet for buffer 1.
+        + 78 start of quad packet for buffer 2.
+        + a0 [][]     x1. From particles sprite data.
+        + a2 [][]     y1. From particles sprite data.
+        + a4 [][]     z1. Always 0.
+        + a8 [][]     x2. From particles sprite data.
+        + aa [][]     y2. From particles sprite data.
+        + ac [][]     z2. Always 0.
+        + b0 [][]     x3. From particles sprite data.
+        + b2 [][]     y3. From particles sprite data.
+        + b4 [][]     z3. Always 0.
+        + b8 [][]     x4. From particles sprite data.
+        + ba [][]     y4. From particles sprite data.
+        + bc [][]     z4. Always 0.
+    + 30 array of 0x8 elements 0x4 size
+        + 0 [][]     init with 0.
+        + 2 [][]     init with 0.
+    + 50 [][]     init with 800.
+    + 52 [][]     entity id (set entity id from script called).
+    + 54 [][]     particle is. Init with 0.
+    + 56 [][]     init with 1.
+    + 58 [][]     init with 1c.
+    + 5a [][]     init with 1c8.
+    + 5c [][]     init with 1c8.
+    + 5e [][]     init with 1c8.
+    + 62 [][]     init with 20.
+    + 64 [][]     init with 20.
+    + 66 [][]     init with 20.
+    + 6a []       init with 80.
+    + 6b []       init with 20.
+    + 6c []       init with 0.
+    + 6e []       init with -4.
+    + 6f []       init with -1.
+    + 70 []       init with 0.
+    + 76 [][]     init with 0.
 
 800c2f18 [][][][] min horizontal movement for mouse controller.
 800c2f20 [][][][] min vertical movement for mouse controller.
