@@ -621,19 +621,16 @@ return A2;
 
 
 ////////////////////////////////
-// func49484
-T0 = w[A0 + 0000];
-T1 = w[A0 + 0004];
-VXY0 = T0;
-VZ0 = T1;
-80049494	nop
-80049498	gte_func18t0,l33
-[A1 + 0000] = w(IR1);
-[A1 + 0004] = w(IR2);
-[A1 + 0008] = w(IR3);
-V0 = A2;
-800494AC	jr     ra 
-800494B0	nop
+// system_gte_rotate_vector()
+
+VXY0 = w[A0 + 0];
+VZ0 = w[A0 + 4];
+gte_rtv0(); // v0 * rotmatrix.
+
+[A1 + 0] = w(IR1);
+[A1 + 4] = w(IR2);
+[A1 + 8] = w(IR3);
+return A2;
 ////////////////////////////////
 
 
@@ -748,6 +745,7 @@ return A0;
 
 ////////////////////////////////
 // func49834
+
 T0 = w[A0 + 0000];
 T1 = w[A0 + 0004];
 T2 = w[A0 + 0008];
@@ -1850,22 +1848,23 @@ V0 = V0 >> 02;
 
 
 ////////////////////////////////
-// func4a584
-VXY0 = w[A0 + 0000];
-VZ0 = w[A0 + 0004];
-8004A58C	nop
-8004A590	gte_func18t0,r11r12
-[A1 + 0000] = w(MAC1);
-[A1 + 0004] = w(MAC2);
-[A1 + 0008] = w(MAC3);
-V0 = FLAG;
-[A2 + 0000] = w(V0);
+// system_gte_rotate_translate_vector()
+
+VXY0 = w[A0 + 0];
+VZ0 = w[A0 + 4];
+gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+[A1 + 0] = w(MAC1);
+[A1 + 4] = w(MAC2);
+[A1 + 8] = w(MAC3);
+
+[A2 + 0] = w(FLAG);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_side_of_vector
+// system_side_of_vector()
+
 8004A5B4	mtc2   a0,l33
 8004A5B8	mtc2   a2,gbk
 8004A5BC	mtc2   a1,rbk

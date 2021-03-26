@@ -145,7 +145,7 @@ system_gte_set_translation_vector();
 A0 = S1 + cc;
 A1 = S1 + e8;
 A2 = SP + 10;
-8006F6E0	jal    func4a584 [$8004a584]
+8006F6E0	jal    system_gte_rotate_translate_vector [$8004a584]
 
 A0 = S2; // original light matrix without rotation.
 system_gte_calculate_and_set_lighting_matrix();
@@ -687,18 +687,18 @@ V0 = 0008;
 [800b16aa] = h(V0);
 80070194	bne    v1, zero, L701cc [$800701cc]
 A1 = 0;
-A2 = 00ff;
 A0 = 8006f020;
 V1 = 80059ad4;
 
 loop701b0:	; 800701B0
-[V1 + 0000] = w(A2);
-[A0 + 0000] = w(A2);
-A0 = A0 + 0004;
-A1 = A1 + 0001;
-V0 = A1 < 0003;
+    [V1 + 0000] = w(ff);
+    [A0 + 0000] = w(ff);
+    A0 = A0 + 0004;
+    V1 = V1 + 0004;
+    A1 = A1 + 0001;
+    V0 = A1 < 0003;
 800701C4	bne    v0, zero, loop701b0 [$800701b0]
-V1 = V1 + 0004;
+
 
 L701cc:	; 800701CC
 V1 = ffff;
@@ -3359,6 +3359,7 @@ V0 = w[A1 + 001c];
 
 ////////////////////////////////
 // func7372c()
+
 [A0 + 0] = h(hu[A1 + 0]);
 [A0 + 2] = h(hu[A1 + 2]);
 [A0 + 4] = h(hu[A1 + 4]);

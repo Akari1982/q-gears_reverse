@@ -147,7 +147,7 @@ func73050(); // move here
 
 S0 = 80d4;
 
-if( w[800c1b60] == 0 )
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1c4; // "SEFFECT"
     80074C30	0C0A06C6	Ж...
@@ -157,7 +157,7 @@ A0 = w[800c3740] + S0;
 A1 = w[800acfe0];
 80074C48	jal    func71344 [$80071344]
 
-if( w[800c1b60] == 0 )
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1d0; // "MESSAGE"
     80074C6C	0C0A06C6	Ж...
@@ -174,9 +174,9 @@ SP = T0;
 
 func74958(); // update sprite
 
-funca8b60(); // update patricle
+field_particle_update();
 
-if( w[800c1b60] == 0 )
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     80074CC0	0C0A051A	....
 }
@@ -193,7 +193,7 @@ SP = w[SP];
 
 80074CF0	jal    funcab3a0 [$800ab3a0]
 
-if( w[800c1b60] == 0 )
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     80074D0C	0C0A0506	....
 
@@ -257,17 +257,16 @@ system_psyq_put_disp_env();
 A0 = w[800c3740] + 0;
 system_psyq_put_draw_env();
 
-V0 = w[800c1b60];
-if( V0 == 0 )
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    A0 = 0001;
+    A0 = 1;
     system_psyq_wait_frames();
     [800ad074] = w(V0);
 }
 
 func24e3c();
 
-if( w[800c1b60] == 0 )
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1e8; // ShapeTrans
     80074E78	0C0A06C6	Ж...
@@ -284,7 +283,7 @@ if( w[800ad08c] != 0 )
     [800ad08c] = w(0);
 }
 
-if( w[800c1b60] == 0 )
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1f4; // "LineScroll"
     80074ED8	0C0A06C6	Ж...

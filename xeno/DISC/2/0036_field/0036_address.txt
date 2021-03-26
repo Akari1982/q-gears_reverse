@@ -125,6 +125,8 @@
     + 14 [][]     u4.
     + 16 [][]     v4.
 
+800ae948 array of some particle data (0x200 size).
+
 800aec3c some data during texture set (func910b0).
 
 800aed04 [][][][] x pos. Set to 0 when shake less than 0.
@@ -383,9 +385,9 @@
         +  ea [][]     init with 0xff. We store animation id to play here in SpritePlayAnimation.
         +  ec [][][][] init with 0 when set position by x z. Init with 0.
         +  f0 [][][][] init with 0 when set position by x z.
-        +  f4 [][]     init with 0x1000. speed X.
-        +  f6 [][]     init with 0x1000. speed Y.
-        +  f8 [][]     init with 0x1000. speed Z.
+        +  f4 [][]     init with 0x1000. scale X.
+        +  f6 [][]     init with 0x1000. scale Y.
+        +  f8 [][]     init with 0x1000. scale Z.
         +  fc []       init with 0x80.
         +  fd []       init with 0x80.
         +  fe []       init with 0x80.
@@ -507,6 +509,7 @@
 
 800af7a0 temp struct for init patricle instance. Description at 800c2dec.
 
+800af588 [][][][] used for particle scaled render.
 800afb8c [][][][] offset to struct 0x5c for current entity in script call.
 
 800b0984 array of 0x40 bool value. 0x1 size.
@@ -574,7 +577,7 @@
     +5c RECT struct (0x8 size).
     +64
     +b8 DISPENV struct (0x14 size).
-    +cc some array
+    +cc depth sorted array of lists.
     +40d0
     +80f0 otag
 
@@ -679,22 +682,55 @@
     + 02 [][]     wait value. Init with 0.
     + 04 [][]     ttl. Init with 80. If 0x7fff then this particle will not die.
     + 06 [][]     number of sprites. Init with 0.
-    + 08 [][][][] init with 8000.
-    + 0c [][]     init with 0.
-    + 0e [][]     init with 0.
-    + 10 [][]     init with 0.
-    + 14 [][]     init with 0.
-    + 16 [][]     init with -3e8.
-    + 18 [][]     init with 0.
-    + 1c [][]     init with 0.
-    + 1e [][]     init with 0.
-    + 20 [][]     init with 0.
-    + 24 [][]     init with 1.
-    + 26 [][]     init with 0.
-    + 28 [][]     init with 100.
+    + 08 [][][][] speed of sprites. Init with 8000.
+    + 0c [][]     x pos.
+    + 0e [][]     y pos.
+    + 10 [][]     z pos.
+    + 14 [][]     x speed for sprites. Init with 0.
+    + 16 [][]     y speed for sprites. Init with -3e8.
+    + 18 [][]     z speed for sprites. Init with 0.
+    + 1c [][]     x accel for sprites. Init with 0.
+    + 1e [][]     y accel for sprites. Init with 0.
+    + 20 [][]     z accel for sprites. Init with 0.
+    + 24 [][]     use speed for sprites. Init with 1.
+    + 26 [][]     random range for start pos. Init with 0.
+    + 28 [][]     random range for speed. Init with 100.
     + 2a [][]     render settings. Init with 0.
+                  0x0001 - use random rotation of sprites.
+                  0x0006 - order of sprites (0 - bottom, 1 - lower than real, 2 - real, 3 - higher than real)
+                  0x0030 - type of patricle:
+                           0 - use entity pos and rot, ignore scale.
+                           1 - use data from +72, +74.
+                           2 - use entity matrix for particle pos.
+                           3 - use entity pos rot and scale. Ignore particle data.
+                  0x0040 - use fized z variation pos.
+                  0x0080 - use fixed start pos.
     + 2c [][][][] pointer to allocated sprites memory. Size is sprite number * c0.
         + 00 [][]     init with 0. If this not 0 then we will not kill particle after ttl.
+        + 02 [][]     wait value.
+        + 04 [][]     ttl.
+        + 06 [][]     z rot.
+        + 08 [][][][] x pos.
+        + 0c [][][][] y pos.
+        + 10 [][][][] z pos.
+        + 18 [][][][] x speed.
+        + 1c [][][][] y speed.
+        + 20 [][][][] z speed.
+        + 28 [][][][] x accel.
+        + 2c [][][][] y accel.
+        + 30 [][][][] z accel.
+        + 38 [][]     x trans.
+        + 3a [][]     y trans.
+        + 3c [][]     z trans.
+        + 40 [][]     x trans add.
+        + 42 [][]     y trans add.
+        + 44 [][]     x trans add.
+        + 48 []       R.
+        + 49 []       G.
+        + 4a []       B.
+        + 4c []       R add (maybe -X).
+        + 4d []       G add (maybe -X).
+        + 4e []       B add (maybe -X).
         + 50 start of quad packet for buffer 1.
         + 78 start of quad packet for buffer 2.
         + a0 [][]     x1. From particles sprite data.
@@ -709,27 +745,29 @@
         + b8 [][]     x4. From particles sprite data.
         + ba [][]     y4. From particles sprite data.
         + bc [][]     z4. Always 0.
-    + 30 array of 0x8 elements 0x4 size
-        + 0 [][]     init with 0.
-        + 2 [][]     init with 0.
-    + 50 [][]     init with 800.
+    + 30 array of 0x8 offsets for all directions sprites. 0x4 size.
+        + 0 [][]     x offset. Init with 0.
+        + 2 [][]     z offset. Init with 0.
+    + 50 [][]     scale. Init with 800.
     + 52 [][]     entity id (set entity id from script called).
     + 54 [][]     particle is. Init with 0.
-    + 56 [][]     init with 1.
+    + 56 [][]     init with 1. Default wait for sprite.
     + 58 [][]     init with 1c.
-    + 5a [][]     init with 1c8.
-    + 5c [][]     init with 1c8.
-    + 5e [][]     init with 1c8.
-    + 62 [][]     init with 20.
-    + 64 [][]     init with 20.
-    + 66 [][]     init with 20.
-    + 6a []       init with 80.
-    + 6b []       init with 20.
-    + 6c []       init with 0.
-    + 6e []       init with -4.
-    + 6f []       init with -1.
-    + 70 []       init with 0.
-    + 76 [][]     init with 0.
+    + 5a [][]     x trans. Init with 1c8.
+    + 5c [][]     y trans. Init with 1c8.
+    + 5e [][]     z trans. Init with 1c8.
+    + 62 [][]     x trans add. Init with 20.
+    + 64 [][]     y trans add. Init with 20.
+    + 66 [][]     x trans add. Init with 20.
+    + 6a []       R. Init with 80.
+    + 6b []       G. Init with 20.
+    + 6c []       B. Init with 0.
+    + 6e []       R add. Init with -4.
+    + 6f []       G add. Init with -1.
+    + 70 []       B add. Init with 0.
+    + 72 [][]     rotation x.
+    + 74 [][]     ritation y.
+    + 76 [][]     rotation z.
 
 800c2f18 [][][][] min horizontal movement for mouse controller.
 800c2f20 [][][][] min vertical movement for mouse controller.

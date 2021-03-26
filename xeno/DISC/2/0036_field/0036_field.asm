@@ -2578,10 +2578,10 @@
 // funca897c
 800A897C-800A8B5C
 ////////////////////////////////
-// funca8b60
+// field_particle_update
 800A8B60-800A8D50
 ////////////////////////////////
-// funca8d54
+// field_particle_random
 800A8D54-800A8D88
 ////////////////////////////////
 // funca8d8c
@@ -2593,16 +2593,16 @@
 // particle_create_instance
 800A8E80-800A8FF0
 ////////////////////////////////
-// funca8ff4
+// field_particle_colour_sum
 800A8FF4-800A9028
 ////////////////////////////////
-// funca902c
+// field_particle_sprite_packet_update
 800A902C-800A93EC
 ////////////////////////////////
-// funca93f0
+// field_particle_sprite_update
 800A93F0-800A9B88
 ////////////////////////////////
-// funca9b8c
+// field_particle_sprite_init
 800A9B8C-800A9EB0
 ////////////////////////////////
 // funca9eb4

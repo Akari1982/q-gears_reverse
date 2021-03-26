@@ -11179,7 +11179,7 @@ L405dc:	; 800405DC
 // system_gte_apply_matrix_lv
 80049324-80049480
 ////////////////////////////////
-// func49484
+// system_gte_rotate_vector
 80049484-800494B0
 ////////////////////////////////
 // system_gte_push_matrix
@@ -11380,7 +11380,7 @@ L405dc:	; 800405DC
 // func4a524
 8004A524-8004A580
 ////////////////////////////////
-// func4a584
+// system_gte_rotate_translate_vector
 8004A584-8004A5B0
 ////////////////////////////////
 // system_side_of_vector

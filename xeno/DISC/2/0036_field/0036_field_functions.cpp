@@ -1361,11 +1361,11 @@ S4 = S5;
 [SP + 003c] = w(0);
 [SP + 0048] = w(V0);
 [SP + 004c] = w(V0);
-800A596C	jal    $80049c74
+800A596C	jal    $system_gte_multiply_matrix_by_vector
 [SP + 0050] = w(V0);
-800A5974	jal    $80049da4
+800A5974	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0028;
-800A597C	jal    $80049e34
+800A597C	jal    $system_gte_set_translation_vector
 A0 = SP + 0028;
 
 loopa5984:	; 800A5984
@@ -1397,7 +1397,7 @@ V1 = V0 + 0010;
 V1 = V0 + 0018;
 V0 = V0 + 0020;
 [SP + 0018] = w(V1);
-800A59FC	jal    $8004a664
+800A59FC	jal    $func4a664
 [SP + 001c] = w(V0);
 
 La5a04:	; 800A5A04
@@ -3836,24 +3836,20 @@ SP = SP + 0038;
 800A8074	jr     ra 
 800A8078	nop
 ////////////////////////////////
-// funca807c
-800A807C	addiu  sp, sp, $ffb0 (=-$50)
-[SP + 004c] = w(RA);
-[SP + 0048] = w(FP);
-[SP + 0044] = w(S7);
-[SP + 0040] = w(S6);
-[SP + 003c] = w(S5);
-[SP + 0038] = w(S4);
-[SP + 0034] = w(S3);
-[SP + 0030] = w(S2);
-[SP + 002c] = w(S1);
+
+
+
+////////////////////////////////
+// funca807c()
+
 800A80A4	jal    funca77ec [$800a77ec]
-[SP + 0028] = w(S0);
+
 S4 = 0;
 A0 = 0008;
 [800ae038] = w(0);
-800A80BC	jal    $800322bc
 A1 = 0;
+system_memory_set_alloc_user();
+
 A0 = 1108;
 800A80C8	jal    $system_memory_allocate
 A1 = 0;
@@ -3875,8 +3871,9 @@ V0 = w[800af134];
 S0 = V0 + S1;
 V0 = w[800af138];
 A0 = S0;
-800A8128	jal    $80043b28
 S6 = V0 + S1;
+system_graphic_textured_quad_header();
+
 A0 = 0;
 A1 = 00e8;
 V0 = 0080;
@@ -4037,19 +4034,6 @@ V0 = S3 < 006d;
 S1 = S1 + 0028;
 V0 = 0001;
 [800ae74c] = w(V0);
-RA = w[SP + 004c];
-FP = w[SP + 0048];
-S7 = w[SP + 0044];
-S6 = w[SP + 0040];
-S5 = w[SP + 003c];
-S4 = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0050;
-800A837C	jr     ra 
-800A8380	nop
 ////////////////////////////////
 
 
@@ -4057,39 +4041,39 @@ SP = SP + 0050;
 ////////////////////////////////
 // field_particle_create_sprite_packets()
 
-S0 = A0;
+sprite_data = A0;
 S1 = A1;
 tranc = A2;
 
-A0 = S0 + 50;
+A0 = sprite_data + 50;
 system_graphic_textured_quad_header();
 
-[S0 + 54] = b(80);
-[S0 + 55] = b(80);
-[S0 + 56] = b(80);
+[sprite_data + 54] = b(80);
+[sprite_data + 55] = b(80);
+[sprite_data + 56] = b(80);
 
 x1 = hu[800ae750 + S1 * 18 + 4] << 4 - hu[800ae750 + S1 * 18 + 0] << 4;
 y1 = hu[800ae750 + S1 * 18 + 6] << 4 - hu[800ae750 + S1 * 18 + 2] << 4;
 x2 = hu[800ae750 + S1 * 18 + 4] << 4 + hu[800ae750 + S1 * 18 + 0] << 4;
 y2 = hu[800ae750 + S1 * 18 + 6] << 4 + hu[800ae750 + S1 * 18 + 2] << 4;
 
-[S0 + a0] = h(x1);
-[S0 + a2] = h(y1);
-[S0 + a4] = h(0);
+[sprite_data + a0] = h(x1);
+[sprite_data + a2] = h(y1);
+[sprite_data + a4] = h(0);
 
-[S0 + a8] = h(x2);
-[S0 + aa] = h(y1);
-[S0 + ac] = h(0);
+[sprite_data + a8] = h(x2);
+[sprite_data + aa] = h(y1);
+[sprite_data + ac] = h(0);
 
-[S0 + b0] = h(x1);
-[S0 + b2] = h(y2);
-[S0 + b4] = h(0);
+[sprite_data + b0] = h(x1);
+[sprite_data + b2] = h(y2);
+[sprite_data + b4] = h(0);
 
-[S0 + b8] = h(x2);
-[S0 + ba] = h(y2);
-[S0 + bc] = h(0);
+[sprite_data + b8] = h(x2);
+[sprite_data + ba] = h(y2);
+[sprite_data + bc] = h(0);
 
-A0 = S0 + 50; // addr
+A0 = sprite_data + 50; // addr
 A1 = hu[800ae750 + S1 * 18 + 8]; // u1
 A2 = hu[800ae750 + S1 * 18 + a] + 40; // v1
 A3 = hu[800ae750 + S1 * 18 + c] - 1; // u2
@@ -4100,7 +4084,7 @@ A7 = hu[800ae750 + S1 * 18 + 14] - 1; // u4
 A8 = hu[800ae750 + S1 * 18 + 16] + 3f; // v4
 field_set_quad_uv();
 
-A0 = S0 + 50;
+A0 = sprite_data + 50;
 A1 = 1;
 system_set_draw_packet_transparency();
 
@@ -4109,17 +4093,17 @@ A1 = tranc; // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
 A2 = 3c0;
 A3 = 140;
 system_graphic_get_texpage_by_param();
-[S0 + 66] = h(V0);
+[sprite_data + 66] = h(V0);
 
 A0 = 100;
 A1 = f7;
 system_graphic_get_clut_by_param();
-[S0 + 5e] = h(V0);
+[sprite_data + 5e] = h(V0);
 
 // copy quad to second buffer packet
-A2 = S0 + 78;
-A3 = S0 + 70;
-S2 = S0 + 50;
+A2 = sprite_data + 78;
+A3 = sprite_data + 70;
+S2 = sprite_data + 50;
 
 loopa8530:	; 800A8530
     [A2 + 0] = w(w[S2 + 0]);
@@ -4138,6 +4122,7 @@ loopa8530:	; 800A8530
 
 ////////////////////////////////
 // funca858c()
+
 S0 = A0;
 if( w[800ad00c] == 1 )
 {
@@ -4156,16 +4141,9 @@ if( w[800ad00c] == 1 )
     A3 = A2 + A3;
 
     loopa85dc:	; 800A85DC
-        V0 = w[A2 + 0000];
-        V1 = w[A2 + 0004];
-        A0 = w[A2 + 0008];
-        A1 = w[A2 + 000c];
-        [T0 + 0000] = w(V0);
-        [T0 + 0004] = w(V1);
-        [T0 + 0008] = w(A0);
-        [T0 + 000c] = w(A1);
-        T0 = T0 + 0010;
-        A2 = A2 + 0010;
+        [T0] = w(w[A2]);
+        T0 = T0 + 4;
+        A2 = A2 + 4;
     800A8600	bne    a2, a3, loopa85dc [$800a85dc]
 
     A0 = w[800af144];
@@ -4179,6 +4157,7 @@ if( w[800ad00c] == 1 )
 
 ////////////////////////////////
 // funca8634()
+
 if( w[800ad00c] != 1 )
 {
     [800ad00c] = w(1);
@@ -4209,34 +4188,27 @@ if( w[800ad00c] != 1 )
 
 
 ////////////////////////////////
-// funca86c8
-V0 = w[800ad00c];
-800A86D0	addiu  sp, sp, $ffe8 (=-$18)
-800A86D4	beq    v0, zero, La873c [$800a873c]
-[SP + 0010] = w(RA);
-A0 = 800af0fc;
-V0 = 03c0;
-A1 = w[800af144];
-V1 = 0100;
-[A0 + 0000] = h(V0);
-V0 = 0040;
-[800ad00c] = w(0);
-[800af0fe] = h(V1);
-[800af100] = h(V0);
-[800af102] = h(V1);
-800A871C	jal    $8004470c
-800A8720	nop
-800A8724	jal    $system_draw_sync
-A0 = 0;
-A0 = w[800af144];
-800A8734	jal    $80031f0c
-800A8738	nop
+// funca86c8()
 
-La873c:	; 800A873C
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A8744	jr     ra 
-800A8748	nop
+if( w[800ad00c] != 0 )
+{
+    [800ad00c] = w(0);
+
+    [800af0fc] = h(3c0);
+    [800af0fe] = h(100);
+    [800af100] = h(40);
+    [800af102] = h(100);
+
+    A0 = 800af0fc;
+    A1 = w[800af144];
+    system_load_image();
+
+    A0 = 0;
+    system_draw_sync();
+
+    A0 = w[800af144];
+    system_memory_mark_removed_alloc();
+}
 ////////////////////////////////
 
 
@@ -4266,7 +4238,7 @@ if( bu[800b0984 + id] == 1 )
     {
         if( h[S0 + i * 78 + 6] != 0 )
         {
-            A0 = w[S0 + i * 78 + 2c];
+            A0 = w[S0 + i * 78 + 2c]; // sprite data
             system_memory_mark_removed_alloc();
         }
     }
@@ -4402,7 +4374,7 @@ for( int i = 0; i < 8; ++i )
 
 
 ////////////////////////////////
-// funca8b60()
+// field_particle_update()
 
 if( w[800ad00c] == 0 )
 {
@@ -4435,19 +4407,19 @@ if( w[800ad00c] == 0 )
                         {
                             sprite_data = w[particle_data + j * 78 + 2c];
 
-                            if( h[sprite_data + k * c0 + 0] == 0 )
+                            if( h[sprite_data + k * c0 + 0] == 0 ) // if sprite not inited
                             {
-                                if( hu[particle_data + j * 78 + 4] != 0 )
+                                if( hu[particle_data + j * 78 + 4] != 0 ) // if ttl exist
                                 {
                                     A0 = particle_data + j * 78;
                                     A1 = sprite_data + k * c0;
                                     A2 = SP + 30;
-                                    funca9b8c();
+                                    field_particle_sprite_init();
 
                                     A0 = particle_data + j * 78;
                                     A1 = sprite_data + k * c0;
                                     A2 = SP + 10;
-                                    800A8C80	jal    funca93f0 [$800a93f0]
+                                    field_particle_sprite_update();
 
                                     not_fin = 1;
                                 }
@@ -4457,7 +4429,7 @@ if( w[800ad00c] == 0 )
                                 A0 = particle_data + j * 78;
                                 A1 = sprite_data + k * c0;
                                 A2 = SP + 10;
-                                800A8C80	jal    funca93f0 [$800a93f0]
+                                field_particle_sprite_update();
 
                                 not_fin = 1;
                             }
@@ -4500,7 +4472,7 @@ if( w[800ad00c] == 0 )
 
 
 ////////////////////////////////
-// funca8d54()
+// field_particle_random()
 
 S0 = A0;
 
@@ -4529,61 +4501,31 @@ return -1;
 
 
 ////////////////////////////////
-// funca8dc0
-800A8DC0	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S3);
+// funca8dc0()
+
 S3 = A0;
-[SP + 0020] = w(S4);
 S4 = A1;
-[SP + 0014] = w(S1);
-S1 = 0;
-[SP + 0010] = w(S0);
-S0 = 800c2dec;
-[SP + 0018] = w(S2);
-S2 = 800af5dc;
-[SP + 0024] = w(RA);
 
-loopa8df8:	; 800A8DF8
-V0 = h[S2 + 0000];
-800A8DFC	nop
-800A8E00	bne    v0, s3, La8e48 [$800a8e48]
-800A8E04	nop
-800A8E08	bne    s4, zero, La8e30 [$800a8e30]
-A0 = S1;
-V0 = w[S0 + 0000];
-800A8E14	nop
-[V0 + 0004] = h(0);
-V0 = w[S0 + 0000];
-800A8E20	jal    funca884c [$800a884c]
-[V0 + 0002] = h(0);
-800A8E28	j      La8e4c [$800a8e4c]
-S0 = S0 + 0004;
+for( int i = 0; i < 40; ++i )
+{
+    if( h[800af5dc + i * 2] == S3 )
+    {
+        V0 = w[800c2dec + i * 4];
+        [V0 + 2] = h(0);
+        [V0 + 4] = h(0);
 
-La8e30:	; 800A8E30
-V0 = w[S0 + 0000];
-800A8E34	nop
-[V0 + 0004] = h(0);
-V0 = w[S0 + 0000];
-800A8E40	jal    funca88a4 [$800a88a4]
-[V0 + 0002] = h(0);
-
-La8e48:	; 800A8E48
-S0 = S0 + 0004;
-
-La8e4c:	; 800A8E4C
-S1 = S1 + 0001;
-V0 = S1 < 0040;
-800A8E54	bne    v0, zero, loopa8df8 [$800a8df8]
-S2 = S2 + 0002;
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800A8E78	jr     ra 
-800A8E7C	nop
+        if( S4 == 0 )
+        {
+            A0 = i;
+            funca884c();
+        }
+        else
+        {
+            A0 = i;
+            funca88a4();
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -4634,15 +4576,15 @@ for( int i = 0; i < 8; ++i )
         A0 = sprite_num * c0;
         A1 = 0;
         system_memory_allocate();
-        sprite_mem = V0;
+        sprite_data = V0;
 
-        [particle_mem + i * 78 + 2c] = w(sprite_mem);
+        [particle_mem + i * 78 + 2c] = w(sprite_data);
 
         for( int j = 0; j < sprite_num; ++j )
         {
-            [sprite_mem + j * c0 + 0] = h(0);
+            [sprite_data + j * c0 + 0] = h(0);
 
-            A0 = sprite_mem + j * c0; // buffer
+            A0 = sprite_data + j * c0; // buffer
             A1 = h[particle_mem + i * 78 + 54]; // particle id
             A2 = (((hu[particle_mem + i * 78 + 2a] << 10) >> 18) + 1) & 3; // transparency
             field_particle_create_sprite_packets();
@@ -4656,818 +4598,470 @@ return 1;
 
 
 ////////////////////////////////
-// funca8ff4
-800A8FF4	bgez   a1, La9010 [$800a9010]
-800A8FF8	nop
+// field_particle_colour_sum()
+
 A0 = A0 + A1;
-800A9000	bgez   a0, La9024 [$800a9024]
-800A9004	nop
-800A9008	j      La9024 [$800a9024]
-A0 = 0;
 
-La9010:	; 800A9010
-A0 = A0 + A1;
-V0 = A0 < 0100;
-800A9018	bne    v0, zero, La9024 [$800a9024]
-800A901C	nop
-A0 = 00ff;
-
-La9024:	; 800A9024
-800A9024	jr     ra 
-V0 = A0;
-////////////////////////////////
-// funca902c
-800A902C	addiu  sp, sp, $ff38 (=-$c8)
-[SP + 00ac] = w(S1);
-S1 = A0;
-[SP + 00b4] = w(S3);
-S3 = A1;
-[SP + 00bc] = w(S5);
-S5 = w[SP + 00d8];
-A0 = SP + 0088;
-[SP + 00b0] = w(S2);
-S2 = SP + 0048;
-[SP + 00a8] = w(S0);
-S0 = w[SP + 00dc];
-A1 = S2;
-[SP + 00b8] = w(S4);
-S4 = A3;
-[SP + 00c0] = w(RA);
-[SP + 0088] = h(0);
-[SP + 008a] = h(0);
-800A9074	jal    $8003f5e0
-[SP + 008c] = h(A2);
-V0 = w[S1 + 0008];
-800A9080	nop
-V0 = V0 >> 0c;
-[SP + 005c] = w(V0);
-V0 = w[S1 + 000c];
-800A9090	nop
-V0 = V0 >> 0c;
-[SP + 0060] = w(V0);
-V0 = w[S1 + 0010];
-800A90A0	nop
-V0 = V0 >> 0c;
-[SP + 0064] = w(V0);
-V0 = 0003;
-800A90B0	bne    s0, v0, La91d0 [$800a91d0]
-A0 = S3;
-V0 = w[S3 + 0000];
-V1 = w[S3 + 0004];
-A0 = w[S3 + 0008];
-A1 = w[S3 + 000c];
-[SP + 0068] = w(V0);
-[SP + 006c] = w(V1);
-[SP + 0070] = w(A0);
-[SP + 0074] = w(A1);
-V0 = w[S3 + 0010];
-V1 = w[S3 + 0014];
-A0 = w[S3 + 0018];
-A1 = w[S3 + 001c];
-[SP + 0078] = w(V0);
-[SP + 007c] = w(V1);
-[SP + 0080] = w(A0);
-[SP + 0084] = w(A1);
-S0 = SP + 0068;
-A0 = S0;
-800A9100	jal    $80049c74
-A1 = S5;
-A0 = S0;
-A1 = S2;
-800A9110	jal    $800491c4
-A2 = SP + 0028;
-A0 = SP + 0028;
-800A911C	jal    func7372c [$8007372c]
-A1 = S2;
-V0 = h[S1 + 0038];
-800A9128	nop
-[SP + 0090] = w(V0);
-V0 = h[S1 + 003a];
-A0 = SP + 0028;
-[SP + 0094] = w(V0);
-V0 = h[S1 + 003c];
-A1 = SP + 0090;
-800A9144	jal    $80049c74
-[SP + 0098] = w(V0);
-V1 = w[800acfe0];
-800A9154	nop
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V1 = bu[S1 + 0048];
-V0 = V0 + S1;
-[V0 + 0054] = b(V1);
-V1 = w[800acfe0];
-800A9178	nop
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V1 = bu[S1 + 0049];
-V0 = V0 + S1;
-[V0 + 0055] = b(V1);
-V1 = w[800acfe0];
-A0 = SP + 0028;
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V1 = bu[S1 + 004a];
-V0 = V0 + S1;
-800A91B4	jal    $80049e34
-[V0 + 0056] = b(V1);
-A0 = SP + 0028;
-800A91C0	jal    $80049c74
-A1 = S5;
-800A91C8	j      La9280 [$800a9280]
-800A91CC	nop
-
-La91d0:	; 800A91D0
-A1 = S2;
-800A91D4	jal    $800491c4
-A2 = SP + 0028;
-A0 = SP + 0028;
-800A91E0	jal    func7372c [$8007372c]
-A1 = S2;
-V0 = h[S1 + 0038];
-800A91EC	nop
-[SP + 0090] = w(V0);
-V0 = h[S1 + 003a];
-A0 = SP + 0028;
-[SP + 0094] = w(V0);
-V0 = h[S1 + 003c];
-A1 = SP + 0090;
-800A9208	jal    $80049c74
-[SP + 0098] = w(V0);
-V1 = w[800acfe0];
-800A9218	nop
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V1 = bu[S1 + 0048];
-V0 = V0 + S1;
-[V0 + 0054] = b(V1);
-V1 = w[800acfe0];
-800A923C	nop
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V1 = bu[S1 + 0049];
-V0 = V0 + S1;
-[V0 + 0055] = b(V1);
-V1 = w[800acfe0];
-A0 = SP + 0028;
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V1 = bu[S1 + 004a];
-V0 = V0 + S1;
-800A9278	jal    $80049e34
-[V0 + 0056] = b(V1);
-
-La9280:	; 800A9280
-800A9280	jal    $80049da4
-A0 = SP + 0028;
-A0 = S1 + 00a0;
-A1 = S1 + 00a8;
-A2 = S1 + 00b0;
-V0 = SP + 00a0;
-V1 = w[800acfe0];
-A3 = S1 + 00b8;
-[SP + 0020] = w(V0);
-[SP + 0024] = w(V0);
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + 0050;
-V0 = S1 + V0;
-V1 = V0 + 0008;
-[SP + 0010] = w(V1);
-V1 = V0 + 0010;
-[SP + 0014] = w(V1);
-V1 = V0 + 0018;
-V0 = V0 + 0020;
-[SP + 0018] = w(V1);
-800A92DC	jal    $8004a664
-[SP + 001c] = w(V0);
-V1 = w[8004f7a4];
-A0 = 0001;
-800A92F0	beq    s4, a0, La9338 [$800a9338]
-V1 = V0 >> V1;
-V0 = S4 < 0002;
-800A92FC	beq    v0, zero, La9314 [$800a9314]
-800A9300	nop
-800A9304	beq    s4, zero, La9330 [$800a9330]
-800A9308	nop
-800A930C	j      La934c [$800a934c]
-800A9310	nop
-
-La9314:	; 800A9314
-V0 = 0002;
-800A9318	beq    s4, v0, La9340 [$800a9340]
-V0 = 0003;
-800A9320	beq    s4, v0, La9348 [$800a9348]
-V0 = V1 + 0010;
-800A9328	j      La934c [$800a934c]
-800A932C	nop
-
-La9330:	; 800A9330
-800A9330	j      La934c [$800a934c]
-[SP + 00a0] = w(A0);
-
-La9338:	; 800A9338
-800A9338	j      La9348 [$800a9348]
-800A933C	addiu  v0, v1, $fff0 (=-$10)
-
-La9340:	; 800A9340
-800A9340	j      La934c [$800a934c]
-[SP + 00a0] = w(V1);
-
-La9348:	; 800A9348
-[SP + 00a0] = w(V0);
-
-La934c:	; 800A934C
-A1 = w[SP + 00a0];
-800A9350	nop
-800A9354	addiu  v0, a1, $ffff (=-$1)
-V0 = V0 < 0fff;
-800A935C	beq    v0, zero, La93c8 [$800a93c8]
-A3 = ffffff;
-A1 = A1 << 02;
-V0 = w[800acfe0];
-800A9374	lui    a2, $ff00
-V1 = V0 << 02;
-V1 = V1 + V0;
-V1 = V1 << 03;
-T0 = V1 + S1;
-V1 = V1 + 0050;
-V1 = S1 + V1;
-V0 = w[800c3740];
-A0 = w[T0 + 0050];
-A1 = A1 + V0;
-V0 = w[A1 + 00cc];
-A0 = A0 & A2;
-V0 = V0 & A3;
-A0 = A0 | V0;
-[T0 + 0050] = w(A0);
-V0 = w[A1 + 00cc];
-V1 = V1 & A3;
-V0 = V0 & A2;
-V0 = V0 | V1;
-[A1 + 00cc] = w(V0);
-
-La93c8:	; 800A93C8
-RA = w[SP + 00c0];
-S5 = w[SP + 00bc];
-S4 = w[SP + 00b8];
-S3 = w[SP + 00b4];
-S2 = w[SP + 00b0];
-S1 = w[SP + 00ac];
-S0 = w[SP + 00a8];
-SP = SP + 00c8;
-800A93E8	jr     ra 
-800A93EC	nop
+if( A0 < 0 )
+{
+    A0 = 0;
+}
+else if( A0 >= 100 )
+{
+    A0 = ff;
+}
+return A0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca93f0
-800A93F0	addiu  sp, sp, $ff28 (=-$d8)
-[SP + 00c0] = w(S2);
-S2 = A0;
-[SP + 00bc] = w(S1);
-S1 = A1;
-[SP + 00d0] = w(RA);
-[SP + 00cc] = w(S5);
-[SP + 00c8] = w(S4);
+// field_particle_sprite_packet_update()
 
-La9410:	; 800A9410
-[SP + 00c4] = w(S3);
-[SP + 00b8] = w(S0);
-V0 = hu[S1 + 0002];
-800A941C	nop
-800A9420	beq    v0, zero, La9a20 [$800a9a20]
-S0 = A2;
-800A9428	addiu  v0, v0, $ffff (=-$1)
-[S1 + 0002] = h(V0);
-V0 = V0 & ffff;
-800A9434	bne    v0, zero, La9b64 [$800a9b64]
-800A9438	nop
-[SP + 004c] = w(0);
-[SP + 0048] = w(0);
-[SP + 0044] = w(0);
-V0 = hu[S2 + 002a];
-800A944C	nop
-V0 = V0 >> 04;
-V1 = V0 & 0003;
-V0 = 0001;
-800A945C	beq    v1, v0, La9698 [$800a9698]
-S5 = 0;
-V0 = V1 < 0002;
-800A9468	beq    v0, zero, La9480 [$800a9480]
-800A946C	nop
-800A9470	beq    v1, zero, La95b0 [$800a95b0]
-S0 = SP + 0030;
-800A9478	j      La9768 [$800a9768]
-800A947C	nop
+buffer_id = w[800acfe0];
 
-La9480:	; 800A9480
-V0 = 0002;
-800A9484	beq    v1, v0, La96b8 [$800a96b8]
-V0 = 0003;
-800A948C	bne    v1, v0, La9768 [$800a9768]
-S0 = SP + 0030;
-[SP + 0028] = h(0);
-V1 = h[S2 + 0052];
-800A949C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-A0 = SP + 0028;
-V0 = hu[V0 + 0108];
-A1 = SP + 0030;
-[SP + 002c] = h(0);
-800A94D4	jal    system_calculate_rotation_matrix [$8003f5e0]
-[SP + 002a] = h(V0);
-V1 = h[S2 + 0052];
-A0 = w[800aefe4];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = w[V0 + 004c];
-800A9504	nop
-V0 = h[V0 + 0022];
-800A950C	nop
-[SP + 0070] = w(V0);
-V1 = h[S2 + 0052];
-800A9518	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = w[V0 + 004c];
-800A9538	nop
-V0 = h[V0 + 0026];
-800A9540	nop
-[SP + 0074] = w(V0);
-V1 = h[S2 + 0052];
-800A954C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = w[V0 + 004c];
-800A956C	nop
-V0 = h[V0 + 002a];
-800A9574	nop
-[SP + 0078] = w(V0);
-V1 = h[S2 + 0052];
-800A9580	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = w[V0 + 004c];
-800A95A0	nop
-V0 = hu[V0 + 00f4];
-800A95A8	j      La9760 [$800a9760]
-S5 = 0001;
+sprite_data = A0;
+camera_matrix = A1;
+rotation = A2;
+order = A3;
+scale_vector = A4;
+use_scale = A5;
 
-La95b0:	; 800A95B0
-[SP + 0028] = h(0);
-V1 = h[S2 + 0052];
-800A95B8	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-A0 = SP + 0028;
-V0 = hu[V0 + 0108];
-A1 = SP + 0030;
-[SP + 002c] = h(0);
-800A95F0	jal    system_calculate_rotation_matrix [$8003f5e0]
-[SP + 002a] = h(V0);
-V1 = h[S2 + 0052];
-A0 = w[800aefe4];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = w[V0 + 004c];
-800A9620	nop
-V0 = h[V0 + 0022];
-800A9628	nop
-[SP + 0070] = w(V0);
-V1 = h[S2 + 0052];
-800A9634	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = w[V0 + 004c];
-800A9654	nop
-V0 = h[V0 + 0026];
-800A965C	nop
-[SP + 0074] = w(V0);
-V1 = h[S2 + 0052];
-800A9668	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = w[V0 + 004c];
-800A9688	nop
-V0 = h[V0 + 002a];
-800A9690	j      La975c [$800a975c]
-[SP + 0078] = w(V0);
+[SP + 88] = h(0);
+[SP + 8a] = h(0);
+[SP + 8c] = h(rotation);
 
-La9698:	; 800A9698
-S0 = SP + 0030;
-A0 = S0;
-A2 = h[S2 + 0072];
-A3 = h[S2 + 0074];
-800A96A8	jal    func1e72cc [$801e72cc]
-A1 = SP + 0050;
-800A96B0	j      La9724 [$800a9724]
-A0 = S0;
+A0 = SP + 88; // input rot vector
+A1 = SP + 48; // rotation sprite matrix
+system_calculate_rotation_matrix();
 
-La96b8:	; 800A96B8
-S0 = SP + 0030;
-V1 = h[S2 + 0052];
-A0 = S0;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = w[V0 + 002c];
-A1 = w[V0 + 0030];
-A2 = w[V0 + 0034];
-A3 = w[V0 + 0038];
-[SP + 0030] = w(V1);
-[SP + 0034] = w(A1);
-[SP + 0038] = w(A2);
-[SP + 003c] = w(A3);
-V1 = w[V0 + 003c];
-A1 = w[V0 + 0040];
-A2 = w[V0 + 0044];
-A3 = w[V0 + 0048];
-[SP + 0040] = w(V1);
-[SP + 0044] = w(A1);
-[SP + 0048] = w(A2);
-[SP + 004c] = w(A3);
+// add sprite translation
+[SP + 5c] = w(w[sprite_data +  8] >> c); // x
+[SP + 60] = w(w[sprite_data +  c] >> c); // y
+[SP + 64] = w(w[sprite_data + 10] >> c); // z
 
-La9724:	; 800A9724
-800A9724	jal    system_gte_set_rotation_matrix [$80049da4]
-800A9728	nop
-800A972C	jal    system_gte_set_translation_vector [$80049e34]
-A0 = S0;
-V0 = hu[S2 + 000c];
-A0 = SP + 0028;
-[SP + 0028] = h(V0);
-V0 = hu[S2 + 000e];
-A1 = SP + 0070;
-[SP + 002a] = h(V0);
-V0 = hu[S2 + 0010];
-A2 = SP + 00b0;
-800A9754	jal    func4a584 [$8004a584]
-[SP + 002c] = h(V0);
+if( use_scale == 3 )
+{
+    [SP + 68] = w(w[camera_matrix +  0]);
+    [SP + 6c] = w(w[camera_matrix +  4]);
+    [SP + 70] = w(w[camera_matrix +  8]);
+    [SP + 74] = w(w[camera_matrix +  c]);
+    [SP + 78] = w(w[camera_matrix + 10]);
+    [SP + 7c] = w(w[camera_matrix + 14]);
+    [SP + 80] = w(w[camera_matrix + 18]);
+    [SP + 84] = w(w[camera_matrix + 1c]);
 
-La975c:	; 800A975C
-V0 = 1000;
+    A0 = SP + 68; // camera scale matrix
+    A1 = scale_vector;
+    system_gte_multiply_matrix_by_vector();
 
-La9760:	; 800A9760
-[S2 + 0050] = h(V0);
-S0 = SP + 0030;
+    A0 = SP + 68; // camera scale matrix
+    A1 = SP + 48; // sprite matrix
+    A2 = SP + 28; // camera sprite matrix
+    system_gte_matrix_mult_and_trans();
 
-La9768:	; 800A9768
-A0 = S0;
-[SP + 004c] = w(0);
-[SP + 0048] = w(0);
-800A9774	jal    system_gte_set_rotation_matrix [$80049da4]
-[SP + 0044] = w(0);
-800A977C	jal    system_gte_set_translation_vector [$80049e34]
-A0 = S0;
-V0 = w[S1 + 0018];
-S3 = SP + 0028;
-[SP + 0028] = h(V0);
-V0 = w[S1 + 001c];
-A0 = S3;
-[SP + 002a] = h(V0);
-V0 = w[S1 + 0020];
-A1 = SP + 0018;
-800A97A4	jal    func49484 [$80049484]
-[SP + 002c] = h(V0);
-A0 = SP + 0018;
-800A97B0	jal    system_gte_normalize_word_vector_T0_T1_T2_to_word [$80048c24]
-A1 = S1 + 0018;
-V1 = w[S1 + 0018];
-V0 = w[S2 + 0008];
-800A97C0	nop
-800A97C4	mult   v1, v0
-800A97C8	mflo   t0
-V1 = h[S2 + 0024];
-V0 = T0 >> 0c;
-800A97D4	mult   v0, v1
-V1 = w[S1 + 001c];
-800A97DC	mflo   t0
-[S1 + 0018] = w(T0);
-V0 = w[S2 + 0008];
-800A97E8	nop
-800A97EC	mult   v1, v0
-800A97F0	mflo   t0
-V1 = h[S2 + 0024];
-V0 = T0 >> 0c;
-800A97FC	mult   v0, v1
-V1 = w[S1 + 0020];
-800A9804	mflo   t0
-[S1 + 001c] = w(T0);
-V0 = w[S2 + 0008];
-800A9810	nop
-800A9814	mult   v1, v0
-800A9818	mflo   t0
-V1 = h[S2 + 0024];
-V0 = T0 >> 0c;
-800A9824	mult   v0, v1
-S4 = 0001;
-800A982C	mflo   t0
-800A9830	bne    s5, s4, La988c [$800a988c]
-[S1 + 0020] = w(T0);
-V1 = h[S2 + 0050];
-V0 = w[S1 + 0008];
-800A9840	nop
-800A9844	mult   v0, v1
-800A9848	mflo   t0
-V0 = T0 >> 0c;
-[S1 + 0008] = w(V0);
-V1 = h[S2 + 0050];
-V0 = w[S1 + 000c];
-800A985C	nop
-800A9860	mult   v0, v1
-800A9864	mflo   t0
-V0 = T0 >> 0c;
-[S1 + 000c] = w(V0);
-V1 = h[S2 + 0050];
-V0 = w[S1 + 0010];
-800A9878	nop
-800A987C	mult   v0, v1
-800A9880	mflo   t0
-V0 = T0 >> 0c;
-[S1 + 0010] = w(V0);
+    A0 = SP + 28; // sprite matrix
+    A1 = SP + 48;
+    func7372c(); // copy A1 to A0
 
-La988c:	; 800A988C
-800A988C	jal    system_gte_set_rotation_matrix [$80049da4]
-A0 = S0;
-800A9894	jal    system_gte_set_translation_vector [$80049e34]
-A0 = S0;
-V0 = w[S1 + 0008];
-A0 = S3;
-[SP + 0028] = h(V0);
-V0 = w[S1 + 000c];
-A1 = SP + 0018;
-[SP + 002a] = h(V0);
-V0 = w[S1 + 0010];
-A2 = SP + 00b0;
-800A98BC	jal    func4a584 [$8004a584]
-[SP + 002c] = h(V0);
-800A98C4	bne    s5, s4, La99d4 [$800a99d4]
-A0 = S3;
-S0 = SP + 0050;
-V0 = w[800af588];
-V1 = hu[800aee62];
-A1 = S0;
-[SP + 002c] = h(0);
-800A98E8	addiu  v0, v0, $fc00 (=-$400)
-V1 = 0 - V1;
-[SP + 0028] = h(V0);
-800A98F4	jal    func4aa64 [$8004aa64]
-[SP + 002a] = h(V1);
-800A98FC	jal    system_gte_set_rotation_matrix [$80049da4]
-A0 = S0;
-800A9904	jal    system_gte_set_translation_vector [$80049e34]
-A0 = S0;
-A0 = SP + 0080;
-V0 = w[SP + 001c];
-A1 = SP + 0090;
-[SP + 0080] = w(0);
-[SP + 0088] = w(0);
-800A9920	jal    func49834 [$80049834]
-[SP + 0084] = w(V0);
-A0 = w[SP + 0018];
-V0 = w[SP + 0090];
-V1 = w[SP + 0098];
-A1 = w[SP + 0094];
-A0 = A0 + V0;
-V0 = w[SP + 0020];
-[SP + 0018] = w(A0);
-[SP + 001c] = w(A1);
-V0 = V0 + V1;
-[SP + 0020] = w(V0);
-V1 = h[S2 + 0050];
-800A9954	lui    a1, $0100
-800A9958	div    a1, v1
-800A995C	mflo   v1
-V0 = w[SP + 0070];
-800A9964	nop
-V0 = V0 + A0;
-800A996C	mult   v0, v1
-800A9970	mflo   t0
-[S1 + 0008] = w(T0);
-V1 = h[S2 + 0050];
-800A997C	nop
-800A9980	div    a1, v1
-800A9984	mflo   v1
-A0 = w[SP + 001c];
-V0 = w[SP + 0074];
-800A9990	nop
-V0 = V0 + A0;
-800A9998	mult   v0, v1
-800A999C	mflo   t0
-[S1 + 000c] = w(T0);
-V0 = h[S2 + 0050];
-800A99A8	nop
-800A99AC	div    a1, v0
-800A99B0	mflo   a1
-V1 = w[SP + 0020];
-V0 = w[SP + 0078];
-800A99BC	nop
-V0 = V0 + V1;
-800A99C4	mult   v0, a1
-800A99C8	mflo   t0
-800A99CC	j      La9b64 [$800a9b64]
-[S1 + 0010] = w(T0);
+    // add trans
+    [SP + 90] = w(h[sprite_data + 38]);
+    [SP + 94] = w(h[sprite_data + 3a]);
+    [SP + 98] = w(h[sprite_data + 3c]);
 
-La99d4:	; 800A99D4
-V0 = w[SP + 0070];
-V1 = w[SP + 0018];
-800A99DC	nop
-V0 = V0 + V1;
-V0 = V0 << 0c;
-[S1 + 0008] = w(V0);
-V0 = w[SP + 0074];
-V1 = w[SP + 001c];
-800A99F4	nop
-V0 = V0 + V1;
-V0 = V0 << 0c;
-[S1 + 000c] = w(V0);
-V0 = w[SP + 0078];
-V1 = w[SP + 0020];
-800A9A0C	nop
-V0 = V0 + V1;
-V0 = V0 << 0c;
-800A9A18	j      La9b64 [$800a9b64]
-[S1 + 0010] = w(V0);
+    A0 = SP + 28; // sprite matrix
+    A1 = SP + 90;
+    system_gte_multiply_matrix_by_vector();
 
-La9a20:	; 800A9A20
-A0 = bu[S1 + 0048];
-V0 = w[S1 + 0018];
-V1 = w[S1 + 0028];
-A1 = b[S1 + 004c];
-A2 = w[S1 + 002c];
-A3 = w[S1 + 0030];
-V0 = V0 + V1;
-[S1 + 0018] = w(V0);
-V0 = w[S1 + 001c];
-V1 = w[S1 + 0020];
-V0 = V0 + A2;
-[S1 + 001c] = w(V0);
-V0 = hu[S1 + 0038];
-V1 = V1 + A3;
-[S1 + 0020] = w(V1);
-V1 = hu[S1 + 003a];
-A3 = hu[S1 + 0042];
-A2 = hu[S1 + 0040];
-V1 = V1 + A3;
-[S1 + 003a] = h(V1);
-V1 = w[S1 + 0008];
-V0 = V0 + A2;
-[S1 + 0038] = h(V0);
-V0 = hu[S1 + 003c];
-A2 = hu[S1 + 0044];
-A3 = w[S1 + 0018];
-V0 = V0 + A2;
-[S1 + 003c] = h(V0);
-V0 = w[S1 + 000c];
-A2 = w[S1 + 001c];
-V1 = V1 + A3;
-[S1 + 0008] = w(V1);
-V1 = w[S1 + 0010];
-A3 = w[S1 + 0020];
-V0 = V0 + A2;
-V1 = V1 + A3;
-[S1 + 000c] = w(V0);
-800A9AB4	jal    funca8ff4 [$800a8ff4]
-[S1 + 0010] = w(V1);
-A0 = bu[S1 + 0049];
-A1 = b[S1 + 004d];
-800A9AC4	jal    funca8ff4 [$800a8ff4]
-[S1 + 0048] = b(V0);
-A0 = bu[S1 + 004a];
-A1 = b[S1 + 004e];
-800A9AD4	jal    funca8ff4 [$800a8ff4]
-[S1 + 0049] = b(V0);
-[S1 + 004a] = b(V0);
-V0 = h[S2 + 0050];
-800A9AE4	nop
-[SP + 00a0] = w(V0);
-V0 = h[S2 + 0050];
-800A9AF0	nop
-[SP + 00a4] = w(V0);
-V0 = h[S2 + 0050];
-800A9AFC	nop
-[SP + 00a8] = w(V0);
-V1 = hu[S1 + 0004];
-V0 = 0001;
-800A9B0C	beq    v1, v0, La9b44 [$800a9b44]
-A0 = S1;
-A1 = S0;
-A2 = h[S1 + 0006];
-A3 = hu[S2 + 002a];
-V0 = SP + 00a0;
-[SP + 0010] = w(V0);
-V0 = hu[S2 + 002a];
-A3 = A3 >> 01;
-A3 = A3 & 0003;
-V0 = V0 >> 04;
-V0 = V0 & 0003;
-800A9B3C	jal    funca902c [$800a902c]
-[SP + 0014] = w(V0);
+    [sprite_data + buffer_id * 20 + 54] = b(bu[sprite_data + 48]);
+    [sprite_data + buffer_id * 20 + 55] = b(bu[sprite_data + 49]);
+    [sprite_data + buffer_id * 20 + 56] = b(bu[sprite_data + 4a]);
 
-La9b44:	; 800A9B44
-V0 = hu[S1 + 0004];
-800A9B48	nop
-800A9B4C	addiu  v0, v0, $ffff (=-$1)
-[S1 + 0004] = h(V0);
-V0 = V0 & ffff;
-800A9B58	bne    v0, zero, La9b64 [$800a9b64]
-800A9B5C	nop
-[S1 + 0000] = h(0);
+    A0 = SP + 28;
+    system_gte_set_translation_vector();
 
-La9b64:	; 800A9B64
-RA = w[SP + 00d0];
-S5 = w[SP + 00cc];
-S4 = w[SP + 00c8];
-S3 = w[SP + 00c4];
-S2 = w[SP + 00c0];
-S1 = w[SP + 00bc];
-S0 = w[SP + 00b8];
-SP = SP + 00d8;
-800A9B84	jr     ra 
-800A9B88	nop
+    A0 = SP + 28;
+    A1 = scale_vector;
+    system_gte_multiply_matrix_by_vector();
+
+    A0 = SP + 28;
+    system_gte_set_rotation_matrix();
+}
+else
+{
+    A0 = camera_matrix;
+    A1 = SP + 48; // sprite matrix
+    A2 = SP + 28; // camera sprite matrix
+    system_gte_matrix_mult_and_trans();
+
+    A0 = SP + 28; // sprite matrix
+    A1 = SP + 48;
+    func7372c(); // copy A1 to A0
+
+    // add trans
+    [SP + 90] = w(h[sprite_data + 38]);
+    [SP + 94] = w(h[sprite_data + 3a]);
+    [SP + 98] = w(h[sprite_data + 3c]);
+
+    A0 = SP + 28;
+    A1 = SP + 90;
+    system_gte_multiply_matrix_by_vector();
+
+    [sprite_data + buffer_id * 20 + 54] = b(bu[sprite_data + 48]);
+    [sprite_data + buffer_id * 20 + 55] = b(bu[sprite_data + 49]);
+    [sprite_data + buffer_id * 20 + 56] = b(bu[sprite_data + 4a]);
+
+    A0 = SP + 28;
+    system_gte_set_translation_vector();
+
+    A0 = SP + 28;
+    system_gte_set_rotation_matrix();
+}
+
+A0 = sprite_data + a0; // xyz0
+A1 = sprite_data + a8; // xyz1
+A2 = sprite_data + b0; // xyz3
+A3 = sprite_data + b8; // xyz2
+A4 = sprite_data + 50 + buffer_id * 20 +  8; // xy0
+A5 = sprite_data + 50 + buffer_id * 20 + 10; // xy1
+A6 = sprite_data + 50 + buffer_id * 20 + 18; // xy3
+A7 = sprite_data + 50 + buffer_id * 20 + 20; // xy2
+A8 = SP + a0; // Interpolation value for depth queing
+A9 = SP + a0; // return flags
+func4a664(); // transform 4 points by rotation matrix
+OTZ = V0;
+
+if( order == 0 )
+{
+    depth = 1;
+}
+if( order == 1 )
+{
+    depth = (OTZ >> w[8004f7a4]) - 10;
+}
+else if( order == 2 )
+{
+    depth = OTZ >> w[8004f7a4];
+}
+else if( order == 3 )
+{
+    depth = (OTZ >> w[8004f7a4]) + 10;
+}
+
+if( ( depth - 1 ) < fff )
+{
+    otag = w[800c3740];
+    [sprite_data + 50 + buffer_id * 20] = w((w[sprite_data + 50 + buffer_id * 20] & ff000000) | (w[otag + cc + depth * 4] & 00ffffff));
+    [otag + cc + depth * 4] = w((w[otag + cc + depth * 4] & ff000000) | ((sprite_data + 50 + buffer_id * 20) & 00ffffff));
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca9b8c()
+// field_particle_sprite_update()
+
+particle_data = A0;
+sprite_data = A1;
+matrix = A2;
+
+if( hu[sprite_data + 2] != 0 )
+{
+    [sprite_data + 2] = h(hu[sprite_data + 2] - 1);
+
+    if( hu[sprite_data + 2] == 0 ) // update after waiting
+    {
+        [SP + 44] = w(0);
+        [SP + 48] = w(0);
+        [SP + 4c] = w(0);
+
+        V1 = (hu[particle_data + 2a] >> 4) & 3;
+        update_scale = 0;
+
+        if( V1 == 0 )
+        {
+            entity_id = h[particle_data + 52];
+            V1 = w[800aefe4];
+            entity_data = w[V1 + entity_id * 5c + 4c];
+
+            // current rotation from entity
+            [SP + 28] = h(0);
+            [SP + 2a] = h(hu[entity_data + 108]);
+            [SP + 2c] = h(0);
+
+            A0 = SP + 28;
+            A1 = SP + 30;
+            system_calculate_rotation_matrix();
+
+            // current pos from entity
+            [SP + 70] = w(h[entity_data + 22]);
+            [SP + 74] = w(h[entity_data + 26]);
+            [SP + 78] = w(h[entity_data + 2a]);
+
+            [particle_data + 50] = h(1000);
+        }
+        else if( V1 == 1 )
+        {
+            A0 = SP + 30;
+            A1 = SP + 50;
+            A2 = h[particle_data + 72];
+            A3 = h[particle_data + 74];
+            800A96A8	jal    func1e72cc [$801e72cc]
+
+            A0 = SP + 30;
+            system_gte_set_rotation_matrix();
+
+            A0 = SP + 30;
+            system_gte_set_translation_vector();
+
+            [SP + 28] = h(hu[particle_data +  c]);
+            [SP + 2a] = h(hu[particle_data +  e]);
+            [SP + 2c] = h(hu[particle_data + 10]);
+
+            A0 = SP + 28; // input
+            A1 = SP + 70; // output
+            A2 = SP + b0; // FLAG
+            system_gte_rotate_translate_vector();
+
+            // set scale
+            [particle_data + 50] = h(1000);
+        }
+        else if( V1 == 2 )
+        {
+            entity_id = h[particle_data + 52];
+            V1 = w[800aefe4];
+            [SP + 30] = w(w[V1 + entity_id * 5c + 2c]);
+            [SP + 34] = w(w[V1 + entity_id * 5c + 30]);
+            [SP + 38] = w(w[V1 + entity_id * 5c + 34]);
+            [SP + 3c] = w(w[V1 + entity_id * 5c + 38]);
+            [SP + 40] = w(w[V1 + entity_id * 5c + 3c]);
+            [SP + 44] = w(w[V1 + entity_id * 5c + 40]);
+            [SP + 48] = w(w[V1 + entity_id * 5c + 44]);
+            [SP + 4c] = w(w[V1 + entity_id * 5c + 48]);
+
+            A0 = SP + 30;
+            system_gte_set_rotation_matrix();
+
+            A0 = SP + 30;
+            system_gte_set_translation_vector();
+
+            [SP + 28] = h(hu[particle_data +  c]);
+            [SP + 2a] = h(hu[particle_data +  e]);
+            [SP + 2c] = h(hu[particle_data + 10]);
+
+            A0 = SP + 28; // input
+            A1 = SP + 70; // output
+            A2 = SP + b0; // FLAG
+            system_gte_rotate_translate_vector();
+
+            // set scale
+            [particle_data + 50] = h(1000);
+        }
+        else if( V1 == 3 )
+        {
+            entity_id = h[particle_data + 52];
+            V1 = w[800aefe4];
+            entity_data = w[V1 + entity_id * 5c + 4c];
+
+            // current rotation from entity
+            [SP + 28] = h(0);
+            [SP + 2a] = h(hu[entity_data + 108]);
+            [SP + 2c] = h(0);
+
+            A0 = SP + 28;
+            A1 = SP + 30;
+            system_calculate_rotation_matrix();
+
+            // current pos from entity
+            [SP + 70] = w(h[entity_data + 22]);
+            [SP + 74] = w(h[entity_data + 26]);
+            [SP + 78] = w(h[entity_data + 2a]);
+
+            // set scale from entity
+            update_scale = 1;
+            [particle_data + 50] = h(hu[entity_data + f4]); // scale x from entity
+        }
+
+        // add translation vector
+        [SP + 44] = w(0);
+        [SP + 48] = w(0);
+        [SP + 4c] = w(0);
+
+        A0 = SP + 30;
+        system_gte_set_rotation_matrix();
+
+        A0 = SP + 30;
+        system_gte_set_translation_vector();
+
+        // update speed vector with needed rotation
+        [SP + 28] = h(w[sprite_data + 18]);
+        [SP + 2a] = h(w[sprite_data + 1c]);
+        [SP + 2c] = h(w[sprite_data + 20]);
+        A0 = SP + 28;
+        A1 = SP + 18; // speed vector
+        system_gte_rotate_vector();
+
+        // normalize speed vector
+        A0 = SP + 18;
+        A1 = sprite_data + 18;
+        system_gte_normalize_word_vector_T0_T1_T2_to_word();
+
+        // update speed vector
+        [sprite_data + 18] = w(h[particle_data + 24] * ((w[sprite_data + 18] * w[particle_data + 8]) >> c));
+        [sprite_data + 1c] = w(h[particle_data + 24] * ((w[sprite_data + 1c] * w[particle_data + 8]) >> c));
+        [sprite_data + 20] = w(h[particle_data + 24] * ((w[sprite_data + 20] * w[particle_data + 8]) >> c));
+
+        // scale pos
+        if( update_scale == 1 )
+        {
+            [sprite_data +  8] = w((h[particle_data + 50] * w[sprite_data +  8]) >> c);
+            [sprite_data +  c] = w((h[particle_data + 50] * w[sprite_data +  c]) >> c);
+            [sprite_data + 10] = w((h[particle_data + 50] * w[sprite_data + 10]) >> c);
+        }
+
+        A0 = SP + 30;
+        system_gte_set_rotation_matrix();
+
+        A0 = SP + 30;
+        system_gte_set_translation_vector();
+
+        // sprite pos
+        [SP + 28] = h(w[sprite_data +  8]);
+        [SP + 2a] = h(w[sprite_data +  c]);
+        [SP + 2c] = h(w[sprite_data + 10]);
+
+        A0 = SP + 28; // input
+        A1 = SP + 18; // output sprite pos vector
+        A2 = SP + b0; // FLAG
+        system_gte_rotate_translate_vector();
+
+        if( update_scale == 1 )
+        {
+            [SP + 28] = h(w[800af588] - 400);
+            [SP + 2a] = h(0 - hu[800aee62]);
+            [SP + 2c] = h(0);
+
+            A0 = SP + 28;
+            A1 = SP + 50;
+            800A98F4	jal    func4aa64 [$8004aa64]
+
+            A0 = SP + 50;
+            system_gte_set_rotation_matrix();
+
+            A0 = SP + 50;
+            system_gte_set_translation_vector();
+
+            [SP + 80] = w(0);
+            [SP + 84] = w(w[SP + 1c]);
+            [SP + 88] = w(0);
+
+            A0 = SP + 80;
+            A1 = SP + 90;
+            800A9920	jal    func49834 [$80049834]
+
+            [SP + 18] = w(w[SP + 90] + w[SP + 18]);
+            [SP + 1c] = w(w[SP + 94]);
+            [SP + 20] = w(w[SP + 98] + w[SP + 20]);
+
+            [sprite_data +  8] = w((w[SP + 70] + w[SP + 18]) * (1000000 / h[particle_data + 50]));
+            [sprite_data +  c] = w((w[SP + 74] + w[SP + 1c]) * (1000000 / h[particle_data + 50]));
+            [sprite_data + 10] = w((w[SP + 78] + w[SP + 20]) * (1000000 / h[particle_data + 50]));
+        }
+        else
+        {
+            // set pos as needed pos (from entity for example) with inner sprite pos
+            [sprite_data +  8] = w((w[SP + 70] + w[SP + 18]) << c);
+            [sprite_data +  c] = w((w[SP + 74] + w[SP + 1c]) << c);
+            [sprite_data + 10] = w((w[SP + 78] + w[SP + 20]) << c);
+        }
+    }
+}
+else
+{
+    // increment translation
+    [sprite_data + 38] = h(hu[sprite_data + 38] + hu[sprite_data + 40]);
+    [sprite_data + 3a] = h(hu[sprite_data + 3a] + hu[sprite_data + 42]);
+    [sprite_data + 3c] = h(hu[sprite_data + 3c] + hu[sprite_data + 44]);
+
+    // update speed
+    [sprite_data + 18] = w(w[sprite_data + 18] + w[sprite_data + 28]);
+    [sprite_data + 1c] = w(w[sprite_data + 1c] + w[sprite_data + 2c]);
+    [sprite_data + 20] = w(w[sprite_data + 20] + w[sprite_data + 30]);
+
+    // update position
+    [sprite_data +  8] = w(w[sprite_data +  8] + w[sprite_data + 18]);
+    [sprite_data +  c] = w(w[sprite_data +  c] + w[sprite_data + 1c]);
+    [sprite_data + 10] = w(w[sprite_data + 10] + w[sprite_data + 20]);
+
+    // update colours
+    A0 = bu[sprite_data + 48]; // r
+    A1 = b[sprite_data + 4c];
+    field_particle_colour_sum();
+    [sprite_data + 48] = b(V0);
+
+    A0 = bu[sprite_data + 49]; // g
+    A1 = b[sprite_data + 4d];
+    field_particle_colour_sum();
+    [sprite_data + 49] = b(V0);
+
+    A0 = bu[sprite_data + 4a]; // b
+    A1 = b[sprite_data + 4e];
+    field_particle_colour_sum();
+    [sprite_data + 4a] = b(V0);
+
+    // create scale vector
+    [SP + a0] = w(h[particle_data + 50]);
+    [SP + a4] = w(h[particle_data + 50]);
+    [SP + a8] = w(h[particle_data + 50]);
+
+    if( hu[sprite_data + 4] != 1 )
+    {
+        A0 = sprite_data;
+        A1 = matrix;
+        A2 = h[sprite_data + 6]; // z rotation
+        A3 = (hu[particle_data + 2a] >> 1) & 3; // order 0 - bottom, 1 - lower than real, 2 - real, 3 - higher than real
+        A4 = SP + a0; // patricle scale vector
+        A5 = (hu[particle_data + 2a] >> 4) & 3; // use scale
+        field_particle_sprite_packet_update();
+    }
+
+    [sprite_data + 4] = h(hu[sprite_data + 4] - 1);
+
+    if( hu[sprite_data + 4] == 0 )
+    {
+        [sprite_data + 0] = h(0); // set to reinitialize
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_particle_sprite_init()
 
 particle_data = A0;
 sprite_data = A1;
 
-[sprite_data + 0] = h(1);
-[sprite_data + 2] = h(hu[particle_data + 56] + w[A2 + 0]);
+[sprite_data + 0] = h(1); // inited
+
+[sprite_data + 2] = h(hu[particle_data + 56] + w[A2 + 0]); // set wait
 [A2 + 0] = w(w[A2 + 0] + hu[particle_data + 56]);
 [sprite_data + 4] = h(hu[particle_data + 58]);
 
-if( hu[particle_data + 2a] & 1 )
+if( hu[particle_data + 2a] & 0001 )
 {
     system_get_random_2_bytes();
-    [sprite_data + 6] = h(V0 & fff);
+    [sprite_data + 6] = h(V0 & fff); // set random rotation
 }
 else
 {
-    [sprite_data + 6] = h(hu[particle_data + 76]);
+    [sprite_data + 6] = h(hu[particle_data + 76]); // set rotation from particle
 }
 
-if( ( hu[particle_data + 2a] & 80 ) == 0 )
+if( ( hu[particle_data + 2a] & 0080 ) == 0 )
 {
     A0 = hu[particle_data + 26];
-    funca8d54();
+    field_particle_random();
     S2 = V0;
 }
 else
@@ -5476,81 +5070,71 @@ else
 }
 
 A0 = fff;
-funca8d54();
+field_particle_random();
 S3 = V0;
 
 A0 = S3;
 system_cos();
 [SP + 20] = w((V0 * S2) >> c);
 
-if( ( hu[particle_data + 2a] & 40 ) == 0 )
+if( ( hu[particle_data + 2a] & 0040 ) == 0 )
 {
     A0 = S3;
     system_sin();
-
     [SP + 28] = w((V0 * S2) >> c);
 }
 else
 {
-    [SP + 0028] = w(0);
+    [SP + 28] = w(0);
 }
 
-V1 = h[particle_data + 52];
-V0 = V1 * 5c;
+entity_id = h[particle_data + 52];
 V1 = w[800aefe4];
-V0 = V0 + V1;
-V1 = w[V0 + 4c];
-V0 = h[800aee62];
-V1 = h[V1 + 108];
-V0 = V0 + V1;
-V0 = V0 & 0fff;
-A0 = bu[800ae948 + V0 * 200];
-A0 = particle_data + A0 * 4;
+entity_data = w[V1 + entity_id * 5c + 4c];
+V0 = (h[800aee62] + h[entity_data + 108]) & fff;
 
-A1 = w[SP + 20] + h[particle_data + c] + h[A0 + 30];
-[SP + 20] = w(A1);
+A0 = bu[800ae948 + V0 / 200];
 
-[SP + 28] = w(w[SP + 28] + h[particle_data + 10] + h[A0 + 32]);
+[SP + 20] = w(w[SP + 20] + h[particle_data + c] + h[particle_data + 30 + A0 * 4 + 0]);
 [SP + 24] = w(h[particle_data + e]);
+[SP + 28] = w(w[SP + 28] + h[particle_data + 10] + h[particle_data + 30 + A0 * 4 + 2]);
 
-[sprite_data + 8] = w(A1);
+[sprite_data +  8] = w(w[SP + 20]);
+[sprite_data +  c] = w(w[SP + 24]);
 [sprite_data + 10] = w(w[SP + 28]);
-[sprite_data + c] = w(w[SP + 24]);
 
+// set random speed for sprite
 A0 = hu[particle_data + 28];
-funca8d54();
-
+field_particle_random();
 S2 = V0;
 
 A0 = S3;
 system_cos();
-
 [SP + 30] = w(h[particle_data + 14] + ((V0 * S2) >> c));
+[SP + 34] = w(h[particle_data + 16]);
 
 A0 = S3;
 system_sin();
-
 [SP + 38] = w(h[particle_data + 18] + ((V0 * S2) >> c));
-[SP + 34] = w(h[particle_data + 16]);
 
-[sprite_data + 18] = w(w[SP + 30] - w[SP + 20]);
-[sprite_data + 1c] = w(w[SP + 34] - w[SP + 24]);
-[sprite_data + 20] = w(w[SP + 38] - w[SP + 28]);
-[sprite_data + 28] = w(h[particle_data + 1c]);
-[sprite_data + 2c] = w(h[particle_data + 1e]);
-[sprite_data + 30] = w(h[particle_data + 20]);
-[sprite_data + 38] = h(hu[particle_data + 5a]);
-[sprite_data + 3a] = h(hu[particle_data + 5c]);
-[sprite_data + 3c] = h(hu[particle_data + 5e]);
-[sprite_data + 40] = h(hu[particle_data + 62]);
-[sprite_data + 42] = h(hu[particle_data + 64]);
-[sprite_data + 44] = h(hu[particle_data + 66]);
-[sprite_data + 48] = b(bu[particle_data + 6a]);
-[sprite_data + 49] = b(bu[particle_data + 6b]);
-[sprite_data + 4a] = b(bu[particle_data + 6c]);
-[sprite_data + 4c] = b(bu[particle_data + 6e]);
-[sprite_data + 4d] = b(bu[particle_data + 6f]);
-[sprite_data + 4e] = b(bu[particle_data + 70]);
+[sprite_data + 18] = w(w[SP + 30] - w[SP + 20]); // speed x
+[sprite_data + 1c] = w(w[SP + 34] - w[SP + 24]); // speed y
+[sprite_data + 20] = w(w[SP + 38] - w[SP + 28]); // speed z
+[sprite_data + 28] = w(h[particle_data + 1c]); // accel x
+[sprite_data + 2c] = w(h[particle_data + 1e]); // accel y
+[sprite_data + 30] = w(h[particle_data + 20]); // accel z
+[sprite_data + 38] = h(hu[particle_data + 5a]); // x trans
+[sprite_data + 3a] = h(hu[particle_data + 5c]); // y trans
+[sprite_data + 3c] = h(hu[particle_data + 5e]); // z trans
+[sprite_data + 40] = h(hu[particle_data + 62]); // x trans add
+[sprite_data + 42] = h(hu[particle_data + 64]); // y trans add
+[sprite_data + 44] = h(hu[particle_data + 66]); // x trans add
+[sprite_data + 48] = b(bu[particle_data + 6a]); // R.
+[sprite_data + 49] = b(bu[particle_data + 6b]); // G.
+[sprite_data + 4a] = b(bu[particle_data + 6c]); // B.
+[sprite_data + 4c] = b(bu[particle_data + 6e]); // R add.
+[sprite_data + 4d] = b(bu[particle_data + 6f]); // G add.
+[sprite_data + 4e] = b(bu[particle_data + 70]); // B add.
 ////////////////////////////////
 
 
@@ -5623,9 +5207,9 @@ A2 = w[SP + 0018];
 [V0 + 0000] = w(V1);
 [800af5d4] = w(A1);
 [800af5d8] = w(A2);
-800A9FB0	jal    $80049da4
+800A9FB0	jal    $system_gte_set_rotation_matrix
 A0 = S0;
-800A9FB8	jal    $80049e34
+800A9FB8	jal    $system_gte_set_translation_vector
 A0 = S0;
 S4 = SP + 0020;
 A0 = S4;
@@ -8294,17 +7878,13 @@ A1 = h[V0 + 00e6];
 A2 = V1 + A2;
 800AC978	jal    func9f474 [$8009f474]
 A0 = S3;
-A0 = w[S2 + 0000];
-800AC984	jal    funca8dc0 [$800a8dc0]
+A0 = w[S2 + 0];
 A1 = 0;
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800AC9A4	jr     ra 
-800AC9A8	nop
+funca8dc0();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcac9ac
 800AC9AC	addiu  sp, sp, $ffd8 (=-$28)
@@ -8517,18 +8097,15 @@ A1 = h[V0 + 00e6];
 800ACD34	jal    func81808 [$80081808]
 A2 = V1 + A2;
 A0 = w[S2 + 0000];
-800ACD40	jal    funca8dc0 [$800a8dc0]
 A1 = 0;
-800ACD48	jal    func9f474 [$8009f474]
+funca8dc0();
+
 A0 = S3;
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800ACD68	jr     ra 
-800ACD6C	nop
+800ACD48	jal    func9f474 [$8009f474]
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcacd70
 V0 = w[800b173c];
@@ -8613,9 +8190,7 @@ V0 = 0001;
 800ACEA4	bne    v1, v0, Lacf0c [$800acf0c]
 800ACEA8	nop
 V1 = w[80059a38];
-800ACEB4	lui    at, $8007
-AT = AT + A0;
-V0 = w[AT + f020];
+V0 = w[8006f020 + A0];
 V1 = V1 + S0;
 [800af1f0] = w(V0);
 V0 = bu[V1 + 22b1];
