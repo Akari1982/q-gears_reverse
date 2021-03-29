@@ -84,13 +84,108 @@ E4A70880 5B
 80EC0880 5D
 ACE80880 5E
 9CE70880 5F
-04E20880CCDF088018EA088074EA0880B8EB0880D0EA08802CEB0880E8E30880F4210980B49C0880D89B0880149C0880749B0880FCF0088090F0088030AA0880
-28950880707F09808C7E0980F07B0980907B0980C47F09800C7D0980BC980880C49A0880BC9A0880B49A0880EC9A0880D49A0880DC9A0880E49A088018980880
-A4950880609608801C97088088250980CC2909807498088068950880B82C0980C4910880A0930880EC94088028910880A4E9088068E908801CE90880647D0880
-D88508804887088048890880488B0880A88C0880548E088054900880B8900880A07A0880607A088088E6088030E5088074E5088044E60880B8E50880A8790880
-2CE008803479088030780880BC7708806C770880F0810880787E0880907F0880E4FF08806800098000D1088048D2088040D308802C610980C8600980E0750880
-A0A00880A8750880FC620980F463098014620980787508806C74088030740880B4730880307108800872088004730880547308803C810880E07108801C6E0880
-D46D0880DC7A0880487C0880A4D5098008D509805065088054B208808C780880CC820880EC82088078040A8040040A80E4030A808C030A8050030A805C2E0980
+04E20880 60
+CCDF0880 61
+18EA0880 62
+74EA0880 63
+B8EB0880 64
+D0EA0880 65
+2CEB0880 66
+E8E30880 67
+F4210980 68
+B49C0880 69
+D89B0880 6a
+149C0880 6b
+749B0880 6c
+FCF00880 6d
+90F00880 6e
+30AA0880 6f
+28950880 70
+707F0980 71
+8C7E0980 72
+F07B0980 73
+907B0980 74
+C47F0980 75
+0C7D0980 76
+BC980880 77
+C49A0880 78
+BC9A0880 79
+B49A0880 7a
+EC9A0880 7b
+D49A0880 7c
+DC9A0880 7d
+E49A0880 7e
+18980880 7f
+A4950880 80
+60960880 81
+1C970880 82
+88250980 83
+CC290980 84
+74980880 85
+68950880 86
+B82C0980 87
+C4910880 88
+A0930880 89
+EC940880 8a
+28910880 8b
+A4E90880 8c
+68E90880 8d
+1CE90880 8e
+488B0880 93
+B8900880 97
+A07A0880 98
+607A0880 99
+88E60880 9a
+30E50880 9b
+74E50880 9c
+44E60880 9d
+B8E50880 9e
+A8790880 9f
+2CE00880 a0
+34790880 a1
+30780880 a2
+BC770880 a3
+6C770880 a4
+787E0880 a6
+907F0880 a7
+E4FF0880 a8
+68000980 a9
+00D10880 aa
+48D20880 ab
+40D30880 ac
+2C610980 ad
+C8600980 ae
+E0750880 af
+A0A00880 b0
+A8750880 b1
+FC620980 b2
+F4630980 b3
+14620980 b4
+78750880 b5
+6C740880 b6
+30740880 b7
+B4730880 b8
+30710880 b9
+08720880 ba
+04730880 bb
+54730880 bc
+E0710880 be
+1C6E0880 bf
+D46D0880 c0
+DC7A0880 c1
+A4D50980 c3
+08D50980 c4
+50650880 c5
+54B20880 c6
+8C780880 c7
+CC820880 c8
+EC820880 c9
+78040A80 ca
+40040A80 cb
+E4030A80 cc
+8C030A80 cd
+50030A80 ce
+5C2E0980 cf
 206C0880206B0880006B0880F4690880A4650880346F0880A46F08808C7008801470088050700880642D0980D467098098690880846708801C670880F0630880
 B4630880546B08800700010002000400008C008E00800082008400860088008A008C008E00800082008400860088008A008C008400880080
 
@@ -1907,6 +2002,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func87a60
+
 A0 = w[800af54c];
 V0 = w[800ad0d8];
 V1 = hu[A0 + 00cc];
@@ -2032,7 +2128,8 @@ for( int i = 0; i < 8; ++i )
 
 
 ////////////////////////////////
-// func87c48
+// func87c48()
+// 0xC2_ParticleInit???
 
 A0 = 1;
 read_two_bytes_with_80();
@@ -2091,6 +2188,7 @@ else if( V1 == 3 )
 
 ////////////////////////////////
 // func87d64()
+// 0x8F_ParticleInit???
 
 A0 = 1;
 get_entity_id_from_opcode();
@@ -2146,12 +2244,8 @@ else if( V1 == 3 )
 
 ////////////////////////////////
 // func87e78
-80087E78	addiu  sp, sp, $ffe0 (=-$20)
+
 V1 = w[800af1f0];
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
@@ -2205,27 +2299,14 @@ A0 = A0 | A1;
 [A2 + 012c] = w(A0);
 V0 = V0 + 0005;
 [A2 + 00cc] = h(V0);
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80087F88	jr     ra 
-80087F8C	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func87f90
-80087F90	addiu  sp, sp, $ffd8 (=-$28)
+// func87f90()
+
 V1 = w[800af1f0];
-[SP + 0024] = w(RA);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
@@ -2311,100 +2392,59 @@ V0 = V0 + 0009;
 [A2 + 0130] = w(V1);
 [A2 + 00cc] = h(V0);
 [A2 + 012c] = w(A0);
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-80088134	jr     ra 
-80088138	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8813c
+// 0xBD_ParticleSpawnSettings()
+
+struct_138 = w[800af54c];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
 
 S0 = 0;
 
-8008814C	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
-V1 = V0;
-V0 = 0001;
-8008815C	beq    v1, v0, L88174 [$80088174]
-V0 = 0002;
-80088164	beq    v1, v0, L8817c [$8008817c]
-80088168	nop
-8008816C	j      L88180 [$80088180]
-80088170	nop
+A0 = 1;
+read_two_bytes_with_80();
 
-L88174:	; 80088174
-80088174	j      L88180 [$80088180]
-S0 = 0080;
+if( V0 == 1 )
+{
+    S0 = 80; // use fixed start pos
+}
+else if( V0 == 2 )
+{
+    S0 = 40; // use fized z variation pos
+}
+[800af7a0 + id * 78 + 2a] = h(hu[800af7a0 + id * 78 + 2a] | S0);
 
-L8817c:	; 8008817C
-S0 = 0040;
-
-L88180:	; 80088180
-V0 = w[800b1858];
-80088188	nop
-V1 = V0 << 04;
-V1 = V1 - V0;
-V1 = V1 << 03;
-V0 = hu[800af7ca + V1];
-A0 = w[800af54c];
-[800af7ca + V1] = h(V0 | S0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0004;
-V1 = V1 + 0007;
-[800af150] = w(V0);
-[A0 + 00cc] = h(V1);
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + 7);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func881f0
+// 0xA5_ParticleRenderSettings()
 
-A0 = 0001;
-800881FC	jal    read_two_bytes_with_80 [$800ac2c4]
+struct_138 = w[800af54c];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
 
-S0 = 800b1858;
-A1 = w[S0 + 0000];
-80088210	nop
-V1 = A1 << 04;
-V1 = V1 - A1;
-V1 = V1 << 03;
-[800af7c4 + V1] = h(V0);
-8008822C	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0003;
-V1 = w[S0 + 0000];
-80088238	nop
-A1 = V1 << 04;
-A1 = A1 - V1;
-A1 = A1 << 03;
-V1 = hu[800af7ca + A1];
-V0 = V0 << 08;
-V1 = V1 | V0;
-[800af7ca + A1] = h(V1);
-80088268	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0005;
-A0 = w[S0 + 0000];
-80088274	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af816 + V1] = h(V0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0004;
-[800af150] = w(V0);
-V1 = V1 + 0007;
-[A0 + 00cc] = h(V1);
+A0 = 1;
+read_two_bytes_with_80();
+[800af7a0 + id * 78 + 24] = h(V0); // use speed for sprites
+
+A0 = 3;
+read_two_bytes_with_80();
+[800af7a0 + id * 78 + 2a] = h((V0 << 8) | hu[800af7a0 + id * 78 + 2a]); // render settings
+
+A0 = 5;
+read_two_bytes_with_80();
+[800af7a0 + id * 78 + 76] = h(V0); // rotation z
+
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + 7);
 ////////////////////////////////
 
 
@@ -2413,7 +2453,7 @@ V1 = V1 + 0007;
 // func882cc()
 
 A0 = 0;
-800882D4	jal    func8830c [$8008830c]
+func8830c();
 ////////////////////////////////
 
 
@@ -2422,172 +2462,95 @@ A0 = 0;
 // func882ec()
 
 A0 = 4;
-800882F4	jal    func8830c [$8008830c]
+func8830c();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8830c
+// func8830c()
+// particle x and z offsets
 
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
 S1 = A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
-80088340	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
-S2 = 800b1858;
-A0 = w[S2 + 0000];
-S0 = S1 << 02;
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-A0 = w[800af54c];
-V1 = S0 + V1;
-[800af7d0 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088388	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
-80088394	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
-A0 = 0003;
-A0 = w[S2 + 0000];
-800883A0	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-S0 = S0 + V1;
-A0 = w[800af54c];
-V1 = w[800ad0d8];
-[800af7d2 + S0] = h(V0);
-V0 = hu[A0 + 00cc];
-800883D4	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
-800883E0	jal    read_two_bytes_based_on_flag_20 [$8009c590]
-A0 = 0005;
-S0 = S1 + 0001;
-A0 = w[S2 + 0000];
-S0 = S0 << 02;
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-A0 = w[800af54c];
-V1 = S0 + V1;
-[800af7d0 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088424	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
-80088430	jal    read_two_bytes_based_on_flag_10 [$8009c5d4]
-A0 = 0007;
-A0 = w[S2 + 0000];
-8008843C	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-S0 = S0 + V1;
-A0 = w[800af54c];
-V1 = w[800ad0d8];
-[800af7d2 + S0] = h(V0);
-V0 = hu[A0 + 00cc];
-80088470	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
-8008847C	jal    read_two_bytes_based_on_flag_08 [$8009c618]
-A0 = 0009;
-S0 = S1 + 0002;
-A0 = w[S2 + 0000];
-S0 = S0 << 02;
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-A0 = w[800af54c];
-V1 = S0 + V1;
-[800af7d0 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-800884C0	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
-800884CC	jal    read_two_bytes_based_on_flag_04 [$8009c65c]
-A0 = 000b;
-A0 = w[S2 + 0000];
-800884D8	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-S0 = S0 + V1;
-A0 = w[800af54c];
-V1 = w[800ad0d8];
-[800af7d2 + S0] = h(V0);
-V0 = hu[A0 + 00cc];
-8008850C	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
-80088518	jal    read_two_bytes_based_on_flag_02 [$8009c6a0]
-A0 = 000d;
-S1 = S1 + 0003;
-A0 = w[S2 + 0000];
-S1 = S1 << 02;
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-A0 = w[800af54c];
-V1 = S1 + V1;
-[800af7d0 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-8008855C	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0011];
+
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
+flag = bu[script + current_pos + 11];
+
+A0 = 1;
+A1 = flag;
+read_two_bytes_based_on_flag_80();
+[800af7a0 + id * 78 + 30 + (S1 + 0) * 4 + 0] = h(V0);
+
+A0 = 3;
+A1 = flag;
+read_two_bytes_based_on_flag_40();
+[800af7a0 + id * 78 + 30 + (S1 + 0) * 4 + 2] = h(V0);
+
+A0 = 5;
+A1 = flag;
+read_two_bytes_based_on_flag_20();
+[800af7a0 + id * 78 + 30 + (S1 + 1) * 4 + 0] = h(V0);
+
+A0 = 7;
+A1 = flag;
+read_two_bytes_based_on_flag_10();
+[800af7a0 + id * 78 + 30 + (S1 + 1) * 4 + 2] = h(V0);
+
+A0 = 9;
+A1 = flag;
+read_two_bytes_based_on_flag_08();
+[800af7a0 + id * 78 + 30 + (S1 + 2) * 4 + 0] = h(V0);
+
+A0 = b;
+A1 = flag;
+read_two_bytes_based_on_flag_04();
+[800af7a0 + id * 78 + 30 + (S1 + 2) * 4 + 2] = h(V0);
+
+A0 = d;
+A1 = flag;
+read_two_bytes_based_on_flag_02();
+[800af7a0 + id * 78 + 30 + (S1 + 3) * 4 + 0] = h(V0);
+
+A1 = flag;
 A0 = f;
 read_two_bytes_based_on_flag_01();
+[800af7a0 + id * 78 + 30 + (S1 + 3) * 4 + 2] = h(V0);
 
-A0 = w[S2 + 0000];
-80088574	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-A0 = w[800af54c];
-S1 = S1 + V1;
-[800af7d2 + S1] = h(V0);
 [800af150] = w(w[800af150] + 4);
-[A0 + cc] = h(hu[A0 + cc] + 12);
+[struct_138 + cc] = h(current_pos + 12);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func885d8()
+// 0x90_ParticleInitBase()
 
 A0 = 1;
 read_two_bytes_with_80();
 val = V0;
 
-[800b1858] = w(val);
+[800b1858] = w(val); // particle id
 [800ad018] = w(w[800b1848]);
 
 [800af7a0 + val * 78 + 0] = h(0);
-[800af7a0 + val * 78 + 24] = h(1);
-[800af7a0 + val * 78 + 52] = h(w[800b1848]);
-[800af7a0 + val * 78 + 76] = h(0);
+[800af7a0 + val * 78 + 24] = h(1); // use speed for sprites
+[800af7a0 + val * 78 + 52] = h(w[800b1848]); // entity id
+[800af7a0 + val * 78 + 76] = h(0); // rotation z
 
 A0 = 3;
 read_two_bytes_with_80();
-[800af7a0 + val * 78 + 6] = h(V0);
+[800af7a0 + val * 78 + 6] = h(V0); // number of sprites
 
 A0 = 5;
 read_two_bytes_with_80();
-[800af7a0 + val * 78 + 2] = h(V0);
+[800af7a0 + val * 78 + 2] = h(V0); // wait
 
 A0 = 7;
 read_two_bytes_with_80();
-[800af7a0 + val * 78 + 4] = h(V0);
+[800af7a0 + val * 78 + 4] = h(V0); // ttl
 
 func87bf0();
 
@@ -2600,198 +2563,91 @@ A0 = w[800af54c];
 
 
 ////////////////////////////////
-// func88748
+// 0x91_ParticlePos()
 
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088774	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
-S0 = 800b1858;
-A0 = w[S0 + 0000];
-80088788	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7ac + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-800887B8	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-800887C4	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
-A0 = 0003;
-A0 = w[S0 + 0000];
-800887D0	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7ae + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088800	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-8008880C	jal    read_two_bytes_based_on_flag_20 [$8009c590]
-A0 = 0005;
-A0 = w[S0 + 0000];
-80088818	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7b0 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088848	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088854	jal    read_two_bytes_based_on_flag_10 [$8009c5d4]
-A0 = 0007;
-A0 = w[S0 + 0000];
-80088860	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7b4 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088890	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-8008889C	jal    read_two_bytes_based_on_flag_08 [$8009c618]
-A0 = 0009;
-A0 = w[S0 + 0000];
-800888A8	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7b6 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-800888D8	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-800888E4	jal    read_two_bytes_based_on_flag_04 [$8009c65c]
-A0 = 000b;
-A0 = w[S0 + 0000];
-800888F0	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7b8 + V1] = h(V0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0004;
-[800af150] = w(V0);
-V1 = V1 + 000e;
-[A0 + 00cc] = h(V1);
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
+flag = bu[script + current_pos + d];
+
+A0 = 1;
+A1 = flag;
+read_two_bytes_based_on_flag_80();
+[800af7a0 + id * 78 + c] = h(V0); // x pos
+
+A0 = 3;
+A1 = flag;
+read_two_bytes_based_on_flag_40();
+[800af7a0 + id * 78 + e] = h(V0); // y pos
+
+A0 = 5;
+A1 = flag;
+read_two_bytes_based_on_flag_20();
+[800af7a0 + id * 78 + 10] = h(V0); // z pos
+
+A0 = 7;
+A1 = flag;
+read_two_bytes_based_on_flag_10();
+[800af7a0 + id * 78 + 14] = h(V0); // x speed
+
+A0 = 9;
+A1 = flag;
+read_two_bytes_based_on_flag_08();
+[800af7a0 + id * 78 + 16] = h(V0); // y speed
+
+A0 = b;
+A1 = flag;
+read_two_bytes_based_on_flag_04();
+[800af7a0 + id * 78 + 18] = h(V0); // z speed
+
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + e);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func88948
+// 0x92_ParticleSpeed()
 
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-80088968	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088974	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
-S0 = 800b1858;
-A0 = w[S0 + 0000];
-80088988	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7a8 + V1] = w(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-800889B8	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-800889C4	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
-A0 = 0003;
-A0 = w[S0 + 0000];
-800889D0	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7bc + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088A00	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088A0C	jal    read_two_bytes_based_on_flag_20 [$8009c590]
-A0 = 0005;
-A0 = w[S0 + 0000];
-80088A18	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7be + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088A48	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088A54	jal    read_two_bytes_based_on_flag_10 [$8009c5d4]
-A0 = 0007;
-A0 = w[S0 + 0000];
-80088A60	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7c0 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088A90	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088A9C	jal    read_two_bytes_based_on_flag_08 [$8009c618]
-A0 = 0009;
-A0 = w[S0 + 0000];
-80088AA8	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7c6 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088AD8	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088AE4	jal    read_two_bytes_based_on_flag_04 [$8009c65c]
-A0 = 000b;
-A0 = w[S0 + 0000];
-80088AF0	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7c8 + V1] = h(V0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0004;
-[800af150] = w(V0);
-V1 = V1 + 000e;
-[A0 + 00cc] = h(V1);
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
+flag = bu[script + current_pos + d];
+
+A0 = 1;
+A1 = flag;
+read_two_bytes_based_on_flag_80();
+[800af7a0 + id * 78 + 8] = w(V0); // speed of sprites.
+
+A0 = 3;
+A1 = flag;
+read_two_bytes_based_on_flag_40();
+[800af7a0 + id * 78 + 1c] = h(V0); // x accel for sprites
+
+A0 = 5;
+A1 = flag;
+read_two_bytes_based_on_flag_20();
+[800af7a0 + id * 78 + 1e] = h(V0); // y accel for sprites
+
+A0 = 7;
+A1 = flag;
+read_two_bytes_based_on_flag_10();
+[800af7a0 + id * 78 + 20] = h(V0); // z accel for sprites
+
+A0 = 9;
+A1 = flag;
+read_two_bytes_based_on_flag_08();
+[800af7a0 + id * 78 + 26] = h(V0); // random range for start pos
+
+A0 = b;
+A1 = flag;
+read_two_bytes_based_on_flag_04();
+[800af7a0 + id * 78 + 28] = h(V0); // random range for speed
+
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + e);
 ////////////////////////////////
 
 
@@ -2864,189 +2720,94 @@ V1 = V1 + 000b;
 
 
 ////////////////////////////////
-// func88ca8
+// 0x94_ParticleTranslation()
 
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-V0 = V0 + V1;
-A1 = bu[V0 + 0009];
-80088CD4	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
-S0 = 800b1858;
-A0 = w[S0 + 0000];
-80088CE8	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af7fa + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088D18	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0009];
-80088D24	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
-A0 = 0003;
-A0 = w[S0 + 0000];
-80088D30	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af7fc + V1] = h(V0);
-V1 = w[S0 + 0000];
-80088D50	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V1 = w[800af54c];
-V0 = V0 << 03;
-[800af7fe + V0] = h(0);
-V0 = hu[V1 + 00cc];
-V1 = w[800ad0d8];
-80088D80	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0009];
-80088D8C	jal    read_two_bytes_based_on_flag_20 [$8009c590]
-A0 = 0005;
-A0 = w[S0 + 0000];
-80088D98	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800af54c];
-V1 = V1 << 03;
-[800af802 + V1] = h(V0);
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-80088DC8	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0009];
-80088DD4	jal    read_two_bytes_based_on_flag_10 [$8009c5d4]
-A0 = 0007;
-A0 = w[S0 + 0000];
-80088DE0	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af804 + V1] = h(V0);
-V1 = w[S0 + 0000];
-A0 = w[800af54c];
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-[800af806 + V0] = h(0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0004;
-V1 = V1 + 000a;
-[800af150] = w(V0);
-[A0 + 00cc] = h(V1);
-////////////////////////////////
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
+flag = bu[script + current_pos + 9];
 
+A0 = 1;
+A1 = flag;
+read_two_bytes_based_on_flag_80();
+[800af7a0 + id * 78 + 5a] = h(V0); // x trans
 
+A0 = 3;
+A1 = flag;
+read_two_bytes_based_on_flag_40();
+[800af7a0 + id * 78 + 5c] = h(V0); // y trans
 
-////////////////////////////////
-// func88e54
+[800af7a0 + id * 78 + 5e] = h(0); // z trans
 
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-80088E74	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088E80	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
-S0 = 800b1858;
-A0 = w[S0 + 0000];
-80088E94	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af80a + V1] = b(V0);
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-80088EC4	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088ED0	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
-A0 = 0003;
-A0 = w[S0 + 0000];
-80088EDC	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af80b + V1] = b(V0);
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-80088F0C	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088F18	jal    read_two_bytes_based_on_flag_20 [$8009c590]
-A0 = 0005;
-A0 = w[S0 + 0000];
-80088F24	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af80c + V1] = b(V0);
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-80088F54	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088F60	jal    read_two_bytes_based_on_flag_10 [$8009c5d4]
-A0 = 0007;
-A0 = w[S0 + 0000];
-80088F6C	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af80e + V1] = b(V0);
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-80088F9C	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088FA8	jal    read_two_bytes_based_on_flag_08 [$8009c618]
-A0 = 0009;
-A0 = w[S0 + 0000];
-80088FB4	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af80f + V1] = b(V0);
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-80088FE4	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000d];
-80088FF0	jal    read_two_bytes_based_on_flag_04 [$8009c65c]
-A0 = 000b;
-A0 = w[S0 + 0000];
-80088FFC	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-[800af810 + V1] = b(V0);
-A0 = w[800af54c];
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0004;
-[800af150] = w(V0);
-V1 = V1 + 000e;
-[A0 + 00cc] = h(V1);
-////////////////////////////////
+A0 = 5;
+A1 = flag;
+read_two_bytes_based_on_flag_20();
+[800af7a0 + id * 78 + 62] = h(V0); // x trans add
 
+A0 = 7;
+A1 = flag;
+read_two_bytes_based_on_flag_10();
+[800af7a0 + id * 78 + 64] = h(V0); // y trans add
 
-
-////////////////////////////////
-// func89054()
+[800af7a0 + id * 78 + 66] = h(0); // z trans add
 
 [800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + a);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x95_ParticleColour()
+
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
+flag = bu[script + current_pos + d];
+
+A0 = 1;
+A1 = flag;
+read_two_bytes_based_on_flag_80();
+[800af7a0 + id * 78 + 6a] = b(V0); // R
+
+A0 = 3;
+A1 = flag;
+read_two_bytes_based_on_flag_40();
+[800af7a0 + id * 78 + 6b] = b(V0); // G
+
+A0 = 5;
+A1 = flag;
+read_two_bytes_based_on_flag_20();
+[800af7a0 + id * 78 + 6c] = b(V0); // B
+
+A0 = 7;
+A1 = flag;
+read_two_bytes_based_on_flag_10();
+[800af7a0 + id * 78 + 6e] = b(V0); // R add
+
+A0 = 9;
+A1 = flag;
+read_two_bytes_based_on_flag_08();
+[800af7a0 + id * 78 + 6f] = b(V0); // G add
+
+A0 = b;
+A1 = flag;
+read_two_bytes_based_on_flag_04();
+[800af7a0 + id * 78 + 70] = b(V0); // B add
+
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + e);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 0x96_ParticleCreate()
+
+struct_138 = w[800af54c];
+current_pos = hu[struct_138 + cc];
 
 if( w[800ad064] == 0 )
 {
@@ -3054,8 +2815,8 @@ if( w[800ad064] == 0 )
     particle_create_instance();
 }
 
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 1);
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + 1);
 ////////////////////////////////
 
 
@@ -3430,8 +3191,6 @@ SP = SP + 0018;
 // func89660
 V0 = w[800af54c];
 V1 = w[800ad0d8];
-80089670	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
 V0 = hu[V0 + 00cc];
 8008967C	nop
 V0 = V0 + V1;
@@ -3461,10 +3220,7 @@ V1 = w[800af54c];
 V0 = hu[V1 + 00cc];
 80089704	nop
 V0 = V0 + 0008;
-RA = w[SP + 0010];
 [V1 + 00cc] = h(V0);
-80089714	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
 
 
@@ -8443,21 +8199,15 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// func8e644
-8008E644	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008E64C	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
+// func8e644()
+
+A0 = 1;
+read_two_bytes_with_80();
+
 V1 = w[800af54c];
 [800ad014] = w(V0);
-V0 = hu[V1 + 00cc];
-A0 = 0003;
-[800ad010] = w(A0);
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008E680	jr     ra 
-SP = SP + 0018;
+[800ad010] = w(3);
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
@@ -23540,10 +23290,8 @@ A0 = V0;
 A1 = 0;
 put_bytes_to_800C2F3C;
 
-V1 = w[800AF54C];
-V0 = hu[V1 + CC];
-V0 = V0 + 3;
-[V1 + CC] = V0;
+V1 = w[800af54c];
+[V1 + cc] = h[hu[V1 + cc] + 3];
 
 return;
 ////////////////////////////////

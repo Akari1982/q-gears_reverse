@@ -572,6 +572,10 @@
 
 800b1834 array of stored index to party character data (somewhere in 800b09d8) (0x4 size)
 
+800b1848 [][][][] entity id for particle.
+
+800b1858 [][][][] ???
+
 800b1970 render data.
     +00 DRAWENV struct (0x5c size).
     +5c RECT struct (0x8 size).
@@ -766,7 +770,7 @@
     + 6f []       G add. Init with -1.
     + 70 []       B add. Init with 0.
     + 72 [][]     rotation x.
-    + 74 [][]     ritation y.
+    + 74 [][]     rotation y.
     + 76 [][]     rotation z.
 
 800c2f18 [][][][] min horizontal movement for mouse controller.

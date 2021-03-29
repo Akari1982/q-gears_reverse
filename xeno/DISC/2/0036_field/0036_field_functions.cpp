@@ -4262,7 +4262,7 @@ if( bu[800b0984 + A0] == 1 )
 
     for( int i = 0; i < 8; ++i )
     {
-        if( h[V1 + i * 78 + 2] != 0 )
+        if( h[V1 + i * 78 + 2] != 0 ) // if we waiting
         {
             [V1 + i * 78 + 0] = h(0);
         }
@@ -4273,27 +4273,24 @@ if( bu[800b0984 + A0] == 1 )
 
 
 ////////////////////////////////
-// funca88a4();
+// field_particle_reset_ttl();
 
 if(  bu[800b0984 + A0] == 1 )
 {
-    V0 = w[800c2dec + A0 * 4];
-    A1 = V0 + 6;
+    A1 = w[800c2dec + A0 * 4];
 
     for( int i = 0; i < 8; ++i )
     {
-        V0 = h[A1 + i * 78 + 0];
-        if( V0 != 0 )
-        {
-            [A1 + i * 78 - 2] = h(0);
+        number_of_sprites = h[A1 + i * 78 + 6];
 
-            if( V0 > 0 )
+        if( number_of_sprites != 0 )
+        {
+            [A1 + i * 78 + 4] = h(0); // reset ttl
+
+            for( j = 0; j < number_of_sprites; ++j )
             {
-                for( j = 0; j < h[A1 + i * 78 + 0]; ++j )
-                {
-                    V0 = w[A1 + i * 78 + 26];
-                    [V0 + V1 + j * c0 + 4] = h(1);
-                }
+                V0 = w[A1 + i * 78 + 2c];
+                [V0 + V1 + j * c0 + 4] = h(1); // reset ttl for sprites
             }
         }
     }
@@ -4522,7 +4519,7 @@ for( int i = 0; i < 40; ++i )
         else
         {
             A0 = i;
-            funca88a4();
+            field_particle_reset_ttl();
         }
     }
 }

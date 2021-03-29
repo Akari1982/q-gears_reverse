@@ -228,3 +228,15 @@ v80  variable from memory which can be immediate value if 0x8000 bit is set.
 
 0xFE26_ScreenDistortion(v80, v80, v80, v80, v80, v80, v80 steps)
     add distortion effect to screen.
+
+
+
+
+//////////////////////////////////////////////////////////////////
+// PARTICLES OPCODES
+
+0x96_ParticleCreate()
+Creates and start particle effect from settings
+
+
+//////////////////////////////////////////////////////////////////
