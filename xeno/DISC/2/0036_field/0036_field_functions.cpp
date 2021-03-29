@@ -4500,12 +4500,12 @@ return -1;
 ////////////////////////////////
 // funca8dc0()
 
-S3 = A0;
+entity_id = A0;
 S4 = A1;
 
 for( int i = 0; i < 40; ++i )
 {
-    if( h[800af5dc + i * 2] == S3 )
+    if( h[800af5dc + i * 2] == entity_id )
     {
         V0 = w[800c2dec + i * 4];
         [V0 + 2] = h(0);

@@ -2653,68 +2653,38 @@ read_two_bytes_based_on_flag_04();
 
 
 ////////////////////////////////
-// func88b48
+// func88b48()
+// particle
 
-A0 = 0001;
-80088B58	jal    read_two_bytes_with_80 [$800ac2c4]
+struct_138 = w[800af54c];
+current_pos = hu[struct_138 + cc];
+id = w[800b1858];
 
-S1 = 800b1858;
-A1 = w[S1 + 0000];
-80088B6C	nop
-V1 = A1 << 04;
-V1 = V1 - A1;
-V1 = V1 << 03;
-[800af7f6 + V1] = h(V0);
-80088B88	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0003;
-A1 = w[S1 + 0000];
-80088B94	nop
-V1 = A1 << 04;
-V1 = V1 - A1;
-V1 = V1 << 03;
-[800af7f8 + V1] = h(V0);
-80088BB0	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0005;
-A1 = w[S1 + 0000];
-80088BBC	nop
-V1 = A1 << 04;
-V1 = V1 - A1;
-V1 = V1 << 03;
-[800af7f4 + V1] = h(V0);
-80088BD8	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0007;
-A0 = 0009;
-80088BE4	jal    read_two_bytes_with_80 [$800ac2c4]
+A0 = 1;
+read_two_bytes_with_80();
+[800af7a0 + id * 78 + 56] = h(V0); // sprite wait
+
+A0 = 3;
+read_two_bytes_with_80();
+[800af7a0 + id * 78 + 58] = h(V0);
+
+A0 = 5;
+read_two_bytes_with_80();
+[800af7a0 + id * 78 + 54] = h(V0);
+
+A0 = 7;
+read_two_bytes_with_80();
 S0 = V0;
-V0 = V0 << 01;
-A0 = w[S1 + 0000];
-S0 = S0 | V0;
-V1 = A0 << 04;
-V1 = V1 - A0;
-A0 = w[800b184c];
-V1 = V1 << 03;
-S0 = S0 | A0;
-[800af7ca + V1] = h(S0);
-V1 = w[S1 + 0000];
-80088C20	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V1 = w[800b1850];
-V0 = V0 << 03;
-[800af812 + V0] = h(V1);
-V1 = w[S1 + 0000];
-A0 = w[800af54c];
-V0 = V1 << 04;
-V0 = V0 - V1;
-V1 = w[800b1854];
-V0 = V0 << 03;
-[800af814 + V0] = h(V1);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0004;
-V1 = V1 + 000b;
-[800af150] = w(V0);
-[A0 + 00cc] = h(V1);
+
+A0 = 9;
+read_two_bytes_with_80();
+[800af7a0 + id * 78 + 2a] = h((V0 << 1) | S0 | w[800b184c]);
+
+[800af7a0 + id * 78 + 72] = h(w[800b1850]); // rotation x
+[800af7a0 + id * 78 + 74] = h(w[800b1854]); // rotation y
+
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + b);
 ////////////////////////////////
 
 
@@ -2822,73 +2792,61 @@ if( w[800ad064] == 0 )
 
 
 ////////////////////////////////
-// func890b8
+// func890b8()
+// particle
 
-V1 = w[800af54c];
-V0 = w[800af150];
-A0 = w[800ad0d8];
-V1 = hu[V1 + 00cc];
-V0 = V0 + 0004;
-[800af150] = w(V0);
-V1 = V1 + A0;
-A0 = w[800af1f0];
-A1 = bu[V1 + 0001];
-800890F8	jal    funca8dc0 [$800a8dc0]
-800890FC	nop
-V1 = w[800af54c];
-80089108	nop
-V0 = hu[V1 + 00cc];
-80089110	nop
-V0 = V0 + 0002;
-[V1 + 00cc] = h(V0);
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
+
+A0 = w[800af1f0]; // current entity id in script call
+A1 = bu[script + current_pos + 1];
+funca8dc0();
+
+[800af150] = w(w[800af150] + 4);
+[struct_138 + cc] = h(current_pos + 2);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89128
-80089128	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
 S0 = 0;
 A0 = 80059ad4;
-[SP + 0014] = w(RA);
 
 loop89140:	; 80089140
-V1 = w[A0 + 0000];
-V0 = w[800af1f0];
-8008914C	nop
-80089150	bne    v1, v0, L8916c [$8008916c]
-80089154	nop
-80089158	jal    read_two_bytes_unsigned [$800ac290]
-A0 = 0001;
-A0 = V0 & ffff;
-80089164	j      L8918c [$8008918c]
-A1 = S0;
+    V1 = w[A0 + 0000];
+    V0 = w[800af1f0]; // current entity id in script call
 
-L8916c:	; 8008916C
-S0 = S0 + 0001;
-V0 = S0 < 0003;
+    80089150	bne    v1, v0, L8916c [$8008916c]
+
+    A0 = 0001;
+    80089158	jal    read_two_bytes_unsigned [$800ac290]
+
+    A0 = V0 & ffff;
+    80089164	j      L8918c [$8008918c]
+    A1 = S0;
+
+    L8916c:	; 8008916C
+    A0 = A0 + 4;
+    S0 = S0 + 1;
+    V0 = S0 < 3;
 80089174	bne    v0, zero, loop89140 [$80089140]
-A0 = A0 + 0004;
-8008917C	jal    read_two_bytes_unsigned [$800ac290]
-A0 = 0001;
+
+A0 = 1;
+read_two_bytes_unsigned();
+
 A0 = V0 & ffff;
 A1 = 00ff;
 
 L8918c:	; 8008918C
-8008918C	jal    put_bytes_to_800C2F3C [$800a2604]
-80089190	nop
+put_bytes_to_800C2F3C();
+
 V1 = w[800af54c];
-8008919C	nop
 V0 = hu[V1 + 00cc];
-800891A4	nop
 V0 = V0 + 0003;
 [V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800891BC	jr     ra 
-800891C0	nop
 ////////////////////////////////
 
 

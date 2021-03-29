@@ -754,7 +754,7 @@
         + 2 [][]     z offset. Init with 0.
     + 50 [][]     scale. Init with 800.
     + 52 [][]     entity id (set entity id from script called).
-    + 54 [][]     particle is. Init with 0.
+    + 54 [][]     particle id. Init with 0.
     + 56 [][]     init with 1. Default wait for sprite.
     + 58 [][]     init with 1c.
     + 5a [][]     x trans. Init with 1c8.
