@@ -51,6 +51,10 @@
 
 800acffc [][][][] init flag for buffers 800b1588 800b158c 800b1590 800b1594.
 
+800ad008 [][][][] ???
+800ad00c [][][][] flag that particle image is loaded. 0 - loaded. 1 - stored.
+800ad010 [][][][] ???
+
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
 
 800ad04c [][][][] if this is 1 then we set number of entities to 1 in script call call_run_script_8().
@@ -128,6 +132,8 @@
 800ae948 array of some particle data (0x200 size).
 
 800aec3c some data during texture set (func910b0).
+
+800aec44 [][][][] ???
 
 800aed04 [][][][] x pos. Set to 0 when shake less than 0.
 800aed08 [][][][] y pos. Set to 0 when shake less than 0.
@@ -459,9 +465,14 @@
 800af018          array of 4 blocks number of triangles.
 800af028 [][][][] number of walkmesh blocks.
 
+800af0fc [][]     particle texture x.
+800af0fe [][]     particle texture y.
+800af100 [][]     particle texture width.
+800af102 [][]     particle texture height.
+
 800af104 some matrix and translation.
 
-800af144 [][][][] store here some image from vram (3c0 100 40 100).
+800af144 [][][][] store here particle texture from vram (3c0 100 40 100).
 800af148 [][][][] every time we init entity model with func76150 we increment this by 1.
 
 800af150 [][][][] store here how much opcodes to execute in run_script().
@@ -507,12 +518,14 @@
 
 800af594 [][][][] seems like return result from function (wait opcode returns 1). Set to 0 at start of run_script function.
 
+800af5dc array of particle entities id. 0x40 items 0x2 size.
+
 800af7a0 temp struct for init patricle instance. Description at 800c2dec.
 
 800af588 [][][][] used for particle scaled render.
 800afb8c [][][][] offset to struct 0x5c for current entity in script call.
 
-800b0984 array of 0x40 bool value. 0x1 size.
+800b0984 array of 0x40 bool value. 0x1 size. Set to 1 if patricle is inited.
 
 800b144c copy first 0x100 byte of field file here.
 

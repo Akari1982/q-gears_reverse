@@ -767,7 +767,7 @@ func71bdc(); // init camera
 800702E0	nop
 800702E4	jal    func85ac8 [$80085ac8]
 800702E8	nop
-800702EC	jal    funca874c [$800a874c]
+800702EC	jal    field_particle_clear_arrays [$800a874c]
 800702F0	nop
 800702F4	jal    funcab1f0 [$800ab1f0]
 ////////////////////////////////

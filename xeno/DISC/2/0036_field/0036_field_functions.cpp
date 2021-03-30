@@ -635,12 +635,12 @@ V0 = S0 < 0002;
 V0 = w[800ad010];
 800A4E14	beq    v0, zero, La50fc [$800a50fc]
 
-800A4E1C	jal    $80037334
-800A4E20	nop
+system_print_clear_memory();
+
 800A4E24	jal    func70314 [$80070314]
 800A4E28	nop
-800A4E2C	jal    funca8634 [$800a8634]
-800A4E30	nop
+field_particle_store_texture();
+
 V1 = w[800ad010];
 V0 = 0001;
 800A4E40	beq    v1, v0, La4e50 [$800a4e50]
@@ -826,8 +826,9 @@ V0 = w[800ad010];
 
 La50e4:	; 800A50E4
 [800ad010] = w(0);
-800A50EC	jal    funca86c8 [$800a86c8]
-800A50F0	nop
+
+field_particle_load_texture();
+
 800A50F4	jal    func76bd4 [$80076bd4]
 800A50F8	nop
 
@@ -841,7 +842,7 @@ La50fc:	; 800A50FC
 
 system_print_clear_memory();
 
-funca8938(); // clear something and sync
+field_particle_clear_all();
 
 func85b04(); // stops first 8 chanels (4 left, 4 right) if requested
 
@@ -849,7 +850,7 @@ func7f5fc(); // close and clean dialogs
 
 if( w[800af51c] != 6 )
 {
-    funca8634(); // store some image from vram
+    field_particle_store_texture();
 
     if( w[800af51c] != 4 )
     {
@@ -1314,7 +1315,7 @@ switch( V1 )
 La5878:	; 800A5878
 if( w[800af51c] != 6 )
 {
-    800A588C	jal    funca86c8 [$800a86c8]
+    field_particle_load_texture();
 }
 
 [800af51c] = w(2);
@@ -2922,8 +2923,8 @@ A0 = w[800acff8];
 800A7208	nop
 
 La720c:	; 800A720C
-800A720C	jal    funca8938 [$800a8938]
-800A7210	nop
+field_particle_clear_all();
+
 V1 = w[800ad04c];
 V0 = 0002;
 800A7220	beq    v1, v0, La727c [$800a727c]
@@ -4123,40 +4124,38 @@ loopa8530:	; 800A8530
 ////////////////////////////////
 // funca858c()
 
-S0 = A0;
+flag = A0;
+
 if( w[800ad00c] == 1 )
 {
-    A0 = 8;
+    A0 = 8; // YOSI
     A1 = 0;
     system_memory_set_alloc_user();
 
     A0 = 8000;
-    A1 = S0;
+    A1 = flag;
     system_memory_allocate();
+    mem = V0;
 
-    S0 = V0;
-    T0 = S0;
+    T0 = mem;
     A2 = w[800af144];
-    A3 = 8000;
-    A3 = A2 + A3;
-
     loopa85dc:	; 800A85DC
         [T0] = w(w[A2]);
         T0 = T0 + 4;
         A2 = A2 + 4;
-    800A8600	bne    a2, a3, loopa85dc [$800a85dc]
+    800A8600	bne    a2, w[800af144] + 8000, loopa85dc [$800a85dc]
 
     A0 = w[800af144];
     system_memory_mark_removed_alloc();
 
-    [800af144] = w(S0); // vram image
+    [800af144] = w(mem);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca8634()
+// field_particle_store_texture()
 
 if( w[800ad00c] != 1 )
 {
@@ -4188,7 +4187,7 @@ if( w[800ad00c] != 1 )
 
 
 ////////////////////////////////
-// funca86c8()
+// field_particle_load_texture()
 
 if( w[800ad00c] != 0 )
 {
@@ -4199,8 +4198,8 @@ if( w[800ad00c] != 0 )
     [800af100] = h(40);
     [800af102] = h(100);
 
-    A0 = 800af0fc;
-    A1 = w[800af144];
+    A0 = 800af0fc; // here
+    A1 = w[800af144]; // from this pointer
     system_load_image();
 
     A0 = 0;
@@ -4214,7 +4213,7 @@ if( w[800ad00c] != 0 )
 
 
 ////////////////////////////////
-// funca874c()
+// field_particle_clear_arrays()
 
 for( int i = 0; i < 40; ++i )
 {
@@ -4254,17 +4253,19 @@ if( bu[800b0984 + id] == 1 )
 
 
 ////////////////////////////////
-// funca884c()
+// field_particle_reset_ttl_only()
 
 if( bu[800b0984 + A0] == 1 )
 {
-    V1 = w[800c2dec + A0 * 4] + 4;
+    V1 = w[800c2dec + A0 * 4];
 
     for( int i = 0; i < 8; ++i )
     {
-        if( h[V1 + i * 78 + 2] != 0 ) // if we waiting
+        number_of_sprites = h[V1 + i * 78 + 6];
+
+        if( number_of_sprites != 0 )
         {
-            [V1 + i * 78 + 0] = h(0);
+            [V1 + i * 78 + 4] = h(0); // reset ttl
         }
     }
 }
@@ -4273,24 +4274,24 @@ if( bu[800b0984 + A0] == 1 )
 
 
 ////////////////////////////////
-// field_particle_reset_ttl();
+// field_particle_reset_ttl_all()
 
 if(  bu[800b0984 + A0] == 1 )
 {
-    A1 = w[800c2dec + A0 * 4];
+    V1 = w[800c2dec + A0 * 4];
 
     for( int i = 0; i < 8; ++i )
     {
-        number_of_sprites = h[A1 + i * 78 + 6];
+        number_of_sprites = h[V1 + i * 78 + 6];
 
         if( number_of_sprites != 0 )
         {
-            [A1 + i * 78 + 4] = h(0); // reset ttl
+            [V1 + i * 78 + 4] = h(0); // reset ttl
 
             for( j = 0; j < number_of_sprites; ++j )
             {
-                V0 = w[A1 + i * 78 + 2c];
-                [V0 + V1 + j * c0 + 4] = h(1); // reset ttl for sprites
+                V0 = w[V1 + i * 78 + 2c];
+                [V0 + j * c0 + 4] = h(1); // reset ttl for sprites
             }
         }
     }
@@ -4300,15 +4301,13 @@ if(  bu[800b0984 + A0] == 1 )
 
 
 ////////////////////////////////
-// funca8938()
-S0 = 0;
-loopa8948:	; 800A8948
-    A0 = S0;
-    field_particle_remove();
+// field_particle_clear_all()
 
-    S0 = S0 + 1;
-    V0 = S0 < 40;
-800A8958	bne    v0, zero, loopa8948 [$800a8948]
+for( int i = 0; i < 40; ++i )
+{
+    A0 = i;
+    field_particle_remove();
+}
 
 field_sync();
 ////////////////////////////////
@@ -4316,7 +4315,7 @@ field_sync();
 
 
 ////////////////////////////////
-// funca897c()
+// field_particle_init_default_particle()
 
 [800af518] = w(0);
 
@@ -4483,7 +4482,7 @@ V0 = V0 >> f;
 
 
 ////////////////////////////////
-// funca8d8c()
+// field_patricle_find_empty()
 
 for( int i = 0; i < 40; ++i )
 {
@@ -4498,28 +4497,28 @@ return -1;
 
 
 ////////////////////////////////
-// funca8dc0()
+// field_particle_reset_particle_for_entity()
 
 entity_id = A0;
-S4 = A1;
+all = A1;
 
 for( int i = 0; i < 40; ++i )
 {
     if( h[800af5dc + i * 2] == entity_id )
     {
         V0 = w[800c2dec + i * 4];
-        [V0 + 2] = h(0);
-        [V0 + 4] = h(0);
+        [V0 + 0 * 78 + 2] = h(0); // reset wait
+        [V0 + 0 * 78 + 4] = h(0); // reset ttl
 
-        if( S4 == 0 )
+        if( all == 0 ) // only particle itself
         {
             A0 = i;
-            funca884c();
+            field_particle_reset_ttl_only();
         }
-        else
+        else // particle and sprites
         {
             A0 = i;
-            field_particle_reset_ttl();
+            field_particle_reset_ttl_all();
         }
     }
 }
@@ -4528,11 +4527,11 @@ for( int i = 0; i < 40; ++i )
 
 
 ////////////////////////////////
-// particle_create_instance()
+// field_particle_create_instance()
 
-S0 = A0;
+entity_id = A0;
 
-funca8d8c(); // find first not inited 800b0984
+field_patricle_find_empty();
 
 S3 = V0;
 if( S3 == V0 )
@@ -4544,9 +4543,9 @@ A0 = 8; // YOSI Kiyoshi Yoshii (Main Programmer)
 A1 = 0;
 system_memory_set_alloc_user();
 
-[800ad01c] = w(S0);
+[800ad01c] = w(entity_id);
 [800b0984 + S3] = b(1); // set that we init memory for this id
-[800af5dc + S3 * 2] = h(S0);
+[800af5dc + S3 * 2] = h(entity_id);
 
 A0 = 3c0;
 A1 = 0;
@@ -5138,9 +5137,9 @@ system_sin();
 
 ////////////////////////////////
 // funca9eb4
+
 A2 = A0;
 V0 = w[A2 + 0004];
-800A9EBC	nop
 V1 = h[V0 + 0028];
 T0 = h[V0 + 0020];
 A0 = h[V0 + 002a];
@@ -5178,8 +5177,11 @@ V0 = V0 + T2;
 [A2 + 001c] = h(V0);
 V0 = A1 << 01;
 V0 = V0 + 0001;
-800A9F44	jr     ra 
 [A2 + 0020] = h(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca9f4c
 800A9F4C	addiu  sp, sp, $ffa8 (=-$58)
@@ -7875,9 +7877,9 @@ A1 = h[V0 + 00e6];
 A2 = V1 + A2;
 800AC978	jal    func9f474 [$8009f474]
 A0 = S3;
-A0 = w[S2 + 0];
-A1 = 0;
-funca8dc0();
+A0 = w[S2 + 0]; // entity id
+A1 = 0; // only particle
+field_particle_reset_particle_for_entity();
 ////////////////////////////////
 
 
@@ -8093,9 +8095,9 @@ V1 = w[S1 + 0000];
 A1 = h[V0 + 00e6];
 800ACD34	jal    func81808 [$80081808]
 A2 = V1 + A2;
-A0 = w[S2 + 0000];
-A1 = 0;
-funca8dc0();
+A0 = w[S2 + 0000]; // entity id
+A1 = 0; // only particle
+field_particle_reset_particle_for_entity();
 
 A0 = S3;
 800ACD48	jal    func9f474 [$8009f474]

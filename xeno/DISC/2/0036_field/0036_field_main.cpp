@@ -226,10 +226,10 @@ if( w[800c1b60] == 0 ) // debug
     800777BC	break   $00400
 
     A0 = w[800b1740]; // entity id which controls party leader
-    funca897c();
+    field_particle_init_default_particle();
 
-    [800af7a0] = h(1);
-    [800af7a6] = h(10);
+    [800af7a0 + 0] = h(1);
+    [800af7a0 + 6] = h(10); // number of sprites
 }
 
 S5 = 0;
@@ -621,11 +621,11 @@ L77810:	; 80077810
 L780cc:	; 800780CC
 800780CC	jal    func78ed0 [$80078ed0]
 
-800780D4	jal    funca86c8 [$800a86c8]
+800780D4	jal    field_particle_load_texture [$800a86c8]
 
 800780DC	jal    funca2778 [$800a2778]
 
-800780E4	jal    funca8938 [$800a8938]
+field_particle_clear_all();
 
 800780EC	jal    func85b04 [$80085b04]
 
@@ -752,7 +752,7 @@ if( h[800b1818] != 0 )
 
 func76bd4();
 
-80078378	jal    funca8634 [$800a8634]
+80078378	jal    field_particle_store_texture [$800a8634]
 8007837C	nop
 A0 = 0004;
 80078384	jal    $system_filesystem_set_dir
@@ -1069,14 +1069,13 @@ V0 = S1 < 0008;
 
 L78834:	; 80078834
 V0 = w[800b1738];
-8007883C	nop
-80078840	beq    v0, zero, L78850 [$80078850]
-80078844	nop
-80078848	jal    $801e7378
-A0 = 0;
+if( V0 != 0 )
+{
+    A0 = 0;
+    80078848	jal    $801e7378
+}
 
-L78850:	; 80078850
-80078850	jal    funca86c8 [$800a86c8]
+field_particle_load_texture();
 
 system_memory_clean_removed_alloc();
 

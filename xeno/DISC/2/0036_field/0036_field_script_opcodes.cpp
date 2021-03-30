@@ -365,7 +365,7 @@ else if( V1 == 1 )
     read_two_bytes_with_80();
 
     A0 = w[800af1f0]; // current entity id in script call
-    funca897c(); // init default particle
+    field_particle_init_default_particle();
 
     [800af7a0 + 0] = h(1);
     [800af7a0 + 4] = h(1000);
@@ -383,7 +383,7 @@ else if( V1 == 1 )
     }
 
     A0 = w[800af1f0]; // current entity id in script call
-    particle_create_instance();
+    field_particle_create_instance();
 
     V1 = w[800af54c];
     [V1 + cc] = h(hu[V1 + cc] + 8);
@@ -1802,37 +1802,22 @@ V0 = V0 + 0001;
 
 
 ////////////////////////////////
-// func877bc
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-800877CC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = hu[V0 + 00cc];
-800877D8	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800877E4	nop
-800877E8	bne    v0, zero, L87800 [$80087800]
-800877EC	nop
-800877F0	jal    funca8634 [$800a8634]
-800877F4	nop
-800877F8	j      L87808 [$80087808]
-800877FC	nop
+// func877bc()
 
-L87800:	; 80087800
-80087800	jal    funca86c8 [$800a86c8]
-80087804	nop
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
 
-L87808:	; 80087808
-V1 = w[800af54c];
-80087810	nop
-V0 = hu[V1 + 00cc];
-80087818	nop
-V0 = V0 + 0002;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80087828	jr     ra 
-SP = SP + 0018;
+if( bu[script + current_pos + 1] == 0 )
+{
+    field_particle_store_texture();
+}
+else
+{
+    field_particle_load_texture();
+}
+
+[struct_138 + cc] = h(current_pos + 2);
 ////////////////////////////////
 
 
@@ -2160,7 +2145,7 @@ V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 9);
 
 A0 = S0;
-funca897c(); // init default particle
+field_particle_init_default_particle();
 
 V1 = w[800b184c];
 
@@ -2216,7 +2201,7 @@ V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 8);
 
 A0 = S0;
-funca897c(); // init default particle
+field_particle_init_default_particle();
 
 V1 = w[800b184c];
 
@@ -2782,7 +2767,7 @@ current_pos = hu[struct_138 + cc];
 if( w[800ad064] == 0 )
 {
     A0 = w[800af1f0]; // current entity id in script call
-    particle_create_instance();
+    field_particle_create_instance();
 }
 
 [800af150] = w(w[800af150] + 4);
@@ -2801,7 +2786,7 @@ current_pos = hu[struct_138 + cc];
 
 A0 = w[800af1f0]; // current entity id in script call
 A1 = bu[script + current_pos + 1];
-funca8dc0();
+field_particle_reset_particle_for_entity();
 
 [800af150] = w(w[800af150] + 4);
 [struct_138 + cc] = h(current_pos + 2);
@@ -3376,7 +3361,7 @@ A1 = S1;
 V0 = S1 < 02c0;
 80089A14	bne    v0, zero, L89a2c [$80089a2c]
 A2 = S0;
-80089A1C	jal    funca8634 [$800a8634]
+80089A1C	jal    field_particle_store_texture [$800a8634]
 80089A20	nop
 A1 = S1;
 

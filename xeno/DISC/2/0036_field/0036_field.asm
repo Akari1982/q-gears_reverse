@@ -2554,28 +2554,28 @@
 // funca858c
 800A858C-800A8630
 ////////////////////////////////
-// funca8634
+// field_particle_store_texture
 800A8634-800A86C4
 ////////////////////////////////
-// funca86c8
+// field_particle_load_texture
 800A86C8-800A8748
 ////////////////////////////////
-// funca874c
+// field_particle_clear_arrays
 800A874C-800A8780
 ////////////////////////////////
 // field_particle_remove
 800A8784-800A8848
 ////////////////////////////////
-// funca884c
+// field_particle_reset_ttl_only
 800A884C-800A88A0
 ////////////////////////////////
-// field_particle_reset_ttl
+// field_particle_reset_ttl_all
 800A88A4-800A8934
 ////////////////////////////////
-// funca8938
+// field_particle_clear_all
 800A8938-800A8978
 ////////////////////////////////
-// funca897c
+// field_particle_init_default_particle
 800A897C-800A8B5C
 ////////////////////////////////
 // field_particle_update
@@ -2584,13 +2584,13 @@
 // field_particle_random
 800A8D54-800A8D88
 ////////////////////////////////
-// funca8d8c
+// field_patricle_find_empty
 800A8D8C-800A8DBC
 ////////////////////////////////
-// funca8dc0
+// field_particle_reset_particle_for_entity
 800A8DC0-800A8E7C
 ////////////////////////////////
-// particle_create_instance
+// field_particle_create_instance
 800A8E80-800A8FF0
 ////////////////////////////////
 // field_particle_colour_sum
