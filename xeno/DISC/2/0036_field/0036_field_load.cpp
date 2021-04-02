@@ -422,7 +422,7 @@ V0 = 0001;
 [SP + 0010] = w(RA);
 8006FBB0	jal    $80028870
 A0 = 0;
-8006FBB8	jal    $80044448
+8006FBB8	jal    $system_draw_sync
 A0 = 0;
 A0 = w[800ad0ec];
 8006FBC8	jal    $80031f0c
@@ -807,11 +807,7 @@ A1 = 8006f184;
 [SP + 40] = w(w[A1 + 8]);
 [SP + 44] = w(w[A1 + c]);
 
-
-
 func6fc6c(); // init values
-
-
 
 // copy first 0x100 byte of field file
 A2 = w[80059b70];
@@ -825,8 +821,6 @@ loop703cc:	; 800703CC
     A2 = A2 + 10;
     A3 = A3 + 10;
 80070410	bne    a2, t0, loop703cc [$800703cc]
-
-
 
 S4 = 0;
 loop7045c:	; 8007045C
@@ -845,8 +839,6 @@ loop7045c:	; 8007045C
     S4 = S4 + 1;
     V0 = S4 < 4;
 8007049C	bne    v0, zero, loop7045c [$8007045c]
-
-
 
 A0 = 800b0290 + 0;
 A1 = 4;
@@ -880,8 +872,6 @@ func79e08();
 
 func79bd8();
 
-
-
 // additional textures extraction (part 0 of field file)
 V0 = w[80059b70];
 A0 = w[V0 + 10c] + 10;
@@ -906,8 +896,6 @@ if( S3 > 0 )
         V0 = S4 < S3;
     80070580	bne    v0, zero, loop7056c [$8007056c]
 }
-
-
 
 // sprite texture extraction (part 4 of field file)
 V0 = w[80059b70];
@@ -938,8 +926,6 @@ if( number_of_textures > 0 )
     80070620	bne    v0, zero, func705e0 [$800705e0]
 }
 
-
-
 A0 = 0; // wait for termination
 system_draw_sync();
 
@@ -948,8 +934,6 @@ system_memory_mark_removed_alloc();
 
 A0 = S4;
 system_memory_mark_removed_alloc();
-
-
 
 // 3d model extraction (part 2 of field file)
 V0 = w[80059b70];
@@ -977,14 +961,10 @@ if( number_of_models > 0 )
     800706D4	bne    v0, zero, loop706a8 [$800706a8]
 }
 
-
-
 A1 = w[80059b70];
 A0 = A1 + w[A1 + 148];
 A1 = 80064f6c; // where
 system_extract_archive();
-
-
 
 // script extraction (part 5 of field file)
 V0 = w[80059b70];
@@ -1003,8 +983,6 @@ V1 = w[V0 + 80];
 [800ad0d4] = w(V1); // number of entities
 [800ad0d8] = w(V0 + 84 + V1 * 40); // pointer to script data
 
-
-
 // triggers extraction (part 8 of field file)
 A0 = w[80059b70];
 A0 = w[A0 + 12c] + 10;
@@ -1017,8 +995,6 @@ A0 = V1 + w[V1 + 150];
 A1 = V0;
 system_extract_archive();
 
-
-
 // dialogs extraction (part 7 of field file)
 V0 = w[80059b70];
 A0 = w[V0 + 128] + 10;
@@ -1030,8 +1006,6 @@ V1 = w[80059b70];
 A0 = V1 + w[V1 + 14c];
 A1 = V0;
 system_extract_archive();
-
-
 
 // walkmesh extraction (part 1 of field file)
 V0 = w[80059b70];
@@ -1076,8 +1050,6 @@ if( blocks > 0 )
 
 [800af1e4] = w((w[800aeff8] - w[800aeff4]) / 4); // number of materials
 
-
-
 // sprite data extraction (part 3 of field file)
 V1 = w[80059b70];
 A0 = w[V1 + 118] + 10;
@@ -1090,19 +1062,13 @@ A0 = V1 + w[V1 + 13c];
 A1 = V0;
 system_extract_archive();
 
-
-
 [800aeeb0] = h(1);
 [800aeeb2] = h(1);
 [800aeeb4] = h(1);
 [800aeeb6] = h(1);
 
-
-
 A0 = w[80059b70] + 154;
 func6f47c();
-
-
 
 // set up entities
 V0 = w[80059b70];
@@ -1204,21 +1170,14 @@ if( number_of_entities > 0 )
     80070C28	bne    v0, zero, L70a1c [$80070a1c]
 }
 
-
-
-// DEBUG
-if( w[800c1b60] == 0 )
+if( w[800c1b60] == 0 ) // DEBUG
 {
     func2812bc();
 }
 
-
-
 func7d4e0();
 
-
-
-80070C54	jal    func710f4 [$800710f4]
+func710f4(); // create some packets
 
 A0 = w[80059b70];
 system_memory_mark_removable();
@@ -1232,9 +1191,9 @@ system_memory_set_alloc_user();
 
 A0 = 3c00;
 A1 = 0;
-80070C8C	jal    func24d5c [$80024d5c]
+func24d5c(); // init for sprites
 
-80070C94	jal    func1c7d0 [$8001c7d0]
+func1c7d0(); // sprites init all
 
 A0 = 8; // YOSI
 A1 = 0;
@@ -1252,7 +1211,7 @@ A6 = 0;
 A7 = 800;
 A8 = 0;
 A9 = 0;
-80070CD8	jal    func76ed4 [$80076ed4]
+func76ed4(); // set data in A0
 
 A0 = S0 - 20;
 A1 = 1f8;
@@ -1264,7 +1223,7 @@ A6 = 0;
 A7 = 0;
 A8 = 0;
 A9 = 0;
-80070D04	jal    func76ed4 [$80076ed4]
+func76ed4(); // set data in A0
 
 S2 = 800af558;
 
@@ -1475,17 +1434,13 @@ if( w[800ad0d4] > 0 )
 
 
 ////////////////////////////////
-// func710f4
-800710F4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800710FC	jal    func7cf50 [$8007cf50]
+// func710f4()
+
 A0 = 0;
-80071104	jal    func7cf50 [$8007cf50]
-A0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80071114	jr     ra 
-80071118	nop
+func7cf50();
+
+A0 = 1;
+func7cf50();
 ////////////////////////////////
 
 
@@ -1832,6 +1787,7 @@ A3 = dc;
 
 ////////////////////////////////
 // func715f4()
+
 [800b1970] = h(A0);
 [800b1972] = h(A1);
 [800b1974] = h(A2);
@@ -1846,95 +1802,94 @@ A3 = dc;
 
 
 ////////////////////////////////
-// func71640
-80071640	addiu  sp, sp, $ffd8 (=-$28)
-V0 = 0001;
-[SP + 0024] = w(RA);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
-[80058838] = w(V0);
-80071660	jal    $80044448
+// func71640()
+
+[80058838] = w(1);
+
 A0 = 0;
-80071668	jal    $8004b3f4
+system_draw_sync();
+
 A0 = 0;
-80071670	jal    $80048a6c
-S0 = 00e0;
+system_psyq_wait_frames();
+
+func48a6c();
+
 A0 = 00a0;
-8007167C	jal    $80049fd4
 A1 = 0070;
-80071684	lui    s1, $800b
-S1 = S1 + 1970;
-A0 = S1;
+system_gte_set_screen_offset();
+
+A0 = 800b1970;
 A1 = 0;
 A2 = 0;
-A3 = 0140;
-8007169C	jal    $800437a0
-[SP + 0010] = w(S0);
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
 S2 = 800b9a64;
 A0 = S2;
 A1 = 0;
-A2 = 0100;
-A3 = 0140;
-800716BC	jal    $800437a0
-[SP + 0010] = w(S0);
-A0 = S1 + 005c;
+A2 = 100;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+A0 = 800b1970 + 5c;
 A1 = 0;
 A2 = 0;
-A3 = 0140;
-800716D4	jal    $800437a0
-[SP + 0010] = w(S0);
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
 A0 = 800b9ac0;
 A1 = 0;
-A2 = 0100;
-A3 = 0140;
-800716F0	jal    $800437a0
-[SP + 0010] = w(S0);
-A0 = S1 + 00b8;
+A2 = 100;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+A0 = 800b1970 + b8;
 A1 = 0;
-A2 = 0100;
-A3 = 0140;
-80071708	jal    $80043858
-[SP + 0010] = w(S0);
-S1 = 800b9b1c;
-A0 = S1;
+A2 = 100;
+A3 = 140;
+A4 = e0;
+system_graphic_create_display_env_struct();
+
+A0 = 800b9b1c;
 A1 = 0;
 A2 = 0;
-A3 = 0140;
-80071728	jal    $80043858
-[SP + 0010] = w(S0);
+A3 = 140;
+A4 = e0;
+system_graphic_create_display_env_struct();
+
 A0 = 0;
 A1 = 0;
-A2 = 0140;
-8007173C	jal    func715f4 [$800715f4]
-A3 = 00e0;
-80071744	jal    func86360 [$80086360]
-80071748	nop
-V0 = 0001;
+A2 = 140;
+A3 = e0;
+func715f4();
+
+func86360();
+
 [800b1989] = b(0);
 [800b198a] = b(0);
 [800b198b] = b(0);
 [800b9a7d] = b(0);
 [800b9a7e] = b(0);
 [800b9a7f] = b(0);
-[800b1986] = b(V0);
-[800b9a7a] = b(V0);
-80071790	jal    $8004b3f4
+[800b1986] = b(1);
+[800b9a7a] = b(1);
+
 A0 = 0;
-80071798	jal    $80044d14
-A0 = S1;
-800717A0	jal    system_psyq_put_draw_env
+system_psyq_wait_frames();
+
+A0 = 800b9b1c;
+system_psyq_put_disp_env();
+
 A0 = S2;
-A0 = 0140;
-800717AC	jal    $8002de00
-A1 = 00f0;
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800717C8	jr     ra 
-800717CC	nop
+system_psyq_put_draw_env();
+
+A0 = 140;
+A1 = f0;
+func2de00();
 ////////////////////////////////
 
 
@@ -3189,15 +3144,11 @@ if( w[800c1b60] == 0 )
 
 ////////////////////////////////
 // func734c8
+
 V0 = w[800aefe0];
-800734D0	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S2);
 S2 = 0;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S3);
-[SP + 001c] = w(S1);
 800734E8	blez   v0, L735c0 [$800735c0]
-[SP + 0018] = w(S0);
+
 S3 = 0;
 
 loop734f4:	; 800734F4
@@ -3263,20 +3214,13 @@ V0 = S2 < V0;
 S3 = S3 + 005c;
 
 L735c0:	; 800735C0
-RA = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-800735D8	jr     ra 
-800735DC	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func735e0()
+
 if( w[800c1b60] == 0 )
 {
     800735F4	break   $00400
@@ -3441,7 +3385,7 @@ V0 = 0080;
 80073884	jal    $80049ff4
 A0 = 0080;
 A0 = 010a;
-80073890	jal    $80049fd4
+80073890	jal    $system_gte_set_screen_offset
 A1 = 00a6;
 A0 = w[800aed54];
 V0 = w[800aed64];
@@ -3701,7 +3645,7 @@ V0 = V0 | V1;
 80073CDC	lui    at, $0001
 AT = A2 + AT;
 [AT + 80d4] = w(V0);
-80073CE8	jal    $80049fd4
+80073CE8	jal    $system_gte_set_screen_offset
 A1 = 0070;
 A0 = w[800aeecc];
 80073CF8	jal    $80049ff4

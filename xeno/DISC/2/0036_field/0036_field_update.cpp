@@ -1525,7 +1525,8 @@ loop76898:	; 80076898
 
 
 ////////////////////////////////
-// func768f8
+// func768f8()
+
 A0 = w[800b1740];
 V0 = w[800b1740];
 A2 = w[800aefe4];
@@ -1688,22 +1689,22 @@ if( w[800c1b60] == 0 ) // debug
     A0 = 80270000;
     system_print_set_memory();
 
-    A0 = 10;
-    A1 = 10;
-    A2 = 130;
-    A3 = e0;
-    A4 = 400;
-    A5 = 4;
-    A6 = 3c0;
-    A7 = 100;
-    A8 = 100;
-    A9 = 1ff;
-    A10 = 0;
+    A0 = 10;  // start x
+    A1 = 10;  // start y
+    A2 = 130; // area width
+    A3 = e0;  // area height
+    A4 = 400; // max letters
+    A5 = 4;   // flags
+    A6 = 3c0; // texpage x
+    A7 = 100; // texpage y
+    A8 = 100; // clut x
+    A9 = 1ff; // clut y
+    A10 = 0;  // file
     system_print_init();
 }
 
-A0 = 100;
-A1 = f0;
+A0 = 100; // x
+A1 = f0;  // y
 func334bc();
 ////////////////////////////////
 
@@ -1820,7 +1821,7 @@ system_cdrom_action_sync(); // ececute till cd sync
 loop76e7c:	; 80076E7C
     A0 = (w[8004e9f0] & fff) << 1;
     A1 = 0;
-    func1b318();
+    func1b318(); // prepare cdrom for field load
 80076E94	bne    v0, zero, loop76e7c [$80076e7c]
 ////////////////////////////////
 
@@ -2101,14 +2102,8 @@ SP = SP + 0058;
 
 ////////////////////////////////
 // func772f0
-800772F0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 800772F8	jal    func76f14 [$80076f14]
-800772FC	nop
+
 80077300	jal    func77144 [$80077144]
-80077304	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80077310	jr     ra 
-80077314	nop
 ////////////////////////////////

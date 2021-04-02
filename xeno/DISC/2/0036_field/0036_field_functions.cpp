@@ -2596,23 +2596,21 @@ La6c94:	; 800A6C94
 800A6C94	jr     ra 
 V0 = V1;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca6c9c
-800A6C9C	addiu  sp, sp, $ffc8 (=-$38)
+
 A0 = a800;
 A1 = 0;
-[SP + 0034] = w(RA);
-[SP + 0030] = w(S6);
-[SP + 002c] = w(S5);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-800A6CC4	jal    $system_memory_allocate
-[SP + 0018] = w(S0);
+system_memory_allocate();
+S4 = V0;
+
 A0 = 7000;
 A1 = 0;
-800A6CD4	jal    $system_memory_allocate
-S4 = V0;
+system_memory_allocate();
+
 S5 = V0;
 S2 = 0;
 S6 = 00e0;
@@ -2681,17 +2679,10 @@ S3 = S3 + 0060;
 A0 = S4;
 800A6DEC	jal    $80031f0c
 A0 = S5;
-RA = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-800A6E18	jr     ra 
-800A6E1C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca6e20
 V0 = w[8004e9a4];

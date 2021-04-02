@@ -551,6 +551,8 @@
 800b1590 pointer to buffer 0 for 0x11 x 0x14 textured quads render data. 0x3840 size. 0x28 each quad.
 800b1594 pointer to buffer 0 for 0x11 x 0x14 textured quads render data. 0x3840 size. 0x28 each quad.
 
+800b15b0 array of some 0x58 size packets.
+
 800b1648 [][][][] activated windows mask. If 1 then we lock all dialog script call.
 
 800b1654 [][][][] increment during each entity initialization.

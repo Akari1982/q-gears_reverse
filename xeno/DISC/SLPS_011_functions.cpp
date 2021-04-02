@@ -394,23 +394,25 @@ A0 = S0;
 ////////////////////////////////
 // func334bc()
 
-S0 = A0;
-S1 = A1;
+x = A0;
+y = A1;
 
-[SP + 14] = h(20);
-[SP + 16] = h(1);
+[SP + 10] = h(x);
+[SP + 12] = h(y);
+[SP + 14] = h(20); // width
+[SP + 16] = h(1); // height
 
 A0 = SP + 10;
-A1 = 8004f834;
+A1 = 8004f834; // load image from here into vram
 system_load_image();
 
-A0 = S0;
-A1 = S1;
+A0 = x;
+A1 = y;
 system_graphic_get_clut_by_param();
 [80058c70] = h(V0);
 
-A0 = S0 + 10;
-A1 = S1;
+A0 = x + 10;
+A1 = y;
 system_graphic_get_clut_by_param();
 [80058ab0] = h(V0);
 ////////////////////////////////

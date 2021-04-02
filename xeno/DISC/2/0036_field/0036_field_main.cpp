@@ -180,7 +180,7 @@ if( w[800c1b60] == 0 ) // debug
     800776C8	0C0A0481	Ѓ...
 }
 
-func76c50(); // set dir inside
+func76c50(); // set dir inside (control related)
 
 [80059a38] = w(8006ccc4);
 [8004e9f0] = w(hu[8006efde]); // field id to load
@@ -621,7 +621,7 @@ L77810:	; 80077810
 L780cc:	; 800780CC
 800780CC	jal    func78ed0 [$80078ed0]
 
-800780D4	jal    field_particle_load_texture [$800a86c8]
+field_particle_load_texture();
 
 800780DC	jal    funca2778 [$800a2778]
 
@@ -748,55 +748,52 @@ if( h[800b1818] != 0 )
 
 
 ////////////////////////////////
-// func78358
+// func78358()
 
-func76bd4();
+func76bd4(); // init font clut
 
-80078378	jal    field_particle_store_texture [$800a8634]
-8007837C	nop
-A0 = 0004;
-80078384	jal    $system_filesystem_set_dir
+field_particle_store_texture();
+
+A0 = 4;
 A1 = 0;
-8007838C	jal    func76e6c [$80076e6c]
-80078390	nop
-80078394	jal    field_sync [$80076c88]
-80078398	nop
-V0 = w[8004e99c];
-800783A4	nop
-800783A8	bne    v0, zero, L783b8 [$800783b8]
-800783AC	nop
-800783B0	jal    funca6c9c [$800a6c9c]
-A0 = 0;
+system_filesystem_set_dir();
 
-L783b8:	; 800783B8
-800783B8	jal    func71640 [$80071640]
-800783BC	nop
-V0 = w[8004e99c];
-800783C8	nop
-800783CC	bne    v0, zero, L78404 [$80078404]
-S0 = 0001;
-A0 = SP + 0010;
-A1 = 0;
-A2 = 0;
-V0 = 0100;
-[SP + 0012] = h(V0);
-V0 = 0140;
-[SP + 0014] = h(V0);
-V0 = 00e0;
-[SP + 0010] = h(0);
-800783F8	jal    $system_move_image
-[SP + 0016] = h(V0);
-S0 = 0001;
+func76e6c(); // prepare to field load
 
-L78404:	; 80078404
+field_sync();
+
+if( w[8004e99c] == 0 )
+{
+    A0 = 0;
+    funca6c9c();
+}
+
+func71640();
+
+if( w[8004e99c] == 0 )
+{
+    [SP + 10] = h(0); // x
+    [SP + 12] = h(100); // y
+    [SP + 14] = h(140); // width
+    [SP + 16] = h(e0); // height
+
+    A0 = SP + 10;
+    A1 = 0;
+    A2 = 0;
+    system_move_image();
+}
+
+S0 = 0001;
 [800acfe0] = w(S0);
 8007840C	jal    funca3c20 [$800a3c20]
-80078410	nop
+
 A0 = 0;
+A1 = 100;
 80078418	jal    funca3c44 [$800a3c44]
-A1 = 0100;
-80078420	jal    $system_draw_sync
+
 A0 = 0;
+system_draw_sync();
+
 80078428	jal    func73670 [$80073670]
 8007842C	nop
 80078430	jal    field_sync [$80076c88]
@@ -822,15 +819,18 @@ L78470:	; 80078470
 80078470	jal    funca4d5c [$800a4d5c]
 S0 = 0001;
 [8004e99c] = w(S0);
-80078480	jal    $system_cdrom_action_sync
+
 A0 = 0;
-A0 = 0004;
-8007848C	jal    $system_filesystem_set_dir
+system_cdrom_action_sync();
+
+A0 = 4;
 A1 = 0;
-80078494	jal    func70358 [$80070358]
-80078498	nop
+system_filesystem_set_dir();
+
+func70358(); // parse field
+
 8007849C	jal    func6fb18 [$8006fb18]
-800784A0	nop
+
 V0 = w[800b1738];
 [800af1d8] = w(S0);
 800784B4	beq    v0, zero, L784c4 [$800784c4]

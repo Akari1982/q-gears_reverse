@@ -145,6 +145,8 @@
 8004f7ac [][][][] some tex page global setting. If 1 or 2 we use some default values.
 8004f7b0 [][][][] some clut global setting. If 0 then we use some default values.
 
+8004f834 clut for fonts (0x20 items).
+
 8004f8a4 [][][][] init with 1. Buttons related.
 8004f8a8 [][][][] init with 0. Buttons related.
 8004f8ac [][][][] init with 0. Set to 1 if button buffer is overflow.
@@ -586,6 +588,9 @@
 
 80058c58 [][][][] sound event id.
 80058c5c [][][][] we add here number of polygons for which we create packets.
+
+80058c70 [][]     1st clut field for font.
+80058c72 [][]     2nd clut field for font.
 
 80058c74 [][][][] offset to main struct with 0x10 music struct channels.
 
