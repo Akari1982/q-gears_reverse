@@ -118,6 +118,7 @@
 
 800adf08 data for rotation (each 2 bytes)
 
+800ae74c [][][][] 
 800ae750 array of particles sprite data (sprite size and textures). 0x18 size.
     + 00 [][]     half width.
     + 02 [][]     half height.
