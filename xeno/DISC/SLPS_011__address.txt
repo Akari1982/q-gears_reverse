@@ -974,7 +974,7 @@ First struct is just header struct (0x10 size), later we add more structs differ
 
 
 
-Sprite struct 164. Can be allocated anywhere.
+Sprite struct 0x164. Can be allocated anywhere.
     +  0 [][][][] store x here from struct_138 + 20.
     +  4 [][][][] store y here from struct_138 + 24.
     +  8 [][][][] store z here from struct_138 + 28.

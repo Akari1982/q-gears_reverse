@@ -55,6 +55,9 @@
 800ad00c [][][][] flag that particle image is loaded. 0 - loaded. 1 - stored.
 800ad010 [][][][] ???
 
+800ad018 [][][][] store here entity id for particle.
+800ad01c [][][][] store here entity id that inits particle.
+
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
 
 800ad04c [][][][] if this is 1 then we set number of entities to 1 in script call call_run_script_8().
@@ -588,9 +591,12 @@
 
 800b1834 array of stored index to party character data (somewhere in 800b09d8) (0x4 size)
 
-800b1848 [][][][] entity id for particle.
+800b1848 [][][][] temp entity id for particle system.
+800b184c [][][][] temp render settings for particle system.
+800b1850 [][][][] temp rotation x for particle system.
+800b1854 [][][][] temp rotation y for particle system.
 
-800b1858 [][][][] ???
+800b1858 [][][][] temp particle id for particle.
 
 800b1970 render data.
     +00 DRAWENV struct (0x5c size).
@@ -770,7 +776,7 @@
         + 2 [][]     z offset. Init with 0.
     + 50 [][]     scale. Init with 800.
     + 52 [][]     entity id (set entity id from script called).
-    + 54 [][]     particle id. Init with 0.
+    + 54 [][]     sprite id. Init with 0.
     + 56 [][]     init with 1. Default wait for sprite.
     + 58 [][]     init with 1c.
     + 5a [][]     x trans. Init with 1c8.

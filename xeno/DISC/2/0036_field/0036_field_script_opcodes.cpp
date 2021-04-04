@@ -2113,7 +2113,7 @@ for( int i = 0; i < 8; ++i )
 
 ////////////////////////////////
 // func87c48()
-// 0xFEC2_ParticleInit???
+// 0xFEC2_ParticleSystemInit???
 
 A0 = 1;
 read_two_bytes_with_80();
@@ -2126,11 +2126,11 @@ if( S0 == ff )
 
 A0 = 1;
 read_two_bytes_with_80();
-[800b1848] = w(V0);
+[800b1848] = w(V0); // entity id
 
 A0 = 3;
 read_two_bytes_with_80();
-[800b184c] = w(V0);
+[800b184c] = w(V0); // render settings
 
 A0 = 5;
 read_two_bytes_with_80();
@@ -2172,17 +2172,17 @@ else if( V1 == 3 )
 
 ////////////////////////////////
 // func87d64()
-// 0xFE8F_ParticleInit1()
+// 0xFE8F_ParticleSystemInit1()
 
 A0 = 1;
 get_entity_id_from_opcode();
-S0 = V0;
+entity_id = V0;
 
-if( S0 == ff )
+if( entity_id == -1 )
 {
-    S0 = 0;
+    entity_id = 0;
 }
-[800b1848] = w(S0);
+[800b1848] = w(entity_id);
 
 A0 = 2;
 read_two_bytes_with_80();
@@ -2199,7 +2199,7 @@ read_two_bytes_with_80();
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 8);
 
-A0 = S0;
+A0 = entity_id;
 field_particle_init_default_particle();
 
 V1 = w[800b184c];
@@ -2524,7 +2524,7 @@ read_two_bytes_with_80();
 val = V0;
 
 [800b1858] = w(val); // particle id
-[800ad018] = w(w[800b1848]);
+[800ad018] = w(w[800b1848]); // entity id
 
 [800af7a0 + val * 78 + 0] = h(0);
 [800af7a0 + val * 78 + 24] = h(1); // use speed for sprites
@@ -2662,7 +2662,7 @@ read_two_bytes_with_80();
 
 A0 = 5;
 read_two_bytes_with_80();
-[800af7a0 + id * 78 + 54] = h(V0);
+[800af7a0 + id * 78 + 54] = h(V0); // sprite id
 
 A0 = 7;
 read_two_bytes_with_80();
@@ -14474,24 +14474,25 @@ A0 = w[800af54c];
 // 0x5B()
 // func94858()
 
-V1 = w[800af1f0];
-V1 = w[800aefe4];
-V0 = V1 + V1 * 5c;
-V1 = w[800af54c];
-A1 = w[V0 + 4];
-A0 = hu[V1 + 104];
+entity_id = w[800af1f0]; // current entity id
+struct_5c_p = w[800aefe4];
+struct_138 = w[800af54c];
+
 [800af594] = w(1);
-[V1 + 30] = w(0);
-[V1 + 34] = w(0);
-[V1 + 38] = w(0);
-[V1 + 40] = w(0);
-[V1 + 44] = w(0);
-[V1 + 48] = w(0);
-[V1 + 106] = h(A0 | 8000);
-[V1 + 104] = h(A0 | 8000);
-[A1 + c] = w(0);
-[A1 + 14] = w(0);
-[A1 + 18] = w(0);
+
+[struct_138 + 30] = w(0); // modified move vector X
+[struct_138 + 34] = w(0); // modified move vector Y
+[struct_138 + 38] = w(0); // modified move vector Z
+[struct_138 + 40] = w(0); // move vector X
+[struct_138 + 44] = w(0); // move vector Y
+[struct_138 + 48] = w(0); // move vector Z
+[struct_138 + 106] = h(hu[struct_138 + 104] | 8000); // rotate this dir
+[struct_138 + 104] = h(hu[struct_138 + 104] | 8000); // rotate this dir
+
+A1 = w[struct_5c_p + entity_id * 5c + 4];
+[A1 +  c] = w(0); // animation move x
+[A1 + 14] = w(0); // animation move z
+[A1 + 18] = w(0); // move speed
 ////////////////////////////////
 
 
@@ -27059,7 +27060,6 @@ read_two_bytes_unsigned();
 // 0xC6()
 
 V0 = w[800af54c];
-V1 = w[800af150];
-[800af150] = w(V1 + 20);
+[800af150] = w(w[800af150] + 20); // add 0x20 more opcodes to ececute
 [V0 + cc] = h(hu[V0 + cc] + 1);
 ////////////////////////////////

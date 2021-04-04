@@ -4034,7 +4034,7 @@ V0 = 0001;
 // field_particle_create_sprite_packets()
 
 sprite_data = A0;
-S1 = A1;
+sprite_id = A1;
 tranc = A2;
 
 A0 = sprite_data + 50;
@@ -4044,10 +4044,10 @@ system_graphic_textured_quad_header();
 [sprite_data + 55] = b(80);
 [sprite_data + 56] = b(80);
 
-x1 = hu[800ae750 + S1 * 18 + 4] << 4 - hu[800ae750 + S1 * 18 + 0] << 4;
-y1 = hu[800ae750 + S1 * 18 + 6] << 4 - hu[800ae750 + S1 * 18 + 2] << 4;
-x2 = hu[800ae750 + S1 * 18 + 4] << 4 + hu[800ae750 + S1 * 18 + 0] << 4;
-y2 = hu[800ae750 + S1 * 18 + 6] << 4 + hu[800ae750 + S1 * 18 + 2] << 4;
+x1 = hu[800ae750 + sprite_id * 18 + 4] << 4 - hu[800ae750 + sprite_id * 18 + 0] << 4;
+y1 = hu[800ae750 + sprite_id * 18 + 6] << 4 - hu[800ae750 + sprite_id * 18 + 2] << 4;
+x2 = hu[800ae750 + sprite_id * 18 + 4] << 4 + hu[800ae750 + sprite_id * 18 + 0] << 4;
+y2 = hu[800ae750 + sprite_id * 18 + 6] << 4 + hu[800ae750 + sprite_id * 18 + 2] << 4;
 
 [sprite_data + a0] = h(x1);
 [sprite_data + a2] = h(y1);
@@ -4066,14 +4066,14 @@ y2 = hu[800ae750 + S1 * 18 + 6] << 4 + hu[800ae750 + S1 * 18 + 2] << 4;
 [sprite_data + bc] = h(0);
 
 A0 = sprite_data + 50; // addr
-A1 = hu[800ae750 + S1 * 18 + 8]; // u1
-A2 = hu[800ae750 + S1 * 18 + a] + 40; // v1
-A3 = hu[800ae750 + S1 * 18 + c] - 1; // u2
-A4 = hu[800ae750 + S1 * 18 + e] + 40; // v2
-A5 = hu[800ae750 + S1 * 18 + 10]; // u3
-A6 = hu[800ae750 + S1 * 18 + 12] + 3f; // v3
-A7 = hu[800ae750 + S1 * 18 + 14] - 1; // u4
-A8 = hu[800ae750 + S1 * 18 + 16] + 3f; // v4
+A1 = hu[800ae750 + sprite_id * 18 + 8]; // u1
+A2 = hu[800ae750 + sprite_id * 18 + a] + 40; // v1
+A3 = hu[800ae750 + sprite_id * 18 + c] - 1; // u2
+A4 = hu[800ae750 + sprite_id * 18 + e] + 40; // v2
+A5 = hu[800ae750 + sprite_id * 18 + 10]; // u3
+A6 = hu[800ae750 + sprite_id * 18 + 12] + 3f; // v3
+A7 = hu[800ae750 + sprite_id * 18 + 14] - 1; // u4
+A8 = hu[800ae750 + sprite_id * 18 + 16] + 3f; // v4
 field_set_quad_uv();
 
 A0 = sprite_data + 50;
@@ -4523,9 +4523,9 @@ for( int i = 0; i < 40; ++i )
 entity_id = A0;
 
 field_patricle_find_empty();
-
 S3 = V0;
-if( S3 == V0 )
+
+if( S3 == -1 )
 {
     return -1;
 }
