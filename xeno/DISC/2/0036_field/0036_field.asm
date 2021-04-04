@@ -758,10 +758,10 @@
 // func87f90
 80087F90-80088138
 ////////////////////////////////
-// 0xBD_ParticleSpawnSettings
+// 0xFEBD_ParticleSpawnSettings
 8008813C-800881EC
 ////////////////////////////////
-// 0xA5_ParticleRenderSettings
+// 0xFEA5_ParticleRenderSettings
 800881F0-800882C8
 ////////////////////////////////
 // func882cc
@@ -773,28 +773,28 @@
 // func8830c
 8008830C-800885D4
 ////////////////////////////////
-// 0x90_ParticleInitBase
+// 0xFE90_ParticleInitBase
 800885D8-80088744
 ////////////////////////////////
-// 0x91_ParticlePos
+// 0xFE91_ParticlePos
 80088748-80088944
 ////////////////////////////////
-// 0x92_ParticleSpeed
+// 0xFE92_ParticleSpeed
 80088948-80088B44
 ////////////////////////////////
 // func88b48
 80088B48-80088CA4
 ////////////////////////////////
-// 0x94_ParticleTranslation
+// 0xFE94_ParticleTranslation
 80088CA8-80088E50
 ////////////////////////////////
-// 0x95_ParticleColour
+// 0xFE95_ParticleColour
 80088E54-80089050
 ////////////////////////////////
-// 0x96_ParticleCreate
+// 0xFE96_ParticleCreate
 80089054-800890B4
 ////////////////////////////////
-// func890b8
+// 0xFE97_ParticleReset
 800890B8-80089124
 ////////////////////////////////
 // func89128

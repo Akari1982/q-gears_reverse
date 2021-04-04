@@ -1,193 +1,210 @@
 ////////////////////////////////
-// 0xFE_OpExtend1
+// 0xFE_OpExtend1()
 
-V1 = w[800AF54C];
-V0 = hu[V1 + CC];
-V0 = V0 + 1;
-[V1 + CC] = h(V0);
+V1 = w[800af54c];
+V0 = ;
+V0 = hu[V1 + cc] + 1;
+[V1 + cc] = h(V0);
 
 V1 = w[800AD0D8];
 V0 = bu[V1 + V0];
 V0 = w[800ADB78 + V0 * 4];
 
-ACC80880 00
-B4E90980 01
-10510980 02
-C8C60880 03
-40C80880 04
-98520980 05
-40530980 06
-D8CB0880 07
-54C70880 08
-4CC60880 09
-58CC0880 0A
-D4CC0880 0B
-C0C50880 0C
-20BE0880 0E
-0CBF0880 0F
-34C00880 10
-20C10880 11
-48C20880 12
-A8C30880 14
-800A0A80 15
-ACBD0880 16
-D49F0980 17
-ACB30880 18
-08B90880 19
-68AE0880 1A
-A8AB0880 1B
-50800980 1C
-C07A0980 1D
-28F10980 1E
-64F30980 1F
-DCF30980 20
-78FC0980 21
-38AC0980 22
-6CA90980 23
-E4A70980 24
-9CCB0880 25
-C0DA0880 28
-ECDA0880 29
-18DB0880 2a
-44DB0880 2b
-90D40880 2c
-18D50880 2d
-A0D50880 2e
-28D60880 2f
-BCD90880E8D9088014DA088040DA08806CD80880C0D8088014D9088068D9088088D7088004C80880A4C4088038C4088054A708809CA40880ACA50880BCA60880
-1C170980 40
-D8F10980 41
-3CF20980 42
-30A70980 43
-58A70980 44
-30A40880 46
-18A70880 47
-ECAA0880 48
-D0D00880 49
-BCA20880 4A
-809F0880 4B
-489F0880 4C
-109F0880 4D
-34A00880 4E
-84310980 4F
-A8310980 50
-D0310980 51
-F4310980 52
-142D0980 55
-042F0980 56
-B42D0980 57
-F82D0980 58
-742F0980 59
-D82F0980 5A
-E4A70880 5B
-68050A80 5C
-80EC0880 5D
-ACE80880 5E
-9CE70880 5F
-04E20880 60
-CCDF0880 61
-18EA0880 62
-74EA0880 63
-B8EB0880 64
-D0EA0880 65
-2CEB0880 66
-E8E30880 67
-F4210980 68
-B49C0880 69
-D89B0880 6a
-149C0880 6b
-749B0880 6c
-FCF00880 6d
-90F00880 6e
-30AA0880 6f
-28950880 70
-707F0980 71
-8C7E0980 72
-F07B0980 73
-907B0980 74
-C47F0980 75
-0C7D0980 76
-BC980880 77
-C49A0880 78
-BC9A0880 79
-B49A0880 7a
-EC9A0880 7b
-D49A0880 7c
-DC9A0880 7d
-E49A0880 7e
-18980880 7f
-A4950880 80
-60960880 81
-1C970880 82
-88250980 83
-CC290980 84
-74980880 85
-68950880 86
-B82C0980 87
-C4910880 88
-A0930880 89
-EC940880 8a
-28910880 8b
-A4E90880 8c
-68E90880 8d
-1CE90880 8e
-488B0880 93
-B8900880 97
-A07A0880 98
-607A0880 99
-88E60880 9a
-30E50880 9b
-74E50880 9c
-44E60880 9d
-B8E50880 9e
-A8790880 9f
-2CE00880 a0
-34790880 a1
-30780880 a2
-BC770880 a3
-6C770880 a4
-787E0880 a6
-907F0880 a7
-E4FF0880 a8
-68000980 a9
-00D10880 aa
-48D20880 ab
-40D30880 ac
-2C610980 ad
-C8600980 ae
-E0750880 af
-A0A00880 b0
-A8750880 b1
-FC620980 b2
-F4630980 b3
-14620980 b4
-78750880 b5
-6C740880 b6
-30740880 b7
-B4730880 b8
-30710880 b9
-08720880 ba
-04730880 bb
-54730880 bc
-E0710880 be
-1C6E0880 bf
-D46D0880 c0
-DC7A0880 c1
-A4D50980 c3
-08D50980 c4
-50650880 c5
-54B20880 c6
-8C780880 c7
-CC820880 c8
-EC820880 c9
-78040A80 ca
-40040A80 cb
-E4030A80 cc
-8C030A80 cd
-50030A80 ce
-5C2E0980 cf
-206C0880206B0880006B0880F4690880A4650880346F0880A46F08808C7008801470088050700880642D0980D467098098690880846708801C670880F0630880
-B4630880546B08800700010002000400008C008E00800082008400860088008A008C008E00800082008400860088008A008C008400880080
+00 8008C8AC
+01 8009E9B4
+02 80095110
+03 8008C6C8
+04 8008C840
+05 80095298
+06 80095340
+07 8008CBD8
+08 8008C754
+09 8008C64C
+0B 8008CCD4
+0C 8008C5C0
+0F 8008BF0C
+10 8008C034
+11 8008C120
+12 8008C248
+14 8008C3A8
+15 800A0A80
+16 8008BDAC
+17 80099FD4
+18 8008B3AC
+19 8008B908
+1A 8008AE68
+1B 8008ABA8
+1C 80098050
+1D 80097AC0
+1E 8009F128
+1F 8009F364
+20 8009F3DC
+21 8009FC78
+22 8009AC38
+24 8009A7E4
+25 8008CB9C
+28 8008DAC0
+29 8008DAEC
+2a 8008DB18
+2b 8008DB44
+2c 8008D490
+2d 8008D518
+2e 8008D5A0
+2f 8008D628
+30 8008D9BC
+31 8008D9E8
+32 8008DA14
+33 8008DA40
+34 8008D86C
+36 8008D914
+37 8008D968
+38 8008D788
+39 8008C804
+3a 8008C4A4
+3b 8008C438
+3c 8008A754
+3d 8008A49C
+3e 8008A5AC
+3f 8008A6BC
+40 8009171C
+41 8009F1D8
+42 8009F23C
+43 8009A730
+44 8009A758
+46 8008A430
+47 8008A718
+48 8008AAEC
+49 8008D0D0
+4A 8008A2BC
+4B 80089F80
+4C 80089F48
+4D 80089F10
+4E 8008A034
+4F 80093184
+50 800931A8
+51 800931D0
+52 800931F4
+55 80092D14
+56 80092F04
+57 80092DB4
+58 80092DF8
+59 80092F74
+5A 80092FD8
+5B 8008A7E4
+5C 800A0568
+5D 8008EC80
+5E 8008E8AC
+5F 8008E79C
+60 8008E204
+61 8008DFCC
+62 8008EA18
+64 8008EBB8
+65 8008EAD0
+66 8008EB2C
+67 8008E3E8
+68 800921F4
+69 80089CB4
+6a 80089BD8
+6b 80089C14
+6c 80089B74
+6d 8008F0FC
+6e 8008F090
+6f 8008AA30
+70 80089528
+71 80097F70
+72 80097E8C
+73 80097BF0
+74 80097B90
+76 80097D0C
+77 800898BC
+78 80089AC4
+79 80089ABC
+7a 80089AB4
+7b 80089AEC
+7c 80089AD4
+7d 80089ADC
+7e 80089AE4
+7f 80089818
+80 800895A4
+81 80089660
+82 8008971C
+83 80092588
+84 800929CC
+85 80089874
+86 80089568
+87 80092CB8
+88 800891C4
+89 800893A0
+8a 800894EC
+8b 80089128
+8c 8008E9A4
+8d 8008E968
+8e 8008E91C
+98 80087AA0
+9a 8008E688
+9b 8008E530
+9c 8008E574
+9d 8008E644
+9e 8008E5B8
+9f 800879A8
+a1 80087934
+a2 80087830
+a3 800877BC
+a4 8008776C
+a6 80087E78
+a8 8008FFE4
+a9 80090068
+aa 8008D100
+ab 8008D248
+ac 8008D340
+ad 8009612C
+ae 800960C8
+af 800875E0
+b0 8008A0A0
+b1 800875A8
+b2 800962FC
+b3 800963F4
+b4 80096214
+b5 80087578
+b6 8008746C
+b7 80087430
+b8 800873B4
+b9 80087130
+ba 80087208
+bb 80087304
+bc 80087354
+be 800871E0
+bf 80086E1C
+c0 80086DD4
+c1 80087ADC
+c3 8009D5A4
+c4 8009D508
+c5 80086550
+c7 8008788C
+c8 800882CC
+c9 800882EC
+ca 800A0478
+cb 800A0440
+cc 800A03E4
+cd 800A038C
+ce 800A0350
+cf 80092E5C
+d1 80086B20
+d2 80086B00
+d3 800869F4
+d4 800865A4
+d5 80086F34
+d6 80086FA4
+d7 8008708C
+d8 80087014
+d9 80087050
+da 80092D64
+db 800967D4
+dc 80086998
+dd 80086784
+de 8008671C
+df 800863F0
+e0 800863B4
 
 80086018	jalr   v0 ra
 ////////////////////////////////
@@ -1007,16 +1024,17 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func86c20
-80086C20	addiu  sp, sp, $ffe8 (=-$18)
+// func86c20()
+// 0xFED0()
+
 A0 = 0001;
-[SP + 0014] = w(RA);
-80086C2C	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0003;
-80086C38	jal    read_two_bytes_with_80 [$800ac2c4]
+read_two_bytes_with_80()
 S0 = V0;
+
+A0 = 0003;
+read_two_bytes_with_80();
 T1 = V0;
+
 V1 = T1 << 02;
 V1 = V1 + T1;
 V1 = V1 << 03;
@@ -1108,16 +1126,7 @@ V0 = V0 | 1000;
 
 L86da4:	; 80086DA4
 V1 = w[800af54c];
-80086DAC	nop
-V0 = hu[V1 + 00cc];
-80086DB4	nop
-V0 = V0 + 0005;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80086DCC	jr     ra 
-80086DD0	nop
+[V1 + cc] = h(hu[V1 + cc] + 5);
 ////////////////////////////////
 
 
@@ -1982,21 +1991,15 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func87a60
+// func87a60()
+// 0xFE99()
 
 A0 = w[800af54c];
 V0 = w[800ad0d8];
-V1 = hu[A0 + 00cc];
-80087A74	nop
-V1 = V1 + V0;
-V0 = hu[A0 + 00cc];
-V1 = bu[V1 + 0001];
-V0 = V0 + 0002;
-V1 = V1 ^ 0001;
-[A0 + 00cc] = h(V0);
-[800b1840] = h(V1);
-80087A98	jr     ra 
-80087A9C	nop
+V1 = hu[A0 + cc];
+
+[A0 + cc] = h(hu[A0 + cc] + 2);
+[800b1840] = h(bu[V1 + V0 + 1] ^ 1);
 ////////////////////////////////
 
 
@@ -2110,7 +2113,7 @@ for( int i = 0; i < 8; ++i )
 
 ////////////////////////////////
 // func87c48()
-// 0xC2_ParticleInit???
+// 0xFEC2_ParticleInit???
 
 A0 = 1;
 read_two_bytes_with_80();
@@ -2169,7 +2172,7 @@ else if( V1 == 3 )
 
 ////////////////////////////////
 // func87d64()
-// 0x8F_ParticleInit???
+// 0xFE8F_ParticleInit1()
 
 A0 = 1;
 get_entity_id_from_opcode();
@@ -2248,7 +2251,7 @@ S0 = S0 << 08;
 S0 = S0 + V0;
 A1 = 0002;
 A2 = 0;
-80087EEC	jal    $80022eb8
+80087EEC	jal    $func22eb8
 A0 = S2;
 A0 = f003ffff;
 V0 = w[S2 + 007c];
@@ -2286,6 +2289,7 @@ V0 = V0 + 0005;
 
 ////////////////////////////////
 // func87f90()
+// 0xFEA7()
 
 V1 = w[800af1f0];
 V0 = V1 << 01;
@@ -2296,31 +2300,39 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S4 = w[V0 + 0004];
-80087FD8	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
-A0 = 0001;
-80087FE4	jal    read_two_bytes_with_80 [$800ac2c4]
+
+A0 = 1;
+read_two_bytes_with_80();
 S2 = V0 & 000f;
-A0 = 0003;
-80087FF0	jal    read_two_bytes_with_80 [$800ac2c4]
+
+A0 = 1;
+read_two_bytes_with_80();
 S0 = V0;
-A0 = 0005;
+
+A0 = 3;
+read_two_bytes_with_80();
+
 S0 = S0 >> 04;
 S0 = S0 << 08;
-80088004	jal    read_two_bytes_with_80 [$800ac2c4]
 S0 = S0 + V0;
-A0 = 0005;
-80088010	jal    read_two_bytes_with_80 [$800ac2c4]
-S3 = V0 & 000f;
-A0 = 0007;
-8008801C	jal    read_two_bytes_with_80 [$800ac2c4]
+
+A0 = 5;
+read_two_bytes_with_80();
+S3 = V0 & f;
+
+A0 = 5;
+read_two_bytes_with_80();
 S1 = V0;
+
+A0 = 7;
+read_two_bytes_with_80();
+
 S1 = S1 >> 04;
 S1 = S1 << 08;
 S1 = S1 + V0;
 A1 = 0003;
 A2 = 0;
-80088038	jal    $80022eb8
+80088038	jal    $func22eb8
 A0 = S4;
 A0 = f003ffff;
 A3 = f007ffff;
@@ -2363,22 +2375,20 @@ S1 = S1 & 01ff;
 S1 = S1 << 13;
 V1 = w[A2 + 0130];
 A0 = w[A2 + 012c];
-V0 = hu[A2 + 00cc];
 V1 = V1 & A3;
 V1 = V1 | S1;
 A0 = A0 & A1;
 80088100	lui    a1, $0002
 A0 = A0 | A1;
-V0 = V0 + 0009;
 [A2 + 0130] = w(V1);
-[A2 + 00cc] = h(V0);
+[A2 + cc] = h(hu[A2 + cc] + 9);
 [A2 + 012c] = w(A0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0xBD_ParticleSpawnSettings()
+// 0xFEBD_ParticleSpawnSettings()
 
 struct_138 = w[800af54c];
 current_pos = hu[struct_138 + cc];
@@ -2395,7 +2405,7 @@ if( V0 == 1 )
 }
 else if( V0 == 2 )
 {
-    S0 = 40; // use fized z variation pos
+    S0 = 40; // use fixed z variation pos
 }
 [800af7a0 + id * 78 + 2a] = h(hu[800af7a0 + id * 78 + 2a] | S0);
 
@@ -2406,7 +2416,7 @@ else if( V0 == 2 )
 
 
 ////////////////////////////////
-// 0xA5_ParticleRenderSettings()
+// 0xFEA5_ParticleRenderSettings()
 
 struct_138 = w[800af54c];
 current_pos = hu[struct_138 + cc];
@@ -2507,7 +2517,7 @@ read_two_bytes_based_on_flag_01();
 
 
 ////////////////////////////////
-// 0x90_ParticleInitBase()
+// 0xFE90_ParticleInitBase()
 
 A0 = 1;
 read_two_bytes_with_80();
@@ -2544,7 +2554,7 @@ A0 = w[800af54c];
 
 
 ////////////////////////////////
-// 0x91_ParticlePos()
+// 0xFE91_ParticlePos()
 
 struct_138 = w[800af54c];
 script = w[800ad0d8];
@@ -2589,7 +2599,7 @@ read_two_bytes_based_on_flag_04();
 
 
 ////////////////////////////////
-// 0x92_ParticleSpeed()
+// 0xFE92_ParticleSpeed()
 
 struct_138 = w[800af54c];
 script = w[800ad0d8];
@@ -2635,6 +2645,7 @@ read_two_bytes_based_on_flag_04();
 
 ////////////////////////////////
 // func88b48()
+// 0xFE93()
 // particle
 
 struct_138 = w[800af54c];
@@ -2671,7 +2682,7 @@ read_two_bytes_with_80();
 
 
 ////////////////////////////////
-// 0x94_ParticleTranslation()
+// 0xFE94_ParticleTranslation()
 
 struct_138 = w[800af54c];
 script = w[800ad0d8];
@@ -2710,7 +2721,7 @@ read_two_bytes_based_on_flag_10();
 
 
 ////////////////////////////////
-// 0x95_ParticleColour()
+// 0xFE95_ParticleColour()
 
 struct_138 = w[800af54c];
 script = w[800ad0d8];
@@ -2755,7 +2766,7 @@ read_two_bytes_based_on_flag_04();
 
 
 ////////////////////////////////
-// 0x96_ParticleCreate()
+// 0xFE96_ParticleCreate()
 
 struct_138 = w[800af54c];
 current_pos = hu[struct_138 + cc];
@@ -2773,8 +2784,7 @@ if( w[800ad064] == 0 )
 
 
 ////////////////////////////////
-// func890b8()
-// particle
+// 0xFE97_ParticleReset()
 
 struct_138 = w[800af54c];
 script = w[800ad0d8];
@@ -3496,7 +3506,8 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func89b2c
+// func89b2c()
+
 if (w[800ad004] == 0)
 {
     system_cdrom_data_sync;
@@ -3648,7 +3659,12 @@ SP = SP + 0018;
 80089D5C	jr     ra 
 80089D60	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func89d64
+
 V1 = 0;
 A3 = 00ff;
 A2 = 80061c20;
@@ -3676,14 +3692,15 @@ L89da8:	; 80089DA8
 80089DA8	jr     ra 
 80089DAC	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func89db0
-80089DB0	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = A0;
 A0 = 0004;
 [800ad0a4] = w(A1);
-[SP + 0018] = w(RA);
-[SP + 0010] = w(S0);
 [800ad0a0] = w(S1);
 80089DD8	jal    $system_filesystem_set_dir
 A1 = 0;
@@ -3759,12 +3776,10 @@ V0 = 0001;
 
 L89ef0:	; 80089EF0
 [800ad09c] = w(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80089F08	jr     ra 
-80089F0C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func89f10
 A0 = w[800af54c];
@@ -4332,28 +4347,27 @@ SP = SP + 0018;
 ////////////////////////////////
 
 
-
 ////////////////////////////////
-// 0xF1
+// 0xF1()
 
 A0 = 9;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 S3 = V0;
 
 A0 = 3;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 S2 = V0;
 
 A0 = 5;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 S1 = V0;
 
 A0 = 7;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 S0 = V0;
 
 A0 = 1;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 
 A0 = 1;
 A1 = S3;
@@ -4920,92 +4934,67 @@ return;
 
 
 ////////////////////////////////
-// func8b254
-8008B254	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S1);
-S1 = w[800ad09c];
-V0 = 00ff;
-[SP + 0020] = w(RA);
-8008B26C	bne    s1, v0, L8b370 [$8008b370]
-[SP + 0018] = w(S0);
-V0 = w[800ad004];
-8008B27C	nop
-8008B280	bne    v0, zero, L8b370 [$8008b370]
-8008B284	nop
-8008B288	jal    func89b2c [$80089b2c]
-8008B28C	nop
-8008B290	bne    v0, zero, L8b370 [$8008b370]
-8008B294	nop
-8008B298	jal    $system_cdrom_action_sync
-A0 = 0;
-8008B2A0	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
-S0 = V0;
-8008B2AC	beq    s0, s1, L8b350 [$8008b350]
-A0 = S0;
-8008B2B4	jal    func89d64 [$80089d64]
-A1 = SP + 0010;
-8008B2BC	bne    v0, zero, L8b31c [$8008b31c]
-V1 = 0001;
-V0 = w[80059a38];
-V1 = w[SP + 0010];
-8008B2D0	nop
-V0 = V0 + V1;
-[V0 + 22b1] = b(0);
-A1 = w[SP + 0010];
-A0 = S0;
-V0 = A1 << 02;
-8008B2E8	lui    at, $8006
-AT = AT + V0;
-[AT + 1c20] = w(A0);
-8008B2F4	jal    func89db0 [$80089db0]
-8008B2F8	nop
-V1 = w[800af54c];
-8008B304	nop
-V0 = hu[V1 + 00cc];
-8008B30C	nop
-V0 = V0 + 0003;
-8008B314	j      L8b394 [$8008b394]
-[V1 + 00cc] = h(V0);
+// func8b254()
+// 0xFEC6()
 
-L8b31c:	; 8008B31C
-A0 = w[80059a38];
-V1 = V1 << S0;
-V0 = hu[A0 + 1d30];
-A1 = w[800af54c];
-V0 = V0 | V1;
-[A0 + 1d30] = h(V0);
-V0 = hu[A1 + 00cc];
-8008B340	nop
-V0 = V0 + 0005;
-8008B348	j      L8b394 [$8008b394]
-[A1 + 00cc] = h(V0);
+struct_138 = w[800af54c];
+current_pos = hu[struct_138 + cc];
 
-L8b350:	; 8008B350
-V1 = w[800af54c];
-8008B358	nop
-V0 = hu[V1 + 00cc];
-8008B360	nop
-V0 = V0 + 0005;
-8008B368	j      L8b394 [$8008b394]
-[V1 + 00cc] = h(V0);
+if( ( w[800ad09c] == ff ) || ( w[800ad004] == 0 ) )
+{
+    func89b2c(); // cdrom data sync
 
-L8b370:	; 8008B370
-V0 = w[800af54c];
-8008B378	nop
-V1 = hu[V0 + 00cc];
-A0 = 0001;
-[800af594] = w(A0);
-8008B38C	addiu  v1, v1, $ffff (=-$1)
-[V0 + 00cc] = h(V1);
+    if( V0 == 0 )
+    {
+        A0 = 0;
+        system_cdrom_action_sync();
 
-L8b394:	; 8008B394
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-8008B3A4	jr     ra 
-8008B3A8	nop
+        A0 = 1;
+        read_two_bytes_with_80();
+
+        S0 = V0;
+        if( S0 == w[800ad09c] )
+        {
+            [struct_138 + cc] = h(current_pos + 5);
+        }
+        else
+        {
+            A0 = S0;
+            A1 = SP + 10;
+            8008B2B4	jal    func89d64 [$80089d64]
+
+            if( V0 != 0 )
+            {
+                A0 = w[80059a38];
+                [A0 + 1d30] = h(hu[A0 + 1d30] | (1 << S0));
+                [struct_138 + cc] = h(current_pos + 5);
+            }
+            else
+            {
+                V0 = w[80059a38];
+                V1 = w[SP + 10];
+                V0 = V0 + V1;
+                [V0 + 22b1] = b(0);
+                A1 = w[SP + 10];
+
+                [80061c20 + A1 * 4] = w(A0);
+
+                A0 = S0;
+                8008B2F4	jal    func89db0 [$80089db0]
+
+                [struct_138 + cc] = h(current_pos + 3);
+            }
+        }
+        return;
+    }
+}
+
+[800af594] = w(1);
+[struct_138 + cc] = h(current_pos - 1);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8b3ac
 8008B3AC	addiu  sp, sp, $ffe0 (=-$20)
@@ -5645,65 +5634,57 @@ RA = w[SP + 0010];
 8008BE18	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func8be20
+
+
+
+////////////////////////////////
+// func8be20()
+// 0xFE0E_SoundSetVolume()
+
+struct_138 = w[800af54c];
+current_pos = hu[struct_138 + cc];
+
 V0 = w[8004ea10];
-8008BE28	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-8008BE30	beq    v0, zero, L8be78 [$8008be78]
-[SP + 0010] = w(S0);
-8008BE38	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
-A0 = 0003;
-8008BE44	jal    read_two_bytes_with_80 [$800ac2c4]
-S0 = V0;
-A1 = S0;
-A0 = w[80061bb8];
-8008BE58	jal    $8003a744
-A2 = V0;
-V1 = w[800af54c];
-8008BE68	nop
-V0 = hu[V1 + 00cc];
-8008BE70	j      L8bee8 [$8008bee8]
-V0 = V0 + 0005;
+if( V0 != 0 )
+{
+    A0 = 1;
+    read_two_bytes_with_80();
+    S0 = V0;
 
-L8be78:	; 8008BE78
-V1 = w[8004e9c8];
-V0 = 00ff;
-8008BE84	bne    v1, v0, L8bea4 [$8008bea4]
-8008BE88	nop
-V1 = w[800af54c];
-8008BE94	nop
-V0 = hu[V1 + 00cc];
-8008BE9C	j      L8bee8 [$8008bee8]
-V0 = V0 + 0005;
+    A0 = 3;
+    read_two_bytes_with_80();
+    A2 = V0; // steps
 
-L8bea4:	; 8008BEA4
-V0 = w[800acff4];
-8008BEAC	nop
-8008BEB0	bne    v0, zero, L8bed0 [$8008bed0]
-8008BEB4	nop
-V1 = w[800af54c];
-8008BEC0	nop
-V0 = hu[V1 + 00cc];
-8008BEC8	j      L8bee8 [$8008bee8]
-V0 = V0 + 0005;
+    A1 = S0; // volume
+    A0 = w[80061bb8]; // main struct
+    func3a744(); // sound volume control
 
-L8bed0:	; 8008BED0
-V1 = w[800af54c];
-8008BED8	nop
-V0 = hu[V1 + 00cc];
-8008BEE0	nop
-8008BEE4	addiu  v0, v0, $ffff (=-$1)
+    [struct_138 + cc] = h(current_pos + 5);
+}
+else
+{
+    if( w[8004e9c8] == ff )
+    {
+        [struct_138 + cc] = h(current_pos + 5);
+    }
+    else
+    {
+        if( w[800acff4] == 0 )
+        {
+            [struct_138 + cc] = h(current_pos + 5);
+        }
+        else
+        {
+            [struct_138 + cc] = h(current_pos - 1);
+        }
+    }
+}
 
-L8bee8:	; 8008BEE8
-[V1 + 00cc] = h(V0);
-V0 = 0001;
-[800af594] = w(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008BF04	jr     ra 
-8008BF08	nop
+[800af594] = w(1);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8bf0c
 V0 = w[8004ea10];
@@ -6123,7 +6104,8 @@ return A0;
 
 
 ////////////////////////////////
-// 0xFE0D_SetAvatar
+// 0xFE0D_SetAvatar()
+
 A0 = 1;
 read_two_bytes_with_80();
 
@@ -6561,37 +6543,37 @@ V0 = V0 + 0002;
 8008CC50	jr     ra 
 [V1 + 00cc] = h(V0);
 ////////////////////////////////
-// func8cc58
-8008CC58	addiu  sp, sp, $ffe0 (=-$20)
-A0 = 0001;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-8008CC68	jal    read_two_bytes_unsigned [$800ac290]
-[SP + 0010] = w(S0);
-A0 = 0001;
+
+
+
+////////////////////////////////
+// func8cc58()
+// 0x0A()
+
+A0 = 1;
+read_two_bytes_unsigned();
 S1 = V0 & ffff;
-8008CC78	jal    read_two_bytes_unsigned [$800ac290]
 S1 = S1 >> 04;
-A0 = S1;
+
+A0 = 1;
+read_two_bytes_unsigned();
 V0 = V0 & 000f;
-S0 = 0001;
-8008CC8C	jal    get_bytes_from_800C2F3C [$800a25a8]
-S0 = S0 << V0;
+S0 = 1 << V0;
+
+
 A0 = S1;
-8008CC98	jal    put_bytes_to_800C2F3C [$800a2604]
+get_bytes_from_800C2F3C();
+
+A0 = S1;
 A1 = V0 | S0;
+put_bytes_to_800C2F3C();
+
 V1 = w[800af54c];
-8008CCA8	nop
-V0 = hu[V1 + 00cc];
-8008CCB0	nop
-V0 = V0 + 0003;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8008CCCC	jr     ra 
-8008CCD0	nop
+[V1 + cc] = h(hu[V1 + cc] + 3);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8ccd4
 8008CCD4	addiu  sp, sp, $ffe0 (=-$20)
@@ -7220,36 +7202,33 @@ SP = SP + 0018;
 8008D6A8	jr     ra 
 8008D6AC	nop
 ////////////////////////////////
-// func8d6b0
-8008D6B0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func8d6b0()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-8008D6C0	jal    read_two_bytes_unsigned [$800ac290]
-A0 = 0001;
-V0 = V0 & S0;
-V0 = V0 & ffff;
-8008D6D0	beq    v0, zero, L8d6f0 [$8008d6f0]
-8008D6D4	nop
-V1 = w[800af54c];
-8008D6E0	nop
-V0 = hu[V1 + 00cc];
-8008D6E8	j      L8d700 [$8008d700]
-V0 = V0 + 0006;
 
-L8d6f0:	; 8008D6F0
-8008D6F0	jal    read_two_bytes_unsigned [$800ac290]
-A0 = 0004;
+A0 = 1;
+read_two_bytes_unsigned();
+
 V1 = w[800af54c];
 
-L8d700:	; 8008D700
-8008D700	nop
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008D714	jr     ra 
-8008D718	nop
+if( (V0 & S0) & ffff )
+{
+    [V1 + cc] = h(hu[V1 + cc] + 6);
+}
+else
+{
+    A0 = 4;
+    read_two_bytes_unsigned();
+    [V1 + cc] = h(V0);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8d71c
 8008D71C	addiu  sp, sp, $ffe8 (=-$18)
@@ -7363,11 +7342,16 @@ SP = SP + 0018;
 8008D8B8	jr     ra 
 8008D8BC	nop
 ////////////////////////////////
-// func8d8c0
-8008D8C0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008D8C8	jal    get_entity_id_from_opcode [$8009c344]
-A0 = 0003;
+
+
+
+////////////////////////////////
+// func8d8c0()
+// 0xFE35()
+
+A0 = 3;
+get_entity_id_from_opcode();
+
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 03;
@@ -7375,15 +7359,13 @@ V1 = V1 - V0;
 V0 = w[800aefe4];
 V1 = V1 << 02;
 V1 = V1 + V0;
-V0 = w[V1 + 004c];
-8008D8F4	nop
-A0 = hu[V0 + 0002];
-8008D8FC	jal    func8d6b0 [$8008d6b0]
-8008D900	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8008D90C	jr     ra 
-8008D910	nop
+V0 = w[V1 + 4c];
+A0 = hu[V0 + 2];
+func8d6b0();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8d914
 8008D914	addiu  sp, sp, $ffe8 (=-$18)
@@ -7786,11 +7768,12 @@ V0 = 0001;
 
 
 ////////////////////////////////
-// func8e02c
+// func8e02c()
+// 0xFEA0
+
 V0 = w[800ad0b4];
-8008E034	addiu  sp, sp, $ffe8 (=-$18)
 8008E038	bne    v0, zero, L8e068 [$8008e068]
-[SP + 0010] = w(RA);
+
 V0 = w[800af54c];
 8008E048	nop
 V1 = hu[V0 + 00cc];
@@ -7868,14 +7851,9 @@ V1 = 0001;
 [800ad04c] = w(0);
 [800ad048] = w(V1);
 [800af594] = w(V1);
-V0 = V0 + 000c;
-[A0 + 00cc] = h(V0);
+[A0 + cc] = h(V0 + c);
 
 L8e1f4:	; 8008E1F4
-RA = w[SP + 0010];
-SP = SP + 0018;
-8008E1FC	jr     ra 
-8008E200	nop
 ////////////////////////////////
 
 
@@ -8426,29 +8404,23 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8ea74
-8008EA74	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0003;
-[SP + 0014] = w(RA);
-8008EA80	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0001;
-8008EA8C	jal    read_two_bytes_with_80 [$800ac2c4]
-S0 = V0 << 01;
+// func8ea74()
+// 0xFE63()
+
+
+A0 = 3;
+read_two_bytes_with_80();
+S0 = V0 << 1;
+
+A0 = 1;
+read_two_bytes_with_80();
+
 A0 = S0;
-8008EA98	jal    $8003a404
 A1 = V0;
+8008EA98	jal    $8003a404
+
 V1 = w[800af54c];
-8008EAA8	nop
-V0 = hu[V1 + 00cc];
-8008EAB0	nop
-V0 = V0 + 0005;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008EAC8	jr     ra 
-8008EACC	nop
+[V1 + cc] = h(hu[V1 + cc] + 5);
 ////////////////////////////////
 
 
@@ -8644,63 +8616,49 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8ed40
-V0 = w[800ad0b4];
-8008ED48	addiu  sp, sp, $ffe8 (=-$18)
-8008ED4C	bne    v0, zero, L8ed68 [$8008ed68]
-[SP + 0010] = w(RA);
-V0 = 0001;
-[800af594] = w(V0);
-8008ED60	j      L8ed7c [$8008ed7c]
-8008ED64	nop
+// func8ed40()
+// 0x75()
 
-L8ed68:	; 8008ED68
-8008ED68	addiu  v0, zero, $ffff (=-$1)
-[8004e9e4] = w(V0);
-8008ED74	jal    func8ed8c [$8008ed8c]
-8008ED78	nop
-
-L8ed7c:	; 8008ED7C
-RA = w[SP + 0010];
-SP = SP + 0018;
-8008ED84	jr     ra 
-8008ED88	nop
+if( w[800ad0b4] == 0 )
+{
+    [800af594] = w(1);
+}
+else
+{
+    [8004e9e4] = w(-1);
+    func8ed8c();
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8ed8c
-8008ED8C	addiu  sp, sp, $ffe0 (=-$20)
-A0 = 0001;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-8008ED9C	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
-V1 = w[800acff4];
-8008EDAC	nop
-8008EDB0	bne    v1, zero, L8ee08 [$8008ee08]
+// func8ed8c()
+
+A0 = 1;
+read_two_bytes_with_80();
 S0 = V0;
-8008EDB8	jal    func85500 [$80085500]
-8008EDBC	nop
-V0 = w[8004e9c8];
-8008EDC8	nop
-8008EDCC	beq    s0, v0, L8ede8 [$8008ede8]
-8008EDD0	nop
-8008EDD4	jal    $8001b500
-8008EDD8	nop
-8008EDDC	addiu  v0, zero, $ffff (=-$1)
-[8004e9ac] = w(V0);
 
-L8ede8:	; 8008EDE8
-V1 = w[800af54c];
-8008EDF0	nop
-V0 = hu[V1 + 00cc];
-[8004e9c8] = w(S0);
-8008EE00	j      L8eeb8 [$8008eeb8]
-V0 = V0 + 0003;
+V1 = w[800acff4];
+if( V1 == 0 )
+{
+    8008EDB8	jal    func85500 [$80085500]
 
-L8ee08:	; 8008EE08
+    V0 = w[8004e9c8];
+    if( S0 != V0 )
+    {
+        8008EDD4	jal    $8001b500
+
+        [8004e9ac] = w(-1);
+    }
+
+    V1 = w[800af54c];
+    V0 = hu[V1 + 00cc];
+    [8004e9c8] = w(S0);
+    8008EE00	j      L8eeb8 [$8008eeb8]
+    V0 = V0 + 0003;
+}
+
 8008EE08	jal    func89b2c [$80089b2c]
 8008EE0C	nop
 8008EE10	bne    v0, zero, L8ee30 [$8008ee30]
@@ -8739,10 +8697,8 @@ A1 = 0;
 
 L8eea0:	; 8008EEA0
 V1 = w[800af54c];
-8008EEA8	nop
-V0 = hu[V1 + 00cc];
-8008EEB0	nop
-V0 = V0 + 0003;
+V0 = hu[V1 + cc];
+V0 = V0 + 3;
 
 L8eeb8:	; 8008EEB8
 8008EEB8	j      L8eec8 [$8008eec8]
@@ -8752,12 +8708,6 @@ L8eec0:	; 8008EEC0
 [800af594] = w(V1);
 
 L8eec8:	; 8008EEC8
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8008EED8	jr     ra 
-8008EEDC	nop
 ////////////////////////////////
 
 
@@ -8933,7 +8883,9 @@ V0 = V0 + 0001;
 
 
 ////////////////////////////////
-// func8f16c
+// func8f16c()
+// 0x99()
+
 A0 = w[800af54c];
 V0 = 0001;
 [800aee08] = h(V0);
@@ -8941,8 +8893,7 @@ V0 = w[800af150];
 V1 = hu[A0 + 00cc];
 V0 = V0 + 0004;
 [800af150] = w(V0);
-V1 = V1 + 0001;
-[A0 + 00cc] = h(V1);
+[A0 + cc] = h(V1 + 1);
 A0 = h[800aeed2];
 V0 = w[800aeecc];
 V1 = 1000;
@@ -8961,8 +8912,6 @@ V0 = V0 | 8000;
 8008F208	mflo   a1
 V0 = A1 >> 0c;
 [800aee04] = w(V0);
-8008F218	jr     ra 
-8008F21C	nop
 ////////////////////////////////
 
 
@@ -9176,17 +9125,17 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8f564
+// func8f564()
+// 0x63()
+
 V0 = w[800af54c];
 V1 = w[800ad0d8];
-8008F574	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
 V0 = hu[V0 + 00cc];
-8008F580	nop
 V0 = V0 + V1;
 A1 = bu[V0 + 0007];
-8008F58C	jal    read_two_bytes_based_on_flag_80 [$8009c508]
 A0 = 0001;
+read_two_bytes_based_on_flag_80();
+
 V1 = w[800af54c];
 V0 = V0 << 10;
 [800aedd4] = w(V0);
@@ -9195,8 +9144,9 @@ V1 = w[800ad0d8];
 8008F5B4	nop
 V0 = V0 + V1;
 A1 = bu[V0 + 0007];
-8008F5C0	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
 A0 = 0003;
+read_two_bytes_based_on_flag_40();
+
 V1 = w[800af54c];
 V0 = V0 << 10;
 [800aeddc] = w(V0);
@@ -9205,20 +9155,15 @@ V1 = w[800ad0d8];
 8008F5E8	nop
 V0 = V0 + V1;
 A1 = bu[V0 + 0007];
-8008F5F4	jal    read_two_bytes_based_on_flag_20 [$8009c590]
 A0 = 0005;
+read_two_bytes_based_on_flag_20();
+
 A0 = w[800af54c];
 V0 = V0 << 10;
 [800aedd8] = w(V0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0001;
-[800af150] = w(V0);
-V1 = V1 + 0008;
-RA = w[SP + 0010];
-[A0 + 00cc] = h(V1);
-8008F634	jr     ra 
-SP = SP + 0018;
+[800af150] = w(w[800af150] + 1);
+[A0 + cc] = h(hu[A0 + cc] + 8);
+
 ////////////////////////////////
 
 
@@ -9326,11 +9271,11 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8f7fc
+// func8f7fc()
+// 0xa3()
+
 V0 = w[800af54c];
 V1 = w[800ad0d8];
-8008F80C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
 V0 = hu[V0 + 00cc];
 8008F818	nop
 V0 = V0 + V1;
@@ -9364,11 +9309,7 @@ V0 = w[800af150];
 V1 = hu[A0 + 00cc];
 V0 = V0 + 0001;
 [800af150] = w(V0);
-V1 = V1 + 0008;
-RA = w[SP + 0010];
-[A0 + 00cc] = h(V1);
-8008F8CC	jr     ra 
-SP = SP + 0018;
+[A0 + 00cc] = h(V1 + 8);
 ////////////////////////////////
 
 
@@ -12416,7 +12357,7 @@ if( ( w[800ad0b4] != 0 ) && ( w[800ad0bc] != 0 ) && ( w[800ad004] == 0 ) && ( w[
 
         A0 = 1;
         read_two_bytes_with_80();
-        S1 = V0;
+        field_id = V0;
 
         func92518();
 
@@ -12426,7 +12367,7 @@ if( ( w[800ad0b4] != 0 ) && ( w[800ad0bc] != 0 ) && ( w[800ad004] == 0 ) && ( w[
         A1 = S0;
         put_bytes_to_800C2F3C();
 
-        [8004e9f0] = w(S1);
+        [8004e9f0] = w(field_id);
     }
 
     struct_138 = w[800af54c];
@@ -12901,50 +12842,37 @@ V0 = V0 + 0001;
 
 
 ////////////////////////////////
-// 0xFE54
+// 0xFE54()
 // looks like wait for something
 
-[800B164A] = h(-1);
-[800B16A4] = b(01);
-[800B16A5] = b(01);
+struct_138 = w[800af54c];
 
-V0 = w[800AEEAC];
-V0 = V0 | C000;
-[800AEEAC] = w[V0];
+[800b164a] = h(-1);
+[800b16a4] = b(1);
+[800b16a5] = b(1);
 
-A0 = w[800AD0B4];
-V0 = w[800AD0BC];
-if (A0 != 0 && V0 != 0)
+[800aeeac] = w[w[800aeeac] | 0000c000];
+
+if( ( w[800ad0b4] != 0 ) && ( w[800ad0bc] != 0 ) )
 {
-    V1 = w[800AF54C];
-    V0 = [V1 + CC];
-    V0 = V0 + 1;
-    [V1 + CC] = h(V0);
-
-    return;
+    [struct_138 + cc] = h([struct_138 + cc] + 1);
 }
-
-V0 = w[800AF54C];
-V1 = hu[V0 + CC];
-V1 = V1 - 1;
-[V0 + CC] = h(V1);
-
-[800AF594] = w(01);
-
-return;
+else
+{
+    [struct_138 + cc] = h(hu[struct_138 + cc] - 1);
+    [800af594] = w(1);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func93184
-V1 = w[800af54c];
+// func93184()
+
+struct_138 = w[800af54c];
+
 [800b16a4] = b(0);
-V0 = hu[V1 + 00cc];
-80093198	nop
-V0 = V0 + 0001;
-800931A0	jr     ra 
-[V1 + 00cc] = h(V0);
+[struct_138 + cc] = h(hu[struct_138 + cc] + 1);
 ////////////////////////////////
 
 
@@ -13907,11 +13835,12 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func940a0
-800940A0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800940A8	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
+// func940a0()
+// 0xBE()
+
+A0 = 1;
+read_two_bytes_with_80();
+
 A0 = w[800af1f0];
 A1 = w[800aefe4];
 V1 = A0 << 01;
@@ -13924,15 +13853,10 @@ A1 = hu[V1 + 0050];
 A2 = w[800af54c];
 A1 = A1 - V0;
 [V1 + 0050] = h(A1);
-V0 = hu[A2 + 00cc];
-800940F0	nop
-V0 = V0 + 0003;
+[A2 + 00cc] = h(hu[A2 + 00cc] + 3);
+
 800940F8	jal    func718e4 [$800718e4]
-[A2 + 00cc] = h(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80094108	jr     ra 
-8009410C	nop
+
 ////////////////////////////////
 
 
@@ -14536,38 +14460,36 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0x5A
-func94858;
+// 0x5A()
 
-A0 = w[800AF54C];
-A1 = [A0 + CC];
-A1 = A1 + 1;
-[A0 + CC] = h(A1);
+func94858();
+
+A0 = w[800af54c];
+[A0 + cc] = h([A0 + cc] + 1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0x5B
-// func94858
-V1 = w[800AF1F0];
-V0 = V1 * 5C;
-V1 = w[800AEFE4];
-V0 = V0 + V1;
-V1 = w[800AF54C];
+// 0x5B()
+// func94858()
+
+V1 = w[800af1f0];
+V1 = w[800aefe4];
+V0 = V1 + V1 * 5c;
+V1 = w[800af54c];
 A1 = w[V0 + 4];
 A0 = hu[V1 + 104];
-[800AF594] = w(1);
+[800af594] = w(1);
 [V1 + 30] = w(0);
 [V1 + 34] = w(0);
 [V1 + 38] = w(0);
 [V1 + 40] = w(0);
 [V1 + 44] = w(0);
 [V1 + 48] = w(0);
-A0 = A0 | 8000;
-[V1 + 106] = h(A0);
-[V1 + 104] = h(A0);
-[A1 + C] = w(0);
+[V1 + 106] = h(A0 | 8000);
+[V1 + 104] = h(A0 | 8000);
+[A1 + c] = w(0);
 [A1 + 14] = w(0);
 [A1 + 18] = w(0);
 ////////////////////////////////
@@ -15420,36 +15342,34 @@ RA = w[SP + 0010];
 80095644	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func9564c
-8009564C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(RA);
-8009565C	jal    read_two_bytes_unsigned [$800ac290]
-A0 = 0001;
-V0 = V0 & S0;
-V0 = V0 & ffff;
-8009566C	beq    v0, zero, L9568c [$8009568c]
-80095670	nop
-V1 = w[800af54c];
-8009567C	nop
-V0 = hu[V1 + 00cc];
-80095684	j      L9569c [$8009569c]
-V0 = V0 + 0005;
 
-L9568c:	; 8009568C
-8009568C	jal    read_two_bytes_unsigned [$800ac290]
-A0 = 0003;
-V1 = w[800af54c];
 
-L9569c:	; 8009569C
-8009569C	nop
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800956B0	jr     ra 
-800956B4	nop
+
+////////////////////////////////
+// func9564c()
+
+button_mask = A0;
+
+A0 = 1;
+read_two_bytes_unsigned();
+
+if( V0 & button_mask )
+{
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 5);
+}
+else
+{
+    A0 = 3;
+    read_two_bytes_unsigned();
+
+    V1 = w[800af54c];
+    [V1 + cc] = h(V0);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func956b8
 800956B8	addiu  sp, sp, $ffe8 (=-$18)
@@ -15504,27 +15424,28 @@ SP = SP + 0018;
 8009576C	jr     ra 
 80095770	nop
 ////////////////////////////////
-// func95774
-A0 = hu[800af370];
-8009577C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80095784	jal    func9564c [$8009564c]
-80095788	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80095794	jr     ra 
-80095798	nop
+
+
+
 ////////////////////////////////
-// func9579c
+// func95774()
+// 0x31_JumpIfButtonNotPressed()
+
+A0 = hu[800af370]; // current button mask
+func9564c();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func9579c()
+
 A0 = hu[800af140];
-800957A4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800957AC	jal    func9564c [$8009564c]
-800957B0	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800957BC	jr     ra 
-800957C0	nop
+func9564c();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func957c4
 V1 = w[800af54c];
@@ -15832,15 +15753,16 @@ V0 = V0 + 0002;
 
 
 ////////////////////////////////
-// 0x84_ProgressLessEqualJumpTo
+// 0x84_ProgressLessEqualJumpTo()
+
 current_entity_data = w[800af54c];
 
 A0 = 1;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 S0 = V0;
 
 A0 = 0;
-get_bytes_from_800C2F3C;
+get_bytes_from_800C2F3C();
 
 if( V0 < S0 )
 {
@@ -15849,7 +15771,7 @@ if( V0 < S0 )
 else
 {
     A0 = 3;
-    read_two_bytes_unsigned;
+    read_two_bytes_unsigned();
     [current_entity_data + cc] = h(V0);
 }
 ////////////////////////////////
@@ -15918,49 +15840,19 @@ else
 
 
 ////////////////////////////////
-// 0x87_SetProgress
-V0 = w[800AF150];
-V0 = V0 + 20;
-[800AF150] = w(V0);
+// 0x87_SetProgress()
+
+[800af150] = w(w[800af150] + 20);
 
 A0 = 1;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 
 A0 = 0;
 A1 = V0;
-put_bytes_to_800C2F3C;
+put_bytes_to_800C2F3C();
 
-V1 = w[800AF54C];
-V0 = hu[V1 + CC];
-V0 = V0 + 3;
-[V1 + CC] = V0;
-
-return;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func95d64
-80095D64	addiu  sp, sp, $ffe8 (=-$18)
-V0 = w[800af150];
-[SP + 0010] = w(RA);
-V0 = V0 + 0020;
-[800af150] = w(V0);
-80095D80	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
-A0 = 0;
-80095D8C	jal    put_bytes_to_800C2F3C [$800a2604]
-A1 = V0;
 V1 = w[800af54c];
-80095D9C	nop
-V0 = hu[V1 + 00cc];
-80095DA4	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80095DB4	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
@@ -16759,45 +16651,35 @@ V1 = V1 + 0001;
 
 
 ////////////////////////////////
-// func968f0
-800968F0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800968F8	jal    func7cf50 [$8007cf50]
+// func968f0()
+// 0xB3()
+
 A0 = 0;
-80096900	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
+800968F8	jal    func7cf50 [$8007cf50]
+
+A0 = 1;
+read_two_bytes_with_80();
+
+A0 = V0;
 80096908	jal    func714e8 [$800714e8]
-A0 = V0;
+
 V1 = w[800af54c];
-80096918	nop
-V0 = hu[V1 + 00cc];
-80096920	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80096930	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0xB4_FadeIn
-80096938	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80096940	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
+// 0xB4_FadeIn()
+
+A0 = 1;
+read_two_bytes_with_80();
+
+A0 = V0;
 80096948	jal    func7145c [$8007145c]
-A0 = V0;
+
 V1 = w[800af54c];
-80096958	nop
-V0 = hu[V1 + 00cc];
-80096960	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80096970	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
@@ -18331,12 +18213,13 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func97fc4
-80097FC4	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0001;
-[SP + 0014] = w(RA);
-80097FD0	jal    get_entity_id_from_opcode [$8009c344]
-[SP + 0010] = w(S0);
+// func97fc4()
+// 0xFE75()
+
+
+A0 = 1;
+get_entity_id_from_opcode();
+
 V1 = V0;
 V0 = 00ff;
 80097FE0	beq    v1, v0, L98020 [$80098020]
@@ -18348,25 +18231,18 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 004c];
-80098008	jal    read_two_bytes_unsigned [$800ac290]
 A0 = 0002;
+read_two_bytes_unsigned();
+
 A1 = hu[S0 + 0106];
 A0 = V0 & ffff;
-80098018	jal    put_bytes_to_800C2F3C [$800a2604]
 A1 = A1 & 0fff;
+put_bytes_to_800C2F3C();
+
 
 L98020:	; 80098020
 V1 = w[800af54c];
-80098028	nop
-V0 = hu[V1 + 00cc];
-80098030	nop
-V0 = V0 + 0004;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80098048	jr     ra 
-8009804C	nop
+[V1 + cc] = h(hu[V1 + cc] + 4);
 ////////////////////////////////
 
 
@@ -21007,20 +20883,18 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func9a96c
+// func9a96c()
+// 0xFE23()
+
 V0 = w[800af54c];
 V1 = w[800ad0d8];
-8009A97C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = hu[V0 + 00cc];
-8009A994	nop
 V0 = V0 + V1;
 A1 = bu[V0 + 000d];
-8009A9A0	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
+
+A0 = 1;
+read_two_bytes_based_on_flag_80();
+
 V1 = 7fff;
 8009A9AC	bne    v0, v1, L9aa44 [$8009aa44]
 A1 = 0;
@@ -21029,82 +20903,87 @@ V0 = w[800af54c];
 8009A9C0	addiu  a2, zero, $8000 (=-$8000)
 V1 = hu[V0 + 00cc];
 A0 = 80059ad4;
-V1 = V1 + 0014;
-[V0 + 00cc] = h(V1);
-V0 = 0001;
-[800b16a2] = b(V0);
+[V0 + cc] = h(V1 + 14);
+[800b16a2] = b(1);
 
 loop9a9e4:	; 8009A9E4
-V1 = w[A0 + 0000];
-8009A9E8	nop
-8009A9EC	beq    v1, a3, L9aa2c [$8009aa2c]
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = w[V0 + 004c];
-8009AA14	nop
-V0 = hu[V1 + 0106];
-8009AA1C	nop
-V0 = V0 | A2;
-[V1 + 0104] = h(V0);
-[V1 + 0106] = h(V0);
+    V1 = w[A0 + 0000];
+    8009A9E8	nop
+    8009A9EC	beq    v1, a3, L9aa2c [$8009aa2c]
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 03;
+    V0 = V0 - V1;
+    V1 = w[800aefe4];
+    V0 = V0 << 02;
+    V0 = V0 + V1;
+    V1 = w[V0 + 004c];
+    8009AA14	nop
+    V0 = hu[V1 + 0106];
+    8009AA1C	nop
+    V0 = V0 | A2;
+    [V1 + 0104] = h(V0);
+    [V1 + 0106] = h(V0);
 
-L9aa2c:	; 8009AA2C
-A1 = A1 + 0001;
-V0 = A1 < 0003;
+    L9aa2c:	; 8009AA2C
+    A0 = A0 + 0004;
+    A1 = A1 + 0001;
+    V0 = A1 < 0003;
 8009AA34	bne    v0, zero, loop9a9e4 [$8009a9e4]
-A0 = A0 + 0004;
+
 8009AA3C	j      L9ac1c [$8009ac1c]
-8009AA40	nop
 
 L9aa44:	; 8009AA44
 V0 = w[800af54c];
 V1 = w[800ad0d8];
 V0 = hu[V0 + 00cc];
-8009AA58	nop
 V0 = V0 + V1;
 A1 = bu[V0 + 000d];
-8009AA64	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
+A0 = 1;
+read_two_bytes_based_on_flag_80();
+
 V1 = w[800af54c];
 A1 = w[800ad0d8];
-V1 = hu[V1 + 00cc];
-A0 = 0003;
+V1 = hu[V1 + cc];
+
+S1 = V0;
 V1 = V1 + A1;
 A1 = bu[V1 + 000d];
-8009AA8C	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
-S1 = V0;
-A0 = 000e;
-8009AA98	jal    read_two_bytes_with_80 [$800ac2c4]
+A0 = 3;
+read_two_bytes_based_on_flag_40();
 S0 = V0;
+
+A0 = e;
+read_two_bytes_with_80();
+
 A0 = 0;
 A1 = S1;
 A2 = S0;
-8009AAAC	jal    func9a4b4 [$8009a4b4]
 A3 = V0;
+8009AAAC	jal    func9a4b4 [$8009a4b4]
+
 V1 = w[800af54c];
 A0 = w[800ad0d8];
 V1 = hu[V1 + 00cc];
 S2 = V0 < 0001;
 V1 = V1 + A0;
 A1 = bu[V1 + 000d];
+A0 = 5;
 8009AAD4	jal    read_two_bytes_based_on_flag_20 [$8009c590]
-A0 = 0005;
+
 V1 = w[800af54c];
 A1 = w[800ad0d8];
 V1 = hu[V1 + 00cc];
 A0 = 0007;
 V1 = V1 + A1;
 A1 = bu[V1 + 000d];
-8009AAFC	jal    read_two_bytes_based_on_flag_10 [$8009c5d4]
 S1 = V0;
-A0 = 0010;
-8009AB08	jal    read_two_bytes_with_80 [$800ac2c4]
+read_two_bytes_based_on_flag_10();
 S0 = V0;
+
+A0 = 10;
+read_two_bytes_with_80();
+
 A0 = 0001;
 A1 = S1;
 A2 = S0;
@@ -21121,19 +21000,22 @@ V0 = hu[V0 + 00cc];
 8009AB44	nop
 V0 = V0 + V1;
 A1 = bu[V0 + 000d];
-8009AB50	jal    read_two_bytes_based_on_flag_08 [$8009c618]
 A0 = 0009;
+read_two_bytes_based_on_flag_08();
+
 V1 = w[800af54c];
 A1 = w[800ad0d8];
 V1 = hu[V1 + 00cc];
 A0 = 000b;
 V1 = V1 + A1;
 A1 = bu[V1 + 000d];
-8009AB78	jal    read_two_bytes_based_on_flag_04 [$8009c65c]
 S1 = V0;
-A0 = 0012;
-8009AB84	jal    read_two_bytes_with_80 [$800ac2c4]
+read_two_bytes_based_on_flag_04();
 S0 = V0;
+
+A0 = 12;
+read_two_bytes_with_80();
+
 A0 = 0002;
 A1 = S1;
 A2 = S0;
@@ -21150,10 +21032,7 @@ V0 = 0007;
 V0 = 0001;
 V1 = w[800af54c];
 [800b181c] = h(0);
-V0 = hu[V1 + 00cc];
-8009ABD4	nop
-V0 = V0 + 0014;
-[V1 + 00cc] = h(V0);
+[V1 + cc] = h(hu[V1 + cc] + 14);
 [800b16a0] = b(0);
 8009ABE8	j      L9ac14 [$8009ac14]
 V0 = 0001;
@@ -21171,13 +21050,6 @@ L9ac14:	; 8009AC14
 [800b16a2] = b(V0);
 
 L9ac1c:	; 8009AC1C
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8009AC30	jr     ra 
-8009AC34	nop
 ////////////////////////////////
 
 
@@ -21416,15 +21288,16 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0xA0
+// 0xA0()
+
 A0 = 3;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 [800aeed0] = h(V0);
 
 A0 = 1;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 V0 = V0 + 4;
-V0 = V0 & 0007;
+V0 = V0 & 7;
 V1 = V0 << 9;
 V0 = V0 << 9;
 [800aeee0] = w(V0);
@@ -21433,13 +21306,12 @@ V0 = V0 << 10;
 [800aeec4] = w(V0);
 
 A0 = 5;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 A0 = V0;
 [800aeecc] = w(A0);
 
 system_gte_set_projection_plane_distance();
 
-// move script pointer by 7
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 7);
 ////////////////////////////////
@@ -21447,7 +21319,8 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// 0x9C
+// 0x9C()
+
 struct_138 = w[800af54c];
 
 A0 = SP + 10;
@@ -21638,7 +21511,8 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0xF4
+// 0xF4()
+
 A0 = w[800af54c];
 V1 = w[800ad0d8];
 V0 = hu[A0 + cc];
@@ -21770,7 +21644,8 @@ func9bb7c();
 
 
 ////////////////////////////////
-// 0xD3_DialogShow1
+// 0xD3_DialogShow1()
+
 A0 = w[800af1f0]; // current entity id
 A1 = 1;
 func9bb7c();
@@ -21779,7 +21654,8 @@ func9bb7c();
 
 
 ////////////////////////////////
-// 0x03_DialogShow2
+// 0x03_DialogShow2()
+
 A0 = w[800af1f0]; // current entity id
 A1 = 2;
 func9bb7c();
@@ -21788,7 +21664,8 @@ func9bb7c();
 
 
 ////////////////////////////////
-// 0xF5_DialogShow3
+// 0xF5_DialogShow3()
+
 A0 = w[8009f1f0];
 A1 = 3;
 func9bb7c();
@@ -22097,6 +21974,7 @@ L9bb74:	; 8009BB74
 
 ////////////////////////////////
 // func9bb7c()
+
 entity_id = A0;
 type = A1;
 
@@ -22553,7 +22431,8 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// get_entity_id_from_opcode
+// get_entity_id_from_opcode()
+
 V0 = w[800af54c];
 V0 = hu[V0 + cc];
 V1 = w[800ad0d8];
@@ -22561,19 +22440,19 @@ V0 = V0 + A0;
 V1 = V1 + V0;
 entity_id = bu[V1];
 
-if (entity == ff)
+if( entity == ff )
 {
     entity_id = w[80059ad4];
 }
-else if (entity == fe)
+else if( entity == fe )
 {
     entity_id = w[80059ad8];
 }
-else if (entity == fd)
+else if( entity == fd )
 {
     entity_id = w[80059adc];
 }
-else if (entity == fb)
+else if( entity == fb )
 {
     entity_id = w[800af1f0];
 }
@@ -22623,44 +22502,41 @@ V0 = V0 + 0005;
 
 
 ////////////////////////////////
-// 0xD0
+// 0xD0()
+
 A0 = 1;
-read_two_bytes_with_80;
-V1 = w[800AF54C];
+read_two_bytes_with_80();
+V1 = w[800af54c];
 [V1 + 88] = h(V0);
 
 A0 = 3;
-read_two_bytes_with_80;
-V1 = w[800AF54C];
+read_two_bytes_with_80();
+V1 = w[800af54c];
 [V1 + 8A] = h(V0);
 
 A0 = 5;
-read_two_bytes_with_80;
+read_two_bytes_with_80();
 V1 = V0 * 3;
-A1 = w[800AF54C];
+A1 = w[800af54c];
 [A1 + 82] = b(V1);
 
 A0 = 7;
-read_two_bytes_with_80;
-V1 = w[800AF54C];
+read_two_bytes_with_80();
+V1 = w[800af54c];
 [V1 + 83] = b(V0);
 
 A0 = 9;
-read_two_bytes_with_80;
-A0 = w[800AF54C];
+read_two_bytes_with_80();
+A0 = w[800af54c];
 [A0 + 84] = w(V0);
 
-V1 = hu[A0 + CC];
-V1 = V1 + B;
-[A0 + CC] = h(V1);
+[A0 + cc] = h(hu[A0 + cc] + b);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func9c500
-8009C500	jr     ra 
-8009C504	nop
+// func9c500()
 ////////////////////////////////
 
 
@@ -23257,43 +23133,36 @@ return;
 
 
 ////////////////////////////////
-// func9cf34
-8009CF34	addiu  sp, sp, $ffe8 (=-$18)
+// func9cf34()
+// 0x35()
+
 A0 = 0001;
-[SP + 0014] = w(RA);
-8009CF40	jal    read_two_bytes_unsigned [$800ac290]
-[SP + 0010] = w(S0);
+read_two_bytes_unsigned();
+
 V1 = w[800af54c];
 A1 = w[800ad0d8];
 V1 = hu[V1 + 00cc];
 A0 = 0003;
+S0 = V0 & ffff;
 V1 = V1 + A1;
 A1 = bu[V1 + 0005];
-8009CF68	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
-S0 = V0 & ffff;
+read_two_bytes_based_on_flag_40();
+
 A0 = S0;
-8009CF74	jal    put_bytes_to_800C2F3C [$800a2604]
 A1 = V0;
+put_bytes_to_800C2F3C();
+
 V1 = w[800af54c];
-8009CF84	nop
-V0 = hu[V1 + 00cc];
-8009CF8C	nop
-V0 = V0 + 0006;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8009CFA4	jr     ra 
-8009CFA8	nop
+[V1 + cc] = h(hu[V1 + cc] + 6);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0x2A
+// 0x2A()
+
 A0 = w[800af54c];
 [A0 + 0] = w(w[A0 + 0] | 00000002);
-
 [A0 + cc] = h([A0 + cc] + 1);
 ////////////////////////////////
 
@@ -23452,7 +23321,8 @@ if( V0 != ff )
 
 
 ////////////////////////////////
-// 0x26_Wait
+// 0x26_Wait()
+
 current_entity_data = w[800af54c];
 slot_id = bu[current_entity_data + ce];
 
@@ -23460,7 +23330,7 @@ V0 = bu[current_entity_data + 8c + slot_id * 8 + 2];
 if( V0 == 0 )
 {
     A0 = 1;
-    read_two_bytes_with_80;
+    read_two_bytes_with_80();
     [current_entity_data + 8c + slot_id * 8 + 2] = b(V0);
 }
 else
@@ -23654,7 +23524,9 @@ V0 = V0 | A1;
 
 
 ////////////////////////////////
+// func9d5d0
 // 0x23()
+
 V1 = w[800af1f0];
 V1 = w[800aefe4] + V1 * 5c;
 [V1 + 58] = h(hu[V1 + 58] | 0020);
@@ -23698,11 +23570,11 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0x20_SpriteSetSolid
-8009D69C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8009D6A4	jal    read_two_bytes_with_80 [$800ac2c4]
+// 0x20_SpriteSetSolid()
+
 A0 = 0001;
+8009D6A4	jal    read_two_bytes_with_80 [$800ac2c4]
+
 V1 = V0;
 V0 = V1 & 0001;
 A1 = V0 << 07;
@@ -23740,11 +23612,8 @@ V0 = V0 & V1;
 V1 = hu[A0 + 00cc];
 V0 = V0 | A1;
 [A0 + 0000] = w(V0);
-V1 = V1 + 0003;
-RA = w[SP + 0010];
-[A0 + 00cc] = h(V1);
-8009D728	jr     ra 
-SP = SP + 0018;
+[A0 + 00cc] = h(V1 + 3);
+
 ////////////////////////////////
 
 
@@ -23964,47 +23833,36 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0x19_SpriteSetPosition
+// 0x19_SpriteSetPosition()
+
 V0 = w[800af54c];
 V1 = w[800ad0d8];
-8009DA5C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-[SP + 0010] = w(S0);
 V0 = hu[V0 + 00cc];
-8009DA6C	nop
 V0 = V0 + V1;
-A1 = bu[V0 + 0005];
-8009DA78	jal    read_two_bytes_based_on_flag_80 [$8009c508]
-A0 = 0001;
+
+A0 = 1;
+A1 = bu[V0 + 5];
+read_two_bytes_based_on_flag_80();
+
 V1 = w[800af54c];
 A1 = w[800ad0d8];
 V1 = hu[V1 + 00cc];
-A0 = 0003;
+
 V1 = V1 + A1;
-A1 = bu[V1 + 0005];
-8009DAA0	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
 S0 = V0;
+
+A0 = 3;
+A1 = bu[V1 + 5];
+read_two_bytes_based_on_flag_40();
+
 A0 = S0;
-8009DAAC	jal    set_position_by_x_z [$8009db04]
 A1 = V0;
-V1 = ffdfffff;
+8009DAAC	jal    set_position_by_x_z [$8009db04]
+
 A0 = w[800af54c];
-8009DAC4	lui    a1, $fffe
-V0 = w[A0 + 0004];
-A1 = A1 | ffff;
-V0 = V0 & V1;
-[A0 + 0004] = w(V0);
-V0 = w[A0 + 0000];
-V1 = hu[A0 + 00cc];
-V0 = V0 & A1;
-V1 = V1 + 0006;
-[A0 + 0000] = w(V0);
-[A0 + 00cc] = h(V1);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8009DAFC	jr     ra 
-8009DB00	nop
+[A0 + 0004] = w(w[A0 + 0004] & ffdfffff);
+[A0 + 0000] = w(w[A0 + 0000] & fffeffff);
+[A0 + cc] = h(hu[A0 + cc] + 6);
 ////////////////////////////////
 
 
@@ -24320,13 +24178,12 @@ return 0;
 
 
 ////////////////////////////////
-// func9e108
-8009E108	addiu  sp, sp, $ffe0 (=-$20)
+// func9e108()
+// 0x07()
+
 A0 = 0001;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
 8009E118	jal    get_entity_id_from_opcode [$8009c344]
-[SP + 0010] = w(S0);
+
 V1 = 00ff;
 8009E124	beq    v0, v1, L9e2c4 [$8009e2c4]
 8009E128	nop
@@ -24436,35 +24293,26 @@ V0 = V0 & 001f;
 L9e2c4:	; 8009E2C4
 V1 = w[800af54c];
 8009E2CC	nop
-V0 = hu[V1 + 00cc];
-8009E2D4	nop
-V0 = V0 + 0003;
-[V1 + 00cc] = h(V0);
+V0 = hu[V1 + cc];
+[V1 + cc] = h(V0 + 3);
 
 L9e2e0:	; 8009E2E0
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8009E2F0	jr     ra 
-8009E2F4	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0x08_EntityCallScriptSW
+// 0x08_EntityCallScriptSW()
+
 current_entity_data = w[800AF54C];
 
 A0 = 1;
-get_entity_id_from_opcode;
+get_entity_id_from_opcode();
 param_entity_id = V0;
 
-if (param_entity_id == FF)
+if( param_entity_id == ff )
 {
-    V0 = hu[current_entity_data + CC];
-    V0 = V0 + 3;
-    [current_entity_data + CC] = V0;
+    [current_entity_data + cc] = hu[current_entity_data + cc] + 3;
     return;
 }
 
@@ -24516,9 +24364,7 @@ if (V0 & 0003)
             }
         }
 
-        V0 = hu[current_entity_data + CC];
-        V0 = V0 + 3;
-        [current_entity_data + CC] = h(V0);
+        [current_entity_data + c] = h(hu[current_entity_data + cc] + 3);
 
         V1 = bu[current_entity_data + CE];
         V0 = w[current_entity_data + V1 * 8 + 90];
@@ -24538,13 +24384,11 @@ if (V0 & 0003)
 
 A0 = S2;
 A1 = script_to_run;
-check_script_execution;
+check_script_execution();
 
-if (V0 == -1)
+if( V0 == -1 )
 {
-    V0 = hu[current_entity_data + CC];
-    V0 = V0 + 3;
-    [current_entity_data + CC] = V0;
+    [current_entity_data + cc] = h(hu[current_entity_data + cc] + 3);
     return;
 }
 
@@ -24594,13 +24438,13 @@ loop9e434:	; 8009E434
     S0 = S0 + 8;
     V0 = S1 < 8;
 8009E464	bne    v0, zero, loop9e434 [$8009e434]
-return;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0x09_EntityCallScriptEW
+// 0x09_EntityCallScriptEW()
+
 current_entity_data = w[800AF54C];
 
 A0 = 1;
@@ -24898,8 +24742,9 @@ func9eb84();
 
 
 ////////////////////////////////
-// 0xA7
 // func9eb84()
+// 0xA7()
+
 data_138 = w[800af54c];
 
 if( ( w[data_138 + 0] & 00004000 ) == 0 )
@@ -26045,6 +25890,7 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0x16_EntityPCInit
+
 entity_id = w[800af1f0];
 sprite_data = w[800aeff0];
 struct_5c_p = w[800aefe4];
@@ -26062,11 +25908,7 @@ party_slot_id = V0;
 
 [struct_138 + e4] = h(character_id);
 
-
-
 [struct_5c_p + V1 * 5c + 58] = h((hu[struct_5c_p + entity_id * 5c + 58] & f07f) | 0200);
-
-
 
 // if character in party
 if( party_slot_id != -1 )
@@ -26208,8 +26050,9 @@ struct_164 = w[struct_5c_p + entity_id * 5c + 4];
 
 
 ////////////////////////////////
-// 0xBC_EntityNoModelInit
+// 0xBC_EntityNoModelInit()
 // funca02cc()
+
 entity_id = w[800af1f0];
 sprite_data = w[800aeff0];
 struct_138 = w[800af54c];
@@ -26824,107 +26667,61 @@ funca0224();
 
 
 ////////////////////////////////
-// 0x06
-A1 = w[800af54c];
-800A0CC8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-A2 = w[A1 + 012c];
-V0 = 0100;
-V1 = A2 & 01c0;
-800A0CDC	beq    v1, v0, La0d3c [$800a0d3c]
-A0 = 0001;
-V1 = A2 >> 05;
-V1 = V1 & 000e;
-V0 = hu[A1 + 00cc];
-V1 = V1 + A1;
-V0 = V0 + 0005;
-800A0CF8	jal    read_two_bytes_unsigned [$800ac290]
-[V1 + 0078] = h(V0);
-A0 = w[800af54c];
-800A0D08	nop
-[A0 + 00cc] = h(V0);
-V0 = w[A0 + 012c];
-800A0D14	addiu  v1, zero, $fe3f (=-$1c1)
-V1 = V0 & V1;
-V0 = V0 >> 06;
-V0 = V0 & 0007;
-V0 = V0 + 0001;
-V0 = V0 & 0007;
-V0 = V0 << 06;
-V1 = V1 | V0;
-800A0D34	j      La0d74 [$800a0d74]
-[A0 + 012c] = w(V1);
+// 0x06()
 
-La0d3c:	; 800A0D3C
-if( w[800c1b60] == 0 )
+struct_138 = w[800af54c];
+stack_id = (w[struct_138 + 12c] & 000001c0) >> 6;
+
+if( V1 != 100 )
 {
-    A0 = 8006f3d4; // "STACKERR ACT=%d"
-    A1 = w[800af1f0];
-    system_print_alias();
+    [struct_138 + 78 + stack_id * 2] = h(hu[struct_138 + cc] + 5);
+
+    A0 = 1;
+    read_two_bytes_unsigned();
+    [struct_138 + cc] = h(V0);
+    [struct_138 + 12c] = w(w[struct_138 + 12c] & fffffe3f | (((stack_id + 1) & 7) << 6));
 }
-V0 = 0001;
-[800af594] = w(V0);
+else
+{
+    if( w[800c1b60] == 0 )
+    {
+        A0 = 8006f3d4; // "STACKERR ACT=%d\n"
+        A1 = w[800af1f0];
+        system_print_alias();
+    }
 
-La0d74:	; 800A0D74
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A0D7C	jr     ra 
-800A0D80	nop
+    [800af594] = w(1);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca0d84
-A1 = w[800af54c];
-800A0D8C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-A2 = w[A1 + 012c];
-V0 = 0100;
-V1 = A2 & 01c0;
-800A0DA0	beq    v1, v0, La0e00 [$800a0e00]
-A0 = 0001;
-V1 = A2 >> 05;
-V1 = V1 & 000e;
-V0 = hu[A1 + 00cc];
-V1 = V1 + A1;
-V0 = V0 + 0003;
-800A0DBC	jal    read_two_bytes_unsigned [$800ac290]
-[V1 + 0078] = h(V0);
-A0 = w[800af54c];
-800A0DCC	nop
-[A0 + 00cc] = h(V0);
-V0 = w[A0 + 012c];
-800A0DD8	addiu  v1, zero, $fe3f (=-$1c1)
-V1 = V0 & V1;
-V0 = V0 >> 06;
-V0 = V0 & 0007;
-V0 = V0 + 0001;
-V0 = V0 & 0007;
-V0 = V0 << 06;
-V1 = V1 | V0;
-800A0DF8	j      La0e38 [$800a0e38]
-[A0 + 012c] = w(V1);
+// funca0d84()
+// 0x05_CallFunction()
 
-La0e00:	; 800A0E00
-V0 = w[800c1b60];
-800A0E08	nop
-800A0E0C	bne    v0, zero, La0e30 [$800a0e30]
-V0 = 0001;
-A1 = w[800af1f0];
-A0 = 8006f3d4;
-800A0E24	jal    $80037870
-800A0E28	nop
-V0 = 0001;
+struct_138 = w[800af54c];
+stack_id = (w[struct_138 + 12c] & 000001c0) >> 6;
 
-La0e30:	; 800A0E30
-[800af594] = w(V0);
+if( stack_id != 100 )
+{
+    [struct_138 + 78 + stack_id * 2] = h(hu[struct_138 + cc] + 3);
 
-La0e38:	; 800A0E38
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A0E40	jr     ra 
-800A0E44	nop
+    A0 = 1;
+    read_two_bytes_unsigned();
+    [struct_138 + cc] = h(V0);
+    [struct_138 + 12c] = w(w[struct_138 + 12c] & fffffe3f | (((stack_id + 1) & 7) << 6));
+}
+else
+{
+    if( w[800c1b60] == 0 )
+    {
+        A0 = 8006f3d4; // "STACKERR ACT=%d\n"
+        A1 = w[800af1f0];
+        system_print_alias();
+    }
+    [800af594] = w(1);
+}
 ////////////////////////////////
 
 
@@ -27251,20 +27048,18 @@ else
 current_entity_data = w[800af54c];
 
 A0 = 1;
-read_two_bytes_unsigned;
+read_two_bytes_unsigned();
 [current_entity_data + cc] = h(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca142c
+// funca142c()
+// 0xC6()
+
 V0 = w[800af54c];
 V1 = w[800af150];
-A0 = hu[V0 + 00cc];
-V1 = V1 + 0020;
-[800af150] = w(V1);
-A0 = A0 + 0001;
-800A1450	jr     ra 
-[V0 + 00cc] = h(A0);
+[800af150] = w(V1 + 20);
+[V0 + cc] = h(hu[V0 + cc] + 1);
 ////////////////////////////////

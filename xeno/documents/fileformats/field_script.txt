@@ -1,6 +1,6 @@
 script file
 +00 array of signs for 800c2f3c memory block. Each bit - sign for 2 byte value in 800c2f3c.
-+80 [][][][] number of scripts.
++80 [][][][] number of entities.
 +84 start of arrays of pointers to separate scripts (size 0x2 items 0x20).
 +84 + number_of_scripts * 0x40 - start of scripts (+84 offsets starts from here).
 

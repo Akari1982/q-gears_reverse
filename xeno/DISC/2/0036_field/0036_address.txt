@@ -359,6 +359,7 @@
         +  74 []       follow entity id. Init with 0xff. We dont calculate interaction with this entity.
         +  75 []       init with 0xff.
         +  76 [][]     move speed. Init with 0x0100.
+        +  78          stored script pointers stack (2 size 4 item) (when we go to subroutine we store here return pointer).
         +  80 []       store character id here when we set avatar. Init with 0xff.
         +  81 []       store something from here to memory block + 14. Dialog related. Maybe cursor position.
         +  82 []       dialog width. Init with 0.
@@ -426,7 +427,7 @@
                         0x00000003 - remove during entity init.
                         0x0000001c - remove during entity init. clut Y. used for avatar render.
                         0x00000020 - if set - door opening or closing. Remove during init.
-                        0x000001c0 - remove during entity init.
+                        0x000001c0 - current script stack pointer.
                         0x00000e00 - remove during entity init. Rotation dir.
                         0x00001000 - remove during entity init. Checked in func81aa8(). If set then struct_138 + 114 allocated.
                         0x0000e000 - index in model pointers 801e8670.
