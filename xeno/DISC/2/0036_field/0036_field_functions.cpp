@@ -587,44 +587,35 @@ system_memory_mark_removed_alloc();
 
 
 ////////////////////////////////
-// funca4d5c
+// funca4d5c()
 
-800A4D68	jal    funca5b14 [$800a5b14]
+funca5b14(); // create some sprites
 
-S0 = 0;
+for( int i = 0; i < 2; ++i )
+{
+    func73670(); // clear otagr
 
-loopa4d74:	; 800A4D74
-800A4D74	jal    func73670 [$80073670]
-S0 = S0 + 0001;
-800A4D7C	jal    funca58e0 [$800a58e0]
-800A4D80	nop
-800A4D84	jal    funca5dfc [$800a5dfc]
-800A4D88	nop
-V0 = S0 < 0002;
-800A4D90	bne    v0, zero, loopa4d74 [$800a4d74]
-S1 = 02c0;
-S0 = 0;
+    800A4D7C	jal    funca58e0 [$800a58e0]
 
-loopa4d9c:	; 800A4D9C
-A0 = S1;
-A1 = 0100;
-800A4DA4	jal    funca4c4c [$800a4c4c]
-A2 = 00e0;
-S0 = S0 + 0001;
-V0 = S0 < 0005;
-800A4DB4	bne    v0, zero, loopa4d9c [$800a4d9c]
-S1 = S1 + 0040;
-S0 = 0;
+    funca5dfc(); // draw otag
+}
 
-loopa4dc0:	; 800A4DC0
-800A4DC0	jal    func73670 [$80073670]
-S0 = S0 + 0001;
-800A4DC8	jal    funca58e0 [$800a58e0]
-800A4DCC	nop
-800A4DD0	jal    funca5dfc [$800a5dfc]
-800A4DD4	nop
-V0 = S0 < 0002;
-800A4DDC	bne    v0, zero, loopa4dc0 [$800a4dc0]
+for( int i = 0; i < 5; ++i )
+{
+    A0 = 2c0 + i * 40;
+    A1 = 100;
+    A2 = e0;
+    funca4c4c();
+}
+
+for( int i = 0; i < 2; ++i )
+{
+    func73670(); // clear otagr
+
+    800A4DC8	jal    funca58e0 [$800a58e0]
+
+    funca5dfc(); // draw otag
+}
 ////////////////////////////////
 
 
@@ -1330,21 +1321,12 @@ system_memory_clean_removed_alloc();
 
 
 ////////////////////////////////
-// funca58e0
-800A58E0	addiu  sp, sp, $ff78 (=-$88)
+// funca58e0()
+
 A0 = 800af58c;
 A1 = SP + 0028;
-[SP + 0084] = w(RA);
-[SP + 0080] = w(FP);
-[SP + 007c] = w(S7);
-[SP + 0078] = w(S6);
-[SP + 0074] = w(S5);
-[SP + 0070] = w(S4);
-[SP + 006c] = w(S3);
-[SP + 0068] = w(S2);
-[SP + 0064] = w(S1);
 800A5914	jal    $8003f5e0
-[SP + 0060] = w(S0);
+
 A0 = SP + 0028;
 A1 = SP + 0048;
 S3 = 0;
@@ -1455,25 +1437,13 @@ AT = A3 + AT;
 V0 = S3 < 0005;
 800A5AD8	bne    v0, zero, loopa5984 [$800a5984]
 S2 = S2 + 0018;
-RA = w[SP + 0084];
-FP = w[SP + 0080];
-S7 = w[SP + 007c];
-S6 = w[SP + 0078];
-S5 = w[SP + 0074];
-S4 = w[SP + 0070];
-S3 = w[SP + 006c];
-S2 = w[SP + 0068];
-S1 = w[SP + 0064];
-S0 = w[SP + 0060];
-SP = SP + 0088;
-800A5B0C	jr     ra 
-800A5B10	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funca5b14()
+
 V1 = 800b0748;
 800A5B28	addiu  v1, v1, $ff44 (=-$bc)
 S5 = 02c0;
@@ -1643,32 +1613,33 @@ La5ba0:	; 800A5BA0
 
 
 ////////////////////////////////
-// funca5dfc
-800A5DFC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A5E04	jal    $system_draw_sync
+// funca5dfc()
+
 A0 = 0;
-800A5E0C	jal    $8004b3f4
-A0 = 0002;
+system_draw_sync();
+
+A0 = 2;
+system_psyq_wait_frames();
+
+A0 = w[800c3740];
 A1 = 0;
 A2 = 0;
-A0 = w[800c3740];
-800A5E24	jal    $800445dc
 A3 = 0;
+system_clear_image();
+
 A0 = w[800c3740];
-800A5E34	jal    system_psyq_put_draw_env
-800A5E38	nop
+system_psyq_put_draw_env();
+
 A0 = w[800c3740];
-800A5E44	jal    $system_psyq_put_disp_env
 A0 = A0 + 00b8;
-V0 = w[800c3740];
-A0 = 80f0;
-800A5E58	jal    $system_psyq_draw_otag
-A0 = V0 + A0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A5E68	jr     ra 
-800A5E6C	nop
+system_psyq_put_disp_env();
+
+A0 = w[800c3740] + 80f0;
+system_psyq_draw_otag();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca5e70
 800A5E70	addiu  sp, sp, $ffc0 (=-$40)
@@ -6333,113 +6304,73 @@ Lab1d0:	; 800AB1D0
 
 
 ////////////////////////////////
-// funcab1f0
-800AB1F0	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0028] = w(S2);
-S2 = 0;
-[SP + 0040] = w(FP);
-FP = SP + 0018;
-[SP + 003c] = w(S7);
-S7 = 0080;
-V1 = 800af65c;
-[SP + 0038] = w(S6);
-S6 = V1 + 008c;
-[SP + 0034] = w(S5);
-S5 = 0;
-[SP + 0030] = w(S4);
-S4 = 800af65c;
-[SP + 002c] = w(S3);
-S3 = 0;
-[SP + 0024] = w(S1);
-S1 = 0280;
-V0 = 00ff;
-[SP + 0044] = w(RA);
-[SP + 0020] = w(S0);
-[SP + 0018] = h(0);
-[SP + 001a] = h(0);
-[SP + 001c] = h(V0);
-[SP + 001e] = h(V0);
+// funcab1f0()
 
-loopab25c:	; 800AB25C
-A0 = 0001;
-A1 = 0;
-A2 = S1;
-800AB268	jal    $system_graphic_get_texpage_by_param
-A3 = 0;
-A0 = S4;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-800AB280	jal    $system_gpu_create_texture_setting_packet
-[SP + 0010] = w(FP);
-A0 = 0001;
-A1 = 0;
-A2 = S1;
-800AB294	jal    $system_graphic_get_texpage_by_param
-A3 = 0;
-V1 = 800af65c;
-A0 = V1 + 000c;
-A0 = S3 + A0;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-800AB2B8	jal    $system_gpu_create_texture_setting_packet
-[SP + 0010] = w(FP);
-V1 = 800af65c;
-S0 = V1 + 0078;
-S0 = S5 + S0;
-800AB2D0	jal    $80043b8c
-A0 = S0;
-A0 = S0;
-A1 = 0;
-V0 = S2 << 07;
-[S0 + 0008] = h(V0);
-V0 = 00e0;
-[S0 + 0004] = b(S7);
-[S0 + 0005] = b(S7);
-[S0 + 0006] = b(S7);
-[S0 + 000a] = h(0);
-[S0 + 000c] = b(0);
-[S0 + 000d] = b(0);
-[S0 + 0010] = h(S7);
-800AB308	jal    $system_set_draw_packet_transparency
-[S0 + 0012] = h(V0);
-A0 = 0;
-800AB314	jal    $800438d0
-A1 = 00e8;
-[S0 + 000e] = h(V0);
-V0 = w[S0 + 0000];
-V1 = w[S0 + 0004];
-A0 = w[S0 + 0008];
-A1 = w[S0 + 000c];
-[S6 + 0000] = w(V0);
-[S6 + 0004] = w(V1);
-[S6 + 0008] = w(A0);
-[S6 + 000c] = w(A1);
-V0 = w[S0 + 0010];
-800AB344	nop
-[S6 + 0010] = w(V0);
-S6 = S6 + 0028;
-S5 = S5 + 0028;
-S4 = S4 + 0018;
-S3 = S3 + 0018;
-S2 = S2 + 0001;
-V0 = S2 < 0005;
-800AB364	bne    v0, zero, loopab25c [$800ab25c]
-S1 = S1 + 0040;
-RA = w[SP + 0044];
-FP = w[SP + 0040];
-S7 = w[SP + 003c];
-S6 = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0048;
-800AB398	jr     ra 
-800AB39C	nop
+[SP + 18] = h(0);
+[SP + 1a] = h(0);
+[SP + 1c] = h(ff);
+[SP + 1e] = h(ff);
+
+for( int i = 0; i < 5; ++i )
+{
+    A0 = 1;
+    A1 = 0;
+    A2 = 280 + i * 40;
+    A3 = 0;
+    system_graphic_get_texpage_by_param();
+
+    A0 = 800af65c + i * 18;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+
+    A0 = 1;
+    A1 = 0;
+    A2 = 280 + i * 40;
+    A3 = 0;
+    system_graphic_get_texpage_by_param();
+
+    A0 = 800af65c + i * 18 + c;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+
+    A0 = 800af6d4 + i * 28;
+    func43b8c();
+
+    [800af6d4 + i * 28 + 0008] = h(i * 80);
+    [800af6d4 + i * 28 + 0004] = b(80);
+    [800af6d4 + i * 28 + 0005] = b(80);
+    [800af6d4 + i * 28 + 0006] = b(80);
+    [800af6d4 + i * 28 + 000a] = h(0);
+    [800af6d4 + i * 28 + 000c] = b(0);
+    [800af6d4 + i * 28 + 000d] = b(0);
+    [800af6d4 + i * 28 + 0010] = h(80);
+    [800af6d4 + i * 28 + 0012] = h(e0);
+
+    A0 = 800af6d4 + i * 28;
+    A1 = 0;
+    system_set_draw_packet_transparency();
+
+    A0 = 0;
+    A1 = e8;
+    system_graphic_get_clut_by_param();
+
+    [800af6d4 + i * 28 + 000e] = h(V0);
+    [800af6e8 + i * 28 + 0000] = w(w[S0 + 0000]);
+    [800af6e8 + i * 28 + 0004] = w(w[S0 + 0004]);
+    [800af6e8 + i * 28 + 0008] = w(w[S0 + 0008]);
+    [800af6e8 + i * 28 + 000c] = w(w[S0 + 000c]);
+    [800af6e8 + i * 28 + 0010] = w(w[S0 + 0010]);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcab3a0
 V0 = h[800ad02c];

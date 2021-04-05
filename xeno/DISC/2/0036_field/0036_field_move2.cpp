@@ -4286,37 +4286,25 @@ L85ac0:	; 80085AC0
 
 
 ////////////////////////////////
-// func85ac8
-A0 = 0;
-A1 = ffff;
-V1 = 0;
+// func85ac8()
 
-loop85ad4:	; 80085AD4
-80085AD4	lui    at, $800b
-AT = AT + V1;
-[AT + f35c] = h(A1);
-80085AE0	lui    at, $800b
-AT = AT + V1;
-[AT + f35e] = h(A1);
-A0 = A0 + 0001;
-V0 = A0 < 0003;
-80085AF4	bne    v0, zero, loop85ad4 [$80085ad4]
-V1 = V1 + 0006;
-80085AFC	jr     ra 
-80085B00	nop
+for( int i = 0; i < 3; ++i )
+{
+    [800af35c + i * 6] = h(ffff);
+    [800af35e + i * 6] = h(ffff);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func85b04()
-S0 = 0;
-loop85b20:	; 80085B20
-    [800af35e + S0 * 6] = h(ffff);
-    [800af35c + S0 * 6] = h(ffff);
-    S0 = S0 + 1;
-    V0 = S0 < 3;
-80085B40	bne    v0, zero, loop85b20 [$80085b20]
+
+for( int i = 0; i < 3; ++i )
+{
+    [800af35e + i * 6] = h(ffff);
+    [800af35c + i * 6] = h(ffff);
+}
 
 // stops first 8 chanels (4 left, 4 right) if requested
 S0 = 0;

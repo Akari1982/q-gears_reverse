@@ -119,7 +119,28 @@
 800adf08 data for rotation (each 2 bytes)
 
 800ae74c [][][][] 
-800ae750 array of particles sprite data (sprite size and textures). 0x18 size.
+800ae750 array of particles sprite data (sprite size and textures). 0x18 size. Stored in field.exe
+    4000 4000  0000 0000  0000 0000  4000 0000  0000 4000  4000 4000
+    4000 4000  0000 C0FF  4000 0000  8000 0000  4000 4000  8000 4000
+    2000 2000  0000 0000  0000 4000  2000 4000  0000 6000  2000 6000
+    2000 2000  0000 0000  2000 4000  4000 4000  2000 6000  4000 6000
+    2000 2000  0000 0000  4000 4000  6000 4000  4000 6000  6000 6000
+    FE00 1F00  0001 0000  0000 6000  FF00 6000  0000 8000  FF00 8000
+    1000 2000  0000 E0FF  E000 0000  F000 0000  E000 2000  F000 2000
+    1000 6000  0000 A0FF  F000 0000  FF00 0000  F000 6000  FF00 6000
+    6000 1000  A0FF 0000  F000 0100  F000 6000  FF00 0100  FF00 6000
+    4000 4000  0000 0000  8000 0000  C000 0000  8000 4000  C000 4000
+    2000 2000  0000 0000  6000 4000  8000 4000  6000 6000  8000 6000
+    4000 4000  0000 0000  0000 8000  4000 8000  0000 C000  4000 C000
+    4000 4000  0000 0000  4000 8000  8000 8000  4000 C000  8000 C000
+    2000 2000  0000 0000  8000 4000  A000 4000  8000 6000  A000 6000
+    2000 2000  0000 0000  A000 4000  C000 4000  A000 6000  C000 6000
+    2000 2000  0000 0000  C000 0000  E000 0000  C000 2000  E000 2000
+    2000 2000  0000 0000  C000 2000  E000 2000  C000 4000  E000 4000
+    4000 4000  0000 C0FF  8000 8000  C000 8000  8000 C000  C000 C000
+    2000 2000  0000 0000  C000 4000  E000 4000  C000 6000  E000 6000
+    4000 4000  0000 0000  C000 8000  0001 8000  C000 C000  0001 C000
+    1000 1000  0000 0000  E000 2000  F000 2000  E000 3000  F000 3000
     + 00 [][]     half width.
     + 02 [][]     half height.
     + 04 [][]     center x.
@@ -133,7 +154,9 @@
     + 14 [][]     u4.
     + 16 [][]     v4.
 
-800ae948 array of some particle data (0x200 size).
+800ae948 array of some particle data (0x1 size).
+    02 03 04 05 06 07 00 01
+
 
 800aec3c some data during texture set (func910b0).
 
@@ -528,7 +551,10 @@
 800af7a0 temp struct for init patricle instance. Description at 800c2dec.
 
 800af588 [][][][] used for particle scaled render.
+
 800afb8c [][][][] offset to struct 0x5c for current entity in script call.
+
+800afb90 array of 0x16 structs 0x70 size.
 
 800b0984 array of 0x40 bool value. 0x1 size. Set to 1 if patricle is inited.
 
@@ -779,7 +805,7 @@
     + 52 [][]     entity id (set entity id from script called).
     + 54 [][]     sprite id. Init with 0.
     + 56 [][]     init with 1. Default wait for sprite.
-    + 58 [][]     init with 1c.
+    + 58 [][]     init with 1c. Default ttl for sprite.
     + 5a [][]     x trans. Init with 1c8.
     + 5c [][]     y trans. Init with 1c8.
     + 5e [][]     z trans. Init with 1c8.

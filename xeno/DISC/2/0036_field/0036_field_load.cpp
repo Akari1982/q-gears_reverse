@@ -414,28 +414,24 @@ SP = SP + 0030;
 
 
 ////////////////////////////////
-// func6fb98
-8006FB98	addiu  sp, sp, $ffe8 (=-$18)
-V1 = w[800ad038];
-V0 = 0001;
-8006FBA8	bne    v1, v0, L6fbd8 [$8006fbd8]
-[SP + 0010] = w(RA);
-8006FBB0	jal    $80028870
-A0 = 0;
-8006FBB8	jal    $system_draw_sync
-A0 = 0;
-A0 = w[800ad0ec];
-8006FBC8	jal    $80031f0c
-8006FBCC	nop
-[800ad038] = w(0);
+// func6fb98()
 
-L6fbd8:	; 8006FBD8
+V1 = w[800ad038];
+if( V1 == 1 )
+{
+    A0 = 0;
+    system_cdrom_action_sync();
+
+    A0 = 0;
+    system_draw_sync();
+
+    A0 = w[800ad0ec];
+    system_memory_mark_removed_alloc();
+
+    [800ad038] = w(0);
+}
+
 8006FBD8	jal    func78270 [$80078270]
-8006FBDC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8006FBE8	jr     ra 
-8006FBEC	nop
 ////////////////////////////////
 
 
@@ -479,7 +475,7 @@ system_calculate_rotation_matrix();
 
 
 ////////////////////////////////
-// func6fc6c
+// func6fc6c()
 
 if( w[800c1b60] == 0 )
 {
@@ -510,8 +506,6 @@ func35c84(); // reset system buttons
 
 [800c2f0c] = h(ff);
 
-
-
 [800c2f34] = w(0);
 [800c2f30] = w(0);
 [800b1690] = w(0);
@@ -521,7 +515,6 @@ func35c84(); // reset system buttons
 [800b168c] = w(0);
 [800b16a5] = b(0);
 [800b16a4] = b(0);
-
 
 // distortion
 [800b154c] = h(0);
@@ -703,8 +696,7 @@ loop701b0:	; 800701B0
 L701cc:	; 800701CC
 V1 = ffff;
 A1 = 001f;
-800701D4	lui    v0, $800b
-V0 = V0 + 17b2;
+V0 = 800b17b2;
 
 loop701dc:	; 800701DC
 [V0 + 0000] = h(V1);
@@ -761,39 +753,26 @@ system_calculate_rotation_matrix();
 
 func71bdc(); // init camera
 
+func70314();
 
+func85ac8();
 
-800702DC	jal    func70314 [$80070314]
-800702E0	nop
-800702E4	jal    func85ac8 [$80085ac8]
-800702E8	nop
-800702EC	jal    field_particle_clear_arrays [$800a874c]
-800702F0	nop
-800702F4	jal    funcab1f0 [$800ab1f0]
+field_particle_clear_arrays();
+
+funcab1f0();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func70314
-A0 = 0;
-A1 = 00ff;
-V1 = 0;
+// func70314()
 
-loop70320:	; 80070320
-80070320	lui    at, $800b
-AT = AT + V1;
-[AT + fb78] = h(A1);
-8007032C	lui    at, $800b
-AT = AT + V1;
-[AT + fb7a] = h(A1);
-A0 = A0 + 0001;
-V0 = A0 < 0003;
-80070340	bne    v0, zero, loop70320 [$80070320]
-V1 = V1 + 0006;
+for( int i = 0; i < 3; ++i )
+{
+    [800afb78 + i * 6] = h(00ff);
+    [800afb7a + i * 6] = h(00ff);
+}
 [800acfe4] = w(0);
-80070350	jr     ra 
-80070354	nop
 ////////////////////////////////
 
 
@@ -810,7 +789,7 @@ A1 = 8006f184;
 func6fc6c(); // init values
 
 // copy first 0x100 byte of field file
-A2 = w[80059b70];
+A2 = w[80059b70]; // field file
 A3 = 800b144c;
 T0 = A2 + 100;
 loop703cc:	; 800703CC
@@ -822,23 +801,17 @@ loop703cc:	; 800703CC
     A3 = A3 + 10;
 80070410	bne    a2, t0, loop703cc [$800703cc]
 
-S4 = 0;
-loop7045c:	; 8007045C
-    S0 = 0;
-    loop70464:	; 80070464
-        A0 = 800afb90 + (S4 * 4 + S0) * 70;
-        A1 = S0;
-        A2 = S4;
+for( int i = 0; i < 4; ++i )
+{
+    for( int j = 0; j < 4; ++j )
+    {
+        A0 = 800afb90 + (i * 4 + j) * 70;
+        A1 = j;
+        A2 = i;
         A3 = 0;
         func79e08();
-
-        S0 = S0 + 1;
-        V0 = S0 < 4;
-    8007048C	bne    v0, zero, loop70464 [$80070464]
-
-    S4 = S4 + 1;
-    V0 = S4 < 4;
-8007049C	bne    v0, zero, loop7045c [$8007045c]
+    }
+}
 
 A0 = 800b0290 + 0;
 A1 = 4;

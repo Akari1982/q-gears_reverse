@@ -2658,7 +2658,7 @@ read_two_bytes_with_80();
 
 A0 = 3;
 read_two_bytes_with_80();
-[800af7a0 + id * 78 + 58] = h(V0);
+[800af7a0 + id * 78 + 58] = h(V0); // sprite ttl
 
 A0 = 5;
 read_two_bytes_with_80();
