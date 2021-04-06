@@ -9,7 +9,7 @@ public:
     ParticleSystemManager();
     virtual ~ParticleSystemManager();
 
-    void Update( const float delta );
+    void Update( float &delta );
 
 private:
     struct Particle
@@ -38,6 +38,12 @@ private:
     };
 
     ParticleSystem system;
+
+
+
+private:
+    void ParticleInit( Emitter &emitter, Particle &particle, float &add_wait );
+    void ParticleUpdate( float &delta, Emitter &emitter, Particle &particle );
 };
 
 

@@ -27,7 +27,7 @@ ParticleSystemManager::~ParticleSystemManager()
 
 
 void
-ParticleSystemManager::Update( const float &delta )
+ParticleSystemManager::Update( float &delta )
 {
     for( int i = 0; i < 1/*8*/; ++i )
     {
