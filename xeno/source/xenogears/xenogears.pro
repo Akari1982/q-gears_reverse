@@ -1,6 +1,7 @@
 QT -= gui
+QT += opengl
 
-CONFIG += c++11 console
+#CONFIG += c++11 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -16,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         ../ParticleSystemManager.cpp \
+        ../og.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -24,4 +26,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    ../ParticleSystemManager.h
+    ../ParticleSystemManager.h \
+    ../og.h
