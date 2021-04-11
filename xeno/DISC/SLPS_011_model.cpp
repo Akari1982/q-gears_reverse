@@ -227,132 +227,105 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func2c4f0
+// func2c4f0()
+
 [80058c34] = b(A0);
 [80058c35] = b(A1);
 [80058c36] = b(A2);
-8002C508	jr     ra 
-8002C50C	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func2c510
-8002C510	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0014] = w(S1);
+// func2c510()
+
 S1 = A1;
 A1 = w[8004f7a8];
-[SP + 0010] = w(S0);
 S0 = A0;
-[SP + 0020] = w(S4);
 S4 = A2;
-[SP + 0024] = w(S5);
 S5 = A3;
-[SP + 0028] = w(RA);
-[SP + 001c] = w(S3);
-8002C544	beq    a1, zero, L2c55c [$8002c55c]
-[SP + 0018] = w(S2);
-8002C54C	jal    func30e2c [$80030e2c]
-8002C550	nop
-8002C554	bne    v0, zero, L2c6b4 [$8002c6b4]
-V0 = 0;
 
-L2c55c:	; 8002C55C
-S3 = hu[S0 + 0006];
-V1 = w[S0 + 0010];
-A0 = w[S0 + 0018];
-A1 = w[S0 + 000c];
-A2 = w[S0 + 0008];
-A3 = hu[S0 + 0004];
-V0 = w[80058c5c];
-[80058ac0] = w(S1);
+if( A1 != 0 )
+{
+    8002C54C	jal    func30e2c [$80030e2c]
+
+    if( V0 != 0 )
+    {
+        return 0;
+    }
+}
+
+S3 = hu[S0 + 6]; // number of polygons blocks
+[80058ac0] = w(S1); // pointer to place for packets
 [80058c04] = w(S4);
-8002C58C	addiu  s3, s3, $ffff (=-$1)
-V0 = V0 + A3;
-[80058c5c] = w(V0);
-8002C59C	addiu  v0, zero, $ffff (=-$1)
-[80058bc4] = w(V1);
-[80058b34] = w(A0);
-[80058bc8] = w(A1);
-[80058bd8] = w(A2);
-8002C5C0	beq    s3, v0, L2c6b0 [$8002c6b0]
-V0 = S5 << 02;
-8002C5C8	lui    v1, $8002
-8002C5CC	addiu  v1, v1, $8950 (=-$76b0)
-S4 = V0 + V1;
+S3 = S3 - 1;
+[80058c5c] = w(w[80058c5c] + hu[S0 + 4]); // number of polygons for which we create packets
+[80058bc4] = w(w[S0 + 10]); // pointer to polygons data block in 3d model file
+[80058b34] = w(w[S0 + 18]); // precalculated normal for polygon lighting
+[80058bc8] = w(w[S0 + c]);
+[80058bd8] = w(w[S0 + 8]); // pointer to vertex block in model data
 
-loop2c5d4:	; 8002C5D4
-S1 = w[80058bc4];
-8002C5DC	nop
-V1 = bu[S1 + 0000];
-8002C5E4	nop
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-8002C5F4	lui    v1, $8005
-8002C5F8	addiu  v1, v1, $f4f4 (=-$b0c)
-S0 = V0 + V1;
-V0 = S5 < 0006;
-8002C604	beq    v0, zero, L2c65c [$8002c65c]
-8002C608	nop
-V0 = w[S4 + 0000];
-8002C610	nop
-8002C614	jr     v0 
-8002C618	nop
+while( S3 != -1 )
+{
+    S1 = w[80058bc4];
+    V1 = bu[S1 + 0]; // polygons type
+    S0 = 8004f4f4 + V1 * 28;
+    switch( S5 )
+    {
+        case 0:
+        {
+            S2 = w[S0 + 0];
+        }
+        break;
 
-S2 = w[S0 + 0000];
-8002C620	j      L2c65c [$8002c65c]
-8002C624	nop
-S2 = w[S0 + 0004];
-8002C62C	j      L2c65c [$8002c65c]
-8002C630	nop
-S2 = w[S0 + 0008];
+        case 1:
+        {
+            S2 = w[S0 + 4];
+        }
+        break;
 
-L2c638:	; 8002C638
-8002C638	j      L2c65c [$8002c65c]
-8002C63C	nop
-S2 = w[S0 + 000c];
-8002C644	j      L2c65c [$8002c65c]
-8002C648	nop
-S2 = w[S0 + 0010];
-8002C650	j      L2c65c [$8002c65c]
-8002C654	nop
-S2 = w[S0 + 0014];
+        case 2:
+        {
+            S2 = w[S0 + 8];
+        }
+        break;
 
-L2c65c:	; 8002C65C
-A0 = w[80058bc4];
-A1 = h[S1 + 0002];
-A0 = A0 + 0004;
-[80058bc4] = w(A0);
-8002C674	jalr   s2 ra
-8002C678	addiu  s3, s3, $ffff (=-$1)
-V1 = h[S1 + 0002];
-V0 = w[S0 + 001c];
-8002C684	nop
-8002C688	mult   v1, v0
-V0 = w[80058bc4];
-8002C694	mflo   t0
-V0 = V0 + T0;
-[80058bc4] = w(V0);
-8002C6A4	addiu  v0, zero, $ffff (=-$1)
-8002C6A8	bne    s3, v0, loop2c5d4 [$8002c5d4]
-8002C6AC	nop
+        case 3:
+        {
+            S2 = w[S0 + c];
+        }
+        break;
 
-L2c6b0:	; 8002C6B0
-V0 = 0001;
+        case 4:
+        {
+            S2 = w[S0 + 10];
+        }
+        break;
 
-L2c6b4:	; 8002C6B4
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0030;
-8002C6D4	jr     ra 
-8002C6D8	nop
+        case 5:
+        {
+            S2 = w[S0 + 14];
+        }
+        break;
+    }
+
+    A0 = w[80058bc4];
+    A1 = h[S1 + 2]; // number of polygons
+    A0 = A0 + 4;
+    [80058bc4] = w(A0);
+
+    8002C674	jalr   s2 ra
+
+    V1 = h[S1 + 2]; // number of polygons
+    V0 = w[S0 + 1c];
+    T0 = V1 * V0;
+    V0 = w[80058bc4] + T0;
+    [80058bc4] = w(V0);
+
+    S3 = S3 - 1;
+}
+
+return 1;
 ////////////////////////////////
 
 

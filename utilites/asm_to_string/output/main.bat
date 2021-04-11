@@ -1,1 +1,1 @@
-main 1.txt
+main input.txt

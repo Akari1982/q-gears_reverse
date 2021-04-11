@@ -1,4 +1,221 @@
 ////////////////////////////////
+// func362a8
+800362A8	lui    at, $8005
+800362AC	sw     a0, $f8a4(at)
+800362B0	jr     ra 
+800362B4	nop
+////////////////////////////////
+// func362b8
+800362B8	lui    v0, $8005
+800362BC	lw     v0, $f8ac(v0)
+800362C0	jr     ra 
+800362C4	nop
+////////////////////////////////
+// func362c8
+800362C8	addiu  sp, sp, $ffd0 (=-$30)
+800362CC	sw     s5, $0024(sp)
+800362D0	addu   s5, zero, zero
+800362D4	sw     s4, $0020(sp)
+800362D8	addu   s4, zero, zero
+800362DC	sw     s3, $001c(sp)
+800362E0	addu   s3, zero, zero
+800362E4	sw     s2, $0018(sp)
+800362E8	addu   s2, zero, zero
+800362EC	sw     s1, $0014(sp)
+800362F0	addu   s1, zero, zero
+800362F4	sw     s0, $0010(sp)
+800362F8	sw     ra, $0028(sp)
+800362FC	jal    func362b8 [$800362b8]
+80036300	addu   s0, zero, zero
+80036304	beq    v0, zero, L3631c [$8003631c]
+80036308	nop
+8003630C	jal    func35c84 [$80035c84]
+80036310	nop
+80036314	j      L36378 [$80036378]
+80036318	nop
+
+L3631c:	; 8003631C
+8003631C	jal    func35b88 [$80035b88]
+80036320	nop
+80036324	beq    v0, zero, L36378 [$80036378]
+80036328	nop
+8003632C	lui    v0, $8006
+80036330	lhu    v0, $8c0c(v0)
+80036334	lui    v1, $8006
+80036338	lhu    v1, $8c10(v1)
+8003633C	or     s0, s0, v0
+80036340	or     s1, s1, v1
+80036344	lui    v0, $8006
+80036348	lhu    v0, $8b28(v0)
+8003634C	lui    v1, $8006
+80036350	lhu    v1, $8b2c(v1)
+80036354	or     s2, s2, v0
+80036358	or     s3, s3, v1
+8003635C	lui    v0, $8006
+80036360	lhu    v0, $8b40(v0)
+80036364	lui    v1, $8006
+80036368	lhu    v1, $8b44(v1)
+8003636C	or     s4, s4, v0
+80036370	j      L3631c [$8003631c]
+80036374	or     s5, s5, v1
+
+L36378:	; 80036378
+80036378	lui    at, $8006
+8003637C	sh     s0, $8c0c(at)
+80036380	lui    at, $8006
+80036384	sh     s1, $8c10(at)
+80036388	lui    at, $8006
+8003638C	sh     s2, $8b28(at)
+80036390	lui    at, $8006
+80036394	sh     s3, $8b2c(at)
+80036398	lui    at, $8006
+8003639C	sh     s4, $8b40(at)
+800363A0	lui    at, $8006
+800363A4	sh     s5, $8b44(at)
+800363A8	lw     ra, $0028(sp)
+800363AC	lw     s5, $0024(sp)
+800363B0	lw     s4, $0020(sp)
+800363B4	lw     s3, $001c(sp)
+800363B8	lw     s2, $0018(sp)
+800363BC	lw     s1, $0014(sp)
+800363C0	lw     s0, $0010(sp)
+800363C4	addiu  sp, sp, $0030
+800363C8	jr     ra 
+800363CC	nop
+////////////////////////////////
+// func363d0
+800363D0	addiu  sp, sp, $ffe0 (=-$20)
+800363D4	sw     s1, $0014(sp)
+800363D8	addu   s1, a0, zero
+800363DC	sw     ra, $001c(sp)
+800363E0	sw     s2, $0018(sp)
+800363E4	sw     s0, $0010(sp)
+800363E8	lbu    v0, $0001(s1)
+800363EC	nop
+800363F0	andi   v0, v0, $000f
+800363F4	sll    v0, v0, $01
+800363F8	addiu  v0, v0, $0002
+800363FC	beq    v0, zero, L3642c [$8003642c]
+80036400	nop
+80036404	addu   s0, s1, zero
+80036408	addu   s2, v0, s1
+
+loop3640c:	; 8003640C
+8003640C	lui    a0, $8002
+80036410	addiu  a0, a0, $8b60 (=-$74a0)
+80036414	lbu    a1, $0000(s0)
+80036418	jal    system_print [$80036eb4]
+8003641C	addiu  s0, s0, $0001
+80036420	slt    v0, s0, s2
+80036424	bne    v0, zero, loop3640c [$8003640c]
+80036428	nop
+
+L3642c:	; 8003642C
+8003642C	lui    a0, $8002
+80036430	addiu  a0, a0, $8b68 (=-$7498)
+80036434	jal    system_print [$80036eb4]
+80036438	nop
+8003643C	lbu    v0, $0000(s1)
+80036440	nop
+80036444	bne    v0, zero, L36488 [$80036488]
+80036448	ori    v1, zero, $0040
+8003644C	lbu    v0, $0001(s1)
+80036450	nop
+80036454	andi   v0, v0, $00f0
+80036458	bne    v0, v1, L36488 [$80036488]
+8003645C	nop
+80036460	lui    a0, $8002
+80036464	addiu  a0, a0, $8b6c (=-$7494)
+80036468	lbu    v0, $0003(s1)
+8003646C	lbu    a1, $0002(s1)
+80036470	nor    v0, zero, v0
+80036474	andi   v0, v0, $00ff
+80036478	sll    a1, a1, $08
+8003647C	xori   a1, a1, $ff00
+80036480	jal    system_print [$80036eb4]
+80036484	or     a1, v0, a1
+
+L36488:	; 80036488
+80036488	lw     ra, $001c(sp)
+8003648C	lw     s2, $0018(sp)
+80036490	lw     s1, $0014(sp)
+80036494	lw     s0, $0010(sp)
+80036498	addiu  sp, sp, $0020
+8003649C	jr     ra 
+800364A0	nop
+////////////////////////////////
+// func364a4
+800364A4	addiu  sp, sp, $ffe0 (=-$20)
+800364A8	sw     s0, $0018(sp)
+800364AC	lui    s0, $8006
+800364B0	addiu  s0, s0, $1c8c
+800364B4	sw     ra, $001c(sp)
+800364B8	jal    func363d0 [$800363d0]
+800364BC	addu   a0, s0, zero
+800364C0	jal    func363d0 [$800363d0]
+800364C4	addiu  a0, s0, $0022
+800364C8	lui    a1, $8006
+800364CC	lbu    a1, $8acc(a1)
+800364D0	lui    a2, $8006
+800364D4	lbu    a2, $8ad4(a2)
+800364D8	lui    a0, $8002
+800364DC	addiu  a0, a0, $8b74 (=-$748c)
+800364E0	jal    system_print [$80036eb4]
+800364E4	nop
+800364E8	lui    a1, $8006
+800364EC	lbu    a1, $8ad0(a1)
+800364F0	lui    a2, $8006
+800364F4	lbu    a2, $8ad8(a2)
+800364F8	lui    a0, $8002
+800364FC	addiu  a0, a0, $8b88 (=-$7478)
+80036500	jal    system_print [$80036eb4]
+80036504	nop
+80036508	lui    a1, $8006
+8003650C	lhu    a1, $8c0c(a1)
+80036510	lui    a2, $8006
+80036514	lhu    a2, $8c10(a2)
+80036518	lui    a0, $8002
+8003651C	addiu  a0, a0, $8b9c (=-$7464)
+80036520	jal    system_print [$80036eb4]
+80036524	nop
+
+L36528:	; 80036528
+80036528	jal    func35b88 [$80035b88]
+8003652C	nop
+80036530	beq    v0, zero, L36574 [$80036574]
+80036534	nop
+80036538	jal    system_controller_get_pressed_button_mask [$800354c0]
+8003653C	addu   a0, zero, zero
+80036540	addu   a1, v0, zero
+80036544	lui    a2, $8006
+80036548	lhu    a2, $8c0c(a2)
+8003654C	lui    a3, $8006
+80036550	lhu    a3, $8b28(a3)
+80036554	lui    v0, $8006
+80036558	lhu    v0, $8b40(v0)
+8003655C	lui    a0, $8002
+80036560	addiu  a0, a0, $8bac (=-$7454)
+80036564	jal    system_print [$80036eb4]
+80036568	sw     v0, $0010(sp)
+8003656C	j      L36528 [$80036528]
+80036570	nop
+
+L36574:	; 80036574
+80036574	lw     ra, $001c(sp)
+80036578	lw     s0, $0018(sp)
+8003657C	addiu  sp, sp, $0020
+80036580	jr     ra 
+80036584	nop
+
+80036588	lui    at, $8005
+8003658C	sw     a0, $fc34(at)
+80036590	jr     ra 
+80036594	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_print_add_letter_to_render()
 
 V0 = w[8004fc34]; // system_print_add_letter_to_render_inner()
@@ -1158,4 +1375,121 @@ A0 = file;
 system_memory_mark_removed_alloc();
 
 return mem;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func37720
+80037720	addiu  sp, sp, $ffc0 (=-$40)
+80037724	sw     s6, $0030(sp)
+80037728	addu   s6, a0, zero
+8003772C	sw     s7, $0034(sp)
+80037730	addu   s7, a1, zero
+80037734	sw     s2, $0020(sp)
+80037738	addu   s2, a2, zero
+8003773C	addu   a0, s2, zero
+80037740	addu   a1, zero, zero
+80037744	sw     ra, $003c(sp)
+80037748	sw     fp, $0038(sp)
+8003774C	sw     s5, $002c(sp)
+80037750	sw     s4, $0028(sp)
+80037754	sw     s3, $0024(sp)
+80037758	sw     s1, $001c(sp)
+8003775C	sw     s0, $0018(sp)
+80037760	jal    system_memory_allocate [$800319ec]
+80037764	sw     a3, $0010(sp)
+80037768	addu   s4, zero, zero
+8003776C	slt    v1, s4, s7
+80037770	beq    v1, zero, L37820 [$80037820]
+80037774	addu   fp, v0, zero
+80037778	addu   s5, s6, zero
+8003777C	addu   s3, s4, zero
+
+loop37780:	; 80037780
+80037780	beq    v1, zero, L377d0 [$800377d0]
+80037784	addu   s0, s4, zero
+80037788	mult   s4, s2
+8003778C	mflo   t0
+80037790	addu   s1, t0, s6
+
+loop37794:	; 80037794
+80037794	nop
+80037798	mult   s2, s3
+8003779C	mflo   t0
+800377A0	addu   a0, s6, t0
+800377A4	lw     t0, $0010(sp)
+800377A8	nop
+800377AC	jalr   t0 ra
+800377B0	addu   a1, s1, zero
+800377B4	blez   v0, L377c0 [$800377c0]
+800377B8	nop
+800377BC	addu   s3, s0, zero
+
+L377c0:	; 800377C0
+800377C0	addiu  s0, s0, $0001
+800377C4	slt    v0, s0, s7
+800377C8	bne    v0, zero, loop37794 [$80037794]
+800377CC	addu   s1, s1, s2
+
+L377d0:	; 800377D0
+800377D0	addu   a0, fp, zero
+800377D4	addu   a1, s5, zero
+800377D8	jal    system_memcpy [$8003f810]
+800377DC	addu   a2, s2, zero
+800377E0	mult   s2, s3
+800377E4	addu   a0, s5, zero
+800377E8	addu   a2, s2, zero
+800377EC	addu   s5, s5, s2
+800377F0	addiu  s4, s4, $0001
+800377F4	mflo   t0
+800377F8	addu   s0, s6, t0
+800377FC	jal    system_memcpy [$8003f810]
+80037800	addu   a1, s0, zero
+80037804	addu   a0, s0, zero
+80037808	addu   a1, fp, zero
+8003780C	jal    system_memcpy [$8003f810]
+80037810	addu   a2, s2, zero
+80037814	slt    v1, s4, s7
+80037818	bne    v1, zero, loop37780 [$80037780]
+8003781C	addu   s3, s4, zero
+
+L37820:	; 80037820
+80037820	jal    system_memory_mark_removed_alloc [$80031f0c]
+80037824	addu   a0, fp, zero
+80037828	lw     ra, $003c(sp)
+8003782C	lw     fp, $0038(sp)
+80037830	lw     s7, $0034(sp)
+80037834	lw     s6, $0030(sp)
+80037838	lw     s5, $002c(sp)
+8003783C	lw     s4, $0028(sp)
+80037840	lw     s3, $0024(sp)
+80037844	lw     s2, $0020(sp)
+80037848	lw     s1, $001c(sp)
+8003784C	lw     s0, $0018(sp)
+80037850	addiu  sp, sp, $0040
+80037854	jr     ra 
+80037858	nop
+
+
+func3785c:	; 8003785C
+8003785C	lui    t0, $8005
+80037860	addiu  t0, t0, $fcb8 (=-$348)
+80037864	sw     a0, $0000(t0)
+80037868	jr     ra 
+8003786C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_print_alias()
+
+system_print()
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func37878()
 ////////////////////////////////

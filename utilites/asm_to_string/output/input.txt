@@ -1,0 +1,129 @@
+////////////////////////////////
+// load_poly_00_01
+8002EB30	lui    t8, $0400
+8002EB34	sw     s0, $fffc(sp)
+8002EB38	sw     s1, $fff8(sp)
+8002EB3C	sw     s2, $fff0(sp)
+8002EB40	sw     s3, $ffec(sp)
+8002EB44	sw     s4, $ffe8(sp)
+8002EB48	sw     s5, $ffe4(sp)
+8002EB4C	sw     s6, $ffe0(sp)
+8002EB50	sw     s7, $ffdc(sp)
+8002EB54	lui    s0, $8006
+8002EB58	lw     s0, $8bd8(s0)
+8002EB5C	lui    s2, $8006
+8002EB60	lw     s2, $8c14(s2)
+8002EB64	lui    s3, $8006
+8002EB68	lw     s3, $8ac0(s3)
+8002EB6C	lui    s4, $8006
+8002EB70	lw     s4, $8c04(s4)
+8002EB74	lui    v0, $8005
+8002EB78	lw     v0, $f7a0(v0)
+8002EB7C	lui    v1, $8005
+8002EB80	lw     v1, $f79c(v1)
+8002EB84	lui    t7, $8005
+8002EB88	lw     t7, $f7a4(t7)
+8002EB8C	lui    s6, $00ff
+8002EB90	ori    s6, s6, $ffff
+8002EB94	lw     t4, $0000(a0)
+8002EB98	lhu    t5, $0004(a0)
+8002EB9C	andi   t6, t4, $ffff
+8002EBA0	sll    t6, t6, $03
+8002EBA4	addu   t6, t6, s0
+8002EBA8	lui    a2, $8006
+8002EBAC	lw     a2, $8b34(a2)
+8002EBB0	srl    t0, t4, $0d
+8002EBB4	andi   t0, t0, $fff8
+8002EBB8	addu   t0, t0, s0
+8002EBBC	lwc2   v0, $0000(t0)
+8002EBC0	lwc2   v1, $0004(t0)
+8002EBC4	sll    t0, t5, $03
+8002EBC8	addu   t0, t0, s0
+8002EBCC	lwc2   a0, $0000(t0)
+8002EBD0	lwc2   a1, $0004(t0)
+8002EBD4	addiu  s3, s3, $ffec (=-$14)
+
+loop2ebd8:	; 8002EBD8
+8002EBD8	lwc2   zero, $0000(t6)
+8002EBDC	lwc2   at, $0004(t6)
+8002EBE0	gte_func17t0,r11r12
+8002EBE4	beq    a1, zero, L2ecf4 [$8002ecf4]
+8002EBE8	addiu  a1, a1, $ffff (=-$1)
+8002EBEC	addiu  a0, a0, $0008
+8002EBF0	lw     t4, $0000(a0)
+8002EBF4	lhu    t5, $0004(a0)
+8002EBF8	addiu  s3, s3, $0014
+8002EBFC	andi   t6, t4, $ffff
+8002EC00	sll    t6, t6, $03
+8002EC04	addu   t6, t6, s0
+8002EC08	addiu  a2, a2, $000c
+8002EC0C	srl    t0, t4, $0d
+8002EC10	andi   t0, t0, $fff8
+8002EC14	addu   t0, t0, s0
+8002EC18	lwc2   v0, $0000(t0)
+8002EC1C	lwc2   v1, $0004(t0)
+8002EC20	sll    t1, t5, $03
+8002EC24	addu   t1, t1, s0
+8002EC28	lwc2   a0, $0000(t1)
+8002EC2C	lwc2   a1, $0004(t1)
+8002EC30	mfc2   t0,flag
+8002EC34	mfc2   t1,l33
+8002EC38	bltz   t0, loop2ebd8 [$8002ebd8]
+8002EC3C	sltu   t0, t1, v0
+8002EC40	mfc2   t2,rbk
+8002EC44	mfc2   t3,gbk
+8002EC48	gte_func26zero,r11r12
+8002EC4C	bne    t0, zero, L2ec60 [$8002ec60]
+8002EC50	sltu   t0, t2, v0
+8002EC54	bne    t0, zero, L2ec60 [$8002ec60]
+8002EC58	sltu   t0, t3, v0
+8002EC5C	beq    t0, zero, loop2ebd8 [$8002ebd8]
+
+L2ec60:	; 8002EC60
+8002EC60	andi   t0, t1, $ffff
+8002EC64	sltu   t0, t0, v1
+8002EC68	bne    t0, zero, L2ec84 [$8002ec84]
+8002EC6C	andi   t0, t2, $ffff
+8002EC70	sltu   t0, t0, v1
+8002EC74	bne    t0, zero, L2ec84 [$8002ec84]
+8002EC78	andi   t0, t3, $ffff
+8002EC7C	sltu   t0, t0, v1
+8002EC80	beq    t0, zero, loop2ebd8 [$8002ebd8]
+
+L2ec84:	; 8002EC84
+8002EC84	mfc2   t0,ofx
+8002EC88	sw     t1, $0008(s3)
+8002EC8C	gte_func26t8,r11r12
+8002EC90	sw     t2, $000c(s3)
+8002EC94	blez   t0, loop2ebd8 [$8002ebd8]
+8002EC98	sw     t3, $0010(s3)
+8002EC9C	and    s3, s3, s6
+8002ECA0	mfc2   t0,trz
+8002ECA4	addiu  s2, s2, $0001
+8002ECA8	lw     t1, $fff4(a2)
+8002ECAC	lwc2   zero, $fff8(a2)
+8002ECB0	lwc2   at, $fffc(a2)
+8002ECB4	mtc2   t1,try
+8002ECB8	gte_func24t0,r11r12
+8002ECBC	srav   t0, t7, t0
+8002ECC0	sll    t0, t0, $02
+8002ECC4	addu   t0, t0, s4
+8002ECC8	mfc2   t2,gfc
+8002ECCC	lui    at, $ff00
+8002ECD0	and    t1, t1, at
+8002ECD4	and    t2, t2, s6
+8002ECD8	or     t1, t1, t2
+8002ECDC	sw     t1, $0004(s3)
+8002ECE0	lw     t1, $0000(t0)
+8002ECE4	sw     s3, $0000(t0)
+8002ECE8	or     t1, t1, t8
+8002ECEC	j      loop2ebd8 [$8002ebd8]
+8002ECF0	sw     t1, $0000(s3)
+
+L2ecf4:	; 8002ECF4
+8002ECF4	lui    at, $8006
+8002ECF8	sw     a2, $8b34(at)
+8002ECFC	ori    a3, zero, $0014
+8002ED00	j      L2e004 [$8002e004]
+8002ED04	nop
+////////////////////////////////

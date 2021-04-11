@@ -1990,3 +1990,803 @@ L4a78c:	; 8004A78C
 8004A78C	jr     ra 
 8004A790	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// func4a794
+8004A794	addu   v0, a1, zero
+8004A798	lw     t1, $0000(a0)
+8004A79C	lw     t2, $0004(a0)
+8004A7A0	sw     t1, $0004(a1)
+8004A7A4	sw     t2, $0000(a1)
+8004A7A8	sh     t1, $0000(a1)
+8004A7AC	lw     t3, $0008(a0)
+8004A7B0	lw     t1, $000c(a0)
+8004A7B4	sw     t3, $000c(a1)
+8004A7B8	sw     t1, $0008(a1)
+8004A7BC	sh     t2, $000c(a1)
+8004A7C0	sh     t3, $0008(a1)
+8004A7C4	lh     t2, $0010(a0)
+8004A7C8	sh     t1, $0004(a1)
+8004A7CC	jr     ra 
+8004A7D0	sh     t2, $0010(a1)
+////////////////////////////////
+// func4a7d4
+8004A7D4	lh     t7, $0000(a0)
+8004A7D8	addu   v0, a1, zero
+8004A7DC	bgez   t7, L4a818 [$8004a818]
+8004A7E0	andi   t9, t7, $0fff
+8004A7E4	subu   t7, zero, t7
+8004A7E8	bgez   t7, L4a7f0 [$8004a7f0]
+8004A7EC	andi   t7, t7, $0fff
+
+L4a7f0:	; 8004A7F0
+8004A7F0	sll    t8, t7, $02
+8004A7F4	lui    t9, $8005
+8004A7F8	addu   t9, t9, t8
+8004A7FC	lw     t9, $1a90(t9)
+8004A800	nop
+8004A804	sll    t6, t9, $10
+8004A808	sra    t6, t6, $10
+8004A80C	subu   t3, zero, t6
+8004A810	j      L4a83c [$8004a83c]
+8004A814	sra    t0, t9, $10
+
+L4a818:	; 8004A818
+8004A818	sll    t8, t9, $02
+8004A81C	lui    t9, $8005
+8004A820	addu   t9, t9, t8
+8004A824	lw     t9, $1a90(t9)
+8004A828	nop
+8004A82C	sll    t8, t9, $10
+8004A830	sra    t3, t8, $10
+8004A834	subu   t6, zero, t3
+8004A838	sra    t0, t9, $10
+
+L4a83c:	; 8004A83C
+8004A83C	lh     t7, $0002(a0)
+8004A840	nop
+8004A844	bgez   t7, L4a880 [$8004a880]
+8004A848	andi   t9, t7, $0fff
+8004A84C	subu   t7, zero, t7
+8004A850	bgez   t7, L4a858 [$8004a858]
+8004A854	andi   t7, t7, $0fff
+
+L4a858:	; 8004A858
+8004A858	sll    t8, t7, $02
+8004A85C	lui    t9, $8005
+8004A860	addu   t9, t9, t8
+8004A864	lw     t9, $1a90(t9)
+8004A868	nop
+8004A86C	sll    t8, t9, $10
+8004A870	sra    t8, t8, $10
+8004A874	subu   t4, zero, t8
+8004A878	j      L4a8a0 [$8004a8a0]
+8004A87C	sra    t1, t9, $10
+
+L4a880:	; 8004A880
+8004A880	sll    t8, t9, $02
+8004A884	lui    t9, $8005
+8004A888	addu   t9, t9, t8
+8004A88C	lw     t9, $1a90(t9)
+8004A890	nop
+8004A894	sll    t8, t9, $10
+8004A898	sra    t4, t8, $10
+8004A89C	sra    t1, t9, $10
+
+L4a8a0:	; 8004A8A0
+8004A8A0	multu  t4, t0
+8004A8A4	lh     t7, $0004(a0)
+8004A8A8	sh     t6, $000a(a1)
+8004A8AC	mflo   t8
+8004A8B0	sra    t6, t8, $0c
+8004A8B4	nop
+8004A8B8	multu  t1, t0
+8004A8BC	sh     t6, $0004(a1)
+8004A8C0	bgez   t7, L4a908 [$8004a908]
+8004A8C4	andi   t9, t7, $0fff
+8004A8C8	mflo   t8
+8004A8CC	sra    t6, t8, $0c
+8004A8D0	sh     t6, $0010(a1)
+8004A8D4	subu   t7, zero, t7
+8004A8D8	bgez   t7, L4a8e0 [$8004a8e0]
+8004A8DC	andi   t7, t7, $0fff
+
+L4a8e0:	; 8004A8E0
+8004A8E0	sll    t8, t7, $02
+8004A8E4	lui    t9, $8005
+8004A8E8	addu   t9, t9, t8
+8004A8EC	lw     t9, $1a90(t9)
+8004A8F0	nop
+8004A8F4	sll    t8, t9, $10
+8004A8F8	sra    t8, t8, $10
+8004A8FC	subu   t5, zero, t8
+8004A900	j      L4a934 [$8004a934]
+8004A904	sra    t2, t9, $10
+
+L4a908:	; 8004A908
+8004A908	mflo   t7
+8004A90C	sra    t6, t7, $0c
+8004A910	sh     t6, $0010(a1)
+8004A914	sll    t8, t9, $02
+8004A918	lui    t9, $8005
+8004A91C	addu   t9, t9, t8
+8004A920	lw     t9, $1a90(t9)
+8004A924	nop
+8004A928	sll    t8, t9, $10
+8004A92C	sra    t5, t8, $10
+8004A930	sra    t2, t9, $10
+
+L4a934:	; 8004A934
+8004A934	multu  t5, t0
+8004A938	nop
+8004A93C	nop
+8004A940	mflo   t7
+8004A944	sra    t6, t7, $0c
+8004A948	sh     t6, $0006(a1)
+8004A94C	multu  t2, t0
+8004A950	nop
+8004A954	nop
+8004A958	mflo   t7
+8004A95C	sra    t6, t7, $0c
+8004A960	nop
+8004A964	multu  t4, t3
+8004A968	sh     t6, $0008(a1)
+8004A96C	nop
+8004A970	mflo   t7
+8004A974	sra    t8, t7, $0c
+8004A978	nop
+8004A97C	multu  t8, t5
+8004A980	nop
+8004A984	nop
+8004A988	mflo   t7
+8004A98C	sra    t6, t7, $0c
+8004A990	nop
+8004A994	multu  t1, t2
+8004A998	nop
+8004A99C	nop
+8004A9A0	mflo   t7
+8004A9A4	sra    t9, t7, $0c
+8004A9A8	addu   t7, t9, t6
+8004A9AC	multu  t1, t5
+8004A9B0	sh     t7, $0000(a1)
+8004A9B4	nop
+8004A9B8	mflo   t6
+8004A9BC	sra    t9, t6, $0c
+8004A9C0	subu   t7, zero, t9
+8004A9C4	multu  t8, t2
+8004A9C8	nop
+8004A9CC	nop
+8004A9D0	mflo   t6
+8004A9D4	sra    t9, t6, $0c
+8004A9D8	addu   t6, t7, t9
+8004A9DC	multu  t1, t3
+8004A9E0	sh     t6, $0002(a1)
+8004A9E4	nop
+8004A9E8	mflo   t7
+8004A9EC	sra    t8, t7, $0c
+8004A9F0	nop
+8004A9F4	multu  t8, t2
+8004A9F8	nop
+8004A9FC	nop
+8004AA00	mflo   t7
+8004AA04	sra    t6, t7, $0c
+8004AA08	nop
+8004AA0C	multu  t4, t5
+8004AA10	nop
+8004AA14	nop
+8004AA18	mflo   t7
+8004AA1C	sra    t9, t7, $0c
+8004AA20	addu   t7, t9, t6
+8004AA24	multu  t4, t2
+8004AA28	sh     t7, $000e(a1)
+8004AA2C	nop
+8004AA30	mflo   t6
+8004AA34	sra    t9, t6, $0c
+8004AA38	subu   t7, zero, t9
+8004AA3C	multu  t8, t5
+8004AA40	nop
+8004AA44	nop
+8004AA48	mflo   t6
+8004AA4C	sra    t9, t6, $0c
+8004AA50	addu   t6, t7, t9
+8004AA54	sh     t6, $000c(a1)
+8004AA58	jr     ra 
+8004AA5C	nop
+8004AA60	nop
+////////////////////////////////
+// func4aa64
+8004AA64	lh     t7, $0000(a0)
+8004AA68	addu   v0, a1, zero
+8004AA6C	bgez   t7, L4aaa8 [$8004aaa8]
+8004AA70	andi   t9, t7, $0fff
+8004AA74	subu   t7, zero, t7
+8004AA78	bgez   t7, L4aa80 [$8004aa80]
+8004AA7C	andi   t7, t7, $0fff
+
+L4aa80:	; 8004AA80
+8004AA80	sll    t8, t7, $02
+8004AA84	lui    t9, $8005
+8004AA88	addu   t9, t9, t8
+8004AA8C	lw     t9, $1a90(t9)
+8004AA90	nop
+8004AA94	sll    t6, t9, $10
+8004AA98	sra    t6, t6, $10
+8004AA9C	subu   t3, zero, t6
+8004AAA0	j      L4aac8 [$8004aac8]
+8004AAA4	sra    t0, t9, $10
+
+L4aaa8:	; 8004AAA8
+8004AAA8	sll    t8, t9, $02
+8004AAAC	lui    t9, $8005
+8004AAB0	addu   t9, t9, t8
+8004AAB4	lw     t9, $1a90(t9)
+8004AAB8	nop
+8004AABC	sll    t8, t9, $10
+8004AAC0	sra    t3, t8, $10
+8004AAC4	sra    t0, t9, $10
+
+L4aac8:	; 8004AAC8
+8004AAC8	lh     t7, $0002(a0)
+8004AACC	nop
+8004AAD0	bgez   t7, L4ab0c [$8004ab0c]
+8004AAD4	andi   t9, t7, $0fff
+8004AAD8	subu   t7, zero, t7
+8004AADC	bgez   t7, L4aae4 [$8004aae4]
+8004AAE0	andi   t7, t7, $0fff
+
+L4aae4:	; 8004AAE4
+8004AAE4	sll    t8, t7, $02
+8004AAE8	lui    t9, $8005
+8004AAEC	addu   t9, t9, t8
+8004AAF0	lw     t9, $1a90(t9)
+8004AAF4	nop
+8004AAF8	sll    t6, t9, $10
+8004AAFC	sra    t6, t6, $10
+8004AB00	subu   t4, zero, t6
+8004AB04	j      L4ab30 [$8004ab30]
+8004AB08	sra    t1, t9, $10
+
+L4ab0c:	; 8004AB0C
+8004AB0C	sll    t8, t9, $02
+8004AB10	lui    t9, $8005
+8004AB14	addu   t9, t9, t8
+8004AB18	lw     t9, $1a90(t9)
+8004AB1C	nop
+8004AB20	sll    t6, t9, $10
+8004AB24	sra    t4, t6, $10
+8004AB28	subu   t6, zero, t4
+8004AB2C	sra    t1, t9, $10
+
+L4ab30:	; 8004AB30
+8004AB30	multu  t3, t1
+8004AB34	lh     t7, $0004(a0)
+8004AB38	sh     t6, $000c(a1)
+8004AB3C	mflo   t8
+8004AB40	sra    t6, t8, $0c
+8004AB44	nop
+8004AB48	multu  t0, t1
+8004AB4C	sh     t6, $000e(a1)
+8004AB50	bgez   t7, L4ab98 [$8004ab98]
+8004AB54	andi   t9, t7, $0fff
+8004AB58	mflo   t8
+8004AB5C	sra    t6, t8, $0c
+8004AB60	sh     t6, $0010(a1)
+8004AB64	subu   t7, zero, t7
+8004AB68	bgez   t7, L4ab70 [$8004ab70]
+8004AB6C	andi   t7, t7, $0fff
+
+L4ab70:	; 8004AB70
+8004AB70	sll    t8, t7, $02
+8004AB74	lui    t9, $8005
+8004AB78	addu   t9, t9, t8
+8004AB7C	lw     t9, $1a90(t9)
+8004AB80	nop
+8004AB84	sll    t8, t9, $10
+8004AB88	sra    t8, t8, $10
+8004AB8C	subu   t5, zero, t8
+8004AB90	j      L4abc4 [$8004abc4]
+8004AB94	sra    t2, t9, $10
+
+L4ab98:	; 8004AB98
+8004AB98	mflo   t7
+8004AB9C	sra    t6, t7, $0c
+8004ABA0	sh     t6, $0010(a1)
+8004ABA4	sll    t8, t9, $02
+8004ABA8	lui    t9, $8005
+8004ABAC	addu   t9, t9, t8
+8004ABB0	lw     t9, $1a90(t9)
+8004ABB4	nop
+8004ABB8	sll    t8, t9, $10
+8004ABBC	sra    t5, t8, $10
+8004ABC0	sra    t2, t9, $10
+
+L4abc4:	; 8004ABC4
+8004ABC4	multu  t1, t2
+8004ABC8	nop
+8004ABCC	nop
+8004ABD0	mflo   t7
+8004ABD4	sra    t6, t7, $0c
+8004ABD8	sh     t6, $0000(a1)
+8004ABDC	multu  t5, t1
+8004ABE0	nop
+8004ABE4	nop
+8004ABE8	mflo   t7
+8004ABEC	sra    t6, t7, $0c
+8004ABF0	nop
+8004ABF4	multu  t3, t4
+8004ABF8	sh     t6, $0006(a1)
+8004ABFC	nop
+8004AC00	mflo   t7
+8004AC04	sra    t8, t7, $0c
+8004AC08	nop
+8004AC0C	multu  t8, t2
+8004AC10	nop
+8004AC14	nop
+8004AC18	mflo   t7
+8004AC1C	sra    t6, t7, $0c
+8004AC20	nop
+8004AC24	multu  t5, t0
+8004AC28	nop
+8004AC2C	nop
+8004AC30	mflo   t7
+8004AC34	sra    t9, t7, $0c
+8004AC38	subu   t7, t6, t9
+8004AC3C	multu  t0, t2
+8004AC40	sh     t7, $0002(a1)
+8004AC44	nop
+8004AC48	mflo   t6
+8004AC4C	sra    t7, t6, $0c
+8004AC50	nop
+8004AC54	multu  t8, t5
+8004AC58	nop
+8004AC5C	nop
+8004AC60	mflo   t6
+8004AC64	sra    t9, t6, $0c
+8004AC68	addu   t6, t9, t7
+8004AC6C	multu  t4, t0
+8004AC70	sh     t6, $0008(a1)
+8004AC74	nop
+8004AC78	mflo   t7
+8004AC7C	sra    t8, t7, $0c
+8004AC80	nop
+8004AC84	multu  t8, t2
+8004AC88	nop
+8004AC8C	nop
+8004AC90	mflo   t7
+8004AC94	sra    t6, t7, $0c
+8004AC98	nop
+8004AC9C	multu  t3, t5
+8004ACA0	nop
+8004ACA4	nop
+8004ACA8	mflo   t7
+8004ACAC	sra    t9, t7, $0c
+8004ACB0	addu   t7, t6, t9
+8004ACB4	multu  t3, t2
+8004ACB8	sh     t7, $0004(a1)
+8004ACBC	nop
+8004ACC0	mflo   t6
+8004ACC4	sra    t7, t6, $0c
+8004ACC8	nop
+8004ACCC	multu  t8, t5
+8004ACD0	nop
+8004ACD4	nop
+8004ACD8	mflo   t6
+8004ACDC	sra    t9, t6, $0c
+8004ACE0	subu   t6, t9, t7
+8004ACE4	sh     t6, $000a(a1)
+8004ACE8	jr     ra 
+8004ACEC	nop
+8004ACF0	nop
+////////////////////////////////
+// func4acf4
+8004ACF4	addu   t7, a0, zero
+8004ACF8	addu   v0, a1, zero
+8004ACFC	bgez   t7, L4ad38 [$8004ad38]
+8004AD00	andi   t9, t7, $0fff
+8004AD04	subu   t7, zero, t7
+8004AD08	bgez   t7, L4ad10 [$8004ad10]
+8004AD0C	andi   t7, t7, $0fff
+
+L4ad10:	; 8004AD10
+8004AD10	sll    t8, t7, $02
+8004AD14	lui    t9, $8005
+8004AD18	addu   t9, t9, t8
+8004AD1C	lw     t9, $1a90(t9)
+8004AD20	nop
+8004AD24	sll    t6, t9, $10
+8004AD28	sra    t6, t6, $10
+8004AD2C	subu   t1, zero, t6
+8004AD30	j      L4ad58 [$8004ad58]
+8004AD34	sra    t0, t9, $10
+
+L4ad38:	; 8004AD38
+8004AD38	sll    t8, t9, $02
+8004AD3C	lui    t9, $8005
+8004AD40	addu   t9, t9, t8
+8004AD44	lw     t9, $1a90(t9)
+8004AD48	nop
+8004AD4C	sll    t8, t9, $10
+8004AD50	sra    t1, t8, $10
+8004AD54	sra    t0, t9, $10
+
+L4ad58:	; 8004AD58
+8004AD58	lh     t2, $0006(a1)
+8004AD5C	lh     t5, $000c(a1)
+8004AD60	multu  t0, t2
+8004AD64	lh     t3, $0008(a1)
+8004AD68	lh     t6, $000e(a1)
+8004AD6C	mflo   t8
+8004AD70	lh     t4, $000a(a1)
+8004AD74	lh     t7, $0010(a1)
+8004AD78	multu  t1, t5
+8004AD7C	nop
+8004AD80	nop
+8004AD84	mflo   t9
+8004AD88	subu   t9, t8, t9
+8004AD8C	sra    t8, t9, $0c
+8004AD90	multu  t0, t3
+8004AD94	sh     t8, $0006(a1)
+8004AD98	nop
+8004AD9C	mflo   t8
+8004ADA0	nop
+8004ADA4	nop
+8004ADA8	multu  t1, t6
+8004ADAC	nop
+8004ADB0	nop
+8004ADB4	mflo   t9
+8004ADB8	subu   t9, t8, t9
+8004ADBC	sra    t8, t9, $0c
+8004ADC0	multu  t0, t4
+8004ADC4	sh     t8, $0008(a1)
+8004ADC8	nop
+8004ADCC	mflo   t8
+8004ADD0	nop
+8004ADD4	nop
+8004ADD8	multu  t1, t7
+8004ADDC	nop
+8004ADE0	nop
+8004ADE4	mflo   t9
+8004ADE8	subu   t9, t8, t9
+8004ADEC	sra    t8, t9, $0c
+8004ADF0	multu  t1, t2
+8004ADF4	sh     t8, $000a(a1)
+8004ADF8	nop
+8004ADFC	mflo   t8
+8004AE00	nop
+8004AE04	nop
+8004AE08	multu  t0, t5
+8004AE0C	nop
+8004AE10	nop
+8004AE14	mflo   t9
+8004AE18	addu   t9, t8, t9
+8004AE1C	sra    t8, t9, $0c
+8004AE20	multu  t1, t3
+8004AE24	sh     t8, $000c(a1)
+8004AE28	nop
+8004AE2C	mflo   t8
+8004AE30	nop
+8004AE34	nop
+8004AE38	multu  t0, t6
+8004AE3C	nop
+8004AE40	nop
+8004AE44	mflo   t9
+8004AE48	addu   t9, t8, t9
+8004AE4C	sra    t8, t9, $0c
+8004AE50	multu  t1, t4
+8004AE54	sh     t8, $000e(a1)
+8004AE58	nop
+8004AE5C	mflo   t8
+8004AE60	nop
+8004AE64	nop
+8004AE68	multu  t0, t7
+8004AE6C	nop
+8004AE70	nop
+8004AE74	mflo   t9
+8004AE78	addu   t9, t8, t9
+8004AE7C	sra    t8, t9, $0c
+8004AE80	sh     t8, $0010(a1)
+8004AE84	jr     ra 
+8004AE88	nop
+8004AE8C	nop
+8004AE90	nop
+////////////////////////////////
+// func4ae94
+8004AE94	addu   t7, a0, zero
+8004AE98	addu   v0, a1, zero
+8004AE9C	bgez   t7, L4aed4 [$8004aed4]
+8004AEA0	andi   t9, t7, $0fff
+8004AEA4	subu   t7, zero, t7
+8004AEA8	bgez   t7, L4aeb0 [$8004aeb0]
+8004AEAC	andi   t7, t7, $0fff
+
+L4aeb0:	; 8004AEB0
+8004AEB0	sll    t8, t7, $02
+8004AEB4	lui    t9, $8005
+8004AEB8	addu   t9, t9, t8
+8004AEBC	lw     t9, $1a90(t9)
+8004AEC0	nop
+8004AEC4	sll    t6, t9, $10
+8004AEC8	sra    t1, t6, $10
+8004AECC	j      L4aef8 [$8004aef8]
+8004AED0	sra    t0, t9, $10
+
+L4aed4:	; 8004AED4
+8004AED4	sll    t8, t9, $02
+8004AED8	lui    t9, $8005
+8004AEDC	addu   t9, t9, t8
+8004AEE0	lw     t9, $1a90(t9)
+8004AEE4	nop
+8004AEE8	sll    t8, t9, $10
+8004AEEC	sra    t7, t8, $10
+8004AEF0	subu   t1, zero, t7
+8004AEF4	sra    t0, t9, $10
+
+L4aef8:	; 8004AEF8
+8004AEF8	lh     t2, $0000(a1)
+8004AEFC	lh     t5, $000c(a1)
+8004AF00	multu  t0, t2
+8004AF04	lh     t3, $0002(a1)
+8004AF08	lh     t6, $000e(a1)
+8004AF0C	mflo   t8
+8004AF10	lh     t4, $0004(a1)
+8004AF14	lh     t7, $0010(a1)
+8004AF18	multu  t1, t5
+8004AF1C	nop
+8004AF20	nop
+8004AF24	mflo   t9
+8004AF28	subu   t9, t8, t9
+8004AF2C	sra    t8, t9, $0c
+8004AF30	multu  t0, t3
+8004AF34	sh     t8, $0000(a1)
+8004AF38	nop
+8004AF3C	mflo   t8
+8004AF40	nop
+8004AF44	nop
+8004AF48	multu  t1, t6
+8004AF4C	nop
+8004AF50	nop
+8004AF54	mflo   t9
+8004AF58	subu   t9, t8, t9
+8004AF5C	sra    t8, t9, $0c
+8004AF60	multu  t0, t4
+8004AF64	sh     t8, $0002(a1)
+8004AF68	nop
+8004AF6C	mflo   t8
+8004AF70	nop
+8004AF74	nop
+8004AF78	multu  t1, t7
+8004AF7C	nop
+8004AF80	nop
+8004AF84	mflo   t9
+8004AF88	subu   t9, t8, t9
+8004AF8C	sra    t8, t9, $0c
+8004AF90	multu  t1, t2
+8004AF94	sh     t8, $0004(a1)
+8004AF98	nop
+8004AF9C	mflo   t8
+8004AFA0	nop
+8004AFA4	nop
+8004AFA8	multu  t0, t5
+8004AFAC	nop
+8004AFB0	nop
+8004AFB4	mflo   t9
+8004AFB8	addu   t9, t8, t9
+8004AFBC	sra    t8, t9, $0c
+8004AFC0	multu  t1, t3
+8004AFC4	sh     t8, $000c(a1)
+8004AFC8	nop
+8004AFCC	mflo   t8
+8004AFD0	nop
+8004AFD4	nop
+8004AFD8	multu  t0, t6
+8004AFDC	nop
+8004AFE0	nop
+8004AFE4	mflo   t9
+8004AFE8	addu   t9, t8, t9
+8004AFEC	sra    t8, t9, $0c
+8004AFF0	multu  t1, t4
+8004AFF4	sh     t8, $000e(a1)
+8004AFF8	nop
+8004AFFC	mflo   t8
+8004B000	nop
+8004B004	nop
+8004B008	multu  t0, t7
+8004B00C	nop
+8004B010	nop
+8004B014	mflo   t9
+8004B018	addu   t9, t8, t9
+8004B01C	sra    t8, t9, $0c
+8004B020	sh     t8, $0010(a1)
+8004B024	jr     ra 
+8004B028	nop
+8004B02C	nop
+8004B030	nop
+////////////////////////////////
+// func4b034
+8004B034	addu   t7, a0, zero
+8004B038	addu   v0, a1, zero
+8004B03C	bgez   t7, L4b078 [$8004b078]
+8004B040	andi   t9, t7, $0fff
+8004B044	subu   t7, zero, t7
+8004B048	bgez   t7, L4b050 [$8004b050]
+8004B04C	andi   t7, t7, $0fff
+
+L4b050:	; 8004B050
+8004B050	sll    t8, t7, $02
+8004B054	lui    t9, $8005
+8004B058	addu   t9, t9, t8
+8004B05C	lw     t9, $1a90(t9)
+8004B060	nop
+8004B064	sll    t6, t9, $10
+8004B068	sra    t6, t6, $10
+8004B06C	subu   t1, zero, t6
+8004B070	j      L4b098 [$8004b098]
+8004B074	sra    t0, t9, $10
+
+L4b078:	; 8004B078
+8004B078	sll    t8, t9, $02
+8004B07C	lui    t9, $8005
+8004B080	addu   t9, t9, t8
+8004B084	lw     t9, $1a90(t9)
+8004B088	nop
+8004B08C	sll    t8, t9, $10
+8004B090	sra    t1, t8, $10
+8004B094	sra    t0, t9, $10
+
+L4b098:	; 8004B098
+8004B098	lh     t2, $0000(a1)
+8004B09C	lh     t5, $0006(a1)
+8004B0A0	multu  t0, t2
+8004B0A4	lh     t3, $0002(a1)
+8004B0A8	lh     t6, $0008(a1)
+8004B0AC	mflo   t8
+8004B0B0	lh     t4, $0004(a1)
+8004B0B4	lh     t7, $000a(a1)
+8004B0B8	multu  t1, t5
+8004B0BC	nop
+8004B0C0	nop
+8004B0C4	mflo   t9
+8004B0C8	subu   t9, t8, t9
+8004B0CC	sra    t8, t9, $0c
+8004B0D0	multu  t0, t3
+8004B0D4	sh     t8, $0000(a1)
+8004B0D8	nop
+8004B0DC	mflo   t8
+8004B0E0	nop
+8004B0E4	nop
+8004B0E8	multu  t1, t6
+8004B0EC	nop
+8004B0F0	nop
+8004B0F4	mflo   t9
+8004B0F8	subu   t9, t8, t9
+8004B0FC	sra    t8, t9, $0c
+8004B100	multu  t0, t4
+8004B104	sh     t8, $0002(a1)
+8004B108	nop
+8004B10C	mflo   t8
+8004B110	nop
+8004B114	nop
+8004B118	multu  t1, t7
+8004B11C	nop
+8004B120	nop
+8004B124	mflo   t9
+8004B128	subu   t9, t8, t9
+8004B12C	sra    t8, t9, $0c
+8004B130	multu  t1, t2
+8004B134	sh     t8, $0004(a1)
+8004B138	nop
+8004B13C	mflo   t8
+8004B140	nop
+8004B144	nop
+8004B148	multu  t0, t5
+8004B14C	nop
+8004B150	nop
+8004B154	mflo   t9
+8004B158	addu   t9, t8, t9
+8004B15C	sra    t8, t9, $0c
+8004B160	multu  t1, t3
+8004B164	sh     t8, $0006(a1)
+8004B168	nop
+8004B16C	mflo   t8
+8004B170	nop
+8004B174	nop
+8004B178	multu  t0, t6
+8004B17C	nop
+8004B180	nop
+8004B184	mflo   t9
+8004B188	addu   t9, t8, t9
+8004B18C	sra    t8, t9, $0c
+8004B190	multu  t1, t4
+8004B194	sh     t8, $0008(a1)
+8004B198	nop
+8004B19C	mflo   t8
+8004B1A0	nop
+8004B1A4	nop
+8004B1A8	multu  t0, t7
+8004B1AC	nop
+8004B1B0	nop
+8004B1B4	mflo   t9
+8004B1B8	addu   t9, t8, t9
+8004B1BC	sra    t8, t9, $0c
+8004B1C0	sh     t8, $000a(a1)
+8004B1C4	jr     ra 
+8004B1C8	nop
+8004B1CC	nop
+8004B1D0	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_rotation_based_on_vector_x_y
+//A0 - Y
+//A1 - X
+//V0 - rotation for entity
+
+A2 = 0;
+A3 = 0;
+
+if (A1 == 0 && A0 == 0)
+{
+    return 0;
+}
+
+if (A1 < 0)
+{
+    A2 = 1;
+    A1 = -A1;
+}
+
+if (A0 < 0)
+{
+    A3 = 1;
+    A0 = -A0;
+}
+
+
+
+if (A0 >= A1)
+{
+    if (A0 & 7fe00000)
+    {
+        V0 = A1 >> 10;
+        A0 = A0 / V0;
+    }
+    else
+    {
+        V0 = A0 << 10;
+        A0 = V0 / A1;
+    }
+
+    V1 = h[800566d0 + A0 * 2];
+}
+else
+{
+    if (A1 & 7fe00000)
+    {
+        V0 = A0 >> 10;
+        A0 = A1 / V0;
+    }
+    else
+    {
+        V0 = A1 << 10;
+        A0 = V0 / A0;
+    }
+
+    V1 = 0400 - h[800566d0 + A0 * 2];
+}
+
+if (A2 != 0)
+{
+    V1 = 0800 - V1;
+}
+
+if (A3 != 0)
+{
+    V1 = -V1;
+}
+
+V0 = V1;
+////////////////////////////////

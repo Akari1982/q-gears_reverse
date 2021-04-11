@@ -109,30 +109,6 @@
 
 
 ////////////////////////////////
-// system_bios_file_write()
-// A(03h) or B(35h) - FileWrite(fd, src, length) - Write data to an open file
-//  out: V0  Number of bytes written.
-// Writes the number of bytes to the specified open file. Write to the memory card
-// per $0080 bytes. Writing to the cdrom returns 0.
-800403CC	addiu  t2, zero, $00b0
-800403D0	jr     t2 
-800403D4	addiu  t1, zero, $0035
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_change_clear_pad()
-// B(5Bh) ChangeClearPad(int)   ;pad AND card (ie. used also for Card)
-
-T2 = b0;
-T1 = 5b;
-80040450	jr     t2 
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_enter_critical_section()
 // SYS(01h) - EnterCriticalSection() ;syscall with r4=01h
 // Disables interrupts by clearing SR (cop0r12) Bit 2 and 10
@@ -154,4 +130,247 @@ T1 = 5b;
 // (all registers except SR and K0 are unchanged).
 8004035C	addiu  a0, zero, $0002
 80040360	syscall $00000
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4036c
+8004036C	mfc0   a0,sr
+80040370	nop
+80040374	addiu  at, zero, $fbfe (=-$402)
+80040378	and    a0, a0, at
+8004037C	mtc0   a0,sr
+80040380	nop
+80040384	jr     ra 
+80040388	nop
+////////////////////////////////
+// func4038c
+8004038C	mfc0   a0,sr
+80040390	nop
+80040394	ori    a0, a0, $0401
+80040398	mtc0   a0,sr
+8004039C	nop
+800403A0	jr     ra 
+800403A4	nop
+800403A8	nop
+////////////////////////////////
+// func403a8
+800403AC	addiu  t2, zero, $00b0
+800403B0	jr     t2 
+800403B4	addiu  t1, zero, $0032
+800403B8	nop
+////////////////////////////////
+// func403bc
+800403BC	addiu  t2, zero, $00b0
+800403C0	jr     t2 
+800403C4	addiu  t1, zero, $0034
+800403C8	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_file_write()
+// A(03h) or B(35h) - FileWrite(fd, src, length) - Write data to an open file
+//  out: V0  Number of bytes written.
+// Writes the number of bytes to the specified open file. Write to the memory card
+// per $0080 bytes. Writing to the cdrom returns 0.
+800403CC	addiu  t2, zero, $00b0
+800403D0	jr     t2 
+800403D4	addiu  t1, zero, $0035
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func403dc
+800403DC	addiu  t2, zero, $00b0
+800403E0	jr     t2 
+800403E4	addiu  t1, zero, $0036
+800403E8	nop
+////////////////////////////////
+// func403ec
+800403EC	addiu  t2, zero, $00b0
+800403F0	jr     t2 
+800403F4	addiu  t1, zero, $0041
+800403F8	nop
+////////////////////////////////
+// func403fc
+800403FC	addiu  t2, zero, $00b0
+80040400	jr     t2 
+80040404	addiu  t1, zero, $0042
+80040408	nop
+////////////////////////////////
+// func4040c
+8004040C	addiu  t2, zero, $00b0
+80040410	jr     t2 
+80040414	addiu  t1, zero, $0043
+80040418	nop
+////////////////////////////////
+// func4041c
+8004041C	addiu  t2, zero, $00b0
+80040420	jr     t2 
+80040424	addiu  t1, zero, $0044
+80040428	nop
+////////////////////////////////
+// func4042c
+8004042C	addiu  t2, zero, $00b0
+80040430	jr     t2 
+80040434	addiu  t1, zero, $0045
+80040438	nop
+////////////////////////////////
+// func4043c
+8004043C	addiu  t2, zero, $00b0
+80040440	jr     t2 
+80040444	addiu  t1, zero, $0051
+80040448	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_change_clear_pad()
+// B(5Bh) ChangeClearPad(int)   ;pad AND card (ie. used also for Card)
+
+T2 = b0;
+T1 = 5b;
+80040450	jr     t2 
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4045c
+8004045C	jr     ra 
+80040460	addu   v0, gp, zero
+80040464	nop
+80040468	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_root_counter_setup()
+
+T0 = A0 & ffff;
+
+if( T0 >= 3 )
+{
+    return 0;
+}
+
+root = w[80055aa0]; // 1f801100
+
+// 6 IRQ Once/Repeat Mode    (0=One-shot, 1=Repeatedly)
+// 3 Reset counter to 0000h  (0=After Counter=FFFFh, 1=After Counter=Target)
+counter_mode = 0048;
+
+[root + T0 * 10 + 4] = h(0); // Timer 0..2 Counter Mode
+[root + T0 * 10 + 8] = h(A1); // Timer 0..2 Counter Target Value
+
+if( T0 < 2 )
+{
+    if( A2 & 0010 )
+    {
+        counter_mode = 0049;
+    }
+
+    if( ( A2 & 0001 ) == 0 )
+    {
+        counter_mode = counter_mode | 0100;
+    }
+}
+else if( T0 == 2 )
+{
+    if( ( A2 & 0001 ) == 0 )
+    {
+        // 10 Interrupt Request       (0=Yes, 1=No) (Set after Writing)    (W=1) (R)
+        counter_mode = 0248;
+    }
+}
+
+if( A2 & 1000 )
+{
+    // 4 IRQ when Counter=Target (0=Disable, 1=Enable)
+    counter_mode = counter_mode | 0010;
+}
+
+[root + T0 * 10 + 4] = h(counter_mode); // Timer 0..2 Counter Mode
+
+return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_root_counter_value()
+
+A0 = A0 & ffff;
+
+if( A0 < 3 )
+{
+    V0 = w[80055aa0]; // 1f801100
+    return hu[V0 + A0 * 10]; // current root counter X value
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_root_counter_enable()
+
+A0 = A0 & ffff;
+A1 = w[80055a9c]; // 1f801070
+[A1 + 4] = w(w[A1 + 4] | w[80055aa4 + A0 * 4]); // I_MASK - Interrupt mask register
+return A0 < 3;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_root_counter_disable()
+
+A0 = A0 & ffff;
+A1 = w[80055a9c];
+[A1 + 4] = w(w[A1 + 4] & (0 NOR w[80055aa4 + A0 * 4]));
+return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func405ac
+800405AC	andi   v1, a0, $ffff
+800405B0	slti   v0, v1, $0003
+800405B4	beq    v0, zero, L405d8 [$800405d8]
+800405B8	addiu  v0, zero, $0001
+800405BC	lui    a0, $8005
+800405C0	lw     a0, $5aa0(a0)
+800405C4	sll    v1, v1, $04
+800405C8	addu   v1, v1, a0
+800405CC	sh     zero, $0000(v1)
+800405D0	j      L405dc [$800405dc]
+800405D4	nop
+
+L405d8:	; 800405D8
+800405D8	addu   v0, zero, zero
+
+L405dc:	; 800405DC
+800405DC	jr     ra 
+800405E0	nop
+////////////////////////////////
+// func405e4
+800405E4	lui    at, $8005
+800405E8	sw     a0, $5ab4(at)
+800405EC	jr     ra 
+800405F0	nop
+////////////////////////////////
+// func405f4
+800405F4	lui    v0, $8005
+800405F8	lw     v0, $5ab4(v0)
+800405FC	jr     ra 
+80040600	nop
 ////////////////////////////////
