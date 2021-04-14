@@ -184,11 +184,7 @@ while( true )
         data = w[data - 8];
     }
 
-
-
     free_space = w[data - 8] - data - 8;
-
-
 
     if( ( ( free_space - aligned_size ) == 4 ) || ( ( free_space - aligned_size ) == 0 ) )
     {

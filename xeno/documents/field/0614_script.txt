@@ -4,7 +4,7 @@ Particle system:
     rotation x: 0
     rotation y: 0
 
-    particle: 0
+    emitter: 0
         number of sprites: 2
         wait: 25
         ttl: 1
@@ -22,7 +22,7 @@ Particle system:
 0xFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 ) -- 0x0b3d 0xfe
 0xFEBD_ParticleSpawnSettings( settings=1 ) -- 0x0b45 0xfe
 
-    particle: 1
+    emitter: 1
         number of sprites: 1
         wait: 10
         ttl: 1
@@ -104,7 +104,7 @@ Particle system:
     rotation x: 0
     rotation y: 0
 
-    particle: 0
+    emitter: 0
         number of sprites: 2
         wait: 25
         ttl: 1
@@ -122,7 +122,7 @@ Particle system:
 0xFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 ) -- 0x0e3a 0xfe
 0xFEBD_ParticleSpawnSettings( settings=1 ) -- 0x0e42 0xfe
 
-    particle: 1
+    emitter: 1
         number of sprites: 1
         wait: 0
         ttl: 1
@@ -204,7 +204,7 @@ Particle system:
     rotation x: 0
     rotation y: 0
 
-    particle: 0
+    emitter: 0
         number of sprites: 3
         wait: 20
         ttl: 1000

@@ -417,7 +417,7 @@ if( A0 != 0 )
 // 2 8001B550 800C31A4 800D3110 00000001 // battle      func1b550()
 // 3 8007038C 8009AF98 8009CBF4 00000001 // worldmap
 // 4 800884D4 80091C0C 8009AB90 00000001 // battling
-// 5 8001C4C0 80058954 8006F17C 00000000 // menu
+// 5 8001C4C0 80058954 8006F17C 00000000 // menu        menu_main()
 // 6 80072E7C 800765C8 80076AE4 00000001 // movie       movie_main()
 S1 = 8001808c + w[80018088] * 10;
 
@@ -2214,114 +2214,103 @@ system_cdrom_action_sync(); // ececute till cd sync
 ////////////////////////////////
 // func1ba38
 8001BA38	addiu  sp, sp, $ffe0 (=-$20)
-8001BA44	sw     ra, $001c(sp)
-8001BA48	sw     s2, $0018(sp)
-8001BA4C	sw     s1, $0014(sp)
-8001BA54	sw     s0, $0010(sp)
+[SP + 001c] = w(RA);
+[SP + 0018] = w(S2);
+[SP + 0014] = w(S1);
+[SP + 0010] = w(S0);
 
 A0 = 2; // HIG
 A1 = 0;
 system_memory_set_alloc_user();
 
-8001BA58	ori    a0, zero, $000c
+A0 = 000c;
 8001BA5C	jal    system_filesystem_set_dir [$80028280]
-8001BA60	addu   a1, zero, zero
-8001BA64	ori    a0, zero, $0004
+A1 = 0;
+A0 = 0004;
 8001BA68	jal    system_memory_allocate [$800319ec]
-8001BA6C	ori    a1, zero, $0001
-8001BA70	lui    a0, $7fe1
-8001BA74	ori    a0, a0, $c000
-8001BA78	addu   a0, v0, a0
-8001BA7C	sw     v0, $030c(gp)
+A1 = 0001;
+A0 = 7fe1c000;
+A0 = V0 + A0;
+[GP + 030c] = w(V0);
 8001BA80	jal    system_memory_allocate [$800319ec]
-8001BA84	ori    a1, zero, $0001
-8001BA88	lui    s0, $801e
-8001BA8C	ori    s0, s0, $4000
-8001BA90	sw     v0, $0338(gp)
+A1 = 0001;
+S0 = 801e4000;
+[GP + 0338] = w(V0);
 8001BA94	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
-8001BA98	ori    a0, zero, $0002
-8001BA9C	addu   a0, v0, zero
+A0 = 0002;
+A0 = V0;
 8001BAA0	jal    system_memory_allocate [$800319ec]
-8001BAA4	ori    a1, zero, $0001
-8001BAA8	sw     v0, $045c(gp)
+A1 = 0001;
+[GP + 045c] = w(V0);
 8001BAAC	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
-8001BAB0	ori    a0, zero, $0003
-8001BAB4	addu   a0, v0, zero
+A0 = 0003;
+A0 = V0;
 8001BAB8	jal    system_memory_allocate [$800319ec]
-8001BABC	ori    a1, zero, $0001
-8001BAC0	lui    a0, $8007
-8001BAC4	addiu  a0, a0, $f04c (=-$fb4)
-8001BAC8	addu   a1, zero, zero
-8001BACC	ori    s1, zero, $0003
-8001BAD0	ori    v1, zero, $0002
-8001BAD4	sh     v1, $0000(a0)
-8001BAD8	ori    v1, zero, $0003
-8001BADC	sw     v0, $0434(gp)
-8001BAE0	lui    at, $8007
-8001BAE4	sw     v0, $f058(at)
-8001BAE8	ori    v0, zero, $0004
-8001BAEC	lui    at, $8007
-8001BAF0	sh     v1, $f054(at)
-8001BAF4	lw     v1, $045c(gp)
-8001BAF8	lui    at, $8007
-8001BAFC	sh     v0, $f05c(at)
-8001BB00	lui    at, $8007
-8001BB04	sw     s0, $f060(at)
-8001BB08	lui    at, $8007
-8001BB0C	sh     zero, $f064(at)
-8001BB10	lui    at, $8007
-8001BB14	sw     zero, $f068(at)
-8001BB18	lui    at, $8007
-8001BB1C	sw     v1, $f050(at)
+A1 = 0001;
+A0 = 8006f04c;
+A1 = 0;
+S1 = 0003;
+V1 = 0002;
+[A0 + 0000] = h(V1);
+V1 = 0003;
+[GP + 0434] = w(V0);
+[8006f058] = w(V0);
+V0 = 0004;
+[8006f054] = h(V1);
+V1 = w[GP + 045c];
+[8006f05c] = h(V0);
+[8006f060] = w(S0);
+[8006f064] = h(0);
+[8006f068] = w(0);
+[8006f050] = w(V1);
 8001BB20	jal    func2990c [$8002990c]
-8001BB24	ori    a2, zero, $0080
+A2 = 0080;
 
 loop1bb28:	; 8001BB28
 8001BB28	jal    system_cdrom_data_sync [$800284dc]
 8001BB2C	nop
 8001BB30	beq    v0, s1, loop1bb28 [$8001bb28]
 8001BB34	nop
-8001BB38	lw     a0, $045c(gp)
+A0 = w[GP + 045c];
 8001BB3C	jal    func382d0 [$800382d0]
 8001BB40	nop
-8001BB44	lbu    v1, $03d8(gp)
-8001BB48	ori    v0, zero, $0004
+V1 = bu[GP + 03d8];
+V0 = 0004;
 8001BB4C	beq    v1, v0, L1bbb0 [$8001bbb0]
-8001BB50	addu   s0, zero, zero
-8001BB54	lui    s2, $8005
-8001BB58	addiu  s2, s2, $ea2c (=-$15d4)
-8001BB5C	ori    s1, zero, $00ff
+S0 = 0;
+S2 = 8004ea2c;
+S1 = 00ff;
 
 loop1bb60:	; 8001BB60
-8001BB60	lbu    v1, $03d8(gp)
+V1 = bu[GP + 03d8];
 8001BB64	nop
-8001BB68	sll    v0, v1, $01
-8001BB6C	addu   v0, v0, v1
-8001BB70	addu   v0, v0, s0
-8001BB74	addu   v0, v0, s2
-8001BB78	lbu    v1, $0000(v0)
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 + S0;
+V0 = V0 + S2;
+V1 = bu[V0 + 0000];
 8001BB7C	nop
 8001BB80	beq    v1, s1, L1bba4 [$8001bba4]
-8001BB84	addiu  s0, s0, $0001
-8001BB88	lw     v0, $045c(gp)
+S0 = S0 + 0001;
+V0 = w[GP + 045c];
 8001BB8C	nop
-8001BB90	lhu    a0, $0014(v0)
+A0 = hu[V0 + 0014];
 8001BB94	nop
-8001BB98	sll    a0, a0, $10
+A0 = A0 << 10;
 8001BB9C	jal    func39c60 [$80039c60]
-8001BBA0	or     a0, a0, v1
+A0 = A0 | V1;
 
 L1bba4:	; 8001BBA4
-8001BBA4	slti   v0, s0, $0003
+V0 = S0 < 0003;
 8001BBA8	bne    v0, zero, loop1bb60 [$8001bb60]
 8001BBAC	nop
 
 L1bbb0:	; 8001BBB0
-8001BBB0	lw     ra, $001c(sp)
-8001BBB4	lw     s2, $0018(sp)
-8001BBB8	lw     s1, $0014(sp)
-8001BBBC	lw     s0, $0010(sp)
-8001BBC0	addiu  sp, sp, $0020
+RA = w[SP + 001c];
+S2 = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0020;
 8001BBC4	jr     ra 
 8001BBC8	nop
 ////////////////////////////////
@@ -2368,107 +2357,100 @@ return V0;
 
 
 ////////////////////////////////
-// func1bc68
-8001BC68	ori    v0, zero, $0001
-8001BC6C	sb     v0, $0016(a0)
-8001BC70	ori    v0, zero, $000a
-8001BC74	sh     v0, $0066(a0)
-8001BC78	ori    v0, zero, $0100
-8001BC7C	sh     v0, $0068(a0)
-8001BC80	ori    v0, zero, $00d8
-8001BC84	sb     zero, $0018(a0)
-8001BC88	sb     zero, $0019(a0)
+// func1bc68()
 
-L1bc8c:	; 8001BC8C
-8001BC8C	sb     zero, $001a(a0)
-8001BC90	sb     zero, $001b(a0)
-8001BC94	sh     zero, $0064(a0)
-8001BC98	jr     ra 
-8001BC9C	sh     v0, $006a(a0)
+[A0 + 16] = b(1);
+[A0 + 18] = b(0);
+[A0 + 19] = b(0);
+[A0 + 1a] = b(0);
+[A0 + 1b] = b(0);
+
+[A0 + 64] = h(0);
+[A0 + 66] = h(a);
+[A0 + 68] = h(100);
+[A0 + 6a] = h(d8);
 ////////////////////////////////
-// func1bca0
-8001BCA0	addiu  sp, sp, $ffe0 (=-$20)
-8001BCA4	ori    a0, zero, $00a0
-8001BCA8	ori    a1, zero, $0070
-8001BCAC	sw     ra, $001c(sp)
-8001BCB0	jal    system_gte_set_screen_offset [$80049fd4]
-8001BCB4	sw     s0, $0018(sp)
-8001BCB8	jal    system_gte_set_projection_plane_distance [$80049ff4]
-8001BCBC	ori    a0, zero, $0200
-8001BCC0	addu   a1, zero, zero
-8001BCC4	ori    a2, zero, $00e0
-8001BCC8	ori    a3, zero, $0140
-8001BCCC	lui    a0, $8006
-8001BCD0	lw     a0, $1c30(a0)
-8001BCD4	ori    s0, zero, $00e0
-8001BCD8	sw     s0, $0010(sp)
-8001BCDC	jal    system_graphic_create_display_env_struct [$80043858]
-8001BCE0	addiu  a0, a0, $00c8
-8001BCE4	addu   a1, zero, zero
-8001BCE8	addu   a2, zero, zero
-8001BCEC	lui    a0, $8006
-8001BCF0	lw     a0, $1c30(a0)
-8001BCF4	ori    a3, zero, $0140
-8001BCF8	sw     s0, $0010(sp)
-8001BCFC	jal    system_graphic_create_draw_env_struct [$800437a0]
-8001BD00	addiu  a0, a0, $006c
-8001BD04	addu   a1, zero, zero
-8001BD08	addu   a2, zero, zero
-8001BD0C	lui    a0, $8006
-8001BD10	lw     a0, $1c30(a0)
-8001BD14	ori    a3, zero, $0140
-8001BD18	sw     s0, $0010(sp)
-8001BD1C	jal    system_graphic_create_display_env_struct [$80043858]
-8001BD20	addiu  a0, a0, $017c
-8001BD24	addu   a1, zero, zero
-8001BD28	ori    a2, zero, $00e0
-8001BD2C	lui    a0, $8006
-8001BD30	lw     a0, $1c30(a0)
-8001BD34	ori    a3, zero, $0140
-8001BD38	sw     s0, $0010(sp)
-8001BD3C	jal    system_graphic_create_draw_env_struct [$800437a0]
-8001BD40	addiu  a0, a0, $0120
-8001BD44	lui    a0, $8006
-8001BD48	lw     a0, $1c30(a0)
-8001BD4C	jal    func1bc68 [$8001bc68]
-8001BD50	addiu  a0, a0, $006c
-8001BD54	lui    a0, $8006
-8001BD58	lw     a0, $1c30(a0)
-8001BD5C	jal    func1bc68 [$8001bc68]
-8001BD60	addiu  a0, a0, $0120
-8001BD64	lw     ra, $001c(sp)
-8001BD68	lw     s0, $0018(sp)
-8001BD6C	addiu  sp, sp, $0020
-8001BD70	jr     ra 
-8001BD74	nop
+
+
+
 ////////////////////////////////
-// func1bd78
-8001BD78	lui    v0, $8006
-8001BD7C	lw     v0, $1c30(v0)
-8001BD80	ori    v1, zero, $0800
-8001BD84	sw     v1, $01e8(v0)
-8001BD88	sw     v1, $0228(v0)
-8001BD8C	ori    v1, zero, $0001
-8001BD90	sh     zero, $01dc(v0)
-8001BD94	sh     zero, $01da(v0)
-8001BD98	sh     zero, $01d8(v0)
-8001BD9C	sw     zero, $01e4(v0)
-8001BDA0	sw     zero, $01e0(v0)
-8001BDA4	sh     zero, $021c(v0)
-8001BDA8	sh     zero, $021a(v0)
-8001BDAC	sh     zero, $0218(v0)
-8001BDB0	sw     zero, $0224(v0)
-8001BDB4	sw     zero, $0220(v0)
-8001BDB8	sw     v1, $02e8(v0)
-8001BDBC	jr     ra 
-8001BDC0	sb     zero, $0329(v0)
+// func1bca0()
+
+A0 = a0;
+A1 = 70;
+system_gte_set_screen_offset();
+
+A0 = 200;
+system_gte_set_projection_plane_distance();
+
+A0 = w[80061c30] + c8;
+A1 = 0;
+A2 = e0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_display_env_struct();
+
+A0 = w[80061c30] + 6c;
+A1 = 0;
+A2 = 0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+A0 = w[80061c30] + 17c;
+A1 = 0;
+A2 = 0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_display_env_struct();
+
+A0 = w[80061c30] + 120;
+A1 = 0;
+A2 = e0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+A0 = w[80061c30];
+A0 = A0 + 6c;
+func1bc68();
+
+A0 = w[80061c30];
+A0 = A0 + 120;
+func1bc68();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1bd78()
+
+V0 = w[80061c30];
+[V0 + 01e8] = w(800);
+[V0 + 0228] = w(800);
+[V0 + 01dc] = h(0);
+[V0 + 01da] = h(0);
+[V0 + 01d8] = h(0);
+[V0 + 01e4] = w(0);
+[V0 + 01e0] = w(0);
+[V0 + 021c] = h(0);
+[V0 + 021a] = h(0);
+[V0 + 0218] = h(0);
+[V0 + 0224] = w(0);
+[V0 + 0220] = w(0);
+[V0 + 02e8] = w(1);
+[V0 + 0329] = b(0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1bdc4
 8001BDC4	addiu  sp, sp, $ffe8 (=-$18)
-8001BDC8	sw     s0, $0010(sp)
-8001BDCC	sw     ra, $0014(sp)
+[SP + 0010] = w(S0);
+[SP + 0014] = w(RA);
 8001BDD0	jal    func362b8 [$800362b8]
-8001BDD4	ori    s0, zero, $0008
+S0 = 0008;
 8001BDD8	beq    v0, zero, L1be38 [$8001be38]
 8001BDDC	nop
 8001BDE0	jal    func35c84 [$80035c84]
@@ -2478,89 +2460,84 @@ L1bc8c:	; 8001BC8C
 
 loop1bdf0:	; 8001BDF0
 8001BDF0	j      L1bedc [$8001bedc]
-8001BDF4	addu   s0, zero, zero
+S0 = 0;
 
 loop1bdf8:	; 8001BDF8
 8001BDF8	j      L1bedc [$8001bedc]
-8001BDFC	ori    s0, zero, $0001
+S0 = 0001;
 
 loop1be00:	; 8001BE00
 8001BE00	j      L1bedc [$8001bedc]
-8001BE04	ori    s0, zero, $0002
+S0 = 0002;
 
 loop1be08:	; 8001BE08
 8001BE08	j      L1bedc [$8001bedc]
-8001BE0C	ori    s0, zero, $0003
+S0 = 0003;
 
 loop1be10:	; 8001BE10
 8001BE10	j      L1bedc [$8001bedc]
-8001BE14	ori    s0, zero, $0004
+S0 = 0004;
 
 loop1be18:	; 8001BE18
-8001BE18	lui    v1, $8006
-8001BE1C	lw     v1, $1c30(v1)
+V1 = w[80061c30];
 8001BE20	nop
-8001BE24	lbu    v0, $1e94(v1)
-8001BE28	ori    s0, zero, $000c
-8001BE2C	sltiu  v0, v0, $0001
+V0 = bu[V1 + 1e94];
+S0 = 000c;
+V0 = V0 < 0001;
 8001BE30	j      L1bedc [$8001bedc]
-8001BE34	sb     v0, $1e94(v1)
+[V1 + 1e94] = b(V0);
 
 L1be38:	; 8001BE38
 8001BE38	jal    func35b88 [$80035b88]
 8001BE3C	nop
 8001BE40	beq    v0, zero, L1bedc [$8001bedc]
 8001BE44	nop
-8001BE48	lui    v1, $8006
-8001BE4C	lhu    v1, $8b40(v1)
+V1 = hu[80058b40];
 8001BE50	nop
-8001BE54	andi   v0, v1, $2000
+V0 = V1 & 2000;
 8001BE58	bne    v0, zero, loop1bdf0 [$8001bdf0]
-8001BE5C	andi   v0, v1, $4000
+V0 = V1 & 4000;
 8001BE60	bne    v0, zero, loop1bdf8 [$8001bdf8]
-8001BE64	andi   v0, v1, $8000
+V0 = V1 & 8000;
 8001BE68	bne    v0, zero, loop1be00 [$8001be00]
-8001BE6C	andi   v0, v1, $1000
+V0 = V1 & 1000;
 8001BE70	bne    v0, zero, loop1be08 [$8001be08]
-8001BE74	andi   v0, v1, $0020
+V0 = V1 & 0020;
 8001BE78	bne    v0, zero, loop1be10 [$8001be10]
-8001BE7C	andi   v0, v1, $0100
+V0 = V1 & 0100;
 8001BE80	bne    v0, zero, loop1be18 [$8001be18]
-8001BE84	andi   v0, v1, $0004
+V0 = V1 & 0004;
 8001BE88	beq    v0, zero, L1beb8 [$8001beb8]
-8001BE8C	andi   v0, v1, $0001
-8001BE90	lui    v1, $8006
-8001BE94	lw     v1, $1c30(v1)
+V0 = V1 & 0001;
+V1 = w[80061c30];
 8001BE98	nop
-8001BE9C	lbu    v0, $1e95(v1)
+V0 = bu[V1 + 1e95];
 8001BEA0	nop
 8001BEA4	beq    v0, zero, L1bedc [$8001bedc]
 8001BEA8	nop
-8001BEAC	lbu    v0, $1e95(v1)
+V0 = bu[V1 + 1e95];
 8001BEB0	j      L1bed8 [$8001bed8]
 8001BEB4	addiu  v0, v0, $ffff (=-$1)
 
 L1beb8:	; 8001BEB8
 8001BEB8	beq    v0, zero, L1be38 [$8001be38]
 8001BEBC	nop
-8001BEC0	lui    v1, $8006
-8001BEC4	lw     v1, $1c30(v1)
+V1 = w[80061c30];
 8001BEC8	nop
-8001BECC	lbu    v0, $1e95(v1)
+V0 = bu[V1 + 1e95];
 8001BED0	nop
-8001BED4	addiu  v0, v0, $0001
+V0 = V0 + 0001;
 
 L1bed8:	; 8001BED8
-8001BED8	sb     v0, $1e95(v1)
+[V1 + 1e95] = b(V0);
 
 L1bedc:	; 8001BEDC
-8001BEDC	lui    v0, $8006
-8001BEE0	lw     v0, $1c30(v0)
+V0 = w[80061c30];
 8001BEE4	nop
-8001BEE8	sb     s0, $0325(v0)
-8001BEEC	lw     ra, $0014(sp)
-8001BEF0	lw     s0, $0010(sp)
-8001BEF4	addiu  sp, sp, $0018
+[V0 + 0325] = b(S0);
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
 8001BEF8	jr     ra 
 8001BEFC	nop
 ////////////////////////////////
@@ -2647,155 +2624,135 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func1c034
-8001C034	lui    v0, $8006
-8001C038	lbu    v0, $8818(v0)
-8001C03C	addiu  sp, sp, $ffd0 (=-$30)
-8001C040	sw     s1, $0014(sp)
-8001C044	addu   s1, zero, zero
-8001C048	sw     s0, $0010(sp)
-8001C04C	addu   s0, zero, zero
-8001C050	sw     s2, $0018(sp)
-8001C054	ori    s2, zero, $0001
-8001C058	sw     ra, $0028(sp)
-8001C05C	sw     s5, $0024(sp)
-8001C060	sw     s4, $0020(sp)
+// func1c034()
+
+V0 = bu[80058818];
+S1 = 0;
+S0 = 0;
+S2 = 0001;
 8001C064	beq    v0, zero, L1c20c [$8001c20c]
-8001C068	sw     s3, $001c(sp)
-8001C06C	ori    s3, zero, $0006
+
+S3 = 0006;
 
 loop1c070:	; 8001C070
-8001C070	lui    a0, $8002
-8001C074	addiu  a0, a0, $830c (=-$7cf4)
-8001C078	sll    v0, s1, $02
-8001C07C	lui    at, $8005
-8001C080	addu   at, at, v0
-8001C084	lw     a2, $f140(at)
-8001C088	jal    system_print [$80036eb4]
-8001C08C	addu   a1, s1, zero
-8001C090	slti   v0, s1, $0004
+A0 = 8001830c; // "\n\n     Menu=(%d)%s\n"
+V0 = S1 << 02;
+A2 = w[8004f140 + V0];
+A1 = S1;
+system_print();
+
+V0 = S1 < 0004;
 8001C094	beq    v0, zero, L1c0c4 [$8001c0c4]
-8001C098	slti   v0, s0, $000b
+V0 = S0 < 000b;
 8001C09C	beq    v0, zero, L1c0b4 [$8001c0b4]
-8001C0A0	addu   a1, s0, zero
-8001C0A4	lui    a0, $8002
-8001C0A8	addiu  a0, a0, $8320 (=-$7ce0)
+A1 = S0;
+A0 = 80018320;
 8001C0AC	j      L1c0dc [$8001c0dc]
 8001C0B0	nop
 
 L1c0b4:	; 8001C0B4
-8001C0B4	lui    a0, $8002
-8001C0B8	addiu  a0, a0, $8334 (=-$7ccc)
+A0 = 80018334;
 8001C0BC	j      L1c0dc [$8001c0dc]
 8001C0C0	addiu  a1, s0, $fff5 (=-$b)
 
 L1c0c4:	; 8001C0C4
-8001C0C4	lui    a0, $8002
-8001C0C8	addiu  a0, a0, $8360 (=-$7ca0)
+A0 = 80018360;
 8001C0CC	beq    s1, s3, L1c0dc [$8001c0dc]
-8001C0D0	addu   a1, s0, zero
-8001C0D4	lui    a0, $8002
-8001C0D8	addiu  a0, a0, $8348 (=-$7cb8)
+A1 = S0;
+A0 = 80018348; // "\n\n     ShopNo =(%d)\n"
 
 L1c0dc:	; 8001C0DC
-8001C0DC	jal    system_print [$80036eb4]
-8001C0E0	nop
-8001C0E4	lui    v0, $8006
-8001C0E8	lw     v0, $1c30(v0)
+system_print();
+
+V0 = w[80061c30];
 8001C0EC	nop
-8001C0F0	lbu    v1, $0325(v0)
+V1 = bu[V0 + 0325];
 8001C0F4	nop
-8001C0F8	sltiu  v0, v1, $0005
+V0 = V1 < 0005;
 8001C0FC	beq    v0, zero, L1c1b4 [$8001c1b4]
-8001C100	sll    v0, v1, $02
+V0 = V1 << 02;
 8001C104	lui    at, $8002
-8001C108	addu   at, at, v0
-8001C10C	lw     v0, $8374(at)
+AT = AT + V0;
+V0 = w[AT + 8374];
 8001C110	nop
 8001C114	jr     v0 
 8001C118	nop
 
 8001C11C	j      L1c1b4 [$8001c1b4]
-8001C120	addu   s2, zero, zero
-8001C124	addiu  s1, s1, $0001
-8001C128	slti   v0, s1, $0007
+S2 = 0;
+S1 = S1 + 0001;
+V0 = S1 < 0007;
 8001C12C	bne    v0, zero, L1c1b4 [$8001c1b4]
-8001C130	addu   s0, zero, zero
+S0 = 0;
 8001C134	j      L1c1b4 [$8001c1b4]
-8001C138	addu   s1, zero, zero
+S1 = 0;
 8001C13C	addiu  s1, s1, $ffff (=-$1)
 8001C140	bgez   s1, L1c1b4 [$8001c1b4]
-8001C144	addu   s0, zero, zero
+S0 = 0;
 8001C148	j      L1c1b4 [$8001c1b4]
-8001C14C	ori    s1, zero, $0006
-8001C150	slti   v0, s1, $0004
+S1 = 0006;
+V0 = S1 < 0004;
 8001C154	beq    v0, zero, L1c174 [$8001c174]
 8001C158	nop
-8001C15C	addiu  s0, s0, $0001
-8001C160	slti   v0, s0, $001f
+S0 = S0 + 0001;
+V0 = S0 < 001f;
 8001C164	bne    v0, zero, L1c1b4 [$8001c1b4]
 8001C168	nop
 8001C16C	j      L1c1b4 [$8001c1b4]
-8001C170	addu   s0, zero, zero
+S0 = 0;
 
 L1c174:	; 8001C174
 8001C174	beq    s1, s3, L1c1b0 [$8001c1b0]
 8001C178	nop
 8001C17C	j      L1c1b4 [$8001c1b4]
-8001C180	addiu  s0, s0, $0001
+S0 = S0 + 0001;
 8001C184	addiu  s0, s0, $ffff (=-$1)
 8001C188	bgez   s0, L1c1b4 [$8001c1b4]
-8001C18C	slti   v0, s1, $0004
+V0 = S1 < 0004;
 8001C190	beq    v0, zero, L1c1a0 [$8001c1a0]
 8001C194	nop
 8001C198	j      L1c1b4 [$8001c1b4]
-8001C19C	ori    s0, zero, $001e
+S0 = 001e;
 
 L1c1a0:	; 8001C1A0
 8001C1A0	beq    s1, s3, L1c1b4 [$8001c1b4]
-8001C1A4	sltiu  s0, s0, $0001
+S0 = S0 < 0001;
 8001C1A8	j      L1c1b4 [$8001c1b4]
-8001C1AC	ori    s0, zero, $00ff
+S0 = 00ff;
 
 L1c1b0:	; 8001C1B0
-8001C1B0	sltiu  s0, s0, $0001
+S0 = S0 < 0001;
 
 L1c1b4:	; 8001C1B4
 8001C1B4	jal    func1bf00 [$8001bf00]
 8001C1B8	nop
-8001C1BC	andi   v0, s2, $00ff
+V0 = S2 & 00ff;
 8001C1C0	bne    v0, zero, loop1c070 [$8001c070]
-8001C1C4	addu   a0, zero, zero
-8001C1C8	lui    v0, $8006
-8001C1CC	lw     v0, $1c30(v0)
-8001C1D0	lui    at, $8006
-8001C1D4	sb     s1, $8afc(at)
-8001C1D8	lui    at, $8006
-8001C1DC	sb     s0, $8811(at)
-8001C1E0	sb     zero, $0084(v0)
-8001C1E4	lui    v0, $8006
-8001C1E8	lw     v0, $1c30(v0)
-8001C1EC	jal    system_psyq_set_disp_mask [$800443ac]
-8001C1F0	sb     zero, $0138(v0)
-8001C1F4	lui    v1, $8006
-8001C1F8	lw     v1, $1c30(v1)
-8001C1FC	ori    a0, zero, $0001
-8001C200	addiu  v0, v1, $0120
-8001C204	jal    system_psyq_set_disp_mask [$800443ac]
-8001C208	sw     v0, $01d4(v1)
+A0 = 0;
+V0 = w[80061c30];
+[80058afc] = b(S1);
+[80058811] = b(S0);
+[V0 + 0084] = b(0);
+V0 = w[80061c30];
+[V0 + 0138] = b(0);
+system_psyq_set_disp_mask();
+
+V1 = w[80061c30];
+A0 = 0001;
+V0 = V1 + 0120;
+[V1 + 01d4] = w(V0);
+system_psyq_set_disp_mask();
 
 L1c20c:	; 8001C20C
-8001C20C	ori    a0, zero, $0010
-8001C210	jal    system_filesystem_set_dir [$80028280]
-8001C214	addu   a1, zero, zero
-8001C218	lui    v0, $8006
-8001C21C	lbu    v0, $8818(v0)
+A0 = 10;
+A1 = 0;
+system_filesystem_set_dir();
+
+V0 = bu[80058818];
 8001C220	nop
 8001C224	beq    v0, zero, L1c370 [$8001c370]
-8001C228	lui    v0, $3b9a
-8001C22C	ori    v0, v0, $c9ff
-8001C234	lui    at, $8007
-8001C238	sw     v0, $e5e8(at)
+V0 = 3b9ac9ff;
+[8006e5e8] = w(V0);
 
 A0 = 2; // HIG
 A1 = 0;
@@ -2803,96 +2760,86 @@ system_memory_set_alloc_user();
 
 
 8001C244	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
-8001C248	ori    a0, zero, $0001
-8001C24C	addu   a0, v0, zero
-8001C250	jal    system_memory_allocate [$800319ec]
-8001C254	addu   a1, zero, zero
-8001C258	ori    a0, zero, $0001
-8001C25C	addu   a1, v0, zero
-8001C260	addu   a2, zero, zero
-8001C264	lui    at, $8006
-8001C268	sw     a1, $8af8(at)
+A0 = 0001;
+A0 = V0;
+A1 = 0;
+system_memory_allocate();
+
+A0 = 0001;
+A1 = V0;
+A2 = 0;
+[80058af8] = w(A1);
 8001C26C	jal    func293e8 [$800293e8]
-8001C270	ori    a3, zero, $0080
+A3 = 0080;
 8001C274	jal    system_cdrom_action_sync [$80028870]
-8001C278	addu   a0, zero, zero
-8001C27C	lui    v1, $8006
-8001C280	lbu    v1, $8afc(v1)
-8001C284	ori    v0, zero, $0005
+A0 = 0;
+V1 = bu[80058afc];
+V0 = 0005;
 8001C288	bne    v1, v0, L1c320 [$8001c320]
 8001C28C	nop
-8001C290	ori    a0, zero, $0004
+A0 = 0004;
 8001C294	jal    system_filesystem_set_dir [$80028280]
-8001C298	addu   a1, zero, zero
-8001C29C	ori    a0, zero, $0004
+A1 = 0;
+A0 = 0004;
 8001C2A0	jal    system_memory_allocate [$800319ec]
-8001C2A4	ori    a1, zero, $0001
-8001C2A8	lui    a0, $7fe2
-8001C2AC	ori    a0, a0, $4000
-8001C2B0	addu   a0, v0, a0
-8001C2B4	lui    at, $8006
-8001C2B8	sw     v0, $4f5c(at)
+A1 = 0001;
+A0 = 7fe24000;
+A0 = V0 + A0;
+[80064f5c] = w(V0);
 8001C2BC	jal    system_memory_allocate [$800319ec]
-8001C2C0	ori    a1, zero, $0001
-8001C2C4	ori    a0, zero, $06b9
-8001C2C8	lui    a1, $801d
-8001C2CC	ori    a1, a1, $c000
-8001C2D0	addu   a2, zero, zero
-8001C2D4	lui    at, $8007
-8001C2D8	sw     v0, $b4b4(at)
+A1 = 0001;
+A0 = 06b9;
+A1 = 801dc000;
+A2 = 0;
+[8006b4b4] = w(V0);
 8001C2DC	jal    func293e8 [$800293e8]
-8001C2E0	ori    a3, zero, $0080
+A3 = 0080;
 8001C2E4	jal    system_cdrom_action_sync [$80028870]
-8001C2E8	addu   a0, zero, zero
-8001C2EC	ori    a0, zero, $0010
+A0 = 0;
+A0 = 0010;
 8001C2F0	jal    system_filesystem_set_dir [$80028280]
-8001C2F4	addu   a1, zero, zero
-8001C2F8	ori    a0, zero, $4000
+A1 = 0;
+A0 = 4000;
 8001C2FC	jal    system_memory_allocate [$800319ec]
-8001C300	addu   a1, zero, zero
-8001C304	ori    a0, zero, $4000
-8001C308	lui    at, $8006
-8001C30C	sw     v0, $9b3c(at)
+A1 = 0;
+A0 = 4000;
+[80059b3c] = w(V0);
 8001C310	jal    system_memory_allocate [$800319ec]
-8001C314	addu   a1, zero, zero
-8001C318	lui    at, $8006
-8001C31C	sw     v0, $9b40(at)
+A1 = 0;
+[80059b40] = w(V0);
 
 L1c320:	; 8001C320
-8001C320	ori    a0, zero, $0004
+A0 = 0004;
 8001C324	jal    system_memory_allocate [$800319ec]
-8001C328	ori    a1, zero, $0001
-8001C32C	lui    a0, $7fe3
-8001C330	ori    a0, a0, $b000
-8001C334	addu   s4, v0, zero
-8001C338	addu   a0, s4, a0
+A1 = 0001;
+A0 = 7fe3b000;
+S4 = V0;
+A0 = S4 + A0;
 8001C33C	jal    system_memory_allocate [$800319ec]
-8001C340	ori    a1, zero, $0001
-8001C344	lui    a1, $801c
-8001C348	ori    a1, a1, $5000
-8001C34C	addu   a2, zero, zero
-8001C350	lui    a0, $8006
-8001C354	lbu    a0, $8afc(a0)
-8001C358	ori    a3, zero, $0080
-8001C35C	addu   s5, v0, zero
+A1 = 0001;
+A1 = 801c5000;
+A2 = 0;
+A0 = bu[80058afc];
+A3 = 0080;
+S5 = V0;
 8001C360	jal    func293e8 [$800293e8]
-8001C364	addiu  a0, a0, $0005
+A0 = A0 + 0005;
 8001C368	jal    system_cdrom_action_sync [$80028870]
-8001C36C	addu   a0, zero, zero
+A0 = 0;
 
 L1c370:	; 8001C370
-8001C370	ori    a0, zero, $0010
-8001C374	jal    system_filesystem_set_dir [$80028280]
-8001C378	addu   a1, zero, zero
-8001C37C	lui    v1, $8006
-8001C380	lbu    v1, $8afc(v1)
+A0 = 0010;
+A1 = 0;
+system_filesystem_set_dir();
+
+V1 = bu[80058afc];
 8001C384	nop
-8001C388	sltiu  v0, v1, $0007
+V0 = V1 < 0007;
 8001C38C	beq    v0, zero, L1c40c [$8001c40c]
-8001C390	sll    v0, v1, $02
+V0 = V1 << 02;
 8001C394	lui    at, $8002
-8001C398	addu   at, at, v0
-8001C39C	lw     v0, $838c(at)
+AT = AT + V0;
+V0 = w[AT + 838c];
 8001C3A0	nop
 8001C3A4	jr     v0 
 8001C3A8	nop
@@ -2916,147 +2863,113 @@ L1c370:	; 8001C370
 8001C3EC	jal    $801c6298
 8001C3F0	nop
 8001C3F4	jal    func199f0 [$800199f0]
-8001C3F8	ori    a0, zero, $0001
+A0 = 0001;
 8001C3FC	j      L1c40c [$8001c40c]
 8001C400	nop
 8001C404	jal    $801ce060
 8001C408	nop
 
 L1c40c:	; 8001C40C
-8001C40C	lui    v0, $8006
-8001C410	lbu    v0, $8818(v0)
-8001C414	nop
-8001C418	beq    v0, zero, L1c498 [$8001c498]
-8001C41C	nop
-8001C420	jal    system_memory_mark_removed_alloc [$80031f0c]
-8001C424	addu   a0, s4, zero
-8001C428	jal    system_memory_mark_removed_alloc [$80031f0c]
-8001C42C	addu   a0, s5, zero
-8001C430	lui    v1, $8006
-8001C434	lbu    v1, $8afc(v1)
-8001C438	ori    v0, zero, $0005
-8001C43C	bne    v1, v0, L1c488 [$8001c488]
-8001C440	ori    v0, zero, $0001
-8001C444	lui    a0, $8006
-8001C448	lw     a0, $4f5c(a0)
-8001C44C	jal    system_memory_mark_removed_alloc [$80031f0c]
-8001C450	nop
-8001C454	lui    a0, $8007
-8001C458	lw     a0, $b4b4(a0)
-8001C45C	jal    system_memory_mark_removed_alloc [$80031f0c]
-8001C460	nop
-8001C464	lui    a0, $8006
-8001C468	lw     a0, $9b3c(a0)
-8001C46C	jal    system_memory_mark_removed_alloc [$80031f0c]
-8001C470	nop
-8001C474	lui    a0, $8006
-8001C478	lw     a0, $9b40(a0)
-8001C47C	jal    system_memory_mark_removed_alloc [$80031f0c]
-8001C480	nop
-8001C484	ori    v0, zero, $0001
+if( bu[80058818] != 0 )
+{
+    A0 = S4;
+    system_memory_mark_removed_alloc();
 
-L1c488:	; 8001C488
-8001C488	lui    at, $8006
-8001C48C	sb     v0, $8818(at)
-8001C490	jal    func19b50 [$80019b50]
-8001C494	addu   a0, zero, zero
+    A0 = S5;
+    system_memory_mark_removed_alloc();
 
-L1c498:	; 8001C498
-8001C498	lw     ra, $0028(sp)
-8001C49C	lw     s5, $0024(sp)
-8001C4A0	lw     s4, $0020(sp)
-8001C4A4	lw     s3, $001c(sp)
-8001C4A8	lw     s2, $0018(sp)
-8001C4AC	lw     s1, $0014(sp)
-8001C4B0	lw     s0, $0010(sp)
-8001C4B4	addiu  sp, sp, $0030
-8001C4B8	jr     ra 
-8001C4BC	nop
+    if( bu[80058afc] == 5 )
+    {
+        A0 = w[80064f5c];
+        system_memory_mark_removed_alloc();
+
+        A0 = w[8006b4b4];
+        system_memory_mark_removed_alloc();
+
+        A0 = w[80059b3c];
+        system_memory_mark_removed_alloc();
+
+        A0 = w[80059b40];
+        system_memory_mark_removed_alloc();
+    }
+
+    [80058818] = b(1);
+
+    A0 = 0;
+    func19b50(); // load next
+}
 ////////////////////////////////
-// func1c4c0
-8001C4C0	addiu  sp, sp, $ffe8 (=-$18)
-8001C4C4	ori    a0, zero, $1e98
-8001C4C8	addu   a1, zero, zero
-8001C4CC	sw     ra, $0014(sp)
-8001C4D0	jal    system_memory_allocate [$800319ec]
-8001C4D4	sw     s0, $0010(sp)
-8001C4D8	addu   a0, v0, zero
-8001C4DC	lui    at, $8006
-8001C4E0	sw     a0, $1c30(at)
-8001C4E4	jal    func3f790 [$8003f790]
-8001C4E8	ori    a1, zero, $1e98
-8001C4F4	lui    v1, $8006
-8001C4F8	lw     v1, $1c30(v1)
-8001C4FC	ori    v0, zero, $0008
-8001C504	sb     v0, $0325(v1)
+
+
+
+////////////////////////////////
+// menu_main()
+
+A0 = 1e98;
+A1 = 0;
+system_memory_allocate();
+[80061c30] = w(A0);
+
+A0 = V0;
+A1 = 1e98;
+func3f790(); // memzero
+
+V1 = w[80061c30];
+[V1 + 0325] = b(8);
 
 A0 = 2; // HIG
 A1 = 0;
 system_memory_set_alloc_user();
 
+V0 = w[80061c30];
+V1 = V0 + 120;
+[V0 + 1d4] = w(V1);
+[V0 + 1e94] = b(0);
+V0 = w[80061c30];
+[V0 + 1e95] = b(1);
+V0 = w[80061c30];
+[V0 + 02d8] = w(0);
+[V0 + 0327] = b(0);
 
-8001C508	lui    v0, $8006
-8001C50C	lw     v0, $1c30(v0)
-8001C510	nop
-8001C514	addiu  v1, v0, $0120
-8001C518	sw     v1, $01d4(v0)
-8001C51C	sb     zero, $1e94(v0)
-8001C520	lui    v0, $8006
-8001C524	lw     v0, $1c30(v0)
-8001C528	ori    s0, zero, $0001
-8001C52C	sb     s0, $1e95(v0)
-8001C530	lui    v0, $8006
-8001C534	lw     v0, $1c30(v0)
-8001C538	nop
-8001C53C	sw     zero, $02d8(v0)
-8001C540	jal    func1bca0 [$8001bca0]
-8001C544	sb     zero, $0327(v0)
-8001C548	lui    v0, $8006
-8001C54C	lbu    v0, $8818(v0)
-8001C550	nop
-8001C554	beq    v0, zero, L1c57c [$8001c57c]
-8001C558	nop
-8001C55C	lui    v0, $8006
-8001C560	lw     v0, $1c30(v0)
-8001C564	nop
-8001C568	sb     s0, $0084(v0)
-8001C56C	lui    v0, $8006
-8001C570	lw     v0, $1c30(v0)
-8001C574	nop
+func1bca0();
 
-L1c578:	; 8001C578
-8001C578	sb     s0, $0138(v0)
+V0 = bu[80058818];
 
-L1c57c:	; 8001C57C
-8001C57C	jal    func1bd78 [$8001bd78]
-8001C580	nop
-8001C584	jal    system_psyq_wait_frames [$8004b3f4]
-8001C588	addu   a0, zero, zero
-8001C58C	lui    a0, $8006
-8001C590	lw     a0, $1c30(a0)
-8001C594	jal    system_psyq_put_draw_env [$80044abc]
-8001C598	addiu  a0, a0, $006c
-8001C59C	lui    a0, $8006
-8001C5A0	lw     a0, $1c30(a0)
-8001C5A4	jal    system_psyq_put_draw_env [$80044abc]
-8001C5A8	addiu  a0, a0, $0120
-8001C5AC	lui    a0, $8006
-8001C5B0	lw     a0, $1c30(a0)
-8001C5B4	jal    system_psyq_put_disp_env [$80044d14]
-8001C5B8	addiu  a0, a0, $00c8
-8001C5BC	lui    a0, $8006
-8001C5C0	lw     a0, $1c30(a0)
-8001C5C4	jal    system_psyq_put_disp_env [$80044d14]
-8001C5C8	addiu  a0, a0, $017c
-8001C5CC	jal    system_psyq_set_disp_mask [$800443ac]
-8001C5D0	ori    a0, zero, $0001
-8001C5D4	jal    func1c034 [$8001c034]
-8001C5D8	nop
-8001C5DC	lui    at, $8006
-8001C5E0	sb     s0, $8818(at)
-8001C5E4	lw     ra, $0014(sp)
-8001C5E8	lw     s0, $0010(sp)
-8001C5EC	addiu  sp, sp, $0018
-8001C5F0	jr     ra 
-8001C5F4	nop
+if( V0 != 0 )
+{
+    V0 = w[80061c30];
+    [V0 + 0084] = b(1);
+    V0 = w[80061c30];
+
+    L1c578:	; 8001C578
+    [V0 + 0138] = b(1);
+}
+
+func1bd78();
+
+A0 = 0;
+system_psyq_wait_frames();
+
+A0 = w[80061c30];
+A0 = A0 + 006c;
+system_psyq_put_draw_env();
+
+A0 = w[80061c30];
+A0 = A0 + 0120;
+system_psyq_put_draw_env();
+
+A0 = w[80061c30];
+A0 = A0 + 00c8;
+system_psyq_put_disp_env();
+
+A0 = w[80061c30];
+A0 = A0 + 017c;
+system_psyq_put_disp_env();
+
+A0 = 1;
+system_psyq_set_disp_mask();
+
+func1c034();
+
+[80058818] = b(1);
 ////////////////////////////////

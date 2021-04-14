@@ -1325,118 +1325,62 @@ system_memory_clean_removed_alloc();
 
 A0 = 800af58c;
 A1 = SP + 0028;
-800A5914	jal    $8003f5e0
+system_calculate_rotation_matrix();
 
-A0 = SP + 0028;
-A1 = SP + 0048;
-S3 = 0;
-S5 = 800b08d8;
-800A5930	addiu  s7, s5, $fe70 (=-$190)
-S0 = ffffff;
-800A593C	lui    s6, $ff00
-800A5940	addiu  fp, s5, $fda8 (=-$258)
-S2 = 0;
-S1 = 0;
-V0 = w[800c1b58];
-S4 = S5;
-[SP + 0044] = w(0);
-[SP + 0040] = w(0);
-[SP + 003c] = w(0);
-[SP + 0048] = w(V0);
-[SP + 004c] = w(V0);
-800A596C	jal    $system_gte_multiply_matrix_by_vector
-[SP + 0050] = w(V0);
-800A5974	jal    $system_gte_set_rotation_matrix
-A0 = SP + 0028;
-800A597C	jal    $system_gte_set_translation_vector
-A0 = SP + 0028;
+[SP + 3c] = w(0);
+[SP + 40] = w(0);
+[SP + 44] = w(0);
+[SP + 48] = w(w[800c1b58]);
+[SP + 4c] = w(w[800c1b58]);
+[SP + 50] = w(w[800c1b58]);
 
-loopa5984:	; 800A5984
-V1 = w[800c1b58];
-V0 = 1000;
-800A5990	beq    v1, v0, La5a04 [$800a5a04]
-A0 = S4;
-T0 = S3 << 05;
-A1 = S5 + 0008;
-A1 = T0 + A1;
-V0 = SP + 0058;
-[SP + 0020] = w(V0);
-V0 = SP + 005c;
-A2 = S5 + 0010;
-A3 = S5 + 0018;
-A2 = T0 + A2;
-V1 = w[800acfe0];
-A3 = T0 + A3;
-[SP + 0024] = w(V0);
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + S7;
-V0 = S1 + V0;
-V1 = V0 + 0008;
-[SP + 0010] = w(V1);
-V1 = V0 + 0010;
-[SP + 0014] = w(V1);
-V1 = V0 + 0018;
-V0 = V0 + 0020;
-[SP + 0018] = w(V1);
-800A59FC	jal    $func4a664
-[SP + 001c] = w(V0);
+A0 = SP + 28;
+A1 = SP + 48;
+system_gte_multiply_matrix_by_vector();
 
-La5a04:	; 800A5A04
-S4 = S4 + 0020;
-S3 = S3 + 0001;
-A2 = w[800acfe0];
-A3 = w[800c3740];
-A0 = A2 << 02;
-A0 = A0 + A2;
-A0 = A0 << 03;
-A1 = S1 + A0;
-A1 = A1 + S7;
-A0 = A0 + S7;
-A0 = S1 + A0;
-A0 = A0 & S0;
-S1 = S1 + 0050;
-V1 = w[A1 + 0000];
-800A5A44	lui    at, $0001
-AT = A3 + AT;
-V0 = w[AT + 80d4];
-V1 = V1 & S6;
-V0 = V0 & S0;
-V1 = V1 | V0;
-[A1 + 0000] = w(V1);
-V1 = A2 << 01;
-V1 = V1 + A2;
-800A5A68	lui    at, $0001
-AT = A3 + AT;
-A1 = w[AT + 80d4];
-V1 = V1 << 02;
-A1 = A1 & S6;
-A1 = A1 | A0;
-A0 = S2 + V1;
-A0 = A0 + FP;
-V1 = V1 + FP;
-V1 = S2 + V1;
-800A5A90	lui    at, $0001
-AT = A3 + AT;
-[AT + 80d4] = w(A1);
-V0 = w[A0 + 0000];
-A1 = A1 & S0;
-V0 = V0 & S6;
-V0 = V0 | A1;
-[A0 + 0000] = w(V0);
-800A5AB0	lui    at, $0001
-AT = A3 + AT;
-V0 = w[AT + 80d4];
-V1 = V1 & S0;
-V0 = V0 & S6;
-V0 = V0 | V1;
-800A5AC8	lui    at, $0001
-AT = A3 + AT;
-[AT + 80d4] = w(V0);
-V0 = S3 < 0005;
-800A5AD8	bne    v0, zero, loopa5984 [$800a5984]
-S2 = S2 + 0018;
+A0 = SP + 28;
+system_gte_set_rotation_matrix();
+
+A0 = SP + 28;
+system_gte_set_translation_vector();
+
+for( int i = 0; i < 5; ++i )
+{
+    if( w[800c1b58] != 1000 )
+    {
+        A0 = 800b08d8 + i * 20 +  0; // xyz0
+        A1 = 800b08d8 + i * 20 +  8; // xyz1
+        A2 = 800b08d8 + i * 20 + 10; // xyz3
+        A3 = 800b08d8 + i * 20 + 18; // xyz2
+        A4 = 800b08d8 - 190 + i * 50 + w[800acfe0] * 28 +  8; // xy0
+        A5 = 800b08d8 - 190 + i * 50 + w[800acfe0] * 28 + 10; // xy1
+        A6 = 800b08d8 - 190 + i * 50 + w[800acfe0] * 28 + 18; // xy3
+        A7 = 800b08d8 - 190 + i * 50 + w[800acfe0] * 28 + 20; // xy2
+        A8 = SP + 58; // Interpolation value for depth queing. (not used)
+        A9 = SP + 5c; // return flags (not used)
+        func4a664(); // transform 4 points by rotation matrix
+    }
+
+    A2 = w[800acfe0];
+    A3 = w[800c3740];
+    A0 = A2 * 28;
+    A1 = i * 50 + A0;
+    A1 = A1 + 800b08d8 - 190;
+    A0 = A0 + 800b08d8 - 190;
+    A0 = i * 50 + A0;
+    A0 = A0 & 00ffffff;
+    V1 = w[A1 + 0000];
+    V0 = w[000180d4 + A3];
+    [A1 + 0000] = w((V1 & ff000000) | (V0 & 00ffffff));
+    V1 = A2 << 01;
+    V1 = V1 + A2;
+    A1 = w[000180d4 + A3];
+    V1 = V1 << 02;
+    A1 = (A1 & ff000000) | A0;
+    [000180d4 + A3] = w(A1);
+    [800b08d8 + i * 18 + V1 - 258 + 0000] = w((w[800b08d8 + i * 18 + V1 - 258 + 0000] & ff000000) | (A1 & 00ffffff));
+    [000180d4 + A3] = w((w[000180d4 + A3] & ff000000) | ((800b08d8 + i * 18 + V1 - 258) & 00ffffff));
+}
 ////////////////////////////////
 
 
@@ -4971,30 +4915,30 @@ if( ( hu[particle_data + 2a] & 0080 ) == 0 )
 {
     A0 = hu[particle_data + 26];
     field_particle_random();
-    S2 = V0;
+    src_rnd = V0;
 }
 else
 {
-    S2 = hu[particle_data + 26];
+    src_rnd = hu[particle_data + 26];
 }
 
 A0 = fff;
 field_particle_random();
-S3 = V0;
+angle = V0;
 
-A0 = S3;
+A0 = angle;
 system_cos();
-[SP + 20] = w((V0 * S2) >> c);
+src_x = (V0 * src_rnd) >> c;
 
 if( ( hu[particle_data + 2a] & 0040 ) == 0 )
 {
-    A0 = S3;
+    A0 = angle;
     system_sin();
-    [SP + 28] = w((V0 * S2) >> c);
+    src_z = (V0 * src_rnd) >> c;
 }
 else
 {
-    [SP + 28] = w(0);
+    src_z = 0;
 }
 
 entity_id = h[particle_data + 52];
@@ -5004,31 +4948,31 @@ V0 = (h[800aee62] + h[entity_data + 108]) & fff;
 
 A0 = bu[800ae948 + V0 / 200];
 
-[SP + 20] = w(w[SP + 20] + h[particle_data + c] + h[particle_data + 30 + A0 * 4 + 0]);
-[SP + 24] = w(h[particle_data + e]);
-[SP + 28] = w(w[SP + 28] + h[particle_data + 10] + h[particle_data + 30 + A0 * 4 + 2]);
+src_x = src_x + h[particle_data + c] + h[particle_data + 30 + A0 * 4 + 0];
+src_y = h[particle_data + e];
+src_z = src_z + h[particle_data + 10] + h[particle_data + 30 + A0 * 4 + 2];
 
-[sprite_data +  8] = w(w[SP + 20]);
-[sprite_data +  c] = w(w[SP + 24]);
-[sprite_data + 10] = w(w[SP + 28]);
+[sprite_data +  8] = w(src_x);
+[sprite_data +  c] = w(src_y);
+[sprite_data + 10] = w(src_z);
 
-// set random speed for sprite
 A0 = hu[particle_data + 28];
 field_particle_random();
-S2 = V0;
+dst_rnd = V0;
 
-A0 = S3;
+A0 = angle;
 system_cos();
-[SP + 30] = w(h[particle_data + 14] + ((V0 * S2) >> c));
-[SP + 34] = w(h[particle_data + 16]);
+dst_x = h[particle_data + 14] + ((V0 * dst_rnd) >> c);
 
-A0 = S3;
+dst_y = h[particle_data + 16];
+
+A0 = angle;
 system_sin();
-[SP + 38] = w(h[particle_data + 18] + ((V0 * S2) >> c));
+dst_z = h[particle_data + 18] + ((V0 * dst_rnd) >> c);
 
-[sprite_data + 18] = w(w[SP + 30] - w[SP + 20]); // speed x
-[sprite_data + 1c] = w(w[SP + 34] - w[SP + 24]); // speed y
-[sprite_data + 20] = w(w[SP + 38] - w[SP + 28]); // speed z
+[sprite_data + 18] = w(dst_x - src_x); // speed x
+[sprite_data + 1c] = w(dst_y - src_y); // speed y
+[sprite_data + 20] = w(dst_z - src_z); // speed z
 [sprite_data + 28] = w(h[particle_data + 1c]); // accel x
 [sprite_data + 2c] = w(h[particle_data + 1e]); // accel y
 [sprite_data + 30] = w(h[particle_data + 20]); // accel z

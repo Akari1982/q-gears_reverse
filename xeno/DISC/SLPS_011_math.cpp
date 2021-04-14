@@ -43,23 +43,28 @@ return h[80051a92 + (A0 & 0fff) * 4];
 
 
 ////////////////////////////////
-// func3f790
-8003F790	beq    a0, zero, L3f7b8 [$8003f7b8]
-8003F794	addu   v0, zero, zero
-8003F798	bgtz   a1, L3f7a8 [$8003f7a8]
-8003F79C	addu   v0, a0, zero
-8003F7A0	j      L3f7b8 [$8003f7b8]
-8003F7A4	addu   v0, zero, zero
+// func3f790()
 
-L3f7a8:	; 8003F7A8
-8003F7A8	sb     zero, $0000(a0)
-8003F7AC	addiu  a1, a1, $ffff (=-$1)
-8003F7B0	bgtz   a1, L3f7a8 [$8003f7a8]
-8003F7B4	addiu  a0, a0, $0001
+addr = A0;
+size = A1;
 
-L3f7b8:	; 8003F7B8
-8003F7B8	jr     ra 
-8003F7BC	nop
+if( ( addr == 0 ) || ( A1 <= 0 ) )
+{
+    return 0;
+}
+
+A0 = addr;
+while( A1 > 0 )
+{
+    [A0] = b(0);
+    A1 = A1 - 1;
+    A0 = A0 + 1;
+}
+return addr;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3f7c0
 8003F7C0	beq    a0, zero, L3f808 [$8003f808]

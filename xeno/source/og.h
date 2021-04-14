@@ -1,5 +1,9 @@
 #include <QWindow>
 #include <QOpenGLFunctions>
+#include <QMatrix4x4>
+#include <QOpenGLShaderProgram>
+#include <QScreen>
+#include <QtMath>
 
 QT_BEGIN_NAMESPACE
 class QPainter;
@@ -19,8 +23,6 @@ public:
 
     virtual void initialize();
 
-    void setAnimating( bool animating );
-
 public slots:
     void renderLater();
     void renderNow();
@@ -31,8 +33,13 @@ protected:
     void exposeEvent( QExposeEvent* event ) override;
 
 private:
-    bool m_animating = false;
-
     QOpenGLContext* m_context = nullptr;
     QOpenGLPaintDevice* m_device = nullptr;
+
+    GLint m_posAttr = 0;
+    GLint m_colAttr = 0;
+    GLint m_matrixUniform = 0;
+
+    QOpenGLShaderProgram* m_program = nullptr;
+    int m_frame = 0;
 };

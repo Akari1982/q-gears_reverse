@@ -729,36 +729,36 @@
 800c2dd4 [][]     repeated button mask for controller 1 (details in 800af370).
 800c2ddc [][]     repeated button mask for controller 2 (details in 800af370).
 
-800c2dec array of pointers to particle data (0x40 items 0x4 size)(same as 800af7a0)
-         each particle data is array of 0x8 items 0x78 size.
+800c2dec array of pointers to particle system data (0x40 items 0x4 size)(same as 800af7a0)
+         each particle system data is array of 0x8 items 0x78 size.
     + 00 [][]     init with 0.
     + 02 [][]     wait value. Init with 0.
     + 04 [][]     ttl. Init with 80. If 0x7fff then this particle will not die.
-    + 06 [][]     number of sprites. Init with 0.
-    + 08 [][][][] speed of sprites. Init with 8000.
-    + 0c [][]     x pos.
-    + 0e [][]     y pos.
-    + 10 [][]     z pos.
-    + 14 [][]     x speed for sprites. Init with 0.
-    + 16 [][]     y speed for sprites. Init with -3e8.
-    + 18 [][]     z speed for sprites. Init with 0.
-    + 1c [][]     x accel for sprites. Init with 0.
-    + 1e [][]     y accel for sprites. Init with 0.
-    + 20 [][]     z accel for sprites. Init with 0.
-    + 24 [][]     use speed for sprites. Init with 1.
-    + 26 [][]     random range for start pos. Init with 0.
-    + 28 [][]     random range for speed. Init with 100.
+    + 06 [][]     number of particles. Init with 0.
+    + 08 [][][][] speed of particles. Init with 8000.
+    + 0c [][]     source x pos.
+    + 0e [][]     source y pos.
+    + 10 [][]     source z pos.
+    + 14 [][]     destination x. Init with 0.
+    + 16 [][]     destination y. Init with -3e8.
+    + 18 [][]     destination z. Init with 0.
+    + 1c [][]     x accel for particles. Init with 0.
+    + 1e [][]     y accel for particles. Init with 0.
+    + 20 [][]     z accel for particles. Init with 0.
+    + 24 [][]     use speed for particles. Init with 1.
+    + 26 [][]     random source pos. Init with 0.
+    + 28 [][]     random destination pos. Init with 100.
     + 2a [][]     render settings. Init with 0.
-                  0x0001 - use random rotation of sprites.
-                  0x0006 - order of sprites (0 - bottom, 1 - lower than real, 2 - real, 3 - higher than real)
+                  0x0001 - use random rotation of particles.
+                  0x0006 - order of particles (0 - bottom, 1 - lower than real, 2 - real, 3 - higher than real)
                   0x0030 - type of patricle:
                            0 - use entity pos and rot, ignore scale.
                            1 - use data from +72, +74.
                            2 - use entity matrix for particle pos.
                            3 - use entity pos rot and scale. Ignore particle data.
                   0x0040 - use fized z variation pos.
-                  0x0080 - use fixed start pos.
-    + 2c [][][][] pointer to allocated sprites memory. Size is sprite number * c0.
+                  0x0080 - use distance from emitter +26.
+    + 2c [][][][] pointer to allocated particles memory. Size is sprite number * c0.
         + 00 [][]     init with 0. If this not 0 then we will not kill particle after ttl.
         + 02 [][]     wait value.
         + 04 [][]     ttl.
@@ -786,26 +786,26 @@
         + 4e []       B add (maybe -X).
         + 50 start of quad packet for buffer 1.
         + 78 start of quad packet for buffer 2.
-        + a0 [][]     x1. From particles sprite data.
-        + a2 [][]     y1. From particles sprite data.
+        + a0 [][]     x1. From emitter particle data.
+        + a2 [][]     y1. From emitter particle data.
         + a4 [][]     z1. Always 0.
-        + a8 [][]     x2. From particles sprite data.
-        + aa [][]     y2. From particles sprite data.
+        + a8 [][]     x2. From emitter particle data.
+        + aa [][]     y2. From emitter particle data.
         + ac [][]     z2. Always 0.
-        + b0 [][]     x3. From particles sprite data.
-        + b2 [][]     y3. From particles sprite data.
+        + b0 [][]     x3. From emitter particle data.
+        + b2 [][]     y3. From emitter particle data.
         + b4 [][]     z3. Always 0.
-        + b8 [][]     x4. From particles sprite data.
-        + ba [][]     y4. From particles sprite data.
+        + b8 [][]     x4. From emitter particle data.
+        + ba [][]     y4. From emitter particle data.
         + bc [][]     z4. Always 0.
     + 30 array of 0x8 offsets for all directions sprites. 0x4 size.
         + 0 [][]     x offset. Init with 0.
         + 2 [][]     z offset. Init with 0.
     + 50 [][]     scale. Init with 800.
     + 52 [][]     entity id (set entity id from script called).
-    + 54 [][]     sprite id. Init with 0.
-    + 56 [][]     init with 1. Default wait for sprite.
-    + 58 [][]     init with 1c. Default ttl for sprite.
+    + 54 [][]     particle id. Init with 0.
+    + 56 [][]     init with 1. Default wait for particle.
+    + 58 [][]     init with 1c. Default ttl for particle.
     + 5a [][]     x trans. Init with 1c8.
     + 5c [][]     y trans. Init with 1c8.
     + 5e [][]     z trans. Init with 1c8.
