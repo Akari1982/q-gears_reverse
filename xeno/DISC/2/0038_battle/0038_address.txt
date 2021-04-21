@@ -1,0 +1,11 @@
+800c35c4 [][][][] pointer to allocated 0xa5d4 size.
+
+800c35cc [][][][] pointer to allocated 0x2f8 size.
+
+800c4140 address for draw enviroment data buffer 1
+800c419c address for display enviroment data buffer 1
+800c4140 + 4070 address for draw enviroment data buffer 2
+800c419c + 4070 address for display enviroment data buffer 2
+
+800d2448 [][][][] pointer to allocated 0x10c size.
+

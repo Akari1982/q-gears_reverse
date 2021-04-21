@@ -105,7 +105,7 @@
 // func1b550
 8001B550-8001B6CC
 ////////////////////////////////
-// func1b6d0
+// system_battle_draw_settings
 8001B6D0-8001B7D4
 ////////////////////////////////
 // func1b7d8
@@ -126,25 +126,25 @@
 // system_get_random_value_from_to
 8001BBCC-8001BC64
 ////////////////////////////////
-// func1bc68
+// kernel_menu_draw_env_settings
 8001BC68-8001BC9C
 ////////////////////////////////
-// func1bca0
+// kernel_menu_draw_settings
 8001BCA0-8001BD74
 ////////////////////////////////
-// func1bd78
+// kernel_menu_init_data
 8001BD78-8001BDC0
 ////////////////////////////////
-// func1bdc4
+// kernel_menu_buttons_update
 8001BDC4-8001BEFC
 ////////////////////////////////
-// func1bf00
+// kernel_menu_render
 8001BF00-8001C030
 ////////////////////////////////
-// func1c034
+// kernel_menu_loop
 8001C034-8001C4BC
 ////////////////////////////////
-// menu_main
+// kernel_menu_main
 8001C4C0-8001C5F4
 ////////////////////////////////
 
@@ -5635,7 +5635,7 @@ L31820:	; 80031820
 // system_cos
 8003F774-8003F78C
 ////////////////////////////////
-// func3f790
+// system_memzero
 8003F790-8003F7BC
 ////////////////////////////////
 // func3f7c0
@@ -6356,7 +6356,7 @@ L31820:	; 80031820
 80048A64	bne    t0, t1, $800657a8
 80048A68	00409F9C	œŸ@.
 ////////////////////////////////
-// func48a6c
+// system_gte_init
 80048A6C-80048AF0
 ////////////////////////////////
 // system_square_root

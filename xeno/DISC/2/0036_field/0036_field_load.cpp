@@ -1743,7 +1743,7 @@ system_draw_sync();
 A0 = 0;
 system_psyq_wait_frames();
 
-func48a6c();
+system_gte_init();
 
 A0 = 00a0;
 A1 = 0070;

@@ -43,7 +43,7 @@ return h[80051a92 + (A0 & 0fff) * 4];
 
 
 ////////////////////////////////
-// func3f790()
+// system_memzero()
 
 addr = A0;
 size = A1;

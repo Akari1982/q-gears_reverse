@@ -408,6 +408,7 @@
                                     0x1fffffff id from prev struct
                                     0xe0000000 ???
                     +18 [][][][] prev struct.
+    +428 []       store 1 here at start of battle load.
 
 80058954 start of working area
 80058954 [][][][] pointer to some func.
@@ -755,6 +756,12 @@
 80061c1c
 
 80061c20 array of 3 items with size 0x4. Init with 0.
+
+80061c30 pointer to allocated menu memory (0x1e98 size)
+    +  6с draw enviroment packet buffer 1.
+    +  c8 display enviroment packet buffer 1.
+    + 120 draw enviroment packet buffer 2.
+    + 17c display enviroment packet buffer 1.
 
 80061c8c controller input buffers (size 0x22 items 0x2).
     +02 [][]     button mask. (0=Pressed, 1=Released)

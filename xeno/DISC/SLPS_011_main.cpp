@@ -73,7 +73,7 @@ system_draw_sync();
 A0 = 1; // display on screen
 system_psyq_set_disp_mask();
 
-func48a6c(); // init gte and patch exception handler.
+system_gte_init();
 
 func3615c(); // init gamepad and related functions and data.
 
@@ -179,7 +179,7 @@ system_sound_load_snd_file();
 [80058c48] = w(V0);
 
 S4 = hu[GP + 1ac];
-[GP +1ac] = h(6);
+[GP + 1ac] = h(6);
 
 A0 = 6; // STRIPCD1\1\0028
 system_get_filesize_by_dir_file_id();
@@ -417,7 +417,7 @@ if( A0 != 0 )
 // 2 8001B550 800C31A4 800D3110 00000001 // battle      func1b550()
 // 3 8007038C 8009AF98 8009CBF4 00000001 // worldmap
 // 4 800884D4 80091C0C 8009AB90 00000001 // battling
-// 5 8001C4C0 80058954 8006F17C 00000000 // menu        menu_main()
+// 5 8001C4C0 80058954 8006F17C 00000000 // menu        kernel_menu_main()
 // 6 80072E7C 800765C8 80076AE4 00000001 // movie       movie_main()
 S1 = 8001808c + w[80018088] * 10;
 
@@ -1910,9 +1910,7 @@ A1 = 0;
 system_filesystem_set_dir();
 
 V0 = w[8005881c];
-V1 = w[V0 + 0];
-
-if( V1 != -1 )
+if( w[V0 + 0] != -1 )
 {
     A0 = 80200000;
     system_print_set_memory();
@@ -1931,7 +1929,7 @@ if( V1 != -1 )
     system_print_init(); // LsFONT
 }
 
-8001B5D4	jal    func1b6d0 [$8001b6d0]
+system_battle_draw_settings();
 
 battle_main();
 
@@ -1991,68 +1989,74 @@ func19b50();
 
 
 ////////////////////////////////
-// func1b6d0()
+// system_battle_draw_settings()
 
-A0 = 0001;
-8001B6E4	jal    system_psyq_reset_graph [$80043f88]
+A0 = 1;
+system_psyq_reset_graph();
 
-A0 = 0300;
-8001B6F0	jal    func37878 [$80037878]
+A0 = 300;
 A1 = 0;
-A0 = 0008;
-A1 = 0010;
-A2 = 0140;
-A3 = 00f0;
-V0 = 1000;
-[SP + 0010] = w(0);
-8001B710	jal    func37878 [$80037878]
-[SP + 0014] = w(V0);
-8001B718	jal    func37878 [$80037878]
+func37878(); // nothing
+
+A0 = 8;
+A1 = 10;
+A2 = 140;
+A3 = f0;
+A4 = 0;
+A5 = 1000;
+func37878(); // nothing
+
 A0 = V0;
-8001B720	jal    func48a6c [$80048a6c]
-S1 = 00e0;
-A0 = 00a0;
-8001B72C	jal    system_gte_set_screen_offset [$80049fd4]
-A1 = 00b4;
-8001B734	jal    system_gte_set_projection_plane_distance [$80049ff4]
-A0 = 0200;
-S0 = 800c419c;
-A0 = S0;
+func37878(); // nothing
+
+system_gte_init();
+
+A0 = a0;
+A1 = b4;
+system_gte_set_screen_offset();
+
+A0 = 200;
+system_gte_set_projection_plane_distance();
+
+A0 = 800c419c;
 A1 = 0;
-A2 = 00e0;
-A3 = 0140;
-8001B754	jal    system_graphic_create_display_env_struct [$80043858]
-[SP + 0010] = w(S1);
-8001B75C	addiu  s2, s0, $ffa4 (=-$5c)
-A0 = S2;
-A1 = 0;
-A2 = 0;
-A3 = 0140;
-8001B770	jal    system_graphic_create_draw_env_struct [$800437a0]
-[SP + 0010] = w(S1);
-A0 = S0 + 4070;
+A2 = e0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_display_env_struct();
+
+A0 = 800c4140;
 A1 = 0;
 A2 = 0;
-A3 = 0140;
-8001B788	jal    system_graphic_create_display_env_struct [$80043858]
-[SP + 0010] = w(S1);
-S0 = S0 + 4014;
-A0 = S0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+A0 = 800c419c + 4070;
 A1 = 0;
-A2 = 00e0;
-A3 = 0140;
-8001B7A4	jal    system_graphic_create_draw_env_struct [$800437a0]
-[SP + 0010] = w(S1);
-8001B7AC	jal    func1b7d8 [$8001b7d8]
-A0 = S2;
-8001B7B4	jal    func1b7d8 [$8001b7d8]
-A0 = S0;
+A2 = 0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_display_env_struct();
+
+A0 = 800c4140 + 4070;
+A1 = 0;
+A2 = e0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+A0 = 800c4140 + 4014;
+func1b7d8();
+
+A0 = 800c419c + 4014;
+func1b7d8();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1b7d8
+// func1b7d8()
 
 [A0 + 18] = b(1);
 [A0 + 16] = b(1);
@@ -2086,7 +2090,7 @@ S0 = V0;
 A1 = S0;
 A2 = 0;
 A3 = 0080;
-8001B850	jal    func293e8 [$800293e8]
+func293e8(); // load file by dir file id
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -2357,7 +2361,7 @@ return V0;
 
 
 ////////////////////////////////
-// func1bc68()
+// kernel_menu_draw_env_settings()
 
 [A0 + 16] = b(1);
 [A0 + 18] = b(0);
@@ -2374,7 +2378,7 @@ return V0;
 
 
 ////////////////////////////////
-// func1bca0()
+// kernel_menu_draw_settings()
 
 A0 = a0;
 A1 = 70;
@@ -2383,255 +2387,229 @@ system_gte_set_screen_offset();
 A0 = 200;
 system_gte_set_projection_plane_distance();
 
-A0 = w[80061c30] + c8;
+mem = w[80061c30];
+
+A0 = mem + c8;
 A1 = 0;
 A2 = e0;
 A3 = 140;
 A4 = e0;
 system_graphic_create_display_env_struct();
 
-A0 = w[80061c30] + 6c;
+A0 = mem + 6c;
 A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
 system_graphic_create_draw_env_struct();
 
-A0 = w[80061c30] + 17c;
+A0 = mem + 17c;
 A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
 system_graphic_create_display_env_struct();
 
-A0 = w[80061c30] + 120;
+A0 = mem + 120;
 A1 = 0;
 A2 = e0;
 A3 = 140;
 A4 = e0;
 system_graphic_create_draw_env_struct();
 
-A0 = w[80061c30];
-A0 = A0 + 6c;
-func1bc68();
+A0 = mem + 6c;
+kernel_menu_draw_env_settings();
 
-A0 = w[80061c30];
-A0 = A0 + 120;
-func1bc68();
+A0 = mem + 120;
+kernel_menu_draw_env_settings();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1bd78()
+// kernel_menu_init_data()
 
-V0 = w[80061c30];
-[V0 + 01e8] = w(800);
-[V0 + 0228] = w(800);
-[V0 + 01dc] = h(0);
-[V0 + 01da] = h(0);
-[V0 + 01d8] = h(0);
-[V0 + 01e4] = w(0);
-[V0 + 01e0] = w(0);
-[V0 + 021c] = h(0);
-[V0 + 021a] = h(0);
-[V0 + 0218] = h(0);
-[V0 + 0224] = w(0);
-[V0 + 0220] = w(0);
-[V0 + 02e8] = w(1);
-[V0 + 0329] = b(0);
+mem = w[80061c30];
+
+[mem + 1d8] = h(0);
+[mem + 1da] = h(0);
+[mem + 1dc] = h(0);
+[mem + 1e0] = w(0);
+[mem + 1e4] = w(0);
+[mem + 1e8] = w(800);
+[mem + 218] = h(0);
+[mem + 21a] = h(0);
+[mem + 21c] = h(0);
+[mem + 220] = w(0);
+[mem + 224] = w(0);
+[mem + 228] = w(800);
+[mem + 2e8] = w(1);
+[mem + 329] = b(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1bdc4()
+// kernel_menu_buttons_update()
 
-S0 = 8;
+mem = w[80061c30];
 
-8001BDD0	jal    func362b8 [$800362b8]
+func362b8();
 
-8001BDD8	beq    v0, zero, L1be38 [$8001be38]
-8001BDDC	nop
-8001BDE0	jal    func35c84 [$80035c84]
-8001BDE4	nop
-8001BDE8	j      L1bedc [$8001bedc]
-8001BDEC	nop
+if( V0 != 0 )
+{
+    func35c84(); // clear button input
+}
+else
+{
+    while( true )
+    {
+        func35b88(); // get buttons
 
-loop1bdf0:	; 8001BDF0
-8001BDF0	j      L1bedc [$8001bedc]
-S0 = 0;
-
-loop1bdf8:	; 8001BDF8
-8001BDF8	j      L1bedc [$8001bedc]
-S0 = 0001;
-
-loop1be00:	; 8001BE00
-8001BE00	j      L1bedc [$8001bedc]
-S0 = 0002;
-
-loop1be08:	; 8001BE08
-8001BE08	j      L1bedc [$8001bedc]
-S0 = 0003;
-
-loop1be10:	; 8001BE10
-8001BE10	j      L1bedc [$8001bedc]
-S0 = 0004;
-
-loop1be18:	; 8001BE18
-V1 = w[80061c30];
-8001BE20	nop
-V0 = bu[V1 + 1e94];
-S0 = 000c;
-V0 = V0 < 0001;
-8001BE30	j      L1bedc [$8001bedc]
-[V1 + 1e94] = b(V0);
-
-L1be38:	; 8001BE38
-8001BE38	jal    func35b88 [$80035b88]
-8001BE3C	nop
-8001BE40	beq    v0, zero, L1bedc [$8001bedc]
-8001BE44	nop
-V1 = hu[80058b40];
-8001BE50	nop
-V0 = V1 & 2000;
-8001BE58	bne    v0, zero, loop1bdf0 [$8001bdf0]
-V0 = V1 & 4000;
-8001BE60	bne    v0, zero, loop1bdf8 [$8001bdf8]
-V0 = V1 & 8000;
-8001BE68	bne    v0, zero, loop1be00 [$8001be00]
-V0 = V1 & 1000;
-8001BE70	bne    v0, zero, loop1be08 [$8001be08]
-V0 = V1 & 0020;
-8001BE78	bne    v0, zero, loop1be10 [$8001be10]
-V0 = V1 & 0100;
-8001BE80	bne    v0, zero, loop1be18 [$8001be18]
-V0 = V1 & 0004;
-8001BE88	beq    v0, zero, L1beb8 [$8001beb8]
-V0 = V1 & 0001;
-V1 = w[80061c30];
-8001BE98	nop
-V0 = bu[V1 + 1e95];
-8001BEA0	nop
-8001BEA4	beq    v0, zero, L1bedc [$8001bedc]
-8001BEA8	nop
-V0 = bu[V1 + 1e95];
-8001BEB0	j      L1bed8 [$8001bed8]
-8001BEB4	addiu  v0, v0, $ffff (=-$1)
-
-L1beb8:	; 8001BEB8
-8001BEB8	beq    v0, zero, L1be38 [$8001be38]
-8001BEBC	nop
-V1 = w[80061c30];
-V0 = bu[V1 + 1e95];
-V0 = V0 + 0001;
-
-L1bed8:	; 8001BED8
-[V1 + 1e95] = b(V0);
-
-L1bedc:	; 8001BEDC
-V0 = w[80061c30];
-[V0 + 0325] = b(S0);
+        if( V0 == 0 )
+        {
+            [mem + 325] = b(8);
+            break;
+        }
+        else if( hu[80058b40] & 2000 ) // Right
+        {
+            [mem + 325] = b(0);
+            break;
+        }
+        else if( hu[80058b40] & 4000 ) // Down
+        {
+            [mem + 325] = b(1);
+            break;
+        }
+        else if( hu[80058b40] & 8000 ) // Left
+        {
+            [mem + 325] = b(2);
+            break;
+        }
+        else if( hu[80058b40] & 1000 ) // Up
+        {
+            [mem + 325] = b(3);
+            break;
+        }
+        else if( hu[80058b40] & 0020 ) // Circle
+        {
+            [mem + 325] = b(4);
+            break;
+        }
+        else if( hu[80058b40] & 0100 ) // Select
+        {
+            [mem + 1e94] = b(bu[mem + 1e94] < 1);
+            [mem + 325] = b(c);
+            break;
+        }
+        else if( hu[80058b40] & 0004 ) // L1
+        {
+            if( bu[mem + 1e95] != 0 )
+            {
+                [mem + 1e95] = b(bu[mem + 1e95] - 1);
+            }
+            [mem + 325] = b(8);
+            break;
+        }
+        else if( hu[80058b40] & 0001 ) // L2
+        {
+            [mem + 1e95] = b(bu[mem + 1e95] + 1);
+            [mem + 325] = b(8);
+            break;
+        }
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1bf00()
+// kernel_menu_render()
 
-8001BF08	jal    func1bdc4 [$8001bdc4]
+kernel_menu_buttons_update();
 
-V1 = w[80061c30];
-8001BF18	nop
-V0 = w[V1 + 01d4];
-A0 = V1 + 006c;
-8001BF24	bne    v0, a0, L1bf30 [$8001bf30]
-A1 = 0010;
-A0 = V1 + 0120;
+mem = w[80061c30];
 
-L1bf30:	; 8001BF30
-[V1 + 01d4] = w(A0);
-A0 = w[V1 + 01d4];
-V0 = w[V1 + 0308];
-A0 = A0 + 0070;
-V0 = V0 < 0001;
-[V1 + 0308] = w(V0);
+V0 = w[mem + 1d4];
+A0 = mem + 6c;
+if( V0 == A0 )
+{
+    A0 = mem + 120;
+}
+
+[mem + 1d4] = w(A0);
+[mem + 308] = w(w[mem + 308] < 1);
+
+A0 = w[mem + 1d4] + 70;
+A1 = 10;
 system_clear_otagr();
 
 V0 = w[8005881c];
-8001BF54	nop
-V0 = w[V0 + 0000];
-8001BF5C	addiu  s0, zero, $ffff (=-$1)
-8001BF60	beq    v0, s0, L1bfc8 [$8001bfc8]
-8001BF64	nop
-V1 = w[80061c30];
-8001BF70	nop
-V0 = bu[V1 + 1e94];
-8001BF78	nop
-8001BF7C	beq    v0, zero, L1bf94 [$8001bf94]
-A0 = 0003;
-A1 = bu[V1 + 1e95];
-A2 = 000f;
-A3 = 80ac;
-system_memory_full_dump();
+if( w[V0 + 0] != -1 )
+{
+    if( bu[mem + 1e94] != 0 )
+    {
+        A0 = 3;
+        A1 = bu[mem + 1e95];
+        A2 = f;
+        A3 = 80ac;
+        system_memory_full_dump();
+    }
 
+    V0 = w[8005881c];
+    if( w[V0 + 0] != -1 )
+    {
+        A0 = w[mem + 1d4] + 70;
+        system_print_render_strings();
+    }
+}
 
-L1bf94:	; 8001BF94
-V0 = w[8005881c];
-8001BF9C	nop
-V0 = w[V0 + 0000];
-8001BFA4	nop
-8001BFA8	beq    v0, s0, L1bfc8 [$8001bfc8]
-
-V0 = w[80061c30];
-A0 = w[V0 + 1d4] + 70;
-system_print_render_strings();
-
-L1bfc8:	; 8001BFC8
-8001BFC8	jal    system_draw_sync [$80044448]
 A0 = 0;
-8001BFD0	jal    system_psyq_wait_frames [$8004b3f4]
+system_draw_sync();
+
 A0 = 0;
-V0 = w[80061c30];
-8001BFE0	nop
-A0 = w[V0 + 01d4];
-8001BFE8	jal    system_psyq_put_draw_env [$80044abc]
-8001BFEC	nop
-V0 = w[80061c30];
-8001BFF8	nop
-A0 = w[V0 + 01d4];
-8001C000	jal    system_psyq_put_disp_env [$80044d14]
-A0 = A0 + 005c;
-V0 = w[80061c30];
-8001C010	nop
-A0 = w[V0 + 01d4];
-A0 = A0 + 00ac;
+system_psyq_wait_frames();
+
+A0 = w[mem + 1d4];
+system_psyq_put_draw_env();
+
+A0 = w[mem + 1d4] + 5c;
+system_psyq_put_disp_env();
+
+A0 = w[mem + 1d4] + ac;
 system_psyq_draw_otag();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1c034()
+// kernel_menu_loop()
+
+mem = w[80061c30];
 
 if( bu[80058818] != 0 )
 {
-    S1 = 0;
-    S0 = 0;
-    S3 = 6;
+    horiz = 0;
+    vert = 0;
 
     S2 = 1;
     while( S2 != 0 )
     {
         A0 = 8001830c; // "\n\n     Menu=(%d)%s\n"
-        V0 = S1 * 4;
-        A2 = w[8004f140 + V0];
-        A1 = S1;
+        A1 = horiz;
+        A2 = w[8004f140 + horiz * 4];
+        // 0 "Normal Menu"
+        // 1 "Member Change"
+        // 2 "Load Game"
+        // 3 "Enter Name"
+        // 4 "Shop"
+        // 5 "Robo"
+        // 6 "CD Change"
         system_print();
 
-        if( S1 >= 4 )
+        if( horiz >= 4 )
         {
-            if( S1 != S3 )
+            if( horiz != 6 )
             {
                 A0 = 80018348; // "\n\n     ShopNo =(%d)\n"
             }
@@ -2639,118 +2617,116 @@ if( bu[80058818] != 0 )
             {
                 A0 = 80018360; // "\n\n     CdNo =(%d)\n"
             }
-            A1 = S0;
+            A1 = vert;
         }
-        else if( S0 >= b )
+        else if( vert >= b )
         {
 
             A0 = 80018334; // "\n\n     Robo =(%d)\n"
-            A1 = S0 - b;
+            A1 = vert - b;
         }
         else
         {
-            A1 = S0;
+            A1 = vert;
             A0 = 80018320; // "\n\n     Chr =(%d)\n"
         }
 
         system_print();
 
-        V0 = w[80061c30];
-        V1 = bu[V0 + 325];
+        V1 = bu[mem + 325];
 
         switch( V1 )
         {
-            case 4:
+            case 4: // Circle
             {
                 S2 = 0;
             }
             break;
 
-            case 0:
+            case 0: // Right
             {
-                S1 = S1 + 1;
-                if( S1 >= 7 )
+                horiz = horiz + 1;
+                if( horiz >= 7 )
                 {
-                    S1 = 0;
+                    horiz = 0;
                 }
-                S0 = 0;
+                vert = 0;
             }
             break;
 
-            case 2:
+            case 2: // Left
             {
-                S1 = S1 - 1;
-                if( S1 < 0 )
+                horiz = horiz - 1;
+                if( horiz < 0 )
                 {
-                    S1 = 6;
+                    horiz = 6;
                 }
-                S0 = 0;
+                vert = 0;
             }
             break;
 
-            case 1:
+            case 1: // Down
             {
-                S0 = S0 - 1;
+                vert = vert - 1;
 
-                if( S0 < 0 )
+                if( vert < 0 )
                 {
-                    if( S1 >= 4 )
+                    if( horiz >= 4 )
                     {
-                        S0 = S0 < 1;
-                        if( S1 != S3 )
+                        vert = vert < 1;
+                        if( horiz != 6 )
                         {
-                            S0 = ff;
+                            vert = ff;
                         }
                     }
                     else
                     {
-                        S0 = 1e;
+                        vert = 1e;
                     }
                 }
             }
             break;
 
-            case 3:
+            case 3: // Up
             {
-                if( S1 < 4 )
+                if( horiz < 4 )
                 {
-                    S0 = S0 + 1;
-                    if( S0 >= 1f )
+                    vert = vert + 1;
+                    if( vert >= 1f )
                     {
-                        S0 = 0;
+                        vert = 0;
                     }
                 }
                 else
                 {
-                    if( S1 != S3 )
+                    if( horiz != 6 )
                     {
-                        S0 = S0 + 1;
+                        vert = vert + 1;
                     }
                     else
                     {
-                        S0 = S0 < 1;
+                        vert = vert < 1;
                     }
                 }
             }
             break;
         }
 
-        8001C1B4	jal    func1bf00 [$8001bf00]
+        kernel_menu_render();
     }
 
+    [80058afc] = b(horiz);
+    [80058811] = b(vert);
+
+    [mem + 84] = b(0);
+    [mem + 138] = b(0);
+
     A0 = 0;
-    V0 = w[80061c30];
-    [80058afc] = b(S1);
-    [80058811] = b(S0);
-    [V0 + 0084] = b(0);
-    V0 = w[80061c30];
-    [V0 + 0138] = b(0);
     system_psyq_set_disp_mask();
 
-    V1 = w[80061c30];
-    A0 = 0001;
-    V0 = V1 + 0120;
-    [V1 + 01d4] = w(V0);
+    [mem + 1d4] = w(mem + 120);
+
+    A0 = 1;
     system_psyq_set_disp_mask();
 }
 
@@ -2758,11 +2734,9 @@ A0 = 10;
 A1 = 0;
 system_filesystem_set_dir();
 
-V0 = bu[80058818];
-if( V0 != 0 )
+if( bu[80058818] != 0 )
 {
-    V0 = 3b9ac9ff;
-    [8006e5e8] = w(V0);
+    [8006e5e8] = w(3b9ac9ff);
 
     A0 = 2; // HIG
     A1 = 0;
@@ -2774,138 +2748,123 @@ if( V0 != 0 )
     A0 = V0;
     A1 = 0;
     system_memory_allocate();
+    [80058af8] = w(V0);
 
-    A0 = 0001;
+    A0 = 1; // file
     A1 = V0;
     A2 = 0;
-    [80058af8] = w(A1);
-    A3 = 0080;
-    8001C26C	jal    func293e8 [$800293e8]
+    A3 = 80;
+    func293e8(); // load file by dir file id
 
     A0 = 0;
     system_cdrom_action_sync();
 
-    V1 = bu[80058afc];
-    V0 = 0005;
-    8001C288	bne    v1, v0, L1c320 [$8001c320]
-    8001C28C	nop
-    A0 = 4;
-    A1 = 0;
-    system_filesystem_set_dir();
+    if( bu[80058afc] == 5 )
+    {
+        A0 = 4;
+        A1 = 0;
+        system_filesystem_set_dir();
 
-    A0 = 0004;
-    A1 = 0001;
-    system_memory_allocate();
+        A0 = 4;
+        A1 = 1;
+        system_memory_allocate();
+        [80064f5c] = w(V0);
 
-    A0 = 7fe24000;
-    A0 = V0 + A0;
-    [80064f5c] = w(V0);
-    A1 = 0001;
-    system_memory_allocate();
+        A0 = V0 + 7fe24000;
+        A1 = 1;
+        system_memory_allocate();
+        [8006b4b4] = w(V0);
 
-    A0 = 06b9;
-    A1 = 801dc000;
-    A2 = 0;
-    [8006b4b4] = w(V0);
-    A3 = 0080;
-    8001C2DC	jal    func293e8 [$800293e8]
+        A0 = 6b9;
+        A1 = 801dc000;
+        A2 = 0;
+        A3 = 80;
+        func293e8(); // load file by dir file id
 
-    A0 = 0;
-    system_cdrom_action_sync();
+        A0 = 0;
+        system_cdrom_action_sync();
 
-    A0 = 0010;
-    A1 = 0;
-    system_filesystem_set_dir();
+        A0 = 10;
+        A1 = 0;
+        system_filesystem_set_dir();
 
-    A0 = 4000;
-    A1 = 0;
-    system_memory_allocate();
+        A0 = 4000;
+        A1 = 0;
+        system_memory_allocate();
+        [80059b3c] = w(V0);
 
-    A0 = 4000;
-    [80059b3c] = w(V0);
-    A1 = 0;
-    system_memory_allocate()
+        A0 = 4000;
+        A1 = 0;
+        system_memory_allocate()
+        [80059b40] = w(V0);
+    }
 
-    [80059b40] = w(V0);
-
-    L1c320:	; 8001C320
     A0 = 4;
     A1 = 1;
     system_memory_allocate();
-
-    A0 = 7fe3b000;
     S4 = V0;
-    A0 = S4 + A0;
-    A1 = 0001;
-    system_memory_allocate();
 
+    A0 = S4 + 7fe3b000;
+    A1 = 1;
+    system_memory_allocate();
+    S5 = V0;
+
+    A0 = bu[80058afc] + 5;
     A1 = 801c5000;
     A2 = 0;
-    A0 = bu[80058afc];
-    A3 = 0080;
-    S5 = V0;
-    A0 = A0 + 0005;
-    8001C360	jal    func293e8 [$800293e8]
+    A3 = 80;
+    func293e8(); // load file by dir file id
 
     A0 = 0;
     system_cdrom_action_sync();
 }
 
-A0 = 0010;
+A0 = 10;
 A1 = 0;
 system_filesystem_set_dir();
 
-V1 = bu[80058afc];
-8001C384	nop
-V0 = V1 < 0007;
-8001C38C	beq    v0, zero, L1c40c [$8001c40c]
+switch( bu[80058afc] )
+{
+    case 0:
+    {
+        8001C3AC	jal    $801c6298
+    }
+    break;
 
-V0 = w[8001838c + V1 * 4];
-8001C3A4	jr     v0 
+    case 1:
+    {
+        8001C3BC	jal    $801cb094
+    }
+    break;
 
-case 0:
+    case 3:
+    {
+        8001C3CC	jal    $801cbd24
+    }
+    break;
 
-8001C3AC	jal    $801c6298
-8001C3B0	nop
-8001C3B4	j      L1c40c [$8001c40c]
-8001C3B8	nop
+    case 4:
+    {
+        8001C3DC	jal    $801ccddc
+    }
+    break;
 
-case 1:
+    case 2 6:
+    {
+        8001C3EC	jal    $801c6298
 
-8001C3BC	jal    $801cb094
-8001C3C0	nop
-8001C3C4	j      L1c40c [$8001c40c]
-8001C3C8	nop
+        A0 = 1;
+        8001C3F4	jal    func199f0 [$800199f0]
+    }
+    break;
 
-case 3:
+    case 5:
+    {
+        8001C404	jal    $801ce060
+    }
+    break;
+}
 
-8001C3CC	jal    $801cbd24
-8001C3D0	nop
-8001C3D4	j      L1c40c [$8001c40c]
-8001C3D8	nop
-
-case 4:
-
-8001C3DC	jal    $801ccddc
-8001C3E0	nop
-8001C3E4	j      L1c40c [$8001c40c]
-8001C3E8	nop
-
-case 2 6:
-
-8001C3EC	jal    $801c6298
-8001C3F0	nop
-8001C3F4	jal    func199f0 [$800199f0]
-A0 = 0001;
-8001C3FC	j      L1c40c [$8001c40c]
-8001C400	nop
-
-case 5:
-
-8001C404	jal    $801ce060
-8001C408	nop
-
-L1c40c:	; 8001C40C
 if( bu[80058818] != 0 )
 {
     A0 = S4;
@@ -2939,73 +2898,60 @@ if( bu[80058818] != 0 )
 
 
 ////////////////////////////////
-// menu_main()
+// kernel_menu_main()
 
 A0 = 1e98;
 A1 = 0;
 system_memory_allocate();
-[80061c30] = w(A0);
+mem = V0;
 
-A0 = V0;
+[80061c30] = w(mem);
+
+A0 = mem;
 A1 = 1e98;
-func3f790(); // memzero
+system_memzero();
 
-V1 = w[80061c30];
-[V1 + 0325] = b(8);
+[mem + 325] = b(8);
 
 A0 = 2; // HIG
 A1 = 0;
 system_memory_set_alloc_user();
 
-V0 = w[80061c30];
-V1 = V0 + 120;
-[V0 + 1d4] = w(V1);
-[V0 + 1e94] = b(0);
-V0 = w[80061c30];
-[V0 + 1e95] = b(1);
-V0 = w[80061c30];
-[V0 + 02d8] = w(0);
-[V0 + 0327] = b(0);
+[mem + 1d4] = w(mem + 120);
+[mem + 2d8] = w(0);
+[mem + 327] = b(0);
+[mem + 1e94] = b(0);
+[mem + 1e95] = b(1);
 
-func1bca0();
+kernel_menu_draw_settings();
 
-V0 = bu[80058818];
-
-if( V0 != 0 )
+if( bu[80058818] != 0 )
 {
-    V0 = w[80061c30];
-    [V0 + 0084] = b(1);
-    V0 = w[80061c30];
-
-    L1c578:	; 8001C578
-    [V0 + 0138] = b(1);
+    [mem + 84] = b(1);
+    [mem + 138] = b(1);
 }
 
-func1bd78();
+kernel_menu_init_data();
 
 A0 = 0;
 system_psyq_wait_frames();
 
-A0 = w[80061c30];
-A0 = A0 + 006c;
+A0 = mem + 6c;
 system_psyq_put_draw_env();
 
-A0 = w[80061c30];
-A0 = A0 + 0120;
+A0 = mem + 120;
 system_psyq_put_draw_env();
 
-A0 = w[80061c30];
-A0 = A0 + 00c8;
+A0 = mem + c8;
 system_psyq_put_disp_env();
 
-A0 = w[80061c30];
-A0 = A0 + 017c;
+A0 = mem + 17c;
 system_psyq_put_disp_env();
 
 A0 = 1;
 system_psyq_set_disp_mask();
 
-func1c034();
+kernel_menu_loop();
 
 [80058818] = b(1);
 ////////////////////////////////
