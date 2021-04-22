@@ -520,6 +520,8 @@
 
 80058b14 [][][][] number of initing channels.
 
+80058b18 []       ???
+
 80058b20 []       number of hours game working.
 80058b24 [][][][] if this &3 then we always return pressed buttons in 80058b40. Increment every frame.
 80058b28 [][]     mask of buttons that was pressed in last update for controller 1 (details in 80058c0c).
@@ -601,6 +603,8 @@
 
 80058c20 [][][][] allocated spu pointer for pcm data.
 80058c24 [][][][] size of pcm data.
+
+80058c38
 
 80058c40 [][][][] init with 0.
 80058c48 [][][][] pointer to struct from STRIPCD1\1\0027.snd file.

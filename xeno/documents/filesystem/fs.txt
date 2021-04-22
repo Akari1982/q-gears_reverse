@@ -1,5 +1,25 @@
-Directory 0 1
+// hardcoded into SLPS_011
+// 00 1600 1800 FFFF FFFF
+// 04 A801 FFFF FFFF FFFF
+// 08 FFFF FFFF FFFF FFFF
+// 0с 350A 3A0A 350D D30A
+// 10 220A 2E0A 2F0A FFFF
+// 14 FFFF FFFF FFFF FFFF
+// 18 1400 0100 1300 FFFF
+// 1с 7500 FFFF FFFF FFFF
+// 20 100C 140C 150C 190C
+// 24 520F FFFF FFFF FFFF
+// 28 4C0F 6E0B 4D0C 3710
+// 2с 090C AD0B FFFF FFFF
+// 30 2E00 3400 FFFF FFFF
+// 34 FFFF FFFF FFFF FFFF
+// 38 FFFF FFFF FFFF FFFF
+// 3с 0100
 
+
+Directory 0 0 (0021)
+
+Directory 0 1 (0023)
      2 STRIPCD1\1\0024.snd
      3 STRIPCD1\1\0025.snd
      4 STRIPCD1\1\0026.snd
@@ -18,7 +38,7 @@ Directory 0 1
     11 STRIPCD1\2\0039 menu.exe
     12 STRIPCD1\2\0040 movie.exe
 
-Directory 4 0
+Directory 4 0 (0424)
      2 STRIPCD1\7\0424          0x1d1d5, 0x211dc
      3 STRIPCD1\7\0425          0x1d218, 0xead4
      4 STRIPCD1\8\0427          0x1d236, 0xdd38
@@ -56,8 +76,12 @@ Directory с 3
 
 Directory 10 0
 
+Directory 10 1
 
-
-Directory 18 0
-    14
-
+Directory 10 2 (2606)
+     1 STRIPCD1\14\2606.exe     0x3a73b, 0x1ddc
+     2 STRIPCD1\14\2607.unk4    0x3a73f, 0x7a10
+     3 STRIPCD1\14\2608         0x3a74f, 0x998a
+     4 STRIPCD1\14\2609         0x3a763, 0x6794
+     5 STRIPCD1\14\2610.sed     0x3a770, 0x6f8c
+     6 STRIPCD1\14\2611         0x3a77e, 0x21c8

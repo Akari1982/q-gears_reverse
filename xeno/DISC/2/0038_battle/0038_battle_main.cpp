@@ -108,92 +108,89 @@ A0 = w[800c35cc];
 A1 = 2f8;
 system_memzero();
 
-A0 = w[80061bb8];
 A1 = bu[80058b18];
 [80058c38] = b(0);
-[800c3549] = b(ff);
+
 [800c3548] = b(ff);
+[800c3549] = b(ff);
+[800c3574] = w(w[80061bb8]); // sound main struct
+
 [800d2d8c] = b(0);
-[800c3574] = w(A0);
-V0 = A1 + ff;
 
-800706A4	beq    a1, zero, L706f0 [$800706f0]
-
-V1 = bu[80058820];
-[80058ba4] = b(V0);
-
-if( V1 != 0 )
+if( A1 != 0 )
 {
-    [80058820] = b(0);
-    A1 = 7f;
-    A2 = 3c;
-    800706CC	jal    func3a744 [$8003a744]
+    [80058ba4] = b(A1 + ff);
+
+    if( bu[80058820] != 0 ) // GP + 10
+    {
+        [80058820] = b(0);
+
+        A0 = w[80061bb8];
+        A1 = 7f;
+        A2 = 3c;
+        func3a744(); // sound related
+    }
+
+    if( bu[80058b94] == 0 )
+    {
+        [80058b18] = b(0);
+    }
 }
 
-800706E0	bne    bu[80058b94], zero, L70704 [$80070704]
-
-[80058b18] = b(0);
-
-L706f0:	; 800706F0
-800706FC	beq    bu[80058b94], zero, L70790 [$80070790]
-
-L70704:	; 80070704
-A0 = 10;
-A1 = 2;
-system_filesystem_set_dir();
-
-A0 = 0004;
-A1 = 0001;
-battle_memory_allocate();
-
-S0 = V0;
-8007071C	lui    a0, $7fe2
-A0 = S0 + A0;
-A1 = 0001;
-80070724	jal    battle_memory_allocate [$80072e5c]
-
-A0 = 0001;
-80070730	lui    a1, $801e
-A2 = 0;
-A3 = 0080;
-S1 = V0;
-8007073C	jal    func293e8 [$800293e8]
-
-A0 = 0;
-system_cdrom_action_sync();
-
-A0 = S0;
-system_memory_mark_removed_alloc();
-
-A0 = S1;
-system_memory_mark_removed_alloc();
-
-V0 = bu[80058b18];
-if( V0 == 0 )
-{
-    80070770	jal    func1e0a34 [$801e0a34]
-}
-else
-{
-    [80058ba4] = b(V0 - 1);
-    [80058b18] = b(0);
-}
-
-L70790:	; 80070790
-V0 = w[8005881c];
-V1 = w[V0 + 0000];
-
-if( V1 != -1 )
+if( bu[80058b94] != 0 )
 {
     A0 = 10;
     A1 = 2;
     system_filesystem_set_dir();
 
-    A0 = 0006;
+    A0 = 4;
+    A1 = 1;
+    battle_memory_allocate();
+    S0 = V0;
+
+    A0 = S0 + 7fe20000;
+    A1 = 1;
+    battle_memory_allocate();
+    S1 = V0;
+
+    A0 = 1; // "STRIPCD1\14\2606.exe"
+    A1 = 801e0000;
+    A2 = 0;
+    A3 = 80;
+    system_load_file_by_dir_file_id();
+
+    A0 = 0;
+    system_cdrom_action_sync();
+
+    A0 = S0;
+    system_memory_mark_removed_alloc();
+
+    A0 = S1;
+    system_memory_mark_removed_alloc();
+
+    if( bu[80058b18] == 0 )
+    {
+        func1e0a34();
+    }
+    else
+    {
+        [80058ba4] = b(bu[80058b18] - 1);
+        [80058b18] = b(0);
+    }
+}
+
+V0 = w[8005881c];
+if( w[V0 + 0] != -1 ) // DEBUG
+{
+    A0 = 10;
+    A1 = 2;
+    system_filesystem_set_dir();
+
+    A0 = 6; // "STRIPCD1\14\2611"
     A1 = 80280000;
     A2 = 0;
     A3 = 80;
-    800707C0	jal    func293e8 [$800293e8]
+    system_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -237,7 +234,7 @@ if( bu[80058b94] != 0 )
     A0 = 80061cd8;
     A1 = 7f;
     A2 = 0;
-    8007088C	jal    func396a4 [$800396a4]
+    func396a4(); // sound related
 
     [800c3574] = w(V0);
 }
@@ -268,11 +265,11 @@ system_memory_mark_removed_alloc();
 if( bu[80058be8] != 4 )
 {
     A0 = w[80058c6c];
-    80070944	jal    func39f3c [$80039f3c]
+    func39f3c(); // sound related
 }
 
 A0 = w[80058c6c];
-80070954	jal    func383d4 [$800383d4]
+func383d4(); // sound related
 
 A0 = w[80058b1c];
 system_memory_mark_removed_alloc();
@@ -293,158 +290,102 @@ if( bu[800d26e4] == 0 )
 
 800709A8	jal    func96a3c [$80096a3c]
 
-A2 = 007f;
-V1 = 800d2444;
-A0 = 0;
-A1 = V1 + 0003;
-
-loop709c4:	; 800709C4
-    V0 = bu[V1 + 0000];
-    if( V0 != A2 )
-    {
-        V0 = V0 << 05;
-        [800c352c + A0] = h(hu[8006e384 + V0]);
-        V0 = bu[V1 + 0000];
-        V0 = V0 << 05;
-        [800c352e + A0] = h(hu[8006e386 + V0]);
-    }
-
-    A0 = A0 + 0004;
-    V1 = V1 + 0001;
-    V0 = V1 < A1;
-80070A18	bne    v0, zero, loop709c4 [$800709c4]
-
-80070A20	j      L70a4c [$80070a4c]
-
-loop70a28:	; 80070A28
-if( bu[800cc378] != 0 )
+for( int i = 0; i < 3; ++i )
 {
-    80070A3C	jal    func71a80 [$80071a80]
+    V0 = bu[800d2444 + i];
+    if( V0 != 7f )
+    {
+        [800c352c + i * 4] = h(hu[8006e384 + V0 * 20]);
+        [800c352e + i * 4] = h(hu[8006e386 + V0 * 20]);
+    }
 }
 
-80070A44	jal    func70d78 [$80070d78]
+if( bu[800c400a] == 0 )
+{
+    while( bu[800d26e4] == 0 )
+    {
+        if( bu[800cc378] != 0 )
+        {
+            80070A3C	jal    func71a80 [$80071a80]
+        }
 
-L70a4c:	; 80070A4C
-V0 = bu[800c400a];
+        80070A44	jal    func70d78 [$80070d78]
 
-80070A58	bne    v0, zero, L70a74 [$80070a74]
+        if( bu[800c400a] != 0 )
+        {
+            break;
+        }
+    }
+}
 
-V0 = bu[800d26e4];
-80070A6C	beq    v0, zero, loop70a28 [$80070a28]
-
-L70a74:	; 80070A74
-A0 = 800c400a;
-V1 = bu[A0 + 0000];
-V0 = V1 & 00c0;
+V1 = bu[800c400a];
+V0 = V1 & c0;
 if( V0 == 0 )
 {
     S2 = 0;
 }
-else
+else if( V1 & 0040 )
 {
-    if( V1 & 0040 )
+    S2 = 1;
+}
+else if( bu[800c3470] == 0 )
+{
+    S2 = 2;
+}
+else if( bu[800c3484] != 0 )
+{
+    S2 = 3;
+    [80058b6c] = b(S2);
+    [800c400a] = b(1);
+}
+
+V1 = S2 & ff;
+if( V1 == 1 )
+{
+    [80058b6c] = b(2);
+    S3 = 2;
+}
+else if( V1 == 2 )
+{
+    [80058b6c] = b(1);
+    S3 = 1;
+}
+else if( ( V1 == 0 ) || ( V1 == 3 ) )
+{
+    if( V1 == 0 )
     {
-        S2 = 1;
+        [80058b6c] = b(0);
+        S3 = 0;
     }
-    else
+
+    if( bu[800c3470] != 0 )
     {
-        if( bu[800c3470] == 0 )
+        A0 = w[800d2998];
+        [A0 + 394] = h(ff);
+
+        if( ( bu[800c346c] != 0 ) || ( bu[800d26e4] == 0 ) )
         {
-            S2 = 2;
-        }
-        else
-        {
-            if( bu[800c3484] != 0 )
+            [A0 + 800] = b(0);
+            A1 = w[800d2998];
+            S0 = bu[800c400a];
+            [800c400a] = b(0);
+
+            for( int i = 0; i < 3; ++i )
             {
-                S2 = 3;
-                [80058b6c] = b(S2);
-                [A0 + 0000] = b(1);
+                [A1 + 3b4 + i * 2] = h((hu[800cc484 + i * 170] & 8000) | (hu[800cc528 + i * 170] & 8000));
             }
+
+            80070BE0	jal    funcc06dc [$800c06dc]
+
+            A0 = 1;
+            80070BE8	jal    func70550 [$80070550]
+
+            [800c400a] = b(S0);
         }
     }
 }
 
-V1 = S2 & 00ff;
-V0 = 0001;
-80070AF0	beq    v1, v0, L70c00 [$80070c00]
-V0 = V1 < 0002;
-80070AF8	beq    v0, zero, L70b10 [$80070b10]
-80070AFC	nop
-80070B00	beq    v1, zero, L70b2c [$80070b2c]
-80070B04	nop
-80070B08	j      L70c24 [$80070c24]
-80070B0C	nop
 
-L70b10:	; 80070B10
-V0 = 0002;
-80070B14	beq    v1, v0, L70c14 [$80070c14]
-V0 = 0003;
-80070B1C	beq    v1, v0, L70b38 [$80070b38]
-80070B20	nop
-80070B24	j      L70c24 [$80070c24]
-80070B28	nop
-
-L70b2c:	; 80070B2C
-[80058b6c] = b(0);
-S3 = 0;
-
-L70b38:	; 80070B38
-V0 = bu[800c3470];
-80070B40	nop
-80070B44	beq    v0, zero, L70c24 [$80070c24]
-V0 = 00ff;
-A0 = w[800d2998];
-V1 = bu[800c346c];
-80070B5C	nop
-80070B60	bne    v1, zero, L70b7c [$80070b7c]
-[A0 + 0394] = h(V0);
-V0 = bu[800d26e4];
-80070B70	nop
-80070B74	bne    v0, zero, L70c24 [$80070c24]
-80070B78	nop
-
-L70b7c:	; 80070B7C
-A2 = 0;
-V0 = 800c400a;
-[A0 + 0800] = b(0);
-A1 = w[800d2998];
-S0 = bu[V0 + 0000];
-A0 = 0;
-[V0 + 0000] = b(0);
-
-loop70ba0:	; 80070BA0
-    V0 = hu[800cc484 + A0];
-    A2 = A2 + 0001;
-    V0 = V0 & 8000;
-    [A1 + 03b4] = h(V0);
-    V1 = hu[800cc528 + A0];
-    A0 = A0 + 0170;
-    V1 = V1 & 8000;
-    V0 = V0 | V1;
-    [A1 + 03b4] = h(V0);
-    A1 = A1 + 0002;
-    V0 = A2 < 0003;
-80070BD8	bne    v0, zero, loop70ba0 [$80070ba0]
-
-80070BE0	jal    funcc06dc [$800c06dc]
-
-A0 = 1;
-80070BE8	jal    func70550 [$80070550]
-
-[800c400a] = b(S0);
-80070BF8	j      L70c24 [$80070c24]
-
-L70c00:	; 80070C00
-V0 = 0002;
-[80058b6c] = b(V0);
-80070C0C	j      L70c24 [$80070c24]
-S3 = 0002;
-
-L70c14:	; 80070C14
-[80058b6c] = b(1);
-S3 = 0001;
-
-L70c24:	; 80070C24
 80070C24	jal    funcb8374 [$800b8374]
 
 if( bu[800d2470] != 0 )
@@ -470,7 +411,7 @@ A0 = 4;
 A1 = 801de000;
 A2 = 0;
 A3 = 80;
-80070C8C	jal    func293e8 [$800293e8]
+system_load_file_by_dir_file_id();
 
 A0 = S3;
 80070C94	jal    funcb7b00 [$800b7b00]
@@ -514,8 +455,7 @@ system_memory_mark_removed_alloc();
 // func70d78()
 
 V0 = w[8005881c];
-V1 = w[V0 + 0];
-if( V1 != -1 )
+if( w[V0 + 0] != -1 ) // DEBUG
 {
     80070D98	0C0A008B	‹...
 }
@@ -9457,48 +9397,46 @@ loop79998:	; 80079998
 
 S2 = 0;
 V0 = w[8005881c];
-V1 = w[V0 + 0000];
-if( V1 == -1 )
+if( w[V0 + 0] != -1 ) // DEBUG
 {
-    return;
-}
+    S1 = 0;
 
-S1 = 0;
-
-loop799cc:	; 800799CC
-    if( S1 > 0 )
+    while( true )
     {
-        S0 = 0;
-        loop799d4:	; 800799D4
-            A0 = 8006f198; // " "
-            system_print();
-
-            S0 = S0 + 1;
-            V0 = S0 < S1;
-        800799E8	bne    v0, zero, loop799d4 [$800799d4]
-    }
-
-    S2 = S2 + 0001;
-    A0 = 8006f19c; // "\n\n\n\n\n\nLanguage Error\n"
-    system_print();
-
-    A0 = 8006f1b4; // "			Actor%X		No%x\n\n"
-    A1 = S3 & ff;
-    A2 = S4 & ff;
-    system_print();
-
-    80079A14	jal    func70d78 [$80070d78]
-
-    if( S2 >= 3 )
-    {
-        S1 = S1 + 1;
-        S2 = 0;
-        if( S1 >= 15 )
+        if( S1 > 0 )
         {
-            S1 = 0;
+            S0 = 0;
+            loop799d4:	; 800799D4
+                A0 = 8006f198; // " "
+                system_print();
+
+                S0 = S0 + 1;
+                V0 = S0 < S1;
+            800799E8	bne    v0, zero, loop799d4 [$800799d4]
+        }
+
+        S2 = S2 + 1;
+        A0 = 8006f19c; // "\n\n\n\n\n\nLanguage Error\n"
+        system_print();
+
+        A0 = 8006f1b4; // "			Actor%X		No%x\n\n"
+        A1 = S3 & ff;
+        A2 = S4 & ff;
+        system_print();
+
+        80079A14	jal    func70d78 [$80070d78]
+
+        if( S2 >= 3 )
+        {
+            S1 = S1 + 1;
+            S2 = 0;
+            if( S1 >= 15 )
+            {
+                S1 = 0;
+            }
         }
     }
-80079A38	j      loop799cc [$800799cc]
+}
 ////////////////////////////////
 
 
@@ -76536,9 +76474,7 @@ S0 = A0;
 V0 = S0 < 0006;
 800B7648	beq    v0, zero, Lb76c8 [$800b76c8]
 V0 = S0 << 02;
-800B7650	lui    at, $8007
-AT = AT + V0;
-V0 = w[AT + 00a0];
+V0 = w[800700a0 + V0];
 800B765C	nop
 800B7660	jr     v0 
 800B7664	nop
@@ -83476,15 +83412,14 @@ V0 = V0 - V1;
 [800cc254] = w(V0);
 V0 = w[S3 + 0000];
 800BDF44	addiu  s1, zero, $ffff (=-$1)
-800BDF48	beq    v0, s1, Lbdf64 [$800bdf64]
-800BDF4C	nop
-800BDF50	jal    funcbe338 [$800be338]
-800BDF54	nop
-800BDF58	break   $00400
-800BDF5C	0C0A02B8	ё...
-800BDF60	nop
+if( V0 != S1 )
+{
+    funcbe338();
 
-Lbdf64:	; 800BDF64
+    800BDF58	break   $00400
+    800BDF5C	0C0A02B8	ё...
+}
+
 A0 = w[800cc254];
 800BDF6C	jal    $80024ed4
 800BDF70	addiu  s0, s0, $ffd8 (=-$28)
@@ -83498,15 +83433,13 @@ A0 = w[800cc224];
 800BDF94	jal    $80024ddc
 800BDF98	nop
 V0 = w[S3 + 0000];
-800BDFA0	nop
-800BDFA4	beq    v0, s1, Lbdfc0 [$800bdfc0]
-A0 = S0;
-A0 = w[800cc224];
-system_print_render_strings();
+if( V0 != S1 )
+{
+    A0 = w[800cc224];
+    system_print_render_strings();
+}
 
 A0 = S0;
-
-Lbdfc0:	; 800BDFC0
 A2 = w[80058c08];
 A3 = w[800cc254];
 800BDFD0	jal    funca8e74 [$800a8e74]
@@ -83530,12 +83463,13 @@ S0 = h[80058b30];
 800BE020	addiu  s1, zero, $ffff (=-$1)
 
 loopbe024:	; 800BE024
-800BE024	jal    funcbb040 [$800bb040]
-800BE028	addiu  s0, s0, $ffff (=-$1)
-800BE02C	jal    $8001c7f0
-800BE030	nop
+    800BE028	addiu  s0, s0, $ffff (=-$1)
+
+    800BE024	jal    funcbb040 [$800bb040]
+
+    800BE02C	jal    $8001c7f0
+
 800BE034	bne    s0, s1, loopbe024 [$800be024]
-800BE038	nop
 
 Lbe03c:	; 800BE03C
 SP = SP + 0004;
@@ -83555,19 +83489,17 @@ V0 = V0 >> 10;
 800BE07C	addiu  s0, zero, $ffff (=-$1)
 
 loopbe080:	; 800BE080
-800BE080	jal    func72c64 [$80072c64]
-A0 = 0001;
-V0 = hu[80058b30];
-800BE090	nop
-800BE094	addiu  v0, v0, $ffff (=-$1)
-[80058b30] = h(V0);
-V0 = V0 << 10;
-V0 = V0 >> 10;
+    A0 = 1;
+    800BE080	jal    func72c64 [$80072c64]
+
+    V0 = hu[80058b30] - 1;
+    [80058b30] = h(V0);
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
 800BE0A8	bne    v0, s0, loopbe080 [$800be080]
-800BE0AC	nop
 
 Lbe0b0:	; 800BE0B0
-A0 = 0001;
+A0 = 1;
 system_psyq_wait_frames();
 
 [800d27fc] = w(V0);
@@ -83632,39 +83564,38 @@ A0 = A0 + 406c;
 system_psyq_draw_otag();
 
 800BE1A4	jal    funcbe274 [$800be274]
-800BE1A8	nop
+
 V1 = w[800c2f08];
-V0 = 0001;
-800BE1B8	bne    v1, v0, Lbe23c [$800be23c]
-800BE1BC	nop
-A0 = w[800c2d48];
-if( A0 != 0 )
+if( V1 == 1 )
 {
-    V0 = w[A0 + 0008];
-    800BE1D8	nop
-    800BE1DC	jalr   v0 ra
-}
-
-A0 = hu[80058854];
-if( A0 != 0 )
-{
-    [80058854] = h(0);
-    800BE200	jal    funcb75e4 [$800b75e4]
-}
-
-if( bu[800c2f04] != 0 )
-{
-    system_cdrom_data_sync();
-
-    if( V0 == 0 )
+    A0 = w[800c2d48];
+    if( A0 != 0 )
     {
-        [800c2f04] = b(0);
+        V0 = w[A0 + 0008];
+        800BE1D8	nop
+        800BE1DC	jalr   v0 ra
+    }
 
-        funcb0790();
+    A0 = hu[80058854];
+    if( A0 != 0 )
+    {
+        [80058854] = h(0);
+        800BE200	jal    funcb75e4 [$800b75e4]
+    }
+
+    if( bu[800c2f04] != 0 )
+    {
+        system_cdrom_data_sync();
+
+        if( V0 == 0 )
+        {
+            [800c2f04] = b(0);
+
+            funcb0790();
+        }
     }
 }
 
-Lbe23c:	; 800BE23C
 [800c2f08] = w(w[800c2f08] - 1);
 ////////////////////////////////
 
@@ -83719,32 +83650,31 @@ SP = SP + 0020;
 800BE330	jr     ra 
 800BE334	nop
 ////////////////////////////////
-// funcbe338
-800BE338	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800BE340	jal    funcbe380 [$800be380]
-800BE344	nop
-V0 = hu[800cc228];
-800BE350	nop
-V0 = V0 & 0100;
-800BE358	beq    v0, zero, Lbe370 [$800be370]
-800BE35C	nop
-800BE360	jal    $system_psyq_wait_frames
-A0 = 0008;
-[80058b30] = h(0);
 
-Lbe370:	; 800BE370
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BE378	jr     ra 
-800BE37C	nop
+
+
 ////////////////////////////////
-// funcbe380
-800BE380	addiu  sp, sp, $ffe8 (=-$18)
+// funcbe338()
+
+funcbe380();
+
+if( hu[800cc228] & 0100 )
+{
+    A0 = 8;
+    system_psyq_wait_frames();
+
+    [80058b30] = h(0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbe380()
+
 A0 = 0;
-[SP + 0014] = w(RA);
-800BE38C	jal    $800354c0
-[SP + 0010] = w(S0);
+system_controller_get_pressed_button_mask();
+
 A1 = V0 & ffff;
 V1 = hu[800cc228];
 S0 = 800cc22c;
@@ -83755,8 +83685,10 @@ V0 = V0 & A1;
 V0 = 0 NOR A1;
 V0 = V0 & V1;
 [800cc230] = h(V0);
-800BE3CC	jal    $800354c0
-A0 = 0001;
+
+A0 = 1;
+system_controller_get_pressed_button_mask();
+
 A1 = V0;
 V1 = hu[800cc22a];
 A0 = hu[800cc234];
@@ -83769,53 +83701,33 @@ V1 = hu[800cc228];
 A1 = hu[800cc228];
 V0 = V0 & V1;
 [800cc232] = h(V0);
-800BE420	beq    a1, a0, Lbe4f4 [$800be4f4]
-800BE424	nop
-A1 = 800cc244;
-A0 = 800cc24c;
-800BE438	lwl    v0, $0003(a1)
-800BE43C	lwr    v0, $0000(a1)
-800BE440	lwl    v1, $0007(a1)
-800BE444	lwr    v1, $0004(a1)
-800BE448	swl    v0, $0003(a0)
-800BE44C	swr    v0, $0000(a0)
-800BE450	swl    v1, $0007(a0)
-800BE454	swr    v1, $0004(a0)
-A1 = 800cc23c;
-A0 = 800cc244;
-800BE468	lwl    v0, $0003(a1)
-800BE46C	lwr    v0, $0000(a1)
-800BE470	lwl    v1, $0007(a1)
-800BE474	lwr    v1, $0004(a1)
-800BE478	swl    v0, $0003(a0)
-800BE47C	swr    v0, $0000(a0)
-800BE480	swl    v1, $0007(a0)
-800BE484	swr    v1, $0004(a0)
-A1 = 800cc234;
-A0 = 800cc23c;
-800BE498	lwl    v0, $0003(a1)
-800BE49C	lwr    v0, $0000(a1)
-800BE4A0	lwl    v1, $0007(a1)
-800BE4A4	lwr    v1, $0004(a1)
-800BE4A8	swl    v0, $0003(a0)
-800BE4AC	swr    v0, $0000(a0)
-800BE4B0	swl    v1, $0007(a0)
-800BE4B4	swr    v1, $0004(a0)
-V0 = hu[800cc228];
-V1 = hu[S0 + 0000];
-A0 = hu[800cc230];
-A1 = hu[800d2804];
-[800cc234] = h(V0);
-[800cc236] = h(V1);
-[800cc238] = h(A0);
-[800cc23a] = h(A1);
+if( A1 != A0 )
+{
+    A1 = 800cc244;
+    A0 = 800cc24c;
+    [A0 + 0] = w(w[A1 + 0]);
+    [A0 + 4] = w(w[A1 + 4]);
+    A1 = 800cc23c;
+    A0 = 800cc244;
+    [A0 + 0] = w(w[A1 + 0]);
+    [A0 + 4] = w(w[A1 + 4]);
+    A1 = 800cc234;
+    A0 = 800cc23c;
+    [A0 + 0] = w(w[A1 + 0]);
+    [A0 + 4] = w(w[A1 + 4]);
+    V0 = hu[800cc228];
+    V1 = hu[S0 + 0000];
+    A0 = hu[800cc230];
+    A1 = hu[800d2804];
+    [800cc234] = h(V0);
+    [800cc236] = h(V1);
+    [800cc238] = h(A0);
+    [800cc23a] = h(A1);
+}
+////////////////////////////////
 
-Lbe4f4:	; 800BE4F4
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800BE500	jr     ra 
-800BE504	nop
+
+
 ////////////////////////////////
 // funcbe508
 [800c3540] = w(0);

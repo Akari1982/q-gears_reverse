@@ -661,7 +661,7 @@ if( w[8004e9b0] != 0 )
             A1 = V0;
             A2 = 0;
             A3 = 80;
-            func293e8();
+            system_load_file_by_dir_file_id();
 
             A0 = 0;
             system_cdrom_action_sync();

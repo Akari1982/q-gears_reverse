@@ -1,3 +1,8 @@
+800c3548 []       init with 0xff.
+800c3549 []       init with 0xff.
+
+800c3574 [][][][] store here pointer to sound main struct from 80061bb8.
+
 800c35c4 [][][][] pointer to allocated 0xa5d4 size.
 
 800c35cc [][][][] pointer to allocated 0x2f8 size.
@@ -9,3 +14,4 @@
 
 800d2448 [][][][] pointer to allocated 0x10c size.
 
+800d2d8c []       init with 0.

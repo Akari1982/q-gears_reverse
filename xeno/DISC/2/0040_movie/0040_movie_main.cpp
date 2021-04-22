@@ -861,7 +861,7 @@ A2 = 0;
 
 L70db8:	; 80070DB8
 A3 = 0;
-func293e8();
+system_load_file_by_dir_file_id();
 
 80070DC0 8 9
 
@@ -1231,7 +1231,7 @@ switch( A0 )
         A1 = w[80076518]; // allocated memory
         A2 = 0;
         A3 = 0;
-        func293e8(); // load file
+        system_load_file_by_dir_file_id(); // load file
     }
     break;
 
@@ -1328,7 +1328,7 @@ switch( A0 )
         A1 = w[80076518];
         A2 = 1;
         A3 = 0;
-        func293e8();
+        system_load_file_by_dir_file_id();
     }
     break;
 
@@ -1467,7 +1467,7 @@ switch( A0 )
         A1 = w[80076528];
         A2 = 1;
         A3 = 100;
-        func293e8();
+        system_load_file_by_dir_file_id();
     }
     break;
 
@@ -1566,7 +1566,7 @@ switch( A0 )
         A2 = 0;
         A1 = w[80076528];
         A3 = 200;
-        func293e8();
+        system_load_file_by_dir_file_id();
     }
     break;
 }
@@ -2531,7 +2531,7 @@ A0 = 1; // local file id
 A1 = mdec_lib;
 A2 = 0;
 A3 = 0;
-func293e8(); // load file "0\0019"
+system_load_file_by_dir_file_id(); // load file "0\0019"
 
 A0 = 0;
 system_cdrom_action_sync();

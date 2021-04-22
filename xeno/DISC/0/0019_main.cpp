@@ -971,7 +971,7 @@ if( bu[801e8968]; != 0 )
     A1 = w[801e898c];
     A2 = S3;
     A3 = S1;
-    func293e8();
+    system_load_file_by_dir_file_id();
 
     V0 = S1 & 0008;
     A1 = S0 << 03;

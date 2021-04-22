@@ -64,7 +64,7 @@ func75b44();
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f1b8; // CHAR
-    80074AC8	0C0A06C6	Ж...
+    func281b18();
 }
 ////////////////////////////////
 
@@ -150,7 +150,7 @@ S0 = 80d4;
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1c4; // "SEFFECT"
-    80074C30	0C0A06C6	Ж...
+    func281b18();
 }
 
 A0 = w[800c3740] + S0;
@@ -160,7 +160,7 @@ A1 = w[800acfe0];
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1d0; // "MESSAGE"
-    80074C6C	0C0A06C6	Ж...
+    func281b18();
 }
 
 80074C74	jal    func73798 [$80073798]
@@ -178,7 +178,7 @@ field_particle_update();
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    80074CC0	0C0A051A	....
+    func281468();
 }
 
 update_distortion();
@@ -195,10 +195,10 @@ SP = w[SP];
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    80074D0C	0C0A0506	....
+    func281418();
 
     A0 = 8006f1dc; // "FntPrint"
-    80074D1C	0C0A06C6	Ж...
+    func281b18();
 }
 
 A0 = 1;
@@ -269,7 +269,7 @@ func24e3c();
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1e8; // ShapeTrans
-    80074E78	0C0A06C6	Ж...
+    func281b18();
 }
 
 80074E80	jal    func916ac [$800916ac]
@@ -286,7 +286,7 @@ if( w[800ad08c] != 0 )
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1f4; // "LineScroll"
-    80074ED8	0C0A06C6	Ж...
+    func281b18();
 }
 
 if( w[800ad0f0] == 0 )
@@ -1758,7 +1758,7 @@ if( w[8004e9e8] == 0 )
     A1 = w[80059b30];
     A2 = 0;
     A3 = 80;
-    func293e8(); // load file by dir file id
+    system_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync(); // ececute till cd sync

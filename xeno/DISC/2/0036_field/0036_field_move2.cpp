@@ -1,4 +1,4 @@
-////////////////////////////////
+f////////////////////////////////
 // func7fe50()
 
 entity_id = A0;
@@ -1020,7 +1020,7 @@ if( V0 >= 0 )
                 if( w[800c1b60] == 0 )
                 {
                     A0 = data_138;
-                    80081A74	0C0A05A4	....
+                    func281690();
                 }
                 return 0;
             }
@@ -2854,7 +2854,7 @@ if( S4 == walkmesh_blocks )
     if( walkmesh_blocks > 0 )
     {
         loop843d8:	; 800843D8
-            // if current Y less than newly found Y in current walkmesh or ...
+            // if current Y less than newly found Y in current walkmesh or ???
             if( ( h[data_138 + 26] < w[SP + 18 + stored_walkmesh_id * 4] ) || ( w[data_138 + 0] & 00001800 ) )
             {
                 // select new walkmesh id by lowest Y higher that current
@@ -3446,7 +3446,7 @@ if( w[8004e9d0] == -1 )
     A1 = w[80061c2c];
     A2 = 0;
     A3 = 80;
-    func293e8();
+    system_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync(); // ececute till cd sync
@@ -3762,7 +3762,7 @@ if( w[8004e9dc] != S1 )
     A1 = 80061cd8;
     A2 = 0;
     A3 = 80;
-    func293e8();
+    system_load_file_by_dir_file_id();
 
     [8004e9fc] = w(S0);
 

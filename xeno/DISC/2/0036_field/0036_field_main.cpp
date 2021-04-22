@@ -70,7 +70,7 @@ func73670(); // clear otagr
 if( w[800c1b60] == 0 ) // debug
 {
     A0 = 8006f210; // "Clear OTAG"
-    80077480	0C0A06C6	Ж...
+    func281b18();
 }
 
 80077488	jal    funca2778 [$800a2778]
@@ -139,7 +139,7 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
     A1 = 80280000; // allocated_memory
     A2 = 0;
     A3 = 80;
-    func293e8(); // load file
+    system_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -177,7 +177,7 @@ field_allocate_memory_for_party_sprites();
 
 if( w[800c1b60] == 0 ) // debug
 {
-    800776C8	0C0A0481	Ѓ...
+    func281204();
 }
 
 func76c50(); // set dir inside (control related)
@@ -1178,7 +1178,7 @@ if( w[800b1770] > 0 )
                 if( w[800c1b60] == 0 )
                 {
                     A0 = encounter;
-                    80078B3C	0C0A0487	‡...
+                    func28121c();
                 }
             }
         }

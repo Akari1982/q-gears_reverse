@@ -137,25 +137,25 @@ A0 = 2;
 A1 = snd24_mem;
 A2 = 0;
 A3 = 0;
-func293e8(); // load file by dir file id
+system_load_file_by_dir_file_id();
 
 A0 = 3;
 A1 = snd25_mem;
 A2 = 0;
 A3 = 0;
-func293e8(); // load file by dir file id
+system_load_file_by_dir_file_id();
 
 A0 = 4;
 A1 = snd26_mem;
 A2 = 0;
 A3 = 0;
-func293e8(); // load file by dir file id
+system_load_file_by_dir_file_id();
 
 A0 = 5; // dir file id
 A1 = snd27_mem;
 A2 = 0;
 A3 = 0;
-func293e8(); // load file by dir file id
+system_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync(); // ececute till cd sync
@@ -192,7 +192,7 @@ A0 = 6;
 A1 = S5;
 A2 = 0;
 A3 = 0;
-func293e8(); // load file by dir file id
+system_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync(); // ececute till cd sync
@@ -220,7 +220,7 @@ A0 = 7;
 A1 = S5;
 A2 = 0;
 A3 = 0;
-func293e8(); // load file by dir file id
+system_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync(); // ececute till cd sync
@@ -379,7 +379,7 @@ if( w[8005895c] != exe_id )
         A1 = V0;
         A2 = 0;
         A3 = 0;
-        func293e8(); // load file by dir file id
+        system_load_file_by_dir_file_id();
     }
     else
     {
@@ -1837,7 +1837,7 @@ A0 = dir_file_id;
 A1 = w[80059b70];
 A2 = 0;
 A3 = 80;
-func293e8();
+system_load_file_by_dir_file_id();
 ////////////////////////////////
 
 
@@ -2090,7 +2090,7 @@ S0 = V0;
 A1 = S0;
 A2 = 0;
 A3 = 0080;
-func293e8(); // load file by dir file id
+system_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -2754,7 +2754,7 @@ if( bu[80058818] != 0 )
     A1 = V0;
     A2 = 0;
     A3 = 80;
-    func293e8(); // load file by dir file id
+    system_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -2779,7 +2779,7 @@ if( bu[80058818] != 0 )
         A1 = 801dc000;
         A2 = 0;
         A3 = 80;
-        func293e8(); // load file by dir file id
+        system_load_file_by_dir_file_id();
 
         A0 = 0;
         system_cdrom_action_sync();
@@ -2813,7 +2813,7 @@ if( bu[80058818] != 0 )
     A1 = 801c5000;
     A2 = 0;
     A3 = 80;
-    func293e8(); // load file by dir file id
+    system_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
