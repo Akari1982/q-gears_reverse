@@ -63,7 +63,7 @@ func75b44();
 
 if( w[800c1b60] == 0 )
 {
-    A0 = 8006f1b8; // CHAR
+    A0 = 8006f1b8; // "CHAR      "
     func281b18();
 }
 ////////////////////////////////
@@ -149,7 +149,7 @@ S0 = 80d4;
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    A0 = 8006f1c4; // "SEFFECT"
+    A0 = 8006f1c4; // "SEFFECT   "
     func281b18();
 }
 
@@ -159,7 +159,7 @@ A1 = w[800acfe0];
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    A0 = 8006f1d0; // "MESSAGE"
+    A0 = 8006f1d0; // "MESSAGE   "
     func281b18();
 }
 
@@ -178,7 +178,7 @@ field_particle_update();
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    func281468();
+    func281468(); // add some elements to render
 }
 
 update_distortion();
@@ -195,9 +195,9 @@ SP = w[SP];
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    func281418();
+    func281418(); // log a lot of debug info
 
-    A0 = 8006f1dc; // "FntPrint"
+    A0 = 8006f1dc; // "FntPrint  "
     func281b18();
 }
 
@@ -268,7 +268,7 @@ func24e3c();
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    A0 = 8006f1e8; // ShapeTrans
+    A0 = 8006f1e8; // "ShapeTrans"
     func281b18();
 }
 

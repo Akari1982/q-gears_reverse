@@ -20,433 +20,253 @@
 
 
 ////////////////////////////////
-// func281274
-A0 = 000f;
-V1 = 80285b9a;
-V0 = 001e;
+// func281274()
+
 [802859f8] = h(0);
 [802859e0] = w(0);
-[802859e4] = w(V0);
+[802859e4] = w(1e);
 [802859e8] = w(0);
 
+A0 = f;
+V1 = 80285b9a;
 loop2812a4:	; 802812A4
-[V1 + 0000] = h(0);
-802812A8	addiu  a0, a0, $ffff (=-$1)
+    [V1] = h(0);
+    A0 = A0 - 1;
+    V1 = V1 - 2;
 802812AC	bgez   a0, loop2812a4 [$802812a4]
-802812B0	addiu  v1, v1, $fffe (=-$2)
-802812B4	jr     ra 
-802812B8	nop
 ////////////////////////////////
-// func2812bc
-802812BC	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0020] = w(S4);
-S4 = 0;
-[SP + 0030] = w(FP);
-FP = 0080;
-[SP + 002c] = w(S7);
-S7 = 00ff;
-[SP + 0028] = w(S6);
-S6 = 80285bbc;
-[SP + 001c] = w(S3);
-S3 = S6 + 0034;
-[SP + 0014] = w(S1);
-S1 = S6;
-[SP + 0018] = w(S2);
-S2 = 0;
-[SP + 0034] = w(RA);
-[SP + 0024] = w(S5);
-[SP + 0010] = w(S0);
 
-loop281308:	; 80281308
-S5 = S6 + 0008;
-V0 = S2 + S5;
-S0 = S6 + 0020;
-S0 = S2 + S0;
-A0 = S0;
-[S1 + 0000] = h(0);
-[S1 + 0002] = h(0);
-[S1 + 0004] = h(0);
-[V0 + 0000] = h(0);
-[V0 + 0002] = h(0);
-80281330	jal    $80043c04
-[V0 + 0004] = h(0);
-[S0 + 0004] = b(FP);
-[S0 + 0005] = b(FP);
-[S0 + 0006] = b(FP);
-[S0 + 000c] = b(S7);
-[S0 + 000d] = b(S7);
-[S0 + 000e] = b(S7);
-V0 = w[S0 + 0000];
-V1 = w[S0 + 0004];
-A0 = w[S0 + 0008];
-A1 = w[S0 + 000c];
-[S3 + 0000] = w(V0);
-[S3 + 0004] = w(V1);
-[S3 + 0008] = w(A0);
-[S3 + 000c] = w(A1);
-V0 = w[S0 + 0010];
-80281374	nop
-[S3 + 0010] = w(V0);
-S3 = S3 + 0068;
-S1 = S1 + 0068;
-S4 = S4 + 0001;
-V0 = S4 < 0010;
-8028138C	bne    v0, zero, loop281308 [$80281308]
-S2 = S2 + 0068;
-V1 = 0080;
-V0 = 00ff;
-[80285c48] = b(V1);
+
+
+////////////////////////////////
+// func2812bc()
+
+S6 = 80285bbc;
+S3 = S6 + 0034;
+S1 = S6;
+
+for( int i = 0 ; i < 10; ++i )
+{
+    S5 = S6 + 8;
+    V0 = S5 + i * 68;
+    S0 = S6 + 20 + i * 68;
+
+    [S1 + 0] = h(0);
+    [S1 + 2] = h(0);
+    [S1 + 4] = h(0);
+    [V0 + 0] = h(0);
+    [V0 + 2] = h(0);
+    [V0 + 4] = h(0);
+
+    A0 = S0;
+    system_graphic_shaded_line_header();
+
+//  1st   Color1+Command    (CcBbGgRrh)
+//  2nd   Vertex1           (YyyyXxxxh)
+//  3rd   Color2            (00BbGgRrh)
+//  4th   Vertex2           (YyyyXxxxh)
+ //(...)  ColorN            (00BbGgRrh) (poly-line only)
+ //(...)  VertexN           (YyyyXxxxh) (poly-line only)
+ //(Last) Termination Code  (55555555h) (poly-line only)
+
+    [S0 + 4] = b(80); // R1
+    [S0 + 5] = b(80); // G1
+    [S0 + 6] = b(80); // B1
+    [S0 + c] = b(ff); // R2
+    [S0 + d] = b(ff); // G2
+    [S0 + e] = b(ff); // B2
+    [S3 + 0] = w(w[S0 + 0]);
+    [S3 + 4] = w(w[S0 + 4]);
+    [S3 + 8] = w(w[S0 + 8]);
+    [S3 + c] = w(w[S0 + c]);
+    [S3 + 10] = w(w[S0 + 10]);
+    S3 = S3 + 68;
+    S1 = S1 + 68;
+}
+
+[80285c48] = b(80);
 [80285c49] = b(0);
 [80285c4a] = b(0);
-[80285c50] = b(V0);
+[80285c50] = b(ff);
 [80285c51] = b(0);
 [80285c52] = b(0);
-[S5 + 0098] = b(V1);
+[S5 + 0098] = b(80);
 [S5 + 0099] = b(0);
 [S5 + 009a] = b(0);
-[S5 + 00a0] = b(V0);
+[S5 + 00a0] = b(ff);
 [S5 + 00a1] = b(0);
 [S5 + 00a2] = b(0);
-RA = w[SP + 0034];
-FP = w[SP + 0030];
-S7 = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0038;
-80281410	jr     ra 
-80281414	nop
 ////////////////////////////////
-// func281418
-A0 = w[800c3740];
-80281420	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
+
+
+////////////////////////////////
+// func281418()
+
 [802859dc] = w(0);
-80281430	0C0A06EA	....
-A0 = A0 + 00d0;
-80281438	beq    v0, zero, L281450 [$80281450]
-8028143C	nop
-A0 = w[800c3740];
-80281448	jal    $800371cc
-A0 = A0 + 00d0;
 
-L281450:	; 80281450
+A0 = w[800c3740] + d0;
+func281ba8();
+
+if( V0 != 0 )
+{
+    A0 = w[800c3740] + d0;
+    system_print_render_strings();
+}
+
 [802859f8] = h(0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80281460	jr     ra 
-80281464	nop
 ////////////////////////////////
-// func281468
-V0 = w[800c1b60];
-80281470	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-8028147C	bne    v0, zero, L2814d4 [$802814d4]
-[SP + 0010] = w(S0);
-V0 = w[802859dc];
-8028148C	nop
-80281490	beq    v0, zero, L2814d4 [$802814d4]
-S1 = 0;
-S0 = 80285b9c;
-A1 = S0;
 
-loop2814a4:	; 802814A4
-A2 = S0;
-S0 = S0 + 0068;
-S1 = S1 + 0001;
-A0 = w[800c3740];
-A3 = w[800acfe0];
-802814C0	0C0A053B	;...
-A0 = A0 + 00cc;
-V0 = S1 < 000c;
-802814CC	bne    v0, zero, loop2814a4 [$802814a4]
-A1 = S0;
 
-L2814d4:	; 802814D4
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-802814E4	jr     ra 
-802814E8	nop
+
 ////////////////////////////////
-// func2814ec
-802814EC	addiu  sp, sp, $ffb0 (=-$50)
-[SP + 0044] = w(S3);
+// func281468()
+
+if( w[800c1b60] == 0 )
+{
+    if( w[802859dc] != 0 )
+    {
+        for( int i = 0; i < c; ++i )
+        {
+            A0 = w[800c3740] + cc;
+            A1 = 80285b9c + i * 68;
+            A2 = 80285b9c + i * 68;
+            A3 = w[800acfe0];
+            func2814ec();
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2814ec()
+
 S3 = A0;
-[SP + 003c] = w(S1);
 S1 = A1;
-[SP + 0040] = w(S2);
 S2 = A2;
-[SP + 0038] = w(S0);
-S0 = A3 << 02;
-S0 = S0 + A3;
-S0 = S0 << 02;
-S0 = S0 + 0040;
-[SP + 0048] = w(RA);
-80281520	jal    $800494b4
-S0 = S1 + S0;
-80281528	jal    $80049da4
+
+S0 = S1 + A3 * 14 + 40;
+system_gte_push_matrix();
+
 A0 = S2;
-80281530	jal    $80049e34
+system_gte_set_rotation_matrix();
+
 A0 = S2;
-A0 = S1 + 0030;
-V0 = S0 + 0010;
-[SP + 0010] = w(V0);
-V0 = SP + 0028;
-[SP + 0014] = w(V0);
-V0 = SP + 002c;
-[SP + 0018] = w(V0);
-V0 = SP + 0030;
-A1 = S1 + 0038;
-A2 = SP + 0020;
-A3 = S0 + 0008;
-80281564	jal    $8004a524
-[SP + 001c] = w(V0);
-A0 = ffffff;
-80281574	lui    a1, $ff00
-V1 = w[S0 + 0000];
-V0 = w[S3 + 0004];
-V1 = V1 & A1;
-V0 = V0 & A0;
-V1 = V1 | V0;
-[S0 + 0000] = w(V1);
-V0 = w[S3 + 0004];
-S0 = S0 & A0;
-V0 = V0 & A1;
-V0 = V0 | S0;
-802815A0	jal    $80049554
-[S3 + 0004] = w(V0);
-RA = w[SP + 0048];
-S3 = w[SP + 0044];
-S2 = w[SP + 0040];
-S1 = w[SP + 003c];
-S0 = w[SP + 0038];
-SP = SP + 0050;
-802815C0	jr     ra 
-802815C4	nop
+system_gte_set_translation_vector();
+
+A0 = S1 + 30;
+A1 = S1 + 38;
+A2 = SP + 20;
+A3 = S0 + 8;
+A4 = S0 + 10;
+A5 = SP + 28;
+A6 = SP + 2c;
+A7 = SP + 30;
+func4a524(); // some perspective transform
+
+// add to render
+[S0 + 0] = w((w[S0 + 0] & ff000000) | (w[S3 + 4] & 00ffffff));
+[S3 + 4] = w((w[S3 + 4] & ff000000) | (S0 & 00ffffff));
+
+system_gte_pop_matrix();
 ////////////////////////////////
-// func2815c8
-V0 = w[800c1b60];
-802815D0	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0030] = w(RA);
-[SP + 002c] = w(S5);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-802815EC	bne    v0, zero, L281668 [$80281668]
-[SP + 0018] = w(S0);
-S4 = 0;
-V0 = 80285bbc;
-80281600	addiu  s3, v0, $fff4 (=-$c)
-80281604	addiu  s5, v0, $ffe0 (=-$20)
-S0 = S5;
-S2 = V0;
-S1 = 0;
 
-loop281614:	; 80281614
-A0 = S2;
-80281618	jal    $8003f5e0
-A1 = S0;
-80281620	jal    $800494b4
-S2 = S2 + 0068;
-A0 = 800aef38;
-80281630	jal    $80049a84
-A1 = S0;
-80281638	jal    $80049554
-S0 = S0 + 0068;
-A0 = S5 + 0028;
-A0 = S1 + A0;
-A1 = S3;
-8028164C	jal    $8004a584
-A2 = SP + 0010;
-S3 = S3 + 0068;
-S4 = S4 + 0001;
-V0 = S4 < 0010;
-80281660	bne    v0, zero, loop281614 [$80281614]
-S1 = S1 + 0068;
 
-L281668:	; 80281668
-RA = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-80281688	jr     ra 
-8028168C	nop
+
 ////////////////////////////////
-// func281690
-V0 = w[800c1b60];
-80281698	nop
-8028169C	bne    v0, zero, L2819a4 [$802819a4]
-802816A0	nop
-A1 = 0;
-V1 = 0;
+// func2815c8()
 
-loop2816ac:	; 802816AC
-V0 = h[A0 + 0022];
-802816B0	lui    at, $8028
-AT = AT + V1;
-[AT + 5bc4] = h(V0);
-V0 = h[A0 + 0026];
-802816C0	lui    at, $8028
-AT = AT + V1;
-[AT + 5bc6] = h(V0);
-V0 = h[A0 + 002a];
-A1 = A1 + 0001;
-802816D4	lui    at, $8028
-AT = AT + V1;
-[AT + 5bce] = h(0);
-802816E0	lui    at, $8028
-AT = AT + V1;
-[AT + 5bd6] = h(0);
-802816EC	lui    at, $8028
-AT = AT + V1;
-[AT + 5bc8] = h(V0);
-V0 = A1 < 000c;
-802816FC	bne    v0, zero, loop2816ac [$802816ac]
-V1 = V1 + 0068;
-V0 = hu[A0 + 0018];
-80281708	nop
-V0 = 0 - V0;
-[80285bcc] = h(V0);
-V0 = hu[A0 + 001c];
-8028171C	nop
-V0 = 0 - V0;
-[80285bd0] = h(V0);
-V0 = hu[A0 + 0018];
-[80285bd4] = h(V0);
-V0 = hu[A0 + 001c];
-8028173C	nop
-V0 = 0 - V0;
-[80285bd8] = h(V0);
-V0 = hu[A0 + 0018];
-[80285c34] = h(V0);
-V0 = hu[A0 + 001c];
-8028175C	nop
-V0 = 0 - V0;
-[80285c38] = h(V0);
-V0 = hu[A0 + 0018];
-[80285c3c] = h(V0);
-V0 = hu[A0 + 001c];
-[80285c40] = h(V0);
-V0 = hu[A0 + 0018];
-[80285c9c] = h(V0);
-V0 = hu[A0 + 001c];
-[80285ca0] = h(V0);
-V0 = hu[A0 + 0018];
-802817A0	nop
-V0 = 0 - V0;
-[80285ca4] = h(V0);
-V0 = hu[A0 + 001c];
-[80285ca8] = h(V0);
-V0 = hu[A0 + 0018];
-802817C0	nop
-V0 = 0 - V0;
-[80285d04] = h(V0);
-V0 = hu[A0 + 001c];
-[80285d08] = h(V0);
-V0 = hu[A0 + 0018];
-802817E0	nop
-V0 = 0 - V0;
-[80285d0c] = h(V0);
-V0 = hu[A0 + 001c];
-802817F4	nop
-V0 = 0 - V0;
-[80285d10] = h(V0);
-V0 = hu[A0 + 0018];
-80281808	nop
-V0 = 0 - V0;
-[80285d6c] = h(V0);
-V0 = hu[A0 + 001c];
-8028181C	nop
-V0 = 0 - V0;
-[80285d70] = h(V0);
-V0 = hu[A0 + 0018];
-[80285d74] = h(V0);
-V0 = hu[A0 + 001c];
-8028183C	nop
-V0 = 0 - V0;
-[80285d78] = h(V0);
-V0 = hu[A0 + 001a];
-80281850	nop
-V0 = 0 - V0;
-[80285d6e] = h(V0);
-V0 = hu[A0 + 001a];
-80281864	nop
-V0 = 0 - V0;
-[80285d76] = h(V0);
-V0 = hu[A0 + 0018];
-[80285dd4] = h(V0);
-V0 = hu[A0 + 001c];
-80281884	nop
-V0 = 0 - V0;
-[80285dd8] = h(V0);
-V0 = hu[A0 + 0018];
-[80285ddc] = h(V0);
-V0 = hu[A0 + 001c];
-[80285de0] = h(V0);
-V0 = hu[A0 + 001a];
-802818B0	nop
-V0 = 0 - V0;
-[80285dd6] = h(V0);
-V0 = hu[A0 + 001a];
-802818C4	nop
-V0 = 0 - V0;
-[80285dde] = h(V0);
-V0 = hu[A0 + 0018];
-[80285e3c] = h(V0);
-V0 = hu[A0 + 001c];
-[80285e40] = h(V0);
-V0 = hu[A0 + 0018];
-802818F0	nop
-V0 = 0 - V0;
-[80285e44] = h(V0);
-V0 = hu[A0 + 001c];
-[80285e48] = h(V0);
-V0 = hu[A0 + 001a];
-80281910	nop
-V0 = 0 - V0;
-[80285e3e] = h(V0);
-V0 = hu[A0 + 001a];
-80281924	nop
-V0 = 0 - V0;
-[80285e46] = h(V0);
-V0 = hu[A0 + 0018];
-80281938	nop
-V0 = 0 - V0;
-[80285ea4] = h(V0);
-V0 = hu[A0 + 001c];
-[80285ea8] = h(V0);
-V0 = hu[A0 + 0018];
-80281958	nop
-V0 = 0 - V0;
-[80285eac] = h(V0);
-V0 = hu[A0 + 001c];
-8028196C	nop
-V0 = 0 - V0;
-[80285eb0] = h(V0);
-V0 = hu[A0 + 001a];
-80281980	nop
-V0 = 0 - V0;
-[80285ea6] = h(V0);
-V0 = hu[A0 + 001a];
-80281994	nop
-V0 = 0 - V0;
-[80285eae] = h(V0);
+if( w[800c1b60] == 0 )
+{
+    for( int i = 0; i < 10; ++i )
+    {
+        A0 = 80285bbc + i * 68;
+        A1 = 80285b9c + i * 68;
+        system_calculate_rotation_matrix();
 
-L2819a4:	; 802819A4
-802819A4	jr     ra 
-802819A8	nop
+        system_gte_push_matrix();
+
+        A0 = 800aef38;
+        A1 = 80285b9c + i * 68;
+        system_gte_matrix_multiplication_to_A1();
+
+        system_gte_pop_matrix();
+
+        A0 = 80285bbc + i * 68 + 8;
+        A1 = 80285bb0 + i * 68;
+        A2 = SP + 10;
+        system_gte_rotate_translate_vector();
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func281690()
+
+if( w[800c1b60] == 0 )
+{
+    for( int i = 0; i < c; ++i )
+    {
+        [80285bc4 + i * 68] = h(h[A0 + 22]); // current X
+        [80285bc6 + i * 68] = h(h[A0 + 26]); // current Y
+        [80285bce + i * 68] = h(0);
+        [80285bd6 + i * 68] = h(0);
+        [80285bc8 + i * 68] = h(h[A0 + 2a]); // current Z
+    }
+
+    x = hu[A0 + 18];
+    y = hu[A0 + 1a];
+    z = hu[A0 + 1c];
+
+    [80285bcc] = h(-x);
+    [80285bd0] = h(-z);
+    [80285bd4] = h(x);
+    [80285bd8] = h(-z);
+    [80285c34] = h(x);
+    [80285c38] = h(-z);
+    [80285c3c] = h(x);
+    [80285c40] = h(z);
+    [80285c9c] = h(x);
+    [80285ca0] = h(z);
+    [80285ca4] = h(-x);
+    [80285ca8] = h(z);
+    [80285d04] = h(-x);
+    [80285d08] = h(z);
+    [80285d0c] = h(-x);
+    [80285d10] = h(-z);
+    [80285d6c] = h(-x);
+    [80285d70] = h(-z);
+    [80285d74] = h(x);
+    [80285d78] = h(-z);
+    [80285d6e] = h(-y);
+    [80285d76] = h(-y);
+    [80285dd4] = h(x);
+    [80285dd8] = h(-z);
+    [80285ddc] = h(x);
+    [80285de0] = h(z);
+    [80285dd6] = h(-y);
+    [80285dde] = h(-y);
+    [80285e3c] = h(x);
+    [80285e40] = h(z);
+    [80285e44] = h(-x);
+    [80285e48] = h(z);
+    [80285e3e] = h(-y);
+    [80285e46] = h(-y);
+    [80285ea4] = h(-x);
+    [80285ea8] = h(z);
+    [80285eac] = h(-x);
+    [80285eb0] = h(-z);
+    [80285ea6] = h(-y);
+    [80285eae] = h(-y);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func2819ac
 802819AC	addiu  sp, sp, $ffe0 (=-$20)
@@ -459,7 +279,7 @@ A1 = h[A0 + 0000];
 A2 = h[A0 + 0002];
 A3 = h[A0 + 0004];
 A0 = 80280000;
-802819DC	jal    $80037870
+802819DC	jal    $system_print_alias
 [SP + 0010] = w(V0);
 
 L2819e4:	; 802819E4
@@ -482,7 +302,7 @@ A2 = h[S1 + 0002];
 A3 = h[S1 + 0004];
 V0 = w[S1 + 0014];
 A0 = 8028001c;
-80281A30	jal    $80037870
+80281A30	jal    $system_print_alias
 [SP + 0010] = w(V0);
 S0 = 80280038;
 A1 = h[S1 + 0006];
@@ -490,14 +310,14 @@ A2 = h[S1 + 0008];
 A3 = h[S1 + 000a];
 V0 = w[S1 + 0018];
 A0 = S0;
-80281A54	jal    $80037870
+80281A54	jal    $system_print_alias
 [SP + 0010] = w(V0);
 A1 = h[S1 + 000c];
 A2 = h[S1 + 000e];
 A3 = h[S1 + 0010];
 V0 = w[S1 + 001c];
 A0 = S0;
-80281A70	jal    $80037870
+80281A70	jal    $system_print_alias
 [SP + 0010] = w(V0);
 
 L281a78:	; 80281A78
@@ -518,7 +338,7 @@ A1 = w[A0 + 0000];
 A2 = w[A0 + 0004];
 A3 = w[A0 + 0008];
 A0 = 80280054;
-80281ABC	jal    $80037870
+80281ABC	jal    $system_print_alias
 80281AC0	nop
 
 L281ac4:	; 80281AC4
@@ -527,24 +347,22 @@ SP = SP + 0018;
 80281ACC	jr     ra 
 80281AD0	nop
 ////////////////////////////////
-// func281ad4
-80281AD4	addiu  sp, sp, $ffe8 (=-$18)
-V1 = w[800c1b60];
-V0 = 0001;
-80281AE4	beq    v1, v0, L281b08 [$80281b08]
-[SP + 0010] = w(RA);
-A1 = h[A0 + 0000];
-A2 = h[A0 + 0002];
-A3 = h[A0 + 0004];
-A0 = 80280064;
-80281B00	jal    $80037870
-80281B04	nop
 
-L281b08:	; 80281B08
-RA = w[SP + 0010];
-SP = SP + 0018;
-80281B10	jr     ra 
-80281B14	nop
+
+
+////////////////////////////////
+// func281ad4()
+
+svec = A0;
+
+if( w[800c1b60] != 1 )
+{
+    A0 = 80280064; // "SVEC %d %d %d\n"
+    A1 = h[svec + 0];
+    A2 = h[svec + 2];
+    A3 = h[svec + 4];
+    system_print_alias();
+}
 ////////////////////////////////
 
 
@@ -552,7 +370,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // func281b18()
 
-S0 = A0;
+string = A0;
 
 if( w[800c1b60] == 0 )
 {
@@ -561,7 +379,7 @@ if( w[800c1b60] == 0 )
 
     A1 = h[802859f8];
     [802859f8] = h(A1 + 1);
-    [80285a04 + A1 * c] = w(S0);
+    [80285a04 + A1 * c] = w(string);
     [80285a00 + A1 * c] = w(V0 - w[800ad074]);
     [800ad074] = w(V0 - w[800ad074]);
 
@@ -573,116 +391,79 @@ if( w[800c1b60] == 0 )
 
 
 ////////////////////////////////
-// func281ba8
-80281BA8	addiu  sp, sp, $ffb0 (=-$50)
-V1 = w[800c1b60];
-V0 = 0001;
-[SP + 0048] = w(RA);
-[SP + 0044] = w(S3);
-[SP + 0040] = w(S2);
-[SP + 003c] = w(S1);
-80281BC8	bne    v1, v0, L281bd8 [$80281bd8]
-[SP + 0038] = w(S0);
-80281BD0	080A0D85	…...
-V0 = 0;
+// func281ba8()
 
-L281bd8:	; 80281BD8
-V0 = w[800aefe0];
-80281BE0	nop
-80281BE4	blez   v0, L281c54 [$80281c54]
+if( w[800c1b60] == 1 )
+{
+    return 0;
+}
+
+for( int i = 0; i < w[800aefe0]; ++i )
+{
+    V0 = w[800aefe4];
+    if( hu[V0 + i * 5c + 58] & 2000 )
+    {
+        V0 = w[V0 + i * 5c + 0];
+        if( w[V0 + 14] == 0 )
+        {
+            A0 = 80280074; // "MIME ERROR %d\n"
+            A1 = i;
+            system_print_alias();
+        }
+    }
+}
+
+snd_file = w[80058bf4];
 S2 = 0;
-S0 = 0;
+while( snd_file != 0 )
+{
+    A0 = 80280084; // "%d W=%x   "
+    A1 = S2;
+    A2 = snd_file;
+    system_print_alias();
 
-loop281bf0:	; 80281BF0
-V0 = w[800aefe4];
-80281BF8	nop
-V1 = S0 + V0;
-V0 = hu[V1 + 0058];
-80281C04	nop
-V0 = V0 & 2000;
-80281C0C	beq    v0, zero, L281c3c [$80281c3c]
-80281C10	nop
-V0 = w[V1 + 0000];
-80281C18	nop
-V0 = w[V0 + 0014];
-80281C20	nop
-80281C24	bne    v0, zero, L281c3c [$80281c3c]
-80281C28	nop
-A0 = 80280074;
-80281C34	jal    $80037870
-A1 = S2;
+    A0 = hu[snd_file + 20];
+    func285204();
 
-L281c3c:	; 80281C3C
-V0 = w[800aefe0];
-S2 = S2 + 0001;
-V0 = S2 < V0;
-80281C4C	bne    v0, zero, loop281bf0 [$80281bf0]
-S0 = S0 + 005c;
+    A0 = 80280090; // "\n"
+    system_print_alias();
 
-L281c54:	; 80281C54
-S0 = w[80058bf4];
+    snd_file = w[snd_file + 2c];
+    S2 = S2 + 1;
+}
+
+sed_file = w[80058adc];
 S2 = 0;
-80281C60	beq    s0, zero, L281ca0 [$80281ca0]
-A1 = S2;
-A0 = 80280084;
-80281C70	jal    $80037870
-A2 = S0;
-A0 = hu[S0 + 0020];
-80281C7C	0C0A1481	Ѓ...
-S2 = S2 + 0001;
-A0 = 80280090;
-80281C8C	jal    $80037870
-80281C90	nop
-S0 = w[S0 + 002c];
-80281C98	080A0718	....
-80281C9C	nop
+while( sed_file != 0 )
+{
+    A0 = 80280094; // "%d E=%x\n"
+    A1 = S2;
+    A2 = sed_file;
+    system_print_alias();
 
-L281ca0:	; 80281CA0
-S0 = w[80058adc];
-S2 = 0;
-80281CAC	beq    s0, zero, L281cd0 [$80281cd0]
-A1 = S2;
-A0 = 80280094;
-80281CBC	jal    $80037870
-A2 = S0;
-S0 = w[S0 + 001c];
-80281CC8	080A072B	+...
-S2 = S2 + 0001;
+    sed_file = w[sed_file + 1c];
+    S2 = S2 + 1;
+}
 
-L281cd0:	; 80281CD0
-V0 = w[802859d8];
-80281CD8	nop
-V0 = V0 < 000e;
-80281CE0	bne    v0, zero, L281cf0 [$80281cf0]
-80281CE4	nop
-[802859d8] = w(0);
+if( w[802859d8] >= e )
+{
+    [802859d8] = w(0);
+}
 
-L281cf0:	; 80281CF0
-V0 = hu[800c2ddc];
-80281CF8	nop
-V0 = V0 & 0800;
-80281D00	beq    v0, zero, L281d54 [$80281d54]
-80281D04	nop
-V0 = w[800acfd4];
-80281D10	nop
-V0 = V0 & 0001;
-80281D18	beq    v0, zero, L281d30 [$80281d30]
-V0 = 0007;
-[802859d8] = w(V0);
-80281D28	080A074E	N...
-80281D2C	nop
+if( hu[800c2ddc] & 0800 ) // repeated button mask for controller 2 (Start)
+{
+    if( w[800acfd4] & 0001 )
+    {
+        [802859d8] = w(7);
+    }
+    else
+    {
+        [802859d8] = w(0);
+    }
+    [800acfd4] = w((w[800acfd4] + 1) | 8000);
+}
 
-L281d30:	; 80281D30
-[802859d8] = w(0);
-V0 = w[800acfd4];
-80281D40	nop
-V0 = V0 + 0001;
-V0 = V0 | 8000;
-[800acfd4] = w(V0);
-
-L281d54:	; 80281D54
 V0 = hu[800c2dd4];
-80281D5C	nop
 V0 = V0 & 0800;
 80281D64	beq    v0, zero, L281e24 [$80281e24]
 80281D68	nop
@@ -745,12 +526,12 @@ V0 = w[AT + 0738];
 A1 = w[800ad078];
 A2 = w[800ad07c];
 A0 = 802800a0;
-80281E70	jal    $80037870
+80281E70	jal    $system_print_alias
 80281E74	nop
 A1 = w[80058c14];
 A2 = w[80058c5c];
 A0 = 802800b4;
-80281E90	jal    $80037870
+80281E90	jal    $system_print_alias
 80281E94	nop
 V1 = w[800b1740];
 80281EA0	nop
@@ -767,12 +548,12 @@ A1 = h[V0 + 0022];
 A2 = h[V0 + 002a];
 A3 = h[V0 + 0026];
 A0 = 802800c8;
-80281EE0	jal    $80037870
+80281EE0	jal    $system_print_alias
 80281EE4	nop
 80281EE8	080A0A15	....
 80281EEC	nop
 A0 = 802800e0;
-80281EF8	jal    $80037870
+80281EF8	jal    $system_print_alias
 80281EFC	nop
 V0 = hu[800c2dd4];
 80281F08	nop
@@ -827,7 +608,7 @@ A1 = w[802859cc];
 A0 = 802800f8;
 A1 = A1 >> 04;
 A1 = A1 & 0003;
-80281FF4	jal    $80037870
+80281FF4	jal    $system_print_alias
 80281FF8	nop
 V1 = w[802859d0];
 V0 = 0001;
@@ -844,7 +625,7 @@ A1 = A1 & 00ff;
 L282038:	; 80282038
 A1 = w[802859c0];
 A0 = 8028010c;
-80282048	jal    $80037870
+80282048	jal    $system_print_alias
 8028204C	nop
 V1 = w[802859d0];
 V0 = 0002;
@@ -861,7 +642,7 @@ A1 = A1 & 00ff;
 L28208c:	; 8028208C
 A1 = w[802859c4];
 A0 = 8028011c;
-8028209C	jal    $80037870
+8028209C	jal    $system_print_alias
 802820A0	nop
 V1 = w[802859d0];
 V0 = 0003;
@@ -878,7 +659,7 @@ A1 = A1 & 00ff;
 L2820e0:	; 802820E0
 A1 = w[802859c8];
 A0 = 8028012c;
-802820F0	jal    $80037870
+802820F0	jal    $system_print_alias
 802820F4	nop
 A0 = 0001;
 A1 = 0001;
@@ -944,7 +725,7 @@ A1 = V0 & 00ff;
 L282214:	; 80282214
 A1 = bu[800b1664];
 A0 = 80280148;
-80282224	jal    $80037870
+80282224	jal    $system_print_alias
 80282228	nop
 V1 = w[802859d0];
 V0 = 0001;
@@ -961,7 +742,7 @@ A1 = V0 & 00ff;
 L282264:	; 80282264
 A1 = bu[800b1665];
 A0 = 80280170;
-80282274	jal    $80037870
+80282274	jal    $system_print_alias
 80282278	nop
 V1 = w[802859d0];
 V0 = 0002;
@@ -978,7 +759,7 @@ A1 = V0 & 00ff;
 L2822b4:	; 802822B4
 A1 = bu[800b1666];
 A0 = 80280198;
-802822C4	jal    $80037870
+802822C4	jal    $system_print_alias
 802822C8	nop
 V1 = w[802859d0];
 V0 = 0003;
@@ -995,7 +776,7 @@ A1 = V0 & 00ff;
 L282304:	; 80282304
 A1 = bu[800b1668];
 A0 = 802801c0;
-80282314	jal    $80037870
+80282314	jal    $system_print_alias
 80282318	nop
 V1 = w[802859d0];
 V0 = 0004;
@@ -1012,7 +793,7 @@ A1 = V0 & 00ff;
 L282354:	; 80282354
 A1 = bu[800b1669];
 A0 = 80280170;
-80282364	jal    $80037870
+80282364	jal    $system_print_alias
 80282368	nop
 V1 = w[802859d0];
 V0 = 0005;
@@ -1029,7 +810,7 @@ A1 = V0 & 00ff;
 L2823a4:	; 802823A4
 A1 = bu[800b166a];
 A0 = 80280198;
-802823B4	jal    $80037870
+802823B4	jal    $system_print_alias
 802823B8	nop
 V1 = w[802859d0];
 V0 = 0006;
@@ -1049,7 +830,7 @@ A1 = A1 >> 10;
 L282400:	; 80282400
 A1 = h[800b166c];
 A0 = 802801e8;
-80282410	jal    $80037870
+80282410	jal    $system_print_alias
 80282414	nop
 V1 = w[802859d0];
 V0 = 0007;
@@ -1063,7 +844,7 @@ V0 = V0 << 01;
 V1 = V1 + V0;
 A1 = V1 << 10;
 A1 = A1 >> 10;
-80282454	jal    $80037870
+80282454	jal    $system_print_alias
 [A2 + 0000] = h(V1);
 8028245C	080A0D7C	|...
 80282460	nop
@@ -1071,12 +852,12 @@ A1 = A1 >> 10;
 L282464:	; 80282464
 A1 = h[800b166e];
 A0 = 80280210;
-80282474	jal    $80037870
+80282474	jal    $system_print_alias
 80282478	nop
 8028247C	080A0D7C	|...
 80282480	nop
 A0 = 80280224;
-8028248C	jal    $80037870
+8028248C	jal    $system_print_alias
 80282490	nop
 V1 = w[800b1740];
 8028249C	nop
@@ -1093,7 +874,7 @@ A1 = h[V0 + 0022];
 A2 = h[V0 + 002a];
 A3 = h[V0 + 0026];
 A0 = 80280244;
-802824DC	jal    $80037870
+802824DC	jal    $system_print_alias
 802824E0	nop
 V1 = w[800b1740];
 802824EC	nop
@@ -1122,7 +903,7 @@ V0 = V0 + V1;
 A3 = bu[V0 + 000c];
 V0 = w[T0 + 0014];
 A0 = 80280258;
-8028255C	jal    $80037870
+8028255C	jal    $system_print_alias
 [SP + 0010] = w(V0);
 V1 = w[800b1740];
 8028256C	nop
@@ -1140,7 +921,7 @@ A2 = h[V0 + 000a];
 A3 = h[V0 + 000c];
 V0 = h[800acfda];
 A0 = 80280270;
-802825B4	jal    $80037870
+802825B4	jal    $system_print_alias
 [SP + 0010] = w(V0);
 V1 = w[800b1740];
 802825C4	nop
@@ -1157,16 +938,16 @@ A1 = w[V0 + 0000];
 A2 = w[V0 + 0004];
 A3 = bu[V0 + 0074];
 A0 = 80280288;
-80282604	jal    $80037870
+80282604	jal    $system_print_alias
 80282608	nop
 A0 = 802802a4;
-80282614	jal    $80037870
+80282614	jal    $system_print_alias
 80282618	nop
 A1 = w[800aeecc];
 A2 = h[800aeed0];
 A3 = h[800aeed2];
 A0 = 802802c4;
-8028263C	jal    $80037870
+8028263C	jal    $system_print_alias
 80282640	nop
 80282644	jal    $80099ae8
 80282648	nop
@@ -1176,40 +957,40 @@ A0 = 802802e0;
 A1 = S0;
 A3 = w[8004e9f0];
 A2 = V0 & ffff;
-8028266C	jal    $80037870
+8028266C	jal    $system_print_alias
 A3 = A3 & 3fff;
 A1 = h[800aed66];
 A2 = h[800aed6e];
 A3 = h[800aed6a];
 A0 = 80280300;
-80282694	jal    $80037870
+80282694	jal    $system_print_alias
 80282698	nop
 A1 = h[800aed56];
 A2 = h[800aed5e];
 A3 = h[800aed5a];
 A0 = 8028031c;
-802826BC	jal    $80037870
+802826BC	jal    $system_print_alias
 802826C0	nop
 A1 = h[800aed96];
 A2 = h[800aed9e];
 A3 = h[800aed9a];
 A0 = 80280338;
-802826E4	jal    $80037870
+802826E4	jal    $system_print_alias
 802826E8	nop
 A1 = h[800aed86];
 A2 = h[800aed8e];
 A3 = h[800aed8a];
 A0 = 80280354;
-8028270C	jal    $80037870
+8028270C	jal    $system_print_alias
 80282710	nop
 A1 = bu[800aeec8];
 A2 = bu[800aeec9];
 A0 = 80280370;
-8028272C	jal    $80037870
+8028272C	jal    $system_print_alias
 80282730	nop
 A1 = h[800aeeba];
 A0 = 80280390;
-80282744	jal    $80037870
+80282744	jal    $system_print_alias
 80282748	nop
 V0 = h[800aeed2];
 A2 = w[800aeecc];
@@ -1219,25 +1000,25 @@ A0 = 8028039c;
 8028276C	mflo   a2
 A1 = A2 >> 0c;
 A2 = A2 << 01;
-80282778	jal    $80037870
+80282778	jal    $system_print_alias
 A2 = A2 >> 0c;
 A1 = w[8004e9e0];
 A2 = w[8004e9dc];
 A0 = 802803ac;
-80282798	jal    $80037870
+80282798	jal    $system_print_alias
 8028279C	nop
 A1 = w[800ad0d4];
 A0 = 802803c4;
-802827B0	jal    $80037870
+802827B0	jal    $system_print_alias
 802827B4	nop
 A1 = w[800aefe0];
 A0 = 802803d8;
-802827C8	jal    $80037870
+802827C8	jal    $system_print_alias
 802827CC	nop
 802827D0	080A0D7C	|...
 802827D4	nop
 A0 = 802803ec;
-802827E0	jal    $80037870
+802827E0	jal    $system_print_alias
 802827E4	nop
 A0 = 0;
 A2 = 000f;
@@ -1267,12 +1048,12 @@ L282854:	; 80282854
 80282854	jal    $80032164
 80282858	nop
 A0 = 8028040c;
-80282864	jal    $80037870
+80282864	jal    $system_print_alias
 A1 = V0;
 8028286C	080A0D7C	|...
 80282870	nop
 A0 = 8028041c;
-8028287C	jal    $80037870
+8028287C	jal    $system_print_alias
 S2 = 0;
 80282884	jal    $800a25a8
 A0 = 000a;
@@ -1281,7 +1062,7 @@ A0 = 000a;
 S0 = V0 >> 08;
 A0 = 8028043c;
 A1 = S0;
-802828A4	jal    $80037870
+802828A4	jal    $system_print_alias
 A2 = V0 & 00ff;
 802828AC	jal    $800a25a8
 A0 = 000e;
@@ -1294,7 +1075,7 @@ S0 = V0 >> 08;
 A0 = 80280450;
 A1 = S1;
 A2 = S0;
-802828DC	jal    $80037870
+802828DC	jal    $system_print_alias
 A3 = V0 & 00ff;
 S0 = 0;
 
@@ -1306,7 +1087,7 @@ S2 = S2 + 0001;
 V0 = V0 + S0;
 A2 = hu[V0 + 02b8];
 A3 = hu[V0 + 02bc];
-8028290C	jal    $80037870
+8028290C	jal    $system_print_alias
 S0 = S0 + 00a4;
 V0 = S2 < 000b;
 80282918	bne    v0, zero, loop2828e8 [$802828e8]
@@ -1314,22 +1095,22 @@ V0 = S2 < 000b;
 V0 = w[80059a38];
 A0 = 80280480;
 A1 = w[V0 + 1924];
-80282934	jal    $80037870
+80282934	jal    $system_print_alias
 S2 = 0;
 A1 = hu[800c2f3c];
 A0 = 8028048c;
-8028294C	jal    $80037870
+8028294C	jal    $system_print_alias
 80282950	nop
 A1 = w[80061c20];
 A2 = w[80061c24];
 A3 = w[80061c28];
 A0 = 8028049c;
-80282974	jal    $80037870
+80282974	jal    $system_print_alias
 80282978	nop
 V0 = w[80059a38];
 A0 = 802804ac;
 S3 = hu[V0 + 1d30];
-80282990	jal    $80037870
+80282990	jal    $system_print_alias
 80282994	nop
 
 loop282998:	; 80282998
@@ -1337,7 +1118,7 @@ V0 = S3 & 0001;
 8028299C	beq    v0, zero, L2829b4 [$802829b4]
 802829A0	nop
 A0 = 802804b4;
-802829AC	jal    $80037870
+802829AC	jal    $system_print_alias
 A1 = S2;
 
 L2829b4:	; 802829B4
@@ -1346,13 +1127,13 @@ V0 = S2 < 000b;
 802829BC	bne    v0, zero, loop282998 [$80282998]
 S3 = S3 >> 01;
 A0 = 80280090;
-802829CC	jal    $80037870
+802829CC	jal    $system_print_alias
 S2 = 0;
 A0 = 802804b8;
 V0 = w[80059a38];
 802829E4	nop
 S3 = hu[V0 + 1d32];
-802829EC	jal    $80037870
+802829EC	jal    $system_print_alias
 802829F0	nop
 
 loop2829f4:	; 802829F4
@@ -1360,7 +1141,7 @@ V0 = S3 & 0001;
 802829F8	bne    v0, zero, L282a10 [$80282a10]
 802829FC	nop
 A0 = 802804b4;
-80282A08	jal    $80037870
+80282A08	jal    $system_print_alias
 A1 = S2;
 
 L282a10:	; 80282A10
@@ -1369,13 +1150,13 @@ V0 = S2 < 000b;
 80282A18	bne    v0, zero, loop2829f4 [$802829f4]
 S3 = S3 >> 01;
 A0 = 80280090;
-80282A28	jal    $80037870
+80282A28	jal    $system_print_alias
 S2 = 0;
 A0 = 802804c0;
 V0 = w[80059a38];
 80282A40	nop
 S3 = hu[V0 + 2318];
-80282A48	jal    $80037870
+80282A48	jal    $system_print_alias
 80282A4C	nop
 
 loop282a50:	; 80282A50
@@ -1383,7 +1164,7 @@ V0 = S3 & 0001;
 80282A54	beq    v0, zero, L282a6c [$80282a6c]
 80282A58	nop
 A0 = 802804b4;
-80282A64	jal    $80037870
+80282A64	jal    $system_print_alias
 A1 = S2;
 
 L282a6c:	; 80282A6C
@@ -1392,7 +1173,7 @@ V0 = S2 < 000b;
 80282A74	bne    v0, zero, loop282a50 [$80282a50]
 S3 = S3 >> 01;
 A0 = 80280090;
-80282A84	jal    $80037870
+80282A84	jal    $system_print_alias
 S2 = 0;
 A0 = 802804c8;
 V0 = w[80059a38];
@@ -1401,10 +1182,10 @@ A1 = bu[V0 + 22b1];
 A2 = bu[V0 + 22b2];
 A3 = bu[V0 + 22b3];
 S0 = 80061c20;
-80282AB4	jal    $80037870
+80282AB4	jal    $system_print_alias
 S1 = 00ff;
 A0 = 802804dc;
-80282AC4	jal    $80037870
+80282AC4	jal    $system_print_alias
 80282AC8	nop
 
 loop282acc:	; 80282ACC
@@ -1421,7 +1202,7 @@ V1 = w[80059a38];
 V0 = V0 << 02;
 V1 = V1 + V0;
 A1 = bu[V1 + 030c];
-80282B08	jal    $80037870
+80282B08	jal    $system_print_alias
 S2 = S2 + 0001;
 V0 = S2 < 0003;
 80282B14	bne    v0, zero, loop282acc [$80282acc]
@@ -1429,7 +1210,7 @@ V0 = S2 < 0003;
 
 L282b1c:	; 80282B1C
 A0 = 802804ec;
-80282B24	jal    $80037870
+80282B24	jal    $system_print_alias
 S2 = 0;
 S3 = 00ff;
 S0 = 80059ad4;
@@ -1477,21 +1258,21 @@ V0 = 0004;
 
 L282bd0:	; 80282BD0
 A0 = 802804f4;
-80282BD8	jal    $80037870
+80282BD8	jal    $system_print_alias
 S0 = S0 + 0004;
 80282BE0	080A0B1A	....
 S2 = S2 + 0001;
 
 L282be8:	; 80282BE8
 A0 = 802804fc;
-80282BF0	jal    $80037870
+80282BF0	jal    $system_print_alias
 S0 = S0 + 0004;
 80282BF8	080A0B1A	....
 S2 = S2 + 0001;
 
 L282c00:	; 80282C00
 A0 = 80280504;
-80282C08	jal    $80037870
+80282C08	jal    $system_print_alias
 S0 = S0 + 0004;
 80282C10	080A0B1A	....
 S2 = S2 + 0001;
@@ -1509,7 +1290,7 @@ V0 = w[V0 + 004c];
 A1 = w[V0 + 0000];
 A0 = 8028050c;
 A1 = A1 >> 08;
-80282C58	jal    $80037870
+80282C58	jal    $system_print_alias
 A1 = A1 & 0007;
 S0 = S0 + 0004;
 S2 = S2 + 0001;
@@ -1519,7 +1300,7 @@ S1 = S1 + 0004;
 
 L282c74:	; 80282C74
 A0 = 80280514;
-80282C7C	jal    $80037870
+80282C7C	jal    $system_print_alias
 80282C80	nop
 V1 = w[800b1740];
 80282C8C	nop
@@ -1541,7 +1322,7 @@ A0 = 80280520;
 A0 = 8028051c;
 
 L282cdc:	; 80282CDC
-80282CDC	jal    $80037870
+80282CDC	jal    $system_print_alias
 80282CE0	nop
 V0 = S0 & 0040;
 A0 = 80280520;
@@ -1550,25 +1331,25 @@ A0 = 80280520;
 A0 = 80280524;
 
 L282d00:	; 80282D00
-80282D00	jal    $80037870
+80282D00	jal    $system_print_alias
 80282D04	nop
 V0 = S0 & 0020;
 80282D0C	bne    v0, zero, L282d2c [$80282d2c]
 80282D10	nop
 A0 = 80280528;
-80282D1C	jal    $80037870
+80282D1C	jal    $system_print_alias
 80282D20	nop
 80282D24	080A0D7C	|...
 80282D28	nop
 
 L282d2c:	; 80282D2C
 A0 = 80280520;
-80282D34	jal    $80037870
+80282D34	jal    $system_print_alias
 80282D38	nop
 80282D3C	080A0D7C	|...
 80282D40	nop
 A0 = 8028052c;
-80282D4C	jal    $80037870
+80282D4C	jal    $system_print_alias
 S3 = 0;
 S2 = w[802859d0];
 V0 = w[800ad0d4];
@@ -1592,7 +1373,7 @@ A0 = 8028054c;
 V0 = V0 << 03;
 V1 = V1 + V0;
 A2 = hu[V1 + 008c];
-80282DB4	jal    $80037870
+80282DB4	jal    $system_print_alias
 A1 = S2;
 V0 = w[800aefe4];
 80282DC4	nop
@@ -1631,7 +1412,7 @@ V0 = w[V0 + 004c];
 80282E50	nop
 V0 = w[V0 + 0014];
 A0 = 80280564;
-80282E60	jal    $80037870
+80282E60	jal    $system_print_alias
 [SP + 0018] = w(V0);
 V0 = w[800aefe4];
 80282E70	nop
@@ -1642,7 +1423,7 @@ A1 = h[V0 + 0022];
 A2 = h[V0 + 002a];
 A3 = h[V0 + 0026];
 A0 = 80280244;
-80282E94	jal    $80037870
+80282E94	jal    $system_print_alias
 80282E98	nop
 V0 = w[800aefe4];
 80282EA4	nop
@@ -1652,7 +1433,7 @@ V0 = w[V0 + 004c];
 A1 = w[V0 + 0000];
 A2 = w[V0 + 0004];
 A0 = 80280584;
-80282EC4	jal    $80037870
+80282EC4	jal    $system_print_alias
 80282EC8	nop
 V0 = w[800aefe4];
 80282ED4	nop
@@ -1668,7 +1449,7 @@ A0 = 80280594;
 A0 = 80280590;
 
 L282f08:	; 80282F08
-80282F08	jal    $80037870
+80282F08	jal    $system_print_alias
 80282F0C	nop
 V0 = S3 < 0006;
 80282F14	beq    v0, zero, L282f3c [$80282f3c]
@@ -1703,7 +1484,7 @@ V0 = w[802859d0];
 80282F90	080A0D7C	|...
 80282F94	nop
 A0 = 802805a0;
-80282FA0	jal    $80037870
+80282FA0	jal    $system_print_alias
 S2 = 0;
 V0 = h[802859f8];
 80282FB0	nop
@@ -1718,7 +1499,7 @@ A1 = w[AT + 5a04];
 80282FD0	lui    at, $8028
 AT = AT + S0;
 A2 = w[AT + 5a00];
-80282FDC	jal    $80037870
+80282FDC	jal    $system_print_alias
 S0 = S0 + 000c;
 V0 = h[802859f8];
 S2 = S2 + 0001;
@@ -1730,17 +1511,17 @@ L282ffc:	; 80282FFC
 A1 = w[800ad078];
 A2 = w[800ad07c];
 A0 = 802805cc;
-80283014	jal    $80037870
+80283014	jal    $system_print_alias
 80283018	nop
 A1 = w[80058c14];
 A2 = w[80058c5c];
 A0 = 802800b4;
-80283034	jal    $80037870
+80283034	jal    $system_print_alias
 80283038	nop
 8028303C	080A0D7C	|...
 80283040	nop
 A0 = 802805e0;
-8028304C	jal    $80037870
+8028304C	jal    $system_print_alias
 S3 = 0;
 S2 = w[802859d0];
 8028305C	nop
@@ -1758,7 +1539,7 @@ S1 = V0;
 A0 = 80280600;
 A1 = S0;
 A2 = S1;
-80283094	jal    $80037870
+80283094	jal    $system_print_alias
 A3 = V0;
 V0 = S3 < 0010;
 802830A0	beq    v0, zero, L2832a8 [$802832a8]
@@ -1770,7 +1551,7 @@ S3 = S3 + 0001;
 802830B8	080A0CAA	Є...
 802830BC	nop
 A0 = 80280614;
-802830C8	jal    $80037870
+802830C8	jal    $system_print_alias
 802830CC	nop
 V0 = hu[800c2ddc];
 802830D8	nop
@@ -1810,7 +1591,7 @@ L283150:	; 80283150
 80283158	080A0D7C	|...
 8028315C	nop
 A0 = 80280638;
-80283168	jal    $80037870
+80283168	jal    $system_print_alias
 S3 = 0;
 S2 = w[802859d0];
 80283178	nop
@@ -1838,7 +1619,7 @@ V1 = bu[V0 + 2029];
 [SP + 001c] = w(V1);
 V0 = bu[V0 + 1f93];
 A0 = 80280658;
-802831DC	jal    $80037870
+802831DC	jal    $system_print_alias
 [SP + 0020] = w(V0);
 V0 = S3 < 0010;
 802831E8	beq    v0, zero, L2832a8 [$802832a8]
@@ -1850,7 +1631,7 @@ S3 = S3 + 0001;
 80283200	080A0CAA	Є...
 80283204	nop
 A0 = 80280684;
-80283210	jal    $80037870
+80283210	jal    $system_print_alias
 S3 = 0;
 S2 = w[802859d0];
 80283220	nop
@@ -1878,7 +1659,7 @@ V1 = bu[V0 + 1ecb];
 [SP + 001c] = w(V1);
 V0 = bu[V0 + 1e03];
 A0 = 80280658;
-80283284	jal    $80037870
+80283284	jal    $system_print_alias
 [SP + 0020] = w(V0);
 V0 = S3 < 0010;
 80283290	beq    v0, zero, L2832a8 [$802832a8]
@@ -1910,7 +1691,7 @@ V0 = w[802859d0];
 802832FC	080A0D7C	|...
 80283300	nop
 A0 = 802806a4;
-8028330C	jal    $80037870
+8028330C	jal    $system_print_alias
 80283310	nop
 V1 = hu[800c2dd4];
 8028331C	nop
@@ -1943,7 +1724,7 @@ A3 = h[S1 + 0000];
 S1 = S1 + 0002;
 A2 = bu[S0 + 0000];
 S0 = S0 + 0001;
-80283398	jal    $80037870
+80283398	jal    $system_print_alias
 S2 = S2 + 0001;
 V0 = S2 < 0010;
 802833A4	bne    v0, zero, loop28337c [$8028337c]
@@ -1972,14 +1753,14 @@ L2833f4:	; 802833F4
 S0 = 800b176c;
 A1 = w[S0 + 0000];
 A0 = 802806d4;
-80283408	jal    $80037870
+80283408	jal    $system_print_alias
 8028340C	nop
 A1 = w[800b1770];
 A0 = 802806e4;
-80283420	jal    $80037870
+80283420	jal    $system_print_alias
 80283424	nop
 A0 = 802806f4;
-80283430	jal    $80037870
+80283430	jal    $system_print_alias
 80283434	nop
 V1 = hu[800c2dd4];
 80283440	nop
@@ -2004,14 +1785,14 @@ V0 = w[S0 + 0000];
 L283480:	; 80283480
 A1 = w[800b176c];
 A0 = 802806fc;
-80283490	jal    $80037870
+80283490	jal    $system_print_alias
 80283494	nop
 A1 = w[800b1770];
 A0 = 8028070c;
-802834A8	jal    $80037870
+802834A8	jal    $system_print_alias
 802834AC	nop
 A0 = 802806f4;
-802834B8	jal    $80037870
+802834B8	jal    $system_print_alias
 802834BC	nop
 V1 = hu[800c2dd4];
 802834C8	nop
@@ -2043,14 +1824,14 @@ V0 = V0 & 001f;
 L283534:	; 80283534
 A1 = w[800b176c];
 A0 = 802806fc;
-80283544	jal    $80037870
+80283544	jal    $system_print_alias
 80283548	nop
 A1 = w[800b1770];
 A0 = 802806e4;
-8028355C	jal    $80037870
+8028355C	jal    $system_print_alias
 80283560	nop
 A0 = 8028071c;
-8028356C	jal    $80037870
+8028356C	jal    $system_print_alias
 80283570	nop
 80283574	jal    $8008dcec
 80283578	nop
@@ -2072,7 +1853,7 @@ L2835b8:	; 802835B8
 A1 = w[802859e8];
 A2 = w[802859ec];
 A0 = 80280724;
-802835D0	jal    $80037870
+802835D0	jal    $system_print_alias
 802835D4	nop
 802835D8	080A0D7A	z...
 802835DC	nop
@@ -2090,15 +1871,11 @@ V0 = w[802859d0];
 [802859d0] = w(0);
 
 L28360c:	; 8028360C
-V0 = w[802859d8];
-RA = w[SP + 0048];
-S3 = w[SP + 0044];
-S2 = w[SP + 0040];
-S1 = w[SP + 003c];
-S0 = w[SP + 0038];
-SP = SP + 0050;
-8028362C	jr     ra 
-80283630	nop
+return w[802859d8];
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func283634
 80283634	addiu  sp, sp, $ffd0 (=-$30)
@@ -2118,7 +1895,7 @@ A1 = S4;
 A2 = SP + 0010;
 A1 = w[800af518];
 A0 = 8028076c;
-80283688	jal    $80037870
+80283688	jal    $system_print_alias
 S2 = V0;
 A0 = S2;
 A1 = S4;
@@ -2133,7 +1910,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = h[AT + f7a6];
 A0 = 8028077c;
-802836CC	jal    $80037870
+802836CC	jal    $system_print_alias
 802836D0	nop
 A0 = S2;
 A1 = S4;
@@ -2148,7 +1925,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = hu[AT + f7a2];
 A0 = 8028078c;
-80283710	jal    $80037870
+80283710	jal    $system_print_alias
 80283714	nop
 A0 = S2;
 A1 = S4;
@@ -2163,14 +1940,14 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = hu[AT + f7a4];
 A0 = 8028079c;
-80283754	jal    $80037870
+80283754	jal    $system_print_alias
 80283758	nop
 A0 = S2;
 A1 = S4;
 80283764	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 802807ac;
-80283774	jal    $80037870
+80283774	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2184,7 +1961,7 @@ V0 = V0 << 03;
 802837A8	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7ac];
-802837B4	jal    $80037870
+802837B4	jal    $system_print_alias
 A0 = S0;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2198,7 +1975,7 @@ V0 = V0 << 03;
 802837E4	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7ae];
-802837F0	jal    $80037870
+802837F0	jal    $system_print_alias
 A0 = S0;
 A0 = 0002;
 A2 = w[SP + 0010];
@@ -2212,14 +1989,14 @@ V0 = V0 << 03;
 80283824	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7b0];
-80283830	jal    $80037870
+80283830	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
 80283840	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 802807c0;
-80283850	jal    $80037870
+80283850	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2233,7 +2010,7 @@ V0 = V0 << 03;
 80283880	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7b4];
-8028388C	jal    $80037870
+8028388C	jal    $system_print_alias
 A0 = S0;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2247,7 +2024,7 @@ V0 = V0 << 03;
 802838BC	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7b6];
-802838C8	jal    $80037870
+802838C8	jal    $system_print_alias
 A0 = S0;
 A0 = 0002;
 A2 = w[SP + 0010];
@@ -2261,14 +2038,14 @@ V0 = V0 << 03;
 802838F8	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7b8];
-80283904	jal    $80037870
+80283904	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
 80283914	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 802807cc;
-80283924	jal    $80037870
+80283924	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2283,7 +2060,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = w[AT + f7a8];
 A0 = 802807d8;
-80283968	jal    $80037870
+80283968	jal    $system_print_alias
 8028396C	nop
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2297,14 +2074,14 @@ V0 = V0 << 03;
 80283998	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7c4];
-802839A4	jal    $80037870
+802839A4	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
 802839B4	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 802807e0;
-802839C4	jal    $80037870
+802839C4	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2318,7 +2095,7 @@ V0 = V0 << 03;
 802839F4	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7bc];
-80283A00	jal    $80037870
+80283A00	jal    $system_print_alias
 A0 = S0;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2332,7 +2109,7 @@ V0 = V0 << 03;
 80283A30	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7be];
-80283A3C	jal    $80037870
+80283A3C	jal    $system_print_alias
 A0 = S0;
 A0 = 0002;
 A2 = w[SP + 0010];
@@ -2346,7 +2123,7 @@ V0 = V0 << 03;
 80283A6C	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7c0];
-80283A78	jal    $80037870
+80283A78	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
@@ -2361,7 +2138,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = hu[AT + f7c6];
 A0 = 802807ec;
-80283ABC	jal    $80037870
+80283ABC	jal    $system_print_alias
 80283AC0	nop
 A0 = S2;
 A1 = S4;
@@ -2376,7 +2153,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = hu[AT + f7c8];
 A0 = 802807fc;
-80283B00	jal    $80037870
+80283B00	jal    $system_print_alias
 80283B04	nop
 A0 = S2;
 A1 = S4;
@@ -2391,7 +2168,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = hu[AT + f7f6];
 A0 = 8028080c;
-80283B44	jal    $80037870
+80283B44	jal    $system_print_alias
 80283B48	nop
 A0 = S2;
 A1 = S4;
@@ -2406,7 +2183,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = hu[AT + f7f8];
 A0 = 8028081c;
-80283B88	jal    $80037870
+80283B88	jal    $system_print_alias
 80283B8C	nop
 A0 = S2;
 A1 = S4;
@@ -2421,14 +2198,14 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = h[AT + f7f4];
 A0 = 8028082c;
-80283BCC	jal    $80037870
+80283BCC	jal    $system_print_alias
 80283BD0	nop
 A0 = S2;
 A1 = S4;
 80283BDC	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 8028083c;
-80283BEC	jal    $80037870
+80283BEC	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2442,7 +2219,7 @@ V0 = V0 << 03;
 80283C1C	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7fa];
-80283C28	jal    $80037870
+80283C28	jal    $system_print_alias
 A0 = S0;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2456,14 +2233,14 @@ V0 = V0 << 03;
 80283C58	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f7fc];
-80283C64	jal    $80037870
+80283C64	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
 80283C74	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 80280848;
-80283C84	jal    $80037870
+80283C84	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2477,7 +2254,7 @@ V0 = V0 << 03;
 80283CB4	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f802];
-80283CC0	jal    $80037870
+80283CC0	jal    $system_print_alias
 A0 = S0;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2491,14 +2268,14 @@ V0 = V0 << 03;
 80283CF0	lui    at, $800b
 AT = AT + V0;
 A1 = h[AT + f804];
-80283CFC	jal    $80037870
+80283CFC	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
 80283D0C	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 80280854;
-80283D1C	jal    $80037870
+80283D1C	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2512,7 +2289,7 @@ V0 = V0 << 03;
 80283D4C	lui    at, $800b
 AT = AT + V0;
 A1 = bu[AT + f80a];
-80283D58	jal    $80037870
+80283D58	jal    $system_print_alias
 A0 = S0;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2526,7 +2303,7 @@ V0 = V0 << 03;
 80283D88	lui    at, $800b
 AT = AT + V0;
 A1 = bu[AT + f80b];
-80283D94	jal    $80037870
+80283D94	jal    $system_print_alias
 A0 = S0;
 A0 = 0002;
 A2 = w[SP + 0010];
@@ -2540,14 +2317,14 @@ V0 = V0 << 03;
 80283DC4	lui    at, $800b
 AT = AT + V0;
 A1 = bu[AT + f80c];
-80283DD0	jal    $80037870
+80283DD0	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
 80283DE0	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 80280860;
-80283DF0	jal    $80037870
+80283DF0	jal    $system_print_alias
 S2 = V0;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2561,7 +2338,7 @@ V0 = V0 << 03;
 80283E20	lui    at, $800b
 AT = AT + V0;
 A1 = b[AT + f80e];
-80283E2C	jal    $80037870
+80283E2C	jal    $system_print_alias
 A0 = S0;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2575,7 +2352,7 @@ V0 = V0 << 03;
 80283E5C	lui    at, $800b
 AT = AT + V0;
 A1 = b[AT + f80f];
-80283E68	jal    $80037870
+80283E68	jal    $system_print_alias
 A0 = S0;
 A0 = 0002;
 A2 = w[SP + 0010];
@@ -2589,7 +2366,7 @@ V0 = V0 << 03;
 80283E98	lui    at, $800b
 AT = AT + V0;
 A1 = b[AT + f810];
-80283EA4	jal    $80037870
+80283EA4	jal    $system_print_alias
 A0 = S1;
 A0 = S2;
 A1 = S4;
@@ -2611,14 +2388,14 @@ S2 = V0;
 A0 = 8028086c;
 
 L283f00:	; 80283F00
-80283F00	jal    $80037870
+80283F00	jal    $system_print_alias
 80283F04	nop
 A0 = S2;
 A1 = S4;
 80283F10	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 8028088c;
-80283F20	jal    $80037870
+80283F20	jal    $system_print_alias
 S2 = V0;
 V1 = w[800af518];
 80283F30	nop
@@ -2667,14 +2444,14 @@ A0 = 802808a8;
 
 L283fc8:	; 80283FC8
 A0 = 802808b0;
-80283FD0	jal    $80037870
+80283FD0	jal    $system_print_alias
 80283FD4	nop
 A0 = S2;
 A1 = S4;
 80283FE0	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 802808b8;
-80283FF0	jal    $80037870
+80283FF0	jal    $system_print_alias
 S2 = V0;
 V1 = w[800af518];
 80284000	nop
@@ -2723,7 +2500,7 @@ A0 = 802808ec;
 
 L284098:	; 80284098
 A0 = 80280900;
-802840A0	jal    $80037870
+802840A0	jal    $system_print_alias
 802840A4	nop
 A0 = S2;
 A1 = S4;
@@ -2738,14 +2515,14 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = h[AT + f816];
 A0 = 80280914;
-802840E4	jal    $80037870
+802840E4	jal    $system_print_alias
 802840E8	nop
 A0 = S2;
 A1 = S4;
 802840F4	0C0A10FC	ь...
 A2 = SP + 0010;
 A0 = 80280924;
-80284104	jal    $80037870
+80284104	jal    $system_print_alias
 80284108	nop
 V1 = w[800af518];
 80284114	nop
@@ -2787,7 +2564,7 @@ A0 = 8028093c;
 
 L284194:	; 80284194
 A0 = 80280948;
-8028419C	jal    $80037870
+8028419C	jal    $system_print_alias
 802841A0	nop
 V1 = w[800af518];
 802841AC	nop
@@ -2798,7 +2575,7 @@ V0 = V0 << 03;
 AT = AT + V0;
 A1 = h[AT + f816];
 A0 = 80280914;
-802841D0	jal    $80037870
+802841D0	jal    $system_print_alias
 802841D4	nop
 802841D8	080A10AB	«...
 A0 = 00ff;
@@ -2814,7 +2591,7 @@ A1 = S4;
 A2 = SP + 0010;
 S2 = V0;
 A0 = 80280954;
-80284204	jal    $80037870
+80284204	jal    $system_print_alias
 A1 = S1;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -2830,7 +2607,7 @@ V0 = S0 + V0;
 AT = AT + V0;
 A1 = h[AT + f7d0];
 A0 = 802807b8;
-8028424C	jal    $80037870
+8028424C	jal    $system_print_alias
 S1 = S1 + 0001;
 A0 = 0001;
 A2 = w[SP + 0010];
@@ -2846,7 +2623,7 @@ S0 = S0 + V0;
 AT = AT + S0;
 A1 = h[AT + f7d2];
 A0 = 802807bc;
-80284294	jal    $80037870
+80284294	jal    $system_print_alias
 80284298	nop
 V0 = S1 < 0008;
 802842A0	bne    v0, zero, loop2841ec [$802841ec]
@@ -2933,7 +2710,7 @@ A0 = 80280960;
 
 L2843d0:	; 802843D0
 A0 = 80280964;
-802843D8	jal    $80037870
+802843D8	jal    $system_print_alias
 802843DC	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -2953,7 +2730,7 @@ A1 = 00ff;
 80284414	jal    $80036c70
 A2 = 00ff;
 A0 = 80280960;
-80284424	jal    $80037870
+80284424	jal    $system_print_alias
 80284428	nop
 V0 = 0001;
 80284430	080A1117	....
@@ -2965,7 +2742,7 @@ A1 = 0040;
 80284440	jal    $80036c70
 A2 = 0040;
 A0 = 80280964;
-80284450	jal    $80037870
+80284450	jal    $system_print_alias
 80284454	nop
 [S1 + 0000] = w(0);
 V0 = S0 + 0001;
@@ -3676,77 +3453,44 @@ SP = SP + 0020;
 80284EF0	jr     ra 
 80284EF4	nop
 ////////////////////////////////
-// func284ef8
-V1 = hu[800af370];
-80284F00	nop
-V0 = V1 & 0001;
-80284F08	beq    v0, zero, L285000 [$80285000]
-V0 = V1 & 0040;
-80284F10	beq    v0, zero, L285000 [$80285000]
-V0 = 0004;
-V1 = w[80064ee0];
-80284F20	nop
-80284F24	bne    v1, v0, L284f5c [$80284f5c]
-V0 = 0008;
-V0 = w[800ad06c];
-A0 = w[80064ee8];
-V1 = 0001;
-[800ad070] = w(V1);
-V0 = V0 + A0;
-[800ad06c] = w(V0);
-80284F54	080A1400	....
-80284F58	nop
 
-L284f5c:	; 80284F5C
-80284F5C	bne    v1, v0, L284fa4 [$80284fa4]
-V0 = 0001;
-V0 = h[800aeed0];
-V1 = w[80064ee8];
-A0 = 0001;
-[800aee58] = w(A0);
-[800aee5c] = w(A0);
-V1 = V1 << 04;
-V1 = V1 >> 05;
-V0 = V0 + V1;
-[800aeed0] = h(V0);
-80284F9C	080A1400	....
-80284FA0	nop
 
-L284fa4:	; 80284FA4
-[800aee58] = w(V0);
-[800aee5c] = w(V0);
-V0 = w[80064ee8];
-V1 = hu[800aeed2];
-V0 = V0 << 04;
-V1 = V1 + V0;
-[800aeed2] = h(V1);
-V1 = w[80064ee4];
-V0 = w[800aeec4];
-V1 = V1 << 12;
-V0 = V0 + V1;
-[800aeec4] = w(V0);
-V0 = V0 >> 10;
-[800aeeba] = h(V0);
 
-L285000:	; 80285000
-80285000	jr     ra 
-80285004	nop
+////////////////////////////////
+// func284ef8()
+
+if( ( hu[800af370] & 0001 ) && ( hu[800af370] & 0040 ) )
+{
+    if( w[80064ee0] == 4 )
+    {
+        [800ad070] = w(1);
+        [800ad06c] = w(w[800ad06c] + w[80064ee8]);
+    }
+    else if( w[80064ee0] == 8 )
+    {
+        [800aee58] = w(1);
+        [800aee5c] = w(1);
+        [800aeed0] = h(h[800aeed0] + ((w[80064ee8] << 4) >> 5));
+    }
+    else
+    {
+        [800aee58] = w(1);
+        [800aee5c] = w(1);
+        [800aeed2] = h(hu[800aeed2] + w[80064ee8] << 4);
+        [800aeec4] = w(w[800aeec4] + (w[80064ee4] << 12));
+        [800aeeba] = h(w[800aeec4] >> 10);
+    }
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func285008
-80285008	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0024] = w(S1);
+
 S1 = 0;
-[SP + 003c] = w(S7);
 S7 = A2;
-[SP + 0038] = w(S6);
 S6 = A3;
-[SP + 0044] = w(RA);
-[SP + 0040] = w(FP);
-[SP + 0034] = w(S5);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-[SP + 0028] = w(S2);
-[SP + 0020] = w(S0);
 FP = w[A0 + 0000];
 V1 = w[SP + 0058];
 S5 = hu[SP + 005c];
@@ -3863,397 +3607,134 @@ L2851cc:	; 802851CC
 V0 = 0;
 
 L2851d0:	; 802851D0
-RA = w[SP + 0044];
-FP = w[SP + 0040];
-S7 = w[SP + 003c];
-S6 = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0048;
-802851FC	jr     ra 
-80285200	nop
 ////////////////////////////////
-// func285204
-80285204	addiu  sp, sp, $ffe8 (=-$18)
-V0 = A0 < 00ff;
-8028520C	beq    v0, zero, L2859b0 [$802859b0]
-[SP + 0010] = w(RA);
-V0 = A0 << 02;
-80285218	lui    at, $8028
-AT = AT + V0;
-V0 = w[AT + 0e08];
-80285224	nop
-80285228	jr     v0 
-8028522C	nop
 
-A0 = 802809e0;
-80285238	080A166A	j...
-8028523C	nop
-A0 = 802809e8;
-80285248	080A166A	j...
-8028524C	nop
-A0 = 802809f0;
-80285258	080A166A	j...
-8028525C	nop
-A0 = 802809f8;
-80285268	080A166A	j...
-8028526C	nop
-A0 = 80280a00;
-80285278	080A166A	j...
-8028527C	nop
-A0 = 80280a08;
-80285288	080A166A	j...
-8028528C	nop
-A0 = 80280a10;
-80285298	080A166A	j...
-8028529C	nop
-A0 = 80280a18;
-802852A8	080A166A	j...
-802852AC	nop
-A0 = 80280a20;
-802852B8	080A166A	j...
-802852BC	nop
-A0 = 80280a28;
-802852C8	080A166A	j...
-802852CC	nop
-A0 = 80280a30;
-802852D8	080A166A	j...
-802852DC	nop
-A0 = 80280a38;
-802852E8	080A166A	j...
-802852EC	nop
-A0 = 80280a40;
-802852F8	080A166A	j...
-802852FC	nop
-A0 = 80280a48;
-80285308	080A166A	j...
-8028530C	nop
-A0 = 80280a50;
-80285318	080A166A	j...
-8028531C	nop
-A0 = 80280a58;
-80285328	080A166A	j...
-8028532C	nop
-A0 = 80280a60;
-80285338	080A166A	j...
-8028533C	nop
-A0 = 80280a68;
-80285348	080A166A	j...
-8028534C	nop
-A0 = 80280a70;
-80285358	080A166A	j...
-8028535C	nop
-A0 = 80280a78;
-80285368	080A166A	j...
-8028536C	nop
-A0 = 80280a80;
-80285378	080A166A	j...
-8028537C	nop
-A0 = 80280a88;
-80285388	080A166A	j...
-8028538C	nop
-A0 = 80280a90;
-80285398	080A166A	j...
-8028539C	nop
-A0 = 80280a94;
-802853A8	080A166A	j...
-802853AC	nop
-A0 = 80280a98;
-802853B8	080A166A	j...
-802853BC	nop
-A0 = 80280aa0;
-802853C8	080A166A	j...
-802853CC	nop
-A0 = 80280aa8;
-802853D8	080A166A	j...
-802853DC	nop
-A0 = 80280ab0;
-802853E8	080A166A	j...
-802853EC	nop
-A0 = 80280ab8;
-802853F8	080A166A	j...
-802853FC	nop
-A0 = 80280ac0;
-80285408	080A166A	j...
-8028540C	nop
-A0 = 80280ac8;
-80285418	080A166A	j...
-8028541C	nop
-A0 = 80280ad0;
-80285428	080A166A	j...
-8028542C	nop
-A0 = 80280ad8;
-80285438	080A166A	j...
-8028543C	nop
-A0 = 80280ae0;
-80285448	080A166A	j...
-8028544C	nop
-A0 = 80280ae8;
-80285458	080A166A	j...
-8028545C	nop
-A0 = 80280af0;
-80285468	080A166A	j...
-8028546C	nop
-A0 = 80280af8;
-80285478	080A166A	j...
-8028547C	nop
-A0 = 80280b00;
-80285488	080A166A	j...
-8028548C	nop
-A0 = 80280b04;
-80285498	080A166A	j...
-8028549C	nop
-A0 = 80280b0c;
-802854A8	080A166A	j...
-802854AC	nop
-A0 = 80280b14;
-802854B8	080A166A	j...
-802854BC	nop
-A0 = 80280b1c;
-802854C8	080A166A	j...
-802854CC	nop
-A0 = 80280b24;
-802854D8	080A166A	j...
-802854DC	nop
-A0 = 80280b2c;
-802854E8	080A166A	j...
-802854EC	nop
-A0 = 80280b34;
-802854F8	080A166A	j...
-802854FC	nop
-A0 = 80280b3c;
-80285508	080A166A	j...
-8028550C	nop
-A0 = 80280b44;
-80285518	080A166A	j...
-8028551C	nop
-A0 = 80280b4c;
-80285528	080A166A	j...
-8028552C	nop
-A0 = 80280b54;
-80285538	080A166A	j...
-8028553C	nop
-A0 = 80280b60;
-80285548	080A166A	j...
-8028554C	nop
-A0 = 80280b6c;
-80285558	080A166A	j...
-8028555C	nop
-A0 = 80280b78;
-80285568	080A166A	j...
-8028556C	nop
-A0 = 80280b84;
-80285578	080A166A	j...
-8028557C	nop
-A0 = 80280b90;
-80285588	080A166A	j...
-8028558C	nop
-A0 = 80280b9c;
-80285598	080A166A	j...
-8028559C	nop
-A0 = 80280ba4;
-802855A8	080A166A	j...
-802855AC	nop
-A0 = 80280bac;
-802855B8	080A166A	j...
-802855BC	nop
-A0 = 80280bb4;
-802855C8	080A166A	j...
-802855CC	nop
-A0 = 80280bc0;
-802855D8	080A166A	j...
-802855DC	nop
-A0 = 80280bcc;
-802855E8	080A166A	j...
-802855EC	nop
-A0 = 80280bd4;
-802855F8	080A166A	j...
-802855FC	nop
-A0 = 80280bdc;
-80285608	080A166A	j...
-8028560C	nop
-A0 = 80280be4;
-80285618	080A166A	j...
-8028561C	nop
-A0 = 80280bec;
-80285628	080A166A	j...
-8028562C	nop
-A0 = 80280bf4;
-80285638	080A166A	j...
-8028563C	nop
-A0 = 80280bfc;
-80285648	080A166A	j...
-8028564C	nop
-A0 = 80280c04;
-80285658	080A166A	j...
-8028565C	nop
-A0 = 80280c0c;
-80285668	080A166A	j...
-8028566C	nop
-A0 = 80280c14;
-80285678	080A166A	j...
-8028567C	nop
-A0 = 80280c1c;
-80285688	080A166A	j...
-8028568C	nop
-A0 = 80280c24;
-80285698	080A166A	j...
-8028569C	nop
-A0 = 80280c2c;
-802856A8	080A166A	j...
-802856AC	nop
-A0 = 80280c34;
-802856B8	080A166A	j...
-802856BC	nop
-A0 = 80280c3c;
-802856C8	080A166A	j...
-802856CC	nop
-A0 = 80280c48;
-802856D8	080A166A	j...
-802856DC	nop
-A0 = 80280c54;
-802856E8	080A166A	j...
-802856EC	nop
-A0 = 80280c60;
-802856F8	080A166A	j...
-802856FC	nop
-A0 = 80280c6c;
-80285708	080A166A	j...
-8028570C	nop
-A0 = 80280c78;
-80285718	080A166A	j...
-8028571C	nop
-A0 = 80280c84;
-80285728	080A166A	j...
-8028572C	nop
-A0 = 80280c90;
-80285738	080A166A	j...
-8028573C	nop
-A0 = 80280c9c;
-80285748	080A166A	j...
-8028574C	nop
-A0 = 80280ca4;
-80285758	080A166A	j...
-8028575C	nop
-A0 = 80280cb0;
-80285768	080A166A	j...
-8028576C	nop
-A0 = 80280cbc;
-80285778	080A166A	j...
-8028577C	nop
-A0 = 80280cc8;
-80285788	080A166A	j...
-8028578C	nop
-A0 = 80280cd4;
-80285798	080A166A	j...
-8028579C	nop
-A0 = 80280ce0;
-802857A8	080A166A	j...
-802857AC	nop
-A0 = 80280cec;
-802857B8	080A166A	j...
-802857BC	nop
-A0 = 80280cf8;
-802857C8	080A166A	j...
-802857CC	nop
-A0 = 80280d00;
-802857D8	080A166A	j...
-802857DC	nop
-A0 = 80280d08;
-802857E8	080A166A	j...
-802857EC	nop
-A0 = 80280d10;
-802857F8	080A166A	j...
-802857FC	nop
-A0 = 80280d18;
-80285808	080A166A	j...
-8028580C	nop
-A0 = 80280d20;
-80285818	080A166A	j...
-8028581C	nop
-A0 = 80280d28;
-80285828	080A166A	j...
-8028582C	nop
-A0 = 80280d30;
-80285838	080A166A	j...
-8028583C	nop
-A0 = 80280d38;
-80285848	080A166A	j...
-8028584C	nop
-A0 = 80280d40;
-80285858	080A166A	j...
-8028585C	nop
-A0 = 80280d48;
-80285868	080A166A	j...
-8028586C	nop
-A0 = 80280d50;
-80285878	080A166A	j...
-8028587C	nop
-A0 = 80280d58;
-80285888	080A166A	j...
-8028588C	nop
-A0 = 80280d60;
-80285898	080A166A	j...
-8028589C	nop
-A0 = 80280d68;
-802858A8	080A166A	j...
-802858AC	nop
-A0 = 80280d74;
-802858B8	080A166A	j...
-802858BC	nop
-A0 = 80280d80;
-802858C8	080A166A	j...
-802858CC	nop
-A0 = 80280d8c;
-802858D8	080A166A	j...
-802858DC	nop
-A0 = 80280d98;
-802858E8	080A166A	j...
-802858EC	nop
-A0 = 80280da4;
-802858F8	080A166A	j...
-802858FC	nop
-A0 = 80280dac;
-80285908	080A166A	j...
-8028590C	nop
-A0 = 80280db4;
-80285918	080A166A	j...
-8028591C	nop
-A0 = 80280dbc;
-80285928	080A166A	j...
-8028592C	nop
-A0 = 80280dc4;
-80285938	080A166A	j...
-8028593C	nop
-A0 = 80280dcc;
-80285948	080A166A	j...
-8028594C	nop
-A0 = 80280dd4;
-80285958	080A166A	j...
-8028595C	nop
-A0 = 80280ddc;
-80285968	080A166A	j...
-8028596C	nop
-A0 = 80280de4;
-80285978	080A166A	j...
-8028597C	nop
-A0 = 80280dec;
-80285988	080A166A	j...
-8028598C	nop
-A0 = 80280df4;
-80285998	080A166A	j...
-8028599C	nop
-A0 = 80280dfc;
-802859A8	jal    $80037870
-802859AC	nop
 
-L2859b0:	; 802859B0
-RA = w[SP + 0010];
-SP = SP + 0018;
-802859B8	jr     ra 
-802859BC	nop
+
+////////////////////////////////
+// func285204()
+
+switch( A0 )
+{
+    case 00: A0 = 802809e0; system_print_alias(); break; // "main_se"
+    case 01: A0 = 802809e8; system_print_alias(); break; // "bat_se"
+    case 02: A0 = 802809f0; system_print_alias(); break; // "gear_se"
+    case 03: A0 = 802809f8; system_print_alias(); break; // "ambi"
+    case 04: A0 = 80280a00; system_print_alias(); break; // "ambi2"
+    case 05: A0 = 80280a08; system_print_alias(); break; // "ambi3"
+    case 06: A0 = 80280a10; system_print_alias(); break; // "ambi4"
+    case 07: A0 = 80280bcc; system_print_alias(); break; // "movie14"
+    case 20: A0 = 80280a18; system_print_alias(); break; // "minato"
+    case 21: A0 = 80280a20; system_print_alias(); break; // "lahan"
+    case 22: A0 = 80280a28; system_print_alias(); break; // "jyukai"
+    case 23: A0 = 80280a30; system_print_alias(); break; // "shitan"
+    case 24: A0 = 80280a38; system_print_alias(); break; // "musi"
+    case 25: A0 = 80280a40; system_print_alias(); break; // "church"
+    case 26: A0 = 80280a48; system_print_alias(); break; // "battle2"
+    case 27: A0 = 80280a50; system_print_alias(); break; // "chuchu"
+    case 28: A0 = 80280a58; system_print_alias(); break; // "over"
+    case 29: A0 = 80280a60; system_print_alias(); break; // "orgel"
+    case 2a: A0 = 80280a68; system_print_alias(); break; // "battle3"
+    case 2b: A0 = 80280a70; system_print_alias(); break; // "ajito"
+    case 2c: A0 = 80280a78; system_print_alias(); break; // "emerada"
+    case 2d: A0 = 80280a80; system_print_alias(); break; // "ellie"
+    case 2e: A0 = 80280a88; system_print_alias(); break; // "world"
+    case 2f: A0 = 80280a90; system_print_alias(); break; // "sad"
+    case 30: A0 = 80280a94; system_print_alias(); break; // "ave"
+    case 31: A0 = 80280a98; system_print_alias(); break; // "ellie2"
+    case 32: A0 = 80280aa0; system_print_alias(); break; // "balto"
+    case 33: A0 = 80280aa8; system_print_alias(); break; // "dajil"
+    case 34: A0 = 80280ab0; system_print_alias(); break; // "maria1"
+    case 35: A0 = 80280ab8; system_print_alias(); break; // "maria2"
+    case 36: A0 = 80280ac0; system_print_alias(); break; // "heshu"
+    case 37: A0 = 80280ac8; system_print_alias(); break; // "kaisou"
+    case 38: A0 = 80280ad0; system_print_alias(); break; // "pinch"
+    case 39: A0 = 80280ad8; system_print_alias(); break; // "porgan"
+    case 3a: A0 = 80280ae0; system_print_alias(); break; // "babel"
+    case 3b: A0 = 80280ae8; system_print_alias(); break; // "solachu"
+    case 3c: A0 = 80280af0; system_print_alias(); break; // "shinnyu"
+    case 3d: A0 = 80280af8; system_print_alias(); break; // "inbou"
+    case 3e: A0 = 80280b00; system_print_alias(); break; // "ido"
+    case 3f: A0 = 80280b04; system_print_alias(); break; // "takeoff"
+    case 40: A0 = 80280b0c; system_print_alias(); break; // "glaerf"
+    case 41: A0 = 80280b14; system_print_alias(); break; // "last"
+    case 42: A0 = 80280b1c; system_print_alias(); break; // "shebat"
+    case 43: A0 = 80280b24; system_print_alias(); break; // "dungeon"
+    case 44: A0 = 80280b2c; system_print_alias(); break; // "lastbat"
+    case 45: A0 = 80280b34; system_print_alias(); break; // "solaris"
+    case b5: A0 = 80280b3c; system_print_alias(); break; // "vomaria"
+    case b6: A0 = 80280b44; system_print_alias(); break; // "melmv"
+    case b7: A0 = 80280b4c; system_print_alias(); break; // "yugumv"
+    case b8: A0 = 80280b54; system_print_alias(); break; // "zoharumv"
+    case b9: A0 = 80280b60; system_print_alias(); break; // "vomagic5"
+    case ba: A0 = 80280b6c; system_print_alias(); break; // "vomagic4"
+    case bb: A0 = 80280b78; system_print_alias(); break; // "vomagic3"
+    case bc: A0 = 80280b84; system_print_alias(); break; // "voivent3"
+    case bd: A0 = 80280b90; system_print_alias(); break; // "voivent2"
+    case be: A0 = 80280b9c; system_print_alias(); break; // "vobossm"
+    case bf: A0 = 80280ba4; system_print_alias(); break; // "vobossl"
+    case c0: A0 = 80280bac; system_print_alias(); break; // "vochu6"
+    case c1: A0 = 80280bb4; system_print_alias(); break; // "vomagic2"
+    case c2: A0 = 80280bc0; system_print_alias(); break; // "vomagic1"
+    case c3: A0 = 80280bd4; system_print_alias(); break; // "movie15"
+    case c4: A0 = 80280bdc; system_print_alias(); break; // "movie16"
+    case c5: A0 = 80280be4; system_print_alias(); break; // "movie18"
+    case c6: A0 = 80280bec; system_print_alias(); break; // "voivent"
+    case c7: A0 = 80280bf4; system_print_alias(); break; // "damage"
+    case c8: A0 = 80280bfc; system_print_alias(); break; // "vofei"
+    case c9: A0 = 80280c04; system_print_alias(); break; // "vofei1"
+    case ca: A0 = 80280c0c; system_print_alias(); break; // "vofei2"
+    case cb: A0 = 80280c14; system_print_alias(); break; // "vofei3"
+    case cc: A0 = 80280c1c; system_print_alias(); break; // "vofei4"
+    case cd: A0 = 80280c24; system_print_alias(); break; // "vofei5"
+    case ce: A0 = 80280c2c; system_print_alias(); break; // "vofei6"
+    case cf: A0 = 80280c34; system_print_alias(); break; // "voellie"
+    case d0: A0 = 80280c3c; system_print_alias(); break; // "voellie1"
+    case d1: A0 = 80280c48; system_print_alias(); break; // "voellie2"
+    case d2: A0 = 80280c54; system_print_alias(); break; // "voellie3"
+    case d3: A0 = 80280c60; system_print_alias(); break; // "voellie4"
+    case d4: A0 = 80280c6c; system_print_alias(); break; // "voellie5"
+    case d5: A0 = 80280c78; system_print_alias(); break; // "voellie6"
+    case d6: A0 = 80280c84; system_print_alias(); break; // "voellie7"
+    case d7: A0 = 80280c90; system_print_alias(); break; // "voellie8"
+    case d8: A0 = 80280c9c; system_print_alias(); break; // "voshita"
+    case d9: A0 = 80280ca4; system_print_alias(); break; // "voshita1"
+    case da: A0 = 80280cb0; system_print_alias(); break; // "voshita2"
+    case db: A0 = 80280cbc; system_print_alias(); break; // "voshita3"
+    case dc: A0 = 80280cc8; system_print_alias(); break; // "voshita4"
+    case dd: A0 = 80280cd4; system_print_alias(); break; // "voshita5"
+    case de: A0 = 80280ce0; system_print_alias(); break; // "voshita6"
+    case df: A0 = 80280cec; system_print_alias(); break; // "vobaluto"
+    case e0: A0 = 80280cf8; system_print_alias(); break; // "vobalu1"
+    case e1: A0 = 80280d00; system_print_alias(); break; // "vobalu2"
+    case e2: A0 = 80280d08; system_print_alias(); break; // "vobalu3"
+    case e3: A0 = 80280d10; system_print_alias(); break; // "vobalu4"
+    case e4: A0 = 80280d18; system_print_alias(); break; // "vobalu5"
+    case e5: A0 = 80280d20; system_print_alias(); break; // "vobalu6"
+    case e6: A0 = 80280d28; system_print_alias(); break; // "vobalu7"
+    case e7: A0 = 80280d30; system_print_alias(); break; // "vorico"
+    case e8: A0 = 80280d38; system_print_alias(); break; // "vorico1"
+    case e9: A0 = 80280d40; system_print_alias(); break; // "vorico2"
+    case ea: A0 = 80280d48; system_print_alias(); break; // "vorico3"
+    case eb: A0 = 80280d50; system_print_alias(); break; // "vorico4"
+    case ec: A0 = 80280d58; system_print_alias(); break; // "vorico5"
+    case ed: A0 = 80280d60; system_print_alias(); break; // "vobilly"
+    case ee: A0 = 80280d68; system_print_alias(); break; // "vobilly1"
+    case ef: A0 = 80280d74; system_print_alias(); break; // "vobilly2"
+    case f0: A0 = 80280d80; system_print_alias(); break; // "vobilly3"
+    case f1: A0 = 80280d8c; system_print_alias(); break; // "vobilly4"
+    case f2: A0 = 80280d98; system_print_alias(); break; // "vobilly5"
+    case f3: A0 = 80280da4; system_print_alias(); break; // "voeme"
+    case f4: A0 = 80280dac; system_print_alias(); break; // "voeme1"
+    case f5: A0 = 80280db4; system_print_alias(); break; // "voeme2"
+    case f6: A0 = 80280dbc; system_print_alias(); break; // "voeme3"
+    case f7: A0 = 80280dc4; system_print_alias(); break; // "voeme4"
+    case f8: A0 = 80280dcc; system_print_alias(); break; // "voeme5"
+    case f9: A0 = 80280dd4; system_print_alias(); break; // "vochu"
+    case fa: A0 = 80280ddc; system_print_alias(); break; // "vochu1"
+    case fb: A0 = 80280de4; system_print_alias(); break; // "vochu2"
+    case fc: A0 = 80280dec; system_print_alias(); break; // "vochu3"
+    case fd: A0 = 80280df4; system_print_alias(); break; // "vochu4"
+    case fe: A0 = 80280dfc; system_print_alias(); break; // "vochu5"
+}
 ////////////////////////////////

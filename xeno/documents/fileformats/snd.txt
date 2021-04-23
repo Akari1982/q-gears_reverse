@@ -1,5 +1,6 @@
 + 10 [][][][] size of spu struct in memory.
 + 14 [][][][] size of pcm data.
 + 18 [][][][] pointer to pcm data.
++ 20 [][]     sound id (can get name of snd from this)
 + 28 [][][][] address in spu for pcm data.
-
++ 2c [][][][] link to next snd file.

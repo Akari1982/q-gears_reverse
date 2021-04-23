@@ -177,7 +177,7 @@ field_allocate_memory_for_party_sprites();
 
 if( w[800c1b60] == 0 ) // debug
 {
-    func281204();
+    func281204(); // some debug settings
 }
 
 func76c50(); // set dir inside (control related)
@@ -1178,7 +1178,7 @@ if( w[800b1770] > 0 )
                 if( w[800c1b60] == 0 )
                 {
                     A0 = encounter;
-                    func28121c();
+                    func28121c(); // store encounter data for debug
                 }
             }
         }

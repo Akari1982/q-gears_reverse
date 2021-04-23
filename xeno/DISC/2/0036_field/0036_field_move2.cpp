@@ -445,8 +445,8 @@ if( number_of_entity > 0 )
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
-    A0 = 8006f2a8; // MOV CHECK0
-    func281b18;
+    A0 = 8006f2a8; // "MOV CHECK0"
+    func281b18();
 }
 
 
@@ -461,8 +461,8 @@ func8376c(); // move player
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
-    A0 = 8006f2b4; // MOV CHECK1
-    func281b18;
+    A0 = 8006f2b4; // "MOV CHECK1"
+    func281b18();
 }
 
 
@@ -512,8 +512,8 @@ if( number_of_entity > 0 )
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
-    A0 = 8006f2c0; // MOV CHECK2
-    func281b18;
+    A0 = 8006f2c0; // "MOV CHECK2"
+    func281b18();
 }
 
 
@@ -539,7 +539,7 @@ func80c04();
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
-    A0 = 8006f2cc; // MOV CHECK3
+    A0 = 8006f2cc; // "MOV CHECK3"
     func281b18();
 }
 ////////////////////////////////
@@ -3164,10 +3164,9 @@ return 0;
 
 ////////////////////////////////
 // func84ae4
-80084AE4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 80084AEC	jal    func28924 [$80028924]
-80084AF0	nop
+
 A0 = V0;
 [800ad094] = w(A0);
 80084B00	beq    a0, zero, L84b24 [$80084b24]
@@ -3195,10 +3194,6 @@ system_memory_mark_removed_alloc();
 80084B60	addiu  v0, zero, $ffff (=-$1)
 
 L84b64:	; 80084B64
-RA = w[SP + 0010];
-SP = SP + 0018;
-80084B6C	jr     ra 
-80084B70	nop
 ////////////////////////////////
 
 

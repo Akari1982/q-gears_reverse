@@ -458,7 +458,7 @@ L43abc:	; 80043ABC
 
 
 ////////////////////////////////
-// func43c04()
+// system_graphic_shaded_line_header()
 
 [A0 + 3] = b(4);
 [A0 + 7] = b(50);
