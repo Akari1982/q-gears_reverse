@@ -2797,12 +2797,13 @@ S0 = V0;
 A0 = 00a9;
 A1 = S0;
 A2 = 0;
-800A7180	jal    $system_load_file_by_dir_file_id
 A3 = 0080;
+system_load_file_by_dir_file_id();
+
 [800afb74] = w(0);
 [800af348] = w(0);
 800A7198	jal    funca686c [$800a686c]
-800A719C	nop
+
 A0 = 0018;
 800A71A4	jal    $system_filesystem_set_dir
 A1 = 0;

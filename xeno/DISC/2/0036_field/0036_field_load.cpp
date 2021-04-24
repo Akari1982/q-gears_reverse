@@ -3539,7 +3539,7 @@ A0 = w[800c3740];
 A3 = w[800acfe0];
 80073C5C	jal    func7a180 [$8007a180]
 A0 = A0 + S2;
-V0 = S0 < 0019;
+V0 = S0 < 19;
 80073C68	bne    v0, zero, loop73c3c [$80073c3c]
 80073C6C	lui    a3, $00ff
 
