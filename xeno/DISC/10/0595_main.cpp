@@ -463,2295 +463,2001 @@ if( hu[800c2ddc] & 0800 ) // repeated button mask for controller 2 (Start)
     [800acfd4] = w((w[800acfd4] + 1) | 8000);
 }
 
-V0 = hu[800c2dd4];
-V0 = V0 & 0800;
-80281D64	beq    v0, zero, L281e24 [$80281e24]
-80281D68	nop
-V0 = hu[800af370];
-80281D74	nop
-V0 = V0 & 0040;
-80281D7C	beq    v0, zero, L281e24 [$80281e24]
-80281D80	nop
-V0 = w[802859d8];
-80281D8C	nop
-V1 = V0 + 0001;
-80281D94	addiu  v0, v0, $fff9 (=-$7)
-V0 = V0 < 0002;
-[802859d8] = w(V1);
-80281DA4	beq    v0, zero, L281db4 [$80281db4]
-V0 = 000a;
-[802859d8] = w(V0);
-
-L281db4:	; 80281DB4
-V1 = w[802859d8];
-80281DBC	nop
-80281DC0	addiu  v0, v1, $fff5 (=-$b)
-V0 = V0 < 0002;
-80281DC8	beq    v0, zero, L281df8 [$80281df8]
-V0 = 000b;
-80281DD0	bne    v1, v0, L281de8 [$80281de8]
-V0 = 0001;
-[800b1662] = h(V0);
-80281DE0	080A077C	|...
-80281DE4	nop
-
-L281de8:	; 80281DE8
-[800b1662] = h(0);
-80281DF0	jal    $800734c8
-80281DF4	nop
-
-L281df8:	; 80281DF8
-V0 = w[802859d8];
-[802859d0] = w(0);
-[802859d4] = w(0);
-V0 = V0 < 000e;
-80281E14	bne    v0, zero, L281e24 [$80281e24]
-80281E18	nop
-[802859d8] = w(0);
-
-L281e24:	; 80281E24
-V0 = w[802859d8];
-80281E2C	nop
-80281E30	addiu  v1, v0, $ffff (=-$1)
-V0 = V1 < 000d;
-80281E38	beq    v0, zero, L2835f0 [$802835f0]
-V0 = V1 << 02;
-80281E40	lui    at, $8028
-AT = AT + V0;
-V0 = w[AT + 0738];
-80281E4C	nop
-80281E50	jr     v0 
-80281E54	nop
-
-A1 = w[800ad078];
-A2 = w[800ad07c];
-A0 = 802800a0;
-80281E70	jal    $system_print_alias
-80281E74	nop
-A1 = w[80058c14];
-A2 = w[80058c5c];
-A0 = 802800b4;
-80281E90	jal    $system_print_alias
-80281E94	nop
-V1 = w[800b1740];
-80281EA0	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-80281EC8	nop
-A1 = h[V0 + 0022];
-A2 = h[V0 + 002a];
-A3 = h[V0 + 0026];
-A0 = 802800c8;
-80281EE0	jal    $system_print_alias
-80281EE4	nop
-80281EE8	080A0A15	....
-80281EEC	nop
-A0 = 802800e0;
-80281EF8	jal    $system_print_alias
-80281EFC	nop
-V0 = hu[800c2dd4];
-80281F08	nop
-V0 = V0 & 0002;
-80281F10	beq    v0, zero, L281f40 [$80281f40]
-80281F14	nop
-V0 = w[802859d0];
-80281F20	nop
-80281F24	addiu  v0, v0, $ffff (=-$1)
-[802859d0] = w(V0);
-80281F30	bgez   v0, L281f40 [$80281f40]
-V0 = 0003;
-[802859d0] = w(V0);
-
-L281f40:	; 80281F40
-V0 = hu[800c2dd4];
-80281F48	nop
-V0 = V0 & 0001;
-80281F50	beq    v0, zero, L281f84 [$80281f84]
-80281F54	nop
-V0 = w[802859d0];
-80281F60	nop
-V0 = V0 + 0001;
-[802859d0] = w(V0);
-V0 = V0 < 0004;
-80281F74	bne    v0, zero, L281f84 [$80281f84]
-80281F78	nop
-[802859d0] = w(0);
-
-L281f84:	; 80281F84
-V1 = w[80064ee0];
-V0 = 0008;
-80281F90	bne    v1, v0, L281fa0 [$80281fa0]
-S0 = 0;
-S0 = w[80064ee8];
-
-L281fa0:	; 80281FA0
-V0 = w[802859d0];
-80281FA8	nop
-80281FAC	bne    v0, zero, L281fdc [$80281fdc]
-80281FB0	nop
-V0 = w[802859cc];
-A0 = 802800ec;
-V0 = V0 + S0;
-A1 = V0 >> 04;
-[802859cc] = w(V0);
-80281FD4	080A07FD	э...
-A1 = A1 & 0003;
-
-L281fdc:	; 80281FDC
-A1 = w[802859cc];
-A0 = 802800f8;
-A1 = A1 >> 04;
-A1 = A1 & 0003;
-80281FF4	jal    $system_print_alias
-80281FF8	nop
-V1 = w[802859d0];
-V0 = 0001;
-80282008	bne    v1, v0, L282038 [$80282038]
-8028200C	nop
-A1 = w[802859c0];
-A0 = 80280104;
-A1 = A1 + S0;
-A1 = A1 & 00ff;
-[802859c0] = w(A1);
-80282030	080A0812	....
-80282034	nop
-
-L282038:	; 80282038
-A1 = w[802859c0];
-A0 = 8028010c;
-80282048	jal    $system_print_alias
-8028204C	nop
-V1 = w[802859d0];
-V0 = 0002;
-8028205C	bne    v1, v0, L28208c [$8028208c]
-80282060	nop
-A1 = w[802859c4];
-A0 = 80280114;
-A1 = A1 + S0;
-A1 = A1 & 00ff;
-[802859c4] = w(A1);
-80282084	080A0827	'...
-80282088	nop
-
-L28208c:	; 8028208C
-A1 = w[802859c4];
-A0 = 8028011c;
-8028209C	jal    $system_print_alias
-802820A0	nop
-V1 = w[802859d0];
-V0 = 0003;
-802820B0	bne    v1, v0, L2820e0 [$802820e0]
-802820B4	nop
-A1 = w[802859c8];
-A0 = 80280124;
-A1 = A1 + S0;
-A1 = A1 & 00ff;
-[802859c8] = w(A1);
-802820D8	080A083C	<...
-802820DC	nop
-
-L2820e0:	; 802820E0
-A1 = w[802859c8];
-A0 = 8028012c;
-802820F0	jal    $system_print_alias
-802820F4	nop
-A0 = 0001;
-A1 = 0001;
-A2 = w[802859c0];
-A3 = w[802859c4];
-V0 = w[802859cc];
-V1 = w[802859c8];
-V0 = V0 >> 04;
-V0 = V0 & 0003;
-[SP + 0010] = w(V1);
-8028212C	jal    $80071398
-[SP + 0014] = w(V0);
-80282134	080A0D7C	|...
-80282138	nop
-V0 = hu[800c2dd4];
-80282144	nop
-V0 = V0 & 0002;
-8028214C	beq    v0, zero, L28217c [$8028217c]
-80282150	nop
-V0 = w[802859d0];
-8028215C	nop
-80282160	addiu  v0, v0, $ffff (=-$1)
-[802859d0] = w(V0);
-8028216C	bgez   v0, L28217c [$8028217c]
-V0 = 0007;
-[802859d0] = w(V0);
-
-L28217c:	; 8028217C
-V0 = hu[800c2dd4];
-80282184	nop
-V0 = V0 & 0001;
-8028218C	beq    v0, zero, L2821c0 [$802821c0]
-80282190	nop
-V0 = w[802859d0];
-8028219C	nop
-V0 = V0 + 0001;
-[802859d0] = w(V0);
-V0 = V0 < 0008;
-802821B0	bne    v0, zero, L2821c0 [$802821c0]
-802821B4	nop
-[802859d0] = w(0);
-
-L2821c0:	; 802821C0
-V1 = w[80064ee0];
-V0 = 0008;
-802821CC	bne    v1, v0, L2821dc [$802821dc]
-S0 = 0;
-S0 = w[80064ee8];
-
-L2821dc:	; 802821DC
-V0 = w[802859d0];
-802821E4	nop
-802821E8	bne    v0, zero, L282214 [$80282214]
-802821EC	nop
-V1 = 800b1664;
-V0 = bu[V1 + 0000];
-A0 = 80280134;
-V0 = V0 + S0;
-A1 = V0 & 00ff;
-8028220C	080A0889	‰...
-[V1 + 0000] = b(V0);
-
-L282214:	; 80282214
-A1 = bu[800b1664];
-A0 = 80280148;
-80282224	jal    $system_print_alias
-80282228	nop
-V1 = w[802859d0];
-V0 = 0001;
-80282238	bne    v1, v0, L282264 [$80282264]
-8028223C	nop
-V1 = 800b1665;
-V0 = bu[V1 + 0000];
-A0 = 8028015c;
-V0 = V0 + S0;
-A1 = V0 & 00ff;
-8028225C	080A089D	ќ...
-[V1 + 0000] = b(V0);
-
-L282264:	; 80282264
-A1 = bu[800b1665];
-A0 = 80280170;
-80282274	jal    $system_print_alias
-80282278	nop
-V1 = w[802859d0];
-V0 = 0002;
-80282288	bne    v1, v0, L2822b4 [$802822b4]
-8028228C	nop
-V1 = 800b1666;
-V0 = bu[V1 + 0000];
-A0 = 80280184;
-V0 = V0 + S0;
-A1 = V0 & 00ff;
-802822AC	080A08B1	±...
-[V1 + 0000] = b(V0);
-
-L2822b4:	; 802822B4
-A1 = bu[800b1666];
-A0 = 80280198;
-802822C4	jal    $system_print_alias
-802822C8	nop
-V1 = w[802859d0];
-V0 = 0003;
-802822D8	bne    v1, v0, L282304 [$80282304]
-802822DC	nop
-V1 = 800b1668;
-V0 = bu[V1 + 0000];
-A0 = 802801ac;
-V0 = V0 + S0;
-A1 = V0 & 00ff;
-802822FC	080A08C5	Е...
-[V1 + 0000] = b(V0);
-
-L282304:	; 80282304
-A1 = bu[800b1668];
-A0 = 802801c0;
-80282314	jal    $system_print_alias
-80282318	nop
-V1 = w[802859d0];
-V0 = 0004;
-80282328	bne    v1, v0, L282354 [$80282354]
-8028232C	nop
-V1 = 800b1669;
-V0 = bu[V1 + 0000];
-A0 = 8028015c;
-V0 = V0 + S0;
-A1 = V0 & 00ff;
-8028234C	080A08D9	Щ...
-[V1 + 0000] = b(V0);
-
-L282354:	; 80282354
-A1 = bu[800b1669];
-A0 = 80280170;
-80282364	jal    $system_print_alias
-80282368	nop
-V1 = w[802859d0];
-V0 = 0005;
-80282378	bne    v1, v0, L2823a4 [$802823a4]
-8028237C	nop
-V1 = 800b166a;
-V0 = bu[V1 + 0000];
-A0 = 80280184;
-V0 = V0 + S0;
-A1 = V0 & 00ff;
-8028239C	080A08ED	н...
-[V1 + 0000] = b(V0);
-
-L2823a4:	; 802823A4
-A1 = bu[800b166a];
-A0 = 80280198;
-802823B4	jal    $system_print_alias
-802823B8	nop
-V1 = w[802859d0];
-V0 = 0006;
-802823C8	bne    v1, v0, L282400 [$80282400]
-V0 = S0 << 02;
-A0 = 802801d4;
-A2 = 800b166c;
-V0 = V0 + S0;
-V1 = hu[A2 + 0000];
-V0 = V0 << 01;
-V1 = V1 + V0;
-A1 = V1 << 10;
-A1 = A1 >> 10;
-802823F8	080A0904	....
-[A2 + 0000] = h(V1);
-
-L282400:	; 80282400
-A1 = h[800b166c];
-A0 = 802801e8;
-80282410	jal    $system_print_alias
-80282414	nop
-V1 = w[802859d0];
-V0 = 0007;
-80282424	bne    v1, v0, L282464 [$80282464]
-V0 = S0 << 02;
-A0 = 802801fc;
-A2 = 800b166e;
-V0 = V0 + S0;
-V1 = hu[A2 + 0000];
-V0 = V0 << 01;
-V1 = V1 + V0;
-A1 = V1 << 10;
-A1 = A1 >> 10;
-80282454	jal    $system_print_alias
-[A2 + 0000] = h(V1);
-8028245C	080A0D7C	|...
-80282460	nop
-
-L282464:	; 80282464
-A1 = h[800b166e];
-A0 = 80280210;
-80282474	jal    $system_print_alias
-80282478	nop
-8028247C	080A0D7C	|...
-80282480	nop
-A0 = 80280224;
-8028248C	jal    $system_print_alias
-80282490	nop
-V1 = w[800b1740];
-8028249C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-802824C4	nop
-A1 = h[V0 + 0022];
-A2 = h[V0 + 002a];
-A3 = h[V0 + 0026];
-A0 = 80280244;
-802824DC	jal    $system_print_alias
-802824E0	nop
-V1 = w[800b1740];
-802824EC	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-T0 = w[V0 + 004c];
-80282514	nop
-A2 = h[T0 + 0010];
-8028251C	nop
-V0 = A2 << 01;
-V0 = V0 + T0;
-V1 = A2 << 02;
-A1 = h[V0 + 0008];
-80282530	lui    at, $800b
-AT = AT + V1;
-V1 = w[AT + eff8];
-V0 = A1 << 03;
-V0 = V0 - A1;
-V0 = V0 << 01;
-V0 = V0 + V1;
-A3 = bu[V0 + 000c];
-V0 = w[T0 + 0014];
-A0 = 80280258;
-8028255C	jal    $system_print_alias
-[SP + 0010] = w(V0);
-V1 = w[800b1740];
-8028256C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-80282594	nop
-A1 = h[V0 + 0008];
-A2 = h[V0 + 000a];
-A3 = h[V0 + 000c];
-V0 = h[800acfda];
-A0 = 80280270;
-802825B4	jal    $system_print_alias
-[SP + 0010] = w(V0);
-V1 = w[800b1740];
-802825C4	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-802825EC	nop
-A1 = w[V0 + 0000];
-A2 = w[V0 + 0004];
-A3 = bu[V0 + 0074];
-A0 = 80280288;
-80282604	jal    $system_print_alias
-80282608	nop
-A0 = 802802a4;
-80282614	jal    $system_print_alias
-80282618	nop
-A1 = w[800aeecc];
-A2 = h[800aeed0];
-A3 = h[800aeed2];
-A0 = 802802c4;
-8028263C	jal    $system_print_alias
-80282640	nop
-80282644	jal    $80099ae8
-80282648	nop
-8028264C	jal    $80096a20
-S0 = V0 & ffff;
-A0 = 802802e0;
-A1 = S0;
-A3 = w[8004e9f0];
-A2 = V0 & ffff;
-8028266C	jal    $system_print_alias
-A3 = A3 & 3fff;
-A1 = h[800aed66];
-A2 = h[800aed6e];
-A3 = h[800aed6a];
-A0 = 80280300;
-80282694	jal    $system_print_alias
-80282698	nop
-A1 = h[800aed56];
-A2 = h[800aed5e];
-A3 = h[800aed5a];
-A0 = 8028031c;
-802826BC	jal    $system_print_alias
-802826C0	nop
-A1 = h[800aed96];
-A2 = h[800aed9e];
-A3 = h[800aed9a];
-A0 = 80280338;
-802826E4	jal    $system_print_alias
-802826E8	nop
-A1 = h[800aed86];
-A2 = h[800aed8e];
-A3 = h[800aed8a];
-A0 = 80280354;
-8028270C	jal    $system_print_alias
-80282710	nop
-A1 = bu[800aeec8];
-A2 = bu[800aeec9];
-A0 = 80280370;
-8028272C	jal    $system_print_alias
-80282730	nop
-A1 = h[800aeeba];
-A0 = 80280390;
-80282744	jal    $system_print_alias
-80282748	nop
-V0 = h[800aeed2];
-A2 = w[800aeecc];
-8028275C	nop
-80282760	mult   a2, v0
-A0 = 8028039c;
-8028276C	mflo   a2
-A1 = A2 >> 0c;
-A2 = A2 << 01;
-80282778	jal    $system_print_alias
-A2 = A2 >> 0c;
-A1 = w[8004e9e0];
-A2 = w[8004e9dc];
-A0 = 802803ac;
-80282798	jal    $system_print_alias
-8028279C	nop
-A1 = w[800ad0d4];
-A0 = 802803c4;
-802827B0	jal    $system_print_alias
-802827B4	nop
-A1 = w[800aefe0];
-A0 = 802803d8;
-802827C8	jal    $system_print_alias
-802827CC	nop
-802827D0	080A0D7C	|...
-802827D4	nop
-A0 = 802803ec;
-802827E0	jal    $system_print_alias
-802827E4	nop
-A0 = 0;
-A2 = 000f;
-A1 = w[802859d0];
-802827F8	jal    $800325b0
-A3 = 00dc;
-V1 = hu[800c2dd4];
-80282808	nop
-V0 = V1 & 0001;
-80282810	beq    v0, zero, L282834 [$80282834]
-V0 = V1 & 0002;
-V0 = w[802859d0];
-80282820	nop
-V0 = V0 + 0004;
-[802859d0] = w(V0);
-V0 = V1 & 0002;
-
-L282834:	; 80282834
-80282834	beq    v0, zero, L282854 [$80282854]
-80282838	nop
-V0 = w[802859d0];
-80282844	nop
-80282848	addiu  v0, v0, $fffc (=-$4)
-[802859d0] = w(V0);
-
-L282854:	; 80282854
-80282854	jal    $80032164
-80282858	nop
-A0 = 8028040c;
-80282864	jal    $system_print_alias
-A1 = V0;
-8028286C	080A0D7C	|...
-80282870	nop
-A0 = 8028041c;
-8028287C	jal    $system_print_alias
-S2 = 0;
-80282884	jal    $800a25a8
-A0 = 000a;
-A0 = 000a;
-80282890	jal    $800a25a8
-S0 = V0 >> 08;
-A0 = 8028043c;
-A1 = S0;
-802828A4	jal    $system_print_alias
-A2 = V0 & 00ff;
-802828AC	jal    $800a25a8
-A0 = 000e;
-A0 = 000c;
-802828B8	jal    $800a25a8
-S1 = V0;
-A0 = 000c;
-802828C4	jal    $800a25a8
-S0 = V0 >> 08;
-A0 = 80280450;
-A1 = S1;
-A2 = S0;
-802828DC	jal    $system_print_alias
-A3 = V0 & 00ff;
-S0 = 0;
-
-loop2828e8:	; 802828E8
-A0 = 80280468;
-A1 = S2;
-V0 = w[80059a38];
-S2 = S2 + 0001;
-V0 = V0 + S0;
-A2 = hu[V0 + 02b8];
-A3 = hu[V0 + 02bc];
-8028290C	jal    $system_print_alias
-S0 = S0 + 00a4;
-V0 = S2 < 000b;
-80282918	bne    v0, zero, loop2828e8 [$802828e8]
-8028291C	nop
-V0 = w[80059a38];
-A0 = 80280480;
-A1 = w[V0 + 1924];
-80282934	jal    $system_print_alias
-S2 = 0;
-A1 = hu[800c2f3c];
-A0 = 8028048c;
-8028294C	jal    $system_print_alias
-80282950	nop
-A1 = w[80061c20];
-A2 = w[80061c24];
-A3 = w[80061c28];
-A0 = 8028049c;
-80282974	jal    $system_print_alias
-80282978	nop
-V0 = w[80059a38];
-A0 = 802804ac;
-S3 = hu[V0 + 1d30];
-80282990	jal    $system_print_alias
-80282994	nop
-
-loop282998:	; 80282998
-V0 = S3 & 0001;
-8028299C	beq    v0, zero, L2829b4 [$802829b4]
-802829A0	nop
-A0 = 802804b4;
-802829AC	jal    $system_print_alias
-A1 = S2;
-
-L2829b4:	; 802829B4
-S2 = S2 + 0001;
-V0 = S2 < 000b;
-802829BC	bne    v0, zero, loop282998 [$80282998]
-S3 = S3 >> 01;
-A0 = 80280090;
-802829CC	jal    $system_print_alias
-S2 = 0;
-A0 = 802804b8;
-V0 = w[80059a38];
-802829E4	nop
-S3 = hu[V0 + 1d32];
-802829EC	jal    $system_print_alias
-802829F0	nop
-
-loop2829f4:	; 802829F4
-V0 = S3 & 0001;
-802829F8	bne    v0, zero, L282a10 [$80282a10]
-802829FC	nop
-A0 = 802804b4;
-80282A08	jal    $system_print_alias
-A1 = S2;
-
-L282a10:	; 80282A10
-S2 = S2 + 0001;
-V0 = S2 < 000b;
-80282A18	bne    v0, zero, loop2829f4 [$802829f4]
-S3 = S3 >> 01;
-A0 = 80280090;
-80282A28	jal    $system_print_alias
-S2 = 0;
-A0 = 802804c0;
-V0 = w[80059a38];
-80282A40	nop
-S3 = hu[V0 + 2318];
-80282A48	jal    $system_print_alias
-80282A4C	nop
-
-loop282a50:	; 80282A50
-V0 = S3 & 0001;
-80282A54	beq    v0, zero, L282a6c [$80282a6c]
-80282A58	nop
-A0 = 802804b4;
-80282A64	jal    $system_print_alias
-A1 = S2;
-
-L282a6c:	; 80282A6C
-S2 = S2 + 0001;
-V0 = S2 < 000b;
-80282A74	bne    v0, zero, loop282a50 [$80282a50]
-S3 = S3 >> 01;
-A0 = 80280090;
-80282A84	jal    $system_print_alias
-S2 = 0;
-A0 = 802804c8;
-V0 = w[80059a38];
-80282A9C	nop
-A1 = bu[V0 + 22b1];
-A2 = bu[V0 + 22b2];
-A3 = bu[V0 + 22b3];
-S0 = 80061c20;
-80282AB4	jal    $system_print_alias
-S1 = 00ff;
-A0 = 802804dc;
-80282AC4	jal    $system_print_alias
-80282AC8	nop
-
-loop282acc:	; 80282ACC
-V1 = w[S0 + 0000];
-80282AD0	nop
-80282AD4	beq    v1, s1, L282b1c [$80282b1c]
-S0 = S0 + 0004;
-A0 = 802804e8;
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + V1;
-V1 = w[80059a38];
-V0 = V0 << 02;
-V1 = V1 + V0;
-A1 = bu[V1 + 030c];
-80282B08	jal    $system_print_alias
-S2 = S2 + 0001;
-V0 = S2 < 0003;
-80282B14	bne    v0, zero, loop282acc [$80282acc]
-80282B18	nop
-
-L282b1c:	; 80282B1C
-A0 = 802804ec;
-80282B24	jal    $system_print_alias
-S2 = 0;
-S3 = 00ff;
-S0 = 80059ad4;
-S1 = 0;
-
-loop282b3c:	; 80282B3C
-80282B3C	lui    at, $8006
-AT = AT + S1;
-V0 = w[AT + 1c20];
-80282B48	nop
-80282B4C	beq    v0, s3, L282c74 [$80282c74]
-80282B50	nop
-V1 = w[S0 + 0000];
-80282B58	nop
-80282B5C	beq    v1, s3, L282c74 [$80282c74]
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-80282B84	nop
-V0 = w[V0 + 0000];
-80282B8C	nop
-V0 = V0 >> 08;
-V1 = V0 & 0007;
-V0 = 0002;
-80282B9C	beq    v1, v0, L282be8 [$80282be8]
-V0 = V1 < 0003;
-80282BA4	beq    v0, zero, L282bbc [$80282bbc]
-V0 = 0001;
-80282BAC	beq    v1, v0, L282bd0 [$80282bd0]
-80282BB0	nop
-80282BB4	080A0B06	....
-80282BB8	nop
-
-L282bbc:	; 80282BBC
-V0 = 0004;
-80282BC0	beq    v1, v0, L282c00 [$80282c00]
-80282BC4	nop
-80282BC8	080A0B06	....
-80282BCC	nop
-
-L282bd0:	; 80282BD0
-A0 = 802804f4;
-80282BD8	jal    $system_print_alias
-S0 = S0 + 0004;
-80282BE0	080A0B1A	....
-S2 = S2 + 0001;
-
-L282be8:	; 80282BE8
-A0 = 802804fc;
-80282BF0	jal    $system_print_alias
-S0 = S0 + 0004;
-80282BF8	080A0B1A	....
-S2 = S2 + 0001;
-
-L282c00:	; 80282C00
-A0 = 80280504;
-80282C08	jal    $system_print_alias
-S0 = S0 + 0004;
-80282C10	080A0B1A	....
-S2 = S2 + 0001;
-V1 = w[S0 + 0000];
-80282C1C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-80282C44	nop
-A1 = w[V0 + 0000];
-A0 = 8028050c;
-A1 = A1 >> 08;
-80282C58	jal    $system_print_alias
-A1 = A1 & 0007;
-S0 = S0 + 0004;
-S2 = S2 + 0001;
-V0 = S2 < 0003;
-80282C6C	bne    v0, zero, loop282b3c [$80282b3c]
-S1 = S1 + 0004;
-
-L282c74:	; 80282C74
-A0 = 80280514;
-80282C7C	jal    $system_print_alias
-80282C80	nop
-V1 = w[800b1740];
-80282C8C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-80282CB4	nop
-S0 = w[V0 + 0014];
-80282CBC	nop
-V0 = S0 & 0080;
-A0 = 80280520;
-80282CCC	bne    v0, zero, L282cdc [$80282cdc]
-80282CD0	nop
-A0 = 8028051c;
-
-L282cdc:	; 80282CDC
-80282CDC	jal    $system_print_alias
-80282CE0	nop
-V0 = S0 & 0040;
-A0 = 80280520;
-80282CF0	bne    v0, zero, L282d00 [$80282d00]
-80282CF4	nop
-A0 = 80280524;
-
-L282d00:	; 80282D00
-80282D00	jal    $system_print_alias
-80282D04	nop
-V0 = S0 & 0020;
-80282D0C	bne    v0, zero, L282d2c [$80282d2c]
-80282D10	nop
-A0 = 80280528;
-80282D1C	jal    $system_print_alias
-80282D20	nop
-80282D24	080A0D7C	|...
-80282D28	nop
-
-L282d2c:	; 80282D2C
-A0 = 80280520;
-80282D34	jal    $system_print_alias
-80282D38	nop
-80282D3C	080A0D7C	|...
-80282D40	nop
-A0 = 8028052c;
-80282D4C	jal    $system_print_alias
-S3 = 0;
-S2 = w[802859d0];
-V0 = w[800ad0d4];
-80282D64	nop
-V0 = S2 < V0;
-80282D6C	beq    v0, zero, L282f3c [$80282f3c]
-V0 = S2 << 01;
-V0 = V0 + S2;
-V0 = V0 << 03;
-V0 = V0 - S2;
-S0 = V0 << 02;
-
-L282d84:	; 80282D84
-V0 = w[800aefe4];
-80282D8C	nop
-V0 = S0 + V0;
-V1 = w[V0 + 004c];
-80282D98	nop
-V0 = bu[V1 + 00ce];
-A0 = 8028054c;
-V0 = V0 << 03;
-V1 = V1 + V0;
-A2 = hu[V1 + 008c];
-80282DB4	jal    $system_print_alias
-A1 = S2;
-V0 = w[800aefe4];
-80282DC4	nop
-V0 = S0 + V0;
-V0 = w[V0 + 004c];
-80282DD0	nop
-V1 = h[V0 + 0010];
-A1 = h[V0 + 0008];
-A2 = h[V0 + 000a];
-A3 = h[V0 + 000c];
-V0 = w[800aefe4];
-80282DEC	nop
-V0 = S0 + V0;
-[SP + 0010] = w(V1);
-V1 = w[V0 + 004c];
-80282DFC	nop
-T0 = h[V1 + 0010];
-80282E04	nop
-V0 = T0 << 01;
-V0 = V0 + V1;
-V1 = h[V0 + 0008];
-T0 = T0 << 02;
-V0 = V1 << 03;
-V0 = V0 - V1;
-80282E20	lui    at, $800b
-AT = AT + T0;
-V1 = w[AT + eff8];
-V0 = V0 << 01;
-V0 = V0 + V1;
-V1 = bu[V0 + 000c];
-V0 = w[800aefe4];
-80282E40	nop
-V0 = S0 + V0;
-[SP + 0014] = w(V1);
-V0 = w[V0 + 004c];
-80282E50	nop
-V0 = w[V0 + 0014];
-A0 = 80280564;
-80282E60	jal    $system_print_alias
-[SP + 0018] = w(V0);
-V0 = w[800aefe4];
-80282E70	nop
-V0 = S0 + V0;
-V0 = w[V0 + 004c];
-80282E7C	nop
-A1 = h[V0 + 0022];
-A2 = h[V0 + 002a];
-A3 = h[V0 + 0026];
-A0 = 80280244;
-80282E94	jal    $system_print_alias
-80282E98	nop
-V0 = w[800aefe4];
-80282EA4	nop
-V0 = S0 + V0;
-V0 = w[V0 + 004c];
-80282EB0	nop
-A1 = w[V0 + 0000];
-A2 = w[V0 + 0004];
-A0 = 80280584;
-80282EC4	jal    $system_print_alias
-80282EC8	nop
-V0 = w[800aefe4];
-80282ED4	nop
-V0 = S0 + V0;
-V0 = w[V0 + 004c];
-80282EE0	nop
-V0 = w[V0 + 0004];
-80282EE8	lui    v1, $0400
-V0 = V0 & V1;
-A0 = 80280594;
-80282EF8	bne    v0, zero, L282f08 [$80282f08]
-80282EFC	nop
-A0 = 80280590;
-
-L282f08:	; 80282F08
-80282F08	jal    $system_print_alias
-80282F0C	nop
-V0 = S3 < 0006;
-80282F14	beq    v0, zero, L282f3c [$80282f3c]
-80282F18	nop
-S0 = S0 + 005c;
-S2 = S2 + 0001;
-V0 = w[800ad0d4];
-80282F2C	nop
-V0 = S2 < V0;
-80282F34	bne    v0, zero, L282d84 [$80282d84]
-S3 = S3 + 0001;
-
-L282f3c:	; 80282F3C
-V1 = hu[800c2dd4];
-80282F44	nop
-V0 = V1 & 0001;
-80282F4C	beq    v0, zero, L282f70 [$80282f70]
-V0 = V1 & 0002;
-V0 = w[802859d0];
-80282F5C	nop
-V0 = V0 + 0001;
-[802859d0] = w(V0);
-V0 = V1 & 0002;
-
-L282f70:	; 80282F70
-80282F70	beq    v0, zero, L2835f0 [$802835f0]
-80282F74	nop
-V0 = w[802859d0];
-80282F80	nop
-80282F84	addiu  v0, v0, $ffff (=-$1)
-[802859d0] = w(V0);
-80282F90	080A0D7C	|...
-80282F94	nop
-A0 = 802805a0;
-80282FA0	jal    $system_print_alias
-S2 = 0;
-V0 = h[802859f8];
-80282FB0	nop
-80282FB4	blez   v0, L282ffc [$80282ffc]
-S0 = 0;
-
-loop282fbc:	; 80282FBC
-A0 = 802805c0;
-80282FC4	lui    at, $8028
-AT = AT + S0;
-A1 = w[AT + 5a04];
-80282FD0	lui    at, $8028
-AT = AT + S0;
-A2 = w[AT + 5a00];
-80282FDC	jal    $system_print_alias
-S0 = S0 + 000c;
-V0 = h[802859f8];
-S2 = S2 + 0001;
-V0 = S2 < V0;
-80282FF4	bne    v0, zero, loop282fbc [$80282fbc]
-80282FF8	nop
-
-L282ffc:	; 80282FFC
-A1 = w[800ad078];
-A2 = w[800ad07c];
-A0 = 802805cc;
-80283014	jal    $system_print_alias
-80283018	nop
-A1 = w[80058c14];
-A2 = w[80058c5c];
-A0 = 802800b4;
-80283034	jal    $system_print_alias
-80283038	nop
-8028303C	080A0D7C	|...
-80283040	nop
-A0 = 802805e0;
-8028304C	jal    $system_print_alias
-S3 = 0;
-S2 = w[802859d0];
-8028305C	nop
-V0 = S2 < 0400;
-80283064	beq    v0, zero, L2832a8 [$802832a8]
-80283068	nop
-
-loop28306c:	; 8028306C
-S0 = S2 << 01;
-80283070	jal    $800a25a8
-A0 = S0;
-A0 = S0;
-8028307C	jal    $800a25a8
-S1 = V0;
-A0 = 80280600;
-A1 = S0;
-A2 = S1;
-80283094	jal    $system_print_alias
-A3 = V0;
-V0 = S3 < 0010;
-802830A0	beq    v0, zero, L2832a8 [$802832a8]
-802830A4	nop
-S2 = S2 + 0001;
-V0 = S2 < 0400;
-802830B0	bne    v0, zero, loop28306c [$8028306c]
-S3 = S3 + 0001;
-802830B8	080A0CAA	Є...
-802830BC	nop
-A0 = 80280614;
-802830C8	jal    $system_print_alias
-802830CC	nop
-V0 = hu[800c2ddc];
-802830D8	nop
-V0 = V0 & 0100;
-802830E0	beq    v0, zero, L283150 [$80283150]
-802830E4	nop
-S0 = 800b1740;
-A0 = w[S0 + 0000];
-802830F4	jal    $800a8dc0
-A1 = 0001;
-A2 = 00ff;
-V1 = 800af7f2;
-A1 = V1 + 03c0;
-A0 = w[800ad018];
-
-loop283114:	; 80283114
-80283114	nop
-80283118	bne    a0, a2, L28312c [$8028312c]
-8028311C	nop
-V0 = w[S0 + 0000];
-80283124	080A0C4C	L...
-[V1 + 0000] = h(V0);
-
-L28312c:	; 8028312C
-[V1 + 0000] = h(A0);
-V1 = V1 + 0078;
-V0 = V1 < A1;
-80283138	bne    v0, zero, loop283114 [$80283114]
-8028313C	nop
-A0 = w[800b1740];
-80283148	jal    $800a8e80
-8028314C	nop
-
-L283150:	; 80283150
-80283150	0C0A0D8D	Ќ...
-80283154	nop
-80283158	080A0D7C	|...
-8028315C	nop
-A0 = 80280638;
-80283168	jal    $system_print_alias
-S3 = 0;
-S2 = w[802859d0];
-80283178	nop
-V0 = S2 < 0096;
-80283180	beq    v0, zero, L2832a8 [$802832a8]
-80283184	nop
-
-loop283188:	; 80283188
-V0 = w[80059a38];
-80283190	nop
-V0 = V0 + S2;
-V1 = bu[V0 + 1f91];
-A1 = bu[V0 + 2026];
-A2 = bu[V0 + 1f90];
-A3 = bu[V0 + 2027];
-[SP + 0010] = w(V1);
-V1 = bu[V0 + 2028];
-802831B0	nop
-[SP + 0014] = w(V1);
-V1 = bu[V0 + 1f92];
-802831BC	nop
-[SP + 0018] = w(V1);
-V1 = bu[V0 + 2029];
-802831C8	nop
-[SP + 001c] = w(V1);
-V0 = bu[V0 + 1f93];
-A0 = 80280658;
-802831DC	jal    $system_print_alias
-[SP + 0020] = w(V0);
-V0 = S3 < 0010;
-802831E8	beq    v0, zero, L2832a8 [$802832a8]
-802831EC	nop
-S2 = S2 + 0004;
-V0 = S2 < 0096;
-802831F8	bne    v0, zero, loop283188 [$80283188]
-S3 = S3 + 0001;
-80283200	080A0CAA	Є...
-80283204	nop
-A0 = 80280684;
-80283210	jal    $system_print_alias
-S3 = 0;
-S2 = w[802859d0];
-80283220	nop
-V0 = S2 < 00c8;
-80283228	beq    v0, zero, L2832a8 [$802832a8]
-8028322C	nop
-
-loop283230:	; 80283230
-V0 = w[80059a38];
-80283238	nop
-V0 = V0 + S2;
-V1 = bu[V0 + 1e01];
-A1 = bu[V0 + 1ec8];
-A2 = bu[V0 + 1e00];
-A3 = bu[V0 + 1ec9];
-[SP + 0010] = w(V1);
-V1 = bu[V0 + 1eca];
-80283258	nop
-[SP + 0014] = w(V1);
-V1 = bu[V0 + 1e02];
-80283264	nop
-[SP + 0018] = w(V1);
-V1 = bu[V0 + 1ecb];
-80283270	nop
-[SP + 001c] = w(V1);
-V0 = bu[V0 + 1e03];
-A0 = 80280658;
-80283284	jal    $system_print_alias
-[SP + 0020] = w(V0);
-V0 = S3 < 0010;
-80283290	beq    v0, zero, L2832a8 [$802832a8]
-80283294	nop
-S2 = S2 + 0004;
-V0 = S2 < 00c8;
-802832A0	bne    v0, zero, loop283230 [$80283230]
-S3 = S3 + 0001;
-
-L2832a8:	; 802832A8
-V1 = hu[800c2dd4];
-802832B0	nop
-V0 = V1 & 0001;
-802832B8	beq    v0, zero, L2832dc [$802832dc]
-V0 = V1 & 0002;
-V0 = w[802859d0];
-802832C8	nop
-V0 = V0 + 0004;
-[802859d0] = w(V0);
-V0 = V1 & 0002;
-
-L2832dc:	; 802832DC
-802832DC	beq    v0, zero, L2835f0 [$802835f0]
-802832E0	nop
-V0 = w[802859d0];
-802832EC	nop
-802832F0	addiu  v0, v0, $fffc (=-$4)
-[802859d0] = w(V0);
-802832FC	080A0D7C	|...
-80283300	nop
-A0 = 802806a4;
-8028330C	jal    $system_print_alias
-80283310	nop
-V1 = hu[800c2dd4];
-8028331C	nop
-V0 = V1 & 0001;
-80283324	beq    v0, zero, L283348 [$80283348]
-V0 = V1 & 0002;
-V0 = w[802859d0];
-80283334	nop
-V0 = V0 + 0001;
-[802859d0] = w(V0);
-V0 = V1 & 0002;
-
-L283348:	; 80283348
-80283348	beq    v0, zero, L283368 [$80283368]
-8028334C	nop
-V0 = w[802859d0];
-80283358	nop
-8028335C	addiu  v0, v0, $ffff (=-$1)
-[802859d0] = w(V0);
-
-L283368:	; 80283368
-S2 = 0;
-S1 = 80285b7c;
-S0 = 8006516c;
-
-loop28337c:	; 8028337C
-A0 = 802806c8;
-A1 = S2;
-A3 = h[S1 + 0000];
-S1 = S1 + 0002;
-A2 = bu[S0 + 0000];
-S0 = S0 + 0001;
-80283398	jal    $system_print_alias
-S2 = S2 + 0001;
-V0 = S2 < 0010;
-802833A4	bne    v0, zero, loop28337c [$8028337c]
-802833A8	nop
-V0 = w[802859d0];
-802833B4	nop
-V1 = V0 & 0003;
-V0 = 0001;
-802833C0	beq    v1, v0, L283480 [$80283480]
-V0 = V1 < 0002;
-802833C8	beq    v0, zero, L2833e0 [$802833e0]
-802833CC	nop
-802833D0	beq    v1, zero, L2833f4 [$802833f4]
-802833D4	nop
-802833D8	080A0D5F	_...
-802833DC	nop
-
-L2833e0:	; 802833E0
-V0 = 0002;
-802833E4	beq    v1, v0, L283534 [$80283534]
-802833E8	nop
-802833EC	080A0D5F	_...
-802833F0	nop
-
-L2833f4:	; 802833F4
-S0 = 800b176c;
-A1 = w[S0 + 0000];
-A0 = 802806d4;
-80283408	jal    $system_print_alias
-8028340C	nop
-A1 = w[800b1770];
-A0 = 802806e4;
-80283420	jal    $system_print_alias
-80283424	nop
-A0 = 802806f4;
-80283430	jal    $system_print_alias
-80283434	nop
-V1 = hu[800c2dd4];
-80283440	nop
-V0 = V1 & 0004;
-80283448	beq    v0, zero, L283464 [$80283464]
-V0 = V1 & 0008;
-V0 = w[S0 + 0000];
-80283454	nop
-V0 = V0 + 0001;
-[S0 + 0000] = w(V0);
-V0 = V1 & 0008;
-
-L283464:	; 80283464
-80283464	beq    v0, zero, L28357c [$8028357c]
-80283468	nop
-V0 = w[S0 + 0000];
-80283470	nop
-80283474	addiu  v0, v0, $ffff (=-$1)
-80283478	080A0D5F	_...
-[S0 + 0000] = w(V0);
-
-L283480:	; 80283480
-A1 = w[800b176c];
-A0 = 802806fc;
-80283490	jal    $system_print_alias
-80283494	nop
-A1 = w[800b1770];
-A0 = 8028070c;
-802834A8	jal    $system_print_alias
-802834AC	nop
-A0 = 802806f4;
-802834B8	jal    $system_print_alias
-802834BC	nop
-V1 = hu[800c2dd4];
-802834C8	nop
-V0 = V1 & 0004;
-802834D0	beq    v0, zero, L2834f4 [$802834f4]
-V0 = V1 & 0008;
-V0 = w[800b1770];
-802834E0	nop
-V0 = V0 + 0001;
-[800b1770] = w(V0);
-V0 = V1 & 0008;
-
-L2834f4:	; 802834F4
-802834F4	beq    v0, zero, L283514 [$80283514]
-802834F8	nop
-V0 = w[800b1770];
-80283504	nop
-80283508	addiu  v0, v0, $ffff (=-$1)
-[800b1770] = w(V0);
-
-L283514:	; 80283514
-V0 = w[800b1770];
-8028351C	nop
-V0 = V0 & 001f;
-[800b1770] = w(V0);
-8028352C	080A0D5F	_...
-80283530	nop
-
-L283534:	; 80283534
-A1 = w[800b176c];
-A0 = 802806fc;
-80283544	jal    $system_print_alias
-80283548	nop
-A1 = w[800b1770];
-A0 = 802806e4;
-8028355C	jal    $system_print_alias
-80283560	nop
-A0 = 8028071c;
-8028356C	jal    $system_print_alias
-80283570	nop
-80283574	jal    $8008dcec
-80283578	nop
-
-L28357c:	; 8028357C
-V0 = w[802859e0];
-80283584	nop
-80283588	beq    v0, zero, L2835e0 [$802835e0]
-V0 = 003c;
-V0 = w[802859e4];
-80283598	nop
-8028359C	addiu  v0, v0, $ffff (=-$1)
-[802859e4] = w(V0);
-802835A8	bne    v0, zero, L2835b8 [$802835b8]
-802835AC	nop
-[802859e0] = w(0);
-
-L2835b8:	; 802835B8
-A1 = w[802859e8];
-A2 = w[802859ec];
-A0 = 80280724;
-802835D0	jal    $system_print_alias
-802835D4	nop
-802835D8	080A0D7A	z...
-802835DC	nop
-
-L2835e0:	; 802835E0
-[802859e4] = w(V0);
-802835E8	jal    $800a345c
-802835EC	nop
+if( ( hu[800c2dd4] & 0800 ) && ( hu[800af370] & 0040 ) )
+{
+    V0 = w[802859d8];
+    [802859d8] = w(V0 + 1);
+
+    if( ( V0 - 7 ) < 2 )
+    {
+        [802859d8] = w(a);
+    }
+
+    V1 = w[802859d8];
+    if( ( V1 - b ) < 2 )
+    {
+        if( V1 == b )
+        {
+            [800b1662] = h(1);
+        }
+        else
+        {
+            [800b1662] = h(0);
+        }
+
+        func734c8();
+    }
+
+    [802859d0] = w(0);
+    [802859d4] = w(0);
+
+    if( w[802859d8] >= e )
+    {
+        [802859d8] = w(0);
+    }
+}
+
+switch( w[802859d8] )
+{
+    case c:
+    {
+        A1 = w[800ad078];
+        A2 = w[800ad07c];
+        A0 = 802800a0; // "\nCPU=%04d GPU=%04d\n
+        system_print_alias();
+
+        A0 = 802800b4; // "PolyCount %d / %d\n"
+        A1 = w[80058c14];
+        A2 = w[80058c5c];
+        system_print_alias();
+
+        pc = w[800b1740];
+        V1 = w[800aefe4];
+        V0 = w[V1 + pc * 5c + 4c];
+        A1 = h[V0 + 22];
+        A2 = h[V0 + 2a];
+        A3 = h[V0 + 26];
+        A0 = 802800c8; // "Pos X%6d Z=%6d Y=%6d\n"
+        system_print_alias();
+
+        system_memory_get_uncleared_allocated_size();
+
+        A0 = 8028040c; // "Free Size=%x\n"
+        A1 = V0;
+        system_print_alias();
+    }
+    break;
+
+    case d:
+    {
+        A0 = 802800e0; // "RGB CALC\n\n"
+        system_print_alias();
+
+        V0 = hu[800c2dd4];
+        80281F08	nop
+        V0 = V0 & 0002;
+        80281F10	beq    v0, zero, L281f40 [$80281f40]
+        80281F14	nop
+        V0 = w[802859d0];
+        80281F20	nop
+        80281F24	addiu  v0, v0, $ffff (=-$1)
+        [802859d0] = w(V0);
+        80281F30	bgez   v0, L281f40 [$80281f40]
+        V0 = 0003;
+        [802859d0] = w(V0);
+
+        L281f40:	; 80281F40
+        V0 = hu[800c2dd4];
+        80281F48	nop
+        V0 = V0 & 0001;
+        80281F50	beq    v0, zero, L281f84 [$80281f84]
+        80281F54	nop
+        V0 = w[802859d0];
+        80281F60	nop
+        V0 = V0 + 0001;
+        [802859d0] = w(V0);
+        V0 = V0 < 0004;
+        80281F74	bne    v0, zero, L281f84 [$80281f84]
+        80281F78	nop
+        [802859d0] = w(0);
+
+        L281f84:	; 80281F84
+        V1 = w[80064ee0];
+        V0 = 0008;
+        80281F90	bne    v1, v0, L281fa0 [$80281fa0]
+        S0 = 0;
+        S0 = w[80064ee8];
+
+        L281fa0:	; 80281FA0
+        V0 = w[802859d0];
+        80281FA8	nop
+        80281FAC	bne    v0, zero, L281fdc [$80281fdc]
+        80281FB0	nop
+        V0 = w[802859cc];
+        A0 = 802800ec; // ">MODE %d\n"
+        V0 = V0 + S0;
+        A1 = V0 >> 04;
+        [802859cc] = w(V0);
+        80281FD4	080A07FD	э...
+        A1 = A1 & 0003;
+
+        L281fdc:	; 80281FDC
+        A1 = w[802859cc];
+        A0 = 802800f8; // " MODE %d\n"
+        A1 = A1 >> 04;
+        A1 = A1 & 0003;
+        system_print_alias();
+
+        V1 = w[802859d0];
+        V0 = 0001;
+        80282008	bne    v1, v0, L282038 [$80282038]
+        8028200C	nop
+        A1 = w[802859c0];
+        A0 = 80280104; // ">R %d\n"
+        A1 = A1 + S0;
+        A1 = A1 & 00ff;
+        [802859c0] = w(A1);
+        80282030	080A0812	....
+        80282034	nop
+
+        L282038:	; 80282038
+        A1 = w[802859c0];
+        A0 = 8028010c; // " R %d\n"
+        80282048	jal    $system_print_alias
+        8028204C	nop
+        V1 = w[802859d0];
+        V0 = 0002;
+        8028205C	bne    v1, v0, L28208c [$8028208c]
+        80282060	nop
+        A1 = w[802859c4];
+        A0 = 80280114; // ">G %d\n"
+        A1 = A1 + S0;
+        A1 = A1 & 00ff;
+        [802859c4] = w(A1);
+        80282084	080A0827	'...
+        80282088	nop
+
+        L28208c:	; 8028208C
+        A1 = w[802859c4];
+        A0 = 8028011c;
+        8028209C	jal    $system_print_alias
+        802820A0	nop
+        V1 = w[802859d0];
+        V0 = 0003;
+        802820B0	bne    v1, v0, L2820e0 [$802820e0]
+        802820B4	nop
+        A1 = w[802859c8];
+        A0 = 80280124;
+        A1 = A1 + S0;
+        A1 = A1 & 00ff;
+        [802859c8] = w(A1);
+        802820D8	080A083C	<...
+        802820DC	nop
+
+        L2820e0:	; 802820E0
+        A1 = w[802859c8];
+        A0 = 8028012c;
+        802820F0	jal    $system_print_alias
+        802820F4	nop
+        A0 = 0001;
+        A1 = 0001;
+        A2 = w[802859c0];
+        A3 = w[802859c4];
+        V0 = w[802859cc];
+        V1 = w[802859c8];
+        V0 = V0 >> 04;
+        V0 = V0 & 0003;
+        [SP + 0010] = w(V1);
+        8028212C	jal    $80071398
+        [SP + 0014] = w(V0);
+    }
+    break
+
+    0B 8028213C
+
+    V0 = hu[800c2dd4];
+    80282144	nop
+    V0 = V0 & 0002;
+    8028214C	beq    v0, zero, L28217c [$8028217c]
+    80282150	nop
+    V0 = w[802859d0];
+    8028215C	nop
+    80282160	addiu  v0, v0, $ffff (=-$1)
+    [802859d0] = w(V0);
+    8028216C	bgez   v0, L28217c [$8028217c]
+    V0 = 0007;
+    [802859d0] = w(V0);
+
+    L28217c:	; 8028217C
+    V0 = hu[800c2dd4];
+    80282184	nop
+    V0 = V0 & 0001;
+    8028218C	beq    v0, zero, L2821c0 [$802821c0]
+    80282190	nop
+    V0 = w[802859d0];
+    8028219C	nop
+    V0 = V0 + 0001;
+    [802859d0] = w(V0);
+    V0 = V0 < 0008;
+    802821B0	bne    v0, zero, L2821c0 [$802821c0]
+    802821B4	nop
+    [802859d0] = w(0);
+
+    L2821c0:	; 802821C0
+    V1 = w[80064ee0];
+    V0 = 0008;
+    802821CC	bne    v1, v0, L2821dc [$802821dc]
+    S0 = 0;
+    S0 = w[80064ee8];
+
+    L2821dc:	; 802821DC
+    V0 = w[802859d0];
+    802821E4	nop
+    802821E8	bne    v0, zero, L282214 [$80282214]
+    802821EC	nop
+    V1 = 800b1664;
+    V0 = bu[V1 + 0000];
+    A0 = 80280134;
+    V0 = V0 + S0;
+    A1 = V0 & 00ff;
+    8028220C	080A0889	‰...
+    [V1 + 0000] = b(V0);
+
+    L282214:	; 80282214
+    A1 = bu[800b1664];
+    A0 = 80280148; // " NearColor R=%d\n"
+    80282224	jal    $system_print_alias
+    80282228	nop
+    V1 = w[802859d0];
+    V0 = 0001;
+    80282238	bne    v1, v0, L282264 [$80282264]
+    8028223C	nop
+    V1 = 800b1665;
+    V0 = bu[V1 + 0000];
+    A0 = 8028015c;
+    V0 = V0 + S0;
+    A1 = V0 & 00ff;
+    8028225C	080A089D	ќ...
+    [V1 + 0000] = b(V0);
+
+    L282264:	; 80282264
+    A1 = bu[800b1665];
+    A0 = 80280170;
+    80282274	jal    $system_print_alias
+    80282278	nop
+    V1 = w[802859d0];
+    V0 = 0002;
+    80282288	bne    v1, v0, L2822b4 [$802822b4]
+    8028228C	nop
+    V1 = 800b1666;
+    V0 = bu[V1 + 0000];
+    A0 = 80280184;
+    V0 = V0 + S0;
+    A1 = V0 & 00ff;
+    802822AC	080A08B1	±...
+    [V1 + 0000] = b(V0);
+
+    L2822b4:	; 802822B4
+    A1 = bu[800b1666];
+    A0 = 80280198;
+    802822C4	jal    $system_print_alias
+    802822C8	nop
+    V1 = w[802859d0];
+    V0 = 0003;
+    802822D8	bne    v1, v0, L282304 [$80282304]
+    802822DC	nop
+    V1 = 800b1668;
+    V0 = bu[V1 + 0000];
+    A0 = 802801ac;
+    V0 = V0 + S0;
+    A1 = V0 & 00ff;
+    802822FC	080A08C5	Е...
+    [V1 + 0000] = b(V0);
+
+    L282304:	; 80282304
+    A1 = bu[800b1668];
+    A0 = 802801c0;
+    80282314	jal    $system_print_alias
+    80282318	nop
+    V1 = w[802859d0];
+    V0 = 0004;
+    80282328	bne    v1, v0, L282354 [$80282354]
+    8028232C	nop
+    V1 = 800b1669;
+    V0 = bu[V1 + 0000];
+    A0 = 8028015c;
+    V0 = V0 + S0;
+    A1 = V0 & 00ff;
+    8028234C	080A08D9	Щ...
+    [V1 + 0000] = b(V0);
+
+    L282354:	; 80282354
+    A1 = bu[800b1669];
+    A0 = 80280170;
+    80282364	jal    $system_print_alias
+    80282368	nop
+    V1 = w[802859d0];
+    V0 = 0005;
+    80282378	bne    v1, v0, L2823a4 [$802823a4]
+    8028237C	nop
+    V1 = 800b166a;
+    V0 = bu[V1 + 0000];
+    A0 = 80280184;
+    V0 = V0 + S0;
+    A1 = V0 & 00ff;
+    8028239C	080A08ED	н...
+    [V1 + 0000] = b(V0);
+
+    L2823a4:	; 802823A4
+    A1 = bu[800b166a];
+    A0 = 80280198; // "           B=%d\n"
+    802823B4	jal    $system_print_alias
+    802823B8	nop
+    V1 = w[802859d0];
+    V0 = 0006;
+    802823C8	bne    v1, v0, L282400 [$80282400]
+    V0 = S0 << 02;
+    A0 = 802801d4;
+    A2 = 800b166c;
+    V0 = V0 + S0;
+    V1 = hu[A2 + 0000];
+    V0 = V0 << 01;
+    V1 = V1 + V0;
+    A1 = V1 << 10;
+    A1 = A1 >> 10;
+    802823F8	080A0904	....
+    [A2 + 0000] = h(V1);
+
+    L282400:	; 80282400
+    A1 = h[800b166c];
+    A0 = 802801e8;
+    80282410	jal    $system_print_alias
+    80282414	nop
+    V1 = w[802859d0];
+    V0 = 0007;
+    80282424	bne    v1, v0, L282464 [$80282464]
+    V0 = S0 << 02;
+    A0 = 802801fc;
+    A2 = 800b166e;
+    V0 = V0 + S0;
+    V1 = hu[A2 + 0000];
+    V0 = V0 << 01;
+    V1 = V1 + V0;
+    A1 = V1 << 10;
+    A1 = A1 >> 10;
+    80282454	jal    $system_print_alias
+    [A2 + 0000] = h(V1);
+    j 802835f0
+
+    L282464:	; 80282464
+    A1 = h[800b166e];
+    A0 = 80280210;
+    80282474	jal    $system_print_alias
+    80282478	nop
+    j 802835f0
+
+    case 1:
+    {
+        // ---------- Player Info -----
+        // Pos X%6d Z%6d Y%6d
+        // Pol=%d Pri=%d ID=%x:%x
+        // P0=%d P1=%d P2=%d C=%d"
+        // MFflag=%x MFlag2=%x N=%d"
+        //
+        // ---------- Scene Info ------"
+        // SCRZ=%d DIP=%d Scale=%d"
+        // CamDIR=%d ChrDIR=%d MapNum=%d"
+        //
+        // Cam AT   X%6d Z%6d Y%6d"
+        // Cam EYE  X%6d Z%6d Y%6d"
+        // Cam AT2  X%6d Z%6d Y%6d"
+        // Cam EYE2 X%6d Z%6d Y%6d"
+        // DollySet=%02x DollyStop=%02x"
+        // Angle=%d"
+        // Length=%d (%d)"
+        // Wave=%02x Music=%02x"
+        // Total Aactor =%d"
+        // Total Object =%d"
+
+        A0 = 80280224; // "---------- Player Info -----\n"
+        system_print_alias();
+
+        pc = w[800b1740];
+        V1 = w[800aefe4];
+        player_data = w[V1 + pc * 5c + 4c];
+
+        A1 = h[player_data + 22];
+        A2 = h[player_data + 2a];
+        A3 = h[player_data + 26];
+        A0 = 80280244; // "Pos X%6d Z%6d Y%6d\n"
+        system_print_alias();
+
+        walkmesh_id = h[player_data + 10];
+        triangle_id = h[player_data + 8 + walkmesh_id * 2];
+        V1 = w[800aeff8 + walkmesh_id * 4];
+
+        A0 = 80280258; // "Pol=%d Pri=%d ID=%x:%x\n"
+        A1 = triangle_id;
+        A2 = walkmesh_id;
+        A3 = bu[V1 + triangle_id * e + c]; // material id
+        A4 = w[player_data + 14]; // walkmesh triangle material flags
+        system_print_alias();
+
+        A0 = 80280270; // "P0=%d P1=%d P2=%d C=%d\n"
+        A1 = h[player_data + 8]; // triangle id for walkmesh 0
+        A2 = h[player_data + a]; // triangle id for walkmesh 1
+        A3 = h[player_data + c]; // triangle id for walkmesh 2
+        A4 = h[800acfda];
+        system_print_alias();
+
+        A0 = 80280288; // "MFflag=%x MFlag2=%x N=%d\n"
+        A1 = w[player_data + 0];
+        A2 = w[player_data + 4];
+        A3 = bu[player_data + 74]; // follow entity
+        system_print_alias();
+
+        A0 = 802802a4; // "\n---------- Scene Info ------\n"
+        system_print_alias();
+
+        A0 = 802802c4; // "SCRZ=%d DIP=%d Scale=%d\n"
+        A1 = w[800aeecc];
+        A2 = h[800aeed0];
+        A3 = h[800aeed2];
+        system_print_alias();
+
+        func99ae8();
+        cam_rot = V0 & ffff;
+
+        func96a20();
+
+        A0 = 802802e0; // "CamDIR=%d ChrDIR=%d MapNum=%d\n\n"
+        A1 = cam_rot;
+        A2 = V0 & ffff; // character direction (0-7)
+        A3 = w[8004e9f0] & 3fff;
+        system_print_alias();
+
+        A0 = 80280300; // "Cam AT   X%6d Z%6d Y%6d\n"
+        A1 = h[800aed66];
+        A2 = h[800aed6e];
+        A3 = h[800aed6a];
+        system_print_alias();
+
+        A0 = 8028031c; // "Cam EYE  X%6d Z%6d Y%6d\n"
+        A1 = h[800aed56];
+        A2 = h[800aed5e];
+        A3 = h[800aed5a];
+        system_print_alias();
+
+        A0 = 80280338; // "Cam AT2  X%6d Z%6d Y%6d\n"
+        A1 = h[800aed96];
+        A2 = h[800aed9e];
+        A3 = h[800aed9a];
+        system_print_alias();
+
+        A0 = 80280354; // "Cam EYE2 X%6d Z%6d Y%6d\n"
+        A1 = h[800aed86];
+        A2 = h[800aed8e];
+        A3 = h[800aed8a];
+        system_print_alias();
+
+        A0 = 80280370; // "DollySet=%02x DollyStop=%02x\n"
+        A1 = bu[800aeec8];
+        A2 = bu[800aeec9];
+        system_print_alias();
+
+        A0 = 80280390; // "Angle=%d\n"
+        A1 = h[800aeeba];
+        system_print_alias();
+
+        scrz = w[800aeecc] * h[800aeed2];
+        A0 = 8028039c; // "Length=%d (%d)\n"
+        A1 = scrz >> c;
+        A2 = (scrz << 1) >> c;
+        system_print_alias();
+
+        A0 = 802803ac; // "Wave=%02x Music=%02x\n"
+        A1 = w[8004e9e0];
+        A2 = w[8004e9dc];
+        system_print_alias();
+
+        A0 = 802803c4; // "Total Aactor =%d\n"
+        A1 = w[800ad0d4];
+        system_print_alias();
+
+        A0 = 802803d8; // "Total Object =%d\n"
+        A1 = w[800aefe0];
+        system_print_alias();
+    }
+    break;
+
+    02 802827D8
+
+    A0 = 802803ec; // "---------- Memory Info -----\n"
+    802827E0	jal    $system_print_alias
+    802827E4	nop
+    A0 = 0;
+    A2 = 000f;
+    A1 = w[802859d0];
+    802827F8	jal    $800325b0
+    A3 = 00dc;
+    V1 = hu[800c2dd4];
+    80282808	nop
+    V0 = V1 & 0001;
+    80282810	beq    v0, zero, L282834 [$80282834]
+    V0 = V1 & 0002;
+    V0 = w[802859d0];
+    80282820	nop
+    V0 = V0 + 0004;
+    [802859d0] = w(V0);
+    V0 = V1 & 0002;
+
+    L282834:	; 80282834
+    80282834	beq    v0, zero, L282854 [$80282854]
+    80282838	nop
+    V0 = w[802859d0];
+    80282844	nop
+    80282848	addiu  v0, v0, $fffc (=-$4)
+    [802859d0] = w(V0);
+
+    L282854:	; 80282854
+    system_memory_get_uncleared_allocated_size();
+
+    A0 = 8028040c; // "Free Size=%x\n"
+    A1 = V0;
+    system_print_alias();
+
+    j 802835f0
+    80282870	nop
+
+    case 3:
+    {
+        A0 = 8028041c; // "---------- Event Info ------\n"
+        system_print_alias();
+
+        A0 = a;
+        get_bytes_from_800C2F3C();
+
+        A0 = a;
+        S0 = V0 >> 8;
+        get_bytes_from_800C2F3C();
+
+        A0 = 8028043c; // "Event  Time=%d:%d\n"
+        A1 = S0;
+        A2 = V0 & 00ff;
+        system_print_alias();
+
+        A0 = e;
+        get_bytes_from_800C2F3C();
+
+        A0 = c;
+        S1 = V0;
+        get_bytes_from_800C2F3C();
+
+        A0 = c;
+        S0 = V0 >> 08;
+        get_bytes_from_800C2F3C();
+
+        A0 = 80280450; // "System Time=%d:%d:%d\n"
+        A1 = S1;
+        A2 = S0;
+        A3 = V0 & 00ff;
+        system_print_alias();
+
+        for( int i = 0; i < b; ++i )
+        {
+            A0 = 80280468; // "Num=%x HP=%3d MP=%2d\n"
+            A1 = i;
+            V0 = w[80059a38];
+            A2 = hu[V0 + i * a4 + 2b8];
+            A3 = hu[V0 + i * a4 + 2bc];
+            system_print_alias();
+        }
+
+        V0 = w[80059a38];
+        A0 = 80280480; // "Gold=%d\n"
+        A1 = w[V0 + 1924];
+        system_print_alias();
+
+        A1 = hu[800c2f3c];
+        A0 = 8028048c; // "SinarioFlag=%d\n"
+        system_print_alias();
+
+        A1 = w[80061c20];
+        A2 = w[80061c24];
+        A3 = w[80061c28];
+        A0 = 8028049c; // "Party=%d %d %d\n"
+        system_print_alias();
+
+        V0 = w[80059a38];
+        A0 = 802804ac; // "Member "
+        S3 = hu[V0 + 1d30];
+        system_print_alias();
+
+        for( int i = 0; i < b; ++i )
+        {
+            if( S3 & 0001 )
+            {
+                A0 = 802804b4; // "%d "
+                A1 = S2;
+                system_print_alias();
+            }
+
+            S3 = S3 >> 01;
+        }
+
+        A0 = 80280090; // "\n"
+        system_print_alias();
+
+        A0 = 802804b8; // "FrMask "
+        V0 = w[80059a38];
+        S3 = hu[V0 + 1d32];
+        system_print_alias();
+
+        for( int i = 0; i < b; ++i )
+        {
+            if( ( S3 & 0001 ) == 0 )
+            {
+                A0 = 802804b4; // "%d "
+                A1 = S2;
+                system_print_alias();
+            }
+            S3 = S3 >> 01;
+        }
+
+        A0 = 80280090; // "\n"
+        system_print_alias();
+
+        A0 = 802804c0; // "FrLock "
+        V0 = w[80059a38];
+        S3 = hu[V0 + 2318];
+        system_print_alias();
+
+        for( int i = 0; i < b; ++i )
+        {
+            if( S3 & 0001 )
+            {
+                A0 = 802804b4; // "%d "
+                A1 = S2;
+                system_print_alias();
+            }
+            S3 = S3 >> 01;
+        }
+
+        A0 = 80280090; // "\n"
+        system_print_alias();
+
+        A0 = 802804c8; // "GearRide=%d %d %d\n"
+        V0 = w[80059a38];
+        A1 = bu[V0 + 22b1];
+        A2 = bu[V0 + 22b2];
+        A3 = bu[V0 + 22b3];
+        S0 = 80061c20;
+        S1 = 00ff;
+        system_print_alias();
+
+        A0 = 802804dc; // "GearNum="
+        system_print_alias();
+
+        for( int i = 0; i < 3; ++i )
+        {
+            V1 = w[S0 + 0000];
+            S0 = S0 + 0004;
+            if( V1 == S1 )
+            {
+                break;
+            }
+
+            A0 = 802804e8; // " %d"
+            V0 = V1 << 02;
+            V0 = V0 + V1;
+            V0 = V0 << 03;
+            V0 = V0 + V1;
+            V1 = w[80059a38];
+            V0 = V0 << 02;
+            V1 = V1 + V0;
+            A1 = bu[V1 + 030c];
+            system_print_alias();
+        }
+
+        L282b1c:	; 80282B1C
+        A0 = 802804ec; // "\nTYPE="
+        system_print_alias();
+
+        S2 = 0;
+        S3 = 00ff;
+        S0 = 80059ad4;
+        S1 = 0;
+
+        loop282b3c:	; 80282B3C
+            V0 = w[80061c20 + S1];
+            80282B48	nop
+            80282B4C	beq    v0, s3, L282c74 [$80282c74]
+            80282B50	nop
+            V1 = w[S0 + 0000];
+            80282B58	nop
+            80282B5C	beq    v1, s3, L282c74 [$80282c74]
+            V0 = V1 << 01;
+            V0 = V0 + V1;
+            V0 = V0 << 03;
+            V0 = V0 - V1;
+            V1 = w[800aefe4];
+            V0 = V0 << 02;
+            V0 = V0 + V1;
+            V0 = w[V0 + 004c];
+            80282B84	nop
+            V0 = w[V0 + 0000];
+            80282B8C	nop
+            V0 = V0 >> 08;
+            V1 = V0 & 0007;
+            V0 = 0002;
+            80282B9C	beq    v1, v0, L282be8 [$80282be8]
+            V0 = V1 < 0003;
+            80282BA4	beq    v0, zero, L282bbc [$80282bbc]
+            V0 = 0001;
+            80282BAC	beq    v1, v0, L282bd0 [$80282bd0]
+            80282BB0	nop
+            80282BB4	080A0B06	....
+            80282BB8	nop
+
+            L282bbc:	; 80282BBC
+            V0 = 0004;
+            80282BC0	beq    v1, v0, L282c00 [$80282c00]
+            80282BC4	nop
+            80282BC8	080A0B06	....
+            80282BCC	nop
+
+            L282bd0:	; 80282BD0
+            A0 = 802804f4; // "People "
+            S0 = S0 + 0004;
+            system_print_alias();
+
+            80282BE0	080A0B1A	....
+            S2 = S2 + 0001;
+
+            L282be8:	; 80282BE8
+            A0 = 802804fc; // "Robo "
+            S0 = S0 + 0004;
+            system_print_alias();
+
+            80282BF8	080A0B1A	....
+            S2 = S2 + 0001;
+
+            L282c00:	; 80282C00
+            A0 = 80280504; // "Play "
+            S0 = S0 + 0004;
+            system_print_alias();
+
+            80282C10	080A0B1A	....
+            S2 = S2 + 0001;
+            V1 = w[S0 + 0000];
+            80282C1C	nop
+            V0 = V1 << 01;
+            V0 = V0 + V1;
+            V0 = V0 << 03;
+            V0 = V0 - V1;
+            V1 = w[800aefe4];
+            V0 = V0 << 02;
+            V0 = V0 + V1;
+            V0 = w[V0 + 004c];
+            80282C44	nop
+            A1 = w[V0 + 0000];
+            A0 = 8028050c; // "?%d "
+            A1 = A1 >> 08;
+            A1 = A1 & 0007;
+            system_print_alias();
+
+            S0 = S0 + 0004;
+            S1 = S1 + 0004;
+            S2 = S2 + 0001;
+            V0 = S2 < 0003;
+        80282C6C	bne    v0, zero, loop282b3c [$80282b3c]
+
+        L282c74:	; 80282C74
+        A0 = 80280514; // " ID="
+        system_print_alias();
+
+        V1 = w[800b1740];
+        V0 = V1 << 01;
+        V0 = V0 + V1;
+        V0 = V0 << 03;
+        V0 = V0 - V1;
+        V1 = w[800aefe4];
+        V0 = V0 << 02;
+        V0 = V0 + V1;
+        V0 = w[V0 + 004c];
+
+        S0 = w[V0 + 0014];
+        V0 = S0 & 0080;
+        A0 = 80280520; // "-"
+        if( V0 == 0 )
+        {
+            A0 = 8028051c; // "C"
+        }
+        system_print_alias();
+
+        V0 = S0 & 0040;
+        A0 = 80280520; // "-"
+        if( V0 == 0 )
+        {
+            A0 = 80280524; // "G"
+        }
+        system_print_alias();
+
+        V0 = S0 & 0020;
+        if( V0 == 0 )
+        {
+            A0 = 80280528; // "P"
+            system_print_alias();
+        }
+        else
+        {
+            A0 = 80280520; // "-"
+            system_print_alias();
+        }
+    }
+    break;
+
+    04 80282D44
+
+    A0 = 8028052c;
+    80282D4C	jal    $system_print_alias
+    S3 = 0;
+    S2 = w[802859d0];
+    V0 = w[800ad0d4];
+    80282D64	nop
+    V0 = S2 < V0;
+    80282D6C	beq    v0, zero, L282f3c [$80282f3c]
+    V0 = S2 << 01;
+    V0 = V0 + S2;
+    V0 = V0 << 03;
+    V0 = V0 - S2;
+    S0 = V0 << 02;
+
+    L282d84:	; 80282D84
+    V0 = w[800aefe4];
+    80282D8C	nop
+    V0 = S0 + V0;
+    V1 = w[V0 + 004c];
+    80282D98	nop
+    V0 = bu[V1 + 00ce];
+    A0 = 8028054c;
+    V0 = V0 << 03;
+    V1 = V1 + V0;
+    A2 = hu[V1 + 008c];
+    80282DB4	jal    $system_print_alias
+    A1 = S2;
+    V0 = w[800aefe4];
+    80282DC4	nop
+    V0 = S0 + V0;
+    V0 = w[V0 + 004c];
+    80282DD0	nop
+    V1 = h[V0 + 0010];
+    A1 = h[V0 + 0008];
+    A2 = h[V0 + 000a];
+    A3 = h[V0 + 000c];
+    V0 = w[800aefe4];
+    80282DEC	nop
+    V0 = S0 + V0;
+    [SP + 0010] = w(V1);
+    V1 = w[V0 + 004c];
+    80282DFC	nop
+    T0 = h[V1 + 0010];
+    80282E04	nop
+    V0 = T0 << 01;
+    V0 = V0 + V1;
+    V1 = h[V0 + 0008];
+    T0 = T0 << 02;
+    V0 = V1 << 03;
+    V0 = V0 - V1;
+    80282E20	lui    at, $800b
+    AT = AT + T0;
+    V1 = w[AT + eff8];
+    V0 = V0 << 01;
+    V0 = V0 + V1;
+    V1 = bu[V0 + 000c];
+    V0 = w[800aefe4];
+    80282E40	nop
+    V0 = S0 + V0;
+    [SP + 0014] = w(V1);
+    V0 = w[V0 + 004c];
+    80282E50	nop
+    V0 = w[V0 + 0014];
+    A0 = 80280564;
+    80282E60	jal    $system_print_alias
+    [SP + 0018] = w(V0);
+    V0 = w[800aefe4];
+    80282E70	nop
+    V0 = S0 + V0;
+    V0 = w[V0 + 004c];
+    80282E7C	nop
+    A1 = h[V0 + 0022];
+    A2 = h[V0 + 002a];
+    A3 = h[V0 + 0026];
+    A0 = 80280244;
+    80282E94	jal    $system_print_alias
+    80282E98	nop
+    V0 = w[800aefe4];
+    80282EA4	nop
+    V0 = S0 + V0;
+    V0 = w[V0 + 004c];
+    80282EB0	nop
+    A1 = w[V0 + 0000];
+    A2 = w[V0 + 0004];
+    A0 = 80280584;
+    80282EC4	jal    $system_print_alias
+    80282EC8	nop
+    V0 = w[800aefe4];
+    80282ED4	nop
+    V0 = S0 + V0;
+    V0 = w[V0 + 004c];
+    80282EE0	nop
+    V0 = w[V0 + 0004];
+    80282EE8	lui    v1, $0400
+    V0 = V0 & V1;
+    A0 = 80280594;
+    80282EF8	bne    v0, zero, L282f08 [$80282f08]
+    80282EFC	nop
+    A0 = 80280590;
+
+    L282f08:	; 80282F08
+    80282F08	jal    $system_print_alias
+    80282F0C	nop
+    V0 = S3 < 0006;
+    80282F14	beq    v0, zero, L282f3c [$80282f3c]
+    80282F18	nop
+    S0 = S0 + 005c;
+    S2 = S2 + 0001;
+    V0 = w[800ad0d4];
+    80282F2C	nop
+    V0 = S2 < V0;
+    80282F34	bne    v0, zero, L282d84 [$80282d84]
+    S3 = S3 + 0001;
+
+    L282f3c:	; 80282F3C
+    V1 = hu[800c2dd4];
+    80282F44	nop
+    V0 = V1 & 0001;
+    80282F4C	beq    v0, zero, L282f70 [$80282f70]
+    V0 = V1 & 0002;
+    V0 = w[802859d0];
+    80282F5C	nop
+    V0 = V0 + 0001;
+    [802859d0] = w(V0);
+    V0 = V1 & 0002;
+
+    L282f70:	; 80282F70
+    80282F70	beq    v0, zero, L2835f0 [$802835f0]
+    80282F74	nop
+    V0 = w[802859d0];
+    80282F80	nop
+    80282F84	addiu  v0, v0, $ffff (=-$1)
+    [802859d0] = w(V0);
+    j 802835f0
+
+    05 80282F98
+
+    A0 = 802805a0;
+    80282FA0	jal    $system_print_alias
+    S2 = 0;
+    V0 = h[802859f8];
+    80282FB0	nop
+    80282FB4	blez   v0, L282ffc [$80282ffc]
+    S0 = 0;
+
+    loop282fbc:	; 80282FBC
+    A0 = 802805c0;
+    80282FC4	lui    at, $8028
+    AT = AT + S0;
+    A1 = w[AT + 5a04];
+    80282FD0	lui    at, $8028
+    AT = AT + S0;
+    A2 = w[AT + 5a00];
+    80282FDC	jal    $system_print_alias
+    S0 = S0 + 000c;
+    V0 = h[802859f8];
+    S2 = S2 + 0001;
+    V0 = S2 < V0;
+    80282FF4	bne    v0, zero, loop282fbc [$80282fbc]
+    80282FF8	nop
+
+    L282ffc:	; 80282FFC
+    A1 = w[800ad078];
+    A2 = w[800ad07c];
+    A0 = 802805cc;
+    80283014	jal    $system_print_alias
+    80283018	nop
+    A1 = w[80058c14];
+    A2 = w[80058c5c];
+    A0 = 802800b4;
+    80283034	jal    $system_print_alias
+    80283038	nop
+    j 802835f0
+
+    06 80283044
+
+    A0 = 802805e0;
+    8028304C	jal    $system_print_alias
+    S3 = 0;
+    S2 = w[802859d0];
+    8028305C	nop
+    V0 = S2 < 0400;
+    80283064	beq    v0, zero, L2832a8 [$802832a8]
+    80283068	nop
+
+    loop28306c:	; 8028306C
+    S0 = S2 << 01;
+    80283070	jal    $800a25a8
+    A0 = S0;
+    A0 = S0;
+    8028307C	jal    $800a25a8
+    S1 = V0;
+    A0 = 80280600;
+    A1 = S0;
+    A2 = S1;
+    80283094	jal    $system_print_alias
+    A3 = V0;
+    V0 = S3 < 0010;
+    802830A0	beq    v0, zero, L2832a8 [$802832a8]
+    802830A4	nop
+    S2 = S2 + 0001;
+    V0 = S2 < 0400;
+    802830B0	bne    v0, zero, loop28306c [$8028306c]
+    S3 = S3 + 0001;
+    802830B8	080A0CAA	Є...
+    802830BC	nop
+
+    case 7:
+    {
+        A0 = 80280614; // "---------- PARTICLE -----------\n"
+        system_print_alias();
+
+        if( hu[800c2ddc] & 0100 )
+        {
+            A0 = w[800b1740];
+            A1 = 0001;
+            802830F4	jal    $800a8dc0
+
+            V1 = 800af7f2;
+            A1 = V1 + 3c0;
+            A0 = w[800ad018];
+
+            loop283114:	; 80283114
+                if( A0 == ff )
+                {
+                    [V1 + 0000] = h(w[800b1740]);
+                }
+                else
+                }
+                    [V1 + 0000] = h(A0);
+                }
+                V1 = V1 + 0078;
+                V0 = V1 < A1;
+            80283138	bne    v0, zero, loop283114 [$80283114]
+
+            A0 = w[800b1740];
+            80283148	jal    $800a8e80
+        }
+
+        func283634(); // dump purticles state
+    }
+    break;
+
+    08 80283160
+
+    A0 = 80280638;
+    80283168	jal    $system_print_alias
+    S3 = 0;
+    S2 = w[802859d0];
+    80283178	nop
+    V0 = S2 < 0096;
+    80283180	beq    v0, zero, L2832a8 [$802832a8]
+    80283184	nop
+
+    loop283188:	; 80283188
+    V0 = w[80059a38];
+    80283190	nop
+    V0 = V0 + S2;
+    V1 = bu[V0 + 1f91];
+    A1 = bu[V0 + 2026];
+    A2 = bu[V0 + 1f90];
+    A3 = bu[V0 + 2027];
+    [SP + 0010] = w(V1);
+    V1 = bu[V0 + 2028];
+    802831B0	nop
+    [SP + 0014] = w(V1);
+    V1 = bu[V0 + 1f92];
+    802831BC	nop
+    [SP + 0018] = w(V1);
+    V1 = bu[V0 + 2029];
+    802831C8	nop
+    [SP + 001c] = w(V1);
+    V0 = bu[V0 + 1f93];
+    A0 = 80280658;
+    802831DC	jal    $system_print_alias
+    [SP + 0020] = w(V0);
+    V0 = S3 < 0010;
+    802831E8	beq    v0, zero, L2832a8 [$802832a8]
+    802831EC	nop
+    S2 = S2 + 0004;
+    V0 = S2 < 0096;
+    802831F8	bne    v0, zero, loop283188 [$80283188]
+    S3 = S3 + 0001;
+    80283200	080A0CAA	Є...
+    80283204	nop
+
+    09 80283208
+
+    S3 = 0;
+    A0 = 80280684; // "---------- ACC --------------\n"
+    system_print_alias();
+
+    S2 = w[802859d0];
+    80283220	nop
+    V0 = S2 < 00c8;
+    80283228	beq    v0, zero, L2832a8 [$802832a8]
+    8028322C	nop
+
+    loop283230:	; 80283230
+    V0 = w[80059a38];
+    80283238	nop
+    V0 = V0 + S2;
+    V1 = bu[V0 + 1e01];
+    A1 = bu[V0 + 1ec8];
+    A2 = bu[V0 + 1e00];
+    A3 = bu[V0 + 1ec9];
+    [SP + 0010] = w(V1);
+    V1 = bu[V0 + 1eca];
+    80283258	nop
+    [SP + 0014] = w(V1);
+    V1 = bu[V0 + 1e02];
+    80283264	nop
+    [SP + 0018] = w(V1);
+    V1 = bu[V0 + 1ecb];
+    80283270	nop
+    [SP + 001c] = w(V1);
+    V0 = bu[V0 + 1e03];
+    A0 = 80280658;
+    80283284	jal    $system_print_alias
+    [SP + 0020] = w(V0);
+    V0 = S3 < 0010;
+    80283290	beq    v0, zero, L2832a8 [$802832a8]
+    80283294	nop
+    S2 = S2 + 0004;
+    V0 = S2 < 00c8;
+    802832A0	bne    v0, zero, loop283230 [$80283230]
+    S3 = S3 + 0001;
+
+    L2832a8:	; 802832A8
+    V1 = hu[800c2dd4];
+    802832B0	nop
+    V0 = V1 & 0001;
+    802832B8	beq    v0, zero, L2832dc [$802832dc]
+    V0 = V1 & 0002;
+    V0 = w[802859d0];
+    802832C8	nop
+    V0 = V0 + 0004;
+    [802859d0] = w(V0);
+    V0 = V1 & 0002;
+
+    L2832dc:	; 802832DC
+    802832DC	beq    v0, zero, L2835f0 [$802835f0]
+    802832E0	nop
+    V0 = w[802859d0];
+    802832EC	nop
+    802832F0	addiu  v0, v0, $fffc (=-$4)
+    [802859d0] = w(V0);
+    j 802835f0
+
+    0A 80283304
+
+    A0 = 802806a4;
+    8028330C	jal    $system_print_alias
+    80283310	nop
+    V1 = hu[800c2dd4];
+    8028331C	nop
+    V0 = V1 & 0001;
+    80283324	beq    v0, zero, L283348 [$80283348]
+    V0 = V1 & 0002;
+    V0 = w[802859d0];
+    80283334	nop
+    V0 = V0 + 0001;
+    [802859d0] = w(V0);
+    V0 = V1 & 0002;
+
+    L283348:	; 80283348
+    80283348	beq    v0, zero, L283368 [$80283368]
+    8028334C	nop
+    V0 = w[802859d0];
+    80283358	nop
+    8028335C	addiu  v0, v0, $ffff (=-$1)
+    [802859d0] = w(V0);
+
+    L283368:	; 80283368
+    S2 = 0;
+    S1 = 80285b7c;
+    S0 = 8006516c;
+
+    loop28337c:	; 8028337C
+    A0 = 802806c8;
+    A1 = S2;
+    A3 = h[S1 + 0000];
+    S1 = S1 + 0002;
+    A2 = bu[S0 + 0000];
+    S0 = S0 + 0001;
+    80283398	jal    $system_print_alias
+    S2 = S2 + 0001;
+    V0 = S2 < 0010;
+    802833A4	bne    v0, zero, loop28337c [$8028337c]
+    802833A8	nop
+    V0 = w[802859d0];
+    802833B4	nop
+    V1 = V0 & 0003;
+    V0 = 0001;
+    802833C0	beq    v1, v0, L283480 [$80283480]
+    V0 = V1 < 0002;
+    802833C8	beq    v0, zero, L2833e0 [$802833e0]
+    802833CC	nop
+    802833D0	beq    v1, zero, L2833f4 [$802833f4]
+    802833D4	nop
+    802833D8	080A0D5F	_...
+    802833DC	nop
+
+    L2833e0:	; 802833E0
+    V0 = 0002;
+    802833E4	beq    v1, v0, L283534 [$80283534]
+    802833E8	nop
+    802833EC	080A0D5F	_...
+    802833F0	nop
+
+    L2833f4:	; 802833F4
+    S0 = 800b176c;
+    A1 = w[S0 + 0000];
+    A0 = 802806d4;
+    80283408	jal    $system_print_alias
+    8028340C	nop
+    A1 = w[800b1770];
+    A0 = 802806e4;
+    80283420	jal    $system_print_alias
+    80283424	nop
+    A0 = 802806f4;
+    80283430	jal    $system_print_alias
+    80283434	nop
+    V1 = hu[800c2dd4];
+    80283440	nop
+    V0 = V1 & 0004;
+    80283448	beq    v0, zero, L283464 [$80283464]
+    V0 = V1 & 0008;
+    V0 = w[S0 + 0000];
+    80283454	nop
+    V0 = V0 + 0001;
+    [S0 + 0000] = w(V0);
+    V0 = V1 & 0008;
+
+    L283464:	; 80283464
+    80283464	beq    v0, zero, L28357c [$8028357c]
+    80283468	nop
+    V0 = w[S0 + 0000];
+    80283470	nop
+    80283474	addiu  v0, v0, $ffff (=-$1)
+    80283478	080A0D5F	_...
+    [S0 + 0000] = w(V0);
+
+    L283480:	; 80283480
+    A1 = w[800b176c];
+    A0 = 802806fc;
+    80283490	jal    $system_print_alias
+    80283494	nop
+    A1 = w[800b1770];
+    A0 = 8028070c;
+    802834A8	jal    $system_print_alias
+    802834AC	nop
+    A0 = 802806f4;
+    802834B8	jal    $system_print_alias
+    802834BC	nop
+    V1 = hu[800c2dd4];
+    802834C8	nop
+    V0 = V1 & 0004;
+    802834D0	beq    v0, zero, L2834f4 [$802834f4]
+    V0 = V1 & 0008;
+    V0 = w[800b1770];
+    802834E0	nop
+    V0 = V0 + 0001;
+    [800b1770] = w(V0);
+    V0 = V1 & 0008;
+
+    L2834f4:	; 802834F4
+    802834F4	beq    v0, zero, L283514 [$80283514]
+    802834F8	nop
+    V0 = w[800b1770];
+    80283504	nop
+    80283508	addiu  v0, v0, $ffff (=-$1)
+    [800b1770] = w(V0);
+
+    L283514:	; 80283514
+    V0 = w[800b1770];
+    8028351C	nop
+    V0 = V0 & 001f;
+    [800b1770] = w(V0);
+    8028352C	080A0D5F	_...
+    80283530	nop
+
+    L283534:	; 80283534
+    A1 = w[800b176c];
+    A0 = 802806fc;
+    80283544	jal    $system_print_alias
+    80283548	nop
+    A1 = w[800b1770];
+    A0 = 802806e4;
+    8028355C	jal    $system_print_alias
+    80283560	nop
+    A0 = 8028071c;
+    8028356C	jal    $system_print_alias
+    80283570	nop
+    80283574	jal    $8008dcec
+    80283578	nop
+
+    L28357c:	; 8028357C
+    V0 = w[802859e0];
+    80283584	nop
+    80283588	beq    v0, zero, L2835e0 [$802835e0]
+    V0 = 003c;
+    V0 = w[802859e4];
+    80283598	nop
+    8028359C	addiu  v0, v0, $ffff (=-$1)
+    [802859e4] = w(V0);
+    802835A8	bne    v0, zero, L2835b8 [$802835b8]
+    802835AC	nop
+    [802859e0] = w(0);
+
+    L2835b8:	; 802835B8
+    A1 = w[802859e8];
+    A2 = w[802859ec];
+    A0 = 80280724;
+    802835D0	jal    $system_print_alias
+    802835D4	nop
+    802835D8	080A0D7A	z...
+    802835DC	nop
+
+    L2835e0:	; 802835E0
+    [802859e4] = w(V0);
+    802835E8	jal    $800a345c
+    802835EC	nop
+}
 
 L2835f0:	; 802835F0
-V0 = w[802859d0];
-802835F8	nop
-802835FC	bgez   v0, L28360c [$8028360c]
-80283600	nop
-[802859d0] = w(0);
-
-L28360c:	; 8028360C
+if( w[802859d0] < 0 )
+{
+    [802859d0] = w(0);
+}
 return w[802859d8];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func283634
-80283634	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0028] = w(S4);
+// func283634()
+
+bank = w[800af518];
+
 S4 = w[802859f0];
-[SP + 0024] = w(S3);
 S3 = w[802859f4];
-[SP + 002c] = w(RA);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-V0 = S4 < 0016;
-80283660	beq    v0, zero, L2841e0 [$802841e0]
-[SP + 0018] = w(S0);
-A0 = 0;
-A1 = S4;
-80283670	0C0A10FC	ь...
-A2 = SP + 0010;
-A1 = w[800af518];
-A0 = 8028076c;
-80283688	jal    $system_print_alias
-S2 = V0;
-A0 = S2;
-A1 = S4;
-80283698	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802836B8	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7a6];
-A0 = 8028077c;
-802836CC	jal    $system_print_alias
-802836D0	nop
-A0 = S2;
-A1 = S4;
-802836DC	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802836FC	lui    at, $800b
-AT = AT + V0;
-A1 = hu[AT + f7a2];
-A0 = 8028078c;
-80283710	jal    $system_print_alias
-80283714	nop
-A0 = S2;
-A1 = S4;
-80283720	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283740	lui    at, $800b
-AT = AT + V0;
-A1 = hu[AT + f7a4];
-A0 = 8028079c;
-80283754	jal    $system_print_alias
-80283758	nop
-A0 = S2;
-A1 = S4;
-80283764	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 802807ac;
-80283774	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-80283784	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-S0 = 802807b8;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802837A8	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7ac];
-802837B4	jal    $system_print_alias
-A0 = S0;
-A0 = 0001;
-A2 = w[SP + 0010];
-802837C4	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-802837D4	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802837E4	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7ae];
-802837F0	jal    $system_print_alias
-A0 = S0;
-A0 = 0002;
-A2 = w[SP + 0010];
-80283800	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-S1 = 802807bc;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283824	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7b0];
-80283830	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-80283840	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 802807c0;
-80283850	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-80283860	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283870	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283880	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7b4];
-8028388C	jal    $system_print_alias
-A0 = S0;
-A0 = 0001;
-A2 = w[SP + 0010];
-8028389C	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-802838AC	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802838BC	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7b6];
-802838C8	jal    $system_print_alias
-A0 = S0;
-A0 = 0002;
-A2 = w[SP + 0010];
-802838D8	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-802838E8	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802838F8	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7b8];
-80283904	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-80283914	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 802807cc;
-80283924	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-80283934	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283944	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283954	lui    at, $800b
-AT = AT + V0;
-A1 = w[AT + f7a8];
-A0 = 802807d8;
-80283968	jal    $system_print_alias
-8028396C	nop
-A0 = 0001;
-A2 = w[SP + 0010];
-80283978	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283988	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283998	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7c4];
-802839A4	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-802839B4	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 802807e0;
-802839C4	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-802839D4	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-802839E4	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802839F4	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7bc];
-80283A00	jal    $system_print_alias
-A0 = S0;
-A0 = 0001;
-A2 = w[SP + 0010];
-80283A10	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283A20	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283A30	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7be];
-80283A3C	jal    $system_print_alias
-A0 = S0;
-A0 = 0002;
-A2 = w[SP + 0010];
-80283A4C	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283A5C	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283A6C	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7c0];
-80283A78	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-80283A88	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283AA8	lui    at, $800b
-AT = AT + V0;
-A1 = hu[AT + f7c6];
-A0 = 802807ec;
-80283ABC	jal    $system_print_alias
-80283AC0	nop
-A0 = S2;
-A1 = S4;
-80283ACC	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283AEC	lui    at, $800b
-AT = AT + V0;
-A1 = hu[AT + f7c8];
-A0 = 802807fc;
-80283B00	jal    $system_print_alias
-80283B04	nop
-A0 = S2;
-A1 = S4;
-80283B10	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283B30	lui    at, $800b
-AT = AT + V0;
-A1 = hu[AT + f7f6];
-A0 = 8028080c;
-80283B44	jal    $system_print_alias
-80283B48	nop
-A0 = S2;
-A1 = S4;
-80283B54	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283B74	lui    at, $800b
-AT = AT + V0;
-A1 = hu[AT + f7f8];
-A0 = 8028081c;
-80283B88	jal    $system_print_alias
-80283B8C	nop
-A0 = S2;
-A1 = S4;
-80283B98	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283BB8	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7f4];
-A0 = 8028082c;
-80283BCC	jal    $system_print_alias
-80283BD0	nop
-A0 = S2;
-A1 = S4;
-80283BDC	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 8028083c;
-80283BEC	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-80283BFC	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283C0C	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283C1C	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7fa];
-80283C28	jal    $system_print_alias
-A0 = S0;
-A0 = 0001;
-A2 = w[SP + 0010];
-80283C38	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283C48	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283C58	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7fc];
-80283C64	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-80283C74	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 80280848;
-80283C84	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-80283C94	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283CA4	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283CB4	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f802];
-80283CC0	jal    $system_print_alias
-A0 = S0;
-A0 = 0001;
-A2 = w[SP + 0010];
-80283CD0	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283CE0	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283CF0	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f804];
-80283CFC	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-80283D0C	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 80280854;
-80283D1C	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-80283D2C	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283D3C	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283D4C	lui    at, $800b
-AT = AT + V0;
-A1 = bu[AT + f80a];
-80283D58	jal    $system_print_alias
-A0 = S0;
-A0 = 0001;
-A2 = w[SP + 0010];
-80283D68	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283D78	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283D88	lui    at, $800b
-AT = AT + V0;
-A1 = bu[AT + f80b];
-80283D94	jal    $system_print_alias
-A0 = S0;
-A0 = 0002;
-A2 = w[SP + 0010];
-80283DA4	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283DB4	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283DC4	lui    at, $800b
-AT = AT + V0;
-A1 = bu[AT + f80c];
-80283DD0	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-80283DE0	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 80280860;
-80283DF0	jal    $system_print_alias
-S2 = V0;
-A0 = 0;
-A2 = w[SP + 0010];
-80283E00	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283E10	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283E20	lui    at, $800b
-AT = AT + V0;
-A1 = b[AT + f80e];
-80283E2C	jal    $system_print_alias
-A0 = S0;
-A0 = 0001;
-A2 = w[SP + 0010];
-80283E3C	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283E4C	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283E5C	lui    at, $800b
-AT = AT + V0;
-A1 = b[AT + f80f];
-80283E68	jal    $system_print_alias
-A0 = S0;
-A0 = 0002;
-A2 = w[SP + 0010];
-80283E78	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-80283E88	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283E98	lui    at, $800b
-AT = AT + V0;
-A1 = b[AT + f810];
-80283EA4	jal    $system_print_alias
-A0 = S1;
-A0 = S2;
-A1 = S4;
-80283EB4	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = w[800af518];
-80283EC4	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80283ED4	lui    at, $800b
-AT = AT + V1;
-V1 = hu[AT + f7ca];
-80283EE0	nop
-V1 = V1 & 0001;
-A0 = 8028087c;
-80283EF0	bne    v1, zero, L283f00 [$80283f00]
-S2 = V0;
-A0 = 8028086c;
 
-L283f00:	; 80283F00
-80283F00	jal    $system_print_alias
-80283F04	nop
-A0 = S2;
-A1 = S4;
-80283F10	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 8028088c;
-80283F20	jal    $system_print_alias
-S2 = V0;
-V1 = w[800af518];
-80283F30	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80283F40	lui    at, $800b
-AT = AT + V0;
-V0 = hu[AT + f7ca];
-80283F4C	nop
-V0 = V0 >> 01;
-V1 = V0 & 0003;
-V0 = 0001;
-80283F5C	beq    v1, v0, L283fa8 [$80283fa8]
-V0 = V1 < 0002;
-80283F64	beq    v0, zero, L283f7c [$80283f7c]
-80283F68	nop
-80283F6C	beq    v1, zero, L283f98 [$80283f98]
-A0 = S2;
-80283F74	080A0FF7	ч...
-80283F78	nop
+if( S4 < 16 )
+{
+    A0 = 0;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0(); // check A1 = A0 and set 1 to A2
+    S2 = V0;
 
-L283f7c:	; 80283F7C
-V0 = 0002;
-80283F80	beq    v1, v0, L283fb8 [$80283fb8]
-V0 = 0003;
-80283F88	beq    v1, v0, L283fc8 [$80283fc8]
-A0 = S2;
-80283F90	080A0FF7	ч...
-80283F94	nop
+    A0 = 8028076c; // "BANK    = %d\n"
+    A1 = bank;
+    system_print_alias();
 
-L283f98:	; 80283F98
-A0 = 80280898;
-80283FA0	080A0FF4	....
-80283FA4	nop
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
 
-L283fa8:	; 80283FA8
-A0 = 802808a0;
-80283FB0	080A0FF4	....
-80283FB4	nop
+    A0 = 8028077c; // "MAX     = %d\n"
+    A1 = h[800af7a0 + bank * 78 + 6];
+    system_print_alias();
 
-L283fb8:	; 80283FB8
-A0 = 802808a8;
-80283FC0	080A0FF4	....
-80283FC4	nop
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
 
-L283fc8:	; 80283FC8
-A0 = 802808b0;
-80283FD0	jal    $system_print_alias
-80283FD4	nop
-A0 = S2;
-A1 = S4;
-80283FE0	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 802808b8;
-80283FF0	jal    $system_print_alias
-S2 = V0;
-V1 = w[800af518];
-80284000	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284010	lui    at, $800b
-AT = AT + V0;
-V0 = hu[AT + f7ca];
-8028401C	nop
-V0 = V0 >> 08;
-V1 = V0 & 0003;
-V0 = 0001;
-8028402C	beq    v1, v0, L284078 [$80284078]
-V0 = V1 < 0002;
-80284034	beq    v0, zero, L28404c [$8028404c]
-80284038	nop
-8028403C	beq    v1, zero, L284068 [$80284068]
-A0 = S2;
-80284044	080A102B	+...
-80284048	nop
+    A0 = 8028078c; // "SWAIT   = %d\n"
+    A1 = hu[800af7a0 + bank * 78 + 2];
+    system_print_alias();
 
-L28404c:	; 8028404C
-V0 = 0002;
-80284050	beq    v1, v0, L284088 [$80284088]
-V0 = 0003;
-80284058	beq    v1, v0, L284098 [$80284098]
-A0 = S2;
-80284060	080A102B	+...
-80284064	nop
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
 
-L284068:	; 80284068
-A0 = 802808c4;
-80284070	080A1028	(...
-80284074	nop
+    A0 = 8028079c; // "EWAIT   = %d\n"
+    A1 = hu[800af7a0 + bank * 78 + 4];
+    system_print_alias();
 
-L284078:	; 80284078
-A0 = 802808d8;
-80284080	080A1028	(...
-80284084	nop
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
 
-L284088:	; 80284088
-A0 = 802808ec;
-80284090	080A1028	(...
-80284094	nop
+    A0 = 802807ac; // "SPOS    ="
+    system_print_alias();
 
-L284098:	; 80284098
-A0 = 80280900;
-802840A0	jal    $system_print_alias
-802840A4	nop
-A0 = S2;
-A1 = S4;
-802840B0	0C0A10FC	ь...
-A2 = SP + 0010;
-V1 = w[800af518];
-S2 = V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802840D0	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f816];
-A0 = 80280914;
-802840E4	jal    $system_print_alias
-802840E8	nop
-A0 = S2;
-A1 = S4;
-802840F4	0C0A10FC	ь...
-A2 = SP + 0010;
-A0 = 80280924;
-80284104	jal    $system_print_alias
-80284108	nop
-V1 = w[800af518];
-80284114	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284124	lui    at, $800b
-AT = AT + V0;
-V0 = hu[AT + f7ca];
-80284130	nop
-V0 = V0 >> 06;
-V1 = V0 & 0003;
-V0 = 0001;
-80284140	beq    v1, v0, L284194 [$80284194]
-V0 = V1 < 0002;
-80284148	beq    v0, zero, L284160 [$80284160]
-8028414C	nop
-80284150	beq    v1, zero, L284174 [$80284174]
-80284154	nop
-80284158	080A1069	i...
-8028415C	nop
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
 
-L284160:	; 80284160
-V0 = 0002;
-80284164	beq    v1, v0, L284184 [$80284184]
-80284168	nop
-8028416C	080A1069	i...
-80284170	nop
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + c];
+    system_print_alias();
 
-L284174:	; 80284174
-A0 = 80280930;
-8028417C	080A1067	g...
-80284180	nop
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
 
-L284184:	; 80284184
-A0 = 8028093c;
-8028418C	080A1067	g...
-80284190	nop
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + e];
+    system_print_alias();
 
-L284194:	; 80284194
-A0 = 80280948;
-8028419C	jal    $system_print_alias
-802841A0	nop
-V1 = w[800af518];
-802841AC	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802841BC	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f816];
-A0 = 80280914;
-802841D0	jal    $system_print_alias
-802841D4	nop
-802841D8	080A10AB	«...
-A0 = 00ff;
+    A0 = 2;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
 
-L2841e0:	; 802841E0
-S2 = 0016;
-S1 = 0;
-A0 = S2;
+    A0 = 802807bc; // "%d\n"
+    A1 = h[800af7a0 + bank * 78 + 10];
+    system_print_alias();
 
-loop2841ec:	; 802841EC
-A1 = S4;
-802841F0	0C0A10FC	ь...
-A2 = SP + 0010;
-S2 = V0;
-A0 = 80280954;
-80284204	jal    $system_print_alias
-A1 = S1;
-A0 = 0;
-A2 = w[SP + 0010];
-80284214	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-S0 = S1 << 02;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-V0 = S0 + V0;
-80284238	lui    at, $800b
-AT = AT + V0;
-A1 = h[AT + f7d0];
-A0 = 802807b8;
-8028424C	jal    $system_print_alias
-S1 = S1 + 0001;
-A0 = 0001;
-A2 = w[SP + 0010];
-8028425C	0C0A10EA	....
-A1 = S3;
-V1 = w[800af518];
-8028426C	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-S0 = S0 + V0;
-80284280	lui    at, $800b
-AT = AT + S0;
-A1 = h[AT + f7d2];
-A0 = 802807bc;
-80284294	jal    $system_print_alias
-80284298	nop
-V0 = S1 < 0008;
-802842A0	bne    v0, zero, loop2841ec [$802841ec]
-A0 = S2;
-A0 = 00ff;
-A1 = 00ff;
-802842B0	jal    $80036c70
-A2 = 00ff;
-V0 = hu[800c2ddc];
-802842C0	nop
-V0 = V0 & 4000;
-802842C8	beq    v0, zero, L2842dc [$802842dc]
-V0 = S4 < 001d;
-802842D0	beq    v0, zero, L2842dc [$802842dc]
-S3 = 0;
-S4 = S4 + 0001;
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
 
-L2842dc:	; 802842DC
-V0 = hu[800c2ddc];
-802842E4	nop
-V0 = V0 & 1000;
-802842EC	beq    v0, zero, L284300 [$80284300]
-802842F0	nop
-802842F4	blez   s4, L284300 [$80284300]
-S3 = 0;
-802842FC	addiu  s4, s4, $ffff (=-$1)
+    A0 = 802807c0; // "EPOS    ="
+    system_print_alias();
 
-L284300:	; 80284300
-V0 = hu[800c2ddc];
-80284308	nop
-V0 = V0 & 2000;
-80284310	beq    v0, zero, L284344 [$80284344]
-80284314	addiu  v0, s4, $fff3 (=-$d)
-V0 = V0 < 0002;
-8028431C	beq    v0, zero, L284334 [$80284334]
-80284320	nop
-80284324	bgtz   s3, L284344 [$80284344]
-80284328	nop
-8028432C	080A10D1	С...
-S3 = S3 + 0001;
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
 
-L284334:	; 80284334
-V0 = S3 < 0002;
-80284338	beq    v0, zero, L284344 [$80284344]
-8028433C	nop
-S3 = S3 + 0001;
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + 14];
+    system_print_alias();
 
-L284344:	; 80284344
-V0 = hu[800c2ddc];
-8028434C	nop
-V0 = V0 & 8000;
-80284354	beq    v0, zero, L28436c [$8028436c]
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + 16];
+    system_print_alias();
+
+    A0 = 2;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807bc; // "%d\n"
+    A1 = h[800af7a0 + bank * 78 + 18];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 802807cc; // "SPEED   = "
+    system_print_alias();
+
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807d8; // "%d * "
+    A1 = w[800af7a0 + bank * 78 + 8];
+    system_print_alias();
+
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807bc; // "%d\n"
+    A1 = h[800af7a0 + bank * 78 + 24];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 802807e0; // "GRAVITE ="
+    system_print_alias();
+
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + 1c];
+    system_print_alias();
+
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + 1e];
+    system_print_alias();
+
+    A0 = 2;
+    A2 = w[SP + 10];
+    A1 = S3;
+    func2843a8();
+
+    A0 = 802807bc; // "%d\n"
+    A1 = h[800af7a0 + bank * 78 + 20];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 802807ec; // "SRANGE  = %d\n"
+    A1 = hu[800af7a0 + bank * 78 + 26];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 802807fc; // "ERANGE  = %d\n"
+    A1 = hu[800af7a0 + bank * 78 + 28];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 8028080c; // "PSWAIT  = %d\n"
+    A1 = hu[800af7a0 + bank * 78 + 56];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 8028081c; // "PEWAIT  = %d\n"
+    A1 = hu[800af7a0 + bank * 78 + 58];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 8028082c; // "SHAPE   = %d\n"
+    A1 = h[800af7a0 + bank * 78 + 54];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 8028083c; // "SCALE   ="
+    system_print_alias();
+
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + 5a];
+    system_print_alias();
+
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807bc; // "%d\n"
+    A1 = h[800af7a0 + bank * 78 + 5c];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 80280848; // "SCALEOFS="
+    system_print_alias();
+
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = h[800af7a0 + bank * 78 + 62];
+    system_print_alias();
+
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807bc; // "%d\n"
+    A1 = h[800af7a0 + bank * 78 + 64];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 80280854; // "COLOR   ="
+    system_print_alias();
+
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = bu[800af7a0 + bank * 78 + 6a];
+    system_print_alias();
+
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = bu[800af7a0 + bank * 78 + 6b];
+    system_print_alias();
+
+    A0 = 2;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807bc; // "%d\n"
+    A1 = bu[800af7a0 + bank * 78 + 6c];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 80280860; // "COLOROFS="
+    system_print_alias();
+
+    A0 = 0;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = b[800af7a0 + bank * 78 + 6e];
+    system_print_alias();
+
+    A0 = 1;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807b8; // "%d"
+    A1 = b[800af7a0 + bank * 78 + 6f];
+    system_print_alias();
+
+    A0 = 2;
+    A1 = S3;
+    A2 = w[SP + 10];
+    func2843a8();
+
+    A0 = 802807bc; // "%d\n"
+    A1 = b[800af7a0 + bank * 78 + 70];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    if( hu[800af7a0 + bank * 78 + 2a] & 0001 )
+    {
+        A0 = 8028087c; // "RANDROT = ON\n"
+    }
+    else
+    {
+        A0 = 8028086c; // "RANDROT = OFF\n"
+    }
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 8028088c; // "SORT    = "
+    system_print_alias();
+
+    V1 = (hu[800af7a0 + bank * 78 + 2a] >> 1) & 3;
+    if( V1 == 0 )
+    {
+        A0 = 80280898; // "TOP\n"
+        system_print_alias();
+    }
+    else if( V1 == 1 )
+    {
+        A0 = 802808a0; // "MID\n"
+        system_print_alias();
+    }
+    else if( V1 == 2 )
+    {
+        A0 = 802808a8; // "NORMAL\n"
+        system_print_alias();
+    }
+    else if( V1 == 3 )
+    {
+        A0 = 802808b0; // "BACK\n"
+        system_print_alias();
+    }
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 802808b8; // "COLMODE = "
+    system_print_alias();
+
+    V1 = (hu[800af7a0 + bank * 78 + 2a] >> 8) & 3;
+    if( V1 == 0 )
+    {
+        A0 = 802808c4; // "1.0*Bk + 1.0*Fw\n"
+        system_print_alias();
+    }
+    else if( V1 == 1 )
+    {
+        A0 = 802808d8; // "1.0*Bk - 1.0*Fw\n"
+        system_print_alias();
+    }
+    else if( V1 == 2 )
+    {
+        A0 = 802808ec; // "1.0*Bk + 0.25*Fw\n"
+        system_print_alias();
+    }
+    else if( V1 == 3 )
+    {
+        A0 = 80280900; // "0.5*Bk + 0.5*Fw\n"
+        system_print_alias();
+    }
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+    S2 = V0;
+
+    A0 = 80280914; // "ROTANGLE= %d\n"
+    A1 = h[800af7a0 + bank * 78 + 76];
+    system_print_alias();
+
+    A0 = S2;
+    A1 = S4;
+    A2 = SP + 10;
+    func2843f0();
+
+    A0 = 80280924; // "RANGEMOD= "
+    system_print_alias();
+
+    V1 = (hu[800af7a0 + bank * 78 + 2a] >> 6) & 3;
+    if( V1 == 0 )
+    {
+        A0 = 80280930; // "RANDUM (0)"
+        system_print_alias();
+    }
+    else if( V1 == 1 )
+    {
+        A0 = 80280948; // "LINE (2)"
+        system_print_alias();
+    }
+    else if( V1 == 2 )
+    {
+        A0 = 8028093c; // "CIRCLE (1)"
+        system_print_alias();
+    }
+
+    A0 = 80280914; // "ROTANGLE= %d\n"
+    A1 = h[800af7a0 + bank * 78 + 76];
+    system_print_alias();
+}
+else
+{
+    S2 = 16;
+    for( int i = 0; i < 8; ++i )
+    {
+        A0 = S2;
+        A1 = S4;
+        A2 = SP + 10;
+        func2843f0();
+        S2 = V0;
+
+        A0 = 80280954; // "ANGOFFS%d="
+        A1 = i;
+        system_print_alias();
+
+        A0 = 0;
+        A1 = S3;
+        A2 = w[SP + 10];
+        func2843a8();
+
+        A0 = 802807b8; // "%d"
+        A1 = h[800af7a0 + bank * 78 + 30 + i * 4 + 0];
+        system_print_alias();
+
+        A0 = 1;
+        A1 = S3;
+        A2 = w[SP + 10];
+        func2843a8();
+
+        A0 = 802807bc; // "%d\n"
+        A1 = h[800af7d2 + bank * 78 + 30 + i * 4 + 2];
+        system_print_alias();
+    }
+}
+
+A0 = ff;
+A1 = ff;
+A2 = ff;
+func36c70(); // set colour
+
+if( hu[800c2ddc] & 4000 )
+{
+    S3 = 0;
+    if( S4 < 1d )
+    {
+        S4 = S4 + 1;
+    }
+}
+
+if( hu[800c2ddc] & 1000 )
+{
+    S3 = 0;
+    if( S4 > 0 )
+    {
+        S4 = S4 - 1;
+    }
+}
+
+if( hu[800c2ddc] & 2000 )
+{
+    if( ( S4 - d ) < 2 )
+    {
+        if( S3 <= 0 )
+        {
+            S3 = S3 + 1;
+        }
+    }
+    else
+    {
+        if( S3 < 2 )
+        {
+            S3 = S3 + 1;
+        }
+    }
+}
+
+if( hu[800c2ddc] & 8000 )
+{
+    if( S3 > 0 )
+    {
+        S3 = S3 - 1;
+    }
+}
+
 A0 = S3;
-8028435C	blez   s3, L28436c [$8028436c]
-80284360	nop
-80284364	addiu  s3, s3, $ffff (=-$1)
-A0 = S3;
-
-L28436c:	; 8028436C
-8028436C	0C0A11C8	И...
 A1 = S4;
+func284720();
+
 [802859f0] = w(S4);
 [802859f4] = w(S3);
-RA = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-802843A0	jr     ra 
-802843A4	nop
 ////////////////////////////////
-// func2843a8
-802843A8	addiu  sp, sp, $ffe8 (=-$18)
-802843AC	bne    a1, a0, L2843d0 [$802843d0]
-[SP + 0010] = w(RA);
-V0 = 0001;
-802843B8	bne    a2, v0, L2843d0 [$802843d0]
-802843BC	nop
-A0 = 80280960;
-802843C8	080A10F6	ц...
-802843CC	nop
 
-L2843d0:	; 802843D0
-A0 = 80280964;
-802843D8	jal    $system_print_alias
-802843DC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-802843E8	jr     ra 
-802843EC	nop
+
+
 ////////////////////////////////
-// func2843f0
-802843F0	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+// func2843a8()
+
+if( ( A1 == A0 ) && ( A2 == 1 ) )
+{
+    A0 = 80280960; // ">"
+}
+else
+{
+    A0 = 80280964; // " "
+}
+system_print_alias();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2843f0()
+
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A2;
-80284404	bne    a1, s0, L284438 [$80284438]
-[SP + 0018] = w(RA);
-A0 = 0;
-A1 = 00ff;
-80284414	jal    $80036c70
-A2 = 00ff;
-A0 = 80280960;
-80284424	jal    $system_print_alias
-80284428	nop
-V0 = 0001;
-80284430	080A1117	....
-[S1 + 0000] = w(V0);
 
-L284438:	; 80284438
-A0 = 0040;
-A1 = 0040;
-80284440	jal    $80036c70
-A2 = 0040;
-A0 = 80280964;
-80284450	jal    $system_print_alias
-80284454	nop
-[S1 + 0000] = w(0);
-V0 = S0 + 0001;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80284470	jr     ra 
-80284474	nop
+if( A1 == S0 )
+{
+    A0 = 0;
+    A1 = ff;
+    A2 = ff;
+    func36c70(); // set colour
+
+    A0 = 80280960; // ">"
+    system_print_alias();
+
+    [S1 + 0] = w(1);
+}
+else
+{
+    A0 = 40;
+    A1 = 40;
+    A2 = 40;
+    func36c70(); // set colour
+
+    A0 = 80280964; // " "
+    system_print_alias();
+
+    [S1 + 0] = w(0);
+}
+
+return S0 + 1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func284478
 V1 = hu[800af374];
@@ -2992,15 +2698,17 @@ V0 = b[A0 + 0002];
 80284718	jr     ra 
 8028471C	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func284720
-80284720	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = A0;
-[SP + 0010] = w(S0);
 S0 = A1;
 V0 = S0 < 001e;
 80284738	beq    v0, zero, L284ee0 [$80284ee0]
-[SP + 0018] = w(RA);
+
 V0 = S0 << 02;
 80284744	lui    at, $8028
 AT = AT + V0;
@@ -3446,12 +3154,6 @@ AT = AT + S0;
 [AT + f7d2] = h(V0);
 
 L284ee0:	; 80284EE0
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80284EF0	jr     ra 
-80284EF4	nop
 ////////////////////////////////
 
 

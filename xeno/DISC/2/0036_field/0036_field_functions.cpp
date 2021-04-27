@@ -4994,48 +4994,36 @@ dst_z = h[particle_data + 18] + ((V0 * dst_rnd) >> c);
 
 
 ////////////////////////////////
-// funca9eb4
+// funca9eb4()
 
-A2 = A0;
-V0 = w[A2 + 0004];
-V1 = h[V0 + 0028];
-T0 = h[V0 + 0020];
-A0 = h[V0 + 002a];
-T1 = h[V0 + 0022];
-T2 = h[V0 + 0024];
-A1 = V1 - T0;
-A3 = A1;
-A0 = A0 - T1;
-V1 = h[V0 + 002c];
-V0 = A1 < A0;
-800A9EE8	beq    v0, zero, La9ef4 [$800a9ef4]
-V1 = V1 - T2;
-A1 = A0;
+model_data = A0;
 
-La9ef4:	; 800A9EF4
-V0 = A1 < V1;
-800A9EF8	beq    v0, zero, La9f04 [$800a9f04]
-V0 = A3 >> 1f;
-A1 = V1;
+m_parts = w[model_data + 4];
 
-La9f04:	; 800A9F04
-V0 = A3 + V0;
-V0 = V0 >> 01;
-V0 = V0 + T0;
-[A2 + 0018] = h(V0);
-V0 = A0 >> 1f;
-V0 = A0 + V0;
-V0 = V0 >> 01;
-V0 = V0 + T1;
-[A2 + 001a] = h(V0);
-V0 = V1 >> 1f;
-V0 = V1 + V0;
-V0 = V0 >> 01;
-V0 = V0 + T2;
-[A2 + 001c] = h(V0);
-V0 = A1 << 01;
-V0 = V0 + 0001;
-[A2 + 0020] = h(V0);
+x1 = h[m_parts + 20];
+y1 = h[m_parts + 22];
+z1 = h[m_parts + 24];
+x2 = h[m_parts + 28];
+y2 = h[m_parts + 2a];
+z2 = h[m_parts + 2c];
+
+dx = x2 - x1;
+dy = y2 - y1;
+dz = z2 - z1;
+
+if( dx < dy )
+{
+    A1 = dy;
+}
+if( A1 < dz )
+{
+    A1 = dz;
+}
+
+[model_data + 18] = h(x1 + dx / 2);
+[model_data + 1a] = h(y1 + dy / 2);
+[model_data + 1c] = h(z1 + dz / 2);
+[model_data + 20] = h(A1 * 2 + 1);
 ////////////////////////////////
 
 

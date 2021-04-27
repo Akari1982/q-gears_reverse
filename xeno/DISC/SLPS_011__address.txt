@@ -20,8 +20,8 @@
 8004e9d0 [][][][] init with -1.
 8004e9d4 [][][][] init with -1. Looks like current field.
 8004e9d8 [][][][] init with -1. After field load and set to 0 when start field load.
-8004e9dc [][][][] init with -1. Compare this with value from 800b1774 + encounter * 2 during battle load.
-8004e9e0 [][][][] init with -1.
+8004e9dc [][][][] Music. Init with -1. Compare this with value from 800b1774 + encounter * 2 during battle load.
+8004e9e0 [][][][] Wave. Init with -1.
 8004e9e4 [][][][] init with -1.
 8004e9e8 [][][][] init with 0. Load some textures in file 0xa7 for field.
 8004e9ec [][][][] init with 0. Store here 1 in some cases during battle load.
