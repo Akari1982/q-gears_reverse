@@ -357,7 +357,7 @@
                        0x00080000: managed in opcode 0xF6.
                        0x00200000: removed in 0x19_SetPosition.
                        0x00400000: maybe means that we checked this entity during movement collision check.
-                       0x04000000: if flag is set we wil not talk on button press.
+                       0x04000000: talk off.
         +   8 [][]     triangle id for walkmesh 0.
         +   a [][]     triangle id for walkmesh 1.
         +   c [][]     triangle id for walkmesh 2.

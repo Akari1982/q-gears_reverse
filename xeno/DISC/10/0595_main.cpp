@@ -956,8 +956,8 @@ switch( w[802859d8] )
     case 2:
     {
         A0 = 802803ec; // "---------- Memory Info -----\n"
-        802827E0	jal    $system_print_alias
-        802827E4	nop
+        system_print_alias();
+
         A0 = 0;
         A2 = 000f;
         A1 = w[802859d0];
@@ -1288,135 +1288,68 @@ switch( w[802859d8] )
         system_print_alias();
 
         S3 = 0;
-        S2 = w[802859d0];
-        V0 = w[800ad0d4];
-        80282D64	nop
-        V0 = S2 < V0;
-        80282D6C	beq    v0, zero, L282f3c [$80282f3c]
-        V0 = S2 << 01;
-        V0 = V0 + S2;
-        V0 = V0 << 03;
-        V0 = V0 - S2;
-        S0 = V0 << 02;
+        for( int i = w[802859d0]; i < w[800ad0d4]; ++i )
+        {
+            struct_5c_p = w[800aefe4];
+            data = w[struct_5c_p + i * 5c + 4c];
 
-        L282d84:	; 80282D84
-            V0 = w[800aefe4];
-            V0 = S0 + V0;
-            V1 = w[V0 + 004c];
-            80282D98	nop
-            V0 = bu[V1 + 00ce];
             A0 = 8028054c; // "ActNum=%3d RUN=%04x\n"
-            V0 = V0 << 03;
-            V1 = V1 + V0;
-            A2 = hu[V1 + 008c];
-            A1 = S2;
+            A1 = i;
+            V0 = bu[data + ce]; // current script slot id
+            A2 = hu[data + 8c + V0 * 8 + 0]; // current script pointer
             system_print_alias();
 
-            V0 = w[800aefe4];
-            80282DC4	nop
-            V0 = S0 + V0;
-            V0 = w[V0 + 004c];
-            80282DD0	nop
-            V1 = h[V0 + 0010];
-            A1 = h[V0 + 0008];
-            A2 = h[V0 + 000a];
-            A3 = h[V0 + 000c];
-            V0 = w[800aefe4];
-            80282DEC	nop
-            V0 = S0 + V0;
-            [SP + 0010] = w(V1);
-            V1 = w[V0 + 004c];
-            80282DFC	nop
-            T0 = h[V1 + 0010];
-            80282E04	nop
-            V0 = T0 << 01;
-            V0 = V0 + V1;
-            V1 = h[V0 + 0008];
-            T0 = T0 << 02;
-            V0 = V1 << 03;
-            V0 = V0 - V1;
-            V1 = w[800aeff8 + T0];
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V1 = bu[V0 + 000c];
-            V0 = w[800aefe4];
-            80282E40	nop
-            V0 = S0 + V0;
-            [SP + 0014] = w(V1);
-            V0 = w[V0 + 004c];
-            80282E50	nop
-            V0 = w[V0 + 0014];
+            walkmesh_id = h[data + 10];
+            triangle_data = w[800aeff8 + walkmesh_id * 4];
+            V1 = h[data + 8 + walkmesh_id * 2];
+
             A0 = 80280564; // "P0=%d P1=%d P2=%d P=%d I=%x:%x\n"
-            [SP + 0018] = w(V0);
+            A1 = h[data + 8];
+            A2 = h[data + a];
+            A3 = h[data + c];
+            A4 = walkmesh_id;
+            A5 = bu[triangle_data + V1 * e + c]; // material id
+            A6 = w[data + 14]; // material mask
             system_print_alias();
 
-            V0 = w[800aefe4];
-            80282E70	nop
-            V0 = S0 + V0;
-            V0 = w[V0 + 004c];
-            80282E7C	nop
-            A1 = h[V0 + 0022];
-            A2 = h[V0 + 002a];
-            A3 = h[V0 + 0026];
             A0 = 80280244; // "Pos X%6d Z%6d Y%6d\n"
+            A1 = h[data + 22];
+            A2 = h[data + 2a];
+            A3 = h[data + 26];
             system_print_alias();
 
-            V0 = w[800aefe4];
-            80282EA4	nop
-            V0 = S0 + V0;
-            V0 = w[V0 + 004c];
-            80282EB0	nop
-            A1 = w[V0 + 0000];
-            A2 = w[V0 + 0004];
             A0 = 80280584; // "M1=%x M2=%x"
+            A1 = w[data + 0];
+            A2 = w[data + 4];
             system_print_alias();
 
-            V0 = w[800aefe4];
-            80282ED4	nop
-            V0 = S0 + V0;
-            V0 = w[V0 + 004c];
-            80282EE0	nop
-            V0 = w[V0 + 0004];
-            80282EE8	lui    v1, $0400
-            V0 = V0 & V1;
-            A0 = 80280594; // " TALK OFF\n\n"
-            80282EF8	bne    v0, zero, L282f08 [$80282f08]
-            80282EFC	nop
-            A0 = 80280590; // "\n\n"
+            if( w[data + 4] & 04000000 )
+            {
+                A0 = 80280594; // " TALK OFF\n\n"
+                system_print_alias();
+            }
+            else
+            {
+                A0 = 80280590; // "\n\n"
+                system_print_alias();
+            }
 
-            L282f08:	; 80282F08
-            system_print_alias();
+            if( S3 >= 6 )
+            {
+                break;
+            }
+            S3 = S3 + 1;
+        }
 
-            V0 = S3 < 0006;
-            80282F14	beq    v0, zero, L282f3c [$80282f3c]
-            80282F18	nop
-            S0 = S0 + 005c;
-            S2 = S2 + 0001;
-            V0 = w[800ad0d4];
-            S3 = S3 + 0001;
-            V0 = S2 < V0;
-        80282F34	bne    v0, zero, L282d84 [$80282d84]
+        if( hu[800c2dd4] & 0001 )
+        {
+            [802859d0] = w(w[802859d0] + 1);
+        }
 
-        L282f3c:	; 80282F3C
-        V1 = hu[800c2dd4];
-        80282F44	nop
-        V0 = V1 & 0001;
-        80282F4C	beq    v0, zero, L282f70 [$80282f70]
-        V0 = V1 & 0002;
-        V0 = w[802859d0];
-        80282F5C	nop
-        V0 = V0 + 0001;
-        [802859d0] = w(V0);
-        V0 = V1 & 0002;
-
-        L282f70:	; 80282F70
-        80282F70	beq    v0, zero, L2835f0 [$802835f0]
-        80282F74	nop
-        V0 = w[802859d0];
-        80282F80	nop
-        80282F84	addiu  v0, v0, $ffff (=-$1)
-        [802859d0] = w(V0);
-        j 802835f0
+        if( hu[800c2dd4] & 0002 )
+        {
+            [802859d0] = w(w[802859d0] - 1);
+        }
     }
     break;
 
@@ -1427,38 +1360,32 @@ switch( w[802859d8] )
 
         S2 = 0;
         V0 = h[802859f8];
-        80282FB0	nop
-        80282FB4	blez   v0, L282ffc [$80282ffc]
-        S0 = 0;
+        if( V0 > 0 )
+        {
+            S0 = 0;
 
-        loop282fbc:	; 80282FBC
-        A0 = 802805c0;
-        80282FC4	lui    at, $8028
-        AT = AT + S0;
-        A1 = w[AT + 5a04];
-        80282FD0	lui    at, $8028
-        AT = AT + S0;
-        A2 = w[AT + 5a00];
-        80282FDC	jal    $system_print_alias
-        S0 = S0 + 000c;
-        V0 = h[802859f8];
-        S2 = S2 + 0001;
-        V0 = S2 < V0;
-        80282FF4	bne    v0, zero, loop282fbc [$80282fbc]
-        80282FF8	nop
+            loop282fbc:	; 80282FBC
+                A0 = 802805c0; // "%s = %6d\n"
+                A1 = w[80285a04 + S0];
+                A2 = w[80285a00 + S0];
+                system_print_alias();
 
-        L282ffc:	; 80282FFC
+                S0 = S0 + c;
+                V0 = h[802859f8];
+                S2 = S2 + 1;
+                V0 = S2 < V0;
+            80282FF4	bne    v0, zero, loop282fbc [$80282fbc]
+        }
+
         A1 = w[800ad078];
         A2 = w[800ad07c];
-        A0 = 802805cc;
-        80283014	jal    $system_print_alias
-        80283018	nop
+        A0 = 802805cc; // "\nCPU=%6d GPU=%6d\n"
+        system_print_alias();
+
         A1 = w[80058c14];
         A2 = w[80058c5c];
-        A0 = 802800b4;
-        80283034	jal    $system_print_alias
-        80283038	nop
-        j 802835f0
+        A0 = 802800b4; // "PolyCount %d / %d\n"
+        system_print_alias();
     }
     break;
 
@@ -1481,11 +1408,12 @@ switch( w[802859d8] )
         A0 = S0;
         8028307C	jal    $800a25a8
         S1 = V0;
-        A0 = 80280600;
+        A0 = 80280600; // "ADD %04x:%08x %06d\n"
         A1 = S0;
         A2 = S1;
-        80283094	jal    $system_print_alias
         A3 = V0;
+        80283094	jal    $system_print_alias
+
         V0 = S3 < 0010;
         802830A0	beq    v0, zero, L2832a8 [$802832a8]
         802830A4	nop
@@ -1493,8 +1421,15 @@ switch( w[802859d8] )
         V0 = S2 < 0400;
         802830B0	bne    v0, zero, loop28306c [$8028306c]
         S3 = S3 + 0001;
-        802830B8	080A0CAA	Є...
-        802830BC	nop
+
+        if( hu[800c2dd4] & 0001 )
+        {
+            [802859d0] = w(w[802859d0] + 4);
+        }
+        if( hu[800c2dd4] & 0002 )
+        {
+            [802859d0] = w(w[802859d0] - 4);
+        }
     }
     break;
 
@@ -1505,9 +1440,9 @@ switch( w[802859d8] )
 
         if( hu[800c2ddc] & 0100 )
         {
-            A0 = w[800b1740];
-            A1 = 0001;
-            802830F4	jal    $800a8dc0
+            A0 = w[800b1740]; // pc entity id
+            A1 = 1; // all
+            field_particle_reset_particle_for_entity();
 
             V1 = 800af7f2;
             A1 = V1 + 3c0;
@@ -1516,18 +1451,18 @@ switch( w[802859d8] )
             loop283114:	; 80283114
                 if( A0 == ff )
                 {
-                    [V1 + 0000] = h(w[800b1740]);
+                    [V1] = h(w[800b1740]); //  // pc entity id
                 }
                 else
                 }
-                    [V1 + 0000] = h(A0);
+                    [V1] = h(A0);
                 }
-                V1 = V1 + 0078;
+                V1 = V1 + 78;
                 V0 = V1 < A1;
             80283138	bne    v0, zero, loop283114 [$80283114]
 
-            A0 = w[800b1740];
-            80283148	jal    $800a8e80
+            A0 = w[800b1740]; //  // pc entity id
+            field_particle_create_instance();
         }
 
         func283634(); // dump purticles state
@@ -1541,107 +1476,87 @@ switch( w[802859d8] )
 
         S3 = 0;
         S2 = w[802859d0];
-        80283178	nop
         V0 = S2 < 0096;
         80283180	beq    v0, zero, L2832a8 [$802832a8]
         80283184	nop
 
         loop283188:	; 80283188
-        V0 = w[80059a38];
-        80283190	nop
-        V0 = V0 + S2;
-        V1 = bu[V0 + 1f91];
-        A1 = bu[V0 + 2026];
-        A2 = bu[V0 + 1f90];
-        A3 = bu[V0 + 2027];
-        [SP + 0010] = w(V1);
-        V1 = bu[V0 + 2028];
-        802831B0	nop
-        [SP + 0014] = w(V1);
-        V1 = bu[V0 + 1f92];
-        802831BC	nop
-        [SP + 0018] = w(V1);
-        V1 = bu[V0 + 2029];
-        802831C8	nop
-        [SP + 001c] = w(V1);
-        V0 = bu[V0 + 1f93];
-        A0 = 80280658;
-        802831DC	jal    $system_print_alias
-        [SP + 0020] = w(V0);
-        V0 = S3 < 0010;
-        802831E8	beq    v0, zero, L2832a8 [$802832a8]
-        802831EC	nop
-        S2 = S2 + 0004;
-        V0 = S2 < 0096;
+            V0 = w[80059a38];
+            80283190	nop
+            V0 = V0 + S2;
+            V1 = bu[V0 + 1f91];
+            A1 = bu[V0 + 2026];
+            A2 = bu[V0 + 1f90];
+            A3 = bu[V0 + 2027];
+            [SP + 0010] = w(V1);
+            V1 = bu[V0 + 2028];
+            802831B0	nop
+            [SP + 0014] = w(V1);
+            V1 = bu[V0 + 1f92];
+            802831BC	nop
+            [SP + 0018] = w(V1);
+            V1 = bu[V0 + 2029];
+            802831C8	nop
+            [SP + 001c] = w(V1);
+            V0 = bu[V0 + 1f93];
+            [SP + 0020] = w(V0);
+            A0 = 80280658; // "%03d=%03d %03d=%03d %03d=%03d %03d=%03d\n"
+            system_print_alias();
+
+            V0 = S3 < 0010;
+            802831E8	beq    v0, zero, L2832a8 [$802832a8]
+            802831EC	nop
+            S2 = S2 + 0004;
+            V0 = S2 < 0096;
+            S3 = S3 + 0001;
         802831F8	bne    v0, zero, loop283188 [$80283188]
-        S3 = S3 + 0001;
-        80283200	080A0CAA	Є...
-        80283204	nop
+
+        if( hu[800c2dd4] & 0001 )
+        {
+            [802859d0] = w(w[802859d0] + 4);
+        }
+        if( hu[800c2dd4] & 0002 )
+        {
+            [802859d0] = w(w[802859d0] - 4);
+        }
     }
     break;
 
     case 9:
     {
-        S3 = 0;
         A0 = 80280684; // "---------- ACC --------------\n"
         system_print_alias();
 
-        S2 = w[802859d0];
-        80283220	nop
-        V0 = S2 < 00c8;
-        80283228	beq    v0, zero, L2832a8 [$802832a8]
-        8028322C	nop
+        S3 = 0;
+        for( int i = w[802859d0]; i < 32; ++i )
+        {
+            A0 = 80280658; // "%03d=%03d %03d=%03d %03d=%03d %03d=%03d\n"
+            V0 = w[80059a38];
+            A1 = bu[V0 + 1ec8 + i * 4];
+            A2 = bu[V0 + 1e00 + i * 4];
+            A3 = bu[V0 + 1ec9 + i * 4];
+            A4 = bu[V0 + 1e01 + i * 4];
+            A5 = bu[V0 + 1eca + i * 4];
+            A6 = bu[V0 + 1e02 + i * 4];
+            A7 = bu[V0 + 1ecb + i * 4];
+            A8 = bu[V0 + 1e03 + i * 4];
+            system_print_alias();
 
-        loop283230:	; 80283230
-        V0 = w[80059a38];
-        80283238	nop
-        V0 = V0 + S2;
-        V1 = bu[V0 + 1e01];
-        A1 = bu[V0 + 1ec8];
-        A2 = bu[V0 + 1e00];
-        A3 = bu[V0 + 1ec9];
-        [SP + 0010] = w(V1);
-        V1 = bu[V0 + 1eca];
-        80283258	nop
-        [SP + 0014] = w(V1);
-        V1 = bu[V0 + 1e02];
-        80283264	nop
-        [SP + 0018] = w(V1);
-        V1 = bu[V0 + 1ecb];
-        80283270	nop
-        [SP + 001c] = w(V1);
-        V0 = bu[V0 + 1e03];
-        A0 = 80280658;
-        80283284	jal    $system_print_alias
-        [SP + 0020] = w(V0);
-        V0 = S3 < 0010;
-        80283290	beq    v0, zero, L2832a8 [$802832a8]
-        80283294	nop
-        S2 = S2 + 0004;
-        V0 = S2 < 00c8;
-        802832A0	bne    v0, zero, loop283230 [$80283230]
-        S3 = S3 + 0001;
+            if( S3 >= 10 )
+            {
+                break;
+            }
+            S3 = S3 + 1;
+        }
 
-        L2832a8:	; 802832A8
-        V1 = hu[800c2dd4];
-        802832B0	nop
-        V0 = V1 & 0001;
-        802832B8	beq    v0, zero, L2832dc [$802832dc]
-        V0 = V1 & 0002;
-        V0 = w[802859d0];
-        802832C8	nop
-        V0 = V0 + 0004;
-        [802859d0] = w(V0);
-        V0 = V1 & 0002;
-
-        L2832dc:	; 802832DC
-        802832DC	beq    v0, zero, L2835f0 [$802835f0]
-        802832E0	nop
-        V0 = w[802859d0];
-        802832EC	nop
-        802832F0	addiu  v0, v0, $fffc (=-$4)
-        [802859d0] = w(V0);
-        j 802835f0
+        if( hu[800c2dd4] & 0001 )
+        {
+            [802859d0] = w(w[802859d0] + 4);
+        }
+        if( hu[800c2dd4] & 0002 )
+        {
+            [802859d0] = w(w[802859d0] - 4);
+        }
     }
     break;
 
@@ -1651,179 +1566,108 @@ switch( w[802859d8] )
         system_print_alias();
 
         V1 = hu[800c2dd4];
-        8028331C	nop
-        V0 = V1 & 0001;
-        80283324	beq    v0, zero, L283348 [$80283348]
-        V0 = V1 & 0002;
-        V0 = w[802859d0];
-        80283334	nop
-        V0 = V0 + 0001;
-        [802859d0] = w(V0);
-        V0 = V1 & 0002;
+        if( V1 & 0001 != 0 )
+        {
+            [802859d0] = w(w[802859d0] + 1);
+        }
+        if( V1 & 0002 )
+        {
+            [802859d0] = w(w[802859d0] - 1);
+        }
 
-        L283348:	; 80283348
-        80283348	beq    v0, zero, L283368 [$80283368]
-        8028334C	nop
-        V0 = w[802859d0];
-        80283358	nop
-        8028335C	addiu  v0, v0, $ffff (=-$1)
-        [802859d0] = w(V0);
+        for( int i = 0; i < 10; ++i )
+        {
+            A0 = 802806c8; // "%2d %3d %d\n"
+            A1 = i;
+            A2 = bu[8006516c + i]; // chances for encounters
+            A3 = h[80285b7c + i * 2];
+            system_print_alias();
+        }
 
-        L283368:	; 80283368
-        S2 = 0;
-        S1 = 80285b7c;
-        S0 = 8006516c;
+        V1 = w[802859d0] & 3;
+        if( V1 == 0 )
+        {
+            A0 = 802806d4; // ">TIME   =%d\n"
+            A1 = w[800b176c];
+            system_print_alias();
 
-        loop28337c:	; 8028337C
-        A0 = 802806c8;
-        A1 = S2;
-        A3 = h[S1 + 0000];
-        S1 = S1 + 0002;
-        A2 = bu[S0 + 0000];
-        S0 = S0 + 0001;
-        80283398	jal    $system_print_alias
-        S2 = S2 + 0001;
-        V0 = S2 < 0010;
-        802833A4	bne    v0, zero, loop28337c [$8028337c]
-        802833A8	nop
-        V0 = w[802859d0];
-        802833B4	nop
-        V1 = V0 & 0003;
-        V0 = 0001;
-        802833C0	beq    v1, v0, L283480 [$80283480]
-        V0 = V1 < 0002;
-        802833C8	beq    v0, zero, L2833e0 [$802833e0]
-        802833CC	nop
-        802833D0	beq    v1, zero, L2833f4 [$802833f4]
-        802833D4	nop
-        802833D8	080A0D5F	_...
-        802833DC	nop
+            A0 = 802806e4; // " ENCOUNT=%d\n"
+            A1 = w[800b1770];
+            system_print_alias();
 
-        L2833e0:	; 802833E0
-        V0 = 0002;
-        802833E4	beq    v1, v0, L283534 [$80283534]
-        802833E8	nop
-        802833EC	080A0D5F	_...
-        802833F0	nop
+            A0 = 802806f4; // " SET"
+            system_print_alias();
 
-        L2833f4:	; 802833F4
-        S0 = 800b176c;
-        A1 = w[S0 + 0000];
-        A0 = 802806d4;
-        80283408	jal    $system_print_alias
-        8028340C	nop
-        A1 = w[800b1770];
-        A0 = 802806e4;
-        80283420	jal    $system_print_alias
-        80283424	nop
-        A0 = 802806f4;
-        80283430	jal    $system_print_alias
-        80283434	nop
-        V1 = hu[800c2dd4];
-        80283440	nop
-        V0 = V1 & 0004;
-        80283448	beq    v0, zero, L283464 [$80283464]
-        V0 = V1 & 0008;
-        V0 = w[S0 + 0000];
-        80283454	nop
-        V0 = V0 + 0001;
-        [S0 + 0000] = w(V0);
-        V0 = V1 & 0008;
+            if( hu[800c2dd4] & 0004 )
+            {
+                [800b176c] = w(w[800b176c] + 1);
+            }
+            if( hu[800c2dd4] & 0008 )
+            {
+                [800b176c] = w(w[800b176c] - 1);
+            }
+        }
+        else if( V1 == 1 )
+        {
+            A0 = 802806fc; // " TIME   =%d\n"
+            A1 = w[800b176c];
+            system_print_alias();
 
-        L283464:	; 80283464
-        80283464	beq    v0, zero, L28357c [$8028357c]
-        80283468	nop
-        V0 = w[S0 + 0000];
-        80283470	nop
-        80283474	addiu  v0, v0, $ffff (=-$1)
-        80283478	080A0D5F	_...
-        [S0 + 0000] = w(V0);
+            A0 = 8028070c; // ">ENCOUNT=%d\n"
+            A1 = w[800b1770];
+            system_print_alias();
 
-        L283480:	; 80283480
-        A1 = w[800b176c];
-        A0 = 802806fc;
-        80283490	jal    $system_print_alias
-        80283494	nop
-        A1 = w[800b1770];
-        A0 = 8028070c;
-        802834A8	jal    $system_print_alias
-        802834AC	nop
-        A0 = 802806f4;
-        802834B8	jal    $system_print_alias
-        802834BC	nop
-        V1 = hu[800c2dd4];
-        802834C8	nop
-        V0 = V1 & 0004;
-        802834D0	beq    v0, zero, L2834f4 [$802834f4]
-        V0 = V1 & 0008;
-        V0 = w[800b1770];
-        802834E0	nop
-        V0 = V0 + 0001;
-        [800b1770] = w(V0);
-        V0 = V1 & 0008;
+            A0 = 802806f4; // " SET"
+            system_print_alias();
 
-        L2834f4:	; 802834F4
-        802834F4	beq    v0, zero, L283514 [$80283514]
-        802834F8	nop
-        V0 = w[800b1770];
-        80283504	nop
-        80283508	addiu  v0, v0, $ffff (=-$1)
-        [800b1770] = w(V0);
+            if( hu[800c2dd4] & 0004 )
+            {
+                [800b1770] = w(w[800b1770] + 1);
+            }
+            if( hu[800c2dd4] & 0008 )
+            {
+                [800b1770] = w(w[800b1770] - 1);
+            }
+            [800b1770] = w(w[800b1770] & 001f);
+        }
+        else if( V1 == 2 )
+        {
+            A0 = 802806fc; // " TIME   =%d\n"
+            A1 = w[800b176c];
+            system_print_alias();
 
-        L283514:	; 80283514
-        V0 = w[800b1770];
-        8028351C	nop
-        V0 = V0 & 001f;
-        [800b1770] = w(V0);
-        8028352C	080A0D5F	_...
-        80283530	nop
+            A0 = 802806e4; // " ENCOUNT=%d\n"
+            A1 = w[800b1770];
+            system_print_alias();
 
-        L283534:	; 80283534
-        A1 = w[800b176c];
-        A0 = 802806fc;
-        80283544	jal    $system_print_alias
-        80283548	nop
-        A1 = w[800b1770];
-        A0 = 802806e4;
-        8028355C	jal    $system_print_alias
-        80283560	nop
-        A0 = 8028071c;
-        8028356C	jal    $system_print_alias
-        80283570	nop
-        80283574	jal    $8008dcec
-        80283578	nop
+            A0 = 8028071c; // ">SET"
+            system_print_alias();
 
-        L28357c:	; 8028357C
-        V0 = w[802859e0];
-        80283584	nop
-        80283588	beq    v0, zero, L2835e0 [$802835e0]
-        V0 = 003c;
-        V0 = w[802859e4];
-        80283598	nop
-        8028359C	addiu  v0, v0, $ffff (=-$1)
-        [802859e4] = w(V0);
-        802835A8	bne    v0, zero, L2835b8 [$802835b8]
-        802835AC	nop
-        [802859e0] = w(0);
+            func8dcec(); // reinit 800b1774
+        }
 
-        L2835b8:	; 802835B8
-        A1 = w[802859e8];
-        A2 = w[802859ec];
-        A0 = 80280724;
-        802835D0	jal    $system_print_alias
-        802835D4	nop
-        802835D8	080A0D7A	z...
-        802835DC	nop
+        if( w[802859e0] != 0 )
+        {
+            [802859e4] = w(w[802859e4] - 1);
+            if( w[802859e4] == 0 )
+            {
+                [802859e0] = w(0);
+            }
+
+            A0 = 80280724; // "COUNT=%d NUM=%d\n"
+            A1 = w[802859e8];
+            A2 = w[802859ec];
+            system_print_alias();
+        }
+        else
+        {
+            [802859e4] = w(3c);
+        }
+        funca345c();
     }
     break;
-
-    L2835e0:	; 802835E0
-    [802859e4] = w(V0);
-    802835E8	jal    $800a345c
-    802835EC	nop
 }
 
-L2835f0:	; 802835F0
 if( w[802859d0] < 0 )
 {
     [802859d0] = w(0);

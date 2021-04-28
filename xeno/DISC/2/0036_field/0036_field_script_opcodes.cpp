@@ -7614,6 +7614,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func8dcec()
+
 [800b1768] = w(w[800b176c]);
 
 if( w[800b1770] == 0 )
@@ -7624,43 +7625,34 @@ if( w[800b1770] == 0 )
 
 S0 = 1f;
 loop8dd3c:	; 8008DD3C
-    [800b1774 + S0 * 2] = h(ffff);
+    [800b1774 + S0 * 2] = h(-1);
     S0 = S0 - 1;
 8008DD44	bgez   s0, loop8dd3c [$8008dd3c]
 
 // generate unique random calue to array 800b1774
-if( w[800b1770] > 0 )
+for( int i = 0; i < w[800b1770]; ++i )
 {
-    S0 = 0;
     loop8dd6c:	; 8008DD6C
-        // gen random from 0 - w[800b176c]
-        system_get_random_2_bytes();
-        A1 = (((w[800b176c] + 1) * V0) >> f) & ffff;
-        A0 = 0;
-        loop8dd9c:	; 8008DD9C
-            // if this randim value already exist - generate other one
-            if( hu[800b1774 + A0 * 2] == A1 )
-            {
-                8008DDA4	j      loop8dd6c [$8008dd6c]
-            }
-            A0 = A0 + 1;
-            V0 = A0 < 20;
-        8008DDB0	bne    v0, zero, loop8dd9c [$8008dd9c]
 
-        [800b1774 + S0 * 2] = h(A1);
-        S0 = S0 + 1;
-        V0 = S0 < w[800b1770];
-    8008DDC8	bne    v0, zero, loop8dd6c [$8008dd6c]
+    // gen random from 0 - w[800b176c]
+    system_get_random_2_bytes();
+    A1 = (((w[800b176c] + 1) * V0) >> f) & ffff;
+
+    for( int j = 0; j < 20; ++j )
+    {
+        // if this randim value already exist - generate other one
+        if( hu[800b1774 + j * 2] == A1 )
+        {
+            8008DDA4	j      loop8dd6c [$8008dd6c]
+        }
+    }
+
+    [800b1774 + i * 2] = h(A1);
 }
 
-if( w[800b1770] > 0 )
+for( int i = 0; i < w[800b1770]; ++i )
 {
-    S0 = 0;
-    loop8ddf0:	; 8008DDF0
-        [800b1774 + S0 * 2] = h(hu[800b1774 + S0 * 2] + 1);
-        S0 = S0 + 1;
-        V0 = S0 < w[800b1770];
-    8008DE0C	bne    v0, zero, loop8ddf0 [$8008ddf0]
+    [800b1774 + i * 2] = h(hu[800b1774 + i * 2] + 1);
 }
 ////////////////////////////////
 

@@ -1124,68 +1124,62 @@ if( w[800b1770] > 0 )
     800789B4	bne    v0, zero, loop78994 [$80078994]
 }
 
-if( w[800b1770] > 0 )
+for( int i = 0; i < w[800b1770]; ++i )
 {
-    S0 = 0;
-    loop789dc:	; 800789DC
-        if( hu[800b1774 + S0 * 2] == 0 )
-        {
-            [800b1774 + S0 * 2] = h(ffff);
+    if( hu[800b1774 + i * 2] == 0 )
+    {
+        [800b1774 + i * 2] = h(ffff);
 
-            max_chance = 0;
+        max_chance = 0;
 
-            // get total encounter chance and
-            // store chance for current encounter
-            A0 = 0;
-            loop78a50:	; 80078A50
-                [SP + 10 + A0 * 4] = w(max_chance);
-                max_chance = max_chance + bu[8006516c + A0]; // last row in encounter file
-                A0 = A0 + 1;
-                V0 = A0 < 10;
-            80078A68	bne    v0, zero, loop78a50 [$80078a50]
+        // get total encounter chance and
+        // store chance for current encounter
+        A0 = 0;
+        loop78a50:	; 80078A50
+            [SP + 10 + A0 * 4] = w(max_chance);
+            max_chance = max_chance + bu[8006516c + A0]; // last row in encounter file
+            A0 = A0 + 1;
+            V0 = A0 < 10;
+        80078A68	bne    v0, zero, loop78a50 [$80078a50]
 
-            // calculate current chance value
-            system_get_random_2_bytes();
-            cur_chance = (V0 * (max_chance + 1)) >> f;
+        // calculate current chance value
+        system_get_random_2_bytes();
+        cur_chance = (V0 * (max_chance + 1)) >> f;
 
-            // find encounter
-            found = 0;
-            encounter = f;
-            loop78a94:	; 80078A94
-                if( ( bu[8006516c + encounter] != 0 ) && ( w[SP + 10 + encounter * 4] < cur_chance ) ) // last row in encounter file
-                {
-                    found = 1;
-                    break;
-                }
-                encounter = encounter - 1;
-            80078AC8	bgez   encounter, loop78a94 [$80078a94]
-
-            if( found != 0 )
+        // find encounter
+        found = 0;
+        encounter = f;
+        loop78a94:	; 80078A94
+            if( ( bu[8006516c + encounter] != 0 ) && ( w[SP + 10 + encounter * 4] < cur_chance ) ) // last row in encounter file
             {
-                [80058ba4] = b(encounter);
-                [80058b94] = b(0);
-                [800b1764] = h(hu[800b1774 + encounter * 2]);
+                found = 1;
+                break;
+            }
+            encounter = encounter - 1;
+        80078AC8	bgez   encounter, loop78a94 [$80078a94]
 
-                if( w[8004ea14] == 0 )
-                {
-                    A0 = 2; // battle
-                    func19a50(); // load exe
-                }
+        if( found != 0 )
+        {
+            [80058ba4] = b(encounter);
+            [80058b94] = b(0);
+            [800b1764] = h(hu[800b1774 + encounter * 2]);
 
-                [800ad0b4] = w(0);
-                [800ad0a8] = w(1);
+            if( w[8004ea14] == 0 )
+            {
+                A0 = 2; // battle
+                func19a50(); // load exe
+            }
 
-                if( w[800c1b60] == 0 )
-                {
-                    A0 = encounter;
-                    func28121c(); // store encounter data for debug
-                }
+            [800ad0b4] = w(0);
+            [800ad0a8] = w(1);
+
+            if( w[800c1b60] == 0 )
+            {
+                A0 = encounter;
+                func28121c(); // store encounter data for debug
             }
         }
-
-        S0 = S0 + 1;
-        V0 = S0 < w[800b1770];
-    800789F8	bne    v0, zero, loop789dc [$800789dc]
+    }
 }
 ////////////////////////////////
 
