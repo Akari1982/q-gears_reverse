@@ -2304,42 +2304,43 @@ return S0 + 1;
 ////////////////////////////////
 // func284478()
 
-V1 = hu[800af374];
+current = A0;
+min = A1;
+max = A2
 
-A3 = 1;
+add = 1;
+if( hu[800af374] & 0004 ) // current L1 on pad2
+{
+    add = a;
+}
+if( hu[800af374] & 0001 ) // current L2 on pad2
+{
+    add = 64;
+}
+if( hu[800af374] & 0002 ) // current R2 on pad2
+{
+    add = 3e8;
+}
 
-if( V1 & 0004 )
+if( hu[800c2ddc] & 0080 ) // repeated Square on pad2
 {
-    A3 = a;
-}
-if( V1 & 0001 )
-{
-    A3 = 64;
-}
-if( V1 & 0002 )
-{
-    A3 = 3e8;
-}
-
-if( hu[800c2ddc] & 0080 )
-{
-    A0 = A0 - A3;
-    if( A0 < A1 )
+    current = current - add;
+    if( current < min )
     {
-        A0 = A1;
+        current = min;
     }
 }
 
-if( hu[800c2ddc] & 0020 )
+if( hu[800c2ddc] & 0020 ) // repeated Circle on pad2
 {
-    A0 = A0 + A3;
-    if( A2 < A0 )
+    current = current + add;
+    if( current > max )
     {
-        A0 = A2;
+        current = max;
     }
 }
 
-return A0;
+return current;
 ////////////////////////////////
 
 
@@ -2462,456 +2463,435 @@ return 0;
 
 
 ////////////////////////////////
-// func284720
+// func284720()
 
 S1 = A0;
 S0 = A1;
-V0 = S0 < 001e;
-80284738	beq    v0, zero, L284ee0 [$80284ee0]
 
-V0 = S0 << 02;
-80284744	lui    at, $8028
-AT = AT + V0;
-V0 = w[AT + 0968];
-80284750	nop
-80284754	jr     v0 
-80284758	nop
+bank = w[800af518];
 
-A1 = 0;
-A0 = w[800af518];
-80284768	0C0A111E	....
-A2 = 0007;
-[800af518] = w(V0);
-80284778	080A13B8	ё...
-8028477C	nop
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284798	lui    at, $800b
-AT = AT + V0;
-A0 = h[AT + f7a6];
-802847A4	0C0A111E	....
-A2 = 00ff;
-A0 = w[800af518];
-802847B4	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-802847C4	lui    at, $800b
-AT = AT + V1;
-[AT + f7a6] = h(V0);
-802847D0	080A13B8	ё...
-802847D4	nop
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802847F0	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7a2];
-802847FC	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-8028480C	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-8028481C	lui    at, $800b
-AT = AT + V1;
-[AT + f7a2] = h(V0);
-80284828	080A13B8	ё...
-8028482C	nop
-V1 = w[800af518];
-A1 = 0001;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284848	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7a4];
-80284854	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-80284864	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80284874	lui    at, $800b
-AT = AT + V1;
-[AT + f7a4] = h(V0);
-80284880	080A13B8	ё...
-80284884	nop
-V0 = w[800af518];
-S0 = 800af7ac;
-80284898	080A12DB	Ы...
-A1 = S1;
-V0 = w[800af518];
-S0 = 800af7b4;
-802848B0	080A12DB	Ы...
-A1 = S1;
-802848B8	bne    s1, zero, L284918 [$80284918]
-A1 = 0001;
-V1 = w[800af518];
-802848C8	addiu  a1, zero, $8000 (=-$8000)
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802848D8	lui    at, $800b
-AT = AT + V0;
-A0 = w[AT + f7a8];
-802848E4	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-802848F4	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80284904	lui    at, $800b
-AT = AT + V1;
-[AT + f7a8] = w(V0);
-80284910	080A13B8	ё...
-80284914	nop
+switch( S0 )
+{
+    case 0:
+    {
+        A0 = bank;
+        A1 = 0; // min
+        A2 = 7; // max
+        func284478(); // pagination
+        [800af518] = w(V0);
+    }
+    break;
 
-L284918:	; 80284918
-V1 = w[800af518];
-80284920	nop
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284930	lui    at, $800b
-AT = AT + V0;
-A0 = h[AT + f7c4];
-8028493C	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-8028494C	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-8028495C	lui    at, $800b
-AT = AT + V1;
-[AT + f7c4] = h(V0);
-80284968	080A13B8	ё...
-8028496C	nop
-V0 = w[800af518];
-S0 = 800af7bc;
-80284980	080A12DB	Ы...
-A1 = S1;
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802849A0	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7c6];
-802849AC	0C0A111E	....
-A2 = ffff;
-A0 = w[800af518];
-802849BC	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-802849CC	lui    at, $800b
-AT = AT + V1;
-[AT + f7c6] = h(V0);
-802849D8	080A13B8	ё...
-802849DC	nop
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-802849F8	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7c8];
-80284A04	0C0A111E	....
-A2 = ffff;
-A0 = w[800af518];
-80284A14	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80284A24	lui    at, $800b
-AT = AT + V1;
-[AT + f7c8] = h(V0);
-80284A30	080A13B8	ё...
-80284A34	nop
-V1 = w[800af518];
-A1 = 0001;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284A50	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7f6];
-80284A5C	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-80284A6C	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80284A7C	lui    at, $800b
-AT = AT + V1;
-[AT + f7f6] = h(V0);
-80284A88	080A13B8	ё...
-80284A8C	nop
-V1 = w[800af518];
-A1 = 0001;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284AA8	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7f8];
-80284AB4	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-80284AC4	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80284AD4	lui    at, $800b
-AT = AT + V1;
-[AT + f7f8] = h(V0);
-80284AE0	080A13B8	ё...
-80284AE4	nop
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284B00	lui    at, $800b
-AT = AT + V0;
-A0 = h[AT + f7f4];
-80284B0C	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-80284B1C	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80284B2C	lui    at, $800b
-AT = AT + V1;
-[AT + f7f4] = h(V0);
-80284B38	080A13B8	ё...
-80284B3C	nop
-V0 = w[800af518];
-S0 = 800af7fa;
-80284B50	080A12DB	Ы...
-A1 = S1;
-A1 = S1;
-V0 = w[800af518];
-S0 = 800af802;
-A0 = V0 << 04;
-A0 = A0 - V0;
-A0 = A0 << 03;
-80284B78	0C0A1159	Y...
-A0 = A0 + S0;
-A0 = V0;
-80284B84	addiu  a1, zero, $8000 (=-$8000)
-80284B88	0C0A111E	....
-A2 = 7fff;
-A1 = S1;
-V1 = w[800af518];
-A2 = V0;
-A0 = V1 << 04;
-A0 = A0 - V1;
-A0 = A0 << 03;
-80284BAC	0C0A1144	D...
-A0 = A0 + S0;
-80284BB4	080A13B8	ё...
-80284BB8	nop
-A1 = S1;
-V0 = w[800af518];
-S0 = 800af80a;
-A0 = V0 << 04;
-A0 = A0 - V0;
-A0 = A0 << 03;
-80284BDC	0C0A1185	…...
-A0 = A0 + S0;
-A0 = V0;
-A1 = 0;
-80284BEC	0C0A111E	....
-A2 = 00ff;
-A1 = S1;
-V1 = w[800af518];
-A2 = V0;
-A0 = V1 << 04;
-A0 = A0 - V1;
-A0 = A0 << 03;
-80284C10	0C0A1170	p...
-A0 = A0 + S0;
-80284C18	080A13B8	ё...
-80284C1C	nop
-A1 = S1;
-V0 = w[800af518];
-S0 = 800af80e;
-A0 = V0 << 04;
-A0 = A0 - V0;
-A0 = A0 << 03;
-80284C40	0C0A11B1	±...
-A0 = A0 + S0;
-A0 = V0;
-80284C4C	addiu  a1, zero, $ff80 (=-$80)
-80284C50	0C0A111E	....
-A2 = 007f;
-A1 = S1;
-V1 = w[800af518];
-A2 = V0;
-A0 = V1 << 04;
-A0 = A0 - V1;
-A0 = A0 << 03;
-80284C74	0C0A119C	њ...
-A0 = A0 + S0;
-80284C7C	080A13B8	ё...
-80284C80	nop
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284C9C	lui    at, $800b
-AT = AT + V0;
-S0 = h[AT + f7ca];
-A2 = 0001;
-A0 = S0 & 0001;
-80284CB0	0C0A111E	....
-S0 = S0 & fffe;
-80284CB8	080A137B	{...
-80284CBC	nop
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284CD8	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7ca];
-A2 = 0003;
-A0 = A0 << 10;
-S0 = A0 >> 10;
-S0 = S0 & fff9;
-A0 = A0 >> 11;
-80284CF8	0C0A111E	....
-A0 = A0 & 0003;
-80284D00	080A137B	{...
-V0 = V0 << 01;
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284D20	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7ca];
-A2 = 0003;
-A0 = A0 << 10;
-S0 = A0 >> 10;
-S0 = S0 & fcff;
-A0 = A0 >> 18;
-80284D40	0C0A111E	....
-A0 = A0 & 0003;
-80284D48	080A137B	{...
-V0 = V0 << 08;
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284D68	lui    at, $800b
-AT = AT + V0;
-A0 = h[AT + f816];
-80284D74	0C0A111E	....
-A2 = 0fff;
-A0 = w[800af518];
-80284D84	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-80284D94	lui    at, $800b
-AT = AT + V1;
-[AT + f816] = h(V0);
-80284DA0	080A13B8	ё...
-80284DA4	nop
-V1 = w[800af518];
-A1 = 0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284DC0	lui    at, $800b
-AT = AT + V0;
-A0 = hu[AT + f7ca];
-A2 = 0002;
-A0 = A0 << 10;
-S0 = A0 >> 10;
-S0 = S0 & ff3f;
-A0 = A0 >> 16;
-80284DE0	0C0A111E	....
-A0 = A0 & 0003;
-V0 = V0 << 06;
-V1 = w[800af518];
-S0 = S0 | V0;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-80284E04	lui    at, $800b
-AT = AT + V0;
-[AT + f7ca] = h(S0);
-80284E10	080A13B8	ё...
-80284E14	nop
-80284E18	bne    s1, zero, L284e84 [$80284e84]
-80284E1C	addiu  a1, zero, $8000 (=-$8000)
-80284E20	addiu  s0, s0, $ffea (=-$16)
-V1 = w[800af518];
-S0 = S0 << 02;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-V0 = S0 + V0;
-80284E40	lui    at, $800b
-AT = AT + V0;
-A0 = h[AT + f7d0];
-80284E4C	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-80284E5C	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-S0 = S0 + V1;
-80284E70	lui    at, $800b
-AT = AT + S0;
-[AT + f7d0] = h(V0);
-80284E7C	080A13B8	ё...
-80284E80	nop
+    case 1:
+    {
+        A0 = h[800af7a0 + bank * 78 + 6];
+        A1 = 0;
+        A2 = ff;
+        func284478();
+        [800af7a0 + bank * 78 + 6] = h(V0);
+    }
+    break;
 
-L284e84:	; 80284E84
-80284E84	addiu  s0, s0, $ffea (=-$16)
-V1 = w[800af518];
-S0 = S0 << 02;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 03;
-V0 = S0 + V0;
-80284EA4	lui    at, $800b
-AT = AT + V0;
-A0 = h[AT + f7d2];
-80284EB0	0C0A111E	....
-A2 = 7fff;
-A0 = w[800af518];
-80284EC0	nop
-V1 = A0 << 04;
-V1 = V1 - A0;
-V1 = V1 << 03;
-S0 = S0 + V1;
-80284ED4	lui    at, $800b
-AT = AT + S0;
-[AT + f7d2] = h(V0);
+    case 2:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 2];
+        A1 = 0;
+        A2 = 7fff;
+        func284478();
+        [800af7a0 + bank * 78 + 2] = h(V0);
+    }
+    break;
+
+    case 3:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 4];
+        A1 = 1;
+        A2 = 7fff;
+        func284478();
+        [800af7a0 + bank * 78 + 4] = h(V0);
+    }
+    break;
+
+    case 4:
+    {
+        V0 = w[800af518];
+        S0 = 800af7ac;
+        80284898	080A12DB	Ы...
+        A1 = S1;
+    }
+    break;
+
+    case 5:
+    {
+        V0 = w[800af518];
+        S0 = 800af7b4;
+        802848B0	080A12DB	Ы...
+        A1 = S1;
+    }
+    break;
+
+    case 6:
+    {
+        802848B8	bne    s1, zero, L284918 [$80284918]
+        A1 = 0001;
+        V1 = w[800af518];
+        802848C8	addiu  a1, zero, $8000 (=-$8000)
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        802848D8	lui    at, $800b
+        AT = AT + V0;
+        A0 = w[AT + f7a8];
+        802848E4	func284478();	....
+        A2 = 7fff;
+        A0 = w[800af518];
+        802848F4	nop
+        V1 = A0 << 04;
+        V1 = V1 - A0;
+        V1 = V1 << 03;
+        80284904	lui    at, $800b
+        AT = AT + V1;
+        [AT + f7a8] = w(V0);
+        80284910	j L284ee0	ё...
+        80284914	nop
+
+        L284918:	; 80284918
+        V1 = w[800af518];
+        80284920	nop
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        80284930	lui    at, $800b
+        AT = AT + V0;
+        A0 = h[AT + f7c4];
+        8028493C	func284478();	....
+        A2 = 7fff;
+        A0 = w[800af518];
+        8028494C	nop
+        V1 = A0 << 04;
+        V1 = V1 - A0;
+        V1 = V1 << 03;
+        8028495C	lui    at, $800b
+        AT = AT + V1;
+        [AT + f7c4] = h(V0);
+        80284968	j L284ee0	ё...
+        8028496C	nop
+    }
+    break;
+
+    case 7:
+    {
+        V0 = w[800af518];
+        S0 = 800af7bc;
+        80284980	080A12DB	Ы...
+        A1 = S1;
+    }
+    break;
+
+    case 8:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 26];
+        A1 = 0;
+        A2 = ffff;
+        func284478();
+        [800af7a0 + bank * 78 + 26] = h(V0);
+    }
+    break;
+
+    case 9:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 28];
+        A1 = 0;
+        A2 = ffff;
+        func284478();
+        [800af7a0 + bank * 78 + 28] = h(V0);
+    }
+    break;
+
+    case a:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 56];
+        A1 = 1;
+        A2 = 7fff;
+        func284478();
+        [800af7a0 + bank * 78 + 56] = h(V0);
+    }
+    break;
+
+    case b:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 58];
+        A1 = 1;
+        A2 = 7fff;
+        func284478();
+        [800af7a0 + bank * 78 + 58] = h(V0);
+    }
+    break;
+
+    case c:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 54];
+        A1 = 0;
+        A2 = 7fff;
+        func284478();
+        [800af7a0 + bank * 78 + 54] = h(V0);
+    }
+    break;
+
+    case d:
+    {
+        V0 = w[800af518];
+        S0 = 800af7fa;
+        80284B50	080A12DB	Ы...
+        A1 = S1;
+    }
+    break;
+
+    case e:
+    {
+        A1 = S1;
+        V0 = w[800af518];
+        S0 = 800af802;
+        A0 = V0 << 04;
+        A0 = A0 - V0;
+        A0 = A0 << 03;
+        80284B78	0C0A1159	Y...
+        A0 = A0 + S0;
+        A0 = V0;
+        80284B84	addiu  a1, zero, $8000 (=-$8000)
+        80284B88	func284478();	....
+        A2 = 7fff;
+        A1 = S1;
+        V1 = w[800af518];
+        A2 = V0;
+        A0 = V1 << 04;
+        A0 = A0 - V1;
+        A0 = A0 << 03;
+        80284BAC	0C0A1144	D...
+        A0 = A0 + S0;
+        80284BB4	j L284ee0	ё...
+        80284BB8	nop
+    }
+    break;
+
+    case f:
+    {
+        A1 = S1;
+        V0 = w[800af518];
+        S0 = 800af80a;
+        A0 = V0 << 04;
+        A0 = A0 - V0;
+        A0 = A0 << 03;
+        80284BDC	0C0A1185	…...
+        A0 = A0 + S0;
+        A0 = V0;
+        A1 = 0;
+        80284BEC	func284478();	....
+        A2 = 00ff;
+        A1 = S1;
+        V1 = w[800af518];
+        A2 = V0;
+        A0 = V1 << 04;
+        A0 = A0 - V1;
+        A0 = A0 << 03;
+        80284C10	0C0A1170	p...
+        A0 = A0 + S0;
+        80284C18	j L284ee0	ё...
+        80284C1C	nop
+    }
+    break;
+
+    case 10:
+    {
+        A1 = S1;
+        V0 = w[800af518];
+        S0 = 800af80e;
+        A0 = V0 << 04;
+        A0 = A0 - V0;
+        A0 = A0 << 03;
+        80284C40	0C0A11B1	±...
+        A0 = A0 + S0;
+        A0 = V0;
+        80284C4C	addiu  a1, zero, $ff80 (=-$80)
+        80284C50	func284478();	....
+        A2 = 007f;
+        A1 = S1;
+        V1 = w[800af518];
+        A2 = V0;
+        A0 = V1 << 04;
+        A0 = A0 - V1;
+        A0 = A0 << 03;
+        80284C74	0C0A119C	њ...
+        A0 = A0 + S0;
+        80284C7C	j L284ee0	ё...
+        80284C80	nop
+    }
+    break;
+
+    case 11:
+    {
+        V1 = w[800af518];
+        A1 = 0;
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        80284C9C	lui    at, $800b
+        AT = AT + V0;
+        S0 = h[AT + f7ca];
+        A2 = 0001;
+        A0 = S0 & 0001;
+        80284CB0	func284478();	....
+        S0 = S0 & fffe;
+        80284CB8	080A137B	{...
+        80284CBC	nop
+    }
+    break;
+
+    case 12:
+    {
+        V1 = w[800af518];
+        A1 = 0;
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        80284CD8	lui    at, $800b
+        AT = AT + V0;
+        A0 = hu[AT + f7ca];
+        A2 = 0003;
+        A0 = A0 << 10;
+        S0 = A0 >> 10;
+        S0 = S0 & fff9;
+        A0 = A0 >> 11;
+        80284CF8	func284478();	....
+        A0 = A0 & 0003;
+        80284D00	080A137B	{...
+        V0 = V0 << 01;
+    }
+    break;
+
+    case 13:
+    {
+        V1 = w[800af518];
+        A1 = 0;
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        80284D20	lui    at, $800b
+        AT = AT + V0;
+        A0 = hu[AT + f7ca];
+        A2 = 0003;
+        A0 = A0 << 10;
+        S0 = A0 >> 10;
+        S0 = S0 & fcff;
+        A0 = A0 >> 18;
+        80284D40	func284478();	....
+        A0 = A0 & 0003;
+        80284D48	080A137B	{...
+        V0 = V0 << 08;
+    }
+    break;
+
+    case 14:
+    {
+        A0 = hu[800af7a0 + bank * 78 + 76];
+        A1 = 0;
+        A2 = fff;
+        func284478();
+        [800af7a0 + bank * 78 + 76] = h(V0);
+    }
+    break;
+
+    case 15:
+    {
+        V1 = w[800af518];
+        A1 = 0;
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        80284DC0	lui    at, $800b
+        AT = AT + V0;
+        A0 = hu[AT + f7ca];
+        A2 = 0002;
+        A0 = A0 << 10;
+        S0 = A0 >> 10;
+        S0 = S0 & ff3f;
+        A0 = A0 >> 16;
+        80284DE0	func284478();	....
+        A0 = A0 & 0003;
+        V0 = V0 << 06;
+        V1 = w[800af518];
+        S0 = S0 | V0;
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        80284E04	lui    at, $800b
+        AT = AT + V0;
+        [AT + f7ca] = h(S0);
+        80284E10	j L284ee0	ё...
+        80284E14	nop
+    }
+    break;
+
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 1a:
+    case 1b:
+    case 1c:
+    case 1d:
+    {
+        80284E18	bne    s1, zero, L284e84 [$80284e84]
+        80284E1C	addiu  a1, zero, $8000 (=-$8000)
+        80284E20	addiu  s0, s0, $ffea (=-$16)
+        V1 = w[800af518];
+        S0 = S0 << 02;
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        V0 = S0 + V0;
+        80284E40	lui    at, $800b
+        AT = AT + V0;
+        A0 = h[AT + f7d0];
+        80284E4C	func284478();	....
+        A2 = 7fff;
+        A0 = w[800af518];
+        80284E5C	nop
+        V1 = A0 << 04;
+        V1 = V1 - A0;
+        V1 = V1 << 03;
+        S0 = S0 + V1;
+        80284E70	lui    at, $800b
+        AT = AT + S0;
+        [AT + f7d0] = h(V0);
+        80284E7C	j L284ee0	ё...
+        80284E80	nop
+
+        L284e84:	; 80284E84
+        80284E84	addiu  s0, s0, $ffea (=-$16)
+        V1 = w[800af518];
+        S0 = S0 << 02;
+        V0 = V1 << 04;
+        V0 = V0 - V1;
+        V0 = V0 << 03;
+        V0 = S0 + V0;
+        80284EA4	lui    at, $800b
+        AT = AT + V0;
+        A0 = h[AT + f7d2];
+        80284EB0	func284478();	....
+        A2 = 7fff;
+        A0 = w[800af518];
+        80284EC0	nop
+        V1 = A0 << 04;
+        V1 = V1 - A0;
+        V1 = V1 << 03;
+        S0 = S0 + V1;
+        80284ED4	lui    at, $800b
+        AT = AT + S0;
+        [AT + f7d2] = h(V0);
+    }
+    break;
+}
 
 L284ee0:	; 80284EE0
 ////////////////////////////////
