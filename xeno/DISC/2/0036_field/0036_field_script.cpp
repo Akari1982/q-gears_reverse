@@ -1161,6 +1161,7 @@ return 0 - (0 < (sign_data & sign_mask)); // 0 - signed, -1 unsigned
 // get_bytes_from_800C2F3C()
 // [xxxxxxxx][xxxxxxx0] => x (offset to read)
 // [xxxxxxxx][xx000000] => x * 4 (offset to sign)
+
 slot = A0 / 2;
 
 script_file = w[800ad0d0];
@@ -1181,6 +1182,7 @@ else
 
 ////////////////////////////////
 // put_bytes_to_800C2F3C()
+
 [800c2f3c + ((A0 >> 1) << 1)] = h(A1);
 ////////////////////////////////
 

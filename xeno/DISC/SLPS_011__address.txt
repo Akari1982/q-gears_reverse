@@ -691,6 +691,8 @@
 
 80059918 some gpu mem set (0x100 size).
 
+80059a38 [][][][] pointer to something.
+
 80059a3c some array 0x2 size.
 
 80059a5c [][][][] init with 0xc.
@@ -973,6 +975,8 @@ First struct is just header struct (0x10 size), later we add more structs differ
 8006b4c8 [][][][] otag ptr.
 8006b4cc [][][][] data src (data to transfer).
 8006b4d0 start of otag data.
+
+8006ccc4 start of player data. savemap?
 
 8006f020 array of 3 items with size 0x4. Init with 0.
 

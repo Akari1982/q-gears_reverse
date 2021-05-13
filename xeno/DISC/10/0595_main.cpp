@@ -479,6 +479,9 @@ if( ( hu[800c2dd4] & 0800 ) && ( hu[800af370] & 0040 ) )
     }
 }
 
+game_data = w[80059a38];
+struct_5c_p = w[800aefe4];
+
 switch( w[802859d8] )
 {
     case c:
@@ -494,8 +497,7 @@ switch( w[802859d8] )
         system_print_alias();
 
         pc = w[800b1740];
-        V1 = w[800aefe4];
-        V0 = w[V1 + pc * 5c + 4c];
+        V0 = w[struct_5c_p + pc * 5c + 4c];
         A1 = h[V0 + 22];
         A2 = h[V0 + 2a];
         A3 = h[V0 + 26];
@@ -585,8 +587,8 @@ switch( w[802859d8] )
         L282038:	; 80282038
         A1 = w[802859c0];
         A0 = 8028010c; // " R %d\n"
-        80282048	jal    $system_print_alias
-        8028204C	nop
+        system_print_alias();
+
         V1 = w[802859d0];
         V0 = 0002;
         8028205C	bne    v1, v0, L28208c [$8028208c]
@@ -601,13 +603,13 @@ switch( w[802859d8] )
 
         L28208c:	; 8028208C
         A1 = w[802859c4];
-        A0 = 8028011c;
-        8028209C	jal    $system_print_alias
-        802820A0	nop
+        A0 = 8028011c; // " G %d\n"
+        system_print_alias();
+
         V1 = w[802859d0];
         V0 = 0003;
         802820B0	bne    v1, v0, L2820e0 [$802820e0]
-        802820B4	nop
+
         A1 = w[802859c8];
         A0 = 80280124;
         A1 = A1 + S0;
@@ -618,9 +620,9 @@ switch( w[802859d8] )
 
         L2820e0:	; 802820E0
         A1 = w[802859c8];
-        A0 = 8028012c;
-        802820F0	jal    $system_print_alias
-        802820F4	nop
+        A0 = 8028012c; // " B %d\n"
+        system_print_alias();
+
         A0 = 0001;
         A1 = 0001;
         A2 = w[802859c0];
@@ -630,192 +632,135 @@ switch( w[802859d8] )
         V0 = V0 >> 04;
         V0 = V0 & 0003;
         [SP + 0010] = w(V1);
-        8028212C	jal    $80071398
         [SP + 0014] = w(V0);
+        8028212C	jal    $80071398
     }
     break;
 
     case b:
     {
-        V0 = hu[800c2dd4];
-        V0 = V0 & 0002;
-        8028214C	beq    v0, zero, L28217c [$8028217c]
-        80282150	nop
-        V0 = w[802859d0];
-        8028215C	nop
-        80282160	addiu  v0, v0, $ffff (=-$1)
-        [802859d0] = w(V0);
-        8028216C	bgez   v0, L28217c [$8028217c]
-        V0 = 0007;
-        [802859d0] = w(V0);
+        if( hu[800c2dd4] & 2 )
+        {
+            [802859d0] = w(w[802859d0] - 1);
+            if( V0 < 0 )
+            {
+                [802859d0] = w(7);
+            }
+        }
 
-        L28217c:	; 8028217C
-        V0 = hu[800c2dd4];
-        80282184	nop
-        V0 = V0 & 0001;
-        8028218C	beq    v0, zero, L2821c0 [$802821c0]
-        80282190	nop
-        V0 = w[802859d0];
-        8028219C	nop
-        V0 = V0 + 0001;
-        [802859d0] = w(V0);
-        V0 = V0 < 0008;
-        802821B0	bne    v0, zero, L2821c0 [$802821c0]
-        802821B4	nop
-        [802859d0] = w(0);
+        if( hu[800c2dd4] & 1 )
+        {
+            [802859d0] = w(w[802859d0] + 1);
+            if( V0 >= 8 )
+            {
+                [802859d0] = w(0);
+            }
+        }
 
-        L2821c0:	; 802821C0
-        V1 = w[80064ee0];
-        V0 = 0008;
-        802821CC	bne    v1, v0, L2821dc [$802821dc]
-        S0 = 0;
-        S0 = w[80064ee8];
+        if( w[80064ee0] == 8 )
+        {
+            S0 = w[80064ee8];
+        }
+        else
+        {
+            S0 = 0;
+        }
 
-        L2821dc:	; 802821DC
-        V0 = w[802859d0];
-        802821E4	nop
-        802821E8	bne    v0, zero, L282214 [$80282214]
-        802821EC	nop
-        V1 = 800b1664;
-        V0 = bu[V1 + 0000];
-        A0 = 80280134;
-        V0 = V0 + S0;
-        A1 = V0 & 00ff;
-        8028220C	080A0889	‰...
-        [V1 + 0000] = b(V0);
-
-        L282214:	; 80282214
+        if( w[802859d0] == 0 )
+        {
+            [800b1664] = b(bu[800b1664] + S0);
+            A0 = 80280134; // ">NearColor R=%d\n"
+        }
+        else
+        {
+            A0 = 80280148; // " NearColor R=%d\n"
+        }
         A1 = bu[800b1664];
-        A0 = 80280148; // " NearColor R=%d\n"
-        80282224	jal    $system_print_alias
-        80282228	nop
-        V1 = w[802859d0];
-        V0 = 0001;
-        80282238	bne    v1, v0, L282264 [$80282264]
-        8028223C	nop
-        V1 = 800b1665;
-        V0 = bu[V1 + 0000];
-        A0 = 8028015c;
-        V0 = V0 + S0;
-        A1 = V0 & 00ff;
-        8028225C	080A089D	ќ...
-        [V1 + 0000] = b(V0);
+        system_print_alias();
 
-        L282264:	; 80282264
+        if( w[802859d0] == 1 )
+        {
+            [800b1665] = b(bu[800b1665] + S0);
+            A0 = 8028015c; // ">          G=%d\n"
+        }
+        else
+        {
+            A0 = 80280170; // "           G=%d\n"
+        }
         A1 = bu[800b1665];
-        A0 = 80280170;
-        80282274	jal    $system_print_alias
-        80282278	nop
-        V1 = w[802859d0];
-        V0 = 0002;
-        80282288	bne    v1, v0, L2822b4 [$802822b4]
-        8028228C	nop
-        V1 = 800b1666;
-        V0 = bu[V1 + 0000];
-        A0 = 80280184;
-        V0 = V0 + S0;
-        A1 = V0 & 00ff;
-        802822AC	080A08B1	±...
-        [V1 + 0000] = b(V0);
+        system_print_alias();
 
-        L2822b4:	; 802822B4
+        if( w[802859d0] == 2 )
+        {
+            [800b1666] = b(bu[800b1666] + S0);
+            A0 = 80280184; // ">          B=%d\n"
+        }
+        else
+        {
+            A0 = 80280198; // "           B=%d\n"
+        }
         A1 = bu[800b1666];
-        A0 = 80280198;
-        802822C4	jal    $system_print_alias
-        802822C8	nop
-        V1 = w[802859d0];
-        V0 = 0003;
-        802822D8	bne    v1, v0, L282304 [$80282304]
-        802822DC	nop
-        V1 = 800b1668;
-        V0 = bu[V1 + 0000];
-        A0 = 802801ac;
-        V0 = V0 + S0;
-        A1 = V0 & 00ff;
-        802822FC	080A08C5	Е...
-        [V1 + 0000] = b(V0);
+        system_print_alias();
 
-        L282304:	; 80282304
+        if( w[802859d0] == 3 )
+        {
+            [800b1668] = b(bu[800b1668] + S0);
+            A0 = 802801ac; // ">FarColor  R=%d\n"
+        }
+        else
+        {
+            A0 = 802801c0; // " FarColor  R=%d\n"
+        }
         A1 = bu[800b1668];
-        A0 = 802801c0;
-        80282314	jal    $system_print_alias
-        80282318	nop
-        V1 = w[802859d0];
-        V0 = 0004;
-        80282328	bne    v1, v0, L282354 [$80282354]
-        8028232C	nop
-        V1 = 800b1669;
-        V0 = bu[V1 + 0000];
-        A0 = 8028015c;
-        V0 = V0 + S0;
-        A1 = V0 & 00ff;
-        8028234C	080A08D9	Щ...
-        [V1 + 0000] = b(V0);
+        system_print_alias();
 
-        L282354:	; 80282354
+        if( w[802859d0] == 4 )
+        {
+            [800b1669] = b(bu[800b1669] + S0);
+            A0 = 8028015c; // ">          G=%d\n"
+        }
+        else
+        {
+            A0 = 80280170; // "           G=%d\n"
+        }
         A1 = bu[800b1669];
-        A0 = 80280170;
-        80282364	jal    $system_print_alias
-        80282368	nop
-        V1 = w[802859d0];
-        V0 = 0005;
-        80282378	bne    v1, v0, L2823a4 [$802823a4]
-        8028237C	nop
-        V1 = 800b166a;
-        V0 = bu[V1 + 0000];
-        A0 = 80280184;
-        V0 = V0 + S0;
-        A1 = V0 & 00ff;
-        8028239C	080A08ED	н...
-        [V1 + 0000] = b(V0);
+        system_print_alias();
 
-        L2823a4:	; 802823A4
+        if( w[802859d0] == 5 )
+        {
+            [800b166a] = b(bu[800b166a] + S0);
+            A0 = 80280184; // ">          B=%d\n"
+        }
+        else
+        {
+            A0 = 80280198; // "           B=%d\n"
+        }
         A1 = bu[800b166a];
-        A0 = 80280198; // "           B=%d\n"
-        802823B4	jal    $system_print_alias
-        802823B8	nop
-        V1 = w[802859d0];
-        V0 = 0006;
-        802823C8	bne    v1, v0, L282400 [$80282400]
-        V0 = S0 << 02;
-        A0 = 802801d4;
-        A2 = 800b166c;
-        V0 = V0 + S0;
-        V1 = hu[A2 + 0000];
-        V0 = V0 << 01;
-        V1 = V1 + V0;
-        A1 = V1 << 10;
-        A1 = A1 >> 10;
-        802823F8	080A0904	....
-        [A2 + 0000] = h(V1);
+        system_print_alias();
 
-        L282400:	; 80282400
+        if( w[802859d0] == 6 )
+        {
+            [800b166c] = h(hu[800b166c] + S0 * a);
+            A0 = 802801d4; // ">Near        %d\n"
+        }
+        else
+        {
+            A0 = 802801e8; // " Near        %d\n"
+        }
         A1 = h[800b166c];
-        A0 = 802801e8;
-        80282410	jal    $system_print_alias
-        80282414	nop
-        V1 = w[802859d0];
-        V0 = 0007;
-        80282424	bne    v1, v0, L282464 [$80282464]
-        V0 = S0 << 02;
-        A0 = 802801fc;
-        A2 = 800b166e;
-        V0 = V0 + S0;
-        V1 = hu[A2 + 0000];
-        V0 = V0 << 01;
-        V1 = V1 + V0;
-        A1 = V1 << 10;
-        A1 = A1 >> 10;
-        80282454	jal    $system_print_alias
-        [A2 + 0000] = h(V1);
-        j 802835f0
+        system_print_alias();
 
-        L282464:	; 80282464
+        if( w[802859d0] == 7 )
+        {
+            [800b166e] = h(hu[800b166e] + S0 * a);
+            A0 = 802801fc; // ">Far         %d\n"
+        }
+        else
+        {
+            A0 = 80280210; // " Far         %d\n"
+        }
         A1 = h[800b166e];
-        A0 = 80280210;
-        80282474	jal    $system_print_alias
-        80282478	nop
-        j 802835f0
+        system_print_alias();
     }
     break;
 
@@ -846,8 +791,7 @@ switch( w[802859d8] )
         system_print_alias();
 
         pc = w[800b1740];
-        V1 = w[800aefe4];
-        player_data = w[V1 + pc * 5c + 4c];
+        player_data = w[struct_5c_p + pc * 5c + 4c];
 
         A1 = h[player_data + 22];
         A2 = h[player_data + 2a];
@@ -959,38 +903,25 @@ switch( w[802859d8] )
         system_print_alias();
 
         A0 = 0;
-        A2 = 000f;
         A1 = w[802859d0];
-        802827F8	jal    $800325b0
-        A3 = 00dc;
-        V1 = hu[800c2dd4];
-        80282808	nop
-        V0 = V1 & 0001;
-        80282810	beq    v0, zero, L282834 [$80282834]
-        V0 = V1 & 0002;
-        V0 = w[802859d0];
-        80282820	nop
-        V0 = V0 + 0004;
-        [802859d0] = w(V0);
-        V0 = V1 & 0002;
+        A2 = f;
+        A3 = dc;
+        system_memory_full_dump();
 
-        L282834:	; 80282834
-        80282834	beq    v0, zero, L282854 [$80282854]
-        80282838	nop
-        V0 = w[802859d0];
-        80282844	nop
-        80282848	addiu  v0, v0, $fffc (=-$4)
-        [802859d0] = w(V0);
+        if( hu[800c2dd4] & 1 )
+        {
+            [802859d0] = w(w[802859d0] + 4);
+        }
+        if( hu[800c2dd4] & 2 )
+        {
+            [802859d0] = w(w[802859d0] - 4);
+        }
 
-        L282854:	; 80282854
         system_memory_get_uncleared_allocated_size();
 
         A0 = 8028040c; // "Free Size=%x\n"
         A1 = V0;
         system_print_alias();
-
-        j 802835f0
-        80282870	nop
     }
     break;
 
@@ -1032,92 +963,84 @@ switch( w[802859d8] )
         {
             A0 = 80280468; // "Num=%x HP=%3d MP=%2d\n"
             A1 = i;
-            V0 = w[80059a38];
-            A2 = hu[V0 + i * a4 + 2b8];
-            A3 = hu[V0 + i * a4 + 2bc];
+            A2 = hu[game_data + i * a4 + 2b8];
+            A3 = hu[game_data + i * a4 + 2bc];
             system_print_alias();
         }
 
-        V0 = w[80059a38];
         A0 = 80280480; // "Gold=%d\n"
-        A1 = w[V0 + 1924];
+        A1 = w[game_data + 1924];
         system_print_alias();
 
-        A1 = hu[800c2f3c];
         A0 = 8028048c; // "SinarioFlag=%d\n"
+        A1 = hu[800c2f3c];
         system_print_alias();
 
+        A0 = 8028049c; // "Party=%d %d %d\n"
         A1 = w[80061c20];
         A2 = w[80061c24];
         A3 = w[80061c28];
-        A0 = 8028049c; // "Party=%d %d %d\n"
         system_print_alias();
 
-        V0 = w[80059a38];
         A0 = 802804ac; // "Member "
-        S3 = hu[V0 + 1d30];
         system_print_alias();
 
+        S3 = hu[game_data + 1d30];
         for( int i = 0; i < b; ++i )
         {
-            if( S3 & 0001 )
+            if( S3 & 1 )
             {
                 A0 = 802804b4; // "%d "
                 A1 = S2;
                 system_print_alias();
             }
 
-            S3 = S3 >> 01;
+            S3 = S3 >> 1;
         }
 
         A0 = 80280090; // "\n"
         system_print_alias();
 
         A0 = 802804b8; // "FrMask "
-        V0 = w[80059a38];
-        S3 = hu[V0 + 1d32];
         system_print_alias();
 
+        S3 = hu[game_data + 1d32];
         for( int i = 0; i < b; ++i )
         {
-            if( ( S3 & 0001 ) == 0 )
+            if( ( S3 & 1 ) == 0 )
             {
                 A0 = 802804b4; // "%d "
                 A1 = S2;
                 system_print_alias();
             }
-            S3 = S3 >> 01;
+            S3 = S3 >> 1;
         }
 
         A0 = 80280090; // "\n"
         system_print_alias();
 
         A0 = 802804c0; // "FrLock "
-        V0 = w[80059a38];
-        S3 = hu[V0 + 2318];
         system_print_alias();
 
+        S3 = hu[game_data + 2318];
         for( int i = 0; i < b; ++i )
         {
-            if( S3 & 0001 )
+            if( S3 & 1 )
             {
                 A0 = 802804b4; // "%d "
                 A1 = S2;
                 system_print_alias();
             }
-            S3 = S3 >> 01;
+            S3 = S3 >> 1;
         }
 
         A0 = 80280090; // "\n"
         system_print_alias();
 
         A0 = 802804c8; // "GearRide=%d %d %d\n"
-        V0 = w[80059a38];
-        A1 = bu[V0 + 22b1];
-        A2 = bu[V0 + 22b2];
-        A3 = bu[V0 + 22b3];
-        S0 = 80061c20;
-        S1 = 00ff;
+        A1 = bu[game_data + 22b1];
+        A2 = bu[game_data + 22b2];
+        A3 = bu[game_data + 22b3];
         system_print_alias();
 
         A0 = 802804dc; // "GearNum="
@@ -1125,160 +1048,90 @@ switch( w[802859d8] )
 
         for( int i = 0; i < 3; ++i )
         {
-            V1 = w[S0 + 0000];
-            S0 = S0 + 0004;
-            if( V1 == S1 )
+            V1 = w[80061c20 + i * 4];
+            if( V1 == ff )
             {
                 break;
             }
 
             A0 = 802804e8; // " %d"
-            V0 = V1 << 02;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 + V1;
-            V1 = w[80059a38];
-            V0 = V0 << 02;
-            V1 = V1 + V0;
-            A1 = bu[V1 + 030c];
+            A1 = bu[game_data + V1 * a4 + 30c];
             system_print_alias();
         }
 
-        L282b1c:	; 80282B1C
         A0 = 802804ec; // "\nTYPE="
         system_print_alias();
 
-        S2 = 0;
-        S3 = 00ff;
-        S0 = 80059ad4;
-        S1 = 0;
+        for( int i = 0; i < 3; ++i )
+        {
+            V1 = w[80059ad4 + i * 4];
+            if( ( w[80061c20 + i * 4] == ff ) || ( V1 == ff ) )
+            {
+                break;
+            }
 
-        loop282b3c:	; 80282B3C
-            V0 = w[80061c20 + S1];
-            80282B48	nop
-            80282B4C	beq    v0, s3, L282c74 [$80282c74]
-            80282B50	nop
-            V1 = w[S0 + 0000];
-            80282B58	nop
-            80282B5C	beq    v1, s3, L282c74 [$80282c74]
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 - V1;
-            V1 = w[800aefe4];
-            V0 = V0 << 02;
-            V0 = V0 + V1;
-            V0 = w[V0 + 004c];
-            80282B84	nop
-            V0 = w[V0 + 0000];
-            80282B8C	nop
-            V0 = V0 >> 08;
-            V1 = V0 & 0007;
-            V0 = 0002;
-            80282B9C	beq    v1, v0, L282be8 [$80282be8]
-            V0 = V1 < 0003;
-            80282BA4	beq    v0, zero, L282bbc [$80282bbc]
-            V0 = 0001;
-            80282BAC	beq    v1, v0, L282bd0 [$80282bd0]
-            80282BB0	nop
-            80282BB4	080A0B06	....
-            80282BB8	nop
+            V0 = w[struct_5c_p + V1 * 5с + 4c];
+            V1 = (w[V0 + 0] >> 8) & 7;
+            if( V1 == 1 )
+            {
+                A0 = 802804f4; // "People "
+                system_print_alias();
+            }
+            else if( V1 == 2 )
+            {
+                A0 = 802804fc; // "Robo "
+                system_print_alias();
+            }
+            else if( V1 == 4 )
+            {
+                A0 = 80280504; // "Play "
+                system_print_alias();
+            }
+            else
+            {
+                V1 = w[80059ad4 + i * 4];
+                V0 = w[struct_5c_p + V1 * 5с + 4c];
+                A0 = 8028050c; // "?%d "
+                A1 = (w[V0 + 0] >> 8) & 7;
+                system_print_alias();
+            }
+        }
 
-            L282bbc:	; 80282BBC
-            V0 = 0004;
-            80282BC0	beq    v1, v0, L282c00 [$80282c00]
-            80282BC4	nop
-            80282BC8	080A0B06	....
-            80282BCC	nop
-
-            L282bd0:	; 80282BD0
-            A0 = 802804f4; // "People "
-            S0 = S0 + 0004;
-            system_print_alias();
-
-            80282BE0	080A0B1A	....
-            S2 = S2 + 0001;
-
-            L282be8:	; 80282BE8
-            A0 = 802804fc; // "Robo "
-            S0 = S0 + 0004;
-            system_print_alias();
-
-            80282BF8	080A0B1A	....
-            S2 = S2 + 0001;
-
-            L282c00:	; 80282C00
-            A0 = 80280504; // "Play "
-            S0 = S0 + 0004;
-            system_print_alias();
-
-            80282C10	080A0B1A	....
-            S2 = S2 + 0001;
-            V1 = w[S0 + 0000];
-            80282C1C	nop
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 - V1;
-            V1 = w[800aefe4];
-            V0 = V0 << 02;
-            V0 = V0 + V1;
-            V0 = w[V0 + 004c];
-            80282C44	nop
-            A1 = w[V0 + 0000];
-            A0 = 8028050c; // "?%d "
-            A1 = A1 >> 08;
-            A1 = A1 & 0007;
-            system_print_alias();
-
-            S0 = S0 + 0004;
-            S1 = S1 + 0004;
-            S2 = S2 + 0001;
-            V0 = S2 < 0003;
-        80282C6C	bne    v0, zero, loop282b3c [$80282b3c]
-
-        L282c74:	; 80282C74
         A0 = 80280514; // " ID="
         system_print_alias();
 
         V1 = w[800b1740];
-        V0 = V1 << 01;
-        V0 = V0 + V1;
-        V0 = V0 << 03;
-        V0 = V0 - V1;
-        V1 = w[800aefe4];
-        V0 = V0 << 02;
-        V0 = V0 + V1;
-        V0 = w[V0 + 004c];
-
-        S0 = w[V0 + 0014];
-        V0 = S0 & 0080;
-        A0 = 80280520; // "-"
-        if( V0 == 0 )
+        V0 = w[struct_5c_p + V1 * 5с + 4c];
+        S0 = w[V0 + 14];
+        if( S0 & 0080 )
+        {
+            A0 = 80280520; // "-"
+        }
+        else
         {
             A0 = 8028051c; // "C"
         }
         system_print_alias();
 
-        V0 = S0 & 0040;
-        A0 = 80280520; // "-"
-        if( V0 == 0 )
+        if( S0 & 0040 )
+        {
+            A0 = 80280520; // "-"
+        }
+        else
         {
             A0 = 80280524; // "G"
         }
         system_print_alias();
 
-        V0 = S0 & 0020;
-        if( V0 == 0 )
+        if( S0 & 0020 )
         {
-            A0 = 80280528; // "P"
-            system_print_alias();
+            A0 = 80280520; // "-"
         }
         else
         {
-            A0 = 80280520; // "-"
-            system_print_alias();
+            A0 = 80280528; // "P"
         }
+        system_print_alias();
     }
     break;
 
@@ -1290,7 +1143,6 @@ switch( w[802859d8] )
         S3 = 0;
         for( int i = w[802859d0]; i < w[800ad0d4]; ++i )
         {
-            struct_5c_p = w[800aefe4];
             data = w[struct_5c_p + i * 5c + 4c];
 
             A0 = 8028054c; // "ActNum=%3d RUN=%04x\n"
@@ -1358,33 +1210,22 @@ switch( w[802859d8] )
         A0 = 802805a0; // "---------- CPU Time --------\n"
         system_print_alias();
 
-        S2 = 0;
-        V0 = h[802859f8];
-        if( V0 > 0 )
+        for( int i = 0; i < h[802859f8]; ++i )
         {
-            S0 = 0;
-
-            loop282fbc:	; 80282FBC
-                A0 = 802805c0; // "%s = %6d\n"
-                A1 = w[80285a04 + S0];
-                A2 = w[80285a00 + S0];
-                system_print_alias();
-
-                S0 = S0 + c;
-                V0 = h[802859f8];
-                S2 = S2 + 1;
-                V0 = S2 < V0;
-            80282FF4	bne    v0, zero, loop282fbc [$80282fbc]
+            A0 = 802805c0; // "%s = %6d\n"
+            A1 = w[80285a04 + i * c];
+            A2 = w[80285a00 + i * c];
+            system_print_alias();
         }
 
+        A0 = 802805cc; // "\nCPU=%6d GPU=%6d\n"
         A1 = w[800ad078];
         A2 = w[800ad07c];
-        A0 = 802805cc; // "\nCPU=%6d GPU=%6d\n"
         system_print_alias();
 
+        A0 = 802800b4; // "PolyCount %d / %d\n"
         A1 = w[80058c14];
         A2 = w[80058c5c];
-        A0 = 802800b4; // "PolyCount %d / %d\n"
         system_print_alias();
     }
     break;
@@ -1395,32 +1236,27 @@ switch( w[802859d8] )
         system_print_alias();
 
         S3 = 0;
-        S2 = w[802859d0];
-        8028305C	nop
-        V0 = S2 < 0400;
-        80283064	beq    v0, zero, L2832a8 [$802832a8]
-        80283068	nop
+        for( int i = w[802859d0]; i < 400; ++i )
+        {
+            A0 = i * 2;
+            get_bytes_from_800C2F3C();
+            S1 = V0;
 
-        loop28306c:	; 8028306C
-        S0 = S2 << 01;
-        80283070	jal    $800a25a8
-        A0 = S0;
-        A0 = S0;
-        8028307C	jal    $800a25a8
-        S1 = V0;
-        A0 = 80280600; // "ADD %04x:%08x %06d\n"
-        A1 = S0;
-        A2 = S1;
-        A3 = V0;
-        80283094	jal    $system_print_alias
+            A0 = i * 2;
+            get_bytes_from_800C2F3C();
 
-        V0 = S3 < 0010;
-        802830A0	beq    v0, zero, L2832a8 [$802832a8]
-        802830A4	nop
-        S2 = S2 + 0001;
-        V0 = S2 < 0400;
-        802830B0	bne    v0, zero, loop28306c [$8028306c]
-        S3 = S3 + 0001;
+            A0 = 80280600; // "ADD %04x:%08x %06d\n"
+            A1 = i * 2;
+            A2 = S1;
+            A3 = V0;
+            system_print_alias();
+
+            if( S3 >= 10 )
+            {
+                break;
+            }
+            S3 = S3 + 1;
+        }
 
         if( hu[800c2dd4] & 0001 )
         {
@@ -1475,41 +1311,25 @@ switch( w[802859d8] )
         system_print_alias();
 
         S3 = 0;
-        S2 = w[802859d0];
-        V0 = S2 < 0096;
-        80283180	beq    v0, zero, L2832a8 [$802832a8]
-        80283184	nop
-
-        loop283188:	; 80283188
-            V0 = w[80059a38];
-            80283190	nop
-            V0 = V0 + S2;
-            V1 = bu[V0 + 1f91];
-            A1 = bu[V0 + 2026];
-            A2 = bu[V0 + 1f90];
-            A3 = bu[V0 + 2027];
-            [SP + 0010] = w(V1);
-            V1 = bu[V0 + 2028];
-            802831B0	nop
-            [SP + 0014] = w(V1);
-            V1 = bu[V0 + 1f92];
-            802831BC	nop
-            [SP + 0018] = w(V1);
-            V1 = bu[V0 + 2029];
-            802831C8	nop
-            [SP + 001c] = w(V1);
-            V0 = bu[V0 + 1f93];
-            [SP + 0020] = w(V0);
+        for( int i = w[802859d0]; i < 25; ++i )
+        {
             A0 = 80280658; // "%03d=%03d %03d=%03d %03d=%03d %03d=%03d\n"
+            A1 = bu[game_data + 2026 + i * 4];
+            A2 = bu[game_data + 1f90 + i * 4];
+            A3 = bu[game_data + 2027 + i * 4];
+            A4 = bu[game_data + 1f91 + i * 4];
+            A5 = bu[game_data + 2028 + i * 4];
+            A6 = bu[game_data + 1f92 + i * 4];
+            A7 = bu[game_data + 2029 + i * 4];
+            A8 = bu[game_data + 1f93 + i * 4];
             system_print_alias();
 
-            V0 = S3 < 0010;
-            802831E8	beq    v0, zero, L2832a8 [$802832a8]
-            802831EC	nop
-            S2 = S2 + 0004;
-            V0 = S2 < 0096;
-            S3 = S3 + 0001;
-        802831F8	bne    v0, zero, loop283188 [$80283188]
+            if( S3 >= 10 )
+            {
+                break;
+            }
+            S3 = S3 + 1;
+        }
 
         if( hu[800c2dd4] & 0001 )
         {
@@ -1531,15 +1351,14 @@ switch( w[802859d8] )
         for( int i = w[802859d0]; i < 32; ++i )
         {
             A0 = 80280658; // "%03d=%03d %03d=%03d %03d=%03d %03d=%03d\n"
-            V0 = w[80059a38];
-            A1 = bu[V0 + 1ec8 + i * 4];
-            A2 = bu[V0 + 1e00 + i * 4];
-            A3 = bu[V0 + 1ec9 + i * 4];
-            A4 = bu[V0 + 1e01 + i * 4];
-            A5 = bu[V0 + 1eca + i * 4];
-            A6 = bu[V0 + 1e02 + i * 4];
-            A7 = bu[V0 + 1ecb + i * 4];
-            A8 = bu[V0 + 1e03 + i * 4];
+            A1 = bu[game_data + 1ec8 + i * 4];
+            A2 = bu[game_data + 1e00 + i * 4];
+            A3 = bu[game_data + 1ec9 + i * 4];
+            A4 = bu[game_data + 1e01 + i * 4];
+            A5 = bu[game_data + 1eca + i * 4];
+            A6 = bu[game_data + 1e02 + i * 4];
+            A7 = bu[game_data + 1ecb + i * 4];
+            A8 = bu[game_data + 1e03 + i * 4];
             system_print_alias();
 
             if( S3 >= 10 )
@@ -2514,77 +2333,78 @@ switch( S0 )
 
     case 4:
     {
-        V0 = w[800af518];
-        S0 = 800af7ac;
-        80284898	080A12DB	Ы...
+        A0 = 800af7ac + bank * 78;
         A1 = S1;
+        func284564();
+
+        A0 = V0;
+        A1 = -8000;
+        A2 = 7fff;
+        func284478();
+
+        A0 = 800af7ac + bank * 78;
+        A1 = S1;
+        A2 = V0;
+        func284510();
     }
     break;
 
     case 5:
     {
-        V0 = w[800af518];
-        S0 = 800af7b4;
-        802848B0	080A12DB	Ы...
+        A0 = 800af7b4 + bank * 78;
         A1 = S1;
+        func284564();
+
+        A0 = V0;
+        A1 = -8000;
+        A2 = 7fff;
+        func284478();
+
+        A0 = 800af7b4 + bank * 78;
+        A1 = S1;
+        A2 = V0;
+        func284510();
     }
     break;
 
     case 6:
     {
-        802848B8	bne    s1, zero, L284918 [$80284918]
-        A1 = 0001;
-        V1 = w[800af518];
-        802848C8	addiu  a1, zero, $8000 (=-$8000)
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        802848D8	lui    at, $800b
-        AT = AT + V0;
-        A0 = w[AT + f7a8];
-        802848E4	func284478();	....
-        A2 = 7fff;
-        A0 = w[800af518];
-        802848F4	nop
-        V1 = A0 << 04;
-        V1 = V1 - A0;
-        V1 = V1 << 03;
-        80284904	lui    at, $800b
-        AT = AT + V1;
-        [AT + f7a8] = w(V0);
-        80284910	j L284ee0	ё...
-        80284914	nop
+        if( S1 == 0 )
+        {
+            A0 = w[800af7a8 + bank * 78];
+            A1 = -8000;
+            A2 = 7fff;
+            func284478();
 
-        L284918:	; 80284918
-        V1 = w[800af518];
-        80284920	nop
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        80284930	lui    at, $800b
-        AT = AT + V0;
-        A0 = h[AT + f7c4];
-        8028493C	func284478();	....
-        A2 = 7fff;
-        A0 = w[800af518];
-        8028494C	nop
-        V1 = A0 << 04;
-        V1 = V1 - A0;
-        V1 = V1 << 03;
-        8028495C	lui    at, $800b
-        AT = AT + V1;
-        [AT + f7c4] = h(V0);
-        80284968	j L284ee0	ё...
-        8028496C	nop
+            [800af7a8 + bank * 78] = w(V0);
+        }
+        else
+        {
+            A0 = h[800af7c4 + bank * 78];
+            A1 = 1;
+            A2 = 7fff;
+            func284478();
+
+            [800af7c4 + bank * 78] = h(V0);
+        }
     }
     break;
 
     case 7:
     {
-        V0 = w[800af518];
-        S0 = 800af7bc;
-        80284980	080A12DB	Ы...
+        A0 = 800af7bc + bank * 78;
         A1 = S1;
+        func284564();
+
+        A0 = V0;
+        A1 = -8000;
+        A2 = 7fff;
+        func284478();
+
+        A0 = 800af7bc + bank * 78;
+        A1 = S1;
+        A2 = V0;
+        func284510();
     }
     break;
 
@@ -2640,154 +2460,123 @@ switch( S0 )
 
     case d:
     {
-        V0 = w[800af518];
-        S0 = 800af7fa;
-        80284B50	080A12DB	Ы...
+        A0 = 800af7fa + bank * 78;
         A1 = S1;
+        func284564();
+
+        A0 = V0;
+        A1 = -8000;
+        A2 = 7fff;
+        func284478();
+
+        A0 = 800af7fa + bank * 78;
+        A1 = S1;
+        A2 = V0;
+        func284510();
     }
     break;
 
     case e:
     {
+        A0 = 800af802 + bank * 78;
         A1 = S1;
-        V0 = w[800af518];
-        S0 = 800af802;
-        A0 = V0 << 04;
-        A0 = A0 - V0;
-        A0 = A0 << 03;
-        80284B78	0C0A1159	Y...
-        A0 = A0 + S0;
+        func284564();
+
         A0 = V0;
-        80284B84	addiu  a1, zero, $8000 (=-$8000)
-        80284B88	func284478();	....
+        A1 = -8000;
         A2 = 7fff;
+        func284478();
+
+        A0 = 800af802 + bank * 78;
         A1 = S1;
-        V1 = w[800af518];
         A2 = V0;
-        A0 = V1 << 04;
-        A0 = A0 - V1;
-        A0 = A0 << 03;
-        80284BAC	0C0A1144	D...
-        A0 = A0 + S0;
-        80284BB4	j L284ee0	ё...
-        80284BB8	nop
+        func284510();
     }
     break;
 
     case f:
     {
+        A0 = 800af80a + bank * 78;
         A1 = S1;
-        V0 = w[800af518];
-        S0 = 800af80a;
-        A0 = V0 << 04;
-        A0 = A0 - V0;
-        A0 = A0 << 03;
-        80284BDC	0C0A1185	…...
-        A0 = A0 + S0;
+        func284614();
+
         A0 = V0;
         A1 = 0;
-        80284BEC	func284478();	....
-        A2 = 00ff;
+        A2 = ff;
+        func284478();
+
+        A0 = 800af80a + bank * 78;
         A1 = S1;
-        V1 = w[800af518];
         A2 = V0;
-        A0 = V1 << 04;
-        A0 = A0 - V1;
-        A0 = A0 << 03;
-        80284C10	0C0A1170	p...
-        A0 = A0 + S0;
-        80284C18	j L284ee0	ё...
-        80284C1C	nop
+        func2845c0();
     }
     break;
 
     case 10:
     {
+        A0 = 800af80e + bank * 78;
         A1 = S1;
-        V0 = w[800af518];
-        S0 = 800af80e;
-        A0 = V0 << 04;
-        A0 = A0 - V0;
-        A0 = A0 << 03;
-        80284C40	0C0A11B1	±...
-        A0 = A0 + S0;
+        func2846c4();
+
         A0 = V0;
-        80284C4C	addiu  a1, zero, $ff80 (=-$80)
-        80284C50	func284478();	....
-        A2 = 007f;
+        A1 = -80;
+        A2 = 7f;
+        func284478();
+
+        A0 = 800af80e + bank * 78;
         A1 = S1;
-        V1 = w[800af518];
         A2 = V0;
-        A0 = V1 << 04;
-        A0 = A0 - V1;
-        A0 = A0 << 03;
-        80284C74	0C0A119C	њ...
-        A0 = A0 + S0;
-        80284C7C	j L284ee0	ё...
-        80284C80	nop
+        func284670();
     }
     break;
 
     case 11:
     {
-        V1 = w[800af518];
-        A1 = 0;
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        80284C9C	lui    at, $800b
-        AT = AT + V0;
-        S0 = h[AT + f7ca];
-        A2 = 0001;
+        S0 = h[800af7ca + bank * 78];
         A0 = S0 & 0001;
-        80284CB0	func284478();	....
         S0 = S0 & fffe;
-        80284CB8	080A137B	{...
-        80284CBC	nop
+        A1 = 0;
+        A2 = 1;
+        func284478();
+
+        S0 = S0 | V0;
+        [800af7ca + bank * 78] = h(S0);
     }
     break;
 
     case 12:
     {
-        V1 = w[800af518];
-        A1 = 0;
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        80284CD8	lui    at, $800b
-        AT = AT + V0;
-        A0 = hu[AT + f7ca];
-        A2 = 0003;
+        A0 = hu[800af7ca + bank * 78];
         A0 = A0 << 10;
         S0 = A0 >> 10;
         S0 = S0 & fff9;
         A0 = A0 >> 11;
-        80284CF8	func284478();	....
         A0 = A0 & 0003;
-        80284D00	080A137B	{...
+        A1 = 0;
+        A2 = 3;
+        func284478();
+
         V0 = V0 << 01;
+        S0 = S0 | V0;
+        [800af7ca + bank * 78] = h(S0);
     }
     break;
 
     case 13:
     {
-        V1 = w[800af518];
         A1 = 0;
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        80284D20	lui    at, $800b
-        AT = AT + V0;
-        A0 = hu[AT + f7ca];
-        A2 = 0003;
+        A0 = hu[800af7ca + bank * 78];
         A0 = A0 << 10;
         S0 = A0 >> 10;
         S0 = S0 & fcff;
         A0 = A0 >> 18;
-        80284D40	func284478();	....
         A0 = A0 & 0003;
-        80284D48	080A137B	{...
+        A2 = 3;
+        func284478();
+
         V0 = V0 << 08;
+        S0 = S0 | V0;
+        [800af7ca + bank * 78] = h(S0);
     }
     break;
 
@@ -2803,32 +2592,19 @@ switch( S0 )
 
     case 15:
     {
-        V1 = w[800af518];
-        A1 = 0;
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        80284DC0	lui    at, $800b
-        AT = AT + V0;
-        A0 = hu[AT + f7ca];
-        A2 = 0002;
+        A0 = hu[800af7ca + bank * 78];
         A0 = A0 << 10;
         S0 = A0 >> 10;
         S0 = S0 & ff3f;
         A0 = A0 >> 16;
-        80284DE0	func284478();	....
         A0 = A0 & 0003;
+        A1 = 0;
+        A2 = 2;
+        func284478();
+
         V0 = V0 << 06;
-        V1 = w[800af518];
         S0 = S0 | V0;
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        80284E04	lui    at, $800b
-        AT = AT + V0;
-        [AT + f7ca] = h(S0);
-        80284E10	j L284ee0	ё...
-        80284E14	nop
+        [800af7ca + bank * 78] = h(S0);
     }
     break;
 
@@ -2841,54 +2617,27 @@ switch( S0 )
     case 1c:
     case 1d:
     {
-        80284E18	bne    s1, zero, L284e84 [$80284e84]
-        80284E1C	addiu  a1, zero, $8000 (=-$8000)
-        80284E20	addiu  s0, s0, $ffea (=-$16)
-        V1 = w[800af518];
-        S0 = S0 << 02;
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        V0 = S0 + V0;
-        80284E40	lui    at, $800b
-        AT = AT + V0;
-        A0 = h[AT + f7d0];
-        80284E4C	func284478();	....
-        A2 = 7fff;
-        A0 = w[800af518];
-        80284E5C	nop
-        V1 = A0 << 04;
-        V1 = V1 - A0;
-        V1 = V1 << 03;
-        S0 = S0 + V1;
-        80284E70	lui    at, $800b
-        AT = AT + S0;
-        [AT + f7d0] = h(V0);
-        80284E7C	j L284ee0	ё...
-        80284E80	nop
+        if( S1 == 0 )
+        {
+            S0 = S0 - 16;
 
-        L284e84:	; 80284E84
-        80284E84	addiu  s0, s0, $ffea (=-$16)
-        V1 = w[800af518];
-        S0 = S0 << 02;
-        V0 = V1 << 04;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        V0 = S0 + V0;
-        80284EA4	lui    at, $800b
-        AT = AT + V0;
-        A0 = h[AT + f7d2];
-        80284EB0	func284478();	....
-        A2 = 7fff;
-        A0 = w[800af518];
-        80284EC0	nop
-        V1 = A0 << 04;
-        V1 = V1 - A0;
-        V1 = V1 << 03;
-        S0 = S0 + V1;
-        80284ED4	lui    at, $800b
-        AT = AT + S0;
-        [AT + f7d2] = h(V0);
+            A0 = h[800af7d0 + bank * 78 + S0 * 4];
+            A1 = -8000;
+            A2 = 7fff;
+            func284478();
+
+            [800af7d0 + S0 + bank * 78] = h(V0);
+        }
+        else
+        {
+            S0 = S0 - 16;
+            A0 = h[800af7d2 + bank * 78 + S0 * 4];
+            A1 = -8000;
+            A2 = 7fff;
+            func284478();
+
+            [800af7d2 + S0 + bank * 78] = h(V0);
+        }
     }
     break;
 }
@@ -2930,125 +2679,76 @@ if( ( hu[800af370] & 0001 ) && ( hu[800af370] & 0040 ) )
 ////////////////////////////////
 // func285008()
 
-S1 = 0;
 S7 = A2;
 S6 = A3;
-FP = w[A0 + 0000];
-V1 = w[SP + 0058];
-S5 = hu[SP + 005c];
-S4 = hu[SP + 0060];
-V0 = FP << 02;
-V0 = V0 + 0004;
-S0 = A0 + V0;
+FP = w[A0 + 0];
+V1 = A4;
+S5 = A5;
+S4 = A6;
+S0 = A0 + FP * 4 + 4;
 
-if( FP > 0 )
+V0 = A1 << 10;
+S3 = V0 >> 10;
+V0 = V1 << 10;
+S2 = V0 >> 10;
+
+for( int i = 0; i < FP; ++i )
 {
-    V0 = A1 << 10;
-    S3 = V0 >> 10;
-    V0 = V1 << 10;
-    S2 = V0 >> 10;
+    V1 = w[S0 + 0];
+    S0 = S0 + 4;
 
-    loop285070:	; 80285070
-        V1 = w[S0 + 0000];
-        V0 = 1100;
-        80285078	bne    v1, v0, L2850e0 [$802850e0]
-        S0 = S0 + 0004;
-        V0 = 0001;
-        80285084	beq    s3, v0, L2850a0 [$802850a0]
-        80285088	nop
-        V0 = 0002;
-        80285090	beq    s3, v0, L2850bc [$802850bc]
-        80285094	nop
-        80285098	080A1454	T...
-        8028509C	nop
-
-        L2850a0:	; 802850A0
-        V0 = hu[S0 + 0004];
-        802850A4	nop
-        V0 = S7 + V0;
-        [SP + 0010] = h(V0);
-        V0 = hu[S0 + 0006];
-        802850B4	080A145D	]...
-        V0 = S6 + V0;
-
-        L2850bc:	; 802850BC
-        V0 = hu[S0 + 0000];
-        V1 = hu[S0 + 0004];
-        V0 = S7 + V0;
-        V1 = V1 + V0;
-        [SP + 0010] = h(V1);
-        V0 = hu[S0 + 0002];
-        V1 = hu[S0 + 0006];
-        802850D8	080A1451	Q...
-        V0 = S6 + V0;
-
-        L2850e0:	; 802850E0
-        V0 = 1101;
-        if( V1 != V0 )
+    if( V1 != 1100 )
+    {
+        if( V1 != 1101 )
         {
             return 1;
         }
 
-        V0 = 0001;
-        802850EC	beq    s2, v0, L285108 [$80285108]
-        802850F0	nop
-        V0 = 0002;
-        802850F8	beq    s2, v0, L285124 [$80285124]
-        802850FC	nop
-        80285100	080A1454	T...
-        80285104	nop
+        if( S2 == 1 )
+        {
+            [SP + 10] = h(S5 + hu[S0 + 4]);
+            [SP + 12] = h(S4 + hu[S0 + 6]);
+        }
+        else if( S2 == 2 )
+        {
+            [SP + 10] = h(S5 + hu[S0 + 0] + hu[S0 + 4]);
+            [SP + 12] = h(S4 + hu[S0 + 2] + hu[S0 + 6]);
+        }
+        else
+        {
+            [SP + 10] = h(hu[S0 + 0] + hu[S0 + 4]);
+            [SP + 12] = h(hu[S0 + 2] + hu[S0 + 6]);
+        }
+    }
+    else
+    {
+        if( S3 == 1 )
+        {
+            [SP + 10] = h(S7 + hu[S0 + 4]);
+            [SP + 12] = h(S6 + hu[S0 + 6]);
+        }
+        else if( S3 == 2 )
+        {
+            [SP + 10] = h(S7 + hu[S0 + 0] + hu[S0 + 4]);
+            [SP + 12] = h(S6 + hu[S0 + 2] + hu[S0 + 6]);
+        }
+        else
+        {
+            [SP + 10] = h(hu[S0 + 0] + hu[S0 + 4]);
+            [SP + 12] = h(hu[S0 + 2] + hu[S0 + 6]);
+        }
+    }
+    S0 = S0 + 8;
+    [SP + 14] = h(hu[S0]);
+    S0 = S0 + 2;
+    [SP + 16] = h(hu[S0]);
+    S0 = S0 + 2;
 
-        L285108:	; 80285108
-        V0 = hu[S0 + 0004];
-        8028510C	nop
-        V0 = S5 + V0;
-        [SP + 0010] = h(V0);
-        V0 = hu[S0 + 0006];
-        8028511C	080A145D	]...
-        V0 = S4 + V0;
+    A0 = SP + 10;
+    A1 = S0;
+    system_load_image();
 
-        L285124:	; 80285124
-        V0 = hu[S0 + 0000];
-        V1 = hu[S0 + 0004];
-        V0 = S5 + V0;
-        V1 = V1 + V0;
-        [SP + 0010] = h(V1);
-        V0 = hu[S0 + 0002];
-        V1 = hu[S0 + 0006];
-        V0 = S4 + V0;
-        V1 = V1 + V0;
-        80285148	080A145E	^...
-        [SP + 0012] = h(V1);
-        V0 = hu[S0 + 0000];
-        V1 = hu[S0 + 0004];
-        80285158	nop
-        V0 = V0 + V1;
-        [SP + 0010] = h(V0);
-        V0 = hu[S0 + 0002];
-        V1 = hu[S0 + 0006];
-        8028516C	nop
-        V0 = V0 + V1;
-        [SP + 0012] = h(V0);
-        S0 = S0 + 0008;
-        V0 = hu[S0 + 0000];
-        S0 = S0 + 0002;
-        A0 = SP + 0010;
-        [SP + 0014] = h(V0);
-        V0 = hu[S0 + 0000];
-        S0 = S0 + 0002;
-        A1 = S0;
-        80285198	jal    $8004470c
-        [SP + 0016] = h(V0);
-        V1 = h[SP + 0014];
-        V0 = h[SP + 0016];
-        802851A8	nop
-        802851AC	mult   v1, v0
-        802851B0	mflo   t0
-        V0 = T0 << 01;
-        S0 = S0 + V0;
-        S1 = S1 + 0001;
-        V0 = S1 < FP;
-    802851C4	bne    v0, zero, loop285070 [$80285070]
+    S0 = S0 + h[SP + 14] * h[SP + 16] * 2;
 }
 
 return 0;

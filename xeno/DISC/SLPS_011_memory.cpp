@@ -543,18 +543,21 @@ if( S0 & 2 )
     A1 = mcb & 00ffffff;
     func32a00();
 }
+
 if( S0 & 4 )
 {
     A0 = 800588e4; // "%06x "
     A1 = addr & 00ffffff;
     func32a00();
 }
+
 if( S0 & 8 )
 {
     A0 = 800588ec; // "%6x "
     A1 = size;
     func32a00();
 }
+
 if( S0 & 10 )
 {
     A0 = 800588f4; // "%s "
@@ -578,12 +581,14 @@ if( S0 & 10 )
     A1 = w[8004f7b4 + V0 * 4];
     func32a00();
 }
+
 if( S0 & 20 )
 {
     A0 = 800588e4; // "%06x "
     A1 = (w[mcb + 4] & 001fffff) << 2;
     func32a00();
 }
+
 if( S0 & 40 )
 {
     V1 = w[mcb + 4];
