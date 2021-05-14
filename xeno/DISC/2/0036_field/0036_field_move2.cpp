@@ -375,7 +375,7 @@ if( number_of_entity > 0 )
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f29c; // "EVENT CODE"
-    func281b18();
+    field_debug_add_timer();
 }
 
 [800aed2c] = w(0);
@@ -446,7 +446,7 @@ if( number_of_entity > 0 )
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2a8; // "MOV CHECK0"
-    func281b18();
+    field_debug_add_timer();
 }
 
 
@@ -462,7 +462,7 @@ func8376c(); // move player
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2b4; // "MOV CHECK1"
-    func281b18();
+    field_debug_add_timer();
 }
 
 
@@ -513,7 +513,7 @@ if( number_of_entity > 0 )
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2c0; // "MOV CHECK2"
-    func281b18();
+    field_debug_add_timer();
 }
 
 
@@ -540,7 +540,7 @@ func80c04();
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2cc; // "MOV CHECK3"
-    func281b18();
+    field_debug_add_timer();
 }
 ////////////////////////////////
 

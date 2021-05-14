@@ -1,8 +1,8 @@
 ////////////////////////////////
-// func281204()
+// field_debug_reset_current_pos()
 
-[802859d4] = w(0);
-[802859d0] = w(0);
+[802859d0] = w(0); // vertical current pos
+[802859d4] = w(0); // horizontal current pos
 ////////////////////////////////
 
 
@@ -23,17 +23,15 @@
 // func281274()
 
 [802859f8] = h(0);
+
 [802859e0] = w(0);
 [802859e4] = w(1e);
 [802859e8] = w(0);
 
-A0 = f;
-V1 = 80285b9a;
-loop2812a4:	; 802812A4
-    [V1] = h(0);
-    A0 = A0 - 1;
-    V1 = V1 - 2;
-802812AC	bgez   a0, loop2812a4 [$802812a4]
+for( int i = 0; i < 10; ++i )
+{
+    [80285b7c + i * 2] = h(0);
+}
 ////////////////////////////////
 
 
@@ -41,47 +39,38 @@ loop2812a4:	; 802812A4
 ////////////////////////////////
 // func2812bc()
 
-S6 = 80285bbc;
-S3 = S6 + 34;
-S1 = S6;
-
 for( int i = 0 ; i < 10; ++i )
 {
-    S5 = S6 + 8;
-    V0 = S5 + i * 68;
-    S0 = S6 + 20 + i * 68;
+    [80285bbc + i * 68 + 0] = h(0);
+    [80285bbc + i * 68 + 2] = h(0);
+    [80285bbc + i * 68 + 4] = h(0);
+    [80285bbc + i * 68 + 8] = h(0);
+    [80285bbc + i * 68 + a] = h(0);
+    [80285bbc + i * 68 + c] = h(0);
 
-    [S1 + 0] = h(0);
-    [S1 + 2] = h(0);
-    [S1 + 4] = h(0);
-    [V0 + 0] = h(0);
-    [V0 + 2] = h(0);
-    [V0 + 4] = h(0);
-
-    A0 = S0;
+    A0 = 80285bbc + 20 + i * 68;
     system_graphic_shaded_line_header();
 
-//  1st   Color1+Command    (CcBbGgRrh)
-//  2nd   Vertex1           (YyyyXxxxh)
-//  3rd   Color2            (00BbGgRrh)
-//  4th   Vertex2           (YyyyXxxxh)
- //(...)  ColorN            (00BbGgRrh) (poly-line only)
- //(...)  VertexN           (YyyyXxxxh) (poly-line only)
- //(Last) Termination Code  (55555555h) (poly-line only)
+    //  1st   Color1+Command    (CcBbGgRrh)
+    //  2nd   Vertex1           (YyyyXxxxh)
+    //  3rd   Color2            (00BbGgRrh)
+    //  4th   Vertex2           (YyyyXxxxh)
+    // (...)  ColorN            (00BbGgRrh) (poly-line only)
+    // (...)  VertexN           (YyyyXxxxh) (poly-line only)
+    // (Last) Termination Code  (55555555h) (poly-line only)
 
-    [S0 + 4] = b(80); // R1
-    [S0 + 5] = b(80); // G1
-    [S0 + 6] = b(80); // B1
-    [S0 + c] = b(ff); // R2
-    [S0 + d] = b(ff); // G2
-    [S0 + e] = b(ff); // B2
-    [S3 + 0] = w(w[S0 + 0]);
-    [S3 + 4] = w(w[S0 + 4]);
-    [S3 + 8] = w(w[S0 + 8]);
-    [S3 + c] = w(w[S0 + c]);
-    [S3 + 10] = w(w[S0 + 10]);
-    S3 = S3 + 68;
-    S1 = S1 + 68;
+    [80285bbc + 20 + i * 68 + 4] = b(80); // R1
+    [80285bbc + 20 + i * 68 + 5] = b(80); // G1
+    [80285bbc + 20 + i * 68 + 6] = b(80); // B1
+    [80285bbc + 20 + i * 68 + c] = b(ff); // R2
+    [80285bbc + 20 + i * 68 + d] = b(ff); // G2
+    [80285bbc + 20 + i * 68 + e] = b(ff); // B2
+
+    [80285bbc + 34 + i * 68 +  0] = w(w[80285bbc + 20 + i * 68 +  0]);
+    [80285bbc + 34 + i * 68 +  4] = w(w[80285bbc + 20 + i * 68 +  4]);
+    [80285bbc + 34 + i * 68 +  8] = w(w[80285bbc + 20 + i * 68 +  8]);
+    [80285bbc + 34 + i * 68 +  c] = w(w[80285bbc + 20 + i * 68 +  c]);
+    [80285bbc + 34 + i * 68 + 10] = w(w[80285bbc + 20 + i * 68 + 10]);
 }
 
 [80285c48] = b(80);
@@ -90,23 +79,23 @@ for( int i = 0 ; i < 10; ++i )
 [80285c50] = b(ff);
 [80285c51] = b(0);
 [80285c52] = b(0);
-[S5 + 98] = b(80);
-[S5 + 99] = b(0);
-[S5 + 9a] = b(0);
-[S5 + a0] = b(ff);
-[S5 + a1] = b(0);
-[S5 + a2] = b(0);
+[80285bbc + 8 + 98] = b(80);
+[80285bbc + 8 + 99] = b(0);
+[80285bbc + 8 + 9a] = b(0);
+[80285bbc + 8 + a0] = b(ff);
+[80285bbc + 8 + a1] = b(0);
+[80285bbc + 8 + a2] = b(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func281418()
+// field_debug_draw_settings()
 
 [802859dc] = w(0);
 
 A0 = w[800c3740] + d0;
-func281ba8();
+field_debug_main_settings();
 
 if( V0 != 0 )
 {
@@ -268,7 +257,7 @@ if( w[800c1b60] == 0 )
 
 
 ////////////////////////////////
-// func2819ac()
+// field_debug_print_rec()
 
 if( w[800c1b60] != 1 )
 {
@@ -284,7 +273,7 @@ if( w[800c1b60] != 1 )
 
 
 ////////////////////////////////
-// func2819f4()
+// field_debug_print_mtx()
 
 mtx = A0;
 
@@ -316,7 +305,7 @@ if( w[800c1b60] != 1 )
 
 
 ////////////////////////////////
-// func281a90()
+// field_debug_print_vec()
 
 vec = A0;
 
@@ -333,7 +322,7 @@ if( w[800c1b60] != 1 )
 
 
 ////////////////////////////////
-// func281ad4()
+// field_debug_print_svec()
 
 svec = A0;
 
@@ -350,7 +339,7 @@ if( w[800c1b60] != 1 )
 
 
 ////////////////////////////////
-// func281b18()
+// field_debug_add_timer()
 
 string = A0;
 
@@ -358,12 +347,13 @@ if( w[800c1b60] == 0 )
 {
     A0 = 1;
     system_psyq_wait_frames();
+    delta = V0;
 
     A1 = h[802859f8];
     [802859f8] = h(A1 + 1);
-    [80285a04 + A1 * c] = w(string);
-    [80285a00 + A1 * c] = w(V0 - w[800ad074]);
-    [800ad074] = w(V0 - w[800ad074]);
+    [80285a00 + A1 * c + 0] = w(delta - w[800ad074]);
+    [80285a00 + A1 * c + 4] = w(string);
+    [800ad074] = w(delta - w[800ad074]);
 
     A0 = 1;
     system_psyq_wait_frames();
@@ -373,7 +363,7 @@ if( w[800c1b60] == 0 )
 
 
 ////////////////////////////////
-// func281ba8()
+// field_debug_main_settings()
 
 if( w[800c1b60] == 1 )
 {
@@ -405,7 +395,7 @@ while( snd_file != 0 )
     system_print_alias();
 
     A0 = hu[snd_file + 20];
-    func285204();
+    field_debug_print_snd_name();
 
     A0 = 80280090; // "\n"
     system_print_alias();
@@ -432,7 +422,7 @@ if( w[802859d8] >= e )
     [802859d8] = w(0);
 }
 
-if( hu[800c2ddc] & 0800 ) // repeated button mask for controller 2 (Start)
+if( hu[800c2ddc] & 0800 ) // repeated Start for controller 2
 {
     if( w[800acfd4] & 0001 )
     {
@@ -445,31 +435,28 @@ if( hu[800c2ddc] & 0800 ) // repeated button mask for controller 2 (Start)
     [800acfd4] = w((w[800acfd4] + 1) | 8000);
 }
 
-if( ( hu[800c2dd4] & 0800 ) && ( hu[800af370] & 0040 ) )
+if( ( hu[800c2dd4] & 0800 ) && ( hu[800af370] & 0040 ) ) // repeated Start and current Cross for controller 1
 {
-    V0 = w[802859d8];
-    [802859d8] = w(V0 + 1);
+    [802859d8] = w(w[802859d8] + 1);
 
-    if( ( V0 - 7 ) < 2 )
+    if( ( w[802859d8] == 7 ) || ( w[802859d8] == 8 ) )
     {
         [802859d8] = w(a);
     }
 
-    V1 = w[802859d8];
-    if( ( V1 - b ) < 2 )
+    if( w[802859d8] == b )
     {
-        if( V1 == b )
-        {
-            [800b1662] = h(1);
-        }
-        else
-        {
-            [800b1662] = h(0);
-        }
-
+        [800b1662] = h(1); // move length
         func734c8();
     }
 
+    if( w[802859d8] == c )
+    {
+        [800b1662] = h(0); // move length
+        func734c8();
+    }
+
+    // reset current pos
     [802859d0] = w(0);
     [802859d4] = w(0);
 
@@ -484,286 +471,6 @@ struct_5c_p = w[800aefe4];
 
 switch( w[802859d8] )
 {
-    case c:
-    {
-        A1 = w[800ad078];
-        A2 = w[800ad07c];
-        A0 = 802800a0; // "\nCPU=%04d GPU=%04d\n
-        system_print_alias();
-
-        A0 = 802800b4; // "PolyCount %d / %d\n"
-        A1 = w[80058c14];
-        A2 = w[80058c5c];
-        system_print_alias();
-
-        pc = w[800b1740];
-        V0 = w[struct_5c_p + pc * 5c + 4c];
-        A1 = h[V0 + 22];
-        A2 = h[V0 + 2a];
-        A3 = h[V0 + 26];
-        A0 = 802800c8; // "Pos X%6d Z=%6d Y=%6d\n"
-        system_print_alias();
-
-        system_memory_get_uncleared_allocated_size();
-
-        A0 = 8028040c; // "Free Size=%x\n"
-        A1 = V0;
-        system_print_alias();
-    }
-    break;
-
-    case d:
-    {
-        A0 = 802800e0; // "RGB CALC\n\n"
-        system_print_alias();
-
-        V0 = hu[800c2dd4];
-        80281F08	nop
-        V0 = V0 & 0002;
-        80281F10	beq    v0, zero, L281f40 [$80281f40]
-        80281F14	nop
-        V0 = w[802859d0];
-        80281F20	nop
-        80281F24	addiu  v0, v0, $ffff (=-$1)
-        [802859d0] = w(V0);
-        80281F30	bgez   v0, L281f40 [$80281f40]
-        V0 = 0003;
-        [802859d0] = w(V0);
-
-        L281f40:	; 80281F40
-        V0 = hu[800c2dd4];
-        80281F48	nop
-        V0 = V0 & 0001;
-        80281F50	beq    v0, zero, L281f84 [$80281f84]
-        80281F54	nop
-        V0 = w[802859d0];
-        80281F60	nop
-        V0 = V0 + 0001;
-        [802859d0] = w(V0);
-        V0 = V0 < 0004;
-        80281F74	bne    v0, zero, L281f84 [$80281f84]
-        80281F78	nop
-        [802859d0] = w(0);
-
-        L281f84:	; 80281F84
-        V1 = w[80064ee0];
-        V0 = 0008;
-        80281F90	bne    v1, v0, L281fa0 [$80281fa0]
-        S0 = 0;
-        S0 = w[80064ee8];
-
-        L281fa0:	; 80281FA0
-        V0 = w[802859d0];
-        80281FA8	nop
-        80281FAC	bne    v0, zero, L281fdc [$80281fdc]
-        80281FB0	nop
-        V0 = w[802859cc];
-        A0 = 802800ec; // ">MODE %d\n"
-        V0 = V0 + S0;
-        A1 = V0 >> 04;
-        [802859cc] = w(V0);
-        80281FD4	080A07FD	э...
-        A1 = A1 & 0003;
-
-        L281fdc:	; 80281FDC
-        A1 = w[802859cc];
-        A0 = 802800f8; // " MODE %d\n"
-        A1 = A1 >> 04;
-        A1 = A1 & 0003;
-        system_print_alias();
-
-        V1 = w[802859d0];
-        V0 = 0001;
-        80282008	bne    v1, v0, L282038 [$80282038]
-        8028200C	nop
-        A1 = w[802859c0];
-        A0 = 80280104; // ">R %d\n"
-        A1 = A1 + S0;
-        A1 = A1 & 00ff;
-        [802859c0] = w(A1);
-        80282030	080A0812	....
-        80282034	nop
-
-        L282038:	; 80282038
-        A1 = w[802859c0];
-        A0 = 8028010c; // " R %d\n"
-        system_print_alias();
-
-        V1 = w[802859d0];
-        V0 = 0002;
-        8028205C	bne    v1, v0, L28208c [$8028208c]
-        80282060	nop
-        A1 = w[802859c4];
-        A0 = 80280114; // ">G %d\n"
-        A1 = A1 + S0;
-        A1 = A1 & 00ff;
-        [802859c4] = w(A1);
-        80282084	080A0827	'...
-        80282088	nop
-
-        L28208c:	; 8028208C
-        A1 = w[802859c4];
-        A0 = 8028011c; // " G %d\n"
-        system_print_alias();
-
-        V1 = w[802859d0];
-        V0 = 0003;
-        802820B0	bne    v1, v0, L2820e0 [$802820e0]
-
-        A1 = w[802859c8];
-        A0 = 80280124;
-        A1 = A1 + S0;
-        A1 = A1 & 00ff;
-        [802859c8] = w(A1);
-        802820D8	080A083C	<...
-        802820DC	nop
-
-        L2820e0:	; 802820E0
-        A1 = w[802859c8];
-        A0 = 8028012c; // " B %d\n"
-        system_print_alias();
-
-        A0 = 0001;
-        A1 = 0001;
-        A2 = w[802859c0];
-        A3 = w[802859c4];
-        V0 = w[802859cc];
-        V1 = w[802859c8];
-        V0 = V0 >> 04;
-        V0 = V0 & 0003;
-        [SP + 0010] = w(V1);
-        [SP + 0014] = w(V0);
-        8028212C	jal    $80071398
-    }
-    break;
-
-    case b:
-    {
-        if( hu[800c2dd4] & 2 )
-        {
-            [802859d0] = w(w[802859d0] - 1);
-            if( V0 < 0 )
-            {
-                [802859d0] = w(7);
-            }
-        }
-
-        if( hu[800c2dd4] & 1 )
-        {
-            [802859d0] = w(w[802859d0] + 1);
-            if( V0 >= 8 )
-            {
-                [802859d0] = w(0);
-            }
-        }
-
-        if( w[80064ee0] == 8 )
-        {
-            S0 = w[80064ee8];
-        }
-        else
-        {
-            S0 = 0;
-        }
-
-        if( w[802859d0] == 0 )
-        {
-            [800b1664] = b(bu[800b1664] + S0);
-            A0 = 80280134; // ">NearColor R=%d\n"
-        }
-        else
-        {
-            A0 = 80280148; // " NearColor R=%d\n"
-        }
-        A1 = bu[800b1664];
-        system_print_alias();
-
-        if( w[802859d0] == 1 )
-        {
-            [800b1665] = b(bu[800b1665] + S0);
-            A0 = 8028015c; // ">          G=%d\n"
-        }
-        else
-        {
-            A0 = 80280170; // "           G=%d\n"
-        }
-        A1 = bu[800b1665];
-        system_print_alias();
-
-        if( w[802859d0] == 2 )
-        {
-            [800b1666] = b(bu[800b1666] + S0);
-            A0 = 80280184; // ">          B=%d\n"
-        }
-        else
-        {
-            A0 = 80280198; // "           B=%d\n"
-        }
-        A1 = bu[800b1666];
-        system_print_alias();
-
-        if( w[802859d0] == 3 )
-        {
-            [800b1668] = b(bu[800b1668] + S0);
-            A0 = 802801ac; // ">FarColor  R=%d\n"
-        }
-        else
-        {
-            A0 = 802801c0; // " FarColor  R=%d\n"
-        }
-        A1 = bu[800b1668];
-        system_print_alias();
-
-        if( w[802859d0] == 4 )
-        {
-            [800b1669] = b(bu[800b1669] + S0);
-            A0 = 8028015c; // ">          G=%d\n"
-        }
-        else
-        {
-            A0 = 80280170; // "           G=%d\n"
-        }
-        A1 = bu[800b1669];
-        system_print_alias();
-
-        if( w[802859d0] == 5 )
-        {
-            [800b166a] = b(bu[800b166a] + S0);
-            A0 = 80280184; // ">          B=%d\n"
-        }
-        else
-        {
-            A0 = 80280198; // "           B=%d\n"
-        }
-        A1 = bu[800b166a];
-        system_print_alias();
-
-        if( w[802859d0] == 6 )
-        {
-            [800b166c] = h(hu[800b166c] + S0 * a);
-            A0 = 802801d4; // ">Near        %d\n"
-        }
-        else
-        {
-            A0 = 802801e8; // " Near        %d\n"
-        }
-        A1 = h[800b166c];
-        system_print_alias();
-
-        if( w[802859d0] == 7 )
-        {
-            [800b166e] = h(hu[800b166e] + S0 * a);
-            A0 = 802801fc; // ">Far         %d\n"
-        }
-        else
-        {
-            A0 = 80280210; // " Far         %d\n"
-        }
-        A1 = h[800b166e];
-        system_print_alias();
-    }
-    break;
-
     case 1:
     {
         // ---------- Player Info -----
@@ -1213,8 +920,8 @@ switch( w[802859d8] )
         for( int i = 0; i < h[802859f8]; ++i )
         {
             A0 = 802805c0; // "%s = %6d\n"
-            A1 = w[80285a04 + i * c];
-            A2 = w[80285a00 + i * c];
+            A1 = w[80285a00 + i * c + 4];
+            A2 = w[80285a00 + i * c + 0];
             system_print_alias();
         }
 
@@ -1258,11 +965,11 @@ switch( w[802859d8] )
             S3 = S3 + 1;
         }
 
-        if( hu[800c2dd4] & 0001 )
+        if( hu[800c2dd4] & 0001 ) // repeated L2 on controller 1
         {
             [802859d0] = w(w[802859d0] + 4);
         }
-        if( hu[800c2dd4] & 0002 )
+        if( hu[800c2dd4] & 0002 ) // repeated R2 on controller 1
         {
             [802859d0] = w(w[802859d0] - 4);
         }
@@ -1384,12 +1091,11 @@ switch( w[802859d8] )
         A0 = 802806a4; // "---------- ENCOUNT -------------\n"
         system_print_alias();
 
-        V1 = hu[800c2dd4];
-        if( V1 & 0001 != 0 )
+        if( hu[800c2dd4] & 0001 ) // repeated L2 on controller 1
         {
             [802859d0] = w(w[802859d0] + 1);
         }
-        if( V1 & 0002 )
+        if( hu[800c2dd4] & 0002 ) // repeated R2 on controller 1
         {
             [802859d0] = w(w[802859d0] - 1);
         }
@@ -1483,6 +1189,251 @@ switch( w[802859d8] )
             [802859e4] = w(3c);
         }
         funca345c();
+    }
+    break;
+
+    case b:
+    {
+        if( hu[800c2dd4] & 2 )
+        {
+            [802859d0] = w(w[802859d0] - 1);
+            if( w[802859d0] < 0 )
+            {
+                [802859d0] = w(7);
+            }
+        }
+
+        if( hu[800c2dd4] & 1 )
+        {
+            [802859d0] = w(w[802859d0] + 1);
+            if( w[802859d0] >= 8 )
+            {
+                [802859d0] = w(0);
+            }
+        }
+
+        if( w[80064ee0] == 8 )
+        {
+            S0 = w[80064ee8];
+        }
+        else
+        {
+            S0 = 0;
+        }
+
+        if( w[802859d0] == 0 )
+        {
+            [800b1664] = b(bu[800b1664] + S0);
+            A0 = 80280134; // ">NearColor R=%d\n"
+        }
+        else
+        {
+            A0 = 80280148; // " NearColor R=%d\n"
+        }
+        A1 = bu[800b1664];
+        system_print_alias();
+
+        if( w[802859d0] == 1 )
+        {
+            [800b1665] = b(bu[800b1665] + S0);
+            A0 = 8028015c; // ">          G=%d\n"
+        }
+        else
+        {
+            A0 = 80280170; // "           G=%d\n"
+        }
+        A1 = bu[800b1665];
+        system_print_alias();
+
+        if( w[802859d0] == 2 )
+        {
+            [800b1666] = b(bu[800b1666] + S0);
+            A0 = 80280184; // ">          B=%d\n"
+        }
+        else
+        {
+            A0 = 80280198; // "           B=%d\n"
+        }
+        A1 = bu[800b1666];
+        system_print_alias();
+
+        if( w[802859d0] == 3 )
+        {
+            [800b1668] = b(bu[800b1668] + S0);
+            A0 = 802801ac; // ">FarColor  R=%d\n"
+        }
+        else
+        {
+            A0 = 802801c0; // " FarColor  R=%d\n"
+        }
+        A1 = bu[800b1668];
+        system_print_alias();
+
+        if( w[802859d0] == 4 )
+        {
+            [800b1669] = b(bu[800b1669] + S0);
+            A0 = 8028015c; // ">          G=%d\n"
+        }
+        else
+        {
+            A0 = 80280170; // "           G=%d\n"
+        }
+        A1 = bu[800b1669];
+        system_print_alias();
+
+        if( w[802859d0] == 5 )
+        {
+            [800b166a] = b(bu[800b166a] + S0);
+            A0 = 80280184; // ">          B=%d\n"
+        }
+        else
+        {
+            A0 = 80280198; // "           B=%d\n"
+        }
+        A1 = bu[800b166a];
+        system_print_alias();
+
+        if( w[802859d0] == 6 )
+        {
+            [800b166c] = h(hu[800b166c] + S0 * a);
+            A0 = 802801d4; // ">Near        %d\n"
+        }
+        else
+        {
+            A0 = 802801e8; // " Near        %d\n"
+        }
+        A1 = h[800b166c];
+        system_print_alias();
+
+        if( w[802859d0] == 7 )
+        {
+            [800b166e] = h(hu[800b166e] + S0 * a);
+            A0 = 802801fc; // ">Far         %d\n"
+        }
+        else
+        {
+            A0 = 80280210; // " Far         %d\n"
+        }
+        A1 = h[800b166e];
+        system_print_alias();
+    }
+    break;
+
+    case c:
+    {
+        A1 = w[800ad078];
+        A2 = w[800ad07c];
+        A0 = 802800a0; // "\nCPU=%04d GPU=%04d\n
+        system_print_alias();
+
+        A0 = 802800b4; // "PolyCount %d / %d\n"
+        A1 = w[80058c14];
+        A2 = w[80058c5c];
+        system_print_alias();
+
+        pc = w[800b1740];
+        V0 = w[struct_5c_p + pc * 5c + 4c];
+        A1 = h[V0 + 22];
+        A2 = h[V0 + 2a];
+        A3 = h[V0 + 26];
+        A0 = 802800c8; // "Pos X%6d Z=%6d Y=%6d\n"
+        system_print_alias();
+
+        system_memory_get_uncleared_allocated_size();
+
+        A0 = 8028040c; // "Free Size=%x\n"
+        A1 = V0;
+        system_print_alias();
+    }
+    break;
+
+    case d:
+    {
+        A0 = 802800e0; // "RGB CALC\n\n"
+        system_print_alias();
+
+        if( hu[800c2dd4] & 2 )
+        {
+            [802859d0] = w(w[802859d0] - 1);
+            if( w[802859d0] < 0 )
+            {
+                [802859d0] = w(3);
+            }
+        }
+
+        if( hu[800c2dd4] & 1 )
+        {
+            [802859d0] = w(w[802859d0] + 1);
+            if( w[802859d0] >= 4 )
+            {
+                [802859d0] = w(0);
+            }
+        }
+
+        if( w[80064ee0] == 8 )
+        {
+            S0 = w[80064ee8];
+        }
+        else
+        {
+            S0 = 0;
+        }
+
+        if( w[802859d0] == 0 )
+        {
+            [802859cc] = w(w[802859cc] + S0);
+            A0 = 802800ec; // ">MODE %d\n"
+        }
+        else
+        {
+            A0 = 802800f8; // " MODE %d\n"
+        }
+        A1 = (w[802859cc] >> 4) & 3;
+        system_print_alias();
+
+        if( w[802859d0] == 1 )
+        {
+            [802859c0] = w((w[802859c0] + S0) & ff);
+            A0 = 80280104; // ">R %d\n"
+        }
+        else
+        {
+            A0 = 8028010c; // " R %d\n"
+        }
+        A1 = w[802859c0];
+        system_print_alias();
+
+        if( w[802859d0] == 2 )
+        {
+            [802859c4] = w((w[802859c4] + S0) & ff);
+            A0 = 80280114; // ">G %d\n"
+        }
+        else
+        {
+            A0 = 8028011c; // " G %d\n"
+        }
+        A1 = w[802859c4];
+        system_print_alias();
+
+        if( w[802859d0] == 3 )
+        {
+            [802859c8] = w((w[802859c8] + S0) & ff);
+            A0 = 80280124; // ">B %d\n"
+        }
+        else
+        {
+            A0 = 8028012c; // " B %d\n"
+        }
+        A1 = w[802859c8];
+        system_print_alias();
+
+        A0 = 1;
+        A1 = 1;
+        A2 = w[802859c0];
+        A3 = w[802859c4];
+        A4 = w[802859c8];
+        A5 = (w[802859cc] >> 4) & 3;
+        func71398();
     }
     break;
 }
@@ -2757,7 +2708,7 @@ return 0;
 
 
 ////////////////////////////////
-// func285204()
+// field_debug_print_snd_name()
 
 switch( A0 )
 {

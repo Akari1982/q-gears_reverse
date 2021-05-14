@@ -70,7 +70,7 @@ func73670(); // clear otagr
 if( w[800c1b60] == 0 ) // debug
 {
     A0 = 8006f210; // "Clear OTAG"
-    func281b18();
+    field_debug_add_timer();
 }
 
 80077488	jal    funca2778 [$800a2778]
@@ -177,7 +177,7 @@ field_allocate_memory_for_party_sprites();
 
 if( w[800c1b60] == 0 ) // debug
 {
-    func281204(); // some debug settings
+    field_debug_reset_current_pos();
 }
 
 func76c50(); // set dir inside (control related)

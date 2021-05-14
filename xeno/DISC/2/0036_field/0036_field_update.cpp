@@ -64,7 +64,7 @@ func75b44();
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f1b8; // "CHAR      "
-    func281b18();
+    field_debug_add_timer();
 }
 ////////////////////////////////
 
@@ -150,7 +150,7 @@ S0 = 80d4;
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1c4; // "SEFFECT   "
-    func281b18();
+    field_debug_add_timer();
 }
 
 A0 = w[800c3740] + S0;
@@ -160,7 +160,7 @@ A1 = w[800acfe0];
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1d0; // "MESSAGE   "
-    func281b18();
+    field_debug_add_timer();
 }
 
 80074C74	jal    func73798 [$80073798]
@@ -195,10 +195,10 @@ SP = w[SP];
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
-    func281418(); // log a lot of debug info
+    field_debug_draw_settings();
 
     A0 = 8006f1dc; // "FntPrint  "
-    func281b18();
+    field_debug_add_timer();
 }
 
 A0 = 1;
@@ -269,7 +269,7 @@ func24e3c();
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1e8; // "ShapeTrans"
-    func281b18();
+    field_debug_add_timer();
 }
 
 80074E80	jal    func916ac [$800916ac]
@@ -286,7 +286,7 @@ if( w[800ad08c] != 0 )
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1f4; // "LineScroll"
-    func281b18();
+    field_debug_add_timer();
 }
 
 if( w[800ad0f0] == 0 )

@@ -43,6 +43,7 @@
 
 80065198 [][][][] store entity id which perform move here during func821cc.
 
+800acfd4 [][][][] ???
 800acfda [][]     looks like this is timer when we stack during auto slide down.
 
 800acfe0 [][][][] render buffer index (0 or 1).
@@ -64,8 +65,7 @@
 
 800ad070 [][][][] checked if equal to 0 in func83f40.
 800ad074 [][][][] delta time from prev update.
-
-
+800ad078 [][][][] cpu delta time.
 800ad07ñ [][][][] store here delta time from last draw.
 800ad080 [][][][] 1 if we use cam y pos same as entity y. 0 otherwise.
 800ad084 [][][][] set to 0 in cam mode 2. Counter for cam mode 0. Each &3 == 0 we do adjustments to 800aee58 and 800aee5c.

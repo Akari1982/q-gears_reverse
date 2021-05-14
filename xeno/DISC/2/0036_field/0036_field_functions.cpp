@@ -4318,7 +4318,7 @@ if( w[800ad00c] == 0 )
     if( w[800c1b60] == 0 ) // PC HDD MODE
     {
         A0 = 8006f458; // "PARTICLE  "
-        func281b18();
+        field_debug_add_timer();
     }
 }
 ////////////////////////////////
