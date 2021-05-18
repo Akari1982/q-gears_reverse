@@ -344,6 +344,7 @@
     + 38 [][][][] rotation dta for some sprite animation if flag 0x2000 in sprite animation data not set.
     + 3d []       if this != 0 then we use +38 to calculate rotation matrix for sprite animation (if flag 0x2000 not set).
     + 3e []       
+    +17c [][][][] increment during sprite update.
     +1a8 [][]     init with 0x20. 0xfc000000 type of memory alloc.
     +1ac [][]     init with 0xa. 0x01e00000 owner for memory alloc.
     +1b0 [][][][] pointer to start of allocated memory.

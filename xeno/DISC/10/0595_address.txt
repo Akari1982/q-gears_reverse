@@ -1,0 +1,31 @@
+802859d0 [][][][] vertical current pos.
+802859d4 [][][][] horizontal current pos (not used).
+802859d8 [][][][] selected debug settings
+                  0
+                  1 Player/Scene Info
+                  2 Memory Info
+                  3 Event Info
+                  4 Event DEBUG
+                  5 CPU Time
+                  6 RAM MAP (data from 800c2f3c)
+                  7 PARTICLE
+                  8 ITEM
+                  9 ACC
+                  a ENCOUNT
+                  b Near/Far Color
+                  c PolyCount
+                  d RGB CALC
+
+802859e0 [][][][]
+802859e4 [][][][]
+802859e8 [][][][]
+802859ec [][][][]
+
+802859f8 [][]     current timer count (increment when new timer check added).
+
+80285a00 array of timers to draw.
+    + 0 [][][][] delta.
+    + 4 [][][][] pointer to string.
+
+
+80285b7c array (0x10 items 0x2 size)

@@ -4762,40 +4762,6 @@ return V0 >> 2 + 4;
 
 
 ////////////////////////////////
-// funcbbeac
-
-A2 = 0;
-loopbbed0:	; 800BBED0
-    if (w[80161ef0 + A2 * 4] == 0 && A2 >= h[8015169c])
-    {
-        [80161ef0 + A2 * 4] = w(A0);
-
-        [80162978 + A2 * 20] = h(h[8015169c]);
-
-        [80162080] = h(hu[80162080] + 1);
-        return;
-    }
-
-
-    A2 = A2 + 1;
-    V0 = A2 < 64;
-800BBF40	bne    v0, zero, loopbbed0 [$800bbed0]
-
-func3cebc;
-
-A0 = 1;
-system_psyq_reset_graph;
-
-func3d1b4;
-
-A0 = 61;
-A1 = 1;
-system_bios_system_error_boot_or_disk_failure();
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funccd558
 V0 = bu[80151920 + A0 * b9c];
 S0 = bu[A1 + V0 + 0];
@@ -4912,47 +4878,6 @@ else
 [801620ac + T2 * 20 + 10] = w(w[1f800000]); // 2nd argument
 [801620ac + T2 * 20 + 14] = w(w[1f800004]);
 [801620ac + T2 * 20 + 18] = b(bu[80166f58]);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbbf7c
-A2 = 0;
-T0 = 801590d0;
-A3 = T0;
-
-loopbbfa0:	; 800BBFA0
-    V1 = A2;
-    A1 = 80163b48 + V1 * 4;
-    V0 = w[A1];
-    if (V0 == 0 && V1 >= T0)
-    {
-        [A1 + 0] = w(A0);
-
-        [801620ac + V1 * 20] = h(A3);
-        [80163b7c] = h(hu[80163b7c] + 1);
-
-        return;
-    }
-
-    800BBFB8	addiu  v0, a2, $0001
-    800BC000	addu   a2, v0, zero
-    800BC004	sll    v0, v0, $10
-    800BC008	sra    v0, v0, $10
-
-    800BC00C	slti   v0, v0, $000a
-800BC010	bne    v0, zero, loopbbfa0 [$800bbfa0]
-
-800BC018	jal    func3cebc [$8003cebc]
-800BC01C	nop
-800BC020	jal    system_psyq_reset_graph [$80043938]
-800BC024	ori    a0, zero, $0001
-800BC028	jal    func3d1b4 [$8003d1b4]
-800BC02C	nop
-800BC030	ori    a0, zero, $0061
-800BC034	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
-800BC038	ori    a1, zero, $0002
 ////////////////////////////////
 
 

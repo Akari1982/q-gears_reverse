@@ -52,50 +52,6 @@ if (h[S5] > 0)
 
 
 ////////////////////////////////
-// funcbb538
-unit_id = A0;
-model_data = A1;
-
-V1 = w[801590e8];
-V1 = bu[801590e8 + V1 - 4];
-if (V1 == 2)
-{
-    if (A2 == 0)
-    {
-        A0 = 800f8158; // struct with field background rotation and translation
-    }
-    else
-    {
-        A0 = 800f818c;
-    }
-
-    A1 = 801518e4 + unit_id * b9c + 140;
-}
-else if (unit_id == 3)
-{
-    A0 = 800fa63c; // camera matrix
-    A1 = 80153cf8;
-}
-else
-{
-    A0 = 800f8158; // struct with field background rotation and translation
-    A1 = 801518e4 + unit_id * b9c + 140;
-}
-
-[A1 + 30] = w(A0);
-
-
-[801518e4 + 34 + unit_id * b9c + 170] = w(801518e4 + 140 + unit_id * b9c);
-
-A0 = 801518e4 + unit_id * b9c + 10; // number of bones
-A1 = model_data;
-A2 = unit_id;
-funcc76c8;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcc76c8
 S4 = A0;
 offset_to_subfile = A1;
@@ -159,29 +115,4 @@ loopd098c:	; 800D098C
     A1 = A1 + 1;
     V0 = A1 < 8;
 800D09C0	bne    v0, zero, loopd098c [$800d098c]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbb430
-S2 = A1;
-unit_id = A0;
-
-number_of_bones = h[801518e4 + unit_id * b9c + 10];
-if (number_of_bones > 0)
-{
-    A0 = 0;
-    loopbb48c:	; 800BB48C
-        A0 = w[801518e4 + unit_id * b9c + 78 + S0 * 4];
-        if (A0 != 0)
-        {
-            A0 = A0 + w[A0] + 4;
-            [A0 + 2] = h(h[A0 + 2] + S2);
-        }
-
-        S0 = S0 + 1;
-        V0 = S0 < number_of_bones;
-    800BB4D4	bne    v0, zero, loopbb48c [$800bb48c]
-}
 ////////////////////////////////

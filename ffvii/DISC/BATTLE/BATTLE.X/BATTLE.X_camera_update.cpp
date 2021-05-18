@@ -1,56 +1,4 @@
 ////////////////////////////////
-// funcbc2f0()
-// init camera callback func data and id
-
-[800fa9bc] = h(0);
-
-for( int i = 0; i < 10; ++i )
-{
-    [800fa978 + i * 4] = w(0);
-    [800f7ed8 + i * 28 + 0] = h(0);
-    [800f7eda + i * 28 + 2] = h(0);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbb684()
-
-V1 = bu[801590e0];
-V1 = h[80163798 + V1 * c + 8]; // camera movement id
-if( V1 != -4 )
-{
-    [800f8370] = h(V1); // set current camera
-    [801590dc] = b(0); // set call camera script
-
-    // cam pos vector
-    [80151844 + 0 * e + 8] = b(ff);
-    [80151844 + 1 * e + 8] = b(ff);
-    [80151844 + 2 * e + 8] = b(ff);
-    [80151844 + 3 * e + 8] = b(ff);
-
-    // cam dir vector
-    [801518a4 + 0 * e + 8] = b(ff);
-    [801518a4 + 1 * e + 8] = b(ff);
-    [801518a4 + 2 * e + 8] = b(ff);
-    [801518a4 + 3 * e + 8] = b(ff);
-
-    funcbc2f0(); // reset camera callbacks
-
-    if( bu[800f837c] != 3 ) // not last cam pos and dir vector
-    {
-        if( ( bu[801516f4] & 3 ) != 3 )
-        {
-            [800f837c] = b(bu[801516f4] & 3);
-        }
-    }
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcbc8b0
 // A0 - camera id to use
 if (hu[8016360c + 8] == 4e) // Final Battle - Sephiroth
@@ -221,58 +169,6 @@ if (bu[801031e0] != 0)
 
 
 ////////////////////////////////
-// funcbb75c
-// create primary and final camera matrix
-//A0 = 800fa63c; // store final camera matrix (primary + scale + ??? + ???)
-//A1 = 800fa958; // store primary camera matrix here
-//A2 = 80158d00; // end vector
-//A3 = 801031e8; // start vector
-S0 = A0; // we store here final transformation matrix
-S1 = A1;
-
-A0 = S1; // result matrix here
-A1 = A2; // end vector
-A2 = A3; // start vector
-A3 = 800e7d10; // up vector
-funcd85b0; // create camera matrix here
-
-
-
-
-// init it with rotation matrix
-A0 = S0 + 20;
-A1 = S0;
-system_gte_rotation_matrix_from_yxz();
-
-// add translation vector
-A0 = S0;
-A1 = S0 + 28; // translation vector
-system_gte_copy_matrix_translation_part();
-
-// multiply field matrix
-A0 = S1;
-A1 = S0;
-system_gte_matrixes_multiply_A0_A1_to_A1;
-
-// multiply field translation vector
-A0 = S1;
-system_gte_set_rotation_matrix();
-A0 = S1;
-system_gte_set_translation_vector();
-
-A0 = S0 - 28; // vector to transform
-A1 = S0 + 14; // result
-A2 = SP + 10; // flag
-system_gte_rotate_and_translate_vector();
-
-A0 = S0; // matrix to scale
-A1 = 800e7d20; // scale vector
-funcbaff8; // scale matrix and set it to gte
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcd85b0
 // create camera matrix
 result = A0;
@@ -362,24 +258,6 @@ gte_rtv0;
 [result + 14] = w(-MAC1);
 [result + 18] = w(-MAC2);
 [result + 1c] = w(-MAC3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbaff8
- // scale matrix and set it to gte
-S0 = A0;
-
-A0 = A0;
-A1 = A1;
-system_scale_matrix_by_vector;
-
-A0 = S0;
-system_gte_set_rotation_matrix();
-
-A0 = S0;
-system_gte_set_translation_vector();
 ////////////////////////////////
 
 
@@ -1803,39 +1681,6 @@ V1 = hu[801518a4 + camera_struct_id * e + 8];
 [801518a4 + camera_struct_id * e + 8] = h(V1 + 2);
 
 return h[script + V1];
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbc11c
-A3 = 0;
-loopbc13c:	; 800BC13C
-    if (w[800fa978 + A3 * 4] == 0)
-    {
-        [800fa978 + A3 * 4] = w(A0);
-
-        [800f7ed8 + A3 * 28 + 0] = h(hu[800f8360]);
-
-        [800fa9bc] = h(hu[800fa9bc] + 1);
-        return A3;
-    }
-
-    A3 = A3 + 1;
-    V0 = A3 < 10;
-800BC1A4	bne    v0, zero, loopbc13c [$800bc13c]
-
-// generate error
-800BC1AC	jal    func3cebc [$8003cebc]
-
-A0 = 1;
-800BC1B4	jal    system_psyq_reset_graph [$80043938]
-
-800BC1BC	jal    func3d1b4 [$8003d1b4]
-
-A0 = 61;
-A1 = 3;
-800BC1C8	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
 ////////////////////////////////
 
 
@@ -3857,4 +3702,207 @@ else
 
     [S0 + 4] = h(hu[S0 + 4] - 1);
 }
+////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////
+// funcc5864()
+
+for( int i = 0; i < 100; ++i )
+{
+    if( bu[801619e8 + i * 2 + 0] == 0 )
+    {
+        if( h[8015e1e8 + i * 34 + 2a] <= 0 )
+        {
+            [8015e1e8 + i * 34 + 2a] = h(h[8015e1e8 + i * 34 + 2a] + 190);
+        }
+        else
+        {
+            [801619e8 + i * 2 + 0] = b(1);
+        }
+    }
+    else if( bu[801619e8 + i * 2 + 0] != 8 )
+    {
+        [8015e1e8 + i * 34 + 20 + a] = h(0);
+    }
+    else
+    {
+        [801619e8 + i * 2 + 0] = b(0);
+
+        battle_opcodes_get_random();
+        [8015e1e8 + i * 34 + 2a] = h(-2710 - V0 / 2);
+    }
+
+    A0 = 8015e1e8 + i * 34 + 20;
+    A1 = 8015e1e8 + i * 34 + 0;
+    system_gte_rotation_matrix_from_yxz();
+
+    A0 = 8015e1e8 + i * 34;
+    funcbaf34(); // multiply current part matrix to camera matrix and add translation and set it to GTE
+
+    if( bu[801619e8 + i * 2 + 0] == 0 )
+    {
+        A0 = w[801517c0] + 70;
+        funcc5adc();
+    }
+    else
+    {
+        [801619e8 + i * 2 + 0] = b(bu[801619e8 + i * 2 + 0] + 1);
+        [801619e8 + i * 2 + 1] = b(bu[801619e8 + i * 2 + 1] + 20);
+        A0 = w[801517c0] + 4078;
+        A1 = bu[801619e8 + i * 2 + 1];
+        funcc59b8();
+    }
+    [80163c74] = w(bu[801619e8 + i * 2 + 0]);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcc5adc()
+
+S2 = w[80163c74];
+S3 = A0;
+A0 = S2;
+800C5B00	jal    $800469d8
+
+S1 = 800ea284;
+
+A0 = S1;
+A1 = S2 + 0008;
+A2 = SP + 0010;
+S0 = SP + 0014;
+A3 = S0;
+func3bbdc()
+
+A0 = S1 + 0008;
+A1 = S2 + 0010;
+A2 = SP + 0010;
+A3 = S0;
+800C5B34	jal    $8003bbdc
+
+V1 = 0080;
+[S2 + 000c] = b(V1);
+[S2 + 000d] = b(V1);
+[S2 + 000e] = b(V1);
+V1 = 0001;
+A0 = V0 >> 02;
+V0 = A0 < 0002;
+[S2 + 0004] = b(V1);
+[S2 + 0005] = b(V1);
+800C5B60	bne    v0, zero, Lc5b7c [$800c5b7c]
+[S2 + 0006] = b(V1);
+V0 = A0 < 1001;
+800C5B6C	bne    v0, zero, Lc5b84 [$800c5b84]
+
+800C5B74	j      Lc5b84 [$800c5b84]
+A0 = 1000;
+
+Lc5b7c:	; 800C5B7C
+A0 = 0002;
+
+Lc5b84:	; 800C5B84
+A1 = 00ffffff;
+A0 = A0 << 02;
+A0 = A0 + S3;
+800C5B90	lui    a2, $ff00
+V0 = w[A0 + 0000];
+V1 = w[S2 + 0000];
+V0 = w[V0 + 0000];
+V1 = V1 & A2;
+V0 = V0 & A1;
+V1 = V1 | V0;
+[S2 + 0000] = w(V1);
+A0 = w[A0 + 0000];
+V0 = S2 + 0014;
+V1 = w[A0 + 0000];
+A1 = S2 & A1;
+V1 = V1 & A2;
+V1 = V1 | A1;
+[A0 + 0000] = w(V1);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcc59b8
+
+S0 = w[80163c74];
+S2 = A0;
+S1 = A1;
+A0 = S0;
+800C59DC	jal    $800468fc
+
+A0 = 0140;
+A1 = 01fe;
+V0 = 028a;
+[S0 + 0016] = h(V0);
+system_create_clut_for_packet();
+
+800C59F8	lui    v1, $1f80
+V1 = V1 | 0008;
+800C5A00	lui    a0, $800f
+800C5A04	addiu  a0, a0, $a264 (=-$5d9c)
+A1 = A0 + 0008;
+[S0 + 000e] = h(V0);
+V0 = 0080;
+[S0 + 0004] = b(V0);
+[S0 + 0005] = b(V0);
+[S0 + 0006] = b(V0);
+V0 = S0 + 0008;
+[SP + 0010] = w(V0);
+V0 = S0 + 0010;
+[SP + 0014] = w(V0);
+V0 = S0 + 0018;
+[SP + 0018] = w(V0);
+V0 = S0 + 0020;
+[SP + 001c] = w(V0);
+800C5A40	lui    v0, $1f80
+A2 = A0 + 0010;
+A3 = A0 + 0018;
+[SP + 0020] = w(V0);
+800C5A50	jal    $8003bc9c
+[SP + 0024] = w(V1);
+800C5A58	lui    a0, $00ff
+A0 = A0 | ffff;
+V0 = 00a0;
+[S0 + 000c] = b(S1);
+V1 = S1 + 0020;
+[S0 + 000d] = b(V0);
+[S0 + 0015] = b(V0);
+V0 = 00c0;
+[S0 + 0014] = b(V1);
+[S0 + 0024] = b(V1);
+V1 = w[S0 + 0000];
+800C5A84	lui    a1, $ff00
+[S0 + 001c] = b(S1);
+[S0 + 001d] = b(V0);
+[S0 + 0025] = b(V0);
+V0 = w[S2 + 0000];
+V1 = V1 & A1;
+V0 = V0 & A0;
+V1 = V1 | V0;
+V0 = S0 + 0028;
+[S0 + 0000] = w(V1);
+V1 = w[S2 + 0000];
+S0 = S0 & A0;
+V1 = V1 & A1;
+V1 = V1 | S0;
+[S2 + 0000] = w(V1);
 ////////////////////////////////

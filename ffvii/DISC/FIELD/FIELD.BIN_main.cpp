@@ -650,7 +650,7 @@ La25bc:	; 800A25BC
 
     A0 = 80071e38; // screen scroll X
     A1 = 80071e3c; // screen scroll Y
-    funca2f78();
+    funca2f78(); // update buttons
     [80114454] = w(V0);
 
     V1 = w[80075d00];
@@ -862,8 +862,7 @@ La25bc:	; 800A25BC
     system_psyq_put_disp_env();
 
     V0 = h[80075dec];
-    800A2B3C	lui    s0, $8008
-    800A2B40	addiu  s0, s0, $eaac (=-$1554)
+    S0 = 8007eaac;
     A0 = S0 + V0 * 5c;
     system_psyq_put_draw_env();
 
@@ -1036,41 +1035,21 @@ system_psyq_draw_sync();
 
 system_get_current_pad_buttons();
 
-800A2F88	lui    v1, $800a
-V1 = w[V1 + ac5c];
-800A2F90	lui    at, $8011
-[AT + 4454] = w(V0);
-800A2F98	lui    at, $800a
-[AT + ac5c] = w(V0);
-800A2FA0	lui    at, $800a
-[AT + ac60] = w(V1);
-V1 = V0 ^ V1;
-A0 = V1 & V0;
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-800A2FB8	lui    at, $800a
-[AT + ac64] = w(A0);
-800A2FC0	lui    at, $800a
-[AT + ac68] = w(V1);
+V1 = w[8009ac5c];
+[80114454] = w(V0);
+[8009ac5c] = w(V0);
+[8009ac60] = w(V1);
+[8009ac64] = w((V0 ^ V1) & V0);
+[8009ac68] = w((V0 ^ V1) & (0 NOR V0));
 
 system_get_buttons_with_config_remap();
 
-800A2FD0	lui    v1, $800a
-V1 = w[V1 + ac6c];
-800A2FD8	lui    at, $8011
-[AT + 4454] = w(V0);
-800A2FE0	lui    at, $800a
-[AT + ac6c] = w(V0);
-800A2FE8	lui    at, $800a
-[AT + ac70] = w(V1);
-V1 = V0 ^ V1;
-A0 = V1 & V0;
-800A2FF8	lui    at, $800a
-[AT + ac74] = w(A0);
-A0 = 0 NOR V0;
-V1 = V1 & A0;
-800A3008	lui    at, $800a
-[AT + ac78] = w(V1);
+V1 = w[8009ac6c];
+[80114454] = w(V0);
+[8009ac6c] = w(V0);
+[8009ac70] = w(V1);
+[8009ac74] = w((V0 ^ V1) & V0);
+[8009ac78] = w((V0 ^ V1) & (0 NOR V0));
 ////////////////////////////////
 
 

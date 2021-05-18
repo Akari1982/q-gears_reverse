@@ -87,26 +87,6 @@ system_graphic_create_display_env_struct();
 
 
 ////////////////////////////////
-// funcbb4f8()
-
-V0 = w[801b0000];
-A0 = 801b0000 + w[801b0000 + V0 * 4]; // offset to texture part (last file)
-A1 = 0;
-A2 = 0; // x add to clut
-A3 = 0; // y add to clut
-funcd2980();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbb67c
-[A1 + 30] = w(A0);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcc57b0()
 
 for( int i = 0; i < 100; ++i )
@@ -129,42 +109,6 @@ for( int i = 0; i < 100; ++i )
     [801619e8 + i * 2 + 0] = b(0);
     [801619e8 + i * 2 + 1] = b(0);
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbc1e0()
-
-[80163c78] = h(0);
-[80163b7c] = h(0);
-[80162080] = h(0);
-
-// init damage callbacks
-for( int i = 0; i < 64; ++i )
-{
-    [80161ef0 + i * 4] = w(0);
-    [80162978 + i * 20 + 0] = h(0);
-    [80162978 + i * 20 + 2] = h(0);
-}
-
-// init unit movements callback
-for( int i = 0; i < a; ++i )
-{
-    [80163b48 + i * 4] = w(0); // unit movements callback
-    [801620ac + i * 20 + 0] = h(0);
-    [801620ac + i * 20 + 2] = h(0);
-}
-
-// init effects callback
-for( int i = 0; i < 3c; ++i )
-{
-    [80163b84 + i * 4] = w(0);
-    [801621f0 + i * 20 + 0] = h(0);
-    [801621f0 + i * 20 + 2] = h(0);
-}
-
-funcbc2f0(); // init camera callbacks
 ////////////////////////////////
 
 
@@ -200,35 +144,4 @@ if( bu[80062d99] != 0 )
 [8009a004] = w(A0 & ffff);
 [8009a008] = w(A0 & ffff);
 system_execute_AKAO();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbc04c()
-
-T0 = h[801590d4]; // id of effect to render
-
-for( int i = 0; i < 3c; ++i )
-{
-    if( ( w[80163b84 + i * 4] == 0 ) && ( i >= T0 ) )
-    {
-        [80163b84 + i * 4] = w(A0);
-        [801621f0 + i * 20 + 0] = h(T0);
-        [80163c78] = h(hu[80163c78] + 1);
-        return i;
-    }
-}
-
-system_bios_stop_pad();
-
-A0 = 1;
-system_psyq_reset_graph;
-
-func3d1b4; // disable dma, set default exit from exception
-
-A0 = 61;
-A1 = 4;
-system_bios_system_error_boot_or_disk_failure();
-return V0;
 ////////////////////////////////

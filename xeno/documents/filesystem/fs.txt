@@ -31,18 +31,20 @@ Directory 0 1 (0023)
      a
      b
      c
-     d STRIPCD1\2\0035 battling.exe
-     e STRIPCD1\2\0036 field.exe
-     f STRIPCD1\2\0037 worldmap.exe
-    10 STRIPCD1\2\0038 battle.exe
-    11 STRIPCD1\2\0039 menu.exe
-    12 STRIPCD1\2\0040 movie.exe
+     d STRIPCD1\2\0035_battling.exe
+     e STRIPCD1\2\0036_field.exe
+     f STRIPCD1\2\0037_worldmap.exe
+    10 STRIPCD1\2\0038_battle.exe
+    11 STRIPCD1\2\0039_menu.exe
+    12 STRIPCD1\2\0040_movie.exe
 
 Directory 4 0 (0424)
      2 STRIPCD1\7\0424          0x1d1d5, 0x211dc
      3 STRIPCD1\7\0425          0x1d218, 0xead4
      4 STRIPCD1\8\0427          0x1d236, 0xdd38
      5 STRIPCD1\8\0428          0x1d252, 0xd3b0
+
+    ad STRIPCD1\10\0595_field_debug.exe
 
 Directory с 0
      2 STRIPCD1\15\2613.sed     0x3a783, 0x0680
@@ -85,3 +87,6 @@ Directory 10 2 (2606)
      4 STRIPCD1\14\2609         0x3a763, 0x6794
      5 STRIPCD1\14\2610.sed     0x3a770, 0x6f8c
      6 STRIPCD1\14\2611         0x3a77e, 0x21c8
+
+Directory 18 0 (19)
+     1 STRIPCD1\0\0019_mdec.exe

@@ -36,33 +36,17 @@ func11c1c();
 
 
 ////////////////////////////////
-// func1117c
-8001117C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+// func1117c()
+
 S0 = A0;
-[SP + 0014] = w(S1);
-8001118C	lui    s1, $800a
-80011190	addiu  s1, s1, $a000 (=-$6000)
-V0 = 00f1;
-[SP + 0018] = w(RA);
-8001119C	jal    system_execute_AKAO [$8002da7c]
-[S1 + 0000] = h(V0);
-V0 = 0020;
-[S1 + 0000] = h(V0);
-V0 = 0040;
-S0 = S0 & ffff;
-800111B4	lui    at, $800a
-[AT + a004] = w(V0);
-800111BC	lui    at, $800a
-[AT + a008] = w(S0);
-800111C4	jal    system_execute_AKAO [$8002da7c]
-800111C8	nop
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800111DC	jr     ra 
-800111E0	nop
+
+[8009a000] = h(f1);
+system_execute_AKAO();
+
+[8009a000] = h(20);
+[8009a004] = w(40);
+[8009a008] = w(S0);
+system_execute_AKAO();
 ////////////////////////////////
 
 
@@ -76,7 +60,7 @@ system_execute_AKAO();
 if( ( bu[8009d5e9] & 30 ) == 0 )
 {
     A0 = 2b
-    80011218	jal    func1117c [$8001117c]
+    func1117c();
 }
 
 [800707bc] = h(hu[8009abf6]);
@@ -91,40 +75,32 @@ func146a4();
 
 
 ////////////////////////////////
-// func11274
-80011274	addiu  sp, sp, $ffe8 (=-$18)
-80011278	lui    a2, $800e
-8001127C	lui    a0, $8005
-A0 = w[A0 + 8d1c];
-80011284	lui    a1, $8005
-A1 = w[A1 + 8d20];
-[SP + 0010] = w(RA);
-80011290	jal    system_cdrom_start_load_file [$80033e34]
+// func11274()
+
+A0 = w[80048d1c]; // 5F020000 "SOUND\INSTR2.DAT"
+A1 = w[80048d20]; // 00200000
+A2 = 800e0000;
 A3 = 0;
+system_cdrom_start_load_file();
+
 
 loop11298:	; 80011298
-80011298	jal    system_cdrom_read_chain [$80034b44]
-8001129C	nop
+    system_cdrom_read_chain();
 800112A0	bne    v0, zero, loop11298 [$80011298]
-800112A4	lui    a2, $800a
-800112A8	lui    a0, $8005
-A0 = w[A0 + 8d14];
-800112B0	lui    a1, $8005
-A1 = w[A1 + 8d18];
-800112B8	jal    system_cdrom_start_load_file [$80033e34]
+
+A0 = w[80048d14]; // E4010000 "SOUND\INSTR2.ALL"
+A1 = w[80048d18]; // F0D40300
+A2 = 800a0000;
 A3 = 0;
+system_cdrom_start_load_file();
 
 loop112c0:	; 800112C0
-800112C0	jal    system_cdrom_read_chain [$80034b44]
-800112C4	nop
+    system_cdrom_read_chain();
 800112C8	bne    v0, zero, loop112c0 [$800112c0]
-800112CC	lui    a0, $800a
-800112D0	jal    func29818 [$80029818]
-800112D4	lui    a1, $800e
-RA = w[SP + 0010];
-SP = SP + 0018;
-800112E0	jr     ra 
-800112E4	nop
+
+A0 = 800a0000;
+A1 = 800e0000;
+func29818();
 ////////////////////////////////
 
 
@@ -495,7 +471,7 @@ if( h[800965ec] != 5 )
     {
         if( h[800965ec] != 2 )
         {
-            A0 = w[80048d24]; // FIELD/FIELD.BIN
+            A0 = w[80048d24]; // "FIELD/FIELD.BIN"
             A1 = w[80048d28];
             A2 = 80180000;
             A3 = 0;
@@ -529,65 +505,57 @@ funca16cc(); // field main
 
 
 ////////////////////////////////
-// func11920
-80011920	lui    at, $8009
-[AT + 65e8] = h(0);
-80011928	lui    at, $8007
-[AT + 1a5c] = h(0);
-80011930	jr     ra 
-80011934	nop
+// func11920()
+
+[800965e8] = h(0);
+[80071a5c] = h(0);
 ////////////////////////////////
-// func11938
-80011938	addiu  sp, sp, $ffe8 (=-$18)
-8001193C	lui    a2, $800f
-80011940	lui    a0, $8005
-A0 = w[A0 + 8cfc];
-80011948	lui    a1, $8005
-A1 = w[A1 + 8d00];
-[SP + 0010] = w(RA);
-80011954	jal    system_cdrom_start_load_file [$80033e34]
+
+
+
+////////////////////////////////
+// func11938()
+
+A0 = w[80048cfc]; // DB000000 "SOUND\INSTR.ALL"
+A1 = w[80048d00]; // A05F0700
+A2 = 800f0000;
 A3 = 0;
+system_cdrom_start_load_file();
 
 loop1195c:	; 8001195C
-8001195C	jal    system_cdrom_read_chain [$80034b44]
-80011960	nop
-A2 = 801b0000;
+    system_cdrom_read_chain();
 80011964	bne    v0, zero, loop1195c [$8001195c]
 
-8001196C	lui    a0, $8005
-A0 = w[A0 + 8d04];
-80011974	lui    a1, $8005
-A1 = w[A1 + 8d08];
-8001197C	jal    system_cdrom_start_load_file [$80033e34]
+A0 = w[80048d04]; // C7010000 "SOUND\EFFECT.ALL"
+A1 = w[80048d08]; // 00C80000
+A2 = 801b0000;
 A3 = 0;
+system_cdrom_start_load_file();
 
 loop11984:	; 80011984
-80011984	jal    system_cdrom_read_chain [$80034b44]
-
+    system_cdrom_read_chain();
 8001198C	bne    v0, zero, loop11984 [$80011984]
-80011990	lui    a2, $801b
-A2 = A2 | c800;
-80011998	lui    a0, $8005
-A0 = w[A0 + 8d0c];
-800119A0	lui    a1, $8005
-A1 = w[A1 + 8d10];
-800119A8	jal    system_cdrom_start_load_file [$80033e34]
+
+A0 = w[80048d0c]; // E0010000 "SOUND\INSTR.DAT"
+A1 = w[80048d10]; // 00200000
+A2 = 801bc800;
 A3 = 0;
+system_cdrom_start_load_file();
 
 loop119b0:	; 800119B0
-800119B0	jal    system_cdrom_read_chain [$80034b44]
-800119B4	nop
+    system_cdrom_read_chain();
 800119B8	bne    v0, zero, loop119b0 [$800119b0]
-800119BC	lui    a0, $800f
-800119C0	lui    a1, $801b
+
+A0 = 800f0000;
+A1 = 801bc800;
 800119C4	jal    func2988c [$8002988c]
-A1 = A1 | c800;
+
+A0 = 801b0000;
 800119CC	jal    func29998 [$80029998]
-800119D0	lui    a0, $801b
-RA = w[SP + 0010];
-SP = SP + 0018;
-800119DC	jr     ra 
-800119E0	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func119e4
 800119E4
@@ -735,8 +703,8 @@ S7 = 20000000;
 
 func33b70(); // init cdrom, mdec
 
-A0 = w[80048d54]; // 1efa9 FIELD\ENDING.X
-A1 = w[80048d58]; // f414 size
+A0 = w[80048d54]; // 1efa9 "FIELD\ENDING.X"
+A1 = w[80048d58]; // f414
 A2 = 800a0000;
 A3 = 0;
 func33f40();
@@ -752,14 +720,14 @@ L11cf8:	; 80011CF8
     [8009ac32] = h(0);
     [8009ac2f] = b(0);
 
-    80011D0C	jal    func148a0 [$800148a0]
+    func148a0();
 
-    80011D14	jal    func11938 [$80011938]
+    func11938(); // load sounds instr.dat instr.all effect.all
 
-    80011D1C	jal    func1c434 [$8001c434]
+    func1c434();
 
-    A0 = w[80048d54]; // 1efa9 FIELD\ENDING.X
-    A1 = w[80048d58]; // f414 size
+    A0 = w[80048d54]; // 1efa9 "FIELD\ENDING.X"
+    A1 = w[80048d58]; // f414
     A2 = 800a0000
     A3 = 0;
     func33f40();
@@ -1359,7 +1327,7 @@ L11cf8:	; 80011CF8
 
         case 10:
         {
-            8001220C	jal    func11274 [$80011274]
+            func11274(); // load instr2.dat instr2.all
 
             [8009ac1a] = h(2);
             [800965ec] = h(10);

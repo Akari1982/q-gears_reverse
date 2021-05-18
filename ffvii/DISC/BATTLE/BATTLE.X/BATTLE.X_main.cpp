@@ -19414,3 +19414,1232 @@ V0 = hu[800f198c];
 800B8218	nop
 [801516a0] = h(V0);
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8234
+800B8234	addiu  sp, sp, $ffe8 (=-$18)
+800B8238	beq    a0, zero, Lb8258 [$800b8258]
+800B823C	sw     ra, $0010(sp)
+800B8240	lui    a0, $8016
+800B8244	lbu    a0, $90cc(a0)
+800B8248	jal    funcd0c80 [$800d0c80]
+800B824C	nop
+800B8250	lui    at, $8015
+800B8254	sb     zero, $17bc(at)
+
+Lb8258:	; 800B8258
+800B8258	lw     ra, $0010(sp)
+800B825C	addiu  sp, sp, $0018
+800B8260	jr     ra 
+800B8264	nop
+////////////////////////////////
+// funcb8268
+800B8268	addu   t0, zero, zero
+800B826C	ori    t1, zero, $0001
+800B8270	lui    a1, $8016
+800B8274	addiu  a1, a1, $3784
+800B8278	addu   a0, zero, zero
+800B827C	addu   a3, zero, zero
+800B8280	addu   a2, zero, zero
+
+loopb8284:	; 800B8284
+800B8284	lui    at, $8016
+800B8288	addiu  at, at, $36b9
+800B828C	addu   at, at, a2
+800B8290	lbu    v0, $0000(at)
+800B8294	nop
+800B8298	sb     v0, $0000(a1)
+800B829C	lui    at, $8015
+800B82A0	addiu  at, at, $120c
+800B82A4	addu   at, at, a3
+800B82A8	lhu    v0, $0000(at)
+800B82AC	nop
+800B82B0	andi   v0, v0, $0008
+800B82B4	bne    v0, zero, Lb8338 [$800b8338]
+800B82B8	addiu  a3, a3, $0074
+800B82BC	lui    at, $8015
+800B82C0	addiu  at, at, $18e6
+800B82C4	addu   at, at, a0
+800B82C8	lh     v1, $0000(at)
+800B82CC	lbu    v0, $0000(a1)
+800B82D0	nop
+800B82D4	beq    v1, v0, Lb8338 [$800b8338]
+800B82D8	nop
+800B82DC	lui    at, $8015
+800B82E0	addiu  at, at, $190a
+800B82E4	addu   at, at, a0
+800B82E8	lbu    v0, $0000(at)
+800B82EC	nop
+800B82F0	bne    v0, t1, Lb8338 [$800b8338]
+800B82F4	nop
+800B82F8	lui    at, $8015
+800B82FC	addiu  at, at, $1922
+800B8300	addu   at, at, a0
+800B8304	lbu    v0, $0000(at)
+800B8308	nop
+800B830C	ori    v0, v0, $0001
+800B8310	lui    at, $8015
+800B8314	addiu  at, at, $1922
+800B8318	addu   at, at, a0
+800B831C	sb     v0, $0000(at)
+800B8320	lbu    v0, $0000(a1)
+800B8324	nop
+800B8328	lui    at, $8015
+800B832C	addiu  at, at, $18e6
+800B8330	addu   at, at, a0
+800B8334	sh     v0, $0000(at)
+
+Lb8338:	; 800B8338
+800B8338	addiu  a1, a1, $0001
+800B833C	addiu  a0, a0, $0b9c
+800B8340	addiu  t0, t0, $0001
+800B8344	slti   v0, t0, $000a
+800B8348	bne    v0, zero, loopb8284 [$800b8284]
+800B834C	addiu  a2, a2, $0010
+800B8350	lui    at, $8016
+800B8354	sb     zero, $3787(at)
+800B8358	jr     ra 
+800B835C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8360()
+
+type = A0;
+
+A0 = w[80163c74];
+A1 = 1; // drawing to display area is permitted
+A2 = 1; // dithering processing flag on
+A3 = (type & 3) * 20; // initial value of texture page
+A4 = 0;
+system_gpu_create_texture_setting_packet();
+
+A0 = w[801517c0] + 4078; // inited OT for 2 packets
+A1 = w[80163c74];
+[80163c74] = w(A1 + c);
+system_add_render_packet_to_queue();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb83c4
+800B83C4	addiu  sp, sp, $ffe8 (=-$18)
+800B83C8	sw     ra, $0010(sp)
+800B83CC	addu   a0, zero, zero
+800B83D0	addu   v1, zero, zero
+
+loopb83d4:	; 800B83D4
+800B83D4	lui    at, $8015
+800B83D8	addiu  at, at, $120c
+800B83DC	addu   at, at, v1
+800B83E0	lhu    v0, $0000(at)
+800B83E4	nop
+800B83E8	andi   v0, v0, $0001
+800B83EC	beq    v0, zero, Lb840c [$800b840c]
+800B83F0	addiu  a0, a0, $0001
+800B83F4	jal    funcba4c8 [$800ba4c8]
+800B83F8	nop
+800B83FC	jal    funcba40c [$800ba40c]
+800B8400	nop
+800B8404	j      Lb8428 [$800b8428]
+800B8408	nop
+
+Lb840c:	; 800B840C
+800B840C	slti   v0, a0, $0003
+800B8410	bne    v0, zero, loopb83d4 [$800b83d4]
+800B8414	addiu  v1, v1, $0074
+800B8418	jal    funcba40c [$800ba40c]
+800B841C	nop
+800B8420	jal    funcba4c8 [$800ba4c8]
+800B8424	nop
+
+Lb8428:	; 800B8428
+800B8428	lw     ra, $0010(sp)
+800B842C	addiu  sp, sp, $0018
+800B8430	jr     ra 
+800B8434	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8438()
+
+funcb9568; // update field geometry and set it to render
+
+V0 = bu[801635fc];
+800B8450	nop
+800B8454	beq    v0, zero, Lb8464 [$800b8464]
+800B8458	addiu  v0, v0, $ffff (=-$1)
+[801635fc] = b(V0);
+
+Lb8464:	; 800B8464
+V1 = bu[80163c7c];
+800B846C	nop
+V0 = V1 < 0007;
+800B8474	beq    v0, zero, Lb84b8 [$800b84b8]
+V0 = V1 << 02;
+800B847C	lui    at, $800a
+AT = AT + 0614;
+AT = AT + V0;
+V0 = w[AT + 0000];
+800B848C	nop
+800B8490	jr     v0 
+800B8494	nop
+
+800B8498	jal    funcb905c [$800b905c]
+800B849C	nop
+800B84A0	jal    funcbc440 [$800bc440]
+800B84A4	nop
+800B84A8	jal    funcba4c8 [$800ba4c8]
+800B84AC	nop
+800B84B0	j      Lb84f8 [$800b84f8]
+800B84B4	nop
+
+Lb84b8:	; 800B84B8
+800B84B8	jal    funcb8ee4 [$800b8ee4]
+800B84BC	nop
+800B84C0	jal    funcb905c [$800b905c]
+800B84C4	nop
+A0 = bu[801517bc];
+800B84D0	jal    funcb8234 [$800b8234]
+800B84D4	nop
+800B84D8	jal    funcbc440 [$800bc440]
+
+funcb7fb4();
+
+800B84E8	jal    funcb83c4 [$800b83c4]
+800B84EC	nop
+800B84F0	jal    funcb8b48 [$800b8b48]
+800B84F4	nop
+
+Lb84f8:	; 800B84F8
+funcb7fb4();
+
+800B8500	jal    funcb91cc [$800b91cc]
+800B8504	nop
+V0 = hu[8016375a];
+800B8510	nop
+[80151694] = h(V0);
+800B851C	jal    funcb85e0 [$800b85e0]
+
+
+
+A0 = h[800f8370]; // camera id to use
+A1 = bu[801590cc]; // attacker id
+A1 = bu[801518e4 + A1 * b9c + 22];
+funcbc81c; // we read camera data here
+
+A0 = h[800f8370]; // camera id to use
+funcbc8b0; // copy data to camera vectors
+
+800B8578	jal    funcb8268 [$800b8268]
+800B857C	nop
+A0 = 0;
+A1 = 0;
+A2 = 0;
+system_gte_set_far_colour();
+
+800B8590	jal    funcbc538 [$800bc538]
+800B8594	nop
+800B8598	jal    funcbc348 [$800bc348]
+
+
+
+A0 = 800fa63c; // store final camera matrix (primary + scale + ??? + ???)
+A1 = 800fa958; // store primary camera matrix here
+A2 = 80158d00; // end vector
+A3 = 801031e8; // start vector
+funcbb75c; // create primary and final camera matrix
+
+800B85C8	jal    funcc627c [$800c627c]
+
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb85e0
+800B85E0	addiu  sp, sp, $ffe8 (=-$18)
+800B85E4	lui    v1, $800f
+800B85E8	lbu    v1, $7ed4(v1)
+800B85EC	ori    v0, zero, $0064
+800B85F0	beq    v1, v0, Lb86bc [$800b86bc]
+800B85F4	sw     ra, $0010(sp)
+800B85F8	lui    v0, $8010
+800B85FC	lhu    v0, $a6b8(v0)
+800B8600	nop
+800B8604	beq    v0, zero, Lb86bc [$800b86bc]
+800B8608	nop
+800B860C	jal    funcbb804 [$800bb804]
+800B8610	nop
+800B8614	ori    v0, zero, $0005
+800B8618	lui    at, $8016
+800B861C	sb     v0, $3c7c(at)
+800B8620	jal    funcd8b2c [$800d8b2c]
+800B8624	nop
+800B8628	lui    v1, $8016
+800B862C	lbu    v1, $90e0(v1)
+800B8630	ori    v0, zero, $0064
+800B8634	lui    at, $800f
+800B8638	sb     v0, $7ed4(at)
+800B863C	sll    v0, v1, $01
+800B8640	addu   v0, v0, v1
+800B8644	sll    v0, v0, $02
+800B8648	addiu  v1, zero, $fffd (=-$3)
+800B864C	lui    at, $8016
+800B8650	addiu  at, at, $37a0
+800B8654	addu   at, at, v0
+800B8658	sh     v1, $0000(at)
+800B865C	jal    funcbb684 [$800bb684]
+800B8660	nop
+800B8664	addu   a1, zero, zero
+800B8668	addu   a2, zero, zero
+800B866C	addu   a0, zero, zero
+800B8670	lui    v1, $8015
+800B8674	addiu  v1, v1, $1922
+
+loopb8678:	; 800B8678
+800B8678	lbu    v0, $0000(v1)
+800B867C	addiu  a1, a1, $0001
+800B8680	ori    v0, v0, $0020
+800B8684	sb     v0, $0000(v1)
+800B8688	lui    at, $8016
+800B868C	addiu  at, at, $36c0
+800B8690	addu   at, at, a2
+800B8694	lw     v0, $0000(at)
+800B8698	addiu  a2, a2, $0010
+800B869C	addiu  v1, v1, $0b9c
+800B86A0	lui    at, $8015
+800B86A4	addiu  at, at, $1200
+800B86A8	addu   at, at, a0
+800B86AC	sw     v0, $0000(at)
+800B86B0	slti   v0, a1, $0003
+800B86B4	bne    v0, zero, loopb8678 [$800b8678]
+800B86B8	addiu  a0, a0, $0074
+
+Lb86bc:	; 800B86BC
+800B86BC	lui    v1, $8010
+800B86C0	lbu    v1, $9d98(v1)
+800B86C4	ori    v0, zero, $0064
+800B86C8	beq    v1, v0, Lb8734 [$800b8734]
+800B86CC	nop
+800B86D0	lui    v0, $8007
+800B86D4	lhu    v0, $07be(v0)
+800B86D8	nop
+800B86DC	andi   v0, v0, $0001
+800B86E0	beq    v0, zero, Lb8734 [$800b8734]
+800B86E4	ori    v0, zero, $0005
+800B86E8	lui    at, $8016
+800B86EC	sb     v0, $3c7c(at)
+800B86F0	jal    funcd8b2c [$800d8b2c]
+800B86F4	nop
+800B86F8	lui    v1, $8016
+800B86FC	lbu    v1, $90e0(v1)
+800B8700	ori    v0, zero, $0064
+800B8704	lui    at, $8010
+800B8708	sb     v0, $9d98(at)
+800B870C	sll    v0, v1, $01
+800B8710	addu   v0, v0, v1
+800B8714	sll    v0, v0, $02
+800B8718	addiu  v1, zero, $ffff (=-$1)
+800B871C	lui    at, $8016
+800B8720	addiu  at, at, $37a0
+800B8724	addu   at, at, v0
+800B8728	sh     v1, $0000(at)
+800B872C	jal    funcbb684 [$800bb684]
+800B8730	nop
+
+Lb8734:	; 800B8734
+800B8734	lui    v0, $8016
+800B8738	lbu    v0, $90d8(v0)
+800B873C	nop
+800B8740	bne    v0, zero, Lb8770 [$800b8770]
+800B8744	nop
+800B8748	lui    v0, $8016
+800B874C	lhu    v0, $3b80(v0)
+800B8750	nop
+800B8754	beq    v0, zero, Lb8770 [$800b8770]
+800B8758	nop
+800B875C	jal    funcbb864 [$800bb864]
+800B8760	nop
+800B8764	ori    v0, zero, $0001
+800B8768	lui    at, $8016
+800B876C	sb     v0, $90d8(at)
+
+Lb8770:	; 800B8770
+800B8770	lui    v1, $8010
+800B8774	lbu    v1, $9d9c(v1)
+800B8778	ori    v0, zero, $0064
+800B877C	beq    v1, v0, Lb887c [$800b887c]
+800B8780	nop
+800B8784	lui    v0, $8007
+800B8788	lhu    v0, $07be(v0)
+800B878C	nop
+800B8790	andi   v0, v0, $0008
+800B8794	beq    v0, zero, Lb887c [$800b887c]
+800B8798	addu   a1, zero, zero
+800B879C	addu   a3, zero, zero
+800B87A0	lui    v1, $8015
+800B87A4	addiu  v1, v1, $1922
+800B87A8	addu   a0, zero, zero
+800B87AC	addu   a2, zero, zero
+
+loopb87b0:	; 800B87B0
+800B87B0	lbu    v0, $0000(v1)
+800B87B4	nop
+800B87B8	ori    v0, v0, $0001
+800B87BC	sb     v0, $0000(v1)
+800B87C0	lui    at, $8016
+800B87C4	addiu  at, at, $36b9
+800B87C8	addu   at, at, a0
+800B87CC	lbu    v0, $0000(at)
+800B87D0	addiu  a1, a1, $0001
+800B87D4	lui    at, $8015
+800B87D8	addiu  at, at, $18e6
+800B87DC	addu   at, at, a2
+800B87E0	sh     v0, $0000(at)
+800B87E4	lbu    v0, $0000(v1)
+800B87E8	addiu  a2, a2, $0b9c
+800B87EC	ori    v0, v0, $0020
+800B87F0	sb     v0, $0000(v1)
+800B87F4	addiu  v1, v1, $0b9c
+800B87F8	lui    at, $8016
+800B87FC	addiu  at, at, $36c0
+800B8800	addu   at, at, a0
+800B8804	lw     v0, $0000(at)
+800B8808	addiu  a0, a0, $0010
+800B880C	lui    at, $8015
+800B8810	addiu  at, at, $1200
+800B8814	addu   at, at, a3
+800B8818	sw     v0, $0000(at)
+800B881C	slti   v0, a1, $0003
+800B8820	bne    v0, zero, loopb87b0 [$800b87b0]
+800B8824	addiu  a3, a3, $0074
+800B8828	ori    v0, zero, $0064
+800B882C	lui    at, $8010
+800B8830	sb     v0, $9d9c(at)
+800B8834	ori    v0, zero, $0005
+800B8838	lui    at, $8016
+800B883C	sb     v0, $3c7c(at)
+800B8840	jal    funcd8b2c [$800d8b2c]
+800B8844	nop
+800B8848	lui    v1, $8016
+800B884C	lbu    v1, $90e0(v1)
+800B8850	nop
+800B8854	sll    v0, v1, $01
+800B8858	addu   v0, v0, v1
+800B885C	sll    v0, v0, $02
+800B8860	addiu  v1, zero, $ffff (=-$1)
+800B8864	lui    at, $8016
+800B8868	addiu  at, at, $37a0
+800B886C	addu   at, at, v0
+800B8870	sh     v1, $0000(at)
+800B8874	jal    funcbb684 [$800bb684]
+800B8878	nop
+
+Lb887c:	; 800B887C
+800B887C	lw     ra, $0010(sp)
+800B8880	addiu  sp, sp, $0018
+800B8884	jr     ra 
+800B8888	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb888c
+V1 = 0;
+
+loopb8890:	; 800B8890
+    V0 = bu[801517f0 + V1];
+    if (A0 == V0)
+    {
+        return V1;
+    }
+
+    V1 = V1 + 1;
+    V0 = V1 < 4e;
+800B88BC	bne    v0, zero, loopb8890 [$800b8890]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb88cc
+unit_id = A0;
+
+// add new effect
+A0 = 800ce970;
+funcbbeac;
+S0 = V0;
+[80162978 + S0 * 20 + 4] = h(0);
+[80162978 + S0 * 20 + 8] = h(unit_id);
+
+A0 = unit_id;
+funcb888c;
+A0 = V0;
+A1 = S0;
+funcb8a34;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8944
+800B8944	addiu  sp, sp, $ffe0 (=-$20)
+800B8948	sw     s1, $0014(sp)
+800B894C	addu   s1, a0, zero
+800B8950	sw     s0, $0010(sp)
+800B8954	lui    a0, $800d
+800B8958	addiu  a0, a0, $e970 (=-$1690)
+800B895C	sw     ra, $0018(sp)
+800B8960	jal    funcbbeac [$800bbeac]
+800B8964	addu   s0, a1, zero
+800B8968	addu   a0, s0, zero
+800B896C	sll    v1, v0, $05
+800B8970	lui    at, $8016
+800B8974	addiu  at, at, $297c
+800B8978	addu   at, at, v1
+800B897C	sh     zero, $0000(at)
+800B8980	lui    at, $8016
+800B8984	addiu  at, at, $2980
+800B8988	addu   at, at, v1
+800B898C	sh     s1, $0000(at)
+800B8990	jal    funcb8a34 [$800b8a34]
+800B8994	addu   a1, v0, zero
+800B8998	sll    s0, s0, $03
+800B899C	lui    at, $8016
+800B89A0	addiu  at, at, $3cc2
+800B89A4	addu   at, at, s0
+800B89A8	lhu    v0, $0000(at)
+800B89AC	nop
+800B89B0	andi   v0, v0, $0004
+800B89B4	beq    v0, zero, Lb89e4 [$800b89e4]
+800B89B8	sll    v0, s1, $03
+800B89BC	subu   v0, v0, s1
+800B89C0	sll    v0, v0, $02
+800B89C4	addu   v0, v0, s1
+800B89C8	sll    v0, v0, $02
+800B89CC	lui    at, $8015
+800B89D0	addiu  at, at, $120c
+800B89D4	addu   at, at, v0
+800B89D8	lhu    v1, $0000(at)
+800B89DC	j      Lb8a0c [$800b8a0c]
+800B89E0	ori    v1, v1, $0010
+
+Lb89e4:	; 800B89E4
+800B89E4	subu   v0, v0, s1
+800B89E8	sll    v0, v0, $02
+800B89EC	addu   v0, v0, s1
+800B89F0	sll    v0, v0, $02
+800B89F4	lui    at, $8015
+800B89F8	addiu  at, at, $120c
+800B89FC	addu   at, at, v0
+800B8A00	lhu    v1, $0000(at)
+800B8A04	nop
+800B8A08	andi   v1, v1, $ffef
+
+Lb8a0c:	; 800B8A0C
+800B8A0C	lui    at, $8015
+800B8A10	addiu  at, at, $120c
+800B8A14	addu   at, at, v0
+800B8A18	sh     v1, $0000(at)
+800B8A1C	lw     ra, $0018(sp)
+800B8A20	lw     s1, $0014(sp)
+800B8A24	lw     s0, $0010(sp)
+800B8A28	addiu  sp, sp, $0020
+800B8A2C	jr     ra 
+800B8A30	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8a34
+[80162978 + A1 * 20 + 06] = h(hu[800f99ec + A0 * c + 8]);
+[80162978 + A1 * 20 + 0a] = h(hu[800f99ec + A0 * c + 0]); // damage.
+[80162978 + A1 * 20 + 0c] = h(bu[801590cc]); // attacker id
+[80162978 + A1 * 20 + 0e] = h(hu[800f99ec + A0 * c + 2]); // 1f800220 damage flags (heal damage to mp critical).
+[80162978 + A1 * 20 + 10] = w(h[800f99ec + A0 * c + 4]); // impact sound.
+[80162978 + A1 * 20 + 14] = w(h[800f99f2 + A0 * c]); // impact effect id.
+[80162978 + A1 * 20 + 18] = b(bu[800f8cf0]); // 1 in 0xbe opcode or 0 in 0xf7 opcode
+[80162978 + A1 * 20 + 19] = b(bu[800f99ec + A0 * c + a]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8b48
+S1 = 80151778;
+
+loopb8b60:	; 800B8B60
+    A0 = SP + 10; // we store address of current 800f4d2c
+    funcd4ff0; // we read 800f4cec hurt byte here
+
+    if (V0 == 0)
+    {
+        return;
+    }
+
+    V1 = V0 < b;
+800B8B74	beq    v1, zero, loopb8b60 [$800b8b60]
+
+2C8D0B80 1
+848D0B80 2
+608B0B80 3 8
+E48D0B80 7
+448C0B80 9
+688C0B80 a
+
+if (V0 == 4 || V0 == 5) // normal hurt
+{
+    [800f8378] = b(0);
+
+    V0 = w[SP + 10];
+    S0 = h[V0 + 0]; // unit id
+
+    A0 = S0;
+    funcb88cc;
+
+    [801518e4 + S0 * b9c + 3e] = b(bu[801518e4 + S0 * b9c + 3e] | 20);
+
+    A0 = S0;
+    funcb888c;
+    [80151200 + S0 * 74 + 0] = w(w[80163cc4 + V0 * 8]);
+
+    800B8C3C	j      loopb8b60 [$800b8b60]
+}
+else if (V0 == 6) // reflection
+{
+    V0 = w[SP + 10];
+    S0 = h[V0 + 0]; // unit id
+
+    A0 = S0;
+    funcd6814; // add reflection effect
+
+    [801518e4 + S0 * b9c + 26] = b(1);
+
+    800B8DDC	j      loopb8b60 [$800b8b60]
+}
+
+800B8C44	lw     v0, $0010(sp)
+800B8C48	nop
+800B8C4C	lh     a0, $0000(v0)
+800B8C50	lui    at, $8010
+800B8C54	sb     zero, $8378(at)
+800B8C58	jal    funcb88cc [$800b88cc]
+800B8C5C	nop
+800B8C60	j      loopb8b60 [$800b8b60]
+800B8C64	nop
+800B8C68	lw     v1, $0010(sp)
+800B8C6C	ori    v0, zero, $0001
+800B8C70	lui    at, $8010
+800B8C74	sb     v0, $8378(at)
+800B8C78	lh     s0, $0000(v1)
+800B8C7C	lh     a1, $0010(v1)
+800B8C80	jal    funcb8944 [$800b8944]
+800B8C84	addu   a0, s0, zero
+800B8C88	sll    v1, s0, $01
+800B8C8C	addu   v1, v1, s0
+800B8C90	sll    v0, v1, $05
+800B8C94	subu   v0, v0, v1
+800B8C98	sll    v0, v0, $03
+800B8C9C	subu   v0, v0, s0
+800B8CA0	sll    v0, v0, $02
+800B8CA4	lui    at, $8015
+800B8CA8	addiu  at, at, $1922
+800B8CAC	addu   at, at, v0
+800B8CB0	lbu    v1, $0000(at)
+800B8CB4	nop
+800B8CB8	ori    v1, v1, $0020
+800B8CBC	lui    at, $8015
+800B8CC0	addiu  at, at, $1922
+800B8CC4	addu   at, at, v0
+800B8CC8	sb     v1, $0000(at)
+800B8CCC	jal    funcb888c [$800b888c]
+800B8CD0	addu   a0, s0, zero
+800B8CD4	sll    v1, s0, $03
+800B8CD8	subu   v1, v1, s0
+800B8CDC	sll    v1, v1, $02
+800B8CE0	addu   v1, v1, s0
+800B8CE4	sll    v0, v0, $10
+800B8CE8	sra    v0, v0, $0d
+800B8CEC	sll    v1, v1, $02
+800B8CF0	lui    a0, $8016
+800B8CF4	lbu    a0, $3b38(a0)
+800B8CF8	lui    at, $8016
+800B8CFC	addiu  at, at, $3cc4
+800B8D00	addu   at, at, v0
+800B8D04	lw     v0, $0000(at)
+800B8D08	addiu  a0, a0, $0001
+800B8D0C	lui    at, $8015
+800B8D10	addiu  at, at, $1200
+800B8D14	addu   at, at, v1
+800B8D18	sw     v0, $0000(at)
+800B8D1C	lui    at, $8016
+800B8D20	sb     a0, $3b38(at)
+800B8D24	j      loopb8b60 [$800b8b60]
+800B8D28	nop
+800B8D2C	lw     v1, $0010(sp)
+800B8D30	nop
+800B8D34	lhu    v0, $0004(v1)
+800B8D38	nop
+800B8D3C	sh     v0, $0000(s1)
+800B8D40	lhu    v0, $0006(v1)
+800B8D44	nop
+800B8D48	sh     v0, $0002(s1)
+800B8D4C	lhu    v0, $0008(v1)
+800B8D50	nop
+800B8D54	sh     v0, $0004(s1)
+800B8D58	lhu    v0, $0010(v1)
+800B8D5C	lui    a0, $800c
+800B8D60	addiu  a0, a0, $7340
+800B8D64	lui    at, $8010
+800B8D68	sh     v0, $afe8(at)
+800B8D6C	jal    funcbbeac [$800bbeac]
+800B8D70	nop
+800B8D74	lui    at, $8010
+800B8D78	sb     zero, $8364(at)
+800B8D7C	j      loopb8b60 [$800b8b60]
+800B8D80	nop
+800B8D84	ori    v0, zero, $00ff
+800B8D88	lui    at, $8010
+800B8D8C	sb     v0, $8364(at)
+800B8D90	j      loopb8b60 [$800b8b60]
+800B8D94	nop
+800B8DE4	lw     v1, $0010(sp)
+800B8DE8	nop
+800B8DEC	lh     v0, $0010(v1)
+800B8DF0	lw     a2, $000c(v1)
+800B8DF4	sll    v0, v0, $03
+800B8DF8	lui    at, $800f
+800B8DFC	addiu  at, at, $8c90 (=-$7370)
+800B8E00	addu   at, at, v0
+800B8E04	lw     a0, $0000(at)
+800B8E08	lui    at, $800f
+800B8E0C	addiu  at, at, $8c94 (=-$736c)
+800B8E10	addu   at, at, v0
+800B8E14	lw     a1, $0000(at)
+800B8E18	jal    system_cdrom_start_load_lzs [$80033e74]
+800B8E1C	addu   a3, zero, zero
+800B8E20	jal    funcb7fb4 [$800b7fb4]
+800B8E24	nop
+800B8E28	j      loopb8b60 [$800b8b60]
+800B8E2C	nop
+
+Lb8e30:	; 800B8E30
+800B8E30	lw     ra, $0020(sp)
+800B8E34	lw     s1, $001c(sp)
+800B8E38	lw     s0, $0018(sp)
+800B8E3C	addiu  sp, sp, $0028
+800B8E40	jr     ra 
+800B8E44	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb8e48
+800B8E48	andi   a0, a0, $00ff
+800B8E4C	sll    v1, a0, $01
+800B8E50	addu   v1, v1, a0
+800B8E54	sll    v0, v1, $05
+800B8E58	subu   v0, v0, v1
+800B8E5C	sll    v0, v0, $03
+800B8E60	subu   v0, v0, a0
+800B8E64	sll    v0, v0, $02
+800B8E68	lui    at, $8015
+800B8E6C	addiu  at, at, $1909
+800B8E70	addu   at, at, v0
+800B8E74	lbu    v1, $0000(at)
+800B8E78	ori    a1, zero, $0001
+800B8E7C	lui    at, $8015
+800B8E80	addiu  at, at, $190a
+800B8E84	addu   at, at, v0
+800B8E88	sb     a1, $0000(at)
+800B8E8C	andi   v1, v1, $007f
+800B8E90	lui    at, $8015
+800B8E94	addiu  at, at, $1909
+800B8E98	addu   at, at, v0
+800B8E9C	sb     v1, $0000(at)
+800B8EA0	sll    v0, a0, $03
+800B8EA4	subu   v0, v0, a0
+800B8EA8	sll    v0, v0, $02
+800B8EAC	addu   v0, v0, a0
+800B8EB0	sll    v0, v0, $02
+800B8EB4	lui    at, $8015
+800B8EB8	addiu  at, at, $120c
+800B8EBC	addu   at, at, v0
+800B8EC0	lhu    v1, $0000(at)
+800B8EC4	nop
+800B8EC8	andi   v1, v1, $ffdf
+800B8ECC	lui    at, $8015
+800B8ED0	addiu  at, at, $120c
+800B8ED4	addu   at, at, v0
+800B8ED8	sh     v1, $0000(at)
+800B8EDC	jr     ra 
+800B8EE0	nop
+////////////////////////////////
+// funcb8ee4
+800B8EE4	addiu  sp, sp, $ffd8 (=-$28)
+800B8EE8	sw     s0, $0010(sp)
+800B8EEC	addu   s0, zero, zero
+800B8EF0	sw     s4, $0020(sp)
+800B8EF4	lui    s4, $8010
+800B8EF8	addiu  s4, s4, $8384 (=-$7c7c)
+800B8EFC	sw     s3, $001c(sp)
+800B8F00	addu   s3, zero, zero
+800B8F04	sw     s2, $0018(sp)
+800B8F08	addu   s2, zero, zero
+800B8F0C	sw     s1, $0014(sp)
+800B8F10	addu   s1, zero, zero
+800B8F14	sw     ra, $0024(sp)
+
+loopb8f18:	; 800B8F18
+800B8F18	lui    at, $8016
+800B8F1C	addiu  at, at, $36b8
+800B8F20	addu   at, at, s1
+800B8F24	lb     v1, $0000(at)
+800B8F28	addiu  v0, zero, $ffff (=-$1)
+800B8F2C	beq    v1, v0, Lb8f94 [$800b8f94]
+800B8F30	addiu  s1, s1, $0010
+800B8F34	sll    a0, s0, $10
+800B8F38	jal    funcb5fc4 [$800b5fc4]
+800B8F3C	sra    a0, a0, $10
+800B8F40	lui    at, $8015
+800B8F44	addiu  at, at, $1909
+800B8F48	addu   at, at, s2
+800B8F4C	lbu    v0, $0000(at)
+800B8F50	nop
+800B8F54	andi   v0, v0, $0002
+800B8F58	bne    v0, zero, Lb8f94 [$800b8f94]
+800B8F5C	addu   a0, s0, zero
+800B8F60	lui    at, $8015
+800B8F64	addiu  at, at, $1232
+800B8F68	addu   at, at, s3
+800B8F6C	lbu    v0, $0000(at)
+800B8F70	nop
+800B8F74	sll    v0, v0, $02
+800B8F78	addu   v0, v0, s4
+800B8F7C	lw     a3, $0000(v0)
+800B8F80	nop
+800B8F84	lw     a1, $0008(a3)
+800B8F88	addiu  a2, a3, $000c
+800B8F8C	jal    funcc7c4c [$800c7c4c]
+800B8F90	addiu  a1, a1, $0068
+
+Lb8f94:	; 800B8F94
+800B8F94	addiu  s3, s3, $0074
+800B8F98	addiu  s0, s0, $0001
+800B8F9C	slti   v0, s0, $0003
+800B8FA0	bne    v0, zero, loopb8f18 [$800b8f18]
+800B8FA4	addiu  s2, s2, $0b9c
+800B8FA8	lw     ra, $0024(sp)
+800B8FAC	lw     s4, $0020(sp)
+800B8FB0	lw     s3, $001c(sp)
+800B8FB4	lw     s2, $0018(sp)
+800B8FB8	lw     s1, $0014(sp)
+800B8FBC	lw     s0, $0010(sp)
+800B8FC0	addiu  sp, sp, $0028
+800B8FC4	jr     ra 
+800B8FC8	nop
+////////////////////////////////
+// funcb8fcc
+800B8FCC	addiu  sp, sp, $ffe8 (=-$18)
+800B8FD0	sll    v0, a0, $03
+800B8FD4	subu   v0, v0, a0
+800B8FD8	sll    v0, v0, $02
+800B8FDC	addu   v0, v0, a0
+800B8FE0	sll    v0, v0, $02
+800B8FE4	sw     ra, $0010(sp)
+800B8FE8	lui    at, $8015
+800B8FEC	addiu  at, at, $1232
+800B8FF0	addu   at, at, v0
+800B8FF4	lbu    v1, $0000(at)
+800B8FF8	ori    v0, zero, $0006
+800B8FFC	beq    v1, v0, Lb9020 [$800b9020]
+800B9000	addiu  v1, a0, $fffc (=-$4)
+800B9004	sll    v0, v1, $01
+800B9008	addu   v0, v0, v1
+800B900C	sll    v0, v0, $02
+800B9010	lui    at, $800f
+800B9014	addiu  at, at, $7e08
+800B9018	addu   at, at, v0
+800B901C	lh     v0, $0000(at)
+
+Lb9020:	; 800B9020
+800B9020	nop
+800B9024	sll    v0, v0, $02
+800B9028	lui    at, $8010
+800B902C	addiu  at, at, $8384 (=-$7c7c)
+800B9030	addu   at, at, v0
+800B9034	lw     a3, $0000(at)
+800B9038	nop
+800B903C	lw     a1, $0008(a3)
+800B9040	addiu  a2, a3, $000c
+800B9044	jal    funcc7c4c [$800c7c4c]
+800B9048	addiu  a1, a1, $0068
+800B904C	lw     ra, $0010(sp)
+800B9050	addiu  sp, sp, $0018
+800B9054	jr     ra 
+800B9058	nop
+////////////////////////////////
+// funcb905c
+800B905C	lui    v0, $800f
+800B9060	lbu    v0, $7e04(v0)
+800B9064	addiu  sp, sp, $ffd8 (=-$28)
+800B9068	sw     s0, $0010(sp)
+800B906C	ori    s0, zero, $0004
+800B9070	sw     ra, $0024(sp)
+800B9074	sw     s4, $0020(sp)
+800B9078	sw     s3, $001c(sp)
+800B907C	sw     s2, $0018(sp)
+800B9080	addiu  v0, v0, $0004
+800B9084	slt    v0, s0, v0
+800B9088	beq    v0, zero, Lb90f4 [$800b90f4]
+800B908C	sw     s1, $0014(sp)
+800B9090	ori    s1, zero, $2e70
+800B9094	sll    a0, s0, $10
+
+loopb9098:	; 800B9098
+800B9098	jal    funcb5fc4 [$800b5fc4]
+800B909C	sra    a0, a0, $10
+800B90A0	lui    at, $8015
+800B90A4	addiu  at, at, $1909
+800B90A8	addu   at, at, s1
+800B90AC	lbu    v1, $0000(at)
+800B90B0	nop
+800B90B4	andi   v0, v1, $0040
+800B90B8	bne    v0, zero, Lb90d8 [$800b90d8]
+800B90BC	addiu  s1, s1, $0b9c
+800B90C0	andi   v0, v1, $0002
+800B90C4	bne    v0, zero, Lb90d8 [$800b90d8]
+800B90C8	addu   a0, s0, zero
+800B90CC	addu   a1, s3, zero
+800B90D0	jal    funcb8fcc [$800b8fcc]
+800B90D4	addu   a2, s4, zero
+
+Lb90d8:	; 800B90D8
+800B90D8	lui    v0, $800f
+800B90DC	lbu    v0, $7e04(v0)
+800B90E0	addiu  s0, s0, $0001
+800B90E4	addiu  v0, v0, $0004
+800B90E8	slt    v0, s0, v0
+800B90EC	bne    v0, zero, loopb9098 [$800b9098]
+800B90F0	sll    a0, s0, $10
+
+Lb90f4:	; 800B90F4
+800B90F4	lui    v0, $800f
+800B90F8	lbu    v0, $7e04(v0)
+800B90FC	ori    s0, zero, $0004
+800B9100	addiu  v0, v0, $0004
+800B9104	slt    v0, s0, v0
+800B9108	beq    v0, zero, Lb91a8 [$800b91a8]
+800B910C	ori    s2, zero, $01d0
+800B9110	ori    s1, zero, $2e70
+
+loopb9114:	; 800B9114
+800B9114	lui    at, $8015
+800B9118	addiu  at, at, $1909
+800B911C	addu   at, at, s1
+800B9120	lbu    v1, $0000(at)
+800B9124	nop
+800B9128	andi   v0, v1, $0040
+800B912C	bne    v0, zero, Lb9188 [$800b9188]
+800B9130	andi   v0, v1, $0002
+800B9134	bne    v0, zero, Lb9188 [$800b9188]
+800B9138	nop
+800B913C	lui    at, $8015
+800B9140	addiu  at, at, $1922
+800B9144	addu   at, at, s1
+800B9148	lbu    v0, $0000(at)
+800B914C	nop
+800B9150	andi   v0, v0, $0001
+800B9154	beq    v0, zero, Lb9188 [$800b9188]
+800B9158	nop
+800B915C	lui    at, $8015
+800B9160	addiu  at, at, $120c
+800B9164	addu   at, at, s2
+800B9168	lhu    v0, $0000(at)
+800B916C	nop
+800B9170	andi   v0, v0, $0004
+800B9174	beq    v0, zero, Lb9188 [$800b9188]
+800B9178	addu   a0, s0, zero
+800B917C	addu   a1, s3, zero
+800B9180	jal    funcb8fcc [$800b8fcc]
+800B9184	addu   a2, s4, zero
+
+Lb9188:	; 800B9188
+800B9188	addiu  s2, s2, $0074
+800B918C	lui    v0, $800f
+800B9190	lbu    v0, $7e04(v0)
+800B9194	addiu  s0, s0, $0001
+800B9198	addiu  v0, v0, $0004
+800B919C	slt    v0, s0, v0
+800B91A0	bne    v0, zero, loopb9114 [$800b9114]
+800B91A4	addiu  s1, s1, $0b9c
+
+Lb91a8:	; 800B91A8
+800B91A8	lw     ra, $0024(sp)
+800B91AC	lw     s4, $0020(sp)
+800B91B0	lw     s3, $001c(sp)
+800B91B4	lw     s2, $0018(sp)
+800B91B8	lw     s1, $0014(sp)
+800B91BC	lw     s0, $0010(sp)
+800B91C0	addiu  sp, sp, $0028
+800B91C4	jr     ra 
+800B91C8	nop
+////////////////////////////////
+// funcb91cc
+800B91CC	addiu  sp, sp, $ffc0 (=-$40)
+800B91D0	lui    v0, $800a
+800B91D4	lhu    v0, $d7be(v0)
+800B91D8	ori    v1, zero, $0100
+800B91DC	sw     ra, $0038(sp)
+800B91E0	sw     s5, $0034(sp)
+800B91E4	sw     s4, $0030(sp)
+800B91E8	sw     s3, $002c(sp)
+800B91EC	sw     s2, $0028(sp)
+800B91F0	sw     s1, $0024(sp)
+800B91F4	andi   v0, v0, $0300
+800B91F8	bne    v0, v1, Lb942c [$800b942c]
+800B91FC	sw     s0, $0020(sp)
+800B9200	addu   s3, zero, zero
+800B9204	addu   s4, zero, zero
+800B9208	lui    v0, $8016
+800B920C	addiu  v0, v0, $3abc
+800B9210	addiu  s2, v0, $ffe0 (=-$20)
+800B9214	addu   s5, v0, zero
+800B9218	addu   s1, zero, zero
+800B921C	addu   s0, zero, zero
+
+loopb9220:	; 800B9220
+800B9220	lui    at, $8015
+800B9224	addiu  at, at, $1a54
+800B9228	addu   at, at, s1
+800B922C	lw     v0, $0000(at)
+800B9230	addu   a0, s5, zero
+800B9234	lui    at, $8016
+800B9238	addiu  at, at, $3acc
+800B923C	addu   at, at, s0
+800B9240	sw     v0, $0000(at)
+800B9244	lui    at, $8015
+800B9248	addiu  at, at, $1a4c
+800B924C	addu   at, at, s1
+800B9250	lhu    v1, $0000(at)
+800B9254	addiu  v0, zero, $fe0c (=-$1f4)
+800B9258	lui    at, $8016
+800B925C	addiu  at, at, $3ac6
+800B9260	addu   at, at, s0
+800B9264	sh     v0, $0000(at)
+800B9268	lui    at, $8016
+800B926C	addiu  at, at, $3ac4
+800B9270	addu   at, at, s0
+800B9274	sh     v1, $0000(at)
+800B9278	lui    at, $8015
+800B927C	addiu  at, at, $1a50
+800B9280	addu   at, at, s1
+800B9284	lhu    v0, $0000(at)
+800B9288	addu   a1, s2, zero
+800B928C	lui    at, $8016
+800B9290	addiu  at, at, $3ac8
+800B9294	addu   at, at, s0
+800B9298	sh     v0, $0000(at)
+800B929C	lui    at, $8015
+800B92A0	addiu  at, at, $1a44
+800B92A4	addu   at, at, s1
+800B92A8	lhu    v0, $0000(at)
+800B92AC	addiu  s5, s5, $0034
+800B92B0	lui    at, $8016
+800B92B4	addiu  at, at, $3abc
+800B92B8	addu   at, at, s0
+800B92BC	sh     v0, $0000(at)
+800B92C0	lui    at, $8015
+800B92C4	addiu  at, at, $1a46
+800B92C8	addu   at, at, s1
+800B92CC	lhu    v0, $0000(at)
+800B92D0	addiu  s3, s3, $0001
+800B92D4	lui    at, $8016
+800B92D8	addiu  at, at, $3abe
+800B92DC	addu   at, at, s0
+800B92E0	sh     v0, $0000(at)
+800B92E4	lui    at, $8015
+800B92E8	addiu  at, at, $1a48
+800B92EC	addu   at, at, s1
+800B92F0	lhu    v0, $0000(at)
+800B92F4	nop
+800B92F8	lui    at, $8016
+800B92FC	addiu  at, at, $3ac0
+800B9300	addu   at, at, s0
+800B9304	sh     v0, $0000(at)
+800B9308	jal    $8003c21c
+800B930C	addiu  s1, s1, $0b9c
+800B9310	jal    funcbaf34 [$800baf34]
+800B9314	addu   a0, s2, zero
+800B9318	lui    a0, $800e
+800B931C	addiu  a0, a0, $7d08
+800B9320	addiu  a1, sp, $0010
+800B9324	addiu  a2, sp, $0014
+800B9328	jal    $8003bbdc
+800B932C	addiu  a3, sp, $0018
+800B9330	addiu  s2, s2, $0034
+800B9334	lhu    v0, $0010(sp)
+800B9338	lh     v1, $0012(sp)
+800B933C	addiu  s0, s0, $0034
+800B9340	lui    at, $8015
+800B9344	addiu  at, at, $1700
+800B9348	addu   at, at, s4
+800B934C	sh     v0, $0000(at)
+800B9350	lui    at, $8015
+800B9354	addiu  at, at, $1702
+800B9358	addu   at, at, s4
+800B935C	sh     v1, $0000(at)
+800B9360	slti   v0, s3, $0003
+800B9364	bne    v0, zero, loopb9220 [$800b9220]
+800B9368	addiu  s4, s4, $0008
+800B936C	ori    s3, zero, $0004
+800B9370	ori    s2, zero, $0020
+800B9374	lui    s1, $8015
+800B9378	addiu  s1, s1, $477f
+800B937C	ori    s4, zero, $2e70
+
+loopb9380:	; 800B9380
+800B9380	lui    s0, $8015
+800B9384	addiu  s0, s0, $1a58
+800B9388	addu   s0, s4, s0
+800B938C	lbu    v0, $0000(s1)
+800B9390	addiu  s4, s4, $0b9c
+800B9394	sll    a0, v0, $01
+800B9398	addu   a0, a0, v0
+800B939C	sll    a0, a0, $02
+800B93A0	addu   a0, a0, v0
+800B93A4	sll    a0, a0, $02
+800B93A8	jal    $8003b48c
+800B93AC	addu   a0, s0, a0
+800B93B0	lbu    v0, $0000(s1)
+800B93B4	addiu  s3, s3, $0001
+800B93B8	sll    a0, v0, $01
+800B93BC	addu   a0, a0, v0
+800B93C0	sll    a0, a0, $02
+800B93C4	addu   a0, a0, v0
+800B93C8	sll    a0, a0, $02
+800B93CC	jal    $8003b51c
+800B93D0	addu   a0, s0, a0
+800B93D4	lui    a0, $800e
+800B93D8	addiu  a0, a0, $7d08
+800B93DC	addiu  a1, sp, $0010
+800B93E0	addiu  a2, sp, $0014
+800B93E4	jal    $8003bbdc
+800B93E8	addiu  a3, sp, $0018
+800B93EC	lhu    v0, $0010(sp)
+800B93F0	lh     v1, $0012(sp)
+800B93F4	addiu  s1, s1, $0b9c
+800B93F8	lui    at, $8015
+800B93FC	addiu  at, at, $1700
+800B9400	addu   at, at, s2
+800B9404	sh     v0, $0000(at)
+800B9408	lui    at, $8015
+800B940C	addiu  at, at, $1702
+800B9410	addu   at, at, s2
+800B9414	sh     v1, $0000(at)
+800B9418	slti   v0, s3, $000a
+800B941C	bne    v0, zero, loopb9380 [$800b9380]
+800B9420	addiu  s2, s2, $0008
+800B9424	j      Lb94e4 [$800b94e4]
+800B9428	nop
+
+Lb942c:	; 800B942C
+800B942C	addu   s3, zero, zero
+800B9430	addu   s2, zero, zero
+800B9434	lui    s1, $8015
+800B9438	addiu  s1, s1, $190f
+800B943C	addu   s4, zero, zero
+
+loopb9440:	; 800B9440
+800B9440	lui    s0, $8015
+800B9444	addiu  s0, s0, $1a58
+800B9448	addu   s0, s4, s0
+800B944C	lbu    v0, $0000(s1)
+800B9450	addiu  s4, s4, $0b9c
+800B9454	sll    a0, v0, $01
+800B9458	addu   a0, a0, v0
+800B945C	sll    a0, a0, $02
+800B9460	addu   a0, a0, v0
+800B9464	sll    a0, a0, $02
+800B9468	jal    $8003b48c
+800B946C	addu   a0, s0, a0
+800B9470	lbu    v0, $0000(s1)
+800B9474	addiu  s3, s3, $0001
+800B9478	sll    a0, v0, $01
+800B947C	addu   a0, a0, v0
+800B9480	sll    a0, a0, $02
+800B9484	addu   a0, a0, v0
+800B9488	sll    a0, a0, $02
+800B948C	jal    $8003b51c
+800B9490	addu   a0, s0, a0
+800B9494	lui    a0, $800e
+800B9498	addiu  a0, a0, $7d08
+800B949C	addiu  a1, sp, $0010
+800B94A0	addiu  a2, sp, $0014
+800B94A4	jal    $8003bbdc
+800B94A8	addiu  a3, sp, $0018
+800B94AC	lhu    v0, $0010(sp)
+800B94B0	lh     v1, $0012(sp)
+800B94B4	addiu  s1, s1, $0b9c
+800B94B8	lui    at, $8015
+800B94BC	addiu  at, at, $1700
+800B94C0	addu   at, at, s2
+800B94C4	sh     v0, $0000(at)
+800B94C8	lui    at, $8015
+800B94CC	addiu  at, at, $1702
+800B94D0	addu   at, at, s2
+800B94D4	sh     v1, $0000(at)
+800B94D8	slti   v0, s3, $000a
+800B94DC	bne    v0, zero, loopb9440 [$800b9440]
+800B94E0	addiu  s2, s2, $0008
+
+Lb94e4:	; 800B94E4
+800B94E4	lw     ra, $0038(sp)
+800B94E8	lw     s5, $0034(sp)
+800B94EC	lw     s4, $0030(sp)
+800B94F0	lw     s3, $002c(sp)
+800B94F4	lw     s2, $0028(sp)
+800B94F8	lw     s1, $0024(sp)
+800B94FC	lw     s0, $0020(sp)
+800B9500	addiu  sp, sp, $0040
+800B9504	jr     ra 
+800B9508	nop
+////////////////////////////////
+// funcb950c
+800B950C	addu   a0, zero, zero
+
+loopb9510:	; 800B9510
+800B9510	lui    at, $8015
+800B9514	addiu  at, at, $1700
+800B9518	addu   at, at, a0
+800B951C	lhu    v0, $0000(at)
+800B9520	lui    at, $8015
+800B9524	addiu  at, at, $1702
+800B9528	addu   at, at, a0
+800B952C	lhu    v1, $0000(at)
+800B9530	lui    at, $8015
+800B9534	addiu  at, at, $16fc
+800B9538	addu   at, at, a0
+800B953C	sh     v0, $0000(at)
+800B9540	lui    at, $8015
+800B9544	addiu  at, at, $16fe
+800B9548	addu   at, at, a0
+800B954C	sh     v1, $0000(at)
+800B9550	addiu  a0, a0, $0008
+800B9554	slti   v0, a0, $0050
+800B9558	bne    v0, zero, loopb9510 [$800b9510]
+800B955C	nop
+800B9560	jr     ra 
+800B9564	nop
+////////////////////////////////

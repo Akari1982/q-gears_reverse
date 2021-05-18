@@ -128,7 +128,7 @@ A0 = 8; // YOSI
 A1 = 0;
 system_memory_set_alloc_user();
 
-// load some debug executable
+// load debug executable
 if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
 {
     A0 = 4;
