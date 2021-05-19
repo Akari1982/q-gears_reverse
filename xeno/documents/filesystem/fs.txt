@@ -39,54 +39,86 @@ Directory 0 1 (0023)
     12 STRIPCD1\2\0040_movie.exe
 
 Directory 4 0 (0424)
-     2 STRIPCD1\7\0424          0x1d1d5, 0x211dc
-     3 STRIPCD1\7\0425          0x1d218, 0xead4
-     4 STRIPCD1\8\0427          0x1d236, 0xdd38
-     5 STRIPCD1\8\0428          0x1d252, 0xd3b0
+     2 STRIPCD1\7\0424
+     3 STRIPCD1\7\0425
+     4 STRIPCD1\8\0427
+     5 STRIPCD1\8\0428
 
     ad STRIPCD1\10\0595_field_debug.exe
 
 Directory с 0
-     2 STRIPCD1\15\2613.sed     0x3a783, 0x0680
-     3 STRIPCD1\15\2614         0x3a784, 0xde78
-     4 STRIPCD1\15\2615         0x3a7a0, 0x5768
-     5 STRIPCD1\15\2616.smd     0x3a7ab, 0x0414
+     2 STRIPCD1\15\2613.sed
+     3 STRIPCD1\15\2614
+     4 STRIPCD1\15\2615
+     5 STRIPCD1\15\2616.smd
 
 Directory с 1
-     2 STRIPCD1\16\2618         0x3a7ac, 0x17d0
-     3 STRIPCD1\16\2619.unk7    0x3a7af, 0x22244
-     4 STRIPCD1\16\2620         0x3a7f4, 0x1469
-     5 STRIPCD1\16\2621.unk7    0x3a7f7, 0x22244
-     6 STRIPCD1\16\2622         0x3a83c, 0x16a1
+      2 16\2618
+      3 16\2619.unk7
+      4 16\2620
+      5 16\2621.unk7
+      6 16\2622
 
-Directory с 2
-     2 STRIPCD1\21\3381         0x41199, 0x0700
-     3 STRIPCD1\21\3382         0x4119a, 0x0700
-     4 STRIPCD1\21\3383         0x4119b, 0x05e0
-     5 STRIPCD1\21\3384         0x4119c, 0x0e0c
-     6 STRIPCD1\21\3385         0x4119e, 0x08a8
-     7 STRIPCD1\21\3386         0x411a0, 0x0840
+Directory с 2 (3380)
+      2 21\3381
+      3 21\3382
+      4 21\3383
+      5 21\3384
+      6 21\3385
+      7 21\3386
 
 Directory с 3
-     2 - directory...?
-     3 STRIPCD1\17\2772         0x3c180, 0x8000
-     4 STRIPCD1\17\2773.unk3    0x3c190, 0x0024
-     5 STRIPCD1\18\2775.unk5    0x3c191, 0x3eca0
-     6 STRIPCD1\18\2776         0x3c20f, 0x0c20
-     7 STRIPCD1\18\2777.unk5    0x3c211, 0x438e0
-     8 STRIPCD1\18\2778         0x3c299, 0x1e5c
+      2 - directory...?
+      3 17\2772
+      4 17\2773.unk3
+      5 18\2775.unk5
+      6 18\2776
+      7 18\2777.unk5
+      8 18\2778
 
-Directory 10 0
+Directory 10 0 (2593)
+      1 14\2593.unk8
+      2 14\2594
+      3 14\2595
+      4 14\2596
 
 Directory 10 1
 
 Directory 10 2 (2606)
-     1 STRIPCD1\14\2606.exe     0x3a73b, 0x1ddc
-     2 STRIPCD1\14\2607.unk4    0x3a73f, 0x7a10
-     3 STRIPCD1\14\2608         0x3a74f, 0x998a
-     4 STRIPCD1\14\2609         0x3a763, 0x6794
-     5 STRIPCD1\14\2610.sed     0x3a770, 0x6f8c
-     6 STRIPCD1\14\2611         0x3a77e, 0x21c8
+      1 14\2606.exe
+      2 14\2607.unk4
+      3 14\2608
+      4 14\2609
+      5 14\2610.sed
+      6 14\2611.exe
 
 Directory 18 0 (19)
-     1 STRIPCD1\0\0019_mdec.exe
+      1 0\0019_mdec.exe
+
+Directory 20 3 (3096)
+      1 19\3096.dlg
+      2 19\3097.dlg
+      3 19\3098.dlg
+
+Directory 28 0 (3915)
+      1 21\3915.unk4
+      2 21\3916.unk2
+
+Directory 28 1 (2925)
+      1 - directory...?
+      2 19\2926.unk4
+      3 19\2927.unk2
+
+Directory 28 2 (3148) magic and special files
+      1 - directory...?
+      2 20\3149.unk2
+      ...
+    232 20\3379.unk2
+
+Directory 2c 0 (3080)
+      1 19\3080
+
+Directory 2c 1 (2988)
+      1 19\2988.unk3
+      ...
+     17 19\3004.unk3

@@ -1,1 +1,1 @@
-adisasm 2611 2611.asm -v -b 80280000 80280000 -u -a
+adisasm 2596 2596.asm -v -b 801de000 801de000 -u -a

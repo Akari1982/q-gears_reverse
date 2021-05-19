@@ -194,23 +194,23 @@ if (bu[8015191f + S2] != 0)
     if (V0 != 0)
     {
         800C7EE4	lui    t2, $1f80
-        800C7EE8	addu   s5, s1, zero
+        S5 = S1;
         800C7EEC	lui    s6, $1f80
         S7 = 1f800004;
-        800C7EF8	ori    t2, t2, $0008
-        800C7EFC	sw     t2, $0030(sp)
-        800C7F00	sw     s4, $0038(sp)
-        800C7F04	sw     s0, $0040(sp)
+        T2 = T2 | 0008;
+        [SP + 0030] = w(T2);
+        [SP + 0038] = w(S4);
+        [SP + 0040] = w(S0);
 
         Lc7f08:	; 800C7F08
-            800C7F08	lw     t2, $0040(sp)
+            T2 = w[SP + 0040];
             800C7F0C	nop
-            800C7F10	sll    v0, t2, $05
-            800C7F14	subu   v0, v0, t2
-            800C7F18	lw     t2, $0038(sp)
-            800C7F1C	sll    v0, v0, $03
-            800C7F20	subu   v0, v0, t2
-            800C7F24	sll    v0, v0, $02
+            V0 = T2 << 05;
+            V0 = V0 - T2;
+            T2 = w[SP + 0038];
+            V0 = V0 << 03;
+            V0 = V0 - T2;
+            V0 = V0 << 02;
 
             A0 = bu[80151920 + V0];
             [80151920 + V0] = b(A0 + 1);
@@ -294,82 +294,72 @@ ECA70C80 67
 00E20C80C8E10C8034E10C8000E20C8044E10C8000E20C8000E20C8000E20C8000E20C8000E20C8000E20C80B8E10C80B8E10C80000000008CE20C80ACE20C80
 
 
-                800C7F7C	sll    v0, v1, $02
-                800C7F80	lui    at, $800a
-                800C7F84	addiu  at, at, $08c0
-                800C7F88	addu   at, at, v0
-                800C7F8C	lw     v0, $0000(at)
+                V0 = V1 << 02;
+                AT = 800a08c0;
+                AT = AT + V0;
+                V0 = w[AT + 0000];
                 800C7F90	nop
                 800C7F94	jr     v0 
                 800C7F98	nop
 
-                800C7F9C	sra    a0, s5, $10
-                800C7FA0	sll    v0, a0, $01
-                800C7FA4	addu   v0, v0, a0
-                800C7FA8	sll    v1, v0, $05
-                800C7FAC	subu   v1, v1, v0
-                800C7FB0	sll    v1, v1, $03
-                800C7FB4	subu   v1, v1, a0
-                800C7FB8	sll    a1, v1, $02
-                800C7FBC	lui    at, $8015
-                800C7FC0	addiu  at, at, $1921
-                800C7FC4	addu   at, at, a1
-                800C7FC8	lbu    v0, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                A1 = V1 << 02;
+                AT = 80151921;
+                AT = AT + A1;
+                V0 = bu[AT + 0000];
                 800C7FCC	nop
                 800C7FD0	bne    v0, zero, Lcd208 [$800cd208]
                 800C7FD4	nop
-                800C7FD8	lui    at, $8015
-                800C7FDC	addiu  at, at, $1920
-                800C7FE0	addu   at, at, a1
-                800C7FE4	lbu    v1, $0000(at)
-                800C7FE8	lw     v0, $0004(s3)
+                AT = 80151920;
+                AT = AT + A1;
+                V1 = bu[AT + 0000];
+                V0 = w[S3 + 0004];
                 800C7FEC	nop
-                800C7FF0	addu   v0, v0, v1
-                800C7FF4	lbu    v0, $0000(v0)
+                V0 = V0 + V1;
+                V0 = bu[V0 + 0000];
                 800C7FF8	nop
-                800C7FFC	sb     v0, $0001(s3)
-                800C8000	lbu    v1, $0001(s3)
-                800C8004	ori    v0, zero, $00c0
+                [S3 + 0001] = b(V0);
+                V1 = bu[S3 + 0001];
+                V0 = 00c0;
                 800C8008	bne    v1, v0, Lcd208 [$800cd208]
-                800C800C	sll    v0, a0, $06
-                800C8010	lui    at, $8015
-                800C8014	addiu  at, at, $1920
-                800C8018	addu   at, at, a1
-                800C801C	sb     zero, $0000(at)
-                800C8020	lui    at, $8010
-                800C8024	addiu  at, at, $a6d8 (=-$5928)
-                800C8028	addu   at, at, v0
-                800C802C	sw     zero, $0000(at)
-                800C8030	sll    v0, a0, $03
-                800C8034	subu   v0, v0, a0
-                800C8038	sll    v0, v0, $02
-                800C803C	addu   v0, v0, a0
-                800C8040	sll    v0, v0, $02
-                800C8044	lui    t2, $8015
-                800C8048	addiu  t2, t2, $18e4
-                800C804C	lui    at, $8015
-                800C8050	addiu  at, at, $1236
-                800C8054	addu   at, at, v0
-                800C8058	sb     zero, $0000(at)
-                800C805C	addu   v0, a1, t2
-                800C8060	sw     zero, $0074(v0)
-                800C8064	lui    at, $8015
-                800C8068	addiu  at, at, $1921
-                800C806C	addu   at, at, a1
-                800C8070	sb     zero, $0000(at)
+                V0 = A0 << 06;
+                AT = 80151920;
+                AT = AT + A1;
+                [AT + 0000] = b(0);
+                AT = 800fa6d8;
+                AT = AT + V0;
+                [AT + 0000] = w(0);
+                V0 = A0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                V0 = V0 + A0;
+                V0 = V0 << 02;
+                T2 = 801518e4;
+                AT = 80151236;
+                AT = AT + V0;
+                [AT + 0000] = b(0);
+                V0 = A1 + T2;
+                [V0 + 0074] = w(0);
+                AT = 80151921;
+                AT = AT + A1;
+                [AT + 0000] = b(0);
 
                 V0 = w[S3 + 4];
                 V0 = bu[V0];
                 [801518f2 + A1] = h(V0);
-                800C8094	lui    at, $8016
-                800C8098	addiu  at, at, $3784
-                800C809C	addu   at, at, a0
-                800C80A0	lbu    v0, $0000(at)
+                AT = 80163784;
+                AT = AT + A0;
+                V0 = bu[AT + 0000];
                 800C80A4	nop
-                800C80A8	lui    at, $8015
-                800C80AC	addiu  at, at, $18e6
-                800C80B0	addu   at, at, a1
-                800C80B4	sh     v0, $0000(at)
+                AT = 801518e6;
+                AT = AT + A1;
+                [AT + 0000] = h(V0);
                 T2 = w[SP + 18];
                 [1f800024] = w(w[T2 + V0 * 4]);
 
@@ -378,170 +368,148 @@ ECA70C80 67
                 800CB7E8	j      Lcd208 [$800cd208]
                 800CB7EC	nop
 
-                800C80C0	sra    a0, s5, $10
-                800C80C4	sll    v1, a0, $01
-                800C80C8	addu   v1, v1, a0
-                800C80CC	sll    v0, v1, $05
-                800C80D0	subu   v0, v0, v1
-                800C80D4	sll    v0, v0, $03
-                800C80D8	subu   v0, v0, a0
-                800C80DC	sll    v0, v0, $02
-                800C80E0	lui    at, $8015
-                800C80E4	addiu  at, at, $1920
-                800C80E8	addu   at, at, v0
-                800C80EC	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800C80F0	nop
-                800C80F4	addiu  v1, a0, $0001
-                800C80F8	lui    at, $8015
-                800C80FC	addiu  at, at, $1920
-                800C8100	addu   at, at, v0
-                800C8104	sb     v1, $0000(at)
-                800C8108	lw     v0, $0004(s3)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
                 800C810C	nop
-                800C8110	addu   a0, a0, v0
-                800C8114	lbu    v0, $0000(a0)
-                800C8118	lui    a0, $800d
-                800C811C	addiu  a0, a0, $dfc4 (=-$203c)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800cdfc4;
                 800C8120	jal    funcbc04c [$800bc04c]
-                800C8124	sw     v0, $0000(s6)
-                800C8128	sb     v0, $0014(s3)
-                800C812C	lbu    v0, $0014(s3)
-                800C8130	lhu    v1, $0000(s6)
-                800C8134	sll    v0, v0, $05
-                800C8138	lui    at, $8016
-                800C813C	addiu  at, at, $21f4
-                800C8140	addu   at, at, v0
-                800C8144	sh     v1, $0000(at)
+                [S6 + 0000] = w(V0);
+                [S3 + 0014] = b(V0);
+                V0 = bu[S3 + 0014];
+                V1 = hu[S6 + 0000];
+                V0 = V0 << 05;
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800C8148	j      Lcd208 [$800cd208]
                 800C814C	nop
                 800C8150	jal    funcbb90c [$800bb90c]
                 800C8154	nop
                 800C8158	j      Lcd208 [$800cd208]
                 800C815C	nop
-                800C8160	sra    s0, s5, $10
-                800C8164	sll    v1, s0, $01
-                800C8168	addu   v1, v1, s0
-                800C816C	sll    v0, v1, $05
-                800C8170	subu   v0, v0, v1
-                800C8174	sll    v0, v0, $03
-                800C8178	subu   v0, v0, s0
-                800C817C	sll    v0, v0, $02
-                800C8180	lui    at, $8015
-                800C8184	addiu  at, at, $1920
-                800C8188	addu   at, at, v0
-                800C818C	lbu    a0, $0000(at)
+                S0 = S5 >> 10;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800C8190	nop
-                800C8194	addiu  v1, a0, $0001
-                800C8198	lui    at, $8015
-                800C819C	addiu  at, at, $1920
-                800C81A0	addu   at, at, v0
-                800C81A4	sb     v1, $0000(at)
-                800C81A8	lw     v0, $0004(s3)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
                 800C81AC	nop
-                800C81B0	addu   a0, a0, v0
-                800C81B4	lbu    v0, $0000(a0)
-                800C81B8	lui    a0, $800d
-                800C81BC	addiu  a0, a0, $e384 (=-$1c7c)
-                800C81C0	lui    at, $1f80
-                800C81C4	sw     v0, $0000(at)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800ce384;
+                [1f800000] = w(V0);
                 800C81C8	jal    funcbc04c [$800bc04c]
                 800C81CC	nop
-                800C81D0	sh     v0, $000a(s3)
-                800C81D4	slti   v0, s0, $0004
+                [S3 + 000a] = h(V0);
+                V0 = S0 < 0004;
                 800C81D8	beq    v0, zero, Lc8200 [$800c8200]
-                800C81DC	sll    v0, s0, $02
-                800C81E0	lui    at, $8010
-                800C81E4	addiu  at, at, $8384 (=-$7c7c)
-                800C81E8	addu   at, at, v0
-                800C81EC	lw     v0, $0000(at)
-                800C81F0	lui    at, $1f80
-                800C81F4	sw     s0, $0008(at)
+                V0 = S0 << 02;
+                AT = 800f8384;
+                AT = AT + V0;
+                V0 = w[AT + 0000];
+                [1f800008] = w(S0);
                 800C81F8	j      Lc8240 [$800c8240]
                 800C81FC	nop
 
                 Lc8200:	; 800C8200
                 800C8200	addiu  v1, s0, $fffc (=-$4)
-                800C8204	sll    v0, v1, $01
-                800C8208	addu   v0, v0, v1
-                800C820C	sll    v0, v0, $02
-                800C8210	lui    at, $800f
-                800C8214	addiu  at, at, $7e08
-                800C8218	addu   at, at, v0
-                800C821C	lh     v1, $0000(at)
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 << 02;
+                AT = 800f7e08;
+                AT = AT + V0;
+                V1 = h[AT + 0000];
                 800C8220	nop
-                800C8224	sll    v0, v1, $02
-                800C8228	lui    at, $8010
-                800C822C	addiu  at, at, $8384 (=-$7c7c)
-                800C8230	addu   at, at, v0
-                800C8234	lw     v0, $0000(at)
-                800C8238	lui    at, $1f80
-                800C823C	sw     v1, $0008(at)
+                V0 = V1 << 02;
+                AT = 800f8384;
+                AT = AT + V0;
+                V0 = w[AT + 0000];
+                [1f800008] = w(V1);
 
                 Lc8240:	; 800C8240
-                800C8240	lw     a0, $0008(v0)
-                800C8244	lhu    v1, $000a(s3)
-                800C8248	lui    v0, $1f80
-                800C824C	lw     v0, $0000(v0)
-                800C8250	sll    v1, v1, $10
-                800C8254	sll    v0, v0, $02
-                800C8258	addu   v0, v0, a0
-                800C825C	lw     v0, $0024(v0)
-                800C8260	sra    v1, v1, $0b
-                800C8264	lui    at, $8016
-                800C8268	addiu  at, at, $2200
-                800C826C	addu   at, at, v1
-                800C8270	sw     v0, $0000(at)
-                800C8274	lhu    v0, $000a(s3)
+                A0 = w[V0 + 0008];
+                V1 = hu[S3 + 000a];
+                V0 = w[1f800000];
+                V1 = V1 << 10;
+                V0 = V0 << 02;
+                V0 = V0 + A0;
+                V0 = w[V0 + 0024];
+                V1 = V1 >> 0b;
+                AT = 80162200;
+                AT = AT + V1;
+                [AT + 0000] = w(V0);
+                V0 = hu[S3 + 000a];
                 800C8278	nop
-                800C827C	sll    v0, v0, $10
-                800C8280	sra    v0, v0, $0b
-                800C8284	lui    at, $8016
-                800C8288	addiu  at, at, $21f6
-                800C828C	addu   at, at, v0
-                800C8290	sh     fp, $0000(at)
-                800C8294	lhu    v0, $000a(s3)
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 801621f6;
+                AT = AT + V0;
+                [AT + 0000] = h(FP);
+                V0 = hu[S3 + 000a];
                 800C8298	nop
-                800C829C	sll    v0, v0, $10
-                800C82A0	sra    v0, v0, $0b
-                800C82A4	lui    at, $8016
-                800C82A8	addiu  at, at, $2208
-                800C82AC	addu   at, at, v0
-                800C82B0	sb     zero, $0000(at)
-                800C82B4	lhu    v0, $000a(s3)
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 80162208;
+                AT = AT + V0;
+                [AT + 0000] = b(0);
+                V0 = hu[S3 + 000a];
                 800C82B8	nop
-                800C82BC	sll    v0, v0, $10
-                800C82C0	sra    v0, v0, $0b
-                800C82C4	lui    at, $8016
-                800C82C8	addiu  at, at, $21f4
-                800C82CC	addu   at, at, v0
-                800C82D0	sh     zero, $0000(at)
-                800C82D4	sra    v0, s5, $10
-                800C82D8	sll    v1, v0, $03
-                800C82DC	subu   v1, v1, v0
-                800C82E0	sll    v1, v1, $02
-                800C82E4	addu   v1, v1, v0
-                800C82E8	sll    v1, v1, $02
-                800C82EC	lui    at, $8015
-                800C82F0	addiu  at, at, $1234
-                800C82F4	addu   at, at, v1
-                800C82F8	lbu    v0, $0000(at)
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(0);
+                V0 = S5 >> 10;
+                V1 = V0 << 03;
+                V1 = V1 - V0;
+                V1 = V1 << 02;
+                V1 = V1 + V0;
+                V1 = V1 << 02;
+                AT = 80151234;
+                AT = AT + V1;
+                V0 = bu[AT + 0000];
                 800C82FC	nop
-                800C8300	addiu  v0, v0, $0001
-                800C8304	lui    at, $8015
-                800C8308	addiu  at, at, $1234
-                800C830C	addu   at, at, v1
-                800C8310	sb     v0, $0000(at)
-                800C8314	lhu    v0, $000a(s3)
-                800C8318	lui    at, $8015
-                800C831C	addiu  at, at, $1234
-                800C8320	addu   at, at, v1
-                800C8324	lbu    v1, $0000(at)
-                800C8328	sll    v0, v0, $10
-                800C832C	sra    v0, v0, $0b
-                800C8330	lui    at, $8016
-                800C8334	addiu  at, at, $21f2
-                800C8338	addu   at, at, v0
-                800C833C	sh     v1, $0000(at)
+                V0 = V0 + 0001;
+                AT = 80151234;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = hu[S3 + 000a];
+                AT = 80151234;
+                AT = AT + V1;
+                V1 = bu[AT + 0000];
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 801621f2;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800C8340	j      Lcd208 [$800cd208]
                 800C8344	nop
 
@@ -588,28 +556,22 @@ ECA70C80 67
 
 
 
-                800C84A0	lui    at, $8016
-                800C84A4	sb     zero, $20a4(at)
+                [801620a4] = b(0);
                 800C84A8	j      Lcd208 [$800cd208]
                 800C84AC	nop
-                800C84B0	lui    v0, $8015
-                800C84B4	lbu    v0, $17c4(v0)
+                V0 = bu[801517c4];
                 800C84B8	nop
                 800C84BC	bne    v0, zero, Lcd208 [$800cd208]
-                800C84C0	ori    v0, zero, $0001
-                800C84C4	lui    at, $8016
-                800C84C8	sb     v0, $20a4(at)
-                800C84CC	lui    at, $8015
-                800C84D0	sb     v0, $17c4(at)
+                V0 = 0001;
+                [801620a4] = b(V0);
+                [801517c4] = b(V0);
                 800C84D4	j      Lcd208 [$800cd208]
                 800C84D8	nop
-                800C84DC	ori    v0, zero, $0001
-                800C84E0	lui    at, $8010
-                800C84E4	sb     v0, $afdc(at)
+                V0 = 0001;
+                [800fafdc] = b(V0);
                 800C84E8	j      Lcd208 [$800cd208]
                 800C84EC	nop
-                800C84F0	lui    a0, $800c
-                800C84F4	addiu  a0, a0, $494c
+                A0 = 800c494c;
                 800C84F8	jal    funcbc04c [$800bc04c]
                 800C84FC	nop
                 800C8500	j      Lcd208 [$800cd208]
@@ -633,129 +595,117 @@ ECA70C80 67
 
 
 
-                800C859C	sra    a0, s5, $10
-                800C85A0	sll    v1, a0, $01
-                800C85A4	addu   v1, v1, a0
-                800C85A8	sll    v0, v1, $05
-                800C85AC	subu   v0, v0, v1
-                800C85B0	sll    v0, v0, $03
-                800C85B4	subu   v0, v0, a0
-                800C85B8	sll    v0, v0, $02
-                800C85BC	lui    at, $8015
-                800C85C0	addiu  at, at, $1920
-                800C85C4	addu   at, at, v0
-                800C85C8	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800C85CC	nop
-                800C85D0	addiu  v1, a0, $0001
-                800C85D4	lui    at, $8015
-                800C85D8	addiu  at, at, $1920
-                800C85DC	addu   at, at, v0
-                800C85E0	sb     v1, $0000(at)
-                800C85E4	lw     v0, $0004(s3)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
                 800C85E8	nop
-                800C85EC	addu   a0, a0, v0
-                800C85F0	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800C85F4	nop
-                800C85F8	lui    at, $8016
-                800C85FC	sb     v0, $3b3c(at)
+                [80163b3c] = b(V0);
                 800C8600	j      Lcd208 [$800cd208]
                 800C8604	nop
-                800C8608	sra    s0, s5, $10
-                800C860C	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800C8610	jal    funccd558 [$800cd558]
-                800C8614	addu   a0, s0, zero
-                800C8618	sll    v1, s0, $01
-                800C861C	addu   v1, v1, s0
-                800C8620	sll    s1, v1, $05
-                800C8624	subu   s1, s1, v1
-                800C8628	sll    s1, s1, $03
-                800C862C	subu   s1, s1, s0
-                800C8630	sll    s1, s1, $02
-                800C8634	lui    at, $8015
-                800C8638	addiu  at, at, $1a4c
-                800C863C	addu   at, at, s1
-                800C8640	sh     v0, $0000(at)
-                800C8644	lw     a1, $0004(s3)
+                A0 = S0;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                S1 = V1 << 05;
+                S1 = S1 - V1;
+                S1 = S1 << 03;
+                S1 = S1 - S0;
+                S1 = S1 << 02;
+                AT = 80151a4c;
+                AT = AT + S1;
+                [AT + 0000] = h(V0);
+                A1 = w[S3 + 0004];
                 800C8648	jal    funccd558 [$800cd558]
-                800C864C	addu   a0, s0, zero
-                800C8650	lui    at, $8015
-                800C8654	addiu  at, at, $1a4e
-                800C8658	addu   at, at, s1
-                800C865C	sh     v0, $0000(at)
-                800C8660	lw     a1, $0004(s3)
+                A0 = S0;
+                AT = 80151a4e;
+                AT = AT + S1;
+                [AT + 0000] = h(V0);
+                A1 = w[S3 + 0004];
                 800C8664	jal    funccd558 [$800cd558]
-                800C8668	addu   a0, s0, zero
-                800C866C	lui    at, $8015
-                800C8670	addiu  at, at, $1a50
-                800C8674	addu   at, at, s1
-                800C8678	sh     v0, $0000(at)
+                A0 = S0;
+                AT = 80151a50;
+                AT = AT + S1;
+                [AT + 0000] = h(V0);
                 800C867C	j      Lcd208 [$800cd208]
                 800C8680	nop
-                800C8684	sra    s0, s5, $10
-                800C8688	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800C868C	jal    funccd558 [$800cd558]
-                800C8690	addu   a0, s0, zero
-                800C8694	addu   a0, s0, zero
-                800C8698	sll    v0, v0, $10
-                800C869C	lw     a1, $0004(s3)
-                800C86A0	sra    v0, v0, $10
+                A0 = S0;
+                A0 = S0;
+                V0 = V0 << 10;
+                A1 = w[S3 + 0004];
+                V0 = V0 >> 10;
                 800C86A4	jal    funccd558 [$800cd558]
-                800C86A8	sw     v0, $0000(s6)
-                800C86AC	sll    v0, v0, $10
-                800C86B0	sra    v0, v0, $10
-                800C86B4	sll    v1, s0, $01
-                800C86B8	addu   v1, v1, s0
-                800C86BC	sw     v0, $0000(s7)
-                800C86C0	sll    v0, v1, $05
-                800C86C4	subu   v0, v0, v1
-                800C86C8	sll    v0, v0, $03
-                800C86CC	subu   v0, v0, s0
-                800C86D0	sll    v0, v0, $02
-                800C86D4	lui    at, $8015
-                800C86D8	addiu  at, at, $1920
-                800C86DC	addu   at, at, v0
-                800C86E0	lbu    a0, $0000(at)
+                [S6 + 0000] = w(V0);
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                [S7 + 0000] = w(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800C86E4	nop
-                800C86E8	addiu  v1, a0, $0001
-                800C86EC	lui    at, $8015
-                800C86F0	addiu  at, at, $1920
-                800C86F4	addu   at, at, v0
-                800C86F8	sb     v1, $0000(at)
-                800C86FC	lw     v0, $0004(s3)
-                800C8700	lw     t2, $0030(sp)
-                800C8704	addu   a0, a0, v0
-                800C8708	lbu    v0, $0000(a0)
-                800C870C	lui    a0, $800d
-                800C8710	addiu  a0, a0, $f3cc (=-$c34)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
+                T2 = w[SP + 0030];
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800cf3cc;
                 800C8714	jal    funcbbf7c [$800bbf7c]
-                800C8718	sw     v0, $0000(t2)
-                800C871C	sb     v0, $0014(s3)
-                800C8720	lbu    v0, $0014(s3)
+                [T2 + 0000] = w(V0);
+                [S3 + 0014] = b(V0);
+                V0 = bu[S3 + 0014];
                 800C8724	nop
-                800C8728	sll    v0, v0, $05
-                800C872C	lui    at, $8016
-                800C8730	addiu  at, at, $20b4
-                800C8734	addu   at, at, v0
-                800C8738	sh     fp, $0000(at)
-                800C873C	lbu    v0, $0014(s3)
-                800C8740	lhu    v1, $0000(s6)
-                800C8744	sll    v0, v0, $05
-                800C8748	lui    at, $8016
-                800C874C	addiu  at, at, $20b6
-                800C8750	addu   at, at, v0
-                800C8754	sh     v1, $0000(at)
-                800C8758	lbu    v0, $0014(s3)
-                800C875C	lhu    v1, $0000(s7)
-                800C8760	sll    v0, v0, $05
-                800C8764	lui    at, $8016
-                800C8768	addiu  at, at, $20b8
-                800C876C	addu   at, at, v0
-                800C8770	sh     v1, $0000(at)
-                800C8774	lw     v1, $0000(s7)
-                800C8778	lw     t2, $0030(sp)
-                800C877C	lw     a0, $0000(s6)
-                800C8780	lw     v0, $0000(t2)
-                800C8784	subu   v1, v1, a0
+                V0 = V0 << 05;
+                AT = 801620b4;
+                AT = AT + V0;
+                [AT + 0000] = h(FP);
+                V0 = bu[S3 + 0014];
+                V1 = hu[S6 + 0000];
+                V0 = V0 << 05;
+                AT = 801620b6;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V0 = bu[S3 + 0014];
+                V1 = hu[S7 + 0000];
+                V0 = V0 << 05;
+                AT = 801620b8;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V1 = w[S7 + 0000];
+                T2 = w[SP + 0030];
+                A0 = w[S6 + 0000];
+                V0 = w[T2 + 0000];
+                V1 = V1 - A0;
                 800C8788	div    v1, v0
                 800C878C	bne    v0, zero, Lc8798 [$800c8798]
                 800C8790	nop
@@ -771,96 +721,87 @@ ECA70C80 67
 
                 Lc87b0:	; 800C87B0
                 800C87B0	mflo   v1
-                800C87B4	lbu    v0, $0014(s3)
+                V0 = bu[S3 + 0014];
                 800C87B8	nop
-                800C87BC	sll    v0, v0, $05
-                800C87C0	lui    at, $8016
-                800C87C4	addiu  at, at, $20ba
-                800C87C8	addu   at, at, v0
-                800C87CC	sh     v1, $0000(at)
-                800C87D0	lbu    v0, $0014(s3)
-                800C87D4	lhu    v1, $0000(t2)
+                V0 = V0 << 05;
+                AT = 801620ba;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V0 = bu[S3 + 0014];
+                V1 = hu[T2 + 0000];
                 800C87D8	j      Lc901c [$800c901c]
-                800C87DC	sll    v0, v0, $05
-                800C87E0	sra    a0, s5, $10
-                800C87E4	sll    v0, a0, $01
-                800C87E8	addu   v0, v0, a0
-                800C87EC	sll    s0, v0, $05
-                800C87F0	subu   s0, s0, v0
-                800C87F4	sll    s0, s0, $03
-                800C87F8	subu   s0, s0, a0
-                800C87FC	sll    s0, s0, $02
-                800C8800	lui    at, $8015
-                800C8804	addiu  at, at, $18fc
-                800C8808	addu   at, at, s0
-                800C880C	lhu    v0, $0000(at)
+                V0 = V0 << 05;
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - A0;
+                S0 = S0 << 02;
+                AT = 801518fc;
+                AT = AT + S0;
+                V0 = hu[AT + 0000];
                 800C8810	nop
-                800C8814	lui    at, $8015
-                800C8818	addiu  at, at, $1a46
-                800C881C	addu   at, at, s0
-                800C8820	sh     v0, $0000(at)
-                800C8824	lw     a1, $0004(s3)
+                AT = 80151a46;
+                AT = AT + S0;
+                [AT + 0000] = h(V0);
+                A1 = w[S3 + 0004];
                 800C8828	jal    funccd558 [$800cd558]
                 800C882C	nop
-                800C8830	lui    at, $8015
-                800C8834	addiu  at, at, $1a46
-                800C8838	addu   at, at, s0
-                800C883C	lhu    v1, $0000(at)
+                AT = 80151a46;
+                AT = AT + S0;
+                V1 = hu[AT + 0000];
                 800C8840	nop
-                800C8844	addu   v1, v1, v0
-                800C8848	lui    at, $8015
-                800C884C	addiu  at, at, $1a46
-                800C8850	addu   at, at, s0
-                800C8854	sh     v1, $0000(at)
-                800C8858	lui    v1, $8010
-                800C885C	lbu    v1, $a6d0(v1)
-                800C8860	ori    v0, zero, $0002
+                V1 = V1 + V0;
+                AT = 80151a46;
+                AT = AT + S0;
+                [AT + 0000] = h(V1);
+                V1 = bu[800fa6d0];
+                V0 = 0002;
                 800C8864	beq    v1, v0, Lc887c [$800c887c]
-                800C8868	ori    v0, zero, $0004
+                V0 = 0004;
                 800C886C	beq    v1, v0, Lc88b8 [$800c88b8]
-                800C8870	sra    a0, s5, $10
+                A0 = S5 >> 10;
                 800C8874	j      Lc8e68 [$800c8e68]
-                800C8878	sll    v1, a0, $01
+                V1 = A0 << 01;
 
                 Lc887c:	; 800C887C
-                800C887C	sra    a0, s5, $10
-                800C8880	sll    v1, a0, $01
-                800C8884	addu   v1, v1, a0
-                800C8888	sll    v0, v1, $05
-                800C888C	subu   v0, v0, v1
-                800C8890	sll    v0, v0, $03
-                800C8894	subu   v0, v0, a0
-                800C8898	sll    v0, v0, $02
-                800C889C	ori    v1, zero, $0800
-                800C88A0	lui    at, $8015
-                800C88A4	addiu  at, at, $18fc
-                800C88A8	addu   at, at, v0
-                800C88AC	sh     v1, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                V1 = 0800;
+                AT = 801518fc;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800C88B0	j      Lc8e68 [$800c8e68]
-                800C88B4	sll    v1, a0, $01
+                V1 = A0 << 01;
 
                 Lc88b8:	; 800C88B8
-                800C88B8	sll    v1, a0, $01
-                800C88BC	addu   v1, v1, a0
-                800C88C0	sll    v0, v1, $05
-                800C88C4	subu   v0, v0, v1
-                800C88C8	sll    v0, v0, $03
-                800C88CC	subu   v0, v0, a0
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
 
                 Lc88d0:	; 800C88D0
-                800C88D0	sll    v0, v0, $02
-                800C88D4	lui    at, $8015
-                800C88D8	addiu  at, at, $18fc
-                800C88DC	addu   at, at, v0
-                800C88E0	sh     zero, $0000(at)
+                V0 = V0 << 02;
+                AT = 801518fc;
+                AT = AT + V0;
+                [AT + 0000] = h(0);
                 800C88E4	j      Lc8e64 [$800c8e64]
-                800C88E8	sra    a0, s5, $10
-                800C88EC	lui    v1, $8010
-                800C88F0	lbu    v1, $a6d0(v1)
-                800C88F4	ori    v0, zero, $0002
+                A0 = S5 >> 10;
+                V1 = bu[800fa6d0];
+                V0 = 0002;
                 800C88F8	bne    v1, v0, Lc8e64 [$800c8e64]
-                800C88FC	sra    a0, s5, $10
-                800C8904	slti   v0, a0, $0004
+                A0 = S5 >> 10;
+                V0 = A0 < 0004;
                 if (V0 != 0)
                 {
                     [801518fc + A0 * b9c] = h(0800);
@@ -967,77 +908,69 @@ ECA70C80 67
 
 
 
-                        800C8B90	sra    s0, s5, $10
-                        800C8B94	lw     a1, $0004(s3)
+                        S0 = S5 >> 10;
+                        A1 = w[S3 + 0004];
                         800C8B98	jal    funccd558 [$800cd558]
-                        800C8B9C	addu   a0, s0, zero
-                        800C8BA0	addu   v0, fp, v0
-                        800C8BAC	sh     v0, $000e(s3)
+                        A0 = S0;
+                        V0 = FP + V0;
+                        [S3 + 000e] = h(V0);
                         A1 = S0 * b9c;
-                        800C8BC4	lui    at, $8015
-                        800C8BC8	addiu  at, at, $1920
-                        800C8BCC	addu   at, at, a1
-                        800C8BD0	lbu    v1, $0000(at)
+                        AT = 80151920;
+                        AT = AT + A1;
+                        V1 = bu[AT + 0000];
                         800C8BD4	nop
-                        800C8BD8	addiu  v0, v1, $0001
-                        800C8BDC	lui    at, $8015
-                        800C8BE0	addiu  at, at, $1920
-                        800C8BE4	addu   at, at, a1
-                        800C8BE8	sb     v0, $0000(at)
-                        800C8BEC	lw     v0, $0004(s3)
-                        800C8BF0	lhu    a0, $000e(s3)
-                        800C8BF4	addu   v1, v1, v0
+                        V0 = V1 + 0001;
+                        AT = 80151920;
+                        AT = AT + A1;
+                        [AT + 0000] = b(V0);
+                        V0 = w[S3 + 0004];
+                        A0 = hu[S3 + 000e];
+                        V1 = V1 + V0;
                         800C8BF8	addiu  v0, a0, $fffc (=-$4)
-                        800C8BFC	lbu    a2, $0000(v1)
-                        800C8C00	sltiu  v0, v0, $0006
+                        A2 = bu[V1 + 0000];
+                        V0 = V0 < 0006;
                         800C8C04	beq    v0, zero, Lcd208 [$800cd208]
-                        800C8C08	sh     a2, $0010(s3)
-                        800C8C0C	sll    v0, s0, $03
-                        800C8C10	subu   v0, v0, s0
-                        800C8C14	sll    v0, v0, $02
-                        800C8C18	addu   v0, v0, s0
-                        800C8C1C	sll    v0, v0, $02
-                        800C8C20	lui    at, $8015
-                        800C8C24	addiu  at, at, $120c
-                        800C8C28	addu   at, at, v0
-                        800C8C2C	lhu    v1, $0000(at)
+                        [S3 + 0010] = h(A2);
+                        V0 = S0 << 03;
+                        V0 = V0 - S0;
+                        V0 = V0 << 02;
+                        V0 = V0 + S0;
+                        V0 = V0 << 02;
+                        AT = 8015120c;
+                        AT = AT + V0;
+                        V1 = hu[AT + 0000];
                         800C8C30	nop
-                        800C8C34	andi   v0, v1, $0004
+                        V0 = V1 & 0004;
                         if (V0 == 0)
                         {
                             A0 = A0 * b9c;
-                            800C8C64	lui    at, $8015
-                            800C8C68	addiu  at, at, $1909
-                            800C8C6C	addu   at, at, a0
-                            800C8C70	lbu    v0, $0000(at)
+                            AT = 80151909;
+                            AT = AT + A0;
+                            V0 = bu[AT + 0000];
                             800C8C74	nop
-                            800C8C78	andi   v0, v0, $0080
+                            V0 = V0 & 0080;
                             800C8C7C	beq    v0, zero, Lcd208 [$800cd208]
                             800C8C80	nop
-                            800C8C84	lui    t2, $8015
-                            800C8C88	addiu  t2, t2, $18e4
-                            800C8C8C	lui    at, $8015
-                            800C8C90	addiu  at, at, $18fc
-                            800C8C94	addu   at, at, a1
-                            800C8C98	lhu    v1, $0000(at)
-                            800C8C9C	addu   v0, a0, t2
-                            800C8CA0	sh     v1, $0018(v0)
-                            800C8CA4	lui    at, $8015
-                            800C8CA8	addiu  at, at, $1a46
-                            800C8CAC	addu   at, at, a0
-                            800C8CB0	sh     v1, $0000(at)
-                            800C8CB4	lhu    a0, $000e(s3)
+                            T2 = 801518e4;
+                            AT = 801518fc;
+                            AT = AT + A1;
+                            V1 = hu[AT + 0000];
+                            V0 = A0 + T2;
+                            [V0 + 0018] = h(V1);
+                            AT = 80151a46;
+                            AT = AT + A0;
+                            [AT + 0000] = h(V1);
+                            A0 = hu[S3 + 000e];
                             800C8CB8	nop
-                            800C8CDC	lhu    v1, $0010(s3)
+                            V1 = hu[S3 + 0010];
                             V0 = A0 * b9c;
-                            800C8CE4	lui    at, $8015
-                            800C8CE8	addiu  at, at, $18e6
-                            800C8CEC	addu   at, at, v0
-                            800C8CF0	sh     v1, $0000(at)
+                            AT = 801518e6;
+                            AT = AT + V0;
+                            [AT + 0000] = h(V1);
                         }
                         else
                         {
-                            800C8C3C	andi   v0, v1, $0008
+                            V0 = V1 & 0008;
                             800C8CFC	beq    v0, zero, Lcd208 [$800cd208]
                             800C8D00	nop
                             V0 = bu[801031f0];
@@ -1049,7 +982,7 @@ ECA70C80 67
 
                             V1 = A0 * b9c;
                             V0 = bu[80151909 + V1];
-                            800C8D60	andi   v0, v0, $0080
+                            V0 = V0 & 0080;
                             800C8D64	beq    v0, zero, Lcd208 [$800cd208]
                             800C8D68	nop
                             [801519e6 + V1] = h(A2);
@@ -1069,64 +1002,57 @@ ECA70C80 67
                 [80151a46 + A0 * b9c] = h(hu[801518fc + A0 * b9c]);
                 800C8EA4	j      Lcd208 [$800cd208]
                 800C8EA8	nop
-                800C8EAC	lui    a0, $8016
-                800C8EB0	lbu    a0, $90cc(a0)
+                A0 = bu[801590cc];
                 800C8EB4	nop
-                800C8EB8	sll    v1, a0, $01
-                800C8EBC	addu   v1, v1, a0
-                800C8EC0	sll    v0, v1, $05
-                800C8EC4	subu   v0, v0, v1
-                800C8EC8	sll    v0, v0, $03
-                800C8ECC	subu   v0, v0, a0
-                800C8ED0	sll    v0, v0, $02
-                800C8ED4	lui    at, $8015
-                800C8ED8	addiu  at, at, $1a4c
-                800C8EDC	addu   at, at, v0
-                800C8EE0	lhu    a0, $0000(at)
-                800C8EE4	sll    v1, v1, $01
-                800C8EE8	lui    at, $8016
-                800C8EEC	addiu  at, at, $3c80
-                800C8EF0	addu   at, at, v1
-                800C8EF4	sh     a0, $0000(at)
-                800C8EF8	lui    at, $8015
-                800C8EFC	addiu  at, at, $1a50
-                800C8F00	addu   at, at, v0
-                800C8F04	lhu    v0, $0000(at)
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 80151a4c;
+                AT = AT + V0;
+                A0 = hu[AT + 0000];
+                V1 = V1 << 01;
+                AT = 80163c80;
+                AT = AT + V1;
+                [AT + 0000] = h(A0);
+                AT = 80151a50;
+                AT = AT + V0;
+                V0 = hu[AT + 0000];
                 800C8F08	nop
-                800C8F0C	lui    at, $8016
-                800C8F10	addiu  at, at, $3c84
-                800C8F14	addu   at, at, v1
-                800C8F18	sh     v0, $0000(at)
+                AT = 80163c84;
+                AT = AT + V1;
+                [AT + 0000] = h(V0);
                 800C8F1C	j      Lcd208 [$800cd208]
                 800C8F20	nop
-                800C8F24	sra    s0, s5, $10
-                800C8F28	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800C8F2C	jal    funccd558 [$800cd558]
-                800C8F30	addu   a0, s0, zero
-                800C8F34	sll    v1, s0, $01
-                800C8F38	addu   v1, v1, s0
-                800C8F3C	sh     v0, $0012(s3)
-                800C8F40	sll    v0, v1, $05
-                800C8F44	subu   v0, v0, v1
-                800C8F48	sll    v0, v0, $03
-                800C8F4C	subu   v0, v0, s0
-                800C8F50	sll    v0, v0, $02
-                800C8F54	lui    at, $8015
-                800C8F58	addiu  at, at, $1920
-                800C8F5C	addu   at, at, v0
-                800C8F60	lbu    a0, $0000(at)
+                A0 = S0;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                [S3 + 0012] = h(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800C8F64	nop
-                800C8F68	addiu  v1, a0, $0001
-                800C8F6C	lui    at, $8015
-                800C8F70	addiu  at, at, $1920
-                800C8F74	addu   at, at, v0
-                800C8F78	sb     v1, $0000(at)
-                800C8F7C	lw     v1, $0004(s3)
-                800C8F80	lhu    v0, $0012(s3)
-                800C8F84	addu   a0, a0, v1
-                800C8F88	sll    v0, v0, $10
-                800C8F8C	lbu    a1, $0000(a0)
-                800C8F90	sra    v0, v0, $10
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V1 = w[S3 + 0004];
+                V0 = hu[S3 + 0012];
+                A0 = A0 + V1;
+                V0 = V0 << 10;
+                A1 = bu[A0 + 0000];
+                V0 = V0 >> 10;
                 800C8F94	div    v0, a1
                 800C8F98	bne    a1, zero, Lc8fa4 [$800c8fa4]
                 800C8F9C	nop
@@ -1142,71 +1068,63 @@ ECA70C80 67
 
                 Lc8fbc:	; 800C8FBC
                 800C8FBC	mflo   v0
-                800C8FC0	lui    a0, $800d
-                800C8FC4	addiu  a0, a0, $f2f0 (=-$d10)
-                800C8FC8	sh     a1, $0010(s3)
+                A0 = 800cf2f0;
+                [S3 + 0010] = h(A1);
                 800C8FCC	jal    funcbbf7c [$800bbf7c]
-                800C8FD0	sw     v0, $0000(s6)
-                800C8FD4	sb     v0, $0014(s3)
-                800C8FD8	lbu    v0, $0014(s3)
+                [S6 + 0000] = w(V0);
+                [S3 + 0014] = b(V0);
+                V0 = bu[S3 + 0014];
                 800C8FDC	nop
-                800C8FE0	sll    v0, v0, $05
-                800C8FE4	lui    at, $8016
-                800C8FE8	addiu  at, at, $20b4
-                800C8FEC	addu   at, at, v0
-                800C8FF0	sh     fp, $0000(at)
-                800C8FF4	lbu    v0, $0014(s3)
-                800C8FF8	lhu    v1, $0000(s6)
-                800C8FFC	sll    v0, v0, $05
-                800C9000	lui    at, $8016
-                800C9004	addiu  at, at, $20b6
-                800C9008	addu   at, at, v0
-                800C900C	sh     v1, $0000(at)
-                800C9010	lbu    v0, $0014(s3)
-                800C9014	lhu    v1, $0010(s3)
-                800C9018	sll    v0, v0, $05
+                V0 = V0 << 05;
+                AT = 801620b4;
+                AT = AT + V0;
+                [AT + 0000] = h(FP);
+                V0 = bu[S3 + 0014];
+                V1 = hu[S6 + 0000];
+                V0 = V0 << 05;
+                AT = 801620b6;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V0 = bu[S3 + 0014];
+                V1 = hu[S3 + 0010];
+                V0 = V0 << 05;
 
                 Lc901c:	; 800C901C
-                800C901C	lui    at, $8016
-                800C9020	addiu  at, at, $20b0
-                800C9024	addu   at, at, v0
-                800C9028	sh     v1, $0000(at)
+                AT = 801620b0;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800C902C	j      Lcd208 [$800cd208]
                 800C9030	nop
-                800C9034	lui    a0, $8015
-                800C9038	lh     a0, $1774(a0)
+                A0 = h[80151774];
                 800C903C	jal    battle_calculate_middle_point_from_target_mask_units_position [$800d54ec]
-                800C9040	addiu  a1, s3, $0016
-                800C9044	sra    v1, s5, $10
-                800C9048	sll    v0, v1, $01
-                800C904C	addu   v0, v0, v1
-                800C9050	sll    s0, v0, $05
-                800C9054	subu   s0, s0, v0
-                800C9058	sll    s0, s0, $03
-                800C905C	subu   s0, s0, v1
-                800C9060	sll    s0, s0, $02
-                800C9064	lhu    a2, $0016(s3)
-                800C9068	lui    at, $8015
-                800C906C	addiu  at, at, $1a4c
-                800C9070	addu   at, at, s0
-                800C9074	lh     a0, $0000(at)
-                800C9078	lhu    a1, $001a(s3)
-                800C907C	lui    at, $8015
-                800C9080	addiu  at, at, $1a50
-                800C9084	addu   at, at, s0
-                800C9088	lh     v0, $0000(at)
-                800C908C	sll    a2, a2, $10
-                800C9090	sra    a2, a2, $10
-                800C9094	subu   a0, a2, a0
-                800C9098	sll    a1, a1, $10
-                800C909C	sra    a1, a1, $10
+                A1 = S3 + 0016;
+                V1 = S5 >> 10;
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - V1;
+                S0 = S0 << 02;
+                A2 = hu[S3 + 0016];
+                AT = 80151a4c;
+                AT = AT + S0;
+                A0 = h[AT + 0000];
+                A1 = hu[S3 + 001a];
+                AT = 80151a50;
+                AT = AT + S0;
+                V0 = h[AT + 0000];
+                A2 = A2 << 10;
+                A2 = A2 >> 10;
+                A0 = A2 - A0;
+                A1 = A1 << 10;
+                A1 = A1 >> 10;
                 800C90A0	jal    func3cc1c [$8003cc1c]
-                800C90A4	subu   a1, a1, v0
-                800C90A8	addiu  v0, v0, $0800
-                800C90AC	lui    at, $8015
-                800C90B0	addiu  at, at, $1a46
-                800C90B4	addu   at, at, s0
-                800C90B8	sh     v0, $0000(at)
+                A1 = A1 - V0;
+                V0 = V0 + 0800;
+                AT = 80151a46;
+                AT = AT + S0;
+                [AT + 0000] = h(V0);
                 800C90BC	j      Lcd208 [$800cd208]
                 800C90C0	nop
 
@@ -1320,188 +1238,166 @@ ECA70C80 67
                 }
                 break;
 
-                800C95BC	sra    a0, s5, $10
-                800C95C0	sll    v0, a0, $01
-                800C95C4	addu   v0, v0, a0
-                800C95C8	sll    v1, v0, $05
-                800C95CC	subu   v1, v1, v0
-                800C95D0	sll    v1, v1, $03
-                800C95D4	subu   v1, v1, a0
-                800C95D8	sll    v1, v1, $02
-                800C95DC	lui    at, $8015
-                800C95E0	addiu  at, at, $1920
-                800C95E4	addu   at, at, v1
-                800C95E8	lbu    a1, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A1 = bu[AT + 0000];
                 800C95EC	nop
-                800C95F0	addiu  v0, a1, $0001
-                800C95F4	lui    at, $8015
-                800C95F8	addiu  at, at, $1920
-                800C95FC	addu   at, at, v1
-                800C9600	sb     v0, $0000(at)
-                800C9604	lw     v0, $0004(s3)
+                V0 = A1 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800C9608	nop
-                800C960C	addu   a1, a1, v0
-                800C9610	lbu    v0, $0000(a1)
+                A1 = A1 + V0;
+                V0 = bu[A1 + 0000];
                 800C9614	nop
-                800C9618	sw     v0, $0000(s6)
-                800C961C	lui    at, $8015
-                800C9620	addiu  at, at, $1920
-                800C9624	addu   at, at, v1
-                800C9628	lbu    a1, $0000(at)
+                [S6 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A1 = bu[AT + 0000];
                 800C962C	nop
-                800C9630	addiu  v0, a1, $0001
-                800C9634	lui    at, $8015
-                800C9638	addiu  at, at, $1920
-                800C963C	addu   at, at, v1
-                800C9640	sb     v0, $0000(at)
-                800C9644	lw     v0, $0004(s3)
-                800C9648	lh     a2, $0000(s6)
-                800C964C	addu   a1, a1, v0
-                800C9650	lbu    v0, $0000(a1)
+                V0 = A1 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                A2 = h[S6 + 0000];
+                A1 = A1 + V0;
+                V0 = bu[A1 + 0000];
                 800C9654	nop
-                800C9658	sw     v0, $0000(s7)
-                800C965C	lh     a1, $0000(s7)
+                [S7 + 0000] = w(V0);
+                A1 = h[S7 + 0000];
                 800C9660	jal    funccf8c0 [$800cf8c0]
                 800C9664	nop
                 800C9668	j      Lcd208 [$800cd208]
                 800C966C	nop
-                800C9670	sra    s0, s5, $10
-                800C9674	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800C9678	jal    funccd558 [$800cd558]
-                800C967C	addu   a0, s0, zero
-                800C9680	addu   a0, s0, zero
-                800C9684	sll    v1, a0, $01
-                800C9688	addu   v1, v1, a0
-                800C968C	sh     v0, $0012(s3)
-                800C9690	sll    v0, v1, $05
-                800C9694	subu   v0, v0, v1
-                800C9698	sll    v0, v0, $03
-                800C969C	subu   v0, v0, a0
-                800C96A0	sll    v0, v0, $02
-                800C96A4	lui    at, $8015
-                800C96A8	addiu  at, at, $1920
-                800C96AC	addu   at, at, v0
-                800C96B0	lbu    t0, $0000(at)
-                800C96B4	lui    a3, $800d
-                800C96B8	addiu  a3, a3, $f5bc (=-$a44)
-                800C96BC	addiu  v1, t0, $0001
-                800C96C0	lui    at, $8015
-                800C96C4	addiu  at, at, $1920
-                800C96C8	addu   at, at, v0
-                800C96CC	sb     v1, $0000(at)
-                800C96D0	lw     a1, $0004(s3)
-                800C96D4	lw     v0, $0004(s3)
-                800C96D8	lhu    a2, $0012(s3)
-                800C96DC	lui    t1, $8010
-                800C96E0	lbu    t1, $99e8(t1)
-                800C96E4	addu   t0, t0, v0
-                800C96E8	sll    a2, a2, $10
-                800C96EC	sra    a2, a2, $10
-                800C96F0	lbu    v0, $0000(t0)
-                800C96F4	sll    t0, a0, $03
-                800C96F8	subu   t0, t0, a0
-                800C96FC	sll    t0, t0, $02
-                800C9700	addu   t0, t0, a0
-                800C9704	sll    t0, t0, $02
-                800C9708	sll    v1, t1, $01
-                800C970C	addu   v1, v1, t1
-                800C9710	sh     v0, $0010(s3)
-                800C9714	sll    v0, v1, $05
-                800C9718	subu   v0, v0, v1
-                800C971C	sll    v0, v0, $03
-                800C9720	subu   v0, v0, t1
-                800C9724	sll    v0, v0, $02
-                800C9728	lui    t1, $8015
-                800C972C	addiu  t1, t1, $1a4c
-                800C9730	lui    at, $8015
-                800C9734	addiu  at, at, $1228
-                800C9738	addu   at, at, t0
-                800C973C	lh     t0, $0000(at)
-                800C9740	lhu    v1, $0010(s3)
-                800C9744	addu   v0, v0, t1
-                800C9748	sw     v0, $0014(sp)
-                800C974C	sll    v1, v1, $10
-                800C9750	lui    at, $1f80
-                800C9754	sw     t0, $0000(at)
+                A0 = S0;
+                A0 = S0;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                [S3 + 0012] = h(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                T0 = bu[AT + 0000];
+                A3 = 800cf5bc;
+                V1 = T0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                A1 = w[S3 + 0004];
+                V0 = w[S3 + 0004];
+                A2 = hu[S3 + 0012];
+                T1 = bu[800f99e8];
+                T0 = T0 + V0;
+                A2 = A2 << 10;
+                A2 = A2 >> 10;
+                V0 = bu[T0 + 0000];
+                T0 = A0 << 03;
+                T0 = T0 - A0;
+                T0 = T0 << 02;
+                T0 = T0 + A0;
+                T0 = T0 << 02;
+                V1 = T1 << 01;
+                V1 = V1 + T1;
+                [S3 + 0010] = h(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - T1;
+                V0 = V0 << 02;
+                T1 = 80151a4c;
+                AT = 80151228;
+                AT = AT + T0;
+                T0 = h[AT + 0000];
+                V1 = hu[S3 + 0010];
+                V0 = V0 + T1;
+                [SP + 0014] = w(V0);
+                V1 = V1 << 10;
+                [1f800000] = w(T0);
                 800C9758	j      Lca710 [$800ca710]
-                800C975C	sra    v1, v1, $10
-                800C9760	sra    s1, s5, $10
-                800C9764	sll    v0, s1, $01
-                800C9768	addu   v0, v0, s1
-                800C976C	sll    s0, v0, $05
-                800C9770	subu   s0, s0, v0
-                800C9774	sll    s0, s0, $03
-                800C9778	subu   s0, s0, s1
-                800C977C	sll    s0, s0, $02
-                800C9780	lui    at, $8015
-                800C9784	addiu  at, at, $1920
-                800C9788	addu   at, at, s0
-                800C978C	lbu    v1, $0000(at)
+                V1 = V1 >> 10;
+                S1 = S5 >> 10;
+                V0 = S1 << 01;
+                V0 = V0 + S1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - S1;
+                S0 = S0 << 02;
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800C9790	nop
-                800C9794	addiu  v0, v1, $0001
-                800C9798	lui    at, $8015
-                800C979C	addiu  at, at, $1920
-                800C97A0	addu   at, at, s0
-                800C97A4	sb     v0, $0000(at)
-                800C97A8	lw     v0, $0004(s3)
-                800C97AC	lw     a1, $0004(s3)
-                800C97B0	addu   v1, v1, v0
-                800C97B4	lbu    v0, $0000(v1)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                A1 = w[S3 + 0004];
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
                 800C97B8	nop
-                800C97BC	lui    at, $8016
-                800C97C0	sb     v0, $6f58(at)
+                [80166f58] = b(V0);
                 800C97C4	jal    funccd558 [$800cd558]
-                800C97C8	addu   a0, s1, zero
-                800C97CC	lw     a1, $0004(s3)
-                800C97D0	addu   a0, s1, zero
+                A0 = S1;
+                A1 = w[S3 + 0004];
+                A0 = S1;
                 800C97D4	jal    funccd558 [$800cd558]
-                800C97D8	sh     v0, $0012(s3)
-                800C97DC	sll    v0, v0, $10
-                800C97E0	sra    v0, v0, $10
-                800C97E4	lui    at, $1f80
-                800C97E8	sw     v0, $0000(at)
-                800C97EC	lui    at, $8015
-                800C97F0	addiu  at, at, $1920
-                800C97F4	addu   at, at, s0
-                800C97F8	lbu    v1, $0000(at)
+                [S3 + 0012] = h(V0);
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                [1f800000] = w(V0);
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800C97FC	nop
-                800C9800	addiu  v0, v1, $0001
-                800C9804	lui    at, $8015
-                800C9808	addiu  at, at, $1920
-                800C980C	addu   at, at, s0
-                800C9810	sb     v0, $0000(at)
-                800C9814	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800C9818	nop
-                800C981C	addu   v1, v1, v0
-                800C9820	lbu    v1, $0000(v1)
-                800C9824	lui    v0, $8010
-                800C9828	lbu    v0, $31f0(v0)
+                V1 = V1 + V0;
+                V1 = bu[V1 + 0000];
+                V0 = bu[801031f0];
                 800C982C	nop
                 800C9830	bne    v0, zero, Lc986c [$800c986c]
-                800C9834	sh     v1, $0010(s3)
-                800C9838	addu   a0, s1, zero
-                800C983C	lw     a1, $0004(s3)
-                800C9840	lhu    a2, $0012(s3)
-                800C9844	lui    t0, $8010
-                800C9848	lbu    t0, $99e8(t0)
-                800C984C	lui    a3, $800d
-                800C9850	addiu  a3, a3, $f5bc (=-$a44)
-                800C9854	sw     v1, $0010(sp)
+                [S3 + 0010] = h(V1);
+                A0 = S1;
+                A1 = w[S3 + 0004];
+                A2 = hu[S3 + 0012];
+                T0 = bu[800f99e8];
+                A3 = 800cf5bc;
+                [SP + 0010] = w(V1);
                 [SP + 14] = w(80151a4c + T0 * b9c);
                 funccd860;
                 800CA9B8	j      Lcd208 [$800cd208]
 
                 Lc986c:	; 800C986C
-                800C986C	addiu  s0, s3, $0016
-                800C9870	lui    a0, $8015
-                800C9874	lh     a0, $1774(a0)
+                S0 = S3 + 0016;
+                A0 = h[80151774];
                 800C9878	jal    battle_calculate_middle_point_from_target_mask_units_position [$800d54ec]
-                800C987C	addu   a1, s0, zero
-                800C9880	lw     a1, $0004(s3)
-                800C9884	lhu    a2, $0012(s3)
-                800C9888	lui    a3, $800d
-                800C988C	addiu  a3, a3, $f5bc (=-$a44)
-                800C9894	addu   a0, s1, zero
+                A1 = S0;
+                A1 = w[S3 + 0004];
+                A2 = hu[S3 + 0012];
+                A3 = 800cf5bc;
+                A0 = S1;
                 [SP + 14] = w(S0);
                 [SP + 10] = w(hu[S3 + 10]);
                 funccd860;
@@ -1556,996 +1452,871 @@ ECA70C80 67
 
 
 
-                800C9990	sra    s0, s5, $10
-                800C9994	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800C9998	jal    funccd558 [$800cd558]
-                800C999C	addu   a0, s0, zero
-                800C99A0	addu   a0, s0, zero
-                800C99A4	sll    v0, v0, $10
-                800C99A8	lw     a1, $0004(s3)
-                800C99AC	sra    v0, v0, $10
+                A0 = S0;
+                A0 = S0;
+                V0 = V0 << 10;
+                A1 = w[S3 + 0004];
+                V0 = V0 >> 10;
                 800C99B0	jal    funccd558 [$800cd558]
-                800C99B4	sw     v0, $0000(s6)
-                800C99B8	sll    v0, v0, $10
-                800C99BC	sra    v0, v0, $10
-                800C99C0	sll    v1, s0, $01
-                800C99C4	addu   v1, v1, s0
-                800C99C8	sw     v0, $0000(s7)
-                800C99CC	sll    v0, v1, $05
-                800C99D0	subu   v0, v0, v1
-                800C99D4	sll    v0, v0, $03
-                800C99D8	subu   v0, v0, s0
-                800C99DC	sll    v0, v0, $02
-                800C99E0	lui    at, $8015
-                800C99E4	addiu  at, at, $1920
-                800C99E8	addu   at, at, v0
-                800C99EC	lbu    a0, $0000(at)
+                [S6 + 0000] = w(V0);
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                [S7 + 0000] = w(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800C99F0	nop
-                800C99F4	addiu  v1, a0, $0001
-                800C99F8	lui    at, $8015
-                800C99FC	addiu  at, at, $1920
-                800C9A00	addu   at, at, v0
-                800C9A04	sb     v1, $0000(at)
-                800C9A08	lw     v0, $0004(s3)
-                800C9A0C	lw     t2, $0030(sp)
-                800C9A10	addu   a0, a0, v0
-                800C9A14	lbu    v0, $0000(a0)
-                800C9A18	lui    a0, $800d
-                800C9A1C	addiu  a0, a0, $f4a8 (=-$b58)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
+                T2 = w[SP + 0030];
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800cf4a8;
                 800C9A20	jal    funcbbf7c [$800bbf7c]
-                800C9A24	sw     v0, $0000(t2)
-                800C9A28	sll    a0, v0, $05
-                800C9A2C	lui    at, $8016
-                800C9A30	addiu  at, at, $20b4
-                800C9A34	addu   at, at, a0
-                800C9A38	sh     fp, $0000(at)
-                800C9A3C	lhu    v1, $0000(s6)
+                [T2 + 0000] = w(V0);
+                A0 = V0 << 05;
+                AT = 801620b4;
+                AT = AT + A0;
+                [AT + 0000] = h(FP);
+                V1 = hu[S6 + 0000];
                 800C9A40	nop
-                800C9A44	lui    at, $8016
-                800C9A48	addiu  at, at, $20b6
-                800C9A4C	addu   at, at, a0
-                800C9A50	sh     v1, $0000(at)
-                800C9A54	lhu    v1, $0000(s7)
+                AT = 801620b6;
+                AT = AT + A0;
+                [AT + 0000] = h(V1);
+                V1 = hu[S7 + 0000];
                 800C9A58	nop
-                800C9A5C	lui    at, $8016
-                800C9A60	addiu  at, at, $20b8
-                800C9A64	addu   at, at, a0
-                800C9A68	sh     v1, $0000(at)
-                800C9A6C	lw     t2, $0030(sp)
+                AT = 801620b8;
+                AT = AT + A0;
+                [AT + 0000] = h(V1);
+                T2 = w[SP + 0030];
                 800C9A70	nop
-                800C9A74	lhu    v1, $0000(t2)
-                800C9A78	lui    at, $1f80
-                800C9A7C	sw     v0, $000c(at)
-                800C9A80	lui    at, $8016
-                800C9A84	addiu  at, at, $20b0
-                800C9A88	addu   at, at, a0
-                800C9A8C	sh     v1, $0000(at)
+                V1 = hu[T2 + 0000];
+                [1f80000c] = w(V0);
+                AT = 801620b0;
+                AT = AT + A0;
+                [AT + 0000] = h(V1);
                 800C9A90	j      Lcd208 [$800cd208]
                 800C9A94	nop
-                800C9A98	sra    a0, s5, $10
-                800C9A9C	sll    v1, a0, $01
-                800C9AA0	addu   v1, v1, a0
-                800C9AA4	sll    v0, v1, $05
-                800C9AA8	subu   v0, v0, v1
-                800C9AAC	sll    v0, v0, $03
-                800C9AB0	subu   v0, v0, a0
-                800C9AB4	sll    v0, v0, $02
-                800C9AB8	ori    v1, zero, $0001
-                800C9ABC	lui    at, $8015
-                800C9AC0	addiu  at, at, $190a
-                800C9AC4	addu   at, at, v0
-                800C9AC8	sb     v1, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                V1 = 0001;
+                AT = 8015190a;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
                 800C9ACC	jal    funcce058 [$800ce058]
                 800C9AD0	nop
-                800C9AD4	lui    a0, $800c
-                800C9AD8	addiu  a0, a0, $3950
+                A0 = 800c3950;
                 800C9ADC	jal    funcbbf7c [$800bbf7c]
                 800C9AE0	nop
-                800C9AE4	sb     v0, $0014(s3)
-                800C9AE8	lbu    v0, $0014(s3)
+                [S3 + 0014] = b(V0);
+                V0 = bu[S3 + 0014];
                 800C9AEC	nop
-                800C9AF0	sll    v0, v0, $05
-                800C9AF4	lui    at, $8016
-                800C9AF8	addiu  at, at, $20b4
-                800C9AFC	addu   at, at, v0
-                800C9B00	sh     fp, $0000(at)
-                800C9B04	lbu    v0, $0014(s3)
+                V0 = V0 << 05;
+                AT = 801620b4;
+                AT = AT + V0;
+                [AT + 0000] = h(FP);
+                V0 = bu[S3 + 0014];
                 800C9B08	nop
-                800C9B0C	sll    v0, v0, $05
-                800C9B10	lui    at, $8016
-                800C9B14	addiu  at, at, $20b6
-                800C9B18	addu   at, at, v0
-                800C9B1C	sh     zero, $0000(at)
-                800C9B20	lbu    v0, $0014(s3)
-                800C9B24	ori    v1, zero, $0001
-                800C9B28	sll    v0, v0, $05
-                800C9B2C	lui    at, $8016
-                800C9B30	addiu  at, at, $20b2
-                800C9B34	addu   at, at, v0
-                800C9B38	sh     v1, $0000(at)
+                V0 = V0 << 05;
+                AT = 801620b6;
+                AT = AT + V0;
+                [AT + 0000] = h(0);
+                V0 = bu[S3 + 0014];
+                V1 = 0001;
+                V0 = V0 << 05;
+                AT = 801620b2;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800C9B3C	j      Lcd208 [$800cd208]
                 800C9B40	nop
-                800C9B44	sra    a0, s5, $10
-                800C9B48	sll    v0, a0, $01
-                800C9B4C	addu   v0, v0, a0
-                800C9B50	sll    v1, v0, $05
-                800C9B54	subu   v1, v1, v0
-                800C9B58	sll    v1, v1, $03
-                800C9B5C	subu   v1, v1, a0
-                800C9B60	sll    v1, v1, $02
-                800C9B64	lui    at, $8015
-                800C9B68	addiu  at, at, $1909
-                800C9B6C	addu   at, at, v1
-                800C9B70	lbu    v0, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151909;
+                AT = AT + V1;
+                V0 = bu[AT + 0000];
                 800C9B74	nop
-                800C9B78	andi   v0, v0, $007f
-                800C9B7C	ori    v0, v0, $0004
-                800C9B80	lui    at, $8015
-                800C9B84	addiu  at, at, $1909
-                800C9B88	addu   at, at, v1
-                800C9B8C	sb     v0, $0000(at)
+                V0 = V0 & 007f;
+                V0 = V0 | 0004;
+                AT = 80151909;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
                 800C9B90	j      Lcd208 [$800cd208]
                 800C9B94	nop
                 800CAF2C	jal    funcce21c [$800ce21c]
-                800CAF30	ori    a1, zero, $0001
+                A1 = 0001;
                 800CAF34	j      Lcd208 [$800cd208]
                 800CAF38	nop
-                800C9B9C	sra    a0, s5, $10
-                800C9BA0	lui    v0, $800f
-                800C9BA4	lbu    v0, $eb24(v0)
+                A0 = S5 >> 10;
+                V0 = bu[800eeb24];
                 800C9BA8	nop
                 800C9BAC	bne    v0, zero, Lc9bd0 [$800c9bd0]
-                800C9BB0	sra    s0, s5, $10
-                800C9BB4	ori    a0, zero, $0185
+                S0 = S5 >> 10;
+                A0 = 0185;
                 800C9BB8	addiu  a1, zero, $ffff (=-$1)
                 800C9BBC	jal    funcbba84 [$800bba84]
-                800C9BC0	ori    a2, zero, $0040
-                800C9BC4	ori    v0, zero, $0001
-                800C9BC8	lui    at, $800f
-                800C9BCC	sb     v0, $eb24(at)
+                A2 = 0040;
+                V0 = 0001;
+                [800eeb24] = b(V0);
 
                 Lc9bd0:	; 800C9BD0
-                800C9BD0	lw     a1, $0004(s3)
+                A1 = w[S3 + 0004];
                 800C9BD4	jal    funccd558 [$800cd558]
-                800C9BD8	addu   a0, s0, zero
-                800C9BDC	sll    v0, v0, $10
-                800C9BE0	sra    v0, v0, $10
-                800C9BE4	sll    v1, s0, $01
-                800C9BE8	addu   v1, v1, s0
-                800C9BEC	lui    at, $1f80
-                800C9BF0	sw     v0, $0004(at)
-                800C9BF4	sll    v0, v1, $05
-                800C9BF8	subu   v0, v0, v1
-                800C9BFC	sll    v0, v0, $03
-                800C9C00	subu   v0, v0, s0
-                800C9C04	sll    v0, v0, $02
-                800C9C08	lui    at, $8015
-                800C9C0C	addiu  at, at, $1920
-                800C9C10	addu   at, at, v0
-                800C9C14	lbu    a0, $0000(at)
+                A0 = S0;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                [1f800004] = w(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800C9C18	nop
-                800C9C1C	addiu  v1, a0, $0001
-                800C9C20	lui    at, $8015
-                800C9C24	addiu  at, at, $1920
-                800C9C28	addu   at, at, v0
-                800C9C2C	sb     v1, $0000(at)
-                800C9C30	lw     v0, $0004(s3)
-                800C9C34	lw     t2, $0030(sp)
-                800C9C38	addu   a0, a0, v0
-                800C9C3C	lbu    v0, $0000(a0)
-                800C9C40	lui    a0, $800d
-                800C9C44	addiu  a0, a0, $f4a8 (=-$b58)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
+                T2 = w[SP + 0030];
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800cf4a8;
                 800C9C48	jal    funcbbf7c [$800bbf7c]
-                800C9C4C	sw     v0, $0000(t2)
-                800C9C50	sll    v1, v0, $05
-                800C9C54	lui    at, $8016
-                800C9C58	addiu  at, at, $20b4
-                800C9C5C	addu   at, at, v1
-                800C9C60	sh     fp, $0000(at)
-                800C9C64	lui    at, $8016
-                800C9C68	addiu  at, at, $20b6
-                800C9C6C	addu   at, at, v1
-                800C9C70	sh     zero, $0000(at)
-                800C9C74	lw     t2, $0030(sp)
-                800C9C78	lui    a1, $8010
-                800C9C7C	lbu    a1, $a6d0(a1)
-                800C9C80	lhu    a0, $0000(t2)
-                800C9C84	lui    at, $1f80
-                800C9C88	sw     v0, $000c(at)
-                800C9C8C	sltiu  v0, a1, $0009
-                800C9C90	lui    at, $8016
-                800C9C94	addiu  at, at, $20b0
-                800C9C98	addu   at, at, v1
-                800C9C9C	sh     a0, $0000(at)
+                [T2 + 0000] = w(V0);
+                V1 = V0 << 05;
+                AT = 801620b4;
+                AT = AT + V1;
+                [AT + 0000] = h(FP);
+                AT = 801620b6;
+                AT = AT + V1;
+                [AT + 0000] = h(0);
+                T2 = w[SP + 0030];
+                A1 = bu[800fa6d0];
+                A0 = hu[T2 + 0000];
+                [1f80000c] = w(V0);
+                V0 = A1 < 0009;
+                AT = 801620b0;
+                AT = AT + V1;
+                [AT + 0000] = h(A0);
                 800C9CA0	beq    v0, zero, Lc9dd8 [$800c9dd8]
-                800C9CA4	sll    v0, a1, $02
-                800C9CA8	lui    at, $800a
-                800C9CAC	addiu  at, at, $0aa0
-                800C9CB0	addu   at, at, v0
-                800C9CB4	lw     v0, $0000(at)
+                V0 = A1 << 02;
+                AT = 800a0aa0;
+                AT = AT + V0;
+                V0 = w[AT + 0000];
                 800C9CB8	nop
                 800C9CBC	jr     v0 
                 800C9CC0	nop
 
-                800C9CC4	sra    a0, s5, $10
-                800C9CC8	sll    v1, a0, $01
-                800C9CCC	addu   v1, v1, a0
-                800C9CD0	sll    v0, v1, $05
-                800C9CD4	subu   v0, v0, v1
-                800C9CD8	sll    v0, v0, $03
-                800C9CDC	subu   v0, v0, a0
-                800C9CE0	sll    v0, v0, $02
-                800C9CE4	lui    at, $8015
-                800C9CE8	addiu  at, at, $18fc
-                800C9CEC	addu   at, at, v0
-                800C9CF0	lh     v0, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 801518fc;
+                AT = AT + V0;
+                V0 = h[AT + 0000];
                 800C9CF4	nop
                 800C9CF8	bne    v0, zero, Lc9d1c [$800c9d1c]
                 800C9CFC	nop
-                800C9D00	lui    v0, $1f80
-                800C9D04	lw     v0, $0004(v0)
+                V0 = w[1f800004];
                 800C9D08	nop
-                800C9D0C	lui    at, $1f80
-                800C9D10	sw     v0, $0010(at)
+                [1f800010] = w(V0);
                 800C9D14	j      Lc9dd8 [$800c9dd8]
                 800C9D18	nop
 
                 Lc9d1c:	; 800C9D1C
-                800C9D1C	lui    v0, $1f80
-                800C9D20	lw     v0, $0004(v0)
+                V0 = w[1f800004];
                 800C9D24	nop
-                800C9D28	subu   v0, zero, v0
-                800C9D2C	lui    at, $1f80
-                800C9D30	sw     v0, $0010(at)
+                V0 = 0 - V0;
+                [1f800010] = w(V0);
                 800C9D34	j      Lc9dd8 [$800c9dd8]
                 800C9D38	nop
-                800C9D3C	lui    v0, $8016
-                800C9D40	lhu    v0, $3780(v0)
+                V0 = hu[80163780];
                 800C9D44	nop
                 800C9D48	beq    v0, zero, Lc9d94 [$800c9d94]
-                800C9D4C	sra    a0, s5, $10
-                800C9D50	sll    v1, a0, $01
-                800C9D54	addu   v1, v1, a0
-                800C9D58	sll    v0, v1, $05
-                800C9D5C	subu   v0, v0, v1
-                800C9D60	sll    v0, v0, $03
-                800C9D64	subu   v0, v0, a0
-                800C9D68	lui    v1, $1f80
-                800C9D6C	lw     v1, $0004(v1)
-                800C9D70	sll    v0, v0, $02
-                800C9D74	lui    at, $8015
-                800C9D78	addiu  at, at, $1a46
-                800C9D7C	addu   at, at, v0
-                800C9D80	sh     zero, $0000(at)
-                800C9D84	lui    at, $1f80
-                800C9D88	sw     v1, $0010(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V1 = w[1f800004];
+                V0 = V0 << 02;
+                AT = 80151a46;
+                AT = AT + V0;
+                [AT + 0000] = h(0);
+                [1f800010] = w(V1);
                 800C9D8C	j      Lc9dd8 [$800c9dd8]
                 800C9D90	nop
 
                 Lc9d94:	; 800C9D94
-                800C9D94	sll    v1, a0, $01
-                800C9D98	addu   v1, v1, a0
-                800C9D9C	sll    v0, v1, $05
-                800C9DA0	subu   v0, v0, v1
-                800C9DA4	sll    v0, v0, $03
-                800C9DA8	subu   v0, v0, a0
-                800C9DAC	sll    v0, v0, $02
-                800C9DB0	lui    a0, $1f80
-                800C9DB4	lw     a0, $0004(a0)
-                800C9DB8	ori    v1, zero, $0800
-                800C9DBC	lui    at, $8015
-                800C9DC0	addiu  at, at, $1a46
-                800C9DC4	addu   at, at, v0
-                800C9DC8	sh     v1, $0000(at)
-                800C9DCC	subu   a0, zero, a0
-                800C9DD0	lui    at, $1f80
-                800C9DD4	sw     a0, $0010(at)
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                A0 = w[1f800004];
+                V1 = 0800;
+                AT = 80151a46;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                A0 = 0 - A0;
+                [1f800010] = w(A0);
 
                 Lc9dd8:	; 800C9DD8
-                800C9DD8	lui    v0, $1f80
-                800C9DDC	lw     v0, $000c(v0)
-                800C9DE0	lui    v1, $1f80
-                800C9DE4	lhu    v1, $0010(v1)
-                800C9DE8	sll    v0, v0, $05
-                800C9DEC	lui    at, $8016
-                800C9DF0	addiu  at, at, $20b8
-                800C9DF4	addu   at, at, v0
-                800C9DF8	sh     v1, $0000(at)
+                V0 = w[1f80000c];
+                V1 = hu[1f800010];
+                V0 = V0 << 05;
+                AT = 801620b8;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800C9DFC	j      Lcd208 [$800cd208]
                 800C9E00	nop
-                800C9E04	sra    s0, s5, $10
-                800C9E08	lw     a1, $0004(s3)
-                800C9E0C	ori    v0, zero, $0001
-                800C9E10	lui    at, $8016
-                800C9E14	sb     v0, $2090(at)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
+                V0 = 0001;
+                [80162090] = b(V0);
                 800C9E18	jal    funccd558 [$800cd558]
-                800C9E1C	addu   a0, s0, zero
-                800C9E20	lw     a1, $0004(s3)
-                800C9E24	addu   a0, s0, zero
+                A0 = S0;
+                A1 = w[S3 + 0004];
+                A0 = S0;
                 800C9E28	jal    funccd558 [$800cd558]
-                800C9E2C	sh     v0, $0012(s3)
-                800C9E30	andi   a0, fp, $00ff
-                800C9E34	sll    a3, v0, $10
-                800C9E38	lui    a1, $8010
-                800C9E3C	lbu    a1, $99e8(a1)
-                800C9E40	lhu    a2, $0012(s3)
-                800C9E44	sra    a3, a3, $10
-                800C9E48	sh     v0, $000c(s3)
-                800C9E4C	sll    a2, a2, $10
+                [S3 + 0012] = h(V0);
+                A0 = FP & 00ff;
+                A3 = V0 << 10;
+                A1 = bu[800f99e8];
+                A2 = hu[S3 + 0012];
+                A3 = A3 >> 10;
+                [S3 + 000c] = h(V0);
+                A2 = A2 << 10;
                 800C9E50	jal    funccd5e4 [$800cd5e4]
-                800C9E54	sra    a2, a2, $10
+                A2 = A2 >> 10;
                 800C9E58	j      Lcd208 [$800cd208]
                 800C9E5C	nop
-                800C9E60	lui    v1, $8010
-                800C9E64	lbu    v1, $afe0(v1)
+                V1 = bu[800fafe0];
                 800C9E68	nop
-                800C9E6C	sll    a0, v1, $01
-                800C9E70	addu   a0, a0, v1
-                800C9E74	sll    v0, a0, $05
-                800C9E78	subu   v0, v0, a0
-                800C9E7C	sll    v0, v0, $03
-                800C9E80	subu   v0, v0, v1
-                800C9E84	sll    a0, a0, $01
-                800C9E88	lui    at, $8016
-                800C9E8C	addiu  at, at, $3c80
-                800C9E90	addu   at, at, a0
-                800C9E94	lhu    v1, $0000(at)
-                800C9E98	sll    v0, v0, $02
-                800C9E9C	lui    at, $8015
-                800C9EA0	addiu  at, at, $1a4c
-                800C9EA4	addu   at, at, v0
-                800C9EA8	sh     v1, $0000(at)
-                800C9EAC	lui    at, $8016
-                800C9EB0	addiu  at, at, $3c82
-                800C9EB4	addu   at, at, a0
-                800C9EB8	lhu    v1, $0000(at)
+                A0 = V1 << 01;
+                A0 = A0 + V1;
+                V0 = A0 << 05;
+                V0 = V0 - A0;
+                V0 = V0 << 03;
+                V0 = V0 - V1;
+                A0 = A0 << 01;
+                AT = 80163c80;
+                AT = AT + A0;
+                V1 = hu[AT + 0000];
+                V0 = V0 << 02;
+                AT = 80151a4c;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                AT = 80163c82;
+                AT = AT + A0;
+                V1 = hu[AT + 0000];
                 800C9EBC	nop
-                800C9EC0	lui    at, $8015
-                800C9EC4	addiu  at, at, $1a4e
-                800C9EC8	addu   at, at, v0
-                800C9ECC	sh     v1, $0000(at)
-                800C9ED0	lui    at, $8016
-                800C9ED4	addiu  at, at, $3c84
-                800C9ED8	addu   at, at, a0
-                800C9EDC	lhu    v1, $0000(at)
+                AT = 80151a4e;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                AT = 80163c84;
+                AT = AT + A0;
+                V1 = hu[AT + 0000];
                 800C9EE0	nop
-                800C9EE4	lui    at, $8015
-                800C9EE8	addiu  at, at, $1a50
-                800C9EEC	addu   at, at, v0
-                800C9EF0	sh     v1, $0000(at)
+                AT = 80151a50;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800C9EF4	j      Lcd208 [$800cd208]
                 800C9EF8	nop
-                800C9EFC	sra    s0, s5, $10
-                800C9F00	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800C9F04	jal    funccd558 [$800cd558]
-                800C9F08	addu   a0, s0, zero
-                800C9F0C	addu   a0, s0, zero
-                800C9F10	sll    v0, v0, $10
-                800C9F14	lw     a1, $0004(s3)
-                800C9F18	sra    v0, v0, $10
-                800C9F1C	sw     v0, $0000(s6)
+                A0 = S0;
+                A0 = S0;
+                V0 = V0 << 10;
+                A1 = w[S3 + 0004];
+                V0 = V0 >> 10;
+                [S6 + 0000] = w(V0);
                 800C9F20	jal    funccd558 [$800cd558]
-                800C9F24	sh     zero, $0012(s3)
-                800C9F28	sh     v0, $000c(s3)
-                800C9F2C	sll    v0, s0, $01
-                800C9F30	addu   v0, v0, s0
-                800C9F34	sll    s1, v0, $05
-                800C9F38	subu   s1, s1, v0
-                800C9F3C	sll    s1, s1, $03
-                800C9F40	subu   s1, s1, s0
-                800C9F44	lui    a2, $8010
-                800C9F48	lbu    a2, $afe0(a2)
-                800C9F4C	sll    s1, s1, $02
-                800C9F50	sll    a0, a2, $01
-                800C9F54	addu   a0, a0, a2
-                800C9F58	sll    v1, a0, $01
-                800C9F5C	sll    a1, a0, $05
-                800C9F60	subu   a1, a1, a0
-                800C9F64	lui    at, $8016
-                800C9F68	addiu  at, at, $3c80
-                800C9F6C	addu   at, at, v1
-                800C9F70	lhu    v0, $0000(at)
-                800C9F74	lui    a0, $8016
-                800C9F78	lbu    a0, $90cc(a0)
-                800C9F7C	sll    a1, a1, $03
-                800C9F80	lui    at, $8015
-                800C9F84	addiu  at, at, $1a4c
-                800C9F88	addu   at, at, s1
-                800C9F8C	sh     v0, $0000(at)
-                800C9F90	lui    at, $8016
-                800C9F94	addiu  at, at, $3c82
-                800C9F98	addu   at, at, v1
-                800C9F9C	lhu    v0, $0000(at)
-                800C9FA0	subu   a1, a1, a2
-                800C9FA4	lui    at, $8015
-                800C9FA8	addiu  at, at, $1a4e
-                800C9FAC	addu   at, at, s1
-                800C9FB0	sh     v0, $0000(at)
-                800C9FB4	lui    at, $8016
-                800C9FB8	addiu  at, at, $3c84
-                800C9FBC	addu   at, at, v1
-                800C9FC0	lhu    v0, $0000(at)
-                800C9FC4	sll    a1, a1, $02
-                800C9FC8	lui    at, $8015
-                800C9FCC	addiu  at, at, $1a50
-                800C9FD0	addu   at, at, s1
-                800C9FD4	sh     v0, $0000(at)
-                800C9FD8	lui    at, $8015
-                800C9FDC	addiu  at, at, $18fc
-                800C9FE0	addu   at, at, a1
-                800C9FE4	lhu    v0, $0000(at)
-                800C9FE8	sll    v1, a0, $01
-                800C9FEC	lui    at, $8015
-                800C9FF0	addiu  at, at, $1a46
-                800C9FF4	addu   at, at, s1
-                800C9FF8	sh     v0, $0000(at)
-                800C9FFC	lhu    v0, $0000(s6)
-                800CA000	addu   v1, v1, a0
-                800CA004	sh     zero, $000c(s3)
-                800CA008	sh     v0, $0012(s3)
-                800CA00C	sll    v0, v1, $05
-                800CA010	subu   v0, v0, v1
-                800CA014	sll    v0, v0, $03
-                800CA018	subu   v0, v0, a0
-                800CA01C	sll    v0, v0, $02
-                800CA020	ori    v1, zero, $0800
-                800CA024	lui    at, $8015
-                800CA028	addiu  at, at, $1a46
-                800CA02C	addu   at, at, v0
-                800CA030	lhu    a0, $0000(at)
-                800CA034	lhu    v0, $0012(s3)
-                800CA038	subu   v1, v1, a0
-                800CA03C	sll    v0, v0, $10
-                800CA040	sh     v1, $0008(s3)
-                800CA044	lui    at, $8015
-                800CA048	addiu  at, at, $18ea
-                800CA04C	addu   at, at, a1
-                800CA050	lh     v1, $0000(at)
-                800CA054	sra    v0, v0, $10
+                [S3 + 0012] = h(0);
+                [S3 + 000c] = h(V0);
+                V0 = S0 << 01;
+                V0 = V0 + S0;
+                S1 = V0 << 05;
+                S1 = S1 - V0;
+                S1 = S1 << 03;
+                S1 = S1 - S0;
+                A2 = bu[800fafe0];
+                S1 = S1 << 02;
+                A0 = A2 << 01;
+                A0 = A0 + A2;
+                V1 = A0 << 01;
+                A1 = A0 << 05;
+                A1 = A1 - A0;
+                AT = 80163c80;
+                AT = AT + V1;
+                V0 = hu[AT + 0000];
+                A0 = bu[801590cc];
+                A1 = A1 << 03;
+                AT = 80151a4c;
+                AT = AT + S1;
+                [AT + 0000] = h(V0);
+                AT = 80163c82;
+                AT = AT + V1;
+                V0 = hu[AT + 0000];
+                A1 = A1 - A2;
+                AT = 80151a4e;
+                AT = AT + S1;
+                [AT + 0000] = h(V0);
+                AT = 80163c84;
+                AT = AT + V1;
+                V0 = hu[AT + 0000];
+                A1 = A1 << 02;
+                AT = 80151a50;
+                AT = AT + S1;
+                [AT + 0000] = h(V0);
+                AT = 801518fc;
+                AT = AT + A1;
+                V0 = hu[AT + 0000];
+                V1 = A0 << 01;
+                AT = 80151a46;
+                AT = AT + S1;
+                [AT + 0000] = h(V0);
+                V0 = hu[S6 + 0000];
+                V1 = V1 + A0;
+                [S3 + 000c] = h(0);
+                [S3 + 0012] = h(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                V1 = 0800;
+                AT = 80151a46;
+                AT = AT + V0;
+                A0 = hu[AT + 0000];
+                V0 = hu[S3 + 0012];
+                V1 = V1 - A0;
+                V0 = V0 << 10;
+                [S3 + 0008] = h(V1);
+                AT = 801518ea;
+                AT = AT + A1;
+                V1 = h[AT + 0000];
+                V0 = V0 >> 10;
                 800CA058	mult   v0, v1
-                800CA05C	lui    at, $8015
-                800CA060	addiu  at, at, $18f6
-                800CA064	addu   at, at, s1
-                800CA068	lh     v1, $0000(at)
+                AT = 801518f6;
+                AT = AT + S1;
+                V1 = h[AT + 0000];
                 800CA06C	mflo   a1
-                800CA070	lui    at, $8015
-                800CA074	addiu  at, at, $18ea
-                800CA078	addu   at, at, s1
-                800CA07C	lh     v0, $0000(at)
+                AT = 801518ea;
+                AT = AT + S1;
+                V0 = h[AT + 0000];
                 800CA080	nop
                 800CA084	mult   v1, v0
-                800CA088	lhu    a0, $0008(s3)
+                A0 = hu[S3 + 0008];
                 800CA08C	nop
-                800CA090	sll    a0, a0, $10
-                800CA094	sra    a0, a0, $10
-                800CA098	sra    a1, a1, $0c
+                A0 = A0 << 10;
+                A0 = A0 >> 10;
+                A1 = A1 >> 0c;
                 800CA09C	mflo   v0
-                800CA0A0	sra    v0, v0, $0c
-                800CA0A4	addu   a1, a1, v0
+                V0 = V0 >> 0c;
+                A1 = A1 + V0;
                 800CA0A8	jal    system_get_sin [$80039a74]
-                800CA0AC	sh     a1, $000a(s3)
-                800CA0B0	lhu    v1, $000a(s3)
+                [S3 + 000a] = h(A1);
+                V1 = hu[S3 + 000a];
                 800CA0B4	nop
-                800CA0B8	sll    v1, v1, $10
-                800CA0BC	sra    v1, v1, $10
+                V1 = V1 << 10;
+                V1 = V1 >> 10;
                 800CA0C0	mult   v0, v1
-                800CA0C4	lui    a0, $8010
-                800CA0C8	lbu    a0, $afe0(a0)
+                A0 = bu[800fafe0];
                 800CA0CC	nop
-                800CA0D0	sll    v0, a0, $01
-                800CA0D4	addu   v0, v0, a0
-                800CA0D8	sll    v1, v0, $05
-                800CA0DC	subu   v1, v1, v0
-                800CA0E0	sll    v1, v1, $03
-                800CA0E4	subu   v1, v1, a0
-                800CA0E8	sll    v1, v1, $02
-                800CA0EC	lui    at, $8015
-                800CA0F0	addiu  at, at, $1a4c
-                800CA0F4	addu   at, at, s1
-                800CA0F8	lhu    a0, $0000(at)
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151a4c;
+                AT = AT + S1;
+                A0 = hu[AT + 0000];
                 800CA0FC	mflo   v0
-                800CA100	sra    v0, v0, $0c
-                800CA104	subu   a0, a0, v0
-                800CA108	lui    at, $8015
-                800CA10C	addiu  at, at, $1a4c
-                800CA110	addu   at, at, v1
-                800CA114	sh     a0, $0000(at)
-                800CA118	lhu    a0, $0008(s3)
+                V0 = V0 >> 0c;
+                A0 = A0 - V0;
+                AT = 80151a4c;
+                AT = AT + V1;
+                [AT + 0000] = h(A0);
+                A0 = hu[S3 + 0008];
                 800CA11C	nop
-                800CA120	sll    a0, a0, $10
+                A0 = A0 << 10;
                 800CA124	jal    system_get_cos [$80039b40]
-                800CA128	sra    a0, a0, $10
-                800CA12C	lhu    v1, $000a(s3)
+                A0 = A0 >> 10;
+                V1 = hu[S3 + 000a];
                 800CA130	nop
-                800CA134	sll    v1, v1, $10
-                800CA138	sra    v1, v1, $10
+                V1 = V1 << 10;
+                V1 = V1 >> 10;
                 800CA13C	mult   v0, v1
-                800CA140	lui    a0, $8010
-                800CA144	lbu    a0, $afe0(a0)
+                A0 = bu[800fafe0];
                 800CA148	nop
-                800CA14C	sll    v0, a0, $01
-                800CA150	addu   v0, v0, a0
-                800CA154	sll    v1, v0, $05
-                800CA158	subu   v1, v1, v0
-                800CA15C	sll    v1, v1, $03
-                800CA160	subu   v1, v1, a0
-                800CA164	sll    v1, v1, $02
-                800CA168	lui    at, $8015
-                800CA16C	addiu  at, at, $1a50
-                800CA170	addu   at, at, s1
-                800CA174	lhu    a0, $0000(at)
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151a50;
+                AT = AT + S1;
+                A0 = hu[AT + 0000];
                 800CA178	mflo   v0
-                800CA17C	sra    v0, v0, $0c
-                800CA180	addu   a0, a0, v0
-                800CA184	lui    at, $8015
-                800CA188	addiu  at, at, $1a50
-                800CA18C	addu   at, at, v1
-                800CA190	sh     a0, $0000(at)
-                800CA194	lhu    v0, $000c(s3)
+                V0 = V0 >> 0c;
+                A0 = A0 + V0;
+                AT = 80151a50;
+                AT = AT + V1;
+                [AT + 0000] = h(A0);
+                V0 = hu[S3 + 000c];
                 800CA198	nop
-                800CA19C	lui    at, $8015
-                800CA1A0	addiu  at, at, $1a4e
-                800CA1A4	addu   at, at, v1
-                800CA1A8	sh     v0, $0000(at)
+                AT = 80151a4e;
+                AT = AT + V1;
+                [AT + 0000] = h(V0);
                 800CA1AC	j      Lcd208 [$800cd208]
                 800CA1B0	nop
-                800CA1B4	sra    s0, s5, $10
-                800CA1B8	sll    v1, s0, $01
-                800CA1BC	addu   v1, v1, s0
-                800CA1C0	sll    v0, v1, $05
-                800CA1C4	subu   v0, v0, v1
-                800CA1C8	sll    v0, v0, $03
-                800CA1CC	subu   v0, v0, s0
-                800CA1D0	sll    v0, v0, $02
-                800CA1D4	sh     zero, $0012(s3)
-                800CA1D8	lui    at, $1f80
-                800CA1DC	sw     zero, $0000(at)
-                800CA1E0	lui    at, $8015
-                800CA1E4	addiu  at, at, $1920
-                800CA1E8	addu   at, at, v0
-                800CA1EC	lbu    a1, $0000(at)
-                800CA1F0	addiu  s1, s3, $0016
-                800CA1F4	addiu  v1, a1, $0001
-                800CA1F8	lui    at, $8015
-                800CA1FC	addiu  at, at, $1920
-                800CA200	addu   at, at, v0
-                800CA204	sb     v1, $0000(at)
-                800CA208	lw     v0, $0004(s3)
-                800CA20C	lui    a0, $8015
-                800CA210	lh     a0, $1774(a0)
-                800CA214	addu   a1, a1, v0
-                800CA218	lbu    v0, $0000(a1)
-                800CA21C	addu   a1, s1, zero
+                S0 = S5 >> 10;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                [S3 + 0012] = h(0);
+                [1f800000] = w(0);
+                AT = 80151920;
+                AT = AT + V0;
+                A1 = bu[AT + 0000];
+                S1 = S3 + 0016;
+                V1 = A1 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
+                A0 = h[80151774];
+                A1 = A1 + V0;
+                V0 = bu[A1 + 0000];
+                A1 = S1;
                 800CA220	jal    battle_calculate_middle_point_from_target_mask_units_position [$800d54ec]
-                800CA224	sh     v0, $0010(s3)
-                800CA228	addu   a0, s0, zero
-                800CA22C	lw     a1, $0004(s3)
-                800CA230	lhu    a2, $0012(s3)
-                800CA234	lui    a3, $800d
-                800CA238	addiu  a3, a3, $f5bc (=-$a44)
-                800CA23C	sw     s1, $0014(sp)
-                800CA240	lhu    v0, $0016(s3)
-                800CA244	lhu    v1, $001a(s3)
-                800CA248	sll    a2, a2, $10
-                800CA24C	sra    a2, a2, $10
-                800CA250	sll    v0, v0, $10
-                800CA254	sra    v0, v0, $0f
-                800CA258	sll    v1, v1, $10
-                800CA25C	sh     v0, $0016(s3)
-                800CA260	lhu    v0, $0010(s3)
-                800CA264	sra    v1, v1, $0f
-                800CA26C	sh     v1, $001a(s3)
+                [S3 + 0010] = h(V0);
+                A0 = S0;
+                A1 = w[S3 + 0004];
+                A2 = hu[S3 + 0012];
+                A3 = 800cf5bc;
+                [SP + 0014] = w(S1);
+                V0 = hu[S3 + 0016];
+                V1 = hu[S3 + 001a];
+                A2 = A2 << 10;
+                A2 = A2 >> 10;
+                V0 = V0 << 10;
+                V0 = V0 >> 0f;
+                V1 = V1 << 10;
+                [S3 + 0016] = h(V0);
+                V0 = hu[S3 + 0010];
+                V1 = V1 >> 0f;
+                [S3 + 001a] = h(V1);
                 [SP + 10] = w(V0);
                 funccd860;
                 800CAA04	j      Lcd208 [$800cd208]
 
-                800CA270	sra    a0, s5, $10
-                800CA274	sll    v1, a0, $01
-                800CA278	addu   v1, v1, a0
-                800CA27C	sll    v0, v1, $05
-                800CA280	subu   v0, v0, v1
-                800CA284	sll    v0, v0, $03
-                800CA288	subu   v0, v0, a0
-                800CA28C	sll    v0, v0, $02
-                800CA290	lui    at, $8015
-                800CA294	addiu  at, at, $1920
-                800CA298	addu   at, at, v0
-                800CA29C	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800CA2A0	nop
-                800CA2A4	addiu  v1, a0, $0001
-                800CA2A8	lui    at, $8015
-                800CA2AC	addiu  at, at, $1920
-                800CA2B0	addu   at, at, v0
-                800CA2B4	sb     v1, $0000(at)
-                800CA2B8	lw     v0, $0004(s3)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
                 800CA2BC	nop
-                800CA2C0	addu   a0, a0, v0
-                800CA2C4	lbu    v1, $0000(a0)
-                800CA2C8	ori    v0, zero, $00a4
-                800CA2CC	lui    at, $800a
-                800CA2D0	sh     v0, $a000(at)
-                800CA2D4	lui    at, $800a
-                800CA2D8	sw     zero, $a008(at)
-                800CA2DC	lui    at, $800a
-                800CA2E0	sw     v1, $a004(at)
+                A0 = A0 + V0;
+                V1 = bu[A0 + 0000];
+                V0 = 00a4;
+                [8009a000] = h(V0);
+                [8009a008] = w(0);
+                [8009a004] = w(V1);
                 800CA2E4	jal    system_execute_AKAO [$8002da7c]
                 800CA2E8	nop
                 800CA2EC	j      Lcd208 [$800cd208]
                 800CA2F0	nop
-                800CA2F4	sra    a0, s5, $10
-                800CA2F8	sll    v1, a0, $01
-                800CA2FC	addu   v1, v1, a0
-                800CA300	sll    v0, v1, $05
-                800CA304	subu   v0, v0, v1
-                800CA308	sll    v0, v0, $03
-                800CA30C	subu   v0, v0, a0
-                800CA310	sll    s0, v0, $02
-                800CA314	lui    at, $8015
-                800CA318	addiu  at, at, $1920
-                800CA31C	addu   at, at, s0
-                800CA320	lbu    v1, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                S0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800CA324	nop
-                800CA328	addiu  v0, v1, $0001
-                800CA32C	lui    at, $8015
-                800CA330	addiu  at, at, $1920
-                800CA334	addu   at, at, s0
-                800CA338	sb     v0, $0000(at)
-                800CA33C	lw     v0, $0004(s3)
-                800CA340	lw     a1, $0004(s3)
-                800CA344	addu   v1, v1, v0
-                800CA348	lbu    v0, $0000(v1)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                A1 = w[S3 + 0004];
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
                 800CA34C	jal    funccd558 [$800cd558]
-                800CA350	sw     v0, $0000(s6)
-                800CA354	sll    v0, v0, $10
-                800CA358	sra    v0, v0, $10
-                800CA35C	sw     v0, $0000(s7)
-                800CA360	lui    at, $8015
-                800CA364	addiu  at, at, $1920
-                800CA368	addu   at, at, s0
-                800CA36C	lbu    v1, $0000(at)
+                [S6 + 0000] = w(V0);
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                [S7 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800CA370	nop
-                800CA374	addiu  v0, v1, $0001
-                800CA378	lui    at, $8015
-                800CA37C	addiu  at, at, $1920
-                800CA380	addu   at, at, s0
-                800CA384	sb     v0, $0000(at)
-                800CA388	lw     v0, $0004(s3)
-                800CA38C	lw     t2, $0030(sp)
-                800CA390	addu   v1, v1, v0
-                800CA394	lbu    v0, $0000(v1)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                T2 = w[SP + 0030];
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
                 800CA398	nop
-                800CA39C	sw     v0, $0000(t2)
-                800CA3A0	lui    at, $8015
-                800CA3A4	addiu  at, at, $1920
-                800CA3A8	addu   at, at, s0
-                800CA3AC	lbu    v1, $0000(at)
+                [T2 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800CA3B0	nop
-                800CA3B4	addiu  v0, v1, $0001
-                800CA3B8	lui    at, $8015
-                800CA3BC	addiu  at, at, $1920
-                800CA3C0	addu   at, at, s0
-                800CA3C4	sb     v0, $0000(at)
-                800CA3C8	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CA3CC	lui    a2, $1f80
-                800CA3D0	addu   v1, v1, v0
-                800CA3D4	lbu    v0, $0000(v1)
-                800CA3D8	ori    a2, a2, $0018
-                800CA3DC	sw     v0, $0000(a2)
-                800CA3E0	lui    at, $8015
-                800CA3E4	addiu  at, at, $1920
-                800CA3E8	addu   at, at, s0
-                800CA3EC	lbu    v1, $0000(at)
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
+                A2 = A2 | 0018;
+                [A2 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800CA3F0	nop
-                800CA3F4	addiu  v0, v1, $0001
-                800CA3F8	lui    at, $8015
-                800CA3FC	addiu  at, at, $1920
-                800CA400	addu   at, at, s0
-                800CA404	sb     v0, $0000(at)
-                800CA408	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CA40C	lui    a1, $1f80
-                800CA410	addu   v1, v1, v0
-                800CA414	lbu    v0, $0000(v1)
-                800CA418	ori    a1, a1, $001c
-                800CA41C	sw     v0, $0000(a1)
-                800CA420	lui    at, $8015
-                800CA424	addiu  at, at, $1920
-                800CA428	addu   at, at, s0
-                800CA42C	lbu    v1, $0000(at)
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
+                A1 = A1 | 001c;
+                [A1 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800CA430	nop
-                800CA434	addiu  v0, v1, $0001
-                800CA438	lui    at, $8015
-                800CA43C	addiu  at, at, $1920
-                800CA440	addu   at, at, s0
-                800CA444	sb     v0, $0000(at)
-                800CA448	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CA44C	lui    a3, $1f80
-                800CA450	addu   v1, v1, v0
-                800CA454	lbu    v0, $0000(v1)
-                800CA458	ori    a3, a3, $000c
-                800CA45C	sw     v0, $0000(a3)
-                800CA460	lui    at, $8015
-                800CA464	addiu  at, at, $1920
-                800CA468	addu   at, at, s0
-                800CA46C	lbu    a0, $0000(at)
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
+                A3 = A3 | 000c;
+                [A3 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + S0;
+                A0 = bu[AT + 0000];
                 800CA470	nop
-                800CA474	addiu  v0, a0, $0001
-                800CA478	lui    at, $8015
-                800CA47C	addiu  at, at, $1920
-                800CA480	addu   at, at, s0
-                800CA484	sb     v0, $0000(at)
-                800CA488	lw     v0, $0004(s3)
-                800CA48C	lbu    v1, $0000(t2)
-                800CA490	addu   a0, a0, v0
-                800CA494	sll    v1, v1, $0a
-                800CA498	lbu    v0, $0000(a2)
-                800CA49C	lbu    t0, $0000(a0)
-                800CA4A0	sll    v0, v0, $05
-                800CA4A4	or     v1, v1, v0
-                800CA4A8	lbu    v0, $0000(a1)
-                800CA4AC	lui    at, $1f80
-                800CA4B0	sw     t0, $0010(at)
-                800CA4B4	or     a2, v1, v0
-                800CA4B8	lui    at, $1f80
-                800CA4BC	sw     a2, $0014(at)
-                800CA4C0	lw     a1, $0000(s6)
-                800CA4C4	ori    v0, zero, $00ff
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                V1 = bu[T2 + 0000];
+                A0 = A0 + V0;
+                V1 = V1 << 0a;
+                V0 = bu[A2 + 0000];
+                T0 = bu[A0 + 0000];
+                V0 = V0 << 05;
+                V1 = V1 | V0;
+                V0 = bu[A1 + 0000];
+                [1f800010] = w(T0);
+                A2 = V1 | V0;
+                [1f800014] = w(A2);
+                A1 = w[S6 + 0000];
+                V0 = 00ff;
                 800CA4C8	bne    a1, v0, Lca4e8 [$800ca4e8]
                 800CA4CC	nop
-                800CA4D0	lui    a0, $8015
-                800CA4D4	addiu  a0, a0, $1a24
-                800CA4D8	lw     a1, $0000(s7)
-                800CA4DC	lw     a3, $0000(a3)
+                A0 = 80151a24;
+                A1 = w[S7 + 0000];
+                A3 = w[A3 + 0000];
                 800CA4E0	j      Lca514 [$800ca514]
-                800CA4E4	addu   a0, s0, a0
+                A0 = S0 + A0;
 
                 Lca4e8:	; 800CA4E8
-                800CA4E8	lui    t2, $8015
-                800CA4EC	addiu  t2, t2, $1a58
-                800CA4F0	addu   v0, s0, t2
-                800CA4F4	sll    a0, a1, $01
-                800CA4F8	addu   a0, a0, a1
-                800CA4FC	sll    a0, a0, $02
-                800CA500	addu   a0, a0, a1
-                800CA504	sll    a0, a0, $02
-                800CA508	lw     a1, $0000(s7)
-                800CA50C	lw     a3, $0000(a3)
-                800CA510	addu   a0, v0, a0
+                T2 = 80151a58;
+                V0 = S0 + T2;
+                A0 = A1 << 01;
+                A0 = A0 + A1;
+                A0 = A0 << 02;
+                A0 = A0 + A1;
+                A0 = A0 << 02;
+                A1 = w[S7 + 0000];
+                A3 = w[A3 + 0000];
+                A0 = V0 + A0;
 
                 Lca514:	; 800CA514
                 800CA514	jal    funcd61ac [$800d61ac]
-                800CA518	sw     t0, $0010(sp)
+                [SP + 0010] = w(T0);
                 800CA51C	j      Lcd208 [$800cd208]
                 800CA520	nop
-                800CA524	sra    s0, s5, $10
-                800CA528	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800CA52C	jal    funccd558 [$800cd558]
-                800CA530	addu   a0, s0, zero
-                800CA534	lw     a1, $0004(s3)
-                800CA538	addu   a0, s0, zero
+                A0 = S0;
+                A1 = w[S3 + 0004];
+                A0 = S0;
                 800CA53C	jal    funccd558 [$800cd558]
-                800CA540	sh     v0, $0012(s3)
-                800CA544	sll    v0, v0, $10
-                800CA548	lw     a1, $0004(s3)
-                800CA54C	sra    v0, v0, $10
-                800CA550	lui    at, $1f80
-                800CA554	sw     v0, $0004(at)
+                [S3 + 0012] = h(V0);
+                V0 = V0 << 10;
+                A1 = w[S3 + 0004];
+                V0 = V0 >> 10;
+                [1f800004] = w(V0);
                 800CA558	jal    funccd558 [$800cd558]
-                800CA55C	addu   a0, s0, zero
-                800CA560	sll    v0, v0, $10
-                800CA564	sra    v0, v0, $10
-                800CA568	lui    at, $1f80
-                800CA56C	sw     v0, $0000(at)
-                800CA570	sll    v0, s0, $01
-                800CA574	addu   v0, v0, s0
-                800CA578	sll    v1, v0, $05
-                800CA57C	subu   v1, v1, v0
-                800CA580	sll    v1, v1, $03
-                800CA584	subu   v1, v1, s0
-                800CA588	sll    v1, v1, $02
-                800CA58C	lui    at, $8015
-                800CA590	addiu  at, at, $1920
-                800CA594	addu   at, at, v1
-                800CA598	lbu    a0, $0000(at)
+                A0 = S0;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                [1f800000] = w(V0);
+                V0 = S0 << 01;
+                V0 = V0 + S0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - S0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CA59C	lui    t1, $1f80
-                800CA5A0	addiu  v0, a0, $0001
-                800CA5A4	lui    at, $8015
-                800CA5A8	addiu  at, at, $1920
-                800CA5AC	addu   at, at, v1
-                800CA5B0	sb     v0, $0000(at)
-                800CA5B4	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CA5B8	nop
-                800CA5BC	addu   a0, a0, v0
-                800CA5C0	lbu    v0, $0000(a0)
-                800CA5C4	lui    a3, $800d
-                800CA5C8	addiu  a3, a3, $fe60 (=-$1a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A3 = 800cfe60;
                 800CA5CC	j      Lca67c [$800ca67c]
-                800CA5D0	ori    t1, t1, $000c
-                800CA5D4	sra    s0, s5, $10
-                800CA5D8	lw     a1, $0004(s3)
+                T1 = T1 | 000c;
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800CA5DC	jal    funccd558 [$800cd558]
-                800CA5E0	addu   a0, s0, zero
-                800CA5E4	lw     a1, $0004(s3)
-                800CA5E8	addu   a0, s0, zero
+                A0 = S0;
+                A1 = w[S3 + 0004];
+                A0 = S0;
                 800CA5EC	jal    funccd558 [$800cd558]
-                800CA5F0	sh     v0, $0012(s3)
-                800CA5F4	sll    v0, v0, $10
-                800CA5F8	lw     a1, $0004(s3)
-                800CA5FC	sra    v0, v0, $10
-                800CA600	lui    at, $1f80
-                800CA604	sw     v0, $0004(at)
+                [S3 + 0012] = h(V0);
+                V0 = V0 << 10;
+                A1 = w[S3 + 0004];
+                V0 = V0 >> 10;
+                [1f800004] = w(V0);
                 800CA608	jal    funccd558 [$800cd558]
-                800CA60C	addu   a0, s0, zero
-                800CA610	sll    v0, v0, $10
-                800CA614	sra    v0, v0, $10
-                800CA618	lui    at, $1f80
-                800CA61C	sw     v0, $0000(at)
-                800CA620	sll    v0, s0, $01
-                800CA624	addu   v0, v0, s0
-                800CA628	sll    v1, v0, $05
-                800CA62C	subu   v1, v1, v0
-                800CA630	sll    v1, v1, $03
-                800CA634	subu   v1, v1, s0
-                800CA638	sll    v1, v1, $02
-                800CA63C	lui    at, $8015
-                800CA640	addiu  at, at, $1920
-                800CA644	addu   at, at, v1
-                800CA648	lbu    a0, $0000(at)
+                A0 = S0;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                [1f800000] = w(V0);
+                V0 = S0 << 01;
+                V0 = V0 + S0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - S0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CA64C	lui    t1, $1f80
-                800CA650	addiu  v0, a0, $0001
-                800CA654	lui    at, $8015
-                800CA658	addiu  at, at, $1920
-                800CA65C	addu   at, at, v1
-                800CA660	sb     v0, $0000(at)
-                800CA664	lw     v0, $0004(s3)
-                800CA668	ori    t1, t1, $000c
-                800CA66C	addu   a0, a0, v0
-                800CA670	lbu    v0, $0000(a0)
-                800CA674	lui    a3, $800d
-                800CA678	addiu  a3, a3, $01c0
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                T1 = T1 | 000c;
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A3 = 800d01c0;
 
                 Lca67c:	; 800CA67C
-                800CA67C	lui    at, $1f80
-                800CA680	sw     v0, $0008(at)
-                800CA684	lui    at, $8015
-                800CA688	addiu  at, at, $1920
-                800CA68C	addu   at, at, v1
-                800CA690	lbu    t0, $0000(at)
-                800CA694	addu   a0, s0, zero
-                800CA698	addiu  v0, t0, $0001
-                800CA69C	lui    at, $8015
-                800CA6A0	addiu  at, at, $1920
-                800CA6A4	addu   at, at, v1
-                800CA6A8	sb     v0, $0000(at)
-                800CA6AC	lw     a1, $0004(s3)
-                800CA6B0	lw     v0, $0004(s3)
-                800CA6B4	lhu    a2, $0012(s3)
-                800CA6B8	addu   t0, t0, v0
-                800CA6BC	sll    a2, a2, $10
-                800CA6C0	lbu    v0, $0000(t0)
-                800CA6C4	lui    t0, $8010
-                800CA6C8	lbu    t0, $99e8(t0)
-                800CA6CC	sra    a2, a2, $10
-                800CA6D0	sll    v1, t0, $01
-                800CA6D4	addu   v1, v1, t0
-                800CA6D8	sw     v0, $0000(t1)
-                800CA6DC	sll    v0, v1, $05
-                800CA6E0	subu   v0, v0, v1
-                800CA6E4	sll    v0, v0, $03
-                800CA6E8	subu   v0, v0, t0
-                800CA6EC	sll    v0, v0, $02
-                800CA6F0	lui    t0, $8015
-                800CA6F4	addiu  t0, t0, $1a4c
-                800CA6F8	lhu    v1, $0000(t1)
-                800CA6FC	addu   v0, v0, t0
-                800CA700	sw     v0, $0014(sp)
-                800CA704	sh     v1, $0010(s3)
-                800CA708	sll    v1, v1, $10
-                800CA70C	sra    v1, v1, $10
+                [1f800008] = w(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                T0 = bu[AT + 0000];
+                A0 = S0;
+                V0 = T0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                A1 = w[S3 + 0004];
+                V0 = w[S3 + 0004];
+                A2 = hu[S3 + 0012];
+                T0 = T0 + V0;
+                A2 = A2 << 10;
+                V0 = bu[T0 + 0000];
+                T0 = bu[800f99e8];
+                A2 = A2 >> 10;
+                V1 = T0 << 01;
+                V1 = V1 + T0;
+                [T1 + 0000] = w(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - T0;
+                V0 = V0 << 02;
+                T0 = 80151a4c;
+                V1 = hu[T1 + 0000];
+                V0 = V0 + T0;
+                [SP + 0014] = w(V0);
+                [S3 + 0010] = h(V1);
+                V1 = V1 << 10;
+                V1 = V1 >> 10;
 
                 Lca710:	; 800CA710
                 800CA710	jal    funccd860 [$800cd860]
-                800CA714	sw     v1, $0010(sp)
+                [SP + 0010] = w(V1);
                 800CA718	j      Lcd208 [$800cd208]
                 800CA71C	nop
-                800CA720	sra    a0, s5, $10
-                800CA724	sll    v1, a0, $01
-                800CA728	addu   v1, v1, a0
-                800CA72C	sll    v0, v1, $05
-                800CA730	subu   v0, v0, v1
-                800CA734	sll    v0, v0, $03
-                800CA738	subu   v0, v0, a0
-                800CA73C	sll    a0, v0, $02
-                800CA740	lui    at, $8015
-                800CA744	addiu  at, at, $1920
-                800CA748	addu   at, at, a0
-                800CA74C	lbu    v1, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                A0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + A0;
+                V1 = bu[AT + 0000];
                 800CA750	nop
-                800CA754	addiu  v0, v1, $0001
-                800CA758	lui    at, $8015
-                800CA75C	addiu  at, at, $1920
-                800CA760	addu   at, at, a0
-                800CA764	sb     v0, $0000(at)
-                800CA768	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + A0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CA76C	nop
-                800CA770	addu   v1, v1, v0
-                800CA774	lbu    v0, $0000(v1)
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
                 800CA778	nop
-                800CA77C	lui    at, $1f80
-                800CA780	sw     v0, $0008(at)
+                [1f800008] = w(V0);
                 800CA784	bne    v0, zero, Lca7bc [$800ca7bc]
                 800CA788	nop
-                800CA78C	lui    at, $8015
-                800CA790	addiu  at, at, $1909
-                800CA794	addu   at, at, a0
-                800CA798	lbu    v0, $0000(at)
+                AT = 80151909;
+                AT = AT + A0;
+                V0 = bu[AT + 0000];
                 800CA79C	nop
-                800CA7A0	ori    v0, v0, $0004
-                800CA7A4	lui    at, $8015
-                800CA7A8	addiu  at, at, $1909
-                800CA7AC	addu   at, at, a0
-                800CA7B0	sb     v0, $0000(at)
+                V0 = V0 | 0004;
+                AT = 80151909;
+                AT = AT + A0;
+                [AT + 0000] = b(V0);
                 800CA7B4	j      Lcd208 [$800cd208]
                 800CA7B8	nop
 
                 Lca7bc:	; 800CA7BC
-                800CA7BC	lui    at, $8015
-                800CA7C0	addiu  at, at, $1909
-                800CA7C4	addu   at, at, a0
-                800CA7C8	lbu    v0, $0000(at)
+                AT = 80151909;
+                AT = AT + A0;
+                V0 = bu[AT + 0000];
                 800CA7CC	nop
-                800CA7D0	andi   v0, v0, $00fb
-                800CA7D4	lui    at, $8015
-                800CA7D8	addiu  at, at, $1909
-                800CA7DC	addu   at, at, a0
-                800CA7E0	sb     v0, $0000(at)
+                V0 = V0 & 00fb;
+                AT = 80151909;
+                AT = AT + A0;
+                [AT + 0000] = b(V0);
                 800CA7E4	j      Lcd208 [$800cd208]
                 800CA7E8	nop
-                800CA7EC	sra    a0, s5, $10
-                800CA7F0	sll    v0, a0, $01
-                800CA7F4	addu   v0, v0, a0
-                800CA7F8	sll    s0, v0, $05
-                800CA7FC	subu   s0, s0, v0
-                800CA800	sll    s0, s0, $03
-                800CA804	subu   s0, s0, a0
-                800CA808	sll    s0, s0, $02
-                800CA80C	lui    at, $8015
-                800CA810	addiu  at, at, $1920
-                800CA814	addu   at, at, s0
-                800CA818	lbu    v1, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - A0;
+                S0 = S0 << 02;
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800CA81C	nop
-                800CA820	addiu  v0, v1, $0001
-                800CA824	lui    at, $8015
-                800CA828	addiu  at, at, $1920
-                800CA82C	addu   at, at, s0
-                800CA830	sb     v0, $0000(at)
-                800CA834	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CA838	lui    a1, $1f80
-                800CA83C	addu   v1, v1, v0
-                800CA840	lbu    v0, $0000(v1)
-                800CA844	ori    a1, a1, $000c
-                800CA848	sw     v0, $0000(a1)
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
+                A1 = A1 | 000c;
+                [A1 + 0000] = w(V0);
                 800CA84C	addiu  v0, a0, $fffc (=-$4)
-                800CA850	sll    v1, v0, $01
-                800CA854	addu   v1, v1, v0
-                800CA858	lhu    v0, $0000(a1)
-                800CA85C	sll    v1, v1, $02
-                800CA860	addiu  v0, v0, $0003
-                800CA864	lui    at, $800f
-                800CA868	addiu  at, at, $7e08
-                800CA86C	addu   at, at, v1
-                800CA870	sh     v0, $0000(at)
+                V1 = V0 << 01;
+                V1 = V1 + V0;
+                V0 = hu[A1 + 0000];
+                V1 = V1 << 02;
+                V0 = V0 + 0003;
+                AT = 800f7e08;
+                AT = AT + V1;
+                [AT + 0000] = h(V0);
                 800CA874	jal    funcb54b8 [$800b54b8]
                 800CA878	nop
-                800CA87C	lui    at, $8015
-                800CA880	addiu  at, at, $1922
-                800CA884	addu   at, at, s0
-                800CA888	lbu    v0, $0000(at)
+                AT = 80151922;
+                AT = AT + S0;
+                V0 = bu[AT + 0000];
                 800CA88C	nop
-                800CA890	ori    v0, v0, $0001
-                800CA894	lui    at, $8015
-                800CA898	addiu  at, at, $1922
-                800CA89C	addu   at, at, s0
-                800CA8A0	sb     v0, $0000(at)
+                V0 = V0 | 0001;
+                AT = 80151922;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
                 800CA8A4	j      Lcd208 [$800cd208]
                 800CA8A8	nop
 
@@ -2699,49 +2470,43 @@ ECA70C80 67
 
 
 
-                800CAD24	sra    a0, s5, $10
-                800CAD28	sll    v0, a0, $01
-                800CAD2C	addu   v0, v0, a0
-                800CAD30	sll    v1, v0, $05
-                800CAD34	subu   v1, v1, v0
-                800CAD38	sll    v1, v1, $03
-                800CAD3C	subu   v1, v1, a0
-                800CAD40	sll    v1, v1, $02
-                800CAD44	lui    at, $8010
-                800CAD48	sb     zero, $8cf0(at)
-                800CAD4C	lui    at, $8015
-                800CAD50	addiu  at, at, $1920
-                800CAD54	addu   at, at, v1
-                800CAD58	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                [800f8cf0] = b(0);
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CAD5C	nop
-                800CAD60	addiu  v0, a0, $0001
-                800CAD64	lui    at, $8015
-                800CAD68	addiu  at, at, $1920
-                800CAD6C	addu   at, at, v1
-                800CAD70	sb     v0, $0000(at)
-                800CAD74	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CAD78	nop
-                800CAD7C	addu   a0, a0, v0
-                800CAD80	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CAD84	nop
-                800CAD88	sw     v0, $0000(s6)
-                800CAD8C	lui    at, $8015
-                800CAD90	addiu  at, at, $1920
-                800CAD94	addu   at, at, v1
-                800CAD98	lbu    a0, $0000(at)
+                [S6 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CAD9C	nop
-                800CADA0	addiu  v0, a0, $0001
-                800CADA4	lui    at, $8015
-                800CADA8	addiu  at, at, $1920
-                800CADAC	addu   at, at, v1
-                800CADB0	sb     v0, $0000(at)
-                800CADB4	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CADB8	nop
-                800CADBC	addu   a0, a0, v0
-                800CADC0	lbu    a1, $0000(a0)
-                800CADC4	lw     a0, $0000(s6)
-                800CADC8	lui    at, $1f80
-                800CADCC	sw     a1, $0004(at)
+                A0 = A0 + V0;
+                A1 = bu[A0 + 0000];
+                A0 = w[S6 + 0000];
+                [1f800004] = w(A1);
                 800CADD0	jal    funcd5a68 [$800d5a68]
                 800CADD4	nop
                 800CADD8	j      Lcd208 [$800cd208]
@@ -2795,127 +2560,117 @@ ECA70C80 67
                 }
                 break;
 
-                800CAF3C	sra    a0, s5, $10
-                800CAF40	slti   v0, a0, $0004
+                A0 = S5 >> 10;
+                V0 = A0 < 0004;
                 800CAF44	bne    v0, zero, Lcd208 [$800cd208]
-                800CAF48	sll    v1, a0, $01
-                800CAF4C	addu   v1, v1, a0
-                800CAF50	sll    v0, v1, $05
-                800CAF54	subu   v0, v0, v1
-                800CAF58	sll    v0, v0, $03
-                800CAF5C	subu   v0, v0, a0
-                800CAF60	sll    a0, v0, $02
-                800CAF64	ori    a1, zero, $00cd
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                A0 = V0 << 02;
+                A1 = 00cd;
 
                 loopcaf68:	; 800CAF68
-                800CAF68	lui    at, $8015
-                800CAF6C	addiu  at, at, $1920
-                800CAF70	addu   at, at, a0
-                800CAF74	lbu    v1, $0000(at)
+                AT = 80151920;
+                AT = AT + A0;
+                V1 = bu[AT + 0000];
                 800CAF78	nop
-                800CAF7C	addiu  v0, v1, $0001
-                800CAF80	lui    at, $8015
-                800CAF84	addiu  at, at, $1920
-                800CAF88	addu   at, at, a0
-                800CAF8C	sb     v0, $0000(at)
-                800CAF90	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + A0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CAF94	nop
-                800CAF98	addu   v1, v1, v0
-                800CAF9C	lbu    v0, $0000(v1)
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
                 800CAFA0	nop
                 800CAFA4	bne    v0, a1, loopcaf68 [$800caf68]
                 800CAFA8	nop
                 800CAFAC	j      Lcd208 [$800cd208]
                 800CAFB0	nop
-                800CAFB4	sra    a0, s5, $10
-                800CAFB8	sll    v0, a0, $03
-                800CAFBC	subu   v0, v0, a0
-                800CAFC0	sll    v0, v0, $02
-                800CAFC4	addu   v0, v0, a0
-                800CAFC8	sll    v0, v0, $02
-                800CAFCC	lui    at, $8015
-                800CAFD0	addiu  at, at, $1200
-                800CAFD4	addu   at, at, v0
-                800CAFD8	lw     v0, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                V0 = V0 + A0;
+                V0 = V0 << 02;
+                AT = 80151200;
+                AT = AT + V0;
+                V0 = w[AT + 0000];
                 800CAFDC	nop
-                800CAFE0	andi   v0, v0, $1000
+                V0 = V0 & 1000;
                 800CAFE4	beq    v0, zero, Lcd208 [$800cd208]
-                800CAFE8	sll    v1, a0, $01
-                800CAFEC	addu   v1, v1, a0
-                800CAFF0	sll    v0, v1, $05
-                800CAFF4	subu   v0, v0, v1
-                800CAFF8	sll    v0, v0, $03
-                800CAFFC	subu   v0, v0, a0
-                800CB000	sll    a0, v0, $02
-                800CB004	ori    a1, zero, $00b2
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                A0 = V0 << 02;
+                A1 = 00b2;
 
                 loopcb008:	; 800CB008
-                800CB008	lui    at, $8015
-                800CB00C	addiu  at, at, $1920
-                800CB010	addu   at, at, a0
-                800CB014	lbu    v1, $0000(at)
+                AT = 80151920;
+                AT = AT + A0;
+                V1 = bu[AT + 0000];
                 800CB018	nop
-                800CB01C	addiu  v0, v1, $0001
-                800CB020	lui    at, $8015
-                800CB024	addiu  at, at, $1920
-                800CB028	addu   at, at, a0
-                800CB02C	sb     v0, $0000(at)
-                800CB030	lw     v0, $0004(s3)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + A0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CB034	nop
-                800CB038	addu   v1, v1, v0
-                800CB03C	lbu    v0, $0000(v1)
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
                 800CB040	nop
                 800CB044	bne    v0, a1, loopcb008 [$800cb008]
                 800CB048	nop
                 800CB04C	j      Lcd208 [$800cd208]
                 800CB050	nop
-                800CB054	sra    a0, s5, $10
-                800CB058	sll    v0, a0, $01
-                800CB05C	addu   v0, v0, a0
-                800CB060	sll    v1, v0, $05
-                800CB064	subu   v1, v1, v0
-                800CB068	sll    v1, v1, $03
-                800CB06C	subu   v1, v1, a0
-                800CB070	sll    v1, v1, $02
-                800CB074	lui    at, $8015
-                800CB078	addiu  at, at, $1920
-                800CB07C	addu   at, at, v1
-                800CB080	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CB084	nop
-                800CB088	addiu  v0, a0, $0001
-                800CB08C	lui    at, $8015
-                800CB090	addiu  at, at, $1920
-                800CB094	addu   at, at, v1
-                800CB098	sb     v0, $0000(at)
-                800CB09C	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CB0A0	nop
-                800CB0A4	addu   a0, a0, v0
-                800CB0A8	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CB0AC	nop
-                800CB0B0	sw     v0, $0000(s6)
-                800CB0B4	lui    at, $8015
-                800CB0B8	addiu  at, at, $1920
-                800CB0BC	addu   at, at, v1
-                800CB0C0	lbu    a0, $0000(at)
+                [S6 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CB0C4	nop
-                800CB0C8	addiu  v0, a0, $0001
-                800CB0CC	lui    at, $8015
-                800CB0D0	addiu  at, at, $1920
-                800CB0D4	addu   at, at, v1
-                800CB0D8	sb     v0, $0000(at)
-                800CB0DC	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CB0E0	nop
-                800CB0E4	addu   a0, a0, v0
-                800CB0E8	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CB0EC	nop
-                800CB0F0	sw     v0, $0000(s7)
-                800CB0F4	lw     v1, $0000(s6)
-                800CB0F8	lbu    v0, $0000(s7)
+                [S7 + 0000] = w(V0);
+                V1 = w[S6 + 0000];
+                V0 = bu[S7 + 0000];
                 800CB0FC	nop
-                800CB100	lui    at, $8016
-                800CB104	addiu  at, at, $6f68
-                800CB108	addu   at, at, v1
-                800CB10C	sb     v0, $0000(at)
+                AT = 80166f68;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
                 800CB110	jal    funccdda4 [$800cdda4]
                 800CB114	nop
                 800CB118	j      Lcd208 [$800cd208]
@@ -2956,207 +2711,187 @@ ECA70C80 67
 
 
 
-                800CB238	sra    v1, s5, $10
-                800CB23C	sll    v0, v1, $01
-                800CB240	addu   v0, v0, v1
-                800CB244	sll    s0, v0, $05
-                800CB248	subu   s0, s0, v0
-                800CB24C	sll    s0, s0, $03
-                800CB250	subu   s0, s0, v1
-                800CB254	sll    s0, s0, $02
-                800CB258	lui    at, $8015
-                800CB25C	addiu  at, at, $1a46
-                800CB260	addu   at, at, s0
-                800CB264	lh     a0, $0000(at)
+                V1 = S5 >> 10;
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - V1;
+                S0 = S0 << 02;
+                AT = 80151a46;
+                AT = AT + S0;
+                A0 = h[AT + 0000];
                 800CB268	jal    system_get_sin [$80039a74]
-                800CB26C	sw     a0, $0000(s6)
-                800CB270	sll    v1, v0, $07
-                800CB274	addu   v1, v1, v0
-                800CB278	sll    v1, v1, $02
-                800CB27C	lui    at, $8015
-                800CB280	addiu  at, at, $1a4c
-                800CB284	addu   at, at, s0
-                800CB288	lhu    v0, $0000(at)
-                800CB28C	sra    v1, v1, $0c
-                800CB290	subu   v0, v0, v1
-                800CB294	lui    at, $8015
-                800CB298	addiu  at, at, $1a4c
-                800CB29C	addu   at, at, s0
-                800CB2A0	sh     v0, $0000(at)
-                800CB2A4	lw     a0, $0000(s6)
+                [S6 + 0000] = w(A0);
+                V1 = V0 << 07;
+                V1 = V1 + V0;
+                V1 = V1 << 02;
+                AT = 80151a4c;
+                AT = AT + S0;
+                V0 = hu[AT + 0000];
+                V1 = V1 >> 0c;
+                V0 = V0 - V1;
+                AT = 80151a4c;
+                AT = AT + S0;
+                [AT + 0000] = h(V0);
+                A0 = w[S6 + 0000];
                 800CB2A8	jal    system_get_cos [$80039b40]
                 800CB2AC	nop
-                800CB2B0	sll    v1, v0, $07
-                800CB2B4	addu   v1, v1, v0
+                V1 = V0 << 07;
+                V1 = V1 + V0;
                 800CB2B8	j      Lcb414 [$800cb414]
-                800CB2BC	sll    v1, v1, $02
-                800CB2C0	sra    v1, s5, $10
-                800CB2C4	sll    v0, v1, $01
-                800CB2C8	addu   v0, v0, v1
-                800CB2CC	sll    s0, v0, $05
-                800CB2D0	subu   s0, s0, v0
-                800CB2D4	sll    s0, s0, $03
-                800CB2D8	subu   s0, s0, v1
-                800CB2DC	sll    s0, s0, $02
-                800CB2E0	lui    at, $8015
-                800CB2E4	addiu  at, at, $1a46
-                800CB2E8	addu   at, at, s0
-                800CB2EC	lh     a0, $0000(at)
+                V1 = V1 << 02;
+                V1 = S5 >> 10;
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - V1;
+                S0 = S0 << 02;
+                AT = 80151a46;
+                AT = AT + S0;
+                A0 = h[AT + 0000];
                 800CB2F0	nop
-                800CB2F4	addiu  a0, a0, $0800
+                A0 = A0 + 0800;
                 800CB2F8	jal    system_get_sin [$80039a74]
-                800CB2FC	sw     a0, $0000(s6)
-                800CB300	sll    v1, v0, $07
-                800CB304	addu   v1, v1, v0
-                800CB308	sll    v1, v1, $02
-                800CB30C	lui    at, $8015
-                800CB310	addiu  at, at, $1a4c
-                800CB314	addu   at, at, s0
-                800CB318	lhu    v0, $0000(at)
-                800CB31C	sra    v1, v1, $0c
-                800CB320	subu   v0, v0, v1
-                800CB324	lui    at, $8015
-                800CB328	addiu  at, at, $1a4c
-                800CB32C	addu   at, at, s0
-                800CB330	sh     v0, $0000(at)
-                800CB334	lw     a0, $0000(s6)
+                [S6 + 0000] = w(A0);
+                V1 = V0 << 07;
+                V1 = V1 + V0;
+                V1 = V1 << 02;
+                AT = 80151a4c;
+                AT = AT + S0;
+                V0 = hu[AT + 0000];
+                V1 = V1 >> 0c;
+                V0 = V0 - V1;
+                AT = 80151a4c;
+                AT = AT + S0;
+                [AT + 0000] = h(V0);
+                A0 = w[S6 + 0000];
                 800CB338	jal    system_get_cos [$80039b40]
                 800CB33C	nop
-                800CB340	sll    v1, v0, $07
-                800CB344	addu   v1, v1, v0
+                V1 = V0 << 07;
+                V1 = V1 + V0;
                 800CB348	j      Lcb414 [$800cb414]
-                800CB34C	sll    v1, v1, $02
-                800CB350	sra    v1, s5, $10
-                800CB354	sll    v0, v1, $01
-                800CB358	addu   v0, v0, v1
-                800CB35C	sll    s0, v0, $05
-                800CB360	subu   s0, s0, v0
-                800CB364	sll    s0, s0, $03
-                800CB368	subu   s0, s0, v1
-                800CB36C	sll    s0, s0, $02
-                800CB370	lui    at, $8015
-                800CB374	addiu  at, at, $1a46
-                800CB378	addu   at, at, s0
-                800CB37C	lh     a0, $0000(at)
+                V1 = V1 << 02;
+                V1 = S5 >> 10;
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - V1;
+                S0 = S0 << 02;
+                AT = 80151a46;
+                AT = AT + S0;
+                A0 = h[AT + 0000];
                 800CB380	j      Lcb3c0 [$800cb3c0]
                 800CB384	nop
-                800CB388	sra    v1, s5, $10
-                800CB38C	sll    v0, v1, $01
-                800CB390	addu   v0, v0, v1
-                800CB394	sll    s0, v0, $05
-                800CB398	subu   s0, s0, v0
-                800CB39C	sll    s0, s0, $03
-                800CB3A0	subu   s0, s0, v1
-                800CB3A4	sll    s0, s0, $02
-                800CB3A8	lui    at, $8015
-                800CB3AC	addiu  at, at, $1a46
-                800CB3B0	addu   at, at, s0
-                800CB3B4	lh     a0, $0000(at)
+                V1 = S5 >> 10;
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - V1;
+                S0 = S0 << 02;
+                AT = 80151a46;
+                AT = AT + S0;
+                A0 = h[AT + 0000];
                 800CB3B8	nop
-                800CB3BC	addiu  a0, a0, $0800
+                A0 = A0 + 0800;
 
                 Lcb3c0:	; 800CB3C0
                 800CB3C0	jal    system_get_sin [$80039a74]
-                800CB3C4	sw     a0, $0000(s6)
-                800CB3C8	sll    v1, v0, $07
-                800CB3CC	addu   v1, v1, v0
-                800CB3D0	sll    v1, v1, $01
-                800CB3D4	lui    at, $8015
-                800CB3D8	addiu  at, at, $1a4c
-                800CB3DC	addu   at, at, s0
-                800CB3E0	lhu    v0, $0000(at)
-                800CB3E4	sra    v1, v1, $0c
-                800CB3E8	subu   v0, v0, v1
-                800CB3EC	lui    at, $8015
-                800CB3F0	addiu  at, at, $1a4c
-                800CB3F4	addu   at, at, s0
-                800CB3F8	sh     v0, $0000(at)
-                800CB3FC	lw     a0, $0000(s6)
+                [S6 + 0000] = w(A0);
+                V1 = V0 << 07;
+                V1 = V1 + V0;
+                V1 = V1 << 01;
+                AT = 80151a4c;
+                AT = AT + S0;
+                V0 = hu[AT + 0000];
+                V1 = V1 >> 0c;
+                V0 = V0 - V1;
+                AT = 80151a4c;
+                AT = AT + S0;
+                [AT + 0000] = h(V0);
+                A0 = w[S6 + 0000];
                 800CB400	jal    system_get_cos [$80039b40]
                 800CB404	nop
-                800CB408	sll    v1, v0, $07
-                800CB40C	addu   v1, v1, v0
-                800CB410	sll    v1, v1, $01
+                V1 = V0 << 07;
+                V1 = V1 + V0;
+                V1 = V1 << 01;
 
                 Lcb414:	; 800CB414
-                800CB414	lui    at, $8015
-                800CB418	addiu  at, at, $1a50
-                800CB41C	addu   at, at, s0
-                800CB420	lhu    v0, $0000(at)
-                800CB424	sra    v1, v1, $0c
-                800CB428	subu   v0, v0, v1
-                800CB42C	lui    at, $8015
-                800CB430	addiu  at, at, $1a50
-                800CB434	addu   at, at, s0
-                800CB438	sh     v0, $0000(at)
+                AT = 80151a50;
+                AT = AT + S0;
+                V0 = hu[AT + 0000];
+                V1 = V1 >> 0c;
+                V0 = V0 - V1;
+                AT = 80151a50;
+                AT = AT + S0;
+                [AT + 0000] = h(V0);
                 800CB43C	j      Lcd208 [$800cd208]
                 800CB440	nop
-                800CB444	sra    a0, s5, $10
-                800CB448	sll    v0, a0, $01
-                800CB44C	addu   v0, v0, a0
-                800CB450	sll    v1, v0, $05
-                800CB454	subu   v1, v1, v0
-                800CB458	sll    v1, v1, $03
-                800CB45C	subu   v1, v1, a0
-                800CB460	sll    v1, v1, $02
-                800CB464	lui    at, $8015
-                800CB468	addiu  at, at, $1920
-                800CB46C	addu   at, at, v1
-                800CB470	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CB474	nop
-                800CB478	addiu  v0, a0, $0001
-                800CB47C	lui    at, $8015
-                800CB480	addiu  at, at, $1920
-                800CB484	addu   at, at, v1
-                800CB488	sb     v0, $0000(at)
-                800CB48C	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CB490	nop
-                800CB494	addu   a0, a0, v0
-                800CB498	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CB49C	nop
-                800CB4A0	sw     v0, $0000(s6)
-                800CB4A4	lui    at, $8015
-                800CB4A8	addiu  at, at, $1920
-                800CB4AC	addu   at, at, v1
-                800CB4B0	lbu    a0, $0000(at)
+                [S6 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CB4B4	nop
-                800CB4B8	addiu  v0, a0, $0001
-                800CB4BC	lui    at, $8015
-                800CB4C0	addiu  at, at, $1920
-                800CB4C4	addu   at, at, v1
-                800CB4C8	sb     v0, $0000(at)
-                800CB4CC	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CB4D0	nop
-                800CB4D4	addu   a0, a0, v0
-                800CB4D8	lbu    v0, $0000(a0)
-                800CB4DC	lui    a0, $800d
-                800CB4E0	addiu  a0, a0, $0578
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800d0578;
                 800CB4E4	jal    funcbc04c [$800bc04c]
-                800CB4E8	sw     v0, $0000(s7)
-                800CB4EC	sh     v0, $000a(s3)
-                800CB4F0	sll    v0, v0, $10
-                800CB4F4	lhu    v1, $0000(s6)
-                800CB4F8	sra    v0, v0, $0b
-                800CB4FC	lui    at, $8016
-                800CB500	addiu  at, at, $21f4
-                800CB504	addu   at, at, v0
-                800CB508	sh     v1, $0000(at)
-                800CB50C	lhu    v0, $000a(s3)
-                800CB510	lhu    v1, $0000(s7)
-                800CB514	sll    v0, v0, $10
-                800CB518	sra    v0, v0, $0b
-                800CB51C	lui    at, $8016
-                800CB520	addiu  at, at, $21f6
-                800CB524	addu   at, at, v0
-                800CB528	sh     v1, $0000(at)
-                800CB52C	lhu    v0, $000a(s3)
+                [S7 + 0000] = w(V0);
+                [S3 + 000a] = h(V0);
+                V0 = V0 << 10;
+                V1 = hu[S6 + 0000];
+                V0 = V0 >> 0b;
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V0 = hu[S3 + 000a];
+                V1 = hu[S7 + 0000];
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 801621f6;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V0 = hu[S3 + 000a];
                 800CB530	nop
-                800CB534	sll    v0, v0, $10
-                800CB538	sra    v0, v0, $0b
-                800CB53C	lui    at, $8016
-                800CB540	addiu  at, at, $21f8
-                800CB544	addu   at, at, v0
-                800CB548	sh     fp, $0000(at)
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 801621f8;
+                AT = AT + V0;
+                [AT + 0000] = h(FP);
                 800CB54C	j      Lcd208 [$800cd208]
                 800CB550	nop
 
@@ -3185,14 +2920,12 @@ ECA70C80 67
 
 
 
-                800CB614	lui    a0, $8010
-                800CB618	lbu    a0, $a6d4(a0)
-                800CB61C	lw     t2, $0038(sp)
+                A0 = bu[800fa6d4];
+                T2 = w[SP + 0038];
                 800CB620	nop
                 800CB624	bne    t2, a0, Lcb660 [$800cb660]
-                800CB628	sll    v1, a0, $01
-                800CB62C	lui    v0, $8016
-                800CB630	lh     v0, $2080(v0)
+                V1 = A0 << 01;
+                V0 = h[80162080];
                 800CB634	nop
                 if (V0 == 0)
                 {
@@ -3200,31 +2933,29 @@ ECA70C80 67
                     return;
                 }
 
-                800CB640	lw     t2, $0040(sp)
+                T2 = w[SP + 0040];
                 800CB644	nop
-                800CB648	sll    v0, t2, $05
-                800CB64C	subu   v0, v0, t2
-                800CB650	lw     t2, $0038(sp)
-                800CB654	sll    v0, v0, $03
+                V0 = T2 << 05;
+                V0 = V0 - T2;
+                T2 = w[SP + 0038];
+                V0 = V0 << 03;
                 800CB658	j      Lcb6c0 [$800cb6c0]
-                800CB65C	subu   v0, v0, t2
+                V0 = V0 - T2;
 
                 Lcb660:	; 800CB660
-                800CB660	addu   v1, v1, a0
-                800CB664	sll    v0, v1, $05
-                800CB668	subu   v0, v0, v1
-                800CB66C	sll    v0, v0, $03
-                800CB670	subu   v0, v0, a0
-                800CB674	sll    v0, v0, $02
-                800CB678	lui    at, $8015
-                800CB67C	addiu  at, at, $190a
-                800CB680	addu   at, at, v0
-                800CB684	lbu    v1, $0000(at)
-                800CB688	ori    v0, zero, $0001
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 8015190a;
+                AT = AT + V0;
+                V1 = bu[AT + 0000];
+                V0 = 0001;
                 800CB68C	bne    v1, v0, Lcb6a8 [$800cb6a8]
-                800CB690	sra    a0, s5, $10
-                800CB694	lui    v0, $8016
-                800CB698	lh     v0, $2080(v0)
+                A0 = S5 >> 10;
+                V0 = h[80162080];
                 800CB69C	nop
                 if (V0 == 0)
                 {
@@ -3235,24 +2966,22 @@ ECA70C80 67
                 }
 
                 Lcb6a8:	; 800CB6A8
-                800CB6A8	sll    v1, a0, $01
-                800CB6AC	addu   v1, v1, a0
-                800CB6B0	sll    v0, v1, $05
-                800CB6B4	subu   v0, v0, v1
-                800CB6B8	sll    v0, v0, $03
-                800CB6BC	subu   v0, v0, a0
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
 
                 Lcb6c0:	; 800CB6C0
-                800CB6C0	sll    v0, v0, $02
-                800CB6C4	lui    t2, $8015
-                800CB6C8	addiu  t2, t2, $18e4
-                800CB6CC	lui    at, $8015
-                800CB6D0	addiu  at, at, $1920
-                800CB6D4	addu   at, at, v0
-                800CB6D8	lbu    v1, $0000(at)
-                800CB6DC	addu   v0, v0, t2
+                V0 = V0 << 02;
+                T2 = 801518e4;
+                AT = 80151920;
+                AT = AT + V0;
+                V1 = bu[AT + 0000];
+                V0 = V0 + T2;
                 800CB6E0	addiu  v1, v1, $ffff (=-$1)
-                800CB6E8	sb     v1, $003c(v0)
+                [V0 + 003c] = b(V1);
                 return;
 
 
@@ -3279,488 +3008,413 @@ ECA70C80 67
 
 
 
-                800CB7F0	sra    a1, s5, $10
-                800CB7F4	sll    a0, a1, $03
-                800CB7F8	subu   a0, a0, a1
-                800CB7FC	sll    a0, a0, $02
-                800CB800	addu   a0, a0, a1
-                800CB804	sll    a0, a0, $02
-                800CB808	lui    at, $8015
-                800CB80C	addiu  at, at, $120c
-                800CB810	addu   at, at, a0
-                800CB814	lhu    v0, $0000(at)
+                A1 = S5 >> 10;
+                A0 = A1 << 03;
+                A0 = A0 - A1;
+                A0 = A0 << 02;
+                A0 = A0 + A1;
+                A0 = A0 << 02;
+                AT = 8015120c;
+                AT = AT + A0;
+                V0 = hu[AT + 0000];
                 800CB818	nop
-                800CB81C	andi   v0, v0, $fffb
-                800CB820	lui    at, $8015
-                800CB824	addiu  at, at, $120c
-                800CB828	addu   at, at, a0
-                800CB82C	sh     v0, $0000(at)
-                800CB830	sll    v0, a1, $01
-                800CB834	addu   v0, v0, a1
-                800CB838	sll    v1, v0, $05
-                800CB83C	subu   v1, v1, v0
-                800CB840	sll    v1, v1, $03
-                800CB844	subu   v1, v1, a1
-                800CB848	sll    v1, v1, $02
-                800CB84C	ori    v0, zero, $0001
-                800CB850	lui    at, $8015
-                800CB854	addiu  at, at, $190a
-                800CB858	addu   at, at, v1
-                800CB85C	sb     v0, $0000(at)
-                800CB860	lui    at, $8015
-                800CB864	addiu  at, at, $120c
-                800CB868	addu   at, at, a0
-                800CB86C	lhu    v0, $0000(at)
-                800CB870	lui    t2, $8015
-                800CB874	addiu  t2, t2, $18e4
-                800CB878	andi   v0, v0, $fff7
-                800CB87C	lui    at, $8015
-                800CB880	addiu  at, at, $120c
-                800CB884	addu   at, at, a0
-                800CB888	sh     v0, $0000(at)
-                800CB88C	lui    at, $8015
-                800CB890	addiu  at, at, $1920
-                800CB894	addu   at, at, v1
-                800CB898	lbu    v0, $0000(at)
-                800CB89C	addu   v1, v1, t2
+                V0 = V0 & fffb;
+                AT = 8015120c;
+                AT = AT + A0;
+                [AT + 0000] = h(V0);
+                V0 = A1 << 01;
+                V0 = V0 + A1;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A1;
+                V1 = V1 << 02;
+                V0 = 0001;
+                AT = 8015190a;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                AT = 8015120c;
+                AT = AT + A0;
+                V0 = hu[AT + 0000];
+                T2 = 801518e4;
+                V0 = V0 & fff7;
+                AT = 8015120c;
+                AT = AT + A0;
+                [AT + 0000] = h(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                V0 = bu[AT + 0000];
+                V1 = V1 + T2;
                 800CB8A0	addiu  v0, v0, $ffff (=-$1)
-                800CB8A8	sb     v0, $003c(v1)
+                [V1 + 003c] = b(V0);
                 return;
 
-                800CB8AC	lui    v1, $8010
-                800CB8B0	lbu    v1, $99e8(v1)
+                V1 = bu[800f99e8];
                 800CB8B4	nop
-                800CB8B8	sll    v0, v1, $03
-                800CB8BC	subu   v0, v0, v1
-                800CB8C0	sll    v0, v0, $02
-                800CB8C4	addu   v0, v0, v1
-                800CB8C8	sll    v0, v0, $02
-                800CB8CC	lui    at, $8015
-                800CB8D0	addiu  at, at, $120c
-                800CB8D4	addu   at, at, v0
-                800CB8D8	lhu    v1, $0000(at)
-                800CB8DC	sra    a0, s5, $10
-                800CB8E0	ori    v1, v1, $0001
-                800CB8E4	lui    at, $8015
-                800CB8E8	addiu  at, at, $120c
-                800CB8EC	addu   at, at, v0
-                800CB8F0	sh     v1, $0000(at)
-                800CB8F4	sll    v0, a0, $01
-                800CB8F8	addu   v0, v0, a0
-                800CB8FC	sll    v1, v0, $05
-                800CB900	subu   v1, v1, v0
-                800CB904	sll    v1, v1, $03
-                800CB908	subu   v1, v1, a0
-                800CB90C	sll    v1, v1, $02
-                800CB910	lui    at, $8015
-                800CB914	addiu  at, at, $1920
-                800CB918	addu   at, at, v1
-                800CB91C	lbu    a2, $0000(at)
+                V0 = V1 << 03;
+                V0 = V0 - V1;
+                V0 = V0 << 02;
+                V0 = V0 + V1;
+                V0 = V0 << 02;
+                AT = 8015120c;
+                AT = AT + V0;
+                V1 = hu[AT + 0000];
+                A0 = S5 >> 10;
+                V1 = V1 | 0001;
+                AT = 8015120c;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A2 = bu[AT + 0000];
                 800CB920	nop
-                800CB924	addiu  v0, a2, $0001
-                800CB928	lui    at, $8015
-                800CB92C	addiu  at, at, $1920
-                800CB930	addu   at, at, v1
+                V0 = A2 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
 
                 Lcb934:	; 800CB934
-                800CB934	sb     v0, $0000(at)
-                800CB938	lui    a0, $8010
-                800CB93C	lbu    a0, $99e8(a0)
-                800CB940	lui    t2, $8015
-                800CB944	addiu  t2, t2, $1a58
-                800CB948	sll    v0, a0, $01
-                800CB94C	addu   v0, v0, a0
-                800CB950	sll    a1, v0, $05
-                800CB954	subu   a1, a1, v0
-                800CB958	sll    a1, a1, $03
-                800CB95C	subu   a1, a1, a0
-                800CB960	sll    a1, a1, $02
+                [AT + 0000] = b(V0);
+                A0 = bu[800f99e8];
+                T2 = 80151a58;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                A1 = V0 << 05;
+                A1 = A1 - V0;
+                A1 = A1 << 03;
+                A1 = A1 - A0;
+                A1 = A1 << 02;
                 800CB964	addiu  v0, t2, $ffcc (=-$34)
-                800CB968	lw     a0, $0004(s3)
-                800CB96C	addu   a1, a1, v0
-                800CB970	addu   a2, a2, a0
-                800CB974	lbu    v0, $0000(a2)
-                800CB978	addu   v1, v1, t2
-                800CB97C	sll    a0, v0, $01
-                800CB980	addu   a0, a0, v0
-                800CB984	sll    a0, a0, $02
-                800CB988	addu   a0, a0, v0
-                800CB98C	sll    a0, a0, $02
-                800CB990	lui    at, $1f80
-                800CB994	sw     v0, $0000(at)
+                A0 = w[S3 + 0004];
+                A1 = A1 + V0;
+                A2 = A2 + A0;
+                V0 = bu[A2 + 0000];
+                V1 = V1 + T2;
+                A0 = V0 << 01;
+                A0 = A0 + V0;
+                A0 = A0 << 02;
+                A0 = A0 + V0;
+                A0 = A0 << 02;
+                [1f800000] = w(V0);
                 800CB998	jal    funcbb67c [$800bb67c]
-                800CB99C	addu   a0, v1, a0
-                800CB9A0	lui    a0, $8010
-                800CB9A4	lbu    a0, $99e8(a0)
-                800CB9A8	lui    t2, $8015
-                800CB9AC	addiu  t2, t2, $18e4
-                800CB9B0	sll    v0, a0, $01
-                800CB9B4	addu   v0, v0, a0
-                800CB9B8	sll    v1, v0, $05
-                800CB9BC	subu   v1, v1, v0
-                800CB9C0	sll    v1, v1, $03
-                800CB9C4	subu   v1, v1, a0
-                800CB9C8	sll    v1, v1, $02
-                800CB9CC	addu   v0, t2, v1
-                800CB9D0	sh     zero, $0162(v0)
-                800CB9D4	sh     zero, $0160(v0)
-                800CB9D8	sh     zero, $016c(v0)
-                800CB9DC	sh     zero, $016a(v0)
-                800CB9E0	lui    at, $8015
-                800CB9E4	addiu  at, at, $1909
-                800CB9E8	addu   at, at, v1
-                800CB9EC	lbu    a0, $0000(at)
-                800CB9F0	ori    v0, zero, $0800
-                800CB9F4	lui    at, $8015
-                800CB9F8	addiu  at, at, $1a4c
-                800CB9FC	addu   at, at, v1
-                800CBA00	sh     zero, $0000(at)
-                800CBA04	lui    at, $8015
-                800CBA08	addiu  at, at, $1a48
-                800CBA0C	addu   at, at, v1
-                800CBA10	sh     v0, $0000(at)
-                800CBA14	ori    a0, a0, $0010
-                800CBA18	lui    at, $8015
-                800CBA1C	addiu  at, at, $1909
-                800CBA20	addu   at, at, v1
-                800CBA24	sb     a0, $0000(at)
+                A0 = V1 + A0;
+                A0 = bu[800f99e8];
+                T2 = 801518e4;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                V0 = T2 + V1;
+                [V0 + 0162] = h(0);
+                [V0 + 0160] = h(0);
+                [V0 + 016c] = h(0);
+                [V0 + 016a] = h(0);
+                AT = 80151909;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
+                V0 = 0800;
+                AT = 80151a4c;
+                AT = AT + V1;
+                [AT + 0000] = h(0);
+                AT = 80151a48;
+                AT = AT + V1;
+                [AT + 0000] = h(V0);
+                A0 = A0 | 0010;
+                AT = 80151909;
+                AT = AT + V1;
+                [AT + 0000] = b(A0);
                 800CBA28	j      Lcd208 [$800cd208]
                 800CBA2C	nop
-                800CBA30	lui    v1, $8010
-                800CBA34	lbu    v1, $99e8(v1)
+                V1 = bu[800f99e8];
                 800CBA38	nop
-                800CBA3C	sll    v0, v1, $03
-                800CBA40	subu   v0, v0, v1
-                800CBA44	sll    v0, v0, $02
-                800CBA48	addu   v0, v0, v1
-                800CBA4C	sll    v0, v0, $02
-                800CBA50	lui    at, $8015
-                800CBA54	addiu  at, at, $120c
-                800CBA58	addu   at, at, v0
-                800CBA5C	lhu    v1, $0000(at)
-                800CBA60	sra    a0, s5, $10
-                800CBA64	ori    v1, v1, $0001
-                800CBA68	lui    at, $8015
-                800CBA6C	addiu  at, at, $120c
-                800CBA70	addu   at, at, v0
-                800CBA74	sh     v1, $0000(at)
-                800CBA78	sll    v0, a0, $01
-                800CBA7C	addu   v0, v0, a0
-                800CBA80	sll    v1, v0, $05
-                800CBA84	subu   v1, v1, v0
-                800CBA88	sll    v1, v1, $03
-                800CBA8C	subu   v1, v1, a0
-                800CBA90	sll    v1, v1, $02
-                800CBA94	lui    at, $8015
-                800CBA98	addiu  at, at, $1920
-                800CBA9C	addu   at, at, v1
-                800CBAA0	lbu    a2, $0000(at)
+                V0 = V1 << 03;
+                V0 = V0 - V1;
+                V0 = V0 << 02;
+                V0 = V0 + V1;
+                V0 = V0 << 02;
+                AT = 8015120c;
+                AT = AT + V0;
+                V1 = hu[AT + 0000];
+                A0 = S5 >> 10;
+                V1 = V1 | 0001;
+                AT = 8015120c;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A2 = bu[AT + 0000];
                 800CBAA4	nop
-                800CBAA8	addiu  v0, a2, $0001
-                800CBAAC	lui    at, $8015
-                800CBAB0	addiu  at, at, $1920
-                800CBAB4	addu   at, at, v1
-                800CBAB8	sb     v0, $0000(at)
-                800CBABC	lui    a0, $8010
-                800CBAC0	lbu    a0, $99e8(a0)
-                800CBAC4	lui    t2, $8015
-                800CBAC8	addiu  t2, t2, $1a58
-                800CBACC	sll    v0, a0, $01
-                800CBAD0	addu   v0, v0, a0
-                800CBAD4	sll    a1, v0, $05
-                800CBAD8	subu   a1, a1, v0
-                800CBADC	sll    a1, a1, $03
-                800CBAE0	subu   a1, a1, a0
-                800CBAE4	sll    a1, a1, $02
+                V0 = A2 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                A0 = bu[800f99e8];
+                T2 = 80151a58;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                A1 = V0 << 05;
+                A1 = A1 - V0;
+                A1 = A1 << 03;
+                A1 = A1 - A0;
+                A1 = A1 << 02;
                 800CBAE8	addiu  v0, t2, $ffcc (=-$34)
-                800CBAEC	lw     a0, $0004(s3)
-                800CBAF0	addu   a1, a1, v0
-                800CBAF4	addu   a2, a2, a0
-                800CBAF8	lbu    v0, $0000(a2)
-                800CBAFC	addu   v1, v1, t2
-                800CBB00	sll    a0, v0, $01
-                800CBB04	addu   a0, a0, v0
-                800CBB08	sll    a0, a0, $02
-                800CBB0C	addu   a0, a0, v0
-                800CBB10	sll    a0, a0, $02
-                800CBB14	lui    at, $1f80
-                800CBB18	sw     v0, $0000(at)
+                A0 = w[S3 + 0004];
+                A1 = A1 + V0;
+                A2 = A2 + A0;
+                V0 = bu[A2 + 0000];
+                V1 = V1 + T2;
+                A0 = V0 << 01;
+                A0 = A0 + V0;
+                A0 = A0 << 02;
+                A0 = A0 + V0;
+                A0 = A0 << 02;
+                [1f800000] = w(V0);
                 800CBB1C	jal    funcbb67c [$800bb67c]
-                800CBB20	addu   a0, v1, a0
-                800CBB24	lui    a0, $8010
-                800CBB28	lbu    a0, $99e8(a0)
-                800CBB2C	lui    t2, $8015
-                800CBB30	addiu  t2, t2, $18e4
-                800CBB34	sll    v0, a0, $01
-                800CBB38	addu   v0, v0, a0
-                800CBB3C	sll    v1, v0, $05
-                800CBB40	subu   v1, v1, v0
-                800CBB44	sll    v1, v1, $03
-                800CBB48	subu   v1, v1, a0
-                800CBB4C	sll    v1, v1, $02
-                800CBB50	addu   v0, t2, v1
-                800CBB54	sh     zero, $0164(v0)
-                800CBB58	sh     zero, $0162(v0)
-                800CBB5C	sh     zero, $0160(v0)
-                800CBB60	sh     zero, $016c(v0)
-                800CBB64	sh     zero, $016a(v0)
-                800CBB68	lui    at, $8015
-                800CBB6C	addiu  at, at, $1909
-                800CBB70	addu   at, at, v1
-                800CBB74	lbu    v0, $0000(at)
-                800CBB78	lui    at, $8015
-                800CBB7C	addiu  at, at, $1a4c
-                800CBB80	addu   at, at, v1
-                800CBB84	sh     zero, $0000(at)
-                800CBB88	ori    v0, v0, $0010
-                800CBB8C	lui    at, $8015
-                800CBB90	addiu  at, at, $1909
-                800CBB94	addu   at, at, v1
-                800CBB98	sb     v0, $0000(at)
+                A0 = V1 + A0;
+                A0 = bu[800f99e8];
+                T2 = 801518e4;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                V0 = T2 + V1;
+                [V0 + 0164] = h(0);
+                [V0 + 0162] = h(0);
+                [V0 + 0160] = h(0);
+                [V0 + 016c] = h(0);
+                [V0 + 016a] = h(0);
+                AT = 80151909;
+                AT = AT + V1;
+                V0 = bu[AT + 0000];
+                AT = 80151a4c;
+                AT = AT + V1;
+                [AT + 0000] = h(0);
+                V0 = V0 | 0010;
+                AT = 80151909;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
                 800CBB9C	j      Lcd208 [$800cd208]
                 800CBBA0	nop
-                800CBBA4	lui    a2, $8010
-                800CBBA8	lbu    a2, $99e8(a2)
-                800CBBAC	lui    a0, $8010
-                800CBBB0	addiu  a0, a0, $8158 (=-$7ea8)
-                800CBBB4	sll    v1, a2, $03
-                800CBBB8	subu   v1, v1, a2
-                800CBBBC	sll    v1, v1, $02
-                800CBBC0	addu   v1, v1, a2
-                800CBBC4	sll    v1, v1, $02
-                800CBBC8	sll    v0, a2, $01
-                800CBBCC	addu   v0, v0, a2
-                800CBBD0	sll    a1, v0, $05
-                800CBBD4	subu   a1, a1, v0
-                800CBBD8	sll    a1, a1, $03
-                800CBBDC	subu   a1, a1, a2
-                800CBBE0	sll    a1, a1, $02
-                800CBBE4	lui    a2, $8015
-                800CBBE8	addiu  a2, a2, $1a24
-                800CBBEC	lui    at, $8015
-                800CBBF0	addiu  at, at, $120c
-                800CBBF4	addu   at, at, v1
-                800CBBF8	lhu    v0, $0000(at)
+                A2 = bu[800f99e8];
+                A0 = 800f8158;
+                V1 = A2 << 03;
+                V1 = V1 - A2;
+                V1 = V1 << 02;
+                V1 = V1 + A2;
+                V1 = V1 << 02;
+                V0 = A2 << 01;
+                V0 = V0 + A2;
+                A1 = V0 << 05;
+                A1 = A1 - V0;
+                A1 = A1 << 03;
+                A1 = A1 - A2;
+                A1 = A1 << 02;
+                A2 = 80151a24;
+                AT = 8015120c;
+                AT = AT + V1;
+                V0 = hu[AT + 0000];
                 800CBBFC	nop
-                800CBC00	andi   v0, v0, $fffe
-                800CBC04	lui    at, $8015
-                800CBC08	addiu  at, at, $120c
-                800CBC0C	addu   at, at, v1
-                800CBC10	sh     v0, $0000(at)
+                V0 = V0 & fffe;
+                AT = 8015120c;
+                AT = AT + V1;
+                [AT + 0000] = h(V0);
                 800CBC14	jal    funcbb67c [$800bb67c]
-                800CBC18	addu   a1, a1, a2
-                800CBC1C	lui    v1, $8010
-                800CBC20	lbu    v1, $99e8(v1)
+                A1 = A1 + A2;
+                V1 = bu[800f99e8];
                 800CBC24	nop
-                800CBC28	sll    a0, v1, $01
-                800CBC2C	addu   a0, a0, v1
-                800CBC30	sll    v0, a0, $05
-                800CBC34	subu   v0, v0, a0
-                800CBC38	sll    v0, v0, $03
-                800CBC3C	subu   v0, v0, v1
-                800CBC40	sll    a0, a0, $01
-                800CBC44	lui    at, $8016
-                800CBC48	addiu  at, at, $3c80
-                800CBC4C	addu   at, at, a0
-                800CBC50	lhu    v1, $0000(at)
-                800CBC54	sll    v0, v0, $02
-                800CBC58	lui    at, $8015
-                800CBC5C	addiu  at, at, $1a4c
-                800CBC60	addu   at, at, v0
-                800CBC64	sh     v1, $0000(at)
-                800CBC68	lui    at, $8016
-                800CBC6C	addiu  at, at, $3c82
-                800CBC70	addu   at, at, a0
-                800CBC74	lhu    v1, $0000(at)
+                A0 = V1 << 01;
+                A0 = A0 + V1;
+                V0 = A0 << 05;
+                V0 = V0 - A0;
+                V0 = V0 << 03;
+                V0 = V0 - V1;
+                A0 = A0 << 01;
+                AT = 80163c80;
+                AT = AT + A0;
+                V1 = hu[AT + 0000];
+                V0 = V0 << 02;
+                AT = 80151a4c;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                AT = 80163c82;
+                AT = AT + A0;
+                V1 = hu[AT + 0000];
                 800CBC78	nop
-                800CBC7C	lui    at, $8015
-                800CBC80	addiu  at, at, $1a4e
-                800CBC84	addu   at, at, v0
-                800CBC88	sh     v1, $0000(at)
-                800CBC8C	lui    at, $8016
-                800CBC90	addiu  at, at, $3c84
-                800CBC94	addu   at, at, a0
-                800CBC98	lhu    v1, $0000(at)
-                800CBC9C	lui    t2, $8015
-                800CBCA0	addiu  t2, t2, $18e4
-                800CBCA4	lui    at, $8015
-                800CBCA8	addiu  at, at, $1a50
-                800CBCAC	addu   at, at, v0
-                800CBCB0	sh     v1, $0000(at)
-                800CBCB4	addu   v1, t2, v0
-                800CBCB8	sh     zero, $0164(v1)
-                800CBCBC	sh     zero, $0162(v1)
-                800CBCC0	lui    at, $8015
-                800CBCC4	addiu  at, at, $1909
-                800CBCC8	addu   at, at, v0
-                800CBCCC	lbu    v1, $0000(at)
-                800CBCD0	lui    at, $8015
-                800CBCD4	addiu  at, at, $1a44
-                800CBCD8	addu   at, at, v0
-                800CBCDC	sh     zero, $0000(at)
-                800CBCE0	andi   v1, v1, $00ef
-                800CBCE4	lui    at, $8015
-                800CBCE8	addiu  at, at, $1909
-                800CBCEC	addu   at, at, v0
-                800CBCF0	sb     v1, $0000(at)
+                AT = 80151a4e;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                AT = 80163c84;
+                AT = AT + A0;
+                V1 = hu[AT + 0000];
+                T2 = 801518e4;
+                AT = 80151a50;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V1 = T2 + V0;
+                [V1 + 0164] = h(0);
+                [V1 + 0162] = h(0);
+                AT = 80151909;
+                AT = AT + V0;
+                V1 = bu[AT + 0000];
+                AT = 80151a44;
+                AT = AT + V0;
+                [AT + 0000] = h(0);
+                V1 = V1 & 00ef;
+                AT = 80151909;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
                 800CBCF4	j      Lcd208 [$800cd208]
                 800CBCF8	nop
-                800CBCFC	sra    a0, s5, $10
-                800CBD00	sll    v1, a0, $01
-                800CBD04	addu   v1, v1, a0
-                800CBD08	sll    v0, v1, $05
-                800CBD0C	subu   v0, v0, v1
-                800CBD10	sll    v0, v0, $03
-                800CBD14	subu   v0, v0, a0
-                800CBD18	sll    v0, v0, $02
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
                 A0 = bu[80151920 + V0];
-                800CBD30	addiu  v1, a0, $0001
-                800CBD34	lui    at, $8015
-                800CBD38	addiu  at, at, $1920
-                800CBD3C	addu   at, at, v0
-                800CBD40	sb     v1, $0000(at)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
                 V0 = w[S3 + 4];
                 A0 = A0 + V0;
                 V1 = bu[A0];
-                800CBD58	sltiu  v0, v1, $0007
-                800CBD5C	lui    at, $1f80
-                800CBD60	sw     v1, $0000(at)
+                V0 = V1 < 0007;
+                [1f800000] = w(V1);
                 800CBD64	beq    v0, zero, Lcd208 [$800cd208]
-                800CBD68	sll    v0, v1, $02
-                800CBD6C	lui    at, $800a
-                800CBD70	addiu  at, at, $0ac8
-                800CBD74	addu   at, at, v0
-                800CBD78	lw     v0, $0000(at)
+                V0 = V1 << 02;
+                AT = 800a0ac8;
+                AT = AT + V0;
+                V0 = w[AT + 0000];
                 800CBD7C	nop
                 800CBD80	jr     v0 
                 800CBD84	nop
 
-                800CBD88	lui    a0, $8015
-                800CBD8C	lh     a0, $1774(a0)
-                800CBD90	lui    a1, $8016
-                800CBD94	lbu    a1, $90cc(a1)
+                A0 = h[80151774];
+                A1 = bu[801590cc];
                 800CBD98	jal    func1b00b0 [$801b00b0]
                 800CBD9C	nop
                 800CBDA0	j      Lcd208 [$800cd208]
                 800CBDA4	nop
-                800CBDA8	lui    a0, $8015
-                800CBDAC	lh     a0, $1774(a0)
-                800CBDB0	lui    a1, $8016
-                800CBDB4	lbu    a1, $90cc(a1)
+                A0 = h[80151774];
+                A1 = bu[801590cc];
                 800CBDB8	jal    func1b00d0 [$801b00d0]
                 800CBDBC	nop
                 800CBDC0	j      Lcd208 [$800cd208]
                 800CBDC4	nop
-                800CBDC8	lui    a0, $8015
-                800CBDCC	lh     a0, $1774(a0)
-                800CBDD0	lui    a1, $8016
-                800CBDD4	lbu    a1, $90cc(a1)
+                A0 = h[80151774];
+                A1 = bu[801590cc];
                 800CBDD8	jal    func1b00f0 [$801b00f0]
                 800CBDDC	nop
                 800CBDE0	j      Lcd208 [$800cd208]
                 800CBDE4	nop
-                800CBDE8	lui    a0, $8015
-                800CBDEC	lh     a0, $1774(a0)
-                800CBDF0	lui    a1, $8016
-                800CBDF4	lbu    a1, $90cc(a1)
+                A0 = h[80151774];
+                A1 = bu[801590cc];
                 800CBDF8	jal    func1b0110 [$801b0110]
                 800CBDFC	nop
                 800CBE00	j      Lcd208 [$800cd208]
                 800CBE04	nop
-                800CBE08	lui    a0, $8015
-                800CBE0C	lh     a0, $1774(a0)
-                800CBE10	lui    a1, $8016
-                800CBE14	lbu    a1, $90cc(a1)
+                A0 = h[80151774];
+                A1 = bu[801590cc];
                 800CBE18	jal    func1b0130 [$801b0130]
                 800CBE1C	nop
                 800CBE20	j      Lcd208 [$800cd208]
                 800CBE24	nop
-                800CBE28	lui    a0, $8015
-                800CBE2C	lh     a0, $1774(a0)
-                800CBE30	lui    a1, $8016
-                800CBE34	lbu    a1, $90cc(a1)
+                A0 = h[80151774];
+                A1 = bu[801590cc];
                 800CBE38	jal    func1b0150 [$801b0150]
                 800CBE3C	nop
                 800CBE40	j      Lcd208 [$800cd208]
                 800CBE44	nop
-                800CBE48	lui    a0, $8015
-                800CBE4C	lh     a0, $1774(a0)
-                800CBE50	lui    a1, $8016
-                800CBE54	lbu    a1, $90cc(a1)
+                A0 = h[80151774];
+                A1 = bu[801590cc];
                 800CBE58	jal    func1b0170 [$801b0170]
                 800CBE5C	nop
                 800CBE60	j      Lcd208 [$800cd208]
                 800CBE64	nop
-                800CBE68	sra    a0, s5, $10
-                800CBE6C	sll    v0, a0, $01
-                800CBE70	addu   v0, v0, a0
-                800CBE74	sll    v1, v0, $05
-                800CBE78	subu   v1, v1, v0
-                800CBE7C	sll    v1, v1, $03
-                800CBE80	subu   v1, v1, a0
-                800CBE84	sll    v1, v1, $02
-                800CBE88	lui    at, $8015
-                800CBE8C	addiu  at, at, $1920
-                800CBE90	addu   at, at, v1
-                800CBE94	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CBE98	nop
-                800CBE9C	addiu  v0, a0, $0001
-                800CBEA0	lui    at, $8015
-                800CBEA4	addiu  at, at, $1920
-                800CBEA8	addu   at, at, v1
-                800CBEAC	sb     v0, $0000(at)
-                800CBEB0	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CBEB4	nop
-                800CBEB8	addu   a0, a0, v0
-                800CBEBC	lbu    a0, $0000(a0)
-                800CBEC0	ori    v0, zero, $0002
-                800CBEC4	lui    at, $8015
-                800CBEC8	addiu  at, at, $1907
-                800CBECC	addu   at, at, v1
-                800CBED0	sb     v0, $0000(at)
-                800CBED4	lui    at, $8015
-                800CBED8	addiu  at, at, $1906
-                800CBEDC	addu   at, at, v1
-                800CBEE0	sb     a0, $0000(at)
+                A0 = A0 + V0;
+                A0 = bu[A0 + 0000];
+                V0 = 0002;
+                AT = 80151907;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                AT = 80151906;
+                AT = AT + V1;
+                [AT + 0000] = b(A0);
                 800CBEE4	j      Lcd208 [$800cd208]
                 800CBEE8	nop
-                800CBEEC	sra    s0, s5, $10
-                800CBEF0	sll    v0, s0, $01
-                800CBEF4	addu   v0, v0, s0
-                800CBEF8	sll    v1, v0, $05
-                800CBEFC	subu   v1, v1, v0
-                800CBF00	sll    v1, v1, $03
-                800CBF04	subu   v1, v1, s0
-                800CBF08	sll    v1, v1, $02
-                800CBF0C	lui    at, $8015
-                800CBF10	addiu  at, at, $1920
-                800CBF14	addu   at, at, v1
-                800CBF18	lbu    a0, $0000(at)
+                S0 = S5 >> 10;
+                V0 = S0 << 01;
+                V0 = V0 + S0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - S0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CBF1C	nop
-                800CBF20	addiu  v0, a0, $0001
-                800CBF24	lui    at, $8015
-                800CBF28	addiu  at, at, $1920
-                800CBF2C	addu   at, at, v1
-                800CBF30	sb     v0, $0000(at)
-                800CBF34	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CBF38	nop
-                800CBF3C	addu   a0, a0, v0
-                800CBF40	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CBF44	nop
-                800CBF48	sh     v0, $000a(s3)
-                800CBF4C	lui    at, $8015
-                800CBF50	addiu  at, at, $1920
-                800CBF54	addu   at, at, v1
-                800CBF58	lbu    a0, $0000(at)
+                [S3 + 000a] = h(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CBF5C	nop
-                800CBF60	addiu  v0, a0, $0001
-                800CBF64	lui    at, $8015
-                800CBF68	addiu  at, at, $1920
-                800CBF6C	addu   at, at, v1
-                800CBF70	sb     v0, $0000(at)
-                800CBF74	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CBF78	nop
-                800CBF7C	addu   a0, a0, v0
+                A0 = A0 + V0;
                 [S3 + c] = h(bu[A0]);
 
                 A0 = S0;
@@ -3780,140 +3434,126 @@ ECA70C80 67
 
                 800CBFF8	j      Lcd208 [$800cd208]
 
-                800CC000	sra    a0, s5, $10
-                800CC004	sll    v0, a0, $01
-                800CC008	addu   v0, v0, a0
-                800CC00C	sll    s0, v0, $05
-                800CC010	subu   s0, s0, v0
-                800CC014	sll    s0, s0, $03
-                800CC018	subu   s0, s0, a0
-                800CC01C	sll    s0, s0, $02
-                800CC020	lui    at, $8015
-                800CC024	addiu  at, at, $1920
-                800CC028	addu   at, at, s0
-                800CC02C	lbu    v1, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - A0;
+                S0 = S0 << 02;
+                AT = 80151920;
+                AT = AT + S0;
+                V1 = bu[AT + 0000];
                 800CC030	nop
-                800CC034	addiu  v0, v1, $0001
-                800CC038	lui    at, $8015
-                800CC03C	addiu  at, at, $1920
-                800CC040	addu   at, at, s0
-                800CC044	sb     v0, $0000(at)
-                800CC048	lw     v0, $0004(s3)
-                800CC04C	lw     a1, $0004(s3)
-                800CC050	addu   v1, v1, v0
-                800CC054	lbu    v0, $0000(v1)
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + S0;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                A1 = w[S3 + 0004];
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
                 800CC058	jal    funccd558 [$800cd558]
-                800CC05C	sh     v0, $000a(s3)
-                800CC060	sll    v0, v0, $10
-                800CC064	lui    at, $8015
-                800CC068	addiu  at, at, $18ea
-                800CC06C	addu   at, at, s0
-                800CC070	lh     v1, $0000(at)
-                800CC074	sra    v0, v0, $10
+                [S3 + 000a] = h(V0);
+                V0 = V0 << 10;
+                AT = 801518ea;
+                AT = AT + S0;
+                V1 = h[AT + 0000];
+                V0 = V0 >> 10;
                 800CC078	mult   v0, v1
-                800CC07C	lui    v0, $8015
-                800CC080	addiu  v0, v0, $18fe
-                800CC084	lhu    v1, $000a(s3)
-                800CC088	addu   s0, s0, v0
-                800CC08C	sll    v1, v1, $10
-                800CC090	sra    v1, v1, $0f
-                800CC094	addu   v1, v1, s0
+                V0 = 801518fe;
+                V1 = hu[S3 + 000a];
+                S0 = S0 + V0;
+                V1 = V1 << 10;
+                V1 = V1 >> 0f;
+                V1 = V1 + S0;
                 800CC098	mflo   v0
-                800CC09C	sra    v0, v0, $0c
+                V0 = V0 >> 0c;
                 800CC0A0	j      Lcd208 [$800cd208]
-                800CC0A4	sh     v0, $0000(v1)
-                800CC0A8	sra    a1, s5, $10
-                800CC0AC	sll    v0, a1, $01
-                800CC0B0	addu   v0, v0, a1
-                800CC0B4	sll    v1, v0, $05
-                800CC0B8	subu   v1, v1, v0
-                800CC0BC	sll    v1, v1, $03
-                800CC0C0	subu   v1, v1, a1
-                800CC0C4	sll    v1, v1, $02
-                800CC0C8	lui    at, $8015
-                800CC0CC	addiu  at, at, $1920
-                800CC0D0	addu   at, at, v1
-                800CC0D4	lbu    a0, $0000(at)
+                [V1 + 0000] = h(V0);
+                A1 = S5 >> 10;
+                V0 = A1 << 01;
+                V0 = V0 + A1;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A1;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CC0D8	nop
-                800CC0DC	addiu  v0, a0, $0001
-                800CC0E0	lui    at, $8015
-                800CC0E4	addiu  at, at, $1920
-                800CC0E8	addu   at, at, v1
-                800CC0EC	sb     v0, $0000(at)
-                800CC0F0	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CC0F4	nop
-                800CC0F8	addu   a0, a0, v0
-                800CC0FC	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CC100	nop
-                800CC104	sh     v0, $000a(s3)
-                800CC108	lui    at, $8015
-                800CC10C	addiu  at, at, $1920
-                800CC110	addu   at, at, v1
-                800CC114	lbu    a3, $0000(at)
+                [S3 + 000a] = h(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A3 = bu[AT + 0000];
                 800CC118	nop
-                800CC11C	addiu  v0, a3, $0001
-                800CC120	lui    at, $8015
-                800CC124	addiu  at, at, $1920
-                800CC128	addu   at, at, v1
-                800CC12C	sb     v0, $0000(at)
-                800CC130	lui    a0, $8010
-                800CC134	lbu    a0, $a6d4(a0)
-                800CC138	lw     v0, $0004(s3)
-                800CC13C	lhu    a2, $000a(s3)
-                800CC140	addu   a3, a3, v0
-                800CC144	sll    a2, a2, $10
-                800CC148	lbu    v0, $0000(a3)
-                800CC14C	sra    a2, a2, $10
-                800CC150	addu   a3, v0, zero
+                V0 = A3 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                A0 = bu[800fa6d4];
+                V0 = w[S3 + 0004];
+                A2 = hu[S3 + 000a];
+                A3 = A3 + V0;
+                A2 = A2 << 10;
+                V0 = bu[A3 + 0000];
+                A2 = A2 >> 10;
+                A3 = V0;
                 800CC154	jal    funcd7b1c [$800d7b1c]
-                800CC158	sh     v0, $000c(s3)
+                [S3 + 000c] = h(V0);
                 800CC15C	j      Lcd208 [$800cd208]
                 800CC160	nop
-                800CC164	sra    a1, s5, $10
-                800CC168	sll    v0, a1, $01
-                800CC16C	addu   v0, v0, a1
-                800CC170	sll    v1, v0, $05
-                800CC174	subu   v1, v1, v0
-                800CC178	sll    v1, v1, $03
-                800CC17C	subu   v1, v1, a1
-                800CC180	sll    v1, v1, $02
-                800CC184	lui    at, $8015
-                800CC188	addiu  at, at, $1920
-                800CC18C	addu   at, at, v1
-                800CC190	lbu    a0, $0000(at)
+                A1 = S5 >> 10;
+                V0 = A1 << 01;
+                V0 = V0 + A1;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A1;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CC194	nop
-                800CC198	addiu  v0, a0, $0001
-                800CC19C	lui    at, $8015
-                800CC1A0	addiu  at, at, $1920
-                800CC1A4	addu   at, at, v1
-                800CC1A8	sb     v0, $0000(at)
-                800CC1AC	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CC1B0	nop
-                800CC1B4	addu   a0, a0, v0
-                800CC1B8	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CC1BC	nop
-                800CC1C0	sh     v0, $000a(s3)
-                800CC1C4	lui    at, $8015
-                800CC1C8	addiu  at, at, $1920
-                800CC1CC	addu   at, at, v1
-                800CC1D0	lbu    a3, $0000(at)
+                [S3 + 000a] = h(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A3 = bu[AT + 0000];
                 800CC1D4	nop
-                800CC1D8	addiu  v0, a3, $0001
-                800CC1DC	lui    at, $8015
-                800CC1E0	addiu  at, at, $1920
-                800CC1E4	addu   at, at, v1
-                800CC1E8	sb     v0, $0000(at)
-                800CC1EC	lui    a0, $8010
-                800CC1F0	lbu    a0, $a6d4(a0)
-                800CC1F4	lw     v0, $0004(s3)
-                800CC1F8	lhu    a2, $000a(s3)
-                800CC1FC	addu   a3, a3, v0
-                800CC200	sll    a2, a2, $10
-                800CC204	lbu    v0, $0000(a3)
-                800CC208	sra    a2, a2, $10
-                800CC20C	addu   a3, v0, zero
+                V0 = A3 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                A0 = bu[800fa6d4];
+                V0 = w[S3 + 0004];
+                A2 = hu[S3 + 000a];
+                A3 = A3 + V0;
+                A2 = A2 << 10;
+                V0 = bu[A3 + 0000];
+                A2 = A2 >> 10;
+                A3 = V0;
                 800CC210	jal    funcd7ba4 [$800d7ba4]
-                800CC214	sh     v0, $000c(s3)
+                [S3 + 000c] = h(V0);
                 800CC218	j      Lcd208 [$800cd208]
                 800CC21C	nop
 
@@ -3955,65 +3595,59 @@ ECA70C80 67
 
 
 
-                800CC36C	sra    s0, s5, $10
-                800CC370	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800CC374	jal    funccd558 [$800cd558]
-                800CC378	addu   a0, s0, zero
-                800CC37C	sh     v0, $000e(s3)
-                800CC380	sll    v0, s0, $01
-                800CC384	addu   v0, v0, s0
-                800CC388	sll    v1, v0, $05
-                800CC38C	subu   v1, v1, v0
-                800CC390	sll    v1, v1, $03
-                800CC394	subu   v1, v1, s0
-                800CC398	sll    v1, v1, $02
-                800CC39C	lui    at, $8015
-                800CC3A0	addiu  at, at, $1920
-                800CC3A4	addu   at, at, v1
-                800CC3A8	lbu    a0, $0000(at)
+                A0 = S0;
+                [S3 + 000e] = h(V0);
+                V0 = S0 << 01;
+                V0 = V0 + S0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - S0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CC3AC	nop
-                800CC3B0	addiu  v0, a0, $0001
-                800CC3B4	lui    at, $8015
-                800CC3B8	addiu  at, at, $1920
-                800CC3BC	addu   at, at, v1
-                800CC3C0	sb     v0, $0000(at)
-                800CC3C4	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CC3C8	nop
-                800CC3CC	addu   a0, a0, v0
-                800CC3D0	lbu    v0, $0000(a0)
-                800CC3D4	addu   a1, s0, zero
-                800CC3D8	sh     v0, $000a(s3)
-                800CC3DC	lui    at, $8015
-                800CC3E0	addiu  at, at, $1920
-                800CC3E4	addu   at, at, v1
-                800CC3E8	lbu    t0, $0000(at)
-                800CC3EC	lui    a2, $8010
-                800CC3F0	addiu  a2, a2, $a6e0 (=-$5920)
-                800CC3F4	addiu  v0, t0, $0001
-                800CC3F8	lui    at, $8015
-                800CC3FC	addiu  at, at, $1920
-                800CC400	addu   at, at, v1
-                800CC404	sb     v0, $0000(at)
-                800CC408	sll    v0, a1, $06
-                800CC40C	addu   a2, v0, a2
-                800CC410	lui    a0, $8010
-                800CC414	lbu    a0, $a6d4(a0)
-                800CC418	lw     v0, $0004(s3)
-                800CC41C	lhu    a3, $000e(s3)
-                800CC420	lhu    v1, $000a(s3)
-                800CC424	addu   t0, t0, v0
-                800CC428	sll    a3, a3, $10
-                800CC42C	sra    a3, a3, $10
-                800CC430	lbu    v0, $0000(t0)
-                800CC434	sll    v1, v1, $10
-                800CC438	sh     v0, $000c(s3)
-                800CC43C	lhu    v0, $000c(s3)
-                800CC440	sra    v1, v1, $10
-                800CC444	sw     v1, $0010(sp)
-                800CC448	sll    v0, v0, $10
-                800CC44C	sra    v0, v0, $10
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A1 = S0;
+                [S3 + 000a] = h(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                T0 = bu[AT + 0000];
+                A2 = 800fa6e0;
+                V0 = T0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = A1 << 06;
+                A2 = V0 + A2;
+                A0 = bu[800fa6d4];
+                V0 = w[S3 + 0004];
+                A3 = hu[S3 + 000e];
+                V1 = hu[S3 + 000a];
+                T0 = T0 + V0;
+                A3 = A3 << 10;
+                A3 = A3 >> 10;
+                V0 = bu[T0 + 0000];
+                V1 = V1 << 10;
+                [S3 + 000c] = h(V0);
+                V0 = hu[S3 + 000c];
+                V1 = V1 >> 10;
+                [SP + 0010] = w(V1);
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
                 800CC450	jal    funcd7a88 [$800d7a88]
-                800CC454	sw     v0, $0014(sp)
+                [SP + 0014] = w(V0);
                 800CC458	j      Lcd208 [$800cd208]
                 800CC45C	nop
 
@@ -4028,232 +3662,204 @@ ECA70C80 67
 
 
 
-                800CC470	sra    s0, s5, $10
-                800CC474	lw     a1, $0004(s3)
+                S0 = S5 >> 10;
+                A1 = w[S3 + 0004];
                 800CC478	jal    funccd558 [$800cd558]
-                800CC47C	addu   a0, s0, zero
-                800CC480	lw     a1, $0004(s3)
-                800CC484	addu   a0, s0, zero
+                A0 = S0;
+                A1 = w[S3 + 0004];
+                A0 = S0;
                 800CC488	jal    funccd558 [$800cd558]
-                800CC48C	sh     v0, $0016(s3)
-                800CC490	lw     a1, $0004(s3)
-                800CC494	addu   a0, s0, zero
+                [S3 + 0016] = h(V0);
+                A1 = w[S3 + 0004];
+                A0 = S0;
                 800CC498	jal    funccd558 [$800cd558]
-                800CC49C	sh     v0, $0018(s3)
-                800CC4A0	sll    v1, s0, $01
-                800CC4A4	addu   v1, v1, s0
-                800CC4A8	sh     v0, $001a(s3)
-                800CC4AC	sll    v0, v1, $05
-                800CC4B0	subu   v0, v0, v1
-                800CC4B4	sll    v0, v0, $03
-                800CC4B8	subu   v0, v0, s0
-                800CC4BC	sll    v0, v0, $02
-                800CC4C0	lui    at, $8015
-                800CC4C4	addiu  at, at, $1920
-                800CC4C8	addu   at, at, v0
-                800CC4CC	lbu    a0, $0000(at)
+                [S3 + 0018] = h(V0);
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                [S3 + 001a] = h(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800CC4D0	nop
-                800CC4D4	addiu  v1, a0, $0001
-                800CC4D8	lui    at, $8015
-                800CC4DC	addiu  at, at, $1920
-                800CC4E0	addu   at, at, v0
-                800CC4E4	sb     v1, $0000(at)
-                800CC4E8	lw     v0, $0004(s3)
-                800CC4EC	lw     a1, $0004(s3)
-                800CC4F0	addu   a0, a0, v0
-                800CC4F4	lbu    v0, $0000(a0)
-                800CC4F8	addu   a0, s0, zero
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
+                A1 = w[S3 + 0004];
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = S0;
                 800CC4FC	jal    funccd558 [$800cd558]
-                800CC500	sh     v0, $000a(s3)
-                800CC504	lw     a1, $0004(s3)
-                800CC508	addu   a0, s0, zero
+                [S3 + 000a] = h(V0);
+                A1 = w[S3 + 0004];
+                A0 = S0;
                 800CC50C	jal    funccd558 [$800cd558]
-                800CC510	sh     v0, $000c(s3)
-                800CC514	addu   a0, s0, zero
-                800CC518	addiu  a1, s3, $0016
-                800CC51C	sh     v0, $000e(s3)
-                800CC520	sll    v0, v0, $10
-                800CC524	lhu    a2, $000a(s3)
-                800CC528	sra    v0, v0, $10
-                800CC52C	sw     v0, $0010(sp)
-                800CC530	lhu    a3, $000c(s3)
-                800CC534	sll    a2, a2, $10
-                800CC538	sra    a2, a2, $10
-                800CC53C	sll    a3, a3, $10
+                [S3 + 000c] = h(V0);
+                A0 = S0;
+                A1 = S3 + 0016;
+                [S3 + 000e] = h(V0);
+                V0 = V0 << 10;
+                A2 = hu[S3 + 000a];
+                V0 = V0 >> 10;
+                [SP + 0010] = w(V0);
+                A3 = hu[S3 + 000c];
+                A2 = A2 << 10;
+                A2 = A2 >> 10;
+                A3 = A3 << 10;
                 800CC540	jal    funcd415c [$800d415c]
-                800CC544	sra    a3, a3, $10
+                A3 = A3 >> 10;
                 800CC548	j      Lcd208 [$800cd208]
                 800CC54C	nop
-                800CC550	lui    a0, $800d
-                800CC554	addiu  a0, a0, $dde8 (=-$2218)
+                A0 = 800cdde8;
                 800CC558	jal    funcbc04c [$800bc04c]
                 800CC55C	nop
-                800CC560	sll    v0, v0, $05
-                800CC564	ori    v1, zero, $0002
-                800CC568	lui    at, $8016
-                800CC56C	addiu  at, at, $21f2
-                800CC570	addu   at, at, v0
-                800CC574	sh     v1, $0000(at)
-                800CC578	ori    v1, zero, $01f0
-                800CC57C	lui    at, $8016
-                800CC580	addiu  at, at, $21f4
-                800CC584	addu   at, at, v0
-                800CC588	sh     v1, $0000(at)
+                V0 = V0 << 05;
+                V1 = 0002;
+                AT = 801621f2;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V1 = 01f0;
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800CC58C	j      Lcd208 [$800cd208]
                 800CC590	nop
-                800CC594	lui    a0, $800d
-                800CC598	addiu  a0, a0, $dde8 (=-$2218)
+                A0 = 800cdde8;
                 800CC59C	jal    funcbc04c [$800bc04c]
                 800CC5A0	nop
-                800CC5A4	sll    v0, v0, $05
-                800CC5A8	ori    v1, zero, $0003
-                800CC5AC	lui    at, $8016
-                800CC5B0	addiu  at, at, $21f2
-                800CC5B4	addu   at, at, v0
-                800CC5B8	sh     v1, $0000(at)
-                800CC5BC	ori    v1, zero, $01e9
-                800CC5C0	lui    at, $8016
-                800CC5C4	addiu  at, at, $21f4
-                800CC5C8	addu   at, at, v0
-                800CC5CC	sh     v1, $0000(at)
+                V0 = V0 << 05;
+                V1 = 0003;
+                AT = 801621f2;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V1 = 01e9;
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800CC5D0	j      Lcd208 [$800cd208]
                 800CC5D4	nop
-                800CC5D8	lui    a0, $800d
-                800CC5DC	addiu  a0, a0, $dde8 (=-$2218)
+                A0 = 800cdde8;
                 800CC5E0	jal    funcbc04c [$800bc04c]
                 800CC5E4	nop
-                800CC5E8	sll    v0, v0, $05
-                800CC5EC	ori    v1, zero, $000d
-                800CC5F0	lui    at, $8016
-                800CC5F4	addiu  at, at, $21f2
-                800CC5F8	addu   at, at, v0
-                800CC5FC	sh     zero, $0000(at)
-                800CC600	lui    at, $8016
-                800CC604	addiu  at, at, $21f4
-                800CC608	addu   at, at, v0
-                800CC60C	sh     v1, $0000(at)
+                V0 = V0 << 05;
+                V1 = 000d;
+                AT = 801621f2;
+                AT = AT + V0;
+                [AT + 0000] = h(0);
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800CC610	j      Lcd208 [$800cd208]
                 800CC614	nop
-                800CC618	lui    a0, $800d
-                800CC61C	addiu  a0, a0, $dde8 (=-$2218)
+                A0 = 800cdde8;
                 800CC620	jal    funcbc04c [$800bc04c]
                 800CC624	nop
-                800CC628	sll    v0, v0, $05
-                800CC62C	ori    v1, zero, $0001
-                800CC630	lui    at, $8016
-                800CC634	addiu  at, at, $21f2
-                800CC638	addu   at, at, v0
-                800CC63C	sh     v1, $0000(at)
-                800CC640	ori    v1, zero, $0024
-                800CC644	lui    at, $8016
-                800CC648	addiu  at, at, $21f4
-                800CC64C	addu   at, at, v0
-                800CC650	sh     v1, $0000(at)
+                V0 = V0 << 05;
+                V1 = 0001;
+                AT = 801621f2;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
+                V1 = 0024;
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800CC654	j      Lcd208 [$800cd208]
                 800CC658	nop
-                800CC65C	sra    a1, s5, $10
-                800CC660	sll    v1, a1, $01
-                800CC664	addu   v1, v1, a1
-                800CC668	sll    v0, v1, $05
-                800CC66C	subu   v0, v0, v1
-                800CC670	sll    v0, v0, $03
-                800CC674	subu   v0, v0, a1
-                800CC678	sll    v0, v0, $02
-                800CC67C	lui    at, $8015
-                800CC680	addiu  at, at, $1920
-                800CC684	addu   at, at, v0
-                800CC688	lbu    a0, $0000(at)
+                A1 = S5 >> 10;
+                V1 = A1 << 01;
+                V1 = V1 + A1;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A1;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800CC68C	nop
-                800CC690	addiu  v1, a0, $0001
-                800CC694	lui    at, $8015
-                800CC698	addiu  at, at, $1920
-                800CC69C	addu   at, at, v0
-                800CC6A0	sb     v1, $0000(at)
-                800CC6A4	lw     v0, $0004(s3)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
                 800CC6A8	nop
-                800CC6AC	addu   a0, a0, v0
-                800CC6B0	lbu    v0, $0000(a0)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
                 800CC6B4	nop
-                800CC6B8	sb     v0, $0015(s3)
-                800CC6BC	ori    v0, zero, $0007
+                [S3 + 0015] = b(V0);
+                V0 = 0007;
                 800CC6C0	beq    a1, v0, Lcc718 [$800cc718]
-                800CC6C4	slti   v0, a1, $0008
+                V0 = A1 < 0008;
                 800CC6C8	beq    v0, zero, Lcc6e0 [$800cc6e0]
-                800CC6CC	ori    v0, zero, $0006
+                V0 = 0006;
                 800CC6D0	beq    a1, v0, Lcc6fc [$800cc6fc]
                 800CC6D4	nop
                 800CC6D8	j      Lcc768 [$800cc768]
                 800CC6DC	nop
 
                 Lcc6e0:	; 800CC6E0
-                800CC6E0	ori    v0, zero, $0008
+                V0 = 0008;
                 800CC6E4	beq    a1, v0, Lcc738 [$800cc738]
-                800CC6E8	ori    v0, zero, $0009
+                V0 = 0009;
                 800CC6EC	beq    a1, v0, Lcc750 [$800cc750]
-                800CC6F0	ori    v0, zero, $0001
+                V0 = 0001;
                 800CC6F4	j      Lcc768 [$800cc768]
                 800CC6F8	nop
 
                 Lcc6fc:	; 800CC6FC
-                800CC6FC	lbu    v0, $0015(s3)
-                800CC700	lui    at, $1f80
-                800CC704	sw     zero, $0000(at)
-                800CC708	lui    at, $1f80
-                800CC70C	sw     v0, $0004(at)
+                V0 = bu[S3 + 0015];
+                [1f800000] = w(0);
+                [1f800004] = w(V0);
                 800CC710	j      Lcc768 [$800cc768]
                 800CC714	nop
 
                 Lcc718:	; 800CC718
-                800CC718	lbu    v0, $0015(s3)
-                800CC71C	lui    at, $1f80
-                800CC720	sw     zero, $0000(at)
-                800CC724	addiu  v0, v0, $0008
-                800CC728	lui    at, $1f80
-                800CC72C	sw     v0, $0004(at)
+                V0 = bu[S3 + 0015];
+                [1f800000] = w(0);
+                V0 = V0 + 0008;
+                [1f800004] = w(V0);
                 800CC730	j      Lcc768 [$800cc768]
                 800CC734	nop
 
                 Lcc738:	; 800CC738
-                800CC738	lbu    v1, $0015(s3)
-                800CC73C	ori    v0, zero, $0001
-                800CC740	lui    at, $1f80
-                800CC744	sw     v0, $0000(at)
+                V1 = bu[S3 + 0015];
+                V0 = 0001;
+                [1f800000] = w(V0);
                 800CC748	j      Lcc760 [$800cc760]
                 800CC74C	nop
 
                 Lcc750:	; 800CC750
-                800CC750	lbu    v1, $0015(s3)
-                800CC754	lui    at, $1f80
-                800CC758	sw     v0, $0000(at)
-                800CC75C	addiu  v1, v1, $0008
+                V1 = bu[S3 + 0015];
+                [1f800000] = w(V0);
+                V1 = V1 + 0008;
 
                 Lcc760:	; 800CC760
-                800CC760	lui    at, $1f80
-                800CC764	sw     v1, $0004(at)
+                [1f800004] = w(V1);
 
                 Lcc768:	; 800CC768
-                800CC768	lw     a1, $0004(s3)
+                A1 = w[S3 + 0004];
                 800CC76C	jal    funccd558 [$800cd558]
-                800CC770	sra    a0, s5, $10
-                800CC774	lui    a1, $8010
-                800CC778	addiu  a1, a1, $8e74 (=-$718c)
-                800CC77C	lui    v1, $1f80
-                800CC780	lw     v1, $0000(v1)
-                800CC784	lui    a0, $1f80
-                800CC788	lw     a0, $0004(a0)
-                800CC78C	sll    v1, v1, $05
-                800CC790	addu   v1, v1, a1
-                800CC794	sll    a0, a0, $01
-                800CC798	addu   a0, a0, v1
+                A0 = S5 >> 10;
+                A1 = 800f8e74;
+                V1 = w[1f800000];
+                A0 = w[1f800004];
+                V1 = V1 << 05;
+                V1 = V1 + A1;
+                A0 = A0 << 01;
+                A0 = A0 + V1;
                 800CC79C	j      Lcd208 [$800cd208]
-                800CC7A0	sh     v0, $0000(a0)
-                800CC7A4	ori    v0, zero, $0001
-                800CC7A8	lui    at, $8016
-                800CC7AC	sb     v0, $2090(at)
+                [A0 + 0000] = h(V0);
+                V0 = 0001;
+                [80162090] = b(V0);
                 800CC7B0	j      Lcd208 [$800cd208]
                 800CC7B4	nop
-                800CC7B8	lui    at, $8016
-                800CC7BC	sb     zero, $2090(at)
+                [80162090] = b(0);
                 800CC7C0	j      Lcd208 [$800cd208]
                 800CC7C4	nop
 
@@ -4298,50 +3904,43 @@ ECA70C80 67
 
 
 
-                800CC8E4	sra    a1, s5, $10
+                A1 = S5 >> 10;
                 A0 = A1 * b9c;
-                800CC904	lui    at, $8015
-                800CC908	addiu  at, at, $1922
-                800CC90C	addu   at, at, a0
-                800CC910	lbu    v0, $0000(at)
-                800CC914	sll    v1, a1, $04
-                800CC918	ori    v0, v0, $0020
-                800CC91C	lui    at, $8015
-                800CC920	addiu  at, at, $1922
-                800CC924	addu   at, at, a0
-                800CC928	sb     v0, $0000(at)
-                800CC92C	sll    v0, a1, $03
-                800CC930	subu   v0, v0, a1
-                800CC934	sll    v0, v0, $02
-                800CC938	addu   v0, v0, a1
-                800CC93C	lui    at, $8016
-                800CC940	addiu  at, at, $36c0
-                800CC944	addu   at, at, v1
-                800CC948	lw     v1, $0000(at)
-                800CC94C	sll    v0, v0, $02
-                800CC950	lui    at, $8015
-                800CC954	addiu  at, at, $1200
-                800CC958	addu   at, at, v0
-                800CC95C	sw     v1, $0000(at)
-                800CC960	lui    at, $8015
-                800CC964	addiu  at, at, $18fc
-                800CC968	addu   at, at, a0
-                800CC96C	lhu    v0, $0000(at)
+                AT = 80151922;
+                AT = AT + A0;
+                V0 = bu[AT + 0000];
+                V1 = A1 << 04;
+                V0 = V0 | 0020;
+                AT = 80151922;
+                AT = AT + A0;
+                [AT + 0000] = b(V0);
+                V0 = A1 << 03;
+                V0 = V0 - A1;
+                V0 = V0 << 02;
+                V0 = V0 + A1;
+                AT = 801636c0;
+                AT = AT + V1;
+                V1 = w[AT + 0000];
+                V0 = V0 << 02;
+                AT = 80151200;
+                AT = AT + V0;
+                [AT + 0000] = w(V1);
+                AT = 801518fc;
+                AT = AT + A0;
+                V0 = hu[AT + 0000];
                 V1 = bu[80151920 + A0];
-                800CC980	lui    at, $8015
-                800CC984	addiu  at, at, $1a46
-                800CC988	addu   at, at, a0
-                800CC98C	sh     v0, $0000(at)
-                800CC990	addiu  v0, v1, $0001
-                800CC994	lui    at, $8015
-                800CC998	addiu  at, at, $1920
-                800CC99C	addu   at, at, a0
-                800CC9A0	sb     v0, $0000(at)
+                AT = 80151a46;
+                AT = AT + A0;
+                [AT + 0000] = h(V0);
+                V0 = V1 + 0001;
+                AT = 80151920;
+                AT = AT + A0;
+                [AT + 0000] = b(V0);
                 V0 = w[S3 + 4];
                 V0 = bu[V0 + V1];
 
-                800CC9B8	addu   v1, v0, zero
-                800CC9BC	sh     v0, $000a(s3)
+                V1 = V0;
+                [S3 + 000a] = h(V0);
 
                 if (V1 == a)
                 {
@@ -4392,150 +3991,134 @@ ECA70C80 67
                 800CCA6C	j      Lcd208 [$800cd208]
 
 
-                800CCA74	sra    s0, s5, $10
-                800CCA78	sll    v1, s0, $01
-                800CCA7C	addu   v1, v1, s0
-                800CCA80	sll    v0, v1, $05
-                800CCA84	subu   v0, v0, v1
-                800CCA88	sll    v0, v0, $03
-                800CCA8C	subu   v0, v0, s0
-                800CCA90	sll    v0, v0, $02
-                800CCA94	lui    at, $8015
-                800CCA98	addiu  at, at, $1920
-                800CCA9C	addu   at, at, v0
-                800CCAA0	lbu    a0, $0000(at)
-                800CCAA4	sll    s1, s0, $02
-                800CCAA8	addiu  v1, a0, $0001
-                800CCAAC	lui    at, $8015
-                800CCAB0	addiu  at, at, $1920
-                800CCAB4	addu   at, at, v0
-                800CCAB8	sb     v1, $0000(at)
-                800CCABC	lw     v0, $0004(s3)
-                800CCAC0	lui    v1, $8010
-                800CCAC4	addiu  v1, v1, $3200
-                800CCAC8	addu   a0, a0, v0
-                800CCACC	lbu    v0, $0000(a0)
-                800CCAD0	addu   a0, s0, zero
-                800CCAD4	sh     v0, $000e(s3)
-                800CCAD8	lui    v0, $8010
-                800CCADC	addiu  v0, v0, $8384 (=-$7c7c)
-                800CCAE0	addu   s1, s1, v0
-                800CCAE4	sll    v0, s0, $04
-                800CCAE8	subu   v0, v0, s0
-                800CCAEC	sll    v0, v0, $0c
-                800CCAF0	addu   v0, v0, v1
+                S0 = S5 >> 10;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
+                S1 = S0 << 02;
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
+                V1 = 80103200;
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = S0;
+                [S3 + 000e] = h(V0);
+                V0 = 800f8384;
+                S1 = S1 + V0;
+                V0 = S0 << 04;
+                V0 = V0 - S0;
+                V0 = V0 << 0c;
+                V0 = V0 + V1;
                 800CCAF4	jal    funcb5e64 [$800b5e64]
-                800CCAF8	sw     v0, $0000(s1)
+                [S1 + 0000] = w(V0);
                 800CCAFC	jal    funcb5c1c [$800b5c1c]
-                800CCB00	addu   a0, s0, zero
-                800CCB04	lw     v1, $0000(s1)
+                A0 = S0;
+                V1 = w[S1 + 0000];
                 800CCB08	nop
-                800CCB0C	lw     v0, $0008(v1)
+                V0 = w[V1 + 0008];
                 800CCB10	nop
-                800CCB14	addu   v0, v0, v1
-                800CCB18	sw     v0, $0008(v1)
-                800CCB1C	lw     v0, $0000(s1)
-                800CCB20	addu   s2, zero, zero
-                800CCB24	lw     a0, $0008(v0)
+                V0 = V0 + V1;
+                [V1 + 0008] = w(V0);
+                V0 = w[S1 + 0000];
+                S2 = 0;
+                A0 = w[V0 + 0008];
 
                 loopccb28:	; 800CCB28
-                800CCB28	lw     v1, $0000(s1)
-                800CCB2C	lw     v0, $0068(a0)
-                800CCB30	lw     v1, $0008(v1)
-                800CCB34	addiu  s2, s2, $0001
-                800CCB38	addu   v0, v0, v1
-                800CCB3C	sw     v0, $0068(a0)
-                800CCB40	slti   v0, s2, $004a
+                V1 = w[S1 + 0000];
+                V0 = w[A0 + 0068];
+                V1 = w[V1 + 0008];
+                S2 = S2 + 0001;
+                V0 = V0 + V1;
+                [A0 + 0068] = w(V0);
+                V0 = S2 < 004a;
                 800CCB44	bne    v0, zero, loopccb28 [$800ccb28]
-                800CCB48	addiu  a0, a0, $0004
+                A0 = A0 + 0004;
                 800CCB4C	jal    funcb4e30 [$800b4e30]
-                800CCB50	andi   a0, fp, $00ff
-                800CCB54	ori    a0, zero, $02d9
-                800CCB58	sra    a1, s5, $10
-                800CCB5C	sll    v0, a1, $01
-                800CCB60	addu   v0, v0, a1
-                800CCB64	sll    v1, v0, $05
-                800CCB68	subu   v1, v1, v0
-                800CCB6C	sll    v1, v1, $03
-                800CCB70	subu   v1, v1, a1
-                800CCB74	sll    v1, v1, $02
-                800CCB78	lui    t2, $8015
-                800CCB7C	addiu  t2, t2, $18e4
-                800CCB80	lhu    a3, $000e(s3)
-                800CCB84	addu   v0, v1, t2
-                800CCB88	sh     a3, $0002(v0)
-                800CCB8C	sll    v0, a1, $04
-                800CCB90	lui    at, $8016
-                800CCB94	addiu  at, at, $36b9
-                800CCB98	addu   at, at, v0
-                800CCB9C	sb     a3, $0000(at)
-                800CCBA0	lui    at, $8016
-                800CCBA4	addiu  at, at, $3784
-                800CCBA8	addu   at, at, a1
-                800CCBAC	sb     a3, $0000(at)
-                800CCBB0	lui    at, $8015
-                800CCBB4	addiu  at, at, $1922
-                800CCBB8	addu   at, at, v1
-                800CCBBC	lbu    v0, $0000(at)
-                800CCBC0	lui    at, $8015
-                800CCBC4	addiu  at, at, $1909
-                800CCBC8	addu   at, at, v1
-                800CCBCC	lbu    a3, $0000(at)
-                800CCBD0	ori    v0, v0, $0005
-                800CCBD4	andi   a3, a3, $00fd
-                800CCBD8	lui    at, $8015
-                800CCBDC	addiu  at, at, $1922
-                800CCBE0	addu   at, at, v1
-                800CCBE4	sb     v0, $0000(at)
-                800CCBE8	lui    at, $8015
-                800CCBEC	addiu  at, at, $1909
-                800CCBF0	addu   at, at, v1
-                800CCBF4	sb     a3, $0000(at)
+                A0 = FP & 00ff;
+                A0 = 02d9;
+                A1 = S5 >> 10;
+                V0 = A1 << 01;
+                V0 = V0 + A1;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A1;
+                V1 = V1 << 02;
+                T2 = 801518e4;
+                A3 = hu[S3 + 000e];
+                V0 = V1 + T2;
+                [V0 + 0002] = h(A3);
+                V0 = A1 << 04;
+                AT = 801636b9;
+                AT = AT + V0;
+                [AT + 0000] = b(A3);
+                AT = 80163784;
+                AT = AT + A1;
+                [AT + 0000] = b(A3);
+                AT = 80151922;
+                AT = AT + V1;
+                V0 = bu[AT + 0000];
+                AT = 80151909;
+                AT = AT + V1;
+                A3 = bu[AT + 0000];
+                V0 = V0 | 0005;
+                A3 = A3 & 00fd;
+                AT = 80151922;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                AT = 80151909;
+                AT = AT + V1;
+                [AT + 0000] = b(A3);
                 800CCBF8	jal    funcbba84 [$800bba84]
-                800CCBFC	addu   a2, zero, zero
+                A2 = 0;
                 return;
 
-                800CCC08	sra    a0, s5, $10
-                800CCC0C	sll    v1, a0, $01
-                800CCC10	addu   v1, v1, a0
-                800CCC14	sll    v0, v1, $05
-                800CCC18	subu   v0, v0, v1
-                800CCC1C	sll    v0, v0, $03
-                800CCC20	subu   v0, v0, a0
-                800CCC24	sll    v0, v0, $02
-                800CCC28	lui    at, $8015
-                800CCC2C	addiu  at, at, $1920
-                800CCC30	addu   at, at, v0
-                800CCC34	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800CCC38	nop
-                800CCC3C	addiu  v1, a0, $0001
-                800CCC40	lui    at, $8015
-                800CCC44	addiu  at, at, $1920
-                800CCC48	addu   at, at, v0
-                800CCC4C	sb     v1, $0000(at)
-                800CCC50	lw     v0, $0004(s3)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
                 800CCC54	nop
-                800CCC58	addu   a0, a0, v0
-                800CCC5C	lbu    v0, $0000(a0)
-                800CCC60	lui    a0, $800d
-                800CCC64	addiu  a0, a0, $06b8
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800d06b8;
                 800CCC68	jal    funcbc04c [$800bc04c]
-                800CCC6C	sh     v0, $000a(s3)
-                800CCC70	sh     v0, $000c(s3)
-                800CCC74	sll    v0, v0, $10
-                800CCC78	sra    v0, v0, $0b
-                800CCC7C	lui    at, $8016
-                800CCC80	addiu  at, at, $21f6
-                800CCC84	addu   at, at, v0
-                800CCC88	sh     fp, $0000(at)
-                800CCC8C	lhu    v0, $000c(s3)
-                800CCC90	lhu    v1, $000a(s3)
-                800CCC94	sll    v0, v0, $10
-                800CCC98	sra    v0, v0, $0b
-                800CCC9C	lui    at, $8016
-                800CCCA0	addiu  at, at, $21f4
-                800CCCA4	addu   at, at, v0
-                800CCCA8	sh     v1, $0000(at)
+                [S3 + 000a] = h(V0);
+                [S3 + 000c] = h(V0);
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 801621f6;
+                AT = AT + V0;
+                [AT + 0000] = h(FP);
+                V0 = hu[S3 + 000c];
+                V1 = hu[S3 + 000a];
+                V0 = V0 << 10;
+                V0 = V0 >> 0b;
+                AT = 801621f4;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800CCCAC	j      Lcd208 [$800cd208]
                 800CCCB0	nop
 
@@ -4557,93 +4140,84 @@ ECA70C80 67
                 }
                 break;
 
-                800CCD1C	sra    a0, s5, $10
-                800CCD20	sll    v0, a0, $01
-                800CCD24	addu   v0, v0, a0
-                800CCD28	sll    v1, v0, $05
-                800CCD2C	subu   v1, v1, v0
-                800CCD30	sll    v1, v1, $03
-                800CCD34	subu   v1, v1, a0
-                800CCD38	sll    v1, v1, $02
-                800CCD3C	lui    at, $8015
-                800CCD40	addiu  at, at, $1920
-                800CCD44	addu   at, at, v1
-                800CCD48	lbu    a1, $0000(at)
+                A0 = S5 >> 10;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A1 = bu[AT + 0000];
                 800CCD4C	nop
-                800CCD50	addiu  v0, a1, $0001
-                800CCD54	lui    at, $8015
-                800CCD58	addiu  at, at, $1920
-                800CCD5C	addu   at, at, v1
-                800CCD60	sb     v0, $0000(at)
-                800CCD64	lw     v0, $0004(s3)
+                V0 = A1 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CCD68	nop
-                800CCD6C	addu   a1, a1, v0
-                800CCD70	lbu    v0, $0000(a1)
+                A1 = A1 + V0;
+                V0 = bu[A1 + 0000];
                 800CCD74	nop
-                800CCD78	sw     v0, $0000(s6)
-                800CCD7C	lui    at, $8015
-                800CCD80	addiu  at, at, $1920
-                800CCD84	addu   at, at, v1
-                800CCD88	lbu    a2, $0000(at)
+                [S6 + 0000] = w(V0);
+                AT = 80151920;
+                AT = AT + V1;
+                A2 = bu[AT + 0000];
                 800CCD8C	nop
-                800CCD90	addiu  v0, a2, $0001
-                800CCD94	lui    at, $8015
-                800CCD98	addiu  at, at, $1920
-                800CCD9C	addu   at, at, v1
-                800CCDA0	sb     v0, $0000(at)
-                800CCDA4	lw     v0, $0004(s3)
-                800CCDA8	lbu    a1, $0000(s6)
-                800CCDAC	addu   a2, a2, v0
-                800CCDB0	lbu    v0, $0000(a2)
+                V0 = A2 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
+                A1 = bu[S6 + 0000];
+                A2 = A2 + V0;
+                V0 = bu[A2 + 0000];
                 800CCDB4	nop
-                800CCDB8	sw     v0, $0000(s7)
-                800CCDBC	lbu    a2, $0000(s7)
+                [S7 + 0000] = w(V0);
+                A2 = bu[S7 + 0000];
                 800CCDC0	jal    funcce0c8 [$800ce0c8]
                 800CCDC4	nop
                 800CCDC8	j      Lcd208 [$800cd208]
                 800CCDCC	nop
-                800CCDD0	sra    a0, s5, $10
-                800CCDD4	sll    v1, a0, $01
-                800CCDD8	addu   v1, v1, a0
-                800CCDDC	sll    v0, v1, $05
-                800CCDE0	subu   v0, v0, v1
-                800CCDE4	sll    v0, v0, $03
-                800CCDE8	subu   v0, v0, a0
-                800CCDEC	sll    v0, v0, $02
-                800CCDF0	lui    at, $8015
-                800CCDF4	addiu  at, at, $1920
-                800CCDF8	addu   at, at, v0
-                800CCDFC	lbu    a0, $0000(at)
+                A0 = S5 >> 10;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                AT = 80151920;
+                AT = AT + V0;
+                A0 = bu[AT + 0000];
                 800CCE00	nop
-                800CCE04	addiu  v1, a0, $0001
-                800CCE08	lui    at, $8015
-                800CCE0C	addiu  at, at, $1920
-                800CCE10	addu   at, at, v0
-                800CCE14	sb     v1, $0000(at)
-                800CCE18	lw     v0, $0004(s3)
+                V1 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V0;
+                [AT + 0000] = b(V1);
+                V0 = w[S3 + 0004];
                 800CCE1C	nop
-                800CCE20	addu   a0, a0, v0
-                800CCE24	lbu    v0, $0000(a0)
-                800CCE28	lui    a0, $800d
-                800CCE2C	addiu  a0, a0, $0760
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800d0760;
                 800CCE30	jal    funcbbeac [$800bbeac]
-                800CCE34	sw     v0, $0000(s6)
+                [S6 + 0000] = w(V0);
                 800CCE38	jal    funcc60f4 [$800c60f4]
-                800CCE3C	sb     v0, $0014(s3)
-                800CCE40	lbu    v1, $0014(s3)
+                [S3 + 0014] = b(V0);
+                V1 = bu[S3 + 0014];
                 800CCE44	nop
-                800CCE48	sll    v1, v1, $05
-                800CCE4C	lui    at, $8016
-                800CCE50	addiu  at, at, $297c
-                800CCE54	addu   at, at, v1
-                800CCE58	sh     v0, $0000(at)
-                800CCE5C	lbu    v0, $0014(s3)
-                800CCE60	lhu    v1, $0000(s6)
-                800CCE64	sll    v0, v0, $05
-                800CCE68	lui    at, $8016
-                800CCE6C	addiu  at, at, $297e
-                800CCE70	addu   at, at, v0
-                800CCE74	sh     v1, $0000(at)
+                V1 = V1 << 05;
+                AT = 8016297c;
+                AT = AT + V1;
+                [AT + 0000] = h(V0);
+                V0 = bu[S3 + 0014];
+                V1 = hu[S6 + 0000];
+                V0 = V0 << 05;
+                AT = 8016297e;
+                AT = AT + V0;
+                [AT + 0000] = h(V1);
                 800CCE78	j      Lcd208 [$800cd208]
                 800CCE7C	nop
 
@@ -4657,34 +4231,31 @@ ECA70C80 67
                 }
                 break;
 
-                800CCED8	lui    v0, $8015
-                800CCEDC	lbu    v0, $18dc(v0)
+                V0 = bu[801518dc];
                 800CCEE0	nop
                 800CCEE4	bne    v0, zero, Lccefc [$800ccefc]
-                800CCEE8	sra    a0, s5, $10
+                A0 = S5 >> 10;
                 800CCEEC	jal    funcd0b4c [$800d0b4c]
-                800CCEF0	andi   a0, fp, $00ff
+                A0 = FP & 00ff;
                 800CCEF4	j      Lcd208 [$800cd208]
                 800CCEF8	nop
 
                 Lccefc:	; 800CCEFC
-                800CCEFC	sll    v1, a0, $01
-                800CCF00	addu   v1, v1, a0
-                800CCF04	sll    v0, v1, $05
-                800CCF08	subu   v0, v0, v1
-                800CCF0C	sll    v0, v0, $03
-                800CCF10	subu   v0, v0, a0
-                800CCF14	sll    v0, v0, $02
-                800CCF18	lui    t2, $8015
-                800CCF1C	addiu  t2, t2, $18e4
-                800CCF20	lui    at, $8015
-                800CCF24	addiu  at, at, $1920
-                800CCF28	addu   at, at, v0
-                800CCF2C	lbu    v1, $0000(at)
-                800CCF30	addu   v0, v0, t2
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                T2 = 801518e4;
+                AT = 80151920;
+                AT = AT + V0;
+                V1 = bu[AT + 0000];
+                V0 = V0 + T2;
                 800CCF34	addiu  v1, v1, $ffff (=-$1)
                 800CCF38	j      Lcd204 [$800cd204]
-                800CCF3C	sb     v1, $003c(v0)
+                [V0 + 003c] = b(V1);
 
 
 
@@ -4696,74 +4267,68 @@ ECA70C80 67
 
 
 
-                800CCF50	sra    a1, s5, $10
-                800CCF54	sll    v0, a1, $01
-                800CCF58	addu   v0, v0, a1
-                800CCF5C	sll    v1, v0, $05
-                800CCF60	subu   v1, v1, v0
-                800CCF64	sll    v1, v1, $03
-                800CCF68	subu   v1, v1, a1
-                800CCF6C	sll    v1, v1, $02
-                800CCF70	lui    at, $8015
-                800CCF74	addiu  at, at, $1920
-                800CCF78	addu   at, at, v1
-                800CCF7C	lbu    a0, $0000(at)
+                A1 = S5 >> 10;
+                V0 = A1 << 01;
+                V0 = V0 + A1;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A1;
+                V1 = V1 << 02;
+                AT = 80151920;
+                AT = AT + V1;
+                A0 = bu[AT + 0000];
                 800CCF80	nop
-                800CCF84	addiu  v0, a0, $0001
-                800CCF88	lui    at, $8015
-                800CCF8C	addiu  at, at, $1920
-                800CCF90	addu   at, at, v1
-                800CCF94	sb     v0, $0000(at)
-                800CCF98	lw     v0, $0004(s3)
+                V0 = A0 + 0001;
+                AT = 80151920;
+                AT = AT + V1;
+                [AT + 0000] = b(V0);
+                V0 = w[S3 + 0004];
                 800CCF9C	nop
-                800CCFA0	addu   a0, a0, v0
-                800CCFA4	lbu    v0, $0000(a0)
-                800CCFA8	lui    at, $8015
-                800CCFAC	addiu  at, at, $1958
-                800CCFB0	addu   at, at, v1
-                800CCFB4	sw     zero, $0000(at)
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                AT = 80151958;
+                AT = AT + V1;
+                [AT + 0000] = w(0);
                 [801518f2 + V1] = h(V0);
-                800CCFC8	sll    v0, a1, $06
-                800CCFCC	lui    at, $8010
-                800CCFD0	addiu  at, at, $a6d8 (=-$5928)
-                800CCFD4	addu   at, at, v0
-                800CCFD8	sw     zero, $0000(at)
-                800CCFDC	sll    v0, a1, $03
-                800CCFE0	subu   v0, v0, a1
-                800CCFE4	sll    v0, v0, $02
-                800CCFE8	addu   v0, v0, a1
-                800CCFEC	sll    v0, v0, $02
-                800CCFF0	lui    at, $8015
-                800CCFF4	addiu  at, at, $1236
-                800CCFF8	addu   at, at, v0
-                800CCFFC	lbu    v0, $0000(at)
+                V0 = A1 << 06;
+                AT = 800fa6d8;
+                AT = AT + V0;
+                [AT + 0000] = w(0);
+                V0 = A1 << 03;
+                V0 = V0 - A1;
+                V0 = V0 << 02;
+                V0 = V0 + A1;
+                V0 = V0 << 02;
+                AT = 80151236;
+                AT = AT + V0;
+                V0 = bu[AT + 0000];
                 800CD000	nop
                 800CD004	beq    v0, zero, Lcd204 [$800cd204]
-                800CD008	addu   s1, s5, zero
+                S1 = S5;
                 800CD00C	beq    v0, zero, Lcd204 [$800cd204]
-                800CD010	addu   s2, zero, zero
-                800CD014	sra    s0, s1, $10
+                S2 = 0;
+                S0 = S1 >> 10;
 
                 loopcd018:	; 800CD018
-                800CD018	lw     a1, $0020(sp)
-                800CD01C	lw     a2, $0028(sp)
+                A1 = w[SP + 0020];
+                A2 = w[SP + 0028];
                 800CD020	jal    funccd400 [$800cd400]
-                800CD024	addu   a0, s0, zero
-                800CD028	sll    v0, s0, $03
-                800CD02C	subu   v0, v0, s0
-                800CD030	sll    v0, v0, $02
-                800CD034	addu   v0, v0, s0
-                800CD038	sll    v0, v0, $02
-                800CD03C	lui    at, $8015
-                800CD040	addiu  at, at, $1236
-                800CD044	addu   at, at, v0
-                800CD048	lbu    v0, $0000(at)
-                800CD04C	addiu  s2, s2, $0001
-                800CD050	slt    v0, s2, v0
+                A0 = S0;
+                V0 = S0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                V0 = V0 + S0;
+                V0 = V0 << 02;
+                AT = 80151236;
+                AT = AT + V0;
+                V0 = bu[AT + 0000];
+                S2 = S2 + 0001;
+                V0 = S2 < V0;
                 800CD054	bne    v0, zero, loopcd018 [$800cd018]
-                800CD058	sra    s0, s1, $10
+                S0 = S1 >> 10;
                 800CD05C	j      Lcd208 [$800cd208]
-                800CD060	sb     zero, $0000(s3)
+                [S3 + 0000] = b(0);
 
 
 
@@ -4806,24 +4371,22 @@ ECA70C80 67
 
 
 
-            800CD188	sra    a0, s5, $10
+            A0 = S5 >> 10;
             V0 = A0 * b9c;
             [80151958 + V0] = w(0); // animation from start
             [801518f2 + V0] = h(bu[1f800021]); // here we set all animations fo MP
-            800CD1CC	sll    v0, a0, $03
-            800CD1D0	subu   v0, v0, a0
-            800CD1D4	sll    v0, v0, $02
-            800CD1D8	addu   v0, v0, a0
-            800CD1DC	sll    v0, v0, $02
-            800CD1E0	sll    a0, a0, $06
-            800CD1E4	lui    at, $8015
-            800CD1E8	addiu  at, at, $1236
-            800CD1EC	addu   at, at, v0
-            800CD1F0	sb     zero, $0000(at)
-            800CD1F4	lui    at, $8010
-            800CD1F8	addiu  at, at, $a6d8 (=-$5928)
-            800CD1FC	addu   at, at, a0
-            800CD200	sw     zero, $0000(at)
+            V0 = A0 << 03;
+            V0 = V0 - A0;
+            V0 = V0 << 02;
+            V0 = V0 + A0;
+            V0 = V0 << 02;
+            A0 = A0 << 06;
+            AT = 80151236;
+            AT = AT + V0;
+            [AT + 0000] = b(0);
+            AT = 800fa6d8;
+            AT = AT + A0;
+            [AT + 0000] = w(0);
 
             Lcd204:	; 800CD204
             [1f800020] = b(0);
@@ -4930,112 +4493,101 @@ return (S1 << 8) + S0;
 ///////////////////////////////
 // funccd5e4
 800CD5E4	addiu  sp, sp, $ffd8 (=-$28)
-800CD5E8	sw     s3, $001c(sp)
+[SP + 001c] = w(S3);
 800CD5EC	lui    s3, $1f80
-800CD5F0	andi   a1, a1, $00ff
-800CD5F4	sll    v0, a1, $01
-800CD5F8	addu   v0, v0, a1
-800CD5FC	sw     s1, $0014(sp)
-800CD600	sll    s1, v0, $05
-800CD604	subu   s1, s1, v0
-800CD608	sll    s1, s1, $03
-800CD60C	subu   s1, s1, a1
-800CD610	sll    s1, s1, $02
-800CD614	ori    a1, zero, $0800
-800CD618	sll    a2, a2, $10
-800CD61C	sw     ra, $0024(sp)
-800CD620	sw     s4, $0020(sp)
-800CD624	sw     s2, $0018(sp)
-800CD628	sw     s0, $0010(sp)
-800CD62C	lui    at, $8015
-800CD630	addiu  at, at, $18fc
-800CD634	addu   at, at, s1
-800CD638	lh     v0, $0000(at)
-800CD63C	andi   a0, a0, $00ff
-800CD640	subu   a1, a1, v0
-800CD644	sll    v0, a0, $01
-800CD648	addu   v0, v0, a0
-800CD64C	sll    s0, v0, $05
-800CD650	subu   s0, s0, v0
-800CD654	sll    s0, s0, $03
-800CD658	subu   s0, s0, a0
-800CD65C	sll    s0, s0, $02
-800CD660	sw     a1, $0000(s3)
-800CD664	lui    at, $8015
-800CD668	addiu  at, at, $18ea
-800CD66C	addu   at, at, s0
-800CD670	lh     v0, $0000(at)
-800CD674	sra    a2, a2, $10
+A1 = A1 & 00ff;
+V0 = A1 << 01;
+V0 = V0 + A1;
+[SP + 0014] = w(S1);
+S1 = V0 << 05;
+S1 = S1 - V0;
+S1 = S1 << 03;
+S1 = S1 - A1;
+S1 = S1 << 02;
+A1 = 0800;
+A2 = A2 << 10;
+[SP + 0024] = w(RA);
+[SP + 0020] = w(S4);
+[SP + 0018] = w(S2);
+[SP + 0010] = w(S0);
+AT = 801518fc;
+AT = AT + S1;
+V0 = h[AT + 0000];
+A0 = A0 & 00ff;
+A1 = A1 - V0;
+V0 = A0 << 01;
+V0 = V0 + A0;
+S0 = V0 << 05;
+S0 = S0 - V0;
+S0 = S0 << 03;
+S0 = S0 - A0;
+S0 = S0 << 02;
+[S3 + 0000] = w(A1);
+AT = 801518ea;
+AT = AT + S0;
+V0 = h[AT + 0000];
+A2 = A2 >> 10;
 800CD678	mult   a2, v0
-800CD67C	lui    at, $8015
-800CD680	addiu  at, at, $18f6
-800CD684	addu   at, at, s1
-800CD688	lh     a0, $0000(at)
+AT = 801518f6;
+AT = AT + S1;
+A0 = h[AT + 0000];
 800CD68C	mflo   v1
-800CD690	lui    at, $8015
-800CD694	addiu  at, at, $18ea
-800CD698	addu   at, at, s1
-800CD69C	lh     v0, $0000(at)
+AT = 801518ea;
+AT = AT + S1;
+V0 = h[AT + 0000];
 800CD6A0	nop
 800CD6A4	mult   a0, v0
-800CD6A8	addu   s4, a3, zero
-800CD6AC	lui    s2, $1f80
-800CD6B0	ori    s2, s2, $0004
-800CD6B4	addu   a0, a1, zero
-800CD6B8	sra    v1, v1, $0c
+S4 = A3;
+S2 = 1f800004;
+A0 = A1;
+V1 = V1 >> 0c;
 800CD6BC	mflo   v0
-800CD6C0	sra    v0, v0, $0c
-800CD6C4	addu   v1, v1, v0
+V0 = V0 >> 0c;
+V1 = V1 + V0;
 800CD6C8	jal    $80039a74
-800CD6CC	sw     v1, $0000(s2)
-800CD6D0	lw     v1, $0000(s2)
+[S2 + 0000] = w(V1);
+V1 = w[S2 + 0000];
 800CD6D4	nop
 800CD6D8	mult   v0, v1
-800CD6DC	lui    at, $8015
-800CD6E0	addiu  at, at, $1a4c
-800CD6E4	addu   at, at, s1
-800CD6E8	lhu    v1, $0000(at)
+AT = 80151a4c;
+AT = AT + S1;
+V1 = hu[AT + 0000];
 800CD6EC	mflo   v0
-800CD6F0	sra    v0, v0, $0c
-800CD6F4	subu   v1, v1, v0
-800CD6F8	lui    at, $8015
-800CD6FC	addiu  at, at, $1a4c
-800CD700	addu   at, at, s0
-800CD704	sh     v1, $0000(at)
-800CD708	lw     a0, $0000(s3)
+V0 = V0 >> 0c;
+V1 = V1 - V0;
+AT = 80151a4c;
+AT = AT + S0;
+[AT + 0000] = h(V1);
+A0 = w[S3 + 0000];
 800CD70C	jal    $80039b40
 800CD710	nop
-800CD714	lw     v1, $0000(s2)
+V1 = w[S2 + 0000];
 800CD718	nop
 800CD71C	mult   v0, v1
-800CD720	lui    at, $8015
-800CD724	addiu  at, at, $1a50
-800CD728	addu   at, at, s1
-800CD72C	lhu    v1, $0000(at)
-800CD730	lui    at, $8015
-800CD734	addiu  at, at, $1a4e
-800CD738	addu   at, at, s0
-800CD73C	sh     s4, $0000(at)
+AT = 80151a50;
+AT = AT + S1;
+V1 = hu[AT + 0000];
+AT = 80151a4e;
+AT = AT + S0;
+[AT + 0000] = h(S4);
 800CD740	mflo   v0
-800CD744	sra    v0, v0, $0c
-800CD748	addu   v1, v1, v0
-800CD74C	lui    at, $8015
-800CD750	addiu  at, at, $1a50
-800CD754	addu   at, at, s0
-800CD758	sh     v1, $0000(at)
-800CD75C	lhu    v0, $0000(s3)
+V0 = V0 >> 0c;
+V1 = V1 + V0;
+AT = 80151a50;
+AT = AT + S0;
+[AT + 0000] = h(V1);
+V0 = hu[S3 + 0000];
 800CD760	nop
-800CD764	lui    at, $8015
-800CD768	addiu  at, at, $1a46
-800CD76C	addu   at, at, s0
-800CD770	sh     v0, $0000(at)
-800CD774	lw     ra, $0024(sp)
-800CD778	lw     s4, $0020(sp)
-800CD77C	lw     s3, $001c(sp)
-800CD780	lw     s2, $0018(sp)
-800CD784	lw     s1, $0014(sp)
-800CD788	lw     s0, $0010(sp)
-800CD78C	addiu  sp, sp, $0028
+AT = 80151a46;
+AT = AT + S0;
+[AT + 0000] = h(V0);
+RA = w[SP + 0024];
+S4 = w[SP + 0020];
+S3 = w[SP + 001c];
+S2 = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0028;
 800CD790	jr     ra 
 800CD794	nop
 ////////////////////////////////
@@ -5054,19 +4606,11 @@ unit_id = A0;
 
 ////////////////////////////////
 // funccd82c
-800CD82C	lui    v0, $8016
-800CD830	lh     v0, $90d4(v0)
-800CD834	ori    v1, zero, $0001
-800CD838	lui    at, $8016
-800CD83C	sb     v1, $90dc(at)
-800CD840	addiu  v1, zero, $ffff (=-$1)
-800CD844	sll    v0, v0, $05
-800CD848	lui    at, $8016
-800CD84C	addiu  at, at, $21f0
-800CD850	addu   at, at, v0
-800CD854	sh     v1, $0000(at)
-800CD858	jr     ra 
-800CD85C	nop
+// stop camera scripts
+V0 = h[801590d4];
+[801621f0 + V0 * 20 + 0] = h(-1);
+
+[801590dc] = b(1);
 ////////////////////////////////
 
 
@@ -5171,317 +4715,269 @@ else
 
 ////////////////////////////////
 // funccdda4
-800CDDA4	lui    v0, $8016
-800CDDA8	lbu    v0, $6f68(v0)
+V0 = bu[80166f68];
 800CDDAC	nop
 800CDDB0	beq    v0, zero, Lcddc8 [$800cddc8]
 800CDDB4	nop
-800CDDB8	lui    v0, $8010
-800CDDBC	lhu    v0, $9da4(v0)
+V0 = hu[800f9da4];
 800CDDC0	j      Lcddd8 [$800cddd8]
-800CDDC4	ori    v0, v0, $0001
+V0 = V0 | 0001;
 
 Lcddc8:	; 800CDDC8
-800CDDC8	lui    v0, $8010
-800CDDCC	lhu    v0, $9da4(v0)
+V0 = hu[800f9da4];
 800CDDD0	nop
-800CDDD4	andi   v0, v0, $fffe
+V0 = V0 & fffe;
 
 Lcddd8:	; 800CDDD8
-800CDDD8	lui    at, $8010
-800CDDDC	sh     v0, $9da4(at)
+[800f9da4] = h(V0);
 800CDDE0	jr     ra 
 800CDDE4	nop
 ////////////////////////////////
 // funccdde8
-800CDDE8	lui    v0, $8016
-800CDDEC	lh     v0, $90d4(v0)
-800CDDF0	lui    a1, $8016
-800CDDF4	lbu    a1, $90cc(a1)
+V0 = h[801590d4];
+A1 = bu[801590cc];
 800CDDF8	addiu  sp, sp, $ffe8 (=-$18)
-800CDDFC	sw     ra, $0010(sp)
-800CDE00	sll    v0, v0, $05
-800CDE04	lui    at, $8016
-800CDE08	addiu  at, at, $21f4
-800CDE0C	addu   at, at, v0
-800CDE10	lhu    a0, $0000(at)
+[SP + 0010] = w(RA);
+V0 = V0 << 05;
+AT = 801621f4;
+AT = AT + V0;
+A0 = hu[AT + 0000];
 800CDE14	jal    funcbba84 [$800bba84]
-800CDE18	addu   a2, zero, zero
-800CDE1C	lui    v0, $8016
-800CDE20	lh     v0, $90d4(v0)
-800CDE24	lui    a0, $8016
-800CDE28	lbu    a0, $90cc(a0)
-800CDE2C	sll    v0, v0, $05
-800CDE30	lui    at, $8016
-800CDE34	addiu  at, at, $21f2
-800CDE38	addu   at, at, v0
-800CDE3C	lh     a1, $0000(at)
+A2 = 0;
+V0 = h[801590d4];
+A0 = bu[801590cc];
+V0 = V0 << 05;
+AT = 801621f2;
+AT = AT + V0;
+A1 = h[AT + 0000];
 800CDE40	jal    funcd7178 [$800d7178]
 800CDE44	nop
-800CDE48	lui    v0, $8016
-800CDE4C	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CDE50	addiu  v1, zero, $ffff (=-$1)
-800CDE54	sll    v0, v0, $05
-800CDE58	lui    at, $8016
-800CDE5C	addiu  at, at, $21f0
-800CDE60	addu   at, at, v0
-800CDE64	sh     v1, $0000(at)
-800CDE68	lw     ra, $0010(sp)
-800CDE6C	addiu  sp, sp, $0018
+V0 = V0 << 05;
+AT = 801621f0;
+AT = AT + V0;
+[AT + 0000] = h(V1);
+RA = w[SP + 0010];
+SP = SP + 0018;
 800CDE70	jr     ra 
 800CDE74	nop
 ////////////////////////////////
 // funccde78
-800CDE78	lui    v0, $8016
-800CDE7C	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CDE80	addiu  sp, sp, $ffe8 (=-$18)
-800CDE84	sw     ra, $0010(sp)
-800CDE88	sll    a0, v0, $05
-800CDE8C	lui    v0, $8016
-800CDE90	lbu    v0, $90cc(v0)
-800CDE94	lui    at, $8016
-800CDE98	addiu  at, at, $21f8
-800CDE9C	addu   at, at, a0
-800CDEA0	lh     v1, $0000(at)
-800CDEA4	sll    v0, v0, $03
-800CDEA8	sll    v1, v1, $03
-800CDEAC	lui    at, $8015
-800CDEB0	addiu  at, at, $16fc
-800CDEB4	addu   at, at, v0
-800CDEB8	lh     v0, $0000(at)
-800CDEBC	lui    at, $8015
-800CDEC0	addiu  at, at, $16fc
-800CDEC4	addu   at, at, v1
-800CDEC8	lh     v1, $0000(at)
+[SP + 0010] = w(RA);
+A0 = V0 << 05;
+V0 = bu[801590cc];
+AT = 801621f8;
+AT = AT + A0;
+V1 = h[AT + 0000];
+V0 = V0 << 03;
+V1 = V1 << 03;
+AT = 801516fc;
+AT = AT + V0;
+V0 = h[AT + 0000];
+AT = 801516fc;
+AT = AT + V1;
+V1 = h[AT + 0000];
 800CDECC	nop
-800CDED0	slt    v0, v0, v1
+V0 = V0 < V1;
 800CDED4	beq    v0, zero, Lcdf04 [$800cdf04]
 800CDED8	nop
-800CDEDC	lui    at, $8016
-800CDEE0	addiu  at, at, $2204
-800CDEE4	addu   at, at, a0
-800CDEE8	lw     v0, $0000(at)
+AT = 80162204;
+AT = AT + A0;
+V0 = w[AT + 0000];
 800CDEEC	nop
-800CDEF0	ori    v0, v0, $0100
-800CDEF4	lui    at, $8016
-800CDEF8	addiu  at, at, $2204
-800CDEFC	addu   at, at, a0
-800CDF00	sw     v0, $0000(at)
+V0 = V0 | 0100;
+AT = 80162204;
+AT = AT + A0;
+[AT + 0000] = w(V0);
 
 Lcdf04:	; 800CDF04
-800CDF04	lui    v0, $8016
-800CDF08	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CDF0C	nop
-800CDF10	sll    v0, v0, $05
-800CDF14	lui    at, $8016
-800CDF18	addiu  at, at, $21f8
-800CDF1C	addu   at, at, v0
-800CDF20	lh     a0, $0000(at)
-800CDF24	lui    at, $8016
-800CDF28	addiu  at, at, $2204
-800CDF2C	addu   at, at, v0
-800CDF30	lw     a1, $0000(at)
+V0 = V0 << 05;
+AT = 801621f8;
+AT = AT + V0;
+A0 = h[AT + 0000];
+AT = 80162204;
+AT = AT + V0;
+A1 = w[AT + 0000];
 800CDF34	jal    funcd4d4c [$800d4d4c]
 800CDF38	nop
-800CDF3C	lui    v0, $8016
-800CDF40	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CDF44	addiu  v1, zero, $ffff (=-$1)
-800CDF48	sll    v0, v0, $05
-800CDF4C	lui    at, $8016
-800CDF50	addiu  at, at, $21f0
-800CDF54	addu   at, at, v0
-800CDF58	sh     v1, $0000(at)
-800CDF5C	lw     ra, $0010(sp)
-800CDF60	addiu  sp, sp, $0018
+V0 = V0 << 05;
+AT = 801621f0;
+AT = AT + V0;
+[AT + 0000] = h(V1);
+RA = w[SP + 0010];
+SP = SP + 0018;
 800CDF64	jr     ra 
 800CDF68	nop
 ////////////////////////////////
 // funccdf6c
 800CDF6C	addiu  sp, sp, $ffe8 (=-$18)
-800CDF70	sw     s0, $0010(sp)
-800CDF74	addu   s0, a0, zero
-800CDF78	ori    a0, zero, $0014
-800CDF7C	sll    a1, a1, $10
-800CDF80	sra    a1, a1, $10
-800CDF84	sw     ra, $0014(sp)
+[SP + 0010] = w(S0);
+S0 = A0;
+A0 = 0014;
+A1 = A1 << 10;
+A1 = A1 >> 10;
+[SP + 0014] = w(RA);
 800CDF88	jal    funcbba84 [$800bba84]
-800CDF8C	addu   a2, zero, zero
-800CDF90	addu   a0, s0, zero
-800CDF94	ori    a1, zero, $0001
+A2 = 0;
+A0 = S0;
+A1 = 0001;
 800CDF98	jal    funcd58d0 [$800d58d0]
-800CDF9C	ori    a2, zero, $0001
-800CDFA0	lui    a0, $8010
-800CDFA4	lbu    a0, $a6d4(a0)
+A2 = 0001;
+A0 = bu[800fa6d4];
 800CDFA8	jal    funcd4d4c [$800d4d4c]
-800CDFAC	ori    a1, zero, $002c
-800CDFB0	lw     ra, $0014(sp)
-800CDFB4	lw     s0, $0010(sp)
-800CDFB8	addiu  sp, sp, $0018
+A1 = 002c;
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
 800CDFBC	jr     ra 
 800CDFC0	nop
 ////////////////////////////////
 // funccdfc4
-800CDFC4	lui    v0, $8016
-800CDFC8	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CDFCC	addiu  sp, sp, $ffe0 (=-$20)
-800CDFD0	sw     ra, $0018(sp)
-800CDFD4	sll    a0, v0, $05
-800CDFD8	lui    at, $8016
-800CDFDC	addiu  at, at, $21f4
-800CDFE0	addu   at, at, a0
-800CDFE4	lh     v0, $0000(at)
+[SP + 0018] = w(RA);
+A0 = V0 << 05;
+AT = 801621f4;
+AT = AT + A0;
+V0 = h[AT + 0000];
 800CDFE8	nop
 800CDFEC	bne    v0, zero, Lce034 [$800ce034]
-800CDFF0	addu   v1, v0, zero
-800CDFF4	ori    a0, zero, $00fa
-800CDFF8	ori    a1, zero, $00fa
+V1 = V0;
+A0 = 00fa;
+A1 = 00fa;
 800CDFFC	jal    funcc4fc8 [$800c4fc8]
-800CE000	ori    a2, zero, $00fa
-800CE004	lui    v1, $8016
-800CE008	lh     v1, $90d4(v1)
-800CE00C	lui    at, $8016
-800CE010	sw     v0, $3c74(at)
+A2 = 00fa;
+V1 = h[801590d4];
+[80163c74] = w(V0);
 800CE014	addiu  v0, zero, $ffff (=-$1)
-800CE018	sll    v1, v1, $05
-800CE01C	lui    at, $8016
-800CE020	addiu  at, at, $21f0
-800CE024	addu   at, at, v1
-800CE028	sh     v0, $0000(at)
+V1 = V1 << 05;
+AT = 801621f0;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 800CE02C	j      Lce048 [$800ce048]
 800CE030	nop
 
 Lce034:	; 800CE034
 800CE034	addiu  v0, v1, $ffff (=-$1)
-800CE038	lui    at, $8016
-800CE03C	addiu  at, at, $21f4
-800CE040	addu   at, at, a0
-800CE044	sh     v0, $0000(at)
+AT = 801621f4;
+AT = AT + A0;
+[AT + 0000] = h(V0);
 
 Lce048:	; 800CE048
-800CE048	lw     ra, $0018(sp)
-800CE04C	addiu  sp, sp, $0020
+RA = w[SP + 0018];
+SP = SP + 0020;
 800CE050	jr     ra 
 800CE054	nop
 ////////////////////////////////
 // funcce058
-800CE058	sll    a0, a0, $10
-800CE05C	sra    a0, a0, $10
-800CE060	sll    v0, a0, $03
-800CE064	subu   v0, v0, a0
-800CE068	sll    v0, v0, $02
-800CE06C	addu   v0, v0, a0
-800CE070	sll    v0, v0, $02
-800CE074	lui    v1, $8015
-800CE078	addiu  v1, v1, $1200
-800CE07C	addu   v1, v0, v1
-800CE080	ori    a0, zero, $1000
-800CE084	sh     a0, $003c(v1)
-800CE088	sh     a0, $003a(v1)
-800CE08C	lui    at, $8015
-800CE090	addiu  at, at, $120c
-800CE094	addu   at, at, v0
-800CE098	lhu    v1, $0000(at)
-800CE09C	lui    at, $8015
-800CE0A0	addiu  at, at, $1238
-800CE0A4	addu   at, at, v0
-800CE0A8	sh     a0, $0000(at)
-800CE0AC	ori    v1, v1, $0020
-800CE0B0	lui    at, $8015
-800CE0B4	addiu  at, at, $120c
-800CE0B8	addu   at, at, v0
-800CE0BC	sh     v1, $0000(at)
+A0 = A0 << 10;
+A0 = A0 >> 10;
+V0 = A0 << 03;
+V0 = V0 - A0;
+V0 = V0 << 02;
+V0 = V0 + A0;
+V0 = V0 << 02;
+V1 = 80151200;
+V1 = V0 + V1;
+A0 = 1000;
+[V1 + 003c] = h(A0);
+[V1 + 003a] = h(A0);
+AT = 8015120c;
+AT = AT + V0;
+V1 = hu[AT + 0000];
+AT = 80151238;
+AT = AT + V0;
+[AT + 0000] = h(A0);
+V1 = V1 | 0020;
+AT = 8015120c;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 800CE0C0	jr     ra 
 800CE0C4	nop
 ////////////////////////////////
 // funcce0c8
 800CE0C8	addiu  sp, sp, $ffe0 (=-$20)
-800CE0CC	addu   v0, a0, zero
-800CE0D0	sll    a0, v0, $10
-800CE0D4	sra    a0, a0, $10
-800CE0D8	sw     s1, $0014(sp)
-800CE0DC	addu   s1, v0, zero
-800CE0E0	sw     s0, $0010(sp)
-800CE0E4	addu   s0, a1, zero
-800CE0E8	sw     s2, $0018(sp)
-800CE0EC	sw     ra, $001c(sp)
+V0 = A0;
+A0 = V0 << 10;
+A0 = A0 >> 10;
+[SP + 0014] = w(S1);
+S1 = V0;
+[SP + 0010] = w(S0);
+S0 = A1;
+[SP + 0018] = w(S2);
+[SP + 001c] = w(RA);
 800CE0F0	jal    funcce058 [$800ce058]
-800CE0F4	addu   s2, a2, zero
-800CE0F8	andi   s0, s0, $00ff
-800CE0FC	sltiu  v0, s0, $0013
+S2 = A2;
+S0 = S0 & 00ff;
+V0 = S0 < 0013;
 800CE100	beq    v0, zero, Lce200 [$800ce200]
-800CE104	sll    v0, s0, $02
-800CE108	lui    at, $800a
-800CE10C	addiu  at, at, $0ae8
-800CE110	addu   at, at, v0
-800CE114	lw     v0, $0000(at)
+V0 = S0 << 02;
+AT = 800a0ae8;
+AT = AT + V0;
+V0 = w[AT + 0000];
 800CE118	nop
 800CE11C	jr     v0 
 800CE120	nop
 
-800CE124	lui    a0, $800c
-800CE128	addiu  a0, a0, $3578
+A0 = 800c3578;
 800CE12C	j      Lce1d0 [$800ce1d0]
 800CE130	nop
-800CE134	lui    a0, $800c
-800CE138	addiu  a0, a0, $4814
+A0 = 800c4814;
 800CE13C	j      Lce1d0 [$800ce1d0]
 800CE140	nop
-800CE144	lui    a0, $800c
-800CE148	addiu  a0, a0, $3950
+A0 = 800c3950;
 800CE14C	jal    funcbbf7c [$800bbf7c]
 800CE150	nop
-800CE154	sll    v0, v0, $05
-800CE158	andi   v1, s2, $00ff
-800CE15C	lui    at, $8016
-800CE160	addiu  at, at, $20b2
-800CE164	addu   at, at, v0
-800CE168	sh     v1, $0000(at)
-800CE16C	ori    v1, zero, $00f8
-800CE170	lui    at, $8016
-800CE174	addiu  at, at, $20b4
-800CE178	addu   at, at, v0
-800CE17C	sh     s1, $0000(at)
-800CE180	lui    at, $8016
-800CE184	addiu  at, at, $20b6
-800CE188	addu   at, at, v0
-800CE18C	sh     v1, $0000(at)
+V0 = V0 << 05;
+V1 = S2 & 00ff;
+AT = 801620b2;
+AT = AT + V0;
+[AT + 0000] = h(V1);
+V1 = 00f8;
+AT = 801620b4;
+AT = AT + V0;
+[AT + 0000] = h(S1);
+AT = 801620b6;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 800CE190	j      Lce200 [$800ce200]
 800CE194	nop
-800CE198	lui    a0, $800c
-800CE19C	addiu  a0, a0, $3ca8
+A0 = 800c3ca8;
 800CE1A0	j      Lce1d0 [$800ce1d0]
 800CE1A4	nop
-800CE1A8	lui    a0, $800c
-800CE1AC	addiu  a0, a0, $328c
+A0 = 800c328c;
 800CE1B0	j      Lce1d0 [$800ce1d0]
 800CE1B4	nop
-800CE1B8	lui    a0, $800c
-800CE1BC	addiu  a0, a0, $40f4
+A0 = 800c40f4;
 800CE1C0	j      Lce1d0 [$800ce1d0]
 800CE1C4	nop
-800CE1C8	lui    a0, $800c
-800CE1CC	addiu  a0, a0, $44b4
+A0 = 800c44b4;
 
 Lce1d0:	; 800CE1D0
 800CE1D0	jal    funcbbeac [$800bbeac]
 800CE1D4	nop
-800CE1D8	sll    v0, v0, $05
-800CE1DC	andi   v1, s2, $00ff
-800CE1E0	lui    at, $8016
-800CE1E4	addiu  at, at, $2980
-800CE1E8	addu   at, at, v0
-800CE1EC	sh     s1, $0000(at)
-800CE1F0	lui    at, $8016
-800CE1F4	addiu  at, at, $297e
-800CE1F8	addu   at, at, v0
-800CE1FC	sh     v1, $0000(at)
+V0 = V0 << 05;
+V1 = S2 & 00ff;
+AT = 80162980;
+AT = AT + V0;
+[AT + 0000] = h(S1);
+AT = 8016297e;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 
 Lce200:	; 800CE200
-800CE200	lw     ra, $001c(sp)
-800CE204	lw     s2, $0018(sp)
-800CE208	lw     s1, $0014(sp)
-800CE20C	lw     s0, $0010(sp)
-800CE210	addiu  sp, sp, $0020
+RA = w[SP + 001c];
+S2 = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0020;
 800CE214	jr     ra 
 800CE218	nop
 ////////////////////////////////
@@ -5572,197 +5068,169 @@ if (V1 < 13)
 
 ////////////////////////////////
 // funcce384
-800CE384	lui    v0, $8016
-800CE388	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CE38C	nop
-800CE390	sll    a0, v0, $05
-800CE394	lui    at, $8016
-800CE398	addiu  at, at, $21f6
-800CE39C	addu   at, at, a0
-800CE3A0	lh     v1, $0000(at)
+A0 = V0 << 05;
+AT = 801621f6;
+AT = AT + A0;
+V1 = h[AT + 0000];
 800CE3A4	nop
-800CE3A8	sll    v0, v1, $03
-800CE3AC	subu   v0, v0, v1
-800CE3B0	sll    v0, v0, $02
-800CE3B4	addu   v0, v0, v1
-800CE3B8	sll    v0, v0, $02
-800CE3BC	lui    at, $8015
-800CE3C0	addiu  at, at, $1234
-800CE3C4	addu   at, at, v0
-800CE3C8	lbu    v1, $0000(at)
-800CE3CC	lui    at, $8016
-800CE3D0	addiu  at, at, $21f2
-800CE3D4	addu   at, at, a0
-800CE3D8	lh     v0, $0000(at)
+V0 = V1 << 03;
+V0 = V0 - V1;
+V0 = V0 << 02;
+V0 = V0 + V1;
+V0 = V0 << 02;
+AT = 80151234;
+AT = AT + V0;
+V1 = bu[AT + 0000];
+AT = 801621f2;
+AT = AT + A0;
+V0 = h[AT + 0000];
 800CE3DC	nop
 800CE3E0	beq    v1, v0, Lce404 [$800ce404]
 800CE3E4	addiu  sp, sp, $fff8 (=-$8)
 800CE3E8	addiu  v0, zero, $ffff (=-$1)
-800CE3EC	lui    at, $8016
-800CE3F0	addiu  at, at, $21f0
-800CE3F4	addu   at, at, a0
-800CE3F8	sh     v0, $0000(at)
+AT = 801621f0;
+AT = AT + A0;
+[AT + 0000] = h(V0);
 800CE3FC	j      Lce62c [$800ce62c]
 800CE400	nop
 
 Lce404:	; 800CE404
-800CE404	lui    at, $8016
-800CE408	addiu  at, at, $21f4
-800CE40C	addu   at, at, a0
-800CE410	lh     v0, $0000(at)
+AT = 801621f4;
+AT = AT + A0;
+V0 = h[AT + 0000];
 800CE414	nop
 800CE418	beq    v0, zero, Lce43c [$800ce43c]
-800CE41C	addu   v1, v0, zero
+V1 = V0;
 800CE420	addiu  v0, v1, $ffff (=-$1)
-800CE424	lui    at, $8016
-800CE428	addiu  at, at, $21f4
-800CE42C	addu   at, at, a0
-800CE430	sh     v0, $0000(at)
+AT = 801621f4;
+AT = AT + A0;
+[AT + 0000] = h(V0);
 800CE434	j      Lce62c [$800ce62c]
 800CE438	nop
 
 Lce43c:	; 800CE43C
-800CE43C	ori    t0, zero, $0001
+T0 = 0001;
 
 Lce440:	; 800CE440
-800CE440	lui    v1, $8016
-800CE444	lh     v1, $90d4(v1)
+V1 = h[801590d4];
 800CE448	nop
-800CE44C	sll    v1, v1, $05
-800CE450	lui    at, $8016
-800CE454	addiu  at, at, $2208
-800CE458	addu   at, at, v1
-800CE45C	lbu    a0, $0000(at)
-800CE460	lui    at, $8016
-800CE464	addiu  at, at, $2200
-800CE468	addu   at, at, v1
-800CE46C	lw     a3, $0000(at)
-800CE470	addiu  v0, a0, $0001
-800CE474	addu   a0, a0, a3
-800CE478	lui    at, $8016
-800CE47C	addiu  at, at, $2208
-800CE480	addu   at, at, v1
-800CE484	sb     v0, $0000(at)
-800CE488	lbu    v1, $0000(a0)
-800CE48C	ori    v0, zero, $00fe
+V1 = V1 << 05;
+AT = 80162208;
+AT = AT + V1;
+A0 = bu[AT + 0000];
+AT = 80162200;
+AT = AT + V1;
+A3 = w[AT + 0000];
+V0 = A0 + 0001;
+A0 = A0 + A3;
+AT = 80162208;
+AT = AT + V1;
+[AT + 0000] = b(V0);
+V1 = bu[A0 + 0000];
+V0 = 00fe;
 800CE490	beq    v1, v0, Lce5d4 [$800ce5d4]
-800CE494	slti   v0, v1, $00ff
+V0 = V1 < 00ff;
 800CE498	beq    v0, zero, Lce4b0 [$800ce4b0]
-800CE49C	ori    v0, zero, $00fd
+V0 = 00fd;
 800CE4A0	beq    v1, v0, Lce4c4 [$800ce4c4]
-800CE4A4	addu   t0, zero, zero
+T0 = 0;
 800CE4A8	j      Lce620 [$800ce620]
 800CE4AC	nop
 
 Lce4b0:	; 800CE4B0
-800CE4B0	ori    v0, zero, $00ff
+V0 = 00ff;
 800CE4B4	beq    v1, v0, Lce5fc [$800ce5fc]
 800CE4B8	addiu  v0, zero, $ffff (=-$1)
 800CE4BC	j      Lce620 [$800ce620]
-800CE4C0	addu   t0, zero, zero
+T0 = 0;
 
 Lce4c4:	; 800CE4C4
-800CE4C4	lui    v1, $8016
-800CE4C8	lh     v1, $90d4(v1)
+V1 = h[801590d4];
 800CE4CC	nop
-800CE4D0	sll    v1, v1, $05
-800CE4D4	lui    at, $8016
-800CE4D8	addiu  at, at, $2208
-800CE4DC	addu   at, at, v1
-800CE4E0	lbu    a0, $0000(at)
+V1 = V1 << 05;
+AT = 80162208;
+AT = AT + V1;
+A0 = bu[AT + 0000];
 800CE4E4	nop
-800CE4E8	addiu  v0, a0, $0001
-800CE4EC	lui    at, $8016
-800CE4F0	addiu  at, at, $2208
-800CE4F4	addu   at, at, v1
-800CE4F8	sb     v0, $0000(at)
-800CE4FC	lui    v1, $8016
-800CE500	lh     v1, $90d4(v1)
-800CE504	addu   a0, a0, a3
-800CE508	sll    v1, v1, $05
-800CE50C	lui    at, $8016
-800CE510	addiu  at, at, $2208
-800CE514	addu   at, at, v1
-800CE518	lbu    a1, $0000(at)
-800CE51C	lbu    a2, $0000(a0)
-800CE520	addiu  v0, a1, $0001
-800CE524	addu   a1, a1, a3
-800CE528	lui    at, $8016
-800CE52C	addiu  at, at, $2208
-800CE530	addu   at, at, v1
-800CE534	sb     v0, $0000(at)
-800CE538	lui    a0, $8016
-800CE53C	lh     a0, $90d4(a0)
-800CE540	lbu    a1, $0000(a1)
-800CE544	sll    a0, a0, $05
-800CE548	lui    at, $8016
-800CE54C	addiu  at, at, $2208
-800CE550	addu   at, at, a0
-800CE554	lbu    v1, $0000(at)
-800CE558	sll    a1, a1, $08
-800CE55C	addiu  v0, v1, $0001
-800CE560	addu   v1, v1, a3
-800CE564	lui    at, $8016
-800CE568	addiu  at, at, $2208
-800CE56C	addu   at, at, a0
-800CE570	sb     v0, $0000(at)
-800CE574	lui    v0, $8016
-800CE578	lh     v0, $90d4(v0)
-800CE57C	lbu    v1, $0000(v1)
-800CE580	sll    v0, v0, $05
-800CE584	lui    at, $8016
-800CE588	addiu  at, at, $21f4
-800CE58C	addu   at, at, a0
-800CE590	sh     v1, $0000(at)
-800CE594	lui    at, $8016
-800CE598	addiu  at, at, $21f6
-800CE59C	addu   at, at, v0
-800CE5A0	lh     v1, $0000(at)
-800CE5A4	or     a2, a2, a1
-800CE5A8	sll    v0, v1, $03
-800CE5AC	subu   v0, v0, v1
-800CE5B0	sll    v0, v0, $02
-800CE5B4	addu   v0, v0, v1
-800CE5B8	sll    v0, v0, $02
-800CE5BC	lui    at, $8015
-800CE5C0	addiu  at, at, $122e
-800CE5C4	addu   at, at, v0
-800CE5C8	sh     a2, $0000(at)
+V0 = A0 + 0001;
+AT = 80162208;
+AT = AT + V1;
+[AT + 0000] = b(V0);
+V1 = h[801590d4];
+A0 = A0 + A3;
+V1 = V1 << 05;
+AT = 80162208;
+AT = AT + V1;
+A1 = bu[AT + 0000];
+A2 = bu[A0 + 0000];
+V0 = A1 + 0001;
+A1 = A1 + A3;
+AT = 80162208;
+AT = AT + V1;
+[AT + 0000] = b(V0);
+A0 = h[801590d4];
+A1 = bu[A1 + 0000];
+A0 = A0 << 05;
+AT = 80162208;
+AT = AT + A0;
+V1 = bu[AT + 0000];
+A1 = A1 << 08;
+V0 = V1 + 0001;
+V1 = V1 + A3;
+AT = 80162208;
+AT = AT + A0;
+[AT + 0000] = b(V0);
+V0 = h[801590d4];
+V1 = bu[V1 + 0000];
+V0 = V0 << 05;
+AT = 801621f4;
+AT = AT + A0;
+[AT + 0000] = h(V1);
+AT = 801621f6;
+AT = AT + V0;
+V1 = h[AT + 0000];
+A2 = A2 | A1;
+V0 = V1 << 03;
+V0 = V0 - V1;
+V0 = V0 << 02;
+V0 = V0 + V1;
+V0 = V0 << 02;
+AT = 8015122e;
+AT = AT + V0;
+[AT + 0000] = h(A2);
 800CE5CC	j      Lce620 [$800ce620]
 800CE5D0	nop
 
 Lce5d4:	; 800CE5D4
-800CE5D4	lui    v0, $8016
-800CE5D8	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CE5DC	nop
-800CE5E0	sll    v0, v0, $05
-800CE5E4	lui    at, $8016
-800CE5E8	addiu  at, at, $2208
-800CE5EC	addu   at, at, v0
-800CE5F0	sb     zero, $0000(at)
+V0 = V0 << 05;
+AT = 80162208;
+AT = AT + V0;
+[AT + 0000] = b(0);
 800CE5F4	j      Lce624 [$800ce624]
-800CE5F8	andi   v0, t0, $00ff
+V0 = T0 & 00ff;
 
 Lce5fc:	; 800CE5FC
-800CE5FC	lui    v1, $8016
-800CE600	lh     v1, $90d4(v1)
+V1 = h[801590d4];
 800CE604	nop
-800CE608	sll    v1, v1, $05
-800CE60C	lui    at, $8016
-800CE610	addiu  at, at, $21f0
-800CE614	addu   at, at, v1
-800CE618	sh     v0, $0000(at)
-800CE61C	addu   t0, zero, zero
+V1 = V1 << 05;
+AT = 801621f0;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+T0 = 0;
 
 Lce620:	; 800CE620
-800CE620	andi   v0, t0, $00ff
+V0 = T0 & 00ff;
 
 Lce624:	; 800CE624
 800CE624	bne    v0, zero, Lce440 [$800ce440]
 800CE628	nop
 
 Lce62c:	; 800CE62C
-800CE62C	addiu  sp, sp, $0008
+SP = SP + 0008;
 800CE630	jr     ra 
 800CE634	nop
 ////////////////////////////////
@@ -5771,79 +5239,66 @@ Lce62c:	; 800CE62C
 
 ////////////////////////////////
 // funcce638
-800CE638	lui    v0, $8016
-800CE63C	lh     v0, $90d4(v0)
-800CE648	sll    a0, v0, $05
-800CE64C	lui    at, $8016
-800CE650	addiu  at, at, $21f2
-800CE654	addu   at, at, a0
-800CE658	lh     v1, $0000(at)
+V0 = h[801590d4];
+A0 = V0 << 05;
+AT = 801621f2;
+AT = AT + A0;
+V1 = h[AT + 0000];
 800CE65C	nop
 800CE660	beq    v1, zero, Lce678 [$800ce678]
-800CE664	ori    v0, zero, $0001
+V0 = 0001;
 800CE668	beq    v1, v0, Lce6b0 [$800ce6b0]
 800CE66C	nop
 800CE670	j      Lce74c [$800ce74c]
 800CE674	nop
 
 Lce678:	; 800CE678
-800CE678	lui    at, $8016
-800CE67C	addiu  at, at, $21f2
-800CE680	addu   at, at, a0
-800CE684	lhu    v0, $0000(at)
-800CE688	ori    v1, zero, $0003
-800CE68C	lui    at, $8016
-800CE690	addiu  at, at, $21f4
-800CE694	addu   at, at, a0
-800CE698	sh     v1, $0000(at)
-800CE69C	addiu  v0, v0, $0001
-800CE6A0	lui    at, $8016
-800CE6A4	addiu  at, at, $21f2
-800CE6A8	addu   at, at, a0
-800CE6AC	sh     v0, $0000(at)
+AT = 801621f2;
+AT = AT + A0;
+V0 = hu[AT + 0000];
+V1 = 0003;
+AT = 801621f4;
+AT = AT + A0;
+[AT + 0000] = h(V1);
+V0 = V0 + 0001;
+AT = 801621f2;
+AT = AT + A0;
+[AT + 0000] = h(V0);
 
 Lce6b0:	; 800CE6B0
-800CE6B0	lui    v0, $8016
-800CE6B4	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800CE6B8	nop
-800CE6BC	sll    v1, v0, $05
-800CE6C0	lui    at, $8016
-800CE6C4	addiu  at, at, $21f4
-800CE6C8	addu   at, at, v1
-800CE6CC	lh     v0, $0000(at)
+V1 = V0 << 05;
+AT = 801621f4;
+AT = AT + V1;
+V0 = h[AT + 0000];
 800CE6D0	nop
 800CE6D4	bne    v0, zero, Lce714 [$800ce714]
 800CE6D8	addiu  v0, zero, $ffff (=-$1)
-800CE6DC	lui    at, $8016
-800CE6E0	addiu  at, at, $21fa
-800CE6E4	addu   at, at, v1
-800CE6E8	lh     a0, $0000(at)
-800CE6EC	lui    at, $8016
-800CE6F0	addiu  at, at, $21f8
-800CE6F4	addu   at, at, v1
-800CE6F8	lh     a1, $0000(at)
-800CE6FC	lui    at, $8016
-800CE700	addiu  at, at, $21f0
-800CE704	addu   at, at, v1
-800CE708	sh     v0, $0000(at)
+AT = 801621fa;
+AT = AT + V1;
+A0 = h[AT + 0000];
+AT = 801621f8;
+AT = AT + V1;
+A1 = h[AT + 0000];
+AT = 801621f0;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 800CE70C	jal    funca3534 [$800a3534]
 800CE710	nop
 
 Lce714:	; 800CE714
-800CE714	lui    v1, $8016
-800CE718	lh     v1, $90d4(v1)
+V1 = h[801590d4];
 800CE71C	nop
-800CE720	sll    v1, v1, $05
-800CE724	lui    at, $8016
-800CE728	addiu  at, at, $21f4
-800CE72C	addu   at, at, v1
-800CE730	lhu    v0, $0000(at)
+V1 = V1 << 05;
+AT = 801621f4;
+AT = AT + V1;
+V0 = hu[AT + 0000];
 800CE734	nop
 800CE738	addiu  v0, v0, $ffff (=-$1)
-800CE73C	lui    at, $8016
-800CE740	addiu  at, at, $21f4
-800CE744	addu   at, at, v1
-800CE748	sh     v0, $0000(at)
+AT = 801621f4;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 
 Lce74c:	; 800CE74C
 ////////////////////////////////
@@ -5870,110 +5325,90 @@ else if ((h[80163608] >> A0) & 1)
 
 ////////////////////////////////
 // funcce7e0
-800CE7E0	lui    v0, $8015
-800CE7E4	lh     v0, $169c(v0)
+V0 = h[8015169c];
 800CE7E8	addiu  sp, sp, $ffe0 (=-$20)
-800CE7EC	sw     ra, $0018(sp)
-800CE7F0	sll    v1, v0, $05
-800CE7F4	lui    at, $8016
-800CE7F8	addiu  at, at, $297c
-800CE7FC	addu   at, at, v1
-800CE800	lh     v0, $0000(at)
+[SP + 0018] = w(RA);
+V1 = V0 << 05;
+AT = 8016297c;
+AT = AT + V1;
+V0 = h[AT + 0000];
 800CE804	nop
 800CE808	bne    v0, zero, Lce94c [$800ce94c]
-800CE80C	addu   a0, v0, zero
-800CE810	lui    at, $8016
-800CE814	addiu  at, at, $297e
-800CE818	addu   at, at, v1
-800CE81C	lh     v1, $0000(at)
+A0 = V0;
+AT = 8016297e;
+AT = AT + V1;
+V1 = h[AT + 0000];
 800CE820	addiu  v0, zero, $ffff (=-$1)
 800CE824	beq    v1, v0, Lce924 [$800ce924]
 800CE828	nop
 800CE82C	jal    funcce75c [$800ce75c]
 800CE830	nop
-800CE834	lui    a0, $800c
-800CE838	addiu  a0, a0, $2928
+A0 = 800c2928;
 800CE83C	jal    funcbc04c [$800bc04c]
 800CE840	nop
-800CE844	lui    a0, $8015
-800CE848	lh     a0, $169c(a0)
+A0 = h[8015169c];
 800CE84C	nop
-800CE850	sll    a0, a0, $05
-800CE854	lui    at, $8016
-800CE858	addiu  at, at, $2986
-800CE85C	addu   at, at, a0
-800CE860	lh     v1, $0000(at)
-800CE864	sll    v0, v0, $05
-800CE868	lui    at, $8016
-800CE86C	addiu  at, at, $2204
-800CE870	addu   at, at, v0
-800CE874	sw     v1, $0000(at)
-800CE878	lui    at, $8016
-800CE87C	addiu  at, at, $2982
-800CE880	addu   at, at, a0
-800CE884	lhu    v1, $0000(at)
+A0 = A0 << 05;
+AT = 80162986;
+AT = AT + A0;
+V1 = h[AT + 0000];
+V0 = V0 << 05;
+AT = 80162204;
+AT = AT + V0;
+[AT + 0000] = w(V1);
+AT = 80162982;
+AT = AT + A0;
+V1 = hu[AT + 0000];
 800CE888	nop
-800CE88C	lui    at, $8016
-800CE890	addiu  at, at, $21fe
-800CE894	addu   at, at, v0
-800CE898	sh     v1, $0000(at)
-800CE89C	lui    at, $8016
-800CE8A0	addiu  at, at, $2980
-800CE8A4	addu   at, at, a0
-800CE8A8	lh     v1, $0000(at)
-800CE8AC	lui    a0, $800d
-800CE8B0	addiu  a0, a0, $e638 (=-$19c8)
-800CE8B4	lui    at, $8016
-800CE8B8	addiu  at, at, $2200
-800CE8BC	addu   at, at, v0
-800CE8C0	sw     v1, $0000(at)
+AT = 801621fe;
+AT = AT + V0;
+[AT + 0000] = h(V1);
+AT = 80162980;
+AT = AT + A0;
+V1 = h[AT + 0000];
+A0 = 800ce638;
+AT = 80162200;
+AT = AT + V0;
+[AT + 0000] = w(V1);
 800CE8C4	jal    funcbc04c [$800bc04c]
 800CE8C8	nop
-800CE8CC	lui    v1, $8015
-800CE8D0	lh     v1, $169c(v1)
+V1 = h[8015169c];
 800CE8D4	nop
-800CE8D8	sll    v1, v1, $05
-800CE8DC	lui    at, $8016
-800CE8E0	addiu  at, at, $2991
-800CE8E4	addu   at, at, v1
-800CE8E8	lbu    a0, $0000(at)
-800CE8EC	sll    v0, v0, $05
-800CE8F0	lui    at, $8016
-800CE8F4	addiu  at, at, $21fa
-800CE8F8	addu   at, at, v0
-800CE8FC	sh     a0, $0000(at)
-800CE900	lui    at, $8016
-800CE904	addiu  at, at, $297e
-800CE908	addu   at, at, v1
-800CE90C	lhu    v1, $0000(at)
+V1 = V1 << 05;
+AT = 80162991;
+AT = AT + V1;
+A0 = bu[AT + 0000];
+V0 = V0 << 05;
+AT = 801621fa;
+AT = AT + V0;
+[AT + 0000] = h(A0);
+AT = 8016297e;
+AT = AT + V1;
+V1 = hu[AT + 0000];
 800CE910	nop
-800CE914	lui    at, $8016
-800CE918	addiu  at, at, $21f8
-800CE91C	addu   at, at, v0
-800CE920	sh     v1, $0000(at)
+AT = 801621f8;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 
 Lce924:	; 800CE924
-800CE924	lui    v0, $8015
-800CE928	lh     v0, $169c(v0)
+V0 = h[8015169c];
 800CE92C	addiu  v1, zero, $ffff (=-$1)
-800CE930	sll    v0, v0, $05
-800CE934	lui    at, $8016
-800CE938	addiu  at, at, $2978
-800CE93C	addu   at, at, v0
-800CE940	sh     v1, $0000(at)
+V0 = V0 << 05;
+AT = 80162978;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 800CE944	j      Lce960 [$800ce960]
 800CE948	nop
 
 Lce94c:	; 800CE94C
 800CE94C	addiu  v0, a0, $ffff (=-$1)
-800CE950	lui    at, $8016
-800CE954	addiu  at, at, $297c
-800CE958	addu   at, at, v1
-800CE95C	sh     v0, $0000(at)
+AT = 8016297c;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 
 Lce960:	; 800CE960
-800CE960	lw     ra, $0018(sp)
-800CE964	addiu  sp, sp, $0020
+RA = w[SP + 0018];
+SP = SP + 0020;
 800CE968	jr     ra 
 800CE96C	nop
 ////////////////////////////////
@@ -6094,73 +5529,64 @@ if (target_id != attacker_id)
     {
         [801518e4 + target_id * b9c + 26] = b(0);
 
-        800CED08	ori    v0, zero, $004e
+        V0 = 004e;
         V1 = hu[8016360c + 8]; // enemy id
         if (V1 == 4e) // if enemy id == 4e (NO NAME 12 scene maybe not even used ingame)
         {
-            800CEDC0	ori    v0, zero, $000f
-            800CEDC4	lui    v1, $8016
-            800CEDC8	lbu    v1, $3b38(v1)
+            V0 = 000f;
+            V1 = bu[80163b38];
             800CEDCC	nop
             800CEDD0	bne    v1, v0, Lcee38 [$800cee38]
             800CEDD4	nop
-            800CEDD8	lui    a0, $8016
-            800CEDDC	lbu    a0, $90cc(a0)
+            A0 = bu[801590cc];
             800CEDE0	nop
-            800CEDE4	sll    v1, a0, $01
-            800CEDE8	addu   v1, v1, a0
-            800CEDEC	sll    v0, v1, $05
-            800CEDF0	subu   v0, v0, v1
-            800CEDF4	sll    v0, v0, $03
-            800CEDF8	subu   v0, v0, a0
-            800CEDFC	sll    a0, v0, $02
-            800CEE00	lui    at, $8015
-            800CEE04	addiu  at, at, $1906
-            800CEE08	addu   at, at, a0
-            800CEE0C	lbu    v1, $0000(at)
-            800CEE10	ori    v0, zero, $0006
+            V1 = A0 << 01;
+            V1 = V1 + A0;
+            V0 = V1 << 05;
+            V0 = V0 - V1;
+            V0 = V0 << 03;
+            V0 = V0 - A0;
+            A0 = V0 << 02;
+            AT = 80151906;
+            AT = AT + A0;
+            V1 = bu[AT + 0000];
+            V0 = 0006;
             800CEE14	bne    v1, v0, Lcee38 [$800cee38]
-            800CEE18	ori    v0, zero, $0014
-            800CEE1C	lui    at, $8015
-            800CEE20	addiu  at, at, $1907
-            800CEE24	addu   at, at, a0
-            800CEE28	lbu    v1, $0000(at)
+            V0 = 0014;
+            AT = 80151907;
+            AT = AT + A0;
+            V1 = bu[AT + 0000];
             800CEE2C	nop
             800CEE30	beq    v1, v0, Lcee4c [$800cee4c]
             800CEE34	nop
 
             Lcee38:	; 800CEE38
-            800CEE38	lui    v1, $8010
-            800CEE3C	lbu    v1, $a6d4(v1)
-            800CEE40	ori    v0, zero, $0004
+            V1 = bu[800fa6d4];
+            V0 = 0004;
             800CEE44	bne    v1, v0, Lceeb4 [$800ceeb4]
             800CEE48	nop
 
             Lcee4c:	; 800CEE4C
-            800CEE4C	lui    v0, $8015
-            800CEE50	lh     v0, $169c(v0)
+            V0 = h[8015169c];
             800CEE54	nop
-            800CEE58	sll    v0, v0, $05
-            800CEE5C	lui    at, $8016
-            800CEE60	addiu  at, at, $2980
-            800CEE64	addu   at, at, v0
-            800CEE68	lh     a0, $0000(at)
+            V0 = V0 << 05;
+            AT = 80162980;
+            AT = AT + V0;
+            A0 = h[AT + 0000];
             800CEE6C	nop
-            800CEE70	sll    v1, a0, $01
-            800CEE74	addu   v1, v1, a0
-            800CEE78	sll    v0, v1, $05
-            800CEE7C	subu   v0, v0, v1
-            800CEE80	sll    v0, v0, $03
-            800CEE84	subu   v0, v0, a0
-            800CEE88	sll    v0, v0, $02
-            800CEE8C	ori    v1, zero, $0001
-            800CEE90	lui    at, $8015
-            800CEE94	addiu  at, at, $18e6
-            800CEE98	addu   at, at, v0
-            800CEE9C	sh     v1, $0000(at)
-            800CEEA0	ori    v0, zero, $0005
-            800CEEA4	lui    at, $8016
-            800CEEA8	sb     v0, $36f9(at)
+            V1 = A0 << 01;
+            V1 = V1 + A0;
+            V0 = V1 << 05;
+            V0 = V0 - V1;
+            V0 = V0 << 03;
+            V0 = V0 - A0;
+            V0 = V0 << 02;
+            V1 = 0001;
+            AT = 801518e6;
+            AT = AT + V0;
+            [AT + 0000] = h(V1);
+            V0 = 0005;
+            [801636f9] = b(V0);
         }
         else
         {
@@ -6204,107 +5630,93 @@ if (target_id != attacker_id)
 else
 {
     Lcf124:	; 800CF124
-    800CF124	lui    v0, $8016
-    800CF128	lh     v0, $1de8(v0)
+    V0 = h[80161de8];
     800CF12C	nop
-    800CF130	srav   v0, a1, v0
-    800CF134	andi   v0, v0, $0001
+    V0 = V0 >> A1;
+    V0 = V0 & 0001;
     800CF138	beq    v0, zero, Lcf260 [$800cf260]
-    800CF13C	slti   v0, a1, $0004
+    V0 = A1 < 0004;
     800CF140	bne    v0, zero, Lcf2c0 [$800cf2c0]
-    800CF144	sll    v1, a1, $01
-    800CF148	addu   v1, v1, a1
-    800CF14C	sll    v0, v1, $05
-    800CF150	subu   v0, v0, v1
-    800CF154	sll    v0, v0, $03
-    800CF158	subu   v0, v0, a1
-    800CF15C	sll    v0, v0, $02
-    800CF160	lui    at, $8015
-    800CF164	addiu  at, at, $18e8
-    800CF168	addu   at, at, v0
-    800CF16C	lhu    v1, $0000(at)
+    V1 = A1 << 01;
+    V1 = V1 + A1;
+    V0 = V1 << 05;
+    V0 = V0 - V1;
+    V0 = V0 << 03;
+    V0 = V0 - A1;
+    V0 = V0 << 02;
+    AT = 801518e8;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
     800CF170	nop
-    800CF174	lui    at, $8015
-    800CF178	addiu  at, at, $18e6
-    800CF17C	addu   at, at, v0
-    800CF180	sh     v1, $0000(at)
+    AT = 801518e6;
+    AT = AT + V0;
+    [AT + 0000] = h(V1);
     A0 = h[80162978 + index * 20 + 8];
-    800CF198	sll    v1, a0, $01
-    800CF19C	addu   v1, v1, a0
-    800CF1A0	sll    v0, v1, $05
-    800CF1A4	subu   v0, v0, v1
-    800CF1A8	sll    v0, v0, $03
-    800CF1AC	subu   v0, v0, a0
-    800CF1B0	sll    v0, v0, $02
-    800CF1B4	lui    at, $8015
-    800CF1B8	addiu  at, at, $1922
-    800CF1BC	addu   at, at, v0
-    800CF1C0	lbu    v1, $0000(at)
+    V1 = A0 << 01;
+    V1 = V1 + A0;
+    V0 = V1 << 05;
+    V0 = V0 - V1;
+    V0 = V0 << 03;
+    V0 = V0 - A0;
+    V0 = V0 << 02;
+    AT = 80151922;
+    AT = AT + V0;
+    V1 = bu[AT + 0000];
     800CF1C4	nop
-    800CF1C8	ori    v1, v1, $0001
-    800CF1CC	lui    at, $8015
-    800CF1D0	addiu  at, at, $1922
-    800CF1D4	addu   at, at, v0
-    800CF1D8	sb     v1, $0000(at)
-    800CF1DC	lui    a0, $8015
-    800CF1E0	lh     a0, $169c(a0)
+    V1 = V1 | 0001;
+    AT = 80151922;
+    AT = AT + V0;
+    [AT + 0000] = b(V1);
+    A0 = h[8015169c];
     800CF1E4	nop
-    800CF1E8	sll    a0, a0, $05
-    800CF1EC	lui    at, $8016
-    800CF1F0	addiu  at, at, $2980
-    800CF1F4	addu   at, at, a0
-    800CF1F8	lh     v1, $0000(at)
+    A0 = A0 << 05;
+    AT = 80162980;
+    AT = AT + A0;
+    V1 = h[AT + 0000];
     800CF1FC	nop
-    800CF200	sll    v0, v1, $03
-    800CF204	subu   v0, v0, v1
-    800CF208	sll    v0, v0, $02
-    800CF20C	addu   v0, v0, v1
-    800CF210	sll    v0, v0, $02
-    800CF214	lui    at, $8015
-    800CF218	addiu  at, at, $120c
-    800CF21C	addu   at, at, v0
-    800CF220	lhu    v1, $0000(at)
+    V0 = V1 << 03;
+    V0 = V0 - V1;
+    V0 = V0 << 02;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    AT = 8015120c;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
     800CF224	nop
-    800CF228	ori    v1, v1, $0008
-    800CF22C	lui    at, $8015
-    800CF230	addiu  at, at, $120c
-    800CF234	addu   at, at, v0
-    800CF238	sh     v1, $0000(at)
-    800CF23C	lui    at, $8016
-    800CF240	addiu  at, at, $2980
-    800CF244	addu   at, at, a0
-    800CF248	lbu    v0, $0000(at)
+    V1 = V1 | 0008;
+    AT = 8015120c;
+    AT = AT + V0;
+    [AT + 0000] = h(V1);
+    AT = 80162980;
+    AT = AT + A0;
+    V0 = bu[AT + 0000];
     800CF24C	nop
-    800CF250	lui    at, $8010
-    800CF254	sb     v0, $a9c0(at)
+    [800fa9c0] = b(V0);
     800CF258	j      Lcf2c0 [$800cf2c0]
     800CF25C	nop
 
     Lcf260:	; 800CF260
-    800CF260	lui    v1, $8016
-    800CF264	lbu    v1, $90e0(v1)
+    V1 = bu[801590e0];
     800CF268	nop
-    800CF26C	sll    v0, v1, $01
-    800CF270	addu   v0, v0, v1
-    800CF274	sll    v0, v0, $02
-    800CF278	lui    at, $8016
-    800CF27C	addiu  at, at, $3799
-    800CF280	addu   at, at, v0
-    800CF284	lb     v1, $0000(at)
-    800CF288	ori    v0, zero, $0003
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    AT = 80163799;
+    AT = AT + V0;
+    V1 = b[AT + 0000];
+    V0 = 0003;
     800CF28C	bne    v1, v0, Lcf2c0 [$800cf2c0]
-    800CF290	sll    v0, a1, $01
-    800CF294	addu   v0, v0, a1
-    800CF298	sll    v1, v0, $05
-    800CF29C	subu   v1, v1, v0
-    800CF2A0	sll    v1, v1, $03
-    800CF2A4	subu   v1, v1, a1
-    800CF2A8	sll    v1, v1, $02
-    800CF2AC	ori    v0, zero, $0001
-    800CF2B0	lui    at, $8015
-    800CF2B4	addiu  at, at, $190a
-    800CF2B8	addu   at, at, v1
-    800CF2BC	sb     v0, $0000(at)
+    V0 = A1 << 01;
+    V0 = V0 + A1;
+    V1 = V0 << 05;
+    V1 = V1 - V0;
+    V1 = V1 << 03;
+    V1 = V1 - A1;
+    V1 = V1 << 02;
+    V0 = 0001;
+    AT = 8015190a;
+    AT = AT + V1;
+    [AT + 0000] = b(V0);
 }
 
 Lcf2c0:	; 800CF2C0
@@ -6315,199 +5727,167 @@ Lcf2c0:	; 800CF2C0
 
 ////////////////////////////////
 // funccf2f0
-800CF2F0	lui    v0, $8016
-800CF2F4	lh     v0, $90d0(v0)
+V0 = h[801590d0];
 800CF2F8	nop
-800CF2FC	sll    a2, v0, $05
-800CF300	lui    at, $8016
-800CF304	addiu  at, at, $20b0
-800CF308	addu   at, at, a2
-800CF30C	lh     v0, $0000(at)
+A2 = V0 << 05;
+AT = 801620b0;
+AT = AT + A2;
+V0 = h[AT + 0000];
 800CF310	nop
 800CF314	bne    v0, zero, Lcf334 [$800cf334]
 800CF318	addiu  v0, zero, $ffff (=-$1)
-800CF31C	lui    at, $8016
-800CF320	addiu  at, at, $20ac
-800CF324	addu   at, at, a2
-800CF328	sh     v0, $0000(at)
+AT = 801620ac;
+AT = AT + A2;
+[AT + 0000] = h(V0);
 800CF32C	j      Lcf3c4 [$800cf3c4]
 800CF330	nop
 
 Lcf334:	; 800CF334
-800CF334	lui    at, $8016
-800CF338	addiu  at, at, $20b4
-800CF33C	addu   at, at, a2
-800CF340	lh     a1, $0000(at)
-800CF344	lui    at, $8016
-800CF348	addiu  at, at, $20b6
-800CF34C	addu   at, at, a2
-800CF350	lhu    a0, $0000(at)
-800CF354	sll    v1, a1, $01
-800CF358	addu   v1, v1, a1
-800CF35C	sll    v0, v1, $05
-800CF360	subu   v0, v0, v1
-800CF364	sll    v0, v0, $03
-800CF368	subu   v0, v0, a1
-800CF36C	sll    v0, v0, $02
-800CF370	lui    at, $8015
-800CF374	addiu  at, at, $1a4e
-800CF378	addu   at, at, v0
-800CF37C	lhu    v1, $0000(at)
+AT = 801620b4;
+AT = AT + A2;
+A1 = h[AT + 0000];
+AT = 801620b6;
+AT = AT + A2;
+A0 = hu[AT + 0000];
+V1 = A1 << 01;
+V1 = V1 + A1;
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - A1;
+V0 = V0 << 02;
+AT = 80151a4e;
+AT = AT + V0;
+V1 = hu[AT + 0000];
 800CF380	nop
-800CF384	addu   v1, v1, a0
-800CF388	lui    at, $8015
-800CF38C	addiu  at, at, $1a4e
-800CF390	addu   at, at, v0
-800CF394	sh     v1, $0000(at)
-800CF398	lui    at, $8016
-800CF39C	addiu  at, at, $20b0
-800CF3A0	addu   at, at, a2
-800CF3A4	lhu    v0, $0000(at)
-800CF3A8	lui    at, $1f80
-800CF3AC	sw     a1, $000c(at)
+V1 = V1 + A0;
+AT = 80151a4e;
+AT = AT + V0;
+[AT + 0000] = h(V1);
+AT = 801620b0;
+AT = AT + A2;
+V0 = hu[AT + 0000];
+[1f80000c] = w(A1);
 800CF3B0	addiu  v0, v0, $ffff (=-$1)
-800CF3B4	lui    at, $8016
-800CF3B8	addiu  at, at, $20b0
-800CF3BC	addu   at, at, a2
-800CF3C0	sh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A2;
+[AT + 0000] = h(V0);
 
 Lcf3c4:	; 800CF3C4
 800CF3C4	jr     ra 
 800CF3C8	nop
 ////////////////////////////////
 // funccf3cc
-800CF3CC	lui    v0, $8016
-800CF3D0	lh     v0, $90d0(v0)
+V0 = h[801590d0];
 800CF3D4	nop
-800CF3D8	sll    a1, v0, $05
-800CF3DC	lui    at, $8016
-800CF3E0	addiu  at, at, $20b4
-800CF3E4	addu   at, at, a1
-800CF3E8	lh     a0, $0000(at)
-800CF3EC	lui    at, $8016
-800CF3F0	addiu  at, at, $20b0
-800CF3F4	addu   at, at, a1
-800CF3F8	lh     v0, $0000(at)
-800CF3FC	lui    at, $1f80
-800CF400	sw     a0, $000c(at)
+A1 = V0 << 05;
+AT = 801620b4;
+AT = AT + A1;
+A0 = h[AT + 0000];
+AT = 801620b0;
+AT = AT + A1;
+V0 = h[AT + 0000];
+[1f80000c] = w(A0);
 800CF404	bne    v0, zero, Lcf428 [$800cf428]
-800CF408	sll    v1, a0, $01
+V1 = A0 << 01;
 800CF40C	addiu  v0, zero, $ffff (=-$1)
-800CF410	lui    at, $8016
-800CF414	addiu  at, at, $20ac
-800CF418	addu   at, at, a1
-800CF41C	sh     v0, $0000(at)
+AT = 801620ac;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 800CF420	j      Lcf4a0 [$800cf4a0]
 800CF424	nop
 
 Lcf428:	; 800CF428
-800CF428	addu   v1, v1, a0
-800CF42C	sll    v0, v1, $05
-800CF430	subu   v0, v0, v1
-800CF434	sll    v0, v0, $03
-800CF438	subu   v0, v0, a0
-800CF43C	sll    v0, v0, $02
-800CF440	lui    at, $8015
-800CF444	addiu  at, at, $1a46
-800CF448	addu   at, at, v0
-800CF44C	lhu    v1, $0000(at)
-800CF450	lui    at, $8016
-800CF454	addiu  at, at, $20ba
-800CF458	addu   at, at, a1
-800CF45C	lhu    a0, $0000(at)
+V1 = V1 + A0;
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - A0;
+V0 = V0 << 02;
+AT = 80151a46;
+AT = AT + V0;
+V1 = hu[AT + 0000];
+AT = 801620ba;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800CF460	nop
-800CF464	addu   v1, v1, a0
-800CF468	lui    at, $8015
-800CF46C	addiu  at, at, $1a46
-800CF470	addu   at, at, v0
-800CF474	sh     v1, $0000(at)
-800CF478	lui    at, $8016
-800CF47C	addiu  at, at, $20b0
-800CF480	addu   at, at, a1
-800CF484	lhu    v0, $0000(at)
+V1 = V1 + A0;
+AT = 80151a46;
+AT = AT + V0;
+[AT + 0000] = h(V1);
+AT = 801620b0;
+AT = AT + A1;
+V0 = hu[AT + 0000];
 800CF488	nop
 800CF48C	addiu  v0, v0, $ffff (=-$1)
 800CF490	lui    at, $8016
 
 Lcf494:	; 800CF494
-800CF494	addiu  at, at, $20b0
-800CF498	addu   at, at, a1
-800CF49C	sh     v0, $0000(at)
+AT = AT + 20b0;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 
 Lcf4a0:	; 800CF4A0
 800CF4A0	jr     ra 
 800CF4A4	nop
 ////////////////////////////////
 // funccf4a8
-800CF4A8	lui    v0, $8016
-800CF4AC	lh     v0, $90d0(v0)
+V0 = h[801590d0];
 800CF4B0	nop
-800CF4B4	sll    a2, v0, $05
-800CF4B8	lui    at, $8016
-800CF4BC	addiu  at, at, $20b0
-800CF4C0	addu   at, at, a2
-800CF4C4	lh     v0, $0000(at)
+A2 = V0 << 05;
+AT = 801620b0;
+AT = AT + A2;
+V0 = h[AT + 0000];
 800CF4C8	nop
 800CF4CC	bne    v0, zero, Lcf4ec [$800cf4ec]
 800CF4D0	addiu  v0, zero, $ffff (=-$1)
-800CF4D4	lui    at, $8016
-800CF4D8	addiu  at, at, $20ac
-800CF4DC	addu   at, at, a2
-800CF4E0	sh     v0, $0000(at)
+AT = 801620ac;
+AT = AT + A2;
+[AT + 0000] = h(V0);
 800CF4E4	j      Lcf5b4 [$800cf5b4]
 800CF4E8	nop
 
 Lcf4ec:	; 800CF4EC
-800CF4EC	lui    at, $8016
-800CF4F0	addiu  at, at, $20b4
-800CF4F4	addu   at, at, a2
-800CF4F8	lh     a1, $0000(at)
-800CF4FC	lui    at, $8016
-800CF500	addiu  at, at, $20b6
-800CF504	addu   at, at, a2
-800CF508	lhu    a0, $0000(at)
-800CF50C	sll    v0, a1, $01
-800CF510	addu   v0, v0, a1
-800CF514	sll    v1, v0, $05
-800CF518	subu   v1, v1, v0
-800CF51C	sll    v1, v1, $03
-800CF520	subu   v1, v1, a1
-800CF524	sll    v1, v1, $02
-800CF528	lui    at, $8015
-800CF52C	addiu  at, at, $1a4c
-800CF530	addu   at, at, v1
-800CF534	lhu    v0, $0000(at)
+AT = 801620b4;
+AT = AT + A2;
+A1 = h[AT + 0000];
+AT = 801620b6;
+AT = AT + A2;
+A0 = hu[AT + 0000];
+V0 = A1 << 01;
+V0 = V0 + A1;
+V1 = V0 << 05;
+V1 = V1 - V0;
+V1 = V1 << 03;
+V1 = V1 - A1;
+V1 = V1 << 02;
+AT = 80151a4c;
+AT = AT + V1;
+V0 = hu[AT + 0000];
 800CF538	nop
-800CF53C	addu   v0, v0, a0
-800CF540	lui    at, $8015
-800CF544	addiu  at, at, $1a4c
-800CF548	addu   at, at, v1
-800CF54C	sh     v0, $0000(at)
-800CF550	lui    at, $8015
-800CF554	addiu  at, at, $1a50
-800CF558	addu   at, at, v1
-800CF55C	lhu    v0, $0000(at)
-800CF560	lui    at, $8016
-800CF564	addiu  at, at, $20b8
-800CF568	addu   at, at, a2
-800CF56C	lhu    a0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a4c;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 80151a50;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620b8;
+AT = AT + A2;
+A0 = hu[AT + 0000];
 800CF570	nop
-800CF574	addu   v0, v0, a0
-800CF578	lui    at, $8015
-800CF57C	addiu  at, at, $1a50
-800CF580	addu   at, at, v1
-800CF584	sh     v0, $0000(at)
-800CF588	lui    at, $8016
-800CF58C	addiu  at, at, $20b0
-800CF590	addu   at, at, a2
-800CF594	lhu    v0, $0000(at)
-800CF598	lui    at, $1f80
-800CF59C	sw     a1, $000c(at)
+V0 = V0 + A0;
+AT = 80151a50;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 801620b0;
+AT = AT + A2;
+V0 = hu[AT + 0000];
+[1f80000c] = w(A1);
 800CF5A0	addiu  v0, v0, $ffff (=-$1)
-800CF5A4	lui    at, $8016
-800CF5A8	addiu  at, at, $20b0
-800CF5AC	addu   at, at, a2
-800CF5B0	sh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A2;
+[AT + 0000] = h(V0);
 
 Lcf5b4:	; 800CF5B4
 800CF5B4	jr     ra 
@@ -6569,80 +5949,68 @@ else
 ////////////////////////////////
 // funccf8c0
 800CF8C0	addiu  sp, sp, $ffd8 (=-$28)
-800CF8C4	sw     s0, $0010(sp)
-800CF8C8	addu   s0, a0, zero
-800CF8CC	sw     s3, $001c(sp)
-800CF8D0	addu   s3, a1, zero
-800CF8D4	sw     s1, $0014(sp)
-800CF8D8	addu   s1, s0, zero
-800CF8DC	sw     s2, $0018(sp)
-800CF8E0	lui    a0, $800d
-800CF8E4	addiu  a0, a0, $fb14 (=-$4ec)
-800CF8E8	sw     ra, $0020(sp)
+[SP + 0010] = w(S0);
+S0 = A0;
+[SP + 001c] = w(S3);
+S3 = A1;
+[SP + 0014] = w(S1);
+S1 = S0;
+[SP + 0018] = w(S2);
+A0 = 800cfb14;
+[SP + 0020] = w(RA);
 800CF8EC	jal    funcbbf7c [$800bbf7c]
-800CF8F0	addu   s2, a2, zero
-800CF8F4	andi   v0, v0, $00ff
-800CF8F8	sll    a3, v0, $05
-800CF8FC	addu   v0, s3, zero
-800CF900	lui    v1, $8010
-800CF904	lbu    v1, $99e8(v1)
-800CF908	sll    s0, s0, $10
-800CF90C	lui    at, $8016
-800CF910	addiu  at, at, $20b0
-800CF914	addu   at, at, a3
-800CF918	sh     v0, $0000(at)
-800CF91C	lui    at, $8016
-800CF920	addiu  at, at, $20c4
-800CF924	addu   at, at, a3
-800CF928	sb     s2, $0000(at)
-800CF92C	lui    v0, $8010
-800CF930	lbu    v0, $99e8(v0)
-800CF934	sra    s0, s0, $10
-800CF938	lui    at, $8016
-800CF93C	addiu  at, at, $20b4
-800CF940	addu   at, at, a3
-800CF944	sh     s1, $0000(at)
-800CF948	lui    at, $8016
-800CF94C	addiu  at, at, $20b6
-800CF950	addu   at, at, a3
-800CF954	sh     v1, $0000(at)
+S2 = A2;
+V0 = V0 & 00ff;
+A3 = V0 << 05;
+V0 = S3;
+V1 = bu[800f99e8];
+S0 = S0 << 10;
+AT = 801620b0;
+AT = AT + A3;
+[AT + 0000] = h(V0);
+AT = 801620c4;
+AT = AT + A3;
+[AT + 0000] = b(S2);
+V0 = bu[800f99e8];
+S0 = S0 >> 10;
+AT = 801620b4;
+AT = AT + A3;
+[AT + 0000] = h(S1);
+AT = 801620b6;
+AT = AT + A3;
+[AT + 0000] = h(V1);
 800CF958	bne    v0, s0, Lcf998 [$800cf998]
-800CF95C	sll    v0, s0, $01
-800CF960	lui    at, $8016
-800CF964	addiu  at, at, $20b8
-800CF968	addu   at, at, a3
-800CF96C	sh     zero, $0000(at)
-800CF970	lui    at, $8016
-800CF974	addiu  at, at, $20ba
-800CF978	addu   at, at, a3
-800CF97C	sh     zero, $0000(at)
-800CF980	lui    at, $8016
-800CF984	addiu  at, at, $20b2
-800CF988	addu   at, at, a3
-800CF98C	sh     zero, $0000(at)
+V0 = S0 << 01;
+AT = 801620b8;
+AT = AT + A3;
+[AT + 0000] = h(0);
+AT = 801620ba;
+AT = AT + A3;
+[AT + 0000] = h(0);
+AT = 801620b2;
+AT = AT + A3;
+[AT + 0000] = h(0);
 800CF990	j      Lcfaf4 [$800cfaf4]
 800CF994	nop
 
 Lcf998:	; 800CF998
-800CF998	addu   v0, v0, s0
-800CF99C	sll    a2, v0, $01
-800CF9A0	sll    a0, v0, $05
-800CF9A4	subu   a0, a0, v0
-800CF9A8	sll    a0, a0, $03
-800CF9AC	subu   a0, a0, s0
-800CF9B0	sll    a0, a0, $02
-800CF9B4	lui    at, $8016
-800CF9B8	addiu  at, at, $3c80
-800CF9BC	addu   at, at, a2
-800CF9C0	lh     v0, $0000(at)
-800CF9C4	lui    at, $8015
-800CF9C8	addiu  at, at, $1a4c
-800CF9CC	addu   at, at, a0
-800CF9D0	lh     v1, $0000(at)
+V0 = V0 + S0;
+A2 = V0 << 01;
+A0 = V0 << 05;
+A0 = A0 - V0;
+A0 = A0 << 03;
+A0 = A0 - S0;
+A0 = A0 << 02;
+AT = 80163c80;
+AT = AT + A2;
+V0 = h[AT + 0000];
+AT = 80151a4c;
+AT = AT + A0;
+V1 = h[AT + 0000];
 800CF9D4	nop
-800CF9D8	subu   v0, v0, v1
-800CF9DC	sll    v1, s3, $10
-800CF9E0	sra    v1, v1, $10
+V0 = V0 - V1;
+V1 = S3 << 10;
+V1 = V1 >> 10;
 800CF9E4	div    v0, v1
 800CF9E8	bne    v1, zero, Lcf9f4 [$800cf9f4]
 800CF9EC	nop
@@ -6659,20 +6027,17 @@ Lcf9f4:	; 800CF9F4
 Lcfa0c:	; 800CFA0C
 800CFA0C	mflo   v0
 800CFA10	nop
-800CFA14	lui    at, $8016
-800CFA18	addiu  at, at, $20b8
-800CFA1C	addu   at, at, a3
-800CFA20	sh     v0, $0000(at)
-800CFA24	lui    at, $8016
-800CFA28	addiu  at, at, $3c84
-800CFA2C	addu   at, at, a2
-800CFA30	lh     v0, $0000(at)
-800CFA34	lui    at, $8015
-800CFA38	addiu  at, at, $1a50
-800CFA3C	addu   at, at, a0
-800CFA40	lh     a1, $0000(at)
+AT = 801620b8;
+AT = AT + A3;
+[AT + 0000] = h(V0);
+AT = 80163c84;
+AT = AT + A2;
+V0 = h[AT + 0000];
+AT = 80151a50;
+AT = AT + A0;
+A1 = h[AT + 0000];
 800CFA44	nop
-800CFA48	subu   v0, v0, a1
+V0 = V0 - A1;
 800CFA4C	div    v0, v1
 800CFA50	bne    v1, zero, Lcfa5c [$800cfa5c]
 800CFA54	nop
@@ -6689,20 +6054,17 @@ Lcfa5c:	; 800CFA5C
 Lcfa74:	; 800CFA74
 800CFA74	mflo   v0
 800CFA78	nop
-800CFA7C	lui    at, $8016
-800CFA80	addiu  at, at, $20ba
-800CFA84	addu   at, at, a3
-800CFA88	sh     v0, $0000(at)
-800CFA8C	lui    at, $8016
-800CFA90	addiu  at, at, $3c82
-800CFA94	addu   at, at, a2
-800CFA98	lh     v0, $0000(at)
-800CFA9C	lui    at, $8015
-800CFAA0	addiu  at, at, $1a4e
-800CFAA4	addu   at, at, a0
-800CFAA8	lh     a0, $0000(at)
+AT = 801620ba;
+AT = AT + A3;
+[AT + 0000] = h(V0);
+AT = 80163c82;
+AT = AT + A2;
+V0 = h[AT + 0000];
+AT = 80151a4e;
+AT = AT + A0;
+A0 = h[AT + 0000];
 800CFAAC	nop
-800CFAB0	subu   v0, v0, a0
+V0 = V0 - A0;
 800CFAB4	div    v0, v1
 800CFAB8	bne    v1, zero, Lcfac4 [$800cfac4]
 800CFABC	nop
@@ -6721,127 +6083,106 @@ Lcfac8:	; 800CFAC8
 Lcfadc:	; 800CFADC
 800CFADC	mflo   v0
 800CFAE0	nop
-800CFAE4	lui    at, $8016
-800CFAE8	addiu  at, at, $20b2
-800CFAEC	addu   at, at, a3
-800CFAF0	sh     v0, $0000(at)
+AT = 801620b2;
+AT = AT + A3;
+[AT + 0000] = h(V0);
 
 Lcfaf4:	; 800CFAF4
-800CFAF4	lw     ra, $0020(sp)
-800CFAF8	lw     s3, $001c(sp)
-800CFAFC	lw     s2, $0018(sp)
-800CFB00	lw     s1, $0014(sp)
-800CFB04	lw     s0, $0010(sp)
-800CFB08	addiu  sp, sp, $0028
+RA = w[SP + 0020];
+S3 = w[SP + 001c];
+S2 = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0028;
 800CFB0C	jr     ra 
 800CFB10	nop
 ////////////////////////////////
 // funccfb14
-800CFB14	lui    v0, $8016
-800CFB18	lh     v0, $90d0(v0)
+V0 = h[801590d0];
 800CFB1C	nop
-800CFB20	sll    a1, v0, $05
-800CFB24	lui    at, $8016
-800CFB28	addiu  at, at, $20b4
-800CFB2C	addu   at, at, a1
-800CFB30	lh     a0, $0000(at)
-800CFB34	lui    at, $8016
-800CFB38	addiu  at, at, $20b6
-800CFB3C	addu   at, at, a1
-800CFB40	lh     v0, $0000(at)
-800CFB44	lui    at, $1f80
-800CFB48	sw     a0, $000c(at)
-800CFB4C	lui    at, $1f80
-800CFB50	sw     v0, $0008(at)
-800CFB54	lui    at, $8016
-800CFB58	addiu  at, at, $20c4
-800CFB5C	addu   at, at, a1
-800CFB60	lbu    v0, $0000(at)
+A1 = V0 << 05;
+AT = 801620b4;
+AT = AT + A1;
+A0 = h[AT + 0000];
+AT = 801620b6;
+AT = AT + A1;
+V0 = h[AT + 0000];
+[1f80000c] = w(A0);
+[1f800008] = w(V0);
+AT = 801620c4;
+AT = AT + A1;
+V0 = bu[AT + 0000];
 800CFB64	nop
 800CFB68	bne    v0, zero, Lcfc98 [$800cfc98]
 800CFB6C	addiu  v0, v0, $ffff (=-$1)
-800CFB70	lui    at, $8016
-800CFB74	addiu  at, at, $20b0
-800CFB78	addu   at, at, a1
-800CFB7C	lh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+V0 = h[AT + 0000];
 800CFB80	nop
 800CFB84	bne    v0, zero, Lcfba8 [$800cfba8]
-800CFB88	sll    v0, a0, $01
+V0 = A0 << 01;
 800CFB8C	addiu  v0, zero, $ffff (=-$1)
-800CFB90	lui    at, $8016
-800CFB94	addiu  at, at, $20ac
-800CFB98	addu   at, at, a1
-800CFB9C	sh     v0, $0000(at)
+AT = 801620ac;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 800CFBA0	j      Lcfca8 [$800cfca8]
 800CFBA4	nop
 
 Lcfba8:	; 800CFBA8
-800CFBA8	addu   v0, v0, a0
-800CFBAC	sll    v1, v0, $05
-800CFBB0	subu   v1, v1, v0
-800CFBB4	sll    v1, v1, $03
-800CFBB8	subu   v1, v1, a0
-800CFBBC	sll    v1, v1, $02
-800CFBC0	lui    at, $8015
-800CFBC4	addiu  at, at, $1a4c
-800CFBC8	addu   at, at, v1
-800CFBCC	lhu    v0, $0000(at)
-800CFBD0	lui    at, $8016
-800CFBD4	addiu  at, at, $20b8
-800CFBD8	addu   at, at, a1
-800CFBDC	lhu    a0, $0000(at)
+V0 = V0 + A0;
+V1 = V0 << 05;
+V1 = V1 - V0;
+V1 = V1 << 03;
+V1 = V1 - A0;
+V1 = V1 << 02;
+AT = 80151a4c;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620b8;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800CFBE0	nop
-800CFBE4	addu   v0, v0, a0
-800CFBE8	lui    at, $8015
-800CFBEC	addiu  at, at, $1a4c
-800CFBF0	addu   at, at, v1
-800CFBF4	sh     v0, $0000(at)
-800CFBF8	lui    at, $8015
-800CFBFC	addiu  at, at, $1a50
-800CFC00	addu   at, at, v1
-800CFC04	lhu    v0, $0000(at)
-800CFC08	lui    at, $8016
-800CFC0C	addiu  at, at, $20ba
-800CFC10	addu   at, at, a1
-800CFC14	lhu    a0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a4c;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 80151a50;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620ba;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800CFC18	nop
-800CFC1C	addu   v0, v0, a0
-800CFC20	lui    at, $8015
-800CFC24	addiu  at, at, $1a50
-800CFC28	addu   at, at, v1
-800CFC2C	sh     v0, $0000(at)
-800CFC30	lui    at, $8015
-800CFC34	addiu  at, at, $1a4e
-800CFC38	addu   at, at, v1
-800CFC3C	lhu    v0, $0000(at)
-800CFC40	lui    at, $8016
-800CFC44	addiu  at, at, $20b2
-800CFC48	addu   at, at, a1
-800CFC4C	lhu    a0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a50;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 80151a4e;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620b2;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800CFC50	nop
-800CFC54	addu   v0, v0, a0
-800CFC58	lui    at, $8015
-800CFC5C	addiu  at, at, $1a4e
-800CFC60	addu   at, at, v1
-800CFC64	sh     v0, $0000(at)
-800CFC68	lui    at, $8016
-800CFC6C	addiu  at, at, $20b0
-800CFC70	addu   at, at, a1
-800CFC74	lhu    v0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a4e;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 801620b0;
+AT = AT + A1;
+V0 = hu[AT + 0000];
 800CFC78	nop
 800CFC7C	addiu  v0, v0, $ffff (=-$1)
-800CFC80	lui    at, $8016
-800CFC84	addiu  at, at, $20b0
-800CFC88	addu   at, at, a1
-800CFC8C	sh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 800CFC90	j      Lcfca8 [$800cfca8]
 800CFC94	nop
 
 Lcfc98:	; 800CFC98
-800CFC98	lui    at, $8016
-800CFC9C	addiu  at, at, $20c4
-800CFCA0	addu   at, at, a1
-800CFCA4	sb     v0, $0000(at)
+AT = 801620c4;
+AT = AT + A1;
+[AT + 0000] = b(V0);
 
 Lcfca8:	; 800CFCA8
 800CFCA8	jr     ra 
@@ -6882,116 +6223,99 @@ else
 
 ////////////////////////////////
 // funccfe60
-800CFE60	lui    v0, $8016
-800CFE64	lh     v0, $90d0(v0)
+V0 = h[801590d0];
 800CFE68	nop
-800CFE6C	sll    a1, v0, $05
-800CFE70	lui    at, $8016
-800CFE74	addiu  at, at, $20b4
-800CFE78	addu   at, at, a1
-800CFE7C	lh     a2, $0000(at)
-800CFE80	lui    at, $8016
-800CFE84	addiu  at, at, $20b6
-800CFE88	addu   at, at, a1
-800CFE8C	lh     a3, $0000(at)
-800CFE90	lui    at, $8016
-800CFE94	addiu  at, at, $20ae
-800CFE98	addu   at, at, a1
-800CFE9C	lh     v1, $0000(at)
-800CFEA0	ori    v0, zero, $0001
-800CFEA4	lui    at, $1f80
-800CFEA8	sw     a2, $000c(at)
-800CFEAC	lui    at, $1f80
-800CFEB0	sw     a3, $0008(at)
+A1 = V0 << 05;
+AT = 801620b4;
+AT = AT + A1;
+A2 = h[AT + 0000];
+AT = 801620b6;
+AT = AT + A1;
+A3 = h[AT + 0000];
+AT = 801620ae;
+AT = AT + A1;
+V1 = h[AT + 0000];
+V0 = 0001;
+[1f80000c] = w(A2);
+[1f800008] = w(A3);
 800CFEB4	beq    v1, v0, Lcff20 [$800cff20]
-800CFEB8	slti   v0, v1, $0002
+V0 = V1 < 0002;
 800CFEBC	beq    v0, zero, Lcfed4 [$800cfed4]
 800CFEC0	nop
 800CFEC4	beq    v1, zero, Lcfee8 [$800cfee8]
-800CFEC8	ori    v0, zero, $0001
+V0 = 0001;
 800CFECC	j      Ld01b8 [$800d01b8]
 800CFED0	nop
 
 Lcfed4:	; 800CFED4
-800CFED4	ori    v0, zero, $0002
+V0 = 0002;
 800CFED8	beq    v1, v0, Ld0098 [$800d0098]
 800CFEDC	nop
 800CFEE0	j      Ld01b8 [$800d01b8]
 800CFEE4	nop
 
 Lcfee8:	; 800CFEE8
-800CFEE8	lui    at, $8016
-800CFEEC	addiu  at, at, $20c5
-800CFEF0	addu   at, at, a1
+AT = 801620c5;
+AT = AT + A1;
 
 Lcfef4:	; 800CFEF4
-800CFEF4	lbu    v1, $0000(at)
-800CFEF8	lui    at, $8016
-800CFEFC	addiu  at, at, $20ae
-800CFF00	addu   at, at, a1
-800CFF04	sh     v0, $0000(at)
-800CFF08	lui    at, $8016
-800CFF0C	addiu  at, at, $20b0
-800CFF10	addu   at, at, a1
-800CFF14	sh     v1, $0000(at)
+V1 = bu[AT + 0000];
+AT = 801620ae;
+AT = AT + A1;
+[AT + 0000] = h(V0);
+AT = 801620b0;
+AT = AT + A1;
+[AT + 0000] = h(V1);
 800CFF18	j      Ld01b8 [$800d01b8]
 800CFF1C	nop
 
 Lcff20:	; 800CFF20
-800CFF20	lui    at, $8016
-800CFF24	addiu  at, at, $20b0
-800CFF28	addu   at, at, a1
-800CFF2C	lh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+V0 = h[AT + 0000];
 800CFF30	nop
 800CFF34	bne    v0, zero, Ld0040 [$800d0040]
-800CFF38	sll    v1, a2, $01
-800CFF3C	ori    v0, zero, $0002
-800CFF40	lui    at, $8016
-800CFF44	addiu  at, at, $20ae
-800CFF48	addu   at, at, a1
-800CFF4C	sh     v0, $0000(at)
-800CFF50	sll    v0, a2, $01
-800CFF54	addu   v0, v0, a2
-800CFF58	sll    a0, v0, $05
-800CFF5C	subu   a0, a0, v0
-800CFF60	sll    a0, a0, $03
-800CFF64	subu   a0, a0, a2
-800CFF68	lui    at, $8016
-800CFF6C	addiu  at, at, $20c6
-800CFF70	addu   at, at, a1
-800CFF74	lbu    v1, $0000(at)
-800CFF78	sll    a0, a0, $02
-800CFF7C	lui    at, $8016
-800CFF80	addiu  at, at, $20b0
-800CFF84	addu   at, at, a1
-800CFF88	sh     v1, $0000(at)
-800CFF8C	sll    v1, a3, $01
-800CFF90	addu   v1, v1, a3
-800CFF94	sll    v0, v1, $05
-800CFF98	subu   v0, v0, v1
-800CFF9C	sll    v0, v0, $03
-800CFFA0	subu   v0, v0, a3
-800CFFA4	sll    v0, v0, $02
-800CFFA8	lui    at, $8015
-800CFFAC	addiu  at, at, $1a4e
-800CFFB0	addu   at, at, a0
-800CFFB4	lh     v1, $0000(at)
-800CFFB8	lui    at, $8016
-800CFFBC	addiu  at, at, $20bc
-800CFFC0	addu   at, at, a1
-800CFFC4	lw     a0, $0000(at)
-800CFFC8	lui    at, $8015
-800CFFCC	addiu  at, at, $18ea
-800CFFD0	addu   at, at, v0
-800CFFD4	lh     v0, $0000(at)
-800CFFD8	subu   v1, v1, a0
+V1 = A2 << 01;
+V0 = 0002;
+AT = 801620ae;
+AT = AT + A1;
+[AT + 0000] = h(V0);
+V0 = A2 << 01;
+V0 = V0 + A2;
+A0 = V0 << 05;
+A0 = A0 - V0;
+A0 = A0 << 03;
+A0 = A0 - A2;
+AT = 801620c6;
+AT = AT + A1;
+V1 = bu[AT + 0000];
+A0 = A0 << 02;
+AT = 801620b0;
+AT = AT + A1;
+[AT + 0000] = h(V1);
+V1 = A3 << 01;
+V1 = V1 + A3;
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - A3;
+V0 = V0 << 02;
+AT = 80151a4e;
+AT = AT + A0;
+V1 = h[AT + 0000];
+AT = 801620bc;
+AT = AT + A1;
+A0 = w[AT + 0000];
+AT = 801518ea;
+AT = AT + V0;
+V0 = h[AT + 0000];
+V1 = V1 - A0;
 800CFFDC	mult   v1, v0
 800CFFE0	mflo   v0
-800CFFE4	lui    at, $8016
-800CFFE8	addiu  at, at, $20c6
-800CFFEC	addu   at, at, a1
-800CFFF0	lbu    v1, $0000(at)
-800CFFF4	sra    v0, v0, $0c
+AT = 801620c6;
+AT = AT + A1;
+V1 = bu[AT + 0000];
+V0 = V0 >> 0c;
 800CFFF8	div    v0, v1
 800CFFFC	bne    v1, zero, Ld0008 [$800d0008]
 800D0000	nop
@@ -7008,185 +6332,157 @@ Ld0008:	; 800D0008
 Ld0020:	; 800D0020
 800D0020	mflo   v0
 800D0024	nop
-800D0028	lui    at, $8016
-800D002C	addiu  at, at, $20b2
-800D0030	addu   at, at, a1
-800D0034	sh     v0, $0000(at)
+AT = 801620b2;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 800D0038	j      Ld01b8 [$800d01b8]
 800D003C	nop
 
 Ld0040:	; 800D0040
-800D0040	addu   v1, v1, a2
-800D0044	sll    v0, v1, $05
-800D0048	subu   v0, v0, v1
-800D004C	sll    v0, v0, $03
-800D0050	subu   v0, v0, a2
-800D0054	sll    v0, v0, $02
-800D0058	lui    at, $8015
-800D005C	addiu  at, at, $1a4e
-800D0060	addu   at, at, v0
-800D0064	lhu    v1, $0000(at)
-800D0068	lui    at, $8016
-800D006C	addiu  at, at, $20c0
-800D0070	addu   at, at, a1
-800D0074	lhu    a0, $0000(at)
+V1 = V1 + A2;
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - A2;
+V0 = V0 << 02;
+AT = 80151a4e;
+AT = AT + V0;
+V1 = hu[AT + 0000];
+AT = 801620c0;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D0078	nop
-800D007C	addu   v1, v1, a0
-800D0080	lui    at, $8015
-800D0084	addiu  at, at, $1a4e
-800D0088	addu   at, at, v0
-800D008C	sh     v1, $0000(at)
+V1 = V1 + A0;
+AT = 80151a4e;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 800D0090	j      Ld0190 [$800d0190]
 800D0094	nop
 
 Ld0098:	; 800D0098
-800D0098	lui    at, $8016
-800D009C	addiu  at, at, $20b0
-800D00A0	addu   at, at, a1
-800D00A4	lh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+V0 = h[AT + 0000];
 800D00A8	nop
 800D00AC	bne    v0, zero, Ld00d0 [$800d00d0]
-800D00B0	sll    v0, a2, $01
+V0 = A2 << 01;
 800D00B4	addiu  v0, zero, $ffff (=-$1)
-800D00B8	lui    at, $8016
-800D00BC	addiu  at, at, $20ac
-800D00C0	addu   at, at, a1
-800D00C4	sh     v0, $0000(at)
+AT = 801620ac;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 800D00C8	j      Ld01b8 [$800d01b8]
 800D00CC	nop
 
 Ld00d0:	; 800D00D0
-800D00D0	addu   v0, v0, a2
-800D00D4	sll    v1, v0, $05
-800D00D8	subu   v1, v1, v0
-800D00DC	sll    v1, v1, $03
-800D00E0	subu   v1, v1, a2
-800D00E4	sll    v1, v1, $02
-800D00E8	lui    at, $8015
-800D00EC	addiu  at, at, $1a4c
-800D00F0	addu   at, at, v1
-800D00F4	lhu    v0, $0000(at)
-800D00F8	lui    at, $8016
-800D00FC	addiu  at, at, $20b8
-800D0100	addu   at, at, a1
-800D0104	lhu    a0, $0000(at)
+V0 = V0 + A2;
+V1 = V0 << 05;
+V1 = V1 - V0;
+V1 = V1 << 03;
+V1 = V1 - A2;
+V1 = V1 << 02;
+AT = 80151a4c;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620b8;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D0108	nop
-800D010C	addu   v0, v0, a0
-800D0110	lui    at, $8015
-800D0114	addiu  at, at, $1a4c
-800D0118	addu   at, at, v1
-800D011C	sh     v0, $0000(at)
-800D0120	lui    at, $8015
-800D0124	addiu  at, at, $1a50
-800D0128	addu   at, at, v1
-800D012C	lhu    v0, $0000(at)
-800D0130	lui    at, $8016
-800D0134	addiu  at, at, $20ba
-800D0138	addu   at, at, a1
-800D013C	lhu    a0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a4c;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 80151a50;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620ba;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D0140	nop
-800D0144	addu   v0, v0, a0
-800D0148	lui    at, $8015
-800D014C	addiu  at, at, $1a50
-800D0150	addu   at, at, v1
-800D0154	sh     v0, $0000(at)
-800D0158	lui    at, $8015
-800D015C	addiu  at, at, $1a4e
-800D0160	addu   at, at, v1
-800D0164	lhu    v0, $0000(at)
-800D0168	lui    at, $8016
-800D016C	addiu  at, at, $20b2
-800D0170	addu   at, at, a1
-800D0174	lhu    a0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a50;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 80151a4e;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620b2;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D0178	nop
-800D017C	subu   v0, v0, a0
-800D0180	lui    at, $8015
-800D0184	addiu  at, at, $1a4e
-800D0188	addu   at, at, v1
-800D018C	sh     v0, $0000(at)
+V0 = V0 - A0;
+AT = 80151a4e;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 
 Ld0190:	; 800D0190
-800D0190	lui    at, $8016
-800D0194	addiu  at, at, $20b0
-800D0198	addu   at, at, a1
-800D019C	lhu    v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+V0 = hu[AT + 0000];
 800D01A0	nop
 800D01A4	addiu  v0, v0, $ffff (=-$1)
-800D01A8	lui    at, $8016
-800D01AC	addiu  at, at, $20b0
-800D01B0	addu   at, at, a1
-800D01B4	sh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 
 Ld01b8:	; 800D01B8
 800D01B8	jr     ra 
 800D01BC	nop
 ////////////////////////////////
 // funcd01c0
-800D01C0	lui    v0, $8016
-800D01C4	lh     v0, $90d0(v0)
+V0 = h[801590d0];
 800D01C8	nop
-800D01CC	sll    a1, v0, $05
-800D01D0	lui    at, $8016
-800D01D4	addiu  at, at, $20b6
-800D01D8	addu   at, at, a1
-800D01DC	lh     v0, $0000(at)
-800D01E0	lui    at, $8016
-800D01E4	addiu  at, at, $20b4
-800D01E8	addu   at, at, a1
-800D01EC	lh     a0, $0000(at)
-800D01F0	lui    at, $8016
-800D01F4	addiu  at, at, $20ae
-800D01F8	addu   at, at, a1
-800D01FC	lh     v1, $0000(at)
-800D0200	lui    at, $1f80
-800D0204	sw     v0, $0008(at)
-800D0208	ori    v0, zero, $0001
-800D020C	lui    at, $1f80
-800D0210	sw     a0, $000c(at)
+A1 = V0 << 05;
+AT = 801620b6;
+AT = AT + A1;
+V0 = h[AT + 0000];
+AT = 801620b4;
+AT = AT + A1;
+A0 = h[AT + 0000];
+AT = 801620ae;
+AT = AT + A1;
+V1 = h[AT + 0000];
+[1f800008] = w(V0);
+V0 = 0001;
+[1f80000c] = w(A0);
 800D0214	beq    v1, v0, Ld02e8 [$800d02e8]
-800D0218	slti   v0, v1, $0002
+V0 = V1 < 0002;
 800D021C	beq    v0, zero, Ld0234 [$800d0234]
 800D0220	nop
 800D0224	beq    v1, zero, Ld0248 [$800d0248]
-800D0228	sll    v1, a0, $01
+V1 = A0 << 01;
 800D022C	j      Ld0570 [$800d0570]
 800D0230	nop
 
 Ld0234:	; 800D0234
-800D0234	ori    v0, zero, $0002
+V0 = 0002;
 800D0238	beq    v1, v0, Ld04c0 [$800d04c0]
 800D023C	nop
 800D0240	j      Ld0570 [$800d0570]
 800D0244	nop
 
 Ld0248:	; 800D0248
-800D0248	lui    at, $8016
-800D024C	addiu  at, at, $20c6
-800D0250	addu   at, at, a1
-800D0254	lbu    v0, $0000(at)
-800D0258	addu   v1, v1, a0
-800D025C	lui    at, $8016
-800D0260	addiu  at, at, $20b0
-800D0264	addu   at, at, a1
-800D0268	sh     v0, $0000(at)
-800D026C	sll    v0, v1, $05
-800D0270	subu   v0, v0, v1
-800D0274	sll    v0, v0, $03
-800D0278	subu   v0, v0, a0
-800D027C	sll    v0, v0, $02
-800D0280	lui    at, $8015
-800D0284	addiu  at, at, $1a4e
-800D0288	addu   at, at, v0
-800D028C	lh     a0, $0000(at)
-800D0290	lui    at, $8016
-800D0294	addiu  at, at, $20c0
-800D0298	addu   at, at, a1
-800D029C	lw     v0, $0000(at)
-800D02A0	lui    at, $8016
-800D02A4	addiu  at, at, $20c6
-800D02A8	addu   at, at, a1
-800D02AC	lbu    v1, $0000(at)
-800D02B0	subu   v0, v0, a0
+AT = 801620c6;
+AT = AT + A1;
+V0 = bu[AT + 0000];
+V1 = V1 + A0;
+AT = 801620b0;
+AT = AT + A1;
+[AT + 0000] = h(V0);
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - A0;
+V0 = V0 << 02;
+AT = 80151a4e;
+AT = AT + V0;
+A0 = h[AT + 0000];
+AT = 801620c0;
+AT = AT + A1;
+V0 = w[AT + 0000];
+AT = 801620c6;
+AT = AT + A1;
+V1 = bu[AT + 0000];
+V0 = V0 - A0;
 800D02B4	div    v0, v1
 800D02B8	bne    v1, zero, Ld02c4 [$800d02c4]
 800D02BC	nop
@@ -7203,57 +6499,49 @@ Ld02c4:	; 800D02C4
 Ld02dc:	; 800D02DC
 800D02DC	mflo   v0
 800D02E0	j      Ld03d0 [$800d03d0]
-800D02E4	ori    v1, zero, $0001
+V1 = 0001;
 
 Ld02e8:	; 800D02E8
-800D02E8	lui    at, $8016
-800D02EC	addiu  at, at, $20b0
-800D02F0	addu   at, at, a1
-800D02F4	lh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+V0 = h[AT + 0000];
 800D02F8	nop
 
 Ld02fc:	; 800D02FC
 800D02FC	bne    v0, zero, Ld03f8 [$800d03f8]
-800D0300	sll    v0, a0, $01
-800D0304	lui    at, $8016
-800D0308	addiu  at, at, $20b6
-800D030C	addu   at, at, a1
-800D0310	lh     a0, $0000(at)
-800D0314	lui    at, $8016
-800D0318	addiu  at, at, $20c5
-800D031C	addu   at, at, a1
-800D0320	lbu    v0, $0000(at)
-800D0324	sll    v1, a0, $01
-800D0328	addu   v1, v1, a0
-800D032C	lui    at, $8016
-800D0330	addiu  at, at, $20b0
-800D0334	addu   at, at, a1
-800D0338	sh     v0, $0000(at)
-800D033C	sll    v0, v1, $05
-800D0340	subu   v0, v0, v1
-800D0344	sll    v0, v0, $03
-800D0348	subu   v0, v0, a0
-800D034C	sll    v0, v0, $02
-800D0350	lui    at, $8016
-800D0354	addiu  at, at, $20c0
-800D0358	addu   at, at, a1
-800D035C	lw     v1, $0000(at)
-800D0360	lui    at, $8016
-800D0364	addiu  at, at, $20bc
-800D0368	addu   at, at, a1
-800D036C	lw     a0, $0000(at)
-800D0370	lui    at, $8015
-800D0374	addiu  at, at, $18ea
-800D0378	addu   at, at, v0
-800D037C	lh     v0, $0000(at)
-800D0380	subu   v1, v1, a0
+V0 = A0 << 01;
+AT = 801620b6;
+AT = AT + A1;
+A0 = h[AT + 0000];
+AT = 801620c5;
+AT = AT + A1;
+V0 = bu[AT + 0000];
+V1 = A0 << 01;
+V1 = V1 + A0;
+AT = 801620b0;
+AT = AT + A1;
+[AT + 0000] = h(V0);
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - A0;
+V0 = V0 << 02;
+AT = 801620c0;
+AT = AT + A1;
+V1 = w[AT + 0000];
+AT = 801620bc;
+AT = AT + A1;
+A0 = w[AT + 0000];
+AT = 801518ea;
+AT = AT + V0;
+V0 = h[AT + 0000];
+V1 = V1 - A0;
 800D0384	mult   v1, v0
 800D0388	mflo   v0
-800D038C	lui    at, $8016
-800D0390	addiu  at, at, $20c5
-800D0394	addu   at, at, a1
-800D0398	lbu    v1, $0000(at)
-800D039C	sra    v0, v0, $0c
+AT = 801620c5;
+AT = AT + A1;
+V1 = bu[AT + 0000];
+V0 = V0 >> 0c;
 800D03A0	div    v0, v1
 800D03A4	bne    v1, zero, Ld03b0 [$800d03b0]
 800D03A8	nop
@@ -7269,170 +6557,145 @@ Ld03b0:	; 800D03B0
 
 Ld03c8:	; 800D03C8
 800D03C8	mflo   v0
-800D03CC	ori    v1, zero, $0002
+V1 = 0002;
 
 Ld03d0:	; 800D03D0
-800D03D0	lui    at, $8016
-800D03D4	addiu  at, at, $20ae
-800D03D8	addu   at, at, a1
-800D03DC	sh     v1, $0000(at)
-800D03E0	lui    at, $8016
-800D03E4	addiu  at, at, $20b2
-800D03E8	addu   at, at, a1
-800D03EC	sh     v0, $0000(at)
+AT = 801620ae;
+AT = AT + A1;
+[AT + 0000] = h(V1);
+AT = 801620b2;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 800D03F0	j      Ld0570 [$800d0570]
 800D03F4	nop
 
 Ld03f8:	; 800D03F8
-800D03F8	addu   v0, v0, a0
-800D03FC	sll    v1, v0, $05
-800D0400	subu   v1, v1, v0
-800D0404	sll    v1, v1, $03
-800D0408	subu   v1, v1, a0
-800D040C	sll    v1, v1, $02
-800D0410	lui    at, $8015
-800D0414	addiu  at, at, $1a4c
-800D0418	addu   at, at, v1
-800D041C	lhu    v0, $0000(at)
-800D0420	lui    at, $8016
-800D0424	addiu  at, at, $20b8
-800D0428	addu   at, at, a1
-800D042C	lhu    a0, $0000(at)
+V0 = V0 + A0;
+V1 = V0 << 05;
+V1 = V1 - V0;
+V1 = V1 << 03;
+V1 = V1 - A0;
+V1 = V1 << 02;
+AT = 80151a4c;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620b8;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D0430	nop
-800D0434	addu   v0, v0, a0
-800D0438	lui    at, $8015
-800D043C	addiu  at, at, $1a4c
-800D0440	addu   at, at, v1
-800D0444	sh     v0, $0000(at)
-800D0448	lui    at, $8015
-800D044C	addiu  at, at, $1a50
-800D0450	addu   at, at, v1
-800D0454	lhu    v0, $0000(at)
-800D0458	lui    at, $8016
-800D045C	addiu  at, at, $20ba
-800D0460	addu   at, at, a1
-800D0464	lhu    a0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a4c;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 80151a50;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620ba;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D0468	nop
-800D046C	addu   v0, v0, a0
-800D0470	lui    at, $8015
-800D0474	addiu  at, at, $1a50
-800D0478	addu   at, at, v1
-800D047C	sh     v0, $0000(at)
-800D0480	lui    at, $8015
-800D0484	addiu  at, at, $1a4e
-800D0488	addu   at, at, v1
-800D048C	lhu    v0, $0000(at)
-800D0490	lui    at, $8016
-800D0494	addiu  at, at, $20b2
-800D0498	addu   at, at, a1
-800D049C	lhu    a0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a50;
+AT = AT + V1;
+[AT + 0000] = h(V0);
+AT = 80151a4e;
+AT = AT + V1;
+V0 = hu[AT + 0000];
+AT = 801620b2;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D04A0	nop
-800D04A4	addu   v0, v0, a0
-800D04A8	lui    at, $8015
-800D04AC	addiu  at, at, $1a4e
-800D04B0	addu   at, at, v1
-800D04B4	sh     v0, $0000(at)
+V0 = V0 + A0;
+AT = 80151a4e;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 800D04B8	j      Ld0548 [$800d0548]
 800D04BC	nop
 
 Ld04c0:	; 800D04C0
-800D04C0	lui    at, $8016
-800D04C4	addiu  at, at, $20b0
-800D04C8	addu   at, at, a1
-800D04CC	lh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+V0 = h[AT + 0000];
 800D04D0	nop
 800D04D4	bne    v0, zero, Ld04f8 [$800d04f8]
-800D04D8	sll    v1, a0, $01
+V1 = A0 << 01;
 800D04DC	addiu  v0, zero, $ffff (=-$1)
-800D04E0	lui    at, $8016
-800D04E4	addiu  at, at, $20ac
-800D04E8	addu   at, at, a1
-800D04EC	sh     v0, $0000(at)
+AT = 801620ac;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 800D04F0	j      Ld0570 [$800d0570]
 800D04F4	nop
 
 Ld04f8:	; 800D04F8
-800D04F8	addu   v1, v1, a0
-800D04FC	sll    v0, v1, $05
-800D0500	subu   v0, v0, v1
-800D0504	sll    v0, v0, $03
-800D0508	subu   v0, v0, a0
-800D050C	sll    v0, v0, $02
-800D0510	lui    at, $8015
-800D0514	addiu  at, at, $1a4e
-800D0518	addu   at, at, v0
-800D051C	lhu    v1, $0000(at)
-800D0520	lui    at, $8016
-800D0524	addiu  at, at, $20b2
-800D0528	addu   at, at, a1
-800D052C	lhu    a0, $0000(at)
+V1 = V1 + A0;
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - A0;
+V0 = V0 << 02;
+AT = 80151a4e;
+AT = AT + V0;
+V1 = hu[AT + 0000];
+AT = 801620b2;
+AT = AT + A1;
+A0 = hu[AT + 0000];
 800D0530	nop
-800D0534	subu   v1, v1, a0
-800D0538	lui    at, $8015
-800D053C	addiu  at, at, $1a4e
-800D0540	addu   at, at, v0
-800D0544	sh     v1, $0000(at)
+V1 = V1 - A0;
+AT = 80151a4e;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 
 Ld0548:	; 800D0548
-800D0548	lui    at, $8016
-800D054C	addiu  at, at, $20b0
-800D0550	addu   at, at, a1
-800D0554	lhu    v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+V0 = hu[AT + 0000];
 800D0558	nop
 800D055C	addiu  v0, v0, $ffff (=-$1)
-800D0560	lui    at, $8016
-800D0564	addiu  at, at, $20b0
-800D0568	addu   at, at, a1
-800D056C	sh     v0, $0000(at)
+AT = 801620b0;
+AT = AT + A1;
+[AT + 0000] = h(V0);
 
 Ld0570:	; 800D0570
 800D0570	jr     ra 
 800D0574	nop
 ////////////////////////////////
 // funcd0578
-800D0578	lui    v0, $8016
-800D057C	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800D0580	addiu  sp, sp, $ffe0 (=-$20)
-800D0584	sw     ra, $0018(sp)
-800D0588	sll    v1, v0, $05
-800D058C	lui    at, $8016
-800D0590	addiu  at, at, $21f4
-800D0594	addu   at, at, v1
-800D0598	lh     v0, $0000(at)
+[SP + 0018] = w(RA);
+V1 = V0 << 05;
+AT = 801621f4;
+AT = AT + V1;
+V0 = h[AT + 0000];
 800D059C	nop
 800D05A0	bne    v0, zero, Ld05f8 [$800d05f8]
-800D05A4	addu   a0, v0, zero
-800D05A8	lui    at, $8016
-800D05AC	addiu  at, at, $21f8
-800D05B0	addu   at, at, v1
-800D05B4	lh     a0, $0000(at)
-800D05B8	lui    at, $8016
-800D05BC	addiu  at, at, $21f6
-800D05C0	addu   at, at, v1
-800D05C4	lh     a1, $0000(at)
+A0 = V0;
+AT = 801621f8;
+AT = AT + V1;
+A0 = h[AT + 0000];
+AT = 801621f6;
+AT = AT + V1;
+A1 = h[AT + 0000];
 800D05C8	jal    funcd4d4c [$800d4d4c]
 800D05CC	nop
-800D05D0	lui    v0, $8016
-800D05D4	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800D05D8	addiu  v1, zero, $ffff (=-$1)
-800D05DC	sll    v0, v0, $05
-800D05E0	lui    at, $8016
-800D05E4	addiu  at, at, $21f0
-800D05E8	addu   at, at, v0
-800D05EC	sh     v1, $0000(at)
+V0 = V0 << 05;
+AT = 801621f0;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 800D05F0	j      Ld060c [$800d060c]
 800D05F4	nop
 
 Ld05f8:	; 800D05F8
 800D05F8	addiu  v0, a0, $ffff (=-$1)
-800D05FC	lui    at, $8016
-800D0600	addiu  at, at, $21f4
-800D0604	addu   at, at, v1
-800D0608	sh     v0, $0000(at)
+AT = 801621f4;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 
 Ld060c:	; 800D060C
-800D060C	lw     ra, $0018(sp)
-800D0610	addiu  sp, sp, $0020
+RA = w[SP + 0018];
+SP = SP + 0020;
 800D0614	jr     ra 
 800D0618	nop
 ////////////////////////////////
@@ -7462,133 +6725,115 @@ else
 
 ////////////////////////////////
 // funcd06b8
-800D06B8	lui    v0, $8016
-800D06BC	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800D06C0	addiu  sp, sp, $ffe0 (=-$20)
-800D06C4	sw     ra, $0018(sp)
-800D06C8	sll    a0, v0, $05
-800D06CC	lui    at, $8016
-800D06D0	addiu  at, at, $21f4
-800D06D4	addu   at, at, a0
-800D06D8	lh     v0, $0000(at)
+[SP + 0018] = w(RA);
+A0 = V0 << 05;
+AT = 801621f4;
+AT = AT + A0;
+V0 = h[AT + 0000];
 800D06DC	nop
 800D06E0	bne    v0, zero, Ld073c [$800d073c]
-800D06E4	addu   v1, v0, zero
-800D06E8	lui    v0, $8015
-800D06EC	lbu    v0, $18dc(v0)
+V1 = V0;
+V0 = bu[801518dc];
 800D06F0	nop
 800D06F4	bne    v0, zero, Ld0750 [$800d0750]
 800D06F8	nop
-800D06FC	lui    at, $8016
-800D0700	addiu  at, at, $21f6
-800D0704	addu   at, at, a0
-800D0708	lbu    a0, $0000(at)
+AT = 801621f6;
+AT = AT + A0;
+A0 = bu[AT + 0000];
 800D070C	jal    funcd0c80 [$800d0c80]
 800D0710	nop
-800D0714	lui    v0, $8016
-800D0718	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800D071C	addiu  v1, zero, $ffff (=-$1)
-800D0720	sll    v0, v0, $05
-800D0724	lui    at, $8016
-800D0728	addiu  at, at, $21f0
-800D072C	addu   at, at, v0
-800D0730	sh     v1, $0000(at)
+V0 = V0 << 05;
+AT = 801621f0;
+AT = AT + V0;
+[AT + 0000] = h(V1);
 800D0734	j      Ld0750 [$800d0750]
 800D0738	nop
 
 Ld073c:	; 800D073C
 800D073C	addiu  v0, v1, $ffff (=-$1)
-800D0740	lui    at, $8016
-800D0744	addiu  at, at, $21f4
-800D0748	addu   at, at, a0
-800D074C	sh     v0, $0000(at)
+AT = 801621f4;
+AT = AT + A0;
+[AT + 0000] = h(V0);
 
 Ld0750:	; 800D0750
-800D0750	lw     ra, $0018(sp)
-800D0754	addiu  sp, sp, $0020
+RA = w[SP + 0018];
+SP = SP + 0020;
 800D0758	jr     ra 
 800D075C	nop
 ////////////////////////////////
 // funcd0760
-800D0760	lui    v0, $8015
-800D0764	lh     v0, $169c(v0)
+V0 = h[8015169c];
 800D0768	addiu  sp, sp, $ffe0 (=-$20)
-800D076C	sw     ra, $0018(sp)
-800D0770	sll    v1, v0, $05
-800D0774	lui    at, $8016
-800D0778	addiu  at, at, $297e
-800D077C	addu   at, at, v1
-800D0780	lh     v0, $0000(at)
+[SP + 0018] = w(RA);
+V1 = V0 << 05;
+AT = 8016297e;
+AT = AT + V1;
+V0 = h[AT + 0000];
 800D0784	nop
 800D0788	bne    v0, zero, Ld0868 [$800d0868]
-800D078C	addu   a0, v0, zero
-800D0790	lui    at, $8016
-800D0794	addiu  at, at, $297c
-800D0798	addu   at, at, v1
-800D079C	lh     v0, $0000(at)
+A0 = V0;
+AT = 8016297c;
+AT = AT + V1;
+V0 = h[AT + 0000];
 800D07A0	nop
 800D07A4	bne    v0, zero, Ld07c4 [$800d07c4]
 800D07A8	addiu  v0, zero, $ffff (=-$1)
-800D07AC	lui    at, $8016
-800D07B0	addiu  at, at, $2978
-800D07B4	addu   at, at, v1
-800D07B8	sh     v0, $0000(at)
+AT = 80162978;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 800D07BC	j      Ld087c [$800d087c]
 800D07C0	nop
 
 Ld07c4:	; 800D07C4
-800D07C4	lui    a0, $8016
-800D07C8	lbu    a0, $90cc(a0)
+A0 = bu[801590cc];
 800D07CC	nop
-800D07D0	sll    v0, a0, $01
-800D07D4	addu   v0, v0, a0
-800D07D8	sll    v1, v0, $05
-800D07DC	subu   v1, v1, v0
-800D07E0	sll    v1, v1, $03
-800D07E4	subu   v1, v1, a0
-800D07E8	sll    v1, v1, $02
-800D07EC	sll    v0, a0, $03
-800D07F0	subu   v0, v0, a0
-800D07F4	sll    v0, v0, $02
-800D07F8	addu   v0, v0, a0
-800D07FC	sll    v0, v0, $02
-800D0800	lui    at, $8015
-800D0804	addiu  at, at, $1907
-800D0808	addu   at, at, v1
-800D080C	lbu    a0, $0000(at)
-800D0810	lui    at, $8015
-800D0814	addiu  at, at, $123e
-800D0818	addu   at, at, v0
-800D081C	lh     a1, $0000(at)
+V0 = A0 << 01;
+V0 = V0 + A0;
+V1 = V0 << 05;
+V1 = V1 - V0;
+V1 = V1 << 03;
+V1 = V1 - A0;
+V1 = V1 << 02;
+V0 = A0 << 03;
+V0 = V0 - A0;
+V0 = V0 << 02;
+V0 = V0 + A0;
+V0 = V0 << 02;
+AT = 80151907;
+AT = AT + V1;
+A0 = bu[AT + 0000];
+AT = 8015123e;
+AT = AT + V0;
+A1 = h[AT + 0000];
 800D0820	jal    funcdcf60 [$800dcf60]
 800D0824	nop
-800D0828	lui    v1, $8015
-800D082C	lh     v1, $169c(v1)
+V1 = h[8015169c];
 800D0830	nop
-800D0834	sll    v1, v1, $05
-800D0838	lui    at, $8016
-800D083C	addiu  at, at, $297c
-800D0840	addu   at, at, v1
-800D0844	lhu    v0, $0000(at)
+V1 = V1 << 05;
+AT = 8016297c;
+AT = AT + V1;
+V0 = hu[AT + 0000];
 800D0848	nop
 800D084C	addiu  v0, v0, $ffff (=-$1)
-800D0850	lui    at, $8016
-800D0854	addiu  at, at, $297c
-800D0858	addu   at, at, v1
-800D085C	sh     v0, $0000(at)
+AT = 8016297c;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 800D0860	j      Ld087c [$800d087c]
 800D0864	nop
 
 Ld0868:	; 800D0868
 800D0868	addiu  v0, a0, $ffff (=-$1)
-800D086C	lui    at, $8016
-800D0870	addiu  at, at, $297e
-800D0874	addu   at, at, v1
-800D0878	sh     v0, $0000(at)
+AT = 8016297e;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 
 Ld087c:	; 800D087C
-800D087C	lw     ra, $0018(sp)
-800D0880	addiu  sp, sp, $0020
+RA = w[SP + 0018];
+SP = SP + 0020;
 800D0884	jr     ra 
 800D0888	nop
 ////////////////////////////////
@@ -7610,47 +6855,45 @@ funcb7fb4;
 ////////////////////////////////
 // funcd08b8
 800D08B8	beq    a1, zero, Ld0950 [$800d0950]
-800D08BC	addu   t1, a0, zero
-800D08C0	addu   a2, zero, zero
-800D08C4	andi   v0, t1, $00ff
-800D08C8	lui    v1, $8010
-800D08CC	addiu  v1, v1, $8384 (=-$7c7c)
-800D08D0	sll    v0, v0, $02
-800D08D4	addu   t0, v0, v1
-800D08D8	addu   a3, a1, zero
+T1 = A0;
+A2 = 0;
+V0 = T1 & 00ff;
+V1 = 800f8384;
+V0 = V0 << 02;
+T0 = V0 + V1;
+A3 = A1;
 
 loopd08dc:	; 800D08DC
-800D08DC	lw     v0, $0004(a3)
-800D08E0	sll    v1, a2, $02
-800D08E4	lw     a0, $0000(t0)
-800D08E8	addiu  a2, a2, $0001
-800D08EC	addu   v1, a0, v1
-800D08F0	addu   v0, a1, v0
-800D08F4	subu   v0, v0, a0
-800D08F8	sw     v0, $00bc(v1)
-800D08FC	slti   v0, a2, $0008
+V0 = w[A3 + 0004];
+V1 = A2 << 02;
+A0 = w[T0 + 0000];
+A2 = A2 + 0001;
+V1 = A0 + V1;
+V0 = A1 + V0;
+V0 = V0 - A0;
+[V1 + 00bc] = w(V0);
+V0 = A2 < 0008;
 800D0900	bne    v0, zero, loopd08dc [$800d08dc]
-800D0904	addiu  a3, a3, $0004
-800D0908	addu   a2, zero, zero
-800D090C	andi   v0, t1, $00ff
-800D0910	lui    v1, $8010
-800D0914	addiu  v1, v1, $8384 (=-$7c7c)
-800D0918	sll    v0, v0, $02
-800D091C	addu   t0, v0, v1
-800D0920	addu   a3, a1, zero
+A3 = A3 + 0004;
+A2 = 0;
+V0 = T1 & 00ff;
+V1 = 800f8384;
+V0 = V0 << 02;
+T0 = V0 + V1;
+A3 = A1;
 
 loopd0924:	; 800D0924
-800D0924	lw     v0, $0024(a3)
-800D0928	sll    v1, a2, $02
-800D092C	lw     a0, $0000(t0)
-800D0930	addiu  a2, a2, $0001
-800D0934	addu   v1, a0, v1
-800D0938	addu   v0, a1, v0
-800D093C	subu   v0, v0, a0
-800D0940	sw     v0, $018c(v1)
-800D0944	slti   v0, a2, $0008
+V0 = w[A3 + 0024];
+V1 = A2 << 02;
+A0 = w[T0 + 0000];
+A2 = A2 + 0001;
+V1 = A0 + V1;
+V0 = A1 + V0;
+V0 = V0 - A0;
+[V1 + 018c] = w(V0);
+V0 = A2 < 0008;
 800D0948	bne    v0, zero, loopd0924 [$800d0924]
-800D094C	addiu  a3, a3, $0004
+A3 = A3 + 0004;
 
 Ld0950:	; 800D0950
 800D0950	jr     ra 
@@ -7677,35 +6920,32 @@ loopd098c:	; 800D098C
 
 ////////////////////////////////
 // funcd09d0
-800D09D0	addu   a1, zero, zero
-800D09D4	andi   a0, a0, $00ff
-800D09D8	lui    v1, $8010
-800D09DC	addiu  v1, v1, $8384 (=-$7c7c)
-800D09E0	sll    v0, a0, $02
-800D09E4	addu   t0, v0, v1
-800D09E8	sll    a0, a0, $05
-800D09EC	lui    v0, $8016
-800D09F0	addiu  v0, v0, $79bc
-800D09F4	addu   a3, a0, v0
-800D09F8	lui    v0, $8010
-800D09FC	addiu  v0, v0, $9984 (=-$667c)
-800D0A00	addu   a2, a0, v0
+A1 = 0;
+A0 = A0 & 00ff;
+V1 = 800f8384;
+V0 = A0 << 02;
+T0 = V0 + V1;
+A0 = A0 << 05;
+V0 = 801679bc;
+A3 = A0 + V0;
+V0 = 800f9984;
+A2 = A0 + V0;
 
 loopd0a04:	; 800D0A04
-800D0A04	lw     v1, $0000(a2)
-800D0A08	addiu  a2, a2, $0004
-800D0A0C	sll    a0, a1, $02
-800D0A10	lw     v0, $0000(t0)
-800D0A14	addiu  a1, a1, $0001
-800D0A18	addu   v0, v0, a0
-800D0A1C	sw     v1, $00bc(v0)
-800D0A20	lw     v0, $0000(t0)
-800D0A24	lw     v1, $0000(a3)
-800D0A28	addu   v0, v0, a0
-800D0A2C	sw     v1, $018c(v0)
-800D0A30	slti   v0, a1, $0008
+V1 = w[A2 + 0000];
+A2 = A2 + 0004;
+A0 = A1 << 02;
+V0 = w[T0 + 0000];
+A1 = A1 + 0001;
+V0 = V0 + A0;
+[V0 + 00bc] = w(V1);
+V0 = w[T0 + 0000];
+V1 = w[A3 + 0000];
+V0 = V0 + A0;
+[V0 + 018c] = w(V1);
+V0 = A1 < 0008;
 800D0A34	bne    v0, zero, loopd0a04 [$800d0a04]
-800D0A38	addiu  a3, a3, $0004
+A3 = A3 + 0004;
 800D0A3C	jr     ra 
 800D0A40	nop
 ////////////////////////////////
@@ -7715,60 +6955,51 @@ loopd0a04:	; 800D0A04
 ////////////////////////////////
 // funcd0a4c
 800D0A4C	addiu  sp, sp, $ffe8 (=-$18)
-800D0A50	sw     ra, $0010(sp)
-800D0A54	addu   a0, zero, zero
-800D0A58	lui    v1, $8015
-800D0A5C	addiu  v1, v1, $1909
+[SP + 0010] = w(RA);
+A0 = 0;
+V1 = 80151909;
 
 loopd0a60:	; 800D0A60
-800D0A60	lbu    v0, $0000(v1)
-800D0A64	addiu  a0, a0, $0001
-800D0A68	ori    v0, v0, $0001
-800D0A6C	sb     v0, $0000(v1)
-800D0A70	slti   v0, a0, $0003
+V0 = bu[V1 + 0000];
+A0 = A0 + 0001;
+V0 = V0 | 0001;
+[V1 + 0000] = b(V0);
+V0 = A0 < 0003;
 800D0A74	bne    v0, zero, loopd0a60 [$800d0a60]
-800D0A78	addiu  v1, v1, $0b9c
-800D0A7C	lui    a0, $8015
-800D0A80	lh     a0, $1774(a0)
-800D0A84	lui    a1, $8016
-800D0A88	lbu    a1, $90cc(a1)
+V1 = V1 + 0b9c;
+A0 = h[80151774];
+A1 = bu[801590cc];
 800D0A8C	jal    $801b0040
 800D0A90	nop
-800D0A94	lui    a0, $800d
-800D0A98	addiu  a0, a0, $0ad4
+A0 = 800d0ad4;
 800D0A9C	jal    funcbc04c [$800bc04c]
 800D0AA0	nop
-800D0AA4	lui    at, $1f80
-800D0AA8	sw     v0, $0000(at)
-800D0AAC	sll    v0, v0, $05
-800D0AB0	ori    v1, zero, $0002
-800D0AB4	lui    at, $8016
-800D0AB8	addiu  at, at, $21f4
-800D0ABC	addu   at, at, v0
-800D0AC0	sh     v1, $0000(at)
-800D0AC4	lw     ra, $0010(sp)
-800D0AC8	addiu  sp, sp, $0018
+[1f800000] = w(V0);
+V0 = V0 << 05;
+V1 = 0002;
+AT = 801621f4;
+AT = AT + V0;
+[AT + 0000] = h(V1);
+RA = w[SP + 0010];
+SP = SP + 0018;
 800D0ACC	jr     ra 
 800D0AD0	nop
 ////////////////////////////////
 // funcd0ad4
-800D0AD4	lui    v0, $8016
-800D0AD8	lh     v0, $90d4(v0)
+V0 = h[801590d4];
 800D0ADC	addiu  sp, sp, $ffe0 (=-$20)
-800D0AE0	sw     ra, $0018(sp)
-800D0AE4	sll    v1, v0, $05
-800D0AE8	lui    at, $8016
-800D0AEC	addiu  at, at, $21f4
-800D0AF0	addu   at, at, v1
-800D0AF4	lh     v0, $0000(at)
+[SP + 0018] = w(RA);
+V1 = V0 << 05;
+AT = 801621f4;
+AT = AT + V1;
+V0 = h[AT + 0000];
 800D0AF8	nop
 800D0AFC	bne    v0, zero, Ld0b28 [$800d0b28]
-800D0B00	addu   a0, v0, zero
+A0 = V0;
 800D0B04	addiu  v0, zero, $ffff (=-$1)
-800D0B08	lui    at, $8016
-800D0B0C	addiu  at, at, $21f0
-800D0B10	addu   at, at, v1
-800D0B14	sh     v0, $0000(at)
+AT = 801621f0;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 800D0B18	jal    funcbb978 [$800bb978]
 800D0B1C	nop
 800D0B20	j      Ld0b3c [$800d0b3c]
@@ -7776,95 +7007,82 @@ loopd0a60:	; 800D0A60
 
 Ld0b28:	; 800D0B28
 800D0B28	addiu  v0, a0, $ffff (=-$1)
-800D0B2C	lui    at, $8016
-800D0B30	addiu  at, at, $21f4
-800D0B34	addu   at, at, v1
-800D0B38	sh     v0, $0000(at)
+AT = 801621f4;
+AT = AT + V1;
+[AT + 0000] = h(V0);
 
 Ld0b3c:	; 800D0B3C
-800D0B3C	lw     ra, $0018(sp)
-800D0B40	addiu  sp, sp, $0020
+RA = w[SP + 0018];
+SP = SP + 0020;
 800D0B44	jr     ra 
 800D0B48	nop
 ////////////////////////////////
 // funcd0b4c
 800D0B4C	addiu  sp, sp, $ffe8 (=-$18)
-800D0B50	sw     s0, $0010(sp)
-800D0B54	sw     ra, $0014(sp)
-800D0B58	lui    at, $8010
-800D0B5C	sb     zero, $8cf0(at)
+[SP + 0010] = w(S0);
+[SP + 0014] = w(RA);
+[800f8cf0] = b(0);
 800D0B60	jal    funcd1530 [$800d1530]
-800D0B64	addu   s0, a0, zero
-800D0B68	andi   s0, s0, $00ff
-800D0B6C	sll    v1, s0, $01
-800D0B70	addu   v1, v1, s0
-800D0B74	sll    v0, v1, $05
-800D0B78	subu   v0, v0, v1
-800D0B7C	sll    v0, v0, $03
-800D0B80	subu   v0, v0, s0
-800D0B84	sll    a1, v0, $02
-800D0B88	lui    at, $8015
-800D0B8C	addiu  at, at, $1907
-800D0B90	addu   at, at, a1
-800D0B94	lbu    v1, $0000(at)
-800D0B98	ori    v0, zero, $0007
+S0 = A0;
+S0 = S0 & 00ff;
+V1 = S0 << 01;
+V1 = V1 + S0;
+V0 = V1 << 05;
+V0 = V0 - V1;
+V0 = V0 << 03;
+V0 = V0 - S0;
+A1 = V0 << 02;
+AT = 80151907;
+AT = AT + A1;
+V1 = bu[AT + 0000];
+V0 = 0007;
 800D0B9C	beq    v1, v0, Ld0c0c [$800d0c0c]
-800D0BA0	slti   v0, v1, $0008
+V0 = V1 < 0008;
 800D0BA4	beq    v0, zero, Ld0bbc [$800d0bbc]
-800D0BA8	ori    v0, zero, $0004
+V0 = 0004;
 800D0BAC	beq    v1, v0, Ld0bd0 [$800d0bd0]
 800D0BB0	nop
 800D0BB4	j      Ld0c6c [$800d0c6c]
 800D0BB8	nop
 
 Ld0bbc:	; 800D0BBC
-800D0BBC	ori    v0, zero, $0008
+V0 = 0008;
 800D0BC0	beq    v1, v0, Ld0c2c [$800d0c2c]
 800D0BC4	nop
 800D0BC8	j      Ld0c6c [$800d0c6c]
 800D0BCC	nop
 
 Ld0bd0:	; 800D0BD0
-800D0BD0	lui    a0, $8015
-800D0BD4	lh     a0, $1774(a0)
-800D0BD8	lui    at, $8015
-800D0BDC	addiu  at, at, $1906
-800D0BE0	addu   at, at, a1
-800D0BE4	lbu    v0, $0000(at)
-800D0BE8	lui    a1, $8016
-800D0BEC	lbu    a1, $90cc(a1)
-800D0BF0	sll    v0, v0, $02
-800D0BF4	lui    at, $800f
-800D0BF8	addiu  at, at, $f9d8 (=-$628)
-800D0BFC	addu   at, at, v0
-800D0C00	lw     v0, $0000(at)
+A0 = h[80151774];
+AT = 80151906;
+AT = AT + A1;
+V0 = bu[AT + 0000];
+A1 = bu[801590cc];
+V0 = V0 << 02;
+AT = 800ef9d8;
+AT = AT + V0;
+V0 = w[AT + 0000];
 800D0C04	j      Ld0c60 [$800d0c60]
 800D0C08	nop
 
 Ld0c0c:	; 800D0C0C
-800D0C0C	lui    a0, $8015
-800D0C10	lh     a0, $1774(a0)
-800D0C14	lui    a1, $8016
-800D0C18	lbu    a1, $90cc(a1)
+A0 = h[80151774];
+A1 = bu[801590cc];
 800D0C1C	jal    $801b037c
 800D0C20	nop
 800D0C24	j      Ld0c6c [$800d0c6c]
 800D0C28	nop
 
 Ld0c2c:	; 800D0C2C
-800D0C2C	lui    a0, $8015
-800D0C30	lh     a0, $1774(a0)
-800D0C34	lui    at, $8015
-800D0C38	addiu  at, at, $1906
-800D0C3C	addu   at, at, a1
-800D0C40	lbu    v0, $0000(at)
-800D0C44	lui    a1, $8016
-800D0C48	lbu    a1, $90cc(a1)
-800D0C4C	sll    v0, v0, $02
-800D0C50	lui    at, $800f
-800D0C54	addiu  at, at, $ffe0 (=-$20)
-800D0C58	addu   at, at, v0
-800D0C5C	lw     v0, $0000(at)
+A0 = h[80151774];
+AT = 80151906;
+AT = AT + A1;
+V0 = bu[AT + 0000];
+A1 = bu[801590cc];
+V0 = V0 << 02;
+AT = 800effe0;
+AT = AT + V0;
+V0 = w[AT + 0000];
 
 Ld0c60:	; 800D0C60
 800D0C60	nop
@@ -7872,9 +7090,9 @@ Ld0c60:	; 800D0C60
 800D0C68	nop
 
 Ld0c6c:	; 800D0C6C
-800D0C6C	lw     ra, $0014(sp)
-800D0C70	lw     s0, $0010(sp)
-800D0C74	addiu  sp, sp, $0018
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
 800D0C78	jr     ra 
 800D0C7C	nop
 ////////////////////////////////
@@ -7948,11 +7166,10 @@ switch (V0)
 
         A1 = bu[801590cc]; // attacker_id
 
-        800D0EC0	sll    v0, v0, $02
-        800D0EC4	lui    at, $800f
-        800D0EC8	addiu  at, at, $faf0 (=-$510)
-        800D0ECC	addu   at, at, v0
-        800D0ED0	lw     v0, $0000(at)
+        V0 = V0 << 02;
+        AT = 800efaf0;
+        AT = AT + V0;
+        V0 = w[AT + 0000];
 
 D4081B80B8091B808C0A1B80440C1B80600B1B8000001B8064051B80B86C0C80B86C0C8054001B8054001B8054001B80B86C0C8054001B80D0071B8000001B80
 00001B80 10
@@ -7990,10 +7207,9 @@ B86C0C80 18
         A1 = bu[801590cc];
         V0 = effect_id * 4;
 
-    800D0F2C	lui    at, $800f
-    800D0F30	addiu  at, at, $fbc8 (=-$438)
-    800D0F34	addu   at, at, v0
-    800D0F38	lw     v0, $0000(at)
+    AT = 800efbc8;
+    AT = AT + V0;
+    V0 = w[AT + 0000];
 
 54001B80
 70001B80
@@ -8011,89 +7227,75 @@ B86C0C80
     800D0F4C	nop
 
     case 14: // limit
-    800D0F50	andi   a0, s1, $00ff
-    800D0F54	sll    v1, a0, $01
-    800D0F58	addu   v1, v1, a0
-    800D0F5C	sll    v0, v1, $05
-    800D0F60	subu   v0, v0, v1
-    800D0F64	sll    v0, v0, $03
-    800D0F68	subu   v0, v0, a0
-    800D0F6C	sll    v0, v0, $02
-    800D0F70	lui    at, $8015
-    800D0F74	addiu  at, at, $1906
-    800D0F78	addu   at, at, v0
-    800D0F7C	lbu    v1, $0000(at)
-    800D0F80	ori    v0, zero, $0002
+    A0 = S1 & 00ff;
+    V1 = A0 << 01;
+    V1 = V1 + A0;
+    V0 = V1 << 05;
+    V0 = V0 - V1;
+    V0 = V0 << 03;
+    V0 = V0 - A0;
+    V0 = V0 << 02;
+    AT = 80151906;
+    AT = AT + V0;
+    V1 = bu[AT + 0000];
+    V0 = 0002;
     800D0F84	bne    v1, v0, Ld0fc4 [$800d0fc4]
-    800D0F88	andi   v1, s1, $00ff
-    800D0F8C	lui    v1, $8016
-    800D0F90	lbu    v1, $90cc(v1)
-    800D0F94	lui    v0, $8010
-    800D0F98	lb     v0, $a9e8(v0)
+    V1 = S1 & 00ff;
+    V1 = bu[801590cc];
+    V0 = b[800fa9e8];
     800D0F9C	nop
     800D0FA0	bne    v1, v0, Ld0fb8 [$800d0fb8]
-    800D0FA4	ori    v0, zero, $0001
-    800D0FA8	lui    at, $8016
-    800D0FAC	sb     zero, $3a98(at)
+    V0 = 0001;
+    [80163a98] = b(0);
     800D0FB0	j      Ld0fc4 [$800d0fc4]
-    800D0FB4	andi   v1, s1, $00ff
+    V1 = S1 & 00ff;
 
     Ld0fb8:	; 800D0FB8
-    800D0FB8	lui    at, $8016
-    800D0FBC	sb     v0, $3a98(at)
-    800D0FC0	andi   v1, s1, $00ff
+    [80163a98] = b(V0);
+    V1 = S1 & 00ff;
 
     Ld0fc4:	; 800D0FC4
-    800D0FC4	sll    v0, v1, $01
-    800D0FC8	addu   v0, v0, v1
-    800D0FCC	sll    s0, v0, $05
-    800D0FD0	subu   s0, s0, v0
-    800D0FD4	sll    s0, s0, $03
-    800D0FD8	subu   s0, s0, v1
-    800D0FDC	sll    s0, s0, $02
-    800D0FE0	lui    a0, $8015
-    800D0FE4	lh     a0, $1774(a0)
-    800D0FE8	lui    at, $8015
-    800D0FEC	addiu  at, at, $1906
-    800D0FF0	addu   at, at, s0
-    800D0FF4	lbu    v0, $0000(at)
-    800D0FF8	lui    a1, $8016
-    800D0FFC	lbu    a1, $90cc(a1)
-    800D1000	sll    v0, v0, $02
-    800D1004	lui    at, $800f
-    800D1008	addiu  at, at, $fea0 (=-$160)
-    800D100C	addu   at, at, v0
-    800D1010	lw     v0, $0000(at)
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    S0 = V0 << 05;
+    S0 = S0 - V0;
+    S0 = S0 << 03;
+    S0 = S0 - V1;
+    S0 = S0 << 02;
+    A0 = h[80151774];
+    AT = 80151906;
+    AT = AT + S0;
+    V0 = bu[AT + 0000];
+    A1 = bu[801590cc];
+    V0 = V0 << 02;
+    AT = 800efea0;
+    AT = AT + V0;
+    V0 = w[AT + 0000];
     800D1014	nop
     800D1018	jalr   v0 ra
     800D101C	nop
-    800D1020	lui    at, $1f80
-    800D1024	sw     v0, $0000(at)
-    800D1028	lui    at, $8015
-    800D102C	addiu  at, at, $1906
-    800D1030	addu   at, at, s0
-    800D1034	lbu    v0, $0000(at)
+    [1f800000] = w(V0);
+    AT = 80151906;
+    AT = AT + S0;
+    V0 = bu[AT + 0000];
     800D1038	nop
     800D103C	addiu  v1, v0, $ffd3 (=-$2d)
-    800D1040	sltiu  v0, v1, $0023
+    V0 = V1 < 0023;
     800D1044	beq    v0, zero, Ld1070 [$800d1070]
-    800D1048	sll    v0, v1, $02
-    800D104C	lui    at, $800a
-    800D1050	addiu  at, at, $0c48
-    800D1054	addu   at, at, v0
-    800D1058	lw     v0, $0000(at)
+    V0 = V1 << 02;
+    AT = 800a0c48;
+    AT = AT + V0;
+    V0 = w[AT + 0000];
     800D105C	nop
     800D1060	jr     v0 
     800D1064	nop
 
-    800D1068	lui    at, $1f80
-    800D106C	sw     zero, $0000(at)
+    [1f800000] = w(0);
 
     Ld1070:	; 800D1070
-    800D1070	lui    a1, $1f80
-    800D1074	lw     a1, $0000(a1)
+    A1 = w[1f800000];
     800D1078	jal    funcd08b8 [$800d08b8]
-    800D107C	andi   a0, s1, $00ff
+    A0 = S1 & 00ff;
     800D1080	j      Ld10f8 [$800d10f8]
     800D1084	nop
 
