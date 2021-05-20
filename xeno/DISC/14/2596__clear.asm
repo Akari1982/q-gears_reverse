@@ -7195,20 +7195,3 @@ L1e4484:	; 801E4484
 801E44B4	addiu  sp, sp, $0030
 801E44B8	jr     ra 
 801E44BC	nop
-
-801E44C0	sll    s1, zero, $10
-801E44C4	lb     a2, $ccc4(zero)
-801E44C8	lb     t4, $c408(zero)
-801E44CC	nop
-801E44D0	nop
-801E44D4	nop
-801E44D8	nop
-801E44DC	nop
-801E44E0	nop
-801E44E4	nop
-801E44E8	nop
-801E44EC	nop
-801E44F0	nop
-801E44F4	nop
-801E44F8	nop
-801E44FC	nop

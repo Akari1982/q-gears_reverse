@@ -95,6 +95,9 @@ Directory 10 2 (2606)
 Directory 18 0 (19)
       1 0\0019_mdec.exe
 
+Directory 20 0 (3087)
+      1 19\3087.exe
+
 Directory 20 3 (3096)
       1 19\3096.dlg
       2 19\3097.dlg

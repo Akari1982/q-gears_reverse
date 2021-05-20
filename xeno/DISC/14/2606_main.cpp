@@ -726,9 +726,8 @@ A0 = S1;
 A1 = 1;
 battle_memory_allocate();
 
-S0 = V0;
-
 A0 = S0;
+S0 = V0;
 A1 = S0;
 A2 = 0;
 A3 = 80;
