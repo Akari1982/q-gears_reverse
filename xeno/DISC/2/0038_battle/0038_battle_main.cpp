@@ -72398,12 +72398,12 @@ A0 = S0;
 800B3ADC	j      Lb43e8 [$800b43e8]
 800B3AE0	nop
 A0 = 00a0;
-800B3AE8	jal    $80049fd4
+800B3AE8	jal    $system_gte_set_screen_offset
 A1 = 0070;
 800B3AF0	j      Lb43e8 [$800b43e8]
 800B3AF4	nop
 A0 = 00a0;
-800B3AFC	jal    $80049fd4
+800B3AFC	jal    $system_gte_set_screen_offset
 A1 = 00a4;
 800B3B04	j      Lb43e8 [$800b43e8]
 800B3B08	nop
@@ -75351,7 +75351,7 @@ A0 = SP + 0020;
 S7 = 0;
 A0 = 00a0;
 A1 = 0070;
-800B66DC	jal    $80049fd4
+800B66DC	jal    $system_gte_set_screen_offset
 [SP + 0058] = w(V0);
 800B66E4	jal    $80049ff4
 A0 = 0200;
@@ -75432,7 +75432,7 @@ V0 = 0002;
 800B67FC	nop
 A0 = w[SP + 0020];
 A1 = w[SP + 0024];
-800B6808	jal    $80049fd4
+800B6808	jal    $system_gte_set_screen_offset
 800B680C	nop
 A0 = w[SP + 0058];
 800B6814	jal    $80049ff4
@@ -76352,50 +76352,60 @@ S0 = A0;
 
 [800d2dd8] = b(S0);
 
-800B7634	jal    funcb782c [$800b782c]
+funcb782c();
 
-800B763C	jal    func1ba38 [$8001ba38]
+func1ba38();
 
-V0 = S0 < 0006;
-800B7648	beq    v0, zero, Lb76c8 [$800b76c8]
-V0 = S0 << 02;
-V0 = w[800700a0 + V0];
-800B765C	nop
-800B7660	jr     v0 
-800B7664	nop
+switch( S0 )
+{
+    case 1:
+    {
+        A0 = 0;
+        system_cdrom_action_sync();
 
-800B7668	jal    system_cdrom_action_sync [$80028870]
-A0 = 0;
-800B7670	jal    func1e85ac [$801e85ac]
-800B7674	nop
-800B7678	j      Lb76d0 [$800b76d0]
-800B767C	nop
-800B7680	jal    system_cdrom_action_sync [$80028870]
-A0 = 0;
-800B7688	jal    func1e9244 [$801e9244]
-800B768C	nop
-800B7690	j      Lb76d0 [$800b76d0]
-800B7694	nop
-800B7698	jal    system_cdrom_action_sync [$80028870]
-A0 = 0;
-800B76A0	jal    func1e9638 [$801e9638]
-800B76A4	nop
-800B76A8	j      Lb76d0 [$800b76d0]
-800B76AC	nop
-800B76B0	jal    system_cdrom_action_sync [$80028870]
-A0 = 0;
-800B76B8	jal    func1e89a4 [$801e89a4]
-800B76BC	nop
-800B76C0	j      Lb76d0 [$800b76d0]
-800B76C4	nop
+        800B7670	jal    func1e85ac [$801e85ac]
+    }
+    break;
 
-Lb76c8:	; 800B76C8
-800B76C8	jal    funcb6d94 [$800b6d94]
-800B76CC	nop
+    case 2:
+    {
+        A0 = 0;
+        system_cdrom_action_sync();
+
+        800B7688	jal    func1e9244 [$801e9244]
+    }
+    break;
+
+    case 3:
+    {
+        A0 = 0;
+        system_cdrom_action_sync();
+
+        800B76A0	jal    func1e9638 [$801e9638]
+    }
+    break;
+
+    case 4:
+    {
+        A0 = 0;
+        system_cdrom_action_sync();
+
+        800B76B8	jal    func1e89a4 [$801e89a4]
+    }
+    break;
+
+    default:
+    {
+        funcb6d94();
+    }
+}
+
+
 
 Lb76d0:	; 800B76D0
-800B76D0	jal    system_cdrom_action_sync [$80028870]
 A0 = 0;
+system_cdrom_action_sync();
+
 800B76D8	jal    funca7f30 [$800a7f30]
 800B76DC	nop
 A0 = 80058b38;
@@ -76469,39 +76479,42 @@ SP = SP + 0018;
 800B7824	jr     ra 
 800B7828	nop
 ////////////////////////////////
-// funcb782c
-800B782C	addiu  sp, sp, $ffd8 (=-$28)
+
+
+
+////////////////////////////////
+// funcb782c()
+
 A0 = 00a0;
 A1 = 00a4;
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S1);
-800B7840	jal    $80049fd4
-[SP + 0018] = w(S0);
+
+800B7840	jal    $system_gte_set_screen_offset
+
 S1 = 800c419c;
 A0 = S1;
 A1 = 0;
 A2 = 00e0;
 A3 = 0140;
 S0 = 00e0;
-800B7864	jal    $80043858
+800B7864	jal    $system_graphic_create_display_env_struct
 [SP + 0010] = w(S0);
 A0 = S1 + 4070;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-800B787C	jal    $80043858
+800B787C	jal    $system_graphic_create_display_env_struct
 [SP + 0010] = w(S0);
 800B7884	addiu  a0, s1, $ffa4 (=-$5c)
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-800B7894	jal    $800437a0
+800B7894	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(S0);
 A0 = S1 + 4014;
 A1 = 0;
 A2 = 00e0;
 A3 = 0140;
-800B78AC	jal    $800437a0
+800B78AC	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(S0);
 V0 = 000a;
 [800c8216] = h(V0);
@@ -76514,12 +76527,10 @@ V0 = 00d8;
 [800c41a4] = h(0);
 [800c821a] = h(V0);
 [800c41aa] = h(V0);
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800B7910	jr     ra 
-800B7914	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb7918
 800B7918	addiu  sp, sp, $ffe8 (=-$18)

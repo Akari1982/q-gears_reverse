@@ -49,7 +49,7 @@ Directory 4 0 (0424)
 Directory с 0
      2 STRIPCD1\15\2613.sed
      3 STRIPCD1\15\2614
-     4 STRIPCD1\15\2615
+     4 STRIPCD1\15\2615.exe
      5 STRIPCD1\15\2616.smd
 
 Directory с 1

@@ -2216,107 +2216,76 @@ system_cdrom_action_sync(); // ececute till cd sync
 
 
 ////////////////////////////////
-// func1ba38
-8001BA38	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
+// func1ba38()
 
 A0 = 2; // HIG
 A1 = 0;
 system_memory_set_alloc_user();
 
-A0 = 000c;
-8001BA5C	jal    system_filesystem_set_dir [$80028280]
+A0 = c;
 A1 = 0;
-A0 = 0004;
-8001BA68	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-A0 = 7fe1c000;
-A0 = V0 + A0;
-[GP + 030c] = w(V0);
-8001BA80	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-S0 = 801e4000;
-[GP + 0338] = w(V0);
-8001BA94	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
-A0 = 0002;
+system_filesystem_set_dir();
+
+A0 = 4;
+A1 = 1;
+system_memory_allocate();
+[GP + 30c] = w(V0);
+
+A0 = 7fe1c000 + V0;
+A1 = 1;
+system_memory_allocate();
+[GP + 338] = w(V0);
+
+A0 = 2;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-8001BAA0	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
-[GP + 045c] = w(V0);
-8001BAAC	jal    system_get_aligned_filesize_by_dir_file_id [$800286fc]
-A0 = 0003;
+A1 = 1;
+system_memory_allocate();
+[GP + 45c] = w(V0);
+
+A0 = 3;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-8001BAB8	jal    system_memory_allocate [$800319ec]
-A1 = 0001;
+A1 = 1;
+system_memory_allocate();
+[GP + 434] = w(V0);
+
+[8006f04c +  0] = h(2); // dir file id
+[8006f04c +  4] = w(w[GP + 45c]);
+[8006f04c +  8] = h(3);
+[8006f04c +  c] = w(V0);
+[8006f04c + 10] = h(4);
+[8006f04c + 14] = w(801e4000);
+[8006f04c + 18] = h(0);
+[8006f04c + 1c] = w(0);
+
 A0 = 8006f04c;
 A1 = 0;
-S1 = 0003;
-V1 = 0002;
-[A0 + 0000] = h(V1);
-V1 = 0003;
-[GP + 0434] = w(V0);
-[8006f058] = w(V0);
-V0 = 0004;
-[8006f054] = h(V1);
-V1 = w[GP + 045c];
-[8006f05c] = h(V0);
-[8006f060] = w(S0);
-[8006f064] = h(0);
-[8006f068] = w(0);
-[8006f050] = w(V1);
-8001BB20	jal    func2990c [$8002990c]
-A2 = 0080;
+A2 = 80;
+func2990c();
 
 loop1bb28:	; 8001BB28
-8001BB28	jal    system_cdrom_data_sync [$800284dc]
-8001BB2C	nop
-8001BB30	beq    v0, s1, loop1bb28 [$8001bb28]
-8001BB34	nop
-A0 = w[GP + 045c];
+    system_cdrom_data_sync();
+8001BB30	beq    v0, 3, loop1bb28 [$8001bb28]
+
+A0 = w[GP + 45c];
 8001BB3C	jal    func382d0 [$800382d0]
-8001BB40	nop
-V1 = bu[GP + 03d8];
-V0 = 0004;
-8001BB4C	beq    v1, v0, L1bbb0 [$8001bbb0]
-S0 = 0;
-S2 = 8004ea2c;
-S1 = 00ff;
 
-loop1bb60:	; 8001BB60
-V1 = bu[GP + 03d8];
-8001BB64	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 + S0;
-V0 = V0 + S2;
-V1 = bu[V0 + 0000];
-8001BB7C	nop
-8001BB80	beq    v1, s1, L1bba4 [$8001bba4]
-S0 = S0 + 0001;
-V0 = w[GP + 045c];
-8001BB8C	nop
-A0 = hu[V0 + 0014];
-8001BB94	nop
-A0 = A0 << 10;
-8001BB9C	jal    func39c60 [$80039c60]
-A0 = A0 | V1;
-
-L1bba4:	; 8001BBA4
-V0 = S0 < 0003;
-8001BBA8	bne    v0, zero, loop1bb60 [$8001bb60]
-8001BBAC	nop
-
-L1bbb0:	; 8001BBB0
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8001BBC4	jr     ra 
-8001BBC8	nop
+if( bu[GP + 3d8] != 4 )
+{
+    for( int i = 0; i < 3 )
+    {
+        V1 = bu[GP + 3d8];
+        if( bu[8004ea2c + V1 * 3 + i] != ff )
+        {
+            V0 = w[GP + 45c];
+            A0 = (hu[V0 + 14] << 10) | bu[8004ea2c + V1 * 3 + i + 0000];
+            8001BB9C	jal    func39c60 [$80039c60]
+        }
+    }
+}
 ////////////////////////////////
 
 
