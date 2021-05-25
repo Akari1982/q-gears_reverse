@@ -121,8 +121,8 @@ if( w[800c1b60] == 0 ) // debug
     system_psyq_draw_sync_callback();
 }
 
-[80061bac] = w(w[80058bfc]); // pointer to struct from STRIPCD1\1\0025.snd file
-[80061bb4] = w(w[80058c48]); // pointer to struct from STRIPCD1\1\0027.snd file
+[80061bac] = w(w[80058bfc]); // pointer to struct from 1\0025.snd file
+[80061bb4] = w(w[80058c48]); // pointer to struct from 1\0027.snd file
 
 A0 = 8; // YOSI
 A1 = 0;
@@ -135,7 +135,7 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
     A1 = 0;
     system_filesystem_set_dir();
 
-    A0 = ad; // STRIPCD1\10\0595 - 0x1d6d3, 0x621c
+    A0 = ad; // 10\0595_field_debug.exe
     A1 = 80280000; // allocated_memory
     A2 = 0;
     A3 = 80;
@@ -155,7 +155,7 @@ if( w[8004e9b0] == 0 )
 }
 
 A0 = 0;
-func84ea4(); // load some sound file
+field_load_0590_sed_into_sound();
 
 S4 = 0;
 
@@ -164,11 +164,11 @@ field_allocate_memory_for_party_sprites();
 [8004e9f8] = w(0);
 [8004e9fc] = w(0);
 
-[800ad00c] = w(0);
+[800ad00c] = w(0); // flag that particle image is loaded.
 [800ad038] = w(0);
 [800ad054] = w(0);
 [800ad0b0] = w(-1);
-[800ad0b4] = w(-1);
+[800ad0b4] = w(-1); // battle not started
 [800ad0b8] = w(-1);
 [800ad0bc] = w(-1);
 [800ad0c0] = w(-1);
@@ -180,7 +180,7 @@ if( w[800c1b60] == 0 ) // debug
     field_debug_reset_current_pos();
 }
 
-func76c50(); // set dir inside (control related)
+func76c50(); // init controllers update and set default dir 4 0
 
 [80059a38] = w(8006ccc4);
 [8004e9f0] = w(hu[8006efde]); // field id to load

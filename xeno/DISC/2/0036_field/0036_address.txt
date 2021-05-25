@@ -1,48 +1,3 @@
-80059aa4 pointer to player sprite data for party slot 1.
-80059aa8 pointer to player sprite data for party slot 2.
-80059aac pointer to player sprite data for party slot 3.
-
-80059ad4 array of party slot - entity id association. (size 0x04).
-80059ad8 [][][][] entity id in party 2.
-80059adñ [][][][] entity id in patry 3.
-
-80061bac [][][][] pointer to struct from STRIPCD1\1\0025.snd file.
-80061bb4 [][][][] pointer to struct from STRIPCD1\1\0027.snd file.
-
-80061c20 [][][][] party member 1.
-80061c24 [][][][] party member 2.
-80061c28 [][][][] party member 3.
-80061c2c [][][][] pointer to some sound STRIPCD1\10\0590.sed
-
-80064ed8 store mouse input from second controller here.
-    +00 [][][][] pos X
-    +04 [][][][] pos Y.
-    +08 [][][][] mouse buttons mask.
-    +0c [][][][] relative movement X from last update.
-    +10 [][][][] relative movement Y from last update.
-
-80064f6c array of encounters. Extract part 6 of fieldfile here. (0x20 size 0x10 items).
-// tutorial field 0x616
-09A3120100 000000 8081818181FFFFFF 0000000000FFFFFF 0001020304FFFFFF
-0B001C0000 000000 80FFFFFFFFFFFFFF 00000000000000FF 00020000FFFFFFFF
-0200110000 000000 0101010180FFFFFF 0000000000FFFFFF 0000000000FFFFFF
-0100030080 808000 000001010101FFFF 000000000000FFFF 000001010101FFFF
-0F00070000 000000 80FFFFFFFFFFFFFF 0000000000000000 0001020001010101
-0B001D0000 000000 80FFFFFFFFFFFFFF 0000000000000000 0001020001010101
-02001E0000 000000 8282FFFFFFFFFFFF 0000000000000000 0100020001010101
-0900110000 000000 818181FFFFFFFFFF 00000000000000FF 00010200000000FF
-0400000000 000000 010101010101FFFF 000000000000FFFF 010100000202FFFF
-09000B0002 020200 818181FFFFFFFFFF 000000FFFFFFFFFF 000102FFFFFFFFFF
-0300160000 000000 00000000FFFFFFFF 000000000000FFFF 000000000202FFFF
-0700020000 000000 01010102FFFFFFFF 0000000000000000 0000000001010101
-0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
-0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
-0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
-0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
-8006516c chances for encounters (0x10 items 0x1 byte size).
-
-80065198 [][][][] store entity id which perform move here during func821cc.
-
 800acfd4 [][][][] ???
 800acfda [][]     looks like this is timer when we stack during auto slide down.
 
@@ -59,13 +14,18 @@
 800ad018 [][][][] store here entity id for particle.
 800ad01c [][][][] store here entity id that inits particle.
 
+800ad038 [][][][] init with 0.
+
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
 
 800ad04c [][][][] if this is 1 then we set number of entities to 1 in script call call_run_script_8().
 
+800ad054 [][][][] init with 0.
+
 800ad070 [][][][] checked if equal to 0 in func83f40.
 800ad074 [][][][] delta time from prev update.
 800ad078 [][][][] cpu delta time.
+800ad07c [][][][] gpu (draw sync) delta time.
 800ad07ñ [][][][] store here delta time from last draw.
 800ad080 [][][][] 1 if we use cam y pos same as entity y. 0 otherwise.
 800ad084 [][][][] set to 0 in cam mode 2. Counter for cam mode 0. Each &3 == 0 we do adjustments to 800aee58 and 800aee5c.
@@ -73,9 +33,11 @@
 
 800ad0a8 [][][][] store 1 when start load battle.
 
-800ad0b4 [][][][] battle not started ( 0 - started ).
+800ad0b0 [][][][] init with -1.
+800ad0b4 [][][][] battle not started (0 - started).
 800ad0b8 [][][][] if this is 0 - we dont perform something in call_run_script_8 (move related).
 800ad0bc [][][][] if this is 0 - we dont perform something in call_run_script_8 (move related).
+800ad0c0 [][][][] init with -1.
 800ad0c4 [][][][] field load not started ( 0 - started ).
 
 800ad0c8 [][][][] pointer to field dialogs block (file 7).
@@ -83,6 +45,7 @@
 800ad0d0 [][][][] pointer to field entity file (file 5).
 800ad0d4 [][][][] number of entity actors.
 800ad0d8 [][][][] offset to field scripts in file 5.
+800ad0dc [][][][] init with 2.
 
 800ad0e4 [][][][] checked if equal to 1 in func83f40.
 800ad0e8 [][][][] some index in 0x1f800000. Maybe move stack?

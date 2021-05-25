@@ -1322,21 +1322,16 @@ SP = SP + 0038;
 801E537C	jr     ra 
 801E5380	nop
 ////////////////////////////////
-// func1e5384
+
+
+
+////////////////////////////////
+// func1e5384()
+
 V0 = bu[8006f06d];
-801E538C	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0044] = w(RA);
-[SP + 0040] = w(FP);
-[SP + 003c] = w(S7);
-[SP + 0038] = w(S6);
-[SP + 0034] = w(S5);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-[SP + 0028] = w(S2);
-[SP + 0024] = w(S1);
 V0 = V0 & 0010;
 801E53B8	beq    v0, zero, L1e53d4 [$801e53d4]
-[SP + 0020] = w(S0);
+
 V0 = 0001;
 [800d29b4] = b(V0);
 801E53CC	j      L1e53dc [$801e53dc]
@@ -1568,14 +1563,15 @@ A0 = w[80058c44];
 [800d3110] = w(V0);
 801E5748	jal    $80031f0c
 801E574C	nop
-A0 = 000c;
-801E5754	jal    $80028280
-A1 = 0001;
+A0 = c;
+A1 = 1;
+system_filesystem_set_dir();
+
 S0 = 8006f06c;
 A0 = bu[S0 + 0000];
 801E5768	nop
 A0 = A0 << 01;
-801E5770	jal    $800286fc
+801E5770	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = A0 + 0002;
 A0 = V0;
 801E577C	jal    $80072e5c
@@ -1589,7 +1585,7 @@ A0 = A0 << 01;
 A0 = A0 + 0003;
 V0 = V0 << 01;
 V0 = V0 + 0002;
-801E57B4	jal    $800286fc
+801E57B4	jal    $system_get_aligned_filesize_by_dir_file_id
 [S1 + 0000] = h(V0);
 A0 = V0;
 801E57C0	jal    $80072e5c
@@ -1604,21 +1600,12 @@ V1 = bu[S0 + 0000];
 V1 = V1 << 01;
 V1 = V1 + 0003;
 [800d2b10] = h(V1);
-801E5804	jal    $8002990c
 A2 = 0080;
-RA = w[SP + 0044];
-FP = w[SP + 0040];
-S7 = w[SP + 003c];
-S6 = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0048;
-801E5838	jr     ra 
-801E583C	nop
+system_load_files_by_array();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1e5840
 801E5840	addiu  sp, sp, $ffe8 (=-$18)
@@ -2738,8 +2725,10 @@ A1 = 0001;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-801E6984	jal    $80028280
 [SP + 0010] = w(S0);
+
+system_filesystem_set_dir();
+
 S3 = 0;
 S4 = 0;
 S2 = 0;
@@ -2764,7 +2753,7 @@ V0 = V1 << 03;
 AT = AT + V0;
 A0 = w[AT + 9664];
 S4 = S4 + 0001;
-801E69E4	jal    $800286fc
+801E69E4	jal    $system_get_aligned_filesize_by_dir_file_id
 [S0 + 0000] = h(A0);
 A0 = V0;
 801E69F0	jal    $800319ec
@@ -2789,7 +2778,7 @@ V0 = S4 << 03;
 V0 = V0 + A0;
 A2 = 0;
 [V0 + 0000] = h(0);
-801E6A40	jal    $8002990c
+801E6A40	jal    $system_load_files_by_array
 [V0 + 0004] = w(0);
 RA = w[SP + 0028];
 S5 = w[SP + 0024];
@@ -3138,13 +3127,14 @@ S1 = A0;
 [SP + 0010] = w(S0);
 A0 = 002c;
 A1 = 0;
-801E6F40	jal    $80028280
 S0 = V0;
+system_filesystem_set_dir();
+
 801E6F48	bne    s0, zero, L1e6ff4 [$801e6ff4]
 801E6F4C	nop
 801E6F50	jal    func1e6af4 [$801e6af4]
 801E6F54	nop
-801E6F58	jal    $800286fc
+801E6F58	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 0001;
 A0 = V0;
 801E6F64	jal    $800319ec
@@ -3153,7 +3143,7 @@ A0 = 0002;
 [S1 + 0054] = w(V0);
 [S1 + 0028] = w(V0);
 V0 = 0001;
-801E6F7C	jal    $800286fc
+801E6F7C	jal    $system_get_aligned_filesize_by_dir_file_id
 [S1 + 0050] = h(V0);
 A0 = V0;
 801E6F88	jal    $800319ec
@@ -3163,7 +3153,7 @@ A0 = 0003;
 [S1 + 0024] = w(V0);
 [800d2474] = w(V0);
 V0 = 0002;
-801E6FA8	jal    $800286fc
+801E6FA8	jal    $system_get_aligned_filesize_by_dir_file_id
 [S1 + 0058] = h(V0);
 A0 = V0;
 801E6FB4	jal    $800319ec
@@ -3176,7 +3166,7 @@ V0 = 0003;
 A2 = 0;
 [S1 + 0060] = h(V0);
 [S1 + 006c] = w(0);
-801E6FDC	jal    $8002990c
+801E6FDC	jal    $system_load_files_by_array
 [S1 + 0068] = h(0);
 A1 = 801e6e5c;
 801E6FEC	jal    $8001cbf8

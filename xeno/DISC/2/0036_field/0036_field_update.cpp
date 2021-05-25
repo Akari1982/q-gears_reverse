@@ -1721,7 +1721,7 @@ A0 = 4;
 A1 = 0;
 system_filesystem_set_dir();
 
-func71578();
+field_init_controllers_and_mouse();
 ////////////////////////////////
 
 

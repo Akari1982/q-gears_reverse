@@ -1,5 +1,5 @@
 ﻿////////////////////////////////
-// func37880
+// func37880()
 
 S0 = A0;
 S4 = A1;
@@ -31,66 +31,66 @@ V1 = V0 >> 10;
 V0 = V0 >> 1f;
 V1 = V1 + V0;
 V1 = V1 >> 01;
-V1 = S0 < V1;
-80037908	bne    v1, zero, L37924 [$80037924]
-S0 = S0 << 01;
-80037910	addiu  s7, zero, $ffff (=-$1)
-[S5 + 0000] = w(0);
-[S6 + 0000] = w(0);
-8003791C	j      L379e8 [$800379e8]
-[FP + 0000] = w(0);
 
-L37924:	; 80037924
-A0 = S4 + 7;
-A0 = S0 + A0;
-system_get_aligned_filesize_by_dir_file_id();
+if( S0 >= V1 )
+{
+    S7 = -1;
+    [S5 + 0000] = w(0);
+    [S6 + 0000] = w(0);
+    [FP + 0000] = w(0);
+}
+else
+{
+    S0 = S0 * 2;
+    A0 = S4 + 7;
+    A0 = S0 + A0;
+    system_get_aligned_filesize_by_dir_file_id();
 
-A0 = V0;
-A1 = 1;
-system_memory_allocate();
+    A0 = V0;
+    A1 = 1;
+    system_memory_allocate();
 
-S3 = V0;
-A0 = S3;
-system_memory_mark_not_removable();
+    S3 = V0;
+    A0 = S3;
+    system_memory_mark_not_removable();
 
-S2 = S0 + 0006;
-A0 = S2;
-system_get_aligned_filesize_by_dir_file_id();
+    S2 = S0 + 0006;
+    A0 = S2;
+    system_get_aligned_filesize_by_dir_file_id();
 
-A0 = V0;
-A1 = 1;
-system_memory_allocate();
-S1 = V0;
+    A0 = V0;
+    A1 = 1;
+    system_memory_allocate();
+    S1 = V0;
 
-A0 = S1;
-system_memory_mark_not_removable();
+    A0 = S1;
+    system_memory_mark_not_removable();
 
-A0 = 80059878;
-A1 = 0;
-S0 = S0 + 0007;
-S0 = S0 + S4;
-[A0 + 0000] = h(S2);
-[8005987c] = w(S1);
-[80059880] = h(S0);
-[80059884] = w(S3);
-[80059888] = h(0);
-[8005988c] = w(0);
-A2 = 0;
+    S0 = S0 + 0007;
+    S0 = S0 + S4;
+    [80059878] = h(S2);
+    [8005987c] = w(S1);
+    [80059880] = h(S0);
+    [80059884] = w(S3);
+    [80059888] = h(0);
+    [8005988c] = w(0);
 
-800379AC	jal    func2990c [$8002990c]
+    A0 = 80059878;
+    A1 = 0;
+    A2 = 0;
+    system_load_files_by_array();
 
-[S5 + 0000] = w(S1);
-[S6 + 0000] = w(0);
-V0 = w[80059884];
-800379C4	nop
-V0 = V0 + 0004;
-[FP + 0000] = w(V0);
-V0 = w[80059884];
-800379D8	nop
-V0 = V0 + 0004;
-[80064f58] = w(V0);
-
-L379e8:	; 800379E8
+    [S5 + 0000] = w(S1);
+    [S6 + 0000] = w(0);
+    V0 = w[80059884];
+    800379C4	nop
+    V0 = V0 + 0004;
+    [FP + 0000] = w(V0);
+    V0 = w[80059884];
+    800379D8	nop
+    V0 = V0 + 0004;
+    [80064f58] = w(V0);
+}
 
 // restore old dir
 A0 = w[SP + 10];
@@ -2179,31 +2179,23 @@ V0 = w[80058be0];
 
 
 ////////////////////////////////
-// func39c60
+// func39c60()
 
-80039C60	addiu  sp, sp, $ffe8 (=-$18)
-V0 = hu[80058c18];
-A1 = A0;
-V0 = V0 & 0800;
-80039C74	beq    v0, zero, L39cb0 [$80039cb0]
-[SP + 0010] = w(RA);
-V0 = 0002;
-[80058aa0] = w(V0);
-80039C88	addiu  v0, zero, $8000 (=-$8000)
-A2 = 6000;
-A0 = w[80058b14];
-A3 = 4000;
-80039C9C	addiu  a0, a0, $fffe (=-$2)
-A0 = A0 | V0;
-A0 = A0 << 10;
-80039CA8	jal    func3b4ec [$8003b4ec]
-A0 = A0 >> 10;
+sound_id = A0;
 
-L39cb0:	; 80039CB0
-RA = w[SP + 0010];
-SP = SP + 0018;
-80039CB8	jr     ra 
-80039CBC	nop
+if( hu[80058c18] & 0800 )
+{
+    [80058aa0] = w(2);
+    80039C88	addiu  v0, zero, $8000 (=-$8000)
+    A0 = w[80058b14] - 2;
+    A0 = A0 | V0;
+    A0 = A0 << 10;
+    A0 = A0 >> 10;
+    A1 = sound_id;
+    A2 = 6000;
+    A3 = 4000;
+    func3b4ec();
+}
 ////////////////////////////////
 
 
@@ -2321,8 +2313,10 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// func39e44
+// func39e44()
+
 sound_id = A0;
+
 if (hu[80058c18] & 0800)
 {
     [80058aa0] = w(2);
@@ -2334,7 +2328,7 @@ if (hu[80058c18] & 0800)
     A1 = sound_id;
     A2 = A2 << 8;
     A3 = A3 << 8;
-    func3b4ec;
+    func3b4ec();
 }
 ////////////////////////////////
 
@@ -7996,28 +7990,29 @@ V0 = V0 + A1;
 
 
 ////////////////////////////////
-// func3f4bc
+// func3f4bc()
 
 S0 = A0;
 V0 = w[S0 + 0000];
-8003F4D4	nop
-8003F4D8	beq    v0, a1, L3f4e8 [$8003f4e8]
 S1 = A2;
-8003F4E0	j      L3f50c [$8003f50c]
-V0 = 0001;
+if( V0 != A1 )
+{
+    return 1;
+}
 
-L3f4e8:	; 8003F4E8
-8003F4E8	jal    func3f52c [$8003f52c]
 A0 = S0;
-8003F4F0	bne    v0, zero, L3f50c [$8003f50c]
-V0 = 0002;
-V0 = hu[S0 + 000c];
+8003F4E8	jal    func3f52c [$8003f52c]
+
+if( V0 != 0 )
+{
+    return 2;
+}
+
+V0 = hu[S0 + c];
 V1 = S1 & ffff;
 V0 = V0 ^ V1;
 V0 = 0 < V0;
-V0 = V0 << 02;
-
-L3f50c:	; 8003F50C
+return V0 << 02;
 ////////////////////////////////
 
 

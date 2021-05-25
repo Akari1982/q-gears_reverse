@@ -20,37 +20,41 @@
 Directory 0 0 (0021)
 
 Directory 0 1 (0023)
-     2 STRIPCD1\1\0024.snd
-     3 STRIPCD1\1\0025.snd
-     4 STRIPCD1\1\0026.snd
-     5 STRIPCD1\1\0027.snd
-     6 STRIPCD1\1\0028
-     7 STRIPCD1\1\0029
-     8
-     9
-     a
-     b
-     c
-     d STRIPCD1\2\0035_battling.exe
-     e STRIPCD1\2\0036_field.exe
-     f STRIPCD1\2\0037_worldmap.exe
-    10 STRIPCD1\2\0038_battle.exe
-    11 STRIPCD1\2\0039_menu.exe
-    12 STRIPCD1\2\0040_movie.exe
+       2 1\0024.snd
+       3 1\0025.snd
+       4 1\0026.snd
+       5 1\0027.snd
+       6 1\0028
+       7 1\0029
+       8
+       9
+       a
+       b
+       c
+       d 2\0035_battling.exe
+       e 2\0036_field.exe
+       f 2\0037_worldmap.exe
+      10 2\0038_battle.exe
+      11 2\0039_menu.exe
+      12 2\0040_movie.exe
 
 Directory 4 0 (0424)
-     2 STRIPCD1\7\0424
-     3 STRIPCD1\7\0425
-     4 STRIPCD1\8\0427
-     5 STRIPCD1\8\0428
+       2 7\0424
+       3 7\0425
+       4 8\0427
+       5 8\0428
 
-    ad STRIPCD1\10\0595_field_debug.exe
+     a8 10\0590.sed // field sound effect???
+
+     aa 10\0592.tim
+
+     ad 10\0595_field_debug.exe
 
 Directory с 0
-     2 STRIPCD1\15\2613.sed
-     3 STRIPCD1\15\2614
-     4 STRIPCD1\15\2615.exe
-     5 STRIPCD1\15\2616.smd
+      2 15\2613.sed
+      3 15\2614
+      4 15\2615_battle_2.exe
+      5 15\2616.smd
 
 Directory с 1
       2 16\2618
@@ -85,18 +89,25 @@ Directory 10 0 (2593)
 Directory 10 1
 
 Directory 10 2 (2606)
-      1 14\2606.exe
+      1 14\2606_battle_1.exe
       2 14\2607.unk4
       3 14\2608
       4 14\2609
       5 14\2610.sed
-      6 14\2611.exe
+      6 14\2611_battle_debug.exe
 
 Directory 18 0 (19)
       1 0\0019_mdec.exe
 
 Directory 20 0 (3087)
-      1 19\3087.exe
+      1 19\3087_battle_3.exe
+
+Directory 20 2 (3092)
+      1 19\3092.snd
+      2 19\3093.snd
+      3 19\3094.sed
+      4 19\3095.smd
+
 
 Directory 20 3 (3096)
       1 19\3096.dlg

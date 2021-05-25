@@ -808,7 +808,7 @@ V0 = w[8006f384 + V0]; // 8006f384-8006f180
 
     L70d1c:	; 80070D1C
     A2 = 0;
-    func2990c();
+    system_load_files_by_array();
 
     80070D24	j      L70dc0 [$80070dc0]
     80070D28	nop
@@ -1276,7 +1276,7 @@ switch( A0 )
             A0 = w[8007650c];
             A1 = 0;
             A2 = 0;
-            func2990c();
+            system_load_files_by_array();
         }
     }
     break;
@@ -1373,7 +1373,7 @@ switch( A0 )
             A0 = w[8007650c];
             A1 = 1;
             A2 = 0;
-            func2990c();
+            system_load_files_by_array();
         }
     }
     break;
@@ -1537,7 +1537,7 @@ switch( A0 )
             A0 = w[8007650c];
             A1 = 1;
             A2 = 100;
-            func2990c();
+            system_load_files_by_array();
         }
     }
     break;

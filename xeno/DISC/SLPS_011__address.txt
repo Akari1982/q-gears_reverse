@@ -17,7 +17,7 @@
 8004e9c4 [][][][] init with 0.
 8004e9c8 [][][][] init with 000000ff. Store here value from 800b1774 + encounter * 2.
 8004e9cc [][][][] init with 000000ff.
-8004e9d0 [][][][] init with -1.
+8004e9d0 [][][][] init with -1. If this is 0 then 10\0590.sed already loaded into temp buffer and we can copy it.
 8004e9d4 [][][][] init with -1. Looks like current field.
 8004e9d8 [][][][] init with -1. After field load and set to 0 when start field load.
 8004e9dc [][][][] Music. Init with -1. Compare this with value from 800b1774 + encounter * 2 during battle load.
@@ -693,7 +693,7 @@
 
 80059918 some gpu mem set (0x100 size).
 
-80059a38 [][][][] pointer to something.
+80059a38 [][][][] pointer to start of player data. Init with 8006ccc4.
 
 80059a3c some array 0x2 size.
 
@@ -736,7 +736,13 @@
     +08 [][]     discrease until == 0.
     +0a [][]     if +08 == 0 then set value with this << 10.
 
-80059ad4 array of 3 items with size 0x4. Init with 0.
+80059aa4 pointer to player sprite data for party slot 1 (0x14000 size).
+80059aa8 pointer to player sprite data for party slot 2 (0x14000 size).
+80059aac pointer to player sprite data for party slot 3 (0x14000 size).
+
+80059ad4 array of party slot - entity id association. (size 0x04).
+80059ad8 [][][][] entity id in party 2.
+80059adс [][][][] entity id in patry 3.
 
 80059b18 [][][][] init with 0.
 80059b1c [][][][] init with 0.
@@ -750,20 +756,23 @@
 
 80059b44 [][][][] init with 0.
 
+80059b4c [][][][] pointer to temp buffer for 10\0590.sed loaded in advance for field data.
 80059b50 [][][][] file size for loading field file.
 80059b58 array of something spu related. Init with 0. (size 0x2 items 0xa)
 80059b70 [][][][] pointer to allocated memory for loading field file.
 
 80061ba8 [][][][] init with 0.
-80061bac [][][][] init with 0.
+80061bac [][][][] pointer to struct from 1\0025.snd file.
 80061bb0 [][][][] init with 0.
-80061bb4 [][][][] init with 0.
+80061bb4 [][][][] pointer to struct from 1\0027.snd file.
 80061bb8 field sound main struct?
 80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4 (+30).
 
-80061c1c
+80061c20 [][][][] party member 1.
+80061c24 [][][][] party member 2.
+80061c28 [][][][] party member 3.
 
-80061c20 array of 3 items with size 0x4. Init with 0.
+80061c2c [][][][] pointer to 10\0590.sed file in field (maybe sound effects for field)
 
 80061c30 pointer to allocated menu memory (0x1e98 size)
     +  6с draw enviroment packet buffer 1.
@@ -790,7 +799,34 @@
                     0x4000 Cross
                     0x8000 Square
 
+80064ed8 store mouse input from second controller here.
+    +00 [][][][] pos X
+    +04 [][][][] pos Y.
+    +08 [][][][] mouse buttons mask.
+    +0c [][][][] relative movement X from last update.
+    +10 [][][][] relative movement Y from last update.
 
+80064f6c array of encounters. Extract part 6 of fieldfile here. (0x20 size 0x10 items).
+// tutorial field 0x616
+09A3120100 000000 8081818181FFFFFF 0000000000FFFFFF 0001020304FFFFFF
+0B001C0000 000000 80FFFFFFFFFFFFFF 00000000000000FF 00020000FFFFFFFF
+0200110000 000000 0101010180FFFFFF 0000000000FFFFFF 0000000000FFFFFF
+0100030080 808000 000001010101FFFF 000000000000FFFF 000001010101FFFF
+0F00070000 000000 80FFFFFFFFFFFFFF 0000000000000000 0001020001010101
+0B001D0000 000000 80FFFFFFFFFFFFFF 0000000000000000 0001020001010101
+02001E0000 000000 8282FFFFFFFFFFFF 0000000000000000 0100020001010101
+0900110000 000000 818181FFFFFFFFFF 00000000000000FF 00010200000000FF
+0400000000 000000 010101010101FFFF 000000000000FFFF 010100000202FFFF
+09000B0002 020200 818181FFFFFFFFFF 000000FFFFFFFFFF 000102FFFFFFFFFF
+0300160000 000000 00000000FFFFFFFF 000000000000FFFF 000000000202FFFF
+0700020000 000000 01010102FFFFFFFF 0000000000000000 0000000001010101
+0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
+0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
+0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
+0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
+8006516c chances for encounters (0x10 items 0x1 byte size).
+
+80065198 [][][][] store entity id which perform move here during func821cc.
 
 800651a0-8006b490. Spu memory struct
 First struct is just header struct (0x10 size), later we add more structs different size.
@@ -979,6 +1015,15 @@ First struct is just header struct (0x10 size), later we add more structs differ
 8006b4d0 start of otag data.
 
 8006ccc4 start of player data. savemap?
+
+8006e5f6 [][]     init from 8006efe4.
+
+8006e5fc [][]     init as hu[8006efe0] >> 9.
+
+8006efde [][]     field id to load.
+8006efe0 [][]     ???
+8006efe4 [][]     copied to 8006e5f6.
+8006efe6 [][]     copied to 8004e9c8.
 
 8006f020 array of 3 items with size 0x4. Init with 0.
 

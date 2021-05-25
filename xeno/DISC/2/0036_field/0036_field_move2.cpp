@@ -3326,10 +3326,10 @@ V0 = 00ff;
 80084D64	jal    $80039ea0
 80084D68	nop
 A0 = w[800b1830];
-80084D74	jal    $800383d4
+80084D74	jal    $func383d4
 80084D78	nop
 A0 = w[800b1830];
-80084D84	jal    $80031f0c
+80084D84	jal    $system_memory_mark_removed_alloc
 80084D88	nop
 
 L84d8c:	; 80084D8C
@@ -3417,13 +3417,13 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// func84ea4()
+// field_load_0590_sed_into_sound()
 
 A0 = 4;
 A1 = 0;
 system_filesystem_set_dir();
 
-A0 = a8; // STRIPCD1\10\0590.sed - 0x1d67a, 0x6f8c
+A0 = a8; // 10\0590.sed
 system_get_aligned_filesize_by_dir_file_id();
 S0 = V0;
 
@@ -3437,7 +3437,7 @@ system_memory_mark_not_removable();
 
 if( w[8004e9d0] == -1 )
 {
-    A0 = a8; // STRIPCD1\10\0590.sed - 0x1d67a, 0x6f8c
+    A0 = a8; // 10\0590.sed
     A1 = w[80061c2c];
     A2 = 0;
     A3 = 80;
@@ -3448,9 +3448,9 @@ if( w[8004e9d0] == -1 )
 }
 else
 {
-    A0 = w[80061c2c];
-    A1 = w[80059b4c];
-    A2 = S0;
+    A0 = w[80061c2c]; // dst
+    A1 = w[80059b4c]; // src
+    A2 = S0; // size
     system_memcpy();
 
     A0 = w[80059b4c];
@@ -3476,24 +3476,18 @@ system_filesystem_set_dir();
 
 
 ////////////////////////////////
-// func84f9c
+// func84f9c()
+
 A0 = w[80061c2c];
-80084FA4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80084FAC	jal    $800383d4
-80084FB0	nop
+func383d4();
+
 A0 = w[80061c2c];
-80084FBC	jal    $80031edc
-80084FC0	nop
+system_memory_mark_removable();
+
 A0 = w[80061c2c];
-80084FCC	jal    $80031f0c
-80084FD0	nop
-80084FD4	addiu  v0, zero, $ffff (=-$1)
-[8004e9d0] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80084FE8	jr     ra 
-80084FEC	nop
+system_memory_mark_removed_alloc();
+
+[8004e9d0] = w(-1);
 ////////////////////////////////
 
 
@@ -3872,7 +3866,7 @@ A1 = 0;
 8008557C	jal    $8003bca4
 A0 = 0010;
 A0 = w[800af5b4];
-8008558C	jal    $80031f0c
+8008558C	jal    $system_memory_mark_removed_alloc
 80085590	nop
 V1 = 0001;
 [8004ea08] = w(V1);

@@ -2083,246 +2083,220 @@ else
 
 
 ////////////////////////////////
-// func2990c()
+// system_load_files_by_array()
 
-S6 = A0;
+load_arr = A0;
 S2 = A1;
-80029938	beq    s6, zero, L29970 [$80029970]
 
-V0 = hu[S6 + 0000];
-80029944	nop
-80029948	beq    v0, zero, L29968 [$80029968]
-S5 = 0;
-V1 = S6;
+if( load_arr == 0 )
+{
+    return -3;
+}
 
-loop29954:	; 80029954
-V1 = V1 + 0008;
-V0 = hu[V1 + 0000];
-8002995C	nop
-80029960	bne    v0, zero, loop29954 [$80029954]
-S5 = S5 + 0001;
+// count number of files to load
+load_num = 0;
+V1 = load_arr;
+while( hu[V1 + 0] != 0 )
+{
+    load_num = load_num + 1;
+    V1 = V1 + 8;
+}
 
-L29968:	; 80029968
-80029968	bne    s5, zero, L29978 [$80029978]
-8002996C	addiu  v0, s5, $ffff (=-$1)
+if( load_num == 0 )
+{
+    return -1;
+}
 
-L29970:	; 80029970
-80029970	j      L29c90 [$80029c90]
-80029974	addiu  v0, zero, $fffd (=-$3)
+// sort by dir file id
+for( int i = 0; i < load_num - 1; ++i )
+{
+    S1 = hu[load_arr + i * 8 + 0];
+    V1 = i;
+    for( int j = i + 1; j < load_num; ++i )
+    {
+        if( hu[load_arr + j * 8 + 0] < S1 )
+        {
+            V1 = j;
+            S1 = hu[load_arr + j * 8 + 0];
+        }
+    }
 
-L29978:	; 80029978
-80029978	blez   v0, L29a08 [$80029a08]
-A1 = 0;
-A3 = V0;
-A2 = S6;
+    // swap
+    i1 = hu[load_arr + i * 8 + 0];
+    i4 = w[load_arr + i * 8 + 4];
+    j0 = hu[load_arr + V1 * 8 + 0];
+    j4 = w[load_arr + V1 * 8 + 4];
+    [load_arr + i * 8 + 0] = h(j0);
+    [load_arr + i * 8 + 4] = w(j4);
+    [load_arr + V1 * 8 + 0] = h(i1);
+    [load_arr + V1 * 8 + 4] = w(i4);
+}
 
-loop29988:	; 80029988
-S1 = hu[A2 + 0000];
-S0 = A1 + 0001;
-V0 = S0 < S5;
-80029994	beq    v0, zero, L299d0 [$800299d0]
-V1 = A1;
-V0 = S0 << 03;
-A0 = V0 + S6;
-
-loop299a4:	; 800299A4
-V0 = hu[A0 + 0000];
-800299A8	nop
-V0 = V0 < S1;
-800299B0	beq    v0, zero, L299c0 [$800299c0]
-800299B4	nop
-V1 = S0;
-S1 = hu[A0 + 0000];
-
-L299c0:	; 800299C0
-S0 = S0 + 0001;
-V0 = S0 < S5;
-800299C8	bne    v0, zero, loop299a4 [$800299a4]
-A0 = A0 + 0008;
-
-L299d0:	; 800299D0
-V1 = V1 << 03;
-V1 = V1 + S6;
-V0 = hu[V1 + 0000];
-S1 = hu[A2 + 0000];
-A0 = w[A2 + 0004];
-[A2 + 0000] = h(V0);
-V0 = w[V1 + 0004];
-A1 = A1 + 0001;
-[A2 + 0004] = w(V0);
-A2 = A2 + 0008;
-V0 = A1 < A3;
-[V1 + 0000] = h(S1);
-80029A00	bne    v0, zero, loop29988 [$80029988]
-[V1 + 0004] = w(A0);
-
-L29a08:	; 80029A08
 A0 = 0; // until the end
 system_cdrom_action_sync();
 
-A1 = 0002;
-V0 = w[8004f4b8];
+[8004f4bc] = w(w[8004f4b8]);
+
+A1 = 2;
 V1 = 8005959c;
-[8004f4bc] = w(V0);
+while( A1 >= 0 )
+{
+    [V1 + 0] = w(0);
+    V1 = V1 - 4;
+    A1 = A1 - 1;
+}
 
-loop29a2c:	; 80029A2C
-[V1 + 0000] = w(0);
-80029A30	addiu  a1, a1, $ffff (=-$1)
-80029A34	bgez   a1, loop29a2c [$80029a2c]
-80029A38	addiu  v1, v1, $fffc (=-$4)
-V0 = w[S6 + 0004];
-S0 = hu[S6 + 0000];
+V0 = w[load_arr + 4];
+S0 = hu[load_arr + 0];
 [8004f4b4] = w(0);
-[8004f4b0] = w(S6);
-[8004f4a0] = w(S5);
-[8004f4a4] = w(S5);
+[8004f4b0] = w(load_arr);
+[8004f4a0] = w(load_num);
+[8004f4a4] = w(load_num);
 [8004f4ac] = w(V0);
-80029A6C	beq    s0, zero, L29a7c [$80029a7c]
-80029A70	nop
-80029A74	bne    v0, zero, L29a8c [$80029a8c]
-80029A78	nop
 
-L29a7c:	; 80029A7C
-A0 = S2;
-func2a1a4();
+if( ( S0 == 0 ) || ( V0 == 0 ) )
+{
+    A0 = S2; // dir_file_id
+    func2a1a4(); // load
 
-80029A84	j      L29c14 [$80029c14]
-80029A88	nop
+    [8004f49c] = w(0);
+    [8004f4a0] = w(0);
+}
+else
+{
+    [800595a8] = w(S0);
 
-L29a8c:	; 80029A8C
-[800595a8] = w(S0);
+    A0 = S0;
+    system_filesystem_get_sector_by_dir_file_id();
+    [8004f4a8] = w(V0);
 
-A0 = S0;
-system_filesystem_get_sector_by_dir_file_id();
-[8004f4a8] = w(V0);
+    A0 = S0;
+    system_get_aligned_filesize_by_dir_file_id_async();
 
-A0 = S0;
-system_get_aligned_filesize_by_dir_file_id_async();
+    S0 = 800595ac;
+    A0 = w[8004f4a8];
+    [8004f49c] = w(V0);
+    V0 = S2 & ffff;
+    [8004f4dc] = w(V0);
+    [8004f4e0] = w(0);
+    [8004f4d8] = w(0);
+    [80059b6c] = w(0);
+    A1 = S0;
 
-S0 = 800595ac;
-A0 = w[8004f4a8];
-[8004f49c] = w(V0);
-V0 = S2 & ffff;
-[8004f4dc] = w(V0);
-[8004f4e0] = w(0);
-[8004f4d8] = w(0);
-[80059b6c] = w(0);
-80029AE8	jal    system_psyq_cd_int_to_pos [$800412a8]
-A1 = S0;
-V0 = w[8004f4ec];
-80029AF8	nop
-80029AFC	beq    v0, zero, L29c2c [$80029c2c]
-80029B00	nop
-80029B04	blez   s5, L29c14 [$80029c14]
-80029B08	addiu  s7, zero, $ffff (=-$1)
-S4 = S6;
+    system_psyq_cd_int_to_pos();
 
-loop29b10:	; 80029B10
-S1 = hu[S4 + 0000];
-A0 = S1 & ffff;
-[800595a8] = w(A0);
-S0 = 0;
-system_filesystem_get_debug_filename();
+    if( w[8004f4ec] != 0 ) // PC HDD MODE
+    {
+        if( load_num > 0 )
+        {
+            S4 = load_arr;
 
-S3 = V0;
-A0 = S3;
+            loop29b10:	; 80029B10
+                S1 = hu[S4 + 0000];
+                A0 = S1 & ffff;
+                [800595a8] = w(A0);
+                S0 = 0;
+                system_filesystem_get_debug_filename();
 
-loop29b34:	; 80029B34
-A1 = 0;
-80029B38	jal    system_devkit_pc_open [$8004c1c0]
-A2 = 0;
-S2 = V0;
-80029B44	bne    s2, s7, L29b74 [$80029b74]
-A0 = S0;
-A1 = 00ff;
-A2 = 0;
-80029B54	jal    func27e5c [$80027e5c]
-A3 = 0;
-S0 = S0 + 0001;
-V0 = S0 < 0004;
-80029B64	bne    v0, zero, loop29b34 [$80029b34]
-A0 = S3;
-80029B6C	j      L29bcc [$80029bcc]
-S0 = 0;
+                S3 = V0;
 
-L29b74:	; 80029B74
-V0 = w[S4 + 0004];
-80029B78	nop
-80029B7C	beq    v0, zero, L29bc8 [$80029bc8]
-S0 = 0;
-S3 = S4;
+                loop29b34:	; 80029B34
+                    A0 = S3;
+                    A1 = 0;
+                    A2 = 0;
+                    system_devkit_pc_open();
 
-loop29b88:	; 80029B88
-A0 = S1 & ffff;
-system_get_aligned_filesize_by_dir_file_id_async();
+                    S2 = V0;
+                    80029B44	bne    s2, -1, L29b74 [$80029b74]
 
-A0 = S2;
-A1 = w[S3 + 0004];
-80029B98	jal    system_devkit_pc_read_all [$8004c240]
-A2 = V0;
-80029BA0	bne    v0, zero, L29bc8 [$80029bc8]
-A0 = S0;
-A1 = 0;
-A2 = 00ff;
-80029BB0	jal    func27e5c [$80027e5c]
-A3 = 0;
-S0 = S0 + 0001;
-V0 = S0 < 0004;
-80029BC0	bne    v0, zero, loop29b88 [$80029b88]
-80029BC4	nop
+                    A0 = S0;
+                    A1 = ff;
+                    A2 = 0;
+                    A3 = 0;
+                    func27e5c(); // draw debug
 
-L29bc8:	; 80029BC8
-S0 = 0;
+                    S0 = S0 + 0001;
+                    V0 = S0 < 0004;
+                80029B64	bne    v0, zero, loop29b34 [$80029b34]
 
-L29bcc:	; 80029BCC
-80029BCC	jal    system_devkit_pc_close [$8004c1e0]
-A0 = S2;
-80029BD4	beq    v0, zero, L29bfc [$80029bfc]
-A0 = S0;
-A1 = 0;
-A2 = 0;
-80029BE4	jal    func27e5c [$80027e5c]
-A3 = 00ff;
-S0 = S0 + 0001;
-V0 = S0 < 0004;
-80029BF4	bne    v0, zero, L29bcc [$80029bcc]
-80029BF8	nop
+                S0 = 0;
+                80029B6C	j      L29bcc [$80029bcc]
 
-L29bfc:	; 80029BFC
-S4 = S4 + 0008;
-V0 = S5 << 03;
-V0 = V0 + S6;
-V0 = S4 < V0;
-80029C0C	bne    v0, zero, loop29b10 [$80029b10]
-80029C10	nop
+                L29b74:	; 80029B74
+                if( w[S4 + 4] != 0 )
+                {
+                    S3 = S4;
+                    for( int j = 0; j < 4; ++j )
+                    {
+                        A0 = S1 & ffff;
+                        system_get_aligned_filesize_by_dir_file_id_async();
 
-L29c14:	; 80029C14
-[8004f49c] = w(0);
-[8004f4a0] = w(0);
-80029C24	j      L29c90 [$80029c90]
-V0 = 0;
+                        A0 = S2;
+                        A1 = w[S3 + 4];
+                        A2 = V0;
+                        system_devkit_pc_read_all();
 
-L29c2c:	; 80029C2C
-[8004f4c0] = w(1);
+                        if( V0 != 0 )
+                        {
+                            break;
+                        }
 
-A0 = 8002b850;
-system_cdrom_dma_callback();
+                        A0 = j;
+                        A1 = 0;
+                        A2 = ff;
+                        A3 = 0;
+                        func27e5c();
+                    }
+                }
 
-A0 = 8002a49c; // system_cdrom_sync_callback()
-system_cdrom_set_sync_callback();
+                // L29bcc
+                for( int j = 0; j < 4; ++j )
+                {
+                    A0 = S2;
+                    system_devkit_pc_close();
 
-A0 = 8002aa34; // system_cdrom_ready_callback_1()
-system_cdrom_set_ready_callback();
+                    if( V0 == 0 )
+                    {
+                        break;
+                    }
 
-[80059b18] = w(w[80059b18] + 1);
+                    A0 = j;
+                    A1 = 0;
+                    A2 = 0;
+                    A3 = ff;
+                    func27e5c();
+                }
 
-A0 = 2; // CdlSetloc
-A1 = S0;
-system_cdrom_cdl_command_exec_without_ret();
+                S4 = S4 + 8;
+                V0 = S4 < ( load_arr + load_num * 8 );
+            80029C0C	bne    v0, zero, loop29b10 [$80029b10]
+        }
 
-V0 = 0;
+        [8004f49c] = w(0);
+        [8004f4a0] = w(0);
+    }
+    else
+    {
+        [8004f4c0] = w(1);
 
-L29c90:	; 80029C90
+        A0 = 8002b850;
+        system_cdrom_dma_callback();
+
+        A0 = 8002a49c; // system_cdrom_sync_callback()
+        system_cdrom_set_sync_callback();
+
+        A0 = 8002aa34; // system_cdrom_ready_callback_1()
+        system_cdrom_set_ready_callback();
+
+        [80059b18] = w(w[80059b18] + 1);
+
+        A0 = 2; // CdlSetloc
+        A1 = S0;
+        system_cdrom_cdl_command_exec_without_ret();
+    }
+}
+
+return 0;
 ////////////////////////////////
 
 

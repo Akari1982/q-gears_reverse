@@ -1681,7 +1681,7 @@ L71570:	; 80071570
 
 
 ////////////////////////////////
-// func71578()
+// field_init_controllers_and_mouse()
 
 A0 = 80061c8c; // system buffer for controller 1
 A1 = A0 + 22; // system buffer for controller 2
@@ -1695,23 +1695,23 @@ A0 = 0;
 A1 = 140;
 A2 = 0;
 A3 = e0;
-800715A8	jal    func7a3b8 [$8007a3b8]
+field_set_mouse_area();
 
-A0 = 0;
+A0 = 0; // controller
 A1 = 50;
 A2 = 64;
-800715B8	jal    func7a440 [$8007a440]
+field_set_mouse_position();
 
-A0 = 1;
+A0 = 1; // controller
 A1 = fa;
 A2 = 64;
-800715C8	jal    func7a440 [$8007a440]
+field_set_mouse_position();
 
 A0 = 0;
 A1 = 12c;
 A2 = a;
 A3 = dc;
-800715DC	jal    func7a3b8 [$8007a3b8]
+field_set_mouse_area();
 ////////////////////////////////
 
 

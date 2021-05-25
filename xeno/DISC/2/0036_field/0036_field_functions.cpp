@@ -2779,25 +2779,29 @@ SP = SP + 0030;
 800A7128	jr     ra 
 800A712C	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca7130
-800A7130	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0024] = w(RA);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
+
 [800ad05c] = w(0);
 [800af5b8] = w(0);
 [800ad050] = w(0);
-800A715C	jal    $system_get_aligned_filesize_by_dir_file_id
-A0 = 00a9;
+
+A0 = a9;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-800A7168	jal    $system_memory_allocate
 A1 = 0;
+system_memory_allocate();
+
 S0 = V0;
-A0 = 00a9;
+
+A0 = a9;
 A1 = S0;
 A2 = 0;
-A3 = 0080;
+A3 = 80;
 system_load_file_by_dir_file_id();
 
 [800afb74] = w(0);
@@ -3193,19 +3197,12 @@ V0 = 00ff;
 800A77BC	addiu  v0, zero, $ffff (=-$1)
 [800ad04c] = w(0);
 [800ad044] = w(V0);
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800A77E4	jr     ra 
-800A77E8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca77ec()
+// field_load_0592_tim_into_ram()
 
 A0 = 8;
 A1 = 0;
@@ -3223,7 +3220,7 @@ A1 = 1;
 system_memory_allocate();
 mem = V0;
 
-A0 = aa;
+A0 = aa; // "10\0592.tim"
 A1 = mem;
 A2 = 0;
 A3 = 80;
@@ -3723,11 +3720,12 @@ La804c:	; 800A804C
 ////////////////////////////////
 // funca807c()
 
-funca77ec(); // load texture 0xaa from dir 0x4 into vram
+field_load_0592_tim_into_ram(); // load texture 0xaa from dir 0x4 into vram
 
 S4 = 0;
-A0 = 0008;
 [800ae038] = w(0);
+
+A0 = 8;
 A1 = 0;
 system_memory_set_alloc_user();
 
@@ -6117,12 +6115,16 @@ A1 = S3;
 A0 = 0;
 800AB070	jal    $system_cdrom_action_sync
 A0 = 0;
-A0 = 0004;
-800AB07C	jal    $system_filesystem_set_dir
+
+A0 = 4;
 A1 = 0;
-S0 = S0 + 07fb;
-800AB088	jal    $system_get_aligned_filesize_by_dir_file_id
+system_filesystem_set_dir();
+
+S0 = S0 + 7fb;
+
 A0 = S0;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
 800AB094	jal    $system_memory_allocate
 A1 = 0;
@@ -6130,8 +6132,9 @@ A0 = S0;
 S0 = V0;
 A1 = S0;
 A2 = 0;
-800AB0AC	jal    $system_load_file_by_dir_file_id
 A3 = 0080;
+system_load_file_by_dir_file_id();
+
 800AB0B4	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = S0;

@@ -1470,7 +1470,7 @@ for( int i = 0; i < 3; ++i )
 A0 = 80061c34;
 A1 = 0;
 A2 = 0;
-8001AD14	jal    func2990c [$8002990c]
+system_load_files_by_array();
 
 [8004e9c0] = w(1);
 ////////////////////////////////
@@ -1535,7 +1535,7 @@ for( int i = 0; i < 3; ++i )
 A0 = 80061c34;
 A1 = 0;
 A2 = 0;
-8001AE98	jal    func2990c [$8002990c]
+system_load_files_by_array();
 
 [8004e9c0] = w(2);
 ////////////////////////////////
@@ -1700,7 +1700,7 @@ if( S5 != 0 )
         A0 = V0;
         system_memory_mark_not_removable();
 
-        [80061c34 + S3 * 8] = h(a7);
+        [80061c34 + S3 * 8 + 0] = h(a7);
         [8004e9e8] = w(1);
 
         S3 = S3 + 1;
@@ -1714,27 +1714,27 @@ if( S5 != 0 )
     system_memory_allocate();
     [80059b4c] = w(V0);
 
-    [80061c38 + S3 * 8] = w(V0);
+    [80061c34 + S3 * 8 + 4] = w(V0);
 
     if( V0 != 0 )
     {
         A0 = V0;
         system_memory_mark_not_removable();
 
-        [80061c34 + S3 * 8] = h(a8);
+        [80061c34 + S3 * 8 + 0] = h(a8);
         [8004e9d0] = w(0);
 
         S3 = S3 + 1;
     }
 }
 
-[80061c38 + S3 * 8] = w(0);
-[80061c34 + S3 * 8] = h(0);
+[80061c34 + S3 * 8 + 0] = h(0);
+[80061c34 + S3 * 8 + 4] = w(0);
 
 A0 = 80061c34;
 A1 = 0;
 A2 = 0;
-func2990c();
+system_load_files_by_array();
 
 [8004ea18] = w(1);
 
@@ -2236,7 +2236,7 @@ A1 = 1;
 system_memory_allocate();
 [GP + 338] = w(V0);
 
-A0 = 2;
+A0 = 2; // "15\2613.sed"
 system_get_aligned_filesize_by_dir_file_id();
 
 A0 = V0;
@@ -2244,7 +2244,7 @@ A1 = 1;
 system_memory_allocate();
 [GP + 45c] = w(V0);
 
-A0 = 3;
+A0 = 3; // "15\2614"
 system_get_aligned_filesize_by_dir_file_id();
 
 A0 = V0;
@@ -2252,11 +2252,11 @@ A1 = 1;
 system_memory_allocate();
 [GP + 434] = w(V0);
 
-[8006f04c +  0] = h(2); // dir file id
+[8006f04c +  0] = h(2); // "15\2613.sed"
 [8006f04c +  4] = w(w[GP + 45c]);
-[8006f04c +  8] = h(3);
+[8006f04c +  8] = h(3); // "15\2614"
 [8006f04c +  c] = w(V0);
-[8006f04c + 10] = h(4);
+[8006f04c + 10] = h(4); // "15\2615.exe"
 [8006f04c + 14] = w(801e4000);
 [8006f04c + 18] = h(0);
 [8006f04c + 1c] = w(0);
@@ -2264,14 +2264,14 @@ system_memory_allocate();
 A0 = 8006f04c;
 A1 = 0;
 A2 = 80;
-func2990c();
+system_load_files_by_array();
 
 loop1bb28:	; 8001BB28
     system_cdrom_data_sync();
 8001BB30	beq    v0, 3, loop1bb28 [$8001bb28]
 
 A0 = w[GP + 45c];
-8001BB3C	jal    func382d0 [$800382d0]
+func382d0();
 
 if( bu[GP + 3d8] != 4 )
 {
@@ -2281,8 +2281,8 @@ if( bu[GP + 3d8] != 4 )
         if( bu[8004ea2c + V1 * 3 + i] != ff )
         {
             V0 = w[GP + 45c];
-            A0 = (hu[V0 + 14] << 10) | bu[8004ea2c + V1 * 3 + i + 0000];
-            8001BB9C	jal    func39c60 [$80039c60]
+            A0 = (hu[V0 + 14] << 10) | bu[8004ea2c + V1 * 3 + i + 0000]; // sound id
+            func39c60();
         }
     }
 }
