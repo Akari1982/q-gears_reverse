@@ -1,4 +1,904 @@
 ////////////////////////////////
+// funcbb538
+unit_id = A0;
+model_data = A1;
+
+V1 = w[801590e8];
+V1 = bu[801590e8 + V1 - 4];
+if (V1 == 2)
+{
+    if (A2 == 0)
+    {
+        A0 = 800f8158; // struct with field background rotation and translation
+    }
+    else
+    {
+        A0 = 800f818c;
+    }
+
+    A1 = 801518e4 + unit_id * b9c + 140;
+}
+else if (unit_id == 3)
+{
+    A0 = 800fa63c; // camera matrix
+    A1 = 80153cf8;
+}
+else
+{
+    A0 = 800f8158; // struct with field background rotation and translation
+    A1 = 801518e4 + unit_id * b9c + 140;
+}
+
+[A1 + 30] = w(A0);
+
+
+[801518e4 + 34 + unit_id * b9c + 170] = w(801518e4 + 140 + unit_id * b9c);
+
+A0 = 801518e4 + unit_id * b9c + 10; // number of bones
+A1 = model_data;
+A2 = unit_id;
+funcc76c8;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbb67c
+[A1 + 30] = w(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_queue1_camera_init()
+
+q1_id = bu[801590e0];
+cam_id = h[80163798 + q1_id * c + 8]; // camera movement id
+
+if( cam_id != -4 )
+{
+    [800f8370] = h(cam_id); // set current camera
+    [801590dc] = b(0); // set call camera script
+
+    // cam pos vector
+    [80151844 + 0 * e + 8] = b(-1);
+    [80151844 + 1 * e + 8] = b(-1);
+    [80151844 + 2 * e + 8] = b(-1);
+    [80151844 + 3 * e + 8] = b(-1);
+
+    // cam dir vector
+    [801518a4 + 0 * e + 8] = b(-1);
+    [801518a4 + 1 * e + 8] = b(-1);
+    [801518a4 + 2 * e + 8] = b(-1);
+    [801518a4 + 3 * e + 8] = b(-1);
+
+    battle_camera_reset_callbacks();
+
+    if( bu[800f837c] != 3 ) // not last cam pos and dir vector
+    {
+        if( ( bu[801516f4] & 3 ) != 3 )
+        {
+            [800f837c] = b(bu[801516f4] & 3);
+        }
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbb75c
+// create primary and final camera matrix
+//A0 = 800fa63c; // store final camera matrix (primary + scale + ??? + ???)
+//A1 = 800fa958; // store primary camera matrix here
+//A2 = 80158d00; // end vector
+//A3 = 801031e8; // start vector
+S0 = A0; // we store here final transformation matrix
+S1 = A1;
+
+A0 = S1; // result matrix here
+A1 = A2; // end vector
+A2 = A3; // start vector
+A3 = 800e7d10; // up vector
+funcd85b0; // create camera matrix here
+
+
+
+
+// init it with rotation matrix
+A0 = S0 + 20;
+A1 = S0;
+system_gte_rotation_matrix_from_yxz();
+
+// add translation vector
+A0 = S0;
+A1 = S0 + 28; // translation vector
+system_gte_copy_matrix_translation_part();
+
+// multiply field matrix
+A0 = S1;
+A1 = S0;
+system_gte_matrixes_multiply_A0_A1_to_A1;
+
+// multiply field translation vector
+A0 = S1;
+system_gte_set_rotation_matrix();
+A0 = S1;
+system_gte_set_translation_vector();
+
+A0 = S0 - 28; // vector to transform
+A1 = S0 + 14; // result
+A2 = SP + 10; // flag
+system_gte_rotate_and_translate_vector();
+
+A0 = S0; // matrix to scale
+A1 = 800e7d20; // scale vector
+funcbaff8; // scale matrix and set it to gte
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbb804
+V0 = hu[8016376a];
+800BB80C	addiu  sp, sp, $ffe8 (=-$18)
+V0 = V0 & 0020;
+800BB814	bne    v0, zero, Lbb844 [$800bb844]
+[SP + 0010] = w(RA);
+A0 = 77e7;
+A1 = 1000;
+A3 = 800bb89c;
+800BB82C	jal    $80033e34
+800BB830	lui    a2, $801d
+800BB834	jal    funcb7fb4 [$800b7fb4]
+800BB838	nop
+800BB83C	j      Lbb854 [$800bb854]
+800BB840	nop
+
+Lbb844:	; 800BB844
+[80163b80] = h(0);
+[800fa6b8] = h(0);
+
+Lbb854:	; 800BB854
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BB85C	jr     ra 
+800BB860	nop
+////////////////////////////////
+// funcbb864
+800BB864	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(RA);
+A0 = 77e6;
+A1 = 0800;
+A3 = 800bb89c;
+800BB87C	jal    $80033e34
+800BB880	lui    a2, $801d
+800BB884	jal    funcb7fb4 [$800b7fb4]
+800BB888	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BB894	jr     ra 
+800BB898	nop
+////////////////////////////////
+// funcbb89c
+V0 = hu[8016376a];
+800BB8A4	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(RA);
+[80163b80] = h(0);
+[800fa6b8] = h(0);
+V0 = V0 & 0010;
+800BB8C0	bne    v0, zero, Lbb8e0 [$800bb8e0]
+V0 = 0010;
+V0 = w[80083338];
+800BB8D0	nop
+800BB8D4	bne    v0, zero, Lbb8e0 [$800bb8e0]
+V0 = 0010;
+V0 = 0014;
+
+Lbb8e0:	; 800BB8E0
+[8009a000] = h(V0);
+800BB8E8	lui    v0, $801d
+[8009a004] = w(V0);
+800BB8F4	jal    $8002da7c
+800BB8F8	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BB904	jr     ra 
+800BB908	nop
+////////////////////////////////
+// funcbb90c
+800BB90C	addiu  sp, sp, $ffe8 (=-$18)
+V0 = 00a0;
+[8009a000] = h(V0);
+V0 = 007f;
+[SP + 0010] = w(RA);
+[8009a004] = w(V0);
+800BB92C	jal    $8002da7c
+800BB930	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BB93C	jr     ra 
+800BB940	nop
+////////////////////////////////
+// funcbb944
+800BB944	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(RA);
+800BB94C	jal    funcbb90c [$800bb90c]
+800BB950	nop
+V0 = 00f1;
+[8009a000] = h(V0);
+800BB960	jal    $8002da7c
+800BB964	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BB970	jr     ra 
+800BB974	nop
+////////////////////////////////
+// funcbb978
+800BB978	addiu  sp, sp, $ffe8 (=-$18)
+V0 = 00c1;
+[8009a000] = h(V0);
+V0 = 012c;
+[SP + 0010] = w(RA);
+[8009a004] = w(V0);
+[8009a008] = w(0);
+800BB9A0	jal    $8002da7c
+800BB9A4	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BB9B0	jr     ra 
+800BB9B4	nop
+////////////////////////////////
+// funcbb9b8
+800BB9B8	addiu  sp, sp, $ffe8 (=-$18)
+V0 = 800f4ad0;
+V1 = 0030;
+A0 = A0 & ffff;
+[SP + 0010] = w(RA);
+[V0 + 0000] = h(V1);
+[800f4ad4] = w(A0);
+[800f4ad8] = w(A0);
+800BB9E4	jal    $8002df88
+A0 = V0;
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BB9F4	jr     ra 
+800BB9F8	nop
+////////////////////////////////
+// funcbb9fc
+800BB9FC	addiu  sp, sp, $ffe8 (=-$18)
+V0 = 002b;
+[8009a000] = h(V0);
+V0 = 0040;
+A0 = A0 & ffff;
+[SP + 0010] = w(RA);
+[8009a004] = w(V0);
+[8009a008] = w(A0);
+800BBA28	jal    $8002da7c
+800BBA2C	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BBA38	jr     ra 
+800BBA3C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbba40()
+
+[8009a000] = h(20);
+[8009a004] = w(40);
+[8009a008] = w(A0 & ffff);
+system_execute_AKAO();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbba84
+A3 = A0;
+if (A1 == -1)
+{
+    V0 = A2 & ff;
+}
+else
+{
+    V0 = h[801516fc + A1 * 8] / 5;
+    V0 = V0 * 2;
+    V0 = V0 & 7e;
+}
+
+[8009a000] = h(0020);
+[8009a004] = h(V0);
+[8009a008] = h(A3);
+system_execute_AKAO;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbbb20()
+
+A1 = 80163799;
+A2 = 0001;
+[A1 + 0000] = b(A2);
+[801637a5] = b(A2);
+[801637b1] = b(A2);
+[801637bd] = b(A2);
+[801637c9] = b(A2);
+[801637d5] = b(A2);
+V1 = b[A1 + ffff];
+
+if( V1 == 1 )
+{
+    [A1 + 0015] = h(2);
+    [A1 + 0021] = h(4);
+    [A1 + 002d] = h(6);
+    [A1 + 0039] = h(8);
+    [A1 + 0045] = h(a);
+    [A1 + 0004] = b(3c);
+    [A1 + 0010] = b(3d);
+    [A1 + 001c] = b(3e);
+    [A1 + 0028] = b(3f);
+    [A1 + 0034] = b(40);
+    [A1 + 0040] = b(47);
+    [A1 + 0002] = b(14);
+    [A1 + 000e] = b(14);
+    [A1 + 001a] = b(14);
+    [A1 + 0026] = b(14);
+    [A1 + 0032] = b(14);
+    [A1 + 003e] = b(14);
+    [A1 + 0001] = b(1e);
+    [A1 + 000d] = b(1e);
+    [A1 + 0019] = b(1e);
+    [A1 + 0025] = b(1e);
+    [A1 + 0031] = b(1e);
+    [A1 + 003d] = b(1e);
+    [A1 + ffff] = b(A2);
+    [A1 + 000b] = b(A2);
+    [A1 + 0017] = b(A2);
+    [A1 + 0023] = b(A2);
+    [A1 + 002f] = b(A2);
+    [A1 + 003b] = b(A2);
+    [A1 + 0047] = b(-1);
+    [A1 + 0009] = h(0);
+    [A1 + 0007] = h(0);
+    [A1 + 0013] = h(-4);
+    [A1 + 001f] = h(-4);
+    [A1 + 002b] = h(-4);
+    [A1 + 0037] = h(-4);
+    [A1 + 0043] = h(-4);
+    [800f9f3e] = h(64);
+    [800f9f4c] = h(c8);
+    [800f9f5a] = h(12c);
+    [800f9f68] = h(190);
+    [800f9f46] = h(-1);
+    [800f9f48] = h(-1);
+    [800f9f54] = h(-1);
+    [800f9f56] = h(-1);
+    [800f9f62] = h(-1);
+    [800f9f64] = h(-1);
+    [800f9f70] = h(-1);
+    [800f9f72] = h(-1);
+    [800f9f7e] = h(-1);
+    [800f9f80] = h(-1);
+    [800f9f76] = h(1f4);
+    [800fa9e8] = b(5);
+    [800f9f40] = h(0);
+    [800f9f4e] = h(0);
+    [800f9f5c] = h(0);
+    [800f9f6a] = h(0);
+    [800f9f78] = h(0);
+
+    [800fa9d0 + 0 * c + 0] = b(4);
+    [800fa9d0 + 0 * c + 2] = b(A2);
+    [800fa9d0 + 0 * c + 3] = b(0);
+    [800fa9d0 + 0 * c + 4] = h(0);
+    [800fa9d0 + 1 * c + 0] = b(-1);
+
+    [800fa9d0 + 2 * c + 2] = b(A2);
+    [800fa9d0 + 2 * c + 3] = b(A2);
+    [800fa9d0 + 2 * c + 4] = h(0);
+    [800fa9d0 + 3 * c + 0] = b(-1);
+
+    [800fa9d0 + 4 * c + 0] = b(4);
+    [800fa9d0 + 4 * c + 2] = b(A2);
+    [800fa9d0 + 4 * c + 3] = b(2);
+    [800fa9d0 + 4 * c + 4] = h(0);
+    [800fa9d0 + 5 * c + 0] = b(-1);
+
+    [800fa9d0 + 6 * c + 0] = b(6);
+    [800fa9d0 + 6 * c + 2] = b(A2);
+    [800fa9d0 + 6 * c + 3] = b(3);
+    [800fa9d0 + 6 * c + 4] = h(0);
+    [800fa9d0 + 7 * c + 0] = b(-1);
+
+    [800fa9d0 + 8 * c + 0] = b(4);
+    [800fa9d0 + 8 * c + 2] = b(A2);
+    [800fa9d0 + 8 * c + 3] = b(4);
+    [800fa9d0 + 8 * c + 4] = h(0);
+    [800fa9d0 + 9 * c + 0] = b(-1);
+
+    [800fa9d0 + a * c + 0] = b(2);
+    [800fa9d0 + a * c + 2] = b(0);
+    [800fa9d0 + a * c + 3] = b(0);
+    [800fa9d0 + a * c + 4] = h(0);
+    [800fa9d0 + b * c + 0] = b(-1);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbbdf8
+V0 = w[800f8368];
+800BBE00	addiu  sp, sp, $ffe8 (=-$18)
+800BBE04	bne    v0, zero, Lbbe54 [$800bbe54]
+[SP + 0010] = w(RA);
+800BBE0C	lui    v0, $8018
+V1 = w[80163c74];
+V0 = V0 | 4000;
+V0 = V0 < V1;
+[800f4af4] = w(V1);
+800BBE28	beq    v0, zero, Lbbe9c [$800bbe9c]
+800BBE2C	nop
+800BBE30	jal    $8003cebc
+800BBE34	nop
+800BBE38	jal    $80043938
+A0 = 0001;
+800BBE40	jal    $8003d1b4
+800BBE44	nop
+A0 = 0062;
+800BBE4C	j      Lbbe94 [$800bbe94]
+A1 = 0;
+
+Lbbe54:	; 800BBE54
+V1 = w[80163c74];
+800BBE5C	lui    v0, $801a
+V0 = V0 < V1;
+[800f4af8] = w(V1);
+800BBE6C	beq    v0, zero, Lbbe9c [$800bbe9c]
+800BBE70	nop
+800BBE74	jal    $8003cebc
+800BBE78	nop
+800BBE7C	jal    $80043938
+A0 = 0001;
+800BBE84	jal    $8003d1b4
+800BBE88	nop
+A0 = 0062;
+A1 = 0001;
+
+Lbbe94:	; 800BBE94
+800BBE94	jal    $800429e0
+800BBE98	nop
+
+Lbbe9c:	; 800BBE9C
+RA = w[SP + 0010];
+SP = SP + 0018;
+800BBEA4	jr     ra 
+800BBEA8	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbbeac
+
+A2 = 0;
+loopbbed0:	; 800BBED0
+    if (w[80161ef0 + A2 * 4] == 0 && A2 >= h[8015169c])
+    {
+        [80161ef0 + A2 * 4] = w(A0);
+
+        [80162978 + A2 * 20] = h(h[8015169c]);
+
+        [80162080] = h(hu[80162080] + 1);
+        return;
+    }
+
+
+    A2 = A2 + 1;
+    V0 = A2 < 64;
+800BBF40	bne    v0, zero, loopbbed0 [$800bbed0]
+
+func3cebc;
+
+A0 = 1;
+system_psyq_reset_graph;
+
+func3d1b4;
+
+A0 = 61;
+A1 = 1;
+system_bios_system_error_boot_or_disk_failure();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbbf7c
+A2 = 0;
+T0 = 801590d0;
+A3 = T0;
+
+loopbbfa0:	; 800BBFA0
+    V1 = A2;
+    A1 = 80163b48 + V1 * 4;
+    V0 = w[A1];
+    if (V0 == 0 && V1 >= T0)
+    {
+        [A1 + 0] = w(A0);
+
+        [801620ac + V1 * 20] = h(A3);
+        [80163b7c] = h(hu[80163b7c] + 1);
+
+        return;
+    }
+
+    V0 = A2 + 0001;
+    A2 = V0;
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+
+    V0 = V0 < 000a;
+800BC010	bne    v0, zero, loopbbfa0 [$800bbfa0]
+
+800BC018	jal    func3cebc [$8003cebc]
+800BC01C	nop
+800BC020	jal    system_psyq_reset_graph [$80043938]
+A0 = 0001;
+800BC028	jal    func3d1b4 [$8003d1b4]
+800BC02C	nop
+A0 = 0061;
+800BC034	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
+A1 = 0002;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc04c()
+
+T0 = h[801590d4]; // id of effect to render
+
+for( int i = 0; i < 3c; ++i )
+{
+    if( ( w[80163b84 + i * 4] == 0 ) && ( i >= T0 ) )
+    {
+        [80163b84 + i * 4] = w(A0);
+        [801621f0 + i * 20 + 0] = h(T0);
+        [80163c78] = h(hu[80163c78] + 1);
+        return i;
+    }
+}
+
+system_bios_stop_pad();
+
+A0 = 1;
+system_psyq_reset_graph;
+
+func3d1b4; // disable dma, set default exit from exception
+
+A0 = 61;
+A1 = 4;
+system_bios_system_error_boot_or_disk_failure();
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc11c
+A3 = 0;
+loopbc13c:	; 800BC13C
+    if (w[800fa978 + A3 * 4] == 0)
+    {
+        [800fa978 + A3 * 4] = w(A0);
+
+        [800f7ed8 + A3 * 28 + 0] = h(hu[800f8360]);
+
+        [800fa9bc] = h(hu[800fa9bc] + 1);
+        return A3;
+    }
+
+    A3 = A3 + 1;
+    V0 = A3 < 10;
+800BC1A4	bne    v0, zero, loopbc13c [$800bc13c]
+
+// generate error
+800BC1AC	jal    func3cebc [$8003cebc]
+
+A0 = 1;
+800BC1B4	jal    system_psyq_reset_graph [$80043938]
+
+800BC1BC	jal    func3d1b4 [$8003d1b4]
+
+A0 = 61;
+A1 = 3;
+800BC1C8	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc1e0()
+
+[80163c78] = h(0);
+[80163b7c] = h(0);
+[80162080] = h(0);
+
+// init damage callbacks
+for( int i = 0; i < 64; ++i )
+{
+    [80161ef0 + i * 4] = w(0);
+    [80162978 + i * 20 + 0] = h(0);
+    [80162978 + i * 20 + 2] = h(0);
+}
+
+// init unit movements callback
+for( int i = 0; i < a; ++i )
+{
+    [80163b48 + i * 4] = w(0); // unit movements callback
+    [801620ac + i * 20 + 0] = h(0);
+    [801620ac + i * 20 + 2] = h(0);
+}
+
+// init effects callback
+for( int i = 0; i < 3c; ++i )
+{
+    [80163b84 + i * 4] = w(0);
+    [801621f0 + i * 20 + 0] = h(0);
+    [801621f0 + i * 20 + 2] = h(0);
+}
+
+battle_camera_reset_callbacks();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_camera_reset_callbacks()
+// init camera callback func data and id
+
+[800fa9bc] = h(0);
+
+for( int i = 0; i < 10; ++i )
+{
+    [800fa978 + i * 4] = w(0);
+    [800f7ed8 + i * 28 + 0] = h(0);
+    [800f7eda + i * 28 + 2] = h(0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc348
+800BC348	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(S0);
+S0 = 80161ef0;
+[SP + 0014] = w(RA);
+[8015169c] = h(0);
+
+loopbc364:	; 800BC364
+V0 = h[8015169c];
+800BC36C	nop
+V0 = V0 << 02;
+V0 = V0 + S0;
+V0 = w[V0 + 0000];
+800BC37C	nop
+800BC380	beq    v0, zero, Lbc3f8 [$800bc3f8]
+800BC384	nop
+800BC388	jalr   v0 ra
+800BC38C	nop
+A1 = h[8015169c];
+800BC398	nop
+A0 = A1 << 05;
+AT = 80162978;
+AT = AT + A0;
+V1 = h[AT + 0000];
+800BC3B0	addiu  v0, zero, $ffff (=-$1)
+800BC3B4	bne    v1, v0, Lbc3f8 [$800bc3f8]
+V0 = A1 << 02;
+V1 = hu[80162080];
+V0 = V0 + S0;
+AT = 80162978;
+AT = AT + A0;
+[AT + 0000] = h(0);
+AT = 8016297a;
+AT = AT + A0;
+[AT + 0000] = h(0);
+[V0 + 0000] = w(0);
+800BC3EC	addiu  v1, v1, $ffff (=-$1)
+[80162080] = h(V1);
+
+Lbc3f8:	; 800BC3F8
+V0 = hu[8015169c];
+800BC400	nop
+V0 = V0 + 0001;
+[8015169c] = h(V0);
+V0 = V0 << 10;
+V0 = V0 >> 10;
+V0 = V0 < 0064;
+800BC41C	bne    v0, zero, loopbc364 [$800bc364]
+800BC420	nop
+[8015169c] = h(0);
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+800BC438	jr     ra 
+800BC43C	nop
+////////////////////////////////
+// funcbc440
+800BC440	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(S0);
+S0 = 80163b48;
+[SP + 0014] = w(RA);
+[801590d0] = h(0);
+
+loopbc45c:	; 800BC45C
+V0 = h[801590d0];
+800BC464	nop
+V0 = V0 << 02;
+V0 = V0 + S0;
+V0 = w[V0 + 0000];
+800BC474	nop
+800BC478	beq    v0, zero, Lbc4f0 [$800bc4f0]
+800BC47C	nop
+800BC480	jalr   v0 ra
+800BC484	nop
+A1 = h[801590d0];
+800BC490	nop
+A0 = A1 << 05;
+AT = 801620ac;
+AT = AT + A0;
+V1 = h[AT + 0000];
+800BC4A8	addiu  v0, zero, $ffff (=-$1)
+800BC4AC	bne    v1, v0, Lbc4f0 [$800bc4f0]
+V0 = A1 << 02;
+V1 = hu[80163b7c];
+V0 = V0 + S0;
+AT = 801620ac;
+AT = AT + A0;
+[AT + 0000] = h(0);
+AT = 801620ae;
+AT = AT + A0;
+[AT + 0000] = h(0);
+[V0 + 0000] = w(0);
+800BC4E4	addiu  v1, v1, $ffff (=-$1)
+[80163b7c] = h(V1);
+
+Lbc4f0:	; 800BC4F0
+V0 = hu[801590d0];
+800BC4F8	nop
+V0 = V0 + 0001;
+[801590d0] = h(V0);
+V0 = V0 << 10;
+V0 = V0 >> 10;
+V0 = V0 < 000a;
+800BC514	bne    v0, zero, loopbc45c [$800bc45c]
+800BC518	nop
+[801590d0] = h(0);
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+800BC530	jr     ra 
+800BC534	nop
+////////////////////////////////
+// funcbc538
+800BC538	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(S0);
+S0 = 80163b84;
+[SP + 0014] = w(RA);
+[801590d4] = h(0);
+
+loopbc554:	; 800BC554
+V0 = h[801590d4];
+800BC55C	nop
+V0 = V0 << 02;
+V0 = V0 + S0;
+V0 = w[V0 + 0000];
+800BC56C	nop
+800BC570	beq    v0, zero, Lbc5e8 [$800bc5e8]
+800BC574	nop
+800BC578	jalr   v0 ra
+800BC57C	nop
+A1 = h[801590d4];
+800BC588	nop
+A0 = A1 << 05;
+AT = 801621f0;
+AT = AT + A0;
+V1 = h[AT + 0000];
+800BC5A0	addiu  v0, zero, $ffff (=-$1)
+800BC5A4	bne    v1, v0, Lbc5e8 [$800bc5e8]
+V0 = A1 << 02;
+V1 = hu[80163c78];
+V0 = V0 + S0;
+AT = 801621f0;
+AT = AT + A0;
+[AT + 0000] = h(0);
+AT = 801621f2;
+AT = AT + A0;
+[AT + 0000] = h(0);
+[V0 + 0000] = w(0);
+800BC5DC	addiu  v1, v1, $ffff (=-$1)
+[80163c78] = h(V1);
+
+Lbc5e8:	; 800BC5E8
+V0 = hu[801590d4];
+800BC5F0	nop
+V0 = V0 + 0001;
+[801590d4] = h(V0);
+V0 = V0 << 10;
+V0 = V0 >> 10;
+V0 = V0 < 003c;
+800BC60C	bne    v0, zero, loopbc554 [$800bc554]
+800BC610	nop
+[801590d4] = h(0);
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+800BC628	jr     ra 
+800BC62C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcbc630
+S0 = 800fa978;
+[800f8360] = h(0);
+
+loopbc64c:	; 800BC64C
+V0 = h[800f8360];
+800BC654	nop
+V0 = V0 << 02;
+V0 = V0 + S0;
+V0 = w[V0 + 0000];
+800BC664	nop
+800BC668	beq    v0, zero, Lbc6e4 [$800bc6e4]
+800BC66C	nop
+800BC670	jalr   v0 ra
+800BC674	nop
+V0 = h[800f8360];
+800BC680	nop
+A1 = V0 << 02;
+V0 = A1 + V0;
+A0 = V0 << 03;
+AT = 800f7ed8;
+AT = AT + A0;
+V1 = h[AT + 0000];
+800BC6A0	addiu  v0, zero, $ffff (=-$1)
+800BC6A4	bne    v1, v0, Lbc6e4 [$800bc6e4]
+V0 = A1 + S0;
+V1 = hu[800fa9bc];
+AT = 800f7ed8;
+AT = AT + A0;
+[AT + 0000] = h(0);
+AT = 800f7eda;
+AT = AT + A0;
+[AT + 0000] = h(0);
+[V0 + 0000] = w(0);
+800BC6D8	addiu  v1, v1, $ffff (=-$1)
+[800fa9bc] = h(V1);
+
+Lbc6e4:	; 800BC6E4
+V0 = hu[800f8360];
+800BC6EC	nop
+V0 = V0 + 0001;
+[800f8360] = h(V0);
+V0 = V0 << 10;
+V0 = V0 >> 10;
+V0 = V0 < 0010;
+800BC708	bne    v0, zero, loopbc64c [$800bc64c]
+800BC70C	nop
+[800f8360] = h(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // funcbc72c
 // copy camera start end as transition from current to battle setup
 funcc1104; // set transition from current camera to one from battle set up

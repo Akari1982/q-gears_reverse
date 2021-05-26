@@ -1,3 +1,38 @@
+The entire file is compressed using LZS format and is decompressed into the playstation user memory for a battle. The file consists of several section blocks, a header, compiled HRC and model information, battle animations, a texture image in TIM format, and optional weapon models.
+
+
+
+HEADER
+    + 08 [][][][] pointer to settings
+
+SETTINGS
+    +00 [][]     0000 - if this is not 0 we add 0x40 bit to 8015190b
+    +02 []       80 - 0x3f - dead type. 0x80 - play secondary animation
+    +03 []       00
+    +04 [][]     015e - collision radius. Set to 801518e4+6
+    +06 [][]     0640 - to 801518ec
+    +08 [][]     0640 - to 801518ee
+    +0a [][]     0000 - to 801518f0
+    +0c [][]     0096
+    +0e [][]     fda8
+    +10 [][]     fc18 - filler?
+    +12 array of joints (bone indexes) (0x1 size)
+    +22 [][]     0000 - filler?
+    +24 array of 8 offsets to something (0x4 size)
+    +44 array of 4 something (0x2 size)
+    +4c array of 6 something (0x2 size)
+    +58 array of 6 something (0x2 size)
+    +64 [][]     00c8
+    +66 [][]     0000 - filler?
+    +68 array of 32 offsets to animation scripts (0x4 size)
+
+
+
+
+
+
+ANIMATION SCRIPT OPCODES
+
 0x00 - 0x8d - animations
 
 0x8e

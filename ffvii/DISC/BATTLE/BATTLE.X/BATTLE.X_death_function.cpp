@@ -1946,29 +1946,25 @@ for( int i = 0; i < 40; ++i )
 ////////////////////////////////
 // funcc5c18()
 
-T1 = 0;
-loopc5c40:	; 800C5C40
-    if( h[800f9da8 + T1 * 6 + 0] == -1 )
+for( int i = 0; i < 40; ++i )
+{
+    if( h[800f9da8 + i * 6 + 0] == -1 )
     {
-        [800f9da8 + T1 * 6 + 0] = h(A0); // string index in buffer + 0x100
-        [800f9da8 + T1 * 6 + 2] = h(A3); // 0
-        [800f9da8 + T1 * 6 + 4] = b(A1 + ff); // string argument
+        [800f9da8 + i * 6 + 0] = h(A0); // string index in buffer + 0x100
+        [800f9da8 + i * 6 + 2] = h(A3); // 0
+        [800f9da8 + i * 6 + 4] = b(A1 + ff); // string argument
 
         if( A2 == 0 ) // 0
         {
-            [800f9da8 + T1 * 6 + 5] = b(bu[8009d7bd] >> 2 + 4);
+            [800f9da8 + i * 6 + 5] = b(bu[8009d7bd] >> 2 + 4);
         }
         else
         {
-            [800f9da8 + T1 * 6 + 5] = b(A2);
+            [800f9da8 + i * 6 + 5] = b(A2);
         }
-
         break;
     }
-
-    T1 = T1 + 1;
-    V0 = T1 < 40;
-800C5CA4	bne    v0, zero, loopc5c40 [$800c5c40]
+}
 ////////////////////////////////
 
 

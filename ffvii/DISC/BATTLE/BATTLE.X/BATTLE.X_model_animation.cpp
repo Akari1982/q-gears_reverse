@@ -1,5 +1,6 @@
 ﻿////////////////////////////////
 // funcc76c8
+
 S4 = A0;
 offset_to_subfile = A1;
 unit_id = A2;
@@ -52,6 +53,7 @@ if (w[S4] > 0)
 
 ////////////////////////////////
 // funcc7924
+
 S5 = A0;
 offset_to_subfile = A1;
 unit_id = A2;
@@ -108,13 +110,13 @@ if (h[S5] > 0)
 // A0 - unit_id
 // A1 - bone number
 // A2 - offset to animation
-init_id = A0;
+unit_id = A0;
 
 A3 = A2; // offset to animation
-A0 = 801518e4 + init_id * b9c + 174; // start of matrixes to calculate
+A0 = 801518e4 + unit_id * b9c + 174; // start of matrixes to calculate
 A2 = A1; // number of bone
-A1 = w[801518e4 + init_id * b9c + 74]; // read from start or not
-funcd376c;
+A1 = w[801518e4 + unit_id * b9c + 74]; // read from start or not
+funcd376c();
 [801518e4 + A0 * b9c + 74] = w(V0);
 
 return V0 < 1;
@@ -123,14 +125,15 @@ return V0 < 1;
 
 
 ////////////////////////////////
-// funcc7be8
-init_id = A0;
+// funcc7be8()
+
+unit_id = A0;
 A3 = A2; // offset to animation
 A2 = A1; // number of bone
-A0 = 800fa6e0 + init_id * 40; // start of matrixes to calculate
-A1 = w[800fa6d8 + init_id * 40]; // read from start or not
-funcd376c;
-[800fa6d8 + init_id * 40] = w(V0);
+A0 = 800fa6e0 + unit_id * 40; // start of matrixes to calculate
+A1 = w[800fa6d8 + unit_id * 40]; // read from start or not
+funcd376c();
+[800fa6d8 + unit_id * 40] = w(V0);
 ////////////////////////////////
 
 
@@ -589,7 +592,7 @@ ECA70C80 67
                     [80163798 + A0 * c + 8] = h(-2); // camera movement id set to init camera
                     [80163f30] = b(bu[w[1f800024] + A1]); // set init camera
 
-                    funcbb684; // reset camera
+                    battle_queue1_camera_init();
                 }
                 break;
 
@@ -707,19 +710,6 @@ ECA70C80 67
                 V0 = w[T2 + 0000];
                 V1 = V1 - A0;
                 800C8788	div    v1, v0
-                800C878C	bne    v0, zero, Lc8798 [$800c8798]
-                800C8790	nop
-                800C8794	break   $01c00
-
-                Lc8798:	; 800C8798
-                800C8798	addiu  at, zero, $ffff (=-$1)
-                800C879C	bne    v0, at, Lc87b0 [$800c87b0]
-                800C87A0	lui    at, $8000
-                800C87A4	bne    v1, at, Lc87b0 [$800c87b0]
-                800C87A8	nop
-                800C87AC	break   $01800
-
-                Lc87b0:	; 800C87B0
                 800C87B0	mflo   v1
                 V0 = bu[S3 + 0014];
                 800C87B8	nop
@@ -1054,19 +1044,6 @@ ECA70C80 67
                 A1 = bu[A0 + 0000];
                 V0 = V0 >> 10;
                 800C8F94	div    v0, a1
-                800C8F98	bne    a1, zero, Lc8fa4 [$800c8fa4]
-                800C8F9C	nop
-                800C8FA0	break   $01c00
-
-                Lc8fa4:	; 800C8FA4
-                800C8FA4	addiu  at, zero, $ffff (=-$1)
-                800C8FA8	bne    a1, at, Lc8fbc [$800c8fbc]
-                800C8FAC	lui    at, $8000
-                800C8FB0	bne    v0, at, Lc8fbc [$800c8fbc]
-                800C8FB4	nop
-                800C8FB8	break   $01800
-
-                Lc8fbc:	; 800C8FBC
                 800C8FBC	mflo   v0
                 A0 = 800cf2f0;
                 [S3 + 0010] = h(A1);
@@ -2319,8 +2296,6 @@ ECA70C80 67
                 [AT + 0000] = b(V0);
                 800CA8A4	j      Lcd208 [$800cd208]
                 800CA8A8	nop
-
-
 
                 case d0: // 42
                 {
