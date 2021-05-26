@@ -48,10 +48,10 @@
 // funca2f24
 800A2F24-800A2F48
 ////////////////////////////////
-// funca2f4c
+// battle_queue1_get_pointer
 800A2F4C-800A2FCC
 ////////////////////////////////
-// funca2fd0
+// battle_queue2_get_pointer
 800A2FD0-800A3048
 ////////////////////////////////
 // funca304c

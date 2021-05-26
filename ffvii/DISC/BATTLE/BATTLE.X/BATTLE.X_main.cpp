@@ -505,7 +505,7 @@ V1 = 1 << attacker_id;
 
 S0 = 0;
 loopa1a3c:	; 800A1A3C
-    [temp + d0 + S0] = b(FF);
+    [temp + d0 + S0] = b(-1);
     S0 = S0 + 1;
     V0 = S0 < 8;
 800A1A58	bne    v0, zero, loopa1a3c [$800a1a3c]
@@ -517,9 +517,7 @@ A0 = attack_mask;
 system_count_active_bits;
 if ((V0 == 0 && attacker_id < 3 ) || V0 >= 2)
 {
-    V0 = w[temp + 90];
-    V0 = V0 | 00000200;
-    [temp + 90] = w(V0);
+    [temp + 90] = w(w[temp + 90] | 00000200);
 }
 
 
@@ -606,45 +604,35 @@ if (attacker_id < 3)
     }
 }
 
-
-
 A0 = bu[800f5bb8 + attacker_id * 44 + 29];
-if (A0 & 80)
+if( A0 & 80 )
 {
-    V0 = A0 & 7F;
-    [800F5BB8 + attacker_id * 44 + 29] = b(V0);
+    V0 = A0 & 7f;
+    [800f5bb8 + attacker_id * 44 + 29] = b(V0);
 
     V1 = hu[800f5bb8 +  + attacker_id * 44 + 3c];
-    if (V1 == 1e61)
+    if( V1 == 1e61 )
     {
         [800f7dbe] = h(51);
         [800f7dc0] = h(2f);
     }
 }
 
-
-
 [temp + 28] = w(w[temp + c]);
 
-
 // replace 15 with 2, 16 with 3, 17 with 4
-A0 = 0;
-loopa1d04:	; 800A1D04
+for( int i = 0; i < 3; ++i )
+{
     V1 = w[temp + 28];
-    V0 = w[800a0108 + A0];
-    if (V1 == V0)
+    V0 = w[800a0108 + i * 8];
+    if( V1 == V0 )
     {
-        [temp + 28] = w(w[800a010c + A0]);
+        [temp + 28] = w(w[800a010c + i * 8]);
     }
-
-    A0 = A0 + 8;
-    V0 = A0 < 18;
-800A1D3C	bne    v0, zero, loopa1d04 [$800a1d04]
-
-
+}
 
 V1 = w[temp + c];
-if (V1 < 20) // if action type less than 20
+if( V1 < 20 ) // if action type less than 20
 {
     [temp + 60] = w(hu[800707c4 + V1 * 8 + 4]);
     [temp + 64] = w(hu[800707c4 + V1 * 8 + 6]);
@@ -684,13 +672,12 @@ if (V0 & 04)
 V0 = w[temp + c];
 
 // after each function
-        // if error - we finish
-        V0 = w[GP + 01d0];
-        if (V0 >= 0)
-        {
-            return;
-        }
-
+// if error - we finish
+V0 = w[GP + 1d0];
+if( V0 >= 0 )
+{
+    return;
+}
 
 switch (V0)
 {
@@ -807,9 +794,9 @@ switch (V0)
     // change
     case 0x12:
     {
-        action_type_04; // se animation to play and switch rows
-        action_type_0B; // set target type and target mask to self
-        action_type_0F; // add action to perform
+        action_type_04(); // set animation to play and switch rows
+        action_type_0B(); // set target type and target mask to self
+        action_type_0F(); // add action to perform
     }
     break;
 
@@ -897,8 +884,8 @@ switch (V0)
     // ???
     case 0x25:
     {
-        action_type_15;
-        action_type_0F; // add action to perform
+        action_type_15();
+        action_type_0F(); // add action to perform
     }
     break;
 }
@@ -1684,7 +1671,8 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funca2efc
+// funca2efc()
+
 [800f3950] = w(w[800f3944]);
 [800f3954] = w(w[800f3948]);
 ////////////////////////////////
@@ -1701,16 +1689,16 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funca2f4c()
+// battle_queue1_get_pointer()
 
-V1 = w[800f3944];
-[80163798 + V1 * c + 2] = b(0);
-[80163798 + V1 * c + 3] = b(0);
-[80163798 + V1 * c + a] = h(w[800f3948]);
+pos = w[800f3944];
+[80163798 + pos * c + 2] = b(0);
+[80163798 + pos * c + 3] = b(0);
+[80163798 + pos * c + a] = h(w[800f3948]);
 
-if( V1 < 40 )
+if( pos < 40 )
 {
-    [800f3944] = w(w[800f3944] + 1);
+    [800f3944] = w(pos + 1);
 }
 else
 {
@@ -1718,25 +1706,25 @@ else
     func155a4();
 }
 
-return 80163798 + V1 * c;
+return 80163798 + pos * c;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca2fd0
+// battle_queue2_get_pointer()
+
 pos = w[800f3948];
-
 [800fa9d0 + pos * c + 3] = b(-1);
 
-if (pos < 80)
+if( pos < 80 )
 {
     [800f3948] = w(pos + 1);
 }
 else
 {
-    A0 = 28;
-    func155a4;
+    A0 = 28; // error code
+    func155a4();
 }
 
 return 800fa9d0 + pos * c;
@@ -1798,8 +1786,9 @@ V0 = 800f9f3c + V1 * e;
 
 
 ////////////////////////////////
-// funca317c
-funca2fd0;
+// funca317c()
+
+battle_queue2_get_pointer();
 
 [V0 + 0] = b(-1);
 ////////////////////////////////
@@ -1814,7 +1803,7 @@ S1 = A1;
 S2 = A2;
 S3 = A3;
 
-funca2f4c();
+battle_queue1_get_pointer();
 
 [V0 + 0] = b(S0);
 [V0 + 1] = b(S1);
@@ -1827,34 +1816,25 @@ funca2f4c();
 
 
 ////////////////////////////////
-// funca3208
+// funca3208()
+
 V1 = w[800f3944];
-800A3210	nop
-800A3214	beq    v1, zero, La3238 [$800a3238]
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800A3224	lui    v1, $8016
-V1 = V1 + 378c;
-V0 = V0 + V1;
-[V0 + 0003] = b(A0);
-[V0 + 0002] = b(A1);
-
-La3238:	; 800A3238
-800A3238	jr     ra 
-800A323C	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca3240
-
-V0 = w[800f3944];
-if( V0 != 0 )
+if( V1 != 0 )
 {
-    V0 = V0 - 1;
-    [80163798 + V0 * c + 8] = h(-1);
+    [8016378c + V1 * c + 2] = b(A1);
+    [8016378c + V1 * c + 3] = b(A0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca3240()
+
+V1 = w[800f3944];
+if( V1 != 0 )
+{
+    [80163798 + (V1 - 1) * c + 8] = h(-1);
 }
 ////////////////////////////////
 
@@ -1871,15 +1851,13 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// funca329c
+// funca329c()
+
 V0 = w[800f3944];
-
-
-800A32A8	beq    v0, zero, La32b8 [$800a32b8]
-800A32AC	addiu  v0, v0, $ffff (=-$1)
-[800f3944] = w(V0);
-
-La32b8:	; 800A32B8
+if( V0 != 0 )
+{
+    [800f3944] = w(V0 - 1);
+}
 ////////////////////////////////
 
 
@@ -1934,7 +1912,7 @@ funca32c0();
 
 if( w[800f3944] != 0 )
 {
-    funca2f4c();
+    battle_queue1_get_pointer();
     [V0 + 0] = b(-1);
 }
 
@@ -1967,19 +1945,13 @@ for( int i = 4; i < a; ++i )
 
 
 ////////////////////////////////
-// funca345c
-V0 = w[800f3944];
-800A3464	addiu  sp, sp, $ffe8 (=-$18)
-800A3468	beq    v0, zero, La3478 [$800a3478]
-[SP + 0010] = w(RA);
-800A3470	jal    funca3354 [$800a3354]
-800A3474	nop
+// funca345c()
 
-La3478:	; 800A3478
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A3480	jr     ra 
-800A3484	nop
+V0 = w[800f3944];
+if( V0 != 0 )
+{
+    800A3470	jal    funca3354 [$800a3354]
+}
 ////////////////////////////////
 
 
@@ -5445,23 +5417,18 @@ temp = w[80063014];
 temp = w[80063014];
 [temp + 20] = w(-1);
 
-funcb12dc;
-
-if (V0 != 0)
+funcb12dc(); // is enemy on one side
+if( V0 != 0 ) // enemy on one side
 {
     V0 = w[temp + 0];
-    if (w[800f83e0 + V0 * 68 + 4] & 00000040)
+    if( w[800f83e0 + V0 * 68 + 4] & 00000040 )
     {
-        [temp + 20] = w(3);
+        [temp + 20] = w(3); // jump from back to front
     }
     else
     {
-        [temp + 20] = w(4);
+        [temp + 20] = w(4); // jump from front to back
     }
-
-    V0 = w[temp + 0];
-
-
     [800f83e0 + V0 * 68 + 4] = w(w[800f83e0 + V0 * 68 + 4] ^ 00000040);
 }
 ////////////////////////////////
@@ -5586,12 +5553,11 @@ funcaf9c8;
 
 
 ////////////////////////////////
-// action_type_0B
+// action_type_0B()
+
 temp = w[80063014];
-// set target type to 0 (self)
-[temp + 50] = w(0);
-// set target mask (self)
-[temp + 18] = w(1 << w[temp + 0]);
+[temp + 50] = w(0); // set target type to 0 (self)
+[temp + 18] = w(1 << w[temp + 0]); // set target mask (self)
 ////////////////////////////////
 
 
@@ -6083,28 +6049,27 @@ if( w[800f5bf4 + attacker_id * 44 + 0] == 1e61 ) // if lucky 7777 then no status
 
 
 ////////////////////////////////
-// action_type_0F
+// action_type_0F()
+
 temp = w[80063014];
-if( w[temp + 20] >= 0 )
+if( w[temp + 20] >= 0 ) // animation id
 {
-    funca2f4c();
-
-    [V0 + 0] = b(w[temp + 0]);
-    [V0 + 1] = b(w[temp + 1c]);
-    [V0 + 2] = b(w[temp + 24]);
-    [V0 + 3] = b(w[temp + 28]);
+    battle_queue1_get_pointer();
+    [V0 + 0] = b(w[temp + 0]);  // unit id
+    [V0 + 1] = b(w[temp + 1c]); // 1
+    [V0 + 2] = b(w[temp + 24]); // attack effect id
+    [V0 + 3] = b(w[temp + 28]); // action id
     [V0 + 4] = b(0);
-    [V0 + 5] = b(w[temp + 20]);
-    [V0 + 8] = b(w[temp + 60]);
+    [V0 + 5] = b(w[temp + 20]); // animation id
+    [V0 + 8] = b(w[temp + 60]); // camera movement single id
 
-    funca2fd0;
-
-    [V0 + 0] = b(w[temp + 0]);
-    [V0 + 1] = b(w[temp + 0]);
+    battle_queue2_get_pointer();
+    [V0 + 0] = b(w[temp + 0]); // unit id
+    [V0 + 1] = b(w[temp + 0]); // unit id
     [V0 + 2] = b(0);
     [V0 + 4] = h(0);
 
-    funca317c;
+    funca317c();
 }
 ////////////////////////////////
 
@@ -6171,6 +6136,7 @@ La85f4:	; 800A85F4
 
 ////////////////////////////////
 // action_type_15
+
 temp = w[80063014];
 V0 = w[temp + 0];
 if (V0 >= 3)
@@ -6620,7 +6586,8 @@ A0 = w[80063014];
 
 
 ////////////////////////////////
-// action_type_1E
+// action_type_1E()
+
 temp = w[80063014];
 V1 = w[temp + 0];
 A0 = bu[800f5efc + V1 * 18];
@@ -6633,6 +6600,7 @@ return;
 
 ////////////////////////////////
 // battle_copy_target_type_data_to_temp
+
 temp = w[80063014];
 if( w[temp + 50] == ff )
 {
@@ -7348,8 +7316,9 @@ CC930A80 e
             A0 = w[80063014];
             800A9784	j      La98a0 [$800a98a0]
             800A9788	lui    v1, $0008
-            800A978C	jal    funcb12dc [$800b12dc]
-            800A9790	nop
+
+            funcb12dc(); // is enemy on one side
+
             800A9794	beq    v0, zero, La9bf8 [$800a9bf8]
             V0 = 0;
             A0 = w[80063014];
@@ -8360,7 +8329,7 @@ temp = w[80063014];
 
 S0 = A0; // target mask
 
-funca2f4c();
+battle_queue1_get_pointer();
 S1 = V0;
 
 A0 = S0;
@@ -8763,9 +8732,7 @@ if (V0 != -1)
                                 [temp + b0] = w(V0);
                             800AB038	bne    v0, zero, loopaaf4c [$800aaf4c]
 
-
-
-                            funca317c;
+                            funca317c();
 
                             A0 = 5;
                             funca8e84();
@@ -9220,7 +9187,7 @@ A0 = A0 | V1;
 [V0 + 007c] = w(A0);
 
 Lab958:	; 800AB958
-800AB958	jal    funca2fd0 [$800a2fd0]
+battle_queue2_get_pointer();
 
 A0 = V0;
 [V0 + 0000] = b(S0);
@@ -9242,12 +9209,13 @@ A2 = hu[V1 + 0220];
 
 ////////////////////////////////
 // funcab9c4
+
 S0 = A0;
 S1 = A1;
 
 if( ( w[800f83e0 + S0 * 68 + 0] & 00000001 ) == 0 ) // status
 {
-    funca2f4c();
+    battle_queue1_get_pointer();
 
     [V0 + 0] = b(S0);
     [V0 + 1] = b(1);
@@ -9262,7 +9230,7 @@ if( ( w[800f83e0 + S0 * 68 + 0] & 00000001 ) == 0 ) // status
     A1 = S1;
     funcab830;
 
-    funca317c;
+    funca317c();
 }
 ////////////////////////////////
 
@@ -9295,7 +9263,7 @@ temp = w[80063014];
 
 S3 = A0; // attacker id
 S0 = A1; // target id
-funca2fd0;
+battle_queue2_get_pointer();
 S1 = V0;
 
 [S1 + 0] = b(S0);
@@ -13776,7 +13744,7 @@ S5 = A4;
 S6 = A5;
 S7 = A6;
 
-funca2f4c();
+battle_queue1_get_pointer();
 [V0 + 0] = b(S1);
 [V0 + 1] = b(1);
 [V0 + 2] = b(S4);
@@ -13786,7 +13754,7 @@ funca2f4c();
 [V0 + 6] = h(S5);
 [V0 + 8] = h(-1);
 
-funca2fd0();
+battle_queue2_get_pointer();
 [V0 + 0] = b(S1);
 [V0 + 1] = b(S1);
 [V0 + 2] = b(33);
@@ -13857,18 +13825,21 @@ loopb1284:	; 800B1284
 
 
 ////////////////////////////////
-// funcb12dc
-A0 = hu[800f7dc8];
-800B12E4	nop
-V0 = A0 < 0003;
-800B12EC	beq    v0, zero, Lb12fc [$800b12fc]
-V1 = 0;
-V0 = 0 NOR A0;
-V1 = V0 >> 1f;
+// funcb12dc()
 
-Lb12fc:	; 800B12FC
-800B12FC	jr     ra 
-V0 = V1;
+if( hu[800f7dc8] < 3 )
+{
+    // 00 - normal, 01 - preemptive, 02 - back
+    // 0 NOR 00 = 11111111
+    // 0 NOR 01 = 11111110
+    // 0 NOR 10 = 11111101
+    return (0 NOR hu[800f7dc8]) >> 1f;
+}
+else
+{
+    // 03 - side, 04 - both sides, 05 - normal
+    return 0;
+}
 ////////////////////////////////
 
 

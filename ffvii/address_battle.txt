@@ -116,8 +116,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f38ac [][][][] array of some data. Init in funca283c. Related with 800a0098 data.
 
-800f3944 [][][][] index of 80163798 element. Init with 0.
-800f3948 [][][][] index of 800fa9d0 element. Init with 0.
+800f3944 [][][][] index of queue1 (80163798) element. Init with 0.
+800f3948 [][][][] index of queue2 (800fa9d0) element. Init with 0.
 
 800f3950 [][][][] copy 800f3944 here at start of battle damage calculation.
 800f3954 [][][][] copy 800f3948 here at start of battle damage calculation.
@@ -733,14 +733,14 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800fa9c0 []       store target id here during executing hurt effect.
 
-800fa9d0 temp array where we store data for attack impact (animation related). Every time we tried to receive pointer via "funca2fd0" we move to next struct element. (size 0xc)
-+00 []       store target id here.
-+01 []       store attacker id here.
-+02 []       Set hurt animation script here from 1f8000224.
-+03 []       store -1 here during pointer reciving. Store here index of 800f9f3c additional array.
-+04 [][]     init with 0. Add some flags later.
-                0x0001 - add if we do damage.
-+08 [][][][] store current status of target.
+800fa9d0 queue2 for attack impact (animation related) (0x80 items 0xc size).
+    +00 []       store target id here.
+    +01 []       store attacker id here.
+    +02 []       Set hurt animation script here from 1f8000224.
+    +03 []       init with -1. Store here index of 800f9f3c additional array.
+    +04 [][]     init with 0. Add some flags later.
+                    0x0001 - add if we do damage.
+    +08 [][][][] store current status of target.
 
 800fafd0 [][][][] init with "0" string (0x10)
 
@@ -1113,36 +1113,49 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 
-80163798 array of some struct to where we store data. Probably action to perform. Every time we tried to receive pointer via "funca2f4c" we move to next struct element. There can be 0x40 actions at once (size 0xc)
+80163798 queue of queue1 data. Probably action to perform (0x40 items, 0xc size).
+    // init
+    +2 []       init with 0.
+    +3 []       init with 0.
+    +a [][]     init with index from 800f3948.
+    // 1 - play animation
+    +0 []       unit id.
+    +1 []       1.
+    +2 []       attack effect id.
+    +3 []       action id.
+    +4 []       0.
+    +5 []       animation id.
+    +8 []       camera movement single id.
+    +a [][]     init with index from queue2.
     // 2 - string to display
-    +00 []       id of unit that init action. (sometimes set to 0xa)
-    +01 []       2. Type string.
-    +02 []       0.
-    +03 []       0.
-    +05 []       argument of fucnction battle_add_string_to_display than add this. Sometimes set to 1.
-    +06 [][]     string index + 0x100.
-    +08 [][]     -1.
-    +0a [][]     -1.
+    +0 []       id of unit that init action. (sometimes set to 0xa)
+    +1 []       2. Type string.
+    +2 []       0.
+    +3 []       0.
+    +5 []       argument of fucnction battle_add_string_to_display than add this. Sometimes set to 1.
+    +6 [][]     string index + 0x100.
+    +8 [][]     -1.
+    +a [][]     -1.
     // 4 - ???
-    +00 []       init with unit id.
-    +01 []       set 4 here.
-    +02 []       0.
-    +03 []       0.
-    +04 []       0.
-    +05 []       model scale.
-    +06 [][]     0x10.
-    +08 [][]     -1.
-    +0a [][]     -1.
+    +0 []       init with unit id.
+    +1 []       set 4 here.
+    +2 []       0.
+    +3 []       0.
+    +4 []       0.
+    +5 []       model scale.
+    +6 [][]     0x10.
+    +8 [][]     -1.
+    +a [][]     -1.
     // 5 - ???
-    +00 []       init with 0xff. Set attacker id here.
-    +01 []       set 5 here. Set 1f80001c from temp attack here.
-    +02 []       store 0 here during pointer reciving. Set attack effect id here (1F800024).
-    +03 []       store 0 here during pointer reciving. Store 1f800028 (action id) here
-    +04 []       set 0 here.
-    +05 []       set 0 here. We store animation action id here.
-    +06 [][]     set 0 here. Set attack id here (1f800098).
-    +08 [][]     set 0xffff here. Set camera movement id here.
-    +0a [][]     current index in 800f3948. set 0xffff here.
+    +0 []       init with 0xff. Set attacker id here.
+    +1 []       set 5 here. Set 1f80001c from temp attack here.
+    +2 []       store 0 here during pointer reciving. Set attack effect id here (1F800024).
+    +3 []       store 0 here during pointer reciving. Store 1f800028 (action id) here
+    +4 []       set 0 here.
+    +5 []       set 0 here. We store animation action id here.
+    +6 [][]     set 0 here. Set attack id here (1f800098).
+    +8 [][]     set 0xffff here. Set camera movement id here.
+    +a [][]     current index in 800f3948. set 0xffff here.
 
 80163b38 []       init with 0.
 80163b3c []       store 0 here during battle init. This is index to battle camera data in battle setup
@@ -1213,7 +1226,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f80007c          stack. (pointer in w[800f4ac4] + 08)
 
 
-
+// battle temp for actions
 1f800000 attacker id.
 1f800004 attacker level
 1f800008 init with -1. Store enemy index here if this is enemy attack.
@@ -1221,7 +1234,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 1f800010 attack id or item id.
 1f800014 init with -1. Store attacker id here if specified attack was magic, summon or enemy skill and player has it. Action Animation Base.
 1f800018 target mask
-1f80001c init with 1. Active Allies???
+1f80001c action for queue 1. Init with 1. Active Allies???
 1f800020 animation script id to play.
 1F800024 copy D byte from attack data here or item id - 80. (Attack effect id)
 1f800028 action id.
