@@ -1,11 +1,12 @@
 ////////////////////////////////
-// funcbb538
+// funcbb538()
+
 unit_id = A0;
 model_data = A1;
 
 V1 = w[801590e8];
 V1 = bu[801590e8 + V1 - 4];
-if (V1 == 2)
+if( V1 == 2 )
 {
     if (A2 == 0)
     {
@@ -18,7 +19,7 @@ if (V1 == 2)
 
     A1 = 801518e4 + unit_id * b9c + 140;
 }
-else if (unit_id == 3)
+else if( unit_id == 3 )
 {
     A0 = 800fa63c; // camera matrix
     A1 = 80153cf8;
@@ -30,7 +31,6 @@ else
 }
 
 [A1 + 30] = w(A0);
-
 
 [801518e4 + 34 + unit_id * b9c + 170] = w(801518e4 + 140 + unit_id * b9c);
 

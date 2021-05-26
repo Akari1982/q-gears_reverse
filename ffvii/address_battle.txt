@@ -62,6 +62,8 @@
 800e7d98 array of battle field data.
 800e8050 array of enemy data files data.
 
+800e8c90
+
 800e8e84      array of default player position depends on type of battle (0x12 for each battle type, 0x6 for each player)
 C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 C0F9 0000 A406    0000 0000 A406    4006 0000 A406
@@ -465,6 +467,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7df4 []       store 0 here during battle init. Increment with each enemy unit, that will be at battle.
 800f7df8 [][][][] store here enemy id + 14 for each enemy that has formation record, -1 otherwise. (3 items)
 
+800f7dfc [][][][] id of enemy file to load.
+800f7e00 [][][][] id of enemy file to load.
 800f7e04 []       store here number of enemy unit in battle during battle init.
 
 800f7e08 formation copied data.

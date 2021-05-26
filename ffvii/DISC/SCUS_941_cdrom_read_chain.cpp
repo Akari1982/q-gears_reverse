@@ -289,46 +289,34 @@ L33f84:	; 80033F84
 
 
 ////////////////////////////////
-// func33fc4
-80033FC4	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0010] = w(S0);
+// func33fc4()
+
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
-[SP + 0018] = w(S2);
 S2 = A2;
-[SP + 001c] = w(S3);
 S3 = A3;
-[SP + 0020] = w(RA);
-A0 = S0;
 
-loop33ff0:	; 80033FF0
-A1 = S1;
-A2 = S2;
-80033FF8	jal    system_cdrom_start_load_lzs [$80033e74]
-A3 = S3;
-80034000	bne    v0, zero, loop33ff0 [$80033ff0]
-A0 = S0;
+do
+{
+    A0 = S0;
+    A1 = S1;
+    A2 = S2;
+    A3 = S3;
+    system_cdrom_start_load_lzs();
+}
+while( V0 != 0 )
 
-L34008:	; 80034008
-80034008	jal    system_cdrom_read_chain [$80034b44]
-8003400C	nop
-80034010	beq    v0, zero, L34028 [$80034028]
-V0 = 0;
-80034018	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 0;
-80034020	j      L34008 [$80034008]
-80034024	nop
+while( true )
+{
+    system_cdrom_read_chain();
+    if( V0 == 0 )
+    {
+        return 0;
+    }
 
-L34028:	; 80034028
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-80034040	jr     ra 
-80034044	nop
+    A0 = 0;
+    system_psyq_wait_frames();
+}
 ////////////////////////////////
 
 
