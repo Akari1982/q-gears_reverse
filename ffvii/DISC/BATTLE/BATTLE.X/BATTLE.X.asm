@@ -993,7 +993,7 @@
 // battle_load_enemy_texture
 800B5D38-800B5E60
 ////////////////////////////////
-// funcb5e64
+// battle_load_player_texture
 800B5E64-800B5FC0
 ////////////////////////////////
 // funcb5fc4

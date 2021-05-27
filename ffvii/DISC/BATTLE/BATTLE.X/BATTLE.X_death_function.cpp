@@ -2035,7 +2035,18 @@ for( int i = 0; i < 3; ++i )
     {
         [800fa9c4 + i * 4 + 0] = h(c8);
     }
-    else if( V1 == 1 )
+    else if( V1 == 0 ) // "Cloud"
+    {
+        if( hu[80163614] == 4e )
+        {
+            [800fa9c4 + i * 4 + 0] = h(10); // "HICLOUD.LZS"
+        }
+        else
+        {
+            [800fa9c4 + i * 4 + 0] = h(0); // "CLOUD.LZS"
+        }
+    }
+    else if( V1 == 1 ) // Barrett
     {
         A0 = i;
         system_get_party_player_structure_address_by_party_id();
@@ -2043,22 +2054,22 @@ for( int i = 0; i < 3; ++i )
         V1 = bu[V0 + 408 + 9] & f0;
         if( V1 == 10 )
         {
-            [800fa9c4 + i * 4 + 0] = h(b);
+            [800fa9c4 + i * 4 + 0] = h(b); // "BARRETT2.LZS"
         }
         if( V1 == 20 )
         {
-            [800fa9c4 + i * 4 + 0] = h(c);
+            [800fa9c4 + i * 4 + 0] = h(c); // "BARRETT3.LZS"
         }
         if( V1 == 30 )
         {
-            [800fa9c4 + i * 4 + 0] = h(d);
+            [800fa9c4 + i * 4 + 0] = h(d); // "BARRETT4.LZS"
         }
         else
         {
-            [800fa9c4 + i * 4 + 0] = h(1);
+            [800fa9c4 + i * 4 + 0] = h(1); // "BARRETT.LZS"
         }
     }
-    else if( V1 == 7 )
+    else if( V1 == 7 ) // Vincent
     {
         A0 = i;
         system_get_party_player_structure_address_by_party_id();
@@ -2066,50 +2077,40 @@ for( int i = 0; i < 3; ++i )
         V1 = bu[V0 + 408 + 9] & f0;
         if( V1 == 10 )
         {
-            [800fa9c4 + i * 4 + 0] = h(e);
+            [800fa9c4 + i * 4 + 0] = h(e); // "VINSENT2.LZS"
         }
         else if( V1 == 20 )
         {
-            [800fa9c4 + i * 4 + 0] = h(f);
+            [800fa9c4 + i * 4 + 0] = h(f); // "VINSENT3.LZS"
         }
         else
         {
-            [800fa9c4 + i * 4 + 0] = h(7);
+            [800fa9c4 + i * 4 + 0] = h(7); // "VINSENT.LZS"
         }
     }
     else
     {
-        if( ( hu[80163614] != 4e ) || ( b[801636b8 + i * 10 + 0] != 0 ) )
-        {
-            [800fa9c4 + i * 4 + 0] = h(b[801636b8 + i * 10 + 0]);
-        }
-        else
-        {
-            [800fa9c4 + i * 4 + 0] = h(10);
-        }
+        [800fa9c4 + i * 4 + 0] = h(b[801636b8 + i * 10 + 0]);
     }
 
     [800fa9c6 + i * 4 + 0] = h(i);
 }
 
+// sort
 for( int i = 0; i < 2; ++i )
 {
     for( int j = 0; j < 2; ++j )
     {
-        A3 = j * 4;
-        A2 = (j + 1) * 4;
-        V0 = h[800fa9c4 + A2 + 0];
-        A1 = h[800fa9c4 + A3 + 0];
-        V1 = V0;
-
-        if( V0 < A1 )
+        next = h[800fa9c4 + (j + 1) * 4 + 0];
+        prev = h[800fa9c4 + j * 4 + 0];
+        if( next < prev )
         {
-            [800fa9c4 + A3 + 0000] = h(V1);
-            V0 = hu[800fa9c6 + A2 + 0000];
-            [800fa9c4 + A2 + 0000] = h(A1);
-            V1 = h[800fa9c6 + A3 + 0000];
-            [800fa9c6 + A3 + 0000] = h(V0);
-            [800fa9c6 + A2 + 0000] = h(V1);
+            [800fa9c4 + j * 4 + 0] = h(next);
+            [800fa9c4 + (j + 1) * 4 + 0] = h(prev);
+            next = hu[800fa9c6 + (j + 1) * 4 + 0];
+            prev = hu[800fa9c6 + j * 4 + 0];
+            [800fa9c6 + j * 4 + 0] = h(next);
+            [800fa9c6 + (j + 1) * 4 + 0] = h(prev);
         }
     }
 }

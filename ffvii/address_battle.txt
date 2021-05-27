@@ -855,6 +855,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 +010 [][]     number of bones in model.
 +012 [][]     collision radius. Init from +04 from animation description block. Used when calculated how much move to target to hit it.
 +014 [][]     alpha for additional color.
++016 [][]     clut offset.
 +018 [][]     default rotation.
 +022 []       effect id from attack that we use. Init with 0.
 +023 []       store here action id we performing. (0x20 - enemy attack, 0x2 - magic)
