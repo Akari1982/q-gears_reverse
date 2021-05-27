@@ -2576,6 +2576,7 @@ battle_copy_action_to_battle_queue();
 
 ////////////////////////////////
 // funca3ed0
+
 V0 = w[800f39e8];
 V1 = hu[80062d78];
 A2 = w[80062f14];
@@ -15573,9 +15574,9 @@ SP = SP + 0020;
 [800f8368] = w(0);
 [80162084] = h(0200);
 
-funcb383c(); // we load camera and battle field here.
+funcb383c(); // we load camera and stage here.
 
-funcb430c(); // we read first block of battle field here and set scrolling.
+funcb430c(); // we read first block of stage and set stage scrolling.
 
 A0 = 0;
 system_psyq_wait_frames(); // wait
@@ -15596,9 +15597,9 @@ battle_queue1_camera_init();
 A0 = 800c4d10; // funcc4d10() battle fade in effect
 funcbc04c(); // add effect callback
 
-funcb7fdc();
+battle_update_render();
 
-funcb7fdc();
+battle_update_render();
 
 while( hu[80095dd4] != 0 )
 {
@@ -15606,7 +15607,7 @@ while( hu[80095dd4] != 0 )
 
 S1 = 3;
 
-800B31A4	jal    funcb37ec [$800b37ec]
+funcb37ec();
 
 A0 = 1;
 system_psyq_set_disp_mask();
@@ -15616,13 +15617,13 @@ S0 = 80151922;
 Lb31bc:	; 800B31BC
 switch( bu[80163c7c] )
 {
-    case 0:
+    case 0: // load enemies files
     {
         [801635fc] = b(3d);
 
-        funcb38e0();
+        battle_load_first_enemy();
 
-        funcb7fdc();
+        battle_update_render();
 
         [80163c7c] = b(1);
 
@@ -15632,13 +15633,13 @@ switch( bu[80163c7c] )
 
     case 1:
     {
-        funcb7fdc();
+        battle_update_render();
 
-        if( bu[800f7df4] == bu[80166f64] )
+        if( bu[800f7df4] == bu[80166f64] ) // all files loaded
         {
             if( bu[801518dc] == 0 )
             {
-                funcb3d38(); // set file to load
+                battle_load_seffects();
 
                 funcb5138; // we parse enemy model and script data here. Init some values.
 
@@ -15651,7 +15652,7 @@ switch( bu[80163c7c] )
 
     case 6:
     {
-        800B327C	jal    funcb7fdc [$800b7fdc]
+        battle_update_render();
 
         800B3284	jal    funcb3d88 [$800b3d88]
 
@@ -15685,9 +15686,9 @@ switch( bu[80163c7c] )
 
     case 2:
     {
-        funcb7fdc(); // we load models here
+        battle_update_render();
 
-        if( bu[80166f64] == 3 )
+        if( bu[80166f64] == 3 ) // 3 files loaded
         {
             if( bu[801518dc] == 0 )
             {
@@ -15707,7 +15708,7 @@ switch( bu[80163c7c] )
 
     case 3:
     {
-        funcb7fdc();
+        battle_update_render();
 
         if( bu[801635fc] == 0 )
         {
@@ -15780,7 +15781,7 @@ if( V0 != 0 )
             }
         }
 
-        funcb7fdc();
+        battle_update_render();
 
         V0 = w[SP + 10];
     800B3504	bne    v0, zero, loopb3474 [$800b3474]
@@ -15817,16 +15818,17 @@ Lb353c:	; 800B353C
 
     Lb3580:	; 800B3580
     [801635fc] = b(V0);
-    funcb38e0();
 
-    800B3590	jal    funcb7fdc [$800b7fdc]
+    battle_load_first_enemy();
+
+    800B3590	jal    battle_update_render [$800b7fdc]
     800B3594	nop
     [80163c7c] = b(S3);
     800B35A0	j      Lb353c [$800b353c]
     800B35A4	nop
 
     Lb35a8:	; 800B35A8
-    800B35A8	jal    funcb7fdc [$800b7fdc]
+    800B35A8	jal    battle_update_render [$800b7fdc]
     800B35AC	nop
     V1 = bu[800f7df4];
     V0 = bu[80166f64];
@@ -15844,7 +15846,7 @@ Lb353c:	; 800B353C
     800B35F4	nop
 
     Lb35f8:	; 800B35F8
-    800B35F8	jal    funcb7fdc [$800b7fdc]
+    800B35F8	jal    battle_update_render [$800b7fdc]
 
     800B3600	jal    funcb3d88 [$800b3d88]
 
@@ -15857,7 +15859,7 @@ Lb353c:	; 800B353C
     800B3660	j      Lb353c [$800b353c]
 
     Lb3668:	; 800B3668
-    800B3668	jal    funcb7fdc [$800b7fdc]
+    800B3668	jal    battle_update_render [$800b7fdc]
 
     if( bu[801635fc] == 0 )
     {
@@ -15914,25 +15916,21 @@ funcd91dc(); // set initial disp env and prepare additional
 
 
 ////////////////////////////////
-// funcb37ec
-800B37EC	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 0004;
-[SP + 0010] = w(RA);
-[80162094] = b(V0);
+// funcb37ec()
+
+[80162094] = b(4);
+
+A0 = 4;
 800B3800	jal    funcd8a78 [$800d8a78]
-A0 = 0004;
+
 800B3808	jal    funce15d8 [$800e15d8]
-800B380C	nop
-800B3810	addiu  a0, zero, $ffff (=-$1)
-800B3814	addiu  a1, zero, $ffff (=-$1)
-800B3818	jal    funcd9e0c [$800d9e0c]
+
+A0 = -1;
+A1 = -1;
 A2 = 0;
-V0 = 0002;
-[80095dd4] = h(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B3834	jr     ra 
-800B3838	nop
+800B3818	jal    funcd9e0c [$800d9e0c]
+
+[80095dd4] = h(2);
 ////////////////////////////////
 
 
@@ -15950,7 +15948,7 @@ A2 = 801a0000;
 A3 = 0;
 load_lzs();
 
-// load battle field
+// load stage
 V0 = hu[8016360c + 8]; // battle field id
 A0 = w[800e7d98 + V0 * 8 + 0];
 A1 = w[800e7d98 + V0 * 8 + 4];
@@ -15958,7 +15956,7 @@ A2 = 801b0000;
 A3 = 0;
 load_lzs();
 
-funcbb4f8(); // set texture to load queue
+funcbb4f8(); // set texture from stage to load queue
 
 // copy battle field
 A0 = 801590e4; // dst
@@ -15973,13 +15971,13 @@ system_psyq_draw_sync();
 
 
 ////////////////////////////////
-// funcb38e0()
+// battle_load_first_enemy()
 
-V0 = w[800f7df8];
-A0 = w[800e8050 + V0 * 8 + 0];
-A1 = w[800e8050 + V0 * 8 + 4];
+V0 = w[800f7df8 + 0];
+A0 = w[800e8050 + V0 * 8 + 0]; // 604a
+A1 = w[800e8050 + V0 * 8 + 4]; // 330
 A2 = 801b0000;
-A3 = 800b3a04; // funcb3a04()
+A3 = 800b3a04; // battle_load_second_enemy()
 system_cdrom_start_load_lzs();
 
 funcb7fb4();
@@ -15988,38 +15986,39 @@ funcb7fb4();
 
 
 ////////////////////////////////
-// funcb3934
-A0 = 2;
-funcb5d38;
+// battle_load_enemy_finish()
 
 A0 = 2;
-funcb5cd4;
+battle_load_enemy_texture();
 
-[80166f64] = b(3);
+A0 = 2;
+battle_load_enemy_model();
+
+[80166f64] = b(3); // loaded enemy file
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb3968()
+// battle_load_third_enemy()
 
 A0 = 1;
-funcb5d38();
+battle_load_enemy_texture();
 
 A0 = 1;
-funcb5cd4();
+battle_load_enemy_model();
 
-[80166f64] = b(2);
+[80166f64] = b(2); // loaded enemy file
 
 [800f8398] = w(w[800f8394] + V0);
 
 if( bu[800f7df4] >= 3 ) // number of inited enemy
 {
-    V0 = w[800f7e00];
+    V0 = w[800f7df8 + 8];
     A0 = w[800e8050 + V0 * 8 + 0];
     A1 = w[800e8050 + V0 * 8 + 4];
     A2 = 801b0000;
-    A3 = 800b3934;
+    A3 = 800b3934; // battle_load_enemy_finish()
     system_cdrom_start_load_lzs();
 
     funcb7fb4();
@@ -16029,27 +16028,27 @@ if( bu[800f7df4] >= 3 ) // number of inited enemy
 
 
 ////////////////////////////////
-// funcb3a04()
+// battle_load_second_enemy()
 
 [800f8390] = w(80130200);
 
 A0 = 0;
-funcb5d38();
+battle_load_enemy_texture();
 
 A0 = 0;
-funcb5cd4();
+battle_load_enemy_model();
 
-[80166f64] = b(1);
+[80166f64] = b(1); // loaded enemy file
 
 [800f8394] = w(w[800f8390] + V0);
 
 if( bu[800f7df4] >= 2 ) // number of inited enemy
 {
-    V0 = w[800f7dfc];
+    V0 = w[800f7df8 + 4];
     A0 = w[800e8050 + V0 * 8 + 0];
     A1 = w[800e8050 + V0 * 8 + 4];
     A2 = 801b0000;
-    A3 = 800b3968;
+    A3 = 800b3968; // battle_load_third_enemy()
     system_cdrom_start_load_lzs();
 
     funcb7fb4();
@@ -16059,64 +16058,47 @@ if( bu[800f7df4] >= 2 ) // number of inited enemy
 
 
 ////////////////////////////////
-// funcb3ab8()
+// battle_load_second_player()
 
-S0 = 800fa9c6;
-V1 = h[S0 + 0000];
-A0 = V1 << 02;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << 0c;
-V1 = 80103200;
-V0 = V0 + V1;
-AT = 800f8384;
-AT = AT + A0;
-[AT + 0000] = w(V0);
-A0 = h[S0 + 0000];
+V1 = h[800fa9c6];
+[800f8384 + V1 * 4 + 0] = w(80103200 + V1 * f000);
+
+A0 = h[800fa9c6];
 funcb5e64();
 
-A0 = h[S0 + 0000];
-800B3B10	jal    funcb5c1c [$800b5c1c]
+A0 = h[800fa9c6];
+funcb5c1c();
 
 A1 = h[800fa9c8];
-V0 = 00c8;
-800B3B24	beq    a1, v0, Lb3b64 [$800b3b64]
+if( A1 != c8 )
+{
+    A0 = w[800e8068 + A1 * 8 + 0];
+    A1 = w[800e8068 + A1 * 8 + 4];
+    A2 = 801b0000;
+    A3 = 800b3b84; // battle_load_third_player()
+    system_cdrom_start_load_lzs();
 
-A0 = w[800e8068 + A1 * 8 + 0];
-A1 = w[800e8068 + A1 * 8 + 4];
-A2 = 801b0000;
-A3 = 800b3b84; // funcb3b84()
-system_cdrom_start_load_lzs();
-
-800B3B54	jal    funcb7fb4 [$800b7fb4]
-800B3B58	nop
-800B3B5C	j      Lb3b70 [$800b3b70]
-800B3B60	nop
-
-Lb3b64:	; 800B3B64
-[80166f64] = b(3);
-
-Lb3b70:	; 800B3B70
+    funcb7fb4();
+}
+else
+{
+    [80166f64] = b(3); // loaded enemy file
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb3b84()
+// battle_load_third_player()
 
-S0 = 800fa9ca;
-V1 = h[S0 + 0000];
-A0 = V1 << 02;
-V0 = V1 << 04;
-V0 = V0 - V1;
-V0 = V0 << c;
-V0 = 80103200 + V0;
-[800f8384 + A0 + 0] = w(V0);
-A0 = h[S0 + 0000];
+V1 = h[800fa9ca];
+[800f8384 + V1 * 4 + 0] = w(80103200 + V1 * f000);
+
+A0 = h[800fa9ca];
 funcb5e64();
 
-A0 = h[S0 + 0000];
-800B3BDC	jal    funcb5c1c [$800b5c1c]
+A0 = h[800fa9ca];
+funcb5c1c();
 
 A1 = h[800fa9cc];
 if( A1 != c8 )
@@ -16124,21 +16106,21 @@ if( A1 != c8 )
     A0 = w[800e8068 + A1 * 8 + 0];
     A1 = w[800e8068 + A1 * 8 + 4];
     A2 = 801b0000;
-    A3 = 800b3c50; // funcb3c50()
+    A3 = 800b3c50; // battle_load_player_finish()
     system_cdrom_start_load_lzs();
 
-    800B3C20	jal    funcb7fb4 [$800b7fb4]
+    funcb7fb4();
 }
 else
 {
-    [80166f64] = b(3);
+    [80166f64] = b(3); // loaded enemy file
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb3c50()
+// battle_load_player_finish()
 
 V1 = h[800fa9ce];
 [800f8384 + V1 * 4 + 0] = w(80103200 + V1 * f000);
@@ -16147,45 +16129,27 @@ A0 = h[800fa9ce];
 funcb5e64();
 
 A0 = h[800fa9ce];
-800B3CA8	jal    funcb5c1c [$800b5c1c]
+funcb5c1c();
 
-[80166f64] = b(3);
+[80166f64] = b(3); // loaded enemy file
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb3cd0
+// battle_load_first_player()
 
 A0 = 801b0000;
 A1 = 0;
 A2 = 0;
 A3 = 0;
-800B3CE4	jal    funcd2980 [$800d2980]
+battle_set_load_tim_to_vram();
 
 V0 = h[800fa9c4];
-A0 = w[800e8068 + V0 * 8 + 0];
+A0 = w[800e8068 + V0 * 8 + 0]; // player models
 A1 = w[800e8068 + V0 * 8 + 4];
 A2 = 801b0000;
-A3 = 800b3ab8; // funcb3ab8()
-system_cdrom_start_load_lzs();
-
-800B3D20	jal    funcb7fb4 [$800b7fb4]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcb3d38()
-
-funcc5e94();
-
-[800f839c] = w(800ea50c);
-
-A0 = 755e;
-A1 = a800;
-A2 = 801b0000;
-A3 = 800b3cd0; // funcb3cd0()
+A3 = 800b3ab8; // battle_load_second_player()
 system_cdrom_start_load_lzs();
 
 funcb7fb4();
@@ -16194,52 +16158,67 @@ funcb7fb4();
 
 
 ////////////////////////////////
-// funcb3d88
-800B3D88	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+// battle_load_seffects()
+
+funcc5e94();
+
+[800f839c] = w(800ea50c);
+
+A0 = 755e; // "SEFFECT.LZS"
+A1 = a800;
+A2 = 801b0000;
+A3 = 800b3cd0; // battle_load_first_player()
+system_cdrom_start_load_lzs();
+
+funcb7fb4();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcb3d88()
+
 800B3D90	jal    funcb588c [$800b588c]
-800B3D94	nop
-A0 = 0004;
+
+A0 = 4;
+A1 = a;
 800B3D9C	jal    funcb6b98 [$800b6b98]
-A1 = 000a;
+
 800B3DA4	jal    funcb36b4 [$800b36b4]
-800B3DA8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B3DB4	jr     ra 
-800B3DB8	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb3dbc
-800B3DBC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 800B3DC4	jal    funcb4794 [$800b4794]
-800B3DC8	nop
+
 A0 = 0;
+A1 = 3;
 800B3DD0	jal    funcb6b98 [$800b6b98]
-A1 = 0003;
-A0 = 0003;
+
+A0 = 3;
+A1 = 3;
 800B3DDC	jal    funcb6b98 [$800b6b98]
-A1 = 0003;
+
 V1 = hu[80163614];
 V0 = 0039;
-800B3DF0	bne    v1, v0, Lb3e1c [$800b3e1c]
 A0 = 0;
+800B3DF0	bne    v1, v0, Lb3e1c [$800b3e1c]
+
 V1 = 80151909;
 
 loopb3e00:	; 800B3E00
-V0 = bu[V1 + 0000];
-A0 = A0 + 0001;
-V0 = V0 | 0010;
-[V1 + 0000] = b(V0);
-V0 = A0 < 000a;
+    V0 = bu[V1 + 0000];
+    A0 = A0 + 0001;
+    V0 = V0 | 0010;
+    [V1 + 0000] = b(V0);
+    V1 = V1 + 0b9c;
+    V0 = A0 < 000a;
 800B3E14	bne    v0, zero, loopb3e00 [$800b3e00]
-V1 = V1 + 0b9c;
 
 Lb3e1c:	; 800B3E1C
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B3E24	jr     ra 
-800B3E28	nop
 ////////////////////////////////
 
 
@@ -16330,9 +16309,9 @@ for( int i = 0; i < 3; ++i )
     funcb3fac(); // check if enemy exist in formation
     if( V0 != -1 )
     {
-        V0 = h[8016360c + i * 2] + 14;
+        V0 = h[8016360c + i * 2] + 14; // add 14 to skip player files
     }
-    [800f7df8 + i * 4] = w(V0);
+    [800f7df8 + i * 4] = w(V0); // enemy file to load
 }
 
 [800f7e04] = b(0);
@@ -17382,62 +17361,47 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funcb5cd4
-// copy battle field
+// battle_load_enemy_model()
 
-A0 = w[800f8390 + A0 * 4]; // 80130200 address where we copy model data
-A1 = 8001b0000; // from where
-A2 = w[S0 + w[S0] * 4]; // how much
+A0 = w[800f8390 + A0 * 4]; // dst
+A1 = 8001b0000; // stc
+A2 = w[S0 + w[S0] * 4]; // size
 func1c3cc;
 
-return w[S0 + w[S0] * 4];
+return w[S0 + w[S0] * 4]; // size
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcb5d38
-S1 = A0;
+// battle_load_enemy_texture()
 
-V1 = hu[80163614];
-if (V1 == 4e) // if final battle with sephiroth field
+enemy_num = A0;
+
+if( hu[80163614] == 4e ) // if final battle with sephiroth field
 {
-    A1 = S1 + 13;
+    A1 = enemy_num + 13;
     A2 = 0;
     A3 = 0;
 }
 else
 {
-    A1 = S1 + 12;
+    A1 = enemy_num + 12;
     A2 = 0;
-    A3 = (S1 + 3) * 3;
+    A3 = (enemy_num + 3) * 3;
 }
 
-// load texture
-A0 = 801b0000 + w[801b0000 + w[801b0000] * 4]; // offset to last block in battle model file
-funcd2980;
+A0 = 801b0000 + w[801b0000 + w[801b0000] * 4]; // offset to last block in battle model file (texture)
+battle_set_load_tim_to_vram();
 
-
-
-S3 = S1 + 3;
-S0 = 4;
-
-if (bu[800f7e04] + 4 >= S0)
+for( int i = 4; i <= bu[800f7e04] + 4; ++i ) // go through all enemy inits
 {
-    S1 = 0;
-
-    loopb5dec:	; 800B5DEC
-        if (h[800f7e08 + S1] == S3) // enemy id
-        {
-            A0 = 801b0000 + w[801b0000 + w[801b0000] * 4]; // offset to last block in battle model file
-            A1 = S0;
-            funcc614c;
-        }
-
-        S1 = S1 + c;
-        S0 = S0 + 1;
-        V0 = bu[800f7e04] + 4 >= S0;
-    800B5E3C	bne    v0, zero, loopb5dec [$800b5dec]
+    if( h[800f7e08 + i * c + 0] == ( enemy_num + 3 ) ) // if this is enemy from file we loaded
+    {
+        A0 = 801b0000 + w[801b0000 + w[801b0000] * 4];
+        A1 = i;
+        battle_store_unit_clut();
+    }
 }
 ////////////////////////////////
 
@@ -17504,17 +17468,19 @@ V0 = V0 << 02;
 AT = V0 + AT;
 A0 = w[AT + ffc0];
 A3 = A3 >> 10;
-800B5F38	jal    funcd2980 [$800d2980]
 A0 = A0 + S1;
+battle_set_load_tim_to_vram();
+
 V0 = w[S1 + 0000];
 800B5F44	nop
 V0 = V0 << 02;
 800B5F4C	lui    at, $801b
 AT = V0 + AT;
 A0 = w[AT + ffc0];
-A1 = S3;
-800B5F5C	jal    funcc614c [$800c614c]
 A0 = A0 + S1;
+A1 = S3;
+battle_store_unit_clut();
+
 V0 = S0 << 05;
 V0 = V0 - S0;
 V0 = V0 << 03;
@@ -18278,10 +18244,11 @@ while( b[80163798 + A0 * c + 0] != -1 )
     {
         case 0:
         {
-            A0 = 800c494c;
-            funcbc04c();
+            A0 = 800c494c; // funcc494c()
+            funcbc04c(); // add effect callback
 
-            funcb7fdc();
+            battle_update_render();
+
             [801590e0] = b(bu[801590e0] + 1);
         }
         break;
@@ -18349,7 +18316,7 @@ while( b[80163798 + A0 * c + 0] != -1 )
 
             [801517bc] = b(0);
 
-            funcb7fdc();
+            battle_update_render();
 
             if( bu[800f7de4] != 0 )
             {
@@ -18367,7 +18334,8 @@ while( b[80163798 + A0 * c + 0] != -1 )
             A3 = bu[80163798 + q1_id * c + 2]; // 0
             funcc5c18();
 
-            funcb7fdc();
+            battle_update_render();
+
             [801590e0] = b(bu[801590e0] + 1);
         }
         break;
@@ -18409,7 +18377,7 @@ while( b[80163798 + A0 * c + 0] != -1 )
                 battle_queue1_update_target_masks();
             }
 
-            funcb7fdc();
+            battle_update_render();
 
             if( bu[800f7de4] != 0 )
             {
@@ -18452,7 +18420,7 @@ while( b[80163798 + A0 * c + 0] != -1 )
                 [80163798 + index * c + 8] = h(-1);
             }
 
-            funcb7fdc();
+            battle_update_render();
 
             if( bu[800f7de4] != 0 )
             {
@@ -18476,7 +18444,8 @@ while( b[80163798 + A0 * c + 0] != -1 )
                 [801518e4 + unit_id * b9c + 162] = h(hu[801518e4 + unit_id * b9c + 18]); // store rotation
             }
 
-            funcb7fdc();
+            battle_update_render();
+
             [801590e0] = b(bu[801590e0] + 1);
         }
         break;
@@ -18487,7 +18456,7 @@ while( b[80163798 + A0 * c + 0] != -1 )
 
 [801590e0] = b(0);
 
-funcb7fdc();
+battle_update_render();
 ////////////////////////////////
 
 
@@ -18635,21 +18604,12 @@ for( int i = 0; i < bu[800f9774]; ++i )
 
 
 ////////////////////////////////
-// funcb7f6c
+// funcb7f6c()
 
-V0 = bu[80062d99];
-
-800B7F78	beq    v0, zero, Lb7f9c [$800b7f9c]
-
-loopb7f80:	; 800B7F80
-800B7F80	jal    funcb7fb4 [$800b7fb4]
-800B7F84	nop
-V0 = bu[80062d99];
-800B7F90	nop
-800B7F94	bne    v0, zero, loopb7f80 [$800b7f80]
-800B7F98	nop
-
-Lb7f9c:	; 800B7F9C
+while( bu[80062d99] != 0 )
+{
+    funcb7fb4();
+}
 [80062d98] = b(0);
 ////////////////////////////////
 
@@ -18665,7 +18625,7 @@ system_cdrom_read_chain();
 
 
 ////////////////////////////////
-// funcb7fdc()
+// battle_update_render()
 
 funcb7fb4();
 
@@ -18711,91 +18671,71 @@ funcc5cc0(); // add next show string element 800f9da8
 
 funcb8438(); // we load field model to packets here
 
-A0 = 0;
-A2 = 0001;
-V1 = 0;
-A1 = h[80162080];
+for( int i = 0; i < a; ++i )
+{
+    if( bu[8015190a + i * b9c] == 0 )
+    {
+        [800f7de4] = b(0);
+        break;
+    }
 
-loopb80cc:	; 800B80CC
-    V0 = bu[8015190a + V1];
-    800B80E0	bne    v0, zero, Lb80f8 [$800b80f8]
+    if( h[80162080] == 0 )
+    {
+        [800f7de4] = b(1);
+    }
+    else
+    {
+        [800f7de4] = b(0);
+    }
+}
 
-    [800f7de4] = b(0);
-    800B80F0	j      Lb8128 [$800b8128]
-    800B80F4	nop
-
-    Lb80f8:	; 800B80F8
-    800B80F8	bne    a1, zero, Lb8110 [$800b8110]
-    800B80FC	nop
-    [800f7de4] = b(A2);
-    800B8108	j      Lb811c [$800b811c]
-    A0 = A0 + 0001;
-
-    Lb8110:	; 800B8110
-    [800f7de4] = b(0);
-    A0 = A0 + 0001;
-
-    Lb811c:	; 800B811C
-    V1 = V1 + 0b9c;
-    V0 = A0 < 000a;
-800B8120	bne    v0, zero, loopb80cc [$800b80cc]
-
-Lb8128:	; 800B8128
 800B8128	jal    funca3ed0 [$800a3ed0]
 
 A0 = 2;
 funcb8360();
 
-A0 = w[801517c0];
+A0 = w[801517c0] + 40e4;
 800B8140	jal    funcdcfd4 [$800dcfd4]
-A0 = A0 + 40e4;
-V0 = bu[800f9d94];
-800B8150	nop
-800B8154	bne    v0, zero, Lb8170 [$800b8170]
-800B8158	nop
-800B815C	jal    system_psyq_reset_graph [$80043938]
-A0 = 0001;
-V0 = 0001;
-[800f9d94] = b(V0);
 
-Lb8170:	; 800B8170
-V0 = hu[8016376a];
-800B8178	nop
-V0 = V0 & 0002;
-800B8180	beq    v0, zero, Lb81a8 [$800b81a8]
-A1 = 0010;
-V0 = 8009d268;
-A2 = 0010;
-A0 = w[801517c0];
-A3 = w[V0 + 0000];
-800B81A0	jal    funce16b8 [$800e16b8]
-A0 = A0 + 40e4;
+if( bu[800f9d94] == 0 )
+{
+    A0 = 1;
+    system_psyq_reset_graph();
 
-Lb81a8:	; 800B81A8
-800B81A8	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 0001;
+    [800f9d94] = b(1);
+}
+
+if( hu[8016376a] & 0002 )
+{
+    A0 = w[801517c0] + 40e4;
+    A1 = 10;
+    A2 = 10;
+    A3 = w[8009d268];
+    funce16b8(); // add render packets to queue
+}
+
+A0 = 1;
+system_psyq_wait_frames();
 [800fa9b8] = w(V0);
-800B81B8	jal    funcd25e8 [$800d25e8]
 
-funcb7fb4();
+funcd25e8(); // perform images operations (load store move clear)
 
-800B81C8	jal    funcd8a88 [$800d8a88]
-800B81CC	nop
-A0 = h[80162084];
+funcb7fb4(); // cdrom sync
+
+funcd8a88(); // switch buffers
+
 [80158d08] = w(V0);
-800B81E0	jal    system_gte_set_proj_plane_dist [$8003b6dc]
-800B81E4	nop
-V0 = bu[801516f4];
-800B81F0	nop
-V0 = V0 + 0001;
-[801516f4] = b(V0);
-800B8200	jal    funcb7f6c [$800b7f6c]
-800B8204	nop
-800B8208	jal    funcb950c [$800b950c]
-800B820C	nop
-V0 = hu[800f198c];
-800B8218	nop
-[801516a0] = h(V0);
+
+A0 = h[80162084];
+system_gte_set_proj_plane_dist();
+
+[801516f4] = b(bu[801516f4] + 1);
+
+funcb7f6c(); // some cdrom sync
+
+funcb950c();
+
+[801516a0] = h(hu[800f198c]);
 ////////////////////////////////
 
 
@@ -19847,26 +19787,15 @@ SP = SP + 0040;
 800B9504	jr     ra 
 800B9508	nop
 ////////////////////////////////
-// funcb950c
-A0 = 0;
 
-loopb9510:	; 800B9510
-AT = 80151700;
-AT = AT + A0;
-V0 = hu[AT + 0000];
-AT = 80151702;
-AT = AT + A0;
-V1 = hu[AT + 0000];
-AT = 801516fc;
-AT = AT + A0;
-[AT + 0000] = h(V0);
-AT = 801516fe;
-AT = AT + A0;
-[AT + 0000] = h(V1);
-A0 = A0 + 0008;
-V0 = A0 < 0050;
-800B9558	bne    v0, zero, loopb9510 [$800b9510]
-800B955C	nop
-800B9560	jr     ra 
-800B9564	nop
+
+
+////////////////////////////////
+// funcb950c()
+
+for( int i = 0; i < 50; i += 8 )
+{
+    [801516fc + i + 0000] = h(hu[80151700 + i + 0000]);
+    [801516fe + i + 0000] = h(hu[80151702 + i + 0000]);
+}
 ////////////////////////////////

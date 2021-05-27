@@ -8120,7 +8120,7 @@ S0 = A1;
 S1 = A2;
 [SP + 0030] = w(S2);
 [SP + 0038] = w(RA);
-80025D38	jal    func46cfc [$80046cfc]
+80025D38	jal    system_read_tim_set_address [$80046cfc]
 S2 = A3;
 
 loop25d40:	; 80025D40

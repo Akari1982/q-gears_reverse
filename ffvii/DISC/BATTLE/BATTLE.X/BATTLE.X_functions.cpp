@@ -1775,5 +1775,5 @@ A0 = 801b0000 + w[801b0000 + V0 * 4]; // offset to texture part (last file)
 A1 = 0;
 A2 = 0; // x add to clut
 A3 = 0; // y add to clut
-funcd2980();
+battle_set_load_tim_to_vram();
 ////////////////////////////////

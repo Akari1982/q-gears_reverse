@@ -915,31 +915,31 @@
 // funcb383c
 800B383C-800B38DC
 ////////////////////////////////
-// funcb38e0
+// battle_load_first_enemy
 800B38E0-800B3930
 ////////////////////////////////
-// funcb3934
+// battle_load_enemy_finish
 800B3934-800B3964
 ////////////////////////////////
-// funcb3968
+// battle_load_third_enemy
 800B3968-800B3A00
 ////////////////////////////////
-// funcb3a04
+// battle_load_second_enemy
 800B3A04-800B3AB4
 ////////////////////////////////
-// funcb3ab8
+// battle_load_second_player
 800B3AB8-800B3B80
 ////////////////////////////////
-// funcb3b84
+// battle_load_third_player
 800B3B84-800B3C4C
 ////////////////////////////////
-// funcb3c50
+// battle_load_player_finish
 800B3C50-800B3CCC
 ////////////////////////////////
-// funcb3cd0
+// battle_load_first_player
 800B3CD0-800B3D34
 ////////////////////////////////
-// funcb3d38
+// battle_load_seffects
 800B3D38-800B3D84
 ////////////////////////////////
 // funcb3d88
@@ -987,10 +987,10 @@
 // funcb5c1c
 800B5C1C-800B5CD0
 ////////////////////////////////
-// funcb5cd4
+// battle_load_enemy_model
 800B5CD4-800B5D34
 ////////////////////////////////
-// funcb5d38
+// battle_load_enemy_texture
 800B5D38-800B5E60
 ////////////////////////////////
 // funcb5e64
@@ -1035,7 +1035,7 @@
 // funcb7fb4
 800B7FB4-800B7FD8
 ////////////////////////////////
-// funcb7fdc
+// battle_update_render
 800B7FDC-800B8230
 ////////////////////////////////
 // funcb8234
@@ -1473,7 +1473,7 @@
 // funcc610c
 800C610C-800C6148
 ////////////////////////////////
-// funcc614c
+// battle_store_unit_clut
 800C614C-800C61BC
 ////////////////////////////////
 // funcc61c0
@@ -1518,7 +1518,7 @@
 
 
 
-// BATTLE.X_model_animation.cpp
+// BATTLE.X_model.cpp
 ////////////////////////////////
 // funcc76c8
 800C76C8-800C7920
@@ -1670,21 +1670,16 @@
 // funcd1530
 800D1530-800D2534
 ////////////////////////////////
-
-
-
-// BATTLE.X_units_functions.cpp
-////////////////////////////////
-// funcd2538
+// battle_set_load_to_vram
 800D2538-800D2560
 ////////////////////////////////
-// funcd2564
+// battle_set_store_from_vram
 800D2564-800D258C
 ////////////////////////////////
-// funcd2590
+// battle_set_move_in_vram
 800D2590-800D25BC
 ////////////////////////////////
-// funcd25c0
+// battle_set_clear_vram
 800D25C0-800D25E4
 ////////////////////////////////
 // funcd25e8
@@ -1693,14 +1688,19 @@
 // funcd26f8
 800D26F8-800D270C
 ////////////////////////////////
-// funcd2710
+// battle_set_load_clut_to_vram
 800D2710-800D2824
 ////////////////////////////////
-// funcd2828
+// battle_set_load_texture_to_vram
 800D2828-800D297C
 ////////////////////////////////
-// funcd2980
+// battle_set_load_tim_to_vram
 800D2980-800D29D0
+////////////////////////////////
+
+
+
+// BATTLE.X_units_functions.cpp
 ////////////////////////////////
 // funcd29d4
 800D29D4-800D32B0

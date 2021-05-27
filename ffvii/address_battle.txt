@@ -60,7 +60,7 @@
 
 800e7d50 array of camera data files data.
 800e7d98 array of battle field data.
-800e8050 array of enemy data files data.
+800e8050 array of enemy data files data (ENEMY000.LZS ...).
 
 800e8c90
 
@@ -465,10 +465,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f7de8 [][]     add 0x0001 bit during units init function.
 
 800f7df4 []       store 0 here during battle init. Increment with each enemy unit, that will be at battle.
-800f7df8 [][][][] store here enemy id + 14 for each enemy that has formation record, -1 otherwise. (3 items)
-
-800f7dfc [][][][] id of enemy file to load.
-800f7e00 [][][][] id of enemy file to load.
+800f7df8 [][][][] enemy file id. Store here enemy id + 14 (to skip player files) for each enemy that has formation record, -1 otherwise. (3 items)
+800f7dfc [][][][] enemy file id to load.
+800f7e00 [][][][] enemy file id to load.
 800f7e04 []       store here number of enemy unit in battle during battle init.
 
 800f7e08 formation copied data.
@@ -564,9 +563,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                   0x04 - don't draw main background parts.
                   0x08 - don't draw rain on map 0x3a.
 
-800f8390 [][][][] address where model data for 1st enemy model stored (without texture because it's loaded to vram)
-800f8394 [][][][] address where model data for 2nd enemy model stored (without texture because it's loaded to vram)
-800f8398 [][][][] address where model data for 3rd enemy model stored (without texture because it's loaded to vram)
+800f8390 [][][][] pointer to model data for 1st enemy model stored (without texture because it's loaded to vram)
+800f8394 [][][][] pointer to where model data for 2nd enemy model stored (without texture because it's loaded to vram)
+800f8398 [][][][] pointer to where model data for 3rd enemy model stored (without texture because it's loaded to vram)
 
 800f83a4 battle global structure. (address 0x2000).
     +00 []       store data performed action type id here. (0x20 for example)
@@ -674,6 +673,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +08 [][]     store 800fa9d0 + 3 index here.
     +0a []       ???
 
+800f8cf4 stored clut array for units. (0x60 size) Each clut is 0x18 items 0x4 size.
+
 800f9d94 []       init with 0.
 800f9d98 []       init with 0.
 800f9d9c []       init with 0.
@@ -738,6 +739,12 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800fa9bc [][]     index into 800fa978 and 800f7ed8.
 
 800fa9c0 []       store target id here during executing hurt effect.
+800fa9c4 [][]     id of 1st player model file.
+800fa9c6 [][]     ???
+800fa9c8 [][]     id of 2nd player model file.
+800fa9ca [][]     ???
+800fa9cc [][]     id of 3rd player model file.
+800fa9ce [][]     ???
 
 800fa9d0 queue1 targets (0x80 items 0xc size). Divided by record with target -1.
     +00 []       store target id here.
@@ -904,7 +911,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 801590dc []       if this not 0 then we will not call camera script.
 801590e0 []       currently performed index in queue1 (80163798). Init with 0.
 
-801590e4-80161de8 copy 8d04 bytes of field data file here. Battle field file.
+801590e4-80161de8 copy 8d04 bytes of stage file here.
 
 80161de8 [][]     some target mask. Looks like dead targets.
 
@@ -1186,7 +1193,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                         800d7888 - mashinegun effect
 
 80163c78 [][]     number of inited element in 80163b84 and 801621f0.
-80163c7c []       init with 0.
+80163c7c []       current battle state (0:init -> 1:).
 
 80163c80 array of default positions for units. (0x6 size)
 +0 [][]     X.
@@ -1198,6 +1205,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80163f30 []       init camera script id.
 
 80166f58 []       init with 0.
+
+80166f64 []       number of loaded enemy file (0-3).
 
 80166f74 []       number of rows in battle item menu. Minimum 3.
 80166f75 []       set to -1 when we use item.
@@ -1218,7 +1227,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80167938 copy here whole savemap character data during battle init.
 
-
+801a0000 load CAMDAT0.LZS here.
+801b0000 load STAGE00.LZS here (copy to 801590e4).
 
 
 

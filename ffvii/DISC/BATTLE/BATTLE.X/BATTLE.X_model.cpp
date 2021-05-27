@@ -7424,3 +7424,190 @@ return;
 ////////////////////////////////
 // funcd1530
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_set_load_to_vram()
+
+sizes = A0;
+data = A1;
+
+V0 = w[800f01dc];
+[V0 + 0] = w(0); // load
+[V0 + 4] = w(sizes);
+[V0 + 8] = w(data);
+[800f01dc] = w(V0 + 14);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_set_store_from_vram()
+
+V0 = w[800f01dc];
+[V0 + 0] = w(1); // store
+[V0 + 4] = w(A0);
+[V0 + 8] = w(A1);
+[800f01dc] = w(V0 + 14);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_set_move_in_vram()
+
+V0 = w[800f01dc];
+[V0 + 0] = w(2); // move
+[V0 + 4] = w(A0);
+[V0 + c] = w(A1);
+[V0 + 10] = w(A2);
+[800f01dc] = w(V0 + 14);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_set_clear_vram()
+
+V0 = w[800f01dc];
+[V0 + 0] = w(3); // clear
+[V0 + 4] = w(A0);
+[800f01dc] = w(V0 + 14);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd25e8()
+
+for( int i = 800f4bac; i < w[800f01dc]; i += 14 )
+{
+    V1 = w[i + 0];
+    if( V1 == 0 )
+    {
+        A0 = w[i + 4];
+        A1 = w[i + 8];
+        system_psyq_load_image();
+    }
+    else if( V1 == 1 )
+    {
+        A0 = w[i + 4];
+        A1 = w[i + 8];
+        system_psyq_store_image();
+    }
+    else if( V1 == 2 )
+    {
+        A0 = w[i + 4];
+        A1 = w[i + c];
+        A2 = w[i + 10];
+        system_psyq_move_image();
+    }
+    else if( V1 == 3 )
+    {
+        A0 = w[i + 4];
+        A1 = 0;
+        A2 = 0;
+        A3 = 0;
+        system_psyq_clear_image();
+    }
+}
+[800f01dc] = w(800f4bac);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd26f8()
+
+[800f01dc] = w(800f4bac);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_set_load_clut_to_vram()
+
+texture = A0;
+x_add = A1;
+y_add = A2;
+
+A0 = texture;
+system_read_tim_set_address();
+
+A0 = SP + 10;
+system_read_tim();
+
+clut_sizes = w[SP + 14];
+if( ( clut_sizes != 0 ) && ( w[SP + 18] != 0 ) ) // and clut data
+{
+    V0 = w[800f01e0];
+    [800f4b2c + V0 * 8 + 0] = w(w[clut_sizes + 0]); // x y
+    [800f4b2c + V0 * 8 + 4] = w(w[clut_sizes + 4]); // width height
+
+    [800f4b2c + V0 * 8 + 0] = h(hu[800f4b2c + A0 * 8 + 0] + (x_add & fff0)); // x
+    [800f4b2c + V0 * 8 + 2] = h(hu[800f4b2c + A0 * 8 + 2] + y_add); // y
+
+    A0 = 800f4b2c + A0 * 8; // sizes
+    A1 = w[SP + 18]; // data
+    battle_set_load_to_vram();
+
+    [800f01e0] = w((w[800f01e0] + 1) & 7);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_set_load_texture_to_vram()
+
+texture = A0;
+S0 = A1;
+
+A0 = texture;
+system_read_tim_set_address();
+
+A0 = SP + 10;
+system_read_tim()
+
+image_sizes = w[SP + 1c];
+if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) ) // and image data
+{
+    V0 = w[800f01e4];
+    [800f4b6c + V0 * 8 + 0] = w(w[image_sizes + 0]); // x y
+    [800f4b6c + V0 * 8 + 4] = w(w[image_sizes + 4]); // width height
+
+    A1 = ((hu[image_sizes + 2] & 0300) >> 04) | ((hu[image_sizes + 0] & 03ff) >> 06);
+    A2 = A1 + S0;
+
+    A0 = w[800f01e4];
+    [800f4b6c + A0 * 8 + 0] = h((hu[800f4b6c + A0 * 8 + 0] + ((A2 & 000f) << 06) - ((A1 & 000f) << 06)) & 03ff);
+    [800f4b6c + A0 * 8 + 2] = h((hu[800f4b6c + A0 * 8 + 2] + ((A2 & 0030) << 04) - ((A1 & 0030) << 04)) & 01ff);
+
+    A0 = 800f4b6c + A0 * 8; // sizes
+    A1 = w[SP + 20]; // data
+    battle_set_load_to_vram();
+
+    [800f01e4] = w((w[800f01e4] + 1) & 7);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// battle_set_load_tim_to_vram()
+
+texture = A0;
+S0 = A1; // 0
+x_add = A2;
+y_add = A3;
+
+A0 = texture;
+A1 = x_add;
+A2 = y_add;
+battle_set_load_clut_to_vram();
+
+A0 = texture;
+A1 = S0; // 0
+battle_set_load_texture_to_vram();
+////////////////////////////////

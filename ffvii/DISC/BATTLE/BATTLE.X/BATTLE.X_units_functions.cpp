@@ -1,249 +1,4 @@
 ////////////////////////////////
-// funcd2538()
-
-sizes = A0;
-data = A1;
-
-V0 = w[800f01dc];
-[V0 + 0] = w(0);
-[V0 + 4] = w(sizes);
-[V0 + 8] = w(data);
-[800f01dc] = w(V0 + 14);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd2564
-V0 = w[800f01dc];
-V1 = 0001;
-[V0 + 0000] = w(V1);
-[V0 + 0004] = w(A0);
-[V0 + 0008] = w(A1);
-V0 = V0 + 0014;
-[800f01dc] = w(V0);
-800D2588	jr     ra 
-800D258C	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd2590
-V0 = w[800f01dc];
-V1 = 0002;
-[V0 + 0000] = w(V1);
-[V0 + 0004] = w(A0);
-[V0 + 000c] = w(A1);
-[V0 + 0010] = w(A2);
-V0 = V0 + 0014;
-[800f01dc] = w(V0);
-800D25B8	jr     ra 
-800D25BC	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd25c0
-V0 = w[800f01dc];
-V1 = 0003;
-[V0 + 0000] = w(V1);
-[V0 + 0004] = w(A0);
-V0 = V0 + 0014;
-[800f01dc] = w(V0);
-800D25E0	jr     ra 
-800D25E4	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd25e8
-V0 = w[800f01dc];
-800D25F0	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-S1 = 800f4bac;
-[SP + 0018] = w(RA);
-V0 = S1 < V0;
-800D2608	beq    v0, zero, Ld26d0 [$800d26d0]
-[SP + 0010] = w(S0);
-S0 = S1 + 0004;
-
-loopd2614:	; 800D2614
-V1 = w[S1 + 0000];
-V0 = 0001;
-800D261C	beq    v1, v0, Ld2670 [$800d2670]
-V0 = V1 < 0002;
-800D2624	beq    v0, zero, Ld263c [$800d263c]
-800D2628	nop
-800D262C	beq    v1, zero, Ld2658 [$800d2658]
-800D2630	nop
-800D2634	j      Ld26b8 [$800d26b8]
-S0 = S0 + 0014;
-
-Ld263c:	; 800D263C
-V0 = 0002;
-800D2640	beq    v1, v0, Ld2688 [$800d2688]
-V0 = 0003;
-800D2648	beq    v1, v0, Ld26a4 [$800d26a4]
-A1 = 0;
-800D2650	j      Ld26b8 [$800d26b8]
-S0 = S0 + 0014;
-
-Ld2658:	; 800D2658
-A0 = w[S0 + 0000];
-A1 = w[S0 + 0004];
-800D2660	jal    $80044000
-S0 = S0 + 0014;
-800D2668	j      Ld26b8 [$800d26b8]
-800D266C	nop
-
-Ld2670:	; 800D2670
-A0 = w[S0 + 0000];
-A1 = w[S0 + 0004];
-800D2678	jal    $80044064
-S0 = S0 + 0014;
-800D2680	j      Ld26b8 [$800d26b8]
-800D2684	nop
-
-Ld2688:	; 800D2688
-A0 = w[S0 + 0000];
-A1 = w[S0 + 0008];
-A2 = w[S0 + 000c];
-800D2694	jal    $800440c8
-S0 = S0 + 0014;
-800D269C	j      Ld26b8 [$800d26b8]
-800D26A0	nop
-
-Ld26a4:	; 800D26A4
-A0 = w[S0 + 0000];
-A2 = 0;
-800D26AC	jal    $80043f6c
-A3 = 0;
-S0 = S0 + 0014;
-
-Ld26b8:	; 800D26B8
-V0 = w[800f01dc];
-S1 = S1 + 0014;
-V0 = S1 < V0;
-800D26C8	bne    v0, zero, loopd2614 [$800d2614]
-800D26CC	nop
-
-Ld26d0:	; 800D26D0
-V0 = 800f4bac;
-[800f01dc] = w(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800D26F0	jr     ra 
-800D26F4	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd26f8
-V0 = 800f4bac;
-[800f01dc] = w(V0);
-800D2708	jr     ra 
-800D270C	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd2710()
-
-texture = A0;
-x_add = A1;
-y_add = A2;
-
-A0 = texture;
-func46cfc(); // set address
-
-A0 = SP + 10;
-system_read_tim();
-
-clut_sizes = w[SP + 14];
-if( ( clut_sizes != 0 ) && ( w[SP + 18] != 0 ) ) // and clut data
-{
-    V0 = w[800f01e0];
-    [800f4b2c + V0 * 8 + 0] = w(w[clut_sizes + 0]); // x y
-    [800f4b2c + V0 * 8 + 4] = w(w[clut_sizes + 4]); // width height
-
-    A0 = w[800f01e0];
-    [800f4b2c + A0 * 8 + 0] = h(hu[800f4b2c + A0 * 8 + 0] + (x_add & fff0)); // x
-    [800f4b2c + A0 * 8 + 2] = h(hu[800f4b2c + A0 * 8 + 2] + y_add); // y
-
-    A0 = 800f4b2c + A0 * 8;
-    A1 = w[SP + 18];
-    funcd2538();
-
-    [800f01e0] = w((w[800f01e0] + 1) & 7);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd2828()
-
-texture = A0;
-S0 = A1;
-
-A0 = texture;
-func46cfc(); // set address
-
-A0 = SP + 10;
-system_read_tim()
-
-image_sizes = w[SP + 1c];
-if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) ) // and image data
-{
-    V0 = w[800f01e4];
-    [800f4b6c + V0 * 8 + 0] = w(w[image_sizes + 0]); // x y
-    [800f4b6c + V0 * 8 + 4] = w(w[image_sizes + 4]); // width height
-
-    A1 = ((hu[image_sizes + 2] & 0300) >> 04) | ((hu[image_sizes + 0] & 03ff) >> 06);
-    A2 = A1 + S0;
-
-    A0 = w[800f01e4];
-    [800f4b6c + A0 * 8 + 0] = h((hu[800f4b6c + A0 * 8 + 0] + ((A2 & 000f) << 06) - ((A1 & 000f) << 06)) & 03ff);
-    [800f4b6c + A0 * 8 + 2] = h((hu[800f4b6c + A0 * 8 + 2] + ((A2 & 0030) << 04) - ((A1 & 0030) << 04)) & 01ff);
-
-    A0 = 800f4b6c + A0 * 8;
-    A1 = w[SP + 20];
-    funcd2538();
-
-    [800f01e4] = w((w[800f01e4] + 1) & 7);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcd2980()
-
-texture = A0;
-S0 = A1; // 0
-x_add = A2;
-y_add = A3;
-
-A0 = texture;
-A1 = x_add;
-A2 = y_add;
-funcd2710(); // clut
-
-A0 = texture;
-A1 = S0; // 0
-funcd2828(); // color
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funcd29d4
 // A3 - offset to packets
 // A2 - 00 or 0c (in effect machingun fire loading - 0c)
@@ -1499,7 +1254,7 @@ bone_id = bu[801518e4 + unit_id * b9c + 2b + b + (hu[801621f0 + effect_id * 20 +
 if (bone_id != ff)
 {
     A0 = 800d3bf0;
-    funcbc04c;
+    funcbc04c();
     new_effect_id = V0;
 
     A0 = unit_id;
@@ -1528,7 +1283,7 @@ if (h[801621f0 + effect_id * 20 + 2] == 4)
 unit_id = A0;
 
 A0 = 800d3d88;
-funcbc04c;
+funcbc04c();
 
 [801621f0 + V0 * 20 + 00] = h(unit_id);
 [801621f0 + V0 * 20 + 0e] = h(hu[801518e4 + unit_id * b9c + 6]);
@@ -1544,7 +1299,7 @@ S1 = A1;
 S2 = A2;
 
 A0 = 800d3af0;
-funcbc04c;
+funcbc04c();
 
 V0 = 801621f0 + V0 * 20;
 
@@ -1843,7 +1598,7 @@ A2 = 0001;
 800D44B0	jal    $80044a68
 A0 = S0;
 A0 = S1;
-800D44BC	jal    $80046794
+800D44BC	jal    $system_add_render_packet_to_queue
 A1 = S0;
 S0 = S0 + 000c;
 [80163c74] = w(S0);
@@ -3389,7 +3144,7 @@ A0 = A0 << 02;
 [S2 + 0014] = w(V0);
 V0 = w[801517c0];
 A0 = A0 + 0070;
-800D5C5C	jal    $80046794
+800D5C5C	jal    $system_add_render_packet_to_queue
 A0 = A0 + V0;
 V0 = S2 + 0024;
 [80163c74] = w(V0);
@@ -6209,29 +5964,26 @@ AT = AT + V0;
 800D8A80	jr     ra 
 800D8A84	nop
 ////////////////////////////////
-// funcd8a88
-800D8A88	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800D8A90	jal    $80043dd8
-A0 = 0;
-A0 = bu[800f19a4];
-800D8AA0	jal    $8003cedc
-800D8AA4	nop
-V1 = w[801517c0];
-A0 = 800faff4;
-800D8AB8	bne    v1, a0, Ld8ac4 [$800d8ac4]
-800D8ABC	nop
-A0 = A0 + 40f4;
 
-Ld8ac4:	; 800D8AC4
-V1 = w[800f8368];
+
+
+////////////////////////////////
+// funcd8a88()
+
+A0 = 0;
+system_psyq_draw_sync();
+
+A0 = bu[800f19a4];
+system_psyq_wait_frames();
+
+A0 = 800faff4;
+if( w[801517c0] == A0 )
+{
+    A0 = A0 + 40f4;
+}
 [801517c0] = w(A0);
-V1 = V1 ^ 0001;
-[800f8368] = w(V1);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800D8AE8	jr     ra 
-800D8AEC	nop
+
+[800f8368] = w(w[800f8368] ^ 1);
 ////////////////////////////////
 
 
@@ -6412,7 +6164,7 @@ A0 = w[801517c0];
 A1 = bu[A0 + 0019];
 A2 = bu[A0 + 001a];
 A3 = bu[A0 + 001b];
-800D8E00	jal    $80043f6c
+800D8E00	jal    $system_psyq_clear_image
 800D8E04	nop
 
 Ld8e08:	; 800D8E08
@@ -6517,7 +6269,7 @@ A1 = w[800f1994];
 A0 = A1 << 08;
 A0 = A0 + S1;
 A1 = A1 << 04;
-800D8FD4	jal    $80046794
+800D8FD4	jal    $system_add_render_packet_to_queue
 A1 = A1 + A2;
 A2 = 00a6;
 V0 = w[800f8368];
@@ -6543,7 +6295,7 @@ A1 = S2;
 A0 = w[800f1994];
 A1 = S0;
 A0 = A0 << 08;
-800D904C	jal    $80046794
+800D904C	jal    $system_add_render_packet_to_queue
 A0 = A0 + S1;
 A0 = w[800f1994];
 V0 = S1 + 0004;
@@ -6782,7 +6534,7 @@ S2 = S3 + 008c;
 A1 = w[S0 + 0000];
 A0 = S2;
 V0 = A1 + 0010;
-800D94D4	jal    $80046794
+800D94D4	jal    $system_add_render_packet_to_queue
 [S0 + 0000] = w(V0);
 A2 = 00a6;
 V0 = w[800f8368];
@@ -6807,7 +6559,7 @@ V0 = 005f;
 800D9538	jal    $80044ac0
 A1 = S1;
 A1 = w[S0 + 0000];
-800D9544	jal    $80046794
+800D9544	jal    $system_add_render_packet_to_queue
 A0 = S2;
 V0 = w[S0 + 0000];
 800D9550	nop
@@ -7092,7 +6844,7 @@ A0 = w[S0 + 0000];
 800D9AA4	jal    $80046848
 A1 = 0001;
 A0 = w[S0 + 0000];
-800D9AB0	jal    $80046870
+800D9AB0	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 V1 = w[80062f24];
 V0 = hu[800f3898];
@@ -7107,7 +6859,7 @@ V0 = 00e0;
 [V1 + 000c] = b(V0);
 V1 = w[80062f24];
 V0 = 0008;
-800D9B04	jal    $80046634
+800D9B04	jal    $system_create_clut_for_packet
 [V1 + 000d] = b(V0);
 V1 = w[80062f24];
 S2 = S3 + 008c;
@@ -7119,7 +6871,7 @@ V1 = w[80062f24];
 V0 = 0010;
 [V1 + 0012] = h(V0);
 A1 = w[S0 + 0000];
-800D9B40	jal    $80046794
+800D9B40	jal    $system_add_render_packet_to_queue
 A0 = S2;
 V0 = w[S0 + 0000];
 A2 = 00a6;
@@ -7147,7 +6899,7 @@ V0 = 005f;
 800D9BB0	jal    $80044ac0
 A1 = S1;
 A1 = w[S0 + 0000];
-800D9BBC	jal    $80046794
+800D9BBC	jal    $system_add_render_packet_to_queue
 A0 = S2;
 V0 = w[S0 + 0000];
 800D9BC8	nop
@@ -7266,7 +7018,7 @@ V1 = 005f;
 800D9DAC	addiu  a1, a2, $fffc (=-$4)
 A0 = w[80062fc4];
 A1 = w[S0 + 0000];
-800D9DBC	jal    $80046794
+800D9DBC	jal    $system_add_render_packet_to_queue
 800D9DC0	nop
 V0 = w[S0 + 0000];
 800D9DC8	nop
@@ -7483,7 +7235,7 @@ Lda12c:	; 800DA12C
 AT = 800f5179;
 AT = AT + V0;
 [AT + 0000] = b(V1);
-800DA13C	jal    $80046634
+800DA13C	jal    $system_create_clut_for_packet
 800DA140	lui    s1, $00ff
 A0 = w[800f1994];
 800DA14C	nop
@@ -7656,7 +7408,7 @@ S1 = 800f5194;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DA454	jal    $80046870
+800DA454	jal    $system_change_brightness_calculation_in_packet
 A0 = A0 + S1;
 A1 = 0002;
 A2 = 0196;
@@ -7792,7 +7544,7 @@ A1 = 0001;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DA6C8	jal    $80046870
+800DA6C8	jal    $system_change_brightness_calculation_in_packet
 A0 = A0 + S1;
 V1 = w[800f1994];
 800DA6D8	nop
@@ -7888,7 +7640,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DA884	jal    $80046794
+800DA884	jal    $system_add_render_packet_to_queue
 A1 = A1 + A2;
 A1 = 0002;
 A2 = 0196;
@@ -7983,7 +7735,7 @@ V0 = 800f5194;
 A0 = V1 << 02;
 A0 = A0 + V1;
 A0 = A0 << 04;
-800DAA40	jal    $80046870
+800DAA40	jal    $system_change_brightness_calculation_in_packet
 A0 = A0 + V0;
 V1 = w[800f1994];
 800DAA50	nop
@@ -8089,7 +7841,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DAC30	jal    $80046794
+800DAC30	jal    $system_add_render_packet_to_queue
 A1 = A1 + A2;
 A2 = 00a6;
 V1 = w[800f1994];
@@ -8196,7 +7948,7 @@ S1 = 800f5194;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DAE10	jal    $80046870
+800DAE10	jal    $system_change_brightness_calculation_in_packet
 A0 = A0 + S1;
 A1 = 0002;
 A2 = 00a6;
@@ -8338,7 +8090,7 @@ A1 = 0001;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DB094	jal    $80046870
+800DB094	jal    $system_change_brightness_calculation_in_packet
 A0 = A0 + S1;
 V1 = w[800f1994];
 800DB0A4	nop
@@ -8434,7 +8186,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DB258	jal    $80046794
+800DB258	jal    $system_add_render_packet_to_queue
 A1 = A1 + A2;
 A1 = 0002;
 A2 = 00a6;
@@ -8528,7 +8280,7 @@ S0 = 800f5194;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DB40C	jal    $80046870
+800DB40C	jal    $system_change_brightness_calculation_in_packet
 A0 = A0 + S0;
 S3 = ffffff;
 V1 = w[800f1994];
@@ -8622,7 +8374,7 @@ A0 = w[80062fc4];
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DB5D0	jal    $80046794
+800DB5D0	jal    $system_add_render_packet_to_queue
 A1 = A1 + S0;
 V1 = w[800f1994];
 S0 = S0 + 0010;
@@ -8667,7 +8419,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DB69C	jal    $80046794
+800DB69C	jal    $system_add_render_packet_to_queue
 A1 = A1 + S0;
 A1 = 0002;
 A2 = 00a6;
@@ -8791,7 +8543,7 @@ S0 = 800f5234;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 02;
-800DB8B4	jal    $80046870
+800DB8B4	jal    $system_change_brightness_calculation_in_packet
 A0 = A0 + S0;
 V1 = w[800f1994];
 800DB8C4	nop
@@ -8893,7 +8645,7 @@ A0 = S1;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DBA90	jal    $80046794
+800DBA90	jal    $system_add_render_packet_to_queue
 A1 = A1 + A2;
 V0 = S4 << 10;
 A2 = V0 >> 10;
@@ -9570,7 +9322,7 @@ V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800DC454	jal    $80046634
+800DC454	jal    $system_create_clut_for_packet
 S4 = V0 + 0084;
 V1 = bu[S0 + 0000];
 A0 = w[800707c0];
@@ -9604,7 +9356,7 @@ S5 = V0 << 02;
 V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
-800DC4DC	jal    $80046634
+800DC4DC	jal    $system_create_clut_for_packet
 S4 = V0 << 02;
 V1 = bu[S0 + 0000];
 A0 = w[800707c0];
@@ -9638,7 +9390,7 @@ V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800DC564	jal    $80046634
+800DC564	jal    $system_create_clut_for_packet
 S4 = V0 + 0084;
 V1 = bu[S0 + 0000];
 A0 = w[800707c0];
@@ -9675,7 +9427,7 @@ S5 = V0 << 02;
 V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
-800DC5F0	jal    $80046634
+800DC5F0	jal    $system_create_clut_for_packet
 S4 = V0 << 02;
 A0 = bu[S0 + 0000];
 V1 = w[800707c0];
@@ -9693,7 +9445,7 @@ A0 = w[80163c74];
 800DC62C	jal    $80046960
 S0 = S0 + 0001;
 A0 = w[80163c74];
-800DC63C	jal    $80046870
+800DC63C	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 A0 = FP;
 T0 = 0006;
@@ -9714,7 +9466,7 @@ V0 = 000c;
 V0 = A1 + 0014;
 [A1 + 000e] = h(S3);
 [80163c74] = w(V0);
-800DC6A0	jal    $80046794
+800DC6A0	jal    $system_add_render_packet_to_queue
 S2 = S2 + S1;
 
 Ldc6a8:	; 800DC6A8
@@ -9743,7 +9495,7 @@ A1 = w[80163c74];
 800DC710	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DC720	jal    $80046794
+800DC720	jal    $system_add_render_packet_to_queue
 A0 = FP;
 T0 = hu[SP + 0118];
 800DC72C	nop
@@ -9794,7 +9546,7 @@ A0 = w[80163c74];
 800DC7D4	jal    $80046938
 800DC7D8	nop
 A0 = w[80163c74];
-800DC7E4	jal    $80046870
+800DC7E4	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 V1 = w[S0 + 0000];
 800DC7F0	nop
@@ -9802,7 +9554,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC804	jal    $80046634
+800DC804	jal    $system_create_clut_for_packet
 A1 = A1 + 01e0;
 A0 = w[80163c74];
 800DC814	nop
@@ -9847,7 +9599,7 @@ A0 = w[80163c74];
 800DC8B8	jal    $8004694c
 800DC8BC	nop
 A0 = w[80163c74];
-800DC8C8	jal    $80046870
+800DC8C8	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 V1 = w[S0 + 0000];
 800DC8D4	nop
@@ -9855,7 +9607,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC8E8	jal    $80046634
+800DC8E8	jal    $system_create_clut_for_packet
 A1 = A1 + 01e0;
 A0 = w[80163c74];
 800DC8F8	nop
@@ -9900,7 +9652,7 @@ A0 = w[80163c74];
 800DC99C	jal    $80046960
 800DC9A0	nop
 A0 = w[80163c74];
-800DC9AC	jal    $80046870
+800DC9AC	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 V1 = w[S0 + 0000];
 800DC9B8	nop
@@ -9908,7 +9660,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC9CC	jal    $80046634
+800DC9CC	jal    $system_create_clut_for_packet
 A1 = A1 + 01e0;
 A0 = w[80163c74];
 800DC9DC	nop
@@ -9962,7 +9714,7 @@ V0 = A1 + 0014;
 [A1 + 0012] = h(V1);
 
 Ldcaac:	; 800DCAAC
-800DCAAC	jal    $80046794
+800DCAAC	jal    $system_add_render_packet_to_queue
 800DCAB0	nop
 A1 = 0;
 
@@ -9982,7 +9734,7 @@ A1 = w[80163c74];
 800DCB00	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCB10	jal    $80046794
+800DCB10	jal    $system_add_render_packet_to_queue
 A0 = FP;
 V1 = S7 + 0001;
 
@@ -10053,7 +9805,7 @@ A1 = w[80163c74];
 800DCC38	nop
 V0 = A1 + 0010;
 [80163c74] = w(V0);
-800DCC48	jal    $80046794
+800DCC48	jal    $system_add_render_packet_to_queue
 A0 = FP;
 A1 = 0;
 A2 = 0001;
@@ -10071,7 +9823,7 @@ A1 = w[80163c74];
 800DCC9C	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCCAC	jal    $80046794
+800DCCAC	jal    $system_add_render_packet_to_queue
 A0 = FP;
 
 Ldccb4:	; 800DCCB4
@@ -10091,7 +9843,7 @@ A1 = w[80163c74];
 800DCD00	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCD10	jal    $80046794
+800DCD10	jal    $system_add_render_packet_to_queue
 A0 = FP;
 A0 = w[80163c74];
 800DCD20	jal    $80046910
@@ -10168,7 +9920,7 @@ A1 = w[80163c74];
 800DCEA4	nop
 V0 = A1 + 0024;
 [80163c74] = w(V0);
-800DCEB4	jal    $80046794
+800DCEB4	jal    $system_add_render_packet_to_queue
 A0 = FP;
 A1 = 0;
 A2 = 0001;
@@ -10188,7 +9940,7 @@ A1 = w[80163c74];
 800DCF0C	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCF1C	jal    $80046794
+800DCF1C	jal    $system_add_render_packet_to_queue
 A0 = FP;
 RA = w[SP + 0164];
 FP = w[SP + 0160];
@@ -10647,8 +10399,7 @@ V1 = 8009c748;
 V0 = V0 + V1;
 
 Ldd658:	; 800DD658
-800DD658	lui    at, $800f
-[AT + 55d4] = w(V0);
+[800f55d4] = w(V0);
 
 Ldd660:	; 800DD660
 A0 = S1;
@@ -10665,11 +10416,11 @@ Ldd678:	; 800DD678
 
 ////////////////////////////////
 // funcdd690
-800DD690	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
-800DD69C	jal    $80026a00
+
 S0 = A1;
+
+800DD69C	jal    $80026a00
+
 S0 = S0 << 10;
 S0 = S0 >> 10;
 V0 = S0 < 001d;
@@ -10917,7 +10668,7 @@ V0 = 005f;
 800DDA98	jal    $80044ac0
 [V1 + 0000] = h(V0);
 A1 = w[S0 + 0000];
-800DDAA4	jal    $80046794
+800DDAA4	jal    $system_add_render_packet_to_queue
 A0 = S2;
 V0 = w[S0 + 0000];
 800DDAB0	nop
@@ -11094,7 +10845,7 @@ S4 = 0001;
 800DDD6C	jal    $80044ac0
 A1 = S6;
 A1 = w[S1 + 0000];
-800DDD78	jal    $80046794
+800DDD78	jal    $system_add_render_packet_to_queue
 A0 = S5;
 S3 = 800f3148;
 V0 = w[S1 + 0000];
@@ -11142,7 +10893,7 @@ A0 = w[S1 + 0000];
 800DDE40	jal    $80044ac0
 A1 = S6;
 A1 = w[S1 + 0000];
-800DDE4C	jal    $80046794
+800DDE4C	jal    $system_add_render_packet_to_queue
 A0 = S5;
 V0 = w[S1 + 0000];
 800DDE58	nop
@@ -14649,29 +14400,23 @@ SP = SP + 0018;
 800E16B0	jr     ra 
 800E16B4	nop
 ////////////////////////////////
-// funce16b8
-800E16B8	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 003c] = w(S7);
+
+
+
+////////////////////////////////
+// funce16b8()
+
 S7 = A0;
-[SP + 0038] = w(S6);
 S6 = A1;
-[SP + 0040] = w(FP);
 FP = A2;
-[SP + 0034] = w(S5);
 S5 = A3;
 A1 = 0001;
-[SP + 0028] = w(S2);
 S2 = w[80163c74];
 V0 = 0004;
-[SP + 0044] = w(RA);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-[SP + 0024] = w(S1);
-[SP + 0020] = w(S0);
 A0 = S2;
 [S2 + 0003] = b(V0);
 V0 = 0064;
-800E1710	jal    $80046870
+800E1710	jal    $system_change_brightness_calculation_in_packet
 [S2 + 0007] = b(V0);
 V0 = S6 + 0020;
 [S2 + 0008] = h(V0);
@@ -14693,12 +14438,12 @@ V0 = 0050;
 V0 = 0008;
 [S2 + 0010] = h(V0);
 V0 = 0015;
-800E1758	jal    $80046634
+800E1758	jal    $system_create_clut_for_packet
 [S2 + 0012] = h(V0);
 A1 = S2;
 [S2 + 000e] = h(V0);
 S2 = S2 + 0014;
-800E176C	jal    $80046794
+800E176C	jal    $system_add_render_packet_to_queue
 A0 = S7;
 V0 = S5 < 1770;
 800E1778	bne    v0, zero, Le1784 [$800e1784]
@@ -14713,26 +14458,13 @@ loope1790:	; 800E1790
 S0 = w[S3 + 0000];
 800E1794	nop
 800E1798	div    s5, s0
-800E179C	bne    s0, zero, Le17a8 [$800e17a8]
-800E17A0	nop
-800E17A4	break   $01c00
-
-Le17a8:	; 800E17A8
-800E17A8	addiu  at, zero, $ffff (=-$1)
-800E17AC	bne    s0, at, Le17c0 [$800e17c0]
-800E17B0	lui    at, $8000
-800E17B4	bne    s5, at, Le17c0 [$800e17c0]
-800E17B8	nop
-800E17BC	break   $01800
-
-Le17c0:	; 800E17C0
 800E17C0	mflo   s0
 A0 = S2;
 A1 = 0001;
 V0 = 0004;
 [S1 + 0003] = b(V0);
 V0 = 0064;
-800E17D8	jal    $80046870
+800E17D8	jal    $system_change_brightness_calculation_in_packet
 [S1 + 0007] = b(V0);
 V0 = 66666667;
 800E17E8	mult   s0, v0
@@ -14763,13 +14495,13 @@ A1 = 01ec;
 V0 = 0010;
 [S1 + 0010] = h(V0);
 V0 = 0015;
-800E1848	jal    $80046634
+800E1848	jal    $system_create_clut_for_packet
 [S1 + 0012] = h(V0);
 A1 = S1;
 [S1 + 000e] = h(V0);
 S1 = S1 + 0014;
 S2 = S2 + 0014;
-800E1860	jal    $80046794
+800E1860	jal    $system_add_render_packet_to_queue
 A0 = S7;
 V0 = 0001;
 800E186C	bne    s4, v0, Le1878 [$800e1878]
@@ -14781,19 +14513,6 @@ S6 = S6 + 0010;
 V0 = w[S3 + 0000];
 S4 = S4 + 0001;
 800E1884	div    s5, v0
-800E1888	bne    v0, zero, Le1894 [$800e1894]
-800E188C	nop
-800E1890	break   $01c00
-
-Le1894:	; 800E1894
-800E1894	addiu  at, zero, $ffff (=-$1)
-800E1898	bne    v0, at, Le18ac [$800e18ac]
-800E189C	lui    at, $8000
-800E18A0	bne    s5, at, Le18ac [$800e18ac]
-800E18A4	nop
-800E18A8	break   $01800
-
-Le18ac:	; 800E18AC
 800E18AC	mfhi   s5
 V0 = S4 < 0004;
 800E18B4	bne    v0, zero, loope1790 [$800e1790]
@@ -14812,22 +14531,13 @@ A3 = 003f;
 [SP + 0010] = w(V0);
 A1 = S2;
 S2 = S2 + 000c;
-800E18F4	jal    $80046794
+800E18F4	jal    $system_add_render_packet_to_queue
 A0 = S7;
 [80163c74] = w(S2);
-RA = w[SP + 0044];
-FP = w[SP + 0040];
-S7 = w[SP + 003c];
-S6 = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0048;
-800E1930	jr     ra 
-800E1934	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funce1938
 800E1938	addiu  sp, sp, $ffd8 (=-$28)
@@ -15610,7 +15320,7 @@ V0 = SP + 0020;
 A1 = w[S0 + 0000];
 A0 = w[80062fc4];
 V0 = A1 + 000c;
-800E24E8	jal    $80046794
+800E24E8	jal    $system_add_render_packet_to_queue
 [S0 + 0000] = w(V0);
 800E24F0	j      Le25fc [$800e25fc]
 V0 = S4 << 10;
@@ -16785,7 +16495,7 @@ V0 = V0 + S0;
 A1 = w[800f8368];
 A0 = w[80062fc4];
 A1 = A1 << 04;
-800E3640	jal    $80046794
+800E3640	jal    $system_add_render_packet_to_queue
 A1 = A1 + S0;
 A0 = 0;
 A1 = 0001;
@@ -17622,7 +17332,7 @@ A0 = w[S0 + 0000];
 800E4288	jal    $80046960
 800E428C	nop
 A0 = w[S0 + 0000];
-800E4294	jal    $80046870
+800E4294	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 A1 = 0003;
 V0 = w[80062f24];
@@ -17648,7 +17358,7 @@ V0 = 009e;
 [V1 + 0010] = h(V0);
 V1 = w[80062f24];
 V0 = 0034;
-800E431C	jal    $80046634
+800E431C	jal    $system_create_clut_for_packet
 [V1 + 0012] = h(V0);
 V1 = w[80062f24];
 800E432C	nop
@@ -17656,7 +17366,7 @@ V1 = w[80062f24];
 A1 = w[S0 + 0000];
 A0 = w[80062fc4];
 V0 = A1 + 0014;
-800E4344	jal    $80046794
+800E4344	jal    $system_add_render_packet_to_queue
 [S0 + 0000] = w(V0);
 A0 = 0;
 A1 = 0001;
@@ -18491,7 +18201,7 @@ S0 = bu[AT + 0000];
 800E4F24	jal    $800468fc
 800E4F28	nop
 A0 = w[S7 + 0000];
-800E4F30	jal    $80046870
+800E4F30	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 V0 = w[80062f24];
 T4 = hu[SP + 0020];
@@ -18550,7 +18260,7 @@ A1 = 01e2;
 A1 = 01e1;
 
 Le5054:	; 800E5054
-800E5054	jal    $80046634
+800E5054	jal    $system_create_clut_for_packet
 A0 = 0010;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -18563,7 +18273,7 @@ V1 = w[80062f24];
 A0 = w[80062fc4];
 [V1 + 0016] = h(V0);
 A1 = w[S7 + 0000];
-800E5094	jal    $80046794
+800E5094	jal    $system_add_render_packet_to_queue
 S4 = S4 + 0030;
 V0 = w[S7 + 0000];
 S5 = S5 + 0001;
@@ -19300,7 +19010,7 @@ V0 = V0 << 02;
 800E5BA8	jal    $80046960
 S1 = S1 + V0;
 A0 = w[S7 + 0000];
-800E5BB4	jal    $80046870
+800E5BB4	jal    $system_change_brightness_calculation_in_packet
 A1 = 0001;
 V0 = S5 << 05;
 T0 = w[SP + 0020];
@@ -19326,7 +19036,7 @@ AT = 800f3450;
 AT = AT + S2;
 A1 = bu[AT + 0000];
 A0 = 0120;
-800E5C38	jal    $80046634
+800E5C38	jal    $system_create_clut_for_packet
 A1 = A1 + 01e0;
 V1 = w[80062f24];
 S4 = S4 + 0001;
@@ -19334,7 +19044,7 @@ S4 = S4 + 0001;
 A1 = w[S7 + 0000];
 A0 = w[80062fc4];
 V0 = A1 + 0014;
-800E5C60	jal    $80046794
+800E5C60	jal    $system_add_render_packet_to_queue
 [S7 + 0000] = w(V0);
 V0 = S4 < 0004;
 800E5C6C	bne    v0, zero, loope5af8 [$800e5af8]

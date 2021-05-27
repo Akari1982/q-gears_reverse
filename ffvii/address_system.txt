@@ -861,6 +861,7 @@
         +05 []       attack status bit id.
         +07 []       critical hit chance.
         +08 []       weapon hit chance.
+        +09 []       ???
         +0b []       high sound id mask.
         +0c [][]     camera movement id.
         +10 [][]     attack element type.

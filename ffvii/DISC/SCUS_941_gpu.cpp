@@ -841,9 +841,10 @@ return V0;
 
 
 ////////////////////////////////
-// func46cfc()
+// system_read_tim_set_address()
 
 [80070690] = w(A0);
+
 return 0;
 ////////////////////////////////
 
@@ -856,7 +857,7 @@ ret = A0;
 
 A0 = w[80070690]; // texture addr
 A1 = ret;
-func47060();
+system_read_tim_get_sizes();
 
 if( V0 != -1 )
 {
@@ -869,7 +870,7 @@ return 0;
 
 
 ////////////////////////////////
-// func47060()
+// system_read_tim_get_sizes()
 
 texture = A0;
 ret = A1;
