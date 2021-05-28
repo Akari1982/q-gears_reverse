@@ -1743,25 +1743,20 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// funcbb430
-S2 = A1;
+// battle_model_update_all_bones_height()
+
 unit_id = A0;
+add_height = A1;
 
 number_of_bones = h[801518e4 + unit_id * b9c + 10];
-if (number_of_bones > 0)
+for( int i = 0; i < number_of_bones; ++i )
 {
-    A0 = 0;
-    loopbb48c:	; 800BB48C
-        A0 = w[801518e4 + unit_id * b9c + 78 + S0 * 4];
-        if (A0 != 0)
-        {
-            A0 = A0 + w[A0] + 4;
-            [A0 + 2] = h(h[A0 + 2] + S2);
-        }
-
-        S0 = S0 + 1;
-        V0 = S0 < number_of_bones;
-    800BB4D4	bne    v0, zero, loopbb48c [$800bb48c]
+    A0 = w[801518e4 + unit_id * b9c + 78 + i * 4];
+    if( A0 != 0 )
+    {
+        A1 = add_height;
+        battle_model_update_bone_height();
+    }
 }
 ////////////////////////////////
 

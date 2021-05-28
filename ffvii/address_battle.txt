@@ -563,9 +563,13 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                   0x04 - don't draw main background parts.
                   0x08 - don't draw rain on map 0x3a.
 
+800f8384 [][][][] pointer to 1st player model.
+800f8388 [][][][] pointer to 2nd player model.
+800f838c [][][][] pointer to 3rd player model.
+
 800f8390 [][][][] pointer to model data for 1st enemy model stored (without texture because it's loaded to vram)
-800f8394 [][][][] pointer to where model data for 2nd enemy model stored (without texture because it's loaded to vram)
-800f8398 [][][][] pointer to where model data for 3rd enemy model stored (without texture because it's loaded to vram)
+800f8394 [][][][] pointer to model data for 2nd enemy model stored (without texture because it's loaded to vram)
+800f8398 [][][][] pointer to model data for 3rd enemy model stored (without texture because it's loaded to vram)
 
 800f83a4 battle global structure. (address 0x2000).
     +00 []       store data performed action type id here. (0x20 for example)
@@ -774,6 +778,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 801031ec [][]     camera start Z.
 
 801031f0 []       store 1 here if number of targets greater than 1.
+
+80103200 player model and animation block copied here (0xf000 size per player model).
 
 80130200 model and animation block copied here.
 
@@ -1204,6 +1210,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80163cc2
 
 80163f30 []       init camera script id.
+
+80163f34 copy battle model weapon subfile for players here (0x100c size for each) 0x1000 bytes copied.
 
 80166f58 []       init with 0.
 

@@ -771,9 +771,12 @@ Ld3518:	; 800D3518
 
 
 ////////////////////////////////
-// funcd3520
-A0 = A0 + w[A0] + 4;
-[A0 + 2] = h(h[A0 + 2] + A1);
+// battle_model_update_bone_height()
+
+bone = w[A0];
+bone_ptr = A0 + bone + 4;
+
+[bone_ptr + 2] = h(h[bone_ptr + 2] + A1);
 ////////////////////////////////
 
 

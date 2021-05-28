@@ -3996,7 +3996,7 @@ ECA70C80 67
                 V0 = V0 + V1;
                 800CCAF4	jal    battle_load_player_texture [$800b5e64]
                 [S1 + 0000] = w(V0);
-                800CCAFC	jal    funcb5c1c [$800b5c1c]
+                800CCAFC	jal    battle_load_player_model [$800b5c1c]
                 A0 = S0;
                 V1 = w[S1 + 0000];
                 800CCB08	nop

@@ -972,19 +972,19 @@
 // funcb4e30
 800B4E30-800B5134
 ////////////////////////////////
-// funcb5138
+// battle_parse_enemy_models
 800B5138-800B54B4
 ////////////////////////////////
 // funcb54b8
 800B54B8-800B5888
 ////////////////////////////////
-// funcb588c
+// battle_model_update_bones_pos_clut
 800B588C-800B5AA8
 ////////////////////////////////
 // funcb5aac
 800B5AAC-800B5C18
 ////////////////////////////////
-// funcb5c1c
+// battle_load_player_model
 800B5C1C-800B5CD0
 ////////////////////////////////
 // battle_load_enemy_model
@@ -1133,7 +1133,7 @@
 // funcbb2a8
 800BB2A8-800BB42C
 ////////////////////////////////
-// funcbb430
+// battle_model_update_all_bones_height
 800BB430-800BB4F4
 ////////////////////////////////
 // funcbb4f8
@@ -1720,7 +1720,7 @@
 // funcd34c8
 800D34C8-800D351C
 ////////////////////////////////
-// funcd3520
+// battle_model_update_bone_height
 800D3520-800D3544
 ////////////////////////////////
 // funcd3548
