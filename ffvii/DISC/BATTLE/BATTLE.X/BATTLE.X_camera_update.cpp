@@ -37,7 +37,7 @@ else
 A0 = 801518e4 + unit_id * b9c + 10; // number of bones
 A1 = model_data;
 A2 = unit_id;
-funcc76c8;
+funcc76c8();
 ////////////////////////////////
 
 

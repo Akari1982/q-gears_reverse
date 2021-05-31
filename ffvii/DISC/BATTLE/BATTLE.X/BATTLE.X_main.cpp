@@ -16931,80 +16931,63 @@ for( int i = 0; i < bu[800f7df4]; ++i )
     }
 }
 
-V0 = bu[800f7e04] + 4;
-S0 = 4;
-800B52DC	j      Lb52f8 [$800b52f8]
-
-loopb52e4:	; 800B52E4
-    A0 = S0;
-    funcb54b8; // parse loaded model file here (init some values and create skeletons)
-
-    V0 = bu[800f7e04] + 4;
-    S0 = S0 + 1;
-
-    Lb52f8:	; 800B52F8
-    V0 = S0 < V0;
-800B5300	bne    v0, zero, loopb52e4 [$800b52e4]
-
-
-
-S0 = 4;
-if( S0 < bu[800f7e04] + 4 )
+for( int i = 0; i < bu[800f7e04]; ++i )
 {
-    loopb5350:	; 800B5350
-        [80163784 + S4] = b(bu[801636b8 + S0 * 10 + 1]); // idle action id
+    A0 = i + 4; // init id
+    funcb54b8(); // parse loaded model file here (init some values and create skeletons)
+}
 
-        [80163c80 + S0 * 6 + 0] = h(hu[800f7e08 + (S0 - 4) * c + 2]); // x default position from formation
-        [80163c80 + S0 * 6 + 2] = h(hu[800f7e08 + (S0 - 4) * c + 4]); // y default position from formation
-        [80163c80 + S0 * 6 + 4] = h(hu[800f7e08 + (S0 - 4) * c + 6]); // z default position from formation
+for( int i = 4; i < bu[800f7e04] + 4; ++i )
+{
+    [80163784 + S4] = b(bu[801636b8 + i * 10 + 1]); // idle action id
 
-        [801518e4 + S0 * b9c + 160] = h(0); // root x rotation
-        [801518e4 + S0 * b9c + 164] = h(0); // root z rotation
+    [80163c80 + i * 6 + 0] = h(hu[800f7e08 + (i - 4) * c + 2]); // x default position from formation
+    [80163c80 + i * 6 + 2] = h(hu[800f7e08 + (i - 4) * c + 4]); // y default position from formation
+    [80163c80 + i * 6 + 4] = h(hu[800f7e08 + (i - 4) * c + 6]); // z default position from formation
 
-        switch( bu[800fa6d0] ) // formation type
+    [801518e4 + i * b9c + 160] = h(0); // root x rotation
+    [801518e4 + i * b9c + 164] = h(0); // root z rotation
+
+    switch( bu[800fa6d0] ) // formation type
+    {
+        case 1: // enemy look from left to left initial, left to right normal
         {
-            case 1: // enemy look from left to left initial, left to right normal
-            {
-                [801518e4 + S0 * b9c + 18] = h(0800); // default
-                [801518e4 + S0 * b9c + 162] = h(0); // root y rotation
-            }
-            break;
+            [801518e4 + i * b9c + 18] = h(800); // default
+            [801518e4 + i * b9c + 162] = h(0); // root y rotation
+        }
+        break;
 
-            case 0 2 4 8: // enemy look from sides to center
+        case 0 2 4 8: // enemy look from sides to center
+        {
+            V0 = h[80163c80 + i * 6 + 4];
+            if (V0 < 0)
             {
-                V0 = h[80163c80 + S0 * 6 + 4];
-                if (V0 < 0)
-                {
-                    [801518e4 + S0 * b9c + 18] = h(0800);
-                    [801518e4 + S0 * b9c + 162] = h(0800);
-                }
-                else
-                {
-                    [801518e4 + S0 * b9c + 18] = h(0);
-                    [801518e4 + S0 * b9c + 162] = h(0);
-                }
+                [801518e4 + i * b9c + 18] = h(0800);
+                [801518e4 + i * b9c + 162] = h(0800);
             }
-
-            case 3 5 6 7: // enemy looks from center to sides
+            else
             {
-                V0 = h[80163c80 + S0 * 6 + 4];
-                if (V0 >= 0)
-                {
-                    [801518e4 + S0 * b9c + 18] = h(0800);
-                    [801518e4 + S0 * b9c + 162] = h(0800);
-                }
-                else
-                {
-                    [801518e4 + S0 * b9c + 18] = h(0);
-                    [801518e4 + S0 * b9c + 162] = h(0);
-                }
+                [801518e4 + i * b9c + 18] = h(0);
+                [801518e4 + i * b9c + 162] = h(0);
             }
-            break;
         }
 
-        S0 = S0 + 1;
-        V0 = S0 < bu[800f7e04] + 4;
-    800B549C	bne    v0, zero, loopb5350 [$800b5350]
+        case 3 5 6 7: // enemy looks from center to sides
+        {
+            V0 = h[80163c80 + i * 6 + 4];
+            if (V0 >= 0)
+            {
+                [801518e4 + i * b9c + 18] = h(800);
+                [801518e4 + i * b9c + 162] = h(800);
+            }
+            else
+            {
+                [801518e4 + i * b9c + 18] = h(0);
+                [801518e4 + i * b9c + 162] = h(0);
+            }
+        }
+        break;
+    }
 }
 ////////////////////////////////
 
@@ -17073,11 +17056,7 @@ loopb5754:	; 800B5754
     V0 = A2 < 6;
 800B5774	bne    v0, zero, loopb5754 [$800b5754]
 
-
-
 [801636b8 + unit_id * 10 + 4] = b(bu[801518e4 + unit_id * b9c + 27] & 3f);
-
-
 
 if (bu[801518e4 + unit_id * b9c + 27] & 80) // if secondary animation
 {
@@ -17091,15 +17070,11 @@ if (bu[801518e4 + unit_id * b9c + 27] & 80) // if secondary animation
     funcc7924;
 }
 
-
-
 // copy joints
-S5 = 0;
-loopb5848:	; 800B5848
-    [8015190f + unit_id * b9c + S5] = b(bu[S3 + S5 + 12]);
-    S5 = S5 + 1;
-    V0 = S5 < 10;
-800B585C	bne    v0, zero, loopb5848 [$800b5848]
+for( int i = 0; i < 10; ++i )
+{
+    [8015190f + unit_id * b9c + i] = b(bu[S3 + i + 12]);
+}
 ////////////////////////////////
 
 

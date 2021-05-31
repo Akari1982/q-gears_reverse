@@ -13,39 +13,33 @@ unit_id = A2;
 
 offset_to_subfile = offset_to_subfile + 4;
 
-bone = 0;
-if (w[S4] > 0)
+for( int bone = 0; bone < w[S4]; ++bone )
 {
-    Lc7760:	; 800C7760
-        [801518e4 + unit_id * b9c + 3f + bone] = b(0);
+    [801518e4 + unit_id * b9c + 3f + bone] = b(0);
 
-        data = w[offset_to_subfile + bone * 8 + 4];
-        if (data == 0)
-        {
-            [801518e4 + unit_id * b9c + 78 + bone * 4] = w(0);
-        }
-        else if (data < 0)
-        {
-            [801518e4 + unit_id * b9c + 3f + bone] = b(1);
-            [801518e4 + unit_id * b9c + 78 + bone * 4] = w(offset_to_subfile + (data & 7fffffff) - 4);
-        }
-        else
-        {
-            [801518e4 + unit_id * b9c + 78 + bone * 4] = w(offset_to_subfile + data - 4);
-        }
+    data = w[offset_to_subfile + bone * 8 + 4];
+    if( data == 0 )
+    {
+        [801518e4 + unit_id * b9c + 78 + bone * 4] = w(0);
+    }
+    else if( data < 0 )
+    {
+        [801518e4 + unit_id * b9c + 3f + bone] = b(1);
+        [801518e4 + unit_id * b9c + 78 + bone * 4] = w(offset_to_subfile + (data & 7fffffff) - 4);
+    }
+    else
+    {
+        [801518e4 + unit_id * b9c + 78 + bone * 4] = w(offset_to_subfile + data - 4);
+    }
 
-        if (bone != 0)
-        {
-            V0 = h[offset_to_subfile + bone * 8 + 0];
-            [801518e4 + unit_id * b9c + bone * 34 + 174 + 28] = h(0); // translation X
-            [801518e4 + unit_id * b9c + bone * 34 + 174 + 2a] = h(0); // translation Y
-            [801518e4 + unit_id * b9c + bone * 34 + 174 + 2c] = h(hu[offset_to_subfile + V0 * 8 + 2]); // translation Z
-            [801518e4 + unit_id * b9c + bone * 34 + 174 + 30] = w(801518e4 + unit_id * b9c + 174 + V0 * 34);
-        }
-
-        bone = bone + 1;
-        V0 = bone < h[S4];
-    800C78F8	bne    v0, zero, Lc7760 [$800c7760]
+    if( bone != 0 )
+    {
+        V0 = h[offset_to_subfile + bone * 8 + 0];
+        [801518e4 + unit_id * b9c + bone * 34 + 174 + 28] = h(0); // translation X
+        [801518e4 + unit_id * b9c + bone * 34 + 174 + 2a] = h(0); // translation Y
+        [801518e4 + unit_id * b9c + bone * 34 + 174 + 2c] = h(hu[offset_to_subfile + V0 * 8 + 2]); // translation Z
+        [801518e4 + unit_id * b9c + bone * 34 + 174 + 30] = w(801518e4 + unit_id * b9c + 174 + V0 * 34);
+    }
 }
 ////////////////////////////////
 
