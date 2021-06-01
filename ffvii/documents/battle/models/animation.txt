@@ -6,7 +6,7 @@ HEADER
     + 08 [][][][] pointer to settings
 
 SETTINGS
-    +00 [][]     0000 - if this is not 0 we add 0x40 bit to 8015190b
+    +00 [][]     0000 - if this is not 0 we add 0x40 bit to death type
     +02 []       80 - 0x3f - dead type. 0x80 - play secondary animation
     +03 []       00
     +04 [][]     015e - collision radius. Set to 801518e4+6
@@ -24,7 +24,7 @@ SETTINGS
     +58 array of 6 something (0x2 size)
     +64 [][]     00c8
     +66 [][]     0000 - filler?
-    +68 array of 32 offsets to animation scripts (0x4 size)
+    +68 array of 0x20 offsets to animation scripts for enemy and 0x4a offsets for player and inbuild model (0x4 size)
 
 
 

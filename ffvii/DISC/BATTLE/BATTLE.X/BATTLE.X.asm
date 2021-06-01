@@ -897,13 +897,18 @@
 // battle_opcodes_get_random_bit
 800B3030-800B30E0
 ////////////////////////////////
-// funcb30e4
+
+
+
+// BATTLE.X_start.cpp
+////////////////////////////////
+// battle_normal_start_sequence
 800B30E4-800B33A0
 ////////////////////////////////
-// funcb33a4
+// battle_next_start_sequence
 800B33A4-800B36B0
 ////////////////////////////////
-// funcb36b4
+// battle_enemys_play_init_animations
 800B36B4-800B379C
 ////////////////////////////////
 // funcb37a0
@@ -942,10 +947,10 @@
 // battle_load_seffects
 800B3D38-800B3D84
 ////////////////////////////////
-// funcb3d88
+// battle_enemys_init_bones_and_animations
 800B3D88-800B3DB8
 ////////////////////////////////
-// funcb3dbc
+// battle_players_init_bones_and_animations
 800B3DBC-800B3E28
 ////////////////////////////////
 // funcb3e2c
@@ -960,25 +965,25 @@
 // funcb430c
 800B430C-800B45EC
 ////////////////////////////////
-// funcb45f0
+// battle_player_modify_default_pos_by_formation
 800B45F0-800B46B0
 ////////////////////////////////
-// funcb46b4
+// battle_player_set_default_rotation
 800B46B4-800B4790
 ////////////////////////////////
-// funcb4794
+// battle_player_models_update_bones_pos
 800B4794-800B4E2C
 ////////////////////////////////
-// funcb4e30
+// battle_player_init_model_with_settings
 800B4E30-800B5134
 ////////////////////////////////
 // battle_parse_enemy_models
 800B5138-800B54B4
 ////////////////////////////////
-// funcb54b8
+// battle_enemy_init_model_with_settings
 800B54B8-800B5888
 ////////////////////////////////
-// battle_model_update_bones_pos_clut
+// battle_enemy_models_update_bones_pos_clut
 800B588C-800B5AA8
 ////////////////////////////////
 // funcb5aac
@@ -1011,8 +1016,13 @@
 // funcb677c
 800B677C-800B6B94
 ////////////////////////////////
-// funcb6b98
+// battle_init_models_animation_and_color
 800B6B98-800B6D68
+////////////////////////////////
+
+
+
+// BATTLE.X_functions.cpp
 ////////////////////////////////
 // battle_queue1_execute
 800B6D6C-800B7760
@@ -1032,7 +1042,7 @@
 // funcb7f6c
 800B7F6C-800B7FB0
 ////////////////////////////////
-// funcb7fb4
+// battle_cdrom_read_chain
 800B7FB4-800B7FD8
 ////////////////////////////////
 // battle_update_render
@@ -1089,11 +1099,6 @@
 // funcb950c
 800B950C-800B9564
 ////////////////////////////////
-
-
-
-// BATTLE.X_functions.cpp
-////////////////////////////////
 // funcb9568
 800B9568-800BA118
 ////////////////////////////////
@@ -1144,7 +1149,7 @@
 
 // BATTLE.X_camera_update.cpp
 ////////////////////////////////
-// funcbb538
+// battle_unit_init_bones_and_matrixes
 800BB538-800BB678
 ////////////////////////////////
 // funcbb67c
@@ -1464,7 +1469,7 @@
 // funcc5cc0
 800C5CC0-800C5E90
 ////////////////////////////////
-// funcc5e94
+// battle_select_player_model_files
 800C5E94-800C60F0
 ////////////////////////////////
 // funcc60f4
@@ -1520,10 +1525,10 @@
 
 // BATTLE.X_model.cpp
 ////////////////////////////////
-// funcc76c8
+// battle_get_model_bone_number_and_init_bones
 800C76C8-800C7920
 ////////////////////////////////
-// funcc7924
+// battle_get_weapon_bone_number_and_init_bones
 800C7924-800C7B5C
 ////////////////////////////////
 // funcc7b60
@@ -1643,10 +1648,10 @@
 // funcd08b8
 800D08B8-800D0954
 ////////////////////////////////
-// funcd0958
+// battle_store_player_animation_scripts_ptr
 800D0958-800D09CC
 ////////////////////////////////
-// funcd09d0
+// battle_restore_player_animation_scripts_ptr
 800D09D0-800D0A40
 ////////////////////////////////
 // funcd0a44

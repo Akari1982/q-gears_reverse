@@ -1,44 +1,45 @@
 ﻿////////////////////////////////
-// funcc76c8
+// battle_get_model_bone_number_and_init_bones()
 
-S4 = A0;
-offset_to_subfile = A1;
+ret_number_of_bones = A0;
+model_data = A1;
 unit_id = A2;
 
+// set root translation (bone 0)
 [801518e4 + unit_id * b9c + 174 + 28] = h(0);
 [801518e4 + unit_id * b9c + 174 + 2a] = h(0);
 [801518e4 + unit_id * b9c + 174 + 2c] = h(0);
 
-[S4] = h(hu[offset_to_subfile] + 1); // number of bone
+[ret_number_of_bones] = h(hu[model_data + 0] + 1); // number of bone
 
-offset_to_subfile = offset_to_subfile + 4;
+model_data = model_data + 4;
 
-for( int bone = 0; bone < w[S4]; ++bone )
+for( int bone = 0; bone < w[ret_number_of_bones]; ++bone )
 {
-    [801518e4 + unit_id * b9c + 3f + bone] = b(0);
+    [801518e4 + unit_id * b9c + 3f + bone] = b(00);
 
-    data = w[offset_to_subfile + bone * 8 + 4];
+    data = w[model_data + bone * 8 + 4];
     if( data == 0 )
     {
         [801518e4 + unit_id * b9c + 78 + bone * 4] = w(0);
     }
     else if( data < 0 )
     {
-        [801518e4 + unit_id * b9c + 3f + bone] = b(1);
-        [801518e4 + unit_id * b9c + 78 + bone * 4] = w(offset_to_subfile + (data & 7fffffff) - 4);
+        [801518e4 + unit_id * b9c + 3f + bone] = b(01);
+        [801518e4 + unit_id * b9c + 78 + bone * 4] = w(model_data + (data & 7fffffff) - 4);
     }
     else
     {
-        [801518e4 + unit_id * b9c + 78 + bone * 4] = w(offset_to_subfile + data - 4);
+        [801518e4 + unit_id * b9c + 78 + bone * 4] = w(model_data + data - 4);
     }
 
     if( bone != 0 )
     {
-        V0 = h[offset_to_subfile + bone * 8 + 0];
-        [801518e4 + unit_id * b9c + bone * 34 + 174 + 28] = h(0); // translation X
-        [801518e4 + unit_id * b9c + bone * 34 + 174 + 2a] = h(0); // translation Y
-        [801518e4 + unit_id * b9c + bone * 34 + 174 + 2c] = h(hu[offset_to_subfile + V0 * 8 + 2]); // translation Z
-        [801518e4 + unit_id * b9c + bone * 34 + 174 + 30] = w(801518e4 + unit_id * b9c + 174 + V0 * 34);
+        parent = h[model_data + bone * 8 + 0];
+        [801518e4 + unit_id * b9c + 174 + bone * 34 + 28] = h(0); // translation X
+        [801518e4 + unit_id * b9c + 174 + bone * 34 + 2a] = h(0); // translation Y
+        [801518e4 + unit_id * b9c + 174 + bone * 34 + 2c] = h(hu[model_data + parent * 8 + 2]); // translation Z
+        [801518e4 + unit_id * b9c + 174 + bone * 34 + 30] = w(801518e4 + unit_id * b9c + 174 + parent * 34);
     }
 }
 ////////////////////////////////
@@ -46,54 +47,48 @@ for( int bone = 0; bone < w[S4]; ++bone )
 
 
 ////////////////////////////////
-// funcc7924
+// battle_get_weapon_bone_number_and_init_bones()
 
-S5 = A0;
-offset_to_subfile = A1;
+ret_number_of_bones = A0;
+model_data = A1;
 unit_id = A2;
 
+// set root translation (bone 0)
 [800fa6d8 + unit_id * 40 + 30] = h(0);
 [800fa6d8 + unit_id * 40 + 32] = h(0);
 [800fa6d8 + unit_id * 40 + 34] = h(0);
 
-[S5] = h(hu[offset_to_subfile] + 1); // store number of bones
+[ret_number_of_bones] = h(hu[model_data] + 1); // store number of bones
 
-bone = 0;
+model_data = model_data + 4;
 
-offset_to_subfile = offset_to_subfile + 4;
-
-if (h[S5] > 0)
+for( int bone = 0; bone < w[ret_number_of_bones]; ++bone )
 {
-    loopc79c8:	; 800C79C8
-        [800fa6d8 + unit_id * 40 + 3e + bone] = b(0);
+    [800fa6d8 + unit_id * 40 + 3e + bone] = b(00);
 
-        data = w[offset_to_subfile + bone * 8 + 4]
-        if (data == 0)
-        {
-            [800fa6d8 + unit_id * 40 + bone * 4 + 4] = w(0);
-        }
-        else if (data < 0)
-        {
-            [800fa6d8 + unit_id * 40 + 3e + bone] = b(1);
-            [800fa6d8 + unit_id * 40 + bone * 4 + 4] = w(offset_to_subfile + (data & 7fffffff) - 4);
-        }
-        else
-        {
-            [800fa6d8 + unit_id * 40 + bone * 4 + 4] = w(offset_to_subfile + data - 4);
-        }
+    data = w[model_data + bone * 8 + 4]
+    if( data == 0 )
+    {
+        [800fa6d8 + unit_id * 40 + bone * 4 + 4] = w(0);
+    }
+    else if( data < 0 )
+    {
+        [800fa6d8 + unit_id * 40 + 3e + bone] = b(01);
+        [800fa6d8 + unit_id * 40 + bone * 4 + 4] = w(model_data + (data & 7fffffff) - 4);
+    }
+    else
+    {
+        [800fa6d8 + unit_id * 40 + bone * 4 + 4] = w(model_data + data - 4);
+    }
 
-        if (bone != 0)
-        {
-            V0 = h[offset_to_subfile + bone * 8 + 0];
-            [800fa6d8 + unit_id * 40 + bone * 34 + 30] = h(0); // translation X
-            [800fa6d8 + unit_id * 40 + bone * 34 + 32] = h(0); // translation Y
-            [800fa6d8 + unit_id * 40 + bone * 34 + 34] = h(hu[offset_to_subfile + V0 * 8 + 2]); // translation Z
-            [800fa6d8 + unit_id * 40 + bone * 34 + 38] = w(800fa6d8 + 8 + unit_id * 40 + V0 * 34);
-        }
-
-        bone = bone + 1;
-        V0 = bone < h[S5];
-    800C7B28	bne    v0, zero, loopc79c8 [$800c79c8]
+    if( bone != 0 )
+    {
+        parent_id = h[model_data + bone * 8 + 0];
+        [800fa6d8 + unit_id * 40 + bone * 34 + 30] = h(0); // translation X
+        [800fa6d8 + unit_id * 40 + bone * 34 + 32] = h(0); // translation Y
+        [800fa6d8 + unit_id * 40 + bone * 34 + 34] = h(hu[model_data + parent_id * 8 + 2]); // translation Z
+        [800fa6d8 + unit_id * 40 + bone * 34 + 38] = w(800fa6d8 + unit_id * 40 + parent_id * 34 + 8);
+    }
 }
 ////////////////////////////////
 
@@ -134,6 +129,7 @@ funcd376c();
 
 ////////////////////////////////
 // funcc7c4c
+
 // A0 = A0; // unit id
 // A1 = w[A3 + 8] + 68; offset to first animation
 // A2 = w[800f8384 + V0 * 4] + c;
@@ -2278,8 +2274,8 @@ ECA70C80 67
                 AT = 800f7e08;
                 AT = AT + V1;
                 [AT + 0000] = h(V0);
-                800CA874	jal    funcb54b8 [$800b54b8]
-                800CA878	nop
+                battle_enemy_init_model_with_settings();
+
                 AT = 80151922;
                 AT = AT + S0;
                 V0 = bu[AT + 0000];
@@ -4012,8 +4008,9 @@ ECA70C80 67
                 V0 = S2 < 004a;
                 800CCB44	bne    v0, zero, loopccb28 [$800ccb28]
                 A0 = A0 + 0004;
-                800CCB4C	jal    funcb4e30 [$800b4e30]
                 A0 = FP & 00ff;
+                battle_player_init_model_with_settings();
+
                 A0 = 02d9;
                 A1 = S5 >> 10;
                 V0 = A1 << 01;
@@ -6816,7 +6813,7 @@ A2 = 801b0000;
 A3 = 0;
 system_cdrom_start_load_file();
 
-funcb7fb4;
+battle_cdrom_read_chain;
 ////////////////////////////////
 
 
@@ -6872,55 +6869,39 @@ Ld0950:	; 800D0950
 
 
 ////////////////////////////////
-// funcd0958
+// battle_store_player_animation_scripts_ptr()
 
 unit_id = A0;
 
 for( int i = 0; i < 8; ++i )
 {
-    V0 = w[800f8384 + unit_id * 4]; // animation settings file offsets
-    [800f9984 + unit_id * 20 + i * 4] = w(w[V0 + 68 + 15 * 4 + i * 4]);
-    [801679bc + unit_id * 20 + i * 4] = w(w[V0 + 68 + 49 * 4 + i * 4]);
+    model_file = w[800f8384 + unit_id * 4];
+    [800f9984 + unit_id * 20 + i * 4] = w(w[model_file + 68 + 15 * 4 + i * 4]);
+    [801679bc + unit_id * 20 + i * 4] = w(w[model_file + 68 + 49 * 4 + i * 4]);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcd09d0
+// battle_restore_player_animation_scripts_ptr()
 
-A1 = 0;
-A0 = A0 & 00ff;
-V1 = 800f8384;
-V0 = A0 << 02;
-T0 = V0 + V1;
-A0 = A0 << 05;
-V0 = 801679bc;
-A3 = A0 + V0;
-V0 = 800f9984;
-A2 = A0 + V0;
+for( int i = 0; i < 8; ++i )
+{
+    model_file = w[800f8384 + unit_id * 4];
+    [model_file + 68 + 15 * 4 + i * 4] = w(w[800f9984 + unit_id * 20 + i * 4]);
+    [model_file + 68 + 49 * 4 + i * 4] = w(w[801679bc + unit_id * 20 + i * 4]);
+}
+////////////////////////////////
 
-loopd0a04:	; 800D0A04
-V1 = w[A2 + 0000];
-A2 = A2 + 0004;
-A0 = A1 << 02;
-V0 = w[T0 + 0000];
-A1 = A1 + 0001;
-V0 = V0 + A0;
-[V0 + 00bc] = w(V1);
-V0 = w[T0 + 0000];
-V1 = w[A3 + 0000];
-V0 = V0 + A0;
-[V0 + 018c] = w(V1);
-V0 = A1 < 0008;
-800D0A34	bne    v0, zero, loopd0a04 [$800d0a04]
-A3 = A3 + 0004;
-800D0A3C	jr     ra 
-800D0A40	nop
+
+
 ////////////////////////////////
 // funcd0a44
-800D0A44	jr     ra 
-800D0A48	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcd0a4c
 800D0A4C	addiu  sp, sp, $ffe8 (=-$18)

@@ -1,43 +1,37 @@
 ////////////////////////////////
-// funcbb538()
+// battle_unit_init_bones_and_matrixes()
 
 unit_id = A0;
 model_data = A1;
 
-V1 = w[801590e8];
-V1 = bu[801590e8 + V1 - 4];
-if( V1 == 2 )
+V1 = w[801590e4 + 4];
+if( bu[801590e4 + V1] == 2 )
 {
-    if (A2 == 0)
+    if( A2 == 0 )
     {
-        A0 = 800f8158; // struct with field background rotation and translation
+        A0 = 800f8158 + 0 * 34;
     }
     else
     {
-        A0 = 800f818c;
+        A0 = 800f8158 + 1 * 34;
     }
-
-    A1 = 801518e4 + unit_id * b9c + 140;
 }
 else if( unit_id == 3 )
 {
     A0 = 800fa63c; // camera matrix
-    A1 = 80153cf8;
 }
 else
 {
-    A0 = 800f8158; // struct with field background rotation and translation
-    A1 = 801518e4 + unit_id * b9c + 140;
+    A0 = 800f8158 + 0 * 34;
 }
 
-[A1 + 30] = w(A0);
+[801518e4 + unit_id * b9c + 170] = w(A0);
+[801518e4 + unit_id * b9c + 174 + 30] = w(801518e4 + unit_id * b9c + 140);
 
-[801518e4 + 34 + unit_id * b9c + 170] = w(801518e4 + 140 + unit_id * b9c);
-
-A0 = 801518e4 + unit_id * b9c + 10; // number of bones
+A0 = 801518e4 + unit_id * b9c + 10; // get here number of bones
 A1 = model_data;
 A2 = unit_id;
-funcc76c8();
+battle_get_model_bone_number_and_init_bones();
 ////////////////////////////////
 
 
@@ -140,46 +134,41 @@ funcbaff8; // scale matrix and set it to gte
 
 
 ////////////////////////////////
-// funcbb804
-V0 = hu[8016376a];
-800BB80C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0020;
-800BB814	bne    v0, zero, Lbb844 [$800bb844]
-[SP + 0010] = w(RA);
-A0 = 77e7;
-A1 = 1000;
-A3 = 800bb89c;
-800BB82C	jal    $80033e34
-800BB830	lui    a2, $801d
-800BB834	jal    funcb7fb4 [$800b7fb4]
-800BB838	nop
-800BB83C	j      Lbb854 [$800bb854]
-800BB840	nop
+// funcbb804()
 
-Lbb844:	; 800BB844
-[80163b80] = h(0);
-[800fa6b8] = h(0);
+if( ( hu[8016376a] & 0020 ) == 0 )
+{
+    A0 = 77e7;
+    A1 = 1000;
+    A2 = 801d0000;
+    A3 = 800bb89c;
+    800BB82C	jal    $80033e34
 
-Lbb854:	; 800BB854
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BB85C	jr     ra 
-800BB860	nop
+    battle_cdrom_read_chain();
+}
+else
+{
+    [80163b80] = h(0);
+    [800fa6b8] = h(0);
+}
 ////////////////////////////////
-// funcbb864
-800BB864	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
+
+
+////////////////////////////////
+// funcbb864()
+
 A0 = 77e6;
 A1 = 0800;
+A2 = 801d0000;
 A3 = 800bb89c;
 800BB87C	jal    $80033e34
-800BB880	lui    a2, $801d
-800BB884	jal    funcb7fb4 [$800b7fb4]
-800BB888	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BB894	jr     ra 
-800BB898	nop
+
+battle_cdrom_read_chain();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcbb89c
 V0 = hu[8016376a];

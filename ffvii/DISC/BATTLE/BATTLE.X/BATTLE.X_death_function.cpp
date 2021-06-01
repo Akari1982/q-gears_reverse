@@ -1247,24 +1247,21 @@ SP = SP + 0020;
 800C5038	jr     ra 
 800C503C	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funcc5040
-800C5040	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 002c] = w(S5);
+
 S5 = A1;
 A1 = 0001;
-[SP + 0024] = w(S3);
 S3 = A0;
-[SP + 0028] = w(S4);
 S4 = A2;
 A3 = A3 & 0003;
-[SP + 0020] = w(S2);
 S2 = w[SP + 0048];
 A2 = 0;
-[SP + 0018] = w(S0);
 S0 = w[80163c74];
 A3 = A3 << 05;
-[SP + 0030] = w(RA);
-[SP + 001c] = w(S1);
 [SP + 0010] = w(0);
 800C508C	jal    $80044a68
 A0 = S0;
@@ -1312,20 +1309,13 @@ V0 = V0 & A1;
 V0 = V0 | A0;
 [S2 + 0000] = w(V0);
 V0 = S0 + 0138;
-RA = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-800C5168	jr     ra 
-800C516C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcc5170
-800C5170	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S2);
+
 S2 = A0;
 A0 = S2 & 00ff;
 V0 = A0 << 03;
@@ -1333,11 +1323,6 @@ V0 = V0 - A0;
 V0 = V0 << 02;
 V0 = V0 + A0;
 V1 = V0 << 02;
-[SP + 0024] = w(RA);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 AT = 80151200;
 AT = AT + V1;
 V0 = w[AT + 0000];
@@ -1390,8 +1375,10 @@ V0 = A0 << 01;
 AT = 80151232;
 AT = AT + V1;
 [AT + 0000] = b(S2);
-800C5290	jal    funcd09d0 [$800d09d0]
 S0 = S2 & 00ff;
+
+battle_restore_player_animation_scripts_ptr();
+
 800C5298	j      Lc52e4 [$800c52e4]
 V1 = S0 << 01;
 
@@ -1432,8 +1419,9 @@ AT = AT + S1;
 V0 = S0 < 0004;
 800C5328	beq    v0, zero, Lc542c [$800c542c]
 800C532C	nop
-800C5330	jal    funcb4e30 [$800b4e30]
 A0 = S0;
+battle_player_init_model_with_settings();
+
 V0 = bu[801590cc];
 800C5340	nop
 800C5344	bne    s0, v0, Lc53d0 [$800c53d0]
@@ -1497,23 +1485,19 @@ A1 = A1 + 0068;
 800C5428	nop
 
 Lc542c:	; 800C542C
-800C542C	jal    funcb54b8 [$800b54b8]
 A0 = S0;
+battle_enemy_init_model_with_settings();
+
 A0 = S0;
 A1 = S3;
 800C543C	jal    funcb8fcc [$800b8fcc]
 A2 = S4;
 
 Lc5444:	; 800C5444
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800C5460	jr     ra 
-800C5464	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcc5468
 800C5468	addiu  sp, sp, $ffe8 (=-$18)
@@ -2026,7 +2010,7 @@ funcdcf94();
 
 
 ////////////////////////////////
-// funcc5e94()
+// battle_select_player_model_files()
 
 for( int i = 0; i < 3; ++i )
 {
@@ -2128,24 +2112,11 @@ return V0 >> 2 + 4;
 
 ////////////////////////////////
 // funcc610c
-V0 = bu[801518dc];
-800C6114	addiu  sp, sp, $ffe8 (=-$18)
-800C6118	beq    v0, zero, Lc613c [$800c613c]
-[SP + 0010] = w(RA);
 
-loopc6120:	; 800C6120
-800C6120	jal    funcb7fb4 [$800b7fb4]
-800C6124	nop
-V0 = bu[801518dc];
-800C6130	nop
-800C6134	bne    v0, zero, loopc6120 [$800c6120]
-800C6138	nop
-
-Lc613c:	; 800C613C
-RA = w[SP + 0010];
-SP = SP + 0018;
-800C6144	jr     ra 
-800C6148	nop
+while( bu[801518dc] != 0 )
+{
+    battle_cdrom_read_chain();
+}
 ////////////////////////////////
 
 
@@ -2171,55 +2142,26 @@ for( int i = 0; i < 18; ++i )
 
 
 ////////////////////////////////
-// funcc61c0
-800C61C0	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 001c] = w(S3);
-S3 = 0;
-[SP + 0024] = w(S5);
-S5 = 0006;
-[SP + 0010] = w(S0);
-S0 = 800f4b1c;
-[SP + 0020] = w(S4);
-S4 = 0010;
-[SP + 0018] = w(S2);
-S2 = 0;
-[SP + 0014] = w(S1);
-S1 = 0;
-[SP + 0028] = w(RA);
+// funcc61c0()
 
-loopc61fc:	; 800C61FC
-AT = 801636b8;
-AT = AT + S1;
-V0 = b[AT + 0000];
-800C620C	nop
-800C6210	bne    v0, s5, Lc6244 [$800c6244]
-S1 = S1 + 0010;
-V0 = 01e0;
-[S0 + 0002] = h(V0);
-V0 = 0003;
-A1 = 800f8cf4;
-A0 = S0;
-A1 = S2 + A1;
-[S0 + 0000] = h(S4);
-[S0 + 0004] = h(S4);
-800C623C	jal    battle_set_load_to_vram [$800d2538]
-[S0 + 0006] = h(V0);
+for( int i = 0; i < 3; ++i )
+{
+    if( b[801636b8 + i * 10 + 0] == 6 )
+    {
+        [800f4b1c + 2] = h(1e0);
+        [800f4b1c + 0] = h(10);
+        [800f4b1c + 4] = h(10);
+        [800f4b1c + 6] = h(3);
 
-Lc6244:	; 800C6244
-S3 = S3 + 0001;
-V0 = S3 < 0003;
-800C624C	bne    v0, zero, loopc61fc [$800c61fc]
-S2 = S2 + 0060;
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0030;
-800C6274	jr     ra 
-800C6278	nop
+        A0 = 800f4b1c; // sizes
+        A1 = 800f8cf4 + i * 60; // data
+        battle_set_load_to_vram();
+    }
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcc627c
 800C627C	addiu  sp, sp, $ffe8 (=-$18)
@@ -3363,8 +3305,9 @@ A0 = 0003;
 V0 = w[800f57d0];
 A1 = w[S0 + 0004];
 A2 = 0;
-800C754C	jal    funcbb538 [$800bb538]
 A1 = V0 + A1;
+battle_unit_init_bones_and_matrixes();
+
 A1 = 0;
 V1 = 8015138f;
 800C7560	addiu  t0, v1, $ffe7 (=-$19)

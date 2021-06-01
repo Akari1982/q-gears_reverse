@@ -1,4 +1,5 @@
-800a0000               some action default values (size 0x4).
+800a0000 start of battle exe file (end 800f38ab)
+800a0000 some action default values (size 0x4).
     00 00 0000          14 11 0000 attack       1D 00 0000 magic        1F 00 0000 summon
     21 37 0000 item     22 00 0600 steal        26 00 1204 sense        21 0A 0000 coin
     21 09 0000 throw    28 B1 0020 morph        2A 11 0000 deathblow    2C 90 0000 manipulate
@@ -64,7 +65,7 @@
 
 800e8c90
 
-800e8e84      array of default player position depends on type of battle (0x12 for each battle type, 0x6 for each player)
+800e8e84 array of default player position depends on type of battle (0x12 for each battle type, 0x6 for each player)
 C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 C0F9 0000 5CF9    0000 0000 5CF9    4006 0000 5CF9
@@ -86,7 +87,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 0000 0000 C409    0000 0000 3CF6
 18FC 0000 A406    E803 0000 A406
 
-800e8f94      array of default player rotations
+800e8f94 array of default player rotations based on formation type (0x26 size per formation)
 0000 0000 0000
 0000 0000 0000
 0008 0008 0008
@@ -100,6 +101,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800e9ff8 offsets to init camera scripts.
 
 800ea198 default camera data.
+
+800ea50c some model file integrated into exe.
 
 800f01dc pointer to current tex to load. Set sizes and addreses here.
 800f01e0 index into 800f4b2c data for loading texture cluts. 0-7.
@@ -115,6 +118,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f1e4f []       init with 0. Set 1 together with 800f1e50.
 800f1e50 [][]     set with string id.
+
+800f38ab end of battle exe file.
 
 800f38ac [][][][] array of some data. Init in funca283c. Related with 800a0098 data.
 
@@ -531,7 +536,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +1a [][]     number of steps.
     +1e [][]     current step.
 
-800f8158 array of matrixes for field background (size 0x34 items 0xa)
+800f8158 array of matrixes for stage (size 0x34 items 0xa)
     +00 [][][][] final rotation matrix R11R12.
     +04 [][][][] final rotation matrix R13R21.
     +08 [][][][] final rotation matrix R22R23.
@@ -566,10 +571,19 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f8384 [][][][] pointer to 1st player model.
 800f8388 [][][][] pointer to 2nd player model.
 800f838c [][][][] pointer to 3rd player model.
-
 800f8390 [][][][] pointer to model data for 1st enemy model stored (without texture because it's loaded to vram)
 800f8394 [][][][] pointer to model data for 2nd enemy model stored (without texture because it's loaded to vram)
 800f8398 [][][][] pointer to model data for 3rd enemy model stored (without texture because it's loaded to vram)
+800f839c [][][][] pointer to 800ea50c.
+    + 4 [][][][] pointer to model data.
+        +  0 [][]     number of bones.
+        +  4 array of bones (0x8 size).
+            + 0 [][]     parent bone id.
+            + 2 [][]     bone length.
+            + 4 [][][][] pointer to bone vertex.
+    + 8 [][][][] pointer to settings.
+        + 24 array of pointers to something unknown (0x4 size 0x8 items).
+        + 68 array of 0x20 offsets to animation scripts for enemy and 0x4a offsets for player and inbuild model (0x4 size)
 
 800f83a4 battle global structure. (address 0x2000).
     +00 []       store data performed action type id here. (0x20 for example)
@@ -666,6 +680,15 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f9774 []       current target count.
 
 800f9980 []       number of players units in battle.
+800f9984 array of array pointers to animation scripts for units (0x20 size per unit 0x8 items for each unit 0x4 size).
+    +00 [][][][] pointer to animation script 0x15.
+    +04 [][][][] pointer to animation script 0x16.
+    +08 [][][][] pointer to animation script 0x17.
+    +0c [][][][] pointer to animation script 0x18.
+    +10 [][][][] pointer to animation script 0x19.
+    +14 [][][][] pointer to animation script 0x1a.
+    +18 [][][][] pointer to animation script 0x1b.
+    +1c [][][][] pointer to animation script 0x1c.
 
 800f99e8 []       store target id here (used in animation opcodes).
 
@@ -706,7 +729,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800fa614 we get translation vector for field matrix here
 
-800fa63c matrix user for field render. Camera matrix.
+800fa63c matrix user for stage. Camera matrix.
     +20 [][]     rotation X
     +22 [][]     rotation Y
     +24 [][]     rotation Z
@@ -721,9 +744,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800fa6d0 []       formation type id. Used for load camdat (0,1,8 - CAMDAT0.LZS, 2 - CAMDAT1.LZS, 3,4,5,6,7 - CAMDAT2.LZS).
 800fa6d4 []       we store target unit id here during attack. Used in effects animation opcodes. Init with 0.
 
-800fa6d8 some secondary animation unit struct 0x40 size. In this structure can be more than 1 bone (bone data 0x34) but it seems that here will be error in this case. And seems all models has only 1 weapon bone.
+800fa6d8 weapon model struct 0x40 size. In this structure can be more than 1 bone (bone data 0x34) but it seems that here will be error in this case. And seems all models has only 1 weapon bone.
     +00 []       we store 1 if secondary animation in process, 0 if we need to read ot from start.
-    +04 [][][][] pointer to some data in [last file in model file - 1]
+    +04 [][][][] pointer to bone vertex data.
     +08 []       some additional bone flags (0x1 size).
                  0x08 - add this in die effect 0.
     +28 [][]     rotation X.
@@ -732,8 +755,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +30 [][]     translation X. Init with 0.
     +32 [][]     translation Y. Init with 0.
     +34 [][]     translation Z. Init with 0.
-    +3c [][]     number of bones in secondary animations.
-    +3e [][]     init with 0.
+    +38 [][][][] pointer to camera matrix.
+    +3c [][]     number of bones in weapon.
+    +3e []       array of bones flags (only one bone can exist).
 
 
 
@@ -789,31 +813,35 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 80151200 some model struct 0x74 size.
 +00 [][][][] ???
-+04 [][]     init from +44 from animation description block.
-+06 [][]     init from +46 from animation description block.
-+08 [][]     init from +48 from animation description block.
-+0a [][]     init from +4a from animation description block.
++04 [][]     init from +44 from model settings block.
++06 [][]     init from +46 from model settings block.
++08 [][]     init from +48 from model settings block.
++0a [][]     init from +4a from model settings block.
 +0c [][]     some flags.
-+0e [][]     init from +4c from animation description block.
-+10 [][]     init from +4e from animation description block.
-+12 [][]     init from +50 from animation description block.
-+14 [][]     init from +52 from animation description block.
-+16 [][]     init from +54 from animation description block.
-+18 [][]     init from +56 from animation description block.
-+1a [][]     init from +58 from animation description block.
-+1c [][]     init from +5a from animation description block.
-+1e [][]     init from +5c from animation description block.
-+20 [][]     init from +5e from animation description block.
-+22 [][]     init from +60 from animation description block.
-+24 [][]     init from +62 from animation description block.
-+26 [][]     init from +0c from animation description block.
-+28 [][]     init from +0e from animation description block.
-+2a [][]     init with [+0c] - 0x384 from animation description block.
++0e [][]     init from +4c from model settings block.
++10 [][]     init from +4e from model settings block.
++12 [][]     init from +50 from model settings block.
++14 [][]     init from +52 from model settings block.
++16 [][]     init from +54 from model settings block.
++18 [][]     init from +56 from model settings block.
++1a [][]     init from +58 from model settings block.
++1c [][]     init from +5a from model settings block.
++1e [][]     init from +5c from model settings block.
++20 [][]     init from +5e from model settings block.
++22 [][]     init from +60 from model settings block.
++24 [][]     init from +62 from model settings block.
++26 [][]     init from +0c from model settings block.
++28 [][]     init from +0e from model settings block.
++2a [][]     init with [+0c] - 0x384 from model settings block.
 +2c [][]     delayed rotation for target. We will use this data when target will be hitted.
 +2e [][]     init with 0.
-+30 [][]     init from +64 from animation description block.
++30 [][]     init from +64 from model settings block.
 +32 []       unit index (0, 1, 2 for player, init with 0 for enemy). Init with 0. If this == 6 then we use enemy with id 6.
++33 []       init with 0.
 +34 []       store 0 here during battle init.
++38 [][]     init with 1000.
++3a [][]     init with 1000.
++3c [][]     init with 1000.
 +3e [][]     
 80151236 []       reset to 0 at start of idle and then increment this each frame.
 
@@ -848,51 +876,53 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 801518dc []       if this is not 0 then something is loading in background.
 
-801518e4 struct for 3d models (0xb9c size). 0x00-0x09 parts of battle field.
-80154754 enemy starts here
-+000 [][]     init from +00 from animation description block in case of player.
-+002 [][]     animation id. If this == bu[80163784 + unit_id] we do some specific treatment with animation.
-+004 [][]     action id to perform. We copy action id from here to actual. As I see used for delayed hurt action while it wait to sync with attacker.
-+006 [][]     scale of model.
-+008 [][]     Init from +06 from animation description block.
-+00a [][]     Init from +08 from animation description block.
-+00c [][]     Init from +0a from animation description block.
-+00e [][]     animation to play.
-+010 [][]     number of bones in model.
-+012 [][]     collision radius. Init from +04 from animation description block. Used when calculated how much move to target to hit it.
-+014 [][]     alpha for additional color.
-+016 [][]     clut offset.
-+018 [][]     default rotation.
-+022 []       effect id from attack that we use. Init with 0.
-+023 []       store here action id we performing. (0x20 - enemy attack, 0x2 - magic)
-+025 []       some flags (add 0x80 byte if 801518e6 == 0x39)
-+026 []       init with 1.
-+027 []       is &80 then we play secondary animation. Init from +02 from animation description block. Add 0x40 bit here if +00 in animation block != 0.
-+028 []       R additional color.
-+029 []       G additional color.
-+02a []       B additional color.
-+02b array of joints (size 0x01 items 0x10).
-+03b []       init with 1.
-+03c []       pointer in current action script. Init with 0.
-+03d []       init with 0. Frames to wait.
-+03e []       some flags.
+801518e4 struct for 3d models (0xb9c size). 0x00-0x09 parts of battle field. 80154754 enemy starts here.
++  0 [][]     init from +00 from animation description block in case of player.
++  2 [][]     animation id. If this == bu[80163784 + unit_id] we do some specific treatment with animation.
++  4 [][]     action id to perform. We copy action id from here to actual. As I see used for delayed hurt action while it wait to sync with attacker.
++  6 [][]     scale of model.
++  8 [][]     Init from +06 from model settings block.
++  a [][]     Init from +08 from model settings block.
++  c [][]     Init from +0a from model settings block.
++  e [][]     animation to play.
++ 10 [][]     number of bones in model.
++ 12 [][]     collision radius. Init from +04 from animation description block. Used when calculated how much move to target to hit it.
++ 14 [][]     alpha for additional color.
++ 16 [][]     clut offset.
++ 18 [][]     default rotation.
++ 22 []       effect id from attack that we use. Init with 0.
++ 23 []       store here action id we performing. (0x20 - enemy attack, 0x2 - magic)
++ 24 []       init with 0x1f.
++ 25 []       some flags (add 0x80 byte if 801518e6 == 0x39)
+              0x10 - add if this is stage 0x39 (safer battle).
++ 26 []       init with 1.
++ 27 []       death type. 0x80 flag - model has weapon model (enemy). Add 0x40 bit here if +00 in animation block != 0.
++ 28 []       R additional color.
++ 29 []       G additional color.
++ 2a []       B additional color.
++ 2b array of joints (size 0x01 items 0x10).
++ 3b []       init with 1.
++ 3c []       pointer in current action script. Init with 0.
++ 3d []       init with 0. Frames to wait.
++ 3e []       some flags.
                 add 0x01 when we add hurt actions.
                 add 0x02 if we want unit to disappear.
                 add 0x04 if we want unit to appear.
                 add 0x20 at 0x4 or 0x5 hurt type action.
-+03f array of some bone flags (0x1 byte size).
++ 3f array of some bone flags (0x1 byte size).
     +00 []       some flags.
+                 0x01 - set to 1 if bone data exist and less than zero.
                  0x08 - add this in die effect 0.
-+074 []       we store 1 if animation in process, 0 if we need to read ot from start.
-+078 [][][][] array of pointers to bone data in model file (0x4 size).
-+140 [][][][] pointer to struct with field background rotation and translation (or some other matrixes in special cases)
++ 74 []       we store 1 if animation in process, 0 if we need to read ot from start.
++ 78 [][][][] array of pointers to bone data in model file (0x4 size).
++140 [][][][] pointer to struct with battle stage rotation and translation (or some other matrixes in special cases)
 +160 [][]     Root rotation X.
 +162 [][]     Root rotation Y. Seted in 0xfc animation opcode (0800(look right) or 0000 (look left)).
 +164 [][]     Root rotation Z.
 +168 [][]     Root translation X. Used in 0xfc animation opcode.
 +16a [][]     Root translation Y.
 +16c [][]     Root translation Z. Used in 0xfc animation opcode.
-
++170 [][][][] pointer to camera matrix.
 +174 start of data where we store translation and rotation in secondary animation (0x34 size for each bone)
     +14 [][][][] real translation X.
     +18 [][][][] real translation Y.
@@ -1071,6 +1101,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +14 [][]     3rd formation id of candidates for next arena battle.
     +16 [][]     4th formation id of candidates for next arena battle.
     +18 [][]     escape flags.
+                    0x0002 - play init animation during load if this is 0.
                     Some flags checked as &10 during enemy init.
                     If (this & 4) == 0 then add 0x08 to previous battle result.
                     Make this & fffb if previous battle result &08.
@@ -1106,8 +1137,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 801636b8 units structure (size 0x10)
     00 []       init with -1. If this is not -1 and player not dead we execute ai script 0.
     01 []       idle action id. in case of enemy init with +10 from 0x68 structure (there is 0 there).
-    02
-    03
+    02 [][]     ???
     04 []       dead effect. Init from 801518e4+27 & 3f.
     05
     06 [][]     backrow? In case of player store w[800f83e0 + A3 * 68 + 4] & 1 here for battle types 0,1. Store !(w[800f83e0 + A3 * 68 + 4] & 1) for battle 2 and 0 for battle types 3,4,5. Function func1b19ac.
@@ -1235,6 +1265,16 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +04 []       item command restriction & b.
 
 80167938 copy here whole savemap character data during battle init.
+
+801679bc array of array pointers to animation scripts for units (0x20 size per unit 0x8 items for each unit 0x4 size).
+    +00 [][][][] pointer to animation script 0x49.
+    +04 [][][][] pointer to animation script 0x4a.
+    +08 [][][][] pointer to animation script 0x4b.
+    +0c [][][][] pointer to animation script 0x4c.
+    +10 [][][][] pointer to animation script 0x4d.
+    +14 [][][][] pointer to animation script 0x4e.
+    +18 [][][][] pointer to animation script 0x4f.
+    +1c [][][][] pointer to animation script 0x50.
 
 801a0000 load CAMDAT0.LZS here.
 801b0000 load STAGE00.LZS here (copy to 801590e4).
