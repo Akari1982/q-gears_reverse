@@ -930,6 +930,7 @@ else
 
 ////////////////////////////////
 // funcd376c
+
 // A0 - struct to store
 // A1 - 1 if we continue animation - 0 if we read first frame
 // A2 - bone number

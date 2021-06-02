@@ -1476,11 +1476,11 @@ V0 = S3 << 02;
 AT = 800f8384;
 AT = AT + V0;
 A3 = w[AT + 0000];
-800C5410	nop
 A1 = w[A3 + 0008];
 A2 = A3 + 000c;
-800C541C	jal    funcc7c4c [$800c7c4c]
 A1 = A1 + 0068;
+battle_execute_unit_animation_script();
+
 800C5424	j      Lc5444 [$800c5444]
 800C5428	nop
 
@@ -3262,23 +3262,24 @@ SP = SP + 0018;
 800C749C	jr     ra 
 800C74A0	nop
 ////////////////////////////////
-// funcc74a4
-V0 = bu[80153bdd];
-800C74AC	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0002;
-800C74B4	bne    v0, zero, Lc74d4 [$800c74d4]
-[SP + 0010] = w(RA);
-A3 = w[800f57d0];
-A0 = 0003;
-A1 = w[A3 + 0008];
-800C74CC	jal    funcc7c4c [$800c7c4c]
-A2 = A3 + 000c;
 
-Lc74d4:	; 800C74D4
-RA = w[SP + 0010];
-SP = SP + 0018;
-800C74DC	jr     ra 
-800C74E0	nop
+
+
+////////////////////////////////
+// funcc74a4()
+
+if( ( bu[80153bdd] & 02 ) == 0 )
+{
+    A0 = 3; // unit id
+    A3 = w[800f57d0];
+    A1 = w[A3 + 8];
+    A2 = A3 + c;
+    battle_execute_unit_animation_script();
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcc74e4
 

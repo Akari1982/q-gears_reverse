@@ -1537,7 +1537,7 @@
 // funcc7be8
 800C7BE8-800C7C48
 ///////////////////////////////
-// funcc7c4c
+// battle_execute_unit_animation_script
 800C7C4C-800CD3FC
 ///////////////////////////////
 // funccd400
@@ -1558,7 +1558,7 @@
 // funccd860
 800CD860-800CDD40
 ////////////////////////////////
-// funccdd44
+// battle_reset_unit_animation_script
 800CDD44-800CDDA0
 ////////////////////////////////
 // funccdda4

@@ -297,7 +297,8 @@ if( ( hu[8016360c + 18] & 0002 ) == 0 )
             A0 = i + 4; // unit id
             A1 = w[model_file + 8] + 68; // animation script
             A2 = model_file + c;
-            funcc7c4c(); // play animation
+            A3 = model_file;
+            battle_execute_unit_animation_script();
         }
     }
 }

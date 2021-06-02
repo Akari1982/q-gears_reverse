@@ -839,6 +839,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 +32 []       unit index (0, 1, 2 for player, init with 0 for enemy). Init with 0. If this == 6 then we use enemy with id 6.
 +33 []       init with 0.
 +34 []       store 0 here during battle init.
++36 []       incremented if +c flag 0x0002 not set during animation script update.
 +38 [][]     init with 1000.
 +3a [][]     init with 1000.
 +3c [][]     init with 1000.
@@ -893,7 +894,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 + 22 []       effect id from attack that we use. Init with 0.
 + 23 []       store here action id we performing. (0x20 - enemy attack, 0x2 - magic)
 + 24 []       init with 0x1f.
-+ 25 []       some flags (add 0x80 byte if 801518e6 == 0x39)
++ 25 []       some flags (add 0x80 byte if animation id == 0x39)
               0x10 - add if this is stage 0x39 (safer battle).
 + 26 []       init with 1.
 + 27 []       death type. 0x80 flag - model has weapon model (enemy). Add 0x40 bit here if +00 in animation block != 0.
@@ -901,11 +902,11 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 + 29 []       G additional color.
 + 2a []       B additional color.
 + 2b array of joints (size 0x01 items 0x10).
-+ 3b []       init with 1.
++ 3b []       init with 1. Play animation script if this not 0.
 + 3c []       pointer in current action script. Init with 0.
 + 3d []       init with 0. Frames to wait.
 + 3e []       some flags.
-                add 0x01 when we add hurt actions.
+                0x01 if set then we reset animation script during script update and remove flag.
                 add 0x02 if we want unit to disappear.
                 add 0x04 if we want unit to appear.
                 add 0x20 at 0x4 or 0x5 hurt type action.
@@ -1161,7 +1162,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80163772 [][]     left fighters mask.
 
 80163780 [][]     store here last mask with enemy units in case of battle type 4 (0 - there is no enemy in right mask, 1 - there is no enemy in left mask, 2 - enemies in both masks)
-80163784 one byte unit array with idle? actions id for each.
+80163784 one byte unit array with idle animation id.
 80163790 [][][][] party slots data.
 
 

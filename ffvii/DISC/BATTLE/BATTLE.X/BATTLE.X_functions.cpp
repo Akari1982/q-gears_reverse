@@ -1204,13 +1204,13 @@ for( int i = 0; i < 3; ++i )
 
         if( ( bu[80151909 + i * b9c + 0] & 2 ) == 0 )
         {
-            A0 = i;
+            A0 = i; // unit id
             V0 = bu[80151232 + i * 74 + 0];
             A3 = w[800f8384 + V0 * 4 + 0];
             A1 = w[A3 + 8];
             A2 = A3 + c;
             A1 = A1 + 68;
-            800B8F8C	jal    funcc7c4c [$800c7c4c]
+            battle_execute_unit_animation_script();
         }
     }
 }
@@ -1219,42 +1219,28 @@ for( int i = 0; i < 3; ++i )
 
 
 ////////////////////////////////
-// funcb8fcc
-800B8FCC	addiu  sp, sp, $ffe8 (=-$18)
-V0 = A0 << 03;
-V0 = V0 - A0;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = V0 << 02;
-[SP + 0010] = w(RA);
-AT = 80151232;
-AT = AT + V0;
-V1 = bu[AT + 0000];
-V0 = 0006;
-800B8FFC	beq    v1, v0, Lb9020 [$800b9020]
-800B9000	addiu  v1, a0, $fffc (=-$4)
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-AT = 800f7e08;
-AT = AT + V0;
-V0 = h[AT + 0000];
+// funcb8fcc()
 
-Lb9020:	; 800B9020
-800B9020	nop
-V0 = V0 << 02;
-AT = 800f8384;
-AT = AT + V0;
-A3 = w[AT + 0000];
-800B9038	nop
-A1 = w[A3 + 0008];
-A2 = A3 + 000c;
-800B9044	jal    funcc7c4c [$800c7c4c]
-A1 = A1 + 0068;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B9054	jr     ra 
-800B9058	nop
+unit_id = A0;
+
+if( bu[80151232 + unit_id * 74 + 0] != 6 )
+{
+    V0 = h[800f7e08 + (unit_id - 4) * c + 0];
+}
+else
+{
+    V0 = 6;
+}
+
+A0 = unit_id;
+A3 = w[800f8384 + V0 * 4 + 0];
+A1 = w[A3 + 8] + 68;
+A2 = A3 + c;
+battle_execute_unit_animation_script();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb905c
 V0 = bu[800f7e04];
