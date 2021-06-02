@@ -209,40 +209,21 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             }
             break;
 
-800C80C0 91
+            case 91:
+            {
+                A0 = bu[801518e4 + unit_id * b9c + 3c];
+                [801518e4 + unit_id * b9c + 3c] = b(A0 + 1);
+                [1f800000] = w(bu[script + A0]); // read param
 
-            A0 = unit_id;
-            V1 = A0 << 01;
-            V1 = V1 + A0;
-            V0 = V1 << 05;
-            V0 = V0 - V1;
-            V0 = V0 << 03;
-            V0 = V0 - A0;
-            V0 = V0 << 02;
-            AT = 80151920;
-            AT = AT + V0;
-            A0 = bu[AT + 0000];
-            800C80F0	nop
-            V1 = A0 + 0001;
-            AT = 80151920;
-            AT = AT + V0;
-            [AT + 0000] = b(V1);
-            V0 = w[1f800024];
-            800C810C	nop
-            A0 = A0 + V0;
-            V0 = bu[A0 + 0000];
-            A0 = 800cdfc4;
-            800C8120	jal    funcbc04c [$800bc04c]
-            [1f800000 + 0000] = w(V0);
-            [1f800034] = b(V0);
-            V0 = bu[1f800034];
-            V1 = hu[1f800000 + 0000];
-            V0 = V0 << 05;
-            AT = 801621f4;
-            AT = AT + V0;
-            [AT + 0000] = h(V1);
-            800C8148	j      Lcd208 [$800cd208]
-            800C814C	nop
+                A0 = 800cdfc4; // funcdfc40
+                funcbc04c();
+                [1f800034] = b(V0);
+
+                [801621f0 + V0 * 20 + 4] = h(hu[1f800000]);
+
+                800C8148	j      Lcd208 [$800cd208]
+            }
+            break;
 
 800C8150 9c
 

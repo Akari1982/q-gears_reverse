@@ -119,6 +119,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f1e4f []       init with 0. Set 1 together with 800f1e50.
 800f1e50 [][]     set with string id.
 
+800f38a0 []       ???
+
 800f38ab end of battle exe file.
 
 800f38ac [][][][] array of some data. Init in funca283c. Related with 800a0098 data.
@@ -206,7 +208,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 800f4d2c      array of 0xf struct with size 0x14.
 +00 [][]     store unit id here to which we want play hurt actions.
 
-
+800f57cc
 
 800f5b70 []       init with 0. Far color R for battle.
 800f5b71 []       init with 0. Far color G for battle.
@@ -677,6 +679,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f8cf0 []       set to 0 in 0xf7 action opcode
 
+800f9108
+
 800f9774 []       current target count.
 
 800f9980 []       number of players units in battle.
@@ -1036,6 +1040,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +0a [][]     frame at which stop effect.
     +1a [][]     distance from joint.
     +1c [][][][] attached bone matrix offset.
+    // 800cdfc4 ???
 
 80162974 []       init with 0.
 
