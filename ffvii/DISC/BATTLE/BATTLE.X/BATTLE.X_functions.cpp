@@ -422,23 +422,25 @@ A0 = w[801517c0] + 40ec;
 A1 = 2;
 system_psyq_clear_o_tag();
 
-V1 = 80164000;
 if( w[800f8368] == 0 )
 {
-    V1 = 80168000;
+    [80163c74] = w(80168000);
 }
-[80163c74] = w(V1);
+else
+{
+    [80163c74] = w(80164000);
+}
 
 A0 = 1;
 funcb8360();
 
 funcc5cc0(); // add next show string element 800f9da8
 
-funcb8438(); // we load field model to packets here
+funcb8438(); // we load stage model to packets here
 
 for( int i = 0; i < a; ++i )
 {
-    if( bu[8015190a + i * b9c] == 0 )
+    if( bu[801518e4 + i * b9c + 26] == 0 )
     {
         [800f7de4] = b(0);
         break;

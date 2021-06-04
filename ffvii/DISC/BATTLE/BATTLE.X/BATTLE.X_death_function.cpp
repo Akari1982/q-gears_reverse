@@ -57,12 +57,12 @@ funcc33f0;
 
 
 ////////////////////////////////
-// funcc36b4
-T1 = A0;
+// funcc36b4()
 
+T1 = A0;
 unit_id = h[801620ac + T1 * 20 + 8];
 
-if (h[801620ac + T1 * 20 + 4] == 0) // if there is no steps left
+if( h[801620ac + T1 * 20 + 4] == 0 ) // if there is no steps left
 {
     [801620ac + T1 * 20 * 20 + 0] = h(-1);
     [801518e4 + unit_id * b9c + 25] = b(bu[801518e4 + unit_id * b9c + 25] & 7f);
@@ -70,7 +70,7 @@ if (h[801620ac + T1 * 20 + 4] == 0) // if there is no steps left
     [801518e4 + unit_id * b9c + 26] = b(1);
 
     A0 = unit_id;
-    funcb5aac;
+    funcb5aac();
 }
 else
 {

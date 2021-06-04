@@ -1235,6 +1235,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                         funcc4d10 - ???
                         800d7888 - mashinegun effect
 
+80163c74 [][][][] store 80168000 or 80164000 here.
 80163c78 [][]     number of inited element in 80163b84 and 801621f0.
 80163c7c []       current battle state (0:init -> 1:).
 

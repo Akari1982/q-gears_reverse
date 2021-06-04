@@ -1593,6 +1593,7 @@ funcb60e0();
 
 ////////////////////////////////
 // funcb5fe8
+
 unit_id = A0;
 
 number_of_bones = h[801518e4 + unit_id * b9c + 10];

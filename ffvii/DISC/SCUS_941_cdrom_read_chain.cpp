@@ -935,7 +935,7 @@ if( V0 == -1 ) // error
 }
 else if( V0 == 0 ) // finish read
 {
-    [80034cf0] = w(800698f0); // buffer where we read into
+    [80034cf0] = w(800698f0); // src
     [80071a6c] = w(w[80071a6c] - 9); // size
     [800698e8] = w(w[800698e8] + 9); // sector
 
@@ -1171,9 +1171,9 @@ V0 = V0 + A0;
 ////////////////////////////////
 // system_cdrom_set_lzs_extract()
 
-[80034cf0] = w(A0); // buffer where we read into
-[80034cf4] = w(A1); // final buffer
-[80034cfc] = w(A1); // final buffer
+[80034cf0] = w(A0); // src
+[80034cf4] = w(A1); // dst
+[80034cfc] = w(A1); // dst
 [80034d14] = w(80034e00); // system_cdrom_lzs_extract()
 ////////////////////////////////
 
@@ -1182,10 +1182,10 @@ V0 = V0 + A0;
 ////////////////////////////////
 // func34d5c()
 
-T0 = w[80034cf0]; // buffer where we read into
-T1 = w[80034cf4]; // final buffer
+T0 = w[80034cf0]; // src
+T1 = w[80034cf4]; // dst
 T2 = w[80034cf8];
-T4 = w[80034cfc]; // final buffer
+T4 = w[80034cfc]; // dst
 T5 = w[80034d00];
 T6 = w[80034d04];
 T7 = 4800;
@@ -1199,27 +1199,18 @@ A0 = w[80034d08];
 
 
 ////////////////////////////////
-// func34db0
-80034DB0	lui    at, $8003
-[AT + 4d14] = w(RA);
-80034DB8	lui    ra, $8003
-RA = w[RA + 4d10];
-80034DC0	lui    at, $8003
-[AT + 4cf0] = w(T0);
-80034DC8	lui    at, $8003
-[AT + 4cf4] = w(T1);
-80034DD0	lui    at, $8003
-[AT + 4cf8] = w(T2);
-80034DD8	lui    at, $8003
-[AT + 4cfc] = w(T4);
-80034DE0	lui    at, $8003
-[AT + 4d00] = w(T5);
-80034DE8	lui    at, $8003
-[AT + 4d04] = w(T6);
-80034DF0	lui    at, $8003
-[AT + 4d08] = w(A0);
-80034DF8	jr     ra 
-V0 = 0001;
+// func34db0()
+
+[80034d14] = w(RA);
+RA = w[80034d10];
+[80034cf0] = w(T0);
+[80034cf4] = w(T1);
+[80034cf8] = w(T2);
+[80034cfc] = w(T4);
+[80034d00] = w(T5);
+[80034d04] = w(T6);
+[80034d08] = w(A0);
+return 1;
 ////////////////////////////////
 
 
@@ -1227,107 +1218,104 @@ V0 = 0001;
 ////////////////////////////////
 // system_cdrom_lzs_extract()
 
-T2 = w[T0];
-T0 = T0 + 4;
-T7 = T7 - 4;
-T6 = 0;
+size_u = w[T0]; // read src
+T0 = T0 + 4; // src
+T7 = T7 - 4; // left
+left_literal = 0;
 
-L34e10:	; 80034E10
-if (T6 == 0)
+while( true )
 {
-    T6 = 8;
-    T5 = bu[T0];
-    T0 = T0 + 1;
-    T2 = T2 - 1;
-    T7 = T7 - 1;
-
-    if (T2 == 0)
+    // if literal byte finished we read another one
+    if( left_literal == 0 )
     {
-        return 0;
+        literal = bu[T0]; // read src
+        T0 = T0 + 1; // src
+
+        left_literal = 8;
+        size_u = size_u - 1;
+        T7 = T7 - 1; // left
+
+        if( size_u == 0 )
+        {
+            return 0;
+        }
+
+        if( T7 == 0 )
+        {
+            func34db0();
+        }
     }
 
-    if (T7 == 0)
+    // we read direct data
+    if( literal & 01 ) // literal
     {
-        func34db0;
+        [T1] = b(bu[T0]); // read src to dst
+        T0 = T0 + 1; // src
+        T1 = T1 + 1; // dst
+
+        size_u = size_u - 1;
+        T7 = T7 - 1; // left
+
+        if( size_u == 0 )
+        {
+            return 0;
+        }
+
+        if( T7 == 0 )
+        {
+            func34db0();
+        }
     }
-}
-
-V0 = T5 & 0001;
-80034E44	beq    v0, zero, L34e7c [$80034e7c]
-80034E48	nop
-V0 = bu[T0 + 0000];
-T0 = T0 + 0001;
-[T1 + 0000] = b(V0);
-T1 = T1 + 0001;
-80034E5C	addiu  t2, t2, $ffff (=-$1)
-80034E60	beq    t2, zero, L34f34 [$80034f34]
-80034E64	addiu  t7, t7, $ffff (=-$1)
-80034E68	bne    t7, zero, L34f24 [$80034f24]
-80034E6C	nop
-80034E70	jal    func34db0 [$80034db0]
-80034E74	nop
-80034E78	j      L34f24 [$80034f24]
-
-L34e7c:	; 80034E7C
-A0 = bu[T0 + 0000];
-T0 = T0 + 0001;
-80034E84	addiu  t7, t7, $ffff (=-$1)
-80034E88	bne    t7, zero, L34e98 [$80034e98]
-80034E8C	nop
-80034E90	jal    func34db0 [$80034db0]
-80034E94	nop
-
-L34e98:	; 80034E98
-A1 = bu[T0 + 0000];
-T0 = T0 + 0001;
-V0 = A1 & 00f0;
-V0 = V0 << 04;
-A0 = A0 | V0;
-V0 = A1 & 000f;
-T3 = T1 + V0;
-T3 = T3 + 0003;
-80034EB8	addiu  v0, a0, $f012 (=-$fee)
-V1 = T1 - T4;
-V0 = V1 - V0;
-V0 = V0 & 0fff;
-A3 = T1 - V0;
-
-L34ecc:	; 80034ECC
-V0 = A3 < T4;
-80034ED0	beq    v0, zero, L34ee8 [$80034ee8]
-80034ED4	nop
-[T1] = b(0);
-T1 = T1 + 1;
-80034EE0	j      L34ecc [$80034ecc]
-A3 = A3 + 0001;
-
-L34ee8:	; 80034EE8
-if (T1 < T3)
-{
-    V0 = bu[A3 + 0000];
-    A3 = A3 + 0001;
-    [T1 + 0000] = b(V0);
-    80034F00	j      L34ee8 [$80034ee8]
-    T1 = T1 + 0001;
-}
-
-L34f08:	; 80034F08
-T2 = T2 - 2;
-if (T2 != 0)
-{
-    T7 = T7 - 1;
-    if (T7 <= 0)
+    else // reference
     {
-        func34db0;
+        A0 = bu[T0]; // read src
+        T0 = T0 + 1; // src
+
+        T7 = T7 - 1; // left
+        if( T7 == 0 )
+        {
+            func34db0();
+        }
+
+        A1 = bu[T0]; // read src
+        T0 = T0 + 1; // src
+
+        offset = ((A1 & f0) << 4) | A0;
+        length = A1 & 0f;
+        T3 = T1 + length + 3;
+        A3 = T1 - ((T1 - T4 - offset - fee) & fff);
+
+        while( A3 < T4 )
+        {
+            [T1] = b(0);
+            T1 = T1 + 1; // dst
+            A3 = A3 + 1;
+        }
+
+        while( T1 < T3 )
+        {
+            [T1] = b(bu[A3]);
+            A3 = A3 + 1;
+            T1 = T1 + 1; // dst
+        }
+
+        size_u = size_u - 2;
+        T7 = T7 - 1; // left
+
+        if( size_u == 0 )
+        {
+            return 0;
+        }
+
+        if( T7 <= 0 )
+        {
+            func34db0();
+        }
     }
 
-    T5 = T5 >> 1;
-    T6 = T6 - 1;
-    80034F2C	j      L34e10 [$80034e10]
+    literal = literal >> 1;
+    left_literal = left_literal - 1;
 }
-
-L34f34:	; 80034F34
-return 0;
 ////////////////////////////////
 
 
