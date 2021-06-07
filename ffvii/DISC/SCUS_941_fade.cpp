@@ -775,7 +775,7 @@ loop13f2c:	; 80013F2C
 A0 = S1;
 A1 = S2;
 A2 = SP + 0018;
-80013F38	jal    func3bbdc [$8003bbdc]
+80013F38	jal    system_gte_vector_perspective_transform [$8003bbdc]
 A3 = SP + 001c;
 S2 = S2 + 0020;
 S0 = S0 + 0001;

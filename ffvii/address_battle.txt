@@ -56,6 +56,8 @@
 800e7cbc
 800e7cdc
 
+800e7d08 vector for something on 1st joint in units.
+
 800e7d10 up vector for battle camera. (3 items, 0x4 size)
 800e7d20 vector to scale rotation matrix for 3d. (3 items, 0x4 size)
 
@@ -816,43 +818,48 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 80151200 some model struct 0x74 size.
-+00 [][][][] ???
-+04 [][]     init from +44 from model settings block.
-+06 [][]     init from +46 from model settings block.
-+08 [][]     init from +48 from model settings block.
-+0a [][]     init from +4a from model settings block.
-+0c [][]     some flags.
-+0e [][]     init from +4c from model settings block.
-+10 [][]     init from +4e from model settings block.
-+12 [][]     init from +50 from model settings block.
-+14 [][]     init from +52 from model settings block.
-+16 [][]     init from +54 from model settings block.
-+18 [][]     init from +56 from model settings block.
-+1a [][]     init from +58 from model settings block.
-+1c [][]     init from +5a from model settings block.
-+1e [][]     init from +5c from model settings block.
-+20 [][]     init from +5e from model settings block.
-+22 [][]     init from +60 from model settings block.
-+24 [][]     init from +62 from model settings block.
-+26 [][]     init from +0c from model settings block.
-+28 [][]     init from +0e from model settings block.
-+2a [][]     init with [+0c] - 0x384 from model settings block.
-+2c [][]     delayed rotation for target. We will use this data when target will be hitted.
-+2e [][]     init with 0.
-+30 [][]     init from +64 from model settings block.
-+32 []       unit index (0, 1, 2 for player, init with 0 for enemy). Init with 0. If this == 6 then we use enemy with id 6.
-+33 []       init with 0.
-+34 []       store 0 here during battle init.
-+36 []       incremented if +c flag 0x0002 not set during animation script update.
-+38 [][]     init with 1000.
-+3a [][]     init with 1000.
-+3c [][]     init with 1000.
-+3e [][]     
+    +00 [][][][] ???
+    +04 [][]     init from +44 from model settings block.
+    +06 [][]     init from +46 from model settings block.
+    +08 [][]     init from +48 from model settings block.
+    +0a [][]     init from +4a from model settings block.
+    +0c [][]     some flags.
+    +0e [][]     init from +4c from model settings block.
+    +10 [][]     init from +4e from model settings block.
+    +12 [][]     init from +50 from model settings block.
+    +14 [][]     init from +52 from model settings block.
+    +16 [][]     init from +54 from model settings block.
+    +18 [][]     init from +56 from model settings block.
+    +1a [][]     init from +58 from model settings block.
+    +1c [][]     init from +5a from model settings block.
+    +1e [][]     init from +5c from model settings block.
+    +20 [][]     init from +5e from model settings block.
+    +22 [][]     init from +60 from model settings block.
+    +24 [][]     init from +62 from model settings block.
+    +26 [][]     init from +0c from model settings block.
+    +28 [][]     init from +0e from model settings block.
+    +2a [][]     init with [+0c] - 0x384 from model settings block.
+    +2c [][]     delayed rotation for target. We will use this data when target will be hitted.
+    +2e [][]     init with 0.
+    +30 [][]     init from +64 from model settings block.
+    +32 []       unit index (0, 1, 2 for player, init with 0 for enemy). Init with 0. If this == 6 then we use enemy with id 6.
+    +33 []       init with 0.
+    +34 []       store 0 here during battle init.
+    +36 []       incremented if +c flag 0x0002 not set during animation script update.
+    +38 [][]     init with 1000.
+    +3a [][]     init with 1000.
+    +3c [][]     init with 1000.
+    +3e [][]     
 80151236 []       reset to 0 at start of idle and then increment this each frame.
 
+8015169c [][]     
 801516a0 [][]     init with 0.
 
 801516f4 []       we copy id of camera position/direction vector struct from here to 800f837c.
+
+80151700 array if units joint 0 something (0xa items 0z8 size).
+    +0 [][]     2d x.
+    +2 [][]     2d y.
 
 80151774 [][]     target mask.
 
@@ -863,11 +870,11 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 801517f0 [] array of 0x4e elements of some unit id.
 
 80151844 struct for cameras position vector (0xe size).
-+00 [][]     X
-+02 [][]     Y
-+04 [][]     Z
-+08 []       init with 0xff.
-+0d []       init with 0. Smooth or linear transition. 0x0 - smooth, 0x1 - linear
+    +00 [][]     X
+    +02 [][]     Y
+    +04 [][]     Z
+    +08 []       init with 0xff.
+    +0d []       init with 0. Smooth or linear transition. 0x0 - smooth, 0x1 - linear
 
 801518a4 struct for camera direction vector (0xe size).
 +00 [][]     X

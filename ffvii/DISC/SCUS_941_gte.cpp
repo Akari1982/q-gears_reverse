@@ -2241,19 +2241,23 @@ IR3 = w[A0 + 0004];
 8003BBD4	jr     ra 
 V0 = A1;
 ////////////////////////////////
-// func3bbdc
-VXY0 = w[A0 + 0000];
-VZ0 = w[A0 + 0004];
-8003BBE4	nop
+
+
+
+////////////////////////////////
+// system_gte_vector_perspective_transform()
+
+VXY0 = w[A0 + 0];
+VZ0 = w[A0 + 4];
 gte_RTPS(); // Perspective transform
-[A1 + 0000] = w(SXY2);
-[A2 + 0000] = w(IR0);
-V1 = FLAG;
-V0 = SZ3;
-[A3 + 0000] = w(V1);
-8003BC00	jr     ra 
-V0 = V0 >> 02;
-8003BC08	nop
+[A1 + 0] = w(SXY2);
+[A2 + 0] = w(IR0);
+[A3 + 0] = w(FLAG);
+V0 = SZ3 >> 2;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3bc0c
 VXY0 = w[A0 + 0000];

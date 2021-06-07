@@ -2390,7 +2390,7 @@
 // func3bbac
 8003BBAC-8003BBD8
 ////////////////////////////////
-// func3bbdc
+// system_gte_vector_perspective_transform
 8003BBDC-8003BC08
 ////////////////////////////////
 // func3bc0c
