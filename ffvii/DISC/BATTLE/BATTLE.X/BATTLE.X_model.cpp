@@ -7494,6 +7494,7 @@ battle_set_load_texture_to_vram();
 
 ////////////////////////////////
 // funcd29d4
+
 // A3 - offset to packets
 // A2 - 00 or 0c (in effect machingun fire loading - 0c)
 A2 = e - A2;

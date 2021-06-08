@@ -145,7 +145,7 @@ int main()
         printf(" - %d\n", T0);
     }
 */
-/*
+/* /10
     for (__int64 V1 = 0; V1 <= 100; ++V1)
     {
         printf("%d:", V1);

@@ -1123,13 +1123,13 @@
 // funcba598
 800BA598-800BACE8
 ////////////////////////////////
-// funcbacec
+// battle_update_model_matrixes_with_self_and_parent
 800BACEC-800BAF30
 ////////////////////////////////
-// funcbaf34
+// battle_update_matrix_with_self_and_parent_and_set_to_gte
 800BAF34-800BAFF4
 ////////////////////////////////
-// funcbaff8
+// battle_update_matrix_with_scale_and_set_to_gte
 800BAFF8-800BB02C
 ////////////////////////////////
 // funcbb030
@@ -1338,7 +1338,7 @@
 // funcc2000
 800C2000-800C20E4
 ////////////////////////////////
-// funcc20e8
+// battle_get_4_digits_from_value
 800C20E8-800C214C
 ////////////////////////////////
 // funcc2150

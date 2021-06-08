@@ -1755,7 +1755,7 @@ for( int i = 0; i < 100; ++i )
     system_gte_rotation_matrix_from_yxz();
 
     A0 = 8015e1e8 + i * 34;
-    funcbaf34(); // multiply current part matrix to camera matrix and add translation and set it to GTE
+    battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
     if( bu[801619e8 + i * 2 + 0] == 0 )
     {

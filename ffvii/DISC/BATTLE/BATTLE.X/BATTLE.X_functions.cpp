@@ -1351,7 +1351,7 @@ if( ( hu[8009d7be] & 0300 ) == 0100 )
         system_gte_rotation_matrix_from_yxz();
 
         A0 = 80163abc - 20 + i * 34;
-        funcbaf34();
+        battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
         A0 = 800e7d08;
         A1 = SP + 10; // 2d XY
@@ -1440,7 +1440,7 @@ A1 = 800f8158 + 0 * 34;
 system_gte_rotation_matrix_from_yxz();
 
 A0 = 800f8158;
-funcbaf34(); // multiply current part matrix to camera matrix and add translation and set it to GTE
+battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
 V1 = w[V0];
 S1 = 801590e4 + V1;
@@ -1502,7 +1502,7 @@ switch( bu[S1 + 00] )
                 system_gte_rotation_matrix_from_yxz();
 
                 A0 = 800f8158 + 1 * 34;
-                funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+                battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
                 A0 = 4;
                 A2 = 4;
@@ -1632,7 +1632,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
 
             A0 = 5;
@@ -1647,7 +1647,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 2 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 6;
             A2 = c;
@@ -1661,7 +1661,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 3 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 7;
             A2 = c;
@@ -1786,7 +1786,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 1 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 2;
             A1 = w[801517c0];
@@ -1807,7 +1807,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 2 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             // move translation Y
             if (h[800f8158 + 2 * 34 + 2a] == -30d4)
@@ -1847,7 +1847,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 4 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             // move translation Y
             if (h[800f8158 + 4 * 34 + 2a] == 0)
@@ -1887,7 +1887,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 3 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 6;
             A1 = w[801517c0];
@@ -1945,7 +1945,7 @@ switch( bu[S1 + 00] )
                 system_gte_rotation_matrix_from_yxz();
 
                 A0 = 800f8158 + 4 * 34;
-                funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+                battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
                 A0 = 3;
                 A1 = w[801517c0];
@@ -1972,7 +1972,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 1 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 6;
             A1 = w[801517c0];
@@ -1991,7 +1991,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 2 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 7;
             A1 = w[801517c0];
@@ -2008,7 +2008,7 @@ switch( bu[S1 + 00] )
             system_gte_rotation_matrix_from_yxz();
 
             A0 = 800f8158 + 3 * 34;
-            funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+            battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 8;
             A1 = w[801517c0];
@@ -2039,7 +2039,7 @@ A1 = 800f8158 + dynamic_id * 34;
 system_gte_rotation_matrix_from_yxz();
 
 A0 = 800f8158 + dynamic_id * 34;
-funcbaf34; // multiply current part matrix to camera matrix and add translation and set it to GTE
+battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
 
 
@@ -2267,51 +2267,45 @@ SP = SP + 0020;
 
 unit_id = A0;
 
-S6 = 1f800220;
-S5 = 1f800320;
-V0 = unit_id << 03;
-V0 = V0 - unit_id;
-V0 = V0 << 02;
-V0 = V0 + unit_id;
-A2 = V0 << 02;
 [1f80000c] = w(0);
 
-if( hu[8015120c + A2 + 0000] & 0020 )
-{
-    V0 = h[801518ea + unit_id * b9c + 0000];
+scale = h[801518e4 + unit_id * b9c + 6];
 
-    [1f800000] = w((h[80151238 + A2 + 0] * V0) >> c);
-    [1f800004] = w((h[8015123a + A2 + 0] * V0) >> c);
-    [1f800008] = w((h[8015123c + A2 + 0] * V0) >> c);
+if( hu[80151200 + unit_id * 74 + c] & 0020 )
+{
+    [1f800000] = w((h[80151200 + unit_id * 74 + 38] * scale) >> c);
+    [1f800004] = w((h[80151200 + unit_id * 74 + 3a] * scale) >> c);
+    [1f800008] = w((h[80151200 + unit_id * 74 + 3c] * scale) >> c);
 }
 else
 {
-    V0 = h[801518ea + unit_id * b9c + 0000];
-    [1f800008] = w(V0);
-    [1f800004] = w(V0);
-    [1f800000] = w(V0);
+    [1f800008] = w(scale);
+    [1f800004] = w(scale);
+    [1f800000] = w(scale);
 }
 
-A0 = 801518e4 + unit_id * b9c + 140 + 20;
-A1 = 801518e4 + unit_id * b9c + 140;
+A0 = 801518e4 + unit_id * b9c + 140 + 20; // root rotation data
+A1 = 801518e4 + unit_id * b9c + 140; // store matrix here
 system_gte_rotation_matrix_from_yxz();
 
 A0 = 801518e4 + unit_id * b9c + 140;
-funcbaf34(); // multiply current part matrix to camera matrix and add translation and set it to GTE
+battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
 A0 = 801518e4 + unit_id * b9c + 140;
-A1 = 1f800000;
-funcbaff8();
+A1 = 1f800000; // scale
+battle_update_matrix_with_scale_and_set_to_gte();
 
 A0 = bu[801518e4 + unit_id * b9c + 28]; // r
 A1 = bu[801518e4 + unit_id * b9c + 29]; // g
 A2 = bu[801518e4 + unit_id * b9c + 2a]; // b
 system_gte_set_far_colour();
 
-A0 = unit_id & 00ff;
-800BA7AC	jal    funcc14c0 [$800c14c0]
+A0 = unit_id;
+funcc14c0(); // ???
 
-for( int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i ) // number of bones
+number_of_bones = h[801518e4 + unit_id * b9c + 10];
+
+for( int i = 0; i < number_of_bones; ++i )
 {
     A0 = 801518e4 + unit_id * b9c + 174 + i * 34 + 20; // rotation data
     A1 = 801518e4 + unit_id * b9c + 174 + i * 34; // ret matrix
@@ -2319,100 +2313,62 @@ for( int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i ) // number of bones
 }
 
 A0 = unit_id;
-funcbacec();
+battle_update_model_matrixes_with_self_and_parent();
 
-
-    S4 = unit_id;
-    S0 = unit_id * b9c;
-    S1 = 0;
-    S3 = 0;
-
-for( int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i )
+for( int i = 0; i < number_of_bones; ++i )
 {
-    V0 = 8015195c + S0;
-    V0 = S1 + V0;
-    V0 = w[V0 + 0000];
-    if( V0 != 0 )
+    if( w[801518e4 + unit_id * b9c + 78 + i * 4] != 0 ) // bone exist
     {
-        V0 = 8015195c + 00fc;
-        V0 = S0 + V0;
-        V0 = V0 + S3;
-        R11R12 = w[V0 + 0000];
-        R13R21 = w[V0 + 0004];
-        R22R23 = w[V0 + 0008];
-        R31R32 = w[V0 + 000c];
-        R33 = w[V0 + 0010];
-        TRX = w[V0 + 0014];
-        TRY = w[V0 + 0018];
-        TRZ = w[V0 + 001c];
-        V1 = h[801518e4 + S0 + 0000];
-        if( V1 == 9e )
+        matrix = 801518e4 + unit_id * b9c + 174 + i * 34;
+        R11R12 = w[matrix + 0];
+        R13R21 = w[matrix + 4];
+        R22R23 = w[matrix + 8];
+        R31R32 = w[matrix + c];
+        R33 = w[matrix + 10];
+        TRX = w[matrix + 14];
+        TRY = w[matrix + 18];
+        TRZ = w[matrix + 1c];
+
+        if( h[801518e4 + unit_id * b9c + 0] == 9e )
         {
-            V0 = S0 - 39;
-            V0 = V0 + i;
-            V0 = bu[V0 + 0000];
-            V0 = V0 | 01b8;
+            [1f800320 + 4] = w(bu[801518e4 + unit_id * b9c + 3f + i] | 01b8);
         }
         else
         {
-            V0 = S0 - 39;
-            V0 = V0 + i;
-            V0 = bu[V0 + 0000];
-            V0 = V0 | 0190;
+            [1f800320 + 4] = w(bu[801518e4 + unit_id * b9c + 3f + i] | 0190);
         }
 
-        [S5 + 0004] = w(V0);
-        V0 = w[8015195c + S0 + S1 + 0000];
-        [S5 + 0000] = w(V0);
-        V0 = S4 << 03;
-        V0 = V0 - S4;
-        V0 = V0 << 02;
-        V0 = V0 + S4;
-        V0 = V0 << 02;
-        [S5 + 0008] = h(hu[8015122e + V0 + 0000]);
-        [S5 + 000c] = h(20);
-        [S5 + 000a] = h(hu[801518f8 + S0 + 0000]);
-        [S5 + 000e] = h(hu[801518fa + S0 + 0000]);
+        [1f800320 + 0] = w(w[801518e4 + unit_id * b9c + i * 4 + 78]);
+        [1f800320 + 8] = h(hu[8015122e + unit_id * 74 + 0000]);
+        [1f800320 + a] = h(hu[801518f8 + unit_id * b9c + 0000]);
+        [1f800320 + c] = h(20);
+        [1f800320 + e] = h(hu[801518fa + unit_id * b9c + 0000]);
 
-        if( ( bu[80151909 + S0 + 0000] & 0004 ) == 0 )
+        if( ( bu[801518e4 + unit_id * b9c + 25] & 04 ) == 0 )
         {
-            A0 = S5;
+            A0 = 1f800320;
             A1 = w[801517c0] + 70;
             A2 = c;
             A3 = w[80163c74];
-            800BA9C4	jal    funcd29d4 [$800d29d4]
+            funcd29d4(); // create model packets
 
             [80163c74] = w(V0);
         }
     }
-
-    S1 = S1 + 0004;
-    S3 = S3 + 0034;
 }
 
-V0 = unit_id << 10;
-A0 = V0 >> 10;
-V1 = A0 << 01;
-V1 = V1 + A0;
-V0 = V1 << 05;
-V0 = V0 - V1;
-V0 = V0 << 03;
-V0 = V0 - A0;
-A1 = V0 << 02;
-V1 = bu[80151909 + A1 + 0000];
-V0 = V1 & 0004;
-if( V0 == 0 )
+V1 = bu[801518e4 + unit_id * b9c + 25];
+
+if( ( V1 & 04 ) == 0 )
 {
-    V0 = V1 & 0010;
-    if( V0 == 0 )
+    if( ( V1 & 10 ) == 0 )
     {
         V0 = hu[8016375a];
-        V0 = V0 >> A0;
+        V0 = V0 >> unit_id;
         V0 = V0 & 0001;
         if( V0 == 0 )
         {
-            A0 = bu[8015190c + A1 + 0000];
-            A0 = A0 >> 02;
+            A0 = bu[8015190c + unit_id * b9c + 0000] >> 2;
             A1 = A0;
             A2 = A0;
             system_gte_set_far_colour();
@@ -2425,64 +2381,42 @@ if( V0 == 0 )
             system_gte_set_far_colour();
         }
 
-        A0 = S6 + 0034;
-        A1 = unit_id << 10;
-        A1 = A1 >> 10;
-        V1 = A1 << 01;
-        V1 = V1 + A1;
-        V0 = V1 << 05;
-        V0 = V0 - V1;
-        V0 = V0 << 03;
-        V0 = V0 - A1;
-        S1 = V0 << 02;
-        S0 = 80151a24;
-        S0 = S1 + S0;
-        A1 = S0;
-        A2 = 0034;
+        A0 = 1f800220 + 0034;
+        A1 = 80151a24 + unit_id * b9c;
+        A2 = 34;
         func1c3cc();
 
-        [S6 + 0030] = w(S0);
-        [S6 + 0024] = h(0);
-        [S6 + 0022] = h(0);
-        [S6 + 0020] = h(0);
+        [1f800220 + 0030] = w(80151a24 + unit_id * b9c);
+        [1f800220 + 0024] = h(0);
+        [1f800220 + 0022] = h(0);
+        [1f800220 + 0020] = h(0);
         [1f80000c] = w(0);
 
-        V1 = h[801518f0 + S1 + 0000];
-        if( V1 == -1 )
+        if( h[801518f0 + unit_id * b9c + 0000] == -1 )
         {
-            [S6 + 002a] = h(0);
-            [80151a4e + S1 + 0000] = h(0);
-            [S6 + 0028] = h(0);
-            [S6 + 002c] = h(0);
+            [1f800220 + 002a] = h(0);
+            [80151a4e + unit_id * b9c + 0000] = h(0);
+            [1f800220 + 0028] = h(0);
+            [1f800220 + 002c] = h(0);
         }
         else
         {
-            [S6 + 002a] = h(0);
-            V0 = hu[80151a80 + S1 + 0000];
-            [80151a4e + S1 + 0000] = h(0);
-            [S6 + 0028] = h(V0);
-            V0 = hu[80151a84 + S1 + 0000];
-            V1 = hu[801518f0 + S1 + 0000];
+            [1f800220 + 002a] = h(0);
+            V0 = hu[80151a80 + unit_id * b9c + 0000];
+            [80151a4e + unit_id * b9c + 0000] = h(0);
+            [1f800220 + 0028] = h(V0);
+            V0 = hu[80151a84 + unit_id * b9c + 0000];
+            V1 = hu[801518f0 + unit_id * b9c + 0000];
             V0 = V0 + V1;
-            [S6 + 002c] = h(V0);
+            [1f800220 + 002c] = h(V0);
         }
 
         S3 = 1f800004;
         S4 = 1f800008;
-        V1 = unit_id << 10;
-        V1 = V1 >> 10;
-        V0 = V1 << 01;
-        V0 = V0 + V1;
-        S0 = V0 << 05;
-        S0 = S0 - V0;
-        S0 = S0 << 03;
-        S0 = S0 - V1;
-        S0 = S0 << 02;
-        S1 = 80151a24;
-        S1 = S0 + S1;
+        S1 = 80151a24 + unit_id * b9c;
         A0 = S1 + 0020;
         A1 = S1;
-        V0 = h[801518ea + S0 + 0000];
+        V0 = h[801518ea + unit_id * b9c + 0000];
         S2 = 1f800000;
         [S4 + 0000] = w(V0);
         [S3 + 0000] = w(V0);
@@ -2490,36 +2424,36 @@ if( V0 == 0 )
         system_gte_rotation_matrix_from_yxz();
 
         A0 = S1;
-        800BABE8	jal    funcbaf34 [$800baf34]
+        battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
         A0 = S1;
         A1 = 1f800000;
-        800BABF4	jal    funcbaff8 [$800baff8]
+        battle_update_matrix_with_scale_and_set_to_gte();
 
-        A0 = S6 + 0020;
-        V1 = hu[801518ec + S0 + 0000];
+        A0 = 1f800220 + 0020;
+        V1 = hu[801518ec + unit_id * b9c + 0000];
         [S3 + 0000] = w(1000);
         [S2 + 0000] = w(V1);
-        V0 = hu[801518ee + S0 + 0000];
-        A1 = S6;
+        V0 = hu[801518ee + unit_id * b9c + 0000];
+        A1 = 1f800220;
         [S4 + 0000] = w(V0);
         system_gte_rotation_matrix_from_yxz();
 
-        A0 = S6;
-        800BAC38	jal    funcbaf34 [$800baf34]
+        A0 = 1f800220;
+        battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
-        A0 = S6;
+        A0 = 1f800220;
         A1 = 1f800000;
-        800BAC44	jal    funcbaff8 [$800baff8]
+        battle_update_matrix_with_scale_and_set_to_gte();
 
-        A0 = S5;
+        A0 = 1f800320;
         A2 = 0;
         A3 = w[80163c74];
         [A0 + 0000] = w(800ea294);
         [A0 + 0004] = w(190);
         [A0 + 000e] = h(0);
         [A0 + 0008] = h(0);
-        V1 = hu[801518f8 + S0 + 0000];
+        V1 = hu[801518f8 + unit_id * b9c + 0000];
         A1 = w[801517c0];
         [A0 + 000c] = h(20);
         A1 = A1 + 4078;
@@ -2529,7 +2463,7 @@ if( V0 == 0 )
         [80163c74] = w(V0);
 
         A0 = S1;
-        A1 = S6 + 34;
+        A1 = 1f800220 + 34;
         A2 = 34;
         func1c3cc();
     }
@@ -2539,7 +2473,7 @@ if( V0 == 0 )
 
 
 ////////////////////////////////
-// funcbacec()
+// battle_update_model_matrixes_with_self_and_parent()
 
 unit_id = A0;
 
@@ -2610,23 +2544,24 @@ for( int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i ) // number of bones
 
 
 ////////////////////////////////
-// funcbaf34
-// multiply current part matrix to camera matrix and add translation and set it to GTE
-S0 = A0; // part info
-V0 = w[S0 + 30]; // camera data
-[1f800020] = w(V0);
+// battle_update_matrix_with_self_and_parent_and_set_to_gte()
 
-[1f800024 + 0] = w(w[V0 + 0]);
-[1f800024 + 4] = w(w[V0 + 4]);
-[1f800024 + 8] = w(w[V0 + 8]);
-[1f800024 + c] = w(w[V0 + c]);
-[1f800024 + 10] = w(w[V0 + 10]);
-[1f800024 + 14] = w(w[V0 + 14]);
-[1f800024 + 18] = w(w[V0 + 18]);
-[1f800024 + 1c] = w(w[V0 + 1c]);
+bone_matrix = A0;
 
-A0 = 1f800024; // camera matrix
-A1 = S0; // part matrix
+parent_matrix = w[bone_matrix + 30];
+
+[1f800020] = w(parent_matrix);
+[1f800024 + 0] = w(w[parent_matrix + 0]);
+[1f800024 + 4] = w(w[parent_matrix + 4]);
+[1f800024 + 8] = w(w[parent_matrix + 8]);
+[1f800024 + c] = w(w[parent_matrix + c]);
+[1f800024 + 10] = w(w[parent_matrix + 10]);
+[1f800024 + 14] = w(w[parent_matrix + 14]);
+[1f800024 + 18] = w(w[parent_matrix + 18]);
+[1f800024 + 1c] = w(w[parent_matrix + 1c]);
+
+A0 = 1f800024;
+A1 = bone_matrix;
 system_gte_matrixes_multiply_A0_A1_to_A1;
 
 A0 = 1f800024;
@@ -2635,33 +2570,34 @@ system_gte_set_rotation_matrix();
 A0 = 1f800024;
 system_gte_set_translation_vector();
 
-A0 = S0 + 28; // vector
-A1 = S0 + 14; // result vector
+A0 = bone_matrix + 28; // vector
+A1 = bone_matrix + 14; // result vector
 A2 = SP + 10;
 system_gte_rotate_and_translate_vector();
 
-A0 = S0;
+A0 = bone_matrix;
 system_gte_set_rotation_matrix();
 
-A0 = S0;
+A0 = bone_matrix;
 system_gte_set_translation_vector();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbaff8
- // scale matrix and set it to gte
-S0 = A0;
+// battle_update_matrix_with_scale_and_set_to_gte()
 
-A0 = A0;
-A1 = A1;
-system_scale_matrix_by_vector;
+matrix = A0;
+scale = A1;
 
-A0 = S0;
+A0 = matrix;
+A1 = scale;
+system_scale_matrix_by_vector();
+
+A0 = matrix;
 system_gte_set_rotation_matrix();
 
-A0 = S0;
+A0 = matrix;
 system_gte_set_translation_vector();
 ////////////////////////////////
 
@@ -2746,7 +2682,7 @@ S1 = V1 >> 10;
 loopbb16c:	; 800BB16C
 S0 = S1 << 06;
 A0 = S0 + S5;
-800BB174	jal    funcbaf34 [$800baf34]
+800BB174	jal    battle_update_matrix_with_self_and_parent_and_set_to_gte [$800baf34]
 A0 = A0 + S4;
 800BB17C	addiu  v0, s5, $fffc (=-$4)
 V1 = S2 << 02;

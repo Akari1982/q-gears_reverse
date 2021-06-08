@@ -192,6 +192,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800f4b00 []       init with 0.
 
+800f4b08
+
 800f4b2c array of loading texture clut data. (size 0x8, items 0x8)
     +0 [][]     x.
     +2 [][]     y.
@@ -820,7 +822,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 80151200 some model struct 0x74 size.
     +00 [][][][] ???
     +04 [][]     init from +44 from model settings block.
-    +06 [][]     init from +46 from model settings block.
+    +06 [][]     init from +46 from model settings block. Some flags.
+                 0x0020 is set then we use +38 +3a +3c from here as scale multiplier in addition to model scale.
     +08 [][]     init from +48 from model settings block.
     +0a [][]     init from +4a from model settings block.
     +0c [][]     some flags.
@@ -838,7 +841,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
     +24 [][]     init from +62 from model settings block.
     +26 [][]     init from +0c from model settings block.
     +28 [][]     init from +0e from model settings block.
-    +2a [][]     init with [+0c] - 0x384 from model settings block.
+    +2a [][]     init with [+0c] - 0x384 from model settings block. Digits height above models (from ground). For death sentence and slow-numb.
     +2c [][]     delayed rotation for target. We will use this data when target will be hitted.
     +2e [][]     init with 0.
     +30 [][]     init from +64 from model settings block.
@@ -1150,7 +1153,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 801636b8 units structure (size 0x10)
     00 []       init with -1. If this is not -1 and player not dead we execute ai script 0.
     01 []       idle action id. in case of enemy init with +10 from 0x68 structure (there is 0 there).
-    02 [][]     ???
+    02 []       digit for death sentence.
+    03 []       digit for slow-numb.
     04 []       dead effect. Init from 801518e4+27 & 3f.
     05
     06 [][]     backrow? In case of player store w[800f83e0 + A3 * 68 + 4] & 1 here for battle types 0,1. Store !(w[800f83e0 + A3 * 68 + 4] & 1) for battle 2 and 0 for battle types 3,4,5. Function func1b19ac.
