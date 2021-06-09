@@ -2350,7 +2350,7 @@ for( int i = 0; i < number_of_bones; ++i )
             A1 = w[801517c0] + 70;
             A2 = c;
             A3 = w[80163c74];
-            funcd29d4(); // create model packets
+            funcd29d4();
 
             [80163c74] = w(V0);
         }

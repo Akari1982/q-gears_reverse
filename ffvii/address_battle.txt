@@ -104,6 +104,9 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 800ea198 default camera data.
 
+800ea1e8 array of 4 texture u for status icon animation (0x4 items 0x1 size).
+800ea1ec [][]     status icon animation frame (0-3).
+
 800ea50c some model file integrated into exe.
 
 800f01dc pointer to current tex to load. Set sizes and addreses here.
@@ -211,6 +214,8 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
                         0xa - unknown
 800f4d2c      array of 0xf struct with size 0x14.
 +00 [][]     store unit id here to which we want play hurt actions.
+
+800f514c array
 
 800f57cc
 
@@ -820,7 +825,7 @@ C0F9 0000 A406    0000 0000 A406    4006 0000 A406
 
 
 80151200 some model struct 0x74 size.
-    +00 [][][][] ???
+    +00 [][][][] status data (get sleep and silence icon from this status).
     +04 [][]     init from +44 from model settings block.
     +06 [][]     init from +46 from model settings block. Some flags.
                  0x0020 is set then we use +38 +3a +3c from here as scale multiplier in addition to model scale.

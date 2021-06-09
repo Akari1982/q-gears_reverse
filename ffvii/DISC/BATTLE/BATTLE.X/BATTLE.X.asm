@@ -1332,19 +1332,19 @@
 // funcc1908
 800C1908-800C1D88
 ////////////////////////////////
-// funcc1d8c
+// battle_create_status_icon_packet
 800C1D8C-800C1FFC
 ////////////////////////////////
-// funcc2000
+// battle_add_status_icon_to_render
 800C2000-800C20E4
 ////////////////////////////////
 // battle_get_4_digits_from_value
 800C20E8-800C214C
 ////////////////////////////////
-// funcc2150
+// battle_add_status_digits_to_render
 800C2150-800C2238
 ////////////////////////////////
-// funcc223c
+// battle_create_status_digits_packets
 800C223C-800C2700
 ////////////////////////////////
 // funcc2704

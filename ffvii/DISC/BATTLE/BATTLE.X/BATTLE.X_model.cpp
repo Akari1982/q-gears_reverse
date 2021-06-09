@@ -7493,51 +7493,43 @@ battle_set_load_texture_to_vram();
 
 
 ////////////////////////////////
-// funcd29d4
+// funcd29d4()
 
-// A3 - offset to packets
+model = A0;
+packets = A3;
 // A2 - 00 or 0c (in effect machingun fire loading - 0c)
 A2 = e - A2;
 
 S7 = hu[800d3544 + 0];
 FP = hu[800d3544 + 2];
 
-S0 = w[A0 + 4]; // flags 0x0100 - use +7[] as vertex specific packet addition (only without 0x0040).
-                //       0x0080 - use +6[] as color in vertex, if not set use function argument as color.
-                //       0x0040 - use +7[] as vertex texture page settings instead of global part.
-                //       0x0020 - render triangles.
-                //       0x0010 - use color interpolation.
-                //       0x0008 - render packets with transparensy on.
-S1 = hu[A0 + 8];
-S2 = hu[A0 + a]; // color for polygons
-S3 = hu[A0 + c]; // blending option
-S4 = hu[A0 + e];
-A0 = w[A0 + 0]; // global offset to part
+S0 = w[model + 4]; // flags 0x0100 - use +7[] as vertex specific packet addition (only without 0x0040).
+                   //       0x0080 - use +6[] as color in vertex, if not set use function argument as color.
+                   //       0x0040 - use +7[] as vertex texture page settings instead of global part.
+                   //       0x0020 - render triangles.
+                   //       0x0010 - use color interpolation.
+                   //       0x0008 - render packets with transparensy on.
+S1 = hu[model + 8];
+S2 = hu[model + a]; // color for polygons
+S3 = hu[model + c]; // blending option
+S4 = hu[model + e];
+A0 = w[model + 0]; // global offset to part
 
-
-
-if ((S0 & 0080) == 0)
+if( ( S0 & 0080 ) == 0 )
 {
     S2 = (S2 << 10) | (S2 << 8) | S2;
 }
 
-
-
 S4 = S4 << 10;
 
-
-V0 = w[A0 + 00]; // offset to triangle
+V0 = w[A0 + 0]; // offset to triangle
 S5 = A0 + 4;
 A0 = S5 + V0; // real offset to triangle data
-
-
 
 // add transparency bit to polygon header
 V0 = S0 & 0008;
 V0 = V0 << 16;
 S2 = S2 | V0;
-
-
 
 S6 = 0;
 if (S0 & 0001)
@@ -7556,14 +7548,10 @@ if (S0 & 0004)
     funcd34c8;
 }
 
-
-
 if ((S0 & 0040) == 0)
 {
     S3 = (h[A0 + 2] & 19f) + S3; // add blend
 }
-
-
 
 T8 = h[A0 + 0]; // number of triangle
 A0 = A0 + 4;

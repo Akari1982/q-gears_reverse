@@ -1107,7 +1107,7 @@ T0 = w[SP + 0028];
 800143E4	nop
 S0 = T0 + S3;
 S0 = S0 + S5;
-800143F0	jal    func468fc [$800468fc]
+800143F0	jal    system_gpu_textured_quad_header [$800468fc]
 A0 = S0;
 A0 = S0;
 800143FC	jal    system_change_semi_transparency_in_packet [$80046848]

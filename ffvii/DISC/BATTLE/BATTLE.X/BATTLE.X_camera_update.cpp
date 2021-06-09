@@ -4538,58 +4538,32 @@ return start + ((V0 + 1000) * (end - start)) >> d;
 
 
 ////////////////////////////////
-// funcc1394
+// funcc1394()
 
-A1 = A0 & 00ff;
-V0 = A1 << 01;
-V0 = V0 + A1;
-V1 = V0 << 05;
-V1 = V1 - V0;
-V1 = V1 << 03;
-V1 = V1 - A1;
-V1 = V1 << 02;
-S0 = 80151a58;
-S0 = V1 + S0;
-A0 = S0 + 0a14;
-V0 = A1 << 03;
-V0 = V0 - A1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-V0 = V0 << 02;
-S0 = S0 + 09f4;
-AT = 80151226;
-AT = AT + V0;
-A2 = hu[AT + 0000];
-AT = 8015246e;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-800C1408	nop
-V0 = V0 + 0080;
-AT = 80152476;
-AT = AT + V1;
-[AT + 0000] = h(A2);
-AT = 8015246e;
-AT = AT + V1;
-[AT + 0000] = h(V0);
-800C1430	jal    $8003c21c
-A1 = S0;
-800C1438	jal    battle_update_matrix_with_self_and_parent_and_set_to_gte [$800baf34]
-A0 = S0;
-A0 = 1f800020;
-V0 = 800ea470;
-[1f800020] = w(V0);
-V0 = 0090;
-[1f800024] = w(V0);
-V0 = 0020;
-A1 = w[801517c0];
-A3 = w[80163c74];
-A2 = 000c;
-[1f80002e] = h(0);
-[1f80002a] = h(0);
+unit_id = A0;
+
+[801518e4 + unit_id * b9c + b92] = h(hu[80151226 + unit_id * 74 + 0]);
+[801518e4 + unit_id * b9c + b8a] = h(hu[801518e4 + unit_id * b9c + b8a] + 80);
+
+A0 = 801518e4 + unit_id * b9c + 174 + 31 * 34 + 20;
+A1 = 801518e4 + unit_id * b9c + 174 + 31 * 34;
+system_gte_rotation_matrix_from_yxz();
+
+A0 = 801518e4 + unit_id * b9c + 174 + 31 * 34;
+battle_update_matrix_with_self_and_parent_and_set_to_gte();
+
+[1f800020] = w(800ea470);
+[1f800024] = w(90);
 [1f800028] = h(0);
-[1f80002c] = h(V0);
-800C149C	jal    funcd29d4 [$800d29d4]
-A1 = A1 + 0070;
+[1f80002a] = h(0);
+[1f80002c] = h(20); // blending
+[1f80002e] = h(0);
+
+A0 = 1f800020; // offset to effect 3d data
+A1 = w[801517c0] + 70;
+A2 = c;
+A3 = w[80163c74]; // packets
+funcd29d4();
 [80163c74] = w(V0);
 ////////////////////////////////
 
@@ -4613,13 +4587,13 @@ if( ( bu[801518e4 + unit_id * b9c + 25] & 04 ) == 0 )
     {
         A0 = unit_id;
         A1 = bu[801636b8 + unit_id * 10 + 2];
-        funcc2150();
+        battle_add_status_digits_to_render();
     }
     else if( status & 00002000 ) // slow-numb
     {
         A0 = unit_id;
         A1 = bu[801636b8 + unit_id * 10 + 3];
-        funcc2150();
+        battle_add_status_digits_to_render();
     }
     else
     {
@@ -4628,13 +4602,13 @@ if( ( bu[801518e4 + unit_id * b9c + 25] & 04 ) == 0 )
         {
             A0 = unit_id;
             A1 = e0;
-            funcc2000();
+            battle_add_status_icon_to_render();
         }
         else if( V1 & 00000080 ) // silence
         {
             A0 = unit_id;
             A1 = ef;
-            funcc2000();
+            battle_add_status_icon_to_render();
         }
     }
 }
@@ -4642,7 +4616,7 @@ if( ( bu[801518e4 + unit_id * b9c + 25] & 04 ) == 0 )
 if( ( bu[801518e4 + unit_id * b9c + 25] & 01 ) == 0 )
 {
     A0 = 1;
-    800C160C	jal    funcd9dec [$800d9dec]
+    funcd9dec();
 
     V0 = V0 << 10;
     V0 = V0 >> 10;
@@ -4651,12 +4625,12 @@ if( ( bu[801518e4 + unit_id * b9c + 25] & 01 ) == 0 )
         A0 = bu[800f38a0];
         if( A0 == unit_id )
         {
-            800C163C	jal    funcc1394 [$800c1394]
+            funcc1394();
         }
     }
 
     A0 = 13;
-    800C1644	jal    funcd9dec [$800d9dec]
+    funcd9dec();
 
     V0 = V0 << 10;
     V0 = V0 >> 10;
@@ -4666,7 +4640,7 @@ if( ( bu[801518e4 + unit_id * b9c + 25] & 01 ) == 0 )
 
         if( A0 == unit_id )
         {
-            800C167C	jal    funcc1394 [$800c1394]
+            funcc1394();
         }
     }
 }
@@ -5120,221 +5094,139 @@ SP = SP + 0020;
 800C1D84	jr     ra 
 800C1D88	nop
 ////////////////////////////////
-// funcc1d8c
-800C1D8C	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0040] = w(S6);
+
+
+
+////////////////////////////////
+// battle_create_status_icon_packet()
+
 S6 = A0;
-[SP + 0028] = w(S0);
-S0 = A1;
-[SP + 0038] = w(S4);
-S4 = 1f800010;
-[SP + 003c] = w(S5);
-800C1DB0	lui    s5, $1f80
-[SP + 002c] = w(S1);
-S1 = w[80163c74];
-S5 = S5 | 0014;
-[SP + 0034] = w(S3);
-S3 = A2;
-[SP + 0030] = w(S2);
-S2 = A3;
-[SP + 0044] = w(RA);
-800C1DD8	jal    $func468fc
-A0 = S1;
-A0 = 0100;
-A1 = 01e1;
-V0 = 003f;
-800C1DEC	jal    $system_create_clut_for_packet
-[S1 + 0016] = h(V0);
-A0 = S0;
-S0 = 800e7d44;
-A1 = S0;
+vector = A1;
+tex_u = A2;
+tex_v = A3;
+
+packet = w[80163c74];
+
+A0 = packet;
+system_gpu_textured_quad_header();
+
+A0 = 100;
+A1 = 1e1;
+system_create_clut_for_packet();
+[packet + e] = h(V0); // clut
+[packet + 16] = h(003f); // texpage
+
+[packet + 4] = b(80); // r
+[packet + 5] = b(80); // g
+[packet + 6] = b(80); // b
+
+A0 = vector;
+A1 = 800e7d44;
 A2 = 1f800008;
-[S1 + 000e] = h(V0);
-V0 = 0080;
-[S1 + 0004] = b(V0);
-[S1 + 0005] = b(V0);
-800C1E1C	jal    $system_gte_rotate_and_translate_vector
-[S1 + 0006] = b(V0);
-800C1E24	addiu  s0, s0, $ffec (=-$14)
-800C1E28	jal    $system_gte_set_rotation_matrix
-A0 = S0;
-800C1E30	jal    $system_gte_set_translation_vector
-A0 = S0;
-V1 = 1f800008;
+system_gte_rotate_and_translate_vector();
+
+A0 = 800e7d30;
+system_gte_set_rotation_matrix();
+
+A0 = 800e7d30;
+system_gte_set_translation_vector();
+
+[1f800010] = w(0);
+[1f800014] = w(0);
+
 A0 = 800ea1c8;
-A1 = A0 + 0008;
-A2 = A0 + 0010;
-V0 = S1 + 0008;
-[S5 + 0000] = w(0);
-[S4 + 0000] = w(0);
-[SP + 0010] = w(V0);
-V0 = S1 + 0010;
-[SP + 0014] = w(V0);
-V0 = S1 + 0018;
-[SP + 0018] = w(V0);
-V0 = S1 + 0020;
-800C1E74	lui    s0, $1f80
-A3 = A0 + 0018;
-[SP + 001c] = w(V0);
-[SP + 0020] = w(S0);
-800C1E84	jal    $system_perspective_transformation_on_4_points
-[SP + 0024] = w(V1);
-V1 = h[S1 + 0010];
-A0 = h[S1 + 0008];
-800C1E94	nop
-V1 = V1 - A0;
-[S0 + 0000] = w(V1);
-V1 = V1 < 0010;
-800C1EA4	beq    v1, zero, Lc1ecc [$800c1ecc]
-A1 = V0;
-V0 = hu[S1 + 0010];
-V1 = hu[S1 + 0020];
-800C1EB4	addiu  v0, v0, $fff1 (=-$f)
-800C1EB8	addiu  v1, v1, $fff1 (=-$f)
-[S1 + 0008] = h(V0);
-V0 = 0001;
-[S1 + 0018] = h(V1);
-[S4 + 0000] = w(V0);
+A1 = 800ea1c8 + 8;
+A2 = 800ea1c8 + 10;
+A3 = 800ea1c8 + 18;
+A4 = packet + 8; // vertex 0
+A5 = packet + 10; // vertex 1
+A6 = packet + 18; // vertex 2
+A7 = packet + 20; // vertex 3
+A8 = 1f800000;
+A9 = 1f800008;
+system_perspective_transformation_on_4_points();
+depth = V0;
 
-Lc1ecc:	; 800C1ECC
-V0 = h[S1 + 001a];
-V1 = h[S1 + 000a];
-800C1ED4	nop
-V0 = V0 - V1;
-[S0 + 0000] = w(V0);
-V0 = V0 < 0010;
-800C1EE4	beq    v0, zero, Lc1f08 [$800c1f08]
-800C1EE8	nop
-V0 = hu[S1 + 001a];
-800C1EF0	nop
-800C1EF4	addiu  v0, v0, $fff0 (=-$10)
-[S1 + 0012] = h(V0);
-[S1 + 000a] = h(V0);
-V0 = 0001;
-[S5 + 0000] = w(V0);
+[1f800000] = w(h[packet + 10] - h[packet + 8]);
 
-Lc1f08:	; 800C1F08
-V1 = w[S4 + 0000];
-V0 = 0001;
-800C1F10	bne    v1, v0, Lc1f38 [$800c1f38]
-V0 = S3;
-V0 = w[S5 + 0000];
-800C1F1C	nop
-800C1F20	bne    v0, v1, Lc1f38 [$800c1f38]
-V0 = S3;
-V1 = V0 + 000f;
-[S1 + 001c] = b(V0);
-800C1F30	j      Lc1f44 [$800c1f44]
-V0 = S2 + 0010;
+if( w[1f800000] < 10 )
+{
+    [packet + 8] = h(hu[packet + 10] - f);
+    [packet + 18] = h(hu[packet + 20] - f);
+    [1f800010] = w(1);
+}
 
-Lc1f38:	; 800C1F38
-V1 = V0 + 000f;
-[S1 + 001c] = b(V0);
-V0 = S2 + 000f;
+[1f800000] = w(h[packet + 1a] - h[packet + a]);
 
-Lc1f44:	; 800C1F44
-[S1 + 000c] = b(S3);
-[S1 + 000d] = b(S2);
-[S1 + 0014] = b(V1);
-[S1 + 0015] = b(S2);
-[S1 + 001d] = b(V0);
-[S1 + 0024] = b(V1);
-[S1 + 0025] = b(V0);
-A1 = A1 >> 02;
-V0 = A1 < 0002;
-800C1F68	bne    v0, zero, Lc1f88 [$800c1f88]
-A0 = 0002;
-A0 = A1;
-V0 = A0 < 1001;
-800C1F78	bne    v0, zero, Lc1f8c [$800c1f8c]
-800C1F7C	lui    a1, $00ff
-800C1F80	j      Lc1f8c [$800c1f8c]
-A0 = 1000;
+if( w[1f800000] < 10 )
+{
+    [packet + 0012] = h(hu[packet + 001a] - 10);
+    [packet + 000a] = h(hu[packet + 001a] - 10);
+    [1f800014] = w(1);
+}
 
-Lc1f88:	; 800C1F88
-800C1F88	lui    a1, $00ff
+if( ( w[1f800010] == 1 ) && ( w[1f800014] == w[1f800010] ) )
+{
+    [packet + 1d] = b(tex_v + 10); // v2
+    [packet + 25] = b(tex_v + 10); // v3
 
-Lc1f8c:	; 800C1F8C
-A1 = A1 | ffff;
-A0 = A0 << 02;
-A0 = A0 + S6;
-800C1F98	lui    a2, $ff00
-V0 = w[A0 + 0000];
-V1 = w[S1 + 0000];
-V0 = w[V0 + 0000];
-V1 = V1 & A2;
-V0 = V0 & A1;
-V1 = V1 | V0;
-[S1 + 0000] = w(V1);
-A0 = w[A0 + 0000];
-V0 = S1 + 0028;
-V1 = w[A0 + 0000];
-A1 = S1 & A1;
-V1 = V1 & A2;
-V1 = V1 | A1;
-[A0 + 0000] = w(V1);
-RA = w[SP + 0044];
-S6 = w[SP + 0040];
-S5 = w[SP + 003c];
-S4 = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0048;
-800C1FF8	jr     ra 
-800C1FFC	nop
+}
+else
+{
+    [packet + 1d] = b(tex_v + f); // v2
+    [packet + 25] = b(tex_v + f); // v3
+}
+
+[packet + c] = b(tex_u); // u0
+[packet + d] = b(tex_v); // v0
+[packet + 14] = b(tex_u + f); // u1
+[packet + 15] = b(tex_v); // v1
+[packet + 1c] = b(tex_u); // u2
+[packet + 24] = b(tex_u + f); // u3
+
+if( ( depth / 4 ) >= 2 )
+{
+    depth = depth / 4;
+    if( depth >= 1001 )
+    {
+        depth = 1000;
+    }
+}
+else
+{
+    depth = 2;
+}
+
+V0 = w[S6 + depth * 4];
+[packet] = w((w[S1] & ff000000) | (w[V0] & 00ffffff));
+[V0] = w((w[V0] & ff000000) | (packet & 00ffffff));
+
+return packet + 28;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcc2000()
+// battle_add_status_icon_to_render()
 
-A0 = A0 & 00ff;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V1 = V0 << 05;
-V1 = V1 - V0;
-V1 = V1 << 03;
-V1 = V1 - A0;
-V1 = V1 << 02;
+unit_id = A0;
+tex_v = A1;
+
 A2 = w[800f4b04];
-A3 = A1 << 10;
-[SP + 0010] = w(RA);
-AT = 80151a80;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-A3 = A3 >> 10;
-[A2 + 0000] = h(V0);
-V0 = A0 << 03;
-V0 = V0 - A0;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = V0 << 02;
-AT = 8015122a;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-A0 = w[801517c0];
-A1 = A2;
-[A2 + 0002] = h(V0);
-V0 = hu[800ea1ec];
-AT = 80151a84;
-AT = AT + V1;
-V1 = hu[AT + 0000];
-V0 = V0 >> 03;
-V0 = V0 & 0003;
-[A2 + 0004] = h(V1);
-AT = 800ea1e8;
-AT = AT + V0;
-A2 = bu[AT + 0000];
-A0 = A0 + 0070;
-800C20B4	jal    funcc1d8c [$800c1d8c]
+[A2 + 0] = h(hu[80151a80 + unit_id * b9c + 0]);
+[A2 + 2] = h(hu[80151200 + unit_id * 74 + 2a]);
+[A2 + 4] = h(hu[80151a84 + unit_id * b9c + 0]);
 
-V1 = hu[800ea1ec];
+V0 = (hu[800ea1ec] >> 3) & 3;
+
+A0 = w[801517c0] + 70;
+A1 = w[800f4b04]; // pos vector
+A2 = bu[800ea1e8 + V0 + 0]; // texture u
+A3 = tex_v;
+battle_create_status_icon_packet();
 [80163c74] = w(V0);
-V1 = V1 + 0001;
-[800ea1ec] = h(V1);
+
+[800ea1ec] = h(hu[800ea1ec] + 1);
 ////////////////////////////////
 
 
@@ -5355,7 +5247,7 @@ for( int i = 0; i < 4; ++i )
 
 
 ////////////////////////////////
-// funcc2150()
+// battle_add_status_digits_to_render()
 
 unit_id = A0;
 digit = A1;
@@ -5365,7 +5257,6 @@ A1 = w[800f4b08];
 [A1 + 0] = h(hu[801518e4 + unit_id * b9c + 174 + 28]); // translation X
 [A1 + 2] = h(hu[80151200 + unit_id * 74 + 2a]);
 [A1 + 4] = h(hu[80151a84 + unit_id * b9c + 174 + 2c]); // translation Z
-
 
 if( digit != -1 )
 {
@@ -5377,7 +5268,7 @@ if( digit != -1 )
     A1 = w[800f4b08];
     A2 = bu[800f4b10]; // dX
     A3 = bu[800f4b12]; // Xd
-    funcc223c();
+    battle_create_status_digits_packets();
 
     [80163c74] = w(V0);
 }
@@ -5386,7 +5277,7 @@ if( digit != -1 )
 
 
 ////////////////////////////////
-// funcc223c()
+// battle_create_status_digits_packets()
 
 S3 = A1;
 digit0 = A2;
@@ -5401,7 +5292,7 @@ V0 = w[80163c74];
 for( int i = 0; i < 2; ++i )
 {
     A0 = w[SP + 28 + i * 4];
-    func468fc();
+    system_gpu_textured_quad_header();
 
     V1 = w[SP + 28 + i * 4];
     [V1 + 0016] = h(3f);
@@ -5880,7 +5771,7 @@ A1 = A1 << 02;
 A1 = A1 + V0;
 A1 = A1 << 02;
 A1 = A1 + S0;
-800C2AAC	jal    system_gte_rotation_matrix_from_yxz [$8003c21c]
+800C2AAC	jal    system_gte_rotation_matrix_from_yxz [$system_gte_rotation_matrix_from_yxz]
 A0 = A1 + 0020;
 V0 = w[S1 + 0010];
 800C2AB8	nop

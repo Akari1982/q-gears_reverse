@@ -2378,19 +2378,19 @@ VZ1 = w[A1 + 4]
 VXY2 = w[A2 + 0];
 VZ2 = w[A2 + 4]
 gte_RTPT; // Perspective transform on 3 points.
-[w[SP + 10]] = w(SXY0);
-[w[SP + 14]] = w(SXY1);
-[w[SP + 18]] = w(SXY2);
+[A4] = w(SXY0);
+[A5] = w(SXY1);
+[A6] = w(SXY2);
 V1 = FLAG;
 
 VXY0 = w[A3 + 0];
 VZ0 = w[A3 + 4]
 gte_RTPS; // Perspective transform
-[w[SP + 1c]] = w(SXY2);
+[A7] = w(SXY2);
 T0 = FLAG;
 
-[w[SP + 20]] = w(T0);
-[w[SP + 24]] = w(T0 | V1);
+[A8] = w(T0);
+[A9] = w(T0 | V1);
 
 AVSZ4; // Average of four Z values
 

@@ -4,7 +4,7 @@
 A0 = w[A0 + 2f24];
 8001CDAC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8001CDB4	jal    func468fc [$800468fc]
+8001CDB4	jal    system_gpu_textured_quad_header [$800468fc]
 8001CDB8	nop
 8001CDBC	lui    a0, $8006
 A0 = w[A0 + 2f24];
@@ -129,7 +129,7 @@ FP = A3;
 [SP + 004c] = w(RA);
 [SP + 0034] = w(S3);
 [SP + 002c] = w(S1);
-8001CFA0	jal    func468fc [$800468fc]
+8001CFA0	jal    system_gpu_textured_quad_header [$800468fc]
 [SP + 0018] = h(T0);
 8001CFA8	lui    a0, $8006
 A0 = w[A0 + 2f24];
@@ -278,7 +278,7 @@ FP = A3;
 [SP + 004c] = w(RA);
 [SP + 0034] = w(S3);
 [SP + 002c] = w(S1);
-8001D1E4	jal    func468fc [$800468fc]
+8001D1E4	jal    system_gpu_textured_quad_header [$800468fc]
 [SP + 0018] = h(T0);
 8001D1EC	lui    a0, $8006
 A0 = w[A0 + 2f24];
