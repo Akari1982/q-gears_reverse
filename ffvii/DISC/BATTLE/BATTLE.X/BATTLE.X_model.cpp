@@ -7513,223 +7513,174 @@ S1 = hu[model + 8];
 S2 = hu[model + a]; // color for polygons
 S3 = hu[model + c]; // blending option
 S4 = hu[model + e];
-A0 = w[model + 0]; // global offset to part
+part_data = w[model + 0]; // global offset to part
 
 if( ( S0 & 0080 ) == 0 )
 {
     S2 = (S2 << 10) | (S2 << 8) | S2;
 }
+// add transparency bit to polygon header
+S2 = S2 | ((S0 & 8) << 16);
 
 S4 = S4 << 10;
 
-V0 = w[A0 + 0]; // offset to triangle
-S5 = A0 + 4;
-A0 = S5 + V0; // real offset to triangle data
-
-// add transparency bit to polygon header
-V0 = S0 & 0008;
-V0 = V0 << 16;
-S2 = S2 | V0;
+mesh = part_data + 4 + w[part_data + 0]; // real offset to triangle data
 
 S6 = 0;
-if (S0 & 0001)
+if( S0 & 0001 )
 {
     S6 = S6 XOR ffffffff;
     funcd3418;
 }
-if (S0 & 0002)
+if( S0 & 0002 )
 {
     S6 = S6 XOR ffffffff;
     funcd3474;
 }
-if (S0 & 0004)
+if( S0 & 0004 )
 {
     S6 = S6 XOR ffffffff;
     funcd34c8;
 }
 
-if ((S0 & 0040) == 0)
+if( ( S0 & 0040 ) == 0 )
 {
-    S3 = (h[A0 + 2] & 19f) + S3; // add blend
+    S3 = (h[mesh + 2] & 19f) + S3; // add blend
 }
 
-T8 = h[A0 + 0]; // number of triangle
-A0 = A0 + 4;
-S7 = S7 + T8;
-if (T8 != 0)
+number = h[mesh]; // number of triangle
+mesh = mesh + 4;
+S7 = S7 + number;
+
+for( int i = number; i != 0; --i )
 {
-    T8 = T8 - 1;
+    T4 = part_data + 4 + h[mesh + 0];
+    T5 = part_data + 4 + h[mesh + 2];
+    T6 = part_data + 4 + h[mesh + 4];
 
-    Ld2afc:	; 800D2AFC
-        T4 = S5 + h[A0 + 0];
-        T5 = S5 + h[A0 + 2];
-        T6 = S5 + h[A0 + 4];
+    VXY0 = w[T4 + 0]; VZ0  = w[T4 + 4];
+    VXY1 = w[T5 + 0]; VZ1  = w[T5 + 4];
+    VXY2 = w[T6 + 0]; VZ2  = w[T6 + 4];
+    gte_RTPT(); // Perspective transform on 3 points.
+    V0 = FLAG;
 
-        VXY0 = w[T4 + 0]; VZ0  = w[T4 + 4];
-        VXY1 = w[T5 + 0]; VZ1  = w[T5 + 4];
-        VXY2 = w[T6 + 0]; VZ2  = w[T6 + 4];
-        gte_RTPT; // Perspective transform on 3 points.
-        V0 = FLAG;
+    gte_NCLIP(); // Normal clipping.
 
-        gte_NCLIP; // Normal clipping.
+    if( ( ( V0 & 00060000 ) == 0 ) && ( ( S0 & 0020 ) || ( ( MAC0 != 0 ) && ( ( MAC0 XOR S6 ) >= 0 ) ) ) )
+    {
+        T0 = SXY0;
+        T1 = SXY1;
+        T2 = SXY2;
 
-        V0 = V0 & 00060000;
-        // Limiter C out of range (less than 0, or 2^16 or more)
-        // Divide overflow generated (quotient of 2.0 or more)
-        if (V0 == 0)
+        // if at least 1 point is on screen
+        if ( ( ( ( T0 << 10 ) >=  0 ) || ( ( T1 << 10 ) >=  0 ) || ( ( T2 << 10 ) >=  0 ) ) &&
+             ( ( ( T0 << 10 ) < 140 ) || ( ( T1 << 10 ) < 140 ) || ( ( T2 << 10 ) < 140 ) ) &&
+             ( ( ( T0 >= 0 ) && ( ( T0 < a6 ) || ( T1 < a6 ) || ( T2 < a6 ) ) ) || ( ( T1 >= 0 ) || ( T2 >= 0 ) ) )
         {
-            V0 = MAC0; // result of normal clipping
-            if (S0 & 20 || (V0 != 0 && (V0 XOR S6) >= 0))
+            // set vertex pos
+            [packets +  8] = w(T0);
+            [packets + 10] = w(T1);
+            [packets + 18] = w(T2);
+
+            // do depth sort
+            gte_AVSZ3(); // Average of four Z values
+            T0 = OTZ >> A2;
+
+            [packets + 0] = w((w[A1 + T0 * 4] & 00ffffff) | 07000000);
+            [A1 + T0 * 4] = w(packets & 00ffffff);
+
+            // set clut and uv
+            [packets + c] = w(w[mesh + 8] + S4 + S1);
+            [packets + 14] = h(h[mesh + c] + S1);
+            [packets + 1c] = h(h[mesh + e] + S1);
+
+            T0 = h[mesh + 6];
+            T1 = 0;
+            if( ( S0 & 0040 ) == 0)
             {
-                T0 = SXY0;
-                T1 = SXY1;
-                T2 = SXY2;
+                [packets + 16] = h(S3);
 
-                // if at least 1 point is on screen
-                if (((T0 << 10) >= 0 || (T1 << 10) >= 0 || (T2 << 10) >= 0) &&
-                    ((T0 << 10) < 140 || (T1 << 10) < 140 || (T2 << 10) < 140) &&
-                    (((T0 >= 0) && (T0 < a6 || T1 < a6 || T2 < a6)) || (T1 >= 0 || T2 >= 0))
+                if( S0 & 0100 )
                 {
-                    // set vertex pos
-                    [A3 + 8] = w(T0);
-                    [A3 + 10] = w(T1);
-                    [A3 + 18] = w(T2);
-
-
-
-                    // do depth sort
-                    gte_AVSZ3; // Average of four Z values
-                    T0 = OTZ;
-                    T0 = T0 >> A2;
-                    T1 = w[A1 + T0 * 4];
-                    T1 = T1 & 00ffffff;
-                    T1 = T1 | 07000000;
-                    [A3 + 0] = w(T1);
-                    [A1 + T0 * 4] = w(A3 & 00ffffff);
-
-
-
-                    // set clut and uv
-                    [A3 + c] = w(w[A0 + 8] + S4 + S1);
-                    [A3 + 14] = h(h[A0 + c] + S1);
-                    [A3 + 1c] = h(h[A0 + e] + S1);
-
-
-
-                    T0 = h[A0 + 6];
-                    T1 = 0;
-                    if ((S0 & 0040) == 0)
-                    {
-                        [A3 + 16] = h(S3);
-
-                        if (S0 & 0100)
-                        {
-                            T1 = T0 & ff00;
-                            T1 = T1 << 10;
-                        }
-                    }
-                    else
-                    {
-                        [A3 + 16] = h((T0 >> 8) & 19f + S3); // add texpage settings from vertex
-                    }
-
-                    if (S0 & 0080)
-                    {
-                        V0 = S2 & ff000000; // BGR only
-                        V0 = 24000000 | (T0 & ff << 10) | (T0 & ff << 8) | (T0 & ff);
-
-                        if ((S0 & 0010) == 0)
-                        {
-                            V1 = S2 & ffff;
-                            if (V1 != 0)
-                            {
-                                IR0 = V1;
-                                RGB = V0;
-                                gte_DPCS;
-                                V0 = RGB2;
-                                V0 = V0 | (S2 >> 10) << 10;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        V0 = 24000000 | S2;
-                    }
-
-                    V0 = V0 | T1;
-                    [A3 + 4] = w(V0);
-
-                    A3 = A3 + 20;
-                    FP = FP + 1;
+                    T1 = (T0 & ff00) << 10;
                 }
             }
+            else
+            {
+                [packets + 16] = h((T0 >> 8) & 19f + S3); // add texpage settings from vertex
+            }
+
+            if( S0 & 0080 )
+            {
+                V0 = (S2 & ff000000) | 24000000 | (T0 & ff << 10) | (T0 & ff << 8) | (T0 & ff);
+
+                if( ( S0 & 0010 ) == 0 )
+                {
+                    V1 = S2 & ffff;
+                    if( V1 != 0 )
+                    {
+                        IR0 = V1;
+                        RGB = V0;
+                        gte_DPCS();
+                        V0 = RGB2 | (S2 >> 10) << 10;
+                    }
+                }
+            }
+            else
+            {
+                V0 = 24000000 | S2;
+            }
+
+            [packets + 4] = w(V0 | T1); // header and RGB
+
+            packets = packets + 20;
+            FP = FP + 1;
         }
+    }
 
-        A0 = A0 + 10;
-        T8 = T8 - 1;
-    800D2CD0	bne    t8, zero, Ld2afc [$800d2afc]
-
+    mesh = mesh + 10;
 }
 
 
 
 AT = 800d2f0c;
-T8 = w[A0];
-A0 = A0 + 4;
+T8 = w[mesh];
+mesh = mesh + 4;
 S7 = S7 + T8;
-if (T8 != 0)
+S7 = S7 + T8;
+
+for( int i = T8; i != 0; --i )
 {
-    S7 = S7 + T8;
-    T8 = T8 - 1;
+    T4 = part_data + 4 + h[mesh + 0];
+    T5 = part_data + 4 + h[mesh + 2];
+    T6 = part_data + 4 + h[mesh + 4];
 
-    T4 = S5 + h[A0 + 0];
-    T5 = S5 + h[A0 + 2];
-    T6 = S5 + h[A0 + 4];
+    VXY0 = w[T4 + 0]; VZ0  = w[T4 + 4];
+    VXY1 = w[T5 + 0]; VZ1  = w[T5 + 4];
+    VXY2 = w[T6 + 0]; VZ2  = w[T6 + 4];
+    gte_RTPT(); // Perspective transform on 3 points.
+    V0 = FLAG;
 
-    Ld2d10:	; 800D2D10
-        VXY0 = w[T4 + 0]; VZ0  = w[T4 + 4];
-        VXY1 = w[T5 + 0]; VZ1  = w[T5 + 4];
-        VXY2 = w[T6 + 0]; VZ2  = w[T6 + 4];
-        A0 = A0 + 14;
-        gte_RTPT; // Perspective transform on 3 points.
-        V0 = FLAG;
+    gte_NCLIP(); // Normal clipping.
 
-        T4 = S5 + h[A0 + 0];
-        T5 = S5 + h[A0 + 2];
-        T6 = S5 + h[A0 + 4];
-
-        gte_NCLIP; // Normal clipping.
-
-        V1 = 00060000;
-        V0 = V0 & V1;
-        800D2D58	bne    v0, zero, Ld2f0c [$800d2f0c]
-        800D2D5C	nop
-        V0 = S0 & 0020;
-        800D2D64	bne    v0, zero, Ld2d84 [$800d2d84]
-        800D2D68	nop
-        V0 = MAC0;
-        800D2D70	nop
-        800D2D74	beq    v0, zero, Ld2d84 [$800d2d84]
-        V0 = V0 ^ S6;
-        800D2D7C	bltz   v0, Ld2f0c [$800d2f0c]
-        800D2D80	nop
-
-        Ld2d84:	; 800D2D84
-        T7 = h[A0 + fff2];
+    if( ( ( V0 & 00060000 ) == 0 ) && ( ( S0 & 20 ) || ( MAC0 == 0 ) || ( ( MAC0 ^ S6 ) >= 0 ) ) )
+    {
+        T7 = h[mesh + 14 - e];
         T0 = SXY0;
-        T7 = S5 + T7;
+        T7 = part_data + 4 + T7;
         T1 = SXY1;
         VXY0 = w[T7 + 0000];
         VZ0 = w[T7 + 0004];
         T2 = SXY2P;
         gte_RTPS(); // Perspective transform
         T3 = SXY2P;
+
         800D2DA8	jal    funcd3354 [$800d3354]
-        800D2DAC	nop
-        [A3 + 0008] = w(T0);
-        [A3 + 0010] = w(T1);
-        [A3 + 0018] = w(T2);
-        [A3 + 0020] = w(T3);
+
+        [packets + 0008] = w(T0);
+        [packets + 0010] = w(T1);
+        [packets + 0018] = w(T2);
+        [packets + 0020] = w(T3);
         gte_AVSZ4(); // Average of four Z values
         T0 = OTZ;
         800D2DC8	nop
@@ -7741,35 +7692,35 @@ if (T8 != 0)
         800D2DE4	lui    v1, $0900
         T1 = T1 & V0;
         T1 = T1 | V1;
-        [A3 + 0000] = w(T1);
-        V0 = A3 & V0;
+        [packets + 0000] = w(T1);
+        V0 = packets & V0;
         [T0 + 0000] = w(V0);
-        T0 = w[A0 + fff4];
-        T1 = h[A0 + fff8];
-        T2 = h[A0 + fffa];
-        T3 = h[A0 + fffc];
+        T0 = w[mesh + 14 - c];
+        T1 = h[mesh + 14 - 8];
+        T2 = h[mesh + 14 - 6];
+        T3 = h[mesh + 14 - 4];
         800D2E0C	add    t0, t0, s4
         800D2E10	add    t0, t0, s1
         800D2E14	add    t1, t1, s1
         800D2E18	add    t2, t2, s1
         800D2E1C	add    t3, t3, s1
-        [A3 + 000c] = w(T0);
-        [A3 + 0014] = h(T1);
-        [A3 + 001c] = h(T2);
-        [A3 + 0024] = h(T3);
-        T0 = h[A0 + fffe];
+        [packets + 000c] = w(T0);
+        [packets + 0014] = h(T1);
+        [packets + 001c] = h(T2);
+        [packets + 0024] = h(T3);
+        T0 = h[mesh + 14 - 2];
         V0 = S0 & 0040;
         800D2E38	beq    v0, zero, Ld2e58 [$800d2e58]
         800D2E3C	nop
         V0 = T0 >> 08;
         V0 = V0 & 019f;
         800D2E48	add    v0, v0, s3
-        [A3 + 0016] = h(V0);
+        [packets + 0016] = h(V0);
         800D2E50	j      Ld2e70 [$800d2e70]
         T1 = 0;
 
         Ld2e58:	; 800D2E58
-        [A3 + 0016] = h(S3);
+        [packets + 0016] = h(S3);
         V0 = S0 & 0100;
         800D2E60	beq    v0, zero, Ld2e70 [$800d2e70]
         T1 = 0;
@@ -7779,297 +7730,281 @@ if (T8 != 0)
         Ld2e70:	; 800D2E70
         V0 = S0 & 0080;
         800D2E74	beq    v0, zero, Ld2ef4 [$800d2ef4]
-        800D2E78	nop
-        800D2E7C	lui    v0, $ff00
-        V0 = S2 & V0;
-        800D2E84	lui    v1, $2c00
-        V0 = V0 | V1;
-        V1 = T0 & 00ff;
-        V0 = V0 | V1;
-        V1 = V1 << 08;
-        V0 = V0 | V1;
-        V1 = V1 << 08;
-        V0 = V0 | V1;
+
+        V0 = S2 & ff000000;
+        V0 = 2c000000 | V0;
+        V0 = V0 | (T0 & ff);
+        V0 = V0 | ((T0 & ff) << 08);
+        V0 = V0 | ((T0 & ff) << 10);
         V1 = S0 & 0010;
         800D2EA8	bne    v1, zero, Ld2efc [$800d2efc]
         V1 = S2 & ffff;
         800D2EB0	beq    v1, zero, Ld2efc [$800d2efc]
-        800D2EB4	nop
+
         IR0 = V1;
         RGB = V0;
-        800D2EC0	nop
-        800D2EC4	nop
         gte_DPCS(); // Depth Cueing
-        800D2ECC	nop
-        800D2ED0	nop
         V0 = RGB2;
         V1 = S1 >> 10;
         V1 = V1 << 10;
         V0 = V0 | V1;
         V0 = V0 | T1;
-        [A3 + 0004] = w(V0);
+        [packets + 0004] = w(V0);
         800D2EEC	j      Ld2f04 [$800d2f04]
         800D2EF0	nop
 
         Ld2ef4:	; 800D2EF4
-        800D2EF4	lui    v0, $2c00
-        V0 = V0 | S2;
+        V0 = 2c000000 | S2;
 
         Ld2efc:	; 800D2EFC
         V0 = V0 | T1;
-        [A3 + 0004] = w(V0);
+        [packets + 0004] = w(V0);
 
         Ld2f04:	; 800D2F04
-        A3 = A3 + 0028;
-        FP = FP + 0002;
+        packets = packets + 28;
+        FP = FP + 2;
+    }
 
-        Ld2f0c:	; 800D2F0C
-        T8 = T8 - 1;
-    800D2F0C	bne    t8, zero, Ld2d10 [$800d2d10]
+    mesh = mesh + 14;
 }
 
-
-
-AT = 800d3098;
-T8 = h[A0 + 0000];
-A0 = A0 + 0004;
-800D2F24	beq    t8, zero, Ld30a0 [$800d30a0]
+T8 = h[mesh + 0000];
+mesh = mesh + 0004;
 S7 = S7 + T8;
-800D2F2C	addiu  t8, t8, $ffff (=-$1)
-T4 = h[A0 + 0000];
-T5 = h[A0 + 0002];
-T6 = h[A0 + 0004];
-T4 = S5 + T4;
-T5 = S5 + T5;
-T6 = S5 + T6;
+if( T8 != 0 )
+{
+    T4 = h[mesh + 0000];
+    T5 = h[mesh + 0002];
+    T6 = h[mesh + 0004];
+    T4 = part_data + 4 + T4;
+    T5 = part_data + 4 + T5;
+    T6 = part_data + 4 + T6;
 
-loopd2f48:	; 800D2F48
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-VXY1 = w[T5 + 0000];
-VZ1 = w[T5 + 0004];
-VXY2 = w[T6 + 0000];
-VZ2 = w[T6 + 0004];
-A0 = A0 + 0014;
-gte_RTPT(); // Perspective transform on 3 points
-T4 = h[A0 + 0000];
-T5 = h[A0 + 0002];
-T6 = h[A0 + 0004];
-T4 = S5 + T4;
-T5 = S5 + T5;
-T6 = S5 + T6;
-V0 = FLAG;
-gte_NCLIP(); // Normal clipping
-800D2F88	lui    v1, $0006
-V0 = V0 & V1;
-800D2F90	bne    v0, zero, Ld3098 [$800d3098]
-800D2F94	nop
-V0 = S0 & 0020;
-800D2F9C	bne    v0, zero, Ld2fbc [$800d2fbc]
-800D2FA0	nop
-V0 = MAC0;
-800D2FA8	nop
-800D2FAC	beq    v0, zero, Ld3098 [$800d3098]
-V0 = V0 ^ S6;
-800D2FB4	bltz   v0, Ld3098 [$800d3098]
-800D2FB8	nop
+    loopd2f48:	; 800D2F48
+        T8 = T8 - 1;
+        VXY0 = w[T4 + 0000];
+        VZ0 = w[T4 + 0004];
+        VXY1 = w[T5 + 0000];
+        VZ1 = w[T5 + 0004];
+        VXY2 = w[T6 + 0000];
+        VZ2 = w[T6 + 0004];
+        mesh = mesh + 0014;
+        gte_RTPT(); // Perspective transform on 3 points
+        T4 = h[mesh + 0000];
+        T5 = h[mesh + 0002];
+        T6 = h[mesh + 0004];
+        T4 = part_data + 4 + T4;
+        T5 = part_data + 4 + T5;
+        T6 = part_data + 4 + T6;
+        V0 = FLAG;
+        gte_NCLIP(); // Normal clipping
+        800D2F88	lui    v1, $0006
+        V0 = V0 & V1;
+        800D2F90	bne    v0, zero, Ld3098 [$800d3098]
+        800D2F94	nop
+        V0 = S0 & 0020;
+        800D2F9C	bne    v0, zero, Ld2fbc [$800d2fbc]
+        800D2FA0	nop
+        V0 = MAC0;
+        800D2FA8	nop
+        800D2FAC	beq    v0, zero, Ld3098 [$800d3098]
+        V0 = V0 ^ S6;
+        800D2FB4	bltz   v0, Ld3098 [$800d3098]
+        800D2FB8	nop
 
-Ld2fbc:	; 800D2FBC
-T0 = SXY0;
-T1 = SXY1;
-T2 = SXY2P;
-800D2FC8	jal    funcd32b4 [$800d32b4]
-800D2FCC	nop
-[A3 + 0008] = w(T0);
-[A3 + 0010] = w(T1);
-[A3 + 0018] = w(T2);
-gte_AVSZ3(); // Average of three Z values
-T0 = OTZ;
-800D2FE4	nop
-T0 = T0 >> A2;
-T0 = T0 << 02;
-T0 = T0 + A1;
-T1 = w[T0 + 0000];
-V0 = ffffff;
-800D3000	lui    v1, $0600
-T1 = T1 & V0;
-T1 = T1 | V1;
-[A3 + 0000] = w(T1);
-V0 = A3 & V0;
-[T0 + 0000] = w(V0);
-V1 = S2 & ffff;
-800D301C	beq    v1, zero, Ld3074 [$800d3074]
-800D3020	nop
-V0 = w[A0 - c];
-RGB1 = w[A0 - 8];
-RGB0 = w[A0 - 4];
-RGB2 = V0;
-RGB = V0;
-IR0 = V1;
-DPCT; // Depth cue color RGB0,RGB1,RGB2.
+        Ld2fbc:	; 800D2FBC
+        T0 = SXY0;
+        T1 = SXY1;
+        T2 = SXY2P;
+        800D2FC8	jal    funcd32b4 [$800d32b4]
+        800D2FCC	nop
+        [packets + 0008] = w(T0);
+        [packets + 0010] = w(T1);
+        [packets + 0018] = w(T2);
+        gte_AVSZ3(); // Average of three Z values
+        T0 = OTZ;
+        800D2FE4	nop
+        T0 = T0 >> A2;
+        T0 = T0 << 02;
+        T0 = T0 + A1;
+        T1 = w[T0 + 0000];
+        V0 = ffffff;
+        800D3000	lui    v1, $0600
+        T1 = T1 & V0;
+        T1 = T1 | V1;
+        [packets + 0000] = w(T1);
+        V0 = packets & V0;
+        [T0 + 0000] = w(V0);
+        V1 = S2 & ffff;
+        800D301C	beq    v1, zero, Ld3074 [$800d3074]
+        800D3020	nop
+        V0 = w[mesh - c];
+        RGB1 = w[mesh - 8];
+        RGB0 = w[mesh - 4];
+        RGB2 = V0;
+        RGB = V0;
+        IR0 = V1;
+        DPCT; // Depth cue color RGB0,RGB1,RGB2.
 
-V0 = RGB2;
-[A3 + 0014] = w(RGB0);
-[A3 + 000c] = w(RGB1);
-V1 = S2 >> 10;
-V1 = V1 << 10;
-V0 = V0 | V1;
-[A3 + 0004] = w(V0);
-800D306C	j      Ld3090 [$800d3090]
-800D3070	nop
+        V0 = RGB2;
+        [packets + 0014] = w(RGB0);
+        [packets + 000c] = w(RGB1);
+        V1 = S2 >> 10;
+        V1 = V1 << 10;
+        V0 = V0 | V1;
+        [packets + 0004] = w(V0);
+        800D306C	j      Ld3090 [$800d3090]
+        800D3070	nop
 
-Ld3074:	; 800D3074
-T0 = w[A0 + fff4];
-T1 = w[A0 + fff8];
-T2 = w[A0 + fffc];
-T0 = T0 | S2;
-[A3 + 0004] = w(T0);
-[A3 + 000c] = w(T1);
-[A3 + 0014] = w(T2);
+        Ld3074:	; 800D3074
+        T0 = w[mesh + fff4];
+        T1 = w[mesh + fff8];
+        T2 = w[mesh + fffc];
+        T0 = T0 | S2;
+        [packets + 0004] = w(T0);
+        [packets + 000c] = w(T1);
+        [packets + 0014] = w(T2);
 
-Ld3090:	; 800D3090
-A3 = A3 + 001c;
-FP = FP + 0001;
+        Ld3090:	; 800D3090
+        packets = packets + 001c;
+        FP = FP + 0001;
 
-Ld3098:	; 800D3098
-800D3098	bne    t8, zero, loopd2f48 [$800d2f48]
-800D309C	addi   t8, t8, $ffff (=-$1)
+        Ld3098:	; 800D3098
+    800D3098	bne    t8, zero, loopd2f48 [$800d2f48]
+}
 
-Ld30a0:	; 800D30A0
-AT = 800d326c;
-T8 = w[A0 + 0000];
-A0 = A0 + 0004;
-800D30B0	beq    t8, zero, Ld3274 [$800d3274]
+T8 = w[mesh + 0000];
+mesh = mesh + 0004;
 S7 = S7 + T8;
-S7 = S7 + T8;
-800D30BC	addiu  t8, t8, $ffff (=-$1)
-T4 = h[A0 + 0000];
-T5 = h[A0 + 0002];
-T6 = h[A0 + 0004];
-T4 = S5 + T4;
-T5 = S5 + T5;
-T6 = S5 + T6;
+if( T8 != 0 )
+{
+    S7 = S7 + T8;
+    T4 = h[mesh + 0000];
+    T5 = h[mesh + 0002];
+    T6 = h[mesh + 0004];
+    T4 = part_data + 4 + T4;
+    T5 = part_data + 4 + T5;
+    T6 = part_data + 4 + T6;
 
-Ld30d8:	; 800D30D8
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-VXY1 = w[T5 + 0000];
-VZ1 = w[T5 + 0004];
-VXY2 = w[T6 + 0000];
-VZ2 = w[T6 + 0004];
-A0 = A0 + 0018;
-gte_RTPT(); // Perspective transform on 3 points
+    Ld30d8:	; 800D30D8
+        T8 = T8 - 1;
+        VXY0 = w[T4 + 0000];
+        VZ0 = w[T4 + 0004];
+        VXY1 = w[T5 + 0000];
+        VZ1 = w[T5 + 0004];
+        VXY2 = w[T6 + 0000];
+        VZ2 = w[T6 + 0004];
+        mesh = mesh + 0018;
+        gte_RTPT(); // Perspective transform on 3 points
 
-T4 = h[A0 + 0];
-T5 = h[A0 + 2];
-T6 = h[A0 + 4];
+        T4 = h[mesh + 0];
+        T5 = h[mesh + 2];
+        T6 = h[mesh + 4];
 
-T4 = S5 + T4;
-T5 = S5 + T5;
-T6 = S5 + T6;
-V0 = FLAG;
-gte_NCLIP(); // Normal clipping
-800D3118	lui    v1, $0006
-V0 = V0 & V1;
-800D3120	bne    v0, zero, Ld326c [$800d326c]
-800D3124	nop
-V0 = S0 & 0020;
-800D312C	bne    v0, zero, Ld314c [$800d314c]
-800D3130	nop
-V0 = MAC0;
-800D3138	nop
-800D313C	beq    v0, zero, Ld314c [$800d314c]
-V0 = V0 ^ S6;
-800D3144	bltz   v0, Ld326c [$800d326c]
-800D3148	nop
+        T4 = part_data + 4 + T4;
+        T5 = part_data + 4 + T5;
+        T6 = part_data + 4 + T6;
+        V0 = FLAG;
+        gte_NCLIP(); // Normal clipping
+        800D3118	lui    v1, $0006
+        V0 = V0 & V1;
+        800D3120	bne    v0, zero, Ld326c [$800d326c]
+        800D3124	nop
+        V0 = S0 & 0020;
+        800D312C	bne    v0, zero, Ld314c [$800d314c]
+        800D3130	nop
+        V0 = MAC0;
+        800D3138	nop
+        800D313C	beq    v0, zero, Ld314c [$800d314c]
+        V0 = V0 ^ S6;
+        800D3144	bltz   v0, Ld326c [$800d326c]
+        800D3148	nop
 
-Ld314c:	; 800D314C
-T7 = h[A0 + ffee];
-T0 = SXY0;
-T7 = S5 + T7;
-T1 = SXY1;
-VXY0 = w[T7 + 0000];
-VZ0 = w[T7 + 0004];
-T2 = SXY2P;
-gte_RTPS(); // Perspective transform
-T3 = SXY2P;
-800D3170	jal    funcd3354 [$800d3354]
-800D3174	nop
-[A3 + 0008] = w(T0);
-[A3 + 0010] = w(T1);
-[A3 + 0018] = w(T2);
-[A3 + 0020] = w(T3);
-gte_AVSZ4(); // Average of four Z values
-T0 = OTZ;
-800D3190	nop
-T0 = T0 >> A2;
-T0 = T0 << 02;
-T0 = T0 + A1;
-T1 = w[T0 + 0000];
-V0 = ffffff;
-800D31AC	lui    v1, $0800
-T1 = T1 & V0;
-T1 = T1 | V1;
-[A3 + 0000] = w(T1);
-V0 = A3 & V0;
-[T0 + 0000] = w(V0);
-V1 = S2 & ffff;
-800D31C8	beq    v1, zero, Ld3240 [$800d3240]
-800D31CC	nop
-V0 = w[A0 + fff0];
-RGB1 = w[A0 + fff4];
-RGB0 = w[A0 + fff8];
-RGB2 = V0;
-RGB = V0;
-IR0 = V1;
-800D31E8	nop
-800D31EC	nop
-gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
-800D31F4	nop
-800D31F8	nop
-V0 = RGB2;
-[A3 + 0014] = w(RGB0);
-[A3 + 000c] = w(RGB1);
-T0 = S2 >> 10;
-T0 = T0 << 10;
-V0 = V0 | T0;
-[A3 + 0004] = w(V0);
-RGB = w[A0 + fffc];
-IR0 = V1;
-800D3220	nop
-800D3224	nop
-gte_DPCS(); // Depth Cueing
-800D322C	nop
-800D3230	nop
-[A3 + 001c] = w(RGB2);
-800D3238	j      Ld3264 [$800d3264]
-800D323C	nop
+        Ld314c:	; 800D314C
+        T7 = h[mesh + ffee];
+        T0 = SXY0;
+        T7 = part_data + 4 + T7;
+        T1 = SXY1;
+        VXY0 = w[T7 + 0000];
+        VZ0 = w[T7 + 0004];
+        T2 = SXY2P;
+        gte_RTPS(); // Perspective transform
+        T3 = SXY2P;
+        800D3170	jal    funcd3354 [$800d3354]
+        800D3174	nop
+        [packets + 0008] = w(T0);
+        [packets + 0010] = w(T1);
+        [packets + 0018] = w(T2);
+        [packets + 0020] = w(T3);
+        gte_AVSZ4(); // Average of four Z values
+        T0 = OTZ;
+        800D3190	nop
+        T0 = T0 >> A2;
+        T0 = T0 << 02;
+        T0 = T0 + A1;
+        T1 = w[T0 + 0000];
+        V0 = ffffff;
+        800D31AC	lui    v1, $0800
+        T1 = T1 & V0;
+        T1 = T1 | V1;
+        [packets + 0000] = w(T1);
+        V0 = packets & V0;
+        [T0 + 0000] = w(V0);
+        V1 = S2 & ffff;
+        800D31C8	beq    v1, zero, Ld3240 [$800d3240]
+        800D31CC	nop
+        V0 = w[mesh + fff0];
+        RGB1 = w[mesh + fff4];
+        RGB0 = w[mesh + fff8];
+        RGB2 = V0;
+        RGB = V0;
+        IR0 = V1;
+        800D31E8	nop
+        800D31EC	nop
+        gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
+        800D31F4	nop
+        800D31F8	nop
+        V0 = RGB2;
+        [packets + 0014] = w(RGB0);
+        [packets + 000c] = w(RGB1);
+        T0 = S2 >> 10;
+        T0 = T0 << 10;
+        V0 = V0 | T0;
+        [packets + 0004] = w(V0);
+        RGB = w[mesh + fffc];
+        IR0 = V1;
+        800D3220	nop
+        800D3224	nop
+        gte_DPCS(); // Depth Cueing
+        800D322C	nop
+        800D3230	nop
+        [packets + 001c] = w(RGB2);
+        800D3238	j      Ld3264 [$800d3264]
+        800D323C	nop
 
-Ld3240:	; 800D3240
-V0 = w[A0 + fff0];
-V1 = w[A0 + fff4];
-T0 = w[A0 + fff8];
-T1 = w[A0 + fffc];
-V0 = V0 | S2;
-[A3 + 0004] = w(V0);
-[A3 + 000c] = w(V1);
-[A3 + 0014] = w(T0);
-[A3 + 001c] = w(T1);
+        Ld3240:	; 800D3240
+        V0 = w[mesh + fff0];
+        V1 = w[mesh + fff4];
+        T0 = w[mesh + fff8];
+        T1 = w[mesh + fffc];
+        V0 = V0 | S2;
+        [packets +  4] = w(V0);
+        [packets +  c] = w(V1);
+        [packets + 14] = w(T0);
+        [packets + 1c] = w(T1);
 
-Ld3264:	; 800D3264
-A3 = A3 + 0024;
-FP = FP + 0002;
+        Ld3264:	; 800D3264
+        packets = packets + 24;
+        FP = FP + 2;
 
-Ld326c:	; 800D326C
-800D326C	bne    t8, zero, Ld30d8 [$800d30d8]
-800D3270	addi   t8, t8, $ffff (=-$1)
+        Ld326c:	; 800D326C
+    800D326C	bne    t8, zero, Ld30d8 [$800d30d8]
+}
 
-Ld3274:	; 800D3274
-V0 = 800d3544;
-[V0 + 0000] = h(S7);
-[V0 + 0002] = h(FP);
+[800d3544 + 0] = h(S7);
+[800d3544 + 2] = h(FP);
 
-return A3;
+return packets;
 ////////////////////////////////
 
 
