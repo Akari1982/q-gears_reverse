@@ -205,7 +205,6 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                         battle_reset_unit_animation_script();
                     }
                 }
-                800CB7E8	j      Lcd208 [$800cd208]
             }
             break;
 
@@ -220,128 +219,56 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                 [1f800034] = b(V0);
 
                 [801621f0 + V0 * 20 + 4] = h(hu[1f800000]);
-
-                800C8148	j      Lcd208 [$800cd208]
             }
             break;
 
-800C8150 9c
+            case 9c:
+            {
+                800C8150	jal    funcbb90c [$800bb90c]
+            }
+            break;
 
-            800C8150	jal    funcbb90c [$800bb90c]
-            800C8154	nop
-            800C8158	j      Lcd208 [$800cd208]
-            800C815C	nop
+            case f8:
+            {
+                A0 = bu[80151920 + unit_id * b9c + 0];
 
-800C8160 f8
+                [80151920 + unit_id * b9c + 0] = b(A0 + 1);
 
-            S0 = unit_id;
-            V1 = S0 << 01;
-            V1 = V1 + S0;
-            V0 = V1 << 05;
-            V0 = V0 - V1;
-            V0 = V0 << 03;
-            V0 = V0 - S0;
-            V0 = V0 << 02;
-            AT = 80151920;
-            AT = AT + V0;
-            A0 = bu[AT + 0000];
-            800C8190	nop
-            V1 = A0 + 0001;
-            AT = 80151920;
-            AT = AT + V0;
-            [AT + 0000] = b(V1);
-            V0 = w[1f800024];
-            800C81AC	nop
-            A0 = A0 + V0;
-            V0 = bu[A0 + 0000];
-            A0 = 800ce384;
-            [1f800000] = w(V0);
-            800C81C8	jal    funcbc04c [$800bc04c]
-            800C81CC	nop
-            [1f80002a] = h(V0);
-            V0 = S0 < 0004;
-            800C81D8	beq    v0, zero, Lc8200 [$800c8200]
-            V0 = S0 << 02;
-            AT = 800f8384;
-            AT = AT + V0;
-            V0 = w[AT + 0000];
-            [1f800008] = w(S0);
-            800C81F8	j      Lc8240 [$800c8240]
-            800C81FC	nop
+                V0 = w[1f800024];
+                V0 = bu[A0 + V0 + 0];
+                [1f800000] = w(V0);
 
-            Lc8200:	; 800C8200
-            800C8200	addiu  v1, s0, $fffc (=-$4)
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 02;
-            AT = 800f7e08;
-            AT = AT + V0;
-            V1 = h[AT + 0000];
-            800C8220	nop
-            V0 = V1 << 02;
-            AT = 800f8384;
-            AT = AT + V0;
-            V0 = w[AT + 0000];
-            [1f800008] = w(V1);
+                A0 = 800ce384;
+                funcbc04c();
+                [1f80002a] = h(V0);
 
-            Lc8240:	; 800C8240
-            A0 = w[V0 + 0008];
-            V1 = hu[1f80002a];
-            V0 = w[1f800000];
-            V1 = V1 << 10;
-            V0 = V0 << 02;
-            V0 = V0 + A0;
-            V0 = w[V0 + 0024];
-            V1 = V1 >> 0b;
-            AT = 80162200;
-            AT = AT + V1;
-            [AT + 0000] = w(V0);
-            V0 = hu[1f80002a];
-            800C8278	nop
-            V0 = V0 << 10;
-            V0 = V0 >> 0b;
-            AT = 801621f6;
-            AT = AT + V0;
-            [AT + 0000] = h(unit_id);
-            V0 = hu[1f80002a];
-            800C8298	nop
-            V0 = V0 << 10;
-            V0 = V0 >> 0b;
-            AT = 80162208;
-            AT = AT + V0;
-            [AT + 0000] = b(0);
-            V0 = hu[1f80002a];
-            800C82B8	nop
-            V0 = V0 << 10;
-            V0 = V0 >> 0b;
-            AT = 801621f4;
-            AT = AT + V0;
-            [AT + 0000] = h(0);
-            V0 = unit_id;
-            V1 = V0 << 03;
-            V1 = V1 - V0;
-            V1 = V1 << 02;
-            V1 = V1 + V0;
-            V1 = V1 << 02;
-            AT = 80151234;
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            800C82FC	nop
-            V0 = V0 + 0001;
-            AT = 80151234;
-            AT = AT + V1;
-            [AT + 0000] = b(V0);
-            V0 = hu[1f80002a];
-            AT = 80151234;
-            AT = AT + V1;
-            V1 = bu[AT + 0000];
-            V0 = V0 << 10;
-            V0 = V0 >> 0b;
-            AT = 801621f2;
-            AT = AT + V0;
-            [AT + 0000] = h(V1);
-            800C8340	j      Lcd208 [$800cd208]
-            800C8344	nop
+                if( unit_id < 4 )
+                {
+                    V0 = w[800f8384 + unit_id * 4];
+                    [1f800008] = w(unit_id);
+                }
+                else
+                {
+                    V1 = h[800f7e08 + (unit_id - 4) * c + 0];
+                    [1f800008] = w(V1);
+                    V0 = w[800f8384 + V1 * 4];
+                }
+
+                A0 = w[V0 + 8];
+                V0 = w[1f800000];
+                V0 = w[A0 + V0 * 4 + 24];
+
+                V1 = h[1f80002a];
+                [80162200 + V1 * 20 + 0] = w(V0);
+                [801621f6 + V1 * 20 + 0] = h(unit_id);
+                [80162208 + V1 * 20 + 0] = b(0);
+                [801621f4 + V1 * 20 + 0] = h(0);
+
+                [80151234 + unit_id * 74 + 0] = b(bu[80151234 + unit_id * 74 + 0] + 1);
+
+                [801621f2 + V1 * 20 + 0] = h(bu[80151234 + unit_id * 74 + 0]);
+            }
+            break;
 
             case a9:
             {
@@ -861,108 +788,97 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             800C8F1C	j      Lcd208 [$800cd208]
             800C8F20	nop
 
-800C8F24 d4
+            case d4:
+            {
+                S0 = unit_id;
 
-            S0 = unit_id;
-            A1 = w[1f800024];
-            800C8F2C	jal    funccd558 [$800cd558]
-            A0 = S0;
-            V1 = S0 << 01;
-            V1 = V1 + S0;
-            [1f800032] = h(V0);
-            V0 = V1 << 05;
-            V0 = V0 - V1;
-            V0 = V0 << 03;
-            V0 = V0 - S0;
-            V0 = V0 << 02;
-            AT = 80151920;
-            AT = AT + V0;
-            A0 = bu[AT + 0000];
-            800C8F64	nop
-            V1 = A0 + 0001;
-            AT = 80151920;
-            AT = AT + V0;
-            [AT + 0000] = b(V1);
-            V1 = w[1f800024];
-            V0 = hu[1f800032];
-            A0 = A0 + V1;
-            V0 = V0 << 10;
-            A1 = bu[A0 + 0000];
-            V0 = V0 >> 10;
-            800C8F94	div    v0, a1
-            800C8FBC	mflo   v0
-            A0 = 800cf2f0;
-            [1f800030] = h(A1);
-            800C8FCC	jal    funcbbf7c [$800bbf7c]
-            [1f800000 + 0000] = w(V0);
-            [1f800034] = b(V0);
-            V0 = bu[1f800034];
-            800C8FDC	nop
-            V0 = V0 << 05;
-            AT = 801620b4;
-            AT = AT + V0;
-            [AT + 0000] = h(unit_id);
-            V0 = bu[1f800034];
-            V1 = hu[1f800000 + 0000];
-            V0 = V0 << 05;
-            AT = 801620b6;
-            AT = AT + V0;
-            [AT + 0000] = h(V1);
-            V0 = bu[1f800034];
-            V1 = hu[1f800030];
-            V0 = V0 << 05;
+                A0 = S0;
+                A1 = w[1f800024];
+                800C8F2C	jal    funccd558 [$800cd558]
 
-            Lc901c:	; 800C901C
-            AT = 801620b0;
-            AT = AT + V0;
-            [AT + 0000] = h(V1);
-            800C902C	j      Lcd208 [$800cd208]
-            800C9030	nop
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                [1f800032] = h(V0);
 
-800C9034 df
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
 
-            A0 = h[80151774];
-            800C903C	jal    battle_calculate_middle_point_from_target_mask_units_position [$800d54ec]
-            A1 = 1f800036;
-            V1 = unit_id;
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            S0 = V0 << 05;
-            S0 = S0 - V0;
-            S0 = S0 << 03;
-            S0 = S0 - V1;
-            S0 = S0 << 02;
-            A2 = hu[1f800036];
-            AT = 80151a4c;
-            AT = AT + S0;
-            A0 = h[AT + 0000];
-            A1 = hu[1f80003a];
-            AT = 80151a50;
-            AT = AT + S0;
-            V0 = h[AT + 0000];
-            A2 = A2 << 10;
-            A2 = A2 >> 10;
-            A0 = A2 - A0;
-            A1 = A1 << 10;
-            A1 = A1 >> 10;
-            800C90A0	jal    func3cc1c [$8003cc1c]
-            A1 = A1 - V0;
-            V0 = V0 + 0800;
-            AT = 80151a46;
-            AT = AT + S0;
-            [AT + 0000] = h(V0);
-            800C90BC	j      Lcd208 [$800cd208]
-            800C90C0	nop
+                A0 = bu[80151920 + V0 + 0000];
+                [80151920 + V0 + 0000] = b(A0 + 1);
+
+                V1 = w[1f800024];
+                V0 = hu[1f800032];
+                A0 = A0 + V1;
+                V0 = V0 << 10;
+                A1 = bu[A0 + 0000];
+                V0 = V0 >> 10;
+                V0 = V0 / A1;
+                A0 = 800cf2f0;
+                [1f800030] = h(A1);
+                [1f800000] = w(V0);
+                800C8FCC	jal    funcbbf7c [$800bbf7c]
+
+                [1f800034] = b(V0);
+                V0 = bu[1f800034];
+                V0 = V0 << 05;
+                [801620b4 + V0 + 0000] = h(unit_id);
+                V0 = bu[1f800034];
+                V1 = hu[1f800000];
+                V0 = V0 << 05;
+                [801620b6 + V0 + 0000] = h(V1);
+                V0 = bu[1f800034];
+                V1 = hu[1f800030];
+                V0 = V0 << 05;
+
+                Lc901c:	; 800C901C
+                [801620b0 + V0 + 0000] = h(V1);
+            }
+            break;
+
+            case df:
+            {
+                A0 = h[80151774];
+                A1 = 1f800036;
+                battle_calculate_middle_point_from_target_mask_units_position();
+
+                V1 = unit_id;
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - V1;
+                S0 = S0 << 02;
+
+                A2 = hu[1f800036];
+                A0 = h[80151a4c + S0 + 0000];
+                A1 = hu[1f80003a];
+
+                V0 = h[80151a50 + S0 + 0000];
+                A2 = A2 << 10;
+                A2 = A2 >> 10;
+                A0 = A2 - A0;
+                A1 = A1 << 10;
+                A1 = A1 >> 10;
+                A1 = A1 - V0;
+                800C90A0	jal    func3cc1c [$8003cc1c]
+
+                [80151a46 + S0 + 0000] = h(V0 + 800);
+            }
+            break;
 
             case fc:
             {
                 model_id = unit_id;
 
-                if (bu[801031f0] != 0) // in case of multiple targets
+                if( bu[801031f0] != 0 ) // in case of multiple targets
                 {
                     formation_id = bu[800fa6d0];
                     // in case of pincer attacks
-                    if (formation_id == 4)
+                    if( formation_id == 4 )
                     {
                         if (hu[8016376e] & h[80151774])
                         {
@@ -974,48 +890,43 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                         }
                     }
                     // in case of different side attacks
-                    else if (formation_id == 3 || formation_id == 5 || formation_id == 6 || formation_id == 7)
+                    else if( ( formation_id == 3 ) || ( formation_id == 5 ) || ( formation_id == 6 ) || ( formation_id == 7 ) )
                     {
                         [801518e4 + model_id * b9c + 162] = h(0800);
 
-                        V1 = 4;
-                        loopc913c:	; 800C913C
-                            V0 = h[801518e4 + model_id * b9c + 18];
-                            if (V0 == 0)
+                        for( int i = 4; i < a; ++i )
+                        {
+                            if( h[801518e4 + model_id * b9c + 18] == 0 )
                             {
-                                [801518e4 + V1 * b9c + 18] = h(0800);
+                                [801518e4 + i * b9c + 18] = h(0800);
                             }
                             else
                             {
-                                [801518e4 + V1 * b9c + 18] = h(0000);
+                                [801518e4 + i * b9c + 18] = h(0000);
                             }
-
-                            V0 = V1 < a;
-                        800C916C	bne    v0, zero, loopc913c [$800c913c]
+                        }
                     }
                 }
                 else
                 {
-                    if (bu[801518e4 + model_id * b9c + 22] != 15 || bu[801518e4 + model_id * b9c + 23] != d)
+                    if( ( bu[801518e4 + model_id * b9c + 22] != 15 ) || ( bu[801518e4 + model_id * b9c + 23] != d ) )
                     {
                         attacker_id = bu[801590cc];
                         target_id = bu[800f99e8];
-                        if (attacker_id != target_id)
+                        if( attacker_id != target_id )
                         {
                             A0 = h[801518e4 + target_id * b9c + 168] - h[801518e4 + model_id * b9c + 168];
                             A1 = h[801518e4 + target_id * b9c + 16c] - h[801518e4 + model_id * b9c + 16c];
-                            func3cc1c;
+                            func3cc1c();
                             [801518e4 + model_id * b9c + 162] = h(V0 + 0800);
 
                             A0 = h[801518e4 + target_id * b9c + 168] - h[801518e4 + model_id * b9c + 168];
                             A1 = h[801518e4 + target_id * b9c + 16c] - h[801518e4 + model_id * b9c + 16c];
-                            func3cc1c;
+                            func3cc1c();
                             [8015122c + target_id * 74] = h(V0);
                         }
                     }
                 }
-
-                800C93AC	j      Lcd208 [$800cd208]
             }
             break;
 
@@ -1060,178 +971,154 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             }
             break;
 
-800C95BC a8
+            case a8:
+            {
+                A0 = unit_id;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
 
-            A0 = unit_id;
-            V0 = A0 << 01;
-            V0 = V0 + A0;
-            V1 = V0 << 05;
-            V1 = V1 - V0;
-            V1 = V1 << 03;
-            V1 = V1 - A0;
-            V1 = V1 << 02;
-            AT = 80151920;
-            AT = AT + V1;
-            A1 = bu[AT + 0000];
-            800C95EC	nop
-            V0 = A1 + 0001;
-            AT = 80151920;
-            AT = AT + V1;
-            [AT + 0000] = b(V0);
-            V0 = w[1f800024];
-            800C9608	nop
-            A1 = A1 + V0;
-            V0 = bu[A1 + 0000];
-            800C9614	nop
-            [1f800000 + 0000] = w(V0);
-            AT = 80151920;
-            AT = AT + V1;
-            A1 = bu[AT + 0000];
-            800C962C	nop
-            V0 = A1 + 0001;
-            AT = 80151920;
-            AT = AT + V1;
-            [AT + 0000] = b(V0);
-            V0 = w[1f800024];
-            A2 = h[1f800000 + 0000];
-            A1 = A1 + V0;
-            V0 = bu[A1 + 0000];
-            800C9654	nop
-            [1f800004 + 0000] = w(V0);
-            A1 = h[1f800004 + 0000];
-            800C9660	jal    funccf8c0 [$800cf8c0]
-            800C9664	nop
-            800C9668	j      Lcd208 [$800cd208]
-            800C966C	nop
+                A1 = bu[80151920 + V1];
+                [80151920 + V1] = b(A1 + 1);
 
-800C9670 e9
+                V0 = w[1f800024];
+                [1f800000] = w(bu[A1 + V0]);
 
-            S0 = unit_id;
-            A1 = w[1f800024];
-            800C9678	jal    funccd558 [$800cd558]
-            A0 = S0;
-            A0 = S0;
-            V1 = A0 << 01;
-            V1 = V1 + A0;
-            [1f800032] = h(V0);
-            V0 = V1 << 05;
-            V0 = V0 - V1;
-            V0 = V0 << 03;
-            V0 = V0 - A0;
-            V0 = V0 << 02;
-            AT = 80151920;
-            AT = AT + V0;
-            T0 = bu[AT + 0000];
-            A3 = 800cf5bc;
-            V1 = T0 + 0001;
-            AT = 80151920;
-            AT = AT + V0;
-            [AT + 0000] = b(V1);
-            A1 = w[1f800024];
-            V0 = w[1f800024];
-            A2 = hu[1f800032];
-            T1 = bu[800f99e8];
-            T0 = T0 + V0;
-            A2 = A2 << 10;
-            A2 = A2 >> 10;
-            V0 = bu[T0 + 0000];
-            T0 = A0 << 03;
-            T0 = T0 - A0;
-            T0 = T0 << 02;
-            T0 = T0 + A0;
-            T0 = T0 << 02;
-            V1 = T1 << 01;
-            V1 = V1 + T1;
-            [1f800030] = h(V0);
-            V0 = V1 << 05;
-            V0 = V0 - V1;
-            V0 = V0 << 03;
-            V0 = V0 - T1;
-            V0 = V0 << 02;
-            T1 = 80151a4c;
-            AT = 80151228;
-            AT = AT + T0;
-            T0 = h[AT + 0000];
-            V1 = hu[1f800030];
-            V0 = V0 + T1;
-            [SP + 0014] = w(V0);
-            V1 = V1 << 10;
-            [1f800000] = w(T0);
-            800C9758	j      Lca710 [$800ca710]
-            V1 = V1 >> 10;
+                A1 = bu[80151920 + V1];
+                [80151920 + V1] = b(A1 + 1);
 
-800C9760 99
+                V0 = w[1f800024];
+                [1f800004] = w(bu[A1 + V0]);
 
-            S1 = unit_id;
-            V0 = S1 << 01;
-            V0 = V0 + S1;
-            S0 = V0 << 05;
-            S0 = S0 - V0;
-            S0 = S0 << 03;
-            S0 = S0 - S1;
-            S0 = S0 << 02;
-            AT = 80151920;
-            AT = AT + S0;
-            V1 = bu[AT + 0000];
-            800C9790	nop
-            V0 = V1 + 0001;
-            AT = 80151920;
-            AT = AT + S0;
-            [AT + 0000] = b(V0);
-            V0 = w[1f800024];
-            A1 = w[1f800024];
-            V1 = V1 + V0;
-            V0 = bu[V1 + 0000];
-            800C97B8	nop
-            [80166f58] = b(V0);
-            800C97C4	jal    funccd558 [$800cd558]
-            A0 = S1;
-            A1 = w[1f800024];
-            A0 = S1;
-            800C97D4	jal    funccd558 [$800cd558]
-            [1f800032] = h(V0);
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            [1f800000] = w(V0);
-            AT = 80151920;
-            AT = AT + S0;
-            V1 = bu[AT + 0000];
-            800C97FC	nop
-            V0 = V1 + 0001;
-            AT = 80151920;
-            AT = AT + S0;
-            [AT + 0000] = b(V0);
-            V0 = w[1f800024];
-            800C9818	nop
-            V1 = V1 + V0;
-            V1 = bu[V1 + 0000];
-            V0 = bu[801031f0];
-            800C982C	nop
-            800C9830	bne    v0, zero, Lc986c [$800c986c]
-            [1f800030] = h(V1);
-            A0 = S1;
-            A1 = w[1f800024];
-            A2 = hu[1f800032];
-            T0 = bu[800f99e8];
-            A3 = 800cf5bc;
-            [SP + 0010] = w(V1);
-            [SP + 14] = w(80151a4c + T0 * b9c);
-            funccd860;
-            800CA9B8	j      Lcd208 [$800cd208]
+                A0 = unit_id;
+                A1 = h[1f800004];
+                A2 = h[1f800000];
+                800C9660	jal    funccf8c0 [$800cf8c0]
+            }
+            break;
 
-            Lc986c:	; 800C986C
-            S0 = 1f800036;
-            A0 = h[80151774];
-            800C9878	jal    battle_calculate_middle_point_from_target_mask_units_position [$800d54ec]
-            A1 = S0;
-            A1 = w[1f800024];
-            A2 = hu[1f800032];
-            A3 = 800cf5bc;
-            A0 = S1;
-            [SP + 14] = w(S0);
-            [SP + 10] = w(hu[1f800030]);
-            funccd860;
-            800CAA04	j      Lcd208 [$800cd208]
+            case e9:
+            {
+                A0 = unit_id;
+                A1 = w[1f800024];
+                800C9678	jal    funccd558 [$800cd558]
+
+                [1f800032] = h(V0);
+
+                A0 = unit_id;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                T0 = bu[80151920 + V0 + 0000];
+                A3 = 800cf5bc;
+                V1 = T0 + 1;
+                [80151920 + V0 + 0000] = b(V1);
+                A1 = w[1f800024];
+                V0 = w[1f800024];
+                A2 = hu[1f800032];
+                T1 = bu[800f99e8];
+                T0 = T0 + V0;
+                A2 = A2 << 10;
+                A2 = A2 >> 10;
+                V0 = bu[T0 + 0000];
+                T0 = A0 << 03;
+                T0 = T0 - A0;
+                T0 = T0 << 02;
+                T0 = T0 + A0;
+                T0 = T0 << 02;
+                V1 = T1 << 01;
+                V1 = V1 + T1;
+                [1f800030] = h(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - T1;
+                V0 = V0 << 02;
+                T1 = 80151a4c;
+                T0 = h[80151228 + T0 + 0000];
+                V1 = hu[1f800030];
+                V0 = V0 + T1;
+                [SP + 0014] = w(V0);
+                V1 = V1 << 10;
+                [1f800000] = w(T0);
+                V1 = V1 >> 10;
+                800C9758	j      Lca710 [$800ca710]
+            }
+            break;
+
+            case 99:
+            {
+                S1 = unit_id;
+                V0 = S1 << 01;
+                V0 = V0 + S1;
+                S0 = V0 << 05;
+                S0 = S0 - V0;
+                S0 = S0 << 03;
+                S0 = S0 - S1;
+                S0 = S0 << 02;
+                V1 = bu[80151920 + S0 + 0000];
+                V0 = V1 + 0001;
+                [80151920 + S0 + 0000] = b(V0);
+                V0 = w[1f800024];
+                A1 = w[1f800024];
+                V1 = V1 + V0;
+                V0 = bu[V1 + 0000];
+                [80166f58] = b(V0);
+                A0 = S1;
+                800C97C4	jal    funccd558 [$800cd558]
+
+                A1 = w[1f800024];
+                A0 = S1;
+                800C97D4	jal    funccd558 [$800cd558]
+                [1f800032] = h(V0);
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                [1f800000] = w(V0);
+                V1 = bu[80151920 + S0 + 0000];
+                V0 = V1 + 0001;
+                [80151920 + S0 + 0000] = b(V0);
+                V0 = w[1f800024];
+                800C9818	nop
+                V1 = V1 + V0;
+                V1 = bu[V1 + 0000];
+                V0 = bu[801031f0];
+                800C982C	nop
+                800C9830	bne    v0, zero, Lc986c [$800c986c]
+                [1f800030] = h(V1);
+                A0 = S1;
+                A1 = w[1f800024];
+                A2 = hu[1f800032];
+                T0 = bu[800f99e8];
+                A3 = 800cf5bc;
+                [SP + 0010] = w(V1);
+                [SP + 14] = w(80151a4c + T0 * b9c);
+                funccd860;
+                800CA9B8	j      Lcd208 [$800cd208]
+
+                Lc986c:	; 800C986C
+                S0 = 1f800036;
+                A0 = h[80151774];
+                A1 = S0;
+                battle_calculate_middle_point_from_target_mask_units_position();
+
+                A1 = w[1f800024];
+                A2 = hu[1f800032];
+                A3 = 800cf5bc;
+                A0 = S1;
+                [SP + 14] = w(S0);
+                [SP + 10] = w(hu[1f800030]);
+                funccd860;
+                800CAA04	j      Lcd208 [$800cd208]
+            }
+            break;
 
             case d1:
             {
@@ -1278,129 +1165,95 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             }
             break;
 
-800C9990 c8
+            case c8:
+            {
+                S0 = unit_id;
 
-            S0 = unit_id;
-            A1 = w[1f800024];
-            800C9998	jal    funccd558 [$800cd558]
-            A0 = S0;
-            A0 = S0;
-            V0 = V0 << 10;
-            A1 = w[1f800024];
-            V0 = V0 >> 10;
-            800C99B0	jal    funccd558 [$800cd558]
-            [1f800000 + 0000] = w(V0);
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            V1 = S0 << 01;
-            V1 = V1 + S0;
-            [1f800004 + 0000] = w(V0);
-            V0 = V1 << 05;
-            V0 = V0 - V1;
-            V0 = V0 << 03;
-            V0 = V0 - S0;
-            V0 = V0 << 02;
-            AT = 80151920;
-            AT = AT + V0;
-            A0 = bu[AT + 0000];
-            800C99F0	nop
-            V1 = A0 + 0001;
-            AT = 80151920;
-            AT = AT + V0;
-            [AT + 0000] = b(V1);
-            V0 = w[1f800024];
-            T2 = 1f800008;
-            A0 = A0 + V0;
-            V0 = bu[A0 + 0000];
-            A0 = 800cf4a8;
-            800C9A20	jal    funcbbf7c [$800bbf7c]
-            [T2 + 0000] = w(V0);
-            A0 = V0 << 05;
-            AT = 801620b4;
-            AT = AT + A0;
-            [AT + 0000] = h(unit_id);
-            V1 = hu[1f800000 + 0000];
-            800C9A40	nop
-            AT = 801620b6;
-            AT = AT + A0;
-            [AT + 0000] = h(V1);
-            V1 = hu[1f800004 + 0000];
-            800C9A58	nop
-            AT = 801620b8;
-            AT = AT + A0;
-            [AT + 0000] = h(V1);
-            T2 = 1f800008;
-            800C9A70	nop
-            V1 = hu[T2 + 0000];
-            [1f80000c] = w(V0);
-            AT = 801620b0;
-            AT = AT + A0;
-            [AT + 0000] = h(V1);
-            800C9A90	j      Lcd208 [$800cd208]
-            800C9A94	nop
+                A0 = S0;
+                A1 = w[1f800024];
+                800C9998	jal    funccd558 [$800cd558]
 
-800C9A98 c3
+                A0 = S0;
+                V0 = V0 << 10;
+                A1 = w[1f800024];
+                V0 = V0 >> 10;
+                [1f800000 + 0000] = w(V0);
 
-            A0 = unit_id;
-            V1 = A0 << 01;
-            V1 = V1 + A0;
-            V0 = V1 << 05;
-            V0 = V0 - V1;
-            V0 = V0 << 03;
-            V0 = V0 - A0;
-            V0 = V0 << 02;
-            V1 = 0001;
-            AT = 8015190a;
-            AT = AT + V0;
-            [AT + 0000] = b(V1);
-            800C9ACC	jal    funcce058 [$800ce058]
-            800C9AD0	nop
-            A0 = 800c3950;
-            800C9ADC	jal    funcbbf7c [$800bbf7c]
-            800C9AE0	nop
-            [1f800034] = b(V0);
-            V0 = bu[1f800034];
-            800C9AEC	nop
-            V0 = V0 << 05;
-            AT = 801620b4;
-            AT = AT + V0;
-            [AT + 0000] = h(unit_id);
-            V0 = bu[1f800034];
-            800C9B08	nop
-            V0 = V0 << 05;
-            AT = 801620b6;
-            AT = AT + V0;
-            [AT + 0000] = h(0);
-            V0 = bu[1f800034];
-            V1 = 0001;
-            V0 = V0 << 05;
-            AT = 801620b2;
-            AT = AT + V0;
-            [AT + 0000] = h(V1);
-            800C9B3C	j      Lcd208 [$800cd208]
-            800C9B40	nop
+                800C99B0	jal    funccd558 [$800cd558]
 
-800C9B44 b8
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                V1 = S0 << 01;
+                V1 = V1 + S0;
+                [1f800004 + 0000] = w(V0);
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - S0;
+                V0 = V0 << 02;
+                A0 = bu[80151920 + V0 + 0000];
+                V1 = A0 + 0001;
+                [80151920 + V0 + 0000] = b(V1);
+                V0 = w[1f800024];
+                T2 = 1f800008;
+                A0 = A0 + V0;
+                V0 = bu[A0 + 0000];
+                A0 = 800cf4a8;
+                [T2 + 0000] = w(V0);
+                800C9A20	jal    funcbbf7c [$800bbf7c]
 
-            A0 = unit_id;
-            V0 = A0 << 01;
-            V0 = V0 + A0;
-            V1 = V0 << 05;
-            V1 = V1 - V0;
-            V1 = V1 << 03;
-            V1 = V1 - A0;
-            V1 = V1 << 02;
-            AT = 80151909;
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            800C9B74	nop
-            V0 = V0 & 007f;
-            V0 = V0 | 0004;
-            AT = 80151909;
-            AT = AT + V1;
-            [AT + 0000] = b(V0);
-            800C9B90	j      Lcd208 [$800cd208]
-            800C9B94	nop
+                A0 = V0 << 05;
+                [801620b4 + A0 + 0000] = h(unit_id);
+                V1 = hu[1f800000 + 0000];
+                [801620b6 + A0 + 0000] = h(V1);
+                V1 = hu[1f800004 + 0000];
+                [801620b8 + A0 + 0000] = h(V1);
+                T2 = 1f800008;
+                V1 = hu[T2 + 0000];
+                [1f80000c] = w(V0);
+                [801620b0 + A0 + 0000] = h(V1);
+            }
+            break;
+
+            case c3:
+            {
+                A0 = unit_id;
+                V1 = A0 << 01;
+                V1 = V1 + A0;
+                V0 = V1 << 05;
+                V0 = V0 - V1;
+                V0 = V0 << 03;
+                V0 = V0 - A0;
+                V0 = V0 << 02;
+                [8015190a + V0 + 0000] = b(1);
+
+                800C9ACC	jal    funcce058 [$800ce058]
+
+                A0 = 800c3950;
+                800C9ADC	jal    funcbbf7c [$800bbf7c]
+
+                [1f800034] = b(V0);
+
+                V0 = bu[1f800034];
+                [801620b4 + V0 * 20 + 0000] = h(unit_id);
+                [801620b6 + V0 * 20 + 0000] = h(0);
+                [801620b2 + V0 * 20 + 0000] = h(1);
+            }
+            break;
+
+            case b8:
+            {
+                A0 = unit_id;
+                V0 = A0 << 01;
+                V0 = V0 + A0;
+                V1 = V0 << 05;
+                V1 = V1 - V0;
+                V1 = V1 << 03;
+                V1 = V1 - A0;
+                V1 = V1 << 02;
+                [80151909 + V1 + 0000] = b((bu[80151909 + V1 + 0000] & 7f) | 04);
+            }
+            break;
 
 800C9B98 b7
 
@@ -2305,8 +2158,6 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                 [80162978 + struct_id * 20 + a] = h(hu[800f99ec + S2 * c]);
                 [80162978 + struct_id * 20 + e] = h(hu[800f99ee + S2 * c]);
                 [80162978 + struct_id * 20 + 19] = b(bu[800f99f6 + S2 * c]);
-
-                800CAC9C	j      Lcd208 [$800cd208]
             }
             break;
 
@@ -2385,10 +2236,8 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                     A0 = h[80151774]; // target mask
                     A1 = w[1f800000];
                     A2 = 1;
-                    funcd58d0;
+                    funcd58d0();
                 }
-
-                800CAEC4	j      Lcd208 [$800cd208]
             }
             break;
 
@@ -2781,7 +2630,7 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                 [1f800004] = w(V0);
 
                 A0 = 800d061c;
-                funcbc04c;
+                funcbc04c();
                 [1f80002a] = h(V0);
 
                 [801621f0 + V0 * 20 + 4] = h(hu[1f800000]);
@@ -2864,8 +2713,6 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                 [1f800024] = w(w[scripts + idle_action_id * 4]);
 
                 battle_reset_unit_animation_script();
-
-                800CB7E8	j      Lcd208 [$800cd208]
             }
             break;
 
@@ -3635,21 +3482,15 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             800CC5D0	j      Lcd208 [$800cd208]
             800CC5D4	nop
 
-800CC5D8 e6
+            case e6:
+            {
+                A0 = 800cdde8;
+                800CC5E0	jal    funcbc04c [$800bc04c]
 
-            A0 = 800cdde8;
-            800CC5E0	jal    funcbc04c [$800bc04c]
-            800CC5E4	nop
-            V0 = V0 << 05;
-            V1 = 000d;
-            AT = 801621f2;
-            AT = AT + V0;
-            [AT + 0000] = h(0);
-            AT = 801621f4;
-            AT = AT + V0;
-            [AT + 0000] = h(V1);
-            800CC610	j      Lcd208 [$800cd208]
-            800CC614	nop
+                [801621f2 + V0 * 20 + 0000] = h(0);
+                [801621f4 + V0 * 20 + 0000] = h(d);
+            }
+            break;
 
 800CC618 e0
 
@@ -4246,9 +4087,9 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
                 S1 = unit_id << 10;
 
                 A0 = 800cd82c;
-                funcbc04c;
+                funcbc04c();
+                unit_id = V0;
 
-                unit_id = unit_id;
                 A0 = bu[80151920 + unit_id * b9c];
                 [80151920 + unit_id * b9c] = b(A0 + 1);
                 V0 = bu[w[1f800024] + A0]; // read byte from script
@@ -5305,13 +5146,13 @@ if (V0 == 0)
 
         // add damage to display
         A0 = 800c2928;
-        funcbc04c;
+        funcbc04c();
         [801621f0 + V0 * 20 + 0e] = h(h[80162978 + T0 * 20 + a]); // damage.
         [801621f0 + V0 * 20 + 10] = w(h[80162978 + T0 * 20 + 8]); // target id
         [801621f0 + V0 * 20 + 14] = w(h[80162978 + T0 * 20 + e]); // 1f800220 damage flags (heal damage to mp critical).
 
         A0 = 800ce638;
-        funcbc04c;
+        funcbc04c();
         [801621f0 + V0 * 20 + a] = h(bu[80162978 + T1 * 20 + 19]);
         [801621f0 + V0 * 20 + 8] = h(hu[80162978 + T1 * 20 + 6]);
     }
@@ -5352,7 +5193,7 @@ V1 = bu[80162978 + index * 20 + 14]; // impact effect id
 if (V1 != ff)
 {
     A0 = 800cde78;
-    funcbc04c;
+    funcbc04c();
 
     [801621f0 + V0 * 20 + 8] = h(hu[80162978 + index * 20 + 8]); // unit id
     [801621f0 + V0 * 20 + 14] = w(w[80162978 + index * 20 + 14]); // effect id
