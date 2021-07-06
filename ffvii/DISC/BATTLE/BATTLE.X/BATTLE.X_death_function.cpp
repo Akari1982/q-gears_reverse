@@ -1,8 +1,9 @@
 ////////////////////////////////
-// funcc33f0
+// funcc33f0()
+
 unit_id = h[80162978 + A0 * 20 + 8];
 
-if (h[80162978 + A0 * 20 + 4] == 0) // if there is no steps left
+if( h[80162978 + A0 * 20 + 4] == 0 ) // if there is no steps left
 {
     [80162978 + A0 * 20 + 0] = h(-1);
     [801518e4 + unit_id * b9c + 25] = b(bu[801518e4 + unit_id * b9c + 25] & 7f);
@@ -10,7 +11,7 @@ if (h[80162978 + A0 * 20 + 4] == 0) // if there is no steps left
     [801518e4 + unit_id * b9c + 26] = b(1);
 
     A0 = unit_id;
-    funcb5aac;
+    funcb5aac();
 }
 else
 {
@@ -47,11 +48,11 @@ if (h[80162978 + V1 * 20 + 2] == 0)
     [801518e4 + unit_id * b9c + 2a] = b(0);
 
     A0 = unit_id;
-    funcb5fe8;
+    funcb5fe8(); // add flag to bones
 }
 
 A0 = bu[8015169c];
-funcc33f0;
+funcc33f0();
 ////////////////////////////////
 
 
@@ -82,22 +83,16 @@ else
         [801518e4 + unit_id * b9c + 28] = b(A0 + f0);
     }
 
-    A2 = 0;
     number_of_bones = h[801518e4 + unit_id * b9c + 10];
-    if (number_of_bones > 0)
+    for( int i = 0; i < number_of_bones; ++i )
     {
-        loopc3840:	; 800C3840
-            V0 = h[801620ac + T1 * 20 + 4];
-            A0 = hu[800ea23a + V0 * 2];
+        V0 = h[801620ac + T1 * 20 + 4];
+        A0 = hu[800ea23a + V0 * 2];
 
-            [801518e4 + unit_id * b9c + 174 + A2 * 34 + 20] = h(hu[801518e4 + unit_id * b9c + 174 + A2 * 34 + 20] + 100); // 78
-            [801518e4 + unit_id * b9c + 174 + A2 * 34 + 22] = h(hu[801518e4 + unit_id * b9c + 174 + A2 * 34 + 22] + 100); // 7a
-            [801518e4 + unit_id * b9c + 174 + A2 * 34 + 24] = h(hu[801518e4 + unit_id * b9c + 174 + A2 * 34 + 24] + 100); // 7c
-            [801518e4 + unit_id * b9c + 174 + A2 * 34 + 2a] = h(hu[801518e4 + unit_id * b9c + 174 + A2 * 34 + 2a] + A0);
-
-            A2 = A2 + 1;
-            V0 = A2 < number_of_bones;
-        800C3908	bne    v0, zero, loopc3840 [$800c3840]
+        [801518e4 + unit_id * b9c + 174 + i * 34 + 20] = h(hu[801518e4 + unit_id * b9c + 174 + i * 34 + 20] + 100); // 78
+        [801518e4 + unit_id * b9c + 174 + i * 34 + 22] = h(hu[801518e4 + unit_id * b9c + 174 + i * 34 + 22] + 100); // 7a
+        [801518e4 + unit_id * b9c + 174 + i * 34 + 24] = h(hu[801518e4 + unit_id * b9c + 174 + i * 34 + 24] + 100); // 7c
+        [801518e4 + unit_id * b9c + 174 + i * 34 + 2a] = h(hu[801518e4 + unit_id * b9c + 174 + i * 34 + 2a] + A0);
     }
 
     [801620ac + T1 * 20 + 4] = h(hu[801520ac + T1 * 20 + 4] -1)
@@ -1760,7 +1755,7 @@ for( int i = 0; i < 100; ++i )
     system_gte_rotation_matrix_from_yxz();
 
     A0 = 8015e1e8 + i * 34;
-    funcbaf34(); // multiply current part matrix to camera matrix and add translation and set it to GTE
+    battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
     if( bu[801619e8 + i * 2 + 0] == 0 )
     {
@@ -1864,7 +1859,7 @@ A1 = S2 + 0008;
 A2 = SP + 0010;
 S0 = SP + 0014;
 A3 = S0;
-func3bbdc()
+system_gte_vector_perspective_transform()
 
 A0 = S1 + 0008;
 A1 = S2 + 0010;

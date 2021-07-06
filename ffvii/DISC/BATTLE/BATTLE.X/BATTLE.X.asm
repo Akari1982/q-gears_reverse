@@ -1123,13 +1123,13 @@
 // funcba598
 800BA598-800BACE8
 ////////////////////////////////
-// funcbacec
+// battle_update_model_matrixes_with_self_and_parent
 800BACEC-800BAF30
 ////////////////////////////////
-// funcbaf34
+// battle_update_matrix_with_self_and_parent_and_set_to_gte
 800BAF34-800BAFF4
 ////////////////////////////////
-// funcbaff8
+// battle_update_matrix_with_scale_and_set_to_gte
 800BAFF8-800BB02C
 ////////////////////////////////
 // funcbb030
@@ -1332,19 +1332,19 @@
 // funcc1908
 800C1908-800C1D88
 ////////////////////////////////
-// funcc1d8c
+// battle_create_status_icon_packet
 800C1D8C-800C1FFC
 ////////////////////////////////
-// funcc2000
+// battle_add_status_icon_to_render
 800C2000-800C20E4
 ////////////////////////////////
-// funcc20e8
+// battle_get_4_digits_from_value
 800C20E8-800C214C
 ////////////////////////////////
-// funcc2150
+// battle_add_status_digits_to_render
 800C2150-800C2238
 ////////////////////////////////
-// funcc223c
+// battle_create_status_digits_packets
 800C223C-800C2700
 ////////////////////////////////
 // funcc2704
@@ -1531,10 +1531,10 @@
 // battle_get_weapon_bone_number_and_init_bones
 800C7924-800C7B5C
 ////////////////////////////////
-// funcc7b60
+// battle_model_read_animation_into_matrix
 800C7B60-800C7BE4
 ///////////////////////////////
-// funcc7be8
+// battle_weapon_read_animation_into_matrix
 800C7BE8-800C7C48
 ///////////////////////////////
 // battle_execute_unit_animation_script
@@ -1702,11 +1702,6 @@
 // battle_set_load_tim_to_vram
 800D2980-800D29D0
 ////////////////////////////////
-
-
-
-// BATTLE.X_units_functions.cpp
-////////////////////////////////
 // funcd29d4
 800D29D4-800D32B0
 ////////////////////////////////
@@ -1728,20 +1723,25 @@
 // battle_model_update_bone_height
 800D3520-800D3544
 ////////////////////////////////
-// funcd3548
+// battle_model_animation_read_dynamic_frame_offset_bits
 800D3548-800D35D4
 ////////////////////////////////
-// funcd35d8
+// battle_model_animation_read_bit_stream
 800D35D8-800D3654
 ////////////////////////////////
-// funcd3658
+// battle_model_animation_read_encrypted_rotation_bits
 800D3658-800D3768
 ////////////////////////////////
-// funcd376c
+// battle_model_read_animation_stream
 800D376C-800D3990
 ////////////////////////////////
 // battle_get_point_by_model_bone
 800D3994-800D3A68
+////////////////////////////////
+
+
+
+// BATTLE.X_units_functions.cpp
 ////////////////////////////////
 // funcd3a6c
 800D3A6C-800D3AEC

@@ -1592,38 +1592,18 @@ funcb60e0();
 
 
 ////////////////////////////////
-// funcb5fe8
+// funcb5fe8()
 
 unit_id = A0;
 
-number_of_bones = h[801518e4 + unit_id * b9c + 10];
-if (number_of_bones > 0)
+for( int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i ) // number of bones
 {
-    V1 = 801518e4 + unit_id * b9c + 3f;
-
-    A2 = 0;
-    loopb603c:	; 800B603C
-        [V1] = b(bu[V1] | 8);
-
-        V1 = V1 + 1;
-        A2 = A2 + 1;
-        V0 = A2 < number_of_bones;
-    800B6064	bne    v0, zero, loopb603c [$800b603c]
+    [801518e4 + unit_id * b9c + 3f + i] = b(bu[801518e4 + unit_id * b9c + 3f + i] | 08);
 }
 
-number_of_bones2 = h[800fa714 + unit_id * 40]; // number of bones in secondary animation
-if (V0 > 0)
+for( int i = 0; i < h[800fa714 + unit_id * 40]; ++i ) // number of bones in secondary animation
 {
-    V1 = 800fa716 + unit_id * 40
-
-    A2 = 0;
-    loopb60a0:	; 800B60A0
-        [V1] = b(bu[V1] | 08);
-
-        A2 = A2 + 1;
-        V1 = V1 + 1;
-        V0 = A2 < number_of_bones2;
-    800B60CC	bne    v0, zero, loopb60a0 [$800b60a0]
+    [800fa716 + unit_id * 40 + i] = b(bu[800fa716 + unit_id * 40 + i] | 08);
 }
 ////////////////////////////////
 

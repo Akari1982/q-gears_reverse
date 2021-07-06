@@ -2390,7 +2390,7 @@
 // func3bbac
 8003BBAC-8003BBD8
 ////////////////////////////////
-// func3bbdc
+// system_gte_vector_perspective_transform
 8003BBDC-8003BC08
 ////////////////////////////////
 // func3bc0c
@@ -4743,7 +4743,7 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func468fc
+// system_gpu_textured_quad_header
 800468FC-8004690C
 ////////////////////////////////
 // func46910

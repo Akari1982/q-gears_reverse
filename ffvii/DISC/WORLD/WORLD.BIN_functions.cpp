@@ -5523,7 +5523,7 @@ V1 = bu[S2 + 1c];
 for( int i = 0; i < 2; ++i )
 {
     A0 = S2 + i * 28 + 24;
-    func468fc();
+    system_gpu_textured_quad_header();
 
     V1 = bu[S2 + 1c];
     V0 = bu[800c6a11 + V1 * c + 0] & 1c;

@@ -775,7 +775,7 @@ loop13f2c:	; 80013F2C
 A0 = S1;
 A1 = S2;
 A2 = SP + 0018;
-80013F38	jal    func3bbdc [$8003bbdc]
+80013F38	jal    system_gte_vector_perspective_transform [$8003bbdc]
 A3 = SP + 001c;
 S2 = S2 + 0020;
 S0 = S0 + 0001;
@@ -1107,7 +1107,7 @@ T0 = w[SP + 0028];
 800143E4	nop
 S0 = T0 + S3;
 S0 = S0 + S5;
-800143F0	jal    func468fc [$800468fc]
+800143F0	jal    system_gpu_textured_quad_header [$800468fc]
 A0 = S0;
 A0 = S0;
 800143FC	jal    system_change_semi_transparency_in_packet [$80046848]

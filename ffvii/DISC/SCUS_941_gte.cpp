@@ -2241,19 +2241,23 @@ IR3 = w[A0 + 0004];
 8003BBD4	jr     ra 
 V0 = A1;
 ////////////////////////////////
-// func3bbdc
-VXY0 = w[A0 + 0000];
-VZ0 = w[A0 + 0004];
-8003BBE4	nop
+
+
+
+////////////////////////////////
+// system_gte_vector_perspective_transform()
+
+VXY0 = w[A0 + 0];
+VZ0 = w[A0 + 4];
 gte_RTPS(); // Perspective transform
-[A1 + 0000] = w(SXY2);
-[A2 + 0000] = w(IR0);
-V1 = FLAG;
-V0 = SZ3;
-[A3 + 0000] = w(V1);
-8003BC00	jr     ra 
-V0 = V0 >> 02;
-8003BC08	nop
+[A1 + 0] = w(SXY2);
+[A2 + 0] = w(IR0);
+[A3 + 0] = w(FLAG);
+V0 = SZ3 >> 2;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3bc0c
 VXY0 = w[A0 + 0000];
@@ -2374,19 +2378,19 @@ VZ1 = w[A1 + 4]
 VXY2 = w[A2 + 0];
 VZ2 = w[A2 + 4]
 gte_RTPT; // Perspective transform on 3 points.
-[w[SP + 10]] = w(SXY0);
-[w[SP + 14]] = w(SXY1);
-[w[SP + 18]] = w(SXY2);
+[A4] = w(SXY0);
+[A5] = w(SXY1);
+[A6] = w(SXY2);
 V1 = FLAG;
 
 VXY0 = w[A3 + 0];
 VZ0 = w[A3 + 4]
 gte_RTPS; // Perspective transform
-[w[SP + 1c]] = w(SXY2);
+[A7] = w(SXY2);
 T0 = FLAG;
 
-[w[SP + 20]] = w(T0);
-[w[SP + 24]] = w(T0 | V1);
+[A8] = w(T0);
+[A9] = w(T0 | V1);
 
 AVSZ4; // Average of four Z values
 
