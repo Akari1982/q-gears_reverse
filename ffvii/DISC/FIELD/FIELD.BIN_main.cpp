@@ -3148,7 +3148,7 @@ return;
 ////////////////////////////////
 // handle_update()
 
-S4 = A0;
+input = A0;
 
 number_of_models = h[8009abf4 + 28];
 
@@ -3309,14 +3309,12 @@ for( int i = 0; i < number_of_models; ++i )
 // manual move update
 for( int i = 0; i < number_of_models; ++i )
 {
-    A1 = i;
-
     // if model not performing auto action
-    if( bu[80074ea4 + A1 * 84 + 5d] == 0 )
+    if( bu[80074ea4 + i * 84 + 5d] == 0 )
     {
-        if( (A1 == pc_entity ) && ( bu[8009abf4 + 32] != 1 ) ) // if we can control this entity (manual model and UC == 0)
+        if( ( i == pc_entity ) && ( bu[8009abf4 + 32] != 1 ) ) // if we can control this entity (manual model and UC == 0)
         {
-            A0 = S4;
+            A0 = input;
             move_add_shift_rotate();
 
             // set idle animation id by default
@@ -3324,7 +3322,7 @@ for( int i = 0; i < number_of_models; ++i )
 
             field_scale = h[8009abf4 + 10];
 
-            if ((S4 & 0040) == 0)
+            if ((input & 0040) == 0)
             {
                 if (bu[8009abf4 + 3a] != 0)
                 {
@@ -3349,46 +3347,46 @@ for( int i = 0; i < number_of_models; ++i )
 
             [80074EA4 + pc_entity * 84 + 70] = h(V0); // set speed
 
-            if (S4 & f000)
+            if (input & f000)
             {
-                if (S4 & 1000)
+                if (input & 1000)
                 {
                     [80074ea4 + pc_entity * 84 + 36] = b(0);
 
-                    if (S4 & 8000)
+                    if (input & 8000)
                     {
                         [80074ea4 + pc_entity * 84 + 36] = b(20);
                     }
 
-                    if (S4 & 2000)
+                    if (input & 2000)
                     {
                         [80074ea4 + pc_entity * 84 + 36] = b(e0);
                     }
                 }
                 else
                 {
-                    if (S4 & 4000)
+                    if (input & 4000)
                     {
                         [80074ea4 + pc_entity * 84 + 36] = b(80);
 
-                        if (S4 & 8000)
+                        if (input & 8000)
                         {
                             [80074ea4 + pc_entity * 84 + 36] = b(60);
                         }
 
-                        if (S4 & 2000)
+                        if (input & 2000)
                         {
                             [80074ea4 + pc_entity * 84 + 36] = b(a0);
                         }
                     }
                     else
                     {
-                        if (S4 & 2000)
+                        if (input & 2000)
                         {
                             [80074ea4 + pc_entity * 84 + 36] = b(c0);
                         }
 
-                        if (S4 & 8000)
+                        if (input & 8000)
                         {
                             [80074ea4 + pc_entity * 84 + 36] = b(40);
                         }
@@ -3676,7 +3674,7 @@ for( int i = 0; i < number_of_models; ++i )
                         }
                     }
 
-                    if( S4 & start )
+                    if( input & start )
                     {
                         step = h[80074ea4 + i * 84 + 32];
                         if( step == 0 )
@@ -3699,7 +3697,7 @@ for( int i = 0; i < number_of_models; ++i )
                         }
                     }
 
-                    if( S4 & end )
+                    if( input & end )
                     {
                         step = h[80074ea4 + i * 84 + 32];
                         steps = h[80074ea4 + i * 84 + 30];
