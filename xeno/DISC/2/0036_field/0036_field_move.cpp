@@ -1,5 +1,6 @@
 ////////////////////////////////
 // field_calculate_walkmesh_height()
+
 A_vec = A0;
 B_vec = A1;
 C_vec = A2;

@@ -1904,6 +1904,7 @@ SP = SP + 0070;
 
 ////////////////////////////////
 // func7ebc0()
+
 window_id = A0;
 V0 = bu[800ad40c + A1 * 4 + 0];
 [800c1b6c + window_id * 498 + 450 + 0] = b(V0);
@@ -1941,6 +1942,7 @@ system_graphic_get_clut_by_param();
 
 ////////////////////////////////
 // func7ed0c()
+
 dialog_id = A0;
 if( h[800c1b6c + dialog_id * 498 + 40e] != 0 )
 {

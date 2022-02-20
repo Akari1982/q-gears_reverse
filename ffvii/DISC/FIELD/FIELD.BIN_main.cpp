@@ -3146,709 +3146,640 @@ return;
 
 
 ////////////////////////////////
-// handle_update
+// handle_update()
+
 S4 = A0;
 
 number_of_models = h[8009abf4 + 28];
 
-if (number_of_models > 0)
+if( number_of_models <= 0)
 {
-    S2 = 0;
-    A3 = FF;
-    A1 = 1;
-    A2 = 8009ABF4 + 28;
+    return;
+}
 
-    loopa65f4:	; 800A65F4
-        V1 = w[8008357C];
-        V0 = bu[V1 + S2 * 8 + 4];
-        if (V0 != ff)
+pc_entity = h[800965e0];
+
+for( int i = 0; i < number_of_models; ++i )
+{
+    V1 = w[8008357c];
+    V0 = bu[V1 + i * 8 + 4];
+    if( V0 != ff )
+    {
+        A0 = w[8004A62C];
+        A0 = w[A0 + 4];
+        V1 = A0 + V0 * 24;
+
+        V0 = bu[80074EA4 + i * 84 + 5C]; // model visibility
+        if( V0 == 1 )
         {
-            A0 = w[8004A62C];
-            A0 = w[A0 + 4];
-            V1 = A0 + V0 * 24;
-
-            V0 = bu[80074EA4 + S2 * 84 + 5C]; // model visibility
-            if (V0 == 1)
-            {
-                [V1] = b(1);
-            }
-            else
-            {
-                [V1] = b(0);
-            }
-        }
-
-        S2 = S2 + 1;
-        V0 = S2 < number_of_models;
-    800A6678	bne    v0, zero, loopa65f4 [$800a65f4]
-
-
-
-    /////////////////////////////
-    // turn update
-    S2 = 0;
-    loopa66a4:	; 800A66A4
-        S0 = S2 * 84;
-        V1 = bu[80074EA4 + S0 + 3B];
-        if (V1 == 1)
-        {
-            A0 = h[80074EA4 + S0 + 3C];
-            A1 = h[80074EA4 + S0 + 3E];
-            A2 = bu[80074EA4 + S0 + 39];
-            A3 = bu[80074EA4 + S0 + 3A];
-            calculate_current_value_by_steps;
-            [80074EA4 + S0 + 38] = b(V0);
-
-            A0 = bu[80074EA4 + S0 + 3A];
-            V1 = bu[80074EA4 + S0 + 39];
-            if (A0 == V1)
-            {
-                [80074EA4 + S0 + 3B] = b(3);
-            }
-            else
-            {
-                V1 = A0 + 1;
-                [80074EA4 + S0 + 3A] = b(V1);
-            }
-        }
-        else if (V1 == 2)
-        {
-            A0 = h[80074EA4 + S0 + 3C];
-            A1 = h[80074EA4 + S0 + 3E];
-            A2 = bu[80074EA4 + S0 + 39];
-            A3 = bu[80074EA4 + S0 + 3A];
-            calculate_smooth_current_value_by_steps;
-
-            [80074EA4 + S0 + 38] = b(V0);
-
-            A0 = bu[80074EA4 + S0 + 3A];
-            V1 = bu[80074EA4 + S0 + 39];
-
-            if (A0 == V1)
-            {
-                [80074EA4 + S0 + 3B] = b(3);
-            }
-            else
-            {
-                V1 = A0 + 1;
-                [80074EA4 + S0 + 3A] = b(V1);
-            }
-        }
-
-        S2 = S2 + 1;
-        V0 = S2 < number_of_models;
-    800A6830	bne    v0, zero, loopa66a4 [$800a66a4]
-    /////////////////////////////
-
-
-
-    /////////////////////////////
-    // offset update
-    S2 = 0;
-
-    La6850:	; 800A6850
-        V1 = bu[80074EA4 + S2 * 84 + 56];
-
-        if (V1 == 0)
-        {
-            continue;
-        }
-        if (V1 == 1)
-        {
-            A0 = hu[80074EA4 + S2 * 84 + 42];
-            A1 = hu[80074EA4 + S2 * 84 + 44];
-            A2 = hu[80074EA4 + S2 * 84 + 52];
-            A3 = hu[80074EA4 + S2 * 84 + 54];
-            calculate_current_value_by_steps;
-            [80074EA4 + S2 * 84 + 40] = h(V0);
-
-            A0 = hu[80074EA4 + S2 * 84 + 48];
-            A1 = hu[80074EA4 + S2 * 84 + 4a];
-            A2 = hu[80074EA4 + S2 * 84 + 52];
-            A3 = hu[80074EA4 + S2 * 84 + 54];
-            calculate_current_value_by_steps;
-            [80074EA4 + S2 * 84 + 46] = h(V0);
-
-            A0 = hu[80074EA4 + S2 * 84 + 4e];
-            A1 = hu[80074EA4 + S2 * 84 + 50];
-            A2 = hu[80074EA4 + S2 * 84 + 52];
-            A3 = hu[80074EA4 + S2 * 84 + 54];
-            calculate_current_value_by_steps;
-            [80074EA4 + S2 * 84 + 4c] = h(V0);
-        }
-        else if (V1 == 2)
-        {
-            A0 = hu[80074EA4 + S2 * 84 + 42];
-            A1 = hu[80074EA4 + S2 * 84 + 44];
-            A2 = hu[80074EA4 + S2 * 84 + 52];
-            A3 = hu[80074EA4 + S2 * 84 + 54];
-            calculate_smooth_current_value_by_steps;
-            [80074EA4 + S2 * 84 + 40] = h(V0);
-
-            A0 = hu[80074EA4 + S2 * 84 + 48];
-            A1 = hu[80074EA4 + S2 * 84 + 4a];
-            A2 = hu[80074EA4 + S2 * 84 + 52];
-            A3 = hu[80074EA4 + S2 * 84 + 54];
-            calculate_smooth_current_value_by_steps;
-            [80074EA4 + S2 * 84 + 46] = h(V0);
-
-            A0 = hu[80074EA4 + S2 * 84 + 4e];
-            A1 = hu[80074EA4 + S2 * 84 + 50];
-            A2 = hu[80074EA4 + S2 * 84 + 52];
-            A3 = hu[80074EA4 + S2 * 84 + 54];
-            calculate_smooth_current_value_by_steps;
-            [80074EA4 + S2 * 84 + 4c] = h(V0);
+            [V1] = b(1);
         }
         else
         {
-            continue;
+            [V1] = b(0);
         }
+    }
+}
 
-        A0 = hu[80074EA4 + S2 * 84 + 54];
-        V1 = hu[80074EA4 + S2 * 84 + 52];
+// turn update
+for( int i = 0; i < number_of_models; ++i )
+{
+    V1 = bu[80074ea4 + i * 84 + 3b];
+    if( V1 == 1 )
+    {
+        A0 = h[80074EA4 + i * 84 + 3C];
+        A1 = h[80074EA4 + i * 84 + 3E];
+        A2 = bu[80074EA4 + i * 84 + 39];
+        A3 = bu[80074EA4 + i * 84 + 3A];
+        calculate_current_value_by_steps();
+        [80074EA4 + i * 84 + 38] = b(V0);
 
-        if (A0 != V1)
+        A0 = bu[80074EA4 + i * 84 + 3A];
+        V1 = bu[80074EA4 + i * 84 + 39];
+        if (A0 == V1)
         {
-            [80074EA4 + S2 * 84 + 54] = h(A0 + 1);
+            [80074EA4 + i * 84 + 3B] = b(3);
         }
         else
         {
-            [80074EA4 + S2 * 84 + 56] = b(3);
+            V1 = A0 + 1;
+            [80074EA4 + i * 84 + 3A] = b(V1);
         }
+    }
+    else if( V1 == 2 )
+    {
+        A0 = h[80074EA4 + i * 84 + 3C];
+        A1 = h[80074EA4 + i * 84 + 3E];
+        A2 = bu[80074EA4 + i * 84 + 39];
+        A3 = bu[80074EA4 + i * 84 + 3A];
+        calculate_smooth_current_value_by_steps();
 
-        pc_entity = h[800965E0];
-        if (S2 == pc_entity)
+        [80074EA4 + i * 84 + 38] = b(V0);
+
+        A0 = bu[80074EA4 + i * 84 + 3A];
+        V1 = bu[80074EA4 + i * 84 + 39];
+
+        if (A0 == V1)
         {
-            A0 = 8007e7ac;
-            field_line_clear_entity_in_line();
+            [80074EA4 + i * 84 + 3B] = b(3);
         }
-
-        S2 = S2 + 1;
-        V0 = S2 < number_of_models;
-    800A6B70	bne    v0, zero, La6850 [$800a6850]
-    /////////////////////////////
-
-
-
-    /////////////////////////////
-    // manual move update
-    S2 = 0;
-    S1 = 8009abf4 + 32;
-    manual_model_id = h[800965e0];
-
-    La6b9c:	; 800A6B9C
-        A1 = S2;
-
-        // if model not performing auto action
-        if (bu[80074ea4 + A1 * 84 + 5d] == 0)
+        else
         {
-            if (A1 == manual_model_id && bu[8009abf4 + 32] != 1) // if we can control this entity (manual model and UC == 0)
+            V1 = A0 + 1;
+            [80074EA4 + i * 84 + 3A] = b(V1);
+        }
+    }
+}
+
+// offset update
+for( int i = 0; i < number_of_models; ++i )
+{
+    V1 = bu[80074EA4 + i * 84 + 56];
+
+    if( V1 == 1 )
+    {
+        A0 = hu[80074EA4 + i * 84 + 42];
+        A1 = hu[80074EA4 + i * 84 + 44];
+        A2 = hu[80074EA4 + i * 84 + 52];
+        A3 = hu[80074EA4 + i * 84 + 54];
+        calculate_current_value_by_steps();
+        [80074EA4 + i * 84 + 40] = h(V0);
+
+        A0 = hu[80074EA4 + i * 84 + 48];
+        A1 = hu[80074EA4 + i * 84 + 4a];
+        A2 = hu[80074EA4 + i * 84 + 52];
+        A3 = hu[80074EA4 + i * 84 + 54];
+        calculate_current_value_by_steps();
+        [80074EA4 + i * 84 + 46] = h(V0);
+
+        A0 = hu[80074EA4 + i * 84 + 4e];
+        A1 = hu[80074EA4 + i * 84 + 50];
+        A2 = hu[80074EA4 + i * 84 + 52];
+        A3 = hu[80074EA4 + i * 84 + 54];
+        calculate_current_value_by_steps();
+        [80074EA4 + i * 84 + 4c] = h(V0);
+    }
+    else if( V1 == 2 )
+    {
+        A0 = hu[80074EA4 + i * 84 + 42];
+        A1 = hu[80074EA4 + i * 84 + 44];
+        A2 = hu[80074EA4 + i * 84 + 52];
+        A3 = hu[80074EA4 + i * 84 + 54];
+        calculate_smooth_current_value_by_steps();
+        [80074EA4 + i * 84 + 40] = h(V0);
+
+        A0 = hu[80074EA4 + i * 84 + 48];
+        A1 = hu[80074EA4 + i * 84 + 4a];
+        A2 = hu[80074EA4 + i * 84 + 52];
+        A3 = hu[80074EA4 + i * 84 + 54];
+        calculate_smooth_current_value_by_steps();
+        [80074EA4 + i * 84 + 46] = h(V0);
+
+        A0 = hu[80074EA4 + i * 84 + 4e];
+        A1 = hu[80074EA4 + i * 84 + 50];
+        A2 = hu[80074EA4 + i * 84 + 52];
+        A3 = hu[80074EA4 + i * 84 + 54];
+        calculate_smooth_current_value_by_steps();
+        [80074EA4 + i * 84 + 4c] = h(V0);
+    }
+    else
+    {
+        continue;
+    }
+
+    A0 = hu[80074EA4 + i * 84 + 54];
+    V1 = hu[80074EA4 + i * 84 + 52];
+
+    if( A0 != V1 )
+    {
+        [80074EA4 + i * 84 + 54] = h(A0 + 1);
+    }
+    else
+    {
+        [80074EA4 + i * 84 + 56] = b(3);
+    }
+
+    if( i == pc_entity )
+    {
+        A0 = 8007e7ac;
+        field_line_clear_entity_in_line();
+    }
+}
+
+// manual move update
+for( int i = 0; i < number_of_models; ++i )
+{
+    A1 = i;
+
+    // if model not performing auto action
+    if( bu[80074ea4 + A1 * 84 + 5d] == 0 )
+    {
+        if( (A1 == pc_entity ) && ( bu[8009abf4 + 32] != 1 ) ) // if we can control this entity (manual model and UC == 0)
+        {
+            A0 = S4;
+            move_add_shift_rotate();
+
+            // set idle animation id by default
+            [80074EA4 + pc_entity * 84 + 5e] = b(bu[8009ABF4 + 2C]);
+
+            field_scale = h[8009abf4 + 10];
+
+            if ((S4 & 0040) == 0)
             {
-                A0 = S4;
-                move_add_shift_rotate;
-
-                // set idle animation id by default
-                [80074EA4 + manual_model_id * 84 + 5e] = b(bu[8009ABF4 + 2C]);
-
-                field_scale = h[8009abf4 + 10];
-
-                if ((S4 & 0040) == 0)
+                if (bu[8009abf4 + 3a] != 0)
                 {
-                    if (bu[8009abf4 + 3a] != 0)
+                    V0 = field_scale * 3;
+                }
+                else
+                {
+                    V0 = field_scale * 2;
+                }
+            }
+            else
+            {
+                if (bu[8009abf4 + 3a] == 0)
+                {
+                    V0 = field_scale * 8;
+                }
+                else
+                {
+                    V0 = field_scale * c;
+                }
+            }
+
+            [80074EA4 + pc_entity * 84 + 70] = h(V0); // set speed
+
+            if (S4 & f000)
+            {
+                if (S4 & 1000)
+                {
+                    [80074ea4 + pc_entity * 84 + 36] = b(0);
+
+                    if (S4 & 8000)
                     {
-                        V0 = field_scale * 3;
+                        [80074ea4 + pc_entity * 84 + 36] = b(20);
                     }
-                    else
+
+                    if (S4 & 2000)
                     {
-                        V0 = field_scale * 2;
+                        [80074ea4 + pc_entity * 84 + 36] = b(e0);
                     }
                 }
                 else
                 {
-                    if (bu[8009abf4 + 3a] == 0)
+                    if (S4 & 4000)
                     {
-                        V0 = field_scale * 8;
-                    }
-                    else
-                    {
-                        V0 = field_scale * c;
-                    }
-                }
-
-                [80074EA4 + manual_model_id * 84 + 70] = h(V0); // set speed
-
-                if (S4 & f000)
-                {
-                    if (S4 & 1000)
-                    {
-                        [80074ea4 + manual_model_id * 84 + 36] = b(0);
+                        [80074ea4 + pc_entity * 84 + 36] = b(80);
 
                         if (S4 & 8000)
                         {
-                            [80074ea4 + manual_model_id * 84 + 36] = b(20);
+                            [80074ea4 + pc_entity * 84 + 36] = b(60);
                         }
 
                         if (S4 & 2000)
                         {
-                            [80074ea4 + manual_model_id * 84 + 36] = b(e0);
+                            [80074ea4 + pc_entity * 84 + 36] = b(a0);
                         }
                     }
                     else
                     {
-                        if (S4 & 4000)
+                        if (S4 & 2000)
                         {
-                            [80074ea4 + manual_model_id * 84 + 36] = b(80);
-
-                            if (S4 & 8000)
-                            {
-                                [80074ea4 + manual_model_id * 84 + 36] = b(60);
-                            }
-
-                            if (S4 & 2000)
-                            {
-                                [80074ea4 + manual_model_id * 84 + 36] = b(a0);
-                            }
+                            [80074ea4 + pc_entity * 84 + 36] = b(c0);
                         }
-                        else
-                        {
-                            if (S4 & 2000)
-                            {
-                                [80074ea4 + manual_model_id * 84 + 36] = b(c0);
-                            }
 
-                            if (S4 & 8000)
-                            {
-                                [80074ea4 + manual_model_id * 84 + 36] = b(40);
-                            }
+                        if (S4 & 8000)
+                        {
+                            [80074ea4 + pc_entity * 84 + 36] = b(40);
                         }
                     }
-
-                    // read field global rotation byte
-                    V1 = w[800716c4];
-                    V0 = bu[V1 + 9] + bu[80074ea4 + manual_model_id * 84 + 36] + bu[80074ea4 + manual_model_id * 84 + 35];
-                    [80074ea4 + manual_model_id * 84 + 36] = b(V0);
-
-                    A0 = S2;
-                    main_walkmesh_move;
-                    A0 = V0;
-
-                    // if this byte == 0 store move direction as model direction
-                    V1 = bu[80074EA4 + manual_model_id * 84 + 37];
-                    if (V1 == 0)
-                    {
-                        80074EA4 + manual_model_id * 84 + 38] = b(bu[80074EA4 + manual_model_id * 84 + 36]);
-                    }
-
-                    V0 = bu[8009abf4 + 01];
-                    if (V0 != 1 && A0 == 1)
-                    {
-                        funcaba70;
-                    }
-                }
-            }
-
-            A0 = S2;
-            handle_animation_update;
-        }
-
-        V0 = S2 + 0001;
-        S2 = V0;
-        V0 = V0 << 10;
-        V1 = h[8009ac1c];
-        V0 = V0 >> 10;
-        V0 = V0 < V1;
-    800A6EF4	bne    v0, zero, La6b9c [$800a6b9c]
-
-
-
-    /////////////////////////////
-    // auto move update
-    S2 = 0;
-    loopa6f18:	; 800A6F18
-        V0 = bu[80074EA4 + S2 * 84 + 5D];
-
-        if (V0 == 1)
-        {
-            V0 = bu[8009ABF4 + 33];
-            if (V0 != 1)
-            {
-                [80074EA4 + S2 * 84 + 35] = b(0);
-
-                A0 = 80074EA4 + S2 * 84;
-                A1 = h[80074EA4 + S2 * 84 + 68];
-                funca8858();
-
-                if (V0 == 0)
-                {
-                    [80074EA4 + S2 * 84 + 6A] = h(2);
-                }
-                else
-                {
-                    [80074EA4 + S2 * 84 + 6A] = h(1);
-
-                    A0 = S2;
-                    main_walkmesh_move;
-
-                    if (bu[80074EA4 + S2 * 84 + 37] == 0)
-                    {
-                        [80074ea4 + S2 * 84 + 38] = b(bu[80074ea4 + S2 * 84 + 36]);
-                    }
                 }
 
-                A0 = S2;
-                handle_animation_update;
+                // read field global rotation byte
+                V1 = w[800716c4];
+                V0 = bu[V1 + 9] + bu[80074ea4 + pc_entity * 84 + 36] + bu[80074ea4 + pc_entity * 84 + 35];
+                [80074ea4 + pc_entity * 84 + 36] = b(V0);
 
-                pc_entity = h[800965E0];
-                if (S2 == pc_entity)
+                A0 = i;
+                main_walkmesh_move();
+                A0 = V0;
+
+                // if this byte == 0 store move direction as model direction
+                V1 = bu[80074EA4 + pc_entity * 84 + 37];
+                if( V1 == 0 )
                 {
-                    A0 = 8007e7ac;
-                    field_line_clear_entity_in_line();
+                    80074EA4 + pc_entity * 84 + 38] = b(bu[80074EA4 + pc_entity * 84 + 36]);
+                }
+
+                V0 = bu[8009abf4 + 01];
+                if( ( V0 != 1 ) && ( A0 == 1 ) )
+                {
+                    funcaba70();
                 }
             }
         }
 
-        S2 = S2 + 1;
-        V0 = S2 < number_of_models;
-    800A7050	bne    v0, zero, loopa6f18 [$800a6f18]
-    /////////////////////////////
+        A0 = i;
+        handle_animation_update();
+    }
+}
 
+// auto move update
+for( int i = 0; i < number_of_models; ++i )
+{
+    V0 = bu[80074ea4 + i * 84 + 5d];
 
-
-    /////////////////////////////
-    // jump update
-    S2 = 0;
-    S1 = SP + 20;
-
-    La7070:	; 800A7070
-        V1 = bu[80074EA4 + S2 * 84 + 5D];
-        // if jump
-        if (V1 == 3)
+    if( V0 == 1 )
+    {
+        V0 = bu[8009abf4 + 33];
+        if( V0 != 1 )
         {
-            A0 = S2 * 84 + 10;
+            [80074EA4 + i * 84 + 35] = b(0);
 
-            V0 = h[80074EA4 + S2 * 84 + 6A];
+            A0 = 80074EA4 + i * 84;
+            A1 = h[80074EA4 + i * 84 + 68];
+            funca8858();
+
             if (V0 == 0)
             {
-                V0 = hu[80074EA4 + S2 * 84 + 74]; // triangle id
-                V1 = w[80074EA4 + S2 * 84 + 0C]; // x
-                A3 = w[80074EA4 + S2 * 84 + 10]; // y
-                T0 = w[80074EA4 + S2 * 84 + 14]; // z
-
-                // byte added to rotation byte in triggers and to move direction and stored in move direction.
-                [80074EA4 + S2 * 84 + 35] = b(0);
-
-                [80074EA4 + S2 * 84 + 18] = w(V1);
-                [80074EA4 + S2 * 84 + 1C] = w(A3);
-                [80074EA4 + S2 * 84 + 20] = w(T0);
-
-                id_offset = w[800E4274];
-                A1 = id_offset + V0 * 18 + 8;
-                A2 = id_offset + V0 * 18;
-                field_walkmesh_vector_sub();
-
-                V0 = hu[80074F18 + S2 * 84];
-                A0 = S1;
-                A1 = id_offset + V0 * 18 + 10;
-                A2 = id_offset + V0 * 18 + 8;
-                field_walkmesh_vector_sub();
-
-                V0 = w[80074F1C + S2 * 84];
-                V0 = V0 >> C;
-                [SP + 30] = w(V0);
-
-                V0 = w[80074F20 + S2 * 84];
-                V0 = V0 >> C;
-                [SP + 34] = w(V0);
-
-                V0 = hu[80074EA4 + S2 * 84 + 74];
-
-                A0 = SP + 10;
-                A1 = S1;
-                A2 = SP + 30;
-                A3 = id_offset + V0 * 18;
-                field_walkmesh_calculate_z();
-                Z_fin = V0 << C;
-                [80074EA4 + S2 * 84 + 80] = w(Z_fin);
-
-                Z_start = w[80074EA4 + S2 * 84 + 20];
-                steps = h[80074EA4 + S2 * 84 + 30];
-                b_value = (Z_fin - Z_start) / steps - steps * 1740;
-                [80074EA4 + S2 * 84 + 2C] = w(b_value);
-
-                [80074EA4 + S2 * 84 + 32] = h(0);
-                [80074EA4 + S2 * 84 + 6A] = w(1);
+                [80074EA4 + i * 84 + 6A] = h(2);
             }
             else
             {
-                V1 = h[80074EA4 + S2 * 84 + 32];
-                V0 = h[80074EA4 + S2 * 84 + 30];
-                A3 = V1;
-                // if current substep == number of steps
-                if (V0 == V1)
+                [80074EA4 + i * 84 + 6A] = h(1);
+
+                A0 = i;
+                main_walkmesh_move();
+
+                if (bu[80074EA4 + i * 84 + 37] == 0)
                 {
-                    V1 = hu[80074EA4 + S2 * 84 + 74];
-                    [80074EA4 + S2 * 84 + 72] = h(V1);
-
-                    [80074EA4 + S2 * 84 + 6A] = h(2);
-                }
-                else
-                {
-                    V0 = A3 + 1;
-                    [80074EA4 + S2 * 84 + 32] = h(V0);
-
-                    A0 = w[80074EA4 + S2 * 84 + 18];
-                    A1 = w[80074EA4 + S2 * 84 + 78];
-                    A2 = h[80074EA4 + S2 * 84 + 30];
-                    A3 = h[80074EA4 + S2 * 84 + 32];
-                    calculate_current_value_by_steps;
-                    [80074EA4 + S2 * 84 + C] = w(V0); // real X
-
-                    A0 = w[80074EC0 + S2 * 84];
-                    A1 = w[80074F20 + S2 * 84];
-                    A2 = h[80074EA4 + S2 * 84 + 30];
-                    A3 = h[80074EA4 + S2 * 84 + 32];
-                    calculate_current_value_by_steps;
-                    [80074EA4 + S2 * 84 + 10] = w(V0); // real Y
-
-                    step = h[80074EA4 + S2 * 84 + 32];
-                    b_value = h[80074EA4 + S2 * 84 + 2C];
-                    Z_start = w[80074EA4 + S2 * 84 + 20];
-                    Z_cur = - step^2 * 1740 + step * b_value + Z_start;
-                    [80074EA4 + S2 * 84 + 14] = w(Z_cur);
+                    [80074ea4 + i * 84 + 38] = b(bu[80074ea4 + i * 84 + 36]);
                 }
             }
 
-            A0 = S2;
-            // we update animation here
-            handle_animation_update;
+            A0 = i;
+            handle_animation_update();
 
-            pc_entity = h[800965E0];
-            if (S2 == pc_entity)
+            if( i == pc_entity )
             {
                 A0 = 8007e7ac;
                 field_line_clear_entity_in_line();
             }
         }
+    }
+}
 
-        La74cc:	; 800A74CC
-        S2 = S2 + 1;
-        V0 = S2 < number_of_models;
-    800A74E4	bne    v0, zero, La7070 [$800a7070]
-    /////////////////////////////
+// jump update
+for( int i = 0; i < number_of_models; ++i )
+{
+    V1 = bu[80074EA4 + i * 84 + 5D];
+    // if jump
+    if (V1 == 3)
+    {
+        A0 = i * 84 + 10;
 
-
-
-    /////////////////////////////
-    // ladder update
-    S2 = 0;
-    La7510:	; 800A7510
-        V1 = bu[80074EA4 + S2 * 84 + 5D];
-        if (V1 == 4 || V1 == 5)
+        V0 = h[80074EA4 + i * 84 + 6A];
+        if (V0 == 0)
         {
-            V0 = w[8008357C];
-            A0 = bu[V0 + S2 * 8 + 4];
-            if (A0 != FF)
+            V0 = hu[80074EA4 + i * 84 + 74]; // triangle id
+            V1 = w[80074EA4 + i * 84 + 0C]; // x
+            A3 = w[80074EA4 + i * 84 + 10]; // y
+            T0 = w[80074EA4 + i * 84 + 14]; // z
+
+            // byte added to rotation byte in triggers and to move direction and stored in move direction.
+            [80074EA4 + i * 84 + 35] = b(0);
+
+            [80074EA4 + i * 84 + 18] = w(V1);
+            [80074EA4 + i * 84 + 1C] = w(A3);
+            [80074EA4 + i * 84 + 20] = w(T0);
+
+            id_offset = w[800E4274];
+            A1 = id_offset + V0 * 18 + 8;
+            A2 = id_offset + V0 * 18;
+            field_walkmesh_vector_sub();
+
+            V0 = hu[80074F18 + i * 84];
+            A0 = SP + 20;
+            A1 = id_offset + V0 * 18 + 10;
+            A2 = id_offset + V0 * 18 + 8;
+            field_walkmesh_vector_sub();
+
+            V0 = w[80074F1C + i * 84];
+            V0 = V0 >> C;
+            [SP + 30] = w(V0);
+
+            V0 = w[80074F20 + i * 84];
+            V0 = V0 >> C;
+            [SP + 34] = w(V0);
+
+            V0 = hu[80074EA4 + i * 84 + 74];
+
+            A0 = SP + 10;
+            A1 = SP + 20;
+            A2 = SP + 30;
+            A3 = id_offset + V0 * 18;
+            field_walkmesh_calculate_z();
+            Z_fin = V0 << C;
+            [80074EA4 + i * 84 + 80] = w(Z_fin);
+
+            Z_start = w[80074EA4 + i * 84 + 20];
+            steps = h[80074EA4 + i * 84 + 30];
+            b_value = (Z_fin - Z_start) / steps - steps * 1740;
+            [80074EA4 + i * 84 + 2C] = w(b_value);
+
+            [80074EA4 + i * 84 + 32] = h(0);
+            [80074EA4 + i * 84 + 6A] = w(1);
+        }
+        else
+        {
+            V1 = h[80074EA4 + i * 84 + 32];
+            V0 = h[80074EA4 + i * 84 + 30];
+            A3 = V1;
+            // if current substep == number of steps
+            if (V0 == V1)
             {
-                V1 = w[8004A62C];
-                V1 = w[V1 + 4];
-                V0 = V1 + A0 * 24;
-                A0 = hu[V0 + 1A];
-                V0 = w[V0 + 1C];
+                V1 = hu[80074EA4 + i * 84 + 74];
+                [80074EA4 + i * 84 + 72] = h(V1);
 
-                V1 = h[80074EA4 + S2 * 84 + 6A];
-                S3 = A0 + V0;
-                if (V1 == 0)
+                [80074EA4 + i * 84 + 6A] = h(2);
+            }
+            else
+            {
+                V0 = A3 + 1;
+                [80074EA4 + i * 84 + 32] = h(V0);
+
+                A0 = w[80074EA4 + i * 84 + 18];
+                A1 = w[80074EA4 + i * 84 + 78];
+                A2 = h[80074EA4 + i * 84 + 30];
+                A3 = h[80074EA4 + i * 84 + 32];
+                calculate_current_value_by_steps();
+                [80074EA4 + i * 84 + C] = w(V0); // real X
+
+                A0 = w[80074EC0 + i * 84];
+                A1 = w[80074F20 + i * 84];
+                A2 = h[80074EA4 + i * 84 + 30];
+                A3 = h[80074EA4 + i * 84 + 32];
+                calculate_current_value_by_steps();
+                [80074EA4 + i * 84 + 10] = w(V0); // real Y
+
+                step = h[80074EA4 + i * 84 + 32];
+                b_value = h[80074EA4 + i * 84 + 2C];
+                Z_start = w[80074EA4 + i * 84 + 20];
+                Z_cur = - step^2 * 1740 + step * b_value + Z_start;
+                [80074EA4 + i * 84 + 14] = w(Z_cur);
+            }
+        }
+
+        A0 = i;
+        // we update animation here
+        handle_animation_update();
+
+        if( i == pc_entity )
+        {
+            A0 = 8007e7ac;
+            field_line_clear_entity_in_line();
+        }
+    }
+}
+
+// ladder update
+for( int i = 0; i < number_of_models; ++i )
+{
+    V1 = bu[80074EA4 + i * 84 + 5D];
+    if (V1 == 4 || V1 == 5)
+    {
+        V0 = w[8008357C];
+        A0 = bu[V0 + i * 8 + 4];
+        if( A0 != ff )
+        {
+            V1 = w[8004A62C];
+            V1 = w[V1 + 4];
+            V0 = V1 + A0 * 24;
+            A0 = hu[V0 + 1A];
+            V0 = w[V0 + 1C];
+
+            V1 = h[80074EA4 + i * 84 + 6A];
+            S3 = A0 + V0;
+            if (V1 == 0)
+            {
+                // copy current coords as start coords
+                X_cur = w[80074EA4 + i * 84 + 0с];
+                [80074EA4 + i * 84 + 18] = w(X_cur);
+                Y_cur = w[80074EA4 + i * 84 + 10];
+                [80074EA4 + i * 84 + 1C] = w(Y_cur);
+                Z_cur = w[80074EA4 + i * 84 + 14];
+                [80074EA4 + i * 84 + 20] = w(Z_cur);
+
+                X_fin = w[80074EA4 + i * 84 + 78];
+                A1 = (X_fin - X_cur) >> c;
+                [SP + 10] = w(A1);
+
+                Y_fin = w[80074EA4 + i * 84 + 7C];
+                A0 = (Y_fin - Y_cur) >> c;
+                [SP + 14] = w(A0);
+
+                Z_fin = w[80074EA4 + i * 84 + 80];
+                V0 = (Z_fin - Z_cur) >> c;
+                [SP + 18] = w(V0);
+
+                A0 = A1 * A1 + A0 * A0 + V0 * V0;
+                system_square_root();
+
+                [80074EA4 + i * 84 + 30] = h(V0 * 4);
+                [80074EA4 + i * 84 + 32] = h(0);
+                [80074EA4 + i * 84 + 6A] = h(1);
+
+                [80074EA4 + S0 + 35] = b(0);
+
+                V1 = bu[80074EA4 + i * 84 + 5E];
+                V0 = hu[S3 + V1 * 10];
+                V0 = V0 - 1;
+                [80074EA4 + i * 84 + 64] = h(V0);
+
+                if( i == pc_entity )
                 {
-                    // copy current coords as start coords
-                    X_cur = w[80074EA4 + S2 * 84 + 0C];
-                    [80074EA4 + S2 * 84 + 18] = w(X_cur);
-                    Y_cur = w[80074EA4 + S2 * 84 + 10];
-                    [80074EA4 + S2 * 84 + 1C] = w(Y_cur);
-                    Z_cur = w[80074EA4 + S2 * 84 + 14];
-                    [80074EA4 + S2 * 84 + 20] = w(Z_cur);
-
-                    X_fin = w[80074EA4 + S2 * 84 + 78];
-                    A1 = (X_fin - X_cur) >> c;
-                    [SP + 10] = w(A1);
-
-                    Y_fin = w[80074EA4 + S2 * 84 + 7C];
-                    A0 = (Y_fin - Y_cur) >> c;
-                    [SP + 14] = w(A0);
-
-                    Z_fin = w[80074EA4 + S2 * 84 + 80];
-                    V0 = (Z_fin - Z_cur) >> c;
-                    [SP + 18] = w(V0);
-
-                    A0 = A1 * A1 + A0 * A0 + V0 * V0;
-                    system_square_root();
-
-                    [80074EA4 + S2 * 84 + 30] = h(V0 * 4);
-                    [80074EA4 + S2 * 84 + 32] = h(0);
-                    [80074EA4 + S2 * 84 + 6A] = h(1);
-
-                    [80074EA4 + S0 + 35] = b(0);
-
-                    V1 = bu[80074EA4 + S2 * 84 + 5E];
-                    V0 = hu[S3 + V1 * 10];
-                    V0 = V0 - 1;
-                    [80074EA4 + S2 * 84 + 64] = h(V0);
-
-                    pc_entity = h[800965E0];
-                    if (S2 == pc_entity)
-                    {
-                        A0 = 8007E7AC;
-                        field_line_clear_entity_in_line();
-                    }
+                    A0 = 8007E7AC;
+                    field_line_clear_entity_in_line();
                 }
-                else
+            }
+            else
+            {
+                uc = bu[8009ABF4 + 32];
+                if( ( i == pc_entity ) && ( uc == 0 ) )
                 {
-                    pc_entity = h[800965E0];
-                    uc = bu[8009ABF4 + 32];
-                    if (S2 == pc_entity && uc == 0)
+                    V1 = bu[80074EA4 + i * 84 + 5D];
+                    up_down_switch = h[80074EA4 + i * 84 + 68];
+                    if (V1 == 5)
                     {
-                        V1 = bu[80074EA4 + S2 * 84 + 5D];
-                        up_down_switch = h[80074EA4 + S2 * 84 + 68];
-                        if (V1 == 5)
+                        if (up_down_switch == 0)
                         {
-                            if (up_down_switch == 0)
-                            {
-                                start = 8000;
-                                ens = 2000;
-                            }
-                            else
-                            {
-                                start = 2000;
-                                ens = 8000;
-                            }
+                            start = 8000;
+                            ens = 2000;
                         }
                         else
                         {
-                            if( up_down_switch == 0 )
-                            {
-                                start = 4000;
-                                ens = 1000;
-                            }
-                            else
-                            {
-                                start = 1000;
-                                ens = 4000;
-                            }
-                        }
-
-                        if( S4 & start )
-                        {
-                            step = h[80074ea4 + S2 * 84 + 32];
-                            if( step == 0 )
-                            {
-                                [80074ea4 + S2 * 84 + 6a] = h(2);
-                            }
-                            else
-                            {
-                                step = step - 1;
-                                [80074ea4 + S2 * 84 + 32] = h(step);
-
-                                V0 = hu[80074ea4 + S2 * 84 + 62] - hu[80074ea4 + S2 * 84 + 60]; // reduce by animation_speed
-                                [80074ea4 + S2 * 84 + 62] = h(V0);
-                                V0 = V0 << 10;
-
-                                if( V0 < 0 )
-                                {
-                                    [80074ea4 + S2 * 84 + 62] = h(hu[80074EA4 + S2 * 84 + 64] * 10);
-                                }
-                            }
-                        }
-
-                        if( S4 & end )
-                        {
-                            step = h[80074ea4 + S2 * 84 + 32];
-                            steps = h[80074ea4 + S2 * 84 + 30];
-                            if( step == steps )
-                            {
-                                move_to_triangle = hu[80074ea4 + S2 * 84 + 74];
-                                [80074ea4 + S2 * 84 + 72] = h(move_to_triangle);
-                                [80074ea4 + S2 * 84 + 6a] = h(2);
-                            }
-                            else
-                            {
-                                step = step + 1;
-                                [80074ea4 + S2 * 84 + 32] = h(step);
-
-                                V0 = hu[80074EA4 + S2 * 84 + 62] + hu[80074EA4 + S2 * 84 + 60]; // increment by animation speed
-                                [80074ea4 + S2 * 84 + 62] = h(V0);
-
-                                if( hu[80074ea4 + S2 * 84 + 64] < V0 * 10 )
-                                {
-                                    [80074ea4 + S2 * 84 + 62] = h(0);
-                                }
-                            }
+                            start = 2000;
+                            ens = 8000;
                         }
                     }
                     else
                     {
-                        step = h[80074EA4 + S2 * 84 + 32];
-                        steps = h[80074EA4 + S2 * 84 + 30];
-                        if (step == steps)
+                        if( up_down_switch == 0 )
                         {
-                            move_to_triangle = hu[80074EA4 + S2 * 84 + 74];
-                            [80074EA4 + S2 * 84 + 72] = h(move_to_triangle);
-
-                            [80074EA4 + S2 * 84 + 6A] = h(2);
+                            start = 4000;
+                            ens = 1000;
                         }
                         else
                         {
-                            step = step + 1;
-                            [80074EA4 + S2 * 84 + 32] = h(step);
+                            start = 1000;
+                            ens = 4000;
+                        }
+                    }
 
+                    if( S4 & start )
+                    {
+                        step = h[80074ea4 + i * 84 + 32];
+                        if( step == 0 )
+                        {
+                            [80074ea4 + i * 84 + 6a] = h(2);
+                        }
+                        else
+                        {
+                            step = step - 1;
+                            [80074ea4 + i * 84 + 32] = h(step);
 
-                            V0 = hu[80074EA4 + S2 * 84 + 62];
-                            animation_speed = hu[80074EA4 + S2 * 84 + 60];
-                            V0 = V0 + animation_speed;
-                            [80074EA4 + S2 * 84 + 62] = h(V0);
+                            V0 = hu[80074ea4 + i * 84 + 62] - hu[80074ea4 + i * 84 + 60]; // reduce by animation_speed
+                            [80074ea4 + i * 84 + 62] = h(V0);
+                            V0 = V0 << 10;
 
-                            V1 = hu[80074EA4 + S2 * 84 + 64];
-                            V0 = V0 * 10;
-
-                            if (V1 < V0)
+                            if( V0 < 0 )
                             {
-                                [80074EA4 + S2 * 84 + 62] = h(0);
+                                [80074ea4 + i * 84 + 62] = h(hu[80074EA4 + i * 84 + 64] * 10);
                             }
                         }
                     }
 
-                    A0 = w[80074EA4 + S2 * 84 + 18];
-                    A1 = w[80074EA4 + S2 * 84 + 78];
-                    A2 = w[80074EA4 + S2 * 84 + 30];
-                    A3 = w[80074EA4 + S2 * 84 + 32];
-                    calculate_current_value_by_steps;
-                    [80074EB0 + S2 * 84] = w(V0);
+                    if( S4 & end )
+                    {
+                        step = h[80074ea4 + i * 84 + 32];
+                        steps = h[80074ea4 + i * 84 + 30];
+                        if( step == steps )
+                        {
+                            move_to_triangle = hu[80074ea4 + i * 84 + 74];
+                            [80074ea4 + i * 84 + 72] = h(move_to_triangle);
+                            [80074ea4 + i * 84 + 6a] = h(2);
+                        }
+                        else
+                        {
+                            step = step + 1;
+                            [80074ea4 + i * 84 + 32] = h(step);
 
-                    A0 = w[80074EA4 + S2 * 84 + 1C];
-                    A1 = w[80074EA4 + S2 * 84 + 7C];
-                    A2 = w[80074EA4 + S2 * 84 + 30];
-                    A3 = w[80074EA4 + S2 * 84 + 32];
-                    calculate_current_value_by_steps;
-                    [80074EB4 + S2 * 84] = w(V0);
+                            V0 = hu[80074EA4 + i * 84 + 62] + hu[80074EA4 + i * 84 + 60]; // increment by animation speed
+                            [80074ea4 + i * 84 + 62] = h(V0);
 
-                    A0 = w[80074EA4 + S2 * 84 + 20];
-                    A1 = w[80074EA4 + S2 * 84 + 80];
-                    A2 = w[80074EA4 + S2 * 84 + 30];
-                    A3 = w[80074EA4 + S2 * 84 + 32];
-                    calculate_current_value_by_steps;
-                    [80074EB8 + S2 * 84] = w(V0);
+                            if( hu[80074ea4 + i * 84 + 64] < V0 * 10 )
+                            {
+                                [80074ea4 + i * 84 + 62] = h(0);
+                            }
+                        }
+                    }
                 }
+                else
+                {
+                    step = h[80074EA4 + i * 84 + 32];
+                    steps = h[80074EA4 + i * 84 + 30];
+                    if( step == steps )
+                    {
+                        move_to_triangle = hu[80074EA4 + i * 84 + 74];
+                        [80074EA4 + i * 84 + 72] = h(move_to_triangle);
+
+                        [80074EA4 + i * 84 + 6A] = h(2);
+                    }
+                    else
+                    {
+                        step = step + 1;
+                        [80074EA4 + i * 84 + 32] = h(step);
+
+
+                        V0 = hu[80074EA4 + i * 84 + 62];
+                        animation_speed = hu[80074EA4 + i * 84 + 60];
+                        V0 = V0 + animation_speed();
+                        [80074EA4 + i * 84 + 62] = h(V0);
+
+                        V1 = hu[80074EA4 + i * 84 + 64];
+                        V0 = V0 * 10;
+
+                        if (V1 < V0)
+                        {
+                            [80074EA4 + i * 84 + 62] = h(0);
+                        }
+                    }
+                }
+
+                A0 = w[80074EA4 + i * 84 + 18];
+                A1 = w[80074EA4 + i * 84 + 78];
+                A2 = w[80074EA4 + i * 84 + 30];
+                A3 = w[80074EA4 + i * 84 + 32];
+                calculate_current_value_by_steps();
+                [80074EB0 + i * 84] = w(V0);
+
+                A0 = w[80074EA4 + i * 84 + 1C];
+                A1 = w[80074EA4 + i * 84 + 7C];
+                A2 = w[80074EA4 + i * 84 + 30];
+                A3 = w[80074EA4 + i * 84 + 32];
+                calculate_current_value_by_steps();
+                [80074EB4 + i * 84] = w(V0);
+
+                A0 = w[80074EA4 + i * 84 + 20];
+                A1 = w[80074EA4 + i * 84 + 80];
+                A2 = w[80074EA4 + i * 84 + 30];
+                A3 = w[80074EA4 + i * 84 + 32];
+                calculate_current_value_by_steps();
+                [80074EB8 + i * 84] = w(V0);
             }
         }
-
-        S2 = S2 + 1;
-        V0 = S2 < number_of_models;
-    800A826C	bne    v0, zero, La7bd4 [$800a7bd4]
-    /////////////////////////////
+    }
 }
-
-
-
-La8274:	; 800A8274
-return;
 ////////////////////////////////
 
 
