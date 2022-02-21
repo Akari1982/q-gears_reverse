@@ -695,12 +695,12 @@ void psxJAL()
 
         XenoTest();
     }
+    else if( _JumpTarget_ == 0x80046794 ) // ffvii system_add_render_packet_to_queue
+    {
+        FFVII_System_RenderPacketAddToQueue();
+    }
     else if( _JumpTarget_ == 0x800a65a4 ) // ffvii handle_update
     {
-        char Text[256];
-        sprintf(Text, _( "FFVII: 0x%x"), _PC_);
-        GPU_displayText(Text);
-
         FFVII_Field_HandleUpdate();
     }
     else

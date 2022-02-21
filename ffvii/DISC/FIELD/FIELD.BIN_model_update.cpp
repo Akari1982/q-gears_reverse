@@ -1602,7 +1602,7 @@ if (V1 != 0)
         A1 = S3; // offset to place to store packet drafts
         A2 = 0;
         A3 = S4; // model id
-        model_packet_draft_prepare;
+        model_packet_draft_prepare();
         S3 = V0;
 
         S2 = S2 + 1;
@@ -1622,7 +1622,7 @@ return S3;
 
 
 ////////////////////////////////
-// model_packet_draft_prepare
+// model_packet_draft_prepare()
 //        A0 = S1 + S2 * 20; // offset to model parts part.
 //        A1 = S3; // offset to place to store packet drafts
 //        A2 = 0;

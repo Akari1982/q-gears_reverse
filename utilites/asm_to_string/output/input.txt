@@ -1,0 +1,87 @@
+func7a690:	; 8007A690
+8007A690	addiu  sp, sp, $ffa8 (=-$58)
+8007A694	sw     s2, $0048(sp)
+8007A698	addu   s2, a0, zero
+8007A69C	sw     s1, $0044(sp)
+8007A6A0	addu   s1, a2, zero
+8007A6A4	sw     s3, $004c(sp)
+8007A6A8	addu   s3, a3, zero
+8007A6AC	sw     s0, $0040(sp)
+8007A6B0	addiu  s0, sp, $0030
+8007A6B4	sw     ra, $0054(sp)
+8007A6B8	sw     s4, $0050(sp)
+8007A6BC	lh     v0, $0000(a1)
+8007A6C0	lh     v1, $0000(s2)
+8007A6C4	lw     s4, $0068(sp)
+8007A6C8	subu   v0, v0, v1
+8007A6CC	sw     v0, $0030(sp)
+8007A6D0	lh     v0, $0002(a1)
+8007A6D4	lh     v1, $0002(s2)
+8007A6D8	addu   a0, s0, zero
+8007A6DC	subu   v0, v0, v1
+8007A6E0	sw     v0, $0034(sp)
+8007A6E4	lh     v0, $0004(a1)
+8007A6E8	lh     v1, $0004(s2)
+8007A6EC	addiu  a1, sp, $0010
+8007A6F0	subu   v0, v0, v1
+8007A6F4	jal    $80048c24
+8007A6F8	sw     v0, $0038(sp)
+8007A6FC	lh     v0, $0000(s1)
+8007A700	lh     v1, $0000(s2)
+8007A704	addu   a0, s0, zero
+8007A708	subu   v0, v0, v1
+8007A70C	sw     v0, $0030(sp)
+8007A710	lh     v0, $0002(s1)
+8007A714	lh     v1, $0002(s2)
+8007A718	addiu  s0, sp, $0020
+8007A71C	subu   v0, v0, v1
+8007A720	sw     v0, $0034(sp)
+8007A724	lh     v0, $0004(s1)
+8007A728	lh     v1, $0004(s2)
+8007A72C	addu   a1, s0, zero
+8007A730	subu   v0, v0, v1
+8007A734	jal    $80048c24
+8007A738	sw     v0, $0038(sp)
+8007A73C	addiu  a0, sp, $0010
+8007A740	addu   a1, s0, zero
+8007A744	jal    $8004a328
+8007A748	addu   a2, s4, zero
+8007A74C	lw     a1, $0004(s4)
+8007A750	nop
+8007A754	bne    a1, zero, L7a764 [$8007a764]
+8007A758	nop
+8007A75C	j      L7a7b4 [$8007a7b4]
+8007A760	sh     zero, $0002(s3)
+
+L7a764:	; 8007A764
+8007A764	lh     v0, $0000(s3)
+8007A768	lh     v1, $0000(s2)
+8007A76C	lw     a0, $0000(s4)
+8007A770	subu   v0, v0, v1
+8007A774	mult   a0, v0
+8007A778	lh     v0, $0004(s3)
+8007A77C	lh     v1, $0004(s2)
+8007A780	mflo   a2
+8007A784	lw     a0, $0008(s4)
+8007A788	subu   v0, v0, v1
+8007A78C	mult   a0, v0
+8007A790	mflo   t1
+8007A794	subu   v1, zero, a2
+8007A798	subu   v1, v1, t1
+8007A79C	div    v1, a1
+8007A7A0	mflo   v1
+8007A7A4	lhu    v0, $0002(s2)
+8007A7A8	nop
+8007A7AC	addu   v0, v0, v1
+8007A7B0	sh     v0, $0002(s3)
+
+L7a7b4:	; 8007A7B4
+8007A7B4	lw     ra, $0054(sp)
+8007A7B8	lw     s4, $0050(sp)
+8007A7BC	lw     s3, $004c(sp)
+8007A7C0	lw     s2, $0048(sp)
+8007A7C4	lw     s1, $0044(sp)
+8007A7C8	lw     s0, $0040(sp)
+8007A7CC	addiu  sp, sp, $0058
+8007A7D0	jr     ra 
+8007A7D4	nop

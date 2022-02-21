@@ -6275,7 +6275,7 @@ V0 = w[8009c6dc];           // current field file offset.
 A0 = [V0 + V1 + 1];         // window_id
 A1 = [V0 + V1 + 2];         // dialog_id
 
-manage_window_states
+manage_window_states();
 
 if (v == 0)
 {
@@ -6370,7 +6370,7 @@ if ([8008326C + S0] != FF)
     A0 = S0;
     A1 = 0;
 
-    manage_window_states;
+    manage_window_states();
 
     V0 = 1;
 }
@@ -6405,7 +6405,7 @@ else
 
         A0 = S0;
         A1 = 0;
-        manage_window_states;
+        manage_window_states();
     }
 }
 return 1;

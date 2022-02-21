@@ -229,7 +229,7 @@ S0 = S0 + A2;
 
 
 ////////////////////////////////
-// set_window_height
+// set_window_height()
 
 [8008327e + A0 * 30] = h(A1);
 ////////////////////////////////
@@ -237,7 +237,8 @@ S0 = S0 + A2;
 
 
 ////////////////////////////////
-// manage_window_states
+// manage_window_states()
+
 A0 - window ID
 A1 - message ID
 
@@ -250,7 +251,7 @@ if (v0 < F)
     {
         case 0:
         {
-            dialog_window_init;
+            dialog_window_init();
 
             if (v0 == 0)
             {
@@ -263,7 +264,7 @@ if (v0 < F)
 
         case 1:
         {
-            dialog_window_growth;
+            dialog_window_growth();
 
             return 0;
         }
@@ -271,7 +272,7 @@ if (v0 < F)
 
         case 2:
         {
-            dialog_copy_text_from_field;
+            dialog_copy_text_from_field();
 
             return 0;
         }
@@ -279,7 +280,7 @@ if (v0 < F)
 
         case 8:
         {
-            dialog_scroll_text;
+            dialog_scroll_text();
 
             return 0;
         }
@@ -287,7 +288,7 @@ if (v0 < F)
 
         case C:
         {
-            dialog_scroll_text_during_ok;
+            dialog_scroll_text_during_ok();
 
             return 0;
         }
@@ -378,7 +379,7 @@ if (v0 < F)
                 // set state to 7
                 [800832A0 + A0 * 30] = h(07);
 
-                dialog_window_discrease;
+                dialog_window_discrease();
 
                 return 0;
             }
@@ -392,7 +393,7 @@ if (v0 < F)
 
             if (V0 != 0)
             {
-                dialog_init_next_window;
+                dialog_init_next_window();
 
                 return 0;
             }
@@ -426,7 +427,7 @@ if (v0 < F)
 
         case 9:
         {
-            dialog_init_next_window;
+            dialog_init_next_window();
 
             return 0;
         }
@@ -434,7 +435,7 @@ if (v0 < F)
 
         case 5 7:
         {
-            dialog_window_discrease;
+            dialog_window_discrease();
 
             if (V0 != 0)
             {
@@ -826,7 +827,7 @@ else
 
 
 ////////////////////////////////
-// dialog_window_growth
+// dialog_window_growth()
 
 V1 = bu[8008326C + A0];
 V0 = bu[800722C4];
@@ -907,7 +908,7 @@ if (V1 == V0)
 
 
 ////////////////////////////////
-// dialog_copy_text_from_field
+// dialog_copy_text_from_field()
 
 S3 = A0;
 
