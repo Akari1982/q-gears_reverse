@@ -30,6 +30,7 @@
 #include "pgxp_gte.h"
 
 #include "../../src/xeno.h"
+#include "../../src/ffvii/system/render.h"
 
 static int branch = 0;
 static int branch2 = 0;
@@ -689,20 +690,27 @@ void psxJAL()
 {
     if( _JumpTarget_ == 0x8007a690 ) // field_calculate_walkmesh_height
     {
-        char Text[256];
-        sprintf(Text, _( "Xeno: 0x%x"), _PC_);
-        GPU_displayText(Text);
+        _SetLink( 31 );
+        doBranch( _PC_ + 4 );
 
         XenoTest();
     }
     else if( _JumpTarget_ == 0x80046794 ) // ffvii system_add_render_packet_to_queue
     {
+        _SetLink( 31 );
+        doBranch( _PC_ + 4 );
+
         FFVII_System_RenderPacketAddToQueue();
     }
+/*
     else if( _JumpTarget_ == 0x800a65a4 ) // ffvii handle_update
     {
+        _SetLink( 31 );
+        doBranch( _PC_ + 4 );
+
         FFVII_Field_HandleUpdate();
     }
+*/
     else
     {
         _SetLink( 31 );

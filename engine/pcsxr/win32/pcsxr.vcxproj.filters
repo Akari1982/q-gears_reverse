@@ -28,6 +28,12 @@
     <Filter Include="ffvii">
       <UniqueIdentifier>{c0a2615d-7922-42d2-a7f3-919e9461620c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ffvii\system">
+      <UniqueIdentifier>{77b1c0c2-c7f4-4bca-9f48-c7c0b0b9ba14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ffvii\field">
+      <UniqueIdentifier>{9246dd1d-e29e-4470-a8f0-1ae32db39150}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libpcsxcore\cdriso.c">
@@ -216,8 +222,17 @@
     <ClCompile Include="..\..\src\xeno.c">
       <Filter>xenogears</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ffvii_field.c">
-      <Filter>ffvii</Filter>
+    <ClCompile Include="..\..\src\ffvii\system\render.c">
+      <Filter>ffvii\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\system\window.c">
+      <Filter>ffvii\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\field\entity.c">
+      <Filter>ffvii\field</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\field\window.c">
+      <Filter>ffvii\field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,8 +421,17 @@
     <ClInclude Include="..\..\src\xeno.h">
       <Filter>xenogears</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ffvii_field.h">
-      <Filter>ffvii</Filter>
+    <ClInclude Include="..\..\src\ffvii\system\render.h">
+      <Filter>ffvii\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ffvii\system\window.h">
+      <Filter>ffvii\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ffvii\field\entity.h">
+      <Filter>ffvii\field</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ffvii\field\window.h">
+      <Filter>ffvii\field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

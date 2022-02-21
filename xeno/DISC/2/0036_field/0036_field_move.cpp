@@ -945,7 +945,8 @@ if( A2 >= 0 )
 
 ////////////////////////////////
 // func7bca8()
-// return -1 if we can't move, 0 otherwise.
+// return -1 if we can't move, 0 otherwise
+
 move_vector = A0;
 current_pos = A1;
 struct_138 = A2;

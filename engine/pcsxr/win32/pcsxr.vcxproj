@@ -147,7 +147,10 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\ffvii_field.c" />
+    <ClCompile Include="..\..\src\ffvii\field\entity.c" />
+    <ClCompile Include="..\..\src\ffvii\field\window.c" />
+    <ClCompile Include="..\..\src\ffvii\system\render.c" />
+    <ClCompile Include="..\..\src\ffvii\system\window.c" />
     <ClCompile Include="..\..\src\xeno.c" />
     <ClCompile Include="..\libpcsxcore\cdriso.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -417,7 +420,10 @@
     <ClCompile Include="zlib\zutil.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\ffvii_field.h" />
+    <ClInclude Include="..\..\src\ffvii\field\entity.h" />
+    <ClInclude Include="..\..\src\ffvii\field\window.h" />
+    <ClInclude Include="..\..\src\ffvii\system\render.h" />
+    <ClInclude Include="..\..\src\ffvii\system\window.h" />
     <ClInclude Include="..\..\src\xeno.h" />
     <ClInclude Include="..\libpcsxcore\cdriso.h" />
     <ClInclude Include="..\libpcsxcore\cdrom.h" />

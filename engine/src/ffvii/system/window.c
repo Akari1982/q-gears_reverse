@@ -1,4 +1,4 @@
-#include "ffvii_field.h"
+#include "window.h"
 #include "..\..\pcsxr\libpcsxcore\psxcommon.h"
 #include "..\..\pcsxr\libpcsxcore\psxmem.h"
 #include "..\..\pcsxr\libpcsxcore\plugins.h"
