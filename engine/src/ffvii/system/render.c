@@ -16,3 +16,21 @@ void FFVII_System_RenderPacketAddToQueue()
     psxMemWrite32( buf, ( psxMemRead32( buf ) & 0xff000000 ) | ( psxMemRead32( ot ) & 0x00ffffff ) );
     psxMemWrite32( ot, ( psxMemRead32( ot ) & 0xff000000 ) | ( buf & 0x00ffffff ) );
 }
+
+
+
+
+void FFVII_System_RenderPacketChangeTransparency()
+{
+    u32 packet = psxRegs.GPR.n.a0;
+    u32 tr = psxRegs.GPR.n.a1;
+
+    if( tr != 0 )
+    {
+        psxMemWrite8( packet + 7, psxMemRead8( packet + 7 ) | 0x02 );
+    }
+    else
+    {
+        psxMemWrite8( packet + 7, psxMemRead8( packet + 7 ) & 0xfd );
+    }
+}

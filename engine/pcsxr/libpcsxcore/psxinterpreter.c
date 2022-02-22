@@ -695,12 +695,21 @@ void psxJAL()
 
         XenoTest();
     }
-    else if( _JumpTarget_ == 0x80046794 ) // ffvii system_add_render_packet_to_queue
+
+    // FFVII
+    else if( _JumpTarget_ == 0x80046794 )
     {
         _SetLink( 31 );
         doBranch( _PC_ + 4 );
 
         FFVII_System_RenderPacketAddToQueue();
+    }
+    else if( _JumpTarget_ == 0x80046848 )
+    {
+        _SetLink( 31 );
+        doBranch( _PC_ + 4 );
+
+        FFVII_System_RenderPacketChangeTransparency();
     }
 /*
     else if( _JumpTarget_ == 0x800a65a4 ) // ffvii handle_update
@@ -711,6 +720,7 @@ void psxJAL()
         FFVII_Field_HandleUpdate();
     }
 */
+
     else
     {
         _SetLink( 31 );
