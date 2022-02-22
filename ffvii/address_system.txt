@@ -55,6 +55,8 @@
 +2c [][][][]
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
+80062c00 []       render mode (0 old normal, 1 old normal?, 2 old texture disable, 3 normal render, 4 texture disable).
+
 80062d44 GP
 + 1c [][]     first pad start button delay (0 - delay, 1 - fast)
 + 1e [][]     second pad start button delay (0 - delay, 1 - fast)

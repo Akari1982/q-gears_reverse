@@ -1780,18 +1780,18 @@ return e1000000 | V1 | V0;
 ////////////////////////////////
 // system_create_texture_page_settings_for_packet()
 
-tp = A0;
-abr = A1;
-vram_x = A2;
+tp = A0 & 3;
+abr = A1 & 3;
+vram_x = A2 & 3ff;
 vram_y = A3;
 
 if( bu[80062c00] == 1 || bu[80062c00] == 2 )
 {
-    return ((tp & 3) << 9) | ((abr & 3) << 7) | ((vram_y & 300) >> 3) | ((vram_x & 3c0) >> 6);
+    return (tp << 9) | (abr << 7) | ((vram_y & 300) >> 3) | (vram_x >> 6);
 }
 else
 {
-    return ((vram_y & 200) << 2) | ((tp & 3) << 7) | ((abr & 3) << 5) | (((vram_y & 100) >> 4)) | ((vram_x & 3c0) >> 6);
+    return ((vram_y & 200) << 2) | (tp << 7) | (abr << 5) | ((vram_y & 100) >> 4) | (vram_x >> 6);
 }
 ////////////////////////////////
 
