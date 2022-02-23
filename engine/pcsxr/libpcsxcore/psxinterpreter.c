@@ -690,26 +690,15 @@ void psxJAL()
 {
     if( _JumpTarget_ == 0x8007a690 ) // field_calculate_walkmesh_height
     {
-        _SetLink( 31 );
-        doBranch( _PC_ + 4 );
-
+        execI();
         XenoTest();
     }
 
     // FFVII
-    else if( _JumpTarget_ == 0x80046794 )
+    else if( _JumpTarget_ == 0x80044AC0 )
     {
-        _SetLink( 31 );
-        doBranch( _PC_ + 4 );
-
-        FFVII_System_RenderPacketAddToQueue();
-    }
-    else if( _JumpTarget_ == 0x80046848 )
-    {
-        _SetLink( 31 );
-        doBranch( _PC_ + 4 );
-
-        FFVII_System_RenderPacketChangeTransparency();
+        execI();
+        FFVII_System_RenderDrawEnviromentCreatePackets();
     }
 /*
     else if( _JumpTarget_ == 0x800a65a4 ) // ffvii handle_update

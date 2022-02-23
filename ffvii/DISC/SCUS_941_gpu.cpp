@@ -949,107 +949,226 @@ A3 = 0;
 ////////////////////////////////
 // system_prepare_draw_env_packets()
 
-S0 = A1; // draw env
-S1 = A0; // draw env packets
+env = A1; // draw env
+packets = A0; // draw env packets
 
-A0 = h[S0 + 0]; // x top clip
-A1 = h[S0 + 2]; // y top clip
-func44dc0(); // create packet for clip
-[S1 + 4] = w(V0);
+A0 = h[env + 0]; // x top clip
+A1 = h[env + 2]; // y top clip
+system_gpu_set_drawing_area_top_left(); // create packet for clip
+[packets + 4] = w(V0);
 
-A0 = h[S0 + 0] + h[S0 + 4] - 1;
-A1 = h[S0 + 2] + hu[S0 + 6] - 1;
-func44e8c(); // create packet for сlip
-[S1 + 8] = w(V0);
+A0 = h[env + 0] + h[env + 4] - 1;
+A1 = h[env + 2] + h[env + 6] - 1;
+system_gpu_set_drawing_area_bottom_right(); // create packet for сlip
+[packets + 8] = w(V0);
 
-A0 = h[S0 + 8]; // offset x
-A1 = h[S0 + a]; // offset y
-func44f58(); // create packet for offset
-[S1 + c] = w(V0);
+A0 = h[env + 8]; // offset x
+A1 = h[env + a]; // offset y
+system_gpu_set_drawing_offset(); // create packet for offset
+[packets + c] = w(V0);
 
-A0 = bu[S0 + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
-A1 = bu[S0 + 16]; // dithering processing flag. 0: off; 1: on
-A2 = hu[S0 + 14]; // initial values of texture page
+A0 = bu[env + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
+A1 = bu[env + 16]; // dithering processing flag. 0: off; 1: on
+A2 = hu[env + 14]; // initial values of texture page
 system_gpu_get_draw_mode_setting_command(); // create packet
-[S1 + 10] = w(V0);
+[packets + 10] = w(V0);
 
-A0 = S0 + c; // texture window rect
+A0 = env + c; // texture window rect
 system_gpu_get_texture_window_setting_command(); // create packet
-[S1 + 14] = w(V0);
+[packets + 14] = w(V0);
 
-[S1 + 18] = w(e6000000);
+[packets + 18] = w(e6000000);
 
-// 0: Does not clear drawing area when drawing environment is set.
-if( bu[S0 + 18] == 0 )
-{
-    [S1 + 3] = b(6);
-}
-// 1: Paints entire clip area with brightness values (r0, g0, b0) when drawing environment is set.
-else
+[packets + 3] = b(6); // number of 0x4 packets to gpu
+
+if( bu[env + 18] != 0 )
 {
     T0 = 7;
 
-    [SP + 10] = h(hu[S0 + 0]);
-    [SP + 12] = h(hu[S0 + 2]);
-    [SP + 14] = h(hu[S0 + 4]);
-    [SP + 16] = h(hu[S0 + 6]);
+    rect_x = hu[env + 0];
+    rect_y = hu[env + 2];
+    rect_w = hu[env + 4];
+    rect_h = hu[env + 6];
 
-    V1 = h[S0 + 4];
-    if( V1 >= 0 )
-    {
-        V0 = h[80062с04];
-        A0 = V0 - 1;
-        if( A0 < V1 )
-        {
-            V1 = A0;
-        }
-    }
+    m_width = h[80062с04] - 1;
+    m_height = h[80062c06] - 1;
 
-    V0 = V1;
-    V1 = h[SP + 16];
-    [SP + 0014] = h(V0);
-    if( V1 >= 0 )
-    {
-        V0 = h[80062c06];
-        80044C08	addiu  a0, v0, $ffff (=-$1)
-        80044C0C	slt    v0, a0, v1
-        if( V0 != 0 )
-        {
-            V1 = A0;
-        }
-        V0 = V1;
-    }
-    else
-    {
-        V0 = 0;
-    }
+    rect_w = ( rect_w >= 0 ) ? ( ( m_width < rect_w ) ? m_width : rect_w ) : 0;
+    rect_h = ( rect_h >= 0 ) ? ( ( m_height < rect_h ) ? m_height : rect_h ) : 0;
 
-    [SP + 16] = h(V0);
-    if( ( hu[SP + 10] & 3f ) || ( hu[SP + 14] & 3f ) )
+    if( ( rect_x & 3f ) || ( rect_w & 3f ) )
     {
         A2 = T0 << 02;
         T0 = T0 + 1;
         A1 = T0 * 4;
         T0 = T0 + 1;
-        [SP + 10] = h(V1 - hu[S0 + 08]);
-        [SP + 12] = h(hu[SP + 12] - hu[S0 + 0a]);
-        [S1 + A2] = w(60000000 | (bu[S0 + 1a] << 08) | (bu[S0 + 1b] << 10) | bu[S0 + 19]);
-        [S1 + A1] = w(w[SP + 10]);
-        [S1 + T0 * 4] = w(w[SP + 14]);
+        rect_x = h(V1 - hu[env + 08]);
+        rect_y = rect_y - hu[env + 0a];
+        [packets + A2] = w(60000000 | (bu[env + 1a] << 08) | (bu[env + 1b] << 10) | bu[env + 19]);
+        [packets + A1] = w((rect_y << 10) | rect_x);
+        [packets + T0 * 4] = w((rect_h << 10) | rect_w);
 
-        [SP + 10] = h(hu[SP + 10] + hu[S0 + 08]);
-        T0 = T0 + 1;
-        [SP + 12] = h(hu[SP + 12] + hu[S0 + 0a]);
-        [S1 + 3] = b(T0 - 1);
+        rect_x = rect_x + hu[env + 8];
+        rect_y = rect_y + hu[env + a];
+
+        [packets + 3] = b(T0);
     }
     else
     {
-        [S1 + (T0 + 0) * 4] = w(02000000 | (bu[S0 + 1b] << 10) | (bu[S0 + 1a] << 08); | bu[S0 + 19]);
-        [S1 + (T0 + 1) * 4] = w(w[SP + 10]);
-        [S1 + (T0 + 2) * 4] = w(w[SP + 14]);
-        [S1 + 3] = b(T0 + 2);
+        [packets + (T0 + 0) * 4] = w(02000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 08); | bu[env + 19]);
+        [packets + (T0 + 1) * 4] = w((rect_y << 10) | rect_x);
+        [packets + (T0 + 2) * 4] = w((rect_h << 10) | rect_w);
+
+        [packets + 3] = b(T0 + 2);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+T0 = 0007;
+V0 = hu[S0 + 0000];
+80044B78	nop
+[SP + 0010] = h(V0);
+V0 = hu[S0 + 0002];
+80044B84	nop
+[SP + 0012] = h(V0);
+V0 = hu[S0 + 0004];
+80044B90	nop
+[SP + 0014] = h(V0);
+V1 = hu[S0 + 0006];
+V0 = V0 << 10;
+[SP + 0016] = h(V1);
+V1 = V0 >> 10;
+80044BA8	bltz   v1, L44be0 [$80044be0]
+V0 = 0;
+V0 = 80062c04;
+V0 = hu[V0 + 0000];
+80044BBC	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+80044BC8	addiu  a0, v0, $ffff (=-$1)
+V0 = A0 < V1;
+80044BD0	beq    v0, zero, L44be0 [$80044be0]
+V0 = V1;
+V1 = A0;
+V0 = V1;
+
+L44be0:	; 80044BE0
+V1 = h[SP + 0016];
+80044BE4	nop
+80044BE8	bltz   v1, L44c24 [$80044c24]
+[SP + 0014] = h(V0);
+V0 = 80062c06;
+V0 = hu[V0 + 0000];
+80044BFC	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+80044C08	addiu  a0, v0, $ffff (=-$1)
+V0 = A0 < V1;
+80044C10	beq    v0, zero, L44c28 [$80044c28]
+V0 = V1;
+V1 = A0;
+80044C1C	j      L44c28 [$80044c28]
+V0 = V1;
+
+L44c24:	; 80044C24
+V0 = 0;
+
+L44c28:	; 80044C28
+V1 = hu[SP + 0010];
+[SP + 0016] = h(V0);
+V0 = V1 & 003f;
+80044C34	bne    v0, zero, L44c50 [$80044c50]
+A2 = T0 << 02;
+V0 = hu[SP + 0014];
+80044C40	nop
+V0 = V0 & 003f;
+80044C48	beq    v0, zero, L44cec [$80044cec]
+A1 = T0 << 02;
+
+L44c50:	; 80044C50
+T0 = T0 + 0001;
+A1 = T0 << 02;
+T0 = T0 + 0001;
+V0 = hu[S0 + 0008];
+A2 = A2 + S1;
+V0 = V1 - V0;
+[SP + 0010] = h(V0);
+V0 = hu[SP + 0012];
+V1 = hu[S0 + 000a];
+80044C74	lui    a0, $6000
+V0 = V0 - V1;
+[SP + 0012] = h(V0);
+V0 = bu[S0 + 001b];
+V1 = bu[S0 + 001a];
+V0 = V0 << 10;
+V1 = V1 << 08;
+V1 = V1 | A0;
+A0 = bu[S0 + 0019];
+V0 = V0 | V1;
+V0 = V0 | A0;
+[A2 + 0000] = w(V0);
+V0 = w[SP + 0010];
+A1 = A1 + S1;
+[A1 + 0000] = w(V0);
+V0 = T0 << 02;
+V1 = w[SP + 0014];
+V0 = V0 + S1;
+[V0 + 0000] = w(V1);
+V0 = hu[SP + 0010];
+V1 = hu[S0 + 0008];
+80044CC8	nop
+V0 = V0 + V1;
+[SP + 0010] = h(V0);
+V0 = hu[SP + 0012];
+V1 = hu[S0 + 000a];
+T0 = T0 + 0001;
+V0 = V0 + V1;
+80044CE4	j      L44d44 [$80044d44]
+[SP + 0012] = h(V0);
+
+L44cec:	; 80044CEC
+T0 = T0 + 0001;
+A2 = T0 << 02;
+T0 = T0 + 0001;
+A3 = T0 << 02;
+T0 = T0 + 0001;
+A1 = A1 + S1;
+80044D04	lui    a0, $0200
+V0 = bu[S0 + 001b];
+V1 = bu[S0 + 001a];
+V0 = V0 << 10;
+V1 = V1 << 08;
+V1 = V1 | A0;
+A0 = bu[S0 + 0019];
+V0 = V0 | V1;
+V0 = V0 | A0;
+[A1 + 0000] = w(V0);
+V0 = w[SP + 0010];
+A2 = A2 + S1;
+[A2 + 0000] = w(V0);
+V0 = w[SP + 0014];
+A3 = A3 + S1;
+[A3 + 0000] = w(V0);
+
+L44d44:	; 80044D44
+80044D44	addiu  v0, t0, $ffff (=-$1)
+[S1 + 0003] = b(V0);
 ////////////////////////////////
 
 
@@ -1798,39 +1917,55 @@ else
 
 
 ////////////////////////////////
-// func44dc0()
+// system_gpu_set_drawing_area_top_left()
 
-V0 = 0;
-if( A0 >= 0 )
+x = (A0 << 10) >> 10;
+y = (A1 << 10) >> 10;
+
+width = h[80062c04] - 1;
+height = h[80062c06] - 1;
+
+x = ( x >= 0 ) ? ( ( width < x ) ? width : x ) : 0;
+y = ( y >= 0 ) ? ( ( height < y ) ? height : y ) : 0;
+
+if( ( bu[80062c00] - 1 ) >= 2 )
 {
-    A2 = hu[80062c04] - 1;
-    V0 = (A2 < A0) ? A2 : A0;
-}
-
-A0 = V0;
-V1 = A1;
-
-A1 = 0;
-if( V1 >= 0 )
-{
-    A1 = hu[80062c06] - 1;
-    A1 = (A1 < V1) ? A1 : V1;
-}
-
-if ((bu[80062c00] - 1) >= 2)
-{
-    return e3000000 | ((A1 & 03ff) << a) | (A0 & 03ff);
+    return e3000000 | ((y & 03ff) << a) | (x & 03ff);
 }
 else
 {
-    return e3000000 | ((A1 & 0fff) << c) | (A0 & 0fff);
+    return e3000000 | ((y & 0fff) << c) | (x & 0fff);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func44f58()
+// system_gpu_set_drawing_area_bottom_right()
+
+x = (A0 << 10) >> 10;
+y = (A1 << 10) >> 10;
+
+width = h[80062c04] - 1;
+height = h[80062c06] - 1;
+
+x = ( x >= 0 ) > ( ( width < x ) ? width : x ) : 0;
+y = ( y >= 0 ) > ( ( height < y ) ? height : y ) : 0;
+
+if( bu[80062c00] - 1 >= 2 )
+{
+    return e4000000 | ((A1 & 03ff) << a) | (x & 03ff);
+}
+else
+{
+    return e4000000 | ((A1 & 0fff) << c) | (x & 0fff);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gpu_set_drawing_offset()
 
 if( ( bu[80062c00] - 1 ) >= 2 )
 {
@@ -1841,6 +1976,7 @@ else
     return e5000000 | ((A1 & 0fff) << 0c) | (A0 & 0fff);
 }
 ////////////////////////////////
+
 
 
 ////////////////////////////////

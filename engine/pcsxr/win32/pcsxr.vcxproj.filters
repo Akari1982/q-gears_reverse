@@ -225,13 +225,7 @@
     <ClCompile Include="..\..\src\ffvii\system\render.c">
       <Filter>ffvii\system</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ffvii\system\window.c">
-      <Filter>ffvii\system</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\ffvii\field\entity.c">
-      <Filter>ffvii\field</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\ffvii\field\window.c">
       <Filter>ffvii\field</Filter>
     </ClCompile>
   </ItemGroup>
@@ -424,13 +418,7 @@
     <ClInclude Include="..\..\src\ffvii\system\render.h">
       <Filter>ffvii\system</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ffvii\system\window.h">
-      <Filter>ffvii\system</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\ffvii\field\entity.h">
-      <Filter>ffvii\field</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ffvii\field\window.h">
       <Filter>ffvii\field</Filter>
     </ClInclude>
   </ItemGroup>

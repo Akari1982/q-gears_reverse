@@ -3366,7 +3366,7 @@ V0 = 0002;
 [S1 + 0003] = b(V0);
 A0 = h[S0 + 0000];
 A1 = h[S0 + 0002];
-800449A0	jal    func44dc0 [$80044dc0]
+800449A0	jal    system_gpu_set_drawing_area_top_left [$80044dc0]
 800449A4	nop
 [S1 + 0004] = w(V0);
 A0 = hu[S0 + 0000];
@@ -3380,7 +3380,7 @@ A0 = A0 >> 10;
 A1 = A1 + V0;
 800449D0	addiu  a1, a1, $ffff (=-$1)
 A1 = A1 << 10;
-800449D8	jal    func44e8c [$80044e8c]
+800449D8	jal    system_gpu_set_drawing_area_bottom_right [$80044e8c]
 A1 = A1 >> 10;
 [S1 + 0008] = w(V0);
 RA = w[SP + 0018];
@@ -3398,7 +3398,7 @@ V0 = 0002;
 [S0 + 0003] = b(V0);
 A0 = h[A1 + 0000];
 A1 = h[A1 + 0002];
-80044A1C	jal    func44f58 [$80044f58]
+80044A1C	jal    system_gpu_set_drawing_offset [$80044f58]
 80044A20	nop
 [S0 + 0004] = w(V0);
 [S0 + 0008] = w(0);
@@ -3433,79 +3433,13 @@ V0 = V1 | V0;
 // system_gpu_get_draw_mode_setting_command
 80044D64-80044DBC
 ////////////////////////////////
-// func44dc0
+// system_gpu_set_drawing_area_top_left
 80044DC0-80044E88
 ////////////////////////////////
-
-
-
-func44e8c:	; 80044E8C
-A0 = A0 << 10;
-A0 = A0 >> 10;
-80044E94	bltz   a0, L44ecc [$80044ecc]
-V0 = 0;
-80044E9C	lui    v0, $8006
-V0 = V0 + 2c04;
-V0 = hu[V0 + 0000];
-80044EA8	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
-80044EB4	addiu  a2, v0, $ffff (=-$1)
-80044EB8	slt    v0, a2, a0
-80044EBC	beq    v0, zero, L44ecc [$80044ecc]
-V0 = A0;
-A0 = A2;
-V0 = A0;
-
-L44ecc:	; 80044ECC
-A0 = V0;
-V0 = A1 << 10;
-V1 = V0 >> 10;
-80044ED8	bltz   v1, L44f10 [$80044f10]
-A1 = 0;
-80044EE0	lui    v0, $8006
-V0 = V0 + 2c06;
-V0 = hu[V0 + 0000];
-80044EEC	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
-80044EF8	addiu  a1, v0, $ffff (=-$1)
-80044EFC	slt    v0, a1, v1
-80044F00	beq    v0, zero, L44f0c [$80044f0c]
-80044F04	nop
-V1 = A1;
-
-L44f0c:	; 80044F0C
-A1 = V1;
-
-L44f10:	; 80044F10
-80044F10	lui    v0, $8006
-V0 = V0 + 2c00;
-V0 = bu[V0 + 0000];
-80044F1C	nop
-80044F20	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < 0002;
-80044F28	bne    v0, zero, L44f40 [$80044f40]
-V1 = A1 & 0fff;
-V1 = A1 & 03ff;
-V1 = V1 << 0a;
-80044F38	j      L44f48 [$80044f48]
-V0 = A0 & 03ff;
-
-L44f40:	; 80044F40
-V1 = V1 << 0c;
-V0 = A0 & 0fff;
-
-L44f48:	; 80044F48
-80044F48	lui    a0, $e400
-V0 = V0 | A0;
-80044F50	jr     ra 
-V0 = V1 | V0;
-
-
-
+// system_gpu_set_drawing_area_bottom_right
+80044E8C-80044F54
 ////////////////////////////////
-// func44f58
+// system_gpu_set_drawing_offset
 80044F58-80044F9C
 ////////////////////////////////
 // system_gpu_get_texture_window_setting_command

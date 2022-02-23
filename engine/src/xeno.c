@@ -40,7 +40,7 @@ void XenoTest()
     P.y = psxMemRead16( psxRegs.GPR.n.a3 + 2 );
     P.z = psxMemRead16( psxRegs.GPR.n.a3 + 4 );
     u32 P_vec = psxRegs.GPR.n.a3;
-    u32 N_vec = psxMemRead32( psxRegs.GPR.n.sp + 10 ); // normal pointer
+    u32 N_vec = psxMemRead32( psxRegs.GPR.n.sp + 0x10 ); // normal pointer
 
     struct Vector32 temp_vec;
     temp_vec.x = B.x - A.x;
