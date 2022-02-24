@@ -231,24 +231,25 @@ FFVII_System_RenderDrawEnviromentCreatePackets()
     u32 env = psxRegs.GPR.n.a0;
     u32 packets = psxRegs.GPR.n.a1;
 
-    s16 t_clip_x = psxMemRead16( env + 0x00 );
-    s16 t_clip_y = psxMemRead16( env + 0x02 );
-    u32 t_clip_packet = FFVII_System_RenderDrawAreaTopLeft( t_clip_x , t_clip_y );
-    psxMemWrite32( packets + 0x4, t_clip_packet );
-
-    s16 b_clip_x = t_clip_x + psxMemRead16( env + 0x04 ) - 1;
-    s16 b_clip_y = t_clip_y + psxMemRead16( env + 0x06 ) - 1;
-    u32 b_clip_packet = FFVII_System_RenderDrawAreaBottomRight( b_clip_x, b_clip_y );
-    psxMemWrite32( packets + 0x8, t_clip_packet );
-
+    s16 clip_x = psxMemRead16( env + 0x00 );
+    s16 clip_y = psxMemRead16( env + 0x02 );
+    s16 clip_w = psxMemRead16( env + 0x04 );
+    s16 clip_h = psxMemRead16( env + 0x06 );
     s16 off_x = psxMemRead16( env + 0x08 );
     s16 off_y = psxMemRead16( env + 0x0a );
+    u16 settings = psxMemRead16( env + 0x14 );
+    u8 dither = psxMemRead8( env + 0x16 );
+    u8 draw_allow = psxMemRead8( env + 0x17 );
+
+    u32 t_clip_packet = FFVII_System_RenderDrawAreaTopLeft( clip_x , clip_y );
+    psxMemWrite32( packets + 0x4, t_clip_packet );
+
+    u32 b_clip_packet = FFVII_System_RenderDrawAreaBottomRight( clip_x + clip_w - 1, clip_y + clip_h - 1 );
+    psxMemWrite32( packets + 0x8, t_clip_packet );
+
     u32 offset_packet = FFVII_System_RenderDrawAreaBottomRight( off_x, off_y );
     psxMemWrite32( packets + 0xc, offset_packet );
 
-    u8 draw_allow = psxMemRead8( env + 0x17 );
-    u8 dither = psxMemRead8( env + 0x16 );
-    u16 settings = psxMemRead16( env + 0x14 );
     u32 settings_packet = FFVII_System_RenderDrawModeSettings( draw_allow, dither, settings );
     psxMemWrite32( packets + 0x10, settings_packet );
 
@@ -257,74 +258,36 @@ FFVII_System_RenderDrawEnviromentCreatePackets()
 
     psxMemWrite32( packets + 0x18, 0xe6000000 );
 
-    if( psxMemRead8( env + 0x18 ) == 0 ) // 0: Does not clear drawing area when drawing environment is set.
+    psxMemWrite8( packets + 0x3, 0x06 );
+
+    if( psxMemRead8( env + 0x18 ) != 0 )
     {
-        psxMemWrite8( packets + 0x3, 0x06 );
-    }
-    else // 1: Paints entire clip area with brightness values (r0, g0, b0) when drawing environment is set.
-    {
-/*
-        T0 = 7;
+        s16 width = psxMemRead16( 0x80062c04 ) - 1;
+        s16 height = psxMemRead16( 0x80062c06 ) - 1;
 
-        rect_x = hu[env + 0];
-        rect_y = hu[env + 2];
-        rect_w = hu[env + 4];
-        rect_h = hu[env + 6];
+        u8 r = psxMemRead8( env + 0x19 );
+        u8 g = psxMemRead8( env + 0x1a );
+        u8 b = psxMemRead8( env + 0x1b );
 
-        V1 = h[env + 4];
-        if( V1 >= 0 )
+        clip_w = ( clip_w >= 0 ) ? ( ( width < clip_w ) ? width : clip_w ) : 0;
+        clip_h = ( clip_h >= 0 ) ? ( ( height < clip_h ) ? height : clip_h ) : 0;
+
+        if( ( clip_x & 3f ) || ( clip_w & 3f ) )
         {
-            V0 = h[80062с04];
-            A0 = V0 - 1;
-            if( A0 < V1 )
-            {
-                V1 = A0;
-            }
-        }
+            clip_x = clip_x - hu[env + 8];
+            clip_y = clip_y - hu[env + a];
 
-        V0 = V1;
-        V1 = rect_h;
-        rect_w = V0;
-        if( V1 >= 0 )
-        {
-            V0 = h[80062c06];
-            A0 = V0 - 1;
-            if( A0 < V1 )
-            {
-                V1 = A0;
-            }
-            V0 = V1;
+            psxMemWrite32( packets + 7 * 4, 0x60000000 | ( b << 0x10 ) | ( g << 0x8 ) | r );
+            psxMemWrite32( packets + 8 * 4, ( clip_y << 0x10 ) | clip_x );
+            psxMemWrite32( packets + 9 * 4, ( clip_h << 0x10 ) | clip_w );
         }
         else
         {
-            V0 = 0;
+            psxMemWrite32( packets + 7 * 4, 0x02000000 | ( b << 0x10 ) | ( g << 0x8 ) | r );
+            psxMemWrite32( packets + 8 * 4, ( clip_y << 0x10 ) | clip_x );
+            psxMemWrite32( packets + 9 * 4, ( clip_h << 0x10 ) | clip_w );
         }
 
-        rect_h = V0;
-        if( ( rect_x & 3f ) || ( rect_w & 3f ) )
-        {
-            A2 = T0 << 02;
-            T0 = T0 + 1;
-            A1 = T0 * 4;
-            T0 = T0 + 1;
-            rect_x = h(V1 - hu[env + 08]);
-            rect_y = rect_y - hu[env + 0a];
-            [packets + A2] = w(60000000 | (bu[env + 1a] << 08) | (bu[env + 1b] << 10) | bu[env + 19]);
-            [packets + A1] = w((rect_y << 10) | rect_x);
-            [packets + T0 * 4] = w((rect_h << 10) | rect_w);
-
-            rect_x = rect_x + hu[env + 8];
-            T0 = T0 + 1;
-            rect_y = rect_y + hu[env + a];
-            [packets + 3] = b(T0 - 1);
-        }
-        else
-        {
-            [packets + (T0 + 0) * 4] = w(02000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 08); | bu[env + 19]);
-            [packets + (T0 + 1) * 4] = w((rect_y << 10) | rect_x);
-            [packets + (T0 + 2) * 4] = w((rect_h << 10) | rect_w);
-            [packets + 3] = b(T0 + 2);
-        }
-*/
+        psxMemWrite8( packets + 0x3, 0x09 );
     }
 }
