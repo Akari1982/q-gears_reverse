@@ -697,8 +697,17 @@ void psxJAL()
     // FFVII
     else if( _JumpTarget_ == 0x80044AC0 )
     {
+        u32 pc = psxRegs.pc;
+        u32 code = psxRegs.code;
+
         execI();
         FFVII_System_RenderDrawEnviromentCreatePackets();
+
+        psxRegs.pc = pc;
+        psxRegs.code = code;
+
+        _SetLink( 31 );
+        doBranch( _JumpTarget_ );
     }
 /*
     else if( _JumpTarget_ == 0x800a65a4 ) // ffvii handle_update
