@@ -230,8 +230,8 @@ FFVII_System_RenderDrawEnviromentCreateStruct()
 void
 FFVII_System_RenderDrawEnviromentCreatePackets()
 {
-    u32 env = psxRegs.GPR.n.a0;
-    u32 packets = psxRegs.GPR.n.a1;
+    u32 packets = psxRegs.GPR.n.a0;
+    u32 env = psxRegs.GPR.n.a1;
 
     s16 clip_x = psxMemRead16( env + 0x00 );
     s16 clip_y = psxMemRead16( env + 0x02 );
