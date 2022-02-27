@@ -30,7 +30,7 @@
 #include "pgxp_gte.h"
 
 #include "../../src/xeno.h"
-#include "../../src/ffvii/system/render.h"
+#include "../../src/ffvii/system/window.h"
 
 static int branch = 0;
 static int branch2 = 0;
@@ -695,19 +695,26 @@ void psxJAL()
     }
 
     // FFVII
-    else if( _JumpTarget_ == 0x80044AC0 )
+    else if( _JumpTarget_ == 0x8001E040 )
     {
-        u32 pc = psxRegs.pc;
-        u32 code = psxRegs.code;
+        //u32 pc = psxRegs.pc;
+        //u32 code = psxRegs.code;
 
         execI();
-        FFVII_System_RenderDrawEnviromentCreatePackets();
+        FFVII_System_UIWindowAddToRender();
 
-        psxRegs.pc = pc;
-        psxRegs.code = code;
+        //psxRegs.pc = pc;
+        //psxRegs.code = code;
 
-        _SetLink( 31 );
-        doBranch( _JumpTarget_ );
+        //_SetLink( 31 );
+
+        //psxRegs.GPR.n.sp -= 0x28;
+        //psxMemWrite32( psxRegs.GPR.n.sp + 0x18, psxRegs.GPR.n.s0 );
+        //psxRegs.GPR.n.s0 = psxRegs.GPR.n.a1;
+        //psxMemWrite32( psxRegs.GPR.n.sp + 0x1c, psxRegs.GPR.n.s1 );
+        //psxRegs.GPR.n.s1 = psxRegs.GPR.n.a0;
+        //psxMemWrite32( psxRegs.GPR.n.sp + 0x20, psxRegs.GPR.n.ra );
+        //doBranch( 0x80044B38 );
     }
 /*
     else if( _JumpTarget_ == 0x800a65a4 ) // ffvii handle_update

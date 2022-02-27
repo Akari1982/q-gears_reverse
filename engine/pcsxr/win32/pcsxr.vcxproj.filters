@@ -228,6 +228,9 @@
     <ClCompile Include="..\..\src\ffvii\field\entity.c">
       <Filter>ffvii\field</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\system\window.c">
+      <Filter>ffvii\system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libpcsxcore\cdriso.h">
@@ -420,6 +423,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\ffvii\field\entity.h">
       <Filter>ffvii\field</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ffvii\system\window.h">
+      <Filter>ffvii\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
