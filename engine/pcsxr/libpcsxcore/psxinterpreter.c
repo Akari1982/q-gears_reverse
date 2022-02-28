@@ -695,13 +695,13 @@ void psxJAL()
     }
 
     // FFVII
-    else if( _JumpTarget_ == 0x8001E040 )
+    else if( _JumpTarget_ == 0x8001f1bc )
     {
         //u32 pc = psxRegs.pc;
         //u32 code = psxRegs.code;
 
         execI();
-        FFVII_System_UIWindowAddToRender();
+        FFVII_System_UIDialogAddToRender();
 
         //psxRegs.pc = pc;
         //psxRegs.code = code;

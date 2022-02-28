@@ -176,7 +176,7 @@ FFVII_System_UIWindowAddToRender( struct FFVII_Rect w_rect )
         psxMemWrite8( g_ui_buffer + 0x3, 0x08 );
         psxMemWrite8( g_ui_buffer + 0x7, 0x38 );
 
-        if( psxMemRead( psxRegs.GPR.n.gp + 0x84 ) != 0 )
+        if( psxMemRead32( psxRegs.GPR.n.gp + 0x84 ) != 0 )
         {
             FFVII_System_RenderPacketChangeTransparency( g_ui_buffer, 1 );
         }
@@ -237,8 +237,8 @@ FFVII_System_UIDialogAddToRender()
 
     //[80062dfd] = b(1);
     //[GP + 76] = h(hu[GP + 76] + 1);
-    //[GP + 280] = w(buffer);
-    //[80062f24] = w(80077f64 + buffer_id * 3400);
+    psxMemWrite32( psxRegs.GPR.n.gp + 0x280, buffer );
+    psxMemWrite32( 0x80062f24, 0x80077f64 + buffer_id * 0x3400 );
 
     for( int i = 0; i < count; ++i )
     {
