@@ -594,15 +594,439 @@ V0 = V0 + 0010;
 ////////////////////////////////
 // system_menu_add_dialog_string_to_render()
 
+
+
+
+
+
+
+S0 = A3;
+S2 = A0;
+FP = A1;
+[SP + 18] = h(A2);
+
+for( int i = 0, count = 0; i < 400; ++i, ++count )
+{
+    V0 = h[GP + 0078];
+    A0 = bu[S0 + 0000];
+    8001D6F4	beq    v0, zero, L1dd94 [$8001dd94]
+    V1 = A0 & 00ff;
+    V0 = 00ff;
+    8001D700	beq    v1, v0, L1dd94 [$8001dd94]
+    V0 = A0 + 0018;
+    V0 = V0 & 00ff;
+    V0 = V0 < 0002;
+    8001D710	bne    v0, zero, L1dd94 [$8001dd94]
+
+    if( V1 == e7 )
+    {
+        S2 = 8;
+        FP = FP + 10;
+        S0 = S0 + 1;
+        [GP + 258] = w(w[GP + 258] + 1);
+        [GP + 2ac] = w(w[GP + 2ac] + 1);
+        continue;
+    }
+
+    V1 = V1 - fa;
+
+    S3 = 0;
+
+    if( V1 >= 5 )
+    {
+        if( ( ( A0 + a ) & ff )>= 4 )
+        {
+            S7 = 0;
+            S4 = 0;
+            8001D7CC	j      L1dab0 [$8001dab0]
+        }
+
+        A0 = 0;
+        A1 = 1;
+        A2 = 380;
+        A3 = 100;
+        8001D8C4	jal    func4656c [$8004656c]
+
+        [SP + 10] = h(0);
+        [SP + 12] = h(0);
+        [SP + 14] = h(100);
+        [SP + 16] = h(100);
+
+        A0 = 0;
+        A1 = 1;
+        A2 = V0 & ffff;
+        A3 = SP + 10;
+        8001D8D8	jal    func26a34 [$80026a34]
+
+        V1 = w[80062f24];
+        [V1 + 3] = b(4);
+        [V1 + 7] = b(64);
+
+        A0 = w[80062f24];
+        A1 = 1;
+        8001D908	jal    func46870 [$80046870]
+
+        if( w[GP + 7c] != 0 )
+        {
+            A0 = w[80062f24];
+            A1 = 1;
+            8001D928	jal    func46848 [$80046848]
+        }
+
+        V1 = w[80062f24];
+        [V1 + 8] = h(S2);
+        [V1 + a] = h(FP - 2);
+
+        V1 = bu[S0 + 0] - f6;
+
+        V0 = w[80062f24];
+        if( V1 == 0 )
+        {
+            [V0 + c] = b(60);
+            [V0 + d] = b(40);
+        }
+        if( V1 == 1 )
+        {
+            [V0 + c] = b(90);
+            [V0 + d] = b(40);
+        }
+        if( V1 == 2 )
+        {
+            [V0 + c] = b(80);
+            [V0 + d] = b(40);
+        }
+        if( V1 == 3 )
+        {
+            [V0 + c] = b(70);
+            [V0 + d] = b(40);
+        }
+
+        [V0 + 10] = h(10);
+        [V0 + 12] = h(10);
+
+        A0 = 100;
+        A1 = 1ea;
+        8001DA0C	jal    func46634 [$80046634]
+
+        V1 = w[80062f24];
+        [V1 + 000e] = h(V0);
+
+        S0 = S0 + 1;
+
+        A0 = w[80062fc4];
+        A1 = w[80062f24];
+        8001DA40	jal    func46794 [$80046794]
+
+        [80062f24] = w(w[80062f24] + 14);
+
+        [GP + 78] = h(hu[GP + 78] - 1);
+
+        A0 = 0;
+        A1 = 1;
+        A2 = 3c0;
+        A3 = 100;
+        8001DA74	jal    func4656c [$8004656c]
+
+        [SP + 10] = h(0);
+        [SP + 12] = h(0);
+        [SP + 14] = h(100);
+        [SP + 16] = h(100);
+
+        A0 = 0;
+        A1 = 1;
+        A2 = V0 & ffff;
+        A3 = SP + 10;
+        8001DA88	jal    func26a34 [$80026a34]
+
+        [GP + 2ac] = w(w[GP + 2ac] + 1);
+        S2 = S2 + 10;
+        continue;
+    }
+
+    switch( V1 )
+    {
+        case 0:
+        {
+            S0 = S0 + 1;
+            S4 = 84;
+            S7 = e7;
+        }
+        break;
+
+        case 1:
+        {
+            S0 = S0 + 1;
+            S4 = 0;
+            S3 = 10;
+            S7 = 1b9;
+        }
+        break;
+
+        case 2:
+        {
+            S0 = S0 + 1;
+            S4 = 84;
+            S3 = 10;
+            S7 = 2a0;
+        }
+        break;
+
+        case 3
+        {
+            S0 = S0 + 1;
+            S4 = 84;
+            S7 = 372;
+        }
+        break;
+    }
+
+    [GP + 2ac] = w(w[GP + 2ac] + 1);
+
+    8001D7CC	j      L1dab0 [$8001dab0]
+
+    V1 = w[GP + 02ac];
+    S0 = S0 + 0001;
+    V0 = V1 + 0001;
+    [GP + 02ac] = w(V0);
+    V0 = bu[S0 + 0000];
+
+    if( V0 < d2 )
+    {
+        S4 = 84;
+        S3 = 10;
+        S7 = 444;
+    }
+    else
+    {
+        [GP + 2ac] = w(V1 + 2);
+        A0 = bu[S0 + 0];
+        V1 = A0 & ff;
+
+        if( V1 < da )
+        {
+            [GP + 70] = h(A0 - d2);
+            S0 = S0 + 1;
+            continue;
+        }
+        else if( V1 == da )
+        {
+            [GP + 72] = h(hu[GP + 72] ^ 1);
+            S0 = S0 + 1;
+            continue;
+        }
+        else if( V1 == db )
+        {
+            [GP + 74] = h(hu[GP + 74] ^ 1);
+            S0 = S0 + 1;
+            continue;
+        }
+        else if( V1 == e9 )
+        {
+            [GP + 80] = w(w[GP + 80] ^ 1);
+            S0 = S0 + 1;
+            continue;
+        }
+    }
+    8001D800	j      L1dab0 [$8001dab0]
+
+    L1dab0:	; 8001DAB0
+    if( h[GP + 72] != 0 )
+    {
+        V0 = h[GP + 74];
+        8001DAE0	beq    v0, zero, L1db08 [$8001db08]
+
+        8001DAD0	j      L1dae8 [$8001dae8]
+    }
+
+    V0 = h[GP + 74];
+    8001DAC8	beq    v0, zero, L1db20 [$8001db20]
+
+    8001DAD0	j      L1dae8 [$8001dae8]
+
+    L1dae8:	; 8001DAE8
+    V0 = h[GP + 76] >> 2;
+    V0 = (V0 - count) & 7;
+    S1 = V0 | 01f0;
+    8001DB00	j      L1db44 [$8001db44]
+
+    L1db08:	; 8001DB08
+    V0 = (hu[GP + 76] >> 2) & 1;
+    8001DB18	beq    v0, zero, L1db2c [$8001db2c]
+
+    8001DAD0	j      L1db20 [$8001DB20]
+
+    L1db20:	; 8001DB20
+    V0 = hu[GP + 0070];
+    S1 = V0 + 1f0;
+    8001DB24	j      L1db44 [$8001db44]
+
+    L1db2c:	; 8001DB2C
+    S1 = 01f0;
+    V0 = h[GP + 70];
+    8001DB34	bne    v0, zero, L1db44 [$8001db44]
+
+    S2 = S2 + S3;
+    continue;
+
+    L1db44:	; 8001DB44
+    V0 = bu[S0 + 0000];
+    V1 = 30c30c31;
+    V0 = V0 << 10;
+    A1 = V0 >> 10;
+    8001DB58	mult   a1, v1
+    V0 = V0 >> 1f;
+    8001DB60	mfhi   t0
+    A0 = T0 >> 02;
+    A0 = A0 - V0;
+    V0 = A0 << 02;
+    V0 = V0 + A0;
+    V0 = V0 << 02;
+    V0 = V0 + A0;
+    V0 = A1 - V0;
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    V1 = V0 << 01;
+    V1 = V1 + V0;
+    S6 = V1 << 02;
+    A0 = A0 << 10;
+    A0 = A0 >> 10;
+    V0 = A0 << 01;
+    V0 = V0 + A0;
+    V0 = V0 << 02;
+    S4 = S4 + V0;
+    A0 = S2 << 10;
+    V0 = S7 << 10;
+    V0 = V0 >> 10;
+    S5 = A1 + V0;
+    V1 = w[800707c0];
+    A0 = A0 >> 10;
+    A1 = V1 + S5;
+    V1 = bu[A1 + 0000];
+    T0 = hu[SP + 0018];
+    V0 = V1 >> 05;
+    V1 = V1 & 001f;
+    V0 = V0 + V1;
+    A0 = A0 + V0;
+    V0 = T0 << 10;
+    V0 = V0 >> 10;
+
+    if( V0 < A0 )
+    {
+        S2 = 8;
+        FP = FP + 10;
+        [GP + 258] = w(w[GP + 258] + 1);
+    }
+
+    if( w[GP + 80] == 0 )
+    {
+        V0 = bu[A1 + 0] >> 5;
+        S2 = S2 + V0;
+    }
+
+    V1 = w[80062f24];
+    [V1 + 3] = b(4);
+    [V1 + 7] = b(64);
+
+    A0 = w[80062f24];
+    A1 = 1;
+    8001DC54	jal    func46870 [$80046870]
+
+    if( w[GP + 7c] != 0 )
+    {
+        A0 = w[80062f24];
+        A1 = 1;
+        8001DC74	jal    func46848 [$80046848]
+    }
+
+    V0 = w[80062f24];
+    [V0 + 8] = h(S2);
+    [V0 + a] = h(FP);
+    [V0 + c] = b(S6);
+    [V0 + d] = b(S4);
+    [V0 + 10] = h(c);
+    [V0 + 12] = h(c);
+
+    A0 = S3 << 10;
+    A0 = A0 >> 10;
+    A0 = A0 | 0100;
+    A1 = S1 << 10;
+    A1 = A1 >> 10;
+    8001DCD8	jal    func46634 [$80046634]
+
+    V1 = w[80062f24];
+    [V1 + e] = h(V0);
+
+    A0 = w[80062fc4];
+    A1 = w[80062f24];
+    8001DD0C	jal    func46794 [$80046794]
+
+    [80062f24] = w(w[80062f24] + 14);
+
+    if( w[GP + 80] == 0 )
+    {
+        V0 = w[800707c0];
+        V0 = bu[V0 + S5 + 0] & 1f;
+        S2 = S2 + V0;
+    }
+    else
+    {
+        S2 = S2 + d;
+    }
+
+    S0 = S0 + 1;
+    V0 = hu[GP + 78] - 1;
+    V1 = w[GP + 2ac] + 1;
+    [GP + 78] = h(V0);
+    [GP + 2ac] = w(V1);
+}
+
+L1dd94:	; 8001DD94
+A0 = 0;
+A1 = 1;
+A2 = 380;
+A3 = 100;
+8001DDB4	jal    func4656c [$8004656c]
+
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(100);
+[SP + 16] = h(100);
+
+A0 = 0;
+A1 = 01;
+A2 = V0 & ffff;
+A3 = SP + 10;
+8001DDC8	jal    func26a34 [$80026a34]
+
+V0 = FP << 10;
+V0 = V0 >> 10;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 pos_x = A0;
 pos_y = A1;
 dialog_width = A2;
 message = A3; // message address
 
-[SP + 28] = h(0);
-index = 0;
-
-L1d6ec:	; 8001D6EC
+for( int index = 0, count = 0; index < 400; ++index, ++count )
+{
     A0 = bu[message];
 
     if( h[GP + 78] == 0 ) // number of letter
@@ -630,10 +1054,10 @@ L1d6ec:	; 8001D6EC
     }
     else
     {
+        S3 = 0;
+
         if (A0 == fa || A0 == fb || A0 == fc || A0 == fd || A0 == fe) // FA FB FC FD FE
         {
-            S3 = 0;
-
             switch( A0 )
             {
                 case fa:
@@ -684,34 +1108,35 @@ L1d6ec:	; 8001D6EC
                     [GP + 2ac] = w(w[GP + 2ac] + 1);
 
                     V0 = bu[message];
-                    if (V0 >= d2)
+                    if( V0 >= d2 )
                     {
                         [GP + 2ac] = w(w[GP + 2ac] + 1);
 
                         A0 = bu[message];
                         V1 = A0 & ff;
-                        if (V1 < da)
+                        if( V1 < da ) // set font colour
                         {
                             [GP + 70] = h(A0 - d2);
                             message = message + 1;
-                            8001D828	j      L1dd68 [$8001dd68]
+                            continue;
                         }
-                        if (V1 == da)
+                        if( V1 == da ) // special colour
                         {
                             [GP + 72] = hu(hu[GP + 72] ^ 1);
                             message = message + 1;
-                            8001D86C	j      L1dd68 [$8001dd68]
+                            continue;
                         }
-                        else if (V1 == db)
+                        else if (V1 == db) // special colour
                         {
                             [GP + 74] = hu(hu[GP + 74] ^ 1);
                             message = message + 1;
-                            8001D86C	j      L1dd68 [$8001dd68]
+                            continue;
                         }
-                        else if (V1 == e9)
+                        else if (V1 == e9) // mono width formatter
                         {
                             [GP + 80] = w(w[GP + 80] ^ 1);
                             message = message + 1;
+                            continue;
                         }
                     }
                     else
@@ -725,246 +1150,209 @@ L1d6ec:	; 8001D6EC
                 break;
             }
         }
-        else
+        else if( ( A0 == f6 ) || ( A0 == f7 ) || ( A0 == f8 ) || ( A0 == f9 ) )
         {
-            S3 = 0;
+            A0 = 0;
+            A1 = 1;
+            A2 = 380;
+            A3 = 100;
+            system_create_texture_page_settings_for_packet();
 
-            if( ( A0 == f6 ) || ( A0 == f7 ) || ( A0 == f8 ) || ( A0 == f9 ) )
+            [SP + 10] = h(0);
+            [SP + 12] = h(0);
+            [SP + 14] = h(100);
+            [SP + 16] = h(100);
+
+            A0 = 0;
+            A1 = 1;
+            A2 = V0 & ffff;
+            A3 = SP + 10;
+            system_menu_create_and_add_texture_setting_packet();
+
+            V1 = w[80062f24];
+            [V1 + 3] = b(4);
+            [V1 + 7] = b(64);
+
+            A0 = w[80062f24];
+            A1 = 1;
+            system_change_brightness_calculation_in_packet();
+
+            if( w[GP + 7c] != 0 )
             {
-                A0 = 0;
-                A1 = 1;
-                A2 = 380;
-                A3 = 100;
-                system_create_texture_page_settings_for_packet();
-
-                [SP + 10] = h(0);
-                [SP + 12] = h(0);
-                [SP + 14] = h(100);
-                [SP + 16] = h(100);
-
-                A0 = 0;
-                A1 = 1;
-                A2 = V0 & ffff;
-                A3 = SP + 10;
-                system_menu_create_and_add_texture_setting_packet();
-
-                V1 = w[80062f24];
-                [V1 + 3] = b(4);
-                [V1 + 7] = b(64);
-
                 A0 = w[80062f24];
                 A1 = 1;
-                system_change_brightness_calculation_in_packet();
+                system_change_semi_transparency_in_packet();
+            }
 
-                V0 = w[GP + 007c];
-                if( V0 != 0 )
+            V0 = w[80062f24];
+            [V0 + 8] = h(pos_x);
+            [V0 + a] = h(pos_y - 2);
+
+            V1 = bu[message] - f6;
+
+            if( V1 == 0 )
+            {
+                [V0 + c] = b(60);
+                [V0 + d] = b(40);
+            }
+            else if( V1 == 1 )
+            {
+                [V0 + c] = b(90);
+                [V0 + d] = b(40);
+            }
+            else if( V1 == 2 )
+            {
+                [V0 + c] = b(80);
+                [V0 + d] = b(40);
+            }
+            else if( V1 == 3 )
+            {
+                [V0 + c] = b(70);
+                [V0 + d] = b(40);
+            }
+
+            [V0 + 10] = h(10);
+            [V0 + 12] = h(10);
+
+            A0 = 100;
+            A1 = 1ea;
+            system_create_clut_for_packet();
+
+            V1 = w[80062f24];
+            [V1 + e] = h(V0);
+
+            message = message + 1;
+
+            A0 = w[80062fc4];
+            A1 = w[80062f24];
+            system_add_render_packet_to_queue();
+
+            [80062f24] = w(w[80062f24] + 14);
+
+            A0 = 0;
+            A1 = 1;
+            A2 = 3c0;
+            A3 = 100;
+            [SP + 10] = h(0);
+            [SP + 12] = h(0);
+            [SP + 14] = h(100);
+            [SP + 16] = h(100);
+
+            [GP + 78] = h(h[GP + 78] - 1);
+            system_create_texture_page_settings_for_packet();
+
+            A0 = 0;
+            A1 = 0001;
+            A2 = V0 & ffff;
+            A3 = SP + 0010;
+            system_menu_create_and_add_texture_setting_packet();
+
+            [GP + 2ac] = w(w[GP + 2ac] + 1);
+            pos_x = pos_x + 10;
+        }
+        else
+        {
+            A0 = 0;
+            S7 = 0;
+            S4 = 0;
+
+            L1dab0:	; 8001DAB0
+            if( ( h[GP + 74] == 0 ) && ( h[GP + 72] == 0 ) )
+            {
+                S1 = h[GP + 70] + 1f0;
+            }
+            else if( ( h[GP + 72] == 0 ) && ( hu[GP + 74] == 0 ) )
+            {
+                if( ( hu[GP + 76] >> 2 ) & 1 )
                 {
-                    A0 = w[80062f24];
-                    A1 = 1;
-                    system_change_semi_transparency_in_packet();
+                    S1 = h[GP + 70] + 1f0;
                 }
-
-                V0 = w[80062f24];
-                [V0 + 8] = h(pos_x);
-                [V0 + a] = h(pos_y - 2);
-
-                V0 = bu[message];
-                8001D958	addiu  v1, v0, $ff0a (=-$f6)
-                V0 = 0001;
-                8001D960	beq    v1, v0, L1d9ac [$8001d9ac]
-                V0 = V1 < 0002;
-                8001D968	beq    v0, zero, L1d980 [$8001d980]
-                8001D96C	nop
-                8001D970	beq    v1, zero, L1d99c [$8001d99c]
-                A0 = 0100;
-                8001D978	j      L1d9f0 [$8001d9f0]
-                8001D97C	nop
-
-                L1d980:	; 8001D980
-                V0 = 0002;
-                8001D984	beq    v1, v0, L1d9bc [$8001d9bc]
-                V0 = 0003;
-                8001D98C	beq    v1, v0, L1d9cc [$8001d9cc]
-                V1 = 0070;
-                8001D994	j      L1d9f0 [$8001d9f0]
-                A0 = 0100;
-
-                L1d99c:	; 8001D99C
-                V0 = w[80062f24];
-                8001D9A4	j      L1d9d4 [$8001d9d4]
-                V1 = 0060;
-
-                L1d9ac:	; 8001D9AC
-                V0 = w[80062f24];
-                8001D9B4	j      L1d9d4 [$8001d9d4]
-                V1 = 0090;
-
-                L1d9bc:	; 8001D9BC
-                V0 = w[80062f24];
-                8001D9C4	j      L1d9d4 [$8001d9d4]
-                V1 = 0080;
-
-                L1d9cc:	; 8001D9CC
-                V0 = w[80062f24];
-
-                L1d9d4:	; 8001D9D4
-                8001D9D4	nop
-                [V0 + 000c] = b(V1);
-                V0 = w[80062f24];
-                T0 = 0040;
-                [V0 + 000d] = b(T0);
-                A0 = 0100;
-
-                L1d9f0:	; 8001D9F0
-                V0 = w[80062f24];
-                V1 = 0010;
-                [V0 + 0010] = h(V1);
-                V0 = w[80062f24];
-                A1 = 01ea;
-                8001DA0C	jal    system_create_clut_for_packet [$80046634]
-                [V0 + 0012] = h(V1);
-                V1 = w[80062f24];
-                8001DA1C	nop
-                [V1 + 000e] = h(V0);
-                A1 = w[80062f24];
-                A0 = w[80062fc4];
-                V0 = A1 + 0014;
-                [80062f24] = w(V0);
-
-                message = message + 1;
-                system_add_render_packet_to_queue();
-
-                A0 = 0;
-                A1 = 1;
-                A2 = 3c0;
-                A3 = 100;
-                [SP + 10] = h(0);
-                [SP + 12] = h(0);
-                [SP + 14] = h(100);
-                [SP + 16] = h(100);
-
-                [GP + 78] = h(h[GP + 78] - 1);
-                system_create_texture_page_settings_for_packet();
-
-                A0 = 0;
-                A1 = 0001;
-                A2 = V0 & ffff;
-                A3 = SP + 0010;
-                system_menu_create_and_add_texture_setting_packet();
-
-                [GP + 2ac] = w(w[GP + 2ac] + 1);
-                pos_x = pos_x + 10;
+                else if( h[GP + 70] != 0 )
+                {
+                    S1 = 1f0;
+                }
+                else
+                {
+                    pos_x = pos_x + S3;
+                    continue;
+                }
             }
             else
             {
-                A0 = 0;
-                S7 = 0;
-                S4 = 0;
-
-                L1dab0:	; 8001DAB0
-                if h[GP + 74] == 0 && h[GP + 72] == 0)
-                {
-                    S1 = h[GP + 70] + 01f0;
-                }
-                else if (h[GP + 72] == 0 && hu[GP + 74] == 0)
-                {
-                    if ((hu[GP + 76] >> 2) & 1)
-                    {
-                        S1 = h[GP + 70] + 1f0;
-                    }
-                    else if (h[GP + 70] != 0)
-                    {
-                        S1 = 01f0;
-                    }
-                    else
-                    {
-                        pos_x = pos_x + S3;
-                        8001DB3C	j      L1dd68 [$8001dd68]
-                    }
-                }
-                else
-                {
-                    S1 = ((h[GP + 76] / 4 - hu[SP + 28]) & 7) | 1f0;
-                }
-
-                letter = bu[message];
-                S6 = (letter % 15) * c; // x in texture
-                S4 = S4 + (letter / 15) * c; // y in texture
-                S5 = letter + S7; // opcode + offset in table if extended opcode used
-                A1 = w[800707c0] + S5; // offset to font padding
-
-                if( dialog_width < pos_x + ( bu[A1] >> 5 ) + ( bu[A1] & 1f ) ) // if this letter is on next row
-                {
-                    pos_x = 8;
-                    pos_y = pos_y + 10;
-                    [GP + 258] = w(w[GP + 258] + 1);
-                }
-
-                if( w[GP + 80] == 0 ) // if not monowidth
-                {
-                    pos_x = pos_x + ( bu[A1] >> 5 );
-                }
-
-                V1 = w[80062f24];
-                [V1 + 3] = b(4);
-                [V1 + 7] = b(64); // draw sprite
-
-                A0 = w[80062f24];
-                A1 = 1;
-                system_change_brightness_calculation_in_packet();
-
-                V0 = [GP + 7c];
-
-                if (V0 != 0)
-                {
-                    A0 = w[80062f24];
-                    A1 = 0;
-                    system_change_semi_transparency_in_packet();
-                }
-
-                V0 = w[80062f24];
-                [V0 + 8] = pos_x;
-                [V0 + a] = pos_y;
-                [V0 + c] = S6;
-                [V0 + d] = S4;
-                [V0 + 10] = h(c);
-                [V0 + 12] = h(c);
-
-                A0 = S3 | 0100; // clut X
-                A1 = S1; // clut Y
-                system_create_clut_for_packet();
-
-                V1 = w[80062f24];
-                [V1 + e] = h(V0);
-
-                A0 = [80062fc4];
-                A1 = w[80062f24];
-                [80062f24] = w(A1 + 14);
-                system_add_render_packet_to_queue();
-
-                if( w[GP + 80] == 0 ) // if not monowidth
-                {
-                    V0 = w[800707c0];
-                    pos_x = pos_x + (bu[V0 + S5] & 1f);
-                }
-                else
-                {
-                    pos_x = pos_x + d;
-                }
-
-                message = message + 1;
-                [GP + 78] = h([GP + 78] - 1); // numbers of letter
-                [GP + 02ac] = w[GP + 02ac] + 1;
+                S1 = ((h[GP + 76] / 4 - count) & 7) | 1f0;
             }
+
+            letter = bu[message];
+            S6 = (letter % 15) * c; // x in texture
+            S4 = S4 + (letter / 15) * c; // y in texture
+            S5 = letter + S7; // opcode + offset in table if extended opcode used
+            A1 = w[800707c0] + S5; // offset to font padding
+
+            if( dialog_width < pos_x + ( bu[A1] >> 5 ) + ( bu[A1] & 1f ) ) // if this letter is on next row
+            {
+                pos_x = 8;
+                pos_y = pos_y + 10;
+                [GP + 258] = w(w[GP + 258] + 1);
+            }
+
+            if( w[GP + 80] == 0 ) // if not monowidth
+            {
+                pos_x = pos_x + ( bu[A1] >> 5 );
+            }
+
+            V1 = w[80062f24];
+            [V1 + 3] = b(4);
+            [V1 + 7] = b(64); // draw sprite
+
+            A0 = w[80062f24];
+            A1 = 1;
+            system_change_brightness_calculation_in_packet();
+
+            V0 = [GP + 7c];
+
+            if (V0 != 0)
+            {
+                A0 = w[80062f24];
+                A1 = 0;
+                system_change_semi_transparency_in_packet();
+            }
+
+            V0 = w[80062f24];
+            [V0 + 8] = pos_x;
+            [V0 + a] = pos_y;
+            [V0 + c] = S6;
+            [V0 + d] = S4;
+            [V0 + 10] = h(c);
+            [V0 + 12] = h(c);
+
+            A0 = S3 | 0100; // clut X
+            A1 = S1; // clut Y
+            system_create_clut_for_packet();
+
+            V1 = w[80062f24];
+            [V1 + e] = h(V0);
+
+            A0 = [80062fc4];
+            A1 = w[80062f24];
+            [80062f24] = w(A1 + 14);
+            system_add_render_packet_to_queue();
+
+            if( w[GP + 80] == 0 ) // if not monowidth
+            {
+                V0 = w[800707c0];
+                pos_x = pos_x + (bu[V0 + S5] & 1f);
+            }
+            else
+            {
+                pos_x = pos_x + d;
+            }
+
+            message = message + 1;
+            [GP + 78] = h([GP + 78] - 1); // numbers of letter
+            [GP + 2ac] = w[GP + 2ac] + 1;
         }
     }
-
-    L1dd68:	; 8001DD68
-    [SP + 28] = h(h[SP + 28] + 1);
-
-    index = index + 1;
-    V0 = index < 400;
-8001DD8C	bne    v0, zero, L1d6ec [$8001d6ec]
+}
 
 A0 = 0;
 A1 = 1;

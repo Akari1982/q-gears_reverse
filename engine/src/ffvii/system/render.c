@@ -17,11 +17,8 @@ FFVII_System_RenderPacketAddToQueue( const u32 ot, const u32 buf )
 
 
 void
-FFVII_System_RenderPacketChangeTransparency()
+FFVII_System_RenderPacketChangeTransparency( const u32 packet, const u32 tr )
 {
-    u32 packet = psxRegs.GPR.n.a0;
-    u32 tr = psxRegs.GPR.n.a1;
-
     if( tr != 0 )
     {
         psxMemWrite8( packet + 7, psxMemRead8( packet + 7 ) | 0x02 );
@@ -69,28 +66,6 @@ FFVII_System_RenderPacketCreateTextureSettings( const u8 tp, const u8 abr, const
     else
     {
         return ( ( tp & 0x3 ) << 7 ) | ( ( abr & 0x3 ) << 5 ) | ( ( vram_y & 0x200 ) << 2 ) | ( ( vram_y & 0x100 ) >> 4 ) | ( ( vram_x & 0x3ff ) >> 6 );
-    }
-}
-
-
-
-void
-FFVII_System_RenderPacketCreateTextureSettings_()
-{
-    u32 tp = psxRegs.GPR.n.a0 & 0x03;
-    u32 abr = psxRegs.GPR.n.a1 & 0x03;
-    u32 vram_x = psxRegs.GPR.n.a2 & 0x03ff;
-    u32 vram_y = psxRegs.GPR.n.a3 & 0x0300;
-
-    u8 render_mode = psxMemRead8( 0x80062c00 );
-
-    if( ( render_mode == 1 ) || ( render_mode == 2 ) ) // old GPU support
-    {
-        psxRegs.GPR.n.v0 = ( tp << 9 ) | ( abr << 7 ) | ( vram_y >> 3 ) | ( vram_x >> 6 ); // return
-    }
-    else
-    {
-        psxRegs.GPR.n.v0 = ( tp << 7 ) | ( abr << 5 ) | ( ( vram_y & 0x0200 ) << 2 ) | ( ( vram_y & 0x100 ) >> 4 ) | ( vram_x >> 6 ); // return
     }
 }
 
