@@ -68,6 +68,12 @@
 + 2a [][]     second pad repeat button delay time (7/1).
 + 2c []       if 1 then system pad started and inited.
 + 44 [][]     10c?
++ 70 [][]     colour for dialog text
++ 72 [][]
++ 74 [][]
++ 76 [][]
++ 78 [][]     number letters to render.
++ 80 [][][][] monowidth text
 + 97 []       ??? some type of text.
 + 98 []       colour of tutorial text window.
 + a0 []       ??? some type of text.
@@ -107,6 +113,7 @@
     +1 []       total number of stars in materia.
     +4 [][][][] ap to next star in materia.
 +244 [][][][] some flags. used in loading units.
++258 [][][][] text row count.
 +278 [][][][] total number of stars currently parsing materia has.
 +27c [][][][] enable or disable input in menu? we only handle input if this == 1.
                     0 - 

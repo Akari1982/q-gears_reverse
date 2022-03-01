@@ -218,6 +218,348 @@ FFVII_System_UIWindowAddToRender( struct FFVII_Rect w_rect )
 
 
 void
+FFVII_System_UIStringAddToRender()
+{
+    u32 pos_x = psxRegs.GPR.n.a0;
+    u32 pos_y = psxRegs.GPR.n.a1;
+    u32 dialog_width = psxRegs.GPR.n.a2;
+    u32 message = psxRegs.GPR.n.a3;
+
+    struct FFVII_Rect rect;
+    u16 tex_set;
+
+    for( int i = 0, count = 0; i < 0x400; ++i, ++count )
+    {
+        /*
+        letter = bu[message];
+
+        if( h[GP + 78] == 0 ) // number of letter
+        {
+            break;
+        }
+
+        if( letter == e7 ) // new row
+        {
+            pos_x = 8;
+            pos_y = pos_y + 10;
+            message = message + 1;
+            [GP + 258] = w(w[GP + 258] + 1);
+            [GP + 2ac] = w(w[GP + 2ac] + 1);
+            continue;
+        }
+        else if( ( letter == e8 ) || ( letter == e9 ) )
+        {
+            break;
+        }
+        else if( letter == ff ) // end of string
+        {
+            break;
+        }
+        else if( ( letter == f6 ) || ( letter == f7 ) || ( letter == f8 ) || ( letter == f9 ) )
+        {
+            A0 = 0;
+            A1 = 1;
+            A2 = 380;
+            A3 = 100;
+            system_create_texture_page_settings_for_packet();
+
+            [SP + 10] = h(0);
+            [SP + 12] = h(0);
+            [SP + 14] = h(100);
+            [SP + 16] = h(100);
+
+            A0 = 0;
+            A1 = 1;
+            A2 = V0 & ffff;
+            A3 = SP + 10;
+            system_menu_create_and_add_texture_setting_packet();
+
+            V1 = w[80062f24];
+            [V1 + 3] = b(4);
+            [V1 + 7] = b(64);
+
+            A0 = w[80062f24];
+            A1 = 1;
+            system_change_brightness_calculation_in_packet();
+
+            if( w[GP + 7c] != 0 )
+            {
+                A0 = w[80062f24];
+                A1 = 1;
+                system_change_semi_transparency_in_packet();
+            }
+
+            V1 = w[80062f24];
+            [V1 + 8] = h(pos_x);
+            [V1 + a] = h(pos_y - 2);
+
+            V0 = w[80062f24];
+            if( letter == f6 ) // circle
+            {
+                [V0 + c] = b(60);
+                [V0 + d] = b(40);
+            }
+            if( letter == f7 ) // triangle
+            {
+                [V0 + c] = b(90);
+                [V0 + d] = b(40);
+            }
+            if( letter == f8 ) // square
+            {
+                [V0 + c] = b(80);
+                [V0 + d] = b(40);
+            }
+            if( letter == f9 ) // cross
+            {
+                [V0 + c] = b(70);
+                [V0 + d] = b(40);
+            }
+
+            [V0 + 10] = h(10);
+            [V0 + 12] = h(10);
+
+            A0 = 100;
+            A1 = 1ea;
+            system_create_clut_for_packet();
+
+            V1 = w[80062f24];
+            [V1 + e] = h(V0);
+
+            message = message + 1;
+
+            A0 = w[80062fc4];
+            A1 = w[80062f24];
+            system_add_render_packet_to_queue();
+
+            [80062f24] = w(w[80062f24] + 14);
+
+            [GP + 78] = h(hu[GP + 78] - 1);
+
+            A0 = 0;
+            A1 = 1;
+            A2 = 3c0;
+            A3 = 100;
+            system_create_texture_page_settings_for_packet();
+
+            [SP + 10] = h(0);
+            [SP + 12] = h(0);
+            [SP + 14] = h(100);
+            [SP + 16] = h(100);
+
+            A0 = 0;
+            A1 = 1;
+            A2 = V0 & ffff;
+            A3 = SP + 10;
+            system_menu_create_and_add_texture_setting_packet();
+
+            [GP + 2ac] = w(w[GP + 2ac] + 1);
+            pos_x = pos_x + 10;
+            continue;
+        }
+        else
+        {
+            set_start = 0;
+            tex_y = 0;
+            clut_x = 0;
+
+            switch( letter )
+            {
+                case fa: // extended char
+                {
+                    message = message + 1;
+                    tex_y = 84;
+                    set_start = e7;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                }
+                break;
+
+                case fb: // extended char
+                {
+                    message = message + 1;
+                    tex_y = 0;
+                    clut_x = 10;
+                    set_start = 1b9;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                }
+                break;
+
+                case fc: // extended char
+                {
+                    message = message + 1;
+                    tex_y = 84;
+                    clut_x = 10;
+                    set_start = 2a0;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                }
+                break;
+
+                case fd: // extended char
+                {
+                    message = message + 1;
+                    tex_y = 84;
+                    set_start = 372;
+                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                }
+                break;
+
+                case fe:
+                {
+                    message = message + 1;
+                    ex_letter = bu[message];
+
+                    if( ex_letter < d2 )
+                    {
+                        [GP + 2ac] = w(w[GP + 2ac] + 1);
+                        tex_y = 84;
+                        clut_x = 10;
+                        set_start = 444;
+                    }
+                    else
+                    {
+                        [GP + 2ac] = w(w[GP + 2ac] + 2);
+
+                        if( ex_letter < da ) // colours d2 d3 d4 d5 d6 d7 d8 d9
+                        {
+                            [GP + 70] = h(A0 - d2);
+                            message = message + 1;
+                            continue;
+                        }
+                        else if( ex_letter == da ) // special colour
+                        {
+                            [GP + 72] = h(hu[GP + 72] ^ 1);
+                            message = message + 1;
+                            continue;
+                        }
+                        else if( ex_letter == db ) // rainbow colour
+                        {
+                            [GP + 74] = h(hu[GP + 74] ^ 1);
+                            message = message + 1;
+                            continue;
+                        }
+                        else if( ex_letter == e9 ) // mono width
+                        {
+                            [GP + 80] = w(w[GP + 80] ^ 1);
+                            message = message + 1;
+                            continue;
+                        }
+                    }
+                }
+                break
+            }
+
+            if( h[GP + 74] != 0 ) // rainbow colour
+            {
+                clut_y = (((h[GP + 76] / 4) - count) & 7) | 1f0;
+            }
+            else
+            {
+                if( h[GP + 72] != 0 )
+                {
+                    if( ( hu[GP + 76] / 4 ) & 1 )
+                    {
+                        clut_y = hu[GP + 70] + 1f0; // set exact colour
+                    }
+                    else
+                    {
+                        clut_y = 1f0;
+
+                        if( h[GP + 70] == 0 )
+                        {
+                            pos_x = pos_x + clut_x;
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    clut_y = hu[GP + 70] + 1f0; // set exact colour
+                }
+            }
+
+            letter = bu[message];
+            tex_x = (letter % 15) * c;
+            tex_y = tex_y + (letter / 15) * c;
+            font_padding = w[800707c0];
+            letter_pad = bu[font_padding + letter + set_start] >> 5;
+            letter_w = bu[font_padding + letter + set_start] & 1f;
+
+            if( dialog_width < ( pos_x + letter_pad + letter_w ) ) // if this letter is on next row
+            {
+                pos_x = 8;
+                pos_y = pos_y + 10;
+                [GP + 258] = w(w[GP + 258] + 1);
+            }
+
+            if( w[GP + 80] == 0 ) // if not monowidth
+            {
+                pos_x = pos_x + letter_pad;
+            }
+
+            V1 = w[80062f24];
+            [V1 + 3] = b(4);
+            [V1 + 7] = b(64);
+
+            A0 = w[80062f24];
+            A1 = 1;
+            system_change_brightness_calculation_in_packet();
+
+            if( w[GP + 7c] != 0 )
+            {
+                A0 = w[80062f24];
+                A1 = 1;
+                system_change_semi_transparency_in_packet();
+            }
+
+            V0 = w[80062f24];
+            [V0 + 8] = h(pos_x);
+            [V0 + a] = h(pos_y);
+            [V0 + c] = b(tex_x);
+            [V0 + d] = b(tex_y);
+            [V0 + 10] = h(c);
+            [V0 + 12] = h(c);
+
+            A0 = clut_x | 100;
+            A1 = clut_y;
+            system_create_clut_for_packet();
+
+            V1 = w[80062f24];
+            [V1 + e] = h(V0);
+
+            A0 = w[80062fc4];
+            A1 = w[80062f24];
+            system_add_render_packet_to_queue();
+
+            [80062f24] = w(w[80062f24] + 14);
+
+            if( w[GP + 80] == 0 ) // if not monowidth
+            {
+                pos_x = pos_x + letter_w;
+            }
+            else
+            {
+                pos_x = pos_x + d;
+            }
+
+            message = message + 1;
+            [GP + 78] = h(hu[GP + 78] - 1);
+            [GP + 2ac] = w(w[GP + 2ac] + 1);
+        }
+        */
+    }
+
+    tex_set = FFVII_System_RenderPacketCreateTextureSettings( 0, 1, 0x380, 0x100 );
+    rect.x = 0x0;
+    rect.y = 0x0;
+    rect.w = 0x100;
+    rect.h = 0x100;
+    FFVII_System_UICreateAddTextureSettings( 0, 1, tex_set, rect );
+
+    psxRegs.GPR.n.v0 = pos_y;
+}
+
+
+
+void
 FFVII_System_UICreateAddTextureSettings( const u32 draw_allow, const u32 dithering, const u16 settings, struct FFVII_Rect rect )
 {
     FFVII_System_RenderTextureSettingsCreate( g_ui_buffer, draw_allow, dithering, settings, rect );
