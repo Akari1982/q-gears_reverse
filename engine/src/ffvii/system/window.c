@@ -217,253 +217,211 @@ FFVII_System_UIWindowAddToRender( struct FFVII_Rect w_rect )
 
 
 
-void
-FFVII_System_UIStringAddToRender()
+u16
+FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message )
 {
-    u32 pos_x = psxRegs.GPR.n.a0;
-    u32 pos_y = psxRegs.GPR.n.a1;
-    u32 dialog_width = psxRegs.GPR.n.a2;
-    u32 message = psxRegs.GPR.n.a3;
+    g_ui_buffer = psxMemRead32( 0x80062f24 );
 
     struct FFVII_Rect rect;
     u16 tex_set;
 
     for( int i = 0, count = 0; i < 0x400; ++i, ++count )
     {
-        /*
-        letter = bu[message];
-
-        if( h[GP + 78] == 0 ) // number of letter
+        if( psxMemRead16( psxRegs.GPR.n.gp + 0x78 ) == 0 ) // number of letter
         {
             break;
         }
 
-        if( letter == e7 ) // new row
+        u8 letter = psxMemRead8( message );
+
+        if( letter == 0xe7 ) // new row
         {
-            pos_x = 8;
-            pos_y = pos_y + 10;
-            message = message + 1;
-            [GP + 258] = w(w[GP + 258] + 1);
-            [GP + 2ac] = w(w[GP + 2ac] + 1);
+            pos_x = 0x8;
+            pos_y = pos_y + 0x10;
+            message = message + 0x1;
+            psxMemWrite32( psxRegs.GPR.n.gp + 0x258, psxMemRead32( psxRegs.GPR.n.gp + 0x258 ) + 1 );
+            psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
             continue;
         }
-        else if( ( letter == e8 ) || ( letter == e9 ) )
+        else if( ( letter == 0xe8 ) || ( letter == 0xe9 ) ) // new window
         {
             break;
         }
-        else if( letter == ff ) // end of string
+        else if( letter == 0xff ) // end of string
         {
             break;
         }
-        else if( ( letter == f6 ) || ( letter == f7 ) || ( letter == f8 ) || ( letter == f9 ) )
+        else if( ( letter == 0xf6 ) || ( letter == 0xf7 ) || ( letter == 0xf8 ) || ( letter == 0xf9 ) )
         {
-            A0 = 0;
-            A1 = 1;
-            A2 = 380;
-            A3 = 100;
-            system_create_texture_page_settings_for_packet();
+            tex_set = FFVII_System_RenderPacketCreateTextureSettings( 0, 1, 0x380, 0x100 );
+            rect.x = 0x0;
+            rect.y = 0x0;
+            rect.w = 0x100;
+            rect.h = 0x100;
+            FFVII_System_UICreateAddTextureSettings( 0, 1, tex_set, rect );
 
-            [SP + 10] = h(0);
-            [SP + 12] = h(0);
-            [SP + 14] = h(100);
-            [SP + 16] = h(100);
+            psxMemWrite8( g_ui_buffer + 0x3, 0x04 );
+            psxMemWrite8( g_ui_buffer + 0x7, 0x64 );
+            FFVII_System_RenderPacketChangeBrightness( g_ui_buffer, 1 );
 
-            A0 = 0;
-            A1 = 1;
-            A2 = V0 & ffff;
-            A3 = SP + 10;
-            system_menu_create_and_add_texture_setting_packet();
-
-            V1 = w[80062f24];
-            [V1 + 3] = b(4);
-            [V1 + 7] = b(64);
-
-            A0 = w[80062f24];
-            A1 = 1;
-            system_change_brightness_calculation_in_packet();
-
-            if( w[GP + 7c] != 0 )
+            if( psxMemRead32( psxRegs.GPR.n.gp + 0x7c ) != 0 )
             {
-                A0 = w[80062f24];
-                A1 = 1;
-                system_change_semi_transparency_in_packet();
+                FFVII_System_RenderPacketChangeTransparency( g_ui_buffer, 1 );
             }
 
-            V1 = w[80062f24];
-            [V1 + 8] = h(pos_x);
-            [V1 + a] = h(pos_y - 2);
+            psxMemWrite16( g_ui_buffer + 0x8, pos_x );
+            psxMemWrite16( g_ui_buffer + 0xa, pos_y - 2 );
 
-            V0 = w[80062f24];
-            if( letter == f6 ) // circle
+            if( letter == 0xf6 ) // circle
             {
-                [V0 + c] = b(60);
-                [V0 + d] = b(40);
+                psxMemWrite8( g_ui_buffer + 0xc, 0x60 );
             }
-            if( letter == f7 ) // triangle
+            if( letter == 0xf7 ) // triangle
             {
-                [V0 + c] = b(90);
-                [V0 + d] = b(40);
+                psxMemWrite8( g_ui_buffer + 0xc, 0x90 );
             }
-            if( letter == f8 ) // square
+            if( letter == 0xf8 ) // square
             {
-                [V0 + c] = b(80);
-                [V0 + d] = b(40);
+                psxMemWrite8( g_ui_buffer + 0xc, 0x80 );
             }
-            if( letter == f9 ) // cross
+            if( letter == 0xf9 ) // cross
             {
-                [V0 + c] = b(70);
-                [V0 + d] = b(40);
+                psxMemWrite8( g_ui_buffer + 0xc, 0x70 );
             }
+            psxMemWrite8( g_ui_buffer + 0xd, 0x40 );
 
-            [V0 + 10] = h(10);
-            [V0 + 12] = h(10);
 
-            A0 = 100;
-            A1 = 1ea;
-            system_create_clut_for_packet();
-
-            V1 = w[80062f24];
-            [V1 + e] = h(V0);
+            psxMemWrite16( g_ui_buffer + 0xe, FFVII_System_RenderPacketCreateCLUT( 0x100, 0x1ea ) );
+            psxMemWrite16( g_ui_buffer + 0x10, 0x10 );
+            psxMemWrite16( g_ui_buffer + 0x12, 0x10 );
+            FFVII_System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+            g_ui_buffer += 0x14;
 
             message = message + 1;
 
-            A0 = w[80062fc4];
-            A1 = w[80062f24];
-            system_add_render_packet_to_queue();
+            psxMemWrite32( psxRegs.GPR.n.gp + 0x78, psxMemRead32( psxRegs.GPR.n.gp + 0x78 ) - 1 );
 
-            [80062f24] = w(w[80062f24] + 14);
+            tex_set = FFVII_System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
+            rect.x = 0x0;
+            rect.y = 0x0;
+            rect.w = 0x100;
+            rect.h = 0x100;
+            FFVII_System_UICreateAddTextureSettings( 0, 1, tex_set, rect );
 
-            [GP + 78] = h(hu[GP + 78] - 1);
-
-            A0 = 0;
-            A1 = 1;
-            A2 = 3c0;
-            A3 = 100;
-            system_create_texture_page_settings_for_packet();
-
-            [SP + 10] = h(0);
-            [SP + 12] = h(0);
-            [SP + 14] = h(100);
-            [SP + 16] = h(100);
-
-            A0 = 0;
-            A1 = 1;
-            A2 = V0 & ffff;
-            A3 = SP + 10;
-            system_menu_create_and_add_texture_setting_packet();
-
-            [GP + 2ac] = w(w[GP + 2ac] + 1);
+            psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
             pos_x = pos_x + 10;
             continue;
         }
         else
         {
-            set_start = 0;
-            tex_y = 0;
-            clut_x = 0;
+            u32 set_start = 0;
+            u32 tex_y = 0;
+            u32 clut_x = 0;
 
             switch( letter )
             {
-                case fa: // extended char
+                case 0xfa: // extended char
                 {
                     message = message + 1;
-                    tex_y = 84;
-                    set_start = e7;
-                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    tex_y = 0x84;
+                    set_start = 0xe7;
+                    psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
                 }
                 break;
 
-                case fb: // extended char
+                case 0xfb: // extended char
                 {
                     message = message + 1;
                     tex_y = 0;
-                    clut_x = 10;
-                    set_start = 1b9;
-                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    clut_x = 0x10;
+                    set_start = 0x1b9;
+                    psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
                 }
                 break;
 
-                case fc: // extended char
+                case 0xfc: // extended char
                 {
                     message = message + 1;
-                    tex_y = 84;
-                    clut_x = 10;
-                    set_start = 2a0;
-                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    tex_y = 0x84;
+                    clut_x = 0x10;
+                    set_start = 0x2a0;
+                    psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
                 }
                 break;
 
-                case fd: // extended char
+                case 0xfd: // extended char
                 {
                     message = message + 1;
-                    tex_y = 84;
-                    set_start = 372;
-                    [GP + 2ac] = w(w[GP + 2ac] + 1);
+                    tex_y = 0x84;
+                    set_start = 0x372;
+                    psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
                 }
                 break;
 
-                case fe:
+                case 0xfe:
                 {
                     message = message + 1;
-                    ex_letter = bu[message];
+                    u32 ex_letter = psxMemRead8( message );
 
-                    if( ex_letter < d2 )
+                    if( ex_letter < 0xd2 )
                     {
-                        [GP + 2ac] = w(w[GP + 2ac] + 1);
-                        tex_y = 84;
-                        clut_x = 10;
-                        set_start = 444;
+                        psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
+                        tex_y = 0x84;
+                        clut_x = 0x10;
+                        set_start = 0x444;
                     }
                     else
                     {
-                        [GP + 2ac] = w(w[GP + 2ac] + 2);
+                        psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 2 );
 
-                        if( ex_letter < da ) // colours d2 d3 d4 d5 d6 d7 d8 d9
+                        if( ex_letter < 0xda ) // colours d2 d3 d4 d5 d6 d7 d8 d9
                         {
-                            [GP + 70] = h(A0 - d2);
+                            psxMemWrite16( psxRegs.GPR.n.gp + 0x70, ex_letter - 0xd2 );
                             message = message + 1;
                             continue;
                         }
-                        else if( ex_letter == da ) // special colour
+                        else if( ex_letter == 0xda ) // blinking colour
                         {
-                            [GP + 72] = h(hu[GP + 72] ^ 1);
+                            psxMemWrite16( psxRegs.GPR.n.gp + 0x72, psxMemRead32( psxRegs.GPR.n.gp + 0x72 ) ^ 1 );
                             message = message + 1;
                             continue;
                         }
-                        else if( ex_letter == db ) // rainbow colour
+                        else if( ex_letter == 0xdb ) // rainbow colour
                         {
-                            [GP + 74] = h(hu[GP + 74] ^ 1);
+                            psxMemWrite16( psxRegs.GPR.n.gp + 0x74, psxMemRead32( psxRegs.GPR.n.gp + 0x74 ) ^ 1 );
                             message = message + 1;
                             continue;
                         }
-                        else if( ex_letter == e9 ) // mono width
+                        else if( ex_letter == 0xe9 ) // mono width
                         {
-                            [GP + 80] = w(w[GP + 80] ^ 1);
+                            psxMemWrite16( psxRegs.GPR.n.gp + 0x80, psxMemRead32( psxRegs.GPR.n.gp + 0x80 ) ^ 1 );
                             message = message + 1;
                             continue;
                         }
                     }
                 }
-                break
+                break;
             }
 
-            if( h[GP + 74] != 0 ) // rainbow colour
+            u16 clut_y;
+
+            if( psxMemRead16( psxRegs.GPR.n.gp + 0x74 ) != 0 ) // rainbow colour
             {
-                clut_y = (((h[GP + 76] / 4) - count) & 7) | 1f0;
+                clut_y = (((psxMemRead16( psxRegs.GPR.n.gp + 0x76 ) / 4) - count) & 0x7) | 0x1f0;
             }
             else
             {
-                if( h[GP + 72] != 0 )
+                if( psxMemRead16( psxRegs.GPR.n.gp + 0x72 ) != 0 )
                 {
-                    if( ( hu[GP + 76] / 4 ) & 1 )
+                    if( ( psxMemRead16( psxRegs.GPR.n.gp + 0x76 ) / 4 ) & 1 )
                     {
-                        clut_y = hu[GP + 70] + 1f0; // set exact colour
+                        clut_y = psxMemRead16( psxRegs.GPR.n.gp + 0x70 ) + 0x1f0; // set exact colour
                     }
                     else
                     {
-                        clut_y = 1f0;
+                        clut_y = 0x1f0;
 
-                        if( h[GP + 70] == 0 )
+                        if( psxMemRead16( psxRegs.GPR.n.gp + 0x70 ) == 0 )
                         {
                             pos_x = pos_x + clut_x;
                             continue;
@@ -472,79 +430,61 @@ FFVII_System_UIStringAddToRender()
                 }
                 else
                 {
-                    clut_y = hu[GP + 70] + 1f0; // set exact colour
+                    clut_y = psxMemRead16( psxRegs.GPR.n.gp + 0x70 ) + 0x1f0; // set exact colour
                 }
             }
 
-            letter = bu[message];
-            tex_x = (letter % 15) * c;
-            tex_y = tex_y + (letter / 15) * c;
-            font_padding = w[800707c0];
-            letter_pad = bu[font_padding + letter + set_start] >> 5;
-            letter_w = bu[font_padding + letter + set_start] & 1f;
+            letter = psxMemRead8( message );
+            u32 tex_x = ( letter % 0x15 ) * 0xc;
+            tex_y += ( letter / 0x15 ) * 0xc;
+            u32 font_padding = psxMemRead32( 0x800707c0 );
+            u8 letter_pad = psxMemRead8( font_padding + letter + set_start ) >> 0x5;
+            u8 letter_w = psxMemRead8( font_padding + letter + set_start ) & 0x1f;
 
-            if( dialog_width < ( pos_x + letter_pad + letter_w ) ) // if this letter is on next row
+            if( d_width < ( pos_x + letter_pad + letter_w ) ) // if this letter is on next row
             {
-                pos_x = 8;
-                pos_y = pos_y + 10;
-                [GP + 258] = w(w[GP + 258] + 1);
+                pos_x = 0x8;
+                pos_y = pos_y + 0x10;
+                psxMemWrite32( psxRegs.GPR.n.gp + 0x258, psxMemRead32( psxRegs.GPR.n.gp + 0x258 ) + 1 );
             }
 
-            if( w[GP + 80] == 0 ) // if not monowidth
+            if( psxMemRead32( psxRegs.GPR.n.gp + 0x80 ) == 0 ) // if not monowidth
             {
                 pos_x = pos_x + letter_pad;
             }
 
-            V1 = w[80062f24];
-            [V1 + 3] = b(4);
-            [V1 + 7] = b(64);
+            psxMemWrite8( g_ui_buffer + 0x3, 0x04 );
+            psxMemWrite8( g_ui_buffer + 0x7, 0x64 );
+            FFVII_System_RenderPacketChangeBrightness( g_ui_buffer, 1 );
 
-            A0 = w[80062f24];
-            A1 = 1;
-            system_change_brightness_calculation_in_packet();
-
-            if( w[GP + 7c] != 0 )
+            if( psxMemRead32( psxRegs.GPR.n.gp + 0x7c ) != 0 )
             {
-                A0 = w[80062f24];
-                A1 = 1;
-                system_change_semi_transparency_in_packet();
+                FFVII_System_RenderPacketChangeTransparency( g_ui_buffer, 1 );
             }
 
-            V0 = w[80062f24];
-            [V0 + 8] = h(pos_x);
-            [V0 + a] = h(pos_y);
-            [V0 + c] = b(tex_x);
-            [V0 + d] = b(tex_y);
-            [V0 + 10] = h(c);
-            [V0 + 12] = h(c);
+            psxMemWrite16( g_ui_buffer + 0x8, pos_x );
+            psxMemWrite16( g_ui_buffer + 0xa, pos_y );
+            psxMemWrite8( g_ui_buffer + 0xc, tex_x );
+            psxMemWrite8( g_ui_buffer + 0xd, tex_y );
+            psxMemWrite16( g_ui_buffer + 0xe, FFVII_System_RenderPacketCreateCLUT( clut_x | 0x100, clut_y ) );
+            psxMemWrite16( g_ui_buffer + 0x10, 0xc );
+            psxMemWrite16( g_ui_buffer + 0x12, 0xc );
+            FFVII_System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+            g_ui_buffer += 0x14;
 
-            A0 = clut_x | 100;
-            A1 = clut_y;
-            system_create_clut_for_packet();
-
-            V1 = w[80062f24];
-            [V1 + e] = h(V0);
-
-            A0 = w[80062fc4];
-            A1 = w[80062f24];
-            system_add_render_packet_to_queue();
-
-            [80062f24] = w(w[80062f24] + 14);
-
-            if( w[GP + 80] == 0 ) // if not monowidth
+            if( psxMemRead32( psxRegs.GPR.n.gp + 0x80 ) == 0 ) // if not monowidth
             {
                 pos_x = pos_x + letter_w;
             }
             else
             {
-                pos_x = pos_x + d;
+                pos_x = pos_x + 0xd;
             }
 
             message = message + 1;
-            [GP + 78] = h(hu[GP + 78] - 1);
-            [GP + 2ac] = w(w[GP + 2ac] + 1);
+            psxMemWrite32( psxRegs.GPR.n.gp + 0x78, psxMemRead32( psxRegs.GPR.n.gp + 0x78 ) - 1 );
+            psxMemWrite32( psxRegs.GPR.n.gp + 0x2ac, psxMemRead32( psxRegs.GPR.n.gp + 0x2ac ) + 1 );
         }
-        */
     }
 
     tex_set = FFVII_System_RenderPacketCreateTextureSettings( 0, 1, 0x380, 0x100 );
@@ -554,7 +494,9 @@ FFVII_System_UIStringAddToRender()
     rect.h = 0x100;
     FFVII_System_UICreateAddTextureSettings( 0, 1, tex_set, rect );
 
-    psxRegs.GPR.n.v0 = pos_y;
+    psxMemWrite32( 0x80062f24, g_ui_buffer );
+
+    return pos_y;
 }
 
 
@@ -617,20 +559,18 @@ FFVII_System_UIDialogAddToRender()
             }
             */
 
-            /*
-            A0 = 8; // start of string
-            A1 = h[windows + i * 30 + 10] + 6; // text scrolling value
-            A2 = h[windows + i * 30 + 8] - 3; // dialog width
-            A3 = w[windows + i * 30 + 0];
+            u16 pos_x = 8; // start of string
+            u16 pos_y = psxMemRead16( windows + i * 0x30 + 0x10 ) + 6; // text scrolling value
+            u16 d_width = psxMemRead16( windows + i * 0x30 + 0x8 ) - 3; // dialog width
+            u32 message = psxMemRead32( windows + i * 0x30 + 0x0 );
 
-            [GP + 70] = h(7);
-            [GP + 72] = h(0);
-            [GP + 74] = h(0);
-            [GP + 78] = h(hu[windows + i * 30 + 12]); // number of letters in window string
-            [GP + 7c] = w((bu[windows + i * 30 + 19] >> 2) & 1); // WMODE style
+            psxMemWrite16( psxRegs.GPR.n.gp + 0x70, 7 );
+            psxMemWrite16( psxRegs.GPR.n.gp + 0x72, 0 );
+            psxMemWrite16( psxRegs.GPR.n.gp + 0x74, 0 );
+            psxMemWrite16( psxRegs.GPR.n.gp + 0x78, psxMemRead16( windows + i * 0x30 + 0x12 ) ); // number of letters in window string
+            psxMemWrite32( psxRegs.GPR.n.gp + 0x7c, ( psxMemRead8( windows + i * 0x30 + 0x19 ) >> 2 ) & 1 ); // WMODE style
 
-            system_menu_add_dialog_string_to_render();
-            */
+            pos_y = FFVII_System_UIStringAddToRender( pos_x, pos_y, d_width, message );
 
             /*
             if (h[windows + i * 30 + a] - 3 < V0 + 10)
