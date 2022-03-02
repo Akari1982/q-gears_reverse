@@ -183,21 +183,15 @@ FFVII_System_RenderDrawOffset( const s16 x, const s16 y )
 
 
 
-void
-FFVII_System_RenderDrawEnviromentCreateStruct()
+u32
+FFVII_System_RenderDrawEnviromentCreateStruct( const u32 env, struct FFVII_Rect rect )
 {
-    u32 env = psxRegs.GPR.n.a0;
-    u32 rect_x = psxRegs.GPR.n.a1;
-    u32 rect_y = psxRegs.GPR.n.a2;
-    u32 rect_w = psxRegs.GPR.n.a3;
-    u32 rect_h = psxMemRead32( psxRegs.GPR.n.sp + 0x10 );
-
-    psxMemWrite16( env + 0x00, rect_x ); // clip rect x
-    psxMemWrite16( env + 0x02, rect_y ); // clip rect y
-    psxMemWrite16( env + 0x04, rect_w ); // clip rect width
-    psxMemWrite16( env + 0x06, rect_h ); // clip rect height
-    psxMemWrite16( env + 0x08, rect_x ); // offset to primitive x
-    psxMemWrite16( env + 0x0a, rect_y ); // offset to primitive y
+    psxMemWrite16( env + 0x00, rect.x ); // clip rect x
+    psxMemWrite16( env + 0x02, rect.y ); // clip rect y
+    psxMemWrite16( env + 0x04, rect.w ); // clip rect width
+    psxMemWrite16( env + 0x06, rect.h ); // clip rect height
+    psxMemWrite16( env + 0x08, rect.x ); // offset to primitive x
+    psxMemWrite16( env + 0x0a, rect.y ); // offset to primitive y
     psxMemWrite16( env + 0x0c, 0x0000 ); // texture window rect x
     psxMemWrite16( env + 0x0e, 0x0000 ); // texture window rect y
     psxMemWrite16( env + 0x10, 0x0000 ); // texture window rect width
@@ -210,17 +204,14 @@ FFVII_System_RenderDrawEnviromentCreateStruct()
     psxMemWrite8( env + 0x1a, 0x00 ); // background color g
     psxMemWrite8( env + 0x1b, 0x00 ); // background color b
 
-    psxRegs.GPR.n.v0 = env; // return
+    return env;
 }
 
 
 
 void
-FFVII_System_RenderDrawEnviromentCreatePackets()
+FFVII_System_RenderDrawEnviromentCreatePackets( const u32 packets, const u32 env )
 {
-    u32 packets = psxRegs.GPR.n.a0;
-    u32 env = psxRegs.GPR.n.a1;
-
     s16 clip_x = psxMemRead16( env + 0x00 );
     s16 clip_y = psxMemRead16( env + 0x02 );
     s16 clip_w = psxMemRead16( env + 0x04 );

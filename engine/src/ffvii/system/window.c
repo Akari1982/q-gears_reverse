@@ -559,6 +559,7 @@ FFVII_System_UIDialogAddToRender()
             }
             */
 
+            // render string
             u16 pos_x = 8; // start of string
             u16 pos_y = psxMemRead16( windows + i * 0x30 + 0x10 ) + 6; // text scrolling value
             u16 d_width = psxMemRead16( windows + i * 0x30 + 0x8 ) - 3; // dialog width
@@ -572,37 +573,35 @@ FFVII_System_UIDialogAddToRender()
 
             pos_y = FFVII_System_UIStringAddToRender( pos_x, pos_y, d_width, message );
 
-            /*
-            if (h[windows + i * 30 + a] - 3 < V0 + 10)
+            if( ( psxMemRead16( windows + i * 0x30 + 0xa ) - 3 ) < ( pos_y + 0x10 ) )
             {
-                [windows + i * 30 + 18] = b(1);
+                psxMemWrite8( windows + i * 0x30 + 0x18, 1 );
             }
             else
             {
-                [windows + i * 30 + 18] = b(0);
+                psxMemWrite8( windows + i * 0x30 + 0x18, 0 );
             }
-            */
 
             /*
-            A1 = h[windows + i * 30 + 4];
-            A2 = h[windows + i * 30 + 6];
+            struct FFVII_Rect rect;
+
+            rect.x = psxMemRead16( windows + i * 0x30 + 0x4 );
+            rect.y = psxMemRead16( windows + i * 0x30 + 0x6 );
 
             if( buffer_id != 0 )
             {
-                A2 = A2 + 8;
+                rect.y += 0x8;
             }
             else
             {
-                A2 = A2 + f0;
+                rect.y += 0xf0;
             }
 
-            A0 = SP + 18;
-            A3 = h[windows + i * 30 + 8];
-            A4 = h[windows + i * 30 + a];
-            system_graphic_create_draw_env_struct();
-            */
+            u32 env = psxRegs.GPR.n.sp + 0x18;
+            rect.w = h[windows + i * 30 + 8];
+            rect.h = h[windows + i * 30 + a];
+            FFVII_System_RenderDrawEnviromentCreateStruct( env, rect );
 
-            /*
             [SP + 30] = b(0);
             [SP + 2f] = b(1);
 
@@ -631,11 +630,11 @@ FFVII_System_UIDialogAddToRender()
             A0 = buffer;
             A1 = w[80062f24];
             system_add_render_packet_to_queue();
+
+            [80062f24] = w(w[80062f24] + 40);
             */
 
             /*
-            [80062f24] = w(w[80062f24] + 40);
-
             if( bu[windows + i * 30 + 19] & 2 )
             {
                 [GP + 84] = w(1);
@@ -669,7 +668,6 @@ FFVII_System_UIDialogAddToRender()
                 FFVII_System_UIWindowAddToRender( rect );
             }
 
-
             /*
             A0 = SP + 18;
             A1 = h[windows + i * 30 + 4]; // WINDOW x
@@ -686,6 +684,8 @@ FFVII_System_UIDialogAddToRender()
             A3 = h[windows + i * 30 + 8]; // WINDOW width
             A4 = h[windows + i * 30 + a]; // WINDOW height
             system_graphic_create_draw_env_struct();
+
+
             */
 
             /*

@@ -14,10 +14,10 @@ const u16 FFVII_System_RenderPacketCreateTextureSettings( const u8 tp, const u8 
 void FFVII_System_RenderTextureSettingsCreate( const u32 buffer, const u32 draw_allow, const u32 dithering, const u16 settings, struct FFVII_Rect w_rect );  // system_gpu_create_texture_setting_packet
 
 const u32 FFVII_System_RenderDrawModeSettings( const u8 draw_allow, const u8 dither, const u16 settings );                                  // system_gpu_get_draw_mode_setting_command
-const u32 FFVII_System_RenderTextureWindowSettings( struct FFVII_Rect rect );                                                                             // system_gpu_get_texture_window_setting_command
-const u32 FFVII_System_RenderDrawAreaTopLeft( s16 x, s16 y );                                                                               // system_gpu_set_drawing_area_top_left
-const u32 FFVII_System_RenderDrawAreaBottomRight( s16 x, s16 y );                                                                           // system_gpu_set_drawing_area_bottom_right
-const u32 FFVII_System_RenderDrawOffset( s16 x, s16 y );                                                                                    // system_gpu_set_drawing_offset
+const u32 FFVII_System_RenderTextureWindowSettings( struct FFVII_Rect rect );                                                               // system_gpu_get_texture_window_setting_command
+const u32 FFVII_System_RenderDrawAreaTopLeft( const s16 x, const s16 y );                                                                   // system_gpu_set_drawing_area_top_left
+const u32 FFVII_System_RenderDrawAreaBottomRight( const s16 x, const s16 y );                                                               // system_gpu_set_drawing_area_bottom_right
+const u32 FFVII_System_RenderDrawOffset( const s16 x, const s16 y );                                                                        // system_gpu_set_drawing_offset
 
-void FFVII_System_RenderDrawEnviromentCreateStruct();                                                                                       // system_graphic_create_draw_env_struct
-void FFVII_System_RenderDrawEnviromentCreatePackets();                                                                                      // system_prepare_draw_env_packets
+u32 FFVII_System_RenderDrawEnviromentCreateStruct( const u32 env, struct FFVII_Rect rect );                                                 // system_graphic_create_draw_env_struct
+void FFVII_System_RenderDrawEnviromentCreatePackets( const u32 packets, const u32 env );                                                    // system_prepare_draw_env_packets
