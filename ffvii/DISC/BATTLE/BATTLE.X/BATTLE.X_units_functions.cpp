@@ -3635,7 +3635,7 @@ V0 = V0 + V1;
 
 
 ////////////////////////////////
-// funcd7724
+// funcd7724()
 // function used to render effect mashingun fire and spot
 V0 = h[801590d4];
 S1 = 801621f0 + V0 * 20;
@@ -3700,7 +3700,7 @@ else
 
 
 ////////////////////////////////
-// funcd7888
+// funcd7888()
 // function used to render effect mashingun (total)
 V0 = h[801590d4];
 S1 = 801621f0 + V0 * 20;
@@ -3726,8 +3726,8 @@ if( bu[80062d98] == 0 )
             }
 
             // add effect mashingun fire & spot
-            A0 = 800d7724;
-            funcbc04c;
+            A0 = 800d7724; // funcd7724()
+            funcbc04c();
             [801621f0 + V0 * 20 + 04] = h(hu[S1 + 04]);
             [801621f0 + V0 * 20 + 06] = h(hu[S1 + 06]);
             [801621f0 + V0 * 20 + 1a] = h(hu[S1 + 1a]);
@@ -3737,13 +3737,13 @@ if( bu[80062d98] == 0 )
             {
                 // shell effect
                 A0 = 800d7368;
-                funcbc04c;
+                funcbc04c();
 
                 S2 = 801621f0 + V0 * 20;
 
                 A0 = w[S1 + 1c];
                 A1 = S2 + 8;
-                funcd3a6c; // set effect start position
+                funcd3a6c(); // set effect start position
 
                 system_bios_rand();
                 [SP + 30] = h(-3c - V0 & f);
@@ -3770,7 +3770,7 @@ if( bu[80062d98] == 0 )
                 A0 = S2 + 8;
                 A1 = 400;
                 A2 = 800;
-                funcd3f0c; // add shell falling effect effect
+                funcd3f0c(); // add shell falling effect effect
             }
         }
         else
@@ -3786,14 +3786,14 @@ if( bu[80062d98] == 0 )
 
 
 ////////////////////////////////
-// funcd7a88
+// funcd7a88()
 
 S2 = A0;
 unit_id = A1;
 bone_address = A2; // bone address to which we want to attach
 distance = A3;
 
-A0 = 800d7888;
+A0 = 800d7888; // funcd7888() machinegun
 funcbc04c();
 
 [801621f0 + V0 * 20 + 04] = h(S2);

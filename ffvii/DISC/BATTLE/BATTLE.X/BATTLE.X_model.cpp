@@ -3245,10 +3245,11 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             V0 = bu[A3 + 0000];
             A2 = A2 >> 10;
             A3 = V0;
-            800CC154	jal    funcd7b1c [$800d7b1c]
             [1f80002c] = h(V0);
+
+            funcd7b1c [$800d7b1c]
+
             800CC15C	j      Lcd208 [$800cd208]
-            800CC160	nop
 
 800CC164 dd
 
