@@ -1748,43 +1748,22 @@ for( int i = 0; i < number_to_render; ++i )
             [windows + i * 30 + 18] = b(0);
         }
 
+        A0 = SP + 18;
         A1 = h[windows + i * 30 + 4];
         A2 = h[windows + i * 30 + 6];
-
-        if( buffer_id != 0 )
-        {
-            A2 = A2 + 8;
-        }
-        else
-        {
-            A2 = A2 + f0;
-        }
-
-        A0 = SP + 18;
+        A2 += ( buffer_id != 0 ) ? 8 : f0;
         A3 = h[windows + i * 30 + 8];
         A4 = h[windows + i * 30 + a];
         system_graphic_create_draw_env_struct();
 
-        [SP + 30] = b(0);
-        [SP + 2f] = b(1);
-
+        V0 = ( buffer_id != 0 ) ? b : f3;
         [SP + 18] = h(hu[windows + i * 30 + 4] + h[windows + i * 30 + 8] / 2 - h[windows + i * 30 + c] / 2 + 3);
-
-        V0 = h[windows + i * 30 + a] / 2;
-
-        if( buffer_id != 0 )
-        {
-            V0 = V0 + b;
-        }
-        else
-        {
-            V0 = V0 + f3;
-        }
-
-        [SP + 1a] = h(h[windows + i * 30 + 6] + V0 - h[windows + i * 30 + e] / 2);
+        [SP + 1a] = h(h[windows + i * 30 + 6] + h[windows + i * 30 + a] / 2 - h[windows + i * 30 + e] / 2 + V0);
         [SP + 1c] = h(hu[windows + i * 30 + c] - 6);
         [SP + 1e] = h(hu[windows + i * 30 + e] - 6);
         [SP + 2c] = h(5f);
+        [SP + 2f] = b(1);
+        [SP + 30] = b(0);
 
         A0 = w[80062f24];
         A1 = SP + 18;
@@ -1835,24 +1814,17 @@ for( int i = 0; i < number_to_render; ++i )
         A0 = SP + 18;
         A1 = h[windows + i * 30 + 4]; // WINDOW x
         A2 = h[windows + i * 30 + 6]; // WINDOW y
-        if( buffer_id == 0 )
-        {
-            A2 = A2 + f0;
-        }
-        else
-        {
-            A2 = A2 + 8;
-        }
-
+        A2 += ( buffer_id != 0 ) ? 8 : f0;
         A3 = h[windows + i * 30 + 8]; // WINDOW width
         A4 = h[windows + i * 30 + a]; // WINDOW height
         system_graphic_create_draw_env_struct();
 
+        [SP + 2c] = h(5f);
+        [SP + 2f] = b(1);
+        [SP + 30] = b(0);
+
         A0 = w[80062f24];
         A1 = SP + 18;
-        [SP + 30] = b(0);
-        [SP + 2f] = b(1);
-        [SP + 2c] = h(5f);
         system_prepare_draw_env_packets();
 
         A0 = buffer;
