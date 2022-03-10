@@ -7,7 +7,7 @@
 
 
 void
-FFVII_System_RenderPacketAddToQueue( const u32 ot, const u32 buf )
+System_RenderPacketAddToQueue( const u32 ot, const u32 buf )
 {
     psxMemWrite32( buf, ( psxMemRead32( buf ) & 0xff000000 ) | ( psxMemRead32( ot ) & 0x00ffffff ) );
     psxMemWrite32( ot, ( psxMemRead32( ot ) & 0xff000000 ) | ( buf & 0x00ffffff ) );
@@ -17,7 +17,7 @@ FFVII_System_RenderPacketAddToQueue( const u32 ot, const u32 buf )
 
 
 void
-FFVII_System_RenderPacketChangeTransparency( const u32 packet, const u32 tr )
+System_RenderPacketChangeTransparency( const u32 packet, const u32 tr )
 {
     if( tr != 0 )
     {
@@ -32,7 +32,7 @@ FFVII_System_RenderPacketChangeTransparency( const u32 packet, const u32 tr )
 
 
 void
-FFVII_System_RenderPacketChangeBrightness( const u32 packet, const u32 br )
+System_RenderPacketChangeBrightness( const u32 packet, const u32 br )
 {
     if( br != 0 )
     {
@@ -47,7 +47,7 @@ FFVII_System_RenderPacketChangeBrightness( const u32 packet, const u32 br )
 
 
 const u16
-FFVII_System_RenderPacketCreateCLUT( const u32 x, const u32 y )
+System_RenderPacketCreateCLUT( const u32 x, const u32 y )
 {
     return ( ( y << 6 ) | ( ( x >> 4 ) & 0x003f ) ) & 0xffff;
 }
@@ -55,7 +55,7 @@ FFVII_System_RenderPacketCreateCLUT( const u32 x, const u32 y )
 
 
 const u16
-FFVII_System_RenderPacketCreateTextureSettings( const u8 tp, const u8 abr, const u16 vram_x, const u16 vram_y )
+System_RenderPacketCreateTextureSettings( const u8 tp, const u8 abr, const u16 vram_x, const u16 vram_y )
 {
     u8 render_mode = psxMemRead8( 0x80062c00 );
 
@@ -72,17 +72,17 @@ FFVII_System_RenderPacketCreateTextureSettings( const u8 tp, const u8 abr, const
 
 
 void
-FFVII_System_RenderTextureSettingsCreate( const u32 buffer, const u32 draw_allow, const u32 dithering, const u16 settings, struct RECT rect )
+System_RenderTextureSettingsCreate( const u32 buffer, const u32 draw_allow, const u32 dithering, const u16 settings, struct PSX_RECT rect )
 {
     psxMemWrite8( buffer + 0x3, 0x02 );
-    psxMemWrite32( buffer + 0x4, FFVII_System_RenderDrawModeSettings( draw_allow, dithering, settings ) );
-    psxMemWrite32( buffer + 0x8, FFVII_System_RenderTextureWindowSettings( rect ) );
+    psxMemWrite32( buffer + 0x4, System_RenderDrawModeSettings( draw_allow, dithering, settings ) );
+    psxMemWrite32( buffer + 0x8, System_RenderTextureWindowSettings( rect ) );
 }
 
 
 
 const u32
-FFVII_System_RenderDrawModeSettings( const u8 draw_allow, const u8 dither, const u16 settings )
+System_RenderDrawModeSettings( const u8 draw_allow, const u8 dither, const u16 settings )
 {
     u32 packet = 0xe1000000;
 
@@ -107,7 +107,7 @@ FFVII_System_RenderDrawModeSettings( const u8 draw_allow, const u8 dither, const
 
 
 const u32
-FFVII_System_RenderTextureWindowSettings( struct RECT rect )
+System_RenderTextureWindowSettings( struct PSX_RECT rect )
 {
     u8 off_x = rect.x >> 3;
     u8 off_y = rect.y >> 3;
@@ -119,7 +119,7 @@ FFVII_System_RenderTextureWindowSettings( struct RECT rect )
 
 
 const u32
-FFVII_System_RenderDrawAreaTopLeft( const s16 x, const s16 y )
+System_RenderDrawAreaTopLeft( const s16 x, const s16 y )
 {
     s16 width = psxMemRead16( 0x80062c04 ) - 1;
     s16 height = psxMemRead16( 0x80062c06 ) - 1;
@@ -142,7 +142,7 @@ FFVII_System_RenderDrawAreaTopLeft( const s16 x, const s16 y )
 
 
 const u32
-FFVII_System_RenderDrawAreaBottomRight( const s16 x, const s16 y )
+System_RenderDrawAreaBottomRight( const s16 x, const s16 y )
 {
     s16 width = psxMemRead16( 0x80062c04 ) - 1;
     s16 height = psxMemRead16( 0x80062c06 ) - 1;
@@ -165,7 +165,7 @@ FFVII_System_RenderDrawAreaBottomRight( const s16 x, const s16 y )
 
 
 const u32
-FFVII_System_RenderDrawOffset( const s16 x, const s16 y )
+System_RenderDrawOffset( const s16 x, const s16 y )
 {
     u8 render_mode = psxMemRead8( 0x80062c00 );
 
@@ -182,7 +182,7 @@ FFVII_System_RenderDrawOffset( const s16 x, const s16 y )
 
 
 u32
-FFVII_System_RenderDrawEnviromentCreateStruct( const u32 env, struct RECT rect )
+System_RenderDrawEnviromentCreateStruct( const u32 env, struct PSX_RECT rect )
 {
     psxMemWrite16( env + 0x00, rect.x ); // clip rect x
     psxMemWrite16( env + 0x02, rect.y ); // clip rect y
@@ -208,7 +208,7 @@ FFVII_System_RenderDrawEnviromentCreateStruct( const u32 env, struct RECT rect )
 
 
 void
-FFVII_System_RenderDrawEnviromentCreatePackets( const u32 packets, const u32 env )
+System_RenderDrawEnviromentCreatePackets( const u32 packets, const u32 env )
 {
     s16 clip_x = psxMemRead16( env + 0x00 );
     s16 clip_y = psxMemRead16( env + 0x02 );
@@ -220,10 +220,10 @@ FFVII_System_RenderDrawEnviromentCreatePackets( const u32 packets, const u32 env
     u8 dither = psxMemRead8( env + 0x16 );
     u8 draw_allow = psxMemRead8( env + 0x17 );
 
-    psxMemWrite32( packets + 0x4, FFVII_System_RenderDrawAreaTopLeft( clip_x , clip_y ) );
-    psxMemWrite32( packets + 0x8, FFVII_System_RenderDrawAreaBottomRight( clip_x + clip_w - 1, clip_y + clip_h - 1 ) );
-    psxMemWrite32( packets + 0xc, FFVII_System_RenderDrawOffset( off_x, off_y ) );
-    psxMemWrite32( packets + 0x10, FFVII_System_RenderDrawModeSettings( draw_allow, dither, settings ) );
+    psxMemWrite32( packets + 0x4, System_RenderDrawAreaTopLeft( clip_x , clip_y ) );
+    psxMemWrite32( packets + 0x8, System_RenderDrawAreaBottomRight( clip_x + clip_w - 1, clip_y + clip_h - 1 ) );
+    psxMemWrite32( packets + 0xc, System_RenderDrawOffset( off_x, off_y ) );
+    psxMemWrite32( packets + 0x10, System_RenderDrawModeSettings( draw_allow, dither, settings ) );
     //psxMemWrite32( packets + 0x14, FFVII_System_RenderTextureWindowSettings( env + 0xc ) );
     psxMemWrite32( packets + 0x18, 0xe6000000 );
 

@@ -688,10 +688,10 @@ void psxBNE() {	RepBranchi32(!=) }  // Branch if Rs != Rt
 void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
-    if( _JumpTarget_ == 0x8007a690 ) // field_calculate_walkmesh_height
+    if( _JumpTarget_ == 0x80079a64 ) // battle_parse_action
     {
         execI();
-        XenoTest();
+        //XenoTest();
     }
 
     // FFVII

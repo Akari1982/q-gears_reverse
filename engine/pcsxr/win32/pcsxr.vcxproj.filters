@@ -22,17 +22,23 @@
     <Filter Include="intl">
       <UniqueIdentifier>{2fc9bc1d-cd0d-4c0e-a6ff-d26d53d52434}</UniqueIdentifier>
     </Filter>
-    <Filter Include="xenogears">
+    <Filter Include="game">
+      <UniqueIdentifier>{44cb5845-3ecc-4acd-be15-1672b0924b34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\xenogears">
       <UniqueIdentifier>{3e6d6f3b-daa7-4bb8-9ff7-9a8d5a441e19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ffvii">
+    <Filter Include="game\ffvii">
       <UniqueIdentifier>{c0a2615d-7922-42d2-a7f3-919e9461620c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ffvii\system">
+    <Filter Include="game\ffvii\system">
       <UniqueIdentifier>{77b1c0c2-c7f4-4bca-9f48-c7c0b0b9ba14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ffvii\field">
+    <Filter Include="game\ffvii\field">
       <UniqueIdentifier>{9246dd1d-e29e-4470-a8f0-1ae32db39150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\system">
+      <UniqueIdentifier>{c3c7a756-859c-4523-b263-f23ed719b0e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -219,17 +225,17 @@
     <ClCompile Include="..\libpcsxcore\pgxp_value.c">
       <Filter>libpcsxcore</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ffvii\system\render.c">
-      <Filter>ffvii\system</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\ffvii\field\entity.c">
-      <Filter>ffvii\field</Filter>
+      <Filter>game\ffvii\field</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ffvii\system\window.c">
-      <Filter>ffvii\system</Filter>
+      <Filter>game\ffvii\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\xeno\xeno.c">
-      <Filter>xenogears</Filter>
+      <Filter>game\xenogears</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\system\render.c">
+      <Filter>game\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,17 +421,17 @@
     <ClInclude Include="..\libpcsxcore\psxinterpreter_pgxp.h">
       <Filter>libpcsxcore</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ffvii\system\render.h">
-      <Filter>ffvii\system</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\ffvii\field\entity.h">
-      <Filter>ffvii\field</Filter>
+      <Filter>game\ffvii\field</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\ffvii\system\window.h">
-      <Filter>ffvii\system</Filter>
+      <Filter>game\ffvii\system</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\xeno\xeno.h">
-      <Filter>xenogears</Filter>
+      <Filter>game\xenogears</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\system\render.h">
+      <Filter>game\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
