@@ -219,9 +219,6 @@
     <ClCompile Include="..\libpcsxcore\pgxp_value.c">
       <Filter>libpcsxcore</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\xeno.c">
-      <Filter>xenogears</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\ffvii\system\render.c">
       <Filter>ffvii\system</Filter>
     </ClCompile>
@@ -230,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\ffvii\system\window.c">
       <Filter>ffvii\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xeno\xeno.c">
+      <Filter>xenogears</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,9 +415,6 @@
     <ClInclude Include="..\libpcsxcore\psxinterpreter_pgxp.h">
       <Filter>libpcsxcore</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\xeno.h">
-      <Filter>xenogears</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\ffvii\system\render.h">
       <Filter>ffvii\system</Filter>
     </ClInclude>
@@ -426,6 +423,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\ffvii\system\window.h">
       <Filter>ffvii\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xeno\xeno.h">
+      <Filter>xenogears</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,3 +1,3 @@
-#include "..\pcsxr\libpcsxcore\psxcommon.h"
+#include "..\..\pcsxr\libpcsxcore\psxcommon.h"
 
 void XenoTest();

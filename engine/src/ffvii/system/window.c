@@ -13,9 +13,9 @@ u32 g_ui_window_tr; // GP + 84
 
 
 void
-FFVII_System_UIWindowAddToRender( struct FFVII_Rect w_rect )
+FFVII_System_UIWindowAddToRender( struct RECT w_rect )
 {
-    struct FFVII_Rect rect;
+    struct RECT rect;
     u16 tex_set;
 
     if( w_rect.w >= 9 )
@@ -218,7 +218,7 @@ FFVII_System_UIWindowAddToRender( struct FFVII_Rect w_rect )
 u16
 FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message )
 {
-    struct FFVII_Rect rect;
+    struct RECT rect;
     u16 tex_set;
 
     for( int i = 0, count = 0; i < 0x400; ++i, ++count )
@@ -496,7 +496,7 @@ FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message
 
 
 void
-FFVII_System_UICreateAddTextureSettings( const u32 draw_allow, const u32 dithering, const u16 settings, struct FFVII_Rect rect )
+FFVII_System_UICreateAddTextureSettings( const u32 draw_allow, const u32 dithering, const u16 settings, struct RECT rect )
 {
     FFVII_System_RenderTextureSettingsCreate( g_ui_buffer, draw_allow, dithering, settings, rect );
     FFVII_System_RenderPacketAddToQueue( psxMemRead32( psxRegs.GPR.n.gp + 0x280 ), g_ui_buffer );
@@ -613,7 +613,7 @@ FFVII_System_UIDialogAddToRender()
             // render window
             if( ( psxMemRead16( windows + i * 0x30 + 0x19 ) & 1 ) == 0 ) // with window
             {
-                struct FFVII_Rect rect;
+                struct RECT rect;
 
                 if( psxMemRead32( windows + i * 0x30 + 0x8 ) != psxMemRead32( windows + i * 0x30 + 0xc ) )
                 {

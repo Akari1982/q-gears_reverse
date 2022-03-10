@@ -29,7 +29,7 @@
 #include "pgxp_cpu.h"
 #include "pgxp_gte.h"
 
-#include "../../src/xeno.h"
+#include "../../src/xeno/xeno.h"
 #include "../../src/ffvii/system/window.h"
 
 static int branch = 0;

@@ -72,7 +72,7 @@ FFVII_System_RenderPacketCreateTextureSettings( const u8 tp, const u8 abr, const
 
 
 void
-FFVII_System_RenderTextureSettingsCreate( const u32 buffer, const u32 draw_allow, const u32 dithering, const u16 settings, struct FFVII_Rect rect )
+FFVII_System_RenderTextureSettingsCreate( const u32 buffer, const u32 draw_allow, const u32 dithering, const u16 settings, struct RECT rect )
 {
     psxMemWrite8( buffer + 0x3, 0x02 );
     psxMemWrite32( buffer + 0x4, FFVII_System_RenderDrawModeSettings( draw_allow, dithering, settings ) );
@@ -107,10 +107,8 @@ FFVII_System_RenderDrawModeSettings( const u8 draw_allow, const u8 dither, const
 
 
 const u32
-FFVII_System_RenderTextureWindowSettings( struct FFVII_Rect rect )
+FFVII_System_RenderTextureWindowSettings( struct RECT rect )
 {
-    //GPU_displayText( "XenoTest" );
-
     u8 off_x = rect.x >> 3;
     u8 off_y = rect.y >> 3;
     u16 mask_x = ( ( 0 - rect.w ) & 0xff ) >> 3;
@@ -184,7 +182,7 @@ FFVII_System_RenderDrawOffset( const s16 x, const s16 y )
 
 
 u32
-FFVII_System_RenderDrawEnviromentCreateStruct( const u32 env, struct FFVII_Rect rect )
+FFVII_System_RenderDrawEnviromentCreateStruct( const u32 env, struct RECT rect )
 {
     psxMemWrite16( env + 0x00, rect.x ); // clip rect x
     psxMemWrite16( env + 0x02, rect.y ); // clip rect y
