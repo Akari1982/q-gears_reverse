@@ -342,6 +342,7 @@
     + 26 [][]     some x of texture (used as + 300). Increment by A1 each func call limited by 41.
     + 28 [][][][] ???
     + 38 [][][][] rotation dta for some sprite animation if flag 0x2000 in sprite animation data not set.
+    + 3c []       init with 0 during battle attack struct init.
     + 3d []       if this != 0 then we use +38 to calculate rotation matrix for sprite animation (if flag 0x2000 not set).
     + 3e []       
     +17c [][][][] increment during sprite update.
@@ -518,6 +519,8 @@
     +08 [][][][] start address.
     +0c [][][][] size.
     +10 [][][][] some callback.
+
+80058b00 [][][][] init with 0 during battle attack struct init.
 
 80058b14 [][][][] number of initing channels.
 
@@ -1104,7 +1107,7 @@ Sprite struct 0x164. Can be allocated anywhere.
     + 5c [][][][] pointer to animation data in sprite data file 0 + 6, set when sprite has only two directions (one animation sequence).
     + 60 [][][][] pointer to 1st animation data in sprite data file 0.
     + 64 [][][][] current pointer to sprite sequence data from file 0. Init with 0.
-    + 68 [][][][] init with 0. Pointer to callback func func76104. This callback adds flag 0x00010000 to +4 in struct_138.
+    + 68 [][][][] callback. Init with 0.
     + 6c [][][][] init with 0. Pointer to itself (allocated struct start).
     + 70 [][][][] init with 0.
     + 74 [][][][] pointer to some other entity struct_168.
@@ -1121,6 +1124,8 @@ Sprite struct 0x164. Can be allocated anywhere.
         + 1 []       2nd byte.
         + 2 []       3rd byte.
     + 9e [][]     animation script wait timer. Init with 0x0001.
+    + a0 [][]     some pos x.
+    + a4 [][]     some pos z.
     + a8 [][][][] init with 0. Some flags.
                     0x00000001 - set if bu[80058810 + 3d] == 0, removed otherwise. Reset f4+0, f4+4, f4+c if set.
                     0x000007fe - removed when start animation.

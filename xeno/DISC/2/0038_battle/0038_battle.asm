@@ -2144,7 +2144,7 @@
 // funcb782c
 800B782C-800B7914
 ////////////////////////////////
-// funcb7918
+// battle_cdrom_data_sync
 800B7918-800B794C
 ////////////////////////////////
 // funcb7950
@@ -2453,16 +2453,16 @@
 // funcbe694
 800BE694-800BE6F8
 ////////////////////////////////
-// funcbe6fc
+// battle_get_rotation_based_on_vector_x_y
 800BE6FC-800BE764
 ////////////////////////////////
-// funcbe768
+// battle_get_rotation_based_on_a0_a4
 800BE768-800BE7D0
 ////////////////////////////////
 // funcbe7d4
 800BE7D4-800BE87C
 ////////////////////////////////
-// funcbe880
+// battle_set_action_state
 800BE880-800BE88C
 ////////////////////////////////
 // funcbe890
@@ -2555,7 +2555,7 @@
 // funcbfeb4
 800BFEB4-800BFF24
 ////////////////////////////////
-// funcbff28
+// battle_get_distance_between_2_points
 800BFF28-800BFF80
 ////////////////////////////////
 // funcbff84

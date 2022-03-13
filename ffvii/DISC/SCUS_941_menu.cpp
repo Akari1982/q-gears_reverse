@@ -1,11 +1,9 @@
 ﻿////////////////////////////////
-// func1cda4
-8001CDA4	lui    a0, $8006
-A0 = w[A0 + 2f24];
-8001CDAC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8001CDB4	jal    system_gpu_textured_quad_header [$800468fc]
-8001CDB8	nop
+// func1cda4()
+
+A0 = w[80062f24];
+system_gpu_textured_quad_header();
+
 8001CDBC	lui    a0, $8006
 A0 = w[A0 + 2f24];
 8001CDC4	jal    system_change_brightness_calculation_in_packet [$80046870]
@@ -1757,13 +1755,13 @@ for( int i = 0; i < number_to_render; ++i )
         system_graphic_create_draw_env_struct();
 
         V0 = ( buffer_id != 0 ) ? b : f3;
-        [SP + 18] = h(hu[windows + i * 30 + 4] + h[windows + i * 30 + 8] / 2 - h[windows + i * 30 + c] / 2 + 3);
-        [SP + 1a] = h(h[windows + i * 30 + 6] + h[windows + i * 30 + a] / 2 - h[windows + i * 30 + e] / 2 + V0);
-        [SP + 1c] = h(hu[windows + i * 30 + c] - 6);
-        [SP + 1e] = h(hu[windows + i * 30 + e] - 6);
-        [SP + 2c] = h(5f);
-        [SP + 2f] = b(1);
-        [SP + 30] = b(0);
+        [SP + 18 + 0] = h(hu[windows + i * 30 + 4] + h[windows + i * 30 + 8] / 2 - h[windows + i * 30 + c] / 2 + 3);
+        [SP + 18 + 2] = h(h[windows + i * 30 + 6] + h[windows + i * 30 + a] / 2 - h[windows + i * 30 + e] / 2 + V0);
+        [SP + 18 + 4] = h(hu[windows + i * 30 + c] - 6);
+        [SP + 18 + 6] = h(hu[windows + i * 30 + e] - 6);
+        [SP + 18 + 14] = h(5f);
+        [SP + 18 + 17] = b(1);
+        [SP + 18 + 18] = b(0);
 
         A0 = w[80062f24];
         A1 = SP + 18;

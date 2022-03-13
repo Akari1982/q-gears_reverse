@@ -42,6 +42,23 @@
 
 800c2c68 array of something one byte size.
 
+800c2d44 [][][][] current action index in 800c3708. Init with 0.
+800c2d48 [][][][] pointer to something (0x50 size).
+    +  4 [][][][] pointer to struct_164 of current entity. Init with 0.
+    +  8 [][][][] callback to handle unit action struct.
+    + 1c [][][][] state of action. Init with 0.
+    + 24 [][][][] ???
+    + 2c [][][][] init with 1. Id into 800c400c
+    + 30 [][][][] init with 0.
+    + 34 [][][][] init with 0.
+    + 44 [][][][] distance between two units.
+    + 48 []       set to 1 before action. Init with 1.
+    + 49 []       init with 0.
+    + 4a []       init with 0.
+    + 4c [][][][] pointer to struct_164 of target entity.
+800c2d60 [][][][] pointer to struct_164.
+800c2d98 [][][][] if we already executing action.
+
 800c3504 [][][][] pointer to battle text block.
 800c3508 [][][][] pointer to allocated memory for texts STRIPCD1\19\3098.
 
@@ -80,6 +97,8 @@
 800c419c address for display enviroment data buffer 1
 800c4140 + 4070 address for draw enviroment data buffer 2
 800c419c + 4070 address for display enviroment data buffer 2
+
+800cc25c array of pointers to some struct_164.
 
 800cc408 unit data array (0x170 size)
     + 4c [][]     unit current hp.

@@ -181,79 +181,64 @@ System_RenderDrawOffset( const s16 x, const s16 y )
 
 
 
-u32
-System_RenderDrawEnviromentCreateStruct( const u32 env, struct PSX_RECT rect )
+struct PSX_DRAWENV
+System_RenderDrawEnviromentCreateStruct( struct PSX_DRAWENV env, struct PSX_RECT rect )
 {
-    psxMemWrite16( env + 0x00, rect.x ); // clip rect x
-    psxMemWrite16( env + 0x02, rect.y ); // clip rect y
-    psxMemWrite16( env + 0x04, rect.w ); // clip rect width
-    psxMemWrite16( env + 0x06, rect.h ); // clip rect height
-    psxMemWrite16( env + 0x08, rect.x ); // offset to primitive x
-    psxMemWrite16( env + 0x0a, rect.y ); // offset to primitive y
-    psxMemWrite16( env + 0x0c, 0x0000 ); // texture window rect x
-    psxMemWrite16( env + 0x0e, 0x0000 ); // texture window rect y
-    psxMemWrite16( env + 0x10, 0x0000 ); // texture window rect width
-    psxMemWrite16( env + 0x12, 0x0000 ); // texture window rect height
-    psxMemWrite16( env + 0x14, 0x000a ); // tpage settings
-    psxMemWrite8( env + 0x16, 0x01 ); // dithering processing flag (on)
-    psxMemWrite8( env + 0x17, 0x00 ); // drawing to display area is blocked
-    psxMemWrite8( env + 0x18, 0x00 ); // not clear drawing area when drawing environment is set
-    psxMemWrite8( env + 0x19, 0x00 ); // background color r
-    psxMemWrite8( env + 0x1a, 0x00 ); // background color g
-    psxMemWrite8( env + 0x1b, 0x00 ); // background color b
-
+    env.clip.x = rect.x;
+    env.clip.y = rect.y;
+    env.clip.w = rect.w;
+    env.clip.h = rect.h;
+    env.ofs[ 0 ] = rect.x;
+    env.ofs[ 1 ] = rect.y;
+    env.tw.x = 0;
+    env.tw.y = 0;
+    env.tw.w = 0;
+    env.tw.h = 0;
+    env.tpage = 0x000a;
+    env.dtd = 1;
+    env.dfe = 0;
+    env.isbg = 0;
+    env.r0 = 0;
+    env.g0 = 0;
+    env.b0 = 0;
     return env;
 }
 
 
 
 void
-System_RenderDrawEnviromentCreatePackets( const u32 packets, const u32 env )
+System_RenderDrawEnviromentCreatePackets( const u32 packets, struct PSX_DRAWENV env )
 {
-    s16 clip_x = psxMemRead16( env + 0x00 );
-    s16 clip_y = psxMemRead16( env + 0x02 );
-    s16 clip_w = psxMemRead16( env + 0x04 );
-    s16 clip_h = psxMemRead16( env + 0x06 );
-    s16 off_x = psxMemRead16( env + 0x08 );
-    s16 off_y = psxMemRead16( env + 0x0a );
-    u16 settings = psxMemRead16( env + 0x14 );
-    u8 dither = psxMemRead8( env + 0x16 );
-    u8 draw_allow = psxMemRead8( env + 0x17 );
+    psxMemWrite32( packets + 0x4, System_RenderDrawAreaTopLeft( env.clip.x , env.clip.y ) );
+    psxMemWrite32( packets + 0x8, System_RenderDrawAreaBottomRight( env.clip.x + env.clip.w - 1, env.clip.y + env.clip.h - 1 ) );
+    psxMemWrite32( packets + 0xc, System_RenderDrawOffset( env.ofs[ 0 ], env.ofs[ 1 ] ) );
+    psxMemWrite32( packets + 0x10, System_RenderDrawModeSettings( env.dfe, env.dtd, env.tpage ) );
 
-    psxMemWrite32( packets + 0x4, System_RenderDrawAreaTopLeft( clip_x , clip_y ) );
-    psxMemWrite32( packets + 0x8, System_RenderDrawAreaBottomRight( clip_x + clip_w - 1, clip_y + clip_h - 1 ) );
-    psxMemWrite32( packets + 0xc, System_RenderDrawOffset( off_x, off_y ) );
-    psxMemWrite32( packets + 0x10, System_RenderDrawModeSettings( draw_allow, dither, settings ) );
-    //psxMemWrite32( packets + 0x14, FFVII_System_RenderTextureWindowSettings( env + 0xc ) );
+    psxMemWrite32( packets + 0x14, System_RenderTextureWindowSettings( env.tw ) );
     psxMemWrite32( packets + 0x18, 0xe6000000 );
 
     psxMemWrite8( packets + 0x3, 0x06 );
 
-    if( psxMemRead8( env + 0x18 ) != 0 )
+    if( env.isbg != 0 )
     {
         s16 width = psxMemRead16( 0x80062c04 ) - 1;
         s16 height = psxMemRead16( 0x80062c06 ) - 1;
 
-        u8 r = psxMemRead8( env + 0x19 );
-        u8 g = psxMemRead8( env + 0x1a );
-        u8 b = psxMemRead8( env + 0x1b );
+        s16 clip_w = ( env.clip.w >= 0 ) ? ( ( width < env.clip.w ) ? width : env.clip.w ) : 0;
+        s16 clip_h = ( env.clip.h >= 0 ) ? ( ( height < env.clip.h ) ? height : env.clip.h ) : 0;
 
-        clip_w = ( clip_w >= 0 ) ? ( ( width < clip_w ) ? width : clip_w ) : 0;
-        clip_h = ( clip_h >= 0 ) ? ( ( height < clip_h ) ? height : clip_h ) : 0;
-
-        if( ( clip_x & 0x3f ) || ( clip_w & 0x3f ) )
+        if( ( env.clip.x & 0x3f ) || ( clip_w & 0x3f ) )
         {
-            clip_x = clip_x - off_x;
-            clip_y = clip_y - off_y;
-
-            psxMemWrite32( packets + 7 * 4, 0x60000000 | ( b << 0x10 ) | ( g << 0x8 ) | r );
+            s16 clip_x = env.clip.x - env.ofs[ 0 ];
+            s16 clip_y = env.clip.y - env.ofs[ 1 ];
+            psxMemWrite32( packets + 7 * 4, 0x60000000 | ( env.b0 << 0x10 ) | ( env.g0 << 0x8 ) | env.r0 );
             psxMemWrite32( packets + 8 * 4, ( clip_x << 0x10 ) | clip_y );
             psxMemWrite32( packets + 9 * 4, ( clip_w << 0x10 ) | clip_h );
         }
         else
         {
-            psxMemWrite32( packets + 7 * 4, 0x02000000 | ( b << 0x10 ) | ( g << 0x8 ) | r );
-            psxMemWrite32( packets + 8 * 4, ( clip_y << 0x10 ) | clip_x );
+            psxMemWrite32( packets + 7 * 4, 0x02000000 | ( env.b0 << 0x10 ) | ( env.g0 << 0x8 ) | env.r0 );
+            psxMemWrite32( packets + 8 * 4, ( env.clip.y << 0x10 ) | env.clip.x );
             psxMemWrite32( packets + 9 * 4, ( clip_h << 0x10 ) | clip_w );
         }
 

@@ -688,40 +688,24 @@ void psxBNE() {	RepBranchi32(!=) }  // Branch if Rs != Rt
 void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
-    if( _JumpTarget_ == 0x80079a64 ) // battle_parse_action
+
+    // Xenogears Battle
+    if( _JumpTarget_ == 0x800b8af8 )
     {
         execI();
         //XenoTest();
     }
-
-    // FFVII
+    // FFVII Window
     else if( _JumpTarget_ == 0x8001f1bc )
     {
-        //u32 pc = psxRegs.pc;
-        //u32 code = psxRegs.code;
-
         execI();
         FFVII_System_UIDialogAddToRender();
-
-        //psxRegs.pc = pc;
-        //psxRegs.code = code;
-
-        //_SetLink( 31 );
-
-        //psxRegs.GPR.n.sp -= 0x28;
-        //psxMemWrite32( psxRegs.GPR.n.sp + 0x18, psxRegs.GPR.n.s0 );
-        //psxRegs.GPR.n.s0 = psxRegs.GPR.n.a1;
-        //psxMemWrite32( psxRegs.GPR.n.sp + 0x1c, psxRegs.GPR.n.s1 );
-        //psxRegs.GPR.n.s1 = psxRegs.GPR.n.a0;
-        //psxMemWrite32( psxRegs.GPR.n.sp + 0x20, psxRegs.GPR.n.ra );
-        //doBranch( 0x80044B38 );
     }
 /*
-    else if( _JumpTarget_ == 0x800a65a4 ) // ffvii handle_update
+    // FFVII Battle Effect
+    else if( _JumpTarget_ == 0x ) // ffvii handle_update
     {
-        _SetLink( 31 );
-        doBranch( _PC_ + 4 );
-
+        execI();
         FFVII_Field_HandleUpdate();
     }
 */
