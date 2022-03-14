@@ -655,54 +655,49 @@ if( bu[801635fc] != 0 )
 }
 
 V1 = bu[80163c7c];
-V0 = V1 < 0007;
-800B8474	beq    v0, zero, Lb84b8 [$800b84b8]
-V0 = V1 << 02;
-800B847C	lui    at, $800a
-AT = AT + 0614;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800B848C	nop
-800B8490	jr     v0 
-800B8494	nop
+switch( V1 )
+{
+    case 2:
+    {
+        800B8498	jal    funcb905c [$800b905c]
 
-800B8498	jal    funcb905c [$800b905c]
-800B849C	nop
-800B84A0	jal    funcbc440 [$800bc440]
-800B84A4	nop
-800B84A8	jal    funcba4c8 [$800ba4c8]
-800B84AC	nop
-800B84B0	j      Lb84f8 [$800b84f8]
-800B84B4	nop
+        800B84A0	jal    funcbc440 [$800bc440]
 
-Lb84b8:	; 800B84B8
-800B84B8	jal    funcb8ee4 [$800b8ee4]
-800B84BC	nop
-800B84C0	jal    funcb905c [$800b905c]
-800B84C4	nop
-A0 = bu[801517bc];
-800B84D0	jal    funcb8234 [$800b8234]
-800B84D4	nop
-800B84D8	jal    funcbc440 [$800bc440]
+        800B84A8	jal    funcba4c8 [$800ba4c8]
+    }
+    break;
 
-battle_cdrom_read_chain();
+    case 0 1 6:
+    {
+    }
+    break;
 
-800B84E8	jal    funcb83c4 [$800b83c4]
-800B84EC	nop
-800B84F0	jal    funcb8b48 [$800b8b48]
-800B84F4	nop
+    default:
+    {
+        800B84B8	jal    funcb8ee4 [$800b8ee4]
 
-Lb84f8:	; 800B84F8
+        800B84C0	jal    funcb905c [$800b905c]
+
+        A0 = bu[801517bc];
+        800B84D0	jal    funcb8234 [$800b8234]
+
+        800B84D8	jal    funcbc440 [$800bc440]
+
+        battle_cdrom_read_chain();
+
+        800B84E8	jal    funcb83c4 [$800b83c4]
+
+        800B84F0	jal    funcb8b48 [$800b8b48]
+    }
+}
+
 battle_cdrom_read_chain();
 
 funcb91cc();
 
-V0 = hu[8016375a];
-800B8510	nop
-[80151694] = h(V0);
+[80151694] = h(hu[8016375a]);
+
 800B851C	jal    funcb85e0 [$800b85e0]
-
-
 
 A0 = h[800f8370]; // camera id to use
 A1 = bu[801590cc]; // attacker id
@@ -713,17 +708,15 @@ A0 = h[800f8370]; // camera id to use
 funcbc8b0; // copy data to camera vectors
 
 800B8578	jal    funcb8268 [$800b8268]
-800B857C	nop
+
 A0 = 0;
 A1 = 0;
 A2 = 0;
 system_gte_set_far_colour();
 
-800B8590	jal    funcbc538 [$800bc538]
-800B8594	nop
+funcbc538(); // effects update
+
 800B8598	jal    funcbc348 [$800bc348]
-
-
 
 A0 = 800fa63c; // store final camera matrix (primary + scale + ??? + ???)
 A1 = 800fa958; // store primary camera matrix here
@@ -732,7 +725,6 @@ A3 = 801031e8; // start vector
 funcbb75c; // create primary and final camera matrix
 
 800B85C8	jal    funcc627c [$800c627c]
-
 ////////////////////////////////
 
 

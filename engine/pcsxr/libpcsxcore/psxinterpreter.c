@@ -701,15 +701,11 @@ void psxJAL()
         execI();
         FFVII_System_UIDialogAddToRender();
     }
-/*
     // FFVII Battle Effect
-    else if( _JumpTarget_ == 0x ) // ffvii handle_update
+    else if( _JumpTarget_ == 0x800bc538 ) // ffvii handle_update
     {
         execI();
-        FFVII_Field_HandleUpdate();
     }
-*/
-
     else
     {
         _SetLink( 31 );
