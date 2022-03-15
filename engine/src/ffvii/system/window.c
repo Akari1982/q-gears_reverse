@@ -217,6 +217,86 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
 
 
 
+void
+FFVII_System_UITimerAddToRender( u16 pos_x, u16 pos_y, u32 timer )
+{
+
+    // ":" divider for timer
+    psxMemWrite8( g_ui_buffer + 0x3, 0x04 );
+    psxMemWrite8( g_ui_buffer + 0x7, 0x64 );
+    System_RenderPacketChangeBrightness( g_ui_buffer, 1 );
+    psxMemWrite16( g_ui_buffer + 0x8, pos_x + 0x20 );
+    psxMemWrite16( g_ui_buffer + 0xa, pos_y );
+    psxMemWrite8( g_ui_buffer + 0xc, ( timer & 1 ) ? 0xa8 : 0xa0 );
+    psxMemWrite8( g_ui_buffer + 0xd, 0x50 );
+    psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1ec ) );
+    psxMemWrite16( g_ui_buffer + 0x10, 0x8 );
+    psxMemWrite16( g_ui_buffer + 0x12, 0x15 );
+    System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+    g_ui_buffer += 0x14;
+
+    timer = ( timer >= 0x1770 ) ? 0x176f : timer; // set cap for timer 99min 59sec
+
+    // draw all digits
+    for( int i = 0; i < 4; ++i )
+    {
+/*
+        digit = timer / w[80049214 + i * 4];
+
+        [g_ui_buffer + 3] = b(4);
+        [g_ui_buffer + 7] = b(64);
+
+        A0 = g_ui_buffer;
+        A1 = 1;
+        system_change_brightness_calculation_in_packet();
+
+        [g_ui_buffer + 8] = h(pos_x);
+        [g_ui_buffer + a] = h(y);
+        [g_ui_buffer + c] = b(((digit - ((digit / a) * 3)) * 10) - 50);
+
+        if( digit >= 5 )
+        {
+            [g_ui_buffer + d] = b(68);
+        }
+        else
+        {
+            [g_ui_buffer + d] = b(50);
+        }
+        [g_ui_buffer + 10] = h(10);
+        [g_ui_buffer + 12] = h(15);
+
+        A0 = 100;
+        A1 = 1ec;
+        system_create_clut_for_packet();
+
+        [g_ui_buffer + e] = h(V0);
+
+        A0 = w[80062fc4];
+        A1 = g_ui_buffer;
+        system_add_render_packet_to_queue();
+
+        g_ui_buffer += 0x14
+
+        if( i == 1 )
+        {
+            pos_x += 0x8;
+        }
+        pos_x += 0x10;
+        timer = timer % w[80049214 + i * 4];
+*/
+    }
+
+    u16 tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
+    struct PSX_RECT rect
+    rect.x = 0;
+    rect.y = 0x0;
+    rect.w = 0x0xff;
+    rect.h = 0x0xff;
+    FFVII_System_UICreateAddTextureSettings( 0, 1, tex_set, rect );
+}
+
+
+
 u16
 FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message )
 {
@@ -544,7 +624,7 @@ FFVII_System_UIDialogAddToRender()
                 A0 = h[windows + i * 30 + 28]; // WSPCL x
                 A1 = h[windows + i * 30 + 2a]; // WSPCL y
                 A2 = w[8009c6e4 + b84];
-                system_menu_add_timer_to_render();
+                FFVII_System_UITimerAddToRender( x, y, timer );
             }
             else if( V1 == 2 )
             {
