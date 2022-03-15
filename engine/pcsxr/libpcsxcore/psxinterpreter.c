@@ -702,9 +702,10 @@ void psxJAL()
         FFVII_System_UIDialogAddToRender();
     }
     // FFVII Battle Effect
-    else if( _JumpTarget_ == 0x800bc538 ) // ffvii handle_update
+    else if( _JumpTarget_ == 0x800bc538 )
     {
         execI();
+        FFVII_Battle_EffectsUpdate();
     }
     else
     {

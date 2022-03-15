@@ -1,2 +1,5 @@
+#include "..\..\pcsxr\libpcsxcore\psxcommon.h"
 
-// funcbc538
+
+
+void FFVII_Battle_EffectsUpdate(); // funcbc538
