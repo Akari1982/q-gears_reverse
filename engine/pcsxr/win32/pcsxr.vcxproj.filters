@@ -40,6 +40,9 @@
     <Filter Include="game\system">
       <UniqueIdentifier>{c3c7a756-859c-4523-b263-f23ed719b0e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game\ffvii\battle">
+      <UniqueIdentifier>{54a1c083-873f-4fe8-910e-08eee895ea43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libpcsxcore\cdriso.c">
@@ -237,6 +240,9 @@
     <ClCompile Include="..\..\src\system\render.c">
       <Filter>game\system</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\battle\effects.c">
+      <Filter>game\ffvii\battle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libpcsxcore\cdriso.h">
@@ -432,6 +438,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\system\render.h">
       <Filter>game\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ffvii\battle\effects.h">
+      <Filter>game\ffvii\battle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

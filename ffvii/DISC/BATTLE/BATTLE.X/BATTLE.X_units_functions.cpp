@@ -20,6 +20,7 @@ system_matrix_vector_multiply;
 
 ////////////////////////////////
 // funcd3af0
+
 V0 = h[801590d4];
 S2 = 801621f0 + V0 * 20;
 
@@ -44,7 +45,7 @@ A0 = 800f01e8;
 A1 = w[801517c0] + 70;
 A2 = c;
 A3 = w[80163c74];
-funcd6260;
+funcd6260();
 [80163c74] = w(V0);
 
 if (bu[80062d98] == 0)
@@ -63,6 +64,7 @@ if (bu[80062d98] == 0)
 ////////////////////////////////
 // funcd3bf0
 // function used to render dust effect (single cloud)
+
 S2 = 801621f0 + h[801590d4] * 20;
 
 [SP + 10] = w(w[800a0d98 + 0]);
@@ -74,7 +76,7 @@ S2 = 801621f0 + h[801590d4] * 20;
 [SP + 28] = w(w[800a0d98 + 18]);
 [SP + 2c] = w(w[800a0d98 + 1c]);
 
-[800f0218 + 4] = b(h[S2 + 2] * 20);
+[800f0218 + 4] = b(h[S2 + 2] * 20); // dust frame y tex
 
 A0 = 800fa63c; // camera matrix
 system_gte_set_rotation_matrix();
@@ -104,16 +106,15 @@ A0 = 800f0218;
 A1 = w[801517c0] + 70;
 A2 = c;
 A3 = w[80163c74];
-funcd6260;
+funcd6260();
 [80163c74] = w(V0);
 
-V1 = bu[80062d98];
-if (V1 == 0)
+if( bu[80062d98] == 0 )
 {
     V0 = h[S2 + 2];
     [S2 + 2] = h(V0 + 1);
 
-    if (V0 >= 7)
+    if( V0 >= 7 )
     {
         [S2 + 0] = h(-1);
     }
@@ -125,6 +126,7 @@ if (V1 == 0)
 ////////////////////////////////
 // funcd3d88
 // function used to render dust effect
+
 effect_id = h[801590d4];
 unit_id = h[801621f0 + effect_id * 20 + 0];
 
@@ -192,6 +194,7 @@ V0 = 801621f0 + V0 * 20;
 
 ////////////////////////////////
 // funcd3f8c
+
 V0 = h[801590d4];
 V1 = bu[80062d98];
 800D3F9C	addiu  sp, sp, $ffe0 (=-$20)
@@ -420,6 +423,7 @@ return S2;
 
 ////////////////////////////////
 // funcd4368
+
 position = A0;
 scale = A1;
 collision = A2;
@@ -642,14 +646,10 @@ SP = SP + 0050;
 
 ////////////////////////////////
 // funcd4710
-800D4710	addiu  sp, sp, $ffe0 (=-$20)
+
 V1 = 801621f0;
 V0 = h[801590d4];
 T0 = 800f10b8;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = V0 << 05;
 S1 = V0 + V1;
 V0 = hu[S1 + 0002];
@@ -759,13 +759,6 @@ V0 = V0 < V1;
 [S1 + 0000] = h(V0);
 
 Ld4900:	; 800D4900
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800D4914	jr     ra 
-800D4918	nop
 ////////////////////////////////
 
 
@@ -864,17 +857,10 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // funcd4a64
-800D4A64	addiu  sp, sp, $ffd0 (=-$30)
+
 V0 = h[801590d4];
 A0 = bu[80062d98];
 V1 = 801621f0;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S5);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = V0 << 05;
 800D4AA0	bne    a0, zero, Ld4be0 [$800d4be0]
 S2 = V0 + V1;
@@ -977,16 +963,6 @@ V0 = V0 + 0001;
 [S2 + 0002] = h(V0);
 
 Ld4be0:	; 800D4BE0
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0030;
-800D4C00	jr     ra 
-800D4C04	nop
 ////////////////////////////////
 
 
@@ -2397,87 +2373,77 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// funcd6260
-T0 = w[A0 + 0];
-T9 = w[A0 + 4];
-T1 = T9 & 00ff0000;
+// funcd6260()
 
-T1 = T1 >> 0d;
-800D6274	lui    v0, $ff00
-T2 = T9 & V0;
-T2 = T2 >> 05;
-V0 = 1fff1fff;
-T0 = T0 & V0;
+//  dust cloud
+// F0FFE0FF
+// 00A01F1F
+// 8080802E colour + command
+// 3A00077A clut + tpage
 
-T0 = T0 << 03;
-800D6290	add    t1, t1, t0
-800D6294	add    t3, t1, t2
-800D6298	add    t2, t2, t0
+data = A0;
+buffer = A1;
+priority = A2;
 
-VXY0 = T0; VZ0 = 0;
-VXY1 = T1; VZ1 = 0;
-VXY2 = T2; VZ2 = 0;
-gte_RTPT; // Perspective transform on 3 points.
-if (TRZ <= 0)
+T0 = w[data + 0];
+T9 = w[data + 4];
+
+width = (T9 & 00ff0000) >> d;
+height = (T9 & ff000000) >> 5;
+p0 = (T0 & 1fff1fff) << 3;
+p1 = p0 + width;
+p2 = p0 + height;
+p3 = p0 + width + height;
+
+VXY0 = p0;
+VZ0 = 0;
+VXY1 = p1;
+VZ1 = 0;
+VXY2 = p2;
+VZ2 = 0;
+gte_RTPT(); // Perspective transform on 3 points
+
+if( TRZ <= 0 )
 {
     return A3;
 }
 
-V1 = 10 - A2;
-V0 = V0 >> V1;
-V0 = V0 << 02;
-800D62D0	add    a1, a1, v0
-T0 = w[A1 + 0000];
-V0 = ffffff;
-800D62E0	lui    v1, $0900
-T0 = T0 & V0;
-T0 = T0 | V1;
-[A3 + 0000] = w(T0);
-V0 = A3 & V0;
-[A1 + 0000] = w(V0);
+// insert packet
+depth = TRZ >> (10 - priority);
+[A3] = w((w[buffer + depth * 4] & 00ffffff) | 09000000);
+[buffer + depth * 4] = w(A3 & 00ffffff);
 
-T0 = SXY0;
-T1 = SXY1;
-T2 = SXY2;
-
-if (V0 == T1)
+if( ( SXY0 - SXY1) == 0 )
 {
-    T1 = T1 + 1;
+    SXY1 = SXY1 + 1;
 }
 
-if (T0 == T2)
+if( ( SXY0 - SXY2P ) == 0 )
 {
-    T2 = T2 + 10000;
+    SXY2P = SXY2P + 10000;
 }
 
-[A3 + 8] = w(T0);
-[A3 + 10] = w(T1);
-[A3 + 18] = w(T2);
+[A3 + 8] = w(SXY0);   // xy0
+[A3 + 10] = w(SXY1);  // xy1
+[A3 + 18] = w(SXY2P); // xy2
 
-VXY0 = T3;
+VXY0 = p3;
 VZ0 = 0;
+gte_RTPS(); // Perspective transform
 
+[A3 + 20] = w(SXY2); // xy3
 
-gte_RTPS; // Perspective transform
+wh = T9 >> 10;
+width = wh & 00ff;
+height = wh & ff00;
 
-[A3 + 0020] = w(SXY2);
-T0 = T9 >> 10;
-T1 = T0 & 00ff;
-T2 = T0 & ff00;
-
-[A3 + c] = h(T9); // UV for vertex1
-800D6358	add    v0, t9, t1
-[A3 + 0014] = h(V0);
-800D6360	add    v0, t9, t2
-[A3 + 001c] = h(V0);
-800D6368	add    v0, t9, t0
-[A3 + 0024] = h(V0);
-V0 = w[A0 + 0008];
-V1 = w[A0 + 000c];
-[A3 + 0004] = w(V0);
-[A3 + 0016] = h(V1);
-V1 = V1 >> 10;
-[A3 + 000e] = h(V1);
+[A3 + 4] = w(w[data + 8]);       // colour + command 8080802E
+[A3 + c] = h(T9);                // uv0
+[A3 + e] = h(w[data + c] >> 10); // clut
+[A3 + 14] = h(T9 + width);       // uv1
+[A3 + 16] = h(w[data + c]);      // tpage
+[A3 + 1c] = h(T9 + height);      // uv2
+[A3 + 24] = h(T9 + wh);          // uv3
 
 return A3 + 28;
 ////////////////////////////////
@@ -3536,6 +3502,7 @@ if (V1 == 0)
 ////////////////////////////////
 // funcd751c
 // function used to render effect mashingun ground spot
+
 V0 = h[801590d4];
 S1 = 801621f0 + V0 * 20;
 
@@ -3637,6 +3604,7 @@ V0 = V0 + V1;
 ////////////////////////////////
 // funcd7724()
 // function used to render effect mashingun fire and spot
+
 V0 = h[801590d4];
 S1 = 801621f0 + V0 * 20;
 
@@ -3702,6 +3670,7 @@ else
 ////////////////////////////////
 // funcd7888()
 // function used to render effect mashingun (total)
+
 V0 = h[801590d4];
 S1 = 801621f0 + V0 * 20;
 

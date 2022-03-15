@@ -287,11 +287,11 @@ FFVII_System_UITimerAddToRender( u16 pos_x, u16 pos_y, u32 timer )
     }
 
     u16 tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
-    struct PSX_RECT rect
+    struct PSX_RECT rect;
     rect.x = 0;
     rect.y = 0x0;
-    rect.w = 0x0xff;
-    rect.h = 0x0xff;
+    rect.w = 0xff;
+    rect.h = 0xff;
     FFVII_System_UICreateAddTextureSettings( 0, 1, tex_set, rect );
 }
 

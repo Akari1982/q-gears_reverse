@@ -8267,53 +8267,20 @@ return w[SP + 4c] & (0 - (((w[SP + 4c] / 8) & ffff) < size));
 
 
 ////////////////////////////////
-// battle_get_point_by_model_bone
-800D3994	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0030] = w(S0);
+// battle_get_point_by_model_bone()
+
 S0 = A2;
-A2 = A1 << 01;
-A2 = A2 + A1;
-A2 = A2 << 02;
-A2 = A2 + A1;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V1 = V0 << 05;
-V1 = V1 - V0;
-V1 = V1 << 03;
-V1 = V1 - A0;
-V1 = V1 + A2;
-V1 = V1 << 02;
-A0 = 800fa650;
-[SP + 0034] = w(RA);
-AT = 80151a6c;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-A1 = hu[A0 + 0000];
-800D39F0	nop
-V0 = V0 - A1;
-[S0 + 0000] = h(V0);
-AT = 80151a70;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-A1 = hu[800fa654];
-800D3A14	addiu  a0, a0, $ffec (=-$14)
-V0 = V0 - A1;
-[S0 + 0002] = h(V0);
-AT = 80151a74;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-V1 = hu[800fa658];
-A1 = SP + 0010;
-V0 = V0 - V1;
-800D3A40	jal    $8003bf3c
-[S0 + 0004] = h(V0);
-A0 = SP + 0010;
+
+[S0 + 0] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 14] - hu[800fa650]); // translation x
+[S0 + 2] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 18] - hu[800fa654]); // translation y
+[S0 + 4] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 1c] - hu[800fa658]); // translation z
+
+A0 = 800fa650 - 14;
+A1 = SP + 10;
+system_transponate_matrix();
+
+A0 = SP + 10;
 A1 = S0;
-800D3A50	jal    $8003b2cc
-A2 = A1;
-RA = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0038;
-800D3A64	jr     ra 
-800D3A68	nop
+A2 = S0;
+system_matrix_vector_multiply();
 ////////////////////////////////

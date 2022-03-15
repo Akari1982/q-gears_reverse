@@ -147,6 +147,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\ffvii\battle\effects.c" />
     <ClCompile Include="..\..\src\ffvii\field\entity.c" />
     <ClCompile Include="..\..\src\ffvii\system\window.c" />
     <ClCompile Include="..\..\src\system\render.c" />
@@ -419,6 +420,7 @@
     <ClCompile Include="zlib\zutil.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\ffvii\battle\effects.h" />
     <ClInclude Include="..\..\src\ffvii\field\entity.h" />
     <ClInclude Include="..\..\src\ffvii\system\window.h" />
     <ClInclude Include="..\..\src\system\render.h" />
