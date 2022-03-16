@@ -2375,15 +2375,10 @@ SP = SP + 0028;
 ////////////////////////////////
 // funcd6260()
 
-//  dust cloud
-// F0FFE0FF
-// 00A01F1F
-// 8080802E colour + command
-// 3A00077A clut + tpage
-
 data = A0;
 buffer = A1;
 priority = A2;
+otc = A3;
 
 T0 = w[data + 0];
 T9 = w[data + 4];
@@ -2405,13 +2400,13 @@ gte_RTPT(); // Perspective transform on 3 points
 
 if( TRZ <= 0 )
 {
-    return A3;
+    return otc;
 }
 
 // insert packet
 depth = TRZ >> (10 - priority);
-[A3] = w((w[buffer + depth * 4] & 00ffffff) | 09000000);
-[buffer + depth * 4] = w(A3 & 00ffffff);
+[otc] = w((w[buffer + depth * 4] & 00ffffff) | 09000000);
+[buffer + depth * 4] = w(otc & 00ffffff);
 
 if( ( SXY0 - SXY1) == 0 )
 {
@@ -2423,29 +2418,29 @@ if( ( SXY0 - SXY2P ) == 0 )
     SXY2P = SXY2P + 10000;
 }
 
-[A3 + 8] = w(SXY0);   // xy0
-[A3 + 10] = w(SXY1);  // xy1
+[otc + 8] = w(SXY0);   // xy0
+[otc + 10] = w(SXY1);  // xy1
 [A3 + 18] = w(SXY2P); // xy2
 
 VXY0 = p3;
 VZ0 = 0;
 gte_RTPS(); // Perspective transform
 
-[A3 + 20] = w(SXY2); // xy3
+[otc + 20] = w(SXY2); // xy3
 
 wh = T9 >> 10;
 width = wh & 00ff;
 height = wh & ff00;
 
-[A3 + 4] = w(w[data + 8]);       // colour + command 8080802E
-[A3 + c] = h(T9);                // uv0
-[A3 + e] = h(w[data + c] >> 10); // clut
-[A3 + 14] = h(T9 + width);       // uv1
-[A3 + 16] = h(w[data + c]);      // tpage
-[A3 + 1c] = h(T9 + height);      // uv2
-[A3 + 24] = h(T9 + wh);          // uv3
+[otc + 4] = w(w[data + 8]);       // colour + command 8080802E
+[otc + c] = h(T9);                // uv0
+[otc + e] = h(w[data + c] >> 10); // clut
+[otc + 14] = h(T9 + width);       // uv1
+[otc + 16] = h(w[data + c]);      // tpage
+[otc + 1c] = h(T9 + height);      // uv2
+[otc + 24] = h(T9 + wh);          // uv3
 
-return A3 + 28;
+return otc + 28;
 ////////////////////////////////
 
 
