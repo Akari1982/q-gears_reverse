@@ -688,7 +688,6 @@ void psxBNE() {	RepBranchi32(!=) }  // Branch if Rs != Rt
 void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
-
     // Xenogears Battle
     if( _JumpTarget_ == 0x800b8af8 )
     {
@@ -707,11 +706,11 @@ void psxJAL()
         //execI();
         //FFVII_Battle_EffectsUpdate();
     //}
-    else if( _JumpTarget_ == 0x800d6260 )
-    {
-        execI();
-        FFVII_Battle_EffectSpriteAdd();
-    }
+    //else if( _JumpTarget_ == 0x800d6260 )
+    //{
+        //execI();
+        //FFVII_Battle_EffectSpriteAdd();
+    //}
     else
     {
         _SetLink( 31 );

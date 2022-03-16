@@ -291,53 +291,49 @@ FFVII_Battle_EffectSpriteAdd()
     u32 p2 = p0 + height;
     u32 p3 = p0 + width + height;
 
-    psxRegs.CP2D.v0.x = p0 & 0xffff;
-    psxRegs.CP2D.v0.y = p0 >> 0x10;
-    psxRegs.CP2D.v0.z = 0;
-    psxRegs.CP2D.v1.x = p1 & 0xffff;
-    psxRegs.CP2D.v1.y = p1 >> 0x10;
-    psxRegs.CP2D.v1.z = 0;
-    psxRegs.CP2D.v2.x = p2 & 0xffff;
-    psxRegs.CP2D.v2.y = p2 >> 0x10;
-    psxRegs.CP2D.v2.z = 0;
+    psxRegs.CP2D.n.v0.x = p0 & 0xffff;
+    psxRegs.CP2D.n.v0.y = p0 >> 0x10;
+    psxRegs.CP2D.n.v0.z = 0;
+    psxRegs.CP2D.n.v1.x = p1 & 0xffff;
+    psxRegs.CP2D.n.v1.y = p1 >> 0x10;
+    psxRegs.CP2D.n.v1.z = 0;
+    psxRegs.CP2D.n.v2.x = p2 & 0xffff;
+    psxRegs.CP2D.n.v2.y = p2 >> 0x10;
+    psxRegs.CP2D.n.v2.z = 0;
 
     psxRegs.code = 0x30;
-    docop2( 0x30 );
+    //docop2( 0x30 );
     //gte_RTPT(); // Perspective transform on 3 points
 
-    if( psxRegs.CP2C.trZ <= 0 )
+    if( psxRegs.CP2C.n.trZ <= 0 )
     {
         //return otc;
     }
 
     // insert packet
-    depth = psxRegs.CP2C.trZ >> ( 0x10 - priority );
+    u32 depth = psxRegs.CP2C.n.trZ >> ( 0x10 - priority );
     psxMemWrite32( otc, ( psxMemRead32( buffer + depth * 4 ) & 0x00ffffff) | 0x09000000 );
     psxMemWrite32( buffer + depth * 4, otc & 0x00ffffff );
 
-    psxRegs.CP2D.sxy0
-    psxRegs.CP2D.sxy1
-    psxRegs.CP2D.sxy2p
-
-    if( ( SXY0 - SXY1 ) == 0 )
+    //if( ( SXY0 - SXY1 ) == 0 )
     {
-        SXY1 = SXY1 + 0x1;
+        //SXY1 = SXY1 + 0x1;
     }
 
-    if( ( SXY0 - SXY2P ) == 0 )
+    //if( ( SXY0 - SXY2P ) == 0 )
     {
-        SXY2P = SXY2P + 0x10000;
+        //SXY2P = SXY2P + 0x10000;
     }
 
-    psxMemWrite32( otc + 0x8, SXY0 ); // xy0
-    psxMemWrite32( otc + 0x10, SXY1 ); // xy1
-    psxMemWrite32( otc + 0x18, SXY2P ); // xy2
+    //psxMemWrite32( otc + 0x8, psxRegs.CP2D.n.sxy0 ); // xy0
+    //psxMemWrite32( otc + 0x10, psxRegs.CP2D.n.sxy1 ); // xy1
+    //psxMemWrite32( otc + 0x18, psxRegs.CP2D.n.sxyp); // xy2
 
     //VXY0 = p3;
     //VZ0 = 0;
     //gte_RTPS(); // Perspective transform
 
-    [otc + 20] = w(SXY2); // xy3
+    //[otc + 20] = w(SXY2); // xy3
 
     u32 wh = data4 >> 0x10;
     width = wh & 0x00ff;
@@ -351,5 +347,5 @@ FFVII_Battle_EffectSpriteAdd()
     psxMemWrite16( otc + 0x1c, data4 + height ); // uv2
     psxMemWrite16( otc + 0x24, data4 + wh ); // uv3
 
-    return otc + 0x28;
+    psxRegs.GPR.n.v0 = otc + 0x28;
 }
