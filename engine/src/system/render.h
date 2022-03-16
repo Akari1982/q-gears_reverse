@@ -22,10 +22,10 @@ struct PSX_DRAWENV
     s16 ofs[ 2 ];             // drawing offset
     struct PSX_RECT tw;       // texture window
     u16 tpage;                // texture page
-    u8  dtd;                  // dither flag (0:off, 1:on)
-    u8  dfe;                  // flag to draw on display area (0:off 1:on)
-    u8  isbg;                 // enable to auto-clear
-    u8  r0, g0, b0;           // initital background color
+    u8 dtd;                   // dither flag (0:off, 1:on)
+    u8 dfe;                   // flag to draw on display area (0:off 1:on)
+    u8 isbg;                  // enable to auto-clear
+    u8 r0, g0, b0;            // initital background color
     struct PSX_DR_ENV dr_env; // reserved
 };
 
