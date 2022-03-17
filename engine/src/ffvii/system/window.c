@@ -285,7 +285,7 @@ FFVII_System_UITimerAddToRender( u16 pos_x, u16 pos_y, u32 timer )
         System_RenderPacketChangeBrightness( g_ui_buffer, 1 );
         psxMemWrite16( g_ui_buffer + 0x8, pos_x );
         psxMemWrite16( g_ui_buffer + 0xa, pos_y );
-        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 0xa ) * 3 ) ) * 0x10 ) - 0x50 );
+        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 10 ) * 5 ) ) * 0x10 ) - 0x50 );
         psxMemWrite8( g_ui_buffer + 0xd, ( digit >= 5 ) ? 0x68 : 0x50 );
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1ec ) );
         psxMemWrite16( g_ui_buffer + 0x10, 0x10 );
@@ -324,7 +324,7 @@ FFVII_System_UIDigitsAddToRender( u16 pos_x, u16 pos_y, u32 value, u32 num )
         System_RenderPacketChangeBrightness( g_ui_buffer, 1 );
         psxMemWrite16( g_ui_buffer + 0x8, pos_x );
         psxMemWrite16( g_ui_buffer + 0xa, pos_y );
-        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 0xa ) * 3 ) ) * 0x10 ) - 0x50 );
+        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 10 ) * 5 ) ) * 0x10 ) - 0x50 );
         psxMemWrite8( g_ui_buffer + 0xd, ( digit >= 5 ) ? 0x68 : 0x50 );
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1ec ) );
         psxMemWrite16( g_ui_buffer + 0x10, 0x10 );

@@ -1548,7 +1548,7 @@ for( int i = 0; i < 4; ++i )
     V1 = w[80062f24];
     [V1 + 8] = h(x);
     [V1 + a] = h(y);
-    [V1 + c] = b(((digit - ((digit / a) * 3)) * 10) - 50);
+    [V1 + c] = b(((digit - ((digit / a) * 5)) * 10) - 50);
 
     if( digit >= 5 )
     {
@@ -1625,7 +1625,7 @@ for( int i = 0 i < 8; +i )
     V1 = w[80062f24];
     [V1 + 8] = h(x);
     [V1 + a] = h(y);
-    [V1 + c] = b((digit - ((digit / a) * 3)) * 10 - 50);
+    [V1 + c] = b((digit - ((digit / a) * 5)) * 10 - 50);
 
     if( digit >= 5 )
     {
