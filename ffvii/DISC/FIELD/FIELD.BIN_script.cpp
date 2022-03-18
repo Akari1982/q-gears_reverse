@@ -61,42 +61,42 @@ if( bu[800716d4] == 0 )
 
 S0 = A0;
 
-V0 = bu[8007ebe0];
-800BA670	beq    v0, zero, Lba738 [$800ba738]
-
-800BA678	jal    funcd4bfc [$800d4bfc]
-800BA67C	nop
-800BA680	jal    funcbc338 [$800bc338]
-800BA684	nop
-800BA688	jal    funcd7d6c [$800d7d6c]
-
-field_init_debug_with_default();
-
-field_file_offset = w[8009c6dc];
-
-[80095dcc] = b(0);
-[8009fe8c] = b(0);
-[8007ebe0] = b(0);
-
-if( bu[field_file_offset + 1] < 5 )
+if( bu[8007ebe0] != 0 )
 {
-    A0 = 4b;
-    A1 = b;
-    system_bios_system_error_boot_or_disk_failure();
-}
+    800BA678	jal    funcd4bfc [$800d4bfc]
 
-if( bu[field_file_offset + 0] < 2 )
-{
-    A0 = 4b;
-    A1 = a;
-    system_bios_system_error_boot_or_disk_failure();
-}
+    800BA680	jal    funcbc338 [$800bc338]
 
-if( bu[field_file_offset + 1] >= 6 || bu[field_file_offset + 0] >= 3 )
-{
-    A0 = 4b;
-    A1 = c;
-    system_bios_system_error_boot_or_disk_failure();
+    800BA688	jal    funcd7d6c [$800d7d6c]
+
+    field_init_debug_with_default();
+
+    field_file_offset = w[8009c6dc];
+
+    [80095dcc] = b(0);
+    [8009fe8c] = b(0);
+    [8007ebe0] = b(0);
+
+    if( bu[field_file_offset + 1] < 5 )
+    {
+        A0 = 4b;
+        A1 = b;
+        system_bios_system_error_boot_or_disk_failure();
+    }
+
+    if( bu[field_file_offset + 0] < 2 )
+    {
+        A0 = 4b;
+        A1 = a;
+        system_bios_system_error_boot_or_disk_failure();
+    }
+
+    if( bu[field_file_offset + 1] >= 6 || bu[field_file_offset + 0] >= 3 )
+    {
+        A0 = 4b;
+        A1 = c;
+        system_bios_system_error_boot_or_disk_failure();
+    }
 }
 
 if( bu[80099ffc] != 4 || bu[80099ffc] != 5 || bu[80070788] != 0 )

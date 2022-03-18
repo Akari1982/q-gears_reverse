@@ -2630,7 +2630,7 @@ S2 = 0200;
 [SP + 001e] = h(S2);
 800A6EA0	jal    $system_draw_sync
 A0 = 0;
-800A6EA8	jal    $8004b3f4
+800A6EA8	jal    $system_psyq_wait_frames
 A0 = 0;
 S1 = 800b1970;
 A0 = S1;
@@ -2679,7 +2679,7 @@ V0 = 0100;
 [SP + 001e] = h(V0);
 800A6F80	jal    funcac068 [$800ac068]
 800A6F84	nop
-800A6F88	jal    $8004b3f4
+800A6F88	jal    $system_psyq_wait_frames
 A0 = 0;
 800A6F90	jal    $system_draw_sync
 A0 = 0;
@@ -2702,7 +2702,7 @@ V0 = V0 < 18de;
 La6fd0:	; 800A6FD0
 800A6FD0	jal    $system_draw_sync
 A0 = 0;
-800A6FD8	jal    $8004b3f4
+800A6FD8	jal    $system_psyq_wait_frames
 A0 = 0002;
 A1 = 0;
 A2 = 0;
@@ -2734,7 +2734,7 @@ V0 = 0001;
 [801e89e0] = w(V0);
 800A7064	jal    $system_draw_sync
 A0 = 0;
-800A706C	jal    $8004b3f4
+800A706C	jal    $system_psyq_wait_frames
 A0 = 0;
 S1 = 800b1970;
 A0 = S1;
@@ -2899,7 +2899,7 @@ S0 = 0001;
 800A7308	nop
 800A730C	jal    field_flush_sync [$80078fb0]
 800A7310	nop
-800A7314	jal    $80031e1c
+800A7314	jal    $system_memory_clean_removed_alloc
 800A7318	nop
 800A731C	jal    funca6564 [$800a6564]
 800A7320	nop
@@ -2908,7 +2908,7 @@ S0 = 0001;
 [800ad054] = w(S0);
 
 loopa7334:	; 800A7334
-800A7334	jal    $8004b3f4
+800A7334	jal    $system_psyq_wait_frames
 A0 = 0;
 800A733C	jal    funca6804 [$800a6804]
 A0 = 0003;
@@ -2947,7 +2947,7 @@ A0 = 0006;
 La73b4:	; 800A73B4
 800A73B4	jal    $system_draw_sync
 A0 = 0;
-800A73BC	jal    $8004b3f4
+800A73BC	jal    $system_psyq_wait_frames
 A0 = 0;
 A0 = w[800c3740];
 800A73CC	jal    $system_psyq_put_disp_env
@@ -2959,7 +2959,7 @@ A0 = w[800c3740];
 A0 = 0003;
 800A73EC	jal    $system_draw_sync
 A0 = 0;
-800A73F4	jal    $8004b3f4
+800A73F4	jal    $system_psyq_wait_frames
 A0 = 0;
 A0 = w[800c3740];
 800A7404	jal    $system_psyq_put_disp_env
@@ -2986,38 +2986,26 @@ La7448:	; 800A7448
 800A744C	nop
 
 La7450:	; 800A7450
-V0 = w[800c1b60];
-800A7458	nop
-800A745C	bne    v0, zero, La74d4 [$800a74d4]
-800A7460	nop
-V0 = w[800ad04c];
-800A746C	nop
-800A7470	bne    v0, s0, La74ac [$800a74ac]
-800A7474	nop
-V0 = hu[800c2dd4];
-800A7480	nop
-V0 = V0 & 0080;
-800A7488	bne    v0, zero, La758c [$800a758c]
-800A748C	nop
-V0 = w[800ad05c];
-800A7498	nop
-800A749C	bne    v0, zero, La758c [$800a758c]
-800A74A0	nop
-800A74A4	j      La7538 [$800a7538]
-800A74A8	nop
+if( w[800c1b60] == 0 ) // PC HDD MODE
+{
+    if( w[800ad04c] != S0 )
+    {
+        800A74AC	jal    func73d90 [$80073d90]
 
-La74ac:	; 800A74AC
-800A74AC	jal    func73d90 [$80073d90]
-800A74B0	nop
-V0 = hu[800c2dd4];
-800A74BC	nop
-V0 = V0 & 0020;
-800A74C4	bne    v0, zero, La758c [$800a758c]
-800A74C8	nop
-800A74CC	j      La7538 [$800a7538]
-800A74D0	nop
+        V0 = hu[800c2dd4] & 0020;
+        800A74C4	bne    v0, zero, La758c [$800a758c]
+    }
+    else
+    {
+        V0 = hu[800c2dd4] & 0080;
+        800A7488	bne    v0, zero, La758c [$800a758c]
 
-La74d4:	; 800A74D4
+        V0 = w[800ad05c];
+        800A749C	bne    v0, zero, La758c [$800a758c]
+    }
+    800A74A4	j      La7538 [$800a7538]
+}
+
 V0 = w[800ad058];
 800A74DC	nop
 V0 = V0 & 0080;
@@ -3030,12 +3018,12 @@ V0 = hu[800c2dd4];
 V0 = V0 & 0020;
 800A7504	beq    v0, zero, La7538 [$800a7538]
 A0 = 0;
-800A750C	jal    $80038bc0
+800A750C	jal    $system_sound_set_cd_volume_increase
 A1 = 000a;
 S0 = 0;
 
 La7518:	; 800A7518
-800A7518	jal    $8004b3f4
+800A7518	jal    $system_psyq_wait_frames
 A0 = 0;
 S0 = S0 + 0001;
 V0 = S0 < 0005;
@@ -3067,7 +3055,7 @@ V0 = V0 < V1;
 800A7588	nop
 
 La758c:	; 800A758C
-800A758C	jal    $8004b3f4
+800A758C	jal    $system_psyq_wait_frames
 A0 = 0;
 800A7594	jal    $system_draw_sync
 A0 = 0;
@@ -3080,15 +3068,19 @@ A0 = w[800c3740];
 A0 = A0 + 00b8;
 A0 = w[800c3740];
 800A75C4	jal    system_psyq_put_draw_env
-800A75C8	nop
-800A75CC	jal    $8004b3f4
+
 A0 = 0;
-800A75D4	jal    $system_draw_sync
+system_psyq_wait_frames();
+
 A0 = 0;
-800A75DC	jal    $system_memory_mark_removed_alloc
+system_draw_sync();
+
 A0 = S2;
-800A75E4	jal    $80031e1c
+system_memory_mark_removed_alloc();
+
 S2 = 00e0;
+system_memory_clean_removed_alloc();
+
 800A75EC	jal    funca69d0 [$800a69d0]
 800A75F0	nop
 800A75F4	jal    func76f14 [$80076f14]
@@ -3105,7 +3097,7 @@ A2 = A2 << 08;
 [SP + 0012] = h(A2);
 800A7628	jal    $system_draw_sync
 A0 = 0;
-800A7630	jal    $8004b3f4
+800A7630	jal    $system_psyq_wait_frames
 A0 = 0;
 S0 = 800b9a64;
 S1 = S0 + 00b8;
@@ -3123,7 +3115,7 @@ V0 = 0002;
 A0 = 0;
 
 La7680:	; 800A7680
-800A7680	jal    $8004b3f4
+800A7680	jal    $system_psyq_wait_frames
 A0 = 0;
 V0 = 800b1a39;
 800A7690	addiu  a0, v0, $ffef (=-$11)
@@ -3147,7 +3139,7 @@ V0 = 0140;
 [SP + 0016] = h(S2);
 800A76E4	jal    $system_draw_sync
 A0 = 0;
-800A76EC	jal    $8004b3f4
+800A76EC	jal    $system_psyq_wait_frames
 A0 = 0;
 [800b9b2d] = b(0);
 [800c3740] = w(S0);

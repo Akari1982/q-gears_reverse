@@ -687,6 +687,8 @@
 8009c5a2 array of some volume mod for channels. (0x2 size)
 
 8009c6dc current field file offset.
+    + 10 name of field creator.
+    + 18 field name.
 8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
 
 8009c6e4 savemap start

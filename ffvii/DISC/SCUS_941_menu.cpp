@@ -1547,10 +1547,11 @@ return bu[GP + 97];
 
 
 ////////////////////////////////
-// func1f6e4
+// func1f6e4()
+
 [GP + a0] = b(A0);
-A0 = A0 << 10;
-if( A0 != 0 )
+
+if( (A0 << 10) != 0 )
 {
     [GP + a2] = h(A1);
     [GP + a4] = h(A2);
@@ -1632,7 +1633,6 @@ if( V1 == 1 )
         [GP + 97] = b(2);
         [GP + a1] = b(2);
     }
-    8001F834	j      L1f9e4 [$8001f9e4]
 }
 else if( V1 == 2 )
 {
@@ -1727,9 +1727,9 @@ else if( V1 == 3 )
         V0 = V0 >> 01;
         [SP + 0010] = w(A2);
         A2 = A2 >> 01;
-        8001F9A8	addiu  a2, a2, $fff4 (=-$c)
-        S1 = h[GP + 00a2];
-        S0 = h[GP + 00a4];
+        A2 = A2 - c;
+        S1 = h[GP + a2];
+        S0 = h[GP + a4];
         A1 = S1 + A1;
         A1 = A1 - V0;
     }
@@ -1748,20 +1748,15 @@ else if( V1 == 3 )
     }
 }
 
-8001F878	j      L1f9e4
-
-
-
-L1f9e4:	; 8001F9E4
-8001F9E4	jal    func1de70 [$8001de70]
+func1de70();
 
 A0 = 80049384;
-8001F9F4	jal    func1def0 [$8001def0]
+func1def0();
 
 A0 = SP + 18;
 system_menu_add_window_to_render();
 
-8001FA04	jal    func1deb0 [$8001deb0]
+func1deb0();
 ////////////////////////////////
 
 
@@ -2534,7 +2529,7 @@ if (bu[8009c757 + character_data * 84] & 10)
     A1 = S6 + b;
     A2 = 80049350; // text "Sadness"
     A3 = 3;
-    func26f44;
+    func26f44();
 }
 
 
@@ -2545,7 +2540,7 @@ if (bu[8009c757 + character_data * 84] & 20)
     A1 = S6 + b;
     A2 = 80049344; // text "Fury"
     A3 = 3;
-    func26f44;
+    func26f44();
 }
 
 
@@ -2561,7 +2556,7 @@ else
 {
     A3 = 7;
 }
-func26f44;
+func26f44();
 
 
 
@@ -4946,7 +4941,7 @@ A0 = 126;
 A1 = A1 + b;
 A2 = 80049248 + V1 * c; // text "Item"
 A3 = 7;
-func26f44;
+func26f44();
 
 V1 = w[GP + 01dc];
 80023214	nop
@@ -5006,7 +5001,7 @@ V1 = w[GP + 0250];
 A1 = b;
 A2 = 80049248 + V1 * c; // text "Item"
 A3 = 7;
-func26f44;
+func26f44();
 
 800232F4	j      L234c8 [$800234c8]
 800232F8	nop
@@ -5033,7 +5028,7 @@ loop23334:	; 80023334
         {
             A3 = 7;
         }
-        func26f44;
+        func26f44();
     }
 
     S0 = S0 + 1;
@@ -5073,7 +5068,7 @@ V0 = w[GP + 01c8];
 A1 = b;
 A2 = 90049248 + V0 * c;
 A3 = 7;
-func26f44;
+func26f44();
 
 V0 = 0018;
 [GP + 00ac] = w(V0);
@@ -5114,8 +5109,9 @@ A2 = A2 + V1;
 A2 = A2 << 02;
 V0 = 80049248;
 A2 = A2 + V0;
-80023484	jal    func26f44 [$80026f44]
 A3 = 0007;
+func26f44();
+
 V1 = w[GP + 0188];
 80023490	nop
 V0 = V1 << 03;
@@ -5374,10 +5370,8 @@ V0 = 0002;
 
 if( w[GP + 24c] != 0 )
 {
-    func26090;
+    func26090();
 }
-
-
 
 [GP + 208] = h(hu[8009c6e4 + 0bc0]); // menu visibility mask
 A1 = hu[8009c6e4 + 0bc2]; // menu locking mask
@@ -5441,7 +5435,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
             if( hu[80062d7c] & 0040 ) // cancel
             {
                 A0 = 4;
-                system_menu_sound;
+                system_menu_sound();
 
                 [GP + 2b0] = h(3);
                 [GP + 27c] = w(2);
@@ -5746,14 +5740,12 @@ A0 = A0 + V0;
 A0 = w[GP + 214];
 func230c4; // draw menu
 
-
-
 // block of fieldname
 A0 = c0;
 A1 = 11c - h[GP + 164] * 4.2f + 6;
 A2 = 8009d5f0; // text field name
 A3 = 7;
-func26f44;
+func26f44();
 
 [SP + 28] = h(b8);
 [SP + 2a] = h(11c - h[GP + 164] * 4.2f);
@@ -5763,8 +5755,6 @@ func26f44;
 A0 = SP + 28;
 system_menu_add_window_to_render();
 
-
-
 // block of time/gil
 S3 = 1ce - h[GP + 164] * 9.2f;
 
@@ -5772,13 +5762,13 @@ A0 = S3 + 4;
 A1 = aa;
 A2 = 800492f0; // text "Time"
 A3 = 7;
-func26f44;
+func26f44();
 
 A0 = S3 + 5;
 A1 = b8;
 A2 = 800492fc; // text "Gil"
 A3 = 7;
-func26f44;
+func26f44();
 
 A0 = w[8009c6e4 + 0b80];
 system_get_hours_from_seconds;
@@ -5788,7 +5778,7 @@ A1 = ac;
 A2 = V0;
 A3 = 2;
 A4 = 7;
-func28e00;
+func28e00();
 
 A0 = S3 + 2c;
 A1 = ad;
@@ -5801,7 +5791,7 @@ else
 {
     A3 = 7;
 }
-system_draw_single_menu_font_character;
+system_draw_single_menu_font_character();
 
 A0 = w[8009d264];
 system_get_minutes_from_seconds;
@@ -5818,7 +5808,7 @@ A0 = S3 + 3e;
 A1 = ad;
 A2 = d5;
 A3 = 7;
-system_draw_single_menu_font_character;
+system_draw_single_menu_font_character();
 
 A0 = w[8009d264];
 system_get_seconds_from_seconds;
@@ -6004,13 +5994,13 @@ L245bc:	; 800245BC
         A1 = y_pos + 11;
         A2 = 80049308; // text "next level"
         A3 = 7;
-        func26f44;
+        func26f44();
 
         A0 = S3 + ba;
         A1 = y_pos + 26;
         A2 = 80049314; // text "Limit level"
         A3 = 7;
-        func26f44;
+        func26f44();
     }
 
     y_pos = y_pos + 3c;
@@ -6195,7 +6185,7 @@ L24b90:	; 80024B90
                 A1 = ce;
                 A2 = 80049320; // text "Tutorial"
                 A3 = 4;
-                func26f44; // text
+                func26f44(); // text
 
                 A0 = 80049320;
                 system_get_single_string_width;
@@ -8436,198 +8426,160 @@ return A1;
 ////////////////////////////////
 // func26c5c()
 
-S3 = A0
+S3 = A0;
 S6 = A1;
 S7 = A2;
+S4 = 0;
+S5 = 0;
+[SP + 0020] = h(A3);
 
-[SP + 20] = A3 = 2F8;
-V0 = [SP + 20] = F8;
+V0 = bu[SP + 20];
 V1 = SP + 20;
-A0 = V0 - F8;
-V0 = A0 < 07;
-[SP + 28] = S0;
+[SP + 0028] = w(S0);
 
-if (V0 != 0)
+switch( V0 )
 {
-    V0 = A0 << 2 = 0;
-    AT = 80010378;
-    AT = AT + V0
-    V0 = [AT] = [80010378] = 80026F10;
-    V1 = V1 + 01;
-
-    case: F8
+    case f8:
     {
-        return;
+        return S3;
     }
-    break;
 
-    case: FA
+    case fa:
     {
-        S1 = E7;
+        V1 = V1 + 1;
         S2 = 84;
-        S4 = 0;
-        S5 = 0;
+        S1 = e7;
     }
-    break;
 
-    case: FB
+    case fb:
     {
-        S1 = 01B9;
-        S2 = 0
+        V1 = V1 + 1;
+        S2 = 0;
         S4 = 10;
-        S5 = 0;
+        S1 = 1b9;
     }
-    break;
 
-    case: FC
+    case fc:
     {
-        S1 = 02A0;
-        S2 = 84
-        S4 = 10;
-        S5 = 0;
-    }
-    break;
-
-    case: FD
-    {
-        S1 = 0372
-        S2 = 84;
-        S4 = 0;
-        S5 = -40 (FFC0);
-    }
-    break;
-
-    case: FE
-    {
-        S1 = 0444;
+        V1 = V1 + 1;
         S2 = 84;
         S4 = 10;
-        S5 = -10 (FFC0);
+        S1 = 2a0;
     }
-    break;
-}
-else
-{
-    S1 = 0;
-    S2 = 0;
-    S4 = 0;
-    S5 = 0;
+
+    case fd:
+    {
+        V1 = V1 + 1;
+        S2 = 0084;
+        S1 = 0372;
+        S5 = -40;
+    }
+
+    case fe:
+    {
+        V1 = V1 + 1;
+        S2 = 84;
+        S4 = 10;
+        S1 = 444;
+        S5 = -40;
+    }
+
+    default:
+    {
+        S1 = 0;
+        S2 = 0;
+    }
 }
 
-A1 = 0001;
-A2 = 86186187;
-A3 = bu[V1 + 0000];
+A3 = bu[V1 + 0];
 V0 = w[800707c0];
-A0 = w[80062f24];
 [SP + 0020] = h(A3);
 A3 = A3 & ffff;
-80026D64	multu  a3, a2
+A2 = hi(A3 * 86186187);
+
 V1 = A3 + S1;
 V0 = V0 + V1;
-V1 = bu[V0 + 0000];
-V0 = 0004;
-[A0 + 0003] = b(V0);
-V1 = V1 >> 05;
-S3 = S3 + V1;
-V1 = w[80062f24];
-V0 = 0064;
-[V1 + 0007] = b(V0);
+
 A0 = w[80062f24];
-80026D9C	mfhi   a2
+[A0 + 3] = b(4);
+[A0 + 7] = b(64);
+
+V1 = bu[V0 + 0000];
+S3 = S3 + V1 * 20;
+
 V0 = A3 - A2;
 V0 = V0 >> 01;
 A2 = A2 + V0;
 A2 = A2 >> 04;
+
 V0 = A2 << 02;
 V0 = V0 + A2;
 V0 = V0 << 02;
 V0 = V0 + A2;
 A3 = A3 - V0;
+
 A3 = A3 & ffff;
 S0 = A3 << 01;
 S0 = S0 + A3;
 S0 = S0 << 02;
+
 A2 = A2 & ffff;
 V0 = A2 << 01;
 V0 = V0 + A2;
 V0 = V0 << 02;
-80026DE4	jal    system_change_brightness_calculation_in_packet [$80046870]
 S2 = S2 + V0;
-V0 = w[80062f24];
-80026DF4	nop
-[V0 + 0008] = h(S3);
-V0 = w[80062f24];
-A0 = S4 << 10;
-[V0 + 000a] = h(S6);
-V0 = w[80062f24];
-A0 = A0 >> 10;
-[V0 + 000c] = b(S0);
-V0 = w[80062f24];
-A0 = A0 | 0100;
-[V0 + 000d] = b(S2);
-V0 = w[80062f24];
-V1 = 000c;
-[V0 + 0010] = h(V1);
-V0 = w[80062f24];
-A1 = S7 + 01f0;
-80026E48	jal    system_create_clut_for_packet [$80046634]
-[V0 + 0012] = h(V1);
-V1 = w[80062f24];
-80026E58	nop
-[V1 + 000e] = h(V0);
-A1 = w[80062f24];
-A0 = w[GP + 0280];
-V0 = A1 + 0014;
-[80062f24] = w(V0);
-80026E78	jal    system_add_render_packet_to_queue [$80046794]
-80026E7C	nop
-V0 = hu[SP + 0020];
-V1 = w[800707c0];
-V0 = V0 + S1;
-V1 = V1 + V0;
-V0 = bu[V1 + 0000];
-V1 = bu[GP + 00b9];
-V0 = V0 & 001f;
-80026EA0	bne    v1, zero, L26f10 [$80026f10]
-S3 = S3 + V0;
-A1 = 0;
-V0 = 00ff;
-[SP + 001c] = h(V0);
-[SP + 001e] = h(V0);
-V0 = SP + 0018;
-A3 = S5 << 10;
-A3 = A3 >> 10;
-A3 = A3 + 0380;
-A3 = A3 & 03ff;
-A3 = A3 >> 06;
-A2 = 0001;
-A0 = w[80062f24];
-A3 = A3 | 0030;
-[SP + 0018] = h(0);
-[SP + 001a] = h(0);
-80026EE8	jal    system_gpu_create_texture_setting_packet [$80044a68]
-[SP + 0010] = w(V0);
-A1 = w[80062f24];
-A0 = w[GP + 0280];
-V0 = A1 + 000c;
-[80062f24] = w(V0);
-80026F08	jal    system_add_render_packet_to_queue [$80046794]
-80026F0C	nop
 
-L26f10:	; 80026F10
-V0 = S3;
-RA = w[SP + 0048];
-S7 = w[SP + 0044];
-S6 = w[SP + 0040];
-S5 = w[SP + 003c];
-S4 = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0050;
-80026F3C	jr     ra 
-80026F40	nop
+A0 = w[80062f24];
+A1 = 1;
+system_change_brightness_calculation_in_packet();
+
+V0 = w[80062f24];
+[V0 + 8] = h(S3);
+[V0 + a] = h(S6);
+[V0 + c] = b(S0);
+[V0 + d] = b(S2);
+[V0 + 10] = h(c);
+[V0 + 12] = h(c);
+
+A0 = ((S4 << 10) >> 10) | 100;
+A1 = S7 + 1f0;
+system_create_clut_for_packet();
+
+V1 = w[80062f24];
+[V1 + e] = h(V0);
+
+A0 = w[GP + 280];
+A1 = w[80062f24];
+system_add_render_packet_to_queue();
+
+[80062f24] = w(w[80062f24] + 14);
+
+V0 = hu[SP + 20];
+V1 = w[800707c0];
+S3 = S3 + (bu[V1 + V0 + S1 + 0] & 1f);
+
+if( bu[GP + b9] == 0 )
+{
+    [SP + 18] = h(0);
+    [SP + 1a] = h(0);
+    [SP + 1c] = h(ff);
+    [SP + 1e] = h(ff);
+
+    A0 = w[80062f24];
+    A1 = 0;
+    A2 = 1;
+    A3 = (((S5 + 380) & 3ff) >> 6) | 30;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+
+    A0 = w[GP + 280];
+    A1 = w[80062f24];
+    system_add_render_packet_to_queue();
+
+    [80062f24] = w(w[80062f24] + c);
+}
+
+return S3;
 ////////////////////////////////
 
 
@@ -8635,77 +8587,64 @@ SP = SP + 0050;
 ////////////////////////////////
 // func26f44()
 
+S1 = A1;
 S0 = A2;
 S3 = A3;
-80026F60	beq    s0, zero, L2706c [$8002706c]
 
-V0 = bu[GP + 00b8];
-80026F6C	nop
-80026F70	beq    v0, zero, L2700c [$8002700c]
-S2 = 0;
-S1 = A1 << 10;
-
-loop26f7c:	; 80026F7C
-opcode = [S0];
-if (opcode != FF)
+if( S0 == 0 )
 {
-    V0 = (opcode == FA) || (opcode == FB) || (opcode == FC) || (opcode == FD) || (opcode == FE);
+    return;
+}
 
-    if ((opcode == FA) || (opcode == FB) || (opcode == FC) || (opcode == FD) || (opcode == FE) || (opcode == F8))
+for( int i = 0; i < bu[GP + b8]; ++i )
+{
+    opcode = bu[S0];
+
+    if( opcode == ff )
     {
-        A3 = [S0 + 01] = 2;
-        S0 = S0 + 02;
+        break;
+    }
 
-        A1 = S1 >> 10
-        A2 = S3 & FF;
-        A3 = A3 << 08 = 200;
-        A3 = opcode & A3 = 2F8;
+    // fa fb fc fd fe f8
+    if( ( ((opcode + 6) & ff) < 5 ) || ( opcode == f8 ) )
+    {
+        A3 = (bu[S0 + 1]) | opcode;
+        S0 = S0 + 2;
     }
     else
     {
-        S0 = S0 + 01;
-
-        A1 = S1 >> 10;
-        A2 = S3 & FF;
         A3 = opcode;
+        S0 = S0 + 1;
     }
 
-    80026FE0	jal    func26c5c [$80026c5c]
-    80026FE4	nop
+    A0 = A0;
+    A1 = S1;
+    A2 = S3 & ff;
+    func26c5c();
+
     A0 = V0;
-    V0 = S2 + 0001;
-    S2 = V0;
-    V0 = V0 << 10;
-    V1 = bu[GP + 00b8];
-    V0 = V0 >> 10;
-    V0 = V0 < V1;
-    80027004	bne    v0, zero, loop26f7c [$80026f7c]
-    80027008	nop
 }
 
-V0 = bu[GP + 00b9];
-80027010	nop
-80027014	beq    v0, zero, L2706c [$8002706c]
-A1 = 0;
-A2 = 0001;
-A3 = 003e;
-A0 = w[80062f24];
-V0 = 00ff;
-[SP + 001c] = h(V0);
-[SP + 001e] = h(V0);
-V0 = SP + 0018;
-[SP + 0018] = h(0);
-[SP + 001a] = h(0);
-80027044	jal    system_gpu_create_texture_setting_packet [$80044a68]
-[SP + 0010] = w(V0);
-A1 = w[80062f24];
-A0 = w[GP + 0280];
-V0 = A1 + 000c;
-[80062f24] = w(V0);
-80027064	jal    system_add_render_packet_to_queue [$80046794]
-80027068	nop
+if( bu[GP + b9] != 0 )
+{
+    [SP + 18] = h(0);
+    [SP + 1a] = h(0);
+    [SP + 1c] = h(ff);
+    [SP + 1e] = h(ff);
 
-L2706c:	; 8002706C
+    A0 = w[80062f24];
+    A1 = 0;
+    A2 = 1;
+    A3 = 3e;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+
+    A0 = w[GP + 280];
+    A1 = w[80062f24];
+    system_add_render_packet_to_queue();
+
+    [80062f24] = w(w[80062f24] + c);
+}
 ////////////////////////////////
 
 
@@ -8819,28 +8758,25 @@ pos_y = A1;
 pos_x = A0;
 colour = A3;
 
-if (pointer != 0)
+if( pointer == 0 )
 {
-    if (bu[GP + b8] != 0)
+    return;
+}
+
+for( int i = 0; i < bu[GP + b8]; ++i )
+{
+    A2 = bu[pointer];
+    if( A2 == ff )
     {
-        S2 = 0;
-        loop2739c:	; 8002739C
-            A2 = bu[pointer];
-            if (A2 == ff)
-            {
-                break;
-            }
-
-            A0 = pos_x + S2 * 8;
-            A1 = pos_y;
-            A3 = colour;
-            system_draw_single_menu_font_character;
-
-            pointer = pointer + 1;
-            S2 = S2 + 1;
-            V0 = S2 < bu[GP + b8];
-        800273D8	bne    v0, zero, loop2739c [$8002739c]
+        break;
     }
+
+    A0 = pos_x + i * 8;
+    A1 = pos_y;
+    A3 = colour;
+    system_draw_single_menu_font_character();
+
+    pointer = pointer + 1;
 }
 ////////////////////////////////
 

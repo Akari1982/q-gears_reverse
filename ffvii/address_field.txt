@@ -223,7 +223,7 @@
 8009d70b []       some flag.
 
 8009d820 unknown value that checked x & 3 == 0.
-
+8009d824 []       debug dirty and needs update.
 8009d828 [][] array of animation speed. ASPED set speed to model data+60 and here. 4bit fixed point.
 
 800a00bc
@@ -305,8 +305,21 @@
 
 800e0738 digit->letter assosiation array (10-26 letters from character table)
 
-800e0748 debug array (size 0x17a).
-    +00c [][]     index into 0xe. Increment each call of field_add_string_to_debug_by_id (debug insertion).
+800e0748 debug array (0x6items 0x17a size). 1 - Actor, 3 - Word, 4 - Actor, 5 - field authtor.
+    +   0 [][]     x pos.
+    +   2 [][]     y pos.
+    +   4 [][]     width.
+    +   6 [][]     height.
+    +   8 []       init with 0x7.
+    +   9 []       init with 0xf.
+    +   a []       init with 0x1f.
+    +   c [][]     index into +10 array of strings. Next id to insert new string.
+    +   e [][]     init with 0. Set to 4 after init.
+    +  10 array of strings (0x18 items 0xe size)
+        + 0 []       init with 0.
+    +  78 []       init with 0. If this is 2 then we not init some data but set this to 0.
+    + 160 array of some data (0x18 items 0x1 size)
+        + 0 []       init with 0.
 
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
@@ -317,6 +330,8 @@
 800e4280 [][] current variable for windows. (size 0x2).
 
 800e42d8 some array (size 0x18)
+
+800e4254 addr for temp debug string.
 
 800e48d8
 

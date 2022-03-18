@@ -931,7 +931,7 @@ switch( S2 )
         V0 = w[struct_164 + 24];
 
         A0 = w[V0];
-        800B8F68	jal    $8001ecd8
+        func1ecd8();
 
         if( V0 == 0 )
         {

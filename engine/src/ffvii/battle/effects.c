@@ -243,7 +243,6 @@ FFVII_Battle_EffectDustSingleCloud()
     A0 = SP + 10;
     system_gte_set_translation_vector();
 
-
     A0 = 800f0218;
     A1 = w[801517c0] + 70;
     A2 = c;

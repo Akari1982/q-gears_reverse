@@ -1657,7 +1657,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
 ////////////////////////////////
 // func1ecd8()
 
-return hu[A0 + 0000] >> f;
+return hu[A0 + 0] >> f;
 ////////////////////////////////
 
 
@@ -9405,21 +9405,15 @@ SP = SP + 0070;
 80026BD4	jr     ra 
 80026BD8	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func26bdc
-80026BDC	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 003c] = w(S7);
+
 S7 = A2;
 A1 = A1 << 01;
 A1 = A1 + A0;
-[SP + 0044] = w(RA);
-[SP + 0040] = w(FP);
-[SP + 0038] = w(S6);
-[SP + 0034] = w(S5);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-[SP + 0028] = w(S2);
-[SP + 0024] = w(S1);
-[SP + 0020] = w(S0);
 V0 = hu[A1 + 0004];
 T0 = hu[SP + 0058];
 S6 = 0;
@@ -9458,14 +9452,16 @@ S0 = S0 & ff00;
 S0 = S0 << 10;
 V0 = h[S3 + fff8];
 S0 = S0 >> 10;
-80026C94	jal    system_graphic_get_clut_by_param [$800438d0]
 S0 = S0 + V0;
+system_graphic_get_clut_by_param();
+
 A0 = S2;
 A1 = 0001;
 A2 = S1;
 A3 = S0;
-80026CAC	jal    system_graphic_get_texpage_by_param [$80043894]
 [S4 + 000a] = h(V0);
+system_graphic_get_texpage_by_param();
+
 [S4 + 0008] = h(V0);
 V0 = bu[S5 + 0000];
 80026CBC	nop
@@ -9494,20 +9490,11 @@ V0 = T0 + V0;
 S4 = S4 + 0018;
 
 L26d1c:	; 80026D1C
-V0 = FP;
-RA = w[SP + 0044];
-FP = w[SP + 0040];
-S7 = w[SP + 003c];
-S6 = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0048;
-80026D4C	jr     ra 
-80026D50	nop
+return FP;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func26d54
 T2 = A1 < 0020;
