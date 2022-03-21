@@ -706,11 +706,11 @@ void psxJAL()
         //execI();
         //FFVII_Battle_EffectsUpdate();
     //}
-    //else if( _JumpTarget_ == 0x800d6260 )
-    //{
-        //execI();
-        //FFVII_Battle_EffectSpriteAdd();
-    //}
+    else if( _JumpTarget_ == 0x800d6260 )
+    {
+        execI();
+        FFVII_Battle_EffectSpriteAdd();
+    }
     else
     {
         _SetLink( 31 );

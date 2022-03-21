@@ -3,6 +3,7 @@
 #include "..\..\pcsxr\libpcsxcore\psxmem.h"
 #include "..\..\pcsxr\libpcsxcore\plugins.h"
 #include "..\..\pcsxr\libpcsxcore\r3000a.h"
+#include "..\..\pcsxr\libpcsxcore\gte.h"
 
 
 
@@ -301,12 +302,11 @@ FFVII_Battle_EffectSpriteAdd()
     psxRegs.CP2D.n.v2.z = 0;
 
     psxRegs.code = 0x30;
-    //docop2( 0x30 );
-    //gte_RTPT(); // Perspective transform on 3 points
+    gteRTPT(); // Perspective transform on 3 points
 
     if( psxRegs.CP2C.n.trZ <= 0 )
     {
-        //return otc;
+        psxRegs.GPR.n.v0 = otc;
     }
 
     // insert packet
@@ -324,15 +324,22 @@ FFVII_Battle_EffectSpriteAdd()
         //SXY2P = SXY2P + 0x10000;
     }
 
+
     //psxMemWrite32( otc + 0x8, psxRegs.CP2D.n.sxy0 ); // xy0
     //psxMemWrite32( otc + 0x10, psxRegs.CP2D.n.sxy1 ); // xy1
     //psxMemWrite32( otc + 0x18, psxRegs.CP2D.n.sxyp); // xy2
 
-    //VXY0 = p3;
-    //VZ0 = 0;
-    //gte_RTPS(); // Perspective transform
+    psxMemWrite32( otc + 0x8, psxRegs.CP2D.n.sxy0.y << 0x10 | psxRegs.CP2D.n.sxy0.x ); // xy0
+    psxMemWrite32( otc + 0x10, 1 << 0x10 | 100 ); // xy1
+    psxMemWrite32( otc + 0x18, 100 << 0x10 | 1 ); // xy2
 
+    psxRegs.CP2D.n.v0.x = p3 & 0xffff;
+    psxRegs.CP2D.n.v0.y = p3 >> 0x10;
+    psxRegs.CP2D.n.v0.z = 0;
+    psxRegs.code = 0x01;
+    gteRTPS(); // Perspective transform
     //[otc + 20] = w(SXY2); // xy3
+    psxMemWrite32( otc + 0x20, 100 << 0x10 | 100 ); // xy3
 
     u32 wh = data4 >> 0x10;
     width = wh & 0x00ff;

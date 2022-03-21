@@ -16,7 +16,7 @@ u16 g_ui_str_left;    // GP + 78
 u32 g_ui_str_tr;      // GP + 7c
 u32 g_ui_str_mono;    // GP + 80
 u32 g_ui_window_tr;   // GP + 84
-u32 g_ui_otc;         // GP + 280
+u32 g_ui_otc;         // GP + 280 (80062fc4)
 u32 g_ui_str_letters; // GP + 2ac
 u32 g_ui_str_rows;    // GP + 258
 
@@ -44,7 +44,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
         psxMemWrite16( g_ui_buffer + 0x10, w_rect.w - 8 );
         psxMemWrite16( g_ui_buffer + 0x12, 4 );
-        System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+        System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
         g_ui_buffer += 0x14;
 
         tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
@@ -65,7 +65,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
         psxMemWrite16( g_ui_buffer + 0x10, w_rect.w - 8 );
         psxMemWrite16( g_ui_buffer + 0x12, 4 );
-        System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+        System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
         g_ui_buffer += 0x14;
 
         tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
@@ -89,7 +89,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
         psxMemWrite16( g_ui_buffer + 0x10, 4 );
         psxMemWrite16( g_ui_buffer + 0x12, w_rect.h - 8 );
-        System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+        System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
         g_ui_buffer += 0x14;
 
         tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
@@ -110,7 +110,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
         psxMemWrite16( g_ui_buffer + 0x10, 4 );
         psxMemWrite16( g_ui_buffer + 0x12, w_rect.h - 8 );
-        System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+        System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
         g_ui_buffer += 0x14;
 
         tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
@@ -132,7 +132,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
     psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
     psxMemWrite16( g_ui_buffer + 0x10, 4 );
     psxMemWrite16( g_ui_buffer + 0x12, 4 );
-    System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+    System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
     g_ui_buffer += 0x14;
 
     // top right corner
@@ -146,7 +146,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
     psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
     psxMemWrite16( g_ui_buffer + 0x10, 4 );
     psxMemWrite16( g_ui_buffer + 0x12, 4 );
-    System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+    System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
     g_ui_buffer += 0x14;
 
     // bottom left corner
@@ -160,7 +160,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
     psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
     psxMemWrite16( g_ui_buffer + 0x10, 4 );
     psxMemWrite16( g_ui_buffer + 0x12, 4 );
-    System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+    System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
     g_ui_buffer += 0x14;
 
     // bottom right corner
@@ -174,7 +174,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
     psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e0 ) );
     psxMemWrite16( g_ui_buffer + 0x10, 4 );
     psxMemWrite16( g_ui_buffer + 0x12, 4 );
-    System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+    System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
     g_ui_buffer += 0x14;
 
     tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
@@ -214,7 +214,7 @@ FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
         psxMemWrite8( g_ui_buffer + 0x1e, psxMemRead8( 0x80049213 ) );
         psxMemWrite16( g_ui_buffer + 0x20, w_rect.x + w_rect.w - 3 );
         psxMemWrite16( g_ui_buffer + 0x22, w_rect.y + w_rect.h - 3 );
-        System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+        System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
         g_ui_buffer += 0x24;
 
         tex_set = System_RenderPacketCreateTextureSettings( 0, 0, 0x3c0, 0x100 );
@@ -242,7 +242,7 @@ FFVII_System_UICursorAddToRender( u16 pos_x, u16 pos_y )
     psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1e1 ) );
     psxMemWrite16( g_ui_buffer + 0x10, 0x18 );
     psxMemWrite16( g_ui_buffer + 0x12, 0x10 );
-    System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+    System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
     g_ui_buffer += 0x14;
 
     u16 tex_set = System_RenderPacketCreateTextureSettings( 0, 2, 0x3c0, 0x100 );
@@ -270,7 +270,7 @@ FFVII_System_UITimerAddToRender( u16 pos_x, u16 pos_y, u32 timer )
     psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1ec ) );
     psxMemWrite16( g_ui_buffer + 0x10, 0x8 );
     psxMemWrite16( g_ui_buffer + 0x12, 0x15 );
-    System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+    System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
     g_ui_buffer += 0x14;
 
     timer = ( timer >= 0x1770 ) ? 0x176f : timer; // set cap for timer 99min 59sec
@@ -285,12 +285,12 @@ FFVII_System_UITimerAddToRender( u16 pos_x, u16 pos_y, u32 timer )
         System_RenderPacketChangeBrightness( g_ui_buffer, 1 );
         psxMemWrite16( g_ui_buffer + 0x8, pos_x );
         psxMemWrite16( g_ui_buffer + 0xa, pos_y );
-        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 10 ) * 5 ) ) * 0x10 ) - 0x50 );
+        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 5 ) * 5 ) ) * 0x10 ) - 0x50 );
         psxMemWrite8( g_ui_buffer + 0xd, ( digit >= 5 ) ? 0x68 : 0x50 );
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1ec ) );
         psxMemWrite16( g_ui_buffer + 0x10, 0x10 );
         psxMemWrite16( g_ui_buffer + 0x12, 0x15 );
-        System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+        System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
         g_ui_buffer += 0x14;
 
         if( i == 1 )
@@ -324,14 +324,14 @@ FFVII_System_UIDigitsAddToRender( u16 pos_x, u16 pos_y, u32 value, u32 num )
         System_RenderPacketChangeBrightness( g_ui_buffer, 1 );
         psxMemWrite16( g_ui_buffer + 0x8, pos_x );
         psxMemWrite16( g_ui_buffer + 0xa, pos_y );
-        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 10 ) * 5 ) ) * 0x10 ) - 0x50 );
+        psxMemWrite8( g_ui_buffer + 0xc, ( ( digit - ( ( digit / 5 ) * 5 ) ) * 0x10 ) - 0x50 );
         psxMemWrite8( g_ui_buffer + 0xd, ( digit >= 5 ) ? 0x68 : 0x50 );
         psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1ec ) );
         psxMemWrite16( g_ui_buffer + 0x10, 0x10 );
         psxMemWrite16( g_ui_buffer + 0x12, 0x15 );
         if( num >= ( 8 - i ) )
         {
-            System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+            System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
             g_ui_buffer += 0x14;
             pos_x += 0x10;
         }
@@ -424,7 +424,7 @@ FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message
             psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( 0x100, 0x1ea ) );
             psxMemWrite16( g_ui_buffer + 0x10, 0x10 );
             psxMemWrite16( g_ui_buffer + 0x12, 0x10 );
-            System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+            System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
             g_ui_buffer += 0x14;
 
             message += 1;
@@ -595,7 +595,7 @@ FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message
             psxMemWrite16( g_ui_buffer + 0xe, System_RenderPacketCreateCLUT( clut_x | 0x100, clut_y ) );
             psxMemWrite16( g_ui_buffer + 0x10, 0xc );
             psxMemWrite16( g_ui_buffer + 0x12, 0xc );
-            System_RenderPacketAddToQueue( psxMemRead32( 0x80062fc4 ), g_ui_buffer );
+            System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
             g_ui_buffer += 0x14;
 
             if( g_ui_str_mono == 0 ) // if not monowidth
@@ -629,8 +629,7 @@ void
 FFVII_System_UICreateAddTextureSettings( u32 draw_allow, u32 dithering, u16 settings, struct PSX_RECT rect )
 {
     System_RenderTextureSettingsCreate( g_ui_buffer, draw_allow, dithering, settings, rect );
-    System_RenderPacketAddToQueue( psxMemRead32( psxRegs.GPR.n.gp + 0x280 ), g_ui_buffer );
-    //System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
+    System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
     g_ui_buffer += 0xc;
 }
 
@@ -648,8 +647,7 @@ FFVII_System_UIDialogAddToRender()
 
     //[80062dfd] = b(1);
     g_ui_str_timer += 1;
-    psxMemWrite32( psxRegs.GPR.n.gp + 0x280, otc );
-    //g_ui_otc = otc;
+    g_ui_otc = otc;
 
     for( int i = 0; i < count; ++i )
     {
