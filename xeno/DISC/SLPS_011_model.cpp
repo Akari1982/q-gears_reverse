@@ -2,6 +2,7 @@
 // func2c1f8
 // sets global offsets for model file and return number of parts
 // A0 - pointer to model 3d data file
+
 offset_to_file = A0;
 T0 = w[offset_to_file + 4];
 T2 = w[offset_to_file + 0];
@@ -180,6 +181,7 @@ L2c44c:	; 8002C44C
 
 ////////////////////////////////
 // func2c454()
+
 part_header = A0;
 if( ( w[part_header + 4] & 00000002 ) == 0 )
 {
@@ -339,9 +341,9 @@ return 1;
 // A2 == 2 - calculate and store lighing for the first time and then use stored data
 // A2 == 3 - calculate lighing and store it
 
-part_data          = A0;
+part_data = A0;
 packet_data_offset = A1; // pointer to allocated memory for packets
-light_flags        = A2;
+light_flags = A2;
 
 // allocate place for lightings normals
 if( ( hu[part_data + 0] & 1 ) == 0 ) // if buffer not allocated
@@ -361,7 +363,7 @@ if( ( hu[part_data + 0] & 1 ) == 0 ) // if buffer not allocated
     }
 }
 
-mesh_data_offset    = w[part_data + 10];
+mesh_data_offset = w[part_data + 10];
 texture_data_offset = w[part_data + 14];
 
 [80058bd8] = w(w[part_data + 8]);
@@ -411,11 +413,7 @@ else if( light_flags == 3 )
     }
 }
 
-
-
 [80058c5c] = w(w[80058c5c] + hu[part_data + 4]); // + number of polygons
-
-
 
 S2 = hu[part_data + 6]; // number of polygons block
 S2 = S2 - 1;
@@ -466,12 +464,14 @@ system_reset_tex_page_and_clut_default_usage();
 
 
 ////////////////////////////////
-// system_allocate_memory_for_packets
+// system_allocate_memory_for_packets()
+
 S0 = A0;
 S1 = A1;
 S2 = A2;
 
 [GP + 1a8] = h(25);
+
 A0 = w[S0 + 34] * 2;
 A1 = 0;
 system_memory_allocate();

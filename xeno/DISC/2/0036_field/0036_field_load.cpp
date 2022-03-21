@@ -921,17 +921,10 @@ A1 = V0;
 system_extract_archive();
 
 S2 = w[800aefe8];
-number_of_models = w[S2];
-if( number_of_models > 0 )
+for( int i = 0; i < w[S2]; ++i ) // number of models
 {
-    S4 = 0;
-    loop706a8:	; 800706A8
-        A0 = S2 + w[S2 + 4 + S4 * 4];
-        func2c1f8(); // sets global offsets for model file and return number of parts
-
-        S4 = S4 + 1;
-        V0 = S4 < number_of_models;
-    800706D4	bne    v0, zero, loop706a8 [$800706a8]
+    A0 = S2 + w[S2 + 4 + i * 4]; //offset to model
+    func2c1f8(); // sets global offsets for model file and return number of parts
 }
 
 A1 = w[80059b70];
@@ -1066,8 +1059,9 @@ if( number_of_entities > 0 )
     800709FC	bne    v0, zero, loop709f0 [$800709f0]
 
     init_data = w[80059b70] + 190;
-    entity_id = 0;
-    L70a1c:	; 80070A1C
+
+    for( entity_id = 0; entity_id < number_of_entities; ++entity_id )
+    {
         [struct_5c + entity_id * 5c + 58] = h(hu[init_data + entity_id * 10 + 0]); // flags
         [struct_5c + entity_id * 5c + 50] = h(hu[init_data + entity_id * 10 + 2]); // x rot
         [struct_5c + entity_id * 5c + 52] = h(hu[init_data + entity_id * 10 + 4]); // y rot
@@ -1093,8 +1087,8 @@ if( number_of_entities > 0 )
             [S0 + 4] = w(models + w[models + 4 + model_id * 4] + 10);
 
             A0 = w[S0 + 4];
-            A1 = S0 + 8;
-            A2 = S0 + c;
+            A1 = S0 + 8; // buffer 1
+            A2 = S0 + c; // buffer 2
             system_allocate_memory_for_packets(); // allocate place for both packets buffers
 
             A0 = w[S0 + 4]; // data
@@ -1137,10 +1131,7 @@ if( number_of_entities > 0 )
 
         A0 = entity_id;
         func80558();
-
-        entity_id = entity_id + 1;
-        V0 = entity_id < number_of_entities;
-    80070C28	bne    v0, zero, L70a1c [$80070a1c]
+    }
 }
 
 if( w[800c1b60] == 0 ) // DEBUG
