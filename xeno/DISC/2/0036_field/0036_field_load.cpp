@@ -18,34 +18,25 @@ system_calculate_rotation_matrix();
 
 A0 = S1;
 A1 = S1 + d4;
-8006F4C4	jal    system_gte_matrix_multiplication_to_A1 [$system_gte_matrix_multiplication_to_A1]
+system_gte_matrix_multiplication_to_A1();
 
-V0 = h[S0];
+[S1 + 138] = w(h[S0]);
 S0 = S0 + 2;
-[S1 + 138] = w(V0);
-A0 = 0;
-A1 = S1 + 0138;
+[800aefa0] = w(h[S0]);
+S0 = S0 + 2;
+[800aefa4] = w(h[S0]);
+S0 = S0 + 4;
+[800aefa8] = h(hu[S0] << 3);
+S0 = S0 + 2;
+[800aefaa] = h(hu[S0] << 3);
+S0 = S0 + 2;
+[800aefac] = h(hu[S0] << 3);
+S0 = S0 + 4;
 
-V0 = h[S0 + 0000];
-S0 = S0 + 0002;
-[800aefa0] = w(V0);
-V0 = h[S0 + 0000];
-S0 = S0 + 0004;
-[800aefa4] = w(V0);
-V0 = hu[S0 + 0000];
-S0 = S0 + 0002;
-V0 = V0 << 03;
-[800aefa8] = h(V0);
-V0 = hu[S0 + 0000];
-S0 = S0 + 0002;
-V0 = V0 << 03;
-[800aefaa] = h(V0);
-V0 = hu[S0 + 0000];
-8006F52C	nop
-V0 = V0 << 03;
-[800aefac] = h(V0);
+A0 = 0;
+A1 = S1 + 138;
 8006F53C	jal    func30840 [$80030840]
-S0 = S0 + 0004;
+
 V0 = h[S0 + 0000];
 S0 = S0 + 0002;
 A0 = 0001;
@@ -990,28 +981,21 @@ V0 = w[800aefec];
 
 S2 = w[800aefec] + 4;
 
-S4 = 0;
-loop70860:	; 80070860
-    [800af018 + S4 * 4] = w(w[S2] / e); // number of triangles
+for( int i = 0; i < 4; ++i )
+{
+    [800af018 + i * 4] = w(w[S2] / e); // number of triangles
     S2 = S2 + 4;
-    S4 = S4 + 1;
-    V0 = S4 < 4;
-80070888	bne    v0, zero, loop70860 [$80070860]
+}
 
 [800aeff4] = w(w[800aefec] + w[S2]); // material data
 S2 = S2 + 4;
 
 blocks = h[800af028];
-if( blocks > 0 )
+for( int i = 0; i < blocks; ++i )
 {
-    S4 = 0;
-    loop708cc:	; 800708CC
-        [800aeff8 + S4 * 4] = w(w[800aefec] + w[S2 + 0]); // block_start
-        [800af008 + S4 * 4] = w(w[800aefec] + w[S2 + 4]; // block_vertex
-        S2 = S2 + 8;
-        S4 = S4 + 1;
-        V0 = S4 < blocks;
-    80070908	bne    v0, zero, loop708cc [$800708cc]
+    [800aeff8 + i * 4] = w(w[800aefec] + w[S2 + 0]); // block_start
+    [800af008 + i * 4] = w(w[800aefec] + w[S2 + 4]; // block_vertex
+    S2 = S2 + 8;
 }
 
 [800af1e4] = w((w[800aeff8] - w[800aeff4]) / 4); // number of materials
