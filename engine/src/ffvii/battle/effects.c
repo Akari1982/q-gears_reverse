@@ -306,17 +306,10 @@ FFVII_Battle_EffectSpriteAdd()
 // Data: 0xffe0fff0 0x1f1fa000 Pos 0xff00ff80 0xff010078 0xfff8ff80 0xfff90078 Matrix: 0x200 0x0 0x0, 0x0 0x400 0x0, 0x0 0x0 0x1000 Trans: 0xfffff8ae 0x141 0x1c94
 
 
-
-    char Text[ 256 ];
-    sprintf( Text, _( "Data: 0x%x 0x%x Pos 0x%x 0x%x 0x%x 0x%x Matrix: 0x%x 0x%x 0x%x, 0x%x 0x%x 0x%x, 0x%x 0x%x 0x%x Trans: 0x%x 0x%x 0x%x" ),
-        data0, data4,
-        p0, p1, p2, p3,
-        psxRegs.CP2C.n.rMatrix.m11, psxRegs.CP2C.n.rMatrix.m12, psxRegs.CP2C.n.rMatrix.m13,
-        psxRegs.CP2C.n.rMatrix.m21, psxRegs.CP2C.n.rMatrix.m22, psxRegs.CP2C.n.rMatrix.m23,
-        psxRegs.CP2C.n.rMatrix.m31, psxRegs.CP2C.n.rMatrix.m32, psxRegs.CP2C.n.rMatrix.m33,
-        psxRegs.CP2C.n.trX, psxRegs.CP2C.n.trY, psxRegs.CP2C.n.trZ );
-    GPU_displayText( Text );
-
+// -0x100 -0x80
+// -0xff   0x78
+// -0x8   -0x80
+// -0x7    0x78
 
     psxRegs.CP2D.n.v0.x = p0 & 0xffff;
     psxRegs.CP2D.n.v0.y = p0 >> 0x10;
@@ -330,6 +323,20 @@ FFVII_Battle_EffectSpriteAdd()
 
     psxRegs.code = 0x30;
     gteRTPT(); // Perspective transform on 3 points
+
+    char Text[ 256 ];
+    sprintf( Text, _( "Data: 0x%x 0x%x Pos 0x%x 0x%x 0x%x 0x%x\nMatrix: 0x%x 0x%x 0x%x, 0x%x 0x%x 0x%x, 0x%x 0x%x 0x%x Trans: 0x%x 0x%x 0x%x\nNewpos: 0x%x 0x%x, 0x%x 0x%x, 0x%x 0x%x" ),
+        data0, data4,
+        p0, p1, p2, p3,
+        psxRegs.CP2C.n.rMatrix.m11, psxRegs.CP2C.n.rMatrix.m12, psxRegs.CP2C.n.rMatrix.m13,
+        psxRegs.CP2C.n.rMatrix.m21, psxRegs.CP2C.n.rMatrix.m22, psxRegs.CP2C.n.rMatrix.m23,
+        psxRegs.CP2C.n.rMatrix.m31, psxRegs.CP2C.n.rMatrix.m32, psxRegs.CP2C.n.rMatrix.m33,
+        psxRegs.CP2C.n.trX, psxRegs.CP2C.n.trY, psxRegs.CP2C.n.trZ,
+        psxRegs.CP2D.n.sxy0.y, psxRegs.CP2D.n.sxy0.x,
+        psxRegs.CP2D.n.sxy1.y, psxRegs.CP2D.n.sxy1.x,
+        psxRegs.CP2D.n.sxyp.y, psxRegs.CP2D.n.sxyp.x );
+    GPU_displayText( Text );
+
 
     if( psxRegs.CP2C.n.trZ <= 0 )
     {
@@ -352,21 +359,23 @@ FFVII_Battle_EffectSpriteAdd()
     }
 
 
-    //psxMemWrite32( otc + 0x8, psxRegs.CP2D.n.sxy0 ); // xy0
-    //psxMemWrite32( otc + 0x10, psxRegs.CP2D.n.sxy1 ); // xy1
-    //psxMemWrite32( otc + 0x18, psxRegs.CP2D.n.sxyp); // xy2
+    psxMemWrite32( otc + 0x8, ( psxRegs.CP2D.n.sxy0.y << 0x10 ) | psxRegs.CP2D.n.sxy0.x ); // xy0
+    psxMemWrite32( otc + 0x10, ( psxRegs.CP2D.n.sxy1.y << 0x10 ) | psxRegs.CP2D.n.sxy1.x ); // xy1
+    psxMemWrite32( otc + 0x18, ( psxRegs.CP2D.n.sxyp.y << 0x10 ) | psxRegs.CP2D.n.sxyp.x ); // xy2
 
-    psxMemWrite32( otc + 0x8, 0xff00ff80 ); // xy0
-    psxMemWrite32( otc + 0x10, 0xff010078 ); // xy1
-    psxMemWrite32( otc + 0x18, 0xfff8ff80 ); // xy2
+    //psxMemWrite32( otc + 0x8, 0xff00ff80 ); // xy0
+    //psxMemWrite32( otc + 0x10, 0xff010078 ); // xy1
+    //psxMemWrite32( otc + 0x18, 0xfff8ff80 ); // xy2
 
     psxRegs.CP2D.n.v0.x = p3 & 0xffff;
     psxRegs.CP2D.n.v0.y = p3 >> 0x10;
     psxRegs.CP2D.n.v0.z = 0;
     psxRegs.code = 0x01;
     gteRTPS(); // Perspective transform
-    //[otc + 20] = w(SXY2); // xy3
-    psxMemWrite32( otc + 0x20, 0xfff90078 ); // xy3
+
+    psxMemWrite32( otc + 0x20, ( psxRegs.CP2D.n.sxy2.y << 0x10 ) | psxRegs.CP2D.n.sxy2.x ); // xy3
+
+    //psxMemWrite32( otc + 0x20, 0xfff90078 ); // xy3
 
     u32 wh = data4 >> 0x10;
     width = wh & 0x00ff;

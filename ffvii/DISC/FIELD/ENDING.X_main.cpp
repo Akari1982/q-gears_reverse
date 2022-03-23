@@ -82,8 +82,9 @@ for( int i = fe; i <= 0; i -= 2 )
         A1 = S0;
         system_psyq_load_image();
 
-        800A0168	jal    $system_psyq_draw_sync
         A0 = 0;
+        system_psyq_draw_sync();
+
         V0 = hu[SP + 001a];
         800A0174	nop
         V0 = V0 + 0002;
@@ -3814,11 +3815,12 @@ SP = SP + 0048;
 800A3794	jr     ra 
 800A3798	nop
 ////////////////////////////////
-// funca379c
-800A379C	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S1);
-[SP + 0020] = w(S0);
+
+
+
+////////////////////////////////
+// funca379c()
+
 V1 = h[A0 + 0040];
 V0 = w[A1 + 0000];
 S1 = A3;
@@ -3933,10 +3935,4 @@ V0 = V0 >> 0c;
 V0 = 0;
 
 La391c:	; 800A391C
-RA = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0030;
-800A392C	jr     ra 
-800A3930	nop
 ////////////////////////////////

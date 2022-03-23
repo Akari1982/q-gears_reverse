@@ -77,39 +77,30 @@ V0 = V0 + 0002;
 80080018	blez   v1, loop80000 [$80080000]
 A0 = A0 + V1;
 A0 = A0 - V1;
-80080024	jr     ra 
 V0 = A0 >> 10;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8002c
-V1 = w[800ad030];
-80080034	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
+// func8002c()
+
+V0 = w[800ad030];
 V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
+A0 = w[V1 + V0 * 5c + 4c];
+
 V1 = w[800ad034];
-A0 = w[V0 + 004c];
-V0 = V1 + 0001;
-[800ad034] = w(V0);
-V0 = w[A0 + 0118];
-V1 = V1 << 02;
-V1 = V1 + V0;
-V0 = w[V1 + 0000];
-80080080	jr     ra 
-80080084	nop
+[800ad034] = w(V1 + 1);
+
+V0 = w[A0 + 118];
+return w[V0 + V1 * 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func80088()
+
 entity_id = A0;
 
 struct_5c = w[800aefe4] + entity_id * 5c;
@@ -345,16 +336,13 @@ func7a058(); // init shadow
 
 ////////////////////////////////
 // func80720()
+
 struct_5c_p = w[800aefe4];
 number_of_entity = w[800ad0d4];
 
-
-
-[800c2de4] = w(ffffffff);
+[800c2de4] = w(-1);
 
 call_run_script_8(); // run 8 opcodes for non-party entities
-
-
 
 // store previous position
 if( number_of_entity > 0 )
@@ -380,67 +368,57 @@ if( w[800c1b60] == 0 )
 
 [800aed2c] = w(0);
 
-
-
-if( number_of_entity > 0 )
+for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
 {
-    entity_id = 0;
-    loop80820:	; 80080820
-        struct_138 = w[struct_5c_p; + entity_id * 5c + 4c];
+    struct_138 = w[struct_5c_p; + entity_id * 5c + 4c];
 
-        if( ( hu[struct_5c_p + entity_id * 5c + 58] & 0f80 ) == 0200 )
+    if( ( hu[struct_5c_p + entity_id * 5c + 58] & 0f80 ) == 0200 )
+    {
+        if( ( w[struct_138 + 0] & 00010001 ) == 0 )
         {
-            if( ( w[struct_138 + 0] & 00010001 ) == 0 )
+            if( ( w[struct_138 + 4] & 00000600 ) != 00000200 )
             {
-                if( ( w[struct_138 + 4] & 00000600 ) != 00000200 )
-                {
-                    A0 = struct_138;
-                    get_current_triangle_material();
-                    [struct_138 + 14] = w(V0);
+                A0 = struct_138;
+                get_current_triangle_material();
+                [struct_138 + 14] = w(V0);
 
-                    A0 = entity_id;
-                    A1 = struct_5c_p + entity_id * 5c;
-                    A2 = struct_138;
-                    func81c34(); // calculate move vector
+                A0 = entity_id;
+                A1 = struct_5c_p + entity_id * 5c;
+                A2 = struct_138;
+                func81c34(); // calculate move vector
 
-                    A0 = entity_id;
-                    A1 = struct_5c_p + entity_id * 5c;
-                    A2 = struct_138;
-                    func821cc(); // check move
-                }
+                A0 = entity_id;
+                A1 = struct_5c_p + entity_id * 5c;
+                A2 = struct_138;
+                func821cc(); // check move
             }
-            else if( w[struct_138 + 4] & 01000000 )
-            {
-                if( ( w[struct_138 + 0] & 00010000 ) == 0 )
-                {
-                    if( h[struct_138 + ea] != h[struct_138 + e8] )
-                    {
-                        [struct_138 + ea] = h(2);
-                        [struct_138 + e8] = h(2);
-                        A0 = w[struct_5c_p + entity_id * 5c + 4];
-                        A1 = h[struct_138 + ea]; // animation id
-                        func243e4(); // init animation
-                    }
-                }
-            }
-            else if( w[struct_138 + 4] & 00200000 )
+        }
+        else if( w[struct_138 + 4] & 01000000 )
+        {
+            if( ( w[struct_138 + 0] & 00010000 ) == 0 )
             {
                 if( h[struct_138 + ea] != h[struct_138 + e8] )
                 {
-                    [struct_138 + e8] = h(h[struct_138 + ea]);
+                    [struct_138 + ea] = h(2);
+                    [struct_138 + e8] = h(2);
                     A0 = w[struct_5c_p + entity_id * 5c + 4];
                     A1 = h[struct_138 + ea]; // animation id
-                    func81808();
+                    func243e4(); // init animation
                 }
             }
         }
-
-        entity_id = entity_id + 1;
-        V0 = entity_id < number_of_entity;
-    800809A0	bne    v0, zero, loop80820 [$80080820]
+        else if( w[struct_138 + 4] & 00200000 )
+        {
+            if( h[struct_138 + ea] != h[struct_138 + e8] )
+            {
+                [struct_138 + e8] = h(h[struct_138 + ea]);
+                A0 = w[struct_5c_p + entity_id * 5c + 4];
+                A1 = h[struct_138 + ea]; // animation id
+                func81808();
+            }
+        }
+    }
 }
-
-
 
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
@@ -449,14 +427,10 @@ if( w[800c1b60] == 0 )
     field_debug_add_timer();
 }
 
-
-
 A0 = w[800b1740];
 A1 = struct_5c_p + leader_id * 5c;
 A2 = w[A1 + 4c];
 func8376c(); // move player
-
-
 
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
@@ -465,49 +439,39 @@ if( w[800c1b60] == 0 )
     field_debug_add_timer();
 }
 
-
-
-if( number_of_entity > 0 )
+for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
 {
-    entity_id = 0;
-    loop80a40:	; 80080A40
-        if( hu[struct_5c_p + entity_id * 5c + 58] & 0f00 )
+    if( hu[struct_5c_p + entity_id * 5c + 58] & 0f00 )
+    {
+        struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
+        if( ( w[struct_138 + 4] & 00000600 ) != 200 )
         {
-            struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
-            if( ( w[struct_138 + 4] & 00000600 ) != 200 )
+            if( ( hu[struct_5c_p + entity_id * 5c + 58] & 00000f80 ) == 200 )
             {
-                if( ( hu[struct_5c_p + entity_id * 5c + 58] & 00000f80 ) == 200 )
+                if( ( w[struct_138 + 0] & 00010001 ) == 0 )
                 {
-                    if( ( w[struct_138 + 0] & 00010001 ) == 0 )
+                    // if not party leader
+                    if( entity_id != w[800b1740] )
                     {
-                        // if not party leader
-                        if( entity_id != w[800b1740] )
-                        {
-                            A0 = entity_id;
-                            A1 = 7fffffff;
-                            A2 = struct_5c_p + entity_id * 5c;
-                            A3 = struct_138;
-                            A4 = 0;
-                            func84054(); // perform move for all nonplayer
+                        A0 = entity_id;
+                        A1 = 7fffffff;
+                        A2 = struct_5c_p + entity_id * 5c;
+                        A3 = struct_138;
+                        A4 = 0;
+                        func84054(); // perform move for all nonplayer
 
-                            V0 = w[struct_5c_p + entity_id * 5c + 4];
-                            V0 = w[V0 + 7c]; // +f4
-                            if( hu[V0 + c] == 1 )
-                            {
-                                [struct_138 + 0] = w(w[struct_138 + 0] & f7ffffff);
-                            }
+                        V0 = w[struct_5c_p + entity_id * 5c + 4];
+                        V0 = w[V0 + 7c]; // +f4
+                        if( hu[V0 + c] == 1 )
+                        {
+                            [struct_138 + 0] = w(w[struct_138 + 0] & f7ffffff);
                         }
                     }
                 }
             }
         }
-
-        entity_id = entity_id + 1;
-        V0 = entity_id < number_of_entity;
-    80080B18	bne    v0, zero, loop80a40 [$80080a40]
+    }
 }
-
-
 
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
@@ -515,8 +479,6 @@ if( w[800c1b60] == 0 )
     A0 = 8006f2c0; // "MOV CHECK2"
     field_debug_add_timer();
 }
-
-
 
 if( ( h[800b164a] == 0 ) && ( bu[800b16a0] == 0 ) )
 {
@@ -526,15 +488,9 @@ if( ( h[800b164a] == 0 ) && ( bu[800b16a0] == 0 ) )
     func82fb0(); // check collision with entity and run scripts 2 and 3 based on conditions
 }
 
-
-
 [800ad0e4] = w(1);
 
-
-
 func80c04();
-
-
 
 // DEBUG TEXT
 if( w[800c1b60] == 0 )
@@ -777,6 +733,7 @@ else
 
 ////////////////////////////////
 // func81268()
+
 entity_id = A0;
 
 if( entity_id != w[800b1740] )
@@ -837,6 +794,7 @@ return 0 - (0 < (((w[A0 + 0] >> 9) & 3) & (w[A0 + 14] >> 3)));
 
 ////////////////////////////////
 // func81594()
+
 struct_164 = A0;
 rotation = A1;
 struct_5c = A2;
@@ -982,6 +940,7 @@ else
 
 ////////////////////////////////
 // field_in_entity_quad()
+
 x_pos = A0;
 z_pos = A1;
 data_138 = A2;
@@ -1034,6 +993,7 @@ return -1;
 
 ////////////////////////////////
 // func81aa8()
+
 move_vector = A0;
 struct_138 = A1;
 
@@ -1086,6 +1046,7 @@ return -1;
 
 ////////////////////////////////
 // get_distance_between_entities()
+
 entity_id1 = A0;
 entity_id2 = A1;
 
@@ -1102,13 +1063,12 @@ length_of_vector_by_x_y();
 
 ////////////////////////////////
 // func81c34()
+
 entity_id = A0;
 struct_5c = A1;
 struct_138 = A2;
 
 struct_5c_p = w[800aefe4];
-
-
 
 // get current walkmesh triangle material
 material = 0;
@@ -1121,8 +1081,6 @@ if( ( ( w[struct_138 + 4] >> V1 ) & 1 ) == 0 ) // use walkmesh material
     }
 }
 
-
-
 A0 = SP + 10; // material self move vector
 speed_id = (material >> 9) & 3;
 A1 = h[800ad49c + speed_id * 2]; // walking speed
@@ -1130,8 +1088,6 @@ dir_id = (material >> b) & 7;
 A2 = hu[800ad480 + dir_id * 2];
 A2 = (hu[800b164c] + A2) & 0fff; // default + rot
 func7ac28();
-
-
 
 if( ( w[struct_138 + 0] & 00041800 ) == 0 )
 {
@@ -1226,8 +1182,6 @@ else
     }
 }
 
-
-
 follow_entity_id = bu[struct_138 + 74];
 if( follow_entity_id != ff )
 {
@@ -1315,8 +1269,6 @@ if( w[struct_138 + 0] & 01000000 )
     return;
 }
 
-
-
 // deside if we play run or walk animation
 animation_id = 1; // walk
 // something and cross button currently pressed and something.
@@ -1335,14 +1287,10 @@ if( ( w[struct_138 + 0] & 00001800 ) && ( V1 != animation_id ) )
     }
 }
 
-
-
 if( bu[struct_138 + e3] >= 9 )
 {
     [struct_138 + e3] = b(bu[struct_138 + e3] - 1);
 }
-
-
 
 is_move = w[struct_138 + 40] | w[struct_138 + 44] | w[struct_138 + 48];
 
@@ -1488,8 +1436,6 @@ else
     [struct_164 + 14] = w(0);
 }
 
-
-
 [struct_138 + 4] = w(w[struct_138 + 4] & ffffefff);
 
 if( w[struct_138 + 0] & 00000800 )
@@ -1574,43 +1520,41 @@ if (w[struct_138 + 14] & 00000100)
 
 
 ////////////////////////////////
-// func8278c
-8008278C	bgez   a0, L827bc [$800827bc]
-80082790	nop
-A0 = A0 + 4000;
-A1 = 0 - A1;
-V0 = A0 < A1;
-800827A0	beq    v0, zero, L827ac [$800827ac]
-800827A4	nop
-A0 = A1;
+// func8278c()
 
-L827ac:	; 800827AC
-800827AC	blez   a0, L827dc [$800827dc]
-800827B0	nop
-800827B4	j      L827dc [$800827dc]
-A0 = 0;
-
-L827bc:	; 800827BC
-800827BC	addiu  a0, a0, $c000 (=-$4000)
-V0 = A1 < A0;
-800827C4	beq    v0, zero, L827d0 [$800827d0]
-800827C8	nop
-A0 = A1;
-
-L827d0:	; 800827D0
-800827D0	bgez   a0, L827dc [$800827dc]
-800827D4	nop
-A0 = 0;
-
-L827dc:	; 800827DC
-800827DC	jr     ra 
-V0 = A0;
+if( A0 < 0 )
+{
+    A0 = A0 + 4000;
+    A1 = 0 - A1;
+    if( A0 < A1 )
+    {
+        A0 = A1;
+    }
+    if( A0 > 0 )
+    {
+        A0 = 0;
+    }
+}
+else
+{
+    A0 = A0 - 4000;
+    if( A1 < A0 )
+    {
+        A0 = A1;
+    }
+    if( A0 < 0 )
+    {
+        A0 = 0;
+    }
+}
+return A0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func827e4()
+
 [A0 + 0] = h(h[A1 + 2]);
 [A0 + 2] = h(h[A1 + 6]);
 [A0 + 4] = h(h[A1 + a]);
@@ -1619,58 +1563,43 @@ V0 = A0;
 
 
 ////////////////////////////////
-// func82808
-80082808	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
+// func82808()
+
 S0 = A1;
-[SP + 001c] = w(RA);
-V0 = w[S0 + 0030];
-8008281C	nop
-80082820	bne    v0, zero, L82838 [$80082838]
-80082824	nop
-V0 = w[S0 + 0038];
-8008282C	nop
-80082830	beq    v0, zero, L82888 [$80082888]
-80082834	nop
 
-L82838:	; 80082838
-V0 = h[S0 + 0106];
-8008283C	nop
-V1 = V0;
-V0 = V0 & 8000;
-80082848	bne    v0, zero, L82888 [$80082888]
-V0 = A3 & 0001;
-80082850	bne    v0, zero, L8285c [$8008285c]
-80082854	addiu  v0, v1, $fc00 (=-$400)
-V0 = V1 + 0400;
+if( ( w[S0 + 30] != 0 ) || ( w[S0 + 38] != 0 ) )
+{
+    V0 = h[S0 + 106];
+    V1 = V0;
 
-L8285c:	; 8008285C
-V0 = V0 & 0fff;
-[S0 + 0104] = h(V0);
-[S0 + 0106] = h(V0);
-A1 = h[S0 + 0104];
-8008286C	jal    func81594 [$80081594]
-80082870	nop
-V0 = hu[S0 + 0106];
-80082878	nop
-V0 = V0 | 8000;
-[S0 + 0104] = h(V0);
-[S0 + 0106] = h(V0);
+    if( (V0 & 8000) == 0 )
+    {
+        if( A3 & 1 )
+        {
+            V0 = V1 - 400;
+        }
+        else
+        {
+            V0 = V1 + 400;
+        }
 
-L82888:	; 80082888
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-80082894	jr     ra 
-80082898	nop
+        [S0 + 104] = h(V0 & fff);
+        [S0 + 106] = h(V0 & fff);
+
+        A1 = h[S0 + 104];
+        func81594();
+
+        V0 = hu[S0 + 106] | 8000;
+        [S0 + 104] = h(V0);
+        [S0 + 106] = h(V0);
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func8289c()
-//                    A4 = SP + 40;
-//                    A5 = SP + 30; // normal
 
 S5 = entity_id = A0;
 S6 = model_parts_header = A1;
@@ -2370,6 +2299,7 @@ if( number_of_entity > 0 )
 
 ////////////////////////////////
 // func8376c()
+
 leader_id = A0;
 leader_5c = A1;
 leader_138 = A2;
@@ -2579,7 +2509,6 @@ if( number_of_entities > 0 )
                                     [data_138 + 4] = w(w[data_138 + 4] & ff7fffff);
                                 }
 
-                                L83cbc:	; 80083CBC
                                 [data_138 + 4] = w(w[data_138 + 4] | 00400000);
                             }
                         }
@@ -2665,6 +2594,7 @@ func7c374(); // return temporary memory
 
 ////////////////////////////////
 // func83f40()
+
 struct_138 = A0;
 
 if( ( w[struct_138 + 14] & 00420000 ) == 0 && 
@@ -2693,6 +2623,7 @@ return -1;
 
 ////////////////////////////////
 // func84054()
+
 entity_id = A0;
 y_pos = A1;
 data_138 = A3;
@@ -2702,8 +2633,6 @@ V1 = w[800aefe4];
 S5 = w[V1 + entity_id * 5c + 4];
 
 walkmesh_blocks = h[800af028] - 1;
-
-
 
 if( entity_id == w[800b1740] ) // if entity is party leader
 {
@@ -2733,57 +2662,41 @@ if( ( entity_id != w[800b1740] ) || ( bu[800b16a3] != 1 ) ) // if entity not par
     }
 }
 
-
-
 // store coords walkmesh and triangle ids
 stored_x = w[data_138 + 20];
 stored_y = w[data_138 + 24];
 stored_z = w[data_138 + 28];
 stored_walkmesh_id = hu[data_138 + 10];
-S0 = 0;
-loop84180:	; 80084180
-    [SP + a0 + S0 * 2] = h(hu[data_138 + 8 + S0 * 2]);
-    S0 = S0 + 1;
-    V0 = S0 < 4;
-80084194	bne    v0, zero, loop84180 [$80084180]
 
-
+for( int i = 0; i < 4; ++i )
+{
+    [SP + a0 + i * 2] = h(hu[data_138 + 8 + i * 2]);
+}
 
 // init y pos and walkmesh ids
-S0 = 0;
-loop841ac:	; 800841AC
-    [SP + 18 + S0 * 4] = w(7fffffff);
-    [SP + 28 + S0 * 4] = w(7fffffff);
-    [SP + 38 + S0 * 4] = w(S0);
-    S0 = S0 + 1;
-    V0 = S0 < 4;
-800841C0	bne    v0, zero, loop841ac [$800841ac]
-
-
+for( int i = 0; i < 4; ++i )
+{
+    [SP + 18 + i * 4] = w(7fffffff);
+    [SP + 28 + i * 4] = w(7fffffff);
+    [SP + 38 + i * 4] = w(i);
+}
 
 // get data for final position triangle
 // search through all walkmesh block
-S4 = 0;
-if( walkmesh_blocks > 0 )
+for( int i = 0; i < walkmesh_blocks; ++i )
 {
-    loop841ec:	; 800841EC
-        A0 = data_138;
-        A1 = S4;
-        A2 = SP + 18 + S4 * 4; // end y pos on triangle
-        A3 = SP + 50 + S4 * 10; // normal to triangle
-        A4 = SP + 48 + S4 * 2; // triangle id
-        A5 = SP + 28 + S4 * 4; // end y pos on triangle + [d] data from triangle
-        func7c9e8();
-        if( V0 != 0 ) // -1 - triangle not found, 0 - triangle found
-        {
-            break;
-        }
-        S4 = S4 + 1;
-        V0 = S4 < walkmesh_blocks;
-    80084238	bne    v0, zero, loop841ec [$800841ec]
+    A0 = data_138;
+    A1 = i;
+    A2 = SP + 18 + i * 4; // end y pos on triangle
+    A3 = SP + 50 + i * 10; // normal to triangle
+    A4 = SP + 48 + i * 2; // triangle id
+    A5 = SP + 28 + i * 4; // end y pos on triangle + [d] data from triangle
+    func7c9e8();
+    if( V0 != 0 ) // -1 - triangle not found, 0 - triangle found
+    {
+        break;
+    }
 }
-
-
 
 // if entity flag forbid us to move on some walkmeshes
 if( w[data_138 + 4] & 00000001 )
@@ -2801,8 +2714,6 @@ if( w[data_138 + 4] & 00000004 )
     [SP + 20] = w(7fffffff);
     [SP + 30] = w(7fffffff);
 }
-
-
 
 // sort found blocks and triangles from less to greatest Y pos
 S0 = 0;
@@ -2833,8 +2744,6 @@ loop842c4:	; 800842C4
     S0 = S0 + 1;
     V0 = S0 < 2;
 80084334	bne    v0, zero, loop842c4 [$800842c4]
-
-
 
 // if we found all walkmeshes triangle ids
 if( S4 == walkmesh_blocks )
@@ -3267,51 +3176,36 @@ else
 
 
 ////////////////////////////////
-// func84c8c
-80084C8C	addiu  sp, sp, $ffe0 (=-$20)
-V1 = h[800c2f0c];
-V0 = 00ff;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-80084CA4	beq    v1, v0, L84d34 [$80084d34]
-[SP + 0010] = w(S0);
-S0 = 800ad538;
-S1 = S0 + 0002;
+// func84c8c()
 
-L84cb8:	; 80084CB8
-V0 = w[800c2f38];
-A0 = hu[800c2f00];
-A1 = V0 << 02;
-V0 = A1 + S0;
-V1 = hu[V0 + 0000];
-V0 = w[800afb74];
-V1 = V1 + A0;
-V0 = V0 < V1;
-80084CE4	bne    v0, zero, L84d34 [$80084d34]
-V0 = A1 + S1;
-A1 = hu[V0 + 0000];
-V1 = w[800b1830];
-V0 = A1 & 00ff;
-A1 = A1 >> 07;
-A0 = hu[V1 + 0014];
-A1 = A1 & 000e;
-A0 = A0 << 10;
-80084D0C	jal    $80039d6c
-A0 = V0 | A0;
-V0 = w[800c2f38];
-80084D1C	nop
-V0 = V0 + 0001;
-[800c2f38] = w(V0);
-80084D2C	j      L84cb8 [$80084cb8]
-80084D30	nop
+if( h[800c2f0c] != ff )
+{
+    S0 = 800ad538;
+    S1 = S0 + 0002;
 
-L84d34:	; 80084D34
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80084D44	jr     ra 
-80084D48	nop
+    while( true )
+    {
+        V0 = w[800c2f38];
+        A0 = hu[800c2f00];
+        A1 = V0 << 02;
+        V0 = A1 + S0;
+        V1 = hu[V0 + 0000];
+        V0 = w[800afb74];
+        V1 = V1 + A0;
+        if( V0 < V1 )
+        {
+            return;
+        }
+
+        A1 = hu[A1 + S1];
+        V1 = w[800b1830];
+        A0 = (hu[V1 + 14] << 10) | (A1 & ff);
+        A1 = (A1 >> 07) & e;
+        80084D0C	jal    $80039d6c
+
+        [800c2f38] = w(w[800c2f38] + 1);
+    }
+}
 ////////////////////////////////
 
 
@@ -4190,14 +4084,6 @@ V0 = S1 < 0003;
 T1 = T1 + 0006;
 
 L859dc:	; 800859DC
-RA = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0038;
-800859F4	jr     ra 
-800859F8	nop
 ////////////////////////////////
 
 
