@@ -306,13 +306,13 @@
 800e0738 digit->letter assosiation array (10-26 letters from character table)
 
 800e0748 debug array (0x6items 0x17a size). 1 - Actor, 3 - Word, 4 - Actor, 5 - field authtor.
-    +   0 [][]     x pos.
-    +   2 [][]     y pos.
+    +   0 [][]     x.
+    +   2 [][]     y.
     +   4 [][]     width.
     +   6 [][]     height.
-    +   8 []       init with 0x7.
-    +   9 []       init with 0xf.
-    +   a []       init with 0x1f.
+    +   8 []       r.
+    +   9 []       g.
+    +   a []       b.
     +   c [][]     index into +10 array of strings. Next id to insert new string.
     +   e [][]     init with 0. Set to 4 after init.
     +  10 array of strings (0x18 items 0xe size)

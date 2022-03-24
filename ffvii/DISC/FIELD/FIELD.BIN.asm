@@ -333,7 +333,7 @@
 // funcbc9fc
 800BC9FC-800BEAD0
 ////////////////////////////////
-// funcbead4
+// field_script_debug_opcode
 800BEAD4-800BECA0
 ////////////////////////////////
 // funcbeca4
@@ -1336,7 +1336,7 @@
 // field_int2_to_string
 800DA444-800DA47C
 ////////////////////////////////
-// funcda480
+// field_int4_to_string
 800DA480-800DA4F8
 ////////////////////////////////
 // funcda4fc

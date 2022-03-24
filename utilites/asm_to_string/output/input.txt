@@ -1,105 +1,126 @@
-funcba65c:	; 800BA65C
-800BA65C	lui    v0, $8008
-800BA660	lbu    v0, $ebe0(v0)
-800BA664	addiu  sp, sp, $ffe8 (=-$18)
-800BA668	sw     s0, $0010(sp)
-800BA66C	addu   s0, a0, zero
-800BA670	beq    v0, zero, Lba738 [$800ba738]
-800BA674	sw     ra, $0014(sp)
-800BA678	jal    funcd4bfc [$800d4bfc]
-800BA67C	nop
-800BA680	jal    funcbc338 [$800bc338]
-800BA684	nop
-800BA688	jal    funcd7d6c [$800d7d6c]
-800BA68C	nop
-800BA690	jal    funcd7f9c [$800d7f9c]
-800BA694	nop
-800BA698	lui    v0, $800a
-800BA69C	lw     v0, $c6dc(v0)
-800BA6A0	lui    at, $8009
-800BA6A4	sb     zero, $5dcc(at)
-800BA6A8	lui    at, $800a
-800BA6AC	sb     zero, $fe8c(at)
-800BA6B0	lui    at, $8008
-800BA6B4	sb     zero, $ebe0(at)
-800BA6B8	lbu    v0, $0001(v0)
-800BA6BC	nop
-800BA6C0	sltiu  v0, v0, $0005
-800BA6C4	beq    v0, zero, Lba6d4 [$800ba6d4]
-800BA6C8	ori    a0, zero, $004b
-800BA6CC	jal    $800429e0
-800BA6D0	ori    a1, zero, $000b
+funcd4c68:	; 800D4C68
+800D4C68	addiu  sp, sp, $ffd8 (=-$28)
+800D4C6C	sw     s1, $0014(sp)
+800D4C70	addu   s1, a1, zero
+800D4C74	sw     s0, $0010(sp)
+800D4C78	addu   s0, a2, zero
+800D4C7C	sw     s4, $0020(sp)
+800D4C80	addu   s4, a0, zero
+800D4C84	sw     s2, $0018(sp)
+800D4C88	addu   s2, a3, zero
+800D4C8C	sll    a1, a1, $10
+800D4C90	sra    a1, a1, $10
+800D4C94	sw     s3, $001c(sp)
+800D4C98	lhu    s3, $0038(sp)
+800D4C9C	slti   v0, a1, $0008
+800D4CA0	beq    v0, zero, Ld4cd0 [$800d4cd0]
+800D4CA4	sw     ra, $0024(sp)
+800D4CA8	lui    v0, $800a
+800D4CAC	lbu    v0, $d820(v0)
+800D4CB0	nop
+800D4CB4	andi   v0, v0, $0003
+800D4CB8	beq    v0, zero, Ld4cd0 [$800d4cd0]
+800D4CBC	ori    s1, zero, $0008
+800D4CC0	lui    a0, $800a
+800D4CC4	addiu  a0, a0, $103c
+800D4CC8	jal    funcbeca4 [$800beca4]
+800D4CCC	ori    a2, zero, $0002
 
-Lba6d4:	; 800BA6D4
-800BA6D4	lui    v0, $800a
-800BA6D8	lw     v0, $c6dc(v0)
-800BA6DC	nop
-800BA6E0	lbu    v0, $0000(v0)
-800BA6E4	nop
-800BA6E8	sltiu  v0, v0, $0002
-800BA6EC	beq    v0, zero, Lba6fc [$800ba6fc]
-800BA6F0	ori    a0, zero, $004b
-800BA6F4	jal    $800429e0
-800BA6F8	ori    a1, zero, $000a
+Ld4cd0:	; 800D4CD0
+800D4CD0	sll    v0, s1, $10
+800D4CD4	sra    v0, v0, $10
+800D4CD8	sll    v1, s2, $10
+800D4CDC	sra    v1, v1, $10
+800D4CE0	addu   a1, v0, v1
+800D4CE4	slti   v0, a1, $0139
+800D4CE8	bne    v0, zero, Ld4d24 [$800d4d24]
+800D4CEC	sll    v0, s0, $10
+800D4CF0	lui    v0, $800a
+800D4CF4	lbu    v0, $d820(v0)
+800D4CF8	nop
+800D4CFC	andi   v0, v0, $0003
+800D4D00	beq    v0, zero, Ld4d1c [$800d4d1c]
+800D4D04	ori    v0, zero, $0138
+800D4D08	lui    a0, $800a
+800D4D0C	addiu  a0, a0, $103c
+800D4D10	jal    funcbeca4 [$800beca4]
+800D4D14	ori    a2, zero, $0003
+800D4D18	ori    v0, zero, $0138
 
-Lba6fc:	; 800BA6FC
-800BA6FC	lui    v1, $800a
-800BA700	lw     v1, $c6dc(v1)
-800BA704	nop
-800BA708	lbu    v0, $0000(v1)
-800BA70C	nop
-800BA710	sltiu  v0, v0, $0003
-800BA714	beq    v0, zero, Lba730 [$800ba730]
-800BA718	ori    a0, zero, $004b
-800BA71C	lbu    v0, $0001(v1)
-800BA720	nop
-800BA724	sltiu  v0, v0, $0006
-800BA728	bne    v0, zero, Lba738 [$800ba738]
-800BA72C	nop
+Ld4d1c:	; 800D4D1C
+800D4D1C	subu   s1, v0, s2
+800D4D20	sll    v0, s0, $10
 
-Lba730:	; 800BA730
-800BA730	jal    $800429e0
-800BA734	ori    a1, zero, $000c
+Ld4d24:	; 800D4D24
+800D4D24	sra    a1, v0, $10
+800D4D28	slti   v0, a1, $0008
+800D4D2C	beq    v0, zero, Ld4d60 [$800d4d60]
+800D4D30	sll    v0, s0, $10
+800D4D34	lui    v0, $800a
+800D4D38	lbu    v0, $d820(v0)
+800D4D3C	nop
+800D4D40	andi   v0, v0, $0003
+800D4D44	beq    v0, zero, Ld4d5c [$800d4d5c]
+800D4D48	ori    s0, zero, $0008
+800D4D4C	lui    a0, $800a
+800D4D50	addiu  a0, a0, $104c
+800D4D54	jal    funcbeca4 [$800beca4]
+800D4D58	ori    a2, zero, $0002
 
-Lba738:	; 800BA738
-800BA738	lui    v1, $800a
-800BA73C	lbu    v1, $9ffc(v1)
-800BA740	ori    v0, zero, $0004
-800BA744	beq    v1, v0, Lba770 [$800ba770]
-800BA748	ori    v0, zero, $0005
-800BA74C	bne    v1, v0, Lba768 [$800ba768]
-800BA750	nop
-800BA754	lui    v0, $8007
-800BA758	lbu    v0, $0788(v0)
-800BA75C	nop
-800BA760	beq    v0, zero, Lba770 [$800ba770]
-800BA764	nop
+Ld4d5c:	; 800D4D5C
+800D4D5C	sll    v0, s0, $10
 
-Lba768:	; 800BA768
-800BA768	jal    funcbb3a8 [$800bb3a8]
-800BA76C	nop
+Ld4d60:	; 800D4D60
+800D4D60	sra    v0, v0, $10
+800D4D64	sll    v1, s3, $10
+800D4D68	sra    v1, v1, $10
+800D4D6C	addu   a1, v0, v1
+800D4D70	slti   v0, a1, $00e1
+800D4D74	bne    v0, zero, Ld4dac [$800d4dac]
+800D4D78	nop
+800D4D7C	lui    v0, $800a
+800D4D80	lbu    v0, $d820(v0)
+800D4D84	nop
+800D4D88	andi   v0, v0, $0003
+800D4D8C	beq    v0, zero, Ld4da8 [$800d4da8]
+800D4D90	ori    v0, zero, $00e0
+800D4D94	lui    a0, $800a
+800D4D98	addiu  a0, a0, $104c
+800D4D9C	jal    funcbeca4 [$800beca4]
+800D4DA0	ori    a2, zero, $0003
+800D4DA4	ori    v0, zero, $00e0
 
-Lba770:	; 800BA770
-800BA770	lui    v0, $8007
-800BA774	lbu    v0, $1e2c(v0)
-800BA778	nop
-800BA77C	beq    v0, zero, Lba7a8 [$800ba7a8]
-800BA780	ori    a1, zero, $0004
-800BA784	lui    a0, $8008
-800BA788	addiu  a0, a0, $3274
-800BA78C	lui    v0, $800a
-800BA790	lw     v0, $c6e0(v0)
-800BA794	nop
-800BA798	lbu    a3, $0000(v0)
-800BA79C	addu   a2, s0, zero
-800BA7A0	jal    $8001f1bc
-800BA7A4	xori   a3, a3, $0001
+Ld4da8:	; 800D4DA8
+800D4DA8	subu   s0, v0, s3
 
-Lba7a8:	; 800BA7A8
-800BA7A8	jal    funcbc438 [$800bc438]
-800BA7AC	addu   a0, s0, zero
-800BA7B0	lw     ra, $0014(sp)
-800BA7B4	lw     s0, $0010(sp)
-800BA7B8	addiu  sp, sp, $0018
-800BA7BC	jr     ra 
-800BA7C0	nop
+Ld4dac:	; 800D4DAC
+800D4DAC	sll    v1, s4, $10
+800D4DB0	sra    v1, v1, $10
+800D4DB4	sll    v0, v1, $01
+800D4DB8	addu   v0, v0, v1
+800D4DBC	sll    v0, v0, $04
+800D4DC0	lui    at, $8008
+800D4DC4	addiu  at, at, $3278
+800D4DC8	addu   at, at, v0
+800D4DCC	sh     s1, $0000(at)
+800D4DD0	lui    at, $8008
+800D4DD4	addiu  at, at, $327a
+800D4DD8	addu   at, at, v0
+800D4DDC	sh     s0, $0000(at)
+800D4DE0	lui    at, $8008
+800D4DE4	addiu  at, at, $327c
+800D4DE8	addu   at, at, v0
+800D4DEC	sh     s2, $0000(at)
+800D4DF0	lui    at, $8008
+800D4DF4	addiu  at, at, $327e
+800D4DF8	addu   at, at, v0
+800D4DFC	sh     s3, $0000(at)
+800D4E00	lw     ra, $0024(sp)
+800D4E04	lw     s4, $0020(sp)
+800D4E08	lw     s3, $001c(sp)
+800D4E0C	lw     s2, $0018(sp)
+800D4E10	lw     s1, $0014(sp)
+800D4E14	lw     s0, $0010(sp)
+800D4E18	addiu  sp, sp, $0028
+800D4E1C	jr     ra 
+800D4E20	nop

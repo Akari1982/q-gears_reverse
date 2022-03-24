@@ -1563,7 +1563,7 @@ V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = w[V0 + 000c];
 A1 = S3;
-800BCFE8	jal    funcda480 [$800da480]
+800BCFE8	jal    field_int4_to_string [$800da480]
 A0 = A0 >> 0c;
 A0 = S1;
 800BCFF4	jal    field_concat_string [$800da368]
@@ -1584,7 +1584,7 @@ V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = w[V0 + 0010];
 A1 = S3;
-800BD040	jal    funcda480 [$800da480]
+800BD040	jal    field_int4_to_string [$800da480]
 A0 = A0 >> 0c;
 A0 = S1;
 800BD04C	jal    field_concat_string [$800da368]
@@ -1622,7 +1622,7 @@ V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = w[V0 + 0014];
 A1 = S3;
-800BD0FC	jal    funcda480 [$800da480]
+800BD0FC	jal    field_int4_to_string [$800da480]
 A0 = A0 >> 0c;
 A0 = S1;
 800BD108	jal    field_concat_string [$800da368]
@@ -1642,7 +1642,7 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = hu[V0 + 0072];
-800BD150	jal    funcda480 [$800da480]
+800BD150	jal    field_int4_to_string [$800da480]
 A1 = S3;
 A0 = S1;
 800BD15C	jal    field_concat_string [$800da368]
@@ -1706,7 +1706,7 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = h[V0 + 0062];
-800BD278	jal    funcda480 [$800da480]
+800BD278	jal    field_int4_to_string [$800da480]
 A1 = S3;
 A0 = S1;
 800BD284	jal    field_concat_string [$800da368]
@@ -1910,7 +1910,7 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = hu[V0 + 0070];
-800BD5CC	jal    funcda480 [$800da480]
+800BD5CC	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
 800BD5D8	jal    field_concat_string [$800da368]
@@ -1930,7 +1930,7 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = h[V0 + 0060];
-800BD620	jal    funcda480 [$800da480]
+800BD620	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
 800BD62C	jal    field_concat_string [$800da368]
@@ -1981,7 +1981,7 @@ V0 = V0 << 03;
 800BD6FC	addiu  at, at, $e7ac (=-$1854)
 AT = AT + V0;
 A0 = h[AT + 0000];
-800BD708	jal    funcda480 [$800da480]
+800BD708	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
 800BD714	jal    field_concat_string [$800da368]
@@ -2002,7 +2002,7 @@ V0 = V0 << 03;
 800BD750	addiu  at, at, $e7ae (=-$1852)
 AT = AT + V0;
 A0 = h[AT + 0000];
-800BD75C	jal    funcda480 [$800da480]
+800BD75C	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
 800BD768	jal    field_concat_string [$800da368]
@@ -2035,7 +2035,7 @@ V0 = V0 << 03;
 800BD7F4	addiu  at, at, $e7b0 (=-$1850)
 AT = AT + V0;
 A0 = h[AT + 0000];
-800BD800	jal    funcda480 [$800da480]
+800BD800	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
 800BD80C	jal    field_concat_string [$800da368]
@@ -2068,7 +2068,7 @@ V0 = V0 << 03;
 800BD898	addiu  at, at, $e7b2 (=-$184e)
 AT = AT + V0;
 A0 = h[AT + 0000];
-800BD8A4	jal    funcda480 [$800da480]
+800BD8A4	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
 800BD8B0	jal    field_concat_string [$800da368]
@@ -2089,7 +2089,7 @@ V0 = V0 << 03;
 800BD8EC	addiu  at, at, $e7b4 (=-$184c)
 AT = AT + V0;
 A0 = h[AT + 0000];
-800BD8F8	jal    funcda480 [$800da480]
+800BD8F8	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
 800BD904	jal    field_concat_string [$800da368]
@@ -2122,7 +2122,7 @@ V0 = V0 << 03;
 800BD990	addiu  at, at, $e7b6 (=-$184a)
 AT = AT + V0;
 A0 = h[AT + 0000];
-800BD99C	jal    funcda480 [$800da480]
+800BD99C	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
 800BD9A8	jal    field_concat_string [$800da368]
@@ -2196,7 +2196,7 @@ field_copy_string();
 800BDAB8	lui    s2, $800e
 S2 = S2 + 4288;
 A0 = h[80071e38];
-800BDAC8	jal    funcda480 [$800da480]
+800BDAC8	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDAD4	jal    field_concat_string [$800da368]
@@ -2206,7 +2206,7 @@ A1 = A1 + 0278;
 800BDAE4	jal    field_concat_string [$800da368]
 A0 = S1;
 A0 = h[80071e3c];
-800BDAF4	jal    funcda480 [$800da480]
+800BDAF4	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDB00	jal    field_concat_string [$800da368]
@@ -2247,7 +2247,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 0000];
-800BDBC0	jal    funcda480 [$800da480]
+800BDBC0	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDBCC	jal    field_concat_string [$800da368]
@@ -2288,7 +2288,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 0002];
-800BDC88	jal    funcda480 [$800da480]
+800BDC88	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDC94	jal    field_concat_string [$800da368]
@@ -2314,7 +2314,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 0004];
-800BDCF4	jal    funcda480 [$800da480]
+800BDCF4	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDD00	jal    field_concat_string [$800da368]
@@ -2350,7 +2350,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 0008];
-800BDDA8	jal    funcda480 [$800da480]
+800BDDA8	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDDB4	jal    field_concat_string [$800da368]
@@ -2390,7 +2390,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 000a];
-800BDE68	jal    funcda480 [$800da480]
+800BDE68	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDE74	jal    field_concat_string [$800da368]
@@ -2414,7 +2414,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 000c];
-800BDECC	jal    funcda480 [$800da480]
+800BDECC	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDED8	jal    field_concat_string [$800da368]
@@ -2449,7 +2449,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 0010];
-800BDF80	jal    funcda480 [$800da480]
+800BDF80	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BDF8C	jal    field_concat_string [$800da368]
@@ -2490,7 +2490,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 0012];
-800BE048	jal    funcda480 [$800da480]
+800BE048	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BE054	jal    field_concat_string [$800da368]
@@ -2514,7 +2514,7 @@ V1 = w[800e4274];
 V0 = V0 << 03;
 V0 = V0 + V1;
 A0 = h[V0 + 0014];
-800BE0AC	jal    funcda480 [$800da480]
+800BE0AC	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BE0B8	jal    field_concat_string [$800da368]
@@ -2548,7 +2548,7 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = h[V0 + 0040];
-800BE158	jal    funcda480 [$800da480]
+800BE158	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BE164	jal    field_concat_string [$800da368]
@@ -2584,7 +2584,7 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = h[V0 + 0046];
-800BE20C	jal    funcda480 [$800da480]
+800BE20C	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BE218	jal    field_concat_string [$800da368]
@@ -2603,7 +2603,7 @@ V1 = w[8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A0 = h[V0 + 004c];
-800BE25C	jal    funcda480 [$800da480]
+800BE25C	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
 800BE268	jal    field_concat_string [$800da368]
@@ -2628,7 +2628,7 @@ A1 = S2;
 A0 = bu[8009d289];
 V0 = bu[8009d288];
 A0 = A0 << 08;
-800BE2E8	jal    funcda480 [$800da480]
+800BE2E8	jal    field_int4_to_string [$800da480]
 A0 = V0 | A0;
 A0 = S1;
 800BE2F4	jal    field_concat_string [$800da368]
@@ -2743,7 +2743,7 @@ A0 = S1;
 800BE4BC	lui    s0, $800e
 S0 = S0 + 4288;
 A0 = hu[80075e12];
-800BE4CC	jal    funcda480 [$800da480]
+800BE4CC	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
 800BE4D8	jal    field_concat_string [$800da368]
@@ -2753,7 +2753,7 @@ A1 = A1 + 02d0;
 800BE4E8	jal    field_concat_string [$800da368]
 A0 = S1;
 A0 = hu[80075e10];
-800BE4F8	jal    funcda480 [$800da480]
+800BE4F8	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
 800BE504	jal    field_concat_string [$800da368]
@@ -3147,7 +3147,7 @@ Lbea7c:	; 800BEA7C
 
 
 ////////////////////////////////
-// funcbead4()
+// field_script_debug_opcode()
 
 S2 = A0; // opcode name text
 S1 = A1; // number of arg
@@ -3227,106 +3227,66 @@ if( S1 != 0 )
 
 
 ////////////////////////////////
-// funcbeca4
+// funcbeca4()
 
-V0 = bu[80071e24];
-V1 = A0;
-[SP + 0014] = w(S1);
-S1 = A1;
-[SP + 0010] = w(S0);
+str = A0;
+value = A1;
 S0 = A2;
-V0 = V0 & 0004;
-800BECC8	beq    v0, zero, Lbecf8 [$800becf8]
-[SP + 0018] = w(RA);
-V0 = bu[800722c4];
-800BECD8	nop
-800BECDC	lui    at, $8011
-AT = AT + 4498;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-800BECEC	nop
-800BECF0	beq    v0, zero, Lbedf8 [$800bedf8]
-800BECF4	nop
 
-Lbecf8:	; 800BECF8
-800BECF8	lui    a0, $800e
-A0 = A0 + 4254;
-800BED00	jal    field_copy_string [$800da334]
-A1 = V1;
-V0 = 0002;
-800BED0C	beq    s0, v0, Lbed58 [$800bed58]
-V0 = S0 < 0003;
-800BED14	beq    v0, zero, Lbed2c [$800bed2c]
-V0 = 0001;
-800BED1C	beq    s0, v0, Lbed40 [$800bed40]
-800BED20	nop
-800BED24	j      Lbed88 [$800bed88]
-800BED28	nop
+if( bu[80071e24] & 4 )
+{
+    V0 = bu[800722c4];
+    if( bu[80114498 + V0] == 0 )
+    {
+        return;
+    }
+}
 
-Lbed2c:	; 800BED2C
-V0 = 0004;
-800BED30	beq    s0, v0, Lbed70 [$800bed70]
-800BED34	nop
-800BED38	j      Lbed88 [$800bed88]
-800BED3C	nop
+A0 = 800e4254;
+A1 = str;
+field_copy_string();
 
-Lbed40:	; 800BED40
-800BED40	lui    a1, $800e
-A1 = A1 + 4288;
-800BED48	jal    field_int_to_string [$800da424]
-A0 = S1;
-800BED50	j      Lbeda0 [$800beda0]
-800BED54	nop
+if( S0 == 1 )
+{
+    A0 = value;
+    A1 = 800e4288;
+    field_int_to_string();
+}
+else if( S0 == 2 )
+{
+    A0 = value;
+    A1 = 800e4288;
+    field_int2_to_string();
+}
+else if( S0 == 4 )
+{
+    A1 = 800e4288;
+    A0 = value;
+    field_int4_to_string();
+}
+else
+{
+    A0 = 800e4288;
+    A1 = 800a0270;
+    field_copy_string();
+}
 
-Lbed58:	; 800BED58
-800BED58	lui    a1, $800e
-A1 = A1 + 4288;
-800BED60	jal    field_int2_to_string [$800da444]
-A0 = S1;
-800BED68	j      Lbeda0 [$800beda0]
-800BED6C	nop
+A0 = 800e4254;
+A1 = 800e4288;
+field_concat_string();
 
-Lbed70:	; 800BED70
-800BED70	lui    a1, $800e
-A1 = A1 + 4288;
-800BED78	jal    funcda480 [$800da480]
-A0 = S1;
-800BED80	j      Lbeda0 [$800beda0]
-800BED84	nop
+if( bu[8009d820] & 1 )
+{
+    A0 = 2;
+    A1 = 800e4254;
+    field_add_string_to_debug_by_id();
+}
 
-Lbed88:	; 800BED88
-800BED88	lui    a0, $800e
-A0 = A0 + 4288;
-800BED90	lui    a1, $800a
-A1 = A1 + 0270;
-800BED98	jal    field_copy_string [$800da334]
-800BED9C	nop
-
-Lbeda0:	; 800BEDA0
-800BEDA0	lui    s0, $800e
-S0 = S0 + 4254;
-800BEDA8	lui    a1, $800e
-A1 = A1 + 4288;
-800BEDB0	jal    field_concat_string [$800da368]
-A0 = S0;
-V0 = bu[8009d820];
-800BEDC0	nop
-V0 = V0 & 0001;
-800BEDC8	beq    v0, zero, Lbedd8 [$800bedd8]
-A0 = 0002;
-800BEDD0	jal    field_add_string_to_debug_by_id [$800d9f00]
-A1 = S0;
-
-Lbedd8:	; 800BEDD8
-V0 = bu[8009d820];
-800BEDE0	nop
-V0 = V0 & 0002;
-800BEDE8	beq    v0, zero, Lbedf8 [$800bedf8]
-800BEDEC	nop
-800BEDF0	jal    funcd4840 [$800d4840]
-A0 = S0;
-
-Lbedf8:	; 800BEDF8
+if( bu[8009d820] & 2 )
+{
+    A0 = 800e4254;
+    800BEDF0	jal    funcd4840 [$800d4840]
+}
 ////////////////////////////////
 
 
@@ -5194,43 +5154,36 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// funcc0b54
+// funcc0b54()
 
-V0 = bu[8009d820];
-V0 = V0 & 0003;
-800C0B68	beq    v0, zero, Lc0bc0 [$800c0bc0]
-[SP + 0010] = w(S0);
-A0 = bu[8009a058];
-800C0B78	lui    s0, $800e
-S0 = S0 + 4288;
-800C0B80	jal    field_int2_to_string [$800da444]
-A1 = S0;
-800C0B88	lui    a1, $800a
-A1 = A1 + 04c0;
-800C0B90	jal    field_concat_string [$800da368]
-A0 = S0;
-A0 = S0;
-800C0B9C	jal    funcbead4 [$800bead4]
-A1 = 0008;
-A0 = 0003;
-A1 = 007f;
-A2 = 0;
-800C0BB0	jal    funcda214 [$800da214]
-A3 = 0;
-800C0BB8	j      Lc0bd4 [$800c0bd4]
-V0 = 0001;
+if( bu[8009d820] & 3 )
+{
+    S0 = 800e4288;
 
-Lc0bc0:	; 800C0BC0
-800C0BC0	lui    a0, $800a
-A0 = A0 + 04c4;
-800C0BC8	jal    funcd4848 [$800d4848]
-800C0BCC	nop
-V0 = 0001;
+    A0 = bu[8009a058];
+    A1 = S0;
+    field_int2_to_string();
 
-Lc0bd4:	; 800C0BD4
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800C0BE0	jr     ra 
-800C0BE4	nop
+
+    A0 = S0;
+    A1 = 800a04c0; // "???"
+    field_concat_string();
+
+    A0 = S0;
+    A1 = 8;
+    field_script_debug_opcode();
+
+    A0 = 3;
+    A1 = 7f;
+    A2 = 0;
+    A3 = 0;
+    800C0BB0	jal    funcda214 [$800da214]
+}
+else
+{
+    A0 = 800a04c4; // "Bad Event code!"
+    funcd4848();
+}
+
+return 1;
 ////////////////////////////////

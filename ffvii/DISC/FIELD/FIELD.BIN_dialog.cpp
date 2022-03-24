@@ -168,56 +168,75 @@ V1 = V1 + 0030;
 
 
 ////////////////////////////////
-// set_window_x_y_width_height
-A0 - window ID
-A1 - x pos
-A2 - y pos
-A3 - width
-height stored
+// set_window_x_y_width_height()
 
-s1 = A1; // x
-S0 = a2; // y
-S2 = a3; // width
-S3 = height;
+window_id = A0;
+x = A1;
+y = A2;
+width = A3;
+height = A4;
 
-if (a1 < 8) // x position < 8
+if( x < 8 )
 {
-    S1 = 8;
+    x = 8;
+
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a103c; // "win limit x="
+        A2 = 2;
+        funcbeca4();
+    }
 }
 
-if (S1 + S2 >= 0139) // if window end x position < 0x139
+if( x + width >= 139 )
 {
-    S1 = 0138 - S2;
+    x = 138 - width;
+
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a103c; // "win limit x="
+        A2 = 3;
+        funcbeca4();
+    }
 }
 
-a1 = s0;
-
-if (a1 < 8) // if window y position < 8
+if( y < 8 )
 {
-    S0 = 8;
+    y = 8;
+
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a104c; // "win limit y="
+        A2 = 2;
+        funcbeca4();
+    }
 }
 
-if (S0 + S3 >= E1) // if window end y position < 0xE1
+if( y + height >= e1 )
 {
-    S0 = E0 - S3;
+    y = e0 - height;
+
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a104c; // "win limit y="
+        A2 = 3;
+        funcbeca4();
+    }
 }
 
-[80083278 + A0 * 30] = s1; // x
-[8008327A + A0 * 30] = s0; // y
-[8008327C + A0 * 30] = s2; // width
-[8008327E + A0 * 30] = s3; // height
+[80083274 + window_id * 30 + 4] = h(x);
+[80083274 + window_id * 30 + 6] = h(y);
+[80083274 + window_id * 30 + 8] = h(width);
+[80083274 + window_id * 30 + a] = h(height);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// add_x_y_to_window_position
-V1 = hu[80083278 + A0 * 30];
-S0 = hu[8008327A + A0 * 30];
-V1 = V1 + A1;
-S0 = S0 + A2;
-[80083278 + A0 * 30] = h(V1);
-[8008327A + A0 * 30] = h(S0);
+// add_x_y_to_window_position()
+
+[80083274 + A0 * 30 + 4] = h(hu[80083278 + A0 * 30 + 4] + A1);
+[80083274 + A0 * 30 + 6] = h(hu[80083274 + A0 * 30 + 6] + A2);
 ////////////////////////////////
 
 
@@ -225,7 +244,7 @@ S0 = S0 + A2;
 ////////////////////////////////
 // set_window_height()
 
-[8008327e + A0 * 30] = h(A1);
+[80083274 + A0 * 30 + a] = h(A1);
 ////////////////////////////////
 
 
@@ -233,218 +252,162 @@ S0 = S0 + A2;
 ////////////////////////////////
 // manage_window_states()
 
-A0 - window ID
-A1 - message ID
+window_id = A0;
+message_id = A1;
 
-v0 = a0 & FF = 3;
-v1 = [800832A0 + v0 * 30] = 0;
+V1 = h[80083274 + window_id * 30 + 2c];
 
-if (v0 < F)
+switch( V1 )
 {
-    switch (v0)
+    case 0:
     {
-        case 0:
+        A0 = window_id;
+        A1 = message_id;
+        dialog_window_init();
+
+        if( V0 != 0 )
         {
-            dialog_window_init();
-
-            if (v0 == 0)
-            {
-                return 0;
-            }
-
             return 1;
         }
-        break;
-
-        case 1:
-        {
-            dialog_window_growth();
-
-            return 0;
-        }
-        break;
-
-        case 2:
-        {
-            dialog_copy_text_from_field();
-
-            return 0;
-        }
-        break;
-
-        case 8:
-        {
-            dialog_scroll_text();
-
-            return 0;
-        }
-        break;
-
-        case C:
-        {
-            dialog_scroll_text_during_ok();
-
-            return 0;
-        }
-        break;
-
-        case D:
-        {
-            V0 = w[8009C6E0];
-            V0 = w[V0 + 80];
-            V0 = V0 & 0020;
-
-            if (V0 != 0)
-            {
-                // set state to 2
-                [800832A0 + A0 * 30] = h(2);
-
-                return 0;
-            }
-        }
-        break;
-
-        case 3:
-        {
-            V0 = h[8011445C + A0 * 2];
-
-            if (V0 == 0)
-            {
-                // set state to 2
-                [800832A0 + A0 * 30] = h(2);
-                return 0;
-            }
-
-            V0 = V0 - 1;
-            [8011445C + A0 * 2] = V0;
-            return 0;
-        }
-        break;
-
-        case 4:
-        {
-            V0 = w[8009C6E0];
-            V0 = w[V0 + 80];
-
-            if (V0 & 0020)
-            {
-                V0 = h[8008327E + A0 * 30];
-                V1 = V0 - 9;
-                V0 = h[801142CC + A0 * 2];
-                V1 = V1 / 10 + V0 - 1;
-
-                A2 = h[8008328A + A0 * 30];
-
-                if (A2 == V1)
-                {
-                    return 0;
-                }
-
-                [800832A0 + A0 * 30] = h(08); // set state to 8
-
-                V0 = h[80083284 + A0 * 30];
-                V0 = V0 - 2;
-                [80083284 + A0 * 30] = h(V0);
-
-                V0 = hu[801142CC + A0 * 2];
-                V0 = V0 + 1;
-                [801142CC + A0 * 2] = h(V0);
-            }
-
-            return 0;
-        }
-        break;
-
-        case 6:
-        {
-            V0 = [800832A2 + A0 * 30];
-
-            // if window can't be clicked
-            if (V0 & 01)
-            {
-                return 0;
-            }
-
-            V0 = [8009C6E0];
-            V0 = [V0 + 80];
-
-            if (V0 & 0020)
-            {
-                // set state to 7
-                [800832A0 + A0 * 30] = h(07);
-
-                dialog_window_discrease();
-
-                return 0;
-            }
-        }
-
-        case E:
-        {
-            V0 = w[8009C6E0];
-            V0 = w[V0 + 80];
-            V0 = V0 & 0020;
-
-            if (V0 != 0)
-            {
-                dialog_init_next_window();
-
-                return 0;
-            }
-        }
-        break;
-
-        case B:
-        {
-            V0 = w[8009C6E0];
-            V0 = w[V0 + 80];
-            V0 = V0 & 0020;
-
-            if (V0 == 0)
-            {
-                return 0;
-            }
-
-            [800832A0 + A0 * 30] = h(0C) // set state to C
-
-            V0 = h[8008328A + A0 * 30];
-            V0 = V0 * 10 + 11;
-            [800E424C + A0 * 30] = h(V0);
-
-            V0 = hu[80083284 + A0 * 30];
-            V0 = V0 - 2;
-            [80083284 + A0 * 30] = h(V0);
-
-            return 0;
-        }
-        break;
-
-        case 9:
-        {
-            dialog_init_next_window();
-
-            return 0;
-        }
-        break;
-
-        case 5 7:
-        {
-            dialog_window_discrease();
-
-            if (V0 != 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        break;
     }
+    break;
+
+    case 1:
+    {
+        A0 = window_id;
+        dialog_window_growth();
+    }
+    break;
+
+    case 2:
+    {
+        A0 = window_id;
+        dialog_copy_text_from_field();
+    }
+    break;
+
+    case 8:
+    {
+        A0 = window_id;
+        dialog_scroll_text();
+    }
+    break;
+
+    case c:
+    {
+        A0 = window_id;
+        dialog_scroll_text_during_ok();
+    }
+    break;
+
+    case d:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 0020 )
+        {
+            [80083274 + window_id * 30 + 2c] = h(2);
+        }
+    }
+    break;
+
+    case 3:
+    {
+        if( h[8011445c + window_id * 2] == 0 )
+        {
+            [80083274 + window_id * 30 + 2c] = h(2);
+        }
+        else
+        {
+            [8011445c + window_id * 2] = h(h[8011445c + window_id * 2] - 1);
+        }
+    }
+    break;
+
+    case 4:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 0020 )
+        {
+            height = h[80083274 + window_id * 30 + a];
+            cur_row = h[80083274 + window_id * 30 + 16];
+
+            V1 = height - 9;
+            if( V1 < 0 )
+            {
+                V1 = height + 6;
+            }
+
+            V1 = (V1 >> 04) + h[801142cc + window_id * 2] - 1;
+
+            if( cur_row == V1 )
+            {
+                [80083274 + window_id * 30 + 2c] = h(8);
+                [80083274 + window_id * 30 + 10] = h(hu[80083274 + window_id * 30 + 10] - 2); // scroll value
+                [801142cc + window_id * 2] = h(hu[801142cc + window_id * 2] + 1);
+            }
+        }
+    }
+    break;
+
+    case 6:
+    {
+        if( ( hu[80083274 + window_id * 30 + 2e] & 0001 ) == 0 )
+        {
+            V0 = w[8009c6e0];
+            if( w[V0 + 80] & 0020 )
+            {
+                [80083274 + window_id * 30 + 2c] = h(7);
+
+                A0 = window_id;
+                dialog_window_discrease();
+            }
+        }
+    }
+    break;
+
+    case e:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 0020 )
+        {
+            A0 = window_id;
+            dialog_init_next_window();
+        }
+    }
+    break;
+
+    case b:
+    {
+        V0 = w[8009c6e0];
+        if( w[V0 + 80] & 0020 )
+        {
+            [80083274 + window_id * 30 + 2c] = h(c);
+            [800e424c + window_id * 2] = h((h[8008328a + window_id * 30] << 04) + 11);
+            [80083274 + window_id * 30 + 10] = h(hu[80083274 + window_id * 30 + 10] - 2);
+        }
+    }
+    break;
+
+    case 9:
+    {
+        A0 = window_id;
+        dialog_init_next_window();
+    }
+    break;
+
+    case 5:
+    case 7:
+    {
+        A0 = window_id;
+        dialog_window_discrease();
+        if( V0 != 0 )
+        {
+            return 1;
+        }
+    }
+    break;
 }
 
-// type A, >= F
 return 0;
 ////////////////////////////////
 
@@ -834,10 +797,11 @@ if (V1 != V0)
     V0 = V0 & 0003;
     800D5AA4	beq    v0, zero, Ld5c8c [$800d5c8c]
     800D5AA8	nop
-    800D5AAC	lui    a0, $800a
-    A0 = A0 + 10ec;
-    800D5AB4	jal    funcbeca4 [$800beca4]
-    A2 = 0001;
+
+    A0 = 800a10ec; // "mes busy="
+    A2 = 1;
+    funcbeca4();
+
     800D5ABC	j      Ld5c8c [$800d5c8c]
     800D5AC0	nop
 }

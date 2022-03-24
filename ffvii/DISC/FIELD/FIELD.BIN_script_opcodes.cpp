@@ -18,7 +18,7 @@ V0 = V0 & 0003;
 
 800C0C38	lui    a0, $800a
 A0 = A0 + 04d4;
-800C0C40	jal    funcbead4 [$800bead4]
+800C0C40	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lc0c48:	; 800C0C48
@@ -141,7 +141,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C0DF8	lui    a0, $800a
 A0 = A0 + 04fc;
-800C0E00	jal    funcbead4 [$800bead4]
+800C0E00	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lc0e08:	; 800C0E08
@@ -182,7 +182,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C0E74	lui    a0, $800a
 A0 = A0 + 0500;
-800C0E7C	jal    funcbead4 [$800bead4]
+800C0E7C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Lc0e84:	; 800C0E84
@@ -222,7 +222,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C0EF4	lui    a0, $800a
 A0 = A0 + 0508;
-800C0EFC	jal    funcbead4 [$800bead4]
+800C0EFC	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lc0f04:	; 800C0F04
@@ -261,7 +261,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C0F70	lui    a0, $800a
 A0 = A0 + 0510;
-800C0F78	jal    funcbead4 [$800bead4]
+800C0F78	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Lc0f80:	; 800C0F80
@@ -308,7 +308,7 @@ funcc0ff8:	; 800C0FF8
 A0 = A0 + 0518;
 
 Lc0ffc:	; 800C0FFC
-800C0FFC	jal    funcbead4 [$800bead4]
+800C0FFC	jal    field_script_debug_opcode [$800bead4]
 
 Lc1000:	; 800C1000
 A1 = 0005;
@@ -364,7 +364,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800C109C	lui    a0, $800a
 A0 = A0 + 0520;
-800C10A4	jal    funcbead4 [$800bead4]
+800C10A4	jal    field_script_debug_opcode [$800bead4]
 A1 = 0006;
 
 Lc10ac:	; 800C10AC
@@ -481,7 +481,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800C1234	lui    a0, $800a
 A0 = A0 + 0568;
-800C123C	jal    funcbead4 [$800bead4]
+800C123C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0006;
 
 Lc1244:	; 800C1244
@@ -762,7 +762,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800C1730	lui    a0, $800a
 A0 = A0 + 0600;
-800C1738	jal    funcbead4 [$800bead4]
+800C1738	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lc1740:	; 800C1740
@@ -811,7 +811,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800C17D4	lui    a0, $800a
 A0 = A0 + 0608;
-800C17DC	jal    funcbead4 [$800bead4]
+800C17DC	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lc17e4:	; 800C17E4
@@ -1674,7 +1674,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C2874	lui    a0, $800a
 A0 = A0 + 06cc;
-800C287C	jal    funcbead4 [$800bead4]
+800C287C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Lc2884:	; 800C2884
@@ -1927,7 +1927,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C2C14	lui    a0, $800a
 A0 = A0 + 0748;
-800C2C1C	jal    funcbead4 [$800bead4]
+800C2C1C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lc2c24:	; 800C2C24
@@ -1977,7 +1977,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C2CC0	lui    a0, $800a
 A0 = A0 + 0750;
-800C2CC8	jal    funcbead4 [$800bead4]
+800C2CC8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lc2cd0:	; 800C2CD0
@@ -2030,7 +2030,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C2D6C	lui    a0, $800a
 A0 = A0 + 0758;
-800C2D74	jal    funcbead4 [$800bead4]
+800C2D74	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lc2d7c:	; 800C2D7C
@@ -2659,7 +2659,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C40BC	lui    a0, $800a
 A0 = A0 + 0840;
-800C40C4	jal    funcbead4 [$800bead4]
+800C40C4	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Lc40cc:	; 800C40CC
@@ -2798,7 +2798,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C42C8	lui    a0, $800a
 A0 = A0 + 0854;
-800C42D0	jal    funcbead4 [$800bead4]
+800C42D0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Lc42d8:	; 800C42D8
@@ -2841,7 +2841,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C4368	lui    a0, $800a
 A0 = A0 + 0854;
-800C4370	jal    funcbead4 [$800bead4]
+800C4370	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Lc4378:	; 800C4378
@@ -3442,7 +3442,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C5254	lui    a0, $800a
 A0 = A0 + 08f4;
-800C525C	jal    funcbead4 [$800bead4]
+800C525C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0001;
 
 Lc5264:	; 800C5264
@@ -3574,7 +3574,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(RA);
 800C557C	lui    a0, $800a
 A0 = A0 + 0910;
-800C5584	jal    funcbead4 [$800bead4]
+800C5584	jal    field_script_debug_opcode [$800bead4]
 A1 = 0001;
 
 Lc558c:	; 800C558C
@@ -4630,7 +4630,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800C7C54	lui    a0, $800a
 A0 = A0 + 099c;
-800C7C5C	jal    funcbead4 [$800bead4]
+800C7C5C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0001;
 
 Lc7c64:	; 800C7C64
@@ -5762,7 +5762,7 @@ V0 = V0 & 0003;
 800CA308	nop
 800CA30C	lui    a0, $800a
 A0 = A0 + 0a60;
-800CA314	jal    funcbead4 [$800bead4]
+800CA314	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lca31c:	; 800CA31C
@@ -5896,7 +5896,7 @@ S0 = bu[V0 + 0003];
 S0 = S0 & 00ff;
 800CA62C	lui    a0, $800a
 A0 = A0 + 0a78;
-800CA634	jal    funcbead4 [$800bead4]
+800CA634	jal    field_script_debug_opcode [$800bead4]
 A1 = 0007;
 
 Lca63c:	; 800CA63C
@@ -5995,7 +5995,7 @@ S0 = bu[V0 + 0003];
 V1 = S0 & 00ff;
 800CA7C8	lui    a0, $800a
 A0 = A0 + 0a80;
-800CA7D0	jal    funcbead4 [$800bead4]
+800CA7D0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0007;
 V1 = S0 & 00ff;
 
@@ -6268,24 +6268,29 @@ return 1;
 
 ////////////////////////////////
 // 0x40 MESSAGE
-V0 = bu[800722C4];          // current entity
-V1 = hu[800831FC + V0 * 2]; // script pointer
-V0 = w[8009c6dc];           // current field file offset.
 
-A0 = [V0 + V1 + 1];         // window_id
-A1 = [V0 + V1 + 2];         // dialog_id
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a0aa8; // "mes"
+    A1 = 2;
+    field_script_debug_opcode();
+}
 
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+A0 = bu[script + 1];
+A1 = bu[script + 2];
 manage_window_states();
 
-if (v == 0)
+if( V0 == 0 )
 {
-    v0 = 1;
+    return 1;
 }
-else
-{
-    v0 = 0;
-    move script pointer by 3
-}
+
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 3);
+
+return 0;
 ////////////////////////////////
 
 
@@ -6386,27 +6391,33 @@ else
 
 ////////////////////////////////
 // 0x2F WSIZE
-A1 = bu[800722C4];
-V1 = hu[800831FC + A1 * 2];
-V0 = w[8009C6DC];
-S0 = bu[V0 + V1 + 1];
-V1 = bu[8008326C + S0]; // parent entity
 
-if (V1 == FF) // if window not opened yet
+if( bu[8009d820] & 3 )
 {
-    window;
+    A0 = 800a0ac0; // "wsizw"
+    A1 = 8;
+    field_script_debug_opcode();
+}
+
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+
+S0 = bu[script + 1];
+V1 = bu[8008326c + S0];
+
+if( V1 == ff )
+{
+    funccb354();
+
     return V0;
 }
-else
+else if( V1 == current_entity )
 {
-    if (V1 == A1) // if parent entity and current entity are the same
-    {
-        set_state_to_close;
+    set_state_to_close();
 
-        A0 = S0;
-        A1 = 0;
-        manage_window_states();
-    }
+    A0 = S0;
+    A1 = 0;
+    manage_window_states();
 }
 return 1;
 ////////////////////////////////
@@ -6415,20 +6426,26 @@ return 1;
 
 ////////////////////////////////
 // 0x50 WINDOW
-// funccb354
+// funccb354()
 
-get curent script offset and store result in t0;
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a0ac8; // "wsize"
+    A1 = 8;
+    field_script_debug_opcode();
+}
 
-a0 = [t0 + 1] = 3;    // window id
-a1 = [t0 + 2] = 0028; // x
-a2 = [t0 + 4] = 0014; // y
-a3 = [t0 + 6] = 0085; // w
-v1 = [t0 + 8] = 0029; // h
-[sp + 10] = v1;
+current_entity = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
-set_window_x_y_width_height
+A0 = bu[script + 1];
+A1 = h[script + 2];
+A2 = h[script + 4];
+A3 = h[script + 6];
+A4 = h[script + 8];
+set_window_x_y_width_height();
 
-move script pointer by 0xA
+[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
 
 return 0;
 ////////////////////////////////
@@ -6553,7 +6570,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CB7DC	lui    a0, $800a
 A0 = A0 + 0af8;
-800CB7E4	jal    funcbead4 [$800bead4]
+800CB7E4	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcb7ec:	; 800CB7EC
@@ -6599,7 +6616,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CB874	lui    a0, $800a
 A0 = A0 + 0afc;
-800CB87C	jal    funcbead4 [$800bead4]
+800CB87C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcb884:	; 800CB884
@@ -6646,7 +6663,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CB910	lui    a0, $800a
 A0 = A0 + 0b04;
-800CB918	jal    funcbead4 [$800bead4]
+800CB918	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcb920:	; 800CB920
@@ -6692,7 +6709,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CB9A8	lui    a0, $800a
 A0 = A0 + 0b08;
-800CB9B0	jal    funcbead4 [$800bead4]
+800CB9B0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcb9b8:	; 800CB9B8
@@ -6739,7 +6756,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBA44	lui    a0, $800a
 A0 = A0 + 0b0c;
-800CBA4C	jal    funcbead4 [$800bead4]
+800CBA4C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcba54:	; 800CBA54
@@ -6785,7 +6802,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBADC	lui    a0, $800a
 A0 = A0 + 0b10;
-800CBAE4	jal    funcbead4 [$800bead4]
+800CBAE4	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcbaec:	; 800CBAEC
@@ -6832,7 +6849,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBB78	lui    a0, $800a
 A0 = A0 + 0b18;
-800CBB80	jal    funcbead4 [$800bead4]
+800CBB80	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcbb88:	; 800CBB88
@@ -6874,7 +6891,7 @@ if( bu[8009d820] & 3 )
 {
     A0 = 800a0b20; // "plus!"
     A1 = 3;
-    funcbead4();
+    field_script_debug_opcode();
 }
 
 A0 = 0001;
@@ -6927,7 +6944,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBCC0	lui    a0, $800a
 A0 = A0 + 0b28;
-800CBCC8	jal    funcbead4 [$800bead4]
+800CBCC8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcbcd0:	; 800CBCD0
@@ -6974,7 +6991,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBD5C	lui    a0, $800a
 A0 = A0 + 0b30;
-800CBD64	jal    funcbead4 [$800bead4]
+800CBD64	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcbd6c:	; 800CBD6C
@@ -7031,7 +7048,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBE18	lui    a0, $800a
 A0 = A0 + 0b38;
-800CBE20	jal    funcbead4 [$800bead4]
+800CBE20	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcbe28:	; 800CBE28
@@ -7077,7 +7094,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBEB0	lui    a0, $800a
 A0 = A0 + 0b40;
-800CBEB8	jal    funcbead4 [$800bead4]
+800CBEB8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcbec0:	; 800CBEC0
@@ -7130,7 +7147,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBF5C	lui    a0, $800a
 A0 = A0 + 0b48;
-800CBF64	jal    funcbead4 [$800bead4]
+800CBF64	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcbf6c:	; 800CBF6C
@@ -7172,7 +7189,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CBFF8	lui    a0, $800a
 A0 = A0 + 0b50;
-800CC000	jal    funcbead4 [$800bead4]
+800CC000	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc008:	; 800CC008
@@ -7229,7 +7246,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CC0B4	lui    a0, $800a
 A0 = A0 + 0b58;
-800CC0BC	jal    funcbead4 [$800bead4]
+800CC0BC	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc0c4:	; 800CC0C4
@@ -7276,7 +7293,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CC150	lui    a0, $800a
 A0 = A0 + 0b5c;
-800CC158	jal    funcbead4 [$800bead4]
+800CC158	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc160:	; 800CC160
@@ -7324,7 +7341,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CC1F0	lui    a0, $800a
 A0 = A0 + 0b64;
-800CC1F8	jal    funcbead4 [$800bead4]
+800CC1F8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc200:	; 800CC200
@@ -7378,7 +7395,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CC2A0	lui    a0, $800a
 A0 = A0 + 0b68;
-800CC2A8	jal    funcbead4 [$800bead4]
+800CC2A8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc2b0:	; 800CC2B0
@@ -7445,7 +7462,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CC374	lui    a0, $800a
 A0 = A0 + 0b70;
-800CC37C	jal    funcbead4 [$800bead4]
+800CC37C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc384:	; 800CC384
@@ -7498,7 +7515,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CC420	lui    a0, $800a
 A0 = A0 + 0b78;
-800CC428	jal    funcbead4 [$800bead4]
+800CC428	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc430:	; 800CC430
@@ -7562,7 +7579,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC4F0	lui    a0, $800a
 A0 = A0 + 0b80;
-800CC4F8	jal    funcbead4 [$800bead4]
+800CC4F8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcc500:	; 800CC500
@@ -7602,7 +7619,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC570	lui    a0, $800a
 A0 = A0 + 0b84;
-800CC578	jal    funcbead4 [$800bead4]
+800CC578	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcc580:	; 800CC580
@@ -7649,7 +7666,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC604	lui    a0, $800a
 A0 = A0 + 0b8c;
-800CC60C	jal    funcbead4 [$800bead4]
+800CC60C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc614:	; 800CC614
@@ -7690,7 +7707,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC688	lui    a0, $800a
 A0 = A0 + 0b94;
-800CC690	jal    funcbead4 [$800bead4]
+800CC690	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc698:	; 800CC698
@@ -7739,7 +7756,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC724	lui    a0, $800a
 A0 = A0 + 0b9c;
-800CC72C	jal    funcbead4 [$800bead4]
+800CC72C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcc734:	; 800CC734
@@ -7779,7 +7796,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC7A4	lui    a0, $800a
 A0 = A0 + 0ba0;
-800CC7AC	jal    funcbead4 [$800bead4]
+800CC7AC	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcc7b4:	; 800CC7B4
@@ -7827,7 +7844,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC83C	lui    a0, $800a
 A0 = A0 + 0ba8;
-800CC844	jal    funcbead4 [$800bead4]
+800CC844	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc84c:	; 800CC84C
@@ -7868,7 +7885,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC8C0	lui    a0, $800a
 A0 = A0 + 0bb0;
-800CC8C8	jal    funcbead4 [$800bead4]
+800CC8C8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Lcc8d0:	; 800CC8D0
@@ -7917,7 +7934,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CC95C	lui    a0, $800a
 A0 = A0 + 0bb8;
-800CC964	jal    funcbead4 [$800bead4]
+800CC964	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcc96c:	; 800CC96C
@@ -8096,7 +8113,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CCD6C	lui    a0, $800a
 A0 = A0 + 0be8;
-800CCD74	jal    funcbead4 [$800bead4]
+800CCD74	jal    field_script_debug_opcode [$800bead4]
 A1 = 0001;
 
 Lccd7c:	; 800CCD7C
@@ -8183,7 +8200,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CCEAC	lui    a0, $800a
 A0 = A0 + 0bf0;
-800CCEB4	jal    funcbead4 [$800bead4]
+800CCEB4	jal    field_script_debug_opcode [$800bead4]
 A1 = 0;
 
 Lccebc:	; 800CCEBC
@@ -8282,7 +8299,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800CD000	lui    a0, $800a
 A0 = A0 + 0bf8;
-800CD008	jal    funcbead4 [$800bead4]
+800CD008	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcd010:	; 800CD010
@@ -8341,7 +8358,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(RA);
 800CD0DC	lui    a0, $800a
 A0 = A0 + 0c00;
-800CD0E4	jal    funcbead4 [$800bead4]
+800CD0E4	jal    field_script_debug_opcode [$800bead4]
 A1 = 0;
 
 Lcd0ec:	; 800CD0EC
@@ -8406,6 +8423,7 @@ return 0;
 ////////////////////////////////
 // 0x62 SCRLC
 // scroll to playable character with specified type.
+
 struct = w[8009c6e0];
 current_entity = bu[800722c4];
 script = w[8009c6dc] + hu[800831fc + current_entity * 2];
@@ -8416,7 +8434,7 @@ script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
 A0 = 2;
 A1 = 2;
-read_memory_block_two_bytes;
+read_memory_block_two_bytes();
 [struct + 20] = b(V0);
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
@@ -8752,7 +8770,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CDD68	lui    a0, $800a
 A0 = A0 + 0c68;
-800CDD70	jal    funcbead4 [$800bead4]
+800CDD70	jal    field_script_debug_opcode [$800bead4]
 A1 = 0007;
 
 Lcdd78:	; 800CDD78
@@ -8898,7 +8916,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CE07C	lui    a0, $800a
 A0 = A0 + 0c70;
-800CE084	jal    funcbead4 [$800bead4]
+800CE084	jal    field_script_debug_opcode [$800bead4]
 A1 = 0007;
 
 Lce08c:	; 800CE08C
@@ -9110,7 +9128,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CE4B0	lui    a0, $800a
 A0 = A0 + 0c78;
-800CE4B8	jal    funcbead4 [$800bead4]
+800CE4B8	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Lce4c0:	; 800CE4C0
@@ -9656,7 +9674,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800CF224	lui    a0, $800a
 A0 = A0 + 0cb4;
-800CF22C	jal    funcbead4 [$800bead4]
+800CF22C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0005;
 
 Lcf234:	; 800CF234
@@ -9709,7 +9727,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800CF2D8	lui    a0, $800a
 A0 = A0 + 0cbc;
-800CF2E0	jal    funcbead4 [$800bead4]
+800CF2E0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0005;
 
 Lcf2e8:	; 800CF2E8
@@ -9974,7 +9992,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800CF734	lui    a0, $800a
 A0 = A0 + 0cc4;
-800CF73C	jal    funcbead4 [$800bead4]
+800CF73C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcf744:	; 800CF744
@@ -10071,7 +10089,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800CF890	lui    a0, $800a
 A0 = A0 + 0ce4;
-800CF898	jal    funcbead4 [$800bead4]
+800CF898	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Lcf8a0:	; 800CF8A0
@@ -11962,7 +11980,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(RA);
 800D1D54	lui    a0, $800a
 A0 = A0 + 0e38;
-800D1D5C	jal    funcbead4 [$800bead4]
+800D1D5C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Ld1d64:	; 800D1D64
@@ -12051,7 +12069,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D1F3C	lui    a0, $800a
 A0 = A0 + 0e48;
-800D1F44	jal    funcbead4 [$800bead4]
+800D1F44	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Ld1f4c:	; 800D1F4C
@@ -12105,7 +12123,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D1FF8	lui    a0, $800a
 A0 = A0 + 0e58;
-800D2000	jal    funcbead4 [$800bead4]
+800D2000	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Ld2008:	; 800D2008
@@ -12159,7 +12177,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D20B4	lui    a0, $800a
 A0 = A0 + 0e68;
-800D20BC	jal    funcbead4 [$800bead4]
+800D20BC	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Ld20c4:	; 800D20C4
@@ -12216,7 +12234,7 @@ if( bu[8009d820] & 3 )
 {
     A0 = 800a0e78;
     A1 = 8;
-    funcbead4();
+    field_script_debug_opcode();
 }
 
 V0 = bu[800722c4];
@@ -12251,7 +12269,7 @@ V0 = V0 & 0003;
 S0 = 0;
 800D2210	lui    a0, $800a
 A0 = A0 + 0e80;
-800D2218	jal    funcbead4 [$800bead4]
+800D2218	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld2220:	; 800D2220
@@ -12273,7 +12291,7 @@ V0 = V0 & 0003;
 800D2258	nop
 800D225C	lui    a0, $800a
 A0 = A0 + 0e88;
-800D2264	jal    funcbead4 [$800bead4]
+800D2264	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld226c:	; 800D226C
@@ -12288,7 +12306,7 @@ V0 = V0 & 0003;
 800D2290	nop
 800D2294	lui    a0, $800a
 A0 = A0 + 0e90;
-800D229C	jal    funcbead4 [$800bead4]
+800D229C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld22a4:	; 800D22A4
@@ -12322,7 +12340,7 @@ V0 = V0 & 0003;
 800D2320	nop
 800D2324	lui    a0, $800a
 A0 = A0 + 0e98;
-800D232C	jal    funcbead4 [$800bead4]
+800D232C	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Ld2334:	; 800D2334
@@ -12349,7 +12367,7 @@ V0 = V0 & 0003;
 800D2394	nop
 800D2398	lui    a0, $800a
 A0 = A0 + 0ea0;
-800D23A0	jal    funcbead4 [$800bead4]
+800D23A0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0002;
 
 Ld23a8:	; 800D23A8
@@ -12376,7 +12394,7 @@ V0 = V0 & 0003;
 S0 = 0;
 800D240C	lui    a0, $800a
 A0 = A0 + 0ea8;
-800D2414	jal    funcbead4 [$800bead4]
+800D2414	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld241c:	; 800D241C
@@ -12398,7 +12416,7 @@ V0 = V0 & 0003;
 S0 = 0;
 800D2458	lui    a0, $800a
 A0 = A0 + 0eb0;
-800D2460	jal    funcbead4 [$800bead4]
+800D2460	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld2468:	; 800D2468
@@ -12427,7 +12445,7 @@ V0 = V0 & 0003;
 A0 = 0004;
 800D24C4	lui    a0, $800a
 A0 = A0 + 0eb8;
-800D24CC	jal    funcbead4 [$800bead4]
+800D24CC	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 A0 = 0004;
 
@@ -12452,7 +12470,7 @@ V0 = V0 & 0003;
 A0 = 0004;
 800D252C	lui    a0, $800a
 A0 = A0 + 0ec0;
-800D2534	jal    funcbead4 [$800bead4]
+800D2534	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 A0 = 0004;
 
@@ -12478,7 +12496,7 @@ V0 = V0 & 0003;
 800D2594	nop
 800D2598	lui    a0, $800a
 A0 = A0 + 0ec8;
-800D25A0	jal    funcbead4 [$800bead4]
+800D25A0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld25a8:	; 800D25A8
@@ -12570,7 +12588,7 @@ V0 = V0 & 0003;
 800D26D4	nop
 800D26D8	lui    a0, $800a
 A0 = A0 + 0ed0;
-800D26E0	jal    funcbead4 [$800bead4]
+800D26E0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld26e8:	; 800D26E8
@@ -12599,7 +12617,7 @@ V0 = V0 & 0003;
 800D2748	nop
 800D274C	lui    a0, $800a
 A0 = A0 + 0ed8;
-800D2754	jal    funcbead4 [$800bead4]
+800D2754	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld275c:	; 800D275C
@@ -12693,7 +12711,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D29A8	lui    a0, $800a
 A0 = A0 + 0f20;
-800D29B0	jal    funcbead4 [$800bead4]
+800D29B0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0006;
 
 Ld29b8:	; 800D29B8
@@ -12758,7 +12776,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800D2A8C	lui    a0, $800a
 A0 = A0 + 0f28;
-800D2A94	jal    funcbead4 [$800bead4]
+800D2A94	jal    field_script_debug_opcode [$800bead4]
 A1 = 0007;
 
 Ld2a9c:	; 800D2A9C
@@ -12822,7 +12840,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800D2B7C	lui    a0, $800a
 A0 = A0 + 0f30;
-800D2B84	jal    funcbead4 [$800bead4]
+800D2B84	jal    field_script_debug_opcode [$800bead4]
 A1 = 0008;
 
 Ld2b8c:	; 800D2B8C
@@ -12951,7 +12969,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(RA);
 800D2EAC	lui    a0, $800a
 A0 = A0 + 0f38;
-800D2EB4	jal    funcbead4 [$800bead4]
+800D2EB4	jal    field_script_debug_opcode [$800bead4]
 A1 = 0001;
 
 Ld2ebc:	; 800D2EBC
@@ -12997,7 +13015,7 @@ V0 = V0 & 0003;
 [SP + 0018] = w(S0);
 800D2F58	lui    a0, $800a
 A0 = A0 + 0f40;
-800D2F60	jal    funcbead4 [$800bead4]
+800D2F60	jal    field_script_debug_opcode [$800bead4]
 A1 = 0003;
 
 Ld2f68:	; 800D2F68
@@ -13282,7 +13300,7 @@ V0 = V0 & 0003;
 800D3560	lui    a0, $800a
 A0 = A0 + 0f60;
 A1 = 0;
-800D3568	jal    funcbead4 [$800bead4]
+800D3568	jal    field_script_debug_opcode [$800bead4]
 
 Ld3570:	; 800D3570
 V1 = 0;
@@ -13382,7 +13400,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D36A8	lui    a0, $800a
 A0 = A0 + 0f68;
-800D36B0	jal    funcbead4 [$800bead4]
+800D36B0	jal    field_script_debug_opcode [$800bead4]
 A1 = 0;
 
 Ld36b8:	; 800D36B8
@@ -13430,7 +13448,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D3748	lui    a0, $800a
 A0 = A0 + 0f70;
-800D3750	jal    funcbead4 [$800bead4]
+800D3750	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Ld3758:	; 800D3758
@@ -13510,7 +13528,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D3860	lui    a0, $800a
 A0 = A0 + 0f74;
-800D3868	jal    funcbead4 [$800bead4]
+800D3868	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Ld3870:	; 800D3870
@@ -13590,7 +13608,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D3978	lui    a0, $800a
 A0 = A0 + 0f78;
-800D3980	jal    funcbead4 [$800bead4]
+800D3980	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Ld3988:	; 800D3988
@@ -13664,7 +13682,7 @@ V0 = V0 & 0003;
 [SP + 0010] = w(S0);
 800D3A90	lui    a0, $800a
 A0 = A0 + 0f7c;
-800D3A98	jal    funcbead4 [$800bead4]
+800D3A98	jal    field_script_debug_opcode [$800bead4]
 A1 = 0004;
 
 Ld3aa0:	; 800D3AA0
