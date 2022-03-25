@@ -321,6 +321,14 @@
     + 160 array of some data (0x18 items 0x1 size)
         + 0 []       init with 0.
 
+
+800e1028 debug packets buffer (2 buffer with size 0x1580 with 0x158 packets 0x10 size) (textured rectangle, 8x8, opaque, raw-texture).
+
+800e3b28 debug packets buffer (2 buffer with size 0x240 with 0x18 packets 0x18 size) (monochrome poly-line, opaque).
+
+800e41b8 [][]     debug render sprite count (text).
+800e41bc [][]     debug render line count.
+
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
 800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).

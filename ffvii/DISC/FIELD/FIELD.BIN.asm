@@ -1288,7 +1288,7 @@
 // funcd8710
 800D8710-800D9C00
 ////////////////////////////////
-// funcd9c04
+// field_debug_render_string
 800D9C04-800D9EFC
 ////////////////////////////////
 // field_add_string_to_debug_by_id

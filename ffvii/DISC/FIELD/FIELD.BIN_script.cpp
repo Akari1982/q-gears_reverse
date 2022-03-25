@@ -2368,7 +2368,7 @@ A2 = S1;
 A0 = S0;
 A1 = b;
 A2 = 4;
-800BDDF0	jal    funcda194 [$800da194]
+funcda194();
 
 Lbddf8:	; 800BDDF8
 A0 = S1;
