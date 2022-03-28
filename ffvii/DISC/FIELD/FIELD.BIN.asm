@@ -330,7 +330,7 @@
 // funcbc4d4
 800BC4D4-800BC9F8
 ////////////////////////////////
-// funcbc9fc
+// field_script_update_debug
 800BC9FC-800BEAD0
 ////////////////////////////////
 // field_script_debug_opcode
@@ -1247,15 +1247,15 @@
 // funcd7c98
 800D7C98-800D7D68
 ////////////////////////////////
-// funcd7d6c
-800D7D6C-800D7F98
-////////////////////////////////
 
 
 
 // FIELD.BIN_debug.cpp
 ////////////////////////////////
-// field_init_debug_with_default
+// field_debug_init_buffers
+800D7D6C-800D7F98
+////////////////////////////////
+// field_debug_init_pages
 800D7F9C-800D8190
 ////////////////////////////////
 // funcd8194
@@ -1285,7 +1285,7 @@
 // field_debug_render
 800D85FC-800D870C
 ////////////////////////////////
-// funcd8710
+// field_debug_render_page
 800D8710-800D9C00
 ////////////////////////////////
 // field_debug_render_string
@@ -1297,16 +1297,16 @@
 // funcd9ffc
 800D9FFC-800DA120
 ////////////////////////////////
-// field_copy_into_debug_by_id
+// field_debug_copy_string_into_page
 800DA124-800DA190
 ////////////////////////////////
-// funcda194
+// field_debug_set_row_color
 800DA194-800DA1D0
 ////////////////////////////////
 // funcda1d4
 800DA1D4-800DA210
 ////////////////////////////////
-// funcda214
+// field_debug_set_page_color
 800DA214-800DA288
 ////////////////////////////////
 // funcda28c
@@ -1318,10 +1318,10 @@
 // funcda310
 800DA310-800DA330
 ////////////////////////////////
-// field_copy_string
+// field_debug_copy_string
 800DA334-800DA364
 ////////////////////////////////
-// field_concat_string
+// field_debug_concat_string
 800DA368-800DA3C0
 ////////////////////////////////
 // funcda3c4

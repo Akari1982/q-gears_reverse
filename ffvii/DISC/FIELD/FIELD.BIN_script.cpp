@@ -67,9 +67,9 @@ if( bu[8007ebe0] != 0 )
 
     800BA680	jal    funcbc338 [$800bc338]
 
-    800BA688	jal    funcd7d6c [$800d7d6c]
+    field_debug_init_buffers();
 
-    field_init_debug_with_default();
+    field_debug_init_pages();
 
     field_file_offset = w[8009c6dc];
 
@@ -324,18 +324,18 @@ for( int i = 0; i < entity_num; ++i )
     {
         A0 = 800e4254;
         A1 = 800e0628; // "Actor:"
-        field_copy_string();
+        field_debug_copy_string();
 
         A0 = 800e4254;
         A1 = field_data + 20 + i * 8; // field entity names
-        field_concat_string();
+        field_debug_concat_string();
 
         if( bu[80071e24] & 1 )
         {
             A0 = 4;
             A1 = 0;
             A2 = 800e4254;
-            field_copy_into_debug_by_id();
+            field_debug_copy_string_into_page();
         }
 
         if( bu[80071e24] & 2 )
@@ -698,7 +698,7 @@ if( bu[80071e24] & 3 )
 {
     A0 = 4;
     A1 = bu[800722c4]; // current entity
-    funcbc9fc();
+    field_script_update_debug();
 }
 
 800BB890	lui    v1, $8007
@@ -808,7 +808,7 @@ loopbb940:	; 800BB940
 800BB940	sll    a1, s1, $10
 800BB944	lui    a2, $800a
 800BB948	addiu  a2, a2, $013c
-800BB94C	jal    field_copy_into_debug_by_id [$800da124]
+800BB94C	jal    field_debug_copy_string_into_page [$800da124]
 800BB950	sra    a1, a1, $10
 800BB954	addiu  s1, s1, $0001
 800BB958	slti   v0, s1, $0009
@@ -1120,52 +1120,42 @@ else
 
 
 ////////////////////////////////
-// funcbc338
-800BC338	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 7fff;
-V1 = 0009;
-[80114464] = h(V0);
-[80114468] = h(V0);
-V0 = 002c;
-[800e48fb] = b(V0);
-[800e4923] = b(V0);
-[800e48fb] = b(V0);
-[800e4923] = b(V0);
-V0 = 002d;
-[SP + 0010] = w(RA);
-[80114490] = b(0);
-[800e48f7] = b(V1);
-[800e491f] = b(V1);
-[800e48fb] = b(V0);
-[800e4923] = b(V0);
-800BC3A8	jal    $80043cc0
-800BC3AC	nop
-V1 = 0001;
-800BC3B4	beq    v0, v1, Lbc3d4 [$800bc3d4]
-V0 = 002f;
-800BC3BC	jal    $80043cc0
-800BC3C0	nop
-V1 = 0002;
-800BC3C8	bne    v0, v1, Lbc3d4 [$800bc3d4]
-V0 = 001f;
-V0 = 002f;
+// funcbc338()
 
-Lbc3d4:	; 800BC3D4
-[800e4932] = h(V0);
-[800e490a] = h(V0);
-V0 = 7850;
-[800e492a] = h(V0);
-[800e4902] = h(V0);
+[80114464] = h(7fff);
+[80114468] = h(7fff);
+[800e48fb] = b(2c);
+[800e4923] = b(2c);
+[800e48fb] = b(2c);
+[800e4923] = b(2c);
+[80114490] = b(0);
+[800e48f7] = b(9);
+[800e491f] = b(9);
+[800e48fb] = b(2d);
+[800e4923] = b(2d);
+
+system_gpu_get_type();
+type = V0;
+
+if( ( type == 1 ) || ( type == 2 ) )
+{
+    [800e4932] = h(2f);
+    [800e490a] = h(2f);
+}
+else
+{
+    [800e4932] = h(1f);
+    [800e490a] = h(1f);
+}
+
+[800e492a] = h(7850);
+[800e4902] = h(7850);
 [800e48f8] = b(0);
 [800e4920] = b(0);
 [800e48f9] = b(0);
 [800e4921] = b(0);
 [800e48fa] = b(0);
 [800e4922] = b(0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BC430	jr     ra 
-800BC434	nop
 ////////////////////////////////
 
 
@@ -1281,7 +1271,7 @@ V1 = 800e48f4 + V0 * 28;
 
 
 ////////////////////////////////
-// funcbc9fc()
+// field_script_update_debug()
 
 debug_id = A0; // 4
 entity_id = A1;
@@ -1304,7 +1294,7 @@ if( debug_id == 4 )
         A1 = 7f;
         A2 = 1;
         A3 = 7f;
-        funcda214(); // set some values
+        field_debug_set_page_color();
     }
     else
     {
@@ -1312,35 +1302,35 @@ if( debug_id == 4 )
         A1 = 7;
         A2 = f;
         A3 = 1f;
-        funcda214(); // set some values
+        field_debug_set_page_color();
     }
 
     A0 = 800e4254;
     A1 = 800e0628; // "Actor:"
-    field_copy_string();
+    field_debug_copy_string();
 }
 else
 {
     A0 = 800e4254;
     A1 = 800a01d4; // "ctrl:"
-    field_copy_string();
+    field_debug_copy_string();
 }
 
 A0 = 800e4254;
 A1 = w[8009c6dc] + 20 + entity_id * 8; // name of entity
-field_concat_string();
+field_debug_concat_string();
 
 if( ( bu[8009fe8c] | ( bu[80071e24] & 1 ) ) != 0 )
 {
     A0 = debug_id;
     A1 = 0;
     A2 = 800e4254;
-    field_copy_into_debug_by_id();
+    field_debug_copy_string_into_page();
 }
 
 A0 = 800e4254;
 A1 = 800a01dc; // "RqLv=" (request level)
-field_copy_string();
+field_debug_copy_string();
 
 A0 = bu[8009a1c4 + entity_id]; // currently used priority slot
 A1 = 800e4288;
@@ -1348,11 +1338,11 @@ field_int_to_string();
 
 A0 = 800e4254;
 A1 = 800e4288;
-field_concat_string();
+field_debug_concat_string();
 
 A0 = 800e4254;
 A1 = 800a01e4; // " Tg="
-field_concat_string();
+field_debug_concat_string();
 
 V1 = bu[8009a1c4 + entity_id];
 V1 = bu[801142d4 + entity_id * 8 + V1]; // priority queue script id
@@ -1360,19 +1350,19 @@ if( V1 == 0 )
 {
     A0 = 800e4254;
     A1 = 800a01ec; // "dft"
-    field_concat_string();
+    field_debug_concat_string();
 }
 else if( V1 == 1 )
 {
     A0 = 800e4254;
     A1 = 800a01f0; // "tlk"
-    field_concat_string();
+    field_debug_concat_string();
 }
 else if( V1 == 2 )
 {
     A0 = 800e4254;
     A1 = 800a01f4; // "psh"
-    field_concat_string();
+    field_debug_concat_string();
 }
 else
 {
@@ -1383,7 +1373,7 @@ else
 
     A0 = 800e4254;
     A1 = 800e4288;
-    field_concat_string();
+    field_debug_concat_string();
 }
 
 if( ( bu[8009fe8c] | (bu[80071e24] & 1) ) != 0 )
@@ -1391,7 +1381,7 @@ if( ( bu[8009fe8c] | (bu[80071e24] & 1) ) != 0 )
     A0 = debug_id;
     A1 = 1;
     A2 = 800e4254;
-    field_copy_into_debug_by_id();
+    field_debug_copy_string_into_page();
 }
 
 V0 = entity_id << 10;
@@ -1412,7 +1402,7 @@ V0 = bu[AT + 0000];
 800BCD30	nop
 A0 = 800e4254;
 A1 = 800a01f8; // "Abst"
-field_copy_string();
+field_debug_copy_string();
 
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1429,7 +1419,7 @@ Lbcd7c:	; 800BCD7C
 S1 = 800e4254;
 A0 = S1;
 A1 = 800a0200; // "line="
-field_copy_string();
+field_debug_copy_string();
 
 S0 = 800e4288;
 A0 = bu[8007078c + S2];
@@ -1438,7 +1428,7 @@ field_int2_to_string();
 
 A0 = S1;
 A1 = S0;
-field_concat_string();
+field_debug_concat_string();
 
 800BCDC0	lui    at, $8007
 AT = AT + 078c;
@@ -1463,7 +1453,7 @@ Lbce0c:	; 800BCE0C
 A1 = 800a020c; // " off"
 
 Lbce14:	; 800BCE14
-field_concat_string();
+field_debug_concat_string();
 
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1480,7 +1470,7 @@ Lbce4c:	; 800BCE4C
 S1 = 800e4254;
 A0 = S1;
 A1 = 800a0214; // "man="
-field_copy_string();
+field_debug_copy_string();
 
 S0 = 800e4288;
 A0 = bu[8007eb98 + S2]; // model id
@@ -1489,11 +1479,11 @@ field_int2_to_string();
 
 A0 = S1;
 A1 = S0;
-field_concat_string();
+field_debug_concat_string();
 
 A0 = S1;
 A1 = 800a021c; // " dir="
-field_concat_string();
+field_debug_concat_string();
 
 800BCEA0	lui    at, $8008
 800BCEA4	addiu  at, at, $eb98 (=-$1468)
@@ -1509,7 +1499,7 @@ A0 = bu[V0 + 0038];
 800BCED0	jal    field_int2_to_string [$800da444]
 A1 = S0;
 A0 = S1;
-800BCEDC	jal    field_concat_string [$800da368]
+800BCEDC	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1522,7 +1512,7 @@ A1 = 0002;
 A2 = 0002;
 
 Lbcf10:	; 800BCF10
-800BCF10	jal    funcda194 [$800da194]
+800BCF10	jal    field_debug_set_row_color [$800da194]
 800BCF14	nop
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1533,7 +1523,7 @@ A0 = debug_id << 10;
 A0 = A0 >> 10;
 800BCF3C	lui    a2, $800e
 A2 = A2 + 4254;
-800BCF44	jal    field_copy_into_debug_by_id [$800da124]
+800BCF44	jal    field_debug_copy_string_into_page [$800da124]
 A1 = 0002;
 
 Lbcf4c:	; 800BCF4C
@@ -1549,7 +1539,7 @@ V0 = 00ff;
 S1 = 800e4254;
 A0 = S1;
 A1 = 800a0224; // "X="
-field_copy_string();
+field_debug_copy_string();
 
 800BCFB0	lui    at, $8008
 800BCFB4	addiu  at, at, $eb98 (=-$1468)
@@ -1566,11 +1556,11 @@ A1 = S3;
 800BCFE8	jal    field_int4_to_string [$800da480]
 A0 = A0 >> 0c;
 A0 = S1;
-800BCFF4	jal    field_concat_string [$800da368]
+800BCFF4	jal    field_debug_concat_string [$800da368]
 A1 = S3;
 800BCFFC	lui    a1, $800a
 A1 = A1 + 0228;
-800BD004	jal    field_concat_string [$800da368]
+800BD004	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 800BD00C	lui    at, $8008
 800BD010	addiu  at, at, $eb98 (=-$1468)
@@ -1587,7 +1577,7 @@ A1 = S3;
 800BD040	jal    field_int4_to_string [$800da480]
 A0 = A0 >> 0c;
 A0 = S1;
-800BD04C	jal    field_concat_string [$800da368]
+800BD04C	jal    field_debug_concat_string [$800da368]
 A1 = S3;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1598,17 +1588,17 @@ S0 = debug_id << 10;
 S0 = S0 >> 10;
 A0 = S0;
 A1 = 0003;
-800BD080	jal    field_copy_into_debug_by_id [$800da124]
+800BD080	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0003;
-800BD090	jal    funcda194 [$800da194]
+800BD090	jal    field_debug_set_row_color [$800da194]
 A2 = 0001;
 
 Lbd098:	; 800BD098
 A0 = S1;
 A1 = 800a022c; // "Z="
-field_copy_string();
+field_debug_copy_string();
 
 800BD0C8	lui    at, $8008
 800BD0CC	addiu  at, at, $eb98 (=-$1468)
@@ -1625,11 +1615,11 @@ A1 = S3;
 800BD0FC	jal    field_int4_to_string [$800da480]
 A0 = A0 >> 0c;
 A0 = S1;
-800BD108	jal    field_concat_string [$800da368]
+800BD108	jal    field_debug_concat_string [$800da368]
 A1 = S3;
 800BD110	lui    a1, $800a
 A1 = A1 + 0230;
-800BD118	jal    field_concat_string [$800da368]
+800BD118	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 800BD120	lui    at, $8008
 800BD124	addiu  at, at, $eb98 (=-$1468)
@@ -1645,7 +1635,7 @@ A0 = hu[V0 + 0072];
 800BD150	jal    field_int4_to_string [$800da480]
 A1 = S3;
 A0 = S1;
-800BD15C	jal    field_concat_string [$800da368]
+800BD15C	jal    field_debug_concat_string [$800da368]
 A1 = S3;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1655,7 +1645,7 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 0004;
-800BD18C	jal    field_copy_into_debug_by_id [$800da124]
+800BD18C	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 
 Lbd194:	; 800BD194
@@ -1672,7 +1662,7 @@ A0 = bu[AT + 0000];
 A1 = S1;
 800BD1E0	lui    a1, $800a
 A1 = A1 + 0234;
-800BD1E8	jal    field_concat_string [$800da368]
+800BD1E8	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 800BD1F0	lui    at, $8008
 800BD1F4	addiu  at, at, $eb98 (=-$1468)
@@ -1688,12 +1678,12 @@ A0 = bu[V0 + 005e];
 800BD220	jal    field_int2_to_string [$800da444]
 A1 = S3;
 A0 = S1;
-800BD22C	jal    field_concat_string [$800da368]
+800BD22C	jal    field_debug_concat_string [$800da368]
 A1 = S3;
 A0 = S1;
 800BD238	lui    s5, $800a
 S5 = S5 + 0238;
-800BD240	jal    field_concat_string [$800da368]
+800BD240	jal    field_debug_concat_string [$800da368]
 A1 = S5;
 800BD248	lui    at, $8008
 800BD24C	addiu  at, at, $eb98 (=-$1468)
@@ -1709,10 +1699,10 @@ A0 = h[V0 + 0062];
 800BD278	jal    field_int4_to_string [$800da480]
 A1 = S3;
 A0 = S1;
-800BD284	jal    field_concat_string [$800da368]
+800BD284	jal    field_debug_concat_string [$800da368]
 A1 = S3;
 A0 = S1;
-800BD290	jal    field_concat_string [$800da368]
+800BD290	jal    field_debug_concat_string [$800da368]
 A1 = S5;
 800BD298	lui    at, $8008
 800BD29C	addiu  at, at, $eb98 (=-$1468)
@@ -1728,7 +1718,7 @@ A0 = h[V0 + 0064];
 800BD2C8	jal    field_int2_to_string [$800da444]
 A1 = S3;
 A0 = S1;
-800BD2D4	jal    field_concat_string [$800da368]
+800BD2D4	jal    field_debug_concat_string [$800da368]
 A1 = S3;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1739,11 +1729,11 @@ S0 = debug_id << 10;
 S0 = S0 >> 10;
 A0 = S0;
 A1 = 0005;
-800BD308	jal    field_copy_into_debug_by_id [$800da124]
+800BD308	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0005;
-800BD318	jal    funcda194 [$800da194]
+800BD318	jal    field_debug_set_row_color [$800da194]
 A2 = 0007;
 
 Lbd320:	; 800BD320
@@ -1770,7 +1760,7 @@ Lbd38c:	; 800BD38C
 A1 = S5;
 
 Lbd390:	; 800BD390
-field_copy_string();
+field_debug_copy_string();
 
 V0 = entity_id << 10;
 V0 = V0 >> 10;
@@ -1802,7 +1792,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0240;
 
 Lbd404:	; 800BD404
-800BD404	jal    field_concat_string [$800da368]
+800BD404	jal    field_debug_concat_string [$800da368]
 800BD408	nop
 V0 = entity_id << 10;
 V0 = V0 >> 10;
@@ -1834,13 +1824,13 @@ A0 = A0 + 4254;
 A1 = A1 + 0244;
 
 Lbd478:	; 800BD478
-800BD478	jal    field_concat_string [$800da368]
+800BD478	jal    field_debug_concat_string [$800da368]
 800BD47C	nop
 800BD480	lui    s1, $800e
 S1 = S1 + 4254;
 800BD488	lui    a1, $800a
 A1 = A1 + 0248;
-800BD490	jal    field_concat_string [$800da368]
+800BD490	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 V0 = entity_id << 10;
 S2 = V0 >> 10;
@@ -1859,11 +1849,11 @@ A0 = hu[V0 + 006e];
 800BD4D4	jal    field_int2_to_string [$800da444]
 A1 = S0;
 A0 = S1;
-800BD4E0	jal    field_concat_string [$800da368]
+800BD4E0	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 800BD4E8	lui    a1, $800a
 A1 = A1 + 024c;
-800BD4F0	jal    field_concat_string [$800da368]
+800BD4F0	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 800BD4F8	lui    at, $8008
 800BD4FC	addiu  at, at, $eb98 (=-$1468)
@@ -1881,7 +1871,7 @@ field_int2_to_string();
 
 A0 = S1;
 A1 = S0;
-field_concat_string();
+field_debug_concat_string();
 
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1891,13 +1881,13 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 0006;
-800BD564	jal    field_copy_into_debug_by_id [$800da124]
+800BD564	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 
 Lbd56c:	; 800BD56C
 A0 = S1;
 A1 = 800a0250; // "MS"
-field_copy_string();
+field_debug_copy_string();
 
 800BD59C	lui    at, $8008
 800BD5A0	addiu  at, at, $eb98 (=-$1468)
@@ -1913,11 +1903,11 @@ A0 = hu[V0 + 0070];
 800BD5CC	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
-800BD5D8	jal    field_concat_string [$800da368]
+800BD5D8	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 800BD5E0	lui    a1, $800a
 A1 = A1 + 0254;
-800BD5E8	jal    field_concat_string [$800da368]
+800BD5E8	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 800BD5F0	lui    at, $8008
 800BD5F4	addiu  at, at, $eb98 (=-$1468)
@@ -1933,7 +1923,7 @@ A0 = h[V0 + 0060];
 800BD620	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
-800BD62C	jal    field_concat_string [$800da368]
+800BD62C	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -1944,11 +1934,11 @@ S0 = debug_id << 10;
 S0 = S0 >> 10;
 A0 = S0;
 A1 = 0007;
-800BD660	jal    field_copy_into_debug_by_id [$800da124]
+800BD660	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0007;
-800BD670	jal    funcda194 [$800da194]
+800BD670	jal    field_debug_set_row_color [$800da194]
 A2 = 0007;
 
 Lbd678:	; 800BD678
@@ -1966,7 +1956,7 @@ V0 = bu[AT + 0000];
 S0 = 800e4254;
 A0 = S0;
 A1 = 800a0258; // "AX"
-field_copy_string();
+field_debug_copy_string();
 
 800BD6D4	lui    at, $8007
 AT = AT + 078c;
@@ -1984,11 +1974,11 @@ A0 = h[AT + 0000];
 800BD708	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
-800BD714	jal    field_concat_string [$800da368]
+800BD714	jal    field_debug_concat_string [$800da368]
 A1 = S1;
 800BD71C	lui    a1, $800a
 A1 = A1 + 025c;
-800BD724	jal    field_concat_string [$800da368]
+800BD724	jal    field_debug_concat_string [$800da368]
 A0 = S0;
 800BD72C	lui    at, $8007
 AT = AT + 078c;
@@ -2005,7 +1995,7 @@ A0 = h[AT + 0000];
 800BD75C	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
-800BD768	jal    field_concat_string [$800da368]
+800BD768	jal    field_debug_concat_string [$800da368]
 A1 = S1;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2015,13 +2005,13 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 0003;
-800BD798	jal    field_copy_into_debug_by_id [$800da124]
+800BD798	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S0;
 
 Lbd7a0:	; 800BD7A0
 A0 = S0;
 A1 = 800a0260; // "AZ"
-field_copy_string();
+field_debug_copy_string();
 
 800BD7D0	lui    at, $8007
 AT = AT + 078c;
@@ -2038,7 +2028,7 @@ A0 = h[AT + 0000];
 800BD800	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
-800BD80C	jal    field_concat_string [$800da368]
+800BD80C	jal    field_debug_concat_string [$800da368]
 A1 = S1;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2048,13 +2038,13 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 0004;
-800BD83C	jal    field_copy_into_debug_by_id [$800da124]
+800BD83C	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S0;
 
 Lbd844:	; 800BD844
 A0 = S0;
 A1 = 800a0264; // "BX"
-field_copy_string();
+field_debug_copy_string();
 
 800BD874	lui    at, $8007
 AT = AT + 078c;
@@ -2071,11 +2061,11 @@ A0 = h[AT + 0000];
 800BD8A4	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
-800BD8B0	jal    field_concat_string [$800da368]
+800BD8B0	jal    field_debug_concat_string [$800da368]
 A1 = S1;
 800BD8B8	lui    a1, $800a
 A1 = A1 + 0268;
-800BD8C0	jal    field_concat_string [$800da368]
+800BD8C0	jal    field_debug_concat_string [$800da368]
 A0 = S0;
 800BD8C8	lui    at, $8007
 AT = AT + 078c;
@@ -2092,7 +2082,7 @@ A0 = h[AT + 0000];
 800BD8F8	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
-800BD904	jal    field_concat_string [$800da368]
+800BD904	jal    field_debug_concat_string [$800da368]
 A1 = S1;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2102,13 +2092,13 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 0005;
-800BD934	jal    field_copy_into_debug_by_id [$800da124]
+800BD934	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S0;
 
 Lbd93c:	; 800BD93C
 800BD95C	lui    a1, $800a
 A1 = A1 + 026c;
-800BD964	jal    field_copy_string [$800da334]
+800BD964	jal    field_debug_copy_string [$800da334]
 A0 = S0;
 800BD96C	lui    at, $8007
 AT = AT + 078c;
@@ -2125,7 +2115,7 @@ A0 = h[AT + 0000];
 800BD99C	jal    field_int4_to_string [$800da480]
 A1 = S1;
 A0 = S0;
-800BD9A8	jal    field_concat_string [$800da368]
+800BD9A8	jal    field_debug_concat_string [$800da368]
 A1 = S1;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2135,7 +2125,7 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 0006;
-800BD9D8	jal    field_copy_into_debug_by_id [$800da124]
+800BD9D8	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S0;
 
 Lbd9e0:	; 800BD9E0
@@ -2155,26 +2145,26 @@ A0 = S0;
 A1 = 0003;
 800BDA38	lui    s1, $800a
 S1 = S1 + 0270;
-800BDA40	jal    field_copy_into_debug_by_id [$800da124]
+800BDA40	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0004;
-800BDA50	jal    field_copy_into_debug_by_id [$800da124]
+800BDA50	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0005;
-800BDA60	jal    field_copy_into_debug_by_id [$800da124]
+800BDA60	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0006;
-800BDA70	jal    field_copy_into_debug_by_id [$800da124]
+800BDA70	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 
 Lbda7c:	; 800BDA7C
 800BDA7C	lui    a2, $800a
 A2 = A2 + 0270;
-800BDA84	jal    field_copy_into_debug_by_id [$800da124]
+800BDA84	jal    field_debug_copy_string_into_page [$800da124]
 A1 = 0007;
 
 Lbda8c:	; 800BDA8C
@@ -2191,7 +2181,7 @@ if( S0 == V0 )
 S1 = 800e4254;
 A0 = S1;
 A1 = 800a0274; // "SX"
-field_copy_string();
+field_debug_copy_string();
 
 800BDAB8	lui    s2, $800e
 S2 = S2 + 4288;
@@ -2199,17 +2189,17 @@ A0 = h[80071e38];
 800BDAC8	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDAD4	jal    field_concat_string [$800da368]
+800BDAD4	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 800BDADC	lui    a1, $800a
 A1 = A1 + 0278;
-800BDAE4	jal    field_concat_string [$800da368]
+800BDAE4	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 A0 = h[80071e3c];
 800BDAF4	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDB00	jal    field_concat_string [$800da368]
+800BDB00	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 
 V1 = bu[8009fe8c] | (bu[80071e24] & 01);
@@ -2217,17 +2207,17 @@ V1 = bu[8009fe8c] | (bu[80071e24] & 01);
 800BDB20	beq    v1, zero, Lbdb44 [$800bdb44]
 A0 = S0;
 A1 = 0008;
-800BDB2C	jal    field_copy_into_debug_by_id [$800da124]
+800BDB2C	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0008;
-800BDB3C	jal    funcda194 [$800da194]
+800BDB3C	jal    field_debug_set_row_color [$800da194]
 A2 = 0003;
 
 Lbdb44:	; 800BDB44
 800BDB64	lui    a1, $800a
 A1 = A1 + 027c;
-800BDB6C	jal    field_copy_string [$800da334]
+800BDB6C	jal    field_debug_copy_string [$800da334]
 A0 = S1;
 800BDB74	lui    s3, $800a
 800BDB78	addiu  s3, s3, $ac1e (=-$53e2)
@@ -2250,7 +2240,7 @@ A0 = h[V0 + 0000];
 800BDBC0	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDBCC	jal    field_concat_string [$800da368]
+800BDBCC	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2259,18 +2249,18 @@ V1 = V1 | V0;
 800BDBEC	beq    v1, zero, Lbdc10 [$800bdc10]
 A0 = S0;
 A1 = 0009;
-800BDBF8	jal    field_copy_into_debug_by_id [$800da124]
+800BDBF8	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 0009;
-800BDC08	jal    funcda194 [$800da194]
+800BDC08	jal    field_debug_set_row_color [$800da194]
 A2 = 0002;
 
 Lbdc10:	; 800BDC10
 A0 = S1;
 S7 = 800a0288; // "Y="
 A1 = S7;
-field_copy_string();
+field_debug_copy_string();
 
 V1 = h[S3 + 0000];
 800BDC48	nop
@@ -2291,12 +2281,12 @@ A0 = h[V0 + 0002];
 800BDC88	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDC94	jal    field_concat_string [$800da368]
+800BDC94	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 A0 = S1;
 800BDCA0	lui    s5, $800a
 S5 = S5 + 028c;
-800BDCA8	jal    field_concat_string [$800da368]
+800BDCA8	jal    field_debug_concat_string [$800da368]
 A1 = S5;
 V1 = h[S3 + 0000];
 800BDCB4	nop
@@ -2317,7 +2307,7 @@ A0 = h[V0 + 0004];
 800BDCF4	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDD00	jal    field_concat_string [$800da368]
+800BDD00	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2326,13 +2316,13 @@ V1 = V1 | V0;
 800BDD20	beq    v1, zero, Lbdd34 [$800bdd34]
 A0 = S0;
 A1 = 000a;
-800BDD2C	jal    field_copy_into_debug_by_id [$800da124]
+800BDD2C	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 
 Lbdd34:	; 800BDD34
 800BDD54	lui    a1, $800a
 A1 = A1 + 0290;
-800BDD5C	jal    field_copy_string [$800da334]
+800BDD5C	jal    field_debug_copy_string [$800da334]
 A0 = S1;
 V1 = h[S3 + 0000];
 800BDD68	nop
@@ -2353,7 +2343,7 @@ A0 = h[V0 + 0008];
 800BDDA8	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDDB4	jal    field_concat_string [$800da368]
+800BDDB4	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2362,17 +2352,17 @@ V1 = V1 | V0;
 800BDDD4	beq    v1, zero, Lbddf8 [$800bddf8]
 A0 = S0;
 A1 = 000b;
-800BDDE0	jal    field_copy_into_debug_by_id [$800da124]
+800BDDE0	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 
 A0 = S0;
 A1 = b;
 A2 = 4;
-funcda194();
+field_debug_set_row_color();
 
 Lbddf8:	; 800BDDF8
 A0 = S1;
-800BDE1C	jal    field_copy_string [$800da334]
+800BDE1C	jal    field_debug_copy_string [$800da334]
 A1 = S7;
 V1 = h[S3 + 0000];
 800BDE28	nop
@@ -2393,10 +2383,10 @@ A0 = h[V0 + 000a];
 800BDE68	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDE74	jal    field_concat_string [$800da368]
+800BDE74	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 A0 = S1;
-800BDE80	jal    field_concat_string [$800da368]
+800BDE80	jal    field_debug_concat_string [$800da368]
 A1 = S5;
 V1 = h[S3 + 0000];
 800BDE8C	nop
@@ -2417,7 +2407,7 @@ A0 = h[V0 + 000c];
 800BDECC	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDED8	jal    field_concat_string [$800da368]
+800BDED8	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2426,13 +2416,13 @@ V1 = V1 | V0;
 800BDEF8	beq    v1, zero, Lbdf0c [$800bdf0c]
 A0 = S0;
 A1 = 000c;
-800BDF04	jal    field_copy_into_debug_by_id [$800da124]
+800BDF04	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 
 Lbdf0c:	; 800BDF0C
 A0 = S1;
 A1 = 800a029c; // "G-B    X="
-field_copy_string();
+field_debug_copy_string();
 
 V1 = h[S3 + 0000];
 V0 = V1 << 05;
@@ -2452,7 +2442,7 @@ A0 = h[V0 + 0010];
 800BDF80	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BDF8C	jal    field_concat_string [$800da368]
+800BDF8C	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2463,16 +2453,16 @@ S0 = debug_id << 10;
 S0 = S0 >> 10;
 A0 = S0;
 A1 = 000d;
-800BDFC0	jal    field_copy_into_debug_by_id [$800da124]
+800BDFC0	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 000d;
-800BDFD0	jal    funcda194 [$800da194]
+800BDFD0	jal    field_debug_set_row_color [$800da194]
 A2 = 0003;
 
 Lbdfd8:	; 800BDFD8
 A0 = S1;
-800BDFFC	jal    field_copy_string [$800da334]
+800BDFFC	jal    field_debug_copy_string [$800da334]
 A1 = S7;
 V1 = h[S3 + 0000];
 800BE008	nop
@@ -2493,10 +2483,10 @@ A0 = h[V0 + 0012];
 800BE048	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BE054	jal    field_concat_string [$800da368]
+800BE054	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 A0 = S1;
-800BE060	jal    field_concat_string [$800da368]
+800BE060	jal    field_debug_concat_string [$800da368]
 A1 = S5;
 V1 = h[S3 + 0000];
 800BE06C	nop
@@ -2517,7 +2507,7 @@ A0 = h[V0 + 0014];
 800BE0AC	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BE0B8	jal    field_concat_string [$800da368]
+800BE0B8	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2527,13 +2517,13 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 000e;
-800BE0E8	jal    field_copy_into_debug_by_id [$800da124]
+800BE0E8	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 
 Lbe0f0:	; 800BE0F0
 800BE110	lui    a1, $800a
 A1 = A1 + 02a8;
-800BE118	jal    field_copy_string [$800da334]
+800BE118	jal    field_debug_copy_string [$800da334]
 A0 = S1;
 V0 = entity_id << 10;
 S3 = V0 >> 10;
@@ -2551,7 +2541,7 @@ A0 = h[V0 + 0040];
 800BE158	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BE164	jal    field_concat_string [$800da368]
+800BE164	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2562,16 +2552,16 @@ S0 = debug_id << 10;
 S0 = S0 >> 10;
 A0 = S0;
 A1 = 000f;
-800BE198	jal    field_copy_into_debug_by_id [$800da124]
+800BE198	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 A0 = S0;
 A1 = 000f;
-800BE1A8	jal    funcda194 [$800da194]
+800BE1A8	jal    field_debug_set_row_color [$800da194]
 A2 = 0002;
 
 Lbe1b0:	; 800BE1B0
 A0 = S1;
-800BE1D4	jal    field_copy_string [$800da334]
+800BE1D4	jal    field_debug_copy_string [$800da334]
 A1 = S7;
 800BE1DC	lui    at, $8008
 800BE1E0	addiu  at, at, $eb98 (=-$1468)
@@ -2587,10 +2577,10 @@ A0 = h[V0 + 0046];
 800BE20C	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BE218	jal    field_concat_string [$800da368]
+800BE218	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 A0 = S1;
-800BE224	jal    field_concat_string [$800da368]
+800BE224	jal    field_debug_concat_string [$800da368]
 A1 = S5;
 800BE22C	lui    at, $8008
 800BE230	addiu  at, at, $eb98 (=-$1468)
@@ -2606,7 +2596,7 @@ A0 = h[V0 + 004c];
 800BE25C	jal    field_int4_to_string [$800da480]
 A1 = S2;
 A0 = S1;
-800BE268	jal    field_concat_string [$800da368]
+800BE268	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2616,13 +2606,13 @@ V1 = V1 | V0;
 A0 = debug_id << 10;
 A0 = A0 >> 10;
 A1 = 0010;
-800BE298	jal    field_copy_into_debug_by_id [$800da124]
+800BE298	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 
 Lbe2a0:	; 800BE2A0
 800BE2C0	lui    a1, $800a
 A1 = A1 + 02b4;
-800BE2C8	jal    field_copy_string [$800da334]
+800BE2C8	jal    field_debug_copy_string [$800da334]
 A0 = S1;
 A1 = S2;
 A0 = bu[8009d289];
@@ -2631,7 +2621,7 @@ A0 = A0 << 08;
 800BE2E8	jal    field_int4_to_string [$800da480]
 A0 = V0 | A0;
 A0 = S1;
-800BE2F4	jal    field_concat_string [$800da368]
+800BE2F4	jal    field_debug_concat_string [$800da368]
 A1 = S2;
 V0 = w[8009c6e0];
 800BE304	nop
@@ -2670,13 +2660,13 @@ A0 = S1;
 A1 = A1 + 02c0;
 
 Lbe37c:	; 800BE37C
-800BE37C	jal    field_concat_string [$800da368]
+800BE37C	jal    field_debug_concat_string [$800da368]
 800BE380	nop
 800BE384	lui    s1, $800e
 S1 = S1 + 4254;
 800BE38C	lui    a1, $800a
 A1 = A1 + 02c4;
-800BE394	jal    field_concat_string [$800da368]
+800BE394	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 800BE39C	lui    s0, $800e
 S0 = S0 + 4288;
@@ -2684,19 +2674,19 @@ A0 = bu[8009cbdc];
 800BE3AC	jal    field_int_to_string [$800da424]
 A1 = S0;
 A0 = S1;
-800BE3B8	jal    field_concat_string [$800da368]
+800BE3B8	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 A0 = bu[8009cbdd];
 800BE3C8	jal    field_int_to_string [$800da424]
 A1 = S0;
 A0 = S1;
-800BE3D4	jal    field_concat_string [$800da368]
+800BE3D4	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 A0 = bu[8009cbde];
 800BE3E4	jal    field_int_to_string [$800da424]
 A1 = S0;
 A0 = S1;
-800BE3F0	jal    field_concat_string [$800da368]
+800BE3F0	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 V0 = w[8009c6e0];
 800BE400	nop
@@ -2714,7 +2704,7 @@ Lbe424:	; 800BE424
 A1 = A1 + 02c0;
 
 Lbe42c:	; 800BE42C
-800BE42C	jal    field_concat_string [$800da368]
+800BE42C	jal    field_debug_concat_string [$800da368]
 800BE430	nop
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -2726,11 +2716,11 @@ S0 = S0 >> 10;
 A0 = S0;
 800BE45C	lui    a2, $800e
 A2 = A2 + 4254;
-800BE464	jal    field_copy_into_debug_by_id [$800da124]
+800BE464	jal    field_debug_copy_string_into_page [$800da124]
 A1 = 0011;
 A0 = S0;
 A1 = 0011;
-800BE474	jal    funcda194 [$800da194]
+800BE474	jal    field_debug_set_row_color [$800da194]
 A2 = 0006;
 
 Lbe47c:	; 800BE47C
@@ -2738,7 +2728,7 @@ Lbe47c:	; 800BE47C
 S1 = S1 + 4254;
 800BE4AC	lui    a1, $800a
 A1 = A1 + 02cc;
-800BE4B4	jal    field_copy_string [$800da334]
+800BE4B4	jal    field_debug_copy_string [$800da334]
 A0 = S1;
 800BE4BC	lui    s0, $800e
 S0 = S0 + 4288;
@@ -2746,17 +2736,17 @@ A0 = hu[80075e12];
 800BE4CC	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
-800BE4D8	jal    field_concat_string [$800da368]
+800BE4D8	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 800BE4E0	lui    a1, $800a
 A1 = A1 + 02d0;
-800BE4E8	jal    field_concat_string [$800da368]
+800BE4E8	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 A0 = hu[80075e10];
 800BE4F8	jal    field_int4_to_string [$800da480]
 A1 = S0;
 A0 = S1;
-800BE504	jal    field_concat_string [$800da368]
+800BE504	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 V0 = bu[800716d4];
 800BE514	nop
@@ -2764,7 +2754,7 @@ V0 = bu[800716d4];
 800BE51C	nop
 800BE520	lui    a1, $800a
 A1 = A1 + 02d4;
-800BE528	jal    field_concat_string [$800da368]
+800BE528	jal    field_debug_concat_string [$800da368]
 A0 = S1;
 
 Lbe530:	; 800BE530
@@ -2777,7 +2767,7 @@ V0 = debug_id << 10;
 S0 = V0 >> 10;
 A0 = S0;
 A1 = 0012;
-800BE55C	jal    field_copy_into_debug_by_id [$800da124]
+800BE55C	jal    field_debug_copy_string_into_page [$800da124]
 A2 = S1;
 V1 = w[80075e10];
 V0 = V0 | ffff;
@@ -2797,7 +2787,7 @@ A1 = 0012;
 A2 = 0003;
 
 Lbe5ac:	; 800BE5AC
-800BE5AC	jal    funcda194 [$800da194]
+800BE5AC	jal    field_debug_set_row_color [$800da194]
 800BE5B0	nop
 V1 = w[80075e10];
 
@@ -2870,7 +2860,7 @@ A1 = 0012;
 A2 = 0007;
 
 Lbe698:	; 800BE698
-800BE698	jal    funcda194 [$800da194]
+800BE698	jal    field_debug_set_row_color [$800da194]
 800BE69C	nop
 
 Lbe6a0:	; 800BE6A0
@@ -2883,19 +2873,19 @@ A1 = 800e4288;
 S1 = 800e4254;
 A0 = S1;
 A1 = 800e4288;
-field_copy_string();
+field_debug_copy_string();
 
 A0 = bu[8009d392];
 800BE6FC	jal    field_int_to_string [$800da424]
 A1 = S0;
 A0 = S1;
-800BE708	jal    field_concat_string [$800da368]
+800BE708	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 A0 = bu[8009d393];
 800BE718	jal    field_int_to_string [$800da424]
 A1 = S0;
 A0 = S1;
-800BE724	jal    field_concat_string [$800da368]
+800BE724	jal    field_debug_concat_string [$800da368]
 A1 = S0;
 V0 = hu[8009d78a];
 800BE734	nop
@@ -2912,7 +2902,7 @@ Lbe754:	; 800BE754
 A1 = A1 + 0238;
 
 Lbe75c:	; 800BE75C
-800BE75C	jal    field_concat_string [$800da368]
+800BE75C	jal    field_debug_concat_string [$800da368]
 800BE760	nop
 V0 = hu[8009d78a];
 800BE76C	nop
@@ -2933,7 +2923,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe7a4:	; 800BE7A4
-800BE7A4	jal    field_concat_string [$800da368]
+800BE7A4	jal    field_debug_concat_string [$800da368]
 800BE7A8	nop
 V0 = hu[8009d78a];
 800BE7B4	nop
@@ -2954,7 +2944,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe7ec:	; 800BE7EC
-800BE7EC	jal    field_concat_string [$800da368]
+800BE7EC	jal    field_debug_concat_string [$800da368]
 800BE7F0	nop
 V0 = hu[8009d78a];
 800BE7FC	nop
@@ -2975,7 +2965,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe834:	; 800BE834
-800BE834	jal    field_concat_string [$800da368]
+800BE834	jal    field_debug_concat_string [$800da368]
 800BE838	nop
 V0 = hu[8009d78a];
 800BE844	nop
@@ -2996,7 +2986,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe87c:	; 800BE87C
-800BE87C	jal    field_concat_string [$800da368]
+800BE87C	jal    field_debug_concat_string [$800da368]
 800BE880	nop
 V0 = hu[8009d78a];
 800BE88C	nop
@@ -3017,7 +3007,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe8c4:	; 800BE8C4
-800BE8C4	jal    field_concat_string [$800da368]
+800BE8C4	jal    field_debug_concat_string [$800da368]
 800BE8C8	nop
 V0 = hu[8009d78a];
 800BE8D4	nop
@@ -3038,7 +3028,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe90c:	; 800BE90C
-800BE90C	jal    field_concat_string [$800da368]
+800BE90C	jal    field_debug_concat_string [$800da368]
 800BE910	nop
 V0 = hu[8009d78a];
 800BE91C	nop
@@ -3059,7 +3049,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe954:	; 800BE954
-800BE954	jal    field_concat_string [$800da368]
+800BE954	jal    field_debug_concat_string [$800da368]
 800BE958	nop
 V0 = hu[8009d78a];
 800BE964	nop
@@ -3080,7 +3070,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe99c:	; 800BE99C
-800BE99C	jal    field_concat_string [$800da368]
+800BE99C	jal    field_debug_concat_string [$800da368]
 800BE9A0	nop
 V0 = hu[8009d78a];
 800BE9AC	nop
@@ -3101,7 +3091,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbe9e4:	; 800BE9E4
-800BE9E4	jal    field_concat_string [$800da368]
+800BE9E4	jal    field_debug_concat_string [$800da368]
 800BE9E8	nop
 V0 = hu[8009d78a];
 800BE9F4	nop
@@ -3122,7 +3112,7 @@ A0 = A0 + 4254;
 A1 = A1 + 0238;
 
 Lbea2c:	; 800BEA2C
-800BEA2C	jal    field_concat_string [$800da368]
+800BEA2C	jal    field_debug_concat_string [$800da368]
 
 V0 = bu[80071e24];
 V1 = bu[8009fe8c];
@@ -3134,12 +3124,12 @@ S0 = debug_id;
 A0 = S0;
 A1 = 13;
 A2 = 800e4254;
-field_copy_into_debug_by_id();
+field_debug_copy_string_into_page();
 
 A0 = S0;
 A1 = 13;
 A2 = 0;
-800BEA74	jal    funcda194 [$800da194]
+800BEA74	jal    field_debug_set_row_color [$800da194]
 
 Lbea7c:	; 800BEA7C
 ////////////////////////////////
@@ -3165,18 +3155,18 @@ if( bu[80071e24] & 04 )
 // create debug string "Word:[OPCODE]"
 A0 = 800e4254;
 A1 = 800e0630; // "Word:"
-field_copy_string();
+field_debug_copy_string();
 
 A0 = 800e4254;
 A1 = S2;
-field_concat_string();
+field_debug_concat_string();
 
 if( bu[8009d820] & 01 )
 {
     A0 = 3;
     A1 = 0;
     A2 = 800e4254; // copy this to temp
-    field_copy_into_debug_by_id();
+    field_debug_copy_string_into_page();
 }
 
 S4 = S1 + 1;
@@ -3188,7 +3178,7 @@ if( S1 != 0 )
     loopbeba8:	; 800BEBA8
         A0 = 800e4254;
         A1 = 800a02f8; // "arg"
-        field_copy_string();
+        field_debug_copy_string();
 
         A0 = S4 - S1; // current opcode number
         A1 = 800e4288;
@@ -3196,11 +3186,11 @@ if( S1 != 0 )
 
         A0 = 800e4254;
         A1 = 800e4288;
-        field_concat_string();
+        field_debug_concat_string();
 
         A0 = 800e4254;
         A1 = 800a02fc; // "="
-        field_concat_string();
+        field_debug_concat_string();
 
         V0 = w[8009c6dc] + hu[800831fc + current_entity * 2] + S4 - S1;
         A0 = bu[V0]; // argument value
@@ -3209,14 +3199,14 @@ if( S1 != 0 )
 
         A0 = 800e4254;
         A1 = 800e4288;
-        field_concat_string();
+        field_debug_concat_string();
 
         if( bu[8009d820] & 01 )
         {
             A0 = 3;
             A1 = S4 - S1;
             A2 = 800e4254; // copy this to temp
-            field_copy_into_debug_by_id();
+            field_debug_copy_string_into_page();
         }
 
         S1 = S1 - 1;
@@ -3244,7 +3234,7 @@ if( bu[80071e24] & 4 )
 
 A0 = 800e4254;
 A1 = str;
-field_copy_string();
+field_debug_copy_string();
 
 if( S0 == 1 )
 {
@@ -3268,12 +3258,12 @@ else
 {
     A0 = 800e4288;
     A1 = 800a0270;
-    field_copy_string();
+    field_debug_copy_string();
 }
 
 A0 = 800e4254;
 A1 = 800e4288;
-field_concat_string();
+field_debug_concat_string();
 
 if( bu[8009d820] & 1 )
 {
@@ -5167,7 +5157,7 @@ if( bu[8009d820] & 3 )
 
     A0 = S0;
     A1 = 800a04c0; // "???"
-    field_concat_string();
+    field_debug_concat_string();
 
     A0 = S0;
     A1 = 8;
@@ -5177,7 +5167,7 @@ if( bu[8009d820] & 3 )
     A1 = 7f;
     A2 = 0;
     A3 = 0;
-    800C0BB0	jal    funcda214 [$800da214]
+    field_debug_set_page_color();
 }
 else
 {

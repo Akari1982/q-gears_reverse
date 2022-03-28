@@ -36,6 +36,7 @@
 
 80071A88 array if priority data. Entity id that request this priority with REQ-type opcodes. (size 0x08 0x01).
 
+80071c08 []       current debug page.
 80071c0c store that we in line and SLIP byte in line == 1 during move_line_check.
 
 80071e24 []       some value used in debug draw.
@@ -316,19 +317,25 @@
     +   c [][]     index into +10 array of strings. Next id to insert new string.
     +   e [][]     init with 0. Set to 4 after init.
     +  10 array of strings (0x18 items 0xe size)
-        + 0 []       init with 0.
     +  78 []       init with 0. If this is 2 then we not init some data but set this to 0.
-    + 160 array of some data (0x18 items 0x1 size)
-        + 0 []       init with 0.
+    + 160 array of row colors (0x18 items 0x1 size)
+        + 0 []       clut for render.
+    + 178 []       ???
 
-
+800e1024 [][]     init with 0.
 800e1028 debug packets buffer (2 buffer with size 0x1580 with 0x158 packets 0x10 size) (textured rectangle, 8x8, opaque, raw-texture).
-
 800e3b28 debug packets buffer (2 buffer with size 0x240 with 0x18 packets 0x18 size) (monochrome poly-line, opaque).
+800e3fa8 debug packets buffer (2 buffer with size 0xc0 with 0x10 packets 0x18 size) (monochrome rectangle, variable size).
+800e4128 debug packets buffer (2 buffer with size 0x48 with 0xc packets 0x18 size) (draw mode setting).
 
 800e41b8 [][]     debug render sprite count (text).
-800e41bc [][]     debug render line count.
+800e41bc [][]     debug render poly-line count.
+800e41c0 [][]     debug render monochrome rectangle count.
+800e41c4 [][]     debug render draw mode settings count.
+800e41c8 otc pointers for debug rendering (0x1c size per buffer, 0x04 per page).
 
+800e4200 some debug array.
+800e4210 [][]     opaque or semi-transparent 800e3fa8 monochrome rectangle. Init with 0.
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
 800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
