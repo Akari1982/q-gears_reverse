@@ -310,267 +310,49 @@ for( row = 0; y < max_y ; y += a, ++row )
     field_debug_render_string();
 }
 
+buffer_id = h[800e1024];
+
 if( h[800e0748 + page * 17a + e] != 0 )
 {
-    V0 = h[800e1024];
     V1 = h[800e41bc];
-    A0 = V0 << 03;
-    A0 = A0 + V0;
-    A0 = A0 << 06;
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    A0 = A0 + V0;
-    A0 = 800e3b28 + A0;
-    [A0 + 0008] = h(hu[800e0748 + page * 17a + 0] + 2);
-    V0 = h[800e0748 + page * 17a + e] - 1;
-    T3 = T3 | ffff;
-    V1 = V0 << 02;
-    V1 = V1 + V0;
-    V0 = hu[800e074a + page * 17a];
-    V1 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 + 000a;
-    [A0 + 000a] = h(V0);
-    V0 = hu[800e074c + page * 17a] - 2;
-    V1 = hu[800e0748 + page * 17a];
-    V1 = V1 + V0;
-    [A0 + 000c] = h(V1);
-    V0 = h[800e0748 + page * 17a + e] - 1;
-    T6 = 800e41c8;
-    V1 = V0 << 02;
-    V1 = V1 + V0;
-    V0 = hu[800e074a + page * 17a];
-    V1 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 + 000a;
-    [A0 + 000e] = h(V0);
-    V0 = hu[800e074c + page * 17a] - 2;
-    V1 = hu[800e0748 + page * 17a];
-    V1 = V1 + V0;
-    [A0 + 0010] = h(V1);
-    V0 = h[800e0748 + page * 17a + e] - 1;
-    T5 = page << 02;
+    [800e3b28 + buffer_id * 240 + V1 * 18 + 4] = b(bu[800e0748 + page * 17a + 8] | 3f);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + 6] = b(bu[800e0748 + page * 17a + a]);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + e] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + buffer_id * 240 + V1 * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3b28 + buffer_id * 240 + V1 * 18] = w((w[800e3b28 + buffer_id * 240 + V1 * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + V1 * 18) & 00ffffff));
+    [800e41bc] = h(V1 + 1);
 
-    [A0 + 12] = h(hu[800e0748 + page * 17a + 2] + V0 * a);
-
-    [A0 + 4] = b(bu[800e0748 + page * 17a + 8] | 3f);
-    V0 = h[800e1024];
-    A0 = h[800e41bc];
-    V1 = V0 << 03;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    V0 = A0 << 01;
-    V0 = V0 + A0;
-    V0 = V0 << 03;
-    V1 = V1 + V0;
-    [800e3b28 + V1 + 5] = b(bu[800e0751 + page * 17a] >> 1);
-    V0 = h[800e1024];
-    A0 = h[800e41bc];
-    V1 = V0 << 03;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    V0 = A0 << 01;
-    V0 = V0 + A0;
-    V0 = V0 << 03;
-    V1 = V1 + V0;
-    V0 = bu[800e0752 + page * 17a];
-    [800e3b28 + V1 + 0006] = b(V0);
-    V0 = h[800e1024];
     T0 = h[800e41bc];
-    A1 = V0 << 03;
-    A2 = A1 + V0;
-    A2 = A2 << 06;
-    A0 = T0 << 01;
-    A0 = A0 + T0;
-    A0 = A0 << 03;
-    A3 = A2 + A0;
-    A3 = 800e3b28 + A3;
-    A1 = A1 - V0;
-    A1 = A1 << 02;
-    A1 = A1 + T5;
-    A1 = A1 + T6;
-    A0 = 800e3b28 + A0 + A2;
-    A0 = A0 & T3;
-    T0 = T0 + 0001;
-    V1 = w[A3 + 0000];
-    V0 = w[A1 + 0000];
-    V1 = V1 & ff000000;
-    V0 = V0 & T3;
-    V1 = V1 | V0;
-    [A3 + 0000] = w(V1);
-    V1 = T0 << 10;
-    V0 = w[A1 + 0000];
-    V1 = V1 >> 10;
-    V0 = V0 & ff000000;
-    V0 = V0 | A0;
-    [A1 + 0000] = w(V0);
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    A2 = A2 + V0;
-    V0 = hu[800e0748 + page * 17a];
-    A2 = 800e3b28 + A2;
-    V0 = V0 + 0002;
-    [A2 + 0008] = h(V0);
-    V0 = h[800e0748 + page * 17a + e] - 1;
-    V1 = V0 << 02;
-    V1 = V1 + V0;
-    V0 = hu[800e074a + page * 17a];
-    V1 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 + a;
-    [A2 + 000a] = h(V0);
-    V0 = hu[800e0748 + page * 17a];
-    V0 = V0 + 0002;
-    [A2 + 000c] = h(V0);
-    V0 = h[800e0748 + page * 17a + e] - 1;
-    V1 = V0 << 02;
-    V1 = V1 + V0;
-    V0 = hu[800e074a + page * 17a];
-    V1 = V1 << 01;
-    V0 = V0 + V1;
-    [A2 + 000e] = h(V0);
-    V0 = hu[800e074c + page * 17a];
-    V1 = hu[800e0748 + page * 17a];
-    V1 = V1 + V0 - 2;
-    [A2 + 0010] = h(V1);
-    V1 = h[800e0748 + page * 17a + e] - 1;
-    [800e41bc] = h(T0);
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V1 = hu[800e074a + page * 17a];
-    V0 = V0 << 01;
-    V1 = V1 + V0;
-    [A2 + 0012] = h(V1);
-    V0 = bu[800e0750 + page * 17a];
-    V0 = V0 << 02;
-    V0 = V0 | 7f;
-    [A2 + 0004] = b(V0);
-    V0 = h[800e1024];
-    A0 = h[800e41bc];
-    V1 = V0 << 03;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    V0 = A0 << 01;
-    V0 = V0 + A0;
-    V0 = V0 << 03;
-    V1 = V1 + V0;
-    V0 = bu[800e0751 + page * 17a];
-    V0 = V0 | 003f;
-    [800e3b28 + V1 + 5] = b(V0);
-    V0 = h[800e1024];
-    A0 = h[800e41bc];
-    V1 = V0 << 03;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    V0 = A0 << 01;
-    V0 = V0 + A0;
-    V0 = V0 << 03;
-    V1 = V1 + V0;
-    V0 = bu[800e0752 + page * 17a];
-    V1 = 800e3b28 + V1;
-    V0 = V0 << 01;
-    V0 = V0 | 003f;
-    [V1 + 0006] = b(V0);
-    T0 = h[800e1024];
-    T1 = h[800e41bc];
-    A0 = T0 << 03;
-    A2 = A0 + T0;
-    A2 = A2 << 06;
-    A1 = T1 << 01;
-    A1 = A1 + T1;
-    A1 = A1 << 03;
-    A3 = A2 + A1;
-    A3 = 800e3b28 + A3;
-    A0 = A0 - T0;
-    A0 = A0 << 02;
-    A0 = A0 + T5;
-    A0 = A0 + T6;
-    A2 = 800e3b28 + A1 + A2;
-    A2 = A2 & T3;
-    V1 = w[A3 + 0000];
-    V0 = w[A0 + 0000];
-    V1 = V1 & ff000000;
-    V0 = V0 & T3;
-    V1 = V1 | V0;
-    [A3 + 0000] = w(V1);
-    V0 = w[A0 + 0000];
-    T2 = 800e3fa8;
-    V0 = V0 & ff000000;
-    V0 = V0 | A2;
-    [A0 + 0000] = w(V0);
-    A0 = T0 << 01;
-    A0 = A0 + T0;
-    V0 = h[800e41c0];
-    A0 = A0 << 06;
-    V0 = V0 << 04;
-    A0 = A0 + V0;
-    V0 = hu[800e0748 + page * 17a];
-    A0 = A0 + T2;
-    V0 = V0 + 0002;
-    [A0 + 0008] = h(V0);
-    V1 = h[800e0748 + page * 17a + e] - 1;
-    T1 = T1 + 0001;
-    [800e41bc] = h(T1);
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V1 = hu[800e0748 + page * 17a + 2];
-    V0 = V0 << 01;
-    V1 = V1 + V0;
-    [A0 + a] = h(V1);
-    [A0 + e] = h(a);
-    [A0 + c] = h(hu[800e0748 + page * 17a + 4] - 4);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 2) | 7f);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + 5] = b(bu[800e0748 + page * 17a + 9] | 3f);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 1) | 3f);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + c] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + e] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + buffer_id * 240 + T0 * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3b28 + buffer_id * 240 + T0 * 18] = w((w[800e3b28 + buffer_id * 240 + T0 * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + T0 * 18) & 00ffffff));
+    [800e41bc] = h(T0 + 1);
 
-    [A0 + 4] = b((bu[800e0748 + page * 17a + 8] << 1) | 7f);
-    V1 = h[800e1024];
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V1 = h[800e41c0];
-    V0 = V0 << 06;
-    V1 = V1 << 04;
-    V0 = V0 + V1;
-    V1 = bu[800e0751 + page * 17a];
-    V0 = V0 + T2;
-    V1 = V1 >> 01;
-    [V0 + 5] = b(V1);
-    V1 = h[800e1024];
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V1 = h[800e41c0];
-    V0 = V0 << 06;
-    V1 = V1 << 04;
-    V0 = V0 + V1;
-    V0 = V0 + T2;
-    [V0 + 6] = b(bu[800e0748 + page * 17a + a] | 3f);
-    V0 = h[800e1024];
     T0 = h[800e41c0];
-    A1 = V0 << 01;
-    A1 = A1 + V0;
-    A1 = A1 << 06;
-    A3 = T0 << 04;
-    A2 = A1 + A3;
-    A2 = A2 + T2;
-    A0 = V0 << 03;
-    A0 = A0 - V0;
-    A0 = A0 << 02;
-    A0 = A0 + T5;
-    A0 = A0 + T6;
-    T0 = T0 + 0001;
-    A3 = A3 + T2;
-    A1 = A1 + A3;
-    V1 = w[A2 + 0000];
-    V0 = w[A0 + 0000];
-    V1 = V1 & ff000000;
-    V0 = V0 & T3;
-    V1 = V1 | V0;
-    [A2 + 0000] = w(V1);
-    V0 = w[A0 + 0000];
-    A1 = A1 & T3;
-    [800e41c0] = h(T0);
-    V0 = V0 & ff000000;
-    V0 = V0 | A1;
-    [A0 + 0000] = w(V0);
+    [800e3fa8 + buffer_id * c0 + T0 * 10 + 4] = b((bu[800e0748 + page * 17a + 8] << 1) | 7f);
+    [800e3fa8 + buffer_id * c0 + T0 * 10 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
+    [800e3fa8 + buffer_id * c0 + T0 * 10 + 6] = b(bu[800e0748 + page * 17a + a] | 3f);
+    [800e3fa8 + buffer_id * c0 + T0 * 10 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3fa8 + buffer_id * c0 + T0 * 10 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3fa8 + buffer_id * c0 + T0 * 10 + e] = h(a);
+    [800e3fa8 + buffer_id * c0 + T0 * 10 + c] = h(hu[800e0748 + page * 17a + 4] - 4);
+    [800e3fa8 + buffer_id * c0 + T0 * 10] = w((w[800e3fa8 + buffer_id * c0 + T0 * 10] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3fa8 + buffer_id * c0 + T0 * 10) & 00ffffff));
+    [800e41c0] = h(T0 + 1);
 }
 else
 {
@@ -591,448 +373,124 @@ else
         800D8F80	addiu  s1, v0, $ffff (=-$1)
     }
 
-    V0 = h[800e1024];
-    V1 = h[800e41bc];
-    [800e3b28 + V0 * 240 + V1 * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
-    [800e3b28 + V0 * 240 + V1 * 18 + a] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
-    [800e3b28 + V0 * 240 + V1 * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
-    [800e3b28 + V0 * 240 + V1 * 18 + e] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
-    [800e3b28 + V0 * 240 + V1 * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
-    [800e3b28 + V0 * 240 + V1 * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + S1 * a);
-
-    [800e3b28 + V0 * 240 + V1 * 18 + 4] = b((bu[800e0750 + page * 17a] >> 1) | 3f);
-    V0 = h[800e1024];
-    A0 = h[800e41bc];
-    V1 = V0 << 03;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    V0 = A0 << 01;
-    V0 = V0 + A0;
-    V0 = V0 << 03;
-    V1 = V1 + V0;
-
-    [800e3b28 + V1 + 5] = b((bu[800e0751 + page * 17a] << 2) | 7f);
-    V0 = h[800e1024];
-    A0 = h[800e41bc];
-    V1 = V0 << 03;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    V0 = A0 << 01;
-    V0 = V0 + A0;
-    V0 = V0 << 03;
-    V1 = V1 + V0;
-    [800e3b28 + V1 + 6] = b(bu[800e0752 + page * 17a] | 3f);
-    V1 = h[800e1024];
     T1 = h[800e41bc];
-    V0 = V1 << 03;
-    A1 = V0 + V1;
-    A1 = A1 << 06;
-    A0 = T1 << 01;
-    A0 = A0 + T1;
-    A0 = A0 << 03;
-    A2 = A1 + A0;
-    A2 = 800e3b28 + A2;
-    V0 = V0 - V1;
-    T0 = page + V0;
-    T0 = T0 << 02;
-    T0 = 800e41c8 + T0;
-    T1 = T1 + 1;
-    A0 = 800e3b28 + A0;
-    A1 = A1 + A0;
-    V1 = w[A2 + 0000];
-    V0 = w[T0 + 0000];
-    V1 = V1 & ff000000;
-    V0 = V0 & 00ffffff;
-    V1 = V1 | V0;
-    [A2 + 0000] = w(V1);
-    V0 = w[T0 + 0000];
-    A1 = A1 & 00ffffff;
-    V0 = V0 & ff000000;
-    V0 = V0 | A1;
-    [T0 + 0000] = w(V0);
-    [800e41bc] = h(T1);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + 4] = b((bu[800e0748 + page * 17a + 8] >> 1) | 3f);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 2) | 7f);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + 6] = b(bu[800e0748 + page * 17a + a] | 3f);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + a] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + e] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + buffer_id * 240 + T1 * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + S1 * a);
+    [800e3b28 + buffer_id * 240 + T1 * 18] = w((w[800e3b28 + buffer_id * 240 + T1 * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + T1 * 18) & 00ffffff));
+    [800e41bc] = h(T1 + 1);
 }
 
 // monochrome loly-line, opaque
 // draw bottol and right border for page
-V0 = h[800e1024];
 A0 = h[800e41bc];
-[800e3b28 + V0 * 240 + A0 * 18 + 8] = h(hu[800e0748 + page * 17a + 0]);
-[800e3b28 + V0 * 240 + A0 * 18 + a] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
-[800e3b28 + V0 * 240 + A0 * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
-[800e3b28 + V0 * 240 + A0 * 18 + e] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
-[800e3b28 + V0 * 240 + A0 * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
-[800e3b28 + V0 * 240 + A0 * 18 + 12] = h(hu[800e0748 + page * 17a + 2]);
+[800e3b28 + buffer_id * 240 + A0 * 18 + 8] = h(hu[800e0748 + page * 17a + 0]);
+[800e3b28 + buffer_id * 240 + A0 * 18 + a] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
+[800e3b28 + buffer_id * 240 + A0 * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
+[800e3b28 + buffer_id * 240 + A0 * 18 + e] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
+[800e3b28 + buffer_id * 240 + A0 * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
+[800e3b28 + buffer_id * 240 + A0 * 18 + 12] = h(hu[800e0748 + page * 17a + 2]);
 
 if( page == bu[80071c08] )
 {
-    [800e3b28 + V0 * 240 + A0 * 18 + 4] = b(bu[800e0748 + page * 17a + 8] >> 1);
-    [800e3b28 + V0 * 240 + A0 * 18 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
-    [800e3b28 + V0 * 240 + A0 * 18 + 6] = b(bu[800e0748 + page * 17a + a] >> 1);
+    [800e3b28 + buffer_id * 240 + A0 * 18 + 4] = b(bu[800e0748 + page * 17a + 8] >> 1);
+    [800e3b28 + buffer_id * 240 + A0 * 18 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
+    [800e3b28 + buffer_id * 240 + A0 * 18 + 6] = b(bu[800e0748 + page * 17a + a] >> 1);
 }
 else
 {
-    [800e3b28 + V0 * 240 + A0 * 18 + 4] = b(bu[800e0748 + page * 17a + 8]);
-    [800e3b28 + V0 * 240 + A0 * 18 + 5] = b(bu[800e0748 + page * 17a + 9]);
-    [800e3b28 + V0 * 240 + A0 * 18 + 6] = b(bu[800e0748 + page * 17a + a]);
+    [800e3b28 + buffer_id * 240 + A0 * 18 + 4] = b(bu[800e0748 + page * 17a + 8]);
+    [800e3b28 + buffer_id * 240 + A0 * 18 + 5] = b(bu[800e0748 + page * 17a + 9]);
+    [800e3b28 + buffer_id * 240 + A0 * 18 + 6] = b(bu[800e0748 + page * 17a + a]);
 }
 
-T2 = 00ffffff;
-T4 = 800e3b28;
-V0 = h[800e1024];
+[800e3b28 + buffer_id * 240 + A0 * 18] = w((w[800e3b28 + buffer_id * 240 + A0 * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+[800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + A0 * 18) & 00ffffff));
+[800e41bc] = h(A0 + 1);
+
 T3 = h[800e41bc];
-A1 = V0 << 03;
-A3 = A1 + V0;
-A3 = A3 << 06;
-A0 = T3 << 01;
-A0 = A0 + T3;
-A0 = A0 << 03;
-A2 = A3 + A0;
-A2 = A2 + T4;
-A1 = A1 - V0;
-A1 = page + A1;
-A1 = A1 << 02;
-A1 = 800e41c8 + A1;
-A0 = A0 + T4;
-A0 = A3 + A0;
-A0 = A0 & T2;
-T3 = T3 + 0001;
-V1 = w[A2 + 0000];
-V0 = w[A1 + 0000];
-V1 = V1 & T0;
-V0 = V0 & T2;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V1 = T3 << 10;
-V0 = w[A1 + 0000];
-V1 = V1 >> 10;
-V0 = V0 & T0;
-V0 = V0 | A0;
-[A1 + 0000] = w(V0);
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-A3 = A3 + V0;
-V1 = page << 01;
-V1 = V1 + page;
-V0 = V1 << 06;
-V0 = V0 - V1;
-A1 = V0 << 01;
-AT = 800e0748;
-AT = AT + A1;
-V0 = hu[AT + 0000];
-A3 = A3 + T4;
-[A3 + 0008] = h(V0);
-V0 = hu[800e074a + A1];
-V1 = hu[800e074e + A1];
-V0 = V0 + V1;
-[A3 + 000a] = h(V0);
-V0 = hu[800e0748 + A1];
-[A3 + 000c] = h(V0);
-V0 = hu[800e074a + A1];
-[A3 + 000e] = h(V0);
-V0 = hu[800e0748 + A1];
-V1 = hu[800e074c + A1];
-V0 = V0 + V1;
-[A3 + 0010] = h(V0);
-V0 = hu[800e074a + A1];
-V1 = bu[80071c08];
-[800e41bc] = h(T3);
-800D9600	bne    page, v1, Ld96c0 [$800d96c0]
-[A3 + 0012] = h(V0);
-AT = 800e0750;
-AT = AT + A1;
-V0 = bu[AT + 0000];
-800D9618	nop
-V0 = V0 << 02;
-V0 = V0 | 007f;
-[A3 + 0004] = b(V0);
-V0 = h[800e1024];
-A0 = h[800e41bc];
-V1 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 << 06;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 03;
-V1 = V1 + V0;
-AT = 800e0751;
-AT = AT + A1;
-V0 = bu[AT + 0000];
-V1 = V1 + T4;
-V0 = V0 << 02;
-V0 = V0 | 007f;
-[V1 + 0005] = b(V0);
-V0 = h[800e1024];
-A0 = h[800e41bc];
-V1 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 << 06;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 03;
-V1 = V1 + V0;
-AT = 800e0752;
-AT = AT + A1;
-V0 = bu[AT + 0000];
-V1 = V1 + T4;
-V0 = V0 << 02;
-800D96B8	j      Ld9774 [$800d9774]
-V0 = V0 | 007f;
+[800e3b28 + buffer_id * 240 + T3 * 18 + 8] = h(hu[800e0748 + page * 17a + 0]);
+[800e3b28 + buffer_id * 240 + T3 * 18 + a] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
+[800e3b28 + buffer_id * 240 + T3 * 18 + c] = h(hu[800e0748 + page * 17a + 0]);
+[800e3b28 + buffer_id * 240 + T3 * 18 + e] = h(hu[800e0748 + page * 17a + 2]);
+[800e3b28 + buffer_id * 240 + T3 * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
+[800e3b28 + buffer_id * 240 + T3 * 18 + 12] = h(hu[800e0748 + page * 17a + 2]);
 
-Ld96c0:	; 800D96C0
-V0 = bu[800e0750 + A1];
-V0 = V0 << 01;
-V0 = V0 | 003f;
-[A3 + 0004] = b(V0);
-V0 = h[800e1024];
-A0 = h[800e41bc];
-V1 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 << 06;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 03;
-V1 = V1 + V0;
-V0 = bu[800e0751 + A1];
-V1 = V1 + T4;
-V0 = V0 << 01;
-V0 = V0 | 003f;
-[V1 + 0005] = b(V0);
-V0 = h[800e1024];
-A0 = h[800e41bc];
-V1 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 << 06;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 03;
-V1 = V1 + V0;
-V0 = bu[800e0752 + A1];
-V1 = V1 + T4;
-V0 = V0 << 01;
-V0 = V0 | 003f;
+if( page == bu[80071c08] )
+{
+    [800e3b28 + buffer_id * 240 + T3 * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 2) | 7f);
+    [800e3b28 + buffer_id * 240 + T3 * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 2) | 7f);
+    [800e3b28 + buffer_id * 240 + T3 * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 2) | 7f);
+}
+else
+{
+    [800e3b28 + buffer_id * 240 + T3 * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 1) | 3f);
+    [800e3b28 + buffer_id * 240 + T3 * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 1) | 3f);
+    [800e3b28 + buffer_id * 240 + T3 * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 1) | 3f);
+}
 
-Ld9774:	; 800D9774
-[V1 + 0006] = b(V0);
-T3 = 00ffffff;
-T5 = 800e3b28;
-T2 = page << 10;
-T2 = T2 >> 10;
-T1 = h[800e1024];
-T4 = h[800e41bc];
-A0 = T1 << 03;
-A2 = A0 + T1;
-A2 = A2 << 06;
-A1 = T4 << 01;
-A1 = A1 + T4;
-A1 = A1 << 03;
-A3 = A2 + A1;
-A3 = A3 + T5;
-A0 = A0 - T1;
-A0 = T2 + A0;
-A0 = A0 << 02;
-A0 = 800e41c8 + A0;
-A1 = A1 + T5;
-A2 = A2 + A1;
-A2 = A2 & T3;
-V1 = w[A3 + 0000];
-V0 = w[A0 + 0000];
-V1 = V1 & T0;
-V0 = V0 & T3;
-V1 = V1 | V0;
-[A3 + 0000] = w(V1);
-V1 = T2 << 01;
-V0 = w[A0 + 0000];
-V1 = V1 + T2;
-V0 = V0 & T0;
-V0 = V0 | A2;
-A2 = 800e3fa8;
-[A0 + 0000] = w(V0);
-A0 = T1 << 01;
-A0 = A0 + T1;
+[800e3b28 + buffer_id * 240 + T3 * 18] = w((w[800e3b28 + buffer_id * 240 + T3 * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+[800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + T3 * 18) & 00ffffff));
+[800e41bc] = h(T3 + 1);
+
 V0 = h[800e41c0];
-A0 = A0 << 06;
-V0 = V0 << 04;
-A0 = A0 + V0;
-V0 = V1 << 06;
-V0 = V0 - V1;
-A1 = V0 << 01;
-V0 = hu[800e0748 + A1];
-V1 = bu[80071c08];
-A0 = A0 + A2;
-[A0 + 0008] = h(V0);
-V0 = hu[800e074a + A1];
-[A0 + 000a] = h(V0);
-V0 = hu[800e074c + A1];
-[A0 + 000c] = h(V0);
-V0 = hu[800e074e + A1];
-T4 = T4 + 0001;
-[800e41bc] = h(T4);
-800D98B4	bne    t2, v1, Ld9960 [$800d9960]
-[A0 + 000e] = h(V0);
-[A0 + 0004] = b(bu[800e0750 + A1] << 01);
-V1 = h[800e1024];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = h[800e41c0];
-V0 = V0 << 06;
-V1 = V1 << 04;
-V0 = V0 + V1;
-V1 = bu[800e0751 + A1];
-V0 = V0 + A2;
-V1 = V1 << 01;
-[V0 + 0005] = b(V1);
-V1 = h[800e1024];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = h[800e41c0];
-V0 = V0 << 06;
-V1 = V1 << 04;
-V0 = V0 + V1;
-V1 = bu[800e0752 + A1];
-V0 = V0 + A2;
-800D9958	j      Ld99f4 [$800d99f4]
-V1 = V1 << 01;
+[800e3fa8 + buffer_id * c0 + V0 * 10 + 8] = h(hu[800e0748 + page * 17a + 0]);
+[800e3fa8 + buffer_id * c0 + V0 * 10 + a] = h(hu[800e0748 + page * 17a + 2]);
+[800e3fa8 + buffer_id * c0 + V0 * 10 + c] = h(hu[800e0748 + page * 17a + 4]);
+[800e3fa8 + buffer_id * c0 + V0 * 10 + e] = h(hu[800e0748 + page * 17a + 6]);
 
-Ld9960:	; 800D9960
-V0 = bu[800e0750 + A1];
-[A0 + 0004] = b(V0);
-V1 = h[800e1024];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = h[800e41c0];
-V0 = V0 << 06;
-V1 = V1 << 04;
-V0 = V0 + V1;
-V1 = bu[800e0751 + A1];
-V0 = V0 + A2;
-[V0 + 0005] = b(V1);
-V1 = h[800e1024];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = h[800e41c0];
-V0 = V0 << 06;
-V1 = V1 << 04;
-V0 = V0 + V1;
-V1 = bu[800e0752 + A1];
-V0 = V0 + A2;
+if( page == bu[80071c08] )
+{
+    [800e3fa8 + buffer_id * c0 + V0 * 10 + 4] = b(bu[800e0748 + page * 17a + 8] << 1);
+    [800e3fa8 + buffer_id * c0 + V0 * 10 + 5] = b(bu[800e0748 + page * 17a + 9] << 1);
+    [800e3fa8 + buffer_id * c0 + V0 * 10 + 6] = b(bu[800e0748 + page * 17a + a] << 1);
+}
+else
+{
+    [800e3fa8 + buffer_id * c0 + V0 * 10 + 4] = b(bu[800e0748 + page * 17a + 8]);
+    [800e3fa8 + buffer_id * c0 + V0 * 10 + 5] = b(bu[800e0748 + page * 17a + 9]);
+    [800e3fa8 + buffer_id * c0 + V0 * 10 + 6] = b(bu[800e0748 + page * 17a + a]);
+}
 
-Ld99f4:	; 800D99F4
-[V0 + 0006] = b(V1);
 V1 = h[800e4210];
-V0 = 0002;
-800D9A04	beq    v1, v0, Ld9a64 [$800d9a64]
-V0 = V1 < 0003;
-800D9A0C	beq    v0, zero, Ld9b38 [$800d9b38]
-V0 = 0001;
-800D9A14	bne    v1, v0, Ld9b3c [$800d9b3c]
+if( V1 == 1 )
+{
+    V1 = h[800e41c0];
+    V0 = 800e3fa8 + buffer_id * c0 + V1 * 10;
+    T1 = 800e41c8;
+    V1 = bu[V0 + 7] | 2;
+    [V0 + 7] = b(V1);
 
-T3 = 800e3fa8;
-V1 = h[800e1024];
-T2 = T2 | ffff;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = h[800e41c0];
-V0 = V0 << 06;
-V1 = V1 << 04;
-V0 = V0 + V1;
-V0 = V0 + T3;
-V1 = bu[V0 + 0007];
-T1 = 800e41c8;
-800D9A5C	j      Ld9aac [$800d9aac]
-V1 = V1 | 0002;
+    T0 = h[800e41c0];
+    [800e3fa8 + buffer_id * c0 + T0 * 10] = w((w[800e3fa8 + buffer_id * c0 + T0 * 10] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3fa8 + buffer_id * c0 + T0 * 10) & 00ffffff));
+    [800e41c0] = h(T0 + 1);
+}
+else if( V1 == 2 )
+{
+    V1 = h[800e41c0];
+    V0 = 800e3fa8 + buffer_id * c0 + V1 * 10;
+    V1 = bu[V0 + 7] & fd;
+    [V0 + 7] = b(V1);
 
-Ld9a64:	; 800D9A64
-T3 = 800e3fa8;
-V1 = h[800e1024];
-T2 = T2 | ffff;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = h[800e41c0];
-V0 = V0 << 06;
-V1 = V1 << 04;
-V0 = V0 + V1;
-V0 = V0 + T3;
-V1 = bu[V0 + 0007];
-T1 = 800e41c8;
-V1 = V1 & 00fd;
+    T0 = h[800e41c0];
+    [800e3fa8 + buffer_id * c0 + T0 * 10] = w((w[800e3fa8 + buffer_id * c0 + T0 * 10] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3fa8 + buffer_id * c0 + T0 * 10) & 00ffffff));
+    [800e41c0] = h(T0 + 1);
+    800D9A5C	j      Ld9aac [$800d9aac]
+}
 
-Ld9aac:	; 800D9AAC
-[V0 + 0007] = b(V1);
-V0 = page << 10;
-V0 = V0 >> 0e;
-V1 = h[800e1024];
-T0 = h[800e41c0];
-A1 = V1 << 01;
-A1 = A1 + V1;
-A1 = A1 << 06;
-A3 = T0 << 04;
-A2 = A1 + A3;
-A2 = A2 + T3;
-A0 = V1 << 03;
-A0 = A0 - V1;
-A0 = A0 << 02;
-A0 = A0 + V0;
-A0 = A0 + T1;
-800D9AF4	lui    t1, $ff00
-T0 = T0 + 0001;
-A3 = A3 + T3;
-A1 = A1 + A3;
-V1 = w[A2 + 0000];
-V0 = w[A0 + 0000];
-V1 = V1 & T1;
-V0 = V0 & T2;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = w[A0 + 0000];
-A1 = A1 & T2;
-[800e41c0] = h(T0);
-V0 = V0 & T1;
-V0 = V0 | A1;
-[A0 + 0000] = w(V0);
-
-Ld9b38:	; 800D9B38
-800D9B38	lui    t2, $00ff
-
-Ld9b3c:	; 800D9B3C
-T2 = T2 | ffff;
-T3 = 800e4128;
-V0 = page << 10;
-T1 = 800e41c8;
-V0 = V0 >> 0e;
-V1 = h[800e1024];
 T0 = h[800e41c4];
-A0 = V1 << 03;
-A2 = A0 + V1;
-A2 = A2 << 03;
-A1 = T0 << 01;
-A1 = A1 + T0;
-A1 = A1 << 02;
-A3 = A2 + A1;
-A3 = A3 + T3;
-A0 = A0 - V1;
-A0 = A0 << 02;
-A0 = A0 + V0;
-A0 = A0 + T1;
-800D9B98	lui    t1, $ff00
-T0 = T0 + 0001;
-A1 = A1 + T3;
-A2 = A2 + A1;
-V1 = w[A3 + 0000];
-V0 = w[A0 + 0000];
-V1 = V1 & T1;
-V0 = V0 & T2;
-V1 = V1 | V0;
-[A3 + 0000] = w(V1);
-V0 = w[A0 + 0000];
-A2 = A2 & T2;
-[800e41c4] = h(T0);
-V0 = V0 & T1;
-V0 = V0 | A2;
-[A0 + 0000] = w(V0);
-
-Ld9bdc:	; 800D9BDC
+[800e4128 + buffer_id * 48 + T0 * c] = w((w[800e4128 + buffer_id * 48 + T0 * c] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
+[800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e4128 + buffer_id * 48 + T0 * c) & 00ffffff));
+[800e41c4] = h(T0 + 1);
 ////////////////////////////////
 
 
