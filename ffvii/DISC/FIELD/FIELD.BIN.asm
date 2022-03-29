@@ -315,10 +315,10 @@
 // opcode_cycle
 800BB3A8-800BBBC8
 ////////////////////////////////
-// handle_animation_state
+// field_script_update_animation_state
 800BBBCC-800BBF70
 ////////////////////////////////
-// script_request_run
+// field_script_request_run
 800BBF74-800BC334
 ////////////////////////////////
 // funcbc338

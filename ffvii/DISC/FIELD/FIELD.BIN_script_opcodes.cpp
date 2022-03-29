@@ -5236,6 +5236,7 @@ return 0;
 
 ////////////////////////////////
 // 0xC4 OFSTW
+
 entity_id = bu[800722c4];
 model_id = bu[8007eb98 + entity_id];
 model_data = w[8009c544];

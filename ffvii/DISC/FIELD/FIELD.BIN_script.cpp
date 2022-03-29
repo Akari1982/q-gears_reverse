@@ -422,188 +422,136 @@ for( int i = 0; i < number_of_models; ++i )
 
 
 ////////////////////////////////
-// opcode_cycle
-800BB3A8	addiu  sp, sp, $ffd0 (=-$30)
-800BB3AC	lui    a1, $91a2
-800BB3B0	lui    a0, $800a
-800BB3B4	addiu  a0, a0, $d264 (=-$2d9c)
-800BB3B8	sw     ra, $0028(sp)
-800BB3BC	sw     s3, $0024(sp)
-800BB3C0	sw     s2, $0020(sp)
-800BB3C4	sw     s1, $001c(sp)
-800BB3C8	sw     s0, $0018(sp)
-800BB3CC	lw     v0, $0000(a0)
-800BB3D0	ori    a1, a1, $b3c5
+// opcode_cycle()
+
+V0 = w[8009d264];
+A1 = 91a2b3c5;
 800BB3D4	multu  v0, a1
 800BB3D8	mfhi   v0
-800BB3DC	srl    v1, v0, $0b
-800BB3E0	andi   v0, v1, $ffff
-800BB3E4	sltiu  v0, v0, $0100
-800BB3E8	bne    v0, zero, Lbb3f4 [$800bb3f4]
-800BB3EC	addu   s1, zero, zero
-800BB3F0	ori    v1, zero, $00ff
-
-Lbb3f4:	; 800BB3F4
-800BB3F4	lw     a0, $0000(a0)
-800BB3F8	nop
-800BB3FC	multu  a0, a1
-800BB400	lui    at, $800a
-800BB404	sb     v1, $d298(at)
-800BB408	lui    a1, $8888
-800BB40C	ori    a1, a1, $8889
-800BB410	mfhi   v1
-800BB414	srl    v1, v1, $0b
-800BB418	sll    v0, v1, $03
-800BB41C	subu   v0, v0, v1
-800BB420	sll    v0, v0, $05
-800BB424	addu   v0, v0, v1
-800BB428	sll    v0, v0, $04
-800BB42C	subu   v1, a0, v0
-800BB430	andi   a0, v1, $ffff
-800BB434	multu  a0, a1
-800BB438	mfhi   v1
-800BB43C	srl    v1, v1, $05
-800BB440	sll    v0, v1, $04
-800BB444	subu   v0, v0, v1
-800BB448	sll    v0, v0, $02
-800BB44C	subu   a0, a0, v0
-800BB450	lui    at, $800a
-800BB454	sb     v1, $d299(at)
-800BB458	lui    v1, $800a
-800BB45C	lbu    v1, $d29a(v1)
-800BB460	andi   v0, a0, $ffff
-800BB464	beq    v1, v0, Lbb484 [$800bb484]
-800BB468	lui    a1, $91a2
-800BB46C	lui    at, $800a
-800BB470	sb     a0, $d29a(at)
-800BB474	lui    at, $800a
-800BB478	sb     zero, $d29b(at)
-800BB47C	j      Lbb49c [$800bb49c]
-800BB480	nop
-
-Lbb484:	; 800BB484
-800BB484	lui    v0, $800a
-800BB488	lbu    v0, $d29b(v0)
-800BB48C	nop
-800BB490	addiu  v0, v0, $0001
-800BB494	lui    at, $800a
-800BB498	sb     v0, $d29b(at)
-
-Lbb49c:	; 800BB49C
-800BB49C	lui    a0, $800a
-800BB4A0	addiu  a0, a0, $d268 (=-$2d98)
-800BB4A4	lw     v0, $0000(a0)
-800BB4A8	ori    a1, a1, $b3c5
-800BB4AC	multu  v0, a1
-800BB4B0	mfhi   v0
-800BB4B4	srl    v1, v0, $0b
-800BB4B8	andi   v0, v1, $ffff
-800BB4BC	sltiu  v0, v0, $0100
-800BB4C0	bne    v0, zero, Lbb4cc [$800bb4cc]
-800BB4C4	nop
-800BB4C8	ori    v1, zero, $00ff
-
-Lbb4cc:	; 800BB4CC
-800BB4CC	lw     a0, $0000(a0)
-800BB4D0	nop
-800BB4D4	multu  a0, a1
-800BB4D8	lui    at, $800a
-800BB4DC	sb     v1, $d29c(at)
-800BB4E0	lui    a1, $8888
-800BB4E4	ori    a1, a1, $8889
-800BB4E8	mfhi   v1
-800BB4EC	srl    v1, v1, $0b
-800BB4F0	sll    v0, v1, $03
-800BB4F4	subu   v0, v0, v1
-800BB4F8	sll    v0, v0, $05
-800BB4FC	addu   v0, v0, v1
-800BB500	sll    v0, v0, $04
-800BB504	subu   v1, a0, v0
-800BB508	andi   a0, v1, $ffff
-800BB50C	multu  a0, a1
-800BB510	mfhi   v1
-800BB514	srl    v1, v1, $05
-800BB518	sll    v0, v1, $04
-800BB51C	subu   v0, v0, v1
-800BB520	sll    v0, v0, $02
-800BB524	subu   a0, a0, v0
-800BB528	lui    at, $800a
-800BB52C	sb     v1, $d29d(at)
-800BB530	lui    v1, $800a
-800BB534	lbu    v1, $d29e(v1)
-800BB538	andi   v0, a0, $ffff
-800BB53C	beq    v1, v0, Lbb554 [$800bb554]
-800BB540	ori    v0, zero, $001e
-800BB544	lui    at, $800a
-800BB548	sb     a0, $d29e(at)
-800BB54C	j      Lbb568 [$800bb568]
-800BB550	nop
-
-Lbb554:	; 800BB554
-800BB554	lui    v0, $800a
-800BB558	lbu    v0, $d29f(v0)
-800BB55C	nop
-800BB560	beq    v0, zero, Lbb570 [$800bb570]
-800BB564	addiu  v0, v0, $ffff (=-$1)
-
-Lbb568:	; 800BB568
-800BB568	lui    at, $800a
-800BB56C	sb     v0, $d29f(at)
-
-Lbb570:	; 800BB570
-V0 = w[8009C6DC];
-// number of visible entity
-S2 = bu[V0 + 3];
-if (S2 != 0)
+V1 = V0 >> 0b;
+V0 = V1 & ffff;
+if( V0 >= 100 )
 {
-    S0 = 0;
-
-    loopbb590:	; 800BB590
-
-    // talk with entity
-    V1 = w[8009C544];
-    V0 = bu[V1 + S0 + 5A];
-    if (V0 != 0)
-    {
-        V0 = w[8009C6E0];
-        V0 = bu[V0 + 32];
-
-        if (V0 == 0 && S1 == 0)
-        {
-            S1 = 1;
-
-            A0 = bu[V1 + 57];
-            A1 = 1;
-            A2 = 1;
-            script_request_run;
-        }
-
-        [V1 + S0 + 5A] = b(0);
-    }
-
-
-
-    // collide with entity
-    V1 = w[8009C544];
-    V0 = bu[V1 + S0 + 58];
-    if (V0 != 0)
-    {
-        A0 = bu[V1 + 57];
-        A1 = 1;
-        A2 = 2;
-        script_request_run;
-
-        [V1 + S0 + 58] = b(0);
-    }
-
-    S0 = S0 + 84;
-    V0 = S2 * 84;
-    V0 = S0 < V0;
-
-    800BB64C	bne    v0, zero, loopbb590 [$800bb590]
+    V1 = ff;
 }
 
+A0 = w[8009d264];
+800BB3F8	nop
+800BB3FC	multu  a0, a1
+[8009d298] = b(V1);
+A1 = 88888889;
+800BB410	mfhi   v1
+V1 = V1 >> 0b;
+V0 = V1 << 03;
+V0 = V0 - V1;
+V0 = V0 << 05;
+V0 = V0 + V1;
+V0 = V0 << 04;
+V1 = A0 - V0;
+A0 = V1 & ffff;
+800BB434	multu  a0, a1
+800BB438	mfhi   v1
+V1 = V1 >> 05;
+V0 = V1 << 04;
+V0 = V0 - V1;
+V0 = V0 << 02;
+A0 = A0 - V0;
+[8009d299] = b(V1);
+V1 = bu[8009d29a];
+V0 = A0 & ffff;
+if( V1 != V0 )
+{
+    [8009d29a] = b(A0);
+    [8009d29b] = b(0);
+}
+else
+{
+    [8009d29b] = b(bu[8009d29b] + 1);
+}
 
+A0 = 8009d268;
+V0 = w[A0 + 0000];
+A1 = 91a2b3c5;
+800BB4AC	multu  v0, a1
+800BB4B0	mfhi   v0
+V1 = V0 >> 0b;
+V0 = V1 & ffff;
+if( V0 >= 100 )
+{
+    V1 = ff;
+}
+
+A0 = w[A0 + 0000];
+800BB4D4	multu  a0, a1
+[8009d29c] = b(V1);
+A1 = 88888889;
+800BB4E8	mfhi   v1
+V1 = V1 >> 0b;
+V0 = V1 << 03;
+V0 = V0 - V1;
+V0 = V0 << 05;
+V0 = V0 + V1;
+V0 = V0 << 04;
+V1 = A0 - V0;
+A0 = V1 & ffff;
+800BB50C	multu  a0, a1
+800BB510	mfhi   v1
+V1 = V1 >> 05;
+V0 = V1 << 04;
+V0 = V0 - V1;
+V0 = V0 << 02;
+A0 = A0 - V0;
+[8009d29d] = b(V1);
+V1 = bu[8009d29e];
+V0 = A0 & ffff;
+if( V1 != V0 )
+{
+    [8009d29e] = b(A0);
+    [8009d29f] = b(1e);
+}
+else
+{
+    if( bu[8009d29f] != 0 )
+    {
+        [8009d29f] = b(bu[8009d29f] - 1);
+    }
+}
+
+models_data = w[8009c544];
+talked = 0;
+
+V0 = w[8009c6dc];
+for( int i = 0; i < bu[V0 + 3]; ++i ) // visible entity
+{
+    if( bu[models_data + i * 84 + 5a] != 0 ) // if model talks with somthing
+    {
+        V0 = w[8009c6e0];
+        if( bu[V0 + 32] == 0 )
+        {
+            if( talked == 0 )
+            {
+                talked = 1;
+
+                A0 = bu[models_data + i * 84 + 57];
+                A1 = 1;
+                A2 = 1;
+                field_script_request_run();
+            }
+        }
+
+        [models_data + i * 84 + 5a] = b(0);
+    }
+
+    if( bu[models_data + i * 84 + 58] != 0 ) // if model collide with something
+    {
+        A0 = bu[models_data + i * 84 + 57]; // entity id
+        A1 = 1;
+        A2 = 2;
+        field_script_request_run();
+
+        [models_data + i * 84 + 58] = b(0);
+    }
+}
 
 // go through all inited lines
 for( int i = 0; i < h[80095d54]; ++i )
@@ -617,7 +565,7 @@ for( int i = 0; i < h[80095d54]; ++i )
             A0 = bu[8007e7ac + i * 18 + d];
             A1 = 1;
             A2 = 1;
-            script_request_run();
+            field_script_request_run();
         }
         [8007e7ac + i * 18 + 11] = b(0);
     }
@@ -628,7 +576,7 @@ for( int i = 0; i < h[80095d54]; ++i )
         A0 = bu[8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 2;
-        script_request_run();
+        field_script_request_run();
 
         [8007e7ac + i * 18 + 10] = b(0);
     }
@@ -639,7 +587,7 @@ for( int i = 0; i < h[80095d54]; ++i )
         A0 = bu[8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 3;
-        script_request_run();
+        field_script_request_run();
 
         [8007e7ac + i * 18 + f] = b(0);
     }
@@ -650,7 +598,7 @@ for( int i = 0; i < h[80095d54]; ++i )
         A0 = bu[8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 4;
-        script_request_run();
+        field_script_request_run();
     }
 
     // entity enter line
@@ -659,7 +607,7 @@ for( int i = 0; i < h[80095d54]; ++i )
         A0 = bu[8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 5;
-        script_request_run();
+        field_script_request_run();
 
         [8007e7ac + i * 18 + 12] = b(0);
     }
@@ -670,252 +618,167 @@ for( int i = 0; i < h[80095d54]; ++i )
         A0 = bu[8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 6;
-        script_request_run();
+        field_script_request_run();
 
         [8007e7ac + i * 18 + 13] = b(0);
     }
 }
 
-
-
-V0 = w[8009C6DC];
-S3 = 5;
-S2 = bu[V0 + 2]; // number of entity
-
-Lbb83c:	; 800BB83C
-800BB83C	lui    v0, $800a
-800BB840	lw     v0, $c6dc(v0)
-800BB844	lui    v1, $8007
-800BB848	lbu    v1, $22c4(v1)
-800BB84C	lbu    v0, $0002(v0)
-
-if( V1 > V0 )
+V0 = w[8009c6dc];
+for( int left_e = bu[V0 + 2]; left_e != 0; --left_e )// number of entity
 {
-    [800722c4] = b(0);
-}
+    V0 = w[8009c6dc];
+    V1 = bu[800722c4];
+    V0 = bu[V0 + 2];
 
-if( bu[80071e24] & 3 )
-{
-    A0 = 4;
-    A1 = bu[800722c4]; // current entity
-    field_script_update_debug();
-}
-
-800BB890	lui    v1, $8007
-800BB894	lbu    v1, $22c4(v1)
-800BB898	nop
-800BB89C	lui    at, $8008
-800BB8A0	addiu  at, at, $1d90
-800BB8A4	addu   at, at, v1
-800BB8A8	lbu    v0, $0000(at)
-800BB8AC	nop
-800BB8B0	beq    v0, zero, Lbb8cc [$800bb8cc]
-800BB8B4	nop
-800BB8B8	lui    v0, $800e
-800BB8BC	lbu    v0, $48f0(v0)
-
-if( V0 != V1 )
-{
-    V0 = bu[800722C4];
-    V0 = V0 + 1;
-    [800722C4] = b(V0);
-
-    V1 = bu[80099FFC];
-    S2 = S2 - 1;
-    if (V1 == S3)
+    if( V1 >= V0 )
     {
-        V1 = bu[80071E24];
-        V0 = V1 & 1;
+        [800722c4] = b(0);
+    }
 
-        if (V0 != 0)
+    if( bu[80071e24] & 3 )
+    {
+        A0 = 4;
+        A1 = bu[800722c4]; // current entity
+        field_script_update_debug();
+    }
+
+    V1 = bu[800722c4];
+    V0 = bu[80081d90 + V1];
+
+    if( ( V0 == 0 ) || ( bu[800e48f0] == V1 ) )
+    {
+        for( int left_o = 8; left_o != 0; --left_o )
         {
-            V0 = V1 & 4;
-
-            if (V0 == 0)
+            if( bu[80099ffc] == 5 )
             {
-                V1 = bu[80099FFC];
-                if (V1 == 5)
+                if( bu[8009d820] & 1 )
                 {
-                    [80070788] = b(0);
+                    V0 = bu[800722c4];
+                    if( ( ( bu[80071e24] & 4 ) == 0 ) || ( bu[80114498 + V0] != 0 ) )
+                    {
+                        for( int i = 1; i < 9; ++i )
+                        {
+                            A0 = 3;
+                            A1 = S1;
+                            A2 = 800a013c; // ""
+                            field_debug_copy_string_into_page();
+                        }
+                    }
                 }
-
-                handle_animation_state;
-                return;
             }
 
-            V0 = bu[800722C4];
+            V0 = bu[800722c4];
+            V1 = hu[800831fc + V0 * 2];
+            V0 = w[8009c6dc];
+            V0 = bu[V0 + V1];
+
+            [8009a058] = b(V0);
+            V0 = bu[8009a058];
+            V0 = w[800e0228 + V0 * 4];
+
+            800BB9C8	jalr   v0 ra
+
+            // call opcode function
+            // 0c 540B0C80
+            // 0d 540B0C80
+            // 1a 540B0C80
+            // 1b 540B0C80
+            // 1c 540B0C80
+            // 1d 540B0C80
+            // 1e 540B0C80
+            // 1f 540B0C80
+            // 44 540B0C80
+            // 46 540B0C80
+            // 4c 540B0C80
+            // 4e 540B0C80
+            // be 540B0C80
+
+            800BB9D0	beq    v0, zero, Lbba54 [$800bba54]
+
+            V0 = bu[80099ffc];
+            800BB9E4	bne    v0, 5, Lbbb14 [$800bbb14]
+
+            V0 = bu[8009d820] & 1;
+            800BB9FC	beq    v0, zero, Lbbb14 [$800bbb14]
+
+            V0 = bu[80071e24] & 4;
+            800BBA14	beq    v0, zero, Lbba44 [$800bba44]
+
+            V0 = bu[800722c4];
             V0 = bu[80114498 + V0];
+            800BBA3C	beq    v0, zero, Lbbb14 [$800bbb14]
 
-            if (V0 == 0)
+            Lbba44:	; 800BBA44
+            [800722c4] = b(bu[800722c4] + 1);
+            800BBB00	j      Lbbb88 [$800bbb88]
+
+            Lbba54:	; 800BBA54
+            V0 = bu[80099ffc];
+            800BBA60	bne    v0, 5, Lbbb08 [$800bbb08]
+
+            V0 = bu[8009d820] & 1;
+            800BBA78	beq    v0, zero, Lbbb08 [$800bbb08]
+
+            V0 = bu[80071e24] & 4;
+            800BBA90	beq    v0, zero, Lbbac0 [$800bbac0]
+
+            V0 = bu[800722c4];
+            V0 = bu[80114498 + V0];
+            800BBAB4	nop
+            800BBAB8	beq    v0, zero, Lbbb08 [$800bbb08]
+            800BBABC	nop
+
+            Lbbac0:	; 800BBAC0
+            [8009a064] = w(w[8009a064] + 1);
+
+            if( w[8009a064] >= 8 )
             {
-                V1 = bu[80099FFC];
-                if (V1 == 5)
-                {
-                    [80070788] = b(0);
-                }
-
-                handle_animation_state;
-                return;
+                [8009a064] = w(0);
+                [800722c4] = b(bu[800722c4] + 1);
             }
+            800BBB00	j      Lbbb88 [$800bbb88]
+
+            Lbbb08:	; 800BBB08
         }
     }
 
-    800BBB80	bne    s2, zero, Lbb83c [$800bb83c]
+    Lbbb14:	; 800BBB14
+    [800722c4] = b(bu[800722c4] + 1);
 
-    if( bu[80099ffc] == 5 )
-    {
-        [80070788] = b(0);
-    }
+    V1 = bu[80099ffc];
+    800BBB30	bne    v1, 5, Lbbb80 [$800bbb80]
 
-    handle_animation_state;
-    return;
+    V1 = ;
+
+    V0 = bu[80071e24] & 1;
+    800BBB48	beq    v0, zero, Lbbb80 [$800bbb80]
+
+    V0 = bu[80071e24] & 4;
+    800BBB50	beq    v0, zero, Lbbb88 [$800bbb88]
+
+    V0 = bu[800722c4];
+    V0 = bu[80114498 + V0];
+
+    800BBB78	bne    v0, zero, Lbbb88 [$800bbb88]
+
+    Lbbb80:	; 800BBB80
 }
 
-Lbb8cc:	; 800BB8CC
-S0 = 8;
-
-Lbb8d0:	; 800BB8D0
-V0 = bu[80099FFC];
-800BB8DC	bne    v0, s3, Lbb964 [$800bb964]
-800BB8E0	nop
-800BB8E4	lui    v0, $800a
-800BB8E8	lbu    v0, $d820(v0)
-800BB8EC	nop
-800BB8F0	andi   v0, v0, $0001
-800BB8F4	beq    v0, zero, Lbb964 [$800bb964]
-800BB8F8	nop
-800BB8FC	lui    v0, $8007
-800BB900	lbu    v0, $1e24(v0)
-800BB904	nop
-800BB908	andi   v0, v0, $0004
-800BB90C	beq    v0, zero, Lbb93c [$800bb93c]
-800BB910	ori    a0, zero, $0003
-800BB914	lui    v0, $8007
-800BB918	lbu    v0, $22c4(v0)
-800BB91C	nop
-800BB920	lui    at, $8011
-800BB924	addiu  at, at, $4498
-800BB928	addu   at, at, v0
-800BB92C	lbu    v0, $0000(at)
-800BB930	nop
-800BB934	beq    v0, zero, Lbb964 [$800bb964]
-800BB938	nop
-
-Lbb93c:	; 800BB93C
-800BB93C	ori    s1, zero, $0001
-
-loopbb940:	; 800BB940
-800BB940	sll    a1, s1, $10
-800BB944	lui    a2, $800a
-800BB948	addiu  a2, a2, $013c
-800BB94C	jal    field_debug_copy_string_into_page [$800da124]
-800BB950	sra    a1, a1, $10
-800BB954	addiu  s1, s1, $0001
-800BB958	slti   v0, s1, $0009
-800BB95C	bne    v0, zero, loopbb940 [$800bb940]
-800BB960	ori    a0, zero, $0003
-
-Lbb964:	; 800BB964
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
-
-// 800BB994
-// read opcode
-[8009A058] = b(bu[V0 + V1]);
-V0 = bu[8009A058];
-V0 = w[800e0228 + V0 * 4];
-// call opcode function
-0c 540B0C80
-0d 540B0C80
-1a 540B0C80
-1b 540B0C80
-1c 540B0C80
-1d 540B0C80
-1e 540B0C80
-1f 540B0C80
-44 540B0C80
-46 540B0C80
-4c 540B0C80
-4e 540B0C80
-be 540B0C80
-
-jalr v0 ra;
-ret = V0;
-
-V1 = bu[800722C4];
-q_1 = bu[80099FFC];
-q_2 = bu[8009D820];
-q_3 = bu[80071E24];
-q_4 = bu[80114498 + V1];
-
-if (q_1 != S3 || q_2 & 1 == 0 || (q_3 & 4 != 0 && q_4 == 0))
-{
-    if (ret == 0)
-    {
-        S0 = S0 - 1;
-        800BBB0C	bne    s0, zero, Lbb8d0 [$800bb8d0]   check if we have left opcodes to execute
-    }
-
-    // if we pause execution or opcodes limit is over
-    // go to nex entity
-    V0 = bu[800722C4];
-    V0 = V0 + 1;
-    [800722C4] = b(V0);
-
-    if (q_1 == S3 && q_3 & 1 != 0 && (q_3 & 4 == 0 || q_4 == 0))
-    {
-        if (q_1 == 5)
-        {
-            [80070788] = b(0);
-        }
-
-        handle_animation_state;
-        return;
-    }
-
-    // if we have entity left
-    S2 = S2 - 1;
-    800BBB80	bne    s2, zero, Lbb83c [$800bb83c]
-}
-else
-{
-    // if script is paused - go to next entity
-    if (ret != 0)
-    {
-        V0 = bu[800722C4];
-        V0 = V0 + 1;
-        [800722C4] = b(V0);
-    }
-    else
-    {
-        V0 = w[8009A064];
-        V0 = V0 + 1;
-        [8009A064] = w(V0);
-
-        if (V0 >= 8)
-        {
-            [8009A064] = w(0);
-
-            V0 = bu[800722C4];
-            V0 = V0 + 1;
-            [800722C4] = b(V0);
-        }
-    }
-}
-
-if (q_1 == 5)
+Lbbb88:	; 800BBB88
+if( bu[80099ffc] == 5 )
 {
     [80070788] = b(0);
 }
 
-handle_animation_state;
+field_script_update_animation_state();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// handle_animation_state
+// field_script_update_animation_state()
+
 field_file = w[8009c6dc];
 offset_to_model = w[8009c544];
 V1 = w[8009c6e0];
@@ -1049,7 +912,7 @@ if( number_of_entity > 0 )
 
 
 ////////////////////////////////
-// script_request_run
+// field_script_request_run
 entity_id                 = A0;
 priority_id               = A1;
 script_id                 = A2;
@@ -1386,8 +1249,7 @@ if( ( bu[8009fe8c] | (bu[80071e24] & 1) ) != 0 )
 
 V0 = entity_id << 10;
 S2 = V0 >> 10;
-800BCCFC	lui    at, $8008
-800BCD00	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 V0 = 00ff;
@@ -1438,8 +1300,7 @@ V1 = bu[AT + 0000];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
-800BCDE0	lui    at, $8008
-800BCDE4	addiu  at, at, $e7b8 (=-$1848)
+AT = 8007e7b8;
 AT = AT + V0;
 V0 = bu[AT + 0000];
 800BCDF0	nop
@@ -1485,8 +1346,7 @@ A0 = S1;
 A1 = 800a021c; // " dir="
 field_debug_concat_string();
 
-800BCEA0	lui    at, $8008
-800BCEA4	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BCEB0	nop
@@ -1529,8 +1389,7 @@ A1 = 0002;
 Lbcf4c:	; 800BCF4C
 V0 = entity_id << 10;
 S2 = V0 >> 10;
-800BCF7C	lui    at, $8008
-800BCF80	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 V0 = 00ff;
@@ -1541,8 +1400,7 @@ A0 = S1;
 A1 = 800a0224; // "X="
 field_debug_copy_string();
 
-800BCFB0	lui    at, $8008
-800BCFB4	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 S3 = 800e4288;
@@ -1562,8 +1420,7 @@ A1 = S3;
 A1 = A1 + 0228;
 800BD004	jal    field_debug_concat_string [$800da368]
 A0 = S1;
-800BD00C	lui    at, $8008
-800BD010	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD01C	nop
@@ -1600,8 +1457,7 @@ A0 = S1;
 A1 = 800a022c; // "Z="
 field_debug_copy_string();
 
-800BD0C8	lui    at, $8008
-800BD0CC	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD0D8	nop
@@ -1621,8 +1477,7 @@ A1 = S3;
 A1 = A1 + 0230;
 800BD118	jal    field_debug_concat_string [$800da368]
 A0 = S1;
-800BD120	lui    at, $8008
-800BD124	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD130	nop
@@ -1649,8 +1504,7 @@ A1 = 0004;
 A2 = S1;
 
 Lbd194:	; 800BD194
-800BD1B4	lui    at, $8008
-800BD1B8	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V0 = bu[AT + 0000];
 800BD1C4	nop
@@ -1664,8 +1518,7 @@ A1 = S1;
 A1 = A1 + 0234;
 800BD1E8	jal    field_debug_concat_string [$800da368]
 A0 = S1;
-800BD1F0	lui    at, $8008
-800BD1F4	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD200	nop
@@ -1685,8 +1538,7 @@ A0 = S1;
 S5 = S5 + 0238;
 800BD240	jal    field_debug_concat_string [$800da368]
 A1 = S5;
-800BD248	lui    at, $8008
-800BD24C	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD258	nop
@@ -1704,8 +1556,7 @@ A1 = S3;
 A0 = S1;
 800BD290	jal    field_debug_concat_string [$800da368]
 A1 = S5;
-800BD298	lui    at, $8008
-800BD29C	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD2A8	nop
@@ -1737,8 +1588,7 @@ A1 = 0005;
 A2 = 0007;
 
 Lbd320:	; 800BD320
-800BD340	lui    at, $8008
-800BD344	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD350	nop
@@ -1764,8 +1614,7 @@ field_debug_copy_string();
 
 V0 = entity_id << 10;
 V0 = V0 >> 10;
-800BD3A0	lui    at, $8008
-800BD3A4	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + V0;
 V1 = bu[AT + 0000];
 800BD3B0	nop
@@ -1796,8 +1645,7 @@ Lbd404:	; 800BD404
 800BD408	nop
 V0 = entity_id << 10;
 V0 = V0 >> 10;
-800BD414	lui    at, $8008
-800BD418	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + V0;
 V1 = bu[AT + 0000];
 800BD424	nop
@@ -1834,8 +1682,7 @@ A1 = A1 + 0248;
 A0 = S1;
 V0 = entity_id << 10;
 S2 = V0 >> 10;
-800BD4A0	lui    at, $8008
-800BD4A4	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD4B0	lui    s0, $800e
@@ -1855,8 +1702,7 @@ A1 = S0;
 A1 = A1 + 024c;
 800BD4F0	jal    field_debug_concat_string [$800da368]
 A0 = S1;
-800BD4F8	lui    at, $8008
-800BD4FC	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD508	nop
@@ -1889,8 +1735,7 @@ A0 = S1;
 A1 = 800a0250; // "MS"
 field_debug_copy_string();
 
-800BD59C	lui    at, $8008
-800BD5A0	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD5AC	nop
@@ -1909,8 +1754,7 @@ A1 = S0;
 A1 = A1 + 0254;
 800BD5E8	jal    field_debug_concat_string [$800da368]
 A0 = S1;
-800BD5F0	lui    at, $8008
-800BD5F4	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S2;
 V1 = bu[AT + 0000];
 800BD600	nop
@@ -1967,8 +1811,7 @@ S1 = S1 + 4288;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
-800BD6F8	lui    at, $8008
-800BD6FC	addiu  at, at, $e7ac (=-$1854)
+AT = 8007e7ac;
 AT = AT + V0;
 A0 = h[AT + 0000];
 800BD708	jal    field_int4_to_string [$800da480]
@@ -1988,8 +1831,7 @@ V1 = bu[AT + 0000];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
-800BD74C	lui    at, $8008
-800BD750	addiu  at, at, $e7ae (=-$1852)
+AT = 8007e7ae;
 AT = AT + V0;
 A0 = h[AT + 0000];
 800BD75C	jal    field_int4_to_string [$800da480]
@@ -2021,8 +1863,7 @@ V1 = bu[AT + 0000];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
-800BD7F0	lui    at, $8008
-800BD7F4	addiu  at, at, $e7b0 (=-$1850)
+AT = 8007e7b0;
 AT = AT + V0;
 A0 = h[AT + 0000];
 800BD800	jal    field_int4_to_string [$800da480]
@@ -2054,8 +1895,7 @@ V1 = bu[AT + 0000];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
-800BD894	lui    at, $8008
-800BD898	addiu  at, at, $e7b2 (=-$184e)
+AT = 8007e7b2;
 AT = AT + V0;
 A0 = h[AT + 0000];
 800BD8A4	jal    field_int4_to_string [$800da480]
@@ -2075,8 +1915,7 @@ V1 = bu[AT + 0000];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
-800BD8E8	lui    at, $8008
-800BD8EC	addiu  at, at, $e7b4 (=-$184c)
+AT = 8007e7b4;
 AT = AT + V0;
 A0 = h[AT + 0000];
 800BD8F8	jal    field_int4_to_string [$800da480]
@@ -2108,8 +1947,7 @@ V1 = bu[AT + 0000];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
-800BD98C	lui    at, $8008
-800BD990	addiu  at, at, $e7b6 (=-$184a)
+AT = 8007e7b6;
 AT = AT + V0;
 A0 = h[AT + 0000];
 800BD99C	jal    field_int4_to_string [$800da480]
@@ -2219,8 +2057,7 @@ Lbdb44:	; 800BDB44
 A1 = A1 + 027c;
 800BDB6C	jal    field_debug_copy_string [$800da334]
 A0 = S1;
-800BDB74	lui    s3, $800a
-800BDB78	addiu  s3, s3, $ac1e (=-$53e2)
+S3 = 8009ac1e;
 V1 = h[S3 + 0000];
 800BDB80	nop
 V0 = V1 << 05;
@@ -2527,8 +2364,7 @@ A1 = A1 + 02a8;
 A0 = S1;
 V0 = entity_id << 10;
 S3 = V0 >> 10;
-800BE128	lui    at, $8008
-800BE12C	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S3;
 V1 = bu[AT + 0000];
 800BE138	nop
@@ -2563,8 +2399,7 @@ Lbe1b0:	; 800BE1B0
 A0 = S1;
 800BE1D4	jal    field_debug_copy_string [$800da334]
 A1 = S7;
-800BE1DC	lui    at, $8008
-800BE1E0	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S3;
 V1 = bu[AT + 0000];
 800BE1EC	nop
@@ -2582,8 +2417,7 @@ A1 = S2;
 A0 = S1;
 800BE224	jal    field_debug_concat_string [$800da368]
 A1 = S5;
-800BE22C	lui    at, $8008
-800BE230	addiu  at, at, $eb98 (=-$1468)
+AT = 8007eb98;
 AT = AT + S3;
 V1 = bu[AT + 0000];
 800BE23C	nop
@@ -3443,8 +3277,7 @@ A1 = bu[V0 + 0000];
 V0 = bu[8009d820];
 800BF080	nop
 V0 = V0 & 0003;
-800BF088	lui    at, $800a
-800BF08C	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 800BF098	beq    v0, zero, Lbf398 [$800bf398]
@@ -3474,8 +3307,7 @@ V0 = bu[V0 + 0000];
 800BF0F8	nop
 A1 = V0 | 0100;
 V0 = bu[8009d820];
-800BF108	lui    at, $800a
-800BF10C	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
@@ -3506,8 +3338,7 @@ V0 = bu[V0 + 0000];
 800BF17C	nop
 A1 = V0 | 0200;
 V0 = bu[8009d820];
-800BF18C	lui    at, $800a
-800BF190	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
@@ -3538,8 +3369,7 @@ V0 = bu[V0 + 0000];
 800BF200	nop
 A1 = V0 | 0300;
 V0 = bu[8009d820];
-800BF210	lui    at, $800a
-800BF214	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
@@ -3570,8 +3400,7 @@ V0 = bu[V0 + 0000];
 800BF284	nop
 A1 = V0 | 0400;
 V0 = bu[8009d820];
-800BF294	lui    at, $800a
-800BF298	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
@@ -3771,8 +3600,7 @@ V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
 800BF5C0	nop
-800BF5C4	lui    at, $800a
-800BF5C8	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -3802,8 +3630,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BF644	nop
 A1 = V0 | 0100;
-800BF64C	lui    at, $800a
-800BF650	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -3833,8 +3660,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BF6CC	nop
 A1 = V0 | 0200;
-800BF6D4	lui    at, $800a
-800BF6D8	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -3864,8 +3690,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BF754	nop
 A1 = V0 | 0300;
-800BF75C	lui    at, $800a
-800BF760	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -3897,8 +3722,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BF7DC	nop
 A1 = V0 | 0400;
-800BF7E4	lui    at, $800a
-800BF7E8	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -4137,8 +3961,7 @@ A1 = bu[V0 + 0000];
 V0 = bu[8009d820];
 800BFB80	nop
 V0 = V0 & 0003;
-800BFB88	lui    at, $800a
-800BFB8C	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 800BFB98	beq    v0, zero, Lc0234 [$800c0234]
@@ -4168,12 +3991,10 @@ A1 = bu[V0 + 0000];
 V0 = bu[8009d820];
 800BFC00	nop
 V0 = V0 & 0003;
-800BFC08	lui    at, $800a
-800BFC0C	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 V1 = bu[AT + 0000];
-800BFC18	lui    at, $800a
-800BFC1C	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V1 = V1 << 08;
@@ -4204,8 +4025,7 @@ V0 = bu[V0 + 0000];
 800BFC8C	nop
 A1 = V0 | 0100;
 V0 = bu[8009d820];
-800BFC9C	lui    at, $800a
-800BFCA0	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
@@ -4235,12 +4055,10 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BFD10	nop
 A1 = V0 | 0100;
-800BFD18	lui    at, $800a
-800BFD1C	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 V1 = bu[AT + 0000];
-800BFD28	lui    at, $800a
-800BFD2C	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = bu[8009d820];
@@ -4273,8 +4091,7 @@ V0 = bu[V0 + 0000];
 800BFDA8	nop
 A1 = V0 | 0200;
 V0 = bu[8009d820];
-800BFDB8	lui    at, $800a
-800BFDBC	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
@@ -4304,12 +4121,10 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BFE2C	nop
 A1 = V0 | 0200;
-800BFE34	lui    at, $800a
-800BFE38	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 V1 = bu[AT + 0000];
-800BFE44	lui    at, $800a
-800BFE48	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = bu[8009d820];
@@ -4342,8 +4157,7 @@ V0 = bu[V0 + 0000];
 800BFEC4	nop
 A1 = V0 | 0300;
 V0 = bu[8009d820];
-800BFED4	lui    at, $800a
-800BFED8	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 
 funcbfee0:	; 800BFEE0
@@ -4375,12 +4189,10 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BFF48	nop
 A1 = V0 | 0300;
-800BFF50	lui    at, $800a
-800BFF54	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 V1 = bu[AT + 0000];
-800BFF60	lui    at, $800a
-800BFF64	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = bu[8009d820];
@@ -4413,8 +4225,7 @@ V0 = bu[V0 + 0000];
 800BFFE0	nop
 A1 = V0 | 0400;
 V0 = bu[8009d820];
-800BFFF0	lui    at, $800a
-800BFFF4	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
@@ -4451,12 +4262,10 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800C0064	nop
 A1 = V0 | 0400;
-800C006C	lui    at, $800a
-800C0070	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 V1 = bu[AT + 0000];
-800C007C	lui    at, $800a
-800C0080	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
 V0 = bu[8009d820];
@@ -4713,8 +4522,7 @@ V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
 800C045C	nop
-800C0460	lui    at, $800a
-800C0464	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -4744,12 +4552,10 @@ V0 = V0 + V1;
 V1 = S0 << 10;
 A1 = bu[V0 + 0000];
 V0 = V1 >> 18;
-800C04E8	lui    at, $800a
-800C04EC	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-800C04F8	lui    at, $800a
-800C04FC	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V0);
 V0 = bu[8009d820];
@@ -4781,8 +4587,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800C0578	nop
 A1 = V0 | 0100;
-800C0580	lui    at, $800a
-800C0584	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -4813,12 +4618,10 @@ A0 = S0 << 10;
 V0 = bu[V0 + 0000];
 V1 = A0 >> 18;
 A1 = V0 | 0100;
-800C060C	lui    at, $800a
-800C0610	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-800C061C	lui    at, $800a
-800C0620	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
 V0 = bu[8009d820];
@@ -4848,8 +4651,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800C069C	nop
 A1 = V0 | 0200;
-800C06A4	lui    at, $800a
-800C06A8	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -4880,12 +4682,10 @@ A0 = S0 << 10;
 V0 = bu[V0 + 0000];
 V1 = A0 >> 18;
 A1 = V0 | 0200;
-800C0730	lui    at, $800a
-800C0734	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-800C0740	lui    at, $800a
-800C0744	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
 V0 = bu[8009d820];
@@ -4917,8 +4717,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800C07C0	nop
 A1 = V0 | 0300;
-800C07C8	lui    at, $800a
-800C07CC	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -4951,12 +4750,10 @@ V1 = A0 >> 18;
 
 Lc0850:	; 800C0850
 A1 = V0 | 0300;
-800C0854	lui    at, $800a
-800C0858	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-800C0864	lui    at, $800a
-800C0868	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
 V0 = bu[8009d820];
@@ -4986,8 +4783,7 @@ V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800C08E4	nop
 A1 = V0 | 0400;
-800C08EC	lui    at, $800a
-800C08F0	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
 V0 = bu[8009d820];
@@ -5018,12 +4814,10 @@ A0 = S0 << 10;
 V0 = bu[V0 + 0000];
 V1 = A0 >> 18;
 A1 = V0 | 0400;
-800C0978	lui    at, $800a
-800C097C	addiu  at, at, $d288 (=-$2d78)
+AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-800C0988	lui    at, $800a
-800C098C	addiu  at, at, $d289 (=-$2d77)
+AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
 V0 = bu[8009d820];
