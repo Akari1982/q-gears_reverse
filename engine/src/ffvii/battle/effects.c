@@ -298,7 +298,7 @@ FFVII_Battle_EffectSpriteAdd()
     psxRegs.CP2D.p[ 4 ].d = p2;
     psxRegs.CP2D.p[ 5 ].d = 0;
 
-    psxRegs.code = 0x30;
+    psxRegs.code = 0x4a280030;
     gteRTPT(); // Perspective transform on 3 points
 
     u32 sxy0 = psxRegs.CP2D.p[ 12 ].d;
@@ -342,22 +342,16 @@ FFVII_Battle_EffectSpriteAdd()
         sxy2 += 0x10000;
     }
 
-    //psxMemWrite32( otc + 0x8, sxy0 ); // xy0
-    //psxMemWrite32( otc + 0x10, sxy1 ); // xy1
-    //psxMemWrite32( otc + 0x18, sxy2 ); // xy2
-
-    psxMemWrite32( otc + 0x8, 0x00000000 ); // xy0
-    psxMemWrite32( otc + 0x10, 0x000000f0 ); // xy1
-    psxMemWrite32( otc + 0x18, 0x00f00000 ); // xy2
+    psxMemWrite32( otc + 0x8, sxy0 ); // xy0
+    psxMemWrite32( otc + 0x10, sxy1 ); // xy1
+    psxMemWrite32( otc + 0x18, sxy2 ); // xy2
 
     psxRegs.CP2D.p[ 0 ].d = p3;
     psxRegs.CP2D.p[ 1 ].d = 0;
-    psxRegs.code = 0x01;
+    psxRegs.code = 0x4a180001;
     gteRTPS(); // Perspective transform
 
-    //psxMemWrite32( otc + 0x20, psxRegs.CP2D.p[ 14 ].d ); // xy3
-
-    psxMemWrite32( otc + 0x20, 0x00f000f0 ); // xy3
+    psxMemWrite32( otc + 0x20, psxRegs.CP2D.p[ 14 ].d ); // xy3
 
     u32 wh = data4 >> 0x10;
     width = wh & 0x00ff;
