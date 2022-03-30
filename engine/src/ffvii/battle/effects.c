@@ -209,24 +209,40 @@ FFVII_Battle_EffectDustClouds()
 void
 FFVII_Battle_EffectDustSingleCloud()
 {
-/*
-    [SP + 10] = w(w[800a0d98 + 0]);
-    [SP + 14] = w(w[800a0d98 + 4]);
-    [SP + 18] = w(w[800a0d98 + 8]);
-    [SP + 1c] = w(w[800a0d98 + c]);
-    [SP + 20] = w(w[800a0d98 + 10]);
-    [SP + 24] = w(w[800a0d98 + 14]);
-    [SP + 28] = w(w[800a0d98 + 18]);
-    [SP + 2c] = w(w[800a0d98 + 1c]);
+    PSX_MATRIX m;
+    m.m[ 0 ][ 0 ] = psxMemRead16( 0x800a0d98 + 0x00 );
+    m.m[ 0 ][ 1 ] = psxMemRead16( 0x800a0d98 + 0x02 );
+    m.m[ 0 ][ 2 ] = psxMemRead16( 0x800a0d98 + 0x04 );
+    m.m[ 1 ][ 0 ] = psxMemRead16( 0x800a0d98 + 0x06 );
+    m.m[ 1 ][ 1 ] = psxMemRead16( 0x800a0d98 + 0x08 );
+    m.m[ 1 ][ 2 ] = psxMemRead16( 0x800a0d98 + 0x0a );
+    m.m[ 2 ][ 0 ] = psxMemRead16( 0x800a0d98 + 0x0c );
+    m.m[ 2 ][ 1 ] = psxMemRead16( 0x800a0d98 + 0x0e );
+    m.m[ 2 ][ 2 ] = psxMemRead16( 0x800a0d98 + 0x10 );
+    m.t[ 0 ]      = psxMemRead32( 0x800a0d98 + 0x14 );
+    m.t[ 1 ]      = psxMemRead32( 0x800a0d98 + 0x18 );
+    m.t[ 2 ]      = psxMemRead32( 0x800a0d98 + 0x1c );
 
-    [800f0218 + 4] = b(h[0x801621f0 + g_effect_id * 0x20 + 2] * 20);
+    //[800f0218 + 4] = b(h[0x801621f0 + g_effect_id * 0x20 + 2] * 20);
 
-    A0 = 800fa63c; // camera matrix
-    system_gte_set_rotation_matrix();
+    PSX_MATRIX c;
+    c.m[ 0 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x00 );
+    c.m[ 0 ][ 1 ] = psxMemRead16( 0x800fa63c + 0x02 );
+    c.m[ 0 ][ 2 ] = psxMemRead16( 0x800fa63c + 0x04 );
+    c.m[ 1 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x06 );
+    c.m[ 1 ][ 1 ] = psxMemRead16( 0x800fa63c + 0x08 );
+    c.m[ 1 ][ 2 ] = psxMemRead16( 0x800fa63c + 0x0a );
+    c.m[ 2 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x0c );
+    c.m[ 2 ][ 1 ] = psxMemRead16( 0x800fa63c + 0x0e );
+    c.m[ 2 ][ 2 ] = psxMemRead16( 0x800fa63c + 0x10 );
+    c.t[ 0 ]      = psxMemRead32( 0x800fa63c + 0x14 );
+    c.t[ 1 ]      = psxMemRead32( 0x800fa63c + 0x18 );
+    c.t[ 2 ]      = psxMemRead32( 0x800fa63c + 0x1c );
 
-    A0 = 800fa63c;
-    system_gte_set_translation_vector();
+    System_GTESetRotationMatrix( c );
+    System_GTESetTranslationVector( c );
 
+    /*
     A0 = 0x801621f0 + g_effect_id * 0x20 + 4; // vector to transform
     A1 = SP + 24; // result vector
     A2 = SP + 30; // flag
@@ -237,13 +253,12 @@ FFVII_Battle_EffectDustSingleCloud()
     [SP + 18] = h(h[0x801621f0 + g_effect_id * 0x20 + 10] + h[0x801621f0 + g_effect_id * 0x20 + 10] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
     // set z translation
     [SP + 2c] = w(w[SP + 2c] - h[0x801621f0 + g_effect_id * 0x20 + 10] / 10);
+    */
 
-    A0 = SP + 10;
-    system_gte_set_rotation_matrix();
+    System_GTESetRotationMatrix( m );
+    System_GTESetTranslationVector( m );
 
-    A0 = SP + 10;
-    system_gte_set_translation_vector();
-
+    /*
     A0 = 800f0218;
     A1 = w[801517c0] + 70;
     A2 = c;
@@ -261,7 +276,7 @@ FFVII_Battle_EffectDustSingleCloud()
             [0x801621f0 + g_effect_id * 0x20 + 0] = h(-1);
         }
     }
-*/
+    */
 }
 
 
