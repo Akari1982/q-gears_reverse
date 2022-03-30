@@ -248,7 +248,7 @@ FFVII_Battle_EffectDustSingleCloud()
     A1 = w[801517c0] + 70;
     A2 = c;
     A3 = w[80163c74];
-    funcd6260();
+    FFVII_Battle_EffectSpriteAdd();
     [80163c74] = w(V0);
 
     if( bu[80062d98] == 0 )
@@ -262,13 +262,6 @@ FFVII_Battle_EffectDustSingleCloud()
         }
     }
 */
-}
-
-
-
-void
-FFVII_Battle_EffectDustSingleCloudAddToRender()
-{
 }
 
 
@@ -305,22 +298,6 @@ FFVII_Battle_EffectSpriteAdd()
     u32 sxy1 = psxRegs.CP2D.p[ 13 ].d;
     u32 sxy2 = psxRegs.CP2D.p[ 14 ].d;
 
-    /*
-    char Text[ 512 ];
-    sprintf( Text, _( "Data: 0x%x 0x%x Pos 0x%x 0x%x 0x%x 0x%x\nMatrix: 0x%x 0x%x 0x%x, 0x%x 0x%x 0x%x, 0x%x 0x%x 0x%x Trans: 0x%x 0x%x 0x%x\nOldpos: 0x%x 0x%x, 0x%x 0x%x, 0x%x 0x%x\nNewpos: 0x%x, 0x%x, 0x%x" ),
-        data0, data4,
-        p0, p1, p2, p3,
-        psxRegs.CP2C.n.rMatrix.m11, psxRegs.CP2C.n.rMatrix.m12, psxRegs.CP2C.n.rMatrix.m13,
-        psxRegs.CP2C.n.rMatrix.m21, psxRegs.CP2C.n.rMatrix.m22, psxRegs.CP2C.n.rMatrix.m23,
-        psxRegs.CP2C.n.rMatrix.m31, psxRegs.CP2C.n.rMatrix.m32, psxRegs.CP2C.n.rMatrix.m33,
-        psxRegs.CP2C.n.trX, psxRegs.CP2C.n.trY, psxRegs.CP2C.n.trZ,
-        psxRegs.CP2D.n.v0.y,  psxRegs.CP2D.n.v0.x,
-        psxRegs.CP2D.n.v1.y,  psxRegs.CP2D.n.v1.x,
-        psxRegs.CP2D.n.v2.y,  psxRegs.CP2D.n.v2.x,
-        sxy0, sxy1, sxy2 );
-    GPU_displayText( Text );
-    */
-
     if( psxRegs.CP2C.n.trZ <= 0 )
     {
         psxRegs.GPR.n.v0 = otc;
@@ -348,6 +325,7 @@ FFVII_Battle_EffectSpriteAdd()
 
     psxRegs.CP2D.p[ 0 ].d = p3;
     psxRegs.CP2D.p[ 1 ].d = 0;
+
     psxRegs.code = 0x4a180001;
     gteRTPS(); // Perspective transform
 
