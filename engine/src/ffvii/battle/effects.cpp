@@ -1,4 +1,5 @@
 #include "effects.h"
+#include "..\..\system\transform.h"
 #include "..\..\pcsxr\libpcsxcore\psxcommon.h"
 #include "..\..\pcsxr\libpcsxcore\psxmem.h"
 #include "..\..\pcsxr\libpcsxcore\plugins.h"
@@ -219,9 +220,9 @@ FFVII_Battle_EffectDustSingleCloud()
     m.m[ 2 ][ 0 ] = psxMemRead16( 0x800a0d98 + 0x0c );
     m.m[ 2 ][ 1 ] = psxMemRead16( 0x800a0d98 + 0x0e );
     m.m[ 2 ][ 2 ] = psxMemRead16( 0x800a0d98 + 0x10 );
-    m.t[ 0 ]      = psxMemRead32( 0x800a0d98 + 0x14 );
-    m.t[ 1 ]      = psxMemRead32( 0x800a0d98 + 0x18 );
-    m.t[ 2 ]      = psxMemRead32( 0x800a0d98 + 0x1c );
+    m.t.vx        = psxMemRead32( 0x800a0d98 + 0x14 );
+    m.t.vy        = psxMemRead32( 0x800a0d98 + 0x18 );
+    m.t.vz        = psxMemRead32( 0x800a0d98 + 0x1c );
 
     //[800f0218 + 4] = b(h[0x801621f0 + g_effect_id * 0x20 + 2] * 20);
 
@@ -235,31 +236,30 @@ FFVII_Battle_EffectDustSingleCloud()
     c.m[ 2 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x0c );
     c.m[ 2 ][ 1 ] = psxMemRead16( 0x800fa63c + 0x0e );
     c.m[ 2 ][ 2 ] = psxMemRead16( 0x800fa63c + 0x10 );
-    c.t[ 0 ]      = psxMemRead32( 0x800fa63c + 0x14 );
-    c.t[ 1 ]      = psxMemRead32( 0x800fa63c + 0x18 );
-    c.t[ 2 ]      = psxMemRead32( 0x800fa63c + 0x1c );
+    c.t.vx        = psxMemRead32( 0x800fa63c + 0x14 );
+    c.t.vy        = psxMemRead32( 0x800fa63c + 0x18 );
+    c.t.vz        = psxMemRead32( 0x800fa63c + 0x1c );
 
-    System_GTESetRotationMatrix( c );
-    System_GTESetTranslationVector( c );
+    PSX_SetRotMatrix( c );
+    PSX_SetTransMatrix( c );
 
-    A0 = 0x801621f0 + g_effect_id * 0x20 + 4; // vector to transform
+    //A0 = 0x801621f0 + g_effect_id * 0x20 + 4; // vector to transform
 
-    struct PSX_SVECTOR v;
-    v.x = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x4 );
-    v.y = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x6 );
-    v.z = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x8 );
+    PSX_SVECTOR v;
+    v.vx = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x4 );
+    v.vy = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x6 );
+    v.vz = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x8 );
     long flag;
-    System_GTERotateAndTranslateVector( &v, &m.t, &flag )
-    system_gte_rotate_and_translate_vector();
+    PSX_RotTrans( v, m.t, flag );
 
     // set scale
-    [SP + 10] = h(h[0x801621f0 + g_effect_id * 0x20 +  e] + h[0x801621f0 + g_effect_id * 0x20 +  e] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
-    [SP + 18] = h(h[0x801621f0 + g_effect_id * 0x20 + 10] + h[0x801621f0 + g_effect_id * 0x20 + 10] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
+    //[SP + 10] = h(h[0x801621f0 + g_effect_id * 0x20 +  e] + h[0x801621f0 + g_effect_id * 0x20 +  e] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
+    //[SP + 18] = h(h[0x801621f0 + g_effect_id * 0x20 + 10] + h[0x801621f0 + g_effect_id * 0x20 + 10] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
     // set z translation
-    [SP + 2c] = w(w[SP + 2c] - h[0x801621f0 + g_effect_id * 0x20 + 10] / 10);
+    //[SP + 2c] = w(w[SP + 2c] - h[0x801621f0 + g_effect_id * 0x20 + 10] / 10);
 
-    System_GTESetRotationMatrix( m );
-    System_GTESetTranslationVector( m );
+    PSX_SetRotMatrix( m );
+    PSX_SetTransMatrix( m );
 
     /*
     A0 = 800f0218;

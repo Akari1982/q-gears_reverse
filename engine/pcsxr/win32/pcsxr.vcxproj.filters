@@ -240,7 +240,10 @@
     <ClCompile Include="..\..\src\system\render.c">
       <Filter>game\system</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ffvii\battle\effects.c">
+    <ClCompile Include="..\..\src\system\transform.cpp">
+      <Filter>game\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\battle\effects.cpp">
       <Filter>game\ffvii\battle</Filter>
     </ClCompile>
   </ItemGroup>
@@ -441,6 +444,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\ffvii\battle\effects.h">
       <Filter>game\ffvii\battle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\system\transform.h">
+      <Filter>game\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

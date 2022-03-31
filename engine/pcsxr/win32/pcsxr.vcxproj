@@ -147,10 +147,11 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\ffvii\battle\effects.c" />
+    <ClCompile Include="..\..\src\ffvii\battle\effects.cpp" />
     <ClCompile Include="..\..\src\ffvii\field\entity.c" />
     <ClCompile Include="..\..\src\ffvii\system\window.c" />
     <ClCompile Include="..\..\src\system\render.c" />
+    <ClCompile Include="..\..\src\system\transform.cpp" />
     <ClCompile Include="..\..\src\xeno\xeno.c" />
     <ClCompile Include="..\libpcsxcore\cdriso.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -424,6 +425,7 @@
     <ClInclude Include="..\..\src\ffvii\field\entity.h" />
     <ClInclude Include="..\..\src\ffvii\system\window.h" />
     <ClInclude Include="..\..\src\system\render.h" />
+    <ClInclude Include="..\..\src\system\transform.h" />
     <ClInclude Include="..\..\src\xeno\xeno.h" />
     <ClInclude Include="..\libpcsxcore\cdriso.h" />
     <ClInclude Include="..\libpcsxcore\cdrom.h" />

@@ -8,4 +8,4 @@ void FFVII_Battle_EffectsUpdate();    // funcbc538
 void FFVII_Battle_EffectMachinegun(); // funcd7888
 void FFVII_Battle_EffectDustClouds(); // funcd3d88
 void FFVII_Battle_EffectDustSingleCloud(); // 
-void FFVII_Battle_EffectSpriteAdd();  // funcd6260
+extern "C" void FFVII_Battle_EffectSpriteAdd();  // funcd6260

@@ -706,6 +706,11 @@ void psxJAL()
         //execI();
         //FFVII_Battle_EffectsUpdate();
     //}
+    else if( _JumpTarget_ == 0x8003BC6C )
+    {
+        execI();
+        System_GTERotateAndTranslateVector();
+    }
     else if( _JumpTarget_ == 0x800d6260 )
     {
         //u32 pc = psxRegs.pc;
