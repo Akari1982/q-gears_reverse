@@ -8,8 +8,19 @@ struct PSX_MATRIX
     long t[ 3 ];       // transfer vector
 };
 
+struct PSX_VECTOR // long word type 3D vector
+{
+    long vx, vy, vz, pad;
+};
 
-void System_GTESetRotationMatrix( PSX_MATRIX m );       // system_gte_set_rotation_matrix
-void System_GTESetTranslationVector( PSX_MATRIX m );    // system_gte_set_translation_vector
+struct PSX_SVECTOR // short word type 3D vector
+{
+    short vx, vy, vz, pad;
+};
 
-void System_GTERotateAndTranslateVector();              // system_gte_rotate_and_translate_vector
+
+void PSX_SetRotMatrix( PSX_MATRIX* m ); // system_gte_set_rotation_matrix
+void PSX_SetTransMatrix( PSX_MATRIX* m ); // system_gte_set_translation_vector
+
+void System_GTERotateAndTranslateVector(); // system_gte_rotate_and_translate_vector
+void PSX_RotTrans( PSX_SVECTOR* v0, PSX_VECTOR* v1, long* flag ); // system_gte_rotate_and_translate_vector

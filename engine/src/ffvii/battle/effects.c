@@ -242,10 +242,14 @@ FFVII_Battle_EffectDustSingleCloud()
     System_GTESetRotationMatrix( c );
     System_GTESetTranslationVector( c );
 
-    /*
     A0 = 0x801621f0 + g_effect_id * 0x20 + 4; // vector to transform
-    A1 = SP + 24; // result vector
-    A2 = SP + 30; // flag
+
+    struct PSX_SVECTOR v;
+    v.x = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x4 );
+    v.y = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x6 );
+    v.z = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x8 );
+    long flag;
+    System_GTERotateAndTranslateVector( &v, &m.t, &flag )
     system_gte_rotate_and_translate_vector();
 
     // set scale
@@ -253,7 +257,6 @@ FFVII_Battle_EffectDustSingleCloud()
     [SP + 18] = h(h[0x801621f0 + g_effect_id * 0x20 + 10] + h[0x801621f0 + g_effect_id * 0x20 + 10] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
     // set z translation
     [SP + 2c] = w(w[SP + 2c] - h[0x801621f0 + g_effect_id * 0x20 + 10] / 10);
-    */
 
     System_GTESetRotationMatrix( m );
     System_GTESetTranslationVector( m );
