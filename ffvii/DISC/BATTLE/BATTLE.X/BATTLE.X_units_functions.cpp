@@ -197,12 +197,7 @@ V0 = 801621f0 + V0 * 20;
 
 V0 = h[801590d4];
 V1 = bu[80062d98];
-800D3F9C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S2);
 S2 = 801621f0;
-[SP + 001c] = w(RA);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = V0 << 05;
 800D3FBC	bne    v1, zero, Ld4140 [$800d4140]
 S1 = V0 + S2;
@@ -1277,11 +1272,10 @@ else
 
 ////////////////////////////////
 // funcd508c
-800D508C	addiu  sp, sp, $ffe8 (=-$18)
+
 V0 = h[8015169c];
 A0 = bu[80062d98];
 V1 = 80162978;
-[SP + 0010] = w(RA);
 V0 = V0 << 05;
 800D50B0	bne    a0, zero, Ld510c [$800d510c]
 V1 = V0 + V1;
@@ -1317,10 +1311,6 @@ A2 = A0;
 [80163c74] = w(V0);
 
 Ld5128:	; 800D5128
-RA = w[SP + 0010];
-SP = SP + 0018;
-800D5130	jr     ra 
-800D5134	nop
 ////////////////////////////////
 
 
@@ -1795,14 +1785,10 @@ funcbbeac;
 
 ////////////////////////////////
 // funcd5938
-800D5938	addiu  sp, sp, $ffe0 (=-$20)
+
 V0 = h[8015169c];
 A0 = bu[80062d98];
 V1 = 80162978;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = V0 << 05;
 800D5968	bne    a0, zero, Ld5a4c [$800d5a4c]
 S0 = V0 + V1;
@@ -1856,13 +1842,6 @@ V0 = V0 + 0001;
 [S0 + 0002] = h(V0);
 
 Ld5a4c:	; 800D5A4C
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800D5A60	jr     ra 
-800D5A64	nop
 ////////////////////////////////
 // funcd5a68
 800D5A68	addiu  sp, sp, $ffe0 (=-$20)
@@ -4939,114 +4918,92 @@ AT = AT + A0;
 800D8D70	jr     ra 
 800D8D74	nop
 ////////////////////////////////
-// funcd8d78
-V1 = w[800f1990];
-V0 = w[800f8368];
-800D8D88	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0034] = w(RA);
-[SP + 0030] = w(S2);
-[SP + 002c] = w(S1);
-[SP + 0028] = w(S0);
+
+
+
+////////////////////////////////
+// funcd8d78()
+
 [80062fdc] = w(0);
-800D8DA4	beq    v1, v0, Ld8e58 [$800d8e58]
-V0 = 0001;
-A0 = w[801517c0];
-[80062fdc] = w(V0);
-800D8DBC	jal    $800444ac
-A0 = A0 + 005c;
-A0 = w[801517c0];
-800D8DCC	jal    $800443b0
-800D8DD0	nop
-V0 = bu[801620a0];
-800D8DDC	nop
-800D8DE0	bne    v0, zero, Ld8e08 [$800d8e08]
-800D8DE4	nop
-A0 = w[801517c0];
-800D8DF0	nop
-A1 = bu[A0 + 0019];
-A2 = bu[A0 + 001a];
-A3 = bu[A0 + 001b];
-800D8E00	jal    $system_psyq_clear_image
-800D8E04	nop
 
-Ld8e08:	; 800D8E08
-800D8E08	jal    funcd8b60 [$800d8b60]
-800D8E0C	nop
-V0 = w[800f8368];
-A0 = 800ff0d4;
-800D8E20	bne    v0, zero, Ld8e2c [$800d8e2c]
-800D8E24	nop
-A0 = A0 + 40f4;
+if( w[800f1990] != w[800f8368] )
+{
+    [80062fdc] = w(1);
 
-Ld8e2c:	; 800D8E2C
-800D8E2C	jal    $8004433c
-800D8E30	nop
-V0 = hu[80163762];
-800D8E3C	nop
-[800f198c] = h(V0);
-800D8E48	jal    funcd9f80 [$800d9f80]
-800D8E4C	nop
-[800f199c] = w(0);
+    A0 = w[801517c0] + 5c;
+    system_psyq_put_disp_env();
 
-Ld8e58:	; 800D8E58
-V0 = w[800f1994];
-800D8E60	nop
-V0 = V0 ^ 0001;
-[800f1994] = w(V0);
+    A0 = w[801517c0];
+    system_psyq_put_draw_env();
+
+    if( bu[801620a0] == 0 )
+    {
+        A0 = w[801517c0];
+        A1 = bu[A0 + 19];
+        A2 = bu[A0 + 1a];
+        A3 = bu[A0 + 1b];
+        system_psyq_clear_image();
+    }
+
+    800D8E08	jal    funcd8b60 [$800d8b60]
+
+    A0 = 800ff0d4;
+    if( w[800f8368] == 0 )
+    {
+        A0 = A0 + 40f4;
+    }
+
+    system_psyq_draw_otag();
+
+    [800f198c] = h(hu[80163762]);
+
+    800D8E48	jal    funcd9f80 [$800d9f80]
+
+    [800f199c] = w(0);
+}
+
+[800f1994] = w(w[800f1994] ^ 1);
+
 800D8E70	jal    funcdbf54 [$800dbf54]
-800D8E74	nop
-A1 = 0002;
-A0 = w[800f1994];
-S1 = 800f508c;
-A0 = A0 << 04;
-800D8E90	jal    $8004418c
-A0 = A0 + S1;
-A1 = 0040;
-A0 = w[800f1994];
-V0 = 800f4e8c;
-A0 = A0 << 08;
-800D8EB0	jal    $8004418c
-A0 = A0 + V0;
+
+
+A0 = 800f508c + w[800f1994] * 10;
+A1 = 2;
+system_psyq_clear_o_tag();
+
+A0 = 800f4e8c + w[800f1994] * 100;
+A1 = 40;
+system_psyq_clear_o_tag();
+
 800D8EB8	jal    $800484a8
-800D8EBC	nop
+
 S0 = V0;
 800D8EC4	addiu  v0, zero, $ffff (=-$1)
-800D8EC8	beq    s0, v0, Ld8f18 [$800d8f18]
-V1 = 0003;
-A0 = w[800f1994];
-800D8ED8	nop
-A0 = A0 << 04;
-800D8EE0	jal    funcdbec8 [$800dbec8]
-A0 = A0 + S1;
+if( S0 != - 1 )
+{
+    A0 = 800f508c + w[800f1994] * 10;
+    800D8EE0	jal    funcdbec8 [$800dbec8]
 
-loopd8ee8:	; 800D8EE8
-800D8EE8	jal    $80048540
-A0 = 0001;
-800D8EF0	bne    v0, zero, loopd8ee8 [$800d8ee8]
-A1 = S0;
-A0 = w[800f1994];
-V0 = 800f508c;
-A0 = A0 << 04;
-800D8F0C	jal    $800485a0
-A0 = A0 + V0;
-V1 = 0003;
+    loopd8ee8:	; 800D8EE8
+        A0 = 1;
+        800D8EE8	jal    $80048540
+    800D8EF0	bne    v0, zero, loopd8ee8 [$800d8ee8]
 
-Ld8f18:	; 800D8F18
+    A0 = 800f508c + w[800f1994] * 10;
+    A1 = S0;
+    800D8F0C	jal    $800485a0
+}
+
+V1 = 0003;
 A2 = 800f512c;
-
-Ld8f20:	; 800D8F20
 V0 = w[800f1994];
 A0 = 004a;
 V0 = V0 << 04;
-AT = 800f512f;
-AT = AT + V0;
-[AT + 0000] = b(V1);
+[800f512f + V0 + 0000] = b(V1);
 V0 = w[800f1994];
 V1 = 0060;
 V0 = V0 << 04;
-AT = 800f5133;
-AT = AT + V0;
-[AT + 0000] = b(V1);
+[800f5133 + V0 + 0000] = b(V1);
 V0 = w[800f1994];
 V1 = 0140;
 V0 = V0 << 04;
@@ -5071,127 +5028,105 @@ A1 = w[800f1994];
 A0 = A1 << 08;
 A0 = A0 + S1;
 A1 = A1 << 04;
-800D8FD4	jal    $system_add_render_packet_to_queue
 A1 = A1 + A2;
+system_add_render_packet_to_queue();
+
 A2 = 00a6;
 V0 = w[800f8368];
 S2 = 800f57d8;
-800D8FF0	bne    v0, zero, Ld8ffc [$800d8ffc]
-800D8FF4	nop
-A2 = 0196;
+if( V0 == 0 )
+{
+    A2 = 196;
+}
 
-Ld8ffc:	; 800D8FFC
 A0 = S2;
 A1 = 0;
-A3 = 0140;
-V0 = 004a;
-800D900C	jal    $80043814
-[SP + 0010] = w(V0);
+A3 = 140;
+A4 = 4a;
+system_graphic_create_draw_env_struct();
+
+[800f57f0] = b(0);
+[800f57ef] = b(1);
+
 S0 = 800f50ac;
 A0 = S0;
-V0 = 0001;
-[800f57f0] = b(0);
-[800f57ef] = b(V0);
-800D9034	jal    $80044ac0
 A1 = S2;
+system_prepare_draw_env_packets();
+
 A0 = w[800f1994];
 A1 = S0;
 A0 = A0 << 08;
-800D904C	jal    $system_add_render_packet_to_queue
 A0 = A0 + S1;
+system_add_render_packet_to_queue();
+
 A0 = w[800f1994];
 V0 = S1 + 0004;
 A0 = A0 << 08;
-800D9064	jal    funcdde90 [$800dde90]
 A0 = A0 + V0;
+800D9064	jal    funcdde90 [$800dde90]
+
 800D906C	jal    $800484a8
-800D9070	nop
+
 S0 = V0;
 800D9078	addiu  v0, zero, $ffff (=-$1)
 800D907C	beq    s0, v0, Ld90b0 [$800d90b0]
 800D9080	nop
 
 loopd9084:	; 800D9084
-800D9084	jal    $80048540
-A0 = 0001;
+    A0 = 1;
+    800D9084	jal    $80048540
+
 800D908C	bne    v0, zero, loopd9084 [$800d9084]
 A1 = S0;
 A0 = w[800f1994];
 V0 = 800f4e8c;
 A0 = A0 << 08;
-800D90A8	jal    $800485a0
 A0 = A0 + V0;
+800D90A8	jal    $800485a0
+
 
 Ld90b0:	; 800D90B0
-800D90B0	jal    $8001cb48
-800D90B4	nop
-V1 = w[800f1990];
-V0 = w[800f8368];
-800D90C8	nop
-800D90CC	beq    v1, v0, Ld9104 [$800d9104]
-800D90D0	nop
-V0 = w[800f8368];
-800D90DC	nop
-[800f1990] = w(V0);
-800D90E8	jal    $8001c980
-800D90EC	nop
-V0 = bu[80062d99];
-800D90F8	nop
-[80062d98] = b(V0);
+func1cb48(); // update pressed repeated buttons mask
 
-Ld9104:	; 800D9104
-V0 = bu[80062d99];
-800D910C	nop
-800D9110	bne    v0, zero, Ld9120 [$800d9120]
-800D9114	nop
-800D9118	jal    funce0e34 [$800e0e34]
-800D911C	nop
+if( w[800f1990] != w[800f8368] )
+{
+    [800f1990] = w(w[800f8368]);
 
-Ld9120:	; 800D9120
-V0 = hu[80062d7c];
-800D9128	nop
-V0 = V0 & 0800;
-800D9130	beq    v0, zero, Ld9184 [$800d9184]
-V0 = 0004;
-V1 = bu[80163c7c];
-800D9140	nop
-800D9144	bne    v1, v0, Ld9184 [$800d9184]
-800D9148	nop
-V0 = bu[80062d99];
-800D9154	nop
-V0 = V0 ^ 0001;
-[80062d99] = b(V0);
-V0 = bu[80062d99];
-800D916C	nop
-800D9170	beq    v0, zero, Ld917c [$800d917c]
-A0 = 0098;
-A0 = 0099;
+    func1c980(); // update pressed repeated buttons mask
 
-Ld917c:	; 800D917C
-800D917C	jal    funcd8af0 [$800d8af0]
-800D9180	nop
+    [80062d98] = b(bu[80062d99]);
+}
 
-Ld9184:	; 800D9184
-V0 = bu[80062d99];
-800D918C	nop
-800D9190	bne    v0, zero, Ld91a0 [$800d91a0]
-800D9194	nop
-800D9198	jal    funca38fc [$800a38fc]
-800D919C	nop
+if( bu[80062d99] == 0 )
+{
+    800D9118	jal    funce0e34 [$800e0e34]
+}
 
-Ld91a0:	; 800D91A0
-V0 = w[800f1998];
-800D91A8	nop
-V0 = V0 + 0001;
-[800f1998] = w(V0);
-V0 = w[800f1998];
-RA = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0038;
-800D91D4	jr     ra 
-800D91D8	nop
+if( hu[80062d7c] & 0800 ) // first pad pressed start
+{
+    if( bu[80163c7c] == 4 )
+    {
+        [80062d99] = b(bu[80062d99] ^ 1);
+
+        V0 = bu[80062d99];
+        800D9170	beq    v0, zero, Ld917c [$800d917c]
+        A0 = 0098;
+        A0 = 0099;
+
+        Ld917c:	; 800D917C
+        800D917C	jal    funcd8af0 [$800d8af0]
+        800D9180	nop
+    }
+}
+
+if( bu[80062d99] == 0 )
+{
+    800D9198	jal    funca38fc [$800a38fc]
+}
+
+[800f1998] = w(w[800f1998] + 1);
+
+return w[800f1998];
 ////////////////////////////////
 
 
@@ -5350,7 +5285,7 @@ A0 = S1;
 A1 = 0;
 A3 = 0140;
 V0 = 004a;
-800D950C	jal    $80043814
+800D950C	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(V0);
 A0 = w[S0 + 0000];
 V0 = 0001;
@@ -5358,7 +5293,7 @@ V0 = 0001;
 V0 = 005f;
 [800f57f0] = b(0);
 [800f57ec] = h(V0);
-800D9538	jal    $80044ac0
+800D9538	jal    $system_prepare_draw_env_packets
 A1 = S1;
 A1 = w[S0 + 0000];
 800D9544	jal    $system_add_render_packet_to_queue
@@ -5690,7 +5625,7 @@ A0 = S1;
 A1 = 0;
 A3 = 0140;
 V0 = 004a;
-800D9B84	jal    $80043814
+800D9B84	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(V0);
 A0 = w[S0 + 0000];
 V0 = 0001;
@@ -5698,7 +5633,7 @@ V0 = 0001;
 V0 = 005f;
 [800f57f0] = b(0);
 [800f57ec] = h(V0);
-800D9BB0	jal    $80044ac0
+800D9BB0	jal    $system_prepare_draw_env_packets
 A1 = S1;
 A1 = w[S0 + 0000];
 800D9BBC	jal    $system_add_render_packet_to_queue
@@ -5761,7 +5696,7 @@ AT = 800f1e5a;
 AT = AT + S0;
 V0 = h[AT + 0000];
 A0 = 800f57d8;
-800D9CA4	jal    $80043814
+800D9CA4	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(V0);
 A0 = 800f57f0;
 V0 = 0001;
@@ -5816,7 +5751,7 @@ V1 = 005f;
 [800f57ec] = h(V1);
 800D9D9C	addiu  v0, v0, $fffa (=-$6)
 [800f57de] = h(V0);
-800D9DA8	jal    $80044ac0
+800D9DA8	jal    $system_prepare_draw_env_packets
 800D9DAC	addiu  a1, a2, $fffc (=-$4)
 A0 = w[80062fc4];
 A1 = w[S0 + 0000];
@@ -6093,7 +6028,7 @@ V0 = 00a6;
 [SP + 0010] = w(V0);
 A2 = A2 < 0001;
 A2 = 0 - A2;
-800DA228	jal    $80043814
+800DA228	jal    $system_graphic_create_draw_env_struct
 A2 = A2 & 00f0;
 V1 = w[800f1994];
 800DA238	nop
@@ -6142,7 +6077,7 @@ V1 = 005f;
 AT = 800f5530;
 AT = AT + V0;
 [AT + 0000] = h(V1);
-800DA318	jal    $80044ac0
+800DA318	jal    $system_prepare_draw_env_packets
 A1 = V0 + S3;
 V1 = w[800f1994];
 V0 = w[S4 + 0000];
@@ -6275,7 +6210,7 @@ V0 = V0 & S3;
 V0 = V0 | T0;
 [FP + 0000] = w(V0);
 T2 = 0010;
-800DA56C	jal    $80043814
+800DA56C	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(T2);
 A0 = 0002;
 A1 = 0;
@@ -6315,7 +6250,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DA62C	jal    $80044ac0
+800DA62C	jal    $system_prepare_draw_env_packets
 A1 = V1 + T2;
 S1 = S1 + 0014;
 A1 = w[800f1994];
@@ -6461,7 +6396,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
-800DA8C4	jal    $80043814
+800DA8C4	jal    $system_graphic_create_draw_env_struct
 A0 = A0 + T2;
 A0 = 0002;
 A1 = 0;
@@ -6501,7 +6436,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DA984	jal    $80044ac0
+800DA984	jal    $system_prepare_draw_env_packets
 A1 = V1 + T2;
 V1 = w[800f1994];
 V0 = w[FP + 0000];
@@ -6668,7 +6603,7 @@ Ldac78:	; 800DAC78
 A1 = 0002;
 A3 = 0018;
 V0 = 0010;
-800DAC84	jal    $80043814
+800DAC84	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(V0);
 A0 = 0002;
 A1 = 0;
@@ -6709,7 +6644,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DAD44	jal    $80044ac0
+800DAD44	jal    $system_prepare_draw_env_packets
 A1 = V1 + S3;
 V1 = w[800f1994];
 V0 = w[FP + 0000];
@@ -6821,7 +6756,7 @@ V0 = V0 & S3;
 V0 = V0 | T0;
 [FP + 0000] = w(V0);
 T2 = 0010;
-800DAF38	jal    $80043814
+800DAF38	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(T2);
 A0 = 0002;
 A1 = 0;
@@ -6861,7 +6796,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DAFF8	jal    $80044ac0
+800DAFF8	jal    $system_prepare_draw_env_packets
 A1 = V1 + T2;
 S1 = S1 + 0014;
 A1 = w[800f1994];
@@ -7007,7 +6942,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
-800DB298	jal    $80043814
+800DB298	jal    $system_graphic_create_draw_env_struct
 A0 = A0 + T2;
 A0 = 0002;
 A1 = 0;
@@ -7047,7 +6982,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DB358	jal    $80044ac0
+800DB358	jal    $system_prepare_draw_env_packets
 A1 = V1 + T2;
 V1 = w[800f1994];
 V0 = w[FP + 0000];
@@ -7240,7 +7175,7 @@ A0 = A0 + V1;
 A0 = A0 << 03;
 A0 = A0 - V1;
 A0 = A0 << 02;
-800DB6DC	jal    $80043814
+800DB6DC	jal    $system_graphic_create_draw_env_struct
 A0 = A0 + S1;
 A0 = 0002;
 A1 = 0;
@@ -7281,7 +7216,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DB79C	jal    $80044ac0
+800DB79C	jal    $system_prepare_draw_env_packets
 A1 = V1 + S1;
 800DB7A4	lui    t2, $ff00
 V1 = w[800f1994];
@@ -7474,7 +7409,7 @@ A2 = A2 + 00f0;
 Ldbae4:	; 800DBAE4
 A3 = 0018;
 V0 = 0010;
-800DBAEC	jal    $80043814
+800DBAEC	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(V0);
 V1 = w[800f1994];
 A0 = 0002;
@@ -7514,7 +7449,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DBBAC	jal    $80044ac0
+800DBBAC	jal    $system_prepare_draw_env_packets
 A1 = V1 + S4;
 V1 = w[800f1994];
 V0 = w[S1 + 0000];
@@ -9380,7 +9315,7 @@ AT = 800f1e5a;
 AT = AT + S0;
 V0 = h[AT + 0000];
 A0 = 800f57d8;
-800DD910	jal    $80043814
+800DD910	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(V0);
 A0 = 800f57f0;
 V0 = 0001;
@@ -9468,7 +9403,7 @@ V1 = 800f57ec;
 S0 = 80062f24;
 A0 = w[S0 + 0000];
 V0 = 005f;
-800DDA98	jal    $80044ac0
+800DDA98	jal    $system_prepare_draw_env_packets
 [V1 + 0000] = h(V0);
 A1 = w[S0 + 0000];
 800DDAA4	jal    $system_add_render_packet_to_queue
@@ -9638,14 +9573,14 @@ A0 = S6;
 A1 = 0;
 A3 = 0140;
 V0 = 004a;
-800DDD44	jal    $80043814
+800DDD44	jal    $system_graphic_create_draw_env_struct
 [SP + 0010] = w(V0);
 S1 = 80062f24;
 A0 = w[S1 + 0000];
 S4 = 0001;
 [800f57f0] = b(0);
 [800f57ef] = b(S4);
-800DDD6C	jal    $80044ac0
+800DDD6C	jal    $system_prepare_draw_env_packets
 A1 = S6;
 A1 = w[S1 + 0000];
 800DDD78	jal    $system_add_render_packet_to_queue
@@ -9688,12 +9623,12 @@ V0 = 00a6;
 [SP + 0010] = w(V0);
 A2 = A2 < 0001;
 A2 = 0 - A2;
-800DDE24	jal    $80043814
+800DDE24	jal    $system_graphic_create_draw_env_struct
 A2 = A2 & 00f0;
 A0 = w[S1 + 0000];
 [800f57f0] = b(0);
 [800f57ef] = b(S4);
-800DDE40	jal    $80044ac0
+800DDE40	jal    $system_prepare_draw_env_packets
 A1 = S6;
 A1 = w[S1 + 0000];
 800DDE4C	jal    $system_add_render_packet_to_queue

@@ -224,7 +224,8 @@ FFVII_Battle_EffectDustSingleCloud()
     m.t.vy        = psxMemRead32( 0x800a0d98 + 0x18 );
     m.t.vz        = psxMemRead32( 0x800a0d98 + 0x1c );
 
-    //[800f0218 + 4] = b(h[0x801621f0 + g_effect_id * 0x20 + 2] * 20);
+    u16 step = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x2 );
+    psxMemWrite8( 0x800f0218 + 0x4, step * 0x20 ); // dust frame y tex
 
     PSX_MATRIX c;
     c.m[ 0 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x00 );
@@ -250,11 +251,11 @@ FFVII_Battle_EffectDustSingleCloud()
     long flag;
     PSX_RotTrans( v, m.t, flag );
 
-    // set scale
-    //[SP + 10] = h(h[0x801621f0 + g_effect_id * 0x20 +  e] + h[0x801621f0 + g_effect_id * 0x20 +  e] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
-    //[SP + 18] = h(h[0x801621f0 + g_effect_id * 0x20 + 10] + h[0x801621f0 + g_effect_id * 0x20 + 10] * h[0x801621f0 + g_effect_id * 0x20 + 2] / 8);
-    // set z translation
-    //[SP + 2c] = w(w[SP + 2c] - h[0x801621f0 + g_effect_id * 0x20 + 10] / 10);
+    u16 scale_x = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0xe );
+    u16 scale_y = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x10 );
+    m.m[ 0 ][ 0 ] = scale_x + ( scale_x * step ) / 0x8;
+    m.m[ 1 ][ 1 ] = scale_y + ( scale_y * step ) / 0x8;
+    m.t.vz -= scale_y / 0x10; // set z translation
 
     PSX_SetRotMatrix( m );
     PSX_SetTransMatrix( m );
