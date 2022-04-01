@@ -706,54 +706,10 @@ void psxJAL()
         //execI();
         //FFVII_Battle_EffectsUpdate();
     //}
-    else if( _JumpTarget_ == 0x8003BC6C )
+    else if( _JumpTarget_ == 0x800d3bf0 )
     {
         execI();
-        System_GTERotateAndTranslateVector();
-    }
-    else if( _JumpTarget_ == 0x800d6260 )
-    {
-        //u32 pc = psxRegs.pc;
-        //u32 code = psxRegs.code;
-
-        execI();
-        FFVII_Battle_EffectSpriteAdd();
-
-        //psxRegs.pc = pc;
-        //psxRegs.code = code;
-
-        //_SetLink( 31 );
-
-        // func //////////////////////////////////////////////
-        //u32 data = psxRegs.GPR.n.a0;
-        //u32 buffer = psxRegs.GPR.n.a1;
-        //u32 priority = psxRegs.GPR.n.a2;
-        //u32 otc = psxRegs.GPR.n.a3;
-
-        //u32 data0 = psxMemRead32( data + 0 );
-        //u32 data4 = psxMemRead32( data + 4 );
-
-        //u32 width = ( data4 & 0x00ff0000) >> 0xd; // multiply by 8 - 0xf8
-        //u32 height = ( data4 & 0xff000000) >> 0x5; // f80000
-        //u32 p0 = ( data0 & 0x1fff1fff) << 0x3; // ff00 ff80
-        //u32 p1 = p0 + width;
-        //u32 p2 = p0 + height;
-        //u32 p3 = p0 + width + height;
-
-        //psxRegs.CP2D.p[ 0 ].d = p0;
-        //psxRegs.CP2D.p[ 1 ].d = 0;
-        //psxRegs.CP2D.p[ 2 ].d = p1;
-        //psxRegs.CP2D.p[ 3 ].d = 0;
-        //psxRegs.CP2D.p[ 4 ].d = p2;
-        //psxRegs.CP2D.p[ 5 ].d = 0;
-
-        //psxRegs.code = 0x4A280030;
-        //gteRTPT(); // Perspective transform on 3 points
-
-        //psxRegs.GPR.n.t9 = data4;
-        //psxRegs.GPR.n.t3 = p3;
-
-        //doBranch( 0x800D62B8 );
+        FFVII_Battle_EffectDustSingleCloud();
     }
     else
     {

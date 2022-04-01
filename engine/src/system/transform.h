@@ -24,5 +24,3 @@ void PSX_SetRotMatrix( const PSX_MATRIX& m ); // system_gte_set_rotation_matrix
 void PSX_SetTransMatrix( const PSX_MATRIX& m ); // system_gte_set_translation_vector
 
 void PSX_RotTrans( const PSX_SVECTOR& v0, PSX_VECTOR& v1, long& flag ); // system_gte_rotate_and_translate_vector
-
-extern "C" void System_GTERotateAndTranslateVector(); // system_gte_rotate_and_translate_vector

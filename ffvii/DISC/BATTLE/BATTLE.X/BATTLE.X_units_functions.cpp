@@ -45,7 +45,7 @@ A0 = 800f01e8;
 A1 = w[801517c0] + 70;
 A2 = c;
 A3 = w[80163c74];
-funcd6260();
+battle_effect_sprite_add();
 [80163c74] = w(V0);
 
 if (bu[80062d98] == 0)
@@ -62,7 +62,7 @@ if (bu[80062d98] == 0)
 
 
 ////////////////////////////////
-// funcd3bf0
+// battle_effect_single_dust_cloud()
 // function used to render dust effect (single cloud)
 
 S2 = 801621f0 + h[801590d4] * 20;
@@ -106,7 +106,7 @@ A0 = 800f0218;
 A1 = w[801517c0] + 70;
 A2 = c;
 A3 = w[80163c74];
-funcd6260();
+battle_effect_sprite_add();
 [80163c74] = w(V0);
 
 if( bu[80062d98] == 0 )
@@ -134,7 +134,7 @@ bone_id = bu[801518e4 + unit_id * b9c + 2b + b + (hu[801621f0 + effect_id * 20 +
 
 if (bone_id != ff)
 {
-    A0 = 800d3bf0;
+    A0 = 800d3bf0; // battle_effect_single_dust_cloud()
     funcbc04c();
     new_effect_id = V0;
 
@@ -2373,7 +2373,7 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// funcd6260()
+// battle_effect_sprite_add()
 
 data = A0;
 buffer = A1;

@@ -49,21 +49,3 @@ PSX_RotTrans( const PSX_SVECTOR& v0, PSX_VECTOR& v1, long& flag )
 
     flag = psxRegs.CP2C.n.flag;
 }
-
-
-
-void
-System_GTERotateAndTranslateVector()
-{
-    psxRegs.CP2D.p[0].d = psxMemRead32(psxRegs.GPR.n.a0 + 0x0);
-    psxRegs.CP2D.p[1].d = psxMemRead32(psxRegs.GPR.n.a0 + 0x4);
-
-    psxRegs.code = 0x4a480012;
-    gteMVMVA(); // v0 * rotmatrix + tr vector
-
-    psxMemWrite32(psxRegs.GPR.n.a1 + 0x0, psxRegs.CP2D.n.mac1);
-    psxMemWrite32(psxRegs.GPR.n.a1 + 0x4, psxRegs.CP2D.n.mac2);
-    psxMemWrite32(psxRegs.GPR.n.a1 + 0x8, psxRegs.CP2D.n.mac3);
-
-    psxMemWrite32(psxRegs.GPR.n.a2 + 0x0, psxRegs.CP2C.n.flag);
-}

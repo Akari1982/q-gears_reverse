@@ -243,8 +243,6 @@ FFVII_Battle_EffectDustSingleCloud()
     PSX_SetRotMatrix( c );
     PSX_SetTransMatrix( c );
 
-    //A0 = 0x801621f0 + g_effect_id * 0x20 + 4; // vector to transform
-
     PSX_SVECTOR v;
     v.vx = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x4 );
     v.vy = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x6 );
@@ -261,14 +259,10 @@ FFVII_Battle_EffectDustSingleCloud()
     PSX_SetRotMatrix( m );
     PSX_SetTransMatrix( m );
 
-    /*
-    A0 = 800f0218;
-    A1 = w[801517c0] + 70;
-    A2 = c;
-    A3 = w[80163c74];
-    FFVII_Battle_EffectSpriteAdd();
-    [80163c74] = w(V0);
+    u32 otc = FFVII_Battle_EffectSpriteAdd( 0x800f0218, psxMemRead32( 0x801517c0 ) + 0x70, 0xc, psxMemRead32( 0x80163c74 ) );
+    psxMemWrite32( 0x80163c74, otc );
 
+    /*
     if( bu[80062d98] == 0 )
     {
         V0 = h[0x801621f0 + g_effect_id * 0x20 + 2];
@@ -284,14 +278,9 @@ FFVII_Battle_EffectDustSingleCloud()
 
 
 
-void
-FFVII_Battle_EffectSpriteAdd()
+u32
+FFVII_Battle_EffectSpriteAdd( u32 data, u32 buffer, u32 priority, u32 otc )
 {
-    u32 data = psxRegs.GPR.n.a0;
-    u32 buffer = psxRegs.GPR.n.a1;
-    u32 priority = psxRegs.GPR.n.a2;
-    u32 otc = psxRegs.GPR.n.a3;
-
     u32 data0 = psxMemRead32( data + 0 );
     u32 data4 = psxMemRead32( data + 4 );
 
@@ -318,8 +307,7 @@ FFVII_Battle_EffectSpriteAdd()
 
     if( psxRegs.CP2C.n.trZ <= 0 )
     {
-        psxRegs.GPR.n.v0 = otc;
-        return;
+        return otc;
     }
 
     // insert packet
@@ -361,5 +349,5 @@ FFVII_Battle_EffectSpriteAdd()
     psxMemWrite16( otc + 0x1c, data4 + height ); // uv2
     psxMemWrite16( otc + 0x24, data4 + wh ); // uv3
 
-    psxRegs.GPR.n.v0 = otc + 0x28;
+    return otc + 0x28;
 }
