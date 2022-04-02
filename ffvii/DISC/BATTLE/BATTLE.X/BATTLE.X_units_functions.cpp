@@ -1,19 +1,40 @@
 ////////////////////////////////
-// funcd3a6c
-S0 = A1;
-[S0 + 0] = h(hu[A0 + 14] - hu[800fa650]);
-[S0 + 2] = h(hu[A0 + 18] - hu[800fa654]);
-[S0 + 4] = h(hu[A0 + 1c] - hu[800fa658]);
+// battle_get_point_by_model_bone()
+
+S0 = A2;
+
+[S0 + 0] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 14] - hu[800fa63c + 14]); // translation x
+[S0 + 2] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 18] - hu[800fa63c + 18]); // translation y
+[S0 + 4] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 1c] - hu[800fa63c  1c]); // translation z
 
 A0 = 800fa63c;
 A1 = SP + 10;
-system_transponate_matrix;
+system_gte_transpose_matrix();
+
+A0 = SP + 10;
+A1 = S0;
+A2 = S0;
+system_gte_apply_matrix_sv();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd3a6c
+S0 = A1;
+[S0 + 0] = h(hu[A0 + 14] - hu[800fa63c + 14]);
+[S0 + 2] = h(hu[A0 + 18] - hu[800fa63c + 18]);
+[S0 + 4] = h(hu[A0 + 1c] - hu[800fa63c + 1c]);
+
+A0 = 800fa63c;
+A1 = SP + 10;
+system_gte_transpose_matrix();
 
 
 A0 = SP + 10;
 A1 = S0;
 A2 = A1;
-system_matrix_vector_multiply;
+system_gte_apply_matrix_sv();
 ////////////////////////////////
 
 
@@ -36,10 +57,10 @@ A2 = S0;
 funcd4284;
 
 A0 = S0;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = S0;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = 800f01e8;
 A1 = w[801517c0] + 70;
@@ -63,7 +84,6 @@ if (bu[80062d98] == 0)
 
 ////////////////////////////////
 // battle_effect_single_dust_cloud()
-// function used to render dust effect (single cloud)
 
 S2 = 801621f0 + h[801590d4] * 20;
 
@@ -79,15 +99,15 @@ S2 = 801621f0 + h[801590d4] * 20;
 [800f0218 + 4] = b(h[S2 + 2] * 20); // dust frame y tex
 
 A0 = 800fa63c; // camera matrix
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 800fa63c;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = S2 + 4; // vector to transform
 A1 = SP + 24; // result vector
 A2 = SP + 30; // flag
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 // set scale
 [SP + 10] = h(h[S2 +  e] + h[S2 +  e] * h[S2 + 2] / 8);
@@ -96,10 +116,10 @@ system_gte_rotate_and_translate_vector();
 [SP + 2c] = w(w[SP + 2c] - h[S2 + 10] / 10);
 
 A0 = SP + 10;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = SP + 10;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 
 A0 = 800f0218;
@@ -124,8 +144,7 @@ if( bu[80062d98] == 0 )
 
 
 ////////////////////////////////
-// funcd3d88
-// function used to render dust effect
+// battle_effect_dust_clouds()
 
 effect_id = h[801590d4];
 unit_id = h[801621f0 + effect_id * 20 + 0];
@@ -163,7 +182,7 @@ if (h[801621f0 + effect_id * 20 + 2] == 4)
 // add dusty effect to feet
 unit_id = A0;
 
-A0 = 800d3d88;
+A0 = 800d3d88; // battle_effect_dust_clouds()
 funcbc04c();
 
 [801621f0 + V0 * 20 + 00] = h(unit_id);
@@ -390,15 +409,15 @@ S3 = A1;
 S2 = A2;
 
 A0 = 800fa63c;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 800fa63c;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = S1;
 A1 = S2 + 14;
 A2 = SP + 20;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 if (S3 != 0)
 {
@@ -429,15 +448,15 @@ collision = A2;
 [800f0238] = h(scale);
 
 A0 = 800fa63c;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 800fa63c;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = position;
 A1 = 800f023c;
 A2 = SP + 20;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 if (collision != 0)
 {
@@ -451,10 +470,10 @@ if (collision != 0)
 }
 
 A0 = 800f0228;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 800f0228;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 return 800f0228;
 ////////////////////////////////
@@ -1012,40 +1031,26 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // funcd4cbc
-800D4CBC	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S1);
+
 S1 = A1;
-[SP + 0020] = w(S2);
 S2 = A2;
 V0 = A0 << 01;
 V0 = V0 + A0;
-[SP + 0018] = w(S0);
 S0 = V0 << 05;
 S0 = S0 - V0;
 S0 = S0 << 03;
 S0 = S0 - A0;
 S0 = S0 << 02;
-[SP + 0024] = w(RA);
-AT = 8015190f;
-AT = AT + S0;
-A1 = bu[AT + 0000];
-800D4D04	jal    battle_get_point_by_model_bone [$800d3994]
+A1 = bu[8015190f + S0];
 A2 = SP + 0010;
+battle_get_point_by_model_bone();
+
 A0 = SP + 0010;
 A1 = S1;
-AT = 801518f6;
-AT = AT + S0;
-A3 = h[AT + 0000];
+A3 = h[801518f6 + S0];
 A2 = S2;
-800D4D28	jal    funcd4c08 [$800d4c08]
 A3 = 0 - A3;
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800D4D44	jr     ra 
-800D4D48	nop
+800D4D28	jal    funcd4c08 [$800d4c08]
 ////////////////////////////////
 
 
@@ -1646,9 +1651,9 @@ system_execute_AKAO;
 [SP + 0024] = w(S1);
 S1 = A0;
 S0 = 800fa63c;
-800D56C4	jal    system_gte_set_rotation_matrix [$8003b48c]
+800D56C4	jal    system_gte_set_rot_matrix [$8003b48c]
 A0 = S0;
-800D56CC	jal    system_gte_set_translation_vector [$8003b51c]
+800D56CC	jal    system_gte_set_trans_matrix [$8003b51c]
 A0 = S0;
 A0 = S1;
 A1 = SP + 0010;
@@ -3420,10 +3425,10 @@ A2 = A1;
 system_transformation_data_multiply;
 
 A0 = SP + 10;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = SP + 10;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = 800f1904;
 A1 = w[801517c0] + 70;
@@ -3497,10 +3502,10 @@ A2 = SP + 28;
 system_transformation_data_multiply;
 
 A0 = SP + 28;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = SP + 28;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 
 
@@ -3593,10 +3598,10 @@ if (bu[80062d98] != 0 || current_frame == 0)
     system_transformation_data_multiply;
 
     A0 = SP + 10;
-    system_gte_set_rotation_matrix();
+    system_gte_set_rot_matrix();
 
     A0 = SP + 10;
-    system_gte_set_translation_vector();
+    system_gte_set_trans_matrix();
 
     // load effect geometry
     A0 = 800f197c; // offset to effect 3d data
@@ -3620,12 +3625,12 @@ if (bu[80062d98] != 0 || current_frame == 0)
 
         A0 = 800fa63c;
         A1 = SP + 10;
-        system_transponate_matrix;
+        system_gte_transpose_matrix();
 
         A0 = SP + 10;
         A1 = S0 + 8;
         A2 = A1;
-        system_matrix_vector_multiply;
+        system_gte_apply_matrix_sv();
 
         [S0 + 0] = h(0);
 
@@ -3704,7 +3709,7 @@ if( bu[80062d98] == 0 )
                 A0 = SP + 10;
                 A1 = SP + 30;
                 A2 = S2 + 10;
-                system_matrix_vector_multiply; // add random direction vector to shell data
+                system_gte_apply_matrix_sv(); // add random direction vector to shell data
 
                 [S2 + 0] = h(0);
                 [S2 + 6] = h(hu[S1 + 6]);

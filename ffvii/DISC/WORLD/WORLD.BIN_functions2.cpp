@@ -909,10 +909,10 @@ if( ( V0 == 2 ) || ( V0 == 3 ) )
     system_gte_copy_matrix_translation_part();
 
     A0 = S0;
-    system_gte_set_rotation_matrix();
+    system_gte_set_rot_matrix();
 
     A0 = S0;
-    system_gte_set_translation_vector();
+    system_gte_set_trans_matrix();
 
     V1 = w[80116500];
     if( V1 == 8 )

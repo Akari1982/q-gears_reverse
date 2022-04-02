@@ -6403,21 +6403,22 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funcd061c
+// funcd061c()
+
 index = h[801590d4];
-V0 = h[801621f0 + index * 20 + 4];
-if (V0 == 0)
+
+if( h[801621f0 + index * 20 + 4] == 0 )
 {
     A0 = hu[801621f0 + index * 20 + 6];
     A1 = bu[801590cc]; // attacker id
     A2 = 0;
-    funcbba84;
+    funcbba84();
 
     [801621f0 + index * 20 + 0] = h(-1);
 }
 else
 {
-    [801620f0 + index * 20 + 4] = h(V0 - 1);
+    [801620f0 + index * 20 + 4] = h(h[801621f0 + index * 20 + 4] - 1);
 }
 ////////////////////////////////
 
@@ -8262,25 +8263,4 @@ else
 }
 
 return w[SP + 4c] & (0 - (((w[SP + 4c] / 8) & ffff) < size));
-////////////////////////////////
-
-
-
-////////////////////////////////
-// battle_get_point_by_model_bone()
-
-S0 = A2;
-
-[S0 + 0] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 14] - hu[800fa650]); // translation x
-[S0 + 2] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 18] - hu[800fa654]); // translation y
-[S0 + 4] = h(hu[801518e4 + A0 * b9c + 174 + A1 * 34 + 1c] - hu[800fa658]); // translation z
-
-A0 = 800fa650 - 14;
-A1 = SP + 10;
-system_transponate_matrix();
-
-A0 = SP + 10;
-A1 = S0;
-A2 = S0;
-system_matrix_vector_multiply();
 ////////////////////////////////

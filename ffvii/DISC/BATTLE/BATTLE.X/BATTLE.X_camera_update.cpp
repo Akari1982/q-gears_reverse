@@ -117,14 +117,14 @@ system_gte_matrixes_multiply_A0_A1_to_A1;
 
 // multiply field translation vector
 A0 = S1;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 A0 = S1;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = S0 - 28; // vector to transform
 A1 = S0 + 14; // result
 A2 = SP + 10; // flag
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 A0 = S0; // matrix to scale
 A1 = 800e7d20; // scale vector
@@ -5100,13 +5100,13 @@ system_create_clut_for_packet();
 A0 = vector;
 A1 = 800e7d44;
 A2 = 1f800008;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 A0 = 800e7d30;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 800e7d30;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 [1f800010] = w(0);
 [1f800014] = w(0);
@@ -5290,15 +5290,15 @@ S0 = 800e7d44;
 A0 = S3;
 A1 = S0;
 A2 = 1f800008;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 800C2314	addiu  s0, s0, $ffec (=-$14)
 
 A0 = S0;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = S0;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 S1 = 0;
 800C232C	lui    s6, $1f80

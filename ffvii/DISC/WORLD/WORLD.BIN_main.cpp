@@ -1153,10 +1153,10 @@ A1 = SP + 18;
 system_gte_copy_matrix_translation_part();
 
 A0 = SP + 38;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = SP + 38;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -1165,7 +1165,7 @@ system_gte_set_translation_vector();
 A0 = SP + 10;
 A1 = SP + 28;
 A2 = SP + 78;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 [SP + 78] = w((w[SP + 2c] * 10) - w[80116508]);
 
@@ -1222,22 +1222,22 @@ system_gte_matrixes_multiply_A0_A1_to_A2();
 [SP + 34] = w(w[A0 + 4]);
 
 A0 = 800e5698;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 800e56b8;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = SP + 30; // in
 A1 = SP + 38; // out
 A2 = SP + 48; // FLAG
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 A0 = SP + 10; // out
 A1 = SP + 38; // in
 system_gte_copy_matrix_translation_part();
 
 A0 = SP + 10;
-system_gte_set_translation_vector()
+system_gte_set_trans_matrix()
 ////////////////////////////////
 
 
@@ -1246,10 +1246,10 @@ system_gte_set_translation_vector()
 // funca2040()
 
 A0 = 800e5698;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 800e56b8;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 ////////////////////////////////
 
 
@@ -1767,15 +1767,15 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
             system_gte_copy_matrix_translation_part();
 
             A0 = SP + 10;
-            system_gte_set_rotation_matrix();
+            system_gte_set_rot_matrix();
 
             A0 = SP + 10;
-            system_gte_set_translation_vector();
+            system_gte_set_trans_matrix();
 
             A0 = SP + 30; // movement
             A1 = SP + 40; // result
             A2 = SP + 60; // ret flag
-            system_gte_rotate_and_translate_vector();
+            system_gte_rot_trans();
 
             [SP + 64] = w(w[SP + 40]); // new movement x
             [SP + 68] = w(w[SP + 48]); // new movement z
@@ -2406,7 +2406,7 @@ A2 = result;
 system_gte_matrixes_multiply_A0_A1_to_A2();
 
 A0 = 800e5698;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 if( ( w[800e5670] > 0 ) && ( pc_model != 0 ) )
 {
@@ -2434,7 +2434,7 @@ A1 = SP + 30;
 system_gte_copy_matrix_translation_part();
 
 A0 = result;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 // copy root offset
 [SP + 40] = h(hu[model + 8]);
@@ -4712,7 +4712,7 @@ A1 = SP + a0;
 system_gte_copy_matrix_translation_part();
 
 A0 = SP + 10;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 S3 = SP + 0038;
 A0 = S3;
@@ -4723,14 +4723,14 @@ V0 = S0 + 0380;
 system_gte_rotation_matrix_from_xyz();
 
 A0 = SP + 0010;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 S2 = SP + 0030;
 A0 = S2;
 A1 = SP + 0080;
 S1 = SP + 00b0;
 A2 = S1;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 A0 = S3;
 A1 = SP + 0010;
@@ -4739,12 +4739,12 @@ A1 = SP + 0010;
 system_gte_rotation_matrix_from_xyz();
 
 A0 = SP + 0010;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = S2;
 A1 = SP + 0090;
 A2 = S1;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 V0 = w[S4 + 0000];
 800A6298	addiu  s6, zero, $fffe (=-$2)
@@ -5648,7 +5648,7 @@ A1 = SP + 10;
 system_gte_rotation_matrix_from_xyz();
 
 A0 = SP + 10;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 VXY0 = w[vector + 0];
 VZ0 = w[vector + 4];
@@ -5890,7 +5890,7 @@ else if( h[SP + 1006] < h[SP + 1002] )
 [SP + f4a] = h(0);
 
 A0 = SP + f78;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 S0 = 00c8;
 
@@ -6237,7 +6237,7 @@ A1 = A1 + 00f0;
 
 La7830:	; 800A7830
 A0 = SP + f78;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = S0;
 800A7838	jal    funcaa6d0 [$800aa6d0]

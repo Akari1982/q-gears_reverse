@@ -706,11 +706,6 @@ void psxJAL()
         //execI();
         //FFVII_Battle_EffectsUpdate();
     //}
-    else if( _JumpTarget_ == 0x800d3bf0 )
-    {
-        execI();
-        FFVII_Battle_EffectDustSingleCloud();
-    }
     else
     {
         _SetLink( 31 );
@@ -722,15 +717,27 @@ void psxJAL()
 * Register jump                                          *
 * Format:  OP rs, rd                                     *
 *********************************************************/
-void psxJR()   {
-	doBranch(_u32(_rRs_));
-	psxJumpTest();
+void psxJR()
+{
+    doBranch(_u32(_rRs_));
+    psxJumpTest();
 }
 
-void psxJALR() {
-	u32 temp = _u32(_rRs_);
-	if (_Rd_) { _SetLink(_Rd_); }
-	doBranch(temp);
+void psxJALR()
+{
+    u32 temp = _u32(_rRs_);
+
+    //if( temp == 0x800d3bf0 )
+    //{
+        //GPU_displayText( "Single" );
+        //execI();
+        //FFVII_Battle_EffectDustSingleCloud();
+    //}
+    //else
+    {
+        if (_Rd_) { _SetLink(_Rd_); }
+        doBranch(temp);
+    }
 }
 
 /*********************************************************

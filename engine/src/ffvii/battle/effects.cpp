@@ -8,7 +8,7 @@
 
 
 
-u32 g_effect_id; // 801590d4
+u16 g_effect_id; // 801590d4
 
 
 
@@ -50,17 +50,19 @@ FFVII_Battle_EffectsUpdate()
 
         if( callback != 0 )
         {
-            char Text[ 256 ];
-            sprintf( Text, _( "Effect: 0x%x" ), callback );
-            GPU_displayText( Text );
-
             switch( callback )
             {
-                //case 0x800d7888:
-                //{
-                    //FFVII_Battle_EffectMachinegun();
-                //}
-                //break;
+                case 0x800d7888:
+                {
+                    FFVII_Battle_EffectMachinegun();
+                }
+                break;
+
+                case 0x800d7724:
+                {
+                    FFVII_Battle_EffectMachinegunFire();
+                }
+                break;
 
                 case 0x800d3d88:
                 {
@@ -73,11 +75,18 @@ FFVII_Battle_EffectsUpdate()
                     FFVII_Battle_EffectDustSingleCloud();
                 }
                 break;
+
+                default:
+                {
+                    char Text[ 256 ];
+                    sprintf( Text, _( "Effect: 0x%x" ), callback );
+                    GPU_displayText( Text );
+                }
             }
 
             //800BC578	jalr   callback ra
 
-            if( psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0 ) == -1 )
+            if( (s16)psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0 ) == -1 )
             {
                 psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0, 0 );
                 psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 2, 0 );
@@ -94,36 +103,36 @@ FFVII_Battle_EffectsUpdate()
 void
 FFVII_Battle_EffectMachinegun()
 {
-/*
-    if( bu[80062d98] == 0 )
+    if( psxMemRead8( 0x80062d98 ) == 0 )
     {
-        current_frame = h[0x801621f0 + g_effect_id * 20 + 2];
-        start_frame = h[0x801621f0 + g_effect_id * 20 + 8];
+        u16 step = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x2 );
+        u16 start = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x8 );
 
-        if( current_frame >= start_frame )
+        if( step >= start )
         {
-            real_current_frame = current_frame - start_frame;
-            final_frame = hu[0x801621f0 + g_effect_id * 20 + a];
+            u16 inner_step = step - start;
+            u16 final_step = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0xa );
 
-            if( real_current_frame < final_frame & ff7f )
+            if( inner_step < ( final_step & 0xff7f ) )
             {
                 // skip every second frame
                 // this creates effect of fireshot blinking
-                if( real_current_frame & 1 )
+                if( inner_step & 1 )
                 {
-                    [0x801621f0 + g_effect_id * 20 + 2] = h(current_frame + 1);
+                    psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x2, step + 1 );
                     return;
                 }
 
                 // add effect mashingun fire & spot
-                A0 = 800d7724; // funcd7724()
-                funcbc04c();
-                [801621f0 + V0 * 20 + 04] = h(hu[0x801621f0 + g_effect_id * 20 + 04]);
-                [801621f0 + V0 * 20 + 06] = h(hu[0x801621f0 + g_effect_id * 20 + 06]);
-                [801621f0 + V0 * 20 + 1a] = h(hu[0x801621f0 + g_effect_id * 20 + 1a]);
-                [801621f0 + V0 * 20 + 1c] = h(hu[0x801621f0 + g_effect_id * 20 + 1c]);
+                u32 new_effect_id = FFVII_Battle_EffectAdd( 0x800d7724 );
 
-                if ((final_frame & 0080) == 0) // render shell animation
+                psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x4, psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x4 ) );
+                psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x6, psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x6 ) );
+                psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x1a, psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x1a ) );
+                psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x1c, psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x1c ) );
+
+                /*
+                if ((final_step & 0080) == 0) // render shell animation
                 {
                     // shell effect
                     A0 = 800d7368;
@@ -151,7 +160,7 @@ FFVII_Battle_EffectMachinegun()
                     A0 = SP + 10;
                     A1 = SP + 30;
                     A2 = S2 + 10;
-                    system_matrix_vector_multiply; // add random direction vector to shell data
+                    system_gte_apply_matrix_sv(); // add random direction vector to shell data
 
                     [S2 + 0] = h(0);
                     [S2 + 6] = h(hu[0x801621f0 + g_effect_id * 20 + 6]);
@@ -162,14 +171,79 @@ FFVII_Battle_EffectMachinegun()
                     A2 = 800;
                     funcd3f0c(); // add shell falling effect effect
                 }
+                */
             }
             else
             {
-                [0x801621f0 + g_effect_id * 20 + 0] = h(-1); // stop effect
+                psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x0, -1 );
             }
         }
 
-        [0x801621f0 + g_effect_id * 20 + 2] = h(current_frame + 1);
+        psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x2, step + 1 );
+    }
+}
+
+
+
+void
+FFVII_Battle_EffectMachinegunFire()
+{
+/*
+    current_frame = h[801621f0 + g_effect_id * 20 + 2];
+
+    if (bu[80062d98] != 0 || current_frame == 0)
+    {
+        [800f1978] = w(-h[801621f0 + g_effect_id * 20 + 1a]); // distance from joint
+
+        A0 = w[801621f0 + g_effect_id * 20 + 1c]; // bone matrix
+        A1 = 800f195c;
+        A2 = SP + 10;
+        system_transformation_data_multiply;
+
+        A0 = SP + 10;
+        system_gte_set_rot_matrix();
+
+        A0 = SP + 10;
+        system_gte_set_trans_matrix();
+
+        // load effect geometry
+        A0 = 800f197c; // offset to effect 3d data
+        A1 = w[801517c0] + 70;
+        A2 = c;
+        A3 = w[80163c74]
+        funcd29d4();
+        [80163c74] = w(V0);
+
+        if (bu[80062d98] == 0)
+        {
+            // add light effect
+            A0 = 800d751c;
+            funcbc04c;
+
+            S0 = 801621f0 + V0 * 20;
+
+            [S0 + 8] = h(hu[SP + 24] - hu[800fa650]);
+            [S0 + a] = h(hu[SP + 28] - hu[800fa654]);
+            [S0 + c] = h(hu[SP + 2c] - hu[800fa658]);
+
+            A0 = 800fa63c;
+            A1 = SP + 10;
+            system_gte_transpose_matrix();
+
+            A0 = SP + 10;
+            A1 = S0 + 8;
+            A2 = A1;
+            system_gte_apply_matrix_sv();
+
+            [S0 + 0] = h(0);
+
+            [801621f0 + g_effect_id * 20 + 2] = h(current_frame + 1);
+        }
+    }
+    else
+    {
+        // stop effect
+        [801621f0 + g_effect_id * 20 + 0] = h(-1);
     }
 */
 }
@@ -179,7 +253,7 @@ FFVII_Battle_EffectMachinegun()
 void
 FFVII_Battle_EffectDustClouds()
 {
-    u16 unit_id = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0 );
+    s16 unit_id = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0 );
 
     s8 bone_id = psxMemRead8( 0x801518e4 + unit_id * 0xb9c + 0x2b + 0xb + ( psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 2 ) & 1 ) );
 
@@ -187,19 +261,20 @@ FFVII_Battle_EffectDustClouds()
     {
         u32 new_effect_id = FFVII_Battle_EffectAdd( 0x800d3bf0 );
 
-        //A0 = unit_id;
-        //A1 = bone_id;
-        //A2 = 801621f0 + new_effect_id * 20 + 4;
-        //battle_get_point_by_model_bone;
-
+        PSX_SVECTOR v;
+        FFVII_Battle_GetPointByModelBone( unit_id, bone_id, v );
+        psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x4, v.vx );
         psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x6, 0 );
+        psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x8, v.vz );
+
         psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0xe, psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0xe ) ); // scale
         psxMemWrite16( 0x801621f0 + new_effect_id * 0x20 + 0x10, psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x10 ) ); // scale
     }
 
-    psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x2, psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x2 ) + 1 );
+    u16 step = psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x2 ) + 1;
+    psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x2, step );
 
-    if( psxMemRead16( 0x801621f0 + g_effect_id * 0x20 + 0x2 ) == 4 )
+    if( step == 4 )
     {
         psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x0, -1 );
     }
@@ -263,18 +338,15 @@ FFVII_Battle_EffectDustSingleCloud()
     u32 otc = FFVII_Battle_EffectSpriteAdd( 0x800f0218, psxMemRead32( 0x801517c0 ) + 0x70, 0xc, psxMemRead32( 0x80163c74 ) );
     psxMemWrite32( 0x80163c74, otc );
 
-    /*
-    if( bu[80062d98] == 0 )
+    if( psxMemRead8( 0x80062d98 ) == 0 )
     {
-        V0 = h[0x801621f0 + g_effect_id * 0x20 + 2];
-        [0x801621f0 + g_effect_id * 0x20 + 2] = h(V0 + 1);
+        psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x2, step + 1 );
 
-        if (V0 >= 7)
+        if( step >= 7 )
         {
-            [0x801621f0 + g_effect_id * 0x20 + 0] = h(-1);
+            psxMemWrite16( 0x801621f0 + g_effect_id * 0x20 + 0x0, -1 );
         }
     }
-    */
 }
 
 
@@ -351,4 +423,33 @@ FFVII_Battle_EffectSpriteAdd( u32 data, u32 buffer, u32 priority, u32 otc )
     psxMemWrite16( otc + 0x24, data4 + wh ); // uv3
 
     return otc + 0x28;
+}
+
+
+
+void
+FFVII_Battle_GetPointByModelBone( const s16 unit_id, const s8 bone_id, PSX_SVECTOR& v )
+{
+    PSX_MATRIX c;
+    c.m[ 0 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x00 );
+    c.m[ 0 ][ 1 ] = psxMemRead16( 0x800fa63c + 0x02 );
+    c.m[ 0 ][ 2 ] = psxMemRead16( 0x800fa63c + 0x04 );
+    c.m[ 1 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x06 );
+    c.m[ 1 ][ 1 ] = psxMemRead16( 0x800fa63c + 0x08 );
+    c.m[ 1 ][ 2 ] = psxMemRead16( 0x800fa63c + 0x0a );
+    c.m[ 2 ][ 0 ] = psxMemRead16( 0x800fa63c + 0x0c );
+    c.m[ 2 ][ 1 ] = psxMemRead16( 0x800fa63c + 0x0e );
+    c.m[ 2 ][ 2 ] = psxMemRead16( 0x800fa63c + 0x10 );
+    c.t.vx        = psxMemRead32( 0x800fa63c + 0x14 );
+    c.t.vy        = psxMemRead32( 0x800fa63c + 0x18 );
+    c.t.vz        = psxMemRead32( 0x800fa63c + 0x1c );
+
+    v.vx = psxMemRead16( 0x801518e4 + unit_id * 0xb9c + 0x174 + bone_id * 0x34 + 0x14 ) - c.t.vx;
+    v.vy = psxMemRead16( 0x801518e4 + unit_id * 0xb9c + 0x174 + bone_id * 0x34 + 0x18 ) - c.t.vy;
+    v.vz = psxMemRead16( 0x801518e4 + unit_id * 0xb9c + 0x174 + bone_id * 0x34 + 0x1c ) - c.t.vz;
+
+    PSX_MATRIX m;
+    PSX_TransposeMatrix( c, m );
+
+    PSX_ApplyMatrixSV( m, v, v );
 }

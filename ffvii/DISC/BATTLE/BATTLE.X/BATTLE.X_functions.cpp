@@ -1360,10 +1360,10 @@ if( ( hu[8009d7be] & 0300 ) == 0100 )
         bone_id = bu[8015477f + i * b9c + 0];
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_rotation_matrix();
+        system_gte_set_rot_matrix();
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_translation_vector();
+        system_gte_set_trans_matrix();
 
         A0 = 800e7d08;
         A1 = SP + 10; // 2d XY
@@ -1382,10 +1382,10 @@ else
         bone_id = bu[801518e4 + i * b9c + 2b]; // get bone for first joint
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_rotation_matrix();
+        system_gte_set_rot_matrix();
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_translation_vector();
+        system_gte_set_trans_matrix();
 
         A0 = 800e7d08;
         A1 = SP + 10; // 2d XY
@@ -2557,21 +2557,21 @@ A1 = bone_matrix;
 system_gte_matrixes_multiply_A0_A1_to_A1;
 
 A0 = 1f800024;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = 1f800024;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A0 = bone_matrix + 28; // vector
 A1 = bone_matrix + 14; // result vector
 A2 = SP + 10;
-system_gte_rotate_and_translate_vector();
+system_gte_rot_trans();
 
 A0 = bone_matrix;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = bone_matrix;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 ////////////////////////////////
 
 
@@ -2587,10 +2587,10 @@ A1 = scale;
 system_scale_matrix_by_vector();
 
 A0 = matrix;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = matrix;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 ////////////////////////////////
 
 
@@ -2631,9 +2631,9 @@ A2 = bu[AT + 0000];
 S6 = V1;
 V0 = 80151a24;
 S0 = S0 + V0;
-800BB0CC	jal    $system_gte_set_rotation_matrix
+800BB0CC	jal    $system_gte_set_rot_matrix
 A0 = S0;
-800BB0D4	jal    $system_gte_set_translation_vector
+800BB0D4	jal    $system_gte_set_trans_matrix
 A0 = S0;
 S1 = S1 << 06;
 AT = 800fa714;

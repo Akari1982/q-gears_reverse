@@ -375,7 +375,7 @@ if( S1 != 0 )
     system_gte_rotation_matrix_from_xyz();
 
     A0 = SP + 10;
-    system_gte_set_rotation_matrix();
+    system_gte_set_rot_matrix();
 
     [SP + 38] = w(0);
     [SP + 3c] = w(0);
@@ -386,7 +386,7 @@ if( S1 != 0 )
     system_gte_copy_matrix_translation_part();
 
     A0 = SP + 10;
-    system_gte_set_translation_vector();
+    system_gte_set_trans_matrix();
 
     VXY0 = w[S1 + 0];
     VZ0 = w[S1 + 4];
@@ -591,7 +591,7 @@ A1 = SP + 30;
 system_gte_rotation_matrix_from_xyz();
 
 A0 = SP + 30;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 [SP + 20] = w(a0);
 [SP + 28] = w(0);
@@ -602,7 +602,7 @@ A1 = SP + 20;
 system_gte_copy_matrix_translation_part();
 
 A0 = SP + 30;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 [SP + 10] = h(-b4);
 [SP + 12] = h((0 - hu[SP + 50]) - 18);
@@ -909,13 +909,13 @@ A1 = S0;
 [SP + 0074] = h(V0);
 system_gte_rotation_matrix_from_xyz();
 
-800AECB8	jal    $system_gte_set_rotation_matrix
+800AECB8	jal    $system_gte_set_rot_matrix
 A0 = S0;
 A0 = S0;
 V0 = 00a0;
 [SP + 014c] = w(V0);
 V0 = 0028;
-800AECD0	jal    $system_gte_set_translation_vector
+800AECD0	jal    $system_gte_set_trans_matrix
 [SP + 0150] = w(V0);
 A1 = 0;
 A0 = SP + 0078;
@@ -1903,17 +1903,17 @@ V1 = A0;
 [SP + 3c] = w(w[800c6868 + V1 * 4] << 5);
 
 A0 = SP + 20;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 A0 = SP + 20;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 for( int i = 0; i < 100; ++i )
 {
     A0 = 8010b4ac + i * 8;
     A1 = SP + 10;
     A2 = SP + 48;
-    system_gte_rotate_and_translate_vector();
+    system_gte_rot_trans();
 
     [SP + 10] = w(w[8010bcac + i * 4] + w[SP + 10]);
     [SP + 18] = w(w[8010bcac + i * 4] + w[SP + 18]);
@@ -5069,7 +5069,7 @@ A1 = S0;
 V0 = V0 >> 11;
 800B34B0	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0014] = h(V0);
-800B34B8	jal    $system_gte_set_rotation_matrix
+800B34B8	jal    $system_gte_set_rot_matrix
 A0 = S0;
 A0 = S0;
 S2 = SP + 0020;
@@ -5081,7 +5081,7 @@ V0 = 4e20;
 system_gte_copy_matrix_translation_part();
 
 A0 = S0;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 A2 = S1 + 0008;
 A3 = S1 + 0014;
@@ -5258,7 +5258,7 @@ A1 = S0;
 V0 = V0 >> 10;
 800B3734	jal    $system_gte_rotation_matrix_from_xyz
 [SP + 0014] = h(V0);
-800B373C	jal    $system_gte_set_rotation_matrix
+800B373C	jal    $system_gte_set_rot_matrix
 A0 = S0;
 V0 = hu[SP + 0024];
 [SP + 0018] = h(0);
@@ -5460,7 +5460,7 @@ V1 = w[8010d9a8];
 [SP + 2c] = w(0);
 
 A0 = SP + 10;
-system_gte_set_translation_vector();
+system_gte_set_trans_matrix();
 
 [SP + 30] = h(0);
 [SP + 32] = h(S1);
@@ -5471,7 +5471,7 @@ A1 = SP + 10;
 system_gte_rotation_matrix_from_xyz();
 
 A0 = SP + 10;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 VXY0 = w[1f800010];
 VZ0 = w[1f800014];
@@ -5496,7 +5496,7 @@ A1 = SP + 10;
 system_gte_rotation_matrix_from_xyz();
 
 A0 = SP + 10;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 VXY0 = w[1f800018];
 VZ0 = w[1f80001c];
@@ -5561,7 +5561,7 @@ A1 = SP + 0038;
 [SP + 003c] = w(0);
 800B3C80	jal    $system_gte_copy_matrix_translation_part
 [SP + 0038] = w(0);
-800B3C88	jal    $system_gte_set_translation_vector
+800B3C88	jal    $system_gte_set_trans_matrix
 A0 = S1;
 S1 = S0;
 V0 = bu[S3 + 0002];
@@ -5744,7 +5744,7 @@ T4 = A1;
 S0 = SP + 0058;
 800B3F24	jal    $system_gte_copy_matrix_translation_part
 A0 = S0;
-800B3F2C	jal    $system_gte_set_translation_vector
+800B3F2C	jal    $system_gte_set_trans_matrix
 A0 = S0;
 V0 = SP + 0018;
 T4 = V0;
@@ -5926,7 +5926,7 @@ Lb41c0:	; 800B41C0
 A0 = SP + 0050;
 
 Lb41c4:	; 800B41C4
-800B41C4	jal    $system_gte_set_rotation_matrix
+800B41C4	jal    $system_gte_set_rot_matrix
 800B41C8	nop
 800B41CC	jal    wm_get_current_render_buffer_id [$800a0bd4]
 800B41D0	nop
@@ -6897,7 +6897,7 @@ V0 = 0096;
 [S1 + 0000] = h(V0);
 [SP + 0044] = w(0);
 [SP + 0040] = w(0);
-800B4F70	jal    $system_gte_set_translation_vector
+800B4F70	jal    $system_gte_set_trans_matrix
 [SP + 003c] = w(0);
 A0 = SP + 0020;
 V0 = 1000;
@@ -6920,7 +6920,7 @@ A1 = S0;
 A0 = h[SP + 0024];
 800B4FC4	jal    $8003ca7c
 A1 = S0;
-800B4FCC	jal    $system_gte_set_rotation_matrix
+800B4FCC	jal    $system_gte_set_rot_matrix
 A0 = S0;
 800B4FD4	lui    t3, $1f80
 T3 = T3 | 0018;
@@ -6949,7 +6949,7 @@ T0 = hu[SP + 0018];
 A3 = 000a;
 funcb39b4();
 
-800B503C	jal    $system_gte_set_rotation_matrix
+800B503C	jal    $system_gte_set_rot_matrix
 A0 = S0;
 800B5044	addiu  v0, zero, $ff6a (=-$96)
 800B5048	lui    t3, $1f80
@@ -7619,7 +7619,7 @@ A1 = SP + 60;
 system_gte_matrix_multiply_A0_to_A1();
 
 A0 = SP + 60;
-system_gte_set_rotation_matrix();
+system_gte_set_rot_matrix();
 
 
 [SP + 10] = h(0 - S0);

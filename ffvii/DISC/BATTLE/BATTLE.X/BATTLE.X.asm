@@ -1735,13 +1735,13 @@
 // battle_model_read_animation_stream
 800D376C-800D3990
 ////////////////////////////////
-// battle_get_point_by_model_bone
-800D3994-800D3A68
-////////////////////////////////
 
 
 
 // BATTLE.X_units_functions.cpp
+////////////////////////////////
+// battle_get_point_by_model_bone
+800D3994-800D3A68
 ////////////////////////////////
 // funcd3a6c
 800D3A6C-800D3AEC
@@ -1752,7 +1752,7 @@
 // battle_effect_single_dust_cloud
 800D3BF0-800D3D84
 ////////////////////////////////
-// funcd3d88
+// battle_effect_dust_clouds
 800D3D88-800D3E88
 ////////////////////////////////
 // funcd3e8c

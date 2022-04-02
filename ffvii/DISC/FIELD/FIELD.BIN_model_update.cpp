@@ -9378,13 +9378,9 @@ T6 = R33;
 800B5770	sw     t5, $0018(1f800020)
 800B5774	sw     t6, $001c(1f800020)
 
-
-
 A0 = w[SP + 10];
 A1 = 1f800000;
-system_transponate_matrix;
-
-
+system_gte_transpose_matrix();
 
 800B5790	lw     t4, $0000(1f800000)
 800B5794	lw     t5, $0004(1f800000)

@@ -7,6 +7,44 @@
 
 
 
+PSX_SVECTOR&
+PSX_ApplyMatrixSV( const PSX_MATRIX& m, const PSX_SVECTOR& v0, PSX_SVECTOR& v1 )
+{
+    PSX_SetRotMatrix( m );
+
+    psxRegs.CP2D.n.v0.x = v0.vx;
+    psxRegs.CP2D.n.v0.y = v0.vy;
+    psxRegs.CP2D.n.v0.z = v0.vz;
+
+    psxRegs.code = 0x4a486012;
+    gteMVMVA(); // v0 * rotmatrix
+
+    v1.vx = psxRegs.CP2D.n.ir1;
+    v1.vy = psxRegs.CP2D.n.ir2;
+    v1.vz = psxRegs.CP2D.n.ir3;
+
+    return v1;
+}
+
+
+
+PSX_MATRIX&
+PSX_TransposeMatrix( const PSX_MATRIX& m0, PSX_MATRIX& m1 )
+{
+    m1.m[ 0 ][ 0 ] = m0.m[ 0 ][ 0 ];
+    m1.m[ 0 ][ 1 ] = m0.m[ 1 ][ 0 ];
+    m1.m[ 0 ][ 2 ] = m0.m[ 2 ][ 0 ];
+    m1.m[ 1 ][ 0 ] = m0.m[ 0 ][ 1 ];
+    m1.m[ 1 ][ 1 ] = m0.m[ 1 ][ 1 ];
+    m1.m[ 1 ][ 2 ] = m0.m[ 2 ][ 1 ];
+    m1.m[ 2 ][ 0 ] = m0.m[ 0 ][ 2 ];
+    m1.m[ 2 ][ 1 ] = m0.m[ 1 ][ 2 ];
+    m1.m[ 2 ][ 2 ] = m0.m[ 2 ][ 2 ];
+    return m1;
+}
+
+
+
 void
 PSX_SetRotMatrix( const PSX_MATRIX& m )
 {

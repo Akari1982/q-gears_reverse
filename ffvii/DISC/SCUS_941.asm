@@ -2225,7 +2225,7 @@
 // func3b27c
 8003B27C-8003B2C8
 ////////////////////////////////
-// system_matrix_vector_multiply
+// system_gte_apply_matrix_sv
 8003B2CC-8003B328
 ////////////////////////////////
 // system_gte_copy_matrix_translation_part
@@ -2234,7 +2234,7 @@
 // system_scale_matrix_by_vector
 8003B35C-8003B488
 ////////////////////////////////
-// system_gte_set_rotation_matrix
+// system_gte_set_rot_matrix
 8003B48C-8003B4B8
 ////////////////////////////////
 // system_gte_set_lighting_matrix
@@ -2243,7 +2243,7 @@
 // system_gte_set_light_colour_matrix
 8003B4EC-8003B518
 ////////////////////////////////
-// system_gte_set_translation_vector
+// system_gte_set_trans_matrix
 8003B51C-8003B538
 ////////////////////////////////
 // func3b53с
@@ -2399,7 +2399,7 @@
 // func3bc0c
 8003BC0C-8003BC68
 ////////////////////////////////
-// system_gte_rotate_and_translate_vector
+// system_gte_rot_trans
 8003BC6C-8003BC98
 ////////////////////////////////
 // func3bc9c
@@ -2417,7 +2417,7 @@
 // func3be8c
 8003BE8C-8003BF38
 ////////////////////////////////
-// system_transponate_matrix
+// system_gte_transpose_matrix
 8003BF3C-8003BF88
 ////////////////////////////////
 // system_gte_rotation_matrix_from_xyz

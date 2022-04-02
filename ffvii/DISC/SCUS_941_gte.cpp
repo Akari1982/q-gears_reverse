@@ -1585,7 +1585,7 @@ V0 = A2;
 
 
 ////////////////////////////////
-// system_matrix_vector_multiply()
+// system_gte_apply_matrix_sv()
 
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
@@ -1595,7 +1595,7 @@ R33 = w[A0 + 10];
 
 VXY0 = w[A1 + 0];
 VZ0 = w[A1 + 4];
-gte_rtv0;
+gte_rtv0();
 [A2 + 0] = IR1;
 [A2 + 2] = IR2;
 [A2 + 4] = IR3;
@@ -1643,7 +1643,7 @@ return A0;
 
 
 ////////////////////////////////
-// system_gte_set_rotation_matrix()
+// system_gte_set_rot_matrix()
 
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
@@ -1679,7 +1679,7 @@ LB3 = w[A0 + 10];
 
 
 ////////////////////////////////
-// system_gte_set_translation_vector()
+// system_gte_set_trans_matrix()
 
 TRX = w[A0 + 14];
 TRY = w[A0 + 18];
@@ -2289,7 +2289,7 @@ V0 = V0 >> 02;
 
 
 ////////////////////////////////
-// system_gte_rotate_and_translate_vector()
+// system_gte_rot_trans()
 
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
@@ -2496,7 +2496,8 @@ L3bf34:	; 8003BF34
 
 
 ////////////////////////////////
-// system_transponate_matrix
+// system_gte_transpose_matrix()
+
 [A1 + 0] = h(h[A0 + 0]); [A1 + 2] = h(h[A0 + 6]); [A1 + 4] = h(h[A0 + c]);
 [A1 + 6] = h(h[A0 + 2]); [A1 + 8] = h(h[A0 + 8]); [A1 + a] = h(h[A0 + e]);
 [A1 + c] = h(h[A0 + 4]); [A1 + e] = h(h[A0 + a]); [A1 + 10] = h(h[A0 + 10]);

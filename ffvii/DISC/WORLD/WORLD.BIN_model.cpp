@@ -2640,7 +2640,7 @@ else if( A0 == 1 )
 
         A0 = 1f800228;
         A1 = 1f800248;
-        system_transponate_matrix();
+        system_gte_transpose_matrix();
 
         R11R12 = w[bone_matrixes + 0];
         R13R21 = w[bone_matrixes + 4];
