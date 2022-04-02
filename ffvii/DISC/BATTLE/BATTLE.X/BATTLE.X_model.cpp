@@ -7410,7 +7410,7 @@ for( int i = number; i != 0; --i )
              ( ( ( T0 >= 0 ) && ( ( T0 < a6 ) || ( T1 < a6 ) || ( T2 < a6 ) ) ) || ( ( T1 >= 0 ) || ( T2 >= 0 ) ) )
         {
             // set vertex pos
-            [packets +  8] = w(T0);
+            [packets + 8] = w(T0);
             [packets + 10] = w(T1);
             [packets + 18] = w(T2);
 
@@ -7527,39 +7527,35 @@ for( int i = T8; i != 0; --i )
         [packets + 0000] = w(T1);
         V0 = packets & V0;
         [T0 + 0000] = w(V0);
-        T0 = w[mesh + 14 - c];
-        T1 = h[mesh + 14 - 8];
-        T2 = h[mesh + 14 - 6];
-        T3 = h[mesh + 14 - 4];
-        800D2E0C	add    t0, t0, s4
-        800D2E10	add    t0, t0, s1
-        800D2E14	add    t1, t1, s1
-        800D2E18	add    t2, t2, s1
-        800D2E1C	add    t3, t3, s1
+        T0 = w[mesh + 14 - c] + S4 + S1;
+        T1 = h[mesh + 14 - 8] + S1;
+        T2 = h[mesh + 14 - 6] + S1;
+        T3 = h[mesh + 14 - 4] + S1;
         [packets + 000c] = w(T0);
         [packets + 0014] = h(T1);
         [packets + 001c] = h(T2);
         [packets + 0024] = h(T3);
-        T0 = h[mesh + 14 - 2];
-        V0 = S0 & 0040;
-        800D2E38	beq    v0, zero, Ld2e58 [$800d2e58]
-        800D2E3C	nop
-        V0 = T0 >> 08;
-        V0 = V0 & 019f;
-        800D2E48	add    v0, v0, s3
-        [packets + 0016] = h(V0);
-        800D2E50	j      Ld2e70 [$800d2e70]
+
+        T0 = h[mesh + 12];
+
+        if( S0 & 0040 )
+        {
+            V0 = T0 >> 08;
+            V0 = V0 & 019f;
+            [packets + 0016] = h(V0 + S3);
+        }
+        else
+        {
+            [packets + 0016] = h(S3);
+
+            if( S0 & 0100 )
+            {
+                T1 = T0 & ff00;
+                T1 = T1 << 10;
+            }
+        }
         T1 = 0;
 
-        Ld2e58:	; 800D2E58
-        [packets + 0016] = h(S3);
-        V0 = S0 & 0100;
-        800D2E60	beq    v0, zero, Ld2e70 [$800d2e70]
-        T1 = 0;
-        T1 = T0 & ff00;
-        T1 = T1 << 10;
-
-        Ld2e70:	; 800D2E70
         V0 = S0 & 0080;
         800D2E74	beq    v0, zero, Ld2ef4 [$800d2ef4]
 
