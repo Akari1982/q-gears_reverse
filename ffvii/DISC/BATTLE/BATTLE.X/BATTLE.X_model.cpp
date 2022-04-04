@@ -7329,6 +7329,442 @@ battle_set_load_texture_to_vram();
 
 model = A0;
 packets = A3;
+
+S7 = hu[800d3544 + 0];
+FP = hu[800d3544 + 2];
+flags = w[model + 4]; // flags 0x0100 - use +7[] as vertex specific packet addition (only without 0x0040).
+                   //       0x0080 - use +6[] as color in vertex, if not set use function argument as color.
+                   //       0x0040 - use +7[] as vertex texture page settings instead of global part.
+                   //       0x0020 - render triangles.
+                   //       0x0010 - use color interpolation.
+                   //       0x0008 - render packets with transparensy on.
+S1 = hu[model + 8];
+color = hu[model + a]; // color for polygons
+blend = hu[model + c]; // blending option
+S4 = hu[model + e];
+part_data = w[model + 0]; // global offset to part
+
+if( ( flags & 0080 ) == 0 )
+{
+    color = (color << 10) | (color << 8) | color;
+}
+
+S4 = S4 << 10;
+// A2 - 00 or 0c (in effect machingun fire loading - 0c)
+A2 = e - A2;
+
+mesh = part_data + 4 + w[part_data + 0]; // real offset to mesh data
+
+// add transparency bit to polygon header
+color = color | ((flags & 8) << 16);
+
+S6 = 0;
+T0 = -1;
+
+if( flags & 1 )
+{
+    S6 = S6 ^ T0;
+    800D2A7C	jal    funcd3418 [$800d3418]
+}
+if( flags & 2 )
+{
+    S6 = S6 ^ T0;
+    800D2A90	jal    funcd3474 [$800d3474]
+}
+if( flags & 4 )
+{
+    S6 = S6 ^ T0;
+    800D2AA4	jal    funcd34c8 [$800d34c8]
+}
+
+if( ( flags & 0040 ) == 0 )
+{
+    blend = blend + (h[mesh + 0002] & 019f);
+}
+
+AT = 800d2cd0; // Ld2cd0
+number = h[mesh]; // number of triangle
+mesh = mesh + 4;
+S7 = S7 + number;
+
+for( int i = number; i != 0; --i )
+{
+    T4 = part_data + 4 + h[mesh + 0];
+    T5 = part_data + 4 + h[mesh + 2];
+    T6 = part_data + 4 + h[mesh + 4];
+
+    VXY0 = w[T4 + 0];
+    VZ0 = w[T4 + 4];
+    VXY1 = w[T5 + 0];
+    VZ1 = w[T5 + 4];
+    VXY2 = w[T6 + 0];
+    VZ2 = w[T6 + 4];
+    gte_RTPT(); // Perspective transform on 3 points
+    V0 = FLAG;
+
+    gte_NCLIP(); // Normal clipping
+
+    if( ( ( V0 & 00060000 ) == 0 ) && ( ( flags & 0020 ) || ( MAC0 == 0 ) || ( ( V0 ^ S6 ) >= 0 ) ) )
+    {
+        T0 = SXY0;
+        T1 = SXY1;
+        T2 = SXY2P;
+        funcd32b4();
+
+        [packets + 8] = w(T0);
+        [packets + 10] = w(T1);
+        [packets + 18] = w(T2);
+        gte_AVSZ3(); // Average of three Z values
+        T0 = OTZ;
+        T0 = T0 >> A2;
+        T0 = T0 << 02;
+        T0 = T0 + A1;
+
+        [packets + 0] = w((w[T0] & 00ffffff) | 07000000);
+        [T0] = w(packets & 00ffffff);
+
+        [packets + c] = w(w[mesh + 8] + S4 + S1);
+        [packets + 14] = h(h[mesh + c] + S1);
+        [packets + 1c] = h(h[mesh + e] + S1);
+
+        T0 = h[mesh + 6];
+        T1 = 0;
+
+        if( flags & 0040 )
+        {
+            [packets + 16] = h(((T0 >> 8) & 019f) + blend);
+        }
+        else
+        {
+            [packets + 16] = h(blend);
+
+            if( flags & 0100 )
+            {
+                T1 = (T0 & ff00) << 10;
+            }
+        }
+
+        V0 = flags & 0080;
+        800D2C38	beq    v0, zero, Ld2cb8 [$800d2cb8]
+
+        V1 = T0 & 00ff;
+        V0 = ((color & ff000000) | 24000000) | (V1 << 10) | (V1 << 8) | V1;
+        V1 = flags & 0010;
+        800D2C6C	bne    v1, zero, Ld2cc0 [$800d2cc0]
+        V1 = color & ffff;
+        800D2C74	beq    v1, zero, Ld2cc0 [$800d2cc0]
+
+        IR0 = V1;
+        RGB = V0;
+        gte_DPCS(); // Depth Cueing
+        [packets + 4] = w(((color >> 10) << 10) | RGB2 | T1);
+        800D2CB0	j      Ld2cc8 [$800d2cc8]
+
+        Ld2cb8:	; 800D2CB8
+        V0 = 24000000 | color;
+
+        Ld2cc0:	; 800D2CC0
+        [packets + 4] = w(V0 | T1);
+
+        Ld2cc8:	; 800D2CC8
+        packets = packets + 20;
+        FP = FP + 1;
+    }
+
+    Ld2cd0:	; 800D2CD0
+    mesh = mesh + 10;
+}
+
+AT = 800d2f0c; // Ld2f0c
+number = h[mesh]; // number of quad
+mesh = mesh + 4;
+S7 = S7 + number * 2;
+
+for( int i = number; i != 0; --i )
+{
+    T4 = part_data + 4 + h[mesh + 0];
+    T5 = part_data + 4 + h[mesh + 2];
+    T6 = part_data + 4 + h[mesh + 4];
+
+    VXY0 = w[T4 + 0];
+    VZ0 = w[T4 + 4];
+    VXY1 = w[T5 + 0];
+    VZ1 = w[T5 + 4];
+    VXY2 = w[T6 + 0];
+    VZ2 = w[T6 + 4];
+    gte_RTPT(); // Perspective transform on 3 points
+    V0 = FLAG;
+
+    gte_NCLIP(); // Normal clipping
+
+    if( ( ( V0 & 00060000 ) == 0 ) && ( ( flags & 0020 ) || ( MAC0 == 0 ) || ( ( V0 ^ S6 ) >= 0 ) ) )
+    {
+        T0 = SXY0;
+        T7 = h[mesh + 6];
+        T1 = SXY1;
+        VXY0 = w[part_data + 4 + T7 + 0];
+        VZ0 = w[part_data + 4 + T7 + 4];
+        T2 = SXY2P;
+        gte_RTPS(); // Perspective transform
+        T3 = SXY2P;
+
+        funcd3354();
+
+        [packets + 8] = w(T0);
+        [packets + 10] = w(T1);
+        [packets + 18] = w(T2);
+        [packets + 20] = w(T3);
+
+        gte_AVSZ4(); // Average of four Z values
+        T0 = A1 + (OTZ >> A2) * 4;
+        [packets + 0] = w((w[T0] & 00ffffff) | 09000000);
+        [T0] = w(packets & 00ffffff);
+
+        [packets + c] = w(w[mesh + 8] + S4 + S1);
+        [packets + 14] = h(h[mesh + c] + S1);
+        [packets + 1c] = h(h[mesh + e] + S1);
+        [packets + 24] = h(h[mesh + 10] + S1);
+
+        T0 = h[mesh + 12];
+        T1 = 0;
+
+        if( flags & 0040 )
+        {
+            [packets + 16] = h(((T0 >> 8) & 019f) + blend);
+        }
+        else
+        {
+            [packets + 16] = h(blend);
+
+            if( flags & 0100 )
+            {
+                T1 = (T0 & ff00) << 10;
+            }
+        }
+
+        V0 = flags & 0080;
+        800D2E74	beq    v0, zero, Ld2ef4 [$800d2ef4]
+
+        V0 = (color & ff000000) | 2c000000;
+        V1 = T0 & ff;
+        V0 = V0 | (V1 << 10) | (V1 << 08) | V1;
+        V1 = flags & 0010;
+        800D2EA8	bne    v1, zero, Ld2efc [$800d2efc]
+        V1 = color & ffff;
+        800D2EB0	beq    v1, zero, Ld2efc [$800d2efc]
+
+        IR0 = V1;
+        RGB = V0;
+        gte_DPCS(); // Depth Cueing
+
+        [packets + 4] = w((S1 >> 10 << 10) | RGB2 | T1);
+        800D2EEC	j      Ld2f04 [$800d2f04]
+
+        Ld2ef4:	; 800D2EF4
+        V0 = 2c000000 | color;
+
+        Ld2efc:	; 800D2EFC
+        [packets + 4] = w(V0 | T1);
+
+        Ld2f04:	; 800D2F04
+        packets = packets + 28;
+        FP = FP + 2;
+    }
+
+    Ld2f0c:	; 800D2F0C
+    mesh = mesh + 14;
+}
+
+AT = 800d3098; // Ld3098
+number = h[mesh];
+mesh = mesh + 4;
+S7 = S7 + number;
+
+for( int i = number; i != 0; --i )
+{
+    T4 = part_data + 4 + h[mesh + 0];
+    T5 = part_data + 4 + h[mesh + 2];
+    T6 = part_data + 4 + h[mesh + 4];
+
+    VXY0 = w[T4 + 0];
+    VZ0 = w[T4 + 4];
+    VXY1 = w[T5 + 0];
+    VZ1 = w[T5 + 4];
+    VXY2 = w[T6 + 0];
+    VZ2 = w[T6 + 4];
+    gte_RTPT(); // Perspective transform on 3 points
+    V0 = FLAG;
+
+    gte_NCLIP(); // Normal clipping
+
+    if( ( ( V0 & 00060000 ) == 0 ) && ( ( flags & 0020 ) || ( MAC0 == 0 ) || ( ( V0 ^ S6 ) >= 0 ) ) )
+    {
+        T0 = SXY0;
+        T1 = SXY1;
+        T2 = SXY2P;
+        funcd32b4();
+
+        [packets + 8] = w(T0);
+        [packets + 10] = w(T1);
+        [packets + 18] = w(T2);
+        gte_AVSZ3(); // Average of three Z values
+        T0 = A1 + (OTZ >> A2) * 4;
+        [packets + 0] = w((w[T0] & 00ffffff) | 06000000);
+        [T0] = w(packets & 00ffffff);
+
+        V1 = color & ffff;
+        if( V1 != 0 )
+        {
+            RGB1 = w[mesh + c];
+            RGB0 = w[mesh + 10];
+            RGB2 = w[mesh + 8];
+            RGB = w[mesh + 8];
+            IR0 = V1;
+            gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
+            [packets + 4] = w(((color >> 10) << 10) | RGB2);
+            [packets + c] = w(RGB1);
+            [packets + 14] = w(RGB0);
+        }
+        else
+        {
+            [packets + 4] = w(w[mesh + 8]; | color);
+            [packets + c] = w(w[mesh + c]);
+            [packets + 14] = w(w[mesh + 10]);
+        }
+
+        packets = packets + 1c;
+        FP = FP + 1;
+    }
+
+    Ld3098:	; 800D3098
+    mesh = mesh + 14;
+}
+
+AT = 800d326c; // Ld326c
+number = h[mesh];
+mesh = mesh + 4;
+S7 = S7 + number * 2;
+
+for( int i = number; i != 0; --i )
+{
+    T4 = part_data + 4 + h[mesh + 0];
+    T5 = part_data + 4 + h[mesh + 2];
+    T6 = part_data + 4 + h[mesh + 4];
+
+    VXY0 = w[T4 + 0];
+    VZ0 = w[T4 + 4];
+    VXY1 = w[T5 + 0];
+    VZ1 = w[T5 + 4];
+    VXY2 = w[T6 + 0];
+    VZ2 = w[T6 + 4];
+    gte_RTPT(); // Perspective transform on 3 points
+    V0 = FLAG;
+
+    gte_NCLIP(); // Normal clipping
+
+    if( ( ( V0 & 00060000 ) == 0 ) && ( ( flags & 0020 ) || ( MAC0 == 0 ) || ( ( V0 ^ S6 ) >= 0 ) ) )
+    {
+        T0 = SXY0;
+        T1 = SXY1;
+        T2 = SXY2P;
+
+        T7 = h[mesh + 6];
+        VXY0 = w[part_data + 4 + T7 + 0];
+        VZ0 = w[part_data + 4 + T7 + 4];
+        gte_RTPS(); // Perspective transform
+
+        funcd3354();
+
+        [packets + 8] = w(T0);
+        [packets + 10] = w(T1);
+        [packets + 18] = w(T2);
+        [packets + 20] = w(SXY2P);
+
+        gte_AVSZ4(); // Average of four Z values
+        T0 = A1 + (OTZ >> A2) * 4;
+        [packets + 0] = w((w[T0] & 00ffffff) | 08000000);
+        [T0] = w(packets & 00ffffff);
+
+        V1 = color & ffff;
+        if( V1 != 0 )
+        {
+            RGB1 = w[mesh + c];
+            RGB0 = w[mesh + 10];
+            RGB2 = w[mesh + 8];
+            RGB = w[mesh + 8];
+            IR0 = V1;
+            gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
+
+            [packets + 4] = w(((color >> 10) << 10) | RGB2);
+            [packets + c] = w(RGB1);
+            [packets + 14] = w(RGB0);
+
+            RGB = w[mesh + 14];
+            IR0 = V1;
+            gte_DPCS(); // Depth Cueing
+            [packets + 1c] = w(RGB2);
+        }
+        else
+        {
+            [packets + 4] = w(w[mesh + 8] | color);
+            [packets + c] = w(w[mesh + c]);
+            [packets + 14] = w(w[mesh + 10]);
+            [packets + 1c] = w(w[mesh + 14]);
+        }
+
+        packets = packets + 24;
+        FP = FP + 2;
+    }
+
+    Ld326c:	; 800D326C
+    mesh = mesh + 18;
+}
+
+[800d3544 + 0] = h(S7);
+[800d3544 + 2] = h(FP);
+return packets;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+model = A0;
+packets = A3;
 // A2 - 00 or 0c (in effect machingun fire loading - 0c)
 A2 = e - A2;
 
@@ -7475,7 +7911,7 @@ for( int i = number; i != 0; --i )
 
 
 
-AT = 800d2f0c;
+AT = 800d2f0c; // Ld2f0c
 T8 = w[mesh];
 mesh = mesh + 4;
 S7 = S7 + T8;
@@ -7507,7 +7943,7 @@ for( int i = T8; i != 0; --i )
         gte_RTPS(); // Perspective transform
         T3 = SXY2P;
 
-        800D2DA8	jal    funcd3354 [$800d3354]
+        funcd3354();
 
         [packets + 0008] = w(T0);
         [packets + 0010] = w(T1);
@@ -7644,8 +8080,8 @@ if( T8 != 0 )
         T0 = SXY0;
         T1 = SXY1;
         T2 = SXY2P;
-        800D2FC8	jal    funcd32b4 [$800d32b4]
-        800D2FCC	nop
+        funcd32b4();
+
         [packets + 0008] = w(T0);
         [packets + 0010] = w(T1);
         [packets + 0018] = w(T2);
@@ -7701,28 +8137,28 @@ if( T8 != 0 )
     800D3098	bne    t8, zero, loopd2f48 [$800d2f48]
 }
 
-T8 = w[mesh + 0000];
-mesh = mesh + 0004;
+T8 = w[mesh + 0];
+mesh = mesh + 4;
 S7 = S7 + T8;
 if( T8 != 0 )
 {
     S7 = S7 + T8;
-    T4 = h[mesh + 0000];
-    T5 = h[mesh + 0002];
-    T6 = h[mesh + 0004];
+    T4 = h[mesh + 0];
+    T5 = h[mesh + 2];
+    T6 = h[mesh + 4];
     T4 = part_data + 4 + T4;
     T5 = part_data + 4 + T5;
     T6 = part_data + 4 + T6;
 
     Ld30d8:	; 800D30D8
         T8 = T8 - 1;
-        VXY0 = w[T4 + 0000];
-        VZ0 = w[T4 + 0004];
-        VXY1 = w[T5 + 0000];
-        VZ1 = w[T5 + 0004];
-        VXY2 = w[T6 + 0000];
-        VZ2 = w[T6 + 0004];
-        mesh = mesh + 0018;
+        VXY0 = w[T4 + 0];
+        VZ0 = w[T4 + 4];
+        VXY1 = w[T5 + 0];
+        VZ1 = w[T5 + 4];
+        VXY2 = w[T6 + 0];
+        VZ2 = w[T6 + 4];
+        mesh = mesh + 18;
         gte_RTPT(); // Perspective transform on 3 points
 
         T4 = h[mesh + 0];
@@ -7734,15 +8170,15 @@ if( T8 != 0 )
         T6 = part_data + 4 + T6;
         V0 = FLAG;
         gte_NCLIP(); // Normal clipping
-        800D3118	lui    v1, $0006
-        V0 = V0 & V1;
+
+        V0 = V0 & 60000;
         800D3120	bne    v0, zero, Ld326c [$800d326c]
-        800D3124	nop
+
         V0 = S0 & 0020;
         800D312C	bne    v0, zero, Ld314c [$800d314c]
-        800D3130	nop
+
         V0 = MAC0;
-        800D3138	nop
+
         800D313C	beq    v0, zero, Ld314c [$800d314c]
         V0 = V0 ^ S6;
         800D3144	bltz   v0, Ld326c [$800d326c]
@@ -7758,70 +8194,49 @@ if( T8 != 0 )
         T2 = SXY2P;
         gte_RTPS(); // Perspective transform
         T3 = SXY2P;
-        800D3170	jal    funcd3354 [$800d3354]
-        800D3174	nop
-        [packets + 0008] = w(T0);
-        [packets + 0010] = w(T1);
-        [packets + 0018] = w(T2);
-        [packets + 0020] = w(T3);
+        funcd3354();
+
+        [packets + 8] = w(T0);
+        [packets + 10] = w(T1);
+        [packets + 18] = w(T2);
+        [packets + 20] = w(T3);
         gte_AVSZ4(); // Average of four Z values
         T0 = OTZ;
-        800D3190	nop
         T0 = T0 >> A2;
         T0 = T0 << 02;
         T0 = T0 + A1;
-        T1 = w[T0 + 0000];
-        V0 = ffffff;
-        800D31AC	lui    v1, $0800
-        T1 = T1 & V0;
-        T1 = T1 | V1;
+        T1 = (w[T0 + 0000] & 00ffffff) | 08000000;
         [packets + 0000] = w(T1);
-        V0 = packets & V0;
-        [T0 + 0000] = w(V0);
+        [T0 + 0000] = w(packets & 00ffffff);
+
         V1 = S2 & ffff;
-        800D31C8	beq    v1, zero, Ld3240 [$800d3240]
-        800D31CC	nop
-        V0 = w[mesh + fff0];
-        RGB1 = w[mesh + fff4];
-        RGB0 = w[mesh + fff8];
-        RGB2 = V0;
-        RGB = V0;
-        IR0 = V1;
-        800D31E8	nop
-        800D31EC	nop
-        gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
-        800D31F4	nop
-        800D31F8	nop
-        V0 = RGB2;
-        [packets + 0014] = w(RGB0);
-        [packets + 000c] = w(RGB1);
-        T0 = S2 >> 10;
-        T0 = T0 << 10;
-        V0 = V0 | T0;
-        [packets + 0004] = w(V0);
-        RGB = w[mesh + fffc];
-        IR0 = V1;
-        800D3220	nop
-        800D3224	nop
-        gte_DPCS(); // Depth Cueing
-        800D322C	nop
-        800D3230	nop
-        [packets + 001c] = w(RGB2);
-        800D3238	j      Ld3264 [$800d3264]
-        800D323C	nop
+        if( V1 != 0 )
+        {
+            V0 = w[mesh - 10];
+            RGB1 = w[mesh - c];
+            RGB0 = w[mesh - 8];
+            RGB2 = V0;
+            RGB = V0;
+            IR0 = V1;
+            gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
 
-        Ld3240:	; 800D3240
-        V0 = w[mesh + fff0];
-        V1 = w[mesh + fff4];
-        T0 = w[mesh + fff8];
-        T1 = w[mesh + fffc];
-        V0 = V0 | S2;
-        [packets +  4] = w(V0);
-        [packets +  c] = w(V1);
-        [packets + 14] = w(T0);
-        [packets + 1c] = w(T1);
+            [packets + 14] = w(RGB0);
+            [packets + c] = w(RGB1);
+            [packets + 4] = w(((S2 >> 10) << 10) | RGB2);
+            RGB = w[mesh - 4];
+            IR0 = V1;
+            gte_DPCS(); // Depth Cueing
 
-        Ld3264:	; 800D3264
+            [packets + 001c] = w(RGB2);
+        }
+        else
+        {
+            [packets +  4] = w(w[mesh - 10] | S2);
+            [packets +  c] = w(w[mesh - c]);
+            [packets + 14] = w(w[mesh - 8]);
+            [packets + 1c] = w(w[mesh - 4]);
+        }
+
         packets = packets + 24;
         FP = FP + 2;
 
@@ -7838,86 +8253,63 @@ return packets;
 
 
 ////////////////////////////////
-// funcd32b4
-if ((T0 << 10) >= 0 || (T1 << 10) >= 0 || (T2 << 10) >= 0)
+// funcd32b4()
+
+x0 = ( T0 << 10 );
+y0 = T0;
+x1 = ( T1 << 10 );
+y1 = T1;
+x2 = ( T2 << 10 );
+y2 = T2;
+
+if( ( x0 < 0 ) && ( x1 < 0 ) && ( x2 < 0 ) )
 {
-    if ((T0 << 10) < 140 || (T1 << 10) < 140 || (T2 << 10) < 140)
-    {
-        if (((T0 >= 0) && (T0 < a6 || T1 < a6 || T2 < a6)) || (T1 >= 0 || T2 >= 0))
-        {
-            return;
-        }
-    }
+    800D3300	jr     at
 }
-
-800D3344	jr     at 
+else if( ( x0 >= 1400000 ) && ( x1 >= 1400000 ) && ( x2 >= 1400000 ) )
+{
+    800D32E4	jr     at
+}
+else if( ( y0 < 0 ) && ( y1 < 0 ) && ( y2 < 0 ) )
+{
+    800D3344	jr     at
+}
+else if( ( y0 >= a60000 ) && ( y1 >= a60000 ) && ( y2 >= a60000 ) )
+{
+    800D332C	jr     at
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcd3354
-V0 = T0 << 10;
-800D3358	bltz   v0, Ld3398 [$800d3398]
-800D335C	lui    v1, $0140
-V0 = V0 < V1;
-800D3364	bne    v0, zero, Ld33bc [$800d33bc]
-V0 = T1 << 10;
-V0 = V0 < V1;
-800D3370	bne    v0, zero, Ld33bc [$800d33bc]
-V0 = T2 << 10;
-V0 = V0 < V1;
-800D337C	bne    v0, zero, Ld33bc [$800d33bc]
-V0 = T3 << 10;
-V0 = V0 < V1;
-800D3388	bne    v0, zero, Ld33bc [$800d33bc]
-800D338C	nop
-800D3390	jr     at 
-800D3394	nop
+// funcd3354()
 
+x0 = ( T0 << 10 );
+y0 = T0;
+x1 = ( T1 << 10 );
+y1 = T1;
+x2 = ( T2 << 10 );
+y2 = T2;
+x3 = ( T3 << 10 );
+y3 = T3;
 
-Ld3398:	; 800D3398
-V0 = T1 << 10;
-800D339C	bgez   v0, Ld33bc [$800d33bc]
-V0 = T2 << 10;
-800D33A4	bgez   v0, Ld33bc [$800d33bc]
-V0 = T3 << 10;
-800D33AC	bgez   v0, Ld33bc [$800d33bc]
-800D33B0	nop
-800D33B4	jr     at 
-800D33B8	nop
-
-
-Ld33bc:	; 800D33BC
-800D33BC	bltz   t0, Ld33f0 [$800d33f0]
-800D33C0	lui    v1, $00a6
-V0 = T0 < V1;
-800D33C8	bne    v0, zero, Ld3410 [$800d3410]
-V0 = T1 < V1;
-800D33D0	bne    v0, zero, Ld3410 [$800d3410]
-V0 = T2 < V1;
-800D33D8	bne    v0, zero, Ld3410 [$800d3410]
-V0 = T3 < V1;
-800D33E0	bne    v0, zero, Ld3410 [$800d3410]
-800D33E4	nop
-800D33E8	jr     at 
-800D33EC	nop
-
-
-Ld33f0:	; 800D33F0
-800D33F0	bgez   t1, Ld3410 [$800d3410]
-800D33F4	nop
-800D33F8	bgez   t2, Ld3410 [$800d3410]
-800D33FC	nop
-800D3400	bgez   t3, Ld3410 [$800d3410]
-800D3404	nop
-800D3408	jr     at 
-800D340C	nop
-
-
-Ld3410:	; 800D3410
-800D3410	jr     ra 
-800D3414	nop
+if( ( x0 < 0 ) && ( x1 < 0 ) && ( x2 < 0 ) && ( x3 < 0 ) )
+{
+    800D33B4	jr     at
+}
+else if( ( x0 >= 1400000 ) && ( x1 >= 1400000 ) && ( x2 >= 1400000 ) && ( x3 >= 1400000 ) )
+{
+    800D3390	jr     at
+}
+else if( ( y0 < 0 ) && ( y1 < 0 ) && ( y2 < 0 ) && ( y3 < 0 ) )
+{
+    800D3408	jr     at
+}
+else if( ( y0 >= a60000 ) && ( y1 >= a60000 ) && ( y2 >= a60000 ) && ( y3 >= a60000 ) )
+{
+    800D33E8	jr     at
+}
 ////////////////////////////////
 
 
