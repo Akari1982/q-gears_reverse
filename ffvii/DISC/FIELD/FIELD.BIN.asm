@@ -1190,7 +1190,7 @@
 // funcd4bfc
 800D4BFC-800D4C64
 ////////////////////////////////
-// set_window_x_y_width_height
+// field_dialog_set_size
 800D4C68-800D4E20
 ////////////////////////////////
 // add_x_y_to_window_position

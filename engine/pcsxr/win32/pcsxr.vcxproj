@@ -148,9 +148,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\ffvii\battle\effects.cpp" />
+    <ClCompile Include="..\..\src\ffvii\field\dialog.cpp" />
     <ClCompile Include="..\..\src\ffvii\field\entity.c" />
-    <ClCompile Include="..\..\src\ffvii\system\window.c" />
-    <ClCompile Include="..\..\src\system\render.c" />
+    <ClCompile Include="..\..\src\ffvii\field\script_opcode.cpp" />
+    <ClCompile Include="..\..\src\ffvii\system\window.cpp" />
+    <ClCompile Include="..\..\src\proxy.cpp" />
+    <ClCompile Include="..\..\src\system\render.cpp" />
     <ClCompile Include="..\..\src\system\transform.cpp" />
     <ClCompile Include="..\..\src\xeno\xeno.c" />
     <ClCompile Include="..\libpcsxcore\cdriso.c">
@@ -422,8 +425,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ffvii\battle\effects.h" />
+    <ClInclude Include="..\..\src\ffvii\field\dialog.h" />
     <ClInclude Include="..\..\src\ffvii\field\entity.h" />
+    <ClInclude Include="..\..\src\ffvii\field\script_opcode.h" />
     <ClInclude Include="..\..\src\ffvii\system\window.h" />
+    <ClInclude Include="..\..\src\proxy.h" />
     <ClInclude Include="..\..\src\system\render.h" />
     <ClInclude Include="..\..\src\system\transform.h" />
     <ClInclude Include="..\..\src\xeno\xeno.h" />

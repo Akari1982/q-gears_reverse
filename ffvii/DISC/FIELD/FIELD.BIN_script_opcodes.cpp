@@ -6391,7 +6391,7 @@ else
 
 
 ////////////////////////////////
-// 0x2F WSIZE
+// 0x2F WSIZEW
 
 if( bu[8009d820] & 3 )
 {
@@ -6426,7 +6426,7 @@ return 1;
 
 
 ////////////////////////////////
-// 0x50 WINDOW
+// 0x50 WSIZE
 // funccb354()
 
 if( bu[8009d820] & 3 )
@@ -6444,7 +6444,7 @@ A1 = h[script + 2];
 A2 = h[script + 4];
 A3 = h[script + 6];
 A4 = h[script + 8];
-set_window_x_y_width_height();
+field_dialog_set_size();
 
 [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
 

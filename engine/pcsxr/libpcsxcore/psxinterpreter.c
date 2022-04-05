@@ -30,7 +30,7 @@
 #include "pgxp_gte.h"
 
 #include "../../src/xeno/xeno.h"
-#include "../../src/ffvii/system/window.h"
+#include "../../src/proxy.h"
 
 static int branch = 0;
 static int branch2 = 0;
@@ -698,7 +698,7 @@ void psxJAL()
     else if( _JumpTarget_ == 0x8001f1bc )
     {
         execI();
-        FFVII_System_UIDialogAddToRender();
+        P_FFVII_System_UIDialogAddToRender();
     }
     // FFVII Battle Effect
     //else if( _JumpTarget_ == 0x800bc538 )
@@ -734,6 +734,17 @@ void psxJALR()
         //FFVII_Battle_EffectDustSingleCloud();
     //}
     //else
+    if( temp == 0x800cb354 )
+    {
+        execI();
+        P_FFVII_Field_ScriptOpcodeWSize();
+    }
+    else if( temp == 0x800caf60 )
+    {
+        execI();
+        P_FFVII_Field_ScriptOpcodeMessage();
+    }
+    else
     {
         if (_Rd_) { _SetLink(_Rd_); }
         doBranch(temp);

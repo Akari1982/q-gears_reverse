@@ -1,4 +1,5 @@
 #include "window.h"
+#include "..\..\system\render.h"
 #include "..\..\pcsxr\libpcsxcore\psxcommon.h"
 #include "..\..\pcsxr\libpcsxcore\psxmem.h"
 #include "..\..\pcsxr\libpcsxcore\plugins.h"
@@ -26,9 +27,9 @@ u32 g_ui_digit_div[ 8 ] = { 10000000, 1000000, 100000, 10000, 1000, 100, 10, 1 }
 
 
 void
-FFVII_System_UIWindowAddToRender( struct PSX_RECT w_rect )
+FFVII_System_UIWindowAddToRender( const PSX_RECT& w_rect )
 {
-    struct PSX_RECT rect;
+    PSX_RECT rect;
     u16 tex_set;
 
     if( w_rect.w >= 9 )
@@ -246,7 +247,7 @@ FFVII_System_UICursorAddToRender( u16 pos_x, u16 pos_y )
     g_ui_buffer += 0x14;
 
     u16 tex_set = System_RenderPacketCreateTextureSettings( 0, 2, 0x3c0, 0x100 );
-    struct PSX_RECT rect;
+    PSX_RECT rect;
     rect.x = 0;
     rect.y = 0;
     rect.w = 0xff;
@@ -302,7 +303,7 @@ FFVII_System_UITimerAddToRender( u16 pos_x, u16 pos_y, u32 timer )
     }
 
     u16 tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
-    struct PSX_RECT rect;
+    PSX_RECT rect;
     rect.x = 0;
     rect.y = 0;
     rect.w = 0xff;
@@ -339,7 +340,7 @@ FFVII_System_UIDigitsAddToRender( u16 pos_x, u16 pos_y, u32 value, u32 num )
     }
 
     u16 tex_set = System_RenderPacketCreateTextureSettings( 0, 1, 0x3c0, 0x100 );
-    struct PSX_RECT rect;
+    PSX_RECT rect;
     rect.x = 0;
     rect.y = 0;
     rect.w = 0xff;
@@ -352,7 +353,7 @@ FFVII_System_UIDigitsAddToRender( u16 pos_x, u16 pos_y, u32 value, u32 num )
 u16
 FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message )
 {
-    struct PSX_RECT rect;
+    PSX_RECT rect;
     u16 tex_set;
 
     for( int i = 0, count = 0; i < 0x400; ++i, ++count )
@@ -626,7 +627,7 @@ FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message
 
 
 void
-FFVII_System_UICreateAddTextureSettings( u32 draw_allow, u32 dithering, u16 settings, struct PSX_RECT rect )
+FFVII_System_UICreateAddTextureSettings( u32 draw_allow, u32 dithering, u16 settings, const PSX_RECT& rect )
 {
     System_RenderTextureSettingsCreate( g_ui_buffer, draw_allow, dithering, settings, rect );
     System_RenderPacketAddToQueue( g_ui_otc, g_ui_buffer );
@@ -705,8 +706,8 @@ FFVII_System_UIDialogAddToRender()
                 psxMemWrite8( windows + i * 0x30 + 0x18, 0 );
             }
 
-            struct PSX_DRAWENV dr_env;
-            struct PSX_RECT rect;
+            PSX_DRAWENV dr_env;
+            PSX_RECT rect;
 
             rect.x = psxMemRead16( windows + i * 0x30 + 0x4 );
             rect.y = psxMemRead16( windows + i * 0x30 + 0x6 );
@@ -715,7 +716,7 @@ FFVII_System_UIDialogAddToRender()
             rect.h = psxMemRead16( windows + i * 0x30 + 0xa );
             dr_env = System_RenderDrawEnviromentCreateStruct( dr_env, rect );
 
-            struct PSX_RECT clip;
+            PSX_RECT clip;
             clip.x = psxMemRead16( windows + i * 0x30 + 0x4 ) + psxMemRead16( windows + i * 0x30 + 0x8 ) / 2 - psxMemRead16( windows + i * 0x30 + 0xc ) / 2 + 3;
             clip.y = psxMemRead16( windows + i * 0x30 + 0x6 ) + psxMemRead16( windows + i * 0x30 + 0xa ) / 2 - psxMemRead16( windows + i * 0x30 + 0xe ) / 2 + ( ( buffer_id != 0 ) ? 0xb : 0xf3 );
             clip.w = psxMemRead16( windows + i * 0x30 + 0xc ) - 6;

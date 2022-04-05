@@ -168,7 +168,7 @@ V1 = V1 + 0030;
 
 
 ////////////////////////////////
-// set_window_x_y_width_height()
+// field_dialog_set_size()
 
 window_id = A0;
 x = A1;

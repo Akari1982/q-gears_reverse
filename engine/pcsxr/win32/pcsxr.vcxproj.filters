@@ -231,20 +231,29 @@
     <ClCompile Include="..\..\src\ffvii\field\entity.c">
       <Filter>game\ffvii\field</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ffvii\system\window.c">
-      <Filter>game\ffvii\system</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\xeno\xeno.c">
       <Filter>game\xenogears</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\system\render.c">
-      <Filter>game\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\system\transform.cpp">
       <Filter>game\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ffvii\battle\effects.cpp">
       <Filter>game\ffvii\battle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\field\dialog.cpp">
+      <Filter>game\ffvii\field</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\system\window.cpp">
+      <Filter>game\ffvii\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\system\render.cpp">
+      <Filter>game\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\proxy.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ffvii\field\script_opcode.cpp">
+      <Filter>game\ffvii\field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -447,6 +456,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\system\transform.h">
       <Filter>game\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ffvii\field\dialog.h">
+      <Filter>game\ffvii\field</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\proxy.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ffvii\field\script_opcode.h">
+      <Filter>game\ffvii\field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
