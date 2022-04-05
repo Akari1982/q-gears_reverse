@@ -1,53 +1,192 @@
-funcd32b4:	; 800D32B4
-800D32B4	sll    v0, t0, $10
-800D32B8	bltz   v0, Ld32ec [$800d32ec]
-800D32BC	lui    v1, $0140
-800D32C0	slt    v0, v0, v1
-800D32C4	bne    v0, zero, Ld3308 [$800d3308]
-800D32C8	sll    v0, t1, $10
-800D32CC	slt    v0, v0, v1
-800D32D0	bne    v0, zero, Ld3308 [$800d3308]
-800D32D4	sll    v0, t2, $10
-800D32D8	slt    v0, v0, v1
-800D32DC	bne    v0, zero, Ld3308 [$800d3308]
-800D32E0	nop
-800D32E4	jr     at 
-800D32E8	nop
+funcd579c:	; 800D579C
+800D579C	addiu  sp, sp, $ffe8 (=-$18)
+800D57A0	lui    v0, $8008
+800D57A4	lw     v0, $e7a8(v0)
+800D57A8	addu   t1, a1, zero
+800D57AC	bne    v0, zero, Ld57cc [$800d57cc]
+800D57B0	sw     ra, $0010(sp)
+800D57B4	lui    a0, $800a
+800D57B8	addiu  a0, a0, $10dc
+800D57BC	jal    funcd4848 [$800d4848]
+800D57C0	nop
+800D57C4	j      Ld5a50 [$800d5a50]
+800D57C8	ori    v0, zero, $0001
 
+Ld57cc:	; 800D57CC
+800D57CC	sll    v0, a0, $10
+800D57D0	sra    a1, v0, $10
+800D57D4	lui    at, $8008
+800D57D8	addiu  at, at, $326c
+800D57DC	addu   at, at, a1
+800D57E0	lbu    v1, $0000(at)
+800D57E4	ori    v0, zero, $00ff
+800D57E8	beq    v1, v0, Ld5820 [$800d5820]
+800D57EC	sll    t0, a1, $01
+800D57F0	lui    v0, $800a
+800D57F4	lbu    v0, $d820(v0)
+800D57F8	nop
+800D57FC	andi   v0, v0, $0003
+800D5800	beq    v0, zero, Ld5a50 [$800d5a50]
+800D5804	addu   v0, zero, zero
+800D5808	lui    a0, $800a
+800D580C	addiu  a0, a0, $10ec
+800D5810	jal    funcbeca4 [$800beca4]
+800D5814	ori    a2, zero, $0001
+800D5818	j      Ld5a50 [$800d5a50]
+800D581C	addu   v0, zero, zero
 
-Ld32ec:	; 800D32EC
-800D32EC	sll    v0, t1, $10
-800D32F0	bgez   v0, Ld3308 [$800d3308]
-800D32F4	sll    v0, t2, $10
-800D32F8	bgez   v0, Ld3308 [$800d3308]
-800D32FC	nop
-800D3300	jr     at 
-800D3304	nop
+Ld5820:	; 800D5820
+800D5820	lui    v0, $8007
+800D5824	lbu    v0, $22c4(v0)
+800D5828	nop
+800D582C	lui    at, $8008
+800D5830	addiu  at, at, $326c
+800D5834	addu   at, at, a1
+800D5838	sb     v0, $0000(at)
+800D583C	addu   v0, t0, a1
+800D5840	sll    a3, v0, $04
+800D5844	lui    at, $8008
+800D5848	addiu  at, at, $327c
+800D584C	addu   at, at, a3
+800D5850	lh     v0, $0000(at)
+800D5854	nop
+800D5858	bgez   v0, Ld5864 [$800d5864]
+800D585C	nop
+800D5860	addiu  v0, v0, $0003
 
+Ld5864:	; 800D5864
+800D5864	lui    at, $8008
+800D5868	addiu  at, at, $327e
+800D586C	addu   at, at, a3
+800D5870	lh     v1, $0000(at)
+800D5874	sra    v0, v0, $02
+800D5878	lui    at, $8008
+800D587C	addiu  at, at, $3280
+800D5880	addu   at, at, a3
+800D5884	sh     v0, $0000(at)
+800D5888	bgez   v1, Ld5898 [$800d5898]
+800D588C	sra    v0, v1, $02
+800D5890	addiu  v1, v1, $0003
+800D5894	sra    v0, v1, $02
 
-Ld3308:	; 800D3308
-800D3308	bltz   t0, Ld3334 [$800d3334]
-800D330C	lui    v1, $00a6
-800D3310	slt    v0, t0, v1
-800D3314	bne    v0, zero, Ld334c [$800d334c]
-800D3318	slt    v0, t1, v1
-800D331C	bne    v0, zero, Ld334c [$800d334c]
-800D3320	slt    v0, t2, v1
-800D3324	bne    v0, zero, Ld334c [$800d334c]
-800D3328	nop
-800D332C	jr     at 
-800D3330	nop
+Ld5898:	; 800D5898
+800D5898	lui    at, $8008
+800D589C	addiu  at, at, $3282
+800D58A0	addu   at, at, a3
+800D58A4	sh     v0, $0000(at)
+800D58A8	slti   v0, v0, $0008
+800D58AC	beq    v0, zero, Ld58c4 [$800d58c4]
+800D58B0	ori    v0, zero, $0008
+800D58B4	lui    at, $8008
+800D58B8	addiu  at, at, $3282
+800D58BC	addu   at, at, a3
+800D58C0	sh     v0, $0000(at)
 
+Ld58c4:	; 800D58C4
+800D58C4	lui    at, $8008
+800D58C8	addiu  at, at, $3280
+800D58CC	addu   at, at, a3
+800D58D0	lh     v0, $0000(at)
+800D58D4	nop
+800D58D8	slti   v0, v0, $0008
+800D58DC	beq    v0, zero, Ld58f8 [$800d58f8]
+800D58E0	sll    v1, a1, $08
+800D58E4	ori    v0, zero, $0008
+800D58E8	lui    at, $8008
+800D58EC	addiu  at, at, $3280
+800D58F0	addu   at, at, a3
+800D58F4	sh     v0, $0000(at)
 
-Ld3334:	; 800D3334
-800D3334	bgez   t1, Ld334c [$800d334c]
-800D3338	nop
-800D333C	bgez   t2, Ld334c [$800d334c]
-800D3340	nop
-800D3344	jr     at 
-800D3348	nop
+Ld58f8:	; 800D58F8
+800D58F8	lui    v0, $800e
+800D58FC	addiu  v0, v0, $4944
+800D5900	addu   v0, v1, v0
+800D5904	lui    at, $8008
+800D5908	addiu  at, at, $3274
+800D590C	addu   at, at, a3
+800D5910	sw     v0, $0000(at)
+800D5914	ori    v0, zero, $00ff
+800D5918	lui    at, $8008
+800D591C	addiu  at, at, $3284
+800D5920	addu   at, at, a3
+800D5924	sh     zero, $0000(at)
+800D5928	lui    at, $8008
+800D592C	addiu  at, at, $3286
+800D5930	addu   at, at, a3
+800D5934	sh     zero, $0000(at)
+800D5938	lui    at, $8008
+800D593C	addiu  at, at, $3288
+800D5940	addu   at, at, a3
+800D5944	sh     zero, $0000(at)
+800D5948	lui    at, $8008
+800D594C	addiu  at, at, $328a
+800D5950	addu   at, at, a3
+800D5954	sh     zero, $0000(at)
+800D5958	lui    at, $8008
+800D595C	addiu  at, at, $328e
+800D5960	addu   at, at, a3
+800D5964	sb     zero, $0000(at)
+800D5968	lui    at, $800e
+800D596C	addiu  at, at, $4944
+800D5970	addu   at, at, v1
+800D5974	sb     v0, $0000(at)
+800D5978	lui    v0, $800e
+800D597C	addiu  v0, v0, $4234
+800D5980	sll    a2, a1, $02
+800D5984	addu   a2, a2, v0
+800D5988	sll    a0, t1, $10
+800D598C	lui    v1, $8008
+800D5990	lw     v1, $e7a8(v1)
+800D5994	sra    a0, a0, $0f
+800D5998	addu   a0, a0, v1
+800D599C	sw     v1, $0000(a2)
+800D59A0	lbu    a1, $0002(a0)
+800D59A4	nop
+800D59A8	addu   a1, a1, v1
+800D59AC	lui    v1, $8007
+800D59B0	lbu    v1, $1e2c(v1)
+800D59B4	addu   v0, zero, zero
+800D59B8	sw     a1, $0000(a2)
+800D59BC	lbu    a0, $0003(a0)
+800D59C0	addiu  v1, v1, $0001
+800D59C4	sll    a0, a0, $08
+800D59C8	addu   a0, a0, a1
+800D59CC	sw     a0, $0000(a2)
+800D59D0	ori    a0, zero, $0001
+800D59D4	lui    at, $8007
+800D59D8	sb     v1, $1e2c(at)
+800D59DC	addiu  v1, zero, $ffff (=-$1)
+800D59E0	lui    at, $8011
+800D59E4	addiu  at, at, $4480
+800D59E8	addu   at, at, t0
+800D59EC	sh     a0, $0000(at)
+800D59F0	lui    at, $8011
+800D59F4	addiu  at, at, $4470
+800D59F8	addu   at, at, t0
+800D59FC	sh     zero, $0000(at)
+800D5A00	lui    at, $8011
+800D5A04	addiu  at, at, $42cc
+800D5A08	addu   at, at, t0
+800D5A0C	sh     zero, $0000(at)
+800D5A10	lui    at, $800e
+800D5A14	addiu  at, at, $4278
+800D5A18	addu   at, at, t0
+800D5A1C	sh     zero, $0000(at)
+800D5A20	lui    at, $800e
+800D5A24	addiu  at, at, $4280
+800D5A28	addu   at, at, t0
+800D5A2C	sh     zero, $0000(at)
+800D5A30	lui    at, $8011
+800D5A34	addiu  at, at, $451c
+800D5A38	addu   at, at, t0
+800D5A3C	sh     v1, $0000(at)
+800D5A40	lui    at, $8008
+800D5A44	addiu  at, at, $32a0
+800D5A48	addu   at, at, a3
+800D5A4C	sh     a0, $0000(at)
 
-
-Ld334c:	; 800D334C
-800D334C	jr     ra 
-800D3350	nop
+Ld5a50:	; 800D5A50
+800D5A50	lw     ra, $0010(sp)
+800D5A54	addiu  sp, sp, $0018
+800D5A58	jr     ra 
+800D5A5C	nop

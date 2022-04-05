@@ -1199,7 +1199,7 @@
 // set_window_height
 800D4E88-800D4EB0
 ////////////////////////////////
-// manage_window_states
+// field_dialog_manage_states
 800D4EB4-800D5224
 ////////////////////////////////
 // manage_ask_window_states
@@ -1208,13 +1208,13 @@
 // play_window_pointer_click_sound
 800D5750-800D5798
 ////////////////////////////////
-// dialog_window_init
+// field_dialog_window_init
 800D579C-800D5A5C
 ////////////////////////////////
-// dialog_window_growth
+// field_dialog_window_growth
 800D5A60-800D5C98
 ////////////////////////////////
-// dialog_copy_text_from_field
+// field_dialog_copy_text_from_field
 800D5C9C-800D6D40
 ////////////////////////////////
 // dialog_scroll_text

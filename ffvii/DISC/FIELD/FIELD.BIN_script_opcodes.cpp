@@ -6282,7 +6282,7 @@ script = w[8009c6dc] + hu[800831fc + current_entity * 2];
 
 A0 = bu[script + 1];
 A1 = bu[script + 2];
-manage_window_states();
+field_dialog_manage_states();
 
 if( V0 == 0 )
 {
@@ -6376,7 +6376,7 @@ if ([8008326C + S0] != FF)
     A0 = S0;
     A1 = 0;
 
-    manage_window_states();
+    field_dialog_manage_states();
 
     V0 = 1;
 }
@@ -6418,7 +6418,7 @@ else if( V1 == current_entity )
 
     A0 = S0;
     A1 = 0;
-    manage_window_states();
+    field_dialog_manage_states();
 }
 return 1;
 ////////////////////////////////

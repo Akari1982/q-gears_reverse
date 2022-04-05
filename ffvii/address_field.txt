@@ -341,8 +341,8 @@
 800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
 800e4254 we copy here string "Actor:[entity name]" for debug purpose.
 800e4274 offset to walkmesh block.
-800e4278 [][] name reading offset for dialog windows. (size 0x2).
-800e4280 [][] current variable for windows. (size 0x2).
+800e4278 array of name reading offset for dialog windows. (size 0x2).
+800e4280 array of current variable for windows. (size 0x2).
 
 800e42d8 some array (size 0x18)
 
@@ -395,7 +395,7 @@
 
 80114278 [][] some data for windows. Set this to zero during window initialization
 
-801142CC [][] additional rows during text scrolling. (size 0x2).
+801142cc array of additional rows during text scrolling. (size 0x2).
 
 801142D4 [] priority queue script id. (size 0x08 0x01).
 
@@ -415,7 +415,7 @@
 
 801144DC [][] temp variable string. First we write variable here and then copy it to window string. (size 0x10).
 
-8011451C [][] current variable read offset. (size 0x2).
+8011451c array of current variable read offset. (size 0x2).
 
 80114fe4 temp storage for DAT file after load.
 

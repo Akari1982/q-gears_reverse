@@ -250,7 +250,7 @@ if( y + height >= e1 )
 
 
 ////////////////////////////////
-// manage_window_states()
+// field_dialog_manage_states()
 
 window_id = A0;
 message_id = A1;
@@ -263,7 +263,7 @@ switch( V1 )
     {
         A0 = window_id;
         A1 = message_id;
-        dialog_window_init();
+        field_dialog_window_init();
 
         if( V0 != 0 )
         {
@@ -275,14 +275,14 @@ switch( V1 )
     case 1:
     {
         A0 = window_id;
-        dialog_window_growth();
+        field_dialog_window_growth();
     }
     break;
 
     case 2:
     {
         A0 = window_id;
-        dialog_copy_text_from_field();
+        field_dialog_copy_text_from_field();
     }
     break;
 
@@ -432,7 +432,7 @@ if (v1 < F)
     {
         case 0x0:
         {
-            dialog_window_init;
+            field_dialog_window_init;
 
             if (v0 == 0)
             {
@@ -445,7 +445,7 @@ if (v1 < F)
 
         case 1:
         {
-            dialog_window_growth;
+            field_dialog_window_growth;
 
             return 0;
         }
@@ -453,7 +453,7 @@ if (v1 < F)
 
         case 2:
         {
-            dialog_copy_text_from_field;
+            field_dialog_copy_text_from_field;
 
             return 0;
         }
@@ -708,166 +708,119 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// dialog_window_init()
+// field_dialog_window_init()
 
-A0 - window ID
-A1 - message ID
-T1 = A1;
+window_id = A0;
+message_id = A1;
 
-if( w[8007e7a8] == 0 )
+dialog = w[8007e7a8];
+
+if( dialog == 0 ) // if there is no dialogs in this field
 {
     A0 = 800a10dc; // "No mes data!"
     funcd4848()
     return 1;
 }
-else
+
+if( b[8008326c + window_id] != -1 ) // parent exist
 {
-    A1 = A0 << 10 >> 10
-
-    if( bu[8008326c] != ff ) // if window has parent entity attached to it
+    if( bu[8009d820] & 3 )
     {
-        return 0;
+        A0 = 800a10ec; // "mes busy="
+        A1 = window_id;
+        A2 = 1;
+        funcbeca4();
     }
-
-    [8008326c + A1] = b(bu[800722c4]); // set parent entity
-
-    [80083274 + A1 * 30 + 0e] = h(hu[80083274 + A1 * 30 + 0a] / 4); // height
-    if( hu[80083274 + A1 * 30 + 0a] < 8 )
-    {
-        [80083274 + A1 * 30 + 0a] = h(08);
-    }
-
-    [80083274 + A1 * 30 + 0c] = h(hu[80083274 + A1 * 30 + 08] / 4); // width
-    if( h[80083274 + A1 * 30 + 0c] < 8 )
-    {
-        [80083274 + A1 * 30 + 0c] = h(08);
-    }
-
-    V1 = A1 << 8;
-    V0 = 800E4944 + V1;
-    [80083274 + A1 * 30] = w(V0);
-    [80083284 + A1 * 30] = h(0);
-    [80083286 + A1 * 30] = h(0);
-    [80083288 + A1 * 30] = h(0);
-    [8008328A + A1 * 30] = h(0);
-    [8008328E + A1 * 30] = b(0);
-    [800E4944 + V1] = b(FF);
-
-    // write field dialog pointer to read
-    A2 = 800E4234 + A1 * 4;
-    V1 = w[8007E7A8];
-    [A2] = w(V1);
-    A1 = bu[V1 + T1 * 2 + 2];
-    A1 = A1 + V1;
-    [A2] = w(A1);
-    A0 = bu[V1 + T1 * 2 + 3];
-    A0 = A0 << 8;
-    A0 = A0 + A1;
-    [A2] = w(A0);
-
-    V1 = bu[80071E2C];
-    V1 = V1 + 1;
-    [80071E2C] = b(V1);
-
-    [80114480 + T0] = h(1);
-    [80114470 + T0] = h(0);
-    [801142CC + T0] = h(0);
-    [80114278 + T0] = h(0);
-    [800E4280 + T0] = h(0);
-    [8011451C + T0] = h(-1);
-    // set window state to 1;
-    [800832A0 + A1 * 30] = h(1);
-
     return 0;
 }
+
+[8008326c + window_id] = b(bu[800722c4]); // set parent entity
+
+[80083274 + window_id * 30 + c] = h(h[80083274 + window_id * 30 + 8] / 4);
+[80083274 + window_id * 30 + e] = h(h[80083274 + window_id * 30 + a] / 4);
+
+if( h[80083274 + window_id * 30 + e] < 8 )
+{
+    [80083274 + window_id * 30 + e] = h(8); // cur h
+}
+
+if( h[80083274 + window_id * 30 + c] < 8 )
+{
+    [80083274 + window_id * 30 + c] = h(8); // cur w
+}
+
+[80083274 + window_id * 30 + 0] = w(800e4944 + window_id * 100); // pointer to string
+[80083274 + window_id * 30 + 10] = h(0); // text scroll value
+[80083274 + window_id * 30 + 12] = h(0); // number of letters
+[80083274 + window_id * 30 + 14] = h(0); // number of bytes
+[80083274 + window_id * 30 + 16] = h(0); // current row
+[80083274 + window_id * 30 + 1a] = b(0); // show pointer
+[800e4944 + window_id * 100] = b(ff); // start with zero string
+
+[800e4234 + window_id * 4] = w(dialog + hu[dialog + 2 + message_id * 2]); // reading offsets in dialog
+
+[80071e2c] = b(bu[80071e2c] + 1); // number of opened windows
+[80114480 + window_id * 2] = h(1); // OK button speed modificator
+[80114470 + window_id * 2] = h(0); // character add speed
+[801142cc + window_id * 2] = h(0); // additional rows during text scrolling
+[800e4278 + window_id * 2] = h(0); // name reading offset
+[800e4280 + window_id * 2] = h(0); // current variable
+[8011451c + window_id * 2] = h(-1); // variable read offset
+[80083274 + window_id * 30 + 2c] = h(1); // state
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// dialog_window_growth()
+// field_dialog_window_growth()
 
-V1 = bu[8008326C + A0];
-V0 = bu[800722C4];
-
-if (V1 != V0)
+if( bu[8008326C + A0] != bu[800722c4] )
 {
-    V0 = bu[8009d820];
-    800D5A9C	nop
-    V0 = V0 & 0003;
-    800D5AA4	beq    v0, zero, Ld5c8c [$800d5c8c]
-    800D5AA8	nop
-
-    A0 = 800a10ec; // "mes busy="
-    A2 = 1;
-    funcbeca4();
-
-    800D5ABC	j      Ld5c8c [$800d5c8c]
-    800D5AC0	nop
-}
-
-V1 = h[8008327C + A0 * 30]; // width
-V0 = hu[80083280 + A0 * 30];
-V1 = V1 >> 2;
-V0 = V0 + V1;
-[80083280 + A0 * 30]= h(V0);
-
-if (V0 < 8)
-{
-    [80083280 + A0 * 30] = h(08);
-}
-
-V0 = h[8008327C + A0 * 30];
-V1 = h[80083280 + A0 * 30];
-
-if (V0 < V1)
-{
-    [80083280 + A0 * 30] = h(V0);
-}
-
-
-
-V1 = h[8008327E + A0 * 30];
-V0 = hu[80083282 + A0 * 30];
-V1 = V1 >> 2;
-V0 = V0 + V1;
-[80083282 + A0 * 30]= h(V0);
-
-if (V0 < 8)
-{
-    [80083282 + A0 * 30] = h(08);
-}
-
-V0 = h[8008327E + A0 * 30];
-V1 = h[80083282 + A0 * 30];
-
-if (V0 < V1)
-{
-    [80083282 + A0 * 30] = h(V0);
-}
-
-
-
-V1 = h[80083280 + A0 * 30];
-V0 = h[8008327Ñ + A0 * 30];
-
-if (V1 == V0)
-{
-    V1 = h[80083282 + A0 * 30];
-    V0 = h[8008327E + A0 * 30];
-
-    if (V1 == V0)
+    if( bu[8009d820] & 3 )
     {
-        // set state to 2
-        [800832A0 + A0 * 30] = h(02);
+        A0 = 800a10ec; // "mes busy="
+        A2 = 1;
+        funcbeca4();
     }
+    return;
+
+}
+
+[80083274 + A0 * 30 + c]= h(hu[80083274 + A0 * 30 + c] + h[80083274 + A0 * 30 + 8] / 4);
+
+if( h[80083274 + A0 * 30 + c] < 8 )
+{
+    [80083274 + A0 * 30 + c] = h(8);
+}
+
+if( h[80083274 + A0 * 30 + 8] < h[80083274 + A0 * 30 + c] )
+{
+    [80083274 + A0 * 30 + c] = h(h[80083274 + A0 * 30 + 8]);
+}
+
+[80083274 + A0 * 30 + e]= h(hu[80083274 + A0 * 30 + e] + h[80083274 + A0 * 30 + a] / 4);
+
+if( h[80083274 + A0 * 30 + e] < 8 )
+{
+    [80083274 + A0 * 30 + e] = h(8);
+}
+if( h[80083274 + A0 * 30 + a] < h[80083274 + A0 * 30 + e] )
+{
+    [80083284 + A0 * 30 + e] = h(h[80083274 + A0 * 30 + a]);
+}
+
+if( ( h[80083274 + A0 * 30 + c] == h[80083274 + A0 * 30 + 8] ) && ( h[80083274 + A0 * 30 + e] == h[80083274 + A0 * 30 + a] ) )
+{
+    [80083274 + A0 * 30 + 2c] = h(2);
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// dialog_copy_text_from_field()
+// field_dialog_copy_text_from_field()
 
 S3 = A0;
 

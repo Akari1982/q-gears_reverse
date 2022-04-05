@@ -16,7 +16,7 @@ FFVII_Field_ScriptOpcodeWSize()
         //A1 = 8;
         //field_script_debug_opcode();
     //}
-    GPU_displayText( "XenoTest2" );
+
     u8 current_entity = psxMemRead8( 0x800722c4 );
     u16 pos = psxMemRead16( 0x800831fc + current_entity * 2 );
     u32 script = psxMemRead32( 0x8009c6dc ) + pos;
@@ -38,7 +38,6 @@ FFVII_Field_ScriptOpcodeWSize()
 void
 FFVII_Field_ScriptOpcodeMessage()
 {
-    GPU_displayText( "XenoTest" );
     //if( bu[8009d820] & 3 )
     //{
         //A0 = 800a0aa8; // "mes"
@@ -50,15 +49,14 @@ FFVII_Field_ScriptOpcodeMessage()
     u16 pos = psxMemRead16( 0x800831fc + current_entity * 2 );
     u32 script = psxMemRead32( 0x8009c6dc ) + pos;
 
-    //A0 = bu[script + 1];
-    //A1 = bu[script + 2];
-    //manage_window_states();
+    u8 window_id = psxMemRead8( script + 1 );
+    u8 message_id = psxMemRead8( script + 2 );
 
-    //if( V0 == 0 )
-    //{
-        //psxRegs.GPR.n.v0 = 1;
-        //return;
-    //}
+    if( FFVII_Field_DialogManageStates( window_id, message_id ) == 0 )
+    {
+        psxRegs.GPR.n.v0 = 1;
+        return;
+    }
 
     psxMemWrite16( 0x800831fc + current_entity * 2, pos + 3 );
 
