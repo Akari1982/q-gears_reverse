@@ -7338,10 +7338,10 @@ flags = w[model + 4]; // flags 0x0100 - use +7[] as vertex specific packet addit
                    //       0x0020 - render triangles.
                    //       0x0010 - use color interpolation.
                    //       0x0008 - render packets with transparensy on.
-S1 = hu[model + 8];
+S1 = hu[model + 8]; // base_tex
 color = hu[model + a]; // color for polygons
 blend = hu[model + c]; // blending option
-S4 = hu[model + e];
+clut = hu[model + e] << 10;
 part_data = w[model + 0]; // global offset to part
 
 if( ( flags & 0080 ) == 0 )
@@ -7349,7 +7349,6 @@ if( ( flags & 0080 ) == 0 )
     color = (color << 10) | (color << 8) | color;
 }
 
-S4 = S4 << 10;
 // A2 - 00 or 0c (in effect machingun fire loading - 0c)
 A2 = e - A2;
 
@@ -7382,11 +7381,11 @@ if( ( flags & 0040 ) == 0 )
     blend = blend + (h[mesh + 0002] & 019f);
 }
 
-AT = 800d2cd0; // Ld2cd0
 number = h[mesh]; // number of triangle
 mesh = mesh + 4;
 S7 = S7 + number;
 
+// textured three-point polygon, opaque, texture-blending
 for( int i = number; i != 0; --i )
 {
     T4 = part_data + 4 + h[mesh + 0];
@@ -7409,73 +7408,70 @@ for( int i = number; i != 0; --i )
         T0 = SXY0;
         T1 = SXY1;
         T2 = SXY2P;
-        funcd32b4();
 
-        [packets + 8] = w(T0);
-        [packets + 10] = w(T1);
-        [packets + 18] = w(T2);
-        gte_AVSZ3(); // Average of three Z values
-        T0 = OTZ;
-        T0 = T0 >> A2;
-        T0 = T0 << 02;
-        T0 = T0 + A1;
-
-        [packets + 0] = w((w[T0] & 00ffffff) | 07000000);
-        [T0] = w(packets & 00ffffff);
-
-        [packets + c] = w(w[mesh + 8] + S4 + S1);
-        [packets + 14] = h(h[mesh + c] + S1);
-        [packets + 1c] = h(h[mesh + e] + S1);
-
-        T0 = h[mesh + 6];
-        T1 = 0;
-
-        if( flags & 0040 )
+        if( ( ( ( T0 << 10 ) >= 0 ) || ( ( T1 << 10 ) >= 0 ) || ( ( T2 << 10 ) >= 0 ) ) &&
+            ( ( ( T0 << 10 ) < 1400000 ) || ( ( T1 << 10 ) < 1400000 ) || ( ( T2 << 10 ) < 1400000 ) ) &&
+            ( ( T0 >= 0 ) || ( T1 >= 0 ) || ( T2 >= 0 ) ) &&
+            ( ( T0 < a60000 ) || ( T1 < a60000 ) || ( T2 < a60000 ) ) )
         {
-            [packets + 16] = h(((T0 >> 8) & 019f) + blend);
-        }
-        else
-        {
-            [packets + 16] = h(blend);
+            [packets + 8] = w(T0); // xy0
+            [packets + 10] = w(T1); // xy1
+            [packets + 18] = w(T2); // xy2
 
-            if( flags & 0100 )
+            gte_AVSZ3(); // Average of three Z values
+            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 07000000);
+            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+
+            [packets + c] = w(w[mesh + 8] + clut + S1); // Texcoord1+Palette (ClutYyXxh)
+            [packets + 14] = h(h[mesh + c] + S1); // Texcoord2+Texpage (PageYyXxh)
+            [packets + 1c] = h(h[mesh + e] + S1); // Texcoord3 (0000YyXxh)
+
+            T0 = h[mesh + 6];
+            T1 = 0;
+
+            if( flags & 0040 )
             {
-                T1 = (T0 & ff00) << 10;
+                [packets + 16] = h(((T0 >> 8) & 019f) + blend); // Texpage (PageYyXxh)
             }
+            else
+            {
+                [packets + 16] = h(blend);
+
+                if( flags & 0100 )
+                {
+                    T1 = (T0 & ff00) << 10;
+                }
+            }
+
+            if( flags & 0080 )
+            {
+                V1 = T0 & ff;
+                V0 = 24000000 | (color & ff000000) | (V1 << 10) | (V1 << 8) | V1;
+
+                if( ( ( flags & 0010 ) == 0 ) && ( color & ffff )
+                {
+                    IR0 = V1;
+                    RGB = V0;
+                    gte_DPCS(); // Depth Cueing
+                    [packets + 4] = w(((color >> 10) << 10) | RGB2 | T1);
+                else
+                {
+                    [packets + 4] = w(V0 | T1);
+                }
+            }
+            else
+            {
+                [packets + 4] = w(24000000 | color | T1);
+            }
+
+            packets = packets + 20;
+            FP = FP + 1;
         }
-
-        V0 = flags & 0080;
-        800D2C38	beq    v0, zero, Ld2cb8 [$800d2cb8]
-
-        V1 = T0 & 00ff;
-        V0 = ((color & ff000000) | 24000000) | (V1 << 10) | (V1 << 8) | V1;
-        V1 = flags & 0010;
-        800D2C6C	bne    v1, zero, Ld2cc0 [$800d2cc0]
-        V1 = color & ffff;
-        800D2C74	beq    v1, zero, Ld2cc0 [$800d2cc0]
-
-        IR0 = V1;
-        RGB = V0;
-        gte_DPCS(); // Depth Cueing
-        [packets + 4] = w(((color >> 10) << 10) | RGB2 | T1);
-        800D2CB0	j      Ld2cc8 [$800d2cc8]
-
-        Ld2cb8:	; 800D2CB8
-        V0 = 24000000 | color;
-
-        Ld2cc0:	; 800D2CC0
-        [packets + 4] = w(V0 | T1);
-
-        Ld2cc8:	; 800D2CC8
-        packets = packets + 20;
-        FP = FP + 1;
     }
 
-    Ld2cd0:	; 800D2CD0
     mesh = mesh + 10;
 }
 
-AT = 800d2f0c; // Ld2f0c
 number = h[mesh]; // number of quad
 mesh = mesh + 4;
 S7 = S7 + number * 2;
@@ -7500,82 +7496,82 @@ for( int i = number; i != 0; --i )
     if( ( ( V0 & 00060000 ) == 0 ) && ( ( flags & 0020 ) || ( MAC0 == 0 ) || ( ( V0 ^ S6 ) >= 0 ) ) )
     {
         T0 = SXY0;
-        T7 = h[mesh + 6];
         T1 = SXY1;
+        T2 = SXY2P;
+
+        T7 = h[mesh + 6];
         VXY0 = w[part_data + 4 + T7 + 0];
         VZ0 = w[part_data + 4 + T7 + 4];
-        T2 = SXY2P;
         gte_RTPS(); // Perspective transform
         T3 = SXY2P;
 
-        funcd3354();
-
-        [packets + 8] = w(T0);
-        [packets + 10] = w(T1);
-        [packets + 18] = w(T2);
-        [packets + 20] = w(T3);
-
-        gte_AVSZ4(); // Average of four Z values
-        T0 = A1 + (OTZ >> A2) * 4;
-        [packets + 0] = w((w[T0] & 00ffffff) | 09000000);
-        [T0] = w(packets & 00ffffff);
-
-        [packets + c] = w(w[mesh + 8] + S4 + S1);
-        [packets + 14] = h(h[mesh + c] + S1);
-        [packets + 1c] = h(h[mesh + e] + S1);
-        [packets + 24] = h(h[mesh + 10] + S1);
-
-        T0 = h[mesh + 12];
-        T1 = 0;
-
-        if( flags & 0040 )
+        if( ( ( ( T0 << 10 ) >= 0 ) || ( ( T1 << 10 ) >= 0 ) || ( ( T2 << 10 ) >= 0 ) || ( ( T3 << 10 ) >= 0 ) ) &&
+            ( ( ( T0 << 10 ) < 1400000 ) || ( ( T1 << 10 ) < 1400000 ) || ( ( T2 << 10 ) < 1400000 ) || ( ( T3 << 10 ) < 1400000 ) ) &&
+            ( ( T0 >= 0 ) || ( T1 >= 0 ) || ( T2 >= 0 ) || ( T3 >= 0 ) ) &&
+            ( ( T0 < a60000 ) || ( T1 < a60000 ) || ( T2 < a60000 ) || ( T3 < a60000 ) ) )
         {
-            [packets + 16] = h(((T0 >> 8) & 019f) + blend);
-        }
-        else
-        {
-            [packets + 16] = h(blend);
+            [packets + 8] = w(T0);
+            [packets + 10] = w(T1);
+            [packets + 18] = w(T2);
+            [packets + 20] = w(T3);
 
-            if( flags & 0100 )
+            gte_AVSZ4(); // Average of four Z values
+            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 09000000);
+            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+
+            [packets + c] = w(w[mesh + 8] + clut + S1);
+            [packets + 14] = h(h[mesh + c] + S1);
+            [packets + 1c] = h(h[mesh + e] + S1);
+            [packets + 24] = h(h[mesh + 10] + S1);
+
+            T0 = h[mesh + 12];
+            T1 = 0;
+
+            if( flags & 0040 )
             {
-                T1 = (T0 & ff00) << 10;
+                [packets + 16] = h(((T0 >> 8) & 019f) + blend);
             }
+            else
+            {
+                [packets + 16] = h(blend);
+
+                if( flags & 0100 )
+                {
+                    T1 = (T0 & ff00) << 10;
+                }
+            }
+
+            if( flags & 0080 )
+            {
+                V1 = T0 & ff;
+                V0 = 2c000000 | (color & ff000000) | (V1 << 10) | (V1 << 08) | V1;
+
+                if( ( ( flags & 0010 ) == 0 ) && ( color & ffff ) )
+                {
+                    IR0 = V1;
+                    RGB = V0;
+                    gte_DPCS(); // Depth Cueing
+
+                    [packets + 4] = w(((S1 >> 10) << 10) | RGB2 | T1);
+                }
+                else
+                {
+                    [packets + 4] = w(V0 | T1);
+                }
+            }
+            else
+            {
+                [packets + 4] = w(2c000000 | color | T1);
+            }
+
+            packets = packets + 28;
+            FP = FP + 2;
         }
-
-        V0 = flags & 0080;
-        800D2E74	beq    v0, zero, Ld2ef4 [$800d2ef4]
-
-        V0 = (color & ff000000) | 2c000000;
-        V1 = T0 & ff;
-        V0 = V0 | (V1 << 10) | (V1 << 08) | V1;
-        V1 = flags & 0010;
-        800D2EA8	bne    v1, zero, Ld2efc [$800d2efc]
-        V1 = color & ffff;
-        800D2EB0	beq    v1, zero, Ld2efc [$800d2efc]
-
-        IR0 = V1;
-        RGB = V0;
-        gte_DPCS(); // Depth Cueing
-
-        [packets + 4] = w((S1 >> 10 << 10) | RGB2 | T1);
-        800D2EEC	j      Ld2f04 [$800d2f04]
-
-        Ld2ef4:	; 800D2EF4
-        V0 = 2c000000 | color;
-
-        Ld2efc:	; 800D2EFC
-        [packets + 4] = w(V0 | T1);
-
-        Ld2f04:	; 800D2F04
-        packets = packets + 28;
-        FP = FP + 2;
     }
 
-    Ld2f0c:	; 800D2F0C
     mesh = mesh + 14;
 }
 
-AT = 800d3098; // Ld3098
 number = h[mesh];
 mesh = mesh + 4;
 S7 = S7 + number;
@@ -7602,45 +7598,48 @@ for( int i = number; i != 0; --i )
         T0 = SXY0;
         T1 = SXY1;
         T2 = SXY2P;
-        funcd32b4();
 
-        [packets + 8] = w(T0);
-        [packets + 10] = w(T1);
-        [packets + 18] = w(T2);
-        gte_AVSZ3(); // Average of three Z values
-        T0 = A1 + (OTZ >> A2) * 4;
-        [packets + 0] = w((w[T0] & 00ffffff) | 06000000);
-        [T0] = w(packets & 00ffffff);
-
-        V1 = color & ffff;
-        if( V1 != 0 )
+        if( ( ( ( T0 << 10 ) >= 0 ) || ( ( T1 << 10 ) >= 0 ) || ( ( T2 << 10 ) >= 0 ) ) &&
+            ( ( ( T0 << 10 ) < 1400000 ) || ( ( T1 << 10 ) < 1400000 ) || ( ( T2 << 10 ) < 1400000 ) ) &&
+            ( ( T0 >= 0 ) || ( T1 >= 0 ) || ( T2 >= 0 ) ) &&
+            ( ( T0 < a60000 ) || ( T1 < a60000 ) || ( T2 < a60000 ) ) )
         {
-            RGB1 = w[mesh + c];
-            RGB0 = w[mesh + 10];
-            RGB2 = w[mesh + 8];
-            RGB = w[mesh + 8];
-            IR0 = V1;
-            gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
-            [packets + 4] = w(((color >> 10) << 10) | RGB2);
-            [packets + c] = w(RGB1);
-            [packets + 14] = w(RGB0);
-        }
-        else
-        {
-            [packets + 4] = w(w[mesh + 8]; | color);
-            [packets + c] = w(w[mesh + c]);
-            [packets + 14] = w(w[mesh + 10]);
-        }
+            [packets + 8] = w(T0);
+            [packets + 10] = w(T1);
+            [packets + 18] = w(T2);
 
-        packets = packets + 1c;
-        FP = FP + 1;
+            gte_AVSZ3(); // Average of three Z values
+            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 06000000);
+            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+
+            V1 = color & ffff;
+            if( V1 != 0 )
+            {
+                RGB1 = w[mesh + c];
+                RGB0 = w[mesh + 10];
+                RGB2 = w[mesh + 8];
+                RGB = w[mesh + 8];
+                IR0 = V1;
+                gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
+                [packets + 4] = w(((color >> 10) << 10) | RGB2);
+                [packets + c] = w(RGB1);
+                [packets + 14] = w(RGB0);
+            }
+            else
+            {
+                [packets + 4] = w(w[mesh + 8]; | color);
+                [packets + c] = w(w[mesh + c]);
+                [packets + 14] = w(w[mesh + 10]);
+            }
+
+            packets = packets + 1c;
+            FP = FP + 1;
+        }
     }
 
-    Ld3098:	; 800D3098
     mesh = mesh + 14;
 }
 
-AT = 800d326c; // Ld326c
 number = h[mesh];
 mesh = mesh + 4;
 S7 = S7 + number * 2;
@@ -7673,580 +7672,57 @@ for( int i = number; i != 0; --i )
         VZ0 = w[part_data + 4 + T7 + 4];
         gte_RTPS(); // Perspective transform
 
-        funcd3354();
-
-        [packets + 8] = w(T0);
-        [packets + 10] = w(T1);
-        [packets + 18] = w(T2);
-        [packets + 20] = w(SXY2P);
-
-        gte_AVSZ4(); // Average of four Z values
-        T0 = A1 + (OTZ >> A2) * 4;
-        [packets + 0] = w((w[T0] & 00ffffff) | 08000000);
-        [T0] = w(packets & 00ffffff);
-
-        V1 = color & ffff;
-        if( V1 != 0 )
+        if( ( ( ( T0 << 10 ) >= 0 ) || ( ( T1 << 10 ) >= 0 ) || ( ( T2 << 10 ) >= 0 ) || ( ( T3 << 10 ) >= 0 ) ) &&
+            ( ( ( T0 << 10 ) < 1400000 ) || ( ( T1 << 10 ) < 1400000 ) || ( ( T2 << 10 ) < 1400000 ) || ( ( T3 << 10 ) < 1400000 ) ) &&
+            ( ( T0 >= 0 ) || ( T1 >= 0 ) || ( T2 >= 0 ) || ( T3 >= 0 ) ) &&
+            ( ( T0 < a60000 ) || ( T1 < a60000 ) || ( T2 < a60000 ) || ( T3 < a60000 ) ) )
         {
-            RGB1 = w[mesh + c];
-            RGB0 = w[mesh + 10];
-            RGB2 = w[mesh + 8];
-            RGB = w[mesh + 8];
-            IR0 = V1;
-            gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
+            [packets + 8] = w(T0);
+            [packets + 10] = w(T1);
+            [packets + 18] = w(T2);
+            [packets + 20] = w(SXY2P);
 
-            [packets + 4] = w(((color >> 10) << 10) | RGB2);
-            [packets + c] = w(RGB1);
-            [packets + 14] = w(RGB0);
+            gte_AVSZ4(); // Average of four Z values
+            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 08000000);
+            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
 
-            RGB = w[mesh + 14];
-            IR0 = V1;
-            gte_DPCS(); // Depth Cueing
-            [packets + 1c] = w(RGB2);
+            V1 = color & ffff;
+            if( V1 != 0 )
+            {
+                RGB1 = w[mesh + c];
+                RGB0 = w[mesh + 10];
+                RGB2 = w[mesh + 8];
+                RGB = w[mesh + 8];
+                IR0 = V1;
+                gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
+
+                [packets + 4] = w(((color >> 10) << 10) | RGB2);
+                [packets + c] = w(RGB1);
+                [packets + 14] = w(RGB0);
+
+                RGB = w[mesh + 14];
+                IR0 = V1;
+                gte_DPCS(); // Depth Cueing
+                [packets + 1c] = w(RGB2);
+            }
+            else
+            {
+                [packets + 4] = w(w[mesh + 8] | color);
+                [packets + c] = w(w[mesh + c]);
+                [packets + 14] = w(w[mesh + 10]);
+                [packets + 1c] = w(w[mesh + 14]);
+            }
+
+            packets = packets + 24;
+            FP = FP + 2;
         }
-        else
-        {
-            [packets + 4] = w(w[mesh + 8] | color);
-            [packets + c] = w(w[mesh + c]);
-            [packets + 14] = w(w[mesh + 10]);
-            [packets + 1c] = w(w[mesh + 14]);
-        }
-
-        packets = packets + 24;
-        FP = FP + 2;
     }
 
-    Ld326c:	; 800D326C
     mesh = mesh + 18;
 }
 
 [800d3544 + 0] = h(S7);
 [800d3544 + 2] = h(FP);
-return packets;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-model = A0;
-packets = A3;
-// A2 - 00 or 0c (in effect machingun fire loading - 0c)
-A2 = e - A2;
-
-S7 = hu[800d3544 + 0];
-FP = hu[800d3544 + 2];
-
-S0 = w[model + 4]; // flags 0x0100 - use +7[] as vertex specific packet addition (only without 0x0040).
-                   //       0x0080 - use +6[] as color in vertex, if not set use function argument as color.
-                   //       0x0040 - use +7[] as vertex texture page settings instead of global part.
-                   //       0x0020 - render triangles.
-                   //       0x0010 - use color interpolation.
-                   //       0x0008 - render packets with transparensy on.
-S1 = hu[model + 8];
-S2 = hu[model + a]; // color for polygons
-S3 = hu[model + c]; // blending option
-S4 = hu[model + e];
-part_data = w[model + 0]; // global offset to part
-
-if( ( S0 & 0080 ) == 0 )
-{
-    S2 = (S2 << 10) | (S2 << 8) | S2;
-}
-// add transparency bit to polygon header
-S2 = S2 | ((S0 & 8) << 16);
-
-S4 = S4 << 10;
-
-mesh = part_data + 4 + w[part_data + 0]; // real offset to triangle data
-
-S6 = 0;
-if( S0 & 0001 )
-{
-    S6 = S6 XOR ffffffff;
-    funcd3418;
-}
-if( S0 & 0002 )
-{
-    S6 = S6 XOR ffffffff;
-    funcd3474;
-}
-if( S0 & 0004 )
-{
-    S6 = S6 XOR ffffffff;
-    funcd34c8;
-}
-
-if( ( S0 & 0040 ) == 0 )
-{
-    S3 = (h[mesh + 2] & 19f) + S3; // add blend
-}
-
-number = h[mesh]; // number of triangle
-mesh = mesh + 4;
-S7 = S7 + number;
-
-for( int i = number; i != 0; --i )
-{
-    T4 = part_data + 4 + h[mesh + 0];
-    T5 = part_data + 4 + h[mesh + 2];
-    T6 = part_data + 4 + h[mesh + 4];
-
-    VXY0 = w[T4 + 0]; VZ0  = w[T4 + 4];
-    VXY1 = w[T5 + 0]; VZ1  = w[T5 + 4];
-    VXY2 = w[T6 + 0]; VZ2  = w[T6 + 4];
-    gte_RTPT(); // Perspective transform on 3 points.
-    V0 = FLAG;
-
-    gte_NCLIP(); // Normal clipping.
-
-    if( ( ( V0 & 00060000 ) == 0 ) && ( ( S0 & 0020 ) || ( ( MAC0 != 0 ) && ( ( MAC0 XOR S6 ) >= 0 ) ) ) )
-    {
-        T0 = SXY0;
-        T1 = SXY1;
-        T2 = SXY2;
-
-        // if at least 1 point is on screen
-        if ( ( ( ( T0 << 10 ) >=  0 ) || ( ( T1 << 10 ) >=  0 ) || ( ( T2 << 10 ) >=  0 ) ) &&
-             ( ( ( T0 << 10 ) < 140 ) || ( ( T1 << 10 ) < 140 ) || ( ( T2 << 10 ) < 140 ) ) &&
-             ( ( ( T0 >= 0 ) && ( ( T0 < a6 ) || ( T1 < a6 ) || ( T2 < a6 ) ) ) || ( ( T1 >= 0 ) || ( T2 >= 0 ) ) )
-        {
-            // set vertex pos
-            [packets + 8] = w(T0);
-            [packets + 10] = w(T1);
-            [packets + 18] = w(T2);
-
-            // do depth sort
-            gte_AVSZ3(); // Average of four Z values
-            T0 = OTZ >> A2;
-
-            [packets + 0] = w((w[A1 + T0 * 4] & 00ffffff) | 07000000);
-            [A1 + T0 * 4] = w(packets & 00ffffff);
-
-            // set clut and uv
-            [packets + c] = w(w[mesh + 8] + S4 + S1);
-            [packets + 14] = h(h[mesh + c] + S1);
-            [packets + 1c] = h(h[mesh + e] + S1);
-
-            T0 = h[mesh + 6];
-            T1 = 0;
-            if( ( S0 & 0040 ) == 0)
-            {
-                [packets + 16] = h(S3);
-
-                if( S0 & 0100 )
-                {
-                    T1 = (T0 & ff00) << 10;
-                }
-            }
-            else
-            {
-                [packets + 16] = h((T0 >> 8) & 19f + S3); // add texpage settings from vertex
-            }
-
-            if( S0 & 0080 )
-            {
-                V0 = (S2 & ff000000) | 24000000 | (T0 & ff << 10) | (T0 & ff << 8) | (T0 & ff);
-
-                if( ( S0 & 0010 ) == 0 )
-                {
-                    V1 = S2 & ffff;
-                    if( V1 != 0 )
-                    {
-                        IR0 = V1;
-                        RGB = V0;
-                        gte_DPCS();
-                        V0 = RGB2 | (S2 >> 10) << 10;
-                    }
-                }
-            }
-            else
-            {
-                V0 = 24000000 | S2;
-            }
-
-            [packets + 4] = w(V0 | T1); // header and RGB
-
-            packets = packets + 20;
-            FP = FP + 1;
-        }
-    }
-
-    mesh = mesh + 10;
-}
-
-
-
-AT = 800d2f0c; // Ld2f0c
-T8 = w[mesh];
-mesh = mesh + 4;
-S7 = S7 + T8;
-S7 = S7 + T8;
-
-for( int i = T8; i != 0; --i )
-{
-    T4 = part_data + 4 + h[mesh + 0];
-    T5 = part_data + 4 + h[mesh + 2];
-    T6 = part_data + 4 + h[mesh + 4];
-
-    VXY0 = w[T4 + 0]; VZ0  = w[T4 + 4];
-    VXY1 = w[T5 + 0]; VZ1  = w[T5 + 4];
-    VXY2 = w[T6 + 0]; VZ2  = w[T6 + 4];
-    gte_RTPT(); // Perspective transform on 3 points.
-    V0 = FLAG;
-
-    gte_NCLIP(); // Normal clipping.
-
-    if( ( ( V0 & 00060000 ) == 0 ) && ( ( S0 & 20 ) || ( MAC0 == 0 ) || ( ( MAC0 ^ S6 ) >= 0 ) ) )
-    {
-        T7 = h[mesh + 14 - e];
-        T0 = SXY0;
-        T7 = part_data + 4 + T7;
-        T1 = SXY1;
-        VXY0 = w[T7 + 0000];
-        VZ0 = w[T7 + 0004];
-        T2 = SXY2P;
-        gte_RTPS(); // Perspective transform
-        T3 = SXY2P;
-
-        funcd3354();
-
-        [packets + 0008] = w(T0);
-        [packets + 0010] = w(T1);
-        [packets + 0018] = w(T2);
-        [packets + 0020] = w(T3);
-        gte_AVSZ4(); // Average of four Z values
-        T0 = OTZ;
-        800D2DC8	nop
-        T0 = T0 >> A2;
-        T0 = T0 << 02;
-        T0 = T0 + A1;
-        T1 = w[T0 + 0000];
-        V0 = ffffff;
-        800D2DE4	lui    v1, $0900
-        T1 = T1 & V0;
-        T1 = T1 | V1;
-        [packets + 0000] = w(T1);
-        V0 = packets & V0;
-        [T0 + 0000] = w(V0);
-        T0 = w[mesh + 14 - c] + S4 + S1;
-        T1 = h[mesh + 14 - 8] + S1;
-        T2 = h[mesh + 14 - 6] + S1;
-        T3 = h[mesh + 14 - 4] + S1;
-        [packets + 000c] = w(T0);
-        [packets + 0014] = h(T1);
-        [packets + 001c] = h(T2);
-        [packets + 0024] = h(T3);
-
-        T0 = h[mesh + 12];
-
-        if( S0 & 0040 )
-        {
-            V0 = T0 >> 08;
-            V0 = V0 & 019f;
-            [packets + 0016] = h(V0 + S3);
-        }
-        else
-        {
-            [packets + 0016] = h(S3);
-
-            if( S0 & 0100 )
-            {
-                T1 = T0 & ff00;
-                T1 = T1 << 10;
-            }
-        }
-        T1 = 0;
-
-        V0 = S0 & 0080;
-        800D2E74	beq    v0, zero, Ld2ef4 [$800d2ef4]
-
-        V0 = S2 & ff000000;
-        V0 = 2c000000 | V0;
-        V0 = V0 | (T0 & ff);
-        V0 = V0 | ((T0 & ff) << 08);
-        V0 = V0 | ((T0 & ff) << 10);
-        V1 = S0 & 0010;
-        800D2EA8	bne    v1, zero, Ld2efc [$800d2efc]
-        V1 = S2 & ffff;
-        800D2EB0	beq    v1, zero, Ld2efc [$800d2efc]
-
-        IR0 = V1;
-        RGB = V0;
-        gte_DPCS(); // Depth Cueing
-        V0 = RGB2;
-        V1 = S1 >> 10;
-        V1 = V1 << 10;
-        V0 = V0 | V1;
-        V0 = V0 | T1;
-        [packets + 0004] = w(V0);
-        800D2EEC	j      Ld2f04 [$800d2f04]
-        800D2EF0	nop
-
-        Ld2ef4:	; 800D2EF4
-        V0 = 2c000000 | S2;
-
-        Ld2efc:	; 800D2EFC
-        V0 = V0 | T1;
-        [packets + 0004] = w(V0);
-
-        Ld2f04:	; 800D2F04
-        packets = packets + 28;
-        FP = FP + 2;
-    }
-
-    mesh = mesh + 14;
-}
-
-T8 = h[mesh + 0000];
-mesh = mesh + 0004;
-S7 = S7 + T8;
-if( T8 != 0 )
-{
-    T4 = h[mesh + 0000];
-    T5 = h[mesh + 0002];
-    T6 = h[mesh + 0004];
-    T4 = part_data + 4 + T4;
-    T5 = part_data + 4 + T5;
-    T6 = part_data + 4 + T6;
-
-    loopd2f48:	; 800D2F48
-        T8 = T8 - 1;
-        VXY0 = w[T4 + 0000];
-        VZ0 = w[T4 + 0004];
-        VXY1 = w[T5 + 0000];
-        VZ1 = w[T5 + 0004];
-        VXY2 = w[T6 + 0000];
-        VZ2 = w[T6 + 0004];
-        mesh = mesh + 0014;
-        gte_RTPT(); // Perspective transform on 3 points
-        T4 = h[mesh + 0000];
-        T5 = h[mesh + 0002];
-        T6 = h[mesh + 0004];
-        T4 = part_data + 4 + T4;
-        T5 = part_data + 4 + T5;
-        T6 = part_data + 4 + T6;
-        V0 = FLAG;
-        gte_NCLIP(); // Normal clipping
-        800D2F88	lui    v1, $0006
-        V0 = V0 & V1;
-        800D2F90	bne    v0, zero, Ld3098 [$800d3098]
-        800D2F94	nop
-        V0 = S0 & 0020;
-        800D2F9C	bne    v0, zero, Ld2fbc [$800d2fbc]
-        800D2FA0	nop
-        V0 = MAC0;
-        800D2FA8	nop
-        800D2FAC	beq    v0, zero, Ld3098 [$800d3098]
-        V0 = V0 ^ S6;
-        800D2FB4	bltz   v0, Ld3098 [$800d3098]
-        800D2FB8	nop
-
-        Ld2fbc:	; 800D2FBC
-        T0 = SXY0;
-        T1 = SXY1;
-        T2 = SXY2P;
-        funcd32b4();
-
-        [packets + 0008] = w(T0);
-        [packets + 0010] = w(T1);
-        [packets + 0018] = w(T2);
-        gte_AVSZ3(); // Average of three Z values
-        T0 = OTZ;
-        800D2FE4	nop
-        T0 = T0 >> A2;
-        T0 = T0 << 02;
-        T0 = T0 + A1;
-        T1 = w[T0 + 0000];
-        V0 = ffffff;
-        800D3000	lui    v1, $0600
-        T1 = T1 & V0;
-        T1 = T1 | V1;
-        [packets + 0000] = w(T1);
-        V0 = packets & V0;
-        [T0 + 0000] = w(V0);
-        V1 = S2 & ffff;
-        800D301C	beq    v1, zero, Ld3074 [$800d3074]
-        800D3020	nop
-        V0 = w[mesh - c];
-        RGB1 = w[mesh - 8];
-        RGB0 = w[mesh - 4];
-        RGB2 = V0;
-        RGB = V0;
-        IR0 = V1;
-        DPCT; // Depth cue color RGB0,RGB1,RGB2.
-
-        V0 = RGB2;
-        [packets + 0014] = w(RGB0);
-        [packets + 000c] = w(RGB1);
-        V1 = S2 >> 10;
-        V1 = V1 << 10;
-        V0 = V0 | V1;
-        [packets + 0004] = w(V0);
-        800D306C	j      Ld3090 [$800d3090]
-        800D3070	nop
-
-        Ld3074:	; 800D3074
-        T0 = w[mesh + fff4];
-        T1 = w[mesh + fff8];
-        T2 = w[mesh + fffc];
-        T0 = T0 | S2;
-        [packets + 0004] = w(T0);
-        [packets + 000c] = w(T1);
-        [packets + 0014] = w(T2);
-
-        Ld3090:	; 800D3090
-        packets = packets + 001c;
-        FP = FP + 0001;
-
-        Ld3098:	; 800D3098
-    800D3098	bne    t8, zero, loopd2f48 [$800d2f48]
-}
-
-T8 = w[mesh + 0];
-mesh = mesh + 4;
-S7 = S7 + T8;
-if( T8 != 0 )
-{
-    S7 = S7 + T8;
-    T4 = h[mesh + 0];
-    T5 = h[mesh + 2];
-    T6 = h[mesh + 4];
-    T4 = part_data + 4 + T4;
-    T5 = part_data + 4 + T5;
-    T6 = part_data + 4 + T6;
-
-    Ld30d8:	; 800D30D8
-        T8 = T8 - 1;
-        VXY0 = w[T4 + 0];
-        VZ0 = w[T4 + 4];
-        VXY1 = w[T5 + 0];
-        VZ1 = w[T5 + 4];
-        VXY2 = w[T6 + 0];
-        VZ2 = w[T6 + 4];
-        mesh = mesh + 18;
-        gte_RTPT(); // Perspective transform on 3 points
-
-        T4 = h[mesh + 0];
-        T5 = h[mesh + 2];
-        T6 = h[mesh + 4];
-
-        T4 = part_data + 4 + T4;
-        T5 = part_data + 4 + T5;
-        T6 = part_data + 4 + T6;
-        V0 = FLAG;
-        gte_NCLIP(); // Normal clipping
-
-        V0 = V0 & 60000;
-        800D3120	bne    v0, zero, Ld326c [$800d326c]
-
-        V0 = S0 & 0020;
-        800D312C	bne    v0, zero, Ld314c [$800d314c]
-
-        V0 = MAC0;
-
-        800D313C	beq    v0, zero, Ld314c [$800d314c]
-        V0 = V0 ^ S6;
-        800D3144	bltz   v0, Ld326c [$800d326c]
-        800D3148	nop
-
-        Ld314c:	; 800D314C
-        T7 = h[mesh + ffee];
-        T0 = SXY0;
-        T7 = part_data + 4 + T7;
-        T1 = SXY1;
-        VXY0 = w[T7 + 0000];
-        VZ0 = w[T7 + 0004];
-        T2 = SXY2P;
-        gte_RTPS(); // Perspective transform
-        T3 = SXY2P;
-        funcd3354();
-
-        [packets + 8] = w(T0);
-        [packets + 10] = w(T1);
-        [packets + 18] = w(T2);
-        [packets + 20] = w(T3);
-        gte_AVSZ4(); // Average of four Z values
-        T0 = OTZ;
-        T0 = T0 >> A2;
-        T0 = T0 << 02;
-        T0 = T0 + A1;
-        T1 = (w[T0 + 0000] & 00ffffff) | 08000000;
-        [packets + 0000] = w(T1);
-        [T0 + 0000] = w(packets & 00ffffff);
-
-        V1 = S2 & ffff;
-        if( V1 != 0 )
-        {
-            V0 = w[mesh - 10];
-            RGB1 = w[mesh - c];
-            RGB0 = w[mesh - 8];
-            RGB2 = V0;
-            RGB = V0;
-            IR0 = V1;
-            gte_DPCT(); // Depth cue color RGB0,RGB1,RGB2
-
-            [packets + 14] = w(RGB0);
-            [packets + c] = w(RGB1);
-            [packets + 4] = w(((S2 >> 10) << 10) | RGB2);
-            RGB = w[mesh - 4];
-            IR0 = V1;
-            gte_DPCS(); // Depth Cueing
-
-            [packets + 001c] = w(RGB2);
-        }
-        else
-        {
-            [packets +  4] = w(w[mesh - 10] | S2);
-            [packets +  c] = w(w[mesh - c]);
-            [packets + 14] = w(w[mesh - 8]);
-            [packets + 1c] = w(w[mesh - 4]);
-        }
-
-        packets = packets + 24;
-        FP = FP + 2;
-
-        Ld326c:	; 800D326C
-    800D326C	bne    t8, zero, Ld30d8 [$800d30d8]
-}
-
-[800d3544 + 0] = h(S7);
-[800d3544 + 2] = h(FP);
-
 return packets;
 ////////////////////////////////
 
@@ -8262,22 +7738,14 @@ y1 = T1;
 x2 = ( T2 << 10 );
 y2 = T2;
 
-if( ( x0 < 0 ) && ( x1 < 0 ) && ( x2 < 0 ) )
+if( ( ( x0 >= 0 ) || ( x1 >= 0 ) || ( x2 >= 0 ) ) &&
+    ( ( x0 < 1400000 ) || ( x1 < 1400000 ) || ( x2 < 1400000 ) ) &&
+    ( ( y0 >= 0 ) || ( y1 >= 0 ) || ( y2 >= 0 ) ) &&
+    ( ( y0 < a60000 ) || ( y1 < a60000 ) || ( y2 < a60000 ) ) )
 {
-    800D3300	jr     at
+    return;
 }
-else if( ( x0 >= 1400000 ) && ( x1 >= 1400000 ) && ( x2 >= 1400000 ) )
-{
-    800D32E4	jr     at
-}
-else if( ( y0 < 0 ) && ( y1 < 0 ) && ( y2 < 0 ) )
-{
-    800D3344	jr     at
-}
-else if( ( y0 >= a60000 ) && ( y1 >= a60000 ) && ( y2 >= a60000 ) )
-{
-    800D332C	jr     at
-}
+800D3300	jr     at
 ////////////////////////////////
 
 
@@ -8294,22 +7762,14 @@ y2 = T2;
 x3 = ( T3 << 10 );
 y3 = T3;
 
-if( ( x0 < 0 ) && ( x1 < 0 ) && ( x2 < 0 ) && ( x3 < 0 ) )
+if( ( ( x0 >= 0 ) || ( x1 >= 0 ) || ( x2 >= 0 ) || ( x3 >= 0 ) ) &&
+    ( ( x0 < 1400000 ) || ( x1 < 1400000 ) || ( x2 < 1400000 ) || ( x3 < 1400000 ) ) &&
+    ( ( y0 >= 0 ) || ( y1 >= 0 ) || ( y2 >= 0 ) || ( y3 >= 0 ) ) &&
+    ( ( y0 < a60000 ) || ( y1 < a60000 ) || ( y2 < a60000 ) || ( y3 < a60000 ) ) )
 {
-    800D33B4	jr     at
+    return
 }
-else if( ( x0 >= 1400000 ) && ( x1 >= 1400000 ) && ( x2 >= 1400000 ) && ( x3 >= 1400000 ) )
-{
-    800D3390	jr     at
-}
-else if( ( y0 < 0 ) && ( y1 < 0 ) && ( y2 < 0 ) && ( y3 < 0 ) )
-{
-    800D3408	jr     at
-}
-else if( ( y0 >= a60000 ) && ( y1 >= a60000 ) && ( y2 >= a60000 ) && ( y3 >= a60000 ) )
-{
-    800D33E8	jr     at
-}
+800D33B4	jr     at
 ////////////////////////////////
 
 
