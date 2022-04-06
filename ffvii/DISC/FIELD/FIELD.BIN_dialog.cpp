@@ -445,7 +445,7 @@ if (v1 < F)
 
         case 1:
         {
-            field_dialog_window_growth;
+            field_dialog_window_growth();
 
             return 0;
         }
@@ -776,44 +776,46 @@ return 0;
 ////////////////////////////////
 // field_dialog_window_growth()
 
-if( bu[8008326C + A0] != bu[800722c4] )
+window_id = A0;
+
+if( bu[8008326C + window_id] != bu[800722c4] )
 {
     if( bu[8009d820] & 3 )
     {
         A0 = 800a10ec; // "mes busy="
+        A1 = window_id;
         A2 = 1;
         funcbeca4();
     }
     return;
-
 }
 
-[80083274 + A0 * 30 + c]= h(hu[80083274 + A0 * 30 + c] + h[80083274 + A0 * 30 + 8] / 4);
+[80083274 + window_id * 30 + c]= h(hu[80083274 + window_id * 30 + c] + h[80083274 + window_id * 30 + 8] / 4);
 
-if( h[80083274 + A0 * 30 + c] < 8 )
+if( h[80083274 + window_id * 30 + c] < 8 )
 {
-    [80083274 + A0 * 30 + c] = h(8);
+    [80083274 + window_id * 30 + c] = h(8);
 }
 
-if( h[80083274 + A0 * 30 + 8] < h[80083274 + A0 * 30 + c] )
+if( h[80083274 + window_id * 30 + 8] < h[80083274 + window_id * 30 + c] )
 {
-    [80083274 + A0 * 30 + c] = h(h[80083274 + A0 * 30 + 8]);
+    [80083274 + window_id * 30 + c] = h(h[80083274 + window_id * 30 + 8]);
 }
 
-[80083274 + A0 * 30 + e]= h(hu[80083274 + A0 * 30 + e] + h[80083274 + A0 * 30 + a] / 4);
+[80083274 + window_id * 30 + e]= h(hu[80083274 + window_id * 30 + e] + h[80083274 + window_id * 30 + a] / 4);
 
-if( h[80083274 + A0 * 30 + e] < 8 )
+if( h[80083274 + window_id * 30 + e] < 8 )
 {
-    [80083274 + A0 * 30 + e] = h(8);
+    [80083274 + window_id * 30 + e] = h(8);
 }
-if( h[80083274 + A0 * 30 + a] < h[80083274 + A0 * 30 + e] )
+if( h[80083274 + window_id * 30 + a] < h[80083274 + window_id * 30 + e] )
 {
-    [80083284 + A0 * 30 + e] = h(h[80083274 + A0 * 30 + a]);
+    [80083284 + window_id * 30 + e] = h(h[80083274 + window_id * 30 + a]);
 }
 
-if( ( h[80083274 + A0 * 30 + c] == h[80083274 + A0 * 30 + 8] ) && ( h[80083274 + A0 * 30 + e] == h[80083274 + A0 * 30 + a] ) )
+if( ( h[80083274 + window_id * 30 + c] == h[80083274 + window_id * 30 + 8] ) && ( h[80083274 + window_id * 30 + e] == h[80083274 + window_id * 30 + a] ) )
 {
-    [80083274 + A0 * 30 + 2c] = h(2);
+    [80083274 + window_id * 30 + 2c] = h(2);
 }
 ////////////////////////////////
 
@@ -822,16 +824,555 @@ if( ( h[80083274 + A0 * 30 + c] == h[80083274 + A0 * 30 + 8] ) && ( h[80083274 +
 ////////////////////////////////
 // field_dialog_copy_text_from_field()
 
-S3 = A0;
+window_id = A0;
 
-V1 = bu[8008326C + S3]; // get windows parent entity
-V0 = bu[800722C2];
-if (V1 != V0)
+if( bu[8008326c + window_id + 0] != bu[800722c4] )
 {
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a10ec; // "mes busy="
+        A1 = window_id
+        A2 = 1;
+        funcbeca4();
+    }
     return;
 }
 
-V0 = hu[800832A2 + S3 * 30];
+if( hu[800832a2 + window_id * 30] & 2 )
+{
+    A1 = 100;
+    S5 = 1;
+}
+else
+{
+    V0 = w[8009c6e0];
+    if( w[V0 + 78] & 20 )
+    {
+        [80114480 + window_id * 2] = h(h[80114480 + window_id * 2] + 1);
+        if( h[80114480 + window_id * 2] >= 81 )
+        {
+            [80114480 + window_id * 2] = h(80);
+        }
+    }
+    else
+    {
+        [80114480 + window_id * 2] = h(h[80114480 + window_id * 2] - 1);
+        if( h[80114480 + window_id * 2] < 2 )
+        {
+            [80114480 + window_id * 2] = h(1);
+        }
+    }
+
+    V1 = bu[8009d7d0];
+    if( V1 < 80 )
+    {
+        A1 = 2;
+        S5 = (V1 - 80) / 20 + 1;
+    }
+    else
+    {
+        A1 = ((80 - V1) / 20) + 2;
+        S5 = 1;
+    }
+}
+
+[80114470 + window_id * 2] = h(h[80114470 + window_id * 2] + A1 + S5 * (h[80114480 + window_id * 2] / 10));
+
+for( ; S5 < h[80114470 + window_id * 2]; )
+{
+    V0 = w[800e4234 + window_id * 4];
+    V0 = bu[V0];
+
+    switch( V0 )
+    {
+        case ff: // string end
+        {
+            [80114470 + window_id * 2] = h(0); // speed
+            bytes = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + bytes] = b(ff);
+            [80083274 + window_id * 30 + 2c] = h(6);
+            return;
+        }
+        break;
+
+        case e0: // tabulation (10 spaces)
+        {
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+
+            for( int i = 0; i < a; ++i )
+            {
+                V0 = h[80083274 + window_id * 30 + 14];
+                [800e4944 + window_id * 100 + V0] = b(0);
+                [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+            }
+            continue;
+        }
+        break;
+
+        case e1: // tabulation (4 spaces)
+        {
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+
+            for( int i = 0; i < 4; ++i )
+            {
+                V0 = h[80083274 + window_id * 30 + 14];
+                [800e4944 + window_id * 100 + V0] = b(0);
+                [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+            }
+            continue;
+        }
+        break;
+
+        case e2: // ", "
+        {
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+            V0 = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + V0] = b(c);
+            [800e4944 + window_id * 100 + V0] = b(0);
+            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2);
+            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 2);
+            continue;
+        }
+        break;
+
+        case e3: // ".""
+        {
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+            V0 = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + V0 + 0] = b(e);
+            [800e4944 + window_id * 100 + V0 + 1] = b(2);
+            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2);
+            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 2);
+            continue;
+        }
+        break;
+
+        case e4: // "...""
+        {
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+            V0 = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + V0] = b(a9);
+            [800e4944 + window_id * 100 + V0] = b(2);
+            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2);
+            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 2);
+            continue;
+        }
+        break;
+
+        case e7: // next row
+        {
+            bytes = h[80083274 + window_id * 30 + 14];
+
+            // if we reach max strings for now
+            if( h[80083274 + window_id * 30 + 16] == ( h[801142cc + window_id * 2] - 1 + h[80083274 + window_id * 30 + a] / 10 ) )
+            {
+                [80114480 + window_id * 2] = h(1); // reset speed mod
+                [80114470 + window_id * 2] = h(0); // speed
+                [800e4944 + window_id * 100 + bytes] = b(ff);
+                [80083274 + window_id * 30 + 2c] = h(4);
+                return;
+            }
+
+            offset = w[800e4234 + window_id * 4];
+            [800e4944 + window_id * 100 + bytes] = b(bu[offset]);
+            [800e4234 + window_id * 4] = w(offset + 1);
+            [80083274 + window_id * 30 + 14] = h(bytes + 1); // bytes in string
+            [80083274 + window_id * 30 + 16] = h(hu[80083274 + window_id * 30 + 16] + 1); // cur row
+            continue;
+        }
+        break;
+
+        case e8 e9: // next window
+        {
+            [80114480 + window_id * 2] = h(1); // reset speed mod
+            [80114470 + window_id * 2] = h(0); // speed
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1); // add offset
+            bytes = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + bytes] = b(ff);
+            [80083274 + window_id * 30 + 2c] = h(e);
+            return;
+        }
+        break;
+
+        case ea eb ec ed ee ef f0 f1 f2: // character names
+        {
+            V0 = w[800e4234 + window_id * 4];
+            S0 = bu[V0] - ea;
+
+            A0 = S0 & ffff;
+            system_get_character_name_offset();
+            A1 = V0 + h[800e4278 + window_id * 2];
+
+            if( ( bu[A1] == ff ) || ( h[800e4278 + window_id * 2] >= 9 ) )
+            {
+                [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                [800e4278 + window_id * 2] = h(0);
+            }
+            else
+            {
+                V0 = h[80083274 + window_id * 30 + 14];
+                [800e4944 + window_id * 100 + V0] = b(bu[A1]);
+                [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                [800e4278 + window_id * 2] = h(hu[800e4278 + window_id * 2] + 1);
+                [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+            }
+            continue;
+        }
+        break;
+
+        case f3 f4 f5: // party character name
+        {
+            V1 = w[800e4234 + window_id * 4];
+            V0 = bu[V1];
+            A0 = bu[8009d29e + V0];
+
+            if( A0 == ff )
+            {
+                if( h[800e4278+ window_id * 2] >= 9 )
+                {
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [800e4278 + window_id * 2] = h(0);
+                }
+                else
+                {
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + V0] = b(a9); // "..."
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                    [800e4278 + window_id * 2] = h(hu[800e4278 + window_id * 2] + 1);
+                    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                    [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+                }
+            }
+            else
+            {
+                A0 = A0;
+                system_get_character_name_offset();
+                V1 = V0 + h[800e4278 + window_id * 2];
+
+                if( ( bu[V1] == ff ) || ( h[800e4278 + window_id * 2] >= 9 ) )
+                {
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [800e4278 + window_id * 2] = h(0);
+                }
+                else
+                {
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + V0] = b(bu[V1]);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                    [800e4278 + window_id * 2] = h(hu[800e4278 + window_id * 2] + 1);
+                    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                    [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+                }
+            }
+            continue;
+        }
+        break;
+
+        case fe:
+        {
+            A0 = w[800e4234 + window_id * 4 + 0000];
+            V0 = h[80083288 + window_id * 30 + 0000];
+            [800e4944 + window_id * 100 + V0 + 0000] = b(bu[A0 + 0000]);
+            [800e4234 + window_id * 4 + 0000] = w(w[800e4234 + window_id * 4 + 0000] + 1);
+            [80083288 + window_id * 30 + 0000] = h(hu[80083288 + window_id * 30 + 0000] + 1);
+            V0 = w[800e4234 + window_id * 4 + 0000];
+
+            switch( bu[V0] )
+            {
+                case dc:
+                {
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + V1 + 14] - 1);
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [80114480 + window_id * 2] = h(1);
+                    [80114470 + window_id * 2] = h(0);
+                    [80083274 + window_id * 30 + 2c] = h(d);
+                    bytes = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + bytes] = b(ff);
+                    return
+                }
+
+                case e0:
+                {
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1);
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [80114480 + window_id * 2] = h(1);
+                    [80114470 + window_id * 2] = h(0);
+                    [80083274 + window_id * 30 + 2c] = h(b);
+                    bytes = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + bytes] = b(ff);
+                    return
+                }
+
+                case de df e1:
+                {
+                    T1 = window_id << 01;
+                    V0 = T1 + window_id;
+                    A3 = V0 << 04;
+                    V0 = 80083274;
+                    V1 = hu[80083288 + A3 + 0000];
+                    T0 = A3 + V0;
+                    [T0 + 0014] = h(V1 - 1);
+                    T2 = w[800e4234 + window_id * 4 + 0000];
+                    [800e4234 + window_id * 4 + 0000] = w(T2 - 1);
+                    V0 = 8011451c;
+                    A2 = T1 + V0;
+                    A0 = h[A2 + 0000];
+                    800D672C	addiu  v0, zero, $ffff (=-$1)
+
+                    if( A0 == V0 )
+                    {
+                        A0 = window_id;
+                        get_variable_for_window_from_memory_bank();
+                        S0 = V0;
+
+                        if( bu[8009d820] & 3 )
+                        {
+                            A0 = 800a10f8; // "mpara="
+                            A1 = S0 & ffff;
+                            A2 = 4;
+                            funcbeca4();
+                        }
+
+                        V0 = w[800e4234 + window_id * 4];
+                        V1 = bu[V0 + 1];
+                        if( V1 == de )
+                        {
+                            A0 = S0 & ffff;
+                            A1 = 801144dc + window_id * 10;
+                            convert_digit_to_string();
+                        }
+                        else if( V1 == df )
+                        {
+                            A0 = S0 & ffff;
+                            A1 = 801144dc + window_id * 10;
+                            convert_hex_to_string();
+                        }
+                        else if( V1 == e1 )
+                        {
+                            A0 = S0 & ffff;
+                            A1 = 801144dc + window_id * 10;
+                            convert_digit_to_string_with_space();
+                        }
+                        800D6800	j      Ld699c [$800d699c]
+                    }
+
+                    V0 = window_id << 04;
+                    A1 = 801144dc + V0 + A0;
+                    V1 = bu[A1 + 0000];
+                    V0 = 00ff;
+                    800D6820	beq    v1, v0, Ld6830 [$800d6830]
+                    V0 = A0 < 0010;
+                    800D6828	bne    v0, zero, Ld69f0 [$800d69f0]
+                    800D682C	nop
+
+                    Ld6830:	; 800D6830
+                    [800e4234 + window_id * 4 + 0000] = w(T2 + 1);
+                    V1 = 800e4280 + T1;
+                    [A2 + 0000] = h(-1);
+                    800D6848	j      Ld69ac [$800d69ac]
+                }
+
+                case e2:
+                {
+                    T1 = window_id << 01;
+                    V0 = T1 + window_id;
+                    A3 = V0 << 04;
+                    V0 = 80083274;
+                    AT = 80083288;
+                    AT = AT + A3;
+                    V1 = hu[AT + 0000];
+                    T0 = A3 + V0;
+                    800D6878	addiu  v1, v1, $ffff (=-$1)
+                    [T0 + 0014] = h(V1);
+                    A0 = w[800e4234 + window_id * 4 + 0000];
+                    800D6884	nop
+                    800D6888	addiu  v0, a0, $ffff (=-$1)
+                    [800e4234 + window_id * 4 + 0000] = w(V0);
+                    V0 = 8011451c;
+                    A2 = T1 + V0;
+                    A1 = h[A2 + 0000];
+                    800D68A0	addiu  v0, zero, $ffff (=-$1)
+                    800D68A4	bne    a1, v0, Ld69c0 [$800d69c0]
+                    V0 = window_id << 04;
+                    S0 = bu[A0 + 0001];
+                    V0 = bu[A0 + 0002];
+                    S1 = bu[A0 + 0003];
+                    V1 = bu[A0 + 0004];
+                    V0 = V0 << 08;
+                    S0 = S0 | V0;
+                    V1 = V1 << 08;
+                    S1 = S1 | V1;
+
+                    if( bu[8009d820] & 3 )
+                    {
+                        A0 = 800a1100; // "gstr="
+                        A1 = S0;
+                        A2 = 4;
+                        funcbeca4();
+
+                        A0 = 800a1108; // "glen="
+                        A1 = S1;
+                        A2 = 4;
+                        funcbeca4();
+                    }
+
+                    A1 = S1 & ffff;
+                    A2 = 0;
+                    if( A1 != 0 )
+                    {
+                        V1 = 801144dc;
+                        V0 = window_id << 04;
+                        T0 = V0 + V1;
+                        A3 = S0 & ffff;
+                        T1 = 8009d288;
+
+                        loopd6944:	; 800D6944
+                            V1 = A2 << 10;
+                            A0 = A2 + 0001;
+                            A2 = A0;
+                            V1 = V1 >> 10;
+                            V0 = A3 + V1;
+                            V0 = V0 + T1;
+                            V1 = T0 + V1;
+                            V0 = bu[V0 + 0000];
+                            A0 = A0 < A1;
+                            [V1 + 0000] = b(V0);
+                        800D6970	bne    a0, zero, loopd6944 [$800d6944]
+
+                    }
+
+                    [801144dc + window_id * 10 + A2 + 0000] = b(ff);
+
+                    Ld699c:	; 800D699C
+                    V1 = 8011451c + window_id * 2;
+
+                    Ld69ac:	; 800D69AC
+                    [V1 + 0000] = h(hu[V1 + 0000] + 1);
+                    continue;
+
+                    Ld69c0:	; 800D69C0
+                    A1 = 801144dc + V0 + A1;
+                    V1 = bu[A1 + 0000];
+                    800D69D8	bne    v1, ff, Ld69f0 [$800d69f0]
+                    V0 = A0 + 0005;
+                    [800e4234 + window_id * 4 + 0000] = w(V0);
+                    800D69E4	addiu  v0, zero, $ffff (=-$1)
+                    [A2 + 0000] = h(V0);
+                    continue;
+
+                    Ld69f0:	; 800D69F0
+                    V0 = h[80083288 + A3 + 0000];
+                    [800e4944 + window_id * 100 + V0 + 0000] = b(bu[A1 + 0000]);
+                    [T0 + 14] = h(hu[80083288 + A3 + 0000] + 1);
+                    [A2] = h(hu[A2] + 1);
+                    [T0 + 0012] = h(hu[80083286 + A3 + 0000] + 1);
+                    [T1 + 80114470 + 0000] = h(hu[T1 + 80114470 + 0000] - S5);
+                    continue;
+                }
+
+                case d2 d3 d4 d5 d6 d7 d8 d9 da db e9:
+                {
+                    A0 = w[800e4234 + window_id * 4];
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + V0] = b(bu[A0]);
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                    continue;
+                }
+
+                case dd:
+                {
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+
+                    V0 = w[800e4234 + window_id * 4];
+                    [8011445c + window_id * 2] = h(hu[V0]);
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 2);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2);
+
+                    bytes = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + bytes] = b(ff);
+                    [80083274 + window_id * 30 + 2с] = h(3);
+                    return;
+                }
+            }
+        }
+        break;
+
+        case fa fb fc fd:
+        {
+            A0 = w[800e4234 + window_id * 4];
+            V0 = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + V0] = b(bu[A0]);
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+        }
+        break;
+    }
+
+    V1 = w[800e4234 + window_id * 4];
+    V0 = h[80083274 + window_id * 30 + 14];
+    [800e4944 + window_id * 100 + V0] = b(bu[V1]);
+    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+    [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+}
+
+bytes = h[80083274 + window_id * 30 + 14];
+[800e4944 + window_id * 100 + bytes] = b(ff);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+window_id = A0;
+
+if( bu[8008326c + window_id] != bu[800722c2] )
+{
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a10ec; // "mes busy="
+        A1 = A1;
+        A2 = 1;
+        funcbeca4();
+    }
+    return;
+}
+
+V0 = hu[800832A2 + window_id * 30];
 if (V0 & 2)
 {
     A1 = 0100;
@@ -844,30 +1385,30 @@ else
 
     if (V0 & 0020)
     {
-        V0 = hu[80114480 + S3 * 2];
+        V0 = hu[80114480 + window_id * 2];
         V0 = V0 + 1;
 
         if (V0 >= 81)
         {
-            [80114480 + S3 * 2] = h(80);
+            [80114480 + window_id * 2] = h(80);
         }
         else
         {
-            [80114480 + S3 * 2] = h(V0);
+            [80114480 + window_id * 2] = h(V0);
         }
     }
     else
     {
-        V0 = hu[80114480 + S3 * 2];
+        V0 = hu[80114480 + window_id * 2];
         V0 = V0 - 1;
 
         if (V0 < 2)
         {
-            [80114480 + S3 * 2] = h(01);
+            [80114480 + window_id * 2] = h(01);
         }
         else
         {
-            [80114480 + S3 * 2] = h(V0);
+            [80114480 + window_id * 2] = h(V0);
         }
     }
 
@@ -886,658 +1427,657 @@ else
     }
 }
 
-V0 = hu[80114480 + S3 * 2];
+V0 = hu[80114480 + window_id * 2];
 V0 = V0 / 10;
 HI/LO = S5 * V0;
 V0 = LO;
 
 V1 = hu[80114470 + T3 * 2];
 V1 = A1 + V1 + V0;
-[80114470 + S3 * 2] = h(V1)
+[80114470 + window_id * 2] = h(V1)
 
 if (S5 >= V1)
 {
     // write FF to end of string;
-    V0 = h[80083288 + S3 * 30];
-    [800E4944 + S3 * 100 + V0] = FF;
+    V0 = h[80083288 + window_id * 30];
+    [800E4944 + window_id * 100 + V0] = FF;
 
     return;
 }
 
 // loop
 Ld5f04:	; 800D5F04
-V0 = w[800E4234 + S3 * 4];
-V0 = [V0];  // read letter
-V1 = V0 - E0;
+    V0 = w[800E4234 + window_id * 4];
+    V0 = [V0];  // read letter
+    V1 = V0 - E0;
 
-if (V1 < 20) // E0 - FF
-{
-    switch (V1)
+    if (V1 < 20) // E0 - FF
     {
-        case 0xFF:
+        switch (V1)
         {
-            [800832A0 + S3 * 30] = 6; // set window state to 6
-            [80114470 + S3 * 2] = 0;
-
-            V0 = h[80083288 + S3 * 30];
-            [800E4944 + S3 * 100 + V0] = FF;
-
-            return;
-        }
-        break;
-
-        case 0xE7:
-        {
-            V0 = h[8008327E + S3 * 30]; // read window height
-            A0 = h[8008328A + S3 * 30];
-            V1 = V0 - 08;
-            V0 = h[801142CC + S3 * 2];
-            V1 = V1 / 10 + V0 - 1;
-
-            if (A0 == V1)
+            case 0xFF:
             {
-                [800832A0 + S3 * 30] = h(04); // set window state
-                [80114480 + S3 * 2] = h(01);
-                [80114470 + S3 * 2] = h(00);
+                [800832A0 + window_id * 30] = 6; // set window state to 6
+                [80114470 + window_id * 2] = 0;
 
-                V0 = h[80083288 + S3 * 30];
-                [800E4944 + S3 * 100 + V0] = FF;
+                V0 = h[80083288 + window_id * 30];
+                [800E4944 + window_id * 100 + V0] = FF;
 
                 return;
             }
+            break;
 
-            V1 = w[800E4234 + S3 * 4];
-            V1 = [V1];
-            V0 = h[80083288 + S3 * 30];
-            [800E4944 + S3 * 100 + V0] = b(V1);
-
-            // reading offset + 1
-            V0 = w[800E4234 + S3 * 4];
-            V0 = V0 + 1;
-            [800E4234 + S3 * 4] = w(V0);
-
-            // number of byte + 1
-            V0 = hu[80083288 + S3 * 30];
-            V0 = V0 + 1;
-            [80083288 + S3 * 30] = h(V0)
-
-            // current row + 1
-            V0 = hu[8008328A + S3 * 30];
-            V0 = V0 + 1;
-            [8008328A + S3 * 30] = h(V0);
-
-            800D6028	j      Ld6ca0 [$800d6ca0]
-        }
-        break;
-
-        case 0xE8 0xE9:
-        {
-            V0 = [800E4234 + S3 * 4];
-            V0 = V0 + 1;
-            [800E4234 + S3 * 4] = V0;
-
-            [800832A0 + S3 * 30] = 0E; // set window state to E
-
-            [80114480 + S3 * 2] = h(1);
-            [80114470 + S3 * 2] = h(0);
-
-            V0 = h[80083288 + S3 * 30];
-            [800E4944 + S3 * 100 + V0] = FF;
-
-            return;
-        }
-        break;
-
-        case 0xE0 0xE1:
-        {
-            V0 = [800E4234 + S3 * 4]
-            V0 = V0 + 1;
-            [800E4234 + S3 * 4] = V0;
-
-            if (0xE0)
+            case 0xE7:
             {
-                x = 0A;
-            }
-            if (0xE1)
-            {
-                x = 04;
-            }
+                V0 = h[8008327E + window_id * 30]; // read window height
+                A0 = h[8008328A + window_id * 30];
+                V1 = V0 - 08;
+                V0 = h[801142CC + window_id * 2];
+                V1 = V1 / 10 + V0 - 1;
 
-            for (A2 = 0; A2 < x; A2 = A2 + 1)
-            {
-                // writes zeros to string data
-                V0 = hu[80083288 + S3 * 30];
-                [800E4944 + S3 * 100 + V0] = b(0)
-
-                V0 = hu[80083288 + S3 * 30];
-                V0 = V0 + 1;
-                [80083288 + S3 * 30] = h(V0);
-
-                V1 = hu[80083286 + S3 * 30];
-                V1 = V1 + 1;
-                [80083286 + S3 * 30] = h(V1);
-            }
-
-            800D618C	j      Ld6ca0 [$800d6ca0]
-        }
-        break;
-
-        case 0xE2 0xE3 0xE4:
-        {
-            V0 = [800E4234 + S3 * 4]
-            V0 = V0 + 1;
-            [800E4234 + S3 * 4] = V0;
-
-            if (0xE2)
-            {
-                V0 = h[80083288 + S3 * 30];
-                [800E4944 + S3 * 100 + V0] = b(0C);
-            }
-            if (0xE3)
-            {
-                V0 = h[80083288 + S3 * 30];
-                [800E4944 + S3 * 100 + V0] = b(0E);
-            }
-            if (0xE4)
-            {
-                V0 = h[80083288 + S3 * 30];
-                [800E4944 + S3 * 100 + V0] = b(A9);
-            }
-
-            V0 = hu[80083288 + S3 * 30];
-            V0 = V0 + 1;
-            [80083288 + S3 * 30] = h(V0);
-
-
-
-            if (0xE2)
-            {
-                V0 = h[80083288 + S3 * 30];
-                [800E4944 + S3 * 100 + V0] = b(0);
-            }
-            if (0xE3 0xE4)
-            {
-                V0 = h[80083288 + S3 * 30];
-                [800E4944 + S3 * 100 + V0] = b(2);
-            }
-
-            V0 = h[80083288 + S3 * 30];
-            V0 = V0 + 1;
-            [80083288 + S3 * 30] = h(V0);
-
-            V0 = hu[80083286 + S3 * 30];
-            V0 = V0 + 2;
-            [80083286 + S3 * 30] = h(V0);
-
-            800D62F8	j      Ld6ca0 [$800d6ca0]
-        }
-        break;
-
-        case 0xEA 0xEB 0xEC 0xED 0xEE 0xEF 0xF0 0xF1 0xF2 0xF3 0xF4 0xF5:
-        {
-            V1 = w[800E4234 + S3 * 4];
-            V0 = bu[V1];
-
-            if (0xEA 0xEB 0xEC 0xED 0xEE 0xEF 0xF0 0xF1 0xF2)
-            {
-                S0 = V0 - EA;
-                A0 = S0 & FFFF;
-            }
-            if (0xF3 0xF4 0xF5)
-            {
-                A0 = bu[8009D29E + V0] = 8009c6e4 + cad;
-
-                if (A0 == FF)
+                if (A0 == V1)
                 {
-                    V0 = h[800E4278 + S3 * 2]
+                    [800832A0 + window_id * 30] = h(04); // set window state
+                    [80114480 + window_id * 2] = h(01);
+                    [80114470 + window_id * 2] = h(00);
 
-                    if (V0 >= 9)
-                    {
-                        V0 = V1 + 1;
-                        [800E4234 + S3 * 4] = w(V0);
-                        [800E4278 + S3 * 2] = h(0);
-
-                        800D64F8	j      Ld6ca0 [$800d6ca0]
-                    }
-
-                    V0 = h[80083288 + S3 * 30]
-                    [800E4944 + S3 * 100 + V0] = b(A9);
-
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083288 + S3 * 30] = h(V0);
-
-                    V0 = hu[800E4278 + S3 * 2];
-                    V0 = V0 + 1;
-                    [800E4278 + S3 * 2] = h(V0)
-
-                    V0 = hu[80083286 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083286 + S3 * 30] = h(V0);
-
-                    V0 = hu[80114470 + S3 * 2];
-                    V0 = V0 - S5;
-                    [80114470 + S3 * 2] = h(V0);
-
-                    800D6A60	j      Ld6ca0 [$800d6ca0]
-                }
-            }
-
-            system_get_character_name_offset;
-
-            A0 = h[800E4278 + S3 * 2];
-            A1 = V0 + A0;
-            V1 = bu[A1];
-
-            if (V1 == FF || A0 > 09)
-            {
-                V0 = w[800E4234 + S3 * 4];
-                V0 = V0 + 1;
-                [800E4234 + S3 * 4] = w(V0);
-
-                [800E4278 + S3 * 2] = h(0);
-
-                800D6360	j      Ld6ca0 [$800d6ca0]
-            }
-
-            V0 = h[80083288 + S3 * 30];
-            V1 = bu[A1];
-            [800E4944 + S3 * 100 + V0] = b(V1);
-
-            V0 = hu[80083288 + S3 * 30];
-            V0 = V0 + 1;
-            [80083288 + S3 * 30] = h(V0);
-
-            V0 = hu[800E4278 + S3 * 2];
-            V0 = V0 + 1;
-            [800E4278 + S3 * 2] = h(V0);
-
-            V0 = hu[80083286 + S3 * 30];
-            V0 = V0 + 1;
-            [80083286 + S3 * 30] = h(V0);
-
-            V0 = hu[80114470 + S3 * 2];
-            V0 = V0 - S5;
-            [80114470 + S3 * 2] = h(V0);
-
-            800D6A60	j      Ld6ca0 [$800d6ca0]
-        }
-        break;
-
-        case 0xFE:
-        {
-            A0 = w[800E4234 + S3 * 4];
-            A0 = bu[A0];
-
-            V0 = hu[80083288 + S3 * 30];
-            [800E4944 + S3 * 100 + V0] = b(A0);
-
-            V0 = w[800E4234 + S3 * 4];
-            V0 = V0 + 1;
-            [800E4234 + S3 * 4] = w(V0);
-
-            V0 = hu[80083288 + S3 * 30];
-            V0 = V0 + 1;
-            [80083288 + S3 * 30] = h(V0);
-
-            V0 = w[800E4234 + S3 * 4];
-            V0 = bu[V0];
-
-            if (V0 < D2 || 0xE3 0xE4 0xE5 0xE6 0xE7 0xE8)
-            {
-                800D665C	j      Ld6c18 [$800d6c18]
-            }
-
-            switch (V1)
-            {
-                case 0xDC 0xFF:
-                {
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 - 1;
-                    [80083288 + S3 * 30] = h(V0);
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = V0 + 1;
-                    [800E4234 + S3 * 4] = w(V0);
-
-                    [800832A0 + S3 * 30] = 0D; // set window state
-
-                    [80114480 + S3 * 2] = h(1);
-                    [80114470 + S3 * 2] = h(0);
-
-                    V0 = h[80083288 + S3 * 30];
-                    [800E4944 + S3 * 100 + V0] = FF;
+                    V0 = h[80083288 + window_id * 30];
+                    [800E4944 + window_id * 100 + V0] = FF;
 
                     return;
                 }
-                break;
 
-                case 0xE0: // scrolling while you hold button
+                V1 = w[800E4234 + window_id * 4];
+                V1 = [V1];
+                V0 = h[80083288 + window_id * 30];
+                [800E4944 + window_id * 100 + V0] = b(V1);
+
+                // reading offset + 1
+                V0 = w[800E4234 + window_id * 4];
+                V0 = V0 + 1;
+                [800E4234 + window_id * 4] = w(V0);
+
+                // number of byte + 1
+                V0 = hu[80083288 + window_id * 30];
+                V0 = V0 + 1;
+                [80083288 + window_id * 30] = h(V0)
+
+                // current row + 1
+                V0 = hu[8008328A + window_id * 30];
+                V0 = V0 + 1;
+                [8008328A + window_id * 30] = h(V0);
+
+                continue;
+            }
+            break;
+
+            case 0xE8 0xE9:
+            {
+                V0 = [800E4234 + window_id * 4];
+                V0 = V0 + 1;
+                [800E4234 + window_id * 4] = V0;
+
+                [800832A0 + window_id * 30] = 0E; // set window state to E
+
+                [80114480 + window_id * 2] = h(1);
+                [80114470 + window_id * 2] = h(0);
+
+                V0 = h[80083288 + window_id * 30];
+                [800E4944 + window_id * 100 + V0] = FF;
+
+                return;
+            }
+            break;
+
+            case 0xE0 0xE1:
+            {
+                V0 = [800E4234 + window_id * 4]
+                V0 = V0 + 1;
+                [800E4234 + window_id * 4] = V0;
+
+                if (0xE0)
                 {
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 - 1;
-                    [80083288 + S3 * 30] = h(V0);
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = V0 + 1;
-                    [800E4234 + S3 * 4] = w(V0);
-
-                    [800832A0 + S3 * 30] = 0B; // set window state
-
-                    [80114480 + S3 * 2] = h(1);
-                    [80114470 + S3 * 2] = h(0);
-
-                    V0 = h[80083288 + S3 * 30];
-                    [800E4944 + S3 * 100 + V0] = FF;
-
-                    return;
+                    x = 0A;
                 }
-                break;
-
-                case 0xE1 0xDE 0xDF: // variable?
+                if (0xE1)
                 {
-                    // move back one byte cause we don't need FE in string.
-                    V1 = hu[80083288 + S3 * 30];
-                    V1 = V1 - 1;
-                    [80083288 + S3 * 30] = V1;
+                    x = 04;
+                }
 
-                    // move to reading of previous byte
-                    T2 = w[800E4234 + S3 * 4];
-                    V0 = T2 - 1;
-                    [800E4234 + S3 * 4] = w(V0);
+                for (A2 = 0; A2 < x; A2 = A2 + 1)
+                {
+                    // writes zeros to string data
+                    V0 = hu[80083288 + window_id * 30];
+                    [800E4944 + window_id * 100 + V0] = b(0)
 
-                    // read number of copied byte
-                    A0 = h[8011451C + S3 * 2];
+                    V0 = hu[80083288 + window_id * 30];
+                    V0 = V0 + 1;
+                    [80083288 + window_id * 30] = h(V0);
 
-                    // if we not reading yet
-                    if (A0 == -1)
+                    V1 = hu[80083286 + window_id * 30];
+                    V1 = V1 + 1;
+                    [80083286 + window_id * 30] = h(V1);
+                }
+
+                continue;
+            }
+            break;
+
+            case 0xE2 0xE3 0xE4:
+            {
+                V0 = [800E4234 + window_id * 4]
+                V0 = V0 + 1;
+                [800E4234 + window_id * 4] = V0;
+
+                if (0xE2)
+                {
+                    V0 = h[80083288 + window_id * 30];
+                    [800E4944 + window_id * 100 + V0] = b(0C);
+                }
+                if (0xE3)
+                {
+                    V0 = h[80083288 + window_id * 30];
+                    [800E4944 + window_id * 100 + V0] = b(0E);
+                }
+                if (0xE4)
+                {
+                    V0 = h[80083288 + window_id * 30];
+                    [800E4944 + window_id * 100 + V0] = b(A9);
+                }
+
+                V0 = hu[80083288 + window_id * 30];
+                V0 = V0 + 1;
+                [80083288 + window_id * 30] = h(V0);
+
+
+
+                if (0xE2)
+                {
+                    V0 = h[80083288 + window_id * 30];
+                    [800E4944 + window_id * 100 + V0] = b(0);
+                }
+                if (0xE3 0xE4)
+                {
+                    V0 = h[80083288 + window_id * 30];
+                    [800E4944 + window_id * 100 + V0] = b(2);
+                }
+
+                V0 = h[80083288 + window_id * 30];
+                V0 = V0 + 1;
+                [80083288 + window_id * 30] = h(V0);
+
+                V0 = hu[80083286 + window_id * 30];
+                V0 = V0 + 2;
+                [80083286 + window_id * 30] = h(V0);
+
+                continue;
+            }
+            break;
+
+            case 0xEA 0xEB 0xEC 0xED 0xEE 0xEF 0xF0 0xF1 0xF2 0xF3 0xF4 0xF5:
+            {
+                V1 = w[800E4234 + window_id * 4];
+                V0 = bu[V1];
+
+                if (0xEA 0xEB 0xEC 0xED 0xEE 0xEF 0xF0 0xF1 0xF2)
+                {
+                    S0 = V0 - EA;
+                    A0 = S0 & FFFF;
+                }
+                if (0xF3 0xF4 0xF5)
+                {
+                    A0 = bu[8009D29E + V0] = 8009c6e4 + cad;
+
+                    if (A0 == FF)
                     {
-                        A0 = S3;
+                        V0 = h[800E4278 + window_id * 2]
 
-                        // get 2bytes value for current variable (memory bank and offset used)
-                        get_variable_for_window_from_memory_bank
-
-                        S0 = V0;
-
-                        // read current byte (DE DF E1)
-                        V0 = w[800E4234 + S3 * 4];
-                        V1 = bu[V0 + 1];
-
-                        // data for variable
-                        A0 = S0 & FFFF;
-                        // address to write
-                        A1 = 8001144DC + S3 * 10;
-
-                        if (V1 == DE)
+                        if (V0 >= 9)
                         {
-                            convert_digit_to_string
-                        }
-                        else if (V1 == DF)
-                        {
-                            convert_hex_to_string
-                        }
-                        else if (V1 == E1)
-                        {
-                            convert_digit_to_string_with_space
+                            V0 = V1 + 1;
+                            [800E4234 + window_id * 4] = w(V0);
+                            [800E4278 + window_id * 2] = h(0);
+
+                            800D64F8	j      Ld6ca0 [$800d6ca0]
                         }
 
-                        // increment current reading offset so we start read on next rotation
-                        V0 = hu[8011451C + S3 * 2];
+                        V0 = h[80083288 + window_id * 30]
+                        [800E4944 + window_id * 100 + V0] = b(A9);
+
+                        V0 = hu[80083288 + window_id * 30];
                         V0 = V0 + 1;
-                        [8011451C + S3 * 2] = h(V0)
+                        [80083288 + window_id * 30] = h(V0);
 
-                        800D69B8	j      Ld6ca0 [$800d6ca0]
+                        V0 = hu[800E4278 + window_id * 2];
+                        V0 = V0 + 1;
+                        [800E4278 + window_id * 2] = h(V0)
+
+                        V0 = hu[80083286 + window_id * 30];
+                        V0 = V0 + 1;
+                        [80083286 + window_id * 30] = h(V0);
+
+                        V0 = hu[80114470 + window_id * 2];
+                        V0 = V0 - S5;
+                        [80114470 + window_id * 2] = h(V0);
+
+                        800D6A60	j      Ld6ca0 [$800d6ca0]
                     }
-                    else
-                    {
-                        // read current byte
-                        V1 = bu[801144DC + S3 * 10 + A0];
-
-                        // if not end of string and number of copied byte less than 10
-                        if (V1 != FF && A0 < 10)
-                        {
-                            V0 = h[80083288 + S3 * 30];
-                            [800E4944 + S3 * 100 + V0] = b(V1);
-
-                            V0 = hu[80083288 + S3 * 30];
-                            V0 = V0 + 1;
-                            [80083288 + S3 * 30] = h(V0);
-
-                            V0 = hu[8011451C + S3 * 2];
-                            V0 = V0 + 1;
-                            [8011451C + S3 * 2] = h(V0);
-
-                            V0 = hu[80083286 + S3 * 30];
-                            V0 = V0 + 1;
-                            [80083286 + S3 * 30] = h(V0);
-
-                            V0 = hu[80114470 + S3 * 2];
-                            V0 = V0 - S5;
-                            [80114470 + S3 * 2] = h(V0);
-
-                            800D6A60	j      Ld6ca0 [$800d6ca0]
-                        }
-
-                        undo previous move and go to next byte (end of this opcode)
-                        V0 = T2 + 1;
-                        [800E4234 + S3 * 4] = w(V0);
-
-                        // write -1 to number of readed byte
-                        [8011451C + S3 * 2] = h(-1);
-                    }
-
-                    // increase number of readed variable (next time we read next one)
-                    V0 = hu[800E4280 + S3 * 2];
-                    V0 = V0 + 1;
-                    [800E4280 + S3 * 2] = h(V0)
-
-                    800D69B8	j      Ld6ca0 [$800d6ca0]
                 }
-                break;
 
-                case 0xE2:
+                system_get_character_name_offset;
+
+                A0 = h[800E4278 + window_id * 2];
+                A1 = V0 + A0;
+                V1 = bu[A1];
+
+                if (V1 == FF || A0 > 09)
                 {
-                    V1 = hu[80083288 + S3 * 30];
-                    V1 = V1 - 1;
-                    [80083288 + S3 * 30] = h(V1);
+                    V0 = w[800E4234 + window_id * 4];
+                    V0 = V0 + 1;
+                    [800E4234 + window_id * 4] = w(V0);
 
-                    A0 = w[800E4234 + S3 * 4];
-                    V0 = A0 - 1;
-                    [800E4234 + S3 * 4] = w(V0);
+                    [800E4278 + window_id * 2] = h(0);
 
-                    A1 = h[8011451C + S3 * 2];
+                    800D6360	j      Ld6ca0 [$800d6ca0]
+                }
 
-                    if (A1 == -1)
+                V0 = h[80083288 + window_id * 30];
+                V1 = bu[A1];
+                [800E4944 + window_id * 100 + V0] = b(V1);
+
+                V0 = hu[80083288 + window_id * 30];
+                V0 = V0 + 1;
+                [80083288 + window_id * 30] = h(V0);
+
+                V0 = hu[800E4278 + window_id * 2];
+                V0 = V0 + 1;
+                [800E4278 + window_id * 2] = h(V0);
+
+                V0 = hu[80083286 + window_id * 30];
+                V0 = V0 + 1;
+                [80083286 + window_id * 30] = h(V0);
+
+                V0 = hu[80114470 + window_id * 2];
+                V0 = V0 - S5;
+                [80114470 + window_id * 2] = h(V0);
+
+                800D6A60	j      Ld6ca0 [$800d6ca0]
+            }
+            break;
+
+            case 0xFE:
+            {
+                A0 = w[800E4234 + window_id * 4];
+                A0 = bu[A0];
+
+                V0 = hu[80083288 + window_id * 30];
+                [800E4944 + window_id * 100 + V0] = b(A0);
+
+                V0 = w[800E4234 + window_id * 4];
+                V0 = V0 + 1;
+                [800E4234 + window_id * 4] = w(V0);
+
+                V0 = hu[80083288 + window_id * 30];
+                V0 = V0 + 1;
+                [80083288 + window_id * 30] = h(V0);
+
+                V0 = w[800E4234 + window_id * 4];
+                V0 = bu[V0];
+
+                if (V0 < D2 || 0xE3 0xE4 0xE5 0xE6 0xE7 0xE8)
+                {
+                    800D665C	j      Ld6c18 [$800d6c18]
+                }
+
+                switch (V1)
+                {
+                    case 0xDC 0xFF:
                     {
-                        S0 = bu[A0 + 1];
-                        V0 = bu[A0 + 2];
-                        S1 = bu[A0 + 3];
-                        V1 = bu[A0 + 4];
+                        V0 = hu[80083288 + window_id * 30];
+                        V0 = V0 - 1;
+                        [80083288 + window_id * 30] = h(V0);
 
-                        V0 = V0 << 8;
-                        S0 = S0 | V0;
-                        V1 = V1 << 8;
-                        S1 = S1 | V1;
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = V0 + 1;
+                        [800E4234 + window_id * 4] = w(V0);
 
-                        A1 = S1;
-                        A2 = 0;
+                        [800832A0 + window_id * 30] = 0D; // set window state
 
-                        if (A1 != 0)
+                        [80114480 + window_id * 2] = h(1);
+                        [80114470 + window_id * 2] = h(0);
+
+                        V0 = h[80083288 + window_id * 30];
+                        [800E4944 + window_id * 100 + V0] = FF;
+
+                        return;
+                    }
+                    break;
+
+                    case 0xE0: // scrolling while you hold button
+                    {
+                        V0 = hu[80083288 + window_id * 30];
+                        V0 = V0 - 1;
+                        [80083288 + window_id * 30] = h(V0);
+
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = V0 + 1;
+                        [800E4234 + window_id * 4] = w(V0);
+
+                        [800832A0 + window_id * 30] = 0B; // set window state
+
+                        [80114480 + window_id * 2] = h(1);
+                        [80114470 + window_id * 2] = h(0);
+
+                        V0 = h[80083288 + window_id * 30];
+                        [800E4944 + window_id * 100 + V0] = FF;
+
+                        return;
+                    }
+                    break;
+
+                    case 0xE1 0xDE 0xDF: // variable?
+                    {
+                        // move back one byte cause we don't need FE in string.
+                        V1 = hu[80083288 + window_id * 30];
+                        V1 = V1 - 1;
+                        [80083288 + window_id * 30] = V1;
+
+                        // move to reading of previous byte
+                        T2 = w[800E4234 + window_id * 4];
+                        V0 = T2 - 1;
+                        [800E4234 + window_id * 4] = w(V0);
+
+                        // read number of copied byte
+                        A0 = h[8011451C + window_id * 2];
+
+                        // if we not reading yet
+                        if (A0 == -1)
                         {
-                            A3 = S0;
+                            A0 = window_id;
 
-                            loopd6944:	; 800D6944
+                            // get 2bytes value for current variable (memory bank and offset used)
+                            get_variable_for_window_from_memory_bank
+
+                            S0 = V0;
+
+                            // read current byte (DE DF E1)
+                            V0 = w[800E4234 + window_id * 4];
+                            V1 = bu[V0 + 1];
+
+                            // data for variable
+                            A0 = S0 & FFFF;
+                            // address to write
+                            A1 = 8001144DC + window_id * 10;
+
+                            if (V1 == DE)
                             {
-                                V0 = bu[8009D288 + A3 + A2]; // reading from memory bank 1/2
-                                [801144DC + S3 * 10 + A2] = b(V0);
+                                convert_digit_to_string
+                            }
+                            else if (V1 == DF)
+                            {
+                                convert_hex_to_string
+                            }
+                            else if (V1 == E1)
+                            {
+                                convert_digit_to_string_with_space
+                            }
 
-                                A2 = A2 + 1;
-                                A0 = A2 < A1;
+                            // increment current reading offset so we start read on next rotation
+                            V0 = hu[8011451C + window_id * 2];
+                            V0 = V0 + 1;
+                            [8011451C + window_id * 2] = h(V0)
 
-                                800D6970	bne    a0, zero, loopd6944 [$800d6944]
+                            800D69B8	j      Ld6ca0 [$800d6ca0]
+                        }
+                        else
+                        {
+                            // read current byte
+                            V1 = bu[801144DC + window_id * 10 + A0];
+
+                            // if not end of string and number of copied byte less than 10
+                            if (V1 != FF && A0 < 10)
+                            {
+                                V0 = h[80083288 + window_id * 30];
+                                [800E4944 + window_id * 100 + V0] = b(V1);
+
+                                V0 = hu[80083288 + window_id * 30];
+                                V0 = V0 + 1;
+                                [80083288 + window_id * 30] = h(V0);
+
+                                V0 = hu[8011451C + window_id * 2];
+                                V0 = V0 + 1;
+                                [8011451C + window_id * 2] = h(V0);
+
+                                V0 = hu[80083286 + window_id * 30];
+                                V0 = V0 + 1;
+                                [80083286 + window_id * 30] = h(V0);
+
+                                V0 = hu[80114470 + window_id * 2];
+                                V0 = V0 - S5;
+                                [80114470 + window_id * 2] = h(V0);
+
+                                800D6A60	j      Ld6ca0 [$800d6ca0]
+                            }
+
+                            undo previous move and go to next byte (end of this opcode)
+                            V0 = T2 + 1;
+                            [800E4234 + window_id * 4] = w(V0);
+
+                            // write -1 to number of readed byte
+                            [8011451C + window_id * 2] = h(-1);
                         }
 
-                        Ld6978:	; 800D6978
-                        [801144DC + S3 * 10 + A2] = b(FF);
-
-                        V0 = hu[8011451C + S3 * 2];
+                        // increase number of readed variable (next time we read next one)
+                        V0 = hu[800E4280 + window_id * 2];
                         V0 = V0 + 1;
-                        [8011451C + S3 * 2] = h(V0)
+                        [800E4280 + window_id * 2] = h(V0)
 
                         800D69B8	j      Ld6ca0 [$800d6ca0]
                     }
+                    break;
 
-                    V1 = bu[801144DC + S3 * 10 + A1];
-
-                    if (V1 == FF)
+                    case 0xE2:
                     {
-                        V0 = A0 + 5;
-                        [800E4234 + S3 * 4] = w(V0);
-                        [8011451C + S3 * 2] = h(-1);
-                        800D69E8	j      Ld6ca0 [$800d6ca0]
+                        V1 = hu[80083288 + window_id * 30];
+                        V1 = V1 - 1;
+                        [80083288 + window_id * 30] = h(V1);
+
+                        A0 = w[800E4234 + window_id * 4];
+                        V0 = A0 - 1;
+                        [800E4234 + window_id * 4] = w(V0);
+
+                        A1 = h[8011451C + window_id * 2];
+
+                        if (A1 == -1)
+                        {
+                            S0 = bu[A0 + 1];
+                            V0 = bu[A0 + 2];
+                            S1 = bu[A0 + 3];
+                            V1 = bu[A0 + 4];
+
+                            V0 = V0 << 8;
+                            S0 = S0 | V0;
+                            V1 = V1 << 8;
+                            S1 = S1 | V1;
+
+                            A1 = S1;
+                            A2 = 0;
+
+                            if (A1 != 0)
+                            {
+                                A3 = S0;
+
+                                loopd6944:	; 800D6944
+                                {
+                                    V0 = bu[8009D288 + A3 + A2]; // reading from memory bank 1/2
+                                    [801144DC + window_id * 10 + A2] = b(V0);
+
+                                    A2 = A2 + 1;
+                                    A0 = A2 < A1;
+
+                                    800D6970	bne    a0, zero, loopd6944 [$800d6944]
+                            }
+
+                            Ld6978:	; 800D6978
+                            [801144DC + window_id * 10 + A2] = b(FF);
+
+                            V0 = hu[8011451C + window_id * 2];
+                            V0 = V0 + 1;
+                            [8011451C + window_id * 2] = h(V0)
+
+                            800D69B8	j      Ld6ca0 [$800d6ca0]
+                        }
+
+                        V1 = bu[801144DC + window_id * 10 + A1];
+
+                        if (V1 == FF)
+                        {
+                            V0 = A0 + 5;
+                            [800E4234 + window_id * 4] = w(V0);
+                            [8011451C + window_id * 2] = h(-1);
+                            800D69E8	j      Ld6ca0 [$800d6ca0]
+                        }
+
+                        V0 = h[80083288 + window_id * 30];
+                        V1 = bu[A1];
+                        [800E4944 + window_id * 100 + V0] = b(V1);
+
+                        V0 = hu[80083288 + window_id * 30];
+                        V0 = V0 + 1;
+                        [80083288 + window_id * 30] = V0;
+
+                        V0 = hu[8011451C + window_id * 2];
+                        V0 = V0 + 1;
+                        [800E4234 + window_id * 4] = h(V0);
+
+                        V0 = hu[80083286 + window_id * 30];
+                        V0 = V0 + 1;
+                        [80083286 + window_id * 30] = V0;
+
+                        V0 = hu[80114470 + window_id * 2];
+                        V0 = V0 - S5;
+                        [80114470 + window_id * 2] = h(V0);
+
+                        800D6A60	j      Ld6ca0 [$800d6ca0]
+                    {
+                    break;
+
+                    case 0xE9 0xD2 0xD3 0xD4 0xD5 0xD6 0xD7 0xD8 0xD9 0xDA 0xDB:
+                    {
+                        A0 = w[800E4234 + window_id * 4];
+                        A0 = bu[A0];
+
+                        V0 = hu[80083288 + window_id * 30];
+                        [800E4944 + window_id * 100 + V0] = b(A0);
+
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = V0 + 1;
+                        [800E4234 + window_id * 4] = w(V0);
+
+                        V0 = hu[80083288 + window_id * 30];
+                        V0 = V0 + 1;
+                        [80083288 + window_id * 30] = h(V0);
+
+                        800D6ACC	j      Ld6ca0 [$800d6ca0]
+                    {
+                    break;
+
+                    case 0xDD:
+                    {
+                        [800832A0 + window_id * 30] = 03; // set window state
+
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = V0 + 1;
+                        [800E4234 + window_id * 4] = w(V0);
+
+                        V0 = hu[80083288 + window_id * 30];
+                        V0 = V0 + 1;
+                        [80083288 + window_id * 30] = h(V0);
+
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = bu[V0];
+                        [8011445C + window_id * 2] = h(V0)
+
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = V0 + 1;
+                        [800E4234 + window_id * 4] = w(V0);
+
+                        V0 = hu[80083288 + window_id * 30];
+                        V0 = V0 + 1;
+                        [80083288 + window_id * 30] = h(V0);
+
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = bu[V0];
+                        V1 = hu[8011445C + window_id * 2];
+                        V0 = V0 << 8;
+                        V1 = V1 | V0
+                        [8011445C + window_id * 2] = h(V1)
+
+                        V0 = w[800E4234 + window_id * 4];
+                        V0 = V0 + 1;
+                        [800E4234 + window_id * 4] = w(V0);
+
+                        V0 = hu[80083288 + window_id * 30];
+                        V0 = V0 + 1;
+                        [80083288 + window_id * 30] = h(V0);
+
+                        V0 = h[80083288 + window_id * 30];
+                        [800E4944 + window_id * 100 + V0] = FF;
+
+                        return;
                     }
-
-                    V0 = h[80083288 + S3 * 30];
-                    V1 = bu[A1];
-                    [800E4944 + S3 * 100 + V0] = b(V1);
-
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083288 + S3 * 30] = V0;
-
-                    V0 = hu[8011451C + S3 * 2];
-                    V0 = V0 + 1;
-                    [800E4234 + S3 * 4] = h(V0);
-
-                    V0 = hu[80083286 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083286 + S3 * 30] = V0;
-
-                    V0 = hu[80114470 + S3 * 2];
-                    V0 = V0 - S5;
-                    [80114470 + S3 * 2] = h(V0);
-
-                    800D6A60	j      Ld6ca0 [$800d6ca0]
-                {
-                break;
-
-                case 0xE9 0xD2 0xD3 0xD4 0xD5 0xD6 0xD7 0xD8 0xD9 0xDA 0xDB:
-                {
-                    A0 = w[800E4234 + S3 * 4];
-                    A0 = bu[A0];
-
-                    V0 = hu[80083288 + S3 * 30];
-                    [800E4944 + S3 * 100 + V0] = b(A0);
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = V0 + 1;
-                    [800E4234 + S3 * 4] = w(V0);
-
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083288 + S3 * 30] = h(V0);
-
-                    800D6ACC	j      Ld6ca0 [$800d6ca0]
-                {
-                break;
-
-                case 0xDD:
-                {
-                    [800832A0 + S3 * 30] = 03; // set window state
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = V0 + 1;
-                    [800E4234 + S3 * 4] = w(V0);
-
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083288 + S3 * 30] = h(V0);
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = bu[V0];
-                    [8011445C + S3 * 2] = h(V0)
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = V0 + 1;
-                    [800E4234 + S3 * 4] = w(V0);
-
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083288 + S3 * 30] = h(V0);
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = bu[V0];
-                    V1 = hu[8011445C + S3 * 2];
-                    V0 = V0 << 8;
-                    V1 = V1 | V0
-                    [8011445C + S3 * 2] = h(V1)
-
-                    V0 = w[800E4234 + S3 * 4];
-                    V0 = V0 + 1;
-                    [800E4234 + S3 * 4] = w(V0);
-
-                    V0 = hu[80083288 + S3 * 30];
-                    V0 = V0 + 1;
-                    [80083288 + S3 * 30] = h(V0);
-
-                    V0 = h[80083288 + S3 * 30];
-                    [800E4944 + S3 * 100 + V0] = FF;
-
-                    return;
+                    break;
                 }
-                break;
             }
-        }
-        break;
+            break;
 
-        case 0xFA 0xFB 0xFC 0xFD:
-        {
-            A0 = [800E4234 + S3 * 4];
-            A0 = [A0];
-            [800E4944 + S3 * 100 + V0] = A0;
-            V0 = [800E4234 + S3 * 4]
-            V0 = V0 + 1;
-            [800E4234 + S3 * 4] = V0;
+            case 0xFA 0xFB 0xFC 0xFD:
+            {
+                A0 = [800E4234 + window_id * 4];
+                A0 = [A0];
+                [800E4944 + window_id * 100 + V0] = A0;
+                V0 = [800E4234 + window_id * 4]
+                V0 = V0 + 1;
+                [800E4234 + window_id * 4] = V0;
 
-            V0 = [80083288 + S3 * 30];
-            V0 = V0 + 1;
-            [80083288 + S3 * 30] = V0;
+                V0 = [80083288 + window_id * 30];
+                V0 = V0 + 1;
+                [80083288 + window_id * 30] = V0;
+            }
         }
     }
-}
 
-Ld6c18:	; 800D6C18
-//0xE5 0xE6 0xF6 0xF7 0xF8 0xF9 and all others:
-V1 = w[800E4234 + S3 * 4];
-V0 = h[80083288 + S3 * 30];
-V1 = b[V1]; // read letter
-[800E4944 + S3 * 100 + V0] = b(V1); // write letter 800D6C40
+    Ld6c18:	; 800D6C18
+    //0xE5 0xE6 0xF6 0xF7 0xF8 0xF9 and all others:
+    V1 = w[800E4234 + window_id * 4];
+    V0 = h[80083288 + window_id * 30];
+    V1 = b[V1]; // read letter
+    [800E4944 + window_id * 100 + V0] = b(V1); // write letter 800D6C40
 
-V0 = w[800E4234 + S3 * 4];
-V0 = V0 + 1;
-[800E4234 + S3 * 4] = w(V0);
+    V0 = w[800E4234 + window_id * 4];
+    V0 = V0 + 1;
+    [800E4234 + window_id * 4] = w(V0);
 
-V0 = hu[80083288 + S3 * 30];
-V0 = V0 + 1;
-[80083288 + S3 * 30] = h(V0);
+    V0 = hu[80083288 + window_id * 30];
+    V0 = V0 + 1;
+    [80083288 + window_id * 30] = h(V0);
 
-V0 = hu[80083286 + S3 * 30];
-V0 = V0 + 1;
-[80083286 + S3 * 30] = h(V0);
+    V0 = hu[80083286 + window_id * 30];
+    V0 = V0 + 1;
+    [80083286 + window_id * 30] = h(V0);
 
-V0 = hu[80114470 + S3 * 2];
-V0 = V0 - S5;
-[80114470 + S3 * 2] = h(V0);
+    V0 = hu[80114470 + window_id * 2];
+    V0 = V0 - S5;
+    [80114470 + window_id * 2] = h(V0);
 
-Ld6ca0:	; 800D6CA0
-V1 = h[80114470 + S3 * 2];
-V0 = S5 < V1;
-
+    Ld6ca0:	; 800D6CA0
+    V1 = h[80114470 + window_id * 2];
+    V0 = S5 < V1;
 800D6CC4	bne    v0, zero, Ld5f04 [$800d5f04]
 
 // write FF to end of string;
-V0 = h[80083288 + S3 * 30];
-[800E4944 + S3 * 100 + V0] = FF;
+V0 = h[80083288 + window_id * 30];
+[800e4944 + window_id * 100 + V0] = b(ff);
 ////////////////////////////////
 
 
@@ -2367,7 +2907,7 @@ else
     V0 = bu[V0 + 0003];
     S0 = S0 + V1;
     V0 = V0 << 08;
-    800D7CFC	jal    $800257cc
+    800D7CFC	jal    $system_get_character_name_offset
     S0 = S0 + V0;
     A0 = V0;
     V1 = bu[S0 + 0000];

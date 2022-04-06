@@ -1,192 +1,1151 @@
-funcd579c:	; 800D579C
-800D579C	addiu  sp, sp, $ffe8 (=-$18)
-800D57A0	lui    v0, $8008
-800D57A4	lw     v0, $e7a8(v0)
-800D57A8	addu   t1, a1, zero
-800D57AC	bne    v0, zero, Ld57cc [$800d57cc]
-800D57B0	sw     ra, $0010(sp)
-800D57B4	lui    a0, $800a
-800D57B8	addiu  a0, a0, $10dc
-800D57BC	jal    funcd4848 [$800d4848]
-800D57C0	nop
-800D57C4	j      Ld5a50 [$800d5a50]
-800D57C8	ori    v0, zero, $0001
+funcd5c9c:	; 800D5C9C
+800D5C9C	addiu  sp, sp, $ffc0 (=-$40)
+800D5CA0	sll    v0, a0, $10
+800D5CA4	sra    a1, v0, $10
+800D5CA8	sw     ra, $003c(sp)
+800D5CAC	sw     fp, $0038(sp)
+800D5CB0	sw     s7, $0034(sp)
+800D5CB4	sw     s6, $0030(sp)
+800D5CB8	sw     s5, $002c(sp)
+800D5CBC	sw     s4, $0028(sp)
+800D5CC0	sw     s3, $0024(sp)
+800D5CC4	sw     s2, $0020(sp)
+800D5CC8	sw     s1, $001c(sp)
+800D5CCC	sw     s0, $0018(sp)
+800D5CD0	lui    at, $8008
+800D5CD4	addiu  at, at, $326c
+800D5CD8	addu   at, at, a1
+800D5CDC	lbu    v1, $0000(at)
+800D5CE0	lui    v0, $8007
+800D5CE4	lbu    v0, $22c4(v0)
+800D5CE8	nop
+800D5CEC	beq    v1, v0, Ld5d24 [$800d5d24]
+800D5CF0	sh     a0, $0010(sp)
+800D5CF4	lui    v0, $800a
+800D5CF8	lbu    v0, $d820(v0)
+800D5CFC	nop
+800D5D00	andi   v0, v0, $0003
+800D5D04	beq    v0, zero, Ld6d10 [$800d6d10]
+800D5D08	nop
+800D5D0C	lui    a0, $800a
+800D5D10	addiu  a0, a0, $10ec
+800D5D14	jal    funcbeca4 [$800beca4]
+800D5D18	ori    a2, zero, $0001
+800D5D1C	j      Ld6d10 [$800d6d10]
+800D5D20	nop
 
-Ld57cc:	; 800D57CC
-800D57CC	sll    v0, a0, $10
-800D57D0	sra    a1, v0, $10
-800D57D4	lui    at, $8008
-800D57D8	addiu  at, at, $326c
-800D57DC	addu   at, at, a1
-800D57E0	lbu    v1, $0000(at)
-800D57E4	ori    v0, zero, $00ff
-800D57E8	beq    v1, v0, Ld5820 [$800d5820]
-800D57EC	sll    t0, a1, $01
-800D57F0	lui    v0, $800a
-800D57F4	lbu    v0, $d820(v0)
-800D57F8	nop
-800D57FC	andi   v0, v0, $0003
-800D5800	beq    v0, zero, Ld5a50 [$800d5a50]
-800D5804	addu   v0, zero, zero
-800D5808	lui    a0, $800a
-800D580C	addiu  a0, a0, $10ec
-800D5810	jal    funcbeca4 [$800beca4]
-800D5814	ori    a2, zero, $0001
-800D5818	j      Ld5a50 [$800d5a50]
-800D581C	addu   v0, zero, zero
+Ld5d24:	; 800D5D24
+800D5D24	sll    v1, a1, $01
+800D5D28	addu   v0, v1, a1
+800D5D2C	sll    v0, v0, $04
+800D5D30	lui    at, $8008
+800D5D34	addiu  at, at, $32a2
+800D5D38	addu   at, at, v0
+800D5D3C	lhu    v0, $0000(at)
+800D5D40	nop
+800D5D44	andi   v0, v0, $0002
+800D5D48	beq    v0, zero, Ld5d58 [$800d5d58]
+800D5D4C	ori    a1, zero, $0100
+800D5D50	j      Ld5e5c [$800d5e5c]
+800D5D54	ori    s5, zero, $0001
 
-Ld5820:	; 800D5820
-800D5820	lui    v0, $8007
-800D5824	lbu    v0, $22c4(v0)
-800D5828	nop
-800D582C	lui    at, $8008
-800D5830	addiu  at, at, $326c
-800D5834	addu   at, at, a1
-800D5838	sb     v0, $0000(at)
-800D583C	addu   v0, t0, a1
-800D5840	sll    a3, v0, $04
-800D5844	lui    at, $8008
-800D5848	addiu  at, at, $327c
-800D584C	addu   at, at, a3
-800D5850	lh     v0, $0000(at)
-800D5854	nop
-800D5858	bgez   v0, Ld5864 [$800d5864]
-800D585C	nop
-800D5860	addiu  v0, v0, $0003
+Ld5d58:	; 800D5D58
+800D5D58	lui    v0, $800a
+800D5D5C	lw     v0, $c6e0(v0)
+800D5D60	nop
+800D5D64	lw     v0, $0078(v0)
+800D5D68	nop
+800D5D6C	andi   v0, v0, $0020
+800D5D70	beq    v0, zero, Ld5db0 [$800d5db0]
+800D5D74	nop
+800D5D78	lui    v0, $8011
+800D5D7C	addiu  v0, v0, $4480
+800D5D80	addu   v1, v1, v0
+800D5D84	lhu    v0, $0000(v1)
+800D5D88	nop
+800D5D8C	addiu  v0, v0, $0001
+800D5D90	sh     v0, $0000(v1)
+800D5D94	sll    v0, v0, $10
+800D5D98	sra    v0, v0, $10
+800D5D9C	slti   v0, v0, $0081
+800D5DA0	bne    v0, zero, Ld5de4 [$800d5de4]
+800D5DA4	ori    v0, zero, $0080
+800D5DA8	j      Ld5de4 [$800d5de4]
+800D5DAC	sh     v0, $0000(v1)
 
-Ld5864:	; 800D5864
-800D5864	lui    at, $8008
-800D5868	addiu  at, at, $327e
-800D586C	addu   at, at, a3
-800D5870	lh     v1, $0000(at)
-800D5874	sra    v0, v0, $02
-800D5878	lui    at, $8008
-800D587C	addiu  at, at, $3280
-800D5880	addu   at, at, a3
-800D5884	sh     v0, $0000(at)
-800D5888	bgez   v1, Ld5898 [$800d5898]
-800D588C	sra    v0, v1, $02
-800D5890	addiu  v1, v1, $0003
-800D5894	sra    v0, v1, $02
+Ld5db0:	; 800D5DB0
+800D5DB0	lui    v0, $8011
+800D5DB4	addiu  v0, v0, $4480
+800D5DB8	addu   v1, v1, v0
+800D5DBC	lhu    v0, $0000(v1)
+800D5DC0	nop
+800D5DC4	addiu  v0, v0, $ffff (=-$1)
+800D5DC8	sh     v0, $0000(v1)
+800D5DCC	sll    v0, v0, $10
+800D5DD0	sra    v0, v0, $10
+800D5DD4	slti   v0, v0, $0002
+800D5DD8	beq    v0, zero, Ld5de4 [$800d5de4]
+800D5DDC	ori    v0, zero, $0001
+800D5DE0	sh     v0, $0000(v1)
 
-Ld5898:	; 800D5898
-800D5898	lui    at, $8008
-800D589C	addiu  at, at, $3282
-800D58A0	addu   at, at, a3
-800D58A4	sh     v0, $0000(at)
-800D58A8	slti   v0, v0, $0008
-800D58AC	beq    v0, zero, Ld58c4 [$800d58c4]
-800D58B0	ori    v0, zero, $0008
-800D58B4	lui    at, $8008
-800D58B8	addiu  at, at, $3282
-800D58BC	addu   at, at, a3
-800D58C0	sh     v0, $0000(at)
+Ld5de4:	; 800D5DE4
+800D5DE4	lui    v1, $800a
+800D5DE8	lbu    v1, $d7d0(v1)
+800D5DEC	nop
+800D5DF0	sltiu  v0, v1, $0080
+800D5DF4	beq    v0, zero, Ld5e4c [$800d5e4c]
+800D5DF8	ori    v0, zero, $0080
+800D5DFC	subu   v0, v0, v1
+800D5E00	sra    v0, v0, $05
+800D5E04	addiu  a1, v0, $0002
+800D5E08	j      Ld5e5c [$800d5e5c]
+800D5E0C	ori    s5, zero, $0001
 
-Ld58c4:	; 800D58C4
-800D58C4	lui    at, $8008
-800D58C8	addiu  at, at, $3280
-800D58CC	addu   at, at, a3
-800D58D0	lh     v0, $0000(at)
-800D58D4	nop
-800D58D8	slti   v0, v0, $0008
-800D58DC	beq    v0, zero, Ld58f8 [$800d58f8]
-800D58E0	sll    v1, a1, $08
-800D58E4	ori    v0, zero, $0008
-800D58E8	lui    at, $8008
-800D58EC	addiu  at, at, $3280
-800D58F0	addu   at, at, a3
-800D58F4	sh     v0, $0000(at)
+Ld5e10:	; 800D5E10
+800D5E10	lui    at, $8008
+800D5E14	addiu  at, at, $32a0
+800D5E18	addu   at, at, s6
+800D5E1C	sh     v0, $0000(at)
+800D5E20	ori    v0, zero, $0001
+800D5E24	lui    at, $8011
+800D5E28	addiu  at, at, $4480
+800D5E2C	addu   at, at, fp
+800D5E30	sh     v0, $0000(at)
+800D5E34	lui    at, $8011
+800D5E38	addiu  at, at, $4470
+800D5E3C	addu   at, at, fp
+800D5E40	sh     zero, $0000(at)
+800D5E44	j      Ld6ccc [$800d6ccc]
+800D5E48	nop
 
-Ld58f8:	; 800D58F8
-800D58F8	lui    v0, $800e
-800D58FC	addiu  v0, v0, $4944
-800D5900	addu   v0, v1, v0
-800D5904	lui    at, $8008
-800D5908	addiu  at, at, $3274
-800D590C	addu   at, at, a3
-800D5910	sw     v0, $0000(at)
-800D5914	ori    v0, zero, $00ff
-800D5918	lui    at, $8008
-800D591C	addiu  at, at, $3284
-800D5920	addu   at, at, a3
-800D5924	sh     zero, $0000(at)
-800D5928	lui    at, $8008
-800D592C	addiu  at, at, $3286
-800D5930	addu   at, at, a3
-800D5934	sh     zero, $0000(at)
-800D5938	lui    at, $8008
-800D593C	addiu  at, at, $3288
-800D5940	addu   at, at, a3
-800D5944	sh     zero, $0000(at)
-800D5948	lui    at, $8008
-800D594C	addiu  at, at, $328a
-800D5950	addu   at, at, a3
-800D5954	sh     zero, $0000(at)
-800D5958	lui    at, $8008
-800D595C	addiu  at, at, $328e
-800D5960	addu   at, at, a3
-800D5964	sb     zero, $0000(at)
-800D5968	lui    at, $800e
-800D596C	addiu  at, at, $4944
-800D5970	addu   at, at, v1
-800D5974	sb     v0, $0000(at)
-800D5978	lui    v0, $800e
-800D597C	addiu  v0, v0, $4234
-800D5980	sll    a2, a1, $02
-800D5984	addu   a2, a2, v0
-800D5988	sll    a0, t1, $10
-800D598C	lui    v1, $8008
-800D5990	lw     v1, $e7a8(v1)
-800D5994	sra    a0, a0, $0f
-800D5998	addu   a0, a0, v1
-800D599C	sw     v1, $0000(a2)
-800D59A0	lbu    a1, $0002(a0)
-800D59A4	nop
-800D59A8	addu   a1, a1, v1
-800D59AC	lui    v1, $8007
-800D59B0	lbu    v1, $1e2c(v1)
-800D59B4	addu   v0, zero, zero
-800D59B8	sw     a1, $0000(a2)
-800D59BC	lbu    a0, $0003(a0)
-800D59C0	addiu  v1, v1, $0001
-800D59C4	sll    a0, a0, $08
-800D59C8	addu   a0, a0, a1
-800D59CC	sw     a0, $0000(a2)
-800D59D0	ori    a0, zero, $0001
-800D59D4	lui    at, $8007
-800D59D8	sb     v1, $1e2c(at)
-800D59DC	addiu  v1, zero, $ffff (=-$1)
-800D59E0	lui    at, $8011
-800D59E4	addiu  at, at, $4480
-800D59E8	addu   at, at, t0
-800D59EC	sh     a0, $0000(at)
-800D59F0	lui    at, $8011
-800D59F4	addiu  at, at, $4470
-800D59F8	addu   at, at, t0
-800D59FC	sh     zero, $0000(at)
-800D5A00	lui    at, $8011
-800D5A04	addiu  at, at, $42cc
-800D5A08	addu   at, at, t0
-800D5A0C	sh     zero, $0000(at)
-800D5A10	lui    at, $800e
-800D5A14	addiu  at, at, $4278
-800D5A18	addu   at, at, t0
-800D5A1C	sh     zero, $0000(at)
-800D5A20	lui    at, $800e
-800D5A24	addiu  at, at, $4280
-800D5A28	addu   at, at, t0
-800D5A2C	sh     zero, $0000(at)
-800D5A30	lui    at, $8011
-800D5A34	addiu  at, at, $451c
-800D5A38	addu   at, at, t0
-800D5A3C	sh     v1, $0000(at)
-800D5A40	lui    at, $8008
-800D5A44	addiu  at, at, $32a0
-800D5A48	addu   at, at, a3
-800D5A4C	sh     a0, $0000(at)
+Ld5e4c:	; 800D5E4C
+800D5E4C	ori    a1, zero, $0002
+800D5E50	addiu  v0, v1, $ff80 (=-$80)
+800D5E54	sra    v0, v0, $05
+800D5E58	addiu  s5, v0, $0001
 
-Ld5a50:	; 800D5A50
-800D5A50	lw     ra, $0010(sp)
-800D5A54	addiu  sp, sp, $0018
-800D5A58	jr     ra 
-800D5A5C	nop
+Ld5e5c:	; 800D5E5C
+800D5E5C	lhu    t3, $0010(sp)
+800D5E60	nop
+800D5E64	sll    a2, t3, $10
+800D5E68	sra    t0, a2, $10
+800D5E6C	sll    a3, t0, $01
+800D5E70	lui    at, $8011
+800D5E74	addiu  at, at, $4480
+800D5E78	addu   at, at, a3
+800D5E7C	lhu    v0, $0000(at)
+800D5E80	nop
+800D5E84	sll    v0, v0, $10
+800D5E88	sra    v0, v0, $14
+800D5E8C	mult   s5, v0
+800D5E90	lui    t1, $8011
+800D5E94	addiu  t1, t1, $4470
+800D5E98	addu   a0, a3, t1
+800D5E9C	lhu    v1, $0000(a0)
+800D5EA0	mflo   v0
+800D5EA4	addu   v0, a1, v0
+800D5EA8	addu   v1, v1, v0
+800D5EAC	sh     v1, $0000(a0)
+800D5EB0	sll    v1, v1, $10
+800D5EB4	sra    v1, v1, $10
+800D5EB8	sll    v0, s5, $10
+800D5EBC	sra    v0, v0, $10
+800D5EC0	slt    v0, v0, v1
+800D5EC4	beq    v0, zero, Ld6ccc [$800d6ccc]
+800D5EC8	nop
+800D5ECC	addu   s7, t1, zero
+800D5ED0	addu   s3, t0, zero
+800D5ED4	addu   fp, a3, zero
+800D5ED8	addu   v0, a3, s3
+800D5EDC	sll    s6, v0, $04
+800D5EE0	lui    v1, $800e
+800D5EE4	addiu  v1, v1, $4944
+800D5EE8	sll    v0, s3, $08
+800D5EEC	addu   s4, v0, v1
+800D5EF0	sll    v0, s3, $02
+800D5EF4	lui    t3, $800e
+800D5EF8	addiu  t3, t3, $4234
+800D5EFC	addu   s2, v0, t3
+800D5F00	sra    v0, a2, $0e
+
+Ld5f04:	; 800D5F04
+800D5F04	lui    t3, $800e
+800D5F08	addiu  t3, t3, $4234
+800D5F0C	addu   v0, v0, t3
+800D5F10	lw     v0, $0000(v0)
+800D5F14	nop
+800D5F18	lbu    v0, $0000(v0)
+800D5F1C	nop
+800D5F20	addiu  v1, v0, $ff20 (=-$e0)
+800D5F24	sltiu  v0, v1, $0020
+800D5F28	beq    v0, zero, Ld6c18 [$800d6c18]
+800D5F2C	sll    v0, v1, $02
+800D5F30	lui    at, $800a
+800D5F34	addiu  at, at, $1110
+800D5F38	addu   at, at, v0
+800D5F3C	lw     v0, $0000(at)
+800D5F40	nop
+800D5F44	jr     v0 
+800D5F48	nop
+
+800D5F4C	ori    v0, zero, $0006
+800D5F50	lui    at, $8008
+800D5F54	addiu  at, at, $32a0
+800D5F58	addu   at, at, s6
+800D5F5C	sh     v0, $0000(at)
+800D5F60	addu   v0, fp, s7
+800D5F64	j      Ld6ccc [$800d6ccc]
+800D5F68	sh     zero, $0000(v0)
+800D5F6C	lui    at, $8008
+800D5F70	addiu  at, at, $327e
+800D5F74	addu   at, at, s6
+800D5F78	lh     v0, $0000(at)
+800D5F7C	lui    at, $8008
+800D5F80	addiu  at, at, $328a
+800D5F84	addu   at, at, s6
+800D5F88	lh     a0, $0000(at)
+800D5F8C	addiu  v1, v0, $fff7 (=-$9)
+800D5F90	bgez   v1, Ld5f9c [$800d5f9c]
+800D5F94	nop
+800D5F98	addiu  v1, v0, $0006
+
+Ld5f9c:	; 800D5F9C
+800D5F9C	lui    at, $8011
+800D5FA0	addiu  at, at, $42cc
+800D5FA4	addu   at, at, fp
+800D5FA8	lh     v0, $0000(at)
+800D5FAC	sra    v1, v1, $04
+800D5FB0	addiu  v0, v0, $ffff (=-$1)
+800D5FB4	addu   v1, v1, v0
+800D5FB8	beq    a0, v1, Ld5e10 [$800d5e10]
+800D5FBC	ori    v0, zero, $0004
+800D5FC0	lw     v1, $0000(s2)
+800D5FC4	lui    at, $8008
+800D5FC8	addiu  at, at, $3288
+800D5FCC	addu   at, at, s6
+800D5FD0	lh     v0, $0000(at)
+800D5FD4	lbu    v1, $0000(v1)
+800D5FD8	addu   v0, s4, v0
+800D5FDC	sb     v1, $0000(v0)
+800D5FE0	lw     v0, $0000(s2)
+800D5FE4	lui    v1, $8008
+800D5FE8	addiu  v1, v1, $3274
+800D5FEC	addiu  v0, v0, $0001
+800D5FF0	sw     v0, $0000(s2)
+800D5FF4	lui    at, $8008
+800D5FF8	addiu  at, at, $3288
+800D5FFC	addu   at, at, s6
+800D6000	lhu    v0, $0000(at)
+800D6004	addu   v1, s6, v1
+800D6008	addiu  v0, v0, $0001
+800D600C	sh     v0, $0014(v1)
+800D6010	lui    at, $8008
+800D6014	addiu  at, at, $328a
+800D6018	addu   at, at, s6
+800D601C	lhu    v0, $0000(at)
+800D6020	nop
+800D6024	addiu  v0, v0, $0001
+800D6028	j      Ld6ca0 [$800d6ca0]
+800D602C	sh     v0, $0016(v1)
+800D6030	sll    a0, s3, $01
+800D6034	lw     v0, $0000(s2)
+800D6038	ori    v1, zero, $000e
+800D603C	addiu  v0, v0, $0001
+800D6040	sw     v0, $0000(s2)
+800D6044	addu   v0, a0, s3
+800D6048	sll    v0, v0, $04
+800D604C	lui    at, $8008
+800D6050	addiu  at, at, $32a0
+800D6054	addu   at, at, v0
+800D6058	sh     v1, $0000(at)
+800D605C	j      Ld66c0 [$800d66c0]
+800D6060	ori    v0, zero, $0001
+800D6064	addu   a2, zero, zero
+800D6068	sll    v0, s3, $01
+800D606C	addu   v0, v0, s3
+800D6070	sll    a0, v0, $04
+800D6074	lui    v1, $8008
+800D6078	addiu  v1, v1, $3274
+800D607C	lw     v0, $0000(s2)
+800D6080	addu   a1, a0, v1
+800D6084	addiu  v0, v0, $0001
+800D6088	sw     v0, $0000(s2)
+
+loopd608c:	; 800D608C
+800D608C	lui    at, $8008
+800D6090	addiu  at, at, $3288
+800D6094	addu   at, at, a0
+800D6098	lh     v0, $0000(at)
+800D609C	nop
+800D60A0	addu   v0, s4, v0
+800D60A4	sb     zero, $0000(v0)
+800D60A8	lui    at, $8008
+800D60AC	addiu  at, at, $3288
+800D60B0	addu   at, at, a0
+800D60B4	lhu    v0, $0000(at)
+800D60B8	nop
+800D60BC	addiu  v0, v0, $0001
+800D60C0	sh     v0, $0014(a1)
+800D60C4	addiu  v0, a2, $0001
+800D60C8	addu   a2, v0, zero
+800D60CC	sll    v0, v0, $10
+800D60D0	sra    v0, v0, $10
+800D60D4	lui    at, $8008
+800D60D8	addiu  at, at, $3286
+800D60DC	addu   at, at, a0
+800D60E0	lhu    v1, $0000(at)
+800D60E4	slti   v0, v0, $0004
+800D60E8	addiu  v1, v1, $0001
+800D60EC	bne    v0, zero, loopd608c [$800d608c]
+800D60F0	sh     v1, $0012(a1)
+800D60F4	j      Ld6ca0 [$800d6ca0]
+800D60F8	nop
+800D60FC	addu   a2, zero, zero
+800D6100	sll    v0, s3, $01
+800D6104	addu   v0, v0, s3
+800D6108	sll    a0, v0, $04
+800D610C	lui    v1, $8008
+800D6110	addiu  v1, v1, $3274
+800D6114	lw     v0, $0000(s2)
+800D6118	addu   a1, a0, v1
+800D611C	addiu  v0, v0, $0001
+800D6120	sw     v0, $0000(s2)
+
+loopd6124:	; 800D6124
+800D6124	lui    at, $8008
+800D6128	addiu  at, at, $3288
+800D612C	addu   at, at, a0
+800D6130	lh     v0, $0000(at)
+800D6134	nop
+800D6138	addu   v0, s4, v0
+800D613C	sb     zero, $0000(v0)
+800D6140	lui    at, $8008
+800D6144	addiu  at, at, $3288
+800D6148	addu   at, at, a0
+800D614C	lhu    v0, $0000(at)
+800D6150	nop
+800D6154	addiu  v0, v0, $0001
+800D6158	sh     v0, $0014(a1)
+800D615C	addiu  v0, a2, $0001
+800D6160	addu   a2, v0, zero
+800D6164	sll    v0, v0, $10
+800D6168	sra    v0, v0, $10
+800D616C	lui    at, $8008
+800D6170	addiu  at, at, $3286
+800D6174	addu   at, at, a0
+800D6178	lhu    v1, $0000(at)
+800D617C	slti   v0, v0, $000a
+800D6180	addiu  v1, v1, $0001
+800D6184	bne    v0, zero, loopd6124 [$800d6124]
+800D6188	sh     v1, $0012(a1)
+800D618C	j      Ld6ca0 [$800d6ca0]
+800D6190	nop
+800D6194	sll    a0, s3, $01
+800D6198	addu   a0, a0, s3
+800D619C	lw     v0, $0000(s2)
+800D61A0	sll    a0, a0, $04
+800D61A4	addiu  v0, v0, $0001
+800D61A8	sw     v0, $0000(s2)
+800D61AC	lui    at, $8008
+800D61B0	addiu  at, at, $3288
+800D61B4	addu   at, at, a0
+800D61B8	lh     v0, $0000(at)
+800D61BC	ori    v1, zero, $000c
+800D61C0	addu   v0, s4, v0
+800D61C4	sb     v1, $0000(v0)
+800D61C8	lui    v1, $8008
+800D61CC	addiu  v1, v1, $3274
+800D61D0	lui    at, $8008
+800D61D4	addiu  at, at, $3288
+800D61D8	addu   at, at, a0
+800D61DC	lhu    v0, $0000(at)
+800D61E0	addu   v1, a0, v1
+800D61E4	addiu  v0, v0, $0001
+800D61E8	sh     v0, $0014(v1)
+800D61EC	lui    at, $8008
+800D61F0	addiu  at, at, $3288
+800D61F4	addu   at, at, a0
+800D61F8	lh     v0, $0000(at)
+800D61FC	nop
+800D6200	addu   v0, s4, v0
+800D6204	sb     zero, $0000(v0)
+800D6208	lui    at, $8008
+800D620C	addiu  at, at, $3288
+800D6210	addu   at, at, a0
+800D6214	lhu    v0, $0000(at)
+800D6218	nop
+800D621C	addiu  v0, v0, $0001
+800D6220	j      Ld62d0 [$800d62d0]
+800D6224	sh     v0, $0014(v1)
+800D6228	sll    a0, s3, $01
+800D622C	addu   a0, a0, s3
+800D6230	sll    a0, a0, $04
+800D6234	lw     v0, $0000(s2)
+800D6238	j      Ld6254 [$800d6254]
+800D623C	ori    v1, zero, $000e
+800D6240	sll    a0, s3, $01
+800D6244	addu   a0, a0, s3
+800D6248	sll    a0, a0, $04
+800D624C	lw     v0, $0000(s2)
+800D6250	ori    v1, zero, $00a9
+
+Ld6254:	; 800D6254
+800D6254	addiu  v0, v0, $0001
+800D6258	sw     v0, $0000(s2)
+800D625C	lui    at, $8008
+800D6260	addiu  at, at, $3288
+800D6264	addu   at, at, a0
+800D6268	lh     v0, $0000(at)
+800D626C	lui    a1, $8008
+800D6270	addiu  a1, a1, $3274
+800D6274	addu   v0, s4, v0
+800D6278	sb     v1, $0000(v0)
+800D627C	lui    at, $8008
+800D6280	addiu  at, at, $3288
+800D6284	addu   at, at, a0
+800D6288	lhu    v0, $0000(at)
+800D628C	addu   a1, a0, a1
+800D6290	addiu  v0, v0, $0001
+800D6294	sh     v0, $0014(a1)
+800D6298	lui    at, $8008
+800D629C	addiu  at, at, $3288
+800D62A0	addu   at, at, a0
+800D62A4	lh     v0, $0000(at)
+800D62A8	ori    v1, zero, $0002
+800D62AC	addu   v0, s4, v0
+800D62B0	sb     v1, $0000(v0)
+800D62B4	lui    at, $8008
+800D62B8	addiu  at, at, $3288
+800D62BC	addu   at, at, a0
+800D62C0	lhu    v0, $0000(at)
+800D62C4	nop
+800D62C8	addiu  v0, v0, $0001
+800D62CC	sh     v0, $0014(a1)
+
+Ld62d0:	; 800D62D0
+800D62D0	lui    at, $8008
+800D62D4	addiu  at, at, $3286
+800D62D8	addu   at, at, a0
+800D62DC	lhu    v0, $0000(at)
+800D62E0	nop
+800D62E4	addiu  v0, v0, $0002
+800D62E8	lui    at, $8008
+800D62EC	addiu  at, at, $3286
+800D62F0	addu   at, at, a0
+800D62F4	sh     v0, $0000(at)
+800D62F8	j      Ld6ca0 [$800d6ca0]
+800D62FC	nop
+800D6300	lw     v0, $0000(s2)
+800D6304	nop
+800D6308	lbu    v0, $0000(v0)
+800D630C	nop
+800D6310	addiu  s0, v0, $ff16 (=-$ea)
+800D6314	jal    $800257cc
+800D6318	andi   a0, s0, $ffff
+800D631C	lui    v1, $800e
+800D6320	addiu  v1, v1, $4278
+800D6324	sll    a3, s3, $01
+800D6328	addu   a2, a3, v1
+800D632C	lh     a0, $0000(a2)
+800D6330	nop
+800D6334	addu   a1, v0, a0
+800D6338	lbu    v1, $0000(a1)
+800D633C	ori    v0, zero, $00ff
+800D6340	beq    v1, v0, Ld6350 [$800d6350]
+800D6344	slti   v0, a0, $0009
+800D6348	bne    v0, zero, Ld6368 [$800d6368]
+800D634C	addu   a0, a3, s3
+
+Ld6350:	; 800D6350
+800D6350	lw     v0, $0000(s2)
+800D6354	nop
+800D6358	addiu  v0, v0, $0001
+800D635C	sw     v0, $0000(s2)
+800D6360	j      Ld6ca0 [$800d6ca0]
+800D6364	sh     zero, $0000(a2)
+
+Ld6368:	; 800D6368
+800D6368	sll    a0, a0, $04
+800D636C	lui    at, $8008
+800D6370	addiu  at, at, $3288
+800D6374	addu   at, at, a0
+800D6378	lh     v0, $0000(at)
+800D637C	lbu    v1, $0000(a1)
+800D6380	addu   v0, s4, v0
+800D6384	sb     v1, $0000(v0)
+800D6388	lui    v1, $8008
+800D638C	addiu  v1, v1, $3274
+800D6390	lui    at, $8008
+800D6394	addiu  at, at, $3288
+800D6398	addu   at, at, a0
+800D639C	lhu    v0, $0000(at)
+800D63A0	addu   v1, a0, v1
+800D63A4	addiu  v0, v0, $0001
+800D63A8	sh     v0, $0014(v1)
+800D63AC	lhu    v0, $0000(a2)
+800D63B0	nop
+800D63B4	addiu  v0, v0, $0001
+800D63B8	sh     v0, $0000(a2)
+800D63BC	lui    at, $8008
+800D63C0	addiu  at, at, $3286
+800D63C4	addu   at, at, a0
+800D63C8	lhu    v0, $0000(at)
+800D63CC	nop
+800D63D0	addiu  v0, v0, $0001
+800D63D4	sh     v0, $0012(v1)
+800D63D8	j      Ld6a54 [$800d6a54]
+800D63DC	addu   v1, a3, s7
+800D63E0	lw     v1, $0000(s2)
+800D63E4	nop
+800D63E8	lbu    v0, $0000(v1)
+800D63EC	nop
+800D63F0	lui    at, $800a
+800D63F4	addiu  at, at, $d29e (=-$2d62)
+800D63F8	addu   at, at, v0
+800D63FC	lbu    a0, $0000(at)
+800D6400	ori    s0, zero, $00ff
+800D6404	bne    a0, s0, Ld64ac [$800d64ac]
+800D6408	sll    a2, s3, $01
+800D640C	lui    v0, $800e
+800D6410	addiu  v0, v0, $4278
+800D6414	addu   a1, a2, v0
+800D6418	lh     v0, $0000(a1)
+800D641C	nop
+800D6420	slti   v0, v0, $0009
+800D6424	bne    v0, zero, Ld6434 [$800d6434]
+800D6428	addu   a0, a2, s3
+800D642C	j      Ld64f4 [$800d64f4]
+800D6430	addiu  v0, v1, $0001
+
+Ld6434:	; 800D6434
+800D6434	sll    a0, a0, $04
+800D6438	lui    at, $8008
+800D643C	addiu  at, at, $3288
+800D6440	addu   at, at, a0
+800D6444	lh     v0, $0000(at)
+800D6448	ori    v1, zero, $00a9
+800D644C	addu   v0, s4, v0
+800D6450	sb     v1, $0000(v0)
+800D6454	lui    v1, $8008
+800D6458	addiu  v1, v1, $3274
+800D645C	lui    at, $8008
+800D6460	addiu  at, at, $3288
+800D6464	addu   at, at, a0
+800D6468	lhu    v0, $0000(at)
+800D646C	addu   v1, a0, v1
+800D6470	addiu  v0, v0, $0001
+800D6474	sh     v0, $0014(v1)
+800D6478	lhu    v0, $0000(a1)
+800D647C	nop
+800D6480	addiu  v0, v0, $0001
+800D6484	sh     v0, $0000(a1)
+800D6488	lui    at, $8008
+800D648C	addiu  at, at, $3286
+800D6490	addu   at, at, a0
+800D6494	lhu    v0, $0000(at)
+800D6498	nop
+800D649C	addiu  v0, v0, $0001
+800D64A0	sh     v0, $0012(v1)
+800D64A4	j      Ld6a54 [$800d6a54]
+800D64A8	addu   v1, a2, s7
+
+Ld64ac:	; 800D64AC
+800D64AC	jal    $800257cc
+800D64B0	nop
+800D64B4	lui    v1, $800e
+800D64B8	addiu  v1, v1, $4278
+800D64BC	sll    a2, s3, $01
+800D64C0	addu   a1, a2, v1
+800D64C4	lh     a0, $0000(a1)
+800D64C8	nop
+800D64CC	addu   v1, v0, a0
+800D64D0	lbu    v0, $0000(v1)
+800D64D4	nop
+800D64D8	beq    v0, s0, Ld64e8 [$800d64e8]
+800D64DC	slti   v0, a0, $0009
+800D64E0	bne    v0, zero, Ld6500 [$800d6500]
+800D64E4	addu   a0, a2, s3
+
+Ld64e8:	; 800D64E8
+800D64E8	lw     v0, $0000(s2)
+800D64EC	nop
+800D64F0	addiu  v0, v0, $0001
+
+Ld64f4:	; 800D64F4
+800D64F4	sw     v0, $0000(s2)
+800D64F8	j      Ld6ca0 [$800d6ca0]
+800D64FC	sh     zero, $0000(a1)
+
+Ld6500:	; 800D6500
+800D6500	sll    a0, a0, $04
+800D6504	lui    at, $8008
+800D6508	addiu  at, at, $3288
+800D650C	addu   at, at, a0
+800D6510	lh     v0, $0000(at)
+800D6514	lbu    v1, $0000(v1)
+800D6518	addu   v0, s4, v0
+800D651C	sb     v1, $0000(v0)
+800D6520	lui    v1, $8008
+800D6524	addiu  v1, v1, $3274
+800D6528	lui    at, $8008
+800D652C	addiu  at, at, $3288
+800D6530	addu   at, at, a0
+800D6534	lhu    v0, $0000(at)
+800D6538	addu   v1, a0, v1
+800D653C	addiu  v0, v0, $0001
+800D6540	sh     v0, $0014(v1)
+800D6544	lhu    v0, $0000(a1)
+800D6548	nop
+800D654C	addiu  v0, v0, $0001
+800D6550	sh     v0, $0000(a1)
+800D6554	lui    at, $8008
+800D6558	addiu  at, at, $3286
+800D655C	addu   at, at, a0
+800D6560	lhu    v0, $0000(at)
+800D6564	nop
+800D6568	addiu  v0, v0, $0001
+800D656C	sh     v0, $0012(v1)
+800D6570	j      Ld6a54 [$800d6a54]
+800D6574	addu   v1, a2, s7
+800D6578	sll    v1, s3, $01
+800D657C	addu   v1, v1, s3
+800D6580	sll    v1, v1, $04
+800D6584	lw     a0, $0000(s2)
+800D6588	lui    at, $8008
+800D658C	addiu  at, at, $3288
+800D6590	addu   at, at, v1
+800D6594	lh     v0, $0000(at)
+800D6598	lbu    a0, $0000(a0)
+800D659C	addu   v0, s4, v0
+800D65A0	sb     a0, $0000(v0)
+800D65A4	lw     v0, $0000(s2)
+800D65A8	nop
+800D65AC	addiu  v0, v0, $0001
+800D65B0	sw     v0, $0000(s2)
+800D65B4	lui    at, $8008
+800D65B8	addiu  at, at, $3288
+800D65BC	addu   at, at, v1
+800D65C0	lhu    v0, $0000(at)
+800D65C4	nop
+800D65C8	addiu  v0, v0, $0001
+800D65CC	lui    at, $8008
+800D65D0	addiu  at, at, $3288
+800D65D4	addu   at, at, v1
+800D65D8	sh     v0, $0000(at)
+800D65DC	lw     v0, $0000(s2)
+800D65E0	nop
+800D65E4	lbu    v0, $0000(v0)
+800D65E8	nop
+800D65EC	addiu  v1, v0, $ff2e (=-$d2)
+800D65F0	sltiu  v0, v1, $0018
+800D65F4	beq    v0, zero, Ld6c18 [$800d6c18]
+800D65F8	sll    v0, v1, $02
+800D65FC	lui    at, $800a
+800D6600	addiu  at, at, $1190
+800D6604	addu   at, at, v0
+800D6608	lw     v0, $0000(at)
+800D660C	nop
+800D6610	jr     v0 
+800D6614	nop
+
+800D6618	sll    a0, s3, $01
+800D661C	addu   v1, a0, s3
+800D6620	sll    v1, v1, $04
+800D6624	lui    at, $8008
+800D6628	addiu  at, at, $3288
+800D662C	addu   at, at, v1
+800D6630	lhu    v0, $0000(at)
+800D6634	nop
+800D6638	addiu  v0, v0, $ffff (=-$1)
+800D663C	lui    at, $8008
+800D6640	addiu  at, at, $3288
+800D6644	addu   at, at, v1
+800D6648	sh     v0, $0000(at)
+800D664C	lw     v0, $0000(s2)
+800D6650	nop
+800D6654	addiu  v0, v0, $0001
+800D6658	sw     v0, $0000(s2)
+800D665C	j      Ld66ac [$800d66ac]
+800D6660	ori    v0, zero, $000d
+800D6664	sll    a0, s3, $01
+800D6668	addu   v1, a0, s3
+800D666C	sll    v1, v1, $04
+800D6670	lui    at, $8008
+800D6674	addiu  at, at, $3288
+800D6678	addu   at, at, v1
+800D667C	lhu    v0, $0000(at)
+800D6680	nop
+800D6684	addiu  v0, v0, $ffff (=-$1)
+800D6688	lui    at, $8008
+800D668C	addiu  at, at, $3288
+800D6690	addu   at, at, v1
+800D6694	sh     v0, $0000(at)
+800D6698	lw     v0, $0000(s2)
+800D669C	nop
+800D66A0	addiu  v0, v0, $0001
+800D66A4	sw     v0, $0000(s2)
+800D66A8	ori    v0, zero, $000b
+
+Ld66ac:	; 800D66AC
+800D66AC	lui    at, $8008
+800D66B0	addiu  at, at, $32a0
+800D66B4	addu   at, at, v1
+800D66B8	sh     v0, $0000(at)
+800D66BC	ori    v0, zero, $0001
+
+Ld66c0:	; 800D66C0
+800D66C0	lui    at, $8011
+800D66C4	addiu  at, at, $4480
+800D66C8	addu   at, at, a0
+800D66CC	sh     v0, $0000(at)
+800D66D0	addu   a0, a0, s7
+800D66D4	j      Ld6ccc [$800d6ccc]
+800D66D8	sh     zero, $0000(a0)
+800D66DC	sll    t1, s3, $01
+800D66E0	addu   v0, t1, s3
+800D66E4	sll    a3, v0, $04
+800D66E8	lui    v0, $8008
+800D66EC	addiu  v0, v0, $3274
+800D66F0	lui    at, $8008
+800D66F4	addiu  at, at, $3288
+800D66F8	addu   at, at, a3
+800D66FC	lhu    v1, $0000(at)
+800D6700	addu   t0, a3, v0
+800D6704	addiu  v1, v1, $ffff (=-$1)
+800D6708	sh     v1, $0014(t0)
+800D670C	lw     t2, $0000(s2)
+800D6710	nop
+800D6714	addiu  v0, t2, $ffff (=-$1)
+800D6718	sw     v0, $0000(s2)
+800D671C	lui    v0, $8011
+800D6720	addiu  v0, v0, $451c
+800D6724	addu   a2, t1, v0
+800D6728	lh     a0, $0000(a2)
+800D672C	addiu  v0, zero, $ffff (=-$1)
+800D6730	bne    a0, v0, Ld6808 [$800d6808]
+800D6734	sll    v0, s3, $04
+800D6738	jal    funcd726c [$800d726c]
+800D673C	addu   a0, s3, zero
+800D6740	lui    v1, $800a
+800D6744	lbu    v1, $d820(v1)
+800D6748	nop
+800D674C	andi   v1, v1, $0003
+800D6750	beq    v1, zero, Ld676c [$800d676c]
+800D6754	addu   s0, v0, zero
+800D6758	lui    a0, $800a
+800D675C	addiu  a0, a0, $10f8
+800D6760	andi   a1, s0, $ffff
+800D6764	jal    funcbeca4 [$800beca4]
+800D6768	ori    a2, zero, $0004
+
+Ld676c:	; 800D676C
+800D676C	lw     v0, $0000(s2)
+800D6770	nop
+800D6774	lbu    v1, $0001(v0)
+800D6778	ori    v0, zero, $00df
+800D677C	beq    v1, v0, Ld67e8 [$800d67e8]
+800D6780	slti   v0, v1, $00e0
+800D6784	beq    v0, zero, Ld679c [$800d679c]
+800D6788	ori    v0, zero, $00de
+800D678C	beq    v1, v0, Ld67b0 [$800d67b0]
+800D6790	andi   a0, s0, $ffff
+800D6794	j      Ld699c [$800d699c]
+800D6798	nop
+
+Ld679c:	; 800D679C
+800D679C	ori    v0, zero, $00e1
+800D67A0	beq    v1, v0, Ld67cc [$800d67cc]
+800D67A4	andi   a0, s0, $ffff
+800D67A8	j      Ld699c [$800d699c]
+800D67AC	nop
+
+Ld67b0:	; 800D67B0
+800D67B0	sll    v0, s3, $04
+800D67B4	lui    a1, $8011
+800D67B8	addiu  a1, a1, $44dc
+800D67BC	jal    funcd775c [$800d775c]
+800D67C0	addu   a1, v0, a1
+800D67C4	j      Ld699c [$800d699c]
+800D67C8	nop
+
+Ld67cc:	; 800D67CC
+800D67CC	sll    v0, s3, $04
+800D67D0	lui    a1, $8011
+800D67D4	addiu  a1, a1, $44dc
+800D67D8	jal    funcd785c [$800d785c]
+800D67DC	addu   a1, v0, a1
+800D67E0	j      Ld699c [$800d699c]
+800D67E4	nop
+
+Ld67e8:	; 800D67E8
+800D67E8	andi   a0, s0, $ffff
+800D67EC	sll    v0, s3, $04
+800D67F0	lui    a1, $8011
+800D67F4	addiu  a1, a1, $44dc
+800D67F8	jal    funcd7970 [$800d7970]
+800D67FC	addu   a1, v0, a1
+800D6800	j      Ld699c [$800d699c]
+800D6804	nop
+
+Ld6808:	; 800D6808
+800D6808	lui    v1, $8011
+800D680C	addiu  v1, v1, $44dc
+800D6810	addu   v0, v0, v1
+800D6814	addu   a1, v0, a0
+800D6818	lbu    v1, $0000(a1)
+800D681C	ori    v0, zero, $00ff
+800D6820	beq    v1, v0, Ld6830 [$800d6830]
+800D6824	slti   v0, a0, $0010
+800D6828	bne    v0, zero, Ld69f0 [$800d69f0]
+800D682C	nop
+
+Ld6830:	; 800D6830
+800D6830	addiu  v0, t2, $0001
+800D6834	sw     v0, $0000(s2)
+800D6838	addiu  v0, zero, $ffff (=-$1)
+800D683C	lui    v1, $800e
+800D6840	addiu  v1, v1, $4280
+800D6844	addu   v1, t1, v1
+800D6848	j      Ld69ac [$800d69ac]
+800D684C	sh     v0, $0000(a2)
+800D6850	sll    t1, s3, $01
+800D6854	addu   v0, t1, s3
+800D6858	sll    a3, v0, $04
+800D685C	lui    v0, $8008
+800D6860	addiu  v0, v0, $3274
+800D6864	lui    at, $8008
+800D6868	addiu  at, at, $3288
+800D686C	addu   at, at, a3
+800D6870	lhu    v1, $0000(at)
+800D6874	addu   t0, a3, v0
+800D6878	addiu  v1, v1, $ffff (=-$1)
+800D687C	sh     v1, $0014(t0)
+800D6880	lw     a0, $0000(s2)
+800D6884	nop
+800D6888	addiu  v0, a0, $ffff (=-$1)
+800D688C	sw     v0, $0000(s2)
+800D6890	lui    v0, $8011
+800D6894	addiu  v0, v0, $451c
+800D6898	addu   a2, t1, v0
+800D689C	lh     a1, $0000(a2)
+800D68A0	addiu  v0, zero, $ffff (=-$1)
+800D68A4	bne    a1, v0, Ld69c0 [$800d69c0]
+800D68A8	sll    v0, s3, $04
+800D68AC	lbu    s0, $0001(a0)
+800D68B0	lbu    v0, $0002(a0)
+800D68B4	lbu    s1, $0003(a0)
+800D68B8	lbu    v1, $0004(a0)
+800D68BC	sll    v0, v0, $08
+800D68C0	or     s0, s0, v0
+800D68C4	sll    v1, v1, $08
+800D68C8	lui    v0, $800a
+800D68CC	lbu    v0, $d820(v0)
+800D68D0	nop
+800D68D4	andi   v0, v0, $0003
+800D68D8	beq    v0, zero, Ld691c [$800d691c]
+800D68DC	or     s1, s1, v1
+800D68E0	lui    a0, $800a
+800D68E4	addiu  a0, a0, $1100
+800D68E8	addu   a1, s0, zero
+800D68EC	jal    funcbeca4 [$800beca4]
+800D68F0	ori    a2, zero, $0004
+800D68F4	lui    v0, $800a
+800D68F8	lbu    v0, $d820(v0)
+800D68FC	nop
+800D6900	andi   v0, v0, $0003
+800D6904	beq    v0, zero, Ld691c [$800d691c]
+800D6908	addu   a1, s1, zero
+800D690C	lui    a0, $800a
+800D6910	addiu  a0, a0, $1108
+800D6914	jal    funcbeca4 [$800beca4]
+800D6918	ori    a2, zero, $0004
+
+Ld691c:	; 800D691C
+800D691C	andi   a1, s1, $ffff
+800D6920	beq    a1, zero, Ld6978 [$800d6978]
+800D6924	addu   a2, zero, zero
+800D6928	lui    v1, $8011
+800D692C	addiu  v1, v1, $44dc
+800D6930	sll    v0, s3, $04
+800D6934	addu   t0, v0, v1
+800D6938	andi   a3, s0, $ffff
+800D693C	lui    t1, $800a
+800D6940	addiu  t1, t1, $d288 (=-$2d78)
+
+loopd6944:	; 800D6944
+800D6944	sll    v1, a2, $10
+800D6948	addiu  a0, a2, $0001
+800D694C	addu   a2, a0, zero
+800D6950	sra    v1, v1, $10
+800D6954	addu   v0, a3, v1
+800D6958	addu   v0, v0, t1
+800D695C	addu   v1, t0, v1
+800D6960	sll    a0, a0, $10
+800D6964	sra    a0, a0, $10
+800D6968	lbu    v0, $0000(v0)
+800D696C	slt    a0, a0, a1
+800D6970	bne    a0, zero, loopd6944 [$800d6944]
+800D6974	sb     v0, $0000(v1)
+
+Ld6978:	; 800D6978
+800D6978	lui    v0, $8011
+800D697C	addiu  v0, v0, $44dc
+800D6980	sll    v1, s3, $04
+800D6984	addu   v1, v1, v0
+800D6988	sll    v0, a2, $10
+800D698C	sra    v0, v0, $10
+800D6990	addu   v1, v1, v0
+800D6994	ori    v0, zero, $00ff
+800D6998	sb     v0, $0000(v1)
+
+Ld699c:	; 800D699C
+800D699C	lui    v0, $8011
+800D69A0	addiu  v0, v0, $451c
+800D69A4	sll    v1, s3, $01
+800D69A8	addu   v1, v1, v0
+
+Ld69ac:	; 800D69AC
+800D69AC	lhu    v0, $0000(v1)
+800D69B0	nop
+800D69B4	addiu  v0, v0, $0001
+800D69B8	j      Ld6ca0 [$800d6ca0]
+800D69BC	sh     v0, $0000(v1)
+
+Ld69c0:	; 800D69C0
+800D69C0	lui    v1, $8011
+800D69C4	addiu  v1, v1, $44dc
+800D69C8	addu   v0, v0, v1
+800D69CC	addu   a1, v0, a1
+800D69D0	lbu    v1, $0000(a1)
+800D69D4	ori    v0, zero, $00ff
+800D69D8	bne    v1, v0, Ld69f0 [$800d69f0]
+800D69DC	addiu  v0, a0, $0005
+800D69E0	sw     v0, $0000(s2)
+800D69E4	addiu  v0, zero, $ffff (=-$1)
+800D69E8	j      Ld6ca0 [$800d6ca0]
+800D69EC	sh     v0, $0000(a2)
+
+Ld69f0:	; 800D69F0
+800D69F0	lui    at, $8008
+800D69F4	addiu  at, at, $3288
+800D69F8	addu   at, at, a3
+800D69FC	lh     v0, $0000(at)
+800D6A00	lbu    v1, $0000(a1)
+800D6A04	addu   v0, s4, v0
+800D6A08	sb     v1, $0000(v0)
+800D6A0C	lui    at, $8008
+800D6A10	addiu  at, at, $3288
+800D6A14	addu   at, at, a3
+800D6A18	lhu    v0, $0000(at)
+800D6A1C	nop
+800D6A20	addiu  v0, v0, $0001
+800D6A24	sh     v0, $0014(t0)
+800D6A28	lhu    v0, $0000(a2)
+800D6A2C	nop
+800D6A30	addiu  v0, v0, $0001
+800D6A34	sh     v0, $0000(a2)
+800D6A38	lui    at, $8008
+800D6A3C	addiu  at, at, $3286
+800D6A40	addu   at, at, a3
+800D6A44	lhu    v0, $0000(at)
+800D6A48	addu   v1, t1, s7
+800D6A4C	addiu  v0, v0, $0001
+800D6A50	sh     v0, $0012(t0)
+
+Ld6a54:	; 800D6A54
+800D6A54	lhu    v0, $0000(v1)
+800D6A58	nop
+800D6A5C	subu   v0, v0, s5
+800D6A60	j      Ld6ca0 [$800d6ca0]
+800D6A64	sh     v0, $0000(v1)
+800D6A68	sll    v1, s3, $01
+800D6A6C	addu   v1, v1, s3
+800D6A70	sll    v1, v1, $04
+800D6A74	lw     a0, $0000(s2)
+800D6A78	lui    at, $8008
+800D6A7C	addiu  at, at, $3288
+800D6A80	addu   at, at, v1
+800D6A84	lh     v0, $0000(at)
+800D6A88	lbu    a0, $0000(a0)
+800D6A8C	addu   v0, s4, v0
+800D6A90	sb     a0, $0000(v0)
+800D6A94	lw     v0, $0000(s2)
+800D6A98	nop
+800D6A9C	addiu  v0, v0, $0001
+800D6AA0	sw     v0, $0000(s2)
+800D6AA4	lui    at, $8008
+800D6AA8	addiu  at, at, $3288
+800D6AAC	addu   at, at, v1
+800D6AB0	lhu    v0, $0000(at)
+800D6AB4	nop
+800D6AB8	addiu  v0, v0, $0001
+800D6ABC	lui    at, $8008
+800D6AC0	addiu  at, at, $3288
+800D6AC4	addu   at, at, v1
+800D6AC8	sh     v0, $0000(at)
+800D6ACC	j      Ld6ca0 [$800d6ca0]
+800D6AD0	nop
+800D6AD4	sll    a1, s3, $01
+800D6AD8	addu   a0, a1, s3
+800D6ADC	sll    a0, a0, $04
+800D6AE0	ori    v0, zero, $0003
+800D6AE4	lui    at, $8008
+800D6AE8	addiu  at, at, $32a0
+800D6AEC	addu   at, at, a0
+800D6AF0	sh     v0, $0000(at)
+800D6AF4	lw     v0, $0000(s2)
+800D6AF8	lui    a2, $8008
+800D6AFC	addiu  a2, a2, $3274
+800D6B00	addiu  v0, v0, $0001
+800D6B04	sw     v0, $0000(s2)
+800D6B08	lui    at, $8008
+800D6B0C	addiu  at, at, $3288
+800D6B10	addu   at, at, a0
+800D6B14	lhu    v0, $0000(at)
+800D6B18	addu   a2, a0, a2
+800D6B1C	addiu  v0, v0, $0001
+800D6B20	sh     v0, $0014(a2)
+800D6B24	lw     v0, $0000(s2)
+800D6B28	lui    v1, $8011
+800D6B2C	addiu  v1, v1, $445c
+800D6B30	lbu    v0, $0000(v0)
+800D6B34	addu   a1, a1, v1
+800D6B38	sh     v0, $0000(a1)
+800D6B3C	lw     v0, $0000(s2)
+800D6B40	nop
+800D6B44	addiu  v0, v0, $0001
+800D6B48	sw     v0, $0000(s2)
+800D6B4C	lui    at, $8008
+800D6B50	addiu  at, at, $3288
+800D6B54	addu   at, at, a0
+800D6B58	lhu    v0, $0000(at)
+800D6B5C	nop
+800D6B60	addiu  v0, v0, $0001
+800D6B64	sh     v0, $0014(a2)
+800D6B68	lw     v0, $0000(s2)
+800D6B6C	nop
+800D6B70	lbu    v0, $0000(v0)
+800D6B74	lhu    v1, $0000(a1)
+800D6B78	sll    v0, v0, $08
+800D6B7C	or     v1, v1, v0
+800D6B80	sh     v1, $0000(a1)
+800D6B84	lw     v0, $0000(s2)
+800D6B88	nop
+800D6B8C	addiu  v0, v0, $0001
+800D6B90	sw     v0, $0000(s2)
+800D6B94	lui    at, $8008
+800D6B98	addiu  at, at, $3288
+800D6B9C	addu   at, at, a0
+800D6BA0	lhu    v0, $0000(at)
+800D6BA4	nop
+800D6BA8	addiu  v0, v0, $0001
+800D6BAC	j      Ld6ccc [$800d6ccc]
+800D6BB0	sh     v0, $0014(a2)
+800D6BB4	sll    v1, s3, $01
+800D6BB8	addu   v1, v1, s3
+800D6BBC	sll    v1, v1, $04
+800D6BC0	lw     a0, $0000(s2)
+800D6BC4	lui    at, $8008
+800D6BC8	addiu  at, at, $3288
+800D6BCC	addu   at, at, v1
+800D6BD0	lh     v0, $0000(at)
+800D6BD4	lbu    a0, $0000(a0)
+800D6BD8	addu   v0, s4, v0
+800D6BDC	sb     a0, $0000(v0)
+800D6BE0	lw     v0, $0000(s2)
+800D6BE4	nop
+800D6BE8	addiu  v0, v0, $0001
+800D6BEC	sw     v0, $0000(s2)
+800D6BF0	lui    at, $8008
+800D6BF4	addiu  at, at, $3288
+800D6BF8	addu   at, at, v1
+800D6BFC	lhu    v0, $0000(at)
+800D6C00	nop
+800D6C04	addiu  v0, v0, $0001
+800D6C08	lui    at, $8008
+800D6C0C	addiu  at, at, $3288
+800D6C10	addu   at, at, v1
+800D6C14	sh     v0, $0000(at)
+
+Ld6c18:	; 800D6C18
+800D6C18	sll    a1, s3, $01
+800D6C1C	addu   a0, a1, s3
+800D6C20	sll    a0, a0, $04
+800D6C24	lw     v1, $0000(s2)
+800D6C28	lui    at, $8008
+800D6C2C	addiu  at, at, $3288
+800D6C30	addu   at, at, a0
+800D6C34	lh     v0, $0000(at)
+800D6C38	lbu    v1, $0000(v1)
+800D6C3C	addu   v0, s4, v0
+800D6C40	sb     v1, $0000(v0)
+800D6C44	lw     v0, $0000(s2)
+800D6C48	lui    v1, $8008
+800D6C4C	addiu  v1, v1, $3274
+800D6C50	addiu  v0, v0, $0001
+800D6C54	sw     v0, $0000(s2)
+800D6C58	lui    at, $8008
+800D6C5C	addiu  at, at, $3288
+800D6C60	addu   at, at, a0
+800D6C64	lhu    v0, $0000(at)
+800D6C68	addu   v1, a0, v1
+800D6C6C	addiu  v0, v0, $0001
+800D6C70	sh     v0, $0014(v1)
+800D6C74	lui    at, $8008
+800D6C78	addiu  at, at, $3286
+800D6C7C	addu   at, at, a0
+800D6C80	lhu    v0, $0000(at)
+800D6C84	addu   a1, a1, s7
+800D6C88	addiu  v0, v0, $0001
+800D6C8C	sh     v0, $0012(v1)
+800D6C90	lhu    v0, $0000(a1)
+800D6C94	nop
+800D6C98	subu   v0, v0, s5
+800D6C9C	sh     v0, $0000(a1)
+
+Ld6ca0:	; 800D6CA0
+800D6CA0	lhu    t3, $0010(sp)
+800D6CA4	nop
+800D6CA8	sll    a2, t3, $10
+800D6CAC	sra    v0, a2, $0f
+800D6CB0	addu   v0, v0, s7
+800D6CB4	lh     v1, $0000(v0)
+800D6CB8	sll    v0, s5, $10
+800D6CBC	sra    v0, v0, $10
+800D6CC0	slt    v0, v0, v1
+800D6CC4	bne    v0, zero, Ld5f04 [$800d5f04]
+800D6CC8	sra    v0, a2, $0e
+
+Ld6ccc:	; 800D6CCC
+800D6CCC	lhu    t3, $0010(sp)
+800D6CD0	lui    a1, $800e
+800D6CD4	addiu  a1, a1, $4944
+800D6CD8	sll    v1, t3, $10
+800D6CDC	sra    v1, v1, $10
+800D6CE0	sll    a0, v1, $08
+800D6CE4	sll    v0, v1, $01
+800D6CE8	addu   v0, v0, v1
+800D6CEC	sll    v0, v0, $04
+800D6CF0	lui    at, $8008
+800D6CF4	addiu  at, at, $3288
+800D6CF8	addu   at, at, v0
+800D6CFC	lh     v0, $0000(at)
+800D6D00	addu   a0, a0, a1
+800D6D04	addu   a0, a0, v0
+800D6D08	ori    v0, zero, $00ff
+800D6D0C	sb     v0, $0000(a0)
+
+Ld6d10:	; 800D6D10
+800D6D10	lw     ra, $003c(sp)
+800D6D14	lw     fp, $0038(sp)
+800D6D18	lw     s7, $0034(sp)
+800D6D1C	lw     s6, $0030(sp)
+800D6D20	lw     s5, $002c(sp)
+800D6D24	lw     s4, $0028(sp)
+800D6D28	lw     s3, $0024(sp)
+800D6D2C	lw     s2, $0020(sp)
+800D6D30	lw     s1, $001c(sp)
+800D6D34	lw     s0, $0018(sp)
+800D6D38	addiu  sp, sp, $0040
+800D6D3C	jr     ra 
+800D6D40	nop
