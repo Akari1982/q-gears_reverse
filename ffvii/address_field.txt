@@ -411,9 +411,9 @@
 
 80114498 arrray of something entity related (size 0x1).
 
-801144CC [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
+801144cc [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 
-801144DC [][] temp variable string. First we write variable here and then copy it to window string. (size 0x10).
+801144dc [][] temp variable string. First we write variable here and then copy it to window string. (size 0x10).
 
 8011451c array of current variable read offset. (size 0x2).
 

@@ -826,7 +826,7 @@ if( ( h[80083274 + window_id * 30 + c] == h[80083274 + window_id * 30 + 8] ) && 
 
 window_id = A0;
 
-if( bu[8008326c + window_id + 0] != bu[800722c4] )
+if( bu[8008326c + window_id] != bu[800722c4] )
 {
     if( bu[8009d820] & 3 )
     {
@@ -838,7 +838,7 @@ if( bu[8008326c + window_id + 0] != bu[800722c4] )
     return;
 }
 
-if( hu[800832a2 + window_id * 30] & 2 )
+if( hu[80083274 + window_id * 30 + 2e] & 2 )
 {
     A1 = 100;
     S5 = 1;
@@ -863,7 +863,7 @@ else
         }
     }
 
-    V1 = bu[8009d7d0];
+    V1 = bu[8009c6e4 + 10ec];
     if( V1 < 80 )
     {
         A1 = 2;
@@ -881,9 +881,7 @@ else
 for( ; S5 < h[80114470 + window_id * 2]; )
 {
     V0 = w[800e4234 + window_id * 4];
-    V0 = bu[V0];
-
-    switch( V0 )
+    switch( bu[V0] )
     {
         case ff: // string end
         {
@@ -893,7 +891,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
             [80083274 + window_id * 30 + 2c] = h(6);
             return;
         }
-        break;
 
         case e0: // tabulation (10 spaces)
         {
@@ -906,7 +903,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                 [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
                 [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
             }
-            continue;
         }
         break;
 
@@ -921,7 +917,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                 [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
                 [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
             }
-            continue;
         }
         break;
 
@@ -933,7 +928,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
             [800e4944 + window_id * 100 + V0] = b(0);
             [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2);
             [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 2);
-            continue;
         }
         break;
 
@@ -945,7 +939,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
             [800e4944 + window_id * 100 + V0 + 1] = b(2);
             [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2);
             [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 2);
-            continue;
         }
         break;
 
@@ -957,7 +950,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
             [800e4944 + window_id * 100 + V0] = b(2);
             [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 2);
             [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 2);
-            continue;
         }
         break;
 
@@ -980,7 +972,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
             [800e4234 + window_id * 4] = w(offset + 1);
             [80083274 + window_id * 30 + 14] = h(bytes + 1); // bytes in string
             [80083274 + window_id * 30 + 16] = h(hu[80083274 + window_id * 30 + 16] + 1); // cur row
-            continue;
         }
         break;
 
@@ -1019,7 +1010,6 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                 [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
                 [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
             }
-            continue;
         }
         break;
 
@@ -1067,65 +1057,53 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                     [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
                 }
             }
-            continue;
         }
         break;
 
         case fe:
         {
-            A0 = w[800e4234 + window_id * 4 + 0000];
-            V0 = h[80083288 + window_id * 30 + 0000];
-            [800e4944 + window_id * 100 + V0 + 0000] = b(bu[A0 + 0000]);
-            [800e4234 + window_id * 4 + 0000] = w(w[800e4234 + window_id * 4 + 0000] + 1);
-            [80083288 + window_id * 30 + 0000] = h(hu[80083288 + window_id * 30 + 0000] + 1);
-            V0 = w[800e4234 + window_id * 4 + 0000];
+            A0 = w[800e4234 + window_id * 4];
+            V0 = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + V0] = b(bu[A0]);
+            [800e4234 + window_id * 4] = w(A0 + 1);
+            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
 
+            V0 = w[800e4234 + window_id * 4];
             switch( bu[V0] )
             {
-                case dc:
+                case d2 d3 d4 d5 d6 d7 d8 d9 da db e9:
                 {
-                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + V1 + 14] - 1);
+                    A0 = w[800e4234 + window_id * 4];
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + V0] = b(bu[A0]);
                     [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
-                    [80114480 + window_id * 2] = h(1);
-                    [80114470 + window_id * 2] = h(0);
-                    [80083274 + window_id * 30 + 2c] = h(d);
-                    bytes = h[80083274 + window_id * 30 + 14];
-                    [800e4944 + window_id * 100 + bytes] = b(ff);
-                    return
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
                 }
+                break;
 
-                case e0:
+                case dc:
                 {
                     [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1);
                     [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
-                    [80114480 + window_id * 2] = h(1);
+                    [80114480 + window_id * 2] = h(1); // OK button speed modificator
                     [80114470 + window_id * 2] = h(0);
-                    [80083274 + window_id * 30 + 2c] = h(b);
                     bytes = h[80083274 + window_id * 30 + 14];
                     [800e4944 + window_id * 100 + bytes] = b(ff);
-                    return
+                    [80083274 + window_id * 30 + 2c] = h(d);
+                    return;
                 }
 
                 case de df e1:
                 {
-                    T1 = window_id << 01;
-                    V0 = T1 + window_id;
-                    A3 = V0 << 04;
-                    V0 = 80083274;
-                    V1 = hu[80083288 + A3 + 0000];
-                    T0 = A3 + V0;
-                    [T0 + 0014] = h(V1 - 1);
-                    T2 = w[800e4234 + window_id * 4 + 0000];
-                    [800e4234 + window_id * 4 + 0000] = w(T2 - 1);
-                    V0 = 8011451c;
-                    A2 = T1 + V0;
-                    A0 = h[A2 + 0000];
-                    800D672C	addiu  v0, zero, $ffff (=-$1)
+                    [80083274 + window_id * 30 + 0014] = h(hu[80083274 + window_id * 30 + 14] - 1);
+                    T2 = w[800e4234 + window_id * 4];
+                    [800e4234 + window_id * 4] = w(T2 - 1);
 
-                    if( A0 == V0 )
+                    A0 = h[8011451c + window_id * 2];
+                    if( A0 == -1 )
                     {
                         A0 = window_id;
-                        get_variable_for_window_from_memory_bank();
+                        field_dialog_get_variable_from_bank();
                         S0 = V0;
 
                         if( bu[8009d820] & 3 )
@@ -1142,146 +1120,43 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                         {
                             A0 = S0 & ffff;
                             A1 = 801144dc + window_id * 10;
-                            convert_digit_to_string();
+                            field_dialog_convert_digit_to_string();
                         }
                         else if( V1 == df )
                         {
                             A0 = S0 & ffff;
                             A1 = 801144dc + window_id * 10;
-                            convert_hex_to_string();
+                            field_dialog_convert_hex_to_string();
                         }
                         else if( V1 == e1 )
                         {
                             A0 = S0 & ffff;
                             A1 = 801144dc + window_id * 10;
-                            convert_digit_to_string_with_space();
+                            field_dialog_convert_digit_to_string_with_space();
                         }
-                        800D6800	j      Ld699c [$800d699c]
+
+                        [8011451c + window_id * 2] = h(hu[8011451c + window_id * 2] + 1);
                     }
-
-                    V0 = window_id << 04;
-                    A1 = 801144dc + V0 + A0;
-                    V1 = bu[A1 + 0000];
-                    V0 = 00ff;
-                    800D6820	beq    v1, v0, Ld6830 [$800d6830]
-                    V0 = A0 < 0010;
-                    800D6828	bne    v0, zero, Ld69f0 [$800d69f0]
-                    800D682C	nop
-
-                    Ld6830:	; 800D6830
-                    [800e4234 + window_id * 4 + 0000] = w(T2 + 1);
-                    V1 = 800e4280 + T1;
-                    [A2 + 0000] = h(-1);
-                    800D6848	j      Ld69ac [$800d69ac]
-                }
-
-                case e2:
-                {
-                    T1 = window_id << 01;
-                    V0 = T1 + window_id;
-                    A3 = V0 << 04;
-                    V0 = 80083274;
-                    AT = 80083288;
-                    AT = AT + A3;
-                    V1 = hu[AT + 0000];
-                    T0 = A3 + V0;
-                    800D6878	addiu  v1, v1, $ffff (=-$1)
-                    [T0 + 0014] = h(V1);
-                    A0 = w[800e4234 + window_id * 4 + 0000];
-                    800D6884	nop
-                    800D6888	addiu  v0, a0, $ffff (=-$1)
-                    [800e4234 + window_id * 4 + 0000] = w(V0);
-                    V0 = 8011451c;
-                    A2 = T1 + V0;
-                    A1 = h[A2 + 0000];
-                    800D68A0	addiu  v0, zero, $ffff (=-$1)
-                    800D68A4	bne    a1, v0, Ld69c0 [$800d69c0]
-                    V0 = window_id << 04;
-                    S0 = bu[A0 + 0001];
-                    V0 = bu[A0 + 0002];
-                    S1 = bu[A0 + 0003];
-                    V1 = bu[A0 + 0004];
-                    V0 = V0 << 08;
-                    S0 = S0 | V0;
-                    V1 = V1 << 08;
-                    S1 = S1 | V1;
-
-                    if( bu[8009d820] & 3 )
+                    else
                     {
-                        A0 = 800a1100; // "gstr="
-                        A1 = S0;
-                        A2 = 4;
-                        funcbeca4();
-
-                        A0 = 800a1108; // "glen="
-                        A1 = S1;
-                        A2 = 4;
-                        funcbeca4();
+                        if( ( bu[801144dc + window_id * 10 + A0] != ff ) && ( A0 < 10 ) )
+                        {
+                            V0 = h[80083274 + window_id * 30 + 14];
+                            [800e4944 + window_id * 100 + V0] = b(bu[801144dc + window_id * 10 + A0]);
+                            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                            [8011451c + window_id * 2] = h(hu[8011451c + window_id * 2] + 1);
+                            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                            [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+                        }
+                        else
+                        {
+                            [800e4234 + window_id * 4] = w(T2 + 1);
+                            [8011451c + window_id * 2] = h(-1);
+                            [800e4280 + window_id * 2] = h(hu[800e4280 + window_id * 2] + 1);
+                        }
                     }
-
-                    A1 = S1 & ffff;
-                    A2 = 0;
-                    if( A1 != 0 )
-                    {
-                        V1 = 801144dc;
-                        V0 = window_id << 04;
-                        T0 = V0 + V1;
-                        A3 = S0 & ffff;
-                        T1 = 8009d288;
-
-                        loopd6944:	; 800D6944
-                            V1 = A2 << 10;
-                            A0 = A2 + 0001;
-                            A2 = A0;
-                            V1 = V1 >> 10;
-                            V0 = A3 + V1;
-                            V0 = V0 + T1;
-                            V1 = T0 + V1;
-                            V0 = bu[V0 + 0000];
-                            A0 = A0 < A1;
-                            [V1 + 0000] = b(V0);
-                        800D6970	bne    a0, zero, loopd6944 [$800d6944]
-
-                    }
-
-                    [801144dc + window_id * 10 + A2 + 0000] = b(ff);
-
-                    Ld699c:	; 800D699C
-                    V1 = 8011451c + window_id * 2;
-
-                    Ld69ac:	; 800D69AC
-                    [V1 + 0000] = h(hu[V1 + 0000] + 1);
-                    continue;
-
-                    Ld69c0:	; 800D69C0
-                    A1 = 801144dc + V0 + A1;
-                    V1 = bu[A1 + 0000];
-                    800D69D8	bne    v1, ff, Ld69f0 [$800d69f0]
-                    V0 = A0 + 0005;
-                    [800e4234 + window_id * 4 + 0000] = w(V0);
-                    800D69E4	addiu  v0, zero, $ffff (=-$1)
-                    [A2 + 0000] = h(V0);
-                    continue;
-
-                    Ld69f0:	; 800D69F0
-                    V0 = h[80083288 + A3 + 0000];
-                    [800e4944 + window_id * 100 + V0 + 0000] = b(bu[A1 + 0000]);
-                    [T0 + 14] = h(hu[80083288 + A3 + 0000] + 1);
-                    [A2] = h(hu[A2] + 1);
-                    [T0 + 0012] = h(hu[80083286 + A3 + 0000] + 1);
-                    [T1 + 80114470 + 0000] = h(hu[T1 + 80114470 + 0000] - S5);
-                    continue;
                 }
-
-                case d2 d3 d4 d5 d6 d7 d8 d9 da db e9:
-                {
-                    A0 = w[800e4234 + window_id * 4];
-                    V0 = h[80083274 + window_id * 30 + 14];
-                    [800e4944 + window_id * 100 + V0] = b(bu[A0]);
-                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
-                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
-                    continue;
-                }
+                break;
 
                 case dd:
                 {
@@ -1298,6 +1173,83 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                     [80083274 + window_id * 30 + 2с] = h(3);
                     return;
                 }
+
+                case e0:
+                {
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1);
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [80114480 + window_id * 2] = h(1);
+                    [80114470 + window_id * 2] = h(0);
+                    bytes = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + bytes] = b(ff);
+                    [80083274 + window_id * 30 + 2c] = h(b);
+                    return;
+                }
+
+                case e2:
+                {
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] - 1);
+                    A0 = w[800e4234 + window_id * 4];
+                    [800e4234 + window_id * 4] = w(A0 - 1);
+                    A1 = h[8011451c + window_id * 2]
+
+                    if( A1 != -1 )
+                    {
+                        if( bu[801144dc + window_id * 10 + A1] != ff )
+                        {
+                            V0 = h[80083274 + window_id * 30 + 14];
+                            [800e4944 + window_id * 100 + V0] = b(bu[801144dc + window_id * 10 + A1]);
+                            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                            [8011451c + window_id * 2] = h(hu[8011451c + window_id * 2] + 1);
+                            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                            [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+                        }
+                        else
+                        {
+                            [800e4234 + window_id * 4] = w(A0 + 5);
+                            [8011451c + window_id * 2] = h(-1);
+                        }
+                    }
+                    else
+                    {
+                        gstr = hu[A0 + 1];
+                        glen = hu[A0 + 3];
+
+                        if( bu[8009d820] & 3 )
+                        {
+                            A0 = 800a1100; // "gstr="
+                            A1 = gstr;
+                            A2 = 4;
+                            funcbeca4();
+
+                            A0 = 800a1108; // "glen="
+                            A1 = glen;
+                            A2 = 4;
+                            funcbeca4();
+                        }
+
+                        int i = 0;
+                        for( i < glen; ++i )
+                        {
+                            [801144dc + window_id * 10 + i] = b(bu[8009d288 + gstr + i]);
+                        }
+                        [801144dc + window_id * 10 + i] = b(ff);
+
+                        [8011451c + window_id * 2] = h(hu[8011451c + window_id * 2] + 1);
+                    }
+                }
+                break;
+
+                default:
+                {
+                    V1 = w[800e4234 + window_id * 4];
+                    V0 = h[80083274 + window_id * 30 + 14];
+                    [800e4944 + window_id * 100 + V0] = b(bu[V1]);
+                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+                    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+                    [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+                }
             }
         }
         break;
@@ -1309,775 +1261,32 @@ for( ; S5 < h[80114470 + window_id * 2]; )
             [800e4944 + window_id * 100 + V0] = b(bu[A0]);
             [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
             [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+
+            V1 = w[800e4234 + window_id * 4];
+            V0 = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + V0] = b(bu[V1]);
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+            [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
         }
         break;
-    }
 
-    V1 = w[800e4234 + window_id * 4];
-    V0 = h[80083274 + window_id * 30 + 14];
-    [800e4944 + window_id * 100 + V0] = b(bu[V1]);
-    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
-    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
-    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
-    [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+        default:
+        {
+            V1 = w[800e4234 + window_id * 4];
+            V0 = h[80083274 + window_id * 30 + 14];
+            [800e4944 + window_id * 100 + V0] = b(bu[V1]);
+            [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
+            [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
+            [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
+            [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - S5);
+        }
+    }
 }
 
 bytes = h[80083274 + window_id * 30 + 14];
 [800e4944 + window_id * 100 + bytes] = b(ff);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window_id = A0;
-
-if( bu[8008326c + window_id] != bu[800722c2] )
-{
-    if( bu[8009d820] & 3 )
-    {
-        A0 = 800a10ec; // "mes busy="
-        A1 = A1;
-        A2 = 1;
-        funcbeca4();
-    }
-    return;
-}
-
-V0 = hu[800832A2 + window_id * 30];
-if (V0 & 2)
-{
-    A1 = 0100;
-    S5 = 1;
-}
-else
-{
-    V0 = w[8009C6E0];
-    V0 = w[V0 + 78];
-
-    if (V0 & 0020)
-    {
-        V0 = hu[80114480 + window_id * 2];
-        V0 = V0 + 1;
-
-        if (V0 >= 81)
-        {
-            [80114480 + window_id * 2] = h(80);
-        }
-        else
-        {
-            [80114480 + window_id * 2] = h(V0);
-        }
-    }
-    else
-    {
-        V0 = hu[80114480 + window_id * 2];
-        V0 = V0 - 1;
-
-        if (V0 < 2)
-        {
-            [80114480 + window_id * 2] = h(01);
-        }
-        else
-        {
-            [80114480 + window_id * 2] = h(V0);
-        }
-    }
-
-
-
-    V1 = bu[8009D7D0]; // message speed
-    if (V1 < 80)
-    {
-        A1 = ((80 - V1) / 20) + 2;
-        S5 = 1;
-    }
-    else
-    {
-        A1 = 2;
-        S5 = ((V1 - 80) / 20) + 1;
-    }
-}
-
-V0 = hu[80114480 + window_id * 2];
-V0 = V0 / 10;
-HI/LO = S5 * V0;
-V0 = LO;
-
-V1 = hu[80114470 + T3 * 2];
-V1 = A1 + V1 + V0;
-[80114470 + window_id * 2] = h(V1)
-
-if (S5 >= V1)
-{
-    // write FF to end of string;
-    V0 = h[80083288 + window_id * 30];
-    [800E4944 + window_id * 100 + V0] = FF;
-
-    return;
-}
-
-// loop
-Ld5f04:	; 800D5F04
-    V0 = w[800E4234 + window_id * 4];
-    V0 = [V0];  // read letter
-    V1 = V0 - E0;
-
-    if (V1 < 20) // E0 - FF
-    {
-        switch (V1)
-        {
-            case 0xFF:
-            {
-                [800832A0 + window_id * 30] = 6; // set window state to 6
-                [80114470 + window_id * 2] = 0;
-
-                V0 = h[80083288 + window_id * 30];
-                [800E4944 + window_id * 100 + V0] = FF;
-
-                return;
-            }
-            break;
-
-            case 0xE7:
-            {
-                V0 = h[8008327E + window_id * 30]; // read window height
-                A0 = h[8008328A + window_id * 30];
-                V1 = V0 - 08;
-                V0 = h[801142CC + window_id * 2];
-                V1 = V1 / 10 + V0 - 1;
-
-                if (A0 == V1)
-                {
-                    [800832A0 + window_id * 30] = h(04); // set window state
-                    [80114480 + window_id * 2] = h(01);
-                    [80114470 + window_id * 2] = h(00);
-
-                    V0 = h[80083288 + window_id * 30];
-                    [800E4944 + window_id * 100 + V0] = FF;
-
-                    return;
-                }
-
-                V1 = w[800E4234 + window_id * 4];
-                V1 = [V1];
-                V0 = h[80083288 + window_id * 30];
-                [800E4944 + window_id * 100 + V0] = b(V1);
-
-                // reading offset + 1
-                V0 = w[800E4234 + window_id * 4];
-                V0 = V0 + 1;
-                [800E4234 + window_id * 4] = w(V0);
-
-                // number of byte + 1
-                V0 = hu[80083288 + window_id * 30];
-                V0 = V0 + 1;
-                [80083288 + window_id * 30] = h(V0)
-
-                // current row + 1
-                V0 = hu[8008328A + window_id * 30];
-                V0 = V0 + 1;
-                [8008328A + window_id * 30] = h(V0);
-
-                continue;
-            }
-            break;
-
-            case 0xE8 0xE9:
-            {
-                V0 = [800E4234 + window_id * 4];
-                V0 = V0 + 1;
-                [800E4234 + window_id * 4] = V0;
-
-                [800832A0 + window_id * 30] = 0E; // set window state to E
-
-                [80114480 + window_id * 2] = h(1);
-                [80114470 + window_id * 2] = h(0);
-
-                V0 = h[80083288 + window_id * 30];
-                [800E4944 + window_id * 100 + V0] = FF;
-
-                return;
-            }
-            break;
-
-            case 0xE0 0xE1:
-            {
-                V0 = [800E4234 + window_id * 4]
-                V0 = V0 + 1;
-                [800E4234 + window_id * 4] = V0;
-
-                if (0xE0)
-                {
-                    x = 0A;
-                }
-                if (0xE1)
-                {
-                    x = 04;
-                }
-
-                for (A2 = 0; A2 < x; A2 = A2 + 1)
-                {
-                    // writes zeros to string data
-                    V0 = hu[80083288 + window_id * 30];
-                    [800E4944 + window_id * 100 + V0] = b(0)
-
-                    V0 = hu[80083288 + window_id * 30];
-                    V0 = V0 + 1;
-                    [80083288 + window_id * 30] = h(V0);
-
-                    V1 = hu[80083286 + window_id * 30];
-                    V1 = V1 + 1;
-                    [80083286 + window_id * 30] = h(V1);
-                }
-
-                continue;
-            }
-            break;
-
-            case 0xE2 0xE3 0xE4:
-            {
-                V0 = [800E4234 + window_id * 4]
-                V0 = V0 + 1;
-                [800E4234 + window_id * 4] = V0;
-
-                if (0xE2)
-                {
-                    V0 = h[80083288 + window_id * 30];
-                    [800E4944 + window_id * 100 + V0] = b(0C);
-                }
-                if (0xE3)
-                {
-                    V0 = h[80083288 + window_id * 30];
-                    [800E4944 + window_id * 100 + V0] = b(0E);
-                }
-                if (0xE4)
-                {
-                    V0 = h[80083288 + window_id * 30];
-                    [800E4944 + window_id * 100 + V0] = b(A9);
-                }
-
-                V0 = hu[80083288 + window_id * 30];
-                V0 = V0 + 1;
-                [80083288 + window_id * 30] = h(V0);
-
-
-
-                if (0xE2)
-                {
-                    V0 = h[80083288 + window_id * 30];
-                    [800E4944 + window_id * 100 + V0] = b(0);
-                }
-                if (0xE3 0xE4)
-                {
-                    V0 = h[80083288 + window_id * 30];
-                    [800E4944 + window_id * 100 + V0] = b(2);
-                }
-
-                V0 = h[80083288 + window_id * 30];
-                V0 = V0 + 1;
-                [80083288 + window_id * 30] = h(V0);
-
-                V0 = hu[80083286 + window_id * 30];
-                V0 = V0 + 2;
-                [80083286 + window_id * 30] = h(V0);
-
-                continue;
-            }
-            break;
-
-            case 0xEA 0xEB 0xEC 0xED 0xEE 0xEF 0xF0 0xF1 0xF2 0xF3 0xF4 0xF5:
-            {
-                V1 = w[800E4234 + window_id * 4];
-                V0 = bu[V1];
-
-                if (0xEA 0xEB 0xEC 0xED 0xEE 0xEF 0xF0 0xF1 0xF2)
-                {
-                    S0 = V0 - EA;
-                    A0 = S0 & FFFF;
-                }
-                if (0xF3 0xF4 0xF5)
-                {
-                    A0 = bu[8009D29E + V0] = 8009c6e4 + cad;
-
-                    if (A0 == FF)
-                    {
-                        V0 = h[800E4278 + window_id * 2]
-
-                        if (V0 >= 9)
-                        {
-                            V0 = V1 + 1;
-                            [800E4234 + window_id * 4] = w(V0);
-                            [800E4278 + window_id * 2] = h(0);
-
-                            800D64F8	j      Ld6ca0 [$800d6ca0]
-                        }
-
-                        V0 = h[80083288 + window_id * 30]
-                        [800E4944 + window_id * 100 + V0] = b(A9);
-
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083288 + window_id * 30] = h(V0);
-
-                        V0 = hu[800E4278 + window_id * 2];
-                        V0 = V0 + 1;
-                        [800E4278 + window_id * 2] = h(V0)
-
-                        V0 = hu[80083286 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083286 + window_id * 30] = h(V0);
-
-                        V0 = hu[80114470 + window_id * 2];
-                        V0 = V0 - S5;
-                        [80114470 + window_id * 2] = h(V0);
-
-                        800D6A60	j      Ld6ca0 [$800d6ca0]
-                    }
-                }
-
-                system_get_character_name_offset;
-
-                A0 = h[800E4278 + window_id * 2];
-                A1 = V0 + A0;
-                V1 = bu[A1];
-
-                if (V1 == FF || A0 > 09)
-                {
-                    V0 = w[800E4234 + window_id * 4];
-                    V0 = V0 + 1;
-                    [800E4234 + window_id * 4] = w(V0);
-
-                    [800E4278 + window_id * 2] = h(0);
-
-                    800D6360	j      Ld6ca0 [$800d6ca0]
-                }
-
-                V0 = h[80083288 + window_id * 30];
-                V1 = bu[A1];
-                [800E4944 + window_id * 100 + V0] = b(V1);
-
-                V0 = hu[80083288 + window_id * 30];
-                V0 = V0 + 1;
-                [80083288 + window_id * 30] = h(V0);
-
-                V0 = hu[800E4278 + window_id * 2];
-                V0 = V0 + 1;
-                [800E4278 + window_id * 2] = h(V0);
-
-                V0 = hu[80083286 + window_id * 30];
-                V0 = V0 + 1;
-                [80083286 + window_id * 30] = h(V0);
-
-                V0 = hu[80114470 + window_id * 2];
-                V0 = V0 - S5;
-                [80114470 + window_id * 2] = h(V0);
-
-                800D6A60	j      Ld6ca0 [$800d6ca0]
-            }
-            break;
-
-            case 0xFE:
-            {
-                A0 = w[800E4234 + window_id * 4];
-                A0 = bu[A0];
-
-                V0 = hu[80083288 + window_id * 30];
-                [800E4944 + window_id * 100 + V0] = b(A0);
-
-                V0 = w[800E4234 + window_id * 4];
-                V0 = V0 + 1;
-                [800E4234 + window_id * 4] = w(V0);
-
-                V0 = hu[80083288 + window_id * 30];
-                V0 = V0 + 1;
-                [80083288 + window_id * 30] = h(V0);
-
-                V0 = w[800E4234 + window_id * 4];
-                V0 = bu[V0];
-
-                if (V0 < D2 || 0xE3 0xE4 0xE5 0xE6 0xE7 0xE8)
-                {
-                    800D665C	j      Ld6c18 [$800d6c18]
-                }
-
-                switch (V1)
-                {
-                    case 0xDC 0xFF:
-                    {
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 - 1;
-                        [80083288 + window_id * 30] = h(V0);
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = V0 + 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        [800832A0 + window_id * 30] = 0D; // set window state
-
-                        [80114480 + window_id * 2] = h(1);
-                        [80114470 + window_id * 2] = h(0);
-
-                        V0 = h[80083288 + window_id * 30];
-                        [800E4944 + window_id * 100 + V0] = FF;
-
-                        return;
-                    }
-                    break;
-
-                    case 0xE0: // scrolling while you hold button
-                    {
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 - 1;
-                        [80083288 + window_id * 30] = h(V0);
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = V0 + 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        [800832A0 + window_id * 30] = 0B; // set window state
-
-                        [80114480 + window_id * 2] = h(1);
-                        [80114470 + window_id * 2] = h(0);
-
-                        V0 = h[80083288 + window_id * 30];
-                        [800E4944 + window_id * 100 + V0] = FF;
-
-                        return;
-                    }
-                    break;
-
-                    case 0xE1 0xDE 0xDF: // variable?
-                    {
-                        // move back one byte cause we don't need FE in string.
-                        V1 = hu[80083288 + window_id * 30];
-                        V1 = V1 - 1;
-                        [80083288 + window_id * 30] = V1;
-
-                        // move to reading of previous byte
-                        T2 = w[800E4234 + window_id * 4];
-                        V0 = T2 - 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        // read number of copied byte
-                        A0 = h[8011451C + window_id * 2];
-
-                        // if we not reading yet
-                        if (A0 == -1)
-                        {
-                            A0 = window_id;
-
-                            // get 2bytes value for current variable (memory bank and offset used)
-                            get_variable_for_window_from_memory_bank
-
-                            S0 = V0;
-
-                            // read current byte (DE DF E1)
-                            V0 = w[800E4234 + window_id * 4];
-                            V1 = bu[V0 + 1];
-
-                            // data for variable
-                            A0 = S0 & FFFF;
-                            // address to write
-                            A1 = 8001144DC + window_id * 10;
-
-                            if (V1 == DE)
-                            {
-                                convert_digit_to_string
-                            }
-                            else if (V1 == DF)
-                            {
-                                convert_hex_to_string
-                            }
-                            else if (V1 == E1)
-                            {
-                                convert_digit_to_string_with_space
-                            }
-
-                            // increment current reading offset so we start read on next rotation
-                            V0 = hu[8011451C + window_id * 2];
-                            V0 = V0 + 1;
-                            [8011451C + window_id * 2] = h(V0)
-
-                            800D69B8	j      Ld6ca0 [$800d6ca0]
-                        }
-                        else
-                        {
-                            // read current byte
-                            V1 = bu[801144DC + window_id * 10 + A0];
-
-                            // if not end of string and number of copied byte less than 10
-                            if (V1 != FF && A0 < 10)
-                            {
-                                V0 = h[80083288 + window_id * 30];
-                                [800E4944 + window_id * 100 + V0] = b(V1);
-
-                                V0 = hu[80083288 + window_id * 30];
-                                V0 = V0 + 1;
-                                [80083288 + window_id * 30] = h(V0);
-
-                                V0 = hu[8011451C + window_id * 2];
-                                V0 = V0 + 1;
-                                [8011451C + window_id * 2] = h(V0);
-
-                                V0 = hu[80083286 + window_id * 30];
-                                V0 = V0 + 1;
-                                [80083286 + window_id * 30] = h(V0);
-
-                                V0 = hu[80114470 + window_id * 2];
-                                V0 = V0 - S5;
-                                [80114470 + window_id * 2] = h(V0);
-
-                                800D6A60	j      Ld6ca0 [$800d6ca0]
-                            }
-
-                            undo previous move and go to next byte (end of this opcode)
-                            V0 = T2 + 1;
-                            [800E4234 + window_id * 4] = w(V0);
-
-                            // write -1 to number of readed byte
-                            [8011451C + window_id * 2] = h(-1);
-                        }
-
-                        // increase number of readed variable (next time we read next one)
-                        V0 = hu[800E4280 + window_id * 2];
-                        V0 = V0 + 1;
-                        [800E4280 + window_id * 2] = h(V0)
-
-                        800D69B8	j      Ld6ca0 [$800d6ca0]
-                    }
-                    break;
-
-                    case 0xE2:
-                    {
-                        V1 = hu[80083288 + window_id * 30];
-                        V1 = V1 - 1;
-                        [80083288 + window_id * 30] = h(V1);
-
-                        A0 = w[800E4234 + window_id * 4];
-                        V0 = A0 - 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        A1 = h[8011451C + window_id * 2];
-
-                        if (A1 == -1)
-                        {
-                            S0 = bu[A0 + 1];
-                            V0 = bu[A0 + 2];
-                            S1 = bu[A0 + 3];
-                            V1 = bu[A0 + 4];
-
-                            V0 = V0 << 8;
-                            S0 = S0 | V0;
-                            V1 = V1 << 8;
-                            S1 = S1 | V1;
-
-                            A1 = S1;
-                            A2 = 0;
-
-                            if (A1 != 0)
-                            {
-                                A3 = S0;
-
-                                loopd6944:	; 800D6944
-                                {
-                                    V0 = bu[8009D288 + A3 + A2]; // reading from memory bank 1/2
-                                    [801144DC + window_id * 10 + A2] = b(V0);
-
-                                    A2 = A2 + 1;
-                                    A0 = A2 < A1;
-
-                                    800D6970	bne    a0, zero, loopd6944 [$800d6944]
-                            }
-
-                            Ld6978:	; 800D6978
-                            [801144DC + window_id * 10 + A2] = b(FF);
-
-                            V0 = hu[8011451C + window_id * 2];
-                            V0 = V0 + 1;
-                            [8011451C + window_id * 2] = h(V0)
-
-                            800D69B8	j      Ld6ca0 [$800d6ca0]
-                        }
-
-                        V1 = bu[801144DC + window_id * 10 + A1];
-
-                        if (V1 == FF)
-                        {
-                            V0 = A0 + 5;
-                            [800E4234 + window_id * 4] = w(V0);
-                            [8011451C + window_id * 2] = h(-1);
-                            800D69E8	j      Ld6ca0 [$800d6ca0]
-                        }
-
-                        V0 = h[80083288 + window_id * 30];
-                        V1 = bu[A1];
-                        [800E4944 + window_id * 100 + V0] = b(V1);
-
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083288 + window_id * 30] = V0;
-
-                        V0 = hu[8011451C + window_id * 2];
-                        V0 = V0 + 1;
-                        [800E4234 + window_id * 4] = h(V0);
-
-                        V0 = hu[80083286 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083286 + window_id * 30] = V0;
-
-                        V0 = hu[80114470 + window_id * 2];
-                        V0 = V0 - S5;
-                        [80114470 + window_id * 2] = h(V0);
-
-                        800D6A60	j      Ld6ca0 [$800d6ca0]
-                    {
-                    break;
-
-                    case 0xE9 0xD2 0xD3 0xD4 0xD5 0xD6 0xD7 0xD8 0xD9 0xDA 0xDB:
-                    {
-                        A0 = w[800E4234 + window_id * 4];
-                        A0 = bu[A0];
-
-                        V0 = hu[80083288 + window_id * 30];
-                        [800E4944 + window_id * 100 + V0] = b(A0);
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = V0 + 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083288 + window_id * 30] = h(V0);
-
-                        800D6ACC	j      Ld6ca0 [$800d6ca0]
-                    {
-                    break;
-
-                    case 0xDD:
-                    {
-                        [800832A0 + window_id * 30] = 03; // set window state
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = V0 + 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083288 + window_id * 30] = h(V0);
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = bu[V0];
-                        [8011445C + window_id * 2] = h(V0)
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = V0 + 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083288 + window_id * 30] = h(V0);
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = bu[V0];
-                        V1 = hu[8011445C + window_id * 2];
-                        V0 = V0 << 8;
-                        V1 = V1 | V0
-                        [8011445C + window_id * 2] = h(V1)
-
-                        V0 = w[800E4234 + window_id * 4];
-                        V0 = V0 + 1;
-                        [800E4234 + window_id * 4] = w(V0);
-
-                        V0 = hu[80083288 + window_id * 30];
-                        V0 = V0 + 1;
-                        [80083288 + window_id * 30] = h(V0);
-
-                        V0 = h[80083288 + window_id * 30];
-                        [800E4944 + window_id * 100 + V0] = FF;
-
-                        return;
-                    }
-                    break;
-                }
-            }
-            break;
-
-            case 0xFA 0xFB 0xFC 0xFD:
-            {
-                A0 = [800E4234 + window_id * 4];
-                A0 = [A0];
-                [800E4944 + window_id * 100 + V0] = A0;
-                V0 = [800E4234 + window_id * 4]
-                V0 = V0 + 1;
-                [800E4234 + window_id * 4] = V0;
-
-                V0 = [80083288 + window_id * 30];
-                V0 = V0 + 1;
-                [80083288 + window_id * 30] = V0;
-            }
-        }
-    }
-
-    Ld6c18:	; 800D6C18
-    //0xE5 0xE6 0xF6 0xF7 0xF8 0xF9 and all others:
-    V1 = w[800E4234 + window_id * 4];
-    V0 = h[80083288 + window_id * 30];
-    V1 = b[V1]; // read letter
-    [800E4944 + window_id * 100 + V0] = b(V1); // write letter 800D6C40
-
-    V0 = w[800E4234 + window_id * 4];
-    V0 = V0 + 1;
-    [800E4234 + window_id * 4] = w(V0);
-
-    V0 = hu[80083288 + window_id * 30];
-    V0 = V0 + 1;
-    [80083288 + window_id * 30] = h(V0);
-
-    V0 = hu[80083286 + window_id * 30];
-    V0 = V0 + 1;
-    [80083286 + window_id * 30] = h(V0);
-
-    V0 = hu[80114470 + window_id * 2];
-    V0 = V0 - S5;
-    [80114470 + window_id * 2] = h(V0);
-
-    Ld6ca0:	; 800D6CA0
-    V1 = h[80114470 + window_id * 2];
-    V0 = S5 < V1;
-800D6CC4	bne    v0, zero, Ld5f04 [$800d5f04]
-
-// write FF to end of string;
-V0 = h[80083288 + window_id * 30];
-[800e4944 + window_id * 100 + V0] = b(ff);
 ////////////////////////////////
 
 
@@ -2224,534 +1433,209 @@ return 1;
 
 
 ////////////////////////////////
-// get_variable_for_window_from_memory_bank
-A0 - window id
+// field_dialog_get_variable_from_bank()
+
+window_id = A0;
 
 // current variable;
-V0 = h[800E4280 + A0 * 2];
-V1 = bu[800E4214 + A0 * 8 + V0];
-
-if (V1 < 10)
+V0 = h[800E4280 + window_id * 2];
+switch( bu[800e4214 + window_id * 8 + V0] )
 {
-    switch (V1)
+    case 0x0:
     {
-        case 0x0:
-        {
-            V0 = h[800E4280 + A0 * 2];
-            V1 = hu[800E4D48 + V0 * 2 + A0 * 10];
+        V0 = h[800e4280 + window_id * 2];
+        return hu[800e4d48 + window_id * 10 + V0 * 2];
+    }
 
-            800D7308	j      Ld7754 [$800d7754]
-        }
-        break;
+    case 0x1:
+    {
+        V0 = h[800e4280 + window_id * 2]
+        V0 = hu[800e4d48 + window_id * 10 + V0 * 2];
+        return bu[8009d288 + V0];
+    }
 
-        case 0x1:
-        {
-            V0 = h[800E4280 + A0 * 2]
+    case 0x02:
+    {
+        V0 = h[800e4280 + window_id * 2]
+        V1 = hu[800e4d48 + window_id * 10 + V0 * 2];
+        return hu[8009d288 + V1];
+    }
 
-            // get offset
-            V0 = hu[800E4D48 + V0 * 2 + A0 * 10];
+    case 0x3:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V0 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 100) & ffff;
+        return bu[8009d288 + V0];
+    }
 
-            // get data byte
-            V1 = bu[8009D288 + V0];
+    case 0x4:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V1 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 100) & ffff;
+        return hu[8009d288 + V1];
+    }
 
-            800D735C	j      Ld7754 [$800d7754]
-        }
-        break;
+    case 0x5:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V0 = hu[800e4d48 + window_id * 10 + V0 * 2];
+        return bu[80075e24 + V0];
+    }
 
-        case 0x02:
-        {
-            V0 = h[800E4280 + A0 * 2]
-            V1 = hu[800E4D48 + V0 * 2 + A0 * 10];
+    case 0x6:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V1 = hu[800e4d48 + window_id * 10 + V0 * 2];
+        return hu[80075e24 + V1];
+    }
 
-            V0 = bu[8009D289 + V1];
-            V1 = bu[8009D288 + V1];
-            V0 = V0 << 8;
-            V1 = V1 | V0;
+    case 0x7:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V1 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 400) & ffff;
+        return hu[8009d288 + V1];
+    }
 
-            800D7748	j      Ld7754 [$800d7754]
-        }
-        break;
+    case 0xb:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V0 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 200) & ffff;
+        return bu[8009d288 + V0];
+    }
 
-        case 0x3:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D73D0	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D73E0	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D7400	j      Ld75a0 [$800d75a0]
-            V0 = V0 + 0100;
-        }
-        break;
+    case 0xc:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V1 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 200) & ffff;
+        return hu[8009d288 + V1];
+    }
 
-        case 0x4:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D7410	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D7420	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D7440	nop
-            V0 = V0 + 0100;
-            V1 = V0 & ffff;
-            800D744C	lui    at, $800a
-            800D7450	addiu  at, at, $d289 (=-$2d77)
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            800D745C	lui    at, $800a
-            800D7460	addiu  at, at, $d288 (=-$2d78)
-            AT = AT + V1;
-            V1 = bu[AT + 0000];
-            800D746C	j      Ld7748 [$800d7748]
-            V0 = V0 << 08;
-        }
-        break;
+    case 0xd:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V0 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 300) & ffff;
+        return bu[8009d288 + V0];
+    }
 
-        case 0xB:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D747C	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D748C	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D74AC	j      Ld75a0 [$800d75a0]
-            V0 = V0 + 0200;
-        }
-        break;
+    case 0xe:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V1 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 300) & ffff;
+        return hu[8009d288 + V1];
+    }
 
-        case 0xC:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D74BC	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D74CC	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D74EC	nop
-            V0 = V0 + 0200;
-            V1 = V0 & ffff;
-            800D74F8	lui    at, $800a
-            800D74FC	addiu  at, at, $d289 (=-$2d77)
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            800D7508	lui    at, $800a
-            800D750C	addiu  at, at, $d288 (=-$2d78)
-            AT = AT + V1;
-            V1 = bu[AT + 0000];
-            800D7518	j      Ld7748 [$800d7748]
-            V0 = V0 << 08;
-        }
-        break;
-
-        case 0xD:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D7528	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D7538	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D7558	j      Ld75a0 [$800d75a0]
-            V0 = V0 + 0300;
-        }
-        break;
-
-        case 0xF:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D7568	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D7578	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D7598	nop
-            V0 = V0 + 0400;
-
-            Ld75a0:	; 800D75A0
-            V0 = V0 & ffff;
-            800D75A4	lui    at, $800a
-            800D75A8	addiu  at, at, $d288 (=-$2d78)
-            AT = AT + V0;
-            V1 = bu[AT + 0000];
-            800D75B4	j      Ld7754 [$800d7754]
-            800D75B8	nop
-        }
-        break;
-
-        case 0xE:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D75C4	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D75D4	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D75F4	nop
-            V0 = V0 + 0300;
-            V1 = V0 & ffff;
-            800D7600	lui    at, $800a
-            800D7604	addiu  at, at, $d289 (=-$2d77)
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            800D7610	lui    at, $800a
-            800D7614	addiu  at, at, $d288 (=-$2d78)
-            AT = AT + V1;
-            V1 = bu[AT + 0000];
-            800D7620	j      Ld7748 [$800d7748]
-            V0 = V0 << 08;
-        }
-        break;
-
-        case 0x7:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D7630	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D7640	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D7660	nop
-            V0 = V0 + 0400;
-            V1 = V0 & ffff;
-            800D766C	lui    at, $800a
-            800D7670	addiu  at, at, $d289 (=-$2d77)
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            800D767C	lui    at, $800a
-            800D7680	addiu  at, at, $d288 (=-$2d78)
-            AT = AT + V1;
-            V1 = bu[AT + 0000];
-            800D768C	j      Ld7748 [$800d7748]
-            V0 = V0 << 08;
-        }
-        break;
-
-        case 0x5:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D769C	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D76AC	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V0 = hu[V0 + 0000];
-            800D76CC	nop
-            800D76D0	lui    at, $8007
-            AT = AT + 5e24;
-            AT = AT + V0;
-            V1 = bu[AT + 0000];
-            800D76E0	j      Ld7754 [$800d7754]
-            800D76E4	nop
-        }
-        break;
-
-        case 0x6:
-        {
-            V0 = A0 << 10;
-            V0 = V0 >> 10;
-            800D76F0	lui    a0, $800e
-            A0 = A0 + 4d48;
-            V1 = V0 << 04;
-            V0 = V0 << 01;
-            800D7700	lui    at, $800e
-            AT = AT + 4280;
-            AT = AT + V0;
-            V0 = h[AT + 0000];
-            V1 = V1 + A0;
-            V0 = V0 << 01;
-            V0 = V0 + V1;
-            V1 = hu[V0 + 0000];
-            800D7720	nop
-            800D7724	lui    at, $8007
-            AT = AT + 5e25;
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            800D7734	lui    at, $8007
-            AT = AT + 5e24;
-            AT = AT + V1;
-            V1 = bu[AT + 0000];
-            V0 = V0 << 08;
-
-            Ld7748:	; 800D7748
-            800D7748	j      Ld7754 [$800d7754]
-            V1 = V1 | V0;
-        }
-        break;
+    case 0xf:
+    {
+        V0 = h[800e4280 + window_id * 2];
+        V0 = (hu[800e4d48 + window_id * 10 + V0 * 2] + 400) & ffff;
+        return bu[8009d288 + V0];
     }
 }
-
-// 0x8 0x9 0xA
-Ld7750:	; 800D7750
-V1 = 0;
-
-Ld7754:	; 800D7754
-V0 = V1;
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// convert_digit_to_string
-A0 - data for variable
-A1 - address to write
+// field_dialog_convert_digit_to_string()
 
-T0 = A0;
-T1 = 0;
-A2 = 2710; (10000)
-A3 = 0;
-T2 = 66666667;
+value = A0;
+buffer = A1;
 
-loopd7774:	; 800D7774
+started = 0;
+divisor = 2710; // 10000
+pos = 0;
+
+while( divisor >= 2 )
 {
-    V0 = T0;
-    V1 = A2;
-    HI/LO = V0 / V1;
-    V1 = LO;
+    digit = value / divisor;
 
-    A0 = V1;
-
-    if (T1 == 0)
+    if( ( started != 0 ) || ( digit != 0 ) )
     {
-        800D77B8	beq    v0, zero, Ld77f4 [$800d77f4]
+        started = 1;
+        [buffer + pos] = b(bu[800e0738 + digit]);
+        pos = pos + 1;
     }
 
-    Ld77c0:	; 800D77C0
-    T1 = 1;
-
-    // write byte
-    V1 = bu[800E0738 + V1];
-    [A1 + A3] = b(V1);
-    A3 = A3 + 1;
-
-    Ld77f4:	; 800D77F4
-    HI/LO = A0 * A2;
-    A0 = LO;
-    V0 = A2;
-    HI/LO = V0 * T2;
-    V1 = A2 >> 0F;
-    V0 = HI >> 2 - V1;
-    A2 = V0;
-    V0 = V0 < 2;
-    T0 = T0 - A0;
-    800D7824	beq    v0, zero, loopd7774 [$800d7774]
+    value = value - digit * divisor;
+    divisor = divisor / a;
 }
 
-V0 = A3 + A1;
-V1 = T0; // data for variable
-
-A0 = bu[800E0738 + V1];
-
-[V0 + 1] = b(FF);
-[V0] = b(A0);
+[buffer + pos + 0] = b(bu[800e0738 + value]);
+[buffer + pos + 1] = b(ff);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// convert_digit_to_string_with_space
-A0 - data for variable
-A1 - address to write
+// field_dialog_convert_digit_to_string_with_space()
 
-T0 = A0;
-T1 = 0;
-A3 = 2710;
-A2 = 0;
-T2 = 66666667;
+value = A0;
+buffer = A1;
 
-loopd7874:	; 800D7874
+started = 0;
+divisor = 2710;
+pos = 0;
+
+while( divisor >= 2 )
 {
-    V0 = T0;
-    V1 = A3;
-    HI/LO = V0 / V1;
-    V1 = LO;
-    A0 = V1;
+    digit = value / divisor;
 
-    if (T1 == 0)
+    if( ( started != 0 ) || ( digit != 0 ) )
     {
-        if (V0 == 0)
-        {
-            [A1 + A2] = b(00);
-            A2 = A2 + 1;
-            800D78EC	j      Ld7904 [$800d7904]
-        }
+        started = 1;
+        [buffer + pos] = b(bu[800e0738 + digit]);
     }
+    else
+    {
+        [buffer + pos] = b(0);
+    }
+    pos = pos + 1;
 
-    Ld78c0:	; 800D78C0
-    T1 = 1;
-    V0 = A2;
-    A2 = A2 + 1;
-    V1 = bu[800E0738 + V1];
-    [A1 + V0] = b(V1);
-
-    Ld7904:	; 800D7904
-    800D7904	mult   a0, a3
-    800D7908	mflo   a0
-    V1 = A3 << 10;
-    V0 = V1 >> 10;
-    800D7914	mult   v0, t2
-    V1 = V1 >> 1f;
-    800D791C	mfhi   v0
-    V0 = V0 >> 02;
-    V0 = V0 - V1;
-    A3 = V0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < 0002;
-    800D7938	beq    v0, zero, loopd7874 [$800d7874]
-    T0 = T0 - A0;
+    value = value - digit * divisor;
+    divisor = divisor / a;
 }
 
-V0 = A2 << 10;
-V0 = V0 >> 10;
-V0 = A1 + V0;
-V1 = T0 & ffff;
-800D7950	lui    at, $800e
-AT = AT + 0738;
-AT = AT + V1;
-A0 = bu[AT + 0000];
-V1 = 00ff;
-[V0 + 0001] = b(V1);
-800D7968	jr     ra 
-[V0 + 0000] = b(A0);
+[buffer + pos + 0] = b(bu[800e0738 + value]);
+[buffer + pos + 1] = b(ff);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// convert_hex_to_string
-A0 - data for variable
-A1 - address to write
+// field_dialog_convert_hex_to_string()
 
-T1 = 0;
-A2 = 1000;
-A3 = 0;
-V0 = A0;
+value = A0;
+buffer = A1;
 
-loopd7980:	; 800D7980
+started = 0;
+divisor = 1000;
+pos = 0;
+
+while( divisor >= 2 )
 {
-    V1 = A2;
-    HI/LO = V0 / V1;
-    V1 = LO;
-    T0 = V1;
+    digit = value / divisor;
 
-    if (T1 == 0)
+    if( ( started != 0 ) || ( digit != 0 ) )
     {
-        800D79C0	beq    v0, zero, Ld79fc [$800d79fc]
+        started = 1;
+        [buffer + pos] = b(bu[800e0738 + digit]);
+        pos = pos + 1;
     }
 
-    Ld79c8:	; 800D79C8
-    T1 = 1;
-
-    V1 = bu[800E0738 + V1];
-    [A1 + A3] = b(V1);
-    A3 = A3 + 1;
-
-    Ld79fc:	; 800D79FC
-    HI/LO = T0 * A2;
-    V1 = A2;
-    V0 = LO;
-    A0 = A0 - V0;
-
-    if (V1 < 0)
-    {
-        V1 = V1 + 0F;
-    }
-
-    V0 = V1 >> 4;
-    A2 = V0;
-    V0 = V0 < 2;
-    V0 = A0 & FFFF;
-
-    800D7A20	beq    v0, zero, loopd7980 [$800d7980]
+    value = value - digit * divisor;
+    divisor = divisor / 10;
 }
 
-V0 = A1 + A3;
-V1 = A0;
-
-A0 = bu[800E0738 + V1];
-
-[V0 + 1] = b(FF);
-[V0] = b(A0);
+[buffer + pos + 0] = b(bu[800e0738 + value]);
+[buffer + pos + 1] = b(ff);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // copy_dialog_to_map_name
+
 V1 = w[8007E7A8];
 if (V1 == 0)
 {

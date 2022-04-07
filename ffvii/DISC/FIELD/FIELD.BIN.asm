@@ -1229,16 +1229,16 @@
 // dialog_window_discrease
 800D707C-800D7268
 ////////////////////////////////
-// get_variable_for_window_from_memory_bank
+// field_dialog_get_variable_from_bank
 800D726C-800D7758
 ////////////////////////////////
-// convert_digit_to_string
+// field_dialog_convert_digit_to_string
 800D775C-800D7858
 ////////////////////////////////
-// convert_digit_to_string_with_space
+// field_dialog_convert_digit_to_string_with_space
 800D785C-800D796C
 ////////////////////////////////
-// convert_hex_to_string
+// field_dialog_convert_hex_to_string
 800D7970-800D7A54
 ////////////////////////////////
 // copy_dialog_to_map_name

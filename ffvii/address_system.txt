@@ -649,7 +649,7 @@
                 2000 - right button
                 4000 - down button.
                 8000 - left button
-+ 78 [][][][] key data. 0020 - ok button (hold, released or pressed). Checked during text copy.
++ 78 [][][][] key data pressed. 0020 - ok button (hold, released or pressed). Checked during text copy.
 + 7c [][][][] key data. (repeat)
 + 80 [][][][] key data. 0020 - ok button (hold, released or pressed). Checked during window state check.
 + 8a []       if 1 we activate X shaking. 0 - deactivate.
@@ -791,7 +791,7 @@
                         0x0001 - sound (0x0000-mono,0x0001-stereo)
     +10dc array of button remap. Each record represent one button in buttons mask (0x10 items 0x1 size)
         +00 [] new button bit
-    +10ec []       savemap message speed.
+    +10ec []       message speed.
 
 
 
