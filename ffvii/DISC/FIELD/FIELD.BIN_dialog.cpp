@@ -359,7 +359,7 @@ switch( V1 )
                 [80083274 + window_id * 30 + 2c] = h(7);
 
                 A0 = window_id;
-                dialog_window_discrease();
+                field_dialog_window_discrease();
             }
         }
     }
@@ -371,7 +371,7 @@ switch( V1 )
         if( w[V0 + 80] & 0020 )
         {
             A0 = window_id;
-            dialog_init_next_window();
+            field_dialog_window_init_next();
         }
     }
     break;
@@ -391,7 +391,7 @@ switch( V1 )
     case 9:
     {
         A0 = window_id;
-        dialog_init_next_window();
+        field_dialog_window_init_next();
     }
     break;
 
@@ -399,7 +399,7 @@ switch( V1 )
     case 7:
     {
         A0 = window_id;
-        dialog_window_discrease();
+        field_dialog_window_discrease();
         if( V0 != 0 )
         {
             return 1;
@@ -610,7 +610,7 @@ if (v1 < F)
 
                 [800832a0 + A0 * 30] = h(7);
 
-                dialog_window_discrease;
+                field_dialog_window_discrease;
             }
 
             return 0;
@@ -625,7 +625,7 @@ if (v1 < F)
 
             if (V0 != 0)
             {
-                dialog_init_next_window;
+                field_dialog_window_init_next;
 
                 return 0;
             }
@@ -659,7 +659,7 @@ if (v1 < F)
 
         case 9:
         {
-            dialog_init_next_window;
+            field_dialog_window_init_next;
 
             return 0;
         }
@@ -667,7 +667,7 @@ if (v1 < F)
 
         case 0x5 0x7:
         {
-            dialog_window_discrease;
+            field_dialog_window_discrease;
 
             if (V0 != 0)
             {
@@ -1357,75 +1357,83 @@ else
 
 
 ////////////////////////////////
-// dialog_init_next_window
+// field_dialog_window_init_next()
 
-A1 = A0;
+window_id = A0;
 
-V1 = bu[8008326C + A0];
-V0 = bu[800722C4];
-
-if (V1 != V0)
+if( bu[8008326c + window_id] != bu[800722c4] )
 {
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a10ec; // "mes busy="
+        A1 = window_id
+        A2 = 1;
+        funcbeca4();
+    }
     return;
 }
 
-[800832A0 + A0 * 30] = h(02);
-[80083288 + A0 * 30] = h(00);
-[80083286 + A0 * 30] = h(00);
-[80083284 + A0 * 30] = h(00);
-[8008328A + A0 * 30] = h(00);
-[800E4944 + A0 * 100] = b(FF);
-[801142CC + A0 * 2] = h(00);
-[80114480 + A0 * 2] = h(01);
+[80083274 + window_id * 30 + 10] = h(0);
+[80083274 + window_id * 30 + 12] = h(0);
+[80083274 + window_id * 30 + 14] = h(0);
+[80083274 + window_id * 30 + 16] = h(0);
+[80083274 + window_id * 30 + 2c] = h(2);
+[800e4944 + window_id * 100 + 0] = b(ff); // clear string
+[801142cc + window_id * 2] = h(0);
+[80114480 + window_id * 2] = h(1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// dialog_window_discrease
+// field_dialog_window_discrease()
 
-if( bu[8008326c + A1] != bu[800722c4] ) // only work witth current entity
+window_id = A0;
+
+if( bu[8008326c + window_id] != bu[800722c4] )
 {
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a10ec; // "mes busy="
+        A1 = window_id
+        A2 = 1;
+        funcbeca4();
+    }
     return;
 }
 
-width = h[80083274 + A0 * 30 + 0c]; //width
+width = h[80083274 + window_id * 30 + 0c]; //width
 if( width >= 8 )
 {
-    width = width - [80083274 + A0 * 30 + 08] / 4;
+    width = width - [80083274 + window_id * 30 + 08] / 4;
 }
 else
 {
     width = 8;
 }
-[80083274 + A0 * 30 + 0c] = h(width);
+[80083274 + window_id * 30 + c] = h(width);
 
-height = h[80083274 + A0 * 30 + 0e];
+height = h[80083274 + window_id * 30 + 0e];
 if( height >= 8 )
 {
-    height = height - [80083274 + A0 * 30 + 0a] / 4;
+    height = height - [80083274 + window_id * 30 + a] / 4;
 }
 else
 {
     height = 8;
 }
-[80083274 + A0 * 30 + 0e] = h(height);
+[80083274 + window_id * 30 + e] = h(height);
 
-if( width >= 9 )
+if( ( width >= 9 ) || ( height >= 9 ) )
 {
     return 0;
 }
 
-if( height >= 9 )
-{
-    return 0;
-}
+[80083274 + window_id * 30 + 12] = h(0); // numbers of letters
+[80083274 + window_id * 30 + 2c] = h(0); // set state to 0
+[8008326c + window_id] = b(ff);
 
-[80083274 + A0 * 30 + 12] = h(0); // numbers of letters
-[80083274 + A0 * 30 + 2c] = h(0); // set state to 0
-[8008326c + A0] = b(ff);
-
-[80071E2c] = b(bu[80071E2c] - 1);
+[80071e2c] = b(bu[80071e2c] - 1);
 
 return 1;
 ////////////////////////////////

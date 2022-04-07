@@ -103,14 +103,49 @@ FFVII_Field_DialogManageStates( u8 window_id, u8 message_id )
             FFVII_Field_DialogWindowGrowth( window_id );
         }
         break;
-/*
+
         case 2:
         {
-            A0 = window_id;
-            field_dialog_copy_text_from_field();
+            FFVII_Field_DialogTextAdd( window_id );
         }
         break;
 
+        case 5:
+        case 7:
+        {
+            if( FFVII_Field_DialogWindowDiscrease( window_id ) != 0 )
+            {
+                return 1;
+            }
+        }
+        break;
+
+        case 6:
+        {
+            if( ( psxMemRead16( 0x80083274 + window_id * 0x30 + 0x2e ) & 0x0001 ) == 0 )
+            {
+                u32 game_data = psxMemRead32( 0x8009c6e0 );
+                if( psxMemRead32( game_data + 0x80 ) & 0x0020 ) // OK button pressed
+                {
+                    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x2c, 7 );
+
+                    FFVII_Field_DialogWindowDiscrease( window_id );
+                }
+            }
+        }
+        break;
+
+        case 0xe:
+        {
+            u32 game_data = psxMemRead32( 0x8009c6e0 );
+            if( psxMemRead32( game_data + 0x80 ) & 0x0020 ) // OK button pressed
+            {
+                FFVII_Field_DialogWindowInitNext( window_id );
+            }
+        }
+        break;
+
+/*
         case 8:
         {
             A0 = window_id;
@@ -174,33 +209,6 @@ FFVII_Field_DialogManageStates( u8 window_id, u8 message_id )
         }
         break;
 
-        case 6:
-        {
-            if( ( hu[80083274 + window_id * 30 + 2e] & 0001 ) == 0 )
-            {
-                V0 = w[8009c6e0];
-                if( w[V0 + 80] & 0020 )
-                {
-                    [80083274 + window_id * 30 + 2c] = h(7);
-
-                    A0 = window_id;
-                    dialog_window_discrease();
-                }
-            }
-        }
-        break;
-
-        case e:
-        {
-            V0 = w[8009c6e0];
-            if( w[V0 + 80] & 0020 )
-            {
-                A0 = window_id;
-                dialog_init_next_window();
-            }
-        }
-        break;
-
         case b:
         {
             V0 = w[8009c6e0];
@@ -216,21 +224,10 @@ FFVII_Field_DialogManageStates( u8 window_id, u8 message_id )
         case 9:
         {
             A0 = window_id;
-            dialog_init_next_window();
+            field_dialog_window_init_next();
         }
         break;
 
-        case 5:
-        case 7:
-        {
-            A0 = window_id;
-            dialog_window_discrease();
-            if( V0 != 0 )
-            {
-                return 1;
-            }
-        }
-        break;
 */
 
         default:
@@ -366,8 +363,8 @@ FFVII_Field_DialogTextAdd( u8 window_id )
         return;
     }
 
-    u8 text_amount;
-    u8 text_speed;
+    u32 text_amount;
+    u32 text_speed;
 
     if( psxMemRead16( 0x80083274 + window_id * 0x30 + 0x2e ) & 0x0002 ) // show all text imm
     {
@@ -377,7 +374,7 @@ FFVII_Field_DialogTextAdd( u8 window_id )
     else
     {
         u32 game_data = psxMemRead32( 0x8009c6e0 );
-        if( psxMemRead32( game_data + 0x78 ) & 0x0020 ) // OK button pressed
+        if( psxMemRead32( game_data + 0x78 ) & 0x0020 ) // OK button hold
         {
             u16 cur_speed = psxMemRead16( 0x80114480 + window_id * 2 ) + 1;
             cur_speed = ( cur_speed >= 129 ) ? 128 : cur_speed;
@@ -501,19 +498,20 @@ FFVII_Field_DialogTextAdd( u8 window_id )
                 [80083274 + window_id * 30 + 16] = h(hu[80083274 + window_id * 30 + 16] + 1); // cur row
             }
             break;
-
-            case e8 e9: // next window
+*/
+            case 0xe8: // next window
+            case 0xe9: // next window
             {
-                [80114480 + window_id * 2] = h(1); // reset speed mod
-                [80114470 + window_id * 2] = h(0); // speed
-                [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1); // add offset
-                bytes = h[80083274 + window_id * 30 + 14];
-                [800e4944 + window_id * 100 + bytes] = b(ff);
-                [80083274 + window_id * 30 + 2c] = h(e);
+                psxMemWrite16( 0x80114480 + window_id * 2, 1 ); // reset speed mod
+                psxMemWrite16( 0x80114470 + window_id * 2, 0 ); // speed
+                psxMemWrite32( 0x800e4234 + window_id * 4, psxMemRead32( 0x800e4234 + window_id * 4 ) + 1 );
+                u16 bytes = psxMemRead16( 0x80083274 + window_id * 0x30 + 0x14 );
+                psxMemWrite8( 0x800e4944 + window_id * 0x100 + bytes, 0xff );
+                psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x2c, 0xe );
                 return;
             }
             break;
-
+/*
             case ea eb ec ed ee ef f0 f1 f2: // character names
             {
                 V0 = w[800e4234 + window_id * 4];
@@ -814,4 +812,81 @@ FFVII_Field_DialogTextAdd( u8 window_id )
 
     u16 bytes = psxMemRead16( 0x80083274 + window_id * 0x30 + 0x14 );
     psxMemWrite8( 0x800e4944 + window_id * 0x100 + bytes, 0xff );
+}
+
+
+
+int
+FFVII_Field_DialogWindowDiscrease( u8 window_id )
+{
+    if( psxMemRead8( 0x8008326c + window_id ) != psxMemRead8( 0x800722c4 ) )
+    {
+        char Text[ 256 ];
+        sprintf( Text, _( "mes busy=0x%x" ), window_id );
+        GPU_displayText( Text );
+        //if( bu[8009d820] & 3 )
+        //{
+            //A0 = 800a10ec; // "mes busy="
+            //A1 = window_id;
+            //A2 = 1;
+            //funcbeca4();
+        //}
+        return 0;
+    }
+
+    u16 cur_w = psxMemRead16( 0x80083274 + window_id * 0x30 + 0xc );
+    u16 width = psxMemRead16( 0x80083274 + window_id * 0x30 + 0x8 );
+    cur_w = ( cur_w >= 8 ) ? cur_w - width / 4 : 8;
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0xc, cur_w );
+
+    u16 cur_h = psxMemRead16( 0x80083274 + window_id * 0x30 + 0xe );
+    u16 height = psxMemRead16( 0x80083274 + window_id * 0x30 + 0xa );
+    cur_h = ( cur_h >= 8 ) ? cur_h - height / 4 : 8;
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0xe, cur_h );
+
+    if( ( cur_w >= 9 ) || ( cur_h >= 9 ) )
+    {
+        return 0;
+    }
+
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x12, 0 );
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x2c, 0 );
+    psxMemWrite8( 0x8008326c + window_id, -1 );
+
+    psxMemWrite8( 0x80071e2c, psxMemRead8( 0x80071e2c ) - 1 );
+
+    return 1;
+}
+
+
+
+void
+FFVII_Field_DialogWindowInitNext( u8 window_id ) // field_dialog_window_init_next
+{
+    if( psxMemRead8( 0x8008326c + window_id ) != psxMemRead8( 0x800722c4 ) )
+    {
+        char Text[ 256 ];
+        sprintf( Text, _( "mes busy=0x%x" ), window_id );
+        GPU_displayText( Text );
+        //if( bu[8009d820] & 3 )
+        //{
+            //A0 = 800a10ec; // "mes busy="
+            //A1 = window_id;
+            //A2 = 1;
+            //funcbeca4();
+        //}
+        return;
+    }
+
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x10, 0 ); // text scroll value
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x12, 0 ); // number of letters
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x14, 0 ); // number of bytes
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x16, 0 ); // current row
+
+    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x2c, 2 ); // state
+
+    psxMemWrite8( 0x800e4944 + window_id * 0x100 + 0, 0xff ); // clear string
+
+    psxMemWrite16( 0x801142cc + window_id * 2, 0 ); // additional rows during text scrolling
+    psxMemWrite16( 0x80114480 + window_id * 2, 1 ); // OK button speed modificator
 }

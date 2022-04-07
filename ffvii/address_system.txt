@@ -649,9 +649,9 @@
                 2000 - right button
                 4000 - down button.
                 8000 - left button
-+ 78 [][][][] key data pressed. 0020 - ok button (hold, released or pressed). Checked during text copy.
++ 78 [][][][] key data hold. 0020 - ok button (hold, released or pressed). Checked during text copy.
 + 7c [][][][] key data. (repeat)
-+ 80 [][][][] key data. 0020 - ok button (hold, released or pressed). Checked during window state check.
++ 80 [][][][] key data pressed. 0020 - ok button (hold, released or pressed). Checked during window state check.
 + 8a []       if 1 we activate X shaking. 0 - deactivate.
 + 8b []       state of shaking single X movement (0 - init, 1 - action)
 + 8c []       random shake array index single X movement.

@@ -107,14 +107,14 @@ state 1: call "dialog_window_growth".
 state 2: call "dialog_copy_text_from_field".
 state 3: discrease 8011445C (wait time) by 1 each call. When wait time == 0, then set state to 2.
 state 4: if "OK" button (0x0020) pressed then discrease 80083284 (dialog scrolling value) by 2. Increment 801142CC (additional rows) by 1. Set state to 8.
-state 6: if WMODE cbc & 0x01 not set and "OK" button (0x0020) pressed then set state to 7 and call "dialog_window_discrease".
-state 7: call "dialog_window_discrease".
+state 6: if WMODE cbc & 0x01 not set and "OK" button (0x0020) pressed then set state to 7 and call "field_dialog_window_discrease".
+state 7: call "field_dialog_window_discrease".
 state 8: call "dialog_scroll_text".
-state 9: call "dialog_init_next_window".
+state 9: call "field_dialog_window_init_next".
 state B: if "OK" button (0x0020) pressed then set state to C.  Discrease 80083284 (dialog scrolling value) by 2. Set 800E424C to current_row * 10 + 11.
 state C: call "dialog_scroll_text_during_ok".
 state D: if "OK" button (0x0020) pressed then set state to 2.
-state E: if "OK" button (0x0020) pressed then call "dialog_init_next_window".
+state E: if "OK" button (0x0020) pressed then call "field_dialog_window_init_next".
 
 
 
@@ -128,16 +128,16 @@ state 6: if WMODE cbc & 0x01 not set then set (8008328E) enable pointer to 1.
          if WMODE cbc & 0x01 not set and "UP" button (0x1000) pressed and first row less then current row then discrease current row by 1 and call "play_window_pointer_click_sound".
          if WMODE cbc & 0x01 not set and "DOWN" button (0x4000) pressed and currewnt row less then last row then increase current row by 1 and call "play_window_pointer_click_sound".
          if WMODE cbc & 0x01 not set then set (80083298) pointex X to 5 and (8008329A) pointer Y to current_row * 10 + 6.
-         if WMODE cbc & 0x01 not set and "OK" button (0x0020) pressed then set state to 7 and call "play_window_pointer_click_sound" and "dialog_window_discrease".
-state 7: call "dialog_window_discrease".
+         if WMODE cbc & 0x01 not set and "OK" button (0x0020) pressed then set state to 7 and call "play_window_pointer_click_sound" and "field_dialog_window_discrease".
+state 7: call "field_dialog_window_discrease".
          if window is still closing invert (8008328E) enable pointer to make it blink.
          when window closed set (8008328E) enable pointer to 0.
 state 8: call "dialog_scroll_text".
-state 9: call "dialog_init_next_window".
+state 9: call "field_dialog_window_init_next".
 state B: if "OK" button (0x0020) pressed then set state to C.  Discrease 80083284 (dialog scrolling value) by 2. Set 800E424C to current_row * 10 + 11.
 state C: call "dialog_scroll_text_during_ok".
 state D: if "OK" button (0x0020) pressed then set state to 2.
-state E: if "OK" button (0x0020) pressed then call "dialog_init_next_window".
+state E: if "OK" button (0x0020) pressed then call "field_dialog_window_init_next".
 
 
 
@@ -190,13 +190,13 @@ dialog_window_growth:
     Increment current_height by height / 4, but current_height no less than 8 and no more than height.
     If current_width == width and current_height == height then set state to 1.
 
-dialog_window_discrease:
+field_dialog_window_discrease:
     Decrement current_width by width / 4, but current_width no less than 8.
     Decrement current_height by height / 4, but current_height no less than 8.
     If current_width  <= 8 and current_height <= 8 then set state to 0. Set 80083286 (letters in window string) to 0. Remove parent entity from this window (set to FF).
     Decrement 80071E2C (opened windows number) by 1;
 
-dialog_init_next_window:
+field_dialog_window_init_next:
     Set 80083284 to 0.
     Set 80083286 to 0.
     Set 80083288 to 0.

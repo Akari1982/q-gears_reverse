@@ -1223,10 +1223,10 @@
 // dialog_scroll_text_during_ok
 800D6E0C-800D6F68
 ////////////////////////////////
-// dialog_init_next_window
+// field_dialog_window_init_next
 800D6F6C-800D7078
 ////////////////////////////////
-// dialog_window_discrease
+// field_dialog_window_discrease
 800D707C-800D7268
 ////////////////////////////////
 // field_dialog_get_variable_from_bank
