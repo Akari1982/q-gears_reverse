@@ -374,7 +374,7 @@ FFVII_System_UIStringAddToRender( u16 pos_x, u16 pos_y, u32 d_width, u32 message
             g_ui_str_letters += 1;
             continue;
         }
-        else if( ( letter == 0xe8 ) || ( letter == 0xe9 ) ) // new window
+        else if( ( letter == 0xe8 ) || ( letter == 0xe9 ) ) // next window
         {
             break;
         }

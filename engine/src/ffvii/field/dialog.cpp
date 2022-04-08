@@ -409,7 +409,7 @@ FFVII_Field_DialogTextAdd( u8 window_id )
         {
             case 0xff: // string end
             {
-                psxMemWrite16( 0x80114470 + window_id * 2, 0 ); // speed
+                psxMemWrite16( 0x80114470 + window_id * 2, 0 );
                 u16 bytes = psxMemRead16( 0x80083274 + window_id * 0x30 + 0x14 );
                 psxMemWrite8( 0x800e4944 + window_id * 0x100 + bytes, 0xff );
                 psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x2c, 6 );
@@ -502,42 +502,46 @@ FFVII_Field_DialogTextAdd( u8 window_id )
             case 0xe8: // next window
             case 0xe9: // next window
             {
-                psxMemWrite16( 0x80114480 + window_id * 2, 1 ); // reset speed mod
-                psxMemWrite16( 0x80114470 + window_id * 2, 0 ); // speed
-                psxMemWrite32( 0x800e4234 + window_id * 4, psxMemRead32( 0x800e4234 + window_id * 4 ) + 1 );
                 u16 bytes = psxMemRead16( 0x80083274 + window_id * 0x30 + 0x14 );
                 psxMemWrite8( 0x800e4944 + window_id * 0x100 + bytes, 0xff );
+
+                psxMemWrite16( 0x80114470 + window_id * 2, 0 ); // speed
+                psxMemWrite16( 0x80114480 + window_id * 2, 1 ); // reset speed mod
+                psxMemWrite32( 0x800e4234 + window_id * 4, psxMemRead32( 0x800e4234 + window_id * 4 ) + 1 );
                 psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x2c, 0xe );
                 return;
             }
             break;
-/*
+
             case ea eb ec ed ee ef f0 f1 f2: // character names
             {
-                V0 = w[800e4234 + window_id * 4];
-                S0 = bu[V0] - ea;
+                u32 pos = psxMemRead32( 0x800e4234 + window_id * 4 );
+                u16 off = psxMemRead16( 0x800e4278 + window_id * 2 );
+
+                S0 = bu[pos] - ea;
 
                 A0 = S0 & ffff;
                 system_get_character_name_offset();
-                A1 = V0 + h[800e4278 + window_id * 2];
 
-                if( ( bu[A1] == ff ) || ( h[800e4278 + window_id * 2] >= 9 ) )
+                u8 chr = psxMemRead8( V0 + off );
+
+                if( ( chr == 0xff ) || ( off >= 9 ) )
                 {
-                    [800e4234 + window_id * 4] = w(w[800e4234 + window_id * 4] + 1);
-                    [800e4278 + window_id * 2] = h(0);
+                    psxMemWrite32( 0x800e4234 + window_id * 4, pos + 1 );
+                    psxMemWrite16( 0x800e4278 + window_id * 2, 0 );
                 }
                 else
                 {
-                    V0 = h[80083274 + window_id * 30 + 14];
-                    [800e4944 + window_id * 100 + V0] = b(bu[A1]);
-                    [80083274 + window_id * 30 + 14] = h(hu[80083274 + window_id * 30 + 14] + 1);
-                    [800e4278 + window_id * 2] = h(hu[800e4278 + window_id * 2] + 1);
-                    [80083274 + window_id * 30 + 12] = h(hu[80083274 + window_id * 30 + 12] + 1);
-                    [80114470 + window_id * 2] = h(hu[80114470 + window_id * 2] - text_speed);
+                    u16 bytes = psxMemRead16( 0x80083274 + window_id * 0x30 + 0x14 );
+                    psxMemWrite8( 0x800e4944 + window_id * 0x100 + bytes, chr );
+                    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x12, psxMemRead16( 0x80083274 + window_id * 0x30 + 0x12 ) + 1);
+                    psxMemWrite16( 0x80083274 + window_id * 0x30 + 0x14, bytes + 1);
+                    psxMemWrite16( 0x800e4278 + window_id * 2, off + 1 );
+                    psxMemWrite16( 0x80114470 + window_id * 2, psxMemRead16( 0x80114470 + window_id * 2 ) - text_speed );
                 }
             }
             break;
-
+/*
             case f3 f4 f5: // party character name
             {
                 V1 = w[800e4234 + window_id * 4];
