@@ -7095,9 +7095,9 @@ if( bu[8009cbdc + party_id] != ff )
 
 
 ////////////////////////////////
-// system_get_character_name_offset
-V1 = w[800491D0 + A0 * 4]
-V0 = 8009C748 + V1 * 84;
+// system_get_character_name_offset()
+
+return 8009c748 + w[800491d0 + A0 * 4] * 84;
 ////////////////////////////////
 
 

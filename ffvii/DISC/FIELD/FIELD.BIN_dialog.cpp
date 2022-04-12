@@ -123,7 +123,8 @@ return 1;
 
 
 ////////////////////////////////
-// set_window_style_cbc
+// set_window_style_cbc()
+
 writes data to window structure
 a0 = window id
 a1 = style
@@ -133,36 +134,17 @@ a2 = cbc
 
 
 ////////////////////////////////
-// funcd4bfc
-800D4BFC
-A0 = 0;
-A2 = 00ff;
-800D4C04	lui    a1, $8011
-A1 = A1 + 445c;
-V1 = 0;
+// funcd4bfc()
 
-loopd4c10:	; 800D4C10
-800D4C10	lui    at, $8008
-AT = AT + 32a0;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800D4C20	lui    at, $8008
-AT = AT + 3286;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800D4C30	lui    at, $8008
-AT = AT + 326c;
-AT = AT + A0;
-[AT + 0000] = b(A2);
-[A1 + 0000] = h(0);
-A1 = A1 + 0002;
-A0 = A0 + 0001;
-V0 = A0 < 0004;
-800D4C50	bne    v0, zero, loopd4c10 [$800d4c10]
-V1 = V1 + 0030;
+for( int i = 0; i < 4; ++i )
+{
+    [800832a0 + i * 30 + 0000] = h(0);
+    [80083286 + i * 30 + 0000] = h(0);
+    [8008326c + i] = b(ff);
+    [8011445c + i * 2] = h(0);
+}
+
 [80071e2c] = b(0);
-800D4C60	jr     ra 
-800D4C64	nop
 ////////////////////////////////
 
 

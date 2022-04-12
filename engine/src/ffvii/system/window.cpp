@@ -784,3 +784,11 @@ FFVII_System_UIDialogAddToRender()
 
     psxMemWrite32( 0x80062f24, g_ui_buffer );
 }
+
+
+
+int
+FFVII_System_GetCharacterName( u8 character_id )
+{
+    return 0x8009c748 + psxMemRead32( 0x800491d0 + character_id * 4 ) * 0x84;
+}
