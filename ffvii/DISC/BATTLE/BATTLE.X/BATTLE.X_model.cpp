@@ -7328,6 +7328,7 @@ battle_set_load_texture_to_vram();
 // funcd29d4()
 
 model = A0;
+otc = A1;
 packets = A3;
 
 S7 = hu[800d3544 + 0];
@@ -7363,22 +7364,22 @@ T0 = -1;
 if( flags & 1 )
 {
     S6 = S6 ^ T0;
-    800D2A7C	jal    funcd3418 [$800d3418]
+    funcd3418();
 }
 if( flags & 2 )
 {
     S6 = S6 ^ T0;
-    800D2A90	jal    funcd3474 [$800d3474]
+    funcd3474();
 }
 if( flags & 4 )
 {
     S6 = S6 ^ T0;
-    800D2AA4	jal    funcd34c8 [$800d34c8]
+    funcd34c8();
 }
 
 if( ( flags & 0040 ) == 0 )
 {
-    blend = blend + (h[mesh + 0002] & 019f);
+    blend = blend + (h[mesh + 2] & 019f);
 }
 
 number = h[mesh]; // number of triangle
@@ -7419,8 +7420,8 @@ for( int i = number; i != 0; --i )
             [packets + 18] = w(T2); // xy2
 
             gte_AVSZ3(); // Average of three Z values
-            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 07000000);
-            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+            [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 07000000);
+            [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
 
             [packets + c] = w(w[mesh + 8] + clut + S1); // Texcoord1+Palette (ClutYyXxh)
             [packets + 14] = h(h[mesh + c] + S1); // Texcoord2+Texpage (PageYyXxh)
@@ -7516,8 +7517,8 @@ for( int i = number; i != 0; --i )
             [packets + 20] = w(T3);
 
             gte_AVSZ4(); // Average of four Z values
-            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 09000000);
-            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+            [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 09000000);
+            [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
 
             [packets + c] = w(w[mesh + 8] + clut + S1);
             [packets + 14] = h(h[mesh + c] + S1);
@@ -7609,8 +7610,8 @@ for( int i = number; i != 0; --i )
             [packets + 18] = w(T2);
 
             gte_AVSZ3(); // Average of three Z values
-            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 06000000);
-            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+            [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 06000000);
+            [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
 
             V1 = color & ffff;
             if( V1 != 0 )
@@ -7683,8 +7684,8 @@ for( int i = number; i != 0; --i )
             [packets + 20] = w(SXY2P);
 
             gte_AVSZ4(); // Average of four Z values
-            [packets + 0] = w((w[A1 + (OTZ >> A2) * 4] & 00ffffff) | 08000000);
-            [A1 + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+            [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 08000000);
+            [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
 
             V1 = color & ffff;
             if( V1 != 0 )
@@ -7775,95 +7776,52 @@ if( ( ( x0 >= 0 ) || ( x1 >= 0 ) || ( x2 >= 0 ) || ( x3 >= 0 ) ) &&
 
 
 ////////////////////////////////
-// funcd3418
-V0 = R11R12;
-800D341C	nop
-V1 = V0 & ffff;
-800D3424	beq    v1, zero, Ld3434 [$800d3434]
-V0 = V0 ^ ffff;
-V0 = V0 + 0001;
-R11R12 = V0;
+// funcd3418()
 
-Ld3434:	; 800D3434
-V0 = R13R21;
-800D3438	nop
-800D343C	lui    v1, $ffff
-V0 = V0 ^ V1;
-800D3444	lui    v1, $0001
-V0 = V0 + V1;
-R13R21 = V0;
-V0 = R31R32;
-800D3454	nop
-V1 = V0 & ffff;
-800D345C	beq    v1, zero, Ld346c [$800d346c]
-V0 = V0 ^ ffff;
-V0 = V0 + 0001;
-R31R32 = V0;
+if( R11R12 & 0000ffff )
+{
+    R11R12 = (R11R12 ^ 0000ffff) + 1;
+}
 
-Ld346c:	; 800D346C
-800D346C	jr     ra 
-800D3470	nop
+R13R21 = (R13R21 ^ ffff0000) + 10000;
+
+if( R31R32 & 0000ffff )
+{
+    R31R32 = (R31R32 ^ 0000ffff) + 1;
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcd3474
-V0 = R11R12;
-800D3478	lui    v1, $ffff
-V0 = V0 ^ V1;
-800D3480	lui    v1, $0001
-800D3484	add    v0, v0, v1
-R11R12 = V0;
-V0 = R22R23;
-800D3490	nop
-V1 = V0 & ffff;
-800D3498	beq    v1, zero, Ld34a8 [$800d34a8]
-V0 = V0 ^ ffff;
-V0 = V0 + 0001;
-R22R23 = V0;
+// funcd3474()
 
-Ld34a8:	; 800D34A8
-V0 = R31R32;
-800D34AC	lui    v1, $ffff
-V0 = V0 ^ V1;
-800D34B4	lui    v1, $0001
-800D34B8	add    v0, v0, v1
-R31R32 = V0;
-800D34C0	jr     ra 
-800D34C4	nop
+R11R12 = (R11R12 ^ ffff0000) + 10000;
+
+if( R22R23 & 0000ffff )
+{
+    R22R23 = (R22R23 ^ 0000ffff) + 1;
+}
+
+R31R32 = (R31R32 ^ ffff0000) + 10000;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcd34c8
-V0 = R13R21;
-800D34CC	nop
-V1 = V0 & ffff;
-800D34D4	beq    v1, zero, Ld34e4 [$800d34e4]
-V0 = V0 ^ ffff;
-V0 = V0 + 0001;
-R13R21 = V0;
+// funcd34c8()
 
-Ld34e4:	; 800D34E4
-V0 = R22R23;
-800D34E8	lui    v1, $ffff
-V0 = V0 ^ V1;
-800D34F0	lui    v1, $0001
-800D34F4	add    v0, v0, v1
-R22R23 = V0;
-V0 = R33;
-800D3500	nop
-V1 = V0 & ffff;
-800D3508	beq    v1, zero, Ld3518 [$800d3518]
-V0 = V0 ^ ffff;
-V0 = V0 + 0001;
-R33 = V0;
+if( R13R21 & ffff )
+{
+    R13R21 = (R13R21 ^ ffff) + 1;
+}
 
-Ld3518:	; 800D3518
-800D3518	jr     ra 
-800D351C	nop
+R22R23 = (R22R23 ^ ffff0000) + 10000;
+
+if( R33 & ffff )
+{
+    R33 = (R33 ^ ffff) + 1;
+}
 ////////////////////////////////
 
 
