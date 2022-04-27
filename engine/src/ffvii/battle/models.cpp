@@ -13,33 +13,25 @@ FFVII_Battle_ModelSimplePackets()
 {
     u32 model = psxRegs.GPR.n.a0;
     u32 otc = psxRegs.GPR.n.a1;
-    u32 divisor = psxRegs.GPR.n.a2;
+    u32 divisor = 0xe - psxRegs.GPR.n.a2;
     u32 packets = psxRegs.GPR.n.a3;
 
     u16 tri_tot_n = psxMemRead16( 0x800d3544 + 0x0 );
     u16 tri_vis_n = psxMemRead16( 0x800d3544 + 0x2 );
 
-/*
-    flags = w[model + 4]; // flags 0x0100 - use +7[] as vertex specific packet addition (only without 0x0040).
-                       //       0x0080 - use +6[] as color in vertex, if not set use function argument as color.
-                       //       0x0040 - use +7[] as vertex texture page settings instead of global part.
-                       //       0x0020 - render triangles.
-                       //       0x0010 - use color interpolation.
-                       //       0x0008 - render packets with transparensy on.
-    S1 = hu[model + 8]; // base_tex
-    color = hu[model + a]; // color for polygons
-    blend = hu[model + c]; // blending option
-    clut = hu[model + e] << 10;
-    part_data = w[model + 0]; // global offset to part
-    mesh = part_data + 4 + w[part_data + 0]; // real offset to mesh data
+    u32 flags = psxMemRead132( model + 0x4 );
+    s16 base_tex = psxMemRead116( model + 0x8 );
+    u16 color = psxMemRead116( model + 0xa );
+    u16 blend = psxMemRead116( model + 0xc );
+    u32 clut = psxMemRead116( model + 0xe ) << 0x10;
+    u32 part_data = psxMemRead132( model + 0 );
+    u32 mesh = part_data + 0x4 + psxMemRead132( part_data + 0 ); // real offset to mesh data
 
+/*
     if( ( flags & 0080 ) == 0 )
     {
         color = (color << 10) | (color << 8) | color;
     }
-
-    // A2 - 00 or 0c (in effect machingun fire loading - 0c)
-    A2 = e - divisor;
 
     // add transparency bit to polygon header
     color = color | ((flags & 8) << 16);
@@ -67,14 +59,16 @@ FFVII_Battle_ModelSimplePackets()
     {
         blend = blend + (h[mesh + 2] & 019f);
     }
+*/
 
-    number = h[mesh]; // number of triangle
+    u16 number = psxMemRead116( mesh );
     mesh += 0x4;
     tri_tot_n += number;
 
     // textured three-point polygon, opaque, texture-blending
     for( int i = number; i != 0; --i )
     {
+/*
         T4 = part_data + 4 + h[mesh + 0];
         T5 = part_data + 4 + h[mesh + 2];
         T6 = part_data + 4 + h[mesh + 4];
@@ -106,12 +100,12 @@ FFVII_Battle_ModelSimplePackets()
                 [packets + 18] = w(T2); // xy2
 
                 gte_AVSZ3(); // Average of three Z values
-                [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 07000000);
-                [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+                [packets + 0] = w((w[otc + (OTZ >> divisor) * 4] & 00ffffff) | 07000000);
+                [otc + (OTZ >> divisor) * 4] = w(packets & 00ffffff);
 
-                [packets + c] = w(w[mesh + 8] + clut + S1); // Texcoord1+Palette (ClutYyXxh)
-                [packets + 14] = h(h[mesh + c] + S1); // Texcoord2+Texpage (PageYyXxh)
-                [packets + 1c] = h(h[mesh + e] + S1); // Texcoord3 (0000YyXxh)
+                [packets + c] = w(w[mesh + 8] + clut + base_tex); // Texcoord1+Palette (ClutYyXxh)
+                [packets + 14] = h(h[mesh + c] + base_tex); // Texcoord2+Texpage (PageYyXxh)
+                [packets + 1c] = h(h[mesh + e] + base_tex); // Texcoord3 (0000YyXxh)
 
                 T0 = h[mesh + 6];
                 T1 = 0;
@@ -155,16 +149,17 @@ FFVII_Battle_ModelSimplePackets()
                 tri_vis_n += 1;
             }
         }
-
+*/
         mesh += 0x10;
     }
 
-    number = h[mesh]; // number of quad
+    number = psxMemRead116( mesh );
     mesh += 0x4;
     tri_tot_n += number * 2;
 
     for( int i = number; i != 0; --i )
     {
+/*
         T4 = part_data + 4 + h[mesh + 0];
         T5 = part_data + 4 + h[mesh + 2];
         T6 = part_data + 4 + h[mesh + 4];
@@ -203,13 +198,13 @@ FFVII_Battle_ModelSimplePackets()
                 [packets + 20] = w(T3);
 
                 gte_AVSZ4(); // Average of four Z values
-                [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 09000000);
-                [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+                [packets + 0] = w((w[otc + (OTZ >> divisor) * 4] & 00ffffff) | 09000000);
+                [otc + (OTZ >> divisor) * 4] = w(packets & 00ffffff);
 
-                [packets + c] = w(w[mesh + 8] + clut + S1);
-                [packets + 14] = h(h[mesh + c] + S1);
-                [packets + 1c] = h(h[mesh + e] + S1);
-                [packets + 24] = h(h[mesh + 10] + S1);
+                [packets + c] = w(w[mesh + 8] + clut + base_tex);
+                [packets + 14] = h(h[mesh + c] + base_tex);
+                [packets + 1c] = h(h[mesh + e] + base_tex);
+                [packets + 24] = h(h[mesh + 10] + base_tex);
 
                 T0 = h[mesh + 12];
                 T1 = 0;
@@ -239,7 +234,7 @@ FFVII_Battle_ModelSimplePackets()
                         RGB = V0;
                         gte_DPCS(); // Depth Cueing
 
-                        [packets + 4] = w(((S1 >> 10) << 10) | RGB2 | T1);
+                        [packets + 4] = w(((base_tex >> 10) << 10) | RGB2 | T1);
                     }
                     else
                     {
@@ -255,11 +250,11 @@ FFVII_Battle_ModelSimplePackets()
                 tri_vis_n += 2;
             }
         }
-
-        mesh = mesh + 14;
+*/
+        mesh += 0x14;
     }
 
-    number = h[mesh];
+    number = psxMemRead116( mesh );
     mesh += 0x4;
     tri_tot_n += number;
 
@@ -296,8 +291,8 @@ FFVII_Battle_ModelSimplePackets()
                 [packets + 18] = w(T2);
 
                 gte_AVSZ3(); // Average of three Z values
-                [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 06000000);
-                [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+                [packets + 0] = w((w[otc + (OTZ >> divisor) * 4] & 00ffffff) | 06000000);
+                [otc + (OTZ >> divisor) * 4] = w(packets & 00ffffff);
 
                 V1 = color & ffff;
                 if( V1 != 0 )
@@ -370,8 +365,8 @@ FFVII_Battle_ModelSimplePackets()
                 [packets + 20] = w(SXY2P);
 
                 gte_AVSZ4(); // Average of four Z values
-                [packets + 0] = w((w[otc + (OTZ >> A2) * 4] & 00ffffff) | 08000000);
-                [otc + (OTZ >> A2) * 4] = w(packets & 00ffffff);
+                [packets + 0] = w((w[otc + (OTZ >> divisor) * 4] & 00ffffff) | 08000000);
+                [otc + (OTZ >> divisor) * 4] = w(packets & 00ffffff);
 
                 V1 = color & ffff;
                 if( V1 != 0 )
