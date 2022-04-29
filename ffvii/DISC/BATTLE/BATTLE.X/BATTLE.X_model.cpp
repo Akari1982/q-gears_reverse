@@ -7359,22 +7359,21 @@ mesh = part_data + 4 + w[part_data + 0]; // real offset to mesh data
 color = color | ((flags & 8) << 16);
 
 S6 = 0;
-T0 = -1;
 
 if( flags & 1 )
 {
-    S6 = S6 ^ T0;
-    funcd3418();
+    S6 = S6 ^ ffffffff;
+    battle_model_flip_r11_r21_r31();
 }
 if( flags & 2 )
 {
-    S6 = S6 ^ T0;
-    funcd3474();
+    S6 = S6 ^ ffffffff;
+    battle_model_flip_r12_r22_r32();
 }
 if( flags & 4 )
 {
-    S6 = S6 ^ T0;
-    funcd34c8();
+    S6 = S6 ^ ffffffff;
+    battle_model_flip_r13_r23_r33();
 }
 
 if( ( flags & 0040 ) == 0 )
@@ -7776,7 +7775,7 @@ if( ( ( x0 >= 0 ) || ( x1 >= 0 ) || ( x2 >= 0 ) || ( x3 >= 0 ) ) &&
 
 
 ////////////////////////////////
-// funcd3418()
+// battle_model_flip_r11_r21_r31()
 
 if( R11R12 & 0000ffff )
 {
@@ -7794,7 +7793,7 @@ if( R31R32 & 0000ffff )
 
 
 ////////////////////////////////
-// funcd3474()
+// battle_model_flip_r12_r22_r32()
 
 R11R12 = (R11R12 ^ ffff0000) + 10000;
 
@@ -7809,18 +7808,18 @@ R31R32 = (R31R32 ^ ffff0000) + 10000;
 
 
 ////////////////////////////////
-// funcd34c8()
+// battle_model_flip_r13_r23_r33()
 
 if( R13R21 & ffff )
 {
-    R13R21 = (R13R21 ^ ffff) + 1;
+    R13R21 = (R13R21 ^ 0000ffff) + 1;
 }
 
 R22R23 = (R22R23 ^ ffff0000) + 10000;
 
 if( R33 & ffff )
 {
-    R33 = (R33 ^ ffff) + 1;
+    R33 = (R33 ^ 0000ffff) + 1;
 }
 ////////////////////////////////
 
