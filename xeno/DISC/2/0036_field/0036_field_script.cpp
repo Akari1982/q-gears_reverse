@@ -2550,5 +2550,5 @@ A1 = dest_x;
 A2 = dest_y;
 system_move_image()
 
-field_sync();
+field_draw_sync();
 ////////////////////////////////

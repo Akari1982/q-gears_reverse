@@ -65,7 +65,7 @@
 8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
 8004f498 [][][][] pointer to 0x80018004
 8004f49c [][][][] file size to load.
-8004f4a0 [][][][] store 1 here before load.
+8004f4a0 [][][][] 1 - cdrom data load performes. 0 - data load finished. Store 1 here before load.
 8004f4a4 [][][][] ???
 8004f4a8 [][][][] file sector to load.
 8004f4ac [][][][] pointer to allocated memory for file load.
@@ -186,6 +186,8 @@
 
 80055ab4 [][][][] set to 1 after gamepad init.
 
+80055ac0 array of some data/checks for Cdl commands (size 0x04 items 0x20). Checked if not 0.
+
 80055b48 [][][][] cd sync interrupt handler.
 80055b4c [][][][] cd ready interrupt handler.
 
@@ -197,7 +199,11 @@
 80055b58 [][][][] stored cdrom status code (stat).
 80055b5c [][][][] stored second response fifo. Init with 0.
 80055b60 [][][][] increment by 1 when shell opened.
-80055b64 array of stored params of CdlSetloc command (size 0x01 items 0x04).
+80055b64 stored cdlloc struct for CdlSetloc command.
+    +0 []       minute.
+    +1 []       second.
+    +2 []       sector.
+    +3 []       track number.
 80055b68 []       stored param of CdlSetmode command.
 80055b69 []       stored cdl command.
 
@@ -208,12 +214,16 @@
          18 ?            19 ?            1a ?            1b CdlReadS     1c ?            1d ?            1e ?            1f ?
 80055bf0 array of pointers to CD interupts result strings (size 0x04 items 0x8).
          00 NoIntr       01 DataReady    02 Complete     03 Acknowledge  04 DataEnd      05 DiskError    06 ?            07 ?
-80055c90 array of something related with Cdl commands (size 0x04 items 0x20).
+80055c90 array of reset 80055e29 cd ready interrupt result for Cdl commands (size 0x04 items 0x20).
         0 0 0 1 1 1 1 0
         0 0 0 0 0 0 0 0
         0 0 0 0 0 1 1 0
         0 0 0 1 0 0 0 0
 80055d90 array of number of arguments in Cdl commands (size 0x04 items 0x20).
+
+80055e10 [][][][] cd_1800 (1f801800).
+80055e14 [][][][] cd_1801 (1f801801).
+80055e18 [][][][] cd_1802 (1f801802).
 
 80055ee4 [][][][] some callback cd related.
 80055f18 [][][][] some callback cd related.
@@ -223,6 +233,9 @@
 80055e2a []       cd read interrupt result.
 
 80055e2c address of cd init data.
+
+80055ef8 [][][][] 200 - something.
+80055efc [][][][] 
 
 80055f70 []       gpu mode type (old commands or new commands).
                     0 - old cpu.
@@ -638,7 +651,11 @@
 8005959c [][][][] 0
 800595a4 [][][][] store cdrom ready callback here.
 800595a8 [][][][] local file id to load.
-800595ac cd command param array.
+800595ac cd command param array (CdlLOC struct).
+    +0 []       minute.
+    +1 []       second.
+    +2 []       sector.
+    +3 []       track number.
 
 800595b4 []       cdrom command param 1.
 800595b5 []       cdrom command param 2.
@@ -747,7 +764,7 @@
 80059ad8 [][][][] entity id in party 2.
 80059adс [][][][] entity id in patry 3.
 
-80059b18 [][][][] init with 0.
+80059b18 [][][][] init with 0. Increment by 1 when download starts.
 80059b1c [][][][] init with 0.
 80059b20 [][][][] init with 0.
 80059b24 [][][][] init with 0.
@@ -1038,7 +1055,7 @@ First struct is just header struct (0x10 size), later we add more structs differ
     +4 [][][][] start of allocated memory.
     +8 [][][][] size of allocated memory.
 
-8006f14c array of 3 items with size 0x4. Init with 0.
+8006f14c array of 3 items with size 0x4. Init with 0. At start of field init with 0xff.
 
 8006f158 some struct spu memory related. Store pointer to 8005850c.
     +0 [][][][] 40001010.

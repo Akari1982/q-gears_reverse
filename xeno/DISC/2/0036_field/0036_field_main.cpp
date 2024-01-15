@@ -157,8 +157,6 @@ if( w[8004e9b0] == 0 )
 A0 = 0;
 field_load_0590_sed_into_sound();
 
-S4 = 0;
-
 field_allocate_memory_for_party_sprites();
 
 [8004e9f8] = w(0);
@@ -232,12 +230,13 @@ if( w[800c1b60] == 0 ) // debug
     [800af7a0 + 6] = h(10); // number of sprites
 }
 
-S5 = 0;
-
 // call script here
 func78358();
 
 [800acfdc] = b(1);
+
+S5 = 0;
+S4 = 0;
 
 L77810:	; 80077810
     if( hu[800c2dd4] & 0800 ) // start repeated
@@ -760,7 +759,7 @@ system_filesystem_set_dir();
 
 func76e6c(); // prepare to field load
 
-field_sync();
+field_draw_sync();
 
 if( w[8004e99c] == 0 )
 {
@@ -797,7 +796,7 @@ system_draw_sync();
 
 func73670(); // clear otagr
 
-field_sync();
+field_draw_sync();
 
 V0 = bu[80058b6c];
 
@@ -959,8 +958,9 @@ L78674:	; 80078674
 80078678	nop
 [8004e9b4] = w(0);
 [8004e9b0] = w(0);
-8007868C	jal    field_sync [$80076c88]
-80078690	nop
+
+field_draw_sync();
+
 80078694	jal    $80035c84
 80078698	nop
 V0 = bu[80058b6c];
@@ -1379,7 +1379,7 @@ V0 = V0 & T0;
 V1 = V1 & A2;
 V1 = V1 | V0;
 [A1 + 00cc] = w(V1);
-field_sync();
+field_draw_sync();
 
 A0 = 800af320;
 A1 = 0;
@@ -1465,7 +1465,7 @@ system_draw_sync();
 ////////////////////////////////
 // field_flush_sync()
 
-field_sync();
+field_draw_sync();
 
 system_enter_critical_section();
 
@@ -1706,8 +1706,10 @@ A0 = S2;
 S2 = S2 + 0001;
 V0 = S2 < 0020;
 800793D8	bne    v0, zero, loop793c8 [$800793c8]
-800793DC	nop
-800793E0	jal    field_sync [$80076c88]
+
+field_draw_sync();
+
+
 S2 = 0;
 S0 = 800af320;
 [S0 + 0000] = h(0);
@@ -1720,8 +1722,9 @@ A0 = S0;
 A1 = 0;
 80079414	jal    $system_move_image
 A2 = 00e0;
-8007941C	jal    field_sync [$80076c88]
-80079420	nop
+
+field_draw_sync();
+
 80079424	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[80059a38];
@@ -1746,12 +1749,12 @@ V0 = 800b1a3c;
 [80059b3c] = w(V0);
 V0 = 800b9b30;
 [80059b40] = w(V0);
-800794A4	jal    field_flush_sync [$80078fb0]
-800794A8	nop
+field_flush_sync();
+
 800794AC	jal    $8001c4c0
-800794B0	nop
-800794B4	jal    field_flush_sync [$80078fb0]
-800794B8	nop
+
+field_flush_sync();
+
 V0 = bu[80058b6c];
 V1 = 0002;
 [8004f7a4] = w(V1);
@@ -1805,7 +1808,9 @@ V0 = hu[V1 + 1984];
 [V1 + 2320] = h(V0);
 
 L795a8:	; 800795A8
-800795A8	jal    field_sync [$80076c88]
+
+field_draw_sync();
+
 S1 = 0140;
 S0 = 800af320;
 A0 = S0;
@@ -1817,7 +1822,9 @@ V0 = 00e0;
 [800af326] = h(V0);
 800795E0	jal    $system_move_image
 A2 = 0;
-800795E8	jal    field_sync [$80076c88]
+
+field_draw_sync();
+
 S2 = 0;
 A0 = S0;
 A1 = 0;
@@ -1829,7 +1836,9 @@ A0 = S0;
 A1 = 0;
 80079614	jal    $system_move_image
 A2 = 0100;
-8007961C	jal    field_sync [$80076c88]
+
+field_draw_sync();
+
 S1 = 0040;
 A0 = w[800c3740];
 8007962C	jal    $system_psyq_put_disp_env
@@ -1943,9 +1952,9 @@ A0 = 0;
 
 L797dc:	; 800797DC
 800797DC	jal    func6fb98 [$8006fb98]
-800797E0	nop
-800797E4	jal    field_sync [$80076c88]
-800797E8	nop
+
+field_draw_sync();
+
 A0 = SP + 0018;
 A1 = S5;
 V0 = 0040;
@@ -2032,9 +2041,9 @@ V0 = 00ff;
 80079950	jal    $8001aed8
 80079954	nop
 80079958	jal    $8001b23c
-8007995C	nop
-80079960	jal    field_sync [$80076c88]
-80079964	nop
+
+field_draw_sync();
+
 V0 = 0001;
 [800ad0c4] = w(0);
 [800acfdd] = b(V0);
@@ -2078,8 +2087,9 @@ V0 = S2 < 0003;
 S1 = S1 + 0004;
 80079A00	jal    funca1a18 [$800a1a18]
 80079A04	nop
-80079A08	jal    field_sync [$80076c88]
-80079A0C	nop
+
+field_draw_sync();
+
 V0 = 00ff;
 
 L79a14:	; 80079A14

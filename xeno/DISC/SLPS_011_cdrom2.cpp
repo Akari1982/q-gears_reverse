@@ -856,7 +856,7 @@ if( S0 == 0 )
             return 1; // error or transfer still being performed
         }
     }
-    if( w[8004f4c0] != 0 ) // if some operation still works
+    if( w[8004f4c0] != 0 ) // cd state (if some operation still works)
     {
         return 1;
     }
@@ -1798,12 +1798,13 @@ return -3;
 
 ////////////////////////////////
 // func294a0()
+// main cdrom file load func
 
 dir_file_id = A0;
 allocated_memory = A1;
 flags = A3;
 
-param_ptr = 800595ac;
+cdlloc = 800595ac;
 
 [8004f4a0] = w(1);
 [8004f4ac] = w(allocated_memory);
@@ -1820,7 +1821,7 @@ param_ptr = 800595ac;
 S0 = 1;
 
 A0 = w[8004f4a8]; // file sector to load
-A1 = param_ptr;
+A1 = cdlloc;
 system_psyq_cd_int_to_pos();
 
 if( flags & 100 )
@@ -1833,12 +1834,8 @@ if( flags & 100 )
         return -4;
     }
 
-    V0 = A0 << 03;
-    V0 = V1 + V0;
-    V0 = V0 + 0024;
-    [8004f4ac] = w(V0);
-    V0 = V1 + 0004;
-    [8004f4d0] = w(V0);
+    [8004f4ac] = w(V1 + A0 * 8 + 24);
+    [8004f4d0] = w(V1 + 4);
     [8004f4e4] = w(A0);
     [8004f4ca] = h(0);
     [8004f4cc] = h(0);
@@ -1893,7 +1890,7 @@ if( flags & 100 )
     [80059b18] = w(w[80059b18] + 1);
 
     A0 = 2; // CdlSetloc
-    A1 = param_ptr;
+    A1 = cdlloc;
     system_cdrom_cdl_command_exec_without_ret();
 
     return 0;
@@ -1973,7 +1970,7 @@ else if( flags & 0200 )
     V0 = 0 - V0;
     return V0 & fffffffd;
 }
-else
+else // usual load (flags = 0x80)
 {
     // if debug disk file name exist load from pc
     if( w[8004f4ec] != 0 )
@@ -2056,9 +2053,9 @@ else
 
         return -6;
     }
-    else
+    else // usual load from cdrom
     {
-        A0 = 0;
+        A0 = 0; // unset internal callbacks
         system_cdrom_dma_callback();
 
         A0 = 8002a49c; // system_cdrom_sync_callback()
@@ -2069,10 +2066,10 @@ else
 
         [80059b18] = w(w[80059b18] + 1);
 
-        [8004f4c0] = w(1); // load file
+        [8004f4c0] = w(1); // cd state - load file sequence
 
         A0 = 2; // CdlSetloc
-        A1 = param_ptr;
+        A1 = cdlloc;
         system_cdrom_cdl_command_exec_without_ret();
 
         return 0;
@@ -3440,8 +3437,7 @@ A1 = 800595ac;
 system_psyq_cd_int_to_pos();
 
 V0 = w[80059b6c];
-V0 = V0 < 0003;
-if( V0 != 0 )
+if( V0 < 3 )
 {
     [8004f4c4] = w(3);
 }

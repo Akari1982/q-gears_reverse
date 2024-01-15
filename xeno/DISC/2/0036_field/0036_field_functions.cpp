@@ -645,13 +645,11 @@ La4e50:	; 800A4E50
 800A4E58	jal    $system_draw_sync
 A0 = 0;
 800A4E60	jal    func73670 [$80073670]
-800A4E64	nop
-800A4E68	jal    field_sync [$80076c88]
-800A4E6C	nop
+
+field_draw_sync();
 
 La4e70:	; 800A4E70
-800A4E70	jal    field_sync [$80076c88]
-800A4E74	nop
+field_draw_sync();
 
 La4e78:	; 800A4E78
 V1 = w[800ad010];
@@ -854,7 +852,7 @@ system_draw_sync();
 
 func73670(); // clear otagr.
 
-field_sync();
+field_draw_sync();
 
 func6f740(); // clear entity, field data and all other allocated memory
 
@@ -1039,7 +1037,7 @@ switch( V1 )
         800A5468	nop
 
         La546c:	; 800A546C
-        field_sync();
+        field_draw_sync();
 
         800A5474	jal    func1aed8 [$8001aed8]
         800A5478	nop
@@ -2824,14 +2822,13 @@ V0 = w[800b1738];
 800A71DC	beq    v0, zero, La720c [$800a720c]
 800A71E0	nop
 800A71E4	jal    $801e7fd4
-800A71E8	nop
-800A71EC	jal    field_flush_sync [$80078fb0]
-800A71F0	nop
-800A71F4	jal    field_sync [$80076c88]
-800A71F8	nop
+
+field_flush_sync();
+
+field_draw_sync();
+
 A0 = w[800acff8];
-800A7204	jal    $system_memory_mark_removed_alloc
-800A7208	nop
+system_memory_mark_removed_alloc();
 
 La720c:	; 800A720C
 field_particle_clear_all();
@@ -2896,11 +2893,11 @@ S0 = 0001;
 800A72F8	nop
 [800af5b8] = w(S0);
 800A7304	jal    funca68c0 [$800a68c0]
-800A7308	nop
-800A730C	jal    field_flush_sync [$80078fb0]
-800A7310	nop
-800A7314	jal    $system_memory_clean_removed_alloc
-800A7318	nop
+
+field_flush_sync();
+
+system_memory_clean_removed_alloc();
+
 800A731C	jal    funca6564 [$800a6564]
 800A7320	nop
 800A7324	jal    funca66f0 [$800a66f0]
@@ -3060,14 +3057,15 @@ A0 = 0;
 800A7594	jal    $system_draw_sync
 A0 = 0;
 800A759C	jal    $801d43b0
-800A75A0	nop
-800A75A4	jal    field_flush_sync [$80078fb0]
-800A75A8	nop
+
+field_flush_sync();
+
 A0 = w[800c3740];
-800A75B4	jal    $system_psyq_put_disp_env
 A0 = A0 + 00b8;
+system_psyq_put_disp_env();
+
 A0 = w[800c3740];
-800A75C4	jal    system_psyq_put_draw_env
+system_psyq_put_draw_env();
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -4157,7 +4155,7 @@ for( int i = 0; i < 40; ++i )
     field_particle_remove();
 }
 
-field_sync();
+field_draw_sync();
 ////////////////////////////////
 
 

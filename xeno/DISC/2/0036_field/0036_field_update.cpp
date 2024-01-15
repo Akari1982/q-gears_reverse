@@ -1727,7 +1727,7 @@ field_init_controllers_and_mouse();
 
 
 ////////////////////////////////
-// field_sync()
+// field_draw_sync()
 
 A0 = 0; // wait for termination
 system_draw_sync();
@@ -2008,8 +2008,9 @@ V0 = w[S0 + 0000];
 80077180	nop
 80077184	jal    func89af4 [$80089af4]
 S3 = 0;
-8007718C	jal    field_flush_sync [$80078fb0]
-80077190	nop
+
+field_flush_sync();
+
 A0 = h[800b181e];
 8007719C	jal    $801e738c
 800771A0	nop

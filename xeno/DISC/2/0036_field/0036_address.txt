@@ -25,7 +25,7 @@
 800ad070 [][][][] checked if equal to 0 in func83f40.
 800ad074 [][][][] delta time from prev update.
 800ad078 [][][][] cpu delta time.
-800ad07c [][][][] gpu (draw sync) delta time.
+800ad07c [][][][] gpu (draw sync) delta time. Updated if debug is set.
 800ad07ñ [][][][] store here delta time from last draw.
 800ad080 [][][][] 1 if we use cam y pos same as entity y. 0 otherwise.
 800ad084 [][][][] set to 0 in cam mode 2. Counter for cam mode 0. Each &3 == 0 we do adjustments to 800aee58 and 800aee5c.
