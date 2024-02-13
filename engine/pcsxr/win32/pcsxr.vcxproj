@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\proxy.cpp" />
     <ClCompile Include="..\..\src\system\render.cpp" />
     <ClCompile Include="..\..\src\system\transform.cpp" />
+    <ClCompile Include="..\..\src\xeno\system\sound.cpp" />
     <ClCompile Include="..\..\src\xeno\xeno.c" />
     <ClCompile Include="..\libpcsxcore\cdriso.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -432,6 +433,8 @@
     <ClInclude Include="..\..\src\proxy.h" />
     <ClInclude Include="..\..\src\system\render.h" />
     <ClInclude Include="..\..\src\system\transform.h" />
+    <ClInclude Include="..\..\src\xeno\system\sound.h" />
+    <ClInclude Include="..\..\src\xeno\system\sound_opcode.h" />
     <ClInclude Include="..\..\src\xeno\xeno.h" />
     <ClInclude Include="..\libpcsxcore\cdriso.h" />
     <ClInclude Include="..\libpcsxcore\cdrom.h" />

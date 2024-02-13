@@ -43,6 +43,9 @@
     <Filter Include="game\ffvii\battle">
       <UniqueIdentifier>{54a1c083-873f-4fe8-910e-08eee895ea43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game\xenogears\system">
+      <UniqueIdentifier>{d799717a-ad15-4dd7-962c-795e4f6f5433}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libpcsxcore\cdriso.c">
@@ -255,6 +258,9 @@
     <ClCompile Include="..\..\src\ffvii\field\script_opcode.cpp">
       <Filter>game\ffvii\field</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\xeno\system\sound.cpp">
+      <Filter>game\xenogears\system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libpcsxcore\cdriso.h">
@@ -465,6 +471,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\ffvii\field\script_opcode.h">
       <Filter>game\ffvii\field</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xeno\system\sound.h">
+      <Filter>game\xenogears\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xeno\system\sound_opcode.h">
+      <Filter>game\xenogears\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

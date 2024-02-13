@@ -5964,7 +5964,7 @@ return sequence;
 // spu_opcode_e0()
 
 sequence = A0;
-hannel_struct = A2;
+channel = A2;
 
 [channel + 2] = h(hu[channel + 2] | 0100);
 [channel + 4] = h(hu[channel + 4] & fef7);

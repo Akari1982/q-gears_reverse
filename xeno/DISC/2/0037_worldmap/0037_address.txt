@@ -1,0 +1,19 @@
+8009b0ec [][]     cycle index into 8009b254 array.
+
+8009b20c [][][][] pointer to some array.
+
+8009b210 [][][][] some rot x.
+8009b214 [][][][] some rot y.
+8009b218 [][][][] some rot z.
+
+8009b254 array of some data 0x18 size 0x20 items.
+    + 00 [][]     ???
+    + 04 [][][][] x?
+    + 08 [][][][] y?
+    + 0c [][][][] z?
+    + 10 [][][][] ?
+    + 14 [][][][] ?
+
+8009c548 [][][][] some fix for rot x.
+
+8009c69c [][][][] some fix for rot z.

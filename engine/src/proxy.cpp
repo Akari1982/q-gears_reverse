@@ -13,4 +13,8 @@ void P_FFVII_Battle_EffectsUpdate() { FFVII_Battle_EffectsUpdate(); }
 
 
 
-void P_Xeno_System_SoundUpdate() { Xeno_System_SoundUpdate(); }
+void P_Xeno_System_SoundUpdate() { Xeno::System::SoundUpdate(); }
+void P_Xeno_System_SoundUpdateSPU() { Xeno::System::SoundUpdateSPU(); }
+void P_Xeno_System_SoundUpdateSequence() { Xeno::System::SoundUpdateSequence(); }
+void P_Xeno_System_SoundUpdateBaseValues() { Xeno::System::SoundUpdateBaseValues(); }
+

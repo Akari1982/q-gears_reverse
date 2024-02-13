@@ -637,7 +637,24 @@ void psxSRLV() { if (!_Rd_) return; _u32(_rRd_) = _u32(_rRt_) >> _u32(_rRs_); } 
 * Load higher 16 bits of the first word in GPR with imm  *
 * Format:  OP rt, immediate                              *
 *********************************************************/
-void psxLUI() { if (!_Rt_) return; _u32(_rRt_) = _ImmLU_; } // Upper halfword of Rt = Im
+void psxLUI()
+{
+    if (!_Rt_) return;
+
+    // Xenogears Sound Main Update
+    if( SOUND_HOOK == 1)
+    {
+        if( psxRegs.pc - 4 == 0x8003bec8 )
+        {
+            P_Xeno_System_SoundUpdate();
+
+            psxRegs.pc = 0x8003c324;
+            return;
+        }
+    }
+
+    _u32(_rRt_) = _ImmLU_;
+} // Upper halfword of Rt = Im
 
 /*********************************************************
 * Move from HI/LO to GPR                                 *
@@ -689,17 +706,27 @@ void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
     // Xenogears Battle
-    if( _JumpTarget_ == 0x800b8af8 )
+    //if ( _JumpTarget_ == 0x800b8af8 )
+    //{
+    //    execI();
+    //    XenoTest();
+    //}
+    //if( _JumpTarget_ == 0x8003e7a8 )
+    //{
+    //    execI();
+    //    P_Xeno_System_SoundUpdateSPU();
+    //}
+    //if( _JumpTarget_ == 0x8003c36c)
+    //{
+    //    execI();
+    //    P_Xeno_System_SoundUpdateBaseValues();
+    //}
+    if (_JumpTarget_ == 0x8003c590)
     {
         execI();
-        //XenoTest();
+        P_Xeno_System_SoundUpdateSequence();
     }
-    // Xenogears Sound Main Update
-    if( _JumpTarget_ == 0x8003bec8 )
-    {
-        execI();
-        P_Xeno_System_SoundUpdate();
-    }
+
     // FFVII Window
     else if( _JumpTarget_ == 0x8001f1bc )
     {
@@ -712,11 +739,11 @@ void psxJAL()
         //execI();
         //FFVII_Battle_EffectsUpdate();
     //}
-    else if( _JumpTarget_ == 0x800d29d4 )
-    {
-        execI();
-        FFVII_Battle_ModelSimplePackets();
-    }
+    //else if( _JumpTarget_ == 0x800d29d4 )
+    //{
+        //execI();
+        //FFVII_Battle_ModelSimplePackets();
+    //}
     else
     {
         _SetLink( 31 );
