@@ -20,15 +20,15 @@
 8004e9d0 [][][][] init with -1. If this is 0 then 10\0590.sed already loaded into temp buffer and we can copy it.
 8004e9d4 [][][][] init with -1. Looks like current field.
 8004e9d8 [][][][] init with -1. After field load and set to 0 when start field load.
-8004e9dc [][][][] Music. Init with -1. Compare this with value from 800b1774 + encounter * 2 during battle load.
-8004e9e0 [][][][] Wave. Init with -1.
+8004e9dc [][][][] music. Init with -1. Compare this with value from 800b1774 + encounter * 2 during battle load.
+8004e9e0 [][][][] wave. Init with -1.
 8004e9e4 [][][][] init with -1.
 8004e9e8 [][][][] init with 0. Load some textures in file 0xa7 for field.
 8004e9ec [][][][] init with 0. Store here 1 in some cases during battle load.
 8004e9f0 [][][][] init with -1. Field id to load.
 8004e9f4 [][][][] init with 0.
 8004e9f8 [][][][] init with 0.
-8004e9fc [][][][] init with 0.
+8004e9fc [][][][] set to 1 when we start loading of music.
 8004e9a0 [][][][] init with 0.
 8004ea00 [][][][] init with 0.
 8004ea04 [][][][] init with 0.
@@ -62,15 +62,18 @@
 
 8004f25c matrix used to render sprite.
 
+8004f488 [][][][] N1 error when read sector and requested sector not equal.
+8004f48c [][][][] N2
+8004f490 [][][][] N3
 8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
 8004f498 [][][][] pointer to 0x80018004
-8004f49c [][][][] file size to load.
-8004f4a0 [][][][] 1 - cdrom data load performes. 0 - data load finished. Store 1 here before load.
+8004f49c [][][][] file size left to cdrom load.
+8004f4a0 [][][][] number of files to cdrom load.
 8004f4a4 [][][][] ???
-8004f4a8 [][][][] file sector to load.
+8004f4a8 [][][][] current file sector to cdrom load.
 8004f4ac [][][][] pointer to allocated memory for file load.
 8004f4b0 [][][][] 0
-8004f4b4 [][][][] 0
+8004f4b4 [][][][] index 8004f4d0 of current texture stream. Cant exeed 8004f4e4.
 8004f4b8 [][][][] start id of files in current dir.
 8004f4bc [][][][] start id of files in current dir (stored for async cd loading).
 8004f4c0 [][][][] cd state:
@@ -102,10 +105,31 @@
                             0x5 - fail to CdlSetmode with start state 0xc.
                             0x6 - fail to CdlSetmode with start state 9.
                     0xc - CdlSetmode
-8004f4c4 [][][][]
-8004f4d4 [][][][] pointer to allocated memory for file load.
-8004f4d8 [][][][] 0
-8004f4dc [][][][] some func param (0).
+8004f4c4 [][][][] sync result. Call different func in sync callback:
+                    0x1 - CdlSetloc
+                    0x2 - CdlPause
+                    0x3 - CdlPause
+                    0x4 - CdlStop
+                    0x5 - CdlSetmode
+                    0x6 - CdlSetmode
+8004f4c8 [][]     
+8004f4ca [][]     R. Total number of loaded stream parts.
+8004f4cc [][]     D. Total number of loaded stream parts in whole load.
+8004f4d0 [][][][] pointer to +4 part of 8004f4d4 struct.
+8004f4d4 [][][][] pointer to some struct.
+    +0 [][][][] size.
+    items
+    +0 [][]     texture stream part state:
+                    0 - texture not loaded to main memory.
+                    1 - texture loaded to main memory.
+                    2 - texture load to vram started.
+                    3 - finish loading file part.
+    +2 [][]     number of this stream part.
+    +4 [][]     init with 0. some size.
+    +6 [][]     init with 0.
+8004f4d8 [][][][] 0 when load file. 1 when disable cdrom.
+8004f4dc [][][][] some func param (0). dir_file_id??
+8004f4e4 [][][][] number of items for texture stream.
 8004f4e8 []       init with 1.
 8004f4e9 []       movie id to play.
 8004f4ea []       init with 1.
@@ -182,6 +206,10 @@
 
 8004ff84 [][][][] address of SPU registers 0x1f801c00.
 
+80050050 array of something (0x1 size).
+
+80050134 array of something (0x1 size).
+
 80055aa0 [][][][] 0x1f801100.
 
 80055ab4 [][][][] set to 1 after gamepad init.
@@ -198,7 +226,7 @@
                   3: print issued command error
 80055b58 [][][][] stored cdrom status code (stat).
 80055b5c [][][][] stored second response fifo. Init with 0.
-80055b60 [][][][] increment by 1 when shell opened.
+80055b60 [][][][] increment by 1 when cdrom shell opened.
 80055b64 stored cdlloc struct for CdlSetloc command.
     +0 []       minute.
     +1 []       second.
@@ -219,6 +247,13 @@
         0 0 0 0 0 0 0 0
         0 0 0 0 0 1 1 0
         0 0 0 1 0 0 0 0
+
+80055d10 array of some data for Cdl commands. Checked during global response interrupt handling (0x4 size 0x20 items).
+         0 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
+         8 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
+        10 00000000 00000000 01000000 01000000 01000000 01000000 01000000 01000000
+        18 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
+
 80055d90 array of number of arguments in Cdl commands (size 0x04 items 0x20).
 
 80055e10 [][][][] cd_1800 (1f801800).
@@ -318,11 +353,11 @@
 80058048 [][][][] reverb master enable(1)/disable(0).
 8005804c [][][][] if this 1 when we enable reverb master else check whether the reverb area is available.
 80058050 [][][][] sound ram reverb work area start address.
-80058058 [][][][] init with 0.
+80058058 [][][][] init with 0. Current reverb type.
 8005805c [][]     stored reverb output volume left.
 8005805e [][]     stored reverb output volume right.
-80058060 [][][][] init with 0.
-80058064 [][][][] init with 0.
+80058060 [][][][] reverb delay for Echo and Delay type reverb. Init with 0.
+80058064 [][][][] reverb feedback for Echo and Delay type reverb. Init with 0.
 80058068 [][][][] init with 0.
 8005806c [][][][] init with 0.
 
@@ -507,11 +542,12 @@
 
 80058aa0 [][][][] number of channels to activate. Store 2 here when starting new sound.
 
-80058aa5 []       init with 0xff.
-
+80058aa5 []       reverb type.
+80058aa6 []       reverb delay.
+80058aa7 []       reverb feedback.
 80058aa8 [][]     reverb output volume left.
 80058aaa [][]     reverb output volume right.
-80058aac [][][][] pointer to start of all sound structs memory (800651a0). Structs is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
+80058aac [][][][] pointer to start of all sound alloc memory structs (800651a0). Structs is dynamic size with 0x10 bytes header. Can be in range 800651a0-8006b490
 
 80058ab4 []       number of seconds game working.
 80058abc []       number of minutes game working.
@@ -520,7 +556,7 @@
 80058ac8 []       init with 0.
 80058acc []       state of LeftJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ad4 []       state of LeftJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
-80058adc [][][][] pointer to some SED file (0391.sed).
+80058adc [][][][] start of sed files linked array.
 80058ae0 []       state of RightJoyX for controller 1 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ae4 []       state of RightJoyX for controller 2 (0x00=Left, 0x80=Center, 0xFF=Right).
 80058ae8 []       state of RightJoyY for controller 1 (0x00=Up, 0x80=Center, 0xFF=Down).
@@ -559,6 +595,11 @@
 80058b94 [][][][] store here 0 when start load battle exe.
 80058b98 [][][][] flags for turning SPU Voice ON.
 80058b9c [][]     spu sound error id. Init with 0.
+                    0x01 sed file +0 don't equal 0x73646573.
+                    0x02 
+                    0x04 sed file +c don't equal 0x0101.
+                    0x15 this sed already loaded to linked array.
+                    0x1e cant allocate place for smd struct.
                     0x28 already inited
 
 80058ba0 [][][][] increment each system_sound_main() call.
@@ -574,12 +615,12 @@
 80058bd4 [][][][] store here pointer to texture data block in 3d model file.
 80058bd8 [][][][] pointer to vertex block in model data file during packet init.
 
-80058be0 [][][][] init with 0x8.
+80058be0 [][][][] init with 0x8. Looks like num of channels for sound or first channel for sound.
 80058be8 []       ??? something
 80058bec [][][][] init with 0.
 
-80058bf0 [][][][] flags for turning SPU Voice OFF.
-80058bf4 [][][][] pointer to SND file (with wds signature).
+80058bf0 [][][][] mask 2 for turning SPU Voice OFF. In addition during turning off channels in this mask set linear release and time to 6.
+80058bf4 [][][][] pointer to SND array (with wds signature).
 80058bfc [][][][] pointer to struct from STRIPCD1\1\0025.snd file.
 
 80058c00 [][][][] pointer to main sound structs data.
@@ -608,13 +649,14 @@
                     0x0001 sound event in 80058c58 enabled.
                     0x0008 add if we genegate sound error.
                     0x0010 ???
+                    0x0020 ???
                     0x0040 we don't play system_sound_main() if this is set. Maybe pause sound.
                     0x0080 do not generate sound error if this flag set.
                     0x0100 if this flag is set then we use mono sound without separation on different channels. Set during init.
-                    0x0200 removed during init.
-                    0x0400 removed during init.
-                    0x0800 we start new sound.
-                    0x1000 ???
+                    0x0200 pan left to right.
+                    0x0400 pan right to left.
+                    0x0800 enable sounds played by sed id.
+                    0x1000 reverb enabled (init reverb if this is set)
                     0x2000 enable reverb.
                     0x4000 set cd out volume to spu.
                     0x8000 already inited flag.
@@ -624,7 +666,7 @@
 
 80058c38
 
-80058c40 [][][][] init with 0.
+80058c40 [][][][] pointer to some memory 0x840 size.
 80058c48 [][][][] pointer to struct from STRIPCD1\1\0027.snd file.
 
 80058c58 [][][][] sound event id.
@@ -633,8 +675,182 @@
 80058c70 [][]     1st clut field for font.
 80058c72 [][]     2nd clut field for font.
 
-80058c74 [][][][] offset to main struct with 0x10 music struct channels.
+80058c74 [][][][] offset to current main channel settings (0x94 size - global settings, then 0x10 channes settings 0x158 size).
+    +00 [][][][] store here previous music data pointer from 80058c00.
+    +04 [][][][] ???
+    +08 [][][][] pointer to smd file.
+    +0c [][][][] pointer to allocated additional data for this main. Stored after all channel structs with size 0x180.
+    +10 [][]     some flags.
+                    0x0001 add during init.
+                    0x0002 add during init.
+                    0x0004 ???
+                    0x0006 check if global reverb not disabled.
+                    0x0010 ???
+                    0x0040 ???
+                    0x0080 ???
+                    0x8000 if set then we update main struct. Remove when stops all channels.
+    +12 [][]     smd + 10. init with 0x7fff.
+    +14 []       number of channels.
+    +16 [][]     snd id.
+    +18 [][]     smd + 18. init with 0x7f.
+    +1a []       init with 0.
+    +1b []       init with 0.
+    +1c [][]     noise frequency shift and step.
+    +1e [][]     check if this == +32 and (reset this to 0.)
+    +20 [][][][] init with 0. Maybe number of cycles.
+    +24 [][][][] init with 0.
+    +28 [][][][] init with 0. Increase by +64+2[][] each cycle.
+    +2c [][][][] ???
+    +30 [][]     init with 0.
+    +32 [][]     Incremented each time +34 become greater than +38. Init with 0x1.
+    +34 [][]     incremented each time +36 reach 0. If greater than +38 then reset to 1 and increment +32. Init with 0.
+    +36 [][]     counter value. Init with 0x1.
+    +38 [][]     board value for +34. Init with 0x0004.
+    +3a [][]     base value for +36 counter. Init with 0x30.
+    +3c [][]     init with 0x0004.
+    +3e [][]     init with 0x0004.
+    +41 []       reverb type.
+    +42 []       reverb delay.
+    +43 []       reverb feedback.
+    +44 [][]     reverb volume.
+    +48 [][][][] mask of active channels.
+    +4c [][][][] init with 0.
+    +50 [][][][] main struct update wait. Set to 0x10000 and discrease by +54 each update call. If less than 0 then update.
+    +54 [][][][] update real speed.
+    +58 [][][][] update base speed (<< 0x10).
+    +5c [][][][] base speed increase add.
+    +60 [][]     steps in update base speed increase.
+    +62 [][]     base speed increase final value.
+    +64 update speed mod increase.
+    +70 global volume increase?
+    +7c global pitch increase?
+    +88 global volume increase?
+        +0 [][][][] value.
+        +4 [][][][] increase value.
+        +8 [][]     current counter value.
+        +a [][]     value set when counter reach 0.
+    +7e [][]     pitch related.
+    +8a [][]     volume distribution addition.
+// +94 start of SPU channel structures (size 0x158)
+    +000 [][]     control flags.
+                    0x0001 - channel inited.
+                    0x0002 - disable reverb.
+                    0x0008 - if set then we will not update volume.
+                    0x0010 - ???
+                    0x0020 - ???
+                    0x0100 - stops sequence.
+                    0x0200 - this flag is set if 0x0800 flag set at the end of sequence parsing.
+                    0x0400 - add play channel.
+                    0x0800 - if this flag set at the end of sequence parsing - we will add 0x0200 flag.
+                    0x1000 - set if in sequence next pause will be note. Remove othewise. This will set new release just before next note.
+                    0x8000 - instrument for channel was set but not updated yet.
+    +002 [][]     calculate flags.
+                    0x0001 - calculate enable
+                    0x0002 - calculate disable
+                    0x0100 - calculate volume.
+                    0x0200 - calculate pitch.
+    +004 [][]     update timers flags.
+                    0x0001 - base pitch update.
+                    0x0002 - if set then update base pitch without timer.
+                    0x0008 - base volume update.
+                    0x0010 - base volume distribution update.
+                    0x0020 - note volume update.
+                    0x0100 - ???
+    +006 []       channel id.
+    +007 []       init with 0x10.
+    +008 [][]     sed inner id.
+    +00a [][]     sed file id.
+    +00c [][][][] sound tick when channel starts from 80058ba0
+    +010 [][][][] sequence start pointer.
+    +014 [][][][] sequence current pointer.
+    +018 [][][][] stored sequence pointer (opcode 0x91).
+    +01c [][][][] init with 0.
+    +020 [][]     init with 0.
+    +022 []       init with 0.
+    +023 []       we store here +066 during opcode 91. Restore +066 from here during opcode 90.
+    +025 []       snd id for this sed.
+    +026 []       instrument id.
+    +027 []       spu channel id.
+    +028 []       store base release rate here.
+    +02c [][][][] pointer to snd file (instruments data).
+    +030 [][]     store here channel id.
+    +032 [][]     enable flags.
+                    0x0010 - enable channel fm (pitch lfo) mode.
+                    0x0020 - enable channel noise mode.
+                    0x0040 - enable channel reverb mode.
+    +034 [][]     init with 0x0100.
+    +036 [][]     update flags.
+                    0x0001 - update left and right volume.
+                    0x0004 - update pitch.
+                    0x0008 - update start and loop sound address.
+                    0x0010 - update attack mode and attack rate.
+                    0x0020 - update decay rate.
+                    0x0040 - update sustain mode and sustain rate.
+                    0x0080 - update release mode and release rate.
+                    0x0100 - update sustain level.
+                    0x1000 - update channel fm (pitch lfo) mode.
+                    0x2000 - update channel noise mode.
+                    0x4000 - update channel reverb mode.
+    +038 [][]     left volume.
+    +03a [][]     right volume.
+    +03c [][]     init with 0.
+    +03e [][]     init with 0.
+    +044 [][]     pitch.
+    +04c [][][][] start address.
+    +050 [][][][] loop address.
+    +054 []       0x04 - attack mode.
+    +055 []       this >> 1 - sustain mode.
+    +056 []       this >> 2 - release mode.
+    +057 []       attack rate.
+    +058 []       decay rate.
+    +059 []       sustain rate.
+    +05a []       release rate.
+    +05b []       sustain level.
+    +05c [][]     script wait timer.
+    +05e [][]     timer to stop playing note.
+    +060 []       init with 0.
+    +062 [][]     init with 0x000f.
+    +064 []       init with 0.
+    +065 []       additional data id. +66 + some wait related data
+    +066 []       init with 0x003c.
+    +068 [][][][] base pitch.
+    +06c [][]     instrument pitch.
+    +06e [][]     pitch add. Init with 0.
+    +070 [][]     init with 0.
+    +072 [][]     stack id for cycles data in +09c. Init with -1.
+    +074 [][]     volume distribution (left/right). Init with 0x4000 (center).
+    +076 [][]     note volume.
+    +078 [][][][] base volume.
+    +07c [][][][] stored base volume add for timer.
+    +080 [][]     timer
+    +082 [][]     stored final
+    +084 [][][][] base pitch add for timer.
+    +088 [][][][] base volume add for timer.
+    +08c [][]     note volume add for timer.
+    +08e [][]     note volume final value for the timer.
+    +090 [][]     volume distribution add for timer.
+    +092 [][]     volume distribution final value for the timer.
+    +094 [][]     base pitch update timer.
+    +096 [][]     base volume update timer.
+    +098 [][]     volume distribution update timer.
+    +09с stack structs (0xc size)
+        +0 []       number of cycles left
+        +2 []       stored base pitch.
+        +3 []       stored base pitch before jump back.
+        +4 [][][][] sequence position.
+        +8 [][][][] sequence position before jump back.
+    +0ce [][]     init with 0.
+    +0d0 [][]     pitch related. Init with 0.
+    +0d2 [][]     volume mod.
+    +0d4 [][]     volume distribution add.
+    +0d8 start of some data.
+    +0d8 [][][][] function to call.
+    +0ec [][]     some wait timers.
+    +0f6 [][]     init with 0.
+    // some additional data related with bu[smd + 15]
 
+80058c78 [][][][] 
+80058c7c [][][][] 
 80058c80 [][][][] end of memory for sound structs (8006b490).
 
 80058c84 addresses for kernel debug enviroments
@@ -646,9 +862,15 @@
     +e4 display enviroment 1 (0x14 size).
     +fc mono triangle 2 (cursor) packet.
 
-80059594 [][][][] 0
+80058d94 defaul address for some error load from cdrom in system_cdrom_ready_callback_3().
+
+80059594 [][][]   struct.
+    +0 []       minute.
+    +1 []       second.
+    +2 []       sector.
 80059598 [][][][] 0
 8005959c [][][][] 0
+
 800595a4 [][][][] store cdrom ready callback here.
 800595a8 [][][][] local file id to load.
 800595ac cd command param array (CdlLOC struct).
@@ -661,9 +883,27 @@
 800595b5 []       cdrom command param 2.
 800595b6 []       cdrom command param 3.
 800595b7 []       cdrom command param 4.
-800595b8 store here result of CdlStandby (MotorOn) cdrom command.
+800595b8 store here result of CdlStandby (MotorOn) and CdlPause cdrom command.
 
-80059b6c [][][][] 0.
+80059b6c [][][][] error counter. If less than 3 errors then we pause cdrom, Then we stop cdrom, wait and restart from scratch.
+
+800595a0 [][][][] opened PC file handler.
+
+800595b1 []
+
+800595c0 [][]     image: 1 - global vram pos + move pos. 2 - global vram pos + inner pos + move pos. Other - inner pos + move pos.
+800595cc [][]     clut: 1 - global vram pos + move pos. 2 - global vram pos + inner pos + move pos. Other - inner pos + move pos.
+800595c4 [][]     global image vram x.
+800595c8 [][]     global image vram y.
+800595d0 [][]     global clut vram x.
+800595d4 [][]     global clut vram y.
+
+800595d8 [][][][] number of something.
+800595dc [][]     vram x.
+800595e0 [][]     current vram y.
+800595e4 [][]     vram width.
+800595e8 [][]     pointer to current chunk heights.
+800595ec [][][][] number of image chunks left to load.
 
 80059600 light matrix
     +00 [][][][] R11R12 for light matrix calculation.
@@ -746,14 +986,14 @@
 
 80059a84 [][]     stored spu main volume.
 80059a86 [][]     stored spu cd volume.
-80059a88 [][]     stored reverb output volume.
+80059a88 [][]     reverb volume.
 80059a8a [][]     stored cd to spu volume.
 
 80059a8c main volume left/right increase struct.
 80059a98 cd volume left/right increase struct.
-    +00 [][][][] value
-    +04 [][][][] increment value with this if +08 != 0.
-    +08 [][]     discrease until == 0.
+    +00 [][][][] volume.
+    +04 [][][][] increment value.
+    +08 [][]     steps left.
     +0a [][]     if +08 == 0 then set value with this << 10.
 
 80059aa4 pointer to player sprite data for party slot 1 (0x14000 size).
@@ -785,8 +1025,8 @@
 80061bac [][][][] pointer to struct from 1\0025.snd file.
 80061bb0 [][][][] init with 0.
 80061bb4 [][][][] pointer to struct from 1\0027.snd file.
-80061bb8 field sound main struct?
-80061bbc array of 4 bytes offsets to SPU channel structures at offset 0xc4 (+30).
+80061bb8 [][][][] pointer to field music main struct.
+80061bbc array of pointers to channel + 30 offsets by spu channel id (0x18 items 0x4 size).
 
 80061c20 [][][][] party member 1.
 80061c24 [][][][] party member 2.
@@ -848,185 +1088,15 @@
 
 80065198 [][][][] store entity id which perform move here during func821cc.
 
-800651a0-8006b490. Spu memory struct
+800651a0-8006b490. Sound memory alloc struct
 First struct is just header struct (0x10 size), later we add more structs different size.
 // header (0x10 size)
-    +00 [][]     some id. In music set to 2; Init with 0x8000.
+    +00 [][]     some id. For main structs set to 2; Init with 0x8000.
     +02 [][]     0.
     +04 [][][][] 0.
     +06 [][]     add 0x01f5 when we enable channel.
-    +08 [][][][] end of data in this struct (number of channels * 0x158 + 0x94 if bu[smd + 15] != 0 then add 0x180).
-    +0c [][][][] link to next struct.
-
-// start of music data (0x94 size) after this starts channels structs
-    +00 [][][][] store here previous music data pointer from 80058c00.
-    +04 [][][][] ???
-    +08 [][][][] pointer to smd file.
-    +0c [][][][] ???
-    +10 [][]     some flags.
-                    0x0001 add during init.
-                    0x0002 add during init.
-                    0x0004 ???
-                    0x0006 check if global reverb not disabled.
-                    0x0010 ???
-                    0x0040 ???
-                    0x0080 ???
-                    0x8000 if set then we update main struct. Remove when stops all channels.
-    +12 [][]     smd + 10. init with 0x7fff.
-    +14 []       number of channels.
-    +16 [][]     smd + 16. init with 0.
-    +18 [][]     smd + 18. init with 0x7f.
-    +1a []       init with 0.
-    +1b []       init with 0.
-    +1e [][]     check if this == +32 and (reset this to 0.)
-    +20 [][][][] init with 0. Maybe number of cycles.
-    +24 [][][][] init with 0.
-    +28 [][][][] init with 0. Increase by +64+2[][] each cycle.
-    +2c [][][][] ???
-    +30 [][]     init with 0.
-    +32 [][]     Incremented each time +34 become greater than +38. Init with 0x1.
-    +34 [][]     incremented each time +36 reach 0. If greater than +38 then reset to 1 and increment +32. Init with 0.
-    +36 [][]     counter value. Init with 0x1.
-    +38 [][]     board value for +34. Init with 0x0004.
-    +3a [][]     base value for +36 counter. Init with 0x30.
-    +3c [][]     init with 0x0004.
-    +3e [][]     init with 0x0004.
-    +41 []       smd + 1a.
-    +42 []       smd + 1c.
-    +43 []       smd + 1d.
-    +44 [][]     smd + 1b << 8.
-    +48 [][][][] mask of channels.
-    +4c [][][][] init with 0.
-    +50 [][][][] main struct update wait. Set to 0x10000 and discrease by +54 each update call. If less than 0 then update.
-    +54 [][][][] update real speed.
-    +58 [][][][] update base speed (<< 0x10).
-    +5c [][][][] base speed increase add.
-    +60 [][]     steps in update base speed increase.
-    +62 [][]     base speed increase final value.
-    +64 update speed mod increase.
-    +70 global volume increase?
-    +7c global pitch increase?
-    +88 global volume increase?
-        +0 [][][][] value.
-        +4 [][][][] increase value.
-        +8 [][]     current counter value.
-        +a [][]     value set when counter reach 0.
-    +7e [][]     pitch related.
-    +8a [][]     volume distribution addition.
-    +94 start of SPU channel structure (size 0x158)
-        +000 [][]     control flags.
-                        0x0001 - ???
-                        0x0002 - disable reverb.
-                        0x0008 - if set then we will not update volume.
-                        0x0010 - ???
-                        0x0020 - ???
-                        0x0100 - stops sequence.
-                        0x0200 = this flag is set if 0x0800 flag set at the end of sequence parsing.
-                        0x0400 - stops sequence. And stop channel.
-                        0x0800 = if this flag set at the end of sequence parsing - we will add 0x0200 flag.
-                        0x1000 - set if in sequence next pause will be note. Remove othewise. This will set new release just before next note.
-                        0x8000 - instrument for channel was set but not updated yet.
-        +002 [][]     calculate flags.
-                        0x0001 - calculate enable
-                        0x0002 - calculate disable
-                        0x0100 - calculate volume.
-                        0x0200 - calculate pitch.
-        +004 [][]     update timers flags.
-                        0x0001 - base pitch update.
-                        0x0002 - if set then update base pitch without timer.
-                        0x0008 - base volume update.
-                        0x0010 - base volume distribution update.
-                        0x0020 - note volume update.
-                        0x0100 - ???
-        +006 []       struct id.
-        +007 []       init with 0x10.
-        +008 [][][][] init with smd + 10.
-        +010 [][][][] sequence start pointer.
-        +014 [][][][] sequence current pointer.
-        +018 [][][][] stored sequence pointer (opcode 0x91).
-        +01c [][][][] init with 0.
-        +020 [][]     init with 0.
-        +022 []       init with 0.
-        +023 []       we store here +066 during opcode 91. Restore +066 from here during opcode 90.
-        +025 []       init with 0.
-        +026 []       instrument id.
-        +027 []       spu channel id.
-        +028 []       store base release rate here.
-        +02c [][][][] pointer to snd file (instruments data).
-        +030 [][]     store here channel id.
-        +032 [][]     enable flags.
-                        0x0010 - enable channel fm (pitch lfo) mode.
-                        0x0020 - enable channel noise mode.
-                        0x0040 - enable channel reverb mode.
-        +034 [][]     init with 0x0100.
-        +036 [][]     update flags.
-                        0x0001 - update left and right volume.
-                        0x0004 - update pitch.
-                        0x0008 - update start and loop sound address.
-                        0x0010 - update attack mode and attack rate.
-                        0x0020 - update decay rate.
-                        0x0040 - update sustain mode and sustain rate.
-                        0x0080 - update release mode and release rate.
-                        0x0100 - update sustain level.
-                        0x1000 - update channel fm (pitch lfo) mode.
-                        0x2000 - update channel noise mode.
-                        0x4000 - update channel reverb mode.
-        +038 [][]     left volume.
-        +03a [][]     right volume.
-        +03c [][]     init with 0.
-        +03e [][]     init with 0.
-        +044 [][]     pitch.
-        +04c [][][][] start address.
-        +050 [][][][] loop address.
-        +054 []       0x04 - attack mode.
-        +055 []       this >> 1 - sustain mode.
-        +056 []       this >> 2 - release mode.
-        +057 []       attack rate.
-        +058 []       decay rate.
-        +059 []       sustain rate.
-        +05a []       release rate.
-        +05b []       sustain level.
-        +05c [][]     script wait timer.
-        +05e [][]     timer to stop playing note.
-        +060 []       init with 0.
-        +062 [][]     init with 0x000f.
-        +064 []       init with 0.
-        +066 []       init with 0x003c.
-        +068 [][][][] base pitch.
-        +06c [][]     instrument pitch.
-        +06e [][]     pitch add. Init with 0.
-        +070 [][]     init with 0.
-        +072 [][]     stack id for cycles data in +09c. Init with -1.
-        +074 [][]     volume distribution (left/right). Init with 0x4000 (center).
-        +076 [][]     note volume
-        +078 [][][][] base volume.
-        +07c [][][][] stored base volume add for timer.
-        +080 [][]     timer
-        +082 [][]     stored final
-        +084 [][][][] base pitch add for timer.
-        +088 [][][][] base volume add for timer.
-        +08c [][]     note volume add for timer.
-        +08e [][]     note volume final value for the timer.
-        +090 [][]     volume distribution add for timer.
-        +092 [][]     volume distribution final value for the timer.
-        +094 [][]     base pitch update timer.
-        +096 [][]     base volume update timer.
-        +098 [][]     volume distribution update timer.
-        +09с stack structs (0xc size)
-            +0 []       number of cycles left
-            +2 []       stored base pitch.
-            +3 []       stored base pitch before jump back.
-            +4 [][][][] sequence position.
-            +8 [][][][] sequence position before jump back.
-        +0ce [][]     init with 0.
-        +0d0 [][]     pitch related. Init with 0.
-        +0d2 [][]     volume mod
-        +0d4 [][]     volume distribution add.
-        +0d8 start of some data.
-        +0d8 [][][][] function to call.
-        +0ec [][]     some wait timers.
-        +0f6 [][]     init with 0.
-        // some additional data related with bu[smd + 15]
+    +08 [][][][] end of data in this memory alloc.
+    +0c [][][][] link to next memory alloc header.
 
 8006b4c4 render queue of 0x40 structs with size 0x60.
 8006b4c4 [][][][] pointer to transfer func.

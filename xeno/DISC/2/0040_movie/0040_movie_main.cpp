@@ -128,10 +128,10 @@ while( true )
     A9 = w[80059b44];
     system_print();
 
-    system_cdrom_data_sync();
+    system_cdrom2_data_sync();
     S0 = V0;
 
-    func284cc();
+    system_cdrom2_get_loaded_filesize(); // get value from 8004f49c
 
     A0 = 8006f238; // "RestFile %7d RestSize %7d N1 %4d N2 %4d N3 %4d R%3d D%3d\n"
     A1 = S0;
@@ -139,7 +139,7 @@ while( true )
     A3 = w[8004f488];
     A4 = w[8004f48c];
     A5 = w[8004f490];
-    A6 = hu[8004f4ca];
+    A6 = hu[8004f4ca]; // total number of loaded stream parts
     A7 = hu[8004f4cc];
     system_print();
 
@@ -338,7 +338,7 @@ while( true )
                 [80076a24] = w(0);
 
                 A0 = 0;
-                func2a2a8();
+                system_cdrom2_abort_fileload();
 
                 A0 = 0;
                 system_cdrom_action_sync();
@@ -433,7 +433,7 @@ if( ( ( w[80076a44] & 0040 ) == 0 ) && ( w[80076a3c] & 0040 ) )
     [80076534] = w(w[80076534] + 1);
 
     A0 = 0;
-    func2a2a8();
+    system_cdrom2_abort_fileload();
 }
 
 if( ( ( w[80076a44] & 1000 ) == 0 ) && ( w[80076a3c] & 1000 ) )
@@ -581,7 +581,7 @@ if( V1 == 0 )
     return;
 }
 
-system_cdrom_data_sync();
+system_cdrom2_data_sync();
 
 80070980	bne    v0, zero, L70dc0 [$80070dc0]
 V0 = 0001;
@@ -724,7 +724,7 @@ V0 = w[8006f384 + V0]; // 8006f384-8006f180
     A2 = w[80076520];
     A3 = 0;
     A4 = 0;
-    func2935c();
+    system_cdrom2_load_file_by_file_sector();
 
     80070BE0	j      L70dc0 [$80070dc0]
 
@@ -860,13 +860,13 @@ A1 = w[8007651c];
 A2 = 0;
 
 L70db8:	; 80070DB8
-A3 = 0;
-system_load_file_by_dir_file_id();
+A3 = 0; // flags
+system_cdrom2_load_file_by_dir_file_id();
 
 80070DC0 8 9
 
 L70dc0:	; 80070DC0
-system_cdrom_data_sync();
+system_cdrom2_data_sync();
 
 if( V0 != 0 )
 {
@@ -1147,7 +1147,7 @@ if( A1 != 0 )
     A2 = 2000;
     A3 = 0;
     A4 = 0;
-    func2935c();
+    system_cdrom2_load_file_by_file_sector();
 }
 
 V1 = w[800765cc];
@@ -1200,12 +1200,12 @@ switch( A0 )
             [V0 + i * 4] = w(0);
         }
 
-        A0 = 40;
-        A1 = w[80076518];
-        A2 = w[80076520];
-        A3 = 0;
-        A4 = 0;
-        func2935c()
+        A0 = 40; // file_sector
+        A1 = w[80076518]; // allocated_memory
+        A2 = w[80076520]; // file_size
+        A3 = 0; // default_dir_file_id
+        A4 = 0; // flags
+        system_cdrom2_load_file_by_file_sector()
     }
     break;
 
@@ -1230,8 +1230,8 @@ switch( A0 )
         A0 = 7; // dir file id
         A1 = w[80076518]; // allocated memory
         A2 = 0;
-        A3 = 0;
-        system_load_file_by_dir_file_id(); // load file
+        A3 = 0; // flags
+        system_cdrom2_load_file_by_dir_file_id();
     }
     break;
 
@@ -1297,12 +1297,12 @@ switch( A0 )
             [V0 + i * 4] = w(0);
         }
 
-        A0 = 40;
-        A1 = w[80076518];
-        A2 = w[80076520];
-        A3 = 0;
-        A4 = 0;
-        func2935c();
+        A0 = 40; // file_sector
+        A1 = w[80076518]; // allocated_memory
+        A2 = w[80076520]; // file_size
+        A3 = 0; // default_dir_file_id
+        A4 = 0; // flags
+        system_cdrom2_load_file_by_file_sector();
     }
     break;
 
@@ -1327,8 +1327,8 @@ switch( A0 )
         A0 = 7;
         A1 = w[80076518];
         A2 = 1;
-        A3 = 0;
-        system_load_file_by_dir_file_id();
+        A3 = 0; // flags
+        system_cdrom2_load_file_by_dir_file_id();
     }
     break;
 
@@ -1400,7 +1400,7 @@ switch( A0 )
         A7 = 0;
         A8 = 0;
         A9 = 0;
-        func29cc0();
+        system_cdrom2_load_texture();
     }
     break;
 
@@ -1426,7 +1426,7 @@ switch( A0 )
         A7 = 0;
         A8 = 0;
         A9 = 0;
-        func29cc0();
+        system_cdrom2_load_texture();
     }
     break;
 
@@ -1466,8 +1466,8 @@ switch( A0 )
         A0 = 6;
         A1 = w[80076528];
         A2 = 1;
-        A3 = 100;
-        system_load_file_by_dir_file_id();
+        A3 = 100; // flags
+        system_cdrom2_load_file_by_dir_file_id();
     }
     break;
 
@@ -1563,10 +1563,10 @@ switch( A0 )
         system_filesystem_set_dir();
 
         A0 = 3;
-        A2 = 0;
         A1 = w[80076528];
-        A3 = 200;
-        system_load_file_by_dir_file_id();
+        A2 = 0;
+        A3 = 200; // flags
+        system_cdrom2_load_file_by_dir_file_id();
     }
     break;
 }
@@ -1602,10 +1602,9 @@ S3 = 0;
 S1 = 0;
 S4 = 0001;
 S2 = 80076614;
-V0 = 0001;
-[SP + 0038] = w(S0);
-[SP + 002c] = w(0);
-[SP + 0030] = w(V0);
+[SP + 38] = w(S0);
+[SP + 2c] = w(0);
+[SP + 30] = w(1);
 
 L71b4c:	; 80071B4C
     V0 = w[800767b0];
@@ -1667,11 +1666,12 @@ L71b4c:	; 80071B4C
     A0 = 8006f49c; // "[ RETRY SET DISC ]\n"
 
     L71c30:	; 80071C30
-    80071C30	jal    $system_print
     S0 = 0;
+    system_print();
+
     A0 = 8006f2fc; // "\n"
-    80071C40	jal    $system_print
-    80071C44	nop
+    system_print();
+
     V0 = S0 < S1;
 
     loop71c4c:	; 80071C4C
@@ -1890,17 +1890,16 @@ L71b4c:	; 80071B4C
 // func71fcc();
 
 system_cdrom_get_cdrom_hdd_mode();
-
 if( V0 == 0 )
 {
     A0 = 0;
-    func2a2a8();
+    system_cdrom2_abort_fileload();
 
     A0 = 0;
     system_cdrom_action_sync();
 
     A0 = 0;
-    system_cdrom_command_cdl_set_mode();
+    system_cdrom2_command_cdl_set_mode();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -1908,12 +1907,13 @@ if( V0 == 0 )
     A0 = 3;
     system_psyq_wait_frames();
 
-    loop72010:	; 80072010
+    do
+    {
         A0 = 8;
         A1 = 0;
         A2 = 80076614;
-        func410c0();
-    80072020	beq    v0, zero, loop72010 [$80072010]
+        system_cdrom_cdl_command_exec_with_ret_sync();
+    } while( V0 == 0 );
 }
 ////////////////////////////////
 
@@ -2019,7 +2019,7 @@ switch( V1 )
         A0 = 8;
         A1 = 0;
         A2 = 80076614;
-        func410c0();
+        system_cdrom_cdl_command_exec_with_ret_sync();
         S2 = V0;
 
         if( S2 != 0 )
@@ -2034,7 +2034,7 @@ switch( V1 )
         A0 = 1;
         A1 = 0;
         A2 = 80076614;
-        func410c0();
+        system_cdrom_cdl_command_exec_with_ret_sync();
 
         if( bu[80076614] & 10 )
         {
@@ -2048,7 +2048,7 @@ switch( V1 )
         A0 = 1;
         A1 = 0;
         A2 = 80076614;
-        func410c0();
+        system_cdrom_cdl_command_exec_with_ret_sync();
 
         if( ( bu[80076614] & 10 ) == 0 )
         {
@@ -2062,7 +2062,7 @@ switch( V1 )
         A0 = 1;
         A1 = 0;
         A2 = 80076614;
-        func410c0();
+        system_cdrom_cdl_command_exec_with_ret_sync();
         S2 = V0;
 
         if( bu[80076614] & 02 )
@@ -2080,7 +2080,7 @@ switch( V1 )
         A0 = 13;
         A1 = 0;
         A2 = 80076614;
-        func410c0();
+        system_cdrom_cdl_command_exec_with_ret_sync();
         S2 = V0;
 
         if( S2 != 0 )
@@ -2095,7 +2095,7 @@ switch( V1 )
         A0 = 2;
         A1 = SP + 28;
         A2 = 80076614;
-        func410c0();
+        system_cdrom_cdl_command_exec_with_ret_sync();
         S2 = V0;
 
         if( S2 != 0 )
@@ -2110,7 +2110,7 @@ switch( V1 )
         A0 = 15;
         A1 = 0;
         A2 = 80076614;
-        func410c0();
+        system_cdrom_cdl_command_exec_with_ret_sync();
         S2 = V0;
 
         if( ( ( bu[80076614] & 01 ) == 0 ) || ( ( bu[80076615] & 40 ) == 0 ) )
@@ -2142,7 +2142,7 @@ switch( V1 )
     case 7:
     {
         A0 = a0;
-        system_cdrom_command_cdl_set_mode();
+        system_cdrom2_command_cdl_set_mode();
 
         A0 = 0;
         system_cdrom_action_sync();
@@ -2155,7 +2155,7 @@ switch( V1 )
         A2 = 10;
         A3 = 0;
         A4 = 0;
-        func2935c();
+        system_cdrom2_load_file_by_file_sector();
 
         A0 = 0;
         system_cdrom_action_sync()
@@ -2177,7 +2177,7 @@ switch( V1 )
             A2 = 8000;
             A3 = 0;
             A4 = 0;
-            func2935c();
+            system_cdrom2_load_file_by_file_sector();
 
             A0 = 0;
             system_cdrom_action_sync();
@@ -2187,7 +2187,7 @@ switch( V1 )
             A2 = 7a;
             A3 = 0;
             A4 = 0;
-            func2935c();
+            system_cdrom2_load_file_by_file_sector();
 
             A0 = 0;
             system_cdrom_action_sync();
@@ -2530,8 +2530,8 @@ system_memory_mark_removed_alloc();
 A0 = 1; // local file id
 A1 = mdec_lib;
 A2 = 0;
-A3 = 0;
-system_load_file_by_dir_file_id(); // load file "0\0019"
+A3 = 0; // flags
+system_cdrom2_load_file_by_dir_file_id(); // load file "0\0019"
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -3622,7 +3622,7 @@ A1 = SP + 18;
 A2 = 800;
 A3 = 0;
 A4 = 0;
-func2935c();
+system_cdrom2_load_file_by_file_sector();
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -3655,7 +3655,7 @@ A1 = S1;
 A2 = 0800;
 A3 = 0;
 A4 = 0;
-func2935c();
+system_cdrom2_load_file_by_file_sector();
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -3709,7 +3709,7 @@ A1 = SP + 0018;
 A2 = 0800;
 A3 = 0;
 A4 = 0;
-func2935c();
+system_cdrom2_load_file_by_file_sector();
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -3768,7 +3768,7 @@ L7477c:	; 8007477C
     A2 = 800;
     A3 = 0;
     A4 = 0;
-    func2935c();
+    system_cdrom2_load_file_by_file_sector();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -3909,7 +3909,7 @@ else // CD-ROM MODE1
     A2 = 800; // file size
     A3 = 0;
     A4 = 0;
-    func2935c();
+    system_cdrom2_load_file_by_file_sector();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -4014,7 +4014,7 @@ A1 = 0;
 system_debug_read_filename_to_memory();
 
 A0 = V0;
-func396f8();
+system_sound_create_main_for_smd();
 [8007669c] = w(V0);
 ////////////////////////////////
 
@@ -4090,7 +4090,7 @@ A1 = S4; // memory
 A2 = 800; // size
 A3 = 0;
 A4 = 0; // flags
-func2935c(); // load file
+system_cdrom2_load_file_by_file_sector(); // load file
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -4194,7 +4194,7 @@ L74ce8:	; 80074CE8
         A2 = 800;
         A3 = 0;
         A4 = 0;
-        func2935c();
+        system_cdrom2_load_file_by_file_sector();
 
         A0 = 0;
         system_cdrom_action_sync();

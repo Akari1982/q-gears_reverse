@@ -49,7 +49,7 @@ int main()
         printf( "%d - %d - %d - %d\n", i, temp1, temp2, temp4 );
     }
 */
-
+/*
     for( __int64 n = 0; n <= 100; ++n )
     {
         printf( "%d:", (int)n );
@@ -59,6 +59,18 @@ int main()
 
         int y = ((4 * n) / 7 + n ) >> 2;
         printf( "%d %d\n", x, y );
+    }
+*/
+    for( __int64 n = 0; n <= 100; ++n )
+    {
+        printf( "%d:", (int)n );
+
+        int V0 = n * 0x8100;
+        __int64 T0 = V0 * 0x81020409;
+        T0 = T0 >> 0x20;
+        V1 = ((T0 + V0) >> 0x6) - (V0 >> 0x1f);
+
+        printf( "%d\n", V1 );
     }
 
 /*

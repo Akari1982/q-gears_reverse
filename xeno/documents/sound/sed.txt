@@ -1,0 +1,10 @@
++  0 [][][][] some magic 0x73646573.
+
++  8 [][][][] some offset to something
++  c [][]     checked against 0x0101
+
++ 14 [][]     sed id of this file.
++ 16 []       snd id for this file.
++ 18 [][]     offset to some part related with sed id
++ 1c [][][][] link to next sed file in linked array.
++ 20 starts of 0x2 size offsets to scripts. Pair of scripts for each instrument. 1 script for 1 channel.

@@ -135,25 +135,25 @@
 
 
 ////////////////////////////////
-// func4036c
-8004036C	mfc0   a0,sr
-80040370	nop
-80040374	addiu  at, zero, $fbfe (=-$402)
-80040378	and    a0, a0, at
-8004037C	mtc0   a0,sr
-80040380	nop
-80040384	jr     ra 
-80040388	nop
+// system_bios_disable_cdrom_int()
+
+A0 = SR; // System status register
+A0 = A0 & fffffbfe;
+SR = A0;
 ////////////////////////////////
-// func4038c
-8004038C	mfc0   a0,sr
-80040390	nop
-80040394	ori    a0, a0, $0401
-80040398	mtc0   a0,sr
-8004039C	nop
-800403A0	jr     ra 
-800403A4	nop
-800403A8	nop
+
+
+
+////////////////////////////////
+// system_bios_enable_cdrom_int()
+
+A0 = SR; // System status register
+A0 = A0 | 0401; // enable Current Interrupt and add mask to 0x4 (CDROM)
+SR = A0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func403a8
 800403AC	addiu  t2, zero, $00b0

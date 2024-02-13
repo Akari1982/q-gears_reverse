@@ -250,7 +250,7 @@ system_memory_mark_removed_alloc();
 if( h[800af586] != 0 )
 {
     A0 = w[800af550];
-    system_cdrom_memory_mark_removed_alloc();
+    system_cdrom2_memory_mark_removed_alloc();
 }
 
 

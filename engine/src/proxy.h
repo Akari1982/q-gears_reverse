@@ -10,3 +10,5 @@ EXTERNC void P_FFVII_Field_ScriptOpcodeMessage();
 
 EXTERNC void P_FFVII_System_UIDialogAddToRender();
 EXTERNC void P_FFVII_Battle_EffectsUpdate();
+
+EXTERNC void P_Xeno_System_SoundUpdate();

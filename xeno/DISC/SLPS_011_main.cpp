@@ -96,7 +96,7 @@ system_psyq_spu_init();
 A0 = 80010004; // file1 allocated memory
 A1 = 80018004; // file2 allocated memory
 A2 = w[80010000]; // ffffffff
-func28040(); // cd init
+system_cdrom2_init(); // cd init
 
 A0 = 0;
 system_sound_initialize();
@@ -137,25 +137,25 @@ A0 = 2;
 A1 = snd24_mem;
 A2 = 0;
 A3 = 0;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 3;
 A1 = snd25_mem;
 A2 = 0;
 A3 = 0;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 4;
 A1 = snd26_mem;
 A2 = 0;
 A3 = 0;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 5; // dir file id
 A1 = snd27_mem;
 A2 = 0;
 A3 = 0;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync(); // ececute till cd sync
@@ -192,7 +192,7 @@ A0 = 6;
 A1 = S5;
 A2 = 0;
 A3 = 0;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync(); // ececute till cd sync
@@ -220,7 +220,7 @@ A0 = 7;
 A1 = S5;
 A2 = 0;
 A3 = 0;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync(); // ececute till cd sync
@@ -379,7 +379,7 @@ if( w[8005895c] != exe_id )
         A1 = V0;
         A2 = 0;
         A3 = 0;
-        system_load_file_by_dir_file_id();
+        system_cdrom2_load_file_by_dir_file_id();
     }
     else
     {
@@ -543,16 +543,16 @@ if( hu[80058c0c] == 090c ) // pressed buttons start select L1 R1
 ////////////////////////////////
 // func19d54()
 
-80019D5C	jal    func4038c [$8004038c]
+system_bios_enable_cdrom_int();
 
 A0 = 0;
 system_psyq_reset_graph();
 
-80019D6C	jal    func281e4 [$800281e4]
+system_cdrom2_reset();
 
 system_sound_deinitialize();
 
-80019D7C	jal    func4d13c [$8004d13c]
+func4d13c(); // disable spu?
 
 A0 = 0; // unset frame update callback
 func36298();
@@ -563,13 +563,13 @@ system_psyq_draw_sync_callback();
 A0 = 0;
 system_call_main_timer_additional_callback_4();
 
-80019D9C	jal    func40d4c [$80040d4c]
+func40d4c();
 
-80019DA4	jal    func4076c [$8004076c]
+func4076c();
 
-80019DAC	jal    func4036c [$8004036c]
+system_bios_disable_cdrom_int();
 
-80019DB4	jal    func195b8 [$800195b8]
+func195b8(); // XENO entry point
 ////////////////////////////////
 
 
@@ -1412,7 +1412,7 @@ return bu[V1 + 30c + A0 * c4];
 
 do
 {
-    system_cdrom_data_sync();
+    system_cdrom2_data_sync();
 } while( V0 != 0 )
 
 A0 = 0;
@@ -1786,7 +1786,7 @@ if( ( w[8004e9d8] == S1 ) && ( w[8004e9d4] == field_id ) )
     return 0;
 }
 
-system_cdrom_data_sync();
+system_cdrom2_data_sync();
 if( V0 != 0 )
 {
     return -1;
@@ -1836,7 +1836,7 @@ A0 = dir_file_id;
 A1 = w[80059b70];
 A2 = 0;
 A3 = 80;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 ////////////////////////////////
 
 
@@ -1860,7 +1860,7 @@ if( w[8004ea04] == 1 )
 if( w[8004ea00] == 1 )
 {
     A0 = w[80061bb8];
-    func39af4();
+    system_sound_stop_main();
 
     if( w[8004e9ec] == 0 )
     {
@@ -2089,7 +2089,7 @@ S0 = V0;
 A1 = S0;
 A2 = 0;
 A3 = 0080;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -2265,12 +2265,13 @@ A1 = 0;
 A2 = 80;
 system_load_files_by_array();
 
-loop1bb28:	; 8001BB28
-    system_cdrom_data_sync();
-8001BB30	beq    v0, 3, loop1bb28 [$8001bb28]
+do()
+{
+    system_cdrom2_data_sync();
+} while( V0 == 3 );
 
 A0 = w[GP + 45c];
-func382d0();
+system_sound_insert_sed_to_linked_array();
 
 if( bu[GP + 3d8] != 4 )
 {
@@ -2722,7 +2723,7 @@ if( bu[80058818] != 0 )
     A1 = V0;
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -2747,7 +2748,7 @@ if( bu[80058818] != 0 )
         A1 = 801dc000;
         A2 = 0;
         A3 = 80;
-        system_load_file_by_dir_file_id();
+        system_cdrom2_load_file_by_dir_file_id();
 
         A0 = 0;
         system_cdrom_action_sync();
@@ -2781,7 +2782,7 @@ if( bu[80058818] != 0 )
     A1 = 801c5000;
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();

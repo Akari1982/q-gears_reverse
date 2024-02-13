@@ -92,7 +92,6 @@ V0 = w[800ADB78 + V0 * 4];
 5A 80092FD8
 5B 8008A7E4
 5C 800A0568
-5D 8008EC80
 5E 8008E8AC
 5F 8008E79C
 60 8008E204
@@ -100,7 +99,6 @@ V0 = w[800ADB78 + V0 * 4];
 62 8008EA18
 64 8008EBB8
 65 8008EAD0
-66 8008EB2C
 67 8008E3E8
 68 800921F4
 69 80089CB4
@@ -3502,11 +3500,11 @@ SP = SP + 0018;
 
 if (w[800ad004] == 0)
 {
-    system_cdrom_data_sync;
+    system_cdrom2_data_sync();
     if (V0 == 0)
     {
         A0 = 0;
-        system_cdrom_action_sync;
+        system_cdrom_action_sync();
 
         return 0;
     }
@@ -8391,7 +8389,7 @@ read_two_bytes_with_80();
 
 A0 = S0;
 A1 = V0;
-8008EA98	jal    $8003a404
+8008EA98	jal    func3a404
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 5);
@@ -8410,7 +8408,7 @@ A0 = 0003;
 8008EAE8	jal    read_two_bytes_with_80 [$800ac2c4]
 S0 = V0;
 A0 = S0;
-8008EAF4	jal    func84c48 [$80084c48]
+8008EAF4	jal    field_play_sound_with_fixed_volume [$80084c48]
 A1 = V0;
 V1 = w[800af54c];
 8008EB04	nop
@@ -8428,41 +8426,32 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8eb2c
-8008EB2C	addiu  sp, sp, $ffe0 (=-$20)
-A0 = 0001;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-8008EB40	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0005;
-8008EB4C	jal    read_two_bytes_with_80 [$800ac2c4]
-S2 = V0;
-A0 = 0003;
-8008EB58	jal    read_two_bytes_with_80 [$800ac2c4]
-S1 = V0;
-A0 = 0007;
-8008EB64	jal    read_two_bytes_with_80 [$800ac2c4]
-S0 = V0;
-A0 = S2;
-A1 = S1;
-A2 = S0;
-8008EB78	jal    func84bdc [$80084bdc]
-A3 = V0;
+// 0x66_PlaySoundWithVolumeInSlot()
+
+A0 = 1;
+read_two_bytes_with_80();
+sed_id = V0;
+
+A0 = 5;
+read_two_bytes_with_80();
+note_volume = V0;
+
+A0 = 3;
+read_two_bytes_with_80();
+volume_distr = V0;
+
+A0 = 7;
+read_two_bytes_with_80();
+sound_slot = V0;
+
+A0 = sed_id;
+A1 = note_volume;
+A2 = volume_distr;
+A3 = sound_slot;
+field_play_sound_with_volume_settings();
+
 V1 = w[800af54c];
-8008EB88	nop
-V0 = hu[V1 + 00cc];
-8008EB90	nop
-V0 = V0 + 0009;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8008EBB0	jr     ra 
-8008EBB4	nop
+[V1 + cc] = h(hu[V1 + cc] + 9);
 ////////////////////////////////
 
 
@@ -8508,58 +8497,44 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8ec3c
-8008EC3C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008EC44	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0001;
-A0 = V0;
-8008EC50	jal    func84c48 [$80084c48]
-A1 = 0003;
+// func8ec3c()
+
+A0 = 1;
+read_two_bytes_with_80();
+
+A0 = V0; // sed_id
+A1 = 3; // sound_slot
+field_play_sound_with_fixed_volume();
+
 V1 = w[800af54c];
-8008EC60	nop
-V0 = hu[V1 + 00cc];
-8008EC68	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008EC78	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8ec80
-8008EC80	addiu  sp, sp, $ffe0 (=-$20)
-A0 = 0001;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-8008EC90	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0005;
-8008EC9C	jal    read_two_bytes_with_80 [$800ac2c4]
-S1 = V0;
-A0 = 0003;
-8008ECA8	jal    read_two_bytes_with_80 [$800ac2c4]
-S0 = V0;
-A0 = S1;
-A1 = S0;
-A2 = V0;
-8008ECBC	jal    func84bdc [$80084bdc]
-A3 = 0003;
+// 0x5D_PlaySoundWithVolumeIn3()
+
+A0 = 1;
+read_two_bytes_with_80();
+sed_id = V0;
+
+A0 = 5;
+read_two_bytes_with_80();
+note_volume = V0;
+
+A0 = 3;
+read_two_bytes_with_80();
+volume_distr = V0;
+
+A0 = sed_id;
+A1 = note_volume;
+A2 = volume_distr;
+A3 = 3; // sound_slot
+field_play_sound_with_volume_settings();
+
 V1 = w[800af54c];
-8008ECCC	nop
-V0 = hu[V1 + 00cc];
-8008ECD4	nop
-V0 = V0 + 0007;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8008ECF0	jr     ra 
-8008ECF4	nop
+[V1 + cc] = h(hu[V1 + cc] + 7);
 ////////////////////////////////
 
 
@@ -13050,7 +13025,7 @@ if ((w[entity + 0] & 00100000) == 0)
 
         A0 = 8;
         A1 = 3;
-        func84c48;
+        field_play_sound_with_fixed_volume();
     }
     else
     {
@@ -13106,7 +13081,7 @@ if ((w[entity + 0] & 00100000) != 0)
 
         A0 = 8;
         A1 = 3;
-        func84c48;
+        field_play_sound_with_fixed_volume();
     }
     else
     {
@@ -13167,8 +13142,9 @@ A0 = 0008;
 V0 = A1 | 0020;
 A1 = 0003;
 [V1 + 012c] = w(V0);
-80093778	jal    func84c48 [$80084c48]
 [V1 + 00e2] = b(0);
+field_play_sound_with_fixed_volume();
+
 V0 = w[800af54c];
 80093788	nop
 V1 = w[V0 + 0020];
@@ -13324,8 +13300,9 @@ A0 = 0008;
 V0 = V1 | 0020;
 [A1 + 012c] = w(V0);
 [A1 + 00e2] = b(0);
-800939CC	jal    func84c48 [$80084c48]
 A1 = 0003;
+field_play_sound_with_fixed_volume();
+
 800939D4	j      L93b80 [$80093b80]
 800939D8	nop
 

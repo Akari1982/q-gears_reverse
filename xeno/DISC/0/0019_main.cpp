@@ -460,13 +460,13 @@ V1 = bu[801e8978];
 [SP + 0020] = b(1);
 [SP + 0021] = b(V1);
 
-loop1d3928:	; 801D3928
+do
+{
     A0 = d;
     A1 = SP + 20;
     A2 = 0;
-    func410c0();
-
-801D3938	beq    v0, zero, loop1d3928 [$801d3928]
+    system_cdrom_cdl_command_exec_with_ret_sync();
+} while( V0 == 0 );
 
 801D393C	addiu  a2, zero, $ffff (=-$1)
 801D3940	j      L1d3958 [$801d3958]
@@ -574,8 +574,8 @@ V0 = w[V0 + 0008];
 [801e8994] = w(V0);
 V0 = V0 < S0;
 801D3B50	bne    v0, zero, L1d3bec [$801d3bec]
-801D3B54	nop
-801D3B58	jal    $func2a2a8
+
+system_cdrom2_abort_fileload();
 
 L1d3b5c:	; 801D3B5C
 A0 = 0;
@@ -946,7 +946,7 @@ A1 = 0;
 system_sound_set_cd_volume_increase();
 
 A0 = 0;
-func2a2a8();
+system_cdrom2_abort_fileload();
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -969,7 +969,7 @@ if( bu[801e8968]; != 0 )
     A1 = w[801e898c];
     A2 = S3;
     A3 = S1;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     V0 = S1 & 0008;
     A1 = S0 << 03;
@@ -1009,13 +1009,13 @@ else
         S0 = SP + 10;
     }
 
-    loop1d42c0:	; 801D42C0
+    do
+    {
         A0 = 2;
         A1 = S0;
         A2 = 0;
-        func410c0();
-
-    801D42CC	beq    v0, zero, loop1d42c0 [$801d42c0]
+        system_cdrom_cdl_command_exec_with_ret_sync();
+    } while( V0 == 0 );
 
     loop1d42d4:	; 801D42D4
         A0 = S1;
@@ -1039,7 +1039,7 @@ A1 = 0;
 system_sound_set_cd_volume_increase();
 
 A0 = 0;
-func2a2a8();
+system_cdrom2_abort_fileload();
 
 A0 = 0;
 mdec_out_dma_callback();
@@ -1057,15 +1057,16 @@ else
 {
     func1d5980();
 
-    loop1d437c:	; 801D437C
+    do
+    {
         A0 = 9;
         A1 = 0;
         A2 = 0;
-        func410c0();
-    801D4388	beq    v0, zero, loop1d437c [$801d437c]
+        system_cdrom_cdl_command_exec_with_ret_sync();
+    } while( V0 == 0 );
 
     A0 = a0;
-    system_cdrom_command_cdl_set_mode();
+    system_cdrom2_command_cdl_set_mode();
 }
 
 A0 = 0;
@@ -2553,7 +2554,7 @@ S0 = A0;
 A0 = e;
 A1 = SP + 10;
 A2 = 0;
-system_cdrom_cdl_command_exec_with_sync_ret();
+system_cdrom_cdl_command_exec_with_ret();
 
 if( S0 & 0100 )
 {
@@ -2576,7 +2577,7 @@ if( S0 & 0100 )
 A0 = 1b;
 A1 = 0;
 A2 = 0;
-system_cdrom_cdl_command_exec_with_sync_ret();
+system_cdrom_cdl_command_exec_with_ret();
 ////////////////////////////////
 
 

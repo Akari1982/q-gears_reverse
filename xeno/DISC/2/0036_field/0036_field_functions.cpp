@@ -1092,7 +1092,7 @@ switch( V1 )
         800A5544	nop
 
         loopa5548:	; 800A5548
-        system_cdrom_data_sync(); // wait for command to finish
+        system_cdrom2_data_sync(); // wait for command to finish
 
         800A5550	beq    v0, zero, La5598 [$800a5598]
 
@@ -2800,7 +2800,7 @@ A0 = a9;
 A1 = S0;
 A2 = 0;
 A3 = 80;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 [800afb74] = w(0);
 [800af348] = w(0);
@@ -3214,7 +3214,7 @@ A0 = aa; // "10\0592.tim"
 A1 = mem;
 A2 = 0;
 A3 = 80;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -5901,7 +5901,7 @@ A0 = 0802;
 A2 = 0;
 [SP + 0028] = w(V0);
 A1 = w[SP + 0028];
-800AAD30	jal    $system_load_file_by_dir_file_id
+800AAD30	jal    $system_cdrom2_load_file_by_dir_file_id
 A3 = 0080;
 800AAD38	jal    $system_cdrom_action_sync
 A0 = 0;
@@ -6123,7 +6123,7 @@ S0 = V0;
 A1 = S0;
 A2 = 0;
 A3 = 0080;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 800AB0B4	jal    $system_cdrom_action_sync
 A0 = 0;
@@ -6604,7 +6604,7 @@ A0 = 00ab;
 A1 = V0;
 A2 = 0;
 [800aec40] = w(A1);
-800AB82C	jal    $system_load_file_by_dir_file_id
+800AB82C	jal    $system_cdrom2_load_file_by_dir_file_id
 A3 = 0080;
 800AB834	jal    $system_cdrom_action_sync
 A0 = 0;
@@ -6617,7 +6617,7 @@ A0 = 00ac;
 A1 = V0;
 A2 = 0;
 [800aec58] = w(A1);
-800AB864	jal    $system_load_file_by_dir_file_id
+800AB864	jal    $system_cdrom2_load_file_by_dir_file_id
 A3 = 0080;
 800AB86C	jal    $system_cdrom_action_sync
 A0 = 0;

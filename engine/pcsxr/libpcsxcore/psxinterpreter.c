@@ -694,6 +694,12 @@ void psxJAL()
         execI();
         //XenoTest();
     }
+    // Xenogears Sound Main Update
+    if( _JumpTarget_ == 0x8003bec8 )
+    {
+        execI();
+        P_Xeno_System_SoundUpdate();
+    }
     // FFVII Window
     else if( _JumpTarget_ == 0x8001f1bc )
     {

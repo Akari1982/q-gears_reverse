@@ -1,0 +1,13 @@
++ 10 [][]     store to main + 12
++ 14 []       number of channels for this smd.
++ 15 []       number of additional data (alloc additional 0x180 bytes for it).
++ 16 [][]     snd id.
++ 18 [][]     store to main + 18
++ 1a []       reverb type
++ 1b []       reverb volume
++ 1c []       reverb delay
++ 1d []       reverb feedback
++ 20 [][]     offset to additional data (0x5 size)
+    + 0 []       id od additional data
+    + 1 [][][][] data.
++ 22 array of offsets for scripts 0x2 size

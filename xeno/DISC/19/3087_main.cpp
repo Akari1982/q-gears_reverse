@@ -257,7 +257,7 @@ A2 = 0;
 V0 = w[800d2998];
 [V0 + 0818] = w(A1);
 A3 = 80;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 801E55C4	jal    $80072ef4
 801E55C8	nop
@@ -1472,7 +1472,7 @@ S0 = V0;
 A1 = V0;
 A2 = 0;
 A3 = 80;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 801E67D0	jal    $80072ef4
 801E67D4	nop
@@ -2849,7 +2849,7 @@ S1 = V0;
 V1 = w[800d2998];
 [V1 + 0814] = w(S0);
 A3 = 80;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 801E7D6C	jal    $80072ef4
 801E7D70	nop

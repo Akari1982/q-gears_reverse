@@ -115,7 +115,7 @@ else
 
 field_flush_sync();
 
-if( w[800c1b60] == 0 ) // debug
+if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 80076eac; // field_update_delta_time()
     system_psyq_draw_sync_callback();
@@ -129,7 +129,7 @@ A1 = 0;
 system_memory_set_alloc_user();
 
 // load debug executable
-if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
+if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) ) // PC HDD MODE
 {
     A0 = 4;
     A1 = 0;
@@ -139,7 +139,7 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) )
     A1 = 80280000; // allocated_memory
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -379,7 +379,7 @@ L77810:	; 80077810
         func1b318(); // prepare cdrom for field load
         if( V0 == 0 )
         {
-            system_cdrom_data_sync(); // wait for command to finish
+            system_cdrom2_data_sync(); // wait for command to finish
             if( V0 == 0 )
             {
                 if( h[800b15ec] == 0 )
@@ -574,7 +574,7 @@ L77810:	; 80077810
 
             if( ( w[800ad048] != 0 ) && ( w[800acfe0] == 1 )
             {
-                80077FB8	jal    funca7130 [$800a7130]
+                funca7130();
 
                 [800ad048] = w(0);
             }
@@ -678,7 +678,7 @@ if( w[800ad0f0] != 0 )
 // func781dc()
 if( w[800ad004] == 0 )
 {
-    system_cdrom_data_sync(); // wait for command to finish
+    system_cdrom2_data_sync(); // wait for command to finish
 
     if( ( V0 == 0 ) && ( w[8004e9ac] == 0 ) && ( w[800ad068] == 0 ) && ( w[800ad00c] == 0 ) )
     {
@@ -887,7 +887,7 @@ S0 = S0 + V0;
 S0 = 0;
 
 L78574:	; 80078574
-system_cdrom_data_sync();
+system_cdrom2_data_sync();
 
 8007857C	bne    v0, zero, loop78504 [$80078504]
 

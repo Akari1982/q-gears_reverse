@@ -1682,7 +1682,7 @@ if( w[8009cbb4] == 0 )
 }
 
 S0 = 0;
-func39ea0(); // turn sound off
+system_sound_stop_all_channels_in_current_main();
 
 A0 = w[80061c2c];
 func383d4(); // sound related

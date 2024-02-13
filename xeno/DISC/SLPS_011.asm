@@ -622,7 +622,7 @@
 // func27708
 80027708-80027B4C
 ////////////////////////////////
-// system_cdrom_memory_mark_removed_alloc
+// system_cdrom2_memory_mark_removed_alloc
 80027B50-80027B70
 ////////////////////////////////
 // func27b54
@@ -634,13 +634,13 @@
 // func27e1c
 80027E1C-80027E58
 ////////////////////////////////
-// func27e5c
+// system_cdrom2_pc_draw_file_operation
 80027E5C-8002803C
 ////////////////////////////////
-// func28040
+// system_cdrom2_init
 80028040-800281E0
 ////////////////////////////////
-// func281e4
+// system_cdrom2_reset
 800281E4-8002827C
 ////////////////////////////////
 // system_filesystem_set_dir
@@ -658,10 +658,10 @@
 // system_debug_read_filename_to_memory
 80028380-800284C8
 ////////////////////////////////
-// func284cc
+// system_cdrom2_get_loaded_filesize
 800284CC-800284D8
 ////////////////////////////////
-// system_cdrom_data_sync
+// system_cdrom2_data_sync
 800284DC-80028544
 ////////////////////////////////
 // system_get_filesize_by_dir_file_id
@@ -712,19 +712,19 @@
 // func292c4
 800292C4-80029358
 ////////////////////////////////
-// func2935c
+// system_cdrom2_load_file_by_file_sector
 8002935C-800293E4
 ////////////////////////////////
-// system_load_file_by_dir_file_id
+// system_cdrom2_load_file_by_dir_file_id
 800293E8-8002949C
 ////////////////////////////////
-// func294a0
+// system_cdrom2_load_file_inner
 800294A0-80029908
 ////////////////////////////////
 // system_load_files_by_array
 8002990C-80029CBC
 ////////////////////////////////
-// func29cc0
+// system_cdrom2_load_texture
 80029CC0-8002A06C
 ////////////////////////////////
 // func2a070
@@ -733,13 +733,13 @@
 // func2a0e0
 8002A0E0-8002A1A0
 ////////////////////////////////
-// func2a1a4
+// system_cdrom2_command_cdl_set_loc
 8002A1A4-8002A234
 ////////////////////////////////
-// system_cdrom_command_cdl_set_mode
+// system_cdrom2_command_cdl_set_mode
 8002A238-8002A2A4
 ////////////////////////////////
-// func2a2a8
+// system_cdrom2_abort_fileload
 8002A2A8-8002A330
 ////////////////////////////////
 // func2a334
@@ -763,19 +763,19 @@
 // system_cdrom_ready_callback_4
 8002B3E0-8002B6BC
 ////////////////////////////////
-// func2b6c0
+// system_cdrom2_pc_stream_texture_into_ram
 8002B6C0-8002B84C
 ////////////////////////////////
 // func2b850
 8002B850-8002B864
 ////////////////////////////////
-// func2b868
+// system_cdrom2_dma_callback
 8002B868-8002B95C
 ////////////////////////////////
-// func2b960
+// system_cdrom2_dma_stream_texture_into_vram
 8002B960-8002BD44
 ////////////////////////////////
-// func2bd48
+// system_cdrom2_pc_stream_texture_into_vram
 8002BD48-8002C11C
 ////////////////////////////////
 // func2c120
@@ -4844,10 +4844,10 @@ L31820:	; 80031820
 // func381b8
 800381B8-80038290
 ////////////////////////////////
-// func38294
+// system_sound_get_snd_file_by_snd_id
 80038294-800382CC
 ////////////////////////////////
-// func382d0
+// system_sound_insert_sed_to_linked_array
 800382D0-800383D0
 ////////////////////////////////
 // func383d4
@@ -4859,7 +4859,7 @@ L31820:	; 80031820
 // func384f4
 800384F4-80038540
 ////////////////////////////////
-// func38544
+// system_sound_stop_all_sounds
 80038544-80038568
 ////////////////////////////////
 // func3856c
@@ -4877,7 +4877,7 @@ L31820:	; 80031820
 // func387b4
 800387B4-800387D8
 ////////////////////////////////
-// func387dc
+// system_sound_set_reverb_settings
 800387DC-80038978
 ////////////////////////////////
 // func3897c
@@ -4904,7 +4904,7 @@ L31820:	; 80031820
 // system_sound_structs_meminit
 80038D68-80038DBC
 ////////////////////////////////
-// system_sound_structs_malloc
+// system_sound_malloc
 80038DC0-80038EC8
 ////////////////////////////////
 // func38ecc
@@ -4952,7 +4952,7 @@ L31820:	; 80031820
 // func396a4
 800396A4-800396F4
 ////////////////////////////////
-// func396f8
+// system_sound_create_main_for_smd
 800396F8-800397B4
 ////////////////////////////////
 // func397b8
@@ -4967,7 +4967,7 @@ L31820:	; 80031820
 // func39a10
 80039A10-80039AF0
 ////////////////////////////////
-// func39af4
+// system_sound_stop_main
 80039AF4-80039B30
 ////////////////////////////////
 // func39b34
@@ -4997,22 +4997,22 @@ L31820:	; 80031820
 // func39d6c
 80039D6C-80039DBC
 ////////////////////////////////
-// func39dc0
+// system_sound_play_sound_from_opcode_9c
 80039DC0-80039E40
 ////////////////////////////////
-// func39e44
+// system_sound_play_sound_from_field
 80039E44-80039E9C
 ////////////////////////////////
-// func39ea0
+// system_sound_stop_all_channels_in_current_main
 80039EA0-80039F38
 ////////////////////////////////
-// func39f3c
+// system_sound_stop_all_channels_by_sed_file
 80039F3C-80039FF0
 ////////////////////////////////
-// func39ff4
+// system_sound_stop_all_channels_by_sed_id
 80039FF4-8003A0B0
 ////////////////////////////////
-// func3a0b4
+// system_sound_stop_two_channels_by_channel_id
 8003A0B4-8003A178
 ////////////////////////////////
 // func3a17c
@@ -5042,7 +5042,7 @@ L31820:	; 80031820
 // func3a478
 8003A478-8003A500
 ////////////////////////////////
-// func3a504
+// system_sound_stop_sound_in_channels
 8003A504-8003A6D0
 ////////////////////////////////
 // func3a6d4
@@ -5102,7 +5102,7 @@ L31820:	; 80031820
 // system_sound_stop_all_channels_in_main
 8003AF08-8003AF50
 ////////////////////////////////
-// func3af54
+// system_sound_copy_add_data_from_smd_to_main
 8003AF54-8003AFEC
 ////////////////////////////////
 // system_sound_add_new_main_with_number_of_channels
@@ -5111,7 +5111,7 @@ L31820:	; 80031820
 // func3b0a4
 8003B0A4-8003B0D0
 ////////////////////////////////
-// func3b0d4
+// system_sound_init_main_for_smd
 8003B0D4-8003B1D0
 ////////////////////////////////
 // func3b1d4
@@ -5120,10 +5120,10 @@ L31820:	; 80031820
 // func3b218
 8003B218-8003B2C8
 ////////////////////////////////
-// func3b2cc
+// system_sound_init_channels_for_smd
 8003B2CC-8003B4E8
 ////////////////////////////////
-// func3b4ec
+// system_sound_init_channels_by_sed_id
 8003B4EC-8003B7D4
 ////////////////////////////////
 // func3b7d8
@@ -5186,13 +5186,13 @@ L31820:	; 80031820
 // system_sound_update_incremented_values
 8003C32C-8003C368
 ////////////////////////////////
-// func3c36c
+// system_sound_update_timers
 8003C36C-8003C58C
 ////////////////////////////////
-// func3c590
+// system_sound_update_sequence
 8003C590-8003CB28
 ////////////////////////////////
-// func3cb2c
+// system_sound_update_base_pitch
 8003CB2C-8003CBA4
 ////////////////////////////////
 // func3cba8
@@ -5204,16 +5204,16 @@ L31820:	; 80031820
 // spu_opcode_81
 8003CBD8-8003CBF0
 ////////////////////////////////
-// func3cbf4
+// spu_opcode_8a
 8003CBF4-8003CBF8
 ////////////////////////////////
-// func3cbfc
+// spu_opcode_8d
 8003CBFC-8003CC20
 ////////////////////////////////
-// func3cc24
+// spu_opcode_8e
 8003CC24-8003CC28
 ////////////////////////////////
-// func3cc2c
+// spu_opcode_8f
 8003CC2C-8003CC30
 ////////////////////////////////
 // spu_opcode_90
@@ -5234,13 +5234,13 @@ L31820:	; 80031820
 // spu_opcode_97
 8003CD10-8003CD40
 ////////////////////////////////
-// func3cd44
+// spu_opcode_f9
 8003CD44-8003CD64
 ////////////////////////////////
-// func3cd68
+// spu_opcode_a4
 8003CD68-8003CD78
 ////////////////////////////////
-// func3cd7c
+// spu_opcode_a5
 8003CD7C-8003CD94
 ////////////////////////////////
 // spu_opcode_98
@@ -5252,121 +5252,121 @@ L31820:	; 80031820
 // spu_opcode_9a
 8003CE4C-8003CE94
 ////////////////////////////////
-// func3ce98
+// spu_opcode_9c
 8003CE98-8003CED8
 ////////////////////////////////
-// func3cedc
+// spu_opcode_9d
 8003CEDC-8003CF14
 ////////////////////////////////
-// func3cf18
+// spu_opcode_9e
 8003CF18-8003CF8C
 ////////////////////////////////
 // spu_opcode_a0
 8003CF90-8003CFB4
 ////////////////////////////////
-// func3cfb8
+// spu_opcode_a1
 8003CFB8-8003CFE0
 ////////////////////////////////
 // spu_opcode_a2
 8003CFE4-8003D020
 ////////////////////////////////
-// func3d024
+// spu_opcode_a6
 8003D024-8003D060
 ////////////////////////////////
-// func3d064
+// spu_opcode_a7
 8003D064-8003D0AC
 ////////////////////////////////
 // spu_opcode_a9
 8003D0B0-8003D0C0
 ////////////////////////////////
-// func3d0c4
+// spu_opcode_aa
 8003D0C4-8003D13C
 ////////////////////////////////
 // spu_opcode_ac
 8003D140-8003D174
 ////////////////////////////////
-// func3d178
+// spu_opcode_ad
 8003D178-8003D1A4
 ////////////////////////////////
 // spu_opcode_ae
 8003D1A8-8003D1CC
 ////////////////////////////////
-// func3d1d0
+// spu_opcode_af
 8003D1D0-8003D1E4
 ////////////////////////////////
 // spu_opcode_b0
 8003D1E8-8003D1FC
 ////////////////////////////////
-// func3d200
+// spu_opcode_b1
 8003D200-8003D214
 ////////////////////////////////
-// func3d218
+// spu_opcode_b2
 8003D218-8003D248
 ////////////////////////////////
-// func3d24c
+// spu_opcode_b3
 8003D24C-8003D27C
 ////////////////////////////////
-// func3d280
+// spu_opcode_b4
 8003D280-8003D2DC
 ////////////////////////////////
-// func3d2e0
+// spu_opcode_b5
 8003D2E0-8003D348
 ////////////////////////////////
-// func3d34c
+// spu_opcode_b6
 8003D34C-8003D368
 ////////////////////////////////
-// func3d36c
+// spu_opcode_b7
 8003D36C-8003D388
 ////////////////////////////////
-// func3d38c
+// spu_opcode_b8
 8003D38C-8003D3E0
 ////////////////////////////////
 // spu_opcode_ba
 8003D3E4-8003D440
 ////////////////////////////////
-// func3d444
+// spu_opcode_bb
 8003D444-8003D460
 ////////////////////////////////
-// func3d464
+// spu_opcode_bc
 8003D464-8003D468
 ////////////////////////////////
-// func3d46c
+// spu_opcode_bd
 8003D46C-8003D470
 ////////////////////////////////
-// func3d474
+// spu_opcode_be
 8003D474-8003D478
 ////////////////////////////////
 // spu_opcode_c0
 8003D47C-8003D4B0
 ////////////////////////////////
-// func3d4b4
+// spu_opcode_c1
 8003D4B4-8003D4E4
 ////////////////////////////////
 // spu_opcode_c2
 8003D4E8-8003D500
 ////////////////////////////////
-// func3d504
+// spu_opcode_c3
 8003D504-8003D51C
 ////////////////////////////////
 // spu_opcode_c4
 8003D520-8003D538
 ////////////////////////////////
-// func3d53c
+// spu_opcode_c5
 8003D53C-8003D558
 ////////////////////////////////
-// func3d55c
+// spu_opcode_c6
 8003D55C-8003D574
 ////////////////////////////////
-// func3d578
+// spu_opcode_c7
 8003D578-8003D59C
 ////////////////////////////////
-// func3d5a0
+// spu_opcode_c8
 8003D5A0-8003D5B8
 ////////////////////////////////
 // spu_opcode_c9
 8003D5BC-8003D5D4
 ////////////////////////////////
-// fucn3d5d8
+// spu_opcode_ca
 8003D5D8-8003D5F0
 ////////////////////////////////
 // spu_opcode_d0
@@ -5375,34 +5375,34 @@ L31820:	; 80031820
 // spu_opcode_d1
 8003D618-8003D640
 ////////////////////////////////
-// func3d644
+// spu_opcode_d2
 8003D644-8003D66C
 ////////////////////////////////
-// func3d670
+// spu_opcode_d3
 8003D670-8003D6A0
 ////////////////////////////////
-// func3d6a4
+// spu_opcode_d4
 8003D6A4-8003D6F8
 ////////////////////////////////
-// func3d6fc
+// spu_opcode_d5
 8003D6FC-8003D710
 ////////////////////////////////
-// func3d714
+// spu_opcode_dc
 8003D714-8003D728
 ////////////////////////////////
-// func3d72c
+// spu_opcode_d6
 8003D72C-8003D75C
 ////////////////////////////////
 // spu_opcode_d8
 8003D760-8003D848
 ////////////////////////////////
-// func3d84c
+// spu_opcode_d9
 8003D84C-8003D954
 ////////////////////////////////
 // spu_opcode_d7
 8003D958-8003D990
 ////////////////////////////////
-// func3d994
+// spu_opcode_da
 8003D994-8003D9B0
 ////////////////////////////////
 // spu_opcode_db
@@ -5411,7 +5411,7 @@ L31820:	; 80031820
 // spu_opcode_e0
 8003D9D4-8003D9FC
 ////////////////////////////////
-// func3da00
+// spu_opcode_e1
 8003DA00-8003DA3C
 ////////////////////////////////
 // spu_opcode_e2
@@ -5423,28 +5423,28 @@ L31820:	; 80031820
 // spu_opcode_e4
 8003DAF8-8003DBC8
 ////////////////////////////////
-// func3dbcc
+// spu_opcode_e5
 8003DBCC-8003DCBC
 ////////////////////////////////
-// func3dcc0
+// spu_opcode_e3
 8003DCC0-8003DCF8
 ////////////////////////////////
-// func3dcfc
+// spu_opcode_e6
 8003DCFC-8003DD18
 ////////////////////////////////
-// func3dd1c
+// spu_opcode_e7
 8003DD1C-8003DD38
 ////////////////////////////////
 // spu_opcode_e8
 8003DD3C-8003DD58
 ////////////////////////////////
-// func3dd5c
+// spu_opcode_e9
 8003DD5C-8003DD88
 ////////////////////////////////
 // spu_opcode_ea
 8003DD8C-8003DDE0
 ////////////////////////////////
-// func3dde4
+// spu_opcode_eb
 8003DDE4-8003DE1C
 ////////////////////////////////
 // spu_opcode_ec
@@ -5453,10 +5453,10 @@ L31820:	; 80031820
 // spu_opcode_ed
 8003DEF4-8003DFE4
 ////////////////////////////////
-// func3dfe8
+// spu_opcode_ee
 8003DFE8-8003E004
 ////////////////////////////////
-// func3e008
+// spu_opcode_ef
 8003E008-8003E024
 ////////////////////////////////
 // func3e028
@@ -5507,22 +5507,22 @@ L31820:	; 80031820
 // system_sound_channel_structures_offset_init
 8003E5A8-8003E5C8
 ////////////////////////////////
-// func3e5cc
+// system_sound_channel_voice_off_reset
 8003E5CC-8003E684
 ////////////////////////////////
 // func3e688
 8003E688-8003E6E0
 ////////////////////////////////
-// system_sound_channel_voice_off
+// system_sound_channel_voice_off_clear_pointer
 8003E6E4-8003E748
 ////////////////////////////////
-// func3e74c
+// system_sound_channel_voice_off_keep_pointer
 8003E74C-8003E7A4
 ////////////////////////////////
 // system_sound_update_spu
 8003E7A8-8003EA00
 ////////////////////////////////
-// func3ea04
+// system_sound_set_key_off_by_masks
 8003EA04-8003EA94
 ////////////////////////////////
 // func3ea98
@@ -5703,10 +5703,10 @@ L31820:	; 80031820
 // system_exit_critical_section
 8004035C-80040368
 ////////////////////////////////
-// func4036c
+// system_bios_disable_cdrom_int
 8004036C-80040388
 ////////////////////////////////
-// func4038c
+// system_bios_enable_cdrom_int
 8004038C-800403A8
 ////////////////////////////////
 // func403a8
@@ -5905,13 +5905,13 @@ L31820:	; 80031820
 // system_cdrom_set_ready_callback
 80040E44-80040E58
 ////////////////////////////////
-// system_cdrom_cdl_command_exec_with_sync_ret
+// system_cdrom_cdl_command_exec_with_ret
 80040E5C-80040F90
 ////////////////////////////////
 // system_cdrom_cdl_command_exec_without_ret
 80040F94-800410BC
 ////////////////////////////////
-// func410c0
+// system_cdrom_cdl_command_exec_with_ret_sync
 800410C0-80041200
 ////////////////////////////////
 // system_cdrom_cdout_to_spu_ret_1
@@ -6852,7 +6852,7 @@ L31820:	; 80031820
 // func4d1b8
 8004D1B8-8004D208
 ////////////////////////////////
-// func4d20c
+// system_psyq_spu_set_noise
 8004D20C-8004D258
 ////////////////////////////////
 // system_psyq_spu_set_reverb
@@ -6897,10 +6897,10 @@ L31820:	; 80031820
 // system_sound_spu_main_and_cd_volume
 8004D830-8004DBC0
 ////////////////////////////////
-// func4dbc4
+// system_psyq_set_reverb_type
 8004DBC4-8004DD9C
 ////////////////////////////////
-// system_sound_spu_update_settings
+// system_sound_spu_update_reverb_registers
 8004DDA0-8004E26C
 ////////////////////////////////
 // func4e270
@@ -6909,13 +6909,13 @@ L31820:	; 80031820
 // system_bios_wait_event
 8004E40C-8004E418
 ////////////////////////////////
-// system_sound_set_reverb_output_volume
+// system_psyq_set_reverb_volume
 8004E41C-8004E444
 ////////////////////////////////
-// func4e448
+// system_psyq_set_reverb_delay
 8004E448-8004E55C
 ////////////////////////////////
-// func4e560
+// system_psyq_set_reverb_feedback
 8004E560-8004E618
 ////////////////////////////////
 // func4e61c

@@ -531,10 +531,10 @@
 // func84b74
 80084B74-80084BD8
 ////////////////////////////////
-// func84bdc
+// field_play_sound_with_volume_settings
 80084BDC-80084C44
 ////////////////////////////////
-// func84c48
+// field_play_sound_with_fixed_volume
 80084C48-80084C88
 ////////////////////////////////
 // func84c8c
@@ -1193,7 +1193,7 @@
 // func8ead0
 8008EAD0-8008EB28
 ////////////////////////////////
-// func8eb2c
+// 0x66_PlaySoundWithVolumeInSlot
 8008EB2C-8008EBB4
 ////////////////////////////////
 // func8ebb8
@@ -1202,7 +1202,7 @@
 // func8ec3c
 8008EC3C-8008EC7C
 ////////////////////////////////
-// func8ec80
+// 0x5D_PlaySoundWithVolumeIn3
 8008EC80-8008ECF4
 ////////////////////////////////
 // func8ecf8

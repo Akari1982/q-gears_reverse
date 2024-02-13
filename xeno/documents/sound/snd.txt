@@ -1,0 +1,20 @@
++ 10 [][][][] size of spu struct in memory.
++ 14 [][][][] size of pcm data.
++ 18 [][][][] pointer to pcm data.
++ 20 [][]     snd id (can get name of snd from this)
++ 28 [][][][] address in spu for pcm data.
++ 2c [][][][] link to next snd file in linked array.
++ 30 start of instruments data 0x10 size each
+    + 0 [][][][] offset to start address chank 0x8.
+    + 4 [][]     offset to loop address chank 0x8.
+    + 6 [][]     pitch.
+    + 8 [][][][] ADSR rates.
+                 0x0000007f - attack rate.
+                 0x00000f00 - decay rate.
+                 0x0000f000 - sustain level.
+                 0x007f0000 - sustain rate.
+                 0x1f000000 - release rate.
+    + c [][]     ADSR modes.
+                 0x0007 - attack mode.
+                 0x0070 - sustain mode.
+                 0x0700 - release mode.

@@ -99,6 +99,9 @@ Directory 10 2 (2606)
 Directory 18 0 (19)
       1 0\0019_mdec.exe
 
+Directory 1c 0 (117)
+      1 4\0117.snd
+
 Directory 20 0 (3087)
       1 19\3087_battle_3.exe
 

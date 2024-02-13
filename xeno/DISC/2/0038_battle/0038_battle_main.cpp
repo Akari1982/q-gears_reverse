@@ -19,7 +19,7 @@ if( bu[800c3470] != 0 )
     A1 = 801e5000;
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     battle_cdrom_data_sync();
 
@@ -149,7 +149,7 @@ if( bu[80058b94] != 0 )
     A1 = 801e0000;
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -182,7 +182,7 @@ if( w[V0 + 0] != -1 ) // DEBUG
     A1 = 80280000;
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync();
@@ -256,8 +256,8 @@ system_memory_mark_removed_alloc();
 
 if( bu[80058be8] != 4 )
 {
-    A0 = w[80058c6c];
-    func39f3c(); // sound related
+    A0 = w[80058c6c]; // sed file
+    system_sound_stop_all_channels_by_sed_file();
 }
 
 A0 = w[80058c6c];
@@ -403,7 +403,7 @@ A0 = 4; // "STRIPCD1\14\2596.exe"
 A1 = 801de000;
 A2 = 0;
 A3 = 80;
-system_load_file_by_dir_file_id();
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = S3;
 80070C94	jal    funcb7b00 [$800b7b00]
@@ -2655,7 +2655,7 @@ return V0;
 
 while( true )
 {
-    system_cdrom_data_sync();
+    system_cdrom2_data_sync();
 
     if( V0 == 0 )
     {

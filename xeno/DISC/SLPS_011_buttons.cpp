@@ -91,21 +91,15 @@ system_set_pad_enable_flag();
 
 
 ////////////////////////////////
-// func4076c
-8004076C	addiu  sp, sp, $ffe8 (=-$18)
-80040770	sw     ra, $0010(sp)
-80040774	jal    system_clear_pad_enable_flag [$80040978]
-80040778	nop
-8004077C	jal    system_bios_stop_pad [$80040924]
-80040780	nop
+// func4076c()
+
+system_clear_pad_enable_flag();
+
+system_bios_stop_pad();
+
 80040784	jal    func40824 [$80040824]
-80040788	nop
-8004078C	lui    at, $8005
-80040790	sw     zero, $5ab4(at)
-80040794	lw     ra, $0010(sp)
-80040798	addiu  sp, sp, $0018
-8004079C	jr     ra 
-800407A0	nop
+
+[80055ab4] = w(0);
 ////////////////////////////////
 
 
@@ -136,21 +130,17 @@ return 1;
 
 
 ////////////////////////////////
-// func40824
-80040824	addiu  sp, sp, $ffe8 (=-$18)
-80040828	sw     ra, $0010(sp)
-8004082C	jal    system_enter_critical_section [$8004034c]
-80040830	nop
-80040834	lui    a1, $8006
-80040838	addiu  a1, a1, $989c (=-$6764)
-8004083C	jal    system_bios_sys_deq_int_rp [$80040954]
-80040840	addiu  a0, zero, $0001
-80040844	jal    system_exit_critical_section [$8004035c]
-80040848	nop
-8004084C	lw     ra, $0010(sp)
-80040850	addiu  v0, zero, $0001
-80040854	jr     ra 
-80040858	addiu  sp, sp, $0018
+// func40824()
+
+system_enter_critical_section();
+
+A0 = 1;
+A1 = 8005989c;
+system_bios_sys_deq_int_rp();
+
+system_exit_critical_section();
+
+return 1;
 ////////////////////////////////
 
 

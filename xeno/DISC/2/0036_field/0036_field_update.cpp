@@ -1758,7 +1758,7 @@ if( w[8004e9e8] == 0 )
     A1 = w[80059b30];
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     A0 = 0;
     system_cdrom_action_sync(); // ececute till cd sync

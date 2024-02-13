@@ -108,7 +108,7 @@ A0 = 0007;
 S0 = V0;
 A1 = S0;
 A2 = 0;
-800B818C	jal    $system_load_file_by_dir_file_id
+800B818C	jal    $system_cdrom2_load_file_by_dir_file_id
 A3 = 0080;
 800B8194	jal    battle_cdrom_data_sync [$800b7918]
 800B8198	nop
@@ -208,54 +208,49 @@ Lb82d0:	; 800B82D0
 
 
 ////////////////////////////////
-// funcb82f4
-800B82F4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800B82FC	jal    battle_cdrom_data_sync [$800b7918]
-800B8300	nop
+// funcb82f4()
+
+battle_cdrom_data_sync();
+
 800B8304	jal    funcbf1b4 [$800bf1b4]
-800B8308	nop
 
-Lb830c:	; 800B830C
-800B830C	jal    funcbeef0 [$800beef0]
-800B8310	nop
-V1 = w[80058b00];
-800B831C	nop
-800B8320	beq    v1, v0, Lb8338 [$800b8338]
-800B8324	nop
-800B8328	jal    funcbdea8 [$800bdea8]
-800B832C	nop
-800B8330	j      Lb830c [$800b830c]
-800B8334	nop
+while( true )
+{
+    800B830C	jal    funcbeef0 [$800beef0]
 
-Lb8338:	; 800B8338
+    if( w[80058b00] == V0 )
+    {
+        break;
+    }
+
+    800B8328	jal    funcbdea8 [$800bdea8]
+}
+
 800B8338	jal    funcbeb68 [$800beb68]
-800B833C	nop
-A0 = w[800c2d50];
-800B8348	nop
-800B834C	beq    a0, zero, Lb8364 [$800b8364]
-800B8350	nop
-800B8354	jal    $system_memory_mark_removed_alloc
-800B8358	nop
-[800c2d50] = w(0);
 
-Lb8364:	; 800B8364
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B836C	jr     ra 
-800B8370	nop
+A0 = w[800c2d50];
+if( A0 != 0 )
+{
+    system_memory_mark_removed_alloc();
+
+    [800c2d50] = w(0);
+}
+
 ////////////////////////////////
-// funcb8374
-800B8374	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800B837C	jal    $func2a2a8
+
+
+
+////////////////////////////////
+// funcb8374()
+
 A0 = 0;
-800B8384	jal    funcb82f4 [$800b82f4]
-800B8388	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B8394	jr     ra 
-800B8398	nop
+system_cdrom2_abort_fileload();
+
+funcb82f4();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcb839c
 V0 = w[800c2d48];
@@ -2603,7 +2598,7 @@ SP = SP + 0020;
 [SP + 0014] = w(S1);
 S1 = A0;
 [SP + 0018] = w(RA);
-800BABA0	jal    $system_cdrom_data_sync
+800BABA0	jal    $system_cdrom2_data_sync
 [SP + 0010] = w(S0);
 800BABA8	bne    v0, zero, Lbabe8 [$800babe8]
 A0 = 1000;
@@ -2655,7 +2650,7 @@ SP = SP + 0018;
 [SP + 0014] = w(S1);
 S1 = A0;
 [SP + 0018] = w(RA);
-800BAC64	jal    $system_cdrom_data_sync
+800BAC64	jal    $system_cdrom2_data_sync
 [SP + 0010] = w(S0);
 800BAC6C	bne    v0, zero, Lbacc0 [$800bacc0]
 800BAC70	nop
@@ -6152,7 +6147,7 @@ if( w[800c2f08] == 1 )
 
     if( bu[800c2f04] != 0 )
     {
-        system_cdrom_data_sync();
+        system_cdrom2_data_sync();
         if( V0 == 0 )
         {
             [800c2f04] = b(0);
@@ -6189,7 +6184,7 @@ if( bu[80058852] != S0 )
     A1 = 801fc000;
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     battle_cdrom_data_sync();
 
@@ -6582,7 +6577,7 @@ A0 = S0;
 S0 = V0;
 A1 = S0;
 A2 = 0;
-800BEAE8	jal    $system_load_file_by_dir_file_id
+800BEAE8	jal    $system_cdrom2_load_file_by_dir_file_id
 A3 = 0080;
 V0 = w[S1 + 00ac];
 [800c2d50] = w(S0);
@@ -7057,7 +7052,7 @@ if( bu[800c2d59] != 0 )
     A1 = S0;
     A2 = 0;
     A3 = 80;
-    system_load_file_by_dir_file_id();
+    system_cdrom2_load_file_by_dir_file_id();
 
     battle_cdrom_data_sync();
 
@@ -7180,7 +7175,7 @@ A0 = 0005;
 S0 = V0;
 A1 = S0;
 A2 = 0;
-800BF3C8	jal    $system_load_file_by_dir_file_id
+800BF3C8	jal    $system_cdrom2_load_file_by_dir_file_id
 A3 = 0080;
 800BF3D0	jal    battle_cdrom_data_sync [$800b7918]
 800BF3D4	nop
@@ -9286,7 +9281,7 @@ B40F0C80 // 9E
 
 DC0F0C80 // 95
         V0 = 0001;
-        800C0FE0	jal    system_cdrom_data_sync [$system_cdrom_data_sync]
+        800C0FE0	jal    system_cdrom2_data_sync [$system_cdrom2_data_sync]
         [S1 + 009e] = h(V0);
         800C0FE8	bne    v0, zero, Lc1754 [$800c1754]
         V0 = S5 & 00ff;
