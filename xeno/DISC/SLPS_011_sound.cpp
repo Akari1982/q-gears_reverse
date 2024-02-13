@@ -4601,8 +4601,6 @@ for( int i = 0; i < number_of_channels; ++i )
             A2 = channel + i * 158;
 
             8003CBA8 82 83 84 85 86 87 88 89 8b 8c 92 93 9b 9f a3 a8 ab b9 bf cb cc cd ce cf dd de df f3 f4 fa fb
-            8003E0A0 f1
-            8003E1B0 f2
             8003E200 f5
             8003E208 f6
             8003E2B4 f7
@@ -6370,15 +6368,11 @@ return sequence;
 sequence = A0;
 channel = A2;
 
-V0 = bu[sequence + 0000];
-[channel + 00cc] = h(V0);
-V0 = hu[channel + 00cc];
-V1 = bu[sequence + 0001];
-V0 = V0 << 05;
-V0 = V0 + 00d8;
-channel = channel + V0;
+[channel + cc] = h(bu[sequence + 0]);
 
-[channel + 001d] = b(V1 & 0f);
+channel = channel + d8 + hu[channel + cc] * 20;
+
+[channel + 1d] = b(bu[sequence + 1] & 0f);
 
 V0 = bu[channel + 1d];
 [channel + 0] = w(w[8004ff44 + V0 * 4]);
@@ -6402,7 +6396,8 @@ return sequence + 3;
 
 
 ////////////////////////////////
-// func3e0a0
+// spu_opcode_f1()
+
 S1 = A0;
 V0 = bu[S1 + 0000];
 8003E0C0	mult   v0, v0
@@ -6468,7 +6463,8 @@ return A0;
 
 
 ////////////////////////////////
-// func3e1b0
+// spu_opcode_f2()
+
 V1 = bu[A0 + 0001];
 V0 = hu[A2 + 00cc];
 V1 = V1 + 0001;
