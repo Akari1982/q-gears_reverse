@@ -972,41 +972,38 @@ system_int_set_interrupt_callback();
 
 
 ////////////////////////////////
-// func4d650
-V0 = A0 << 04;
-V1 = w[800584a8];
-V0 = V0 | 000c;
-V0 = V0 + V1;
-V1 = hu[V0 + 0000];
-8004D668	nop
-[A2 + 0000] = h(V1);
-A2 = 0001;
-V0 = w[80058040];
-A0 = A2 << A0;
-V0 = V0 & A0;
-8004D684	beq    v0, zero, L4d6a4 [$8004d6a4]
+// func4d650()
+
+spu_channel_id = A0;
+
+spu_reg = w[800584a8]; // 1f801c00
+V1 = hu[spu_reg + spu_channel_id * 10 + c]; // ADSR Current Volume
 V0 = V1 << 10;
-8004D68C	blez   v0, L4d69c [$8004d69c]
-V0 = 0003;
-8004D694	j      L4d6b8 [$8004d6b8]
-[A1 + 0000] = w(A2);
 
-L4d69c:	; 8004D69C
-8004D69C	j      L4d6b8 [$8004d6b8]
-[A1 + 0000] = w(V0);
+[A2] = h(V1);
 
-L4d6a4:	; 8004D6A4
-8004D6A4	blez   v0, L4d6b4 [$8004d6b4]
-V0 = 0002;
-8004D6AC	j      L4d6b8 [$8004d6b8]
-[A1 + 0000] = w(V0);
-
-L4d6b4:	; 8004D6B4
-[A1 + 0000] = w(0);
-
-L4d6b8:	; 8004D6B8
-8004D6B8	jr     ra 
-8004D6BC	nop
+if (w[80058040] & (1 << spu_channel_id))
+{
+    if( V0 > 0 )
+    {
+        [A1] = w(1);
+    }
+    else
+    {
+        [A1] = w(3);
+    }
+}
+else
+{
+    if( V0 > 0 )
+    {
+        [A1] = w(2);
+    }
+    else
+    {
+        [A1] = w(0);
+    }
+}
 ////////////////////////////////
 
 

@@ -4513,14 +4513,14 @@ main = A0;
 channel = A1;
 number_of_channels = A2;
 
-for( int i = 0; i < number_of_channels; ++i )
+for (int i = 0; i < number_of_channels; ++i)
 {
-    if( hu[channel + i * 158 + 0] == 0 )
+    if (hu[channel + i * 158 + 0] == 0)
     {
         continue;
     }
 
-    if( hu[channel + i * 158 + 5c] != 0 )
+    if (hu[channel + i * 158 + 5c] != 0)
     {
         continue;
     }
@@ -4537,9 +4537,9 @@ for( int i = 0; i < number_of_channels; ++i )
         opcode = bu[sequence];
         ++sequence;
 
-        if( opcode < 80 ) // play note
+        if (opcode < 80) // play note
         {
-            if( ( hu[channel + i * 158 + 0] & 0008 ) == 0 )
+            if ((hu[channel + i * 158 + 0] & 0008) == 0)
             {
                 [channel + i * 158 + 76] = h(opcode << 8); // volume related
             }
@@ -4552,7 +4552,7 @@ for( int i = 0; i < number_of_channels; ++i )
             [channel + i * 158 + 65] = b(A2);
 
             A1 = bu[80050050 + wait];
-            if( A1 == 0 )
+            if (A1 == 0)
             {
                 A1 = bu[sequence];
                 ++sequence;
@@ -4562,7 +4562,7 @@ for( int i = 0; i < number_of_channels; ++i )
             [channel + i * 158 + 5a] = b(bu[channel + i * 158 + 28]); // release rate
             [channel + i * 158 + 36] = h(hu[channel + i * 158 + 36] | 0080); // update release mode and release rate
 
-            if( hu[channel + i * 158 + 0] & 0010 )
+            if (hu[channel + i * 158 + 0] & 0010)
             {
                 A0 = main;
                 A1 = channel + i * 158;
@@ -4574,18 +4574,17 @@ for( int i = 0; i < number_of_channels; ++i )
                 [channel + i * 158 + 68] = w(((A2 << 8) + h[channel + i * 158 + 6e] + h[channel + i * 158 + 6c]) << 10); // base pitch
             }
 
-            [channel + i * 158 + 2] = h(hu[channel + i * 158 + 2] | 0200); // update pitch
-
             [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0180);
+            [channel + i * 158 + 2] = h(hu[channel + i * 158 + 2] | 0200); // update pitch
 
             play_note = 1;
 
-            if( flags & 0400 ) // 
+            if (flags & 0400) // 
             {
                 [channel + i * 158 + 2] = h(h[channel + i * 158 + 2] | 0001); // calculate enable
             }
 
-            if( h[channel + i * 158 + 0] & 8000 )
+            if (h[channel + i * 158 + 0] & 8000)
             {
                 [channel + i * 158 + 0] = h(h[channel + i * 158 + 0] & 7fff);
                 [channel + i * 158 + 36] = h(ffff); // update all
@@ -4601,33 +4600,28 @@ for( int i = 0; i < number_of_channels; ++i )
             A2 = channel + i * 158;
 
             8003CBA8 82 83 84 85 86 87 88 89 8b 8c 92 93 9b 9f a3 a8 ab b9 bf cb cc cd ce cf dd de df f3 f4 fa fb
-            8003E200 f5
-            8003E208 f6
-            8003E2B4 f7
-            8003E364 fd
-            8003E3F4 ff
 
             // call "spu_opcode_" + 0xXX
             8003C76C	jalr   v0 ra
 
             sequence = V0;
 
-            if( hu[channel + i * 158 + 0] == 0 )
+            if (hu[channel + i * 158 + 0] == 0)
             {
                 [main + 48] = w(w[main + 48] & ~(1 << bu[channel + i * 158 + 6]));
                 break;
             }
         }
-    } while( ( hu[channel + i * 158 + 0] & 0500 ) == 0 )
+    } while ((hu[channel + i * 158 + 0] & 0500) == 0)
 
     [channel + i * 158 + 14] = w(sequence); // store new sequence position
 
-    if( hu[channel + i * 158 + 0] == 0 )
+    if (hu[channel + i * 158 + 0] == 0)
     {
         continue; // go to next channel
     }
 
-    if( hu[channel + i * 158 + 0] & 0800 )
+    if (hu[channel + i * 158 + 0] & 0800)
     {
         [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0200);
     }
@@ -4635,46 +4629,46 @@ for( int i = 0; i < number_of_channels; ++i )
     // check next opcode
     stack = hu[channel + i * 158 + 72];
     A0 = channel + i * 158 + 9c + stack * c;
-    while( bu[sequence] >= 80 )
+    while (bu[sequence] >= 80)
     {
         A2 = bu[sequence];
 
-        if( A2 == 90 )
+        if (A2 == 90)
         {
             sequence = w[channel + i * 158 + 18];
-            if( sequence != 0 )
+            if (sequence != 0)
             {
                 continue;
             }
             break;
         }
-        else if( A2 == 80 )
+        else if (A2 == 80)
         {
             [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & fdff);
             break;
         }
-        else if( A2 == 81 )
+        else if (A2 == 81)
         {
             [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0200);
             break;
         }
-        else if( A2 == b0 || A2 == b1 )
+        else if (A2 == b0 || A2 == b1)
         {
             [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & fdff);
             break;
         }
-        else if( A2 == 99 )
+        else if (A2 == 99)
         {
-            if( bu[A0] != 0 )
+            if (bu[A0] != 0)
             {
                 sequence = w[A0 + 4];
                 continue;
             }
             A0 = A0 - c;
         }
-        else if( A2 == 9a )
+        else if (A2 == 9a)
         {
-            if( bu[A0] == 0 )
+            if (bu[A0] == 0)
             {
                 sequence = w[A0 + 8];
                 A0 = A0 - c;
@@ -4686,7 +4680,7 @@ for( int i = 0; i < number_of_channels; ++i )
         sequence += bu[8004fec4 + V0];
     }
 
-    if( A2 < 80 )
+    if (A2 < 80)
     {
         [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 1000);
     }
@@ -4697,24 +4691,24 @@ for( int i = 0; i < number_of_channels; ++i )
 
     // calculate and set note length
     A1 = b[channel + i * 158 + 60] + hu[channel + i * 158 + 5c];
-    if( ( A1 << 10 ) <= 0 )
+    if ((A1 << 10) <= 0)
     {
         A1 = hu[channel + i * 158 + 5c] + A1;
         [channel + i * 158 + 60] = b(b[channel + i * 158 + 60] + bu[channel + i * 158 + 5c]);
     }
     V1 = 7fff;
-    if( ( [channel + i * 158 + 0] & 0600 ) == 0 )
+    if (([channel + i * 158 + 0] & 0600) == 0)
     {
         V1 = hu[channel + i * 158 + 62];
-        if( V1 == f )
+        if (V1 == f)
         {
             V1 = A1 - 1;
-            if( ( V1 & ffff ) == 0 )
+            if ((V1 & ffff) == 0)
             {
                 V1 = 1;
             }
         }
-        else if( V1 == 10 )
+        else if (V1 == 10)
         {
             V1 = A1;
         }
@@ -4729,12 +4723,12 @@ for( int i = 0; i < number_of_channels; ++i )
     }
     [channel + i * 158 + 5c] = w((V1 << 10) + ((A1 << 10) >> 10));
 
-    if( play_note != 0 )
+    if (play_note != 0)
     {
-        if( hu[channel + i * 158 + 4] & 0004 )
+        if (hu[channel + i * 158 + 4] & 0004)
         {
             V0 = (bu[channel + i * 158 + 65] - bu[channel + i * 158 + 64]) << 18; // diff
-            if( V0 != 0 )
+            if (V0 != 0)
             {
                 [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0001); // base pitch update
                 [channel + i * 158 + 94] = h(hu[channel + i * 158 + 70]); // base pitch update timer
@@ -4744,7 +4738,7 @@ for( int i = 0; i < number_of_channels; ++i )
         }
         [channel + i * 158 + 64] = b(bu[channel + i * 158 + 65]);
 
-        if( hu[channel + i * 158 + 4] & 0100 )
+        if (hu[channel + i * 158 + 4] & 0100)
         {
             [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0008); // base volume update
             [channel + i * 158 + 96] = h(hu[channel + i * 158 + 80]); // base volume update timer
@@ -4752,10 +4746,10 @@ for( int i = 0; i < number_of_channels; ++i )
             [channel + i * 158 + 88] = w(w[channel + i * 158 + 7c]); // base volume add
         }
 
-        for( int j = 0; j < 4; ++j )
+        for (int j = 0; j < 4; ++j)
         {
             A1 = hu[channel + i * 158 + f6 + j * 20];
-            if( ( A1 & 3 ) == 3 )
+            if ((A1 & 3) == 3)
             {
                 V0 = hu[channel + i * 158 + ee + j * 20];
                 V1 = hu[channel + i * 158 + f2 + j * 20];
@@ -4796,6 +4790,7 @@ system_sound_init_channel_instrument();
 // func3cba8()
 
 sequence = A0;
+
 return sequence;
 ////////////////////////////////
 
@@ -5905,7 +5900,7 @@ if( A0 != 0 )
         [S1 + f5] = b(S3);
         [S1 + f4] = b(0);
         [S1 + f6] = h(S0 + 1);
-        [S1 + d8] = w(w[8004ff44 + Ы3 * 4]);
+        [S1 + d8] = w(w[8004ff44 + S3 * 4]);
         [S1 + ce] = h(hu[S1 + ce] | 0001);
 
         A0 = S1 + d8;
@@ -6491,15 +6486,17 @@ return A0 + 2;
 
 
 ////////////////////////////////
-// func3e200()
+// spu_opcode_f5()
 
-return A0;
+sequence = A0;
+
+return sequence;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3e208
+// spu_opcode_f6()
 
 S1 = A0;
 S3 = bu[S1 + 0000];
@@ -6536,24 +6533,16 @@ V0 = S1;
 
 
 ////////////////////////////////
-// func3e2b4
+// spu_opcode_f7()
 
-A1 = bu[A0 + 0000];
-8003E2B8	nop
-V1 = A1 << 05;
-V1 = A2 + V1;
-V0 = hu[V1 + 00f6];
-8003E2C8	nop
-V0 = V0 & fffe;
-[V1 + 00f6] = h(V0);
-V0 = 0001;
-V0 = V0 << A1;
-V1 = hu[A2 + 00ce];
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-V0 = A0 + 0001;
-8003E2EC	jr     ra 
-[A2 + 00ce] = h(V1);
+sequence = A0;
+channel = A2;
+
+A1 = bu[sequence];
+[channel + f6 + A1 * 20] = h(hu[channel + f6 + A1 * 20] & fffe);
+[channel + ce] = h(hu[channel + ce] & (~(1 << A1)));
+
+return sequence + 1;
 ////////////////////////////////
 
 
@@ -6561,10 +6550,10 @@ V0 = A0 + 0001;
 ////////////////////////////////
 // spu_opcode_fc()
 
-sequence_current = A0;
+sequence = A0;
 channel = A2;
 
-A0 = bu[sequence_current + 0];
+A0 = bu[sequence + 0];
 [channel + 25] = b(A0);
 
 system_sound_get_snd_file_by_snd_id();
@@ -6574,32 +6563,29 @@ if( V0 == 0 )
 }
 [channel + 2c] = w(V0);
 
-A0 = bu[sequence_current + 1];
+A0 = bu[sequence + 1];
 A1 = channel;
 system_sound_init_channel_instrument();
 
-return sequence_current + 2;
+return sequence + 2;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3e364
+// spu_opcode_fd()
 
-A2 = bu[A0 + 0000];
-8003E368	nop
-8003E36C	beq    a2, zero, L3e390 [$8003e390]
-A0 = A0 + 0001;
-V1 = h[A1 + 005a];
-V0 = A2 << 08;
-8003E37C	mult   v1, v0
-V0 = A2 << 18;
-[A1 + 0064] = w(V0);
-8003E388	mflo   v0
-[A1 + 0054] = w(V0);
+sequence = A0;
+main = A1;
 
-L3e390:	; 8003E390
-V0 = A0;
+A2 = bu[sequence];
+if( A2 != 0 )
+{
+    [main + 54] = w(h[main + 5a] * (A2 << 8)); // update real speed
+    [main + 64] = w(A2 << 18); // update speed mod increase
+}
+
+return sequence + 1;
 ////////////////////////////////
 
 
@@ -6607,10 +6593,10 @@ V0 = A0;
 ////////////////////////////////
 // spu_opcode_fe()
 
-sequence_current = A0;
+sequence = A0;
 channel = A2;
 
-A0 = bu[sequence_current];
+A0 = bu[sequence];
 [channel + 25] = b(A0);
 system_sound_get_snd_file_by_snd_id();
 if( V0 == 0 )
@@ -6618,36 +6604,35 @@ if( V0 == 0 )
     V0 = w[80058bf4];
 }
 [channel + 2c] = w(V0);
-return sequence_current + 1;
+
+return sequence + 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3e3f4
+// spu_opcode_ff()
 
-S1 = A0;
-S0 = A2;
-A1 = SP + 0010;
-A0 = bu[S0 + 0027];
-A2 = SP + 0014;
-8003E414	jal    func4d650 [$8004d650]
+sequence = A0;
+channel = A2;
 
-V0 = h[SP + 0014];
-8003E420	nop
-8003E424	bne    v0, zero, L3e44c [$8003e44c]
-V0 = S1;
-A0 = S0 + 0030; // channel address
-V0 = hu[S0 + 0002];
-A1 = bu[S0 + 0027]; // spu channel id
-V0 = V0 & fffc;
-[S0 + 0002] = h(V0);
-system_sound_channel_voice_off_clear_pointer();
+A0 = bu[channel + 27];
+A1 = SP + 10;
+A2 = SP + 14; // ADSR Current Volume
+func4d650();
 
-[S0 + 0000] = h(0);
-V0 = S1;
+if( h[SP + 14] == 0 )
+{
+    [channel + 2] = h(hu[channel + 2] & fffc);
 
-L3e44c:	; 8003E44C
+    A0 = channel + 30; // channel address
+    A1 = bu[channel + 27]; // spu channel id
+    system_sound_channel_voice_off_clear_pointer();
+
+    [channel + 0] = h(0);
+}
+
+return sequence;
 ////////////////////////////////
 
 

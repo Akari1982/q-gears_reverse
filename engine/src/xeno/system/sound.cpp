@@ -181,3 +181,265 @@ Xeno_System_SoundInitChannelInstrument()
 
     psxMemWrite16(channel + 0x6c, psxMemRead16(data_p + 0x6));
 }
+
+
+
+
+
+
+Xeno::System::SoundUpdateSequence()
+{
+    u32 main = psxRegs.GPR.n.a0;
+    u32 channel = psxRegs.GPR.n.a1;
+    u32 number_of_channels = psxRegs.GPR.n.a2;
+
+    for (int i = 0; i < number_of_channels; ++i)
+    {
+        if (psxMemRead16(channel + i * 0x158 + 0x0) == 0)
+        {
+            continue;
+        }
+
+        if (psxMemRead16(channel + i * 0x158 + 0x5c) != 0)
+        {
+            continue;
+        }
+
+        u16 flags = psxMemRead16(channel + i * 0x158 + 0x0);
+        psxMemWrite16(channel + i * 0x158 + 0x0, flags & 0xf8ff); // remove all stop sequence flags
+
+        u32 sequence = psxMemRead32(channel + i * 0x158 + 0x14);
+
+        bool play_note = false;
+
+        do
+        {
+            u8 opcode = psxMemRead8(sequence++);
+
+            if (opcode < 0x80) // play note
+            {
+                if ((psxMemRead16(channel + i * 0x158 + 0x0) & 0x0008) == 0)
+                {
+                    psxMemWrite16(channel + i * 0x158 + 0x76, opcode << 0x8); // volume related
+                }
+                psxMemWrite16(channel + i * 0x158 + 0x2, psxMemRead16(channel + i * 0x158 + 0x2) | 0x0100); // update volume
+
+                wait = psxMemRead8(sequence++);
+                ++sequence;
+
+                A2 = ( bu[channel + i * 158 + 66] + bu[80050134 + wait] ) & ff;
+                [channel + i * 158 + 65] = b(A2);
+
+                A1 = bu[80050050 + wait];
+                if (A1 == 0)
+                {
+                    A1 = bu[sequence];
+                    ++sequence;
+                }
+                [channel + i * 158 + 5c] = h(A1); // script wait timer.
+
+                [channel + i * 158 + 5a] = b(bu[channel + i * 158 + 28]); // release rate
+                [channel + i * 158 + 36] = h(hu[channel + i * 158 + 36] | 0080); // update release mode and release rate
+
+                if (hu[channel + i * 158 + 0] & 0010)
+                {
+                    A0 = main;
+                    A1 = channel + i * 158;
+                    A2 = A2;
+                    system_sound_update_base_pitch();
+                }
+                else
+                {
+                    [channel + i * 158 + 68] = w(((A2 << 8) + h[channel + i * 158 + 6e] + h[channel + i * 158 + 6c]) << 10); // base pitch
+                }
+
+                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0180);
+                [channel + i * 158 + 2] = h(hu[channel + i * 158 + 2] | 0200); // update pitch
+
+                play_note = 1;
+
+                if (flags & 0400) // 
+                {
+                    [channel + i * 158 + 2] = h(h[channel + i * 158 + 2] | 0001); // calculate enable
+                }
+
+                if (h[channel + i * 158 + 0] & 8000)
+                {
+                    [channel + i * 158 + 0] = h(h[channel + i * 158 + 0] & 7fff);
+                    [channel + i * 158 + 36] = h(ffff); // update all
+                    [channel + i * 158 + 2] = h(hu[channel + i * 158 + 2] | 0300);
+                }
+            }
+            else // call opcode func
+            {
+                A0 = sequence;
+                A1 = main;
+                V0 = (opcode - 80) * 4;
+                V0 = w[8004fcc4 + V0];
+                A2 = channel + i * 158;
+
+                8003CBA8 82 83 84 85 86 87 88 89 8b 8c 92 93 9b 9f a3 a8 ab b9 bf cb cc cd ce cf dd de df f3 f4 fa fb
+
+                // call "spu_opcode_" + 0xXX
+                8003C76C	jalr   v0 ra
+
+                sequence = V0;
+
+                if (hu[channel + i * 158 + 0] == 0)
+                {
+                    [main + 48] = w(w[main + 48] & ~(1 << bu[channel + i * 158 + 6]));
+                    break;
+                }
+            }
+        } while ((hu[channel + i * 158 + 0] & 0500) == 0)
+
+        [channel + i * 158 + 14] = w(sequence); // store new sequence position
+
+        if (hu[channel + i * 158 + 0] == 0)
+        {
+            continue; // go to next channel
+        }
+
+        if (hu[channel + i * 158 + 0] & 0800)
+        {
+            [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0200);
+        }
+
+        // check next opcode
+        stack = hu[channel + i * 158 + 72];
+        A0 = channel + i * 158 + 9c + stack * c;
+        while (bu[sequence] >= 80)
+        {
+            A2 = bu[sequence];
+
+            if (A2 == 90)
+            {
+                sequence = w[channel + i * 158 + 18];
+                if (sequence != 0)
+                {
+                    continue;
+                }
+                break;
+            }
+            else if (A2 == 80)
+            {
+                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & fdff);
+                break;
+            }
+            else if (A2 == 81)
+            {
+                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0200);
+                break;
+            }
+            else if (A2 == b0 || A2 == b1)
+            {
+                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & fdff);
+                break;
+            }
+            else if (A2 == 99)
+            {
+                if (bu[A0] != 0)
+                {
+                    sequence = w[A0 + 4];
+                    continue;
+                }
+                A0 = A0 - c;
+            }
+            else if (A2 == 9a)
+            {
+                if (bu[A0] == 0)
+                {
+                    sequence = w[A0 + 8];
+                    A0 = A0 - c;
+                    continue;
+                }
+            }
+
+            V0 = ((A2 - 80) << 10) >> 10;
+            sequence += bu[8004fec4 + V0];
+        }
+
+        if (A2 < 80)
+        {
+            [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 1000);
+        }
+        else
+        {
+            [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & efff);
+        }
+
+        // calculate and set note length
+        A1 = b[channel + i * 158 + 60] + hu[channel + i * 158 + 5c];
+        if ((A1 << 10) <= 0)
+        {
+            A1 = hu[channel + i * 158 + 5c] + A1;
+            [channel + i * 158 + 60] = b(b[channel + i * 158 + 60] + bu[channel + i * 158 + 5c]);
+        }
+        V1 = 7fff;
+        if (([channel + i * 158 + 0] & 0600) == 0)
+        {
+            V1 = hu[channel + i * 158 + 62];
+            if (V1 == f)
+            {
+                V1 = A1 - 1;
+                if ((V1 & ffff) == 0)
+                {
+                    V1 = 1;
+                }
+            }
+            else if (V1 == 10)
+            {
+                V1 = A1;
+            }
+            else
+            {
+                V1 = (((A1 << 10) >> 10) * V1) >> 4;
+                if( ( V1 & ffff ) == 0 )
+                {
+                    V1 = 1;
+                }
+            }
+        }
+        [channel + i * 158 + 5c] = w((V1 << 10) + ((A1 << 10) >> 10));
+
+        if (play_note != 0)
+        {
+            if (hu[channel + i * 158 + 4] & 0004)
+            {
+                V0 = (bu[channel + i * 158 + 65] - bu[channel + i * 158 + 64]) << 18; // diff
+                if (V0 != 0)
+                {
+                    [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0001); // base pitch update
+                    [channel + i * 158 + 94] = h(hu[channel + i * 158 + 70]); // base pitch update timer
+                    [channel + i * 158 + 68] = w(((bu[channel + i * 158 + 64] << 8) + h[channel + i * 158 + 6e] + h[channel + i * 158 + 6c]) << 10); // base pitch
+                    [channel + i * 158 + 84] = w(V0 / hu[channel + i * 158 + 70]); // base pitch add
+                }
+            }
+            [channel + i * 158 + 64] = b(bu[channel + i * 158 + 65]);
+
+            if (hu[channel + i * 158 + 4] & 0100)
+            {
+                [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0008); // base volume update
+                [channel + i * 158 + 96] = h(hu[channel + i * 158 + 80]); // base volume update timer
+                [channel + i * 158 + 78] = w(hu[channel + i * 158 + 82] << 10); // base volume
+                [channel + i * 158 + 88] = w(w[channel + i * 158 + 7c]); // base volume add
+            }
+
+            for (int j = 0; j < 4; ++j)
+            {
+                A1 = hu[channel + i * 158 + f6 + j * 20];
+                if ((A1 & 3) == 3)
+                {
+                    V0 = hu[channel + i * 158 + ee + j * 20];
+                    V1 = hu[channel + i * 158 + f2 + j * 20];
+                    [channel + i * 158 + dc + j * 20] = w(0);
+                    [channel + i * 158 + e8 + j * 20] = h(1);
+                    [channel + i * 158 + ec + j * 20] = h(V0);
+                    [channel + i * 158 + f0 + j * 20] = h(V1);
+                    [channel + i * 158 + 2] = h(hu[channel + i * 158 + 2] | 0100);
+                    [channel + i * 158 + f6 + j * 20] = h(A1 & fff3);
+                }
+            }
+        }
+    }
+}
