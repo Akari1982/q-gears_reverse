@@ -442,19 +442,19 @@ Xeno::System::SoundUpdateSequence()
                 }
             }
         } while ((psxMemRead16(channel_p + i * 0x158 + 0x0) & 0x0500) == 0);
-/*
-        [channel + i * 158 + 14] = w(sequence); // store new sequence position
 
-        if (hu[channel + i * 158 + 0] == 0)
+        psxMemWrite32(channel + i * 0x158 + 0x14, sequence); // store new sequence position
+
+        if (psxMemRead16(channel + i * 0x158 + 0x0) == 0)
         {
             continue; // go to next channel
         }
 
-        if (hu[channel + i * 158 + 0] & 0800)
+        if (psxMemRead16(channel + i * 0x158 + 0x0) & 0x0800)
         {
-            [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0200);
+            psxMemWrite16(channel + i * 0x158 + 0x0, psxMemRead16(channel + i * 0x158 + 0x0) | 0x0200);
         }
-
+/*
         // check next opcode
         stack = hu[channel + i * 158 + 72];
         A0 = channel + i * 158 + 9c + stack * c;
@@ -518,17 +518,18 @@ Xeno::System::SoundUpdateSequence()
             [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & efff);
         }
 
+*/
         // calculate and set note length
-        A1 = b[channel + i * 158 + 60] + hu[channel + i * 158 + 5c];
+        A1 = psxMemRead8(channel + i * 0x158 + 0x60) + psxMemRead16(channel + i * 0x158 + 0x5c);
         if ((A1 << 10) <= 0)
         {
-            A1 = hu[channel + i * 158 + 5c] + A1;
-            [channel + i * 158 + 60] = b(b[channel + i * 158 + 60] + bu[channel + i * 158 + 5c]);
+            A1 = psxMemRead16(channel + i * 0x158 + 5c) + A1;
+            psxMemWrite8(channel + i * 0x158 + 0x60, psxMemRead8(channel + i * 0x158 + 0x60) + psxMemRead8(channel + i * 0x158 + 0x5c));
         }
         V1 = 7fff;
-        if (([channel + i * 158 + 0] & 0600) == 0)
+        if ((psxMemRead16(channel + i * 0x158 + 0x0) & 0x0600) == 0)
         {
-            V1 = hu[channel + i * 158 + 62];
+            V1 = psxMemRead16(channel + i * 0x158 + 0x62);
             if (V1 == f)
             {
                 V1 = A1 - 1;
@@ -550,48 +551,50 @@ Xeno::System::SoundUpdateSequence()
                 }
             }
         }
-        [channel + i * 158 + 5c] = w((V1 << 10) + ((A1 << 10) >> 10));
+        psxMemWrite32(channel + i * 0x158 + 0x5c, (V1 << 10) + ((A1 << 10) >> 10));
 
-        if (play_note != 0)
+
+
+
+        if (play_note == true)
         {
-            if (hu[channel + i * 158 + 4] & 0004)
+            if (psxMemRead16(channel + i * 0x158 + 0x4) & 0x0004)
             {
-                V0 = (bu[channel + i * 158 + 65] - bu[channel + i * 158 + 64]) << 18; // diff
+                V0 = (psxMemRead8(channel + i * 0x158 + 0x65) - psxMemRead8(channel + i * 0x158 + 0x64)) << 0x18; // diff
                 if (V0 != 0)
                 {
-                    [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0001); // base pitch update
-                    [channel + i * 158 + 94] = h(hu[channel + i * 158 + 70]); // base pitch update timer
-                    [channel + i * 158 + 68] = w(((bu[channel + i * 158 + 64] << 8) + h[channel + i * 158 + 6e] + h[channel + i * 158 + 6c]) << 10); // base pitch
-                    [channel + i * 158 + 84] = w(V0 / hu[channel + i * 158 + 70]); // base pitch add
+                    psxMemWrite16(channel + i * 0x158 + 0x4, psxMemRead16(channel + i * 0x158 + 0x4) | 0x0001); // base pitch update
+                    psxMemWrite16(channel + i * 0x158 + 0x94, psxMemRead16(channel + i * 0x158 + 0x70)); // base pitch update timer
+                    psxMemWrite32(channel + i * 0x158 + 0x68, ((psxMemRead8(channel + i * 0x158 + 0x64) << 0x8) + psxMemRead16(channel + i * 0x158 + 0x6e) + psxMemRead16(channel + i * 0x158 + 0x6c)) << 0x10); // base pitch
+                    psxMemWrite32(channel + i * 0x158 + 0x84, V0 / psxMemRead16(channel + i * 0x158 + 0x70)); // base pitch add
                 }
             }
-            [channel + i * 158 + 64] = b(bu[channel + i * 158 + 65]);
+            [channel + i * 158 + 64] = b(psxMemRead8(channel + i * 0x158 + 0x65));
 
-            if (hu[channel + i * 158 + 4] & 0100)
+            if (psxMemRead16(channel + i * 0x158 + 0x4) & 0x0100)
             {
-                [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0008); // base volume update
-                [channel + i * 158 + 96] = h(hu[channel + i * 158 + 80]); // base volume update timer
-                [channel + i * 158 + 78] = w(hu[channel + i * 158 + 82] << 10); // base volume
-                [channel + i * 158 + 88] = w(w[channel + i * 158 + 7c]); // base volume add
+                psxMemWrite16(channel + i * 0x158 + 0x4, psxMemRead16(channel + i * 0x158 + 0x4) | 0x0008); // base volume update
+                psxMemWrite16(channel + i * 0x158 + 0x96, psxMemRead16(channel + i * 0x158 + 0x80)); // base volume update timer
+                psxMemWrite32(channel + i * 0x158 + 0x78, psxMemRead16(channel + i * 0x158 + 0x82) << 0x10); // base volume
+                psxMemWrite32(channel + i * 0x158 + 0x88, psxMemRead32(channel + i * 0x158 + 0x7c)); // base volume add
             }
 
             for (int j = 0; j < 4; ++j)
             {
-                A1 = hu[channel + i * 158 + f6 + j * 20];
+                A1 = psxMemRead16(channel + i * 0x158 + 0xf6 + j * 0x20);
                 if ((A1 & 3) == 3)
                 {
-                    V0 = hu[channel + i * 158 + ee + j * 20];
-                    V1 = hu[channel + i * 158 + f2 + j * 20];
-                    [channel + i * 158 + dc + j * 20] = w(0);
-                    [channel + i * 158 + e8 + j * 20] = h(1);
-                    [channel + i * 158 + ec + j * 20] = h(V0);
-                    [channel + i * 158 + f0 + j * 20] = h(V1);
-                    [channel + i * 158 + 2] = h(hu[channel + i * 158 + 2] | 0100);
-                    [channel + i * 158 + f6 + j * 20] = h(A1 & fff3);
+                    V0 = psxMemRead16(channel + i * 0x158 + 0xee + j * 0x20);
+                    V1 = psxMemRead16(channel + i * 0x158 + 0xf2 + j * 0x20);
+                    psxMemWrite32(channel + i * 0x158 + 0xdc + j * 0x20, 0);
+                    psxMemWrite16(channel + i * 0x158 + 0xe8 + j * 0x20, 1);
+                    psxMemWrite16(channel + i * 0x158 + 0xec + j * 0x20, V0);
+                    psxMemWrite16(channel + i * 0x158 + 0xf0 + j * 0x20, V1);
+                    psxMemWrite16(channel + i * 0x158 + 0x2, psxMemRead16(channel + i * 0x158 + 0x2) | 0x0100);
+                    psxMemWrite16(channel + i * 0x158 + 0xf6 + j * 0x20, A1 & 0xfff3);
                 }
             }
         }
-*/
     }
 }
 

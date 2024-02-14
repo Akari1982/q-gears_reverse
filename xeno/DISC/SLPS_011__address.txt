@@ -844,9 +844,18 @@
     +0d2 [][]     volume mod.
     +0d4 [][]     volume distribution add.
     +0d8 start of some data.
-    +0d8 [][][][] function to call.
-    +0ec [][]     some wait timers.
-    +0f6 [][]     init with 0.
+        +00 [][][][] function to call. Base value returned by this func.
+        +04 [][][][] reset with 0.
+        +0c [][][][] ???
+        +10 [][]     reset with 1.
+        +12 [][]     ???
+        +14 [][]     wait until execution.
+        +16 [][]     base wait for reset.
+        +18 [][]     multiplier for value returned by func.
+        +1a [][]     addition to +18.
+        +1c []       type of mod (0 - +d0, 1 - +d2, 2 - +d4). Type 3 - reset.
+        +1d []       ???
+        +1e [][]     init with 0.
     // some additional data related with bu[smd + 15]
 
 80058c78 [][][][] 
