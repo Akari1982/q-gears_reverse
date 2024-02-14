@@ -6268,18 +6268,19 @@ if( A0 != 0 && S1 != 0 )
     func3e138();
 
     [channel + ce] = h(hu[channel + ce] | 0004);
-    [channel + 118] = w(8003f148); // func3f148()
-    [channel + 11c] = w(0);
-    [channel + 124] = w(V0);
-    [channel + 128] = h(1);
-    [channel + 12a] = h(S1);
-    [channel + ec + 2 * 20] = h(bu[sequence + 2] << 2);
-    [channel + 12e] = h(bu[sequence + 2] << 2);
-    [channel + 130] = h(0400);
-    [channel + 132] = h(0400);
-    [channel + 134] = b(2);
-    [channel + 135] = b(3);
-    [channel + f6 + 2 * 20] = h(0003);
+
+    [channel + d8 + 2 * 20 + 0] = w(8003f148); // func3f148()
+    [channel + d8 + 2 * 20 + 4] = w(0);
+    [channel + d8 + 2 * 20 + c] = w(V0);
+    [channel + d8 + 2 * 20 + 10] = h(1);
+    [channel + d8 + 2 * 20 + 12] = h(S1);
+    [channel + d8 + 2 * 20 + 14] = h(bu[sequence + 2] << 2);
+    [channel + d8 + 2 * 20 + 16] = h(bu[sequence + 2] << 2);
+    [channel + d8 + 2 * 20 + 18] = h(0400);
+    [channel + d8 + 2 * 20 + 1a] = h(0400);
+    [channel + d8 + 2 * 20 + 1c] = b(2);
+    [channel + d8 + 2 * 20 + 1d] = b(3);
+    [channel + d8 + 2 * 20 + 1e] = h(0003);
 }
 return sequence + 3;
 ////////////////////////////////
@@ -6306,18 +6307,19 @@ if( A0 != 0 && S2 != 0 )
     func3e138();
 
     [channel + ce] = h(hu[channel + ce] | 0004);
-    [channel + 118] = w(w[8004ff44 + (S3 & f) * 4);
-    [channel + 11c] = w(0);
-    [channel + 124] = w(V0);
-    [channel + 128] = h(1);
-    [channel + 12a] = h(S2);
-    [channel + ec + 2 * 20] = h(0);
-    [channel + 12e] = h(0);
-    [channel + 130] = h(0400);
-    [channel + 132] = h(0400);
-    [channel + 134] = b(2);
-    [channel + 135] = b(S3 & f);
-    [channel + f6 + 2 * 20] = h((((S3 & 0010) == 0) << 1) | 0001);
+
+    [channel + d8 + 2 * 20 + 0] = w(w[8004ff44 + (S3 & f) * 4);
+    [channel + d8 + 2 * 20 + 4] = w(0);
+    [channel + d8 + 2 * 20 + c] = w(V0);
+    [channel + d8 + 2 * 20 + 10] = h(1);
+    [channel + d8 + 2 * 20 + 12] = h(S2);
+    [channel + d8 + 2 * 20 + 14] = h(0);
+    [channel + d8 + 2 * 20 + 16] = h(0);
+    [channel + d8 + 2 * 20 + 18] = h(0400);
+    [channel + d8 + 2 * 20 + 1a] = h(0400);
+    [channel + d8 + 2 * 20 + 1c] = b(2);
+    [channel + d8 + 2 * 20 + 1d] = b(S3 & f);
+    [channel + d8 + 2 * 20 + 1e] = h((((S3 & 0010) == 0) << 1) | 0001);
 }
 return sequence + 3;
 ////////////////////////////////
@@ -6331,7 +6333,8 @@ sequence = A0;
 channel = A2;
 
 [channel + ce] = h(hu[channel + ce] | 0004);
-[channel + 136] = h(hu[channel + 136] | 0001);
+
+[channel + d8 + 2 * 20 + 1e] = h(hu[channel + d8 + 2 * 20 + 1e] | 0001);
 
 return sequence;
 ////////////////////////////////
@@ -6344,8 +6347,9 @@ return sequence;
 sequence = A0;
 channel = A2;
 
-[A2 + ce] = h(hu[A2 + ce] & fffb);
-[A2 + 136] = h(hu[A2 + 136] & fffe);
+[channel + ce] = h(hu[channel + ce] & fffb);
+
+[channel + d8 + 2 * 20 + 1e] = h(hu[channel + d8 + 2 * 20 + 1e] & fffe);
 
 return sequence;
 ////////////////////////////////
@@ -6360,25 +6364,25 @@ channel = A2;
 
 [channel + cc] = h(bu[sequence + 0]);
 
-channel = channel + d8 + hu[channel + cc] * 20;
+channeld8 = channel + d8 + hu[channel + cc] * 20;
 
-[channel + 1d] = b(bu[sequence + 1] & 0f);
+[channeld8 + 1d] = b(bu[sequence + 1] & 0f);
 
-V0 = bu[channel + 1d];
-[channel + 0] = w(w[8004ff44 + V0 * 4]);
+V0 = bu[channeld8 + 1d];
+[channeld8 + 0] = w(w[8004ff44 + V0 * 4]);
+
+[channeld8 + 16] = h(0);
+[channeld8 + 1a] = h(0400);
+[channeld8 + 1c] = b(bu[sequence + 2]);
 
 if ((V1 & 0010) == 0)
 {
-    [channel + 1e] = h(2);
+    [channeld8 + 1e] = h(2);
 }
 else
 {
-    [channel + 1e] = h(0);
+    [channeld8 + 1e] = h(0);
 }
-
-[channel + 1a] = h(0400);
-[channel + 16] = h(0);
-[channel + 1c] = b(bu[sequence + 2]);
 
 return sequence + 3;
 ////////////////////////////////
@@ -6388,33 +6392,26 @@ return sequence + 3;
 ////////////////////////////////
 // spu_opcode_f1()
 
-S1 = A0;
-V0 = bu[S1 + 0000];
-8003E0C0	mult   v0, v0
-V0 = hu[A2 + 00cc];
-V0 = V0 << 05;
-V0 = V0 + 00d8;
-8003E0D4	mflo   v1
-8003E0D8	bgez   v1, L3e0e4 [$8003e0e4]
-S2 = A2 + V0;
-V1 = V1 + 003f;
+sequence = A0;
+channel = A2;
 
-L3e0e4:	; 8003E0E4
-V0 = V1 >> 06;
-A1 = bu[S1 + 0000];
-A0 = bu[S1 + 0002];
-A2 = bu[S2 + 001d];
-A1 = A1 + V0;
+V0 = bu[sequence + 0];
+V1 = V0 * V0;
+V0 = hu[channel + 00cc];
+channeld8 = channel + d8 + V0 * 20;
+
+A0 = bu[sequence + 2];
+A1 = bu[sequence + 0] + V1 / 400;
 S0 = A1;
-V0 = b[S1 + 0001];
-A0 = A0 << 10;
-V0 = V0 << 18;
-A0 = V0 | A0;
+
+A0 = (b[sequence + 1] << 18) | (A0 << 10);
+A2 = bu[channeld8 + 1d];
 func3e138();
 
-[S2 + 000c] = w(V0);
-V0 = S1 + 0003;
-[S2 + 0012] = h(S0);
+[channeld8 + c] = w(V0);
+[channeld8 + 12] = h(S0);
+
+return sequence + 3;
 ////////////////////////////////
 
 
