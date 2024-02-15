@@ -6497,7 +6497,7 @@ S0 = S3 << 05;
 S0 = S0 + 00d8;
 S0 = S2 + S0;
 A0 = S0;
-8003E238	jal    func3e288 [$8003e288]
+func3e288();
 
 V0 = hu[S0 + 001e];
 S1 = S1 + 0001;
@@ -6516,11 +6516,13 @@ V0 = S1;
 ////////////////////////////////
 // func3e288()
 
-[A0 + 4] = w(0);
-[A0 + 10] = h(1);
-[A0 + 14] = h(hu[A0 + 16]);
-[A0 + 18] = h(hu[A0 + 1a]);
-[A0 + 1e] = h(hu[A0 + 1e] & fff3);
+channel_d8 = A0;
+
+[channel_d8 + 4] = w(0);
+[channel_d8 + 10] = h(1);
+[channel_d8 + 14] = h(hu[channel_d8 + 16]);
+[channel_d8 + 18] = h(hu[channel_d8 + 1a]);
+[channel_d8 + 1e] = h(hu[channel_d8 + 1e] & fff3);
 ////////////////////////////////
 
 
@@ -6532,8 +6534,8 @@ sequence = A0;
 channel = A2;
 
 A1 = bu[sequence];
-[channel + f6 + A1 * 20] = h(hu[channel + f6 + A1 * 20] & fffe);
 [channel + ce] = h(hu[channel + ce] & (~(1 << A1)));
+[channel + f6 + A1 * 20] = h(hu[channel + f6 + A1 * 20] & fffe);
 
 return sequence + 1;
 ////////////////////////////////
