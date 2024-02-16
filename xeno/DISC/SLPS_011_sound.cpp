@@ -5872,20 +5872,18 @@ if( A0 != 0 )
             A0 = A0 * A0;
         }
 
-        V0 = S2 << 10;
-        V0 = V0 >> 10;
+        V0 = (S2 << 10) >> 10;
         A1 = V0 * V0;
-        A0 = A0 << 0e;
+        A0 = A0 << e;
         A1 = A1 / 40;
         A1 = S2 + A1;
         S2 = A1;
-        S0 = S3 & 0010;
-        A2 = S3 & 000f;
+        S0 = S3 & 10;
+        A2 = S3 & f;
         S3 = A2;
-        S0 = S0 < 0001;
+        S0 = S0 < 1;
         S0 = S0 << 01;
-        A1 = A1 << 10;
-        A1 = A1 >> 10;
+        A1 = (A1 << 10) >> 10;
         func3e138();
 
         [channel + ce] = h(hu[channel + ce] | 0001);
@@ -6103,6 +6101,22 @@ if( A0 != 0 )
 
         [channel + ce] = h(hu[channel + ce] | 0002);
 
+0 func3f04c()
+1 func3f094()
+2 func3f0e8()
+3 func3f148()
+4 func3f1b0()
+5 func3f1b0()
+6 func3f1fc()
+7 func3f268()
+8 func3f038()
+9 func3f038()
+a func3f038()
+b func3f038()
+c func3f038()
+d func3f038()
+e func3f038()
+f func3f038()
         [channel + d8 + 1 * 20 + 0] = w(w[8004ff44 + S3 * 4]);
         [channel + d8 + 1 * 20 + c] = w(V0);
         [channel + d8 + 1 * 20 + 12] = h(S2);
@@ -6364,24 +6378,24 @@ channel = A2;
 
 [channel + cc] = h(bu[sequence + 0]);
 
-channeld8 = channel + d8 + hu[channel + cc] * 20;
+channel_d8 = channel + d8 + hu[channel + cc] * 20;
 
-[channeld8 + 1d] = b(bu[sequence + 1] & 0f);
+[channel_d8 + 1d] = b(bu[sequence + 1] & 0f);
 
-V0 = bu[channeld8 + 1d];
-[channeld8 + 0] = w(w[8004ff44 + V0 * 4]);
+V0 = bu[channel_d8 + 1d];
+[channel_d8 + 0] = w(w[8004ff44 + V0 * 4]);
 
-[channeld8 + 16] = h(0);
-[channeld8 + 1a] = h(0400);
-[channeld8 + 1c] = b(bu[sequence + 2]);
+[channel_d8 + 16] = h(0);
+[channel_d8 + 1a] = h(0400);
+[channel_d8 + 1c] = b(bu[sequence + 2]);
 
 if ((V1 & 0010) == 0)
 {
-    [channeld8 + 1e] = h(2);
+    [channel_d8 + 1e] = h(2);
 }
 else
 {
-    [channeld8 + 1e] = h(0);
+    [channel_d8 + 1e] = h(0);
 }
 
 return sequence + 3;
@@ -6421,12 +6435,12 @@ return sequence + 3;
 
 if( A0 != 0 )
 {
-    V0 = A1 << 10;
-    A1 = V0 >> 10;
+    A1 = (A1 << 10) >> 10;
+
     if( A1 != 0 )
     {
-        V0 = A2 << 10;
-        V1 = V0 >> 10;
+        V1 = (A2 << 10) >> 10;
+
         if( V1 >= 2 )
         {
             if( V1 < 4 )
@@ -6452,27 +6466,20 @@ return A0;
 ////////////////////////////////
 // spu_opcode_f2()
 
-V1 = bu[A0 + 0001];
-V0 = hu[A2 + 00cc];
-V1 = V1 + 0001;
-V0 = V0 << 05;
-V0 = V0 + 00d8;
-A2 = A2 + V0;
-V0 = V1 & 00ff;
-8003E1CC	beq    v0, zero, L3e1f8 [$8003e1f8]
-V1 = 0400;
-V0 = V0 << 02;
-8003E1D8	div    v1, v0
-8003E1DC	mflo   v1
-V0 = bu[A0 + 0000];
-8003E1E4	nop
-V0 = V0 << 02;
-[A2 + 0016] = h(V0);
-[A2 + 001a] = h(V1);
-[A2 + 0018] = h(V1);
+sequence = A0;
+channel = A2;
 
-L3e1f8:	; 8003E1F8
-return A0 + 2;
+V1 = (bu[sequence + 1] + 1) & ff;
+V0 = hu[channel + cc];
+
+if( V1 != 0 )
+{
+    [channel + d8 + V0 * 20 + 16] = h(bu[sequence + 0] * 4);
+    [channel + d8 + V0 * 20 + 1a] = h(400 / (V1 * 4));
+    [channel + d8 + V0 * 20 + 18] = h(400 / (V1 * 4));
+}
+
+return sequence + 2;
 ////////////////////////////////
 
 
@@ -6490,25 +6497,22 @@ return sequence;
 ////////////////////////////////
 // spu_opcode_f6()
 
+sequence = A0;
+channel = A2;
+
 S1 = A0;
-S3 = bu[S1 + 0000];
-S2 = A2;
-S0 = S3 << 05;
-S0 = S0 + 00d8;
-S0 = S2 + S0;
+S3 = bu[sequence + 0];
+
+S0 = channel + d8 + S3 * 40;
+
 A0 = S0;
 func3e288();
 
-V0 = hu[S0 + 001e];
-S1 = S1 + 0001;
-V0 = V0 | 0001;
-[S0 + 001e] = h(V0);
-V0 = 0001;
-V1 = hu[S2 + 00ce];
-V0 = V0 << S3;
-V1 = V1 | V0;
-V0 = S1;
-[S2 + 00ce] = h(V1);
+[S0 + 1e] = h(hu[S0 + 1e] | 0001);
+
+[channel + ce] = h(hu[channel + ce] | (1 << S3));
+
+return sequence + 1;
 ////////////////////////////////
 
 
@@ -7201,231 +7205,196 @@ V0 = V0 & fffe;
 
 
 ////////////////////////////////
-// func3f04c
-V0 = hu[A0 + 0010];
-8003F050	nop
-8003F054	addiu  v0, v0, $ffff (=-$1)
-[A0 + 0010] = h(V0);
-V0 = V0 & ffff;
-8003F060	bne    v0, zero, L3f088 [$8003f088]
-A1 = 0;
-V0 = hu[A0 + 0012];
-V1 = w[A0 + 0004];
-8003F070	nop
-8003F074	bne    v1, zero, L3f080 [$8003f080]
-[A0 + 0010] = h(V0);
-A1 = w[A0 + 000c];
+// func3f04c()
+// d8_00()
 
-L3f080:	; 8003F080
-8003F080	nop
-[A0 + 0004] = w(A1);
+channel_d8 = A0;
 
-L3f088:	; 8003F088
-V0 = w[A0 + 0004];
-8003F08C	jr     ra 
-8003F090	nop
+[channel_d8 + 10] = h(hu[channel_d8 + 10] - 1); // current wait
+
+if( hu[channel_d8 + 10] == 0 )
+{
+    [channel_d8 + 10] = h(hu[channel_d8 + 12]);
+
+    A1 = 0;
+    if( w[channel_d8 + 4] == 0 )
+    {
+        A1 = w[channel_d8 + c];
+    }
+    [channel_d8 + 4] = w(A1);
+}
+
+return w[channel_d8 + 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f094
-V0 = hu[A0 + 0010];
-8003F098	nop
-8003F09C	addiu  v0, v0, $ffff (=-$1)
-[A0 + 0010] = h(V0);
-V0 = V0 & ffff;
-8003F0A8	bne    v0, zero, L3f0dc [$8003f0dc]
-8003F0AC	nop
-A1 = w[A0 + 000c];
-V0 = hu[A0 + 001e];
-V1 = hu[A0 + 0012];
-V0 = V0 & 0008;
-8003F0C0	beq    v0, zero, L3f0cc [$8003f0cc]
-[A0 + 0010] = h(V1);
-A1 = 0 - A1;
+// func3f094()
+// d8_01()
 
-L3f0cc:	; 8003F0CC
-V0 = hu[A0 + 001e];
-[A0 + 0004] = w(A1);
-V0 = V0 ^ 0008;
-[A0 + 001e] = h(V0);
+channel_d8 = A0;
 
-L3f0dc:	; 8003F0DC
-V0 = w[A0 + 0004];
-8003F0E0	jr     ra 
-8003F0E4	nop
+[channel_d8 + 10] = h(hu[channel_d8 + 10] - 1); // current wait
+
+if( hu[channel_d8 + 10] == 0 )
+{
+    [channel_d8 + 10] = h(hu[channel_d8 + 12]);
+
+    A1 = w[channel_d8 + c];
+    if( hu[channel_d8 + 1e] & 0008 )
+    {
+        A1 = -A1;
+    }
+    [channel_d8 + 4] = w(A1);
+
+    [channel_d8 + 1e] = h(hu[channel_d8 + 1e] ^ 0008);
+}
+
+return w[channel_d8 + 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f0e8
-V0 = hu[A0 + 0010];
-8003F0EC	nop
-8003F0F0	addiu  v0, v0, $ffff (=-$1)
-[A0 + 0010] = h(V0);
-V0 = V0 & ffff;
-8003F0FC	bne    v0, zero, L3f130 [$8003f130]
-8003F100	nop
-A1 = w[A0 + 000c];
-V0 = hu[A0 + 001e];
-V1 = hu[A0 + 0012];
-V0 = V0 & 0008;
-8003F114	beq    v0, zero, L3f120 [$8003f120]
-[A0 + 0010] = h(V1);
-A1 = 0 - A1;
+// func3f0e8()
+// d8_02()
 
-L3f120:	; 8003F120
-V0 = hu[A0 + 001e];
-[A0 + 0008] = w(A1);
-V0 = V0 ^ 0008;
-[A0 + 001e] = h(V0);
+channel_d8 = A0;
 
-L3f130:	; 8003F130
-V0 = w[A0 + 0004];
-V1 = w[A0 + 0008];
-8003F138	nop
-V0 = V0 + V1;
-8003F140	jr     ra 
-[A0 + 0004] = w(V0);
+[channel_d8 + 10] = h(hu[channel_d8 + 10] - 1); // current wait
+
+if( hu[channel_d8 + 10] == 0 )
+{
+    [channel_d8 + 10] = h(hu[channel_d8 + 12]);
+
+    A1 = w[channel_d8 + c];
+    if( hu[channel_d8 + 1e] & 0008 )
+    {
+        A1 = -A1;
+    }
+    [channel_d8 + 8] = w(A1);
+
+    [channel_d8 + 1e] = h(hu[channel_d8 + 1e] ^ 0008);
+}
+
+[channel_d8 + 4] = w(w[channel_d8 + 4] + w[channel_d8 + 8]);
+
+return w[channel_d8 + 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func3f148()
+// d8_03()
 
-A1 = hu[A0 + 0010];
-8003F14C	nop
-8003F150	addiu  a1, a1, $ffff (=-$1)
-8003F154	bne    a1, zero, L3f198 [$8003f198]
-8003F158	nop
-V1 = hu[A0 + 001e];
-A1 = hu[A0 + 0012];
-V0 = V1 & 0004;
-8003F168	beq    v0, zero, L3f174 [$8003f174]
-8003F16C	nop
-A1 = A1 << 01;
+channel_d8 = A0;
 
-L3f174:	; 8003F174
-A2 = w[A0 + 000c];
-V0 = V1 & 0008;
-8003F17C	beq    v0, zero, L3f18c [$8003f18c]
-[A0 + 0008] = w(A2);
-V0 = 0 - A2;
-[A0 + 0008] = w(V0);
+A1 = hu[channel_d8 + 10] - 1;
 
-L3f18c:	; 8003F18C
-V0 = V1 | 0004;
-V1 = V0 ^ 0008;
-[A0 + 001e] = h(V1);
+if( A1 == 0 )
+{
+    V1 = hu[channel_d8 + 1e];
 
-L3f198:	; 8003F198
-V0 = w[A0 + 0004];
-V1 = w[A0 + 0008];
-[A0 + 0010] = h(A1);
-V0 = V0 + V1;
-[A0 + 0004] = w(V0);
+    A1 = hu[channel_d8 + 12];
+    if( V1 & 0004 )
+    {
+        A1 = A1 << 1;
+    }
+
+    A2 = w[channel_d8 + c];
+    [channel_d8 + 8] = w(A2);
+    if( V1 & 0008 )
+    {
+        [channel_d8 + 8] = w(-A2);
+    }
+
+    [channel_d8 + 1e] = h((V1 | 0004) ^ 0008);
+}
+
+[channel_d8 + 10] = h(A1);
+
+[channel_d8 + 4] = w(w[channel_d8 + 4] + w[channel_d8 + 8]);
+
+return w[channel_d8 + 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f1b0
-V0 = hu[A0 + 0010];
-8003F1B4	nop
-8003F1B8	addiu  v0, v0, $ffff (=-$1)
-[A0 + 0010] = h(V0);
-V0 = V0 & ffff;
-8003F1C4	bne    v0, zero, L3f1dc [$8003f1dc]
-8003F1C8	nop
-V0 = hu[A0 + 0012];
-[A0 + 0004] = w(0);
-8003F1D4	j      L3f1f0 [$8003f1f0]
-[A0 + 0010] = h(V0);
+// func3f1b0()
+// d8_04()
+// d8_05()
 
-L3f1dc:	; 8003F1DC
-V0 = w[A0 + 0004];
-V1 = w[A0 + 000c];
-8003F1E4	nop
-V0 = V0 + V1;
-[A0 + 0004] = w(V0);
+channel_d8 = A0;
 
-L3f1f0:	; 8003F1F0
-V0 = w[A0 + 0004];
-8003F1F4	jr     ra 
-8003F1F8	nop
+[channel_d8 + 10] = h(hu[channel_d8 + 10] - 1); // current wait
+
+if (hu[channel_d8 + 10] == 0)
+{
+    [channel_d8 + 10] = h(hu[channel_d8 + 12]);
+
+    [channel_d8 + 4] = w(0);
+}
+else
+{
+    [channel_d8 + 4] = w(w[channel_d8 + 4] + w[channel_d8 + c]);
+}
+
+return w[channel_d8 + 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f1fc
-8003F1FC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
-8003F208	jal    func3f2e4 [$8003f2e4]
+// func3f1fc()
+// d8_06()
+
+channel_d8 = A0;
+
+func3f2e4();
+
+[channel_d8 + 10] = h(hu[channel_d8 + 10] - 1); // current wait
+
+if ( hu[channel_d8 + 10] == 0)
+{
+    [channel_d8 + 10] = h(hu[channel_d8 + 12]);
+
+    func3f2e4();
+
+    [channel_d8 + 4] = w((w[channel_d8 + c] >> f) * V0);
+}
+
+return w[channel_d8 + 4];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3f268()
+// d8_07()
+
 S0 = A0;
-V0 = hu[S0 + 0010];
-8003F214	nop
-8003F218	addiu  v0, v0, $ffff (=-$1)
-[S0 + 0010] = h(V0);
-V0 = V0 & ffff;
-8003F224	bne    v0, zero, L3f250 [$8003f250]
-8003F228	nop
-V0 = hu[S0 + 0012];
-8003F230	jal    func3f2e4 [$8003f2e4]
-[S0 + 0010] = h(V0);
-V1 = w[S0 + 000c];
-8003F23C	nop
-V1 = V1 >> 0f;
-8003F244	mult   v1, v0
-8003F248	mflo   v0
-[S0 + 0004] = w(V0);
-
-L3f250:	; 8003F250
-V0 = w[S0 + 0004];
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8003F260	jr     ra 
-8003F264	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3f268
-8003F268	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(RA);
 V0 = hu[S0 + 0010];
 8003F27C	nop
 8003F280	addiu  v0, v0, $ffff (=-$1)
 [S0 + 0010] = h(V0);
 V0 = V0 & ffff;
-8003F28C	bne    v0, zero, L3f2bc [$8003f2bc]
-8003F290	nop
-V0 = hu[S0 + 0012];
-8003F298	jal    func3f2e4 [$8003f2e4]
-[S0 + 0010] = h(V0);
-A0 = w[S0 + 000c];
-8003F2A4	nop
-V1 = A0 >> 0e;
-8003F2AC	mult   v1, v0
-8003F2B0	mflo   v0
-V0 = V0 - A0;
-[S0 + 0004] = w(V0);
+if( V0 == 0 )
+{
+    V0 = hu[S0 + 0012];
+    [S0 + 0010] = h(V0);
 
-L3f2bc:	; 8003F2BC
-V0 = w[S0 + 0004];
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8003F2CC	jr     ra 
-8003F2D0	nop
+    8003F298	jal    func3f2e4 [$8003f2e4]
+
+    A0 = w[S0 + 000c];
+    V1 = A0 >> 0e;
+    V0 = V1 * V0;
+    [S0 + 0004] = w(V0 - A0);
+}
+
+return w[S0 + 0004];
 ////////////////////////////////
 
 
@@ -7441,15 +7410,14 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func3f2e4
+
 V0 = w[80058b80];
-8003F2EC	nop
 V1 = V0 << 11;
 V0 = V0 ^ V1;
 V1 = V0 >> 0f;
 V0 = V0 ^ V1;
 [80058b80] = w(V0);
-8003F308	jr     ra 
-V0 = V0 & 7fff;
+return V0 & 7fff;
 ////////////////////////////////
 
 

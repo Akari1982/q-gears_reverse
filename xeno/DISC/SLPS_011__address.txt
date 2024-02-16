@@ -839,16 +839,17 @@
         +3 []       stored base pitch before jump back.
         +4 [][][][] sequence position.
         +8 [][][][] sequence position before jump back.
+    +0cc [][]     some id in +d8
     +0ce [][]     init with 0.
     +0d0 [][]     pitch related. Init with 0.
     +0d2 [][]     volume mod.
     +0d4 [][]     volume distribution add.
     +0d8 start of some data.
         +00 [][][][] function to call. Base value returned by this func.
-        +04 [][][][] reset with 0.
-        +0c [][][][] ???
-        +10 [][]     reset with 1.
-        +12 [][]     ???
+        +04 [][][][] function current return value. Reset with 0.
+        +0c [][][][] function base return value.
+        +10 [][]     func exec current wait (inside func update only when this is 0).
+        +12 [][]     func exec wait.
         +14 [][]     wait until execution.
         +16 [][]     base wait for reset.
         +18 [][]     multiplier for value returned by func.
@@ -856,6 +857,7 @@
         +1c []       type of mod (0 - +d0, 1 - +d2, 2 - +d4). Type 3 - reset.
         +1d []       ???
         +1e [][]     init with 0.
+                        0x0008 - flag that switch value for fucntions.
     // some additional data related with bu[smd + 15]
 
 80058c78 [][][][] 
