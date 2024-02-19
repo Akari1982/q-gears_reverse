@@ -5752,7 +5752,7 @@ if( ( A1 != 0 ) && ( V0 != 0 ) )
 }
 else
 {
-    [A2 + 4] = h(hu[A2 + 4] & fffe);
+    [channel + 4] = h(hu[channel + 4] & fffe);
 }
 return sequence + 2;
 ////////////////////////////////

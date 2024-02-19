@@ -14,19 +14,19 @@ typedef u32 (*SoundOpcode) (const u32 sequence_p, const u32 main_p, const u32 ch
 SoundOpcode sound_opcodes[] =
 {
 // 0x80
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeNull, Opcode81,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0x88
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0x90
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, Opcode94,   OpcodeNull, OpcodeNull, OpcodeNull,
+    Opcode90,   OpcodeNull, OpcodeNull, OpcodeNull, Opcode94,   OpcodeNull, OpcodeNull, OpcodeNull,
 // 0x98
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    Opcode98,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xa0
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xa8
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeAD,   OpcodeNull, OpcodeNull,
 // 0xb0
-    OpcodeNull, OpcodeNull, OpcodeB2,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeB0,   OpcodeNull, OpcodeB2,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xb8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xc0
@@ -34,11 +34,11 @@ SoundOpcode sound_opcodes[] =
 // 0xc8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xd0
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeNull, OpcodeNull, OpcodeD2,   OpcodeNull, OpcodeD4,   OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xd8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xe0
-    OpcodeE0,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeE0,   OpcodeNull, OpcodeE2,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xe8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xf0
@@ -414,27 +414,12 @@ Xeno::System::SoundUpdateSequence()
                     continue;
                 }
 
-                //sizeof(sound_opcodes)
-
                 char buffer[50];
                 sprintf(buffer, "Opcode: 0x%02x", opcode);
                 GPU_displayText(buffer);
 
                 sequence_p = sound_opcodes[func](sequence_p, main_p, channel_p + i * 0x158);
-/*
-                A0 = sequence;
-                A1 = main;
-                V0 = (opcode - 80) * 4;
-                V0 = w[8004fcc4 + V0];
-                A2 = channel + i * 158;
 
-                8003CBA8 82 83 84 85 86 87 88 89 8b 8c 92 93 9b 9f a3 a8 ab b9 bf cb cc cd ce cf dd de df f3 f4 fa fb
-
-                // call "spu_opcode_" + 0xXX
-                8003C76C	jalr   v0 ra
-
-                sequence = V0;
-*/
                 if (psxMemRead16(channel_p + i * 0x158 + 0x0) == 0)
                 {
                     psxMemWrite32(main_p + 0x48, psxMemRead32(main_p + 0x48) & ~(1 << psxMemRead8(channel_p + i * 0x158 + 0x6)));
@@ -443,16 +428,16 @@ Xeno::System::SoundUpdateSequence()
             }
         } while ((psxMemRead16(channel_p + i * 0x158 + 0x0) & 0x0500) == 0);
 
-        psxMemWrite32(channel + i * 0x158 + 0x14, sequence); // store new sequence position
+        psxMemWrite32(channel_p + i * 0x158 + 0x14, sequence_p); // store new sequence position
 
-        if (psxMemRead16(channel + i * 0x158 + 0x0) == 0)
+        if (psxMemRead16(channel_p + i * 0x158 + 0x0) == 0)
         {
             continue; // go to next channel
         }
 
-        if (psxMemRead16(channel + i * 0x158 + 0x0) & 0x0800)
+        if (psxMemRead16(channel_p + i * 0x158 + 0x0) & 0x0800)
         {
-            psxMemWrite16(channel + i * 0x158 + 0x0, psxMemRead16(channel + i * 0x158 + 0x0) | 0x0200);
+            psxMemWrite16(channel_p + i * 0x158 + 0x0, psxMemRead16(channel_p + i * 0x158 + 0x0) | 0x0200);
         }
 /*
         // check next opcode
@@ -520,78 +505,74 @@ Xeno::System::SoundUpdateSequence()
 
 */
         // calculate and set note length
-        A1 = psxMemRead8(channel + i * 0x158 + 0x60) + psxMemRead16(channel + i * 0x158 + 0x5c);
-        if ((A1 << 10) <= 0)
+        u32 A1 = psxMemRead8(channel_p + i * 0x158 + 0x60) + psxMemRead16(channel_p + i * 0x158 + 0x5c);
+        if ((A1 << 0x10) <= 0)
         {
-            A1 = psxMemRead16(channel + i * 0x158 + 5c) + A1;
-            psxMemWrite8(channel + i * 0x158 + 0x60, psxMemRead8(channel + i * 0x158 + 0x60) + psxMemRead8(channel + i * 0x158 + 0x5c));
+            A1 = psxMemRead16(channel_p + i * 0x158 + 0x5c) + A1;
+            psxMemWrite8(channel_p + i * 0x158 + 0x60, psxMemRead8(channel_p + i * 0x158 + 0x60) + psxMemRead8(channel_p + i * 0x158 + 0x5c));
         }
-        V1 = 7fff;
-        if ((psxMemRead16(channel + i * 0x158 + 0x0) & 0x0600) == 0)
+        u32 V1 = 0x7fff;
+        if ((psxMemRead16(channel_p + i * 0x158 + 0x0) & 0x0600) == 0)
         {
-            V1 = psxMemRead16(channel + i * 0x158 + 0x62);
-            if (V1 == f)
+            V1 = psxMemRead16(channel_p + i * 0x158 + 0x62);
+            if (V1 == 0xf)
             {
                 V1 = A1 - 1;
-                if ((V1 & ffff) == 0)
+                if ((V1 & 0xffff) == 0)
                 {
                     V1 = 1;
                 }
             }
-            else if (V1 == 10)
+            else if (V1 == 0x10)
             {
                 V1 = A1;
             }
             else
             {
-                V1 = (((A1 << 10) >> 10) * V1) >> 4;
-                if( ( V1 & ffff ) == 0 )
+                V1 = (((A1 << 0x10) >> 0x10) * V1) >> 4;
+                if( ( V1 & 0xffff ) == 0 )
                 {
                     V1 = 1;
                 }
             }
         }
-        psxMemWrite32(channel + i * 0x158 + 0x5c, (V1 << 10) + ((A1 << 10) >> 10));
-
-
-
+        psxMemWrite32(channel_p + i * 0x158 + 0x5c, (V1 << 0x10) + ((A1 << 0x10) >> 0x10));
 
         if (play_note == true)
         {
-            if (psxMemRead16(channel + i * 0x158 + 0x4) & 0x0004)
+            if (psxMemRead16(channel_p + i * 0x158 + 0x4) & 0x0004)
             {
-                V0 = (psxMemRead8(channel + i * 0x158 + 0x65) - psxMemRead8(channel + i * 0x158 + 0x64)) << 0x18; // diff
+                u8 V0 = (psxMemRead8(channel_p + i * 0x158 + 0x65) - psxMemRead8(channel_p + i * 0x158 + 0x64)) << 0x18; // diff
                 if (V0 != 0)
                 {
-                    psxMemWrite16(channel + i * 0x158 + 0x4, psxMemRead16(channel + i * 0x158 + 0x4) | 0x0001); // base pitch update
-                    psxMemWrite16(channel + i * 0x158 + 0x94, psxMemRead16(channel + i * 0x158 + 0x70)); // base pitch update timer
-                    psxMemWrite32(channel + i * 0x158 + 0x68, ((psxMemRead8(channel + i * 0x158 + 0x64) << 0x8) + psxMemRead16(channel + i * 0x158 + 0x6e) + psxMemRead16(channel + i * 0x158 + 0x6c)) << 0x10); // base pitch
-                    psxMemWrite32(channel + i * 0x158 + 0x84, V0 / psxMemRead16(channel + i * 0x158 + 0x70)); // base pitch add
+                    psxMemWrite16(channel_p + i * 0x158 + 0x4, psxMemRead16(channel_p + i * 0x158 + 0x4) | 0x0001); // base pitch update
+                    psxMemWrite16(channel_p + i * 0x158 + 0x94, psxMemRead16(channel_p + i * 0x158 + 0x70)); // base pitch update timer
+                    psxMemWrite32(channel_p + i * 0x158 + 0x68, ((psxMemRead8(channel_p + i * 0x158 + 0x64) << 0x8) + psxMemRead16(channel_p + i * 0x158 + 0x6e) + psxMemRead16(channel_p + i * 0x158 + 0x6c)) << 0x10); // base pitch
+                    psxMemWrite32(channel_p + i * 0x158 + 0x84, V0 / psxMemRead16(channel_p + i * 0x158 + 0x70)); // base pitch add
                 }
             }
-            [channel + i * 158 + 64] = b(psxMemRead8(channel + i * 0x158 + 0x65));
+            psxMemWrite8(channel_p + i * 0x158 + 0x64, psxMemRead8(channel_p + i * 0x158 + 0x65));
 
-            if (psxMemRead16(channel + i * 0x158 + 0x4) & 0x0100)
+            if (psxMemRead16(channel_p + i * 0x158 + 0x4) & 0x0100)
             {
-                psxMemWrite16(channel + i * 0x158 + 0x4, psxMemRead16(channel + i * 0x158 + 0x4) | 0x0008); // base volume update
-                psxMemWrite16(channel + i * 0x158 + 0x96, psxMemRead16(channel + i * 0x158 + 0x80)); // base volume update timer
-                psxMemWrite32(channel + i * 0x158 + 0x78, psxMemRead16(channel + i * 0x158 + 0x82) << 0x10); // base volume
-                psxMemWrite32(channel + i * 0x158 + 0x88, psxMemRead32(channel + i * 0x158 + 0x7c)); // base volume add
+                psxMemWrite16(channel_p + i * 0x158 + 0x4, psxMemRead16(channel_p + i * 0x158 + 0x4) | 0x0008); // base volume update
+                psxMemWrite16(channel_p + i * 0x158 + 0x96, psxMemRead16(channel_p + i * 0x158 + 0x80)); // base volume update timer
+                psxMemWrite32(channel_p + i * 0x158 + 0x78, psxMemRead16(channel_p + i * 0x158 + 0x82) << 0x10); // base volume
+                psxMemWrite32(channel_p + i * 0x158 + 0x88, psxMemRead32(channel_p + i * 0x158 + 0x7c)); // base volume add
             }
 
             for (int j = 0; j < 4; ++j)
             {
-                A1 = psxMemRead16(channel + i * 0x158 + 0xf6 + j * 0x20);
+                A1 = psxMemRead16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x1e);
                 if ((A1 & 3) == 3)
                 {
-                    V0 = psxMemRead16(channel + i * 0x158 + 0xee + j * 0x20);
-                    V1 = psxMemRead16(channel + i * 0x158 + 0xf2 + j * 0x20);
-                    psxMemWrite32(channel + i * 0x158 + 0xdc + j * 0x20, 0);
-                    psxMemWrite16(channel + i * 0x158 + 0xe8 + j * 0x20, 1);
-                    psxMemWrite16(channel + i * 0x158 + 0xec + j * 0x20, V0);
-                    psxMemWrite16(channel + i * 0x158 + 0xf0 + j * 0x20, V1);
-                    psxMemWrite16(channel + i * 0x158 + 0x2, psxMemRead16(channel + i * 0x158 + 0x2) | 0x0100);
-                    psxMemWrite16(channel + i * 0x158 + 0xf6 + j * 0x20, A1 & 0xfff3);
+                    psxMemWrite16(channel_p + i * 0x158 + 0x2, psxMemRead16(channel_p + i * 0x158 + 0x2) | 0x0100);
+
+                    psxMemWrite32(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x4, 0);
+                    psxMemWrite16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x10, 1);
+                    psxMemWrite16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x14, psxMemRead16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x16));
+                    psxMemWrite16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x18, psxMemRead16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x1a));
+                    psxMemWrite16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x1e, A1 & 0xfff3);
                 }
             }
         }
