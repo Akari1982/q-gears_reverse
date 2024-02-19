@@ -5815,16 +5815,16 @@ sequence = A0;
 channel = A2;
 
 A0 = b[sequence + 1];
-S1 = bu[sequence + 0];
+func_wait = bu[sequence + 0];
 
-if( A0 != 0 && S1 != 0 )
+if( A0 != 0 && func_wait != 0 )
 {
-    S1 = S1 + ((S1 * S1) >> 6);
+    func_wait += (func_wait * func_wait) >> 6;
 
     V0 = ( A0 < 0 ) ? -A0 : A0;
 
     A0 = (A0 * V0) << e;
-    A1 = S1;
+    A1 = func_wait;
     A2 = 3;
     func3e138();
 
@@ -5834,7 +5834,7 @@ if( A0 != 0 && S1 != 0 )
     [channel + d8 + 0 * 20 + 4] = w(0);
     [channel + d8 + 0 * 20 + c] = w(V0);
     [channel + d8 + 0 * 20 + 10] = h(1);
-    [channel + d8 + 0 * 20 + 12] = h(S1);
+    [channel + d8 + 0 * 20 + 12] = h(func_wait);
     [channel + d8 + 0 * 20 + 14] = h(bu[sequence + 2] << 2);
     [channel + d8 + 0 * 20 + 16] = h(bu[sequence + 2] << 2);
     [channel + d8 + 0 * 20 + 18] = h(0400);
@@ -6052,7 +6052,7 @@ if( A0 != 0 && S1 != 0 )
 
     [channel + ce] = h(hu[channel + ce] | 0002);
 
-    [channel + d8 + 1 * 20 + 0] = w(8003f0e8);
+    [channel + d8 + 1 * 20 + 0] = w(8003f0e8); // func3f0e8()
     [channel + d8 + 1 * 20 + c] = w(V0);
     [channel + d8 + 1 * 20 + 12] = h(S1);
     [channel + d8 + 1 * 20 + 16] = h(bu[sequence + 2] << 2);
@@ -6101,22 +6101,22 @@ if( A0 != 0 )
 
         [channel + ce] = h(hu[channel + ce] | 0002);
 
-0 func3f04c()
-1 func3f094()
-2 func3f0e8()
-3 func3f148()
-4 func3f1b0()
-5 func3f1b0()
-6 func3f1fc()
-7 func3f268()
-8 func3f038()
-9 func3f038()
-a func3f038()
-b func3f038()
-c func3f038()
-d func3f038()
-e func3f038()
-f func3f038()
+        // 0 func3f04c()
+        // 1 func3f094()
+        // 2 func3f0e8()
+        // 3 func3f148()
+        // 4 func3f1b0()
+        // 5 func3f1b0()
+        // 6 func3f1fc()
+        // 7 func3f268()
+        // 8 func3f038()
+        // 9 func3f038()
+        // a func3f038()
+        // b func3f038()
+        // c func3f038()
+        // d func3f038()
+        // e func3f038()
+        // f func3f038()
         [channel + d8 + 1 * 20 + 0] = w(w[8004ff44 + S3 * 4]);
         [channel + d8 + 1 * 20 + c] = w(V0);
         [channel + d8 + 1 * 20 + 12] = h(S2);
@@ -6380,7 +6380,7 @@ channel = A2;
 
 channel_d8 = channel + d8 + hu[channel + cc] * 20;
 
-[channel_d8 + 1d] = b(bu[sequence + 1] & 0f);
+[channel_d8 + 1d] = b(bu[sequence + 1] & f);
 
 V0 = bu[channel_d8 + 1d];
 [channel_d8 + 0] = w(w[8004ff44 + V0 * 4]);
@@ -7194,12 +7194,14 @@ for (int i = 0; i < number_of_channels; ++i)
 
 
 ////////////////////////////////
-// func3f038
-V0 = hu[A0 + 001e];
-8003F03C	nop
-V0 = V0 & fffe;
-8003F044	jr     ra 
-[A0 + 001e] = h(V0);
+// func3f038()
+// d8_08-0f()
+
+channel_d8 = A0;
+
+[channel_d8 + 1e] = h(hu[channel_d8 + 1e] & fffe);
+
+return hu[channel_d8 + 1e];
 ////////////////////////////////
 
 
@@ -7295,22 +7297,22 @@ A1 = hu[channel_d8 + 10] - 1;
 
 if( A1 == 0 )
 {
-    V1 = hu[channel_d8 + 1e];
+    flags = hu[channel_d8 + 1e];
 
     A1 = hu[channel_d8 + 12];
-    if( V1 & 0004 )
+    if( flags & 0004 )
     {
-        A1 = A1 << 1;
+        A1 = A1 * 2;
     }
 
     A2 = w[channel_d8 + c];
     [channel_d8 + 8] = w(A2);
-    if( V1 & 0008 )
+    if( flags & 0008 )
     {
         [channel_d8 + 8] = w(-A2);
     }
 
-    [channel_d8 + 1e] = h((V1 | 0004) ^ 0008);
+    [channel_d8 + 1e] = h((flags | 0004) ^ 0008);
 }
 
 [channel_d8 + 10] = h(A1);
@@ -7375,41 +7377,34 @@ return w[channel_d8 + 4];
 // func3f268()
 // d8_07()
 
-S0 = A0;
-V0 = hu[S0 + 0010];
-8003F27C	nop
-8003F280	addiu  v0, v0, $ffff (=-$1)
-[S0 + 0010] = h(V0);
-V0 = V0 & ffff;
-if( V0 == 0 )
+channel_d8 = A0;
+
+[channel_d8 + 10] = h(hu[channel_d8 + 10] - 1); // current wait
+
+if( hu[channel_d8 + 10] == 0 )
 {
-    V0 = hu[S0 + 0012];
-    [S0 + 0010] = h(V0);
+    [channel_d8 + 10] = h(hu[channel_d8 + 12]);
 
-    8003F298	jal    func3f2e4 [$8003f2e4]
+    func3f2e4(); // random
 
-    A0 = w[S0 + 000c];
-    V1 = A0 >> 0e;
-    V0 = V1 * V0;
-    [S0 + 0004] = w(V0 - A0);
+    [channel_d8 + 4] = w(((A0 >> e) * V0) - w[channel_d8 + c]);
 }
 
-return w[S0 + 0004];
+return w[channel_d8 + 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f2d4
+// func3f2d4()
+
 [80058b80] = w(A0);
-8003F2DC	jr     ra 
-8003F2E0	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3f2e4
+// func3f2e4()
 
 V0 = w[80058b80];
 V1 = V0 << 11;
@@ -7417,6 +7412,7 @@ V0 = V0 ^ V1;
 V1 = V0 >> 0f;
 V0 = V0 ^ V1;
 [80058b80] = w(V0);
+
 return V0 & 7fff;
 ////////////////////////////////
 

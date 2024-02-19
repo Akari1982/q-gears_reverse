@@ -589,7 +589,7 @@
 80058b6c []       init with 0.
 
 80058b74 [][][][] init with -1.
-80058b80 [][][][] init with 0x12345678.
+80058b80 [][][][] init with 0x12345678. Random for sound opcodes.
 
 80058b90 [][]     id of loaded spu dma transfer.
 80058b94 [][][][] store here 0 when start load battle exe.
@@ -847,16 +847,20 @@
     +0d8 start of some data.
         +00 [][][][] function to call. Base value returned by this func.
         +04 [][][][] function current return value. Reset with 0.
+        +08 [][][][] function addition to current return value + 4.
         +0c [][][][] function base return value.
         +10 [][]     func exec current wait (inside func update only when this is 0).
         +12 [][]     func exec wait.
-        +14 [][]     wait until execution.
+        +14 [][]     current update wait.
         +16 [][]     base wait for reset.
         +18 [][]     multiplier for value returned by func.
         +1a [][]     addition to +18.
-        +1c []       type of mod (0 - +d0, 1 - +d2, 2 - +d4). Type 3 - reset.
-        +1d []       ???
-        +1e [][]     init with 0.
+        +1c []       type of mod (0 - +d0 pitch, 1 - +d2 volume, 2 - +d4 volume distribution).
+        +1d []       fucntion id to call (different type of modifiers for +1d updates).
+        +1e [][]     init with 0. 0x0003 - reset.
+                        0x0001 - enabled.
+                        0x0002 - ???
+                        0x0004 - ???
                         0x0008 - flag that switch value for fucntions.
     // some additional data related with bu[smd + 15]
 
