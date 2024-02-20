@@ -18,7 +18,6 @@ A0 = c;
 A1 = 3;
 system_filesystem_set_dir();
 
-
 A0 = 4; // MASA
 A1 = 0;
 system_memory_set_alloc_user();
@@ -3276,36 +3275,26 @@ for( int i = 0; i < bu[main + 14]; ++i )
 
 
 ////////////////////////////////
-// func3aea4
-8003AEA4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+// func3aea4()
+
 S1 = A0 + 0094;
-[SP + 0010] = w(S0);
 S0 = A0 + 00c4;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-S2 = bu[A0 + 0014];
+S2 = bu[A0 + 14];
 
 loop3aec4:	; 8003AEC4
-V0 = hu[S1 + 0000];
-8003AEC8	nop
-8003AECC	beq    v0, zero, L3aee0 [$8003aee0]
-S1 = S1 + 0158;
-A1 = bu[S0 + fff7];
-8003AED8	jal    system_sound_channel_voice_off_keep_pointer [$8003e74c]
-A0 = S0;
+    V0 = hu[S1 + 0000];
 
-L3aee0:	; 8003AEE0
-8003AEE0	addiu  s2, s2, $ffff (=-$1)
+    if( V0 != 0 )
+    {
+        A0 = S0;
+        A1 = bu[S0 + fff7];
+        system_sound_channel_voice_off_keep_pointer();
+    }
+
+    S1 = S1 + 0158;
+    S2 = S2 - 1;
+    S0 = S0 + 158;
 8003AEE4	bne    s2, zero, loop3aec4 [$8003aec4]
-S0 = S0 + 0158;
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8003AF00	jr     ra 
-8003AF04	nop
 ////////////////////////////////
 
 
