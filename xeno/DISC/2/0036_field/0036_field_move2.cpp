@@ -3224,7 +3224,7 @@ if( h[800c2f0c] != ff )
     system_sound_stop_all_channels_in_current_main()
 
     A0 = w[800b1830];
-    func383d4();
+    system_sound_remove_sed_from_linked_array();
 
     A0 = w[800b1830];
     system_memory_mark_removed_alloc();
@@ -3375,7 +3375,7 @@ system_filesystem_set_dir();
 // func84f9c()
 
 A0 = w[80061c2c];
-func383d4();
+system_sound_remove_sed_from_linked_array();
 
 A0 = w[80061c2c];
 system_memory_mark_removable();

@@ -261,7 +261,7 @@ if( bu[80058be8] != 4 )
 }
 
 A0 = w[80058c6c];
-func383d4(); // sound related
+system_sound_remove_sed_from_linked_array();
 
 A0 = w[80058b1c];
 system_memory_mark_removed_alloc();

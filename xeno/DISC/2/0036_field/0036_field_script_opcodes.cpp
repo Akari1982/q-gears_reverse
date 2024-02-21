@@ -8461,7 +8461,7 @@ V1 = w[800af54c];
 8008EBB8	addiu  sp, sp, $ffe8 (=-$18)
 8008EBBC	addiu  a0, zero, $ffff (=-$1)
 [SP + 0014] = w(RA);
-8008EBC4	jal    $8003a478
+8008EBC4	jal    $system_sound_get_channels_mask_by_sed_id
 [SP + 0010] = w(S0);
 A0 = 0001;
 8008EBD0	jal    read_two_bytes_with_80 [$800ac2c4]

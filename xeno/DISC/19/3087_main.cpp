@@ -329,7 +329,7 @@ A0 = w[V1 + 0818];
 V0 = w[800d2998];
 801E5710	nop
 A0 = w[V0 + 0818];
-801E5718	jal    $800383d4
+801E5718	jal    $system_sound_remove_sed_from_linked_array
 801E571C	nop
 801E5720	jal    $80070d78
 801E5724	nop

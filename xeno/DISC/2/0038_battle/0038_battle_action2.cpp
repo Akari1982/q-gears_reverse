@@ -8677,7 +8677,7 @@ V0 = w[A0 + 0000];
 800C08B4	nop
 800C08B8	bne    v0, s2, Lc08c8 [$800c08c8]
 800C08BC	addiu  s1, s1, $ffff (=-$1)
-800C08C0	jal    $800383d4
+800C08C0	jal    $system_sound_remove_sed_from_linked_array
 800C08C4	nop
 
 Lc08c8:	; 800C08C8

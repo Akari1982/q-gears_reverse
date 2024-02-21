@@ -50666,7 +50666,7 @@ V0 = bu[V1 + 0062];
 V0 = w[V1 + 00b0];
 800A94A0	nop
 A0 = w[V0 + 0008];
-800A94A8	jal    $800383d4
+800A94A8	jal    $system_sound_remove_sed_from_linked_array
 800A94AC	nop
 
 La94b0:	; 800A94B0
@@ -57382,7 +57382,7 @@ V0 = bu[S0 + 0063];
 V0 = w[S0 + 00b4];
 800AF4B8	nop
 A0 = w[V0 + 0008];
-800AF4C0	jal    $800383d4
+800AF4C0	jal    $system_sound_remove_sed_from_linked_array
 800AF4C4	nop
 [S0 + 0063] = b(0);
 
@@ -66522,7 +66522,7 @@ S0 = V1 + V0;
 A0 = S0;
 
 Lb7a98:	; 800B7A98
-800B7A98	jal    $8003a478
+800B7A98	jal    $system_sound_get_channels_mask_by_sed_id
 A0 = S0;
 800B7AA0	beq    v0, zero, Lb7ab8 [$800b7ab8]
 800B7AA4	nop
@@ -66532,7 +66532,7 @@ A0 = S0;
 800B7AB4	nop
 
 Lb7ab8:	; 800B7AB8
-800B7AB8	jal    $800383d4
+800B7AB8	jal    $system_sound_remove_sed_from_linked_array
 A0 = S2;
 800B7AC0	jal    $800381b8
 A0 = S4;
@@ -66741,7 +66741,7 @@ S0 = S0 + 0001;
 800B7D7C	jal    $8001c768
 800B7D80	nop
 A0 = w[8005883c];
-800B7D8C	jal    $800383d4
+800B7D8C	jal    $system_sound_remove_sed_from_linked_array
 800B7D90	nop
 A0 = w[8005883c];
 800B7D9C	jal    $system_memory_mark_removed_alloc

@@ -833,6 +833,7 @@
     +094 [][]     base pitch update timer.
     +096 [][]     base volume update timer.
     +098 [][]     volume distribution update timer.
+    +09a [][]     volume update steps.
     +09с stack structs (0xc size)
         +0 []       number of cycles left
         +2 []       stored base pitch.

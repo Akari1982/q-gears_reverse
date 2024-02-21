@@ -1685,7 +1685,7 @@ S0 = 0;
 system_sound_stop_all_channels_in_current_main();
 
 A0 = w[80061c2c];
-func383d4(); // sound related
+system_sound_remove_sed_from_linked_array();
 
 A0 = w[80061c2c];
 system_memory_mark_removed_alloc();
@@ -6608,7 +6608,7 @@ SP = SP + 0020;
 800770B0	jal    $80039ea0
 800770B4	nop
 A0 = w[80061c2c];
-800770C0	jal    $800383d4
+800770C0	jal    $system_sound_remove_sed_from_linked_array
 800770C4	nop
 A0 = w[80061c2c];
 800770D0	jal    $80031f0c
@@ -7564,7 +7564,7 @@ SP = SP + 0020;
 80078114	jal    $80039ea0
 80078118	nop
 A0 = w[80061c2c];
-80078124	jal    $800383d4
+80078124	jal    $system_sound_remove_sed_from_linked_array
 80078128	nop
 A0 = w[80061c2c];
 80078134	jal    $80031f0c
@@ -9248,7 +9248,7 @@ SP = SP + 0020;
 80079C9C	jal    $80039ea0
 80079CA0	nop
 A0 = w[80061c2c];
-80079CAC	jal    $800383d4
+80079CAC	jal    $system_sound_remove_sed_from_linked_array
 80079CB0	nop
 A0 = w[80061c2c];
 80079CBC	jal    $80031f0c
@@ -10824,7 +10824,7 @@ SP = SP + 0020;
 8007B650	jal    $80039ea0
 8007B654	nop
 A0 = w[80061c2c];
-8007B660	jal    $800383d4
+8007B660	jal    $system_sound_remove_sed_from_linked_array
 8007B664	nop
 A0 = w[80061c2c];
 8007B670	jal    $80031f0c
@@ -12469,7 +12469,7 @@ A2 = 00f0;
 8007D0E4	jal    $80039ea0
 8007D0E8	nop
 A0 = w[80061c2c];
-8007D0F4	jal    $800383d4
+8007D0F4	jal    $system_sound_remove_sed_from_linked_array
 8007D0F8	nop
 A0 = w[80061c2c];
 8007D104	jal    $80031f0c
@@ -14761,7 +14761,7 @@ SP = SP + 0020;
 8007F608	jal    $80039ea0
 8007F60C	nop
 A0 = w[80061c2c];
-8007F618	jal    $800383d4
+8007F618	jal    $system_sound_remove_sed_from_linked_array
 8007F61C	nop
 A0 = w[80061c2c];
 8007F628	jal    $80031f0c
@@ -15647,7 +15647,7 @@ SP = SP + 0028;
 8008045C	jal    $80039ea0
 80080460	nop
 A0 = w[80061c2c];
-8008046C	jal    $800383d4
+8008046C	jal    $system_sound_remove_sed_from_linked_array
 80080470	nop
 A0 = w[80061c2c];
 8008047C	jal    $80031f0c
@@ -17073,7 +17073,7 @@ SP = SP + 0028;
 80081AA4	jal    $80039ea0
 80081AA8	nop
 A0 = w[80061c2c];
-80081AB4	jal    $800383d4
+80081AB4	jal    $system_sound_remove_sed_from_linked_array
 80081AB8	nop
 A0 = w[80061c2c];
 80081AC4	jal    $80031f0c
@@ -18139,7 +18139,7 @@ SP = SP + 0020;
 80082BCC	jal    $80039ea0
 80082BD0	nop
 A0 = w[80061c2c];
-80082BDC	jal    $800383d4
+80082BDC	jal    $system_sound_remove_sed_from_linked_array
 80082BE0	nop
 A0 = w[80061c2c];
 80082BEC	jal    $80031f0c

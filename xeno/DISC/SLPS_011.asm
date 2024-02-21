@@ -4850,7 +4850,7 @@ L31820:	; 80031820
 // system_sound_insert_sed_to_linked_array
 800382D0-800383D0
 ////////////////////////////////
-// func383d4
+// system_sound_remove_sed_from_linked_array
 800383D4-800384C8
 ////////////////////////////////
 // func384cc
@@ -5039,7 +5039,7 @@ L31820:	; 80031820
 // func3a404
 8003A404-8003A474
 ////////////////////////////////
-// func3a478
+// system_sound_get_channels_mask_by_sed_id
 8003A478-8003A500
 ////////////////////////////////
 // system_sound_stop_sound_in_channels
@@ -5135,7 +5135,7 @@ L31820:	; 80031820
 // system_sound_insert_main_struct_into_main_list
 8003B88C-8003B8DC
 ////////////////////////////////
-// func3b8e0
+// system_sound_remove_main_struct_from_main_list
 8003B8E0-8003B9AC
 ////////////////////////////////
 // func3b9b0

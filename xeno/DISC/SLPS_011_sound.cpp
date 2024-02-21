@@ -53,7 +53,7 @@ else
     A0 = S3;
     system_memory_mark_not_removable();
 
-    S2 = S0 + 0006;
+    S2 = S0 + 6;
     A0 = S2;
     system_get_aligned_filesize_by_dir_file_id();
 
@@ -65,8 +65,7 @@ else
     A0 = S1;
     system_memory_mark_not_removable();
 
-    S0 = S0 + 0007;
-    S0 = S0 + S4;
+    S0 = S0 + S4 + 7;
     [80059878] = h(S2);
     [8005987c] = w(S1);
     [80059880] = h(S0);
@@ -81,14 +80,8 @@ else
 
     [S5 + 0000] = w(S1);
     [S6 + 0000] = w(0);
-    V0 = w[80059884];
-    800379C4	nop
-    V0 = V0 + 0004;
-    [FP + 0000] = w(V0);
-    V0 = w[80059884];
-    800379D8	nop
-    V0 = V0 + 0004;
-    [80064f58] = w(V0);
+    [FP + 0000] = w(w[80059884] + 4);
+    [80064f58] = w(w[80059884] + 4);
 }
 
 // restore old dir
@@ -713,73 +706,62 @@ system_bios_enable_event();
 
 
 ////////////////////////////////
-// func383d4
+// system_sound_remove_sed_from_linked_array()
 
-V0 = w[80058adc];
-S2 = A0;
-S0 = 0;
-S1 = S2;
-800383F8	beq    v0, zero, L38424 [$80038424]
+sed_array = w[80058adc];
+sed_file = A0;
+sed_found = 0;
 
-loop38400:	; 80038400
-80038400	beq    v0, s1, L3841c [$8003841c]
-80038404	nop
-S0 = V0;
-V0 = w[S0 + 001c];
-80038410	nop
-80038414	bne    v0, zero, loop38400 [$80038400]
-80038418	nop
+while( sed_array != 0 )
+{
+    if(sed_array == sed_file)
+    {
+        break;
+    }
 
-L3841c:	; 8003841C
-8003841C	bne    v0, zero, L38434 [$80038434]
-80038420	nop
+    sed_found = sed_array;
+    sed_array = w[sed_found + 1c];
+}
 
-L38424:	; 80038424
-80038424	jal    system_sound_error [$8003f558]
-A0 = 0010;
-8003842C	j      L384b0 [$800384b0]
-80038430	nop
+if( sed_array == 0 )
+{
+    A0 = 10;
+    system_sound_error();
 
-L38434:	; 80038434
-A0 = S2;
+    return;
+}
+
+A0 = sed_file;
 system_sound_stop_all_channels_by_sed_file();
 
 A0 = w[80058c58];
 system_bios_disable_event();
 
-8003844C	beq    s0, zero, L38460 [$80038460]
-80038450	nop
-V0 = w[S1 + 001c];
-80038458	j      L3846c [$8003846c]
-[S0 + 001c] = w(V0);
+if( sed_found != 0 )
+{
+    [sed_found + 1c] = w(w[sed_file + 1c]);
+}
+else
+{
+    [80058adc] = w(w[sed_file + 1c]);
+}
+[sed_file + 1c] = w(0);
 
-L38460:	; 80038460
-V0 = w[S1 + 001c];
-[80058adc] = w(V0);
-
-L3846c:	; 8003846C
-[S1 + 001c] = w(0);
-
-A0 = S2;
+A0 = sed_file;
 A1 = 73646573;
 A2 = 101;
 func3f4bc();
 
-L38484:	; 80038484
-V0 = V0 << 10;
-80038488	beq    v0, zero, L384a0 [$800384a0]
+if( (V0 << 10) != 0 )
+{
+    A0 = b;
+    system_sound_error();
 
-A0 = b;
-system_sound_error();
+    return;
+}
 
-80038498	j      L384b0 [$800384b0]
-8003849C	nop
-
-L384a0:	; 800384A0
 A0 = w[80058c58];
 system_bios_enable_event();
-
-L384b0:	; 800384B0
 ////////////////////////////////
 
 
@@ -1887,36 +1869,35 @@ return S0;
 
 
 ////////////////////////////////
-// func3987c
+// func3987c()
 
-S0 = A0;
-V0 = h[S0 + 10] & 8000;
-80039898	beq    v0, zero, L398a8 [$800398a8]
-8003989C	nop
-800398A0	jal    system_sound_stop_main [$80039af4]
-800398A4	nop
+main = A0;
 
-L398a8:	; 800398A8
-800398D0	jal    func3b8e0 [$8003b8e0]
-A0 = S0;
-800398D8	beq    v0, zero, L398f0 [$800398f0]
-800398DC	nop
-800398E0	jal    system_sound_error [$8003f558]
-A0 = 0005;
-800398E8	j      L39914 [$80039914]
-800398EC	nop
+if( h[main + 10] & 8000 )
+{
+    A0 = main;
+    system_sound_stop_main();
+}
 
-L398f0:	; 800398F0
-A0 = S0;
+A0 = main;
+system_sound_remove_main_struct_from_main_list();
+
+if( V0 != 0 )
+{
+    A0 = 5;
+    system_sound_error();
+
+    return;
+}
+
+A0 = main;
 func3b7d8();
 
-V0 = hu[S0 + 10] & 4000;
-80039904	bne    v0, zero, L39914 [$80039914]
-
-A0 = S0;
-func38fec();
-
-L39914:	; 80039914
+if( ( hu[main + 10] & 4000 ) == 0 )
+{
+    A0 = main;
+    func38fec();
+}
 ////////////////////////////////
 
 
@@ -2094,28 +2075,16 @@ else
 
 
 ////////////////////////////////
-// func39c20
+// func39c20()
 
-80039C20	beq    a0, zero, L39c50 [$80039c50]
-V0 = A0 < 0011;
-80039C28	bne    v0, zero, L39c38 [$80039c38]
-V0 = A0 < 0004;
-A0 = 0010;
-V0 = A0 < 0004;
+if( A0 != 0 )
+{
+    A0 = ( A0 >= 11 ) ? 10 : A0;
+    A0 = ( A0 < 4 ) ? 4 : A0;
+    [80058be0] = w(A0 & fe);
+}
 
-L39c38:	; 80039C38
-80039C38	beq    v0, zero, L39c48 [$80039c48]
-V0 = A0 & 00fe;
-A0 = 0004;
-V0 = A0 & 00fe;
-
-L39c48:	; 80039C48
-[80058be0] = w(V0);
-
-L39c50:	; 80039C50
-V0 = w[80058be0];
-80039C58	jr     ra 
-80039C5C	nop
+return w[80058be0];
 ////////////////////////////////
 
 
@@ -2368,205 +2337,135 @@ for( int i = 0; i < 2; ++i )
 
 
 ////////////////////////////////
-// func3a18c
-A1 = A1 << 08;
-T0 = 0100;
-V0 = w[80058c74];
-A3 = w[80058b14];
-A2 = V0 + 0094;
-V1 = V0 + 0096;
+// func3a18c()
 
-loop3a1ac:	; 8003A1AC
-V0 = hu[A2 + 0000];
-8003A1B0	nop
-V0 = V0 & 0001;
-8003A1B8	beq    v0, zero, L3a1d8 [$8003a1d8]
-A2 = A2 + 0158;
-V0 = w[V1 + 0006];
-8003A1C4	nop
-8003A1C8	bne    v0, a0, L3a1d8 [$8003a1d8]
-8003A1CC	nop
-[V1 + 0074] = h(A1);
-[V1 + 0000] = h(T0);
+sed_id = A0;
+volume = A1 << 8;
 
-L3a1d8:	; 8003A1D8
-8003A1D8	addiu  a3, a3, $ffff (=-$1)
-8003A1DC	bne    a3, zero, loop3a1ac [$8003a1ac]
-V1 = V1 + 0158;
-8003A1E4	jr     ra 
-8003A1E8	nop
+channel = w[80058c74] + 94;
+
+for( int i = 0; i < w[80058b14]; ++i ) // go through all inited channels
+{
+    if( hu[channel + i * 158 + 0] & 0001 )
+    {
+        if( w[channel + i * 158 + 8] == sed_id )
+        {
+            [channel + i * 158 + 2] = h(0100); // set calculate volume
+            [channel + i * 158 + 76] = h(volume); // note volume
+        }
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3a1ec
-A0 = A0 & 00fe;
-A0 = A0 ^ 0008;
-A2 = 0002;
-A1 = A1 << 08;
-A3 = 0100;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V0 = V0 - A0;
-V0 = V0 << 02;
-V0 = V0 - A0;
-V0 = V0 << 03;
-V1 = w[80058c74];
-V0 = V0 + 0094;
-A0 = V0 + V1;
-V1 = A0 + 0002;
+// func3a1ec()
 
-loop3a230:	; 8003A230
-V0 = hu[A0 + 0000];
-8003A234	nop
-V0 = V0 & 0001;
-8003A23C	beq    v0, zero, L3a24c [$8003a24c]
-A0 = A0 + 0158;
-[V1 + 0074] = h(A1);
-[V1 + 0000] = h(A3);
+channel_id = (A0 & fe) ^ 8;
+volume = A1 << 8;
 
-L3a24c:	; 8003A24C
-8003A24C	addiu  a2, a2, $ffff (=-$1)
-8003A250	bne    a2, zero, loop3a230 [$8003a230]
-V1 = V1 + 0158;
-8003A258	jr     ra 
-8003A25C	nop
+channel = w[80058c74] + 94 + channel_id * 158;
+
+for( int i = 0; i < 2; ++i )
+{
+    if( hu[channel + i * 158 + 0] & 0001 )
+    {
+        [channel + i * 158 + 2] = h(0100); // set calculate volume
+        [channel + i * 158 + 76] = h(volume); // note volume
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3a260
-A1 = A1 << 08;
-V0 = w[80058c74];
-T1 = w[80058b14];
-T0 = V0 + 0094;
-A3 = V0 + 0098;
+// func3a260()
 
-loop3a27c:	; 8003A27C
-V0 = hu[T0 + 0000];
-8003A280	nop
-V0 = V0 & 0001;
-8003A288	beq    v0, zero, L3a2e0 [$8003a2e0]
-8003A28C	nop
-V0 = w[A3 + 0004];
-8003A294	nop
-8003A298	bne    v0, a0, L3a2e0 [$8003a2e0]
-8003A29C	nop
-V0 = h[A3 + 0072];
-8003A2A4	nop
-V0 = A1 - V0;
-8003A2AC	beq    v0, zero, L3a2e0 [$8003a2e0]
-8003A2B0	nop
-8003A2B4	bne    a2, zero, L3a2c0 [$8003a2c0]
-8003A2B8	nop
-A2 = 0001;
+sed_id = A0;
+volume = A1 << 8;
+steps = A2;
 
-L3a2c0:	; 8003A2C0
-8003A2C0	div    v0, a2
-8003A2C4	mflo   v1
-V0 = hu[A3 + 0000];
-[A3 + 008a] = h(A1);
-[A3 + 0096] = h(A2);
-V0 = V0 | 0020;
-[A3 + 0000] = h(V0);
-[A3 + 0088] = h(V1);
+channel = w[80058c74] + 94;
 
-L3a2e0:	; 8003A2E0
-A3 = A3 + 0158;
-8003A2E4	addiu  t1, t1, $ffff (=-$1)
-8003A2E8	bne    t1, zero, loop3a27c [$8003a27c]
-T0 = T0 + 0158;
-8003A2F0	jr     ra 
-8003A2F4	nop
+for( int i = 0; i < w[80058b14]; ++i )
+{
+    if( hu[channel + i * 158 + 0] & 0001 )
+    {
+        if( w[channel + i * 158 + 8] == sed_id )
+        {
+            V0 = volume - h[channel + i * 158 + 76]; // delta note volume
+            if( V0 != 0 )
+            {
+                if( steps == 0 )
+                {
+                    steps = 1;
+                }
+
+                [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0020); // set note volume update
+                [channel + i * 158 + 8c] = h(V0 / steps); // note volume add for timer
+                [channel + i * 158 + 8e] = h(volume); // note volume final value for the timer
+                [channel + i * 158 + 9a] = h(steps);
+
+            }
+        }
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3a2f8
-A0 = A0 & 00fe;
-A0 = A0 ^ 0008;
-T0 = 0002;
-A1 = A1 << 08;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V0 = V0 - A0;
-V0 = V0 << 02;
-V0 = V0 - A0;
-V0 = V0 << 03;
-V1 = w[80058c74];
-V0 = V0 + 0094;
-A3 = V0 + V1;
-A0 = A3 + 0004;
+// func3a2f8()
 
-loop3a338:	; 8003A338
-V0 = hu[A3 + 0000];
-8003A33C	nop
-V0 = V0 & 0001;
-8003A344	beq    v0, zero, L3a38c [$8003a38c]
-8003A348	nop
-V0 = h[A0 + 0072];
-8003A350	nop
-V0 = A1 - V0;
-8003A358	beq    v0, zero, L3a38c [$8003a38c]
-8003A35C	nop
-8003A360	bne    a2, zero, L3a36c [$8003a36c]
-8003A364	nop
-A2 = 0001;
+channel_id = (A0 & fe) ^ 8;
+volume = A1 << 8;
+steps = A2;
 
-L3a36c:	; 8003A36C
-8003A36C	div    v0, a2
-8003A370	mflo   v1
-V0 = hu[A0 + 0000];
-[A0 + 008a] = h(A1);
-[A0 + 0096] = h(A2);
-V0 = V0 | 0020;
-[A0 + 0000] = h(V0);
-[A0 + 0088] = h(V1);
+channel = w[80058c74] + 94 + channel_id * 158;
 
-L3a38c:	; 8003A38C
-A0 = A0 + 0158;
-8003A390	addiu  t0, t0, $ffff (=-$1)
-8003A394	bne    t0, zero, loop3a338 [$8003a338]
-A3 = A3 + 0158;
-8003A39C	jr     ra 
-8003A3A0	nop
+for( int i = 0; i < 2; ++i )
+{
+    if( hu[channel + i * 158 + 4] & 0001 )
+    {
+        V0 = volume - h[channel + i * 158 + 76];
+        if( V0 != 0 )
+        {
+            if( steps == 0 )
+            {
+                steps = 1;
+            }
+
+            [channel + i * 158 + 4] = h(hu[channel + i * 158 + 4] | 0020);
+            [channel + i * 158 + 8c] = h(V0 / steps);
+            [channel + i * 158 + 8e] = h(volume);
+            [channel + i * 158 + 9a] = h(steps);
+        }
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3a3a4
-A1 = A1 << 08;
-T0 = 0100;
-V0 = w[80058c74];
-A3 = w[80058b14];
-A2 = V0 + 0094;
-V1 = V0 + 0096;
+// func3a3a4()
 
-loop3a3c4:	; 8003A3C4
-V0 = hu[A2 + 0000];
-8003A3C8	nop
-V0 = V0 & 0001;
-8003A3D0	beq    v0, zero, L3a3f0 [$8003a3f0]
-A2 = A2 + 0158;
-V0 = w[V1 + 0006];
-8003A3DC	nop
-8003A3E0	bne    v0, a0, L3a3f0 [$8003a3f0]
-8003A3E4	nop
-[V1 + 0072] = h(A1);
-[V1 + 0000] = h(T0);
+sed_id = A0;
+volume = A1 << 8;
 
-L3a3f0:	; 8003A3F0
-8003A3F0	addiu  a3, a3, $ffff (=-$1)
-8003A3F4	bne    a3, zero, loop3a3c4 [$8003a3c4]
-V1 = V1 + 0158;
-8003A3FC	jr     ra 
-8003A400	nop
+channel = w[80058c74] + 94;
+
+for( int i = 0; i < w[80058b14]; ++i )
+{
+    if( hu[channel + i * 158 + 0] & 0001 )
+    {
+        if( w[channel + i * 158 + 8] == sed_id )
+        {
+            [channel + i * 158 + 2] = h(0100);
+            [channel + i * 158 + 74] = h(volume);
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -2574,87 +2473,60 @@ V1 = V1 + 0158;
 ////////////////////////////////
 // func3a404()
 
-A0 = A0 & 00fe;
-A0 = A0 ^ 0008;
-A2 = 0002;
-A1 = A1 << 08;
-A3 = 0100;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V0 = V0 - A0;
-V0 = V0 << 02;
-V0 = V0 - A0;
-V0 = V0 << 03;
-V1 = w[80058c74];
-V0 = V0 + 0094;
-A0 = V0 + V1;
-V1 = A0 + 0002;
+channel_id = (A0 & fe) ^ 8;
+volume = A1 << 8;
 
-loop3a448:	; 8003A448
-V0 = hu[A0 + 0000];
-8003A44C	nop
-V0 = V0 & 0001;
-8003A454	beq    v0, zero, L3a464 [$8003a464]
-A0 = A0 + 0158;
-[V1 + 0072] = h(A1);
-[V1 + 0000] = h(A3);
+channel = w[80058c74] + 94 + channel_id * 158;
 
-L3a464:	; 8003A464
-8003A464	addiu  a2, a2, $ffff (=-$1)
-8003A468	bne    a2, zero, loop3a448 [$8003a448]
-V1 = V1 + 0158;
-8003A470	jr     ra 
-8003A474	nop
+for( int i = 0; i < 2; ++i )
+{
+    if( hu[channel + i * 158 + 0] & 0001 )
+    {
+        [channel + i * 158 + 2] = h(0100);
+        [channel + i * 158 + 74] = h(volume);
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3a478
-A2 = 0001;
-V0 = w[80058c74];
-A1 = w[80058b14];
-V1 = V0 + 0094;
-8003A490	addiu  v0, zero, $ffff (=-$1)
-8003A494	bne    a0, v0, L3a4c8 [$8003a4c8]
-A3 = 0;
+// system_sound_get_channels_mask_by_sed_id()
 
-loop3a49c:	; 8003A49C
-V0 = hu[V1 + 0000];
-8003A4A0	nop
-V0 = V0 & 0001;
-8003A4A8	beq    v0, zero, L3a4b4 [$8003a4b4]
-V1 = V1 + 0158;
-A3 = A3 | A2;
+sed_id = A0;
 
-L3a4b4:	; 8003A4B4
-8003A4B4	addiu  a1, a1, $ffff (=-$1)
-8003A4B8	bne    a1, zero, loop3a49c [$8003a49c]
-A2 = A2 << 01;
-8003A4C0	j      L3a4fc [$8003a4fc]
-8003A4C4	nop
+channel = w[80058c74] + 94;
 
-L3a4c8:	; 8003A4C8
-V0 = hu[V1 + 0000];
-8003A4CC	nop
-V0 = V0 & 0001;
-8003A4D4	beq    v0, zero, L3a4f0 [$8003a4f0]
-8003A4D8	addiu  a1, a1, $ffff (=-$1)
-V0 = w[V1 + 0008];
-8003A4E0	nop
-8003A4E4	bne    v0, a0, L3a4f0 [$8003a4f0]
-8003A4E8	nop
-A3 = A3 | A2;
+ret = 0;
+A2 = 1;
 
-L3a4f0:	; 8003A4F0
-V1 = V1 + 0158;
-8003A4F4	bne    a1, zero, L3a4c8 [$8003a4c8]
-A2 = A2 << 01;
+if( sed_id == -1 )
+{
+    for( int i = 0; i < w[80058b14]; ++i )
+    {
+        if( hu[channel + i * 158 + 0] & 0001 )
+        {
+            ret |= A2;
+        }
+        A2 = A2 << 1;
+    }
+}
+else
+{
+    for( int i = 0; i < w[80058b14]; ++i )
+    {
+        if( hu[channel + i * 158 + 0] & 0001 )
+        {
+            if( w[channel + i * 158 + 8] == sed_id )
+            {
+                ret |= A2;
+            }
+        }
+        A2 = A2 << 1;
+    }
+}
 
-L3a4fc:	; 8003A4FC
-8003A4FC	jr     ra 
-V0 = A3;
+return ret;
 ////////////////////////////////
 
 
@@ -2686,7 +2558,7 @@ for( int i = 0; i < w[80058b14]; ++i )
 
 number_of_channels = w[80058b14];
 start_channel_id = number_of_channels - (num_to_init + 2);
-T1 = -1 >> (20 - num_to_init);
+T1 = ffffffff >> (20 - num_to_init);
 mask = T1 << start_channel_id;
 channel = main + 94 + start_channel_id * 158;
 A0 = bu[main + 14] - w[80058be0];
@@ -2803,37 +2675,33 @@ if( hu[main + 10] & 0100 )
 
 
 ////////////////////////////////
-// func3a7f0
+// func3a7f0()
 
-A3 = A0;
-V0 = A1 << 08;
-[A3 + 0086] = h(V0);
-8003A800	bne    a2, zero, L3a828 [$8003a828]
+main = A0;
 
-V0 = A1 << 18;
-[A3 + 007c] = w(V0);
-[A3 + 0084] = h(0);
+[main + 86] = h(A1 << 8);
 
-A0 = 0200; // calculate pitch
-A1 = A3; // main_struct
-system_sound_set_calculate_flags_to_all_channels_in_main();
+if( A2 == 0 )
+{
+    [main + 7c] = w(A1 << 18);
+    [main + 84] = h(0);
 
-8003A820	j      L3a854 [$8003a854]
-
-L3a828:	; 8003A828
-V0 = w[A3 + 007c];
-V1 = A1 << 10;
-V0 = V0 >> 08;
-V0 = V1 - V0;
-8003A838	beq    v0, zero, L3a854 [$8003a854]
-8003A83C	nop
-8003A840	div    v0, a2
-8003A844	mflo   v0
-[A3 + 0084] = h(A2);
-V0 = V0 << 08;
-[A3 + 0080] = w(V0);
-
-L3a854:	; 8003A854
+    A0 = 0200; // calculate pitch
+    A1 = main; // main_struct
+    system_sound_set_calculate_flags_to_all_channels_in_main();
+}
+else
+{
+    V0 = w[main + 7c];
+    V1 = A1 << 10;
+    V0 = V0 >> 08;
+    V0 = V1 - V0;
+    if( V0 != 0 )
+    {
+        [main + 80] = w((V0 / A2) << 8);
+        [main + 84] = h(A2);
+    }
+}
 ////////////////////////////////
 
 
@@ -3136,17 +3004,17 @@ L3ac30:	; 8003AC30
 
 
 ////////////////////////////////
-// func3ac40
+// func3ac40()
 
-V1 = hu[A0 + 10];
-V0 = V1 & 0010;
-8003AC54	beq    v0, zero, L3ac64 [$8003ac64]
+main = A0;
 
-V0 = V1 & ffef;
-[A0 + 10] = h(V0);
-func3b7d8();
+if( hu[main + 10] & 0010 )
+{
+    [main + 10] = h(hu[main + 10] & ffef);
 
-L3ac64:	; 8003AC64
+    A0 = main;
+    func3b7d8();
+}
 ////////////////////////////////
 
 
@@ -3392,10 +3260,12 @@ return alloc;
 ////////////////////////////////
 // func3b0a4()
 
-S0 = A0;
-8003B0B0	jal    func3b8e0 [$8003b8e0]
+main = A0;
 
-A0 = S0;
+A0 = main;
+system_sound_remove_main_struct_from_main_list();
+
+A0 = main;
 func38fec();
 ////////////////////////////////
 
@@ -3454,6 +3324,7 @@ func3b218();
 
 main = A0;
 
+A0 = main;
 func3b7d8();
 
 [main + 1a] = b(0);
@@ -3734,6 +3605,8 @@ while( A0 != 0 )
     [main + 4] = w(0);
 
     S0 = w[A0 + 4];
+
+    A0 = A0;
     func38fec();
 
     A0 = S0;
@@ -3784,59 +3657,55 @@ system_bios_enable_event();
 
 
 ////////////////////////////////
-// func3b8e0
+// system_sound_remove_main_struct_from_main_list()
 
-V0 = w[80058c00];
-S0 = A0;
-S1 = 0;
-8003B8FC	beq    v0, zero, L3b928 [$8003b928]
+main = A0;
 
-loop3b904:	; 8003B904
-8003B904	beq    v0, s0, L3b920 [$8003b920]
-8003B908	nop
-S1 = V0;
-V0 = w[S1 + 0000];
-8003B914	nop
-8003B918	bne    v0, zero, loop3b904 [$8003b904]
-8003B91C	nop
+main_array = w[80058c00];
+main_found = 0;
 
-L3b920:	; 8003B920
-8003B920	bne    v0, zero, L3b938 [$8003b938]
-8003B924	nop
-
-L3b928:	; 8003B928
-A0 = f;
-system_sound_error();
-
-return -1;
-
-L3b938:	; 8003B938
-V0 = h[S0 + 0010];
-V1 = V0;
-V0 = V0 & 8000;
-8003B948	beq    v0, zero, L3b974 [$8003b974]
-
-8003B950	bne    s0, zero, L3b968 [$8003b968]
-V0 = V1 & 7fff;
-A0 = 0005;
-system_sound_error();
-
-8003B960	j      L3b974 [$8003b974]
-8003B964	nop
-
-L3b968:	; 8003B968
-[S0 + 0010] = h(V0);
-A0 = S0;
-system_sound_stop_all_channels_in_main()
-
-L3b974:	; 8003B974
-if( S1 != 0 )
+while( main_array != 0 )
 {
-    [S1 + 0] = w(w[S0 + 0]);
+    if( main_array == 0 )
+    {
+        break;
+    }
+
+    main_found = main_array;
+    main_array = w[main_found + 0];
+}
+
+if( main_array == 0 )
+{
+    A0 = f;
+    system_sound_error();
+
+    return -1;
+}
+
+if( h[main + 10] & 8000 )
+{
+    if( main == 0 )
+    {
+        A0 = 5;
+        system_sound_error();
+    }
+    else
+    {
+        [main + 10] = h(h[main + 10] & 7fff);
+
+        A0 = main;
+        system_sound_stop_all_channels_in_main()
+    }
+}
+
+if( main_found != 0 )
+{
+    [main_found + 0] = w(w[main + 0]);
 }
 else
 {
-    [80058c00] = w(w[S0 + 0]);
+    [80058c00] = w(w[main + 0]);
 }
 
 return 0;
