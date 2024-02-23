@@ -2676,15 +2676,19 @@ if( hu[main + 10] & 0100 )
 
 ////////////////////////////////
 // func3a7f0()
+// global pitch increase
 
 main = A0;
+pitch = A1;
+steps = A2;
 
-[main + 86] = h(A1 << 8);
 
-if( A2 == 0 )
+[main + 7c + a] = h(pitch << 8);
+
+if( steps == 0 )
 {
-    [main + 7c] = w(A1 << 18);
-    [main + 84] = h(0);
+    [main + 7c + 0] = w(pitch << 18);
+    [main + 7c + 8] = h(0);
 
     A0 = 0200; // calculate pitch
     A1 = main; // main_struct
@@ -2692,14 +2696,11 @@ if( A2 == 0 )
 }
 else
 {
-    V0 = w[main + 7c];
-    V1 = A1 << 10;
-    V0 = V0 >> 08;
-    V0 = V1 - V0;
-    if( V0 != 0 )
+    diff = (pitch << 10) - (w[main + 7c + 0] >> 8);
+    if( diff != 0 )
     {
-        [main + 80] = w((V0 / A2) << 8);
-        [main + 84] = h(A2);
+        [main + 7c + 4] = w((diff / steps) << 8);
+        [main + 7c + 8] = h(steps);
     }
 }
 ////////////////////////////////
@@ -2707,37 +2708,33 @@ else
 
 
 ////////////////////////////////
-// func3a864
+// func3a864()
+// global volume increase
 
-A3 = A0;
-V0 = A1 << 08;
-[A3 + 0092] = h(V0);
-8003A874	bne    a2, zero, L3a89c [$8003a89c]
+main = A0;
+volume = A1;
+steps = A2;
 
-V0 = A1 << 18;
-[A3 + 0088] = w(V0);
-[A3 + 0090] = h(0);
+[main + 88 + a] = h(volume << 8);
 
-A0 = 0100; // calculate volume
-A1 = A3; // main_struct
-system_sound_set_calculate_flags_to_all_channels_in_main();
+if( steps == 0 )
+{
+    [main + 88 + 0] = w(volume << 18);
+    [main + 88 + 8] = h(0);
 
-8003A894	j      L3a8c8 [$8003a8c8]
-
-L3a89c:	; 8003A89C
-V0 = w[A3 + 0088];
-V1 = A1 << 10;
-V0 = V0 >> 08;
-V0 = V1 - V0;
-8003A8AC	beq    v0, zero, L3a8c8 [$8003a8c8]
-8003A8B0	nop
-8003A8B4	div    v0, a2
-8003A8B8	mflo   v0
-[A3 + 0090] = h(A2);
-V0 = V0 << 08;
-[A3 + 008c] = w(V0);
-
-L3a8c8:	; 8003A8C8
+    A0 = 0100; // calculate volume
+    A1 = main; // main_struct
+    system_sound_set_calculate_flags_to_all_channels_in_main();
+}
+else
+{
+    diff = (volume << 10) - (w[main + 88 + 0] >> 8);
+    if( diff != 0 )
+    {
+        [main + 88 + 4] = w((diff / steps) << 8);
+        [main + 88 + 8] = h(steps);
+    }
+}
 ////////////////////////////////
 
 
@@ -2775,74 +2772,57 @@ system_bios_enable_event();
 
 
 ////////////////////////////////
-// func3a96c
+// func3a96c()
 
-S1 = A0;
-S4 = A1;
-8003A990	beq    s1, zero, L3aa68 [$8003aa68]
+main = A0;
+mask = A1;
 
-S0 = S1 + 0094;
-S3 = S1 + 00bb;
-S5 = bu[S1 + 0014];
-S2 = S1 + 00c4;
-[S1 + 004c] = w(S4);
+if( main == 0 )
+{
+    return;
+}
 
-loop3a9ac:	; 8003A9AC
-V0 = hu[S0 + 0000];
-8003A9B0	nop
-8003A9B4	beq    v0, zero, L3aa50 [$8003aa50]
-V0 = S4 & 0001;
-8003A9BC	beq    v0, zero, L3aa04 [$8003aa04]
-8003A9C0	nop
-V1 = hu[S0 + 0000];
-8003A9C8	nop
-V0 = V1 & 0020;
-8003A9D0	bne    v0, zero, L3aa50 [$8003aa50]
-V0 = V1 | 0020;
-[S0 + 0000] = h(V0);
-V0 = h[S1 + 0010];
-8003A9E0	nop
-V0 = V0 & 8000;
-8003A9E8	beq    v0, zero, L3aa50 [$8003aa50]
-8003A9EC	nop
-A1 = bu[S3 + 0000];
-8003A9F4	jal    func3ee48 [$8003ee48]
-A0 = S2;
-8003A9FC	j      L3aa54 [$8003aa54]
-S3 = S3 + 0158;
+channel = main + 94;
 
-L3aa04:	; 8003AA04
-V1 = hu[S0 + 0000];
-8003AA08	nop
-V0 = V1 & 0020;
-8003AA10	beq    v0, zero, L3aa50 [$8003aa50]
-V0 = V1 & ffdf;
-[S0 + 0000] = h(V0);
-V0 = w[S0 + 0000];
-V1 = 0100;
-V0 = V0 & 0110;
-8003AA28	bne    v0, v1, L3aa50 [$8003aa50]
-8003AA2C	nop
-V0 = h[S1 + 0010];
-8003AA34	nop
-V0 = V0 & 8000;
-8003AA3C	beq    v0, zero, L3aa50 [$8003aa50]
-8003AA40	nop
-A1 = bu[S3 + 0000];
-8003AA48	jal    func3edac [$8003edac]
-A0 = S2;
+[main + 4c] = w(mask);
 
-L3aa50:	; 8003AA50
-S3 = S3 + 0158;
+for( int i = 0; i < bu[main + 14]; ++i )
+{
+    if( hu[channel + i * 158 + 0] != 0 )
+    {
+        if( ( (mask >> i) & 1 ) == 0 )
+        {
+            if( hu[channel + i * 158 + 0] & 0020 )
+            {
+                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & ffdf);
 
-L3aa54:	; 8003AA54
-S2 = S2 + 0158;
-S0 = S0 + 0158;
-8003AA5C	addiu  s5, s5, $ffff (=-$1)
-8003AA60	bne    s5, zero, loop3a9ac [$8003a9ac]
-S4 = S4 >> 01;
+                if( ( w[channel + i * 158 + 0] & 0110 ) == 0100 )
+                {
+                    if( h[main + 10] & 8000 )
+                    {
+                        A0 = channel + i * 158 + 30;
+                        A1 = bu[channel + i * 158 + 27];
+                        func3edac(); // enable channels to play here
+                    }
+                }
+            }
+        }
+        else
+        {
+            if( ( hu[channel + i * 158 + 0] & 0020 ) == 0 )
+            {
+                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0020);
 
-L3aa68:	; 8003AA68
+                if( h[main + 10] & 8000 )
+                {
+                    A0 = channel + i * 158 + 30;
+                    A1 = bu[channel + i * 158 + 27];
+                    func3ee48(); // disable channels to play
+                }
+            }
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -2856,10 +2836,10 @@ L3aa68:	; 8003AA68
 
 
 ////////////////////////////////
-// func3aa98
-8003AA98	lui    v0, $8888
+// func3aa98()
+
 V1 = w[A0 + 0028];
-V0 = V0 | 8889;
+V0 = 88888889;
 V1 = V1 >> 08;
 8003AAA8	multu  v1, v0
 8003AAAC	mfhi   a2
@@ -2881,48 +2861,46 @@ V0 = V0 - V1;
 V0 = V0 << 02;
 A2 = A2 - V0;
 [A1 + 0006] = h(A2);
-8003AAF8	jr     ra 
 [A1 + 0008] = h(V1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3ab00
-A2 = A0 + 0094;
-V1 = bu[A0 + 0014];
-A3 = A0 + 0030;
+// func3ab00()
+
+main = A0;
+
+A2 = main + 94;
+V1 = bu[main + 14];
+A0 = main + b4;
+
 A1 = ffff;
-T0 = ffff;
-A0 = A0 + 00b4;
-
 loop3ab18:	; 8003AB18
-V0 = hu[A2 + 0000];
-8003AB1C	nop
-8003AB20	beq    v0, zero, L3ab40 [$8003ab40]
-A2 = A2 + 0158;
-V0 = hu[A0 + 0000];
-8003AB2C	nop
-V0 = V0 < A1;
-8003AB34	beq    v0, zero, L3ab40 [$8003ab40]
-8003AB38	nop
-A1 = hu[A0 + 0000];
+    if( hu[A2 + 0000] != 0 )
+    {
+        V0 = hu[A0 + 0000];
+        V0 = V0 < A1;
+        if( V0 != 0 )
+        {
+            A1 = hu[A0 + 0];
+        }
+    }
 
-L3ab40:	; 8003AB40
-V1 = V1 + T0;
-V0 = V1 & ffff;
+    V1 = V1 + ffff;
+    V0 = V1 & ffff;
+    A2 = A2 + 0158;
+    A0 = A0 + 0158;
 8003AB48	bne    v0, zero, loop3ab18 [$8003ab18]
-A0 = A0 + 0158;
-V1 = A1 & ffff;
-V0 = ffff;
-8003AB58	bne    v1, v0, L3ab64 [$8003ab64]
-8003AB5C	nop
-A1 = 0;
 
-L3ab64:	; 8003AB64
-[A3 + 0000] = h(A1);
-8003AB68	jr     ra 
-V0 = A3;
+if( ( A1 & ffff ) == ffff )
+{
+    A1 = 0;
+}
+
+[main + 30] = h(A1);
+
+return main + 30;
 ////////////////////////////////
 
 
@@ -6894,8 +6872,7 @@ L3eadc:	; 8003EADC
             {
                 A0 = channel_struct + 30;
                 A1 = bu[channel_struct + 27];
-                // enable channels to play here
-                func3edac();
+                func3edac(); // enable channels to play here
             }
         }
 
