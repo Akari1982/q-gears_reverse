@@ -85,6 +85,46 @@ Opcode98(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 }
 
 
+
+u32
+Opcode99(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    u32 seq_ret = sequence_p;
+
+    u16 slot = psxMemRead16(channel_p + 0x72);
+    psxMemWrite8(channel_p + 0x9c + slot * 0xc + 0x0, psxMemRead8(channel_p + 0x9c + slot * 0xc + 0x0) - 1);
+
+    if (psxMemRead8(channel_p + 0x9c + slot * 0xc + 0x0) != 0xff)
+    {
+        // store for break
+        psxMemWrite8(channel_p + 0x9c + slot * 0xc + 0x3, psxMemRead8(channel_p + 0x66));
+        psxMemWrite32(channel_p + 0x9c + slot * 0xc + 0x8, seq_ret);
+
+        // restore previous
+        seq_ret = psxMemRead32(channel_p + 0x9c + slot * 0xc + 0x4);
+        psxMemWrite16(channel_p + 0x66, psxMemRead8(channel_p + 0x9c + slot * 0xc + 0x2));
+    }
+    else
+    {
+        psxMemWrite16(channel_p + 0x72, psxMemRead16(channel_p + 0x72) - 1);
+    }
+
+    return seq_ret;
+}
+
+
+
+u32
+OpcodeA0(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    u8 speed = psxMemRead8(sequence_p + 0x0);
+    psxMemWrite32(main_p + 0x54, speed * psxMemRead16(main_p + 0x64 + 0x2));
+    psxMemWrite32(main_p + 0x58, speed << 0x10);
+    return sequence_p + 1;
+}
+
+
+
 u32
 OpcodeAD(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
@@ -125,7 +165,7 @@ u32
 OpcodeC2(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
     psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x0010);
-    psxMemWrite32(channel_p + 0x57, psxMemRead8(sequence_p));
+    psxMemWrite8(channel_p + 0x57, psxMemRead8(sequence_p));
 
     return sequence_p + 1;
 }
@@ -136,8 +176,18 @@ u32
 OpcodeC4(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
     psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x0040);
-    psxMemWrite32(channel_p + 0x59, psxMemRead8(sequence_p));
+    psxMemWrite8(channel_p + 0x59, psxMemRead8(sequence_p));
 
+    return sequence_p + 1;
+}
+
+
+
+u32
+OpcodeD1(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) | 0x0200);
+    psxMemWrite16(channel_p + 0x6e, psxMemRead16(channel_p + 0x6e) + ((psxMemRead8(sequence_p) << 0x18) >> 0x13));
     return sequence_p + 1;
 }
 
@@ -158,7 +208,7 @@ u32
 OpcodeD4(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
     u8 A1 = psxMemRead8(sequence_p + 0);
-    s32 V0 = psxMemRead8(sequence_p + 1) << 0x18;
+    u32 V0 = psxMemRead8(sequence_p + 1) << 0x18;
     if ((A1 != 0) && (V0 != 0))
     {
         psxMemWrite16(channel_p + 0x4, psxMemRead16(channel_p + 0x4) | 0x0001); // base pitch update

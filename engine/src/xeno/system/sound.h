@@ -21,6 +21,24 @@ namespace Xeno
     }
 }
 
+void Opcode81();
+void Opcode90();
+void Opcode94();
+void OpcodeB2();
+void OpcodeC2();
+void OpcodeC4();
+void OpcodeE0();
+void OpcodeFC();
+
+void Opcode98();
+void Opcode99();
+void OpcodeA0();
+void OpcodeAD();
+void OpcodeB0();
+void OpcodeD1();
+void OpcodeD2();
+void OpcodeD4();
+void OpcodeE2();
 
 
 #endif

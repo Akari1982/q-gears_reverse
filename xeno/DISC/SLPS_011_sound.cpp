@@ -4465,7 +4465,8 @@ for (int i = 0; i < number_of_channels; ++i)
     // check next opcode
     stack = hu[channel + i * 158 + 72];
     A0 = channel + i * 158 + 9c + stack * c;
-    while (bu[sequence] >= 80)
+    A2 = bu[sequence];
+    while (A2 >= 80)
     {
         A2 = bu[sequence];
 
@@ -4526,38 +4527,34 @@ for (int i = 0; i < number_of_channels; ++i)
     }
 
     // calculate and set note length
-    A1 = b[channel + i * 158 + 60] + hu[channel + i * 158 + 5c];
-    if ((A1 << 10) <= 0)
+    script_wait = b[channel + i * 158 + 60] + hu[channel + i * 158 + 5c];
+    if (script_wait <= 0)
     {
-        A1 = hu[channel + i * 158 + 5c] + A1;
+        script_wait = hu[channel + i * 158 + 5c] + script_wait;
         [channel + i * 158 + 60] = b(b[channel + i * 158 + 60] + bu[channel + i * 158 + 5c]);
     }
-    V1 = 7fff;
+    note_wait = 7fff;
     if (([channel + i * 158 + 0] & 0600) == 0)
     {
-        V1 = hu[channel + i * 158 + 62];
-        if (V1 == f)
+        wait_mod = hu[channel + i * 158 + 62];
+        if (wait_mod == f)
         {
-            V1 = A1 - 1;
-            if ((V1 & ffff) == 0)
-            {
-                V1 = 1;
-            }
+            note_wait = script_wait - 1;
+            if (note_wait == 0) note_wait = 1;
         }
-        else if (V1 == 10)
+        else if (wait_mod == 10)
         {
-            V1 = A1;
+            note_wait = script_wait;
         }
         else
         {
-            V1 = (((A1 << 10) >> 10) * V1) >> 4;
-            if( ( V1 & ffff ) == 0 )
-            {
-                V1 = 1;
+            note_wait = script_wait * (wait_mod / 10);
+            if( note_wait == 0 ) note_wait = 1;
             }
         }
     }
-    [channel + i * 158 + 5c] = w((V1 << 10) + ((A1 << 10) >> 10));
+    [channel + i * 158 + 5c] = h(script_wait);
+    [channel + i * 158 + 5e] = h(note_wait);
 
     if (play_note != 0)
     {
@@ -5401,7 +5398,7 @@ sequence = A0;
 channel = A2;
 
 [channel + 36] = h(hu[channel + 36] | 0010);
-[channel + 57] = w(bu[sequence]);
+[channel + 57] = b(bu[sequence]);
 
 return sequence + 1;
 ////////////////////////////////
@@ -5429,7 +5426,7 @@ sequence = A0;
 channel = A2;
 
 [channel + 36] = h(hu[channel + 36] | 0040);
-[channel + 59] = w(bu[sequence]);
+[channel + 59] = b(bu[sequence]);
 return sequence + 1;
 ////////////////////////////////
 

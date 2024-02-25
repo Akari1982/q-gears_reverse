@@ -20,9 +20,9 @@ SoundOpcode sound_opcodes[] =
 // 0x90
     Opcode90,   OpcodeNull, OpcodeNull, OpcodeNull, Opcode94,   OpcodeNull, OpcodeNull, OpcodeNull,
 // 0x98
-    Opcode98,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    Opcode98,   Opcode99,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xa0
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeA0,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xa8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeAD,   OpcodeNull, OpcodeNull,
 // 0xb0
@@ -34,7 +34,7 @@ SoundOpcode sound_opcodes[] =
 // 0xc8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xd0
-    OpcodeNull, OpcodeNull, OpcodeD2,   OpcodeNull, OpcodeD4,   OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeNull, OpcodeD1,   OpcodeD2,   OpcodeNull, OpcodeD4,   OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xd8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xe0
@@ -200,7 +200,7 @@ Xeno::System::SoundUpdateSPU()
 void
 Xeno::System::SoundUpdateBaseValues()
 {
-    GPU_displayText("SoundUpdateBaseValues Hook");
+    //GPU_displayText("SoundUpdateBaseValues Hook");
 
     u32 main = psxRegs.GPR.n.a0;
     u32 channel = psxRegs.GPR.n.a1;
@@ -343,6 +343,9 @@ Xeno::System::SoundUpdateSequence()
 
         if (psxMemRead16(channel_p + i * 0x158 + 0x5c) != 0)
         {
+            char buffer[50];
+            sprintf(buffer, "Wait: 0x%02x", psxMemRead16(channel_p + i * 0x158 + 0x5c));
+            GPU_displayText(buffer);
             continue;
         }
 
@@ -359,6 +362,10 @@ Xeno::System::SoundUpdateSequence()
 
             if (opcode < 0x80) // play note
             {
+                char buffer[50];
+                sprintf(buffer, "Note: 0x%02x", opcode);
+                GPU_displayText(buffer);
+
                 if ((psxMemRead16(channel_p + i * 0x158 + 0x0) & 0x0008) == 0)
                 {
                     psxMemWrite16(channel_p + i * 0x158 + 0x76, opcode << 0x8); // volume related
@@ -367,9 +374,39 @@ Xeno::System::SoundUpdateSequence()
 
                 u8 wait = psxMemRead8(sequence_p++);
 
-                u8 A2 = (psxMemRead8(channel_p + i * 0x158 + 0x66) + psxMemRead8(0x80050134 + wait)) & 0xff;
+                //00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+                //00 00 00 01 01 01 01 01 01 01 01 01 01 01 01 01
+                //01 01 01 01 01 01 02 02 02 02 02 02 02 02 02 02
+                //02 02 02 02 02 02 02 02 02 03 03 03 03 03 03 03
+                //03 03 03 03 03 03 03 03 03 03 03 03 04 04 04 04
+                //04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 05
+                //05 05 05 05 05 05 05 05 05 05 05 05 05 05 05 05
+                //05 05 06 06 06 06 06 06 06 06 06 06 06 06 06 06
+                //06 06 06 06 06 07 07 07 07 07 07 07 07 07 07 07
+                //07 07 07 07 07 07 07 07 08 08 08 08 08 08 08 08
+                //08 08 08 08 08 08 08 08 08 08 08 09 09 09 09 09
+                //09 09 09 09 09 09 09 09 09 09 09 09 09 09 0A 0A
+                //0A 0A 0A 0A 0A 0A 0A 0A 0A 0A 0A 0A 0A 0A 0A 0A
+                //0A 0B 0B 0B 0B 0B 0B 0B 0B 0B 0B 0B 0B 0B 0B 0B
+                //0B 0B 0B 0B
+                u8 A2 = ((u32)psxMemRead8(channel_p + i * 0x158 + 0x66) + (u32)psxMemRead8(0x80050134 + wait)) & 0xff;
                 psxMemWrite8(channel_p + i * 0x158 + 0x65, A2);
 
+                // 00 C0 90 60 48 40 30 24 20 18 12 10 0C 09 08 06
+                // 04 03 02 00 C0 90 60 48 40 30 24 20 18 12 10 0C
+                // 09 08 06 04 03 02 00 C0 90 60 48 40 30 24 20 18
+                // 12 10 0C 09 08 06 04 03 02 00 C0 90 60 48 40 30
+                // 24 20 18 12 10 0C 09 08 06 04 03 02 00 C0 90 60
+                // 48 40 30 24 20 18 12 10 0C 09 08 06 04 03 02 00
+                // C0 90 60 48 40 30 24 20 18 12 10 0C 09 08 06 04
+                // 03 02 00 C0 90 60 48 40 30 24 20 18 12 10 0C 09
+                // 08 06 04 03 02 00 C0 90 60 48 40 30 24 20 18 12
+                // 10 0C 09 08 06 04 03 02 00 C0 90 60 48 40 30 24
+                // 20 18 12 10 0C 09 08 06 04 03 02 00 C0 90 60 48
+                // 40 30 24 20 18 12 10 0C 09 08 06 04 03 02 00 C0
+                // 90 60 48 40 30 24 20 18 12 10 0C 09 08 06 04 03
+                // 02 00 C0 90 60 48 40 30 24 20 18 12 10 0C 09 08
+                // 06 04 03 02
                 u8 A1 = psxMemRead8(0x80050050 + wait);
                 if (A1 == 0)
                 {
@@ -382,7 +419,7 @@ Xeno::System::SoundUpdateSequence()
 
                 if (psxMemRead16(channel_p + i * 0x158 + 0x0) & 0x0010)
                 {
-                    SoundUpdateBasePitch(main_p, channel_p + i * 158, A2);
+                    SoundUpdateBasePitch(main_p, channel_p + i * 0x158, A2);
                 }
                 else
                 {
@@ -439,110 +476,104 @@ Xeno::System::SoundUpdateSequence()
         {
             psxMemWrite16(channel_p + i * 0x158 + 0x0, psxMemRead16(channel_p + i * 0x158 + 0x0) | 0x0200);
         }
-/*
+
         // check next opcode
-        stack = hu[channel + i * 158 + 72];
-        A0 = channel + i * 158 + 9c + stack * c;
-        while (bu[sequence] >= 80)
+        u16 stack = psxMemRead16(channel_p + i * 0x158 + 0x72);
+        u32 stack_p = channel_p + i * 0x158 + 0x9c + stack * 0xc;
+        u8 next_opcode = psxMemRead8(sequence_p);
+        while (next_opcode >= 0x80)
         {
-            A2 = bu[sequence];
+            next_opcode = psxMemRead8(sequence_p);
 
-            if (A2 == 90)
+            if (next_opcode == 0x90)
             {
-                sequence = w[channel + i * 158 + 18];
-                if (sequence != 0)
+                sequence_p = psxMemRead32(channel_p + i * 0x158 + 0x18);
+                if (sequence_p != 0)
                 {
                     continue;
                 }
                 break;
             }
-            else if (A2 == 80)
+            else if (next_opcode == 0x80)
             {
-                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & fdff);
+                psxMemWrite16(channel_p + i * 0x158 + 0x0, psxMemRead16(channel_p + i * 0x158 + 0x0) & 0xfdff);
                 break;
             }
-            else if (A2 == 81)
+            else if (next_opcode == 0x81)
             {
-                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 0200);
+                psxMemWrite16(channel_p + i * 0x158 + 0x0, psxMemRead16(channel_p + i * 0x158 + 0x0) | 0x0200);
                 break;
             }
-            else if (A2 == b0 || A2 == b1)
+            else if (next_opcode == 0xb0 || next_opcode == 0xb1)
             {
-                [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & fdff);
+                psxMemWrite16(channel_p + i * 0x158 + 0x0, psxMemRead16(channel_p + i * 0x158 + 0x0) & 0xfdff);
                 break;
             }
-            else if (A2 == 99)
+            else if (next_opcode == 0x99)
             {
-                if (bu[A0] != 0)
+                if (psxMemRead8(stack_p) != 0)
                 {
-                    sequence = w[A0 + 4];
+                    sequence_p = psxMemRead32(stack_p + 0x4);
                     continue;
                 }
-                A0 = A0 - c;
+                stack_p -= 0xc;
             }
-            else if (A2 == 9a)
+            else if (next_opcode == 0x9a)
             {
-                if (bu[A0] == 0)
+                if (psxMemRead8(stack_p) == 0)
                 {
-                    sequence = w[A0 + 8];
-                    A0 = A0 - c;
+                    sequence_p = psxMemRead32(stack_p + 0x8);
+                    stack_p -= 0xc;
                     continue;
                 }
             }
 
-            V0 = ((A2 - 80) << 10) >> 10;
-            sequence += bu[8004fec4 + V0];
+            sequence_p += psxMemRead8(0x8004fec4 + (((next_opcode - 0x80) << 0x10) >> 0x10));
         }
 
-        if (A2 < 80)
+        if (next_opcode < 0x80)
         {
-            [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] | 1000);
+            psxMemWrite16(channel_p + i * 0x158 + 0x0, psxMemRead16(channel_p + i * 0x158 + 0x0) | 0x1000);
         }
         else
         {
-            [channel + i * 158 + 0] = h(hu[channel + i * 158 + 0] & efff);
+            psxMemWrite16(channel_p + i * 0x158 + 0x0, psxMemRead16(channel_p + i * 0x158 + 0x0) & 0xefff);
         }
 
-*/
-        // calculate and set note length
-        u32 A1 = psxMemRead8(channel_p + i * 0x158 + 0x60) + psxMemRead16(channel_p + i * 0x158 + 0x5c);
-        if ((A1 << 0x10) <= 0)
+        // calculate and set note length by script wait
+        s16 script_wait = psxMemRead16(channel_p + i * 0x158 + 0x5c) + (s8)psxMemRead8(channel_p + i * 0x158 + 0x60);
+        if (script_wait <= 0)
         {
-            A1 = psxMemRead16(channel_p + i * 0x158 + 0x5c) + A1;
+            script_wait = psxMemRead16(channel_p + i * 0x158 + 0x5c) + script_wait;
             psxMemWrite8(channel_p + i * 0x158 + 0x60, psxMemRead8(channel_p + i * 0x158 + 0x60) + psxMemRead8(channel_p + i * 0x158 + 0x5c));
         }
-        u32 V1 = 0x7fff;
+        s16 note_wait = 0x7fff;
         if ((psxMemRead16(channel_p + i * 0x158 + 0x0) & 0x0600) == 0)
         {
-            V1 = psxMemRead16(channel_p + i * 0x158 + 0x62);
-            if (V1 == 0xf)
+            u16 wait_mod = psxMemRead16(channel_p + i * 0x158 + 0x62);
+            if (wait_mod == 0xf)
             {
-                V1 = A1 - 1;
-                if ((V1 & 0xffff) == 0)
-                {
-                    V1 = 1;
-                }
+                note_wait = script_wait - 1;
+                if (note_wait == 0) note_wait = 1;
             }
-            else if (V1 == 0x10)
+            else if (wait_mod == 0x10)
             {
-                V1 = A1;
+                note_wait = script_wait;
             }
             else
             {
-                V1 = (((A1 << 0x10) >> 0x10) * V1) >> 4;
-                if( ( V1 & 0xffff ) == 0 )
-                {
-                    V1 = 1;
-                }
+                note_wait = script_wait * ( wait_mod / 0x10 );
+                if (note_wait == 0) note_wait = 1;
             }
         }
-        psxMemWrite32(channel_p + i * 0x158 + 0x5c, (V1 << 0x10) + ((A1 << 0x10) >> 0x10));
+        psxMemWrite16(channel_p + i * 0x158 + 0x5c, script_wait);
+        psxMemWrite16(channel_p + i * 0x158 + 0x5e, note_wait);
 
         if (play_note == true)
         {
             if (psxMemRead16(channel_p + i * 0x158 + 0x4) & 0x0004)
             {
-                u8 V0 = (psxMemRead8(channel_p + i * 0x158 + 0x65) - psxMemRead8(channel_p + i * 0x158 + 0x64)) << 0x18; // diff
+                u32 V0 = (psxMemRead8(channel_p + i * 0x158 + 0x65) - psxMemRead8(channel_p + i * 0x158 + 0x64)) << 0x18; // diff
                 if (V0 != 0)
                 {
                     psxMemWrite16(channel_p + i * 0x158 + 0x4, psxMemRead16(channel_p + i * 0x158 + 0x4) | 0x0001); // base pitch update
@@ -563,7 +594,7 @@ Xeno::System::SoundUpdateSequence()
 
             for (int j = 0; j < 4; ++j)
             {
-                A1 = psxMemRead16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x1e);
+                u16 A1 = psxMemRead16(channel_p + i * 0x158 + 0xd8 + j * 0x20 + 0x1e);
                 if ((A1 & 3) == 3)
                 {
                     psxMemWrite16(channel_p + i * 0x158 + 0x2, psxMemRead16(channel_p + i * 0x158 + 0x2) | 0x0100);
@@ -637,4 +668,357 @@ Xeno::System::SoundGetSndFileBySndId(const u8 snd_id)
         snd_file = psxMemRead32(snd_file + 0x2c);
     }
     return snd_file;
+}
+
+
+
+void
+Opcode81()
+{
+    GPU_displayText("Opcode81 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x0, psxMemRead16(channel_p + 0x0) | 0x0100);
+    psxMemWrite16(channel_p + 0x5c, psxMemRead8(sequence_p));
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+void
+Opcode90()
+{
+    GPU_displayText("Opcode90 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    u32 ret_seq = sequence_p;
+
+    if (psxMemRead32(channel_p + 0x18) != 0)
+    {
+        ret_seq = psxMemRead32(channel_p + 0x18);
+        psxMemWrite16(channel_p + 0x66, psxMemRead8(channel_p + 0x23));
+        psxMemWrite16(channel_p + 0x20, psxMemRead16(channel_p + 0x20) + 0x1);
+    }
+    else
+    {
+        u8 spu_channel_id = psxMemRead8(channel_p + 0x27);
+        if (spu_channel_id < 0x18 && psxMemRead32(0x80061bbc + spu_channel_id * 4) == channel_p + 0x30)
+        {
+            psxMemWrite32(0x80061bbc + spu_channel_id * 4, 0);
+            psxMemWrite32(0x80058b98, psxMemRead32(0x80058b98) & ~(1 << spu_channel_id)); // remove mask for turning SPU Voice ON
+            psxMemWrite32(0x80058bf0, psxMemRead32(0x80058bf0) | (1 << spu_channel_id)); // set mask 2 for turning SPU Voice OFF (default release)
+        }
+
+        psxMemWrite16(channel_p + 0x0, 0);
+        psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) & 0xfffc);
+    }
+
+    psxRegs.GPR.n.v0 = ret_seq;
+}
+
+void
+Opcode94()
+{
+    GPU_displayText("Opcode94 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x66, psxMemRead8(sequence_p) * 0xc);
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+void
+OpcodeB2()
+{
+    GPU_displayText("OpcodeB2 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    if (psxMemRead8(channel_p + 0x27) & 0x1) // spu channel id
+    {
+        psxMemWrite16(channel_p + 0x32, psxMemRead16(channel_p + 0x32) | 0x0010); // enable channel fm (pitch lfo) mode
+        psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x1000); // update channel fm (pitch lfo) mode
+    }
+
+    psxRegs.GPR.n.v0 = sequence_p;
+}
+
+void
+OpcodeC2()
+{
+    GPU_displayText("OpcodeC2 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x0010);
+    psxMemWrite8(channel_p + 0x57, psxMemRead8(sequence_p));
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+void
+OpcodeC4()
+{
+    GPU_displayText("OpcodeC4 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x0040);
+    psxMemWrite8(channel_p + 0x59, psxMemRead8(sequence_p));
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+void
+OpcodeE0()
+{
+    GPU_displayText("OpcodeE0 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) | 0x0100);
+    psxMemWrite16(channel_p + 0x4, psxMemRead16(channel_p + 0x4) & 0xfef7);
+    psxMemWrite32(channel_p + 0x78, psxMemRead8(sequence_p) << 0x18);
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+
+
+void
+OpcodeFC()
+{
+    GPU_displayText("OpcodeFC Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    u8 snd_id = psxMemRead8(sequence_p + 0x0);
+    psxMemWrite8(channel_p + 0x25, snd_id);
+
+    u32 snd_file = SoundGetSndFileBySndId(snd_id);
+    if (snd_file == 0)
+    {
+        snd_file = psxMemRead32(0x80058bf4);
+    }
+    psxMemWrite32(channel_p + 0x2c, snd_file);
+
+    SoundInitChannelInstrument(psxMemRead8(sequence_p + 0x1), channel_p);
+
+    psxRegs.GPR.n.v0 = sequence_p + 2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+void
+Opcode98()
+{
+    GPU_displayText("Opcode98 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x72, psxMemRead16(channel_p + 0x72) + 1);
+
+    u16 A1 = psxMemRead16(channel_p + 0x72);
+    psxMemWrite8(channel_p + 0x9c + A1 * 0xc + 0x0, psxMemRead8(sequence_p) - 1);
+    psxMemWrite32(channel_p + 0x9c + A1 * 0xc + 0x4, sequence_p + 1);
+    psxMemWrite8(channel_p + 0x9c + A1 * 0xc + 0x2, psxMemRead8(channel_p + 0x66));
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+
+
+void
+Opcode99()
+{
+    GPU_displayText("Opcode99 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    u32 seq_ret = sequence_p;
+
+    u16 slot = psxMemRead16(channel_p + 0x72);
+    psxMemWrite8(channel_p + 0x9c + slot * 0xc + 0x0, psxMemRead8(channel_p + 0x9c + slot * 0xc + 0x0) - 1);
+
+    if (psxMemRead8(channel_p + 0x9c + slot * 0xc + 0x0) != 0xff)
+    {
+        // store for break
+        psxMemWrite8(channel_p + 0x9c + slot * 0xc + 0x3, psxMemRead8(channel_p + 0x66));
+        psxMemWrite32(channel_p + 0x9c + slot * 0xc + 0x8, seq_ret);
+
+        // restore previous
+        seq_ret = psxMemRead32(channel_p + 0x9c + slot * 0xc + 0x4);
+        psxMemWrite16(channel_p + 0x66, psxMemRead8(channel_p + 0x9c + slot * 0xc + 0x2));
+    }
+    else
+    {
+        psxMemWrite16(channel_p + 0x72, psxMemRead16(channel_p + 0x72) - 1);
+    }
+
+    psxRegs.GPR.n.v0 = seq_ret;
+}
+
+
+
+void
+OpcodeA0()
+{
+    GPU_displayText("OpcodeA0 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    u8 speed = psxMemRead8(sequence_p + 0x0);
+    psxMemWrite32(main_p + 0x54, speed * psxMemRead16(main_p + 0x64 + 0x2));
+    psxMemWrite32(main_p + 0x58, speed << 0x10);
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+
+
+void
+OpcodeAD()
+{
+    GPU_displayText("OpcodeAD Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    u8 V1 = psxMemRead8(sequence_p);
+    V1 = (V1 != 0) ? psxMemRead8(channel_p + 0x60) + V1 : 0;
+    psxMemWrite8(channel_p + 0x60, V1);
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+
+
+void
+OpcodeB0()
+{
+    GPU_displayText("OpcodeB0 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x0, psxMemRead16(channel_p + 0x0) | 0x0800);
+
+    psxRegs.GPR.n.v0 = sequence_p;
+}
+
+void
+OpcodeD1()
+{
+    GPU_displayText("OpcodeD1 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) | 0x0200);
+    psxMemWrite16(channel_p + 0x6e, psxMemRead16(channel_p + 0x6e) + ((psxMemRead8(sequence_p) << 0x18) >> 0x13));
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+
+
+void
+OpcodeD2()
+{
+    GPU_displayText("OpcodeD2 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) | 0x0200);
+    psxMemWrite16(channel_p + 0x6e, psxMemRead16(channel_p + 0x6e) + ((psxMemRead8(sequence_p) << 0x18) >> 0x15));
+
+    psxRegs.GPR.n.v0 = sequence_p + 1;
+}
+
+
+
+void
+OpcodeD4()
+{
+    GPU_displayText("OpcodeD4 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    u8 A1 = psxMemRead8(sequence_p + 0);
+    u32 V0 = psxMemRead8(sequence_p + 1) << 0x18;
+    if ((A1 != 0) && (V0 != 0))
+    {
+        psxMemWrite16(channel_p + 0x4, psxMemRead16(channel_p + 0x4) | 0x0001); // base pitch update
+        psxMemWrite32(channel_p + 0x84, V0 / A1); // base pitch add
+        psxMemWrite16(channel_p + 0x94, A1); // base pitch update timer
+    }
+    else
+    {
+        psxMemWrite16(channel_p + 0x4, psxMemRead16(channel_p + 0x4) & 0xfffe);
+    }
+
+    psxRegs.GPR.n.v0 = sequence_p + 2;
+}
+
+
+
+void
+OpcodeE2()
+{
+    GPU_displayText("OpcodeE2 Hook");
+
+    u32 sequence_p = psxRegs.GPR.n.a0;
+    u32 main_p = psxRegs.GPR.n.a1;
+    u32 channel_p = psxRegs.GPR.n.a2;
+
+    u8 timer = psxMemRead8(sequence_p + 0x0);
+    u32 V0 = (psxMemRead8(sequence_p + 0x1) << 0x18) - psxMemRead32(channel_p + 0x78);
+
+    if (timer != 0 && V0 != 0)
+    {
+        psxMemWrite16(channel_p + 0x96, timer);
+        psxMemWrite16(channel_p + 0x4, (psxMemRead16(channel_p + 0x4) | 0x0008) & 0xfeff);
+        psxMemWrite16(channel_p + 0x88, V0 / timer);
+    }
+
+    psxRegs.GPR.n.v0 = sequence_p + 2;
 }
