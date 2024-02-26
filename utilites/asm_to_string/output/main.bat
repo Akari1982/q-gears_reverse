@@ -1,1 +1,1 @@
-main input.txt
+main 0039_menu.asm

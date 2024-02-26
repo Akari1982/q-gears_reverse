@@ -1,1 +1,1 @@
-adisasm 2615 2615.asm -v -b 801e4000 801e4000 -u -a
+adisasm 0039_menu 0039_menu.asm -v -b 80058954 80058954 -u -a
