@@ -821,18 +821,18 @@
     +074 [][]     volume distribution (left/right). Init with 0x4000 (center).
     +076 [][]     note volume.
     +078 [][][][] base volume.
-    +07c [][][][] stored base volume add for timer.
-    +080 [][]     timer
-    +082 [][]     stored final
+    +07c [][][][] base volume add step value.
+    +080 [][]     base volume add steps.
+    +082 [][]     base volume add final value.
     +084 [][][][] base pitch add for timer.
     +088 [][][][] base volume add for timer.
     +08c [][]     note volume add for timer.
     +08e [][]     note volume final value for the timer.
-    +090 [][]     volume distribution add for timer.
-    +092 [][]     volume distribution final value for the timer.
+    +090 [][]     volume distribution step value.
+    +092 [][]     volume distribution final value.
     +094 [][]     base pitch update timer.
     +096 [][]     base volume update timer.
-    +098 [][]     volume distribution update timer.
+    +098 [][]     volume distribution steps.
     +09a [][]     volume update steps.
     +09с stack structs (0xc size)
         +0 []       number of cycles left

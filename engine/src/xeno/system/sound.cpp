@@ -14,37 +14,37 @@ typedef u32 (*SoundOpcode) (const u32 sequence_p, const u32 main_p, const u32 ch
 SoundOpcode sound_opcodes[] =
 {
 // 0x80
-    OpcodeNull, Opcode81,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    Opcode80,   Opcode81,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0x88
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0x90
-    Opcode90,   OpcodeNull, OpcodeNull, OpcodeNull, Opcode94,   OpcodeNull, OpcodeNull, OpcodeNull,
+    Opcode90,   Opcode91,   OpcodeNull, OpcodeNull, Opcode94,   Opcode95,   Opcode96,   Opcode97,
 // 0x98
-    Opcode98,   Opcode99,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    Opcode98,   Opcode99,   Opcode9A,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xa0
     OpcodeA0,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xa8
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeAD,   OpcodeNull, OpcodeNull,
+    OpcodeNull, OpcodeA9,   OpcodeNull, OpcodeNull, OpcodeAC,   OpcodeAD,   OpcodeNull, OpcodeNull,
 // 0xb0
     OpcodeB0,   OpcodeNull, OpcodeB2,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xb8
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeNull, OpcodeNull, OpcodeBA,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xc0
     OpcodeNull, OpcodeNull, OpcodeC2,   OpcodeNull, OpcodeC4,   OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xc8
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeNull, OpcodeC9,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xd0
-    OpcodeNull, OpcodeD1,   OpcodeD2,   OpcodeNull, OpcodeD4,   OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeD0,   OpcodeD1,   OpcodeD2,   OpcodeNull, OpcodeD4,   OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xd8
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xe0
     OpcodeE0,   OpcodeNull, OpcodeE2,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xe8
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
+    OpcodeE8,   OpcodeNull, OpcodeEA,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xf0
     OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull,
 // 0xf8
-    OpcodeNull, OpcodeNull, OpcodeNull, OpcodeNull, OpcodeFC,   OpcodeNull, OpcodeNull, OpcodeNull
+    OpcodeF8,   OpcodeNull, OpcodeNull, OpcodeNull, OpcodeFC,   OpcodeNull, OpcodeNull, OpcodeNull
 };
 
 

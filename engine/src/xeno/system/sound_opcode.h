@@ -21,6 +21,18 @@ OpcodeNull(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 
 
 u32
+Opcode80(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x0, psxMemRead16(channel_p + 0x0) | 0x0400);
+    psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) | 0x0002);
+    psxMemWrite16(channel_p + 0x5c, psxMemRead8(sequence_p));
+
+    return sequence_p + 1;
+}
+
+
+
+u32
 Opcode81(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
     psxMemWrite16(channel_p + 0x0, psxMemRead16(channel_p + 0x0) | 0x0100);
@@ -62,11 +74,56 @@ Opcode90(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 
 
 u32
+Opcode91(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite32(channel_p + 0x18, sequence_p);
+    psxMemWrite8(channel_p + 0x23, psxMemRead8(channel_p + 0x66));
+
+    return sequence_p;
+}
+
+
+
+u32
 Opcode94(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
     psxMemWrite16(channel_p + 0x66, psxMemRead8(sequence_p) * 0xc);
 
     return sequence_p + 1;
+}
+
+
+
+u32
+Opcode95(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x66, psxMemRead16(channel_p + 0x66) + 0xc);
+
+    return sequence_p;
+}
+
+
+
+u32
+Opcode96(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x66, psxMemRead16(channel_p + 0x66) - 0xc);
+
+    return sequence_p;
+}
+
+
+
+u32
+Opcode97(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(main_p + 0x36, 0xc0 / psxMemRead8(sequence_p + 1));
+    psxMemWrite16(main_p + 0x38, psxMemRead8(sequence_p + 0));
+    psxMemWrite16(main_p + 0x3a, 0xc0 / psxMemRead8(sequence_p + 1));
+    psxMemWrite16(main_p + 0x3c, psxMemRead8(sequence_p + 1));
+    psxMemWrite16(main_p + 0x3e, psxMemRead8(sequence_p + 0));
+
+    return sequence_p + 2;
 }
 
 
@@ -115,11 +172,49 @@ Opcode99(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 
 
 u32
+Opcode9A(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    u32 seq_ret = sequence_p;
+
+    u16 stack = psxMemRead16(channel_p + 0x72);
+
+    if (psxMemRead8(channel_p + 0x9c + stack * 0xc + 0x0) == 0)
+    {
+        seq_ret = psxMemRead32(channel_p + 0x9c + stack * 0xc + 0x8);
+        psxMemWrite16(channel_p + 0x66, psxMemRead8(channel_p + 0x9c + stack * 0xc + 0x3));
+        psxMemWrite16(channel_p + 0x72, psxMemRead16(channel_p + 0x72) - 1);
+    }
+    return seq_ret;
+}
+
+
+
+u32
 OpcodeA0(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
     u8 speed = psxMemRead8(sequence_p + 0x0);
     psxMemWrite32(main_p + 0x54, speed * psxMemRead16(main_p + 0x64 + 0x2));
     psxMemWrite32(main_p + 0x58, speed << 0x10);
+    return sequence_p + 1;
+}
+
+
+
+u32
+OpcodeA9(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x62, psxMemRead8(sequence_p));
+
+    return sequence_p + 1;
+}
+
+
+
+u32
+OpcodeAC(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    SoundInitChannelInstrument(psxMemRead8(sequence_p), channel_p);
+
     return sequence_p + 1;
 }
 
@@ -162,6 +257,22 @@ OpcodeB2(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 
 
 u32
+OpcodeBA(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    // enable channel reverb if not disabled in settings
+
+    // if something or (enable reverb flag and channel reverb not disabled)
+    if (((psxMemRead16(main_p + 0x10) & 0x0006) == 0) || ((psxMemRead16(0x80058c18) & 0x2000) && ((psxMemRead16(channel_p + 0x0) & 0x0002) == 0)))
+    {
+        psxMemWrite16(channel_p + 0x32, psxMemRead16(channel_p + 0x32) | 0x0040); // enable channel reverb mode
+        psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x4000); // update channel reverb mode
+    }
+    return sequence_p;
+}
+
+
+
+u32
 OpcodeC2(const u32 sequence_p, const u32 main_p, const u32 channel_p)
 {
     psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x0010);
@@ -178,6 +289,27 @@ OpcodeC4(const u32 sequence_p, const u32 main_p, const u32 channel_p)
     psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x0040);
     psxMemWrite8(channel_p + 0x59, psxMemRead8(sequence_p));
 
+    return sequence_p + 1;
+}
+
+
+
+u32
+OpcodeC9(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x36, psxMemRead16(channel_p + 0x36) | 0x0040);
+    psxMemWrite8(channel_p + 0x55, psxMemRead8(sequence_p));
+
+    return sequence_p + 1;
+}
+
+
+
+u32
+OpcodeD0(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) | 0x0200);
+    psxMemWrite16(channel_p + 0x6e, (psxMemRead8(sequence_p) << 0x18) >> 0x13);
     return sequence_p + 1;
 }
 
@@ -251,6 +383,59 @@ OpcodeE2(const u32 sequence_p, const u32 main_p, const u32 channel_p)
     }
 
     return sequence_p + 2;
+}
+
+
+
+u32
+OpcodeE8(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    psxMemWrite16(channel_p + 0x2, psxMemRead16(channel_p + 0x2) | 0x0100);
+    psxMemWrite16(channel_p + 0x74, psxMemRead8(sequence_p) << 0x8);
+
+    return sequence_p + 1;
+}
+
+
+
+u32
+OpcodeEA(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    u8 steps = psxMemRead8(sequence_p + 0);
+    s16 volume_distr = ((s8)psxMemRead8(sequence_p + 1) - ((s16)psxMemRead16(channel_p + 0x74) >> 0x8)) << 0x8;
+
+    if (steps != 0 && volume_distr != 0)
+    {
+        psxMemWrite16(channel_p + 0x4, psxMemRead16(channel_p + 0x4) | 0x0010);
+        psxMemWrite16(channel_p + 0x90, volume_distr / steps);
+        psxMemWrite16(channel_p + 0x92, volume_distr);
+        psxMemWrite16(channel_p + 0x98, steps);
+    }
+    return sequence_p + 2;
+}
+
+
+
+u32
+OpcodeF8(const u32 sequence_p, const u32 main_p, const u32 channel_p)
+{
+    s16 vol_add = psxMemRead8(sequence_p + 0) << 0x8;
+    u8 steps = psxMemRead8(sequence_p + 1);
+    s16 diff = ((s8)psxMemRead8(sequence_p + 2) << 0x8) - vol_add;
+
+    if (diff != 0 && steps != 0)
+    {
+        psxMemWrite16(channel_p + 0x4, (psxMemRead16(channel_p + 0x4) | 0x0100) & 0xfff7);
+        psxMemWrite32(channel_p + 0x7c, diff / steps);
+        psxMemWrite16(channel_p + 0x80, steps);
+        psxMemWrite16(channel_p + 0x82, vol_add);
+    }
+    else
+    {
+        psxMemWrite16(channel_p + 0x4, psxMemRead16(channel_p + 0x4) & 0xfeff);
+    }
+
+    return sequence_p + 3;
 }
 
 

@@ -5496,7 +5496,7 @@ sequence = A0;
 channel = A2;
 
 [channel + 36] = h(hu[channel + 36] | 0040);
-[channel + 55] = w(bu[sequence]);
+[channel + 55] = b(bu[sequence]);
 return sequence + 1;
 ////////////////////////////////
 
@@ -6058,15 +6058,15 @@ V0 = A0 + 0001;
 sequence = A0;
 channel = A2;
 
-A3 = bu[sequence + 0];
+steps = bu[sequence + 0];
 V0 = b[sequence + 1] - ( (hu[channel + 74] << 10) >> 18 );
 
-if( A3 != 0 && V0 != 0 )
+if( steps != 0 && V0 != 0 )
 {
     [channel + 92] = h(V0 << 8);
-    [channel + 98] = h(A3);
+    [channel + 98] = h(steps);
     [channel + 4] = h(hu[channel + 4] | 0010);
-    [channel + 90] = h((V0 << 8) / A3);
+    [channel + 90] = h((V0 << 8) / steps);
 }
 return sequence + 2;
 ////////////////////////////////
