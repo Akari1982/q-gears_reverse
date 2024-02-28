@@ -97,7 +97,7 @@ V0 = 0001;
 
 A0 = 2c;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 800B8168	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 0007;
@@ -6174,11 +6174,11 @@ if( bu[80058852] != S0 )
 
     A0 = SP + 10;
     A1 = SP + 14;
-    system_filesystem_get_current_dir();
+    system_cdrom2_get_dir();
 
     A0 = c;
     A1 = 2;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = S0 + 2;
     A1 = 801fc000;
@@ -6190,7 +6190,7 @@ if( bu[80058852] != S0 )
 
     A0 = w[SP + 10];
     A1 = w[SP + 14];
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 0;
     system_draw_sync();
@@ -6563,7 +6563,7 @@ S1 = A0;
 
 A0 = 2c;
 A1 = 1;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 V0 = w[S1 + 007c];
 
@@ -7038,7 +7038,7 @@ if( bu[800c2d59] != 0 )
 
     A0 = 2c;
     A1 = 0;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 1;
     system_get_aligned_filesize_by_dir_file_id();
@@ -7164,7 +7164,7 @@ V0 = bu[800c2d58];
 800BF390	jal    battle_cdrom_data_sync [$800b7918]
 800BF394	nop
 A0 = 002c;
-800BF39C	jal    $system_filesystem_set_dir
+800BF39C	jal    $system_cdrom2_set_dir
 A1 = 0;
 800BF3A4	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 0005;

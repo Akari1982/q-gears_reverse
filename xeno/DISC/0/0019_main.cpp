@@ -409,7 +409,7 @@ if( b[801e8964] == 0 )
 
 A0 = 801e899c;
 A1 = 801e89a0;
-system_filesystem_get_current_dir();
+system_cdrom2_get_dir();
 
 A0 = 801d30c4; // func1d30c4()
 mdec_out_dma_callback();
@@ -954,11 +954,11 @@ system_cdrom_action_sync();
 // save cur dir
 A0 = SP + 18;
 A1 = SP + 1c;
-system_filesystem_get_current_dir();
+system_cdrom2_get_dir();
 
 A0 = w[801e899c];
 A1 = w[801e89a0];
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 [801e89a4] = w(1);
 [801e89a8] = w(1);
@@ -1026,7 +1026,7 @@ else
 // restore cur dir
 A0 = w[SP + 18];
 A1 = w[SP + 1c];
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 ////////////////////////////////
 
 

@@ -1565,7 +1565,7 @@ A0 = w[80058c44];
 801E574C	nop
 A0 = c;
 A1 = 1;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 S0 = 8006f06c;
 A0 = bu[S0 + 0000];
@@ -2727,7 +2727,7 @@ A1 = 0001;
 [SP + 0014] = w(S1);
 [SP + 0010] = w(S0);
 
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 S3 = 0;
 S4 = 0;
@@ -3128,7 +3128,7 @@ S1 = A0;
 A0 = 002c;
 A1 = 0;
 S0 = V0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 801E6F48	bne    s0, zero, L1e6ff4 [$801e6ff4]
 801E6F4C	nop

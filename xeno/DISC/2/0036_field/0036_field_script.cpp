@@ -640,7 +640,7 @@ if( w[8004e9b0] != 0 )
     {
         A0 = 4;
         A1 = 0;
-        system_filesystem_set_dir();
+        system_cdrom2_set_dir();
 
         V0 = w[800aefe4];
         A1 = w[V0 + i * 5c + 4c];

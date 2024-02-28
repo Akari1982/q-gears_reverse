@@ -3305,7 +3305,7 @@ A1 = bu[V1 + 000d];
 A0 = 0005;
 A0 = 0004;
 A1 = 0;
-80089948	jal    $system_filesystem_set_dir
+80089948	jal    $system_cdrom2_set_dir
 S0 = V0;
 S0 = S0 + 07fb;
 80089954	jal    $system_get_aligned_filesize_by_dir_file_id
@@ -3683,7 +3683,7 @@ S1 = A0;
 A0 = 0004;
 [800ad0a4] = w(A1);
 [800ad0a0] = w(S1);
-80089DD8	jal    $system_filesystem_set_dir
+80089DD8	jal    $system_cdrom2_set_dir
 A1 = 0;
 V0 = w[800acff4];
 80089DE8	nop
@@ -3927,7 +3927,7 @@ V0 = V1 & 0080;
 A0 = 001c;
 
 L8a1b8:	; 8008A1B8
-8008A1B8	jal    $system_filesystem_set_dir
+8008A1B8	jal    $system_cdrom2_set_dir
 A1 = 0;
 V0 = w[800af1e0];
 8008A1C8	nop
@@ -3950,7 +3950,7 @@ L8a208:	; 8008A208
 V0 = V0 + 001f;
 [800af1e0] = w(V0);
 A0 = 002c;
-8008A218	jal    $system_filesystem_set_dir
+8008A218	jal    $system_cdrom2_set_dir
 A1 = 0001;
 
 L8a220:	; 8008A220
@@ -3967,7 +3967,7 @@ A0 = w[800af1e0];
 8008A254	jal    $800293e8
 A3 = 0080;
 A0 = 0004;
-8008A260	jal    $system_filesystem_set_dir
+8008A260	jal    $system_cdrom2_set_dir
 A1 = 0;
 V1 = w[800af54c];
 8008A270	nop
@@ -4033,7 +4033,7 @@ L8a354:	; 8008A354
 A0 = 0001;
 A0 = 0004;
 A1 = 0;
-8008A364	jal    $system_filesystem_set_dir
+8008A364	jal    $system_cdrom2_set_dir
 S0 = V0;
 S0 = S0 + 077a;
 8008A370	jal    $system_get_aligned_filesize_by_dir_file_id
@@ -21785,7 +21785,7 @@ V1 = w[A3 + 012c];
 V0 = V0 << 02;
 V1 = V1 & A2;
 V1 = V1 | V0;
-8009B9A8	jal    $system_filesystem_set_dir
+8009B9A8	jal    $system_cdrom2_set_dir
 [A3 + 012c] = w(V1);
 S3 = 0001;
 S0 = 800ad6b8;
@@ -26041,7 +26041,7 @@ A0 = 0001;
 [SP + 0014] = w(RA);
 800A0398	jal    read_two_bytes_unsigned [$800ac290]
 [SP + 0010] = w(S0);
-800A03A0	jal    $80028340
+800A03A0	jal    $system_cdrom2_get_disc_number
 S0 = V0 & ffff;
 A0 = S0;
 800A03AC	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -26206,7 +26206,7 @@ S1 = V0 >> 0d;
 V0 = w[A2 + 0004];
 800A05E0	addiu  v1, zero, $dfff (=-$2001)
 V0 = V0 & V1;
-800A05E8	jal    $system_filesystem_set_dir
+800A05E8	jal    $system_cdrom2_set_dir
 [A2 + 0004] = w(V0);
 A0 = w[800af54c];
 V1 = w[800ad0d8];

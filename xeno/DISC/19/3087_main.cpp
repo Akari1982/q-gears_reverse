@@ -1458,7 +1458,7 @@ S0 = S0 + 46;
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = S0;
 system_get_aligned_filesize_by_dir_file_id();

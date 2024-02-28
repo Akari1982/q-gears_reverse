@@ -133,7 +133,7 @@ if( bu[80058b94] != 0 )
 {
     A0 = 10;
     A1 = 2;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 4;
     A1 = 1;
@@ -176,7 +176,7 @@ if( w[V0 + 0] != -1 ) // DEBUG
 {
     A0 = 10;
     A1 = 2;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 6; // "STRIPCD1\14\2611.exe"
     A1 = 80280000;
@@ -387,7 +387,7 @@ if( bu[800d2470] != 0 )
 
 A0 = 10;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 4;
 A1 = 1;
@@ -2588,7 +2588,7 @@ L72de8:	; 80072DE8
 
 A0 = 20;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 ////////////////////////////////
 
 
@@ -2598,7 +2598,7 @@ system_filesystem_set_dir();
 
 A0 = 20;
 A1 = 2;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 ////////////////////////////////
 
 
@@ -2608,7 +2608,7 @@ system_filesystem_set_dir();
 
 A0 = 20;
 A1 = 3;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 ////////////////////////////////
 
 

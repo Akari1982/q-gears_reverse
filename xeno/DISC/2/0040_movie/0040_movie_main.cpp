@@ -52,7 +52,7 @@ system_graphic_create_draw_env_struct();
 
 A0 = c;
 A1 = 3;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 while( true )
 {
@@ -1176,7 +1176,7 @@ if( ( w[800764d8] != 0 ) || ( w[800764f4] != 0 ) )
 
 A0 = c;
 A1 = 3;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = S0 - 1;
 [800764f4] = w(1);
@@ -1560,7 +1560,7 @@ switch( A0 )
 
         A0 = 18;
         A1 = 0;
-        system_filesystem_set_dir();
+        system_cdrom2_set_dir();
 
         A0 = 3;
         A1 = w[80076528];
@@ -1623,7 +1623,7 @@ L71b4c:	; 80071B4C
     A1 = 20;
     system_clear_otagr();
 
-    system_filesystem_get_disc_number();
+    system_cdrom2_get_disc_number();
 
     A0 = 8006f418; // "\n[ DISC CHANGE TEST NOW DISC %2d ]\n\n"
     A1 = V0;
@@ -1726,7 +1726,7 @@ L71b4c:	; 80071B4C
     S0 = S0 + 0001;
     80071D2C	j      L71d68 [$80071d68]
     V0 = S0 < 0009;
-    system_filesystem_get_disc_number();
+    system_cdrom2_get_disc_number();
 
     A0 = 8006f564; // "  9 : XENOGEARS %2d DISC OK\n"
     A1 = V0;
@@ -1790,7 +1790,7 @@ L71b4c:	; 80071B4C
 
     if( S1 > 0 )
     {
-        system_filesystem_get_disc_number();
+        system_cdrom2_get_disc_number();
 
         A0 = 3 - V0;
         A1 = S1;
@@ -2498,7 +2498,7 @@ system_memory_set_alloc_user();
 
 A0 = 18; // set start file 13
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 0;
 A1 = 0;
@@ -2726,7 +2726,7 @@ while( true )
     A1 = 20;
     system_clear_otagr();
 
-    system_filesystem_get_disc_number();
+    system_cdrom2_get_disc_number();
 
     if( w[80076ae0] == 0 )
     {
@@ -3386,10 +3386,10 @@ if( V1 == 0 )
 {
     A0 = 18;
     A1 = 0;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 2;
-    system_cdrom_get_number_of_files_in_dir();
+    system_cdrom2_get_number_of_files_in_dir();
 
     if( w[800767ac] >= V0 )
     {
@@ -3410,16 +3410,14 @@ else if( V1 == 1 )
 {
     A0 = 18;
     A1 = 1;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 1;
-    system_cdrom_get_number_of_files_in_dir();
+    system_cdrom2_get_number_of_files_in_dir();
 
-    V0 = V0 << 10;
     A0 = w[800767ac];
-    V0 = V0 >> 10;
     V0 = A0 < V0;
-    S5 = A0 + 0002;
+    S5 = A0 + 2;
     if( V0 == 0 )
     {
         return 0;
@@ -3807,10 +3805,10 @@ if( w[80076ad8] == 0 ) // picture only
 {
     A0 = 18;
     A1 = 0;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 2;
-    system_cdrom_get_number_of_files_in_dir();
+    system_cdrom2_get_number_of_files_in_dir();
 
     if( w[800767ac] >= V0 )
     {
@@ -3831,10 +3829,10 @@ else if( w[80076ad8] == 1 ) // picture + adpcm
 {
     A0 = 18;
     A1 = 1;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 1;
-    system_cdrom_get_number_of_files_in_dir();
+    system_cdrom2_get_number_of_files_in_dir();
 
     if( w[800767ac] >= V0 )
     {
@@ -4382,12 +4380,12 @@ S1 = 0;
 
 A0 = SP + 18;
 A1 = SP + 1c;
-system_filesystem_get_current_dir();
+system_cdrom2_get_dir();
 
 
 A0 = 0;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 S2 = 0;
 S3 = 0;
@@ -4642,7 +4640,7 @@ L75474:	; 80075474
 
 A0 = w[SP + 18];
 A1 = w[SP + 1c];
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 ////////////////////////////////
 
 
@@ -4662,7 +4660,7 @@ if( V1 == 0 )
 {
     A0 = 18;
     A1 = 0;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 2;
 }
@@ -4670,7 +4668,7 @@ else if( V1 == 1 )
 {
     A0 = 18;
     A1 = 1;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 1;
 }
@@ -4679,7 +4677,7 @@ else if( V1 == 2 )
     return;
 }
 
-system_cdrom_get_number_of_files_in_dir();
+system_cdrom2_get_number_of_files_in_dir();
 
 if( w[800767ac] >= V0 )
 {
@@ -4739,10 +4737,10 @@ if( w[80076ad8] == 0 ) // movie type picture only
 {
     A0 = 18;
     A1 = 0;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 2;
-    system_cdrom_get_number_of_files_in_dir();
+    system_cdrom2_get_number_of_files_in_dir();
 
     // movie inside movie dir
     if( w[800767ac] < V0 )
@@ -4761,16 +4759,18 @@ else if( w[80076ad8] == 1 ) // movie type picture + adpcm
 {
     A0 = 18;
     A1 = 1;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = 1;
-    system_cdrom_get_number_of_files_in_dir();
+    system_cdrom2_get_number_of_files_in_dir();
 
     // movie inside movie dir
     if( w[800767ac] < V0 )
     {
+        // 0: Does not clear drawing area when drawing environment is set
         [800767b4 + 18] = b(0);
         [800767b4 + 138 + 18] = b(0);
+        // 1: 24-bit mode
         [800767b4 + 5c + 11] = b(1);
         [800767b4 + 194 + 11] = b(1);
 
@@ -4809,7 +4809,7 @@ else // movie type picture + adpcm
 }
 
 A0 = S0;
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 
 if( V0 == 18 )
 {

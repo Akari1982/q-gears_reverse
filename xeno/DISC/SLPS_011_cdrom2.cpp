@@ -565,6 +565,7 @@ else
 
 if( S0 == 0 )
 {
+    // load cdrom files settings
     A0 = 18; // file sector
     A1 = file1_allocated_memory;
     A2 = 8000; // file size
@@ -575,6 +576,7 @@ if( S0 == 0 )
     A0 = 0; // until the end
     system_cdrom_action_sync();
 
+    // load cdrom dir settings
     A0 = 28; // file sector
     A1 = file2_allocated_memory;
     A2 = 7a; // file size
@@ -651,8 +653,9 @@ system_cdrom_set_ready_callback();
 
 
 ////////////////////////////////
-// system_filesystem_set_dir()
+// system_cdrom2_set_dir()
 
+// 8004f498
 // 00 1600 1800 FFFF FFFF
 // 04 A801 FFFF FFFF FFFF
 // 08 FFFF FFFF FFFF FFFF
@@ -668,27 +671,27 @@ system_cdrom_set_ready_callback();
 // 30 2E00 3400 FFFF FFFF
 // 34 FFFF FFFF FFFF FFFF
 // 38 FFFF FFFF FFFF FFFF
-// 3с 0100
+//    0100 - disc number
 
-V0 = w[8004f498];
-V0 = hu[V0 + (A0 + A1) * 2] - 1;
+dir_set = w[8004f498];
+start_id = hu[dir_set + (A0 + A1) * 2] - 1;
 
-[8004f4b8] = w(V0); // start id of files in dir
+[8004f4b8] = w(start_id); // start id of files in dir
 
-if( V0 < 0 )
+if( start_id < 0 )
 {
     [8004f4b8] = w(0);
     return -1;
 }
-return V0;
+return start_id;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_filesystem_get_current_dir()
+// system_cdrom2_get_dir()
 
-A3 = w[8004f498];
+dir_set = w[8004f498];
 
 [A0] = w(0);
 [A1] = w(0);
@@ -696,7 +699,7 @@ A3 = w[8004f498];
 for( int i = 0; i < 40; ++i )
 {
     // if start file index is dir start id
-    if( hu[A3 + i * 2] == ( w[8004f4b8] + 1 ) )
+    if( hu[dir_set + i * 2] == ( w[8004f4b8] + 1 ) )
     {
         [A0] = w((i >> 2) << 2);
         [A1] = w(i % 4);
@@ -710,10 +713,10 @@ return w[8004f4b8];
 
 
 ////////////////////////////////
-// system_filesystem_get_disc_number()
+// system_cdrom2_get_disc_number()
 
-V0 = w[8004f498];
-return hu[V0 + 78];
+dir_set = w[8004f498];
+return hu[dir_set + 78];
 ////////////////////////////////
 
 
@@ -721,8 +724,8 @@ return hu[V0 + 78];
 ////////////////////////////////
 // func28358()
 
-V0 = w[8004f498];
-return hu[V0 + (A0 + A1) * 2] - w[8004f4b8];
+dir_set = w[8004f498];
+return hu[dir_set + (A0 + A1) * 2] - w[8004f4b8];
 ////////////////////////////////
 
 
@@ -857,7 +860,7 @@ return S0;
 
 
 ////////////////////////////////
-// system_get_filesize_by_dir_file_id()
+// system_cdrom2_get_filesize_by_dir_file_id()
 
 dir_file_id = A0;
 
@@ -887,9 +890,9 @@ if( w[8004f4ec] != 0 ) // PC HDD MODE
     }
 }
 
-A0 = w[8004f494]; // pointer to 0x80010004
-V0 = w[8004f4b8] + dir_file_id - 1;
-return w[A0 + V0 * 7 + 3]; // size of file
+file_set = w[8004f494]; // pointer to 0x80010004
+V0 = w[8004f4b8] - 1 + dir_file_id;
+return w[file_set + V0 * 7 + 3]; // size of file
 ////////////////////////////////
 
 
@@ -925,9 +928,9 @@ if( w[8004f4ec] != 0 ) // PC HDD MODE
     }
 }
 
-A0 = w[8004f494];
+file_set = w[8004f494];
 V0 = w[8004f4bc] + dir_file_id - 1;
-return (w[A0 + V0 * 7 + 3] / 4) * 4; // make it aligned
+return (w[file_set + V0 * 7 + 3] / 4) * 4; // make it aligned
 ////////////////////////////////
 
 
@@ -936,7 +939,7 @@ return (w[A0 + V0 * 7 + 3] / 4) * 4; // make it aligned
 // system_get_aligned_filesize_by_dir_file_id()
 
 A0 = A0;
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 
 return (V0 / 4) * 4; // make it aligned
 ////////////////////////////////
@@ -944,15 +947,17 @@ return (V0 / 4) * 4; // make it aligned
 
 
 ////////////////////////////////
-// system_cdrom_get_number_of_files_in_dir()
+// system_cdrom2_get_number_of_files_in_dir()
 
-A0 = w[8004f4b8] + A0 - 1;
-V0 = w[8004f494];
-V0 = w[V0 + A0 * 7 + 3];
+dir_file_id = A0;
 
-if( V0 < 0 )
+A0 = w[8004f4b8] + dir_file_id - 1;
+file_set = w[8004f494];
+num_of_files = w[file_set + A0 * 7 + 3];
+
+if( num_of_files < 0 )
 {
-    return ((0 - V0) << 10) >> 10;
+    return ((0 - num_of_files) << 10) >> 10;
 }
 else
 {
@@ -1652,7 +1657,7 @@ flags = A3;
 if( dir_file_id > 0 )
 {
     A0 = dir_file_id;
-    system_get_filesize_by_dir_file_id();
+    system_cdrom2_get_filesize_by_dir_file_id();
 
     if( V0 > 0 )
     {
@@ -2194,7 +2199,7 @@ if( dir_file_id <= 0 )
 }
 
 A0 = dir_file_id;
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 if( V0 <= 0 )
 {
     return -3;
@@ -2526,8 +2531,8 @@ data = A1;
 new_alloc = 0;
 
 A0 = S5;
-system_cdrom_get_number_of_files_in_dir();
-number = (V0 << 10) >> 10;
+system_cdrom2_get_number_of_files_in_dir();
+number = V0;
 
 if( number <= 0 )
 {

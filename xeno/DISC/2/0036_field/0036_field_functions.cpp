@@ -2159,7 +2159,7 @@ V0 = w[800ad044];
 800A6714	nop
 800A6718	bne    v0, zero, La67e8 [$800a67e8]
 A0 = 0018;
-800A6720	jal    $system_filesystem_set_dir
+800A6720	jal    $system_cdrom2_set_dir
 A1 = 0001;
 V1 = h[800c2f0c];
 V0 = 00ff;
@@ -2199,7 +2199,7 @@ A0 = A0 + 0002;
 800A67D4	jal    $801d37cc
 [SP + 0028] = w(T0);
 A0 = 0004;
-800A67E0	jal    $system_filesystem_set_dir
+800A67E0	jal    $system_cdrom2_set_dir
 A1 = 0;
 
 La67e8:	; 800A67E8
@@ -2362,7 +2362,7 @@ S2 = 8006f150;
 800A6A50	jal    $80031ec8
 800A6A54	nop
 A0 = 0004;
-800A6A5C	jal    $system_filesystem_set_dir
+800A6A5C	jal    $system_cdrom2_set_dir
 A1 = 0;
 
 loopa6a64:	; 800A6A64
@@ -2807,13 +2807,13 @@ system_cdrom2_load_file_by_dir_file_id();
 800A7198	jal    funca686c [$800a686c]
 
 A0 = 0018;
-800A71A4	jal    $system_filesystem_set_dir
+800A71A4	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = h[800c2ef4];
 800A71B4	jal    $8002a0e0
 800A71B8	nop
 A0 = 0004;
-800A71C0	jal    $system_filesystem_set_dir
+800A71C0	jal    $system_cdrom2_set_dir
 A1 = 0;
 800A71C8	jal    funca686c [$800a686c]
 800A71CC	nop
@@ -3164,7 +3164,7 @@ V1 = w[800ad04c];
 V0 = 0002;
 800A775C	beq    v1, v0, La77a8 [$800a77a8]
 A0 = 0004;
-800A7764	jal    $system_filesystem_set_dir
+800A7764	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = 0008;
 800A7770	jal    $system_memory_set_alloc_user
@@ -3200,7 +3200,7 @@ system_memory_set_alloc_user();
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = aa;
 system_get_aligned_filesize_by_dir_file_id();
@@ -6108,7 +6108,7 @@ A0 = 0;
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 S0 = S0 + 7fb;
 
@@ -6586,45 +6586,60 @@ SP = SP + 01a8;
 800AB7D8	jr     ra 
 800AB7DC	nop
 ////////////////////////////////
-// funcab7e0
-800AB7E0	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0004;
-[SP + 0010] = w(RA);
-800AB7EC	jal    $system_filesystem_set_dir
+
+
+
+////////////////////////////////
+// funcab7e0()
+
+A0 = 4;
 A1 = 0;
-800AB7F4	jal    $80028548
-A0 = 00ab;
+system_cdrom2_set_dir();
+
+A0 = ab;
+system_cdrom2_get_filesize_by_dir_file_id();
 [800aec54] = w(V0);
-800AB804	jal    $system_get_aligned_filesize_by_dir_file_id
-A0 = 00ab;
+
+A0 = ab;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-800AB810	jal    $system_memory_allocate
-A1 = 0001;
-A0 = 00ab;
+A1 = 1;
+system_memory_allocate();
+[800aec40] = w(V0);
+
+A0 = ab;
 A1 = V0;
 A2 = 0;
-[800aec40] = w(A1);
-800AB82C	jal    $system_cdrom2_load_file_by_dir_file_id
-A3 = 0080;
-800AB834	jal    $system_cdrom_action_sync
+A3 = 80;
+system_cdrom2_load_file_by_dir_file_id();
+
 A0 = 0;
-800AB83C	jal    $system_get_aligned_filesize_by_dir_file_id
-A0 = 00ac;
+system_cdrom_action_sync();
+
+A0 = ac;
+system_get_aligned_filesize_by_dir_file_id();
+
+
 A0 = V0;
-800AB848	jal    $system_memory_allocate
-A1 = 0001;
-A0 = 00ac;
+A1 = 1;
+system_memory_allocate();
+
+A0 = ac;
 A1 = V0;
 A2 = 0;
-[800aec58] = w(A1);
-800AB864	jal    $system_cdrom2_load_file_by_dir_file_id
+[800aec58] = w(V0);
 A3 = 0080;
-800AB86C	jal    $system_cdrom_action_sync
+system_cdrom2_load_file_by_dir_file_id();
+
 A0 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800AB87C	jr     ra 
-800AB880	nop
+system_cdrom_action_sync();
+
+
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcab884
 800AB884	addiu  sp, sp, $ffb8 (=-$48)

@@ -12,24 +12,19 @@ S7 = 0;
 // store prev dir
 A0 = SP + 10;
 A1 = SP + 14;
-system_filesystem_get_current_dir();
+system_cdrom2_get_dir();
 
 A0 = c;
 A1 = 3;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 4; // MASA
 A1 = 0;
 system_memory_set_alloc_user();
 
 A0 = 5;
-system_cdrom_get_number_of_files_in_dir();
-V0 = V0 << 10;
-V1 = V0 >> 10;
-
-V0 = V0 >> 1f;
-V1 = V1 + V0;
-V1 = V1 >> 01;
+system_cdrom2_get_number_of_files_in_dir();
+V1 = V0 / 2;
 
 if( S0 >= V1 )
 {
@@ -87,7 +82,7 @@ else
 // restore old dir
 A0 = w[SP + 10];
 A1 = w[SP + 14];
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 return S7;
 ////////////////////////////////

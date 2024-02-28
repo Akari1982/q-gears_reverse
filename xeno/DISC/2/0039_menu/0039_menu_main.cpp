@@ -502,7 +502,7 @@ V0 = bu[V1 + 0336];
 [V1 + 0337] = b(V0);
 
 L59420:	; 80059420
-80059420	jal    $80028340
+80059420	jal    $system_cdrom2_get_disc_number
 80059424	nop
 80059428	bne    v0, s1, L59460 [$80059460]
 V0 = S0 & 00ff;
@@ -1171,7 +1171,7 @@ V1 = V1 + 005c;
 S2 = hu[8006e5f4];
 S1 = 0;
 A0 = 0010;
-80059E38	jal    $80028280
+80059E38	jal    $system_cdrom2_set_dir
 A1 = 0001;
 80059E40	jal    $800286fc
 A0 = 0001;
@@ -1232,7 +1232,7 @@ A0 = 0010;
 V0 = w[V0 + 032c];
 A1 = 0;
 [V0 + 501b] = b(0);
-80059F0C	jal    $80028280
+80059F0C	jal    $system_cdrom2_set_dir
 [V0 + 501a] = b(0);
 80059F14	jal    $80031f0c
 A0 = S0;
@@ -1473,7 +1473,7 @@ V0 = bu[80058818];
 8005A2F4	nop
 8005A2F8	beq    v0, zero, L5a35c [$8005a35c]
 A0 = 0010;
-8005A300	jal    $80028280
+8005A300	jal    $system_cdrom2_set_dir
 A1 = 0002;
 8005A308	jal    $800286fc
 A0 = 0005;
@@ -1489,7 +1489,7 @@ A3 = 0080;
 8005A338	jal    $80028870
 A0 = 0;
 A0 = 0010;
-8005A344	jal    $80028280
+8005A344	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = w[80061c2c];
 8005A354	jal    $800382d0
@@ -2029,7 +2029,7 @@ V0 = S0 < 0010;
 8005ABE4	beq    v0, zero, L5ac34 [$8005ac34]
 [SP + 0014] = w(S1);
 A0 = 0010;
-8005ABF0	jal    $80028280
+8005ABF0	jal    $system_cdrom2_set_dir
 A1 = 0;
 8005ABF8	jal    $800286fc
 A0 = 0002;
@@ -3363,7 +3363,7 @@ V0 = V0 + V1;
 8005BFB0	addiu  s3, v0, $ff83 (=-$7d)
 
 loop5bfb4:	; 8005BFB4
-8005BFB4	jal    $80028340
+8005BFB4	jal    $system_cdrom2_get_disc_number
 8005BFB8	nop
 8005BFBC	beq    v0, s2, L5c028 [$8005c028]
 8005BFC0	nop
@@ -7056,7 +7056,7 @@ V0 = bu[801e94ed];
 8005F620	nop
 8005F624	bne    v0, zero, L5f63c [$8005f63c]
 8005F628	nop
-8005F62C	jal    $80028340
+8005F62C	jal    $system_cdrom2_get_disc_number
 8005F630	nop
 8005F634	j      $801cbcec
 8005F638	addiu  v0, v0, $ffff (=-$1)

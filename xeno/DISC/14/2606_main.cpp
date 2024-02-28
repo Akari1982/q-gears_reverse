@@ -692,7 +692,7 @@ for( int i = 0; i < 3; ++i )
 
 A0 = 20;
 A1 = 3;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = w[801e1dc4];
 801E0B84	nop

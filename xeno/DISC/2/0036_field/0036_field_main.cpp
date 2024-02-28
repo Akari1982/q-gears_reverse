@@ -133,7 +133,7 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) ) // PC HDD MODE
 {
     A0 = 4;
     A1 = 0;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     A0 = ad; // 10\0595_field_debug.exe
     A1 = 80280000; // allocated_memory
@@ -755,7 +755,7 @@ field_particle_store_texture();
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 func76e6c(); // prepare to field load
 
@@ -827,7 +827,7 @@ system_cdrom_action_sync();
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 func70358(); // parse field
 
@@ -1547,7 +1547,7 @@ V0 = w[800b1738];
 80079144	nop
 80079148	beq    v0, zero, L791a0 [$800791a0]
 A0 = 0004;
-80079150	jal    $system_filesystem_set_dir
+80079150	jal    $system_cdrom2_set_dir
 A1 = 0;
 80079158	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 06b9;
@@ -1570,7 +1570,7 @@ L791a0:	; 800791A0
 A0 = 0010;
 T0 = w[800ad008];
 A1 = 0;
-800791B0	jal    $system_filesystem_set_dir
+800791B0	jal    $system_cdrom2_set_dir
 [SP + 0048] = w(T0);
 V1 = w[8004ea14];
 V0 = 0001;
@@ -1634,7 +1634,7 @@ A1 = 0;
 800792A8	jal    $8002990c
 A2 = 0;
 A0 = 0004;
-800792B4	jal    $system_filesystem_set_dir
+800792B4	jal    $system_cdrom2_set_dir
 A1 = 0;
 S2 = 0;
 V0 = 800ad1a0;
@@ -1913,7 +1913,7 @@ V0 = S2 < 0006;
 80079748	bne    v0, zero, loop796fc [$800796fc]
 A0 = SP + 0018;
 A0 = 0004;
-80079754	jal    $system_filesystem_set_dir
+80079754	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = 0008;
 80079760	jal    $800322bc
@@ -1981,7 +1981,7 @@ A0 = S6;
 80079848	jal    $system_memory_mark_removed_alloc
 A0 = S7;
 A0 = 0004;
-80079854	jal    $system_filesystem_set_dir
+80079854	jal    $system_cdrom2_set_dir
 A1 = 0;
 V0 = w[800b1738];
 80079864	nop

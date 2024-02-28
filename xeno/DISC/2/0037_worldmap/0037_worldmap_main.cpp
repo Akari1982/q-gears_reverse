@@ -102,7 +102,7 @@ L705c8:	; 800705C8
 800705C8	jal    $800322bc
 A1 = 0;
 A0 = 0024;
-800705D4	jal    $80028280
+800705D4	jal    $system_cdrom2_set_dir
 A1 = 0;
 800705DC	jal    func95360 [$80095360]
 800705E0	nop
@@ -1363,7 +1363,7 @@ A1 = 0;
 A0 = 0024;
 
 L71b10:	; 80071B10
-80071B10	jal    $80028280
+80071B10	jal    $system_cdrom2_set_dir
 A1 = 0;
 V0 = w[8009bc7c];
 80071B20	nop
@@ -4673,7 +4673,7 @@ A1 = 0;
 80075194	jal    $800322bc
 [SP + 0018] = w(S0);
 A0 = 0024;
-800751A0	jal    $80028280
+800751A0	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = w[80058af8];
 800751B0	jal    $80031f0c
@@ -6064,7 +6064,7 @@ S0 = 8009b994;
 80076780	jal    func8834c [$8008834c]
 80076784	nop
 A0 = 0024;
-8007678C	jal    $80028280
+8007678C	jal    $system_cdrom2_set_dir
 A1 = 0;
 80076794	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -6560,7 +6560,7 @@ A0 = w[80061c2c];
 80076FE0	jal    $800382d0
 80076FE4	nop
 A0 = 0024;
-80076FEC	jal    $80028280
+80076FEC	jal    $system_cdrom2_set_dir
 A1 = 0;
 80076FF4	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -7498,7 +7498,7 @@ A0 = w[80061c2c];
 80077FDC	jal    $800382d0
 80077FE0	nop
 A0 = 0024;
-80077FE8	jal    $80028280
+80077FE8	jal    $system_cdrom2_set_dir
 A1 = 0;
 80077FF0	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -9182,7 +9182,7 @@ A0 = w[80061c2c];
 80079B64	jal    $800382d0
 80079B68	nop
 A0 = 0024;
-80079B70	jal    $80028280
+80079B70	jal    $system_cdrom2_set_dir
 A1 = 0;
 80079B78	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -10746,7 +10746,7 @@ A0 = w[80061c2c];
 8007B4D0	jal    $800382d0
 8007B4D4	nop
 A0 = 0024;
-8007B4DC	jal    $80028280
+8007B4DC	jal    $system_cdrom2_set_dir
 A1 = 0;
 8007B4E4	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -12356,7 +12356,7 @@ A0 = w[8009bc74];
 A1 = 0;
 A0 = 0024;
 [80061c1c] = w(V0);
-8007CEF4	jal    $80028280
+8007CEF4	jal    $system_cdrom2_set_dir
 A1 = 0;
 8007CEFC	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -14701,7 +14701,7 @@ A0 = w[80061c2c];
 8007F4F8	jal    $800382d0
 8007F4FC	nop
 A0 = 0024;
-8007F504	jal    $80028280
+8007F504	jal    $system_cdrom2_set_dir
 A1 = 0;
 8007F50C	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -15547,7 +15547,7 @@ A0 = w[8009bc74];
 A1 = 0;
 A0 = 0024;
 [80061c1c] = w(V0);
-8008029C	jal    $80028280
+8008029C	jal    $system_cdrom2_set_dir
 A1 = 0;
 800802A4	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -16966,7 +16966,7 @@ A0 = w[8009bc74];
 A1 = 0;
 A0 = 0024;
 [80061c1c] = w(V0);
-800818D8	jal    $80028280
+800818D8	jal    $system_cdrom2_set_dir
 A1 = 0;
 800818E0	jal    func96fa8 [$80096fa8]
 A0 = S0;
@@ -18085,7 +18085,7 @@ A0 = w[80061c2c];
 80082ADC	jal    $800382d0
 80082AE0	nop
 A0 = 0024;
-80082AE8	jal    $80028280
+80082AE8	jal    $system_cdrom2_set_dir
 A1 = 0;
 80082AF0	jal    func96fa8 [$80096fa8]
 A0 = S0;

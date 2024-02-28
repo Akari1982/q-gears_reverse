@@ -3317,7 +3317,7 @@ L84e8c:	; 80084E8C
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = a8; // 10\0590.sed
 system_get_aligned_filesize_by_dir_file_id();
@@ -3364,7 +3364,7 @@ func3bca4(); // wait for some sound flag
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 [8004e9d0] = w(-1);
 ////////////////////////////////
@@ -3499,7 +3499,7 @@ return;
 L85178:	; 80085178
 A0 = 1c;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 S1 = S0 << 01;
 S0 = 800ad4a5;
@@ -3537,7 +3537,7 @@ system_memory_allocate();
 L8520c:	; 8008520C
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 80085218	addiu  v0, zero, $ffff (=-$1)
 [8004e9ac] = w(V0);
@@ -3632,7 +3632,7 @@ if( w[800af128] == 1 )
     {
         A0 = 1c;
         A1 = 0;
-        system_filesystem_set_dir();
+        system_cdrom2_set_dir();
 
         A0 = 14 + music_id * 2; // smd file
         A1 = 80061cd8;
@@ -3644,7 +3644,7 @@ if( w[800af128] == 1 )
 
         A0 = 4;
         A1 = 0;
-        system_filesystem_set_dir();
+        system_cdrom2_set_dir();
     }
 
     [800af128] = w(0);
@@ -3773,12 +3773,12 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func855cc
-800855CC	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 001c;
-[SP + 0010] = w(RA);
-800855D8	jal    $80028280
+// func855cc()
+
+A0 = 1c;
 A1 = 0;
+system_cdrom2_set_dir();
+
 800855E0	jal    $800286fc
 A0 = 0003;
 A0 = V0;
@@ -3790,15 +3790,13 @@ A2 = 0;
 [800af5b4] = w(A1);
 80085608	jal    $800293e8
 A3 = 0080;
-A0 = 0004;
-80085614	jal    $80028280
+
+A0 = 4;
 A1 = 0;
+system_cdrom2_set_dir();
+
 V0 = 0080;
 [8004ea08] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80085630	jr     ra 
-80085634	nop
 ////////////////////////////////
 
 

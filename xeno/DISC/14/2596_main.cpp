@@ -4236,7 +4236,7 @@ A0 = w[800d267c];
 801E21A0	nop
 A0 = 10;
 A1 = 2;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 801E21B0	jal    $800286fc
 A0 = 0002;

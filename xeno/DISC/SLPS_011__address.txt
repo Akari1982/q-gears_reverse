@@ -66,7 +66,7 @@
 8004f48c [][][][] N2
 8004f490 [][][][] N3
 8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
-8004f498 [][][][] pointer to 0x80018004
+8004f498 [][][][] pointer to 0x80018004 (dir->file number)
 8004f49c [][][][] file size left to cdrom load.
 8004f4a0 [][][][] number of files to cdrom load.
 8004f4a4 [][][][] ???

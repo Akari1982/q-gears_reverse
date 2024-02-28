@@ -49944,11 +49944,11 @@ SP = SP + 00c8;
 S0 = A0;
 A0 = SP + 0010;
 A1 = SP + 0014;
-800A8988	jal    $system_filesystem_get_current_dir
+800A8988	jal    $system_cdrom2_get_dir
 
 A0 = 28;
 A1 = 1;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 0004;
 800A89A0	jal    $system_memory_set_alloc_user
@@ -50019,7 +50019,7 @@ A2 = 0;
 [S3 + 0004] = w(0);
 A0 = w[SP + 0010];
 A1 = w[SP + 0014];
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 ////////////////////////////////
 
 
@@ -50031,11 +50031,11 @@ S1 = A0;
 
 A0 = SP + 10;
 A1 = SP + 14;
-system_filesystem_get_current_dir();
+system_cdrom2_get_dir();
 
 A0 = 28;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 4;
 A1 = 0;
@@ -50081,7 +50081,7 @@ A2 = 0;
 
 A0 = w[SP + 10];
 A1 = w[SP + 14];
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 ////////////////////////////////
 
 
@@ -51928,11 +51928,11 @@ if( w[S4 + c] == 0 )
 {
     A0 = SP + 80;
     A1 = SP + 84;
-    system_filesystem_get_current_dir();
+    system_cdrom2_get_dir();
 
     A0 = 28;
     A1 = 2;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     V0 = h[SP + 9c];
     S0 = S6 & 00ff;
@@ -51954,7 +51954,7 @@ if( w[S4 + c] == 0 )
 
     A0 = w[SP + 80];
     A1 = w[SP + 84];
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 }
 800AA6A0	j      Lad2e0 [$800ad2e0]
 
@@ -65990,7 +65990,7 @@ Lb7260:	; 800B7260
 
 A0 = c;
 A1 = 2;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 [800c3414] = b(1);
 [800d26fc] = b(1);
@@ -66445,7 +66445,7 @@ S0 = S3 << 02;
 
 A0 = 2c;
 A1 = 1;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 800B7990	lui    at, $800c
 AT = AT + S0;
@@ -66666,7 +66666,7 @@ S0 = S0 + 0001;
 
 A0 = 2c;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 800B7C7C	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 0005;

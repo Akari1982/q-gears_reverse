@@ -1719,7 +1719,7 @@ system_memory_set_alloc_user();
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 field_init_controllers_and_mouse();
 ////////////////////////////////
@@ -1862,7 +1862,7 @@ V0 = w[800b1738];
 80076F3C	jal    func89af4 [$80089af4]
 80076F40	nop
 A0 = 0004;
-80076F48	jal    $system_filesystem_set_dir
+80076F48	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = 0;
 funca858c();

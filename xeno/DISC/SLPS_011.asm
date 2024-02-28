@@ -643,13 +643,13 @@
 // system_cdrom2_reset
 800281E4-8002827C
 ////////////////////////////////
-// system_filesystem_set_dir
+// system_cdrom2_set_dir
 80028280-800282C0
 ////////////////////////////////
-// system_filesystem_get_current_dir
+// system_cdrom2_get_dir
 800282C4-8002833C
 ////////////////////////////////
-// system_filesystem_get_disc_number
+// system_cdrom2_get_disc_number
 80028340-80028354
 ////////////////////////////////
 // func28358
@@ -664,7 +664,7 @@
 // system_cdrom2_data_sync
 800284DC-80028544
 ////////////////////////////////
-// system_get_filesize_by_dir_file_id
+// system_cdrom2_get_filesize_by_dir_file_id
 80028548-80028614
 ////////////////////////////////
 // system_get_aligned_filesize_by_dir_file_id_async
@@ -673,7 +673,7 @@
 // system_get_aligned_filesize_by_dir_file_id
 800286FC-80028734
 ////////////////////////////////
-// system_cdrom_get_number_of_files_in_dir
+// system_cdrom2_get_number_of_files_in_dir
 80028738-800287A4
 ////////////////////////////////
 // system_filesystem_get_debug_filename

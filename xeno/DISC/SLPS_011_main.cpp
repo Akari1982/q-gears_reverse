@@ -103,31 +103,31 @@ system_sound_initialize();
 
 A0 = 0;
 A1 = 1;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 2; // STRIPCD1\1\0024.snd
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
 snd24_mem = V0;
 
 A0 = 3; // STRIPCD1\1\0025.snd
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
 snd25_mem = V0;
 
 A0 = 4; // STRIPCD1\1\0026.snd
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
 snd26_mem = V0;
 
 A0 = 5; // STRIPCD1\1\0027.snd
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
@@ -182,7 +182,7 @@ S4 = hu[GP + 1ac];
 [GP + 1ac] = h(6);
 
 A0 = 6; // STRIPCD1\1\0028
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
@@ -210,7 +210,7 @@ A0 = S5;
 system_memory_mark_removed_alloc();
 
 A0 = 7; // STRIPCD1\1\0029
-system_get_filesize_by_dir_file_id();
+system_cdrom2_get_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
@@ -272,7 +272,7 @@ A0 = 0;
 [8004f4ea] = b(1);
 [8004f4eb] = b(0);
 
-system_filesystem_get_disc_number();
+system_cdrom2_get_disc_number();
 
 if( V0 == 1 ) // disc 1
 {
@@ -345,13 +345,13 @@ if( w[8005895c] != exe_id )
     // store prev directory
     A0 = SP + 10;
     A1 = SP + 14;
-    system_filesystem_get_current_dir();
+    system_cdrom2_get_dir();
 
     [GP + 1ac] = h(6); // SUGI Koji Sugimoto Library 'LibLS.LIB'
 
     A0 = 0;
     A1 = 1;
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     S1 = w[GP + 1c0]; // store
     [GP + 1c0] = w(1);
@@ -366,7 +366,7 @@ if( w[8005895c] != exe_id )
     // 6 STRIPCD1\2\0040 - 0x1a9cc, 0x3830      movie.exe
     // 7 start dir
     A0 = w[8004e948 + exe_id * 4];
-    system_get_filesize_by_dir_file_id();
+    system_cdrom2_get_filesize_by_dir_file_id();
 
     A0 = V0;
     A1 = 1;
@@ -391,7 +391,7 @@ if( w[8005895c] != exe_id )
     // restore prev directory
     A0 = w[SP + 10];
     A1 = w[SP + 14];
-    system_filesystem_set_dir();
+    system_cdrom2_set_dir();
 
     [GP + 1ac] = h(S2); // restore memory alloc type
 }
@@ -1390,7 +1390,7 @@ system_memory_set_alloc_user();
 
 A0 = 4;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 1;
 func1afec();
@@ -1906,7 +1906,7 @@ system_cdrom_action_sync(); // ececute till cd sync
 
 A0 = c;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 V0 = w[8005881c];
 if( w[V0 + 0] != -1 )
@@ -2071,7 +2071,7 @@ func1b7d8();
 
 A0 = 10;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 2; // HIG
 A1 = 0;
@@ -2223,7 +2223,7 @@ system_memory_set_alloc_user();
 
 A0 = c;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 A0 = 4;
 A1 = 1;
@@ -2701,7 +2701,7 @@ if( bu[80058818] != 0 )
 
 A0 = 10;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 if( bu[80058818] != 0 )
 {
@@ -2732,7 +2732,7 @@ if( bu[80058818] != 0 )
     {
         A0 = 4;
         A1 = 0;
-        system_filesystem_set_dir();
+        system_cdrom2_set_dir();
 
         A0 = 4;
         A1 = 1;
@@ -2755,7 +2755,7 @@ if( bu[80058818] != 0 )
 
         A0 = 10;
         A1 = 0;
-        system_filesystem_set_dir();
+        system_cdrom2_set_dir();
 
         A0 = 4000;
         A1 = 0;
@@ -2790,7 +2790,7 @@ if( bu[80058818] != 0 )
 
 A0 = 10;
 A1 = 0;
-system_filesystem_set_dir();
+system_cdrom2_set_dir();
 
 switch( bu[80058afc] )
 {
