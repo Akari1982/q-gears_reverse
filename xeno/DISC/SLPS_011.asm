@@ -676,13 +676,13 @@
 // system_cdrom2_get_number_of_files_in_dir
 80028738-800287A4
 ////////////////////////////////
-// system_filesystem_get_debug_filename
+// system_cdrom2_get_debug_filename
 800287A8-800287DC
 ////////////////////////////////
-// system_filesystem_get_sector_by_dir_file_id
+// system_cdrom2_get_sector_by_dir_file_id
 800287E0-80028824
 ////////////////////////////////
-// system_filesystem_get_sector_by_dir_file_id_async
+// system_cdrom2_get_sector_by_dir_file_id_async
 80028828-8002886C
 ////////////////////////////////
 // system_cdrom_action_sync
@@ -781,7 +781,7 @@
 // func2c120
 8002C120-8002C1E4
 ////////////////////////////////
-// system_cdrom_get_cdrom_hdd_mode
+// system_cdrom2_get_cdrom_hdd_mode
 8002C1E8-8002C1F4
 ////////////////////////////////
 

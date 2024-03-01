@@ -1889,7 +1889,7 @@ L71b4c:	; 80071B4C
 ////////////////////////////////
 // func71fcc();
 
-system_cdrom_get_cdrom_hdd_mode();
+system_cdrom2_get_cdrom_hdd_mode();
 if( V0 == 0 )
 {
     A0 = 0;
@@ -1922,21 +1922,22 @@ if( V0 == 0 )
 ////////////////////////////////
 // func72038()
 
-S0 = A1;
-S2 = A2;
+filename = A0;
+dst = A1;
+size = A2;
 
-A0 = A0;
+A0 = filename;
 A1 = 0;
 A2 = 0;
 system_devkit_pc_open();
-S1 = V0;
+handler = V0;
 
-A0 = S1;
-A1 = S0;
-A2 = S2;
+A0 = handler;
+A1 = dst;
+A2 = size;
 system_devkit_pc_read_all();
 
-A0 = S1;
+A0 = handler;
 system_devkit_pc_close();
 ////////////////////////////////
 
@@ -1945,7 +1946,7 @@ system_devkit_pc_close();
 ////////////////////////////////
 // func72098()
 
-S0 = A0;
+cd_num = A0;
 S1 = A1;
 S3 = A2;
 S4 = A3;
@@ -1964,48 +1965,48 @@ if( w[S3] != 0 )
     return S1;
 }
 
-S2 = 1;
-
-system_cdrom_get_cdrom_hdd_mode();
+system_cdrom2_get_cdrom_hdd_mode();
 
 if( V0 != 0 )
 {
     if( S1 < 9 )
     {
-        if( S0 == S2 )
+        if( cd_num == 1 )
         {
-            A0 = 8006f678;
-            A1 = w[8004f494];
-            A2 = 8000;
+            A0 = 8006f678; // "c:\work\cdrom.mdg"
+            A1 = w[8004f494]; // dst
+            A2 = 8000; // size
             func72038();
 
-            A0 = 8006f68c;
+            A0 = 8006f68c; // "c:\work\cdrom.fid"
             A1 = w[8004f498];
-            A2 = 007a;
+            A2 = 7a;
             func72038();
 
-            A0 = 8006f6a0;
+            A0 = 8006f6a0; // "c:\work\cdrom.fnd"
+            A1 = w[8004f4ec];
+            A2 = 40000;
+            func72038();
         }
         else
         {
-            A0 = 8006f6b4;
+            A0 = 8006f6b4; // "c:\work\cdrom2.mdg"
             A1 = w[8004f494];
             A2 = 8000;
             func72038();
 
-            A0 = 8006f6c8;
+            A0 = 8006f6c8; // "c:\work\cdrom2.fid"
             A1 = w[8004f498];
-            A2 = 007a;
+            A2 = 7a;
             func72038();
 
-            A0 = 8006f6dc;
+            A0 = 8006f6dc; // "c:\work\cdrom2.fnd"
+            A1 = w[8004f4ec];
+            A2 = 40000;
+            func72038();
         }
 
-        A1 = w[8004f4ec];
-        A2 = 40000;
-        func72038();
-
-        [S4] = w(S2);
+        [S4] = w(1);
 
         return 9;
     }
@@ -2164,7 +2165,7 @@ switch( V1 )
         {
             [S3] = w(2);
         }
-        else if( bu[SP + 1b] != ( S0 + 30 ) )
+        else if( bu[SP + 1b] != ( cd_num + 30 ) )
         {
             [S3] = w(3);
         }
@@ -2545,7 +2546,7 @@ A5 = 800;
 A6 = 3; // some bit color
 mdec_init();
 
-system_cdrom_get_cdrom_hdd_mode();
+system_cdrom2_get_cdrom_hdd_mode();
 [80076ae0] = w(V0);
 
 [800767ac] = w(0);
@@ -3398,7 +3399,7 @@ if( V1 == 0 )
 
     S5 = A0 + 3;
     A0 = S5;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
     S0 = V0;
 
     S7 = 800;
@@ -3424,7 +3425,7 @@ else if( V1 == 1 )
     }
 
     A0 = S5;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
 
     S0 = V0;
     S7 = 0920;
@@ -3442,7 +3443,7 @@ if( start_frame < 2 )
     return 0;
 }
 
-system_cdrom_get_cdrom_hdd_mode();
+system_cdrom2_get_cdrom_hdd_mode();
 
 80074344	beq    v0, zero, L74594 [$80074594]
 A1 = 0;
@@ -3490,9 +3491,9 @@ A2 = w[SP + 1018];
 system_devkit_pc_read_all();
 
 V1 = w[S1 + 0008];
-800743E0	nop
-800743E4	bne    v1, start_frame, L743f4 [$800743f4]
 A0 = V0;
+800743E4	bne    v1, start_frame, L743f4 [$800743f4]
+
 800743EC	bne    a0, zero, L744a4 [$800744a4]
 800743F0	nop
 
@@ -3613,7 +3614,7 @@ return S0;
 
 L74594:	; 80074594
 A0 = S5;
-system_filesystem_get_sector_by_dir_file_id();
+system_cdrom2_get_sector_by_dir_file_id();
 
 A0 = V0;
 A1 = SP + 18;
@@ -3646,7 +3647,7 @@ V0 = V0 >> 02;
 S0 = V1 - V0;
 
 A0 = S5;
-system_filesystem_get_sector_by_dir_file_id();
+system_cdrom2_get_sector_by_dir_file_id();
 
 A0 = V0 + S0;
 A1 = S1;
@@ -3700,7 +3701,7 @@ V0 = V0 >> 02;
 V0 = V0 - V1;
 S0 = S0 + V0;
 
-system_filesystem_get_sector_by_dir_file_id();
+system_cdrom2_get_sector_by_dir_file_id();
 
 A0 = V0 + S0;
 A1 = SP + 0018;
@@ -3759,7 +3760,7 @@ L7477c:	; 8007477C
     S0 = S2;
 
     A0 = S5;
-    system_filesystem_get_sector_by_dir_file_id();
+    system_cdrom2_get_sector_by_dir_file_id();
 
     A0 = V0 + S0;
     A1 = SP + 18;
@@ -3818,7 +3819,7 @@ if( w[80076ad8] == 0 ) // picture only
     dir_file_id = w[800767ac] + 3;
 
     A0 = dir_file_id;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
     filename = V0;
 
     sectorsize = 800;
@@ -3842,7 +3843,7 @@ else if( w[80076ad8] == 1 ) // picture + adpcm
     dir_file_id = w[800767ac] + 2;
 
     A0 = dir_file_id;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
     filename = V0;
 
     sectorsize = 920;
@@ -3854,7 +3855,7 @@ else if( w[80076ad8] == 2 ) // adpcm only
     return -1
 }
 
-system_cdrom_get_cdrom_hdd_mode();
+system_cdrom2_get_cdrom_hdd_mode();
 
 if( V0 != 0 ) // PC HDD MODE
 {
@@ -3900,7 +3901,7 @@ else // CD-ROM MODE1
     S0 = (V0 + sectorsize - 1) / sectorsize;
 
     A0 = dir_file_id;
-    system_filesystem_get_sector_by_dir_file_id();
+    system_cdrom2_get_sector_by_dir_file_id();
 
     A0 = V0 + S0 - 1; // end file sector
     A1 = SP + 18; // alloc memory
@@ -4382,7 +4383,6 @@ A0 = SP + 18;
 A1 = SP + 1c;
 system_cdrom2_get_dir();
 
-
 A0 = 0;
 A1 = 0;
 system_cdrom2_set_dir();
@@ -4391,7 +4391,6 @@ S2 = 0;
 S3 = 0;
 S6 = 1249;
 S4 = 1;
-S5 = 5c;
 
 L75474:	; 80075474
     V0 = w[800767b0];
@@ -4469,21 +4468,19 @@ L75474:	; 80075474
         S2 = S4 - S2;
     }
 
-    S0 = S1;
-
     if( ( w[80076a44] & 0004 == 0 ) && ( w[80076a3c] & 0004 ) )
     {
         S3 = S4 - S3;
     }
 
-
-    L75660:	; 80075660
-        A0 = S0;
+    for( int i = S1; i < S1 + 14; ++i )
+    {
+        A0 = i;
         func753dc();
+        file_size = V0;
 
-        if( V0 == 0 )
+        if( file_size == 0 )
         {
-            A1 = S0;
             if( S2 != 0 )
             {
                 A0 = 8006fb04; // "No %4x NullFile\n"
@@ -4492,87 +4489,61 @@ L75474:	; 80075474
             {
                 A0 = 8006fb18; // "No %4d NullFile\n"
             }
+            A1 = i;
         }
         else
         {
+            A0 = i + 1;
+            system_cdrom2_get_sector_by_dir_file_id();
+
             if( S2 != 0 )
             {
-                A0 = S0 + 1;
-                system_filesystem_get_sector_by_dir_file_id();
-
                 A0 = 8006fb2c; // "No %4x Sect%6x "
-                A1 = S0;
-                A2 = V0;
-                system_print();
             }
             else
             {
-                A0 = S0 + 1;
-                system_filesystem_get_sector_by_dir_file_id();
-
                 A0 = 8006fb3c; // "No %4d Sect%6d "
-                A1 = S0;
-                A2 = V0;
-                system_print();
             }
+            A1 = i;
+            A2 = V0;
+            system_print();
 
             if( S3 == 0 )
             {
                 if( S2 != 0 )
                 {
-                    A0 = S0;
-                    func753dc();
-
                     A0 = 8006fb58; // "Size%9x\n"
-                    A1 = V0;
                 }
                 else
                 {
-                    A0 = S0;
-                    func753dc();
-
                     A0 = 8006fb64; // "Size%9d\n"
-                    A1 = V0;
                 }
+                A1 = file_size;
             }
             else
             {
-                A0 = S0;
-                func753dc();
-
-                if( V0 < 0 )
+                if( file_size < 0 )
                 {
-                    A0 = S0;
-                    func753dc();
-
                     A0 = 8006fb4c; // "[P%3d]\n"
-                    A1 = 0 - V0;
+                    A1 = 0 - file_size;
                 }
                 else
                 {
-                    A0 = S0 + 1;
-                    system_filesystem_get_debug_filename();
-
+                    A0 = i + 1;
+                    system_cdrom2_get_debug_filename();
                     A1 = V0;
+
                     if( A1 != 0 )
                     {
-                        V0 = bu[A1 + 0000];
-                        if( V0 != 0 )
+                        V1 = A1;
+                        while( bu[V1 + 0] != 0 )
                         {
-                            V1 = A1;
-                            V0 = bu[V1 + 0000];
-
-                            loop7572c:	; 8007572C
-                                if( V0 == S5 )
-                                {
-                                    A1 = V1 + 1;
-                                }
-
-                                V1 = V1 + 1;
-                                V0 = bu[V1 + 0];
-                            80075748	bne    v0, zero, loop7572c [$8007572c]
+                            if( bu[V1 + 0] == 5c ) // "\" symbol
+                            {
+                                A1 = V1 + 1;
+                            }
+                            V1 = V1 + 1;
                         }
-
                         A0 = 8006fb54; // "%s\n"
                     }
                     else
@@ -4583,11 +4554,8 @@ L75474:	; 80075474
             }
         }
 
-        S0 = S0 + 1;
         system_print();
-
-        V0 = S0 < (S1 + 14);
-    800757BC	bne    v0, zero, L75660 [$80075660]
+    }
 
     A0 = 8006fac0; // "\nPUSH CIRCLE BUTTON TO MENU."
     system_print();

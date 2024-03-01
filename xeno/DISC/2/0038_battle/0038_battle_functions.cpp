@@ -50051,7 +50051,7 @@ S0 = V0;
 [800c32a4] = w(S0);
 
 A0 = S2;
-system_filesystem_get_debug_filename();
+system_cdrom2_get_debug_filename();
 
 A0 = S2;
 [S0 + 0000] = h(A0);

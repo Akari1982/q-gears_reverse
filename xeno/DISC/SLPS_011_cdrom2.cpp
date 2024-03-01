@@ -453,7 +453,7 @@ if( tries >= 4 )
         system_print();
 
         A0 = w[800595a8]; // local file id
-        system_filesystem_get_debug_filename();
+        system_cdrom2_get_debug_filename();
 
         A0 = 800188c0; // "\n%s"
         A1 = V0;
@@ -867,7 +867,7 @@ dir_file_id = A0;
 if( w[8004f4ec] != 0 ) // PC HDD MODE
 {
     A0 = dir_file_id;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
 
     A0 = V0; // filename
     A1 = 0; // accessmode
@@ -905,7 +905,7 @@ dir_file_id = A0;
 if( w[8004f4ec] != 0 ) // PC HDD MODE
 {
     A0 = dir_file_id;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
 
     A0 = V0;
     A1 = 0;
@@ -968,7 +968,7 @@ else
 
 
 ////////////////////////////////
-// system_filesystem_get_debug_filename()
+// system_cdrom2_get_debug_filename()
 
 if( w[8004f4ec] != 0 ) // PC HDD MODE
 {
@@ -980,7 +980,7 @@ return 0;
 
 
 ////////////////////////////////
-// system_filesystem_get_sector_by_dir_file_id()
+// system_cdrom2_get_sector_by_dir_file_id()
 
 V0 = w[8004f494]; // pointer to 0x80010004
 A0 = w[8004f4b8] + A0 - 1;
@@ -990,7 +990,7 @@ return (bu[V0 + A0 * 7 + 2] << 10) | (bu[V0 + A0 * 7 + 1] << 8) | bu[V0 + A0 * 7
 
 
 ////////////////////////////////
-// system_filesystem_get_sector_by_dir_file_id_async()
+// system_cdrom2_get_sector_by_dir_file_id_async()
 
 V0 = w[8004f494]; // pointer to 0x80010004
 A0 = w[8004f4bc] + A0 - 1;
@@ -1181,7 +1181,7 @@ if( w[8004f4ec] != 0 ) // PC HDD MODE
     }
 
     A0 = S1;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
     filename = V0;
 
     for( int i = 0; i < 4; ++i )
@@ -1669,7 +1669,7 @@ if( dir_file_id > 0 )
             [8004f4bc] = w(w[8004f4b8]);
 
             A0 = dir_file_id;
-            system_filesystem_get_sector_by_dir_file_id();
+            system_cdrom2_get_sector_by_dir_file_id();
             [8004f4a8] = w(V0); // file sector to load
 
             A0 = dir_file_id;
@@ -1746,7 +1746,7 @@ if( flags & 100 )
     if( w[8004f4ec] != 0 ) // PC HDD MODE
     {
         A0 = dir_file_id;
-        system_filesystem_get_debug_filename();
+        system_cdrom2_get_debug_filename();
         filename = V0;
 
         // try to open file
@@ -1825,7 +1825,7 @@ else if( flags & 0200 )
     if( w[8004f4ec] != 0 ) // PC HDD MODE
     {
         A0 = dir_file_id;
-        system_filesystem_get_debug_filename();
+        system_cdrom2_get_debug_filename();
         filename = V0;
 
         // open PC file
@@ -1863,7 +1863,7 @@ else // usual load (flags = 0x80)
     if( w[8004f4ec] != 0 ) // PC HDD MODE
     {
         A0 = dir_file_id;
-        system_filesystem_get_debug_filename();
+        system_cdrom2_get_debug_filename();
         filename = V0;
 
         // open PC file
@@ -2045,7 +2045,7 @@ else
     [800595a8] = w(S0);
 
     A0 = S0;
-    system_filesystem_get_sector_by_dir_file_id();
+    system_cdrom2_get_sector_by_dir_file_id();
     [8004f4a8] = w(V0);
 
     A0 = S0;
@@ -2071,7 +2071,7 @@ else
                 S1 = hu[S4 + 0000];
                 A0 = S1 & ffff;
                 [800595a8] = w(A0);
-                system_filesystem_get_debug_filename();
+                system_cdrom2_get_debug_filename();
                 S3 = V0;
 
                 for( int i = 0; i < 4; ++i )
@@ -2221,7 +2221,7 @@ A0 = allocated_memory;
 func288a4(); // store to 8004f4d4
 
 A0 = dir_file_id;
-system_filesystem_get_sector_by_dir_file_id();
+system_cdrom2_get_sector_by_dir_file_id();
 [8004f4a8] = w(V0);
 
 A0 = dir_file_id;
@@ -2262,7 +2262,7 @@ system_psyq_cd_int_to_pos();
 if( w[8004f4ec] != 0 ) // PC HDD MODE
 {
     A0 = dir_file_id;
-    system_filesystem_get_debug_filename();
+    system_cdrom2_get_debug_filename();
     filename = V0;
 
     // open PC file
@@ -2380,7 +2380,7 @@ if( w[8004f4ec] == 0 ) // CD-ROM MODE1
         if( dir_file_id > 0 )
         {
             A0 = dir_file_id;
-            system_filesystem_get_sector_by_dir_file_id();
+            system_cdrom2_get_sector_by_dir_file_id();
 
             A0 = V0;
             A1 = 800595ac;
@@ -2420,7 +2420,7 @@ dir_file_id = A0;
 if( dir_file_id > 0 )
 {
     A0 = dir_file_id;
-    system_filesystem_get_sector_by_dir_file_id();
+    system_cdrom2_get_sector_by_dir_file_id();
 
     A0 = V0; // sector to read
     A1 = 800595ac; // result
@@ -3044,7 +3044,7 @@ if( interupt == 1 ) // CdlDataReady
     if( ( S0 != 0 ) && ( w[8004f4ac] != 0 ) )
     {
         A0 = S0;
-        system_filesystem_get_sector_by_dir_file_id_async();
+        system_cdrom2_get_sector_by_dir_file_id_async();
 
         A0 = S0;
         system_get_aligned_filesize_by_dir_file_id_async();
@@ -3995,7 +3995,7 @@ system_print_alias();
 
 
 ////////////////////////////////
-// system_cdrom_get_cdrom_hdd_mode()
+// system_cdrom2_get_cdrom_hdd_mode()
 
 return w[8004f4ec];
 ////////////////////////////////

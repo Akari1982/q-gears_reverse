@@ -262,7 +262,7 @@ FP = A4;
 S7 = A5;
 S1 = A6;
 
-system_cdrom_get_cdrom_hdd_mode();
+system_cdrom2_get_cdrom_hdd_mode();
 
 if( V0 != 0 )
 {
@@ -994,7 +994,7 @@ else
 {
     S1 = S1 | 0080;
     A0 = S2;
-    system_filesystem_get_sector_by_dir_file_id();
+    system_cdrom2_get_sector_by_dir_file_id();
 
     A0 = V0 + S0;
     A1 = SP + 10;

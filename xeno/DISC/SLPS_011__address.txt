@@ -65,8 +65,8 @@
 8004f488 [][][][] N1 error when read sector and requested sector not equal.
 8004f48c [][][][] N2
 8004f490 [][][][] N3
-8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories).
-8004f498 [][][][] pointer to 0x80018004 (dir->file number)
+8004f494 [][][][] pointer to 0x80010004 (file with data about files and directories). File "cdrom.mdg"
+8004f498 [][][][] pointer to 0x80018004 (dir->file number). File "cdrom.fid"
 8004f49c [][][][] file size left to cdrom load.
 8004f4a0 [][][][] number of files to cdrom load.
 8004f4a4 [][][][] ???
@@ -134,7 +134,7 @@
 8004f4e9 []       movie id to play.
 8004f4ea []       init with 1.
 8004f4eb []       init with 0.
-8004f4ec [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work.
+8004f4ec [][][][] pointer to some debug filenames maybe files on working disk. They are not in release so debug wont work. File "cdrom.fnd"
                   0 - CD-ROM MODE1
                  -1 - CD-ROM MODE2
                   else - PC HDD MODE
