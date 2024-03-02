@@ -236,7 +236,7 @@ void psxBranchTest() {
 void psxJumpTest() {
 	if (!Config.HLE && Config.PsxOut) {
 		u32 call = psxRegs.GPR.n.t1 & 0xff;
-		switch (psxRegs.pc & 0x1fffff) {
+		switch (psxRegs.pc & 0x7fffff) {
 			case 0xa0:
 				if (biosA0[call])
 					biosA0[call]();

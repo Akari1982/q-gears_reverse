@@ -37,9 +37,9 @@
 8004ea10 [][][][] init with 0.
 8004ea14 [][][][] init with 0.
 8004ea18 [][][][] init with 0. Set to 1 if some memory inited.
-8004ea1c [][][][] init with 0.
-8004ea20 [][][][] init with 0.
-8004ea24 [][][][] init with 0.
+8004ea1c [][][][] init with 0. Draw compass.
+8004ea20 [][][][] init with 0. Draw sprites.
+8004ea24 [][][][] init with 0. Draw 3d models?
 8004ea28 [][]     init with 0.
 
 8004f23c store 4 points xyz for sprite tile during calculation in func1e264

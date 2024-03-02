@@ -132,21 +132,23 @@ if( w[800c1b60] == 0 )
 ////////////////////////////////
 // func2814ec()
 
-S3 = A0;
-S1 = A1;
-S2 = A2;
+otag = A0;
+packets = A1;
+transform = A2;
+buffer_id = A3;
 
-S0 = S1 + A3 * 14 + 40;
+S0 = packets + 40 + buffer_id * 14;
+
 system_gte_push_matrix();
 
-A0 = S2;
+A0 = transform;
 system_gte_set_rotation_matrix();
 
-A0 = S2;
+A0 = transform;
 system_gte_set_translation_vector();
 
-A0 = S1 + 30;
-A1 = S1 + 38;
+A0 = packets + 30;
+A1 = packets + 38;
 A2 = SP + 20;
 A3 = S0 + 8;
 A4 = S0 + 10;
@@ -156,8 +158,8 @@ A7 = SP + 30;
 func4a524(); // some perspective transform
 
 // add to render
-[S0 + 0] = w((w[S0 + 0] & ff000000) | (w[S3 + 4] & 00ffffff));
-[S3 + 4] = w((w[S3 + 4] & ff000000) | (S0 & 00ffffff));
+[S0 + 0] = w((w[S0 + 0] & ff000000) | (w[otag + 4] & 00ffffff));
+[otag + 4] = w((w[otag + 4] & ff000000) | (S0 & 00ffffff));
 
 system_gte_pop_matrix();
 ////////////////////////////////
@@ -177,7 +179,7 @@ if( w[800c1b60] == 0 )
 
         system_gte_push_matrix();
 
-        A0 = 800aef38;
+        A0 = 800aef38; // camera?
         A1 = 80285b9c + i * 68;
         system_gte_matrix_multiplication_to_A1();
 

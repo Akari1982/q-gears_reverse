@@ -64,7 +64,7 @@ static u32 gpuDmaChainSize(u32 addr) {
 	size = 1;
 
 	do {
-		addr &= 0x1ffffc;
+		addr &= 0x7ffffc;
 
 		if (DMACommandCounter++ > 2000000) break;
 		if (CheckForEndlessLoop(addr)) break;
@@ -163,7 +163,7 @@ void psxDma2(u32 madr, u32 bcr, u32 chcr) { // GPU
 #endif
 
 			size = gpuDmaChainSize(madr);
-			GPU_dmaChain((u32 *)psxM, madr & 0x1fffff);
+			GPU_dmaChain((u32 *)psxM, madr & 0x7fffff);
 
 			// Tekken 3 = use 1.0 only (not 1.5x)
 

@@ -705,10 +705,15 @@ void psxBNE() {	RepBranchi32(!=) }  // Branch if Rs != Rt
 void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
+    //psxMemWrite32(0x800199B4, 0x34040000);
+    psxMemWrite32(0x80010000, 0);
+    //psxMemWrite32(0x802859dc, 1);
+    //psxMemWrite8(0x8004f4e8, 0xff);
+
     if (0) {}
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }
     //else if( _JumpTarget_ == 0x8003c36c ) { execI(); P_Xeno_System_SoundUpdateBaseValues(); }
-    else if (_JumpTarget_ == 0x8003c590) { execI(); P_Xeno_System_SoundUpdateSequence(); }
+    //else if (_JumpTarget_ == 0x8003c590) { execI(); P_Xeno_System_SoundUpdateSequence(); }
 
     // FFVII Window
     else if( _JumpTarget_ == 0x8001f1bc ) { execI(); P_FFVII_System_UIDialogAddToRender(); }
@@ -717,8 +722,8 @@ void psxJAL()
     //else if( _JumpTarget_ == 0x800d29d4 ) { execI(); FFVII_Battle_ModelSimplePackets(); }
     else
     {
-        _SetLink( 31 );
-        doBranch( _JumpTarget_ );
+        _SetLink(31);
+        doBranch(_JumpTarget_);
     }
 }
 
@@ -739,27 +744,27 @@ void psxJALR()
     if (0)
     {
     }
-    else if (temp == 0x8003cbd8) { execI(); P_Opcode81(); }
-    else if (temp == 0x8003CC34) { execI(); P_Opcode90(); }
-    else if (temp == 0x8003CCC0) { execI(); P_Opcode94(); }
-    else if (temp == 0x8003D218) { execI(); P_OpcodeB2(); }
-    else if (temp == 0x8003D4E8) { execI(); P_OpcodeC2(); }
-    else if (temp == 0x8003D520) { execI(); P_OpcodeC4(); }
-    else if (temp == 0x8003D9D4) { execI(); P_OpcodeE0(); }
-    else if (temp == 0x8003E2F4) { execI(); P_OpcodeFC(); }
+    //else if (temp == 0x8003cbd8) { execI(); P_Opcode81(); }
+    //else if (temp == 0x8003CC34) { execI(); P_Opcode90(); }
+    //else if (temp == 0x8003CCC0) { execI(); P_Opcode94(); }
+    //else if (temp == 0x8003D218) { execI(); P_OpcodeB2(); }
+    //else if (temp == 0x8003D4E8) { execI(); P_OpcodeC2(); }
+    //else if (temp == 0x8003D520) { execI(); P_OpcodeC4(); }
+    //else if (temp == 0x8003D9D4) { execI(); P_OpcodeE0(); }
+    //else if (temp == 0x8003E2F4) { execI(); P_OpcodeFC(); }
 
-    else if (temp == 0x8003CD98) { execI(); P_Opcode98(); }
-    else if (temp == 0x8003CDE0) { execI(); P_Opcode99(); }
-    else if (temp == 0x8003CF90) { execI(); P_OpcodeA0(); }
-    else if (temp == 0x8003D178) { execI(); P_OpcodeAD(); }
-    else if (temp == 0x8003D1E8) { execI(); P_OpcodeB0(); }
-    else if (temp == 0x8003D618) { execI(); P_OpcodeD1(); }
-    else if (temp == 0x8003D644) { execI(); P_OpcodeD2(); }
-    else if (temp == 0x8003D6A4) { execI(); P_OpcodeD4(); }
-    else if (temp == 0x8003DA40) { execI(); P_OpcodeE2(); }
+    //else if (temp == 0x8003CD98) { execI(); P_Opcode98(); }
+    //else if (temp == 0x8003CDE0) { execI(); P_Opcode99(); }
+    //else if (temp == 0x8003CF90) { execI(); P_OpcodeA0(); }
+    //else if (temp == 0x8003D178) { execI(); P_OpcodeAD(); }
+    //else if (temp == 0x8003D1E8) { execI(); P_OpcodeB0(); }
+    //else if (temp == 0x8003D618) { execI(); P_OpcodeD1(); }
+    //else if (temp == 0x8003D644) { execI(); P_OpcodeD2(); }
+    //else if (temp == 0x8003D6A4) { execI(); P_OpcodeD4(); }
+    //else if (temp == 0x8003DA40) { execI(); P_OpcodeE2(); }
 
-    else if( temp == 0x800cb354 ) { execI(); P_FFVII_Field_ScriptOpcodeWSize(); }
-    else if( temp == 0x800caf60 ) { execI(); P_FFVII_Field_ScriptOpcodeMessage(); }
+    //else if( temp == 0x800cb354 ) { execI(); P_FFVII_Field_ScriptOpcodeWSize(); }
+    //else if( temp == 0x800caf60 ) { execI(); P_FFVII_Field_ScriptOpcodeMessage(); }
     //else if( temp == 0x800d3bf0 ) { execI(); FFVII_Battle_EffectDustSingleCloud(); }
     else
     {

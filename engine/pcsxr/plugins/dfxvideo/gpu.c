@@ -1693,7 +1693,7 @@ long CALLBACK GPUdmaChain(uint32_t * baseAddrL, uint32_t addr)
 
  do
   {
-   if(iGPUHeight==512) addr&=0x1FFFFC;
+   if(iGPUHeight==512) addr&=0x7FFFFC;
    if(DMACommandCounter++ > 2000000) break;
    if(CheckForEndlessLoop(addr)) break;
 

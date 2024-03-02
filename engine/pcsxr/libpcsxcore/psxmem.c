@@ -65,11 +65,11 @@ int psxMemInit() {
 	memset(psxMemRLUT, 0, 0x10000 * sizeof(void *));
 	memset(psxMemWLUT, 0, 0x10000 * sizeof(void *));
 
-	psxM = mmap(0, 0x00220000,
+	psxM = mmap(0, 0x00820000,
 		PROT_WRITE | PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
-	psxP = &psxM[0x200000];
-	psxH = &psxM[0x210000];
+	psxP = &psxM[0x800000];
+	psxH = &psxM[0x810000];
 
 	psxR = (s8 *)malloc(0x00080000);
 
@@ -80,7 +80,7 @@ int psxMemInit() {
 	}
 
 // MemR
-	for (i = 0; i < 0x80; i++) psxMemRLUT[i + 0x0000] = (u8 *)&psxM[(i & 0x1f) << 16];
+	for (i = 0; i < 0x80; i++) psxMemRLUT[i + 0x0000] = (u8 *)&psxM[(i & 0x7f) << 16];
 
 	memcpy(psxMemRLUT + 0x8000, psxMemRLUT, 0x80 * sizeof(void *));
 	memcpy(psxMemRLUT + 0xa000, psxMemRLUT, 0x80 * sizeof(void *));
@@ -94,7 +94,7 @@ int psxMemInit() {
 	memcpy(psxMemRLUT + 0xbfc0, psxMemRLUT + 0x1fc0, 0x08 * sizeof(void *));
 
 // MemW
-	for (i = 0; i < 0x80; i++) psxMemWLUT[i + 0x0000] = (u8 *)&psxM[(i & 0x1f) << 16];
+	for (i = 0; i < 0x80; i++) psxMemWLUT[i + 0x0000] = (u8 *)&psxM[(i & 0x7f) << 16];
 
 	memcpy(psxMemWLUT + 0x8000, psxMemWLUT, 0x80 * sizeof(void *));
 	memcpy(psxMemWLUT + 0xa000, psxMemWLUT, 0x80 * sizeof(void *));
@@ -109,7 +109,7 @@ void psxMemReset() {
 	FILE *f = NULL;
 	char bios[1024] = { '\0' };
 
-	memset(psxM, 0, 0x00200000);
+	memset(psxM, 0, 0x00800000);
 	memset(psxP, 0, 0x00010000);
 
 	// Load BIOS
@@ -136,7 +136,7 @@ void psxMemReset() {
 }
 
 void psxMemShutdown() {
-	munmap(psxM, 0x00220000);
+	munmap(psxM, 0x00820000);
 
 	free(psxR);
 	free(psxMemRLUT);
@@ -345,7 +345,7 @@ void psxMemWrite32(u32 mem, u32 value) {
 					case 0x00: case 0x1e988:
 						if (writeok == 1) break;
 						writeok = 1;
-						for (i = 0; i < 0x80; i++) psxMemWLUT[i + 0x0000] = (void *)&psxM[(i & 0x1f) << 16];
+						for (i = 0; i < 0x80; i++) psxMemWLUT[i + 0x0000] = (void *)&psxM[(i & 0x7f) << 16];
 						memcpy(psxMemWLUT + 0x8000, psxMemWLUT, 0x80 * sizeof(void *));
 						memcpy(psxMemWLUT + 0xa000, psxMemWLUT, 0x80 * sizeof(void *));
 						break;

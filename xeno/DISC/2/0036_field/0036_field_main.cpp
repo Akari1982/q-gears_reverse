@@ -136,7 +136,7 @@ if( ( w[800c1b60] == 0 ) && ( w[8004ea14] == 0 ) ) // PC HDD MODE
     system_cdrom2_set_dir();
 
     A0 = ad; // 10\0595_field_debug.exe
-    A1 = 80280000; // allocated_memory
+    A1 = 80280000;
     A2 = 0;
     A3 = 80;
     system_cdrom2_load_file_by_dir_file_id();
@@ -488,12 +488,12 @@ L77810:	; 80077810
     {
         if( hu[800c2ddc] & 0040 ) // cross on second controller repeated
         {
-            [8004ea1c] = w((w[8004ea1c] + 1) & 1);
+            [8004ea1c] = w((w[8004ea1c] + 1) & 1); // compas on/off
         }
 
         if( hu[800c2ddc] & 0010 ) // triangle on second controller repeated
         {
-            [8004ea20] = w((w[8004ea20] + 1) & 1);
+            [8004ea20] = w((w[8004ea20] + 1) & 1); // sprite off/on
         }
 
         if( hu[800c2ddc] & 0080 ) // square on second controller repeated
@@ -505,6 +505,7 @@ L77810:	; 80077810
         {
             if( hu[800c2dd4] & 0100 ) // select repeated
             {
+                // load debug map
                 if( w[800ad0c4] == -1 )
                 {
                     if( w[8004e9ac] == 0 )

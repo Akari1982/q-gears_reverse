@@ -17886,21 +17886,23 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func97b90
-V0 = w[800c1b60];
-80097B98	addiu  sp, sp, $ffe8 (=-$18)
-80097B9C	bne    v0, zero, L97bc8 [$80097bc8]
-[SP + 0010] = w(RA);
-80097BA4	jal    read_two_bytes_unsigned [$800ac290]
-A0 = 0001;
-80097BAC	jal    get_bytes_from_800C2F3C [$800a25a8]
-A0 = V0 & ffff;
-A0 = 8006f3ac;
-A1 = V0;
-80097BC0	jal    $80037870
-A2 = A1;
+// func97b90()
 
-L97bc8:	; 80097BC8
+if( w[800c1b60] == 0 )
+{
+    A0 = 1;
+    read_two_bytes_unsigned();
+    A0 = V0 & ffff;
+
+    get_bytes_from_800C2F3C();
+
+    A0 = 8006f3ac; // "DEB=%xh %d \n"
+    A1 = V0;
+    A2 = A1;
+    system_print_alias();
+
+}
+
 V1 = w[800af54c];
 80097BD0	nop
 V0 = hu[V1 + 00cc];
@@ -26667,25 +26669,23 @@ else
 
 
 ////////////////////////////////
-// funca0e48
+// funca0e48()
+
 A0 = w[800af54c];
-800A0E50	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
 V1 = w[A0 + 012c];
-800A0E5C	nop
+
 V0 = V1 & 01c0;
 800A0E64	bne    v0, zero, La0ef8 [$800a0ef8]
 800A0E68	addiu  v0, zero, $fe3f (=-$1c1)
 V0 = w[800c1b60];
 800A0E74	nop
-800A0E78	bne    v0, zero, La0e98 [$800a0e98]
-800A0E7C	nop
-A1 = w[800af1f0];
-A0 = 8006f3d4;
-800A0E90	jal    $80037870
-800A0E94	nop
+if( V0 == 0 )
+{
+    A0 = 8006f3d4; // "STACKERR ACT=%d\n"
+    A1 = w[800af1f0];
+    system_print_alias();
+}
 
-La0e98:	; 800A0E98
 A1 = w[800af54c];
 800A0EA0	nop
 V1 = bu[A1 + 00ce];

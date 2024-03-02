@@ -1811,17 +1811,13 @@ func2de00();
 
 
 ////////////////////////////////
-// func717e0
-800717E0	addiu  sp, sp, $ff80 (=-$80)
-[SP + 006c] = w(S1);
+// func717e0()
+
 S1 = 800aeea4;
 A0 = S1;
-[SP + 0068] = w(S0);
 800717F8	addiu  s0, s1, $ffe0 (=-$20)
 A1 = S0;
-[SP + 0078] = w(RA);
-[SP + 0074] = w(S3);
-[SP + 0070] = w(S2);
+
 system_calculate_rotation_matrix();
 
 80071810	jal    func717d0 [$800717d0]
@@ -1870,14 +1866,7 @@ A1 = SP + 0010;
 A0 = S0;
 800718BC	jal    $80049e34
 A0 = S0;
-RA = w[SP + 0078];
-S3 = w[SP + 0074];
-S2 = w[SP + 0070];
-S1 = w[SP + 006c];
-S0 = w[SP + 0068];
-SP = SP + 0080;
-800718DC	jr     ra 
-800718E0	nop
+
 ////////////////////////////////
 
 
@@ -1906,17 +1895,17 @@ system_gte_multiply_matrix_by_vector();
 
 
 ////////////////////////////////
-// func71984
+// func71984()
 
 8007198C	jal    func717e0 [$800717e0]
 
-S0 = 800aef38;
-8007199C	jal    $80049da4
-A0 = S0;
-800719A4	jal    $80049e34
-A0 = S0;
-V0 = w[800c1b60];
-if( V0 == 0 )
+A0 = 800aef38;
+system_gte_set_rotation_matrix();
+
+A0 = 800aef38;
+system_gte_set_translation_vector();
+
+if( w[800c1b60] == 0 )
 {
     func2815c8(); // update debug line packets
 }
@@ -2918,8 +2907,10 @@ T0 = T1;
 [T0 + 0000] = w(SP);
 800732E4	addiu  t0, t0, $fffc (=-$4)
 SP = T0;
-800732EC	jal    func71984 [$80071984]
 S2 = 0;
+
+func71984();
+
 SP = SP + 0004;
 SP = w[SP + 0000];
 V0 = w[800ad0d4];

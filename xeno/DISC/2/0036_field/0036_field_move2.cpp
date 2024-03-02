@@ -359,7 +359,6 @@ if( number_of_entity > 0 )
     800807D8	bne    v0, zero, loop80768 [$80080768]
 }
 
-// DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f29c; // "EVENT CODE"
@@ -420,7 +419,6 @@ for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
     }
 }
 
-// DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2a8; // "MOV CHECK0"
@@ -432,7 +430,6 @@ A1 = struct_5c_p + leader_id * 5c;
 A2 = w[A1 + 4c];
 func8376c(); // move player
 
-// DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2b4; // "MOV CHECK1"
@@ -473,7 +470,6 @@ for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
     }
 }
 
-// DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2c0; // "MOV CHECK2"
@@ -492,7 +488,6 @@ if( ( h[800b164a] == 0 ) && ( bu[800b16a0] == 0 ) )
 
 func80c04();
 
-// DEBUG TEXT
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f2cc; // "MOV CHECK3"
@@ -2178,7 +2173,7 @@ if( number_of_entity > 0 )
                                         // some debug
                                         if( w[800c1b60] == 0 )
                                         {
-                                            [802859dc] = w(already_talk);
+                                            [802859dc] = w(1);
                                         }
                                     }
                                 }

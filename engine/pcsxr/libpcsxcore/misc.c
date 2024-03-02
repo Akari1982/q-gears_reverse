@@ -207,7 +207,7 @@ int LoadCdrom() {
 	psxRegs.pc = SWAP32(tmpHead.pc0);
 	psxRegs.GPR.n.gp = SWAP32(tmpHead.gp0);
 	psxRegs.GPR.n.sp = SWAP32(tmpHead.s_addr); 
-	if (psxRegs.GPR.n.sp == 0) psxRegs.GPR.n.sp = 0x801fff00;
+	if (psxRegs.GPR.n.sp == 0) psxRegs.GPR.n.sp = 0x807fff00;
 
 	tmpHead.t_size = SWAP32(tmpHead.t_size);
 	tmpHead.t_addr = SWAP32(tmpHead.t_addr);
@@ -475,7 +475,7 @@ int Load(const char *ExePath) {
 				psxRegs.GPR.n.gp = SWAP32(tmpHead.gp0);
 				psxRegs.GPR.n.sp = SWAP32(tmpHead.s_addr); 
 				if (psxRegs.GPR.n.sp == 0)
-					psxRegs.GPR.n.sp = 0x801fff00;
+					psxRegs.GPR.n.sp = 0x807fff00;
 				retval = 0;
 				break;
 
@@ -551,7 +551,7 @@ static int LoadBin( unsigned long addr, char* filename ) {
 
 	FILE *f;
 	long len;
-	unsigned long mem = addr & 0x001fffff;
+	unsigned long mem = addr & 0x007fffff;
 
 	// Load binery files 
 	f = fopen(filename, "rb");
@@ -559,7 +559,7 @@ static int LoadBin( unsigned long addr, char* filename ) {
 		fseek(f,0,SEEK_END);
 		len = ftell(f);
 		fseek(f,0,SEEK_SET);
-		if( len + mem < 0x00200000 ) {
+		if( len + mem < 0x00800000 ) {
 			if( psxM ) {
 				int readsize = fread(psxM + mem, len, 1, f);
 				if( readsize == len )
@@ -794,7 +794,7 @@ int SaveStateGz(gzFile f, long* gzsize) {
 	if (Config.HLE)
 		psxBiosFreeze(1);
 
-	gzwrite(f, psxM, 0x00200000);
+	gzwrite(f, psxM, 0x00800000);
 	gzwrite(f, psxR, 0x00080000);
 	gzwrite(f, psxH, 0x00010000);
 	gzwrite(f, (void *)&psxRegs, sizeof(psxRegs));
@@ -861,7 +861,7 @@ int LoadStateGz(gzFile f) {
 	psxCpu->Reset();
 	gzseek(f, SZ_GPUPIC, SEEK_CUR);
 
-	gzread(f, psxM, 0x00200000);
+	gzread(f, psxM, 0x00800000);
 	gzread(f, psxR, 0x00080000);
 	gzread(f, psxH, 0x00010000);
 	gzread(f, (void *)&psxRegs, sizeof(psxRegs));

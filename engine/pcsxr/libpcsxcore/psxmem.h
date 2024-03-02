@@ -50,19 +50,19 @@ extern "C" {
 #endif
 
 extern s8 *psxM;
-#define psxMs8(mem)		psxM[(mem) & 0x1fffff]
-#define psxMs16(mem)	(SWAP16(*(s16 *)&psxM[(mem) & 0x1fffff]))
-#define psxMs32(mem)	(SWAP32(*(s32 *)&psxM[(mem) & 0x1fffff]))
-#define psxMu8(mem)		(*(u8 *)&psxM[(mem) & 0x1fffff])
-#define psxMu16(mem)	(SWAP16(*(u16 *)&psxM[(mem) & 0x1fffff]))
-#define psxMu32(mem)	(SWAP32(*(u32 *)&psxM[(mem) & 0x1fffff]))
+#define psxMs8(mem)		psxM[(mem) & 0x7fffff]
+#define psxMs16(mem)	(SWAP16(*(s16 *)&psxM[(mem) & 0x7fffff]))
+#define psxMs32(mem)	(SWAP32(*(s32 *)&psxM[(mem) & 0x7fffff]))
+#define psxMu8(mem)		(*(u8 *)&psxM[(mem) & 0x7fffff])
+#define psxMu16(mem)	(SWAP16(*(u16 *)&psxM[(mem) & 0x7fffff]))
+#define psxMu32(mem)	(SWAP32(*(u32 *)&psxM[(mem) & 0x7fffff]))
 
-#define psxMs8ref(mem)	psxM[(mem) & 0x1fffff]
-#define psxMs16ref(mem)	(*(s16 *)&psxM[(mem) & 0x1fffff])
-#define psxMs32ref(mem)	(*(s32 *)&psxM[(mem) & 0x1fffff])
-#define psxMu8ref(mem)	(*(u8 *)&psxM[(mem) & 0x1fffff])
-#define psxMu16ref(mem)	(*(u16 *)&psxM[(mem) & 0x1fffff])
-#define psxMu32ref(mem)	(*(u32 *)&psxM[(mem) & 0x1fffff])
+#define psxMs8ref(mem)	psxM[(mem) & 0x7fffff]
+#define psxMs16ref(mem)	(*(s16 *)&psxM[(mem) & 0x7fffff])
+#define psxMs32ref(mem)	(*(s32 *)&psxM[(mem) & 0x7fffff])
+#define psxMu8ref(mem)	(*(u8 *)&psxM[(mem) & 0x7fffff])
+#define psxMu16ref(mem)	(*(u16 *)&psxM[(mem) & 0x7fffff])
+#define psxMu32ref(mem)	(*(u32 *)&psxM[(mem) & 0x7fffff])
 
 extern s8 *psxP;
 #define psxPs8(mem)	    psxP[(mem) & 0xffff]
