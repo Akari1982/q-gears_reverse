@@ -62209,18 +62209,17 @@ A0 = S0;
 A1 = S1;
 800B39A0	j      Lb43e8 [$800b43e8]
 800B39A4	nop
-V1 = w[80010000];
-800B39B0	addiu  v0, zero, $ffff (=-$1)
-800B39B4	beq    v1, v0, Lb43e8 [$800b43e8]
-800B39B8	nop
-[800c2ca0] = w(S0);
+if( w[80010000] != -1 )
+{
+    [800c2ca0] = w(S0);
+}
 800B39C4	j      Lb43e8 [$800b43e8]
 800B39C8	nop
-V1 = w[80010000];
-800B39D4	addiu  v0, zero, $ffff (=-$1)
-800B39D8	beq    v1, v0, Lb43e8 [$800b43e8]
-800B39DC	nop
-[800c2ca0] = w(0);
+
+if( w[80010000] != -1 )
+{
+    [800c2ca0] = w(0);
+}
 800B39E8	j      Lb43e8 [$800b43e8]
 800B39EC	nop
 V0 = w[S0 + 003c];

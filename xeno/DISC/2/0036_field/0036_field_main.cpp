@@ -393,7 +393,7 @@ L77810:	; 80077810
 
                     funca5118(); // load field here
 
-                    80077B58	jal    func35c84 [$80035c84]
+                    func35c84();
 
                     [800acfdc] = b(1);
                 }
@@ -488,7 +488,7 @@ L77810:	; 80077810
     {
         if( hu[800c2ddc] & 0040 ) // cross on second controller repeated
         {
-            [8004ea1c] = w((w[8004ea1c] + 1) & 1); // compas on/off
+            [8004ea1c] = w((w[8004ea1c] + 1) & 1); // compas off/on
         }
 
         if( hu[800c2ddc] & 0010 ) // triangle on second controller repeated
@@ -498,7 +498,7 @@ L77810:	; 80077810
 
         if( hu[800c2ddc] & 0080 ) // square on second controller repeated
         {
-            [8004ea24] = w((w[8004ea24] + 1) & 1);
+            [8004ea24] = w((w[8004ea24] + 1) & 1); // models off/on
         }
 
         if( hu[800af370] & 0040 ) // cross currently pressed
@@ -962,8 +962,8 @@ L78674:	; 80078674
 
 field_draw_sync();
 
-80078694	jal    $80035c84
-80078698	nop
+func35c84();
+
 V0 = bu[80058b6c];
 [8004e9ac] = w(0);
 800786AC	bne    v0, s0, L786c4 [$800786c4]

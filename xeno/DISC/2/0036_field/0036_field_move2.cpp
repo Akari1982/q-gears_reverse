@@ -2173,7 +2173,7 @@ if( number_of_entity > 0 )
                                         // some debug
                                         if( w[800c1b60] == 0 )
                                         {
-                                            [802859dc] = w(1);
+                                            [802859dc] = w(already_talk);
                                         }
                                     }
                                 }
@@ -2576,7 +2576,7 @@ V0 = w[data_ptr + leader_id * 5c + 7c];
 
 if( hu[V0 + c] == 1 )
 {
-    80083EEC	jal    func35c84 [$80035c84]
+    func35c84();
 
     [leader_138 + 0] = w(w[leader_138 + 0] & f7ffffff);
 }

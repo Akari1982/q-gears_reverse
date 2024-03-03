@@ -1,109 +1,96 @@
 ////////////////////////////////
 // func7038c
-8007038C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S1);
+// worldmap_main()
+
 80070398	jal    func75924 [$80075924]
-[SP + 0018] = w(S0);
-800703A0	jal    $80044448
+
 A0 = 0;
-800703A8	jal    $8004b3f4
+system_draw_sync();
+
 A0 = 0;
+system_psyq_wait_frames();
+
 A0 = 800361f4;
-800703B8	jal    $8004b678
-800703BC	nop
-800703C0	jal    $80048a6c
-800703C4	nop
+system_call_main_timer_additional_callback_4();
+
+system_gte_init();
+
 S0 = 8006efe4;
 V1 = hu[S0 + 0000];
 V0 = 0001;
 [8005884e] = b(V0);
-800703E0	bne    v1, zero, L705c8 [$800705c8]
-A0 = 0003;
-A1 = 0400;
-V0 = 0fff;
-[8006efe2] = h(V0);
-V0 = 0c00;
-A2 = 0001;
-[8006efe0] = h(V0);
-V0 = 4003;
-[8006efde] = h(A1);
-[S0 + 0000] = h(A2);
-[8006e4f8] = h(V0);
-V0 = 6680;
-[8006e4f0] = h(V0);
-V0 = ff00;
-[8006e4f2] = h(V0);
-V0 = 2a00;
-A3 = 7580;
-[8006e4f4] = h(V0);
-V0 = 2c00;
-[8006e4e6] = h(V0);
-V0 = 000a;
-V1 = 0005;
-[8006e9f9] = b(V0);
-V0 = 000f;
-[8006cfd0] = b(V0);
-V0 = 0002;
-A0 = 0003;
-[8006d074] = b(V0);
-V0 = 0004;
-[8006d1bc] = b(V0);
-V0 = 0006;
-[8006e9fa] = b(V1);
-[8006d260] = b(V1);
-V1 = 0009;
-[8006d304] = b(V0);
-V0 = 0007;
-[8006d44c] = b(V0);
-V0 = 0008;
-[8006d4f0] = b(V0);
-V0 = 7500;
-[8006d118] = b(A0);
-[8006d594] = b(A0);
-A0 = 2e58;
-[8006e4fa] = h(A2);
-[8006e4f6] = h(0);
-[8006e4e4] = h(A3);
-[8006e4e8] = h(0);
-[8006e9f8] = b(0);
-[8006ef75] = b(0);
-[8006ef76] = b(0);
-[8006ef77] = b(0);
-[8006d3a8] = b(V1);
-[8006d638] = b(V1);
-[8006e61e] = h(A1);
-[8006e620] = h(V0);
-[8006e622] = h(A0);
-[8006e624] = h(A1);
-V1 = hu[8006e50a];
-V0 = 7600;
-[8006e626] = h(A3);
-[8006e628] = h(A0);
-[8006e62a] = h(A1);
-[8006e62c] = h(V0);
-[8006e62e] = h(A0);
-[8006e50c] = h(A2);
-V1 = V1 << 01;
-8007058C	lui    at, $800a
-AT = AT + V1;
-V0 = hu[AT + a368];
-80070598	lui    a0, $07ff
-[8006e508] = h(V0);
-800705A4	lui    at, $800a
-AT = AT + V1;
-V0 = hu[AT + a378];
-A0 = A0 | ffff;
-[8006e7f0] = w(A0);
-[8006e50a] = h(V0);
-A0 = 0003;
+if( V1 == 0 )
+{
+    A1 = 0400;
+    [8006efe2] = h(0fff);
+    A2 = 0001;
+    [8006efe0] = h(0c00);
+    [8006efde] = h(A1);
+    [S0 + 0000] = h(A2);
+    [8006e4f8] = h(4003);
+    [8006e4f0] = h(6680);
+    [8006e4f2] = h(ff00);
+    A3 = 7580;
+    [8006e4f4] = h(2a00);
+    [8006e4e6] = h(2c00);
+    V1 = 0005;
+    [8006e9f9] = b(0a);
+    [8006cfd0] = b(000f);
+    A0 = 0003;
+    [8006d074] = b(0002);
+    [8006d1bc] = b(0004);
+    [8006e9fa] = b(V1);
+    [8006d260] = b(V1);
+    V1 = 0009;
+    [8006d304] = b(0006);
+    [8006d44c] = b(0007);
+    [8006d4f0] = b(0008);
+    [8006d118] = b(A0);
+    [8006d594] = b(A0);
+    A0 = 2e58;
+    [8006e4fa] = h(A2);
+    [8006e4f6] = h(0);
+    [8006e4e4] = h(A3);
+    [8006e4e8] = h(0);
+    [8006e9f8] = b(0);
+    [8006ef75] = b(0);
+    [8006ef76] = b(0);
+    [8006ef77] = b(0);
+    [8006d3a8] = b(V1);
+    [8006d638] = b(V1);
+    [8006e61e] = h(A1);
+    [8006e620] = h(7500);
+    [8006e622] = h(A0);
+    [8006e624] = h(A1);
+    V1 = hu[8006e50a];
+    [8006e626] = h(A3);
+    [8006e628] = h(A0);
+    [8006e62a] = h(A1);
+    [8006e62c] = h(7600);
+    [8006e62e] = h(A0);
+    [8006e50c] = h(A2);
+    V1 = V1 << 01;
+    8007058C	lui    at, $800a
+    AT = AT + V1;
+    V0 = hu[AT + a368];
+    80070598	lui    a0, $07ff
+    [8006e508] = h(V0);
+    800705A4	lui    at, $800a
+    AT = AT + V1;
+    V0 = hu[AT + a378];
+    A0 = A0 | ffff;
+    [8006e7f0] = w(A0);
+    [8006e50a] = h(V0);
+}
 
-L705c8:	; 800705C8
-800705C8	jal    $800322bc
+A0 = 3;
 A1 = 0;
-A0 = 0024;
-800705D4	jal    $system_cdrom2_set_dir
+system_memory_set_alloc_user();
+
+A0 = 24;
 A1 = 0;
+system_cdrom2_set_dir();
+
 800705DC	jal    func95360 [$80095360]
 800705E0	nop
 800705E4	jal    func72cc4 [$80072cc4]
@@ -140,179 +127,155 @@ V0 = V0 & 3fff;
 80070684	jal    func711c4 [$800711c4]
 80070688	nop
 V1 = w[8009b990];
-80070694	nop
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800706A4	lui    at, $800a
-AT = AT + V0;
-V0 = w[AT + 9440];
-800706B0	nop
+V0 = w[80099440 + V0];
+
 800706B4	beq    v0, zero, L7075c [$8007075c]
 800706B8	nop
 800706BC	j      L70750 [$80070750]
 800706C0	nop
 
 loop706c4:	; 800706C4
-V1 = w[8009b990];
-800706CC	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800706DC	lui    at, $800a
-AT = AT + V0;
-V0 = w[AT + 9444];
-800706E8	nop
-800706EC	jalr   v0 ra
-800706F0	nop
-800706F4	jal    func96be8 [$80096be8]
-800706F8	nop
-800706FC	jal    $80044448
-A0 = 0;
-80070704	jal    $8004b3f4
-A0 = 0;
-8007070C	jal    $80035c84
-80070710	nop
-V0 = w[8009cbb4];
-[8009bc7c] = w(V0);
-80070724	jal    func70960 [$80070960]
-80070728	nop
-V1 = w[8009b990];
-80070734	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-80070744	lui    at, $800a
-AT = AT + V0;
-V0 = w[AT + 9448];
+    V1 = w[8009b990];
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = w[80099444 + V0];
 
-L70750:	; 80070750
-80070750	nop
-80070754	jalr   v0 ra
-80070758	nop
+    800706EC	jalr   v0 ra
 
-L7075c:	; 8007075C
-V0 = w[8009cbb4];
-80070764	nop
-V0 = V0 < 0002;
+    800706F4	jal    func96be8 [$80096be8]
+
+
+    A0 = 0;
+    system_draw_sync();
+
+    A0 = 0;
+    system_psyq_wait_frames();
+
+    func35c84(); // clear button input
+
+    [8009bc7c] = w(w[8009cbb4]);
+
+    func70960();
+
+    V1 = w[8009b990];
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = w[80099448 + V0];
+
+    L70750:	; 80070750
+    80070750	nop
+    80070754	jalr   v0 ra
+    80070758	nop
+
+    L7075c:	; 8007075C
+    V0 = w[8009cbb4];
+    V0 = V0 < 0002;
 8007076C	beq    v0, zero, loop706c4 [$800706c4]
-80070770	nop
+
 V1 = w[8009cbb4];
-8007077C	nop
-80070780	beq    v1, zero, L70798 [$80070798]
-V0 = 0001;
-80070788	beq    v1, v0, L70840 [$80070840]
-8007078C	nop
-80070790	j      L708f4 [$800708f4]
-80070794	nop
+if( V1 == 0 )
+{
+    A0 = 1;
+    func19a50();
 
-L70798:	; 80070798
-80070798	jal    $80019a50
-A0 = 0001;
-800707A0	jal    $800199f0
-A0 = 0001;
-V0 = w[8009afac];
-800707B0	nop
-800707B4	bne    v0, zero, L70820 [$80070820]
-800707B8	nop
-V0 = w[8009cbc0];
-800707C4	nop
-V1 = h[V0 + 000e];
-V0 = 0003;
-800707D0	bne    v1, v0, L707f0 [$800707f0]
-800707D4	nop
-A0 = 8009c944;
-A2 = hu[8006e5f4];
-800707E8	jal    func9374c [$8009374c]
-A1 = 0003;
+    A0 = 1;
+    func199f0();
 
-L707f0:	; 800707F0
-A0 = w[8009cbc0];
-V0 = hu[8009b122];
-V1 = hu[A0 + 0008];
-[8006efe0] = h(V0);
-[8006efde] = h(V1);
-V0 = hu[A0 + 000a];
-[8006efe4] = h(V0);
+    if( w[8009afac] == 0 )
+    {
+        V0 = w[8009cbc0];
+        if( h[V0 + e] == 3 )
+        {
+            A0 = 8009c944;
+            A1 = 3;
+            A2 = hu[8006e5f4];
+            func9374c();
+        }
 
-L70820:	; 80070820
-V0 = w[8009b0f4];
-80070828	nop
-V0 = V0 + 0400;
-[8006e5f8] = h(V0);
-80070838	j      L70930 [$80070930]
-8007083C	nop
+        A0 = w[8009cbc0];
+        [8006efe0] = h(hu[8009b122]);
+        [8006efde] = h(hu[A0 + 8]);
+        [8006efe4] = h(hu[A0 + a]);
+    }
 
-L70840:	; 80070840
-80070840	jal    $80019a50
-A0 = 0002;
-80070848	jal    $800199f0
-A0 = 0002;
-[80058b94] = b(0);
-V1 = 0;
-A0 = 8006e500;
+    [8006e5f8] = h(w[8009b0f4] + 400);
+}
+else if( V1 == 1 )
+{
+    A0 = 2;
+    func19a50();
 
-loop70864:	; 80070864
-80070864	lui    at, $8007
-AT = AT + V1;
-V0 = bu[AT + ef75];
-V1 = V1 + 0001;
-[A0 + 0000] = h(V0);
-V0 = V1 < 0003;
-8007087C	bne    v0, zero, loop70864 [$80070864]
-A0 = A0 + 0002;
-80070884	jal    $80039b6c
-80070888	nop
-A0 = w[8009b0b0];
-S0 = w[8009b9fc];
-8007089C	jal    $800286fc
-800708A0	nop
-S1 = 80061cd8;
-A0 = S1;
-A1 = S0;
-800708B4	jal    $8003f810
-A2 = V0;
-V0 = w[80061bb8];
-[8004e9a0] = w(V0);
-800708CC	jal    $800396f8
-A0 = S1;
-A0 = V0;
-A1 = 007f;
-[80061bb8] = w(A0);
-800708E4	jal    $80039928
-A2 = 0;
-800708EC	j      L70930 [$80070930]
-800708F0	nop
+    A0 = 2;
+    func199f0();
 
-L708f4:	; 800708F4
-800708F4	jal    $800199f0
-A0 = 0;
-A0 = SP + 0010;
-A1 = 0;
-A2 = 0;
-V0 = 013f;
-[SP + 0014] = h(V0);
-V0 = 01af;
-A3 = 0040;
-[SP + 0010] = h(0);
-[SP + 0012] = h(0);
-80070920	jal    $800445dc
-[SP + 0016] = h(V0);
-80070928	jal    $80044448
-A0 = 0;
+    [80058b94] = b(0);
+    V1 = 0;
+    A0 = 8006e500;
 
-L70930:	; 80070930
+    loop70864:	; 80070864
+        [A0 + 0000] = h(bu[8006ef75 + V1]);
+        V1 = V1 + 1;
+        A0 = A0 + 2;
+        V0 = V1 < 3;
+    8007087C	bne    v0, zero, loop70864 [$80070864]
+
+    system_sound_stop_all_channels_in_all_main();
+
+    A0 = w[8009b0b0];
+    S0 = w[8009b9fc];
+    system_get_aligned_filesize_by_dir_file_id();
+
+    S1 = 80061cd8;
+    A0 = S1;
+    A1 = S0;
+    A2 = V0;
+    system_memcpy();
+
+    V0 = w[80061bb8];
+    [8004e9a0] = w(V0);
+
+    A0 = S1;
+    system_sound_create_main_for_smd();
+
+    A0 = V0;
+    [80061bb8] = w(A0);
+
+    A1 = 7f;
+    A2 = 0;
+    func39928();
+}
+else
+{
+    A0 = 0;
+    func199f0();
+
+    A0 = SP + 0010;
+    A1 = 0;
+    A2 = 0;
+    V0 = 013f;
+    [SP + 0014] = h(V0);
+    V0 = 01af;
+    A3 = 0040;
+    [SP + 0010] = h(0);
+    [SP + 0012] = h(0);
+    [SP + 0016] = h(V0);
+    system_clear_image();
+
+    A0 = 0;
+    system_draw_sync();
+}
+
 [8005884e] = b(0);
-80070938	jal    func75924 [$80075924]
-8007093C	nop
-80070940	jal    $80019b50
+
+func75924();
+
 A0 = 0;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-80070958	jr     ra 
-8007095C	nop
+func19b50();
 ////////////////////////////////
 
 
@@ -903,7 +866,7 @@ S0 = bu[AT + e9f8];
 80071354	nop
 80071358	beq    s0, s6, L713cc [$800713cc]
 8007135C	nop
-80071360	jal    $800286fc
+80071360	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0 + 0002;
 A0 = V0;
 8007136C	jal    $system_memory_allocate
@@ -920,7 +883,7 @@ A0 = bu[AT + cfd0];
 80071398	nop
 8007139C	beq    a0, s6, L713c4 [$800713c4]
 V0 = S2 + S5;
-800713A4	jal    $800286fc
+800713A4	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = A0 + 0013;
 A0 = V0;
 800713B0	jal    $system_memory_allocate
@@ -1025,21 +988,21 @@ SP = SP + 0030;
 A0 = w[8009b564];
 80071520	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80071528	jal    $800286fc
+80071528	jal    $system_get_aligned_filesize_by_dir_file_id
 8007152C	nop
 A0 = V0;
 80071534	jal    $system_memory_allocate
 A1 = 0001;
 A0 = w[8009b55c];
 [8009b984] = w(V0);
-8007154C	jal    $800286fc
+8007154C	jal    $system_get_aligned_filesize_by_dir_file_id
 80071550	nop
 A0 = V0;
 80071558	jal    $system_memory_allocate
 A1 = 0001;
 A0 = w[8009c7ac];
 [8009b108] = w(V0);
-80071570	jal    $800286fc
+80071570	jal    $system_get_aligned_filesize_by_dir_file_id
 80071574	nop
 A0 = V0;
 8007157C	jal    $system_memory_allocate
@@ -1074,13 +1037,13 @@ SP = SP + 0018;
 // func71614
 80071614	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8007161C	jal    $800286fc
+8007161C	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 0026;
 A0 = V0;
 80071628	jal    $system_memory_allocate
 A1 = 0001;
 [80058af8] = w(V0);
-80071638	jal    $800286fc
+80071638	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = 0025;
 A0 = V0;
 80071644	jal    $system_memory_allocate
@@ -1116,7 +1079,7 @@ V0 = w[8004e9a8];
 V0 = V0 + 0001;
 [8004e9a8] = w(V0);
 [8009c7e0] = h(A0);
-800716E4	jal    $800286fc
+800716E4	jal    $system_get_aligned_filesize_by_dir_file_id
 800716E8	nop
 A0 = V0;
 800716F0	jal    $system_memory_allocate
@@ -1125,7 +1088,7 @@ A0 = w[8009c7b8];
 [8009bc74] = w(V0);
 [8009c7e4] = w(V0);
 [8009c7e8] = h(A0);
-80071718	jal    $800286fc
+80071718	jal    $system_get_aligned_filesize_by_dir_file_id
 8007171C	nop
 A0 = V0;
 80071724	jal    $system_memory_allocate
@@ -1134,7 +1097,7 @@ A0 = w[8009c7b0];
 [8009bc6c] = w(V0);
 [8009c7ec] = w(V0);
 [8009c7f0] = h(A0);
-8007174C	jal    $800286fc
+8007174C	jal    $system_get_aligned_filesize_by_dir_file_id
 80071750	nop
 A0 = V0;
 80071758	jal    $system_memory_allocate
@@ -1143,7 +1106,7 @@ A0 = w[8009cbe8];
 [80061c2c] = w(V0);
 [8009c7f4] = w(V0);
 [8009c7f8] = h(A0);
-80071780	jal    $800286fc
+80071780	jal    $system_get_aligned_filesize_by_dir_file_id
 80071784	nop
 A0 = V0;
 8007178C	jal    $system_memory_allocate
@@ -1152,7 +1115,7 @@ A0 = w[8009b0b0];
 [8009bc70] = w(V0);
 [8009c7fc] = w(V0);
 [8009c800] = h(A0);
-800717B4	jal    $800286fc
+800717B4	jal    $system_get_aligned_filesize_by_dir_file_id
 800717B8	nop
 A0 = V0;
 800717C0	jal    $system_memory_allocate
@@ -1174,25 +1137,21 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func7180c
+// func7180c()
+
 A0 = w[8009c7b0];
-80071814	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8007181C	jal    $800286fc
-80071820	nop
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-80071828	jal    $system_memory_allocate
 A1 = 0;
+system_memory_allocate();
+[80061c2c] = w(V0);
+
+A0 = w[8009c7b0];
 A1 = V0;
 A2 = 0;
-A0 = w[8009c7b0];
-[80061c2c] = w(A1);
-80071848	jal    $800293e8
 A3 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80071858	jr     ra 
-8007185C	nop
+system_cdrom2_load_file_by_dir_file_id();
 ////////////////////////////////
 
 
@@ -1222,7 +1181,7 @@ A3 = 2; // semi transparency B-F
 func723dc(); // full screen fade
 
 A0 = 0;
-800718B8	jal    $80028870
+800718B8	jal    $system_cdrom_action_sync
 
 800718C0	jal    func71518 [$80071518]
 800718C4	nop
@@ -1319,7 +1278,7 @@ L71a4c:	; 80071A4C
 80071A58	nop
 
 L71a5c:	; 80071A5C
-80071A5C	jal    $80028870
+80071A5C	jal    $system_cdrom_action_sync
 A0 = 0;
 80071A64	jal    func837f4 [$800837f4]
 80071A68	nop
@@ -1350,7 +1309,7 @@ A1 = 0;
 80071ACC	nop
 80071AD0	jal    func8834c [$8008834c]
 80071AD4	nop
-80071AD8	jal    $80028870
+80071AD8	jal    $system_cdrom_action_sync
 A0 = 0;
 V0 = w[8009bc7c];
 80071AE8	nop
@@ -1413,7 +1372,7 @@ A0 = w[8009bc74];
 80071BBC	jal    $system_memory_mark_removed_alloc
 80071BC0	nop
 A0 = w[80061c2c];
-80071BCC	jal    $800382d0
+80071BCC	jal    $system_sound_insert_sed_to_linked_array
 80071BD0	nop
 V1 = w[8009b1f8];
 V0 = 0007;
@@ -1429,21 +1388,21 @@ A0 = w[8009c7b8];
 S0 = w[8009bc6c];
 
 L71c10:	; 80071C10
-80071C10	jal    $800286fc
+80071C10	jal    $system_get_aligned_filesize_by_dir_file_id
 80071C14	nop
 80071C18	lui    a0, $8006
 A0 = A0 + 1cd8;
 A1 = S0;
-80071C24	jal    $8003f810
+80071C24	jal    $system_memcpy
 A2 = V0;
 80071C2C	lui    a0, $8006
 A0 = A0 + 1cd8;
-80071C34	jal    $800396f8
+80071C34	jal    $system_sound_create_main_for_smd
 80071C38	nop
 [80061bb8] = w(V0);
 A0 = V0;
 A1 = 007f;
-80071C4C	jal    $80039928
+80071C4C	jal    $func39928
 A2 = 0;
 80071C54	j      L71ce8 [$80071ce8]
 80071C58	nop
@@ -1453,7 +1412,7 @@ A0 = w[8009bc74];
 80071C64	jal    $system_memory_mark_removed_alloc
 80071C68	nop
 A0 = w[80061c2c];
-80071C74	jal    $800382d0
+80071C74	jal    $system_sound_insert_sed_to_linked_array
 80071C78	nop
 V1 = w[8009b1f8];
 V0 = 0007;
@@ -1469,12 +1428,12 @@ A0 = w[8009c7b8];
 S0 = w[8009bc6c];
 
 L71cb8:	; 80071CB8
-80071CB8	jal    $800286fc
+80071CB8	jal    $system_get_aligned_filesize_by_dir_file_id
 80071CBC	nop
 80071CC0	lui    a0, $8006
 A0 = A0 + 1cd8;
 A1 = S0;
-80071CCC	jal    $8003f810
+80071CCC	jal    $system_memcpy
 A2 = V0;
 A0 = w[80061bb8];
 A1 = 007f;
@@ -1658,7 +1617,7 @@ A0 = 0130;
 A0 = 0130;
 
 L71fa4:	; 80071FA4
-80071FA4	jal    $800334bc
+80071FA4	jal    $func334bc
 A1 = 01e0;
 RA = w[SP + 0020];
 S1 = w[SP + 001c];
@@ -2310,10 +2269,10 @@ SP = SP + 0028;
 S0 = w[8009b568];
 A1 = 0;
 [SP + 0014] = w(RA);
-80072B70	jal    $80032cac
+80072B70	jal    $func32cac
 A0 = S0;
 [8009b568] = w(V0);
-80072B80	jal    $80031f0c
+80072B80	jal    $system_memory_mark_removed_alloc
 A0 = S0;
 A3 = 0;
 V0 = w[8009b568];
@@ -2388,11 +2347,11 @@ SP = SP + 0018;
 80072CC4	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 1000;
 [SP + 0010] = w(RA);
-80072CD0	jal    $800319ec
+80072CD0	jal    $system_memory_allocate
 A1 = 0;
 A0 = 1000;
 [8009b020] = w(V0);
-80072CE4	jal    $800319ec
+80072CE4	jal    $system_memory_allocate
 A1 = 0;
 [8009b098] = w(V0);
 RA = w[SP + 0010];
@@ -3299,15 +3258,15 @@ A1 = 0;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-80073BE8	jal    $800319ec
+80073BE8	jal    $system_memory_allocate
 [SP + 0010] = w(S0);
 A0 = 0280;
 [8009c6f4] = w(V0);
-80073BFC	jal    $800319ec
+80073BFC	jal    $system_memory_allocate
 A1 = 0;
 A0 = 0280;
 [8009b1fc] = w(V0);
-80073C10	jal    $800319ec
+80073C10	jal    $system_memory_allocate
 A1 = 0;
 S1 = 000f;
 V1 = w[8009c6f4];
@@ -3401,13 +3360,13 @@ SP = SP + 0038;
 A0 = w[8009b200];
 80073D7C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80073D84	jal    $80031f0c
+80073D84	jal    $system_memory_mark_removed_alloc
 80073D88	nop
 A0 = w[8009b1fc];
-80073D94	jal    $80031f0c
+80073D94	jal    $system_memory_mark_removed_alloc
 80073D98	nop
 A0 = w[8009c6f4];
-80073DA4	jal    $80031f0c
+80073DA4	jal    $system_memory_mark_removed_alloc
 80073DA8	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -3844,7 +3803,7 @@ A1 = 0;
 A0 = V0 << 01;
 A0 = A0 + V0;
 [8009c084] = w(V0);
-800744A8	jal    $800319ec
+800744A8	jal    $system_memory_allocate
 A0 = A0 << 02;
 A0 = V0;
 T1 = w[8009c084];
@@ -3882,7 +3841,7 @@ SP = SP + 0020;
 A0 = w[8009cb68];
 80074534	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8007453C	jal    $80031f0c
+8007453C	jal    $system_memory_mark_removed_alloc
 80074540	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -3940,7 +3899,7 @@ V0 = V0 + V1;
 A1 = h[V0 + 0000];
 V0 = w[S1 + 0000];
 A1 = A1 << 04;
-80074614	jal    $8004470c
+80074614	jal    $system_load_image
 A1 = V0 + A1;
 
 L7461c:	; 8007461C
@@ -3970,7 +3929,7 @@ A1 = 0;
 A0 = V0 << 01;
 A0 = A0 + V0;
 [8009c14c] = w(V0);
-80074680	jal    $800319ec
+80074680	jal    $system_memory_allocate
 A0 = A0 << 02;
 A0 = V0;
 T1 = w[8009c14c];
@@ -4008,7 +3967,7 @@ SP = SP + 0020;
 A0 = w[8009cbb8];
 8007470C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80074714	jal    $80031f0c
+80074714	jal    $system_memory_mark_removed_alloc
 80074718	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -4074,7 +4033,7 @@ V0 = A2 << 01;
 80074800	mult   v1, v0
 A1 = w[S1 + 0000];
 80074808	mflo   a2
-8007480C	jal    $8004470c
+8007480C	jal    $system_load_image
 A1 = A1 + A2;
 
 L74814:	; 80074814
@@ -4553,32 +4512,32 @@ L74f80:	; 80074F80
 80074F98	jal    func88510 [$80088510]
 80074F9C	nop
 A0 = w[8009b024];
-80074FA8	jal    $80031f0c
+80074FA8	jal    $system_memory_mark_removed_alloc
 80074FAC	nop
 A0 = w[8009b09c];
-80074FB8	jal    $80031f0c
+80074FB8	jal    $system_memory_mark_removed_alloc
 80074FBC	nop
 A0 = 0004;
-80074FC4	jal    $800319ec
+80074FC4	jal    $system_memory_allocate
 A1 = 0001;
 S0 = V0;
-80074FD0	jal    $80031f0c
+80074FD0	jal    $system_memory_mark_removed_alloc
 A0 = S0;
 V0 = ffffff;
 S0 = S0 & V0;
 A0 = ffe3b004;
 A0 = S0 + A0;
-80074FF0	jal    $800319ec
+80074FF0	jal    $system_memory_allocate
 A1 = 0001;
 [8009bbcc] = w(V0);
 80075000	jal    func71614 [$80071614]
 S0 = 0140;
 80075008	lui    a0, $0001
-8007500C	jal    $800319ec
+8007500C	jal    $system_memory_allocate
 A1 = 0;
 A0 = c800;
 [8009bbe8] = w(V0);
-80075020	jal    $800319ec
+80075020	jal    $system_memory_allocate
 A1 = 0;
 A0 = SP + 0010;
 [8009bc78] = w(V0);
@@ -4623,7 +4582,7 @@ V0 = 00d8;
 [SP + 0014] = h(S0);
 800750D4	jal    $system_move_image
 [SP + 0016] = h(V0);
-800750DC	jal    $80044448
+800750DC	jal    $system_draw_sync
 A0 = 0;
 A0 = 0010;
 A1 = 0;
@@ -4642,7 +4601,7 @@ A1 = w[8009bbcc];
 8007511C	jal    $80032cd8
 80075120	nop
 A0 = w[8009c910];
-8007512C	jal    $80031f0c
+8007512C	jal    $system_memory_mark_removed_alloc
 80075130	nop
 A0 = SP + 0010;
 A1 = 0;
@@ -4654,9 +4613,9 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 80075154	jal    $system_move_image
 [SP + 0016] = h(V0);
-8007515C	jal    $80044448
+8007515C	jal    $system_draw_sync
 A0 = 0;
-80075164	jal    $80028870
+80075164	jal    $system_cdrom_action_sync
 A0 = 0;
 RA = w[SP + 001c];
 S0 = w[SP + 0018];
@@ -4670,31 +4629,32 @@ A0 = 0003;
 A1 = 0;
 [SP + 0020] = w(RA);
 [SP + 001c] = w(S1);
-80075194	jal    $800322bc
+80075194	jal    $system_memory_set_alloc_user
 [SP + 0018] = w(S0);
 A0 = 0024;
 800751A0	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = w[80058af8];
-800751B0	jal    $80031f0c
+800751B0	jal    $system_memory_mark_removed_alloc
 S0 = 0100;
 A0 = w[8009bbcc];
-800751C0	jal    $80031f0c
+800751C0	jal    $system_memory_mark_removed_alloc
 S1 = 0140;
 800751C8	jal    func721d8 [$800721d8]
 800751CC	nop
 A0 = w[8009b55c];
-800751D8	jal    $800286fc
+800751D8	jal    $system_get_aligned_filesize_by_dir_file_id
 800751DC	nop
 A0 = V0;
-800751E4	jal    $800319ec
+800751E4	jal    $system_memory_allocate
 A1 = 0001;
 A1 = V0;
 A2 = 0;
 A0 = w[8009b55c];
 [8009b108] = w(A1);
-80075204	jal    $800293e8
 A3 = 0;
+system_cdrom2_load_file_by_dir_file_id();
+
 A0 = 0010;
 A1 = 0080;
 80075214	addiu  a2, zero, $fff8 (=-$8)
@@ -4719,7 +4679,7 @@ V0 = w[8009b224];
 A0 = w[V0 + 0070];
 80075268	jal    $80044950
 A1 = 0400;
-80075270	jal    $80028870
+80075270	jal    $system_cdrom_action_sync
 A0 = 0;
 80075278	jal    func837f4 [$800837f4]
 8007527C	nop
@@ -4730,8 +4690,9 @@ V0 = 0180;
 V0 = 0080;
 [SP + 0012] = h(S0);
 [SP + 0014] = h(V0);
-800752A0	jal    $8004470c
 [SP + 0016] = h(S0);
+system_load_image();
+
 A0 = SP + 0010;
 A1 = w[8009bc78];
 V0 = 01b0;
@@ -4739,15 +4700,15 @@ V0 = 01b0;
 V0 = 0050;
 [SP + 0010] = h(0);
 [SP + 0014] = h(S1);
-800752C8	jal    $8004470c
+800752C8	jal    $system_load_image
 [SP + 0016] = h(V0);
-800752D0	jal    $80044448
+800752D0	jal    $system_draw_sync
 A0 = 0;
 A0 = w[8009bbe8];
-800752E0	jal    $80031f0c
+800752E0	jal    $system_memory_mark_removed_alloc
 800752E4	nop
 A0 = w[8009bc78];
-800752F0	jal    $80031f0c
+800752F0	jal    $system_memory_mark_removed_alloc
 800752F4	nop
 800752F8	jal    func96ce4 [$80096ce4]
 800752FC	nop
@@ -4758,11 +4719,11 @@ A0 = w[8009bc78];
 80075310	jal    func853c8 [$800853c8]
 80075314	nop
 A0 = 0130;
-8007531C	jal    $800334bc
+8007531C	jal    $func334bc
 A1 = 01e0;
-80075324	jal    $8004b3f4
+80075324	jal    $system_psyq_wait_frames
 A0 = 0;
-8007532C	jal    $80035c84
+8007532C	jal    $func35c84
 80075330	nop
 V0 = w[8009c534];
 [8009cbec] = w(0);
@@ -5125,27 +5086,33 @@ SP = SP + 0028;
 8007591C	jr     ra 
 80075920	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func75924
-80075924	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8007592C	jal    $80044448
+
 A0 = 0;
-80075934	jal    $8004b3f4
+system_draw_sync();
+
 A0 = 0;
-8007593C	jal    $8004034c
-80075940	nop
-80075944	jal    $80044448
+system_psyq_wait_frames();
+
+system_enter_critical_section();
+
 A0 = 0;
-8007594C	jal    $8004b3f4
+system_draw_sync();
+
 A0 = 0;
-80075954	jal    $800402cc
-80075958	nop
-8007595C	jal    $8004035c
-80075960	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8007596C	jr     ra 
-80075970	nop
+system_psyq_wait_frames();
+
+system_bios_flush_cache();
+
+system_exit_critical_section();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func75974:	; 80075974
 80075974	addiu  sp, sp, $ffd8 (=-$28)
@@ -5153,9 +5120,9 @@ SP = SP + 0018;
 S1 = w[80058b24];
 A0 = 0;
 [SP + 0020] = w(RA);
-8007598C	jal    $80044448
+8007598C	jal    $system_draw_sync
 [SP + 0018] = w(S0);
-80075994	jal    $8004b3f4
+80075994	jal    $system_psyq_wait_frames
 A0 = 0;
 V0 = w[8009cbd8];
 800759A4	nop
@@ -5181,9 +5148,9 @@ A0 = S0;
 800759F0	nop
 
 loop759f4:	; 800759F4
-800759F4	jal    $80044448
+800759F4	jal    $system_draw_sync
 A0 = 0;
-800759FC	jal    $8004b3f4
+800759FC	jal    $system_psyq_wait_frames
 A0 = 0;
 A0 = 0088;
 80075A08	jal    $8001f92c
@@ -5235,9 +5202,9 @@ V0 = V0 & 0800;
 80075B14	nop
 80075B18	jal    $80037d34
 80075B1C	nop
-80075B20	jal    $80044448
+80075B20	jal    $system_draw_sync
 A0 = 0;
-80075B28	jal    $8004b3f4
+80075B28	jal    $system_psyq_wait_frames
 A0 = 0;
 A0 = SP + 0010;
 A1 = 0;
@@ -5277,24 +5244,24 @@ SP = SP + 0028;
 S1 = A0;
 [SP + 0010] = w(S0);
 [SP + 0018] = w(RA);
-80075BD0	jal    $80039b6c
+80075BD0	jal    $system_sound_stop_all_channels_in_all_main
 S0 = A1;
 A0 = w[80061bb8];
 80075BE0	jal    $8003987c
 80075BE4	nop
-80075BE8	jal    $800286fc
+80075BE8	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0;
 S0 = 80061cd8;
 A0 = S0;
 A1 = S1;
-80075C00	jal    $8003f810
+80075C00	jal    $system_memcpy
 A2 = V0;
-80075C08	jal    $800396f8
+80075C08	jal    $system_sound_create_main_for_smd
 A0 = S0;
 A0 = V0;
 A1 = 007f;
 [80061bb8] = w(A0);
-80075C20	jal    $80039928
+80075C20	jal    $func39928
 A2 = 0;
 RA = w[SP + 0018];
 S1 = w[SP + 0014];
@@ -5374,10 +5341,10 @@ V0 = V0 + V1;
 S0 = w[8009b568];
 A1 = 0;
 [SP + 0014] = w(RA);
-80075D54	jal    $80032cac
+80075D54	jal    $func32cac
 A0 = S0;
 [8009b568] = w(V0);
-80075D64	jal    $80031f0c
+80075D64	jal    $system_memory_mark_removed_alloc
 A0 = S0;
 V1 = w[8009b568];
 80075D74	nop
@@ -5623,7 +5590,7 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80076118	nop
 A0 = A0 << 10;
-80076120	jal    $80039d08
+80076120	jal    $func39d08
 A0 = A0 | A1;
 RA = w[SP + 0010];
 V0 = 0002;
@@ -5988,7 +5955,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 8007662C	jal    $system_move_image
 [SP + 0016] = h(V0);
-80076634	jal    $80044448
+80076634	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -6034,7 +6001,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 800766FC	jal    func9742c [$8009742c]
 80076700	nop
-80076704	jal    $80028870
+80076704	jal    $system_cdrom_action_sync
 A0 = 0;
 V0 = 7702000;
 S0 = 8009b994;
@@ -6072,7 +6039,7 @@ A0 = S0;
 loop7679c:	; 8007679C
 8007679C	jal    func95bcc [$80095bcc]
 800767A0	nop
-800767A4	jal    $8004b3f4
+800767A4	jal    $system_psyq_wait_frames
 A0 = 0;
 800767AC	jal    func95a50 [$80095a50]
 800767B0	nop
@@ -6136,19 +6103,19 @@ SP = SP + 0020;
 800768B0	jal    func9714c [$8009714c]
 800768B4	nop
 A0 = w[8009b020];
-800768C0	jal    $80031f0c
+800768C0	jal    $system_memory_mark_removed_alloc
 800768C4	nop
 A0 = w[8009b098];
-800768D0	jal    $80031f0c
+800768D0	jal    $system_memory_mark_removed_alloc
 800768D4	nop
 A0 = w[8009b024];
-800768E0	jal    $80031f0c
+800768E0	jal    $system_memory_mark_removed_alloc
 800768E4	nop
 A0 = w[8009b09c];
-800768F0	jal    $80031f0c
+800768F0	jal    $system_memory_mark_removed_alloc
 800768F4	nop
 A0 = w[8009b568];
-80076900	jal    $80031f0c
+80076900	jal    $system_memory_mark_removed_alloc
 80076904	nop
 80076908	jal    func96a88 [$80096a88]
 8007690C	nop
@@ -6480,7 +6447,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 80076E7C	jal    $system_move_image
 [SP + 0016] = h(V0);
-80076E84	jal    $80044448
+80076E84	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -6526,7 +6493,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 80076F4C	jal    func9742c [$8009742c]
 80076F50	nop
-80076F54	jal    $80028870
+80076F54	jal    $system_cdrom_action_sync
 A0 = 0;
 80076F5C	jal    func7180c [$8007180c]
 80076F60	nop
@@ -6553,12 +6520,13 @@ S0 = 8009b994;
 80076FC0	jal    func72fe0 [$80072fe0]
 80076FC4	nop
 80076FC8	jal    func8834c [$8008834c]
-80076FCC	nop
-80076FD0	jal    $80028870
+
 A0 = 0;
+system_cdrom_action_sync();
+
 A0 = w[80061c2c];
-80076FE0	jal    $800382d0
-80076FE4	nop
+system_sound_insert_sed_to_linked_array();
+
 A0 = 0024;
 80076FEC	jal    $system_cdrom2_set_dir
 A1 = 0;
@@ -6568,7 +6536,7 @@ A0 = S0;
 loop76ffc:	; 80076FFC
 80076FFC	jal    func95bcc [$80095bcc]
 80077000	nop
-80077004	jal    $8004b3f4
+80077004	jal    $system_psyq_wait_frames
 A0 = 0;
 8007700C	jal    func95a50 [$80095a50]
 80077010	nop
@@ -6602,17 +6570,20 @@ SP = SP + 0020;
 800770A0	jr     ra 
 800770A4	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func770a8
-800770A8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800770B0	jal    $80039ea0
-800770B4	nop
+
+system_sound_stop_all_channels_in_current_main
+
 A0 = w[80061c2c];
-800770C0	jal    $system_sound_remove_sed_from_linked_array
-800770C4	nop
+system_sound_remove_sed_from_linked_array();
+
 A0 = w[80061c2c];
-800770D0	jal    $80031f0c
-800770D4	nop
+system_memory_mark_removed_alloc();
+
 800770D8	jal    func83c00 [$80083c00]
 800770DC	nop
 800770E0	jal    func85950 [$80085950]
@@ -6630,20 +6601,20 @@ A0 = w[80061c2c];
 80077110	jal    func9714c [$8009714c]
 80077114	nop
 A0 = w[8009b020];
-80077120	jal    $80031f0c
-80077124	nop
+system_memory_mark_removed_alloc();
+
 A0 = w[8009b098];
-80077130	jal    $80031f0c
-80077134	nop
+system_memory_mark_removed_alloc();
+
 A0 = w[8009b024];
-80077140	jal    $80031f0c
-80077144	nop
+system_memory_mark_removed_alloc();
+
 A0 = w[8009b09c];
-80077150	jal    $80031f0c
-80077154	nop
+system_memory_mark_removed_alloc();
+
 A0 = w[8009b568];
-80077160	jal    $80031f0c
-80077164	nop
+system_memory_mark_removed_alloc();
+
 80077168	jal    func96a88 [$80096a88]
 8007716C	nop
 V1 = hu[8009b122];
@@ -6653,10 +6624,10 @@ V0 = 0001;
 [8006efe4] = h(0);
 [8009afac] = w(V0);
 [8006efe0] = h(V1);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800771A8	jr     ra 
-800771AC	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func771b0
 800771B0	addiu  sp, sp, $ffe8 (=-$18)
@@ -6681,7 +6652,7 @@ A0 = hu[V0 + 0014];
 V0 = 0001;
 [8009c52c] = w(V0);
 A0 = A0 << 10;
-80077228	jal    $80039d08
+80077228	jal    $func39d08
 A0 = A0 | 00a4;
 V0 = 0018;
 [S0 + 0022] = h(V0);
@@ -7418,7 +7389,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 80077E78	jal    $system_move_image
 [SP + 0016] = h(V0);
-80077E80	jal    $80044448
+80077E80	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -7464,7 +7435,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 80077F48	jal    func9742c [$8009742c]
 80077F4C	nop
-80077F50	jal    $80028870
+80077F50	jal    $system_cdrom_action_sync
 A0 = 0;
 80077F58	jal    func7180c [$8007180c]
 80077F5C	nop
@@ -7492,10 +7463,10 @@ S0 = 8009b994;
 80077FC0	nop
 80077FC4	jal    func8834c [$8008834c]
 80077FC8	nop
-80077FCC	jal    $80028870
+80077FCC	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[80061c2c];
-80077FDC	jal    $800382d0
+80077FDC	jal    $system_sound_insert_sed_to_linked_array
 80077FE0	nop
 A0 = 0024;
 80077FE8	jal    $system_cdrom2_set_dir
@@ -7506,7 +7477,7 @@ A0 = S0;
 loop77ff8:	; 80077FF8
 80077FF8	jal    func95bcc [$80095bcc]
 80077FFC	nop
-80078000	jal    $8004b3f4
+80078000	jal    $system_psyq_wait_frames
 A0 = 0;
 80078008	jal    func95a50 [$80095a50]
 8007800C	nop
@@ -7561,13 +7532,13 @@ SP = SP + 0020;
 // func7810c
 8007810C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80078114	jal    $80039ea0
+80078114	jal    $system_sound_stop_all_channels_in_current_main
 80078118	nop
 A0 = w[80061c2c];
 80078124	jal    $system_sound_remove_sed_from_linked_array
 80078128	nop
 A0 = w[80061c2c];
-80078134	jal    $80031f0c
+80078134	jal    $system_memory_mark_removed_alloc
 80078138	nop
 8007813C	jal    func83c00 [$80083c00]
 80078140	nop
@@ -7586,19 +7557,19 @@ A0 = w[80061c2c];
 80078174	jal    func9714c [$8009714c]
 80078178	nop
 A0 = w[8009b020];
-80078184	jal    $80031f0c
+80078184	jal    $system_memory_mark_removed_alloc
 80078188	nop
 A0 = w[8009b098];
-80078194	jal    $80031f0c
+80078194	jal    $system_memory_mark_removed_alloc
 80078198	nop
 A0 = w[8009b024];
-800781A4	jal    $80031f0c
+800781A4	jal    $system_memory_mark_removed_alloc
 800781A8	nop
 A0 = w[8009b09c];
-800781B4	jal    $80031f0c
+800781B4	jal    $system_memory_mark_removed_alloc
 800781B8	nop
 A0 = w[8009b568];
-800781C4	jal    $80031f0c
+800781C4	jal    $system_memory_mark_removed_alloc
 800781C8	nop
 800781CC	jal    func96a88 [$80096a88]
 800781D0	nop
@@ -7681,14 +7652,14 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007832C	nop
 A0 = A0 << 10;
-80078334	jal    $80039d08
+80078334	jal    $func39d08
 A0 = A0 | 0062;
 V0 = w[80061c2c];
 80078344	nop
 A0 = hu[V0 + 0014];
 8007834C	nop
 A0 = A0 << 10;
-80078354	jal    $80039d08
+80078354	jal    $func39d08
 A0 = A0 | 0063;
 8007835C	j      L7885c [$8007885c]
 80078360	nop
@@ -7803,7 +7774,7 @@ V0 = V0 + 0001;
 A0 = hu[V1 + 0014];
 80078548	nop
 A0 = A0 << 10;
-80078550	jal    $80039d08
+80078550	jal    $func39d08
 A0 = A0 | 0079;
 V0 = w[80061c2c];
 A1 = 0;
@@ -8160,7 +8131,7 @@ A0 = w[80061c2c];
 A0 = hu[A0 + 0014];
 80078B38	nop
 A0 = A0 << 10;
-80078B40	jal    $80039d08
+80078B40	jal    $func39d08
 A0 = A0 | 0036;
 V0 = 0001;
 RA = w[SP + 0014];
@@ -8236,7 +8207,7 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80078C6C	nop
 A0 = A0 << 10;
-80078C74	jal    $80039d08
+80078C74	jal    $func39d08
 A0 = A0 | 0071;
 V0 = 0020;
 80078C80	j      L78f58 [$80078f58]
@@ -8309,7 +8280,7 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80078D90	nop
 A0 = A0 << 10;
-80078D98	jal    $80039d08
+80078D98	jal    $func39d08
 A0 = A0 | 0071;
 80078DA0	j      L78f58 [$80078f58]
 80078DA4	nop
@@ -8780,7 +8751,7 @@ A2 = S2 << 02;
 A2 = A2 + S2;
 A0 = w[S4 + 004c];
 A1 = w[S4 + 0048];
-800794FC	jal    $8003f810
+800794FC	jal    $system_memcpy
 A2 = A2 << 03;
 RA = w[SP + 0030];
 S5 = w[SP + 002c];
@@ -9101,7 +9072,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 800799F4	jal    $system_move_image
 [SP + 0016] = h(V0);
-800799FC	jal    $80044448
+800799FC	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -9147,7 +9118,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 80079AC4	jal    func9742c [$8009742c]
 80079AC8	nop
-80079ACC	jal    $80028870
+80079ACC	jal    $system_cdrom_action_sync
 A0 = 0;
 80079AD4	jal    func7180c [$8007180c]
 80079AD8	nop
@@ -9176,10 +9147,10 @@ S0 = 8009b994;
 80079B48	nop
 80079B4C	jal    func8834c [$8008834c]
 80079B50	nop
-80079B54	jal    $80028870
+80079B54	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[80061c2c];
-80079B64	jal    $800382d0
+80079B64	jal    $system_sound_insert_sed_to_linked_array
 80079B68	nop
 A0 = 0024;
 80079B70	jal    $system_cdrom2_set_dir
@@ -9190,7 +9161,7 @@ A0 = S0;
 loop79b80:	; 80079B80
 80079B80	jal    func95bcc [$80095bcc]
 80079B84	nop
-80079B88	jal    $8004b3f4
+80079B88	jal    $system_psyq_wait_frames
 A0 = 0;
 80079B90	jal    func95a50 [$80095a50]
 80079B94	nop
@@ -9245,13 +9216,13 @@ SP = SP + 0020;
 // func79c94
 80079C94	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80079C9C	jal    $80039ea0
+80079C9C	jal    $system_sound_stop_all_channels_in_current_main
 80079CA0	nop
 A0 = w[80061c2c];
 80079CAC	jal    $system_sound_remove_sed_from_linked_array
 80079CB0	nop
 A0 = w[80061c2c];
-80079CBC	jal    $80031f0c
+80079CBC	jal    $system_memory_mark_removed_alloc
 80079CC0	nop
 80079CC4	jal    func83c00 [$80083c00]
 80079CC8	nop
@@ -9270,19 +9241,19 @@ A0 = w[80061c2c];
 80079CFC	jal    func9714c [$8009714c]
 80079D00	nop
 A0 = w[8009b020];
-80079D0C	jal    $80031f0c
+80079D0C	jal    $system_memory_mark_removed_alloc
 80079D10	nop
 A0 = w[8009b098];
-80079D1C	jal    $80031f0c
+80079D1C	jal    $system_memory_mark_removed_alloc
 80079D20	nop
 A0 = w[8009b024];
-80079D2C	jal    $80031f0c
+80079D2C	jal    $system_memory_mark_removed_alloc
 80079D30	nop
 A0 = w[8009b09c];
-80079D3C	jal    $80031f0c
+80079D3C	jal    $system_memory_mark_removed_alloc
 80079D40	nop
 A0 = w[8009b568];
-80079D4C	jal    $80031f0c
+80079D4C	jal    $system_memory_mark_removed_alloc
 80079D50	nop
 80079D54	jal    func96a88 [$80096a88]
 80079D58	nop
@@ -9367,7 +9338,7 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 80079EA8	nop
 A0 = A0 << 10;
-80079EB0	jal    $80039d08
+80079EB0	jal    $func39d08
 A0 = A0 | 0001;
 80079EB8	j      L7a108 [$8007a108]
 V0 = 0001;
@@ -9389,21 +9360,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80079F04	nop
 A0 = A0 << 10;
-80079F0C	jal    $80039d08
+80079F0C	jal    $func39d08
 A0 = A0 | 0004;
 V0 = w[80061c2c];
 80079F1C	nop
 A0 = hu[V0 + 0014];
 80079F24	nop
 A0 = A0 << 10;
-80079F2C	jal    $80039d08
+80079F2C	jal    $func39d08
 A0 = A0 | 0005;
 V0 = w[80061c2c];
 80079F3C	nop
 A0 = hu[V0 + 0014];
 80079F44	nop
 A0 = A0 << 10;
-80079F4C	jal    $80039d08
+80079F4C	jal    $func39d08
 A0 = A0 | 0006;
 80079F54	j      L7a108 [$8007a108]
 V0 = 0001;
@@ -9430,21 +9401,21 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 80079FB4	nop
 A0 = A0 << 10;
-80079FBC	jal    $80039d08
+80079FBC	jal    $func39d08
 A0 = A0 | 0007;
 V0 = w[80061c2c];
 80079FCC	nop
 A0 = hu[V0 + 0014];
 80079FD4	nop
 A0 = A0 << 10;
-80079FDC	jal    $80039d08
+80079FDC	jal    $func39d08
 A0 = A0 | 0008;
 V0 = w[80061c2c];
 80079FEC	nop
 A0 = hu[V0 + 0014];
 80079FF4	nop
 A0 = A0 << 10;
-80079FFC	jal    $80039d08
+80079FFC	jal    $func39d08
 A0 = A0 | 0009;
 8007A004	j      L7a108 [$8007a108]
 V0 = 0001;
@@ -9457,7 +9428,7 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 8007A02C	nop
 A0 = A0 << 10;
-8007A034	jal    $80039d08
+8007A034	jal    $func39d08
 A0 = A0 | 000a;
 V0 = w[80061c2c];
 8007A044	nop
@@ -10665,7 +10636,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 8007B368	jal    $system_move_image
 [SP + 0016] = h(V0);
-8007B370	jal    $80044448
+8007B370	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -10711,7 +10682,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 8007B438	jal    func9742c [$8009742c]
 8007B43C	nop
-8007B440	jal    $80028870
+8007B440	jal    $system_cdrom_action_sync
 A0 = 0;
 8007B448	jal    func7180c [$8007180c]
 8007B44C	nop
@@ -10740,10 +10711,10 @@ S0 = 8009b994;
 8007B4B4	nop
 8007B4B8	jal    func8834c [$8008834c]
 8007B4BC	nop
-8007B4C0	jal    $80028870
+8007B4C0	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[80061c2c];
-8007B4D0	jal    $800382d0
+8007B4D0	jal    $system_sound_insert_sed_to_linked_array
 8007B4D4	nop
 A0 = 0024;
 8007B4DC	jal    $system_cdrom2_set_dir
@@ -10754,7 +10725,7 @@ A0 = S0;
 loop7b4ec:	; 8007B4EC
 8007B4EC	jal    func95bcc [$80095bcc]
 8007B4F0	nop
-8007B4F4	jal    $8004b3f4
+8007B4F4	jal    $system_psyq_wait_frames
 A0 = 0;
 8007B4FC	jal    func95a50 [$80095a50]
 8007B500	nop
@@ -10821,13 +10792,13 @@ SP = SP + 0020;
 // func7b648
 8007B648	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8007B650	jal    $80039ea0
+8007B650	jal    $system_sound_stop_all_channels_in_current_main
 8007B654	nop
 A0 = w[80061c2c];
 8007B660	jal    $system_sound_remove_sed_from_linked_array
 8007B664	nop
 A0 = w[80061c2c];
-8007B670	jal    $80031f0c
+8007B670	jal    $system_memory_mark_removed_alloc
 8007B674	nop
 8007B678	jal    func83c00 [$80083c00]
 8007B67C	nop
@@ -10846,19 +10817,19 @@ A0 = w[80061c2c];
 8007B6B0	jal    func9714c [$8009714c]
 8007B6B4	nop
 A0 = w[8009b020];
-8007B6C0	jal    $80031f0c
+8007B6C0	jal    $system_memory_mark_removed_alloc
 8007B6C4	nop
 A0 = w[8009b098];
-8007B6D0	jal    $80031f0c
+8007B6D0	jal    $system_memory_mark_removed_alloc
 8007B6D4	nop
 A0 = w[8009b024];
-8007B6E0	jal    $80031f0c
+8007B6E0	jal    $system_memory_mark_removed_alloc
 8007B6E4	nop
 A0 = w[8009b09c];
-8007B6F0	jal    $80031f0c
+8007B6F0	jal    $system_memory_mark_removed_alloc
 8007B6F4	nop
 A0 = w[8009b568];
-8007B700	jal    $80031f0c
+8007B700	jal    $system_memory_mark_removed_alloc
 8007B704	nop
 8007B708	jal    func96a88 [$80096a88]
 8007B70C	nop
@@ -10946,21 +10917,21 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 8007B868	nop
 A0 = A0 << 10;
-8007B870	jal    $80039d08
+8007B870	jal    $func39d08
 A0 = A0 | 000d;
 V0 = w[80061c2c];
 8007B880	nop
 A0 = hu[V0 + 0014];
 8007B888	nop
 A0 = A0 << 10;
-8007B890	jal    $80039d08
+8007B890	jal    $func39d08
 A0 = A0 | 000e;
 V0 = w[80061c2c];
 8007B8A0	nop
 A0 = hu[V0 + 0014];
 8007B8A8	nop
 A0 = A0 << 10;
-8007B8B0	jal    $80039d08
+8007B8B0	jal    $func39d08
 A0 = A0 | 000f;
 8007B8B8	j      L7baf8 [$8007baf8]
 V0 = 0001;
@@ -10980,21 +10951,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007B904	nop
 A0 = A0 << 10;
-8007B90C	jal    $80039d08
+8007B90C	jal    $func39d08
 A0 = A0 | 0010;
 V0 = w[80061c2c];
 8007B91C	nop
 A0 = hu[V0 + 0014];
 8007B924	nop
 A0 = A0 << 10;
-8007B92C	jal    $80039d08
+8007B92C	jal    $func39d08
 A0 = A0 | 0011;
 V0 = w[80061c2c];
 8007B93C	nop
 A0 = hu[V0 + 0014];
 8007B944	nop
 A0 = A0 << 10;
-8007B94C	jal    $80039d08
+8007B94C	jal    $func39d08
 A0 = A0 | 0012;
 8007B954	j      L7baf0 [$8007baf0]
 V0 = 0001;
@@ -11013,21 +10984,21 @@ A0 = hu[V1 + 0014];
 V0 = 0040;
 [8009c7b4] = w(V0);
 A0 = A0 << 10;
-8007B9A4	jal    $80039d08
+8007B9A4	jal    $func39d08
 A0 = A0 | 0013;
 V0 = w[80061c2c];
 8007B9B4	nop
 A0 = hu[V0 + 0014];
 8007B9BC	nop
 A0 = A0 << 10;
-8007B9C4	jal    $80039d08
+8007B9C4	jal    $func39d08
 A0 = A0 | 0014;
 V0 = w[80061c2c];
 8007B9D4	nop
 A0 = hu[V0 + 0014];
 8007B9DC	nop
 A0 = A0 << 10;
-8007B9E4	jal    $80039d08
+8007B9E4	jal    $func39d08
 A0 = A0 | 0015;
 8007B9EC	j      L7baf8 [$8007baf8]
 V0 = 0001;
@@ -12258,7 +12229,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 8007CD34	jal    $system_move_image
 [SP + 0016] = h(V0);
-8007CD3C	jal    $80044448
+8007CD3C	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -12304,7 +12275,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 8007CE04	jal    func9742c [$8009742c]
 8007CE08	nop
-8007CE0C	jal    $80028870
+8007CE0C	jal    $system_cdrom_action_sync
 A0 = 0;
 8007CE14	jal    $8001b500
 8007CE18	nop
@@ -12349,7 +12320,7 @@ V0 = V0 << 0c;
 8007CEC4	nop
 8007CEC8	jal    func8834c [$8008834c]
 8007CECC	nop
-8007CED0	jal    $80028870
+8007CED0	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[8009bc74];
 8007CEE0	jal    $80037e80
@@ -12364,7 +12335,7 @@ A0 = S0;
 loop7cf04:	; 8007CF04
 8007CF04	jal    func95bcc [$80095bcc]
 8007CF08	nop
-8007CF0C	jal    $8004b3f4
+8007CF0C	jal    $system_psyq_wait_frames
 A0 = 0;
 8007CF14	jal    func95a50 [$80095a50]
 8007CF18	nop
@@ -12382,26 +12353,26 @@ loop7cf3c:	; 8007CF3C
 
 L7cf44:	; 8007CF44
 A0 = w[8009bc74];
-8007CF4C	jal    $80031f0c
+8007CF4C	jal    $system_memory_mark_removed_alloc
 8007CF50	nop
 A0 = w[80061c2c];
-8007CF5C	jal    $800382d0
+8007CF5C	jal    $system_sound_insert_sed_to_linked_array
 8007CF60	nop
 A0 = w[8009c7b8];
 S1 = w[8009bc6c];
-8007CF74	jal    $800286fc
+8007CF74	jal    $system_get_aligned_filesize_by_dir_file_id
 8007CF78	nop
 S0 = 80061cd8;
 A0 = S0;
 A1 = S1;
-8007CF8C	jal    $8003f810
+8007CF8C	jal    $system_memcpy
 A2 = V0;
-8007CF94	jal    $800396f8
+8007CF94	jal    $system_sound_create_main_for_smd
 A0 = S0;
 A0 = V0;
 A1 = 007f;
 [80061bb8] = w(A0);
-8007CFAC	jal    $80039928
+8007CFAC	jal    $func39928
 A2 = 0;
 A0 = 80091790;
 A1 = 80091988;
@@ -12466,13 +12437,13 @@ A0 = w[80061bb8];
 [SP + 0010] = w(RA);
 8007D0DC	jal    $8003a744
 A2 = 00f0;
-8007D0E4	jal    $80039ea0
+8007D0E4	jal    $system_sound_stop_all_channels_in_current_main
 8007D0E8	nop
 A0 = w[80061c2c];
 8007D0F4	jal    $system_sound_remove_sed_from_linked_array
 8007D0F8	nop
 A0 = w[80061c2c];
-8007D104	jal    $80031f0c
+8007D104	jal    $system_memory_mark_removed_alloc
 8007D108	nop
 8007D10C	jal    func83c00 [$80083c00]
 8007D110	nop
@@ -12491,19 +12462,19 @@ A0 = w[80061c2c];
 8007D144	jal    func9714c [$8009714c]
 8007D148	nop
 A0 = w[8009b020];
-8007D154	jal    $80031f0c
+8007D154	jal    $system_memory_mark_removed_alloc
 8007D158	nop
 A0 = w[8009b098];
-8007D164	jal    $80031f0c
+8007D164	jal    $system_memory_mark_removed_alloc
 8007D168	nop
 A0 = w[8009b024];
-8007D174	jal    $80031f0c
+8007D174	jal    $system_memory_mark_removed_alloc
 8007D178	nop
 A0 = w[8009b09c];
-8007D184	jal    $80031f0c
+8007D184	jal    $system_memory_mark_removed_alloc
 8007D188	nop
 A0 = w[8009b568];
-8007D194	jal    $80031f0c
+8007D194	jal    $system_memory_mark_removed_alloc
 8007D198	nop
 8007D19C	jal    func96a88 [$80096a88]
 8007D1A0	nop
@@ -12608,21 +12579,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007D334	nop
 A0 = A0 << 10;
-8007D33C	jal    $80039d08
+8007D33C	jal    $func39d08
 A0 = A0 | 001c;
 V0 = w[80061c2c];
 8007D34C	nop
 A0 = hu[V0 + 0014];
 8007D354	nop
 A0 = A0 << 10;
-8007D35C	jal    $80039d08
+8007D35C	jal    $func39d08
 A0 = A0 | 001d;
 V0 = w[80061c2c];
 8007D36C	nop
 A0 = hu[V0 + 0014];
 8007D374	nop
 A0 = A0 << 10;
-8007D37C	jal    $80039d08
+8007D37C	jal    $func39d08
 A0 = A0 | 001e;
 A0 = 0002;
 8007D388	jal    func96b58 [$80096b58]
@@ -12835,7 +12806,7 @@ A0 = hu[V1 + 0014];
 AT = AT + V0;
 V0 = hu[AT + 9988];
 A0 = A0 << 10;
-8007D6EC	jal    $80039d08
+8007D6EC	jal    $func39d08
 A0 = A0 | V0;
 V1 = w[8009c7bc];
 8007D6FC	nop
@@ -12848,7 +12819,7 @@ A0 = hu[V1 + 0014];
 AT = AT + V0;
 V0 = hu[AT + 998a];
 A0 = A0 << 10;
-8007D728	jal    $80039d08
+8007D728	jal    $func39d08
 A0 = A0 | V0;
 V1 = w[8009c7bc];
 8007D738	nop
@@ -12861,7 +12832,7 @@ A0 = hu[V1 + 0014];
 AT = AT + V0;
 V0 = hu[AT + 998c];
 A0 = A0 << 10;
-8007D764	jal    $80039d08
+8007D764	jal    $func39d08
 A0 = A0 | V0;
 8007D76C	j      L7d804 [$8007d804]
 V0 = 0001;
@@ -12870,21 +12841,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007D784	nop
 A0 = A0 << 10;
-8007D78C	jal    $80039d08
+8007D78C	jal    $func39d08
 A0 = A0 | 0019;
 V0 = w[80061c2c];
 8007D79C	nop
 A0 = hu[V0 + 0014];
 8007D7A4	nop
 A0 = A0 << 10;
-8007D7AC	jal    $80039d08
+8007D7AC	jal    $func39d08
 A0 = A0 | 001a;
 V0 = w[80061c2c];
 8007D7BC	nop
 A0 = hu[V0 + 0014];
 8007D7C4	nop
 A0 = A0 << 10;
-8007D7CC	jal    $80039d08
+8007D7CC	jal    $func39d08
 A0 = A0 | 001b;
 8007D7D4	j      L7d804 [$8007d804]
 V0 = 0001;
@@ -13377,7 +13348,7 @@ A2 = S2 << 02;
 A2 = A2 + S2;
 A0 = w[S5 + 004c];
 A1 = w[S5 + 0048];
-8007E058	jal    $8003f810
+8007E058	jal    $system_memcpy
 A2 = A2 << 03;
 RA = w[SP + 0034];
 S6 = w[SP + 0030];
@@ -14618,7 +14589,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 8007F388	jal    $system_move_image
 [SP + 0016] = h(V0);
-8007F390	jal    $80044448
+8007F390	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -14664,7 +14635,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 8007F458	jal    func9742c [$8009742c]
 8007F45C	nop
-8007F460	jal    $80028870
+8007F460	jal    $system_cdrom_action_sync
 A0 = 0;
 8007F468	jal    func7180c [$8007180c]
 8007F46C	nop
@@ -14695,10 +14666,10 @@ S0 = 8009b994;
 8007F4DC	nop
 8007F4E0	jal    func8834c [$8008834c]
 8007F4E4	nop
-8007F4E8	jal    $80028870
+8007F4E8	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[80061c2c];
-8007F4F8	jal    $800382d0
+8007F4F8	jal    $system_sound_insert_sed_to_linked_array
 8007F4FC	nop
 A0 = 0024;
 8007F504	jal    $system_cdrom2_set_dir
@@ -14709,7 +14680,7 @@ A0 = S0;
 loop7f514:	; 8007F514
 8007F514	jal    func95bcc [$80095bcc]
 8007F518	nop
-8007F51C	jal    $8004b3f4
+8007F51C	jal    $system_psyq_wait_frames
 A0 = 0;
 8007F524	jal    func95a50 [$80095a50]
 8007F528	nop
@@ -14758,13 +14729,13 @@ SP = SP + 0020;
 // func7f600
 8007F600	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8007F608	jal    $80039ea0
+8007F608	jal    $system_sound_stop_all_channels_in_current_main
 8007F60C	nop
 A0 = w[80061c2c];
 8007F618	jal    $system_sound_remove_sed_from_linked_array
 8007F61C	nop
 A0 = w[80061c2c];
-8007F628	jal    $80031f0c
+8007F628	jal    $system_memory_mark_removed_alloc
 8007F62C	nop
 8007F630	jal    func83c00 [$80083c00]
 8007F634	nop
@@ -14785,19 +14756,19 @@ A0 = w[80061c2c];
 8007F670	jal    func9714c [$8009714c]
 8007F674	nop
 A0 = w[8009b020];
-8007F680	jal    $80031f0c
+8007F680	jal    $system_memory_mark_removed_alloc
 8007F684	nop
 A0 = w[8009b098];
-8007F690	jal    $80031f0c
+8007F690	jal    $system_memory_mark_removed_alloc
 8007F694	nop
 A0 = w[8009b024];
-8007F6A0	jal    $80031f0c
+8007F6A0	jal    $system_memory_mark_removed_alloc
 8007F6A4	nop
 A0 = w[8009b09c];
-8007F6B0	jal    $80031f0c
+8007F6B0	jal    $system_memory_mark_removed_alloc
 8007F6B4	nop
 A0 = w[8009b568];
-8007F6C0	jal    $80031f0c
+8007F6C0	jal    $system_memory_mark_removed_alloc
 8007F6C4	nop
 8007F6C8	jal    func96a88 [$80096a88]
 8007F6CC	nop
@@ -14923,21 +14894,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007F8D8	nop
 A0 = A0 << 10;
-8007F8E0	jal    $80039d08
+8007F8E0	jal    $func39d08
 A0 = A0 | 0016;
 V0 = w[80061c2c];
 8007F8F0	nop
 A0 = hu[V0 + 0014];
 8007F8F8	nop
 A0 = A0 << 10;
-8007F900	jal    $80039d08
+8007F900	jal    $func39d08
 A0 = A0 | 0017;
 V0 = w[80061c2c];
 8007F910	nop
 A0 = hu[V0 + 0014];
 8007F918	nop
 A0 = A0 << 10;
-8007F920	jal    $80039d08
+8007F920	jal    $func39d08
 A0 = A0 | 0018;
 V0 = 0001;
 
@@ -15464,7 +15435,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 8008011C	jal    $system_move_image
 [SP + 0016] = h(V0);
-80080124	jal    $80044448
+80080124	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -15510,7 +15481,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 800801EC	jal    func9742c [$8009742c]
 800801F0	nop
-800801F4	jal    $80028870
+800801F4	jal    $system_cdrom_action_sync
 A0 = 0;
 800801FC	jal    $8001b500
 80080200	nop
@@ -15540,7 +15511,7 @@ S0 = 8009b994;
 8008026C	nop
 80080270	jal    func8834c [$8008834c]
 80080274	nop
-80080278	jal    $80028870
+80080278	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[8009bc74];
 80080288	jal    $80037e80
@@ -15555,7 +15526,7 @@ A0 = S0;
 loop802ac:	; 800802AC
 800802AC	jal    func95bcc [$80095bcc]
 800802B0	nop
-800802B4	jal    $8004b3f4
+800802B4	jal    $system_psyq_wait_frames
 A0 = 0;
 800802BC	jal    func95a50 [$80095a50]
 800802C0	nop
@@ -15573,26 +15544,26 @@ loop802e4:	; 800802E4
 
 L802ec:	; 800802EC
 A0 = w[8009bc74];
-800802F4	jal    $80031f0c
+800802F4	jal    $system_memory_mark_removed_alloc
 800802F8	nop
 A0 = w[80061c2c];
-80080304	jal    $800382d0
+80080304	jal    $system_sound_insert_sed_to_linked_array
 80080308	nop
 A0 = w[8009c7b8];
 S1 = w[8009bc6c];
-8008031C	jal    $800286fc
+8008031C	jal    $system_get_aligned_filesize_by_dir_file_id
 80080320	nop
 S0 = 80061cd8;
 A0 = S0;
 A1 = S1;
-80080334	jal    $8003f810
+80080334	jal    $system_memcpy
 A2 = V0;
-8008033C	jal    $800396f8
+8008033C	jal    $system_sound_create_main_for_smd
 A0 = S0;
 A0 = V0;
 A1 = 007f;
 [80061bb8] = w(A0);
-80080354	jal    $80039928
+80080354	jal    $func39928
 A2 = 0;
 A0 = 80091790;
 A1 = 80091988;
@@ -15644,13 +15615,13 @@ SP = SP + 0028;
 // func80454
 80080454	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008045C	jal    $80039ea0
+8008045C	jal    $system_sound_stop_all_channels_in_current_main
 80080460	nop
 A0 = w[80061c2c];
 8008046C	jal    $system_sound_remove_sed_from_linked_array
 80080470	nop
 A0 = w[80061c2c];
-8008047C	jal    $80031f0c
+8008047C	jal    $system_memory_mark_removed_alloc
 80080480	nop
 80080484	jal    func83c00 [$80083c00]
 80080488	nop
@@ -15669,19 +15640,19 @@ A0 = w[80061c2c];
 800804BC	jal    func9714c [$8009714c]
 800804C0	nop
 A0 = w[8009b020];
-800804CC	jal    $80031f0c
+800804CC	jal    $system_memory_mark_removed_alloc
 800804D0	nop
 A0 = w[8009b098];
-800804DC	jal    $80031f0c
+800804DC	jal    $system_memory_mark_removed_alloc
 800804E0	nop
 A0 = w[8009b024];
-800804EC	jal    $80031f0c
+800804EC	jal    $system_memory_mark_removed_alloc
 800804F0	nop
 A0 = w[8009b09c];
-800804FC	jal    $80031f0c
+800804FC	jal    $system_memory_mark_removed_alloc
 80080500	nop
 A0 = w[8009b568];
-8008050C	jal    $80031f0c
+8008050C	jal    $system_memory_mark_removed_alloc
 80080510	nop
 80080514	jal    func96a88 [$80096a88]
 80080518	nop
@@ -15793,21 +15764,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 800806D4	nop
 A0 = A0 << 10;
-800806DC	jal    $80039d08
+800806DC	jal    $func39d08
 A0 = A0 | 002e;
 V0 = w[80061c2c];
 800806EC	nop
 A0 = hu[V0 + 0014];
 800806F4	nop
 A0 = A0 << 10;
-800806FC	jal    $80039d08
+800806FC	jal    $func39d08
 A0 = A0 | 002f;
 V0 = w[80061c2c];
 8008070C	nop
 A0 = hu[V0 + 0014];
 80080714	nop
 A0 = A0 << 10;
-8008071C	jal    $80039d08
+8008071C	jal    $func39d08
 A0 = A0 | 0030;
 80080724	j      L8079c [$8008079c]
 V0 = 0001;
@@ -16077,7 +16048,7 @@ A2 = S2 << 02;
 A2 = A2 + S2;
 A0 = w[S4 + 004c];
 A1 = w[S4 + 0048];
-80080B54	jal    $8003f810
+80080B54	jal    $system_memcpy
 A2 = A2 << 03;
 RA = w[SP + 0034];
 S6 = w[SP + 0030];
@@ -16395,16 +16366,16 @@ A1 = 0;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-80081044	jal    $800319ec
+80081044	jal    $system_memory_allocate
 [SP + 0010] = w(S0);
 A0 = 1e00;
 A1 = 0;
 S0 = 8009c540;
-8008105C	jal    $800319ec
+8008105C	jal    $system_memory_allocate
 [S0 + 0000] = w(V0);
 A0 = 0180;
 [8009c544] = w(V0);
-80081070	jal    $800319ec
+80081070	jal    $system_memory_allocate
 A1 = 0;
 S1 = 0;
 S4 = 0009;
@@ -16880,7 +16851,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 80081740	jal    $system_move_image
 [SP + 0016] = h(V0);
-80081748	jal    $80044448
+80081748	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -16926,7 +16897,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 80081810	jal    func9742c [$8009742c]
 80081814	nop
-80081818	jal    $80028870
+80081818	jal    $system_cdrom_action_sync
 A0 = 0;
 80081820	jal    $8001b500
 80081824	nop
@@ -16959,7 +16930,7 @@ S0 = 8009b994;
 800818A8	nop
 800818AC	jal    func8834c [$8008834c]
 800818B0	nop
-800818B4	jal    $80028870
+800818B4	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[8009bc74];
 800818C4	jal    $80037e80
@@ -16974,7 +16945,7 @@ A0 = S0;
 loop818e8:	; 800818E8
 800818E8	jal    func95bcc [$80095bcc]
 800818EC	nop
-800818F0	jal    $8004b3f4
+800818F0	jal    $system_psyq_wait_frames
 A0 = 0;
 800818F8	jal    func95a50 [$80095a50]
 800818FC	nop
@@ -16992,26 +16963,26 @@ loop81920:	; 80081920
 
 L81928:	; 80081928
 A0 = w[8009bc74];
-80081930	jal    $80031f0c
+80081930	jal    $system_memory_mark_removed_alloc
 80081934	nop
 A0 = w[80061c2c];
-80081940	jal    $800382d0
+80081940	jal    $system_sound_insert_sed_to_linked_array
 80081944	nop
 A0 = w[8009c7b8];
 S1 = w[8009bc6c];
-80081958	jal    $800286fc
+80081958	jal    $system_get_aligned_filesize_by_dir_file_id
 8008195C	nop
 S0 = 80061cd8;
 A0 = S0;
 A1 = S1;
-80081970	jal    $8003f810
+80081970	jal    $system_memcpy
 A2 = V0;
-80081978	jal    $800396f8
+80081978	jal    $system_sound_create_main_for_smd
 A0 = S0;
 A0 = V0;
 A1 = 007f;
 [80061bb8] = w(A0);
-80081990	jal    $80039928
+80081990	jal    $func39928
 A2 = 0;
 A0 = 80091790;
 A1 = 80091988;
@@ -17070,13 +17041,13 @@ SP = SP + 0028;
 // func81a9c
 80081A9C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80081AA4	jal    $80039ea0
+80081AA4	jal    $system_sound_stop_all_channels_in_current_main
 80081AA8	nop
 A0 = w[80061c2c];
 80081AB4	jal    $system_sound_remove_sed_from_linked_array
 80081AB8	nop
 A0 = w[80061c2c];
-80081AC4	jal    $80031f0c
+80081AC4	jal    $system_memory_mark_removed_alloc
 80081AC8	nop
 80081ACC	jal    func83c00 [$80083c00]
 80081AD0	nop
@@ -17097,19 +17068,19 @@ A0 = w[80061c2c];
 80081B0C	jal    func9714c [$8009714c]
 80081B10	nop
 A0 = w[8009b020];
-80081B1C	jal    $80031f0c
+80081B1C	jal    $system_memory_mark_removed_alloc
 80081B20	nop
 A0 = w[8009b098];
-80081B2C	jal    $80031f0c
+80081B2C	jal    $system_memory_mark_removed_alloc
 80081B30	nop
 A0 = w[8009b024];
-80081B3C	jal    $80031f0c
+80081B3C	jal    $system_memory_mark_removed_alloc
 80081B40	nop
 A0 = w[8009b09c];
-80081B4C	jal    $80031f0c
+80081B4C	jal    $system_memory_mark_removed_alloc
 80081B50	nop
 A0 = w[8009b568];
-80081B5C	jal    $80031f0c
+80081B5C	jal    $system_memory_mark_removed_alloc
 80081B60	nop
 80081B64	jal    func96a88 [$80096a88]
 80081B68	nop
@@ -17729,7 +17700,7 @@ S0 = S0 + 0020;
 L82580:	; 80082580
 A0 = w[S3 + 004c];
 A1 = w[S3 + 0048];
-80082588	jal    $8003f810
+80082588	jal    $system_memcpy
 A2 = S4 << 05;
 RA = w[SP + 0038];
 S7 = w[SP + 0034];
@@ -17963,9 +17934,9 @@ V0 = 0001;
 800828E0	bne    v1, v0, L82934 [$80082934]
 800828E4	nop
 [A0 + 0004] = h(0);
-800828EC	jal    $80044448
+800828EC	jal    $system_draw_sync
 A0 = 0;
-800828F4	jal    $8004b3f4
+800828F4	jal    $system_psyq_wait_frames
 A0 = 0;
 800828FC	jal    func9714c [$8009714c]
 80082900	nop
@@ -17976,7 +17947,7 @@ A0 = 8009b994;
 loop82914:	; 80082914
 80082914	jal    func95bcc [$80095bcc]
 80082918	nop
-8008291C	jal    $8004b3f4
+8008291C	jal    $system_psyq_wait_frames
 A0 = 0;
 80082924	jal    func95a50 [$80095a50]
 80082928	nop
@@ -18004,7 +17975,7 @@ V0 = 00d8;
 [SP + 0012] = h(0);
 80082974	jal    $system_move_image
 [SP + 0016] = h(V0);
-8008297C	jal    $80044448
+8008297C	jal    $system_draw_sync
 A0 = 0;
 A0 = 0040;
 A1 = 0;
@@ -18050,7 +18021,7 @@ V0 = 80085ae8;
 [8009c128] = w(V0);
 80082A44	jal    func9742c [$8009742c]
 80082A48	nop
-80082A4C	jal    $80028870
+80082A4C	jal    $system_cdrom_action_sync
 A0 = 0;
 80082A54	jal    func7180c [$8007180c]
 80082A58	nop
@@ -18079,10 +18050,10 @@ S0 = 8009b994;
 80082AC0	nop
 80082AC4	jal    func8834c [$8008834c]
 80082AC8	nop
-80082ACC	jal    $80028870
+80082ACC	jal    $system_cdrom_action_sync
 A0 = 0;
 A0 = w[80061c2c];
-80082ADC	jal    $800382d0
+80082ADC	jal    $system_sound_insert_sed_to_linked_array
 80082AE0	nop
 A0 = 0024;
 80082AE8	jal    $system_cdrom2_set_dir
@@ -18093,7 +18064,7 @@ A0 = S0;
 loop82af8:	; 80082AF8
 80082AF8	jal    func95bcc [$80095bcc]
 80082AFC	nop
-80082B00	jal    $8004b3f4
+80082B00	jal    $system_psyq_wait_frames
 A0 = 0;
 80082B08	jal    func95a50 [$80095a50]
 80082B0C	nop
@@ -18136,13 +18107,13 @@ SP = SP + 0020;
 // func82bc4
 80082BC4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80082BCC	jal    $80039ea0
+80082BCC	jal    $system_sound_stop_all_channels_in_current_main
 80082BD0	nop
 A0 = w[80061c2c];
 80082BDC	jal    $system_sound_remove_sed_from_linked_array
 80082BE0	nop
 A0 = w[80061c2c];
-80082BEC	jal    $80031f0c
+80082BEC	jal    $system_memory_mark_removed_alloc
 80082BF0	nop
 80082BF4	jal    func83c00 [$80083c00]
 80082BF8	nop
@@ -18161,19 +18132,19 @@ A0 = w[80061c2c];
 80082C2C	jal    func9714c [$8009714c]
 80082C30	nop
 A0 = w[8009b020];
-80082C3C	jal    $80031f0c
+80082C3C	jal    $system_memory_mark_removed_alloc
 80082C40	nop
 A0 = w[8009b098];
-80082C4C	jal    $80031f0c
+80082C4C	jal    $system_memory_mark_removed_alloc
 80082C50	nop
 A0 = w[8009b024];
-80082C5C	jal    $80031f0c
+80082C5C	jal    $system_memory_mark_removed_alloc
 80082C60	nop
 A0 = w[8009b09c];
-80082C6C	jal    $80031f0c
+80082C6C	jal    $system_memory_mark_removed_alloc
 80082C70	nop
 A0 = w[8009b568];
-80082C7C	jal    $80031f0c
+80082C7C	jal    $system_memory_mark_removed_alloc
 80082C80	nop
 80082C84	jal    func96a88 [$80096a88]
 80082C88	nop
@@ -18869,25 +18840,25 @@ A1 = 8006fb6c;
 8008382C	swr    v0, $0018(sp)
 A1 = 0001;
 A0 = w[8009b108];
-8008383C	jal    $80032cac
+8008383C	jal    $func32cac
 S5 = 0;
 S3 = V0;
 80083848	jal    $8002db30
 A0 = S3;
-80083850	jal    $80044448
+80083850	jal    $system_draw_sync
 A0 = 0;
-80083858	jal    $80031f0c
+80083858	jal    $system_memory_mark_removed_alloc
 A0 = S3;
 A0 = w[8009b108];
 S2 = 8009b0c8;
-80083870	jal    $80031f0c
+80083870	jal    $system_memory_mark_removed_alloc
 S1 = 01f0;
 A0 = 0200;
-8008387C	jal    $800319ec
+8008387C	jal    $system_memory_allocate
 A1 = 0001;
 S3 = V0;
 A0 = 2000;
-8008388C	jal    $800319ec
+8008388C	jal    $system_memory_allocate
 A1 = 0001;
 A0 = SP + 0010;
 A1 = S3;
@@ -18899,7 +18870,7 @@ S4 = V0;
 [SP + 0014] = h(S0);
 800838B4	jal    $80044770
 [SP + 0016] = h(V1);
-800838BC	jal    $80044448
+800838BC	jal    $system_draw_sync
 A0 = 0;
 A0 = S3;
 A1 = S4;
@@ -18912,9 +18883,9 @@ V0 = 000f;
 [SP + 0010] = h(0);
 [SP + 0012] = h(S1);
 [SP + 0014] = h(S0);
-800838F0	jal    $8004470c
+800838F0	jal    $system_load_image
 [SP + 0016] = h(V0);
-800838F8	jal    $80044448
+800838F8	jal    $system_draw_sync
 A0 = 0;
 
 loop83900:	; 80083900
@@ -18930,9 +18901,9 @@ V0 = V0 + 0001;
 V0 = S5 < 0010;
 80083928	bne    v0, zero, loop83900 [$80083900]
 S2 = S2 + 0002;
-80083930	jal    $80031f0c
+80083930	jal    $system_memory_mark_removed_alloc
 A0 = S4;
-80083938	jal    $80031f0c
+80083938	jal    $system_memory_mark_removed_alloc
 A0 = S3;
 RA = w[SP + 0038];
 S5 = w[SP + 0034];
@@ -18985,7 +18956,7 @@ A0 = A0 + V0;
 A0 = A0 << 02;
 A0 = A0 + V0;
 [8009cbc8] = h(V1);
-80083A0C	jal    $800319ec
+80083A0C	jal    $system_memory_allocate
 A0 = A0 << 02;
 S0 = w[8009b118];
 A0 = 80099528;
@@ -19060,7 +19031,7 @@ A0 = w[V0 + 004c];
 V1 = w[V0 + 0040];
 A1 = w[V0 + 0048];
 A2 = w[V1 + 0034];
-80083B58	jal    $8003f810
+80083B58	jal    $system_memcpy
 S3 = S3 + 0010;
 S0 = S0 + 0010;
 A1 = w[8009ba08];
@@ -19113,7 +19084,7 @@ V0 = w[8009ba08];
 80083C2C	nop
 V0 = S0 + V0;
 A0 = w[V0 + 0048];
-80083C38	jal    $80031f0c
+80083C38	jal    $system_memory_mark_removed_alloc
 S1 = S1 + 0001;
 V0 = w[8009ba08];
 80083C48	nop
@@ -19129,7 +19100,7 @@ V0 = S1 < V0;
 
 L83c74:	; 80083C74
 A0 = w[8009ba08];
-80083C7C	jal    $80031f0c
+80083C7C	jal    $system_memory_mark_removed_alloc
 80083C80	nop
 RA = w[SP + 0020];
 S1 = w[SP + 001c];
@@ -20559,12 +20530,12 @@ A1 = 0001;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-800853EC	jal    $800319ec
+800853EC	jal    $system_memory_allocate
 [SP + 0010] = w(S0);
 A0 = 5000;
 A1 = 0001;
 S0 = 8009cbd0;
-80085404	jal    $800319ec
+80085404	jal    $system_memory_allocate
 [S0 + 0000] = w(V0);
 S1 = 0;
 S2 = 0080;
@@ -20636,10 +20607,10 @@ SP = SP + 0030;
 A0 = w[8009cbd4];
 80085514	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008551C	jal    $80031f0c
+8008551C	jal    $system_memory_mark_removed_alloc
 80085520	nop
 A0 = w[8009cbd0];
-8008552C	jal    $80031f0c
+8008552C	jal    $system_memory_mark_removed_alloc
 80085530	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -20804,11 +20775,11 @@ A1 = 0;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-800857F0	jal    $800319ec
+800857F0	jal    $system_memory_allocate
 [SP + 0010] = w(S0);
 A0 = 0280;
 [8009c538] = w(V0);
-80085804	jal    $800319ec
+80085804	jal    $system_memory_allocate
 A1 = 0;
 S3 = w[8009c538];
 S4 = 0;
@@ -20901,10 +20872,10 @@ SP = SP + 0030;
 A0 = w[8009c29c];
 80085958	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80085960	jal    $80031f0c
+80085960	jal    $system_memory_mark_removed_alloc
 80085964	nop
 A0 = w[8009c538];
-80085970	jal    $80031f0c
+80085970	jal    $system_memory_mark_removed_alloc
 80085974	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -20921,12 +20892,12 @@ A1 = 0001;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-800859AC	jal    $800319ec
+800859AC	jal    $system_memory_allocate
 [SP + 0010] = w(S0);
 A0 = 2d00;
 A1 = 0001;
 S0 = 8009cbe0;
-800859C4	jal    $800319ec
+800859C4	jal    $system_memory_allocate
 [S0 + 0000] = w(V0);
 S3 = 0026;
 S2 = 0;
@@ -20991,10 +20962,10 @@ SP = SP + 0030;
 A0 = w[8009cbe4];
 80085AB8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80085AC0	jal    $80031f0c
+80085AC0	jal    $system_memory_mark_removed_alloc
 80085AC4	nop
 A0 = w[8009cbe0];
-80085AD0	jal    $80031f0c
+80085AD0	jal    $system_memory_mark_removed_alloc
 80085AD4	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -22240,7 +22211,7 @@ A2 = S2 << 02;
 A2 = A2 + S2;
 A0 = w[S4 + 004c];
 A1 = w[S4 + 0048];
-80086D64	jal    $8003f810
+80086D64	jal    $system_memcpy
 A2 = A2 << 03;
 RA = w[SP + 002c];
 S4 = w[SP + 0028];
@@ -23656,7 +23627,7 @@ loop88368:	; 80088368
 80088390	bne    v1, a0, loop88368 [$80088368]
 V0 = V0 + 0054;
 A0 = 4c00;
-8008839C	jal    $800319ec
+8008839C	jal    $system_memory_allocate
 A1 = 0;
 [8009b1dc] = w(V0);
 V1 = 00ff;
@@ -23678,7 +23649,7 @@ SP = SP + 0018;
 A0 = w[8009b1dc];
 800883E4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800883EC	jal    $80031f0c
+800883EC	jal    $system_memory_mark_removed_alloc
 800883F0	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -23694,12 +23665,12 @@ A1 = 0001;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-80088424	jal    $800319ec
+80088424	jal    $system_memory_allocate
 [SP + 0010] = w(S0);
 A0 = 2800;
 A1 = 0001;
 S0 = 8009b204;
-8008843C	jal    $800319ec
+8008843C	jal    $system_memory_allocate
 [S0 + 0000] = w(V0);
 S1 = 00ff;
 S4 = 0009;
@@ -23758,10 +23729,10 @@ SP = SP + 0028;
 A0 = w[8009b204];
 80088518	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80088520	jal    $80031f0c
+80088520	jal    $system_memory_mark_removed_alloc
 80088524	nop
 A0 = w[8009b208];
-80088530	jal    $80031f0c
+80088530	jal    $system_memory_mark_removed_alloc
 80088534	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -31278,7 +31249,7 @@ V0 = V0 + 0001;
 A0 = hu[V1 + 0014];
 8008F720	nop
 A0 = A0 << 10;
-8008F728	jal    $80039d08
+8008F728	jal    $func39d08
 A0 = A0 | 0038;
 
 L8f730:	; 8008F730
@@ -37539,13 +37510,17 @@ SP = SP + 0050;
 80095358	jr     ra 
 8009535C	nop
 ////////////////////////////////
-// func95360:	; 80095360
-80095360	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-80095368	jal    $8002c1e8
-[SP + 0010] = w(S0);
-80095370	jal    $8002c1e8
+
+
+
+////////////////////////////////
+// func95360()
+
+system_cdrom2_get_cdrom_hdd_mode();
 S0 = V0;
+
+system_cdrom2_get_cdrom_hdd_mode();
+
 S0 = S0 < 0001;
 V0 = 0 NOR V0;
 V0 = V0 < 0001;
@@ -37563,11 +37538,11 @@ loop953b0:	; 800953B0
 800953B8	bgez   v1, loop953b0 [$800953b0]
 800953BC	addiu  v0, v0, $fffc (=-$4)
 A0 = 4200;
-800953C4	jal    $800319ec
+800953C4	jal    $system_memory_allocate
 A1 = 0;
 A0 = 0800;
 [8009b1f0] = w(V0);
-800953D8	jal    $800319ec
+800953D8	jal    $system_memory_allocate
 A1 = 0;
 V1 = 0007;
 A0 = 8009b977;
@@ -37594,11 +37569,11 @@ loop95434:	; 80095434
 8009543C	bgez   v1, loop95434 [$80095434]
 80095440	addiu  v0, v0, $fffc (=-$4)
 A0 = 5800;
-80095448	jal    $800319ec
+80095448	jal    $system_memory_allocate
 A1 = 0;
 A0 = 0800;
 [8009c7a8] = w(V0);
-8009545C	jal    $800319ec
+8009545C	jal    $system_memory_allocate
 A1 = 0;
 V1 = 0007;
 A0 = 8009b977;
@@ -37612,51 +37587,44 @@ loop95480:	; 80095480
 8009548C	addiu  a0, a0, $ffff (=-$1)
 
 L95490:	; 80095490
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8009549C	jr     ra 
-800954A0	nop
 ////////////////////////////////
-// func954a4:	; 800954A4
-800954A4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-800954AC	jal    $8002c1e8
-[SP + 0010] = w(S0);
-800954B4	jal    $8002c1e8
+
+
+
+////////////////////////////////
+// func954a4()
+
+system_cdrom2_get_cdrom_hdd_mode();
 S0 = V0;
-S0 = S0 < 0001;
-V0 = 0 NOR V0;
-V0 = V0 < 0001;
-S0 = S0 | V0;
-800954CC	beq    s0, zero, L954e4 [$800954e4]
-800954D0	nop
-A0 = w[8009b1f0];
-800954DC	j      L954ec [$800954ec]
-800954E0	nop
 
-L954e4:	; 800954E4
-A0 = w[8009c7a8];
+system_cdrom2_get_cdrom_hdd_mode();
+V0 = ~V0;
 
-L954ec:	; 800954EC
-800954EC	jal    $80031f0c
-800954F0	nop
+if( (S0 < 1) | (V0 < 1) )
+{
+    A0 = w[8009b1f0];
+}
+else
+{
+    A0 = w[8009c7a8];
+}
+
+system_memory_mark_removed_alloc();
+
 A0 = w[8009cbbc];
-800954FC	jal    $80031f0c
-80095500	nop
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80095510	jr     ra 
-80095514	nop
+system_memory_mark_removed_alloc();
 ////////////////////////////////
-// func95518:	; 80095518
-80095518	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0024] = w(RA);
-80095520	jal    $8002c1e8
-[SP + 0020] = w(S0);
-80095528	jal    $8002c1e8
+
+
+
+////////////////////////////////
+// func95518
+
+system_cdrom2_get_cdrom_hdd_mode();
 S0 = V0;
+
+system_cdrom2_get_cdrom_hdd_mode();
+
 S0 = S0 < 0001;
 V0 = 0 NOR V0;
 V0 = V0 < 0001;
@@ -37674,7 +37642,7 @@ V1 = 8009cb70;
 S0 = V1;
 
 L95574:	; 80095574
-80095574	jal    $8004b3f4
+80095574	jal    $system_psyq_wait_frames
 A0 = 0;
 8009557C	jal    func95bcc [$80095bcc]
 80095580	nop
@@ -37701,7 +37669,7 @@ V1 = 8009ba0c;
 S0 = V1;
 
 loop955dc:	; 800955DC
-800955DC	jal    $8004b3f4
+800955DC	jal    $system_psyq_wait_frames
 A0 = 0;
 800955E4	jal    func95bcc [$80095bcc]
 800955E8	nop
@@ -37715,11 +37683,10 @@ V0 = w[V0 + 0000];
 8009560C	nop
 
 L95610:	; 80095610
-RA = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0028;
-8009561C	jr     ra 
-80095620	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func95624:	; 80095624
 A3 = w[8009cbf0];
@@ -37754,9 +37721,13 @@ L95690:	; 80095690
 80095690	jr     ra 
 80095694	nop
 ////////////////////////////////
-// func95698:	; 80095698
+
+
+
+////////////////////////////////
+// func95698()
+
 T0 = w[8009cbf0];
-800956A0	nop
 V0 = T0 < 0058;
 800956A8	bne    v0, zero, L956b8 [$800956b8]
 T1 = A0;
@@ -37783,8 +37754,10 @@ A0 = A0 + V1;
 [A0 + 000c] = w(A3);
 
 L95708:	; 80095708
-80095708	jr     ra 
-8009570C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func95710:	; 80095710
 A0 = w[8009b22c];
@@ -38030,7 +38003,7 @@ L95a74:	; 80095A74
 [SP + 0010] = w(RA);
 
 loop95a84:	; 80095A84
-80095A84	jal    $8004b3f4
+80095A84	jal    $system_psyq_wait_frames
 A0 = 0;
 80095A8C	jal    func95bcc [$80095bcc]
 80095A90	nop
@@ -38129,15 +38102,19 @@ SP = SP + 0028;
 80095BC4	jr     ra 
 80095BC8	nop
 ////////////////////////////////
-// func95bcc:	; 80095BCC
-80095BCC	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S1);
+
+
+
+////////////////////////////////
+// func95bcc
+
 S1 = 0;
-[SP + 0020] = w(RA);
-80095BDC	jal    $8002c1e8
-[SP + 0018] = w(S0);
-80095BE4	jal    $8002c1e8
+
+system_cdrom2_get_cdrom_hdd_mode();
 S0 = V0;
+
+system_cdrom2_get_cdrom_hdd_mode();
+
 S0 = S0 < 0001;
 V0 = 0 NOR V0;
 V0 = V0 < 0001;
@@ -38971,7 +38948,7 @@ SP = SP + 0020;
 80096A54	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 2000;
 [SP + 0010] = w(RA);
-80096A60	jal    $800319ec
+80096A60	jal    $system_memory_allocate
 A1 = 0;
 [8009b20c] = w(V0);
 80096A70	jal    func96ab0 [$80096ab0]
@@ -38985,7 +38962,7 @@ SP = SP + 0018;
 A0 = w[8009b20c];
 80096A90	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80096A98	jal    $80031f0c
+80096A98	jal    $system_memory_mark_removed_alloc
 80096A9C	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -39162,12 +39139,12 @@ SP = SP + 0028;
 80096CE8	lui    a0, $0001
 A1 = 0001;
 [SP + 0014] = w(RA);
-80096CF4	jal    $800319ec
+80096CF4	jal    $system_memory_allocate
 [SP + 0010] = w(S0);
 80096CFC	lui    a0, $0001
 A1 = 0001;
 S0 = 8009b024;
-80096D0C	jal    $800319ec
+80096D0C	jal    $system_memory_allocate
 [S0 + 0000] = w(V0);
 A0 = 0;
 A3 = 0007;
@@ -39221,25 +39198,25 @@ S2 = 0;
 [SP + 0028] = w(S4);
 [SP + 0024] = w(S3);
 [SP + 001c] = w(S1);
-80096DDC	jal    $80032cac
+80096DDC	jal    $func32cac
 [SP + 0018] = w(S0);
 S4 = V0;
 80096DE8	jal    $8002db30
 A0 = S4;
-80096DF0	jal    $80044448
+80096DF0	jal    $system_draw_sync
 A0 = 0;
-80096DF8	jal    $80031f0c
+80096DF8	jal    $system_memory_mark_removed_alloc
 A0 = S4;
 A0 = w[8009b984];
 S3 = 8009c09c;
-80096E10	jal    $80031f0c
+80096E10	jal    $system_memory_mark_removed_alloc
 S1 = 0100;
 A0 = 0400;
-80096E1C	jal    $800319ec
+80096E1C	jal    $system_memory_allocate
 A1 = 0001;
 S4 = V0;
 A0 = 8000;
-80096E2C	jal    $800319ec
+80096E2C	jal    $system_memory_allocate
 A1 = 0001;
 A0 = SP + 0010;
 A1 = S4;
@@ -39251,7 +39228,7 @@ S5 = V0;
 [SP + 0014] = h(S1);
 80096E54	jal    $80044770
 [SP + 0016] = h(V1);
-80096E5C	jal    $80044448
+80096E5C	jal    $system_draw_sync
 A0 = 0;
 A0 = S4;
 A1 = S5;
@@ -39271,9 +39248,9 @@ V0 = 01b0;
 V0 = 0040;
 [SP + 0010] = h(0);
 [SP + 0014] = h(S1);
-80096EB0	jal    $8004470c
+80096EB0	jal    $system_load_image
 [SP + 0016] = h(V0);
-80096EB8	jal    $80044448
+80096EB8	jal    $system_draw_sync
 A0 = 0;
 
 loop96ec0:	; 80096EC0
@@ -39323,9 +39300,9 @@ S2 = S2 + 0001;
 V0 = S2 < 0007;
 80096F68	bne    v0, zero, loop96f44 [$80096f44]
 S1 = S1 + 0002;
-80096F70	jal    $80031f0c
+80096F70	jal    $system_memory_mark_removed_alloc
 A0 = S5;
-80096F78	jal    $80031f0c
+80096F78	jal    $system_memory_mark_removed_alloc
 A0 = S4;
 RA = w[SP + 0030];
 S5 = w[SP + 002c];
@@ -39447,7 +39424,7 @@ A0 = w[S0 + 0000];
 8009716C	nop
 80097170	beq    a0, zero, L97180 [$80097180]
 80097174	nop
-80097178	jal    $80031f0c
+80097178	jal    $system_memory_mark_removed_alloc
 8009717C	nop
 
 L97180:	; 80097180
@@ -39462,182 +39439,173 @@ SP = SP + 0020;
 800971A0	jr     ra 
 800971A4	nop
 ////////////////////////////////
-// func971a8:	; 800971A8
-800971A8	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0034] = w(RA);
-[SP + 0030] = w(FP);
-[SP + 002c] = w(S7);
-[SP + 0028] = w(S6);
-[SP + 0024] = w(S5);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-800971D0	jal    $8002c1e8
-[SP + 0010] = w(S0);
-800971D8	jal    $8002c1e8
+
+
+
+////////////////////////////////
+// func971a8
+
+system_cdrom2_get_cdrom_hdd_mode();
 S0 = V0;
+
+system_cdrom2_get_cdrom_hdd_mode();
+
 S0 = S0 < 0001;
 V0 = 0 NOR V0;
 V0 = V0 < 0001;
 S0 = S0 | V0;
-800971F0	beq    s0, zero, L97344 [$80097344]
-S4 = 0003;
-A0 = w[8009b0c0];
-FP = 8009c958;
-S7 = 8009b56c;
-80097210	jal    $800287e0
-S3 = 001b;
-S6 = V0;
+if( S0 != 0 )
+{
+    S4 = 0003;
+    FP = 8009c958;
+    S7 = 8009b56c;
+    S3 = 001b;
 
-loop9721c:	; 8009721C
-S1 = 0003;
-S5 = S3;
-V0 = S5 + S1;
+    A0 = w[8009b0c0];
+    system_cdrom2_get_sector_by_dir_file_id();
 
-loop97228:	; 80097228
-V0 = V0 << 01;
-V0 = V0 + FP;
-S2 = h[V0 + 0000];
-80097234	nop
-V0 = S2 << 02;
-S0 = V0 + S7;
-V0 = w[S0 + 0000];
-80097244	nop
-80097248	bne    v0, zero, L9726c [$8009726c]
-A0 = 0710;
-80097250	jal    $800319ec
-A1 = 0;
-[S0 + 0000] = w(V0);
-A0 = S6 + S2;
-A1 = 0710;
-80097264	jal    func95624 [$80095624]
-A2 = V0;
+    S6 = V0;
 
-L9726c:	; 8009726C
-S1 = S1 + 0001;
-V0 = S1 < 0006;
-80097274	bne    v0, zero, loop97228 [$80097228]
-V0 = S5 + S1;
-S4 = S4 + 0001;
-V0 = S4 < 0006;
-80097284	bne    v0, zero, loop9721c [$8009721c]
-S3 = S3 + 0009;
-A0 = 0;
-A1 = 0;
-80097294	jal    func95624 [$80095624]
-A2 = 0;
-8009729C	jal    func95710 [$80095710]
-S4 = 0;
-S7 = 8009c958;
-S5 = 8009b56c;
-S3 = 0;
+    loop9721c:	; 8009721C
+    S1 = 0003;
+    S5 = S3;
+    V0 = S5 + S1;
 
-loop972b8:	; 800972B8
-S1 = 0;
-V0 = S3 + S1;
+    loop97228:	; 80097228
+    V0 = V0 << 01;
+    V0 = V0 + FP;
+    S2 = h[V0 + 0000];
+    80097234	nop
+    V0 = S2 << 02;
+    S0 = V0 + S7;
+    V0 = w[S0 + 0000];
+    80097244	nop
+    80097248	bne    v0, zero, L9726c [$8009726c]
 
-loop972c0:	; 800972C0
-V0 = V0 << 01;
-V0 = V0 + S7;
-S2 = h[V0 + 0000];
-800972CC	nop
-V0 = S2 << 02;
-S0 = V0 + S5;
-V0 = w[S0 + 0000];
-800972DC	nop
-800972E0	bne    v0, zero, L97304 [$80097304]
-A0 = 0710;
-800972E8	jal    $800319ec
-A1 = 0;
-[S0 + 0000] = w(V0);
-A0 = S6 + S2;
-A1 = 0710;
-800972FC	jal    func95624 [$80095624]
-A2 = V0;
+    A0 = 710;
+    A1 = 0;
+    system_memory_allocate();
 
-L97304:	; 80097304
-S1 = S1 + 0001;
-V0 = S1 < 0009;
-8009730C	bne    v0, zero, loop972c0 [$800972c0]
-V0 = S3 + S1;
-S4 = S4 + 0001;
-V0 = S4 < 0009;
-8009731C	bne    v0, zero, loop972b8 [$800972b8]
-S3 = S3 + 0009;
-A0 = 0;
-A1 = 0;
-8009732C	jal    func95624 [$80095624]
-A2 = 0;
-80097334	jal    func95710 [$80095710]
-80097338	nop
-8009733C	j      L973f8 [$800973f8]
-80097340	nop
+    [S0 + 0000] = w(V0);
+    A0 = S6 + S2;
+    A1 = 0710;
+    80097264	jal    func95624 [$80095624]
+    A2 = V0;
 
-L97344:	; 80097344
-A0 = w[8009b0c0];
-S4 = 0;
-S7 = 8009c958;
-S6 = 8009b56c;
-80097360	jal    $800287a8
-S3 = 0;
-S5 = V0;
+    L9726c:	; 8009726C
+    S1 = S1 + 0001;
+    V0 = S1 < 0006;
+    80097274	bne    v0, zero, loop97228 [$80097228]
+    V0 = S5 + S1;
+    S4 = S4 + 0001;
+    V0 = S4 < 0006;
+    80097284	bne    v0, zero, loop9721c [$8009721c]
+    S3 = S3 + 0009;
+    A0 = 0;
+    A1 = 0;
+    80097294	jal    func95624 [$80095624]
+    A2 = 0;
+    8009729C	jal    func95710 [$80095710]
+    S4 = 0;
+    S7 = 8009c958;
+    S5 = 8009b56c;
+    S3 = 0;
 
-loop9736c:	; 8009736C
-S1 = 0;
-V0 = S3 + S1;
+    loop972b8:	; 800972B8
+    S1 = 0;
+    V0 = S3 + S1;
 
-loop97374:	; 80097374
-V0 = V0 << 01;
-V0 = V0 + S7;
-S2 = h[V0 + 0000];
-80097380	nop
-V0 = S2 << 02;
-S0 = V0 + S6;
-V0 = w[S0 + 0000];
-80097390	nop
-80097394	bne    v0, zero, L973bc [$800973bc]
-A0 = 0710;
-8009739C	jal    $800319ec
-A1 = 0;
-[S0 + 0000] = w(V0);
-A0 = S5;
-A1 = S2 << 0b;
-A2 = 0710;
-800973B4	jal    func95698 [$80095698]
-A3 = V0;
+    loop972c0:	; 800972C0
+    V0 = V0 << 01;
+    V0 = V0 + S7;
+    S2 = h[V0 + 0000];
+    800972CC	nop
+    V0 = S2 << 02;
+    S0 = V0 + S5;
+    V0 = w[S0 + 0000];
+    800972DC	nop
+    800972E0	bne    v0, zero, L97304 [$80097304]
+    A0 = 0710;
+    800972E8	jal    $system_memory_allocate
+    A1 = 0;
+    [S0 + 0000] = w(V0);
+    A0 = S6 + S2;
+    A1 = 0710;
+    800972FC	jal    func95624 [$80095624]
+    A2 = V0;
 
-L973bc:	; 800973BC
-S1 = S1 + 0001;
-V0 = S1 < 0009;
-800973C4	bne    v0, zero, loop97374 [$80097374]
-V0 = S3 + S1;
-S4 = S4 + 0001;
-V0 = S4 < 0009;
-800973D4	bne    v0, zero, loop9736c [$8009736c]
-S3 = S3 + 0009;
-A0 = 0;
-A1 = 0;
-A2 = 0;
-800973E8	jal    func95698 [$80095698]
-A3 = 0;
-800973F0	jal    func9598c [$8009598c]
-800973F4	nop
+    L97304:	; 80097304
+    S1 = S1 + 0001;
+    V0 = S1 < 0009;
+    8009730C	bne    v0, zero, loop972c0 [$800972c0]
+    V0 = S3 + S1;
+    S4 = S4 + 0001;
+    V0 = S4 < 0009;
+    8009731C	bne    v0, zero, loop972b8 [$800972b8]
+    S3 = S3 + 0009;
+    A0 = 0;
+    A1 = 0;
+    8009732C	jal    func95624 [$80095624]
+    A2 = 0;
+    80097334	jal    func95710 [$80095710]
+}
+else
+{
+    S4 = 0;
+    S7 = 8009c958;
+    S6 = 8009b56c;
+    S3 = 0;
 
-L973f8:	; 800973F8
-RA = w[SP + 0034];
-FP = w[SP + 0030];
-S7 = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0038;
-80097424	jr     ra 
-80097428	nop
+    A0 = w[8009b0c0];
+    system_cdrom2_get_debug_filename();
+    S5 = V0;
+
+    loop9736c:	; 8009736C
+    S1 = 0;
+    V0 = S3 + S1;
+
+    loop97374:	; 80097374
+    V0 = V0 << 01;
+    V0 = V0 + S7;
+    S2 = h[V0 + 0000];
+    80097380	nop
+    V0 = S2 << 02;
+    S0 = V0 + S6;
+    V0 = w[S0 + 0000];
+    80097390	nop
+    80097394	bne    v0, zero, L973bc [$800973bc]
+    A0 = 0710;
+    A1 = 0;
+    system_memory_allocate();
+
+    [S0 + 0000] = w(V0);
+    A0 = S5;
+    A1 = S2 << 0b;
+    A2 = 0710;
+    800973B4	jal    func95698 [$80095698]
+    A3 = V0;
+
+    L973bc:	; 800973BC
+    S1 = S1 + 0001;
+    V0 = S1 < 0009;
+    800973C4	bne    v0, zero, loop97374 [$80097374]
+    V0 = S3 + S1;
+    S4 = S4 + 0001;
+    V0 = S4 < 0009;
+    800973D4	bne    v0, zero, loop9736c [$8009736c]
+    S3 = S3 + 0009;
+    A0 = 0;
+    A1 = 0;
+    A2 = 0;
+    800973E8	jal    func95698 [$80095698]
+    A3 = 0;
+    800973F0	jal    func9598c [$8009598c]
+    800973F4	nop
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func9742c:	; 8009742C
 8009742C	addiu  sp, sp, $ffe8 (=-$18)
@@ -40480,22 +40448,16 @@ L980a0:	; 800980A0
 800980A0	jr     ra 
 800980A4	nop
 ////////////////////////////////
-// func980a8:	; 800980A8
-800980A8	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0018] = w(S2);
+
+
+
+////////////////////////////////
+// func980a8
+
 S2 = 0;
-[SP + 001c] = w(S3);
 S3 = 8009b56c;
-[SP + 0024] = w(S5);
 S5 = 8009c958;
-[SP + 0014] = w(S1);
 S1 = 8009c700;
-[SP + 0034] = w(RA);
-[SP + 0030] = w(FP);
-[SP + 002c] = w(S7);
-[SP + 0028] = w(S6);
-[SP + 0020] = w(S4);
-[SP + 0010] = w(S0);
 
 loop980f0:	; 800980F0
 S0 = h[S1 + 0000];
@@ -40524,7 +40486,7 @@ L98138:	; 80098138
 S0 = S0 << 02;
 S0 = S0 + S3;
 A0 = w[S0 + 0000];
-80098148	jal    $80031f0c
+80098148	jal    $system_memory_mark_removed_alloc
 8009814C	nop
 [S0 + 0000] = w(0);
 
@@ -40533,10 +40495,12 @@ S2 = S2 + 0001;
 V0 = S2 < 0051;
 8009815C	bne    v0, zero, loop980f0 [$800980f0]
 S1 = S1 + 0002;
-80098164	jal    $8002c1e8
 S6 = 0;
-8009816C	jal    $8002c1e8
+system_cdrom2_get_cdrom_hdd_mode();
 S0 = V0;
+
+system_cdrom2_get_cdrom_hdd_mode();
+
 S0 = S0 < 0001;
 V0 = 0 NOR V0;
 V0 = V0 < 0001;
@@ -40546,7 +40510,7 @@ S0 = S0 | V0;
 A0 = w[8009b0c0];
 FP = 8009c958;
 S7 = 8009b56c;
-800981A4	jal    $800287e0
+800981A4	jal    $system_cdrom2_get_sector_by_dir_file_id
 S4 = 0001;
 S5 = V0;
 S0 = 0001;
@@ -40565,7 +40529,7 @@ V0 = w[S1 + 0000];
 800981D4	nop
 800981D8	bne    v0, zero, L98200 [$80098200]
 A0 = 0710;
-800981E0	jal    $800319ec
+800981E0	jal    $system_memory_allocate
 A1 = 0;
 [S1 + 0000] = w(V0);
 A0 = S5 + S0;
@@ -40585,7 +40549,7 @@ S0 = 0049;
 A0 = w[8009b0f0];
 FP = 8009c958;
 S7 = 8009b56c;
-80098234	jal    $800287e0
+80098234	jal    $system_cdrom2_get_sector_by_dir_file_id
 S4 = 0001;
 S5 = V0;
 S0 = 0009;
@@ -40605,24 +40569,11 @@ V0 = w[S1 + 0000];
 80098268	bne    v0, zero, L982e8 [$800982e8]
 8009826C	nop
 A0 = 0710;
-80098274	jal    $800319ec
+80098274	jal    $system_memory_allocate
 A1 = 0;
 A0 = w[8009c548];
 80098284	nop
 80098288	div    s0, a0
-8009828C	bne    a0, zero, L98298 [$80098298]
-80098290	nop
-80098294	break   $01c00
-
-L98298:	; 80098298
-80098298	addiu  at, zero, $ffff (=-$1)
-8009829C	bne    a0, at, L982b0 [$800982b0]
-800982A0	lui    at, $8000
-800982A4	bne    s0, at, L982b0 [$800982b0]
-800982A8	nop
-800982AC	break   $01800
-
-L982b0:	; 800982B0
 800982B0	mflo   a0
 800982B4	mfhi   a1
 V1 = w[8009c69c];
@@ -40664,12 +40615,12 @@ V0 = w[S0 + 0000];
 80098344	nop
 80098348	bne    v0, zero, L98400 [$80098400]
 A0 = 0710;
-80098350	jal    $800319ec
+80098350	jal    $system_memory_allocate
 A1 = 0;
 80098358	beq    s5, zero, L98380 [$80098380]
 [S0 + 0000] = w(V0);
 A0 = w[8009b0c0];
-80098368	jal    $800287e0
+80098368	jal    $system_cdrom2_get_sector_by_dir_file_id
 8009836C	nop
 A0 = V0 + S4;
 A2 = w[S0 + 0000];
@@ -40680,24 +40631,11 @@ L98380:	; 80098380
 80098380	beq    s3, zero, L98400 [$80098400]
 80098384	nop
 A0 = w[8009b0f0];
-80098390	jal    $800287e0
+80098390	jal    $system_cdrom2_get_sector_by_dir_file_id
 80098394	nop
 A0 = w[8009c548];
 800983A0	nop
 800983A4	div    s4, a0
-800983A8	bne    a0, zero, L983b4 [$800983b4]
-800983AC	nop
-800983B0	break   $01c00
-
-L983b4:	; 800983B4
-800983B4	addiu  at, zero, $ffff (=-$1)
-800983B8	bne    a0, at, L983cc [$800983cc]
-800983BC	lui    at, $8000
-800983C0	bne    s4, at, L983cc [$800983cc]
-800983C4	nop
-800983C8	break   $01800
-
-L983cc:	; 800983CC
 800983CC	mflo   a0
 800983D0	mfhi   a1
 V1 = w[8009c69c];
@@ -40731,7 +40669,7 @@ L98430:	; 80098430
 A0 = w[8009b0c0];
 FP = 8009c958;
 S7 = 8009b56c;
-80098448	jal    $800287a8
+80098448	jal    $system_cdrom2_get_debug_filename
 S4 = 0001;
 S5 = V0;
 S0 = 0001;
@@ -40750,7 +40688,7 @@ V0 = w[S1 + 0000];
 80098478	nop
 8009847C	bne    v0, zero, L984a8 [$800984a8]
 A0 = 0710;
-80098484	jal    $800319ec
+80098484	jal    $system_memory_allocate
 A1 = 0;
 [S1 + 0000] = w(V0);
 A0 = S5;
@@ -40771,7 +40709,7 @@ S0 = 0049;
 A0 = w[8009b0f0];
 FP = 8009c958;
 S7 = 8009b56c;
-800984DC	jal    $800287a8
+800984DC	jal    $system_cdrom2_get_debug_filename
 S4 = 0001;
 S5 = V0;
 S0 = 0009;
@@ -40790,7 +40728,7 @@ V0 = w[S1 + 0000];
 8009850C	nop
 80098510	bne    v0, zero, L98590 [$80098590]
 A0 = 0710;
-80098518	jal    $800319ec
+80098518	jal    $system_memory_allocate
 A1 = 0;
 A1 = w[8009c548];
 80098528	nop
@@ -40852,12 +40790,12 @@ V0 = w[S0 + 0000];
 800985F0	nop
 800985F4	bne    v0, zero, L986b4 [$800986b4]
 A0 = 0710;
-800985FC	jal    $800319ec
+800985FC	jal    $system_memory_allocate
 A1 = 0;
 80098604	beq    s3, zero, L98630 [$80098630]
 [S0 + 0000] = w(V0);
 A0 = w[8009b0c0];
-80098614	jal    $800287a8
+80098614	jal    $system_cdrom2_get_debug_filename
 80098618	nop
 A0 = V0;
 A1 = S4 << 0b;
@@ -40869,7 +40807,7 @@ L98630:	; 80098630
 80098630	beq    s1, zero, L986b4 [$800986b4]
 80098634	nop
 A0 = w[8009b0f0];
-80098640	jal    $800287a8
+80098640	jal    $system_cdrom2_get_debug_filename
 80098644	nop
 A1 = w[8009c548];
 80098650	nop

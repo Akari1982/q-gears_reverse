@@ -23,7 +23,7 @@ A0 = 0;
 8028028C	nop
 
 L280290:	; 80280290
-80280290	jal    $80036f00
+80280290	jal    $func36f00
 A1 = 0;
 S2 = 0003;
 S0 = 0450;
@@ -49,142 +49,163 @@ V0 = S2 < 000b;
 802802F4	bne    v0, zero, loop2802a4 [$802802a4]
 S1 = S1 + 001c;
 A0 = 80280004;
-80280304	jal    $system_print
 S2 = 0;
+system_print();
+
 A0 = 80280008;
-80280314	jal    $system_print
 S1 = 0;
+system_print();
+
 S3 = 80280028;
 S0 = 0010;
-A0 = 0;
+
 
 loop28032c:	; 8028032C
-8028032C	jal    $80036f00
-A1 = S0;
-A0 = S3;
-80280338	jal    $system_print
-A1 = S2;
-A0 = 0024;
-80280344	jal    $80036f00
-A1 = S0;
-A0 = S3;
-80280350	lui    at, $800d
-AT = AT + S1;
-A1 = bu[AT + 257c];
-8028035C	jal    $system_print
-S2 = S2 + 0001;
-A0 = 0048;
-80280368	jal    $80036f00
-A1 = S0;
-80280370	lui    at, $800d
-AT = AT + S1;
-A1 = bu[AT + 257d];
-8028037C	jal    $system_print
-A0 = S3;
-A0 = 006c;
-80280388	jal    $80036f00
-A1 = S0;
-80280390	lui    at, $800d
-AT = AT + S1;
-A1 = bu[AT + 257e];
-8028039C	jal    $system_print
-A0 = S3;
-A0 = 0090;
-802803A8	jal    $80036f00
-A1 = S0;
-802803B0	lui    at, $800d
-AT = AT + S1;
-A1 = bu[AT + 257f];
-802803BC	jal    $system_print
-A0 = S3;
-A0 = 00b4;
-802803C8	jal    $80036f00
-A1 = S0;
-802803D0	lui    at, $800d
-AT = AT + S1;
-A1 = bu[AT + 2580];
-802803DC	jal    $system_print
-A0 = S3;
-A0 = 00d8;
-802803E8	jal    $80036f00
-A1 = S0;
-802803F0	lui    at, $800d
-AT = AT + S1;
-A1 = bu[AT + 2581];
-802803FC	jal    $system_print
-A0 = S3;
-A0 = 00fc;
-80280408	jal    $80036f00
-A1 = S0;
-A0 = S3;
-80280414	lui    at, $800d
-AT = AT + S1;
-A1 = hu[AT + 2582];
-S1 = S1 + 0008;
-80280424	jal    $system_print
-S0 = S0 + 0008;
-V0 = S2 < 0017;
+    A0 = 0;
+    A1 = S0;
+    func36f00();
+
+    A0 = S3;
+    A1 = S2;
+    system_print();
+
+    A0 = 0024;
+    80280344	jal    $func36f00
+    A1 = S0;
+    A0 = S3;
+    80280350	lui    at, $800d
+    AT = AT + S1;
+    A1 = bu[AT + 257c];
+    S2 = S2 + 0001;
+    system_print();
+
+    A0 = 0048;
+    80280368	jal    $func36f00
+    A1 = S0;
+    80280370	lui    at, $800d
+    AT = AT + S1;
+    A1 = bu[AT + 257d];
+
+    A0 = S3;
+    system_print();
+
+    A0 = 006c;
+    80280388	jal    $func36f00
+    A1 = S0;
+    80280390	lui    at, $800d
+    AT = AT + S1;
+    A1 = bu[AT + 257e];
+
+    A0 = S3;
+    system_print();
+
+    A0 = 0090;
+    802803A8	jal    $func36f00
+    A1 = S0;
+    802803B0	lui    at, $800d
+    AT = AT + S1;
+    A1 = bu[AT + 257f];
+    A0 = S3;
+    system_print();
+
+    A0 = 00b4;
+    802803C8	jal    $func36f00
+    A1 = S0;
+    802803D0	lui    at, $800d
+    AT = AT + S1;
+    A1 = bu[AT + 2580];
+    A0 = S3;
+    system_print();
+
+    A0 = 00d8;
+    802803E8	jal    $func36f00
+    A1 = S0;
+    802803F0	lui    at, $800d
+    AT = AT + S1;
+    A1 = bu[AT + 2581];
+    A0 = S3;
+    system_print();
+
+    A0 = 00fc;
+    80280408	jal    $func36f00
+    A1 = S0;
+    A0 = S3;
+    80280414	lui    at, $800d
+    AT = AT + S1;
+    A1 = hu[AT + 2582];
+    S1 = S1 + 0008;
+    S0 = S0 + 0008;
+    system_print();
+
+    V0 = S2 < 0017;
 80280430	bne    v0, zero, loop28032c [$8028032c]
+
 A0 = 0;
 80280438	080A0208	....
 8028043C	nop
 
 L280440:	; 80280440
 A0 = 0;
-80280444	jal    $80036f00
 A1 = 0020;
+func36f00();
+
 A0 = 8028002c;
-80280454	jal    $system_print
 S2 = 0;
+system_print();
+
 S4 = 80280028;
 S3 = 0;
-S0 = S2 >> 1f;
 
 loop28046c:	; 8028046C
-S0 = S2 + S0;
-S0 = S0 >> 01;
-V0 = S0 << 01;
-V0 = S2 - V0;
-S1 = V0 << 03;
-S1 = S1 + V0;
-S1 = S1 << 04;
-A0 = S1;
-S0 = S0 + 0005;
-S0 = S0 << 03;
-80280494	jal    $80036f00
-A1 = S0;
-A0 = S4;
-802804A0	jal    $system_print
-A1 = S2;
-A0 = S1 + 0024;
-802804AC	jal    $80036f00
-A1 = S0;
-A0 = S4;
-802804B8	lui    at, $800c
-AT = AT + S3;
-A1 = bu[AT + 374f];
-802804C4	jal    $system_print
-S2 = S2 + 0001;
-A0 = S1 + 0048;
-802804D0	jal    $80036f00
-A1 = S0;
-802804D8	lui    at, $800c
-AT = AT + S3;
-A1 = hu[AT + 3742];
-802804E4	jal    $system_print
-A0 = S4;
-A0 = S1 + 006c;
-802804F0	jal    $80036f00
-A1 = S0;
-A0 = S4;
-802804FC	lui    at, $800c
-AT = AT + S3;
-A1 = hu[AT + 371e];
-80280508	jal    $system_print
-S3 = S3 + 0048;
-V0 = S2 < 0020;
+    S0 = S2 >> 1f;
+    S0 = S2 + S0;
+    S0 = S0 >> 01;
+    V0 = S0 << 01;
+    V0 = S2 - V0;
+    S1 = V0 << 03;
+    S1 = S1 + V0;
+    S1 = S1 << 04;
+    A0 = S1;
+    S0 = S0 + 0005;
+    S0 = S0 << 03;
+    80280494	jal    $func36f00
+    A1 = S0;
+    A0 = S4;
+    A1 = S2;
+    system_print();
+
+    A0 = S1 + 0024;
+    802804AC	jal    $func36f00
+    A1 = S0;
+    A0 = S4;
+    802804B8	lui    at, $800c
+    AT = AT + S3;
+    A1 = bu[AT + 374f];
+    S2 = S2 + 0001;
+    system_print();
+
+    A0 = S1 + 0048;
+    802804D0	jal    $func36f00
+    A1 = S0;
+    802804D8	lui    at, $800c
+    AT = AT + S3;
+    A1 = hu[AT + 3742];
+    A0 = S4;
+    system_print();
+
+    A0 = S1 + 006c;
+    802804F0	jal    $func36f00
+    A1 = S0;
+    A0 = S4;
+    802804FC	lui    at, $800c
+    AT = AT + S3;
+    A1 = hu[AT + 371e];
+    S3 = S3 + 0048;
+    system_print();
+
+    V0 = S2 < 0020;
 80280514	bne    v0, zero, loop28046c [$8028046c]
-S0 = S2 >> 1f;
+
 8028051C	080A0208	....
 80280520	nop
 
@@ -196,109 +217,121 @@ V0 = bu[V0 + 02d3];
 V0 = V0 < 0003;
 8028053C	bne    v0, zero, L280820 [$80280820]
 A0 = 0;
-80280544	jal    $80036f00
+80280544	jal    $func36f00
 A1 = 0050;
 A0 = 80280050;
-80280554	jal    $system_print
 S2 = 0;
+system_print();
+
 S0 = 800d2b50;
 
 loop280564:	; 80280564
-V0 = w[800c35cc];
-8028056C	nop
-V0 = bu[V0 + 02d3];
-A0 = 80280058;
-8028057C	addiu  v0, v0, $fffd (=-$3)
-V0 = V0 << 06;
-V0 = V0 + S0;
-V0 = V0 + S2;
-A1 = bu[V0 + 0000];
-80280590	jal    $system_print
-S2 = S2 + 0001;
-V0 = S2 < 0008;
+    V0 = w[800c35cc];
+    8028056C	nop
+    V0 = bu[V0 + 02d3];
+    A0 = 80280058;
+    8028057C	addiu  v0, v0, $fffd (=-$3)
+    V0 = V0 << 06;
+    V0 = V0 + S0;
+    V0 = V0 + S2;
+    A1 = bu[V0 + 0000];
+    S2 = S2 + 0001;
+    system_print();
+
+    V0 = S2 < 0008;
 8028059C	bne    v0, zero, loop280564 [$80280564]
-802805A0	nop
+
 A0 = 80280004;
-802805AC	jal    $system_print
+system_print();
+
 S2 = 0;
 S0 = 800d2b58;
 
 loop2805bc:	; 802805BC
-V0 = w[800c35cc];
-802805C4	nop
-V0 = bu[V0 + 02d3];
-A0 = 80280058;
-802805D4	addiu  v0, v0, $fffd (=-$3)
-V0 = V0 << 06;
-V0 = V0 + S2;
-V0 = V0 + S0;
-A1 = bu[V0 + 0000];
-802805E8	jal    $system_print
-S2 = S2 + 0001;
-V0 = S2 < 0008;
+    V0 = w[800c35cc];
+    802805C4	nop
+    V0 = bu[V0 + 02d3];
+    A0 = 80280058;
+    802805D4	addiu  v0, v0, $fffd (=-$3)
+    V0 = V0 << 06;
+    V0 = V0 + S2;
+    V0 = V0 + S0;
+    A1 = bu[V0 + 0000];
+    S2 = S2 + 0001;
+    system_print();
+
+    V0 = S2 < 0008;
 802805F4	bne    v0, zero, loop2805bc [$802805bc]
-802805F8	nop
+
 A0 = 8028005c;
-80280604	jal    $system_print
+
+system_print();
+
 S2 = 0;
 S0 = 800d2b40;
 
 loop280614:	; 80280614
-V0 = w[800c35cc];
-A0 = 80280058;
-V0 = bu[V0 + 02d3];
-V1 = S2 << 01;
-8028062C	addiu  v0, v0, $fffd (=-$3)
-V0 = V0 << 06;
-V0 = V0 + S0;
-V1 = V1 + V0;
-A1 = hu[V1 + 0000];
-80280640	jal    $system_print
-S2 = S2 + 0001;
-V0 = S2 < 0004;
+    V0 = w[800c35cc];
+    A0 = 80280058;
+    V0 = bu[V0 + 02d3];
+    V1 = S2 << 01;
+    8028062C	addiu  v0, v0, $fffd (=-$3)
+    V0 = V0 << 06;
+    V0 = V0 + S0;
+    V1 = V1 + V0;
+    A1 = hu[V1 + 0000];
+    S2 = S2 + 0001;
+    system_print();
+
+    V0 = S2 < 0004;
 8028064C	bne    v0, zero, loop280614 [$80280614]
-80280650	nop
+
 A0 = 80280004;
-8028065C	jal    $system_print
+system_print();
+
 S2 = 0;
 S0 = 800d2b48;
 
 loop28066c:	; 8028066C
-V0 = w[800c35cc];
-A0 = 80280058;
-V0 = bu[V0 + 02d3];
-S2 = S2 + 0001;
-80280684	addiu  v0, v0, $fffd (=-$3)
-V0 = V0 << 06;
-V0 = S0 + V0;
-A1 = hu[V0 + 0000];
-80280694	jal    $system_print
-S0 = S0 + 0002;
-V0 = S2 < 0004;
+    V0 = w[800c35cc];
+    A0 = 80280058;
+    V0 = bu[V0 + 02d3];
+    S2 = S2 + 0001;
+    80280684	addiu  v0, v0, $fffd (=-$3)
+    V0 = V0 << 06;
+    V0 = S0 + V0;
+    A1 = hu[V0 + 0000];
+    S0 = S0 + 0002;
+    system_print();
+
+    V0 = S2 < 0004;
 802806A0	bne    v0, zero, loop28066c [$8028066c]
-802806A4	nop
+
 A0 = 80280064;
-802806B0	jal    $system_print
+system_print();
+
 S2 = 0;
 S0 = 800d2b30;
 
 loop2806c0:	; 802806C0
-V0 = w[800c35cc];
-A0 = 80280058;
-V0 = bu[V0 + 02d3];
-V1 = S2 << 02;
-802806D8	addiu  v0, v0, $fffd (=-$3)
-V0 = V0 << 06;
-V0 = V0 + S0;
-V1 = V1 + V0;
-A1 = w[V1 + 0000];
-802806EC	jal    $system_print
-S2 = S2 + 0001;
-V0 = S2 < 0002;
+    V0 = w[800c35cc];
+    A0 = 80280058;
+    V0 = bu[V0 + 02d3];
+    V1 = S2 << 02;
+    802806D8	addiu  v0, v0, $fffd (=-$3)
+    V0 = V0 << 06;
+    V0 = V0 + S0;
+    V1 = V1 + V0;
+    A1 = w[V1 + 0000];
+    S2 = S2 + 0001;
+    system_print();
+
+    V0 = S2 < 0002;
 802806F8	bne    v0, zero, loop2806c0 [$802806c0]
-802806FC	nop
+
 A0 = 80280004;
-80280708	jal    $system_print
+system_print();
+
 S2 = 0;
 S0 = 800d2b38;
 V0 = w[800c35cc];
@@ -309,8 +342,9 @@ S2 = S2 + 0001;
 V0 = V0 << 06;
 V0 = S0 + V0;
 A1 = w[V0 + 0000];
-80280740	jal    $system_print
 S0 = S0 + 0004;
+system_print();
+
 V0 = S2 < 0002;
 8028074C	beq    v0, zero, L280820 [$80280820]
 80280750	nop
@@ -318,56 +352,51 @@ V0 = S2 < 0002;
 80280758	nop
 
 L28075c:	; 8028075C
-8028075C	jal    $80036f00
-A1 = 0020;
+A1 = 20;
+func36f00();
+
 S2 = 0;
 S3 = 800cc498;
 
 loop280770:	; 80280770
-A0 = 8028006c;
-80280778	jal    $system_print
-A1 = S2;
-S0 = 0;
-S1 = S3;
+    A0 = 8028006c;
+    A1 = S2;
+    system_print();
 
-loop280788:	; 80280788
-A0 = 80280078;
-A1 = hu[S1 + 0000];
-S1 = S1 + 0002;
-80280798	jal    $system_print
-S0 = S0 + 0001;
-V0 = S0 < 0007;
-802807A4	bne    v0, zero, loop280788 [$80280788]
-802807A8	nop
-S2 = S2 + 0001;
-V0 = S2 < 0003;
+    S0 = 0;
+    S1 = S3;
+
+    loop280788:	; 80280788
+        A0 = 80280078;
+        A1 = hu[S1 + 0000];
+        S1 = S1 + 0002;
+        S0 = S0 + 0001;
+        system_print();
+
+        V0 = S0 < 0007;
+    802807A4	bne    v0, zero, loop280788 [$80280788]
+    802807A8	nop
+    S2 = S2 + 0001;
+    S3 = S3 + 0170;
+    V0 = S2 < 0003;
 802807B4	bne    v0, zero, loop280770 [$80280770]
-S3 = S3 + 0170;
-A0 = 80280004;
-802807C4	jal    $system_print
-S2 = 0;
-S3 = 8006cfc0;
 
-loop2807d4:	; 802807D4
-A0 = 8028007c;
-802807DC	jal    $system_print
-A1 = S2;
-S0 = 0;
-S1 = S3;
+A0 = 80280004; // "\n"
+system_print();
 
-loop2807ec:	; 802807EC
-A0 = 80280078;
-A1 = hu[S1 + 0000];
-S1 = S1 + 0002;
-802807FC	jal    $system_print
-S0 = S0 + 0001;
-V0 = S0 < 0007;
-80280808	bne    v0, zero, loop2807ec [$802807ec]
-8028080C	nop
-S2 = S2 + 0001;
-V0 = S2 < 000b;
-80280818	bne    v0, zero, loop2807d4 [$802807d4]
-S3 = S3 + 00a4;
+for( int i = 0; i < b; ++i )
+{
+    A0 = 8028007c; // "\nChar#%d:"
+    A1 = i;
+    system_print();
+
+    for( int j = 0; j < 7; ++j )
+    {
+        A0 = 80280078; // " %d"
+        A1 = hu[8006cfc0 + i * a4 + j * 2];
+        system_print();
+    }
+}
 
 L280820:	; 80280820
 ////////////////////////////////
@@ -421,11 +450,11 @@ V0 = 0 - S1;
 
 L2808c0:	; 802808C0
 A0 = 800d27d0;
-802808C8	jal    $8003f5e0
+802808C8	jal    $system_calculate_rotation_matrix
 A1 = S0;
 A0 = S0;
 A1 = SP + 0020;
-802808D8	jal    $80049b94
+802808D8	jal    $system_gte_apply_matrix
 A2 = SP + 0010;
 A0 = 800d2a74;
 V0 = hu[A0 + 0000];
@@ -521,11 +550,11 @@ A1 = S0;
 [SP + 0028] = h(V0);
 [SP + 002a] = h(V1);
 [SP + 002c] = h(A2);
-80280A28	jal    $8003f5e0
+80280A28	jal    $system_calculate_rotation_matrix
 [SP + 0028] = h(0);
 A0 = S0;
 A1 = SP + 0020;
-80280A38	jal    $80049b94
+80280A38	jal    $system_gte_apply_matrix
 A2 = SP + 0010;
 A0 = 800d2a7c;
 V0 = hu[A0 + 0000];
@@ -675,10 +704,10 @@ S0 = w[80058c1c];
 80280CA0	nop
 V0 = S0 + 0028;
 [80058c1c] = w(V0);
-80280CB0	jal    $80043b28
+80280CB0	jal    $system_graphic_textured_quad_header
 A0 = S0;
 A0 = S0;
-80280CBC	jal    $80043a9c
+80280CBC	jal    $func43a9c
 A1 = 0001;
 A0 = 0001;
 A1 = 0;
@@ -704,24 +733,24 @@ S5 = 00ff;
 [S0 + 001c] = b(0);
 [S0 + 001d] = b(S5);
 [S0 + 0024] = b(S3);
-80280D24	jal    $80043894
+80280D24	jal    $system_graphic_get_texpage_by_param
 [S0 + 0025] = b(S5);
 A0 = 0;
 A1 = 01cc;
-80280D34	jal    $800438d0
+80280D34	jal    $system_graphic_get_clut_by_param
 [S0 + 0016] = h(V0);
 A0 = w[80058c08];
 A1 = S0;
-80280D48	jal    $800439c0
+80280D48	jal    $func439c0
 [A1 + 000e] = h(V0);
 S0 = w[80058c1c];
 80280D58	nop
 V0 = S0 + 0028;
 [80058c1c] = w(V0);
-80280D68	jal    $80043b28
+80280D68	jal    $system_graphic_textured_quad_header
 A0 = S0;
 A0 = S0;
-80280D74	jal    $80043a9c
+80280D74	jal    $func43a9c
 A1 = 0001;
 A0 = 0001;
 A1 = 0;
@@ -743,15 +772,15 @@ V0 = 0080;
 [S0 + 001c] = b(0);
 [S0 + 001d] = b(S5);
 [S0 + 0024] = b(S3);
-80280DCC	jal    $80043894
+80280DCC	jal    $system_graphic_get_texpage_by_param
 [S0 + 0025] = b(S5);
 A0 = 0;
 A1 = 01cc;
-80280DDC	jal    $800438d0
+80280DDC	jal    $system_graphic_get_clut_by_param
 [S0 + 0016] = h(V0);
 A0 = w[80058c08];
 A1 = S0;
-80280DF0	jal    $800439c0
+80280DF0	jal    $func439c0
 [A1 + 000e] = h(V0);
 S0 = 800d27d8;
 A1 = w[S0 + 0000];
@@ -820,9 +849,9 @@ V0 = w[802821c4];
 80280F1C	nop
 V0 = V0 + 0001;
 [802821c4] = w(V0);
-80280F2C	jal    $80049da4
+80280F2C	jal    $system_gte_set_rotation_matrix
 A0 = S0;
-80280F34	jal    $80049e34
+80280F34	jal    $system_gte_set_translation_vector
 A0 = S0;
 S2 = SP + 0018;
 A0 = S2;
@@ -853,7 +882,7 @@ V1 = hu[A1 + 000a];
 80280FB0	addiu  v0, v0, $fffc (=-$4)
 80280FB4	addiu  v1, v1, $fffc (=-$4)
 [A1 + 0008] = h(V0);
-80280FBC	jal    $800439c0
+80280FBC	jal    $func439c0
 [A1 + 000a] = h(V1);
 V0 = w[802821c4];
 80280FCC	nop
@@ -1222,15 +1251,15 @@ S1 = SP + 0028;
 A2 = S1;
 [S0 + 0004] = b(S3);
 [S0 + 0005] = b(S4);
-80281504	jal    $8004a3f4
+80281504	jal    $func4a3f4
 [S0 + 0006] = b(S5);
 A0 = S2 + 0008;
 A1 = SP + 0018;
-80281514	jal    $8004a3f4
+80281514	jal    $func4a3f4
 A2 = S1;
 A0 = S2 + 0010;
 A1 = SP + 0020;
-80281524	jal    $8004a3f4
+80281524	jal    $func4a3f4
 A2 = S1;
 V0 = hu[SP + 0010];
 A0 = w[80058c08];
@@ -1249,7 +1278,7 @@ V0 = hu[SP + 0020];
 [S0 + 0010] = h(V0);
 V0 = hu[SP + 0022];
 A1 = S0;
-80281574	jal    $800439c0
+80281574	jal    $func439c0
 [A1 + 0012] = h(V0);
 RA = w[SP + 0048];
 S5 = w[SP + 0044];
@@ -1280,7 +1309,7 @@ S4 = A2;
 [SP + 003c] = w(S1);
 V0 = S0 + 0018;
 [80058c1c] = w(V0);
-802815E0	jal    $80043bf0
+802815E0	jal    $func43bf0
 A0 = S0;
 A0 = SP + 0010;
 A1 = SP + 0020;
@@ -1296,11 +1325,11 @@ V0 = 0023;
 [SP + 001c] = h(0);
 [S0 + 0004] = b(S2);
 [S0 + 0005] = b(S3);
-80281620	jal    $8004a3f4
+80281620	jal    $func4a3f4
 [S0 + 0006] = b(S4);
 A0 = SP + 0018;
 A1 = SP + 0028;
-80281630	jal    $8004a3f4
+80281630	jal    $func4a3f4
 A2 = S1;
 V0 = hu[SP + 0020];
 A0 = w[80058c08];
@@ -1313,7 +1342,7 @@ V0 = hu[SP + 0028];
 [S0 + 000c] = h(V0);
 V0 = hu[SP + 002a];
 A1 = S0;
-80281668	jal    $800439c0
+80281668	jal    $func439c0
 [A1 + 000e] = h(V0);
 RA = w[SP + 004c];
 S4 = w[SP + 0048];
@@ -1345,7 +1374,7 @@ S3 = A3;
 [SP + 003c] = w(RA);
 V0 = S0 + 0018;
 [80058c1c] = w(V0);
-802816D4	jal    $80043bf0
+802816D4	jal    $func43bf0
 A0 = S0;
 A0 = SP + 0010;
 A1 = SP + 0018;
@@ -1355,7 +1384,7 @@ A2 = SP + 0020;
 [SP + 0014] = h(0);
 [S0 + 0004] = b(S1);
 [S0 + 0005] = b(S2);
-802816FC	jal    $8004a3f4
+802816FC	jal    $func4a3f4
 [S0 + 0006] = b(S3);
 V0 = 0118;
 [S0 + 0008] = h(V0);
@@ -1366,7 +1395,7 @@ A0 = w[80058c08];
 [S0 + 000c] = h(V0);
 V0 = hu[SP + 001a];
 A1 = S0;
-8028172C	jal    $800439c0
+8028172C	jal    $func439c0
 [A1 + 000e] = h(V0);
 RA = w[SP + 003c];
 S4 = w[SP + 0038];
@@ -1395,9 +1424,9 @@ V0 = 0118;
 [SP + 0038] = w(V0);
 V0 = 00c8;
 [SP + 003c] = w(V0);
-80281788	jal    $80049c44
+80281788	jal    $func49c44
 [SP + 0040] = w(0);
-80281790	jal    $80049e34
+80281790	jal    $system_gte_set_translation_vector
 A0 = SP + 0010;
 S0 = SP + 0030;
 A0 = S0;
@@ -1406,9 +1435,9 @@ A0 = S0;
 V0 = hu[S2 + 003c];
 A1 = SP + 0010;
 802817B0	addiu  v0, v0, $fc00 (=-$400)
-802817B4	jal    $8003f5e0
+802817B4	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-802817BC	jal    $80049da4
+802817BC	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
 S1 = 80282144;
 A0 = S1;
@@ -1422,9 +1451,9 @@ A0 = S0;
 V0 = hu[S2 + 004c];
 A1 = SP + 0010;
 802817F4	addiu  v0, v0, $fc00 (=-$400)
-802817F8	jal    $8003f5e0
+802817F8	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-80281800	jal    $80049da4
+80281800	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
 A0 = 0014;
 A1 = 0;
@@ -1437,9 +1466,9 @@ A0 = S0;
 V0 = hu[S2 + 0038];
 A1 = SP + 0010;
 80281830	addiu  v0, v0, $fc00 (=-$400)
-80281834	jal    $8003f5e0
+80281834	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-8028183C	jal    $80049da4
+8028183C	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
 A0 = S1 + 0018;
 A1 = 00ff;
@@ -1452,9 +1481,9 @@ A0 = S0;
 V0 = hu[S2 + 0048];
 A1 = SP + 0010;
 8028186C	addiu  v0, v0, $fc00 (=-$400)
-80281870	jal    $8003f5e0
+80281870	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-80281878	jal    $80049da4
+80281878	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
 A0 = 001e;
 A1 = 00ff;
@@ -1478,9 +1507,9 @@ A0 = SP + 0030;
 A1 = SP + 0010;
 [SP + 0030] = h(0);
 [SP + 0032] = h(0);
-802818C8	jal    $8003f5e0
+802818C8	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(S1);
-802818D0	jal    $80049da4
+802818D0	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
 A0 = 00ff;
 A1 = 0;
@@ -1508,9 +1537,9 @@ A0 = SP + 0030;
 A1 = SP + 0010;
 [SP + 0030] = h(0);
 [SP + 0032] = h(0);
-80281928	jal    $8003f5e0
+80281928	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(S1);
-80281930	jal    $80049da4
+80281930	jal    $system_gte_set_rotation_matrix
 A0 = SP + 0010;
 A0 = 0;
 A1 = 0;
@@ -1521,40 +1550,28 @@ A2 = 00ff;
 S1 = S1 + 0100;
 
 L281954:	; 80281954
-RA = w[SP + 0054];
-S2 = w[SP + 0050];
-S1 = w[SP + 004c];
-S0 = w[SP + 0048];
-SP = SP + 0058;
-80281968	jr     ra 
-8028196C	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func281970
-80281970	addiu  sp, sp, $ffe0 (=-$20)
+// func281970()
+
 A0 = 0058;
 A1 = 0;
 A2 = 802813d8;
 A3 = 80281758;
-[SP + 0018] = w(RA);
-80281990	jal    $8001d05c
-[SP + 0010] = w(0);
-V1 = 0001;
-[V0 + 0054] = w(V1);
-[V0 + 0050] = w(V1);
-[V0 + 004c] = w(0);
-[V0 + 0048] = w(0);
-[V0 + 003c] = w(0);
-[V0 + 0038] = w(0);
-[V0 + 0044] = w(0);
-[V0 + 0040] = w(0);
-RA = w[SP + 0018];
-SP = SP + 0020;
-802819C4	jr     ra 
-802819C8	nop
+A4 = 0;
+func1d05c();
+
+[V0 + 54] = w(1);
+[V0 + 50] = w(1);
+[V0 + 4c] = w(0);
+[V0 + 48] = w(0);
+[V0 + 3c] = w(0);
+[V0 + 38] = w(0);
+[V0 + 44] = w(0);
+[V0 + 40] = w(0);
 ////////////////////////////////
 
 
@@ -1642,9 +1659,9 @@ S0 = 800d27dc;
 [SP + 0012] = h(V0);
 V0 = h[S1 + 000a];
 A0 = S0;
-80281B40	jal    $80049da4
+80281B40	jal    $system_gte_set_rotation_matrix
 [SP + 0014] = h(V0);
-80281B48	jal    $80049e34
+80281B48	jal    $system_gte_set_translation_vector
 A0 = S0;
 A0 = SP + 0010;
 A1 = SP + 0028;
