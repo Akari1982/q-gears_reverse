@@ -342,7 +342,7 @@ if( S0 == 0 )
 A0 = S0;
 system_memory_mark_not_removable();
 
-[800589e8] = w(hu[S0 + 4]);
+[800589e8] = w(hu[S0 + 4]); // start of extended text characters
 [800589ec] = w(hu[S0 + 6]);
 [800589f0] = w(hu[S0 + 8]);
 [800589f4] = w(hu[S0 + a]);

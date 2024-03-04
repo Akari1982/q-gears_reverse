@@ -2560,7 +2560,7 @@ system_cdrom2_get_cdrom_hdd_mode();
 [80076ac8] = w(0);
 [80076acc] = w(0);
 [80076ad4] = w(2);
-[80076ad8] = w(1);
+[80076ad8] = w(1); // movie type picture + adpcm
 [80076adc] = w(0);
 [80076ae4] = w(1);
 
@@ -2784,11 +2784,11 @@ while( true )
         [80076ad8] = w(w[80076ad8] + lr);
         if( w[80076ad8] < 0 )
         {
-            [80076ad8] = w(2);
+            [80076ad8] = w(2); // movie type adpcm only
         }
         if( w[80076ad8] >= 3 )
         {
-            [80076ad8] = w(0);
+            [80076ad8] = w(0); // movie type picture only
         }
         [80076a34] = w(1); // start frame
         [80076a38] = w(0); // number of sectors to play
@@ -2949,17 +2949,17 @@ while( true )
                 A0 = 8006f7e0; // " MOVIE TYPE   "
                 system_print();
 
-                if( w[80076ad8] == 0 )
+                if( w[80076ad8] == 0 ) // movie type picture only
                 {
                     A0 = 8006f7f0; // "PICTURE ONLY\n"
                     system_print();
                 }
-                else if( w[80076ad8] == 1 )
+                else if( w[80076ad8] == 1 ) // movie type picture + adpcm
                 {
                     A0 = 8006f800; // "PICTURE+ADPCM\n"
                     system_print();
                 }
-                else if( w[80076ad8] == 2 )
+                else if( w[80076ad8] == 2 ) // movie type adpcm only
                 {
                     A0 = 8006f810; // "ADPCM ONLY\n"
                     system_print();
@@ -3379,11 +3379,11 @@ system_draw_sync();
 ////////////////////////////////
 // func74234()
 
-V1 = w[80076ad8];
 start_frame = A0; // start frame
+
 S6 = 0;
 
-if( V1 == 0 )
+if( w[80076ad8] == 0 ) // movie type picture only
 {
     A0 = 18;
     A1 = 0;
@@ -3392,12 +3392,15 @@ if( V1 == 0 )
     A0 = 2;
     system_cdrom2_get_number_of_files_in_dir();
 
-    if( w[800767ac] >= V0 )
+    movie_id = w[800767ac];
+
+    if( movie_id >= V0 )
     {
         return 0;
     }
 
-    S5 = A0 + 3;
+    S5 = movie_id + 3;
+
     A0 = S5;
     system_cdrom2_get_debug_filename();
     S0 = V0;
@@ -3407,7 +3410,7 @@ if( V1 == 0 )
     [SP + 1020] = w(0);
     800742BC	j      L74330 [$80074330]
 }
-else if( V1 == 1 )
+else if( w[80076ad8] == 1 ) // movie type picture + adpcm
 {
     A0 = 18;
     A1 = 1;
@@ -3416,13 +3419,14 @@ else if( V1 == 1 )
     A0 = 1;
     system_cdrom2_get_number_of_files_in_dir();
 
-    A0 = w[800767ac];
-    V0 = A0 < V0;
-    S5 = A0 + 2;
-    if( V0 == 0 )
+    movie_id = w[800767ac];
+
+    if( movie_id >= V0 )
     {
         return 0;
     }
+
+    S5 = movie_id + 2;
 
     A0 = S5;
     system_cdrom2_get_debug_filename();
@@ -3433,7 +3437,7 @@ else if( V1 == 1 )
     [SP + 1020] = w(8);
 
 }
-else if ( V1 == 2 )
+else if ( w[80076ad8] == 2 ) // movie type adpcm only
 {
     return -1;
 }
@@ -3802,7 +3806,7 @@ return -1;
 
 S4 = -1;
 
-if( w[80076ad8] == 0 ) // picture only
+if( w[80076ad8] == 0 ) // movie type picture only
 {
     A0 = 18;
     A1 = 0;
@@ -3826,7 +3830,7 @@ if( w[80076ad8] == 0 ) // picture only
     datasize = 20;
     S5 = 0;
 }
-else if( w[80076ad8] == 1 ) // picture + adpcm
+else if( w[80076ad8] == 1 ) // movie type picture + adpcm
 {
     A0 = 18;
     A1 = 1;
@@ -3850,7 +3854,7 @@ else if( w[80076ad8] == 1 ) // picture + adpcm
     datasize = 28;
     S5 = 8;
 }
-else if( w[80076ad8] == 2 ) // adpcm only
+else if( w[80076ad8] == 2 ) // movie type adpcm only
 {
     return -1
 }
@@ -4622,9 +4626,7 @@ system_cdrom2_set_dir();
 [800766b8] = w(0);
 [80076a3c] = w(-1);
 
-V1 = w[80076ad8];
-
-if( V1 == 0 )
+if( w[80076ad8] == 0 ) // movie type picture only
 {
     A0 = 18;
     A1 = 0;
@@ -4632,7 +4634,7 @@ if( V1 == 0 )
 
     A0 = 2;
 }
-else if( V1 == 1 )
+else if( w[80076ad8] == 1 ) // movie type picture + adpcm
 {
     A0 = 18;
     A1 = 1;
@@ -4640,7 +4642,7 @@ else if( V1 == 1 )
 
     A0 = 1;
 }
-else if( V1 == 2 )
+else if( w[80076ad8] == 2 ) // movie type adpcm only
 {
     return;
 }

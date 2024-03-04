@@ -1544,6 +1544,7 @@ system_load_files_by_array();
 
 ////////////////////////////////
 // func1aed8()
+// field related
 
 system_cdrom_data_action_sync();
 
@@ -1612,8 +1613,6 @@ if( w[8004ea18] == 1 )
     func1b23c();
 }
 
-S1 = 0;
-
 system_cdrom_data_action_sync();
 
 S3 = 0;
@@ -1621,18 +1620,16 @@ S4 = 8006f14c;
 S0 = 8006518c;
 S6 = S0;
 S2 = 0;
+S1 = 0;
 
 loop1b05c:	; 8001B05C
-    A0 = S4 + S1 * 4;
-    V1 = w[A0 + 0000];
+    V1 = w[S4 + S1 * 4];
 
     if( V1 != ff )
     {
-        V0 = V1 + 0005;
+        [80061c34 + S2] = h(V1 + 5);
 
-        [80061c34 + S2] = h(V0);
-
-        A0 = w[A0 + 0] + 5;
+        A0 = w[S4 + S1 * 4] + 5;
         system_get_aligned_filesize_by_dir_file_id();
 
         A0 = V0;
@@ -1640,7 +1637,7 @@ loop1b05c:	; 8001B05C
         system_memory_allocate();
         [S0] = w(V0);
 
-        [80061c38 + S2] = w(V0);
+        [80061c34 + S2 + 4] = w(V0);
 
         if( V0 == 0 )
         {
@@ -2084,7 +2081,7 @@ A0 = V0;
 A1 = 1;
 system_memory_allocate();
 
-A0 = 0003;
+A0 = 3;
 S0 = V0;
 A1 = S0;
 A2 = 0;

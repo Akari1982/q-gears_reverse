@@ -36,8 +36,7 @@ if( S0 >= V1 )
 else
 {
     S0 = S0 * 2;
-    A0 = S4 + 7;
-    A0 = S0 + A0;
+    A0 = S0 + S4 + 7;
     system_get_aligned_filesize_by_dir_file_id();
 
     A0 = V0;
