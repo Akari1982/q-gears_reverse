@@ -1,0 +1,16 @@
+0013-mdec.lib
+
+0023-battling.lib
+0024-field.lib
+0025-world.lib
+0026-battle.lib
+0027-menu.lib
+0028-movie.lib
+
+0253-field_debug.lib
+
+0a24-.lib
+0a2e-.lib
+0a31-.lib
+0a33-battle_debug.lib
+0c0f-.lib
