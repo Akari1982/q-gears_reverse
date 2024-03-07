@@ -290,7 +290,7 @@ system_print_clear_memory();
 
 if( w[800b1738] != 0 )
 {
-    8006F97C	jal    func1e7fd4 [$801e7fd4]
+    func1e7fd4();
 
     A0 = w[800acff8];
     system_memory_mark_removed_alloc();
@@ -3577,7 +3577,7 @@ SP = SP + 0008;
 
 
 ////////////////////////////////
-// func73d90()
+// field_update_buttons()
 
 [800af370] = h(0); // current buttons c1
 [800af374] = h(0); // current buttons c2

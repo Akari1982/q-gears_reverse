@@ -242,7 +242,7 @@ A0 = S4;
 func319b8();
 
 A0 = 10;
-func3bca4();
+system_sound_spu_sync();
 
 A0 = snd24_mem;
 system_memory_mark_removed_alloc();
@@ -1548,7 +1548,7 @@ system_load_files_by_array();
 
 system_cdrom_data_action_sync();
 
-if( w[8004ea18] != 1 )
+if( w[8004ea18] != 1 ) // if not yet loading
 {
     if( w[8004e9b0] != 0 )
     {
@@ -1558,7 +1558,7 @@ if( w[8004ea18] != 1 )
         return;
     }
 }
-else
+else // finish load
 {
     func1b23c();
 
@@ -1608,56 +1608,44 @@ S5 = A0;
 A0 = 1;
 func319c4();
 
-if( w[8004ea18] == 1 )
+if( w[8004ea18] == 1 ) // if files with sprites data loading
 {
     func1b23c();
 }
 
 system_cdrom_data_action_sync();
 
-S3 = 0;
-S4 = 8006f14c;
-S0 = 8006518c;
-S6 = S0;
-S2 = 0;
-S1 = 0;
+load_id = 0;
 
-loop1b05c:	; 8001B05C
-    V1 = w[S4 + S1 * 4];
-
-    if( V1 != ff )
+for( int i = 0; i < 3; ++i )
+{
+    char_id = w[8006f14c + i * 4];
+    if( char_id != ff ) // if party member exist
     {
-        [80061c34 + S2] = h(V1 + 5);
+        [80061c34 + load_id * 8 + 0] = h(char_id + 5);
 
-        A0 = w[S4 + S1 * 4] + 5;
+        A0 = char_id + 5; // dir file id
         system_get_aligned_filesize_by_dir_file_id();
 
         A0 = V0;
         A1 = 1;
         system_memory_allocate();
-        [S0] = w(V0);
+        [8006518c + load_id * 4] = w(V0); // memory to load into
 
-        [80061c34 + S2 + 4] = w(V0);
+        [80061c34 + load_id * 8 + 4] = w(V0); // cd array load
 
-        if( V0 == 0 )
+        if( V0 == 0 ) // error memory not allocated
         {
-            if( S3 > 0 )
+            if( load_id > 0 ) // remove already allocated memory for char sprites
             {
-                S1 = 0;
-                S0 = S6;
-
-                loop1b0bc:	; 8001B0BC
-                    S1 = S1 + 1;
-
-                    A0 = w[S0];
+                for( int j = 0; j < load_id; ++j )
+                {
+                    A0 = w[8006518c + j * 4];
                     system_memory_mark_removable();
 
-                    A0 = w[S0];
+                    A0 = w[8006518c + j * 4];
                     system_memory_mark_removed_alloc();
-
-                    S0 = S0 + 4;
-                    V0 = S1 < S3;
-                8001B0D8	bne    v0, zero, loop1b0bc [$8001b0bc]
+                }
             }
 
             A0 = 0;
@@ -1666,18 +1654,12 @@ loop1b05c:	; 8001B05C
             return;
         }
 
-        A0 = w[S0];
+        A0 = w[8006518c + load_id * 4];
         system_memory_mark_not_removable();
 
-        S0 = S0 + 4;
-        S2 = S2 + 8;
-        S3 = S3 + 1;
+        ++load_id;
     }
-
-    S1 = S1 + 1;
-    V0 = S1 < 3;
-8001B104	bne    v0, zero, loop1b05c [$8001b05c]
-
+}
 
 if( S5 != 0 )
 {
@@ -1689,17 +1671,17 @@ if( S5 != 0 )
     system_memory_allocate();
     [80059b30] = w(V0);
 
-    [80061c38 + S3 * 8] = w(V0);
+    [80061c34 + load_id * 8 + 4] = w(V0);
 
-    if( V0 != 0 )
+    if( V0 != 0 ) // memory allocated
     {
         A0 = V0;
         system_memory_mark_not_removable();
 
-        [80061c34 + S3 * 8 + 0] = h(a7);
+        [80061c34 + load_id * 8 + 0] = h(a7);
         [8004e9e8] = w(1);
 
-        S3 = S3 + 1;
+        ++load_id;
     }
 
     A0 = a8;
@@ -1710,24 +1692,24 @@ if( S5 != 0 )
     system_memory_allocate();
     [80059b4c] = w(V0);
 
-    [80061c34 + S3 * 8 + 4] = w(V0);
+    [80061c34 + load_id * 8 + 4] = w(V0);
 
-    if( V0 != 0 )
+    if( V0 != 0 ) // memory allocated
     {
         A0 = V0;
         system_memory_mark_not_removable();
 
-        [80061c34 + S3 * 8 + 0] = h(a8);
+        [80061c34 + load_id * 8 + 0] = h(a8);
         [8004e9d0] = w(0);
 
-        S3 = S3 + 1;
+        ++load_id;
     }
 }
 
-[80061c34 + S3 * 8 + 0] = h(0);
-[80061c34 + S3 * 8 + 4] = w(0);
+[80061c34 + load_id * 8 + 0] = h(0);
+[80061c34 + load_id * 8 + 4] = w(0);
 
-A0 = 80061c34;
+A0 = 80061c34; // load array
 A1 = 0;
 A2 = 0;
 system_load_files_by_array();
@@ -1749,16 +1731,16 @@ if( w[8004ea18] != 0 )
 
     for( int i = 0; i < 3; ++i )
     {
-        A0 = w[80059aa4 + i * 4];
+        A0 = w[80059aa4 + i * 4]; // pointer to player sprite data
         system_memory_mark_removable();
 
-        if( w[80061c20 + i * 4] != ff )
+        if( w[80061c20 + i * 4] != ff ) // party member
         {
             A0 = w[8006518c + i * 4];
             system_memory_mark_removable();
 
-            A0 = w[8006518c + i * 4];
-            A1 = w[80059aa4 + i * 4];
+            A0 = w[8006518c + i * 4]; // src
+            A1 = w[80059aa4 + i * 4]; // dst
             system_extract_archive();
 
             A0 = w[8006518c + i * 4];
@@ -2279,7 +2261,7 @@ if( bu[GP + 3d8] != 4 )
         {
             V0 = w[GP + 45c];
             A0 = (hu[V0 + 14] << 10) | bu[8004ea2c + V1 * 3 + i + 0000]; // sound id
-            func39c60();
+            system_sound_play_sed_1();
         }
     }
 }
@@ -2725,7 +2707,7 @@ if( bu[80058818] != 0 )
     A0 = 0;
     system_cdrom_action_sync();
 
-    if( bu[80058afc] == 5 )
+    if( bu[80058afc] == 5 ) // if robo menu
     {
         A0 = 4;
         A1 = 0;

@@ -55675,7 +55675,7 @@ V0 = w[V0 + 0008];
 A0 = hu[V0 + 0014];
 V0 = V1 + 000a;
 A0 = A0 << 10;
-800ADDC4	jal    $80039d08
+800ADDC4	jal    $system_sound_play_sed_3
 A0 = A0 | V0;
 
 Laddcc:	; 800ADDCC
@@ -55698,13 +55698,13 @@ Lade08:	; 800ADE08
 A0 = bu[S1 + 0003];
 800ADE0C	nop
 A0 = S2 + A0;
-800ADE14	jal    $80039d08
+800ADE14	jal    $system_sound_play_sed_3
 A0 = A0 + S4;
 V0 = bu[S1 + 0006];
 800ADE20	nop
 800ADE24	beq    v0, zero, Lade34 [$800ade34]
 A0 = S2 + V0;
-800ADE2C	jal    $80039d08
+800ADE2C	jal    $system_sound_play_sed_3
 A0 = A0 + S4;
 
 Lade34:	; 800ADE34
@@ -62062,7 +62062,7 @@ V0 = A0 | V0;
 A0 = hu[V1 + 0014];
 V0 = A1 + 0052;
 A0 = A0 << 10;
-800B372C	jal    $80039d08
+800B372C	jal    $system_sound_play_sed_3
 A0 = V0 | A0;
 800B3734	j      Lb43e8 [$800b43e8]
 800B3738	nop
@@ -62077,7 +62077,7 @@ A0 = w[S0 + 0050];
 A0 = hu[A0 + 0014];
 V0 = bu[S1 + 0000];
 A0 = A0 << 10;
-800B3768	jal    $80039c60
+800B3768	jal    $system_sound_play_sed_1
 A0 = V0 | A0;
 800B3770	j      Lb43e8 [$800b43e8]
 800B3774	nop
@@ -62089,7 +62089,7 @@ A1 = bu[S1 + 0001];
 A0 = hu[A0 + 0014];
 V0 = bu[S1 + 0000];
 A0 = A0 << 10;
-800B3798	jal    $80039d6c
+800B3798	jal    $system_sound_play_sed_4
 A0 = V0 | A0;
 800B37A0	j      Lb43e8 [$800b43e8]
 800B37A4	nop
@@ -66517,7 +66517,7 @@ V0 = hu[S2 + 0014];
 V1 = V1 + S5;
 V0 = V0 << 10;
 S0 = V1 + V0;
-800B7A90	jal    $80039d08
+800B7A90	jal    $system_sound_play_sed_3
 A0 = S0;
 
 Lb7a98:	; 800B7A98

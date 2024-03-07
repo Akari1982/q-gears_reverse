@@ -871,6 +871,7 @@ else
 
 ////////////////////////////////
 // func81808()
+
 struct_164 = A0;
 animation_id = A1;
 struct_5c = A2;
@@ -3104,29 +3105,23 @@ L84b64:	; 80084B64
 
 ////////////////////////////////
 // func84b74
-80084B74	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+
 S0 = A0;
-A0 = 0008;
-V0 = 0001;
-[SP + 0014] = w(S1);
-[SP + 0018] = w(RA);
-[800ad004] = w(V0);
-80084B98	jal    $8002a070
+[800ad004] = w(1);
 S1 = A2;
+
+A0 = 8;
+func2a070();
+
+[800ad090] = w(V0);
+
 A0 = S0;
 A1 = V0;
 A2 = 0;
-[800ad090] = w(A1);
-80084BB4	jal    $800293e8
-A3 = 0100;
+A3 = 100;
+system_cdrom2_load_file_by_dir_file_id();
+
 [800af378] = w(S1);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80084BD4	jr     ra 
-80084BD8	nop
 ////////////////////////////////
 
 
@@ -3200,9 +3195,10 @@ if( h[800c2f0c] != ff )
 
         A1 = hu[A1 + S1];
         V1 = w[800b1830];
+
         A0 = (hu[V1 + 14] << 10) | (A1 & ff);
         A1 = (A1 >> 07) & e;
-        80084D0C	jal    func39d6c
+        system_sound_play_sed_4();
 
         [800c2f38] = w(w[800c2f38] + 1);
     }
@@ -3267,7 +3263,7 @@ A0 = w[800b1830];
 func382d0();
 
 A0 = 0010;
-func3bca4();
+system_sound_spu_sync();
 
 A0 = 0004;
 A1 = 0;
@@ -3355,7 +3351,7 @@ A0 = w[80061c2c];
 system_sound_insert_sed_to_linked_array();
 
 A0 = 10;
-func3bca4(); // wait for some sound flag
+system_sound_spu_sync();
 
 A0 = 4;
 A1 = 0;
@@ -3444,7 +3440,7 @@ if( w[800b1844] == 4 )
 
 L850c4:	; 800850C4
 A0 = 10;
-func3bca4();
+system_sound_spu_sync();
 
 A3 = w[800c2ef0];
 A2 = S0;
@@ -3591,7 +3587,7 @@ if( S0 == 1 )
     }
 
     A0 = 10;
-    func3bca4();
+    system_sound_spu_sync();
 
     A0 = w[800c2ef0];
     system_memory_mark_removed_alloc();
@@ -3774,24 +3770,25 @@ A0 = 1c;
 A1 = 0;
 system_cdrom2_set_dir();
 
-800855E0	jal    $800286fc
-A0 = 0003;
+A0 = 3;
+system_get_aligned_filesize_by_dir_file_id();
+
 A0 = V0;
-800855EC	jal    $800319ec
-A1 = 0001;
-A0 = 0003;
+A1 = 1;
+system_memory_allocate();
+[800af5b4] = w(V0);
+
+A0 = 3;
 A1 = V0;
 A2 = 0;
-[800af5b4] = w(A1);
-80085608	jal    $800293e8
-A3 = 0080;
+A3 = 80;
+system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 4;
 A1 = 0;
 system_cdrom2_set_dir();
 
-V0 = 0080;
-[8004ea08] = w(V0);
+[8004ea08] = w(80);
 ////////////////////////////////
 
 

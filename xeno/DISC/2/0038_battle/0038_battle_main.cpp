@@ -2479,7 +2479,7 @@ V0 = w[8005883c];
 V0 = hu[V0 + 0014];
 A0 = A0 & 00ff;
 V0 = V0 << 10;
-80072D00	jal    $80039c60
+80072D00	jal    $system_sound_play_sed_1
 A0 = V0 | A0;
 RA = w[SP + 0010];
 SP = SP + 0018;

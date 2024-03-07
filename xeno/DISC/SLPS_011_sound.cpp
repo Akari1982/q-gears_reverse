@@ -2084,7 +2084,7 @@ return w[80058be0];
 
 
 ////////////////////////////////
-// func39c60()
+// system_sound_play_sed_1()
 
 sed_id = A0;
 
@@ -2103,7 +2103,7 @@ if( hu[80058c18] & 0800 )
 
 
 ////////////////////////////////
-// func39cc0()
+// system_sound_play_sed_2()
 
 sed_id = A0;
 
@@ -2122,7 +2122,7 @@ if( hu[80058c18] & 0800 )
 
 
 ////////////////////////////////
-// func39d08()
+// system_sound_play_sed_3()
 
 sed_id = A0;
 
@@ -2145,7 +2145,7 @@ if( hu[80058c18] & 0800 )
 
 
 ////////////////////////////////
-// func39d6c()
+// system_sound_play_sed_4()
 
 sed_id = A0;
 start_channel_id = A1;
@@ -3845,7 +3845,7 @@ return V0 ^ 1;
 
 
 ////////////////////////////////
-// func3bca4()
+// system_sound_spu_sync()
 
 if( A0 & 10 )
 {
@@ -3868,17 +3868,13 @@ return 0;
 ////////////////////////////////
 // func3bd10()
 
-V0 = hu[80058bac];
-V1 = V0 + 0001;
-V0 = V1 & ffff;
-V0 = V0 < 0008;
-if( V0 == 0 )
+V1 = (hu[80058bac] + 1) & ffff;
+if( V1 >= 8 )
 {
     V1 = 0;
 }
 
 [80058bac] = h(V1);
-V1 = V1 & ffff;
 [80058c18] = h(hu[80058c18] | 0010);
 
 A0 = 8003ba0c; // system_sound_spu_dma_stop_callback()
@@ -7482,8 +7478,8 @@ A0 = 8004ffb0; // sed file
 system_sound_insert_sed_to_linked_array();
 
 A0 = 10;
-func3bca4();
+system_sound_spu_sync();
 
 A0 = (hu[8004ffc4] << 10) | 1;
-func39d08();
+system_sound_play_sed_3();
 ////////////////////////////////

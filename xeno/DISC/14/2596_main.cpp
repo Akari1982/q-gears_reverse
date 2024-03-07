@@ -2705,7 +2705,7 @@ V0 = w[8005883c];
 V0 = hu[V0 + 0014];
 A0 = A0 & 00ff;
 V0 = V0 << 10;
-801E09DC	jal    $80039d08
+801E09DC	jal    $system_sound_play_sed_3
 A0 = V0 | A0;
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -4076,7 +4076,7 @@ V0 = w[8005883c];
 A0 = hu[V0 + 0014];
 801E1EE4	nop
 A0 = A0 << 10;
-801E1EEC	jal    $80039c60
+801E1EEC	jal    $system_sound_play_sed_1
 A0 = A0 | 005b;
 V0 = w[800d2448];
 801E1EFC	nop

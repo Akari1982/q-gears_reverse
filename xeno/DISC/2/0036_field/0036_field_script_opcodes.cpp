@@ -3311,14 +3311,16 @@ S0 = S0 + 07fb;
 80089954	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0;
 A0 = V0;
-80089960	jal    $system_memory_allocate
 A1 = 0;
+system_memory_allocate();
+
 A0 = S0;
 A1 = V0;
 A2 = 0;
 [800b1448] = w(A1);
-8008997C	jal    $800293e8
-A3 = 0080;
+A3 = 80;
+system_cdrom2_load_file_by_dir_file_id();
+
 80089984	j      L89a70 [$80089a70]
 80089988	nop
 
@@ -3717,8 +3719,9 @@ A2 = 0;
 A3 = 0080;
 
 L89e60:	; 80089E60
-80089E60	jal    $8001ab84
 A0 = S1;
+func1ab84();
+
 S1 = V0;
 V0 = 00ff;
 80089E70	bne    s1, v0, L89e80 [$80089e80]
@@ -3731,22 +3734,20 @@ S0 = S1 + 0005;
 80089E84	jal    $system_get_aligned_filesize_by_dir_file_id
 A0 = S0;
 A0 = V0;
-80089E90	jal    $system_memory_allocate
 A1 = 0;
+system_memory_allocate();
+
 A0 = S0;
 A1 = V0;
 A2 = 0;
 V0 = w[800ad0a4];
-A3 = 0080;
+A3 = 80;
 [800ad098] = w(A1);
-V0 = V0 << 02;
-80089EBC	lui    at, $8007
-AT = AT + V0;
-[AT + f14c] = w(S1);
+[8006f14c + V0 * 4] = w(S1);
 
 L89ec8:	; 80089EC8
-80089EC8	jal    $800293e8
-80089ECC	nop
+system_cdrom2_load_file_by_dir_file_id()
+
 V0 = w[800acff4];
 80089ED8	nop
 80089EDC	bne    v0, zero, L89ef0 [$80089ef0]
@@ -3958,14 +3959,16 @@ A0 = w[800af1e0];
 8008A228	jal    $system_get_aligned_filesize_by_dir_file_id
 8008A22C	nop
 A0 = V0;
-8008A234	jal    $system_memory_allocate
 A1 = 0;
+system_memory_allocate();
+
 A1 = V0;
 A2 = 0;
 A0 = w[800af1e0];
 [800af1dc] = w(A1);
-8008A254	jal    $800293e8
-A3 = 0080;
+A3 = 80;
+system_cdrom2_load_file_by_dir_file_id();
+
 A0 = 0004;
 8008A260	jal    $system_cdrom2_set_dir
 A1 = 0;
@@ -4041,15 +4044,17 @@ A0 = S0;
 A0 = V0 + 0008;
 V0 = w[800af54c];
 A1 = 0;
-8008A388	jal    $system_memory_allocate
 [V0 + 0124] = h(S0);
+system_memory_allocate();
+
 A0 = S0;
 A1 = V0;
 A2 = 0;
 V1 = w[800af54c];
 A3 = 0080;
-8008A3A8	jal    $800293e8
 [V1 + 0120] = w(A1);
+system_cdrom2_load_file_by_dir_file_id();
+
 V0 = w[800acff4];
 8008A3B8	nop
 8008A3BC	bne    v0, zero, L8a3cc [$8008a3cc]
@@ -6819,7 +6824,7 @@ A0 = A0 << 02;
 8008D14C	lui    at, $8006
 AT = AT + A0;
 A0 = w[AT + 1c20];
-8008D158	jal    $8001ab84
+8008D158	jal    $func1ab84
 S0 = A1;
 V1 = V0;
 V0 = 00ff;
@@ -6856,7 +6861,7 @@ A0 = A0 << 02;
 8008D1D4	lui    at, $8006
 AT = AT + A0;
 A0 = w[AT + 1c20];
-8008D1E0	jal    $8001ab84
+8008D1E0	jal    $func1ab84
 S0 = A1;
 V1 = V0;
 V0 = 00ff;
@@ -8398,29 +8403,21 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func8ead0
-8008EAD0	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0001;
-[SP + 0014] = w(RA);
-8008EADC	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0003;
-8008EAE8	jal    read_two_bytes_with_80 [$800ac2c4]
-S0 = V0;
-A0 = S0;
-8008EAF4	jal    field_play_sound_with_fixed_volume [$80084c48]
+// func8ead0()
+
+A0 = 1;
+read_two_bytes_with_80();
+sed_id = V0;
+
+A0 = 3;
+read_two_bytes_with_80();
+
+A0 = sed_id;
 A1 = V0;
+field_play_sound_with_fixed_volume();
+
 V1 = w[800af54c];
-8008EB04	nop
-V0 = hu[V1 + 00cc];
-8008EB0C	nop
-V0 = V0 + 0005;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008EB24	jr     ra 
-8008EB28	nop
+[V1 + cc] = h(hu[V1 + cc] + 5);
 ////////////////////////////////
 
 
@@ -25444,7 +25441,7 @@ A0 = w[S3 + 0000];
 S1 = 00ff;
 8009F844	beq    a0, s1, L9fa04 [$8009fa04]
 S2 = 0001;
-8009F84C	jal    $8001ab84
+8009F84C	jal    $func1ab84
 8009F850	nop
 8009F854	beq    v0, s1, L9fa04 [$8009fa04]
 A0 = S0;

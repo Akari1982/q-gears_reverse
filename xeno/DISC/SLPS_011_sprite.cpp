@@ -2710,7 +2710,7 @@ D4100280 // f7
     A0 = hu[V0 + 0014];
     V0 = bu[S1 + 0000];
     A0 = A0 << 10;
-    8001FB90	jal    func39d08 [$80039d08]
+    8001FB90	jal    system_sound_play_sed_3 [$system_sound_play_sed_3]
     A0 = V0 | A0;
     8001FB98	j      L21900 [$80021900]
     8001FB9C	nop

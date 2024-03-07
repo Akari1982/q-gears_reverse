@@ -5590,7 +5590,7 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80076118	nop
 A0 = A0 << 10;
-80076120	jal    $func39d08
+80076120	jal    $system_sound_play_sed_3
 A0 = A0 | A1;
 RA = w[SP + 0010];
 V0 = 0002;
@@ -6652,7 +6652,7 @@ A0 = hu[V0 + 0014];
 V0 = 0001;
 [8009c52c] = w(V0);
 A0 = A0 << 10;
-80077228	jal    $func39d08
+80077228	jal    $system_sound_play_sed_3
 A0 = A0 | 00a4;
 V0 = 0018;
 [S0 + 0022] = h(V0);
@@ -7652,14 +7652,14 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007832C	nop
 A0 = A0 << 10;
-80078334	jal    $func39d08
+80078334	jal    $system_sound_play_sed_3
 A0 = A0 | 0062;
 V0 = w[80061c2c];
 80078344	nop
 A0 = hu[V0 + 0014];
 8007834C	nop
 A0 = A0 << 10;
-80078354	jal    $func39d08
+80078354	jal    $system_sound_play_sed_3
 A0 = A0 | 0063;
 8007835C	j      L7885c [$8007885c]
 80078360	nop
@@ -7774,7 +7774,7 @@ V0 = V0 + 0001;
 A0 = hu[V1 + 0014];
 80078548	nop
 A0 = A0 << 10;
-80078550	jal    $func39d08
+80078550	jal    $system_sound_play_sed_3
 A0 = A0 | 0079;
 V0 = w[80061c2c];
 A1 = 0;
@@ -8131,7 +8131,7 @@ A0 = w[80061c2c];
 A0 = hu[A0 + 0014];
 80078B38	nop
 A0 = A0 << 10;
-80078B40	jal    $func39d08
+80078B40	jal    $system_sound_play_sed_3
 A0 = A0 | 0036;
 V0 = 0001;
 RA = w[SP + 0014];
@@ -8207,7 +8207,7 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80078C6C	nop
 A0 = A0 << 10;
-80078C74	jal    $func39d08
+80078C74	jal    $system_sound_play_sed_3
 A0 = A0 | 0071;
 V0 = 0020;
 80078C80	j      L78f58 [$80078f58]
@@ -8280,7 +8280,7 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80078D90	nop
 A0 = A0 << 10;
-80078D98	jal    $func39d08
+80078D98	jal    $system_sound_play_sed_3
 A0 = A0 | 0071;
 80078DA0	j      L78f58 [$80078f58]
 80078DA4	nop
@@ -9338,7 +9338,7 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 80079EA8	nop
 A0 = A0 << 10;
-80079EB0	jal    $func39d08
+80079EB0	jal    $system_sound_play_sed_3
 A0 = A0 | 0001;
 80079EB8	j      L7a108 [$8007a108]
 V0 = 0001;
@@ -9360,21 +9360,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 80079F04	nop
 A0 = A0 << 10;
-80079F0C	jal    $func39d08
+80079F0C	jal    $system_sound_play_sed_3
 A0 = A0 | 0004;
 V0 = w[80061c2c];
 80079F1C	nop
 A0 = hu[V0 + 0014];
 80079F24	nop
 A0 = A0 << 10;
-80079F2C	jal    $func39d08
+80079F2C	jal    $system_sound_play_sed_3
 A0 = A0 | 0005;
 V0 = w[80061c2c];
 80079F3C	nop
 A0 = hu[V0 + 0014];
 80079F44	nop
 A0 = A0 << 10;
-80079F4C	jal    $func39d08
+80079F4C	jal    $system_sound_play_sed_3
 A0 = A0 | 0006;
 80079F54	j      L7a108 [$8007a108]
 V0 = 0001;
@@ -9401,21 +9401,21 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 80079FB4	nop
 A0 = A0 << 10;
-80079FBC	jal    $func39d08
+80079FBC	jal    $system_sound_play_sed_3
 A0 = A0 | 0007;
 V0 = w[80061c2c];
 80079FCC	nop
 A0 = hu[V0 + 0014];
 80079FD4	nop
 A0 = A0 << 10;
-80079FDC	jal    $func39d08
+80079FDC	jal    $system_sound_play_sed_3
 A0 = A0 | 0008;
 V0 = w[80061c2c];
 80079FEC	nop
 A0 = hu[V0 + 0014];
 80079FF4	nop
 A0 = A0 << 10;
-80079FFC	jal    $func39d08
+80079FFC	jal    $system_sound_play_sed_3
 A0 = A0 | 0009;
 8007A004	j      L7a108 [$8007a108]
 V0 = 0001;
@@ -9428,21 +9428,21 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 8007A02C	nop
 A0 = A0 << 10;
-8007A034	jal    $func39d08
+8007A034	jal    $system_sound_play_sed_3
 A0 = A0 | 000a;
 V0 = w[80061c2c];
 8007A044	nop
 A0 = hu[V0 + 0014];
 8007A04C	nop
 A0 = A0 << 10;
-8007A054	jal    $80039cc0
+8007A054	jal    $system_sound_play_sed_2
 A0 = A0 | 000b;
 V0 = w[80061c2c];
 8007A064	nop
 A0 = hu[V0 + 0014];
 8007A06C	nop
 A0 = A0 << 10;
-8007A074	jal    $80039cc0
+8007A074	jal    $system_sound_play_sed_2
 A0 = A0 | 000c;
 8007A07C	j      L7a108 [$8007a108]
 V0 = 0001;
@@ -10917,21 +10917,21 @@ V0 = 0001;
 A0 = hu[V1 + 0014];
 8007B868	nop
 A0 = A0 << 10;
-8007B870	jal    $func39d08
+8007B870	jal    $system_sound_play_sed_3
 A0 = A0 | 000d;
 V0 = w[80061c2c];
 8007B880	nop
 A0 = hu[V0 + 0014];
 8007B888	nop
 A0 = A0 << 10;
-8007B890	jal    $func39d08
+8007B890	jal    $system_sound_play_sed_3
 A0 = A0 | 000e;
 V0 = w[80061c2c];
 8007B8A0	nop
 A0 = hu[V0 + 0014];
 8007B8A8	nop
 A0 = A0 << 10;
-8007B8B0	jal    $func39d08
+8007B8B0	jal    $system_sound_play_sed_3
 A0 = A0 | 000f;
 8007B8B8	j      L7baf8 [$8007baf8]
 V0 = 0001;
@@ -10951,21 +10951,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007B904	nop
 A0 = A0 << 10;
-8007B90C	jal    $func39d08
+8007B90C	jal    $system_sound_play_sed_3
 A0 = A0 | 0010;
 V0 = w[80061c2c];
 8007B91C	nop
 A0 = hu[V0 + 0014];
 8007B924	nop
 A0 = A0 << 10;
-8007B92C	jal    $func39d08
+8007B92C	jal    $system_sound_play_sed_3
 A0 = A0 | 0011;
 V0 = w[80061c2c];
 8007B93C	nop
 A0 = hu[V0 + 0014];
 8007B944	nop
 A0 = A0 << 10;
-8007B94C	jal    $func39d08
+8007B94C	jal    $system_sound_play_sed_3
 A0 = A0 | 0012;
 8007B954	j      L7baf0 [$8007baf0]
 V0 = 0001;
@@ -10984,21 +10984,21 @@ A0 = hu[V1 + 0014];
 V0 = 0040;
 [8009c7b4] = w(V0);
 A0 = A0 << 10;
-8007B9A4	jal    $func39d08
+8007B9A4	jal    $system_sound_play_sed_3
 A0 = A0 | 0013;
 V0 = w[80061c2c];
 8007B9B4	nop
 A0 = hu[V0 + 0014];
 8007B9BC	nop
 A0 = A0 << 10;
-8007B9C4	jal    $func39d08
+8007B9C4	jal    $system_sound_play_sed_3
 A0 = A0 | 0014;
 V0 = w[80061c2c];
 8007B9D4	nop
 A0 = hu[V0 + 0014];
 8007B9DC	nop
 A0 = A0 << 10;
-8007B9E4	jal    $func39d08
+8007B9E4	jal    $system_sound_play_sed_3
 A0 = A0 | 0015;
 8007B9EC	j      L7baf8 [$8007baf8]
 V0 = 0001;
@@ -12579,21 +12579,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007D334	nop
 A0 = A0 << 10;
-8007D33C	jal    $func39d08
+8007D33C	jal    $system_sound_play_sed_3
 A0 = A0 | 001c;
 V0 = w[80061c2c];
 8007D34C	nop
 A0 = hu[V0 + 0014];
 8007D354	nop
 A0 = A0 << 10;
-8007D35C	jal    $func39d08
+8007D35C	jal    $system_sound_play_sed_3
 A0 = A0 | 001d;
 V0 = w[80061c2c];
 8007D36C	nop
 A0 = hu[V0 + 0014];
 8007D374	nop
 A0 = A0 << 10;
-8007D37C	jal    $func39d08
+8007D37C	jal    $system_sound_play_sed_3
 A0 = A0 | 001e;
 A0 = 0002;
 8007D388	jal    func96b58 [$80096b58]
@@ -12806,7 +12806,7 @@ A0 = hu[V1 + 0014];
 AT = AT + V0;
 V0 = hu[AT + 9988];
 A0 = A0 << 10;
-8007D6EC	jal    $func39d08
+8007D6EC	jal    $system_sound_play_sed_3
 A0 = A0 | V0;
 V1 = w[8009c7bc];
 8007D6FC	nop
@@ -12819,7 +12819,7 @@ A0 = hu[V1 + 0014];
 AT = AT + V0;
 V0 = hu[AT + 998a];
 A0 = A0 << 10;
-8007D728	jal    $func39d08
+8007D728	jal    $system_sound_play_sed_3
 A0 = A0 | V0;
 V1 = w[8009c7bc];
 8007D738	nop
@@ -12832,7 +12832,7 @@ A0 = hu[V1 + 0014];
 AT = AT + V0;
 V0 = hu[AT + 998c];
 A0 = A0 << 10;
-8007D764	jal    $func39d08
+8007D764	jal    $system_sound_play_sed_3
 A0 = A0 | V0;
 8007D76C	j      L7d804 [$8007d804]
 V0 = 0001;
@@ -12841,21 +12841,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007D784	nop
 A0 = A0 << 10;
-8007D78C	jal    $func39d08
+8007D78C	jal    $system_sound_play_sed_3
 A0 = A0 | 0019;
 V0 = w[80061c2c];
 8007D79C	nop
 A0 = hu[V0 + 0014];
 8007D7A4	nop
 A0 = A0 << 10;
-8007D7AC	jal    $func39d08
+8007D7AC	jal    $system_sound_play_sed_3
 A0 = A0 | 001a;
 V0 = w[80061c2c];
 8007D7BC	nop
 A0 = hu[V0 + 0014];
 8007D7C4	nop
 A0 = A0 << 10;
-8007D7CC	jal    $func39d08
+8007D7CC	jal    $system_sound_play_sed_3
 A0 = A0 | 001b;
 8007D7D4	j      L7d804 [$8007d804]
 V0 = 0001;
@@ -14894,21 +14894,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 8007F8D8	nop
 A0 = A0 << 10;
-8007F8E0	jal    $func39d08
+8007F8E0	jal    $system_sound_play_sed_3
 A0 = A0 | 0016;
 V0 = w[80061c2c];
 8007F8F0	nop
 A0 = hu[V0 + 0014];
 8007F8F8	nop
 A0 = A0 << 10;
-8007F900	jal    $func39d08
+8007F900	jal    $system_sound_play_sed_3
 A0 = A0 | 0017;
 V0 = w[80061c2c];
 8007F910	nop
 A0 = hu[V0 + 0014];
 8007F918	nop
 A0 = A0 << 10;
-8007F920	jal    $func39d08
+8007F920	jal    $system_sound_play_sed_3
 A0 = A0 | 0018;
 V0 = 0001;
 
@@ -15764,21 +15764,21 @@ V0 = w[80061c2c];
 A0 = hu[V0 + 0014];
 800806D4	nop
 A0 = A0 << 10;
-800806DC	jal    $func39d08
+800806DC	jal    $system_sound_play_sed_3
 A0 = A0 | 002e;
 V0 = w[80061c2c];
 800806EC	nop
 A0 = hu[V0 + 0014];
 800806F4	nop
 A0 = A0 << 10;
-800806FC	jal    $func39d08
+800806FC	jal    $system_sound_play_sed_3
 A0 = A0 | 002f;
 V0 = w[80061c2c];
 8008070C	nop
 A0 = hu[V0 + 0014];
 80080714	nop
 A0 = A0 << 10;
-8008071C	jal    $func39d08
+8008071C	jal    $system_sound_play_sed_3
 A0 = A0 | 0030;
 80080724	j      L8079c [$8008079c]
 V0 = 0001;
@@ -31249,7 +31249,7 @@ V0 = V0 + 0001;
 A0 = hu[V1 + 0014];
 8008F720	nop
 A0 = A0 << 10;
-8008F728	jal    $func39d08
+8008F728	jal    $system_sound_play_sed_3
 A0 = A0 | 0038;
 
 L8f730:	; 8008F730

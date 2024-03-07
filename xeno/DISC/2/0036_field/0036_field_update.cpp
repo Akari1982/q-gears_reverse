@@ -322,7 +322,7 @@ loop74f60:	; 80074F60
 ////////////////////////////////
 // func74fa0
 
-80074FA8	jal    func73d90 [$80073d90]
+field_update_buttons();
 
 call_run_script_8();
 

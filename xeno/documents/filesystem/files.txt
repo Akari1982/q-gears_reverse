@@ -184,7 +184,7 @@ If start sector != 0 and filesize 0 or less than zero then this is collection wi
 00 01
     0017 2FA801 FAFFFFFF (collection of 4 defauls wd files, 5 - archived font settings, 6 - kernel texts)
     0022 C5A801 FAFFFFFF (collection of 6 game mode libs) (0 - battling, 1 - field, 2 - worldmap, 3 - battle, 4 - menu, 5 - movie)
-30 00
+30 00                    Battling Arena Data
     002d D4A901 60190000
     002e D8A901 0C1D0000
     002f DCA901 580C0000
@@ -192,22 +192,24 @@ If start sector != 0 and filesize 0 or less than zero then this is collection wi
     0031 F2A901 E4200300
     0032 57AA01 00100300
 30 01
-    0033 B9AA01 CFFFFFFF
+    0033 B9AA01 CFFFFFFF Battling Arena 3D Models (49 files)
 1c 00
-    0074 5AB001 F9FFFFFF
-    0085 15B101 6EFFFFFF
-    0186 BCD101 F5FFFFFF
+    0074 5AB001 F9FFFFFF Audio Samples (7 .wds files)
+    0085 15B101 6EFFFFFF Music (54 songs)
+    0186 BCD101 F5FFFFFF Sound Effects (11 .sed files)
 04 00
-    01a7 D5D101 FEFFFFFF
-    01aa 36D201 DFFFFFFF (collection of ??)
-    01eb 58D501 A5FFFFFF
-    024c 69D601 F9FFFFFF
+    01a7 D5D101 FEFFFFFF field fonts
+    01aa 36D201 DFFFFFFF collection of char field sprites files
+    01eb 58D501 A5FFFFFF collection of field avatars (.tim)
+    024c 69D601 F9FFFFFF GUI - HUDs and Menus
                          24d(0xa7 in dir) some tim file loaded when start field.
                          24e(0xa8 in dir) some sed file loaded when start field.
+                         24f(0xa9 in dir) some image directly loaded to vram.
                          253(0xad in dir) field_debug.lib
-    025d E0D601 4CFAFFFF (collection of field data packs (0xb8 in dir))
-    085d B58603 6FFFFFFF
-    091f 0B9003 87FFFFFF
+    025d E0D601 4CFAFFFF collection of field data packs (0xb8 in dir)
+    085d B58603 6FFFFFFF field 3D Models (72 models + 1 other file)
+                         85f(0x6b9 in dir)
+    091f 0B9003 87FFFFFF sprite Animations Cutscenes (121 .unk3 files)
     09a0 CA9103 A8FFFFFF
 10 00
     0a21 95A503 DCFD0000  B5A503 389B0000  C9A503 58230000  CEA503 00650000  DBA503 28570200  26A603 88650000  33A603 28570200 7EA603 9C700000  8DA603 18D30000  A8A603 DC400100  D1A603 28570200  1CA703 B4C60000
@@ -216,13 +218,13 @@ If start sector != 0 and filesize 0 or less than zero then this is collection wi
 10 02
     0a2e 3BA703 DC1D0000  3FA703 107A0000  4FA703 8A990000  63A703 94670000  70A703 8C6F0000  7EA703 C8210000
 0c 00
-    0a34 83A703 FCFFFFFF
+    0a34 83A703 FCFFFFFF Battle Data - Battle GUI, Sound Effects, Game Over Music (4 files)
 0c 01
-    0a39 ACA703 68FFFFFF
+    0a39 ACA703 68FFFFFF Battle Enemies 2D + 3D (76 pairs)
 0c 03
     0ad2 EDC003 00980400
     0ad3 80C103 FEFFFFFF
-    0ad6 91C103 6AFFFFFF music collection with pair of files?
+    0ad6 91C103 6AFFFFFF Battle Maps (75 maps)
 28 01
     0b6d 21DE03 C2FFFFFF
 2c 01
@@ -274,3 +276,28 @@ If start sector != 0 and filesize 0 or less than zero then this is collection wi
 
 
 
+
+
+
+Field files
+    A0 = 4;
+    A1 = 0;
+    system_cdrom2_set_dir();
+
+    A0 = ad; // 10\0595_field_debug.exe
+
+
+
+
+A0 = 4;
+A1 = 0;
+system_cdrom2_set_dir();
+
+
+
+
+A0 = a9;
+A1 = S0;
+A2 = 0;
+A3 = 80;
+system_cdrom2_load_file_by_dir_file_id();

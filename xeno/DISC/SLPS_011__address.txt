@@ -439,7 +439,7 @@
                                  0x13 DelayFree
                   -0 start of memory.
     +1bc [][][][] set to 1 if some memory marked to remove in system_memory_mark_removed_alloc().
-    +1c0 [][][][] store 0 here when we start parse model and animation.
+    +1c0 [][][][] store 1 when we start load some data for field, and 0 when finish process. Maybe this is to restrict new memory allocation till we finish process.
     +1c4 [][][][] init with 0. Start of function debug names.
     +1c8 [][][][] init with 0. End of function debug names.
     +1cc [][][][] store size of allocated data here.
@@ -931,7 +931,7 @@
 80059640 array of four bytes values. Store 0 in slot GP + 0x1ac when we start parse model and animation.
          during model initialization if flaf 0x2000 i  +58 in model struct exist we store [80059640 + 3 * 4] = w(0) before +1c initialization
          after +1c init we store [80059640 + 8 * 4] = w(0)
-         looks like we store in GP + 0x1ac index of this struct. GP + 1c0 set to 0 in both cases.
+         looks like we store in GP + 0x1ac index of this struct. GP + 1c0 set to 0 in both cases. Turn off garbage collection?
 
 80059668 [][][][] init with 0.
 
@@ -1056,6 +1056,10 @@
     + 120 draw enviroment packet buffer 2.
     + 17c display enviroment packet buffer 1.
 
+80061c34 array of structs (0x8 size 0x3 items) for party members sprites loading.
+    + 0 [][]     dir file id.
+    + 4 [][][][] allocated memory.
+
 80061c8c controller input buffers (size 0x22 items 0x2).
     +02 [][]     button mask. (0=Pressed, 1=Released)
                     0x0001 Select
@@ -1102,6 +1106,8 @@
 0200070000 000000 00000000FFFFFFFF 00000000FFFFFFFF 00000000FFFFFFFF
 8006516c chances for encounters (0x10 items 0x1 byte size).
 
+8006518c array of 3 pointers of allocated memory for char sprites. Data from here extracts to 80059aa4.
+
 80065198 [][][][] store entity id which perform move here during func821cc.
 
 800651a0-8006b490. Sound memory alloc struct
@@ -1141,7 +1147,7 @@ First struct is just header struct (0x10 size), later we add more structs differ
     +4 [][][][] start of allocated memory.
     +8 [][][][] size of allocated memory.
 
-8006f14c array of 3 items with size 0x4. Init with 0. At start of field init with 0xff.
+8006f14c array of 3 items with size 0x4. Init with 0. At start of field init with 0xff. Related with party members.
 
 8006f158 some struct spu memory related. Store pointer to 8005850c.
     +0 [][][][] 40001010.

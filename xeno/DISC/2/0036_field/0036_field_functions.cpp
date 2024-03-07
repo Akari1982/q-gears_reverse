@@ -2211,13 +2211,16 @@ SP = SP + 0040;
 800A67FC	jr     ra 
 800A6800	nop
 ////////////////////////////////
-// funca6804
-800A6804	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S1);
+
+
+
+////////////////////////////////
+// funca6804()
+
 S1 = A0;
-[SP + 0020] = w(RA);
-800A6814	jal    $80019d24
-[SP + 0018] = w(S0);
+
+system_reset_check();
+
 V0 = w[800ad044];
 800A6824	nop
 800A6828	bne    v0, zero, La6854 [$800a6854]
@@ -2226,45 +2229,40 @@ V0 = w[800ad044];
 S0 = 0;
 
 loopa6838:	; 800A6838
-800A6838	jal    $801d3f7c
-S0 = S0 + 0001;
-800A6840	jal    func84c8c [$80084c8c]
-800A6844	nop
-V0 = S0 < S1;
+    800A6838	jal    $801d3f7c
+    S0 = S0 + 0001;
+    800A6840	jal    func84c8c [$80084c8c]
+    800A6844	nop
+    V0 = S0 < S1;
 800A684C	bne    v0, zero, loopa6838 [$800a6838]
-800A6850	nop
 
 La6854:	; 800A6854
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-800A6864	jr     ra 
-800A6868	nop
 ////////////////////////////////
-// funca686c
-800A686C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
+
+
+////////////////////////////////
+// funca686c()
 
 loopa6874:	; 800A6874
-800A6874	jal    func7743c [$8007743c]
-800A6878	nop
-800A687C	jal    func74bdc [$80074bdc]
-800A6880	nop
-800A6884	jal    $800284dc
-800A6888	nop
+    800A6874	jal    func7743c [$8007743c]
+
+    800A687C	jal    func74bdc [$80074bdc]
+
+    system_cdrom2_data_sync();
+
 800A688C	bne    v0, zero, loopa6874 [$800a6874]
-800A6890	nop
+
 V0 = w[800acfe0];
-800A689C	nop
+
 800A68A0	bne    v0, zero, loopa6874 [$800a6874]
-800A68A4	nop
-800A68A8	jal    $80041288
+
 A0 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A68B8	jr     ra 
-800A68BC	nop
+system_psyq_cd_data_sync();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca68c0
 800A68C0	addiu  sp, sp, $ffd0 (=-$30)
@@ -2453,7 +2451,7 @@ S0 = 0080;
 [SP + 0010] = h(S2);
 [SP + 0012] = h(0);
 [SP + 0014] = h(S1);
-800A6BC0	jal    $80044770
+800A6BC0	jal    $system_store_image
 [SP + 0016] = h(S0);
 800A6BC8	jal    $system_draw_sync
 A0 = 0;
@@ -2462,7 +2460,7 @@ A0 = SP + 0010;
 [SP + 0010] = h(S2);
 [SP + 0012] = h(S0);
 [SP + 0014] = h(S1);
-800A6BE8	jal    $80044770
+800A6BE8	jal    $system_store_image
 [SP + 0016] = h(S0);
 800A6BF0	jal    $system_draw_sync
 A0 = 0;
@@ -2536,7 +2534,7 @@ V0 = 0060;
 [SP + 0010] = h(S3);
 [SP + 0012] = h(0);
 [SP + 0014] = h(V0);
-800A6D04	jal    $80044770
+800A6D04	jal    $system_store_image
 [SP + 0016] = h(S6);
 800A6D0C	jal    $system_draw_sync
 A0 = 0;
@@ -2781,7 +2779,7 @@ SP = SP + 0030;
 
 
 ////////////////////////////////
-// funca7130
+// funca7130()
 
 [800ad05c] = w(0);
 [800af5b8] = w(0);
@@ -2793,7 +2791,6 @@ system_get_aligned_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 0;
 system_memory_allocate();
-
 S0 = V0;
 
 A0 = a9;
@@ -2804,59 +2801,63 @@ system_cdrom2_load_file_by_dir_file_id();
 
 [800afb74] = w(0);
 [800af348] = w(0);
-800A7198	jal    funca686c [$800a686c]
+funca686c()
 
-A0 = 0018;
-800A71A4	jal    $system_cdrom2_set_dir
+A0 = 18;
 A1 = 0;
-A0 = h[800c2ef4];
-800A71B4	jal    $8002a0e0
-800A71B8	nop
-A0 = 0004;
-800A71C0	jal    $system_cdrom2_set_dir
+system_cdrom2_set_dir();
+
+A0 = h[800c2ef4]; // dir_file_id
+func2a0e0();
+
+A0 = 4;
 A1 = 0;
-800A71C8	jal    funca686c [$800a686c]
-800A71CC	nop
-V0 = w[800b1738];
-800A71D8	nop
-800A71DC	beq    v0, zero, La720c [$800a720c]
-800A71E0	nop
-800A71E4	jal    $801e7fd4
+system_cdrom2_set_dir();
 
-field_flush_sync();
+funca686c();
 
-field_draw_sync();
+if( w[800b1738] != 0 )
+{
+    func1e7fd4();
 
-A0 = w[800acff8];
-system_memory_mark_removed_alloc();
+    field_flush_sync();
 
-La720c:	; 800A720C
+    field_draw_sync();
+
+    A0 = w[800acff8];
+    system_memory_mark_removed_alloc();
+}
+
 field_particle_clear_all();
 
 V1 = w[800ad04c];
 V0 = 0002;
 800A7220	beq    v1, v0, La727c [$800a727c]
-A0 = SP + 0010;
+
+[SP + 10] = h(140); // x
+[SP + 12] = h(0); // y
+[SP + 14] = h(c0); // width
+[SP + 16] = h(100); // height
+
+A0 = SP + 10;
 A1 = S0;
-V0 = 0140;
-[SP + 0010] = h(V0);
-V0 = 00c0;
-[SP + 0014] = h(V0);
-V0 = 0100;
-[SP + 0012] = h(0);
-800A7244	jal    $8004470c
-[SP + 0016] = h(V0);
-800A724C	jal    $system_draw_sync
+system_load_image();
+
 A0 = 0;
-800A7254	jal    $system_memory_mark_removed_alloc
+system_draw_sync();
+
 A0 = S0;
+system_memory_mark_removed_alloc();
+
 A0 = 18000;
-800A7264	jal    $system_memory_allocate
 A1 = 0;
+system_memory_allocate();
 S0 = V0;
-A0 = SP + 0010;
-800A7274	jal    $80044770
+
+A0 = SP + 10;
 A1 = S0;
+system_store_image();
+
 
 La727c:	; 800A727C
 V0 = w[8004ea14];
@@ -2987,7 +2988,7 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     if( w[800ad04c] != S0 )
     {
-        800A74AC	jal    func73d90 [$80073d90]
+        field_update_buttons();
 
         V0 = hu[800c2dd4] & 0020;
         800A74C4	bne    v0, zero, La758c [$800a758c]
@@ -3008,8 +3009,8 @@ V0 = w[800ad058];
 V0 = V0 & 0080;
 800A74E4	beq    v0, zero, La7538 [$800a7538]
 800A74E8	nop
-800A74EC	jal    func73d90 [$80073d90]
-800A74F0	nop
+field_update_buttons();
+
 V0 = hu[800c2dd4];
 800A74FC	nop
 V0 = V0 & 0020;
@@ -5889,30 +5890,40 @@ Laacd8:	; 800AACD8
 800AACD8	jr     ra 
 800AACDC	nop
 ////////////////////////////////
-// funcaace0
 
-A0 = 0802;
-800AAD0C	jal    $system_get_aligned_filesize_by_dir_file_id
+
+
+////////////////////////////////
+// funcaace0()
+
+A0 = 802;
+system_get_aligned_filesize_by_dir_file_id();
 
 A0 = V0;
-800AAD18	jal    $system_memory_allocate
 A1 = 0;
-A0 = 0802;
+system_memory_allocate();
+[SP + 28] = w(V0);
+
+A0 = 802;
+A1 = w[SP + 28];
 A2 = 0;
-[SP + 0028] = w(V0);
-A1 = w[SP + 0028];
-800AAD30	jal    $system_cdrom2_load_file_by_dir_file_id
-A3 = 0080;
-800AAD38	jal    $system_cdrom_action_sync
+A3 = 80;
+system_cdrom2_load_file_by_dir_file_id()
+
 A0 = 0;
-A0 = 0f20;
-800AAD44	jal    $system_memory_allocate
+system_cdrom_action_sync();
+
+A0 = f20;
 A1 = 0;
-A0 = w[SP + 0028];
-800AAD50	jal    $8004702c
+system_memory_allocate();
 [SP + 0030] = w(V0);
-800AAD58	jal    $8004703c
-A0 = SP + 0010;
+
+A0 = w[SP + 28];
+system_set_texture_address()
+
+A0 = SP + 10;
+system_read_tim();
+
 800AAD60	beq    v0, zero, Laaf24 [$800aaf24]
 800AAD64	nop
 V0 = 800aea9a;
@@ -6099,7 +6110,7 @@ V0 = 00a0;
 A1 = 0;
 A0 = SP + 0020;
 S3 = V0;
-800AB060	jal    $80044770
+800AB060	jal    $system_store_image
 A1 = S3;
 800AB068	jal    $system_draw_sync
 A0 = 0;
@@ -6116,13 +6127,14 @@ A0 = S0;
 system_get_aligned_filesize_by_dir_file_id();
 
 A0 = V0;
-800AB094	jal    $system_memory_allocate
 A1 = 0;
+system_memory_allocate();
+
 A0 = S0;
 S0 = V0;
 A1 = S0;
 A2 = 0;
-A3 = 0080;
+A3 = 80;
 system_cdrom2_load_file_by_dir_file_id();
 
 800AB0B4	jal    $system_cdrom_action_sync
@@ -6167,9 +6179,9 @@ loopab130:	; 800AB130
 800AB138	jal    funcaa850 [$800aa850]
 A0 = 0080;
 800AB140	jal    funca5dfc [$800a5dfc]
-800AB144	nop
-800AB148	jal    func73d90 [$80073d90]
-800AB14C	nop
+
+field_update_buttons();
+
 V0 = hu[800c2dd4];
 800AB158	nop
 V0 = V0 & 0100;
@@ -6624,18 +6636,16 @@ system_get_aligned_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 1;
 system_memory_allocate();
+[800aec58] = w(V0);
 
 A0 = ac;
 A1 = V0;
 A2 = 0;
-[800aec58] = w(V0);
-A3 = 0080;
+A3 = 80;
 system_cdrom2_load_file_by_dir_file_id();
 
 A0 = 0;
 system_cdrom_action_sync();
-
-
 ////////////////////////////////
 
 

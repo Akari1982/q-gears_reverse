@@ -3941,7 +3941,7 @@ system_sound_load_snd_file();
 
 loop74a74:	; 80074A74
     A0 = 0;
-    func3bca4();
+    system_sound_spu_sync();
 
     V0 = V0 << 10;
 80074A80	bne    v0, zero, loop74a74 [$80074a74]
@@ -3960,7 +3960,7 @@ system_sound_load_snd_file()
 
 loop74ab0:	; 80074AB0
     A0 = 0;
-    func3bca4();
+    system_sound_spu_sync();
 
     V0 = V0 << 10;
 80074ABC	bne    v0, zero, loop74ab0 [$80074ab0]
@@ -3979,7 +3979,7 @@ system_sound_load_snd_file();
 
 loop74aec:	; 80074AEC
     A0 = 0;
-    func3bca4();
+    system_sound_spu_sync();
 
     V0 = V0 << 10;
 80074AF8	bne    v0, zero, loop74aec [$80074aec]
@@ -4004,7 +4004,7 @@ system_sound_load_snd_file();
 
 loop74b48:	; 80074B48
     A0 = 0;
-    func3bca4();
+    system_sound_spu_sync();
 
     V0 = V0 << 10;
 80074B54	bne    v0, zero, loop74b48 [$80074b48]
