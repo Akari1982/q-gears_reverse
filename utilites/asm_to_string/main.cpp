@@ -36,7 +36,7 @@ int main( int argc, char *argv[] )
     std::string str;
     while( std::getline( src, str ) )
     {
-        e = "^\\s*[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]lui    ([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])$";
+        e = "^\\s*[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]lui    ([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])$";
         if( std::regex_match( str ,e ) )
         {
             if( two_row == true )
@@ -54,7 +54,7 @@ int main( int argc, char *argv[] )
             continue;
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]l(hu|w|h|b|bu)\\s*([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]l(hu|w|h|b|bu)\\s*([a-z][0-9a-z]), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -96,7 +96,7 @@ int main( int argc, char *argv[] )
             }
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]s(hu|w|h|b|bu)\\s*([a-z][0-9a-z]|zero), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]s(hu|w|h|b|bu)\\s*([a-z][0-9a-z]|zero), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -141,7 +141,7 @@ int main( int argc, char *argv[] )
             }
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|slt|sltu|sltiu|slti|subu|sll|sra|srl|srlv|sllv|srav)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]$|zero).*?$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t](addu|addiu|addi|and|andi|xor|xori|or|ori|nor|slt|sltu|sltiu|slti|subu|sll|sra|srl|srlv|sllv|srav)\\s*([a-z][0-9a-z]), ([a-z][0-9a-z]|zero), ([a-z][0-9a-z]|\\$[0-9a-z][0-9a-z][0-9a-z][0-9a-z]|\\$[0-9a-z][0-9a-z]$|zero).*?$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -233,7 +233,7 @@ int main( int argc, char *argv[] )
             }
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](mfc0|mtc0)\\s*([a-z][0-9a-z]),([a-z][0-9a-z])$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t](mfc0|mtc0)\\s*([a-z][0-9a-z]),([a-z][0-9a-z])$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -255,7 +255,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|r31r32|r33|trx|try|l33|rbk|bbk|gbk|lr1lr2|lr3lg1|lg2lg3|lb1lb2|lb3|rfc|gfc|bfc|ofx|ofy|h|dqa|dqb|zsf3|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2|lzcr|trz|sz0|sz1|sz2|sz3|rgb0|rgb1|rgb2|17|ir0|ir1|ir2|ir3|sxy0|vz2|rgb|otz|sxy1|sxy2|sxy2p)\\s*$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t](ctc2|mtc2|mfc2|cfc2)\\s*([a-z][0-9a-z]|[a-z][0-9a-z][a-z][0-9a-z]),(mac0|mac1|mac2|mac3|irgb|orgb|lzcs|l11l12|l31l32|l13l21|l22l23|r11r12|r13r21|r22r23|r31r32|r33|trx|try|l33|rbk|bbk|gbk|lr1lr2|lr3lg1|lg2lg3|lb1lb2|lb3|rfc|gfc|bfc|ofx|ofy|h|dqa|dqb|zsf3|zsf4|flag|vxy0|vz0|vxy1|vz1|vxy2|lzcr|trz|sz0|sz1|sz2|sz3|rgb0|rgb1|rgb2|17|ir0|ir1|ir2|ir3|sxy0|vz2|rgb|otz|sxy1|sxy2|sxy2p)\\s*$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -347,7 +347,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t](lwc2|swc2)\\s*(zero|at|v0|v1|a0|a1|a2|a3|t0|t1|t2|t3|t4|t5|t6|t7|s0|s1|s2|s3|s4|s5|s6|t8|t9|k0|k1|gp|sp|fp|ra), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t](lwc2|swc2)\\s*(zero|at|v0|v1|a0|a1|a2|a3|t0|t1|t2|t3|t4|t5|t6|t7|s0|s1|s2|s3|s4|s5|s6|t8|t9|k0|k1|gp|sp|fp|ra), \\$([0-9a-z][0-9a-z][0-9a-z][0-9a-z])\\(([a-z][0-9a-z])\\)$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -403,7 +403,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func16t8,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func16t8,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -413,7 +413,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func17t0,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func17t0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -423,7 +423,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func18t0,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func18t0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -433,7 +433,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func18t1,dqb$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func18t1,dqb$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -443,7 +443,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func18t0,l33$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func18t0,l33$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -453,7 +453,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func19t8,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func19t8,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -463,7 +463,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func22t0,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func22t0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -473,7 +473,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func23t8,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func23t8,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -483,7 +483,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func24t0,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func24t0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -493,7 +493,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func26zero,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func26zero,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -503,7 +503,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func26t8,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func26t8,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -513,7 +513,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27s0,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func27s0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -523,7 +523,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27t0,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func27t0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -533,7 +533,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func27t8,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func27t8,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -543,7 +543,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func28t8,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func28t8,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -553,7 +553,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func28s0,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func28s0,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
@@ -563,7 +563,7 @@ int main( int argc, char *argv[] )
             str = ss.str();
         }
 
-        e = "^(\\s*)[0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][0-9A-Z][\\t]gte_func29zero,r11r12$";
+        e = "^(\\s*)[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][\\t]gte_func29zero,r11r12$";
         if( std::regex_match( str ,e ) )
         {
             std::string m0 = std::regex_replace( str, e, "$1" );
