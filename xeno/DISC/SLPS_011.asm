@@ -6366,8 +6366,11 @@ L31820:	; 80031820
 80048B80-80048C0C
 ////////////////////////////////
 // system_gte_normalize_word_vector_T0_T1_T2_to_half
+80048C10
 // system_gte_normalize_word_vector_T0_T1_T2_to_word
+80048C24
 // system_gte_normalize_half_vector_T0_T1_T2_to_half
+80048C50
 // there are few entry points to this function
 80048C10-80048C7C
 ////////////////////////////////

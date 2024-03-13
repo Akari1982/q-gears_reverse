@@ -143,7 +143,7 @@ S1 = V0;
 
 func73050(); // move here
 
-80074C0C	jal    func85f1c [$80085f1c]
+func85f1c();
 
 S0 = 80d4;
 
