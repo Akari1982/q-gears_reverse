@@ -14,7 +14,7 @@
 01af-05_char.spr_a
 01b0-06_char.spr_a
 01b1-07_char.spr_a
-01b1-08_char.spr_a
+01b2-08_char.spr_a
 01b3-09_char.spr_a
 01b4-0a_char.spr_a
 01b5-0b_char.spr_a
