@@ -15,6 +15,7 @@
 800ad01c [][][][] store here entity id that inits particle.
 
 800ad038 [][][][] init with 0.
+800ad03c [][][][] ???
 
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
 
