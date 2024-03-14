@@ -4,3 +4,7 @@
 /engine/build/obj
 /engine/pcsxr/win32/.vs
 cdrom
+build
+/xeno/utilites/cd extractor/output/cdrom.bin
+/xeno/utilites/cd extractor/output/cdrom.fig
+/xeno/utilites/cd extractor/output/cdrom.mdg
