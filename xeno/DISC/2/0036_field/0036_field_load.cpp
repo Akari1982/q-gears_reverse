@@ -369,37 +369,29 @@ if( V0 != 0 )
 
 
 ////////////////////////////////
-// func6fb18
-V0 = w[800ad038];
-8006FB20	addiu  sp, sp, $ffd0 (=-$30)
-8006FB24	bne    v0, zero, L6fb88 [$8006fb88]
-[SP + 0028] = w(RA);
-A0 = 0004;
-V0 = 0001;
-[800ad038] = w(V0);
-8006FB3C	jal    $8002a070
-A1 = 0001;
-A1 = V0;
-A2 = 0;
-A0 = w[8004e9f0];
-A3 = 0;
-[800ad0ec] = w(A1);
-[SP + 0010] = w(0);
-[SP + 0014] = w(0);
-[SP + 0018] = w(0);
-[SP + 001c] = w(0);
-[SP + 0020] = w(0);
-[SP + 0024] = w(0);
-A0 = A0 & 0fff;
-A0 = A0 << 01;
-8006FB80	jal    $80029cc0
-A0 = A0 + 00b9;
+// field_load_main_map_texture_into_vram()
 
-L6fb88:	; 8006FB88
-RA = w[SP + 0028];
-SP = SP + 0030;
-8006FB90	jr     ra 
-8006FB94	nop
+if( w[800ad038] == 0 )
+{
+    [800ad038] = w(1);
+
+    A0 = 4;
+    A1 = 1;
+    func2a070();
+    [800ad0ec] = w(V0);
+
+    A0 = b9 + (w[8004e9f0] & fff) * 2; // tex for field id
+    A1 = V0; // allocated_memory
+    A2 = 0; // default_dir_file_id
+    A3 = 0; // flags
+    A4 = 0; // image_pos_type
+    A5 = 0; // global_image_vram_x
+    A6 = 0; // global_image_vram_y
+    A7 = 0; // clut_pos_type
+    A8 = 0; // global_clut_vram_x
+    A9 = 0; // global_clut_vram_y
+    system_cdrom2_load_texture();
+}
 ////////////////////////////////
 
 
@@ -407,8 +399,7 @@ SP = SP + 0030;
 ////////////////////////////////
 // func6fb98()
 
-V1 = w[800ad038];
-if( V1 == 1 )
+if( w[800ad038] == 1 )
 {
     A0 = 0;
     system_cdrom_action_sync();

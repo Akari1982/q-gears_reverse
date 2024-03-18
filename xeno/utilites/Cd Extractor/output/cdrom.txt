@@ -41,10 +41,18 @@
 01ca-20_char.spr_a
 01cb-21_char.spr_a
 
+024f-mdec.lib
 0253-field_debug.lib
 
 0a24-.lib
+0a25-.lib
+0a26-.lib
+0a27-0a25_copy.lib
+0a28-.lib
+0a29-.lib
+0a2a-.lib
+0a2b-0a25_copy.lib
+0a2c-.lib
 0a2e-.lib
-0a31-.lib
 0a33-battle_debug.lib
 0c0f-.lib

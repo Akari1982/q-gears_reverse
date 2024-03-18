@@ -12,7 +12,7 @@
 // field_load_tim_into_vram
 8006F9D0-8006FB14
 ////////////////////////////////
-// func6fb18
+// field_load_main_map_texture_into_vram
 8006FB18-8006FB94
 ////////////////////////////////
 // func6fb98

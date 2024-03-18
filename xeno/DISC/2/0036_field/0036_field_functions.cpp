@@ -951,8 +951,8 @@ switch( V1 )
 
         func70358(); // parse field here
 
-        800A5398	jal    func6fb18 [$8006fb18]
-        800A539C	nop
+        field_load_main_map_texture_into_vram();
+
         800A53A0	jal    func6fb98 [$8006fb98]
         800A53A4	nop
         V1 = w[8004e9ac];
@@ -1047,8 +1047,8 @@ switch( V1 )
         S1 = w[800af1e8];
         800A5494	jal    func70358 [$80070358]
         800A5498	nop
-        800A549C	jal    func6fb18 [$8006fb18]
-        800A54A0	nop
+        field_load_main_map_texture_into_vram();
+
         800A54A4	jal    func6fb98 [$8006fb98]
         800A54A8	nop
         V1 = w[8004e9ac];
@@ -1084,8 +1084,8 @@ switch( V1 )
         S1 = w[800af1e8];
         800A5524	jal    func70358 [$80070358]
         800A5528	nop
-        800A552C	jal    func6fb18 [$8006fb18]
-        800A5530	nop
+        field_load_main_map_texture_into_vram();
+
         V1 = w[800ad038];
         V0 = 0001;
         800A5540	bne    v1, v0, La55b8 [$800a55b8]
@@ -1184,9 +1184,10 @@ switch( V1 )
     case 3:
     {
         A0 = 0;
-        800A56AC	jal    funca5b14 [$800a5b14]
         A1 = 0;
-        800A56B4	jal    func6fb18 [$8006fb18]
+        800A56AC	jal    funca5b14 [$800a5b14]
+
+        field_load_main_map_texture_into_vram();
 
         func73670(); // clear otagr
 
@@ -1237,9 +1238,10 @@ switch( V1 )
     case 5:
     {
         A0 = 0;
-        800A5780	jal    funca5b14 [$800a5b14]
         A1 = 0;
-        800A5788	jal    func6fb18 [$8006fb18]
+        800A5780	jal    funca5b14 [$800a5b14]
+
+        field_load_main_map_texture_into_vram();
 
         func73670(); // clear otagr
 
@@ -3119,8 +3121,8 @@ A0 = 0008;
 800A7770	jal    $system_memory_set_alloc_user
 A1 = 0;
 [800ad038] = w(0);
-800A7780	jal    func6fb18 [$8006fb18]
-800A7784	nop
+field_load_main_map_texture_into_vram();
+
 800A7788	jal    func6fb98 [$8006fb98]
 800A778C	nop
 V0 = 0020;

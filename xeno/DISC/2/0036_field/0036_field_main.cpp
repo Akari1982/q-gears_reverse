@@ -239,7 +239,8 @@ func78358();
 S5 = 0;
 S4 = 0;
 
-L77810:	; 80077810
+while( true )
+{
     if( hu[800c2dd4] & 0800 ) // start repeated
     {
         if( ( hu[800af370] & 0040 ) == 0 ) // cross currently not pressed
@@ -295,6 +296,7 @@ L77810:	; 80077810
         if( w[800ad0b4] == 0 )
         {
             func781dc();
+
             if( V0 == 0 )
             {
                 func774a0();
@@ -364,7 +366,7 @@ L77810:	; 80077810
                         }
 
                         [800ad0ac] = w(0);
-                        80077A9C	j      L780cc [$800780cc]
+                        break;
                     }
                 }
             }
@@ -422,7 +424,7 @@ L77810:	; 80077810
                     A0 = w[80059b70];
                     system_memory_mark_removed_alloc();
                 }
-                80077BDC	j      L780cc [$800780cc]
+                break;
             }
         }
 
@@ -451,7 +453,7 @@ L77810:	; 80077810
 
                     80077C70	jal    funca345c [$800a345c]
 
-                    80077C78	j      L780cc [$800780cc]
+                    break;
                 }
             }
 
@@ -478,7 +480,7 @@ L77810:	; 80077810
                         S0 = 3;
                         func1b500(); // something sound related
 
-                        80077CFC	j      L780cc [$800780cc]
+                        break;
                     }
                 }
             }
@@ -533,7 +535,7 @@ L77810:	; 80077810
 
         if( ( V0 == 0 ) && ( w[800ad0c4] == -1 ) )
         {
-            if( ( hu[800af370] & 0003 ) == 0 ) // R2 L2 currently pressed
+            if( ( hu[800af370] & 0003 ) == 0 ) // R2 L2 not pressed
             {
                 S4 = 0;
             }
@@ -543,8 +545,8 @@ L77810:	; 80077810
                 {
                     if( S4 == 0 )
                     {
-                       S4 = 1;
-                        80077EC8	jal    func78ed0 [$80078ed0]
+                        S4 = 1;
+                        func78ed0();
 
                         if( w[800ad03c] == ff )
                         {
@@ -555,7 +557,7 @@ L77810:	; 80077810
                             {
                                 if( bu[80058819] == 0 )
                                 {
-                                    80077F40	jal    funcac368 [$800ac368]
+                                    funcac368();
                                 }
                             }
                         }
@@ -569,7 +571,7 @@ L77810:	; 80077810
                 {
                     if( w[800ad040] == 1 )
                     {
-                        80077F88	jal    funcaaf70 [$800aaf70]
+                        funcaaf70();
                     }
                 }
             }
@@ -583,16 +585,15 @@ L77810:	; 80077810
 
             if( ( w[800ad03c] != ff ) && ( w[800acfe0] == 0 ) )
             {
-                V0 = w[800aefe4] + w[800b1740] * 5c;
-                V0 = w[V0 + 4c];
-                V0 = w[V0 + 0];
+                V0 = w[800aefe4] + w[800b1740] * 5c; // party entity data
+                V0 = w[V0 + 4c]; // allocated total entity data
+                V0 = w[V0 + 0]; // entity flags
 
                 if( ( V0 & 00001800 ) == 0 )
                 {
                     func7f5fc(); // close and clean dialogs
 
-                    // call script here
-                    func78fe8();
+                    func78fe8(); // some func that loaded field tex and some blackout effects
 
                     [800ad03c] = w(ff);
                 }
@@ -615,20 +616,18 @@ L77810:	; 80077810
         }
     }
 
-    800780BC	jal    func78170 [$80078170]
+    func78170();
+}
 
-800780C4	j      L77810 [$80077810]
-
-L780cc:	; 800780CC
-800780CC	jal    func78ed0 [$80078ed0]
+func78ed0();
 
 field_particle_load_texture();
 
-800780DC	jal    funca2778 [$800a2778]
+funca2778();
 
 field_particle_clear_all();
 
-800780EC	jal    func85b04 [$80085b04]
+func85b04();
 
 func7f5fc(); // close and clean dialogs
 
@@ -638,11 +637,11 @@ system_draw_sync();
 A0 = 0;
 system_psyq_wait_frames(); // get time
 
-8007810C	jal    func6f740 [$8006f740]
+func6f740();
 
 field_deallocate_memory_for_party_sprites();
 
-8007811C	jal    func84f9c [$80084f9c]
+func84f9c();
 
 [8004e9c0] = w(0);
 
@@ -650,7 +649,7 @@ A0 = w[800ad008];
 system_memory_mark_removed_alloc();
 
 A0 = S0;
-8007813C	jal    func78b60 [$80078b60]
+func78b60();
 ////////////////////////////////
 
 
@@ -678,6 +677,7 @@ if( w[800ad0f0] != 0 )
 
 ////////////////////////////////
 // func781dc()
+
 if( w[800ad004] == 0 )
 {
     system_cdrom2_data_sync(); // wait for command to finish
@@ -833,7 +833,7 @@ system_cdrom2_set_dir();
 
 func70358(); // parse field
 
-8007849C	jal    func6fb18 [$8006fb18]
+field_load_main_map_texture_into_vram();
 
 V0 = w[800b1738];
 [800af1d8] = w(S0);
@@ -1335,66 +1335,41 @@ system_psyq_put_draw_env();
 
 
 ////////////////////////////////
-// func78d98
+// func78d98()
 
-S0 = A0;
+col = A0;
 
-80078DA4	jal    func73670 [$80073670]
+func73670(); // clear otagr
 
-S0 = S0 << 02;
-A0 = 800af328;
-T0 = 00ffffff;
-V1 = w[800acfe0];
-A2 = ff000000;
-V1 = V1 << 04;
-V0 = V1 + A0;
-[V0 + 0006] = b(S0);
-[V0 + 0005] = b(S0);
-[800af32c + V1] = b(S0);
-A3 = w[800acfe0];
-A1 = w[800c3740];
-V1 = A3 << 04;
-V1 = V1 + A0;
-A0 = w[V1 + 0000];
-V0 = w[A1 + 00cc];
-A0 = A0 & A2;
-V0 = V0 & T0;
-A0 = A0 | V0;
-[V1 + 0000] = w(A0);
-V1 = V1 & T0;
-V0 = A3 << 01;
-V0 = V0 + A3;
-A0 = w[A1 + 00cc];
-V0 = V0 << 02;
-A0 = A0 & A2;
-A0 = A0 | V1;
-V1 = 800af2f8;
-V0 = V0 + V1;
-[A1 + 00cc] = w(A0);
-V1 = w[V0 + 0000];
-A0 = A0 & T0;
-V1 = V1 & A2;
-V1 = V1 | A0;
-[V0 + 0000] = w(V1);
-V1 = w[A1 + 00cc];
-V0 = V0 & T0;
-V1 = V1 & A2;
-V1 = V1 | V0;
-[A1 + 00cc] = w(V1);
+buffer_id = w[800acfe0];
+otag = w[800c3740];
+
+[800af328 + buffer_id * 10 + 4] = b(col * 4);
+[800af328 + buffer_id * 10 + 5] = b(col * 4);
+[800af328 + buffer_id * 10 + 6] = b(col * 4);
+
+V1 = 800af328 + buffer_id * 10;
+[V1] = w((w[V1] & ff000000) | (w[otag + cc] & 00ffffff));
+[otag + cc] = w((w[otag + cc] & ff000000) | (V1 & 00ffffff));
+
+V0 = 800af2f8 + buffer_id * c;
+[V0] = w((w[V0] & ff000000) | (w[otag + cc] & 00ffffff));
+[otag + cc] = w((w[otag + cc] & ff000000) | (V0 & 00ffffff));
+
 field_draw_sync();
 
-A0 = 800af320;
-A1 = 0;
-A2 = w[800acfe0] << 8;
+A0 = 800af320; // rect
+A1 = 0; // x
+A2 = buffer_id * 100; // y
 system_move_image();
 
-A0 = w[800c3740] + b8;
+A0 = otag + b8;
 system_psyq_put_disp_env();
 
-A0 = w[800c3740];
+A0 = otag;
 system_psyq_put_draw_env();
 
-A0 = w[800c3740] + d0;
+A0 = otag + d0;
 system_psyq_draw_otag();
 ////////////////////////////////
 
@@ -1491,26 +1466,25 @@ if( w[800ad03c] == 80 )
     }
 }
 
-S0 = 800af328;
 [800af32b] = b(3);
 [800af32f] = b(60);
 
-A0 = S0;
+A0 = 800af328;
 A1 = 1;
 system_set_draw_packet_transparency();
 
-[800af334] = h(140);
-[800af32e] = b(0);
-[800af32d] = b(0);
 [800af32c] = b(0);
-[800af332] = h(0);
+[800af32d] = b(0);
+[800af32e] = b(0);
 [800af330] = h(0);
+[800af332] = h(0);
+[800af334] = h(140);
 [800af336] = h(e0);
-A1 = 800af338;
-[A1 + 0] = w(w[S0 + 0]);
-[A1 + 4] = w(w[S0 + 4]);
-[A1 + 8] = w(w[S0 + 8]);
-[A1 + c] = w(w[S0 + c]);
+
+[800af338 + 0] = w(w[800af328 + 0]);
+[800af338 + 4] = w(w[800af328 + 4]);
+[800af338 + 8] = w(w[800af328 + 8]);
+[800af338 + c] = w(w[800af328 + c]);
 
 A0 = 0;
 A1 = 2;
@@ -1518,8 +1492,7 @@ A2 = 0;
 A3 = 0;
 system_graphic_get_texpage_by_param();
 
-S0 = 800af2f8;
-A0 = S0;
+A0 = 800af2f8 + 0;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
@@ -1532,7 +1505,7 @@ A2 = 0;
 A3 = 0;
 system_graphic_get_texpage_by_param();
 
-A0 = S0 + c;
+A0 = 800af2f8 + c;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
@@ -1555,13 +1528,11 @@ if( w[800b1738] != 0 )
     system_memory_allocate();
     FP = V0;
 
-    S0 = w[800acff8];
-
     A0 = 6b9;
     system_get_aligned_filesize_by_dir_file_id();
 
     A0 = FP;
-    A1 = S0;
+    A1 = w[800acff8];
     A2 = V0;
     system_memcpy();
 
@@ -1577,9 +1548,7 @@ system_cdrom2_set_dir();
 
 if( w[8004ea14] == 1 )
 {
-    A0 = w[800ad03c];
-    A0 = A0 + 5;
-    A0 = A0 & 7f;
+    A0 = (w[800ad03c] + 5) & 7f;
     system_get_aligned_filesize_by_dir_file_id();
 
     A0 = V0;
@@ -1589,23 +1558,17 @@ if( w[8004ea14] == 1 )
 }
 else
 {
-    A0 = 00ffffff;
-    V0 = ffe3aff8;
-    T0 = w[SP + 48];
-    A0 = T0 & A0;
-    A0 = A0 + V0;
+    A0 = (w[SP + 48] & 00ffffff) + ffe3aff8;
     A1 = 1;
     system_memory_allocate();
     S7 = V0;
 }
 
-[SP + 20] = h(1);
-
 [SP + 30] = h(0);
 [SP + 34] = w(0);
+
 [SP + 38] = h(0);
 [SP + 3c] = w(0);
-
 
 A0 = 1;
 system_get_aligned_filesize_by_dir_file_id();
@@ -1613,22 +1576,20 @@ system_get_aligned_filesize_by_dir_file_id();
 A0 = V0;
 A1 = 1;
 system_memory_allocate();
-
 [80058af8] = w(V0);
 
-[SP + 24] = w(V0);
-[SP + 2c] = w(S7);
+[SP + 20] = h(1); // dir file id
+[SP + 24] = w(V0); // memory
 
-V1 = w[800ad03c] & 7f;
+[SP + 28] = h(w[800ad03c] & 7f + 5); // dir file id
+[SP + 2c] = w(S7); // memory
 
-[SP + 28] = h(V1 + 5);
-
-if( V1 == 5 )
+if( ( w[800ad03c] & 7f ) == 5 )
 {
     if( w[8004ea14] == 0 )
     {
-        [SP + 30] = h(c);
-        [SP + 34] = w(1dc000);
+        [SP + 30] = h(c); // dir file id
+        [SP + 34] = w(1dc000); // memory
     }
 }
 
@@ -1694,20 +1655,19 @@ system_draw_sync();
 for( int i = 0; i < 20; ++i )
 {
     A0 = i;
-    func78d98();
+    func78d98(); // draw some effect
 }
 
 field_draw_sync();
 
-S2 = 0;
-S0 = 800af320;
-[S0 + 0000] = h(0);
-[800af322] = h(0);
+[800af320 + 0] = h(0);
+[800af320 + 2] = h(0);
+
 func78d10();
 
 system_print_clear_memory()
 
-A0 = S0;
+A0 = 800af320;
 A1 = 0;
 A2 = e0;
 system_move_image();
@@ -1717,24 +1677,17 @@ field_draw_sync();
 A0 = 0;
 system_cdrom_action_sync();
 
-A0 = w[80059a38];
-V0 = w[800ad03c];
-V1 = 8006b4bc;
 [80058b6c] = b(0);
 [80058818] = b(0);
-V0 = V0 & 007f;
-[80058afc] = b(V0);
+[80058afc] = b(w[800ad03c] & 7f);
 
-loop79460:	; 80079460
-    V0 = A0 + S2;
-    V0 = bu[V0 + 22b1];
-    S2 = S2 + 0001;
-    [V1 + 0000] = h(V0);
-    V0 = S2 < 0003;
-    V1 = V1 + 0002;
-80079474	bne    v0, zero, loop79460 [$80079460]
+for( int i = 0; i < 3; ++i )
+{
+    A0 = w[80059a38];
+    [8006b4bc + i * 2] = h(bu[A0 + 22b1 + i]);
+}
 
-8007947C	jal    func78ed0 [$80078ed0]
+func78ed0();
 
 [80059b3c] = w(800b1a3c);
 [80059b40] = w(800b9b30);
@@ -1777,15 +1730,13 @@ if( bu[80058b6c] == 2 )
     A1 = 2;
     put_bytes_to_800C2F3C();
 
-    A0 = 4;
     V0 = w[80059a38];
+    A0 = 4;
     A1 = hu[V0 + 231a] & 3fff;
     put_bytes_to_800C2F3C();
 
     V1 = w[80059a38];
-    V0 = hu[V1 + 231a];
-    V0 = V0 & 3fff;
-    if( V0 < 400 )
+    if( ( hu[V1 + 231a] & 3fff ) < 400 )
     {
         [V1 + 2320] = h(hu[V1 + 1984]);
     }
@@ -1793,65 +1744,59 @@ if( bu[80058b6c] == 2 )
 
 field_draw_sync();
 
-S1 = 0140;
-S0 = 800af320;
-A0 = S0;
-A1 = 0140;
-V0 = 00e0;
-[S0 + 0000] = h(0);
-[800af322] = h(V0);
-[800af324] = h(S1);
-[800af326] = h(V0);
+[800af320 + 0] = h(0);
+[800af320 + 2] = h(e0);
+[800af320 + 4] = h(140);
+[800af320 + 6] = h(e0);
+
+A0 = 800af320;
+A1 = 140;
 A2 = 0;
 system_move_image();
 
 field_draw_sync();
 
-S2 = 0;
-A0 = S0;
+[800af320 + 0] = h(140);
+[800af320 + 2] = h(0);
+
+A0 = 800af320;
 A1 = 0;
-[S0 + 0000] = h(S1);
-[800af322] = h(0);
 A2 = 0;
 system_move_image();
 
-A0 = S0;
+A0 = 800af320;
 A1 = 0;
-A2 = 0100;
+A2 = 100;
 system_move_image();
-
 
 field_draw_sync();
 
-S1 = 0040;
-A0 = w[800c3740];
-A0 = A0 + 00b8;
+A0 = w[800c3740] + b8;
 system_psyq_put_disp_env();
 
 A0 = w[800c3740];
 system_psyq_put_draw_env();
 
-V0 = 02c0;
-[S0 + 0000] = h(V0);
-S0 = 0100;
-[800af322] = h(S0);
-A0 = 001f;
-80079658	jal    func78d98 [$80078d98]
+[800af320 + 0] = h(2c0);
+[800af320 + 2] = h(100);
 
-A0 = 001f;
-80079660	jal    func78d98 [$80078d98]
+A0 = 1f;
+func78d98(); // draw some effect
+
+A0 = 1f;
+func78d98(); // draw some effect
 
 A0 = 8000;
-A1 = 0001;
-V0 = 0300;
-[SP + 001c] = h(S1);
-[SP + 001e] = h(S0);
-[SP + 0018] = h(V0);
-[SP + 001a] = h(0);
+A1 = 1;
 system_memory_allocate();
-
-A0 = SP + 0018;
 S6 = V0;
+
+[SP + 18] = h(300);
+[SP + 1a] = h(0);
+[SP + 1c] = h(40);
+[SP + 1e] = h(100);
+
+A0 = SP + 18;
 A1 = S6;
 system_store_image();
 
@@ -1859,54 +1804,37 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 8000;
-A1 = 0001;
-V0 = 0280;
-[SP + 001c] = h(S1);
-[SP + 001e] = h(S0);
-[SP + 0018] = h(V0);
-[SP + 001a] = h(0);
+A1 = 1;
 system_memory_allocate();
-
-A0 = SP + 0018;
 S5 = V0;
+
+[SP + 18] = h(280);
+[SP + 1a] = h(0);
+[SP + 1c] = h(40);
+[SP + 1e] = h(100);
+
+A0 = SP + 18;
 A1 = S5;
 system_store_image();
 
 A0 = 0;
 system_draw_sync();
 
-V0 = 800ad188;
-S4 = V0 + 0002;
-S3 = V0;
-V0 = 800ad1a0;
-S1 = V0 + 0002;
-S0 = V0;
+for( int i = 0; i < 6; ++i )
+{
+    [SP + 18] = h(hu[800ad1a0 + i * 4 + 0]);
+    [SP + 1a] = h(hu[800ad1a0 + i * 4 + 2]);
+    [SP + 1c] = h(40);
+    [SP + 1e] = h(20);
 
-loop796fc:	; 800796FC
-    A0 = SP + 0018;
-    V0 = 0040;
-    [SP + 001c] = h(V0);
-    V0 = 0020;
-    [SP + 001e] = h(V0);
-    V0 = hu[S0 + 0000];
-    S0 = S0 + 0004;
-    S2 = S2 + 0001;
-    [SP + 0018] = h(V0);
-    V0 = hu[S1 + 0000];
-    S1 = S1 + 0004;
-    [SP + 001a] = h(V0);
-    A2 = h[S4 + 0000];
-    S4 = S4 + 0004;
-    A1 = h[S3 + 0000];
-    S3 = S3 + 0004;
+    A0 = SP + 18;
+    A1 = h[800ad188 + i * 4 + 0];
+    A2 = h[800ad188 + i * 4 + 2];
     system_move_image();
 
     A0 = 0;
     system_draw_sync();
-
-    V0 = S2 < 0006;
-80079748	bne    v0, zero, loop796fc [$800796fc]
-
+}
 
 A0 = 4;
 A1 = 0;
@@ -1916,40 +1844,35 @@ A0 = 8;
 A1 = 0;
 system_memory_set_alloc_user()
 
-[800ad038] = w(0);
-80079770	jal    func6fb18 [$8006fb18]
+[800ad038] = w(0); // set that map texture not loaded yet
+
+field_load_main_map_texture_into_vram();
 
 if( w[800af358] != 0 )
 {
-    S2 = 0020;
-
-    loop7978c:	; 8007978C
-        A0 = S2;
-        8007978C	jal    func78d98 [$80078d98]
-
-        S2 = S2 + 0001;
-        V0 = S2 < 003f;
-    8007979C	bne    v0, zero, loop7978c [$8007978c]
+    for( int i = 20; i < 3f; ++i ) // to white
+    {
+        A0 = i;
+        func78d98(); // draw some effect
+    }
 
     [800ad028] = w(1);
 }
 else
 {
-    S2 = 001f;
-
-    loop797b8:	; 800797B8
-        800797B8	jal    func78d98 [$80078d98]
-        A0 = S2;
-        800797C0	addiu  s2, s2, $ffff (=-$1)
-    800797C4	bgez   s2, loop797b8 [$800797b8]
+    for( int i = 1f; i >= 0; --i ) // to black
+    {
+        A0 = i;
+        func78d98(); // draw some effect
+    }
 
     A0 = 0;
-    func78d98();
+    func78d98(); // draw some effect
 
     [800ad028] = w(0);
 }
 
-800797DC	jal    func6fb98 [$8006fb98]
+func6fb98();
 
 field_draw_sync();
 
@@ -1991,11 +1914,7 @@ if( w[800b1738] != 0 )
 {
     if( w[8004ea14] == 0 )
     {
-        A0 = ffffff;
-        V0 = ffe23ff8;
-        T0 = w[SP + 0048];
-        A0 = T0 & A0;
-        A0 = A0 + V0;
+        A0 = (w[SP + 48] & 00ffffff) + ffe23ff8;
         A1 = 1;
         system_memory_allocate();
         [800acff8] = w(V0);
@@ -2034,9 +1953,7 @@ system_gte_set_projection_plane_distance();
 
 field_allocate_memory_for_party_sprites();
 
-V1 = w[800ad03c];
-
-if( V1 == 1 )
+if( w[800ad03c] == 1 )
 {
     [8006f154] = w(ff);
     [8006f150] = w(ff);
@@ -2056,14 +1973,10 @@ if( V1 == 1 )
 }
 else
 {
-    S2 = 0;
-    S1 = 8006f14c;
-
-    loop7998c:	; 8007998C
-        A0 = w[S1 + 0000];
-        V0 = 00ff;
-        S3 = S2 << 02;
-        if( A0 != V0 )
+    for( int i = 0; i < 3; ++i )
+    {
+        A0 = w[8006f14c + i * 4];
+        if( A0 != ff )
         {
             A0 = A0 + 5;
             system_get_aligned_filesize_by_dir_file_id();
@@ -2071,37 +1984,32 @@ else
             A0 = V0;
             A1 = 1;
             system_memory_allocate();
-
             S0 = V0;
+
+            A0 = w[8006f14c + i * 4] + 5;
             A1 = S0;
             A2 = 0;
-            A0 = w[S1 + 0000];
-            A3 = 0080;
-            A0 = A0 + 5;
+            A3 = 80;
             system_cdrom2_load_file_by_dir_file_id();
 
             A0 = 0;
             system_cdrom_action_sync();
 
             A0 = S0;
-            A1 = w[80059aa4 + S3];
+            A1 = w[80059aa4 + i * 4];
             system_extract_archive();
 
             A0 = S0;
             system_memory_mark_removed_alloc();
         }
+    }
 
-        S2 = S2 + 0001;
-        V0 = S2 < 0003;
-        S1 = S1 + 0004;
-    800799F8	bne    v0, zero, loop7998c [$8007998c]
-
-    80079A00	jal    funca1a18 [$800a1a18]
+    funca1a18();
 
     field_draw_sync();
 }
 
-[800ad03c] = w(000000ff);
+[800ad03c] = w(ff);
 
 func76bd4();
 

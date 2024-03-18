@@ -553,7 +553,7 @@ Extract()
                 path += std::format("{:02x}", col);
                 path += "\\";
             }
-            path += std::format("{:02x}", file_id);
+            path += std::format("{:03x}", file_id);
             path += "_";
             path += std::format("{:02x}", i);
 
@@ -565,6 +565,10 @@ Extract()
 
             ParseFile(path, name, file_sector, file_size);
             printf("add file 0x%x, size: 0x%x byte.\n", i, file_size);
+        }
+        else
+        {
+            ++file_id;
         }
     }
 

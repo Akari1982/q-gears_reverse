@@ -14,7 +14,7 @@
 800ad018 [][][][] store here entity id for particle.
 800ad01c [][][][] store here entity id that inits particle.
 
-800ad038 [][][][] init with 0.
+800ad038 [][][][] init with 0. Field texture loaded.
 800ad03c [][][][] ???
 
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
@@ -50,6 +50,7 @@
 
 800ad0e4 [][][][] checked if equal to 1 in func83f40.
 800ad0e8 [][][][] some index in 0x1f800000. Maybe move stack?
+800ad0ec [][][][] pointer to main map texture stream for loading.
 
 800ad0f4 array of 1 bytes of camera rotation mask for each direction.
 
@@ -297,7 +298,8 @@
                        0x00000100: NPC character (initialization with 0xBC and 0x0B opcodes) (movement material check).
                        0x00000200: PC follower (movement material check).
                        0x00000400: PC entity (player entity and this is patry leader. Seems like manipulatable entity) (movement material check).
-                       0x00000800: 
+                       0x00000800: ???
+                       0x00001000: ???
                        0x00002000: 
                        0x00004000: if we remove this flag - entity not move, menu not called. Checked in move function. If this flag is set and (hu[800af370] & 0040) && (w[800ad040] == 1) then we set animation_id 2 (run) to play instead of 1 (walk).
                        0x00008000: managed in opcode 0xF6.
@@ -481,6 +483,15 @@
 
 800af1f0 [][][][] current entity id in script call.
 800af1f4 [][]     store 0xff40 here if we init player entity.
+
+800af2f8 some render buffer.
+800af320 rect for some render effect.
+    + 0 [][]     x.
+    + 2 [][]     y.
+    + 4 [][]     w.
+    + 6 [][]     h.
+800af328 some render buffer.
+800af32c []       store here priority
 
 800af370 [][]     current button mask for controller 1. (1 = pressed, 0 = released)
                     0x0001 L2
