@@ -504,221 +504,208 @@ number_of_entity = w[800ad0d4];
 
 if( h[800b1822] != 0 )
 {
-    if( number_of_entity > 0 )
+    for( int i = 0; i < number_of_entity; ++i )
     {
-        S5 = 0;
-        loop80c60:	; 80080C60
-            struct_138 = w[struct_5c_p + S5 * 5c + 4c];
-            // skip movement
-            if( w[struct_138 + 0] & 01000000 )
+        struct_138 = w[struct_5c_p + i * 5c + 4c];
+        // skip movement
+        if( w[struct_138 + 0] & 01000000 )
+        {
+            // not party leader
+            if( i != w[800b1740] )
             {
-                // not party leader
-                if( S5 != w[800b1740] )
+                if( ( hu[struct_5c_p + i * 5c + 58] & 0020 ) == 0 )
                 {
-                    if( ( hu[struct_5c_p + S5 * 5c + 58] & 0020 ) == 0 )
+                    // if not default animation now
+                    if( h[struct_138 + e8] != h[struct_138 + e6] )
                     {
-                        // if not default animation now
-                        if( h[struct_138 + e8] != h[struct_138 + e6] )
+                        if( h[struct_138 + e6] < 0 )
                         {
-                            if( h[struct_138 + e6] < 0 )
-                            {
-                                [struct_138 + e8] = h(0); // playing animation id
-                            }
-                            else
-                            {
-                                [struct_138 + e8] = h(h[struct_138 + e6]);
-                            }
-                            A0 = w[struct_5c_p + S5 * 5c + 4];
-                            A1 = h[struct_138 + e8];
-                            A2 = struct_5c_p + S5 * 5c;
-                            func81808(); // play new animation
+                            [struct_138 + e8] = h(0); // playing animation id
                         }
+                        else
+                        {
+                            [struct_138 + e8] = h(h[struct_138 + e6]);
+                        }
+                        A0 = w[struct_5c_p + i * 5c + 4];
+                        A1 = h[struct_138 + e8];
+                        A2 = struct_5c_p + i * 5c;
+                        func81808(); // play new animation
                     }
                 }
             }
-            S5 = S5 + 1;
-            V0 = S5 < number_of_entity;
-        80080CFC	bne    v0, zero, loop80c60 [$80080c60]
+        }
     }
 }
 else
 {
-    if( number_of_entity > 0 )
+    for( int i = 0; i < number_of_entity; ++i )
     {
-        S5 = 0;
-        L80d34:	; 80080D34
-            struct_138 = w[struct_5c_p + S5 * 5c + 4c];
+        struct_138 = w[struct_5c_p + i * 5c + 4c];
 
-            if( w[struct_138 + 0] & 01000000 )
+        if( w[struct_138 + 0] & 01000000 )
+        {
+            // not party leader
+            if( i != w[800b1740] )
             {
-                // not party leader
-                if( S5 != w[800b1740] )
+                if( ( hu[struct_5c_p + i * 5c + 58] & 0020 ) == 0 )
                 {
-                    if( ( hu[struct_5c_p + S5 * 5c + 58] & 0020 ) == 0 )
+                    struct_164 = w[struct_5c_p + i * 5c + 4];
+
+                    A0 = h[struct_138 + e4]; // character id
+                    get_party_slot_id();
+                    party_slot_id = V0;
+
+                    if( party_slot_id != -1 )
                     {
-                        struct_164 = w[struct_5c_p + S5 * 5c + 4];
+                        V1 = w[800b1834 + party_slot_id * 4];
 
-                        A0 = h[struct_138 + e4]; // character id
-                        get_party_slot_id();
-                        party_slot_id = V0;
+                        A0 = struct_164;
+                        A1 = h[800b09d8 + V1 * 48]; // rotation
+                        A2 = struct_5c_p + i * 5c;
+                        func81594(); // calculate struct_164 + c, struct_164 + 14 (and struct_164 + 18 in one case)
 
-                        if( party_slot_id != -1 )
+                        if( bu[800b16a3] == 1 )
                         {
-                            V1 = w[800b1834 + party_slot_id * 4];
-
-                            A0 = struct_164;
-                            A1 = h[800b09d8 + V1 * 48]; // rotation
-                            A2 = struct_5c_p + S5 * 5c;
-                            func81594(); // calculate struct_164 + c, struct_164 + 14 (and struct_164 + 18 in one case)
-
-                            if( bu[800b16a3] == 1 )
+                            [800b1834 + party_slot_id * 4] = w((w[800b1834] + 1) & 1f);
+                        }
+                        else
+                        {
+                            if( ( h[800b09c4 + V1 * 48] & 0800 ) == 0 )
                             {
-                                [800b1834 + party_slot_id * 4] = w((w[800b1834] + 1) & 1f);
-                            }
-                            else
-                            {
-                                if( ( h[800b09c4 + V1 * 48] & 0800 ) == 0 )
+                                [struct_138 + 4] = w(w[struct_138 + 4] & ffffefff); // move done
+
+                                if( ( w[struct_138 + 14] & 00420000 ) == 0 )
                                 {
-                                    [struct_138 + 4] = w(w[struct_138 + 4] & ffffefff); // move done
-
-                                    if( ( w[struct_138 + 14] & 00420000 ) == 0 )
+                                    if( w[800c2de4] != -1 )
                                     {
-                                        if( w[800c2de4] != -1 )
+                                        V1 = 14;
+                                        if( party_slot_id == 1 )
                                         {
-                                            V1 = 14;
-                                            if( party_slot_id == 1 )
-                                            {
-                                                V1 = a;
-                                            }
-
-                                            if( ( ( w[800b1834] + V1 ) & 1f ) != w[800b1834 + party_slot_id * 4] )
-                                            {
-                                                80080F28	j      L8121c [$8008121c]
-                                            }
+                                            V1 = a;
                                         }
-                                        else
+
+                                        if( ( ( w[800b1834] + V1 ) & 1f ) != w[800b1834 + party_slot_id * 4] )
                                         {
-                                            if( h[struct_164 + 84] == h[struct_138 + 26] )
-                                            {
-                                                if( h[struct_138 + e8] == 6 )
-                                                {
-                                                    [struct_138 + 4] = w(w[struct_138 + 4] | 00001000);
-                                                }
-                                                else
-                                                {
-                                                    if( h[struct_138 + e8] != h[struct_138 + e6] )
-                                                    {
-                                                        if( h[struct_138 + e6] >= 0 )
-                                                        {
-                                                            [struct_138 + e8] = h(h[struct_138 + e6]);
-                                                        }
-                                                        else
-                                                        {
-                                                            [struct_138 + e8] = h(0);
-                                                        }
-                                                        A0 = struct_164;
-                                                        A1 = h[struct_138 + e8];
-                                                        A2 = struct_5c_p + S5 * 5c;
-                                                        func81808(); // new animation
-                                                    }
-                                                }
-                                                80080F28	j      L8121c [$8008121c]
-                                            }
+                                            continue;
                                         }
-                                    }
-                                }
-
-                                if( w[800b1834 + party_slot_id * 4] == w[800b1834] )
-                                {
-                                    [struct_138 + 0] = w(w[struct_138 + 0] & fffff7ff);
-
-                                    if( h[struct_138 + e6] < 0 )
-                                    {
-                                        [struct_138 + e8] = h(0);
                                     }
                                     else
                                     {
-                                        [struct_138 + e8] = h(h[struct_138 + e6]);
+                                        if( h[struct_164 + 84] == h[struct_138 + 26] )
+                                        {
+                                            if( h[struct_138 + e8] == 6 )
+                                            {
+                                                [struct_138 + 4] = w(w[struct_138 + 4] | 00001000);
+                                            }
+                                            else
+                                            {
+                                                if( h[struct_138 + e8] != h[struct_138 + e6] )
+                                                {
+                                                    if( h[struct_138 + e6] >= 0 )
+                                                    {
+                                                        [struct_138 + e8] = h(h[struct_138 + e6]);
+                                                    }
+                                                    else
+                                                    {
+                                                        [struct_138 + e8] = h(0);
+                                                    }
+                                                    A0 = struct_164;
+                                                    A1 = h[struct_138 + e8];
+                                                    A2 = struct_5c_p + i * 5c;
+                                                    func81808(); // new animation
+                                                }
+                                            }
+
+                                            continue;
+                                        }
                                     }
-
-                                    A0 = struct_164;
-                                    A1 = h[struct_138 + e8];
-                                    A2 = struct_5c_p + S5 * 5c;
-                                    func81808(); // new animation
-
-                                    80080F28	j      L8121c [$8008121c]
                                 }
                             }
 
-                            if( h[800b09c4 + V1 * 48] & 0800 )
-                            {
-                                [struct_138 + 0] = w(w[struct_138 + 0] | 00000800);
-                            }
-                            else
+                            if( w[800b1834 + party_slot_id * 4] == w[800b1834] )
                             {
                                 [struct_138 + 0] = w(w[struct_138 + 0] & fffff7ff);
-                            }
 
-                            V1 = w[800b1834 + party_slot_id * 4];
-                            if( h[struct_138 + e8] != h[800b09d6 + V1 * 48] )
-                            {
-                                if( h[800b09d6 + V1 * 48] < 0 )
+                                if( h[struct_138 + e6] < 0 )
                                 {
                                     [struct_138 + e8] = h(0);
                                 }
                                 else
                                 {
-                                    [struct_138 + e8] = h(h[800b09d6 + V1 * 48]);
+                                    [struct_138 + e8] = h(h[struct_138 + e6]);
                                 }
 
                                 A0 = struct_164;
                                 A1 = h[struct_138 + e8];
-                                A2 = struct_5c_p + S5 * 5c;
+                                A2 = struct_5c_p + i * 5c;
                                 func81808(); // new animation
+
+                                continue;
+                            }
+                        }
+
+                        if( h[800b09c4 + V1 * 48] & 0800 )
+                        {
+                            [struct_138 + 0] = w(w[struct_138 + 0] | 00000800);
+                        }
+                        else
+                        {
+                            [struct_138 + 0] = w(w[struct_138 + 0] & fffff7ff);
+                        }
+
+                        V1 = w[800b1834 + party_slot_id * 4];
+                        if( h[struct_138 + e8] != h[800b09d6 + V1 * 48] )
+                        {
+                            if( h[800b09d6 + V1 * 48] < 0 )
+                            {
+                                [struct_138 + e8] = h(0);
+                            }
+                            else
+                            {
+                                [struct_138 + e8] = h(h[800b09d6 + V1 * 48]);
                             }
 
-                            A2 = 0;
-                            loop80fc4:	; 80080FC4
-                                [struct_138 + 8 + A2 * 2] = h(hu[800b09da + V1 * 48 + A2 * 2]);
-                                A2 = A2 + 1;
-                                V0 = A2 < 4;
-                            80080FF0	bne    v0, zero, loop80fc4 [$80080fc4]
-
-                            [struct_138 + 10] = h(bu[800b0a08 + V1 * 48]);
-
-                            [struct_138 + 50] = w(w[800b09f4 + V1 * 48 + 0]);
-                            [struct_138 + 54] = w(w[800b09f4 + V1 * 48 + 4]);
-                            [struct_138 + 58] = w(w[800b09f4 + V1 * 48 + 8]);
-
-                            [struct_164 + c] = w(w[800b09e4 + V1 * 48 + 0]);
-                            [struct_164 + 10] = w(w[800b09e4 + V1 * 48 + 4]);
-                            [struct_164 + 14] = w(w[800b09e4 + V1 * 48 + 8]);
-
-                            [struct_5c_p + S5 * 5c + 20] = w(h[800b09cc + V1 * 48]);
-                            [struct_5c_p + S5 * 5c + 24] = w(h[800b09ce + V1 * 48]);
-                            [struct_5c_p + S5 * 5c + 28] = w(h[800b09d0 + V1 * 48]);
-
-                            [struct_164 + 0] = w(w[struct_5c_p + S5 * 5c + 20] << 10);
-                            [struct_138 + 20] = w(w[struct_5c_p + S5 * 5c + 20] << 10);
-                            [struct_164 + 4] = w(w[struct_5c_p + S5 * 5c + 24] << 10);
-                            [struct_138 + 24] = w(w[struct_5c_p + S5 * 5c + 24] << 10);
-                            [struct_164 + 8] = w(w[struct_5c_p + S5 * 5c + 28] << 10);
-                            [struct_138 + 28] = w(w[struct_5c_p + S5 * 5c + 28] << 10);
-
-                            [struct_164 + 84] = h(h[800b09d4 + V1 * 48]);
-                            [struct_138 + 106] = h(hu[800b09d8 + V1 * 48]);
-                            [struct_138 + 104] = h(hu[800b09d8 + V1 * 48]);
-
-                            [800b1834 + party_slot_id * 4] = w((w[800b1834 + party_slot_id * 4] - 1) & 1f);
+                            A0 = struct_164;
+                            A1 = h[struct_138 + e8];
+                            A2 = struct_5c_p + i * 5c;
+                            func81808(); // new animation
                         }
+
+                        for( int j = 0; j < 4; ++j )
+                        {
+                            [struct_138 + 8 + j * 2] = h(hu[800b09da + V1 * 48 + j * 2]);
+                        }
+
+                        [struct_138 + 10] = h(bu[800b0a08 + V1 * 48]);
+
+                        [struct_138 + 50] = w(w[800b09f4 + V1 * 48 + 0]);
+                        [struct_138 + 54] = w(w[800b09f4 + V1 * 48 + 4]);
+                        [struct_138 + 58] = w(w[800b09f4 + V1 * 48 + 8]);
+
+                        [struct_164 + c] = w(w[800b09e4 + V1 * 48 + 0]);
+                        [struct_164 + 10] = w(w[800b09e4 + V1 * 48 + 4]);
+                        [struct_164 + 14] = w(w[800b09e4 + V1 * 48 + 8]);
+
+                        [struct_5c_p + i * 5c + 20] = w(h[800b09cc + V1 * 48]);
+                        [struct_5c_p + i * 5c + 24] = w(h[800b09ce + V1 * 48]);
+                        [struct_5c_p + i * 5c + 28] = w(h[800b09d0 + V1 * 48]);
+
+                        [struct_164 + 0] = w(w[struct_5c_p + i * 5c + 20] << 10);
+                        [struct_138 + 20] = w(w[struct_5c_p + i * 5c + 20] << 10);
+                        [struct_164 + 4] = w(w[struct_5c_p + i * 5c + 24] << 10);
+                        [struct_138 + 24] = w(w[struct_5c_p + i * 5c + 24] << 10);
+                        [struct_164 + 8] = w(w[struct_5c_p + i * 5c + 28] << 10);
+                        [struct_138 + 28] = w(w[struct_5c_p + i * 5c + 28] << 10);
+
+                        [struct_164 + 84] = h(h[800b09d4 + V1 * 48]);
+                        [struct_138 + 106] = h(hu[800b09d8 + V1 * 48]);
+                        [struct_138 + 104] = h(hu[800b09d8 + V1 * 48]);
+
+                        [800b1834 + party_slot_id * 4] = w((w[800b1834 + party_slot_id * 4] - 1) & 1f);
                     }
                 }
             }
-
-            L8121c:	; 8008121C
-            S5 = S5 + 1;
-            V0 = S5 < number_of_entity;
-        8008122C	bne    v0, zero, L80d34 [$80080d34]
+        }
     }
 }
 ////////////////////////////////
@@ -1129,14 +1116,14 @@ if( ( w[struct_138 + 0] & 00041800 ) == 0 ) // normal move
         }
         V0 = V1 << 10;
 
-        S5 = w[struct_5c + 4];
+        struct_164 = w[struct_5c + 4];
         if( ( w[struct_138 + f0] >> 10 ) < V1 )
         {
-            V0 = w[struct_138 + f0] + w[S5 + 1c];
+            V0 = w[struct_138 + f0] + w[struct_164 + 1c];
         }
         [struct_138 + f0] = w(V0);
 
-        [S5 + 10] = w(w[struct_138 + f0] >> 1);
+        [struct_164 + 10] = w(w[struct_138 + f0] >> 1);
     }
 
     if( material & 00400000 ) // 00400000 - auto slide down
@@ -1194,12 +1181,12 @@ if( follow_entity_id != ff )
 
         [V1 + 2] = h(hu[struct_5c_p + follow_entity_id * 5c + 52]); // y rot
 
-        S3 = w[follow_struct_138 + 20];
-        S5 = w[follow_struct_138 + 28];
-        S0 = h[V1 + 2]; // y rot
+        cur_x = w[struct_138 + 20];
+        cur_z = w[struct_138 + 28];
+        cur_f_x = w[follow_struct_138 + 20];
+        cur_f_z = w[follow_struct_138 + 28];
 
-        S4 = w[struct_138 + 20];
-        S6 = w[struct_138 + 28];
+        rot_y = h[V1 + 2]; // y rot
 
         if( ( h[struct_138 + 104] & 8000 ) == 0 )
         {
@@ -1211,22 +1198,22 @@ if( follow_entity_id != ff )
             [V1 + 8] = h(V0);
         }
 
-        A0 = S5 - S6;
         V0 = w[struct_138 + 110];
-        S1 = h[V0 + 8];
-        A1 = S3 - S4;
+        dist = h[V0 + 8];
+
+        A0 = cur_f_z - cur_z;
+        A1 = cur_f_x - cur_x;
         system_get_rotation_based_on_vector_x_y();
-        V0 = ((V0 << 10) >> 10) - S0;
 
-        S0 = V0 - 800;
+        rot_y = ((V0 << 10) >> 10) - rot_y - 800;
 
-        A0 = S0;
+        A0 = rot_y;
         system_cos();
-        [struct_138 + 40] = w(w[struct_138 + 40] + (S3 + ((V0 * S1) << 4) - S4))
+        [struct_138 + 40] = w(w[struct_138 + 40] + (cur_f_x + ((V0 * dist) << 4) - cur_x))
 
-        A0 = S0;
+        A0 = rot_y;
         system_sin();
-        [struct_138 + 48] = w(w[struct_138 + 48] + (S5 + ((V0 * S1) << 4) - S6))
+        [struct_138 + 48] = w(w[struct_138 + 48] + (cur_f_z + ((V0 * dist) << 4) - cur_z))
     }
 }
 
@@ -1244,6 +1231,7 @@ if( ( w[struct_138 + 4] & 00022000 ) == 00022000 )
 
 ////////////////////////////////
 // func821cc()
+
 entity_id = A0;
 struct_5c = A1;
 struct_138 = A2;

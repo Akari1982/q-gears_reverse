@@ -416,12 +416,11 @@ return -1;
 ////////////////////////////////
 // func7b0d4()
 // return -1 if we can't move, 0 if we move
+
 move_vector = A0;
 struct_138 = A1;
 intersect_line = A2;
 rotation = A3;
-
-
 
 // check first rotation
 angle1 = (rotation - 100) & 0fff;
@@ -592,6 +591,7 @@ return -1;
 ////////////////////////////////
 // field_check_walkmesh_triangle_and_calculate_height()
 // return -1 if we can't move, 0 otherwise.
+
 move_vector = A0;
 current_pos = A1;
 struct_138 = A2;
