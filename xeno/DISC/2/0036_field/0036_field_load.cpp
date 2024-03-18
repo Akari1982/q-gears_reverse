@@ -597,11 +597,10 @@ A1 = 000f;
 8006FFF8	lui    v1, $800b
 V1 = V1 + 16a8;
 A2 = V1 + 00ba;
-A0 = 1000;
 V0 = 0001;
 [800ad0e0] = h(V0);
 V0 = 0720;
-[800aee0e] = h(A0);
+[800aee0e] = h(1000);
 [V1 + 0000] = h(V0);
 V0 = 0100;
 [800b1678] = h(V0);
@@ -616,7 +615,7 @@ V0 = 0080;
 V0 = 00ff;
 [800ad09c] = w(V0);
 80070074	addiu  v0, zero, $ffff (=-$1)
-[800b1660] = h(A0);
+[800b1660] = h(1000);
 [800b1658] = h(0);
 [800b165a] = h(0);
 [800b165c] = h(0);
@@ -2710,8 +2709,6 @@ else
 
 func80720(); // move routine
 
-
-
 A0 = 800b1658;
 A1 = 800af104;
 system_calculate_rotation_matrix();
@@ -2739,22 +2736,15 @@ A1 = (w[800aed68] - w[800aed58]) >> 10;
 system_get_rotation_based_on_vector_x_y();
 [800af588] = w(V0);
 
-
-
 T1 = 1f8003fc;
 T0 = 1f8003fc;
 [1f8003fc] = w(SP);
 T0 = 1f8003fc - 4;
 SP = T0;
 
-
-
 func728c0(); // camera update
 
-
-
 SP = SP + 4;
-
 
 SP = w[SP];
 V0 = w[800aed54];
@@ -2784,15 +2774,13 @@ A0 = w[S0 + 0000];
 [SP + 0024] = w(V1 + T0);
 [SP + 0028] = w(A0 + A2);
 
-V0 = w[800ad0f0];
-
-if( V0 != 0 )
+if( w[800ad0f0] != 0 )
 {
-    A0 = S0 + 00f8;
-    A1 = SP + 0010;
-    A2 = SP + 0020;
-    A3 = S0 + 0008;
-    80073224	jal    func72de0 [$80072de0]
+    A0 = S0 + f8;
+    A1 = SP + 10;
+    A2 = SP + 20;
+    A3 = S0 + 8;
+    func72de0();
 
     A1 = 800aed30;
     [A1 + 0] = w(w[S0 + f8]);
@@ -2818,133 +2806,79 @@ else
     A1 = SP + 0010;
     A2 = SP + 0020;
     A3 = S0 + 0008;
-    800732CC	jal    func72de0 [$80072de0]
+    func72de0();
 }
 
 T1 = 1f8003fc;
 T0 = T1;
-[T0 + 0000] = w(SP);
-800732E4	addiu  t0, t0, $fffc (=-$4)
+[T0 + 0] = w(SP);
+T0 = T0 - 4;
 SP = T0;
-S2 = 0;
 
 func71984();
 
-SP = SP + 0004;
-SP = w[SP + 0000];
-V0 = w[800ad0d4];
-80073304	nop
+SP = SP + 4;
+SP = w[SP + 0];
 
-if( V0 > 0 )
+for( int i = 0; i < w[800ad0d4]; ++i )
 {
-    S1 = 0;
+    entity_data = w[800aefe4];
+    entity_data_4c = w[entity_data + i * 5c + 4c];
 
-    loop73314:	; 80073314
-        V0 = w[800aefe4];
-        8007331C	nop
-        A0 = S1 + V0;
-        V1 = hu[A0 + 0058];
-        80073328	nop
-        V0 = V1 & 0f40;
-        80073330	beq    v0, zero, L73470 [$80073470]
-        V0 = V1 & 0020;
-        80073338	bne    v0, zero, L73470 [$80073470]
-        8007333C	lui    v0, $0010
-        S0 = w[A0 + 004c];
-        80073344	nop
-        A0 = w[S0 + 0004];
-        8007334C	nop
-        V0 = A0 & V0;
-        80073354	bne    v0, zero, L73470 [$80073470]
-        V1 = A0 & 0600;
-        V0 = 0200;
-        80073360	beq    v1, v0, L73470 [$80073470]
-        80073364	nop
-        V1 = w[S0 + 0000];
-        8007336C	nop
-        V0 = V1 & 8000;
-        80073374	bne    v0, zero, L733e8 [$800733e8]
-        80073378	lui    v0, $0020
-        A1 = w[S0 + 0014];
-        80073380	nop
-        V0 = A1 & V0;
-        80073388	beq    v0, zero, L73398 [$80073398]
-        V0 = V1 & 1800;
-        80073390	beq    v0, zero, L733c8 [$800733c8]
-        A2 = 0200;
+    if( hu[entity_data + i * 5c + 58] & 0f40 )
+    {
+        if( ( hu[entity_data + i * 5c + 58] & 0020 ) == 0 )
+        {
+            if( ( w[entity_data_4c + 4] & 00100000 ) == 0 )
+            {
+                if( ( w[entity_data_4c + 4] & 600 ) != 200 )
+                {
+                    if( ( w[entity_data_4c + 0] & 8000 ) == 0 )
+                    {
 
-        L73398:	; 80073398
-        V0 = A0 & 2000;
-        8007339C	bne    v0, zero, L733b0 [$800733b0]
-        800733A0	nop
-        A2 = h[S0 + 011e];
-        800733A8	j      L733b8 [$800733b8]
-        800733AC	nop
+                        A1 = w[entity_data_4c + 0014];
+                        if( ( ( A1 & 00200000 ) == 0 ) || ( w[entity_data_4c + 0] & 1800 ))
+                        {
+                            A2 = ( w[entity_data_4c + 4] & 2000 ) ? h[800b1688] : h[entity_data_4c + 11e];
 
-        L733b0:	; 800733B0
-        A2 = h[800b1688];
+                            A0 = h[entity_data_4c + 108];
+                            A1 = h[entity_data_4c + 106];
+                            func73018();
+                            [entity_data_4c + 108] = h(V0);
+                        }
+                        else
+                        {
+                            A0 = h[entity_data_4c + 108];
+                            A1 = A1 >> b;
+                            A1 = A1 - 2;
+                            A1 = A1 & 7;
+                            A1 = A1 << 9;
+                            A2 = 200;
+                            func73018();
+                            [entity_data_4c + 108] = h(V0);
+                        }
+                    }
 
-        L733b8:	; 800733B8
-        A0 = h[S0 + 0108];
-        A1 = h[S0 + 0106];
-        800733C0	j      L733dc [$800733dc]
-        800733C4	nop
-
-        L733c8:	; 800733C8
-        A1 = A1 >> 0b;
-        800733CC	addiu  a1, a1, $fffe (=-$2)
-        A1 = A1 & 0007;
-        A1 = A1 << 09;
-        A0 = h[S0 + 0108];
-
-        L733dc:	; 800733DC
-        func73018();
-
-        [S0 + 0108] = h(V0);
-
-        L733e8:	; 800733E8
-        V0 = bu[800acfdd];
-        800733F0	nop
-        800733F4	bne    v0, zero, L73470 [$80073470]
-        800733F8	lui    v1, $0100
-        V0 = w[S0 + 0004];
-        80073400	nop
-        V0 = V0 & V1;
-        80073408	bne    v0, zero, L7344c [$8007344c]
-        8007340C	nop
-        V0 = w[800aefe4];
-        80073418	nop
-        V0 = S1 + V0;
-        V1 = w[V0 + 004c];
-        A1 = hu[800aee62];
-        V1 = hu[V1 + 0108];
-        A0 = w[V0 + 0004];
-        A1 = A1 + V1;
-        A1 = A1 << 10;
-        A1 = A1 >> 10;
-        func22218(); // apply new dir and anim
-
-        80073444	j      L73470 [$80073470]
-        80073448	nop
-
-        L7344c:	; 8007344C
-        V0 = w[800aefe4];
-        80073454	nop
-        V0 = S1 + V0;
-        V1 = w[V0 + 004c];
-        A0 = w[V0 + 0004];
-        A1 = h[V1 + 0108];
-        func21e40(); // set anim move based on rotation
-
-        L73470:	; 80073470
-        V0 = w[800ad0d4];
-        S2 = S2 + 0001;
-        S1 = S1 + 005c;
-        V0 = S2 < V0;
-    80073480	bne    v0, zero, loop73314 [$80073314]
+                    if( bu[800acfdd] == 0 )
+                    {
+                        if( w[entity_data_4c + 4] & 01000000 )
+                        {
+                            A0 = w[entity_data + i * 5c + 4];
+                            A1 = h[entity_data_4c + 108];
+                            func21e40(); // set anim move based on rotation
+                        }
+                        else
+                        {
+                            A0 = w[entity_data + i * 5c + 4];
+                            A1 = h[800aee62] + h[entity_data_4c + 108];
+                            func22218(); // apply new dir and anim
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
-
-
 
 if( w[800c1b60] == 0 )
 {

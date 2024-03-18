@@ -338,7 +338,7 @@
 // func7aa80
 8007AA8C-8007AC24
 ////////////////////////////////
-// func7ac28
+// field_move_calculate_base_move_vector
 8007AC28-8007ACA4
 ////////////////////////////////
 // func7aca8
@@ -450,7 +450,7 @@
 // func7fe50
 8007FE50-8007FF78
 ////////////////////////////////
-// get_current_triangle_material
+// field_move_get_current_triangle_material
 8007FF7C-8007FFE0
 ////////////////////////////////
 // func7ffe4

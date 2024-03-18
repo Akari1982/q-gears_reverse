@@ -134,11 +134,10 @@ L74bcc:	; 80074BCC
 A0 = 1;
 system_psyq_wait_frames();
 
-[800ad074] = w(0);
+[800ad074] = w(0); // delta time from prev update
 
 A0 = -1;
 system_psyq_wait_frames();
-
 S1 = V0;
 
 func73050(); // move here
@@ -308,13 +307,11 @@ if( w[800ad0f0] == 0 )
 A0 = w[800c3740] + 80f0;
 system_psyq_draw_otag();
 
-loop74f60:	; 80074F60
+do
+{
     A0 = -1;
     system_psyq_wait_frames();
-
-    V1 = S1 + w[800b1650] + 2;
-    V0 = V0 < V1;
-80074F80	bne    v0, zero, loop74f60 [$80074f60]
+} while( V0 < S1 + w[800b1650] + 2 );
 ////////////////////////////////
 
 

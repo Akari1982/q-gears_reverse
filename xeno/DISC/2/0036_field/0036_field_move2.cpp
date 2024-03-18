@@ -46,17 +46,21 @@ if( entity_id < w[800ad0d4] ) // number of entity
 
 
 ////////////////////////////////
-// get_current_triangle_material()
+// field_move_get_current_triangle_material()
 
-walkmesh_id = h[A0 + 10];
-if( ( ( w[A0 + 4] >> walkmesh_id + 3 ) & 1 ) == 0 )
+struct_138 = A0;
+
+walkmesh_id = h[struct_138 + 10];
+
+if( ( ( w[struct_138 + 4] >> walkmesh_id + 3 ) & 1 ) == 0 )
 {
     triangle_data = w[800aeff8 + walkmesh_id * 4];
     material_data = w[800aeff4];
-    triangle_id = h[A0 + 8 + walkmesh_id * 2];
-    V0 = bu[triangle_data + triangle_id * e + c];
-    return w[material_data + V0 * 4];
+    triangle_id = h[struct_138 + 8 + walkmesh_id * 2];
+    material_id = bu[triangle_data + triangle_id * e + c];
+    return w[material_data + material_id * 4];
 }
+
 return 0;
 ////////////////////////////////
 
@@ -242,7 +246,7 @@ if( number_of_walkmeshes > 0 )
 }
 
 A0 = S0;
-get_current_triangle_material(); // get current triangle material
+field_move_get_current_triangle_material();
 [S0 + 14] = w(V0);
 
 current_walkmesh = h[S0 + 10];
@@ -346,18 +350,12 @@ number_of_entity = w[800ad0d4];
 call_run_script_8(); // run 8 opcodes for non-party entities
 
 // store previous position
-if( number_of_entity > 0 )
+for( int i = 0; i < number_of_entity; ++i )
 {
-    entity_id = 0;
-    A0 = 0;
-    loop80768:	; 80080768
-        struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
-        [struct_138 + 68] = h(h(struct_138 + 22));
-        [struct_138 + 6a] = h(h(struct_138 + 26));
-        [struct_138 + 6c] = h(h(struct_138 + 2a));
-        entity_id = entity_id + 1;
-        V0 = entity_id < number_of_entity;
-    800807D8	bne    v0, zero, loop80768 [$80080768]
+    struct_138 = w[struct_5c_p + i * 5c + 4c];
+    [struct_138 + 68] = h(h(struct_138 + 22));
+    [struct_138 + 6a] = h(h(struct_138 + 26));
+    [struct_138 + 6c] = h(h(struct_138 + 2a));
 }
 
 if( w[800c1b60] == 0 )
@@ -368,27 +366,27 @@ if( w[800c1b60] == 0 )
 
 [800aed2c] = w(0);
 
-for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
+for( i = 0; i < number_of_entity; ++i )
 {
-    struct_138 = w[struct_5c_p; + entity_id * 5c + 4c];
+    struct_138 = w[struct_5c_p; + i * 5c + 4c];
 
-    if( ( hu[struct_5c_p + entity_id * 5c + 58] & 0f80 ) == 0200 )
+    if( ( hu[struct_5c_p + i * 5c + 58] & 0f80 ) == 0200 )
     {
         if( ( w[struct_138 + 0] & 00010001 ) == 0 )
         {
             if( ( w[struct_138 + 4] & 00000600 ) != 00000200 )
             {
                 A0 = struct_138;
-                get_current_triangle_material();
+                field_move_get_current_triangle_material();
                 [struct_138 + 14] = w(V0);
 
-                A0 = entity_id;
-                A1 = struct_5c_p + entity_id * 5c;
+                A0 = i;
+                A1 = struct_5c_p + i * 5c;
                 A2 = struct_138;
                 func81c34(); // calculate move vector
 
-                A0 = entity_id;
-                A1 = struct_5c_p + entity_id * 5c;
+                A0 = i;
+                A1 = struct_5c_p + i * 5c;
                 A2 = struct_138;
                 func821cc(); // check move
             }
@@ -401,7 +399,7 @@ for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
                 {
                     [struct_138 + ea] = h(2);
                     [struct_138 + e8] = h(2);
-                    A0 = w[struct_5c_p + entity_id * 5c + 4];
+                    A0 = w[struct_5c_p + i * 5c + 4];
                     A1 = h[struct_138 + ea]; // animation id
                     func243e4(); // init animation
                 }
@@ -412,7 +410,7 @@ for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
             if( h[struct_138 + ea] != h[struct_138 + e8] )
             {
                 [struct_138 + e8] = h(h[struct_138 + ea]);
-                A0 = w[struct_5c_p + entity_id * 5c + 4];
+                A0 = w[struct_5c_p + i * 5c + 4];
                 A1 = h[struct_138 + ea]; // animation id
                 func81808();
             }
@@ -1082,15 +1080,11 @@ A0 = SP + 10; // material self move vector
 speed_id = (material >> 9) & 3;
 A1 = h[800ad49c + speed_id * 2]; // walking speed
 dir_id = (material >> b) & 7;
-A2 = hu[800ad480 + dir_id * 2];
-A2 = (hu[800b164c] + A2) & 0fff; // default + rot
-func7ac28();
+A2 = (hu[800b164c] + hu[800ad480 + dir_id * 2]) & 0fff; // default + rot
+field_move_calculate_base_move_vector();
 
-if( ( w[struct_138 + 0] & 00041800 ) == 0 )
+if( ( w[struct_138 + 0] & 00041800 ) == 0 ) // normal move
 {
-    S0 = 0;
-    S3 = 0;
-
     // calculate sliding down
     if( material & 00420000 ) // cant go up and something else
     {
@@ -1152,8 +1146,7 @@ if( ( w[struct_138 + 0] & 00041800 ) == 0 )
         [struct_138 + 104] = h(hu[struct_138 + 104] | 8000); // stop direction movement
     }
 
-
-    if( bu[struct_138 + 74] == ff )
+    if( bu[struct_138 + 74] == ff ) // if this is now follow entity
     {
         if( material & 00020000 )
         {
@@ -1466,7 +1459,7 @@ else
     }
 
     A0 = struct_138;
-    get_current_triangle_material();
+    field_move_get_current_triangle_material();
 
     if( V0 & 00200000 )
     {
@@ -2786,7 +2779,7 @@ if( S4 == walkmesh_blocks )
 
 
     A0 = data_138;
-    get_current_triangle_material();
+    field_move_get_current_triangle_material();
     material = V0;
 
 
@@ -2945,7 +2938,7 @@ if( w[data_138 + 0] & 00040000 )
 
 
 A0 = data_138;
-get_current_triangle_material();
+field_move_get_current_triangle_material();
 material = V0;
 
 
@@ -3021,7 +3014,7 @@ if( S0 == walkmesh_blocks )
         [V0 + entity_id * 5c + 28] = w(h[data_138 + 2a]);
 
         A0 = data_138;
-        get_current_triangle_material();
+        field_move_get_current_triangle_material();
         [data_138 + 14] = w(V0);
 
         A0 = entity_id;

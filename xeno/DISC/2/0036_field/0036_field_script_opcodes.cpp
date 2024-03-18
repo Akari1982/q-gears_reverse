@@ -23832,7 +23832,7 @@ if( number_of_walkmesh <= 0 )
 }
 
 A0 = struct_138;
-get_current_triangle_material();
+field_move_get_current_triangle_material();
 [struct_138 + 14] = w(V0);
 
 V1 = h[struct_138 + 10];

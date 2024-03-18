@@ -12935,7 +12935,7 @@ L7ac00:	; 8007AC00
 8007AC24	nop
 
 
-func7ac28:	; 8007AC28
+field_move_calculate_base_move_vector:	; 8007AC28
 8007AC28	lui    v0, $800b
 8007AC2C	lh     v0, $1660(v0)
 8007AC30	sll    a1, a1, $04
@@ -20876,7 +20876,7 @@ L81ca8:	; 80081CA8
 80081CD4	lh     a1, $d49c(at)
 80081CD8	lw     s5, $0004(a3)
 80081CDC	addu   a2, a2, v0
-80081CE0	jal    func7ac28 [$8007ac28]
+80081CE0	jal    field_move_calculate_base_move_vector [$8007ac28]
 80081CE4	andi   a2, a2, $0fff
 80081CE8	lui    v1, $0004
 80081CEC	lw     v0, $0000(s2)

@@ -132,6 +132,8 @@
 800aed08 [][][][] y pos. Set to 0 when shake less than 0.
 800aed0c [][][][] z pos. Set to 0 when shake less than 0.
 
+800aed2c [][][][] store 0 here at start of movement calc.
+
 800aed54 [][][][] Camera eye x pos. Init with 0.
 800aed58 [][][][] Camera eye y pos. Init with 0.
 800aed5c [][][][] Camera eye z pos. Init with 0.
@@ -314,7 +316,8 @@
         +   4 [][][][] entity flags 2 (0x00000800 init).
                        0x00000001:
                        0x00000002:
-                       0x00000078: ignore walkmeshes material flags. Set - ignore.
+                       0x00000078: ignore walkmeshes material flags. 1 - ignore.
+                       0x000000c0: for follow entity follow move.
                        0x00000180: ???
                        0x00000200: set if entity not on screen.
                        0x00000800: remove this flag during initialization in 0x0B opcode (with model). Add it in 0xBC opcode. Looks like if this entity has model or not.
@@ -329,7 +332,7 @@
         +   c [][]     triangle id for walkmesh 2.
         +   e [][]     triangle id for walkmesh 3.
         +  10 [][]     walkmesh id (0 by default).
-        +  14 [][][][] store current walkmesh triangle material here.
+        +  14 [][][][] current triangle material for current walkmesh.
         +  18 [][]     x width of entity. Init with 0x10.
         +  1a [][]     height if entity. Init with 0x60
         +  1c [][]     z width of entity. Init with 0x10.
@@ -340,7 +343,7 @@
         +  30 [][][][] modified move vector X.
         +  34 [][][][] modified move vector Y.
         +  38 [][][][] modified move vector Z.
-        +  40 [][][][] move vector X.
+        +  40 [][][][] move vector X. Collect all move intention here.
         +  44 [][][][] move vector Y.
         +  48 [][][][] move vector Z.
         +  50 [][][][] normal X to current triangle.
@@ -452,6 +455,7 @@
                    0x0020: set if 0x0040 flag == 1 during init. Set in 0x29 and 0x23(only) opcode. Remove if we init this entity as player.
                    0x0040: model or sprite not loaded yet.
                    0x0080: if this is 0 - we set height for model depending on triangle.
+                   0x0200: 
                    0x0f00: if at least one of this bits exist - we perform move.
                    0x2000: init +1c in model data if this is set.
                    0x4000: ???
@@ -570,10 +574,11 @@
 800b15b0 array of some 0x58 size packets.
 
 800b1648 [][][][] activated windows mask. If 1 then we lock all dialog script call.
+800b164c [][]     additional rotation for movement (can be set from script).
 
 800b1654 [][][][] increment during each entity initialization.
 
-800b1660 [][][][] move length (1 << 0xc)
+800b1660 [][][][] base walking speed. Move length (1 << 0xc) (can be set from script).
 
 800b168c [][][][] store here id of sound to play.
 
@@ -619,7 +624,7 @@
     +40d0
     +80f0 otag
 
-800c1b60 [][][][] 0 - PC HDD MODE, 1 - CD-ROM MODE1
+800c1b60 [][][][] 0 if debug mode.
 
 800c1b68 [][]     pressed button mask for controller 1 (details in 800af370).
 
@@ -713,6 +718,8 @@
 800c2dcc [][]     pressed button mask for controller 2 (details in 800af370).
 800c2dd4 [][]     repeated button mask for controller 1 (details in 800af370).
 800c2ddc [][]     repeated button mask for controller 2 (details in 800af370).
+
+800c2de4 [][][][] store -1 here at start of movement.
 
 800c2dec array of pointers to particle system data (0x40 items 0x4 size)(same as 800af7a0)
          each particle system data is array of 0x8 items 0x78 size.

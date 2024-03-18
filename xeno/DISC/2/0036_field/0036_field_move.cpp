@@ -193,13 +193,15 @@ return w[SP + 34] >> 1f;
 
 
 ////////////////////////////////
-// func7ac28()
+// field_move_calculate_base_move_vector()
 
-V0 = h[800b1660]; // base walking speed
 res = A0;
+speed = A1;
 rot = A2 & 0fff;
 
-S0 = ((A1 << 4) * V0) >> c;
+base_speed = h[800b1660];
+
+S0 = ((speed << 4) * base_speed) >> c;
 
 A0 = rot;
 system_cos();
