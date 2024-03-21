@@ -393,7 +393,7 @@
         +  e8 [][]     playing animation id. When entity is moving we store here animation id acording to that movement (1,2 and so on). Init with 0.
         +  ea [][]     init with 0xff. We store animation id to play here in SpritePlayAnimation.
         +  ec [][][][] init with 0 when set position by x z. Init with 0.
-        +  f0 [][][][] init with 0 when set position by x z.
+        +  f0 [][][][] init with 0 when set position by x z. Set ot 0x00010000 if we cant move where we want.
         +  f4 [][]     init with 0x1000. scale X.
         +  f6 [][]     init with 0x1000. scale Y.
         +  f8 [][]     init with 0x1000. scale Z.

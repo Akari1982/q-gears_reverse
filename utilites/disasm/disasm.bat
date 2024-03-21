@@ -1,1 +1,1 @@
-adisasm 25_f75 25_f75.asm -v -b 8006f180 8006f180 -u -a
+adisasm 005_a25_menu_normal.lib 005_a25_menu_normal.asm -v -b 801c5000 801c6298 -u -a

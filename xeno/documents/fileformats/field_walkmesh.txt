@@ -31,12 +31,15 @@ triangle data (size 0x0e)
 
 
 material (size 0x4)
+0x000000e0 - entity type unpassability flags (every entity can be set to specific type and will be ckecked with this).
 0x00000600 - speed id (value 0-0400 1-0800 2-1000 3-2000).
 0x00003800 - dir id (value: 0-000c 1-000e 2-0000 3-0002 4-0004 5-0006 6-0008 7-000a).
 0x00004000 - auto move by normal move vector?.
 0x00008000 - add normal move vector.
 0x00020000 - slide down. Can correct trajectory.
+0x00200000 - ???
 0x00400000 - auto slide down. Can't correct trajectory.
+0x10000000 - unpassable for walkmesh 0.
 
 
 

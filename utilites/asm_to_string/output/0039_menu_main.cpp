@@ -1,1 +1,0 @@
-8003181C	addu   v0, zero, zero

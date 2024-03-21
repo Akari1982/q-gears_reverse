@@ -2775,7 +2775,7 @@ switch( bu[80058afc] )
 {
     case 0:
     {
-        8001C3AC	jal    $801c6298
+        func1c6298();
     }
     break;
 

@@ -646,9 +646,9 @@ else
 }
 
 
-
-triangle_check_count = 0;
-L7b68c:	; 8007B68C
+int i = 0;
+for( ; i < 20; ++i )
+{
     current_triangle_id = triangle_id;
     S2 = 0;
 
@@ -692,7 +692,7 @@ L7b68c:	; 8007B68C
     {
         case 0: // we not cross anything
         {
-            triangle_check_count = ff;
+            i = ff;
         }
         break;
         case 1:
@@ -812,14 +812,9 @@ L7b68c:	; 8007B68C
     {
         break;
     }
+}
 
-    triangle_check_count = triangle_check_count + 1;
-    V0 = triangle_check_count < 20;
-8007B970	bne    v0, zero, L7b68c [$8007b68c]
-
-
-
-if( ( triangle_id != -1 ) && ( triangle_check_count != 20 ) )
+if( ( triangle_id != -1 ) && ( i != 20 ) )
 {
     if( flag != -1 )
     {
@@ -832,8 +827,6 @@ if( ( triangle_id != -1 ) && ( triangle_check_count != 20 ) )
     }
     return 0;
 }
-
-
 
 if( S2 == 1 )
 {

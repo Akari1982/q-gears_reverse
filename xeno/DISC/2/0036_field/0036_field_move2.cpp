@@ -383,12 +383,12 @@ for( i = 0; i < number_of_entity; ++i )
                 A0 = i;
                 A1 = struct_5c_p + i * 5c;
                 A2 = struct_138;
-                func81c34(); // calculate move vector
+                func81c34(); // calculate base move vector based on current triangle
 
                 A0 = i;
                 A1 = struct_5c_p + i * 5c;
                 A2 = struct_138;
-                func821cc(); // check move
+                func821cc(); // calculate new move vector based on walkmesh and set animation to play
             }
         }
         else if( w[struct_138 + 4] & 01000000 )
@@ -1399,19 +1399,17 @@ else
 {
     animation_id = hu[struct_138 + e6];
 
+    [struct_138 + f0] = w(00010000);
     [struct_138 + 40] = w(0);
     [struct_138 + 44] = w(0);
     [struct_138 + 48] = w(0);
-    [struct_138 + f0] = w(00010000);
-    [struct_138 + 104] = h(hu[struct_138 + 104] | 8000);
-    [struct_138 + 106] = h(hu[struct_138 + 106] | 8000);
-
     [SP + 10] = w(0);
     [SP + 14] = w(0);
     [SP + 18] = w(0);
-
     [struct_164 + c] = w(0);
     [struct_164 + 14] = w(0);
+    [struct_138 + 104] = h(hu[struct_138 + 104] | 8000);
+    [struct_138 + 106] = h(hu[struct_138 + 106] | 8000);
 }
 
 [struct_138 + 4] = w(w[struct_138 + 4] & ffffefff);
@@ -2013,6 +2011,7 @@ return -1;
 ////////////////////////////////
 // func82fb0()
 // run scripts based on leader entity/other entities interaction
+
 leader_id = A0;
 leader_5c = A1;
 leader_138 = A2;
@@ -2282,7 +2281,7 @@ leader_id = A0;
 leader_5c = A1;
 leader_138 = A2;
 
-data_ptr = w[800aefe4];
+struct_5c_p = w[800aefe4];
 
 A0 = 20;
 func7c350(); // get pointer to temporary memory.
@@ -2310,7 +2309,7 @@ if( number_of_entities > 0 )
     L83878:	; 80083878
         if( entity_id != leader_id ) // don't collide with itself
         {
-            data_138 = w[data_ptr + entity_id * 5c + 4c];
+            data_138 = w[struct_5c_p + entity_id * 5c + 4c];
 
             if( ( w[data_138 + 0] & 00000001 ) == 0 ) // entity not disabled
             {
@@ -2319,7 +2318,7 @@ if( number_of_entities > 0 )
                 if( w[data_138 + 4] & 00000080 )
                 {
                     A0 = entity_id;
-                    V1 = w[data_ptr + entity_id * 5c + 0];
+                    V1 = w[struct_5c_p + entity_id * 5c + 0];
                     A1 = w[V1 + 4]; // model parts header
                     A2 = leader_fin_x;
                     A3 = leader_fin_z;
@@ -2515,7 +2514,7 @@ if( w[SP + 70] == 0 )
 else
 {
     V1 = bu[leader_138 + 74];
-    V1 = w[data_ptr + V1 * 5c + 4c];
+    V1 = w[struct_5c_p + V1 * 5c + 4c];
     [V1 + 4] = w(w[V1 + 4] | 80000000 );
 
     if( leader_follow_id == ff )
@@ -2531,9 +2530,9 @@ else
 
         V1 = bu[leader_138 + 74];
         V0 = w[leader_138 + 110];
-        [V0 + 0] = h(hu[data_ptr + V1 * 5c + 50]);
-        [V0 + 2] = h(hu[data_ptr + V1 * 5c + 52]);
-        [V0 + 4] = h(hu[data_ptr + V1 * 5c + 54]);
+        [V0 + 0] = h(hu[struct_5c_p + V1 * 5c + 50]);
+        [V0 + 2] = h(hu[struct_5c_p + V1 * 5c + 52]);
+        [V0 + 4] = h(hu[struct_5c_p + V1 * 5c + 54]);
 
         A0 = leader_id;
         A1 = bu[leader_138 + 74];
@@ -2554,8 +2553,8 @@ if( ( ( w[leader_138 + 0] & 00010000 ) == 0 ) && ( ( w[leader_138 + 4] & 0020000
     func84054();
 }
 
-V0 = w[data_ptr + leader_id * 5c + 4];
-V0 = w[data_ptr + leader_id * 5c + 7c];
+V0 = w[struct_5c_p + leader_id * 5c + 4];
+V0 = w[struct_5c_p + leader_id * 5c + 7c];
 
 if( hu[V0 + c] == 1 )
 {
