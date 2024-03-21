@@ -8,3 +8,9 @@ build
 /xeno/utilites/cd extractor/output/cdrom.bin
 /xeno/utilites/cd extractor/output/cdrom.fig
 /xeno/utilites/cd extractor/output/cdrom.mdg
+/xeno/utilites/cd extractor/compile
+/utilites/asm_to_string/.vs/asm_to_string/v17
+/utilites/asm_to_string/.vs/asm_to_string/FileContentIndex
+/utilites/asm_to_string/asm_to_string.vcxproj.user
+/xeno/utilites/cd extractor/.vs/cd extractor/v17
+/xeno/utilites/cd extractor/cd extractor.vcxproj.user
