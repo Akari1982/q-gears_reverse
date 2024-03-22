@@ -1,4 +1,4 @@
-f////////////////////////////////
+////////////////////////////////
 // func7fe50()
 
 entity_id = A0;
@@ -2301,203 +2301,202 @@ leader_follow_id = bu[leader_138 + 74];
 
 S7 = 7fffffff;
 
-number_of_entities = w[800ad0d4];
-if( number_of_entities > 0 )
+for( int i = 0; i < w[800ad0d4]; ++i ) // go through all entity
 {
-    entity_id = 0;
+    if( i == leader_id ) // don't collide with itself
+    {
+        continue;
+    }
 
-    L83878:	; 80083878
-        if( entity_id != leader_id ) // don't collide with itself
+    struct_138 = w[struct_5c_p + i * 5c + 4c];
+
+    if( w[struct_138 + 0] & 00000001 ) // entity disabled
+    {
+        continue;
+    }
+
+    [struct_138 + 4] = w(w[struct_138 + 4] & ffff3eff);
+
+    if( w[struct_138 + 4] & 00000080 )
+    {
+        A0 = i;
+        V1 = w[struct_5c_p + i * 5c + 0];
+        A1 = w[V1 + 4]; // model parts header
+        A2 = leader_fin_x;
+        A3 = leader_fin_z;
+        A4 = SP + 40;
+        A5 = SP + 30; // normal
+        func8289c();
+        if( V0 != 0 )
         {
-            data_138 = w[struct_5c_p + entity_id * 5c + 4c];
+            [struct_138 + 4] = w(w[struct_138 + 4] & ff3fffff);
+        }
 
-            if( ( w[data_138 + 0] & 00000001 ) == 0 ) // entity not disabled
+        // DEBUG TEXT
+        if( w[800c1b60] == 0 )
+        {
+            A0 = 8006f2d8; // "POLYCHECK %d"
+            A1 = i;
+            system_print_alias();
+        }
+
+        A0 = w[SP + 40] + hu[struct_138 + 1a];
+        [struct_138 + 4] = w(w[struct_138 + 4] | 00000100);
+        V1 = bu[leader_138 + 74];
+        80083958	bne    v1, i, L83aec [$80083aec]
+
+        [leader_138 + 50] = w(w[SP + 30]);
+        [leader_138 + 54] = w(w[SP + 34]);
+        [leader_138 + 58] = w(w[SP + 38]);
+
+        [struct_138 + 4] = w(w[struct_138 + 4] | 00004000);
+        80083990	j      L83acc [$80083acc]
+    }
+    else
+    {
+        if( ( w[struct_138 + 0] & 00002000 ) == 0 )
+        {
+            [S3 + 0] = w(((w[struct_138 + 20] + w[struct_138 + 30]) >> 10) - leader_fin_x);
+            [S3 + 4] = w(hu[leader_138 + 1e] + hu[struct_138 + 1e]); // solid range
+            [S3 + 8] = w(((w[struct_138 + 28] + w[struct_138 + 38]) >> 10) - leader_fin_z);
+
+            A0 = S3 + 0;
+            A1 = S3 + 10;
+            system_gte_square_of_vector();
+
+            V0 = (w[S3 + 10] + w[S3 + 18]) < w[S3 + 14];
+        }
+        else
+        {
+            A0 = leader_fin_x;
+            A1 = leader_fin_z;
+            A2 = struct_138;
+            A3 = 0;
+            field_in_entity_quad();
+        }
+
+        if( V0 != 0 )
+        {
+            [struct_138 + 4] = w(w[struct_138 + 4] & ff3fffff);
+        }
+        else
+        {
+            if( w[leader_138 + 14] & 00400000 ) // material auto slide down
             {
-                [data_138 + 4] = w(w[data_138 + 4] & ffff3eff);
-
-                if( w[data_138 + 4] & 00000080 )
+                // DEBUG TEXT
+                if( w[800c1b60] == 0 )
                 {
-                    A0 = entity_id;
-                    V1 = w[struct_5c_p + entity_id * 5c + 0];
-                    A1 = w[V1 + 4]; // model parts header
-                    A2 = leader_fin_x;
-                    A3 = leader_fin_z;
-                    A4 = SP + 40;
-                    A5 = SP + 30; // normal
-                    func8289c();
-                    if( V0 != 0 )
-                    {
-                        [data_138 + 4] = w(w[data_138 + 4] & ff3fffff);
-                    }
-
-                    // DEBUG TEXT
-                    if( w[800c1b60] == 0 )
-                    {
-                        A0 = 8006f2d8; // "POLYCHECK %d"
-                        A1 = entity_id;
-                        system_print_alias();
-                    }
-
-                    A0 = w[SP + 40] + hu[data_138 + 1a];
-                    [data_138 + 4] = w(w[data_138 + 4] | 00000100);
-                    V1 = bu[leader_138 + 74];
-                    80083958	bne    v1, entity_id, L83aec [$80083aec]
-
-                    [leader_138 + 50] = w(w[SP + 30]);
-                    [leader_138 + 54] = w(w[SP + 34]);
-                    [leader_138 + 58] = w(w[SP + 38]);
-
-                    [data_138 + 4] = w(w[data_138 + 4] | 00004000);
-                    80083990	j      L83acc [$80083acc]
+                    A0 = 8006f2e8; // "HITOFF"
+                    system_print_alias();
                 }
-                else
+            }
+            else if( ( ( w[struct_138 + 0] | leader_flags0 ) & 00000080 ) == 0 ) // both entity solid
+            {
+                if( bu[800b16a0] == 0 ) // looks like this flag stops all movement
                 {
-                    if( ( w[data_138 + 0] & 00002000 ) == 0 )
+                    A0 = h[struct_138 + 26];
+                    [SP + 40] = w(h[struct_138 + 26] - hu[struct_138 + 1a]);
+
+                    L83acc:	; 80083ACC
+                    if( bu[leader_138 + 74] == i )
                     {
-                        [S3 + 0] = w(((w[data_138 + 20] + w[data_138 + 30]) >> 10) - leader_fin_x);
-                        [S3 + 4] = w(hu[leader_138 + 1e] + hu[data_138 + 1e]); // solid range
-                        [S3 + 8] = w(((w[data_138 + 28] + w[data_138 + 38]) >> 10) - leader_fin_z);
+                        T1 = leader_flags0 & 00040800;
+                        80083AE4	beq    t1, zero, L83b34 [$80083b34]
+                    }
 
-                        A0 = S3 + 0;
-                        A1 = S3 + 10;
-                        system_gte_square_of_vector();
+                    L83aec:	; 80083AEC
+                    if( A0 >= leader_top_y )
+                    {
+                        if( leader_cur_y >= w[SP + 40] )
+                        {
+                            if( ( leader_cur_y < w[SP + 40] ) || ( w[struct_138 + 4] & 00800000 ) )
+                            {
+                                L83b34:	; 80083B34
+                                S7 = w[SP + 40];
 
-                        V0 = (w[S3 + 10] + w[S3 + 18]) < w[S3 + 14];
+                                [leader_138 + 40] = w(w[struct_138 + 30]);
+                                [leader_138 + 44] = w(w[struct_138 + 34]);
+                                [leader_138 + 48] = w(w[struct_138 + 38]);
+                                [SP + 78] = w(2);
+
+                                if( ( leader_flags0 & 00040800 ) == 0 )
+                                {
+                                    [leader_138 + 74] = b(i);
+                                    [SP + 70] = w(1);
+                                }
+
+                                [struct_138 + 4] = w(w[struct_138 + 4] | 00800000);
+                                [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+
+                                continue;
+                            }
+                            if( ( w[struct_138 + 0] & 00000010 ) == 0 ) // entity pushable
+                            {
+                                if( bu[struct_138 + e3] < 30 ) // if entity stand we wait first
+                                {
+                                    [struct_138 + e3] = b(bu[struct_138 + e3] + 2);
+                                }
+                                if( bu[struct_138 + e3] >= 21 ) // and then push
+                                {
+                                    // push entity but stop leader movement
+
+                                    // add leader move vector to this entity
+                                    [struct_138 + 40] = w(w[struct_138 + 40] + (w[leader_138 + 30] / 4))
+                                    [struct_138 + 48] = w(w[struct_138 + 48] + (w[leader_138 + 38] / 4))
+
+                                    // remove leader movement
+                                    [leader_138 + 30] = w(0);
+                                    [leader_138 + 34] = w(0);
+                                    [leader_138 + 38] = w(0);
+                                    [leader_138 + 40] = w(0);
+                                    [leader_138 + 44] = w(0);
+                                    [leader_138 + 48] = w(0);
+
+                                    [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+                                    continue;
+                                }
+                            }
+
+                            // stops movement in both entities
+                            [struct_138 + 30] = w(0);
+                            [struct_138 + 34] = w(0);
+                            [struct_138 + 38] = w(0);
+                            [struct_138 + 40] = w(0);
+                            [struct_138 + 44] = w(0);
+                            [struct_138 + 48] = w(0);
+                            [leader_138 + 30] = w(0);
+                            [leader_138 + 34] = w(0);
+                            [leader_138 + 38] = w(0);
+                            [leader_138 + 40] = w(0);
+                            [leader_138 + 44] = w(0);
+                            [leader_138 + 48] = w(0);
+                            [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+                            continue;
+                        }
+                    }
+
+                    A0 = w[SP + 40];
+                    [struct_138 + 4] = w(w[struct_138 + 4] & feffffff);
+
+                    if( leader_cur_y < A0 )
+                    {
+                        [struct_138 + 4] = w(w[struct_138 + 4] | 00800000);
+
+                        if( A0 < S7 )
+                        {
+                            S7 = A0;
+                        }
                     }
                     else
                     {
-                        A0 = leader_fin_x;
-                        A1 = leader_fin_z;
-                        A2 = data_138;
-                        A3 = 0;
-                        field_in_entity_quad();
+                        [struct_138 + 4] = w(w[struct_138 + 4] & ff7fffff);
                     }
 
-                    if( V0 != 0 )
-                    {
-                        [data_138 + 4] = w(w[data_138 + 4] & ff3fffff);
-                    }
-                    else
-                    {
-                        if( w[leader_138 + 14] & 00400000 ) // auto slide down
-                        {
-                            // DEBUG TEXT
-                            if( w[800c1b60] == 0 )
-                            {
-                                A0 = 8006f2e8; // "HITOFF"
-                                system_print_alias();
-                            }
-                        }
-                        else if( ( ( w[data_138 + 0] | leader_flags0 ) & 00000080 ) == 0 ) // both entity solid
-                        {
-                            if( bu[800b16a0] == 0 ) // looks like this flag stops all movement
-                            {
-                                A0 = h[data_138 + 26];
-                                [SP + 40] = w(h[data_138 + 26] - hu[data_138 + 1a]);
-
-                                L83acc:	; 80083ACC
-                                if( bu[leader_138 + 74] == entity_id )
-                                {
-                                    T1 = leader_flags0 & 00040800;
-                                    80083AE4	beq    t1, zero, L83b34 [$80083b34]
-                                }
-
-                                L83aec:	; 80083AEC
-                                if( A0 >= leader_top_y )
-                                {
-                                    if( leader_cur_y >= w[SP + 40] )
-                                    {
-                                        if( ( leader_cur_y < w[SP + 40] ) || ( w[data_138 + 4] & 00800000 ) )
-                                        {
-                                            L83b34:	; 80083B34
-                                            S7 = w[SP + 40];
-
-                                            [leader_138 + 40] = w(w[data_138 + 30]);
-                                            [leader_138 + 44] = w(w[data_138 + 34]);
-                                            [leader_138 + 48] = w(w[data_138 + 38]);
-                                            [SP + 78] = w(2);
-
-                                            if( ( leader_flags0 & 00040800 ) == 0 )
-                                            {
-                                                [leader_138 + 74] = b(entity_id);
-                                                [SP + 70] = w(1);
-                                            }
-
-                                            [data_138 + 4] = w(w[data_138 + 4] | 00800000);
-
-                                            [data_138 + 4] = w(w[data_138 + 4] | 00400000);
-                                            80083B7C	j      L83ccc [$80083ccc]
-                                        }
-                                        if( ( w[data_138 + 0] & 00000010 ) == 0 ) // entity pushable
-                                        {
-                                            if( bu[data_138 + e3] < 30 ) // if entity stand we wait first
-                                            {
-                                                [data_138 + e3] = b(bu[data_138 + e3] + 2);
-                                            }
-                                            if( bu[data_138 + e3] >= 21 ) // and then push
-                                            {
-                                                // push entity but stop leader movement
-                                                [data_138 + 40] = w(w[data_138 + 40] + (w[leader_138 + 30] / 4))
-                                                [data_138 + 48] = w(w[data_138 + 48] + (w[leader_138 + 38] / 4))
-                                                [leader_138 + 30] = w(0);
-                                                [leader_138 + 34] = w(0);
-                                                [leader_138 + 38] = w(0);
-                                                [leader_138 + 40] = w(0);
-                                                [leader_138 + 44] = w(0);
-                                                [leader_138 + 48] = w(0);
-
-                                                [data_138 + 4] = w(w[data_138 + 4] | 00400000);
-                                                80083C34	j      L83ccc [$80083ccc]
-                                            }
-                                        }
-
-                                        // stops movement in both entities
-                                        [data_138 + 30] = w(0);
-                                        [data_138 + 34] = w(0);
-                                        [data_138 + 38] = w(0);
-                                        [data_138 + 40] = w(0);
-                                        [data_138 + 44] = w(0);
-                                        [data_138 + 48] = w(0);
-                                        [leader_138 + 30] = w(0);
-                                        [leader_138 + 34] = w(0);
-                                        [leader_138 + 38] = w(0);
-                                        [leader_138 + 40] = w(0);
-                                        [leader_138 + 44] = w(0);
-                                        [leader_138 + 48] = w(0);
-                                        [data_138 + 4] = w(w[data_138 + 4] | 00400000);
-                                        80083C68	j      L83ccc [$80083ccc]
-                                    }
-                                }
-
-                                A0 = w[SP + 40];
-                                [data_138 + 4] = w(w[data_138 + 4] & feffffff);
-
-                                if( leader_cur_y < A0 )
-                                {
-                                    [data_138 + 4] = w(w[data_138 + 4] | 00800000);
-
-                                    if( A0 < S7 )
-                                    {
-                                        S7 = A0;
-                                    }
-                                }
-                                else
-                                {
-                                    [data_138 + 4] = w(w[data_138 + 4] & ff7fffff);
-                                }
-
-                                [data_138 + 4] = w(w[data_138 + 4] | 00400000);
-                            }
-                        }
-                    }
+                    [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
                 }
             }
         }
-
-        L83ccc:	; 80083CCC
-        entity_id = entity_id + 1;
-        V0 = entity_id < number_of_entities;
-    80083CE0	bne    v0, zero, L83878 [$80083878]
+    }
 }
 
 if( w[800ad070] != 0 )
@@ -2554,11 +2553,11 @@ if( ( ( w[leader_138 + 0] & 00010000 ) == 0 ) && ( ( w[leader_138 + 4] & 0020000
 }
 
 V0 = w[struct_5c_p + leader_id * 5c + 4];
-V0 = w[struct_5c_p + leader_id * 5c + 7c];
+V0 = w[V0 + 7c];
 
 if( hu[V0 + c] == 1 )
 {
-    func35c84();
+    func35c84(); // clear buttons
 
     [leader_138 + 0] = w(w[leader_138 + 0] & f7ffffff);
 }

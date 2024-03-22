@@ -1,1 +1,1 @@
-asm_to_string 005_a25_menu_normal_main.cpp
+asm_to_string input.txt

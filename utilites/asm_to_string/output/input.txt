@@ -1,0 +1,564 @@
+func8376c:	; 8008376C
+8008376C	addiu  sp, sp, $ff38 (=-$c8)
+80083770	sw     fp, $00c0(sp)
+80083774	addu   fp, a0, zero
+80083778	sw     s1, $00a4(sp)
+8008377C	addu   s1, a2, zero
+80083780	ori    a0, zero, $0020
+80083784	sw     ra, $00c4(sp)
+80083788	sw     s7, $00bc(sp)
+8008378C	sw     s6, $00b8(sp)
+80083790	sw     s5, $00b4(sp)
+80083794	sw     s4, $00b0(sp)
+80083798	sw     s3, $00ac(sp)
+8008379C	sw     s2, $00a8(sp)
+800837A0	sw     s0, $00a0(sp)
+800837A4	jal    func7c350 [$8007c350]
+800837A8	sw     a1, $0048(sp)
+800837AC	lw     a2, $0020(s1)
+800837B0	nop
+800837B4	sw     a2, $0018(sp)
+800837B8	lw     a3, $0024(s1)
+800837BC	nop
+800837C0	sw     a3, $001c(sp)
+800837C4	lw     t0, $0028(s1)
+800837C8	nop
+800837CC	sw     t0, $0020(sp)
+800837D0	lw     v1, $0030(s1)
+800837D4	addiu  a0, sp, $0028
+800837D8	addu   a2, a2, v1
+800837DC	sw     a2, $0018(sp)
+800837E0	lw     v1, $0034(s1)
+800837E4	addiu  a1, sp, $0018
+800837E8	sw     zero, $0070(sp)
+800837EC	addu   a3, a3, v1
+800837F0	sw     a3, $001c(sp)
+800837F4	lw     v1, $0038(s1)
+800837F8	addu   s3, v0, zero
+800837FC	addu   t0, t0, v1
+80083800	jal    func827e4 [$800827e4]
+80083804	sw     t0, $0020(sp)
+80083808	lh     t1, $0028(sp)
+8008380C	lh     s6, $0026(s1)
+80083810	lhu    v0, $001a(s1)
+80083814	sw     t1, $0050(sp)
+80083818	lh     t1, $002c(sp)
+8008381C	subu   v0, s6, v0
+80083820	sw     v0, $0060(sp)
+80083824	lui    v0, $800b
+80083828	lw     v0, $d0d4(v0)
+8008382C	lui    s7, $7fff
+80083830	sw     zero, $0078(sp)
+80083834	sw     t1, $0058(sp)
+80083838	lw     t1, $0000(s1)
+8008383C	ori    s7, s7, $ffff
+80083840	sw     t1, $0068(sp)
+80083844	lbu    t1, $0074(s1)
+80083848	addu   s2, zero, zero
+8008384C	blez   v0, L83ce8 [$80083ce8]
+80083850	sw     t1, $0080(sp)
+80083854	lui    t1, $ff3f
+80083858	ori    t1, t1, $ffff
+8008385C	lui    v0, $0004
+80083860	ori    v0, v0, $0800
+80083864	sw     t1, $0088(sp)
+80083868	lw     t1, $0068(sp)
+8008386C	addu   s5, zero, zero
+80083870	and    v0, t1, v0
+80083874	sw     v0, $0090(sp)
+
+L83878:	; 80083878
+80083878	beq    s2, fp, L83ccc [$80083ccc]
+8008387C	nop
+80083880	lui    v0, $800b
+80083884	lw     v0, $efe4(v0)
+80083888	nop
+8008388C	addu   v0, s5, v0
+80083890	lw     a2, $004c(v0)
+80083894	nop
+80083898	lw     a0, $0000(a2)
+8008389C	nop
+800838A0	andi   v0, a0, $0001
+800838A4	bne    v0, zero, L83ccc [$80083ccc]
+800838A8	lui    v1, $ffff
+800838AC	addu   s0, a2, zero
+800838B0	ori    v1, v1, $3eff
+800838B4	lw     v0, $0004(s0)
+800838B8	addu   s4, a0, zero
+800838BC	and    v1, v0, v1
+800838C0	andi   v0, v0, $0080
+800838C4	beq    v0, zero, L83998 [$80083998]
+800838C8	sw     v1, $0004(s0)
+800838CC	lui    v0, $800b
+800838D0	lw     v0, $efe4(v0)
+800838D4	lw     a2, $0050(sp)
+800838D8	lw     a3, $0058(sp)
+800838DC	addu   v0, s5, v0
+800838E0	lw     v1, $0000(v0)
+800838E4	addiu  v0, sp, $0040
+800838E8	sw     v0, $0010(sp)
+800838EC	addiu  v0, sp, $0030
+800838F0	sw     v0, $0014(sp)
+800838F4	lw     a1, $0004(v1)
+800838F8	jal    func8289c [$8008289c]
+800838FC	addu   a0, s2, zero
+80083900	beq    v0, zero, L83918 [$80083918]
+80083904	nop
+80083908	lw     v0, $0004(s0)
+8008390C	lw     t1, $0088(sp)
+80083910	j      L83cc8 [$80083cc8]
+80083914	and    v0, v0, t1
+
+L83918:	; 80083918
+80083918	lui    v0, $800c
+8008391C	lw     v0, $1b60(v0)
+80083920	nop
+80083924	bne    v0, zero, L8393c [$8008393c]
+80083928	nop
+8008392C	lui    a0, $8007
+80083930	addiu  a0, a0, $f2d8 (=-$d28)
+80083934	jal    $80037870
+80083938	addu   a1, s2, zero
+
+L8393c:	; 8008393C
+8008393C	lw     v0, $0004(s0)
+80083940	lhu    a0, $001a(s0)
+80083944	ori    v0, v0, $0100
+80083948	sw     v0, $0004(s0)
+8008394C	lw     v0, $0040(sp)
+80083950	lbu    v1, $0074(s1)
+80083954	nop
+80083958	bne    v1, s2, L83aec [$80083aec]
+8008395C	addu   a0, v0, a0
+80083960	lw     v0, $0030(sp)
+80083964	nop
+80083968	sw     v0, $0050(s1)
+8008396C	lw     v0, $0034(sp)
+80083970	nop
+80083974	sw     v0, $0054(s1)
+80083978	lw     v0, $0038(sp)
+8008397C	nop
+80083980	sw     v0, $0058(s1)
+80083984	lw     v0, $0004(s0)
+80083988	nop
+8008398C	ori    v0, v0, $4000
+80083990	j      L83acc [$80083acc]
+80083994	sw     v0, $0004(s0)
+
+L83998:	; 80083998
+80083998	andi   v0, s4, $2000
+8008399C	beq    v0, zero, L839cc [$800839cc]
+800839A0	addu   a2, s0, zero
+800839A4	lw     a0, $0050(sp)
+800839A8	lw     a1, $0058(sp)
+800839AC	jal    func81990 [$80081990]
+800839B0	addu   a3, zero, zero
+800839B4	beq    v0, zero, L83a4c [$80083a4c]
+800839B8	nop
+800839BC	lw     v0, $0004(s0)
+800839C0	lw     t1, $0088(sp)
+800839C4	j      L83cc8 [$80083cc8]
+800839C8	and    v0, v0, t1
+
+L839cc:	; 800839CC
+800839CC	addu   a0, s3, zero
+800839D0	lw     v0, $0020(s0)
+800839D4	lw     v1, $0030(s0)
+800839D8	lw     t1, $0050(sp)
+800839DC	addu   v0, v0, v1
+800839E0	sra    v0, v0, $10
+800839E4	subu   v0, v0, t1
+800839E8	sw     v0, $0000(s3)
+800839EC	lw     v0, $0028(s0)
+800839F0	lw     v1, $0038(s0)
+800839F4	lw     t1, $0058(sp)
+800839F8	addu   v0, v0, v1
+800839FC	sra    v0, v0, $10
+80083A00	subu   v0, v0, t1
+80083A04	sw     v0, $0008(s3)
+80083A08	lhu    v0, $001e(s1)
+80083A0C	lhu    v1, $001e(s0)
+80083A10	addiu  a1, s3, $0010
+80083A14	addu   v0, v0, v1
+80083A18	jal    $8004a2bc
+80083A1C	sw     v0, $0004(s3)
+80083A20	lw     v0, $0010(s3)
+80083A24	lw     v1, $0018(s3)
+80083A28	lw     a0, $0014(s3)
+80083A2C	addu   v0, v0, v1
+80083A30	slt    v0, v0, a0
+80083A34	bne    v0, zero, L83a4c [$80083a4c]
+80083A38	nop
+80083A3C	lw     v0, $0004(s0)
+80083A40	lw     t1, $0088(sp)
+80083A44	j      L83cc8 [$80083cc8]
+80083A48	and    v0, v0, t1
+
+L83a4c:	; 80083A4C
+80083A4C	lw     v0, $0014(s1)
+80083A50	lui    v1, $0040
+80083A54	and    v0, v0, v1
+80083A58	beq    v0, zero, L83a8c [$80083a8c]
+80083A5C	nop
+80083A60	lui    v0, $800c
+80083A64	lw     v0, $1b60(v0)
+80083A68	nop
+80083A6C	bne    v0, zero, L83ccc [$80083ccc]
+80083A70	nop
+80083A74	lui    a0, $8007
+80083A78	addiu  a0, a0, $f2e8 (=-$d18)
+80083A7C	jal    $80037870
+80083A80	addiu  s5, s5, $005c
+80083A84	j      L83cd0 [$80083cd0]
+80083A88	nop
+
+L83a8c:	; 80083A8C
+80083A8C	lw     t1, $0068(sp)
+80083A90	nop
+80083A94	or     v0, s4, t1
+80083A98	andi   v0, v0, $0080
+80083A9C	bne    v0, zero, L83ccc [$80083ccc]
+80083AA0	nop
+80083AA4	lui    v0, $800b
+80083AA8	lbu    v0, $16a0(v0)
+80083AAC	nop
+80083AB0	bne    v0, zero, L83ccc [$80083ccc]
+80083AB4	nop
+80083AB8	lh     a0, $0026(s0)
+80083ABC	lhu    v0, $001a(s0)
+80083AC0	nop
+80083AC4	subu   v0, a0, v0
+80083AC8	sw     v0, $0040(sp)
+
+L83acc:	; 80083ACC
+80083ACC	lbu    v0, $0074(s1)
+80083AD0	nop
+80083AD4	bne    v0, s2, L83aec [$80083aec]
+80083AD8	nop
+80083ADC	lw     t1, $0090(sp)
+80083AE0	nop
+80083AE4	beq    t1, zero, L83b34 [$80083b34]
+80083AE8	lui    v1, $0080
+
+L83aec:	; 80083AEC
+80083AEC	lw     t1, $0060(sp)
+80083AF0	nop
+80083AF4	slt    v0, a0, t1
+80083AF8	bne    v0, zero, L83c74 [$80083c74]
+80083AFC	addiu  v1, zero, $feff (=-$101)
+80083B00	lw     v1, $0040(sp)
+80083B04	nop
+80083B08	slt    v0, s6, v1
+80083B0C	bne    v0, zero, L83c70 [$80083c70]
+80083B10	addiu  v0, v1, $0010
+80083B14	slt    v0, s6, v0
+80083B18	bne    v0, zero, L83b34 [$80083b34]
+80083B1C	lui    v1, $0080
+80083B20	lw     v0, $0004(s0)
+80083B24	nop
+80083B28	and    v0, v0, v1
+80083B2C	beq    v0, zero, L83b84 [$80083b84]
+80083B30	andi   v0, s4, $0010
+
+L83b34:	; 80083B34
+80083B34	lw     s7, $0040(sp)
+80083B38	lw     v0, $0004(s0)
+80083B3C	lw     a0, $0030(s0)
+80083B40	or     v0, v0, v1
+80083B44	sw     v0, $0004(s0)
+80083B48	sw     a0, $0040(s1)
+80083B4C	lw     v0, $0034(s0)
+80083B50	nop
+80083B54	sw     v0, $0044(s1)
+80083B58	lw     v0, $0038(s0)
+80083B5C	ori    t1, zero, $0002
+80083B60	sw     t1, $0078(sp)
+80083B64	sw     v0, $0048(s1)
+80083B68	lw     t1, $0090(sp)
+80083B6C	nop
+80083B70	bne    t1, zero, L83cbc [$80083cbc]
+80083B74	ori    t1, zero, $0001
+80083B78	sb     s2, $0074(s1)
+80083B7C	j      L83cbc [$80083cbc]
+80083B80	sw     t1, $0070(sp)
+
+L83b84:	; 80083B84
+80083B84	bne    v0, zero, L83c3c [$80083c3c]
+80083B88	nop
+80083B8C	lbu    v1, $00e3(s0)
+80083B90	nop
+80083B94	sltiu  v0, v1, $0030
+80083B98	beq    v0, zero, L83ba4 [$80083ba4]
+80083B9C	addiu  v0, v1, $0002
+80083BA0	sb     v0, $00e3(s0)
+
+L83ba4:	; 80083BA4
+80083BA4	lbu    v0, $00e3(s0)
+80083BA8	nop
+80083BAC	sltiu  v0, v0, $0021
+80083BB0	bne    v0, zero, L83c3c [$80083c3c]
+80083BB4	nop
+80083BB8	lw     v1, $0030(s1)
+80083BBC	nop
+80083BC0	bgez   v1, L83bcc [$80083bcc]
+80083BC4	nop
+80083BC8	addiu  v1, v1, $0003
+
+L83bcc:	; 80083BCC
+80083BCC	lw     v0, $0040(s0)
+80083BD0	sra    v1, v1, $02
+80083BD4	addu   v0, v0, v1
+80083BD8	sw     v0, $0040(s0)
+80083BDC	lw     v1, $0038(s1)
+80083BE0	nop
+80083BE4	bgez   v1, L83bf0 [$80083bf0]
+80083BE8	nop
+80083BEC	addiu  v1, v1, $0003
+
+L83bf0:	; 80083BF0
+80083BF0	lw     v0, $0048(s0)
+80083BF4	sra    v1, v1, $02
+80083BF8	addu   v0, v0, v1
+80083BFC	sw     v0, $0048(s0)
+80083C00	sw     zero, $0030(s1)
+80083C04	lw     v0, $0030(s1)
+80083C08	sw     zero, $0034(s1)
+80083C0C	bgez   v0, L83c18 [$80083c18]
+80083C10	sw     zero, $0038(s1)
+80083C14	addiu  v0, v0, $0003
+
+L83c18:	; 80083C18
+80083C18	lw     v1, $0038(s1)
+80083C1C	sra    v0, v0, $02
+80083C20	sw     v0, $0040(s1)
+80083C24	bgez   v1, L83c30 [$80083c30]
+80083C28	sw     zero, $0044(s1)
+80083C2C	addiu  v1, v1, $0003
+
+L83c30:	; 80083C30
+80083C30	sra    v0, v1, $02
+80083C34	j      L83cbc [$80083cbc]
+80083C38	sw     v0, $0048(s1)
+
+L83c3c:	; 80083C3C
+80083C3C	sw     zero, $0040(s0)
+80083C40	sw     zero, $0044(s0)
+80083C44	sw     zero, $0048(s0)
+80083C48	sw     zero, $0030(s0)
+80083C4C	sw     zero, $0034(s0)
+80083C50	sw     zero, $0038(s0)
+80083C54	sw     zero, $0030(s1)
+80083C58	sw     zero, $0034(s1)
+80083C5C	sw     zero, $0038(s1)
+80083C60	sw     zero, $0040(s1)
+80083C64	sw     zero, $0044(s1)
+80083C68	j      L83cbc [$80083cbc]
+80083C6C	sw     zero, $0048(s1)
+
+L83c70:	; 80083C70
+80083C70	addiu  v1, zero, $feff (=-$101)
+
+L83c74:	; 80083C74
+80083C74	lw     v0, $0004(s0)
+80083C78	lw     a0, $0040(sp)
+80083C7C	and    v1, v0, v1
+80083C80	slt    v0, s6, a0
+80083C84	beq    v0, zero, L83cac [$80083cac]
+80083C88	sw     v1, $0004(s0)
+80083C8C	lui    v0, $0080
+80083C90	or     v0, v1, v0
+80083C94	sw     v0, $0004(s0)
+80083C98	slt    v0, a0, s7
+80083C9C	beq    v0, zero, L83cbc [$80083cbc]
+80083CA0	nop
+80083CA4	j      L83cbc [$80083cbc]
+80083CA8	addu   s7, a0, zero
+
+L83cac:	; 80083CAC
+80083CAC	lui    v0, $ff7f
+80083CB0	ori    v0, v0, $ffff
+80083CB4	and    v0, v1, v0
+80083CB8	sw     v0, $0004(s0)
+
+L83cbc:	; 80083CBC
+80083CBC	lw     v0, $0004(s0)
+80083CC0	lui    v1, $0040
+80083CC4	or     v0, v0, v1
+
+L83cc8:	; 80083CC8
+80083CC8	sw     v0, $0004(s0)
+
+L83ccc:	; 80083CCC
+80083CCC	addiu  s5, s5, $005c
+
+L83cd0:	; 80083CD0
+80083CD0	lui    v0, $800b
+80083CD4	lw     v0, $d0d4(v0)
+80083CD8	addiu  s2, s2, $0001
+80083CDC	slt    v0, s2, v0
+80083CE0	bne    v0, zero, L83878 [$80083878]
+80083CE4	nop
+
+L83ce8:	; 80083CE8
+80083CE8	lui    v0, $800b
+80083CEC	lw     v0, $d070(v0)
+80083CF0	nop
+80083CF4	beq    v0, zero, L83d14 [$80083d14]
+80083CF8	nop
+80083CFC	lui    s7, $800b
+80083D00	lw     s7, $d06c(s7)
+80083D04	lw     t1, $0078(sp)
+80083D08	sw     zero, $0070(sp)
+80083D0C	addiu  t1, t1, $0001
+80083D10	sw     t1, $0078(sp)
+
+L83d14:	; 80083D14
+80083D14	lw     t1, $0070(sp)
+80083D18	nop
+80083D1C	bne    t1, zero, L83d2c [$80083d2c]
+80083D20	ori    v0, zero, $00ff
+80083D24	j      L83e68 [$80083e68]
+80083D28	sb     v0, $0074(s1)
+
+L83d2c:	; 80083D2C
+80083D2C	lbu    v1, $0074(s1)
+80083D30	nop
+80083D34	sll    v0, v1, $01
+80083D38	addu   v0, v0, v1
+80083D3C	sll    v0, v0, $03
+80083D40	subu   v0, v0, v1
+80083D44	lui    v1, $800b
+80083D48	lw     v1, $efe4(v1)
+80083D4C	sll    v0, v0, $02
+80083D50	addu   v0, v0, v1
+80083D54	lw     v1, $004c(v0)
+80083D58	nop
+80083D5C	lw     v0, $0004(v1)
+80083D60	nop
+80083D64	ori    v0, v0, $8000
+80083D68	sw     v0, $0004(v1)
+80083D6C	lw     t1, $0080(sp)
+80083D70	ori    v0, zero, $00ff
+80083D74	bne    t1, v0, L83e68 [$80083e68]
+80083D78	nop
+80083D7C	lw     v0, $0134(s1)
+80083D80	nop
+80083D84	andi   v0, v0, $0080
+80083D88	bne    v0, zero, L83da8 [$80083da8]
+80083D8C	ori    a0, zero, $000c
+80083D90	jal    $800319ec
+80083D94	addu   a1, zero, zero
+80083D98	lw     v1, $0134(s1)
+80083D9C	sw     v0, $0110(s1)
+80083DA0	ori    v1, v1, $0080
+80083DA4	sw     v1, $0134(s1)
+
+L83da8:	; 80083DA8
+80083DA8	lbu    v1, $0074(s1)
+80083DAC	nop
+80083DB0	sll    v0, v1, $01
+80083DB4	addu   v0, v0, v1
+80083DB8	sll    v0, v0, $03
+80083DBC	subu   v0, v0, v1
+80083DC0	lui    v1, $800b
+80083DC4	lw     v1, $efe4(v1)
+80083DC8	sll    v0, v0, $02
+80083DCC	addu   v0, v0, v1
+80083DD0	lw     v1, $0110(s1)
+80083DD4	lhu    v0, $0050(v0)
+80083DD8	nop
+80083DDC	sh     v0, $0000(v1)
+80083DE0	lbu    v1, $0074(s1)
+80083DE4	nop
+80083DE8	sll    v0, v1, $01
+80083DEC	addu   v0, v0, v1
+80083DF0	sll    v0, v0, $03
+80083DF4	subu   v0, v0, v1
+80083DF8	lui    v1, $800b
+80083DFC	lw     v1, $efe4(v1)
+80083E00	sll    v0, v0, $02
+80083E04	addu   v0, v0, v1
+80083E08	lw     v1, $0110(s1)
+80083E0C	lhu    v0, $0052(v0)
+80083E10	nop
+80083E14	sh     v0, $0002(v1)
+80083E18	lbu    v1, $0074(s1)
+80083E1C	nop
+80083E20	sll    v0, v1, $01
+80083E24	addu   v0, v0, v1
+80083E28	sll    v0, v0, $03
+80083E2C	subu   v0, v0, v1
+80083E30	lui    v1, $800b
+80083E34	lw     v1, $efe4(v1)
+80083E38	sll    v0, v0, $02
+80083E3C	addu   v0, v0, v1
+80083E40	lw     v1, $0110(s1)
+80083E44	lhu    v0, $0054(v0)
+80083E48	nop
+80083E4C	sh     v0, $0004(v1)
+80083E50	lbu    a1, $0074(s1)
+80083E54	jal    func81bc0 [$80081bc0]
+80083E58	addu   a0, fp, zero
+80083E5C	lw     v1, $0110(s1)
+80083E60	nop
+80083E64	sh     v0, $0008(v1)
+
+L83e68:	; 80083E68
+80083E68	lw     v0, $0000(s1)
+80083E6C	lui    v1, $0001
+80083E70	and    v0, v0, v1
+80083E74	bne    v0, zero, L83eb0 [$80083eb0]
+80083E78	sll    v0, fp, $01
+80083E7C	lw     v0, $0004(s1)
+80083E80	lui    v1, $0020
+80083E84	and    v0, v0, v1
+80083E88	bne    v0, zero, L83eb0 [$80083eb0]
+80083E8C	sll    v0, fp, $01
+80083E90	lw     t1, $0078(sp)
+80083E94	addu   a0, fp, zero
+80083E98	addu   a1, s7, zero
+80083E9C	lw     a2, $0048(sp)
+80083EA0	addu   a3, s1, zero
+80083EA4	jal    func84054 [$80084054]
+80083EA8	sw     t1, $0010(sp)
+80083EAC	sll    v0, fp, $01
+
+L83eb0:	; 80083EB0
+80083EB0	addu   v0, v0, fp
+80083EB4	sll    v0, v0, $03
+80083EB8	subu   v0, v0, fp
+80083EBC	lui    v1, $800b
+80083EC0	lw     v1, $efe4(v1)
+80083EC4	sll    v0, v0, $02
+80083EC8	addu   v0, v0, v1
+80083ECC	lw     v0, $0004(v0)
+80083ED0	nop
+80083ED4	lw     v0, $007c(v0)
+80083ED8	nop
+80083EDC	lhu    v1, $000c(v0)
+80083EE0	ori    v0, zero, $0001
+80083EE4	bne    v1, v0, L83f04 [$80083f04]
+80083EE8	nop
+80083EEC	jal    $80035c84
+80083EF0	nop
+80083EF4	lw     v0, $0000(s1)
+80083EF8	addiu  v1, zero, $f7ff (=-$801)
+80083EFC	and    v0, v0, v1
+80083F00	sw     v0, $0000(s1)
+
+L83f04:	; 80083F04
+80083F04	jal    func7c374 [$8007c374]
+80083F08	ori    a0, zero, $0020
+80083F0C	lw     ra, $00c4(sp)
+80083F10	lw     fp, $00c0(sp)
+80083F14	lw     s7, $00bc(sp)
+80083F18	lw     s6, $00b8(sp)
+80083F1C	lw     s5, $00b4(sp)
+80083F20	lw     s4, $00b0(sp)
+80083F24	lw     s3, $00ac(sp)
+80083F28	lw     s2, $00a8(sp)
+80083F2C	lw     s1, $00a4(sp)
+80083F30	lw     s0, $00a0(sp)
+80083F34	addiu  sp, sp, $00c8
+80083F38	jr     ra 
+80083F3C	nop
