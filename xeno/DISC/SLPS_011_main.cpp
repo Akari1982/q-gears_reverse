@@ -907,19 +907,19 @@ while( ( w[8005896c] != 0 ) || ( w[80058964] == 0 ) )
     V0 = 80058c84 + A2 * 88;
     [80058968] = w(V0);
 
-    S0 = V0 + 70;
+    otag = V0 + 70;
 
-    A0 = S0;
+    A0 = otag;
     func43a5c();
 
-    A0 = S0;
+    A0 = otag;
     system_print_render_strings();
 
     kernel_update();
 
-    A0 = S0;
+    A0 = otag;
     A1 = w[80058968] + 74;
-    func439c0();
+    system_psyq_add_prim();
 
     A0 = 0;
     system_draw_sync();
@@ -933,7 +933,7 @@ while( ( w[8005896c] != 0 ) || ( w[80058964] == 0 ) )
     A0 = w[80058968] + 5c;
     system_psyq_put_disp_env();
 
-    A0 = S0;
+    A0 = otag;
     system_psyq_draw_otag();
 }
 
@@ -1036,21 +1036,11 @@ V0 = V0 + 0001;
 
 
 ////////////////////////////////
-// func1a57c
+// func1a57c()
+
 V0 = w[80058964];
-8001A584	addiu  sp, sp, $ffb0 (=-$50)
-[SP + 0048] = w(FP);
 FP = 0;
-[SP + 0038] = w(S4);
 S4 = 0;
-[SP + 004c] = w(RA);
-[SP + 0044] = w(S7);
-[SP + 0040] = w(S6);
-[SP + 003c] = w(S5);
-[SP + 0034] = w(S3);
-[SP + 0030] = w(S2);
-[SP + 002c] = w(S1);
-[SP + 0028] = w(S0);
 [SP + 0010] = w(A0);
 [SP + 0020] = w(0);
 V0 = V0 << 02;
@@ -1083,8 +1073,9 @@ A0 = w[SP + 0010];
 V0 = S3 << 03;
 V1 = S4 << 13;
 V0 = V0 | V1;
-8001A62C	jal    func439c0 [$800439c0]
 [S2 + 0000] = w(V0);
+system_psyq_add_prim();
+
 S2 = S2 + 000c;
 S7 = S7 + 000c;
 FP = FP + 0001;
@@ -1293,19 +1284,6 @@ A1 = S3;
 A0 = S0;
 8001A934	jal    func1a518 [$8001a518]
 A1 = S1;
-RA = w[SP + 004c];
-FP = w[SP + 0048];
-S7 = w[SP + 0044];
-S6 = w[SP + 0040];
-S5 = w[SP + 003c];
-S4 = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0050;
-8001A968	jr     ra 
-8001A96C	nop
 ////////////////////////////////
 
 
@@ -2775,7 +2753,7 @@ switch( bu[80058afc] )
 {
     case 0:
     {
-        func1c6298();
+        menu_main();
     }
     break;
 
@@ -2799,7 +2777,7 @@ switch( bu[80058afc] )
 
     case 2 6:
     {
-        8001C3EC	jal    $801c6298
+        menu_main()
 
         A0 = 1;
         8001C3F4	jal    func199f0 [$800199f0]

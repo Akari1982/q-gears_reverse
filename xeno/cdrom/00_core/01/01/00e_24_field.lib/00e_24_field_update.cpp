@@ -73,14 +73,14 @@ if( w[800c1b60] == 0 )
 ////////////////////////////////
 // func74ae8()
 
-dst1 = A0;
-dst2 = A1;
-insert = A1 + A2 * 4;
+ot = A0;
+p1 = A1;
+size = A2;
 
-A0 = dst1;
-A1 = insert;
-A2 = dst2;
-func439fc();
+A0 = ot;
+A1 = p1 + size * 4; // p0
+A2 = p1;
+system_psyq_add_prims();
 ////////////////////////////////
 
 
@@ -120,8 +120,8 @@ V0 = V0 + V1;
 V1 = w[800acfe0];
 V0 = V0 + 40cc;
 [SP + 0010] = w(V0);
-80074BC4	jal    $800271d4
 [SP + 0014] = w(V1);
+func271d4();
 
 L74bcc:	; 80074BCC
 ////////////////////////////////
@@ -144,15 +144,13 @@ func73050(); // move here
 
 func85f1c();
 
-S0 = 80d4;
-
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 8006f1c4; // "SEFFECT   "
     field_debug_add_timer();
 }
 
-A0 = w[800c3740] + S0;
+A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
 80074C48	jal    func71344 [$80071344]
 
@@ -209,7 +207,7 @@ system_draw_sync();
 
 80074D3C	jal    func7fc08 [$8007fc08]
 
-A0 = w[800c3740] + S0;
+A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
 func7f660(); // dialog function
 
@@ -292,18 +290,19 @@ if( w[800ad0f0] == 0 )
 {
     if( w[800ad024] != 0 )
     {
-        A2 = h[800b16a8]; // insert id
-        A0 = w[800c3740] + A2 * 4 + cc; // dst1
-        A1 = w[800c3740] + 40d0; // dst2
+        A0 = w[800c3740] + cc + h[800b16a8] * 4; // ot
+        A1 = w[800c3740] + 40d0; // primitives
+        A2 = h[800b16a8]; // size
         func74ae8();
     }
 
-    A0 = w[800c3740] + 80f0; // dst1
-    A1 = w[800c3740] + cc; // dst2
-    A2 = h[800b16a8]; // insert id
+    A0 = w[800c3740] + 80f0; // ot
+    A1 = w[800c3740] + cc; // primitives
+    A2 = h[800b16a8]; // size
     func74ae8();
 }
 
+// main field draw
 A0 = w[800c3740] + 80f0;
 system_psyq_draw_otag();
 
@@ -317,7 +316,7 @@ do
 
 
 ////////////////////////////////
-// func74fa0
+// func74fa0()
 
 field_update_buttons();
 
@@ -445,11 +444,7 @@ S5 = A0;
 
 scruct_5c_p = w[800aefe4];
 
-
-
 [SP + b0] = w((7 - ((h[800aee60] - 100) >> 9)) & 7);
-
-
 
 A0 = SP + 70;
 A1 = 800aee84;

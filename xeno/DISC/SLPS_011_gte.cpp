@@ -1873,7 +1873,7 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector.
 
 
 ////////////////////////////////
-// func4a5e4()
+// system_gte_quad_perspective_transform()
 
 VXY0 = w[A0 + 0];
 VZ0  = w[A0 + 4];
@@ -1897,7 +1897,7 @@ V0 = FLAG;
 [A8] = w(IR0); // Interpolation value for depth queing.
 [A9] = w(V0 | V1);
 
-return SZ3 >> 2;
+return SZ3 / 4;
 ////////////////////////////////
 
 
@@ -1913,15 +1913,14 @@ VXY2 = w[A2 + 0];
 VZ2 = w[A2 + 4];
 
 gte_RTPT(); // Perspective transform on 3 points
+V1 = FLAG;
 
 [A4] = w(SXY0);
 [A5] = w(SXY1);
 [A6] = w(SXY2);
-V1 = FLAG;
 
 VXY0 = w[A3 + 0];
 VZ0 = w[A3 + 4];
-
 gte_RTPS(); // Perspective transform
 
 [A7] = w(SXY2);
@@ -1984,8 +1983,6 @@ T0 = OTZ;
 [T1 + 0000] = w(T0);
 
 L4a78c:	; 8004A78C
-8004A78C	jr     ra 
-8004A790	nop
 ////////////////////////////////
 
 

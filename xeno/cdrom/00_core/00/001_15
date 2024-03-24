@@ -1,0 +1,4 @@
+BOOT = cdrom:SLPS_011.60;1
+TCB = 4
+EVENT = 5
+STACK = 801fff00

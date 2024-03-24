@@ -569,6 +569,8 @@
     +0c [][][][] size.
     +10 [][][][] some callback.
 
+80058afc []       menu to render.
+
 80058b00 [][][][] init with 0 during battle attack struct init.
 
 80058b14 [][][][] number of initing channels.
@@ -1050,11 +1052,39 @@
 
 80061c2c [][][][] pointer to 10\0590.sed file in field (maybe sound effects for field)
 
-80061c30 pointer to allocated menu memory (0x1e98 size)
-    +  6с draw enviroment packet buffer 1.
-    +  c8 display enviroment packet buffer 1.
-    + 120 draw enviroment packet buffer 2.
-    + 17c display enviroment packet buffer 1.
+80061c30 pointer to allocated menu memory (0x1e98 size) Render data.
+    +   6с draw enviroment packet buffer 1.
+    +   c8 display enviroment packet buffer 1.
+    +  120 draw enviroment packet buffer 2.
+    +  17c display enviroment packet buffer 2.
+    +  1d4 current render queue.
+        +  0 draw enviroment
+        + 5c display enviroment.
+        + 70
+        + 80 otag.
+        + ac otag.
+    +  308
+    +  33c pointer to tooltip text render data
+        + c array of 8 bytes for enable letter renders.
+    +  350
+    +  6e0 array of text 0x80 packets data.
+    + 14e0 array of some 0x80 packets data.
+        +  0 packets buffer 1
+        + 28 packets buffer 2
+        + 50 raw quad data array (0x20 size)
+            +  0 [][]     X1.
+            +  2 [][]     Y1.
+            +  4 [][]     Z1.
+            +  8 [][]     X2.
+            +  a [][]     Y2.
+            +  c [][]     Z2.
+            + 10 [][]     X3.
+            + 12 [][]     Y3.
+            + 14 [][]     Z3.
+            + 18 [][]     X4.
+            + 1a [][]     Y4.
+            + 1c [][]     Z4.
+        + 7d buffer to render.
 
 80061c34 array of structs (0x8 size 0x3 items) for party members sprites loading.
     + 0 [][]     dir file id.

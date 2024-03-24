@@ -1062,7 +1062,7 @@ flags = hu[V1 + 2e];
 ////////////////////////////////
 // system_print_render_strings()
 
-S3 = A0;
+otag = A0;
 
 S2 = w[80058a30];
 
@@ -1088,15 +1088,15 @@ if( S2 != 0 )
         }
     }
 
-    if( ( S3 == 0 ) || ( S3 == -1 ) )
+    if( ( otag == 0 ) || ( otag == -1 ) )
     {
         A0 = 0;
         system_draw_sync();
 
-        S3 = S2 + c4 + S4 * 4;
+        otag = S2 + c4 + S4 * 4;
         S5 = 1;
 
-        A0 = S3;
+        A0 = otag;
         func43a5c();
     }
 
@@ -1105,20 +1105,20 @@ if( S2 != 0 )
 
     while( S0 != 0 )
     {
-        A0 = S3;
+        A0 = otag;
         A1 = S1;
         func315f0();
 
         S1 = S1 + 10;
     }
 
-    A0 = S3;
+    A0 = otag;
     A1 = S2 + 1c + S4 * 8;
-    func439c0();
+    system_psyq_add_prim();
 
     if( hu[S2 + 0] & 0010 )
     {
-        A0 = S3;
+        A0 = otag;
         A1 = S2 + 44 + S4 * 10;
         func31614();
     }
@@ -1127,7 +1127,7 @@ if( S2 != 0 )
 
     if( S5 != 0 )
     {
-        A0 = S3;
+        A0 = otag;
         system_psyq_draw_otag();
     }
 }

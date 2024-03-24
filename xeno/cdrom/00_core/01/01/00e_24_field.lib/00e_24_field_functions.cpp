@@ -828,6 +828,7 @@ La50fc:	; 800A50FC
 
 ////////////////////////////////
 // funca5118()
+// map transition sequence
 
 system_print_clear_memory();
 
@@ -1558,6 +1559,7 @@ La5ba0:	; 800A5BA0
 
 ////////////////////////////////
 // funca5dfc()
+// map transition
 
 A0 = 0;
 system_draw_sync();
@@ -2544,14 +2546,13 @@ A0 = S5;
 
 
 ////////////////////////////////
-// funca6e20
+// funca6e20()
+// called during movie render
+// movie renders aside of here
+
 V0 = w[8004e9a4];
-800A6E28	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 002c] = w(RA);
-[SP + 0028] = w(S2);
-[SP + 0024] = w(S1);
 800A6E38	beq    v0, zero, La7114 [$800a7114]
-[SP + 0020] = w(S0);
+
 V1 = w[800afb74];
 800A6E48	nop
 V0 = V1 < 0687;
@@ -2571,7 +2572,7 @@ S2 = 0200;
 [SP + 0018] = h(0);
 [SP + 001a] = h(0);
 [SP + 001c] = h(V0);
-800A6E98	jal    $800445dc
+800A6E98	jal    $system_clear_image
 [SP + 001e] = h(S2);
 800A6EA0	jal    $system_draw_sync
 A0 = 0;
@@ -2620,7 +2621,7 @@ V0 = 0300;
 V0 = 0100;
 [SP + 001a] = h(0);
 [SP + 001c] = h(S2);
-800A6F78	jal    $800445dc
+800A6F78	jal    $system_clear_image
 [SP + 001e] = h(V0);
 800A6F80	jal    funcac068 [$800ac068]
 800A6F84	nop
@@ -2652,18 +2653,18 @@ A0 = 0002;
 A1 = 0;
 A2 = 0;
 A0 = w[800c3740];
-800A6FF0	jal    $800445dc
 A3 = 0;
-A0 = w[800c3740];
-800A7000	jal    $system_psyq_put_disp_env
-A0 = A0 + 00b8;
-A0 = w[800c3740];
-800A7010	jal    system_psyq_put_draw_env
-800A7014	nop
-V0 = w[800c3740];
-A0 = 80f0;
-800A7024	jal    $system_psyq_draw_otag
-A0 = V0 + A0;
+system_clear_image();
+
+A0 = w[800c3740] + b8;
+system_psyq_put_disp_env();
+
+A0 = w[800c3740] + 0;
+system_psyq_put_draw_env();
+
+A0 = w[800c3740] + 80f0;
+system_psyq_draw_otag();
+
 800A702C	jal    funcac1cc [$800ac1cc]
 800A7030	nop
 800A7034	jal    funca6804 [$800a6804]
@@ -2716,13 +2717,6 @@ V0 = 0001;
 800A7110	nop
 
 La7114:	; 800A7114
-RA = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0030;
-800A7128	jr     ra 
-800A712C	nop
 ////////////////////////////////
 
 

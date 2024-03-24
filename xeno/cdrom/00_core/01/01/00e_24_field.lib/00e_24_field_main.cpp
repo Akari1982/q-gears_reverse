@@ -394,7 +394,7 @@ while( true )
                     A0 = 0;
                     system_cdrom_action_sync(); // execute until command finished
 
-                    funca5118(); // load field here
+                    funca5118(); // map transition sequence
 
                     func35c84();
 
@@ -578,12 +578,12 @@ while( true )
 
             if( ( w[800ad048] != 0 ) && ( w[800acfe0] == 1 )
             {
-                funca7130();
+                funca7130(); // called when movie starts
 
                 [800ad048] = w(0);
             }
 
-            if( ( w[800ad03c] != ff ) && ( w[800acfe0] == 0 ) )
+            if( ( w[800ad03c] != ff ) && ( w[800acfe0] == 0 ) ) // menu to open
             {
                 V0 = w[800aefe4] + w[800b1740] * 5c; // party entity data
                 V0 = w[V0 + 4c]; // allocated total entity data
@@ -593,9 +593,9 @@ while( true )
                 {
                     func7f5fc(); // close and clean dialogs
 
-                    func78fe8(); // some func that loaded field tex and some blackout effects
+                    func78fe8(); // call menu
 
-                    [800ad03c] = w(ff);
+                    [800ad03c] = w(ff); // menu closed
                 }
             }
 
@@ -1455,6 +1455,7 @@ system_exit_critical_section();
 
 ////////////////////////////////
 // func78fe8()
+// menu call
 
 FP = 0;
 

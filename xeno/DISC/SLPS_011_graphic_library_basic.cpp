@@ -228,44 +228,69 @@ return 80000000 | (w[A0 + 0000] & 00ffffff);
 
 
 ////////////////////////////////
-// func439a4
+// func439a4()
 
 V0 = w[A0] & 00ffffff;
 V0 = V0 ^ 00ffffff;
-return V0 < 0001;
+return V0 < 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func439c0()
+// system_psyq_add_prim()
+// AddPrim
+// Register a primitive to the OT.
+// Registers a primitive beginning with the address *p to the OT entry *ot in OT table. ot is an ordering table or
+// pointer to another primitive.
+// A primitive may be added to a primitive list only once in the same frame. Attempting to add it multiple times
+// in the same frame results in a corrupted list.
 
-[A1] = w((w[A1] & ff000000) | (w[A0] & 00ffffff));
-[A0] = w((w[A0] & ff000000) | (A1 & 00ffffff));
+ot = A0;
+p = A1;
+
+ot_next = w[ot] & 00ffffff;
+ot_size = w[ot] & ff000000;
+p_size = w[p] & ff000000;
+
+[p] = w(p_size | ot_next);
+[ot] = w(ot_size | p & 00ffffff);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func439fc()
+// system_psyq_add_prims()
+// AddPrims
+// Collectively register primitives to the OT.
+// Registers primitives beginning with p0 and ending with p1 to the *ot entry in the OT.
+// The primitive list is a list of primitives connected by AddPrim() or created by the local ordering table
 
-[A2] = w((w[A2] & ff000000) | (w[A0] & 00ffffff));
-[A0] = w((w[A0] & ff000000) | (A1 & 00ffffff));
+ot = A0;
+p0 = A1;
+p1 = A2;
+
+ot_next = w[ot] & 00ffffff;
+ot_size = w[ot] & ff000000;
+p1_size = w[p1] & ff000000;
+
+[p1] = w(p1_size | ot_next);
+[ot] = w(ot_size | p0 & 00ffffff);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43a38
-80043A38	lui    a2, $00ff
-A2 = A2 | ffff;
-80043A40	lui    v1, $ff00
-V0 = w[A0 + 0000];
-A1 = A1 & A2;
-V0 = V0 & V1;
-V0 = V0 | A1;
-80043A54	jr     ra 
-[A0 + 0000] = w(V0);
+// system_psyq_cat_prim()
+// CatPrim
+// Concatenate primitives.
+// Links the primitive p1 to the primitive p0.
+// AddPrim() adds a primitive to a primitive list. CatPrim() simply concatenates two primitives.
+
+p0 = A0;
+p1 = A1;
+
+[p0] = w(w[p0] & ff000000 | p1 & 00ffffff);
 ////////////////////////////////
 
 
@@ -280,6 +305,7 @@ V0 = V0 | A1;
 
 ////////////////////////////////
 // system_set_draw_packet_transparency()
+
 if( A1 != 0 )
 {
     [A0 + 7] = b(bu[A0 + 7] | 02);

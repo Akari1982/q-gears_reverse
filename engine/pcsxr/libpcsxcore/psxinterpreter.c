@@ -705,10 +705,10 @@ void psxBNE() {	RepBranchi32(!=) }  // Branch if Rs != Rt
 void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
-    psxMemWrite32(0x80010000, 0);
+    //psxMemWrite32(0x80010000, 0);
 
     if (0) {}
-    else if( _JumpTarget_ == 0x80078fe8) { execI(); GPU_displayText("CALL THAT FUNC"); }
+    //else if( _JumpTarget_ == 0x80074fa0) { execI(); GPU_displayText("CALL THAT FUNC"); }
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }
     //else if( _JumpTarget_ == 0x8003c36c ) { execI(); P_Xeno_System_SoundUpdateBaseValues(); }
     //else if (_JumpTarget_ == 0x8003c590) { execI(); P_Xeno_System_SoundUpdateSequence(); }
