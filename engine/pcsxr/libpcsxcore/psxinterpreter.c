@@ -708,7 +708,12 @@ void psxJAL()
     psxMemWrite32(0x80010000, 0);
 
     if (0) {}
-    //else if( _JumpTarget_ == 0x800aaf70) { execI(); GPU_displayText("CALL THAT FUNC"); }
+    else if( _JumpTarget_ == 0x800AAF70) // call given func when SELECT is pressed instead of map
+     {
+        _SetLink(31);
+        doBranch(0x800a807c);
+        GPU_displayText("CALL THAT FUNC");
+     }
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }
     //else if( _JumpTarget_ == 0x8003c36c ) { execI(); P_Xeno_System_SoundUpdateBaseValues(); }
     //else if (_JumpTarget_ == 0x8003c590) { execI(); P_Xeno_System_SoundUpdateSequence(); }
@@ -742,6 +747,8 @@ void psxJALR()
     if (0)
     {
     }
+    //else if (temp == 0x800863f0) { execI(); GPU_displayText("CALL THAT FUNC"); }
+
     //else if (temp == 0x8003cbd8) { execI(); P_Opcode81(); }
     //else if (temp == 0x8003CC34) { execI(); P_Opcode90(); }
     //else if (temp == 0x8003CCC0) { execI(); P_Opcode94(); }
