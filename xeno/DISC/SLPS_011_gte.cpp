@@ -1906,12 +1906,11 @@ return SZ3 / 4;
 // func4a664()
 
 VXY0 = w[A0 + 0];
-VZ0 = w[A0 + 4];
+VZ0  = w[A0 + 4];
 VXY1 = w[A1 + 0];
-VZ1 = w[A1 + 4];
+VZ1  = w[A1 + 4];
 VXY2 = w[A2 + 0];
-VZ2 = w[A2 + 4];
-
+VZ2  = w[A2 + 4];
 gte_RTPT(); // Perspective transform on 3 points
 V1 = FLAG;
 
@@ -1922,10 +1921,11 @@ V1 = FLAG;
 VXY0 = w[A3 + 0];
 VZ0 = w[A3 + 4];
 gte_RTPS(); // Perspective transform
+V0 = FLAG;
 
 [A7] = w(SXY2);
 [A8] = w(IR0);
-[A9] = w(FLAG | V1);
+[A9] = w(V0 | V1);
 
 AVSZ4(); // Average of four Z values
 

@@ -571,7 +571,7 @@ while( true )
                 {
                     if( w[800ad040] == 1 )
                     {
-                        funcaaf70();
+                        funcaaf70(); // open map of field if exist
                     }
                 }
             }
@@ -1307,23 +1307,15 @@ L78cf8:	; 80078CF8
 // func78d10()
 
 V1 = w[800acfe0];
-A0 = 800b1970;
 V1 = V1 + 1;
 V0 = V1 >> 1f;
 V0 = V1 + V0;
 V0 = V0 >> 1;
 V0 = V0 << 1;
 V1 = V1 - V0;
-V0 = V1 << 7;
-V0 = V0 + V1;
-V0 = V0 << 4;
-V0 = V0 - V1;
-V0 = V0 << 2;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A0;
+
+[800c3740] = w(800b1970 + V1 * 80f4);
 [800acfe0] = w(V1);
-[800c3740] = w(V0);
 
 A0 = V0 + b8;
 system_psyq_put_disp_env();
@@ -1342,19 +1334,19 @@ col = A0;
 func73670(); // clear otagr
 
 buffer_id = w[800acfe0];
-otag = w[800c3740];
+rdata = w[800c3740];
 
 [800af328 + buffer_id * 10 + 4] = b(col * 4);
 [800af328 + buffer_id * 10 + 5] = b(col * 4);
 [800af328 + buffer_id * 10 + 6] = b(col * 4);
 
 V1 = 800af328 + buffer_id * 10;
-[V1] = w((w[V1] & ff000000) | (w[otag + cc] & 00ffffff));
-[otag + cc] = w((w[otag + cc] & ff000000) | (V1 & 00ffffff));
+[V1] = w((w[V1] & ff000000) | (w[rdata + cc] & 00ffffff));
+[rdata + cc] = w((w[rdata + cc] & ff000000) | (V1 & 00ffffff));
 
 V0 = 800af2f8 + buffer_id * c;
-[V0] = w((w[V0] & ff000000) | (w[otag + cc] & 00ffffff));
-[otag + cc] = w((w[otag + cc] & ff000000) | (V0 & 00ffffff));
+[V0] = w((w[V0] & ff000000) | (w[rdata + cc] & 00ffffff));
+[rdata + cc] = w((w[rdata + cc] & ff000000) | (V0 & 00ffffff));
 
 field_draw_sync();
 
@@ -1363,13 +1355,13 @@ A1 = 0; // x
 A2 = buffer_id * 100; // y
 system_move_image();
 
-A0 = otag + b8;
+A0 = rdata + b8;
 system_psyq_put_disp_env();
 
-A0 = otag;
+A0 = rdata;
 system_psyq_put_draw_env();
 
-A0 = otag + d0;
+A0 = rdata + d0;
 system_psyq_draw_otag();
 ////////////////////////////////
 
