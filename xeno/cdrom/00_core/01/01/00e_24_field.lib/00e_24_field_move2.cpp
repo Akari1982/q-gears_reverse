@@ -1584,7 +1584,7 @@ S6 = model_parts_header = A1;
 
 A0 = b8;
 func7c350(); // get pointer to temporary memory.
-S3 = V0;
+temp = V0;
 
 S4 = mesh_data = w[model_parts_header + 10];
 
@@ -1594,90 +1594,90 @@ T0 = leader_fin_z;
 
 struct_5c_p = w[800aefe4];
 
-[S3 + a0] = w(7fffffff);
-[S3 + a4] = vertex_data;
-[S3 + 10] = w(V0 + T0);
+[temp + a0] = w(7fffffff);
+[temp + a4] = vertex_data;
+[temp + 10] = w(V0 + T0);
 
 A1 = w[struct_5c_p + entity_id * 5c + 4c];
 V1 = w[A1 + 12c] & 3;
 
 if( V1 == 1 )
 {
-    [S3 + b0] = h(hu[A1 + 70]);
-    [S3 + b2] = h(0);
-    [S3 + b4] = h(0);
+    [temp + b0] = h(hu[A1 + 70]);
+    [temp + b2] = h(0);
+    [temp + b4] = h(0);
 
-    A0 = S3 + b0;
-    A1 = S3 + 60;
+    A0 = temp + b0;
+    A1 = temp + 60;
     system_calculate_rotation_matrix();
 
     A0 = struct_5c_p + entity_id * 5c + c;
-    A1 = S3 + 60;
+    A1 = temp + 60;
     system_gte_matrix_multiplication_to_A1();
 
-    [S3 + 74] = w(w[struct_5c_p + entity_id * 5c + 20]);
-    [S3 + 78] = w(w[struct_5c_p + entity_id * 5c + 24]);
-    [S3 + 7c] = w(w[struct_5c_p + entity_id * 5c + 28]);
+    [temp + 74] = w(w[struct_5c_p + entity_id * 5c + 20]);
+    [temp + 78] = w(w[struct_5c_p + entity_id * 5c + 24]);
+    [temp + 7c] = w(w[struct_5c_p + entity_id * 5c + 28]);
 
     A0 = 800aef78;
-    A1 = S3 + 60;
-    A2 = S3;
+    A1 = temp + 60;
+    A2 = temp;
     system_gte_matrix_mult_and_trans();
 }
 else if( V1 == 2 )
 {
-    [S3 + b0] = h(0);
-    [S3 + b2] = h(hu[A1 + 70]);
-    [S3 + b4] = h(0);
+    [temp + b0] = h(0);
+    [temp + b2] = h(hu[A1 + 70]);
+    [temp + b4] = h(0);
 
-    A0 = S3 + b0;
-    A1 = S3 + 60;
+    A0 = temp + b0;
+    A1 = temp + 60;
     system_calculate_rotation_matrix();
 
     A0 = struct_5c_p + entity_id * 5c + c;
-    A1 = S3 + 60;
+    A1 = temp + 60;
     system_gte_matrix_multiplication_to_A1();
 
-    [S3 + 74] = w(w[struct_5c_p + entity_id * 5c + 20]);
-    [S3 + 78] = w(w[struct_5c_p + entity_id * 5c + 24]);
-    [S3 + 7c] = w(w[struct_5c_p + entity_id * 5c + 28]);
+    [temp + 74] = w(w[struct_5c_p + entity_id * 5c + 20]);
+    [temp + 78] = w(w[struct_5c_p + entity_id * 5c + 24]);
+    [temp + 7c] = w(w[struct_5c_p + entity_id * 5c + 28]);
 
     A0 = 800aef78;
-    A1 = S3 + 60;
-    A2 = S3;
+    A1 = temp + 60;
+    A2 = temp;
     system_gte_matrix_mult_and_trans();
 }
 else if( V1 == 3 )
 {
-    [S3 + b0] = h(0);
-    [S3 + b2] = h(0);
-    [S3 + b4] = h(hu[A1 + 70]);
+    [temp + b0] = h(0);
+    [temp + b2] = h(0);
+    [temp + b4] = h(hu[A1 + 70]);
 
-    A0 = S3 + b0;
-    A1 = S3 + 60;
+    A0 = temp + b0;
+    A1 = temp + 60;
     system_calculate_rotation_matrix();
 
     A0 = struct_5c_p + entity_id * 5c + c;
-    A1 = S3 + 60;
+    A1 = temp + 60;
     system_gte_matrix_multiplication_to_A1();
 
-    [S3 + 74] = w(w[struct_5c_p + entity_id * 5c + 20]);
-    [S3 + 78] = w(w[struct_5c_p + entity_id * 5c + 24]);
-    [S3 + 7c] = w(w[struct_5c_p + entity_id * 5c + 28]);
+    [temp + 74] = w(w[struct_5c_p + entity_id * 5c + 20]);
+    [temp + 78] = w(w[struct_5c_p + entity_id * 5c + 24]);
+    [temp + 7c] = w(w[struct_5c_p + entity_id * 5c + 28]);
 
     A0 = 800aef78;
-    A1 = S3 + 60;
-    A2 = S3;
+    A1 = temp + 60;
+    A2 = temp;
     system_gte_matrix_mult_and_trans();
 }
 else
 {
-    [S3 + 5c] = w(0);
-    [S3 + 58] = w(0);
-    [S3 + 54] = w(0);
-    [S3 + 9c] = w(0);
-    [S3 + 98] = w(0);
-    [S3 + 94] = w(0);
+    [temp + 5c] = w(0);
+    [temp + 58] = w(0);
+    [temp + 54] = w(0);
+    [temp + 9c] = w(0);
+    [temp + 98] = w(0);
+    [temp + 94] = w(0);
     V0 = w[struct_5c_p + entity_id * 5c + 4c];
     V1 = bu[V0 + 75];
 
@@ -1685,315 +1685,306 @@ else
     {
         A0 = 800aef78;
         A1 = 800af104;
-        A2 = S3 + 80;
+        A2 = temp + 80;
         system_gte_matrix_mult_and_trans();
 
-        A0 = S3 + 80;
+        A0 = temp + 80;
         A1 = struct_5c_p + entity_id * 5c + c;
-        A2 = S3 + 40;
+        A2 = temp + 40;
         system_gte_matrix_mult_and_trans();
     }
     else
     {
         A0 = 800aef78;
         A1 = 800af104;
-        A2 = S3 + 80; // res
+        A2 = temp + 80; // res
         system_gte_matrix_mult_and_trans();
 
         V0 = w[struct_5c_p + entity_id * 5c + 4c];
-        A0 = S3 + 80;
+        A0 = temp + 80;
         A1 = A1 + bu[V0 + 75] * 5c + 2c;
-        A2 = S3 + 60;
+        A2 = temp + 60;
         system_gte_matrix_mult_and_trans();
 
-        A0 = S3 + 60;
+        A0 = temp + 60;
         A1 = struct_5c_p + entity_id * 5c + c;
-        A2 = S3 + 40;
+        A2 = temp + 40;
         system_gte_matrix_mult_and_trans();
     }
 }
 
-
-
-A0 = S3 + 40;
+A0 = temp + 40;
 system_gte_set_rotation_matrix();
 
-A0 = S3 + 40;
+A0 = temp + 40;
 system_gte_set_translation_vector();
 
+S7 = temp + 14;
+S1 = temp + 3c;
+S5 = temp + 1c;
+S2 = temp + 24;
 
-
-S6 = hu[S6 + 6];
-[SP + 28] = w(S6);
-
-if( S6 > 0 )
+for( int i = hu[S6 + 6]; i > 0; --i )
 {
-    S7 = S3 + 0014;
-    S1 = S3 + 003c;
-    S5 = S3 + 001c;
-    S2 = S3 + 0024;
+    A0 = w[S4 + 0];
+    V1 = A0 & 00ff;
+    FP = A0 >> 10;
+    [temp + 00ac] = w(V1);
+    S4 = S4 + 4;
 
-    L82b90:	; 80082B90
-        A0 = w[S4 + 0000];
-        V0 = 00c4;
-        V1 = A0 & 00ff;
-        FP = A0 >> 10;
-        80082BA0	beq    v1, v0, L82bb4 [$80082bb4]
-        [S3 + 00ac] = w(V1);
-        V0 = 00c8;
-        80082BAC	bne    v1, v0, L82bbc [$80082bbc]
-        V0 = A0 & 0008;
+    if( ( V1 == c4 ) || ( V1 == c8 ) )
+    {
+        continue;
+    }
 
-        L82bb4:	; 80082BB4
-        80082BB4	j      L82f24 [$80082f24]
-        S4 = S4 + 0004;
-
-        L82bbc:	; 80082BBC
-        S4 = S4 + 4;
-        if( V0 == 0 )
+    L82bbc:	; 80082BBC
+    if( ( A0 & 0008 ) == 0 )
+    {
+        if( FP != 0 )
         {
-            if( FP != 0 )
-            {
-                S0 = 0;
+            S0 = 0;
 
-                loop82bd0:	; 80082BD0
-                    A1 = S7;
-                    A2 = S1;
-                    A0 = hu[S4 + 0000];
-                    V0 = w[S3 + 00a4];
-                    A0 = A0 << 03;
-                    80082BE0	jal    func4a3f4 [$8004a3f4]
-                    A0 = V0 + A0;
-                    A1 = S5;
-                    A2 = S1;
-                    A0 = hu[S4 + 0002];
-                    S4 = S4 + 0004;
-                    V0 = w[S3 + 00a4];
-                    A0 = A0 << 03;
-                    80082C00	jal    func4a3f4 [$8004a3f4]
-                    A0 = V0 + A0;
-                    A1 = S2;
-                    A2 = S1;
-                    A0 = hu[S4 + 0000];
-                    S4 = S4 + 0004;
-                    V0 = w[S3 + 00a4];
-                    A0 = A0 << 03;
-                    80082C20	jal    func4a3f4 [$8004a3f4]
-                    A0 = V0 + A0;
-                    A2 = w[S3 + 0010];
-                    V0 = h[S3 + 0014];
-                    V1 = h[S3 + 0018];
-                    V0 = V0 << 10;
-                    V0 = V0 + V1;
-                    [S3 + 0000] = w(V0);
-                    A0 = w[S3 + 0000];
-                    V0 = h[S3 + 001c];
-                    V1 = h[S3 + 0020];
-                    V0 = V0 << 10;
-                    V0 = V0 + V1;
-                    [S3 + 0004] = w(V0);
-                    A1 = w[S3 + 0004];
-                    V0 = h[S3 + 0024];
-                    V1 = h[S3 + 0028];
-                    V0 = V0 << 10;
-                    V0 = V0 + V1;
-                    80082C6C	jal    system_side_of_vector [$8004a5b4]
-                    [S3 + 0008] = w(V0);
-                    80082C74	bltz   v0, L82d1c [$80082d1c]
-                    80082C78	nop
-                    A0 = w[S3 + 0004];
-                    A1 = w[S3 + 0008];
-                    A2 = w[S3 + 0010];
-                    80082C88	jal    system_side_of_vector [$8004a5b4]
-                    80082C8C	nop
-                    80082C90	bltz   v0, L82d1c [$80082d1c]
-                    80082C94	nop
-                    A0 = w[S3 + 0008];
-                    A1 = w[S3 + 0000];
-                    A2 = w[S3 + 0010];
-                    80082CA4	jal    system_side_of_vector [$8004a5b4]
-                    80082CA8	nop
-                    80082CAC	bltz   v0, L82d1c [$80082d1c]
-                    80082CB0	nop
-                    A0 = w[S3 + 0000];
-                    A1 = w[S3 + 0004];
-                    A2 = w[S3 + 0008];
-                    80082CC0	jal    system_side_of_vector [$8004a5b4]
-                    80082CC4	nop
-                    80082CC8	bltz   v0, L82d1c [$80082d1c]
-                    A0 = S7;
-                    A1 = S5;
-                    A2 = S2;
-                    T0 = hu[SP + 0018];
-                    80082CDC	nop
-                    [S3 + 0034] = h(T0);
-                    T0 = hu[SP + 0020];
-                    80082CE8	nop
-                    [S3 + 0038] = h(T0);
-                    T0 = w[SP + 007c];
-                    A3 = S3 + 0034;
-                    80082CF8	jal    field_calculate_walkmesh_height [$8007a690]
-                    [SP + 0010] = w(T0);
-                    V1 = h[S3 + 0036];
-                    V0 = w[S3 + 00a0];
-                    80082D08	nop
-                    V0 = V1 < V0;
-                    80082D10	beq    v0, zero, L82d1c [$80082d1c]
-                    80082D14	nop
-                    [S3 + 00a0] = w(V1);
+            loop82bd0:	; 80082BD0
+                A1 = S7;
+                A2 = S1;
+                A0 = hu[S4 + 0000];
+                V0 = w[temp + 00a4];
+                A0 = A0 << 03;
+                80082BE0	jal    func4a3f4 [$8004a3f4]
+                A0 = V0 + A0;
+                A1 = S5;
+                A2 = S1;
+                A0 = hu[S4 + 0002];
+                S4 = S4 + 0004;
+                V0 = w[temp + 00a4];
+                A0 = A0 << 03;
+                80082C00	jal    func4a3f4 [$8004a3f4]
+                A0 = V0 + A0;
+                A1 = S2;
+                A2 = S1;
+                A0 = hu[S4 + 0000];
+                S4 = S4 + 0004;
+                V0 = w[temp + 00a4];
+                A0 = A0 << 03;
+                80082C20	jal    func4a3f4 [$8004a3f4]
+                A0 = V0 + A0;
+                A2 = w[temp + 0010];
+                V0 = h[temp + 0014];
+                V1 = h[temp + 0018];
+                V0 = V0 << 10;
+                V0 = V0 + V1;
+                [temp + 0000] = w(V0);
+                A0 = w[temp + 0000];
+                V0 = h[temp + 001c];
+                V1 = h[temp + 0020];
+                V0 = V0 << 10;
+                V0 = V0 + V1;
+                [temp + 0004] = w(V0);
+                A1 = w[temp + 0004];
+                V0 = h[temp + 0024];
+                V1 = h[temp + 0028];
+                V0 = V0 << 10;
+                V0 = V0 + V1;
+                80082C6C	jal    system_side_of_vector [$8004a5b4]
+                [temp + 0008] = w(V0);
+                80082C74	bltz   v0, L82d1c [$80082d1c]
+                80082C78	nop
+                A0 = w[temp + 0004];
+                A1 = w[temp + 0008];
+                A2 = w[temp + 0010];
+                80082C88	jal    system_side_of_vector [$8004a5b4]
+                80082C8C	nop
+                80082C90	bltz   v0, L82d1c [$80082d1c]
+                80082C94	nop
+                A0 = w[temp + 0008];
+                A1 = w[temp + 0000];
+                A2 = w[temp + 0010];
+                80082CA4	jal    system_side_of_vector [$8004a5b4]
+                80082CA8	nop
+                80082CAC	bltz   v0, L82d1c [$80082d1c]
+                80082CB0	nop
+                A0 = w[temp + 0000];
+                A1 = w[temp + 0004];
+                A2 = w[temp + 0008];
+                80082CC0	jal    system_side_of_vector [$8004a5b4]
+                80082CC4	nop
+                80082CC8	bltz   v0, L82d1c [$80082d1c]
+                A0 = S7;
+                A1 = S5;
+                A2 = S2;
+                T0 = hu[SP + 0018];
+                80082CDC	nop
+                [temp + 0034] = h(T0);
+                T0 = hu[SP + 0020];
+                80082CE8	nop
+                [temp + 0038] = h(T0);
+                T0 = w[SP + 007c];
+                A3 = temp + 0034;
+                [SP + 0010] = w(T0);
+                field_calculate_walkmesh_height();
 
-                    L82d1c:	; 80082D1C
-                    S0 = S0 + 0001;
-                    V0 = S0 < FP;
-                80082D24	bne    v0, zero, loop82bd0 [$80082bd0]
-            }
+                V1 = h[temp + 0036];
+                V0 = w[temp + 00a0];
+                80082D08	nop
+                V0 = V1 < V0;
+                if( V0 != 0 )
+                {
+                    [temp + 00a0] = w(V1);
+                }
+
+                L82d1c:	; 80082D1C
+                S0 = S0 + 0001;
+                V0 = S0 < FP;
+            80082D24	bne    v0, zero, loop82bd0 [$80082bd0]
         }
-        else
+    }
+    else
+    {
+        if( FP != 0 )
         {
-            if( FP != 0 )
-            {
-                S0 = 0;
-                S6 = S3 + 002c;
+            S0 = 0;
+            S6 = temp + 002c;
 
-                L82d44:	; 80082D44
-                    A1 = S7;
-                    A2 = S1;
-                    A0 = hu[S4 + 0000];
-                    V0 = w[S3 + 00a4];
-                    A0 = A0 << 03;
-                    80082D54	jal    func4a3f4 [$8004a3f4]
-                    A0 = V0 + A0;
-                    A1 = S5;
-                    A2 = S1;
-                    A0 = hu[S4 + 0002];
-                    S4 = S4 + 0004;
-                    V0 = w[S3 + 00a4];
-                    A0 = A0 << 03;
-                    80082D74	jal    func4a3f4 [$8004a3f4]
-                    A0 = V0 + A0;
-                    A1 = S2;
-                    A2 = S1;
-                    A0 = hu[S4 + 0000];
-                    V0 = w[S3 + 00a4];
-                    A0 = A0 << 03;
-                    80082D90	jal    func4a3f4 [$8004a3f4]
-                    A0 = V0 + A0;
-                    A1 = S6;
-                    A2 = S1;
-                    A0 = hu[S4 + 0002];
-                    S4 = S4 + 0004;
-                    V0 = w[S3 + 00a4];
-                    A0 = A0 << 03;
-                    80082DB0	jal    func4a3f4 [$8004a3f4]
-                    A0 = V0 + A0;
-                    A2 = w[S3 + 0010];
-                    V0 = h[S3 + 0014];
-                    V1 = h[S3 + 0018];
-                    V0 = V0 << 10;
-                    V0 = V0 + V1;
-                    [S3 + 0000] = w(V0);
-                    A0 = w[S3 + 0000];
-                    V0 = h[S3 + 001c];
-                    V1 = h[S3 + 0020];
-                    V0 = V0 << 10;
-                    V0 = V0 + V1;
-                    [S3 + 0004] = w(V0);
-                    A1 = w[S3 + 0004];
-                    V0 = h[S3 + 0024];
-                    V1 = h[S3 + 0028];
-                    V0 = V0 << 10;
-                    V0 = V0 + V1;
-                    [S3 + 0008] = w(V0);
-                    V0 = h[S3 + 002c];
-                    V1 = h[S3 + 0030];
-                    V0 = V0 << 10;
-                    V0 = V0 + V1;
-                    [S3 + 000c] = w(V0);
-                    80082E10	jal    system_side_of_vector [$8004a5b4]
+            L82d44:	; 80082D44
+                A1 = S7;
+                A2 = S1;
+                A0 = hu[S4 + 0000];
+                V0 = w[temp + 00a4];
+                A0 = A0 << 03;
+                A0 = V0 + A0;
+                80082D54	jal    func4a3f4 [$8004a3f4]
+
+                A1 = S5;
+                A2 = S1;
+                A0 = hu[S4 + 0002];
+                S4 = S4 + 0004;
+                V0 = w[temp + 00a4];
+                A0 = A0 << 03;
+                A0 = V0 + A0;
+                80082D74	jal    func4a3f4 [$8004a3f4]
+
+                A1 = S2;
+                A2 = S1;
+                A0 = hu[S4 + 0000];
+                V0 = w[temp + 00a4];
+                A0 = A0 << 03;
+                A0 = V0 + A0;
+                80082D90	jal    func4a3f4 [$8004a3f4]
+
+                A1 = S6;
+                A2 = S1;
+                A0 = hu[S4 + 0002];
+                S4 = S4 + 0004;
+                V0 = w[temp + 00a4];
+                A0 = A0 << 03;
+                A0 = V0 + A0;
+                80082DB0	jal    func4a3f4 [$8004a3f4]
+
+                A2 = w[temp + 0010];
+                V0 = h[temp + 0014];
+                V1 = h[temp + 0018];
+                V0 = V0 << 10;
+                V0 = V0 + V1;
+                [temp + 0000] = w(V0);
+                A0 = w[temp + 0000];
+                V0 = h[temp + 001c];
+                V1 = h[temp + 0020];
+                V0 = V0 << 10;
+                V0 = V0 + V1;
+                [temp + 0004] = w(V0);
+                A1 = w[temp + 0004];
+                V0 = h[temp + 0024];
+                V1 = h[temp + 0028];
+                V0 = V0 << 10;
+                V0 = V0 + V1;
+                [temp + 0008] = w(V0);
+                V0 = h[temp + 002c];
+                V1 = h[temp + 0030];
+                V0 = V0 << 10;
+                V0 = V0 + V1;
+                [temp + 000c] = w(V0);
+
+                system_side_of_vector();
+
+                if( V0 >= 0 )
+                {
+                    A0 = w[temp + 4];
+                    A1 = w[temp + c];
+                    A2 = w[temp + 10];
+                    system_side_of_vector();
 
                     if( V0 >= 0 )
                     {
-                        A0 = w[S3 + 0004];
-                        A1 = w[S3 + 000c];
-                        A2 = w[S3 + 0010];
-                        80082E2C	jal    system_side_of_vector [$8004a5b4]
+                        A0 = w[temp + c];
+                        A1 = w[temp + 8];
+                        A2 = w[temp + 10];
+                        system_side_of_vector();
 
                         if( V0 >= 0 )
                         {
-                            A0 = w[S3 + 000c];
-                            A1 = w[S3 + 0008];
-                            A2 = w[S3 + 0010];
-                            80082E48	jal    system_side_of_vector [$8004a5b4]
+                            A0 = w[temp + 8];
+                            A1 = w[temp + 0];
+                            A2 = w[temp + 10];
+                            system_side_of_vector();
 
                             if( V0 >= 0 )
                             {
-                                A0 = w[S3 + 0008];
-                                A1 = w[S3 + 0000];
-                                A2 = w[S3 + 0010];
-                                80082E64	jal    system_side_of_vector [$8004a5b4]
+                                A0 = w[temp + 0];
+                                A1 = w[temp + 4];
+                                A2 = w[temp + 8];
+                                system_side_of_vector();
 
                                 if( V0 >= 0 )
                                 {
-                                    A0 = w[S3 + 0000];
-                                    A1 = w[S3 + 0004];
-                                    A2 = w[S3 + 0008];
-                                    80082E80	jal    system_side_of_vector [$8004a5b4]
+                                    A0 = w[temp + 0004];
+                                    A1 = w[temp + 0008];
+                                    A2 = w[temp + 0010];
+                                    T0 = hu[SP + 0018];
+                                    [temp + 0034] = h(T0);
+                                    T0 = hu[SP + 0020];
+                                    [temp + 0038] = h(T0);
+                                    system_side_of_vector();
 
                                     if( V0 >= 0 )
                                     {
-                                        A0 = w[S3 + 0004];
-                                        A1 = w[S3 + 0008];
-                                        A2 = w[S3 + 0010];
-                                        T0 = hu[SP + 0018];
-                                        [S3 + 0034] = h(T0);
-                                        T0 = hu[SP + 0020];
-                                        [S3 + 0038] = h(T0);
-                                        80082EAC	jal    system_side_of_vector [$8004a5b4]
-
-                                        if( V0 >= 0 )
-                                        {
-                                            A0 = S7;
-                                            A1 = S5;
-                                        }
-                                        else
-                                        {
-                                            A0 = S5;
-                                            A1 = S6;
-                                        }
-
-                                        A2 = S2;
-                                        A3 = S3 + 34;
-                                        A4 = w[SP + 7c];
-                                        field_calculate_walkmesh_height();
-
-                                        if( h[S3 + 36] < w[S3 + a0] )
-                                        {
-                                            [S3 + a0] = w(h[S3 + 36]);
-                                        {
+                                        A0 = S7;
+                                        A1 = S5;
                                     }
+                                    else
+                                    {
+                                        A0 = S5;
+                                        A1 = S6;
+                                    }
+
+                                    A2 = S2;
+                                    A3 = temp + 34;
+                                    A4 = A5;
+                                    field_calculate_walkmesh_height();
+
+                                    if( h[temp + 36] < w[temp + a0] )
+                                    {
+                                        [temp + a0] = w(h[temp + 36]);
+                                    {
                                 }
                             }
                         }
                     }
+                }
 
-                    S0 = S0 + 1;
-                    V0 = S0 < FP;
-                80082F1C	bne    v0, zero, L82d44 [$80082d44]
-            }
+                S0 = S0 + 1;
+                V0 = S0 < FP;
+            80082F1C	bne    v0, zero, L82d44 [$80082d44]
         }
-        L82f24:	; 80082F24
-        T0 = w[SP + 28] - 1;
-        [SP + 28] = w(T0);
-    80082F30	bgtz   t0, L82b90 [$80082b90]
+    }
+    L82f24:	; 80082F24
 }
 
 A0 = b8;
 func7c374(); // return temporary memory
 
-if( w[S3 + a0] != 7fffffff )
+if( w[temp + a0] != 7fffffff )
 {
-    T0 = w[SP + 78];
-    [T0] = w(A0);
+    [A4] = w(w[temp + a0]);
     return 0;
 }
 
@@ -2278,22 +2269,31 @@ if( number_of_entity > 0 )
 // func8376c()
 
 leader_id = A0;
-leader_5c = A1;
+leader_5c = [SP + 48] = w(A1);
 leader_138 = A2;
 
 struct_5c_p = w[800aefe4];
 
 A0 = 20;
 func7c350(); // get pointer to temporary memory.
-S3 = V0;
+temp = V0;
 
-leader_fin_x = (w[leader_138 + 20] + w[leader_138 + 30]) >> 10;
-leader_fin_z = (w[leader_138 + 28] + w[leader_138 + 38]) >> 10;
+[SP + 18] = w(w[leader_138 + 20] + w[leader_138 + 30]);
+[SP + 1c] = w(w[leader_138 + 24] + w[leader_138 + 34]);
+[SP + 20] = w(w[leader_138 + 28] + w[leader_138 + 38]);
+
+A0 = SP + 28; // dst
+A1 = SP + 18; // src
+func827e4(); // get 2 bytes vector from 4 bytes
 
 leader_cur_y = h[leader_138 + 26];
 leader_top_y = leader_cur_y - hu[leader_138 + 1a];
 
 leader_flags0 = w[leader_138 + 0];
+
+leader_fin_x = h[SP + 28];
+leader_fin_z = h[SP + 2c];
+
 leader_follow_id = bu[leader_138 + 74];
 
 [SP + 70] = w(0);
@@ -2317,193 +2317,192 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // go through all entity
 
     [struct_138 + 4] = w(w[struct_138 + 4] & ffff3eff);
 
+    entity_flags0 = w[struct_138 + 0];
+
     if( w[struct_138 + 4] & 00000080 )
     {
         A0 = i;
         V1 = w[struct_5c_p + i * 5c + 0];
-        A1 = w[V1 + 4]; // model parts header
+        A1 = w[V1 + 4];
         A2 = leader_fin_x;
         A3 = leader_fin_z;
         A4 = SP + 40;
-        A5 = SP + 30; // normal
+        A5 = SP + 30;
         func8289c();
         if( V0 != 0 )
         {
             [struct_138 + 4] = w(w[struct_138 + 4] & ff3fffff);
+            continue;
         }
 
-        // DEBUG TEXT
-        if( w[800c1b60] == 0 )
+        if( w[800c1b60] == 0 ) // DEBUG
         {
             A0 = 8006f2d8; // "POLYCHECK %d"
             A1 = i;
             system_print_alias();
         }
 
-        A0 = w[SP + 40] + hu[struct_138 + 1a];
         [struct_138 + 4] = w(w[struct_138 + 4] | 00000100);
-        V1 = bu[leader_138 + 74];
-        80083958	bne    v1, i, L83aec [$80083aec]
 
-        [leader_138 + 50] = w(w[SP + 30]);
-        [leader_138 + 54] = w(w[SP + 34]);
-        [leader_138 + 58] = w(w[SP + 38]);
+        if( bu[leader_138 + 74] == i )
+        {
+            [leader_138 + 50] = w(w[SP + 30]);
+            [leader_138 + 54] = w(w[SP + 34]);
+            [leader_138 + 58] = w(w[SP + 38]);
+            [struct_138 + 4] = w(w[struct_138 + 4] | 00004000);
+        }
 
-        [struct_138 + 4] = w(w[struct_138 + 4] | 00004000);
-        80083990	j      L83acc [$80083acc]
+        A0 = hu[struct_138 + 1a] + w[SP + 40];
     }
     else
     {
-        if( ( w[struct_138 + 0] & 00002000 ) == 0 )
-        {
-            [S3 + 0] = w(((w[struct_138 + 20] + w[struct_138 + 30]) >> 10) - leader_fin_x);
-            [S3 + 4] = w(hu[leader_138 + 1e] + hu[struct_138 + 1e]); // solid range
-            [S3 + 8] = w(((w[struct_138 + 28] + w[struct_138 + 38]) >> 10) - leader_fin_z);
-
-            A0 = S3 + 0;
-            A1 = S3 + 10;
-            system_gte_square_of_vector();
-
-            V0 = (w[S3 + 10] + w[S3 + 18]) < w[S3 + 14];
-        }
-        else
+        if( entity_flags0 & 00002000 )
         {
             A0 = leader_fin_x;
             A1 = leader_fin_z;
             A2 = struct_138;
             A3 = 0;
             field_in_entity_quad();
+            V0 = V0;
+        }
+        else
+        {
+            [temp + 0] = w(((w[struct_138 + 20] + w[struct_138 + 30]) >> 10) - leader_fin_x);
+            [temp + 4] = w(hu[leader_138 + 1e] + hu[struct_138 + 1e]); // solid range
+            [temp + 8] = w(((w[struct_138 + 28] + w[struct_138 + 38]) >> 10) - leader_fin_z);
+
+            A0 = temp;
+            A1 = temp + 10;
+            system_gte_square_of_vector();
+
+            V0 = ( w[temp + 10] + w[temp + 18] ) >= w[temp + 14];
         }
 
         if( V0 != 0 )
         {
             [struct_138 + 4] = w(w[struct_138 + 4] & ff3fffff);
+            continue;
         }
-        else
+
+        if( w[leader_138 + 14] & 00400000 ) // material auto slide down
         {
-            if( w[leader_138 + 14] & 00400000 ) // material auto slide down
+            if( w[800c1b60] == 0 ) // DEBUG
             {
-                // DEBUG TEXT
-                if( w[800c1b60] == 0 )
-                {
-                    A0 = 8006f2e8; // "HITOFF"
-                    system_print_alias();
-                }
+                A0 = 8006f2e8; // "HITOFF"
+                system_print_alias();
             }
-            else if( ( ( w[struct_138 + 0] | leader_flags0 ) & 00000080 ) == 0 ) // both entity solid
+            continue;
+        }
+
+        if( ( entity_flags0 | leader_flags0 ) & 00000080 )
+        {
+            continue;
+        }
+
+        if( bu[800b16a0] != 0 ) // looks like this flag stops all movement
+        {
+            continue;
+        }
+
+        A0 = h[struct_138 + 26];
+        [SP + 40] = w(A0 - hu[struct_138 + 1a]);
+    }
+
+    if( ( bu[leader_138 + 74] != i ) || ( leader_flags0 & 00040800 ) )
+    {
+        if( ( A0 < leader_top_y ) || ( leader_cur_y < w[SP + 40] ) )
+        {
+            [struct_138 + 4] = w(w[struct_138 + 4] & feffffff);
+
+            if( leader_cur_y < w[SP + 40] )
             {
-                if( bu[800b16a0] == 0 ) // looks like this flag stops all movement
+                [struct_138 + 4] = w(w[struct_138 + 4] | 00800000);
+                if( w[SP + 40] < S7 )
                 {
-                    A0 = h[struct_138 + 26];
-                    [SP + 40] = w(h[struct_138 + 26] - hu[struct_138 + 1a]);
-
-                    L83acc:	; 80083ACC
-                    if( bu[leader_138 + 74] == i )
-                    {
-                        T1 = leader_flags0 & 00040800;
-                        80083AE4	beq    t1, zero, L83b34 [$80083b34]
-                    }
-
-                    L83aec:	; 80083AEC
-                    if( A0 >= leader_top_y )
-                    {
-                        if( leader_cur_y >= w[SP + 40] )
-                        {
-                            if( ( leader_cur_y < w[SP + 40] ) || ( w[struct_138 + 4] & 00800000 ) )
-                            {
-                                L83b34:	; 80083B34
-                                S7 = w[SP + 40];
-
-                                [leader_138 + 40] = w(w[struct_138 + 30]);
-                                [leader_138 + 44] = w(w[struct_138 + 34]);
-                                [leader_138 + 48] = w(w[struct_138 + 38]);
-                                [SP + 78] = w(2);
-
-                                if( ( leader_flags0 & 00040800 ) == 0 )
-                                {
-                                    [leader_138 + 74] = b(i);
-                                    [SP + 70] = w(1);
-                                }
-
-                                [struct_138 + 4] = w(w[struct_138 + 4] | 00800000);
-                                [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
-
-                                continue;
-                            }
-                            if( ( w[struct_138 + 0] & 00000010 ) == 0 ) // entity pushable
-                            {
-                                if( bu[struct_138 + e3] < 30 ) // if entity stand we wait first
-                                {
-                                    [struct_138 + e3] = b(bu[struct_138 + e3] + 2);
-                                }
-                                if( bu[struct_138 + e3] >= 21 ) // and then push
-                                {
-                                    // push entity but stop leader movement
-
-                                    // add leader move vector to this entity
-                                    [struct_138 + 40] = w(w[struct_138 + 40] + (w[leader_138 + 30] / 4))
-                                    [struct_138 + 48] = w(w[struct_138 + 48] + (w[leader_138 + 38] / 4))
-
-                                    // remove leader movement
-                                    [leader_138 + 30] = w(0);
-                                    [leader_138 + 34] = w(0);
-                                    [leader_138 + 38] = w(0);
-                                    [leader_138 + 40] = w(0);
-                                    [leader_138 + 44] = w(0);
-                                    [leader_138 + 48] = w(0);
-
-                                    [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
-                                    continue;
-                                }
-                            }
-
-                            // stops movement in both entities
-                            [struct_138 + 30] = w(0);
-                            [struct_138 + 34] = w(0);
-                            [struct_138 + 38] = w(0);
-                            [struct_138 + 40] = w(0);
-                            [struct_138 + 44] = w(0);
-                            [struct_138 + 48] = w(0);
-                            [leader_138 + 30] = w(0);
-                            [leader_138 + 34] = w(0);
-                            [leader_138 + 38] = w(0);
-                            [leader_138 + 40] = w(0);
-                            [leader_138 + 44] = w(0);
-                            [leader_138 + 48] = w(0);
-                            [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
-                            continue;
-                        }
-                    }
-
-                    A0 = w[SP + 40];
-                    [struct_138 + 4] = w(w[struct_138 + 4] & feffffff);
-
-                    if( leader_cur_y < A0 )
-                    {
-                        [struct_138 + 4] = w(w[struct_138 + 4] | 00800000);
-
-                        if( A0 < S7 )
-                        {
-                            S7 = A0;
-                        }
-                    }
-                    else
-                    {
-                        [struct_138 + 4] = w(w[struct_138 + 4] & ff7fffff);
-                    }
-
-                    [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+                    S7 = w[SP + 40];
                 }
+                [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+            }
+            else
+            {
+                [struct_138 + 4] = w(w[struct_138 + 4] & ff7fffff);
+                [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+            }
+            continue;
+        }
+
+        if( leader_cur_y >= ( w[SP + 40] + 10 ) )
+        {
+            if( ( w[struct_138 + 4] & 00800000 ) == 0 )
+            {
+                if( ( entity_flags0 & 00000010 ) == 0 ) // entity pushable
+                {
+                    if( bu[struct_138 + e3] < 30 ) // if entity stand we wait first
+                    {
+                        [struct_138 + e3] = b(bu[struct_138 + e3] + 2);
+                    }
+
+                    if( bu[struct_138 + e3] >= 21 ) // and then push
+                    {
+                        [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+                        // add leader move vector to this entity
+                        [struct_138 + 40] = w(w[struct_138 + 40] + (w[leader_138 + 30] / 4));
+                        [struct_138 + 48] = w(w[struct_138 + 48] + (w[leader_138 + 38] / 4));
+
+                        // remove leader movement
+                        [leader_138 + 30] = w(0);
+                        [leader_138 + 34] = w(0);
+                        [leader_138 + 38] = w(0);
+                        [leader_138 + 40] = w(0);
+                        [leader_138 + 44] = w(0);
+                        [leader_138 + 48] = w(0);
+
+                        continue;
+                    }
+                }
+
+                // stops movement in both entities
+                [struct_138 + 40] = w(0);
+                [struct_138 + 44] = w(0);
+                [struct_138 + 48] = w(0);
+                [struct_138 + 30] = w(0);
+                [struct_138 + 34] = w(0);
+                [struct_138 + 38] = w(0);
+
+                [leader_138 + 30] = w(0);
+                [leader_138 + 34] = w(0);
+                [leader_138 + 38] = w(0);
+                [leader_138 + 40] = w(0);
+                [leader_138 + 44] = w(0);
+                [leader_138 + 48] = w(0);
+
+                [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
+
+                continue;
             }
         }
     }
+
+    S7 = w[SP + 40];
+    [struct_138 + 4] = w(w[struct_138 + 4] | 00800000);
+    [leader_138 + 40] = w(w[struct_138 + 30]);
+    [leader_138 + 44] = w(w[struct_138 + 34]);
+    [leader_138 + 48] = w(w[struct_138 + 38]);
+    [SP + 78] = w(2);
+
+    if( leader_flags0 & 00040800 )
+    {
+        [SP + 70] = w(1);
+        [leader_138 + 74] = b(i);
+    }
+    [struct_138 + 4] = w(w[struct_138 + 4] | 00400000);
 }
 
 if( w[800ad070] != 0 )
 {
     S7 = w[800ad06c];
-    [SP + 78] = w(w[SP + 78] + 1);
     [SP + 70] = w(0);
+    [SP + 78] = w(w[SP + 78] + 1);
 }
 
 if( w[SP + 70] == 0 )
@@ -2514,16 +2513,17 @@ else
 {
     V1 = bu[leader_138 + 74];
     V1 = w[struct_5c_p + V1 * 5c + 4c];
-    [V1 + 4] = w(w[V1 + 4] | 80000000 );
+    [V1 + 4] = w(w[V1 + 4] | 00008000);
 
     if( leader_follow_id == ff )
     {
-        if( ( w[leader_138 + 134] & 00000080 ) == 0 )
+        if( ( w[leader_138 + 0134] & 0080 ) == 0 )
         {
             A0 = c;
             A1 = 0;
             system_memory_allocate();
             [leader_138 + 110] = w(V0);
+
             [leader_138 + 134] = w(w[leader_138 + 134] | 00000080);
         }
 
@@ -2535,21 +2535,24 @@ else
 
         A0 = leader_id;
         A1 = bu[leader_138 + 74];
-        get_distance_between_entities();
+        func81bc0();
 
         V1 = w[leader_138 + 110];
         [V1 + 8] = h(V0);
     }
 }
 
-if( ( ( w[leader_138 + 0] & 00010000 ) == 0 ) && ( ( w[leader_138 + 4] & 00200000 ) == 0 ) ) // both flags removed in 0x19_SetPosition.
+if( ( w[leader_138 + 0] & 00010000 ) == 0 )
 {
-    A0 = leader_id;
-    A1 = S7;
-    A2 = leader_5c;
-    A3 = leader_138;
-    A4 = w[SP + 78];
-    func84054();
+    if( ( w[leader_138 + 4] & 00200000 ) == 0 )
+    {
+        A0 = leader_id;
+        A1 = S7;
+        A2 = w[SP + 48];
+        A3 = leader_138;
+        A4 = w[SP + 78];
+        func84054();
+    }
 }
 
 V0 = w[struct_5c_p + leader_id * 5c + 4];
