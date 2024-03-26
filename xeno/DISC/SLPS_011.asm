@@ -2852,7 +2852,7 @@
 // func43b78
 80043B78-80043B88
 ////////////////////////////////
-// func43b8c
+// system_graphic_textured_rectangle_header
 80043B8C-80043B9C
 ////////////////////////////////
 // func43ba0

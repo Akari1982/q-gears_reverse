@@ -571,7 +571,7 @@ while( true )
                 {
                     if( w[800ad040] == 1 )
                     {
-                        funcaaf70(); // open map of field if exist
+                        field_map_show_while_select_pressed();
                     }
                 }
             }

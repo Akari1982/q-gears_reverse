@@ -388,7 +388,7 @@ L43abc:	; 80043ABC
 // system_graphic_textured_quad_header()
 
 [A0 + 3] = b(9);
-[A0 + 7] = b(2c);
+[A0 + 7] = b(2c); // Textured four-point polygon, opaque, texture-blending
 ////////////////////////////////
 
 
@@ -430,10 +430,10 @@ L43abc:	; 80043ABC
 
 
 ////////////////////////////////
-// func43b8c()
+// system_graphic_textured_rectangle_header()
 
 [A0 + 3] = b(4);
-[A0 + 7] = b(64);
+[A0 + 7] = b(64); // Textured Rectangle, variable size, opaque, texture-blending
 ////////////////////////////////
 
 
@@ -1853,7 +1853,7 @@ A0 = A1;
 A1 = A2;
 A2 = A3 & ffff; // tex page
 system_gpu_get_draw_mode_setting_command(); // set md me dtd dfe
-[S0 + 4] = w(V0); // draw mode settings commend to GPU (e1)
+[S0 + 4] = w(V0); // draw mode settings command to GPU (e1)
 
 A0 = S1;
 system_gpu_get_texture_window_setting_command();

@@ -9169,7 +9169,7 @@ S4 = w[SP + 0018];
 S1 = S4 + S7;
 
 loop26894:	; 80026894
-80026894	jal    func43b8c [$80043b8c]
+80026894	jal    system_graphic_textured_rectangle_header [$80043b8c]
 A0 = S1;
 S0 = S3 + S5;
 S5 = S5 + 001c;

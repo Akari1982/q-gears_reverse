@@ -5082,7 +5082,7 @@ A0 = A0 + 000c;
 V0 = w[800af13c];
 800AA1C4	nop
 S0 = V0 + S4;
-800AA1CC	jal    $func43b8c
+800AA1CC	jal    $system_graphic_textured_rectangle_header
 A0 = S0;
 S3 = S0 + 0014;
 [S0 + 0004] = b(S6);
@@ -5243,7 +5243,7 @@ V0 = w[rdata + 80d4] & ff000000;
 
 
 ////////////////////////////////
-// funcaa458()
+// field_map_create_marker_and_map_packets()
 
 A0 = 2f8;
 A1 = 0;
@@ -5288,37 +5288,38 @@ for( int i = 0; i < 4; ++i )
     A4 = SP + 18;
     system_gpu_create_texture_setting_packet();
 
-    packet = w[800b12c4] + 180 + i * 28;
+    packet = w[800b12c4] + 180 + i * 28; // triangle monochrome packet
 
     A0 = packet;
-    func43b8c();
+    system_graphic_textured_rectangle_header();
 
-    [packet + 4] = b(80);
-    [packet + 5] = b(80);
-    [packet + 6] = b(80);
-    [packet + 8] = h(a0);
-    [packet + a] = h(70);
+    [packet + 4] = b(80); // r
+    [packet + 5] = b(80); // g
+    [packet + 6] = b(80); // b
+    [packet + 8] = h(a0); // upper left x
+    [packet + a] = h(70); // upper left y
 
     if( i == 0 )
     {
-        [packet + c] = b(e0);
-        [packet + d] = b(70);
-        [packet + 10] = h(10);
-        [packet + 12] = h(10);
+        [packet + c] = b(e0); // u
+        [packet + d] = b(70); // v
+        [packet + 10] = h(10); // width
+        [packet + 12] = h(10); // height
     }
     else
     {
-        [packet + d] = b(60);
-        [packet + c] = b(e0);
-        [packet + 10] = h(8);
-        [packet + 12] = h(8);
+        [packet + c] = b(e0); // u
+        [packet + d] = b(60); // v
+        [packet + 10] = h(8); // width
+        [packet + 12] = h(8); // height
     }
 
     A0 = 100;
     A1 = f7;
     system_graphic_get_clut_by_param();
-    [packet + e] = h(V0);
+    [packet + e] = h(V0); // clut
 
+    // copy packet for buffer 2
     [packet + 14] = w(w[packet + 0]);
     [packet + 18] = w(w[packet + 4]);
     [packet + 1c] = w(w[packet + 8]);
@@ -5334,24 +5335,27 @@ for( int i = 0; i < 3; ++i )
     A0 = packet;
     system_graphic_textured_quad_header();
 
-    [packet + 8] = h(i * 80);
-    [packet + a] = h(0);
-    [packet + 10] = h(80 + i * 80);
-    [packet + 12] = h(0);
-    [packet + 18] = h(i * 80);
-    [packet + 1a] = h(df);
-    [packet + 20] = h(80 + i * 80);
-    [packet + 22] = h(df);
+    [packet +  8] = h(i * 80);      // v0 x
+    [packet +  a] = h(0);           // v0 y
+    [packet + 10] = h(80 + i * 80); // v1 x
+    [packet + 12] = h(0);           // v1 y
+    [packet + 18] = h(i * 80);      // v2 x
+    [packet + 1a] = h(df);          // v2 y
+    [packet + 20] = h(80 + i * 80); // v3 x
+    [packet + 22] = h(df);          // v3 y
 
-    [alloc + i * 10 + 78] = h(0);
-    [alloc + i * 10 + 7a] = h(0);
-    [alloc + i * 10 + 7c] = h(ff);
-    [alloc + i * 10 + 7e] = h(ff);
-    [alloc + i * 10 + 80] = h(0);
-    [alloc + i * 10 + 82] = h(0);
-    [alloc + i * 10 + 84] = h(ff);
-    [alloc + i * 10 + 86] = h(ff);
+    // buffer 1 settings
+    [alloc + 78 + i * 10 + 0] = h(0);
+    [alloc + 78 + i * 10 + 2] = h(0);
+    [alloc + 78 + i * 10 + 4] = h(ff);
+    [alloc + 78 + i * 10 + 6] = h(ff);
+    // buffer 2 settings
+    [alloc + 78 + i * 10 + 8] = h(0);
+    [alloc + 78 + i * 10 + a] = h(0);
+    [alloc + 78 + i * 10 + c] = h(ff);
+    [alloc + 78 + i * 10 + e] = h(ff);
 
+    // window settings for buffer 1
     A0 = 1;
     A1 = 0;
     A2 = 300 + i * 40;
@@ -5362,9 +5366,10 @@ for( int i = 0; i < 3; ++i )
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
-    A4 = alloc + 78 + i * 10;
+    A4 = alloc + 78 + i * 10; // data for texture window setting (e2)
     system_gpu_create_texture_setting_packet();
 
+    // window settings for buffer 2
     A0 = 1;
     A1 = 0;
     A2 = 300 + i * 40;
@@ -5386,27 +5391,28 @@ for( int i = 0; i < 3; ++i )
     A1 = 1;
     system_set_draw_packet_transparency();
 
-    [packet + c] = b(0);
-    [packet + d] = b(0);
-    [packet + 14] = b(80);
-    [packet + 15] = b(0);
-    [packet + 1c] = b(0);
-    [packet + 1d] = b(df);
-    [packet + 24] = b(80);
-    [packet + 25] = b(df);
+    [packet +  c] = b(0);  // u0
+    [packet +  d] = b(0);  // v0
+    [packet + 14] = b(80); // u1
+    [packet + 15] = b(0);  // v1
+    [packet + 1c] = b(0);  // u2
+    [packet + 1d] = b(df); // v2
+    [packet + 24] = b(80); // u3
+    [packet + 25] = b(df); // v3
 
     A0 = 1;
     A1 = 0;
     A2 = 300 + i * 40;
     A3 = 100;
     system_graphic_get_texpage_by_param();
-    [packet + 16] = h(V0);
+    [packet + 16] = h(V0); // tex page
 
     A0 = 0;
     A1 = f6;
     system_graphic_get_clut_by_param();
-    [packet + e] = h(V0);
+    [packet + e] = h(V0); // clut
 
+    // copy packet for buffer 2
     [packet + 28 + 0] = w(w[packet + 0]);
     [packet + 28 + 4] = w(w[packet + 4]);
     [packet + 28 + 8] = w(w[packet + 8]);
@@ -5423,7 +5429,7 @@ for( int i = 0; i < 3; ++i )
 
 
 ////////////////////////////////
-// field_check_item_in_inventory()
+// field_map_check_item_in_inventory()
 
 A2 = w[80059a38];
 for( int i = 0; i < 96; ++i )
@@ -5443,7 +5449,7 @@ return -1;
 
 
 ////////////////////////////////
-// funcaa850()
+// field_map_update_marker_add_to_render()
 
 col = A0;
 
@@ -5467,16 +5473,18 @@ for( int i = 0; i <= 0; ++i )
     packets = w[800b12c4];
     rdata = w[800c3740];
 
-    [packets + 180 + i * 28 + rb * 14 + 4] = b(col);
-    [packets + 180 + i * 28 + rb * 14 + 5] = b(col);
-    [packets + 180 + i * 28 + rb * 14 + 6] = b(col);
-    [packets + 180 + i * 28 + rb * 14 + 8] = h(scr_x + w[800af34c]);
-    [packets + 180 + i * 28 + rb * 14 + a] = h(scr_z + w[800af350]);
+    [packets + 180 + i * 28 + rb * 14 + 4] = b(col); // r
+    [packets + 180 + i * 28 + rb * 14 + 5] = b(col); // g
+    [packets + 180 + i * 28 + rb * 14 + 6] = b(col); // b
+    [packets + 180 + i * 28 + rb * 14 + 8] = h(scr_x + w[800af34c]); // upper left x
+    [packets + 180 + i * 28 + rb * 14 + a] = h(scr_z + w[800af350]); // upper left y
 
+    // add packets render
     packet1 = packets + 180 + i * 28 + rb * 14;
     [packet1] = w((w[packet1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
     [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (packet1 & 00ffffff));
 
+    // add texture settings
     packet2 = packets + i * 18 + rb * c;
     [packet2] = w((w[packet2] & ff000000) | (w[rdata + 80d4] & 00ffffff));
     [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (packet2 & 00ffffff));
@@ -5488,14 +5496,16 @@ for( int i = 0; i < 3; ++i )
     packets = w[800c2f10];
     rdata = w[800c3740];
 
-    [packets + c8 + rb * 28 + i * 50 + 4] = b(col);
-    [packets + c8 + rb * 28 + i * 50 + 5] = b(col);
-    [packets + c8 + rb * 28 + i * 50 + 6] = b(col);
+    [packets + c8 + i * 50 + rb * 28 + 4] = b(col);
+    [packets + c8 + i * 50 + rb * 28 + 5] = b(col);
+    [packets + c8 + i * 50 + rb * 28 + 6] = b(col);
 
+    // add packets render
     packet1 = packets + c8 + i * 50 + rb * 28;
     [packet1] = w((w[packet1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
     [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (packet1 & 00ffffff));
 
+    // add texture settings
     packet2 = packets + i * 18 + rb * c;
     [packet2] = w((w[packet2] & ff000000) | (w[rdata + 80d4] & 00ffffff));
     [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (packet2 & 00ffffff));
@@ -5725,8 +5735,7 @@ system_memory_mark_removed_alloc();
 
 
 ////////////////////////////////
-// funcaaf70()
-// opens map of field if exist
+// field_map_show_while_select_pressed()
 
 // items data hardcoded in field.lib
 // field id scale x  scale z  tim id   item id  offst x  offst z  add map
@@ -5760,7 +5769,7 @@ while( true )
 }
 
 A0 = w[800ae950 + map_id * 20 + 10];
-field_check_item_in_inventory();
+field_map_check_item_in_inventory();
 if( V0 == -1 )
 {
     return;
@@ -5776,10 +5785,10 @@ A1 = 0;
 system_memory_allocate();
 S3 = V0;
 
-[SP + 20] = h(300);
-[SP + 22] = h(100);
-[SP + 24] = h(a0);
-[SP + 26] = h(100);
+[SP + 20] = h(300); // x
+[SP + 22] = h(100); // y
+[SP + 24] = h(a0);  // w
+[SP + 26] = h(100); // h
 
 A0 = SP + 20;
 A1 = S3;
@@ -5813,12 +5822,12 @@ A0 = 0;
 system_cdrom_action_sync();
 
 A0 = S0;
-A1 = 300;
-A2 = 100;
-A3 = 0;
-A4 = f6;
-A5 = 0;
-A6 = 0;
+A1 = 300; // image_x
+A2 = 100; // image_y
+A3 = 0;   // clut_x
+A4 = f6;  // clut_y
+A5 = 0;   // clut_w
+A6 = 0;   // clut_h
 field_load_tim_into_vram();
 
 A0 = S0;
@@ -5829,14 +5838,14 @@ if( w[800ae950 + map_id * 20 + 1c] == 1 )
     funcaace0();
 }
 
-funcaa458(); // alloc and create packets
+field_map_create_marker_and_map_packets();
 
 for( int i = 0; i < 10; ++i )
 {
     func73670(); // clear otagr
 
     A0 = i * 8; // color
-    funcaa850(); // update player marker and add to render
+    field_map_update_marker_add_to_render();
 
     funca5dfc(); // draw otag
 }
@@ -5846,7 +5855,7 @@ do
     func73670(); // clear otagr
 
     A0 = 80; // color
-    funcaa850(); // update player marker and add to render
+    field_map_update_marker_add_to_render();
 
     funca5dfc(); // draw otag
 
@@ -5858,7 +5867,7 @@ for( int i = 10; i > 0; --i )
     func73670(); // clear otagr
 
     A0 = i * 8; // color
-    funcaa850(); // update player marker and add to render
+    field_map_update_marker_add_to_render();
 
     funca5dfc(); // draw otag
 }
@@ -5922,7 +5931,7 @@ for( int i = 0; i < 5; ++i )
     system_gpu_create_texture_setting_packet();
 
     A0 = 800af6d4 + i * 28;
-    func43b8c();
+    system_graphic_textured_rectangle_header();
 
     [800af6d4 + i * 28 + 0008] = h(i * 80);
     [800af6d4 + i * 28 + 0004] = b(80);
@@ -6480,7 +6489,7 @@ S0 = S0 + S2;
 T1 = S0 + 0060;
 [SP + 0018] = w(T1);
 A0 = w[SP + 0018];
-800ABBF8	jal    $func43b8c
+800ABBF8	jal    $system_graphic_textured_rectangle_header
 S5 = 0;
 A1 = 0;
 A0 = w[SP + 0018];

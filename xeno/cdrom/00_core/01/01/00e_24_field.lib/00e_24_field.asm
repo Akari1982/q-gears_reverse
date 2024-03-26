@@ -2623,13 +2623,13 @@
 // funcaa324
 800AA324-800AA454
 ////////////////////////////////
-// funcaa458
+// field_map_create_marker_and_map_packets
 800AA458-800AA7FC
 ////////////////////////////////
-// field_check_item_in_inventory
+// field_map_check_item_in_inventory
 800AA800-800AA84C
 ////////////////////////////////
-// funcaa850
+// field_map_update_marker_add_to_render
 800AA850-800AAC1C
 ////////////////////////////////
 // funcaac20
@@ -2638,7 +2638,7 @@
 // funcaace0
 800AACE0-800AAF6C
 ////////////////////////////////
-// funcaaf70
+// field_map_show_while_select_pressed
 800AAF70-800AB1EC
 ////////////////////////////////
 // funcab1f0
