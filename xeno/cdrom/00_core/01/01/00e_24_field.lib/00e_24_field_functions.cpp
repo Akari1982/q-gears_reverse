@@ -5728,7 +5728,7 @@ system_memory_mark_removed_alloc();
 // funcaaf70()
 // opens map of field if exist
 
-// items data hardcoded in exe
+// items data hardcoded in field.lib
 // field id scale x  scale z  tim id   item id  offst x  offst z  add map
 // EF000000 8B0A0000 720A0000 03000000 61000000 A0000000 70000000 00000000 // kislev sewer
 // F0000000 8B0A0000 720A0000 04000000 61000000 A8000000 87000000 00000000 // kislev sewer
@@ -5829,7 +5829,7 @@ if( w[800ae950 + map_id * 20 + 1c] == 1 )
     funcaace0();
 }
 
-funcaa458();
+funcaa458(); // alloc and create packets
 
 for( int i = 0; i < 10; ++i )
 {
