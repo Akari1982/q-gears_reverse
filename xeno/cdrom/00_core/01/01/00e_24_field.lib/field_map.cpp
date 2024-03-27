@@ -1,5 +1,5 @@
 ////////////////////////////////
-// field_map_create_marker_and_map_packets()
+// field_map_init()
 
 A0 = 2f8;
 A1 = 0;
@@ -488,7 +488,7 @@ if( w[800ae950 + map_id * 20 + 1c] == 1 )
     field_map_update_image_based_on_progress();
 }
 
-field_map_create_marker_and_map_packets();
+field_map_init();
 
 for( int i = 0; i < 10; ++i )
 {

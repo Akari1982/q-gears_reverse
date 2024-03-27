@@ -2533,10 +2533,10 @@
 // funca7130
 800A7130-800A77E8
 ////////////////////////////////
-// field_load_0592_tim_into_ram
+// field_scifi_hud_load_tim
 800A77EC-800A7888
 ////////////////////////////////
-// funca788c
+// field_scifi_hud_deinit
 800A788C-800A78DC
 ////////////////////////////////
 // funca78e0
@@ -2545,7 +2545,7 @@
 // funca7998
 800A7998-800A8078
 ////////////////////////////////
-// funca807c
+// field_scifi_hud_init
 800A807C-800A8380
 ////////////////////////////////
 // field_particle_create_sprite_packets
@@ -2628,7 +2628,7 @@
 
 // field_map.cpp
 ////////////////////////////////
-// field_map_create_marker_and_map_packets
+// field_map_init
 800AA458-800AA7FC
 ////////////////////////////////
 // field_map_check_item_in_inventory

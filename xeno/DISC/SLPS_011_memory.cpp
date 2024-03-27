@@ -476,6 +476,19 @@ return A1 - 8;
 ////////////////////////////////
 // system_memory_set_alloc_user()
 
+// 0x0 ....
+// 0x1 END 
+// 0x2 HIG  Katsuhisa Higuchi (Battle Menu Programmer)
+// 0x3 KAZM (model data) Kazumi Kobayashi (World Map Programming)
+// 0x4 MASA Masaki Kobayashi (Gear Motion/Movie Programming)
+// 0x5 MIYA Yoshiyuki Miyagawa (Character Effect Programming)
+// 0x6 SUGI Koji Sugimoto (Polygon,3D Graphics Engine,Memory Manager,Message,Font,Controler,VSync,Kernel OS,Compress,Debugger&Tools) Library 'LibLS.LIB'
+// 0x7 SUZU (func32930() func32988()) Hidenori Suzuki (Sound Programming)
+// 0x8 YOSI Kiyoshi Yoshii (Main Programmer)
+// 0x9 SIMA Masaki Kobayashi (Gear Motion/Movie Programming)
+// 0xa ????
+// 0xb TEST
+
 [GP + 1ac] = h(A0); // user
 [80059640 + A0 * 4] = w(A1); // custom contents
 [GP + 1c0] = w(0);

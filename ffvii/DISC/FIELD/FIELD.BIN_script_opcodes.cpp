@@ -7927,83 +7927,49 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x99 RANDOM
-800CC944	lui    v0, $800a
-V0 = bu[V0 + d820];
-800CC94C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800CC954	beq    v0, zero, Lcc96c [$800cc96c]
-[SP + 0010] = w(RA);
-800CC95C	lui    a0, $800a
-A0 = A0 + 0bb8;
-800CC964	jal    field_script_debug_opcode [$800bead4]
-A1 = 0002;
 
-Lcc96c:	; 800CC96C
-800CC96C	lui    v0, $8009
-V0 = bu[V0 + 5dc8];
-800CC974	lui    v1, $8005
-V1 = bu[V1 + a630];
-800CC97C	nop
-V0 = V0 + V1;
-800CC984	lui    at, $8009
-[AT + 5dc8] = b(V0);
-800CC98C	lui    v0, $8009
-V0 = bu[V0 + 5dc8];
-A0 = 0002;
-800CC998	lui    at, $800e
-AT = AT + 0638;
-AT = AT + V0;
-A2 = bu[AT + 0000];
-800CC9A8	jal    store_memory_block_one_byte [$800bf3ac]
-A1 = 0002;
-800CC9B0	lui    v1, $8007
-V1 = bu[V1 + 22c4];
-800CC9B8	lui    v0, $8008
-V0 = V0 + 31fc;
-V1 = V1 << 01;
-V1 = V1 + V0;
-V0 = hu[V1 + 0000];
-800CC9CC	nop
-V0 = V0 + 0003;
-[V1 + 0000] = h(V0);
-V0 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800CC9E4	jr     ra 
-800CC9E8	nop
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a0bb8;
+    A1 = 2;
+    field_script_debug_opcode();
+}
+
+[80095dc8] = b(bu[80095dc8] + bu[8004a630]);
+
+A0 = 2;
+A1 = 2;
+V0 = bu[80095dc8];
+A2 = bu[800e0638 + V0];
+store_memory_block_one_byte();
+
+V1 = bu[800722c4];
+[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 3);
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0x7F RDMSD
-A0 = 0002;
-800CCA18	jal    read_memory_block_one_byte [$800bee10]
-A1 = 0002;
-A1 = V0 << 04;
-V0 = 0;
-800CCA28	lui    a0, $8007
-A0 = bu[A0 + 22c4];
-800CCA30	lui    v1, $8008
-V1 = V1 + 31fc;
-A0 = A0 << 01;
-A0 = A0 + V1;
-V1 = hu[A0 + 0000];
-A1 = A1 + 0001;
-800CCA48	lui    at, $8005
-[AT + a630] = b(A1);
-V1 = V1 + 0003;
-[A0 + 0000] = h(V1);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800CCA60	jr     ra 
-800CCA64	nop
+
+A0 = 2;
+A1 = 2;
+read_memory_block_one_byte();
+[8004a630] = b(V0 * 10 + 1);
+
+A0 = bu[800722c4];
+[800831fc + A0 * 2] = h(hu[800831fc + A0 * 2] + 3);
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xE0 BGON
+
 struct = w[8009c6e0];
 current_entity = bu[800722c4];
 

@@ -302,7 +302,7 @@ if( w[800b1738] != 0 )
 A0 = 3;
 system_memory_mark_removed_alloc_by_type();
 
-funca788c();
+field_scifi_hud_deinit();
 ////////////////////////////////
 
 

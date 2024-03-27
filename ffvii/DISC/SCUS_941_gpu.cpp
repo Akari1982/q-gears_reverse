@@ -1866,12 +1866,10 @@ return ((y << 6) | ((x >> 4) & 3f)) & ffff
 // system_add_render_packet_to_queue()
 
 ot = A0;
-buf = A1;
+packet = A1;
 
-// left size in buf and add pointer to first OT
-[buf + 0] = w((w[buf + 0] & ff000000) | (w[ot] & 00ffffff));
-// left size in OT and add pointer to buf
-[ot] = w((w[ot] & ff000000) | (buf & 00ffffff));
+[packet] = w((w[packet] & ff000000) | (w[ot] & 00ffffff));
+[ot] = w((w[ot] & ff000000) | (packet & 00ffffff));
 ////////////////////////////////
 
 

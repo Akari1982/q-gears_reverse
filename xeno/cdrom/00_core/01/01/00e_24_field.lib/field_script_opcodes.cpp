@@ -1637,8 +1637,8 @@ V0 = V0 + 0001;
 
 ////////////////////////////////
 // func875a8()
-// set HUD elements from 0aa_250.tim to render onscreen
-funca807c();
+
+field_scifi_hud_init();
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 1);

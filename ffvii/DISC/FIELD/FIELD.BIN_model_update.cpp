@@ -401,19 +401,24 @@ else if( V0 == a )
 ////////////////////////////////
 // funcab4ac()
 
-S4 = A0;
+packet = A0;
 
 for( int i = 0; i < 40; ++i )
 {
-    [800e42ee + i * 18] = h(0);
-    [800e42ea + i * 18] = h(S1 << 2);
-    [800e42e8 + i * 18] = h(S1 % 8);
+    [800e42d8 + i * 18 + 10] = h(i % 8); // wait
+    [800e42d8 + i * 18 + 12] = h(i * 4); // rnd seed
+    [800e42d8 + i * 18 + 16] = h(0); // render off
 
-    [S4 + i * 10 + 1749c + 3] = b(3);
-    [S4 + i * 10 + 1749c + 4] = b(10);
-    [S4 + i * 10 + 1749c + 5] = b(10);
-    [S4 + i * 10 + 1749c + 6] = b(10);
-    [S4 + i * 10 + 1749c + 7] = b(42);
+    A0 = packet + 1749c + i * 10;
+    func469c4(); // header for Monochrome line, opaque (0x40)
+
+    A0 = packet + 1749c + i * 10;
+    A1 = 1;
+    system_change_semi_transparency_in_packet();
+
+    [packet + 1749c + i * 10 + 4] = b(10); // r
+    [packet + 1749c + i * 10 + 5] = b(10); // g
+    [packet + 1749c + i * 10 + 6] = b(10); // b
 }
 
 A0 = 0; // tp
@@ -422,10 +427,10 @@ A2 = 0; // vram_x
 A3 = 0; // vram_y
 system_create_texture_page_settings_for_packet();
 
-A0 = S4 + 17490;
+A0 = packet + 17490;
 A1 = 0;
 A2 = 0;
-A3 = V0;
+A3 = V0 & ffff;
 A4 = 0;
 system_gpu_create_texture_setting_packet();
 ////////////////////////////////
@@ -433,287 +438,130 @@ system_gpu_create_texture_setting_packet();
 
 
 ////////////////////////////////
-// funcab5e8
+// funcab5e8()
 
-S6 = A0;
+packet = A0;
 S1 = A1;
-S0 = A2;
-S7 = A3;
-800AB61C	jal    $8003ae38
+matrix = A2;
+otag = A3;
 
-A0 = S0;
-800AB624	jal    $8003b48c
+func3ae38();
 
-800AB62C	jal    $8003b51c
-A0 = S0;
-S4 = 0;
-S5 = SP + 0014;
-V0 = 800e42d8;
-S3 = V0 + 0008;
-S2 = V0;
-S0 = 0;
+A0 = matrix;
+system_gte_set_rot_matrix();
 
-loopab650:	; 800AB650
-800AB650	lui    at, $800e
-AT = AT + 42ee;
-AT = AT + S0;
-V1 = h[AT + 0000];
-V0 = 0001;
-800AB664	bne    v1, v0, Lab6a0 [$800ab6a0]
-S0 = S0 + 0018;
-A0 = S2;
-A1 = S1 + 0008;
-A2 = SP + 0010;
-800AB678	jal    $8003bbdc
-A3 = S5;
-A0 = S3;
-A1 = S1 + 000c;
-A2 = SP + 0010;
-800AB68C	jal    $8003bbdc
-A3 = S5;
-A0 = S6;
-A1 = S1;
-system_add_render_packet_to_queue();
+A0 = matrix;
+system_gte_set_trans_matrix();
 
-Lab6a0:	; 800AB6A0
-S1 = S1 + 0010;
-S3 = S3 + 0018;
-S4 = S4 + 0001;
-V0 = S4 < 0040;
-800AB6B0	bne    v0, zero, loopab650 [$800ab650]
-S2 = S2 + 0018;
-800AB6B8	jal    $8003aed8
-800AB6BC	nop
-A0 = 00ffffff;
-A1 = ff000000;
+for( int i = 0; i < 40; ++i )
+{
+    if( h[800e42d8 + i * 18 + 16] == 1 )
+    {
+        A0 = 800e42d8 + i * 18 + 0;
+        A1 = S1 + i * 10 + 8;
+        A2 = SP + 10;
+        A3 = SP + 14;
+        system_gte_vector_perspective_transform();
 
-V1 = w[S7 + 0000];
-V0 = w[S6 + 0000];
-V1 = V1 & A1;
-V0 = V0 & A0;
-V1 = V1 | V0;
-[S7 + 0000] = w(V1);
-V0 = w[S6 + 0000];
-A0 = S7 & A0;
-V0 = V0 & A1;
-V0 = V0 | A0;
-[S6 + 0000] = w(V0);
+        A0 = 800e42d8 + i * 18 + 8;
+        A1 = S1 + i * 10 + c;
+        A2 = SP + 10;
+        A3 = SP + 14;
+        system_gte_vector_perspective_transform();
+
+        A0 = packet;
+        A1 = S1 + i * 10;
+        system_add_render_packet_to_queue();
+    }
+}
+
+func3aed8();
+
+[otag] = w((w[otag] & ff000000) | (w[packet] & 00ffffff));
+[packet] = w((w[packet] & ff000000) | (otag & 00ffffff));
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcab728
-V0 = bu[8009d70b] & 80;
+// funcab728()
 
-800AB738	bne    v0, zero, Lab75c [$800ab75c]
-V0 = 00ff;
-800AB740	lui    v0, $800e
-V0 = bu[V0 + 48d8];
-800AB748	nop
-800AB74C	beq    v0, zero, Lab778 [$800ab778]
-800AB750	addiu  v0, v0, $ffff (=-$1)
-800AB754	j      Lab770 [$800ab770]
-800AB758	nop
+if( bu[8009c6e4 + 1027] & 80 )
+{
+    if( bu[800e48d8] != ff )
+    {
+        [800e48d8] = b(bu[800e48d8] + 1);
+    }
+}
+else if( bu[800e48d8] != 0 )
+{
+    [800e48d8] = b(bu[800e48d8] - 1);
+}
 
-Lab75c:	; 800AB75C
-800AB75C	lui    v1, $800e
-V1 = bu[V1 + 48d8];
-800AB764	nop
-800AB768	beq    v1, v0, Lab778 [$800ab778]
-V0 = V1 + 0001;
+entity_id = h[800965e0]; // manual visible entity
 
-Lab770:	; 800AB770
-800AB770	lui    at, $800e
-[AT + 48d8] = b(V0);
+for( int i = 0; i < 40; ++i )
+{
+    if( h[800e42d8 + i * 18 + 10] == 0 ) // update
+    {
+        if( i < ( bu[800e48d8] / 4 ) )
+        {
+            [800e42d8 + i * 18 + 10] = h(7); // wait
+            [800e42d8 + i * 18 + 12] = h(hu[800e42d8 + i * 18 + 12] + 1); // increment random
+            [800e42d8 + i * 18 + 16] = h(1); // render on
 
-Lab778:	; 800AB778
-T4 = 0001;
-V0 = 800e42d8;
-A3 = V0 + 0010;
-T1 = V0;
-T0 = T1 + 0014;
-A2 = 0;
-V0 = bu[800e48d8];
-V1 = h[800965e0]; // manual visible entity
-T3 = V0 >> 2;
-T2 = V1 * 84;
+            rnd_seed = h[800e42d8 + i * 18 + 12];
+            rnd1 = bu[800e0638 + rnd_seed];
+            rnd2 = bu[800e0638 + ((rnd_seed * 3) & ff)];
 
-Lab7b4:	; 800AB7B4
-V0 = h[A3 + 0000];
-800AB7B8	nop
-800AB7BC	bne    v0, zero, Lab948 [$800ab948]
-V0 = T3 << 01;
-V0 = V0 + T3;
-V0 = V0 << 03;
-800AB7CC	lui    v1, $800e
-V1 = V1 + 42e8;
-V0 = V0 + V1;
-V0 = A3 < V0;
-800AB7DC	beq    v0, zero, Lab934 [$800ab934]
-800AB7E0	nop
-800AB7E4	lui    at, $800e
-AT = AT + 42ea;
-AT = AT + A2;
-V0 = hu[AT + 0000];
-800AB7F4	lui    at, $800e
-AT = AT + 42ee;
-AT = AT + A2;
-[AT + 0000] = h(T4);
-V0 = V0 + 0001;
-[T1 + 0012] = h(V0);
-V0 = 0007;
-[A3 + 0000] = h(V0);
-800AB814	lui    at, $800e
-AT = AT + 42ea;
-AT = AT + A2;
-V0 = h[AT + 0000];
-V1 = w[80074ea4 + T2 + c] >> c; // X
-A1 = V0 << 01;
-A1 = A1 + V0;
-V0 = bu[800e42ea + A2];
-A0 = bu[800e0638 + V0];
-A1 = A1 & 00ff;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V1 = V1 + V0;
-800AB874	addiu  v1, v1, $fa00 (=-$600)
-800AB878	lui    at, $800e
-AT = AT + 42e0;
-AT = AT + A2;
-[AT + 0000] = h(V1);
-800AB888	lui    at, $8007
-AT = AT + 4eb4;
-AT = AT + T2;
-V1 = w[AT + 0000];
-800AB898	lui    at, $800e
-AT = AT + 0638;
-AT = AT + A1;
-A0 = bu[AT + 0000];
-V1 = V1 >> 0c;
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V1 = V1 + V0;
-800AB8BC	lui    at, $800e
-AT = AT + 42e0;
-AT = AT + A2;
-V0 = hu[AT + 0000];
-800AB8CC	addiu  v1, v1, $fa00 (=-$600)
-800AB8D0	lui    at, $800e
-AT = AT + 42e2;
-AT = AT + A2;
-[AT + 0000] = h(V1);
-800AB8E0	lui    at, $800e
-AT = AT + 42e2;
-AT = AT + A2;
-V1 = hu[AT + 0000];
-800AB8F0	lui    at, $800e
-AT = AT + 42d8;
-AT = AT + A2;
-[AT + 0000] = h(V0);
-800AB900	lui    at, $800e
-AT = AT + 42da;
-AT = AT + A2;
-[AT + 0000] = h(V1);
-800AB910	lui    at, $8007
-AT = AT + 4eb8;
-AT = AT + T2;
-V0 = w[AT + 0000];
-800AB920	nop
-V0 = V0 >> 0c;
-800AB928	addiu  v0, v0, $fd00 (=-$300)
-800AB92C	j      Lab948 [$800ab948]
-[T0 + 0000] = h(V0);
+            [800e42d8 + i * 18 + 8] = h((w[80074ea4 + entity_id * 84 + c] >> c) + rnd1 * c - 600); // x2
+            [800e42d8 + i * 18 + a] = h((w[80074ea4 + entity_id * 84 + 10] >> c) + rnd2 * c - 600); // y2
+            // copy x and y
+            [800e42d8 + i * 18 + 0] = h(hu[800e42d8 + i * 18 + 8]); // x
+            [800e42d8 + i * 18 + 2] = h(hu[800e42d8 + i * 18 + a]); // y
 
-Lab934:	; 800AB934
-[A3 + 0000] = h(T4);
-800AB938	lui    at, $800e
-AT = AT + 42ee;
-AT = AT + A2;
-[AT + 0000] = h(0);
+            [800e42d8 + i * 18 + 14] = h((w[80074ea4 + entity_id * 84 + 14] >> c) - 300); // Z
+        }
+        else
+        {
+            [800e42d8 + i * 18 + 10] = h(1); // wait
+            [800e42d8 + i * 18 + 16] = h(0); // render off
+        }
+    }
 
-Lab948:	; 800AB948
-V0 = hu[A3 + 0000];
-V1 = hu[T0 + 0000];
-V0 = V0 & 0007;
-V0 = V0 << 07;
-V1 = V1 + V0;
-800AB95C	lui    at, $800e
-AT = AT + 42e4;
-AT = AT + A2;
-[AT + 0000] = h(V1);
-V0 = hu[A3 + 0000];
-V1 = hu[T0 + 0000];
-T0 = T0 + 0018;
-V0 = V0 & 0007;
-V0 = V0 << 07;
-V0 = V0 + 0100;
-V1 = V1 + V0;
-800AB988	lui    at, $800e
-AT = AT + 42dc;
-AT = AT + A2;
-[AT + 0000] = h(V1);
-V0 = hu[A3 + 0000];
-A3 = A3 + 0018;
-A2 = A2 + 0018;
-800AB9A4	addiu  v0, v0, $ffff (=-$1)
-[T1 + 0010] = h(V0);
-800AB9AC	lui    v0, $800e
-V0 = V0 + 48e8;
-T1 = T1 + 0018;
-V0 = A3 < V0;
-800AB9B8	bne    v0, zero, Lab7b4 [$800ab7b4]
+    [800e42d8 + i * 18 + 4] = h(hu[800e42d8 + i * 18 + 14] + (hu[800e42d8 + i * 18 + 10] & 7) * 80 + 100); // z1
+    [800e42d8 + i * 18 + c] = h(hu[800e42d8 + i * 18 + 14] + (hu[800e42d8 + i * 18 + 10] & 7) * 80); // z2
+
+    [800e42d8 + i * 18 + 10] = h(hu[800e42d8 + i * 18 + 10] - 1); // wait
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcab9c8
-800AB9C8
-V0 = bu[8009c540];
-800AB9D0	nop
-V0 = V0 + 0001;
-[8009c540] = b(V0);
+// funcab9c8()
+
+[8009c540] = b(bu[8009c540] + 1);
+
 V1 = bu[8009c540];
-800AB9E8	nop
-800AB9EC	bne    v1, zero, Laba0c [$800aba0c]
-800AB9F0	nop
-V0 = bu[8009ad2c];
-800AB9FC	nop
-V0 = V0 + 000d;
-[8009ad2c] = b(V0);
+if( V1 == 0 )
+{
+    [8009ad2c] = b(bu[8009ad2c] + d);
+}
 
-Laba0c:	; 800ABA0C
-800ABA0C	lui    at, $800e
-AT = AT + 0638;
-AT = AT + V1;
-V0 = bu[AT + 0000];
-V1 = bu[8009ad2c];
-800ABA24	nop
-V0 = V0 - V1;
-800ABA2C	jr     ra 
-V0 = V0 & 00ff;
+rnd = bu[800e0638 + V1];
+return (rnd - bu[8009ad2c]) & ff;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcaba34
-800ABA34
+// funcaba34()
+
+[80071c20] = b(bu[80071c20] + 1);
+
 V0 = bu[80071c20];
-800ABA3C	nop
-V0 = V0 + 0001;
-[80071c20] = b(V0);
-V0 = bu[80071c20];
-800ABA54	nop
-800ABA58	lui    at, $800e
-AT = AT + 0638;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-800ABA68	jr     ra 
-800ABA6C	nop
+return bu[800e0638 + V0]; // random
 ////////////////////////////////
 
 
@@ -764,7 +612,7 @@ if (V0 == 0)
         V0 = V0 + V1;
         [8007173c] = h(V0);
 
-        funcab9c8; // random?
+        funcab9c8(); // random
 
         V1 = bu[80062f1b];
         V1 = V1 & 7f;
@@ -777,7 +625,7 @@ if (V0 == 0)
             [800716d0] = b(0);
         }
 
-        funcab9c8; // random 0-ff
+        funcab9c8(); // random 0-ff
 
         A0 = hu[8007173c]; // danger counter
 
@@ -791,7 +639,7 @@ if (V0 == 0)
             [8009abf4 + 01] = b(2);
             [8007ebc8] = b(1);
 
-            funcaba34;
+            funcaba34(); // random
 
             V0 = V0 & ff;
             V1 = bu[80062f1b];
@@ -896,8 +744,10 @@ if (V0 == 0)
                 800ABDF0	nop
 
                 Labdf4:	; 800ABDF4
-                800ABDF4	jal    funcaba34 [$800aba34]
                 S0 = 0;
+
+                funcaba34(); // random
+
                 A0 = 0;
                 V0 = V0 & 00ff;
                 A2 = V0 >> 02;
@@ -941,8 +791,10 @@ if (V0 == 0)
                 800ABE98	nop
 
                 Labe9c:	; 800ABE9C
-                800ABE9C	jal    funcaba34 [$800aba34]
                 S0 = 0;
+
+                funcaba34(); // random
+
                 A0 = 0;
                 V0 = V0 & 00ff;
                 A2 = V0 >> 02;
@@ -1049,11 +901,11 @@ V0 = 0002;
 800AC044	nop
 
 Lac048:	; 800AC048
-800AC048	jal    $8003ae38
+800AC048	jal    $func3ae38
 S4 = 0;
-800AC050	jal    $8003b48c
+800AC050	jal    $system_gte_set_rot_matrix
 A0 = S0;
-800AC058	jal    $8003b51c
+800AC058	jal    $system_gte_set_trans_matrix
 A0 = S0;
 800AC060	lui    s1, $00ff
 S1 = S1 | ffff;
@@ -1105,7 +957,7 @@ Lac110:	; 800AC110
 A0 = SP + 0010;
 A1 = A0;
 A2 = SP + 0018;
-800AC11C	jal    $8003bbdc
+800AC11C	jal    $system_gte_vector_perspective_transform
 A3 = SP + 001c;
 A0 = S0 << 04;
 A1 = A0 + S2;
@@ -1168,7 +1020,7 @@ A2 = SP + 0018;
 [SP + 0012] = h(V0);
 V0 = hu[V1 + 022c];
 A3 = SP + 001c;
-800AC210	jal    $8003bbdc
+800AC210	jal    $system_gte_vector_perspective_transform
 [SP + 0014] = h(V0);
 S1 = S3 + S2;
 V0 = hu[8011446c];
@@ -1220,7 +1072,7 @@ V0 = V0 >> 10;
 V0 = V0 < 000c;
 800AC2D0	bne    v0, zero, loopac1c8 [$800ac1c8]
 V0 = S4 << 10;
-800AC2D8	jal    $8003aed8
+800AC2D8	jal    $func3aed8
 800AC2DC	nop
 800AC2E0	lui    v1, $00ff
 V1 = V1 | ffff;

@@ -28,6 +28,8 @@
 80049c44 AKAO left volume table (0x100 items 0x2 bytes each)
 80049e44 AKAO right volume table (0x100 items 0x2 bytes each)
 
+8004a630 []       random seed for field.
+
 8004a68c [][][][] mask of channels with voice on (manual spu).
 8004a6a8 [][]     store reverberation depth left here.
 8004a6aa [][]     store reverberation depth right here.
@@ -691,6 +693,7 @@
     + 18 field name.
 8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
 
+
 8009c6e4 savemap start
     +0054          savemap character name data (0x84 size).
         +00 []       character id.
@@ -778,6 +781,7 @@
     +0fa6
     +0fa2 []       set id from here as world map to load (planet, underwater, snowfield)
     +0fa4 savemap memory bank 7/f start
+        +83 (+1027) []       used to draw some lines.
     +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
     +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
     +10d8 []       battle speed.

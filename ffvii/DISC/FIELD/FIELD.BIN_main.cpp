@@ -387,7 +387,7 @@ La1af8:	; 800A1AF8
         V0 = h[8009abf4 + 2a]; // manual model id
         [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
 
-        if( bu[8009d70b] & 80 )
+        if( bu[8009c6e4 + 1027] & 80 )
         {
             [800e48d8] = b(ff);
         }
@@ -790,13 +790,13 @@ while( true )
     A0 = S1;
     funcaab24(); // update models (animations drafts and kawai)
 
-    funcab728();
+    funcab728(); // update some debug lines
 
-    A0 = S1;
+    A0 = S1; // packet
     A1 = S1 + 1749c;
-    A2 = w[80071e40];
-    A3 = S1 + 17490;
-    800A29E4	jal    funcab5e8 [$800ab5e8]
+    A2 = w[80071e40]; // matrix
+    A3 = S1 + 17490; // otag
+    funcab5e8(); // add debug lines to render
 
     A0 = S1;
     A1 = w[80071e40];
