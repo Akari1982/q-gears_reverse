@@ -781,7 +781,8 @@
     +0fa6
     +0fa2 []       set id from here as world map to load (planet, underwater, snowfield)
     +0fa4 savemap memory bank 7/f start
-        +83 (+1027) []       used to draw some lines.
+        +83 (+1027) []       flags.
+                             0x80 - enable rain on field. If set it gradually become stronger. If unset if gradually fades away.
     +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
     +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
     +10d8 []       battle speed.

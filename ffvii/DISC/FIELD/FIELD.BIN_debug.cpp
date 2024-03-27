@@ -337,20 +337,20 @@ for( int i = 0; i < 18; ++i )
 ////////////////////////////////
 // field_debug_render()
 
-S2 = A0;
+otag = A0;
 
 if( bu[8009d824] != 0 )
 {
     funcd85c0();
 
-    V0 = h[800e1024];
-    A0 = 800e41c8 + V0 * 1c;
+    rb = h[800e1024];
+    A0 = 800e41c8 + rb * 1c;
     A1 = 7;
     system_psyq_clear_o_tag();
 
     for( int i = 0; i < 6; ++i )
     {
-        if( bu[800e08c0 + i * 17a] == 0 )
+        if( bu[800e0748 + i * 17a + 178] == 0 )
         {
             A0 = i;
             field_debug_render_page();
@@ -360,9 +360,10 @@ if( bu[8009d824] != 0 )
     [8009d824] = b(0);
 }
 
-V0 = h[800e1024];
-[800e41e0 + V0 * 1c] = w((w[800e41e0 + V0 * 1c] & ff000000) | (w[S2] & 00ffffff));
-[S2] = w((w[S2] & ff000000) | ((800e41e0 - 18 + V0 * 1c) & 00ffffff));
+rb = h[800e1024];
+packet = 800e41e0 + rb * 1c;
+[packet] = w((packet & ff000000) | (w[otag] & 00ffffff));
+[otag] = w((w[otag] & ff000000) | (packet & 00ffffff));
 ////////////////////////////////
 
 

@@ -609,11 +609,11 @@ A2 = 8010d3e0;
 A3 = 8010eb68;
 funca3020(); // we read dat background data here
 
-A0 = 800e4df0;
-funcab4ac(); // init some debug lines buffer 1
+A0 = 800e4df0; // buffer 1
+field_rain_init();
 
-A0 = 800fc68c;
-funcab4ac(); // init some debug lines buffer 2
+A0 = 800fc68c; // buffer 2
+field_rain_init();
 
 S3 = 1;
 S2 = 8009abf4;
@@ -642,7 +642,8 @@ while( true )
     A1 = 1000;
     system_psyq_clear_o_tag_r();
 
-    S0 = 8001748c + S1;
+    S0 = S1 + 1748c;
+
     A0 = S0;
     A1 = 1;
     system_psyq_clear_o_tag_r();
@@ -790,13 +791,13 @@ while( true )
     A0 = S1;
     funcaab24(); // update models (animations drafts and kawai)
 
-    funcab728(); // update some debug lines
+    field_rain_update();
 
     A0 = S1; // packet
     A1 = S1 + 1749c;
     A2 = w[80071e40]; // matrix
     A3 = S1 + 17490; // otag
-    funcab5e8(); // add debug lines to render
+    field_rain_add_to_render();
 
     A0 = S1;
     A1 = w[80071e40];

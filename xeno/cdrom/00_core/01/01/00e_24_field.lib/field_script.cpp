@@ -647,8 +647,9 @@ if( w[8004e9b0] != 0 )
 
         if( h[A1 + 124] != -1 )
         {
-            A0 = h[A1 + 124];
             [800af54c] = w(A1);
+
+            A0 = h[A1 + 124];
             system_get_aligned_filesize_by_dir_file_id();
 
             A0 = V0 + 8;
@@ -686,7 +687,7 @@ if( w[8004e9b0] != 0 )
     if( h[800b154c] != 0 ) // activate field distortion
     {
         A0 = 1;
-        set_distortion();
+        field_distortion_init();
     }
 
     A0 = 10;

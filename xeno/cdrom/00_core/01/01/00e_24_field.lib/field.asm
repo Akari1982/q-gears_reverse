@@ -2438,19 +2438,24 @@
 
 
 
-// field_functions.cpp
+// field_distortion.cpp
 ////////////////////////////////
-// clear_distortion_buffers
+// field_distortion_deinit
 800A3CAC-800A3D20
 ////////////////////////////////
-// set_distortion
+// field_distortion_init
 800A3D24-800A4198
 ////////////////////////////////
-// setup_distortion_values
+// field_distortion_settings
 800A419C-800A4280
 ////////////////////////////////
-// update_distortion
+// field_distortion_update_add_to_render
 800A4284-800A4A8C
+////////////////////////////////
+
+
+
+// field_functions.cpp
 ////////////////////////////////
 // funca4a90
 800A4A90-800A4A9C
@@ -2533,20 +2538,30 @@
 // funca7130
 800A7130-800A77E8
 ////////////////////////////////
+
+
+
+// field_scifi_hud.cpp
+////////////////////////////////
 // field_scifi_hud_load_tim
 800A77EC-800A7888
 ////////////////////////////////
 // field_scifi_hud_deinit
 800A788C-800A78DC
 ////////////////////////////////
-// funca78e0
+// field_scifi_hud_update_tex_coords
 800A78E0-800A7994
 ////////////////////////////////
-// funca7998
+// field_scifi_hud_update_add_to_render
 800A7998-800A8078
 ////////////////////////////////
 // field_scifi_hud_init
 800A807C-800A8380
+////////////////////////////////
+
+
+
+// field_functions2.cpp
 ////////////////////////////////
 // field_particle_create_sprite_packets
 800A8384-800A8588
@@ -2649,7 +2664,7 @@
 
 
 
-// field_functions2.cpp
+// field_functions3.cpp
 ////////////////////////////////
 // funcab1f0
 800AB1F0-800AB39C

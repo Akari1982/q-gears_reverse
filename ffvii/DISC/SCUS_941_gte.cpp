@@ -1297,9 +1297,9 @@ AT = T6 < 0280;
 8003AE48	bne    at, zero, L3ae74 [$8003ae74]
 8003AE4C	lui    at, $8005
 [AT + b988] = w(RA);
-8003AE54	lui    a0, $8005
-8003AE58	jal    system_bios_printf [$80042dc8]
-8003AE5C	addiu  a0, a0, $bc18 (=-$43e8)
+A0 = 8004bc18; // "Error: Can't push matrix,stack(max 20) is full!\n"
+system_bios_printf();
+
 8003AE60	lui    ra, $8005
 RA = w[RA + b988];
 8003AE68	nop
@@ -1341,9 +1341,9 @@ T6 = w[T6 + b994];
 8003AEE4	bgtz   t6, L3af10 [$8003af10]
 8003AEE8	lui    at, $8005
 [AT + b988] = w(RA);
-8003AEF0	lui    a0, $8005
-8003AEF4	jal    system_bios_printf [$80042dc8]
-8003AEF8	addiu  a0, a0, $bc49 (=-$43b7)
+A0 = 8004bc49; // "Error: Can't pop matrix,stack is empty!\n"
+system_bios_printf();
+
 8003AEFC	lui    ra, $8005
 RA = w[RA + b988];
 8003AF04	nop

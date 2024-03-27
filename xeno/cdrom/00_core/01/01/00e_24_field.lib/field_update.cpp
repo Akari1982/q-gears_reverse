@@ -178,12 +178,12 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
     func281468(); // add debug elements to render
 }
 
-update_distortion();
+field_distortion_update_add_to_render();
 
 SP = SP + 4;
 SP = w[SP];
 
-funca7998(); // render texture aa.tim from 04 00 effect
+field_scifi_hud_update_add_to_render();
 
 80074CE0	jal    func74b14 [$80074b14]
 

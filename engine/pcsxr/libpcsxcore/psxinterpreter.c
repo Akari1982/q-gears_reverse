@@ -707,19 +707,43 @@ void psxJAL()
 {
     psxMemWrite32(0x80010000, 0);
 
+    // FFVII DEBUG
+    //psxMemWrite8(0x8009d820, 0xff);
+
     if (0) {}
+
     else if( _JumpTarget_ == 0x800AAF70) // call given func when SELECT is pressed instead of map
      {
         _SetLink(31);
         doBranch(0x800a807c);
-        GPU_displayText("CALL THAT FUNC");
+        GPU_displayText("CALL XENO FUNC");
      }
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }
     //else if( _JumpTarget_ == 0x8003c36c ) { execI(); P_Xeno_System_SoundUpdateBaseValues(); }
     //else if (_JumpTarget_ == 0x8003c590) { execI(); P_Xeno_System_SoundUpdateSequence(); }
 
+    // FFVII DEBUG
+    //else if (_JumpTarget_ == 0x800AB5E8)
+    //{
+    //
+    //
+    //    psxMemWrite8(0x800e0748 + 0 * 0x17a + 0x178, 0);
+    //    psxMemWrite8(0x800e0748 + 1 * 0x17a + 0x178, 0);
+    //    psxMemWrite8(0x800e0748 + 2 * 0x17a + 0x178, 0);
+    //    psxMemWrite8(0x800e0748 + 3 * 0x17a + 0x178, 0);
+    //    psxMemWrite8(0x800e0748 + 4 * 0x17a + 0x178, 0);
+    //    psxMemWrite8(0x800e0748 + 5 * 0x17a + 0x178, 0);
+    //
+    //    psxMemWrite8(0x80071c08, 5);
+    //
+    //    psxRegs.GPR.n.a0 = psxRegs.GPR.n.a0 + 0x1748c;
+    //
+    //    _SetLink(31);
+    //    doBranch(0x800D85FC);
+    //    GPU_displayText("CALL FFVII FUNC");
+    //}
     // FFVII Window
-    else if( _JumpTarget_ == 0x8001f1bc ) { execI(); P_FFVII_System_UIDialogAddToRender(); }
+    //else if( _JumpTarget_ == 0x8001f1bc ) { execI(); P_FFVII_System_UIDialogAddToRender(); }
     // FFVII Battle Effect
     //else if( _JumpTarget_ == 0x800bc538 ) { execI(); FFVII_Battle_EffectsUpdate(); }
     //else if( _JumpTarget_ == 0x800d29d4 ) { execI(); FFVII_Battle_ModelSimplePackets(); }

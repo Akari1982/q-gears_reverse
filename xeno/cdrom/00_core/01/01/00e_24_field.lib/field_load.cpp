@@ -224,7 +224,7 @@ if( number_of_entity > 0 )
     8006F858	bne    v0, zero, loop6f7d0 [$8006f7d0]
 }
 
-clear_distortion_buffers();
+field_distortion_deinit();
 
 A0 = w[800aefe4]; // allocated entity data
 system_memory_mark_removed_alloc();

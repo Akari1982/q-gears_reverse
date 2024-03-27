@@ -4335,7 +4335,7 @@ V1 = w[800af54c];
 // 0xFE26_ScreenDistortionSetup()
 
 A0 = 0; // read settings from script
-set_distortion();
+field_distortion_init();
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + f);
@@ -4364,7 +4364,7 @@ if( control == 0 ) // finish distortion (make it normal with number of steps and
     A4 = 0;
     A5 = 0;
     A6 = V0; // steps
-    setup_distortion_values();
+    field_distortion_settings();
 
     [800b154e] = h(1);
 
@@ -4389,7 +4389,7 @@ else if( control == 2 ) // force finish updates
 }
 else if( control == 3 ) // clear distortion and stop updates
 {
-    clear_distortion_buffers();
+    field_distortion_deinit();
 
     [A1 + cc] = h(hu[A1 + cc] + 2);
 }
