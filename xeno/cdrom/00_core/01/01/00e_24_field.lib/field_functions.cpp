@@ -1954,7 +1954,8 @@ else
 
 
 ////////////////////////////////
-// funca6c1c
+// funca6c1c()
+
 A0 = w[800b097c];
 800A6C24	nop
 V0 = A0 & 0003;
@@ -1989,7 +1990,7 @@ V0 = V1;
 
 
 ////////////////////////////////
-// funca6c9c
+// funca6c9c()
 
 A0 = a800;
 A1 = 0;
@@ -2073,11 +2074,9 @@ A0 = S5;
 
 
 ////////////////////////////////
-// funca6e20()
-// credits show on movie
-// movie renders aside of here
+// field_movie_credits()
 
-if( w[8004e9a4] == 0 ) // dont show software credits
+if( w[8004e9a4] == 0 ) // dont show credits
 {
     return;
 }
@@ -2157,7 +2156,7 @@ A2 = 0;
 A3 = 0;
 system_clear_image();
 
-funcac068(); // load credits logos to vram
+field_credits_load_logos_to_vram();
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -2173,7 +2172,7 @@ while( w[800afb74] < 18e2 )
 
     if( w[800afb74] < 18de )
     {
-        funcabe74(); // render credits
+        field_credits_update_pos_add_to_render();
     }
 
     A0 = 0;
@@ -2197,7 +2196,7 @@ while( w[800afb74] < 18e2 )
     A0 = w[800c3740] + 80f0;
     system_psyq_draw_otag();
 
-    funcac1cc(); // credits update texts
+    field_credits_update();
 
     A0 = 5;
     funca6804();
@@ -2245,14 +2244,14 @@ system_graphic_create_display_env_struct();
 [800b9b2c] = b(0);
 [800b1a38] = b(0);
 
-funcac188(); // deinit credits
+field_credits_deinit();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funca7130()
- // called when movie starts
+// called when movie starts
 
 [800ad05c] = w(0);
 [800af5b8] = w(0);
@@ -2358,7 +2357,7 @@ system_memory_mark_removed_alloc();
 
 func84d9c();
 
-funcac130(); // load logo and create packets
+field_credits_init();
 
 [800af5b8] = w(1);
 
@@ -2388,158 +2387,151 @@ S0 = 0002;
 S1 = 800c2f0e;
 
 La7360:	; 800A7360
-V1 = w[800ad04c];
-V0 = 0001;
-800A736C	beq    v1, v0, La739c [$800a739c]
-V0 = V1 < 0002;
-800A7374	beq    v0, zero, La738c [$800a738c]
-800A7378	nop
-800A737C	beq    v1, zero, La73b4 [$800a73b4]
-800A7380	nop
-800A7384	j      La7450 [$800a7450]
-800A7388	nop
+    V1 = w[800ad04c];
+    V0 = 0001;
+    800A736C	beq    v1, v0, La739c [$800a739c]
+    V0 = V1 < 0002;
+    800A7374	beq    v0, zero, La738c [$800a738c]
+    800A7378	nop
+    800A737C	beq    v1, zero, La73b4 [$800a73b4]
+    800A7380	nop
+    800A7384	j      La7450 [$800a7450]
+    800A7388	nop
 
-La738c:	; 800A738C
-800A738C	beq    v1, s0, La7434 [$800a7434]
-800A7390	nop
-800A7394	j      La7450 [$800a7450]
-800A7398	nop
+    La738c:	; 800A738C
+    800A738C	beq    v1, s0, La7434 [$800a7434]
+    800A7390	nop
+    800A7394	j      La7450 [$800a7450]
 
-La739c:	; 800A739C
-800A739C	jal    func735e0 [$800735e0]
-800A73A0	nop
-800A73A4	jal    func74fa0 [$80074fa0]
-800A73A8	nop
-800A73AC	j      La7448 [$800a7448]
-A0 = 0006;
 
-La73b4:	; 800A73B4
-A0 = 0;
-system_draw_sync();
+    La739c:	; 800A739C
+    func735e0();
 
-A0 = 0;
-system_psyq_wait_frames();
+    func74fa0();
 
-A0 = w[800c3740] + b8;
-system_psyq_put_disp_env();
+    A0 = 6;
+    800A73AC	j      La7448 [$800a7448]
 
-A0 = w[800c3740];
-system_psyq_put_draw_env();
+    La73b4:	; 800A73B4
+    A0 = 0;
+    system_draw_sync();
 
-A0 = 3;
-funca6804();
+    A0 = 0;
+    system_psyq_wait_frames();
 
-A0 = 0;
-system_draw_sync();
+    A0 = w[800c3740] + b8;
+    system_psyq_put_disp_env();
 
-A0 = 0;
-system_psyq_wait_frames();
+    A0 = w[800c3740];
+    system_psyq_put_draw_env();
 
-A0 = w[800c3740];
-A0 = A0 + 00b8;
-system_psyq_put_disp_env();
+    A0 = 3;
+    funca6804();
 
-A0 = w[800c3740];
-system_psyq_put_draw_env();
+    A0 = 0;
+    system_draw_sync();
 
-A0 = 3;
-funca6804();
+    A0 = 0;
+    system_psyq_wait_frames();
 
-funca6e20(); // called during movie render and render something
+    A0 = w[800c3740];
+    A0 = A0 + 00b8;
+    system_psyq_put_disp_env();
 
-800A742C	j      La7450 [$800a7450]
-800A7430	nop
+    A0 = w[800c3740];
+    system_psyq_put_draw_env();
 
-La7434:	; 800A7434
-800A7434	jal    func7743c [$8007743c]
-800A7438	nop
-800A743C	jal    func74bdc [$80074bdc]
-800A7440	nop
-A0 = 0009;
+    A0 = 3;
+    funca6804();
 
-La7448:	; 800A7448
-funca6804();
+    field_movie_credits();
 
-La7450:	; 800A7450
-if( w[800c1b60] == 0 ) // PC HDD MODE
-{
-    if( w[800ad04c] != S0 )
+    800A742C	j      La7450 [$800a7450]
+    800A7430	nop
+
+    La7434:	; 800A7434
+    func7743c();
+
+    func74bdc();
+
+    A0 = 9;
+
+    La7448:	; 800A7448
+    funca6804();
+
+    La7450:	; 800A7450
+    if( w[800c1b60] == 0 ) // PC HDD MODE
     {
-        field_update_buttons();
+        if( w[800ad04c] != S0 )
+        {
+            field_update_buttons();
 
-        V0 = hu[800c2dd4] & 0020;
-        800A74C4	bne    v0, zero, La758c [$800a758c]
+            V0 = hu[800c2dd4] & 0020; // repeated circle
+            800A74C4	bne    v0, zero, La758c [$800a758c]
+        }
+        else
+        {
+            V0 = hu[800c2dd4] & 0080; // repeated square
+            800A7488	bne    v0, zero, La758c [$800a758c]
+
+            V0 = w[800ad05c];
+            800A749C	bne    v0, zero, La758c [$800a758c]
+        }
+        800A74A4	j      La7538 [$800a7538]
     }
-    else
-    {
-        V0 = hu[800c2dd4] & 0080;
-        800A7488	bne    v0, zero, La758c [$800a758c]
 
-        V0 = w[800ad05c];
-        800A749C	bne    v0, zero, La758c [$800a758c]
-    }
-    800A74A4	j      La7538 [$800a7538]
-}
+    V0 = w[800ad058] & 0080;
+    800A74E4	beq    v0, zero, La7538 [$800a7538]
 
-V0 = w[800ad058];
-800A74DC	nop
-V0 = V0 & 0080;
-800A74E4	beq    v0, zero, La7538 [$800a7538]
-800A74E8	nop
-field_update_buttons();
+    field_update_buttons();
 
-V0 = hu[800c2dd4];
-800A74FC	nop
-V0 = V0 & 0020;
-800A7504	beq    v0, zero, La7538 [$800a7538]
-A0 = 0;
-800A750C	jal    $system_sound_set_cd_volume_increase
-A1 = 000a;
-S0 = 0;
+    V0 = hu[800c2dd4] & 0020; // repeated circle
+    800A7504	beq    v0, zero, La7538 [$800a7538]
 
-La7518:	; 800A7518
-800A7518	jal    $system_psyq_wait_frames
-A0 = 0;
-S0 = S0 + 0001;
-V0 = S0 < 0005;
-800A7528	beq    v0, zero, La758c [$800a758c]
-800A752C	nop
-800A7530	j      La7518 [$800a7518]
-800A7534	nop
+    A0 = 0;
+    A1 = a;
+    system_sound_set_cd_volume_increase();
 
-La7538:	; 800A7538
-V0 = w[800ad04c];
-800A7540	nop
-800A7544	bne    v0, s0, La7560 [$800a7560]
-800A7548	nop
-V0 = w[800ad05c];
-800A7554	nop
-800A7558	bne    v0, zero, La758c [$800a758c]
-800A755C	nop
+    S0 = 0;
 
-La7560:	; 800A7560
-V0 = h[S1 + 0000];
-800A7564	nop
-800A7568	bne    v0, zero, La7360 [$800a7360]
-800A756C	nop
-V1 = hu[S1 + fff4];
-V0 = w[800afb74];
-800A757C	nop
-V0 = V0 < V1;
+    La7518:	; 800A7518
+        A0 = 0;
+        system_psyq_wait_frames();
+
+        S0 = S0 + 0001;
+        V0 = S0 < 0005;
+        800A7528	beq    v0, zero, La758c [$800a758c]
+
+    800A7530	j      La7518 [$800a7518]
+
+    La7538:	; 800A7538
+    V0 = w[800ad04c];
+    800A7544	bne    v0, s0, La7560 [$800a7560]
+
+    V0 = w[800ad05c];
+    800A7558	bne    v0, zero, La758c [$800a758c]
+
+    La7560:	; 800A7560
+    V0 = h[S1 + 0000];
+    800A7568	bne    v0, zero, La7360 [$800a7360]
+
+    V1 = hu[S1 + fff4];
+    V0 = w[800afb74];
+    V0 = V0 < V1;
 800A7584	bne    v0, zero, La7360 [$800a7360]
-800A7588	nop
 
 La758c:	; 800A758C
-800A758C	jal    $system_psyq_wait_frames
 A0 = 0;
-800A7594	jal    $system_draw_sync
+system_psyq_wait_frames();
+
 A0 = 0;
-800A759C	jal    $801d43b0
+system_draw_sync();
+
+func1d43b0();
 
 field_flush_sync();
 
-A0 = w[800c3740];
-A0 = A0 + 00b8;
+A0 = w[800c3740] + b8;
 system_psyq_put_disp_env();
 
 A0 = w[800c3740];
@@ -2554,115 +2546,114 @@ system_draw_sync();
 A0 = S2;
 system_memory_mark_removed_alloc();
 
-S2 = 00e0;
 system_memory_clean_removed_alloc();
 
 funca69d0();
 
-800A75F4	jal    func76f14 [$80076f14]
-800A75F8	nop
-A0 = SP + 0010;
-A1 = 0;
-V0 = 01e0;
+func76f14();
+
 A2 = w[800ad050];
 [SP + 0010] = h(0);
-[SP + 0014] = h(V0);
-[SP + 0016] = h(S2);
+[SP + 0014] = h(1e0);
+[SP + 0016] = h(e0);
 A2 = A2 << 08;
-800A7620	jal    $system_move_image
 [SP + 0012] = h(A2);
-800A7628	jal    $system_draw_sync
+
+A0 = SP + 10;
+A1 = 0;
+system_move_image();
+
 A0 = 0;
-800A7630	jal    $system_psyq_wait_frames
+system_draw_sync();
+
 A0 = 0;
+system_psyq_wait_frames();
+
 S0 = 800b9a64;
 S1 = S0 + 00b8;
 [800c3740] = w(S0);
-800A764C	jal    $system_psyq_put_disp_env
-A0 = S1;
-A0 = w[800c3740];
-800A765C	jal    system_psyq_put_draw_env
-800A7660	nop
-V1 = w[800ad04c];
-V0 = 0002;
-800A7670	beq    v1, v0, La7680 [$800a7680]
-800A7674	nop
-800A7678	jal    funca6c9c [$800a6c9c]
-A0 = 0;
 
-La7680:	; 800A7680
-800A7680	jal    $system_psyq_wait_frames
-A0 = 0;
-V0 = 800b1a39;
-800A7690	addiu  a0, v0, $ffef (=-$11)
-[V0 + 0000] = b(0);
-800A7698	addiu  v0, v0, $ff37 (=-$c9)
-[800c3740] = w(V0);
-800A76A4	jal    $system_psyq_put_disp_env
-800A76A8	nop
+A0 = S1;
+system_psyq_put_disp_env();
+
 A0 = w[800c3740];
-800A76B4	jal    system_psyq_put_draw_env
-800A76B8	nop
-A0 = SP + 0010;
+system_psyq_put_draw_env();
+
+if( w[800ad04c] != 2 )
+{
+    A0 = 0;
+    funca6c9c();
+}
+
+A0 = 0;
+system_psyq_wait_frames();
+
+[800b1a39] = b(0);
+[800c3740] = w(800b1a39 - c9);
+
+A0 = 800b1a39 - 11;
+system_psyq_put_disp_env();
+
+A0 = w[800c3740];
+system_psyq_put_draw_env();
+
+[SP + 10] = h(0);
+[SP + 12] = h(100);
+[SP + 14] = h(140);
+[SP + 16] = h(e0);
+
+A0 = SP + 10;
 A1 = 0;
 A2 = 0;
-V0 = 0100;
-[SP + 0012] = h(V0);
-V0 = 0140;
-[SP + 0010] = h(0);
-[SP + 0014] = h(V0);
-800A76DC	jal    $system_move_image
-[SP + 0016] = h(S2);
-800A76E4	jal    $system_draw_sync
+system_move_image();
+
 A0 = 0;
-800A76EC	jal    $system_psyq_wait_frames
+system_draw_sync();
+
 A0 = 0;
+system_psyq_wait_frames();
+
 [800b9b2d] = b(0);
 [800c3740] = w(S0);
-800A7704	jal    $system_psyq_put_disp_env
+
 A0 = S1;
+system_psyq_put_disp_env();
+
 A0 = w[800c3740];
-800A7714	jal    system_psyq_put_draw_env
-800A7718	nop
-V0 = w[800af358];
-800A7724	nop
-800A7728	beq    v0, zero, La7740 [$800a7740]
-V0 = 0001;
-[800ad028] = w(V0);
-800A7738	j      La7748 [$800a7748]
-800A773C	nop
+system_psyq_put_draw_env();
 
-La7740:	; 800A7740
-[800ad028] = w(0);
+if( w[800af358] != 0 )
+{
+    [800ad028] = w(1);
+}
+else
+{
+    [800ad028] = w(0);
+}
 
-La7748:	; 800A7748
-800A7748	jal    func77144 [$80077144]
-800A774C	nop
-V1 = w[800ad04c];
-V0 = 0002;
-800A775C	beq    v1, v0, La77a8 [$800a77a8]
+func77144();
 
-A0 = 4;
-A1 = 0;
-system_cdrom2_set_dir();
+if( w[800ad04c] != 2 )
+{
+    A0 = 4;
+    A1 = 0;
+    system_cdrom2_set_dir();
 
-A0 = 8;
-A1 = 0;
-system_memory_set_alloc_user();
+    A0 = 8;
+    A1 = 0;
+    system_memory_set_alloc_user();
 
-[800ad038] = w(0);
+    [800ad038] = w(0);
 
-field_load_main_map_texture_into_vram();
+    field_load_main_map_texture_into_vram();
 
-800A7788	jal    func6fb98 [$8006fb98]
-800A778C	nop
-V0 = 0020;
-[800ad014] = w(V0);
-V0 = 0001;
-[800ad010] = w(V0);
+    func6fb98();
 
-La77a8:	; 800A77A8
-800A77A8	jal    func84d4c [$80084d4c]
+    [800ad014] = w(20);
+    [800ad010] = w(1);
+}
+
+func84d4c();
 
 [800c2f0c] = h(ff);
 [800ad04c] = w(0);

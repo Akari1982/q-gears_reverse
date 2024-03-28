@@ -348,7 +348,7 @@ if( V0 != 0 )
 
         A0 = clut_sizes;
         A1 = clut_data;
-        system_load_image(); // transfer data from pointer to a frame buffer to given rect
+        system_load_image(); // transfer data from pointer to vram to given rect
     }
 
     image_sizes = w[SP + 1c];
@@ -362,7 +362,7 @@ if( V0 != 0 )
 
     A0 = image_sizes;
     A1 = image_data;
-    system_load_image(); // transfer data from pointer to a frame buffer to given rect
+    system_load_image(); // transfer data from pointer to vram to given rect
 }
 ////////////////////////////////
 
@@ -551,12 +551,10 @@ func35c84(); // reset system buttons
 A0 = SP + 20;
 A1 = 800af5bc;
 S0 = 800b182a;
-V0 = 0020;
-[800af1e8] = w(V0);
-V0 = 0002;
-[800af51c] = w(V0);
-V0 = 03ff;
-[800b1680] = h(V0);
+
+[800af1e8] = w(20);
+[800af51c] = w(2);
+[800b1680] = h(3ff);
 [800ad0f0] = w(4);
 [800ad01c] = w(0);
 [800acfda] = h(0);

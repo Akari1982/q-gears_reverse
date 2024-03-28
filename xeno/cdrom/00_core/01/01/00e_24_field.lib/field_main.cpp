@@ -578,7 +578,7 @@ while( true )
 
             if( ( w[800ad048] != 0 ) && ( w[800acfe0] == 1 )
             {
-                funca7130(); // called when movie starts
+                funca7130(); // start movie
 
                 [800ad048] = w(0);
             }

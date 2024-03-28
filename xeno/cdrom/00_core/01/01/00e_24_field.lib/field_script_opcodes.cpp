@@ -171,7 +171,6 @@ b9 80087130
 ba 80087208
 bb 80087304
 bc 80087354
-be 800871E0
 bf 80086E1C
 c0 80086DD4
 c1 80087ADC
@@ -201,7 +200,6 @@ db 800967D4
 dc 80086998
 dd 80086784
 de 8008671C
-df 800863F0
 e0 800863B4
 
 80086018	jalr   v0 ra
@@ -441,7 +439,7 @@ V0 = V0 + 0002;
 
 
 ////////////////////////////////
-// func863f0()
+// field_script_opFEDF()
 
 A0 = 1;
 read_two_bytes_with_80();
@@ -1375,9 +1373,9 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func871e0()
+// field_script_opFEBE_enable_credits()
 
-[8004e9a4] = w(1);
+[8004e9a4] = w(1); // enables credits in movie
 
 V0 = w[800af54c];
 [V0 + cc] = h(hu[V0 + cc] + 1);

@@ -712,7 +712,7 @@ void psxJAL()
 
     if (0) {}
 
-    else if( _JumpTarget_ == 0x800AAF70) // call given func when SELECT is pressed instead of map
+    else if( _JumpTarget_ == 0x80ab3a0) // call given func when SELECT is pressed instead of map
      {
         _SetLink(31);
         doBranch(0x800a807c);
@@ -771,7 +771,7 @@ void psxJALR()
     if (0)
     {
     }
-    //else if (temp == 0x800863f0) { execI(); GPU_displayText("CALL THAT FUNC"); }
+    else if (temp == 0x800863f0) { execI(); GPU_displayText("CALL THAT FUNC"); }
 
     //else if (temp == 0x8003cbd8) { execI(); P_Opcode81(); }
     //else if (temp == 0x8003CC34) { execI(); P_Opcode90(); }

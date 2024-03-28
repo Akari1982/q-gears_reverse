@@ -629,7 +629,7 @@
 // func863b4
 800863B4-800863EC
 ////////////////////////////////
-// func863f0
+// field_script_opFEDF
 800863F0-8008654C
 ////////////////////////////////
 // func86550
@@ -686,7 +686,7 @@
 // func87130
 80087130-800871DC
 ////////////////////////////////
-// func871e0
+// field_script_opFEBE_enable_credits
 800871E0-80087204
 ////////////////////////////////
 // func87208
@@ -2532,7 +2532,7 @@
 // funca6c9c
 800A6C9C-800A6E1C
 ////////////////////////////////
-// funca6e20
+// field_movie_credits
 800A6E20-800A712C
 ////////////////////////////////
 // funca7130
@@ -2672,35 +2672,45 @@
 // funcab3a0
 800AB3A0-800AB4B0
 ////////////////////////////////
-// funcab4b4
+
+
+
+// field_credits.cpp
+////////////////////////////////
+// field_credits_get_symbol_bitmask_from_bios
 800AB4B4-800AB510
 ////////////////////////////////
-// funcab514
+// field_credits_generate_symbol_tex
 800AB514-800AB5C4
 ////////////////////////////////
-// funcab5c8
+// field_credits_update_texture_for_row
 800AB5C8-800AB7DC
 ////////////////////////////////
-// funcab7e0
+// field_credits_load_texts_and_logos
 800AB7E0-800AB880
 ////////////////////////////////
-// funcab884
+// field_credits_create_packets
 800AB884-800ABE70
 ////////////////////////////////
-// funcabe74
+// field_credits_update_pos_add_to_render
 800ABE74-800AC064
 ////////////////////////////////
-// funcac068
+// field_credits_load_logos_to_vram
 800AC068-800AC12C
 ////////////////////////////////
-// funcac130
+// field_credits_init
 800AC130-800AC184
 ////////////////////////////////
-// funcac188
+// field_credits_deinit
 800AC188-800AC1C8
 ////////////////////////////////
-// funcac1cc
+// field_credits_update
 800AC1CC-800AC250
+////////////////////////////////
+
+
+
+// field_functions4.cpp
 ////////////////////////////////
 // read_two_bytes_signed
 800AC254-800AC28C
