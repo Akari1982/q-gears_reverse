@@ -97,242 +97,229 @@ if( h[800ad02c] != 0 )
 
 ////////////////////////////////
 // funcab4b4()
+// credits letter address??
 
-V1 = bu[A0 + 0000];
-V0 = bu[A0 + 0001];
+V1 = bu[A0 + 0];
+V0 = bu[A0 + 1];
 V1 = V1 << 08;
 V0 = V0 | V1;
 A0 = V0;
 V0 = V0 + 7ac0;
 V0 = V0 & ffff;
-V0 = V0 < 0340;
-800AB4DC	bne    v0, zero, Lab4f4 [$800ab4f4]
-V0 = 0001;
-[A1 + 0000] = w(0);
-func4043c();
+if( V0 >= 340 )
+{
+    [A1 + 0000] = w(0);
 
-800AB4EC	j      Lab504 [$800ab504]
-800AB4F0	nop
-
-Lab4f4:	; 800AB4F4
-[A1 + 0000] = w(V0);
-V0 = ffff7ac0;
-V0 = A0 + V0;
-
-Lab504:	; 800AB504
+    system_bios_krom_2_raw_add();
+}
+else
+{
+    [A1 + 0000] = w(1);
+    V0 = A0 + ffff7ac0; // -8540
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcab514
-800AB514	addiu  v0, zero, $ffff (=-$1)
-800AB518	bne    a1, v0, Lab540 [$800ab540]
+// funcab514()
+// something related with credits text
+
 A3 = 0;
-V0 = 00ff;
-A3 = 011f;
 
-loopab528:	; 800AB528
-[A0 + 0000] = b(V0);
-800AB52C	addiu  a3, a3, $ffff (=-$1)
-800AB530	bgez   a3, loopab528 [$800ab528]
-A0 = A0 + 0001;
-800AB538	j      Lab5c0 [$800ab5c0]
-800AB53C	nop
+if( A1 == -1 )
+{
+    V0 = ff;
+    A3 = 11f;
 
-Lab540:	; 800AB540
-V1 = 0007;
-A2 = A0;
+    loopab528:	; 800AB528
+        [A0 + 0000] = b(V0);
+        800AB52C	addiu  a3, a3, $ffff (=-$1)
+        A0 = A0 + 0001;
+    800AB530	bgez   a3, loopab528 [$800ab528]
+}
+else
+{
+    Lab540:	; 800AB540
+        V1 = 0007;
+        A2 = A0;
 
-loopab548:	; 800AB548
-A2 = A2 + 0001;
-V0 = hu[A1 + 0000];
-A0 = A0 + 0001;
-V0 = V0 >> V1;
-V0 = V0 & 0001;
-V0 = 0 - V0;
-800AB560	addiu  v1, v1, $ffff (=-$1)
-800AB564	bgez   v1, loopab548 [$800ab548]
-[A2 + ffff] = b(V0);
-V1 = 000f;
-A2 = A0;
+        loopab548:	; 800AB548
+            A2 = A2 + 0001;
+            V0 = hu[A1 + 0000];
+            A0 = A0 + 0001;
+            V0 = V0 >> V1;
+            V0 = V0 & 0001;
+            V0 = 0 - V0;
+            800AB560	addiu  v1, v1, $ffff (=-$1)
+            [A2 + ffff] = b(V0);
+        800AB564	bgez   v1, loopab548 [$800ab548]
 
-loopab574:	; 800AB574
-A2 = A2 + 0001;
-V0 = hu[A1 + 0000];
-800AB57C	nop
-V0 = V0 >> V1;
-V0 = V0 & 0001;
-V0 = 0 - V0;
-800AB58C	addiu  v1, v1, $ffff (=-$1)
-[A2 + ffff] = b(V0);
-V0 = V1 < 0008;
-800AB598	beq    v0, zero, loopab574 [$800ab574]
-A0 = A0 + 0001;
-[A0 + 0000] = b(0);
-A0 = A0 + 0001;
-[A0 + 0000] = b(0);
-A0 = A0 + 0001;
-A3 = A3 + 0001;
-V0 = A3 < 000f;
-800AB5B8	bne    v0, zero, Lab540 [$800ab540]
-A1 = A1 + 0002;
+        V1 = 000f;
+        A2 = A0;
 
-Lab5c0:	; 800AB5C0
-800AB5C0	jr     ra 
-800AB5C4	nop
+        loopab574:	; 800AB574
+            A2 = A2 + 0001;
+            V0 = hu[A1 + 0000];
+            800AB57C	nop
+            V0 = V0 >> V1;
+            V0 = V0 & 0001;
+            V0 = 0 - V0;
+            800AB58C	addiu  v1, v1, $ffff (=-$1)
+            [A2 + ffff] = b(V0);
+            A0 = A0 + 0001;
+            V0 = V1 < 0008;
+        800AB598	beq    v0, zero, loopab574 [$800ab574]
+
+        [A0 + 0000] = b(0);
+        A0 = A0 + 0001;
+        [A0 + 0000] = b(0);
+        A0 = A0 + 0001;
+        A1 = A1 + 0002;
+        A3 = A3 + 0001;
+        V0 = A3 < 000f;
+    800AB5B8	bne    v0, zero, Lab540 [$800ab540]
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcab5c8();
+// render credits text
 
 S5 = A0;
 S4 = A1;
 S3 = A2;
 V1 = SP + 0140;
 A1 = SP + 0180;
-V0 = 0009;
-[SP + 0134] = h(V0);
-V0 = 0010;
-[SP + 0136] = h(V0);
-V0 = S3 << 04;
-[SP + 0132] = h(V0);
+[SP + 134] = h(9);
+[SP + 136] = h(10);
+[SP + 132] = h(S3 << 04);
 
 loopab614:	; 800AB614
-V0 = bu[A0 + 0000];
-800AB618	nop
-[V1 + 0000] = b(V0);
-V1 = V1 + 0001;
-V0 = V1 < A1;
+    [V1] = b(bu[A0]);
+    A0 = A0 + 1;
+    V1 = V1 + 1;
+    V0 = V1 < A1;
 800AB628	bne    v0, zero, loopab614 [$800ab614]
-A0 = A0 + 0001;
+
 V0 = 011f;
 V1 = SP + 012f;
 
 loopab638:	; 800AB638
-[V1 + 0000] = b(0);
-800AB63C	addiu  v0, v0, $ffff (=-$1)
+    [V1 + 0000] = b(0);
+    800AB63C	addiu  v0, v0, $ffff (=-$1)
+    800AB644	addiu  v1, v1, $ffff (=-$1)
 800AB640	bgez   v0, loopab638 [$800ab638]
-800AB644	addiu  v1, v1, $ffff (=-$1)
-V0 = w[800aec54];
-800AB650	nop
-800AB654	bgtz   v0, Lab66c [$800ab66c]
+
 S2 = 0;
-800AB65C	j      Lab74c [$800ab74c]
-S1 = 0;
-
-loopab664:	; 800AB664
-800AB664	j      Lab74c [$800ab74c]
-S2 = S2 + 0001;
-
-Lab66c:	; 800AB66C
 S1 = 0;
 S0 = S4;
 
-loopab674:	; 800AB674
-V0 = SP + 0140;
-A0 = V0 + S2;
-V1 = bu[A0 + 0000];
-V0 = 000d;
-800AB684	beq    v1, v0, loopab664 [$800ab664]
-800AB688	nop
-800AB68C	jal    funcab4b4 [$800ab4b4]
-A1 = SP + 0180;
-A3 = V0;
-V1 = w[SP + 0180];
-V0 = 0001;
-800AB6A0	bne    v1, v0, Lab718 [$800ab718]
-S2 = S2 + 0002;
-V0 = 92492493;
-800AB6B0	mult   a3, v0
-A0 = SP + 0138;
-A1 = S0;
-V0 = 0009;
-[SP + 013c] = h(V0);
-V0 = 0010;
-[SP + 013e] = h(V0);
-V0 = A3 >> 1f;
-800AB6D0	mfhi   t0
-A2 = T0 + A3;
-A2 = A2 >> 02;
-A2 = A2 - V0;
-V1 = A2 << 03;
-V1 = V1 - A2;
-V1 = A3 - V1;
-V0 = V1 << 03;
-V0 = V0 + V1;
-V0 = V0 + 0380;
-A2 = A2 << 04;
-A2 = A2 + 0100;
-[SP + 013a] = h(A2);
-A2 = S3 << 04;
-800AB708	jal    $system_move_image
-[SP + 0138] = h(V0);
-800AB710	j      Lab734 [$800ab734]
-800AB714	nop
+if( w[800aec54] > 0 ) // credits exist
+{
+    for( ; S1 < 1c; ++S1 )
+    {
+        V0 = SP + 0140;
+        A0 = V0 + S2;
+        V1 = bu[A0 + 0000];
+        if( V1 == d )
+        {
+            S2 = S2 + 1;
+            break;
+        }
 
-Lab718:	; 800AB718
-A0 = SP + 0010;
-800AB71C	jal    funcab514 [$800ab514]
-A1 = A3;
-[SP + 0130] = h(S0);
-A0 = SP + 0130;
-800AB72C	jal    $system_load_image
-A1 = SP + 0010;
+        A1 = SP + 180;
+        funcab4b4();
+        A3 = V0;
 
-Lab734:	; 800AB734
-800AB734	jal    $system_draw_sync
-A0 = 0;
-S1 = S1 + 0001;
-V0 = S1 < 001c;
-800AB744	bne    v0, zero, loopab674 [$800ab674]
-S0 = S0 + 0009;
+        if( w[SP + 180] == 1 )
+        {
+            V0 = 92492493;
+            800AB6B0	mult   a3, v0
+            A0 = SP + 0138;
+            A1 = S0;
+            V0 = 0009;
+            [SP + 013c] = h(V0);
+            V0 = 0010;
+            [SP + 013e] = h(V0);
+            V0 = A3 >> 1f;
+            800AB6D0	mfhi   t0
+            A2 = T0 + A3;
+            A2 = A2 >> 02;
+            A2 = A2 - V0;
+            V1 = A2 << 03;
+            V1 = V1 - A2;
+            V1 = A3 - V1;
+            V0 = V1 << 03;
+            V0 = V0 + V1;
+            V0 = V0 + 0380;
+            A2 = A2 << 04;
+            A2 = A2 + 0100;
+            [SP + 13a] = h(A2);
+            A2 = S3 << 04;
+            [SP + 138] = h(V0);
+            system_move_image();
+        }
+        else
+        {
+            A0 = SP + 10;
+            A1 = A3;
+            funcab514();
 
-Lab74c:	; 800AB74C
-V0 = 011f;
-V1 = SP + 012f;
+            [SP + 130] = h(S0);
+
+            A0 = SP + 130;
+            A1 = SP + 10;
+            system_load_image();
+        }
+
+        A0 = 0;
+        system_draw_sync();
+
+        S2 = S2 + 2;
+        S0 = S0 + 9;
+    }
+}
+
+V0 = 11f;
+V1 = SP + 12f;
 
 loopab754:	; 800AB754
-[V1 + 0000] = b(0);
-800AB758	addiu  v0, v0, $ffff (=-$1)
+    [V1 + 0000] = b(0);
+    800AB758	addiu  v0, v0, $ffff (=-$1)
+    800AB760	addiu  v1, v1, $ffff (=-$1)
 800AB75C	bgez   v0, loopab754 [$800ab754]
-800AB760	addiu  v1, v1, $ffff (=-$1)
-V0 = S1 < 001c;
-800AB768	beq    v0, zero, Lab7a0 [$800ab7a0]
-V0 = S1 << 03;
-V0 = V0 + S1;
-S0 = V0 + S4;
 
-loopab778:	; 800AB778
-[SP + 0130] = h(S0);
-A0 = SP + 0130;
-800AB780	jal    $system_load_image
-A1 = SP + 0010;
-800AB788	jal    $system_draw_sync
-A0 = 0;
-S1 = S1 + 0001;
-V0 = S1 < 001c;
-800AB798	bne    v0, zero, loopab778 [$800ab778]
-S0 = S0 + 0009;
+for( ; S1 < 1c; ++S1 )
+{
+    [SP + 130] = h(S4 + S1 * 9);
 
-Lab7a0:	; 800AB7A0
-V1 = w[800aec54];
-V0 = S5 + S2;
-V1 = V1 - S2;
-[800aec54] = w(V1);
+    A0 = SP + 130;
+    A1 = SP + 10;
+    system_load_image();
+
+    A0 = 0;
+    system_draw_sync();
+}
+
+[800aec54] = w(w[800aec54] - S2);
+
+return S5 + S2;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcab7e0()
+// load credits texts and texture
 
 A0 = 4;
 A1 = 0;
 system_cdrom2_set_dir();
 
+// load credits
 A0 = ab;
 system_cdrom2_get_filesize_by_dir_file_id();
 [800aec54] = w(V0);
@@ -354,9 +341,9 @@ system_cdrom2_load_file_by_dir_file_id();
 A0 = 0;
 system_cdrom_action_sync();
 
+// load credits logos
 A0 = ac;
 system_get_aligned_filesize_by_dir_file_id();
-
 
 A0 = V0;
 A1 = 1;
@@ -377,477 +364,315 @@ system_cdrom_action_sync();
 
 ////////////////////////////////
 // funcab884()
+// create credits packets
 
-S0 = 800aec5c;
-A0 = S0;
-800AB8B8	jal    $80043b50
+A0 = 800aec5c;
+system_graphic_shaded_quad_header();
 
 A0 = 800aecc4;
-800AB8C8	jal    $80043b50
-800AB8CC	nop
-A0 = 0001;
-A1 = 0002;
-A2 = 03c0;
-V0 = 00ff;
-V1 = 0280;
-[800aec62] = b(V0);
-[800aec61] = b(V0);
-[800aec60] = b(V0);
-[800aec6e] = b(V0);
-[800aec6d] = b(V0);
-[800aec6c] = b(V0);
-[800aece2] = b(V0);
-[800aece1] = b(V0);
-[800aece0] = b(V0);
-[800aecee] = b(V0);
-[800aeced] = b(V0);
-[800aecec] = b(V0);
-V0 = 0018;
-[800aec7e] = h(V0);
-[800aec8a] = h(V0);
-V0 = 00c8;
-[800aec7a] = b(0);
-[800aec79] = b(0);
-[800aec78] = b(0);
-[800aec86] = b(0);
-[800aec85] = b(0);
-[800aec84] = b(0);
-[800aecca] = b(0);
-[800aecc9] = b(0);
-[800aecc8] = b(0);
-[800aecd6] = b(0);
-[800aecd5] = b(0);
-[800aecd4] = b(0);
-[800aec64] = h(0);
-[800aec66] = h(0);
-[800aec70] = h(V1);
-[800aec72] = h(0);
-[800aec7c] = h(0);
-[800aec88] = h(V1);
-[800aeccc] = h(0);
-[800aecce] = h(V0);
-[800aecda] = h(V0);
-V0 = 00e0;
-[800aece6] = h(V0);
-[800aecf2] = h(V0);
-V0 = 0002;
-[800aecd8] = h(V1);
-[800aece4] = h(0);
-[800aecf0] = h(V1);
-[800aec68] = b(0);
-[800aec69] = b(0);
-[800aec74] = b(V0);
-[800aec75] = b(0);
-[800aec80] = b(0);
-[800aec81] = b(V0);
-[S0 + 0030] = b(V0);
-[800aec8d] = b(V0);
-[800aecd0] = b(0);
-[800aecd1] = b(0);
-[800aecdc] = b(V0);
-[800aecdd] = b(0);
-[800aece8] = b(0);
-[800aece9] = b(V0);
-[800aecf4] = b(V0);
-[800aecf5] = b(V0);
-800ABAB0	jal    $system_graphic_get_texpage_by_param
-A3 = 0100;
-A0 = 0001;
-A1 = 0002;
-A2 = 03c0;
-[800aec76] = h(V0);
-800ABACC	jal    $system_graphic_get_texpage_by_param
-A3 = 0100;
+system_graphic_shaded_quad_header();
+
+// quad 1
+[800aec5c +  4] = b(ff);  // r1
+[800aec5c +  5] = b(ff);  // g1
+[800aec5c +  6] = b(ff);  // b1
+[800aec5c +  8] = h(0);   // x1
+[800aec5c +  a] = h(0);   // y1
+[800aec5c +  c] = b(0);   // u1
+[800aec5c +  d] = b(0);   // v1
+[800aec5c + 10] = b(ff);  // r2
+[800aec5c + 11] = b(ff);  // g2
+[800aec5c + 12] = b(ff);  // b2
+[800aec5c + 14] = h(280); // x2
+[800aec5c + 16] = h(0);   // y2
+[800aec5c + 18] = b(2);   // u2
+[800aec5c + 19] = b(0);   // v2
+[800aec5c + 1c] = b(0);   // r3
+[800aec5c + 1d] = b(0);   // g3
+[800aec5c + 1e] = b(0);   // b3
+[800aec5c + 20] = h(0);   // x3
+[800aec5c + 22] = h(18);  // y3
+[800aec5c + 24] = b(0);   // u3
+[800aec5c + 25] = b(2);   // v3
+[800aec5c + 28] = b(0);   // r4
+[800aec5c + 29] = b(0);   // g4
+[800aec5c + 2a] = b(0);   // b4
+[800aec5c + 2c] = h(280); // x4
+[800aec5c + 2e] = h(18);  // y4
+[800aec5c + 30] = b(2);   // u4
+[800aec5c + 31] = b(2);   // v4
+
+// quad 2
+[800aecc4 +  4] = b(0);   // r1
+[800aecc4 +  5] = b(0);   // g1
+[800aecc4 +  6] = b(0);   // b1
+[800aecc4 +  8] = h(0);   // x1
+[800aecc4 +  a] = h(c8);  // y1
+[800aecc4 +  c] = b(0);   // u1
+[800aecc4 +  d] = b(0);   // v1
+[800aecc4 + 10] = b(0);   // r2
+[800aecc4 + 11] = b(0);   // g2
+[800aecc4 + 12] = b(0);   // b2
+[800aecc4 + 14] = h(280); // x2
+[800aecc4 + 16] = h(c8);  // y2
+[800aecc4 + 18] = b(2);   // u2
+[800aecc4 + 19] = b(0);   // v2
+[800aecc4 + 1c] = b(ff);  // r3
+[800aecc4 + 1d] = b(ff);  // g3
+[800aecc4 + 1e] = b(ff);  // b3
+[800aecc4 + 20] = h(0);   // x3
+[800aecc4 + 22] = h(e0);  // y3
+[800aecc4 + 24] = b(0);   // u3
+[800aecc4 + 25] = b(2);   // v3
+[800aecc4 + 28] = b(ff);  // r4
+[800aecc4 + 29] = b(ff);  // g4
+[800aecc4 + 2a] = b(ff);  // b4
+[800aecc4 + 2c] = h(280); // x4
+[800aecc4 + 2e] = h(e0);  // y4
+[800aecc4 + 30] = b(2);   // u4
+[800aecc4 + 31] = b(2);   // v4
+
+A0 = 1;
+A1 = 2;
+A2 = 3c0;
+A3 = 100;
+system_graphic_get_texpage_by_param();
+[800aec5c + 1a] = h(V0);
+
+A0 = 1;
+A1 = 2;
+A2 = 3c0;
+A3 = 100;
+system_graphic_get_texpage_by_param();
+[800aecc4 + 1a] = h(V0);
+
 A0 = 0;
-[800aecde] = h(V0);
-800ABAE0	jal    $system_graphic_get_clut_by_param
-A1 = 01ff;
+A1 = 1ff;
+system_graphic_get_clut_by_param();
+[800aec5c + e] = h(V0);
+
 A0 = 0;
-[800aec6a] = h(V0);
-800ABAF4	jal    $system_graphic_get_clut_by_param
-A1 = 01ff;
-A0 = S0;
-[800aecd2] = h(V0);
-800ABB08	jal    $system_set_draw_packet_transparency
-A1 = 0001;
+A1 = 1ff;
+system_graphic_get_clut_by_param();
+[800aecc4 + e] = h(V0);
+
+A0 = 800aec5c;
+A1 = 1;
+system_set_draw_packet_transparency();
+
 A0 = 800aecc4;
-800ABB18	jal    $system_set_draw_packet_transparency
-A1 = 0001;
-A2 = S0 + 0034;
-V0 = S0 + 0030;
-A3 = V0;
+A1 = 1;
+system_set_draw_packet_transparency();
 
-loopabb2c:	; 800ABB2C
-V0 = w[S0 + 0000];
-V1 = w[S0 + 0004];
-A0 = w[S0 + 0008];
-A1 = w[S0 + 000c];
-[A2 + 0000] = w(V0);
-[A2 + 0004] = w(V1);
-[A2 + 0008] = w(A0);
-[A2 + 000c] = w(A1);
-S0 = S0 + 0010;
-800ABB50	bne    s0, a3, loopabb2c [$800abb2c]
-A2 = A2 + 0010;
-V0 = w[S0 + 0000];
-800ABB5C	nop
-[A2 + 0000] = w(V0);
-V0 = 800aecf8;
-A2 = V0;
-800ABB70	addiu  a3, a2, $ffcc (=-$34)
-800ABB74	addiu  t0, a2, $fffc (=-$4)
+// copy packet to buffer 2
+src = 800aec5c;
+dst = 800aec5c + 34;
+while( src != 800aec5c + 34 )
+{
+    [dst] = w(w[src]);
+    src += 4;
+    dst += 4;
+}
 
-loopabb78:	; 800ABB78
-V0 = w[A3 + 0000];
-V1 = w[A3 + 0004];
-A0 = w[A3 + 0008];
-A1 = w[A3 + 000c];
-[A2 + 0000] = w(V0);
-[A2 + 0004] = w(V1);
-[A2 + 0008] = w(A0);
-[A2 + 000c] = w(A1);
-A3 = A3 + 0010;
-800ABB9C	bne    a3, t0, loopabb78 [$800abb78]
-A2 = A2 + 0010;
-V0 = w[A3 + 0000];
-800ABBA8	nop
-[A2 + 0000] = w(V0);
+// copy packet to buffer 2
+src = 800aecc4;
+dst = 800aecc4 + 34;
+while( src != 800aecc4 + 34 )
+{
+    [dst] = w(w[src]);
+    src += 4;
+    dst += 4;
+}
+
 A0 = 1000;
-800ABBB4	jal    $system_memory_allocate
-A1 = 0001;
+A1 = 1;
+system_memory_allocate();
 [800aec44] = w(V0);
-S1 = 0;
-S2 = 0;
 
-Labbcc:	; 800ABBCC
-FP = 0;
-S7 = 0030;
-S6 = 0;
-S4 = 0300;
-S0 = w[800aec44];
-S3 = 0040;
-S0 = S0 + S2;
-T1 = S0 + 0060;
-[SP + 0018] = w(T1);
-A0 = w[SP + 0018];
-800ABBF8	jal    $system_graphic_textured_rectangle_header
-S5 = 0;
-A1 = 0;
-A0 = w[SP + 0018];
-T1 = 0080;
-[S0 + 0064] = b(T1);
-[S0 + 0065] = b(T1);
-800ABC14	jal    $system_set_draw_packet_transparency
-[S0 + 0066] = b(T1);
-A0 = 0;
-800ABC20	jal    $system_graphic_get_clut_by_param
-A1 = 01ff;
-V1 = S1 << 04;
-T1 = 0080;
-[S0 + 006e] = h(V0);
-V0 = 0010;
-[S0 + 0072] = h(V0);
-V0 = 0040;
-[S0 + 006c] = b(0);
-[S0 + 006d] = b(V1);
-[S0 + 0070] = h(T1);
-[S0 + 0068] = h(V0);
-[S0 + 006a] = h(V1);
-V0 = w[S0 + 0060];
-V1 = w[S0 + 0064];
-A0 = w[S0 + 0068];
-A1 = w[S0 + 006c];
-[S0 + 00b0] = w(V0);
-[S0 + 00b4] = w(V1);
-[S0 + 00b8] = w(A0);
-[S0 + 00bc] = w(A1);
-V0 = w[S0 + 0070];
-800ABC78	nop
-[S0 + 00c0] = w(V0);
-V0 = w[S0 + 0060];
-V1 = w[S0 + 0064];
-A0 = w[S0 + 0068];
-A1 = w[S0 + 006c];
-[S0 + 0074] = w(V0);
-[S0 + 0078] = w(V1);
-[S0 + 007c] = w(A0);
-[S0 + 0080] = w(A1);
-V0 = w[S0 + 0070];
-800ABCA4	nop
-[S0 + 0084] = w(V0);
-V0 = w[S0 + 0060];
-V1 = w[S0 + 0064];
-A0 = w[S0 + 0068];
-A1 = w[S0 + 006c];
-[S0 + 00c4] = w(V0);
-[S0 + 00c8] = w(V1);
-[S0 + 00cc] = w(A0);
-[S0 + 00d0] = w(A1);
-V0 = w[S0 + 0070];
-800ABCD0	nop
-[S0 + 00d4] = w(V0);
-V0 = w[S0 + 0060];
-V1 = w[S0 + 0064];
-A0 = w[S0 + 0068];
-A1 = w[S0 + 006c];
-[S0 + 0088] = w(V0);
-[S0 + 008c] = w(V1);
-[S0 + 0090] = w(A0);
-[S0 + 0094] = w(A1);
-V0 = w[S0 + 0070];
-800ABCFC	nop
-[S0 + 0098] = w(V0);
-V0 = w[S0 + 0060];
-V1 = w[S0 + 0064];
-A0 = w[S0 + 0068];
-A1 = w[S0 + 006c];
-[S0 + 00d8] = w(V0);
-[S0 + 00dc] = w(V1);
-[S0 + 00e0] = w(A0);
-[S0 + 00e4] = w(A1);
-V0 = w[S0 + 0070];
-800ABD28	nop
-[S0 + 00e8] = w(V0);
-V0 = w[S0 + 0060];
-V1 = w[S0 + 0064];
-A0 = w[S0 + 0068];
-A1 = w[S0 + 006c];
-[S0 + 009c] = w(V0);
-[S0 + 00a0] = w(V1);
-[S0 + 00a4] = w(A0);
-[S0 + 00a8] = w(A1);
-V0 = w[S0 + 0070];
-800ABD54	nop
-[S0 + 00ac] = w(V0);
-V0 = w[S0 + 0060];
-V1 = w[S0 + 0064];
-A0 = w[S0 + 0068];
-A1 = w[S0 + 006c];
-[S0 + 00ec] = w(V0);
-[S0 + 00f0] = w(V1);
-[S0 + 00f4] = w(A0);
-[S0 + 00f8] = w(A1);
-V0 = w[S0 + 0070];
-800ABD80	nop
-[S0 + 00fc] = w(V0);
+for( int i = 0; i < 10; ++i )
+{
+    S0 = w[800aec44] + i * 100;
 
-loopabd88:	; 800ABD88
-A0 = 0001;
-A1 = 0;
-A2 = S4;
-A3 = 0;
-V0 = w[800aec44];
-FP = FP + 0001;
-V0 = S2 + V0;
-V0 = V0 + S5;
-[V0 + 0068] = h(S3);
-800ABDB0	jal    $system_graphic_get_texpage_by_param
-[V0 + 00b8] = h(S3);
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-S3 = S3 + 0080;
-A0 = w[800aec44];
-S5 = S5 + 0014;
-[SP + 0010] = w(0);
-A0 = A0 + S2;
-800ABDDC	jal    $system_gpu_create_texture_setting_packet
-A0 = A0 + S6;
-A0 = 0001;
-A1 = 0;
-A2 = S4;
-800ABDF0	jal    $system_graphic_get_texpage_by_param
-A3 = 0;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-S6 = S6 + 000c;
-A0 = w[800aec44];
-S4 = S4 + 0040;
-[SP + 0010] = w(0);
-A0 = A0 + S2;
-800ABE1C	jal    $system_gpu_create_texture_setting_packet
-A0 = A0 + S7;
-V0 = FP < 0004;
-800ABE28	bne    v0, zero, loopabd88 [$800abd88]
-S7 = S7 + 000c;
-S1 = S1 + 0001;
-V0 = S1 < 0010;
-800ABE38	bne    v0, zero, Labbcc [$800abbcc]
-S2 = S2 + 0100;
+    A0 = S0 + 60;
+    system_graphic_textured_rectangle_header();
+
+    [S0 + 60 + 0 * 14 + 4] = b(80); // r
+    [S0 + 60 + 0 * 14 + 5] = b(80); // g
+    [S0 + 60 + 0 * 14 + 6] = b(80); // b
+
+    A0 = S0 + 60;
+    A1 = 0;
+    system_set_draw_packet_transparency();
+
+    A0 = 0;
+    A1 = 1ff;
+    system_graphic_get_clut_by_param();
+    [S0 + 60 + 0 * 14 + e] = h(V0);
+
+    [S0 + 60 + 0 * 14 +  8] = h(40);     // x
+    [S0 + 60 + 0 * 14 +  a] = h(i * 10); // y
+    [S0 + 60 + 0 * 14 +  c] = b(0);      // u
+    [S0 + 60 + 0 * 14 +  d] = b(i * 10); // v
+    [S0 + 60 + 0 * 14 + 10] = h(80);     // w
+    [S0 + 60 + 0 * 14 + 12] = h(10);     // h
+
+    // copy packets
+    [S0 + 60 + 1 * 14 +  0] = w(w[S0 + 60 +  0]);
+    [S0 + 60 + 1 * 14 +  4] = w(w[S0 + 60 +  4]);
+    [S0 + 60 + 1 * 14 +  8] = w(w[S0 + 60 +  8]);
+    [S0 + 60 + 1 * 14 +  c] = w(w[S0 + 60 +  c]);
+    [S0 + 60 + 1 * 14 + 10] = w(w[S0 + 60 + 10]);
+    [S0 + 60 + 2 * 14 +  0] = w(w[S0 + 60 +  0]);
+    [S0 + 60 + 2 * 14 +  4] = w(w[S0 + 60 +  4]);
+    [S0 + 60 + 2 * 14 +  8] = w(w[S0 + 60 +  8]);
+    [S0 + 60 + 2 * 14 +  c] = w(w[S0 + 60 +  c]);
+    [S0 + 60 + 2 * 14 + 10] = w(w[S0 + 60 + 10]);
+    [S0 + 60 + 3 * 14 +  0] = w(w[S0 + 60 +  0]);
+    [S0 + 60 + 3 * 14 +  4] = w(w[S0 + 60 +  4]);
+    [S0 + 60 + 3 * 14 +  8] = w(w[S0 + 60 +  8]);
+    [S0 + 60 + 3 * 14 +  c] = w(w[S0 + 60 +  c]);
+    [S0 + 60 + 3 * 14 + 10] = w(w[S0 + 60 + 10]);
+    [S0 + 60 + 4 * 14 +  0] = w(w[S0 + 60 +  0]);
+    [S0 + 60 + 4 * 14 +  4] = w(w[S0 + 60 +  4]);
+    [S0 + 60 + 4 * 14 +  8] = w(w[S0 + 60 +  8]);
+    [S0 + 60 + 4 * 14 +  c] = w(w[S0 + 60 +  c]);
+    [S0 + 60 + 4 * 14 + 10] = w(w[S0 + 60 + 10]);
+    [S0 + 60 + 5 * 14 +  0] = w(w[S0 + 60 +  0]);
+    [S0 + 60 + 5 * 14 +  4] = w(w[S0 + 60 +  4]);
+    [S0 + 60 + 5 * 14 +  8] = w(w[S0 + 60 +  8]);
+    [S0 + 60 + 5 * 14 +  c] = w(w[S0 + 60 +  c]);
+    [S0 + 60 + 5 * 14 + 10] = w(w[S0 + 60 + 10]);
+    [S0 + 60 + 6 * 14 +  0] = w(w[S0 + 60 +  0]);
+    [S0 + 60 + 6 * 14 +  4] = w(w[S0 + 60 +  4]);
+    [S0 + 60 + 6 * 14 +  8] = w(w[S0 + 60 +  8]);
+    [S0 + 60 + 6 * 14 +  c] = w(w[S0 + 60 +  c]);
+    [S0 + 60 + 6 * 14 + 10] = w(w[S0 + 60 + 10]);
+    [S0 + 60 + 7 * 14 +  0] = w(w[S0 + 60 +  0]);
+    [S0 + 60 + 7 * 14 +  4] = w(w[S0 + 60 +  4]);
+    [S0 + 60 + 7 * 14 +  8] = w(w[S0 + 60 +  8]);
+    [S0 + 60 + 7 * 14 +  c] = w(w[S0 + 60 +  c]);
+    [S0 + 60 + 7 * 14 + 10] = w(w[S0 + 60 + 10]);
+
+    for( int j = 0; j < 4; ++j )
+    {
+        V0 = w[800aec44] + i * 100 + j * 14;
+        [V0 + 60 + 0 * 14 + 8] = h(40 + j * 80); // x
+        [V0 + 60 + 4 * 14 + 8] = h(40 + j * 80); // x
+
+        A0 = 1;
+        A1 = 0;
+        A2 = 300 + j * 40;
+        A3 = 0;
+        system_graphic_get_texpage_by_param();
+
+        A0 = w[800aec44] + i * 100 + j * c;
+        A1 = 0;
+        A2 = 0;
+        A3 = V0 & ffff;
+        A4 = 0;
+        system_gpu_create_texture_setting_packet();
+
+        A0 = 1;
+        A1 = 0;
+        A2 = 300 + j * 40;
+        A3 = 0;
+        system_graphic_get_texpage_by_param();
+
+        A0 = w[800aec44] + i * 100 + 30 + j * c;
+        A1 = 0;
+        A2 = 0;
+        A3 = V0 & ffff;
+        A4 = 0;
+        system_gpu_create_texture_setting_packet();
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcabe74()
+// render credits?
 
-T3 = ffffff;
-T4 = ffffff;
-800ABE84	lui    t7, $ff00
-T8 = 0;
-T1 = 800aecc4;
-800ABE94	lui    t2, $ff00
-T5 = w[800aec44];
-A3 = w[800acfe0];
-T0 = w[800c3740];
-A0 = A3 << 01;
-A0 = A0 + A3;
-A0 = A0 << 02;
-A0 = A0 + A3;
-A0 = A0 << 02;
-A2 = A0 + T1;
-800ABEC8	addiu  t1, t1, $ff98 (=-$68)
-A0 = A0 + T1;
-V1 = w[A2 + 0000];
-800ABED4	lui    at, $0001
-AT = T0 + AT;
-V0 = w[AT + 80d4];
-V1 = V1 & T2;
-V0 = V0 & T3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V1 = A3 + 0001;
-V1 = V1 & 0001;
-V0 = V1 << 02;
-V0 = V0 + V1;
-T9 = V0 << 04;
-A2 = A2 & T3;
-V0 = A3 << 02;
-V0 = V0 + A3;
-800ABF10	lui    at, $0001
-AT = T0 + AT;
-A1 = w[AT + 80d4];
-T6 = V0 << 04;
-A1 = A1 & T2;
-A1 = A1 | A2;
-800ABF28	lui    at, $0001
-AT = T0 + AT;
-[AT + 80d4] = w(A1);
-V1 = w[A0 + 0000];
-A1 = A1 & T3;
-V1 = V1 & T2;
-V1 = V1 | A1;
-[A0 + 0000] = w(V1);
-800ABF48	lui    at, $0001
-AT = T0 + AT;
-V0 = w[AT + 80d4];
-A0 = A0 & T3;
-V0 = V0 & T2;
-V0 = V0 | A0;
-800ABF60	lui    at, $0001
-AT = T0 + AT;
-[AT + 80d4] = w(V0);
+rb = w[800acfe0];
+rdata = w[800c3740];
+A2 = 800aecc4 + rb * 34;
+A0 = 800aec5c + rb * 34;
 
-loopabf6c:	; 800ABF6C
-T3 = 0;
-V0 = A3 << 01;
-V0 = V0 + A3;
-V0 = V0 << 04;
-A2 = V0 + T5;
-V0 = T6 + 0060;
-T2 = T5 + V0;
-V0 = T5 + T9;
-T1 = 0;
-V0 = h[V0 + 006a];
-V1 = T5 + T6;
-800ABF98	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 & 00ff;
-[V1 + 006a] = h(V0);
-[V1 + 007e] = h(V0);
-[V1 + 0092] = h(V0);
-[V1 + 00a6] = h(V0);
+[A2] = w((w[A2] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+[rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (A2 & 00ffffff));
 
-loopabfb0:	; 800ABFB0
-A1 = T2 & T4;
-T2 = T2 + 0014;
-A0 = T6 + T5;
-A0 = T1 + A0;
-T1 = T1 + 0014;
-V0 = w[A0 + 0060];
-800ABFC8	lui    at, $0001
-AT = T0 + AT;
-V1 = w[AT + 80d4];
-V0 = V0 & T7;
-V1 = V1 & T4;
-V0 = V0 | V1;
-[A0 + 0060] = w(V0);
-800ABFE4	lui    at, $0001
-AT = T0 + AT;
-V1 = w[AT + 80d4];
-T3 = T3 + 0001;
-V1 = V1 & T7;
-V1 = V1 | A1;
-800ABFFC	lui    at, $0001
-AT = T0 + AT;
-[AT + 80d4] = w(V1);
-V0 = w[A2 + 0000];
-V1 = V1 & T4;
-V0 = V0 & T7;
-V0 = V0 | V1;
-V1 = A2 & T4;
-[A2 + 0000] = w(V0);
-800AC020	lui    at, $0001
-AT = T0 + AT;
-V0 = w[AT + 80d4];
-800AC02C	nop
-V0 = V0 & T7;
-V0 = V0 | V1;
-800AC038	lui    at, $0001
-AT = T0 + AT;
-[AT + 80d4] = w(V0);
-V0 = T3 < 0004;
-800AC048	bne    v0, zero, loopabfb0 [$800abfb0]
-A2 = A2 + 000c;
-T8 = T8 + 0100;
-V0 = T8 < 1000;
-800AC058	bne    v0, zero, loopabf6c [$800abf6c]
-T5 = T5 + 0100;
-800AC060	jr     ra 
-800AC064	nop
+[A0] = w((w[A0] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+[rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (A0 & 00ffffff));
+
+buffer = w[800aec44];
+
+for( int i = 0; i < 10; ++i )
+{
+    V0 = buffer + i * 100 + ((rb + 1) & 1) * 50;
+
+    V1 = buffer + i * 100 + rb * 50;
+    [V1 + 6a] = h((h[V0 + 6a] - 1) & ff);
+    [V1 + 7e] = h(h[V0 + 6a]);
+    [V1 + 92] = h(h[V0 + 6a]);
+    [V1 + a6] = h(h[V0 + 6a]);
+
+    A2 = buffer + i * 100 + rb * 30;
+    T2 = buffer + 60 + i * 100 + rb * 50;
+    for( int j = 0; j < 4; ++j )
+    {
+        A0 = buffer + i * 100 + j * 14 + rb * 50;
+
+        [A0 + 60] = w((w[A0 + 60] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+        [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (T2 & 00ffffff));
+
+        [A2] = w((w[A2] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+        [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (A2 & 00ffffff));
+
+        T2 = T2 + 14;
+        A2 = A2 + c;
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcac068()
+// load credits logos
 
-A1 = 0380;
-V0 = 01ff;
-A2 = 0100;
-A0 = w[800aec58];
+A0 = w[800aec58]; // credits logos
+A1 = 380;
+A2 = 100;
 A3 = 0;
-[SP + 0010] = w(V0);
-[SP + 0014] = w(0);
-[SP + 0018] = w(0);
+A4 = 1ff;
+A5 = 0;
+A6 = 0;
 field_load_tim_into_vram();
 
-800AC09C	jal    $system_draw_sync
 A0 = 0;
+system_draw_sync();
+
 A0 = w[800aec58];
-800AC0AC	jal    $system_memory_mark_removed_alloc
-800AC0B0	nop
-A0 = 0200;
-800AC0B8	jal    $system_memory_allocate
-A1 = 0001;
-800AC0C0	addiu  a0, zero, $ffff (=-$1)
-V1 = 007f;
+system_memory_mark_removed_alloc();
+
+A0 = 200;
+A1 = 1;
+system_memory_allocate();
 S0 = V0;
-V0 = S0 + 01fc;
 
-loopac0d0:	; 800AC0D0
-[V0 + 0000] = w(A0);
-800AC0D4	addiu  v1, v1, $ffff (=-$1)
-800AC0D8	bgez   v1, loopac0d0 [$800ac0d0]
-800AC0DC	addiu  v0, v0, $fffc (=-$4)
-A0 = SP + 0020;
+for( int i = 0; i < 80; ++i )
+{
+    [S0 + i * 4] = w(-1);
+}
+
+[SP + 20] = h(3c0); // x
+[SP + 22] = h(100); // y
+[SP + 24] = h(40);  // w
+[SP + 26] = h(4);   // h
+
+A0 = SP + 20;
 A1 = S0;
-
-[SP + 0020] = h(3c0);
-[SP + 0022] = h(100);
-[SP + 0024] = h(40);
-[SP + 0026] = h(4);
-
 system_load_image();
 
 A0 = 0;
@@ -861,6 +686,7 @@ system_memory_mark_removed_alloc();
 
 ////////////////////////////////
 // funcac130()
+// init credits
 
 if( w[8004e9a4] != 0 )
 {
@@ -878,6 +704,7 @@ if( w[8004e9a4] != 0 )
 
 ////////////////////////////////
 // funcac188()
+// deinit credits
 
 if( w[8004e9a4] != 0 )
 {
@@ -893,6 +720,7 @@ if( w[8004e9a4] != 0 )
 
 ////////////////////////////////
 // funcac1cc()
+// credits update text?
 
 if( w[8004e9a4] != 0 )
 {

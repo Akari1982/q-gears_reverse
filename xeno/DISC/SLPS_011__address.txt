@@ -6,7 +6,7 @@
 
 8004e998 [][][][] init with 0.
 8004e99c [][][][] init with 0.
-8004e9a4 [][][][] init with 0.
+8004e9a4 [][][][] 0 - dont show software credits
 8004e9a8 [][][][] init with 0.
 8004e9ac [][][][] init with -1. (-1 during battle load.)
 8004e9b0 [][][][] init with 0.

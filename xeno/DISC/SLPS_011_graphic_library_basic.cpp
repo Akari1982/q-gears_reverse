@@ -403,10 +403,10 @@ L43abc:	; 80043ABC
 
 
 ////////////////////////////////
-// func43b50()
+// system_graphic_shaded_quad_header()
 
 [A0 + 3] = b(c);
-[A0 + 7] = b(3c);
+[A0 + 7] = b(3c); // Shaded Textured four-point polygon, opaque, texture-blending
 ////////////////////////////////
 
 

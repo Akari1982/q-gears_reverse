@@ -43,6 +43,8 @@
 
 024f-mdec.lib
 0250-scifi_hud.tim
+0251-credits
+0252-credits_logos.tim
 0253-field_debug.lib
 
 0a22-menu.pack

@@ -255,7 +255,7 @@ for( ; i < 6d; ++i )
 // +2 [][] y
 // +4 [][] id of text coord and size
 // +6 [][] 0x00f0 - semi transparency (0-1, 1-2, other-0)
-//         0x000f - uv layout
+//         0x000f - uv layout (0-normal, 1-mirrored horizontally, 2-mirrored vertically, 3- mirrored in both axes)
 // 
 
 // texture coords and sizes hardcoded in field.lib (0x800ae03c global, 0x3eebc local)

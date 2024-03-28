@@ -220,11 +220,19 @@ SR = A0;
 80040434	addiu  t1, zero, $0045
 80040438	nop
 ////////////////////////////////
-// func4043c
-8004043C	addiu  t2, zero, $00b0
+
+
+
+////////////////////////////////
+// system_bios_krom_2_raw_add()
+// B(51h) Krom2RawAdd(shiftjis_code)
+// In: r4  = 16bit Shift-JIS character code
+// Out: r2 = address in BIOS ROM of the desired character (or -1 = error)
+// r4 should be 8140h..84BEh (charset 2), or 889Fh..9872h (charset 3).
+
+T2 = b0;
+T1 = 51;
 80040440	jr     t2 
-80040444	addiu  t1, zero, $0051
-80040448	nop
 ////////////////////////////////
 
 

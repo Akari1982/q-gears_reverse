@@ -2074,10 +2074,10 @@ A0 = S5;
 
 ////////////////////////////////
 // funca6e20()
-// called during movie render
+// credits show on movie
 // movie renders aside of here
 
-if( w[8004e9a4] == 0 )
+if( w[8004e9a4] == 0 ) // dont show software credits
 {
     return;
 }
@@ -2157,7 +2157,7 @@ A2 = 0;
 A3 = 0;
 system_clear_image();
 
-funcac068();
+funcac068(); // load credits logos to vram
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -2173,7 +2173,7 @@ while( w[800afb74] < 18e2 )
 
     if( w[800afb74] < 18de )
     {
-        funcabe74();
+        funcabe74(); // render credits
     }
 
     A0 = 0;
@@ -2197,7 +2197,7 @@ while( w[800afb74] < 18e2 )
     A0 = w[800c3740] + 80f0;
     system_psyq_draw_otag();
 
-    funcac1cc();
+    funcac1cc(); // credits update texts
 
     A0 = 5;
     funca6804();
@@ -2245,7 +2245,7 @@ system_graphic_create_display_env_struct();
 [800b9b2c] = b(0);
 [800b1a38] = b(0);
 
-funcac188();
+funcac188(); // deinit credits
 ////////////////////////////////
 
 
