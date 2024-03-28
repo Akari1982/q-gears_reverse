@@ -2561,7 +2561,7 @@
 
 
 
-// field_functions2.cpp
+// field_particle.cpp
 ////////////////////////////////
 // field_particle_create_sprite_packets
 800A8384-800A8588
@@ -2619,6 +2619,11 @@
 ////////////////////////////////
 // field_particle_sprite_init
 800A9B8C-800A9EB0
+////////////////////////////////
+
+
+
+// field_functions2.cpp
 ////////////////////////////////
 // funca9eb4
 800A9EB4-800A9F48
