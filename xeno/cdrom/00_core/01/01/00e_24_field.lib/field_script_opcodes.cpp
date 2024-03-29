@@ -189,7 +189,6 @@ cf 80092E5C
 d1 80086B20
 d2 80086B00
 d3 800869F4
-d4 800865A4
 d5 80086F34
 d6 80086FA4
 d7 8008708C
@@ -368,14 +367,14 @@ if( V1 == 0 )
 else if( V1 == 1 )
 {
     A0 = 2;
-    read_two_bytes_with_80();
+    field_script_help_read_v80();
 
     A0 = 4;
-    read_two_bytes_with_80();
+    field_script_help_read_v80();
     S0 = V0;
 
     A0 = 6;
-    read_two_bytes_with_80();
+    field_script_help_read_v80();
 
     A0 = w[800af1f0]; // current entity id in script call
     field_particle_init_default_particle();
@@ -442,7 +441,7 @@ V0 = V0 + 0002;
 // field_script_opFEDF()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 if( V0 == 0 )
 {
@@ -509,145 +508,113 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func86550
-80086550	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0001;
-[SP + 0014] = w(RA);
-8008655C	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0003;
-80086568	jal    read_two_bytes_with_80 [$800ac2c4]
+// func86550()
+
+A0 = 1;
+8008655C	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
+
+A0 = 3;
+80086568	jal    field_script_help_read_v80 [$800ac2c4]
+
 A0 = w[800af54c];
 S0 = S0 << 0c;
-V1 = hu[A0 + 00cc];
 S0 = S0 | V0;
 [A0 + 0128] = h(S0);
-V1 = V1 + 0005;
-[A0 + 00cc] = h(V1);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008659C	jr     ra 
-800865A0	nop
+[A0 + 00cc] = h(hu[A0 + 00cc] + 5);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func865a4
+// field_script_opFED4()
+
 V0 = w[800af54c];
 V1 = w[800ad0d8];
-800865B4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-V0 = hu[V0 + 00cc];
-800865CC	nop
-V0 = V0 + V1;
-V1 = bu[V0 + 0001];
-V0 = 0001;
-800865DC	beq    v1, v0, L8665c [$8008665c]
-V0 = V1 < 0002;
-800865E4	beq    v0, zero, L865fc [$800865fc]
-800865E8	nop
-800865EC	beq    v1, zero, L8661c [$8008661c]
-800865F0	nop
-800865F4	j      L86700 [$80086700]
-800865F8	nop
+V0 = hu[V0 + cc];
+V1 = bu[V1 + V0 + 1];
 
-L865fc:	; 800865FC
-V0 = 0002;
-80086600	beq    v1, v0, L8663c [$8008663c]
-80086604	nop
-V0 = 0003;
-8008660C	beq    v1, v0, L866a4 [$800866a4]
-80086610	nop
-80086614	j      L86700 [$80086700]
-80086618	nop
+if( V1 == 0 )
+{
+    funcaa0e0(); // create packets
 
-L8661c:	; 8008661C
-8008661C	jal    funcaa0e0 [$800aa0e0]
-80086620	nop
-V1 = w[800af54c];
-8008662C	nop
-V0 = hu[V1 + 00cc];
-80086634	j      L866fc [$800866fc]
-V0 = V0 + 0002;
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 2);
+}
+else if( V1 == 1 )
+{
+    A0 = 2;
+    field_script_help_read_v80();
+    id = V0;
 
-L8663c:	; 8008663C
-8008663C	jal    funcaa0b0 [$800aa0b0]
-80086640	nop
-V1 = w[800af54c];
-8008664C	nop
-V0 = hu[V1 + 00cc];
-80086654	j      L866fc [$800866fc]
-V0 = V0 + 0002;
+    A0 = 4;
+    field_script_help_read_v80();
+    x = V0;
 
-L8665c:	; 8008665C
-8008665C	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0002;
-A0 = 0004;
-80086668	jal    read_two_bytes_with_80 [$800ac2c4]
-S2 = V0;
-A0 = 0006;
-80086674	jal    read_two_bytes_with_80 [$800ac2c4]
-S1 = V0;
-A0 = 0008;
-80086680	jal    read_two_bytes_with_80 [$800ac2c4]
-S0 = V0;
-A0 = S2;
-A1 = S1;
-A2 = S0;
-A3 = V0;
-funcaa324();
+    A0 = 6;
+    field_script_help_read_v80();
+    y = V0;
 
-8008669C	j      L866e4 [$800866e4]
-800866A0	nop
+    A0 = 8;
+    field_script_help_read_v80();
+    type = V0;
 
-L866a4:	; 800866A4
-800866A4	jal    read_two_bytes_with_80 [$800ac2c4]
-A0 = 0002;
-A0 = 0004;
-800866B0	jal    read_two_bytes_with_80 [$800ac2c4]
-S2 = V0;
-A0 = 0006;
-800866BC	jal    read_two_bytes_with_80 [$800ac2c4]
-S1 = V0;
-A0 = 0008;
-800866C8	jal    read_two_bytes_with_80 [$800ac2c4]
-S0 = V0;
-A0 = S2;
-A1 = S1;
-A2 = S0;
-800866DC	jal    funcaa2a0 [$800aa2a0]
-A3 = V0;
+    A0 = id;
+    A1 = x;
+    A2 = y;
+    A3 = type;
+    funcaa324(); // render
 
-L866e4:	; 800866E4
-V1 = w[800af54c];
-800866EC	nop
-V0 = hu[V1 + 00cc];
-800866F4	nop
-V0 = V0 + 000a;
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + a);
+}
+else if( V1 == 2 )
+{
+    funcaa0b0(); // deinit
 
-L866fc:	; 800866FC
-[V1 + 00cc] = h(V0);
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 2);
+}
+else if( V1 == 3 )
+{
+    A0 = 2;
+    field_script_help_read_v80();
+    id = V0;
 
-L86700:	; 80086700
+    A0 = 4;
+    field_script_help_read_v80();
+    r = V0;
+
+    A0 = 6;
+    field_script_help_read_v80();
+    g = V0;
+
+    A0 = 8;
+    field_script_help_read_v80();
+    b = V0;
+
+    A0 = id;
+    A1 = r;
+    A2 = g;
+    A3 = b;
+    funcaa2a0(); // set color
+
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + a);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8671c
-8008671C	addiu  sp, sp, $ffe8 (=-$18)
+// func8671c()
+
 A0 = 0001;
-[SP + 0014] = w(RA);
-80086728	jal    read_two_bytes_with_80 [$800ac2c4]
-[SP + 0010] = w(S0);
+
+80086728	jal    field_script_help_read_v80 [$800ac2c4]
+
 A0 = 0003;
-80086734	jal    read_two_bytes_with_80 [$800ac2c4]
+80086734	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = w[80059a38];
 S0 = S0 << 05;
@@ -660,11 +627,6 @@ V0 = hu[A1 + 00cc];
 80086764	nop
 V0 = V0 + 0005;
 [A1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008677C	jr     ra 
-80086780	nop
 ////////////////////////////////
 
 
@@ -707,10 +669,10 @@ V0 = w[800af150];
 80086804	nop
 V0 = V0 + 0020;
 [800af150] = w(V0);
-80086814	jal    read_two_bytes_with_80 [$800ac2c4]
+80086814	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 A0 = 0004;
-80086820	jal    read_two_bytes_with_80 [$800ac2c4]
+80086820	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0;
 S2 = V0;
 S0 = S2 << 09;
@@ -729,7 +691,7 @@ V0 = 0100;
 [800af12e] = h(S1);
 [800af130] = h(V0);
 [800af132] = h(S2);
-80086888	jal    $80044770
+80086888	jal    $system_store_image
 8008688C	nop
 V1 = w[800af54c];
 80086898	nop
@@ -743,10 +705,10 @@ V0 = w[800af150];
 800868B8	nop
 V0 = V0 + 0020;
 [800af150] = w(V0);
-800868C8	jal    read_two_bytes_with_80 [$800ac2c4]
+800868C8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 A0 = 0004;
-800868D4	jal    read_two_bytes_with_80 [$800ac2c4]
+800868D4	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = 0100;
 A1 = V0;
@@ -754,7 +716,7 @@ S0 = S0 << 09;
 A2 = w[800aed50];
 A3 = w[800c2f1c];
 A2 = A2 + S0;
-800868FC	jal    $80026d54
+800868FC	jal    $func26d54
 A3 = A3 + S0;
 V1 = w[800af54c];
 8008690C	nop
@@ -768,10 +730,10 @@ L86920:	; 80086920
 
 L86928:	; 80086928
 A0 = w[800c2f1c];
-80086930	jal    $80031f0c
+80086930	jal    $system_memory_mark_removed_alloc
 80086934	nop
 A0 = w[800aed50];
-80086940	jal    $80031f0c
+80086940	jal    $system_memory_mark_removed_alloc
 80086944	nop
 V1 = w[800af54c];
 80086950	nop
@@ -786,14 +748,6 @@ L8696c:	; 8008696C
 [800af594] = w(S3);
 
 L86978:	; 80086978
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-80086990	jr     ra 
-80086994	nop
 ////////////////////////////////
 
 
@@ -803,10 +757,10 @@ SP = SP + 0028;
 80086998	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-800869A4	jal    read_two_bytes_with_80 [$800ac2c4]
+800869A4	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-800869B0	jal    read_two_bytes_with_80 [$800ac2c4]
+800869B0	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 800869B8	lui    at, $800b
 AT = AT + S0;
@@ -835,22 +789,22 @@ A0 = 0001;
 [SP + 001c] = w(S3);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-80086A10	jal    read_two_bytes_with_80 [$800ac2c4]
+80086A10	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-80086A1C	jal    read_two_bytes_with_80 [$800ac2c4]
+80086A1C	jal    field_script_help_read_v80 [$800ac2c4]
 S4 = V0;
 A0 = 0005;
-80086A28	jal    read_two_bytes_with_80 [$800ac2c4]
+80086A28	jal    field_script_help_read_v80 [$800ac2c4]
 S3 = V0;
 A0 = 0007;
-80086A34	jal    read_two_bytes_with_80 [$800ac2c4]
+80086A34	jal    field_script_help_read_v80 [$800ac2c4]
 S2 = V0;
 A0 = 0009;
-80086A40	jal    read_two_bytes_with_80 [$800ac2c4]
+80086A40	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0;
 A0 = 000b;
-80086A4C	jal    read_two_bytes_with_80 [$800ac2c4]
+80086A4C	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 S0 = S0 << 10;
 80086A58	div    s0, s2
@@ -869,12 +823,12 @@ V0 = V0 << 10;
 A0 = 000d;
 S0 = V1 >> 10;
 80086A94	mflo   v0
-80086A98	jal    read_two_bytes_unsigned [$800ac290]
+80086A98	jal    field_script_help_read_u16 [$800ac290]
 S1 = V0 >> 10;
 A0 = V0 & ffff;
 80086AA4	jal    put_bytes_to_800C2F3C [$800a2604]
 A1 = S0;
-80086AAC	jal    read_two_bytes_unsigned [$800ac290]
+80086AAC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000f;
 A0 = V0 & ffff;
 80086AB8	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -933,10 +887,10 @@ V0 = V0 + 0001;
 80086B54	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80086B60	jal    read_two_bytes_with_80 [$800ac2c4]
+80086B60	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-80086B6C	jal    read_two_bytes_with_80 [$800ac2c4]
+80086B6C	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 V1 = V0 << 02;
 V1 = V1 + V0;
@@ -990,11 +944,11 @@ SP = SP + 0018;
 // 0xFED0()
 
 A0 = 0001;
-read_two_bytes_with_80()
+field_script_help_read_v80()
 S0 = V0;
 
 A0 = 0003;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 T1 = V0;
 
 V1 = T1 << 02;
@@ -1097,7 +1051,7 @@ V1 = w[800af54c];
 // func86dd4
 80086DD4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80086DDC	jal    read_two_bytes_unsigned [$800ac290]
+80086DDC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = bu[8004fcc2];
 80086DEC	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -1147,22 +1101,22 @@ A0 = 0001;
 L86e94:	; 80086E94
 80086E94	jal    $8003785c
 A0 = 0;
-80086E9C	jal    read_two_bytes_with_80 [$800ac2c4]
+80086E9C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [8004fcbc] = b(V0);
-80086EAC	jal    read_two_bytes_with_80 [$800ac2c4]
+80086EAC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [8004fcbd] = b(V0);
-80086EBC	jal    read_two_bytes_with_80 [$800ac2c4]
+80086EBC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 [8004fcbe] = b(V0);
-80086ECC	jal    read_two_bytes_with_80 [$800ac2c4]
+80086ECC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0007;
 [8004fcbf] = b(V0);
-80086EDC	jal    read_two_bytes_with_80 [$800ac2c4]
+80086EDC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0009;
 [8004fcc0] = b(V0);
-80086EEC	jal    read_two_bytes_with_80 [$800ac2c4]
+80086EEC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000b;
 A0 = w[800af54c];
 [8004fcc1] = b(V0);
@@ -1186,14 +1140,14 @@ SP = SP + 0018;
 // func86f43
 80086F34	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80086F3C	jal    read_two_bytes_unsigned [$800ac290]
+80086F3C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[80059a38];
 80086F4C	nop
 A1 = hu[V1 + 1844];
 80086F54	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80086F5C	jal    read_two_bytes_unsigned [$800ac290]
+80086F5C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[80059a38];
 80086F6C	nop
@@ -1217,14 +1171,14 @@ SP = SP + 0018;
 // func86fa4
 80086FA4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80086FAC	jal    read_two_bytes_unsigned [$800ac290]
+80086FAC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[80059a38];
 80086FBC	nop
 A1 = hu[V1 + 184e];
 80086FC4	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80086FCC	jal    read_two_bytes_unsigned [$800ac290]
+80086FCC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[80059a38];
 80086FDC	nop
@@ -1324,28 +1278,28 @@ SP = SP + 0018;
 // func87130
 80087130	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80087138	jal    read_two_bytes_unsigned [$800ac290]
+80087138	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[80059a38];
 80087148	nop
 A1 = hu[V1 + 182c];
 80087150	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80087158	jal    read_two_bytes_unsigned [$800ac290]
+80087158	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[80059a38];
 80087168	nop
 A1 = hu[V1 + 182e];
 80087170	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80087178	jal    read_two_bytes_unsigned [$800ac290]
+80087178	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 V1 = w[80059a38];
 80087188	nop
 A1 = hu[V1 + 1830];
 80087190	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80087198	jal    read_two_bytes_unsigned [$800ac290]
+80087198	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0007;
 V1 = w[80059a38];
 800871A8	nop
@@ -1436,7 +1390,7 @@ SP = SP + 0018;
 // func87304
 80087304	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008730C	jal    read_two_bytes_unsigned [$800ac290]
+8008730C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[80059a38];
 8008731C	nop
@@ -1486,7 +1440,7 @@ SP = SP + 0018;
 // func873b4
 800873B4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800873BC	jal    read_two_bytes_with_80 [$800ac2c4]
+800873BC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -1522,7 +1476,7 @@ SP = SP + 0018;
 // func87430
 80087430	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80087438	jal    read_two_bytes_with_80 [$800ac2c4]
+80087438	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b1820] = h(V0);
@@ -1701,17 +1655,17 @@ A1 = SP + 0058;
 A2 = SP + 0060;
 800876F8	jal    $8004a3f4
 [SP + 0054] = h(V0);
-80087700	jal    read_two_bytes_unsigned [$800ac290]
+80087700	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000c;
 A1 = h[SP + 0058];
 8008770C	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80087714	jal    read_two_bytes_unsigned [$800ac290]
+80087714	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000e;
 A1 = h[SP + 005a];
 80087720	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80087728	jal    read_two_bytes_unsigned [$800ac290]
+80087728	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0010;
 A1 = h[SP + 005c];
 80087734	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -1812,7 +1766,7 @@ V0 = 0001;
 8008788C	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80087898	jal    read_two_bytes_with_80 [$800ac2c4]
+80087898	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 800878A0	jal    convert_magic_to_pc_id [$8008c510]
 A0 = V0;
@@ -1820,7 +1774,7 @@ S0 = V0;
 V0 = 00ff;
 800878B0	beq    s0, v0, L878ec [$800878ec]
 800878B4	nop
-800878B8	jal    read_two_bytes_unsigned [$800ac290]
+800878B8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = S0 << 02;
 V1 = V1 + S0;
@@ -1834,7 +1788,7 @@ A1 = bu[A0 + 030c];
 A0 = V0 & ffff;
 
 L878ec:	; 800878EC
-800878EC	jal    read_two_bytes_unsigned [$800ac290]
+800878EC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A0 = V0 & ffff;
 A1 = 00ff;
@@ -1862,10 +1816,10 @@ SP = SP + 0018;
 80087934	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80087940	jal    read_two_bytes_with_80 [$800ac2c4]
+80087940	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-8008794C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008794C	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 V1 = S0 << 02;
 V1 = V1 + S0;
@@ -1894,7 +1848,7 @@ SP = SP + 0018;
 // func879a8
 800879A8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800879B0	jal    read_two_bytes_with_80 [$800ac2c4]
+800879B0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 800879B8	jal    convert_magic_to_pc_id [$8008c510]
 A0 = V0;
@@ -1959,7 +1913,7 @@ V1 = hu[A0 + cc];
 // func87aa0
 80087AA0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80087AA8	jal    read_two_bytes_with_80 [$800ac2c4]
+80087AA8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b1680] = h(V0);
@@ -1980,7 +1934,7 @@ SP = SP + 0018;
 A0 = 0005;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-80087AEC	jal    read_two_bytes_with_80 [$800ac2c4]
+80087AEC	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 V0 = V0 << 02;
 V1 = w[800af150];
@@ -1999,14 +1953,14 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 0004];
-80087B44	jal    read_two_bytes_unsigned [$800ac290]
+80087B44	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[S0 + 007c];
 80087B50	nop
 A1 = hu[V1 + 000c];
 80087B58	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80087B60	jal    read_two_bytes_unsigned [$800ac290]
+80087B60	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A0 = V0 & ffff;
 80087B6C	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -2021,12 +1975,12 @@ V0 = 0001;
 [A0 + 000c] = h(0);
 
 L87b94:	; 80087B94
-80087B94	jal    read_two_bytes_unsigned [$800ac290]
+80087B94	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 80087BA0	jal    put_bytes_to_800C2F3C [$800a2604]
 A1 = 0;
-80087BA8	jal    read_two_bytes_unsigned [$800ac290]
+80087BA8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A0 = V0 & ffff;
 80087BB4	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -2067,7 +2021,7 @@ for( int i = 0; i < 8; ++i )
 // 0xFEC2_ParticleSystemInit???
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0;
 
 if( S0 == ff )
@@ -2076,19 +2030,19 @@ if( S0 == ff )
 }
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b1848] = w(V0); // entity id
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b184c] = w(V0); // render settings
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b1850] = w(V0);
 
 A0 = 7;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b1854] = w(V0);
 
 V1 = w[800af54c];
@@ -2136,15 +2090,15 @@ if( entity_id == -1 )
 [800b1848] = w(entity_id);
 
 A0 = 2;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b184c] = w(V0);
 
 A0 = 4;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b1850] = w(V0);
 
 A0 = 6;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b1854] = w(V0);
 
 V1 = w[800af54c];
@@ -2189,13 +2143,13 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S2 = w[V0 + 0004];
-80087EB8	jal    read_two_bytes_with_80 [$800ac2c4]
+80087EB8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = 0001;
-80087EC4	jal    read_two_bytes_with_80 [$800ac2c4]
+80087EC4	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0 & 000f;
 A0 = 0003;
-80087ED0	jal    read_two_bytes_with_80 [$800ac2c4]
+80087ED0	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 S0 = S0 >> 04;
 S0 = S0 << 08;
@@ -2253,30 +2207,30 @@ V0 = V0 + V1;
 S4 = w[V0 + 0004];
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S2 = V0 & 000f;
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0;
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 S0 = S0 >> 04;
 S0 = S0 << 08;
 S0 = S0 + V0;
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S3 = V0 & f;
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S1 = V0;
 
 A0 = 7;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 S1 = S1 >> 04;
 S1 = S1 << 08;
@@ -2348,7 +2302,7 @@ id = w[800b1858];
 S0 = 0;
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 if( V0 == 1 )
 {
@@ -2374,15 +2328,15 @@ current_pos = hu[struct_138 + cc];
 id = w[800b1858];
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + id * 78 + 24] = h(V0); // use speed for sprites
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + id * 78 + 2a] = h((V0 << 8) | hu[800af7a0 + id * 78 + 2a]); // render settings
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + id * 78 + 76] = h(V0); // rotation z
 
 [800af150] = w(w[800af150] + 4);
@@ -2471,7 +2425,7 @@ read_two_bytes_based_on_flag_01();
 // 0xFE90_ParticleInitBase()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 val = V0;
 
 [800b1858] = w(val); // particle id
@@ -2483,15 +2437,15 @@ val = V0;
 [800af7a0 + val * 78 + 76] = h(0); // rotation z
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + val * 78 + 6] = h(V0); // number of sprites
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + val * 78 + 2] = h(V0); // wait
 
 A0 = 7;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + val * 78 + 4] = h(V0); // ttl
 
 func87bf0();
@@ -2604,23 +2558,23 @@ current_pos = hu[struct_138 + cc];
 id = w[800b1858];
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + id * 78 + 56] = h(V0); // sprite wait
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + id * 78 + 58] = h(V0); // sprite ttl
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + id * 78 + 54] = h(V0); // sprite id
 
 A0 = 7;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0;
 
 A0 = 9;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800af7a0 + id * 78 + 2a] = h((V0 << 1) | S0 | w[800b184c]);
 
 [800af7a0 + id * 78 + 72] = h(w[800b1850]); // rotation x
@@ -2764,7 +2718,7 @@ loop89140:	; 80089140
     80089150	bne    v1, v0, L8916c [$8008916c]
 
     A0 = 0001;
-    80089158	jal    read_two_bytes_unsigned [$800ac290]
+    80089158	jal    field_script_help_read_u16 [$800ac290]
 
     A0 = V0 & ffff;
     80089164	j      L8918c [$8008918c]
@@ -2777,7 +2731,7 @@ loop89140:	; 80089140
 80089174	bne    v0, zero, loop89140 [$80089140]
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 
 A0 = V0 & ffff;
 A1 = 00ff;
@@ -2989,7 +2943,7 @@ SP = SP + 0020;
 // func894ec
 800894EC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800894F4	jal    read_two_bytes_with_80 [$800ac2c4]
+800894F4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b17b4] = h(V0);
@@ -3008,7 +2962,7 @@ SP = SP + 0018;
 // func89528
 80089528	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80089530	jal    read_two_bytes_with_80 [$800ac2c4]
+80089530	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 80089540	addiu  v0, v0, $ff80 (=-$80)
@@ -3044,13 +2998,13 @@ V0 = V0 + 0002;
 // func895a4
 800895A4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800895AC	jal    read_two_bytes_unsigned [$800ac290]
+800895AC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 [800af554] = h(V0);
-800895BC	jal    read_two_bytes_unsigned [$800ac290]
+800895BC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 [800af556] = h(V0);
-800895CC	jal    read_two_bytes_unsigned [$800ac290]
+800895CC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 V1 = V0;
 V0 = V1 << 10;
@@ -3060,17 +3014,17 @@ V0 = V1 + 0001;
 [800af558] = h(V0);
 
 L895f4:	; 800895F4
-800895F4	jal    read_two_bytes_unsigned [$800ac290]
+800895F4	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0007;
 [800af55a] = h(V0);
 [800af55c] = h(0);
-8008960C	jal    read_two_bytes_unsigned [$800ac290]
+8008960C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0009;
 [800af55e] = h(V0);
-8008961C	jal    read_two_bytes_unsigned [$800ac290]
+8008961C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000b;
 [800af560] = h(V0);
-8008962C	jal    read_two_bytes_unsigned [$800ac290]
+8008962C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000d;
 V1 = w[800af54c];
 [800af562] = h(V0);
@@ -3127,40 +3081,40 @@ V0 = V0 + 0008;
 // func8971c
 8008971C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80089724	jal    read_two_bytes_with_80 [$800ac2c4]
+80089724	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800af574] = b(V0);
-80089734	jal    read_two_bytes_with_80 [$800ac2c4]
+80089734	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [800af575] = b(V0);
-80089744	jal    read_two_bytes_with_80 [$800ac2c4]
+80089744	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 [800af576] = b(V0);
-80089754	jal    read_two_bytes_with_80 [$800ac2c4]
+80089754	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0007;
 [800af578] = b(V0);
-80089764	jal    read_two_bytes_with_80 [$800ac2c4]
+80089764	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0009;
 [800af579] = b(V0);
-80089774	jal    read_two_bytes_with_80 [$800ac2c4]
+80089774	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000b;
 [800af57a] = b(V0);
-80089784	jal    read_two_bytes_with_80 [$800ac2c4]
+80089784	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000d;
 [800af57c] = b(V0);
-80089794	jal    read_two_bytes_with_80 [$800ac2c4]
+80089794	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000f;
 [800af57d] = b(V0);
-800897A4	jal    read_two_bytes_with_80 [$800ac2c4]
+800897A4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0011;
 [800af57e] = b(V0);
-800897B4	jal    read_two_bytes_with_80 [$800ac2c4]
+800897B4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0013;
 [800af580] = h(V0);
-800897C4	jal    read_two_bytes_with_80 [$800ac2c4]
+800897C4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0015;
 [800af582] = h(V0);
-800897D4	jal    read_two_bytes_with_80 [$800ac2c4]
+800897D4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0017;
 V1 = w[800af54c];
 [800af584] = h(V0);
@@ -3211,7 +3165,7 @@ V0 = 0001;
 // func89874()
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 
 A0 = V0 & ffff;
 A1 = w[800afb74];
@@ -3334,7 +3288,7 @@ V0 = V0 + 000b;
 
 L89a60:	; 80089A60
 A0 = w[800b1448];
-80089A68	jal    $80031f0c
+80089A68	jal    $system_memory_mark_removed_alloc
 80089A6C	nop
 
 L89a70:	; 80089A70
@@ -3500,7 +3454,7 @@ SP = SP + 0018;
 // func89bd8
 80089BD8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80089BE0	jal    read_two_bytes_with_80 [$800ac2c4]
+80089BE0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b16a8] = h(V0);
@@ -3516,7 +3470,7 @@ SP = SP + 0018;
 80089C14	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0003;
 [SP + 0014] = w(RA);
-80089C20	jal    read_two_bytes_with_80 [$800ac2c4]
+80089C20	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 80089C28	jal    convert_magic_to_pc_id [$8008c510]
 A0 = V0;
@@ -3524,7 +3478,7 @@ S0 = V0;
 V0 = 00ff;
 80089C38	beq    s0, v0, L89c84 [$80089c84]
 80089C3C	nop
-80089C40	jal    read_two_bytes_with_80 [$800ac2c4]
+80089C40	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = S0 << 02;
 V1 = V1 + S0;
@@ -3560,7 +3514,7 @@ SP = SP + 0018;
 80089CB4	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0003;
 [SP + 0014] = w(RA);
-80089CC0	jal    read_two_bytes_with_80 [$800ac2c4]
+80089CC0	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 80089CC8	jal    convert_magic_to_pc_id [$8008c510]
 A0 = V0;
@@ -3577,14 +3531,14 @@ V1 = V1 + V0;
 S0 = bu[V1 + 02e3];
 V0 = bu[V1 + 02e4];
 A0 = 0001;
-80089D08	jal    read_two_bytes_unsigned [$800ac290]
+80089D08	jal    field_script_help_read_u16 [$800ac290]
 S0 = S0 + V0;
 A0 = V0 & ffff;
 80089D14	j      L89d2c [$80089d2c]
 A1 = S0;
 
 L89d1c:	; 80089D1C
-80089D1C	jal    read_two_bytes_unsigned [$800ac290]
+80089D1C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 A1 = 0;
@@ -3798,7 +3752,7 @@ V1 = h[A0 + 0124];
 8008A04C	beq    v1, v0, L8a070 [$8008a070]
 8008A050	nop
 A0 = w[A0 + 0120];
-8008A058	jal    $80031f0c
+8008A058	jal    $system_memory_mark_removed_alloc
 8008A05C	nop
 V1 = w[800af54c];
 8008A068	addiu  v0, zero, $ffff (=-$1)
@@ -3844,7 +3798,7 @@ AT = AT + V1;
 8008A110	jal    $8003bca4
 A0 = 0010;
 A0 = w[800af1dc];
-8008A120	jal    $80031f0c
+8008A120	jal    $system_memory_mark_removed_alloc
 8008A124	nop
 V1 = w[800af1ec];
 V0 = 0003;
@@ -3863,7 +3817,7 @@ V0 = V0 + 0002;
 [V1 + 00cc] = h(V0);
 
 L8a170:	; 8008A170
-8008A170	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A170	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = V0 << 02;
 8008A17C	lui    at, $8006
@@ -3872,7 +3826,7 @@ A0 = w[AT + 1ba8];
 [800af1ec] = w(V0);
 8008A190	jal    $800381b8
 8008A194	nop
-8008A198	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A198	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0004;
 V1 = V0;
 V0 = V1 & 0080;
@@ -3978,14 +3932,14 @@ V1 = h[A0 + 0124];
 8008A330	beq    v1, v0, L8a354 [$8008a354]
 8008A334	nop
 A0 = w[A0 + 0120];
-8008A33C	jal    $80031f0c
+8008A33C	jal    $system_memory_mark_removed_alloc
 8008A340	nop
 V1 = w[800af54c];
 8008A34C	addiu  v0, zero, $ffff (=-$1)
 [V1 + 0124] = h(V0);
 
 L8a354:	; 8008A354
-8008A354	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A354	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = 0004;
 A1 = 0;
@@ -4198,13 +4152,13 @@ SP = SP + 0028;
 // func8a6bc
 8008A6BC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008A6C4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A6C4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800b1730] = b(V0);
-8008A6D4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A6D4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [800b1731] = b(V0);
-8008A6E4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A6E4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = w[800af54c];
 [800b1732] = b(V0);
@@ -4219,7 +4173,7 @@ SP = SP + 0018;
 // func8a718
 8008A718	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008A720	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A720	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b1688] = h(V0);
@@ -4237,19 +4191,19 @@ V0 = w[800acff4];
 [SP + 0014] = w(RA);
 8008A764	beq    v0, zero, L8a7b4 [$8008a7b4]
 [SP + 0010] = w(S0);
-8008A76C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A76C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = 0003;
-8008A778	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A778	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0 & ffff;
 A0 = S0;
 A1 = 0;
 8008A788	jal    $801e8330
 A2 = V0;
-8008A790	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A790	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = 0003;
-8008A79C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A79C	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 S0 = S0 << 01;
 8008A7A8	lui    at, $800b
@@ -4272,7 +4226,7 @@ SP = SP + 0018;
 // func8a7e4
 8008A7E4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008A7EC	jal    read_two_bytes_with_80 [$800ac2c4]
+8008A7EC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af54c];
 8008A7FC	nop
@@ -4290,23 +4244,23 @@ SP = SP + 0018;
 // 0xF1()
 
 A0 = 9;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S3 = V0;
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S2 = V0;
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S1 = V0;
 
 A0 = 7;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0;
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = 1;
 A1 = S3;
@@ -4346,7 +4300,7 @@ control = bu[A0 + V0 + 1];
 if( control == 0 ) // finish distortion (make it normal with number of steps and then finish)
 {
     A0 = 2;
-    read_two_bytes_with_80();
+    field_script_help_read_v80();
 
     A0 = 0;
     A1 = 0;
@@ -4497,11 +4451,11 @@ S3 = w[V0 + 0008];
 S0 = w[A1 + 0004];
 S2 = w[V1 + 0008];
 S1 = w[S0 + 0010];
-8008AC20	jal    read_two_bytes_signed [$800ac254]
+8008AC20	jal    field_script_help_read_s16 [$800ac254]
 A0 = 0001;
 A0 = 0003;
 V0 = V0 << 10;
-8008AC30	jal    read_two_bytes_signed [$800ac254]
+8008AC30	jal    field_script_help_read_s16 [$800ac254]
 S4 = V0 >> 10;
 V0 = V0 << 10;
 T3 = hu[S0 + 0006];
@@ -4685,7 +4639,7 @@ A1 = w[AT + 9aa4];
 8008AEBC	jal    $80032cd8
 8008AEC0	nop
 A0 = w[800ad098];
-8008AECC	jal    $80031f0c
+8008AECC	jal    $system_memory_mark_removed_alloc
 8008AED0	nop
 A0 = w[800ad0a0];
 8008AEDC	jal    func8af4c [$8008af4c]
@@ -4888,7 +4842,7 @@ if( ( w[800ad09c] == ff ) || ( w[800ad004] == 0 ) )
         system_cdrom_action_sync();
 
         A0 = 1;
-        read_two_bytes_with_80();
+        field_script_help_read_v80();
 
         S0 = V0;
         if( S0 == w[800ad09c] )
@@ -5552,7 +5506,7 @@ V0 = V0 & 1000;
 8008BDC8	beq    v0, zero, L8bdf8 [$8008bdf8]
 8008BDCC	nop
 A0 = w[V1 + 0114];
-8008BDD4	jal    $80031f0c
+8008BDD4	jal    $system_memory_mark_removed_alloc
 8008BDD8	nop
 V0 = w[800af54c];
 8008BDE4	nop
@@ -5586,11 +5540,11 @@ V0 = w[8004ea10];
 if( V0 != 0 )
 {
     A0 = 1;
-    read_two_bytes_with_80();
+    field_script_help_read_v80();
     S0 = V0;
 
     A0 = 3;
-    read_two_bytes_with_80();
+    field_script_help_read_v80();
     A2 = V0; // steps
 
     A1 = S0; // volume
@@ -5701,10 +5655,10 @@ V0 = w[8004ea10];
 [SP + 0014] = w(RA);
 8008C044	beq    v0, zero, L8c08c [$8008c08c]
 [SP + 0010] = w(S0);
-8008C04C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C04C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = 0003;
-8008C058	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C058	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A1 = S0;
 A0 = w[80061bb8];
@@ -5831,7 +5785,7 @@ V0 = w[8004ea10];
 8008C250	addiu  sp, sp, $ffe8 (=-$18)
 8008C254	beq    v0, zero, L8c28c [$8008c28c]
 [SP + 0010] = w(RA);
-8008C25C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C25C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[80061bb8];
 8008C26C	jal    $8003a96c
@@ -5887,12 +5841,12 @@ SP = SP + 0018;
 // 0xFE13
 8008C31C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C324	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C324	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 A0 = 0003;
 [V1 + 010a] = h(V0);
-8008C33C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C33C	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 010d] = b(0);
 V1 = w[800af54c];
 8008C34C	nop
@@ -5925,13 +5879,13 @@ SP = SP + 0018;
 // func8c3a8
 8008C3A8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C3B0	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C3B0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 A0 = 0003;
 [V1 + 010a] = h(V0);
 V0 = 0080;
-8008C3CC	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C3CC	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 010d] = b(V0);
 V1 = w[800af54c];
 8008C3DC	nop
@@ -5960,7 +5914,7 @@ SP = SP + 0018;
 // func8c438
 8008C438	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C440	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C440	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 8008C448	jal    convert_magic_to_pc_id [$8008c510]
 A0 = V0;
@@ -5989,7 +5943,7 @@ SP = SP + 0018;
 // func8c4a4
 8008C4A4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C4AC	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C4AC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 8008C4B4	jal    convert_magic_to_pc_id [$8008c510]
 A0 = V0;
@@ -6045,7 +5999,7 @@ return A0;
 // 0xFE0D_SetAvatar()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = V0;
 convert_magic_to_pc_id();
@@ -6061,22 +6015,22 @@ V1 = w[800af54c];
 // func8c5c0
 8008C5C0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C5C8	jal    read_two_bytes_unsigned [$800ac290]
+8008C5C8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 [800b1674] = h(V0);
-8008C5D8	jal    read_two_bytes_unsigned [$800ac290]
+8008C5D8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 [800b1678] = h(V0);
-8008C5E8	jal    read_two_bytes_unsigned [$800ac290]
+8008C5E8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 [800b1676] = h(V0);
-8008C5F8	jal    read_two_bytes_unsigned [$800ac290]
+8008C5F8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0007;
 [800b167a] = h(V0);
-8008C608	jal    read_two_bytes_unsigned [$800ac290]
+8008C608	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0009;
 [800b167e] = h(V0);
-8008C618	jal    read_two_bytes_unsigned [$800ac290]
+8008C618	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000b;
 V1 = w[800af54c];
 [800b167c] = h(V0);
@@ -6091,7 +6045,7 @@ SP = SP + 0018;
 // func8c64c
 8008C64C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C654	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C654	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 8008C65C	bne    v0, zero, L8c684 [$8008c684]
 8008C660	addiu  a0, zero, $f7ff (=-$801)
@@ -6125,7 +6079,7 @@ SP = SP + 0018;
 // func8c6c8
 8008C6C8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C6D0	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C6D0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -6160,13 +6114,13 @@ SP = SP + 0018;
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-8008C764	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C764	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-8008C770	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C770	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0;
 A0 = 0005;
-8008C77C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C77C	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -6200,7 +6154,7 @@ SP = SP + 0020;
 // func8c804
 8008C804	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C80C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C80C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b1660] = h(V0);
@@ -6215,7 +6169,7 @@ SP = SP + 0018;
 // func8c840
 8008C840	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008C848	jal    read_two_bytes_with_80 [$800ac2c4]
+8008C848	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 8008C858	nop
@@ -6489,12 +6443,12 @@ V0 = V0 + 0002;
 // 0x0A()
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 S1 = V0 & ffff;
 S1 = S1 >> 04;
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 V0 = V0 & 000f;
 S0 = 1 << V0;
 
@@ -6518,11 +6472,11 @@ V1 = w[800af54c];
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-8008CCE4	jal    read_two_bytes_unsigned [$800ac290]
+8008CCE4	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 A0 = 0001;
 S1 = V0 & ffff;
-8008CCF4	jal    read_two_bytes_unsigned [$800ac290]
+8008CCF4	jal    field_script_help_read_u16 [$800ac290]
 S1 = S1 >> 04;
 A0 = S1;
 V0 = V0 & 000f;
@@ -6550,11 +6504,11 @@ SP = SP + 0020;
 8008CD54	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8008CD60	jal    read_two_bytes_unsigned [$800ac290]
+8008CD60	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 A0 = 0001;
 S0 = V0 & ffff;
-8008CD70	jal    read_two_bytes_unsigned [$800ac290]
+8008CD70	jal    field_script_help_read_u16 [$800ac290]
 S0 = S0 >> 04;
 A0 = S0;
 V0 = V0 & 000f;
@@ -6571,7 +6525,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0005;
 
 L8cdb0:	; 8008CDB0
-8008CDB0	jal    read_two_bytes_unsigned [$800ac290]
+8008CDB0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[800af54c];
 
@@ -7013,7 +6967,7 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 004c];
-8008D4D4	jal    read_two_bytes_unsigned [$800ac290]
+8008D4D4	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = w[S0 + 0000];
 8008D4E0	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -7049,7 +7003,7 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 004c];
-8008D55C	jal    read_two_bytes_unsigned [$800ac290]
+8008D55C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = hu[S0 + 0002];
 8008D568	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -7085,7 +7039,7 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 004c];
-8008D5E4	jal    read_two_bytes_unsigned [$800ac290]
+8008D5E4	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = w[S0 + 0004];
 8008D5F0	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -7121,7 +7075,7 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 004c];
-8008D66C	jal    read_two_bytes_unsigned [$800ac290]
+8008D66C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = hu[S0 + 0006];
 8008D678	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -7149,7 +7103,7 @@ SP = SP + 0018;
 S0 = A0;
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 
 V1 = w[800af54c];
 
@@ -7160,7 +7114,7 @@ if( (V0 & S0) & ffff )
 else
 {
     A0 = 4;
-    read_two_bytes_unsigned();
+    field_script_help_read_u16();
     [V1 + cc] = h(V0);
 }
 ////////////////////////////////
@@ -7173,7 +7127,7 @@ else
 [SP + 0010] = w(S0);
 S0 = A0;
 [SP + 0014] = w(RA);
-8008D72C	jal    read_two_bytes_unsigned [$800ac290]
+8008D72C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V0 = V0 & S0;
 V0 = V0 & ffff;
@@ -7186,7 +7140,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0005;
 
 L8d75c:	; 8008D75C
-8008D75C	jal    read_two_bytes_unsigned [$800ac290]
+8008D75C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[800af54c];
 
@@ -7240,7 +7194,7 @@ A1 = V1 - A1;
 S1 = V0;
 
 L8d824:	; 8008D824
-8008D824	jal    read_two_bytes_unsigned [$800ac290]
+8008D824	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8008D830	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -7402,7 +7356,7 @@ SP = SP + 0018;
 [SP + 0010] = w(S0);
 S0 = A0;
 [SP + 0014] = w(RA);
-8008DA7C	jal    read_two_bytes_unsigned [$800ac290]
+8008DA7C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8008DA88	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -7470,7 +7424,7 @@ SP = SP + 0018;
 // func8db70
 8008DB70	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008DB78	jal    read_two_bytes_unsigned [$800ac290]
+8008DB78	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -7608,11 +7562,11 @@ for( int i = 0; i < w[800b1770]; ++i )
 ////////////////////////////////
 // 0xF7
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b176c] = w(V0);
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800b1770] = w(V0);
 if( V0 >= 21 )
 {
@@ -7804,16 +7758,16 @@ A0 = 0001;
 [V0 + 00cc] = h(V1);
 
 L8e240:	; 8008E240
-8008E240	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E240	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800c2ef4] = h(V0);
-8008E250	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E250	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [800c2efe] = h(V0);
-8008E260	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E260	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 [800c2f02] = h(V0);
-8008E270	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E270	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0007;
 V1 = V0;
 A0 = 0140;
@@ -7899,19 +7853,19 @@ SP = SP + 0018;
 8008E3E8	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8008E3F4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E3F4	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 [800c2ef4] = h(V0);
-8008E404	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E404	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [800c2efe] = h(V0);
-8008E414	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E414	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 [800c2f00] = h(V0);
-8008E424	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E424	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0007;
 [800c2f02] = h(V0);
-8008E434	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E434	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0009;
 S0 = V0 & ffff;
 [800c2f04] = h(V0);
@@ -7926,18 +7880,18 @@ L8e464:	; 8008E464
 [800c2f0e] = h(0);
 
 L8e46c:	; 8008E46C
-8008E46C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E46C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000b;
 [800c2ef6] = h(V0);
 [800c2efa] = h(V0);
-8008E484	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E484	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000d;
 [800c2ef8] = h(V0);
 [800c2efc] = h(V0);
-8008E49C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E49C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000f;
 [800c2f06] = h(V0);
-8008E4AC	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E4AC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0011;
 [800c2f08] = h(V0);
 V0 = S0 & 0040;
@@ -7969,7 +7923,7 @@ SP = SP + 0018;
 // func8e530
 8008E530	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008E538	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E538	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800ad014] = w(V0);
@@ -7989,7 +7943,7 @@ SP = SP + 0018;
 // func8e574
 8008E574	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008E57C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E57C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800ad014] = w(V0);
@@ -8012,16 +7966,16 @@ A0 = 0001;
 [SP + 001c] = w(RA);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-8008E5CC	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E5CC	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-8008E5D8	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E5D8	jal    field_script_help_read_v80 [$800ac2c4]
 S2 = V0;
 A0 = 0005;
-8008E5E4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E5E4	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0;
 A0 = 0007;
-8008E5F0	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E5F0	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = S2;
 A1 = S1;
@@ -8049,7 +8003,7 @@ SP = SP + 0020;
 // func8e644()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 V1 = w[800af54c];
 [800ad014] = w(V0);
@@ -8085,13 +8039,13 @@ V1 = V1 & 0001;
 S0 = w[V0 + 004c];
 8008E6EC	beq    v1, zero, L8e718 [$8008e718]
 8008E6F0	nop
-8008E6F4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E6F4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 A0 = 0005;
-8008E700	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E700	jal    field_script_help_read_v80 [$800ac2c4]
 [S0 + 00fc] = b(V0);
 A0 = 0007;
-8008E70C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E70C	jal    field_script_help_read_v80 [$800ac2c4]
 [S0 + 00fd] = b(V0);
 [S0 + 00fe] = b(V0);
 
@@ -8106,13 +8060,13 @@ V0 = bu[V0 + 0001];
 V0 = V0 & 0002;
 8008E740	beq    v0, zero, L8e76c [$8008e76c]
 8008E744	nop
-8008E748	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E748	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 A0 = 0005;
-8008E754	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E754	jal    field_script_help_read_v80 [$800ac2c4]
 [S0 + 00ff] = b(V0);
 A0 = 0007;
-8008E760	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E760	jal    field_script_help_read_v80 [$800ac2c4]
 [S0 + 0100] = b(V0);
 [S0 + 0101] = b(V0);
 
@@ -8146,15 +8100,15 @@ V0 = bu[V0 + 0001];
 V0 = V0 & 0001;
 8008E7CC	beq    v0, zero, L8e814 [$8008e814]
 8008E7D0	nop
-8008E7D4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E7D4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = w[800af54c];
 A0 = 0004;
-8008E7E8	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E7E8	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 00fc] = b(V0);
 V1 = w[800af54c];
 A0 = 0006;
-8008E7FC	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E7FC	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 00fd] = b(V0);
 V1 = w[800af54c];
 8008E80C	nop
@@ -8171,15 +8125,15 @@ V0 = bu[V0 + 0001];
 V0 = V0 & 0002;
 8008E83C	beq    v0, zero, L8e884 [$8008e884]
 8008E840	nop
-8008E844	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E844	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = w[800af54c];
 A0 = 0004;
-8008E858	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E858	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 00ff] = b(V0);
 V1 = w[800af54c];
 A0 = 0006;
-8008E86C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E86C	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 0100] = b(V0);
 V1 = w[800af54c];
 8008E87C	nop
@@ -8203,7 +8157,7 @@ SP = SP + 0018;
 // func8e8ac
 8008E8AC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008E8B4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E8B4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 8008E8C4	nop
@@ -8234,10 +8188,10 @@ SP = SP + 0018;
 // func8e91c
 8008E91C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008E924	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E924	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800c2f30] = w(V0);
-8008E934	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E934	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 A0 = w[800af54c];
 8008E944	nop
@@ -8256,7 +8210,7 @@ SP = SP + 0018;
 // func8e968
 8008E968	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008E970	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E970	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b1810] = h(V0);
@@ -8277,13 +8231,13 @@ SP = SP + 0018;
 A0 = 0003;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-8008E9B4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E9B4	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0001;
-8008E9C0	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E9C0	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0 << 01;
 A0 = 0005;
-8008E9CC	jal    read_two_bytes_with_80 [$800ac2c4]
+8008E9CC	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = S1;
 A1 = S0;
@@ -8310,10 +8264,10 @@ SP = SP + 0020;
 8008EA18	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0003;
 [SP + 0014] = w(RA);
-8008EA24	jal    read_two_bytes_with_80 [$800ac2c4]
+8008EA24	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0001;
-8008EA30	jal    read_two_bytes_with_80 [$800ac2c4]
+8008EA30	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0 << 01;
 A0 = S0;
 8008EA3C	jal    $8003a1ec
@@ -8339,11 +8293,11 @@ SP = SP + 0018;
 
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0 << 1;
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = S0;
 A1 = V0;
@@ -8359,11 +8313,11 @@ V1 = w[800af54c];
 // func8ead0()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 sed_id = V0;
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = sed_id;
 A1 = V0;
@@ -8379,19 +8333,19 @@ V1 = w[800af54c];
 // 0x66_PlaySoundWithVolumeInSlot()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 sed_id = V0;
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 note_volume = V0;
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 volume_distr = V0;
 
 A0 = 7;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 sound_slot = V0;
 
 A0 = sed_id;
@@ -8414,7 +8368,7 @@ V1 = w[800af54c];
 8008EBC4	jal    $system_sound_get_channels_mask_by_sed_id
 [SP + 0010] = w(S0);
 A0 = 0001;
-8008EBD0	jal    read_two_bytes_with_80 [$800ac2c4]
+8008EBD0	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 V0 = V0 << 08;
 S0 = S0 & V0;
@@ -8450,7 +8404,7 @@ SP = SP + 0018;
 // func8ec3c()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = V0; // sed_id
 A1 = 3; // sound_slot
@@ -8466,15 +8420,15 @@ V1 = w[800af54c];
 // 0x5D_PlaySoundWithVolumeIn3()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 sed_id = V0;
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 note_volume = V0;
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 volume_distr = V0;
 
 A0 = sed_id;
@@ -8535,7 +8489,7 @@ else
 // func8ed8c()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0;
 
 V1 = w[800acff4];
@@ -8618,16 +8572,16 @@ A0 = 0001;
 [SP + 001c] = w(RA);
 [SP + 0018] = w(S2);
 [SP + 0014] = w(S1);
-8008EEF4	jal    read_two_bytes_with_80 [$800ac2c4]
+8008EEF4	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-8008EF00	jal    read_two_bytes_with_80 [$800ac2c4]
+8008EF00	jal    field_script_help_read_v80 [$800ac2c4]
 S2 = V0;
 A0 = 0005;
-8008EF0C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008EF0C	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0;
 A0 = 0007;
-8008EF18	jal    read_two_bytes_with_80 [$800ac2c4]
+8008EF18	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A2 = V0;
 8008EF24	bne    a2, zero, L8ef30 [$8008ef30]
@@ -8691,7 +8645,7 @@ SP = SP + 0020;
 // func8f00c
 8008F00C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008F014	jal    read_two_bytes_with_80 [$800ac2c4]
+8008F014	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = 0003;
 V1 = h[800aee12];
@@ -8837,7 +8791,7 @@ V0 = V0 & 7fff;
 8008F274	nop
 
 L8f278:	; 8008F278
-8008F278	jal    read_two_bytes_with_80 [$800ac2c4]
+8008F278	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = V0;
 8008F284	bne    v1, zero, L8f2d0 [$8008f2d0]
@@ -8886,11 +8840,11 @@ SP = SP + 0018;
 8008F314	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8008F320	jal    read_two_bytes_with_80 [$800ac2c4]
+8008F320	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
 S0 = 800aee58;
-8008F334	jal    read_two_bytes_with_80 [$800ac2c4]
+8008F334	jal    field_script_help_read_v80 [$800ac2c4]
 [S0 + 0000] = w(V0);
 V1 = w[S0 + 0000];
 A0 = V0;
@@ -9278,7 +9232,7 @@ A0 = SP + 0010;
 8008FA00	nop
 
 L8fa04:	; 8008FA04
-8008FA04	jal    read_two_bytes_with_80 [$800ac2c4]
+8008FA04	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = V0;
 A0 = 800aee12;
@@ -9367,7 +9321,7 @@ A2 = A2 - V0;
 8008FBCC	jal    func98fd8 [$80098fd8]
 A2 = A2 >> 10;
 S1 = V0;
-8008FBD8	jal    read_two_bytes_with_80 [$800ac2c4]
+8008FBD8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 A1 = V0;
 8008FBE4	div    s1, a1
@@ -9451,7 +9405,7 @@ A2 = A2 - V0;
 8008FD80	jal    func98fd8 [$80098fd8]
 A2 = A2 >> 10;
 S1 = V0;
-8008FD8C	jal    read_two_bytes_with_80 [$800ac2c4]
+8008FD8C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 A1 = V0;
 8008FD98	div    s1, a1
@@ -9503,7 +9457,7 @@ V0 = V0 & 0080;
 8008FE90	nop
 
 L8fe94:	; 8008FE94
-8008FE94	jal    read_two_bytes_with_80 [$800ac2c4]
+8008FE94	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = V0;
 A0 = 800aee34;
@@ -9577,17 +9531,17 @@ SP = SP + 0040;
 // func8ffe4
 8008FFE4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8008FFEC	jal    read_two_bytes_unsigned [$800ac290]
+8008FFEC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[800aed66];
 8008FFFC	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090004	jal    read_two_bytes_unsigned [$800ac290]
+80090004	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A1 = h[800aed6e];
 80090014	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-8009001C	jal    read_two_bytes_unsigned [$800ac290]
+8009001C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 A1 = h[800aed6a];
 8009002C	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9610,17 +9564,17 @@ SP = SP + 0018;
 // func90068
 80090068	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80090070	jal    read_two_bytes_unsigned [$800ac290]
+80090070	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[800aed56];
 80090080	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090088	jal    read_two_bytes_unsigned [$800ac290]
+80090088	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A1 = h[800aed5e];
 80090098	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-800900A0	jal    read_two_bytes_unsigned [$800ac290]
+800900A0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 A1 = h[800aed5a];
 800900B0	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9643,17 +9597,17 @@ SP = SP + 0018;
 // func900ec
 800900EC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800900F4	jal    read_two_bytes_unsigned [$800ac290]
+800900F4	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[800aed96];
 80090104	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-8009010C	jal    read_two_bytes_unsigned [$800ac290]
+8009010C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A1 = h[800aed9e];
 8009011C	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090124	jal    read_two_bytes_unsigned [$800ac290]
+80090124	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 A1 = h[800aed9a];
 80090134	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9676,17 +9630,17 @@ SP = SP + 0018;
 // func90170
 80090170	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80090178	jal    read_two_bytes_unsigned [$800ac290]
+80090178	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[800aed86];
 80090188	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090190	jal    read_two_bytes_unsigned [$800ac290]
+80090190	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A1 = h[800aed8e];
 800901A0	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-800901A8	jal    read_two_bytes_unsigned [$800ac290]
+800901A8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 A1 = h[800aed8a];
 800901B8	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9718,7 +9672,7 @@ V0 = bu[V0 + 0003];
 8009021C	nop
 80090220	bne    v0, zero, L90248 [$80090248]
 80090224	nop
-80090228	jal    read_two_bytes_unsigned [$800ac290]
+80090228	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[800aee0c];
 80090238	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9727,7 +9681,7 @@ A0 = V0 & ffff;
 80090244	nop
 
 L90248:	; 80090248
-80090248	jal    read_two_bytes_unsigned [$800ac290]
+80090248	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 [800aee0c] = h(V0);
 
@@ -9759,7 +9713,7 @@ V0 = bu[V0 + 0003];
 800902B4	nop
 800902B8	bne    v0, zero, L902e0 [$800902e0]
 800902BC	nop
-800902C0	jal    read_two_bytes_unsigned [$800ac290]
+800902C0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[800aee0a];
 800902D0	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9768,7 +9722,7 @@ A0 = V0 & ffff;
 800902DC	nop
 
 L902e0:	; 800902E0
-800902E0	jal    read_two_bytes_unsigned [$800ac290]
+800902E0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 [800aee0a] = h(V0);
 
@@ -9800,7 +9754,7 @@ V0 = bu[V0 + 0003];
 8009034C	nop
 80090350	bne    v0, zero, L90378 [$80090378]
 80090354	nop
-80090358	jal    read_two_bytes_unsigned [$800ac290]
+80090358	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = w[800aee04];
 80090368	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9809,7 +9763,7 @@ A0 = V0 & ffff;
 80090374	nop
 
 L90378:	; 80090378
-80090378	jal    read_two_bytes_unsigned [$800ac290]
+80090378	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V0 = V0 & ffff;
 [800aee04] = w(V0);
@@ -9833,17 +9787,17 @@ SP = SP + 0018;
 // func903c0
 800903C0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800903C8	jal    read_two_bytes_unsigned [$800ac290]
+800903C8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[800aee0c];
 800903D8	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-800903E0	jal    read_two_bytes_unsigned [$800ac290]
+800903E0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A1 = h[800aee0a];
 800903F0	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-800903F8	jal    read_two_bytes_unsigned [$800ac290]
+800903F8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 A1 = w[800aee04];
 80090408	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -9927,17 +9881,17 @@ S0 = V1 << 04;
 S0 = S0 - V1;
 S0 = S0 << 03;
 S0 = S0 >> 0c;
-8009055C	jal    read_two_bytes_unsigned [$800ac290]
+8009055C	jal    field_script_help_read_u16 [$800ac290]
 S0 = S0 + 005b;
 A0 = V0 & ffff;
 80090568	jal    put_bytes_to_800C2F3C [$800a2604]
 A1 = S1;
-80090570	jal    read_two_bytes_unsigned [$800ac290]
+80090570	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A0 = V0 & ffff;
 8009057C	jal    put_bytes_to_800C2F3C [$800a2604]
 A1 = S0;
-80090584	jal    read_two_bytes_unsigned [$800ac290]
+80090584	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 A0 = V0 & ffff;
 80090590	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -10118,17 +10072,17 @@ V0 = A3 << 04;
 V0 = V0 + V1;
 80090860	jal    func905dc [$800905dc]
 [SP + 0028] = w(V0);
-80090868	jal    read_two_bytes_unsigned [$800ac290]
+80090868	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000e;
 A1 = h[SP + 0022];
 80090874	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-8009087C	jal    read_two_bytes_unsigned [$800ac290]
+8009087C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0010;
 A1 = h[SP + 002a];
 80090888	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090890	jal    read_two_bytes_unsigned [$800ac290]
+80090890	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0012;
 A1 = h[SP + 0026];
 8009089C	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -10285,17 +10239,17 @@ V0 = A3 << 04;
 V0 = V0 + V1;
 80090B0C	jal    func905dc [$800905dc]
 [SP + 0028] = w(V0);
-80090B14	jal    read_two_bytes_unsigned [$800ac290]
+80090B14	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0009;
 A1 = h[SP + 0022];
 80090B20	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090B28	jal    read_two_bytes_unsigned [$800ac290]
+80090B28	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000b;
 A1 = h[SP + 002a];
 80090B34	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090B3C	jal    read_two_bytes_unsigned [$800ac290]
+80090B3C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 000d;
 A1 = h[SP + 0026];
 80090B48	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -10380,17 +10334,17 @@ L90c7c:	; 80090C7C
 [SP + 0018] = w(A0);
 
 L90c84:	; 80090C84
-80090C84	jal    read_two_bytes_unsigned [$800ac290]
+80090C84	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 A1 = h[SP + 0012];
 80090C90	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090C98	jal    read_two_bytes_unsigned [$800ac290]
+80090C98	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0004;
 A1 = h[SP + 001a];
 80090CA4	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80090CAC	jal    read_two_bytes_unsigned [$800ac290]
+80090CAC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0006;
 A1 = h[SP + 0016];
 80090CB8	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -10551,28 +10505,28 @@ SP = SP + 0010;
 // func90f18
 80090F18	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80090F20	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F20	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800b1664] = b(V0);
-80090F30	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F30	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [800b1665] = b(V0);
-80090F40	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F40	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 [800b1666] = b(V0);
-80090F50	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F50	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0007;
 [800b1668] = b(V0);
-80090F60	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F60	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0009;
 [800b1669] = b(V0);
-80090F70	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F70	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000b;
 [800b166a] = b(V0);
-80090F80	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F80	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000d;
 [800b166c] = h(V0);
-80090F90	jal    read_two_bytes_with_80 [$800ac2c4]
+80090F90	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000f;
 [800b166e] = h(V0);
 V0 = 0001;
@@ -10596,16 +10550,16 @@ SP = SP + 0018;
 // func90fdc
 80090FDC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80090FE4	jal    read_two_bytes_signed [$800ac254]
+80090FE4	jal    field_script_help_read_s16 [$800ac254]
 A0 = 0001;
 [800aeeb0] = h(V0);
-80090FF4	jal    read_two_bytes_signed [$800ac254]
+80090FF4	jal    field_script_help_read_s16 [$800ac254]
 A0 = 0003;
 [800aeeb2] = h(V0);
-80091004	jal    read_two_bytes_signed [$800ac254]
+80091004	jal    field_script_help_read_s16 [$800ac254]
 A0 = 0005;
 [800aeeb4] = h(V0);
-80091014	jal    read_two_bytes_signed [$800ac254]
+80091014	jal    field_script_help_read_s16 [$800ac254]
 A0 = 0007;
 V1 = w[800af54c];
 V0 = 0 - V0;
@@ -10625,13 +10579,13 @@ SP = SP + 0018;
 // func9104c
 8009104C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80091054	jal    read_two_bytes_with_80 [$800ac2c4]
+80091054	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800b1670] = b(V0);
-80091064	jal    read_two_bytes_with_80 [$800ac2c4]
+80091064	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [800b1671] = b(V0);
-80091074	jal    read_two_bytes_with_80 [$800ac2c4]
+80091074	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = w[800af54c];
 [800b1672] = b(V0);
@@ -10943,10 +10897,10 @@ SP = SP + 0018;
 80091558	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80091564	jal    read_two_bytes_with_80 [$800ac2c4]
+80091564	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-80091570	jal    read_two_bytes_with_80 [$800ac2c4]
+80091570	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = V0;
 V0 = A0 < 1000;
@@ -10998,22 +10952,22 @@ SP = SP + 0018;
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-80091628	jal    read_two_bytes_unsigned [$800ac290]
+80091628	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 80091630	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
 A0 = 0003;
-8009163C	jal    read_two_bytes_unsigned [$800ac290]
+8009163C	jal    field_script_help_read_u16 [$800ac290]
 S0 = V0;
 80091644	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
 A0 = 0003;
-80091650	jal    read_two_bytes_unsigned [$800ac290]
+80091650	jal    field_script_help_read_u16 [$800ac290]
 S1 = V0;
 A0 = V0 & ffff;
 8009165C	jal    put_bytes_to_800C2F3C [$800a2604]
 A1 = S0;
-80091664	jal    read_two_bytes_unsigned [$800ac290]
+80091664	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 80091670	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -11077,13 +11031,13 @@ SP = SP + 0028;
 A0 = 0001;
 [SP + 0020] = w(RA);
 [SP + 001c] = w(S1);
-8009172C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009172C	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0018] = w(S0);
 A0 = 0003;
-80091738	jal    read_two_bytes_with_80 [$800ac2c4]
+80091738	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = 0005;
-80091744	jal    read_two_bytes_unsigned [$800ac290]
+80091744	jal    field_script_help_read_u16 [$800ac290]
 S1 = V0;
 A0 = V0 & ffff;
 V0 = S0 << 01;
@@ -11135,7 +11089,7 @@ V0 = h[S0 + 0000];
 V0 = V0 < 0020;
 800917FC	beq    v0, zero, L91974 [$80091974]
 80091800	nop
-80091804	jal    read_two_bytes_unsigned [$800ac290]
+80091804	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0009;
 S5 = V0 & ffff;
 A0 = S5 + 0001;
@@ -11159,7 +11113,7 @@ V1 = h[S0 + 0000];
 A1 = S0 + 0004;
 V1 = V1 << 02;
 V1 = V1 + A1;
-80091864	jal    read_two_bytes_unsigned [$800ac290]
+80091864	jal    field_script_help_read_u16 [$800ac290]
 [V1 + 0000] = w(V0);
 A0 = 0;
 80091870	beq    s5, zero, L918b0 [$800918b0]
@@ -11182,27 +11136,27 @@ V0 = A0 < S5;
 800918AC	nop
 
 L918b0:	; 800918B0
-800918B0	jal    read_two_bytes_unsigned [$800ac290]
+800918B0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = 0003;
 S3 = V0 << 10;
-800918C0	jal    read_two_bytes_unsigned [$800ac290]
+800918C0	jal    field_script_help_read_u16 [$800ac290]
 S3 = S3 >> 10;
 A0 = 0005;
 S4 = V0 << 10;
-800918D0	jal    read_two_bytes_unsigned [$800ac290]
+800918D0	jal    field_script_help_read_u16 [$800ac290]
 S4 = S4 >> 10;
 A0 = 0007;
 S2 = V0 << 10;
-800918E0	jal    read_two_bytes_unsigned [$800ac290]
+800918E0	jal    field_script_help_read_u16 [$800ac290]
 S2 = S2 >> 10;
 A0 = 000b;
 S0 = V0 << 10;
-800918F0	jal    read_two_bytes_unsigned [$800ac290]
+800918F0	jal    field_script_help_read_u16 [$800ac290]
 S0 = S0 >> 10;
 A0 = 000d;
 S1 = V0 << 10;
-80091900	jal    read_two_bytes_unsigned [$800ac290]
+80091900	jal    field_script_help_read_u16 [$800ac290]
 S1 = S1 >> 10;
 V1 = S5 << 10;
 V1 = V1 >> 10;
@@ -11410,7 +11364,7 @@ L91b6c:	; 80091B6C
 // func91b74
 80091B74	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80091B7C	jal    read_two_bytes_with_80 [$800ac2c4]
+80091B7C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = V0;
 V0 = 0001;
@@ -11455,7 +11409,7 @@ SP = SP + 0018;
 // func91bfc
 80091BFC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80091C04	jal    read_two_bytes_unsigned [$800ac290]
+80091C04	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[800af54c];
 [800b164e] = h(V0);
@@ -11474,7 +11428,7 @@ SP = SP + 0018;
 // func91c38
 80091C38	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80091C40	jal    read_two_bytes_with_80 [$800ac2c4]
+80091C40	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -11513,7 +11467,7 @@ A1 = bu[V0 + 0002];
 80091CCC	jal    func919f8 [$800919f8]
 80091CD0	nop
 S0 = V0;
-80091CD8	jal    read_two_bytes_with_80 [$800ac2c4]
+80091CD8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -11554,7 +11508,7 @@ A1 = bu[V0 + 0002];
 80091D6C	jal    func919f8 [$800919f8]
 80091D70	nop
 S0 = V0;
-80091D78	jal    read_two_bytes_with_80 [$800ac2c4]
+80091D78	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -11663,10 +11617,10 @@ V0 = w[800ad0c4];
 80091F44	nop
 80091F48	beq    v0, zero, L91f88 [$80091f88]
 80091F4C	nop
-80091F50	jal    read_two_bytes_with_80 [$800ac2c4]
+80091F50	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0004;
 A0 = 0002;
-80091F5C	jal    read_two_bytes_with_80 [$800ac2c4]
+80091F5C	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 80091F64	jal    func92518 [$80092518]
 S1 = V0;
@@ -12044,7 +11998,7 @@ V0 = w[800ad0b0];
 8009259C	addiu  v0, zero, $ffff (=-$1)
 [800b164a] = h(V0);
 [800ad0b0] = w(0);
-800925B0	jal    read_two_bytes_with_80 [$800ac2c4]
+800925B0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800af538] = w(V0);
 
@@ -12220,10 +12174,10 @@ L9284c:	; 8009284C
 80092850	nop
 80092854	jal    func927cc [$800927cc]
 80092858	nop
-8009285C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009285C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0;
 [800af51c] = w(V0);
-8009286C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009286C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 A0 = w[800af54c];
 8009287C	nop
@@ -12251,11 +12205,11 @@ if( ( w[800ad0b4] != 0 ) && ( w[800ad0bc] != 0 ) && ( w[800ad004] == 0 ) && ( w[
     if( w[800ad0c4] != 0 )
     {
         A0 = 3;
-        read_two_bytes_with_80();
+        field_script_help_read_v80();
         S0 = V0;
 
         A0 = 1;
-        read_two_bytes_with_80();
+        field_script_help_read_v80();
         field_id = V0;
 
         func92518();
@@ -12320,7 +12274,7 @@ A0 = 0001;
 L92a78:	; 80092A78
 V0 = bu[800b182a];
 [80058be8] = b(V0);
-80092A88	jal    read_two_bytes_with_80 [$800ac2c4]
+80092A88	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 S2 = 0001;
 [80058ba4] = b(V0);
@@ -12328,13 +12282,13 @@ S2 = 0001;
 [800ad0b4] = w(0);
 [800ad0b8] = w(0);
 [800ad060] = w(S2);
-80092ABC	jal    read_two_bytes_with_80 [$800ac2c4]
+80092ABC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 S1 = V0;
 V0 = 7fff;
 80092ACC	beq    s1, v0, L92b00 [$80092b00]
 80092AD0	nop
-80092AD4	jal    read_two_bytes_with_80 [$800ac2c4]
+80092AD4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0007;
 80092ADC	jal    func92518 [$80092518]
 S0 = V0;
@@ -12402,7 +12356,7 @@ L92bb8:	; 80092BB8
 L92bc8:	; 80092BC8
 V0 = bu[800b182a];
 [80058be8] = b(V0);
-80092BD8	jal    read_two_bytes_with_80 [$800ac2c4]
+80092BD8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af54c];
 [80058ba4] = b(V0);
@@ -12440,7 +12394,7 @@ A1 = bu[V0 + 0002];
 80092C68	jal    func919f8 [$800919f8]
 80092C6C	nop
 A0 = 0003;
-80092C74	jal    read_two_bytes_unsigned [$800ac290]
+80092C74	jal    field_script_help_read_u16 [$800ac290]
 S0 = V0;
 A0 = V0 & ffff;
 80092C80	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -12550,7 +12504,7 @@ V1 = V1 + 0001;
 // func92df8
 80092DF8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80092E00	jal    read_two_bytes_with_80 [$800ac2c4]
+80092E00	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af54c];
 [80058811] = b(V0);
@@ -12579,10 +12533,10 @@ SP = SP + 0018;
 [SP + 0014] = w(S1);
 [SP + 0010] = w(S0);
 [800b164a] = h(V0);
-80092E78	jal    read_two_bytes_with_80 [$800ac2c4]
+80092E78	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 A0 = 0001;
-80092E84	jal    read_two_bytes_with_80 [$800ac2c4]
+80092E84	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 80092E8C	jal    func92518 [$80092518]
 S1 = V0;
@@ -12616,7 +12570,7 @@ SP = SP + 0020;
 // func92f04
 80092F04	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80092F0C	jal    read_two_bytes_with_80 [$800ac2c4]
+80092F0C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = 0001;
 [800ad03c] = w(V1);
@@ -12643,7 +12597,7 @@ SP = SP + 0018;
 // func92f74
 80092F74	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80092F7C	jal    read_two_bytes_with_80 [$800ac2c4]
+80092F7C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af54c];
 [80058811] = b(V0);
@@ -12668,7 +12622,7 @@ SP = SP + 0018;
 // func92fd8
 80092FD8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80092FE0	jal    read_two_bytes_with_80 [$800ac2c4]
+80092FE0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af54c];
 [80058811] = b(V0);
@@ -12867,13 +12821,13 @@ L9329c:	; 8009329C
 800932A4	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-800932B0	jal    read_two_bytes_unsigned [$800ac290]
+800932B0	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 A0 = 0005;
-800932BC	jal    read_two_bytes_with_80 [$800ac2c4]
+800932BC	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 S0 = S0 + V0;
-800932C8	jal    read_two_bytes_unsigned [$800ac290]
+800932C8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[800ad0d8];
 S0 = S0 & ffff;
@@ -12901,10 +12855,10 @@ SP = SP + 0018;
 8009331C	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80093328	jal    read_two_bytes_unsigned [$800ac290]
+80093328	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 A0 = 0005;
-80093334	jal    read_two_bytes_with_80 [$800ac2c4]
+80093334	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -12915,7 +12869,7 @@ V1 = bu[V1 + 0007];
 8009335C	nop
 80093360	bne    v1, zero, L93398 [$80093398]
 S0 = S0 + V0;
-80093368	jal    read_two_bytes_unsigned [$800ac290]
+80093368	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A0 = V0 & ffff;
 V0 = w[800ad0d8];
@@ -12928,7 +12882,7 @@ A1 = A1 << 08;
 A1 = V0 | A1;
 
 L93398:	; 80093398
-80093398	jal    read_two_bytes_unsigned [$800ac290]
+80093398	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A0 = V0 & ffff;
 V1 = w[800ad0d8];
@@ -13113,12 +13067,12 @@ V0 = V0 + 0001;
 V0 = w[800af54c];
 800937C0	nop
 S0 = bu[V0 + 00e2];
-800937C8	jal    read_two_bytes_with_80 [$800ac2c4]
+800937C8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 S0 = S0 < V0;
 800937D4	beq    s0, zero, L93904 [$80093904]
 800937D8	addiu  a0, zero, $ffdf (=-$21)
-800937DC	jal    read_two_bytes_with_80 [$800ac2c4]
+800937DC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = V0;
 V0 = 1000;
@@ -13130,7 +13084,7 @@ V0 = 1001;
 80093800	nop
 
 L93804:	; 80093804
-80093804	jal    read_two_bytes_with_80 [$800ac2c4]
+80093804	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V0 = V0 << 04;
 A0 = w[800af54c];
@@ -13141,7 +13095,7 @@ A1 = h[A0 + 00da];
 V1 = V1 - V0;
 
 L93830:	; 80093830
-80093830	jal    read_two_bytes_with_80 [$800ac2c4]
+80093830	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V0 = V0 << 04;
 A0 = w[800af54c];
@@ -13156,7 +13110,7 @@ L93858:	; 80093858
 [A2 + 0024] = w(A1);
 
 L93864:	; 80093864
-80093864	jal    read_two_bytes_with_80 [$800ac2c4]
+80093864	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = w[800afb8c];
 80093874	nop
@@ -13167,7 +13121,7 @@ S0 = S0 + V0;
 80093888	jal    $8003f774
 A0 = S0;
 A0 = 0001;
-80093894	jal    read_two_bytes_with_80 [$800ac2c4]
+80093894	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0;
 8009389C	mult   s1, v0
 V1 = w[800af54c];
@@ -13178,7 +13132,7 @@ V0 = V0 + A3;
 800938B8	jal    $8003f758
 [V1 + 00d0] = w(V0);
 A0 = 0001;
-800938C4	jal    read_two_bytes_with_80 [$800ac2c4]
+800938C4	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 800938CC	mult   s0, v0
 V1 = w[800af54c];
@@ -13264,12 +13218,12 @@ V0 = V0 + 0001;
 V0 = w[800af54c];
 800939F4	nop
 S0 = bu[V0 + 00e2];
-800939FC	jal    read_two_bytes_with_80 [$800ac2c4]
+800939FC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 S0 = S0 < V0;
 80093A08	beq    s0, zero, L93b38 [$80093b38]
 80093A0C	lui    a0, $ffef
-80093A10	jal    read_two_bytes_with_80 [$800ac2c4]
+80093A10	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = V0;
 V0 = 1000;
@@ -13281,7 +13235,7 @@ V0 = 1001;
 80093A34	nop
 
 L93a38:	; 80093A38
-80093A38	jal    read_two_bytes_with_80 [$800ac2c4]
+80093A38	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V0 = V0 << 04;
 A0 = w[800af54c];
@@ -13292,7 +13246,7 @@ A1 = h[A0 + 00da];
 V1 = V1 - V0;
 
 L93a64:	; 80093A64
-80093A64	jal    read_two_bytes_with_80 [$800ac2c4]
+80093A64	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V0 = V0 << 04;
 A0 = w[800af54c];
@@ -13307,7 +13261,7 @@ L93a8c:	; 80093A8C
 [A2 + 0024] = w(A1);
 
 L93a98:	; 80093A98
-80093A98	jal    read_two_bytes_with_80 [$800ac2c4]
+80093A98	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = w[800afb8c];
 80093AA8	nop
@@ -13318,7 +13272,7 @@ S0 = S0 + V0;
 80093ABC	jal    $8003f774
 A0 = S0;
 A0 = 0001;
-80093AC8	jal    read_two_bytes_with_80 [$800ac2c4]
+80093AC8	jal    field_script_help_read_v80 [$800ac2c4]
 S1 = V0;
 80093AD0	mult   s1, v0
 V1 = w[800af54c];
@@ -13329,7 +13283,7 @@ V0 = V0 - A3;
 80093AEC	jal    $8003f758
 [V1 + 00d0] = w(V0);
 A0 = 0001;
-80093AF8	jal    read_two_bytes_with_80 [$800ac2c4]
+80093AF8	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 80093B00	mult   s0, v0
 V1 = w[800af54c];
@@ -13386,10 +13340,10 @@ V0 = 00ff;
 [SP + 0010] = w(S0);
 [8004e9bc] = w(0);
 [8004e9cc] = w(V0);
-80093BC8	jal    read_two_bytes_with_80 [$800ac2c4]
+80093BC8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = 0003;
-80093BD4	jal    read_two_bytes_with_80 [$800ac2c4]
+80093BD4	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = 000a;
 S0 = S0 << 08;
@@ -13455,7 +13409,7 @@ V0 = w[A0 + 012c];
 V0 = V0 & V1;
 V0 = V0 | 0001;
 [A0 + 012c] = w(V0);
-80093CB4	jal    read_two_bytes_with_80 [$800ac2c4]
+80093CB4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af54c];
 80093CC4	nop
@@ -13480,7 +13434,7 @@ V0 = w[A0 + 012c];
 V0 = V0 & V1;
 V0 = V0 | 0002;
 [A0 + 012c] = w(V0);
-80093D08	jal    read_two_bytes_with_80 [$800ac2c4]
+80093D08	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af54c];
 80093D18	nop
@@ -13503,7 +13457,7 @@ V1 = w[800af54c];
 V0 = w[V1 + 012c];
 A0 = 0001;
 V0 = V0 | 0003;
-80093D54	jal    read_two_bytes_with_80 [$800ac2c4]
+80093D54	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 012c] = w(V0);
 A0 = w[800af54c];
 80093D64	nop
@@ -13553,40 +13507,40 @@ V0 = w[AT + f338];
 80093E08	jr     v0 
 80093E0C	nop
 
-80093E10	jal    read_two_bytes_with_80 [$800ac2c4]
+80093E10	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = hu[S0 + 0050];
 80093E1C	nop
 V1 = V1 + V0;
 80093E24	j      L93eac [$80093eac]
 [S0 + 0050] = h(V1);
-80093E2C	jal    read_two_bytes_with_80 [$800ac2c4]
+80093E2C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = hu[S0 + 0050];
 80093E38	nop
 V1 = V1 - V0;
 80093E40	j      L93eac [$80093eac]
 [S0 + 0050] = h(V1);
-80093E48	jal    read_two_bytes_with_80 [$800ac2c4]
+80093E48	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = hu[S0 + 0052];
 80093E54	nop
 V1 = V1 + V0;
 80093E5C	j      L93eac [$80093eac]
 [S0 + 0052] = h(V1);
-80093E64	jal    read_two_bytes_with_80 [$800ac2c4]
+80093E64	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = hu[S0 + 0052];
 80093E70	nop
 V1 = V1 - V0;
 80093E78	j      L93eac [$80093eac]
 [S0 + 0052] = h(V1);
-80093E80	jal    read_two_bytes_with_80 [$800ac2c4]
+80093E80	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = hu[S0 + 0054];
 80093E8C	j      L93ea8 [$80093ea8]
 V1 = V1 + V0;
-80093E94	jal    read_two_bytes_with_80 [$800ac2c4]
+80093E94	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 V1 = hu[S0 + 0054];
 80093EA0	nop
@@ -13645,7 +13599,7 @@ V0 = 0002;
 80093F48	nop
 
 L93f4c:	; 80093F4C
-80093F4C	jal    read_two_bytes_with_80 [$800ac2c4]
+80093F4C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af1f0];
 80093F5C	nop
@@ -13660,7 +13614,7 @@ A0 = A0 + V1;
 [A0 + 0050] = h(V0);
 
 L93f88:	; 80093F88
-80093F88	jal    read_two_bytes_with_80 [$800ac2c4]
+80093F88	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af1f0];
 80093F98	nop
@@ -13675,7 +13629,7 @@ A0 = A0 + V1;
 [A0 + 0052] = h(V0);
 
 L93fc4:	; 80093FC4
-80093FC4	jal    read_two_bytes_with_80 [$800ac2c4]
+80093FC4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af1f0];
 80093FD4	nop
@@ -13708,7 +13662,7 @@ SP = SP + 0018;
 // func94030
 80094030	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80094038	jal    read_two_bytes_with_80 [$800ac2c4]
+80094038	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -13740,7 +13694,7 @@ SP = SP + 0018;
 // 0xBE()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -13766,7 +13720,7 @@ A1 = A1 - V0;
 // func94110
 80094110	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80094118	jal    read_two_bytes_with_80 [$800ac2c4]
+80094118	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -13797,7 +13751,7 @@ SP = SP + 0018;
 // func94180
 80094180	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80094188	jal    read_two_bytes_with_80 [$800ac2c4]
+80094188	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -13828,7 +13782,7 @@ SP = SP + 0018;
 // func941f0
 800941F0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800941F8	jal    read_two_bytes_with_80 [$800ac2c4]
+800941F8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -13859,7 +13813,7 @@ SP = SP + 0018;
 // func94260
 80094260	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80094268	jal    read_two_bytes_with_80 [$800ac2c4]
+80094268	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = w[800af1f0];
 A1 = w[800aefe4];
@@ -14402,7 +14356,7 @@ A1 = w[struct_5c_p + entity_id * 5c + 4];
 // func948d4
 800948D4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800948DC	jal    read_two_bytes_with_80 [$800ac2c4]
+800948DC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b164c] = h(V0);
@@ -14498,7 +14452,7 @@ V1 = V1 & 000e;
 V0 = hu[A1 + 00cc];
 V1 = V1 + A1;
 V0 = V0 + 0004;
-80094A64	jal    read_two_bytes_unsigned [$800ac290]
+80094A64	jal    field_script_help_read_u16 [$800ac290]
 [V1 + 0078] = h(V0);
 A0 = w[800af54c];
 80094A74	nop
@@ -14631,7 +14585,7 @@ V1 = V1 & 000e;
 V0 = hu[A1 + 00cc];
 V1 = V1 + A1;
 V0 = V0 + 0004;
-80094C78	jal    read_two_bytes_unsigned [$800ac290]
+80094C78	jal    field_script_help_read_u16 [$800ac290]
 [V1 + 0078] = h(V0);
 A0 = w[800af54c];
 80094C88	nop
@@ -14749,7 +14703,7 @@ V0 = V0 + 0004;
 [V1 + 00cc] = h(V0);
 
 L94e48:	; 80094E48
-80094E48	jal    read_two_bytes_unsigned [$800ac290]
+80094E48	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 V1 = w[800af150];
 A0 = w[800af54c];
@@ -14828,7 +14782,7 @@ if( ( trigger_height < entity_y ) && ( entity_y - hu[A2 + 1a] < trigger_height )
 }
 
 A0 = 2;
-read_two_bytes_unsigned;
+field_script_help_read_u16;
 [current_entity_data + cc] = h(V0);
 
 [800af150] = w(w[800af150] + 1);
@@ -14924,7 +14878,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0004;
 
 L951a0:	; 800951A0
-800951A0	jal    read_two_bytes_unsigned [$800ac290]
+800951A0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 V1 = w[800af54c];
 
@@ -14978,7 +14932,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0004;
 
 L95264:	; 80095264
-80095264	jal    read_two_bytes_unsigned [$800ac290]
+80095264	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 V1 = w[800af54c];
 
@@ -15013,7 +14967,7 @@ V0 = w[800aefe4];
 V1 = V1 << 02;
 V1 = V1 + V0;
 S0 = w[V1 + 004c];
-800952E4	jal    read_two_bytes_with_80 [$800ac2c4]
+800952E4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = h[S0 + 0010];
 800952F0	nop
@@ -15026,7 +14980,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0006;
 
 L95314:	; 80095314
-80095314	jal    read_two_bytes_unsigned [$800ac290]
+80095314	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0004;
 V1 = w[800af54c];
 
@@ -15073,7 +15027,7 @@ V0 = V0 - A1;
 V0 = V0 << 01;
 V0 = V0 + V1;
 S0 = bu[V0 + 000c];
-800953C8	jal    read_two_bytes_with_80 [$800ac2c4]
+800953C8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 800953D0	bne    v0, s0, L953f0 [$800953f0]
 800953D4	nop
@@ -15084,7 +15038,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0006;
 
 L953f0:	; 800953F0
-800953F0	jal    read_two_bytes_unsigned [$800ac290]
+800953F0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0004;
 V1 = w[800af54c];
 
@@ -15129,7 +15083,7 @@ A2 = V1 - A2;
 80095494	jal    func98fd8 [$80098fd8]
 A1 = A3 - A1;
 A0 = 0002;
-800954A0	jal    read_two_bytes_with_80 [$800ac2c4]
+800954A0	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 S0 = S0 < V0;
 800954AC	beq    s0, zero, L954cc [$800954cc]
@@ -15141,7 +15095,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0006;
 
 L954cc:	; 800954CC
-800954CC	jal    read_two_bytes_unsigned [$800ac290]
+800954CC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0004;
 V1 = w[800af54c];
 
@@ -15181,7 +15135,7 @@ V0 = A2 + 0007;
 [A3 + 00cc] = h(V0);
 
 L95564:	; 80095564
-80095564	jal    read_two_bytes_unsigned [$800ac290]
+80095564	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0005;
 V1 = w[800af54c];
 80095574	nop
@@ -15196,7 +15150,7 @@ SP = SP + 0018;
 // func9558c
 8009558C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80095594	jal    read_two_bytes_with_80 [$800ac2c4]
+80095594	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A1 = w[80059a38];
 800955A4	lui    v1, $0098
@@ -15222,7 +15176,7 @@ SP = SP + 0018;
 // func955f0
 800955F0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800955F8	jal    read_two_bytes_with_80 [$800ac2c4]
+800955F8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A1 = w[80059a38];
 80095608	nop
@@ -15253,7 +15207,7 @@ SP = SP + 0018;
 button_mask = A0;
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 
 if( V0 & button_mask )
 {
@@ -15263,7 +15217,7 @@ if( V0 & button_mask )
 else
 {
     A0 = 3;
-    read_two_bytes_unsigned();
+    field_script_help_read_u16();
 
     V1 = w[800af54c];
     [V1 + cc] = h(V0);
@@ -15278,7 +15232,7 @@ else
 [SP + 0010] = w(S0);
 S0 = A0;
 [SP + 0014] = w(RA);
-800956C8	jal    read_two_bytes_unsigned [$800ac290]
+800956C8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V0 = V0 & ffff;
 S0 = S0 & ffff;
@@ -15291,7 +15245,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0005;
 
 L956f8:	; 800956F8
-800956F8	jal    read_two_bytes_unsigned [$800ac290]
+800956F8	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[800af54c];
 
@@ -15363,7 +15317,7 @@ V0 = V0 + 0001;
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-800957F8	jal    read_two_bytes_with_80 [$800ac2c4]
+800957F8	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 S0 = V0;
 80095804	jal    func946f8 [$800946f8]
@@ -15377,7 +15331,7 @@ S0 = V0;
 80095824	addiu  v0, zero, $ffff (=-$1)
 80095828	beq    s1, v0, L95848 [$80095848]
 8009582C	nop
-80095830	jal    read_two_bytes_unsigned [$800ac290]
+80095830	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = S0 + S1;
 A1 = bu[V1 + 0000];
@@ -15385,7 +15339,7 @@ A1 = bu[V1 + 0000];
 A0 = V0 & ffff;
 
 L95848:	; 80095848
-80095848	jal    read_two_bytes_unsigned [$800ac290]
+80095848	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 A0 = V0 & ffff;
 A1 = 0;
@@ -15409,7 +15363,7 @@ SP = SP + 0020;
 // func95894
 80095894	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009589C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009589C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 800958A4	jal    func946f8 [$800946f8]
 A0 = V0;
@@ -15423,7 +15377,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0005;
 
 L958d0:	; 800958D0
-800958D0	jal    read_two_bytes_unsigned [$800ac290]
+800958D0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[800af54c];
 
@@ -15436,7 +15390,7 @@ SP = SP + 0018;
 // func958f0
 800958F0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800958F8	jal    read_two_bytes_with_80 [$800ac2c4]
+800958F8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 80095900	jal    func95930 [$80095930]
 A0 = V0;
@@ -15507,7 +15461,7 @@ SP = SP + 0028;
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-800959F0	jal    read_two_bytes_with_80 [$800ac2c4]
+800959F0	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 S0 = V0;
 800959FC	jal    func946f8 [$800946f8]
@@ -15571,7 +15525,7 @@ L95ad4:	; 80095AD4
 V0 = A2 < 0003;
 80095AD8	bne    v0, zero, loop95aa8 [$80095aa8]
 A1 = A1 + 0004;
-80095AE0	jal    read_two_bytes_unsigned [$800ac290]
+80095AE0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 V1 = w[800af54c];
 80095AF0	nop
@@ -15602,7 +15556,7 @@ V0 = A0 + 0004;
 [A1 + 00cc] = h(V0);
 
 L95b54:	; 80095B54
-80095B54	jal    read_two_bytes_unsigned [$800ac290]
+80095B54	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 V1 = w[800af54c];
 80095B64	nop
@@ -15660,7 +15614,7 @@ V0 = V0 + 0002;
 current_entity_data = w[800af54c];
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0;
 
 A0 = 0;
@@ -15673,7 +15627,7 @@ if( V0 < S0 )
 else
 {
     A0 = 3;
-    read_two_bytes_unsigned();
+    field_script_help_read_u16();
     [current_entity_data + cc] = h(V0);
 }
 ////////////////////////////////
@@ -15685,7 +15639,7 @@ else
 80095C88	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80095C94	jal    read_two_bytes_with_80 [$800ac2c4]
+80095C94	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0;
 80095CA0	jal    get_bytes_from_800C2F3C [$800a25a8]
@@ -15700,7 +15654,7 @@ V0 = hu[V1 + 00cc];
 V0 = V0 + 0005;
 
 L95ccc:	; 80095CCC
-80095CCC	jal    read_two_bytes_unsigned [$800ac290]
+80095CCC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0003;
 V1 = w[800af54c];
 
@@ -15721,7 +15675,7 @@ SP = SP + 0018;
 current_entity_data = w[800af54c];
 
 A0 = 1;
-read_two_bytes_with_80;
+field_script_help_read_v80;
 S0 = V0;
 
 A0 = 0;
@@ -15734,7 +15688,7 @@ if( V0 == S0 )
 else
 {
     A0 = 3;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     [current_entity_data + cc] = h(V0);
 }
 ////////////////////////////////
@@ -15747,7 +15701,7 @@ else
 [800af150] = w(w[800af150] + 20);
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = 0;
 A1 = V0;
@@ -15764,7 +15718,7 @@ V1 = w[800af54c];
 80095DBC	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80095DC8	jal    read_two_bytes_unsigned [$800ac290]
+80095DC8	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 A0 = 0;
 80095DD4	jal    get_bytes_from_800C2F3C [$800a25a8]
@@ -15993,13 +15947,13 @@ SP = SP + 0028;
 // func960c8
 800960C8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800960D0	jal    read_two_bytes_with_80 [$800ac2c4]
+800960D0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 [800b1818] = h(V0);
-800960E0	jal    read_two_bytes_with_80 [$800ac2c4]
+800960E0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 [800b181a] = h(V0);
-800960F0	jal    read_two_bytes_with_80 [$800ac2c4]
+800960F0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = w[800af54c];
 [800b1814] = h(V0);
@@ -16034,7 +15988,7 @@ V1 = w[AT + 1c20];
 V0 = 00ff;
 80096174	beq    v1, v0, L961e4 [$800961e4]
 80096178	nop
-8009617C	jal    read_two_bytes_unsigned [$800ac290]
+8009617C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -16093,7 +16047,7 @@ V1 = w[AT + 1c20];
 V0 = 00ff;
 8009625C	beq    v1, v0, L962cc [$800962cc]
 80096260	nop
-80096264	jal    read_two_bytes_unsigned [$800ac290]
+80096264	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -16152,7 +16106,7 @@ V1 = w[AT + 1c20];
 V0 = 00ff;
 80096344	beq    v1, v0, L963c4 [$800963c4]
 80096348	nop
-8009634C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009634C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -16217,7 +16171,7 @@ V1 = w[AT + 1c20];
 V0 = 00ff;
 8009643C	beq    v1, v0, L964bc [$800964bc]
 80096440	nop
-80096444	jal    read_two_bytes_with_80 [$800ac2c4]
+80096444	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -16465,7 +16419,7 @@ SP = SP + 0028;
 // func967d4
 800967D4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800967DC	jal    read_two_bytes_with_80 [$800ac2c4]
+800967DC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = V0 << 02;
 V1 = V1 + V0;
@@ -16560,7 +16514,7 @@ A0 = 0;
 800968F8	jal    func7cf50 [$8007cf50]
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = V0;
 80096908	jal    func714e8 [$800714e8]
@@ -16575,7 +16529,7 @@ V1 = w[800af54c];
 // 0xB4_FadeIn()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = V0;
 80096948	jal    func7145c [$8007145c]
@@ -16590,7 +16544,7 @@ V1 = w[800af54c];
 // func96978
 80096978	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80096980	jal    read_two_bytes_unsigned [$800ac290]
+80096980	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 V1 = w[800af54c];
 A0 = w[800ad0d8];
@@ -16622,7 +16576,7 @@ SP = SP + 0018;
 // func969e4
 800969E4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800969EC	jal    read_two_bytes_with_80 [$800ac2c4]
+800969EC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = V0 << 01;
 A0 = w[800af54c];
@@ -16694,7 +16648,7 @@ V1 = hu[A1 + 0090];
 V0 = ffff;
 80096B20	bne    v1, v0, L96b50 [$80096b50]
 80096B24	nop
-80096B28	jal    read_two_bytes_with_80 [$800ac2c4]
+80096B28	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 A0 = w[800af54c];
 80096B38	nop
@@ -16705,7 +16659,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L96b50:	; 80096B50
-80096B50	jal    read_two_bytes_with_80 [$800ac2c4]
+80096B50	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 80096B58	jal    func97024 [$80097024]
 A0 = V0;
@@ -16826,7 +16780,7 @@ V1 = hu[V1 + 0090];
 V0 = ffff;
 80096D04	bne    v1, v0, L96d34 [$80096d34]
 80096D08	nop
-80096D0C	jal    read_two_bytes_with_80 [$800ac2c4]
+80096D0C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0008;
 A0 = w[800af54c];
 80096D1C	nop
@@ -16837,7 +16791,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L96d34:	; 80096D34
-80096D34	jal    read_two_bytes_with_80 [$800ac2c4]
+80096D34	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0008;
 80096D3C	jal    func97024 [$80097024]
 A0 = V0;
@@ -16948,7 +16902,7 @@ V1 = hu[V1 + 0090];
 V0 = ffff;
 80096EB4	bne    v1, v0, L96ee4 [$80096ee4]
 80096EB8	nop
-80096EBC	jal    read_two_bytes_with_80 [$800ac2c4]
+80096EBC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 A0 = w[800af54c];
 80096ECC	nop
@@ -16959,7 +16913,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L96ee4:	; 80096EE4
-80096EE4	jal    read_two_bytes_with_80 [$800ac2c4]
+80096EE4	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 80096EEC	jal    func97024 [$80097024]
 A0 = V0;
@@ -16994,7 +16948,7 @@ V1 = hu[V1 + 0090];
 V0 = ffff;
 80096F50	bne    v1, v0, L96f80 [$80096f80]
 80096F54	nop
-80096F58	jal    read_two_bytes_with_80 [$800ac2c4]
+80096F58	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0008;
 A0 = w[800af54c];
 80096F68	nop
@@ -17005,7 +16959,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L96f80:	; 80096F80
-80096F80	jal    read_two_bytes_with_80 [$800ac2c4]
+80096F80	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0008;
 80096F88	jal    func97024 [$80097024]
 A0 = V0;
@@ -17231,7 +17185,7 @@ A0 = 0002;
 S3 = V0;
 
 L972e8:	; 800972E8
-800972E8	jal    read_two_bytes_with_80 [$800ac2c4]
+800972E8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 S0 = V0 & 0fff;
 800972F4	jal    $8003f774
@@ -17470,7 +17424,7 @@ V1 = hu[A1 + 0090];
 V0 = ffff;
 8009765C	bne    v1, v0, L9768c [$8009768c]
 80097660	nop
-80097664	jal    read_two_bytes_with_80 [$800ac2c4]
+80097664	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 A0 = w[800af54c];
 80097674	nop
@@ -17481,7 +17435,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L9768c:	; 8009768C
-8009768C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009768C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 80097694	jal    func99094 [$80099094]
 A0 = V0;
@@ -17578,7 +17532,7 @@ V1 = hu[V1 + 0090];
 V0 = ffff;
 800977D4	bne    v1, v0, L97804 [$80097804]
 800977D8	nop
-800977DC	jal    read_two_bytes_with_80 [$800ac2c4]
+800977DC	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 A0 = w[800af54c];
 800977EC	nop
@@ -17589,7 +17543,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L97804:	; 80097804
-80097804	jal    read_two_bytes_with_80 [$800ac2c4]
+80097804	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 8009780C	jal    func99094 [$80099094]
 A0 = V0;
@@ -17648,7 +17602,7 @@ V1 = hu[V1 + 0090];
 V0 = ffff;
 800978D0	bne    v1, v0, L97900 [$80097900]
 800978D4	nop
-800978D8	jal    read_two_bytes_with_80 [$800ac2c4]
+800978D8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0006;
 A0 = w[800af54c];
 800978E8	nop
@@ -17659,7 +17613,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L97900:	; 80097900
-80097900	jal    read_two_bytes_with_80 [$800ac2c4]
+80097900	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0006;
 80097908	jal    func99094 [$80099094]
 A0 = V0;
@@ -17756,7 +17710,7 @@ V1 = hu[A0 + 0090];
 V0 = ffff;
 80097A4C	bne    v1, v0, L97a7c [$80097a7c]
 80097A50	nop
-80097A54	jal    read_two_bytes_with_80 [$800ac2c4]
+80097A54	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0006;
 A0 = w[800af54c];
 80097A64	nop
@@ -17767,7 +17721,7 @@ A0 = A0 + V1;
 [A0 + 0090] = h(V0);
 
 L97a7c:	; 80097A7C
-80097A7C	jal    read_two_bytes_with_80 [$800ac2c4]
+80097A7C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0006;
 80097A84	jal    func99094 [$80099094]
 A0 = V0;
@@ -17841,7 +17795,7 @@ SP = SP + 0018;
 if( w[800c1b60] == 0 )
 {
     A0 = 1;
-    read_two_bytes_unsigned();
+    field_script_help_read_u16();
     A0 = V0 & ffff;
 
     get_bytes_from_800C2F3C();
@@ -17907,7 +17861,7 @@ A1 = bu[V1 + 000b];
 80097CA0	jal    read_two_bytes_based_on_flag_08 [$8009c618]
 S1 = V0;
 A0 = 0001;
-80097CAC	jal    read_two_bytes_unsigned [$800ac290]
+80097CAC	jal    field_script_help_read_u16 [$800ac290]
 S0 = V0;
 A0 = S1 - S3;
 A1 = S0 - S2;
@@ -17993,7 +17947,7 @@ A1 = bu[V1 + 000f];
 80097E14	jal    read_two_bytes_based_on_flag_08 [$8009c618]
 S1 = V0;
 A0 = 0001;
-80097E20	jal    read_two_bytes_unsigned [$800ac290]
+80097E20	jal    field_script_help_read_u16 [$800ac290]
 S0 = V0;
 A0 = S2 - S5;
 A1 = S0 - S3;
@@ -18058,7 +18012,7 @@ A1 = S0;
 80097F1C	jal    func72fc0 [$80072fc0]
 A2 = V0;
 A0 = 0001;
-80097F28	jal    read_two_bytes_unsigned [$800ac290]
+80097F28	jal    field_script_help_read_u16 [$800ac290]
 S0 = V0;
 A0 = V0 & ffff;
 80097F34	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -18083,7 +18037,7 @@ SP = SP + 0020;
 // func97f70
 80097F70	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80097F78	jal    read_two_bytes_unsigned [$800ac290]
+80097F78	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[800af54c];
 80097F88	nop
@@ -18124,7 +18078,7 @@ V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 004c];
 A0 = 0002;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 
 A1 = hu[S0 + 0106];
 A0 = V0 & ffff;
@@ -18262,7 +18216,7 @@ V1 = hu[V1 + 0090];
 V0 = ffff;
 80098238	bne    v1, v0, L98268 [$80098268]
 8009823C	nop
-80098240	jal    read_two_bytes_with_80 [$800ac2c4]
+80098240	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 000b;
 A0 = w[800af54c];
 80098250	nop
@@ -19238,7 +19192,7 @@ switch( read_type )
     case 3:
     {
         A0 = 1;
-        read_two_bytes_with_80();
+        field_script_help_read_v80();
         S0 = V0;
 
         A0 = S0;
@@ -19313,7 +19267,7 @@ else
 // func994cc
 800994CC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800994D4	jal    read_two_bytes_unsigned [$800ac290]
+800994D4	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[800af54c];
 800994E4	nop
@@ -19347,7 +19301,7 @@ V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 004c];
-80099554	jal    read_two_bytes_unsigned [$800ac290]
+80099554	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = h[S0 + 00e4];
 80099560	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -19371,7 +19325,7 @@ SP = SP + 0018;
 // func99598
 80099598	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800995A0	jal    read_two_bytes_unsigned [$800ac290]
+800995A0	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 V1 = w[800af54c];
 800995B0	nop
@@ -19407,7 +19361,7 @@ S1 = V0;
 V0 = 00ff;
 80099618	beq    s1, v0, L9969c [$8009969c]
 8009961C	nop
-80099620	jal    read_two_bytes_unsigned [$800ac290]
+80099620	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0002;
 S0 = S1 << 01;
 S0 = S0 + S1;
@@ -19419,7 +19373,7 @@ V1 = S0 + V1;
 A1 = w[V1 + 0040];
 8009964C	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80099654	jal    read_two_bytes_unsigned [$800ac290]
+80099654	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0004;
 V1 = w[800aefe4];
 80099664	nop
@@ -19427,7 +19381,7 @@ V1 = S0 + V1;
 A1 = w[V1 + 0048];
 80099670	jal    put_bytes_to_800C2F3C [$800a2604]
 A0 = V0 & ffff;
-80099678	jal    read_two_bytes_unsigned [$800ac290]
+80099678	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0006;
 V1 = w[800aefe4];
 80099688	nop
@@ -19639,7 +19593,7 @@ V1 = V1 + 0002;
 [V0 + 0000] = w(V1);
 
 L99978:	; 80099978
-80099978	jal    read_two_bytes_with_80 [$800ac2c4]
+80099978	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = h[800aeed2];
 V1 = h[S0 + 0000];
@@ -19718,7 +19672,7 @@ return (7 - ((h[800aee60] - 100) >> 9)) & 7;
 80099B08	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-80099B14	jal    read_two_bytes_unsigned [$800ac290]
+80099B14	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 80099B1C	jal    func99ae8 [$80099ae8]
 S0 = V0 & ffff;
@@ -19798,7 +19752,7 @@ L99c00:	; 80099C00
 // func99c08
 80099C08	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80099C10	jal    read_two_bytes_with_80 [$800ac2c4]
+80099C10	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800aeec8] = b(V0);
@@ -19817,7 +19771,7 @@ SP = SP + 0018;
 // func99c44
 80099C44	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80099C4C	jal    read_two_bytes_with_80 [$800ac2c4]
+80099C4C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800aeec9] = b(V0);
@@ -19838,7 +19792,7 @@ SP = SP + 0018;
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-80099C90	jal    read_two_bytes_unsigned [$800ac290]
+80099C90	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 V1 = w[800af54c];
 A1 = w[800ad0d8];
@@ -19886,7 +19840,7 @@ SP = SP + 0020;
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-80099D4C	jal    read_two_bytes_unsigned [$800ac290]
+80099D4C	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 V1 = w[800af54c];
 A1 = w[800ad0d8];
@@ -19934,7 +19888,7 @@ SP = SP + 0020;
 A0 = 0001;
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
-80099E08	jal    read_two_bytes_unsigned [$800ac290]
+80099E08	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 V1 = w[800af54c];
 A1 = w[800ad0d8];
@@ -20167,7 +20121,7 @@ V0 = V0 + 0003;
 8009A130	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009A13C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009A13C	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 8009A144	jal    func99eb0 [$80099eb0]
 S0 = V0;
@@ -20193,7 +20147,7 @@ SP = SP + 0018;
 8009A180	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009A18C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009A18C	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 8009A194	jal    func99eb0 [$80099eb0]
 S0 = V0;
@@ -20218,7 +20172,7 @@ SP = SP + 0018;
 // func9a1d0
 8009A1D0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009A1D8	jal    read_two_bytes_with_80 [$800ac2c4]
+8009A1D8	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V0 = V0 << 01;
 8009A1E4	lui    at, $800b
@@ -20238,7 +20192,7 @@ SP = SP + 0018;
 // func9a208
 8009A208	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009A210	jal    read_two_bytes_with_80 [$800ac2c4]
+8009A210	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 V0 = V0 << 01;
 8009A21C	lui    at, $800b
@@ -20261,7 +20215,7 @@ SP = SP + 0018;
 // 0x69_SetRotation
 8009A250	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009A258	jal    read_two_bytes_with_80 [$800ac2c4]
+8009A258	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V0 = V0 << 01;
 8009A264	lui    at, $800b
@@ -20281,7 +20235,7 @@ SP = SP + 0018;
 // func9a288
 8009A288	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009A290	jal    read_two_bytes_with_80 [$800ac2c4]
+8009A290	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V0 = V0 << 01;
 8009A29C	lui    at, $800b
@@ -20846,7 +20800,7 @@ read_two_bytes_based_on_flag_40();
 S0 = V0;
 
 A0 = e;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = 0;
 A1 = S1;
@@ -20874,7 +20828,7 @@ read_two_bytes_based_on_flag_10();
 S0 = V0;
 
 A0 = 10;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = 0001;
 A1 = S1;
@@ -20906,7 +20860,7 @@ read_two_bytes_based_on_flag_04();
 S0 = V0;
 
 A0 = 12;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = 0002;
 A1 = S1;
@@ -20950,7 +20904,7 @@ L9ac1c:	; 8009AC1C
 // func9ac38
 8009AC38	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009AC40	jal    read_two_bytes_unsigned [$800ac290]
+8009AC40	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A1 = w[800aeecc];
 8009AC50	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -20973,10 +20927,10 @@ SP = SP + 0018;
 8009AC80	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009AC8C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009AC8C	jal    field_script_help_read_v80 [$800ac2c4]
 [SP + 0010] = w(S0);
 A0 = 0003;
-8009AC98	jal    read_two_bytes_with_80 [$800ac2c4]
+8009AC98	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = V0;
 A0 = S0;
 8009ACA4	jal    func9a410 [$8009a410]
@@ -21045,7 +20999,7 @@ else
 if( h[800aeeca] == 0 )
 {
     A0 = 1;
-    read_two_bytes_with_80;
+    field_script_help_read_v80;
 
     A0 = 0;
     A1 = V0;
@@ -21066,7 +21020,7 @@ if( h[800aeeca] == 0 )
 if( h[800aeeca] == 0 )
 {
     A0 = 1;
-    read_two_bytes_with_80;
+    field_script_help_read_v80;
 
     A0 = 1;
     A1 = V0;
@@ -21085,11 +21039,11 @@ if( h[800aeeca] == 0 )
 ////////////////////////////////
 // 0xB5_CameraSetDirection
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 S0 = V0;
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 A1 = V0;
 
 if( w[800acff4] == 0 )
@@ -21183,11 +21137,11 @@ SP = SP + 0018;
 // 0xA0()
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 [800aeed0] = h(V0);
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 V0 = V0 + 4;
 V0 = V0 & 7;
 V1 = V0 << 9;
@@ -21198,7 +21152,7 @@ V0 = V0 << 10;
 [800aeec4] = w(V0);
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 A0 = V0;
 [800aeecc] = w(A0);
 
@@ -21642,14 +21596,14 @@ L9b83c:	; 8009B83C
 8009B83C	bne    v1, v0, L9b87c [$8009b87c]
 8009B840	nop
 A0 = w[800acfe8];
-8009B84C	jal    $80031f0c
+8009B84C	jal    $system_memory_mark_removed_alloc
 [S0 + 0000] = h(0);
 V0 = h[S3 + 0000];
 8009B858	nop
 8009B85C	bne    v0, s5, L9badc [$8009badc]
 8009B860	addiu  v0, zero, $ffff (=-$1)
 A0 = w[800acfec];
-8009B86C	jal    $80031f0c
+8009B86C	jal    $system_memory_mark_removed_alloc
 8009B870	nop
 8009B874	j      L9badc [$8009badc]
 8009B878	addiu  v0, zero, $ffff (=-$1)
@@ -21916,7 +21870,7 @@ if( V0 != -1 )
 
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 dialog_id = V0;
 
 
@@ -22397,28 +22351,28 @@ V0 = V0 + 0005;
 // 0xD0()
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 V1 = w[800af54c];
 [V1 + 88] = h(V0);
 
 A0 = 3;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 V1 = w[800af54c];
 [V1 + 8A] = h(V0);
 
 A0 = 5;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 V1 = V0 * 3;
 A1 = w[800af54c];
 [A1 + 82] = b(V1);
 
 A0 = 7;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 V1 = w[800af54c];
 [V1 + 83] = b(V0);
 
 A0 = 9;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 A0 = w[800af54c];
 [A0 + 84] = w(V0);
 
@@ -22448,11 +22402,11 @@ a1 - flags
 
 if (if bit in function name in A1 set)
 {
-    read_two_bytes_signed;
+    field_script_help_read_s16;
 }
 else
 {
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0 & ffff
     get_bytes_from_800C2F3C [$800a25a8]
 }
@@ -22465,7 +22419,7 @@ else
 8009C728	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009C734	jal    read_two_bytes_unsigned [$800ac290]
+8009C734	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009C73C	jal    $8003f8b0
 S0 = V0 & ffff;
@@ -22493,14 +22447,14 @@ system_get_random_2_bytes;
 S0 = V0;
 
 A0 = 3;
-read_two_bytes_with_80;
+field_script_help_read_v80;
 
 V0 = V0 + 1;
 A2 = S0 * V0;
 S0 = A2 >> F;
 
 A0 = 1;
-read_two_bytes_unsigned;
+field_script_help_read_u16;
 
 A0 = V0;
 A1 = S0;
@@ -22522,15 +22476,15 @@ return;
 8009C7F0	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009C7FC	jal    read_two_bytes_unsigned [$800ac290]
+8009C7FC	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009C804	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
 S0 = V0;
-8009C810	jal    read_two_bytes_with_80 [$800ac2c4]
+8009C810	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 S0 = S0 >> V0;
-8009C81C	jal    read_two_bytes_unsigned [$800ac290]
+8009C81C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009C828	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22554,15 +22508,15 @@ SP = SP + 0018;
 8009C860	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009C86C	jal    read_two_bytes_unsigned [$800ac290]
+8009C86C	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009C874	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
 S0 = V0;
-8009C880	jal    read_two_bytes_with_80 [$800ac2c4]
+8009C880	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0003;
 S0 = S0 << V0;
-8009C88C	jal    read_two_bytes_unsigned [$800ac290]
+8009C88C	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009C898	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22586,12 +22540,12 @@ SP = SP + 0018;
 8009C8D0	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009C8DC	jal    read_two_bytes_unsigned [$800ac290]
+8009C8DC	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009C8E4	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
 A0 = 0001;
-8009C8F0	jal    read_two_bytes_unsigned [$800ac290]
+8009C8F0	jal    field_script_help_read_u16 [$800ac290]
 S0 = V0 + 0001;
 A0 = V0 & ffff;
 8009C8FC	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22615,12 +22569,12 @@ SP = SP + 0018;
 8009C934	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009C940	jal    read_two_bytes_unsigned [$800ac290]
+8009C940	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009C948	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
 A0 = 0001;
-8009C954	jal    read_two_bytes_unsigned [$800ac290]
+8009C954	jal    field_script_help_read_u16 [$800ac290]
 8009C958	addiu  s0, v0, $ffff (=-$1)
 A0 = V0 & ffff;
 8009C960	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22644,7 +22598,7 @@ SP = SP + 0018;
 8009C998	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009C9A4	jal    read_two_bytes_unsigned [$800ac290]
+8009C9A4	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009C9AC	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22660,7 +22614,7 @@ V1 = 0001;
 V1 = V1 << V0;
 V1 = 0 NOR V1;
 S0 = S0 & V1;
-8009C9EC	jal    read_two_bytes_unsigned [$800ac290]
+8009C9EC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009C9F8	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22684,7 +22638,7 @@ SP = SP + 0018;
 8009CA30	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009CA3C	jal    read_two_bytes_unsigned [$800ac290]
+8009CA3C	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009CA44	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22697,7 +22651,7 @@ A1 = bu[V1 + 0005];
 8009CA6C	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
 A0 = 0003;
 S0 = S0 ^ V0;
-8009CA78	jal    read_two_bytes_unsigned [$800ac290]
+8009CA78	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009CA84	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22721,7 +22675,7 @@ SP = SP + 0018;
 8009CABC	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009CAC8	jal    read_two_bytes_unsigned [$800ac290]
+8009CAC8	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009CAD0	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22734,7 +22688,7 @@ A1 = bu[V1 + 0005];
 8009CAF8	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
 A0 = 0003;
 S0 = S0 | V0;
-8009CB04	jal    read_two_bytes_unsigned [$800ac290]
+8009CB04	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009CB10	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22758,7 +22712,7 @@ SP = SP + 0018;
 8009CB48	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009CB54	jal    read_two_bytes_unsigned [$800ac290]
+8009CB54	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009CB5C	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22771,7 +22725,7 @@ A1 = bu[V1 + 0005];
 8009CB84	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
 A0 = 0003;
 S0 = S0 & V0;
-8009CB90	jal    read_two_bytes_unsigned [$800ac290]
+8009CB90	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009CB9C	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22794,7 +22748,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x3A_VariableBitSet
 A0 = 1;
-read_two_bytes_unsigned;
+field_script_help_read_u16;
 
 A0 = V0;
 get_bytes_from_800C2F3C;
@@ -22812,7 +22766,7 @@ V1 = 1 << V0;
 S0 = S0 | V1;
 
 A0 = 1;
-read_two_bytes_unsigned;
+field_script_help_read_u16;
 
 A0 = V0;
 A1 = S0;
@@ -22834,7 +22788,7 @@ return;
 8009CC68	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009CC74	jal    read_two_bytes_unsigned [$800ac290]
+8009CC74	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009CC7C	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22848,7 +22802,7 @@ A1 = bu[V1 + 0005];
 A0 = 0003;
 8009CCAC	mult   s0, v0
 8009CCB0	mflo   s0
-8009CCB4	jal    read_two_bytes_unsigned [$800ac290]
+8009CCB4	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009CCC0	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22873,7 +22827,7 @@ SP = SP + 0018;
 8009CCF8	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009CD04	jal    read_two_bytes_unsigned [$800ac290]
+8009CD04	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009CD0C	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22892,7 +22846,7 @@ V0 = 0001;
 L9cd48:	; 8009CD48
 8009CD48	div    s0, v0
 8009CD4C	mflo   s0
-8009CD50	jal    read_two_bytes_unsigned [$800ac290]
+8009CD50	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009CD5C	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22917,7 +22871,7 @@ SP = SP + 0018;
 8009CD94	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009CDA0	jal    read_two_bytes_unsigned [$800ac290]
+8009CDA0	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009CDA8	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22930,7 +22884,7 @@ A1 = bu[V1 + 0005];
 8009CDD0	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
 A0 = 0003;
 S0 = S0 - V0;
-8009CDDC	jal    read_two_bytes_unsigned [$800ac290]
+8009CDDC	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009CDE8	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22955,7 +22909,7 @@ SP = SP + 0018;
 8009CE20	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009CE2C	jal    read_two_bytes_unsigned [$800ac290]
+8009CE2C	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 8009CE34	jal    get_bytes_from_800C2F3C [$800a25a8]
 A0 = V0 & ffff;
@@ -22968,7 +22922,7 @@ A1 = bu[V1 + 0005];
 8009CE5C	jal    read_two_bytes_based_on_flag_40 [$8009c54c]
 A0 = 0003;
 S0 = S0 + V0;
-8009CE68	jal    read_two_bytes_unsigned [$800ac290]
+8009CE68	jal    field_script_help_read_u16 [$800ac290]
 A0 = 0001;
 A0 = V0 & ffff;
 8009CE74	jal    put_bytes_to_800C2F3C [$800a2604]
@@ -22991,7 +22945,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x37_VariableSetFalse
 A0 = 1;
-read_two_bytes_unsigned;
+field_script_help_read_u16;
 
 A0 = V0;
 A1 = 0;
@@ -23008,7 +22962,7 @@ return;
 ////////////////////////////////
 // 0x36_VariableSetTrue
 A0 = 1;
-read_two_bytes_unsigned;
+field_script_help_read_u16;
 
 A0 = V0;
 A1 = 1;
@@ -23029,7 +22983,7 @@ return;
 // 0x35()
 
 A0 = 0001;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 
 V1 = w[800af54c];
 A1 = w[800ad0d8];
@@ -23222,7 +23176,7 @@ V0 = bu[current_entity_data + 8c + slot_id * 8 + 2];
 if( V0 == 0 )
 {
     A0 = 1;
-    read_two_bytes_with_80();
+    field_script_help_read_v80();
     [current_entity_data + 8c + slot_id * 8 + 2] = b(V0);
 }
 else
@@ -23433,7 +23387,7 @@ A0 = w[800af54c];
 // 0x21
 8009D624	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009D62C	jal    read_two_bytes_with_80 [$800ac2c4]
+8009D62C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 A0 = w[800af1f0];
@@ -23465,7 +23419,7 @@ SP = SP + 0018;
 // 0x20_SpriteSetSolid()
 
 A0 = 0001;
-8009D6A4	jal    read_two_bytes_with_80 [$800ac2c4]
+8009D6A4	jal    field_script_help_read_v80 [$800ac2c4]
 
 V1 = V0;
 V0 = V1 & 0001;
@@ -23566,17 +23520,17 @@ V1 = V1 | A1;
 8009D7D8	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-8009D7E4	jal    read_two_bytes_signed [$800ac254]
+8009D7E4	jal    field_script_help_read_s16 [$800ac254]
 [SP + 0010] = w(S0);
 A0 = 0003;
 S0 = V0 << 10;
-8009D7F4	jal    read_two_bytes_signed [$800ac254]
+8009D7F4	jal    field_script_help_read_s16 [$800ac254]
 S0 = S0 >> 10;
 A0 = S0;
 V0 = V0 << 10;
 8009D804	jal    set_position_by_x_z [$8009db04]
 A1 = V0 >> 10;
-8009D80C	jal    read_two_bytes_signed [$800ac254]
+8009D80C	jal    field_script_help_read_s16 [$800ac254]
 A0 = 0005;
 V0 = V0 << 10;
 8009D818	jal    func9dda0 [$8009dda0]
@@ -24928,7 +24882,7 @@ L9f1d0:	; 8009F1D0
 // func9f1d8
 8009F1D8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009F1E0	jal    read_two_bytes_with_80 [$800ac2c4]
+8009F1E0	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = V0;
 V0 = A0 < 0003;
@@ -24959,7 +24913,7 @@ SP = SP + 0018;
 // func9f23c
 8009F23C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-8009F244	jal    read_two_bytes_with_80 [$800ac2c4]
+8009F244	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 A0 = V0;
 V0 = A0 < 0003;
@@ -25128,12 +25082,10 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func9f474
-8009F474	addiu  sp, sp, $ffe0 (=-$20)
+// func9f474()
+
 V0 = A0 << 02;
-[SP + 0018] = w(S0);
 S0 = 80059ad4;
-[SP + 001c] = w(RA);
 8009F48C	lui    at, $8006
 AT = AT + V0;
 V1 = w[AT + 9ad4];
@@ -25278,11 +25230,6 @@ L9f6cc:	; 8009F6CC
 8009F6D0	nop
 
 L9f6d4:	; 8009F6D4
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-8009F6E0	jr     ra 
-8009F6E4	nop
 ////////////////////////////////
 
 
@@ -25374,7 +25321,7 @@ V0 = V0 << 03;
 V0 = V0 - V1;
 V1 = w[800aefe4];
 V0 = V0 << 02;
-8009F7FC	jal    read_two_bytes_with_80 [$800ac2c4]
+8009F7FC	jal    field_script_help_read_v80 [$800ac2c4]
 S4 = V1 + V0;
 S0 = V0;
 V0 = S0 < 0003;
@@ -25682,7 +25629,7 @@ V0 = V0 + V1;
 V0 = V0 << 03;
 V0 = V0 - V1;
 V0 = V0 << 02;
-8009FCAC	jal    read_two_bytes_with_80 [$800ac2c4]
+8009FCAC	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = S0 + V0;
 8009FCB4	jal    convert_magic_to_pc_id [$8008c510]
 A0 = V0;
@@ -25789,7 +25736,7 @@ struct_5c_p = w[800aefe4];
 struct_138 = w[800af54c];
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 A0 = V0;
 convert_magic_to_pc_id();
 character_id = V0;
@@ -25971,7 +25918,7 @@ funca0224();
 // funca0350
 800A0350	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800A0358	jal    read_two_bytes_with_80 [$800ac2c4]
+800A0358	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0001;
 V1 = w[800af54c];
 [800b181e] = h(V0);
@@ -25991,7 +25938,7 @@ SP = SP + 0018;
 800A038C	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0001;
 [SP + 0014] = w(RA);
-800A0398	jal    read_two_bytes_unsigned [$800ac290]
+800A0398	jal    field_script_help_read_u16 [$800ac290]
 [SP + 0010] = w(S0);
 800A03A0	jal    $system_cdrom2_get_disc_number
 S0 = V0 & ffff;
@@ -26202,7 +26149,7 @@ A0 = w[A0 + 012c];
 A0 = A0 >> 0d;
 800A0684	jal    $801e8030
 A0 = A0 & 0007;
-800A068C	jal    read_two_bytes_with_80 [$800ac2c4]
+800A068C	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0005;
 V1 = 800b16b0;
 S0 = S1 << 01;
@@ -26254,7 +26201,7 @@ La0764:	; 800A0764
 A0 = 0001;
 800A076C	bne    v0, zero, La08ac [$800a08ac]
 800A0770	nop
-800A0774	jal    read_two_bytes_with_80 [$800ac2c4]
+800A0774	jal    field_script_help_read_v80 [$800ac2c4]
 A0 = 0002;
 A0 = S1;
 800A0780	lui    at, $800b
@@ -26295,7 +26242,7 @@ V0 = h[V0 + 001c];
 S0 = S0 + S3;
 [S0 + 0000] = w(V0);
 A0 = w[S1 + 0000];
-800A0824	jal    $80031f0c
+800A0824	jal    $system_memory_mark_removed_alloc
 800A0828	nop
 V1 = w[800af54c];
 800A0834	nop
@@ -26375,7 +26322,7 @@ V0 = hu[V1 + 0058];
 A0 = 0001;
 V0 = V0 & f07f;
 V0 = V0 | 0200;
-800A0938	jal    read_two_bytes_with_80 [$800ac2c4]
+800A0938	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 0058] = h(V0);
 V1 = 0080;
 S0 = V0;
@@ -26468,7 +26415,7 @@ V0 = hu[V1 + 0058];
 A0 = 0001;
 V0 = V0 & f07f;
 V0 = V0 | 0200;
-800A0AC8	jal    read_two_bytes_with_80 [$800ac2c4]
+800A0AC8	jal    field_script_help_read_v80 [$800ac2c4]
 [V1 + 0058] = h(V0);
 S1 = V0;
 V1 = w[800aeff0];
@@ -26476,7 +26423,7 @@ V0 = S1 << 02;
 V0 = V0 + V1;
 S0 = w[V0 + 0004];
 A0 = 0003;
-800A0AEC	jal    read_two_bytes_with_80 [$800ac2c4]
+800A0AEC	jal    field_script_help_read_v80 [$800ac2c4]
 S0 = S0 + V1;
 [SP + 0010] = w(V0);
 V0 = S1 | 0080;
@@ -26536,7 +26483,7 @@ struct_138 = w[800af54c];
 [struct_5c_p + entity_id * 5c + 58] = h((hu[struct_5c_p + entity_id * 5c + 58] & f07f) | 0200);
 
 A0 = 1;
-read_two_bytes_with_80();
+field_script_help_read_v80();
 
 A0 = entity_id;
 A1 = V0; // sprite id to load
@@ -26569,7 +26516,7 @@ if( V1 != 100 )
     [struct_138 + 78 + stack_id * 2] = h(hu[struct_138 + cc] + 5);
 
     A0 = 1;
-    read_two_bytes_unsigned();
+    field_script_help_read_u16();
     [struct_138 + cc] = h(V0);
     [struct_138 + 12c] = w(w[struct_138 + 12c] & fffffe3f | (((stack_id + 1) & 7) << 6));
 }
@@ -26600,7 +26547,7 @@ if( stack_id != 100 )
     [struct_138 + 78 + stack_id * 2] = h(hu[struct_138 + cc] + 3);
 
     A0 = 1;
-    read_two_bytes_unsigned();
+    field_script_help_read_u16();
     [struct_138 + cc] = h(V0);
     [struct_138 + 12c] = w(w[struct_138 + 12c] & fffffe3f | (((stack_id + 1) & 7) << 6));
 }
@@ -26832,19 +26779,19 @@ V1 = flag & 00f0;
 if( V1 == 0 )
 {
     A0 = 1;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0;
     get_bytes_from_800C2F3C;
     S1 = V0;
 
     A0 = 3;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0;
     get_bytes_from_800C2F3C;
     S0 = V0;
 
     A0 = 1;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0;
     get_bytes_sign;
     if( V0 != 0 ) // unsigned
@@ -26855,17 +26802,17 @@ if( V1 == 0 )
 else if( V1 == 40 )
 {
     A0 = 1;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0;
     get_bytes_from_800C2F3C;
     S1 = V0;
 
     A0 = 3;
-    read_two_bytes_signed;
+    field_script_help_read_s16;
     S0 = V0;
 
     A0 = 1;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0;
     get_bytes_sign;
     if( V0 != 0 ) // unsigned
@@ -26876,17 +26823,17 @@ else if( V1 == 40 )
 else if( V1 == 80 )
 {
     A0 = 1;
-    read_two_bytes_signed;
+    field_script_help_read_s16;
     S1 = V0;
 
     A0 = 3;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0;
     get_bytes_from_800C2F3C;
     S0 = V0;
 
     A0 = 3;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     A0 = V0;
     get_bytes_sign;
     if( V0 != 0 ) // unsigned
@@ -26897,11 +26844,11 @@ else if( V1 == 80 )
 else if( V1 == c0 )
 {
     A0 = 1;
-    read_two_bytes_signed;
+    field_script_help_read_s16;
     S1 = V0;
 
     A0 = 3;
-    read_two_bytes_signed;
+    field_script_help_read_s16;
     S0 = V0;
 }
 
@@ -26926,7 +26873,7 @@ if( V1 == 1 )
 else
 {
     A0 = 6;
-    read_two_bytes_unsigned;
+    field_script_help_read_u16;
     [current_entity_data + cc] = h(V0);
 }
 ////////////////////////////////
@@ -26938,7 +26885,7 @@ else
 current_entity_data = w[800af54c];
 
 A0 = 1;
-read_two_bytes_unsigned();
+field_script_help_read_u16();
 [current_entity_data + cc] = h(V0);
 ////////////////////////////////
 
