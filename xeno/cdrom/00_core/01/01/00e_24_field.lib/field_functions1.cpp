@@ -215,56 +215,58 @@ V0 = 0003;
 800A4E84	beq    v1, v0, La4ff8 [$800a4ff8]
 V0 = V1 < 0004;
 800A4E8C	beq    v0, zero, La4ea4 [$800a4ea4]
-800A4E90	nop
+
 800A4E94	blez   v1, La50e4 [$800a50e4]
-A0 = 0001;
+
 800A4E9C	j      La4f54 [$800a4f54]
-800A4EA0	nop
 
 La4ea4:	; 800A4EA4
-V0 = 0004;
-800A4EA8	bne    v1, v0, La50e4 [$800a50e4]
-A0 = 0001;
-800A4EB0	jal    funca4d5c [$800a4d5c]
-A1 = 0001;
-800A4EB8	jal    funca6348 [$800a6348]
-S0 = 0;
-A0 = w[800ad014];
-[800ad0e0] = h(1);
-800A4ED4	jal    func714e8 [$800714e8]
+if( V1 == 4 )
+{
+    A0 = 1;
+    A1 = 1;
+    funca4d5c();
 
-V0 = w[800ad014];
-[800c2f14] = w(0);
-800A4EEC	blez   v0, La4f3c [$800a4f3c]
-800A4EF0	nop
+    S0 = 0;
+    funca6348(); // create packets unk1
 
-loopa4ef4:	; 800A4EF4
-    S0 = S0 + 0001;
+    [800ad0e0] = h(1);
 
-    func7743c();
+    A0 = w[800ad014];
+    func714e8();
 
-    funca6118(); // render something
+    [800c2f14] = w(0);
 
-    func74bdc();
+    if( w[800ad014] > 0 )
+    {
+        loopa4ef4:	; 800A4EF4
+            S0 = S0 + 0001;
 
-    func78170();
+            func7743c();
 
-    [800c2f14] = w(w[800c2f14] + 6);
+            funca6118(); // render unk1
 
-    V1 = S0 < w[800ad014];
-800A4F34	bne    v1, zero, loopa4ef4 [$800a4ef4]
+            func74bdc();
 
-La4f3c:	; 800A4F3C
-A0 = 0;
-system_draw_sync();
+            func78170();
 
-800A4F44	jal    funca653c [$800a653c]
+            [800c2f14] = w(w[800c2f14] + 6);
 
+            V1 = S0 < w[800ad014];
+        800A4F34	bne    v1, zero, loopa4ef4 [$800a4ef4]
+    }
+
+    A0 = 0;
+    system_draw_sync();
+
+    800A4F44	jal    funca653c [$800a653c]
+}
 800A4F4C	j      La50e4 [$800a50e4]
 
 La4f54:	; 800A4F54
-A1 = 0001;
-800A4F54	jal    funca4d5c [$800a4d5c]
+A0 = 1;
+A1 = 1;
+funca4d5c();
 
 A0 = w[800ad014];
 V0 = 0001;
@@ -307,21 +309,24 @@ V0 = S0 < A0;
 800A4FF4	nop
 
 La4ff8:	; 800A4FF8
-A0 = 0001;
-800A4FFC	jal    funca5b14 [$800a5b14]
-A1 = 0001;
+A0 = 1;
+A1 = 1;
+funca5b14();
+
 S0 = 0;
-S1 = 02c0;
+S1 = 2c0;
 
 loopa500c:	; 800A500C
-A0 = S1;
-A1 = 0100;
-800A5014	jal    funca4c4c [$800a4c4c]
-A2 = 00e0;
-S0 = S0 + 0001;
-V0 = S0 < 0005;
+    A0 = S1;
+    A1 = 100;
+    A2 = e0;
+    800A5014	jal    funca4c4c [$800a4c4c]
+
+    S1 = S1 + 40;
+    S0 = S0 + 1;
+    V0 = S0 < 5;
 800A5024	bne    v0, zero, loopa500c [$800a500c]
-S1 = S1 + 0040;
+
 A0 = w[800ad014];
 800A5034	jal    func7145c [$8007145c]
 S1 = 0;
@@ -417,8 +422,6 @@ field_draw_sync();
 
 func6f740(); // clear entity, field data and all other allocated memory
 
-
-
 // allocate new place for field
 A0 = w[80059b50];
 A1 = 0;
@@ -436,15 +439,11 @@ system_memory_mark_removable();
 A0 = w[80059b70];
 system_memory_mark_removed_alloc(); // free field file memory
 
-
-
 if( w[800af51c] != 6 )
 {
     A0 = 1;
     funca858c();
 }
-
-
 
 A0 = w[80059b50];
 A1 = 1;
@@ -461,8 +460,6 @@ system_memory_mark_not_removable();
 
 A0 = S0;
 system_memory_mark_removed_alloc();
-
-
 
 V1 = w[800af51c];
 switch( V1 )
@@ -636,9 +633,10 @@ switch( V1 )
     case 2:
     case 4:
     {
-        A0 = 0001;
-        800A54FC	jal    funca4d5c [$800a4d5c]
-        A1 = 0001;
+        A0 = 1;
+        A1 = 1;
+        funca4d5c();
+
         800A5504	jal    func1aed8 [$8001aed8]
         800A5508	nop
         800A550C	jal    func1b23c [$8001b23c]
@@ -748,7 +746,7 @@ switch( V1 )
     {
         A0 = 0;
         A1 = 0;
-        800A56AC	jal    funca5b14 [$800a5b14]
+        funca5b14();
 
         field_load_main_map_texture_into_vram();
 
@@ -803,7 +801,7 @@ switch( V1 )
     {
         A0 = 0;
         A1 = 0;
-        800A5780	jal    funca5b14 [$800a5b14]
+        funca5b14();
 
         field_load_main_map_texture_into_vram();
 
@@ -1151,186 +1149,101 @@ system_psyq_draw_otag();
 
 ////////////////////////////////
 // funca5e70()
+// update vertex color
 
-S1 = A0;
-S2 = A2;
-S0 = A3;
-V1 = 00a0;
-A2 = 0070;
-V0 = 0001;
-[SP + 0018] = w(0);
-800A5E9C	beq    a1, v0, La5f64 [$800a5f64]
+packet = A0;
+id = A1;
+check = A2;
+color = A3;
 
-V0 = A1 < 0002;
-800A5EA8	beq    v0, zero, La5ec0 [$800a5ec0]
-800A5EAC	nop
-800A5EB0	beq    a1, zero, La5edc [$800a5edc]
-A0 = SP + 0010;
-800A5EB8	j      La60fc [$800a60fc]
-800A5EBC	nop
+if( id == 0 )
+{
+    [SP + 10] = w(a0 - h[packet + 8]); // x1
+    [SP + 14] = w(70 - h[packet + a]); // y1
+    [SP + 18] = w(0);
 
-La5ec0:	; 800A5EC0
-V0 = 0002;
-800A5EC4	beq    a1, v0, La5fec [$800a5fec]
-V0 = 0003;
-800A5ECC	beq    a1, v0, La6074 [$800a6074]
-A0 = SP + 0010;
-800A5ED4	j      La60fc [$800a60fc]
-800A5ED8	nop
+    A0 = SP + 10;
+    A1 = SP + 20;
+    system_gte_square_of_vector();
 
-La5edc:	; 800A5EDC
-V0 = h[S1 + 0008];
-800A5EE0	nop
-V0 = V1 - V0;
-[SP + 0010] = w(V0);
-V0 = h[S1 + 000a];
-A1 = SP + 0020;
-V0 = A2 - V0;
-800A5EF8	jal    $system_gte_square_of_vector
-[SP + 0014] = w(V0);
-V0 = w[SP + 0020];
-A0 = w[SP + 0024];
-800A5F08	jal    $system_square_root
-A0 = V0 + A0;
-V0 = V0 >> 01;
-V0 = V0 < S2;
-800A5F18	beq    v0, zero, La60fc [$800a60fc]
-800A5F1C	nop
-V0 = hu[S0 + 0000];
-800A5F24	nop
-800A5F28	addiu  v0, v0, $fffa (=-$6)
-[S0 + 0000] = h(V0);
-V0 = V0 << 10;
-800A5F34	bgez   v0, La5f40 [$800a5f40]
-800A5F38	nop
-[S0 + 0000] = h(0);
+    A0 = w[SP + 20] + w[SP + 24];
+    system_square_root();
 
-La5f40:	; 800A5F40
-V0 = hu[S0 + 0000];
-800A5F44	nop
-[S1 + 0004] = b(V0);
-V0 = hu[S0 + 0000];
-800A5F50	nop
-[S1 + 0005] = b(V0);
-V0 = hu[S0 + 0000];
-800A5F5C	j      La60fc [$800a60fc]
-[S1 + 0006] = b(V0);
+    if( ( V0 / 2 ) < check ) // half length
+    {
+        [color] = h(h[color] - 6);
+        if( h[color] < 0 ) [color] = h(0);
+        [packet + 4] = b(hu[color]);
+        [packet + 5] = b(hu[color]);
+        [packet + 6] = b(hu[color]);
+    }
+}
+else if( id == 1 )
+{
+    [SP + 10] = w(a0 - h[packet + 14]); // x2
+    [SP + 14] = w(70 - h[packet + 16]); // y2
+    [SP + 18] = w(0);
 
-La5f64:	; 800A5F64
-V0 = h[S1 + 0014];
-A0 = SP + 0010;
-V0 = V1 - V0;
-[SP + 0010] = w(V0);
-V0 = h[S1 + 0016];
-A1 = SP + 0020;
-V0 = A2 - V0;
-800A5F80	jal    $system_gte_square_of_vector
-[SP + 0014] = w(V0);
-V0 = w[SP + 0020];
-A0 = w[SP + 0024];
-800A5F90	jal    $system_square_root
-A0 = V0 + A0;
-V0 = V0 >> 01;
-V0 = V0 < S2;
-800A5FA0	beq    v0, zero, La60fc [$800a60fc]
-800A5FA4	nop
-V0 = hu[S0 + 0000];
-800A5FAC	nop
-800A5FB0	addiu  v0, v0, $fffa (=-$6)
-[S0 + 0000] = h(V0);
-V0 = V0 << 10;
-800A5FBC	bgez   v0, La5fc8 [$800a5fc8]
-800A5FC0	nop
-[S0 + 0000] = h(0);
+    A0 = SP + 10;
+    A1 = SP + 20;
+    system_gte_square_of_vector();
 
-La5fc8:	; 800A5FC8
-V0 = hu[S0 + 0000];
-800A5FCC	nop
-[S1 + 0010] = b(V0);
-V0 = hu[S0 + 0000];
-800A5FD8	nop
-[S1 + 0011] = b(V0);
-V0 = hu[S0 + 0000];
-800A5FE4	j      La60fc [$800a60fc]
-[S1 + 0012] = b(V0);
+    A0 = w[SP + 20] + w[SP + 24];
+    system_square_root();
 
-La5fec:	; 800A5FEC
-V0 = h[S1 + 0020];
-A0 = SP + 0010;
-V0 = V1 - V0;
-[SP + 0010] = w(V0);
-V0 = h[S1 + 0022];
-A1 = SP + 0020;
-V0 = A2 - V0;
-800A6008	jal    $system_gte_square_of_vector
-[SP + 0014] = w(V0);
-V0 = w[SP + 0020];
-A0 = w[SP + 0024];
-800A6018	jal    $system_square_root
-A0 = V0 + A0;
-V0 = V0 >> 01;
-V0 = V0 < S2;
-800A6028	beq    v0, zero, La60fc [$800a60fc]
-800A602C	nop
-V0 = hu[S0 + 0000];
-800A6034	nop
-800A6038	addiu  v0, v0, $fffa (=-$6)
-[S0 + 0000] = h(V0);
-V0 = V0 << 10;
-800A6044	bgez   v0, La6050 [$800a6050]
-800A6048	nop
-[S0 + 0000] = h(0);
+    if( ( V0 / 2 ) < check ) // half length
+    {
+        [color] = h(h[color] - 6);
+        if( h[color] < 0 ) [color] = h(0);
+        [packet + 10] = b(hu[color]);
+        [packet + 11] = b(hu[color]);
+        [packet + 12] = b(hu[color]);
+    }
+}
+else if( id == 2 )
+{
+    [SP + 10] = w(a0 - h[packet + 20]); // x3
+    [SP + 14] = w(70 - h[packet + 22]); // y3
+    [SP + 18] = w(0);
 
-La6050:	; 800A6050
-V0 = hu[S0 + 0000];
-800A6054	nop
-[S1 + 001c] = b(V0);
-V0 = hu[S0 + 0000];
-800A6060	nop
-[S1 + 001d] = b(V0);
-V0 = hu[S0 + 0000];
-800A606C	j      La60fc [$800a60fc]
-[S1 + 001e] = b(V0);
+    A0 = SP + 10;
+    A1 = SP + 20;
+    system_gte_square_of_vector();
 
-La6074:	; 800A6074
-V0 = h[S1 + 002c];
-800A6078	nop
-V0 = V1 - V0;
-[SP + 0010] = w(V0);
-V0 = h[S1 + 002e];
-A1 = SP + 0020;
-V0 = A2 - V0;
-800A6090	jal    $system_gte_square_of_vector
-[SP + 0014] = w(V0);
-V0 = w[SP + 0020];
-A0 = w[SP + 0024];
-800A60A0	jal    $system_square_root
-A0 = V0 + A0;
-V0 = V0 >> 01;
-V0 = V0 < S2;
-800A60B0	beq    v0, zero, La60fc [$800a60fc]
-800A60B4	nop
-V0 = hu[S0 + 0000];
-800A60BC	nop
-800A60C0	addiu  v0, v0, $fffa (=-$6)
-[S0 + 0000] = h(V0);
-V0 = V0 << 10;
-800A60CC	bgez   v0, La60d8 [$800a60d8]
-800A60D0	nop
-[S0 + 0000] = h(0);
+    A0 = w[SP + 20] + w[SP + 24];
+    system_square_root();
 
-La60d8:	; 800A60D8
-V0 = hu[S0 + 0000];
-800A60DC	nop
-[S1 + 0028] = b(V0);
-V0 = hu[S0 + 0000];
-800A60E8	nop
-[S1 + 0029] = b(V0);
-V0 = hu[S0 + 0000];
-800A60F4	nop
-[S1 + 002a] = b(V0);
+    if( ( V0 / 2 ) < check ) // half length
+    {
+        [color] = h(h[color] - 6);
+        if( h[color] < 0 ) [color] = h(0);
+        [packet + 1c] = b(hu[color]);
+        [packet + 1d] = b(hu[color]);
+        [packet + 1e] = b(hu[color]);
+    }
+}
+else if( id == 3 )
+{
+    [SP + 10] = w(a0 - h[packet + 2c]); // x4
+    [SP + 14] = w(70 - h[packet + 2e]); // y4
+    [SP + 18] = w(0);
 
-La60fc:	; 800A60FC
+    A0 = SP + 10;
+    A1 = SP + 20;
+    system_gte_square_of_vector();
+
+    A0 = w[SP + 20] + w[SP + 24];
+    system_square_root();
+
+    if( ( V0 / 2 ) < check ) // half length
+    {
+        [color] = h(h[color] - 6);
+        if( h[color] < 0 ) [color] = h(0);
+        [packet + 28] = b(hu[color]);
+        [packet + 29] = b(hu[color]);
+        [packet + 2a] = b(hu[color]);
+    }
+}
 ////////////////////////////////
 
 
@@ -1349,25 +1262,25 @@ for( int i = 0; i < e; ++i )
         S0 = packet + rb * 38e0 + (i * 14 + j) * 34;
 
         A0 = S0;
-        A1 = 0;
+        A1 = 0; // vertex1
         A2 = w[800c2f14];
         A3 = packet + 71c0 + (i * 14 + j) * 2;
         funca5e70();
 
         A0 = S0;
-        A1 = 1;
+        A1 = 1; // vertex2
         A2 = w[800c2f14];
         A3 = packet + 73f0 + (i * 14 + j) * 2;
         funca5e70();
 
         A0 = S0;
-        A1 = 2;
+        A1 = 2; // vertex3
         A2 = w[800c2f14];
         A3 = packet + 7620 + (i * 14 + j) * 2;
         funca5e70();
 
         A0 = S0;
-        A1 = 3;
+        A1 = 3; // vertex4
         A2 = w[800c2f14];
         A3 = packet + 7850 + (i * 14 + j) * 2;
         funca5e70();
@@ -1386,124 +1299,91 @@ V1 = 800b12f8 + rb * c0;
 
 ////////////////////////////////
 // funca6348()
+// create packets
 
 A0 = 7a80;
-A1 = 0001;
+A1 = 1;
 system_memory_allocate();
-
-S6 = 0;
-S1 = 0080;
-S3 = 0010;
-S7 = 0;
 [800af598] = w(V0);
 
-loopa6398:	; 800A6398
-S2 = 0;
-S5 = S6 << 04;
-S4 = 0010;
+for( int y = 0; y < e; ++y )
+{
+    for( int x = 0; x < 14; ++x )
+    {
+        alloc = w[800af598];
 
-loopa63a4:	; 800A63A4
-V1 = S7 + S2;
-A1 = V1 << 01;
-V0 = A1 + V1;
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = w[800af598];
-V0 = V0 << 02;
-S0 = V1 + V0;
-A0 = S0;
-A1 = A1 + V1;
-V0 = V0 + 38e0;
-FP = V1 + V0;
-[A1 + 71c0] = h(S1);
-[A1 + 73f0] = h(S1);
-[A1 + 7620] = h(S1);
-[A1 + 7850] = h(S1);
-system_graphic_shaded_quad_header();
+        // some data after this packets
+        [alloc + 71c0 + 0 * 230 + (y * 14 + x) * 2] = h(80); // color for vertex 1
+        [alloc + 71c0 + 1 * 230 + (y * 14 + x) * 2] = h(80); // color for vertex 2
+        [alloc + 71c0 + 2 * 230 + (y * 14 + x) * 2] = h(80); // color for vertex 3
+        [alloc + 71c0 + 3 * 230 + (y * 14 + x) * 2] = h(80); // color for vertex 4
 
-A2 = S2;
-V0 = S2 << 04;
-[S0 + 0008] = h(V0);
-[S0 + 0020] = h(V0);
-V0 = V0 & 003f;
-V1 = V0 + 0010;
-[S0 + 0004] = b(S1);
-[S0 + 0005] = b(S1);
-[S0 + 0006] = b(S1);
-[S0 + 0010] = b(S1);
-[S0 + 0011] = b(S1);
-[S0 + 0012] = b(S1);
-[S0 + 001c] = b(S1);
-[S0 + 001d] = b(S1);
-[S0 + 001e] = b(S1);
-[S0 + 0028] = b(S1);
-[S0 + 0029] = b(S1);
-[S0 + 002a] = b(S1);
-[S0 + 000a] = h(S5);
-[S0 + 0014] = h(S4);
-[S0 + 0016] = h(S5);
-[S0 + 0022] = h(S3);
-[S0 + 002c] = h(S4);
-[S0 + 002e] = h(S3);
-[S0 + 000c] = b(V0);
-[S0 + 000d] = b(S5);
-[S0 + 0018] = b(V1);
-[S0 + 0019] = b(S5);
-[S0 + 0024] = b(V0);
-[S0 + 0025] = b(S3);
-[S0 + 0030] = b(V1);
-800A6468	bgez   s2, La6474 [$800a6474]
-[S0 + 0031] = b(S3);
-A2 = S2 + 0003;
+        S0 = alloc + (y * 14 + x) * 34;
 
-La6474:	; 800A6474
-A0 = 0002;
-A1 = 0001;
-A2 = A2 >> 02;
-A2 = A2 << 06;
-A2 = A2 + 02c0;
-A3 = 0100;
-system_graphic_get_texpage_by_param();
+        A0 = S0;
+        system_graphic_shaded_quad_header();
 
-[S0 + 001a] = h(V0);
-A0 = S0;
-A1 = 1;
-system_set_draw_packet_transparency();
+        [S0 +  4] = b(80);                   // r1
+        [S0 +  5] = b(80);                   // g1
+        [S0 +  6] = b(80);                   // b1
+        [S0 +  8] = h(x * 10);               // x1
+        [S0 +  a] = h(y * 10);               // y1
+        [S0 +  c] = b((x * 10) & 3f);        // u1
+        [S0 +  d] = b(y * 10);               // v1
+        [S0 + 10] = b(80);                   // r2
+        [S0 + 11] = b(80);                   // g2
+        [S0 + 12] = b(80);                   // b2
+        [S0 + 14] = h(x * 10 + 10);          // x2
+        [S0 + 16] = h(y * 10);               // y2
+        [S0 + 18] = b(((x * 10) & 3f) + 10); // u2
+        [S0 + 19] = b(y * 10);               // v2
+        [S0 + 1c] = b(80);                   // r3
+        [S0 + 1d] = b(80);                   // g3
+        [S0 + 1e] = b(80);                   // b3
+        [S0 + 20] = h(x * 10);               // x3
+        [S0 + 22] = h(y * 10 + 10);          // y3
+        [S0 + 24] = b((x * 10) & 3f);        // u3
+        [S0 + 25] = b(y * 10 + 10);          // v3
+        [S0 + 28] = b(80);                   // r4
+        [S0 + 29] = b(80);                   // g4
+        [S0 + 2a] = b(80);                   // b4
+        [S0 + 2c] = h(x * 10 + 10);          // x4
+        [S0 + 2e] = h(y * 10 + 10);          // y4
+        [S0 + 30] = b(((x * 10) & 3f) + 10); // u4
+        [S0 + 31] = b(y * 10 + 10);          // v4
 
-A3 = FP;
-A2 = S0;
-T0 = A2 + 0030;
+        A0 = 2;
+        A1 = 1;
+        A2 = 2c0 + (x / 4) * 40;
+        A3 = 100;
+        system_graphic_get_texpage_by_param();
+        [S0 + 1a] = h(V0);
 
-loopa64ac:	; 800A64AC
-V0 = w[A2 + 0000];
-V1 = w[A2 + 0004];
-A0 = w[A2 + 0008];
-A1 = w[A2 + 000c];
-[A3 + 0000] = w(V0);
-[A3 + 0004] = w(V1);
-[A3 + 0008] = w(A0);
-[A3 + 000c] = w(A1);
-A2 = A2 + 0010;
-800A64D0	bne    a2, t0, loopa64ac [$800a64ac]
-A3 = A3 + 0010;
-V0 = w[A2 + 0000];
-800A64DC	nop
-[A3 + 0000] = w(V0);
-S2 = S2 + 0001;
-V0 = S2 < 0014;
-800A64EC	bne    v0, zero, loopa63a4 [$800a63a4]
-S4 = S4 + 0010;
-S3 = S3 + 0010;
-S6 = S6 + 0001;
-V0 = S6 < 000e;
-800A6500	bne    v0, zero, loopa6398 [$800a6398]
-S7 = S7 + 0014;
+        A0 = S0;
+        A1 = 1;
+        system_set_draw_packet_transparency();
+
+        buf2 = alloc + 38e0 + (y * 14 + x) * 34;
+        buf1 = S0;
+        while( buf1 != S0 + 30 )
+        {
+            [buf2 + 0] = w(w[buf1 + 0]);
+            [buf2 + 4] = w(w[buf1 + 4]);
+            [buf2 + 8] = w(w[buf1 + 8]);
+            [buf2 + c] = w(w[buf1 + c]);
+            buf1 += 10;
+            buf2 += 10;
+        }
+        [buf2] = w(w[A2]);
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funca653c()
+// clear memory
 
 A0 = w[800af598];
 system_memory_mark_removed_alloc();
