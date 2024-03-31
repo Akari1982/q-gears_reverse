@@ -183,9 +183,9 @@ La6854:	; 800A6854
 // movie related
 
 loopa6874:	; 800A6874
-    800A6874	jal    func7743c [$8007743c]
+    func7743c();
 
-    800A687C	jal    func74bdc [$80074bdc]
+    func74bdc(); // move and update sprite and model here
 
     system_cdrom2_data_sync();
 
@@ -873,7 +873,7 @@ La7360:	; 800A7360
     La7434:	; 800A7434
     func7743c();
 
-    func74bdc();
+    func74bdc(); // move and update sprite and model here
 
     A0 = 9;
 

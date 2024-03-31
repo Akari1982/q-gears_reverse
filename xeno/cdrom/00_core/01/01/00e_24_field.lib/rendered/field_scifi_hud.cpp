@@ -346,14 +346,14 @@ for( int i = 0; i < 6d; ++i )
     tex_w = hu[800ae03c + V0 * 8 + 4];
     tex_h = hu[800ae03c + V0 * 8 + 6];
 
-    [buffer1 +  8] = h(hu[800ae3e4 + i * 8 + 0]);         // v0 x
-    [buffer1 +  a] = h(hu[800ae3e4 + i * 8 + 2]);         // v0 y
-    [buffer1 + 10] = h(hu[800ae3e4 + i * 8 + 0] + tex_w); // v1 x
-    [buffer1 + 12] = h(hu[800ae3e4 + i * 8 + 2]);         // v1 y
-    [buffer1 + 18] = h(hu[800ae3e4 + i * 8 + 0]);         // v2 x
-    [buffer1 + 1a] = h(hu[800ae3e4 + i * 8 + 2] + tex_h); // v2 y
-    [buffer1 + 20] = h(hu[800ae3e4 + i * 8 + 0] + tex_w); // v3 x
-    [buffer1 + 22] = h(hu[800ae3e4 + i * 8 + 2] + tex_h); // v3 y
+    [buffer1 +  8] = h(hu[800ae3e4 + i * 8 + 0]);         // x1
+    [buffer1 +  a] = h(hu[800ae3e4 + i * 8 + 2]);         // y1
+    [buffer1 + 10] = h(hu[800ae3e4 + i * 8 + 0] + tex_w); // x2
+    [buffer1 + 12] = h(hu[800ae3e4 + i * 8 + 2]);         // y2
+    [buffer1 + 18] = h(hu[800ae3e4 + i * 8 + 0]);         // x3
+    [buffer1 + 1a] = h(hu[800ae3e4 + i * 8 + 2] + tex_h); // y3
+    [buffer1 + 20] = h(hu[800ae3e4 + i * 8 + 0] + tex_w); // x4
+    [buffer1 + 22] = h(hu[800ae3e4 + i * 8 + 2] + tex_h); // y4
 
     V1 = hu[800ae3e4 + i * 8 + 6] & f;
     if( V1 == 0 )

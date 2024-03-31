@@ -1616,3 +1616,95 @@ if( A2 < 0 )
 [pointer_end_y_d] = w(V0 + A2);
 return 0;
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// func7ce2c()
+
+S0 = A0;
+S1 = A1;
+A0 = w[S0 + 0000];
+A1 = w[S0 + 0004];
+A2 = w[S0 + 0008];
+8007CE50	jal    func7cec8 [$8007cec8]
+8007CE54	nop
+V1 = w[S0 + 0000];
+A0 = w[S0 + 0008];
+V1 = V1 >> 0c;
+[S0 + 0000] = w(V1);
+V1 = w[S0 + 0004];
+A0 = A0 >> 0c;
+[S0 + 0008] = w(A0);
+V1 = V1 >> 0c;
+8007CE78	bgez   v0, L7cea4 [$8007cea4]
+[S0 + 0004] = w(V1);
+V0 = w[S0 + 0000];
+V1 = w[S0 + 0008];
+V0 = 0 - V0;
+[S0 + 0000] = w(V0);
+V0 = w[S0 + 0004];
+V1 = 0 - V1;
+[S0 + 0008] = w(V1);
+V0 = 0 - V0;
+[S0 + 0004] = w(V0);
+
+L7cea4:	; 8007CEA4
+A0 = S0;
+A1 = S1;
+system_gte_normalize_word_vector_T0_T1_T2_to_word();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7cec8
+V1 = A0;
+A3 = A1;
+8007CED0	bgez   v1, L7cedc [$8007cedc]
+T0 = A2;
+V1 = 0 - V1;
+
+L7cedc:	; 8007CEDC
+8007CEDC	bgez   a3, L7cee8 [$8007cee8]
+8007CEE0	nop
+A3 = 0 - A3;
+
+L7cee8:	; 8007CEE8
+8007CEE8	bgez   a2, L7cef4 [$8007cef4]
+V0 = V1 < A3;
+T0 = 0 - A2;
+
+L7cef4:	; 8007CEF4
+8007CEF4	bne    v0, zero, L7cf10 [$8007cf10]
+V0 = A3 < V1;
+V0 = V1 < T0;
+8007CF00	bne    v0, zero, L7cf10 [$8007cf10]
+V0 = A3 < V1;
+8007CF08	j      L7cf48 [$8007cf48]
+V0 = A0;
+
+L7cf10:	; 8007CF10
+8007CF10	bne    v0, zero, L7cf2c [$8007cf2c]
+8007CF14	nop
+V0 = A3 < T0;
+8007CF1C	bne    v0, zero, L7cf30 [$8007cf30]
+V1 = T0 < V1;
+8007CF24	j      L7cf48 [$8007cf48]
+V0 = A1;
+
+L7cf2c:	; 8007CF2C
+V1 = T0 < V1;
+
+L7cf30:	; 8007CF30
+8007CF30	bne    v1, zero, L7cf48 [$8007cf48]
+V0 = 0;
+V0 = T0 < A3;
+V0 = V0 ^ 0001;
+V0 = 0 - V0;
+V0 = A2 & V0;
+
+L7cf48:	; 8007CF48
+8007CF48	jr     ra 
+8007CF4C	nop
+////////////////////////////////

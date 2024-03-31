@@ -164,7 +164,7 @@ field_allocate_memory_for_party_sprites();
 [8004e9fc] = w(0);
 
 [800ad00c] = w(0); // flag that particle image is loaded.
-[800ad038] = w(0);
+[800ad038] = w(0); // set that map texture not loading yet
 [800ad054] = w(0);
 [800ad0b0] = w(-1);
 [800ad0b4] = w(-1); // battle not started
@@ -285,8 +285,7 @@ while( true )
 
     func7743c();
 
-    // move and update sprite and model here
-    func74bdc();
+    func74bdc(); // move and update sprite and model here
 
     funca4dfc();
 
@@ -382,7 +381,7 @@ while( true )
         func1b318(); // prepare cdrom for field load
         if( V0 == 0 )
         {
-            system_cdrom2_data_sync(); // wait for command to finish
+            system_cdrom2_data_sync();
             if( V0 == 0 )
             {
                 if( h[800b15ec] == 0 )
@@ -392,9 +391,9 @@ while( true )
                     funca268c();
 
                     A0 = 0;
-                    system_cdrom_action_sync(); // execute until command finished
+                    system_cdrom_action_sync();
 
-                    funca5118(); // map transition sequence
+                    field_transition_start();
 
                     func35c84();
 
@@ -413,7 +412,7 @@ while( true )
             if( V0 == 0 )
             {
                 A0 = 0;
-                system_cdrom_action_sync(); // execute until command finished
+                system_cdrom_action_sync();
 
                 S0 = 1;
                 if( w[8004e9d8] != -1 )
@@ -784,14 +783,14 @@ if( w[8004e99c] == 0 )
     system_move_image();
 }
 
-S0 = 0001;
+S0 = 1;
 [800acfe0] = w(S0);
 
-funca3c20();
+field_copy_screen_to_2c0_100();
 
-A0 = 0;
-A1 = 100;
-funca3c44();
+A0 = 0;   // x
+A1 = 100; // y
+field_copy_screen_to_vram();
 
 A0 = 0;
 system_draw_sync();
@@ -820,7 +819,7 @@ A1 = 0001;
 L78470:	; 80078470
 S0 = 0001;
 
-funca4d5c();
+field_transition_create_add_transp_render();
 
 [8004e99c] = w(S0);
 
@@ -861,9 +860,9 @@ V0 = 0001;
 
 loop78504:	; 80078504
 80078504	jal    func73670 [$80073670]
-80078508	nop
-8007850C	jal    funca58e0 [$800a58e0]
-80078510	nop
+
+field_transition_calculate_add_to_render();
+
 80078514	jal    funca5dfc [$800a5dfc]
 80078518	nop
 V1 = bu[80058ac8];
@@ -880,8 +879,9 @@ V0 = V1 + S2;
 80078554	nop
 
 L78558:	; 80078558
-80078558	jal    funca4ad8 [$800a4ad8]
 A0 = S0 >> 10;
+field_transition_set_color_for_packets();
+
 80078560	lui    v0, $fffc
 S0 = S0 + V0;
 80078568	bgez   s0, L78574 [$80078574]
@@ -899,7 +899,7 @@ system_draw_sync();
 A0 = w[800ad0ec];
 system_memory_mark_removed_alloc();
 
-[800ad038] = w(0);
+[800ad038] = w(0); // set that map texture not loading
 
 func78270();
 
@@ -912,13 +912,14 @@ V0 = 0001;
 
 loop785c4:	; 800785C4
 800785C4	jal    func73670 [$80073670]
-800785C8	nop
-800785CC	jal    funca58e0 [$800a58e0]
-800785D0	nop
+
+field_transition_calculate_add_to_render();
+
 800785D4	jal    funca5dfc [$800a5dfc]
-800785D8	nop
-800785DC	jal    funca4ad8 [$800a4ad8]
+
 A0 = S0 >> 10;
+field_transition_set_color_for_packets();
+
 S0 = S0 + S1;
 800785E8	bgez   s0, loop785c4 [$800785c4]
 800785EC	nop
@@ -1010,28 +1011,31 @@ V0 = bu[80058ac8];
 80078750	nop
 80078754	beq    v0, v1, L787f8 [$800787f8]
 80078758	nop
-8007875C	jal    func714e8 [$800714e8]
-A0 = 0020;
+
+A0 = 20; // steps
+field_fade_set_fadein();
+
 80078764	lui    s0, $0080
 S1 = 0;
 S4 = 0001;
 80078770	lui    s3, $fffc
 
 L78774:	; 80078774
-80078774	jal    func7743c [$8007743c]
-80078778	nop
-8007877C	jal    funca58e0 [$800a58e0]
-80078780	nop
-80078784	jal    func74bdc [$80074bdc]
-80078788	nop
-8007878C	jal    func78170 [$80078170]
-80078790	nop
+func7743c();
+
+field_transition_calculate_add_to_render();
+
+func74bdc(); // move and update sprite and model here
+
+func78170();
+
 V0 = bu[80058b6c];
 8007879C	nop
 800787A0	beq    v0, s4, L787e0 [$800787e0]
-800787A4	nop
-800787A8	jal    funca4ad8 [$800a4ad8]
+
 A0 = S0 >> 10;
+field_transition_set_color_for_packets();
+
 S0 = S0 + S3;
 800787B4	bgez   s0, L787c0 [$800787c0]
 800787B8	nop
@@ -1054,20 +1058,22 @@ V0 = S1 < 0020;
 800787F4	nop
 
 L787f8:	; 800787F8
-800787F8	jal    func714e8 [$800714e8]
-A0 = 0020;
+A0 = 20; // steps
+field_fade_set_fadein();
+
 80078800	j      L78834 [$80078834]
 80078804	nop
 
 L78808:	; 80078808
-80078808	jal    func7743c [$8007743c]
 S1 = S1 + 0001;
-80078810	jal    funca58e0 [$800a58e0]
-80078814	nop
-80078818	jal    func74bdc [$80074bdc]
-8007881C	nop
-80078820	jal    func78170 [$80078170]
-80078824	nop
+func7743c();
+
+field_transition_calculate_add_to_render();
+
+func74bdc(); // move and update sprite and model here
+
+func78170();
+
 V0 = S1 < 0008;
 8007882C	bne    v0, zero, L78808 [$80078808]
 80078830	nop
@@ -1635,7 +1641,7 @@ field_move_image_and_sync();
 [800af324] = h(140);
 [800af326] = h(e0);
 
-funca3c20();
+field_copy_screen_to_2c0_100();
 
 A0 = 800af320;
 A1 = 0;
@@ -1837,7 +1843,7 @@ A0 = 8;
 A1 = 0;
 system_memory_set_alloc_user()
 
-[800ad038] = w(0); // set that map texture not loaded yet
+[800ad038] = w(0); // set that map texture not loading
 
 field_load_main_map_texture_into_vram();
 

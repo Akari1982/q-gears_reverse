@@ -152,7 +152,7 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
 
 A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
-80074C48	jal    func71344 [$80071344]
+field_fade_update_and_add_to_render();
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
@@ -1815,7 +1815,7 @@ A0 = 0;
 system_cdrom_action_sync(); // ececute till cd sync
 
 loop76e7c:	; 80076E7C
-    A0 = (w[8004e9f0] & fff) << 1;
+    A0 = (w[8004e9f0] & fff) * 2;
     A1 = 0;
     func1b318(); // prepare cdrom for field load
 80076E94	bne    v0, zero, loop76e7c [$80076e7c]
@@ -1861,7 +1861,7 @@ A0 = 0004;
 80076F48	jal    $system_cdrom2_set_dir
 A1 = 0;
 A0 = 0;
-funca858c();
+field_particle_restore_texture();
 
 V0 = w[8004ea14];
 V1 = w[800ad008];
@@ -1884,7 +1884,7 @@ A1 = 0001;
 [800acff8] = w(V0);
 
 A0 = 1;
-funca858c();
+field_particle_restore_texture();
 
 V1 = 800b1738;
 V0 = w[V1 + 0000];

@@ -81,7 +81,7 @@ loopa8530:	; 800A8530
 
 
 ////////////////////////////////
-// funca858c()
+// field_particle_restore_texture()
 
 flag = A0;
 
@@ -98,11 +98,12 @@ if( w[800ad00c] == 1 )
 
     T0 = mem;
     A2 = w[800af144];
-    loopa85dc:	; 800A85DC
+    while( A2 != w[800af144] + 8000 )
+    {
         [T0] = w(w[A2]);
         T0 = T0 + 4;
         A2 = A2 + 4;
-    800A8600	bne    a2, w[800af144] + 8000, loopa85dc [$800a85dc]
+    }
 
     A0 = w[800af144];
     system_memory_mark_removed_alloc();

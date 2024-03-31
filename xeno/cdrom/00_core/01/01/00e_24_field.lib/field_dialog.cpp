@@ -1,283 +1,4 @@
 ////////////////////////////////
-// func7ce2c()
-
-S0 = A0;
-S1 = A1;
-A0 = w[S0 + 0000];
-A1 = w[S0 + 0004];
-A2 = w[S0 + 0008];
-8007CE50	jal    func7cec8 [$8007cec8]
-8007CE54	nop
-V1 = w[S0 + 0000];
-A0 = w[S0 + 0008];
-V1 = V1 >> 0c;
-[S0 + 0000] = w(V1);
-V1 = w[S0 + 0004];
-A0 = A0 >> 0c;
-[S0 + 0008] = w(A0);
-V1 = V1 >> 0c;
-8007CE78	bgez   v0, L7cea4 [$8007cea4]
-[S0 + 0004] = w(V1);
-V0 = w[S0 + 0000];
-V1 = w[S0 + 0008];
-V0 = 0 - V0;
-[S0 + 0000] = w(V0);
-V0 = w[S0 + 0004];
-V1 = 0 - V1;
-[S0 + 0008] = w(V1);
-V0 = 0 - V0;
-[S0 + 0004] = w(V0);
-
-L7cea4:	; 8007CEA4
-A0 = S0;
-A1 = S1;
-system_gte_normalize_word_vector_T0_T1_T2_to_word();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func7cec8
-V1 = A0;
-A3 = A1;
-8007CED0	bgez   v1, L7cedc [$8007cedc]
-T0 = A2;
-V1 = 0 - V1;
-
-L7cedc:	; 8007CEDC
-8007CEDC	bgez   a3, L7cee8 [$8007cee8]
-8007CEE0	nop
-A3 = 0 - A3;
-
-L7cee8:	; 8007CEE8
-8007CEE8	bgez   a2, L7cef4 [$8007cef4]
-V0 = V1 < A3;
-T0 = 0 - A2;
-
-L7cef4:	; 8007CEF4
-8007CEF4	bne    v0, zero, L7cf10 [$8007cf10]
-V0 = A3 < V1;
-V0 = V1 < T0;
-8007CF00	bne    v0, zero, L7cf10 [$8007cf10]
-V0 = A3 < V1;
-8007CF08	j      L7cf48 [$8007cf48]
-V0 = A0;
-
-L7cf10:	; 8007CF10
-8007CF10	bne    v0, zero, L7cf2c [$8007cf2c]
-8007CF14	nop
-V0 = A3 < T0;
-8007CF1C	bne    v0, zero, L7cf30 [$8007cf30]
-V1 = T0 < V1;
-8007CF24	j      L7cf48 [$8007cf48]
-V0 = A1;
-
-L7cf2c:	; 8007CF2C
-V1 = T0 < V1;
-
-L7cf30:	; 8007CF30
-8007CF30	bne    v1, zero, L7cf48 [$8007cf48]
-V0 = 0;
-V0 = T0 < A3;
-V0 = V0 ^ 0001;
-V0 = 0 - V0;
-V0 = A2 & V0;
-
-L7cf48:	; 8007CF48
-8007CF48	jr     ra 
-8007CF4C	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func7cf50()
-
-id = A0;
-
-A0 = 800b15b0 + id * 58;
-func43bdc();
-
-A0 = 800b15b0 + id * 58;
-A1 = 1;
-system_set_draw_packet_transparency();
-
-[800b15b0 + id * 58 + 8] = h(0);
-[800b15b0 + id * 58 + a] = h(0);
-[800b15b0 + id * 58 + c] = h(140);
-[800b15b0 + id * 58 + e] = h(e0);
-[800b15b0 + id * 58 + 10] = w(w[800b15b0 + id * 58 + 0]);
-[800b15b0 + id * 58 + 14] = w(w[800b15b0 + id * 58 + 4]);
-[800b15b0 + id * 58 + 18] = w(w[800b15b0 + id * 58 + 8]);
-[800b15b0 + id * 58 + 1c] = w(w[800b15b0 + id * 58 + c]);
-[800b15b0 + id * 58 + 20] = w(0);
-[800b15b0 + id * 58 + 24] = w(0);
-[800b15b0 + id * 58 + 28] = w(0);
-[800b15b0 + id * 58 + 38] = h(2);
-[800b15b0 + id * 58 + 3a] = h(0);
-[800b15b0 + id * 58 + 3c] = h(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func7d058()
-
-FP = 0;
-S3 = ffffff;
-8007D070	lui    t1, $ff00
-T0 = 800b1598;
-S7 = T0 + 0052;
-S6 = T0 + 0040;
-S5 = T0 + 003c;
-S4 = T0 + 0038;
-V0 = A1 << 01;
-V0 = V0 + A1;
-V0 = V0 << 02;
-T3 = 800b15b0;
-[SP + 0020] = w(V0);
-T2 = w[SP + 0020];
-A1 = A1 << 04;
-S1 = 0;
-[SP + 0028] = w(A1);
-[SP + 0030] = w(T2);
-T2 = w[SP + 0028];
-S2 = 0;
-
-[SP + 0050] = w(S0);
-[SP + 0018] = w(A0);
-[SP + 0038] = w(T3);
-[SP + 0040] = w(T2);
-
-L7d0ec:	; 8007D0EC
-V0 = h[S7 + 0000];
-8007D0F0	nop
-8007D0F4	beq    v0, zero, L7d290 [$8007d290]
-A0 = 0;
-A2 = 0;
-V0 = 0140;
-8007D104	lui    at, $800b
-AT = AT + S1;
-[AT + f314] = h(V0);
-V0 = 00e0;
-8007D114	lui    at, $800b
-AT = AT + S1;
-[AT + f310] = h(0);
-8007D120	lui    at, $800b
-AT = AT + S1;
-[AT + f312] = h(0);
-8007D12C	lui    at, $800b
-AT = AT + S1;
-[AT + f316] = h(V0);
-8007D138	lui    at, $800b
-AT = AT + S2;
-A1 = h[AT + 15e8];
-A3 = 0;
-[SP + 0048] = w(T0);
-8007D14C	jal    $system_graphic_get_texpage_by_param
-[SP + 004c] = w(T1);
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-V0 = 800af310;
-T0 = w[SP + 0048];
-T3 = w[SP + 0020];
-V0 = S1 + V0;
-[SP + 0010] = w(V0);
-S0 = T3 + T0;
-S0 = S2 + S0;
-8007D180	jal    $80045354
-A0 = S0;
-T3 = 800b15b0;
-A0 = FP ^ 0001;
-A0 = A0 < 0001;
-T2 = w[SP + 0040];
-V0 = w[S4 + 0000];
-A1 = T2 + T3;
-V0 = V0 >> 08;
-[A1 + 0004] = b(V0);
-V0 = w[S5 + 0000];
-A0 = A0 << 02;
-V0 = V0 >> 08;
-[A1 + 0005] = b(V0);
-V0 = w[S6 + 0000];
-V1 = w[A1 + 0000];
-V0 = V0 >> 08;
-[A1 + 0006] = b(V0);
-T2 = w[SP + 0018];
-T1 = w[SP + 004c];
-A0 = A0 + T2;
-V0 = w[A0 + 0000];
-V1 = V1 & T1;
-V0 = V0 & S3;
-V1 = V1 | V0;
-[A1 + 0000] = w(V1);
-V1 = w[A0 + 0000];
-T3 = w[SP + 0038];
-T2 = w[SP + 0028];
-V1 = V1 & T1;
-V0 = T3 + T2;
-V0 = V0 & S3;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-T0 = w[SP + 0048];
-T3 = w[SP + 0030];
-8007D214	nop
-A1 = T3 + T0;
-V0 = w[A1 + 0000];
-V1 = V1 & S3;
-V0 = V0 & T1;
-V0 = V0 | V1;
-[A1 + 0000] = w(V0);
-V0 = w[A0 + 0000];
-S0 = S0 & S3;
-V0 = V0 & T1;
-V0 = V0 | S0;
-[A0 + 0000] = w(V0);
-V0 = w[S4 + 0000];
-8007D248	nop
-V0 = V0 >> 08;
-8007D250	bne    v0, zero, L7d290 [$8007d290]
-8007D254	nop
-V0 = w[S5 + 0000];
-8007D25C	nop
-V0 = V0 >> 08;
-8007D264	bne    v0, zero, L7d290 [$8007d290]
-8007D268	nop
-V0 = w[S6 + 0000];
-8007D270	nop
-V0 = V0 >> 08;
-8007D278	bne    v0, zero, L7d290 [$8007d290]
-8007D27C	nop
-[S7 + 0000] = h(0);
-8007D284	lui    at, $800b
-AT = AT + S2;
-[AT + 15ec] = h(0);
-
-L7d290:	; 8007D290
-S7 = S7 + 0058;
-S6 = S6 + 0058;
-S5 = S5 + 0058;
-S4 = S4 + 0058;
-S1 = S1 + 0008;
-S2 = S2 + 0058;
-FP = FP + 0001;
-V0 = FP < 0002;
-T2 = w[SP + 0030];
-T3 = w[SP + 0038];
-T2 = T2 + 0058;
-[SP + 0030] = w(T2);
-T2 = w[SP + 0040];
-T3 = T3 + 0058;
-[SP + 0038] = w(T3);
-T2 = T2 + 0058;
-8007D2D0	bne    v0, zero, L7d0ec [$8007d0ec]
-[SP + 0040] = w(T2);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func7d30c()
 
 A2 = A0;
@@ -822,7 +543,7 @@ S0 = S0 + T9;
 S0 = S0 << 02;
 S3 = S0 + 0004;
 S3 = S1 + S3;
-8007DB84	jal    $80045354
+8007DB84	jal    $system_gpu_create_texture_setting_packet
 A0 = S3;
 A3 = ffffff;
 S2 = S2 + 0004;
@@ -1270,7 +991,7 @@ S2 = S2 + T9;
 S2 = S2 << 02;
 S4 = S2 + 0008;
 S4 = S1 + S4;
-8007E238	jal    $80045354
+8007E238	jal    $system_gpu_create_texture_setting_packet
 A0 = S4;
 A0 = ffffff;
 V0 = S5 + 0020;
@@ -1429,7 +1150,7 @@ A0 = S1 + 0018;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
-8007E49C	jal    $80045354
+8007E49C	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(0);
 A0 = 0;
 A1 = 0002;
@@ -1440,7 +1161,7 @@ A0 = S1 + 0024;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
-8007E4C8	jal    $80045354
+8007E4C8	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(0);
 S1 = S1 + 0030;
 8007E4D4	jal    $80043bdc
@@ -1502,7 +1223,7 @@ A0 = S1 + 0004;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
-8007E5EC	jal    $80045354
+8007E5EC	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(FP);
 A0 = 0;
 A1 = 0;
@@ -1513,7 +1234,7 @@ A0 = S1 + 0010;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
-8007E618	jal    $80045354
+8007E618	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(FP);
 8007E620	jal    $80043b8c
 A0 = S1 + 001c;
@@ -1585,7 +1306,7 @@ A0 = S1 + 0008;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
-8007E754	jal    $80045354
+8007E754	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(FP);
 A0 = 0;
 A1 = 0;
@@ -1596,7 +1317,7 @@ A0 = S1 + 0014;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
-8007E780	jal    $80045354
+8007E780	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(FP);
 8007E788	jal    $80043b8c
 A0 = S1 + 0020;
@@ -1687,7 +1408,7 @@ A2 = 0;
 T2 = w[SP + 0038];
 A3 = V0 & ffff;
 [SP + 0010] = w(FP);
-8007E8F4	jal    $80045354
+8007E8F4	jal    $system_gpu_create_texture_setting_packet
 A0 = S1 + T2;
 A0 = 0;
 A1 = 0002;
@@ -1699,7 +1420,7 @@ A2 = 0;
 T2 = w[SP + 0030];
 A3 = V0 & ffff;
 [SP + 0010] = w(FP);
-8007E924	jal    $80045354
+8007E924	jal    $system_gpu_create_texture_setting_packet
 A0 = S1 + T2;
 T2 = w[SP + 0020];
 8007E930	nop
@@ -1793,7 +1514,7 @@ A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
 S1 = SP + 0018;
-8007EAA8	jal    $80045354
+8007EAA8	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(S1);
 A0 = 0001;
 A1 = 0;
@@ -1804,7 +1525,7 @@ A0 = S0 + 000c;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
-8007EAD4	jal    $80045354
+8007EAD4	jal    $system_gpu_create_texture_setting_packet
 [SP + 0010] = w(S1);
 T2 = 800c1d58;
 S0 = T2 + 0258;

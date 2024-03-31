@@ -4241,34 +4241,35 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0xF1()
+// field_script_opF1_fade_setup()
 
 A0 = 9;
 field_script_help_read_v80();
-S3 = V0;
+steps = V0;
 
 A0 = 3;
 field_script_help_read_v80();
-S2 = V0;
+r = V0;
 
 A0 = 5;
 field_script_help_read_v80();
-S1 = V0;
+g = V0;
 
 A0 = 7;
 field_script_help_read_v80();
-S0 = V0;
+b = V0;
 
 A0 = 1;
 field_script_help_read_v80();
+semi_tr = V0;
 
-A0 = 1;
-A1 = S3;
-A2 = S2;
-A3 = S1;
-A4 = S0;
-A5 = V0;
-func71398();
+A0 = 1; // id
+A1 = steps;
+A2 = r;
+A3 = g;
+A4 = b;
+A5 = semi_tr;
+field_fade_setup();
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + b);
@@ -7920,81 +7921,61 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8e530
-8008E530	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008E538	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
+// func8e530()
+
+A0 = 1;
+field_script_help_read_v80();
+
+[800ad010] = w(1); // do screenshot and then show it and fade in back to game
+[800ad014] = w(V0); // steps
+
 V1 = w[800af54c];
-[800ad014] = w(V0);
-V0 = hu[V1 + 00cc];
-A0 = 0001;
-[800ad010] = w(A0);
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008E56C	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8e574
-8008E574	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008E57C	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
+// func8e574()
+
+A0 = 1;
+field_script_help_read_v80();
+
+[800ad010] = w(2); // show texture from 2c0 and fade in back to game
+[800ad014] = w(V0); // steps
+
 V1 = w[800af54c];
-[800ad014] = w(V0);
-V0 = hu[V1 + 00cc];
-A0 = 0002;
-[800ad010] = w(A0);
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008E5B0	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8e5b8
-8008E5B8	addiu  sp, sp, $ffe0 (=-$20)
-A0 = 0001;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-8008E5CC	jal    field_script_help_read_v80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0003;
-8008E5D8	jal    field_script_help_read_v80 [$800ac2c4]
+// func8e5b8()
+
+A0 = 1;
+field_script_help_read_v80();
 S2 = V0;
-A0 = 0005;
-8008E5E4	jal    field_script_help_read_v80 [$800ac2c4]
+
+A0 = 3;
+field_script_help_read_v80();
 S1 = V0;
-A0 = 0007;
-8008E5F0	jal    field_script_help_read_v80 [$800ac2c4]
+
+A0 = 5;
+field_script_help_read_v80();
 S0 = V0;
+
+A0 = 7;
+field_script_help_read_v80();
+
 A0 = S2;
 A1 = S1;
 A2 = S0;
-8008E604	jal    func715f4 [$800715f4]
 A3 = V0;
+func715f4();
+
 V1 = w[800af54c];
-8008E614	nop
-V0 = hu[V1 + 00cc];
-8008E61C	nop
-V0 = V0 + 0009;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8008E63C	jr     ra 
-8008E640	nop
+[V1 + cc] = h(hu[V1 + cc] + 9);
 ////////////////////////////////
 
 
@@ -8005,83 +7986,77 @@ SP = SP + 0020;
 A0 = 1;
 field_script_help_read_v80();
 
-V1 = w[800af54c];
+[800ad010] = w(3); // fade out to some texture
 [800ad014] = w(V0);
-[800ad010] = w(3);
+
+V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8e688
-8008E688	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0002;
-[SP + 0014] = w(RA);
-8008E694	jal    get_entity_id_from_opcode [$8009c344]
-[SP + 0010] = w(S0);
+// func8e688()
+
+A0 = 2;
+get_entity_id_from_opcode();
+
 A0 = V0;
-V0 = 00ff;
-8008E6A4	beq    a0, v0, L8e76c [$8008e76c]
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 03;
-V0 = V0 - A0;
-V1 = w[800af54c];
-A0 = w[800ad0d8];
-V1 = hu[V1 + 00cc];
-V0 = V0 << 02;
-V1 = V1 + A0;
-A0 = w[800aefe4];
-V1 = bu[V1 + 0001];
-V0 = V0 + A0;
-V1 = V1 & 0001;
-S0 = w[V0 + 004c];
-8008E6EC	beq    v1, zero, L8e718 [$8008e718]
-8008E6F0	nop
-8008E6F4	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0003;
-A0 = 0005;
-8008E700	jal    field_script_help_read_v80 [$800ac2c4]
-[S0 + 00fc] = b(V0);
-A0 = 0007;
-8008E70C	jal    field_script_help_read_v80 [$800ac2c4]
-[S0 + 00fd] = b(V0);
-[S0 + 00fe] = b(V0);
 
-L8e718:	; 8008E718
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-8008E72C	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-8008E738	nop
-V0 = V0 & 0002;
-8008E740	beq    v0, zero, L8e76c [$8008e76c]
-8008E744	nop
-8008E748	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0003;
-A0 = 0005;
-8008E754	jal    field_script_help_read_v80 [$800ac2c4]
-[S0 + 00ff] = b(V0);
-A0 = 0007;
-8008E760	jal    field_script_help_read_v80 [$800ac2c4]
-[S0 + 0100] = b(V0);
-[S0 + 0101] = b(V0);
+if( A0 != ff )
+{
+    V0 = A0 << 01;
+    V0 = V0 + A0;
+    V0 = V0 << 03;
+    V0 = V0 - A0;
+    V1 = w[800af54c];
+    A0 = w[800ad0d8];
+    V1 = hu[V1 + cc];
+    V0 = V0 << 02;
+    V1 = V1 + A0;
+    A0 = w[800aefe4];
+    V0 = V0 + A0;
+    S0 = w[V0 + 4c];
 
-L8e76c:	; 8008E76C
+    if( bu[V1 + 1] & 1 )
+    {
+        A0 = 3;
+        field_script_help_read_v80();
+        [S0 + fc] = b(V0);
+
+        A0 = 5;
+        field_script_help_read_v80();
+        [S0 + fd] = b(V0);
+
+        A0 = 7;
+        field_script_help_read_v80();
+        [S0 + fe] = b(V0);
+    }
+
+    V0 = w[800af54c];
+    V1 = w[800ad0d8];
+    V0 = hu[V0 + 00cc];
+    V0 = V0 + V1;
+    V0 = bu[V0 + 1];
+
+    if( V0 & 2 )
+    {
+        A0 = 3;
+        field_script_help_read_v80();
+        [S0 + ff] = b(V0);
+
+        A0 = 5;
+        field_script_help_read_v80();
+        [S0 + 100] = b(V0);
+
+        A0 = 7;
+        field_script_help_read_v80();
+        [S0 + 101] = b(V0);
+    }
+}
+
 V1 = w[800af54c];
-8008E774	nop
-V0 = hu[V1 + 00cc];
-8008E77C	nop
-V0 = V0 + 0009;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008E794	jr     ra 
-8008E798	nop
+[V1 + cc] = h(hu[V1 + cc] + 9);
 ////////////////////////////////
 
 
@@ -12140,10 +12115,11 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func927d4
+
 V0 = w[800ad0b4];
-800927DC	addiu  sp, sp, $ffe8 (=-$18)
+
 800927E0	beq    v0, zero, L92838 [$80092838]
-[SP + 0010] = w(RA);
+
 V0 = w[800ad0bc];
 800927F0	nop
 800927F4	beq    v0, zero, L9283c [$8009283c]
@@ -16507,17 +16483,16 @@ V1 = V1 + 0001;
 
 
 ////////////////////////////////
-// func968f0()
-// 0xB3()
+// field_script_opB3_fadein()
 
 A0 = 0;
-800968F8	jal    func7cf50 [$8007cf50]
+field_fade_init();
 
 A0 = 1;
 field_script_help_read_v80();
 
-A0 = V0;
-80096908	jal    func714e8 [$800714e8]
+A0 = V0; // id
+field_fade_set_fadein();
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 3);
@@ -16526,13 +16501,13 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// 0xB4_FadeIn()
+// field_script_opB4_fadeout()
 
 A0 = 1;
 field_script_help_read_v80();
 
-A0 = V0;
-80096948	jal    func7145c [$8007145c]
+A0 = V0; // id
+field_fade_set_fadeout();
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 3);

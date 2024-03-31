@@ -1760,8 +1760,6 @@ if( w[8004e9d8] != -1 )
     system_memory_mark_removed_alloc();
 }
 
-
-
 A0 = field_id;
 func1b3d0();
 
@@ -1775,7 +1773,8 @@ return -1;
 
 ////////////////////////////////
 // func1b3d0()
-dir_file_id = A0 + b8; // dir file index for files in directory 11 (field)
+
+dir_file_id = b8 + A0; // field data (A0 already multiplied by 2)
 
 A0 = dir_file_id;
 system_get_aligned_filesize_by_dir_file_id();

@@ -707,36 +707,49 @@ void psxJAL()
 {
     psxMemWrite32(0x80010000, 0);
 
+    //psxMemWrite32(0x800af51c, 0); // transition type
+
     // FFVII DEBUG
     //psxMemWrite8(0x8009d820, 0xff);
 
     if (0) {}
 
-    else if (_JumpTarget_ == 0x800ab1f0)
+
+    //else if (_JumpTarget_ == 0x8007d058)
+    //{
+    //    execI();
+    //    GPU_displayText("CALL XENO FUNC");
+    //}
+
+    //else if (_JumpTarget_ == 0x800ab1f0)
+    //{
+    //    _SetLink(31);
+    //    doBranch(0x800aa0e0);
+    //    GPU_displayText("CALL INIT EFFECT");
+    //}
+    //else if (_JumpTarget_ == 0x800ab3a0)
+    //{
+    //    psxRegs.GPR.n.a0 = 1;
+    //    psxRegs.GPR.n.a1 = 0;
+    //    psxRegs.GPR.n.a2 = 0;
+    //    psxRegs.GPR.n.a3 = 0;
+
+    //    _SetLink(31);
+    //    doBranch(0x800aa324);
+    //    GPU_displayText("CALL RENDER EFFECT");
+    //}
+
+
+    else if( _JumpTarget_ == 0x800AAF70) // call given func when SELECT is pressed instead of map
     {
-        _SetLink(31);
-        doBranch(0x800aa0e0);
-        GPU_displayText("CALL INIT EFFECT");
+        psxMemWrite32(0x800ad010, 4);
+        psxMemWrite32(0x800ad014, 0x20);
+        execI();
+
+        //_SetLink(31);
+        //doBranch(0x800a807c);
+        GPU_displayText("SELECT PRESSED");
     }
-    else if (_JumpTarget_ == 0x800ab3a0)
-    {
-        psxRegs.GPR.n.a0 = 1;
-        psxRegs.GPR.n.a1 = 0;
-        psxRegs.GPR.n.a2 = 0;
-        psxRegs.GPR.n.a3 = 0;
-
-        _SetLink(31);
-        doBranch(0x800aa324);
-        GPU_displayText("CALL RENDER EFFECT");
-    }
-
-
-    else if( _JumpTarget_ == 0x800ab3a0) // call given func when SELECT is pressed instead of map
-     {
-        _SetLink(31);
-        doBranch(0x800a807c);
-        GPU_displayText("CALL XENO FUNC");
-     }
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }
     //else if( _JumpTarget_ == 0x8003c36c ) { execI(); P_Xeno_System_SoundUpdateBaseValues(); }
     //else if (_JumpTarget_ == 0x8003c590) { execI(); P_Xeno_System_SoundUpdateSequence(); }

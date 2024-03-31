@@ -2864,7 +2864,7 @@
 // func43bc8
 80043BC8-80043BD8
 ////////////////////////////////
-// func43bdc
+// system_graphic_monochrome_rectangle_header
 80043BDC-80043BEC
 ////////////////////////////////
 // func43bf0

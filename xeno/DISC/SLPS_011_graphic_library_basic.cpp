@@ -466,10 +466,10 @@ L43abc:	; 80043ABC
 
 
 ////////////////////////////////
-// func43bdc()
+// system_graphic_monochrome_rectangle_header()
 
 [A0 + 3] = b(3);
-[A0 + 7] = b(60);
+[A0 + 7] = b(60); // Monochrome Rectangle (variable size) (opaque)
 ////////////////////////////////
 
 
