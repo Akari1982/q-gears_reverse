@@ -8,13 +8,13 @@ File::File( const std::string& path ):
     m_Buffer( NULL ),
     m_BufferSize( 0 )
 {
-    LOGGER->Log( "Loading file: " + m_FileName + "\n" );
+    printf( "Loading file: %s\n", m_FileName.c_str() );
 
     FILE* file = fopen( path.c_str(), "rb" );
 
     if( file == NULL )
     {
-        LOGGER->Log( "Can't open file " + path + ".\n" );
+        printf( "Can't open file %s.\n", path.c_str() );
         return;
     }
 
@@ -36,7 +36,7 @@ File::File( File* file, u32 offset, u32 length ):
 {
     if( file == NULL )
     {
-        LOGGER->Log( "Can't create file from NULL pointer.\n" );
+        printf( "Can't create file from NULL pointer.\n" );
         return;
     }
 
@@ -53,9 +53,9 @@ File::File( u8* buffer, u32 offset, u32 length ):
   m_Buffer( NULL ),
   m_BufferSize( length )
 {
-    if( file == NULL )
+    if( buffer == NULL )
     {
-        LOGGER->Log( "Can't create file from NULL buffer.\n" );
+        printf( "Can't create file from NULL buffer.\n" );
         return;
     }
 
@@ -69,7 +69,7 @@ File::File( File* file )
 {
     if( file == NULL )
     {
-        LOGGER->Log( "Can't copy file from NULL pointer.\n" );
+        printf( "Can't copy file from NULL pointer.\n" );
         return;
     }
 
@@ -92,13 +92,11 @@ File::~File()
 void
 File::WriteFile( const std::string& path ) const
 {
-    FILESYSTEM->WriteNewFile( file, m_Buffer, m_BufferSize );
-
     FILE* file = fopen( path.c_str(), "ab" );
 
     if( file == NULL )
     {
-        LOGGER->Log( "Can't create file to write.\n" );
+        printf( "Can't create file to write.\n" );
         return;
     }
 

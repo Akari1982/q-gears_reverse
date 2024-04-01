@@ -5,8 +5,8 @@
 
 
 
-std::String HexToString( int value, unsigned short width, char fill );
-std::String IntToString( int value );
+std::string HexToString( int value, unsigned short width, char fill );
+std::string IntToString( int value );
 
 
 
@@ -19,7 +19,7 @@ public:
     void Log( const std::string& text );
 
 private:
-    Ogre::String m_File;
+    std::string m_File;
 };
 
 

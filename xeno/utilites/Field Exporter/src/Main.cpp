@@ -1,18 +1,18 @@
 #include "FieldPackFile.h"
 #include "ScriptFile.h"
-
+#include <format>
 
 
 int
 main()
 {
-    for( int i = 0; i < 1000; ++i )
+    for( int i = 0; i <= 729; ++i )
     {
         printf( "Extract script for field %d.\n", i );
 
         std::string path;
-        path += "cdrom/4/0/7"
-        path += std::format( "{:02x}", i );
+        path += "cdrom/";
+        path += std::format( "{:03d}", i );
 
         FieldPackFile* field_pack = new FieldPackFile( path );
 
@@ -21,15 +21,15 @@ main()
         ScriptFile* script_file = new ScriptFile( temp );
 
         std::string save;
-        save += "scripts/raw/"
-        save += std::format( "{:02x}", i );
+        save += "scripts_raw/";
+        save += std::format( "{:03d}", i );
         temp->WriteFile( save );
         delete temp;
 
         std::string script;
-        script += "scripts/"
-        script += std::format( "{:02x}", i );
-        script += ".lua"
+        script += "scripts/";
+        script += std::format( "{:03d}", i );
+        script += ".lua";
         script_file->GetScripts( script );
         delete script_file;
 

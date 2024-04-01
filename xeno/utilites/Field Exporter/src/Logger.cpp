@@ -1,5 +1,8 @@
 #include "Logger.h"
 
+#include <sstream>
+#include <format>
+
 
 
 std::string
@@ -18,9 +21,7 @@ HexToString( int value, unsigned short width, char fill )
 std::string
 IntToString( int value )
 {
-    return std::format("{:d}", dir.id1)
-
-    return Ogre::StringConverter::toString( value );
+    return std::format( "{:d}", value );
 }
 
 
@@ -28,7 +29,7 @@ IntToString( int value )
 Logger::Logger( const std::string& name ):
     m_File( name )
 {
-    return (remove(name.c_str()) == 0);
+    remove(name.c_str());
 }
 
 

@@ -1,0 +1,578 @@
+Entity = {}
+
+
+
+Entity[ "0" ] = {
+    on_start = function( self )
+        -- 0xBC_EntityNoModelInit() -- 0x001d 0xbc
+        -- 0x2A() -- 0x001e 0x2a
+        -- 0x05_CallFunction( 0x0944 ) -- 0x001f 0x05
+        -- MISSING OPCODE 0x3a
+    end,
+
+    on_update = function( self )
+        -- 0xC6() -- 0x0062 0xc6
+        -- MISSING OPCODE 0xe1
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0097 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0097 0x00
+    end,
+
+}
+
+
+
+Entity[ "1" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 0 ) -- 0x0098 0x16
+        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x009b 0xfe
+        return 0 -- 0x009f 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00ad ) -- 0x00a0 0x02
+        -- 0xA7() -- 0x00a8 0xa7
+        return 0 -- 0x00a9 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x00b0 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x00b0 0x00
+    end,
+
+    script_0x04 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x05 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x06 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x07 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x08 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x09 = function( self )
+        -- MISSING OPCODE 0x1b
+    end,
+
+    script_0x0a = function( self )
+        -- 0x05_CallFunction( 0x0662 ) -- 0x00cb 0x05
+        return 0 -- 0x00ce 0x00
+    end,
+
+    script_0x0b = function( self )
+        -- MISSING OPCODE 0x21
+    end,
+
+}
+
+
+
+Entity[ "2" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 1 ) -- 0x00da 0x16
+        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x00dd 0xfe
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x00f3 ) -- 0x00e1 0x02
+        -- MISSING OPCODE 0x1b
+    end,
+
+    on_update = function( self )
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0101 ) -- 0x00f4 0x02
+        -- 0xA7() -- 0x00fc 0xa7
+        return 0 -- 0x00fd 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0104 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0104 0x00
+    end,
+
+    script_0x04 = function( self )
+        -- MISSING OPCODE 0x1b
+    end,
+
+    script_0x05 = function( self )
+        -- 0x05_CallFunction( 0x0662 ) -- 0x0110 0x05
+        return 0 -- 0x0113 0x00
+    end,
+
+    script_0x06 = function( self )
+        -- MISSING OPCODE 0x21
+    end,
+
+    script_0x07 = function( self )
+        -- MISSING OPCODE 0x53
+    end,
+
+    script_0x08 = function( self )
+        -- MISSING OPCODE 0xf6
+    end,
+
+    script_0x09 = function( self )
+        -- MISSING OPCODE 0x5d
+    end,
+
+    script_0x0a = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x0b = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x0c = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x0d = function( self )
+        -- MISSING OPCODE 0x53
+    end,
+
+    script_0x0e = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x0f = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+}
+
+
+
+Entity[ "3" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 2 ) -- 0x015a 0x16
+        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x015d 0xfe
+        return 0 -- 0x0161 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x0C_Encounter() -- 0x0162 0x0c
+        return 0 -- 0x0163 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0163 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0163 0x00
+    end,
+
+}
+
+
+
+Entity[ "4" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 9 ) -- 0x0164 0x16
+        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x0167 0xfe
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x017d ) -- 0x016b 0x02
+        -- MISSING OPCODE 0x1b
+    end,
+
+    on_update = function( self )
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x018b ) -- 0x017e 0x02
+        -- 0xA7() -- 0x0186 0xa7
+        return 0 -- 0x0187 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x018e 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x018e 0x00
+    end,
+
+    script_0x04 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x05 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x06 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x07 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x08 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x09 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+    script_0x0a = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+}
+
+
+
+Entity[ "5" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 3 ) -- 0x01c8 0x16
+        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x01cb 0xfe
+        return 0 -- 0x01cf 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x0C_Encounter() -- 0x01d0 0x0c
+        return 0 -- 0x01d1 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x01d1 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x01d1 0x00
+    end,
+
+}
+
+
+
+Entity[ "6" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 4 ) -- 0x01d2 0x16
+        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x01d5 0xfe
+        return 0 -- 0x01d9 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x0C_Encounter() -- 0x01da 0x0c
+        return 0 -- 0x01db 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x01db 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x01db 0x00
+    end,
+
+}
+
+
+
+Entity[ "7" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 5 ) -- 0x01dc 0x16
+        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x01df 0xfe
+        return 0 -- 0x01e3 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x0C_Encounter() -- 0x01e4 0x0c
+        return 0 -- 0x01e5 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x01e5 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x01e5 0x00
+    end,
+
+}
+
+
+
+Entity[ "8" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 6 ) -- 0x01e6 0x16
+        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x01e9 0xfe
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0201 ) -- 0x01ed 0x02
+        -- MISSING OPCODE 0x1b
+    end,
+
+    on_update = function( self )
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x020f ) -- 0x0202 0x02
+        -- 0xA7() -- 0x020a 0xa7
+        return 0 -- 0x020b 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0212 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0212 0x00
+    end,
+
+    script_0x04 = function( self )
+        -- MISSING OPCODE 0x4a
+    end,
+
+    script_0x05 = function( self )
+        -- 0x05_CallFunction( 0x0662 ) -- 0x021a 0x05
+        return 0 -- 0x021d 0x00
+    end,
+
+    script_0x06 = function( self )
+        -- 0x05_CallFunction( 0x0882 ) -- 0x021e 0x05
+        return 0 -- 0x0221 0x00
+    end,
+
+    script_0x07 = function( self )
+        -- MISSING OPCODE 0x2c
+    end,
+
+}
+
+
+
+Entity[ "9" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 7 ) -- 0x0247 0x16
+        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x024a 0xfe
+        return 0 -- 0x024e 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x0C_Encounter() -- 0x024f 0x0c
+        return 0 -- 0x0250 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0250 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0250 0x00
+    end,
+
+}
+
+
+
+Entity[ "10" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 8 ) -- 0x0251 0x16
+        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x0254 0xfe
+        return 0 -- 0x0258 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x0C_Encounter() -- 0x0259 0x0c
+        return 0 -- 0x025a 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x025a 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x025a 0x00
+    end,
+
+}
+
+
+
+Entity[ "11" ] = {
+    on_start = function( self )
+        -- 0x16_EntityPCInit( 10 ) -- 0x025b 0x16
+        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x025e 0xfe
+        return 0 -- 0x0262 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x0C_Encounter() -- 0x0263 0x0c
+        return 0 -- 0x0264 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0264 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0264 0x00
+    end,
+
+}
+
+
+
+Entity[ "12" ] = {
+    on_start = function( self )
+        -- 0xBC_EntityNoModelInit() -- 0x0265 0xbc
+        -- 0x2A() -- 0x0266 0x2a
+        -- MISSING OPCODE 0xFE1c
+    end,
+
+    on_update = function( self )
+        -- MISSING OPCODE 0x36
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x03af 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x03af 0x00
+    end,
+
+}
+
+
+
+Entity[ "13" ] = {
+    on_start = function( self )
+        -- 0xBC_EntityNoModelInit() -- 0x03b0 0xbc
+        -- 0x2A() -- 0x03b1 0x2a
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x03c0 ) -- 0x03b2 0x02
+        -- MISSING OPCODE 0x36
+    end,
+
+    on_update = function( self )
+        -- 0xFE54() -- 0x03c3 0xfe
+        -- 0x09_EntityCallScriptEW( entity=0x0e, script=0x67 ) -- 0x03c5 0x09
+        -- 0x26_Wait( time=30 ) -- 0x03c8 0x26
+        -- MISSING OPCODE 0xFE17
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0530 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0530 0x00
+    end,
+
+}
+
+
+
+Entity[ "14" ] = {
+    on_start = function( self )
+        -- 0xBC_EntityNoModelInit() -- 0x0531 0xbc
+        -- 0x2A() -- 0x0532 0x2a
+        return 0 -- 0x0533 0x00
+    end,
+
+    on_update = function( self )
+        return 0 -- 0x0534 0x00
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x0534 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0534 0x00
+    end,
+
+    script_0x04 = function( self )
+        -- 0x99() -- 0x0535 0x99
+        -- MISSING OPCODE 0x60
+    end,
+
+    script_0x05 = function( self )
+        -- 0x35() -- 0x0554 0x35
+        -- 0x35() -- 0x055a 0x35
+        -- 0x05_CallFunction( 0x07b2 ) -- 0x0560 0x05
+        return 0 -- 0x0563 0x00
+    end,
+
+    script_0x06 = function( self )
+        -- MISSING OPCODE 0x60
+    end,
+
+    script_0x07 = function( self )
+        -- 0x99() -- 0x0582 0x99
+        -- MISSING OPCODE 0x60
+    end,
+
+    script_0x08 = function( self )
+        -- MISSING OPCODE 0x60
+    end,
+
+    script_0x09 = function( self )
+        -- 0x35() -- 0x05e9 0x35
+        -- 0x35() -- 0x05ef 0x35
+        -- 0x05_CallFunction( 0x07b2 ) -- 0x05f5 0x05
+        return 0 -- 0x05f8 0x00
+    end,
+
+}
+
+
+
+Entity[ "15" ] = {
+    on_start = function( self )
+        -- MISSING OPCODE 0x46
+    end,
+
+    on_update = function( self )
+        return 0 -- 0x05fb 0x00
+    end,
+
+    on_talk = function( self )
+        -- MISSING OPCODE 0x15
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x0608 0x00
+    end,
+
+}
+
+
+
+Entity[ "16" ] = {
+    on_start = function( self )
+        -- 0xBC_EntityNoModelInit() -- 0x0609 0xbc
+        -- 0x2A() -- 0x060a 0x2a
+        return 0 -- 0x060b 0x00
+    end,
+
+    on_update = function( self )
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x001e ), value2=(s16)0xfb50, condition="value1 < value2", jump_if_false=0x0639 ) -- 0x060c 0x02
+        -- MISSING OPCODE 0x85
+    end,
+
+    on_talk = function( self )
+        return 0 -- 0x063d 0x00
+    end,
+
+    on_push = function( self )
+        return 0 -- 0x063d 0x00
+    end,
+
+}
+
+
+

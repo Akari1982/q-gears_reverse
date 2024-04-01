@@ -19,15 +19,15 @@ ScriptFile::~ScriptFile()
 void
 ScriptFile::GetScripts( const std::string& path )
 {
-    Logger* export = new Logger( path );
-    export->Log( "Entity = {}\n\n\n\n" );
+    Logger* exp = new Logger( path );
+    exp->Log( "Entity = {}\n\n\n\n" );
 
     u32 number_of_entity = GetU32LE( 0x80 );
     u32 offset_to_script = 0x84 + number_of_entity * 0x40;
 
     for( u32 i = 0; i < number_of_entity; ++i )
     {
-        export->Log( "Entity[ \"" + IntToString( i ) + "\" ] = {\n" );
+        exp->Log( "Entity[ \"" + IntToString( i ) + "\" ] = {\n" );
 
         for( u8 j = 0; j < 0x20; ++j )
         {
@@ -39,23 +39,23 @@ ScriptFile::GetScripts( const std::string& path )
 
             if( j == 0 )
             {
-                export->Log( "    on_start = function( self )\n" );
+                exp->Log( "    on_start = function( self )\n" );
             }
             else if( j == 1 )
             {
-                export->Log( "    on_update = function( self )\n" );
+                exp->Log( "    on_update = function( self )\n" );
             }
             else if( j == 2 )
             {
-                export->Log( "    on_talk = function( self )\n" );
+                exp->Log( "    on_talk = function( self )\n" );
             }
             else if( j == 3 )
             {
-                export->Log( "    on_push = function( self )\n" );
+                exp->Log( "    on_push = function( self )\n" );
             }
             else
             {
-                export->Log( "    script_0x" + HexToString( j, 2, '0' ) + " = function( self )\n" );
+                exp->Log( "    script_0x" + HexToString( j, 2, '0' ) + " = function( self )\n" );
             }
 
             u32 pointer = offset_to_script + offset_in_script;
@@ -63,254 +63,254 @@ ScriptFile::GetScripts( const std::string& path )
             while( true )
             {
                 std::string address = "0x" + HexToString( pointer - offset_to_script, 4, '0' );
-                export->Log( "        " );
+                exp->Log( "        " );
 
                 u8 opcode = GetU8(pointer);
 
                 if( opcode == 0x00 )
                 {
-                    export->Log( "return 0" );
+                    exp->Log( "return 0" );
                     pointer += 1;
-                    export->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
+                    exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
                     break;
                 }
                 else if( opcode == 0x01 )
                 {
-                    export->Log( "-- 0x01_JumpTo( " + GetU16Variable( pointer + 1 ) + " )" );
+                    exp->Log( "-- 0x01_JumpTo( " + GetU16Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x02 )
                 {
-                    export->Log( "-- 0x02_ConditionalJumpTo( " );
+                    exp->Log( "-- 0x02_ConditionalJumpTo( " );
                     u8 flag = GetU8( pointer + 5 );
                     switch( flag & 0xf0 )
                     {
                         case 0x00:
                         {
-                            export->Log( "value1=" + GetVVariable( pointer + 1 ) + ", " );
-                            export->Log( "value2=" + GetVVariable( pointer + 3 ) + ", " );
+                            exp->Log( "value1=" + GetVVariable( pointer + 1 ) + ", " );
+                            exp->Log( "value2=" + GetVVariable( pointer + 3 ) + ", " );
                         }
                         break;
                         case 0x40:
                         {
-                            export->Log( "value1=" + GetVVariable( pointer + 1 ) + ", " );
-                            export->Log( "value2=" + GetS16Variable( pointer + 3 ) + ", " );
+                            exp->Log( "value1=" + GetVVariable( pointer + 1 ) + ", " );
+                            exp->Log( "value2=" + GetS16Variable( pointer + 3 ) + ", " );
                         }
                         break;
                         case 0x80:
                         {
-                            export->Log( "value1=" + GetS16Variable( pointer + 1 ) + ", " );
-                            export->Log( "value2=" + GetVVariable( pointer + 3 ) + ", " );
+                            exp->Log( "value1=" + GetS16Variable( pointer + 1 ) + ", " );
+                            exp->Log( "value2=" + GetVVariable( pointer + 3 ) + ", " );
                         }
                         break;
                         case 0xc0:
                         {
-                            export->Log( "value1=" + GetS16Variable( pointer + 1 ) + ", " );
-                            export->Log( "value2=" + GetS16Variable( pointer + 3 ) + ", " );
+                            exp->Log( "value1=" + GetS16Variable( pointer + 1 ) + ", " );
+                            exp->Log( "value2=" + GetS16Variable( pointer + 3 ) + ", " );
                         }
                         break;
                     }
-                    export->Log( "condition=\"" );
+                    exp->Log( "condition=\"" );
                     switch( flag & 0x0f )
                     {
-                        case 0x00: export->Log( "value1 == value2" ); break;
-                        case 0x01: export->Log( "value1 != value2" ); break;
-                        case 0x02: export->Log( "value1 > value2" ); break;
-                        case 0x03: export->Log( "value1 < value2" ); break;
-                        case 0x04: export->Log( "value1 >= value2" ); break;
-                        case 0x05: export->Log( "value1 <= value2" ); break;
-                        case 0x06: export->Log( "value1 & value2" ); break;
-                        case 0x07: export->Log( "value1 != value2" ); break;
-                        case 0x08: export->Log( "value1 | value2" ); break;
-                        case 0x09: export->Log( "value1 & value2" ); break;
-                        case 0x0A: export->Log( "(0 NOR value1) & value2" ); break;
+                        case 0x00: exp->Log( "value1 == value2" ); break;
+                        case 0x01: exp->Log( "value1 != value2" ); break;
+                        case 0x02: exp->Log( "value1 > value2" ); break;
+                        case 0x03: exp->Log( "value1 < value2" ); break;
+                        case 0x04: exp->Log( "value1 >= value2" ); break;
+                        case 0x05: exp->Log( "value1 <= value2" ); break;
+                        case 0x06: exp->Log( "value1 & value2" ); break;
+                        case 0x07: exp->Log( "value1 != value2" ); break;
+                        case 0x08: exp->Log( "value1 | value2" ); break;
+                        case 0x09: exp->Log( "value1 & value2" ); break;
+                        case 0x0A: exp->Log( "(0 NOR value1) & value2" ); break;
                     }
-                    export->Log("\", jump_if_false=" + GetU16Variable( pointer + 6 ) + " )" );
+                    exp->Log("\", jump_if_false=" + GetU16Variable( pointer + 6 ) + " )" );
                     pointer += 8;
                 }
                 else if( opcode == 0x05 )
                 {
-                    export->Log( "-- 0x05_CallFunction( " + GetU16Variable( pointer + 1 ) + " )" );
+                    exp->Log( "-- 0x05_CallFunction( " + GetU16Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x07 )
                 {
-                    export->Log( "-- 0x07( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
+                    exp->Log( "-- 0x07( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x08 )
                 {
-                    export->Log( "-- 0x08_EntityCallScriptSW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
+                    exp->Log( "-- 0x08_EntityCallScriptSW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x09 )
                 {
-                    export->Log( "-- 0x09_EntityCallScriptEW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
+                    exp->Log( "-- 0x09_EntityCallScriptEW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x0b )
                 {
-                    export->Log( "-- 0x0B_InitNPC( " + GetV80Variable( pointer + 1 ) + " )" );
+                    exp->Log( "-- 0x0B_InitNPC( " + GetV80Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x0c )
                 {
-                    export->Log( "-- 0x0C_Encounter()" );
+                    exp->Log( "-- 0x0C_Encounter()" );
                     pointer += 1;
                 }
                 else if (opcode == 0x16)
                 {
-                    export->Log( "-- 0x16_EntityPCInit( " + GetV80Variable( pointer + 1 ) + " )" );
+                    exp->Log( "-- 0x16_EntityPCInit( " + GetV80Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x19 )
                 {
-                    export->Log( "-- 0x19_SetPosition( x=" + GetVF80Variable( pointer + 1 ) + ", z=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetFVariable( pointer + 5 ) + " )");
+                    exp->Log( "-- 0x19_SetPosition( x=" + GetVF80Variable( pointer + 1 ) + ", z=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetFVariable( pointer + 5 ) + " )");
                     pointer += 6;
                 }
                 else if( opcode == 0x20 )
                 {
-                    export->Log( "-- 0x20_SpriteSetSolid()");
+                    exp->Log( "-- 0x20_SpriteSetSolid()");
                     pointer += 3;
                 }
                 else if( opcode == 0x23 )
                 {
-                    export->Log( "-- 0x23()");
+                    exp->Log( "-- 0x23()");
                     pointer += 1;
                 }
                 else if( opcode == 0x26 )
                 {
-                    export->Log( "-- 0x26_Wait( time=" + GetV80Variable( pointer + 1 ) + " )" );
+                    exp->Log( "-- 0x26_Wait( time=" + GetV80Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x2a )
                 {
-                    export->Log( "-- 0x2A()");
+                    exp->Log( "-- 0x2A()");
                     pointer += 1;
                 }
                 else if( opcode == 0x31 )
                 {
-                    export->Log( "-- 0x31_JumpIfButtonNotPressed( button_mask=" + GetU16Variable( pointer + 1 ) + ", jump_to=" + GetU16Variable( pointer + 3 ) + " )" );
+                    exp->Log( "-- 0x31_JumpIfButtonNotPressed( button_mask=" + GetU16Variable( pointer + 1 ) + ", jump_to=" + GetU16Variable( pointer + 3 ) + " )" );
                     pointer += 5;
                 }
                 else if( opcode == 0x35 )
                 {
-                    export->Log( "-- 0x35()");
+                    exp->Log( "-- 0x35()");
                     pointer += 6;
                 }
                 else if( opcode == 0x5a )
                 {
-                    export->Log( "-- 0x5A()");
+                    exp->Log( "-- 0x5A()");
                     pointer += 1;
                 }
                 else if( opcode == 0x5b )
                 {
-                    export->Log( "-- 0x5B()");
+                    exp->Log( "-- 0x5B()");
                     pointer += 1;
                 }
                 else if( opcode == 0x63 )
                 {
-                    export->Log( "-- 0x63()");
+                    exp->Log( "-- 0x63()");
                     pointer += 8;
                 }
                 else if( opcode == 0x75 )
                 {
-                    export->Log( "-- 0x75()");
+                    exp->Log( "-- 0x75()");
                     pointer += 3;
                 }
                 else if( opcode == 0x84 )
                 {
-                    export->Log( "-- 0x84_ProgressLessEqualJumpTo( value=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
+                    exp->Log( "-- 0x84_ProgressLessEqualJumpTo( value=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
                     pointer += 5;
                 }
                 else if( opcode == 0x86 )
                 {
-                    export->Log( "-- 0x86_ProgressNotEqualJumpTo( value=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
+                    exp->Log( "-- 0x86_ProgressNotEqualJumpTo( value=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
                     pointer += 5;
                 }
                 else if( opcode == 0x87 )
                 {
-                    export->Log( "-- 0x87_SetProgress( progress=" + GetV80Variable( pointer + 1 ) + " )");
+                    exp->Log( "-- 0x87_SetProgress( progress=" + GetV80Variable( pointer + 1 ) + " )");
                     pointer += 3;
                 }
                 else if( opcode == 0x98 )
                 {
-                    export->Log( "-- 0x98_MapLoad( field_id=" + GetV80Variable( pointer + 1 ) + ", value=" + GetV80Variable( pointer + 3 ) + " )");
+                    exp->Log( "-- 0x98_MapLoad( field_id=" + GetV80Variable( pointer + 1 ) + ", value=" + GetV80Variable( pointer + 3 ) + " )");
                     pointer += 5;
                 }
                 else if( opcode == 0x99 )
                 {
-                    export->Log( "-- 0x99()");
+                    exp->Log( "-- 0x99()");
                     pointer += 1;
                 }
                 else if( opcode == 0x9c )
                 {
-                    export->Log( "-- 0x9C()");
+                    exp->Log( "-- 0x9C()");
                     pointer += 1;
                 }
                 else if( opcode == 0xa0 )
                 {
-                    export->Log( "-- 0xA0()");
+                    exp->Log( "-- 0xA0()");
                     pointer += 7;
                 }
                 else if( opcode == 0xa3 )
                 {
-                    export->Log( "-- 0xA3()");
+                    exp->Log( "-- 0xA3()");
                     pointer += 8;
                 }
                 else if( opcode == 0xa7 )
                 {
-                    export->Log( "-- 0xA7()");
+                    exp->Log( "-- 0xA7()");
                     pointer += 1;
                 }
                 else if( opcode == 0xb3 )
                 {
-                    export->Log( "-- 0xB3()");
+                    exp->Log( "-- 0xB3()");
                     pointer += 3;
                 }
                 else if( opcode == 0xb4 )
                 {
-                    export->Log("-- 0xB4_FadeIn()");
+                    exp->Log("-- 0xB4_FadeIn()");
                     pointer += 3;
                 }
                 else if( opcode == 0xbc )
                 {
-                    export->Log("-- 0xBC_EntityNoModelInit()");
+                    exp->Log("-- 0xBC_EntityNoModelInit()");
                     pointer += 1;
                 }
                 else if( opcode == 0xbe )
                 {
-                    export->Log( "-- 0xBE()");
+                    exp->Log( "-- 0xBE()");
                     pointer += 3;
                 }
                 else if( opcode == 0xc6 )
                 {
-                    export->Log( "-- 0xC6()");
+                    exp->Log( "-- 0xC6()");
                     pointer += 1;
                 }
                 else if( opcode == 0xcb )
                 {
-                    export->Log( "-- 0xCB_TriggerJumpTo( trigger_id=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
+                    exp->Log( "-- 0xCB_TriggerJumpTo( trigger_id=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
                     pointer += 5;
                 }
                 else if( opcode == 0xd0 )
                 {
-                    export->Log( "-- 0xD0()");
+                    exp->Log( "-- 0xD0()");
                     pointer += 11;
                 }
                 else if( opcode == 0xf1 )
                 {
-                    export->Log( "-- 0xF1()");
+                    exp->Log( "-- 0xF1()");
                     pointer += 11;
                 }
                 else if( opcode == 0xf4 )
                 {
-                    export->Log( "-- 0xF4()");
+                    exp->Log( "-- 0xF4()");
                     pointer += 2;
                 }
                 else if( opcode == 0xf5 )
                 {
-                    export->Log( "-- 0xF5_DialogShow3( dialog_id=" + GetU16Variable( pointer + 1 ) + ", flag=" + GetU8Variable( pointer + 3 ) + " )");
+                    exp->Log( "-- 0xF5_DialogShow3( dialog_id=" + GetU16Variable( pointer + 1 ) + ", flag=" + GetU8Variable( pointer + 3 ) + " )");
                     pointer += 4;
                 }
                 else if( opcode == 0xfe )
@@ -320,183 +320,183 @@ ScriptFile::GetScripts( const std::string& path )
 
                     if( eo_opcode == 0x0a )
                     {
-                        export->Log( "-- 0x0A()");
+                        exp->Log( "-- 0x0A()");
                         pointer += 3;
                     }
                     else if( eo_opcode == 0x0d )
                     {
-                        export->Log( "-- 0xFE0D_SetAvatar( character_id=" + GetV80Variable( pointer + 1 ) + " )" );
+                        exp->Log( "-- 0xFE0D_SetAvatar( character_id=" + GetV80Variable( pointer + 1 ) + " )" );
                         pointer += 3;
                     }
                     else if( eo_opcode == 0x0e )
                     {
-                        export->Log( "-- 0xFE0E_SoundSetVolume( volume=" + GetV80Variable( pointer + 1 ) + ", steps=" + GetV80Variable( pointer + 3 ) + " )" );
+                        exp->Log( "-- 0xFE0E_SoundSetVolume( volume=" + GetV80Variable( pointer + 1 ) + ", steps=" + GetV80Variable( pointer + 3 ) + " )" );
                         pointer += 5;
                     }
                     else if( eo_opcode == 0x35 )
                     {
-                        export->Log( "-- 0xFE35()");
+                        exp->Log( "-- 0xFE35()");
                         pointer += 6;
                     }
                     else if( eo_opcode == 0x54 )
                     {
-                        export->Log( "-- 0xFE54()" );
+                        exp->Log( "-- 0xFE54()" );
                         pointer += 1;
                     }
                     else if( eo_opcode == 0x63 )
                     {
-                        export->Log( "-- 0xFE63()");
+                        exp->Log( "-- 0xFE63()");
                         pointer += 5;
                     }
                     else if( eo_opcode == 0x73 )
                     {
-                        export->Log( "opcodeFE73()");
+                        exp->Log( "opcodeFE73()");
                         pointer += 8;
                     }
                     else if( eo_opcode == 0x75 )
                     {
-                        export->Log( "-- 0xFE75()");
+                        exp->Log( "-- 0xFE75()");
                         pointer += 4;
                     }
                     else if( eo_opcode == 0x8f )
                     {
-                        export->Log( "-- 0xFE8F_ParticleSystemInit1( entity=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )");
+                        exp->Log( "-- 0xFE8F_ParticleSystemInit1( entity=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )");
                         pointer += 8;
                     }
                     else if( eo_opcode == 0x90 )
                     {
-                        export->Log( "-- 0xFE90_ParticleInitBase( particle_id=" + GetV80Variable( pointer + 1 ) + ", number_of_sprites=" + GetV80Variable( pointer + 3 ) + ", wait=" + GetV80Variable( pointer + 5 ) + ", ttl=" + GetV80Variable( pointer + 7 ) + " )");
+                        exp->Log( "-- 0xFE90_ParticleInitBase( particle_id=" + GetV80Variable( pointer + 1 ) + ", number_of_sprites=" + GetV80Variable( pointer + 3 ) + ", wait=" + GetV80Variable( pointer + 5 ) + ", ttl=" + GetV80Variable( pointer + 7 ) + " )");
                         pointer += 9;
                     }
                     else if( eo_opcode == 0x91 )
                     {
-                        export->Log( "-- 0xFE91_ParticlePos( x=" + GetVF80Variable( pointer + 1 ) + ", y=" + GetVF40Variable( pointer + 3 ) + ", z=" + GetVF20Variable( pointer + 5 ) + ", speed_x=" + GetVF10Variable( pointer + 7 ) + ", speed_y=" + GetVF08Variable( pointer + 9 ) + ", speed_z=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )");
+                        exp->Log( "-- 0xFE91_ParticlePos( x=" + GetVF80Variable( pointer + 1 ) + ", y=" + GetVF40Variable( pointer + 3 ) + ", z=" + GetVF20Variable( pointer + 5 ) + ", speed_x=" + GetVF10Variable( pointer + 7 ) + ", speed_y=" + GetVF08Variable( pointer + 9 ) + ", speed_z=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )");
                         pointer += 14;
                     }
                     else if( eo_opcode == 0x92 )
                     {
-                        export->Log( "-- 0xFE92_ParticleSpeed( speed=" + GetVF80Variable( pointer + 1 ) + ", acc_x=" + GetVF40Variable( pointer + 3 ) + ", acc_y=" + GetVF20Variable( pointer + 5 ) + ", acc_z=" + GetVF10Variable( pointer + 7 ) + ", rand_start=" + GetVF08Variable( pointer + 9 ) + ", rand_speed=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )");
+                        exp->Log( "-- 0xFE92_ParticleSpeed( speed=" + GetVF80Variable( pointer + 1 ) + ", acc_x=" + GetVF40Variable( pointer + 3 ) + ", acc_y=" + GetVF20Variable( pointer + 5 ) + ", acc_z=" + GetVF10Variable( pointer + 7 ) + ", rand_start=" + GetVF08Variable( pointer + 9 ) + ", rand_speed=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )");
                         pointer += 14;
                     }
                     else if( eo_opcode == 0x93 )
                     {
-                        export->Log( "-- 0xFE93( s_wait=" + GetV80Variable( pointer + 1 ) + ", var2=" + GetV80Variable( pointer + 3 ) + ", sprite_id=" + GetV80Variable( pointer + 5 ) + ", var4=" + GetV80Variable( pointer + 7 ) + ", var5=" + GetV80Variable( pointer + 9 ) + " )");
+                        exp->Log( "-- 0xFE93( s_wait=" + GetV80Variable( pointer + 1 ) + ", var2=" + GetV80Variable( pointer + 3 ) + ", sprite_id=" + GetV80Variable( pointer + 5 ) + ", var4=" + GetV80Variable( pointer + 7 ) + ", var5=" + GetV80Variable( pointer + 9 ) + " )");
                         pointer += 11;
                     }
                     else if( eo_opcode == 0x94 )
                     {
-                        export->Log( "-- 0xFE94_ParticleTranslation( trans_x=" + GetVF80Variable( pointer + 1 ) + ", trans_y=" + GetVF40Variable( pointer + 3 ) + ", trans_add_x=" + GetVF20Variable( pointer + 5 ) + ", trans_add_y=" + GetVF10Variable( pointer + 7 ) + ", flag=" + GetFVariable( pointer + 9 ) + " )");
+                        exp->Log( "-- 0xFE94_ParticleTranslation( trans_x=" + GetVF80Variable( pointer + 1 ) + ", trans_y=" + GetVF40Variable( pointer + 3 ) + ", trans_add_x=" + GetVF20Variable( pointer + 5 ) + ", trans_add_y=" + GetVF10Variable( pointer + 7 ) + ", flag=" + GetFVariable( pointer + 9 ) + " )");
                         pointer += 10;
                     }
                     else if( eo_opcode == 0x95 )
                     {
-                        export->Log( "-- 0xFE95_ParticleColour( r=" + GetVF80Variable( pointer + 1 ) + ", g=" + GetVF40Variable( pointer + 3 ) + ", b=" + GetVF20Variable( pointer + 5 ) + ", r_add=" + GetVF10Variable( pointer + 7 ) + ", g_add=" + GetVF10Variable( pointer + 9 ) + ", b_add=" + GetVF10Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )");
+                        exp->Log( "-- 0xFE95_ParticleColour( r=" + GetVF80Variable( pointer + 1 ) + ", g=" + GetVF40Variable( pointer + 3 ) + ", b=" + GetVF20Variable( pointer + 5 ) + ", r_add=" + GetVF10Variable( pointer + 7 ) + ", g_add=" + GetVF10Variable( pointer + 9 ) + ", b_add=" + GetVF10Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )");
                         pointer += 14;
                     }
                     else if( eo_opcode == 0x96 )
                     {
-                        export->Log( "-- 0xFE96_ParticleCreate()");
+                        exp->Log( "-- 0xFE96_ParticleCreate()");
                         pointer += 1;
                     }
                     else if( eo_opcode == 0x97 )
                     {
-                        export->Log( "-- 0xFE97_ParticleReset( all=" + GetU8Variable( pointer + 1 ) + " )");
+                        exp->Log( "-- 0xFE97_ParticleReset( all=" + GetU8Variable( pointer + 1 ) + " )");
                         pointer += 2;
                     }
                     else if( eo_opcode == 0x99 )
                     {
-                        export->Log( "-- 0xFE99()");
+                        exp->Log( "-- 0xFE99()");
                         pointer += 2;
                     }
                     else if( eo_opcode == 0xa0 )
                     {
-                        export->Log( "-- 0xFEA0()");
+                        exp->Log( "-- 0xFEA0()");
                         pointer += 12;
                     }
                     else if( eo_opcode == 0xa5 )
                     {
-                        export->Log( "-- 0xFEA5_ParticleRenderSettings( use_speed=" + GetV80Variable( pointer + 1 ) + ", settings=" + GetV80Variable( pointer + 3 ) + ", rot_z=" + GetV80Variable( pointer + 5 ) + " )");
+                        exp->Log( "-- 0xFEA5_ParticleRenderSettings( use_speed=" + GetV80Variable( pointer + 1 ) + ", settings=" + GetV80Variable( pointer + 3 ) + ", rot_z=" + GetV80Variable( pointer + 5 ) + " )");
                         pointer += 7;
                     }
                     else if( eo_opcode == 0xa7 )
                     {
-                        export->Log( "-- 0xFEA7()");
+                        exp->Log( "-- 0xFEA7()");
                         pointer += 9;
                     }
                     else if( eo_opcode == 0xb1 )
                     {
-                        export->Log( "opcodeFEB1_ScifiHudInit()");
+                        exp->Log( "opcodeFEB1_ScifiHudInit()");
                         pointer += 1;
                     }
                     else if( eo_opcode == 0xbd )
                     {
-                        export->Log( "-- 0xFEBD_ParticleSpawnSettings( settings=" + GetV80Variable( pointer + 1 ) + " )");
+                        exp->Log( "-- 0xFEBD_ParticleSpawnSettings( settings=" + GetV80Variable( pointer + 1 ) + " )");
                         pointer += 7;
                     }
                     else if( eo_opcode == 0xbe )
                     {
-                        export->Log( "opcodeFEBE_EnableCredits()");
+                        exp->Log( "opcodeFEBE_EnableCredits()");
                         pointer += 1;
                     }
                     else if( eo_opcode == 0xc0 )
                     {
-                        export->Log( "opcodeFEC0()");
+                        exp->Log( "opcodeFEC0()");
                         pointer += 3;
                     }
                     else if( eo_opcode == 0xc2 )
                     {
-                        export->Log( "opcodeFEC2()");
+                        exp->Log( "opcodeFEC2()");
                         pointer += 4;
                     }
                     else if( eo_opcode == 0xc5 )
                     {
-                        export->Log( "opcodeFEC5()");
+                        exp->Log( "opcodeFEC5()");
                         pointer += 5;
                     }
                     else if( eo_opcode == 0xd0 )
                     {
-                        export->Log( "opcodeFED0()");
+                        exp->Log( "opcodeFED0()");
                         pointer += 5;
                     }
                     else if( eo_opcode == 0xd1 )
                     {
-                        export->Log( "opcodeFED1()");
+                        exp->Log( "opcodeFED1()");
                         pointer += 1;
                     }
                     else if( eo_opcode == 0xd2 )
                     {
-                        export->Log( "opcodeFED2()");
+                        exp->Log( "opcodeFED2()");
                         pointer += 3;
                     }
                     else if( eo_opcode == 0xdf )
                     {
-                        export->Log( "opcodeFEDF()");
+                        exp->Log( "opcodeFEDF()");
                         pointer += 3;
                     }
                     else if( eo_opcode == 0xe0 )
                     {
-                        export->Log( "opcodeFEE0()");
+                        exp->Log( "opcodeFEE0()");
                         pointer += 2;
                     }
                     else
                     {
-                        export->Log( "-- MISSING OPCODE 0xFE" + HexToString( eo_opcode, 2, '0' ) + "\n" );
+                        exp->Log( "-- MISSING OPCODE 0xFE" + HexToString( eo_opcode, 2, '0' ) + "\n" );
                         break;
                     }
                 }
                 else
                 {
-                    export->Log( "-- MISSING OPCODE 0x" + HexToString( opcode, 2, '0' ) + "\n" );
+                    exp->Log( "-- MISSING OPCODE 0x" + HexToString( opcode, 2, '0' ) + "\n" );
                     break;
                 }
 
-                export->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
+                exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
             }
 
-            export->Log( "    end,\n\n" );
+            exp->Log( "    end,\n\n" );
         }
 
-        export->Log( "}\n\n\n\n" );
+        exp->Log( "}\n\n\n\n" );
     }
 }
 
