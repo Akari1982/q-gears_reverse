@@ -2,16 +2,16 @@
 
 
 
-ArchiveFile::ArchiveFile( const Ogre::String& file ):
-    File( file )
+ArchiveFile::ArchiveFile( const std::string& path ):
+    File( path )
 {
     Extract();
 }
 
 
 
-ArchiveFile::ArchiveFile( File* pFile, const u32 offset, const u32 length ):
-    File( pFile, offset, length )
+ArchiveFile::ArchiveFile( File* file, const u32 offset, const u32 length ):
+    File( file, offset, length )
 {
     Extract();
 }

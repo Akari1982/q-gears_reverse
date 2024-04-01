@@ -8,10 +8,10 @@
 class ScriptFile : public File
 {
 public:
-    ScriptFile( File* pFile );
+    ScriptFile( File* file );
     virtual ~ScriptFile();
 
-    void GetScripts( const int file_id );
+    void GetScripts( const std::string& path );
     Ogre::String GetEVariable( const u32 script_pointer );
     Ogre::String GetFVariable( const u32 script_pointer );
 

@@ -9734,7 +9734,7 @@ for( int i = 0; i < num; ++i )
     A7 = prim + 20; // ret xy4
     A8 = SP + 28; // ret interpolation
     A9 = SP + 2c; // ret flags
-    system_gte_quad_perspective_transform();
+    system_psyq_rot_trans_pers_4();
 
     rdata = w[80061c30];
     A0 = w[rdata + 1d4] + 80; // otag
@@ -10201,7 +10201,7 @@ V0 = V0 + T0;
 V0 = V0 << 02;
 V1 = V1 + V0;
 V1 = V1 + 0020;
-801CE988	jal    $system_gte_quad_perspective_transform
+801CE988	jal    $system_psyq_rot_trans_pers_4
 [SP + 001c] = w(V1);
 V0 = w[80061c30];
 801CE998	nop
@@ -10281,7 +10281,7 @@ V0 = V0 + T0;
 V0 = V0 << 02;
 V1 = V1 + V0;
 V1 = V1 + 0020;
-801CEAC4	jal    $system_gte_quad_perspective_transform
+801CEAC4	jal    $system_psyq_rot_trans_pers_4
 [SP + 001c] = w(V1);
 V0 = w[80061c30];
 801CEAD4	nop
@@ -10817,7 +10817,7 @@ V0 = V0 + V1;
 V0 = V0 << 03;
 V0 = V0 + S0;
 V0 = V0 + 00c4;
-801CF560	jal    $system_gte_quad_perspective_transform
+801CF560	jal    $system_psyq_rot_trans_pers_4
 [SP + 001c] = w(V0);
 V0 = w[80061c30];
 801CF570	nop
@@ -12085,7 +12085,7 @@ S0 = A3;
 A2 = A0 + 0010;
 A3 = A0 + 0018;
 [SP + 0024] = w(V0);
-system_gte_quad_perspective_transform();
+system_psyq_rot_trans_pers_4();
 
 A1 = S1;
 V0 = w[80061c30];
@@ -12222,7 +12222,7 @@ V0 = V0 + V1;
 V0 = V0 << 02;
 V0 = V0 + S0;
 V0 = V0 + 04d0;
-801D0BCC	jal    $system_gte_quad_perspective_transform
+801D0BCC	jal    $system_psyq_rot_trans_pers_4
 [SP + 001c] = w(V0);
 V0 = bu[S0 + 071c];
 A0 = w[S0 + 0718];

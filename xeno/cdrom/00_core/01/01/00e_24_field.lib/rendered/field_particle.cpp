@@ -684,7 +684,7 @@ A6 = sprite_data + 50 + buffer_id * 20 + 18; // xy3
 A7 = sprite_data + 50 + buffer_id * 20 + 20; // xy2
 A8 = SP + a0; // Interpolation value for depth queing
 A9 = SP + a0; // return flags
-func4a664(); // transform 4 points by rotation matrix
+system_psyq_rot_average_4(); // transform 4 points by rotation matrix
 otz = V0;
 
 if( order == 0 )

@@ -3,8 +3,8 @@
 
 
 
-FieldPackFile::FieldPackFile( const Ogre::String& file ):
-    File( file )
+FieldPackFile::FieldPackFile( const std::string& path ):
+    File( path )
 {
 }
 
@@ -40,13 +40,4 @@ FieldPackFile::Extract( u32 file_number )
     File* file = new File( comp, 0, length_uncompressed );
     delete comp;
     return file;
-}
-
-
-
-void
-FieldPackFile::GetVramTex( const unsigned int tex_id, unsigned int& vram_u, unsigned int& vram_v )
-{
-    vram_u = GetU16LE( tex_id * 0x08 + 0 );
-    vram_v = GetU16LE( tex_id * 0x08 + 2 );
 }

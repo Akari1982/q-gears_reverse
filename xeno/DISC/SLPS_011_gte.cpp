@@ -1873,7 +1873,19 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector.
 
 
 ////////////////////////////////
-// system_gte_quad_perspective_transform()
+// system_psyq_rot_trans_pers_4()
+
+// RotTransPers4
+// After transforming the four coordinate vectors v0, v1, v2, and v3 using a rotation matrix, the function
+// performs perspective transformation, and returns four screen coordinates sxy0, sxy1, sxy2, and sxy3. It
+// also returns an interpolation value for depth cueing to p corresponding to v3. The argument format is as
+//follows:
+// v0, v1, v2, v3 -> vx, vy, vz : (1, 15, 0)
+// sxy0, sxy1, sxy2, sxy3 : (1, 15, 0), (1,15,0)
+// p : (0, 20, 12)
+// flag : (0, 16, 0)
+
+// return: 1/4 of the Z component sz of the screen coordinates corresponding to v3.
 
 VXY0 = w[A0 + 0];
 VZ0  = w[A0 + 4];
@@ -1903,7 +1915,19 @@ return SZ3 / 4;
 
 
 ////////////////////////////////
-// func4a664()
+// system_psyq_rot_average_4()
+
+// RotAverage4
+// A coordinate transformation of four points v0, v1, v2 and v3 is performed using a rotation matrix. Next a
+// perspective transformation is performed and four screen coordinates sxy0, sxy1, sxy2, and sxy3 are
+// returned. An interpolation value for depth cueing on v2 to p is also returned.
+// v0, v1, v2, v3 -> vx, vy, vz : (1, 15, 0)
+// sxy0, sxy1, sxy2, sxy3 : (1, 15, 0), (1, 15, 0)
+// p : (0, 20, 12)
+// flag : (0, 32, 0)
+// Return value
+// 1/4 (OTZ value) average of four screen coordinate Z values.
+
 
 VXY0 = w[A0 + 0];
 VZ0  = w[A0 + 4];
@@ -1935,54 +1959,54 @@ return OTZ;
 
 
 ////////////////////////////////
-// func4a6e4
+// system_psyq_rot_nclip_4()
 
-VXY0 = w[A0 + 0000];
-VZ0 = w[A0 + 0004];
-VXY1 = w[A1 + 0000];
-VZ1 = w[A1 + 0004];
-VXY2 = w[A2 + 0000];
-VZ2 = w[A2 + 0004];
-8004A6FC	nop
+// RotNclip4
+// A coordinate transformation of four points v0, v1, v2, v3 is performed using a rotation matrix. Next a
+// perspective transformation is performed and three screen coordinates sx0, sx1, sx2, and sx3 are returned.
+// An interpolation value for depth cueing on v2 to p is also returned. Finally, we also receive 1/4 of the Z value
+// of the screen coordinates for v2 to otz.
+// v0, v1, v2, v3 -> vx, vy, vz : (1, 15, 0)
+// sxy0, sxy1, sxy2, sxy3 : (1, 15, 0), (1, 15, 0)
+// p : (0, 20, 12)
+// otz : (0, 32, 0)
+// flag : (0, 32, 0)
+// When the return value is negative, SX, SY, etc. are incorrect. When SX and SY are required, use
+// RotTransPers4().
+// Return Value
+// Outer product of (sx0, sy0), (sx1, sy1), (sx2, sy2)
+
+VXY0 = w[A0 + 0];
+VZ0 = w[A0 + 4];
+VXY1 = w[A1 + 0];
+VZ1 = w[A1 + 4];
+VXY2 = w[A2 + 0];
+VZ2 = w[A2 + 4];
 gte_RTPT(); // Perspective transform on 3 points
-T0 = w[SP + 0028];
-V1 = FLAG;
-8004A70C	nop
-[T0 + 0000] = w(V1);
-8004A714	gte_func26zero,r11r12
-T0 = w[SP + 0010];
-T1 = w[SP + 0014];
-T2 = w[SP + 0018];
-8004A724	mfc2   v0,ofx
-8004A728	nop
-8004A72C	bgtz   v0, L4a73c [$8004a73c]
-8004A730	nop
-8004A734	beq    zero, zero, L4a78c [$8004a78c]
-8004A738	nop
+[A10] = w(FLAG);
 
-L4a73c:	; 8004A73C
-[T0 + 0000] = w(SXY0);
-[T1 + 0000] = w(SXY1);
-[T2 + 0000] = w(SXY2);
-VXY0 = w[A3 + 0000];
-VZ0 = w[A3 + 0004];
-8004A750	nop
-gte_RTPS(); // Perspective transform
-T0 = w[SP + 001c];
-T1 = w[SP + 0020];
-T2 = w[SP + 0028];
-[T0 + 0000] = w(SXY2);
-T3 = FLAG;
-[T1 + 0000] = w(IR0);
-T3 = T3 | V1;
-[T2 + 0000] = w(T3);
-AVSZ4(); // Average of four Z values
-T1 = w[SP + 0024];
-T0 = OTZ;
-8004A784	nop
-[T1 + 0000] = w(T0);
+gte_NCLIP(); // Normal clipping.
 
-L4a78c:	; 8004A78C
+V0 = MAC0;
+
+if( V0 > 0 )
+{
+    [A4] = w(SXY0);
+    [A5] = w(SXY1);
+    [A6] = w(SXY2);
+
+    VXY0 = w[A3 + 0];
+    VZ0 = w[A3 + 4];
+    gte_RTPS(); // Perspective transform
+
+    [A7] = w(SXY2);
+    [A8] = w(IR0);
+    [A10] = w(w[A10] | FLAG);
+
+    AVSZ4(); // Average of four Z values
+    [A9] = w(OTZ);
+}
+
 ////////////////////////////////
 
 

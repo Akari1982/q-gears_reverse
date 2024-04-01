@@ -3370,13 +3370,13 @@
 // system_side_of_vector
 8004A5B4-8004A5E0
 ////////////////////////////////
-// system_gte_quad_perspective_transform
+// system_psyq_rot_trans_pers_4
 8004A5E4-8004A660
 ////////////////////////////////
-// func4a664
+// system_psyq_rot_average_4
 8004A664-8004A6E0
 ////////////////////////////////
-// func4a6e4
+// system_psyq_rot_nclip_4
 8004A6E4-8004A790
 ////////////////////////////////
 // func4a794

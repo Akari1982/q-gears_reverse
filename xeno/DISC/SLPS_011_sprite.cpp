@@ -1448,7 +1448,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
             A7 = S0 + 18; // xy2
             A8 = SP + 5c; // Interpolation value for depth queing. (not used)
             A9 = SP + 60; // return flags (not used)
-            system_gte_quad_perspective_transform();
+            system_psyq_rot_trans_pers_4();
 
             // set up texture coordinates
             u0 = bu[tile_data + 4];
@@ -1625,7 +1625,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
             A7 = S0 + 18; // xy2
             A8 = SP + 70; // Interpolation value for depth queing. (not used)
             A9 = SP + 74; // return flags (not used)
-            func4a664(); // transform 4 points by rotation matrix
+            system_psyq_rot_average_4(); // transform 4 points by rotation matrix
 
             A1 = (hu[S0 + a] + hu[S0 + 12]) / 2; // average y
             [S0 + 12] = h(A1); // vy1
@@ -1779,7 +1779,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
             A7 = S0 + 18; // xy2
             A8 = SP + 28; // Interpolation value for depth queing. (not used)
             A9 = SP + 2c; // return flags (not used)
-            func4a664(); // transform 4 points by rotation matrix
+            system_psyq_rot_average_4(); // transform 4 points by rotation matrix
 
             v0 = bu[tile_data + 5];
             S1 = S1 >> scale;
@@ -1937,7 +1937,7 @@ if( ( w[80058c1c] + number_of_tiles * 28 ) < w[80058bd0] )
             A7 = S2 + 18; // xy2
             A8 = SP + 28; // Interpolation value for depth queing. (not used)
             A9 = SP + 2c; // return flags (not used)
-            func4a664(); // transform 4 points by rotation matrix
+            system_psyq_rot_average_4(); // transform 4 points by rotation matrix
 
             S1 = S1 >> scale;
 
@@ -8544,7 +8544,7 @@ A6 = S1 + 20;
 A7 = S1 + 18;
 A8 = SP + 60;
 A9 = SP + 64;
-system_gte_quad_perspective_transform();
+system_psyq_rot_trans_pers_4();
 
 V0 = 0c00;
 A0 = hu[S0 + 0000];

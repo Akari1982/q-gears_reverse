@@ -785,7 +785,7 @@ for( int i = 0; i < 5; ++i )
         // ret
         A8 = SP + 58; // Interpolation value for depth queing. (not used)
         A9 = SP + 5c; // return flags (not used)
-        func4a664(); // transform 4 points by rotation matrix
+        system_psyq_rot_average_4(); // transform 4 points by rotation matrix
     }
 
     A1 = 800b0748 + i * 50 + rb * 28;
