@@ -6,13 +6,13 @@ Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- 0x86_ProgressNotEqualJumpTo( value=234, jump=0x0031 ) -- 0x0009 0x86
-        -- 0x99() -- 0x000e 0x99
+        opcode99() -- 0x000e 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     on_update = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=234, jump=0x0092 ) -- 0x0059 0x86
-        -- 0xFE54() -- 0x005e 0xfe
+        opcodeFE54() -- 0x005e 0xfe
         -- MISSING OPCODE 0x74
     end,
 

@@ -482,8 +482,8 @@ Entity[ "19" ] = {
     on_update = function( self )
         -- 0x75() -- 0x040f 0x75
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0465 ) -- 0x0412 0x02
-        -- 0xFE54() -- 0x041a 0xfe
-        -- 0x26_Wait( time=30 ) -- 0x041c 0x26
+        opcodeFE54() -- 0x041a 0xfe
+        opcode26_Wait( time=30 ) -- 0x041c 0x26
         -- MISSING OPCODE 0x67
     end,
 
@@ -503,7 +503,7 @@ Entity[ "20" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0477 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x04a9 ) -- 0x0478 0x02
-        -- 0x99() -- 0x0480 0x99
+        opcode99() -- 0x0480 0x99
         -- MISSING OPCODE 0x61
     end,
 

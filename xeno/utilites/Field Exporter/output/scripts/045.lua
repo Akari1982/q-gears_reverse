@@ -46,9 +46,9 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x0053 0xfe
+        opcodeFE54() -- 0x0053 0xfe
         -- 0x35() -- 0x0055 0x35
-        -- 0x99() -- 0x005b 0x99
+        opcode99() -- 0x005b 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -151,11 +151,15 @@ Entity[ "4" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x016f 0xd2
+        -- 0x9C() -- 0x0173 0x9c
+        return 0 -- 0x0174 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x0175 0xd2
+        -- 0x9C() -- 0x0179 0x9c
+        return 0 -- 0x017a 0x00
     end,
 
     script_0x09 = function( self )

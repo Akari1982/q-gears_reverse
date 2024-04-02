@@ -304,9 +304,10 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00ac 0xfe
+        opcodeFE54() -- 0x00ac 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=20 ) -- 0x00ae 0xfe
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00b4 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -327,8 +328,9 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00c3 0xfe
-        -- MISSING OPCODE 0x15
+        opcodeFE54() -- 0x00c3 0xfe
+        opcode15() -- 0x00c5 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

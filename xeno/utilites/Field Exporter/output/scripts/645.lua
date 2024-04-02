@@ -30,7 +30,8 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0212, bit_num=(vf40)0x0004, flag=0x40 ) -- 0x004d 0x3a
+        return 0 -- 0x0053 0x00
     end,
 
 }
@@ -133,10 +134,10 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00a6 0xfe
+        opcodeFE54() -- 0x00a6 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x07, script=0x24 ) -- 0x00a8 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x00ab 0x07
-        -- 0x26_Wait( time=10 ) -- 0x00ae 0x26
+        opcode26_Wait( time=10 ) -- 0x00ae 0x26
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x00c2 ) -- 0x00b1 0x02
         -- 0x98_MapLoad( field_id=17035, value=1 ) -- 0x00b9 0x98
         -- 0x5B() -- 0x00be 0x5b
@@ -166,9 +167,9 @@ Entity[ "5" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00e0 0xfe
+        opcodeFE54() -- 0x00e0 0xfe
         -- 0x07( entity=0x01, script=0x25 ) -- 0x00e2 0x07
-        -- 0x26_Wait( time=10 ) -- 0x00e5 0x26
+        opcode26_Wait( time=10 ) -- 0x00e5 0x26
         -- 0x98_MapLoad( field_id=649, value=0 ) -- 0x00e8 0x98
         -- 0x5B() -- 0x00ed 0x5b
         return 0 -- 0x00ee 0x00
@@ -194,10 +195,10 @@ Entity[ "6" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0106 0xfe
+        opcodeFE54() -- 0x0106 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x08, script=0x24 ) -- 0x0108 0x09
         -- 0x07( entity=0x01, script=0x26 ) -- 0x010b 0x07
-        -- 0x26_Wait( time=10 ) -- 0x010e 0x26
+        opcode26_Wait( time=10 ) -- 0x010e 0x26
         -- 0x98_MapLoad( field_id=646, value=0 ) -- 0x0111 0x98
         -- 0x5B() -- 0x0116 0x5b
         return 0 -- 0x0117 0x00
@@ -277,7 +278,7 @@ Entity[ "9" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01b7 0xfe
+        opcodeFE54() -- 0x01b7 0xfe
         -- MISSING OPCODE 0x34
     end,
 

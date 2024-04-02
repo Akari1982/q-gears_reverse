@@ -508,7 +508,7 @@ Entity[ "12" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x040c 0xfe
+        opcodeFE54() -- 0x040c 0xfe
         -- MISSING OPCODE 0x29
     end,
 
@@ -1075,7 +1075,7 @@ Entity[ "31" ] = {
 
     on_push = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0412 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0b34 ) -- 0x0b1f 0x02
-        -- 0xFE54() -- 0x0b27 0xfe
+        opcodeFE54() -- 0x0b27 0xfe
         -- MISSING OPCODE 0xfc
     end,
 
@@ -1094,7 +1094,7 @@ Entity[ "32" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0b4e 0xfe
+        opcodeFE54() -- 0x0b4e 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x1d, script=0x64 ) -- 0x0b50 0x09
         -- MISSING OPCODE 0xFE68
     end,

@@ -388,7 +388,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0124 0xfe
+        opcodeFE54() -- 0x0124 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -412,7 +412,7 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0156 0xfe
+        opcodeFE54() -- 0x0156 0xfe
         -- MISSING OPCODE 0x74
     end,
 

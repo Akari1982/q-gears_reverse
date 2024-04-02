@@ -14,9 +14,9 @@ Entity[ "0" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0180 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0077 ) -- 0x006b 0x02
         -- 0x5B() -- 0x0073 0x5b
         -- 0x01_JumpTo( 0x00bb ) -- 0x0074 0x01
-        -- 0xFE54() -- 0x0077 0xfe
+        opcodeFE54() -- 0x0077 0xfe
         -- 0xA0() -- 0x0079 0xa0
-        -- 0x99() -- 0x0080 0x99
+        opcode99() -- 0x0080 0x99
         -- MISSING OPCODE 0x61
     end,
 
@@ -374,8 +374,9 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0209 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeFE54() -- 0x0209 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x020b 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -514,7 +515,7 @@ Entity[ "18" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=5 ) -- 0x03d4 0x26
+        opcode26_Wait( time=5 ) -- 0x03d4 0x26
         -- MISSING OPCODE 0x1e
     end,
 
@@ -541,7 +542,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=5 ) -- 0x0411 0x26
+        opcode26_Wait( time=5 ) -- 0x0411 0x26
         -- MISSING OPCODE 0x1e
     end,
 
@@ -570,7 +571,7 @@ Entity[ "20" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=5 ) -- 0x0440 0x26
+        opcode26_Wait( time=5 ) -- 0x0440 0x26
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x0118, condition="value1 < value2", jump_if_false=0x045d ) -- 0x0443 0x02
         -- MISSING OPCODE 0xc2
     end,
@@ -810,7 +811,7 @@ Entity[ "29" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=15 ) -- 0x04fc 0x26
+        opcode26_Wait( time=15 ) -- 0x04fc 0x26
         -- 0xFE8F_ParticleSystemInit1( entity=(entity)0xfb, render_settings=0, rot_x=0, rot_y=0 ) -- 0x04ff 0xfe
         -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=3, wait=11, ttl=1 ) -- 0x0508 0xfe
         -- 0xFE91_ParticlePos( x=(vf80)0x012c, y=(vf40)0x0000, z=(vf20)0x012c, speed_x=(vf10)0x012c, speed_y=(vf08)0x0000, speed_z=(vf04)0x0258, flag=(flag)0xfc ) -- 0x0512 0xfe

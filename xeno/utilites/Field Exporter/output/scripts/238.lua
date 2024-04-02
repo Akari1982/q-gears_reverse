@@ -63,7 +63,7 @@ Entity[ "2" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00b6 ) -- 0x005a 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0246 ), value2=(s16)0x0800, condition="value1 & value2", jump_if_false=0x0078 ) -- 0x0062 0x02
-        -- 0xFE54() -- 0x006a 0xfe
+        opcodeFE54() -- 0x006a 0xfe
         -- MISSING OPCODE 0x3b
     end,
 

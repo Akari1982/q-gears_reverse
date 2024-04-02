@@ -130,7 +130,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0xFE54() -- 0x00b3 0xfe
+        opcodeFE54() -- 0x00b3 0xfe
         -- MISSING OPCODE 0x21
     end,
 
@@ -167,7 +167,7 @@ Entity[ "5" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0xFE54() -- 0x012e 0xfe
+        opcodeFE54() -- 0x012e 0xfe
         -- MISSING OPCODE 0x21
     end,
 
@@ -204,7 +204,7 @@ Entity[ "6" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0xFE54() -- 0x01a9 0xfe
+        opcodeFE54() -- 0x01a9 0xfe
         -- MISSING OPCODE 0x21
     end,
 
@@ -536,7 +536,7 @@ Entity[ "20" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04ec ) -- 0x0477 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04ec ) -- 0x047f 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04ec ) -- 0x0487 0x02
-        -- 0xFE54() -- 0x048f 0xfe
+        opcodeFE54() -- 0x048f 0xfe
         -- MISSING OPCODE 0xb5
     end,
 
@@ -572,7 +572,7 @@ Entity[ "21" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x04f3 0x99
+        opcode99() -- 0x04f3 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -592,17 +592,17 @@ Entity[ "22" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0529 0xfe
+        opcodeFE54() -- 0x0529 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0545 ) -- 0x052b 0x02
         -- 0x09_EntityCallScriptEW( entity=0x17, script=0x24 ) -- 0x0533 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x0536 0x07
-        -- 0x26_Wait( time=10 ) -- 0x0539 0x26
+        opcode26_Wait( time=10 ) -- 0x0539 0x26
         -- 0x98_MapLoad( field_id=17026, value=1 ) -- 0x053c 0x98
         -- 0x5B() -- 0x0541 0x5b
         -- 0x01_JumpTo( 0x0554 ) -- 0x0542 0x01
         -- 0x09_EntityCallScriptEW( entity=0x17, script=0x24 ) -- 0x0545 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x0548 0x07
-        -- 0x26_Wait( time=10 ) -- 0x054b 0x26
+        opcode26_Wait( time=10 ) -- 0x054b 0x26
         -- 0x98_MapLoad( field_id=17025, value=1 ) -- 0x054e 0x98
         -- 0x5B() -- 0x0553 0x5b
         return 0 -- 0x0554 0x00

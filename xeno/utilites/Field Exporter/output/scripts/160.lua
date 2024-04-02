@@ -15,7 +15,7 @@ Entity[ "0" ] = {
         -- 0x07( entity=0x01, script=0x04 ) -- 0x002e 0x07
         -- 0x01_JumpTo( 0x0051 ) -- 0x0031 0x01
         -- 0x07( entity=0x01, script=0x05 ) -- 0x0034 0x07
-        -- 0x26_Wait( time=20 ) -- 0x0037 0x26
+        opcode26_Wait( time=20 ) -- 0x0037 0x26
         -- 0x07( entity=0x02, script=0x04 ) -- 0x003a 0x07
         -- 0x09_EntityCallScriptEW( entity=0x03, script=0x04 ) -- 0x003d 0x09
         -- MISSING OPCODE 0x29
@@ -37,7 +37,9 @@ Entity[ "1" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0052 0xbc
         -- 0x2A() -- 0x0053 0x2a
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0054 0xfe
+        opcodeFE50() -- 0x0056 0xfe
+        return 0 -- 0x0058 0x00
     end,
 
     on_update = function( self )
@@ -57,12 +59,26 @@ Entity[ "1" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x00f5 0x99
+        opcode99() -- 0x00f5 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0117 0x60
+        opcode64() -- 0x0118 0x64
+        opcode63() -- 0x0119 0x63
+        opcodeA3() -- 0x0121 0xa3
+        opcodeAC() -- 0x0129 0xac
+        opcodeAC() -- 0x012d 0xac
+        opcodeEF() -- 0x0131 0xef
+        opcode60() -- 0x0134 0x60
+        opcode64() -- 0x0135 0x64
+        opcode63() -- 0x0136 0x63
+        opcodeA3() -- 0x013e 0xa3
+        opcodeAC() -- 0x0146 0xac
+        opcodeAC() -- 0x014a 0xac
+        opcodeEF() -- 0x014e 0xef
+        return 0 -- 0x0151 0x00
     end,
 
 }
@@ -154,7 +170,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0228 0x26
+        opcode26_Wait( time=30 ) -- 0x0228 0x26
         -- 0xFE0D_SetAvatar( character_id=88 ) -- 0x022b 0xfe
         -- MISSING OPCODE 0xd4
     end,
@@ -208,7 +224,7 @@ Entity[ "6" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x033f 0xfe
+        opcodeFE54() -- 0x033f 0xfe
         -- 0x07( entity=0x07, script=0x24 ) -- 0x0341 0x07
         -- 0x09_EntityCallScriptEW( entity=0x08, script=0x24 ) -- 0x0344 0x09
         -- 0x98_MapLoad( field_id=158, value=0 ) -- 0x0347 0x98

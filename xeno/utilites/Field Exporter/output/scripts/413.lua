@@ -174,14 +174,14 @@ Entity[ "7" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x42fa 0xfe
+        opcodeFE54() -- 0x42fa 0xfe
         -- 0x98_MapLoad( field_id=16799, value=1 ) -- 0x42fc 0x98
         -- 0x5B() -- 0x4301 0x5b
         return 0 -- 0x4302 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x42fa 0xfe
+        opcodeFE54() -- 0x42fa 0xfe
         -- 0x98_MapLoad( field_id=16799, value=1 ) -- 0x42fc 0x98
         -- 0x5B() -- 0x4301 0x5b
         return 0 -- 0x4302 0x00
@@ -203,14 +203,14 @@ Entity[ "8" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x4315 0xfe
+        opcodeFE54() -- 0x4315 0xfe
         -- 0x98_MapLoad( field_id=16798, value=1 ) -- 0x4317 0x98
         -- 0x5B() -- 0x431c 0x5b
         return 0 -- 0x431d 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x4315 0xfe
+        opcodeFE54() -- 0x4315 0xfe
         -- 0x98_MapLoad( field_id=16798, value=1 ) -- 0x4317 0x98
         -- 0x5B() -- 0x431c 0x5b
         return 0 -- 0x431d 0x00

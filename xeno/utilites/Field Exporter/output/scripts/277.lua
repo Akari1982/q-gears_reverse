@@ -100,7 +100,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x01f4 0x99
+        opcode99() -- 0x01f4 0x99
         -- MISSING OPCODE 0x9b
     end,
 

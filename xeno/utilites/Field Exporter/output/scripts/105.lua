@@ -9,7 +9,7 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=100 ) -- 0x003f 0x26
+        opcode26_Wait( time=100 ) -- 0x003f 0x26
         -- MISSING OPCODE 0x85
     end,
 
@@ -147,7 +147,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=33 ) -- 0x0251 0x26
+        opcode26_Wait( time=33 ) -- 0x0251 0x26
         -- MISSING OPCODE 0x6f
     end,
 
@@ -371,11 +371,19 @@ Entity[ "12" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0623 0x15
+        opcodeFE52() -- 0x0624 0xfe
+        opcode26_Wait( time=30 ) -- 0x0626 0x26
+        opcodeD2_DialogShow0( dialog_id=0x0041, ???=0x00 ) -- 0x0629 0xd2
+        -- 0x9C() -- 0x062d 0x9c
+        -- 0x19_SetPosition( x=(vf80)0x003c, z=(vf40)0xffef, flag=(flag)0xc0 ) -- 0x062e 0x19
+        -- MISSING OPCODE 0x2c
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0044, ???=0x00 ) -- 0x064c 0xd2
+        -- 0x9C() -- 0x0650 0x9c
+        return 0 -- 0x0651 0x00
     end,
 
     on_push = function( self )

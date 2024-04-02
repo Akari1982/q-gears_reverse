@@ -5,7 +5,9 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x000f 0xbc
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0010 0xfe
+        -- 0x2A() -- 0x0012 0x2a
+        return 0 -- 0x0013 0x00
     end,
 
     on_update = function( self )

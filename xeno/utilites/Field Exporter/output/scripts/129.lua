@@ -5,7 +5,12 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0009 0xfe
+        opcodeFE50() -- 0x000b 0xfe
+        -- 0x35() -- 0x000d 0x35
+        -- 0x35() -- 0x0013 0x35
+        -- 0x35() -- 0x0019 0x35
+        -- MISSING OPCODE 0x9d
     end,
 
     on_update = function( self )
@@ -469,7 +474,8 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0365 0x15
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )

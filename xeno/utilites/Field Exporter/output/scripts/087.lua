@@ -388,7 +388,14 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0163 0x15
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0013, condition="value1 < value2", jump_if_false=0x01e4 ) -- 0x0164 0x02
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01da ) -- 0x016c 0x02
+        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x0174 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x10 ) -- 0x0178 0xd2
+        -- 0x9C() -- 0x017c 0x9c
+        opcode26_Wait( time=10 ) -- 0x017d 0x26
+        -- MISSING OPCODE 0x74
     end,
 
     on_push = function( self )
@@ -435,7 +442,8 @@ Entity[ "18" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0024, condition="value1 >= value2", jump_if_false=0x0319 ) -- 0x0302 0x02
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x030a 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -494,7 +502,8 @@ Entity[ "21" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x032f 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0340 ) -- 0x0330 0x02
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0x0e ) -- 0x0338 0x25
+        -- MISSING OPCODE 0x27
     end,
 
     on_update = function( self )

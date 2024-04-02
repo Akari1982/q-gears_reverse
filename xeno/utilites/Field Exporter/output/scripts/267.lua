@@ -9,9 +9,9 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x0022 0xfe
+        opcodeFE54() -- 0x0022 0xfe
         -- 0x75() -- 0x0024 0x75
-        -- 0x26_Wait( time=60 ) -- 0x0027 0x26
+        opcode26_Wait( time=60 ) -- 0x0027 0x26
         -- MISSING OPCODE 0xb5
     end,
 
@@ -101,7 +101,7 @@ Entity[ "4" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=4 ) -- 0x4322 0x26
+        opcode26_Wait( time=4 ) -- 0x4322 0x26
         -- MISSING OPCODE 0x8a
     end,
 

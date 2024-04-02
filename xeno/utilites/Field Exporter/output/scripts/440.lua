@@ -450,7 +450,7 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x023f 0xfe
+        opcodeFE54() -- 0x023f 0xfe
         -- 0xF5_DialogShow3( dialog_id=0x0008, flag=0x00 ) -- 0x0241 0xf5
         -- MISSING OPCODE 0xa9
     end,
@@ -556,8 +556,12 @@ Entity[ "16" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x03a4 0xfe
-        -- MISSING OPCODE 0x3a
+        opcodeFE54() -- 0x03a4 0xfe
+        opcode3A_VariableBitSet( address=0x02ce, bit_num=(vf40)0x0000, flag=0x40 ) -- 0x03a6 0x3a
+        -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x03ac 0xfe
+        -- 0x98_MapLoad( field_id=302, value=2 ) -- 0x03b2 0x98
+        -- 0x5B() -- 0x03b7 0x5b
+        return 0 -- 0x03b8 0x00
     end,
 
 }

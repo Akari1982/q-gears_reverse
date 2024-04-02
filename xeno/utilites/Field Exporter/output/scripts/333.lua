@@ -210,7 +210,10 @@ Entity[ "7" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00c4, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x0249 0x3a
+        -- 0xC6() -- 0x024f 0xc6
+        -- 0x2A() -- 0x0250 0x2a
+        -- MISSING OPCODE 0xd7
     end,
 
     script_0x05 = function( self )
@@ -284,7 +287,7 @@ Entity[ "10" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=5 ) -- 0x0460 0x26
+        opcode26_Wait( time=5 ) -- 0x0460 0x26
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x041a ), value2=(s16)0x000f, condition="value1 <= value2", jump_if_false=0x0471 ) -- 0x0463 0x02
         -- MISSING OPCODE 0xbd
     end,

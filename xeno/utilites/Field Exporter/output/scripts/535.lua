@@ -108,12 +108,12 @@ Entity[ "4" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0094 ) -- 0x0063 0x02
-        -- 0xFE54() -- 0x006b 0xfe
+        opcodeFE54() -- 0x006b 0xfe
         -- MISSING OPCODE 0xFE24
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0095 0xfe
+        opcodeFE54() -- 0x0095 0xfe
         -- MISSING OPCODE 0xFE24
     end,
 
@@ -200,7 +200,7 @@ Entity[ "7" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01a0 0xfe
+        opcodeFE54() -- 0x01a0 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x08, script=0x64 ) -- 0x01a2 0x09
         -- MISSING OPCODE 0xFE68
     end,
@@ -252,7 +252,7 @@ Entity[ "9" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01d4 0xfe
+        opcodeFE54() -- 0x01d4 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x0a, script=0x64 ) -- 0x01d6 0x09
         -- MISSING OPCODE 0xFE68
     end,
@@ -304,14 +304,14 @@ Entity[ "11" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0204 0xfe
+        opcodeFE54() -- 0x0204 0xfe
         -- 0x07( entity=0x0c, script=0x64 ) -- 0x0206 0x07
         -- 0xB4_FadeIn() -- 0x0209 0xb4
         -- MISSING OPCODE 0xFE68
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0204 0xfe
+        opcodeFE54() -- 0x0204 0xfe
         -- 0x07( entity=0x0c, script=0x64 ) -- 0x0206 0x07
         -- 0xB4_FadeIn() -- 0x0209 0xb4
         -- MISSING OPCODE 0xFE68

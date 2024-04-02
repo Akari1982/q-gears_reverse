@@ -21,7 +21,8 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0188, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x006e 0x3a
+        return 0 -- 0x0074 0x00
     end,
 
 }
@@ -407,7 +408,7 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x460c 0xfe
+        opcodeFE54() -- 0x460c 0xfe
         -- MISSING OPCODE 0x34
     end,
 

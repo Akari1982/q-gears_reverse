@@ -17,7 +17,7 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01a8, condition="value1 == value2", jump_if_false=0x0056 ) -- 0x004c 0x02
-        -- 0xFE54() -- 0x0054 0xfe
+        opcodeFE54() -- 0x0054 0xfe
         -- MISSING OPCODE 0x9d
     end,
 
@@ -373,7 +373,11 @@ Entity[ "14" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0180 ) -- 0x0174 0x02
-        -- MISSING OPCODE 0xFE53
+        opcodeFE54() -- 0x017c 0xfe
+        -- 0x5A() -- 0x017e 0x5a
+        -- 0x5B() -- 0x017f 0x5b
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01a8, condition="value1 == value2", jump_if_false=0x01a4 ) -- 0x0180 0x02
+        -- MISSING OPCODE 0xFE24
     end,
 
     on_talk = function( self )
@@ -400,7 +404,8 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x01f5 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -421,7 +426,8 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0204 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -440,19 +446,19 @@ Entity[ "17" ] = {
 
     on_update = function( self )
         -- 0x5B() -- 0x0223 0x5b
-        -- 0xFE54() -- 0x0224 0xfe
+        opcodeFE54() -- 0x0224 0xfe
         -- 0x98_MapLoad( field_id=427, value=0 ) -- 0x0226 0x98
         return 0 -- 0x022b 0x00
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0224 0xfe
+        opcodeFE54() -- 0x0224 0xfe
         -- 0x98_MapLoad( field_id=427, value=0 ) -- 0x0226 0x98
         return 0 -- 0x022b 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0224 0xfe
+        opcodeFE54() -- 0x0224 0xfe
         -- 0x98_MapLoad( field_id=427, value=0 ) -- 0x0226 0x98
         return 0 -- 0x022b 0x00
     end,

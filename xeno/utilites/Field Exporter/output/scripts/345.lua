@@ -304,11 +304,15 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ec, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x00d5 0x3a
+        -- 0x98_MapLoad( field_id=341, value=6 ) -- 0x00db 0x98
+        return 0 -- 0x00e0 0x00
     end,
 
     on_push = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ec, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x00d5 0x3a
+        -- 0x98_MapLoad( field_id=341, value=6 ) -- 0x00db 0x98
+        return 0 -- 0x00e0 0x00
     end,
 
 }

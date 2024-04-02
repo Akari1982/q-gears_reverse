@@ -21,7 +21,7 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=100 ) -- 0x004a 0x26
+        opcode26_Wait( time=100 ) -- 0x004a 0x26
         -- MISSING OPCODE 0xb5
     end,
 
@@ -383,14 +383,14 @@ Entity[ "12" ] = {
 Entity[ "13" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01be 0xbc
-        -- 0xFE54() -- 0x01bf 0xfe
+        opcodeFE54() -- 0x01bf 0xfe
         -- 0x2A() -- 0x01c1 0x2a
         return 0 -- 0x01c2 0x00
     end,
 
     on_update = function( self )
         -- 0x75() -- 0x01c3 0x75
-        -- 0x26_Wait( time=30 ) -- 0x01c6 0x26
+        opcode26_Wait( time=30 ) -- 0x01c6 0x26
         -- 0x09_EntityCallScriptEW( entity=0xff, script=0x24 ) -- 0x01c9 0x09
         -- MISSING OPCODE 0xa4
     end,

@@ -308,13 +308,13 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00e4 0xfe
+        opcodeFE54() -- 0x00e4 0xfe
         -- 0x98_MapLoad( field_id=695, value=2 ) -- 0x00e6 0x98
         return 0 -- 0x00eb 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x00e4 0xfe
+        opcodeFE54() -- 0x00e4 0xfe
         -- 0x98_MapLoad( field_id=695, value=2 ) -- 0x00e6 0x98
         return 0 -- 0x00eb 0x00
     end,
@@ -334,13 +334,13 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00fe 0xfe
+        opcodeFE54() -- 0x00fe 0xfe
         -- 0x98_MapLoad( field_id=699, value=0 ) -- 0x0100 0x98
         return 0 -- 0x0105 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x00fe 0xfe
+        opcodeFE54() -- 0x00fe 0xfe
         -- 0x98_MapLoad( field_id=699, value=0 ) -- 0x0100 0x98
         return 0 -- 0x0105 0x00
     end,
@@ -360,7 +360,11 @@ Entity[ "14" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0194 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x0126 ) -- 0x0116 0x02
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x02 ) -- 0x011e 0xd2
+        -- 0x9C() -- 0x0122 0x9c
+        -- 0x01_JumpTo( 0x02dd ) -- 0x0123 0x01
+        opcodeFE54() -- 0x0126 0xfe
+        -- MISSING OPCODE 0xb5
     end,
 
     on_push = function( self )
@@ -457,12 +461,12 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0439 0xfe
+        opcodeFE54() -- 0x0439 0xfe
         -- MISSING OPCODE 0xFE17
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0439 0xfe
+        opcodeFE54() -- 0x0439 0xfe
         -- MISSING OPCODE 0xFE17
     end,
 
@@ -481,7 +485,9 @@ Entity[ "19" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0037, ???=0x00 ) -- 0x0524 0xd2
+        -- 0x9C() -- 0x0528 0x9c
+        -- MISSING OPCODE 0x2c
     end,
 
     on_push = function( self )
@@ -489,7 +495,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=60 ) -- 0x0532 0x26
+        opcode26_Wait( time=60 ) -- 0x0532 0x26
         -- MISSING OPCODE 0x18
     end,
 
@@ -527,7 +533,9 @@ Entity[ "20" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0038, ???=0x00 ) -- 0x0591 0xd2
+        -- 0x9C() -- 0x0595 0x9c
+        return 0 -- 0x0596 0x00
     end,
 
     on_push = function( self )
@@ -593,7 +601,9 @@ Entity[ "23" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x003b, ???=0x00 ) -- 0x05ea 0xd2
+        -- 0x9C() -- 0x05ee 0x9c
+        return 0 -- 0x05ef 0x00
     end,
 
     on_push = function( self )
@@ -636,7 +646,7 @@ Entity[ "25" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x074d ) -- 0x061b 0x02
-        -- 0xFE54() -- 0x0623 0xfe
+        opcodeFE54() -- 0x0623 0xfe
         -- MISSING OPCODE 0x3c
     end,
 
@@ -672,12 +682,24 @@ Entity[ "26" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x07e7 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x07e7 0x99
+        opcode60() -- 0x07e8 0x60
+        opcode64() -- 0x07e9 0x64
+        opcode63() -- 0x07ea 0x63
+        opcodeA3() -- 0x07f2 0xa3
+        opcodeAC() -- 0x07fa 0xac
+        opcodeAC() -- 0x07fe 0xac
+        return 0 -- 0x0802 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0803 0x60
+        opcode64() -- 0x0804 0x64
+        opcode63() -- 0x0805 0x63
+        opcodeA3() -- 0x080d 0xa3
+        opcodeAC() -- 0x0815 0xac
+        opcodeAC() -- 0x0819 0xac
+        return 0 -- 0x081d 0x00
     end,
 
     script_0x06 = function( self )

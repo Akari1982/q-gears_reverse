@@ -370,7 +370,16 @@ Entity[ "15" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x01fa ) -- 0x01e8 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x01ed 0xd2
+        -- 0x9C() -- 0x01f1 0x9c
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x01f2 0xd2
+        -- 0x9C() -- 0x01f6 0x9c
+        -- 0x01_JumpTo( 0x0204 ) -- 0x01f7 0x01
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x01fa 0xd2
+        -- 0x9C() -- 0x01fe 0x9c
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x01ff 0xd2
+        -- 0x9C() -- 0x0203 0x9c
+        return 0 -- 0x0204 0x00
     end,
 
     on_push = function( self )
@@ -663,7 +672,9 @@ Entity[ "28" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0011, ???=0x00 ) -- 0x050d 0xd2
+        -- 0x9C() -- 0x0511 0x9c
+        return 0 -- 0x0512 0x00
     end,
 
 }
@@ -682,7 +693,9 @@ Entity[ "29" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0012, ???=0x00 ) -- 0x052b 0xd2
+        -- 0x9C() -- 0x052f 0x9c
+        return 0 -- 0x0530 0x00
     end,
 
     on_push = function( self )
@@ -702,7 +715,7 @@ Entity[ "30" ] = {
 
     on_update = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x0580 ) -- 0x053b 0x84
-        -- 0x26_Wait( time=30 ) -- 0x0540 0x26
+        opcode26_Wait( time=30 ) -- 0x0540 0x26
         -- MISSING OPCODE 0x2c
     end,
 
@@ -728,7 +741,9 @@ Entity[ "31" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0016, ???=0x00 ) -- 0x05f2 0xd2
+        -- 0x9C() -- 0x05f6 0x9c
+        return 0 -- 0x05f7 0x00
     end,
 
     on_push = function( self )
@@ -750,7 +765,12 @@ Entity[ "32" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x0615 ) -- 0x0608 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0017, ???=0x00 ) -- 0x060d 0xd2
+        -- 0x9C() -- 0x0611 0x9c
+        -- 0x01_JumpTo( 0x061a ) -- 0x0612 0x01
+        opcodeD2_DialogShow0( dialog_id=0x0018, ???=0x00 ) -- 0x0615 0xd2
+        -- 0x9C() -- 0x0619 0x9c
+        return 0 -- 0x061a 0x00
     end,
 
     on_push = function( self )

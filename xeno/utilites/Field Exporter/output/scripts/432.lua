@@ -986,7 +986,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x05d5 0xfe
+        opcodeFE54() -- 0x05d5 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c6 ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x0653 ) -- 0x05d7 0x02
         -- 0xF5_DialogShow3( dialog_id=0x0002, flag=0x20 ) -- 0x05df 0xf5
         -- MISSING OPCODE 0xa9
@@ -1926,7 +1926,7 @@ Entity[ "29" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02cc ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x1228 ) -- 0x121d 0x02
         -- 0x01_JumpTo( 0x1243 ) -- 0x1225 0x01
-        -- 0xFE54() -- 0x1228 0xfe
+        opcodeFE54() -- 0x1228 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x73 ) -- 0x122a 0x09
         -- 0xF5_DialogShow3( dialog_id=0x0005, flag=0x21 ) -- 0x122d 0xf5
         -- 0x9C() -- 0x1231 0x9c
@@ -2043,7 +2043,8 @@ Entity[ "34" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x12a7 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -2066,13 +2067,13 @@ Entity[ "35" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x12c5 0xfe
+        opcodeFE54() -- 0x12c5 0xfe
         -- 0x98_MapLoad( field_id=433, value=0 ) -- 0x12c7 0x98
         return 0 -- 0x12cc 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x12c5 0xfe
+        opcodeFE54() -- 0x12c5 0xfe
         -- 0x98_MapLoad( field_id=433, value=0 ) -- 0x12c7 0x98
         return 0 -- 0x12cc 0x00
     end,

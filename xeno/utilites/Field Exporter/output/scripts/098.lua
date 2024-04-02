@@ -46,8 +46,9 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x0275 0xfe
-        -- MISSING OPCODE 0xFE52
+        opcodeFE54() -- 0x0275 0xfe
+        opcodeFE52() -- 0x0277 0xfe
+        -- MISSING OPCODE 0x80
     end,
 
 }
@@ -929,7 +930,7 @@ Entity[ "34" ] = {
     on_push = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0013, condition="value1 >= value2", jump_if_false=0x070d ) -- 0x06e5 0x02
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x070d ) -- 0x06ed 0x31
-        -- 0xFE54() -- 0x06f2 0xfe
+        opcodeFE54() -- 0x06f2 0xfe
         -- MISSING OPCODE 0xb5
     end,
 
@@ -985,7 +986,7 @@ Entity[ "36" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0735 0x99
+        opcode99() -- 0x0735 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -998,7 +999,7 @@ Entity[ "36" ] = {
     end,
 
     script_0x07 = function( self )
-        -- 0x99() -- 0x0877 0x99
+        opcode99() -- 0x0877 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -1062,7 +1063,8 @@ Entity[ "37" ] = {
 Entity[ "38" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x09ee 0xbc
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0x0d ) -- 0x09ef 0x25
+        -- MISSING OPCODE 0x27
     end,
 
     on_update = function( self )
@@ -1079,25 +1081,25 @@ Entity[ "38" ] = {
 
     script_0x04 = function( self )
         -- 0xF1() -- 0x0a1a 0xf1
-        -- 0x26_Wait( time=2 ) -- 0x0a25 0x26
+        opcode26_Wait( time=2 ) -- 0x0a25 0x26
         -- 0xF1() -- 0x0a28 0xf1
-        -- 0x26_Wait( time=2 ) -- 0x0a33 0x26
+        opcode26_Wait( time=2 ) -- 0x0a33 0x26
         -- 0xF1() -- 0x0a36 0xf1
-        -- 0x26_Wait( time=10 ) -- 0x0a41 0x26
+        opcode26_Wait( time=10 ) -- 0x0a41 0x26
         -- 0xF1() -- 0x0a44 0xf1
-        -- 0x26_Wait( time=16 ) -- 0x0a4f 0x26
+        opcode26_Wait( time=16 ) -- 0x0a4f 0x26
         return 0 -- 0x0a52 0x00
     end,
 
     script_0x05 = function( self )
         -- 0xF1() -- 0x0a53 0xf1
-        -- 0x26_Wait( time=16 ) -- 0x0a5e 0x26
+        opcode26_Wait( time=16 ) -- 0x0a5e 0x26
         return 0 -- 0x0a61 0x00
     end,
 
     script_0x06 = function( self )
         -- 0xF1() -- 0x0a62 0xf1
-        -- 0x26_Wait( time=31 ) -- 0x0a6d 0x26
+        opcode26_Wait( time=31 ) -- 0x0a6d 0x26
         return 0 -- 0x0a70 0x00
     end,
 

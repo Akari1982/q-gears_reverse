@@ -5,7 +5,8 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x002b 0xbc
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x01fe, bit_num=(vf40)0x000a, flag=0x40 ) -- 0x002c 0x3a
+        -- MISSING OPCODE 0x9d
     end,
 
     on_update = function( self )
@@ -67,15 +68,21 @@ Entity[ "1" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00d6 0xd2
+        -- 0x9C() -- 0x00da 0x9c
+        return 0 -- 0x00db 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x02 ) -- 0x00dc 0xd2
+        -- 0x9C() -- 0x00e0 0x9c
+        return 0 -- 0x00e1 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x00e2 0xd2
+        -- 0x9C() -- 0x00e6 0x9c
+        return 0 -- 0x00e7 0x00
     end,
 
     script_0x08 = function( self )
@@ -152,15 +159,21 @@ Entity[ "2" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0177 0xd2
+        -- 0x9C() -- 0x017b 0x9c
+        return 0 -- 0x017c 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x02 ) -- 0x017d 0xd2
+        -- 0x9C() -- 0x0181 0x9c
+        return 0 -- 0x0182 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0183 0xd2
+        -- 0x9C() -- 0x0187 0x9c
+        -- MISSING OPCODE 0x92
     end,
 
     script_0x0a = function( self )
@@ -233,7 +246,9 @@ Entity[ "3" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x02 ) -- 0x01f7 0xd2
+        -- 0x9C() -- 0x01fb 0x9c
+        return 0 -- 0x01fc 0x00
     end,
 
     script_0x09 = function( self )
@@ -241,7 +256,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x0a = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0203 0x26
+        opcode26_Wait( time=30 ) -- 0x0203 0x26
         -- MISSING OPCODE 0x2c
     end,
 
@@ -286,7 +301,9 @@ Entity[ "4" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x02 ) -- 0x0239 0xd2
+        -- 0x9C() -- 0x023d 0x9c
+        return 0 -- 0x023e 0x00
     end,
 
     script_0x09 = function( self )
@@ -599,7 +616,13 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0396 0x15
+        -- 0x09_EntityCallScriptEW( entity=0x0d, script=0x24 ) -- 0x0397 0x09
+        -- 0x08_EntityCallScriptSW( entity=0xff, script=0x24 ) -- 0x039a 0x08
+        opcode26_Wait( time=2 ) -- 0x039d 0x26
+        -- 0x98_MapLoad( field_id=317, value=0 ) -- 0x03a0 0x98
+        -- 0x5B() -- 0x03a5 0x5b
+        return 0 -- 0x03a6 0x00
     end,
 
     on_push = function( self )
@@ -622,7 +645,8 @@ Entity[ "15" ] = {
 
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=145, jump=0x03bf ) -- 0x03ac 0x86
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x03b1 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -745,7 +769,12 @@ Entity[ "19" ] = {
     on_talk = function( self )
         -- 0x07( entity=0x12, script=0x24 ) -- 0x04ab 0x07
         -- 0x84_ProgressLessEqualJumpTo( value=144, jump=0x04bb ) -- 0x04ae 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x20 ) -- 0x04b3 0xd2
+        -- 0x9C() -- 0x04b7 0x9c
+        -- 0x01_JumpTo( 0x04c0 ) -- 0x04b8 0x01
+        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x20 ) -- 0x04bb 0xd2
+        -- 0x9C() -- 0x04bf 0x9c
+        return 0 -- 0x04c0 0x00
     end,
 
     on_push = function( self )
@@ -769,7 +798,12 @@ Entity[ "20" ] = {
     on_talk = function( self )
         -- 0x07( entity=0x12, script=0x26 ) -- 0x04d9 0x07
         -- 0x84_ProgressLessEqualJumpTo( value=165, jump=0x04e9 ) -- 0x04dc 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000c, ???=0x20 ) -- 0x04e1 0xd2
+        -- 0x9C() -- 0x04e5 0x9c
+        -- 0x01_JumpTo( 0x04ee ) -- 0x04e6 0x01
+        opcodeD2_DialogShow0( dialog_id=0x000d, ???=0x20 ) -- 0x04e9 0xd2
+        -- 0x9C() -- 0x04ed 0x9c
+        return 0 -- 0x04ee 0x00
     end,
 
     on_push = function( self )
@@ -792,7 +826,9 @@ Entity[ "21" ] = {
 
     on_talk = function( self )
         -- 0x07( entity=0x12, script=0x27 ) -- 0x0507 0x07
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000e, ???=0x20 ) -- 0x050a 0xd2
+        -- 0x9C() -- 0x050e 0x9c
+        return 0 -- 0x050f 0x00
     end,
 
     on_push = function( self )
@@ -822,7 +858,7 @@ Entity[ "22" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=140, jump=0x0636 ) -- 0x05c7 0x84
-        -- 0xFE54() -- 0x05cc 0xfe
+        opcodeFE54() -- 0x05cc 0xfe
         -- MISSING OPCODE 0x6f
     end,
 
@@ -1050,7 +1086,12 @@ Entity[ "28" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=161, jump=0x0b8f ) -- 0x0b82 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0054, ???=0x00 ) -- 0x0b87 0xd2
+        -- 0x9C() -- 0x0b8b 0x9c
+        -- 0x01_JumpTo( 0x0b94 ) -- 0x0b8c 0x01
+        opcodeD2_DialogShow0( dialog_id=0x0055, ???=0x00 ) -- 0x0b8f 0xd2
+        -- 0x9C() -- 0x0b93 0x9c
+        return 0 -- 0x0b94 0x00
     end,
 
     on_push = function( self )
@@ -1092,7 +1133,9 @@ Entity[ "29" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0056, ???=0x02 ) -- 0x0bf6 0xd2
+        -- 0x9C() -- 0x0bfa 0x9c
+        return 0 -- 0x0bfb 0x00
     end,
 
 }
@@ -1105,16 +1148,19 @@ Entity[ "30" ] = {
         -- 0x2A() -- 0x0bfd 0x2a
         -- 0x86_ProgressNotEqualJumpTo( value=142, jump=0x0c16 ) -- 0x0bfe 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0c10 ) -- 0x0c03 0x02
-        -- 0xFE54() -- 0x0c0b 0xfe
+        opcodeFE54() -- 0x0c0b 0xfe
         -- 0x01_JumpTo( 0x0c16 ) -- 0x0c0d 0x01
-        -- 0xFE54() -- 0x0c10 0xfe
-        -- MISSING OPCODE 0x24
+        opcodeFE54() -- 0x0c10 0xfe
+        opcode24( entity=(entity)0x11 ) -- 0x0c12 0x24
+        opcode24( entity=(entity)0x10 ) -- 0x0c14 0x24
+        -- 0x86_ProgressNotEqualJumpTo( value=145, jump=0x0c1d ) -- 0x0c16 0x86
+        -- MISSING OPCODE 0x29
     end,
 
     on_update = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=142, jump=0x0dba ) -- 0x0c50 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0d4e ) -- 0x0c55 0x02
-        -- 0xFE54() -- 0x0c5d 0xfe
+        opcodeFE54() -- 0x0c5d 0xfe
         -- MISSING OPCODE 0x29
     end,
 
@@ -1135,7 +1181,7 @@ Entity[ "31" ] = {
         -- 0xBC_EntityNoModelInit() -- 0x112b 0xbc
         -- 0x86_ProgressNotEqualJumpTo( value=142, jump=0x118e ) -- 0x112c 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x1165 ) -- 0x1131 0x02
-        -- 0x99() -- 0x1139 0x99
+        opcode99() -- 0x1139 0x99
         -- MISSING OPCODE 0x61
     end,
 
@@ -1152,7 +1198,14 @@ Entity[ "31" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x1224 0x60
+        opcode64() -- 0x1225 0x64
+        opcode63() -- 0x1226 0x63
+        opcodeA3() -- 0x122e 0xa3
+        opcodeAC() -- 0x1236 0xac
+        opcodeAC() -- 0x123a 0xac
+        opcodeEF() -- 0x123e 0xef
+        return 0 -- 0x1241 0x00
     end,
 
     script_0x05 = function( self )
@@ -1160,7 +1213,9 @@ Entity[ "31" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x126e 0x60
+        opcode64() -- 0x126f 0x64
+        -- MISSING OPCODE 0x62
     end,
 
     script_0x07 = function( self )
@@ -1180,19 +1235,44 @@ Entity[ "31" ] = {
     end,
 
     script_0x0b = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x1314 0x60
+        opcode64() -- 0x1315 0x64
+        opcode63() -- 0x1316 0x63
+        opcodeA3() -- 0x131e 0xa3
+        opcodeAC() -- 0x1326 0xac
+        opcodeAC() -- 0x132a 0xac
+        return 0 -- 0x132e 0x00
     end,
 
     script_0x0c = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x132f 0x60
+        opcode64() -- 0x1330 0x64
+        opcode63() -- 0x1331 0x63
+        opcodeA3() -- 0x1339 0xa3
+        opcodeAC() -- 0x1341 0xac
+        opcodeAC() -- 0x1345 0xac
+        return 0 -- 0x1349 0x00
     end,
 
     script_0x0d = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x134a 0x60
+        opcode64() -- 0x134b 0x64
+        opcode63() -- 0x134c 0x63
+        opcodeA3() -- 0x1354 0xa3
+        opcodeAC() -- 0x135c 0xac
+        opcodeAC() -- 0x1360 0xac
+        opcodeEF() -- 0x1364 0xef
+        return 0 -- 0x1367 0x00
     end,
 
     script_0x0e = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x1368 0x60
+        opcode64() -- 0x1369 0x64
+        opcode63() -- 0x136a 0x63
+        opcodeA3() -- 0x1372 0xa3
+        opcodeAC() -- 0x137a 0xac
+        opcodeAC() -- 0x137e 0xac
+        return 0 -- 0x1382 0x00
     end,
 
     script_0x0f = function( self )
@@ -1200,7 +1280,13 @@ Entity[ "31" ] = {
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x13ac 0x60
+        opcode64() -- 0x13ad 0x64
+        opcode63() -- 0x13ae 0x63
+        opcodeA3() -- 0x13b6 0xa3
+        opcodeAC() -- 0x13be 0xac
+        opcodeAC() -- 0x13c2 0xac
+        return 0 -- 0x13c6 0x00
     end,
 
 }

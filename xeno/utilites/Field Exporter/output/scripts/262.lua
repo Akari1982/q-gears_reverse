@@ -712,11 +712,11 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x4776 0xfe
+        opcodeFE54() -- 0x4776 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0186 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x4783 ) -- 0x4778 0x02
         -- 0x01_JumpTo( 0x483a ) -- 0x4780 0x01
-        -- 0xFE54() -- 0x4783 0xfe
-        -- 0x99() -- 0x4785 0x99
+        opcodeFE54() -- 0x4783 0xfe
+        opcode99() -- 0x4785 0x99
         -- MISSING OPCODE 0xf0
     end,
 

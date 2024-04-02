@@ -311,7 +311,7 @@ Entity[ "12" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x00c2 0xfe
+        opcodeFE54() -- 0x00c2 0xfe
         -- MISSING OPCODE 0xFE68
     end,
 
@@ -335,7 +335,7 @@ Entity[ "13" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x00eb 0xfe
+        opcodeFE54() -- 0x00eb 0xfe
         -- MISSING OPCODE 0xFE68
     end,
 

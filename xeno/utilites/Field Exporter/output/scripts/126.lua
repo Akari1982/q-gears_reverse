@@ -6,7 +6,8 @@ Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x001d 0xbc
         -- 0x75() -- 0x001e 0x75
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0021 0xfe
+        -- MISSING OPCODE 0xa1
     end,
 
     on_update = function( self )
@@ -393,7 +394,8 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x026c 0x15
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -440,7 +442,9 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x032a 0x15
+        -- 0x20_SpriteSetSolid() -- 0x032b 0x20
+        -- MISSING OPCODE 0xFE68
     end,
 
     on_push = function( self )
@@ -470,7 +474,7 @@ Entity[ "15" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x0446 0x26
+        opcode26_Wait( time=20 ) -- 0x0446 0x26
         -- MISSING OPCODE 0x10
     end,
 
@@ -490,7 +494,9 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x049a 0x15
+        -- 0x20_SpriteSetSolid() -- 0x049b 0x20
+        -- MISSING OPCODE 0xFE68
     end,
 
     on_push = function( self )
@@ -520,7 +526,7 @@ Entity[ "17" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x05b6 0x26
+        opcode26_Wait( time=20 ) -- 0x05b6 0x26
         -- MISSING OPCODE 0x10
     end,
 
@@ -540,7 +546,9 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x060a 0x15
+        -- 0x20_SpriteSetSolid() -- 0x060b 0x20
+        -- MISSING OPCODE 0xFE68
     end,
 
     on_push = function( self )
@@ -570,7 +578,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x0683 0x26
+        opcode26_Wait( time=20 ) -- 0x0683 0x26
         -- MISSING OPCODE 0x10
     end,
 

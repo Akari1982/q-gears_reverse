@@ -360,7 +360,8 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x0385 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -384,7 +385,16 @@ Entity[ "15" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=202, jump=0x03d7 ) -- 0x03ca 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x03cf 0xd2
+        -- 0x9C() -- 0x03d3 0x9c
+        -- 0x01_JumpTo( 0x03e9 ) -- 0x03d4 0x01
+        -- 0x86_ProgressNotEqualJumpTo( value=202, jump=0x03e4 ) -- 0x03d7 0x86
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x03dc 0xd2
+        -- 0x9C() -- 0x03e0 0x9c
+        -- 0x01_JumpTo( 0x03e9 ) -- 0x03e1 0x01
+        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x00 ) -- 0x03e4 0xd2
+        -- 0x9C() -- 0x03e8 0x9c
+        return 0 -- 0x03e9 0x00
     end,
 
     on_push = function( self )
@@ -407,7 +417,9 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x0407 0xd2
+        -- 0x9C() -- 0x040b 0x9c
+        return 0 -- 0x040c 0x00
     end,
 
     on_push = function( self )
@@ -524,7 +536,12 @@ Entity[ "21" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=204, jump=0x04fd ) -- 0x04f0 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0017, ???=0x00 ) -- 0x04f5 0xd2
+        -- 0x9C() -- 0x04f9 0x9c
+        -- 0x01_JumpTo( 0x0502 ) -- 0x04fa 0x01
+        opcodeD2_DialogShow0( dialog_id=0x0018, ???=0x00 ) -- 0x04fd 0xd2
+        -- 0x9C() -- 0x0501 0x9c
+        return 0 -- 0x0502 0x00
     end,
 
     on_push = function( self )
@@ -1142,7 +1159,9 @@ Entity[ "48" ] = {
 
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x0685 ) -- 0x064e 0x86
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0653 0x15
+        opcodeD2_DialogShow0( dialog_id=0x001d, ???=0x00 ) -- 0x0654 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -1165,7 +1184,9 @@ Entity[ "49" ] = {
 
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x06dc ) -- 0x06a4 0x86
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x06a9 0x15
+        opcodeD2_DialogShow0( dialog_id=0x001e, ???=0x00 ) -- 0x06aa 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )

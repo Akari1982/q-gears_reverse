@@ -5,7 +5,7 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
-        -- 0xFE54() -- 0x0017 0xfe
+        opcodeFE54() -- 0x0017 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0192 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0027 ) -- 0x0019 0x02
         -- 0x35() -- 0x0021 0x35
         -- MISSING OPCODE 0xFE1e
@@ -806,7 +806,7 @@ Entity[ "22" ] = {
 Entity[ "23" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x4c62 0xbc
-        -- 0x99() -- 0x4c63 0x99
+        opcode99() -- 0x4c63 0x99
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4c8f ) -- 0x4c64 0x02
         -- MISSING OPCODE 0x61
     end,
@@ -816,11 +816,11 @@ Entity[ "23" ] = {
         -- 0x75() -- 0x4cca 0x75
         -- 0xFE0E_SoundSetVolume( volume=16, steps=0 ) -- 0x4ccd 0xfe
         -- 0x07( entity=0xff, script=0x24 ) -- 0x4cd3 0x07
-        -- 0x26_Wait( time=20 ) -- 0x4cd6 0x26
+        opcode26_Wait( time=20 ) -- 0x4cd6 0x26
         -- 0x07( entity=0xfe, script=0x24 ) -- 0x4cd9 0x07
-        -- 0x26_Wait( time=20 ) -- 0x4cdc 0x26
+        opcode26_Wait( time=20 ) -- 0x4cdc 0x26
         -- 0x07( entity=0xfd, script=0x24 ) -- 0x4cdf 0x07
-        -- 0x26_Wait( time=20 ) -- 0x4ce2 0x26
+        opcode26_Wait( time=20 ) -- 0x4ce2 0x26
         -- MISSING OPCODE 0x61
     end,
 
@@ -872,7 +872,21 @@ Entity[ "24" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x4e77 0x60
+        opcode64() -- 0x4e78 0x64
+        opcode63() -- 0x4e79 0x63
+        opcodeA3() -- 0x4e81 0xa3
+        opcodeAC() -- 0x4e89 0xac
+        opcodeAC() -- 0x4e8d 0xac
+        opcode26_Wait( time=160 ) -- 0x4e91 0x26
+        opcode60() -- 0x4e94 0x60
+        opcode64() -- 0x4e95 0x64
+        opcode63() -- 0x4e96 0x63
+        opcodeA3() -- 0x4e9e 0xa3
+        opcodeAC() -- 0x4ea6 0xac
+        opcodeAC() -- 0x4eaa 0xac
+        opcodeEF() -- 0x4eae 0xef
+        return 0 -- 0x4eb1 0x00
     end,
 
 }

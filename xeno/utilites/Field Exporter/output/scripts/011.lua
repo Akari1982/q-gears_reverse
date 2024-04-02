@@ -326,8 +326,11 @@ Entity[ "13" ] = {
         -- 0x86_ProgressNotEqualJumpTo( value=8, jump=0x0138 ) -- 0x011a 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c4 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x012a ) -- 0x011f 0x02
         -- 0x01_JumpTo( 0x0138 ) -- 0x0127 0x01
-        -- 0xFE54() -- 0x012a 0xfe
-        -- MISSING OPCODE 0x3a
+        opcodeFE54() -- 0x012a 0xfe
+        opcode3A_VariableBitSet( address=0x02c4, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x012c 0x3a
+        -- 0xFE0E_SoundSetVolume( volume=0, steps=120 ) -- 0x0132 0xfe
+        opcode15() -- 0x0138 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

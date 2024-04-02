@@ -19,7 +19,7 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=340, jump=0x0083 ) -- 0x0043 0x84
-        -- 0xFE54() -- 0x0048 0xfe
+        opcodeFE54() -- 0x0048 0xfe
         -- 0xB4_FadeIn() -- 0x004a 0xb4
         -- 0x35() -- 0x004d 0x35
         -- MISSING OPCODE 0x3b
@@ -335,7 +335,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x012d 0xfe
+        opcodeFE54() -- 0x012d 0xfe
         -- 0xD0() -- 0x012f 0xd0
         -- 0xF5_DialogShow3( dialog_id=0x0000, flag=0x00 ) -- 0x013a 0xf5
         -- MISSING OPCODE 0xa9
@@ -360,7 +360,7 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0179 0xfe
+        opcodeFE54() -- 0x0179 0xfe
         -- 0x01_JumpTo( 0x012f ) -- 0x017b 0x01
         return 0 -- 0x017e 0x00
     end,
@@ -384,7 +384,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0191 0xfe
+        opcodeFE54() -- 0x0191 0xfe
         -- 0x01_JumpTo( 0x012f ) -- 0x0193 0x01
         return 0 -- 0x0196 0x00
     end,
@@ -408,13 +408,13 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01a9 0xfe
+        opcodeFE54() -- 0x01a9 0xfe
         -- 0x98_MapLoad( field_id=695, value=1 ) -- 0x01ab 0x98
         return 0 -- 0x01b0 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x01a9 0xfe
+        opcodeFE54() -- 0x01a9 0xfe
         -- 0x98_MapLoad( field_id=695, value=1 ) -- 0x01ab 0x98
         return 0 -- 0x01b0 0x00
     end,

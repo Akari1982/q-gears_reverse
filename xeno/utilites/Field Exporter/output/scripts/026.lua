@@ -10,7 +10,7 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         -- 0xB4_FadeIn() -- 0x001e 0xb4
-        -- 0x26_Wait( time=30 ) -- 0x0021 0x26
+        opcode26_Wait( time=30 ) -- 0x0021 0x26
         -- 0xB3() -- 0x0024 0xb3
         -- 0x01_JumpTo( 0x0027 ) -- 0x0027 0x01
         -- 0xBC_EntityNoModelInit() -- 0x002a 0xbc
@@ -57,7 +57,7 @@ Entity[ "1" ] = {
 
     script_0x04 = function( self )
         -- 0xFE0E_SoundSetVolume( volume=0, steps=1000 ) -- 0x0036 0xfe
-        -- 0x26_Wait( time=250 ) -- 0x003c 0x26
+        opcode26_Wait( time=250 ) -- 0x003c 0x26
         -- MISSING OPCODE 0x72
     end,
 
@@ -137,7 +137,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0101 0x26
+        opcode26_Wait( time=30 ) -- 0x0101 0x26
         -- MISSING OPCODE 0x2c
     end,
 

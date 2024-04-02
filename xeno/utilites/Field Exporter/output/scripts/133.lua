@@ -25,7 +25,11 @@ Entity[ "0" ] = {
 
     script_0x04 = function( self )
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x019b ) -- 0x017a 0x31
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x017f 0x15
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x04ac ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x018c ) -- 0x0180 0x02
+        -- 0x5A() -- 0x0188 0x5a
+        -- 0x01_JumpTo( 0x0180 ) -- 0x0189 0x01
+        -- MISSING OPCODE 0x36
     end,
 
 }
@@ -42,7 +46,9 @@ Entity[ "1" ] = {
 
     on_update = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=201, jump=0x01bf ) -- 0x01a2 0x86
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x01a7 0x15
+        opcodeFE52() -- 0x01a8 0xfe
+        -- MISSING OPCODE 0xfb
     end,
 
     on_talk = function( self )
@@ -405,7 +411,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x05e2 0xfe
+        opcodeFE54() -- 0x05e2 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x04ac ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x05f0 ) -- 0x05e4 0x02
         -- 0x5A() -- 0x05ec 0x5a
         -- 0x01_JumpTo( 0x05e4 ) -- 0x05ed 0x01
@@ -485,7 +491,7 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x062f 0xfe
+        opcodeFE54() -- 0x062f 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x04ac ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x063d ) -- 0x0631 0x02
         -- 0x5A() -- 0x0639 0x5a
         -- 0x01_JumpTo( 0x0631 ) -- 0x063a 0x01

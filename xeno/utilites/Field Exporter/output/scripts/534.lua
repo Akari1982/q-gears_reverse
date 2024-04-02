@@ -138,7 +138,7 @@ Entity[ "5" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0099 0xfe
+        opcodeFE54() -- 0x0099 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x06, script=0x64 ) -- 0x009b 0x09
         -- MISSING OPCODE 0xFE68
     end,

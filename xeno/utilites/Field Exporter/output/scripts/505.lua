@@ -22,7 +22,7 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=15 ) -- 0x001c 0x26
+        opcode26_Wait( time=15 ) -- 0x001c 0x26
         -- MISSING OPCODE 0xFE3c
     end,
 
@@ -477,7 +477,7 @@ Entity[ "18" ] = {
 Entity[ "19" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01fb 0xbc
-        -- 0xFE54() -- 0x01fc 0xfe
+        opcodeFE54() -- 0x01fc 0xfe
         -- 0x2A() -- 0x01fe 0x2a
         return 0 -- 0x01ff 0x00
     end,
@@ -503,7 +503,7 @@ Entity[ "20" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x03cd 0xbc
         -- 0x2A() -- 0x03ce 0x2a
-        -- 0x99() -- 0x03cf 0x99
+        opcode99() -- 0x03cf 0x99
         -- MISSING OPCODE 0x61
     end,
 
@@ -528,24 +528,50 @@ Entity[ "20" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x04aa 0x60
+        opcode64() -- 0x04ab 0x64
+        opcode63() -- 0x04ac 0x63
+        opcodeA3() -- 0x04b4 0xa3
+        opcodeAC() -- 0x04bc 0xac
+        opcodeAC() -- 0x04c0 0xac
+        return 0 -- 0x04c4 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x04c5 0x60
+        opcode64() -- 0x04c6 0x64
+        opcode63() -- 0x04c7 0x63
+        opcodeA3() -- 0x04cf 0xa3
+        opcodeAC() -- 0x04d7 0xac
+        opcodeAC() -- 0x04db 0xac
+        opcodeEF() -- 0x04df 0xef
+        return 0 -- 0x04e2 0x00
     end,
 
     script_0x08 = function( self )
-        -- 0x99() -- 0x04e3 0x99
+        opcode99() -- 0x04e3 0x99
         -- MISSING OPCODE 0x61
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x050d 0x60
+        opcode64() -- 0x050e 0x64
+        opcode63() -- 0x050f 0x63
+        opcodeA3() -- 0x0517 0xa3
+        opcodeAC() -- 0x051f 0xac
+        opcodeAC() -- 0x0523 0xac
+        return 0 -- 0x0527 0x00
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0528 0x60
+        opcode64() -- 0x0529 0x64
+        opcode63() -- 0x052a 0x63
+        opcodeA3() -- 0x0532 0xa3
+        opcodeAC() -- 0x053a 0xac
+        opcodeAC() -- 0x053e 0xac
+        opcodeEF() -- 0x0542 0xef
+        return 0 -- 0x0545 0x00
     end,
 
 }

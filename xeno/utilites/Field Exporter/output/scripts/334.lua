@@ -52,7 +52,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=0 ) -- 0x0062 0x26
+        opcode26_Wait( time=0 ) -- 0x0062 0x26
         -- MISSING OPCODE 0x1e
     end,
 
@@ -87,7 +87,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=0 ) -- 0x008d 0x26
+        opcode26_Wait( time=0 ) -- 0x008d 0x26
         -- MISSING OPCODE 0x1e
     end,
 
@@ -122,7 +122,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=0 ) -- 0x00b8 0x26
+        opcode26_Wait( time=0 ) -- 0x00b8 0x26
         -- MISSING OPCODE 0x1e
     end,
 
@@ -157,7 +157,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=0 ) -- 0x00e3 0x26
+        opcode26_Wait( time=0 ) -- 0x00e3 0x26
         -- MISSING OPCODE 0x1e
     end,
 
@@ -196,7 +196,7 @@ Entity[ "5" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=0 ) -- 0x0125 0x26
+        opcode26_Wait( time=0 ) -- 0x0125 0x26
         -- MISSING OPCODE 0x1e
     end,
 

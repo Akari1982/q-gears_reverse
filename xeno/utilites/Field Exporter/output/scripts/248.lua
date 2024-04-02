@@ -185,18 +185,18 @@ Entity[ "7" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x01b1 0x26
+        opcode26_Wait( time=30 ) -- 0x01b1 0x26
         -- 0xF1() -- 0x01b4 0xf1
-        -- 0x26_Wait( time=50 ) -- 0x01bf 0x26
+        opcode26_Wait( time=50 ) -- 0x01bf 0x26
         -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x01c2 0x09
         -- 0xF1() -- 0x01c5 0xf1
         -- 0xFE0E_SoundSetVolume( volume=0, steps=960 ) -- 0x01d0 0xfe
-        -- 0x26_Wait( time=30 ) -- 0x01d6 0x26
+        opcode26_Wait( time=30 ) -- 0x01d6 0x26
         -- 0x09_EntityCallScriptEW( entity=0x08, script=0x24 ) -- 0x01d9 0x09
-        -- 0x26_Wait( time=90 ) -- 0x01dc 0x26
+        opcode26_Wait( time=90 ) -- 0x01dc 0x26
         -- 0x09_EntityCallScriptEW( entity=0x06, script=0x25 ) -- 0x01df 0x09
         -- 0xF1() -- 0x01e2 0xf1
-        -- 0x26_Wait( time=200 ) -- 0x01ed 0x26
+        opcode26_Wait( time=200 ) -- 0x01ed 0x26
         -- MISSING OPCODE 0xd4
     end,
 
@@ -216,7 +216,7 @@ Entity[ "8" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x03a8 0xbc
         -- 0x2A() -- 0x03a9 0x2a
-        -- 0x99() -- 0x03aa 0x99
+        opcode99() -- 0x03aa 0x99
         -- MISSING OPCODE 0x61
     end,
 
@@ -245,7 +245,7 @@ Entity[ "8" ] = {
     end,
 
     script_0x07 = function( self )
-        -- 0x26_Wait( time=10 ) -- 0x0455 0x26
+        opcode26_Wait( time=10 ) -- 0x0455 0x26
         -- MISSING OPCODE 0x9b
     end,
 

@@ -82,7 +82,8 @@ Entity[ "3" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0031 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -103,7 +104,8 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0041 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

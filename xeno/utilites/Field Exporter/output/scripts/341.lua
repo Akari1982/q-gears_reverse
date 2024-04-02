@@ -399,7 +399,7 @@ Entity[ "16" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x029d ) -- 0x0253 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ec ), value2=(s16)0x0001, condition="value1 & value2", jump_if_false=0x0266 ) -- 0x025b 0x02
         -- 0x01_JumpTo( 0x029d ) -- 0x0263 0x01
-        -- 0xFE54() -- 0x0266 0xfe
+        opcodeFE54() -- 0x0266 0xfe
         -- MISSING OPCODE 0x2c
     end,
 
@@ -575,7 +575,7 @@ Entity[ "23" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x048d 0xfe
+        opcodeFE54() -- 0x048d 0xfe
         -- MISSING OPCODE 0x34
     end,
 
@@ -818,7 +818,9 @@ Entity[ "33" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x05ed ) -- 0x05e2 0x02
         -- 0x01_JumpTo( 0x0607 ) -- 0x05ea 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e0 ), value2=(s16)0x000a, condition="value1 > value2", jump_if_false=0x0607 ) -- 0x05ed 0x02
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x05f5 0x3a
+        opcode15() -- 0x05fb 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -842,7 +844,9 @@ Entity[ "34" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x063d ) -- 0x0632 0x02
         -- 0x01_JumpTo( 0x0657 ) -- 0x063a 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e0 ), value2=(s16)0x000a, condition="value1 > value2", jump_if_false=0x0657 ) -- 0x063d 0x02
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x0645 0x3a
+        opcode15() -- 0x064b 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -866,7 +870,9 @@ Entity[ "35" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x0671 ) -- 0x0666 0x02
         -- 0x01_JumpTo( 0x068b ) -- 0x066e 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e0 ), value2=(s16)0x000a, condition="value1 > value2", jump_if_false=0x068b ) -- 0x0671 0x02
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x0679 0x3a
+        opcode15() -- 0x067f 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

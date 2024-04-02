@@ -300,7 +300,9 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00c0 0x15
+        -- 0x07( entity=0x0e, script=0x05 ) -- 0x00c1 0x07
+        return 0 -- 0x00c4 0x00
     end,
 
     on_push = function( self )
@@ -331,7 +333,8 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00c8 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
 }
@@ -363,7 +366,8 @@ Entity[ "14" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00e9 0x15
+        -- MISSING OPCODE 0xFE65
     end,
 
     script_0x06 = function( self )

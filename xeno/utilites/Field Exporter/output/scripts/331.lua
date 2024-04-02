@@ -445,7 +445,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x02c5 0xfe
+        opcodeFE54() -- 0x02c5 0xfe
         -- 0x19_SetPosition( x=(vf80)0x0024, z=(vf40)0xff57, flag=(flag)0xc0 ) -- 0x02c7 0x19
         -- MISSING OPCODE 0x6f
     end,
@@ -588,7 +588,8 @@ Entity[ "20" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x047f 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -610,7 +611,8 @@ Entity[ "21" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0490 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -633,7 +635,8 @@ Entity[ "22" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c4 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x04b5 ) -- 0x04a1 0x02
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x04a9 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -682,7 +685,8 @@ Entity[ "24" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0570 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

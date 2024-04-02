@@ -11,7 +11,7 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x0012 0xfe
+        opcodeFE54() -- 0x0012 0xfe
         -- MISSING OPCODE 0x9d
     end,
 
@@ -24,10 +24,10 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0168 0x26
+        opcode26_Wait( time=30 ) -- 0x0168 0x26
         -- 0x35() -- 0x016b 0x35
-        -- 0x63() -- 0x0171 0x63
-        -- 0xA3() -- 0x0179 0xa3
+        opcode63() -- 0x0171 0x63
+        opcodeA3() -- 0x0179 0xa3
         -- 0x05_CallFunction( 0x0352 ) -- 0x0181 0x05
         -- MISSING OPCODE 0x36
     end,
@@ -316,7 +316,7 @@ Entity[ "12" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=0 ) -- 0x028c 0x26
+        opcode26_Wait( time=0 ) -- 0x028c 0x26
         -- MISSING OPCODE 0xFE3c
     end,
 

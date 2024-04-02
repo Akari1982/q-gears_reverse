@@ -13,11 +13,11 @@ Entity[ "0" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0095 ) -- 0x0061 0x02
         -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x0069 0x09
-        -- 0xFE54() -- 0x006c 0xfe
-        -- 0x26_Wait( time=32 ) -- 0x006e 0x26
-        -- 0x26_Wait( time=24 ) -- 0x0071 0x26
+        opcodeFE54() -- 0x006c 0xfe
+        opcode26_Wait( time=32 ) -- 0x006e 0x26
+        opcode26_Wait( time=24 ) -- 0x0071 0x26
         -- 0x09_EntityCallScriptEW( entity=0x02, script=0x24 ) -- 0x0074 0x09
-        -- 0x26_Wait( time=64 ) -- 0x0077 0x26
+        opcode26_Wait( time=64 ) -- 0x0077 0x26
         -- 0x07( entity=0x07, script=0x24 ) -- 0x007a 0x07
         -- MISSING OPCODE 0xFE65
     end,
@@ -107,7 +107,7 @@ Entity[ "3" ] = {
 
     script_0x04 = function( self )
         -- 0xF1() -- 0x0164 0xf1
-        -- 0x26_Wait( time=3 ) -- 0x016f 0x26
+        opcode26_Wait( time=3 ) -- 0x016f 0x26
         -- 0xF1() -- 0x0172 0xf1
         -- MISSING OPCODE 0xf2
     end,

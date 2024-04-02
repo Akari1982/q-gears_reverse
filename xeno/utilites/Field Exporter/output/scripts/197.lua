@@ -35,7 +35,7 @@ Entity[ "1" ] = {
     on_update = function( self )
         -- 0xC6() -- 0x00a1 0xc6
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00b4 ) -- 0x00a2 0x02
-        -- 0x26_Wait( time=1 ) -- 0x00aa 0x26
+        opcode26_Wait( time=1 ) -- 0x00aa 0x26
         -- MISSING OPCODE 0x1e
     end,
 
@@ -661,27 +661,57 @@ Entity[ "23" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x097b 0x60
+        opcode64() -- 0x097c 0x64
+        -- MISSING OPCODE 0x62
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x0993 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x0993 0x99
+        opcode60() -- 0x0994 0x60
+        opcode64() -- 0x0995 0x64
+        opcode63() -- 0x0996 0x63
+        opcodeA3() -- 0x099e 0xa3
+        opcodeAC() -- 0x09a6 0xac
+        opcodeAC() -- 0x09aa 0xac
+        opcodeEF() -- 0x09ae 0xef
+        return 0 -- 0x09b1 0x00
     end,
 
     script_0x06 = function( self )
-        -- 0x99() -- 0x09b2 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x09b2 0x99
+        opcode60() -- 0x09b3 0x60
+        opcode64() -- 0x09b4 0x64
+        opcode63() -- 0x09b5 0x63
+        opcodeA3() -- 0x09bd 0xa3
+        opcodeAC() -- 0x09c5 0xac
+        opcodeAC() -- 0x09c9 0xac
+        opcodeEF() -- 0x09cd 0xef
+        return 0 -- 0x09d0 0x00
     end,
 
     script_0x07 = function( self )
-        -- 0x99() -- 0x09d1 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x09d1 0x99
+        opcode60() -- 0x09d2 0x60
+        opcode64() -- 0x09d3 0x64
+        opcode63() -- 0x09d4 0x63
+        opcodeA3() -- 0x09dc 0xa3
+        opcodeAC() -- 0x09e4 0xac
+        opcodeAC() -- 0x09e8 0xac
+        opcodeEF() -- 0x09ec 0xef
+        return 0 -- 0x09ef 0x00
     end,
 
     script_0x08 = function( self )
-        -- 0x99() -- 0x09f0 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x09f0 0x99
+        opcode60() -- 0x09f1 0x60
+        opcode64() -- 0x09f2 0x64
+        opcode63() -- 0x09f3 0x63
+        opcodeA3() -- 0x09fb 0xa3
+        opcodeAC() -- 0x0a03 0xac
+        opcodeAC() -- 0x0a07 0xac
+        opcodeEF() -- 0x0a0b 0xef
+        return 0 -- 0x0a0e 0x00
     end,
 
 }
@@ -907,7 +937,8 @@ Entity[ "33" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0da3 0xbc
         -- 0x2A() -- 0x0da4 0x2a
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0x13 ) -- 0x0da5 0x25
+        -- MISSING OPCODE 0x29
     end,
 
     on_update = function( self )

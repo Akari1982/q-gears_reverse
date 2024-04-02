@@ -30,7 +30,8 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0212, bit_num=(vf40)0x0007, flag=0x40 ) -- 0x0069 0x3a
+        return 0 -- 0x006f 0x00
     end,
 
 }
@@ -178,7 +179,12 @@ Entity[ "4" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x0238 ) -- 0x0228 0x02
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0230 0xd2
+        -- 0x9C() -- 0x0234 0x9c
+        -- 0x01_JumpTo( 0x023d ) -- 0x0235 0x01
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0238 0xd2
+        -- 0x9C() -- 0x023c 0x9c
+        return 0 -- 0x023d 0x00
     end,
 
     on_push = function( self )
@@ -260,10 +266,10 @@ Entity[ "7" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0399 0xfe
+        opcodeFE54() -- 0x0399 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x08, script=0x24 ) -- 0x039b 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x039e 0x07
-        -- 0x26_Wait( time=10 ) -- 0x03a1 0x26
+        opcode26_Wait( time=10 ) -- 0x03a1 0x26
         -- 0x98_MapLoad( field_id=648, value=1 ) -- 0x03a4 0x98
         -- 0x5B() -- 0x03a9 0x5b
         return 0 -- 0x03aa 0x00
@@ -314,7 +320,7 @@ Entity[ "9" ] = {
     on_update = function( self )
         -- 0xC6() -- 0x03d9 0xc6
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x03f4 ) -- 0x03da 0x02
-        -- 0xFE54() -- 0x03e2 0xfe
+        opcodeFE54() -- 0x03e2 0xfe
         -- 0x07( entity=0x01, script=0x26 ) -- 0x03e4 0x07
         -- 0x07( entity=0x02, script=0x24 ) -- 0x03e7 0x07
         -- 0x09_EntityCallScriptEW( entity=0x03, script=0x24 ) -- 0x03ea 0x09
@@ -345,7 +351,7 @@ Entity[ "10" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x048f 0xfe
+        opcodeFE54() -- 0x048f 0xfe
         -- MISSING OPCODE 0x34
     end,
 

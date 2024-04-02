@@ -621,7 +621,7 @@ Entity[ "21" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x053c 0xfe
+        opcodeFE54() -- 0x053c 0xfe
         -- MISSING OPCODE 0x67
     end,
 
@@ -657,16 +657,18 @@ Entity[ "22" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0727 0x99
+        opcode99() -- 0x0727 0x99
         -- MISSING OPCODE 0xf0
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0756 0x60
+        opcode64() -- 0x0757 0x64
+        -- MISSING OPCODE 0x62
     end,
 
     script_0x06 = function( self )
-        -- 0x99() -- 0x0796 0x99
+        opcode99() -- 0x0796 0x99
         -- MISSING OPCODE 0x9b
     end,
 

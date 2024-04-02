@@ -302,7 +302,7 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00ea 0xfe
+        opcodeFE54() -- 0x00ea 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00f8 ) -- 0x00ec 0x02
         -- 0x5A() -- 0x00f4 0x5a
         -- 0x01_JumpTo( 0x00ec ) -- 0x00f5 0x01
@@ -361,7 +361,9 @@ Entity[ "14" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x01 ) -- 0x0164 0xd2
+        -- 0x9C() -- 0x0168 0x9c
+        -- MISSING OPCODE 0x21
     end,
 
 }
@@ -388,7 +390,9 @@ Entity[ "15" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x01 ) -- 0x01b1 0xd2
+        -- 0x9C() -- 0x01b5 0x9c
+        -- MISSING OPCODE 0x21
     end,
 
 }

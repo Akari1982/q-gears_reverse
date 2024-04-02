@@ -10,7 +10,7 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x006c 0xfe
+        opcodeFE54() -- 0x006c 0xfe
         -- MISSING OPCODE 0xFE40
     end,
 
@@ -500,7 +500,7 @@ Entity[ "18" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x0069, condition="value1 < value2", jump_if_false=0x0adf ) -- 0x0aa0 0x02
         -- 0x08_EntityCallScriptSW( entity=0x13, script=0x64 ) -- 0x0aa8 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0adc ) -- 0x0aab 0x31
-        -- 0xFE54() -- 0x0ab0 0xfe
+        opcodeFE54() -- 0x0ab0 0xfe
         -- MISSING OPCODE 0x85
     end,
 
@@ -532,7 +532,9 @@ Entity[ "19" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0011, ???=0x60 ) -- 0x0b16 0xd2
+        -- 0x9C() -- 0x0b1a 0x9c
+        return 0 -- 0x0b1b 0x00
     end,
 
     script_0x05 = function( self )
@@ -568,7 +570,7 @@ Entity[ "20" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xfff0, condition="value1 < value2", jump_if_false=0x0b77 ) -- 0x0b50 0x02
         -- 0x08_EntityCallScriptSW( entity=0x16, script=0x64 ) -- 0x0b58 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0b74 ) -- 0x0b5b 0x31
-        -- 0xFE54() -- 0x0b60 0xfe
+        opcodeFE54() -- 0x0b60 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0b62 0xfe
         -- MISSING OPCODE 0xFE62
     end,
@@ -621,7 +623,9 @@ Entity[ "22" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0012, ???=0x60 ) -- 0x0bb1 0xd2
+        -- 0x9C() -- 0x0bb5 0x9c
+        return 0 -- 0x0bb6 0x00
     end,
 
     script_0x05 = function( self )
@@ -647,8 +651,10 @@ Entity[ "23" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02cc ), value2=(s16)0x0001, condition="value1 & value2", jump_if_false=0x0bdf ) -- 0x0bd4 0x02
         -- 0x01_JumpTo( 0x0bf4 ) -- 0x0bdc 0x01
-        -- 0xFE54() -- 0x0bdf 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeFE54() -- 0x0bdf 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0013, ???=0x00 ) -- 0x0be1 0xd2
+        -- 0x9C() -- 0x0be5 0x9c
+        -- MISSING OPCODE 0x74
     end,
 
     on_push = function( self )
@@ -682,7 +688,7 @@ Entity[ "24" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xffe7, condition="value1 < value2", jump_if_false=0x0c4c ) -- 0x0c25 0x02
         -- 0x08_EntityCallScriptSW( entity=0x19, script=0x64 ) -- 0x0c2d 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0c49 ) -- 0x0c30 0x31
-        -- 0xFE54() -- 0x0c35 0xfe
+        opcodeFE54() -- 0x0c35 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0c37 0xfe
         -- MISSING OPCODE 0xFE62
     end,
@@ -715,7 +721,9 @@ Entity[ "25" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0014, ???=0x60 ) -- 0x0c83 0xd2
+        -- 0x9C() -- 0x0c87 0x9c
+        return 0 -- 0x0c88 0x00
     end,
 
     script_0x05 = function( self )

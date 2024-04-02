@@ -397,7 +397,9 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x01bd 0xd2
+        -- 0x9C() -- 0x01c1 0x9c
+        return 0 -- 0x01c2 0x00
     end,
 
     on_push = function( self )
@@ -420,7 +422,9 @@ Entity[ "17" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x00 ) -- 0x01d1 0xd2
+        -- 0x9C() -- 0x01d5 0x9c
+        return 0 -- 0x01d6 0x00
     end,
 
     on_push = function( self )
@@ -443,7 +447,9 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x00 ) -- 0x01e5 0xd2
+        -- 0x9C() -- 0x01e9 0x9c
+        return 0 -- 0x01ea 0x00
     end,
 
     on_push = function( self )
@@ -465,13 +471,13 @@ Entity[ "19" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01fe 0xfe
+        opcodeFE54() -- 0x01fe 0xfe
         -- 0x98_MapLoad( field_id=695, value=5 ) -- 0x0200 0x98
         return 0 -- 0x0205 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x01fe 0xfe
+        opcodeFE54() -- 0x01fe 0xfe
         -- 0x98_MapLoad( field_id=695, value=5 ) -- 0x0200 0x98
         return 0 -- 0x0205 0x00
     end,
@@ -491,7 +497,7 @@ Entity[ "20" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x021f 0xfe
+        opcodeFE54() -- 0x021f 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x15, script=0x64 ) -- 0x0221 0x09
         -- MISSING OPCODE 0xFE68
     end,
@@ -541,13 +547,13 @@ Entity[ "22" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x024c 0xfe
+        opcodeFE54() -- 0x024c 0xfe
         -- 0x98_MapLoad( field_id=700, value=0 ) -- 0x024e 0x98
         return 0 -- 0x0253 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x024c 0xfe
+        opcodeFE54() -- 0x024c 0xfe
         -- 0x98_MapLoad( field_id=700, value=0 ) -- 0x024e 0x98
         return 0 -- 0x0253 0x00
     end,

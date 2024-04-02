@@ -32,7 +32,9 @@ Entity[ "1" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x00ac 0xd2
+        -- 0x9C() -- 0x00b0 0x9c
+        -- MISSING OPCODE 0xFE66
     end,
 
     script_0x06 = function( self )
@@ -49,7 +51,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x09 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0142 0x26
+        opcode26_Wait( time=30 ) -- 0x0142 0x26
         -- 0x05_CallFunction( 0x0fa3 ) -- 0x0145 0x05
         -- 0x35() -- 0x0148 0x35
         -- MISSING OPCODE 0xFE65
@@ -535,7 +537,7 @@ Entity[ "17" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0961 0xbc
         -- 0x2A() -- 0x0962 0x2a
-        -- 0xFE54() -- 0x0963 0xfe
+        opcodeFE54() -- 0x0963 0xfe
         return 0 -- 0x0965 0x00
     end,
 
@@ -544,14 +546,14 @@ Entity[ "17" ] = {
         -- 0x09_EntityCallScriptEW( entity=0x09, script=0x28 ) -- 0x0969 0x09
         -- 0x09_EntityCallScriptEW( entity=0x02, script=0x25 ) -- 0x096c 0x09
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x24 ) -- 0x096f 0x09
-        -- 0x26_Wait( time=40 ) -- 0x0972 0x26
+        opcode26_Wait( time=40 ) -- 0x0972 0x26
         -- 0x07( entity=0x12, script=0x24 ) -- 0x0975 0x07
         -- 0x07( entity=0x02, script=0x24 ) -- 0x0978 0x07
-        -- 0x26_Wait( time=30 ) -- 0x097b 0x26
+        opcode26_Wait( time=30 ) -- 0x097b 0x26
         -- 0x09_EntityCallScriptEW( entity=0x09, script=0x24 ) -- 0x097e 0x09
         -- 0x07( entity=0x12, script=0x25 ) -- 0x0981 0x07
         -- 0x07( entity=0x02, script=0x24 ) -- 0x0984 0x07
-        -- 0x26_Wait( time=30 ) -- 0x0987 0x26
+        opcode26_Wait( time=30 ) -- 0x0987 0x26
         -- 0x09_EntityCallScriptEW( entity=0x09, script=0x24 ) -- 0x098a 0x09
         -- 0xC6() -- 0x098d 0xc6
         -- MISSING OPCODE 0x29
@@ -589,12 +591,21 @@ Entity[ "18" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0a78 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x0a78 0x99
+        opcode60() -- 0x0a79 0x60
+        opcode64() -- 0x0a7a 0x64
+        -- MISSING OPCODE 0xab
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0a90 0x60
+        opcode64() -- 0x0a91 0x64
+        opcode63() -- 0x0a92 0x63
+        opcodeA3() -- 0x0a9a 0xa3
+        opcodeAC() -- 0x0aa2 0xac
+        opcodeAC() -- 0x0aa6 0xac
+        opcodeEF() -- 0x0aaa 0xef
+        return 0 -- 0x0aad 0x00
     end,
 
     script_0x06 = function( self )
@@ -606,7 +617,9 @@ Entity[ "18" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0b34 0x60
+        opcode64() -- 0x0b35 0x64
+        -- MISSING OPCODE 0xeb
     end,
 
     script_0x09 = function( self )
@@ -630,7 +643,9 @@ Entity[ "18" ] = {
     end,
 
     script_0x0e = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0cc3 0x60
+        opcode64() -- 0x0cc4 0x64
+        -- MISSING OPCODE 0x62
     end,
 
 }
@@ -706,13 +721,13 @@ Entity[ "20" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0e03 0x26
+        opcode26_Wait( time=30 ) -- 0x0e03 0x26
         -- 0x35() -- 0x0e06 0x35
         -- MISSING OPCODE 0x38
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x0e3c 0x26
+        opcode26_Wait( time=20 ) -- 0x0e3c 0x26
         -- 0xFE63() -- 0x0e3f 0xfe
         -- 0xFE63() -- 0x0e45 0xfe
         -- 0xFE63() -- 0x0e4b 0xfe
@@ -732,7 +747,7 @@ Entity[ "20" ] = {
     end,
 
     script_0x08 = function( self )
-        -- 0x26_Wait( time=40 ) -- 0x0ead 0x26
+        opcode26_Wait( time=40 ) -- 0x0ead 0x26
         -- 0x35() -- 0x0eb0 0x35
         -- MISSING OPCODE 0x38
     end,
@@ -742,7 +757,7 @@ Entity[ "20" ] = {
     end,
 
     script_0x0a = function( self )
-        -- 0x26_Wait( time=5 ) -- 0x0f33 0x26
+        opcode26_Wait( time=5 ) -- 0x0f33 0x26
         -- MISSING OPCODE 0xFE65
     end,
 

@@ -35,13 +35,13 @@ Entity[ "1" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00f1 ) -- 0x0040 0x02
-        -- 0xFE54() -- 0x0048 0xfe
+        opcodeFE54() -- 0x0048 0xfe
         -- 0xD0() -- 0x004a 0xd0
         -- 0xB4_FadeIn() -- 0x0055 0xb4
         -- 0x75() -- 0x0058 0x75
         -- 0xFE0E_SoundSetVolume( volume=60, steps=0 ) -- 0x005b 0xfe
-        -- 0x26_Wait( time=0 ) -- 0x0061 0x26
-        -- 0x99() -- 0x0064 0x99
+        opcode26_Wait( time=0 ) -- 0x0061 0x26
+        opcode99() -- 0x0064 0x99
         -- MISSING OPCODE 0x9b
     end,
 

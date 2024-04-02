@@ -350,13 +350,13 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00ef 0xfe
+        opcodeFE54() -- 0x00ef 0xfe
         -- 0x98_MapLoad( field_id=40, value=1 ) -- 0x00f1 0x98
         return 0 -- 0x00f6 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x00ef 0xfe
+        opcodeFE54() -- 0x00ef 0xfe
         -- 0x98_MapLoad( field_id=40, value=1 ) -- 0x00f1 0x98
         return 0 -- 0x00f6 0x00
     end,

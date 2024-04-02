@@ -74,17 +74,18 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x00d2 0x99
+        opcode99() -- 0x00d2 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x00f6 0x99
-        -- MISSING OPCODE 0xFE9b
+        opcode99() -- 0x00f6 0x99
+        opcodeFE9B_SlideShow1( steps=32 ) -- 0x00f7 0xfe
+        -- MISSING OPCODE 0x9b
     end,
 
     script_0x06 = function( self )
-        -- 0x99() -- 0x011e 0x99
+        opcode99() -- 0x011e 0x99
         -- MISSING OPCODE 0x9b
     end,
 

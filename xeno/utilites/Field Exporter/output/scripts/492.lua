@@ -10,7 +10,8 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x00c4 0xfe
+        return 0 -- 0x00c6 0x00
     end,
 
     on_talk = function( self )
@@ -445,12 +446,12 @@ Entity[ "17" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0320 0x99
+        opcode99() -- 0x0320 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x0352 0x99
+        opcode99() -- 0x0352 0x99
         -- MISSING OPCODE 0x9b
     end,
 

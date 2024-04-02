@@ -432,7 +432,7 @@ Entity[ "15" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x46b9 ) -- 0x467a 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0001, condition="value1 & value2", jump_if_false=0x468d ) -- 0x4682 0x02
         -- 0x01_JumpTo( 0x46b9 ) -- 0x468a 0x01
-        -- 0x26_Wait( time=30 ) -- 0x468d 0x26
+        opcode26_Wait( time=30 ) -- 0x468d 0x26
         -- MISSING OPCODE 0xf6
     end,
 
@@ -545,7 +545,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x4784 0x99
+        opcode99() -- 0x4784 0x99
         -- 0x35() -- 0x4785 0x35
         -- MISSING OPCODE 0xab
     end,
@@ -655,7 +655,7 @@ Entity[ "24" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x49ba ) -- 0x498d 0x02
-        -- 0x26_Wait( time=120 ) -- 0x4995 0x26
+        opcode26_Wait( time=120 ) -- 0x4995 0x26
         -- MISSING OPCODE 0x4a
     end,
 
@@ -679,7 +679,7 @@ Entity[ "25" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x49f8 ) -- 0x49d7 0x02
-        -- 0x26_Wait( time=30 ) -- 0x49df 0x26
+        opcode26_Wait( time=30 ) -- 0x49df 0x26
         -- MISSING OPCODE 0x4a
     end,
 
@@ -700,7 +700,7 @@ Entity[ "26" ] = {
         -- 0xBC_EntityNoModelInit() -- 0x49fa 0xbc
         -- 0x2A() -- 0x49fb 0x2a
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x4a29 ) -- 0x49fc 0x02
-        -- 0xFE54() -- 0x4a04 0xfe
+        opcodeFE54() -- 0x4a04 0xfe
         -- MISSING OPCODE 0xb6
     end,
 
@@ -760,7 +760,9 @@ Entity[ "28" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x4bc4 0xd2
+        -- 0x9C() -- 0x4bc8 0x9c
+        -- MISSING OPCODE 0xFE5a
     end,
 
     on_push = function( self )

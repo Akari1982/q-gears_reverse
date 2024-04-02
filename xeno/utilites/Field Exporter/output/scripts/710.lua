@@ -14,7 +14,7 @@ Entity[ "0" ] = {
         -- 0x84_ProgressLessEqualJumpTo( value=300, jump=0x0140 ) -- 0x003c 0x84
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x004c ) -- 0x0041 0x02
         -- 0x01_JumpTo( 0x0140 ) -- 0x0049 0x01
-        -- 0xFE54() -- 0x004c 0xfe
+        opcodeFE54() -- 0x004c 0xfe
         -- MISSING OPCODE 0xFE23
     end,
 
@@ -117,7 +117,9 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000e, ???=0x00 ) -- 0x461a 0xd2
+        -- 0x9C() -- 0x461e 0x9c
+        -- MISSING OPCODE 0x36
     end,
 
     script_0x05 = function( self )
@@ -442,17 +444,17 @@ Entity[ "16" ] = {
 
     script_0x05 = function( self )
         -- 0x35() -- 0x47aa 0x35
-        -- 0x63() -- 0x47b0 0x63
-        -- 0xA3() -- 0x47b8 0xa3
+        opcode63() -- 0x47b0 0x63
+        opcodeA3() -- 0x47b8 0xa3
         -- 0x05_CallFunction( 0x4911 ) -- 0x47c0 0x05
         -- MISSING OPCODE 0x36
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x47c7 0x26
+        opcode26_Wait( time=20 ) -- 0x47c7 0x26
         -- 0x35() -- 0x47ca 0x35
-        -- 0x63() -- 0x47d0 0x63
-        -- 0xA3() -- 0x47d8 0xa3
+        opcode63() -- 0x47d0 0x63
+        opcodeA3() -- 0x47d8 0xa3
         -- 0x05_CallFunction( 0x4911 ) -- 0x47e0 0x05
         return 0 -- 0x47e3 0x00
     end,
@@ -560,7 +562,7 @@ Entity[ "20" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x484b 0xfe
+        opcodeFE54() -- 0x484b 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0008 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x485d ) -- 0x484d 0x02
         -- MISSING OPCODE 0xb5
     end,
@@ -606,7 +608,7 @@ Entity[ "22" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x4902 0xfe
+        opcodeFE54() -- 0x4902 0xfe
         -- 0x98_MapLoad( field_id=17095, value=0 ) -- 0x4904 0x98
         return 0 -- 0x4909 0x00
     end,

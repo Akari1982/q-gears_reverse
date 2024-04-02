@@ -35,9 +35,9 @@ Entity[ "1" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0172 ) -- 0x014e 0x02
         -- 0xF1() -- 0x0156 0xf1
-        -- 0x26_Wait( time=5 ) -- 0x0161 0x26
+        opcode26_Wait( time=5 ) -- 0x0161 0x26
         -- 0xF1() -- 0x0164 0xf1
-        -- 0x26_Wait( time=2 ) -- 0x016f 0x26
+        opcode26_Wait( time=2 ) -- 0x016f 0x26
         return 0 -- 0x0172 0x00
     end,
 
@@ -50,25 +50,46 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0174 0x99
+        opcode99() -- 0x0174 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x01b8 0x60
+        opcode63() -- 0x01b9 0x63
+        opcode64() -- 0x01c1 0x64
+        opcodeA3() -- 0x01c2 0xa3
+        opcodeAC() -- 0x01ca 0xac
+        opcodeAC() -- 0x01ce 0xac
+        opcodeEF() -- 0x01d2 0xef
+        return 0 -- 0x01d5 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x01d6 0x60
+        opcode63() -- 0x01d7 0x63
+        opcode64() -- 0x01df 0x64
+        opcodeA3() -- 0x01e0 0xa3
+        opcodeAC() -- 0x01e8 0xac
+        opcodeAC() -- 0x01ec 0xac
+        opcodeEF() -- 0x01f0 0xef
+        return 0 -- 0x01f3 0x00
     end,
 
     script_0x07 = function( self )
-        -- 0x99() -- 0x01f4 0x99
+        opcode99() -- 0x01f4 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0218 0x60
+        opcode63() -- 0x0219 0x63
+        opcode64() -- 0x0221 0x64
+        opcodeA3() -- 0x0222 0xa3
+        opcodeAC() -- 0x022a 0xac
+        opcodeAC() -- 0x022e 0xac
+        opcodeEF() -- 0x0232 0xef
+        return 0 -- 0x0235 0x00
     end,
 
 }
@@ -119,15 +140,21 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x21 ) -- 0x027e 0xd2
+        -- 0x9C() -- 0x0282 0x9c
+        return 0 -- 0x0283 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x21 ) -- 0x0284 0xd2
+        -- 0x9C() -- 0x0288 0x9c
+        return 0 -- 0x0289 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x21 ) -- 0x028a 0xd2
+        -- 0x9C() -- 0x028e 0x9c
+        return 0 -- 0x028f 0x00
     end,
 
 }

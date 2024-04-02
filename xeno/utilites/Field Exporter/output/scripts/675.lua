@@ -75,7 +75,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0081 0x99
+        opcode99() -- 0x0081 0x99
         -- MISSING OPCODE 0x9b
     end,
 

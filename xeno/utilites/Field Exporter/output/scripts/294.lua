@@ -11,8 +11,16 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- 0x99() -- 0x0049 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x0049 0x99
+        opcode60() -- 0x004a 0x60
+        opcode64() -- 0x004b 0x64
+        opcode63() -- 0x004c 0x63
+        opcodeA3() -- 0x0054 0xa3
+        opcodeAC() -- 0x005c 0xac
+        opcodeAC() -- 0x0060 0xac
+        opcodeEF() -- 0x0064 0xef
+        -- 0x5B() -- 0x0067 0x5b
+        return 0 -- 0x0068 0x00
     end,
 
     on_talk = function( self )
@@ -229,7 +237,7 @@ Entity[ "4" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x01b1 0xfe
+        opcodeFE54() -- 0x01b1 0xfe
         -- MISSING OPCODE 0xFE17
     end,
 
@@ -254,7 +262,15 @@ Entity[ "5" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x045e 0x60
+        opcode64() -- 0x045f 0x64
+        opcode63() -- 0x0460 0x63
+        opcodeA3() -- 0x0468 0xa3
+        opcodeFE9B_SlideShow1( steps=30 ) -- 0x0470 0xfe
+        opcodeAC() -- 0x0474 0xac
+        opcodeAC() -- 0x0478 0xac
+        opcodeEF() -- 0x047c 0xef
+        -- MISSING OPCODE 0x74
     end,
 
     on_talk = function( self )
@@ -278,7 +294,16 @@ Entity[ "6" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x06d9 0x60
+        opcode64() -- 0x06da 0x64
+        opcode63() -- 0x06db 0x63
+        opcodeA3() -- 0x06e3 0xa3
+        opcodeFE9B_SlideShow1( steps=30 ) -- 0x06eb 0xfe
+        opcodeAC() -- 0x06ef 0xac
+        opcodeAC() -- 0x06f3 0xac
+        opcodeEF() -- 0x06f7 0xef
+        opcode26_Wait( time=40 ) -- 0x06fa 0x26
+        -- MISSING OPCODE 0x74
     end,
 
     on_talk = function( self )

@@ -5,7 +5,7 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
-        -- 0xFE54() -- 0x0017 0xfe
+        opcodeFE54() -- 0x0017 0xfe
         -- 0x2A() -- 0x0019 0x2a
         -- MISSING OPCODE 0xb6
     end,
@@ -23,7 +23,7 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=140 ) -- 0x0028 0x26
+        opcode26_Wait( time=140 ) -- 0x0028 0x26
         -- 0xB4_FadeIn() -- 0x002b 0xb4
         -- 0x98_MapLoad( field_id=16703, value=GetVar( 0x0002 ) ) -- 0x002e 0x98
         return 0 -- 0x0033 0x00
@@ -469,7 +469,7 @@ Entity[ "19" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01bd 0xbc
         -- 0x2A() -- 0x01be 0x2a
-        -- 0x99() -- 0x01bf 0x99
+        opcode99() -- 0x01bf 0x99
         -- MISSING OPCODE 0x61
     end,
 

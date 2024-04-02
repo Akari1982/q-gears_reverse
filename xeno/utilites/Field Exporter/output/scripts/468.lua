@@ -323,7 +323,8 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00ac 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

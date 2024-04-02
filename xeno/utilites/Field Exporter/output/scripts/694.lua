@@ -306,7 +306,9 @@ Entity[ "12" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ce ), value2=(s16)0x0080, condition="value1 & value2", jump_if_false=0x0188 ) -- 0x017a 0x02
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0182 0xd2
+        -- 0x9C() -- 0x0186 0x9c
+        return 0 -- 0x0187 0x00
     end,
 
     on_push = function( self )
@@ -736,8 +738,9 @@ Entity[ "29" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x03d1 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeFE54() -- 0x03d1 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x000f, ???=0x00 ) -- 0x03d3 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -759,14 +762,14 @@ Entity[ "30" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x053a 0xfe
+        opcodeFE54() -- 0x053a 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x053c 0xfe
         -- 0x98_MapLoad( field_id=695, value=7 ) -- 0x0542 0x98
         return 0 -- 0x0547 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x053a 0xfe
+        opcodeFE54() -- 0x053a 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x053c 0xfe
         -- 0x98_MapLoad( field_id=695, value=7 ) -- 0x0542 0x98
         return 0 -- 0x0547 0x00

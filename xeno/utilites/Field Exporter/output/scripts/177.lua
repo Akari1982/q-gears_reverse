@@ -99,7 +99,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=40 ) -- 0x023b 0x26
+        opcode26_Wait( time=40 ) -- 0x023b 0x26
         -- MISSING OPCODE 0x2c
     end,
 
@@ -161,7 +161,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=40 ) -- 0x0314 0x26
+        opcode26_Wait( time=40 ) -- 0x0314 0x26
         -- MISSING OPCODE 0x5d
     end,
 
@@ -178,7 +178,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x0a = function( self )
-        -- 0x26_Wait( time=10 ) -- 0x0332 0x26
+        opcode26_Wait( time=10 ) -- 0x0332 0x26
         -- MISSING OPCODE 0x2c
     end,
 
@@ -299,7 +299,12 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x04bc 0x60
+        opcode64() -- 0x04bd 0x64
+        opcode63() -- 0x04be 0x63
+        opcodeA3() -- 0x04c6 0xa3
+        opcode26_Wait( time=1 ) -- 0x04ce 0x26
+        -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
@@ -331,7 +336,7 @@ Entity[ "7" ] = {
 
     script_0x04 = function( self )
         -- 0xFE0E_SoundSetVolume( volume=0, steps=960 ) -- 0x0673 0xfe
-        -- 0x26_Wait( time=120 ) -- 0x0679 0x26
+        opcode26_Wait( time=120 ) -- 0x0679 0x26
         return 0 -- 0x067c 0x00
     end,
 

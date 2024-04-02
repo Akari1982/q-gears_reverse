@@ -325,12 +325,15 @@ Entity[ "13" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0276 ) -- 0x0145 0x02
-        -- 0x26_Wait( time=20 ) -- 0x014d 0x26
+        opcode26_Wait( time=20 ) -- 0x014d 0x26
         -- 0x07( entity=0x04, script=0x24 ) -- 0x0150 0x07
-        -- 0x26_Wait( time=20 ) -- 0x0153 0x26
+        opcode26_Wait( time=20 ) -- 0x0153 0x26
         -- 0x07( entity=0x0e, script=0x24 ) -- 0x0156 0x07
         -- 0xD0() -- 0x0159 0xd0
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x43 ) -- 0x0164 0xd2
+        -- 0x9C() -- 0x0168 0x9c
+        -- 0x5A() -- 0x0169 0x5a
+        -- MISSING OPCODE 0x8a
     end,
 
     on_talk = function( self )
@@ -348,7 +351,7 @@ Entity[ "13" ] = {
 Entity[ "14" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x03e3 0xbc
-        -- 0x99() -- 0x03e4 0x99
+        opcode99() -- 0x03e4 0x99
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0410 ) -- 0x03e5 0x02
         -- MISSING OPCODE 0x61
     end,

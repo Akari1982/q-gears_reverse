@@ -118,7 +118,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x0671 0xfe
+        opcodeFE54() -- 0x0671 0xfe
         -- MISSING OPCODE 0x27
     end,
 
@@ -145,7 +145,7 @@ Entity[ "5" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x0ca3 0xfe
+        opcodeFE54() -- 0x0ca3 0xfe
         -- MISSING OPCODE 0x27
     end,
 
@@ -172,7 +172,7 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x12d9 0xfe
+        opcodeFE54() -- 0x12d9 0xfe
         -- MISSING OPCODE 0x27
     end,
 

@@ -139,7 +139,7 @@ Entity[ "3" ] = {
 Entity[ "4" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x034a 0xbc
-        -- 0x99() -- 0x034b 0x99
+        opcode99() -- 0x034b 0x99
         -- MISSING OPCODE 0x61
     end,
 

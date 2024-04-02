@@ -28,15 +28,18 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x01cc, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x00cb 0x3a
+        return 0 -- 0x00d1 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x01cc, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x00d2 0x3a
+        return 0 -- 0x00d8 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x01cc, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x00d9 0x3a
+        return 0 -- 0x00df 0x00
     end,
 
 }
@@ -126,7 +129,7 @@ Entity[ "3" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01ae ) -- 0x013e 0x02
-        -- 0xFE54() -- 0x0146 0xfe
+        opcodeFE54() -- 0x0146 0xfe
         -- MISSING OPCODE 0xFEb0
     end,
 
@@ -283,7 +286,7 @@ Entity[ "9" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x097c 0xfe
+        opcodeFE54() -- 0x097c 0xfe
         -- MISSING OPCODE 0x34
     end,
 
@@ -307,7 +310,7 @@ Entity[ "10" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0a22 0xfe
+        opcodeFE54() -- 0x0a22 0xfe
         -- MISSING OPCODE 0x34
     end,
 
@@ -331,7 +334,7 @@ Entity[ "11" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0ac8 0xfe
+        opcodeFE54() -- 0x0ac8 0xfe
         -- MISSING OPCODE 0x34
     end,
 

@@ -87,19 +87,27 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x008d 0xd2
+        -- 0x9C() -- 0x0091 0x9c
+        return 0 -- 0x0092 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0093 0xd2
+        -- 0x9C() -- 0x0097 0x9c
+        return 0 -- 0x0098 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x0099 0xd2
+        -- 0x9C() -- 0x009d 0x9c
+        return 0 -- 0x009e 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x009f 0xd2
+        -- 0x9C() -- 0x00a3 0x9c
+        return 0 -- 0x00a4 0x00
     end,
 
 }
@@ -127,19 +135,27 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x00b0 0xd2
+        -- 0x9C() -- 0x00b4 0x9c
+        return 0 -- 0x00b5 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x00b6 0xd2
+        -- 0x9C() -- 0x00ba 0x9c
+        return 0 -- 0x00bb 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x00bc 0xd2
+        -- 0x9C() -- 0x00c0 0x9c
+        return 0 -- 0x00c1 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x00c2 0xd2
+        -- 0x9C() -- 0x00c6 0x9c
+        return 0 -- 0x00c7 0x00
     end,
 
 }
@@ -207,19 +223,27 @@ Entity[ "5" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x00 ) -- 0x00e2 0xd2
+        -- 0x9C() -- 0x00e6 0x9c
+        return 0 -- 0x00e7 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x00e8 0xd2
+        -- 0x9C() -- 0x00ec 0x9c
+        return 0 -- 0x00ed 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x00 ) -- 0x00ee 0xd2
+        -- 0x9C() -- 0x00f2 0x9c
+        return 0 -- 0x00f3 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x00 ) -- 0x00f4 0xd2
+        -- 0x9C() -- 0x00f8 0x9c
+        return 0 -- 0x00f9 0x00
     end,
 
 }
@@ -263,11 +287,15 @@ Entity[ "6" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000c, ???=0x00 ) -- 0x0109 0xd2
+        -- 0x9C() -- 0x010d 0x9c
+        return 0 -- 0x010e 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000d, ???=0x00 ) -- 0x010f 0xd2
+        -- 0x9C() -- 0x0113 0x9c
+        return 0 -- 0x0114 0x00
     end,
 
 }
@@ -295,19 +323,27 @@ Entity[ "7" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000e, ???=0x00 ) -- 0x0120 0xd2
+        -- 0x9C() -- 0x0124 0x9c
+        return 0 -- 0x0125 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000f, ???=0x00 ) -- 0x0126 0xd2
+        -- 0x9C() -- 0x012a 0x9c
+        return 0 -- 0x012b 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0010, ???=0x00 ) -- 0x012c 0xd2
+        -- 0x9C() -- 0x0130 0x9c
+        return 0 -- 0x0131 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0011, ???=0x00 ) -- 0x0132 0xd2
+        -- 0x9C() -- 0x0136 0x9c
+        return 0 -- 0x0137 0x00
     end,
 
 }
@@ -487,7 +523,7 @@ Entity[ "12" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x019f ) -- 0x0187 0x02
-        -- 0xFE54() -- 0x018f 0xfe
+        opcodeFE54() -- 0x018f 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -511,7 +547,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01ee 0xfe
+        opcodeFE54() -- 0x01ee 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -536,8 +572,14 @@ Entity[ "14" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ec ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x0245 ) -- 0x022e 0x02
-        -- 0xFE54() -- 0x0236 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeFE54() -- 0x0236 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0012, ???=0x00 ) -- 0x0238 0xd2
+        -- 0x9C() -- 0x023c 0x9c
+        -- 0x09_EntityCallScriptEW( entity=0x06, script=0xc9 ) -- 0x023d 0x09
+        opcodeFE54() -- 0x0240 0xfe
+        -- 0x01_JumpTo( 0x029f ) -- 0x0242 0x01
+        opcodeFE54() -- 0x0245 0xfe
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -588,15 +630,17 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0365 0xfe
+        opcodeFE54() -- 0x0365 0xfe
         -- 0x07( entity=0x0f, script=0xc4 ) -- 0x0367 0x07
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x036a 0x3a
+        -- MISSING OPCODE 0x29
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0365 0xfe
+        opcodeFE54() -- 0x0365 0xfe
         -- 0x07( entity=0x0f, script=0xc4 ) -- 0x0367 0x07
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x036a 0x3a
+        -- MISSING OPCODE 0x29
     end,
 
 }

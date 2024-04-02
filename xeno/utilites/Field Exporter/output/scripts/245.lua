@@ -89,7 +89,9 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x10 ) -- 0x0100 0xd2
+        -- 0x9C() -- 0x0104 0x9c
+        return 0 -- 0x0105 0x00
     end,
 
     script_0x05 = function( self )
@@ -537,7 +539,7 @@ Entity[ "17" ] = {
 Entity[ "18" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x18a3 0xbc
-        -- 0x99() -- 0x18a4 0x99
+        opcode99() -- 0x18a4 0x99
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x18d0 ) -- 0x18a5 0x02
         -- MISSING OPCODE 0x61
     end,
@@ -573,7 +575,14 @@ Entity[ "18" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x19f8 0x60
+        opcode64() -- 0x19f9 0x64
+        opcode63() -- 0x19fa 0x63
+        opcodeA3() -- 0x1a02 0xa3
+        opcodeAC() -- 0x1a0a 0xac
+        opcodeAC() -- 0x1a0e 0xac
+        opcodeEF() -- 0x1a12 0xef
+        return 0 -- 0x1a15 0x00
     end,
 
     script_0x09 = function( self )
@@ -592,7 +601,13 @@ Entity[ "18" ] = {
     end,
 
     script_0x0c = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x1aae 0x60
+        opcode64() -- 0x1aaf 0x64
+        opcode63() -- 0x1ab0 0x63
+        opcodeA3() -- 0x1ab8 0xa3
+        opcodeAC() -- 0x1ac0 0xac
+        opcodeAC() -- 0x1ac4 0xac
+        return 0 -- 0x1ac8 0x00
     end,
 
     script_0x0d = function( self )
@@ -620,7 +635,14 @@ Entity[ "18" ] = {
     end,
 
     script_0x13 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x1bc5 0x60
+        opcode64() -- 0x1bc6 0x64
+        opcode63() -- 0x1bc7 0x63
+        opcodeA3() -- 0x1bcf 0xa3
+        opcodeAC() -- 0x1bd7 0xac
+        opcodeAC() -- 0x1bdb 0xac
+        opcodeEF() -- 0x1bdf 0xef
+        return 0 -- 0x1be2 0x00
     end,
 
     script_0x14 = function( self )

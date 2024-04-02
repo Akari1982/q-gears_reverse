@@ -328,7 +328,13 @@ Entity[ "13" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=45, jump=0x00e8 ) -- 0x00db 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00e0 0xd2
+        -- 0x9C() -- 0x00e4 0x9c
+        -- 0x01_JumpTo( 0x00f7 ) -- 0x00e5 0x01
+        opcodeFE54() -- 0x00e8 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x00ea 0xd2
+        -- 0x9C() -- 0x00ee 0x9c
+        -- MISSING OPCODE 0xFE5a
     end,
 
     on_push = function( self )
@@ -347,12 +353,14 @@ Entity[ "14" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x0105 0x26
+        opcode26_Wait( time=20 ) -- 0x0105 0x26
         -- MISSING OPCODE 0x4a
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x015d 0xd2
+        -- 0x9C() -- 0x0161 0x9c
+        return 0 -- 0x0162 0x00
     end,
 
     on_push = function( self )
@@ -376,7 +384,9 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x0172 0xd2
+        -- 0x9C() -- 0x0176 0x9c
+        return 0 -- 0x0177 0x00
     end,
 
     on_push = function( self )
@@ -397,7 +407,8 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x017b 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

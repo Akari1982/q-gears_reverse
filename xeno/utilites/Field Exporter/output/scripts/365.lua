@@ -20,7 +20,15 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x003f 0x15
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x017e, condition="value1 != value2", jump_if_false=0x0059 ) -- 0x0040 0x02
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 != value2", jump_if_false=0x0056 ) -- 0x0048 0x02
+        -- 0x35() -- 0x0050 0x35
+        -- 0x01_JumpTo( 0x0067 ) -- 0x0056 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 != value2", jump_if_false=0x0067 ) -- 0x0059 0x02
+        -- 0x35() -- 0x0061 0x35
+        -- 0x5B() -- 0x0067 0x5b
+        return 0 -- 0x0068 0x00
     end,
 
     on_talk = function( self )
@@ -361,7 +369,7 @@ Entity[ "14" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0215 ) -- 0x01f2 0x02
-        -- 0xFE54() -- 0x01fa 0xfe
+        opcodeFE54() -- 0x01fa 0xfe
         -- MISSING OPCODE 0x74
     end,
 

@@ -147,7 +147,7 @@ Entity[ "5" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0078 0xfe
+        opcodeFE54() -- 0x0078 0xfe
         -- MISSING OPCODE 0xFE24
     end,
 

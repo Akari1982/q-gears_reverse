@@ -389,9 +389,17 @@ Entity[ "10" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x03c6 0xfe
-        -- 0x99() -- 0x03c8 0x99
-        -- MISSING OPCODE 0x60
+        opcodeFE54() -- 0x03c6 0xfe
+        opcode99() -- 0x03c8 0x99
+        opcode60() -- 0x03c9 0x60
+        opcode64() -- 0x03ca 0x64
+        opcode63() -- 0x03cb 0x63
+        opcodeA3() -- 0x03d3 0xa3
+        opcodeAC() -- 0x03db 0xac
+        opcodeAC() -- 0x03df 0xac
+        opcodeEF() -- 0x03e3 0xef
+        opcode26_Wait( time=30 ) -- 0x03e6 0x26
+        -- MISSING OPCODE 0xfc
     end,
 
     on_talk = function( self )
@@ -417,8 +425,8 @@ Entity[ "11" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x050c 0xfe
-        -- 0x26_Wait( time=0 ) -- 0x050e 0x26
+        opcodeFE54() -- 0x050c 0xfe
+        opcode26_Wait( time=0 ) -- 0x050e 0x26
         -- MISSING OPCODE 0xFE17
     end,
 
@@ -461,7 +469,14 @@ Entity[ "12" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0644 0x60
+        opcode64() -- 0x0645 0x64
+        opcode63() -- 0x0646 0x63
+        opcodeA3() -- 0x064e 0xa3
+        opcodeAC() -- 0x0656 0xac
+        opcodeAC() -- 0x065a 0xac
+        opcodeEF() -- 0x065e 0xef
+        return 0 -- 0x0661 0x00
     end,
 
 }
@@ -479,7 +494,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0678 0xfe
+        opcodeFE54() -- 0x0678 0xfe
         -- 0x07( entity=0x0e, script=0x64 ) -- 0x067a 0x07
         -- 0x09_EntityCallScriptEW( entity=0x0f, script=0x64 ) -- 0x067d 0x09
         -- MISSING OPCODE 0xFE68
@@ -559,7 +574,7 @@ Entity[ "16" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c0 ), value2=(s16)0x2000, condition="value1 & value2", jump_if_false=0x0704 ) -- 0x06e7 0x02
-        -- 0xFE54() -- 0x06ef 0xfe
+        opcodeFE54() -- 0x06ef 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x11, script=0x64 ) -- 0x06f1 0x09
         -- MISSING OPCODE 0xFE68
     end,
@@ -611,7 +626,7 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x074e 0xfe
+        opcodeFE54() -- 0x074e 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x13, script=0x64 ) -- 0x0750 0x09
         -- MISSING OPCODE 0xFE68
     end,
@@ -663,7 +678,7 @@ Entity[ "20" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x077f 0xfe
+        opcodeFE54() -- 0x077f 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x15, script=0x64 ) -- 0x0781 0x09
         -- MISSING OPCODE 0xFE68
     end,
@@ -720,7 +735,7 @@ Entity[ "22" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x07b4 0xfe
+        opcodeFE54() -- 0x07b4 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x17, script=0x64 ) -- 0x07b6 0x09
         -- MISSING OPCODE 0xFE68
     end,

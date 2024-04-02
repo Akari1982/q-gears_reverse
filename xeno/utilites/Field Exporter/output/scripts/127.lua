@@ -78,7 +78,7 @@ Entity[ "3" ] = {
 
     on_update = function( self )
         -- 0xD0() -- 0x00c3 0xd0
-        -- 0x26_Wait( time=30 ) -- 0x00ce 0x26
+        opcode26_Wait( time=30 ) -- 0x00ce 0x26
         -- 0x07( entity=0x04, script=0x04 ) -- 0x00d1 0x07
         -- MISSING OPCODE 0x6f
     end,
@@ -115,9 +115,13 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x030e 0xfe
-        -- 0x99() -- 0x0310 0x99
-        -- MISSING OPCODE 0x60
+        opcodeFE54() -- 0x030e 0xfe
+        opcode99() -- 0x0310 0x99
+        opcode60() -- 0x0311 0x60
+        opcode63() -- 0x0312 0x63
+        opcodeAC() -- 0x031a 0xac
+        opcodeEF() -- 0x031e 0xef
+        return 0 -- 0x0321 0x00
     end,
 
 }

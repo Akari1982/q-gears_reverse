@@ -143,7 +143,7 @@ if( ( w[800ad010] == 1 ) || ( w[800ad010] == 4 ) )
     A0 = 0;
     system_draw_sync();
 
-    func73670();
+    func73670(); // clear otagr
 
     field_draw_sync();
 }

@@ -25,10 +25,10 @@ Entity[ "0" ] = {
         -- 0x09_EntityCallScriptEW( entity=0x02, script=0x64 ) -- 0x001f 0x09
         -- 0x07( entity=0x1a, script=0x65 ) -- 0x0022 0x07
         -- 0x09_EntityCallScriptEW( entity=0x1b, script=0x65 ) -- 0x0025 0x09
-        -- 0x26_Wait( time=20 ) -- 0x0028 0x26
+        opcode26_Wait( time=20 ) -- 0x0028 0x26
         -- 0x09_EntityCallScriptEW( entity=0x1a, script=0x66 ) -- 0x002b 0x09
         -- 0x09_EntityCallScriptEW( entity=0x02, script=0x68 ) -- 0x002e 0x09
-        -- 0x26_Wait( time=20 ) -- 0x0031 0x26
+        opcode26_Wait( time=20 ) -- 0x0031 0x26
         -- 0x09_EntityCallScriptEW( entity=0x1c, script=0x65 ) -- 0x0034 0x09
         return 0 -- 0x0037 0x00
     end,
@@ -203,7 +203,9 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x01 ) -- 0x02c9 0xd2
+        -- 0x9C() -- 0x02cd 0x9c
+        return 0 -- 0x02ce 0x00
     end,
 
 }
@@ -239,7 +241,9 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x01 ) -- 0x0313 0xd2
+        -- 0x9C() -- 0x0317 0x9c
+        return 0 -- 0x0318 0x00
     end,
 
 }
@@ -275,7 +279,9 @@ Entity[ "5" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x01 ) -- 0x035d 0xd2
+        -- 0x9C() -- 0x0361 0x9c
+        return 0 -- 0x0362 0x00
     end,
 
 }
@@ -311,7 +317,9 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x01 ) -- 0x03a7 0xd2
+        -- 0x9C() -- 0x03ab 0x9c
+        return 0 -- 0x03ac 0x00
     end,
 
 }
@@ -347,7 +355,9 @@ Entity[ "7" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x01 ) -- 0x03f1 0xd2
+        -- 0x9C() -- 0x03f5 0x9c
+        return 0 -- 0x03f6 0x00
     end,
 
 }
@@ -383,7 +393,9 @@ Entity[ "8" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x01 ) -- 0x043b 0xd2
+        -- 0x9C() -- 0x043f 0x9c
+        return 0 -- 0x0440 0x00
     end,
 
 }
@@ -756,7 +768,10 @@ Entity[ "22" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x24
+        opcode24( entity=(entity)0x17 ) -- 0x0922 0x24
+        opcode24( entity=(entity)0x18 ) -- 0x0924 0x24
+        -- 0x05_CallFunction( 0x09e2 ) -- 0x0926 0x05
+        -- MISSING OPCODE 0x21
     end,
 
 }

@@ -244,8 +244,8 @@ Entity[ "9" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x00f4 0xfe
-        -- 0x99() -- 0x00f6 0x99
+        opcodeFE54() -- 0x00f4 0xfe
+        opcode99() -- 0x00f6 0x99
         -- MISSING OPCODE 0xFE5d
     end,
 
@@ -303,11 +303,11 @@ Entity[ "11" ] = {
 
     on_talk = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x0d, script=0x64 ) -- 0x0228 0x09
-        -- 0x99() -- 0x022b 0x99
+        opcode99() -- 0x022b 0x99
         -- 0x35() -- 0x022c 0x35
         -- 0x35() -- 0x0232 0x35
         -- 0x05_CallFunction( 0x03f7 ) -- 0x0238 0x05
-        -- 0x26_Wait( time=10 ) -- 0x023b 0x26
+        opcode26_Wait( time=10 ) -- 0x023b 0x26
         -- 0x98_MapLoad( field_id=519, value=1 ) -- 0x023e 0x98
         -- MISSING OPCODE 0xFE68
     end,

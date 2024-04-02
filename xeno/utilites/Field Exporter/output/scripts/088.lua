@@ -249,7 +249,10 @@ Entity[ "5" ] = {
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x18 ) -- 0x0211 0xd2
+        -- 0x9C() -- 0x0215 0x9c
+        -- 0x35() -- 0x0216 0x35
+        return 0 -- 0x021c 0x00
     end,
 
     script_0x11 = function( self )
@@ -1111,7 +1114,8 @@ Entity[ "38" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0024, condition="value1 >= value2", jump_if_false=0x05db ) -- 0x05c4 0x02
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x05cc 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -1165,7 +1169,7 @@ Entity[ "40" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x05f5 0x99
+        opcode99() -- 0x05f5 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -1182,7 +1186,7 @@ Entity[ "40" ] = {
     end,
 
     script_0x08 = function( self )
-        -- 0x99() -- 0x06ba 0x99
+        opcode99() -- 0x06ba 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -1191,12 +1195,12 @@ Entity[ "40" ] = {
     end,
 
     script_0x0a = function( self )
-        -- 0x99() -- 0x0718 0x99
+        opcode99() -- 0x0718 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x0b = function( self )
-        -- 0x99() -- 0x074a 0x99
+        opcode99() -- 0x074a 0x99
         -- MISSING OPCODE 0x9b
     end,
 

@@ -188,9 +188,19 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0x23()");
                     pointer += 1;
                 }
+                else if( opcode == 0x24 )
+                {
+                    exp->Log( "opcode24( entity=" + GetEVariable( pointer + 1 ) + " )" );
+                    pointer += 2;
+                }
+                else if( opcode == 0x25 )
+                {
+                    exp->Log( "opcode25( entity=" + GetEVariable( pointer + 1 ) + " )" );
+                    pointer += 2;
+                }
                 else if( opcode == 0x26 )
                 {
-                    exp->Log( "-- 0x26_Wait( time=" + GetV80Variable( pointer + 1 ) + " )" );
+                    exp->Log( "opcode26_Wait( time=" + GetV80Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x2a )
@@ -206,6 +216,11 @@ ScriptFile::GetScripts( const std::string& path )
                 else if( opcode == 0x35 )
                 {
                     exp->Log( "-- 0x35()");
+                    pointer += 6;
+                }
+                else if( opcode == 0x3a )
+                {
+                    exp->Log( "opcode3A_VariableBitSet( address=" + GetU16Variable( pointer + 1 ) + ", bit_num=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
                     pointer += 6;
                 }
                 else if( opcode == 0x5a )
@@ -225,8 +240,13 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0x63 )
                 {
-                    exp->Log( "-- 0x63()");
+                    exp->Log( "opcode63()");
                     pointer += 8;
+                }
+                else if( opcode == 0x64 )
+                {
+                    exp->Log( "opcode64()");
+                    pointer += 1;
                 }
                 else if( opcode == 0x75 )
                 {
@@ -270,13 +290,18 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0xa3 )
                 {
-                    exp->Log( "-- 0xA3()");
+                    exp->Log( "opcodeA3()");
                     pointer += 8;
                 }
                 else if( opcode == 0xa7 )
                 {
                     exp->Log( "-- 0xA7()");
                     pointer += 1;
+                }
+                else if( opcode == 0xac )
+                {
+                    exp->Log( "opcodeAC()");
+                    pointer += 4;
                 }
                 else if( opcode == 0xb3 )
                 {
@@ -312,6 +337,16 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "-- 0xD0()");
                     pointer += 11;
+                }
+                else if( opcode == 0xd2 )
+                {
+                    exp->Log( "opcodeD2_DialogShow0( dialog_id=" + GetU16Variable( pointer + 1 ) + ", ???=" + GetU8Variable( pointer + 3 ) + " )" );
+                    pointer += 4;
+                }
+                else if( opcode == 0xef )
+                {
+                    exp->Log( "opcodeEF()");
+                    pointer += 3;
                 }
                 else if( opcode == 0xf1 )
                 {
@@ -447,6 +482,21 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFE99()");
                         pointer += 2;
+                    }
+                    else if( eo_opcode == 0x9b )
+                    {
+                        exp->Log( "opcodeFE9B_SlideShow1( steps=" + GetV80Variable( pointer + 1 ) + " )");
+                        pointer += 3;
+                    }
+                    else if( eo_opcode == 0x9c )
+                    {
+                        exp->Log( "opcodeFE9C_SlideShow2( steps=" + GetV80Variable( pointer + 1 ) + " )");
+                        pointer += 3;
+                    }
+                    else if( eo_opcode == 0x9d )
+                    {
+                        exp->Log( "opcodeFE9D_SlideShow3( steps=" + GetV80Variable( pointer + 1 ) + " )");
+                        pointer += 3;
                     }
                     else if( eo_opcode == 0xa0 )
                     {

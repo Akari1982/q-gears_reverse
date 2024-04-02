@@ -10,17 +10,17 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         -- 0xF1() -- 0x0025 0xf1
-        -- 0x26_Wait( time=5 ) -- 0x0030 0x26
+        opcode26_Wait( time=5 ) -- 0x0030 0x26
         -- 0xF1() -- 0x0033 0xf1
-        -- 0x26_Wait( time=4 ) -- 0x003e 0x26
+        opcode26_Wait( time=4 ) -- 0x003e 0x26
         -- 0xF1() -- 0x0041 0xf1
-        -- 0x26_Wait( time=5 ) -- 0x004c 0x26
+        opcode26_Wait( time=5 ) -- 0x004c 0x26
         -- 0xF1() -- 0x004f 0xf1
-        -- 0x26_Wait( time=4 ) -- 0x005a 0x26
+        opcode26_Wait( time=4 ) -- 0x005a 0x26
         -- 0xF1() -- 0x005d 0xf1
-        -- 0x26_Wait( time=5 ) -- 0x0068 0x26
+        opcode26_Wait( time=5 ) -- 0x0068 0x26
         -- 0xF1() -- 0x006b 0xf1
-        -- 0x26_Wait( time=4 ) -- 0x0076 0x26
+        opcode26_Wait( time=4 ) -- 0x0076 0x26
         return 0 -- 0x0079 0x00
     end,
 
@@ -387,12 +387,13 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x43cc 0xfe
+        opcodeFE54() -- 0x43cc 0xfe
         -- 0x84_ProgressLessEqualJumpTo( value=330, jump=0x4426 ) -- 0x43ce 0x84
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ce ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x43de ) -- 0x43d3 0x02
         -- 0x01_JumpTo( 0x43e7 ) -- 0x43db 0x01
         -- 0x09_EntityCallScriptEW( entity=0x04, script=0x65 ) -- 0x43de 0x09
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x02ce, bit_num=(vf40)0x0009, flag=0x40 ) -- 0x43e1 0x3a
+        -- MISSING OPCODE 0x70
     end,
 
     on_push = function( self )
@@ -418,7 +419,7 @@ Entity[ "16" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x44a9 0xfe
+        opcodeFE54() -- 0x44a9 0xfe
         -- 0x98_MapLoad( field_id=17099, value=1 ) -- 0x44ab 0x98
         return 0 -- 0x44b0 0x00
     end,

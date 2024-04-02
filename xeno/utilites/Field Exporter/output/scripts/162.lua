@@ -35,7 +35,7 @@ Entity[ "1" ] = {
 
     on_update = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=114, jump=0x008a ) -- 0x0042 0x86
-        -- 0xFE54() -- 0x0047 0xfe
+        opcodeFE54() -- 0x0047 0xfe
         -- 0xA0() -- 0x0049 0xa0
         -- 0x07( entity=0x04, script=0x04 ) -- 0x0050 0x07
         -- 0x09_EntityCallScriptEW( entity=0x02, script=0x04 ) -- 0x0053 0x09
@@ -75,7 +75,10 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x12 ) -- 0x008f 0xd2
+        -- 0x9C() -- 0x0093 0x9c
+        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0094 0xfe
+        -- MISSING OPCODE 0xd4
     end,
 
     script_0x05 = function( self )
@@ -582,7 +585,11 @@ Entity[ "21" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x046b 0x15
+        -- 0x09_EntityCallScriptEW( entity=0x16, script=0x05 ) -- 0x046c 0x09
+        -- 0x98_MapLoad( field_id=164, value=4 ) -- 0x046f 0x98
+        -- 0x5B() -- 0x0474 0x5b
+        return 0 -- 0x0475 0x00
     end,
 
     on_push = function( self )

@@ -11,7 +11,12 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         opcodeFEE0() -- 0x003b 0xfe
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x003e 0xfe
+        opcodeFE50() -- 0x0040 0xfe
+        -- 0xB4_FadeIn() -- 0x0042 0xb4
+        opcode26_Wait( time=1 ) -- 0x0045 0x26
+        -- 0xB3() -- 0x0048 0xb3
+        -- MISSING OPCODE 0x29
     end,
 
     on_talk = function( self )
@@ -389,17 +394,17 @@ Entity[ "16" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=167 ) -- 0x01d8 0x26
+        opcode26_Wait( time=167 ) -- 0x01d8 0x26
         -- 0x09_EntityCallScriptEW( entity=0x11, script=0x24 ) -- 0x01db 0x09
-        -- 0x26_Wait( time=58 ) -- 0x01de 0x26
+        opcode26_Wait( time=58 ) -- 0x01de 0x26
         -- 0x09_EntityCallScriptEW( entity=0x11, script=0x25 ) -- 0x01e1 0x09
-        -- 0x26_Wait( time=130 ) -- 0x01e4 0x26
+        opcode26_Wait( time=130 ) -- 0x01e4 0x26
         -- 0x09_EntityCallScriptEW( entity=0x11, script=0x25 ) -- 0x01e7 0x09
-        -- 0x26_Wait( time=25 ) -- 0x01ea 0x26
+        opcode26_Wait( time=25 ) -- 0x01ea 0x26
         -- 0x09_EntityCallScriptEW( entity=0x11, script=0x25 ) -- 0x01ed 0x09
-        -- 0x26_Wait( time=25 ) -- 0x01f0 0x26
+        opcode26_Wait( time=25 ) -- 0x01f0 0x26
         -- 0x09_EntityCallScriptEW( entity=0x11, script=0x24 ) -- 0x01f3 0x09
-        -- 0x26_Wait( time=23 ) -- 0x01f6 0x26
+        opcode26_Wait( time=23 ) -- 0x01f6 0x26
         -- 0x09_EntityCallScriptEW( entity=0x11, script=0x24 ) -- 0x01f9 0x09
         -- 0x35() -- 0x01fc 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040c ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x021c ) -- 0x0202 0x02
@@ -445,7 +450,7 @@ Entity[ "17" ] = {
         -- 0x35() -- 0x023a 0x35
         -- 0x35() -- 0x0240 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x0000, condition="value1 != value2", jump_if_false=0x025e ) -- 0x0246 0x02
-        -- 0x26_Wait( time=0 ) -- 0x024e 0x26
+        opcode26_Wait( time=0 ) -- 0x024e 0x26
         -- 0xC6() -- 0x0251 0xc6
         -- MISSING OPCODE 0x38
     end,
@@ -455,7 +460,7 @@ Entity[ "17" ] = {
         -- 0x35() -- 0x023a 0x35
         -- 0x35() -- 0x0240 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x0000, condition="value1 != value2", jump_if_false=0x025e ) -- 0x0246 0x02
-        -- 0x26_Wait( time=0 ) -- 0x024e 0x26
+        opcode26_Wait( time=0 ) -- 0x024e 0x26
         -- 0xC6() -- 0x0251 0xc6
         -- MISSING OPCODE 0x38
     end,

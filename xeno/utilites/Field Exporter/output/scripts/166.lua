@@ -40,7 +40,12 @@ Entity[ "1" ] = {
         -- 0x07( entity=0x07, script=0x04 ) -- 0x0023 0x07
         -- 0x07( entity=0x03, script=0x04 ) -- 0x0026 0x07
         -- 0x86_ProgressNotEqualJumpTo( value=138, jump=0x0037 ) -- 0x0029 0x86
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x002e 0x15
+        opcodeFE52() -- 0x002f 0xfe
+        -- 0x07( entity=0x02, script=0x05 ) -- 0x0031 0x07
+        -- 0x07( entity=0x05, script=0x06 ) -- 0x0034 0x07
+        -- 0x5B() -- 0x0037 0x5b
+        return 0 -- 0x0038 0x00
     end,
 
     on_talk = function( self )
@@ -76,19 +81,29 @@ Entity[ "2" ] = {
 
     script_0x04 = function( self )
         -- 0x35() -- 0x003c 0x35
-        -- 0x99() -- 0x0042 0x99
+        opcode99() -- 0x0042 0x99
         -- MISSING OPCODE 0x62
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x006c 0x99
-        -- 0x63() -- 0x006d 0x63
-        -- 0xA3() -- 0x0075 0xa3
-        -- MISSING OPCODE 0xac
+        opcode99() -- 0x006c 0x99
+        opcode63() -- 0x006d 0x63
+        opcodeA3() -- 0x0075 0xa3
+        opcodeAC() -- 0x007d 0xac
+        opcodeAC() -- 0x0081 0xac
+        opcodeEF() -- 0x0085 0xef
+        return 0 -- 0x0088 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0089 0x60
+        opcode64() -- 0x008a 0x64
+        opcode63() -- 0x008b 0x63
+        opcodeA3() -- 0x0093 0xa3
+        opcodeAC() -- 0x009b 0xac
+        opcodeAC() -- 0x009f 0xac
+        opcodeEF() -- 0x00a3 0xef
+        return 0 -- 0x00a6 0x00
     end,
 
 }
@@ -121,7 +136,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0285 0x26
+        opcode26_Wait( time=30 ) -- 0x0285 0x26
         -- 0xFE0D_SetAvatar( character_id=24 ) -- 0x0288 0xfe
         -- MISSING OPCODE 0xd4
     end,
@@ -185,7 +200,7 @@ Entity[ "5" ] = {
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x032f 0x26
+        opcode26_Wait( time=20 ) -- 0x032f 0x26
         -- 0xFE0E_SoundSetVolume( volume=80, steps=500 ) -- 0x0332 0xfe
         -- MISSING OPCODE 0x4a
     end,
@@ -533,7 +548,9 @@ Entity[ "19" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x049c 0x15
+        -- 0x09_EntityCallScriptEW( entity=0x14, script=0x05 ) -- 0x049d 0x09
+        -- MISSING OPCODE 0xFE68
     end,
 
     on_push = function( self )
@@ -592,7 +609,9 @@ Entity[ "21" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x050d 0x15
+        -- 0x86_ProgressNotEqualJumpTo( value=72, jump=0x0527 ) -- 0x050e 0x86
+        -- MISSING OPCODE 0xFE17
     end,
 
     on_push = function( self )

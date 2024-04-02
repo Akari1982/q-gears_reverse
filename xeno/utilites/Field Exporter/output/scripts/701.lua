@@ -315,7 +315,9 @@ Entity[ "12" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ce ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x00d9 ) -- 0x00cb 0x02
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00d3 0xd2
+        -- 0x9C() -- 0x00d7 0x9c
+        return 0 -- 0x00d8 0x00
     end,
 
     on_push = function( self )
@@ -337,13 +339,13 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0140 0xfe
+        opcodeFE54() -- 0x0140 0xfe
         -- 0x98_MapLoad( field_id=693, value=1 ) -- 0x0142 0x98
         return 0 -- 0x0147 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0140 0xfe
+        opcodeFE54() -- 0x0140 0xfe
         -- 0x98_MapLoad( field_id=693, value=1 ) -- 0x0142 0x98
         return 0 -- 0x0147 0x00
     end,

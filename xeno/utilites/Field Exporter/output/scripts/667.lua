@@ -582,7 +582,7 @@ Entity[ "16" ] = {
 Entity[ "17" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0aad 0xbc
-        -- 0xFE54() -- 0x0aae 0xfe
+        opcodeFE54() -- 0x0aae 0xfe
         -- 0x2A() -- 0x0ab0 0x2a
         return 0 -- 0x0ab1 0x00
     end,
@@ -607,7 +607,7 @@ Entity[ "17" ] = {
 Entity[ "18" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0b20 0xbc
-        -- 0x99() -- 0x0b21 0x99
+        opcode99() -- 0x0b21 0x99
         -- MISSING OPCODE 0x61
     end,
 
@@ -624,15 +624,33 @@ Entity[ "18" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0b4d 0x60
+        opcode64() -- 0x0b4e 0x64
+        opcode63() -- 0x0b4f 0x63
+        opcodeA3() -- 0x0b57 0xa3
+        opcodeAC() -- 0x0b5f 0xac
+        opcodeAC() -- 0x0b63 0xac
+        return 0 -- 0x0b67 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0b68 0x60
+        opcode64() -- 0x0b69 0x64
+        opcode63() -- 0x0b6a 0x63
+        opcodeA3() -- 0x0b72 0xa3
+        opcodeAC() -- 0x0b7a 0xac
+        opcodeAC() -- 0x0b7e 0xac
+        return 0 -- 0x0b82 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0b83 0x60
+        opcode64() -- 0x0b84 0x64
+        opcode63() -- 0x0b85 0x63
+        opcodeA3() -- 0x0b8d 0xa3
+        opcodeAC() -- 0x0b95 0xac
+        opcodeAC() -- 0x0b99 0xac
+        return 0 -- 0x0b9d 0x00
     end,
 
 }
@@ -702,7 +720,7 @@ Entity[ "20" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=60 ) -- 0x0c9d 0x26
+        opcode26_Wait( time=60 ) -- 0x0c9d 0x26
         -- MISSING OPCODE 0x29
     end,
 

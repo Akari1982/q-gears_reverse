@@ -37,7 +37,8 @@ Entity[ "1" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0030 0x15
+        -- MISSING OPCODE 0x34
     end,
 
     on_push = function( self )
@@ -106,7 +107,8 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0097 0x15
+        -- MISSING OPCODE 0x34
     end,
 
     on_push = function( self )
@@ -175,7 +177,8 @@ Entity[ "7" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00fe 0x15
+        -- MISSING OPCODE 0x34
     end,
 
     on_push = function( self )
@@ -244,7 +247,8 @@ Entity[ "10" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0165 0x15
+        -- MISSING OPCODE 0x34
     end,
 
     on_push = function( self )
@@ -579,7 +583,13 @@ Entity[ "24" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x02b1 ) -- 0x029e 0x84
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x01 ) -- 0x02a3 0xd2
+        -- 0x9C() -- 0x02a7 0x9c
+        -- 0x35() -- 0x02a8 0x35
+        -- 0x01_JumpTo( 0x02b6 ) -- 0x02ae 0x01
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x01 ) -- 0x02b1 0xd2
+        -- 0x9C() -- 0x02b5 0x9c
+        return 0 -- 0x02b6 0x00
     end,
 
     on_push = function( self )

@@ -116,10 +116,10 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01ab 0xfe
+        opcodeFE54() -- 0x01ab 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x0a, script=0x24 ) -- 0x01ad 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x01b0 0x07
-        -- 0x26_Wait( time=10 ) -- 0x01b3 0x26
+        opcode26_Wait( time=10 ) -- 0x01b3 0x26
         -- 0x98_MapLoad( field_id=226, value=0 ) -- 0x01b6 0x98
         return 0 -- 0x01bb 0x00
     end,
@@ -143,10 +143,10 @@ Entity[ "5" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01d4 0xfe
+        opcodeFE54() -- 0x01d4 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x09, script=0x24 ) -- 0x01d6 0x09
         -- 0x07( entity=0x01, script=0x25 ) -- 0x01d9 0x07
-        -- 0x26_Wait( time=10 ) -- 0x01dc 0x26
+        opcode26_Wait( time=10 ) -- 0x01dc 0x26
         -- 0x98_MapLoad( field_id=231, value=3 ) -- 0x01df 0x98
         return 0 -- 0x01e4 0x00
     end,
@@ -302,7 +302,9 @@ Entity[ "11" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0304 0xd2
+        -- 0x9C() -- 0x0308 0x9c
+        return 0 -- 0x0309 0x00
     end,
 
     on_push = function( self )

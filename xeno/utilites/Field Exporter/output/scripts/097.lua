@@ -426,7 +426,8 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0321 0x15
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -516,15 +517,30 @@ Entity[ "19" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x07b7 0x15
+        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x07b8 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0040, ???=0x00 ) -- 0x07bc 0xd2
+        -- 0x9C() -- 0x07c0 0x9c
+        opcode26_Wait( time=10 ) -- 0x07c1 0x26
+        -- MISSING OPCODE 0xfc
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x07d0 0x15
+        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x07d1 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0042, ???=0x00 ) -- 0x07d5 0xd2
+        -- 0x9C() -- 0x07d9 0x9c
+        opcode14() -- 0x07da 0x14
+        return 0 -- 0x07db 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x07dc 0x15
+        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x07dd 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0043, ???=0x00 ) -- 0x07e1 0xd2
+        -- 0x9C() -- 0x07e5 0x9c
+        opcode14() -- 0x07e6 0x14
+        return 0 -- 0x07e7 0x00
     end,
 
 }
@@ -543,7 +559,8 @@ Entity[ "20" ] = {
     on_talk = function( self )
         -- 0x0A() -- 0x07eb 0xfe
         -- 0x35() -- 0x07ef 0x35
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x07f5 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -595,7 +612,12 @@ Entity[ "22" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0013, condition="value1 < value2", jump_if_false=0x0840 ) -- 0x0824 0x02
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0x0e ) -- 0x082c 0x25
+        opcode25( entity=(entity)0x0f ) -- 0x082e 0x25
+        opcode25( entity=(entity)0x10 ) -- 0x0830 0x25
+        opcode25( entity=(entity)0x11 ) -- 0x0832 0x25
+        opcode25( entity=(entity)0x13 ) -- 0x0834 0x25
+        -- MISSING OPCODE 0x27
     end,
 
     on_talk = function( self )

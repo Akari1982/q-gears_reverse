@@ -8,7 +8,8 @@ Entity[ "0" ] = {
         -- 0x2A() -- 0x0010 0x2a
         -- 0xFE0E_SoundSetVolume( volume=127, steps=0 ) -- 0x0011 0xfe
         -- 0xA0() -- 0x0017 0xa0
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x001e 0xfe
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_update = function( self )
@@ -192,7 +193,7 @@ Entity[ "7" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=9 ) -- 0x016a 0x26
+        opcode26_Wait( time=9 ) -- 0x016a 0x26
         -- MISSING OPCODE 0x2c
     end,
 
@@ -281,8 +282,16 @@ Entity[ "11" ] = {
     end,
 
     on_update = function( self )
-        -- 0x99() -- 0x0258 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x0258 0x99
+        opcode60() -- 0x0259 0x60
+        opcode64() -- 0x025a 0x64
+        opcode63() -- 0x025b 0x63
+        opcodeA3() -- 0x0263 0xa3
+        opcodeAC() -- 0x026b 0xac
+        opcodeAC() -- 0x026f 0xac
+        opcode26_Wait( time=30 ) -- 0x0273 0x26
+        -- 0xD0() -- 0x0276 0xd0
+        -- MISSING OPCODE 0xfc
     end,
 
     on_talk = function( self )
@@ -342,8 +351,15 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x02e7 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x02e7 0x99
+        opcode60() -- 0x02e8 0x60
+        opcode64() -- 0x02e9 0x64
+        opcode63() -- 0x02ea 0x63
+        opcodeA3() -- 0x02f2 0xa3
+        opcodeAC() -- 0x02fa 0xac
+        opcodeAC() -- 0x02fe 0xac
+        opcodeEF() -- 0x0302 0xef
+        return 0 -- 0x0305 0x00
     end,
 
     script_0x05 = function( self )
@@ -355,7 +371,14 @@ Entity[ "13" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x034c 0x60
+        opcode64() -- 0x034d 0x64
+        opcode63() -- 0x034e 0x63
+        opcodeA3() -- 0x0356 0xa3
+        opcodeAC() -- 0x035e 0xac
+        opcodeAC() -- 0x0362 0xac
+        opcodeEF() -- 0x0366 0xef
+        return 0 -- 0x0369 0x00
     end,
 
     script_0x08 = function( self )

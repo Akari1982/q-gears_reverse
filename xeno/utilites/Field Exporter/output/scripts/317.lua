@@ -529,7 +529,8 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x05cc 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -1264,7 +1265,11 @@ Entity[ "42" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0xff ) -- 0x1109 0x25
+        opcode25( entity=(entity)0xfe ) -- 0x110b 0x25
+        opcode25( entity=(entity)0xfd ) -- 0x110d 0x25
+        opcode26_Wait( time=45 ) -- 0x110f 0x26
+        -- MISSING OPCODE 0xFE24
     end,
 
 }
@@ -1296,10 +1301,10 @@ Entity[ "43" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=15 ) -- 0x1125 0x26
+        opcode26_Wait( time=15 ) -- 0x1125 0x26
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x042c ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x1133 ) -- 0x1128 0x02
         -- 0x07( entity=0x2d, script=0x24 ) -- 0x1130 0x07
-        -- 0x26_Wait( time=15 ) -- 0x1133 0x26
+        opcode26_Wait( time=15 ) -- 0x1133 0x26
         -- 0xB4_FadeIn() -- 0x1136 0xb4
         return 0 -- 0x1139 0x00
     end,
@@ -1320,7 +1325,9 @@ Entity[ "44" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x117e 0xd2
+        -- 0x9C() -- 0x1182 0x9c
+        -- MISSING OPCODE 0x36
     end,
 
     on_push = function( self )
@@ -1328,7 +1335,7 @@ Entity[ "44" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=45 ) -- 0x1188 0x26
+        opcode26_Wait( time=45 ) -- 0x1188 0x26
         -- MISSING OPCODE 0x22
     end,
 
@@ -1372,7 +1379,7 @@ Entity[ "46" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x1232 ) -- 0x119b 0x02
-        -- 0xFE54() -- 0x11a3 0xfe
+        opcodeFE54() -- 0x11a3 0xfe
         -- MISSING OPCODE 0xe5
     end,
 
@@ -1393,8 +1400,8 @@ Entity[ "47" ] = {
         -- 0xBC_EntityNoModelInit() -- 0x1236 0xbc
         -- 0x2A() -- 0x1237 0x2a
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x1277 ) -- 0x1238 0x02
-        -- 0xFE54() -- 0x1240 0xfe
-        -- 0x99() -- 0x1242 0x99
+        opcodeFE54() -- 0x1240 0xfe
+        opcode99() -- 0x1242 0x99
         -- 0x35() -- 0x1243 0x35
         -- MISSING OPCODE 0x39
     end,

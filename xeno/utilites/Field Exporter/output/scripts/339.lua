@@ -60,7 +60,9 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x011b 0xd2
+        -- 0x9C() -- 0x011f 0x9c
+        return 0 -- 0x0120 0x00
     end,
 
     script_0x05 = function( self )
@@ -559,7 +561,7 @@ Entity[ "12" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x02f6 0x99
+        opcode99() -- 0x02f6 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -581,13 +583,17 @@ Entity[ "13" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0001, condition="value1 & value2", jump_if_false=0x0345 ) -- 0x033a 0x02
         -- 0x01_JumpTo( 0x0363 ) -- 0x0342 0x01
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0000, flag=0x40 ) -- 0x0345 0x3a
+        -- 0x35() -- 0x034b 0x35
+        -- MISSING OPCODE 0xFE34
     end,
 
     on_push = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0001, condition="value1 & value2", jump_if_false=0x0345 ) -- 0x033a 0x02
         -- 0x01_JumpTo( 0x0363 ) -- 0x0342 0x01
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0000, flag=0x40 ) -- 0x0345 0x3a
+        -- 0x35() -- 0x034b 0x35
+        -- MISSING OPCODE 0xFE34
     end,
 
 }
@@ -608,13 +614,15 @@ Entity[ "14" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x038c ) -- 0x0381 0x02
         -- 0x01_JumpTo( 0x03aa ) -- 0x0389 0x01
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x038c 0x3a
+        -- MISSING OPCODE 0xFE34
     end,
 
     on_push = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x038c ) -- 0x0381 0x02
         -- 0x01_JumpTo( 0x03aa ) -- 0x0389 0x01
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x038c 0x3a
+        -- MISSING OPCODE 0xFE34
     end,
 
 }
@@ -633,7 +641,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x03c1 0xfe
+        opcodeFE54() -- 0x03c1 0xfe
         -- MISSING OPCODE 0x29
     end,
 
@@ -657,7 +665,7 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x03e3 0xfe
+        opcodeFE54() -- 0x03e3 0xfe
         -- MISSING OPCODE 0x29
     end,
 
@@ -681,8 +689,9 @@ Entity[ "17" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x044b 0xfe
-        -- MISSING OPCODE 0x3a
+        opcodeFE54() -- 0x044b 0xfe
+        opcode3A_VariableBitSet( address=0x00ec, bit_num=(vf40)0x000c, flag=0x40 ) -- 0x044d 0x3a
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -695,21 +704,30 @@ Entity[ "17" ] = {
 
     script_0x05 = function( self )
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0517 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0016, ???=0x00 ) -- 0x051b 0xd2
+        -- 0x9C() -- 0x051f 0x9c
+        opcode26_Wait( time=6 ) -- 0x0520 0x26
+        -- 0x09_EntityCallScriptEW( entity=0x20, script=0xc4 ) -- 0x0523 0x09
+        opcode26_Wait( time=4 ) -- 0x0526 0x26
+        -- MISSING OPCODE 0x69
     end,
 
     script_0x06 = function( self )
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x052d 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0017, ???=0x00 ) -- 0x0531 0xd2
+        -- 0x9C() -- 0x0535 0x9c
+        return 0 -- 0x0536 0x00
     end,
 
     script_0x07 = function( self )
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0537 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0018, ???=0x00 ) -- 0x053b 0xd2
+        -- 0x9C() -- 0x053f 0x9c
+        return 0 -- 0x0540 0x00
     end,
 
     script_0x08 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x0541 0x26
+        opcode26_Wait( time=30 ) -- 0x0541 0x26
         -- MISSING OPCODE 0x2c
     end,
 
@@ -775,7 +793,9 @@ Entity[ "19" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0021, ???=0x00 ) -- 0x06ac 0xd2
+        -- 0x9C() -- 0x06b0 0x9c
+        return 0 -- 0x06b1 0x00
     end,
 
 }
@@ -869,7 +889,7 @@ Entity[ "23" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x07e3 0xfe
+        opcodeFE54() -- 0x07e3 0xfe
         -- MISSING OPCODE 0x6f
     end,
 
@@ -1059,7 +1079,7 @@ Entity[ "30" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ec ), value2=(s16)0x2000, condition="value1 & value2", jump_if_false=0x094e ) -- 0x0935 0x02
-        -- 0xFE54() -- 0x093d 0xfe
+        opcodeFE54() -- 0x093d 0xfe
         -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x093f 0xfe
         -- MISSING OPCODE 0xd4
     end,
@@ -1082,7 +1102,8 @@ Entity[ "31" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0963 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -1107,7 +1128,8 @@ Entity[ "32" ] = {
         -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x0995 ) -- 0x097a 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x098a ) -- 0x097f 0x02
         -- 0x01_JumpTo( 0x0995 ) -- 0x0987 0x01
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x098a 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -1136,7 +1158,8 @@ Entity[ "33" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x09cf 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -1157,7 +1180,8 @@ Entity[ "34" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x09de 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

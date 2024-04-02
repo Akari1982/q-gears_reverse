@@ -322,9 +322,11 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x028d 0xfe
+        opcodeFE54() -- 0x028d 0xfe
         -- 0x35() -- 0x028f 0x35
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x10 ) -- 0x0295 0xd2
+        -- 0x9C() -- 0x0299 0x9c
+        -- MISSING OPCODE 0x74
     end,
 
     on_push = function( self )
@@ -403,9 +405,13 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0308 0xfe
+        opcodeFE54() -- 0x0308 0xfe
         -- 0x35() -- 0x030a 0x35
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x10 ) -- 0x0310 0xd2
+        -- 0x9C() -- 0x0314 0x9c
+        -- 0x09_EntityCallScriptEW( entity=0x11, script=0x64 ) -- 0x0315 0x09
+        -- 0x98_MapLoad( field_id=485, value=3 ) -- 0x0318 0x98
+        return 0 -- 0x031d 0x00
     end,
 
     on_push = function( self )
@@ -454,9 +460,13 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x035d 0xfe
+        opcodeFE54() -- 0x035d 0xfe
         -- 0x35() -- 0x035f 0x35
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x10 ) -- 0x0365 0xd2
+        -- 0x9C() -- 0x0369 0x9c
+        -- 0x09_EntityCallScriptEW( entity=0x13, script=0x64 ) -- 0x036a 0x09
+        -- 0x98_MapLoad( field_id=485, value=9 ) -- 0x036d 0x98
+        return 0 -- 0x0372 0x00
     end,
 
     on_push = function( self )
@@ -505,9 +515,13 @@ Entity[ "20" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x03b2 0xfe
+        opcodeFE54() -- 0x03b2 0xfe
         -- 0x35() -- 0x03b4 0x35
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x10 ) -- 0x03ba 0xd2
+        -- 0x9C() -- 0x03be 0x9c
+        -- 0x09_EntityCallScriptEW( entity=0x15, script=0x64 ) -- 0x03bf 0x09
+        -- 0x98_MapLoad( field_id=485, value=1 ) -- 0x03c2 0x98
+        return 0 -- 0x03c7 0x00
     end,
 
     on_push = function( self )
@@ -556,7 +570,7 @@ Entity[ "22" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0407 0xfe
+        opcodeFE54() -- 0x0407 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x17, script=0x64 ) -- 0x0409 0x09
         -- 0x98_MapLoad( field_id=486, value=0 ) -- 0x040c 0x98
         return 0 -- 0x0411 0x00
@@ -608,7 +622,7 @@ Entity[ "24" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0451 0xfe
+        opcodeFE54() -- 0x0451 0xfe
         -- 0x35() -- 0x0453 0x35
         -- 0x09_EntityCallScriptEW( entity=0x19, script=0x64 ) -- 0x0459 0x09
         -- 0x98_MapLoad( field_id=486, value=2 ) -- 0x045c 0x98
@@ -661,7 +675,7 @@ Entity[ "26" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x04a1 0xfe
+        opcodeFE54() -- 0x04a1 0xfe
         -- 0x35() -- 0x04a3 0x35
         -- 0x09_EntityCallScriptEW( entity=0x1b, script=0x64 ) -- 0x04a9 0x09
         -- 0x98_MapLoad( field_id=486, value=4 ) -- 0x04ac 0x98
@@ -714,7 +728,7 @@ Entity[ "28" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x04f1 0xfe
+        opcodeFE54() -- 0x04f1 0xfe
         -- 0x35() -- 0x04f3 0x35
         -- 0x09_EntityCallScriptEW( entity=0x1d, script=0x64 ) -- 0x04f9 0x09
         -- 0x98_MapLoad( field_id=486, value=6 ) -- 0x04fc 0x98
@@ -767,7 +781,7 @@ Entity[ "30" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0541 0xfe
+        opcodeFE54() -- 0x0541 0xfe
         -- 0x35() -- 0x0543 0x35
         -- 0x09_EntityCallScriptEW( entity=0x1f, script=0x64 ) -- 0x0549 0x09
         -- 0x98_MapLoad( field_id=486, value=8 ) -- 0x054c 0x98
@@ -820,9 +834,13 @@ Entity[ "32" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0591 0xfe
+        opcodeFE54() -- 0x0591 0xfe
         -- 0x35() -- 0x0593 0x35
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x10 ) -- 0x0599 0xd2
+        -- 0x9C() -- 0x059d 0x9c
+        -- 0x09_EntityCallScriptEW( entity=0x21, script=0x64 ) -- 0x059e 0x09
+        -- 0x98_MapLoad( field_id=485, value=2 ) -- 0x05a1 0x98
+        return 0 -- 0x05a6 0x00
     end,
 
     on_push = function( self )

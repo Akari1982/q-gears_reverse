@@ -45,7 +45,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x001e 0x26
+        opcode26_Wait( time=30 ) -- 0x001e 0x26
         -- MISSING OPCODE 0xFE17
     end,
 
@@ -74,7 +74,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x0099 0x26
+        opcode26_Wait( time=20 ) -- 0x0099 0x26
         -- MISSING OPCODE 0x5f
     end,
 

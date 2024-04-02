@@ -9,7 +9,7 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x010e 0xfe
+        opcodeFE54() -- 0x010e 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01aa ) -- 0x0110 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0140 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x013e ) -- 0x0118 0x02
         -- 0x07( entity=0x06, script=0x24 ) -- 0x0120 0x07
@@ -74,12 +74,12 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x01e3 0x99
+        opcode99() -- 0x01e3 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x028e 0x99
+        opcode99() -- 0x028e 0x99
         -- MISSING OPCODE 0x9b
     end,
 

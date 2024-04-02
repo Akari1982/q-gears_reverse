@@ -56,8 +56,8 @@ Entity[ "2" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x006a 0xfe
-        -- 0x26_Wait( time=1 ) -- 0x006c 0x26
+        opcodeFE54() -- 0x006a 0xfe
+        opcode26_Wait( time=1 ) -- 0x006c 0x26
         -- MISSING OPCODE 0x9b
     end,
 

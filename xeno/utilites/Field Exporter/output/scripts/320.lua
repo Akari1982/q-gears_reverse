@@ -29,7 +29,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x0033 0x26
+        opcode26_Wait( time=20 ) -- 0x0033 0x26
         -- MISSING OPCODE 0x4a
     end,
 
@@ -187,7 +187,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x07 = function( self )
-        -- 0x26_Wait( time=40 ) -- 0x0123 0x26
+        opcode26_Wait( time=40 ) -- 0x0123 0x26
         -- MISSING OPCODE 0xf6
     end,
 
@@ -463,7 +463,7 @@ Entity[ "12" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0307 0xbc
         -- 0x2A() -- 0x0308 0x2a
-        -- 0xFE54() -- 0x0309 0xfe
+        opcodeFE54() -- 0x0309 0xfe
         return 0 -- 0x030b 0x00
     end,
 
@@ -503,23 +503,50 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0711 0x60
+        opcode64() -- 0x0712 0x64
+        opcode63() -- 0x0713 0x63
+        opcodeA3() -- 0x071b 0xa3
+        opcodeAC() -- 0x0723 0xac
+        opcodeAC() -- 0x0727 0xac
+        return 0 -- 0x072b 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x072c 0x60
+        opcode64() -- 0x072d 0x64
+        opcode63() -- 0x072e 0x63
+        opcodeA3() -- 0x0736 0xa3
+        opcodeAC() -- 0x073e 0xac
+        opcodeAC() -- 0x0742 0xac
+        opcodeEF() -- 0x0746 0xef
+        return 0 -- 0x0749 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x074a 0x60
+        opcode64() -- 0x074b 0x64
+        -- MISSING OPCODE 0x62
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x075f 0x60
+        opcode64() -- 0x0760 0x64
+        opcode63() -- 0x0761 0x63
+        opcodeA3() -- 0x0769 0xa3
+        opcodeAC() -- 0x0771 0xac
+        opcodeAC() -- 0x0775 0xac
+        return 0 -- 0x0779 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x077a 0x60
+        opcode64() -- 0x077b 0x64
+        opcode63() -- 0x077c 0x63
+        opcodeA3() -- 0x0784 0xa3
+        opcodeAC() -- 0x078c 0xac
+        opcodeAC() -- 0x0790 0xac
+        return 0 -- 0x0794 0x00
     end,
 
     script_0x09 = function( self )
@@ -527,7 +554,13 @@ Entity[ "13" ] = {
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x07be 0x60
+        opcode64() -- 0x07bf 0x64
+        opcode63() -- 0x07c0 0x63
+        opcodeA3() -- 0x07c8 0xa3
+        opcodeAC() -- 0x07d0 0xac
+        opcodeAC() -- 0x07d4 0xac
+        return 0 -- 0x07d8 0x00
     end,
 
 }

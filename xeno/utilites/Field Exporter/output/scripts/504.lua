@@ -5,11 +5,15 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0009 0xfe
+        -- MISSING OPCODE 0xFEb7
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0052 0xfe
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0022 ), value2=(s16)0x00c8, condition="value1 > value2", jump_if_false=0x0061 ) -- 0x0054 0x02
+        -- 0x98_MapLoad( field_id=16883, value=5 ) -- 0x005c 0x98
+        return 0 -- 0x0061 0x00
     end,
 
     on_talk = function( self )
@@ -21,7 +25,8 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0190, bit_num=(vf40)0x000d, flag=0x40 ) -- 0x0063 0x3a
+        return 0 -- 0x0069 0x00
     end,
 
 }
@@ -425,7 +430,7 @@ Entity[ "17" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x4502 0xfe
+        opcodeFE54() -- 0x4502 0xfe
         -- MISSING OPCODE 0x34
     end,
 

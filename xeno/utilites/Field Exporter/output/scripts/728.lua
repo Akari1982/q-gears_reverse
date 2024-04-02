@@ -19,12 +19,14 @@ Entity[ "0" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x051c ) -- 0x04f8 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0418 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x051c ) -- 0x0500 0x02
         -- 0x35() -- 0x0508 0x35
-        -- 0xFE54() -- 0x050e 0xfe
+        opcodeFE54() -- 0x050e 0xfe
         -- 0xF5_DialogShow3( dialog_id=0x003f, flag=0x12 ) -- 0x0510 0xf5
         -- 0x9C() -- 0x0514 0x9c
         -- 0xF5_DialogShow3( dialog_id=0x0040, flag=0x12 ) -- 0x0515 0xf5
         -- 0x9C() -- 0x0519 0x9c
-        -- MISSING OPCODE 0xFE53
+        opcodeFE54() -- 0x051a 0xfe
+        -- 0x5B() -- 0x051c 0x5b
+        return 0 -- 0x051d 0x00
     end,
 
     on_talk = function( self )
@@ -61,13 +63,13 @@ Entity[ "1" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x0529 0x19
-        -- 0x26_Wait( time=15 ) -- 0x052f 0x26
+        opcode26_Wait( time=15 ) -- 0x052f 0x26
         -- MISSING OPCODE 0x5f
     end,
 
     script_0x05 = function( self )
         -- 0x19_SetPosition( x=(vf80)0x0061, z=(vf40)0xfff3, flag=(flag)0xc0 ) -- 0x0537 0x19
-        -- 0x26_Wait( time=15 ) -- 0x053d 0x26
+        opcode26_Wait( time=15 ) -- 0x053d 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -142,7 +144,8 @@ Entity[ "2" ] = {
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0041, ???=0x00 ) -- 0x06c9 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     script_0x0a = function( self )
@@ -168,13 +171,13 @@ Entity[ "3" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x092a ) -- 0x0906 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x041c ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x092a ) -- 0x090e 0x02
-        -- 0xFE54() -- 0x0916 0xfe
+        opcodeFE54() -- 0x0916 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x24 ) -- 0x0918 0x09
         -- MISSING OPCODE 0xd4
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x094f 0xfe
+        opcodeFE54() -- 0x094f 0xfe
         -- MISSING OPCODE 0xb5
     end,
 
@@ -199,7 +202,8 @@ Entity[ "4" ] = {
 
     on_talk = function( self )
         -- 0x35() -- 0x20f9 0x35
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x00ce, ???=0x00 ) -- 0x20ff 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -251,8 +255,9 @@ Entity[ "6" ] = {
 
     on_talk = function( self )
         -- 0xF4() -- 0x244c 0xf4
-        -- 0x26_Wait( time=1 ) -- 0x244e 0x26
-        -- MISSING OPCODE 0xd2
+        opcode26_Wait( time=1 ) -- 0x244e 0x26
+        opcodeD2_DialogShow0( dialog_id=0x00d2, ???=0x02 ) -- 0x2451 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -319,7 +324,8 @@ Entity[ "9" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0167, ???=0x00 ) -- 0x57cb 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
@@ -343,7 +349,7 @@ Entity[ "10" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x6f99 0xfe
+        opcodeFE54() -- 0x6f99 0xfe
         -- MISSING OPCODE 0x6f
     end,
 
@@ -377,7 +383,7 @@ Entity[ "11" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7c67 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7c6d 0x26
+        opcode26_Wait( time=15 ) -- 0x7c6d 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -421,7 +427,7 @@ Entity[ "12" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7c8b 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7c91 0x26
+        opcode26_Wait( time=15 ) -- 0x7c91 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -465,7 +471,7 @@ Entity[ "13" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7caf 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7cb5 0x26
+        opcode26_Wait( time=15 ) -- 0x7cb5 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -509,7 +515,7 @@ Entity[ "14" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7cd3 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7cd9 0x26
+        opcode26_Wait( time=15 ) -- 0x7cd9 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -553,7 +559,7 @@ Entity[ "15" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7cf7 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7cfd 0x26
+        opcode26_Wait( time=15 ) -- 0x7cfd 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -597,7 +603,7 @@ Entity[ "16" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7d1b 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7d21 0x26
+        opcode26_Wait( time=15 ) -- 0x7d21 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -641,7 +647,7 @@ Entity[ "17" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7d3f 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7d45 0x26
+        opcode26_Wait( time=15 ) -- 0x7d45 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -685,7 +691,7 @@ Entity[ "18" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7d63 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7d69 0x26
+        opcode26_Wait( time=15 ) -- 0x7d69 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -729,7 +735,7 @@ Entity[ "19" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7d87 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7d8d 0x26
+        opcode26_Wait( time=15 ) -- 0x7d8d 0x26
         -- MISSING OPCODE 0x5f
     end,
 
@@ -768,7 +774,7 @@ Entity[ "20" ] = {
 
     script_0x04 = function( self )
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0x0037, flag=(flag)0xc0 ) -- 0x7da7 0x19
-        -- 0x26_Wait( time=15 ) -- 0x7dad 0x26
+        opcode26_Wait( time=15 ) -- 0x7dad 0x26
         -- MISSING OPCODE 0x5f
     end,
 

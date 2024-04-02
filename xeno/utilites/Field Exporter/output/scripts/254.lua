@@ -7,8 +7,8 @@ Entity[ "0" ] = {
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
         -- 0x2A() -- 0x0017 0x2a
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x004b ) -- 0x0018 0x02
-        -- 0xFE54() -- 0x0020 0xfe
-        -- 0x99() -- 0x0022 0x99
+        opcodeFE54() -- 0x0020 0xfe
+        opcode99() -- 0x0022 0x99
         -- MISSING OPCODE 0x61
     end,
 
@@ -88,7 +88,8 @@ Entity[ "3" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00e5 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -117,7 +118,8 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00fb 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -142,7 +144,7 @@ Entity[ "5" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=5 ) -- 0x011e 0x26
+        opcode26_Wait( time=5 ) -- 0x011e 0x26
         -- 0x07( entity=0x03, script=0x04 ) -- 0x0121 0x07
         -- 0x19_SetPosition( x=(vf80)0x0136, z=(vf40)0xfee8, flag=(flag)0xc0 ) -- 0x0124 0x19
         -- MISSING OPCODE 0x22

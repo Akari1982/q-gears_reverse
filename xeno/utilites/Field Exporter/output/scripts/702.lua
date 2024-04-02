@@ -481,19 +481,25 @@ Entity[ "17" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x46e9 0xfe
+        opcodeFE54() -- 0x46e9 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x12, script=0xc4 ) -- 0x46eb 0x09
-        -- 0x26_Wait( time=10 ) -- 0x46ee 0x26
+        opcode26_Wait( time=10 ) -- 0x46ee 0x26
         -- 0x09_EntityCallScriptEW( entity=0x13, script=0xc4 ) -- 0x46f1 0x09
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00e6, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x46f4 0x3a
+        opcode26_Wait( time=10 ) -- 0x46fa 0x26
+        -- 0x09_EntityCallScriptEW( entity=0x12, script=0xc5 ) -- 0x46fd 0x09
+        -- MISSING OPCODE 0x29
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x46e9 0xfe
+        opcodeFE54() -- 0x46e9 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x12, script=0xc4 ) -- 0x46eb 0x09
-        -- 0x26_Wait( time=10 ) -- 0x46ee 0x26
+        opcode26_Wait( time=10 ) -- 0x46ee 0x26
         -- 0x09_EntityCallScriptEW( entity=0x13, script=0xc4 ) -- 0x46f1 0x09
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00e6, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x46f4 0x3a
+        opcode26_Wait( time=10 ) -- 0x46fa 0x26
+        -- 0x09_EntityCallScriptEW( entity=0x12, script=0xc5 ) -- 0x46fd 0x09
+        -- MISSING OPCODE 0x29
     end,
 
 }
@@ -521,7 +527,7 @@ Entity[ "18" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x470b 0x99
+        opcode99() -- 0x470b 0x99
         -- MISSING OPCODE 0x9b
     end,
 

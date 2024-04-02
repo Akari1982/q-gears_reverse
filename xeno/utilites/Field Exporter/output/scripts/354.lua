@@ -300,7 +300,8 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00b5 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -324,7 +325,9 @@ Entity[ "13" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x00cf ) -- 0x00c4 0x02
         -- 0x01_JumpTo( 0x00e9 ) -- 0x00cc 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e0 ), value2=(s16)0x000a, condition="value1 > value2", jump_if_false=0x00e9 ) -- 0x00cf 0x02
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x00d7 0x3a
+        opcode15() -- 0x00dd 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

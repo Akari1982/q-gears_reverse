@@ -117,11 +117,11 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0064 0xfe
+        opcodeFE54() -- 0x0064 0xfe
         -- 0x07( entity=0x08, script=0x24 ) -- 0x0066 0x07
         -- 0x09_EntityCallScriptEW( entity=0x09, script=0x24 ) -- 0x0069 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x006c 0x07
-        -- 0x26_Wait( time=10 ) -- 0x006f 0x26
+        opcode26_Wait( time=10 ) -- 0x006f 0x26
         -- 0x98_MapLoad( field_id=634, value=2 ) -- 0x0072 0x98
         -- 0x5B() -- 0x0077 0x5b
         return 0 -- 0x0078 0x00
@@ -149,8 +149,16 @@ Entity[ "5" ] = {
     on_talk = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x0090 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x020c ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x00a7 ) -- 0x0093 0x02
-        -- 0xFE54() -- 0x009b 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeFE54() -- 0x009b 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x009d 0xd2
+        -- 0x9C() -- 0x00a1 0x9c
+        opcodeFE54() -- 0x00a2 0xfe
+        -- 0x01_JumpTo( 0x00c5 ) -- 0x00a4 0x01
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x00a7 0xd2
+        -- 0x9C() -- 0x00ab 0x9c
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x00ac 0xd2
+        -- 0x9C() -- 0x00b0 0x9c
+        -- MISSING OPCODE 0xFE5d
     end,
 
     on_push = function( self )
@@ -173,9 +181,12 @@ Entity[ "6" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00dc 0xfe
+        opcodeFE54() -- 0x00dc 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x00de 0x09
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x00e1 0xd2
+        -- 0x9C() -- 0x00e5 0x9c
+        opcodeFE54() -- 0x00e6 0xfe
+        return 0 -- 0x00e8 0x00
     end,
 
     on_push = function( self )
@@ -198,9 +209,12 @@ Entity[ "7" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0100 0xfe
+        opcodeFE54() -- 0x0100 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x0102 0x09
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0105 0xd2
+        -- 0x9C() -- 0x0109 0x9c
+        opcodeFE54() -- 0x010a 0xfe
+        return 0 -- 0x010c 0x00
     end,
 
     on_push = function( self )

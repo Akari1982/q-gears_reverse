@@ -61,7 +61,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x0085 0xfe
+        opcodeFE54() -- 0x0085 0xfe
         -- 0x20_SpriteSetSolid() -- 0x0087 0x20
         -- MISSING OPCODE 0x1f
     end,
@@ -626,7 +626,7 @@ Entity[ "25" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x065e 0xfe
+        opcodeFE54() -- 0x065e 0xfe
         -- 0xB4_FadeIn() -- 0x0660 0xb4
         -- 0xB3() -- 0x0663 0xb3
         -- MISSING OPCODE 0xFE65
@@ -681,7 +681,7 @@ Entity[ "27" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x06cc 0xfe
+        opcodeFE54() -- 0x06cc 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x1c, script=0x24 ) -- 0x06ce 0x09
         -- 0x20_SpriteSetSolid() -- 0x06d1 0x20
         -- MISSING OPCODE 0xFE68

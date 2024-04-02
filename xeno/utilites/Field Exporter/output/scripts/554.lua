@@ -156,10 +156,10 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x010d 0xfe
+        opcodeFE54() -- 0x010d 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x24 ) -- 0x010f 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x0112 0x07
-        -- 0x26_Wait( time=10 ) -- 0x0115 0x26
+        opcode26_Wait( time=10 ) -- 0x0115 0x26
         -- 0x98_MapLoad( field_id=556, value=0 ) -- 0x0118 0x98
         -- 0x5B() -- 0x011d 0x5b
         return 0 -- 0x011e 0x00
@@ -171,7 +171,7 @@ Entity[ "4" ] = {
 
     script_0x04 = function( self )
         -- 0xB3() -- 0x0120 0xb3
-        -- 0x26_Wait( time=60 ) -- 0x0123 0x26
+        opcode26_Wait( time=60 ) -- 0x0123 0x26
         return 0 -- 0x0126 0x00
     end,
 
@@ -215,7 +215,7 @@ Entity[ "6" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x019f ) -- 0x0146 0x02
-        -- 0xFE54() -- 0x014e 0xfe
+        opcodeFE54() -- 0x014e 0xfe
         -- 0xB4_FadeIn() -- 0x0150 0xb4
         -- 0x07( entity=0x01, script=0x27 ) -- 0x0153 0x07
         -- 0x07( entity=0x02, script=0x24 ) -- 0x0156 0x07
@@ -225,7 +225,8 @@ Entity[ "6" ] = {
 
     on_talk = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x01a1 0x09
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x01a4 0xd2
+        -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )

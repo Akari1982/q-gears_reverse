@@ -422,7 +422,7 @@ Entity[ "16" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=100 ) -- 0x0265 0x26
+        opcode26_Wait( time=100 ) -- 0x0265 0x26
         -- MISSING OPCODE 0x92
     end,
 
@@ -651,7 +651,7 @@ Entity[ "25" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0597 0xfe
+        opcodeFE54() -- 0x0597 0xfe
         -- MISSING OPCODE 0x34
     end,
 

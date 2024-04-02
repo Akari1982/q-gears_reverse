@@ -5,13 +5,14 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0017 0xfe
+        -- MISSING OPCODE 0xf7
     end,
 
     on_update = function( self )
         -- 0xC6() -- 0x0088 0xc6
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0097 ) -- 0x0089 0x02
-        -- 0x26_Wait( time=3 ) -- 0x0091 0x26
+        opcode26_Wait( time=3 ) -- 0x0091 0x26
         -- MISSING OPCODE 0x36
     end,
 
@@ -460,8 +461,9 @@ Entity[ "18" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x1936 0xbc
         -- 0x2A() -- 0x1937 0x2a
-        -- 0x99() -- 0x1938 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x1938 0x99
+        opcode60() -- 0x1939 0x60
+        -- MISSING OPCODE 0x62
     end,
 
     on_update = function( self )

@@ -379,7 +379,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01a5 0xfe
+        opcodeFE54() -- 0x01a5 0xfe
         -- MISSING OPCODE 0x74
     end,
 

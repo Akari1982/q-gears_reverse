@@ -694,7 +694,7 @@ Entity[ "24" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x04d1 0xfe
+        opcodeFE54() -- 0x04d1 0xfe
         -- MISSING OPCODE 0xb5
     end,
 
@@ -749,16 +749,35 @@ Entity[ "26" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0668 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x0668 0x99
+        opcode60() -- 0x0669 0x60
+        opcode64() -- 0x066a 0x64
+        opcode63() -- 0x066b 0x63
+        opcodeA3() -- 0x0673 0xa3
+        opcodeAC() -- 0x067b 0xac
+        opcodeAC() -- 0x067f 0xac
+        return 0 -- 0x0683 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0684 0x60
+        opcode64() -- 0x0685 0x64
+        opcode63() -- 0x0686 0x63
+        opcodeA3() -- 0x068e 0xa3
+        opcodeAC() -- 0x0696 0xac
+        opcodeAC() -- 0x069a 0xac
+        return 0 -- 0x069e 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x069f 0x60
+        opcode64() -- 0x06a0 0x64
+        opcode63() -- 0x06a1 0x63
+        opcodeA3() -- 0x06a9 0xa3
+        opcodeAC() -- 0x06b1 0xac
+        opcodeAC() -- 0x06b5 0xac
+        opcodeEF() -- 0x06b9 0xef
+        return 0 -- 0x06bc 0x00
     end,
 
 }
@@ -773,7 +792,7 @@ Entity[ "27" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=60 ) -- 0x06c0 0x26
+        opcode26_Wait( time=60 ) -- 0x06c0 0x26
         -- MISSING OPCODE 0xFE65
     end,
 

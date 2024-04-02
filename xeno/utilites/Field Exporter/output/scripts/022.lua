@@ -85,8 +85,10 @@ Entity[ "2" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x99() -- 0x01c9 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x01c9 0x99
+        opcode60() -- 0x01ca 0x60
+        opcode64() -- 0x01cb 0x64
+        -- MISSING OPCODE 0xb6
     end,
 
 }
@@ -218,7 +220,7 @@ Entity[ "5" ] = {
     script_0x04 = function( self )
         -- 0x35() -- 0x052f 0x35
         -- 0xFE0E_SoundSetVolume( volume=0, steps=0 ) -- 0x0535 0xfe
-        -- 0xFE54() -- 0x053b 0xfe
+        opcodeFE54() -- 0x053b 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=0 ) -- 0x053d 0xfe
         -- MISSING OPCODE 0xFE13
     end,
@@ -1043,7 +1045,7 @@ Entity[ "36" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x10a8 0xfe
+        opcodeFE54() -- 0x10a8 0xfe
         -- MISSING OPCODE 0x34
     end,
 

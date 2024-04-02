@@ -329,7 +329,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01c6 0xfe
+        opcodeFE54() -- 0x01c6 0xfe
         -- 0x07( entity=0x0e, script=0x24 ) -- 0x01c8 0x07
         -- 0x09_EntityCallScriptEW( entity=0x0f, script=0x24 ) -- 0x01cb 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x01da ) -- 0x01ce 0x02

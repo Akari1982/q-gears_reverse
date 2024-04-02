@@ -311,8 +311,13 @@ Entity[ "12" ] = {
         -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x0129 ) -- 0x0106 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x0116 ) -- 0x010b 0x02
         -- 0x01_JumpTo( 0x0126 ) -- 0x0113 0x01
-        -- 0xFE54() -- 0x0116 0xfe
-        -- MISSING OPCODE 0x3a
+        opcodeFE54() -- 0x0116 0xfe
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0009, flag=0x40 ) -- 0x0118 0x3a
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x011e 0xd2
+        -- 0x9C() -- 0x0122 0x9c
+        -- 0x07( entity=0x06, script=0xc4 ) -- 0x0123 0x07
+        -- 0x01_JumpTo( 0x0136 ) -- 0x0126 0x01
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -405,7 +410,9 @@ Entity[ "16" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x021f ) -- 0x0214 0x02
         -- 0x01_JumpTo( 0x0239 ) -- 0x021c 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e0 ), value2=(s16)0x000a, condition="value1 > value2", jump_if_false=0x0239 ) -- 0x021f 0x02
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x0227 0x3a
+        opcode15() -- 0x022d 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

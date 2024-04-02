@@ -38,11 +38,13 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x021c, bit_num=(vf40)0x0006, flag=0x40 ) -- 0x01c0 0x3a
+        return 0 -- 0x01c6 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x021c, bit_num=(vf40)0x0007, flag=0x40 ) -- 0x01c7 0x3a
+        return 0 -- 0x01cd 0x00
     end,
 
 }
@@ -141,7 +143,7 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0237 0xfe
+        opcodeFE54() -- 0x0237 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x0239 0x09
         -- MISSING OPCODE 0xb5
     end,
@@ -478,10 +480,10 @@ Entity[ "17" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x063e 0xfe
+        opcodeFE54() -- 0x063e 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x12, script=0x24 ) -- 0x0640 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x0643 0x07
-        -- 0x26_Wait( time=10 ) -- 0x0646 0x26
+        opcode26_Wait( time=10 ) -- 0x0646 0x26
         -- 0x98_MapLoad( field_id=551, value=1 ) -- 0x0649 0x98
         -- 0x5B() -- 0x064e 0x5b
         return 0 -- 0x064f 0x00
@@ -565,7 +567,7 @@ Entity[ "20" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0670 0x99
+        opcode99() -- 0x0670 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -641,7 +643,7 @@ Entity[ "23" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0818 0xfe
+        opcodeFE54() -- 0x0818 0xfe
         -- MISSING OPCODE 0x34
     end,
 
@@ -666,7 +668,7 @@ Entity[ "24" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x08cf 0xfe
+        opcodeFE54() -- 0x08cf 0xfe
         -- MISSING OPCODE 0x34
     end,
 
@@ -747,7 +749,7 @@ Entity[ "27" ] = {
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x09b8 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0452 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x09d4 ) -- 0x09bb 0x02
         -- 0x09_EntityCallScriptEW( entity=0x0d, script=0x24 ) -- 0x09c3 0x09
-        -- 0x26_Wait( time=10 ) -- 0x09c6 0x26
+        opcode26_Wait( time=10 ) -- 0x09c6 0x26
         -- MISSING OPCODE 0x36
     end,
 
@@ -774,7 +776,7 @@ Entity[ "28" ] = {
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x09f2 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0454 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0a0e ) -- 0x09f5 0x02
         -- 0x09_EntityCallScriptEW( entity=0x0f, script=0x24 ) -- 0x09fd 0x09
-        -- 0x26_Wait( time=10 ) -- 0x0a00 0x26
+        opcode26_Wait( time=10 ) -- 0x0a00 0x26
         -- MISSING OPCODE 0x36
     end,
 

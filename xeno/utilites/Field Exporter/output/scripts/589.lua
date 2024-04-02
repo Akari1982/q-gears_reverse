@@ -21,7 +21,8 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0222, bit_num=(vf40)0x000f, flag=0x40 ) -- 0x0049 0x3a
+        return 0 -- 0x004f 0x00
     end,
 
 }
@@ -128,10 +129,10 @@ Entity[ "4" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00e1 0xfe
+        opcodeFE54() -- 0x00e1 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x24 ) -- 0x00e3 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x00e6 0x07
-        -- 0x26_Wait( time=10 ) -- 0x00e9 0x26
+        opcode26_Wait( time=10 ) -- 0x00e9 0x26
         -- 0x98_MapLoad( field_id=565, value=4 ) -- 0x00ec 0x98
         -- 0x5B() -- 0x00f1 0x5b
         return 0 -- 0x00f2 0x00
@@ -303,7 +304,7 @@ Entity[ "9" ] = {
 
     on_talk = function( self )
         -- 0x2A() -- 0x01ee 0x2a
-        -- 0xFE54() -- 0x01ef 0xfe
+        opcodeFE54() -- 0x01ef 0xfe
         -- 0xFE0E_SoundSetVolume( volume=20, steps=20 ) -- 0x01f1 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x01f7 0x09
         -- MISSING OPCODE 0x74
@@ -642,7 +643,7 @@ Entity[ "20" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0851 0xfe
+        opcodeFE54() -- 0x0851 0xfe
         -- MISSING OPCODE 0x34
     end,
 

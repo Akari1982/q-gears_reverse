@@ -432,7 +432,7 @@ Entity[ "15" ] = {
 Entity[ "16" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x022c 0xbc
-        -- 0xFE54() -- 0x022d 0xfe
+        opcodeFE54() -- 0x022d 0xfe
         -- 0x2A() -- 0x022f 0x2a
         return 0 -- 0x0230 0x00
     end,
@@ -441,7 +441,7 @@ Entity[ "16" ] = {
         -- 0x75() -- 0x0231 0x75
         -- 0x07( entity=0x12, script=0x24 ) -- 0x0234 0x07
         -- 0x07( entity=0x0f, script=0x24 ) -- 0x0237 0x07
-        -- 0x26_Wait( time=60 ) -- 0x023a 0x26
+        opcode26_Wait( time=60 ) -- 0x023a 0x26
         -- MISSING OPCODE 0xfc
     end,
 
@@ -461,7 +461,7 @@ Entity[ "17" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0339 0xbc
         -- 0x2A() -- 0x033a 0x2a
-        -- 0x99() -- 0x033b 0x99
+        opcode99() -- 0x033b 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -478,19 +478,47 @@ Entity[ "17" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x036b 0x60
+        opcode64() -- 0x036c 0x64
+        opcode63() -- 0x036d 0x63
+        opcodeA3() -- 0x0375 0xa3
+        opcodeAC() -- 0x037d 0xac
+        opcodeAC() -- 0x0381 0xac
+        opcodeEF() -- 0x0385 0xef
+        return 0 -- 0x0388 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0389 0x60
+        opcode64() -- 0x038a 0x64
+        opcode63() -- 0x038b 0x63
+        opcodeA3() -- 0x0393 0xa3
+        opcodeAC() -- 0x039b 0xac
+        opcodeAC() -- 0x039f 0xac
+        opcodeEF() -- 0x03a3 0xef
+        return 0 -- 0x03a6 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x03a7 0x60
+        opcode64() -- 0x03a8 0x64
+        opcode63() -- 0x03a9 0x63
+        opcodeA3() -- 0x03b1 0xa3
+        opcodeAC() -- 0x03b9 0xac
+        opcodeAC() -- 0x03bd 0xac
+        opcodeEF() -- 0x03c1 0xef
+        return 0 -- 0x03c4 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x03c5 0x60
+        opcode64() -- 0x03c6 0x64
+        opcode63() -- 0x03c7 0x63
+        opcodeA3() -- 0x03cf 0xa3
+        opcodeAC() -- 0x03d7 0xac
+        opcodeAC() -- 0x03db 0xac
+        opcodeEF() -- 0x03df 0xef
+        return 0 -- 0x03e2 0x00
     end,
 
 }

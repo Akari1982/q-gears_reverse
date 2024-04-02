@@ -302,13 +302,13 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00a7 0xfe
+        opcodeFE54() -- 0x00a7 0xfe
         -- 0x98_MapLoad( field_id=695, value=3 ) -- 0x00a9 0x98
         return 0 -- 0x00ae 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x00a7 0xfe
+        opcodeFE54() -- 0x00a7 0xfe
         -- 0x98_MapLoad( field_id=695, value=3 ) -- 0x00a9 0x98
         return 0 -- 0x00ae 0x00
     end,
@@ -328,13 +328,13 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x00c1 0xfe
+        opcodeFE54() -- 0x00c1 0xfe
         -- 0x98_MapLoad( field_id=698, value=0 ) -- 0x00c3 0x98
         return 0 -- 0x00c8 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x00c1 0xfe
+        opcodeFE54() -- 0x00c1 0xfe
         -- 0x98_MapLoad( field_id=698, value=0 ) -- 0x00c3 0x98
         return 0 -- 0x00c8 0x00
     end,

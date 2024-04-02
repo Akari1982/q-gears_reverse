@@ -16,7 +16,7 @@ Entity[ "0" ] = {
     on_update = function( self )
         -- 0xC6() -- 0x0055 0xc6
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c0 ), value2=(s16)0x8000, condition="value1 & value2", jump_if_false=0x0065 ) -- 0x0056 0x02
-        -- 0xFE54() -- 0x005e 0xfe
+        opcodeFE54() -- 0x005e 0xfe
         -- 0x98_MapLoad( field_id=617, value=0 ) -- 0x0060 0x98
         -- 0x5B() -- 0x0065 0x5b
         return 0 -- 0x0066 0x00
@@ -341,10 +341,13 @@ Entity[ "11" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x03fd 0xfe
+        opcodeFE54() -- 0x03fd 0xfe
         -- 0x87_SetProgress( progress=252 ) -- 0x03ff 0x87
-        -- 0x99() -- 0x0402 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x0402 0x99
+        opcode60() -- 0x0403 0x60
+        opcode64() -- 0x0404 0x64
+        opcode63() -- 0x0405 0x63
+        -- MISSING OPCODE 0xec
     end,
 
     on_talk = function( self )

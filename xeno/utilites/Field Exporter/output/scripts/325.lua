@@ -29,7 +29,7 @@ Entity[ "1" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x001a 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x001d 0xfe
-        -- 0xFE54() -- 0x0021 0xfe
+        opcodeFE54() -- 0x0021 0xfe
         -- MISSING OPCODE 0xFE1c
     end,
 
@@ -94,7 +94,7 @@ Entity[ "3" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0086 0xbc
         -- 0x2A() -- 0x0087 0x2a
-        -- 0x99() -- 0x0088 0x99
+        opcode99() -- 0x0088 0x99
         -- MISSING OPCODE 0x61
     end,
 

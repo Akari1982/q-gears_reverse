@@ -11,7 +11,7 @@ Entity[ "0" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ca ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x0037 ) -- 0x002c 0x02
         -- 0x01_JumpTo( 0x00aa ) -- 0x0034 0x01
-        -- 0xFE54() -- 0x0037 0xfe
+        opcodeFE54() -- 0x0037 0xfe
         -- MISSING OPCODE 0xFE23
     end,
 
@@ -484,7 +484,7 @@ Entity[ "19" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x44bc 0xfe
+        opcodeFE54() -- 0x44bc 0xfe
         -- 0x98_MapLoad( field_id=17094, value=1 ) -- 0x44be 0x98
         -- 0x5B() -- 0x44c3 0x5b
         return 0 -- 0x44c4 0x00

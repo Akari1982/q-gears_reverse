@@ -7,14 +7,14 @@ Entity[ "0" ] = {
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- 0xA0() -- 0x0009 0xa0
         -- 0x2A() -- 0x0010 0x2a
-        -- 0x99() -- 0x0011 0x99
+        opcode99() -- 0x0011 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x015a ) -- 0x0043 0x02
         -- 0x07( entity=0x07, script=0x25 ) -- 0x004b 0x07
-        -- 0xFE54() -- 0x004e 0xfe
+        opcodeFE54() -- 0x004e 0xfe
         -- MISSING OPCODE 0xFE66
     end,
 
@@ -74,12 +74,19 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x018f 0x99
+        opcode99() -- 0x018f 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x01d9 0x60
+        opcode63() -- 0x01da 0x63
+        opcode64() -- 0x01e2 0x64
+        opcodeA3() -- 0x01e3 0xa3
+        opcodeAC() -- 0x01eb 0xac
+        opcodeAC() -- 0x01ef 0xac
+        opcodeEF() -- 0x01f3 0xef
+        return 0 -- 0x01f6 0x00
     end,
 
 }
@@ -107,15 +114,21 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x11 ) -- 0x024a 0xd2
+        -- 0x9C() -- 0x024e 0x9c
+        return 0 -- 0x024f 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x11 ) -- 0x0250 0xd2
+        -- 0x9C() -- 0x0254 0x9c
+        return 0 -- 0x0255 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x11 ) -- 0x0256 0xd2
+        -- 0x9C() -- 0x025a 0x9c
+        return 0 -- 0x025b 0x00
     end,
 
     script_0x07 = function( self )
@@ -163,19 +176,27 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x11 ) -- 0x02d2 0xd2
+        -- 0x9C() -- 0x02d6 0x9c
+        return 0 -- 0x02d7 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x11 ) -- 0x02d8 0xd2
+        -- 0x9C() -- 0x02dc 0x9c
+        return 0 -- 0x02dd 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x11 ) -- 0x02de 0xd2
+        -- 0x9C() -- 0x02e2 0x9c
+        return 0 -- 0x02e3 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x11 ) -- 0x02e4 0xd2
+        -- 0x9C() -- 0x02e8 0x9c
+        -- MISSING OPCODE 0x6f
     end,
 
     script_0x08 = function( self )
@@ -183,11 +204,15 @@ Entity[ "4" ] = {
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000c, ???=0x11 ) -- 0x02fd 0xd2
+        -- 0x9C() -- 0x0301 0x9c
+        return 0 -- 0x0302 0x00
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000d, ???=0x11 ) -- 0x0303 0xd2
+        -- 0x9C() -- 0x0307 0x9c
+        return 0 -- 0x0308 0x00
     end,
 
     script_0x0b = function( self )
@@ -195,7 +220,9 @@ Entity[ "4" ] = {
     end,
 
     script_0x0c = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000f, ???=0x11 ) -- 0x0311 0xd2
+        -- 0x9C() -- 0x0315 0x9c
+        -- MISSING OPCODE 0x6f
     end,
 
 }
@@ -226,7 +253,9 @@ Entity[ "5" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0011, ???=0x11 ) -- 0x0351 0xd2
+        -- 0x9C() -- 0x0355 0x9c
+        return 0 -- 0x0356 0x00
     end,
 
     script_0x06 = function( self )
@@ -234,7 +263,9 @@ Entity[ "5" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0013, ???=0x11 ) -- 0x0363 0xd2
+        -- 0x9C() -- 0x0367 0x9c
+        return 0 -- 0x0368 0x00
     end,
 
     script_0x08 = function( self )

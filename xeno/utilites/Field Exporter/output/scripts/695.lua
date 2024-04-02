@@ -9,7 +9,7 @@ Entity[ "0" ] = {
         -- 0xA0() -- 0x0042 0xa0
         -- 0x75() -- 0x0049 0x75
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x02ad, condition="value1 == value2", jump_if_false=0x0056 ) -- 0x004c 0x02
-        -- 0xFE54() -- 0x0054 0xfe
+        opcodeFE54() -- 0x0054 0xfe
         -- MISSING OPCODE 0xFE42
     end,
 
@@ -476,7 +476,7 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x01f5 0xfe
+        opcodeFE54() -- 0x01f5 0xfe
         -- MISSING OPCODE 0x70
     end,
 
@@ -500,8 +500,10 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0220 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeFE54() -- 0x0220 0xfe
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x0222 0xd2
+        -- 0x9C() -- 0x0226 0x9c
+        -- MISSING OPCODE 0xFE59
     end,
 
     on_push = function( self )
@@ -549,7 +551,9 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0261 0xd2
+        -- 0x9C() -- 0x0265 0x9c
+        return 0 -- 0x0266 0x00
     end,
 
     on_push = function( self )
@@ -597,7 +601,9 @@ Entity[ "17" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0290 0xd2
+        -- 0x9C() -- 0x0294 0x9c
+        return 0 -- 0x0295 0x00
     end,
 
     on_push = function( self )
@@ -621,7 +627,9 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x00 ) -- 0x02a5 0xd2
+        -- 0x9C() -- 0x02a9 0x9c
+        return 0 -- 0x02aa 0x00
     end,
 
     on_push = function( self )
@@ -691,7 +699,9 @@ Entity[ "21" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x03a4 0xd2
+        -- 0x9C() -- 0x03a8 0x9c
+        return 0 -- 0x03a9 0x00
     end,
 
     on_push = function( self )
@@ -714,7 +724,9 @@ Entity[ "22" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x00 ) -- 0x03b8 0xd2
+        -- 0x9C() -- 0x03bc 0x9c
+        return 0 -- 0x03bd 0x00
     end,
 
     on_push = function( self )
@@ -770,7 +782,9 @@ Entity[ "24" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000d, ???=0x00 ) -- 0x0420 0xd2
+        -- 0x9C() -- 0x0424 0x9c
+        -- MISSING OPCODE 0x69
     end,
 
 }
@@ -931,7 +945,7 @@ Entity[ "30" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x05f1 0x26
+        opcode26_Wait( time=20 ) -- 0x05f1 0x26
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1007,7 +1021,9 @@ Entity[ "33" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ca ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x0881 ) -- 0x0873 0x02
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000f, ???=0x10 ) -- 0x087b 0xd2
+        -- 0x9C() -- 0x087f 0x9c
+        return 0 -- 0x0880 0x00
     end,
 
     on_push = function( self )
@@ -1031,7 +1047,9 @@ Entity[ "34" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0019, ???=0x00 ) -- 0x093d 0xd2
+        -- 0x9C() -- 0x0941 0x9c
+        return 0 -- 0x0942 0x00
     end,
 
     on_push = function( self )
@@ -1114,13 +1132,13 @@ Entity[ "37" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0a84 0xfe
+        opcodeFE54() -- 0x0a84 0xfe
         -- 0x98_MapLoad( field_id=687, value=0 ) -- 0x0a86 0x98
         return 0 -- 0x0a8b 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0a84 0xfe
+        opcodeFE54() -- 0x0a84 0xfe
         -- 0x98_MapLoad( field_id=687, value=0 ) -- 0x0a86 0x98
         return 0 -- 0x0a8b 0x00
     end,
@@ -1140,13 +1158,13 @@ Entity[ "38" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0a9f 0xfe
+        opcodeFE54() -- 0x0a9f 0xfe
         -- 0x98_MapLoad( field_id=688, value=0 ) -- 0x0aa1 0x98
         return 0 -- 0x0aa6 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0a9f 0xfe
+        opcodeFE54() -- 0x0a9f 0xfe
         -- 0x98_MapLoad( field_id=688, value=0 ) -- 0x0aa1 0x98
         return 0 -- 0x0aa6 0x00
     end,
@@ -1166,13 +1184,13 @@ Entity[ "39" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0aba 0xfe
+        opcodeFE54() -- 0x0aba 0xfe
         -- 0x98_MapLoad( field_id=689, value=0 ) -- 0x0abc 0x98
         return 0 -- 0x0ac1 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0aba 0xfe
+        opcodeFE54() -- 0x0aba 0xfe
         -- 0x98_MapLoad( field_id=689, value=0 ) -- 0x0abc 0x98
         return 0 -- 0x0ac1 0x00
     end,
@@ -1189,19 +1207,19 @@ Entity[ "40" ] = {
 
     on_update = function( self )
         -- 0x5B() -- 0x0ad5 0x5b
-        -- 0xFE54() -- 0x0ad6 0xfe
+        opcodeFE54() -- 0x0ad6 0xfe
         -- 0x98_MapLoad( field_id=691, value=0 ) -- 0x0ad8 0x98
         return 0 -- 0x0add 0x00
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0ad6 0xfe
+        opcodeFE54() -- 0x0ad6 0xfe
         -- 0x98_MapLoad( field_id=691, value=0 ) -- 0x0ad8 0x98
         return 0 -- 0x0add 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0ad6 0xfe
+        opcodeFE54() -- 0x0ad6 0xfe
         -- 0x98_MapLoad( field_id=691, value=0 ) -- 0x0ad8 0x98
         return 0 -- 0x0add 0x00
     end,
@@ -1218,19 +1236,19 @@ Entity[ "41" ] = {
 
     on_update = function( self )
         -- 0x5B() -- 0x0af1 0x5b
-        -- 0xFE54() -- 0x0af2 0xfe
+        opcodeFE54() -- 0x0af2 0xfe
         -- 0x98_MapLoad( field_id=692, value=0 ) -- 0x0af4 0x98
         return 0 -- 0x0af9 0x00
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0af2 0xfe
+        opcodeFE54() -- 0x0af2 0xfe
         -- 0x98_MapLoad( field_id=692, value=0 ) -- 0x0af4 0x98
         return 0 -- 0x0af9 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0af2 0xfe
+        opcodeFE54() -- 0x0af2 0xfe
         -- 0x98_MapLoad( field_id=692, value=0 ) -- 0x0af4 0x98
         return 0 -- 0x0af9 0x00
     end,
@@ -1250,13 +1268,13 @@ Entity[ "42" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0b0d 0xfe
+        opcodeFE54() -- 0x0b0d 0xfe
         -- 0x98_MapLoad( field_id=693, value=0 ) -- 0x0b0f 0x98
         return 0 -- 0x0b14 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0b0d 0xfe
+        opcodeFE54() -- 0x0b0d 0xfe
         -- 0x98_MapLoad( field_id=693, value=0 ) -- 0x0b0f 0x98
         return 0 -- 0x0b14 0x00
     end,
@@ -1273,21 +1291,21 @@ Entity[ "43" ] = {
 
     on_update = function( self )
         -- 0x5B() -- 0x0b28 0x5b
-        -- 0xFE54() -- 0x0b29 0xfe
+        opcodeFE54() -- 0x0b29 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0b2b 0xfe
         -- 0x98_MapLoad( field_id=694, value=0 ) -- 0x0b31 0x98
         return 0 -- 0x0b36 0x00
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0b29 0xfe
+        opcodeFE54() -- 0x0b29 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0b2b 0xfe
         -- 0x98_MapLoad( field_id=694, value=0 ) -- 0x0b31 0x98
         return 0 -- 0x0b36 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0b29 0xfe
+        opcodeFE54() -- 0x0b29 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0b2b 0xfe
         -- 0x98_MapLoad( field_id=694, value=0 ) -- 0x0b31 0x98
         return 0 -- 0x0b36 0x00
@@ -1305,19 +1323,19 @@ Entity[ "44" ] = {
 
     on_update = function( self )
         -- 0x5B() -- 0x0b4a 0x5b
-        -- 0xFE54() -- 0x0b4b 0xfe
+        opcodeFE54() -- 0x0b4b 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0b4d 0xfe
         -- MISSING OPCODE 0x56
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0b4b 0xfe
+        opcodeFE54() -- 0x0b4b 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0b4d 0xfe
         -- MISSING OPCODE 0x56
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0b4b 0xfe
+        opcodeFE54() -- 0x0b4b 0xfe
         -- 0xFE0E_SoundSetVolume( volume=0, steps=60 ) -- 0x0b4d 0xfe
         -- MISSING OPCODE 0x56
     end,

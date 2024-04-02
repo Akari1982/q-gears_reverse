@@ -346,7 +346,7 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0104 0xfe
+        opcodeFE54() -- 0x0104 0xfe
         -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x0106 0xfe
         -- MISSING OPCODE 0x6f
     end,
@@ -370,7 +370,8 @@ Entity[ "15" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0024, condition="value1 >= value2", jump_if_false=0x012f ) -- 0x0118 0x02
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x0120 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -407,7 +408,8 @@ Entity[ "17" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0141 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0151 ) -- 0x0142 0x02
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0x0e ) -- 0x014a 0x25
+        -- MISSING OPCODE 0x27
     end,
 
     on_update = function( self )

@@ -177,7 +177,9 @@ Entity[ "7" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x00a2 ) -- 0x0094 0x02
         -- 0x05_CallFunction( 0x002b ) -- 0x009c 0x05
         -- 0x01_JumpTo( 0x00ae ) -- 0x009f 0x01
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x00a2 0xd2
+        -- 0x9C() -- 0x00a6 0x9c
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -203,7 +205,9 @@ Entity[ "8" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x0135 ) -- 0x0127 0x02
         -- 0x05_CallFunction( 0x002b ) -- 0x012f 0x05
         -- 0x01_JumpTo( 0x013a ) -- 0x0132 0x01
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0135 0xd2
+        -- 0x9C() -- 0x0139 0x9c
+        return 0 -- 0x013a 0x00
     end,
 
     on_push = function( self )
@@ -297,7 +301,9 @@ Entity[ "12" ] = {
 
     on_talk = function( self )
         -- 0x2A() -- 0x024d 0x2a
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x01c6, bit_num=(vf40)0x0008, flag=0x40 ) -- 0x024e 0x3a
+        -- 0x07( entity=0x0d, script=0x24 ) -- 0x0254 0x07
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -326,14 +332,16 @@ Entity[ "13" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x02d0 0x26
+        opcode26_Wait( time=30 ) -- 0x02d0 0x26
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x02ea ) -- 0x02d3 0x02
         -- MISSING OPCODE 0x4a
     end,
 
     on_talk = function( self )
         -- 0x2A() -- 0x0332 0x2a
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x01c6, bit_num=(vf40)0x0008, flag=0x40 ) -- 0x0333 0x3a
+        -- 0x07( entity=0x0c, script=0x64 ) -- 0x0339 0x07
+        -- MISSING OPCODE 0x6f
     end,
 
     on_push = function( self )
@@ -347,7 +355,7 @@ Entity[ "13" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=30 ) -- 0x036b 0x26
+        opcode26_Wait( time=30 ) -- 0x036b 0x26
         return 0 -- 0x036e 0x00
     end,
 
@@ -393,7 +401,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0459 0xfe
+        opcodeFE54() -- 0x0459 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x0469 ) -- 0x045b 0x02
         -- 0x05_CallFunction( 0x002b ) -- 0x0463 0x05
         -- 0x01_JumpTo( 0x0475 ) -- 0x0466 0x01
@@ -419,7 +427,7 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0492 0xfe
+        opcodeFE54() -- 0x0492 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x04a2 ) -- 0x0494 0x02
         -- 0x05_CallFunction( 0x002b ) -- 0x049c 0x05
         -- 0x01_JumpTo( 0x04ae ) -- 0x049f 0x01

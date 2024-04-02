@@ -17,10 +17,39 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x01f2 ) -- 0x0039 0x02
-        -- 0xFE54() -- 0x0041 0xfe
+        opcodeFE54() -- 0x0041 0xfe
         -- 0xF1() -- 0x0043 0xf1
         -- 0x75() -- 0x004e 0x75
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0x02 ) -- 0x0051 0x25
+        opcode25( entity=(entity)0x03 ) -- 0x0053 0x25
+        opcode25( entity=(entity)0x0a ) -- 0x0055 0x25
+        opcode25( entity=(entity)0x04 ) -- 0x0057 0x25
+        opcode25( entity=(entity)0x06 ) -- 0x0059 0x25
+        opcode25( entity=(entity)0x05 ) -- 0x005b 0x25
+        opcode25( entity=(entity)0x09 ) -- 0x005d 0x25
+        opcode25( entity=(entity)0x08 ) -- 0x005f 0x25
+        opcode25( entity=(entity)0x07 ) -- 0x0061 0x25
+        opcode25( entity=(entity)0x0b ) -- 0x0063 0x25
+        opcode99() -- 0x0065 0x99
+        -- 0x35() -- 0x0066 0x35
+        opcode63() -- 0x006c 0x63
+        opcodeA3() -- 0x0074 0xa3
+        -- 0x05_CallFunction( 0x07c5 ) -- 0x007c 0x05
+        opcode26_Wait( time=30 ) -- 0x007f 0x26
+        -- 0xF5_DialogShow3( dialog_id=0x0000, flag=0x15 ) -- 0x0082 0xf5
+        -- 0x9C() -- 0x0086 0x9c
+        -- 0xF1() -- 0x0087 0xf1
+        opcode26_Wait( time=30 ) -- 0x0092 0x26
+        -- 0x08_EntityCallScriptSW( entity=0x0c, script=0x65 ) -- 0x0095 0x08
+        -- 0x08_EntityCallScriptSW( entity=0x0d, script=0x64 ) -- 0x0098 0x08
+        -- 0xFE0D_SetAvatar( character_id=16 ) -- 0x009b 0xfe
+        -- 0xF5_DialogShow3( dialog_id=0x0001, flag=0x15 ) -- 0x009f 0xf5
+        -- 0x9C() -- 0x00a3 0x9c
+        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x00a4 0xfe
+        -- 0x09_EntityCallScriptEW( entity=0x0c, script=0xa6 ) -- 0x00a8 0x09
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00b6 ) -- 0x00ab 0x02
+        -- 0x01_JumpTo( 0x00ab ) -- 0x00b3 0x01
+        -- MISSING OPCODE 0x37
     end,
 
     on_talk = function( self )
@@ -62,11 +91,21 @@ Entity[ "1" ] = {
 
     script_0x05 = function( self )
         -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x03a5 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x50 ) -- 0x03a9 0xd2
+        -- 0x9C() -- 0x03ad 0x9c
+        opcode26_Wait( time=20 ) -- 0x03ae 0x26
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x50 ) -- 0x03b1 0xd2
+        -- 0x9C() -- 0x03b5 0x9c
+        return 0 -- 0x03b6 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x50 ) -- 0x03b7 0xd2
+        -- 0x9C() -- 0x03bb 0x9c
+        opcode26_Wait( time=20 ) -- 0x03bc 0x26
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x50 ) -- 0x03bf 0xd2
+        -- 0x9C() -- 0x03c3 0x9c
+        return 0 -- 0x03c4 0x00
     end,
 
 }
@@ -337,7 +376,7 @@ Entity[ "12" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=40 ) -- 0x045a 0x26
+        opcode26_Wait( time=40 ) -- 0x045a 0x26
         -- MISSING OPCODE 0xFE8c
     end,
 
@@ -346,8 +385,10 @@ Entity[ "12" ] = {
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=10 ) -- 0x0470 0x26
-        -- MISSING OPCODE 0xd2
+        opcode26_Wait( time=10 ) -- 0x0470 0x26
+        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x10 ) -- 0x0473 0xd2
+        -- 0x9C() -- 0x0477 0x9c
+        return 0 -- 0x0478 0x00
     end,
 
     script_0x07 = function( self )
@@ -355,7 +396,9 @@ Entity[ "12" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x10 ) -- 0x04a1 0xd2
+        -- 0x9C() -- 0x04a5 0x9c
+        -- MISSING OPCODE 0x69
     end,
 
     script_0x09 = function( self )
@@ -371,7 +414,9 @@ Entity[ "12" ] = {
     end,
 
     script_0x0c = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0010, ???=0x10 ) -- 0x04e7 0xd2
+        -- 0x9C() -- 0x04eb 0x9c
+        return 0 -- 0x04ec 0x00
     end,
 
     script_0x0d = function( self )
@@ -403,17 +448,19 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=20 ) -- 0x0512 0x26
+        opcode26_Wait( time=20 ) -- 0x0512 0x26
         -- 0x35() -- 0x0515 0x35
-        -- 0x63() -- 0x051b 0x63
-        -- 0xA3() -- 0x0523 0xa3
+        opcode63() -- 0x051b 0x63
+        opcodeA3() -- 0x0523 0xa3
         -- 0x05_CallFunction( 0x07c5 ) -- 0x052b 0x05
         -- MISSING OPCODE 0x36
     end,
 
     script_0x05 = function( self )
         -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x0532 0xfe
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0012, ???=0x11 ) -- 0x0536 0xd2
+        -- 0x9C() -- 0x053a 0x9c
+        return 0 -- 0x053b 0x00
     end,
 
     script_0x06 = function( self )
@@ -455,8 +502,8 @@ Entity[ "14" ] = {
 
     script_0x05 = function( self )
         -- 0x35() -- 0x0581 0x35
-        -- 0x63() -- 0x0587 0x63
-        -- 0xA3() -- 0x058f 0xa3
+        opcode63() -- 0x0587 0x63
+        opcodeA3() -- 0x058f 0xa3
         -- 0x05_CallFunction( 0x07c5 ) -- 0x0597 0x05
         return 0 -- 0x059a 0x00
     end,
@@ -834,13 +881,13 @@ Entity[ "28" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x07a5 0xfe
+        opcodeFE54() -- 0x07a5 0xfe
         -- 0x98_MapLoad( field_id=689, value=1 ) -- 0x07a7 0x98
         return 0 -- 0x07ac 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x07a5 0xfe
+        opcodeFE54() -- 0x07a5 0xfe
         -- 0x98_MapLoad( field_id=689, value=1 ) -- 0x07a7 0x98
         return 0 -- 0x07ac 0x00
     end,
@@ -859,8 +906,9 @@ Entity[ "29" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x07b0 0xfe
-        -- MISSING OPCODE 0x15
+        opcodeFE54() -- 0x07b0 0xfe
+        opcode15() -- 0x07b2 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

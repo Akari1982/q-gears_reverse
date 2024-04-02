@@ -39,7 +39,10 @@ Entity[ "1" ] = {
 
     on_update = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=60, jump=0x0130 ) -- 0x0123 0x86
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0128 0xfe
+        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x04 ) -- 0x012a 0x09
+        -- 0x01_JumpTo( 0x0149 ) -- 0x012d 0x01
+        -- MISSING OPCODE 0xfb
     end,
 
     on_talk = function( self )
@@ -74,13 +77,19 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0150 0x99
+        opcode99() -- 0x0150 0x99
         -- MISSING OPCODE 0xb6
     end,
 
     script_0x05 = function( self )
-        -- 0xFE54() -- 0x01a7 0xfe
-        -- MISSING OPCODE 0xFE52
+        opcodeFE54() -- 0x01a7 0xfe
+        opcodeFE52() -- 0x01a9 0xfe
+        opcode99() -- 0x01ab 0x99
+        opcode60() -- 0x01ac 0x60
+        opcode64() -- 0x01ad 0x64
+        opcode63() -- 0x01ae 0x63
+        opcodeA3() -- 0x01b6 0xa3
+        -- MISSING OPCODE 0xfb
     end,
 
 }
@@ -534,7 +543,7 @@ Entity[ "20" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x04f6 0xfe
+        opcodeFE54() -- 0x04f6 0xfe
         -- MISSING OPCODE 0xFE0b
     end,
 

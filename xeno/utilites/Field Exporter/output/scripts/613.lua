@@ -85,7 +85,9 @@ Entity[ "2" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x01 ) -- 0x0082 0xd2
+        -- 0x9C() -- 0x0086 0x9c
+        return 0 -- 0x0087 0x00
     end,
 
 }
@@ -117,11 +119,15 @@ Entity[ "3" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x009e 0xd2
+        -- 0x9C() -- 0x00a2 0x9c
+        return 0 -- 0x00a3 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x00a4 0xd2
+        -- 0x9C() -- 0x00a8 0x9c
+        return 0 -- 0x00a9 0x00
     end,
 
 }
@@ -315,11 +321,15 @@ Entity[ "8" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x047d 0xfe
+        opcodeFE54() -- 0x047d 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x24 ) -- 0x047f 0x09
         -- 0x09_EntityCallScriptEW( entity=0x02, script=0x24 ) -- 0x0482 0x09
         -- 0x09_EntityCallScriptEW( entity=0x03, script=0x24 ) -- 0x0485 0x09
-        -- MISSING OPCODE 0x24
+        opcode24( entity=(entity)0x03 ) -- 0x0488 0x24
+        opcode25( entity=(entity)0x01 ) -- 0x048a 0x25
+        opcode25( entity=(entity)0x02 ) -- 0x048c 0x25
+        -- 0x09_EntityCallScriptEW( entity=0x09, script=0x24 ) -- 0x048e 0x09
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )
@@ -355,12 +365,20 @@ Entity[ "9" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0432 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x06cb ) -- 0x06bf 0x02
-        -- 0x99() -- 0x06c7 0x99
+        opcode99() -- 0x06c7 0x99
         -- MISSING OPCODE 0x36
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x06e9 0x60
+        opcode64() -- 0x06ea 0x64
+        opcode63() -- 0x06eb 0x63
+        opcodeA3() -- 0x06f3 0xa3
+        opcodeFE9B_SlideShow1( steps=30 ) -- 0x06fb 0xfe
+        opcodeAC() -- 0x06ff 0xac
+        opcodeAC() -- 0x0703 0xac
+        opcodeEF() -- 0x0707 0xef
+        return 0 -- 0x070a 0x00
     end,
 
     script_0x06 = function( self )
@@ -372,7 +390,14 @@ Entity[ "9" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0751 0x60
+        opcode64() -- 0x0752 0x64
+        opcode63() -- 0x0753 0x63
+        opcodeA3() -- 0x075b 0xa3
+        opcodeAC() -- 0x0763 0xac
+        opcodeAC() -- 0x0767 0xac
+        opcodeEF() -- 0x076b 0xef
+        return 0 -- 0x076e 0x00
     end,
 
     script_0x09 = function( self )

@@ -171,12 +171,14 @@ Entity[ "3" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x016d 0xfe
+        opcodeFE54() -- 0x016d 0xfe
         -- 0x35() -- 0x016f 0x35
         -- 0x35() -- 0x0175 0x35
         -- 0x35() -- 0x017b 0x35
-        -- 0x99() -- 0x0181 0x99
-        -- MISSING OPCODE 0x60
+        opcode99() -- 0x0181 0x99
+        opcode60() -- 0x0182 0x60
+        opcode64() -- 0x0183 0x64
+        -- MISSING OPCODE 0x62
     end,
 
     on_talk = function( self )
@@ -223,9 +225,16 @@ Entity[ "5" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x023a 0xfe
-        -- 0x99() -- 0x023c 0x99
-        -- MISSING OPCODE 0x60
+        opcodeFE54() -- 0x023a 0xfe
+        opcode99() -- 0x023c 0x99
+        opcode60() -- 0x023d 0x60
+        opcode64() -- 0x023e 0x64
+        opcode63() -- 0x023f 0x63
+        opcodeA3() -- 0x0247 0xa3
+        opcodeAC() -- 0x024f 0xac
+        opcodeAC() -- 0x0253 0xac
+        opcodeEF() -- 0x0257 0xef
+        -- MISSING OPCODE 0xFE17
     end,
 
     on_talk = function( self )
@@ -249,9 +258,16 @@ Entity[ "6" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x02bd 0xfe
-        -- 0x99() -- 0x02bf 0x99
-        -- MISSING OPCODE 0x60
+        opcodeFE54() -- 0x02bd 0xfe
+        opcode99() -- 0x02bf 0x99
+        opcode60() -- 0x02c0 0x60
+        opcode64() -- 0x02c1 0x64
+        opcode63() -- 0x02c2 0x63
+        opcodeA3() -- 0x02ca 0xa3
+        opcodeAC() -- 0x02d2 0xac
+        opcodeAC() -- 0x02d6 0xac
+        opcodeEF() -- 0x02da 0xef
+        -- MISSING OPCODE 0xFE17
     end,
 
     on_talk = function( self )
@@ -275,9 +291,16 @@ Entity[ "7" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x032a 0xfe
-        -- 0x99() -- 0x032c 0x99
-        -- MISSING OPCODE 0x60
+        opcodeFE54() -- 0x032a 0xfe
+        opcode99() -- 0x032c 0x99
+        opcode60() -- 0x032d 0x60
+        opcode64() -- 0x032e 0x64
+        opcode63() -- 0x032f 0x63
+        opcodeA3() -- 0x0337 0xa3
+        opcodeAC() -- 0x033f 0xac
+        opcodeAC() -- 0x0343 0xac
+        opcodeEF() -- 0x0347 0xef
+        -- MISSING OPCODE 0xFEb0
     end,
 
     on_talk = function( self )

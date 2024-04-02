@@ -21,11 +21,13 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0218, bit_num=(vf40)0x000a, flag=0x40 ) -- 0x0080 0x3a
+        return 0 -- 0x0086 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0218, bit_num=(vf40)0x000b, flag=0x40 ) -- 0x0087 0x3a
+        return 0 -- 0x008d 0x00
     end,
 
 }
@@ -194,14 +196,14 @@ Entity[ "7" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x43bd 0xfe
+        opcodeFE54() -- 0x43bd 0xfe
         -- 0x98_MapLoad( field_id=16799, value=2 ) -- 0x43bf 0x98
         -- 0x5B() -- 0x43c4 0x5b
         return 0 -- 0x43c5 0x00
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x43bd 0xfe
+        opcodeFE54() -- 0x43bd 0xfe
         -- 0x98_MapLoad( field_id=16799, value=2 ) -- 0x43bf 0x98
         -- 0x5B() -- 0x43c4 0x5b
         return 0 -- 0x43c5 0x00
@@ -223,7 +225,9 @@ Entity[ "8" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x43d8 0xd2
+        -- 0x9C() -- 0x43dc 0x9c
+        return 0 -- 0x43dd 0x00
     end,
 
     on_push = function( self )
@@ -269,7 +273,7 @@ Entity[ "10" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x443f 0xfe
+        opcodeFE54() -- 0x443f 0xfe
         -- MISSING OPCODE 0x34
     end,
 
@@ -293,7 +297,7 @@ Entity[ "11" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x44e5 0xfe
+        opcodeFE54() -- 0x44e5 0xfe
         -- MISSING OPCODE 0x34
     end,
 

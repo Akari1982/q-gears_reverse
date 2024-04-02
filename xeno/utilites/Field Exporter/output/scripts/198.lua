@@ -5,7 +5,8 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0047 0xbc
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x01fc, bit_num=(vf40)0x0006, flag=0x40 ) -- 0x0048 0x3a
+        -- MISSING OPCODE 0xFEb8
     end,
 
     on_update = function( self )
@@ -57,7 +58,7 @@ Entity[ "2" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x014e ) -- 0x00d2 0x02
-        -- 0xFE54() -- 0x00da 0xfe
+        opcodeFE54() -- 0x00da 0xfe
         -- 0x35() -- 0x00dc 0x35
         -- 0x09_EntityCallScriptEW( entity=0x2a, script=0x24 ) -- 0x00e2 0x09
         -- MISSING OPCODE 0xFE18
@@ -180,7 +181,7 @@ Entity[ "7" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0274 0xfe
+        opcodeFE54() -- 0x0274 0xfe
         -- MISSING OPCODE 0xb5
     end,
 
@@ -222,7 +223,7 @@ Entity[ "8" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xfc9a, condition="value1 < value2", jump_if_false=0x0363 ) -- 0x030d 0x02
         -- 0x08_EntityCallScriptSW( entity=0x09, script=0x64 ) -- 0x0315 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0360 ) -- 0x0318 0x31
-        -- 0xFE54() -- 0x031d 0xfe
+        opcodeFE54() -- 0x031d 0xfe
         -- MISSING OPCODE 0x85
     end,
 
@@ -232,7 +233,7 @@ Entity[ "8" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xfc9a, condition="value1 < value2", jump_if_false=0x0363 ) -- 0x030d 0x02
         -- 0x08_EntityCallScriptSW( entity=0x09, script=0x64 ) -- 0x0315 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0360 ) -- 0x0318 0x31
-        -- 0xFE54() -- 0x031d 0xfe
+        opcodeFE54() -- 0x031d 0xfe
         -- MISSING OPCODE 0x85
     end,
 
@@ -293,7 +294,7 @@ Entity[ "10" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x0668, condition="value1 < value2", jump_if_false=0x03f8 ) -- 0x03a2 0x02
         -- 0x08_EntityCallScriptSW( entity=0x0b, script=0x64 ) -- 0x03aa 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x03f5 ) -- 0x03ad 0x31
-        -- 0xFE54() -- 0x03b2 0xfe
+        opcodeFE54() -- 0x03b2 0xfe
         -- MISSING OPCODE 0x85
     end,
 
@@ -303,7 +304,7 @@ Entity[ "10" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x0668, condition="value1 < value2", jump_if_false=0x03f8 ) -- 0x03a2 0x02
         -- 0x08_EntityCallScriptSW( entity=0x0b, script=0x64 ) -- 0x03aa 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x03f5 ) -- 0x03ad 0x31
-        -- 0xFE54() -- 0x03b2 0xfe
+        opcodeFE54() -- 0x03b2 0xfe
         -- MISSING OPCODE 0x85
     end,
 
@@ -365,7 +366,7 @@ Entity[ "12" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x0348, condition="value1 < value2", jump_if_false=0x0473 ) -- 0x0458 0x02
         -- 0x08_EntityCallScriptSW( entity=0x0d, script=0x64 ) -- 0x0460 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0470 ) -- 0x0463 0x31
-        -- 0xFE54() -- 0x0468 0xfe
+        opcodeFE54() -- 0x0468 0xfe
         -- 0x98_MapLoad( field_id=196, value=0 ) -- 0x046a 0x98
         -- 0x5B() -- 0x046f 0x5b
         -- 0x01_JumpTo( 0x0476 ) -- 0x0470 0x01
@@ -387,7 +388,7 @@ Entity[ "12" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x0348, condition="value1 < value2", jump_if_false=0x0473 ) -- 0x0458 0x02
         -- 0x08_EntityCallScriptSW( entity=0x0d, script=0x64 ) -- 0x0460 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0470 ) -- 0x0463 0x31
-        -- 0xFE54() -- 0x0468 0xfe
+        opcodeFE54() -- 0x0468 0xfe
         -- 0x98_MapLoad( field_id=196, value=0 ) -- 0x046a 0x98
         -- 0x5B() -- 0x046f 0x5b
         -- 0x01_JumpTo( 0x0476 ) -- 0x0470 0x01
@@ -460,7 +461,7 @@ Entity[ "14" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x0384, condition="value1 < value2", jump_if_false=0x04f6 ) -- 0x04ce 0x02
         -- 0x08_EntityCallScriptSW( entity=0x0f, script=0x64 ) -- 0x04d6 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x04f3 ) -- 0x04d9 0x31
-        -- 0xFE54() -- 0x04de 0xfe
+        opcodeFE54() -- 0x04de 0xfe
         -- MISSING OPCODE 0x85
     end,
 
@@ -472,7 +473,7 @@ Entity[ "14" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x0384, condition="value1 < value2", jump_if_false=0x04f6 ) -- 0x04ce 0x02
         -- 0x08_EntityCallScriptSW( entity=0x0f, script=0x64 ) -- 0x04d6 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x04f3 ) -- 0x04d9 0x31
-        -- 0xFE54() -- 0x04de 0xfe
+        opcodeFE54() -- 0x04de 0xfe
         -- MISSING OPCODE 0x85
     end,
 
@@ -558,7 +559,7 @@ Entity[ "17" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x00f5, condition="value1 < value2", jump_if_false=0x05be ) -- 0x05a3 0x02
         -- 0x08_EntityCallScriptSW( entity=0x12, script=0x64 ) -- 0x05ab 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x05bb ) -- 0x05ae 0x31
-        -- 0xFE54() -- 0x05b3 0xfe
+        opcodeFE54() -- 0x05b3 0xfe
         -- 0x98_MapLoad( field_id=230, value=0 ) -- 0x05b5 0x98
         -- 0x5B() -- 0x05ba 0x5b
         -- 0x01_JumpTo( 0x05c1 ) -- 0x05bb 0x01
@@ -580,7 +581,7 @@ Entity[ "17" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0x00f5, condition="value1 < value2", jump_if_false=0x05be ) -- 0x05a3 0x02
         -- 0x08_EntityCallScriptSW( entity=0x12, script=0x64 ) -- 0x05ab 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x05bb ) -- 0x05ae 0x31
-        -- 0xFE54() -- 0x05b3 0xfe
+        opcodeFE54() -- 0x05b3 0xfe
         -- 0x98_MapLoad( field_id=230, value=0 ) -- 0x05b5 0x98
         -- 0x5B() -- 0x05ba 0x5b
         -- 0x01_JumpTo( 0x05c1 ) -- 0x05bb 0x01
@@ -650,7 +651,7 @@ Entity[ "19" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xffce, condition="value1 < value2", jump_if_false=0x0635 ) -- 0x061a 0x02
         -- 0x08_EntityCallScriptSW( entity=0x14, script=0x64 ) -- 0x0622 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0632 ) -- 0x0625 0x31
-        -- 0xFE54() -- 0x062a 0xfe
+        opcodeFE54() -- 0x062a 0xfe
         -- 0x98_MapLoad( field_id=195, value=7 ) -- 0x062c 0x98
         -- 0x5B() -- 0x0631 0x5b
         -- 0x01_JumpTo( 0x0638 ) -- 0x0632 0x01
@@ -666,7 +667,7 @@ Entity[ "19" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xffce, condition="value1 < value2", jump_if_false=0x0635 ) -- 0x061a 0x02
         -- 0x08_EntityCallScriptSW( entity=0x14, script=0x64 ) -- 0x0622 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0632 ) -- 0x0625 0x31
-        -- 0xFE54() -- 0x062a 0xfe
+        opcodeFE54() -- 0x062a 0xfe
         -- 0x98_MapLoad( field_id=195, value=7 ) -- 0x062c 0x98
         -- 0x5B() -- 0x0631 0x5b
         -- 0x01_JumpTo( 0x0638 ) -- 0x0632 0x01
@@ -732,7 +733,7 @@ Entity[ "21" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xff01, condition="value1 < value2", jump_if_false=0x06a0 ) -- 0x0685 0x02
         -- 0x08_EntityCallScriptSW( entity=0x16, script=0x64 ) -- 0x068d 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x069d ) -- 0x0690 0x31
-        -- 0xFE54() -- 0x0695 0xfe
+        opcodeFE54() -- 0x0695 0xfe
         -- 0x98_MapLoad( field_id=195, value=6 ) -- 0x0697 0x98
         -- 0x5B() -- 0x069c 0x5b
         -- 0x01_JumpTo( 0x06a3 ) -- 0x069d 0x01
@@ -748,7 +749,7 @@ Entity[ "21" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0020 ), value2=(s16)0xff01, condition="value1 < value2", jump_if_false=0x06a0 ) -- 0x0685 0x02
         -- 0x08_EntityCallScriptSW( entity=0x16, script=0x64 ) -- 0x068d 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x069d ) -- 0x0690 0x31
-        -- 0xFE54() -- 0x0695 0xfe
+        opcodeFE54() -- 0x0695 0xfe
         -- 0x98_MapLoad( field_id=195, value=6 ) -- 0x0697 0x98
         -- 0x5B() -- 0x069c 0x5b
         -- 0x01_JumpTo( 0x06a3 ) -- 0x069d 0x01
@@ -814,7 +815,7 @@ Entity[ "23" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x001e ), value2=(s16)0x0082, condition="value1 < value2", jump_if_false=0x070b ) -- 0x06f0 0x02
         -- 0x08_EntityCallScriptSW( entity=0x18, script=0x64 ) -- 0x06f8 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0708 ) -- 0x06fb 0x31
-        -- 0xFE54() -- 0x0700 0xfe
+        opcodeFE54() -- 0x0700 0xfe
         -- 0x98_MapLoad( field_id=195, value=8 ) -- 0x0702 0x98
         -- 0x5B() -- 0x0707 0x5b
         -- 0x01_JumpTo( 0x070e ) -- 0x0708 0x01
@@ -830,7 +831,7 @@ Entity[ "23" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x001e ), value2=(s16)0x0082, condition="value1 < value2", jump_if_false=0x070b ) -- 0x06f0 0x02
         -- 0x08_EntityCallScriptSW( entity=0x18, script=0x64 ) -- 0x06f8 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0708 ) -- 0x06fb 0x31
-        -- 0xFE54() -- 0x0700 0xfe
+        opcodeFE54() -- 0x0700 0xfe
         -- 0x98_MapLoad( field_id=195, value=8 ) -- 0x0702 0x98
         -- 0x5B() -- 0x0707 0x5b
         -- 0x01_JumpTo( 0x070e ) -- 0x0708 0x01
@@ -896,7 +897,7 @@ Entity[ "25" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x001e ), value2=(s16)0x0168, condition="value1 < value2", jump_if_false=0x0795 ) -- 0x077a 0x02
         -- 0x08_EntityCallScriptSW( entity=0x1a, script=0x64 ) -- 0x0782 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0792 ) -- 0x0785 0x31
-        -- 0xFE54() -- 0x078a 0xfe
+        opcodeFE54() -- 0x078a 0xfe
         -- 0x98_MapLoad( field_id=195, value=10 ) -- 0x078c 0x98
         -- 0x5B() -- 0x0791 0x5b
         -- 0x01_JumpTo( 0x0798 ) -- 0x0792 0x01
@@ -912,7 +913,7 @@ Entity[ "25" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x001e ), value2=(s16)0x0168, condition="value1 < value2", jump_if_false=0x0795 ) -- 0x077a 0x02
         -- 0x08_EntityCallScriptSW( entity=0x1a, script=0x64 ) -- 0x0782 0x08
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0792 ) -- 0x0785 0x31
-        -- 0xFE54() -- 0x078a 0xfe
+        opcodeFE54() -- 0x078a 0xfe
         -- 0x98_MapLoad( field_id=195, value=10 ) -- 0x078c 0x98
         -- 0x5B() -- 0x0791 0x5b
         -- 0x01_JumpTo( 0x0798 ) -- 0x0792 0x01
@@ -972,7 +973,7 @@ Entity[ "27" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x07de 0xfe
+        opcodeFE54() -- 0x07de 0xfe
         -- MISSING OPCODE 0x37
     end,
 
@@ -1005,26 +1006,26 @@ Entity[ "28" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=1 ) -- 0x0b47 0x26
-        -- 0x99() -- 0x0b4a 0x99
+        opcode26_Wait( time=1 ) -- 0x0b47 0x26
+        opcode99() -- 0x0b4a 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=1 ) -- 0x0b90 0x26
-        -- 0x99() -- 0x0b93 0x99
+        opcode26_Wait( time=1 ) -- 0x0b90 0x26
+        opcode99() -- 0x0b93 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x06 = function( self )
-        -- 0x26_Wait( time=1 ) -- 0x0bd9 0x26
-        -- 0x99() -- 0x0bdc 0x99
+        opcode26_Wait( time=1 ) -- 0x0bd9 0x26
+        opcode99() -- 0x0bdc 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x07 = function( self )
-        -- 0x26_Wait( time=1 ) -- 0x0c44 0x26
-        -- 0x99() -- 0x0c47 0x99
+        opcode26_Wait( time=1 ) -- 0x0c44 0x26
+        opcode99() -- 0x0c47 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -1368,7 +1369,7 @@ Entity[ "41" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x024a ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0ead ) -- 0x0e18 0x02
-        -- 0xFE54() -- 0x0e20 0xfe
+        opcodeFE54() -- 0x0e20 0xfe
         -- MISSING OPCODE 0xfc
     end,
 

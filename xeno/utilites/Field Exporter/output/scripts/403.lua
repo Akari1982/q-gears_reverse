@@ -13,10 +13,10 @@ Entity[ "0" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0132 ) -- 0x00e0 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0156 ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x00f3 ) -- 0x00e8 0x02
         -- 0x01_JumpTo( 0x0132 ) -- 0x00f0 0x01
-        -- 0xFE54() -- 0x00f3 0xfe
-        -- 0x26_Wait( time=32 ) -- 0x00f5 0x26
-        -- 0x26_Wait( time=60 ) -- 0x00f8 0x26
-        -- 0x99() -- 0x00fb 0x99
+        opcodeFE54() -- 0x00f3 0xfe
+        opcode26_Wait( time=32 ) -- 0x00f5 0x26
+        opcode26_Wait( time=60 ) -- 0x00f8 0x26
+        opcode99() -- 0x00fb 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -29,11 +29,13 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0164, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x0134 0x3a
+        return 0 -- 0x013a 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x3a
+        opcode3A_VariableBitSet( address=0x0164, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x013b 0x3a
+        return 0 -- 0x0141 0x00
     end,
 
 }
@@ -175,11 +177,15 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x01 ) -- 0x450f 0xd2
+        -- 0x9C() -- 0x4513 0x9c
+        return 0 -- 0x4514 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x01 ) -- 0x4515 0xd2
+        -- 0x9C() -- 0x4519 0x9c
+        return 0 -- 0x451a 0x00
     end,
 
 }
@@ -461,7 +467,7 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x462a 0xfe
+        opcodeFE54() -- 0x462a 0xfe
         -- MISSING OPCODE 0x34
     end,
 
@@ -485,7 +491,7 @@ Entity[ "19" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x46d0 0xfe
+        opcodeFE54() -- 0x46d0 0xfe
         -- MISSING OPCODE 0x34
     end,
 

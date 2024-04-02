@@ -362,7 +362,7 @@ Entity[ "14" ] = {
 Entity[ "15" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0a54 0xbc
-        -- 0x99() -- 0x0a55 0x99
+        opcode99() -- 0x0a55 0x99
         -- MISSING OPCODE 0x61
     end,
 

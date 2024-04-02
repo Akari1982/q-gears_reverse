@@ -327,7 +327,9 @@ Entity[ "13" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0011, condition="value1 == value2", jump_if_false=0x01c5 ) -- 0x01b8 0x02
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x20 ) -- 0x01c0 0xd2
+        -- 0x9C() -- 0x01c4 0x9c
+        return 0 -- 0x01c5 0x00
     end,
 
     on_push = function( self )
@@ -391,7 +393,8 @@ Entity[ "16" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0012, condition="value1 > value2", jump_if_false=0x0217 ) -- 0x020b 0x02
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0x0d ) -- 0x0213 0x25
+        -- MISSING OPCODE 0x27
     end,
 
     on_talk = function( self )

@@ -119,7 +119,7 @@ Entity[ "4" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x007f 0xfe
+        opcodeFE54() -- 0x007f 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 != value2", jump_if_false=0x00a5 ) -- 0x0081 0x02
         -- 0xF1() -- 0x0089 0xf1
         -- 0x05_CallFunction( 0x01e0 ) -- 0x0094 0x05

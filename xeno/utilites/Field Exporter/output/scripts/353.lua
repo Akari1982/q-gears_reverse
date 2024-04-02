@@ -105,7 +105,9 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00f2 0xd2
+        -- 0x9C() -- 0x00f6 0x9c
+        return 0 -- 0x00f7 0x00
     end,
 
     script_0x05 = function( self )
@@ -157,7 +159,9 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x012d 0xd2
+        -- 0x9C() -- 0x0131 0x9c
+        return 0 -- 0x0132 0x00
     end,
 
     script_0x05 = function( self )
@@ -261,7 +265,9 @@ Entity[ "5" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x019e 0xd2
+        -- 0x9C() -- 0x01a2 0x9c
+        return 0 -- 0x01a3 0x00
     end,
 
     script_0x05 = function( self )
@@ -313,7 +319,9 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x01d9 0xd2
+        -- 0x9C() -- 0x01dd 0x9c
+        return 0 -- 0x01de 0x00
     end,
 
     script_0x05 = function( self )
@@ -369,7 +377,9 @@ Entity[ "7" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x0280 0xd2
+        -- 0x9C() -- 0x0284 0x9c
+        return 0 -- 0x0285 0x00
     end,
 
     script_0x05 = function( self )
@@ -646,7 +656,7 @@ Entity[ "13" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ea ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x0339 ) -- 0x0324 0x02
-        -- 0xFE54() -- 0x032c 0xfe
+        opcodeFE54() -- 0x032c 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -670,7 +680,7 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x034d 0xfe
+        opcodeFE54() -- 0x034d 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -694,7 +704,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x036e 0xfe
+        opcodeFE54() -- 0x036e 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -718,7 +728,7 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x038f 0xfe
+        opcodeFE54() -- 0x038f 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -742,7 +752,7 @@ Entity[ "17" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x03b0 0xfe
+        opcodeFE54() -- 0x03b0 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -936,7 +946,7 @@ Entity[ "25" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0006 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x05d5 ) -- 0x0595 0x02
-        -- 0xFE54() -- 0x059d 0xfe
+        opcodeFE54() -- 0x059d 0xfe
         -- MISSING OPCODE 0x74
     end,
 
@@ -961,14 +971,16 @@ Entity[ "26" ] = {
 
     on_talk = function( self )
         -- 0x07( entity=0x1d, script=0xc4 ) -- 0x0641 0x07
-        -- 0x26_Wait( time=10 ) -- 0x0644 0x26
-        -- MISSING OPCODE 0x3a
+        opcode26_Wait( time=10 ) -- 0x0644 0x26
+        opcode3A_VariableBitSet( address=0x00ec, bit_num=(vf40)0x000a, flag=0x40 ) -- 0x0647 0x3a
+        -- MISSING OPCODE 0x29
     end,
 
     on_push = function( self )
         -- 0x07( entity=0x1d, script=0xc4 ) -- 0x0641 0x07
-        -- 0x26_Wait( time=10 ) -- 0x0644 0x26
-        -- MISSING OPCODE 0x3a
+        opcode26_Wait( time=10 ) -- 0x0644 0x26
+        opcode3A_VariableBitSet( address=0x00ec, bit_num=(vf40)0x000a, flag=0x40 ) -- 0x0647 0x3a
+        -- MISSING OPCODE 0x29
     end,
 
 }
@@ -988,7 +1000,7 @@ Entity[ "27" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x067b 0xfe
+        opcodeFE54() -- 0x067b 0xfe
         -- MISSING OPCODE 0x6f
     end,
 
@@ -1047,8 +1059,8 @@ Entity[ "29" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE54() -- 0x06fa 0xfe
-        -- 0x26_Wait( time=15 ) -- 0x06fc 0x26
+        opcodeFE54() -- 0x06fa 0xfe
+        opcode26_Wait( time=15 ) -- 0x06fc 0x26
         -- MISSING OPCODE 0xFEaa
     end,
 

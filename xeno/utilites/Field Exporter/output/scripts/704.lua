@@ -10,7 +10,9 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x003e 0xfe
+        opcodeFEE0() -- 0x0040 0xfe
+        return 0 -- 0x0043 0x00
     end,
 
     on_talk = function( self )
@@ -429,7 +431,7 @@ Entity[ "15" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=3 ) -- 0x0173 0x26
+        opcode26_Wait( time=3 ) -- 0x0173 0x26
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0022 ), value2=(s16)0xff7e, condition="value1 < value2", jump_if_false=0x017f ) -- 0x0176 0x02
         return 0 -- 0x017e 0x00
     end,
@@ -473,7 +475,7 @@ Entity[ "16" ] = {
         -- 0x35() -- 0x0215 0x35
         -- 0x35() -- 0x021b 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040a ), value2=(s16)0x0000, condition="value1 != value2", jump_if_false=0x0239 ) -- 0x0221 0x02
-        -- 0x26_Wait( time=0 ) -- 0x0229 0x26
+        opcode26_Wait( time=0 ) -- 0x0229 0x26
         -- 0xC6() -- 0x022c 0xc6
         -- MISSING OPCODE 0x38
     end,
@@ -483,7 +485,7 @@ Entity[ "16" ] = {
         -- 0x35() -- 0x0215 0x35
         -- 0x35() -- 0x021b 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040a ), value2=(s16)0x0000, condition="value1 != value2", jump_if_false=0x0239 ) -- 0x0221 0x02
-        -- 0x26_Wait( time=0 ) -- 0x0229 0x26
+        opcode26_Wait( time=0 ) -- 0x0229 0x26
         -- 0xC6() -- 0x022c 0xc6
         -- MISSING OPCODE 0x38
     end,
@@ -936,7 +938,7 @@ Entity[ "32" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x03c8 0xfe
+        opcodeFE54() -- 0x03c8 0xfe
         -- MISSING OPCODE 0xb5
     end,
 

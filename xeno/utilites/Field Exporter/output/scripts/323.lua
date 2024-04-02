@@ -362,7 +362,11 @@ Entity[ "12" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0xff ) -- 0x08e5 0x25
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0a9c ) -- 0x08e7 0x02
+        -- 0x75() -- 0x08ef 0x75
+        opcodeFE54() -- 0x08f2 0xfe
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )
@@ -381,7 +385,7 @@ Entity[ "13" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0bda 0xbc
         -- 0x2A() -- 0x0bdb 0x2a
-        -- 0x99() -- 0x0bdc 0x99
+        opcode99() -- 0x0bdc 0x99
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0c10 ) -- 0x0bdd 0x02
         -- MISSING OPCODE 0x61
     end,
@@ -399,7 +403,14 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0c3b 0x60
+        opcode64() -- 0x0c3c 0x64
+        opcode63() -- 0x0c3d 0x63
+        opcodeA3() -- 0x0c45 0xa3
+        opcodeAC() -- 0x0c4d 0xac
+        opcodeAC() -- 0x0c51 0xac
+        opcode26_Wait( time=60 ) -- 0x0c55 0x26
+        return 0 -- 0x0c58 0x00
     end,
 
     script_0x05 = function( self )
@@ -408,7 +419,14 @@ Entity[ "13" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0c83 0x60
+        opcode64() -- 0x0c84 0x64
+        opcode63() -- 0x0c85 0x63
+        opcodeA3() -- 0x0c8d 0xa3
+        opcodeAC() -- 0x0c95 0xac
+        opcodeAC() -- 0x0c99 0xac
+        opcode26_Wait( time=60 ) -- 0x0c9d 0x26
+        return 0 -- 0x0ca0 0x00
     end,
 
     script_0x07 = function( self )
@@ -431,11 +449,24 @@ Entity[ "13" ] = {
     end,
 
     script_0x0b = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0db2 0x60
+        opcode64() -- 0x0db3 0x64
+        opcode63() -- 0x0db4 0x63
+        opcodeA3() -- 0x0dbc 0xa3
+        opcodeAC() -- 0x0dc4 0xac
+        opcodeAC() -- 0x0dc8 0xac
+        return 0 -- 0x0dcc 0x00
     end,
 
     script_0x0c = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x0dcd 0x60
+        opcode64() -- 0x0dce 0x64
+        opcode63() -- 0x0dcf 0x63
+        opcodeA3() -- 0x0dd7 0xa3
+        opcodeAC() -- 0x0ddf 0xac
+        opcodeAC() -- 0x0de3 0xac
+        opcodeEF() -- 0x0de7 0xef
+        return 0 -- 0x0dea 0x00
     end,
 
     script_0x0d = function( self )

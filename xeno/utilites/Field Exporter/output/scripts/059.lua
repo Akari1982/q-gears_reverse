@@ -11,16 +11,16 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0412 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00c4 ) -- 0x0073 0x02
-        -- 0xFE54() -- 0x007b 0xfe
-        -- 0x26_Wait( time=32 ) -- 0x007d 0x26
-        -- 0x26_Wait( time=16 ) -- 0x0080 0x26
+        opcodeFE54() -- 0x007b 0xfe
+        opcode26_Wait( time=32 ) -- 0x007d 0x26
+        opcode26_Wait( time=16 ) -- 0x0080 0x26
         -- 0x09_EntityCallScriptEW( entity=0x0e, script=0x24 ) -- 0x0083 0x09
-        -- 0x26_Wait( time=10 ) -- 0x0086 0x26
+        opcode26_Wait( time=10 ) -- 0x0086 0x26
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x26 ) -- 0x0089 0x09
-        -- 0x26_Wait( time=32 ) -- 0x008c 0x26
+        opcode26_Wait( time=32 ) -- 0x008c 0x26
         -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x008f 0x09
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x2a ) -- 0x0092 0x09
-        -- 0x26_Wait( time=32 ) -- 0x0095 0x26
+        opcode26_Wait( time=32 ) -- 0x0095 0x26
         -- 0x07( entity=0x02, script=0x25 ) -- 0x0098 0x07
         -- MISSING OPCODE 0x74
     end,
@@ -85,7 +85,7 @@ Entity[ "2" ] = {
 
     script_0x04 = function( self )
         -- 0xF1() -- 0x01cc 0xf1
-        -- 0x26_Wait( time=3 ) -- 0x01d7 0x26
+        opcode26_Wait( time=3 ) -- 0x01d7 0x26
         -- 0xF1() -- 0x01da 0xf1
         -- MISSING OPCODE 0xf2
     end,
@@ -142,16 +142,30 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x0291 0x99
+        opcode99() -- 0x0291 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x02b5 0x60
+        opcode63() -- 0x02b6 0x63
+        opcode64() -- 0x02be 0x64
+        opcodeA3() -- 0x02bf 0xa3
+        opcodeAC() -- 0x02c7 0xac
+        opcodeAC() -- 0x02cb 0xac
+        opcodeEF() -- 0x02cf 0xef
+        return 0 -- 0x02d2 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x02d3 0x60
+        opcode63() -- 0x02d4 0x63
+        opcode64() -- 0x02dc 0x64
+        opcodeA3() -- 0x02dd 0xa3
+        opcodeAC() -- 0x02e5 0xac
+        opcodeAC() -- 0x02e9 0xac
+        opcodeEF() -- 0x02ed 0xef
+        return 0 -- 0x02f0 0x00
     end,
 
 }
@@ -196,16 +210,21 @@ Entity[ "5" ] = {
     end,
 
     script_0x08 = function( self )
-        -- 0x26_Wait( time=1 ) -- 0x03b9 0x26
+        opcode26_Wait( time=1 ) -- 0x03b9 0x26
         -- MISSING OPCODE 0x21
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x21 ) -- 0x03d1 0xd2
+        -- 0x9C() -- 0x03d5 0x9c
+        opcode26_Wait( time=24 ) -- 0x03d6 0x26
+        -- MISSING OPCODE 0x2c
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x21 ) -- 0x03f6 0xd2
+        -- 0x9C() -- 0x03fa 0x9c
+        return 0 -- 0x03fb 0x00
     end,
 
 }
@@ -233,11 +252,15 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x11 ) -- 0x0405 0xd2
+        -- 0x9C() -- 0x0409 0x9c
+        return 0 -- 0x040a 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x11 ) -- 0x040b 0xd2
+        -- 0x9C() -- 0x040f 0x9c
+        return 0 -- 0x0410 0x00
     end,
 
 }
@@ -646,7 +669,7 @@ Entity[ "21" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=8 ) -- 0x064a 0x26
+        opcode26_Wait( time=8 ) -- 0x064a 0x26
         -- 0xC6() -- 0x064d 0xc6
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0438 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0899 ) -- 0x064e 0x02
         -- 0xFE8F_ParticleSystemInit1( entity=(entity)0x13, render_settings=0, rot_x=0, rot_y=0 ) -- 0x0656 0xfe
@@ -724,7 +747,7 @@ Entity[ "22" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x043a ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0a8f ) -- 0x089e 0x02
-        -- 0x26_Wait( time=5 ) -- 0x08a6 0x26
+        opcode26_Wait( time=5 ) -- 0x08a6 0x26
         -- 0xC6() -- 0x08a9 0xc6
         -- 0xFE8F_ParticleSystemInit1( entity=(entity)0x14, render_settings=0, rot_x=0, rot_y=0 ) -- 0x08aa 0xfe
         -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=10, wait=0, ttl=32767 ) -- 0x08b3 0xfe
@@ -816,7 +839,7 @@ Entity[ "24" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=10 ) -- 0x0acf 0x26
+        opcode26_Wait( time=10 ) -- 0x0acf 0x26
         -- 0xC6() -- 0x0ad2 0xc6
         -- 0xFE8F_ParticleSystemInit1( entity=(entity)0x17, render_settings=0, rot_x=0, rot_y=0 ) -- 0x0ad3 0xfe
         -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=15, wait=0, ttl=32767 ) -- 0x0adc 0xfe

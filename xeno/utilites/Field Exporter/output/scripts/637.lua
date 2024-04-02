@@ -556,7 +556,7 @@ Entity[ "16" ] = {
     end,
 
     on_push = function( self )
-        -- 0xFE54() -- 0x0333 0xfe
+        opcodeFE54() -- 0x0333 0xfe
         -- MISSING OPCODE 0x76
     end,
 

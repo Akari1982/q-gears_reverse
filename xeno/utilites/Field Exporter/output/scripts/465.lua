@@ -302,7 +302,9 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x009b 0xd2
+        -- 0x9C() -- 0x009f 0x9c
+        -- MISSING OPCODE 0x70
     end,
 
     on_push = function( self )
@@ -325,7 +327,9 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x00bc 0xd2
+        -- 0x9C() -- 0x00c0 0x9c
+        -- MISSING OPCODE 0x70
     end,
 
     on_push = function( self )
@@ -369,7 +373,8 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x00ee 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )

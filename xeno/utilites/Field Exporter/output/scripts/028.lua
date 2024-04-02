@@ -5,7 +5,8 @@ Entity = {}
 Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
-        -- MISSING OPCODE 0xFE52
+        opcodeFE52() -- 0x0009 0xfe
+        -- MISSING OPCODE 0xFE81
     end,
 
     on_update = function( self )
@@ -25,13 +26,13 @@ Entity[ "0" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x26_Wait( time=60 ) -- 0x00b7 0x26
+        opcode26_Wait( time=60 ) -- 0x00b7 0x26
         -- MISSING OPCODE 0xFE65
     end,
 
     script_0x06 = function( self )
         -- 0x87_SetProgress( progress=30 ) -- 0x00c7 0x87
-        -- 0x26_Wait( time=60 ) -- 0x00ca 0x26
+        opcode26_Wait( time=60 ) -- 0x00ca 0x26
         -- 0x98_MapLoad( field_id=23, value=1 ) -- 0x00cd 0x98
         -- 0x5B() -- 0x00d2 0x5b
         return 0 -- 0x00d3 0x00
@@ -100,7 +101,7 @@ Entity[ "3" ] = {
     end,
 
     on_update = function( self )
-        -- 0x26_Wait( time=1 ) -- 0x0563 0x26
+        opcode26_Wait( time=1 ) -- 0x0563 0x26
         -- MISSING OPCODE 0x9b
     end,
 

@@ -6,30 +6,30 @@ Entity[ "0" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- 0x2A() -- 0x0009 0x2a
-        -- 0x99() -- 0x000a 0x99
+        opcode99() -- 0x000a 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00c6 ) -- 0x0035 0x02
-        -- 0xFE54() -- 0x003d 0xfe
-        -- 0x26_Wait( time=32 ) -- 0x003f 0x26
+        opcodeFE54() -- 0x003d 0xfe
+        opcode26_Wait( time=32 ) -- 0x003f 0x26
         -- 0xFE0E_SoundSetVolume( volume=0, steps=1000 ) -- 0x0042 0xfe
         -- 0x07( entity=0x01, script=0x24 ) -- 0x0048 0x07
-        -- 0x26_Wait( time=24 ) -- 0x004b 0x26
+        opcode26_Wait( time=24 ) -- 0x004b 0x26
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x24 ) -- 0x004e 0x09
         -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x0051 0x09
-        -- 0x26_Wait( time=12 ) -- 0x0054 0x26
+        opcode26_Wait( time=12 ) -- 0x0054 0x26
         -- 0x09_EntityCallScriptEW( entity=0x08, script=0x24 ) -- 0x0057 0x09
-        -- 0x26_Wait( time=24 ) -- 0x005a 0x26
+        opcode26_Wait( time=24 ) -- 0x005a 0x26
         -- 0x09_EntityCallScriptEW( entity=0x07, script=0x24 ) -- 0x005d 0x09
-        -- 0x26_Wait( time=32 ) -- 0x0060 0x26
+        opcode26_Wait( time=32 ) -- 0x0060 0x26
         -- 0x09_EntityCallScriptEW( entity=0x04, script=0x24 ) -- 0x0063 0x09
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x25 ) -- 0x0066 0x09
         -- 0x09_EntityCallScriptEW( entity=0x02, script=0x24 ) -- 0x0069 0x09
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x26 ) -- 0x006c 0x09
         -- 0x07( entity=0x02, script=0x25 ) -- 0x006f 0x07
-        -- 0x26_Wait( time=23 ) -- 0x0072 0x26
+        opcode26_Wait( time=23 ) -- 0x0072 0x26
         -- 0x75() -- 0x0075 0x75
         -- 0x09_EntityCallScriptEW( entity=0x04, script=0x25 ) -- 0x0078 0x09
         -- MISSING OPCODE 0x36
@@ -67,7 +67,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x00cc 0x99
+        opcode99() -- 0x00cc 0x99
         -- MISSING OPCODE 0x9b
     end,
 
@@ -112,7 +112,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x08 = function( self )
-        -- 0x26_Wait( time=32 ) -- 0x0126 0x26
+        opcode26_Wait( time=32 ) -- 0x0126 0x26
         -- MISSING OPCODE 0x4a
     end,
 
@@ -165,15 +165,21 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x10 ) -- 0x015a 0xd2
+        -- 0x9C() -- 0x015e 0x9c
+        -- MISSING OPCODE 0x2c
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x10 ) -- 0x0167 0xd2
+        -- 0x9C() -- 0x016b 0x9c
+        return 0 -- 0x016c 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x10 ) -- 0x016d 0xd2
+        -- 0x9C() -- 0x0171 0x9c
+        return 0 -- 0x0172 0x00
     end,
 
 }
@@ -198,7 +204,9 @@ Entity[ "5" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x21 ) -- 0x0189 0xd2
+        -- 0x9C() -- 0x018d 0x9c
+        return 0 -- 0x018e 0x00
     end,
 
     script_0x05 = function( self )
@@ -206,7 +214,9 @@ Entity[ "5" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x21 ) -- 0x019e 0xd2
+        -- 0x9C() -- 0x01a2 0x9c
+        -- MISSING OPCODE 0x6f
     end,
 
 }
@@ -231,7 +241,9 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x11 ) -- 0x01e4 0xd2
+        -- 0x9C() -- 0x01e8 0x9c
+        return 0 -- 0x01e9 0x00
     end,
 
     script_0x05 = function( self )

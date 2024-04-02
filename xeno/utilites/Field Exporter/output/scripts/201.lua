@@ -12,10 +12,10 @@ Entity[ "0" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0042 ) -- 0x0012 0x02
         -- 0xB4_FadeIn() -- 0x001a 0xb4
-        -- 0xFE54() -- 0x001d 0xfe
+        opcodeFE54() -- 0x001d 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x0e, script=0x24 ) -- 0x001f 0x09
         -- 0x35() -- 0x0022 0x35
-        -- 0x26_Wait( time=5 ) -- 0x0028 0x26
+        opcode26_Wait( time=5 ) -- 0x0028 0x26
         -- 0xB3() -- 0x002b 0xb3
         -- 0x09_EntityCallScriptEW( entity=0x0d, script=0x24 ) -- 0x002e 0x09
         -- MISSING OPCODE 0x3b
@@ -71,7 +71,8 @@ Entity[ "2" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x15
+        opcode15() -- 0x007e 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -392,12 +393,12 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x26_Wait( time=5 ) -- 0x0306 0x26
+        opcode26_Wait( time=5 ) -- 0x0306 0x26
         -- 0x09_EntityCallScriptEW( entity=0xff, script=0x24 ) -- 0x0309 0x09
-        -- 0x26_Wait( time=15 ) -- 0x030c 0x26
+        opcode26_Wait( time=15 ) -- 0x030c 0x26
         -- 0x02_ConditionalJumpTo( value1=(s16)0x00fe, value2=(s16)0x00fe, condition="value1 == value2", jump_if_false=0x032e ) -- 0x030f 0x02
         -- 0x09_EntityCallScriptEW( entity=0xfe, script=0x24 ) -- 0x0317 0x09
-        -- 0x26_Wait( time=15 ) -- 0x031a 0x26
+        opcode26_Wait( time=15 ) -- 0x031a 0x26
         -- 0x02_ConditionalJumpTo( value1=(s16)0x00ff, value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x032b ) -- 0x031d 0x02
         -- 0x09_EntityCallScriptEW( entity=0xfd, script=0x24 ) -- 0x0325 0x09
         -- 0x01_JumpTo( 0x032b ) -- 0x0328 0x01
@@ -429,7 +430,10 @@ Entity[ "14" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x25
+        opcode25( entity=(entity)0xff ) -- 0x0339 0x25
+        opcode25( entity=(entity)0xfe ) -- 0x033b 0x25
+        opcode25( entity=(entity)0xfd ) -- 0x033d 0x25
+        return 0 -- 0x033f 0x00
     end,
 
 }

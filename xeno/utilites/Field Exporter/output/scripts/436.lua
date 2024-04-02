@@ -11,7 +11,7 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        -- 0xFE54() -- 0x0019 0xfe
+        opcodeFE54() -- 0x0019 0xfe
         -- 0x5B() -- 0x001b 0x5b
         return 0 -- 0x001c 0x00
     end,

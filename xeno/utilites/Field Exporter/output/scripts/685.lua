@@ -9,7 +9,7 @@ Entity[ "0" ] = {
         -- 0xA0() -- 0x000a 0xa0
         -- 0xF1() -- 0x0011 0xf1
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x02b7, condition="value1 == value2", jump_if_false=0x0026 ) -- 0x001c 0x02
-        -- 0xFE54() -- 0x0024 0xfe
+        opcodeFE54() -- 0x0024 0xfe
         return 0 -- 0x0026 0x00
     end,
 
@@ -79,7 +79,9 @@ Entity[ "1" ] = {
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0xd2
+        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0114 0xd2
+        -- 0x9C() -- 0x0118 0x9c
+        return 0 -- 0x0119 0x00
     end,
 
     script_0x0a = function( self )

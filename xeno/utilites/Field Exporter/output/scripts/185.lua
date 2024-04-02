@@ -49,7 +49,7 @@ Entity[ "1" ] = {
 
     script_0x04 = function( self )
         -- 0xF1() -- 0x00ff 0xf1
-        -- 0x26_Wait( time=3 ) -- 0x010a 0x26
+        opcode26_Wait( time=3 ) -- 0x010a 0x26
         -- 0xF1() -- 0x010d 0xf1
         -- MISSING OPCODE 0x74
     end,
@@ -82,12 +82,19 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x99() -- 0x015d 0x99
+        opcode99() -- 0x015d 0x99
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x60
+        opcode60() -- 0x01a1 0x60
+        opcode63() -- 0x01a2 0x63
+        opcode64() -- 0x01aa 0x64
+        opcodeA3() -- 0x01ab 0xa3
+        opcodeAC() -- 0x01b3 0xac
+        opcodeAC() -- 0x01b7 0xac
+        opcodeEF() -- 0x01bb 0xef
+        -- MISSING OPCODE 0xFE65
     end,
 
 }
@@ -142,8 +149,10 @@ Entity[ "4" ] = {
 
     script_0x05 = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x24 ) -- 0x0243 0x09
-        -- 0x26_Wait( time=32 ) -- 0x0246 0x26
-        -- MISSING OPCODE 0xd2
+        opcode26_Wait( time=32 ) -- 0x0246 0x26
+        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x10 ) -- 0x0249 0xd2
+        -- 0x9C() -- 0x024d 0x9c
+        return 0 -- 0x024e 0x00
     end,
 
 }

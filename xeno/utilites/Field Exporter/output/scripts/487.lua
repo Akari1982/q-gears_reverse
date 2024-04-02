@@ -397,7 +397,7 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xFE54() -- 0x0229 0xfe
+        opcodeFE54() -- 0x0229 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x0f, script=0x64 ) -- 0x022b 0x09
         -- 0x98_MapLoad( field_id=486, value=10 ) -- 0x022e 0x98
         -- 0x5B() -- 0x0233 0x5b
@@ -583,7 +583,7 @@ Entity[ "19" ] = {
         -- 0xFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=170 ) -- 0x0588 0xfe
         -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x0590 0xfe
         -- 0xFE96_ParticleCreate() -- 0x0598 0xfe
-        -- 0x26_Wait( time=30 ) -- 0x059a 0x26
+        opcode26_Wait( time=30 ) -- 0x059a 0x26
         -- 0xFE97_ParticleReset( all=0x00 ) -- 0x059d 0xfe
         return 0 -- 0x05a0 0x00
     end,
