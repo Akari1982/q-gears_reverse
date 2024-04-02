@@ -1229,9 +1229,7 @@ if( h[800af586] != 0 )
     A10 = h[800af580];
     A11 = h[800af582];
     A12 = h[800af584];
-
-    80070EB8	jal    func26eac [$80026eac]
-
+    func26eac();
     [800af550] = w(V0);
 }
 
@@ -1239,80 +1237,31 @@ A0 = 8; // YOSI
 A1 = 0;
 system_memory_set_alloc_user();
 
-V1 = hu[800b1812];
+pc_id = hu[800b1812];
+pc_5c = w[800aefe4] + pc * 5c;
+[800aed94] = w(w[pc_5c + 20] << 10);
+[800aed98] = w(w[pc_5c + 24] << 10);
+[800aed9c] = w(w[pc_5c + 28] << 10);
 
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-
-V1 = w[800aefe4];
-
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = w[V0 + 0020];
-
-A1 = 800aed94;
-
-V1 = V1 << 10;
-[A1 + 0000] = w(V1);
-V1 = w[V0 + 0024];
-80070F18	nop
-V1 = V1 << 10;
-
-[800aed98] = w(V1);
-
-V0 = w[V0 + 0028];
-
-V1 = w[800aefe0];
-
-V0 = V0 << 10;
-
-[800aed9c] = w(V0);
-
-if( V1 > 0 )
+for( int i = 0; i < w[800aefe0]; ++i )
 {
-    S4 = 0;
-    S1 = A1 + 250;
-    S0 = 0;
+    struct_5c = w[800aefe4] + i * 5c;
 
-    loop70f50:	; 80070F50
-        A1 = S0 + w[S1];
+    A0 = struct_5c + 50;
+    A1 = struct_5c + c;
+    system_calculate_rotation_matrix();
 
-        A0 = A1 + 50;
-        A1 = A1 + c;
-        system_calculate_rotation_matrix();
-
-        V0 = S0 + w[800aefe4];
-
-        S4 = S4 + 1;
-
-        V1 = w[V0 + c];
-        A0 = w[V0 + 10];
-        A1 = w[V0 + 14];
-        A2 = w[V0 + 18];
-
-        [V0 + 2c] = w(V1);
-        [V0 + 30] = w(A0);
-        [V0 + 34] = w(A1);
-        [V0 + 38] = w(A2);
-
-        V1 = w[V0 + 1c];
-        A0 = w[V0 + 20];
-        A1 = w[V0 + 24];
-        A2 = w[V0 + 28];
-
-        [V0 + 3c] = w(V1);
-        [V0 + 40] = w(A0);
-        [V0 + 44] = w(A1);
-        [V0 + 48] = w(A2);
-
-        S0 = S0 + 5c;
-        V0 = S4 < w[S1 - 4];
-    80070FC4	bne    v0, zero, loop70f50 [$80070f50]
+    [struct_5c + 2c] = w(w[struct_5c +  c]);
+    [struct_5c + 30] = w(w[struct_5c + 10]);
+    [struct_5c + 34] = w(w[struct_5c + 14]);
+    [struct_5c + 38] = w(w[struct_5c + 18]);
+    [struct_5c + 3c] = w(w[struct_5c + 1c]);
+    [struct_5c + 40] = w(w[struct_5c + 20]);
+    [struct_5c + 44] = w(w[struct_5c + 24]);
+    [struct_5c + 48] = w(w[struct_5c + 28]);
 }
 
-80070FCC	jal    func772f0 [$800772f0]
+func772f0(); // load external models
 
 funca1ca4();
 
@@ -1321,11 +1270,11 @@ funca1ca4();
 
 func734c8();
 
-80070FF8	jal    func768f8 [$800768f8]
+func768f8();
 
 if( h[800af586] == 0 )
 {
-    80071014	jal    func73d2c [$80073d2c]
+    func73d2c();
 
     [800ad024] = w(V0);
 }
@@ -1334,35 +1283,26 @@ else
     [800ad024] = w(1);
 }
 
-if( w[800ad0d4] > 0 )
+for( int i = 0; i < w[800ad0d4]; ++i )
 {
-    S4 = 0;
-    S0 = 0;
+    struct_5c = w[800aefe4] + i * 5c;
 
-    loop7103c:	; 8007103C
-        A0 = w[800aefe4] + S0;
-
-        if( hu[A0 + 58] & 0040 )
+    if( hu[struct_5c + 58] & 0040 )
+    {
+        A2 = w[struct_5c + 4c];
+        if( (w[A2 + 4] & 01000000) == 0 )
         {
-            A2 = w[A0 + 4c];
-            if( (w[A2 + 4] & 01000000) == 0 )
-            {
-                A0 = w[A0 + 4];
-                A1 = ((hu[800aee62] + hu[A2 + 108]) << 10) >> 10;
-                80071094	jal    func22218 [$80022218]
-            }
-            else
-            {
-                A0 = w[A0 + 4];
-                A1 = h[A2 + 108];
-                800710AC	jal    func21e40 [$80021e40]
-            }
+            A0 = w[struct_5c + 4];
+            A1 = ((hu[800aee62] + hu[A2 + 108]) << 10) >> 10;
+            func22218(); // apply new dir and anim
         }
-
-        S4 = S4 + 1;
-        S0 = S0 + 5c;
-        V0 = S4 < w[800ad0d4];
-    800710C4	bne    v0, zero, loop7103c [$8007103c]
+        else
+        {
+            A0 = w[struct_5c + 4];
+            A1 = h[A2 + 108];
+            func21e40(); // set rot and ???
+        }
+    }
 }
 ////////////////////////////////
 
@@ -1560,9 +1500,9 @@ system_calculate_rotation_matrix();
 A0 = S2;
 8007186C	jal    $system_gte_matrix_multiplication_to_A1
 A1 = S0;
-80071874	jal    $80049da4
+80071874	jal    $system_gte_set_rotation_matrix
 A0 = S2;
-8007187C	jal    $80049e34
+8007187C	jal    $system_gte_set_translation_vector
 A0 = S2;
 A0 = S1 + 008c;
 A1 = S1 + 00a8;
@@ -1575,9 +1515,9 @@ A1 = SP + 0010;
 [SP + 0014] = w(V0);
 800718AC	jal    $system_gte_multiply_matrix_by_vector
 [SP + 0018] = w(V0);
-800718B4	jal    $80049da4
+800718B4	jal    $system_gte_set_rotation_matrix
 A0 = S0;
-800718BC	jal    $80049e34
+800718BC	jal    $system_gte_set_translation_vector
 A0 = S0;
 
 ////////////////////////////////
@@ -2767,22 +2707,14 @@ V0 = w[A1 + 001c];
 
 
 ////////////////////////////////
-// func73798
-80073798	addiu  sp, sp, $ff08 (=-$f8)
-[SP + 00d8] = w(S0);
+// func73798()
+
 S0 = 0;
 T1 = 800af1f8;
 T3 = 800af0dc;
 A3 = 0;
 T2 = bu[800aeec9];
 T0 = 800ad0fc;
-[SP + 00f4] = w(RA);
-[SP + 00f0] = w(S6);
-[SP + 00ec] = w(S5);
-[SP + 00e8] = w(S4);
-[SP + 00e4] = w(S3);
-[SP + 00e0] = w(S2);
-[SP + 00dc] = w(S1);
 
 loop737e4:	; 800737E4
 V0 = hu[T0 + 0000];
@@ -2829,13 +2761,16 @@ V1 = 800af524;
 8007386C	addiu  a0, v1, $fffc (=-$4)
 A1 = 800af1f8;
 V0 = 0080;
-8007387C	jal    $8004470c
 [V1 + 0000] = h(V0);
-80073884	jal    $80049ff4
-A0 = 0080;
-A0 = 010a;
-80073890	jal    $system_gte_set_screen_offset
-A1 = 00a6;
+system_load_image();
+
+A0 = 80;
+system_gte_set_projection_plane_distance();
+
+A0 = 10a;
+A1 = a6;
+system_gte_set_screen_offset();
+
 A0 = w[800aed54];
 V0 = w[800aed64];
 A1 = w[800aed5c];
@@ -2852,8 +2787,9 @@ A1 = A1 - V0;
 V0 = w[S0 + 0000];
 A1 = A1 >> 10;
 V0 = V0 - V1;
-800738F0	jal    length_of_vector_by_x_y [$80099020]
 [SP + 00bc] = w(V0);
+length_of_vector_by_x_y();
+
 S1 = SP + 0030;
 A0 = S1;
 A1 = SP + 00b8;
@@ -2867,10 +2803,12 @@ V0 = V0 << 10;
 A0 = SP + 0010;
 A0 = SP + 0010;
 V0 = 0080;
-8007392C	jal    $80049da4
 [SP + 002c] = w(V0);
-80073934	jal    $80049e34
-A0 = SP + 0010;
+system_gte_set_rotation_matrix();
+
+A0 = SP + 10;
+system_gte_set_translation_vector();
+
 A2 = 0040;
 V1 = hu[800b1812];
 A0 = h[800ad020];
@@ -2902,14 +2840,16 @@ A1 = S0;
 system_calculate_rotation_matrix();
 
 A0 = S1;
-800739CC	jal    $system_gte_matrix_multiplication_to_A1
 A1 = S0;
+system_gte_matrix_multiplication_to_A1();
+
 A0 = SP + 0010;
 A1 = S0;
 A2 = SP + 0070;
 V0 = 1000;
-800739E4	jal    $system_gte_matrix_mult_and_trans
 [SP + 006c] = w(V0);
+system_gte_matrix_mult_and_trans();
+
 V0 = bu[800b16a5];
 800739F4	nop
 800739F8	bne    v0, zero, L73a6c [$80073a6c]
@@ -2930,10 +2870,10 @@ A1 = S1;
 A2 = SP + 0070;
 S1 = S1 + 0070;
 S0 = S0 + 0001;
-A0 = w[800c3740];
 A3 = w[800acfe0];
-80073A54	jal    func7a180 [$8007a180]
-A0 = A0 + S2;
+A0 = w[800c3740] + S2;
+func7a180(); // add to render something
+
 V0 = S0 < 0015;
 80073A60	bne    v0, zero, loop73a34 [$80073a34]
 80073A64	nop
@@ -2943,34 +2883,42 @@ L73a6c:	; 80073A6C
 80073A6C	jal    func6fc24 [$8006fc24]
 A0 = S2;
 A0 = SP + 0030;
-80073A78	jal    $system_gte_matrix_multiplication_to_A1
 A1 = S2;
+system_gte_matrix_multiplication_to_A1();
+
 A0 = SP + 0010;
 A1 = S2;
 S3 = SP + 0070;
 A2 = S3;
 S1 = 1000;
-80073A94	jal    $system_gte_matrix_mult_and_trans
 [SP + 006c] = w(S1);
+system_gte_matrix_mult_and_trans();
+
 A0 = SP + 0010;
 A1 = S2;
 S0 = 800aef58;
-80073AAC	jal    $800490b4
 A2 = S0;
-80073AB4	jal    $80049da4
+system_gte_matrix_multiplication_to_A2();
+
 A0 = SP + 0010;
-80073ABC	jal    $80049e34
+system_gte_set_rotation_matrix();
+
 A0 = SP + 0010;
-80073AC4	jal    func6fc24 [$8006fc24]
+system_gte_set_translation_vector();
+
 A0 = S2;
+func6fc24();
+
 80073ACC	addiu  a0, s0, $ff0c (=-$f4)
-80073AD0	jal    $system_gte_matrix_multiplication_to_A1
 A1 = S2;
+system_gte_matrix_multiplication_to_A1();
+
 A0 = SP + 0010;
 A1 = S2;
 A2 = S3;
-80073AE4	jal    $system_gte_matrix_mult_and_trans
 [SP + 006c] = w(S1);
+system_gte_matrix_mult_and_trans();
+
 A0 = SP + 0010;
 80073AF0	jal    func736c8 [$800736c8]
 A1 = S3;
@@ -2985,15 +2933,15 @@ system_calculate_rotation_matrix();
 V0 = bu[800b16a5];
 80073B1C	nop
 80073B20	bne    v0, zero, L73c70 [$80073c70]
-80073B24	lui    a3, $00ff
+
 V0 = w[800ad0f0];
 80073B30	nop
 80073B34	bne    v0, zero, L73c74 [$80073c74]
-A3 = A3 | ffff;
+
 V0 = w[8004ea1c];
 80073B44	nop
 80073B48	bne    v0, zero, L73c70 [$80073c70]
-80073B4C	lui    a3, $00ff
+
 S0 = 0010;
 S6 = S2;
 S4 = S3;
@@ -3014,8 +2962,9 @@ S0 = S0 + 0001;
 [SP + 0064] = w(V0);
 V0 = h[S2 + 0000];
 S2 = S2 + 0004;
-80073B9C	jal    $system_gte_matrix_mult_and_trans
 [SP + 006c] = w(V0);
+system_gte_matrix_mult_and_trans();
+
 A0 = S4;
 80073BA8	jal    func7372c [$8007372c]
 A1 = SP + 0090;
@@ -3026,8 +2975,9 @@ S3 = S3 + 0070;
 A0 = 80d4;
 V0 = w[800c3740];
 A3 = w[800acfe0];
-80073BD8	jal    func7a26c [$8007a26c]
 A0 = V0 + A0;
+func7a26c(); // add to render something
+
 V0 = S0 < 0014;
 80073BE4	bne    v0, zero, loop73b70 [$80073b70]
 80073BE8	nop
@@ -3042,8 +2992,9 @@ S1 = S1 + 0070;
 S0 = S0 + 0001;
 A0 = w[800c3740];
 A3 = w[800acfe0];
-80073C18	jal    func7a180 [$8007a180]
 A0 = A0 + S2;
+func7a180(); // add to render something
+
 V0 = S0 < 0010;
 80073C24	bne    v0, zero, loop73bfc [$80073bfc]
 A1 = S1;
@@ -3058,19 +3009,16 @@ S1 = S1 + 0070;
 S0 = S0 + 0001;
 A0 = w[800c3740];
 A3 = w[800acfe0];
-80073C5C	jal    func7a180 [$8007a180]
 A0 = A0 + S2;
+func7a180(); // add to render something
+
 V0 = S0 < 19;
 80073C68	bne    v0, zero, loop73c3c [$80073c3c]
-80073C6C	lui    a3, $00ff
 
 L73c70:	; 80073C70
-A3 = A3 | ffff;
-
 L73c74:	; 80073C74
-A0 = 00a0;
+A0 = a0;
 A1 = 800b12d4;
-80073C80	lui    t0, $ff00
 V0 = w[800acfe0];
 A2 = w[800c3740];
 V1 = V0 << 01;
@@ -3078,38 +3026,21 @@ V1 = V1 + V0;
 V1 = V1 << 06;
 V1 = V1 + A1;
 A1 = w[V1 + 0000];
-80073CA8	lui    at, $0001
-AT = A2 + AT;
-V0 = w[AT + 80d4];
-A1 = A1 & T0;
-V0 = V0 & A3;
+V0 = w[A2 + 80d4];
+A1 = A1 & ff000000;
+V0 = V0 & 00ffffff;
 A1 = A1 | V0;
 [V1 + 0000] = w(A1);
-80073CC4	lui    at, $0001
-AT = A2 + AT;
-V0 = w[AT + 80d4];
-V1 = V1 & A3;
-V0 = V0 & T0;
+V0 = w[A2 + 80d4];
+V1 = V1 & 00ffffff;
+V0 = V0 & ff000000;
 V0 = V0 | V1;
-80073CDC	lui    at, $0001
-AT = A2 + AT;
-[AT + 80d4] = w(V0);
-80073CE8	jal    $system_gte_set_screen_offset
+[A2 + 80d4] = w(V0);
 A1 = 0070;
+system_gte_set_screen_offset();
+
 A0 = w[800aeecc];
-80073CF8	jal    $80049ff4
-80073CFC	nop
-RA = w[SP + 00f4];
-S6 = w[SP + 00f0];
-S5 = w[SP + 00ec];
-S4 = w[SP + 00e8];
-S3 = w[SP + 00e4];
-S2 = w[SP + 00e0];
-S1 = w[SP + 00dc];
-S0 = w[SP + 00d8];
-SP = SP + 00f8;
-80073D24	jr     ra 
-80073D28	nop
+system_gte_set_projection_plane_distance();
 ////////////////////////////////
 
 
@@ -3605,7 +3536,7 @@ L740f8:	; 800740F8
     A0 = S4;
     A0 = 800aef58;
     A1 = A1 + 000c;
-    800745F4	jal    $800490b4
+    800745F4	jal    $system_gte_matrix_multiplication_to_A2
     A2 = S4;
     800745FC	j      L74618 [$80074618]
     80074600	nop

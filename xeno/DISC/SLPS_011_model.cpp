@@ -1,5 +1,6 @@
 ////////////////////////////////
-// func2c1f8
+// func2c1f8()
+
 // sets global offsets for model file and return number of parts
 // A0 - pointer to model 3d data file
 

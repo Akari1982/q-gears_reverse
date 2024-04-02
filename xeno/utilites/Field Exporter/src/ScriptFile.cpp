@@ -158,6 +158,16 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0x0C_Encounter()" );
                     pointer += 1;
                 }
+                else if( opcode == 0x14 )
+                {
+                    exp->Log( "opcode14()" );
+                    pointer += 1;
+                }
+                else if( opcode == 0x15 )
+                {
+                    exp->Log( "opcode15()" );
+                    pointer += 1;
+                }
                 else if (opcode == 0x16)
                 {
                     exp->Log( "-- 0x16_EntityPCInit( " + GetV80Variable( pointer + 1 ) + " )" );
@@ -208,6 +218,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0x5B()");
                     pointer += 1;
                 }
+                else if( opcode == 0x60 )
+                {
+                    exp->Log( "opcode60()");
+                    pointer += 1;
+                }
                 else if( opcode == 0x63 )
                 {
                     exp->Log( "-- 0x63()");
@@ -240,7 +255,7 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0x99 )
                 {
-                    exp->Log( "-- 0x99()");
+                    exp->Log( "opcode99()");
                     pointer += 1;
                 }
                 else if( opcode == 0x9c )
@@ -338,9 +353,34 @@ ScriptFile::GetScripts( const std::string& path )
                         exp->Log( "-- 0xFE35()");
                         pointer += 6;
                     }
+                    else if( eo_opcode == 0x4f )
+                    {
+                        exp->Log( "opcodeFE4F()" );
+                        pointer += 1;
+                    }
+                    else if( eo_opcode == 0x50 )
+                    {
+                        exp->Log( "opcodeFE50()" );
+                        pointer += 1;
+                    }
+                    else if( eo_opcode == 0x51 )
+                    {
+                        exp->Log( "opcodeFE51()" );
+                        pointer += 1;
+                    }
+                    else if( eo_opcode == 0x52 )
+                    {
+                        exp->Log( "opcodeFE52()" );
+                        pointer += 1;
+                    }
+                    else if( eo_opcode == 0x53 )
+                    {
+                        exp->Log( "opcodeFE54()" );
+                        pointer += 1;
+                    }
                     else if( eo_opcode == 0x54 )
                     {
-                        exp->Log( "-- 0xFE54()" );
+                        exp->Log( "opcodeFE54()" );
                         pointer += 1;
                     }
                     else if( eo_opcode == 0x63 )

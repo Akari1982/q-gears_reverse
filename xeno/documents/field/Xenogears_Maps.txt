@@ -1,0 +1,851 @@
+Xenogears Maps
+
+Folder
+0605 / 11 (729 Maps)
+
+File#/Game# - Debug Room Code
+[DRM] DRaMa Cutscenes
+[ENC] ENCounter Boss Battle
+
+Debug Room
+*0606/000* - Debug Room
+
+Lahan Village
+0608/001 - Lahan
+	*0610/002* - Lahan (Under Attack) [DRM]
+	*0612/003* - Outside Lahan (Aftermath) [DRM]
+0614/004 - Prologue [DRM]
+0616/005 - Village Consultant's House
+0618/006 - General Store
+0620/007 - RPS House
+0622/008 - RPS Basement
+0624/009 - Tavern
+0626/010 - Tavern Upstairs
+0628/011 - Alice's House
+0630/012 - Alice's Room
+0632/013 - Chief Lee's House
+0634/014 - Chief Lee's Basement - Fei's Room (START)
+
+Mountain Path
+0636/015 - Mountain Path
+0638/016 - Mountain Path Sky [DRM] - Gears fly overhead at night
+
+Citan's House
+0640/017 - Citan's House Outside
+0642/018 - Citan's Bedroom
+0644/019 - Citan's House
+0646/020 - Citan's Observatory
+0648/021 - Citan's Workshop
+
+Blackmoon Forest
+0650/022 - Blackmoon Forest
+0652/023 - Blackmoon Forest Part 2 [DRM] - Fei wakes up in forest, pre Rankar fight
+0654/024 - Blackmoon Forest Clearing [DRM] - Rankar Fight Area
+0656/025 - Blackmoon Forest Night [DRM] - Fei and Elly at campfire
+0658/026 - Blackmoon Forest Night [DRM] - Citan, Fei and Elly + Weltall
+0660/027 - Sky Above Lahan [DRM] - Elly's Flashback crashing in Lahan
+0662/028 - Lahan [DRM] - Elly's Flashback crashing in Lahan
+
+Dazil
+0664/029 - Dazil Waterworks
+0666/030 - Dazil Office
+0668/031 - Dazil House1
+0670/032 - Dazil House2
+0672/033 - Dazil House3
+0674/034 - Dazil House4
+0676/035 - Dazil
+0678/036 - Dazil Rental Shop
+0680/037 - Dazil Treasure Hunters Association
+0682/038 - Dazil Guardhouse
+0684/039 - Dazil Excavation Site [DRM]
+0686/040 - Dazil Bar
+	*0688/041* - FMVs
+	*0690/042* - Dokudemo Debug Room
+0692/043 - Dazil Bar Upstairs
+0694/044 - Dazil Shop
+0696/045 - Dazil Ethos Workshop
+
+Desert/Duneman Isle
+0698/046 - Duneman Isle Sandfall
+0700/047 - Duneman Isle Sandfall Bottom [ENC]
+0702/048 - Desert
+0704/049 - Desert [DRM] Fei runs into desert to find Citan, sees Shevat
+0706/050 - Desert Sunset [DRM] Fei gets motorcycle
+0708/051 - Duneman Isle Dinosaur Bones
+0710/052 - Duneman Isle Dinosaur Bones 2 - Sword?
+0712/053 - Dunes
+0714/054 - Desert Night [DRM] Fei runs into hostile Gears, Citan saves him
+0716/055 - Desert Night [DRM] Weltall's cockpit, Grahf introduction
+
+Sand Cruiser/Desert
+0718/056 - Sand Cruiser Room [DRM] Fei and Citan in the sand cruiser
+0720/057 - Sand Cruiser Lower Rooms-section 2
+0722/058 - Sand Cruiser Lower Rooms-section 1
+0724/059 - Sand Cruiser Top [DRM] - Fei on top of the sand cruiser
+0726/060 - Sand Cruiser Sinking [DRM]
+0728/061 - Sand Cruiser Top [DRM] Fei in Weltall takes Citan to Desert
+0730/062 - Desert [DRM] Bart's introduction in Bridgandier
+0732/063 - Sand Cruiser [DRM] Sand cruiser driving with Weltall on top
+
+Stalactite Cave
+0734/064  Stalactite Cave [GEAR]
+0736/065  Stalactite Cave - Aveh Excavation Site
+0738/066  Stalactite Cave - Outside Bal's Cave [DRM]
+0740/067  Stalactite Cave - Passageway
+0742/068  Stalactite Cave - Passageway2
+0744/069  Stalactite Cave - Excavation Site
+0746/070  Stalactite Cave - Calamity
+0748/071  Stalactite Cave - Balthasar's Cave
+0750/072  Stalactite Cave - Intro [DRM]
+0752/073  Outside Stalactite Cave [DRM]
+
+Pirate's Lair
+0754/074  Pirate's Lair - Residential Section [DRM]
+0756/075  Pirate's Lair - Dining Hall [DRM]
+0758/076  Pirate's Lair - Crew Quarters
+0760/077  Pirate's Lair - Bart's Room
+0762/078  Pirate's Lair - Strategy Room
+0764/079  Pirate's Lair - Yggdrasil Dock
+0766/080  Pirate's Lair - Yggdrasil Dock Sequence [DRM]
+0768/081  Maison's Story [DRM]
+0770/082  Pirate's Lair - Yggdrasil Dock [DRM]
+0772/083  Pirate's Lair - Yggdrasil Dock [DRM]
+0774/084  Pirate's Lair - Yggdrasil Dock - Lower
+
+Nisan
+0776/085  Nisan - Shop
+0778/086  Nisan - House
+0780/087  Nisan - Inn
+0782/088  Nisan - Meeting Hall
+0784/089  Operation Aveh - Planning Map [DRM]
+0786/090  Nisan - House
+0788/091  Nisan - Studio
+0790/092  Nisan - House
+0792/093  Nisan
+
+Nisan Cathedral
+0794/094 Nisan - Overworld
+0796/095 Nisan - Cathedral Ground Floor
+0798/096 Nisan - Secret Dock (Yggdrasil)
+0800/097 Nisan - Cathedral Library
+0802/098 Nisan - Cathedral, Sophia's Portrait
+0804/099 Nisan - Cathedral, 1st Staircase
+0806/100 Nisan - Cathedral, 2nd Staircase
+
+Bledavik
+0808/101  Bledavik - Overworld
+0810/102  Bledavik - Market
+0812/103  Bledavik - Market - Liberated
+0814/104  Bledavik - Market - Inn
+0816/105  Bledavik - Market - Inn - 2F Room + Window
+0818/106  Bledavik - Market - Inn - 2F Right Room
+0820/107  Bledavik - Market - Inn - 1F Room
+0822/108  Bledavik - Market - Inn - 2F Left Room
+0824/109  Bledavik - Market - House1
+0826/110  Bledavik - Market - House1 - 2F
+0828/111  Bledavik - Market - House2
+0830/112  Bledavik - Market - House2 - 2F
+0832/113  Bledavik - Market - Armor Shop - Storage Room
+0834/114  Bledavik - Market - Armor Shop
+0836/115  Bledavik - Market - House
+0838/116  Bledavik - Market - Cat House
+0840/117  Bledavik - Market - Cat House - 2F
+0842/118  Bledavik - Market - Restaurant
+0844/119  Bledavik - Market - Item Shop
+0846/120  Bledavik - Market - Weapon Shop
+0848/121  Bledavik - Market - Gear Shop
+0850/122  Bledavik - Market - Gear Shop - Observation Room
+0852/123  Bledavik - Market - Restaurant
+0854/124  Bledavik - Square
+0856/125  Bledavik - Square
+0858/126  Bledavik - Square - Tent
+0860/127  Bledavik - Square - Tent - Balloon Game
+0862/128  Bledavik - Square - Tent - Square Game
+0864/129  Bledavik - Square - Tent - Curtain Game
+0866/130  Bledavik - Waterway
+0868/131  Bledavik - Palace - Gate - Tournament
+0870/132  Bledavik - Palace - Gate - Liberated
+0872/133  Bledavik - Palace - Courtyard
+0874/134  Bledavik - Palace - Courtyard [DRM]
+0876/135  Bledavik - Palace
+0878/136  Bledavik - Palace - 2F Room1
+0880/137  Bledavik - Palace - 2F Room2
+0882/138  Bledavik - Palace - 1F Room1
+0884/139  Bledavik - Palace - 1F Room2
+0886/140  Bledavik - Palace - Meeting Room
+0888/141  Bledavik - Palace - Vanderkaum Room
+0890/142  Bledavik - Palace - VIP Room
+0892/143  Bledavik - Palace - Kitchen
+0894/144  Bledavik - Palace - Dining Hall
+0896/145  Bledavik - Palace - Library
+0898/146  Bledavik - Palace - Minister Room
+0900/147  Bledavik - Palace - Waterway
+0902/148  Bledavik - Palace - Gate - Tournament - Tent
+0904/149  Bledavik - Palace - Gate - Tournament - Tent
+0906/150  Bledavik - Palace - Throne Room
+0908/151  Bledavik - Palace - Royal Dining Room
+0910/152  Bledavik - Palace
+0912/153  Bledavik - Palace - Royal Bedroom
+0914/154  Bledavik - Palace - Mergie Bedroom
+0916/155  Bledavik - Palace - King Bedroom
+0918/156  Bledavik - Palace
+0920/157  Bledavik - Palace
+0922/158  Bledavik - Palace
+0924/159  Bledavik - Palace - 3F
+0926/160  Bledavik - Palace - Ramsus Bedroom [DRM]
+0928/161  Ramsus Nightmare [DRM]
+0930/162  Bledavik - Gebler - Meeting Room
+0932/163  Bledavik - Gebler - Pathway
+0934/164  Bledavik - Gebler - Hallway
+0936/165  Bledavik - Gebler - Elly's Room
+0938/166  Bledavik - Gebler - Hallway
+0940/167  Bledavik - Gebler - Elevator
+0942/168  Bledavik - Gebler - Dock
+0944/169  Bledavik - Gebler - Lauchpad [DRM]
+0946/170  Bledavik - Gebler - Solaris Ship Docking Sequence [DRM]
+0948/171  Bledavik - Gebler - Dock
+
+Desert - Kislev Border
+0950/172  Kislev Border [GEAR] [ENC]
+0952/173  Kislev Border [GEAR] [ENC]
+0954/174  Kislev Border - Elly Team [GEAR]
+0956/175  Kislev Border [GEAR] [ENC]
+0958/176  Bledavik - Gebler - Hallway [DRM]
+0960/177  Kislev Border [DRM]
+0962/178  Kislev Border [DRM]
+0964/179  Ramsus Ship [DRM]
+0966/180  Desert - Vanderkaum minigame
+0968/181  Desert - Vanderkaum minigame
+0970/182  Desert - Vanderkaum [DRM]
+0972/183  Desert - Dora [DRM]
+0974/184  Desert - Vanderkaum [DRM]
+0976/185  Desert - Dora [DRM]
+0978/186  Desert - Dora [DRM]
+0980/187  Desert - Bart [DRM]
+0982/188  Desert - Id [DRM]
+0984/189  Desert - Bart vs Id [DRM]
+0986/190  Desert - Bart vs Id [DRM]
+0988/191  Desert - Yggdrasil [DRM]
+0990/192  Desert - Ramsus + Miang [DRM]
+0992/193  Vanderkaum Ship [DRM]
+
+Kislev
+0994/194  Kislev - Map
+0996/195  Kislev - D Block
+0998/196  Kislev - D Block
+1000/197  Kislev - D Block - Train [DRM]
+1002/198  Kislev - Map - After Attack
+1004/199  Kislev - A Block [DRM]
+1006/200  Kislev - A Block - House
+1008/201  Kislev - A Block - House - Toilet
+1010/202  Kislev - A Block - Barracks
+1012/203  Kislev - A Block - Barracks - Room
+1014/204  Kislev - A Block - Barracks - 2F
+1016/205  Kislev - A Block - Restaurant
+1018/206  Kislev - A Block - Armor Shop
+1020/207  Kislev - A Block - Item Shop
+1022/208  Kislev - A Block - House
+1024/209  Kislev - D Block - Battler Exchange
+1026/210  Kislev - D Block - Battler Exchange - Observation
+1028/211  Kislev - D Block - Dining Hall
+1030/212  Kislev - D Block - Dining Hall - Storeroom
+1032/213  Kislev - D Block - Dining Hall - Basement
+1034/214  Kislev - D Block - Dining Hall - Basement - Shower Room
+1036/215  Kislev - D Block - Orphanage
+1038/216  Kislev - D Block - Orphanage - 2F
+1040/217  Kislev - D Block - Bar
+1042/218  Kislev - D Block - Bar - 2F (Champ's Room)
+1044/219  Kislev - D Block - Bar - 2F - Bedroom
+1046/220  Kislev - D Block - House
+1048/221  Kislev - Battling Arena
+1050/222  Kislev - Battling Arena - After Attack
+1052/223  Kislev - Battling Arena - Weltall [DRM]
+1054/224  Rico vs Rankar [DRM]
+1056/225  Rico vs Rankar [DRM]
+1058/226  Kislev - Central - B1F Chicken Hallway
+1060/227  Kislev - Central - B1F Kitchen
+1062/228  Kislev - Central - B1F Warehouse
+1064/229  Rico Past [DRM]
+1066/230  Kislev - Central - Entrance
+1068/231  Kislev - Central - Hallway
+1070/232  Kislev - Central - Plane Room
+1072/233  Kislev - Central - Stair
+1074/234  Gazel Ministers Ship [DRM]
+1076/235  Kislev - Central - 2F Bridge
+1078/236  Kislev - Central - 2F Sigmund Room
+1080/237  Kislev - Central - 2F Organ Room
+	*1082/238*  - Debug Room - ???
+1084/239  Kislev - D Block - Sewer [ENC]
+1086/240  Kislev - D Block - Sewer [ENC]
+1088/241  Kislev - D Block - Sewer [ENC]
+1090/242  Kislev - D Block - Sewer - Pipe Room
+1092/243  Fei's Mind - Pendant [DRM]
+1094/244  Kislev - Battling Arena - Attack on Nortune [DRM]
+1096/245  Cockpit - Fei [DRM]
+1098/246  Sky - Cockpit - Elly [DRM]
+1100/247  Kislev - A Block [DRM]
+1102/248  Grahf Shields Elly [DRM]
+1104/249  Kislev - Map - Attack on Nortune [DRM]
+1106/250  Kislev - Under Arena - Gear Dock [GEAR]
+1108/251  Kislev - Under Arena - Room
+1110/252  Kislev - Under Arena - Reception
+1112/253  Kislev - Under Arena - Warehouse
+1114/254  Kislev - Under Arena - Workout Room
+1116/255  Kislev - Under Arena - Office
+1118/256  Kislev - Under Arena [ENC]
+1120/257  Kislev - Under Arena [ENC]
+1122/258  Kislev - Under Arena [ENC]
+1124/259  Kislev - Under Arena - Vent
+
+Goliath Factory
+1126/260  Goliath Factory [GEAR]
+1128/261  Goliath Factory [GEAR]
+1130/262  Goliath Factory [GEAR]
+1132/263  Goliath Factory - Convey Belt [GEAR]
+1134/264  Goliath Factory [GEAR]
+1136/265  Goliath Factory - Convey Belt [GEAR]
+1138/266  Goliath Factory - Convey Belt [GEAR]
+1140/267  Goliath Factory - Convey Belt [GEAR]
+1142/268  Goliath Factory - Convey Belt [GEAR]
+
+Goliath
+1144/269  Goliath Bridge [DRM]
+1146/270  Goliath Bridge [DRM]
+1148/271  Goliath [DRM]
+
+[World]
+1150/272  Ramsus Ship [DRM]
+1152/273  Gazel Ministry [DRM]
+1154/274  Gazel Ministry [DRM]
+1156/275  Yggdrasil Bridge [DRM]
+1158/276  Cockpit - Citan [DRM]
+1160/277  Desert - Dora [DRM]
+1162/278  Desert - Yggdrasil [DRM]
+1164/279  Yggdrasil vs Goliath [DRM]
+1166/280  Desert - Yggdrasil [DRM]
+1168/281  Desert - Yggdrasil - Deck [DRM]
+1170/282  Yggdrasil - Gun Room - Maison's Bar Closeup [DRM]
+		
+Yggdrasil
+1172/283  Yggdrasil - Deck [DRM]
+1174/284  Yggdrasil - Gear Dock [DRM]
+1176/285  Yggdrasil - Deck [DRM]
+1178/286  Yggdrasil - Engine Room - Elly [DRM]
+1180/287  Yggdrasil - Bridge [DRM]
+1182/288  Yggdrasil - Gun Room
+1184/289  Yggdrasil - Crew Quarters
+1186/290  Yggdrasil - Bridge
+1188/291  Yggdrasil - Gear Dock [GEAR]
+1190/292  Yggdrasil - Gear Dock - Shop
+1192/293  Yggdrasil - Gear Dock - Gear
+1194/294  Yggdrasil IV - Bridge [DRM]
+1196/295  Yggdrasil - Engine Room
+1198/296  Yggdrasil - Gear Dock - Gear [DRM]
+1200/297  Yggdrasil - Deck [DRM]
+1202/298  Yggdrasil - Right Guest Room
+1204/299  Yggdrasil - Medical Room
+1206/300  Yggdrasil - Left Guest Room
+1208/301  Yggdrasil - Margie Room
+1210/302  Yggdrasil - Elevator Up - Bridge
+1212/303  Yggdrasil - Gunroom
+1214/304  Yggdrasil - Elevator down - Hallway
+1216/305  Yggdrasil Charted Ignas Map [DRM]
+1218/306  Yggdrasil Charted World Map [DRM]
+1220/307  Yggdrasil Charted World Map - POST DEUS TERRAFORM [DRM]
+1222/308  Ocean - Goliath Scrap Drifting part 2 [DRM]
+1224/309  Ocean - Goliath Scrap Drifting part 1 [DRM]
+
+Thames
+1226/310  Thames [DRM]
+1228/311  Ocean - Yggdrasil being fired on - Yggdrasil vs Haishao [DRM]
+1230/312  Thames - B2F Dock
+1232/313  Thames - 2F Medical Room
+1234/314  Thames - 4F Bridge
+1236/315  Thames - 3F Beer Hall
+1238/316  Thames - 1F Deck - Market
+1240/317  Thames - Spinning Elevator
+1242/318  Thames - B1F Warehouse
+1244/319  Thames - 1F Deck - Map
+1246/320  Thames - 1F Deck - Market [DRM]
+1248/321  Card Battle Mini-game "Speed"
+
+1250/322  Sky - Ramsus Ship [DRM]
+1252/323  Underwater - Gear Cockpit - Dominia & Kelvena [DRM]
+1254/324  Gebler - Hallway - Dominia confronts Elly [DRM]
+1256/325  Gebler - Room - Elly and Miang [DRM]
+
+Orphanage
+1258/326  Orphanage
+1260/327  Orphanage - Dining Room
+1262/328  Orphanage - Primera Room
+1264/329  Orphanage - Billy Room
+1266/330  Orphanage - Toilet
+1268/331  Orphanage - Bedroom
+1270/332  Orphanage - Past - Dining Room [DRM] - Billy's story
+
+Wels Ship
+1272/333  Wels Ship - Hanging Bridge
+1274/334  Wels Ship - Bridge [DRM]
+1276/335  Wels Ship - Hanging Bridge [DRM]
+1278/336  Wels Ship - Meeting Room
+1280/337  Wels Ship - Meat-hanging Room
+1282/338  Wels Ship - Dark Room
+
+Ethos HQ	
+1284/339  Ethos HQ - Entrance
+1286/340  Ethos HQ - Bedroom
+1288/341  Ethos HQ - Bedroom
+1290/342  Ethos HQ - Gear Hangar - Alkanshel Enters [DRM]
+1292/343  Ethos HQ - Stair - 1F-2F
+1294/344  Ethos HQ - Stair - 1F-B1F
+1296/345  Ethos HQ - Stair - B1F-2F
+1298/346  Ethos HQ - 1F Hallway
+1300/347  Ethos HQ - 2F Hallway
+1302/348  Ethos HQ - 2F Hallway
+1304/349  Ethos HQ - 1F Library
+1306/350  Ethos HQ - 1F Dining Hall
+1308/351  Ethos HQ - 1F Dining Hall - Kitchen
+1310/352  Ethos HQ - B1F Ward [DRM]
+1312/353  Ethos HQ - B1F Hallway [ENC]
+1314/354  Ethos HQ - 1F Confession Room
+1316/355  Ethos HQ - B1F Hallway [ENC]
+1318/356  Ethos HQ - B1F Jail
+1320/357  Ethos HQ - B1F Elevator Top
+1322/358  Ethos HQ - B2F Elevator Bottom
+1324/359  Ethos HQ - B2F Computer Room [DRM]
+1326/360  Ethos HQ - B2F Observation [DRM]
+
+Zeboim
+1328/361  Zeboim - Elevator Top
+1330/362  Zeboim - Elevator Bottom
+1332/363  Zeboim - Room
+1334/364  Underwater - Grahf [DRM]
+1336/365  Zeboim - Elevator
+1338/366  Gazel Ministry Ship [DRM]
+1340/367  Zeboim - Red Hallway
+1342/368  Zeboim - Hallway [ENC]
+1344/369  Zeboim - Tube Room
+1346/370  Zeboim - Stairs
+1348/371  Zeboim - Red Hallway
+1350/372  Zeboim - Hallway [ENC]
+1352/373  Zeboim - Tube Room
+1354/374  Zeboim - Big Tube Room
+1356/375  Zeboim - Stairs
+1358/376  Zeboim - Red Hallway
+1360/377  Zeboim - Room
+1362/378  Zeboim - Computer Room
+1364/379  Zeboim - Emeralda Room
+1366/380  Yggdrasil - Medical Room - Fei-Id [DRM]
+1368/381  Fei Past - Kim [DRM]
+1370/382  Zeboim - Crossroad Room
+1372/383  Zeboim - Sky Bridge
+1374/384  Zeboim - Hallway [ENC]
+1376/385  Zeboim - Hallway [ENC]
+1378/386  Zeboim - Elevator Up
+1380/387  Zeboim - Stairs
+1382/388  Ocean - Alkanshel spots Yggdrasil [DRM]
+1384/389  Zeboim - Kim Elly Emeralda [DRM]
+1386/390  Zeboim - Kim Elly Bedroom [DRM]
+
+Lighthouse
+1388/391  Lighthouse - Zeboim - Store
+1390/392  Lighthouse - Zeboim - Store - 2F
+1392/393  Lighthouse - Zeboim - Big Joe Shop
+1394/394  Lighthouse - Zeboim - TV Station - 2F
+1396/395  Lighthouse - Zeboim - TV Station
+1398/396  Lighthouse - Zeboim - Courtyard with Fountain
+1400/397  Lighthouse - Zeboim - Train Track
+1402/398  Lighthouse - Zeboim - Train Track
+1404/399  Lighthouse - Zeboim - Train Track
+1406/400  Lighthouse - Zeboim - Christmas Tree [DRM]
+1408/401  Lighthouse - Zeboim - Restaurant [DRM]
+1410/402  Lighthouse - Entrance [GEAR]
+1412/403  Lighthouse - Zeboim [GEAR]
+1414/404  Lighthouse - Elevator [GEAR] [DRM]
+
+Babel Tower
+1416/405  Babel Tower - Entrance [GEAR]
+1418/406  Babel Tower [GEAR]
+1420/407  Babel Tower [GEAR]
+1422/408  Babel Tower - Control Room
+1424/409  Babel Tower - Train [GEAR]
+1426/410  Babel Tower - Train - Control Room
+1428/411  Babel Tower - Train [DRM]
+1430/412  Babel Tower - Hallway [GEAR] [ENC]
+1432/413  Babel Tower - Hallway [GEAR] [ENC]
+1434/414  Babel Tower - Hallway [GEAR] [ENC]
+1436/415  Babel Tower - Hallway [GEAR] [ENC]
+1438/416  Babel Tower - Round Platform [GEAR] [ENC]
+1440/417  Babel Tower - Master Control Room
+1442/418  Babel Tower - Top [GEAR] [ENC]
+1444/419  Babel Tower - Top [GEAR] [ENC]
+1446/420  Babel Tower - Seibzehn [GEAR]
+1448/421  Babel Tower - Mirror [DRM]
+1450/422  Babel Tower - Train [DRM]
+
+Shevat
+1452/423  Shevat - Overworld
+1454/424  Shevat - City
+1456/425  Shevat - City - B1F Circular Hallway
+1458/426  Shevat - City - B1F Center
+1460/427  Shevat - City - B2F
+1462/428  Shevat - City - 3 Rocks secret Room
+1464/429  Shevat - City - Bar
+1466/430  Shevat - City - Chu-chu Shop
+1468/431  Shevat - City - Fountain
+1470/432  Shevat - City - Ruined House
+1472/433  Shevat - City - Ruined House - 2F
+1474/434  Shevat - City - Ruined House - 2F - Room
+1476/435  Shevat - City - House
+1478/436  Shevat - City - House - B1F Gear Shop
+1480/437  Shevat - Dock Floor
+1482/438  Shevat - Dock Floor - Elevator
+1484/439  Shevat - Dock Floor - Seibzehn Hallway
+1486/440  Shevat - Dock Floor - Dock
+1488/441  Shevat - Dock Floor - Seibzehn Room
+1490/442  Shevat - Sky - Achtzehn vs Siebzehn [DRM]
+1492/443  Shevat - Seibzehn Drops From Shevat [DRM]
+1494/444  Shevat - Dock Floor - Emergency Shaft
+1496/445  Shevat - Dock Floor - Emergency Shaft
+1498/446  Shevat - Dock Floor - Emergency Shaft - Rotating Stair
+1500/447  Shevat - Dock Floor - Emergency Shaft
+1502/448  Shevat - Dock Floor - Emergency Shaft
+1504/449  Shevat - Dock Floor - Emergency Shaft - Outside
+1506/450  Shevat - Dock Floor - Emergency Shaft - Outside
+1508/451  Shevat - Palace
+1510/452  Shevat - Palace - Throne Room Hallway
+1512/453  Shevat - Palace - Throne Room
+1514/454  Shevat - Palace - Throne Room - Gaspar [DRM]
+1516/455  Shevat - Palace - Throne Room Hallway - Room
+1518/456  Shevat - City - Tower Top
+1520/457  Shevat - Palace - Prison Hallway
+1522/458  Shevat - Palace - Prison Hallway
+1524/459  Shevat - Palace - Limiter Lab
+1526/460  Shevat - Palace - Monitor Room
+1528/461  Shevat - Palace - Library
+1530/462  Shevat - Palace - Bedroom
+1532/463  Shevat - Palace - Room
+1534/464  Shevat - Palace - Room
+1536/465  Shevat - Palace - 3 Scholar Room
+1538/466  Shevat - Palace - Bedroom
+1540/467  Shevat - Palace - Prison
+1542/468  Shevat - Palace - Courtroom
+1544/469  Shevat - Palace - Miang Prison
+1546/470  Shevat - Palace - Dining Room
+1548/471  Shevat - Palace - Warehouse
+1550/472  Shevat - Dock Floor - Elevator
+1552/473  Shevat - Palace - Throne Room - Achtzehn
+
+Nisan - Ft. Jasper
+1554/474  Nisan - Soldier
+1556/475  Nisan - Mausoleum - Stairs
+1558/476  Nisan - Mausoleum - Stairs
+1560/477  Nisan - Mausoleum - Gate
+1562/478  Nisan - Jasper - Outside
+1564/479  Nisan - Jasper - Elevator [DRM]
+1566/480  Nisan - Jasper - 1F
+1568/481  Nisan - Jasper - 1F Statues Room
+1570/482  Nisan - Jasper - 1F Control Room
+1572/483  Nisan - Jasper - Top [GEAR]
+1574/484  Nisan - Jasper - Elevator
+1576/485  Nisan - Jasper - 2F
+1578/486  Nisan - Jasper - 2F
+1580/487  Nisan - Jasper - 2F Scanning Room
+1582/488  Nisan - Jasper - 2F Center Room
+	*1584/489*  *FMV*
+*1586/490*  Title Screen
+1588/491  Nisan - Jasper - Andvari Room [DRM]
+1590/492  Nisan - Jasper - 2F Center Room
+1592/493  Nisan - Elly and Margie take care of Wels [DISC2] [DRM]
+
+Sargasso
+1594/494  Hermit Hole [GEAR]
+1596/495  Hermit Hole - Gate [GEAR]
+1598/496  Sargasso [GEAR]
+1600/497  Sargasso [GEAR]
+1602/498  Sargasso [GEAR]
+1604/499  Sargasso [GEAR]
+1606/500  Sargasso [GEAR]
+1608/501  Sargasso - Cave [GEAR]
+1610/502  Sargasso - Cave [GEAR]
+1612/503  Sargasso [GEAR]
+1614/504  Sargasso - Cave [GEAR]
+1616/505  Sargasso - Gate [GEAR]
+
+Solaris
+1618/506  Sky - Solaris [DRM]
+1620/507  Solaris - Krelian Lab - X-ray Room [DRM]
+1622/508  Solaris - Krelian Lab - Meeting Room
+1624/509  Solaris - City
+1626/510  Solaris - City - Waterway
+1628/511  Sky - Seibzehn flies towards Solaris *loads into 537*[DRM]
+1630/512  Solaris - F Block - Watchtower
+1632/513  Solaris - F Block - Watchtower - Scanner
+1634/514  Solaris - City - Ceremony [DRM]
+1636/515  Cain's Room [DRM]
+1638/516  Solaris - Escape - Join Room
+1640/517  Solaris - Escape - Bridge
+1642/518  Solaris - City - Ceremony [DRM]
+1644/519  Solaris - F Block
+1646/520  Solaris - F Block - Room
+1648/521  Solaris - F Block - Room
+1650/522  Solaris - F Block - Room
+1652/523  Solaris - F Block - Room
+1654/524  Solaris - F Block - Room - Elly
+1656/525  Solaris - Plant - Garbage Room
+1658/526  Solaris - F Block - Watchtower
+1660/527  Solaris - F Block - Watchtower - Scanner
+1662/528  Solaris - City - Office
+1664/529  Solaris - City - Ceremony
+1666/530  Solaris - City - Shopping Mall
+1668/531  Solaris - City - Room - 1F ToyGear
+1670/532  Solaris - City - Room - 2F
+1672/533  Solaris - City - Room - 1F Big Joe
+1674/534  Solaris - City - Room - 2F
+1676/535  Solaris - City - Hallway 1F
+1678/536  Solaris - City - Hallway 2F
+*1680/537*  Solaris - Sky Outside Entry - *crashes* 511 loads into 537 - Siebzehn drops party off at Solaris
+1682/538  Solaris - Elly's House
+1684/539  Solaris - Elly's House - Dining Room
+1686/540  Solaris - Elly's House - Living Room
+1688/541  Solaris - Elly's House - Dad's Office
+1690/542  Solaris - Elly's House - Elly's Room
+1692/543  Solaris - Elly's House - Entrance
+1694/544  Solaris - Plant - Garbage Room
+1696/545  Solaris - Plant - Fan Room
+1698/546  Solaris - Plant - Ladders
+1700/547  Solaris - Plant - Food Cans
+1702/548  Solaris - Plant - Hallway
+1704/549  Solaris - Plant - Lock-off Code Hints
+1706/550  Solaris - Plant - Lock-off Code Input
+1708/551  Solaris - Plant - Walkway
+1710/552  Solaris - Plant - Walkway
+1712/553  Solaris - Plant - Elevator Bottom
+1714/554  Solaris - Krelian Lab - Elevator Top
+1716/555  Solaris - Krelian Lab - Rotating Stair
+1718/556  Solaris - Krelian Lab - Hallway
+1720/557  Solaris - Krelian Lab - Hallway
+1722/558  Solaris - Krelian Lab - Hallway
+1724/559  Solaris - Krelian Lab - Hallway
+1726/560  Solaris - Krelian Lab - Hallway
+1728/561  Solaris - Krelian Lab - Hallway
+1730/562  Solaris - Krelian Lab - Hallway
+1732/563  Solaris - Krelian Lab - Hallway
+1734/564  Solaris - Krelian Lab - Hallway
+1736/565  Solaris - Krelian Lab - Hallway
+1738/566  Solaris - Krelian Lab - Hallway
+1740/567  Solaris - Krelian Lab - 3 Laser Room
+1742/568  Solaris - Krelian Lab - Big Cage Room
+1744/569  Solaris - Krelian Lab - Fetus Room [ENC]
+1746/570  Solaris - Krelian Lab - 3 Small Cage Room
+1748/571  Solaris - Krelian Lab - 3 Small Cage Room
+1750/572  Solaris - Krelian Lab - Opiomorph Room
+1752/573  Solaris - Krelian Lab - Computer Room
+1754/574  Solaris - Krelian Lab - Memory Cube Room
+1756/575  Solaris - Krelian Lab - Meeting Room [ENC]
+1758/576  Solaris - Krelian Lab - Experiment Room
+1760/577  Solaris - Krelian Lab - Experiment Room
+1762/578  Solaris - Krelian Lab - Tunnel
+1764/579  Solaris - Krelian Lab - Id Room
+1766/580  Solaris - Krelian Lab - Wanted Room
+1768/581  Solaris - Krelian Lab - Simulation Room
+1770/582  Solaris - Krelian Lab - Simulation Room
+1772/583  Solaris - Krelian Lab - Simulation Room
+1774/584  Solaris - Krelian Lab - Tube Stairs
+1776/585  Solaris - Krelian Lab - Tube Stairs
+1778/586  Solaris - Krelian Lab - Tube Stairs
+1780/587  Solaris - Krelian Lab - Earth Layers Room
+1782/588  Solaris - Krelian Lab - Shooting Room
+1784/589  Solaris - Krelian Lab - 3 Angel Room
+1786/590  Solaris - Krelian Lab - Scanning Room
+1788/591  Solaris - Krelian Lab - Id Room [DRM]
+1790/592  Solaris - Escape - Vent
+1792/593  Solaris - Energy Core - Gate [DRM]
+1794/594  Solaris - Escape - Vent
+1796/595  Solaris - Krelian Lab - X-ray Room [DRM]
+1798/596  Solaris - Escape - Split Room
+1800/597  Solaris - Krelian Lab - Hallway
+1802/598  Solaris - Krelian Lab - Hallway
+1804/599  Solaris - Krelian Lab - Hallway
+1806/600  Solaris - Krelian Lab - Hallway
+1808/601  Solaris - Krelian Lab - Hallway
+1810/602  Solaris - Escape - Hallway
+1812/603  Solaris - Krelian Lab - Shooting Room
+1814/604  Solaris - Krelian Lab - Computer Room
+1816/605  Solaris - Krelian Lab - Meeting Room
+1818/606  Solaris - Hallways
+1820/607  Solaris - Escape - Bridge [DRM]
+1822/608  Solaris - Escape - Bridge [DRM]
+1824/609  Sky - Solaris vs Id [DRM]
+1826/610  Sky - Solaris [DRM]
+
+Intermission - Disc 2
+1828/611  Yggdrasil - Bridge on Alert as Solaris Crashes [DRM]
+1830/612  Taura's House - Weltall-2 [DRM]
+*1832/613  Sky - Cockpit - Ramsus [DRM] [DISC 1]
+1834/614  Taura's House - Outside
+1836/615  Taura's House
+1838/616  Past - Taura's Lab - Krelian talks with Melchior [DRM]
+1840/617  Chair - Elly returns to Nisan [DRM]
+1842/618  Chair - Fei - Ft Hurricane - Anima Dungeon 1 Aftermath [DRM]
+1844/619  Golgotha (Golgoda) Elly arrives to rescue Fei [DRM]
+
+Wels Facility - Soylent System
+1846/620  Wels Facility - Room full of Wels [DRM]
+1848/621  Wels Facility - Hallway [DRM]
+1850/622  Wels Facility - *Save Screen* -> Sufal Mass boss fight [DRM]
+1852/623  Wels Facility - Conveyor Tubes [DRM]
+1854/624  Wels Facility  - Conveyor System Wide Shot [DRM]
+1856/625  Wels Facility - Sufal Mass Chamber [DRM]
+1858/626  Wels Facility - Chamber Platform [DRM]
+
+Anima Dungeon 1 - Billy
+1860/627  G-Elements! [DRM]
+1862/628  Anima Dungeon 1 - Hangar [GEAR]
+1864/629  Anima Dungeon 1 - Control Room
+1866/630  Anima Dungeon 1 - Main Control Room
+1868/631  Anima Dungeon 1 - Central Elevator Control Room
+1870/632  Anima Dungeon 1 - Hallway
+1872/633  Anima Dungeon 1 - Hallway 2
+1874/634  Anima Dungeon 1 - Central Elevator Room
+1876/635  Anima Dungeon 1 - B1F
+1878/636  Anima Dungeon 1 - B2F - Anima Gates
+1880/637  Anima Dungeon 1 - B2F
+1882/638  Anima Dungeon 1 - Billy Anima Room
+
+Anima Dungeon 2 - Rico
+1884/639  Anima Dungeon 2 - Anima Gates
+1886/640  Anima Dungeon 2 - Rico Anima Room
+1888/641  Anima Dungeon 2 - Hall [GEAR]
+1890/642  Anima Dungeon 2 - Hall - Center Pillars [GEAR]
+1892/643  Anima Dungeon 2 - 3 Stones Room
+1894/644  Anima Dungeon 2 - Lake [GEAR]
+1896/645  Anima Dungeon 2 - Hallway
+1898/646  Anima Dungeon 2 - 3 Chests Room
+1900/647  Anima Dungeon 2 - Ceiling Spike Room
+1902/648  Anima Dungeon 2 - Faucet Room
+1904/649  Anima Dungeon 2 - Cave Path
+1906/650  Anima Dungeon 2 - Narrow Path [GEAR]
+1908/651  Anima Dungeon 2 - Lake - Drained [GEAR]
+
+Mahanon (Merkava)
+1910/652  Mahanon (Eldridge Hull) - Skies Above [DRM]
+1912/653  Mahanon - Bridge *Save Screen before 1st Deus Boss Fight* 
+1914/654  Mahanon - Core - Deus 1st Form [DRM]
+1916/655  Raziel (Razael's Tree) [DRM]
+1918/656  Raziel (Razael's Tree) - Post Grahf Fight [DRM]
+
+Golgotha (Golgoda)
+1920/657  Execution Site - Regulus Amphysvena Opiomorph [DRM]
+
+Zohar
+1922/658  Fei's Mind - Chasing the Coward [DRM]
+1924/659  Snowfield - Beam of Light [DRM]
+1926/660  Zohar Erupts [DRM]
+1928/661  Zohar - Xenogears Cocoon [DRM]
+1930/662  Fei's Mind - Past - Fei talks about mother [DRM]
+1932/663  Fei's Mind - Past - Fei talks about experiments [DRM]
+1934/664  Fei's Mind - Past - Fei's precious memory [DRM]
+1936/665  Fei's Mind - Fei's relives the nightmare [DRM]
+1938/666  Zohar - Fei/Id vs Khan/Grahf [DRM]
+1940/667  Past - Cain chases Abel & Elly [DRM]
+1942/668  Zohar - Astral Plane - Fei's Mind + *Save Screen* loads to 666 [DRM]
+1944/669  -Kadomony- [DRM]
+1946/670  Past - Nisan - Monastery - Painting Room [DRM]
+1948/671  Past - Nisan - Monastery - Altar [DRM]
+1950/672  Past - Nisan - Lacan and Krelian talk [DRM]
+1952/673  Krelian's Lab - Ramsus Tube Room [DRM]
+1954/674  Past - Camping [DRM]
+	*1956/675*  Past - Lacan meet Sophia [DRM] *DELETED SCENE*
+	*1958/676*  Past - Lacan meet Sophia [DRM] *1956 alt. duplicate*
+1960/677  Past - Sky - Cockpit - Krelian [DRM]
+1962/678  Past - Sophia Krelian [DRM]
+1964/679  Past - Yggdrasil - Medical Room [DRM]
+1966/680  Shevat - Miang Prison - Lacan Miang [DRM]
+1968/681  Past - Zohar - Lacan [DRM]
+1970/682  Past - Krelian Speech [DRM]
+1972/683  Past - Excalibur Ship [DRM]
+1974/684  Past - Lahan - Wisemen Fei [DRM]
+
+Snowfield Hideout
+1976/685  Crashed Shevat - Chu-chu Shop
+1978/686  Crashed Shevat - Meeting Room
+1980/687  Crashed Shevat - Bedroom
+1982/688  Crashed Shevat - Hanz Room
+1984/689  Crashed Shevat - Cave Path
+1986/690  Crashed Shevat - Prison Hallway
+1988/691  Crashed Shevat - Cats Room
+1990/692  Crashed Shevat - Scrap Path
+1992/693  Crashed Shevat - Cave Path to Docks
+1994/694  Crashed Shevat - Digger
+1996/695  Crashed Shevat - Broken Fountain
+1998/696  Crashed Shevat - Courtroom
+2000/697  Crashed Shevat - Room
+2002/698  Crashed Shevat - Prison
+2004/699  Crashed Shevat - Ruined House
+2006/700  Crashed Shevat - Tower Top
+2008/701  Crashed Shevat - Docks
+
+Merkava
+2010/702  Merkava - Entrance [GEAR]
+2012/703  Merkava - 1F [GEAR]
+2014/704  Merkava - Vertical Hallway [GEAR]
+2016/705  Merkava - Vertical Hallway Mini-game [GEAR]
+2018/706  Merkava - 2F [GEAR]
+2020/707  Merkava - 2F [GEAR]
+2022/708  Merkava - 2F [GEAR]
+2024/709  Merkava - Vertical Hallway - Statues [DRM]
+2026/710  Merkava - Ramsus Amphysvena Confrontation [DRM]
+2028/711  Merkava - Gate [DRM]
+2030/712  Merkava - Deus Chamber - Opiomorph [DRM]
+2032/713  Merkava - Elly's Awakening [DRM]
+2034/714  Merkava - Elly's Awakening - Post FMV [DRM]
+2036/715  Merkava - Hallway - B3F [GEAR]
+2038/716  Merkava - Shaft - Mini-game? [GEAR]
+2040/717  Merkava - Shaft - Repair Gear - Deus 4 Orbs Room [GEAR]
+
+End
+2042/718  Sky - Xenogears vs Deus [DRM]
+2044/719  Astral Plane - Fei's Mind - Wave Existence [DRM]
+
+Debug Rooms (10 rooms)
+	*2046/720*  Debug - Kato
+	*2048/721*  Debug - Eto
+	*2050/722*  Debug - Kazoumi
+	*2052/723*  Debug - Suzuki
+	*2054/724*  Debug - Tane
+	*2056/725*  Debug - Koumoto - Card Game Voices
+	*2058/726*  Debug - Kigoshi
+	*2060/727*  Debug - Uchimichi
+	*2062/728*  Debug - Saito - Movie View (FMV), Music Mode
+	*2064/729*  Debug - Matu
+
+---------------------------------------------------------------------------------
+
+Overworld (Folders 28-42)
+3963 - Overworld 0 - initial state of the Overworld before Lahan is gone.
+3974 - Overworld 1 - after Lahan is destroyed
+3985 - Overworld 2 - *duplicate
+3996 - Overworld 3 - *duplicate
+4007 - Overworld 4 - *duplicate
+4018 - Overworld 5 - *duplicate
+4029 - Overworld 6 - Ft. Jasper unearthed
+4040 - Overworld 7 - Ethos HQ destroyed
+4051 - Overworld 8 - Deus terraformed
+4062 - Overworld 9 - Ocean
+4073 - Overworld 10 - *ocean duplicate?
+4084 - Overworld 11 - *after Lahan is destroyed duplicate?
+4095 - Overworld 12 - *Ft. Jasper unearthed duplicate?
+4106 - Overworld 13 - *Ft. Jasper unearthed duplicate?
+4117 - Overworld 14 - hole in ocean where Solaris rises
+4128 - Overworld 15 - *Deus terraformed duplicate
+4139 - Overworld 16 - *Deus terraformed duplicate
+
+
+---------------------------------------------------------------------------------
+
+
+
+
+
+
