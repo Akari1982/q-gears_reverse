@@ -1339,18 +1339,18 @@ col = A0;
 
 func73670(); // clear otagr
 
-buffer_id = w[800acfe0];
+rb = w[800acfe0];
 rdata = w[800c3740];
 
-[800af328 + buffer_id * 10 + 4] = b(col * 4);
-[800af328 + buffer_id * 10 + 5] = b(col * 4);
-[800af328 + buffer_id * 10 + 6] = b(col * 4);
+[800af328 + rb * 10 + 4] = b(col * 4);
+[800af328 + rb * 10 + 5] = b(col * 4);
+[800af328 + rb * 10 + 6] = b(col * 4);
 
-V1 = 800af328 + buffer_id * 10;
+V1 = 800af328 + rb * 10;
 [V1] = w((w[V1] & ff000000) | (w[rdata + cc] & 00ffffff));
 [rdata + cc] = w((w[rdata + cc] & ff000000) | (V1 & 00ffffff));
 
-V0 = 800af2f8 + buffer_id * c;
+V0 = 800af2f8 + rb * c;
 [V0] = w((w[V0] & ff000000) | (w[rdata + cc] & 00ffffff));
 [rdata + cc] = w((w[rdata + cc] & ff000000) | (V0 & 00ffffff));
 
@@ -1358,7 +1358,7 @@ field_draw_sync();
 
 A0 = 800af320; // rect
 A1 = 0; // x
-A2 = buffer_id * 100; // y
+A2 = rb * 100; // y
 system_move_image();
 
 A0 = rdata + b8;
@@ -2115,193 +2115,162 @@ if( v4 >= 100 )
 
 ////////////////////////////////
 // func79bd8()
+// создание пакетов
 
-S2 = 0;
-S4 = 800ad348;
-FP = S4 + 0007;
-S7 = S4;
-S3 = 800ad308;
-S6 = S3 + 000e;
-V0 = 800b04c0;
-S0 = V0;
-S5 = S3;
-S1 = S0 + 0020;
+for( int i = 0; i < 4; ++i )
+{
+    S0 = 800b04c0 + i * 70;
+    S1 = 800b04c0 + i * 70 + 20;
 
-L79c38:	; 80079C38
-A0 = S1;
-[A0 + 3] = b(9);
-[A0 + 7] = b(2c);
-V0 = hu[S5 + 0000];
-V1 = S2 << 04;
-[S0 + 0002] = h(0);
-[S0 + 0000] = h(V0);
-V0 = S3 + V1;
-V0 = hu[V0 + 0002];
-80079C58	nop
-[S0 + 0004] = h(V0);
-V0 = S3 + V1;
-V0 = hu[V0 + 0004];
-[S0 + 000a] = h(0);
-[S0 + 0008] = h(V0);
-V0 = S3 + V1;
-V0 = hu[V0 + 0006];
-80079C78	nop
-[S0 + 000c] = h(V0);
-V0 = S3 + V1;
-V0 = hu[V0 + 0008];
-[S0 + 0012] = h(0);
-[S0 + 0010] = h(V0);
-V0 = S3 + V1;
-V0 = hu[V0 + 000a];
-V1 = S3 + V1;
-[S0 + 0014] = h(V0);
-V0 = hu[V1 + 000c];
-V1 = S2 << 03;
-A0 = S4 + V1;
-[S0 + 001a] = h(0);
-[S0 + 0018] = h(V0);
-V0 = hu[S6 + 0000];
-A3 = S4 + V1;
-[S0 + 001c] = h(V0);
-V0 = 0080;
-[S1 + 0004] = b(V0);
-[S1 + 0005] = b(V0);
-[S1 + 0006] = b(V0);
-V0 = S4 + V1;
-A1 = bu[S7 + 0000];
-A2 = bu[A0 + 0001];
-V0 = bu[V0 + 0003];
-A3 = bu[A3 + 0002];
-V0 = V0 + 00c0;
-[SP + 0010] = w(V0);
-V0 = S4 + V1;
-V0 = bu[V0 + 0004];
-80079CF4	nop
-[SP + 0014] = w(V0);
-V0 = S4 + V1;
-V0 = bu[V0 + 0005];
-V1 = S4 + V1;
-V0 = V0 + 00c0;
-[SP + 0018] = w(V0);
-V0 = bu[V1 + 0006];
-A0 = S1;
-[SP + 001c] = w(V0);
-V0 = bu[FP + 0000];
-A2 = A2 + 00c0;
-V0 = V0 + 00c0;
-[SP + 0020] = w(V0);
-field_set_quad_uv();
+    A0 = S1;
+    system_graphic_textured_quad_header();
 
-A0 = S1;
-A1 = 1;
-system_set_draw_packet_transparency();
+    [S0 +  0] = h(hu[800ad308 + i * 10 + 0]);
+    [S0 +  2] = h(0);
+    [S0 +  4] = h(hu[800ad308 + i * 10 + 2]);
+    [S0 +  8] = h(hu[800ad308 + i * 10 + 4]);
+    [S0 +  a] = h(0);
+    [S0 +  c] = h(hu[800ad308 + i * 10 + 6]);
+    [S0 + 10] = h(hu[800ad308 + i * 10 + 8]);
+    [S0 + 12] = h(0);
+    [S0 + 14] = h(hu[800ad308 + i * 10 + a]);
+    [S0 + 1a] = h(0);
+    [S0 + 18] = h(hu[800ad308 + i * 10 + c]);
+    [S0 + 1c] = h(hu[800ad308 + i * 10 + e]);
 
-A0 = 0;
-A1 = 2;
-A2 = 280;
-A3 = 1c0;
-system_graphic_get_texpage_by_param();
-[S1 + 16] = h(V0);
+    [S1 + 4] = b(80);
+    [S1 + 5] = b(80);
+    [S1 + 6] = b(80);
 
-A0 = 100;
-A1 = f2;
-system_graphic_get_clut_by_param(); // pack clut
+    A0 = S1;
+    A1 = bu[800ad348 + i * 8 + 0];       // u1
+    A2 = bu[800ad348 + i * 8 + 1] + c0;  // v1
+    A3 = bu[800ad348 + i * 8 + 2];       // u2
+    A4 = bu[800ad348 + i * 8 + 3] + c0;  // v2
+    A5 = bu[800ad348 + i * 8 + 4];       // u3
+    A6 = bu[800ad348 + i * 8 + 5] + c0;  // v3
+    A7 = bu[800ad348 + i * 8 + 6];       // u4
+    A8 = bu[800ad348 + i * 8 + 7] + c0;  // v4
+    field_set_quad_uv();
 
+    A0 = S1;
+    A1 = 1;
+    system_set_draw_packet_transparency();
 
-V1 = S1 + 0028;
-A3 = V1;
-A2 = S1;
-T0 = S1 + 0020;
-[S1 + 000e] = h(V0);
+    A0 = 0;
+    A1 = 2;
+    A2 = 280;
+    A3 = 1c0;
+    system_graphic_get_texpage_by_param();
+    [S1 + 16] = h(V0);
 
-loop79d74:	; 80079D74
-V0 = w[A2 + 0000];
-V1 = w[A2 + 0004];
-A0 = w[A2 + 0008];
-A1 = w[A2 + 000c];
-[A3 + 0000] = w(V0);
-[A3 + 0004] = w(V1);
-[A3 + 0008] = w(A0);
-[A3 + 000c] = w(A1);
-A2 = A2 + 0010;
+    A0 = 100;
+    A1 = f2;
+    system_graphic_get_clut_by_param(); // pack clut
+    [S1 + e] = h(V0);
 
-L79d98:	; 80079D98
-80079D98	bne    a2, t0, loop79d74 [$80079d74]
-A3 = A3 + 0010;
-V0 = w[A2 + 0000];
-V1 = w[A2 + 0004];
-[A3 + 0000] = w(V0);
-[A3 + 0004] = w(V1);
-FP = FP + 0008;
-S7 = S7 + 0008;
-S6 = S6 + 0010;
-S0 = S0 + 0070;
-S5 = S5 + 0010;
-S2 = S2 + 0001;
-V0 = S2 < 0004;
-80079DCC	bne    v0, zero, L79c38 [$80079c38]
-S1 = S1 + 0070;
+    // copy packet to second buffer
+    A3 = S1 + 28;
+    A2 = S1;
+    T0 = S1 + 20;
+    while( A2 != T0 )
+    {
+        [A3 + 0] = w(w[A2 + 0]);
+        [A3 + 4] = w(w[A2 + 4]);
+        [A3 + 8] = w(w[A2 + 8]);
+        [A3 + c] = w(w[A2 + c]);
+        A2 = A2 + 10;
+        A3 = A3 + 10;
+    }
+    [A3 + 0] = w(w[A2 + 0]);
+    [A3 + 4] = w(w[A2 + 4]);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func79e08()
+// create packets
 
-offset_70 = A0;
-S2 = A1;
-S3 = A2;
-S5 = A3;
+packet = A0;
+x_id = A1;
+y_id = A2;
+tex_id = A3;
 
-[offset_70 + 23] = b(9);
-[offset_70 + 27] = b(2c);
+A0 = packet + 20;
+system_graphic_textured_quad_header();
 
-[offset_70 + 0] = h(hu[800ad1d8 + S2 * 8]);
-[offset_70 + 2] = h(0);
-[offset_70 + 4] = h(hu[800ad200 + S3 * 8]);
-[offset_70 + 8] = h(hu[800ad1ba + S2 * 8]);
-[offset_70 + a] = h(0);
-[offset_70 + c] = h(hu[800ad202 + S3 * 8]);
-[offset_70 + 10] = h(hu[800ad1bc + S2 * 8]);
-[offset_70 + 12] = h(0);
-[offset_70 + 14] = h(hu[800ad204 + S3 * 8]);
-[offset_70 + 18] = h(hu[800ad1be + S2 * 8]);
-[offset_70 + 1a] = h(0);
-[offset_70 + 1c] = h(hu[800ad206 + S3 * 8]);
+// data hardcoded in field.lib
+// x
+// 0 0004000200040002 0002000000020000 000000FE000000FE 00FE00FC00FE00FC
+// 4 00FF000100FF0001 00FF000100FF0001 00FF000100FF0001 00FF000100FF0001
+// 8 00FF000100FF0001
+// y
+// 0 0004000400020002 0002000200000000 0000000000FE00FE 00FE00FE00FC00FC
+// 4 A000A00060FF60FF A000A00060FF60FF A000A00060FF60FF A000A00060FF60FF
+// 8 0003000300000000
 
-[offset_70 + 24] = b(80);
-[offset_70 + 25] = b(80);
-[offset_70 + 26] = b(80);
+[packet +  0] = h(hu[800ad1b8 + x_id * 8 + 0]); // x1
+[packet +  2] = h(0);                           // y1
+[packet +  4] = h(hu[800ad200 + y_id * 8 + 0]); // z1
+[packet +  8] = h(hu[800ad1b8 + x_id * 8 + 2]); // x2
+[packet +  a] = h(0);                           // y2
+[packet +  c] = h(hu[800ad200 + y_id * 8 + 2]); // z2
+[packet + 10] = h(hu[800ad1b8 + x_id * 8 + 4]); // x3
+[packet + 12] = h(0);                           // y3
+[packet + 14] = h(hu[800ad200 + y_id * 8 + 4]); // z3
+[packet + 18] = h(hu[800ad1b8 + x_id * 8 + 6]); // x4
+[packet + 1a] = h(0);                           // y4
+[packet + 1c] = h(hu[800ad200 + y_id * 8 + 6]); // z4
 
-A0 = h[800ad2d8 + S5 * c];
-A1 = h[800ad2da + S5 * c];
-A2 = h[800ad2dc + S5 * c];
-A3 = h[800ad2de + S5 * c];
+[packet + 20 + 4] = b(80); // r
+[packet + 20 + 5] = b(80); // g
+[packet + 20 + 6] = b(80); // b
+
+// data hardcoded in field.lib (3e158)
+// 0 01000000A002C0010000FB00 000000009C02C0010001F500 000000008002C0010001F200 00000000A002C0010000FB00
+// 4 00FA00FA000000FA00FA0000 00000000000600FA000000FA 000600000000000000FA0006 0000000600FA000000000000
+// 8 000600060000000600060000
+
+A0 = h[800ad2d8 + tex_id * c + 0];
+A1 = h[800ad2d8 + tex_id * c + 2];
+A2 = h[800ad2d8 + tex_id * c + 4];
+A3 = h[800ad2d8 + tex_id * c + 6];
 system_graphic_get_texpage_by_param();
-[offset_70 + 36] = h(V0);
+[packet + 20 + 16] = h(V0);
 
-A0 = h[800ad2e0 + S5 * c];
-A1 = h[800ad2e2 + S5 * c];
+A0 = h[800ad2d8 + tex_id * c + 8];
+A1 = h[800ad2d8 + tex_id * c + a];
 system_graphic_get_clut_by_param(); // pack clut
-[offset_70 + 2e] = h(V0);
+[packet + 20 + e] = h(V0);
 
-A0 = offset_70 + 20;
-A1 = h[800ad248 + S2 * 8];
-A2 = h[800ad290 + S3 * 8];
-A3 = h[800ad24a + S2 * 8];
-A4 = h[800ad292 + S3 * 8];
-A5 = h[800ad24c + S2 * 8];
-A6 = h[800ad294 + S3 * 8];
-A7 = h[800ad24e + S2 * 8];
-A8 = h[800ad296 + S3 * 8];
+// data hardcoded in field.lib (3e110)
+// u
+// 0 4000500040005000 5000600050006000 6000700060007000 70007F0070007F00
+// 4 7000800070008000 7000800070008000 7000800070008000 7000800070008000
+// 8 7000800070008000
+// v
+// 0 C000C000D000D000 D000D000E000E000 E000E000F000F000 F000F000FF00FF00
+// 4 C000C000CA00CA00 CA00CA00D400D400 D400D400DE00DE00 DE00DE00E800E800
+// 8 E800E80000010001
+
+A0 = packet + 20;
+A1 = h[800ad248 + x_id * 8 + 0]; // u1
+A2 = h[800ad290 + y_id * 8 + 0]; // v1
+A3 = h[800ad248 + x_id * 8 + 2]; // u2
+A4 = h[800ad290 + y_id * 8 + 2]; // v2
+A5 = h[800ad248 + x_id * 8 + 4]; // u3
+A6 = h[800ad290 + y_id * 8 + 4]; // v3
+A7 = h[800ad248 + x_id * 8 + 6]; // u4
+A8 = h[800ad290 + y_id * 8 + 6]; // v4
 field_set_quad_uv();
 
 // copy packet to second buffer
-A2 = 0;
-loop79ff4:	; 80079FF4
-    [offset_70 + 48 + A2] = w(w[offset_70 + 20 + A2]);
-    A2 = A2 + 4;
-8007A018	bne    A2, 28, loop79ff4 [$80079ff4]
+for( int i = 0; i != 28; i += 4 )
+{
+    [packet + 20 + 28 + i] = w(w[packet + 20 + i]);
+}
 ////////////////////////////////
 
 
@@ -2309,70 +2278,70 @@ loop79ff4:	; 80079FF4
 ////////////////////////////////
 // func7a058()
 
-offset_70 = A0;
-S1 = offset_70 + 20; // start of packet
+packet = A0;
+S1 = packet + 20; // start of packet
 
-[offset_70 + 23] = b(9);
-[offset_70 + 27] = b(2c);
+[packet + 23] = b(9);
+[packet + 27] = b(2c);
 
-[offset_70 + 0] = h(18);
-[offset_70 + 2] = h(0);
-[offset_70 + 4] = h(18);
+[packet + 0] = h(18);
+[packet + 2] = h(0);
+[packet + 4] = h(18);
 
-[offset_70 + 8] = h(-18);
-[offset_70 + a] = h(0);
-[offset_70 + c] = h(18);
+[packet + 8] = h(-18);
+[packet + a] = h(0);
+[packet + c] = h(18);
 
-[offset_70 + 10] = h(18);
-[offset_70 + 12] = h(0);
-[offset_70 + 14] = h(-18);
+[packet + 10] = h(18);
+[packet + 12] = h(0);
+[packet + 14] = h(-18);
 
-[offset_70 + 18] = h(-18);
-[offset_70 + 1a] = h(0);
-[offset_70 + 1c] = h(-18);
+[packet + 18] = h(-18);
+[packet + 1a] = h(0);
+[packet + 1c] = h(-18);
 
-[offset_70 + 20 + 4] = b(80);
-[offset_70 + 20 + 5] = b(80);
-[offset_70 + 20 + 6] = b(80);
+[packet + 20 + 4] = b(80);
+[packet + 20 + 5] = b(80);
+[packet + 20 + 6] = b(80);
 
 A0 = 0;
 A1 = 2;
 A2 = 280;
 A3 = 1e0;
 system_graphic_get_texpage_by_param();
-[offset_70 + 20 + 16] = h(V0);
+[packet + 20 + 16] = h(V0);
 
 A0 = 100;
 A1 = f3;
 system_graphic_get_clut_by_param(); // pack clut
-[offset_70 + 20 + e] = h(V0);
+[packet + 20 + e] = h(V0);
 
-A0 = offset_70 + 20;
+A0 = packet + 20;
 A1 = 1; // transparency on
 system_set_draw_packet_transparency();
 
-[offset_70 + 20 + c] = b(0);
-[offset_70 + 20 + d] = b(e0);
-[offset_70 + 20 + 14] = b(f);
-[offset_70 + 20 + 15] = b(e0);
-[offset_70 + 20 + 1c] = b(0);
-[offset_70 + 20 + 1d] = b(ef);
-[offset_70 + 20 + 24] = b(ef);
-[offset_70 + 20 + 25] = b(f);
+[packet + 20 + c] = b(0);
+[packet + 20 + d] = b(e0);
+[packet + 20 + 14] = b(f);
+[packet + 20 + 15] = b(e0);
+[packet + 20 + 1c] = b(0);
+[packet + 20 + 1d] = b(ef);
+[packet + 20 + 24] = b(ef);
+[packet + 20 + 25] = b(f);
 
 // copy data to 2nd buffer
 A2 = 0;
 loop7a12c:	; 8007A12C
-    [offset_70 + 48 + A2 + 0] = w(w[S1 + 0]);
-    [offset_70 + 48 + A2 + 4] = w(w[S1 + 4]);
-    [offset_70 + 48 + A2 + 8] = w(w[S1 + 8]);
-    [offset_70 + 48 + A2 + c] = w(w[S1 + c]);
+    [packet + 48 + A2 + 0] = w(w[S1 + 0]);
+    [packet + 48 + A2 + 4] = w(w[S1 + 4]);
+    [packet + 48 + A2 + 8] = w(w[S1 + 8]);
+    [packet + 48 + A2 + c] = w(w[S1 + c]);
     A2 = A2 + 10;
     S1 = S1 + 10;
-8007A150	bne    s1, offset_70 + 40, loop7a12c [$8007a12c]
+8007A150	bne    s1, packet + 40, loop7a12c [$8007a12c]
 
-[offset_70 + 48 + A2 + 0] = w(w[S1 + 0]);
-[offset_70 + 48 + A2 + 4] = w(w[S1 + 4]);
+[packet + 48 + A2 + 0] = w(w[S1 + 0]);
+[packet + 48 + A2 + 4] = w(w[S1 + 4]);
 ////////////////////////////////
 
 
@@ -2380,37 +2349,35 @@ loop7a12c:	; 8007A12C
 ////////////////////////////////
 // func7a180()
 
-S3 = A0;
-S2 = A1;
-S1 = A2;
-S0 = A3 << 02;
-S0 = S0 + A3;
-S0 = S0 << 03;
-S0 = S0 + 0020;
-S0 = S2 + S0;
+otag = A0;
+packets = A1;
+matrix = A2;
+rb = A3;
+
+packet = packets + rb * 28 + 20;
 
 system_gte_push_matrix();
 
-A0 = S1;
+A0 = matrix;
 system_gte_set_rotation_matrix();
 
-A0 = S1;
+A0 = matrix;
 system_gte_set_translation_vector();
 
-A0 = S2;
-A1 = A0 +  8;
-A2 = A0 + 10;
-A3 = A0 + 18;
-A4 = S0 +  8;
-A5 = S0 + 10;
-A6 = S0 + 18;
-A7 = S0 + 20;
+A0 = packets +  0; // xyz0
+A1 = packets +  8; // xyz1
+A2 = packets + 10; // xyz3
+A3 = packets + 18; // xyz2
+A4 = packet +  8;
+A5 = packet + 10;
+A6 = packet + 18;
+A7 = packet + 20;
 A8 = SP + 28;
 A9 = SP + 2c;
 system_psyq_rot_average_4();
 
-[S0] = w((w[S0] & ff000000) | (w[S3 + 4] & 00ffffff));
-[S3 + 4] = w((w[S3 + 4] & ff000000) | (S0 & 00ffffff));
+[packet] = w((w[packet] & ff000000) | (w[otag + 4] & 00ffffff));
+[otag + 4] = w((w[otag + 4] & ff000000) | (packet & 00ffffff));
 
 system_gte_pop_matrix();
 ////////////////////////////////
@@ -2420,57 +2387,48 @@ system_gte_pop_matrix();
 ////////////////////////////////
 // func7a26c()
 
-S3 = A0;
-S2 = A1;
-S1 = A2;
-S0 = A3 << 02;
-S0 = S0 + A3;
-S0 = S0 << 03;
+otag = A0;
+packets = A1;
+matrix = A2;
+rb = A3;
 
-S0 = S2 + S0 + 20;
+packet = packets + rb * 28 + 20;
 
 system_gte_push_matrix();
 
-A0 = S1;
+A0 = matrix;
 system_gte_set_rotation_matrix();
 
-A0 = S1;
+A0 = matrix;
 system_gte_set_translation_vector();
 
-A0 = S2;
-A1 = A0 +  8;
-A2 = A0 + 10;
-A3 = A0 + 18;
-A4 = S0 +  8;
-A5 = S0 + 10;
-A6 = S0 + 18;
-A7 = S0 + 20;
+A0 = packets +  0;
+A1 = packets +  8;
+A2 = packets + 10;
+A3 = packets + 18;
+A4 = packet +  8;
+A5 = packet + 10;
+A6 = packet + 18;
+A7 = packet + 20;
 A8 = SP + 28;
 A9 = SP + 2c;
 system_psyq_rot_average_4();
 
-V0 = h[S0 + 0020];
-V1 = h[S0 + 0018];
-A1 = w[S0 + 0000];
-V0 = V0 + V1;
-V1 = V0 >> 1f;
-V0 = V0 + V1;
-V0 = V0 >> 01;
-A2 = V0 + 0008;
-V1 = h[S0 + 0022];
-8007A328	addiu  v0, v0, $fff8 (=-$8)
-[S0 + 0008] = h(V0);
-[S0 + 0010] = h(A2);
-[S0 + 0018] = h(V0);
-[S0 + 0020] = h(A2);
-8007A33C	addiu  a0, v1, $fff6 (=-$a)
-[S0 + 001a] = h(V1);
-[S0 + 0022] = h(V1);
-[S0 + 000a] = h(A0);
-[S0 + 0012] = h(A0);
+V0 = (h[packet + 20] + h[packet + 18]) / 2;
+A2 = V0 + 8;
+V1 = h[packet + 22];
 
-[S0] = w((A1 & ff000000) | (w[S3 + 4] & 00ffffff));
-[S3 + 4] = w((w[S3 + 4] & ff000000) | (S0 & 00ffffff));
+[packet +  8] = h(V0 - 8);
+[packet + 10] = h(A2);
+[packet + 18] = h(V0 - 8);
+[packet + 20] = h(A2);
+[packet + 1a] = h(V1);
+[packet + 22] = h(V1);
+[packet +  a] = h(V1 - a);
+[packet + 12] = h(V1 - a);
+
+[packet] = w((w[packet] & ff000000) | (w[otag + 4] & 00ffffff));
+[otag + 4] = w((w[otag + 4] & ff000000) | (packet & 00ffffff));
 
 system_gte_pop_matrix();
 ////////////////////////////////

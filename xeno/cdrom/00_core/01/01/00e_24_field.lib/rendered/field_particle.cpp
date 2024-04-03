@@ -676,12 +676,12 @@ else
 
 A0 = sprite_data + a0; // xyz0
 A1 = sprite_data + a8; // xyz1
-A2 = sprite_data + b0; // xyz3
-A3 = sprite_data + b8; // xyz2
+A2 = sprite_data + b0; // xyz2
+A3 = sprite_data + b8; // xyz3
 A4 = sprite_data + 50 + buffer_id * 20 +  8; // xy0
 A5 = sprite_data + 50 + buffer_id * 20 + 10; // xy1
-A6 = sprite_data + 50 + buffer_id * 20 + 18; // xy3
-A7 = sprite_data + 50 + buffer_id * 20 + 20; // xy2
+A6 = sprite_data + 50 + buffer_id * 20 + 18; // xy2
+A7 = sprite_data + 50 + buffer_id * 20 + 20; // xy3
 A8 = SP + a0; // Interpolation value for depth queing
 A9 = SP + a0; // return flags
 system_psyq_rot_average_4(); // transform 4 points by rotation matrix

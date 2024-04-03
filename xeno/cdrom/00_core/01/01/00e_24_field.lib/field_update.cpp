@@ -153,7 +153,7 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
     field_debug_add_timer();
 }
 
-80074C74	jal    func73798 [$80073798]
+func73798(); // render messages?
 
 T1 = 1f8003fc;
 T0 = T1;
