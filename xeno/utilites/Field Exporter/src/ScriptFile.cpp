@@ -190,12 +190,12 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0x24 )
                 {
-                    exp->Log( "opcode24( entity=" + GetEVariable( pointer + 1 ) + " )" );
+                    exp->Log( "opcode24_EntityEnable( entity=" + GetEVariable( pointer + 1 ) + " )" );
                     pointer += 2;
                 }
                 else if( opcode == 0x25 )
                 {
-                    exp->Log( "opcode25( entity=" + GetEVariable( pointer + 1 ) + " )" );
+                    exp->Log( "opcode25_EntityDisable( entity=" + GetEVariable( pointer + 1 ) + " )" );
                     pointer += 2;
                 }
                 else if( opcode == 0x26 )
@@ -300,7 +300,15 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0xac )
                 {
-                    exp->Log( "opcodeAC()");
+                    u8 control = GetU8( pointer + 1 ) & 0xf;
+                    if( control == 0 || control == 1 )
+                    {
+                        exp->Log( "opcodeAC_MoveCamera( control=" + GetU8Variable( pointer + 1 ) + ", steps=" + GetV80Variable( pointer + 2 ) + " )" );
+                    }
+                    else
+                    {
+                        exp->Log( "opcodeAC_MoveCamera( control=" + GetU8Variable( pointer + 1 ) + ", change=" + GetV80Variable( pointer + 2 ) + " )" );
+                    }
                     pointer += 4;
                 }
                 else if( opcode == 0xb3 )
@@ -345,7 +353,7 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0xef )
                 {
-                    exp->Log( "opcodeEF()");
+                    exp->Log( "opcodeEF_MoveCameraSync()");
                     pointer += 3;
                 }
                 else if( opcode == 0xf1 )

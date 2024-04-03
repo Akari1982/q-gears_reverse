@@ -979,9 +979,9 @@ Entity[ "22" ] = {
         opcode64() -- 0x0ebc 0x64
         opcode63() -- 0x0ebd 0x63
         opcodeA3() -- 0x0ec5 0xa3
-        opcodeAC() -- 0x0ecd 0xac
-        opcodeAC() -- 0x0ed1 0xac
-        opcodeEF() -- 0x0ed5 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0ecd 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0ed1 0xac
+        opcodeEF_MoveCameraSync() -- 0x0ed5 0xef
         -- 0x09_EntityCallScriptEW( entity=0x0e, script=0x65 ) -- 0x0ed8 0x09
         -- MISSING OPCODE 0xfc
     end,
@@ -1014,9 +1014,9 @@ Entity[ "23" ] = {
         opcode63() -- 0x1044 0x63
         opcodeA3() -- 0x104c 0xa3
         opcodeFE9B_SlideShow1( steps=10 ) -- 0x1054 0xfe
-        opcodeAC() -- 0x1058 0xac
-        opcodeAC() -- 0x105c 0xac
-        opcodeEF() -- 0x1060 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x1058 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x105c 0xac
+        opcodeEF_MoveCameraSync() -- 0x1060 0xef
         opcode26_Wait( time=30 ) -- 0x1063 0x26
         -- 0x09_EntityCallScriptEW( entity=0x0f, script=0x67 ) -- 0x1066 0x09
         opcode26_Wait( time=10 ) -- 0x1069 0x26
@@ -1125,9 +1125,9 @@ Entity[ "27" ] = {
         opcode64() -- 0x1398 0x64
         opcode63() -- 0x1399 0x63
         opcodeA3() -- 0x13a1 0xa3
-        opcodeAC() -- 0x13a9 0xac
-        opcodeAC() -- 0x13ad 0xac
-        opcodeEF() -- 0x13b1 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x13a9 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x13ad 0xac
+        opcodeEF_MoveCameraSync() -- 0x13b1 0xef
         -- MISSING OPCODE 0xfc
     end,
 
@@ -1171,9 +1171,9 @@ Entity[ "28" ] = {
         opcode64() -- 0x15f5 0x64
         opcode63() -- 0x15f6 0x63
         opcodeA3() -- 0x15fe 0xa3
-        opcodeAC() -- 0x1606 0xac
-        opcodeAC() -- 0x160a 0xac
-        opcodeEF() -- 0x160e 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x1606 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x160a 0xac
+        opcodeEF_MoveCameraSync() -- 0x160e 0xef
         return 0 -- 0x1611 0x00
     end,
 

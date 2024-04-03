@@ -18,17 +18,17 @@ Entity[ "0" ] = {
         -- 0x86_ProgressNotEqualJumpTo( value=241, jump=0x0174 ) -- 0x0024 0x86
         opcodeFE54() -- 0x0029 0xfe
         -- 0xF1() -- 0x002b 0xf1
-        opcode25( entity=(entity)0x01 ) -- 0x0036 0x25
-        opcode25( entity=(entity)0x03 ) -- 0x0038 0x25
-        opcode25( entity=(entity)0x02 ) -- 0x003a 0x25
-        opcode25( entity=(entity)0x0a ) -- 0x003c 0x25
-        opcode25( entity=(entity)0x04 ) -- 0x003e 0x25
-        opcode25( entity=(entity)0x05 ) -- 0x0040 0x25
-        opcode25( entity=(entity)0x06 ) -- 0x0042 0x25
-        opcode25( entity=(entity)0x08 ) -- 0x0044 0x25
-        opcode25( entity=(entity)0x09 ) -- 0x0046 0x25
-        opcode25( entity=(entity)0x07 ) -- 0x0048 0x25
-        opcode25( entity=(entity)0x1c ) -- 0x004a 0x25
+        opcode25_EntityDisable( entity=(entity)0x01 ) -- 0x0036 0x25
+        opcode25_EntityDisable( entity=(entity)0x03 ) -- 0x0038 0x25
+        opcode25_EntityDisable( entity=(entity)0x02 ) -- 0x003a 0x25
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x003c 0x25
+        opcode25_EntityDisable( entity=(entity)0x04 ) -- 0x003e 0x25
+        opcode25_EntityDisable( entity=(entity)0x05 ) -- 0x0040 0x25
+        opcode25_EntityDisable( entity=(entity)0x06 ) -- 0x0042 0x25
+        opcode25_EntityDisable( entity=(entity)0x08 ) -- 0x0044 0x25
+        opcode25_EntityDisable( entity=(entity)0x09 ) -- 0x0046 0x25
+        opcode25_EntityDisable( entity=(entity)0x07 ) -- 0x0048 0x25
+        opcode25_EntityDisable( entity=(entity)0x1c ) -- 0x004a 0x25
         opcode99() -- 0x004c 0x99
         -- 0x35() -- 0x004d 0x35
         opcode63() -- 0x0053 0x63

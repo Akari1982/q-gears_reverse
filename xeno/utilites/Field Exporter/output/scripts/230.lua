@@ -23,44 +23,44 @@ Entity[ "0" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0x11 ) -- 0x0174 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x0176 0x25
-        opcode25( entity=(entity)0x13 ) -- 0x0178 0x25
-        opcode25( entity=(entity)0x14 ) -- 0x017a 0x25
-        opcode25( entity=(entity)0x15 ) -- 0x017c 0x25
-        opcode25( entity=(entity)0x16 ) -- 0x017e 0x25
-        opcode25( entity=(entity)0x17 ) -- 0x0180 0x25
-        opcode25( entity=(entity)0x18 ) -- 0x0182 0x25
-        opcode25( entity=(entity)0x1e ) -- 0x0184 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x0186 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x0174 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x0176 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x0178 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x017a 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x017c 0x25
+        opcode25_EntityDisable( entity=(entity)0x16 ) -- 0x017e 0x25
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x0180 0x25
+        opcode25_EntityDisable( entity=(entity)0x18 ) -- 0x0182 0x25
+        opcode25_EntityDisable( entity=(entity)0x1e ) -- 0x0184 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0186 0x25
         -- MISSING OPCODE 0x85
     end,
 
     script_0x05 = function( self )
-        opcode25( entity=(entity)0x1a ) -- 0x019b 0x25
-        opcode25( entity=(entity)0x1b ) -- 0x019d 0x25
-        opcode25( entity=(entity)0x19 ) -- 0x019f 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x019b 0x25
+        opcode25_EntityDisable( entity=(entity)0x1b ) -- 0x019d 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x019f 0x25
         return 0 -- 0x01a1 0x00
     end,
 
     script_0x06 = function( self )
-        opcode24( entity=(entity)0x11 ) -- 0x01a2 0x24
-        opcode24( entity=(entity)0x12 ) -- 0x01a4 0x24
-        opcode24( entity=(entity)0x13 ) -- 0x01a6 0x24
-        opcode24( entity=(entity)0x14 ) -- 0x01a8 0x24
-        opcode24( entity=(entity)0x15 ) -- 0x01aa 0x24
-        opcode24( entity=(entity)0x16 ) -- 0x01ac 0x24
-        opcode24( entity=(entity)0x17 ) -- 0x01ae 0x24
-        opcode24( entity=(entity)0x18 ) -- 0x01b0 0x24
-        opcode24( entity=(entity)0x1e ) -- 0x01b2 0x24
-        opcode24( entity=(entity)0x1f ) -- 0x01b4 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x01a2 0x24
+        opcode24_EntityEnable( entity=(entity)0x12 ) -- 0x01a4 0x24
+        opcode24_EntityEnable( entity=(entity)0x13 ) -- 0x01a6 0x24
+        opcode24_EntityEnable( entity=(entity)0x14 ) -- 0x01a8 0x24
+        opcode24_EntityEnable( entity=(entity)0x15 ) -- 0x01aa 0x24
+        opcode24_EntityEnable( entity=(entity)0x16 ) -- 0x01ac 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x01ae 0x24
+        opcode24_EntityEnable( entity=(entity)0x18 ) -- 0x01b0 0x24
+        opcode24_EntityEnable( entity=(entity)0x1e ) -- 0x01b2 0x24
+        opcode24_EntityEnable( entity=(entity)0x1f ) -- 0x01b4 0x24
         -- MISSING OPCODE 0x85
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x1a ) -- 0x01c9 0x24
-        opcode24( entity=(entity)0x1b ) -- 0x01cb 0x24
-        opcode24( entity=(entity)0x19 ) -- 0x01cd 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x01c9 0x24
+        opcode24_EntityEnable( entity=(entity)0x1b ) -- 0x01cb 0x24
+        opcode24_EntityEnable( entity=(entity)0x19 ) -- 0x01cd 0x24
         return 0 -- 0x01cf 0x00
     end,
 

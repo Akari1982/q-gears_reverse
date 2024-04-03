@@ -259,9 +259,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x43dc 0x63
         opcode64() -- 0x43e4 0x64
         opcodeA3() -- 0x43e5 0xa3
-        opcodeAC() -- 0x43ed 0xac
-        opcodeAC() -- 0x43f1 0xac
-        opcodeEF() -- 0x43f5 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x43ed 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x43f1 0xac
+        opcodeEF_MoveCameraSync() -- 0x43f5 0xef
         -- MISSING OPCODE 0x9b
     end,
 
@@ -397,9 +397,9 @@ Entity[ "14" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x4544 ) -- 0x4501 0x02
         opcodeFE54() -- 0x4509 0xfe
-        opcode25( entity=(entity)0xff ) -- 0x450b 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x450d 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x450f 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x450b 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x450d 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x450f 0x25
         -- MISSING OPCODE 0xf2
     end,
 

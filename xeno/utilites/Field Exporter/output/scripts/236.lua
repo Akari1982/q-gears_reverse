@@ -662,8 +662,8 @@ Entity[ "22" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0204 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x056a ) -- 0x0501 0x02
-        opcode25( entity=(entity)0xff ) -- 0x0509 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x050b 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x0509 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x050b 0x25
         opcodeFE54() -- 0x050d 0xfe
         -- MISSING OPCODE 0xFE24
     end,
@@ -690,8 +690,8 @@ Entity[ "23" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0204 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x05c7 ) -- 0x056e 0x02
         opcodeFE54() -- 0x0576 0xfe
-        opcode25( entity=(entity)0xff ) -- 0x0578 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x057a 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x0578 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x057a 0x25
         -- 0x07( entity=0x01, script=0x25 ) -- 0x057c 0x07
         -- 0x09_EntityCallScriptEW( entity=0x03, script=0x24 ) -- 0x057f 0x09
         -- 0xA0() -- 0x0582 0xa0
@@ -791,41 +791,41 @@ Entity[ "27" ] = {
     on_start = function( self )
         -- 0x2A() -- 0x0717 0x2a
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0722 ) -- 0x0718 0x02
-        opcode24( entity=(entity)0x1a ) -- 0x0720 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x0720 0x24
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x072c ) -- 0x0722 0x02
-        opcode24( entity=(entity)0x1a ) -- 0x072a 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x072a 0x24
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0736 ) -- 0x072c 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x0734 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0734 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0740 ) -- 0x0736 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x073e 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x073e 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x074a ) -- 0x0740 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x0748 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0748 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0754 ) -- 0x074a 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x0752 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0752 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x075e ) -- 0x0754 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x075c 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x075c 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x0768 ) -- 0x075e 0x02
-        opcode24( entity=(entity)0x1a ) -- 0x0766 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x0766 0x24
         return 0 -- 0x0768 0x00
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0722 ) -- 0x0718 0x02
-        opcode24( entity=(entity)0x1a ) -- 0x0720 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x0720 0x24
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x072c ) -- 0x0722 0x02
-        opcode24( entity=(entity)0x1a ) -- 0x072a 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x072a 0x24
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0736 ) -- 0x072c 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x0734 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0734 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0740 ) -- 0x0736 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x073e 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x073e 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x074a ) -- 0x0740 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x0748 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0748 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0754 ) -- 0x074a 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x0752 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0752 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x075e ) -- 0x0754 0x02
-        opcode25( entity=(entity)0x1a ) -- 0x075c 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x075c 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x0768 ) -- 0x075e 0x02
-        opcode24( entity=(entity)0x1a ) -- 0x0766 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x0766 0x24
         return 0 -- 0x0768 0x00
     end,
 

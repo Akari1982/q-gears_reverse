@@ -1173,9 +1173,9 @@ Entity[ "38" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x096c 0xbc
         opcodeFE54() -- 0x096d 0xfe
-        opcode25( entity=(entity)0xff ) -- 0x096f 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x0971 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x0973 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x096f 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x0971 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x0973 0x25
         -- 0x2A() -- 0x0975 0x2a
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x0990 ) -- 0x0976 0x02
         -- MISSING OPCODE 0x29
@@ -1190,7 +1190,7 @@ Entity[ "38" ] = {
         opcode26_Wait( time=200 ) -- 0x09a5 0x26
         opcode26_Wait( time=100 ) -- 0x09a8 0x26
         -- 0x07( entity=0x27, script=0x25 ) -- 0x09ab 0x07
-        opcodeEF() -- 0x09ae 0xef
+        opcodeEF_MoveCameraSync() -- 0x09ae 0xef
         opcode26_Wait( time=80 ) -- 0x09b1 0x26
         opcodeFE9B_SlideShow1( steps=60 ) -- 0x09b4 0xfe
         -- 0x5A() -- 0x09b8 0x5a

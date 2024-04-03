@@ -570,9 +570,9 @@ Entity[ "15" ] = {
         opcode63() -- 0x03a8 0x63
         opcode64() -- 0x03b0 0x64
         opcodeA3() -- 0x03b1 0xa3
-        opcodeAC() -- 0x03b9 0xac
-        opcodeAC() -- 0x03bd 0xac
-        opcodeEF() -- 0x03c1 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x03b9 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x03bd 0xac
+        opcodeEF_MoveCameraSync() -- 0x03c1 0xef
         -- 0xB3() -- 0x03c4 0xb3
         opcode26_Wait( time=60 ) -- 0x03c7 0x26
         -- MISSING OPCODE 0x9b
@@ -584,9 +584,9 @@ Entity[ "15" ] = {
         opcode63() -- 0x0424 0x63
         opcode64() -- 0x042c 0x64
         opcodeA3() -- 0x042d 0xa3
-        opcodeAC() -- 0x0435 0xac
-        opcodeAC() -- 0x0439 0xac
-        opcodeEF() -- 0x043d 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=16 ) -- 0x0435 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=16 ) -- 0x0439 0xac
+        opcodeEF_MoveCameraSync() -- 0x043d 0xef
         return 0 -- 0x0440 0x00
     end,
 

@@ -565,9 +565,9 @@ Entity[ "17" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0214 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x4e1b ) -- 0x4ddb 0x02
         opcodeFE54() -- 0x4de3 0xfe
-        opcode25( entity=(entity)0xff ) -- 0x4de5 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x4de7 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x4de9 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x4de5 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x4de7 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x4de9 0x25
         -- MISSING OPCODE 0xf2
     end,
 
@@ -593,9 +593,9 @@ Entity[ "18" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0214 ), value2=(s16)0x1000, condition="value1 & value2", jump_if_false=0x4e43 ) -- 0x4e21 0x02
         opcodeFE54() -- 0x4e29 0xfe
-        opcode25( entity=(entity)0xff ) -- 0x4e2b 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x4e2d 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x4e2f 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x4e2b 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x4e2d 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x4e2f 0x25
         -- 0x07( entity=0x13, script=0x27 ) -- 0x4e31 0x07
         -- 0x09_EntityCallScriptEW( entity=0x0f, script=0x27 ) -- 0x4e34 0x09
         opcode26_Wait( time=30 ) -- 0x4e37 0x26
@@ -639,9 +639,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x4e4d 0x63
         opcode64() -- 0x4e55 0x64
         opcodeA3() -- 0x4e56 0xa3
-        opcodeAC() -- 0x4e5e 0xac
-        opcodeAC() -- 0x4e62 0xac
-        opcodeEF() -- 0x4e66 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x4e5e 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x4e62 0xac
+        opcodeEF_MoveCameraSync() -- 0x4e66 0xef
         opcode26_Wait( time=40 ) -- 0x4e69 0x26
         -- MISSING OPCODE 0x9b
     end,
@@ -652,9 +652,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x4e93 0x63
         opcode64() -- 0x4e9b 0x64
         opcodeA3() -- 0x4e9c 0xa3
-        opcodeAC() -- 0x4ea4 0xac
-        opcodeAC() -- 0x4ea8 0xac
-        opcodeEF() -- 0x4eac 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x4ea4 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x4ea8 0xac
+        opcodeEF_MoveCameraSync() -- 0x4eac 0xef
         -- 0x07( entity=0x19, script=0x24 ) -- 0x4eaf 0x07
         opcode26_Wait( time=5 ) -- 0x4eb2 0x26
         -- 0x07( entity=0x0f, script=0x26 ) -- 0x4eb5 0x07
@@ -663,9 +663,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x4ebc 0x63
         opcode64() -- 0x4ec4 0x64
         opcodeA3() -- 0x4ec5 0xa3
-        opcodeAC() -- 0x4ecd 0xac
-        opcodeAC() -- 0x4ed1 0xac
-        opcodeEF() -- 0x4ed5 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x4ecd 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x4ed1 0xac
+        opcodeEF_MoveCameraSync() -- 0x4ed5 0xef
         return 0 -- 0x4ed8 0x00
     end,
 
@@ -680,9 +680,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x4f24 0x63
         opcode64() -- 0x4f2c 0x64
         opcodeA3() -- 0x4f2d 0xa3
-        opcodeAC() -- 0x4f35 0xac
-        opcodeAC() -- 0x4f39 0xac
-        opcodeEF() -- 0x4f3d 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x4f35 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x4f39 0xac
+        opcodeEF_MoveCameraSync() -- 0x4f3d 0xef
         -- MISSING OPCODE 0x9b
     end,
 

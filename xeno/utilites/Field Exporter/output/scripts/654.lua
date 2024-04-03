@@ -31,8 +31,8 @@ Entity[ "0" ] = {
         opcode64() -- 0x00d3 0x64
         opcode63() -- 0x00d4 0x63
         opcodeA3() -- 0x00dc 0xa3
-        opcodeAC() -- 0x00e4 0xac
-        opcodeAC() -- 0x00e8 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x00e4 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x00e8 0xac
         opcode26_Wait( time=2 ) -- 0x00ec 0x26
         -- MISSING OPCODE 0x9b
     end,

@@ -872,9 +872,9 @@ Entity[ "27" ] = {
         opcode64() -- 0x0962 0x64
         opcode63() -- 0x0963 0x63
         opcodeA3() -- 0x096b 0xa3
-        opcodeAC() -- 0x0973 0xac
-        opcodeAC() -- 0x0977 0xac
-        opcodeEF() -- 0x097b 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x0973 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x0977 0xac
+        opcodeEF_MoveCameraSync() -- 0x097b 0xef
         return 0 -- 0x097e 0x00
     end,
 
@@ -992,52 +992,52 @@ Entity[ "30" ] = {
 
     script_0x04 = function( self )
         opcode26_Wait( time=33 ) -- 0x0a97 0x26
-        opcode25( entity=(entity)0x1f ) -- 0x0a9a 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0a9a 0x25
         opcode26_Wait( time=38 ) -- 0x0a9c 0x26
-        opcode25( entity=(entity)0x20 ) -- 0x0a9f 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0a9f 0x25
         opcode26_Wait( time=38 ) -- 0x0aa1 0x26
-        opcode25( entity=(entity)0x21 ) -- 0x0aa4 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x0aa4 0x25
         opcode26_Wait( time=38 ) -- 0x0aa6 0x26
-        opcode25( entity=(entity)0x22 ) -- 0x0aa9 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x0aa9 0x25
         opcode26_Wait( time=38 ) -- 0x0aab 0x26
-        opcode25( entity=(entity)0x23 ) -- 0x0aae 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x0aae 0x25
         opcode26_Wait( time=38 ) -- 0x0ab0 0x26
-        opcode25( entity=(entity)0x24 ) -- 0x0ab3 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x0ab3 0x25
         return 0 -- 0x0ab5 0x00
     end,
 
     script_0x05 = function( self )
-        opcode25( entity=(entity)0x1f ) -- 0x0ab6 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x0ab8 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x0aba 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x0abc 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x0abe 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x0ac0 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0ab6 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0ab8 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x0aba 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x0abc 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x0abe 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x0ac0 0x25
         return 0 -- 0x0ac2 0x00
     end,
 
     script_0x06 = function( self )
-        opcode24( entity=(entity)0x24 ) -- 0x0ac3 0x24
+        opcode24_EntityEnable( entity=(entity)0x24 ) -- 0x0ac3 0x24
         opcode26_Wait( time=38 ) -- 0x0ac5 0x26
-        opcode24( entity=(entity)0x23 ) -- 0x0ac8 0x24
+        opcode24_EntityEnable( entity=(entity)0x23 ) -- 0x0ac8 0x24
         opcode26_Wait( time=38 ) -- 0x0aca 0x26
-        opcode24( entity=(entity)0x22 ) -- 0x0acd 0x24
+        opcode24_EntityEnable( entity=(entity)0x22 ) -- 0x0acd 0x24
         opcode26_Wait( time=38 ) -- 0x0acf 0x26
-        opcode24( entity=(entity)0x21 ) -- 0x0ad2 0x24
+        opcode24_EntityEnable( entity=(entity)0x21 ) -- 0x0ad2 0x24
         opcode26_Wait( time=38 ) -- 0x0ad4 0x26
-        opcode24( entity=(entity)0x20 ) -- 0x0ad7 0x24
+        opcode24_EntityEnable( entity=(entity)0x20 ) -- 0x0ad7 0x24
         opcode26_Wait( time=38 ) -- 0x0ad9 0x26
-        opcode24( entity=(entity)0x1f ) -- 0x0adc 0x24
+        opcode24_EntityEnable( entity=(entity)0x1f ) -- 0x0adc 0x24
         return 0 -- 0x0ade 0x00
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x24 ) -- 0x0adf 0x24
-        opcode24( entity=(entity)0x23 ) -- 0x0ae1 0x24
-        opcode24( entity=(entity)0x22 ) -- 0x0ae3 0x24
-        opcode24( entity=(entity)0x21 ) -- 0x0ae5 0x24
-        opcode24( entity=(entity)0x20 ) -- 0x0ae7 0x24
-        opcode24( entity=(entity)0x1f ) -- 0x0ae9 0x24
+        opcode24_EntityEnable( entity=(entity)0x24 ) -- 0x0adf 0x24
+        opcode24_EntityEnable( entity=(entity)0x23 ) -- 0x0ae1 0x24
+        opcode24_EntityEnable( entity=(entity)0x22 ) -- 0x0ae3 0x24
+        opcode24_EntityEnable( entity=(entity)0x21 ) -- 0x0ae5 0x24
+        opcode24_EntityEnable( entity=(entity)0x20 ) -- 0x0ae7 0x24
+        opcode24_EntityEnable( entity=(entity)0x1f ) -- 0x0ae9 0x24
         return 0 -- 0x0aeb 0x00
     end,
 

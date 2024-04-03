@@ -734,7 +734,7 @@ Entity[ "22" ] = {
 
     script_0x06 = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x25, script=0x24 ) -- 0x0a7b 0x09
-        opcode24( entity=(entity)0x16 ) -- 0x0a7e 0x24
+        opcode24_EntityEnable( entity=(entity)0x16 ) -- 0x0a7e 0x24
         opcode26_Wait( time=10 ) -- 0x0a80 0x26
         -- MISSING OPCODE 0x4b
     end,
@@ -903,9 +903,9 @@ Entity[ "26" ] = {
         opcode64() -- 0x113b 0x64
         opcode63() -- 0x113c 0x63
         opcodeA3() -- 0x1144 0xa3
-        opcodeAC() -- 0x114c 0xac
-        opcodeAC() -- 0x1150 0xac
-        opcodeEF() -- 0x1154 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=150 ) -- 0x114c 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=150 ) -- 0x1150 0xac
+        opcodeEF_MoveCameraSync() -- 0x1154 0xef
         return 0 -- 0x1157 0x00
     end,
 

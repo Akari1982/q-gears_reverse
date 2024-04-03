@@ -876,16 +876,16 @@ Entity[ "24" ] = {
         opcode64() -- 0x4e78 0x64
         opcode63() -- 0x4e79 0x63
         opcodeA3() -- 0x4e81 0xa3
-        opcodeAC() -- 0x4e89 0xac
-        opcodeAC() -- 0x4e8d 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x4e89 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x4e8d 0xac
         opcode26_Wait( time=160 ) -- 0x4e91 0x26
         opcode60() -- 0x4e94 0x60
         opcode64() -- 0x4e95 0x64
         opcode63() -- 0x4e96 0x63
         opcodeA3() -- 0x4e9e 0xa3
-        opcodeAC() -- 0x4ea6 0xac
-        opcodeAC() -- 0x4eaa 0xac
-        opcodeEF() -- 0x4eae 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x4ea6 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x4eaa 0xac
+        opcodeEF_MoveCameraSync() -- 0x4eae 0xef
         return 0 -- 0x4eb1 0x00
     end,
 

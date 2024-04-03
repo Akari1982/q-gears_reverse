@@ -2395,12 +2395,12 @@ Entity[ "62" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x65eb 0xfe
-        opcode25( entity=(entity)0x22 ) -- 0x65ed 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x65ef 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x65f1 0x25
-        opcode25( entity=(entity)0xff ) -- 0x65f3 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x65f5 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x65f7 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x65ed 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x65ef 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x65f1 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x65f3 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x65f5 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x65f7 0x25
         -- 0x09_EntityCallScriptEW( entity=0x13, script=0x64 ) -- 0x65f9 0x09
         -- 0x09_EntityCallScriptEW( entity=0x3b, script=0x64 ) -- 0x65fc 0x09
         -- 0x09_EntityCallScriptEW( entity=0x2a, script=0x62 ) -- 0x65ff 0x09

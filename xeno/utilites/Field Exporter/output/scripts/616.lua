@@ -607,9 +607,9 @@ Entity[ "20" ] = {
 
     on_update = function( self )
         opcodeFE54() -- 0x0646 0xfe
-        opcode25( entity=(entity)0xff ) -- 0x0648 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x064a 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x064c 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x0648 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x064a 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x064c 0x25
         -- MISSING OPCODE 0x29
     end,
 
@@ -676,9 +676,9 @@ Entity[ "22" ] = {
         opcode64() -- 0x0726 0x64
         opcode63() -- 0x0727 0x63
         opcodeA3() -- 0x072f 0xa3
-        opcodeAC() -- 0x0737 0xac
-        opcodeAC() -- 0x073b 0xac
-        opcodeEF() -- 0x073f 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0737 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x073b 0xac
+        opcodeEF_MoveCameraSync() -- 0x073f 0xef
         opcode26_Wait( time=60 ) -- 0x0742 0x26
         -- MISSING OPCODE 0x9b
     end,
@@ -707,9 +707,9 @@ Entity[ "22" ] = {
         opcode64() -- 0x085a 0x64
         opcode63() -- 0x085b 0x63
         opcodeA3() -- 0x0863 0xa3
-        opcodeAC() -- 0x086b 0xac
-        opcodeAC() -- 0x086f 0xac
-        opcodeEF() -- 0x0873 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x086b 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x086f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0873 0xef
         return 0 -- 0x0876 0x00
     end,
 

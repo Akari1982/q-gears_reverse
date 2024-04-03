@@ -13,7 +13,7 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         opcodeFE54() -- 0x0024 0xfe
-        opcode25( entity=(entity)0x09 ) -- 0x0026 0x25
+        opcode25_EntityDisable( entity=(entity)0x09 ) -- 0x0026 0x25
         opcode99() -- 0x0028 0x99
         -- 0x35() -- 0x0029 0x35
         opcode63() -- 0x002f 0x63

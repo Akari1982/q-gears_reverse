@@ -1219,9 +1219,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x1ca3 0x64
         opcode63() -- 0x1ca4 0x63
         opcodeA3() -- 0x1cac 0xa3
-        opcodeAC() -- 0x1cb4 0xac
-        opcodeAC() -- 0x1cb8 0xac
-        opcodeEF() -- 0x1cbc 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x1cb4 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x1cb8 0xac
+        opcodeEF_MoveCameraSync() -- 0x1cbc 0xef
         -- MISSING OPCODE 0x29
     end,
 

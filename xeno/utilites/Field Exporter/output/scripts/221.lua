@@ -1157,7 +1157,7 @@ Entity[ "27" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x2015 0xbc
         -- 0x2A() -- 0x2016 0x2a
-        opcode25( entity=(entity)0x1c ) -- 0x2017 0x25
+        opcode25_EntityDisable( entity=(entity)0x1c ) -- 0x2017 0x25
         -- MISSING OPCODE 0x27
     end,
 
@@ -1174,7 +1174,7 @@ Entity[ "27" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode24( entity=(entity)0x04 ) -- 0x2074 0x24
+        opcode24_EntityEnable( entity=(entity)0x04 ) -- 0x2074 0x24
         -- MISSING OPCODE 0x28
     end,
 

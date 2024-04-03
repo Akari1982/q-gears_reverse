@@ -8979,314 +8979,144 @@ V1 = V1 + 0001;
 ////////////////////////////////
 // field_script_opAC()
 
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-8008F9B4	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-S1 = 0001;
-S0 = V0 & 000f;
-8008F9C8	beq    s0, s1, L8fe94 [$8008fe94]
-V0 = S0 < 0002;
-8008F9D0	beq    v0, zero, L8f9e8 [$8008f9e8]
-8008F9D4	nop
-8008F9D8	beq    s0, zero, L8fa04 [$8008fa04]
-8008F9DC	nop
-8008F9E0	j      L8ffb0 [$8008ffb0]
-8008F9E4	nop
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
 
-L8f9e8:	; 8008F9E8
-V0 = 0002;
-8008F9EC	beq    s0, v0, L8fb28 [$8008fb28]
-V0 = 0003;
-8008F9F4	beq    s0, v0, L8fce0 [$8008fce0]
-A0 = SP + 0010;
-8008F9FC	j      L8ffb0 [$8008ffb0]
-8008FA00	nop
+S0 = bu[script + current_pos + 1] & f;
 
-L8fa04:	; 8008FA04
-8008FA04	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0002;
-V1 = V0;
-A0 = 800aee12;
-V0 = V1 << 10;
-8008FA1C	bne    v0, zero, L8fa34 [$8008fa34]
-[A0 + 0000] = h(V1);
-V0 = V1 + 0001;
-[A0 + 0000] = h(V0);
-[800aee58] = w(S1);
-
-L8fa34:	; 8008FA34
-A1 = w[800aedd4];
-T1 = w[800aedc4];
-V0 = h[A0 + 0000];
-A1 = A1 - T1;
-8008FA4C	div    a1, v0
-8008FA50	mflo   a1
-A0 = w[800aedd8];
-T0 = w[800aedc8];
-8008FA64	nop
-A0 = A0 - T0;
-8008FA6C	div    a0, v0
-8008FA70	mflo   a0
-A3 = w[800aedcc];
-V1 = w[800aeddc];
-8008FA84	nop
-V1 = V1 - A3;
-8008FA8C	div    v1, v0
-8008FA90	mflo   v1
-A2 = w[800af54c];
-V0 = hu[800aee10];
-[800aee14] = w(T1);
-[800aee18] = w(T0);
-[800aee1c] = w(A3);
-V0 = V0 | 0001;
-[800aee10] = h(V0);
-[800aee24] = w(A1);
-[800aee28] = w(A0);
-[800aee2c] = w(V1);
-V0 = hu[A2 + 00cc];
-V1 = w[800ad0d8];
-8008FAEC	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-8008FAF8	nop
-V0 = V0 & 0080;
-8008FB00	beq    v0, zero, L8ffb0 [$8008ffb0]
-8008FB04	nop
-[800aed64] = w(T1);
-[800aed68] = w(T0);
-[800aed6c] = w(A3);
-8008FB20	j      L8ffb0 [$8008ffb0]
-8008FB24	nop
-
-L8fb28:	; 8008FB28
-A0 = SP + 0010;
-S0 = 800aedc4;
-A1 = SP + 0020;
-V0 = w[S0 + 0000];
-V1 = w[800aedd4];
-A2 = w[800aedd8];
-V0 = V0 - V1;
-V1 = w[800aedc8];
-V0 = V0 >> 10;
-[SP + 0010] = w(V0);
-V0 = w[800aedcc];
-V1 = V1 - A2;
-A2 = w[800aeddc];
-V1 = V1 >> 10;
-[SP + 0014] = w(V1);
-V0 = V0 - A2;
-V0 = V0 >> 10;
-8008FB84	jal    $system_gte_normalize_word_vector_T0_T1_T2_to_word
-[SP + 0018] = w(V0);
-A0 = w[S0 + 0000];
-V0 = w[800aedd4];
-A1 = w[800aedc8];
-A2 = w[800aedcc];
-A0 = A0 - V0;
-V0 = w[800aedd8];
-A0 = A0 >> 10;
-A1 = A1 - V0;
-V0 = w[800aeddc];
-A1 = A1 >> 10;
-A2 = A2 - V0;
-8008FBCC	jal    func98fd8 [$80098fd8]
-A2 = A2 >> 10;
-S1 = V0;
-8008FBD8	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0002;
-A1 = V0;
-8008FBE4	div    s1, a1
-8008FBE8	mflo   a0
-V0 = w[SP + 0020];
-8008FBF0	nop
-8008FBF4	mult   v0, a1
-8008FBF8	mflo   a2
-V0 = w[SP + 0024];
-8008FC00	nop
-8008FC04	mult   v0, a1
-V1 = w[SP + 0028];
-S0 = w[S0 + 0000];
-T0 = w[800aedc8];
-8008FC18	mflo   a3
-T1 = w[800aedcc];
-V0 = hu[800aee10];
-8008FC2C	mult   v1, a1
-[800aee14] = w(S0);
-[800aee18] = w(T0);
-[800aee1c] = w(T1);
-V0 = V0 | 0001;
-[800aee10] = h(V0);
-V0 = 0 - A2;
-V0 = V0 << 04;
-[800aee24] = w(V0);
-V0 = 0 - A3;
-V0 = V0 << 04;
-[800aee28] = w(V0);
-8008FC74	mflo   v1
-V0 = 0 - V1;
-V1 = w[800af54c];
-V0 = V0 << 04;
-[800aee2c] = w(V0);
-[800aee12] = h(A0);
-V0 = hu[V1 + 00cc];
-V1 = w[800ad0d8];
-8008FCA4	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-8008FCB0	nop
-V0 = V0 & 0080;
-8008FCB8	beq    v0, zero, L8ffb0 [$8008ffb0]
-8008FCBC	nop
-[800aed64] = w(S0);
-[800aed68] = w(T0);
-[800aed6c] = w(T1);
-8008FCD8	j      L8ffb0 [$8008ffb0]
-8008FCDC	nop
-
-L8fce0:	; 8008FCE0
-S0 = 800aede4;
-A1 = SP + 0020;
-V0 = w[S0 + 0000];
-V1 = w[800aedf4];
-A2 = w[800aedf8];
-V0 = V0 - V1;
-V1 = w[800aede8];
-V0 = V0 >> 10;
-[SP + 0010] = w(V0);
-V0 = w[800aedec];
-V1 = V1 - A2;
-A2 = w[800aedfc];
-V1 = V1 >> 10;
-[SP + 0014] = w(V1);
-V0 = V0 - A2;
-V0 = V0 >> 10;
-[SP + 0018] = w(V0);
-system_gte_normalize_word_vector_T0_T1_T2_to_word();
-
-A0 = w[S0 + 0000];
-V0 = w[800aedf4];
-A1 = w[800aede8];
-A2 = w[800aedec];
-A0 = A0 - V0;
-V0 = w[800aedf8];
-A0 = A0 >> 10;
-A1 = A1 - V0;
-V0 = w[800aedfc];
-A1 = A1 >> 10;
-A2 = A2 - V0;
-8008FD80	jal    func98fd8 [$80098fd8]
-A2 = A2 >> 10;
-S1 = V0;
-8008FD8C	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0002;
-A1 = V0;
-8008FD98	div    s1, a1
-8008FD9C	mflo   a0
-V0 = w[SP + 0020];
-8008FDA4	nop
-8008FDA8	mult   v0, a1
-8008FDAC	mflo   a2
-V0 = w[SP + 0024];
-8008FDB4	nop
-8008FDB8	mult   v0, a1
-V1 = w[SP + 0028];
-S0 = w[S0 + 0000];
-T0 = w[800aede8];
-8008FDCC	mflo   a3
-T1 = w[800aedec];
-V0 = hu[800aee10];
-8008FDE0	mult   v1, a1
-[800aee38] = w(S0);
-[800aee3c] = w(T0);
-[800aee40] = w(T1);
-V0 = V0 | 0002;
-[800aee10] = h(V0);
-V0 = 0 - A2;
-V0 = V0 << 04;
-[800aee48] = w(V0);
-V0 = 0 - A3;
-V0 = V0 << 04;
-[800aee4c] = w(V0);
-8008FE28	mflo   v1
-V0 = 0 - V1;
-V1 = w[800af54c];
-V0 = V0 << 04;
-[800aee50] = w(V0);
-[800aee34] = h(A0);
-V0 = hu[V1 + 00cc];
-V1 = w[800ad0d8];
-8008FE58	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-8008FE64	nop
-V0 = V0 & 0080;
-8008FE6C	beq    v0, zero, L8ffb0 [$8008ffb0]
-8008FE70	nop
-[800aed54] = w(S0);
-[800aed58] = w(T0);
-[800aed5c] = w(T1);
-8008FE8C	j      L8ffb0 [$8008ffb0]
-8008FE90	nop
-
-L8fe94:	; 8008FE94
-8008FE94	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0002;
-V1 = V0;
-A0 = 800aee34;
-V0 = V1 << 10;
-8008FEAC	bne    v0, zero, L8fec4 [$8008fec4]
-[A0 + 0000] = h(V1);
-V0 = V1 + 0001;
-[A0 + 0000] = h(V0);
-[800aee5c] = w(S0);
-
-L8fec4:	; 8008FEC4
-A1 = w[800aedf4];
-T1 = w[800aede4];
-V0 = h[A0 + 0000];
-A1 = A1 - T1;
-8008FEDC	div    a1, v0
-8008FEE0	mflo   a1
-A0 = w[800aedf8];
-T0 = w[800aede8];
-8008FEF4	nop
-A0 = A0 - T0;
-8008FEFC	div    a0, v0
-8008FF00	mflo   a0
-A3 = w[800aedec];
-V1 = w[800aedfc];
-8008FF14	nop
-V1 = V1 - A3;
-8008FF1C	div    v1, v0
-8008FF20	mflo   v1
-A2 = w[800af54c];
-V0 = hu[800aee10];
-[800aee38] = w(T1);
-[800aee3c] = w(T0);
-[800aee40] = w(A3);
-V0 = V0 | 0002;
-[800aee10] = h(V0);
-[800aee48] = w(A1);
-[800aee4c] = w(A0);
-[800aee50] = w(V1);
-V0 = hu[A2 + 00cc];
-V1 = w[800ad0d8];
-8008FF7C	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 1];
-if( V0 & 80 )
+if( S0 == 0 )
 {
-    [800aed54] = w(T1); // cam_eye_x
-    [800aed58] = w(T0); // cam_eye_y
-    [800aed5c] = w(A3); // cam_eye_z
+    A0 = 2;
+    field_script_help_read_v80();
+    steps = V0;
+
+    [800aee12] = h(steps);
+    if( ( steps << 10 ) == 0 )
+    {
+        [800aee12] = h(steps + 1);
+        [800aee58] = w(1);
+    }
+
+    steps = h[800aee12];
+    [800aee14] = w(w[800aedc4]);
+    [800aee18] = w(w[800aedc8]);
+    [800aee1c] = w(w[800aedcc]);
+    [800aee24] = w((w[800aedd4] - w[800aedc4]) / steps);
+    [800aee28] = w((w[800aedd8] - w[800aedc8]) / steps);
+    [800aee2c] = w((w[800aeddc] - w[800aedcc]) / steps);
+    [800aee10] = h(hu[800aee10] | 0001);
+
+    if( bu[script + current_pos + 1] & 80 )
+    {
+        [800aed64] = w(w[800aedc4]);
+        [800aed68] = w(w[800aedc8]);
+        [800aed6c] = w(w[800aedcc]);
+    }
+}
+else if( S0 == 1 )
+{
+    A0 = 2;
+    field_script_help_read_v80();
+    steps = V0;
+
+    [800aee34] = h(steps);
+    if( ( steps << 10 ) == 0 )
+    {
+        [800aee34] = h(steps + 1);
+        [800aee5c] = w(1);
+    }
+
+    steps = h[800aee34];
+    [800aee38] = w(w[800aede4]);
+    [800aee3c] = w(w[800aede8]);
+    [800aee40] = w(w[800aedec]);
+    [800aee48] = w((w[800aedf4] - w[800aede4]) / steps);
+    [800aee4c] = w((w[800aedf8] - w[800aede8]) / steps);
+    [800aee50] = w((w[800aedfc] - w[800aedec]) / steps);
+    [800aee10] = h(hu[800aee10] | 0002);
+
+    if( bu[script + current_pos + 1] & 80 )
+    {
+        [800aed54] = w(w[800aede4]); // cam_eye_x
+        [800aed58] = w(w[800aede8]); // cam_eye_y
+        [800aed5c] = w(w[800aedec]); // cam_eye_z
+    }
+}
+else if( S0 == 2 )
+{
+    [SP + 10] = w((w[800aedc4] - w[800aedd4]) >> 10);
+    [SP + 14] = w((w[800aedc8] - w[800aedd8]) >> 10);
+    [SP + 18] = w((w[800aedcc] - w[800aeddc]) >> 10);
+
+    A0 = SP + 10;
+    A1 = SP + 20;
+    system_gte_normalize_word_vector_T0_T1_T2_to_word();
+
+    A0 = (w[800aedc4] - w[800aedd4]) >> 10;
+    A1 = (w[800aedc8] - w[800aedd8]) >> 10;
+    A2 = (w[800aedcc] - w[800aeddc]) >> 10;
+    func98fd8();
+    S1 = V0;
+
+    A0 = 2;
+    field_script_help_read_v80();
+    change = V0;
+
+    [800aee12] = h(S1 / change); // steps
+    [800aee14] = w(w[800aedc4]);
+    [800aee18] = w(w[800aedc8]);
+    [800aee1c] = w(w[800aedcc]);
+    [800aee24] = w((0 - (w[SP + 20] * change)) << 4);
+    [800aee28] = w((0 - (w[SP + 24] * change)) << 4);
+    [800aee2c] = w((0 - (w[SP + 28] * change)) << 4);
+    [800aee10] = h(hu[800aee10] | 0001);
+
+    if( bu[script + current_pos + 1] & 80 )
+    {
+        [800aed64] = w(w[800aedc4]);
+        [800aed68] = w(w[800aedc8]);
+        [800aed6c] = w(w[800aedcc]);
+    }
+}
+else if( S0 == 3 )
+{
+    [SP + 10] = w((w[800aede4] - w[800aedf4]) >> 10);
+    [SP + 14] = w((w[800aede8] - w[800aedf8]) >> 10);
+    [SP + 18] = w((w[800aedec] - w[800aedfc]) >> 10);
+
+    A0 = SP + 10;
+    A1 = SP + 20;
+    system_gte_normalize_word_vector_T0_T1_T2_to_word();
+
+    A0 = (w[800aede4] - w[800aedf4]) >> 10;
+    A1 = (w[800aede8] - w[800aedf8]) >> 10;
+    A2 = (w[800aedec] - w[800aedfc]) >> 10;
+    func98fd8();
+    S1 = V0;
+
+    A0 = 2;
+    field_script_help_read_v80();
+    change = V0;
+
+    [800aee34] = h(S1 / change); // steps
+    [800aee38] = w(w[800aede4]);
+    [800aee3c] = w(w[800aede8]);
+    [800aee40] = w(w[800aedec]);
+    [800aee48] = w((0 - (w[SP + 20] * change)) << 4);
+    [800aee4c] = w((0 - (w[SP + 24] * change)) << 4);
+    [800aee50] = w((0 - (w[SP + 28] * change)) << 4);
+    [800aee10] = h(hu[800aee10] | 0002);
+
+    if( bu[script + current_pos + 1] & 80 )
+    {
+        [800aed54] = w(w[800aede4]);
+        [800aed58] = w(w[800aede8]);
+        [800aed5c] = w(w[800aedec]);
+    }
 }
 
-L8ffb0:	; 8008FFB0
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 4);
+[struct_138 + cc] = h(current_pos + 4);
 ////////////////////////////////
 
 

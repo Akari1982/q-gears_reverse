@@ -1386,9 +1386,9 @@ Entity[ "49" ] = {
         opcode63() -- 0x0a73 0x63
         opcode64() -- 0x0a7b 0x64
         opcodeA3() -- 0x0a7c 0xa3
-        opcodeAC() -- 0x0a84 0xac
-        opcodeAC() -- 0x0a88 0xac
-        opcodeEF() -- 0x0a8c 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x0a84 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x0a88 0xac
+        opcodeEF_MoveCameraSync() -- 0x0a8c 0xef
         return 0 -- 0x0a8f 0x00
     end,
 

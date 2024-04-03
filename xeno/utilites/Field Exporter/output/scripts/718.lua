@@ -10,9 +10,9 @@ Entity[ "0" ] = {
     end,
 
     on_update = function( self )
-        opcode25( entity=(entity)0xfd ) -- 0x0088 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x008a 0x25
-        opcode25( entity=(entity)0xff ) -- 0x008c 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x0088 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x008a 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x008c 0x25
         -- 0x5B() -- 0x008e 0x5b
         return 0 -- 0x008f 0x00
     end,

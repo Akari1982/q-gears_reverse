@@ -684,7 +684,7 @@ Entity[ "19" ] = {
 
     script_0x04 = function( self )
         opcode26_Wait( time=12 ) -- 0x0516 0x26
-        opcode25( entity=(entity)0x14 ) -- 0x0519 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x0519 0x25
         return 0 -- 0x051b 0x00
     end,
 
@@ -1106,8 +1106,8 @@ Entity[ "34" ] = {
         opcode64() -- 0x0e50 0x64
         opcode63() -- 0x0e51 0x63
         opcodeA3() -- 0x0e59 0xa3
-        opcodeAC() -- 0x0e61 0xac
-        opcodeAC() -- 0x0e65 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x0e61 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x0e65 0xac
         return 0 -- 0x0e69 0x00
     end,
 

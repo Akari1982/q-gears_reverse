@@ -714,8 +714,8 @@ Entity[ "17" ] = {
     on_update = function( self )
         opcodeFE54() -- 0x0536 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x27, script=0x44 ) -- 0x0538 0x09
-        opcode24( entity=(entity)0x0e ) -- 0x053b 0x24
-        opcode24( entity=(entity)0x0f ) -- 0x053d 0x24
+        opcode24_EntityEnable( entity=(entity)0x0e ) -- 0x053b 0x24
+        opcode24_EntityEnable( entity=(entity)0x0f ) -- 0x053d 0x24
         -- 0x07( entity=0x0e, script=0x46 ) -- 0x053f 0x07
         opcode26_Wait( time=15 ) -- 0x0542 0x26
         -- 0x09_EntityCallScriptEW( entity=0x0f, script=0x44 ) -- 0x0545 0x09
@@ -812,9 +812,9 @@ Entity[ "19" ] = {
         opcode64() -- 0x08a7 0x64
         opcode63() -- 0x08a8 0x63
         opcodeA3() -- 0x08b0 0xa3
-        opcodeAC() -- 0x08b8 0xac
-        opcodeAC() -- 0x08bc 0xac
-        opcodeEF() -- 0x08c0 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=60 ) -- 0x08b8 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=60 ) -- 0x08bc 0xac
+        opcodeEF_MoveCameraSync() -- 0x08c0 0xef
         opcode26_Wait( time=120 ) -- 0x08c3 0x26
         -- 0xA0() -- 0x08c6 0xa0
         -- MISSING OPCODE 0x9a

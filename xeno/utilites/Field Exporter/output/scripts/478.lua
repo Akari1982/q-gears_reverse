@@ -2539,23 +2539,23 @@ Entity[ "43" ] = {
 
     script_0x05 = function( self )
         -- 0xC6() -- 0x1b58 0xc6
-        opcode25( entity=(entity)0x11 ) -- 0x1b59 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x1b5b 0x25
-        opcode25( entity=(entity)0x13 ) -- 0x1b5d 0x25
-        opcode25( entity=(entity)0x14 ) -- 0x1b5f 0x25
-        opcode25( entity=(entity)0x15 ) -- 0x1b61 0x25
-        opcode25( entity=(entity)0x16 ) -- 0x1b63 0x25
-        opcode25( entity=(entity)0x17 ) -- 0x1b65 0x25
-        opcode25( entity=(entity)0x18 ) -- 0x1b67 0x25
-        opcode25( entity=(entity)0x19 ) -- 0x1b69 0x25
-        opcode25( entity=(entity)0x1a ) -- 0x1b6b 0x25
-        opcode25( entity=(entity)0x1b ) -- 0x1b6d 0x25
-        opcode25( entity=(entity)0x1c ) -- 0x1b6f 0x25
-        opcode25( entity=(entity)0x1d ) -- 0x1b71 0x25
-        opcode25( entity=(entity)0x1e ) -- 0x1b73 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x1b75 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x1b77 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x1b79 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x1b59 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x1b5b 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x1b5d 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x1b5f 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x1b61 0x25
+        opcode25_EntityDisable( entity=(entity)0x16 ) -- 0x1b63 0x25
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x1b65 0x25
+        opcode25_EntityDisable( entity=(entity)0x18 ) -- 0x1b67 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x1b69 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x1b6b 0x25
+        opcode25_EntityDisable( entity=(entity)0x1b ) -- 0x1b6d 0x25
+        opcode25_EntityDisable( entity=(entity)0x1c ) -- 0x1b6f 0x25
+        opcode25_EntityDisable( entity=(entity)0x1d ) -- 0x1b71 0x25
+        opcode25_EntityDisable( entity=(entity)0x1e ) -- 0x1b73 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x1b75 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x1b77 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x1b79 0x25
         -- 0xC6() -- 0x1b7b 0xc6
         -- MISSING OPCODE 0x27
     end,

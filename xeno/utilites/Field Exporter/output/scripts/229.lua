@@ -12,7 +12,7 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         opcodeFE54() -- 0x000e 0xfe
-        opcode25( entity=(entity)0x02 ) -- 0x0010 0x25
+        opcode25_EntityDisable( entity=(entity)0x02 ) -- 0x0010 0x25
         -- 0xB4_FadeIn() -- 0x0012 0xb4
         -- 0xA0() -- 0x0015 0xa0
         -- 0xF1() -- 0x001c 0xf1
@@ -194,7 +194,7 @@ Entity[ "4" ] = {
 
     script_0x08 = function( self )
         -- 0x19_SetPosition( x=(vf80)0x0073, z=(vf40)0xfefd, flag=(flag)0xc0 ) -- 0x01b6 0x19
-        opcode25( entity=(entity)0x04 ) -- 0x01bc 0x25
+        opcode25_EntityDisable( entity=(entity)0x04 ) -- 0x01bc 0x25
         return 0 -- 0x01be 0x00
     end,
 

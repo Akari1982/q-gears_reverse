@@ -18,8 +18,8 @@ Entity[ "0" ] = {
         opcode64() -- 0x00c2 0x64
         opcode63() -- 0x00c3 0x63
         opcodeA3() -- 0x00cb 0xa3
-        opcodeAC() -- 0x00d3 0xac
-        opcodeAC() -- 0x00d7 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x00d3 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x00d7 0xac
         -- 0xF1() -- 0x00db 0xf1
         opcode26_Wait( time=120 ) -- 0x00e6 0x26
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x69 ) -- 0x00e9 0x09
@@ -684,7 +684,7 @@ Entity[ "25" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x0b17 ) -- 0x09ee 0x02
         opcodeFE54() -- 0x09f6 0xfe
-        opcode25( entity=(entity)0x15 ) -- 0x09f8 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x09f8 0x25
         -- MISSING OPCODE 0x80
     end,
 
@@ -1141,8 +1141,8 @@ Entity[ "44" ] = {
     end,
 
     on_update = function( self )
-        opcode25( entity=(entity)0x2d ) -- 0x0e45 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x0e47 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x0e45 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x0e47 0x25
         -- MISSING OPCODE 0x27
     end,
 

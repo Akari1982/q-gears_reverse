@@ -583,18 +583,18 @@ Entity[ "12" ] = {
 
     script_0x04 = function( self )
         -- 0xC6() -- 0x09a5 0xc6
-        opcode25( entity=(entity)0x05 ) -- 0x09a6 0x25
+        opcode25_EntityDisable( entity=(entity)0x05 ) -- 0x09a6 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x05 = function( self )
         -- 0xC6() -- 0x09b8 0xc6
-        opcode25( entity=(entity)0x05 ) -- 0x09b9 0x25
+        opcode25_EntityDisable( entity=(entity)0x05 ) -- 0x09b9 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x06 = function( self )
-        opcode25( entity=(entity)0x03 ) -- 0x09cb 0x25
+        opcode25_EntityDisable( entity=(entity)0x03 ) -- 0x09cb 0x25
         -- MISSING OPCODE 0x27
     end,
 

@@ -683,7 +683,7 @@ Entity[ "25" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0x16 ) -- 0x457a 0x25
+        opcode25_EntityDisable( entity=(entity)0x16 ) -- 0x457a 0x25
         -- MISSING OPCODE 0x27
     end,
 
@@ -872,8 +872,8 @@ Entity[ "32" ] = {
         opcodeFE54() -- 0x4814 0xfe
         opcodeFE52() -- 0x4816 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x1c, script=0x65 ) -- 0x4818 0x09
-        opcode24( entity=(entity)0x16 ) -- 0x481b 0x24
-        opcode24( entity=(entity)0x17 ) -- 0x481d 0x24
+        opcode24_EntityEnable( entity=(entity)0x16 ) -- 0x481b 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x481d 0x24
         -- MISSING OPCODE 0x28
     end,
 

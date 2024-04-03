@@ -738,8 +738,8 @@ Entity[ "27" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x045d 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0474 ) -- 0x045e 0x02
-        opcode24( entity=(entity)0x0d ) -- 0x0466 0x24
-        opcode25( entity=(entity)0x13 ) -- 0x0468 0x25
+        opcode24_EntityEnable( entity=(entity)0x0d ) -- 0x0466 0x24
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x0468 0x25
         -- MISSING OPCODE 0x29
     end,
 
@@ -788,16 +788,16 @@ Entity[ "28" ] = {
         opcode64() -- 0x05bb 0x64
         opcode63() -- 0x05bc 0x63
         opcodeA3() -- 0x05c4 0xa3
-        opcodeAC() -- 0x05cc 0xac
-        opcodeAC() -- 0x05d0 0xac
-        opcodeEF() -- 0x05d4 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x05cc 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x05d0 0xac
+        opcodeEF_MoveCameraSync() -- 0x05d4 0xef
         return 0 -- 0x05d7 0x00
     end,
 
     script_0x05 = function( self )
         -- 0xC6() -- 0x05d8 0xc6
-        opcode25( entity=(entity)0x0d ) -- 0x05d9 0x25
-        opcode24( entity=(entity)0x13 ) -- 0x05db 0x24
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x05d9 0x25
+        opcode24_EntityEnable( entity=(entity)0x13 ) -- 0x05db 0x24
         -- MISSING OPCODE 0xb6
     end,
 

@@ -15,25 +15,25 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x001e ), value2=(s16)0xff64, condition="value1 < value2", jump_if_false=0x0068 ) -- 0x004b 0x02
-        opcode24( entity=(entity)0x18 ) -- 0x0053 0x24
-        opcode24( entity=(entity)0x19 ) -- 0x0055 0x24
-        opcode25( entity=(entity)0x17 ) -- 0x0057 0x25
-        opcode25( entity=(entity)0x16 ) -- 0x0059 0x25
-        opcode25( entity=(entity)0x15 ) -- 0x005b 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x005d 0x25
-        opcode25( entity=(entity)0x13 ) -- 0x005f 0x25
-        opcode25( entity=(entity)0x14 ) -- 0x0061 0x25
-        opcode25( entity=(entity)0x11 ) -- 0x0063 0x25
+        opcode24_EntityEnable( entity=(entity)0x18 ) -- 0x0053 0x24
+        opcode24_EntityEnable( entity=(entity)0x19 ) -- 0x0055 0x24
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x0057 0x25
+        opcode25_EntityDisable( entity=(entity)0x16 ) -- 0x0059 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x005b 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x005d 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x005f 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x0061 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x0063 0x25
         -- 0x01_JumpTo( 0x007a ) -- 0x0065 0x01
-        opcode25( entity=(entity)0x18 ) -- 0x0068 0x25
-        opcode25( entity=(entity)0x19 ) -- 0x006a 0x25
-        opcode24( entity=(entity)0x17 ) -- 0x006c 0x24
-        opcode24( entity=(entity)0x16 ) -- 0x006e 0x24
-        opcode24( entity=(entity)0x15 ) -- 0x0070 0x24
-        opcode24( entity=(entity)0x12 ) -- 0x0072 0x24
-        opcode24( entity=(entity)0x13 ) -- 0x0074 0x24
-        opcode24( entity=(entity)0x14 ) -- 0x0076 0x24
-        opcode24( entity=(entity)0x11 ) -- 0x0078 0x24
+        opcode25_EntityDisable( entity=(entity)0x18 ) -- 0x0068 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x006a 0x25
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x006c 0x24
+        opcode24_EntityEnable( entity=(entity)0x16 ) -- 0x006e 0x24
+        opcode24_EntityEnable( entity=(entity)0x15 ) -- 0x0070 0x24
+        opcode24_EntityEnable( entity=(entity)0x12 ) -- 0x0072 0x24
+        opcode24_EntityEnable( entity=(entity)0x13 ) -- 0x0074 0x24
+        opcode24_EntityEnable( entity=(entity)0x14 ) -- 0x0076 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x0078 0x24
         return 0 -- 0x007a 0x00
     end,
 

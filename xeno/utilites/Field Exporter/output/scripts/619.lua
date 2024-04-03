@@ -1096,42 +1096,42 @@ Entity[ "29" ] = {
     end,
 
     script_0x06 = function( self )
-        opcode25( entity=(entity)0x17 ) -- 0x1771 0x25
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x1771 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x18 ) -- 0x1776 0x25
+        opcode25_EntityDisable( entity=(entity)0x18 ) -- 0x1776 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x08 = function( self )
-        opcode25( entity=(entity)0x1a ) -- 0x177f 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x177f 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x09 = function( self )
-        opcode24( entity=(entity)0x17 ) -- 0x1788 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x1788 0x24
         -- MISSING OPCODE 0x28
     end,
 
     script_0x0a = function( self )
-        opcode24( entity=(entity)0x18 ) -- 0x178d 0x24
+        opcode24_EntityEnable( entity=(entity)0x18 ) -- 0x178d 0x24
         -- MISSING OPCODE 0x28
     end,
 
     script_0x0b = function( self )
-        opcode24( entity=(entity)0x1a ) -- 0x1796 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x1796 0x24
         -- MISSING OPCODE 0x28
     end,
 
     script_0x0c = function( self )
-        opcode25( entity=(entity)0x17 ) -- 0x179f 0x25
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x179f 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x0d = function( self )
-        opcode24( entity=(entity)0x17 ) -- 0x17b4 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x17b4 0x24
         -- MISSING OPCODE 0x28
     end,
 

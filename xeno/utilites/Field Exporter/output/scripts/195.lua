@@ -52,7 +52,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x01 ) -- 0x0101 0x24
+        opcode24_EntityEnable( entity=(entity)0x01 ) -- 0x0101 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -61,7 +61,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x01 ) -- 0x013a 0x24
+        opcode24_EntityEnable( entity=(entity)0x01 ) -- 0x013a 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1361,7 +1361,7 @@ Entity[ "43" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x2b ) -- 0x1652 0x24
+        opcode24_EntityEnable( entity=(entity)0x2b ) -- 0x1652 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1370,7 +1370,7 @@ Entity[ "43" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x2b ) -- 0x168b 0x24
+        opcode24_EntityEnable( entity=(entity)0x2b ) -- 0x168b 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1422,7 +1422,7 @@ Entity[ "44" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x2c ) -- 0x170e 0x24
+        opcode24_EntityEnable( entity=(entity)0x2c ) -- 0x170e 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1431,7 +1431,7 @@ Entity[ "44" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x2c ) -- 0x1747 0x24
+        opcode24_EntityEnable( entity=(entity)0x2c ) -- 0x1747 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1503,7 +1503,7 @@ Entity[ "45" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x2d ) -- 0x180c 0x24
+        opcode24_EntityEnable( entity=(entity)0x2d ) -- 0x180c 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1512,7 +1512,7 @@ Entity[ "45" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x2d ) -- 0x1845 0x24
+        opcode24_EntityEnable( entity=(entity)0x2d ) -- 0x1845 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1546,7 +1546,7 @@ Entity[ "46" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x2e ) -- 0x1894 0x24
+        opcode24_EntityEnable( entity=(entity)0x2e ) -- 0x1894 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1555,7 +1555,7 @@ Entity[ "46" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x2e ) -- 0x18cd 0x24
+        opcode24_EntityEnable( entity=(entity)0x2e ) -- 0x18cd 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1589,7 +1589,7 @@ Entity[ "47" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x2f ) -- 0x191c 0x24
+        opcode24_EntityEnable( entity=(entity)0x2f ) -- 0x191c 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1598,7 +1598,7 @@ Entity[ "47" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x2f ) -- 0x1955 0x24
+        opcode24_EntityEnable( entity=(entity)0x2f ) -- 0x1955 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1637,7 +1637,7 @@ Entity[ "48" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x30 ) -- 0x19a8 0x24
+        opcode24_EntityEnable( entity=(entity)0x30 ) -- 0x19a8 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1646,7 +1646,7 @@ Entity[ "48" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x30 ) -- 0x19e1 0x24
+        opcode24_EntityEnable( entity=(entity)0x30 ) -- 0x19e1 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1680,7 +1680,7 @@ Entity[ "49" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x31 ) -- 0x1a30 0x24
+        opcode24_EntityEnable( entity=(entity)0x31 ) -- 0x1a30 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1689,7 +1689,7 @@ Entity[ "49" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x31 ) -- 0x1a69 0x24
+        opcode24_EntityEnable( entity=(entity)0x31 ) -- 0x1a69 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1723,7 +1723,7 @@ Entity[ "50" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x32 ) -- 0x1ab8 0x24
+        opcode24_EntityEnable( entity=(entity)0x32 ) -- 0x1ab8 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1732,7 +1732,7 @@ Entity[ "50" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x32 ) -- 0x1af1 0x24
+        opcode24_EntityEnable( entity=(entity)0x32 ) -- 0x1af1 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1766,7 +1766,7 @@ Entity[ "51" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x33 ) -- 0x1b40 0x24
+        opcode24_EntityEnable( entity=(entity)0x33 ) -- 0x1b40 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1775,7 +1775,7 @@ Entity[ "51" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x33 ) -- 0x1b79 0x24
+        opcode24_EntityEnable( entity=(entity)0x33 ) -- 0x1b79 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1809,7 +1809,7 @@ Entity[ "52" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x34 ) -- 0x1bc8 0x24
+        opcode24_EntityEnable( entity=(entity)0x34 ) -- 0x1bc8 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1818,7 +1818,7 @@ Entity[ "52" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode24( entity=(entity)0x34 ) -- 0x1c01 0x24
+        opcode24_EntityEnable( entity=(entity)0x34 ) -- 0x1c01 0x24
         -- MISSING OPCODE 0x2c
     end,
 
@@ -1964,7 +1964,7 @@ Entity[ "56" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x213f 0xbc
         -- 0x2A() -- 0x2140 0x2a
-        opcode25( entity=(entity)0x25 ) -- 0x2141 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x2141 0x25
         -- MISSING OPCODE 0x27
     end,
 

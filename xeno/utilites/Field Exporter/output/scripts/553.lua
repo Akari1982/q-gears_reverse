@@ -353,8 +353,8 @@ Entity[ "11" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0x0a ) -- 0x029b 0x25
-        opcode24( entity=(entity)0x0b ) -- 0x029d 0x24
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x029b 0x25
+        opcode24_EntityEnable( entity=(entity)0x0b ) -- 0x029d 0x24
         -- MISSING OPCODE 0x74
     end,
 

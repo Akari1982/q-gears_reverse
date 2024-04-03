@@ -612,11 +612,11 @@ Entity[ "22" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0013, condition="value1 < value2", jump_if_false=0x0840 ) -- 0x0824 0x02
-        opcode25( entity=(entity)0x0e ) -- 0x082c 0x25
-        opcode25( entity=(entity)0x0f ) -- 0x082e 0x25
-        opcode25( entity=(entity)0x10 ) -- 0x0830 0x25
-        opcode25( entity=(entity)0x11 ) -- 0x0832 0x25
-        opcode25( entity=(entity)0x13 ) -- 0x0834 0x25
+        opcode25_EntityDisable( entity=(entity)0x0e ) -- 0x082c 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x082e 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x0830 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x0832 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x0834 0x25
         -- MISSING OPCODE 0x27
     end,
 

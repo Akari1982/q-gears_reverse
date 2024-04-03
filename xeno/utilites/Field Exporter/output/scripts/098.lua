@@ -1063,7 +1063,7 @@ Entity[ "37" ] = {
 Entity[ "38" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x09ee 0xbc
-        opcode25( entity=(entity)0x0d ) -- 0x09ef 0x25
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x09ef 0x25
         -- MISSING OPCODE 0x27
     end,
 

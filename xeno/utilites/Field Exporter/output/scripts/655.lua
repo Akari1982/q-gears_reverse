@@ -768,8 +768,8 @@ Entity[ "22" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode24( entity=(entity)0x17 ) -- 0x0922 0x24
-        opcode24( entity=(entity)0x18 ) -- 0x0924 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x0922 0x24
+        opcode24_EntityEnable( entity=(entity)0x18 ) -- 0x0924 0x24
         -- 0x05_CallFunction( 0x09e2 ) -- 0x0926 0x05
         -- MISSING OPCODE 0x21
     end,

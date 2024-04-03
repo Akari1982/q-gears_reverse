@@ -1252,17 +1252,17 @@ Entity[ "28" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0x10 ) -- 0x16fe 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x16fe 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x05 = function( self )
-        opcode25( entity=(entity)0x10 ) -- 0x1707 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x1707 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x06 = function( self )
-        opcode25( entity=(entity)0x19 ) -- 0x1710 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x1710 0x25
         -- MISSING OPCODE 0x27
     end,
 

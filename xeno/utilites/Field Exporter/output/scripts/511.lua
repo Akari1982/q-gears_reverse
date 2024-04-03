@@ -28,17 +28,17 @@ Entity[ "0" ] = {
         opcode60() -- 0x006a 0x60
         opcode63() -- 0x006b 0x63
         opcodeA3() -- 0x0073 0xa3
-        opcodeAC() -- 0x007b 0xac
-        opcodeAC() -- 0x007f 0xac
-        opcodeEF() -- 0x0083 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x007b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x007f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0083 0xef
         opcode26_Wait( time=90 ) -- 0x0086 0x26
         opcode60() -- 0x0089 0x60
         opcode60() -- 0x008a 0x60
         opcode63() -- 0x008b 0x63
         opcodeA3() -- 0x0093 0xa3
-        opcodeAC() -- 0x009b 0xac
-        opcodeAC() -- 0x009f 0xac
-        opcodeEF() -- 0x00a3 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x009b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x009f 0xac
+        opcodeEF_MoveCameraSync() -- 0x00a3 0xef
         return 0 -- 0x00a6 0x00
     end,
 
@@ -160,26 +160,26 @@ Entity[ "5" ] = {
     end,
 
     on_update = function( self )
-        opcode25( entity=(entity)0xff ) -- 0x01a6 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x01a8 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x01aa 0x25
-        opcode25( entity=(entity)0x04 ) -- 0x01ac 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x01a6 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x01a8 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x01aa 0x25
+        opcode25_EntityDisable( entity=(entity)0x04 ) -- 0x01ac 0x25
         opcode99() -- 0x01ae 0x99
         opcode60() -- 0x01af 0x60
         opcode64() -- 0x01b0 0x64
         opcode63() -- 0x01b1 0x63
         opcodeA3() -- 0x01b9 0xa3
-        opcodeAC() -- 0x01c1 0xac
-        opcodeAC() -- 0x01c5 0xac
-        opcodeEF() -- 0x01c9 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x01c1 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x01c5 0xac
+        opcodeEF_MoveCameraSync() -- 0x01c9 0xef
         opcode26_Wait( time=60 ) -- 0x01cc 0x26
         -- 0xC6() -- 0x01cf 0xc6
         -- 0x07( entity=0x06, script=0x64 ) -- 0x01d0 0x07
         -- 0x09_EntityCallScriptEW( entity=0x07, script=0x64 ) -- 0x01d3 0x09
-        opcode24( entity=(entity)0xff ) -- 0x01d6 0x24
-        opcode24( entity=(entity)0xfe ) -- 0x01d8 0x24
-        opcode24( entity=(entity)0xfd ) -- 0x01da 0x24
-        opcode24( entity=(entity)0x04 ) -- 0x01dc 0x24
+        opcode24_EntityEnable( entity=(entity)0xff ) -- 0x01d6 0x24
+        opcode24_EntityEnable( entity=(entity)0xfe ) -- 0x01d8 0x24
+        opcode24_EntityEnable( entity=(entity)0xfd ) -- 0x01da 0x24
+        opcode24_EntityEnable( entity=(entity)0x04 ) -- 0x01dc 0x24
         -- 0x09_EntityCallScriptEW( entity=0x07, script=0x65 ) -- 0x01de 0x09
         -- 0x87_SetProgress( progress=210 ) -- 0x01e1 0x87
         -- 0x98_MapLoad( field_id=537, value=1 ) -- 0x01e4 0x98
@@ -223,9 +223,9 @@ Entity[ "6" ] = {
         opcode64() -- 0x01f0 0x64
         opcode63() -- 0x01f1 0x63
         opcodeA3() -- 0x01f9 0xa3
-        opcodeAC() -- 0x0201 0xac
-        opcodeAC() -- 0x0205 0xac
-        opcodeEF() -- 0x0209 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0201 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0205 0xac
+        opcodeEF_MoveCameraSync() -- 0x0209 0xef
         return 0 -- 0x020c 0x00
     end,
 
@@ -234,9 +234,9 @@ Entity[ "6" ] = {
         opcode64() -- 0x020e 0x64
         opcode63() -- 0x020f 0x63
         opcodeA3() -- 0x0217 0xa3
-        opcodeAC() -- 0x021f 0xac
-        opcodeAC() -- 0x0223 0xac
-        opcodeEF() -- 0x0227 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x021f 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0223 0xac
+        opcodeEF_MoveCameraSync() -- 0x0227 0xef
         return 0 -- 0x022a 0x00
     end,
 

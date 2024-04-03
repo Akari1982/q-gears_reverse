@@ -1578,7 +1578,7 @@ Entity[ "51" ] = {
         -- 0x2A() -- 0x13fe 0x2a
         -- 0xBC_EntityNoModelInit() -- 0x13ff 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x1424 ) -- 0x1400 0x02
-        opcode25( entity=(entity)0x1b ) -- 0x1408 0x25
+        opcode25_EntityDisable( entity=(entity)0x1b ) -- 0x1408 0x25
         -- MISSING OPCODE 0x27
     end,
 

@@ -242,9 +242,9 @@ Entity[ "6" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01e1 ) -- 0x01ae 0x02
         opcodeFE54() -- 0x01b6 0xfe
         -- 0xC6() -- 0x01b8 0xc6
-        opcode25( entity=(entity)0xff ) -- 0x01b9 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x01bb 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x01bd 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x01b9 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x01bb 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x01bd 0x25
         -- 0x09_EntityCallScriptEW( entity=0x09, script=0x25 ) -- 0x01bf 0x09
         -- 0x09_EntityCallScriptEW( entity=0x07, script=0x24 ) -- 0x01c2 0x09
         opcode26_Wait( time=45 ) -- 0x01c5 0x26

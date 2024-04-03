@@ -507,8 +507,8 @@ Entity[ "13" ] = {
         opcode64() -- 0x0712 0x64
         opcode63() -- 0x0713 0x63
         opcodeA3() -- 0x071b 0xa3
-        opcodeAC() -- 0x0723 0xac
-        opcodeAC() -- 0x0727 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x0723 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x0727 0xac
         return 0 -- 0x072b 0x00
     end,
 
@@ -517,9 +517,9 @@ Entity[ "13" ] = {
         opcode64() -- 0x072d 0x64
         opcode63() -- 0x072e 0x63
         opcodeA3() -- 0x0736 0xa3
-        opcodeAC() -- 0x073e 0xac
-        opcodeAC() -- 0x0742 0xac
-        opcodeEF() -- 0x0746 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x073e 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x0742 0xac
+        opcodeEF_MoveCameraSync() -- 0x0746 0xef
         return 0 -- 0x0749 0x00
     end,
 
@@ -534,8 +534,8 @@ Entity[ "13" ] = {
         opcode64() -- 0x0760 0x64
         opcode63() -- 0x0761 0x63
         opcodeA3() -- 0x0769 0xa3
-        opcodeAC() -- 0x0771 0xac
-        opcodeAC() -- 0x0775 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x0771 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x0775 0xac
         return 0 -- 0x0779 0x00
     end,
 
@@ -544,8 +544,8 @@ Entity[ "13" ] = {
         opcode64() -- 0x077b 0x64
         opcode63() -- 0x077c 0x63
         opcodeA3() -- 0x0784 0xa3
-        opcodeAC() -- 0x078c 0xac
-        opcodeAC() -- 0x0790 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x078c 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x0790 0xac
         return 0 -- 0x0794 0x00
     end,
 
@@ -558,8 +558,8 @@ Entity[ "13" ] = {
         opcode64() -- 0x07bf 0x64
         opcode63() -- 0x07c0 0x63
         opcodeA3() -- 0x07c8 0xa3
-        opcodeAC() -- 0x07d0 0xac
-        opcodeAC() -- 0x07d4 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x07d0 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x07d4 0xac
         return 0 -- 0x07d8 0x00
     end,
 

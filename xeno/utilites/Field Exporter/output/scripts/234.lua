@@ -509,9 +509,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x02e8 0x63
         opcode64() -- 0x02f0 0x64
         opcodeA3() -- 0x02f1 0xa3
-        opcodeAC() -- 0x02f9 0xac
-        opcodeAC() -- 0x02fd 0xac
-        opcodeEF() -- 0x0301 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x02f9 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=2 ) -- 0x02fd 0xac
+        opcodeEF_MoveCameraSync() -- 0x0301 0xef
         -- MISSING OPCODE 0x9b
     end,
 
@@ -520,9 +520,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x032e 0x63
         opcode64() -- 0x0336 0x64
         opcodeA3() -- 0x0337 0xa3
-        opcodeAC() -- 0x033f 0xac
-        opcodeAC() -- 0x0343 0xac
-        opcodeEF() -- 0x0347 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x033f 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x0343 0xac
+        opcodeEF_MoveCameraSync() -- 0x0347 0xef
         return 0 -- 0x034a 0x00
     end,
 
@@ -531,9 +531,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x034c 0x63
         opcode64() -- 0x0354 0x64
         opcodeA3() -- 0x0355 0xa3
-        opcodeAC() -- 0x035d 0xac
-        opcodeAC() -- 0x0361 0xac
-        opcodeEF() -- 0x0365 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x035d 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x0361 0xac
+        opcodeEF_MoveCameraSync() -- 0x0365 0xef
         opcode26_Wait( time=100 ) -- 0x0368 0x26
         -- MISSING OPCODE 0x9b
     end,
@@ -543,9 +543,9 @@ Entity[ "19" ] = {
         opcode63() -- 0x038f 0x63
         opcode64() -- 0x0397 0x64
         opcodeA3() -- 0x0398 0xa3
-        opcodeAC() -- 0x03a0 0xac
-        opcodeAC() -- 0x03a4 0xac
-        opcodeEF() -- 0x03a8 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x03a0 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x03a4 0xac
+        opcodeEF_MoveCameraSync() -- 0x03a8 0xef
         return 0 -- 0x03ab 0x00
     end,
 
@@ -904,17 +904,17 @@ Entity[ "29" ] = {
         opcode26_Wait( time=30 ) -- 0x06e1 0x26
         -- 0xB4_FadeIn() -- 0x06e4 0xb4
         opcode26_Wait( time=10 ) -- 0x06e7 0x26
-        opcode24( entity=(entity)0x14 ) -- 0x06ea 0x24
-        opcode24( entity=(entity)0x15 ) -- 0x06ec 0x24
-        opcode24( entity=(entity)0x16 ) -- 0x06ee 0x24
-        opcode24( entity=(entity)0x17 ) -- 0x06f0 0x24
-        opcode24( entity=(entity)0x1b ) -- 0x06f2 0x24
+        opcode24_EntityEnable( entity=(entity)0x14 ) -- 0x06ea 0x24
+        opcode24_EntityEnable( entity=(entity)0x15 ) -- 0x06ec 0x24
+        opcode24_EntityEnable( entity=(entity)0x16 ) -- 0x06ee 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x06f0 0x24
+        opcode24_EntityEnable( entity=(entity)0x1b ) -- 0x06f2 0x24
         -- 0x09_EntityCallScriptEW( entity=0x13, script=0x25 ) -- 0x06f4 0x09
         -- 0xB3() -- 0x06f7 0xb3
         opcode26_Wait( time=30 ) -- 0x06fa 0x26
-        opcode24( entity=(entity)0x1c ) -- 0x06fd 0x24
-        opcode24( entity=(entity)0x11 ) -- 0x06ff 0x24
-        opcode24( entity=(entity)0x12 ) -- 0x0701 0x24
+        opcode24_EntityEnable( entity=(entity)0x1c ) -- 0x06fd 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x06ff 0x24
+        opcode24_EntityEnable( entity=(entity)0x12 ) -- 0x0701 0x24
         -- 0x07( entity=0x11, script=0x24 ) -- 0x0703 0x07
         -- 0x07( entity=0x12, script=0x24 ) -- 0x0706 0x07
         -- 0x09_EntityCallScriptEW( entity=0x1c, script=0x24 ) -- 0x0709 0x09

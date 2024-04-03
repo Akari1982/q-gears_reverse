@@ -191,25 +191,25 @@ Entity[ "3" ] = {
         opcode99() -- 0x0376 0x99
         opcode63() -- 0x0377 0x63
         opcodeA3() -- 0x037f 0xa3
-        opcodeAC() -- 0x0387 0xac
-        opcodeAC() -- 0x038b 0xac
-        opcodeEF() -- 0x038f 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0387 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x038b 0xac
+        opcodeEF_MoveCameraSync() -- 0x038f 0xef
         return 0 -- 0x0392 0x00
     end,
 
     script_0x06 = function( self )
         opcode63() -- 0x0393 0x63
         opcodeA3() -- 0x039b 0xa3
-        opcodeAC() -- 0x03a3 0xac
-        opcodeAC() -- 0x03a7 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x03a3 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x03a7 0xac
         -- MISSING OPCODE 0xb6
     end,
 
     script_0x07 = function( self )
         opcode63() -- 0x03b4 0x63
         opcodeA3() -- 0x03bc 0xa3
-        opcodeAC() -- 0x03c4 0xac
-        opcodeAC() -- 0x03c8 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x03c4 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x03c8 0xac
         -- MISSING OPCODE 0xb6
     end,
 

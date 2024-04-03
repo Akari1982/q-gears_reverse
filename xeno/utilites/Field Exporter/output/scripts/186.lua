@@ -84,48 +84,48 @@ Entity[ "2" ] = {
     end,
 
     script_0x06 = function( self )
-        opcode24( entity=(entity)0x04 ) -- 0x0614 0x24
-        opcode24( entity=(entity)0x0a ) -- 0x0616 0x24
-        opcode24( entity=(entity)0x0b ) -- 0x0618 0x24
-        opcode24( entity=(entity)0x0c ) -- 0x061a 0x24
-        opcode24( entity=(entity)0x0d ) -- 0x061c 0x24
-        opcode24( entity=(entity)0x0e ) -- 0x061e 0x24
-        opcode24( entity=(entity)0x0f ) -- 0x0620 0x24
-        opcode24( entity=(entity)0x10 ) -- 0x0622 0x24
-        opcode24( entity=(entity)0x11 ) -- 0x0624 0x24
-        opcode24( entity=(entity)0x12 ) -- 0x0626 0x24
-        opcode24( entity=(entity)0x13 ) -- 0x0628 0x24
-        opcode24( entity=(entity)0x14 ) -- 0x062a 0x24
-        opcode24( entity=(entity)0x15 ) -- 0x062c 0x24
-        opcode24( entity=(entity)0x16 ) -- 0x062e 0x24
-        opcode24( entity=(entity)0x17 ) -- 0x0630 0x24
-        opcode24( entity=(entity)0x18 ) -- 0x0632 0x24
-        opcode24( entity=(entity)0x1d ) -- 0x0634 0x24
+        opcode24_EntityEnable( entity=(entity)0x04 ) -- 0x0614 0x24
+        opcode24_EntityEnable( entity=(entity)0x0a ) -- 0x0616 0x24
+        opcode24_EntityEnable( entity=(entity)0x0b ) -- 0x0618 0x24
+        opcode24_EntityEnable( entity=(entity)0x0c ) -- 0x061a 0x24
+        opcode24_EntityEnable( entity=(entity)0x0d ) -- 0x061c 0x24
+        opcode24_EntityEnable( entity=(entity)0x0e ) -- 0x061e 0x24
+        opcode24_EntityEnable( entity=(entity)0x0f ) -- 0x0620 0x24
+        opcode24_EntityEnable( entity=(entity)0x10 ) -- 0x0622 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x0624 0x24
+        opcode24_EntityEnable( entity=(entity)0x12 ) -- 0x0626 0x24
+        opcode24_EntityEnable( entity=(entity)0x13 ) -- 0x0628 0x24
+        opcode24_EntityEnable( entity=(entity)0x14 ) -- 0x062a 0x24
+        opcode24_EntityEnable( entity=(entity)0x15 ) -- 0x062c 0x24
+        opcode24_EntityEnable( entity=(entity)0x16 ) -- 0x062e 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x0630 0x24
+        opcode24_EntityEnable( entity=(entity)0x18 ) -- 0x0632 0x24
+        opcode24_EntityEnable( entity=(entity)0x1d ) -- 0x0634 0x24
         return 0 -- 0x0636 0x00
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x0a ) -- 0x0637 0x25
-        opcode25( entity=(entity)0x0b ) -- 0x0639 0x25
-        opcode25( entity=(entity)0x0c ) -- 0x063b 0x25
-        opcode25( entity=(entity)0x0d ) -- 0x063d 0x25
-        opcode25( entity=(entity)0x0e ) -- 0x063f 0x25
-        opcode25( entity=(entity)0x0f ) -- 0x0641 0x25
-        opcode25( entity=(entity)0x10 ) -- 0x0643 0x25
-        opcode25( entity=(entity)0x11 ) -- 0x0645 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x0647 0x25
-        opcode25( entity=(entity)0x13 ) -- 0x0649 0x25
-        opcode25( entity=(entity)0x14 ) -- 0x064b 0x25
-        opcode25( entity=(entity)0x15 ) -- 0x064d 0x25
-        opcode25( entity=(entity)0x16 ) -- 0x064f 0x25
-        opcode25( entity=(entity)0x17 ) -- 0x0651 0x25
-        opcode25( entity=(entity)0x18 ) -- 0x0653 0x25
-        opcode25( entity=(entity)0x1a ) -- 0x0655 0x25
-        opcode25( entity=(entity)0x19 ) -- 0x0657 0x25
-        opcode25( entity=(entity)0x1b ) -- 0x0659 0x25
-        opcode25( entity=(entity)0x1c ) -- 0x065b 0x25
-        opcode25( entity=(entity)0x1d ) -- 0x065d 0x25
-        opcode25( entity=(entity)0x04 ) -- 0x065f 0x25
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x0637 0x25
+        opcode25_EntityDisable( entity=(entity)0x0b ) -- 0x0639 0x25
+        opcode25_EntityDisable( entity=(entity)0x0c ) -- 0x063b 0x25
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x063d 0x25
+        opcode25_EntityDisable( entity=(entity)0x0e ) -- 0x063f 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x0641 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x0643 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x0645 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x0647 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x0649 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x064b 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x064d 0x25
+        opcode25_EntityDisable( entity=(entity)0x16 ) -- 0x064f 0x25
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x0651 0x25
+        opcode25_EntityDisable( entity=(entity)0x18 ) -- 0x0653 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0655 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x0657 0x25
+        opcode25_EntityDisable( entity=(entity)0x1b ) -- 0x0659 0x25
+        opcode25_EntityDisable( entity=(entity)0x1c ) -- 0x065b 0x25
+        opcode25_EntityDisable( entity=(entity)0x1d ) -- 0x065d 0x25
+        opcode25_EntityDisable( entity=(entity)0x04 ) -- 0x065f 0x25
         return 0 -- 0x0661 0x00
     end,
 
@@ -162,9 +162,9 @@ Entity[ "3" ] = {
         opcode63() -- 0x06cc 0x63
         opcode64() -- 0x06d4 0x64
         opcodeA3() -- 0x06d5 0xa3
-        opcodeAC() -- 0x06dd 0xac
-        opcodeAC() -- 0x06e1 0xac
-        opcodeEF() -- 0x06e5 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x06dd 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x06e1 0xac
+        opcodeEF_MoveCameraSync() -- 0x06e5 0xef
         return 0 -- 0x06e8 0x00
     end,
 
@@ -173,9 +173,9 @@ Entity[ "3" ] = {
         opcode63() -- 0x06ea 0x63
         opcode64() -- 0x06f2 0x64
         opcodeA3() -- 0x06f3 0xa3
-        opcodeAC() -- 0x06fb 0xac
-        opcodeAC() -- 0x06ff 0xac
-        opcodeEF() -- 0x0703 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x06fb 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x06ff 0xac
+        opcodeEF_MoveCameraSync() -- 0x0703 0xef
         return 0 -- 0x0706 0x00
     end,
 
@@ -189,9 +189,9 @@ Entity[ "3" ] = {
         opcode63() -- 0x072c 0x63
         opcode64() -- 0x0734 0x64
         opcodeA3() -- 0x0735 0xa3
-        opcodeAC() -- 0x073d 0xac
-        opcodeAC() -- 0x0741 0xac
-        opcodeEF() -- 0x0745 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x073d 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0741 0xac
+        opcodeEF_MoveCameraSync() -- 0x0745 0xef
         return 0 -- 0x0748 0x00
     end,
 
@@ -201,9 +201,9 @@ Entity[ "3" ] = {
         opcode64() -- 0x0752 0x64
         opcodeA3() -- 0x0753 0xa3
         opcodeFE9B_SlideShow1( steps=5 ) -- 0x075b 0xfe
-        opcodeAC() -- 0x075f 0xac
-        opcodeAC() -- 0x0763 0xac
-        opcodeEF() -- 0x0767 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x075f 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0763 0xac
+        opcodeEF_MoveCameraSync() -- 0x0767 0xef
         -- MISSING OPCODE 0xFE48
     end,
 
@@ -212,9 +212,9 @@ Entity[ "3" ] = {
         opcode63() -- 0x0775 0x63
         opcode64() -- 0x077d 0x64
         opcodeA3() -- 0x077e 0xa3
-        opcodeAC() -- 0x0786 0xac
-        opcodeAC() -- 0x078a 0xac
-        opcodeEF() -- 0x078e 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0786 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x078a 0xac
+        opcodeEF_MoveCameraSync() -- 0x078e 0xef
         -- MISSING OPCODE 0xFE48
     end,
 
@@ -224,9 +224,9 @@ Entity[ "3" ] = {
         opcode64() -- 0x07a4 0x64
         opcodeA3() -- 0x07a5 0xa3
         opcodeFE9B_SlideShow1( steps=5 ) -- 0x07ad 0xfe
-        opcodeAC() -- 0x07b1 0xac
-        opcodeAC() -- 0x07b5 0xac
-        opcodeEF() -- 0x07b9 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x07b1 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x07b5 0xac
+        opcodeEF_MoveCameraSync() -- 0x07b9 0xef
         return 0 -- 0x07bc 0x00
     end,
 
@@ -240,9 +240,9 @@ Entity[ "3" ] = {
         opcode64() -- 0x07ed 0x64
         opcodeA3() -- 0x07ee 0xa3
         opcodeFE9B_SlideShow1( steps=5 ) -- 0x07f6 0xfe
-        opcodeAC() -- 0x07fa 0xac
-        opcodeAC() -- 0x07fe 0xac
-        opcodeEF() -- 0x0802 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x07fa 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x07fe 0xac
+        opcodeEF_MoveCameraSync() -- 0x0802 0xef
         return 0 -- 0x0805 0x00
     end,
 
@@ -252,9 +252,9 @@ Entity[ "3" ] = {
         opcode64() -- 0x080f 0x64
         opcodeA3() -- 0x0810 0xa3
         opcodeFE9B_SlideShow1( steps=5 ) -- 0x0818 0xfe
-        opcodeAC() -- 0x081c 0xac
-        opcodeAC() -- 0x0820 0xac
-        opcodeEF() -- 0x0824 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x081c 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0820 0xac
+        opcodeEF_MoveCameraSync() -- 0x0824 0xef
         -- MISSING OPCODE 0xFE48
     end,
 
@@ -264,9 +264,9 @@ Entity[ "3" ] = {
         opcode64() -- 0x083a 0x64
         opcodeA3() -- 0x083b 0xa3
         opcodeFE9B_SlideShow1( steps=5 ) -- 0x0843 0xfe
-        opcodeAC() -- 0x0847 0xac
-        opcodeAC() -- 0x084b 0xac
-        opcodeEF() -- 0x084f 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0847 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x084b 0xac
+        opcodeEF_MoveCameraSync() -- 0x084f 0xef
         -- MISSING OPCODE 0xFE48
     end,
 
@@ -276,9 +276,9 @@ Entity[ "3" ] = {
         opcode64() -- 0x0865 0x64
         opcodeA3() -- 0x0866 0xa3
         opcodeFE9B_SlideShow1( steps=5 ) -- 0x086e 0xfe
-        opcodeAC() -- 0x0872 0xac
-        opcodeAC() -- 0x0876 0xac
-        opcodeEF() -- 0x087a 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0872 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0876 0xac
+        opcodeEF_MoveCameraSync() -- 0x087a 0xef
         -- MISSING OPCODE 0xFE48
     end,
 

@@ -410,7 +410,7 @@ Entity[ "14" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x0249 0xfe
-        opcode25( entity=(entity)0x01 ) -- 0x024b 0x25
+        opcode25_EntityDisable( entity=(entity)0x01 ) -- 0x024b 0x25
         opcode26_Wait( time=2 ) -- 0x024d 0x26
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x65 ) -- 0x0250 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c8 ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x02ec ) -- 0x0253 0x02

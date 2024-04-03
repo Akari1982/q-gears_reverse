@@ -13,8 +13,8 @@ Entity[ "0" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00df ) -- 0x006e 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0148 ), value2=(s16)0x0014, condition="value1 == value2", jump_if_false=0x00df ) -- 0x0076 0x02
         opcodeFE54() -- 0x007e 0xfe
-        opcode25( entity=(entity)0x06 ) -- 0x0080 0x25
-        opcode25( entity=(entity)0x07 ) -- 0x0082 0x25
+        opcode25_EntityDisable( entity=(entity)0x06 ) -- 0x0080 0x25
+        opcode25_EntityDisable( entity=(entity)0x07 ) -- 0x0082 0x25
         opcode26_Wait( time=16 ) -- 0x0084 0x26
         -- 0x07( entity=0x15, script=0x24 ) -- 0x0087 0x07
         opcode26_Wait( time=16 ) -- 0x008a 0x26
@@ -93,9 +93,9 @@ Entity[ "2" ] = {
         opcode63() -- 0x019b 0x63
         opcode64() -- 0x01a3 0x64
         opcodeA3() -- 0x01a4 0xa3
-        opcodeAC() -- 0x01ac 0xac
-        opcodeAC() -- 0x01b0 0xac
-        opcodeEF() -- 0x01b4 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x01ac 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x01b0 0xac
+        opcodeEF_MoveCameraSync() -- 0x01b4 0xef
         return 0 -- 0x01b7 0x00
     end,
 

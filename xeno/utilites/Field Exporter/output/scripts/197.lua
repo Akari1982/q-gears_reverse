@@ -672,9 +672,9 @@ Entity[ "23" ] = {
         opcode64() -- 0x0995 0x64
         opcode63() -- 0x0996 0x63
         opcodeA3() -- 0x099e 0xa3
-        opcodeAC() -- 0x09a6 0xac
-        opcodeAC() -- 0x09aa 0xac
-        opcodeEF() -- 0x09ae 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x09a6 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x09aa 0xac
+        opcodeEF_MoveCameraSync() -- 0x09ae 0xef
         return 0 -- 0x09b1 0x00
     end,
 
@@ -684,9 +684,9 @@ Entity[ "23" ] = {
         opcode64() -- 0x09b4 0x64
         opcode63() -- 0x09b5 0x63
         opcodeA3() -- 0x09bd 0xa3
-        opcodeAC() -- 0x09c5 0xac
-        opcodeAC() -- 0x09c9 0xac
-        opcodeEF() -- 0x09cd 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x09c5 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x09c9 0xac
+        opcodeEF_MoveCameraSync() -- 0x09cd 0xef
         return 0 -- 0x09d0 0x00
     end,
 
@@ -696,9 +696,9 @@ Entity[ "23" ] = {
         opcode64() -- 0x09d3 0x64
         opcode63() -- 0x09d4 0x63
         opcodeA3() -- 0x09dc 0xa3
-        opcodeAC() -- 0x09e4 0xac
-        opcodeAC() -- 0x09e8 0xac
-        opcodeEF() -- 0x09ec 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x09e4 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x09e8 0xac
+        opcodeEF_MoveCameraSync() -- 0x09ec 0xef
         return 0 -- 0x09ef 0x00
     end,
 
@@ -708,9 +708,9 @@ Entity[ "23" ] = {
         opcode64() -- 0x09f2 0x64
         opcode63() -- 0x09f3 0x63
         opcodeA3() -- 0x09fb 0xa3
-        opcodeAC() -- 0x0a03 0xac
-        opcodeAC() -- 0x0a07 0xac
-        opcodeEF() -- 0x0a0b 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x0a03 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x0a07 0xac
+        opcodeEF_MoveCameraSync() -- 0x0a0b 0xef
         return 0 -- 0x0a0e 0x00
     end,
 
@@ -937,7 +937,7 @@ Entity[ "33" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0da3 0xbc
         -- 0x2A() -- 0x0da4 0x2a
-        opcode25( entity=(entity)0x13 ) -- 0x0da5 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x0da5 0x25
         -- MISSING OPCODE 0x29
     end,
 

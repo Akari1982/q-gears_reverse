@@ -1011,7 +1011,7 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode24( entity=(entity)0x0d ) -- 0x0656 0x24
+        opcode24_EntityEnable( entity=(entity)0x0d ) -- 0x0656 0x24
         -- 0x09_EntityCallScriptEW( entity=0x18, script=0x64 ) -- 0x0658 0x09
         opcode26_Wait( time=10 ) -- 0x065b 0x26
         -- MISSING OPCODE 0xFE17
@@ -1319,9 +1319,9 @@ Entity[ "22" ] = {
         opcode64() -- 0x0e5a 0x64
         opcode63() -- 0x0e5b 0x63
         opcodeA3() -- 0x0e63 0xa3
-        opcodeAC() -- 0x0e6b 0xac
-        opcodeAC() -- 0x0e6f 0xac
-        opcodeEF() -- 0x0e73 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=90 ) -- 0x0e6b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0e6f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0e73 0xef
         return 0 -- 0x0e76 0x00
     end,
 
@@ -1335,9 +1335,9 @@ Entity[ "22" ] = {
         opcode64() -- 0x0e8a 0x64
         opcode63() -- 0x0e8b 0x63
         opcodeA3() -- 0x0e93 0xa3
-        opcodeAC() -- 0x0e9b 0xac
-        opcodeAC() -- 0x0e9f 0xac
-        opcodeEF() -- 0x0ea3 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=60 ) -- 0x0e9b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=60 ) -- 0x0e9f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0ea3 0xef
         return 0 -- 0x0ea6 0x00
     end,
 

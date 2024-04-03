@@ -415,9 +415,9 @@ Entity[ "7" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode25( entity=(entity)0x0d ) -- 0x02d4 0x25
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x02d4 0x25
         opcode26_Wait( time=1 ) -- 0x02d6 0x26
-        opcode24( entity=(entity)0x0d ) -- 0x02d9 0x24
+        opcode24_EntityEnable( entity=(entity)0x0d ) -- 0x02d9 0x24
         opcode26_Wait( time=1 ) -- 0x02db 0x26
         -- 0x01_JumpTo( 0x02d4 ) -- 0x02de 0x01
         return 0 -- 0x02e1 0x00
@@ -428,9 +428,9 @@ Entity[ "7" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x19 ) -- 0x02e5 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x02e5 0x25
         opcode26_Wait( time=1 ) -- 0x02e7 0x26
-        opcode24( entity=(entity)0x19 ) -- 0x02ea 0x24
+        opcode24_EntityEnable( entity=(entity)0x19 ) -- 0x02ea 0x24
         opcode26_Wait( time=1 ) -- 0x02ec 0x26
         -- 0x01_JumpTo( 0x02e5 ) -- 0x02ef 0x01
         return 0 -- 0x02f2 0x00
@@ -441,9 +441,9 @@ Entity[ "7" ] = {
     end,
 
     script_0x09 = function( self )
-        opcode25( entity=(entity)0x13 ) -- 0x02f6 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x02f6 0x25
         opcode26_Wait( time=1 ) -- 0x02f8 0x26
-        opcode24( entity=(entity)0x13 ) -- 0x02fb 0x24
+        opcode24_EntityEnable( entity=(entity)0x13 ) -- 0x02fb 0x24
         opcode26_Wait( time=1 ) -- 0x02fd 0x26
         -- 0x01_JumpTo( 0x02f6 ) -- 0x0300 0x01
         return 0 -- 0x0303 0x00
@@ -477,9 +477,9 @@ Entity[ "8" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode25( entity=(entity)0x0e ) -- 0x030b 0x25
+        opcode25_EntityDisable( entity=(entity)0x0e ) -- 0x030b 0x25
         opcode26_Wait( time=1 ) -- 0x030d 0x26
-        opcode24( entity=(entity)0x0e ) -- 0x0310 0x24
+        opcode24_EntityEnable( entity=(entity)0x0e ) -- 0x0310 0x24
         opcode26_Wait( time=1 ) -- 0x0312 0x26
         -- 0x01_JumpTo( 0x030b ) -- 0x0315 0x01
         return 0 -- 0x0318 0x00
@@ -490,9 +490,9 @@ Entity[ "8" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x1a ) -- 0x031c 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x031c 0x25
         opcode26_Wait( time=1 ) -- 0x031e 0x26
-        opcode24( entity=(entity)0x1a ) -- 0x0321 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x0321 0x24
         opcode26_Wait( time=1 ) -- 0x0323 0x26
         -- 0x01_JumpTo( 0x031c ) -- 0x0326 0x01
         return 0 -- 0x0329 0x00
@@ -503,9 +503,9 @@ Entity[ "8" ] = {
     end,
 
     script_0x09 = function( self )
-        opcode25( entity=(entity)0x14 ) -- 0x032d 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x032d 0x25
         opcode26_Wait( time=1 ) -- 0x032f 0x26
-        opcode24( entity=(entity)0x14 ) -- 0x0332 0x24
+        opcode24_EntityEnable( entity=(entity)0x14 ) -- 0x0332 0x24
         opcode26_Wait( time=1 ) -- 0x0334 0x26
         -- 0x01_JumpTo( 0x032d ) -- 0x0337 0x01
         return 0 -- 0x033a 0x00
@@ -539,9 +539,9 @@ Entity[ "9" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode25( entity=(entity)0x0f ) -- 0x0342 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x0342 0x25
         opcode26_Wait( time=1 ) -- 0x0344 0x26
-        opcode24( entity=(entity)0x0f ) -- 0x0347 0x24
+        opcode24_EntityEnable( entity=(entity)0x0f ) -- 0x0347 0x24
         opcode26_Wait( time=1 ) -- 0x0349 0x26
         -- 0x01_JumpTo( 0x0342 ) -- 0x034c 0x01
         return 0 -- 0x034f 0x00
@@ -552,9 +552,9 @@ Entity[ "9" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x1b ) -- 0x0353 0x25
+        opcode25_EntityDisable( entity=(entity)0x1b ) -- 0x0353 0x25
         opcode26_Wait( time=1 ) -- 0x0355 0x26
-        opcode24( entity=(entity)0x1b ) -- 0x0358 0x24
+        opcode24_EntityEnable( entity=(entity)0x1b ) -- 0x0358 0x24
         opcode26_Wait( time=1 ) -- 0x035a 0x26
         -- 0x01_JumpTo( 0x0353 ) -- 0x035d 0x01
         return 0 -- 0x0360 0x00
@@ -565,9 +565,9 @@ Entity[ "9" ] = {
     end,
 
     script_0x09 = function( self )
-        opcode25( entity=(entity)0x15 ) -- 0x0364 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x0364 0x25
         opcode26_Wait( time=1 ) -- 0x0366 0x26
-        opcode24( entity=(entity)0x15 ) -- 0x0369 0x24
+        opcode24_EntityEnable( entity=(entity)0x15 ) -- 0x0369 0x24
         opcode26_Wait( time=1 ) -- 0x036b 0x26
         -- 0x01_JumpTo( 0x0364 ) -- 0x036e 0x01
         return 0 -- 0x0371 0x00

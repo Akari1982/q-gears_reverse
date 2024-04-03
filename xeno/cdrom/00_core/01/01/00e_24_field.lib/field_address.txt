@@ -161,7 +161,7 @@
 800aee10 [][]     flags in cam mod 1. Init with 0.
                     0x0001 - use counter 800aee12.
                     0x0002 - use counter 800aee34.
-800aee12 [][]     counter. If not 0 increase 800aee14 by 800aee24 and so on. Init with 0.
+800aee12 [][]     steps. If not 0 increase 800aee14 by 800aee24 and so on. Init with 0.
 800aee14 [][][][] some x value.
 800aee18 [][][][] some y value.
 800aee1c [][][][] some z value.

@@ -22,9 +22,9 @@ Entity[ "0" ] = {
         opcode64() -- 0x0048 0x64
         opcode63() -- 0x0049 0x63
         opcodeA3() -- 0x0051 0xa3
-        opcodeAC() -- 0x0059 0xac
-        opcodeAC() -- 0x005d 0xac
-        opcodeEF() -- 0x0061 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0059 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x005d 0xac
+        opcodeEF_MoveCameraSync() -- 0x0061 0xef
         -- 0x5B() -- 0x0064 0x5b
         return 0 -- 0x0065 0x00
     end,

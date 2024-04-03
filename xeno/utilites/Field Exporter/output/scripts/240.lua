@@ -800,7 +800,7 @@ Entity[ "17" ] = {
 
     on_update = function( self )
         -- 0xCB_TriggerJumpTo( trigger_id=21511, jump=0x980e ) -- 0x0eca 0xcb
-        opcodeEF() -- 0x0ecf 0xef
+        opcodeEF_MoveCameraSync() -- 0x0ecf 0xef
         -- MISSING OPCODE 0x80
     end,
 

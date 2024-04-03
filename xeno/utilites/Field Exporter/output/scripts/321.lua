@@ -2333,8 +2333,8 @@ Entity[ "50" ] = {
         opcode99() -- 0x6822 0x99
         opcode63() -- 0x6823 0x63
         opcodeA3() -- 0x682b 0xa3
-        opcodeAC() -- 0x6833 0xac
-        opcodeAC() -- 0x6837 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x6833 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x6837 0xac
         -- MISSING OPCODE 0x2d
     end,
 

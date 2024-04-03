@@ -362,7 +362,7 @@ Entity[ "12" ] = {
     end,
 
     on_update = function( self )
-        opcode25( entity=(entity)0xff ) -- 0x08e5 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x08e5 0x25
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0a9c ) -- 0x08e7 0x02
         -- 0x75() -- 0x08ef 0x75
         opcodeFE54() -- 0x08f2 0xfe
@@ -407,8 +407,8 @@ Entity[ "13" ] = {
         opcode64() -- 0x0c3c 0x64
         opcode63() -- 0x0c3d 0x63
         opcodeA3() -- 0x0c45 0xa3
-        opcodeAC() -- 0x0c4d 0xac
-        opcodeAC() -- 0x0c51 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=150 ) -- 0x0c4d 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=150 ) -- 0x0c51 0xac
         opcode26_Wait( time=60 ) -- 0x0c55 0x26
         return 0 -- 0x0c58 0x00
     end,
@@ -423,8 +423,8 @@ Entity[ "13" ] = {
         opcode64() -- 0x0c84 0x64
         opcode63() -- 0x0c85 0x63
         opcodeA3() -- 0x0c8d 0xa3
-        opcodeAC() -- 0x0c95 0xac
-        opcodeAC() -- 0x0c99 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=150 ) -- 0x0c95 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=150 ) -- 0x0c99 0xac
         opcode26_Wait( time=60 ) -- 0x0c9d 0x26
         return 0 -- 0x0ca0 0x00
     end,
@@ -453,8 +453,8 @@ Entity[ "13" ] = {
         opcode64() -- 0x0db3 0x64
         opcode63() -- 0x0db4 0x63
         opcodeA3() -- 0x0dbc 0xa3
-        opcodeAC() -- 0x0dc4 0xac
-        opcodeAC() -- 0x0dc8 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=150 ) -- 0x0dc4 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=150 ) -- 0x0dc8 0xac
         return 0 -- 0x0dcc 0x00
     end,
 
@@ -463,9 +463,9 @@ Entity[ "13" ] = {
         opcode64() -- 0x0dce 0x64
         opcode63() -- 0x0dcf 0x63
         opcodeA3() -- 0x0dd7 0xa3
-        opcodeAC() -- 0x0ddf 0xac
-        opcodeAC() -- 0x0de3 0xac
-        opcodeEF() -- 0x0de7 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x0ddf 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x0de3 0xac
+        opcodeEF_MoveCameraSync() -- 0x0de7 0xef
         return 0 -- 0x0dea 0x00
     end,
 

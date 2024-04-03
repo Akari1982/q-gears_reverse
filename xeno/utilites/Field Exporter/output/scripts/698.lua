@@ -20,16 +20,16 @@ Entity[ "0" ] = {
         opcodeFE54() -- 0x0041 0xfe
         -- 0xF1() -- 0x0043 0xf1
         -- 0x75() -- 0x004e 0x75
-        opcode25( entity=(entity)0x02 ) -- 0x0051 0x25
-        opcode25( entity=(entity)0x03 ) -- 0x0053 0x25
-        opcode25( entity=(entity)0x0a ) -- 0x0055 0x25
-        opcode25( entity=(entity)0x04 ) -- 0x0057 0x25
-        opcode25( entity=(entity)0x06 ) -- 0x0059 0x25
-        opcode25( entity=(entity)0x05 ) -- 0x005b 0x25
-        opcode25( entity=(entity)0x09 ) -- 0x005d 0x25
-        opcode25( entity=(entity)0x08 ) -- 0x005f 0x25
-        opcode25( entity=(entity)0x07 ) -- 0x0061 0x25
-        opcode25( entity=(entity)0x0b ) -- 0x0063 0x25
+        opcode25_EntityDisable( entity=(entity)0x02 ) -- 0x0051 0x25
+        opcode25_EntityDisable( entity=(entity)0x03 ) -- 0x0053 0x25
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x0055 0x25
+        opcode25_EntityDisable( entity=(entity)0x04 ) -- 0x0057 0x25
+        opcode25_EntityDisable( entity=(entity)0x06 ) -- 0x0059 0x25
+        opcode25_EntityDisable( entity=(entity)0x05 ) -- 0x005b 0x25
+        opcode25_EntityDisable( entity=(entity)0x09 ) -- 0x005d 0x25
+        opcode25_EntityDisable( entity=(entity)0x08 ) -- 0x005f 0x25
+        opcode25_EntityDisable( entity=(entity)0x07 ) -- 0x0061 0x25
+        opcode25_EntityDisable( entity=(entity)0x0b ) -- 0x0063 0x25
         opcode99() -- 0x0065 0x99
         -- 0x35() -- 0x0066 0x35
         opcode63() -- 0x006c 0x63

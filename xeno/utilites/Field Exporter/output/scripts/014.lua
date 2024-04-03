@@ -533,7 +533,7 @@ Entity[ "16" ] = {
         -- 0x01_JumpTo( 0x0746 ) -- 0x0735 0x01
         -- 0x08_EntityCallScriptSW( entity=0x01, script=0x67 ) -- 0x0738 0x08
         opcode26_Wait( time=5 ) -- 0x073b 0x26
-        opcode25( entity=(entity)0x0f ) -- 0x073e 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x073e 0x25
         opcode3A_VariableBitSet( address=0x02c2, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x0740 0x3a
         return 0 -- 0x0746 0x00
     end,
@@ -543,7 +543,7 @@ Entity[ "16" ] = {
         -- 0x01_JumpTo( 0x0746 ) -- 0x0735 0x01
         -- 0x08_EntityCallScriptSW( entity=0x01, script=0x67 ) -- 0x0738 0x08
         opcode26_Wait( time=5 ) -- 0x073b 0x26
-        opcode25( entity=(entity)0x0f ) -- 0x073e 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x073e 0x25
         opcode3A_VariableBitSet( address=0x02c2, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x0740 0x3a
         return 0 -- 0x0746 0x00
     end,

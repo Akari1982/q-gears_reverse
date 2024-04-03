@@ -430,9 +430,9 @@ Entity[ "14" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0xff ) -- 0x0339 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x033b 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x033d 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x0339 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x033b 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x033d 0x25
         return 0 -- 0x033f 0x00
     end,
 

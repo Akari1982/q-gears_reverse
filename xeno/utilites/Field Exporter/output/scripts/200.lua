@@ -932,7 +932,7 @@ Entity[ "25" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x15 ) -- 0x1275 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x1275 0x25
         -- MISSING OPCODE 0x27
     end,
 

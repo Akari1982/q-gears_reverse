@@ -68,16 +68,16 @@ Entity[ "1" ] = {
         opcode64() -- 0x0118 0x64
         opcode63() -- 0x0119 0x63
         opcodeA3() -- 0x0121 0xa3
-        opcodeAC() -- 0x0129 0xac
-        opcodeAC() -- 0x012d 0xac
-        opcodeEF() -- 0x0131 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x0129 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x012d 0xac
+        opcodeEF_MoveCameraSync() -- 0x0131 0xef
         opcode60() -- 0x0134 0x60
         opcode64() -- 0x0135 0x64
         opcode63() -- 0x0136 0x63
         opcodeA3() -- 0x013e 0xa3
-        opcodeAC() -- 0x0146 0xac
-        opcodeAC() -- 0x014a 0xac
-        opcodeEF() -- 0x014e 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x0146 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x014a 0xac
+        opcodeEF_MoveCameraSync() -- 0x014e 0xef
         return 0 -- 0x0151 0x00
     end,
 

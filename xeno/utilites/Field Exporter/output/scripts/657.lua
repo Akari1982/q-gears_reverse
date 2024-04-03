@@ -10,17 +10,17 @@ Entity[ "0" ] = {
 
     on_update = function( self )
         opcodeFE54() -- 0x002b 0xfe
-        opcode25( entity=(entity)0x04 ) -- 0x002d 0x25
-        opcode25( entity=(entity)0x06 ) -- 0x002f 0x25
-        opcode25( entity=(entity)0x05 ) -- 0x0031 0x25
-        opcode25( entity=(entity)0x07 ) -- 0x0033 0x25
-        opcode25( entity=(entity)0x08 ) -- 0x0035 0x25
-        opcode25( entity=(entity)0x09 ) -- 0x0037 0x25
-        opcode25( entity=(entity)0x0c ) -- 0x0039 0x25
-        opcode25( entity=(entity)0x0b ) -- 0x003b 0x25
-        opcode25( entity=(entity)0x0a ) -- 0x003d 0x25
-        opcode25( entity=(entity)0x0d ) -- 0x003f 0x25
-        opcode25( entity=(entity)0x0e ) -- 0x0041 0x25
+        opcode25_EntityDisable( entity=(entity)0x04 ) -- 0x002d 0x25
+        opcode25_EntityDisable( entity=(entity)0x06 ) -- 0x002f 0x25
+        opcode25_EntityDisable( entity=(entity)0x05 ) -- 0x0031 0x25
+        opcode25_EntityDisable( entity=(entity)0x07 ) -- 0x0033 0x25
+        opcode25_EntityDisable( entity=(entity)0x08 ) -- 0x0035 0x25
+        opcode25_EntityDisable( entity=(entity)0x09 ) -- 0x0037 0x25
+        opcode25_EntityDisable( entity=(entity)0x0c ) -- 0x0039 0x25
+        opcode25_EntityDisable( entity=(entity)0x0b ) -- 0x003b 0x25
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x003d 0x25
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x003f 0x25
+        opcode25_EntityDisable( entity=(entity)0x0e ) -- 0x0041 0x25
         opcode99() -- 0x0043 0x99
         -- 0x35() -- 0x0044 0x35
         opcode63() -- 0x004a 0x63
@@ -79,8 +79,8 @@ Entity[ "0" ] = {
         opcode63() -- 0x0167 0x63
         opcodeA3() -- 0x016f 0xa3
         -- 0x05_CallFunction( 0x02db ) -- 0x0177 0x05
-        opcode25( entity=(entity)0x0f ) -- 0x017a 0x25
-        opcode25( entity=(entity)0x10 ) -- 0x017c 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x017a 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x017c 0x25
         -- 0x35() -- 0x017e 0x35
         opcode63() -- 0x0184 0x63
         opcodeA3() -- 0x018c 0xa3

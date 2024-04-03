@@ -738,16 +738,16 @@ Entity[ "22" ] = {
         opcode64() -- 0x0928 0x64
         opcode63() -- 0x0929 0x63
         opcodeA3() -- 0x0931 0xa3
-        opcodeAC() -- 0x0939 0xac
-        opcodeAC() -- 0x093d 0xac
-        opcodeEF() -- 0x0941 0xef
-        opcode25( entity=(entity)0x1b ) -- 0x0944 0x25
-        opcode25( entity=(entity)0x1c ) -- 0x0946 0x25
-        opcode25( entity=(entity)0x1d ) -- 0x0948 0x25
-        opcode25( entity=(entity)0x1e ) -- 0x094a 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x094c 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x094e 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x0950 0x25
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0939 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x093d 0xac
+        opcodeEF_MoveCameraSync() -- 0x0941 0xef
+        opcode25_EntityDisable( entity=(entity)0x1b ) -- 0x0944 0x25
+        opcode25_EntityDisable( entity=(entity)0x1c ) -- 0x0946 0x25
+        opcode25_EntityDisable( entity=(entity)0x1d ) -- 0x0948 0x25
+        opcode25_EntityDisable( entity=(entity)0x1e ) -- 0x094a 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x094c 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x094e 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x0950 0x25
         -- MISSING OPCODE 0x67
     end,
 

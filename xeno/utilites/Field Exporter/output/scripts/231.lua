@@ -33,94 +33,94 @@ Entity[ "0" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode25( entity=(entity)0x0e ) -- 0x01ab 0x25
-        opcode25( entity=(entity)0x10 ) -- 0x01ad 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x01af 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x01b1 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x01b3 0x25
-        opcode25( entity=(entity)0x16 ) -- 0x01b5 0x25
-        opcode25( entity=(entity)0x17 ) -- 0x01b7 0x25
-        opcode25( entity=(entity)0x0f ) -- 0x01b9 0x25
-        opcode25( entity=(entity)0x11 ) -- 0x01bb 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x01bd 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x01bf 0x25
-        opcode25( entity=(entity)0x2f ) -- 0x01c1 0x25
+        opcode25_EntityDisable( entity=(entity)0x0e ) -- 0x01ab 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x01ad 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x01af 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x01b1 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x01b3 0x25
+        opcode25_EntityDisable( entity=(entity)0x16 ) -- 0x01b5 0x25
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x01b7 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x01b9 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x01bb 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x01bd 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x01bf 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x01c1 0x25
         return 0 -- 0x01c3 0x00
     end,
 
     script_0x06 = function( self )
-        opcode25( entity=(entity)0x1e ) -- 0x01c4 0x25
+        opcode25_EntityDisable( entity=(entity)0x1e ) -- 0x01c4 0x25
         return 0 -- 0x01c6 0x00
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x0c ) -- 0x01c7 0x25
-        opcode25( entity=(entity)0x0d ) -- 0x01c9 0x25
+        opcode25_EntityDisable( entity=(entity)0x0c ) -- 0x01c7 0x25
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x01c9 0x25
         return 0 -- 0x01cb 0x00
     end,
 
     script_0x08 = function( self )
-        opcode25( entity=(entity)0x18 ) -- 0x01cc 0x25
-        opcode25( entity=(entity)0x19 ) -- 0x01ce 0x25
-        opcode25( entity=(entity)0x1a ) -- 0x01d0 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x01d2 0x25
-        opcode25( entity=(entity)0x14 ) -- 0x01d4 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x01d6 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x01d8 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x01da 0x25
-        opcode25( entity=(entity)0x1b ) -- 0x01dc 0x25
-        opcode25( entity=(entity)0x1c ) -- 0x01de 0x25
-        opcode25( entity=(entity)0x1d ) -- 0x01e0 0x25
-        opcode25( entity=(entity)0x13 ) -- 0x01e2 0x25
-        opcode25( entity=(entity)0x15 ) -- 0x01e4 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x01e6 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x01e8 0x25
+        opcode25_EntityDisable( entity=(entity)0x18 ) -- 0x01cc 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x01ce 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x01d0 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x01d2 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x01d4 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x01d6 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x01d8 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x01da 0x25
+        opcode25_EntityDisable( entity=(entity)0x1b ) -- 0x01dc 0x25
+        opcode25_EntityDisable( entity=(entity)0x1c ) -- 0x01de 0x25
+        opcode25_EntityDisable( entity=(entity)0x1d ) -- 0x01e0 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x01e2 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x01e4 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x01e6 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x01e8 0x25
         return 0 -- 0x01ea 0x00
     end,
 
     script_0x09 = function( self )
-        opcode24( entity=(entity)0x0e ) -- 0x01eb 0x24
-        opcode24( entity=(entity)0x10 ) -- 0x01ed 0x24
-        opcode24( entity=(entity)0x1f ) -- 0x01ef 0x24
-        opcode24( entity=(entity)0x20 ) -- 0x01f1 0x24
-        opcode24( entity=(entity)0x21 ) -- 0x01f3 0x24
-        opcode24( entity=(entity)0x16 ) -- 0x01f5 0x24
-        opcode24( entity=(entity)0x17 ) -- 0x01f7 0x24
-        opcode24( entity=(entity)0x0f ) -- 0x01f9 0x24
-        opcode24( entity=(entity)0x11 ) -- 0x01fb 0x24
-        opcode24( entity=(entity)0x2d ) -- 0x01fd 0x24
-        opcode24( entity=(entity)0x2e ) -- 0x01ff 0x24
-        opcode24( entity=(entity)0x2f ) -- 0x0201 0x24
+        opcode24_EntityEnable( entity=(entity)0x0e ) -- 0x01eb 0x24
+        opcode24_EntityEnable( entity=(entity)0x10 ) -- 0x01ed 0x24
+        opcode24_EntityEnable( entity=(entity)0x1f ) -- 0x01ef 0x24
+        opcode24_EntityEnable( entity=(entity)0x20 ) -- 0x01f1 0x24
+        opcode24_EntityEnable( entity=(entity)0x21 ) -- 0x01f3 0x24
+        opcode24_EntityEnable( entity=(entity)0x16 ) -- 0x01f5 0x24
+        opcode24_EntityEnable( entity=(entity)0x17 ) -- 0x01f7 0x24
+        opcode24_EntityEnable( entity=(entity)0x0f ) -- 0x01f9 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x01fb 0x24
+        opcode24_EntityEnable( entity=(entity)0x2d ) -- 0x01fd 0x24
+        opcode24_EntityEnable( entity=(entity)0x2e ) -- 0x01ff 0x24
+        opcode24_EntityEnable( entity=(entity)0x2f ) -- 0x0201 0x24
         return 0 -- 0x0203 0x00
     end,
 
     script_0x0a = function( self )
-        opcode24( entity=(entity)0x1e ) -- 0x0204 0x24
+        opcode24_EntityEnable( entity=(entity)0x1e ) -- 0x0204 0x24
         return 0 -- 0x0206 0x00
     end,
 
     script_0x0b = function( self )
-        opcode24( entity=(entity)0x0c ) -- 0x0207 0x24
-        opcode24( entity=(entity)0x0d ) -- 0x0209 0x24
+        opcode24_EntityEnable( entity=(entity)0x0c ) -- 0x0207 0x24
+        opcode24_EntityEnable( entity=(entity)0x0d ) -- 0x0209 0x24
         return 0 -- 0x020b 0x00
     end,
 
     script_0x0c = function( self )
-        opcode24( entity=(entity)0x18 ) -- 0x020c 0x24
-        opcode24( entity=(entity)0x19 ) -- 0x020e 0x24
-        opcode24( entity=(entity)0x1a ) -- 0x0210 0x24
-        opcode24( entity=(entity)0x12 ) -- 0x0212 0x24
-        opcode24( entity=(entity)0x14 ) -- 0x0214 0x24
-        opcode24( entity=(entity)0x22 ) -- 0x0216 0x24
-        opcode24( entity=(entity)0x23 ) -- 0x0218 0x24
-        opcode24( entity=(entity)0x24 ) -- 0x021a 0x24
-        opcode24( entity=(entity)0x1b ) -- 0x021c 0x24
-        opcode24( entity=(entity)0x1c ) -- 0x021e 0x24
-        opcode24( entity=(entity)0x1d ) -- 0x0220 0x24
-        opcode24( entity=(entity)0x13 ) -- 0x0222 0x24
-        opcode24( entity=(entity)0x15 ) -- 0x0224 0x24
-        opcode24( entity=(entity)0x28 ) -- 0x0226 0x24
-        opcode24( entity=(entity)0x29 ) -- 0x0228 0x24
+        opcode24_EntityEnable( entity=(entity)0x18 ) -- 0x020c 0x24
+        opcode24_EntityEnable( entity=(entity)0x19 ) -- 0x020e 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x0210 0x24
+        opcode24_EntityEnable( entity=(entity)0x12 ) -- 0x0212 0x24
+        opcode24_EntityEnable( entity=(entity)0x14 ) -- 0x0214 0x24
+        opcode24_EntityEnable( entity=(entity)0x22 ) -- 0x0216 0x24
+        opcode24_EntityEnable( entity=(entity)0x23 ) -- 0x0218 0x24
+        opcode24_EntityEnable( entity=(entity)0x24 ) -- 0x021a 0x24
+        opcode24_EntityEnable( entity=(entity)0x1b ) -- 0x021c 0x24
+        opcode24_EntityEnable( entity=(entity)0x1c ) -- 0x021e 0x24
+        opcode24_EntityEnable( entity=(entity)0x1d ) -- 0x0220 0x24
+        opcode24_EntityEnable( entity=(entity)0x13 ) -- 0x0222 0x24
+        opcode24_EntityEnable( entity=(entity)0x15 ) -- 0x0224 0x24
+        opcode24_EntityEnable( entity=(entity)0x28 ) -- 0x0226 0x24
+        opcode24_EntityEnable( entity=(entity)0x29 ) -- 0x0228 0x24
         return 0 -- 0x022a 0x00
     end,
 

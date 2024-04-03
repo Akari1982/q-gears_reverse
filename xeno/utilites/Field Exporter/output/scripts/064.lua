@@ -44,17 +44,17 @@ Entity[ "0" ] = {
         opcode64() -- 0x01d6 0x64
         opcode63() -- 0x01d7 0x63
         opcodeA3() -- 0x01df 0xa3
-        opcodeAC() -- 0x01e7 0xac
-        opcodeAC() -- 0x01eb 0xac
-        opcodeEF() -- 0x01ef 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x01e7 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x01eb 0xac
+        opcodeEF_MoveCameraSync() -- 0x01ef 0xef
         opcode60() -- 0x01f2 0x60
         opcode64() -- 0x01f3 0x64
         opcode63() -- 0x01f4 0x63
         opcodeA3() -- 0x01fc 0xa3
-        opcodeAC() -- 0x0204 0xac
-        opcodeAC() -- 0x0208 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x0204 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x0208 0xac
         -- 0xA0() -- 0x020c 0xa0
-        opcodeEF() -- 0x0213 0xef
+        opcodeEF_MoveCameraSync() -- 0x0213 0xef
         return 0 -- 0x0216 0x00
     end,
 
@@ -67,9 +67,9 @@ Entity[ "0" ] = {
         opcode64() -- 0x02c8 0x64
         opcode63() -- 0x02c9 0x63
         opcodeA3() -- 0x02d1 0xa3
-        opcodeAC() -- 0x02d9 0xac
-        opcodeAC() -- 0x02dd 0xac
-        opcodeEF() -- 0x02e1 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=300 ) -- 0x02d9 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=300 ) -- 0x02dd 0xac
+        opcodeEF_MoveCameraSync() -- 0x02e1 0xef
         return 0 -- 0x02e4 0x00
     end,
 
@@ -78,9 +78,9 @@ Entity[ "0" ] = {
         opcode64() -- 0x02e6 0x64
         opcode63() -- 0x02e7 0x63
         opcodeA3() -- 0x02ef 0xa3
-        opcodeAC() -- 0x02f7 0xac
-        opcodeAC() -- 0x02fb 0xac
-        opcodeEF() -- 0x02ff 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=150 ) -- 0x02f7 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=150 ) -- 0x02fb 0xac
+        opcodeEF_MoveCameraSync() -- 0x02ff 0xef
         return 0 -- 0x0302 0x00
     end,
 
@@ -89,9 +89,9 @@ Entity[ "0" ] = {
         opcode64() -- 0x0304 0x64
         opcode63() -- 0x0305 0x63
         opcodeA3() -- 0x030d 0xa3
-        opcodeAC() -- 0x0315 0xac
-        opcodeAC() -- 0x0319 0xac
-        opcodeEF() -- 0x031d 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x0315 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x0319 0xac
+        opcodeEF_MoveCameraSync() -- 0x031d 0xef
         -- MISSING OPCODE 0x92
     end,
 

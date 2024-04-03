@@ -15,8 +15,8 @@ Entity[ "0" ] = {
         -- 0xB4_FadeIn() -- 0x00e9 0xb4
         opcodeFE54() -- 0x00ec 0xfe
         -- 0x75() -- 0x00ee 0x75
-        opcode25( entity=(entity)0x01 ) -- 0x00f1 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x00f3 0x25
+        opcode25_EntityDisable( entity=(entity)0x01 ) -- 0x00f1 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x00f3 0x25
         -- 0xB3() -- 0x00f5 0xb3
         -- 0x09_EntityCallScriptEW( entity=0x3a, script=0x24 ) -- 0x00f8 0x09
         -- MISSING OPCODE 0xFE10
@@ -777,12 +777,12 @@ Entity[ "28" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0x11 ) -- 0x0b1d 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x0b1d 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x05 = function( self )
-        opcode24( entity=(entity)0x11 ) -- 0x0b56 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x0b56 0x24
         -- MISSING OPCODE 0x28
     end,
 

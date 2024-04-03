@@ -604,11 +604,11 @@ Entity[ "24" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x03ec ) -- 0x03d3 0x02
-        opcode25( entity=(entity)0x0f ) -- 0x03db 0x25
-        opcode25( entity=(entity)0x10 ) -- 0x03dd 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x03db 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x03dd 0x25
         opcode26_Wait( time=5 ) -- 0x03df 0x26
-        opcode24( entity=(entity)0x0f ) -- 0x03e2 0x24
-        opcode24( entity=(entity)0x10 ) -- 0x03e4 0x24
+        opcode24_EntityEnable( entity=(entity)0x0f ) -- 0x03e2 0x24
+        opcode24_EntityEnable( entity=(entity)0x10 ) -- 0x03e4 0x24
         opcode26_Wait( time=5 ) -- 0x03e6 0x26
         -- 0x01_JumpTo( 0x03d3 ) -- 0x03e9 0x01
         return 0 -- 0x03ec 0x00
@@ -616,11 +616,11 @@ Entity[ "24" ] = {
 
     script_0x05 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0406 ) -- 0x03ed 0x02
-        opcode25( entity=(entity)0x11 ) -- 0x03f5 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x03f7 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x03f5 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x03f7 0x25
         opcode26_Wait( time=5 ) -- 0x03f9 0x26
-        opcode24( entity=(entity)0x11 ) -- 0x03fc 0x24
-        opcode24( entity=(entity)0x12 ) -- 0x03fe 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x03fc 0x24
+        opcode24_EntityEnable( entity=(entity)0x12 ) -- 0x03fe 0x24
         opcode26_Wait( time=5 ) -- 0x0400 0x26
         -- 0x01_JumpTo( 0x03ed ) -- 0x0403 0x01
         return 0 -- 0x0406 0x00
@@ -628,11 +628,11 @@ Entity[ "24" ] = {
 
     script_0x06 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0420 ) -- 0x0407 0x02
-        opcode25( entity=(entity)0x0d ) -- 0x040f 0x25
-        opcode25( entity=(entity)0x0e ) -- 0x0411 0x25
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x040f 0x25
+        opcode25_EntityDisable( entity=(entity)0x0e ) -- 0x0411 0x25
         opcode26_Wait( time=5 ) -- 0x0413 0x26
-        opcode24( entity=(entity)0x0d ) -- 0x0416 0x24
-        opcode24( entity=(entity)0x0e ) -- 0x0418 0x24
+        opcode24_EntityEnable( entity=(entity)0x0d ) -- 0x0416 0x24
+        opcode24_EntityEnable( entity=(entity)0x0e ) -- 0x0418 0x24
         opcode26_Wait( time=5 ) -- 0x041a 0x26
         -- 0x01_JumpTo( 0x0407 ) -- 0x041d 0x01
         return 0 -- 0x0420 0x00
@@ -640,11 +640,11 @@ Entity[ "24" ] = {
 
     script_0x07 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x043a ) -- 0x0421 0x02
-        opcode25( entity=(entity)0x09 ) -- 0x0429 0x25
-        opcode25( entity=(entity)0x0a ) -- 0x042b 0x25
+        opcode25_EntityDisable( entity=(entity)0x09 ) -- 0x0429 0x25
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x042b 0x25
         opcode26_Wait( time=5 ) -- 0x042d 0x26
-        opcode24( entity=(entity)0x09 ) -- 0x0430 0x24
-        opcode24( entity=(entity)0x0a ) -- 0x0432 0x24
+        opcode24_EntityEnable( entity=(entity)0x09 ) -- 0x0430 0x24
+        opcode24_EntityEnable( entity=(entity)0x0a ) -- 0x0432 0x24
         opcode26_Wait( time=5 ) -- 0x0434 0x26
         -- 0x01_JumpTo( 0x0421 ) -- 0x0437 0x01
         return 0 -- 0x043a 0x00
@@ -652,11 +652,11 @@ Entity[ "24" ] = {
 
     script_0x08 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0454 ) -- 0x043b 0x02
-        opcode25( entity=(entity)0x07 ) -- 0x0443 0x25
-        opcode25( entity=(entity)0x08 ) -- 0x0445 0x25
+        opcode25_EntityDisable( entity=(entity)0x07 ) -- 0x0443 0x25
+        opcode25_EntityDisable( entity=(entity)0x08 ) -- 0x0445 0x25
         opcode26_Wait( time=5 ) -- 0x0447 0x26
-        opcode24( entity=(entity)0x07 ) -- 0x044a 0x24
-        opcode24( entity=(entity)0x08 ) -- 0x044c 0x24
+        opcode24_EntityEnable( entity=(entity)0x07 ) -- 0x044a 0x24
+        opcode24_EntityEnable( entity=(entity)0x08 ) -- 0x044c 0x24
         opcode26_Wait( time=5 ) -- 0x044e 0x26
         -- 0x01_JumpTo( 0x043b ) -- 0x0451 0x01
         return 0 -- 0x0454 0x00
@@ -664,11 +664,11 @@ Entity[ "24" ] = {
 
     script_0x09 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x046e ) -- 0x0455 0x02
-        opcode25( entity=(entity)0x0b ) -- 0x045d 0x25
-        opcode25( entity=(entity)0x0c ) -- 0x045f 0x25
+        opcode25_EntityDisable( entity=(entity)0x0b ) -- 0x045d 0x25
+        opcode25_EntityDisable( entity=(entity)0x0c ) -- 0x045f 0x25
         opcode26_Wait( time=5 ) -- 0x0461 0x26
-        opcode24( entity=(entity)0x0b ) -- 0x0464 0x24
-        opcode24( entity=(entity)0x0c ) -- 0x0466 0x24
+        opcode24_EntityEnable( entity=(entity)0x0b ) -- 0x0464 0x24
+        opcode24_EntityEnable( entity=(entity)0x0c ) -- 0x0466 0x24
         opcode26_Wait( time=5 ) -- 0x0468 0x26
         -- 0x01_JumpTo( 0x0455 ) -- 0x046b 0x01
         return 0 -- 0x046e 0x00
@@ -700,11 +700,11 @@ Entity[ "25" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0494 ) -- 0x047b 0x02
-        opcode25( entity=(entity)0x0f ) -- 0x0483 0x25
-        opcode25( entity=(entity)0x10 ) -- 0x0485 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x0483 0x25
+        opcode25_EntityDisable( entity=(entity)0x10 ) -- 0x0485 0x25
         opcode26_Wait( time=5 ) -- 0x0487 0x26
-        opcode24( entity=(entity)0x0f ) -- 0x048a 0x24
-        opcode24( entity=(entity)0x10 ) -- 0x048c 0x24
+        opcode24_EntityEnable( entity=(entity)0x0f ) -- 0x048a 0x24
+        opcode24_EntityEnable( entity=(entity)0x10 ) -- 0x048c 0x24
         opcode26_Wait( time=5 ) -- 0x048e 0x26
         -- 0x01_JumpTo( 0x047b ) -- 0x0491 0x01
         return 0 -- 0x0494 0x00
@@ -712,11 +712,11 @@ Entity[ "25" ] = {
 
     script_0x05 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04ae ) -- 0x0495 0x02
-        opcode25( entity=(entity)0x11 ) -- 0x049d 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x049f 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x049d 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x049f 0x25
         opcode26_Wait( time=5 ) -- 0x04a1 0x26
-        opcode24( entity=(entity)0x11 ) -- 0x04a4 0x24
-        opcode24( entity=(entity)0x12 ) -- 0x04a6 0x24
+        opcode24_EntityEnable( entity=(entity)0x11 ) -- 0x04a4 0x24
+        opcode24_EntityEnable( entity=(entity)0x12 ) -- 0x04a6 0x24
         opcode26_Wait( time=5 ) -- 0x04a8 0x26
         -- 0x01_JumpTo( 0x0495 ) -- 0x04ab 0x01
         return 0 -- 0x04ae 0x00
@@ -724,11 +724,11 @@ Entity[ "25" ] = {
 
     script_0x06 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04c8 ) -- 0x04af 0x02
-        opcode25( entity=(entity)0x0d ) -- 0x04b7 0x25
-        opcode25( entity=(entity)0x0e ) -- 0x04b9 0x25
+        opcode25_EntityDisable( entity=(entity)0x0d ) -- 0x04b7 0x25
+        opcode25_EntityDisable( entity=(entity)0x0e ) -- 0x04b9 0x25
         opcode26_Wait( time=5 ) -- 0x04bb 0x26
-        opcode24( entity=(entity)0x0d ) -- 0x04be 0x24
-        opcode24( entity=(entity)0x0e ) -- 0x04c0 0x24
+        opcode24_EntityEnable( entity=(entity)0x0d ) -- 0x04be 0x24
+        opcode24_EntityEnable( entity=(entity)0x0e ) -- 0x04c0 0x24
         opcode26_Wait( time=5 ) -- 0x04c2 0x26
         -- 0x01_JumpTo( 0x04af ) -- 0x04c5 0x01
         return 0 -- 0x04c8 0x00
@@ -736,11 +736,11 @@ Entity[ "25" ] = {
 
     script_0x07 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04e2 ) -- 0x04c9 0x02
-        opcode25( entity=(entity)0x09 ) -- 0x04d1 0x25
-        opcode25( entity=(entity)0x0a ) -- 0x04d3 0x25
+        opcode25_EntityDisable( entity=(entity)0x09 ) -- 0x04d1 0x25
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x04d3 0x25
         opcode26_Wait( time=5 ) -- 0x04d5 0x26
-        opcode24( entity=(entity)0x09 ) -- 0x04d8 0x24
-        opcode24( entity=(entity)0x0a ) -- 0x04da 0x24
+        opcode24_EntityEnable( entity=(entity)0x09 ) -- 0x04d8 0x24
+        opcode24_EntityEnable( entity=(entity)0x0a ) -- 0x04da 0x24
         opcode26_Wait( time=5 ) -- 0x04dc 0x26
         -- 0x01_JumpTo( 0x04c9 ) -- 0x04df 0x01
         return 0 -- 0x04e2 0x00
@@ -748,11 +748,11 @@ Entity[ "25" ] = {
 
     script_0x08 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04fc ) -- 0x04e3 0x02
-        opcode25( entity=(entity)0x07 ) -- 0x04eb 0x25
-        opcode25( entity=(entity)0x08 ) -- 0x04ed 0x25
+        opcode25_EntityDisable( entity=(entity)0x07 ) -- 0x04eb 0x25
+        opcode25_EntityDisable( entity=(entity)0x08 ) -- 0x04ed 0x25
         opcode26_Wait( time=5 ) -- 0x04ef 0x26
-        opcode24( entity=(entity)0x07 ) -- 0x04f2 0x24
-        opcode24( entity=(entity)0x08 ) -- 0x04f4 0x24
+        opcode24_EntityEnable( entity=(entity)0x07 ) -- 0x04f2 0x24
+        opcode24_EntityEnable( entity=(entity)0x08 ) -- 0x04f4 0x24
         opcode26_Wait( time=5 ) -- 0x04f6 0x26
         -- 0x01_JumpTo( 0x04e3 ) -- 0x04f9 0x01
         return 0 -- 0x04fc 0x00
@@ -760,11 +760,11 @@ Entity[ "25" ] = {
 
     script_0x09 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0516 ) -- 0x04fd 0x02
-        opcode25( entity=(entity)0x0b ) -- 0x0505 0x25
-        opcode25( entity=(entity)0x0c ) -- 0x0507 0x25
+        opcode25_EntityDisable( entity=(entity)0x0b ) -- 0x0505 0x25
+        opcode25_EntityDisable( entity=(entity)0x0c ) -- 0x0507 0x25
         opcode26_Wait( time=5 ) -- 0x0509 0x26
-        opcode24( entity=(entity)0x0b ) -- 0x050c 0x24
-        opcode24( entity=(entity)0x0c ) -- 0x050e 0x24
+        opcode24_EntityEnable( entity=(entity)0x0b ) -- 0x050c 0x24
+        opcode24_EntityEnable( entity=(entity)0x0c ) -- 0x050e 0x24
         opcode26_Wait( time=5 ) -- 0x0510 0x26
         -- 0x01_JumpTo( 0x04fd ) -- 0x0513 0x01
         return 0 -- 0x0516 0x00
@@ -891,9 +891,9 @@ Entity[ "30" ] = {
         opcode64() -- 0x0588 0x64
         opcode63() -- 0x0589 0x63
         opcodeA3() -- 0x0591 0xa3
-        opcodeAC() -- 0x0599 0xac
-        opcodeAC() -- 0x059d 0xac
-        opcodeEF() -- 0x05a1 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=50 ) -- 0x0599 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=50 ) -- 0x059d 0xac
+        opcodeEF_MoveCameraSync() -- 0x05a1 0xef
         return 0 -- 0x05a4 0x00
     end,
 
@@ -902,9 +902,9 @@ Entity[ "30" ] = {
         opcode64() -- 0x05a6 0x64
         opcode63() -- 0x05a7 0x63
         opcodeA3() -- 0x05af 0xa3
-        opcodeAC() -- 0x05b7 0xac
-        opcodeAC() -- 0x05bb 0xac
-        opcodeEF() -- 0x05bf 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=50 ) -- 0x05b7 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=50 ) -- 0x05bb 0xac
+        opcodeEF_MoveCameraSync() -- 0x05bf 0xef
         return 0 -- 0x05c2 0x00
     end,
 
@@ -913,9 +913,9 @@ Entity[ "30" ] = {
         opcode64() -- 0x05c4 0x64
         opcode63() -- 0x05c5 0x63
         opcodeA3() -- 0x05cd 0xa3
-        opcodeAC() -- 0x05d5 0xac
-        opcodeAC() -- 0x05d9 0xac
-        opcodeEF() -- 0x05dd 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=50 ) -- 0x05d5 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=50 ) -- 0x05d9 0xac
+        opcodeEF_MoveCameraSync() -- 0x05dd 0xef
         return 0 -- 0x05e0 0x00
     end,
 
@@ -924,9 +924,9 @@ Entity[ "30" ] = {
         opcode64() -- 0x05e2 0x64
         opcode63() -- 0x05e3 0x63
         opcodeA3() -- 0x05eb 0xa3
-        opcodeAC() -- 0x05f3 0xac
-        opcodeAC() -- 0x05f7 0xac
-        opcodeEF() -- 0x05fb 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=50 ) -- 0x05f3 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=50 ) -- 0x05f7 0xac
+        opcodeEF_MoveCameraSync() -- 0x05fb 0xef
         return 0 -- 0x05fe 0x00
     end,
 
@@ -940,9 +940,9 @@ Entity[ "30" ] = {
         opcode64() -- 0x0632 0x64
         opcode63() -- 0x0633 0x63
         opcodeA3() -- 0x063b 0xa3
-        opcodeAC() -- 0x0643 0xac
-        opcodeAC() -- 0x0647 0xac
-        opcodeEF() -- 0x064b 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=50 ) -- 0x0643 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=50 ) -- 0x0647 0xac
+        opcodeEF_MoveCameraSync() -- 0x064b 0xef
         return 0 -- 0x064e 0x00
     end,
 

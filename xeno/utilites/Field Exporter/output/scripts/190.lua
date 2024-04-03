@@ -123,11 +123,11 @@ Entity[ "3" ] = {
         opcode63() -- 0x017e 0x63
         opcode64() -- 0x0186 0x64
         opcodeA3() -- 0x0187 0xa3
-        opcodeAC() -- 0x018f 0xac
-        opcodeAC() -- 0x0193 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=200 ) -- 0x018f 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=200 ) -- 0x0193 0xac
         opcode26_Wait( time=50 ) -- 0x0197 0x26
         -- 0x09_EntityCallScriptEW( entity=0x0e, script=0x24 ) -- 0x019a 0x09
-        opcodeEF() -- 0x019d 0xef
+        opcodeEF_MoveCameraSync() -- 0x019d 0xef
         return 0 -- 0x01a0 0x00
     end,
 

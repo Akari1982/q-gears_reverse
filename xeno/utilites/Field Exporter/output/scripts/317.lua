@@ -1265,9 +1265,9 @@ Entity[ "42" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0xff ) -- 0x1109 0x25
-        opcode25( entity=(entity)0xfe ) -- 0x110b 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x110d 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x1109 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x110b 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x110d 0x25
         opcode26_Wait( time=45 ) -- 0x110f 0x26
         -- MISSING OPCODE 0xFE24
     end,

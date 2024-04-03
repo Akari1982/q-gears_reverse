@@ -588,9 +588,9 @@ Entity[ "24" ] = {
         opcode64() -- 0x0643 0x64
         opcode63() -- 0x0644 0x63
         opcodeA3() -- 0x064c 0xa3
-        opcodeAC() -- 0x0654 0xac
-        opcodeAC() -- 0x0658 0xac
-        opcodeEF() -- 0x065c 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=60 ) -- 0x0654 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=60 ) -- 0x0658 0xac
+        opcodeEF_MoveCameraSync() -- 0x065c 0xef
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0418 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x066b ) -- 0x065f 0x02
         -- 0x5A() -- 0x0667 0x5a
         -- 0x01_JumpTo( 0x065f ) -- 0x0668 0x01

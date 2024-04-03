@@ -16,9 +16,9 @@ Entity[ "0" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x014c ), value2=(s16)0x0078, condition="value1 == value2", jump_if_false=0x02dd ) -- 0x00c9 0x02
         -- 0x75() -- 0x00d1 0x75
         opcodeFE54() -- 0x00d4 0xfe
-        opcode24( entity=(entity)0x09 ) -- 0x00d6 0x24
-        opcode24( entity=(entity)0x08 ) -- 0x00d8 0x24
-        opcode24( entity=(entity)0x0a ) -- 0x00da 0x24
+        opcode24_EntityEnable( entity=(entity)0x09 ) -- 0x00d6 0x24
+        opcode24_EntityEnable( entity=(entity)0x08 ) -- 0x00d8 0x24
+        opcode24_EntityEnable( entity=(entity)0x0a ) -- 0x00da 0x24
         -- MISSING OPCODE 0x71
     end,
 

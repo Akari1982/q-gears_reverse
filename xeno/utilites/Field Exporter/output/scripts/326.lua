@@ -1413,9 +1413,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x1257 0x64
         opcode63() -- 0x1258 0x63
         opcodeA3() -- 0x1260 0xa3
-        opcodeAC() -- 0x1268 0xac
-        opcodeAC() -- 0x126c 0xac
-        opcodeEF() -- 0x1270 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x1268 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x126c 0xac
+        opcodeEF_MoveCameraSync() -- 0x1270 0xef
         return 0 -- 0x1273 0x00
     end,
 
@@ -1436,16 +1436,16 @@ Entity[ "32" ] = {
         opcode64() -- 0x12cc 0x64
         opcode63() -- 0x12cd 0x63
         opcodeA3() -- 0x12d5 0xa3
-        opcodeAC() -- 0x12dd 0xac
-        opcodeAC() -- 0x12e1 0xac
-        opcodeEF() -- 0x12e5 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x12dd 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x12e1 0xac
+        opcodeEF_MoveCameraSync() -- 0x12e5 0xef
         opcode60() -- 0x12e8 0x60
         opcode64() -- 0x12e9 0x64
         opcode63() -- 0x12ea 0x63
         opcodeA3() -- 0x12f2 0xa3
-        opcodeAC() -- 0x12fa 0xac
-        opcodeAC() -- 0x12fe 0xac
-        opcodeEF() -- 0x1302 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=60 ) -- 0x12fa 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=60 ) -- 0x12fe 0xac
+        opcodeEF_MoveCameraSync() -- 0x1302 0xef
         return 0 -- 0x1305 0x00
     end,
 
@@ -1494,9 +1494,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x1508 0x64
         opcode63() -- 0x1509 0x63
         opcodeA3() -- 0x1511 0xa3
-        opcodeAC() -- 0x1519 0xac
-        opcodeAC() -- 0x151d 0xac
-        opcodeEF() -- 0x1521 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x1519 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x151d 0xac
+        opcodeEF_MoveCameraSync() -- 0x1521 0xef
         return 0 -- 0x1524 0x00
     end,
 

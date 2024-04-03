@@ -14,7 +14,7 @@ Entity[ "0" ] = {
     on_update = function( self )
         opcodeFE52() -- 0x0023 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01bc, condition="value1 == value2", jump_if_false=0x0030 ) -- 0x0025 0x02
-        opcode25( entity=(entity)0x12 ) -- 0x002d 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x002d 0x25
         -- 0x5B() -- 0x002f 0x5b
         opcodeFE54() -- 0x0030 0xfe
         -- MISSING OPCODE 0xFE5d

@@ -80,8 +80,8 @@ Entity[ "2" ] = {
         opcode64() -- 0x006e 0x64
         opcode63() -- 0x006f 0x63
         opcodeA3() -- 0x0077 0xa3
-        opcodeAC() -- 0x007f 0xac
-        opcodeAC() -- 0x0083 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x007f 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x0083 0xac
         -- 0x75() -- 0x0087 0x75
         opcode26_Wait( time=10 ) -- 0x008a 0x26
         -- MISSING OPCODE 0x9b

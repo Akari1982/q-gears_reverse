@@ -305,9 +305,9 @@ Entity[ "8" ] = {
         opcode63() -- 0x02e5 0x63
         opcode64() -- 0x02ed 0x64
         opcodeA3() -- 0x02ee 0xa3
-        opcodeAC() -- 0x02f6 0xac
-        opcodeAC() -- 0x02fa 0xac
-        opcodeEF() -- 0x02fe 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x02f6 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x02fa 0xac
+        opcodeEF_MoveCameraSync() -- 0x02fe 0xef
         opcode26_Wait( time=10 ) -- 0x0301 0x26
         -- MISSING OPCODE 0x9b
     end,

@@ -1160,10 +1160,10 @@ Entity[ "15" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x572f ) -- 0x571e 0x02
         opcode26_Wait( time=34 ) -- 0x5726 0x26
         opcode99() -- 0x5729 0x99
-        opcode25( entity=(entity)0xff ) -- 0x572a 0x25
+        opcode25_EntityDisable( entity=(entity)0xff ) -- 0x572a 0x25
         -- 0x01_JumpTo( 0x5734 ) -- 0x572c 0x01
         opcode26_Wait( time=43 ) -- 0x572f 0x26
-        opcode25( entity=(entity)0xfe ) -- 0x5732 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x5732 0x25
         return 0 -- 0x5734 0x00
     end,
 

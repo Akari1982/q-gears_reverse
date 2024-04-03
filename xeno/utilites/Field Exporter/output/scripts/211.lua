@@ -1165,7 +1165,7 @@ Entity[ "39" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode25( entity=(entity)0x0a ) -- 0x128c 0x25
+        opcode25_EntityDisable( entity=(entity)0x0a ) -- 0x128c 0x25
         return 0 -- 0x128e 0x00
     end,
 

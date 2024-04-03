@@ -826,8 +826,8 @@ Entity[ "29" ] = {
         opcode64() -- 0x090d 0x64
         opcode63() -- 0x090e 0x63
         opcodeA3() -- 0x0916 0xa3
-        opcodeAC() -- 0x091e 0xac
-        opcodeAC() -- 0x0922 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x091e 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0922 0xac
         opcode26_Wait( time=30 ) -- 0x0926 0x26
         -- MISSING OPCODE 0x9b
     end,

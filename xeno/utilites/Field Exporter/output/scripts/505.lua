@@ -532,8 +532,8 @@ Entity[ "20" ] = {
         opcode64() -- 0x04ab 0x64
         opcode63() -- 0x04ac 0x63
         opcodeA3() -- 0x04b4 0xa3
-        opcodeAC() -- 0x04bc 0xac
-        opcodeAC() -- 0x04c0 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x04bc 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x04c0 0xac
         return 0 -- 0x04c4 0x00
     end,
 
@@ -542,9 +542,9 @@ Entity[ "20" ] = {
         opcode64() -- 0x04c6 0x64
         opcode63() -- 0x04c7 0x63
         opcodeA3() -- 0x04cf 0xa3
-        opcodeAC() -- 0x04d7 0xac
-        opcodeAC() -- 0x04db 0xac
-        opcodeEF() -- 0x04df 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=60 ) -- 0x04d7 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=60 ) -- 0x04db 0xac
+        opcodeEF_MoveCameraSync() -- 0x04df 0xef
         return 0 -- 0x04e2 0x00
     end,
 
@@ -558,8 +558,8 @@ Entity[ "20" ] = {
         opcode64() -- 0x050e 0x64
         opcode63() -- 0x050f 0x63
         opcodeA3() -- 0x0517 0xa3
-        opcodeAC() -- 0x051f 0xac
-        opcodeAC() -- 0x0523 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x051f 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x0523 0xac
         return 0 -- 0x0527 0x00
     end,
 
@@ -568,9 +568,9 @@ Entity[ "20" ] = {
         opcode64() -- 0x0529 0x64
         opcode63() -- 0x052a 0x63
         opcodeA3() -- 0x0532 0xa3
-        opcodeAC() -- 0x053a 0xac
-        opcodeAC() -- 0x053e 0xac
-        opcodeEF() -- 0x0542 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x053a 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x053e 0xac
+        opcodeEF_MoveCameraSync() -- 0x0542 0xef
         return 0 -- 0x0545 0x00
     end,
 

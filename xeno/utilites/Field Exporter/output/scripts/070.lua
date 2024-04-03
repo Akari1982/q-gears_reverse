@@ -454,25 +454,25 @@ Entity[ "14" ] = {
         opcode64() -- 0x4a8a 0x64
         opcode63() -- 0x4a8b 0x63
         opcodeA3() -- 0x4a93 0xa3
-        opcodeAC() -- 0x4a9b 0xac
-        opcodeAC() -- 0x4a9f 0xac
-        opcodeEF() -- 0x4aa3 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x4a9b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x4a9f 0xac
+        opcodeEF_MoveCameraSync() -- 0x4aa3 0xef
         opcode26_Wait( time=50 ) -- 0x4aa6 0x26
         opcode60() -- 0x4aa9 0x60
         opcode64() -- 0x4aaa 0x64
         opcode63() -- 0x4aab 0x63
         opcodeA3() -- 0x4ab3 0xa3
-        opcodeAC() -- 0x4abb 0xac
-        opcodeAC() -- 0x4abf 0xac
-        opcodeEF() -- 0x4ac3 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x4abb 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x4abf 0xac
+        opcodeEF_MoveCameraSync() -- 0x4ac3 0xef
         opcode26_Wait( time=50 ) -- 0x4ac6 0x26
         opcode60() -- 0x4ac9 0x60
         opcode64() -- 0x4aca 0x64
         opcode63() -- 0x4acb 0x63
         opcodeA3() -- 0x4ad3 0xa3
-        opcodeAC() -- 0x4adb 0xac
-        opcodeAC() -- 0x4adf 0xac
-        opcodeEF() -- 0x4ae3 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=210 ) -- 0x4adb 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=220 ) -- 0x4adf 0xac
+        opcodeEF_MoveCameraSync() -- 0x4ae3 0xef
         return 0 -- 0x4ae6 0x00
     end,
 

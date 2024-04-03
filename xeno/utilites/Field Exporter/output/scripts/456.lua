@@ -38,10 +38,10 @@ Entity[ "0" ] = {
         -- 0x86_ProgressNotEqualJumpTo( value=183, jump=0x0375 ) -- 0x008c 0x86
         opcodeFE54() -- 0x0091 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x1e, script=0x65 ) -- 0x0093 0x09
-        opcode25( entity=(entity)0x0c ) -- 0x0096 0x25
-        opcode25( entity=(entity)0x0f ) -- 0x0098 0x25
-        opcode25( entity=(entity)0x01 ) -- 0x009a 0x25
-        opcode25( entity=(entity)0x08 ) -- 0x009c 0x25
+        opcode25_EntityDisable( entity=(entity)0x0c ) -- 0x0096 0x25
+        opcode25_EntityDisable( entity=(entity)0x0f ) -- 0x0098 0x25
+        opcode25_EntityDisable( entity=(entity)0x01 ) -- 0x009a 0x25
+        opcode25_EntityDisable( entity=(entity)0x08 ) -- 0x009c 0x25
         -- MISSING OPCODE 0xFE66
     end,
 

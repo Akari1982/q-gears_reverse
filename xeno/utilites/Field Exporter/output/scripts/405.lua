@@ -432,17 +432,17 @@ Entity[ "16" ] = {
         opcode63() -- 0x44a9 0x63
         opcode64() -- 0x44b1 0x64
         opcodeA3() -- 0x44b2 0xa3
-        opcodeAC() -- 0x44ba 0xac
-        opcodeAC() -- 0x44be 0xac
-        opcodeEF() -- 0x44c2 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x44ba 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x44be 0xac
+        opcodeEF_MoveCameraSync() -- 0x44c2 0xef
         opcode26_Wait( time=60 ) -- 0x44c5 0x26
         opcode60() -- 0x44c8 0x60
         opcode63() -- 0x44c9 0x63
         opcode64() -- 0x44d1 0x64
         opcodeA3() -- 0x44d2 0xa3
-        opcodeAC() -- 0x44da 0xac
-        opcodeAC() -- 0x44de 0xac
-        opcodeEF() -- 0x44e2 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=120 ) -- 0x44da 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=120 ) -- 0x44de 0xac
+        opcodeEF_MoveCameraSync() -- 0x44e2 0xef
         return 0 -- 0x44e5 0x00
     end,
 

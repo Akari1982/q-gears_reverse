@@ -1164,7 +1164,7 @@ Entity[ "36" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x06c7 ) -- 0x06bc 0x02
         -- 0x01_JumpTo( 0x06db ) -- 0x06c4 0x01
-        opcode25( entity=(entity)0x03 ) -- 0x06c7 0x25
+        opcode25_EntityDisable( entity=(entity)0x03 ) -- 0x06c7 0x25
         -- MISSING OPCODE 0x27
     end,
 

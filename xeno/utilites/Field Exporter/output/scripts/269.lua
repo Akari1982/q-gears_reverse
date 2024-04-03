@@ -883,7 +883,7 @@ Entity[ "30" ] = {
         -- 0x35() -- 0x069d 0x35
         opcodeFE54() -- 0x06a3 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x06af ) -- 0x06a5 0x02
-        opcode25( entity=(entity)0x1d ) -- 0x06ad 0x25
+        opcode25_EntityDisable( entity=(entity)0x1d ) -- 0x06ad 0x25
         return 0 -- 0x06af 0x00
     end,
 
@@ -966,8 +966,8 @@ Entity[ "31" ] = {
         opcode64() -- 0x0a6d 0x64
         opcode63() -- 0x0a6e 0x63
         opcodeA3() -- 0x0a76 0xa3
-        opcodeAC() -- 0x0a7e 0xac
-        opcodeAC() -- 0x0a82 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x0a7e 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x0a82 0xac
         return 0 -- 0x0a86 0x00
     end,
 

@@ -797,9 +797,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x04a4 0x64
         opcodeA3() -- 0x04a5 0xa3
         opcodeFE9B_SlideShow1( steps=24 ) -- 0x04ad 0xfe
-        opcodeAC() -- 0x04b1 0xac
-        opcodeAC() -- 0x04b5 0xac
-        opcodeEF() -- 0x04b9 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x04b1 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x04b5 0xac
+        opcodeEF_MoveCameraSync() -- 0x04b9 0xef
         return 0 -- 0x04bc 0x00
     end,
 
@@ -825,9 +825,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x056a 0x64
         opcodeA3() -- 0x056b 0xa3
         opcodeFE9B_SlideShow1( steps=24 ) -- 0x0573 0xfe
-        opcodeAC() -- 0x0577 0xac
-        opcodeAC() -- 0x057b 0xac
-        opcodeEF() -- 0x057f 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0577 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x057b 0xac
+        opcodeEF_MoveCameraSync() -- 0x057f 0xef
         return 0 -- 0x0582 0x00
     end,
 
@@ -837,9 +837,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x058c 0x64
         opcodeA3() -- 0x058d 0xa3
         opcodeFE9B_SlideShow1( steps=24 ) -- 0x0595 0xfe
-        opcodeAC() -- 0x0599 0xac
-        opcodeAC() -- 0x059d 0xac
-        opcodeEF() -- 0x05a1 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=80 ) -- 0x0599 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x059d 0xac
+        opcodeEF_MoveCameraSync() -- 0x05a1 0xef
         return 0 -- 0x05a4 0x00
     end,
 
@@ -849,9 +849,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x05ae 0x64
         opcodeA3() -- 0x05af 0xa3
         opcodeFE9B_SlideShow1( steps=24 ) -- 0x05b7 0xfe
-        opcodeAC() -- 0x05bb 0xac
-        opcodeAC() -- 0x05bf 0xac
-        opcodeEF() -- 0x05c3 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x05bb 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x05bf 0xac
+        opcodeEF_MoveCameraSync() -- 0x05c3 0xef
         return 0 -- 0x05c6 0x00
     end,
 
@@ -861,9 +861,9 @@ Entity[ "32" ] = {
         opcode64() -- 0x05d0 0x64
         opcodeA3() -- 0x05d1 0xa3
         opcodeFE9B_SlideShow1( steps=24 ) -- 0x05d9 0xfe
-        opcodeAC() -- 0x05dd 0xac
-        opcodeAC() -- 0x05e1 0xac
-        opcodeEF() -- 0x05e5 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x05dd 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x05e1 0xac
+        opcodeEF_MoveCameraSync() -- 0x05e5 0xef
         return 0 -- 0x05e8 0x00
     end,
 

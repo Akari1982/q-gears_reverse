@@ -27,17 +27,17 @@ Entity[ "0" ] = {
         opcode60() -- 0x005a 0x60
         opcode63() -- 0x005b 0x63
         opcodeA3() -- 0x0063 0xa3
-        opcodeAC() -- 0x006b 0xac
-        opcodeAC() -- 0x006f 0xac
-        opcodeEF() -- 0x0073 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x006b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x006f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0073 0xef
         opcode26_Wait( time=90 ) -- 0x0076 0x26
         opcode60() -- 0x0079 0x60
         opcode60() -- 0x007a 0x60
         opcode63() -- 0x007b 0x63
         opcodeA3() -- 0x0083 0xa3
-        opcodeAC() -- 0x008b 0xac
-        opcodeAC() -- 0x008f 0xac
-        opcodeEF() -- 0x0093 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x008b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x008f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0093 0xef
         return 0 -- 0x0096 0x00
     end,
 

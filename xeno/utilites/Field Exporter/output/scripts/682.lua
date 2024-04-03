@@ -473,7 +473,7 @@ Entity[ "13" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x03e2 ) -- 0x0382 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0248 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x03b4 ) -- 0x038a 0x02
         opcodeFE54() -- 0x0392 0xfe
-        opcode25( entity=(entity)0x02 ) -- 0x0394 0x25
+        opcode25_EntityDisable( entity=(entity)0x02 ) -- 0x0394 0x25
         -- MISSING OPCODE 0x27
     end,
 
@@ -652,13 +652,13 @@ Entity[ "16" ] = {
 
     script_0x04 = function( self )
         -- 0xC6() -- 0x072e 0xc6
-        opcode25( entity=(entity)0x07 ) -- 0x072f 0x25
+        opcode25_EntityDisable( entity=(entity)0x07 ) -- 0x072f 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x05 = function( self )
         -- 0xC6() -- 0x0738 0xc6
-        opcode25( entity=(entity)0x03 ) -- 0x0739 0x25
+        opcode25_EntityDisable( entity=(entity)0x03 ) -- 0x0739 0x25
         -- MISSING OPCODE 0x27
     end,
 

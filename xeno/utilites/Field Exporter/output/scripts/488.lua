@@ -1435,9 +1435,9 @@ Entity[ "52" ] = {
         opcode64() -- 0x0cb0 0x64
         opcode63() -- 0x0cb1 0x63
         opcodeA3() -- 0x0cb9 0xa3
-        opcodeAC() -- 0x0cc1 0xac
-        opcodeAC() -- 0x0cc5 0xac
-        opcodeEF() -- 0x0cc9 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=100 ) -- 0x0cc1 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=100 ) -- 0x0cc5 0xac
+        opcodeEF_MoveCameraSync() -- 0x0cc9 0xef
         return 0 -- 0x0ccc 0x00
     end,
 
@@ -1526,11 +1526,11 @@ Entity[ "54" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0ee4 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0039, condition="value1 < value2", jump_if_false=0x0f01 ) -- 0x0ee5 0x02
-        opcode25( entity=(entity)0x11 ) -- 0x0eed 0x25
-        opcode25( entity=(entity)0x12 ) -- 0x0eef 0x25
-        opcode25( entity=(entity)0x13 ) -- 0x0ef1 0x25
-        opcode25( entity=(entity)0x14 ) -- 0x0ef3 0x25
-        opcode25( entity=(entity)0x15 ) -- 0x0ef5 0x25
+        opcode25_EntityDisable( entity=(entity)0x11 ) -- 0x0eed 0x25
+        opcode25_EntityDisable( entity=(entity)0x12 ) -- 0x0eef 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x0ef1 0x25
+        opcode25_EntityDisable( entity=(entity)0x14 ) -- 0x0ef3 0x25
+        opcode25_EntityDisable( entity=(entity)0x15 ) -- 0x0ef5 0x25
         -- MISSING OPCODE 0x27
     end,
 

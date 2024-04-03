@@ -628,8 +628,8 @@ Entity[ "18" ] = {
         opcode64() -- 0x0b4e 0x64
         opcode63() -- 0x0b4f 0x63
         opcodeA3() -- 0x0b57 0xa3
-        opcodeAC() -- 0x0b5f 0xac
-        opcodeAC() -- 0x0b63 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=200 ) -- 0x0b5f 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=200 ) -- 0x0b63 0xac
         return 0 -- 0x0b67 0x00
     end,
 
@@ -638,8 +638,8 @@ Entity[ "18" ] = {
         opcode64() -- 0x0b69 0x64
         opcode63() -- 0x0b6a 0x63
         opcodeA3() -- 0x0b72 0xa3
-        opcodeAC() -- 0x0b7a 0xac
-        opcodeAC() -- 0x0b7e 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=360 ) -- 0x0b7a 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=360 ) -- 0x0b7e 0xac
         return 0 -- 0x0b82 0x00
     end,
 
@@ -648,8 +648,8 @@ Entity[ "18" ] = {
         opcode64() -- 0x0b84 0x64
         opcode63() -- 0x0b85 0x63
         opcodeA3() -- 0x0b8d 0xa3
-        opcodeAC() -- 0x0b95 0xac
-        opcodeAC() -- 0x0b99 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=150 ) -- 0x0b95 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=150 ) -- 0x0b99 0xac
         return 0 -- 0x0b9d 0x00
     end,
 

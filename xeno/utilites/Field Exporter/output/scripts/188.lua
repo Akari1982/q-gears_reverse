@@ -115,16 +115,16 @@ Entity[ "2" ] = {
         opcode63() -- 0x0243 0x63
         opcode64() -- 0x024b 0x64
         opcodeA3() -- 0x024c 0xa3
-        opcodeAC() -- 0x0254 0xac
-        opcodeAC() -- 0x0258 0xac
-        opcode24( entity=(entity)0x04 ) -- 0x025c 0x24
-        opcode24( entity=(entity)0x06 ) -- 0x025e 0x24
-        opcode24( entity=(entity)0x05 ) -- 0x0260 0x24
-        opcode24( entity=(entity)0x07 ) -- 0x0262 0x24
-        opcode24( entity=(entity)0x08 ) -- 0x0264 0x24
-        opcode24( entity=(entity)0x09 ) -- 0x0266 0x24
-        opcode24( entity=(entity)0x0a ) -- 0x0268 0x24
-        opcodeEF() -- 0x026a 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0254 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0258 0xac
+        opcode24_EntityEnable( entity=(entity)0x04 ) -- 0x025c 0x24
+        opcode24_EntityEnable( entity=(entity)0x06 ) -- 0x025e 0x24
+        opcode24_EntityEnable( entity=(entity)0x05 ) -- 0x0260 0x24
+        opcode24_EntityEnable( entity=(entity)0x07 ) -- 0x0262 0x24
+        opcode24_EntityEnable( entity=(entity)0x08 ) -- 0x0264 0x24
+        opcode24_EntityEnable( entity=(entity)0x09 ) -- 0x0266 0x24
+        opcode24_EntityEnable( entity=(entity)0x0a ) -- 0x0268 0x24
+        opcodeEF_MoveCameraSync() -- 0x026a 0xef
         return 0 -- 0x026d 0x00
     end,
 
@@ -141,9 +141,9 @@ Entity[ "2" ] = {
         opcode63() -- 0x02c0 0x63
         opcode64() -- 0x02c8 0x64
         opcodeA3() -- 0x02c9 0xa3
-        opcodeAC() -- 0x02d1 0xac
-        opcodeAC() -- 0x02d5 0xac
-        opcodeEF() -- 0x02d9 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x02d1 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x02d5 0xac
+        opcodeEF_MoveCameraSync() -- 0x02d9 0xef
         -- MISSING OPCODE 0x74
     end,
 

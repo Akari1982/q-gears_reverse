@@ -115,9 +115,9 @@ Entity[ "2" ] = {
     script_0x05 = function( self )
         opcode63() -- 0x0122 0x63
         opcodeA3() -- 0x012a 0xa3
-        opcodeAC() -- 0x0132 0xac
-        opcodeAC() -- 0x0136 0xac
-        opcodeEF() -- 0x013a 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0132 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0136 0xac
+        opcodeEF_MoveCameraSync() -- 0x013a 0xef
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0149 ) -- 0x013d 0x02
         -- 0x5A() -- 0x0145 0x5a
         -- 0x01_JumpTo( 0x013d ) -- 0x0146 0x01
@@ -136,9 +136,9 @@ Entity[ "2" ] = {
         opcode64() -- 0x019e 0x64
         opcode63() -- 0x019f 0x63
         opcodeA3() -- 0x01a7 0xa3
-        opcodeAC() -- 0x01af 0xac
-        opcodeAC() -- 0x01b3 0xac
-        opcodeEF() -- 0x01b7 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x01af 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x01b3 0xac
+        opcodeEF_MoveCameraSync() -- 0x01b7 0xef
         -- 0x07( entity=0x01, script=0x04 ) -- 0x01ba 0x07
         -- MISSING OPCODE 0xfc
     end,

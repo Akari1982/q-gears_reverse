@@ -1667,7 +1667,7 @@ Entity[ "60" ] = {
     end,
 
     on_talk = function( self )
-        opcode24( entity=(entity)0x3b ) -- 0x101d 0x24
+        opcode24_EntityEnable( entity=(entity)0x3b ) -- 0x101d 0x24
         -- MISSING OPCODE 0x6f
     end,
 

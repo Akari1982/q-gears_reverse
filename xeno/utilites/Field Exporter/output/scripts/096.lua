@@ -1444,12 +1444,12 @@ Entity[ "53" ] = {
 Entity[ "54" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0c1f 0xbc
-        opcode25( entity=(entity)0x21 ) -- 0x0c20 0x25
-        opcode25( entity=(entity)0x16 ) -- 0x0c22 0x25
-        opcode25( entity=(entity)0x17 ) -- 0x0c24 0x25
-        opcode25( entity=(entity)0x18 ) -- 0x0c26 0x25
-        opcode25( entity=(entity)0x19 ) -- 0x0c28 0x25
-        opcode25( entity=(entity)0x1a ) -- 0x0c2a 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x0c20 0x25
+        opcode25_EntityDisable( entity=(entity)0x16 ) -- 0x0c22 0x25
+        opcode25_EntityDisable( entity=(entity)0x17 ) -- 0x0c24 0x25
+        opcode25_EntityDisable( entity=(entity)0x18 ) -- 0x0c26 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x0c28 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0c2a 0x25
         -- MISSING OPCODE 0x27
     end,
 

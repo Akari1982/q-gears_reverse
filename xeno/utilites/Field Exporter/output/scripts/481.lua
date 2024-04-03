@@ -1103,9 +1103,9 @@ Entity[ "31" ] = {
         opcode64() -- 0x07d7 0x64
         opcode63() -- 0x07d8 0x63
         opcodeA3() -- 0x07e0 0xa3
-        opcodeAC() -- 0x07e8 0xac
-        opcodeAC() -- 0x07ec 0xac
-        opcodeEF() -- 0x07f0 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=85 ) -- 0x07e8 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=80 ) -- 0x07ec 0xac
+        opcodeEF_MoveCameraSync() -- 0x07f0 0xef
         return 0 -- 0x07f3 0x00
     end,
 
@@ -1118,9 +1118,9 @@ Entity[ "31" ] = {
         opcode64() -- 0x0821 0x64
         opcode63() -- 0x0822 0x63
         opcodeA3() -- 0x082a 0xa3
-        opcodeAC() -- 0x0832 0xac
-        opcodeAC() -- 0x0836 0xac
-        opcodeEF() -- 0x083a 0xef
+        opcodeAC_MoveCamera( control=0x80, steps=85 ) -- 0x0832 0xac
+        opcodeAC_MoveCamera( control=0x81, steps=80 ) -- 0x0836 0xac
+        opcodeEF_MoveCameraSync() -- 0x083a 0xef
         return 0 -- 0x083d 0x00
     end,
 

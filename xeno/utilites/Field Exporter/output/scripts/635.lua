@@ -406,9 +406,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x0432 0x63
         opcode64() -- 0x043a 0x64
         opcodeA3() -- 0x043b 0xa3
-        opcodeAC() -- 0x0443 0xac
-        opcodeAC() -- 0x0447 0xac
-        opcodeEF() -- 0x044b 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x0443 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=2 ) -- 0x0447 0xac
+        opcodeEF_MoveCameraSync() -- 0x044b 0xef
         return 0 -- 0x044e 0x00
     end,
 
@@ -423,9 +423,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x0475 0x63
         opcode64() -- 0x047d 0x64
         opcodeA3() -- 0x047e 0xa3
-        opcodeAC() -- 0x0486 0xac
-        opcodeAC() -- 0x048a 0xac
-        opcodeEF() -- 0x048e 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x0486 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=2 ) -- 0x048a 0xac
+        opcodeEF_MoveCameraSync() -- 0x048e 0xef
         return 0 -- 0x0491 0x00
     end,
 
@@ -434,9 +434,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x0493 0x63
         opcode64() -- 0x049b 0x64
         opcodeA3() -- 0x049c 0xa3
-        opcodeAC() -- 0x04a4 0xac
-        opcodeAC() -- 0x04a8 0xac
-        opcodeEF() -- 0x04ac 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x04a4 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=2 ) -- 0x04a8 0xac
+        opcodeEF_MoveCameraSync() -- 0x04ac 0xef
         return 0 -- 0x04af 0x00
     end,
 
@@ -445,9 +445,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x04b1 0x63
         opcode64() -- 0x04b9 0x64
         opcodeA3() -- 0x04ba 0xa3
-        opcodeAC() -- 0x04c2 0xac
-        opcodeAC() -- 0x04c6 0xac
-        opcodeEF() -- 0x04ca 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x04c2 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=2 ) -- 0x04c6 0xac
+        opcodeEF_MoveCameraSync() -- 0x04ca 0xef
         return 0 -- 0x04cd 0x00
     end,
 
@@ -456,9 +456,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x04cf 0x63
         opcode64() -- 0x04d7 0x64
         opcodeA3() -- 0x04d8 0xa3
-        opcodeAC() -- 0x04e0 0xac
-        opcodeAC() -- 0x04e4 0xac
-        opcodeEF() -- 0x04e8 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x04e0 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=2 ) -- 0x04e4 0xac
+        opcodeEF_MoveCameraSync() -- 0x04e8 0xef
         return 0 -- 0x04eb 0x00
     end,
 
@@ -468,9 +468,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x04ee 0x63
         opcode64() -- 0x04f6 0x64
         opcodeA3() -- 0x04f7 0xa3
-        opcodeAC() -- 0x04ff 0xac
-        opcodeAC() -- 0x0503 0xac
-        opcodeEF() -- 0x0507 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x04ff 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=2 ) -- 0x0503 0xac
+        opcodeEF_MoveCameraSync() -- 0x0507 0xef
         return 0 -- 0x050a 0x00
     end,
 
@@ -480,9 +480,9 @@ Entity[ "9" ] = {
         opcode63() -- 0x050d 0x63
         opcode64() -- 0x0515 0x64
         opcodeA3() -- 0x0516 0xa3
-        opcodeAC() -- 0x051e 0xac
-        opcodeAC() -- 0x0522 0xac
-        opcodeEF() -- 0x0526 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x051e 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x0522 0xac
+        opcodeEF_MoveCameraSync() -- 0x0526 0xef
         return 0 -- 0x0529 0x00
     end,
 

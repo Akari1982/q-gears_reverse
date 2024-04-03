@@ -990,9 +990,9 @@ Entity[ "29" ] = {
         opcode63() -- 0x499f 0x63
         opcode64() -- 0x49a7 0x64
         opcodeA3() -- 0x49a8 0xa3
-        opcodeAC() -- 0x49b0 0xac
-        opcodeAC() -- 0x49b4 0xac
-        opcodeEF() -- 0x49b8 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x49b0 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x49b4 0xac
+        opcodeEF_MoveCameraSync() -- 0x49b8 0xef
         opcode26_Wait( time=20 ) -- 0x49bb 0x26
         -- MISSING OPCODE 0x74
     end,
@@ -1002,9 +1002,9 @@ Entity[ "29" ] = {
         opcode63() -- 0x49c3 0x63
         opcode64() -- 0x49cb 0x64
         opcodeA3() -- 0x49cc 0xa3
-        opcodeAC() -- 0x49d4 0xac
-        opcodeAC() -- 0x49d8 0xac
-        opcodeEF() -- 0x49dc 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x49d4 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x49d8 0xac
+        opcodeEF_MoveCameraSync() -- 0x49dc 0xef
         opcode26_Wait( time=20 ) -- 0x49df 0x26
         -- MISSING OPCODE 0x74
     end,
@@ -1014,9 +1014,9 @@ Entity[ "29" ] = {
         opcode63() -- 0x49e7 0x63
         opcode64() -- 0x49ef 0x64
         opcodeA3() -- 0x49f0 0xa3
-        opcodeAC() -- 0x49f8 0xac
-        opcodeAC() -- 0x49fc 0xac
-        opcodeEF() -- 0x4a00 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x49f8 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x49fc 0xac
+        opcodeEF_MoveCameraSync() -- 0x4a00 0xef
         opcode26_Wait( time=20 ) -- 0x4a03 0x26
         -- MISSING OPCODE 0x74
     end,

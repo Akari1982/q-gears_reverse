@@ -373,8 +373,8 @@ Entity[ "6" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0592 ) -- 0x04fe 0x02
         -- 0xF1() -- 0x0506 0xf1
         opcodeFE54() -- 0x0511 0xfe
-        opcode25( entity=(entity)0xfe ) -- 0x0513 0x25
-        opcode25( entity=(entity)0xfd ) -- 0x0515 0x25
+        opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x0513 0x25
+        opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x0515 0x25
         -- 0x09_EntityCallScriptEW( entity=0x04, script=0x24 ) -- 0x0517 0x09
         -- 0x09_EntityCallScriptEW( entity=0x05, script=0x24 ) -- 0x051a 0x09
         opcode26_Wait( time=30 ) -- 0x051d 0x26
@@ -544,9 +544,9 @@ Entity[ "11" ] = {
         opcode63() -- 0x0c78 0x63
         opcode64() -- 0x0c80 0x64
         opcodeA3() -- 0x0c81 0xa3
-        opcodeAC() -- 0x0c89 0xac
-        opcodeAC() -- 0x0c8d 0xac
-        opcodeEF() -- 0x0c91 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=80 ) -- 0x0c89 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x0c8d 0xac
+        opcodeEF_MoveCameraSync() -- 0x0c91 0xef
         return 0 -- 0x0c94 0x00
     end,
 
@@ -556,9 +556,9 @@ Entity[ "11" ] = {
         opcode63() -- 0x0c97 0x63
         opcode64() -- 0x0c9f 0x64
         opcodeA3() -- 0x0ca0 0xa3
-        opcodeAC() -- 0x0ca8 0xac
-        opcodeAC() -- 0x0cac 0xac
-        opcodeEF() -- 0x0cb0 0xef
+        opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x0ca8 0xac
+        opcodeAC_MoveCamera( control=0x80, steps=0 ) -- 0x0cac 0xac
+        opcodeEF_MoveCameraSync() -- 0x0cb0 0xef
         return 0 -- 0x0cb3 0x00
     end,
 

@@ -1264,42 +1264,42 @@ Entity[ "32" ] = {
     end,
 
     script_0x06 = function( self )
-        opcode25( entity=(entity)0x19 ) -- 0x1ea2 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x1ea2 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x07 = function( self )
-        opcode25( entity=(entity)0x1a ) -- 0x1ea7 0x25
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x1ea7 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x08 = function( self )
-        opcode25( entity=(entity)0x1c ) -- 0x1eb0 0x25
+        opcode25_EntityDisable( entity=(entity)0x1c ) -- 0x1eb0 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x09 = function( self )
-        opcode24( entity=(entity)0x19 ) -- 0x1eb9 0x24
+        opcode24_EntityEnable( entity=(entity)0x19 ) -- 0x1eb9 0x24
         -- MISSING OPCODE 0x28
     end,
 
     script_0x0a = function( self )
-        opcode24( entity=(entity)0x1a ) -- 0x1ebe 0x24
+        opcode24_EntityEnable( entity=(entity)0x1a ) -- 0x1ebe 0x24
         -- MISSING OPCODE 0x28
     end,
 
     script_0x0b = function( self )
-        opcode24( entity=(entity)0x1c ) -- 0x1ec7 0x24
+        opcode24_EntityEnable( entity=(entity)0x1c ) -- 0x1ec7 0x24
         -- MISSING OPCODE 0x28
     end,
 
     script_0x0c = function( self )
-        opcode25( entity=(entity)0x19 ) -- 0x1ed0 0x25
+        opcode25_EntityDisable( entity=(entity)0x19 ) -- 0x1ed0 0x25
         -- MISSING OPCODE 0x27
     end,
 
     script_0x0d = function( self )
-        opcode24( entity=(entity)0x19 ) -- 0x1ee5 0x24
+        opcode24_EntityEnable( entity=(entity)0x19 ) -- 0x1ee5 0x24
         -- MISSING OPCODE 0x28
     end,
 

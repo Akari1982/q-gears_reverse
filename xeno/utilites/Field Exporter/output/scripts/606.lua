@@ -47,544 +47,544 @@ Entity[ "1" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0130 ) -- 0x00c6 0x02
-        opcode24( entity=(entity)0x27 ) -- 0x00ce 0x24
-        opcode24( entity=(entity)0x2a ) -- 0x00d0 0x24
-        opcode24( entity=(entity)0x29 ) -- 0x00d2 0x24
-        opcode24( entity=(entity)0x28 ) -- 0x00d4 0x24
-        opcode24( entity=(entity)0x1f ) -- 0x00d6 0x24
-        opcode24( entity=(entity)0x20 ) -- 0x00d8 0x24
+        opcode24_EntityEnable( entity=(entity)0x27 ) -- 0x00ce 0x24
+        opcode24_EntityEnable( entity=(entity)0x2a ) -- 0x00d0 0x24
+        opcode24_EntityEnable( entity=(entity)0x29 ) -- 0x00d2 0x24
+        opcode24_EntityEnable( entity=(entity)0x28 ) -- 0x00d4 0x24
+        opcode24_EntityEnable( entity=(entity)0x1f ) -- 0x00d6 0x24
+        opcode24_EntityEnable( entity=(entity)0x20 ) -- 0x00d8 0x24
         -- 0xC6() -- 0x00da 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x00db 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x00dd 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x00df 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x00e1 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x00db 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x00dd 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x00df 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x00e1 0x25
         -- 0xC6() -- 0x00e3 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x00e4 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x00e6 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x00e8 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x00ea 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x00ec 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x00e4 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x00e6 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x00e8 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x00ea 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x00ec 0x25
         -- 0xC6() -- 0x00ee 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x00ef 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x00f1 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x00f3 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x00f5 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x00ef 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x00f1 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x00f3 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x00f5 0x25
         -- 0xC6() -- 0x00f7 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x00f8 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x00fa 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x00fc 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x00fe 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x00f8 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x00fa 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x00fc 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x00fe 0x25
         -- 0xC6() -- 0x0100 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x0101 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x0103 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x0105 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x0107 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x0109 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x0101 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x0103 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x0105 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x0107 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x0109 0x25
         -- 0xC6() -- 0x010b 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x010c 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x010e 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x0110 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x0112 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x0114 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x010c 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x010e 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x0110 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x0112 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x0114 0x25
         -- 0xC6() -- 0x0116 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x0117 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x0119 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x011b 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x011d 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x0117 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x0119 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x011b 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x011d 0x25
         -- 0xC6() -- 0x011f 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x0120 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x0122 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x0124 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x0120 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x0122 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x0124 0x25
         -- 0xC6() -- 0x0126 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x0127 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x0129 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x012b 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x0127 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x0129 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x012b 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x012d 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x019a ) -- 0x0130 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x0138 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x013a 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x013c 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x013e 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x0140 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x0142 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x0138 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x013a 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x013c 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x013e 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0140 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0142 0x25
         -- 0xC6() -- 0x0144 0xc6
-        opcode24( entity=(entity)0x2b ) -- 0x0145 0x24
-        opcode24( entity=(entity)0x2e ) -- 0x0147 0x24
-        opcode24( entity=(entity)0x2d ) -- 0x0149 0x24
-        opcode24( entity=(entity)0x2c ) -- 0x014b 0x24
+        opcode24_EntityEnable( entity=(entity)0x2b ) -- 0x0145 0x24
+        opcode24_EntityEnable( entity=(entity)0x2e ) -- 0x0147 0x24
+        opcode24_EntityEnable( entity=(entity)0x2d ) -- 0x0149 0x24
+        opcode24_EntityEnable( entity=(entity)0x2c ) -- 0x014b 0x24
         -- 0xC6() -- 0x014d 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x014e 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x0150 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x0152 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x0154 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x0156 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x014e 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x0150 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x0152 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x0154 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x0156 0x25
         -- 0xC6() -- 0x0158 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x0159 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x015b 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x015d 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x015f 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x0159 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x015b 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x015d 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x015f 0x25
         -- 0xC6() -- 0x0161 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x0162 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x0164 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x0166 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x0168 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x0162 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x0164 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x0166 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x0168 0x25
         -- 0xC6() -- 0x016a 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x016b 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x016d 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x016f 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x0171 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x0173 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x016b 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x016d 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x016f 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x0171 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x0173 0x25
         -- 0xC6() -- 0x0175 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x0176 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x0178 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x017a 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x017c 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x017e 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x0176 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x0178 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x017a 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x017c 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x017e 0x25
         -- 0xC6() -- 0x0180 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x0181 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x0183 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x0185 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x0187 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x0181 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x0183 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x0185 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x0187 0x25
         -- 0xC6() -- 0x0189 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x018a 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x018c 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x018e 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x018a 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x018c 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x018e 0x25
         -- 0xC6() -- 0x0190 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x0191 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x0193 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x0195 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x0191 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x0193 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x0195 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x0197 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0204 ) -- 0x019a 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x01a2 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x01a4 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x01a6 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x01a8 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x01aa 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x01ac 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x01a2 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x01a4 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x01a6 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x01a8 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x01aa 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x01ac 0x25
         -- 0xC6() -- 0x01ae 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x01af 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x01b1 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x01b3 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x01b5 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x01af 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x01b1 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x01b3 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x01b5 0x25
         -- 0xC6() -- 0x01b7 0xc6
-        opcode24( entity=(entity)0x2f ) -- 0x01b8 0x24
-        opcode24( entity=(entity)0x32 ) -- 0x01ba 0x24
-        opcode24( entity=(entity)0x31 ) -- 0x01bc 0x24
-        opcode24( entity=(entity)0x30 ) -- 0x01be 0x24
-        opcode24( entity=(entity)0x22 ) -- 0x01c0 0x24
+        opcode24_EntityEnable( entity=(entity)0x2f ) -- 0x01b8 0x24
+        opcode24_EntityEnable( entity=(entity)0x32 ) -- 0x01ba 0x24
+        opcode24_EntityEnable( entity=(entity)0x31 ) -- 0x01bc 0x24
+        opcode24_EntityEnable( entity=(entity)0x30 ) -- 0x01be 0x24
+        opcode24_EntityEnable( entity=(entity)0x22 ) -- 0x01c0 0x24
         -- 0xC6() -- 0x01c2 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x01c3 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x01c5 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x01c7 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x01c9 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x01c3 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x01c5 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x01c7 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x01c9 0x25
         -- 0xC6() -- 0x01cb 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x01cc 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x01ce 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x01d0 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x01d2 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x01cc 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x01ce 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x01d0 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x01d2 0x25
         -- 0xC6() -- 0x01d4 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x01d5 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x01d7 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x01d9 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x01db 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x01dd 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x01d5 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x01d7 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x01d9 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x01db 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x01dd 0x25
         -- 0xC6() -- 0x01df 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x01e0 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x01e2 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x01e4 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x01e6 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x01e8 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x01e0 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x01e2 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x01e4 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x01e6 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x01e8 0x25
         -- 0xC6() -- 0x01ea 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x01eb 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x01ed 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x01ef 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x01f1 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x01eb 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x01ed 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x01ef 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x01f1 0x25
         -- 0xC6() -- 0x01f3 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x01f4 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x01f6 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x01f8 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x01f4 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x01f6 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x01f8 0x25
         -- 0xC6() -- 0x01fa 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x01fb 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x01fd 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x01ff 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x01fb 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x01fd 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x01ff 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x0201 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x026e ) -- 0x0204 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x020c 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x020e 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x0210 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x0212 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x0214 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x0216 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x020c 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x020e 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x0210 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x0212 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0214 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0216 0x25
         -- 0xC6() -- 0x0218 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x0219 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x021b 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x021d 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x021f 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x0219 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x021b 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x021d 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x021f 0x25
         -- 0xC6() -- 0x0221 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x0222 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x0224 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x0226 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x0228 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x022a 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x0222 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x0224 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x0226 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x0228 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x022a 0x25
         -- 0xC6() -- 0x022c 0xc6
-        opcode24( entity=(entity)0x33 ) -- 0x022d 0x24
-        opcode24( entity=(entity)0x36 ) -- 0x022f 0x24
-        opcode24( entity=(entity)0x35 ) -- 0x0231 0x24
-        opcode24( entity=(entity)0x34 ) -- 0x0233 0x24
+        opcode24_EntityEnable( entity=(entity)0x33 ) -- 0x022d 0x24
+        opcode24_EntityEnable( entity=(entity)0x36 ) -- 0x022f 0x24
+        opcode24_EntityEnable( entity=(entity)0x35 ) -- 0x0231 0x24
+        opcode24_EntityEnable( entity=(entity)0x34 ) -- 0x0233 0x24
         -- 0xC6() -- 0x0235 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x0236 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x0238 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x023a 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x023c 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x0236 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x0238 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x023a 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x023c 0x25
         -- 0xC6() -- 0x023e 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x023f 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x0241 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x0243 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x0245 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x0247 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x023f 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x0241 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x0243 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x0245 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x0247 0x25
         -- 0xC6() -- 0x0249 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x024a 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x024c 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x024e 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x0250 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x0252 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x024a 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x024c 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x024e 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x0250 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x0252 0x25
         -- 0xC6() -- 0x0254 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x0255 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x0257 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x0259 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x025b 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x0255 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x0257 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x0259 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x025b 0x25
         -- 0xC6() -- 0x025d 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x025e 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x0260 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x0262 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x025e 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x0260 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x0262 0x25
         -- 0xC6() -- 0x0264 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x0265 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x0267 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x0269 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x0265 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x0267 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x0269 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x026b 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x02d8 ) -- 0x026e 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x0276 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x0278 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x027a 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x027c 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x027e 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x0280 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x0276 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x0278 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x027a 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x027c 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x027e 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0280 0x25
         -- 0xC6() -- 0x0282 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x0283 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x0285 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x0287 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x0289 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x0283 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x0285 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x0287 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x0289 0x25
         -- 0xC6() -- 0x028b 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x028c 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x028e 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x0290 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x0292 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x0294 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x028c 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x028e 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x0290 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x0292 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x0294 0x25
         -- 0xC6() -- 0x0296 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x0297 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x0299 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x029b 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x029d 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x0297 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x0299 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x029b 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x029d 0x25
         -- 0xC6() -- 0x029f 0xc6
-        opcode24( entity=(entity)0x37 ) -- 0x02a0 0x24
-        opcode24( entity=(entity)0x3a ) -- 0x02a2 0x24
-        opcode24( entity=(entity)0x39 ) -- 0x02a4 0x24
-        opcode24( entity=(entity)0x38 ) -- 0x02a6 0x24
+        opcode24_EntityEnable( entity=(entity)0x37 ) -- 0x02a0 0x24
+        opcode24_EntityEnable( entity=(entity)0x3a ) -- 0x02a2 0x24
+        opcode24_EntityEnable( entity=(entity)0x39 ) -- 0x02a4 0x24
+        opcode24_EntityEnable( entity=(entity)0x38 ) -- 0x02a6 0x24
         -- 0xC6() -- 0x02a8 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x02a9 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x02ab 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x02ad 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x02af 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x02b1 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x02a9 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x02ab 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x02ad 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x02af 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x02b1 0x25
         -- 0xC6() -- 0x02b3 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x02b4 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x02b6 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x02b8 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x02ba 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x02bc 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x02b4 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x02b6 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x02b8 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x02ba 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x02bc 0x25
         -- 0xC6() -- 0x02be 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x02bf 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x02c1 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x02c3 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x02c5 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x02bf 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x02c1 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x02c3 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x02c5 0x25
         -- 0xC6() -- 0x02c7 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x02c8 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x02ca 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x02cc 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x02c8 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x02ca 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x02cc 0x25
         -- 0xC6() -- 0x02ce 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x02cf 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x02d1 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x02d3 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x02cf 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x02d1 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x02d3 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x02d5 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0342 ) -- 0x02d8 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x02e0 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x02e2 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x02e4 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x02e6 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x02e8 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x02ea 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x02e0 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x02e2 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x02e4 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x02e6 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x02e8 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x02ea 0x25
         -- 0xC6() -- 0x02ec 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x02ed 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x02ef 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x02f1 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x02f3 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x02ed 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x02ef 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x02f1 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x02f3 0x25
         -- 0xC6() -- 0x02f5 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x02f6 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x02f8 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x02fa 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x02fc 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x02fe 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x02f6 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x02f8 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x02fa 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x02fc 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x02fe 0x25
         -- 0xC6() -- 0x0300 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x0301 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x0303 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x0305 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x0307 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x0301 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x0303 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x0305 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x0307 0x25
         -- 0xC6() -- 0x0309 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x030a 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x030c 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x030e 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x0310 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x030a 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x030c 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x030e 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x0310 0x25
         -- 0xC6() -- 0x0312 0xc6
-        opcode24( entity=(entity)0x3b ) -- 0x0313 0x24
-        opcode24( entity=(entity)0x3e ) -- 0x0315 0x24
-        opcode24( entity=(entity)0x3d ) -- 0x0317 0x24
-        opcode24( entity=(entity)0x3c ) -- 0x0319 0x24
-        opcode24( entity=(entity)0x24 ) -- 0x031b 0x24
+        opcode24_EntityEnable( entity=(entity)0x3b ) -- 0x0313 0x24
+        opcode24_EntityEnable( entity=(entity)0x3e ) -- 0x0315 0x24
+        opcode24_EntityEnable( entity=(entity)0x3d ) -- 0x0317 0x24
+        opcode24_EntityEnable( entity=(entity)0x3c ) -- 0x0319 0x24
+        opcode24_EntityEnable( entity=(entity)0x24 ) -- 0x031b 0x24
         -- 0xC6() -- 0x031d 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x031e 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x0320 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x0322 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x0324 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x0326 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x031e 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x0320 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x0322 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x0324 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x0326 0x25
         -- 0xC6() -- 0x0328 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x0329 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x032b 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x032d 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x032f 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x0329 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x032b 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x032d 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x032f 0x25
         -- 0xC6() -- 0x0331 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x0332 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x0334 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x0336 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x0332 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x0334 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x0336 0x25
         -- 0xC6() -- 0x0338 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x0339 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x033b 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x033d 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x0339 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x033b 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x033d 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x033f 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x03ac ) -- 0x0342 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x034a 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x034c 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x034e 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x0350 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x0352 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x0354 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x034a 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x034c 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x034e 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x0350 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0352 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0354 0x25
         -- 0xC6() -- 0x0356 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x0357 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x0359 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x035b 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x035d 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x0357 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x0359 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x035b 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x035d 0x25
         -- 0xC6() -- 0x035f 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x0360 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x0362 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x0364 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x0366 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x0368 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x0360 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x0362 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x0364 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x0366 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x0368 0x25
         -- 0xC6() -- 0x036a 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x036b 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x036d 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x036f 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x0371 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x036b 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x036d 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x036f 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x0371 0x25
         -- 0xC6() -- 0x0373 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x0374 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x0376 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x0378 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x037a 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x0374 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x0376 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x0378 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x037a 0x25
         -- 0xC6() -- 0x037c 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x037d 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x037f 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x0381 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x0383 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x0385 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x037d 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x037f 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x0381 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x0383 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x0385 0x25
         -- 0xC6() -- 0x0387 0xc6
-        opcode24( entity=(entity)0x3f ) -- 0x0388 0x24
-        opcode24( entity=(entity)0x42 ) -- 0x038a 0x24
-        opcode24( entity=(entity)0x41 ) -- 0x038c 0x24
-        opcode24( entity=(entity)0x40 ) -- 0x038e 0x24
-        opcode24( entity=(entity)0x26 ) -- 0x0390 0x24
+        opcode24_EntityEnable( entity=(entity)0x3f ) -- 0x0388 0x24
+        opcode24_EntityEnable( entity=(entity)0x42 ) -- 0x038a 0x24
+        opcode24_EntityEnable( entity=(entity)0x41 ) -- 0x038c 0x24
+        opcode24_EntityEnable( entity=(entity)0x40 ) -- 0x038e 0x24
+        opcode24_EntityEnable( entity=(entity)0x26 ) -- 0x0390 0x24
         -- 0xC6() -- 0x0392 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x0393 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x0395 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x0397 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x0399 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x0393 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x0395 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x0397 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x0399 0x25
         -- 0xC6() -- 0x039b 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x039c 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x039e 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x03a0 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x039c 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x039e 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x03a0 0x25
         -- 0xC6() -- 0x03a2 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x03a3 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x03a5 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x03a7 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x03a3 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x03a5 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x03a7 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x03a9 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x0416 ) -- 0x03ac 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x03b4 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x03b6 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x03b8 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x03ba 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x03bc 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x03be 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x03b4 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x03b6 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x03b8 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x03ba 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x03bc 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x03be 0x25
         -- 0xC6() -- 0x03c0 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x03c1 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x03c3 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x03c5 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x03c7 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x03c1 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x03c3 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x03c5 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x03c7 0x25
         -- 0xC6() -- 0x03c9 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x03ca 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x03cc 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x03ce 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x03d0 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x03d2 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x03ca 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x03cc 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x03ce 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x03d0 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x03d2 0x25
         -- 0xC6() -- 0x03d4 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x03d5 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x03d7 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x03d9 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x03db 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x03d5 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x03d7 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x03d9 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x03db 0x25
         -- 0xC6() -- 0x03dd 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x03de 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x03e0 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x03e2 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x03e4 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x03de 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x03e0 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x03e2 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x03e4 0x25
         -- 0xC6() -- 0x03e6 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x03e7 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x03e9 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x03eb 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x03ed 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x03ef 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x03e7 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x03e9 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x03eb 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x03ed 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x03ef 0x25
         -- 0xC6() -- 0x03f1 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x03f2 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x03f4 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x03f6 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x03f8 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x03fa 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x03f2 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x03f4 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x03f6 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x03f8 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x03fa 0x25
         -- 0xC6() -- 0x03fc 0xc6
-        opcode24( entity=(entity)0x43 ) -- 0x03fd 0x24
-        opcode24( entity=(entity)0x45 ) -- 0x03ff 0x24
-        opcode24( entity=(entity)0x44 ) -- 0x0401 0x24
-        opcode24( entity=(entity)0x21 ) -- 0x0403 0x24
+        opcode24_EntityEnable( entity=(entity)0x43 ) -- 0x03fd 0x24
+        opcode24_EntityEnable( entity=(entity)0x45 ) -- 0x03ff 0x24
+        opcode24_EntityEnable( entity=(entity)0x44 ) -- 0x0401 0x24
+        opcode24_EntityEnable( entity=(entity)0x21 ) -- 0x0403 0x24
         -- 0xC6() -- 0x0405 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x0406 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x0408 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x040a 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x0406 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x0408 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x040a 0x25
         -- 0xC6() -- 0x040c 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x040d 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x040f 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x0411 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x040d 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x040f 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x0411 0x25
         -- 0x01_JumpTo( 0x04e7 ) -- 0x0413 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x0480 ) -- 0x0416 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x041e 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x0420 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x0422 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x0424 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x0426 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x0428 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x041e 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x0420 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x0422 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x0424 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0426 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0428 0x25
         -- 0xC6() -- 0x042a 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x042b 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x042d 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x042f 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x0431 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x042b 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x042d 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x042f 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x0431 0x25
         -- 0xC6() -- 0x0433 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x0434 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x0436 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x0438 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x043a 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x043c 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x0434 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x0436 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x0438 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x043a 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x043c 0x25
         -- 0xC6() -- 0x043e 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x043f 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x0441 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x0443 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x0445 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x043f 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x0441 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x0443 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x0445 0x25
         -- 0xC6() -- 0x0447 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x0448 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x044a 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x044c 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x044e 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x0448 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x044a 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x044c 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x044e 0x25
         -- 0xC6() -- 0x0450 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x0451 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x0453 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x0455 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x0457 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x0459 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x0451 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x0453 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x0455 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x0457 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x0459 0x25
         -- 0xC6() -- 0x045b 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x045c 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x045e 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x0460 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x0462 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x0464 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x045c 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x045e 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x0460 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x0462 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x0464 0x25
         -- 0xC6() -- 0x0466 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x0467 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x0469 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x046b 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x046d 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x0467 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x0469 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x046b 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x046d 0x25
         -- 0xC6() -- 0x046f 0xc6
-        opcode25( entity=(entity)0x46 ) -- 0x0470 0x25
-        opcode25( entity=(entity)0x47 ) -- 0x0472 0x25
-        opcode25( entity=(entity)0x25 ) -- 0x0474 0x25
+        opcode25_EntityDisable( entity=(entity)0x46 ) -- 0x0470 0x25
+        opcode25_EntityDisable( entity=(entity)0x47 ) -- 0x0472 0x25
+        opcode25_EntityDisable( entity=(entity)0x25 ) -- 0x0474 0x25
         -- 0xC6() -- 0x0476 0xc6
-        opcode24( entity=(entity)0x49 ) -- 0x0477 0x24
-        opcode24( entity=(entity)0x48 ) -- 0x0479 0x24
-        opcode24( entity=(entity)0x23 ) -- 0x047b 0x24
+        opcode24_EntityEnable( entity=(entity)0x49 ) -- 0x0477 0x24
+        opcode24_EntityEnable( entity=(entity)0x48 ) -- 0x0479 0x24
+        opcode24_EntityEnable( entity=(entity)0x23 ) -- 0x047b 0x24
         -- 0x01_JumpTo( 0x04e7 ) -- 0x047d 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x04e7 ) -- 0x0480 0x02
-        opcode25( entity=(entity)0x27 ) -- 0x0488 0x25
-        opcode25( entity=(entity)0x2a ) -- 0x048a 0x25
-        opcode25( entity=(entity)0x29 ) -- 0x048c 0x25
-        opcode25( entity=(entity)0x28 ) -- 0x048e 0x25
-        opcode25( entity=(entity)0x1f ) -- 0x0490 0x25
-        opcode25( entity=(entity)0x20 ) -- 0x0492 0x25
+        opcode25_EntityDisable( entity=(entity)0x27 ) -- 0x0488 0x25
+        opcode25_EntityDisable( entity=(entity)0x2a ) -- 0x048a 0x25
+        opcode25_EntityDisable( entity=(entity)0x29 ) -- 0x048c 0x25
+        opcode25_EntityDisable( entity=(entity)0x28 ) -- 0x048e 0x25
+        opcode25_EntityDisable( entity=(entity)0x1f ) -- 0x0490 0x25
+        opcode25_EntityDisable( entity=(entity)0x20 ) -- 0x0492 0x25
         -- 0xC6() -- 0x0494 0xc6
-        opcode25( entity=(entity)0x2b ) -- 0x0495 0x25
-        opcode25( entity=(entity)0x2e ) -- 0x0497 0x25
-        opcode25( entity=(entity)0x2d ) -- 0x0499 0x25
-        opcode25( entity=(entity)0x2c ) -- 0x049b 0x25
+        opcode25_EntityDisable( entity=(entity)0x2b ) -- 0x0495 0x25
+        opcode25_EntityDisable( entity=(entity)0x2e ) -- 0x0497 0x25
+        opcode25_EntityDisable( entity=(entity)0x2d ) -- 0x0499 0x25
+        opcode25_EntityDisable( entity=(entity)0x2c ) -- 0x049b 0x25
         -- 0xC6() -- 0x049d 0xc6
-        opcode25( entity=(entity)0x2f ) -- 0x049e 0x25
-        opcode25( entity=(entity)0x32 ) -- 0x04a0 0x25
-        opcode25( entity=(entity)0x31 ) -- 0x04a2 0x25
-        opcode25( entity=(entity)0x30 ) -- 0x04a4 0x25
-        opcode25( entity=(entity)0x22 ) -- 0x04a6 0x25
+        opcode25_EntityDisable( entity=(entity)0x2f ) -- 0x049e 0x25
+        opcode25_EntityDisable( entity=(entity)0x32 ) -- 0x04a0 0x25
+        opcode25_EntityDisable( entity=(entity)0x31 ) -- 0x04a2 0x25
+        opcode25_EntityDisable( entity=(entity)0x30 ) -- 0x04a4 0x25
+        opcode25_EntityDisable( entity=(entity)0x22 ) -- 0x04a6 0x25
         -- 0xC6() -- 0x04a8 0xc6
-        opcode25( entity=(entity)0x33 ) -- 0x04a9 0x25
-        opcode25( entity=(entity)0x36 ) -- 0x04ab 0x25
-        opcode25( entity=(entity)0x35 ) -- 0x04ad 0x25
-        opcode25( entity=(entity)0x34 ) -- 0x04af 0x25
+        opcode25_EntityDisable( entity=(entity)0x33 ) -- 0x04a9 0x25
+        opcode25_EntityDisable( entity=(entity)0x36 ) -- 0x04ab 0x25
+        opcode25_EntityDisable( entity=(entity)0x35 ) -- 0x04ad 0x25
+        opcode25_EntityDisable( entity=(entity)0x34 ) -- 0x04af 0x25
         -- 0xC6() -- 0x04b1 0xc6
-        opcode25( entity=(entity)0x37 ) -- 0x04b2 0x25
-        opcode25( entity=(entity)0x3a ) -- 0x04b4 0x25
-        opcode25( entity=(entity)0x39 ) -- 0x04b6 0x25
-        opcode25( entity=(entity)0x38 ) -- 0x04b8 0x25
+        opcode25_EntityDisable( entity=(entity)0x37 ) -- 0x04b2 0x25
+        opcode25_EntityDisable( entity=(entity)0x3a ) -- 0x04b4 0x25
+        opcode25_EntityDisable( entity=(entity)0x39 ) -- 0x04b6 0x25
+        opcode25_EntityDisable( entity=(entity)0x38 ) -- 0x04b8 0x25
         -- 0xC6() -- 0x04ba 0xc6
-        opcode25( entity=(entity)0x3b ) -- 0x04bb 0x25
-        opcode25( entity=(entity)0x3e ) -- 0x04bd 0x25
-        opcode25( entity=(entity)0x3d ) -- 0x04bf 0x25
-        opcode25( entity=(entity)0x3c ) -- 0x04c1 0x25
-        opcode25( entity=(entity)0x24 ) -- 0x04c3 0x25
+        opcode25_EntityDisable( entity=(entity)0x3b ) -- 0x04bb 0x25
+        opcode25_EntityDisable( entity=(entity)0x3e ) -- 0x04bd 0x25
+        opcode25_EntityDisable( entity=(entity)0x3d ) -- 0x04bf 0x25
+        opcode25_EntityDisable( entity=(entity)0x3c ) -- 0x04c1 0x25
+        opcode25_EntityDisable( entity=(entity)0x24 ) -- 0x04c3 0x25
         -- 0xC6() -- 0x04c5 0xc6
-        opcode25( entity=(entity)0x3f ) -- 0x04c6 0x25
-        opcode25( entity=(entity)0x42 ) -- 0x04c8 0x25
-        opcode25( entity=(entity)0x41 ) -- 0x04ca 0x25
-        opcode25( entity=(entity)0x40 ) -- 0x04cc 0x25
-        opcode25( entity=(entity)0x26 ) -- 0x04ce 0x25
+        opcode25_EntityDisable( entity=(entity)0x3f ) -- 0x04c6 0x25
+        opcode25_EntityDisable( entity=(entity)0x42 ) -- 0x04c8 0x25
+        opcode25_EntityDisable( entity=(entity)0x41 ) -- 0x04ca 0x25
+        opcode25_EntityDisable( entity=(entity)0x40 ) -- 0x04cc 0x25
+        opcode25_EntityDisable( entity=(entity)0x26 ) -- 0x04ce 0x25
         -- 0xC6() -- 0x04d0 0xc6
-        opcode25( entity=(entity)0x43 ) -- 0x04d1 0x25
-        opcode25( entity=(entity)0x45 ) -- 0x04d3 0x25
-        opcode25( entity=(entity)0x44 ) -- 0x04d5 0x25
-        opcode25( entity=(entity)0x21 ) -- 0x04d7 0x25
+        opcode25_EntityDisable( entity=(entity)0x43 ) -- 0x04d1 0x25
+        opcode25_EntityDisable( entity=(entity)0x45 ) -- 0x04d3 0x25
+        opcode25_EntityDisable( entity=(entity)0x44 ) -- 0x04d5 0x25
+        opcode25_EntityDisable( entity=(entity)0x21 ) -- 0x04d7 0x25
         -- 0xC6() -- 0x04d9 0xc6
-        opcode24( entity=(entity)0x46 ) -- 0x04da 0x24
-        opcode24( entity=(entity)0x47 ) -- 0x04dc 0x24
-        opcode24( entity=(entity)0x25 ) -- 0x04de 0x24
+        opcode24_EntityEnable( entity=(entity)0x46 ) -- 0x04da 0x24
+        opcode24_EntityEnable( entity=(entity)0x47 ) -- 0x04dc 0x24
+        opcode24_EntityEnable( entity=(entity)0x25 ) -- 0x04de 0x24
         -- 0xC6() -- 0x04e0 0xc6
-        opcode25( entity=(entity)0x49 ) -- 0x04e1 0x25
-        opcode25( entity=(entity)0x48 ) -- 0x04e3 0x25
-        opcode25( entity=(entity)0x23 ) -- 0x04e5 0x25
+        opcode25_EntityDisable( entity=(entity)0x49 ) -- 0x04e1 0x25
+        opcode25_EntityDisable( entity=(entity)0x48 ) -- 0x04e3 0x25
+        opcode25_EntityDisable( entity=(entity)0x23 ) -- 0x04e5 0x25
         return 0 -- 0x04e7 0x00
     end,
 

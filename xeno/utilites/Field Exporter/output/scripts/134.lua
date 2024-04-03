@@ -108,17 +108,17 @@ Entity[ "2" ] = {
     script_0x05 = function( self )
         opcode63() -- 0x0114 0x63
         opcodeA3() -- 0x011c 0xa3
-        opcodeAC() -- 0x0124 0xac
-        opcodeAC() -- 0x0128 0xac
-        opcodeEF() -- 0x012c 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0124 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0128 0xac
+        opcodeEF_MoveCameraSync() -- 0x012c 0xef
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x013b ) -- 0x012f 0x02
         -- 0x5A() -- 0x0137 0x5a
         -- 0x01_JumpTo( 0x012f ) -- 0x0138 0x01
         opcode63() -- 0x013b 0x63
         opcodeA3() -- 0x0143 0xa3
-        opcodeAC() -- 0x014b 0xac
-        opcodeAC() -- 0x014f 0xac
-        opcodeEF() -- 0x0153 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x014b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x014f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0153 0xef
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0162 ) -- 0x0156 0x02
         -- 0x5A() -- 0x015e 0x5a
         -- 0x01_JumpTo( 0x0156 ) -- 0x015f 0x01
@@ -126,23 +126,23 @@ Entity[ "2" ] = {
         opcode64() -- 0x0163 0x64
         opcode63() -- 0x0164 0x63
         opcodeA3() -- 0x016c 0xa3
-        opcodeAC() -- 0x0174 0xac
-        opcodeAC() -- 0x0178 0xac
-        opcodeEF() -- 0x017c 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x0174 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0178 0xac
+        opcodeEF_MoveCameraSync() -- 0x017c 0xef
         opcode60() -- 0x017f 0x60
         opcode64() -- 0x0180 0x64
         opcode63() -- 0x0181 0x63
         opcodeA3() -- 0x0189 0xa3
-        opcodeAC() -- 0x0191 0xac
-        opcodeAC() -- 0x0195 0xac
-        opcodeEF() -- 0x0199 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x0191 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0195 0xac
+        opcodeEF_MoveCameraSync() -- 0x0199 0xef
         opcode60() -- 0x019c 0x60
         opcode64() -- 0x019d 0x64
         opcode63() -- 0x019e 0x63
         opcodeA3() -- 0x01a6 0xa3
-        opcodeAC() -- 0x01ae 0xac
-        opcodeAC() -- 0x01b2 0xac
-        opcodeEF() -- 0x01b6 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x01ae 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x01b2 0xac
+        opcodeEF_MoveCameraSync() -- 0x01b6 0xef
         -- 0x07( entity=0x05, script=0x09 ) -- 0x01b9 0x07
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x01c8 ) -- 0x01bc 0x02
         -- 0x5A() -- 0x01c4 0x5a
@@ -153,9 +153,9 @@ Entity[ "2" ] = {
     script_0x06 = function( self )
         opcode63() -- 0x013b 0x63
         opcodeA3() -- 0x0143 0xa3
-        opcodeAC() -- 0x014b 0xac
-        opcodeAC() -- 0x014f 0xac
-        opcodeEF() -- 0x0153 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x014b 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x014f 0xac
+        opcodeEF_MoveCameraSync() -- 0x0153 0xef
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0162 ) -- 0x0156 0x02
         -- 0x5A() -- 0x015e 0x5a
         -- 0x01_JumpTo( 0x0156 ) -- 0x015f 0x01
@@ -163,23 +163,23 @@ Entity[ "2" ] = {
         opcode64() -- 0x0163 0x64
         opcode63() -- 0x0164 0x63
         opcodeA3() -- 0x016c 0xa3
-        opcodeAC() -- 0x0174 0xac
-        opcodeAC() -- 0x0178 0xac
-        opcodeEF() -- 0x017c 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x0174 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0178 0xac
+        opcodeEF_MoveCameraSync() -- 0x017c 0xef
         opcode60() -- 0x017f 0x60
         opcode64() -- 0x0180 0x64
         opcode63() -- 0x0181 0x63
         opcodeA3() -- 0x0189 0xa3
-        opcodeAC() -- 0x0191 0xac
-        opcodeAC() -- 0x0195 0xac
-        opcodeEF() -- 0x0199 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x0191 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0195 0xac
+        opcodeEF_MoveCameraSync() -- 0x0199 0xef
         opcode60() -- 0x019c 0x60
         opcode64() -- 0x019d 0x64
         opcode63() -- 0x019e 0x63
         opcodeA3() -- 0x01a6 0xa3
-        opcodeAC() -- 0x01ae 0xac
-        opcodeAC() -- 0x01b2 0xac
-        opcodeEF() -- 0x01b6 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x01ae 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x01b2 0xac
+        opcodeEF_MoveCameraSync() -- 0x01b6 0xef
         -- 0x07( entity=0x05, script=0x09 ) -- 0x01b9 0x07
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x01c8 ) -- 0x01bc 0x02
         -- 0x5A() -- 0x01c4 0x5a
@@ -192,23 +192,23 @@ Entity[ "2" ] = {
         opcode64() -- 0x0163 0x64
         opcode63() -- 0x0164 0x63
         opcodeA3() -- 0x016c 0xa3
-        opcodeAC() -- 0x0174 0xac
-        opcodeAC() -- 0x0178 0xac
-        opcodeEF() -- 0x017c 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x0174 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0178 0xac
+        opcodeEF_MoveCameraSync() -- 0x017c 0xef
         opcode60() -- 0x017f 0x60
         opcode64() -- 0x0180 0x64
         opcode63() -- 0x0181 0x63
         opcodeA3() -- 0x0189 0xa3
-        opcodeAC() -- 0x0191 0xac
-        opcodeAC() -- 0x0195 0xac
-        opcodeEF() -- 0x0199 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=80 ) -- 0x0191 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0195 0xac
+        opcodeEF_MoveCameraSync() -- 0x0199 0xef
         opcode60() -- 0x019c 0x60
         opcode64() -- 0x019d 0x64
         opcode63() -- 0x019e 0x63
         opcodeA3() -- 0x01a6 0xa3
-        opcodeAC() -- 0x01ae 0xac
-        opcodeAC() -- 0x01b2 0xac
-        opcodeEF() -- 0x01b6 0xef
+        opcodeAC_MoveCamera( control=0x00, steps=30 ) -- 0x01ae 0xac
+        opcodeAC_MoveCamera( control=0x01, steps=30 ) -- 0x01b2 0xac
+        opcodeEF_MoveCameraSync() -- 0x01b6 0xef
         -- 0x07( entity=0x05, script=0x09 ) -- 0x01b9 0x07
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x01c8 ) -- 0x01bc 0x02
         -- 0x5A() -- 0x01c4 0x5a
@@ -242,7 +242,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode24( entity=(entity)0x08 ) -- 0x0433 0x24
+        opcode24_EntityEnable( entity=(entity)0x08 ) -- 0x0433 0x24
         -- MISSING OPCODE 0xFE65
     end,
 

@@ -1002,8 +1002,8 @@ Entity[ "26" ] = {
     end,
 
     script_0x04 = function( self )
-        opcode24( entity=(entity)0x19 ) -- 0x098e 0x24
-        opcode25( entity=(entity)0x1a ) -- 0x0990 0x25
+        opcode24_EntityEnable( entity=(entity)0x19 ) -- 0x098e 0x24
+        opcode25_EntityDisable( entity=(entity)0x1a ) -- 0x0990 0x25
         -- 0x35() -- 0x0992 0x35
         opcode63() -- 0x0998 0x63
         opcodeA3() -- 0x09a0 0xa3

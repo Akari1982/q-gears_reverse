@@ -1775,11 +1775,11 @@ Entity[ "67" ] = {
     end,
 
     script_0x06 = function( self )
-        opcode25( entity=(entity)0x04 ) -- 0x14ee 0x25
-        opcode25( entity=(entity)0x05 ) -- 0x14f0 0x25
-        opcode25( entity=(entity)0x06 ) -- 0x14f2 0x25
+        opcode25_EntityDisable( entity=(entity)0x04 ) -- 0x14ee 0x25
+        opcode25_EntityDisable( entity=(entity)0x05 ) -- 0x14f0 0x25
+        opcode25_EntityDisable( entity=(entity)0x06 ) -- 0x14f2 0x25
         -- 0xC6() -- 0x14f4 0xc6
-        opcode25( entity=(entity)0x13 ) -- 0x14f5 0x25
+        opcode25_EntityDisable( entity=(entity)0x13 ) -- 0x14f5 0x25
         -- MISSING OPCODE 0x27
     end,
 

@@ -97,9 +97,9 @@ Entity[ "2" ] = {
         opcode63() -- 0x0208 0x63
         opcode64() -- 0x0210 0x64
         opcodeA3() -- 0x0211 0xa3
-        opcodeAC() -- 0x0219 0xac
-        opcodeAC() -- 0x021d 0xac
-        opcodeEF() -- 0x0221 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=90 ) -- 0x0219 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=90 ) -- 0x021d 0xac
+        opcodeEF_MoveCameraSync() -- 0x0221 0xef
         -- 0x87_SetProgress( progress=43 ) -- 0x0224 0x87
         -- 0xFE0E_SoundSetVolume( volume=10, steps=60 ) -- 0x0227 0xfe
         -- 0xB4_FadeIn() -- 0x022d 0xb4
@@ -117,9 +117,9 @@ Entity[ "2" ] = {
         opcode63() -- 0x0245 0x63
         opcode64() -- 0x024d 0x64
         opcodeA3() -- 0x024e 0xa3
-        opcodeAC() -- 0x0256 0xac
-        opcodeAC() -- 0x025a 0xac
-        opcodeEF() -- 0x025e 0xef
+        opcodeAC_MoveCamera( control=0x01, steps=24 ) -- 0x0256 0xac
+        opcodeAC_MoveCamera( control=0x00, steps=24 ) -- 0x025a 0xac
+        opcodeEF_MoveCameraSync() -- 0x025e 0xef
         -- 0x87_SetProgress( progress=43 ) -- 0x0261 0x87
         -- 0x98_MapLoad( field_id=280, value=0 ) -- 0x0264 0x98
         return 0 -- 0x0269 0x00
