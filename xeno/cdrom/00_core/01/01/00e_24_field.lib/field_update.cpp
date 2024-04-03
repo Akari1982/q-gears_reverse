@@ -153,14 +153,15 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
     field_debug_add_timer();
 }
 
-func73798(); // render messages?
+func73798(); // render compass
 
 T1 = 1f8003fc;
 T0 = T1;
 [T0] = w(SP);
 T0 = T0 - 4;
 SP = T0;
-80074C94	jal    func73f78 [$80073f78]
+
+func73f78();
 
 func74958(); // update sprite
 
@@ -442,7 +443,7 @@ func99ae8();
 
 A0 = SP + 70;
 A1 = 800aee84;
-func7372c(); // copy A1 to A0
+field_copy_rotation_matrix(); // copy A1 to A0
 
 [SP + a8] = w(h[800aeed0]);
 

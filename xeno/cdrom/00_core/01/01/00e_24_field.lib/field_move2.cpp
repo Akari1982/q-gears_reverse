@@ -334,7 +334,7 @@ system_memory_allocate();
 [struct_5c + 8] = w(V0);
 
 A0 = V0;
-func7a058(); // init shadow
+func7a058(); // init shadow under entitys
 ////////////////////////////////
 
 

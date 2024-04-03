@@ -1,5 +1,6 @@
 ////////////////////////////////
 // system_calculate_rotation_matrix()
+
 rot_x = h[A0 + 0] & 0fff;
 cos_x = h[80051a90 + rot_x * 4 + 0];
 sin_x = h[80051a90 + rot_x * 4 + 2];

@@ -188,7 +188,8 @@
                     0x00000001 use 800aeef0 decrement counter.
                     0x00000008 use 800aeed4 counter. Add in 0xA4 CameraAngle.
                     0x00000010 use 800aeee4 decrement counter.
-                    0x00004000 if this == 0 recalculate cam pos in cam mode 0 or 2.
+                    0x00004000 camera on walkmesh disable.
+                    0x00008000 manual camera rotation disable.
 800aeeb0 [][]     restriction cam x.
 800aeeb2 [][]     restriction cam z.
 800aeeb4 [][]     restriction cam width x.
@@ -574,6 +575,7 @@
 800b15b0 array of some 0x58 size packets.
 
 800b1648 [][][][] activated windows mask. If 1 then we lock all dialog script call.
+800b164a [][]     -1 disable battle, 0 - enable battle.
 800b164c [][]     additional rotation for movement (can be set from script).
 
 800b1654 [][][][] increment during each entity initialization.
@@ -584,6 +586,9 @@
 
 800b16a0 []       if this is not 0 we nulify triangle material mask. If this not 0 we do not run scripts for party character entity (in call_run_script_8 (move related)).
 800b16a1 []       if 0 then we use entity y pos for camera y.
+
+800b16a4 []       1 - disable menu, 0 - enable menu.
+800b16a5 []       1 - disable compass, 0 - enable compass.
 
 800b16aa [][]     if this != 8 then dialog speed doubled (store 2 instead of 1)
 800b16ac [][][][] increase by 2 if we set camera direction by opcode 0xC7 CameraRotate to 0. Store 1 to 800aee58 and 800aee5c if this not 0 and decrement.

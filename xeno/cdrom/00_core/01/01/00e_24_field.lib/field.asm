@@ -20,7 +20,7 @@
 // func6fbf0
 8006FBF0-8006FC20
 ////////////////////////////////
-// func6fc24
+// field_get_identity_matrix
 8006FC24-8006FC68
 ////////////////////////////////
 // func6fc6c
@@ -122,13 +122,13 @@
 // func73670
 80073670-800736C4
 ////////////////////////////////
-// func736c8
+// field_copy_full_matrix
 800736C8-80073704
 ////////////////////////////////
-// func73708
+// field_copy_translation_vector
 80073708-80073728
 ////////////////////////////////
-// func7372c
+// field_copy_rotation_matrix
 8007372C-80073794
 ////////////////////////////////
 // func73798
@@ -275,19 +275,19 @@
 // field_set_quad_uv
 80079A60-80079BD4
 ////////////////////////////////
-// func79bd8
+// field_compass_shadow_create_packets
 80079BD8-80079E04
 ////////////////////////////////
-// func79e08
+// field_compass_body_create_packets
 80079E08-8007A054
 ////////////////////////////////
 // func7a058
 8007A058-8007A17C
 ////////////////////////////////
-// func7a180
+// field_compass_disc_add_to_render
 8007A180-8007A268
 ////////////////////////////////
-// func7a26c
+// field_compass_letters_add_to_render
 8007A26C-8007A39C
 ////////////////////////////////
 // field_set_controllers_system_buttons_buffer
@@ -2426,10 +2426,10 @@
 // field_transition_create_add_transp_render
 800A4D5C-800A4DF8
 ////////////////////////////////
-// funca4dfc
+// field_transition_same_map
 800A4DFC-800A5114
 ////////////////////////////////
-// field_transition_start
+// field_transition_load_map
 800A5118-800A58DC
 ////////////////////////////////
 // field_transition_calculate_add_to_render
@@ -2438,19 +2438,19 @@
 // field_transition_create_packets
 800A5B14-800A5DF8
 ////////////////////////////////
-// funca5dfc
+// field_transition_draw_otag
 800A5DFC-800A5E6C
 ////////////////////////////////
-// funca5e70
+// field_transition_central_update_vertex_by_distance
 800A5E70-800A6114
 ////////////////////////////////
-// funca6118
+// field_transition_central_update_add_to_render
 800A6118-800A6344
 ////////////////////////////////
-// funca6348
+// field_transition_central_init
 800A6348-800A6538
 ////////////////////////////////
-// funca653c
+// field_transition_central_deinit
 800A653C-800A6560
 ////////////////////////////////
 // funca6564

@@ -618,7 +618,7 @@ if( use_scale == 3 )
 
     A0 = SP + 28; // sprite matrix
     A1 = SP + 48;
-    func7372c(); // copy A1 to A0
+    field_copy_rotation_matrix(); // copy A1 to A0
 
     // add trans
     [SP + 90] = w(h[sprite_data + 38]);
@@ -652,7 +652,7 @@ else
 
     A0 = SP + 28; // sprite matrix
     A1 = SP + 48;
-    func7372c(); // copy A1 to A0
+    field_copy_rotation_matrix(); // copy A1 to A0
 
     // add trans
     [SP + 90] = w(h[sprite_data + 38]);

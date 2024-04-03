@@ -497,7 +497,7 @@ for( int i = 0; i < 10; ++i )
     A0 = i * 8; // color
     field_map_update_marker_add_to_render();
 
-    funca5dfc(); // draw otag
+    field_transition_draw_otag(); // draw otag
 }
 
 do
@@ -507,7 +507,7 @@ do
     A0 = 80; // color
     field_map_update_marker_add_to_render();
 
-    funca5dfc(); // draw otag
+    field_transition_draw_otag(); // draw otag
 
     field_update_buttons();
 } while( ( hu[800c2dd4] & 0100 ) == 0 ) // select repeated stops
@@ -519,7 +519,7 @@ for( int i = 10; i > 0; --i )
     A0 = i * 8; // color
     field_map_update_marker_add_to_render();
 
-    funca5dfc(); // draw otag
+    field_transition_draw_otag(); // draw otag
 }
 
 A0 = 0;

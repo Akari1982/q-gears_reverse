@@ -738,16 +738,17 @@ void psxJAL()
     //    doBranch(0x800aa324);
     //    GPU_displayText("CALL RENDER EFFECT");
     //}
+    else if( _JumpTarget_ == 0x8007a058)
+    {
+        execI();
+        GPU_displayText("CALL DISABLED");
+    }
 
 
     else if( _JumpTarget_ == 0x800AAF70) // call given func when SELECT is pressed instead of map
     {
-        psxMemWrite32(0x800ad010, 4);
-        psxMemWrite32(0x800ad014, 0x20);
-        execI();
-
-        //_SetLink(31);
-        //doBranch(0x800a807c);
+        _SetLink(31);
+        doBranch(0x800a807c);
         GPU_displayText("SELECT PRESSED");
     }
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }

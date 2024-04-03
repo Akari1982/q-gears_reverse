@@ -8576,7 +8576,7 @@ V0 = V0 + 0001;
 [800aee58] = w(c);
 [800aee5c] = w(c);
 [800aee0c] = h(hu[800aeeba]);
-[800aeeac] = w(w[800aeeac] | 8000);
+[800aeeac] = w(w[800aeeac] | 00008000);
 [800aee0a] = h(hu[800aeed0]);
 [800aee04] = w((w[800aeecc] * h[800aeed2]) >> c);
 
@@ -11794,9 +11794,10 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x98_MapLoad
 // func928a4
+
 if( ( w[800ad0b4] != 0 ) && ( w[800ad0bc] != 0 ) && ( w[800ad004] == 0 ) && ( w[8004e9ac] != -1 ) && ( w[800ad068] == 0 ) && ( w[800ad048] == 0 ) )
 {
-    [800b164a] = h(-1);
+    [800b164a] = h(-1); // disable battle
 
     if( w[800ad0c4] != 0 )
     {
@@ -11916,6 +11917,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // func92b3c
+
 V0 = w[800ad0b4];
 80092B44	addiu  sp, sp, $ffe8 (=-$18)
 80092B48	beq    v0, zero, L92bb4 [$80092bb4]
@@ -12274,10 +12276,10 @@ V0 = V0 + 0001;
 ////////////////////////////////
 // field_script_opFE53()
 
-[800b164a] = h(0);
-[800b16a4] = b(0);
-[800b16a5] = b(0);
-[800aeeac] = w(w[800aeeac] & 3fff);
+[800b164a] = h(0); // enable battle
+[800b16a4] = b(0); // enable menu
+[800b16a5] = b(0); // enable compass
+[800aeeac] = w(w[800aeeac] & 00003fff); // enable camera manual control and walkmesh align
 
 A0 = w[800af54c];
 [A0 + cc] = h(hu[A0 + cc] + 1);
@@ -12290,10 +12292,10 @@ A0 = w[800af54c];
 
 struct_138 = w[800af54c];
 
-[800b164a] = h(-1);
-[800b16a4] = b(1);
-[800b16a5] = b(1);
-[800aeeac] = w[w[800aeeac] | 0000c000];
+[800b164a] = h(-1); // disable battle
+[800b16a4] = b(1); // disable menu
+[800b16a5] = b(1); // disable compass
+[800aeeac] = w[w[800aeeac] | 0000c000]; // disable camera manual control and walkmesh align
 
 // check if not some battle or some other activity started
 // wait till it ends
@@ -12314,7 +12316,7 @@ else
 ////////////////////////////////
 // field_script_opFE4F()
 
-[800b16a4] = b(0);
+[800b16a4] = b(0); // enable menu
 
 struct_138 = w[800af54c];
 [struct_138 + cc] = h(hu[struct_138 + cc] + 1);
@@ -12325,7 +12327,7 @@ struct_138 = w[800af54c];
 ////////////////////////////////
 // field_script_opFE50()
 
-[800b16a4] = b(1);
+[800b16a4] = b(1); // disable menu
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 1);
@@ -12336,7 +12338,7 @@ V1 = w[800af54c];
 ////////////////////////////////
 // field_script_opFE51()
 
-[800b16a5] = b(0);
+[800b16a5] = b(0); // enable compass
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 1);
@@ -12347,7 +12349,7 @@ V1 = w[800af54c];
 ////////////////////////////////
 // field_script_opFE52()
 
-[800b16a5] = b(1);
+[800b16a5] = b(1); // disable compass
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 1);
@@ -12358,7 +12360,7 @@ V1 = w[800af54c];
 ////////////////////////////////
 // field_script_op14()
 
-[800b164a] = h(0);
+[800b164a] = h(0); // enable battle
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 1);
@@ -12375,7 +12377,8 @@ if( ( w[800ad0b4] == 0 ) || ( w[800ad0bc] == 0 ) )
 }
 else
 {
-    [800b164a] = h(-1);
+    [800b164a] = h(-1); // disable battle
+
     V1 = w[800af54c];
     [V1 + cc] = h(hu[V1 + cc] + 1);
 }
@@ -25071,14 +25074,15 @@ S0 = S0 << 02;
 A0 = A1 + S1;
 A0 = A0 + 000c;
 A1 = A1 + S0;
-8009FBC0	jal    func7372c [$8007372c]
-A1 = A1 + 000c;
+A1 = A1 + c;
+field_copy_rotation_matrix();
+
 A1 = w[S2 + 0000];
 8009FBCC	nop
 A0 = A1 + S1;
 A0 = A0 + 000c;
 A1 = A1 + S0;
-8009FBDC	jal    func73708 [$80073708]
+8009FBDC	jal    field_copy_translation_vector [$80073708]
 A1 = A1 + 000c;
 V0 = w[800aefe4];
 8009FBEC	nop

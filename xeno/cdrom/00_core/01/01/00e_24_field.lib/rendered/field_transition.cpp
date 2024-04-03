@@ -1,300 +1,5 @@
 ////////////////////////////////
-// funca4a90
-
-[A0 + 14] = w(A1);
-[A0 + 18] = w(A2);
-[A0 + 1c] = w(A3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca4aa0
-
-A0 = w[800af354];
-system_memory_mark_removed_alloc();
-
-A0 = w[800afb70];
-system_memory_mark_removed_alloc();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_transition_set_color_for_packets()
-
-for( int i = 0; i < 5; ++i )
-{
-    rb = (w[800acfe0] + 1) & 1;
-
-    V0 = 800b0748 + i * 50 + rb * 28;
-    [V0 + 4] = b(A0);
-    [V0 + 5] = b(A0);
-    [V0 + 6] = b(A0);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_transition_add_transparency_to_tex()
-
-tex_x = A0;
-tex_y = A1;
-tex_h = A2;
-
-A0 = tex_h * 40 * 2;
-A1 = 1;
-system_memory_allocate();
-S1 = V0;
-
-[SP + 10] = h(tex_x);
-[SP + 12] = h(tex_y);
-[SP + 14] = h(40);
-[SP + 16] = h(tex_h);
-
-A0 = SP + 10;
-A1 = S1; // dst
-system_store_image();
-
-A0 = 0;
-system_draw_sync();
-
-// add alpha for tex
-for( int i = 0; i < (tex_h * 20); i += 8 )
-{
-    [S1 + i * 20 + 0] = w(w[S1 + i * 20 + 0] | 80008000);
-    [S1 + i * 20 + 4] = w(w[S1 + i * 20 + 4] | 80008000);
-    [S1 + i * 20 + 8] = w(w[S1 + i * 20 + 8] | 80008000);
-    [S1 + i * 20 + c] = w(w[S1 + i * 20 + c] | 80008000);
-    [S1 + i * 20 + 10] = w(w[S1 + i * 20 + 10] | 80008000);
-    [S1 + i * 20 + 14] = w(w[S1 + i * 20 + 14] | 80008000);
-    [S1 + i * 20 + 18] = w(w[S1 + i * 20 + 18] | 80008000);
-    [S1 + i * 20 + 1c] = w(w[S1 + i * 20 + 1c] | 80008000);
-}
-
-A0 = SP + 10;
-A1 = S1;
-system_load_image();
-
-A0 = 0;
-system_draw_sync();
-
-A0 = S1;
-system_memory_mark_removed_alloc();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_transition_create_add_transp_render()
-
-A0 = A0; // transparency
-A1 = A1; // semi_tr
-field_transition_create_packets();
-
-for( int i = 0; i < 2; ++i )
-{
-    func73670(); // clear otagr
-
-    field_transition_calculate_add_to_render();
-
-    funca5dfc(); // draw otag
-}
-
-for( int i = 0; i < 5; ++i )
-{
-    A0 = 2c0 + i * 40; // tex x
-    A1 = 100;          // tex y
-    A2 = e0;           // tex h
-    field_transition_add_transparency_to_tex();
-}
-
-for( int i = 0; i < 2; ++i )
-{
-    func73670(); // clear otagr
-
-    field_transition_calculate_add_to_render();
-
-    funca5dfc(); // draw otag
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca4dfc()
-
-if( w[800ad010] == 0 )
-{
-    return;
-}
-
-system_print_clear_memory();
-
-func70314();
-
-field_particle_store_texture();
-
-if( ( w[800ad010] == 1 ) || ( w[800ad010] == 4 ) )
-{
-    field_copy_screen_to_2c0_100();
-
-    A0 = 0;
-    system_draw_sync();
-
-    func73670(); // clear otagr
-
-    field_draw_sync();
-}
-
-field_draw_sync();
-
-if( w[800ad010] == 3 )
-{
-    A0 = 1; // transparency
-    A1 = 1; // semi_tr
-    field_transition_create_packets();
-
-    for( int i = 0; i < 5; ++i )
-    {
-        A0 = 2c0 + i * 40; // tex x
-        A1 = 100;          // tex y
-        A2 = e0;           // tex h
-        field_transition_add_transparency_to_tex();
-    }
-
-    A0 = w[800ad014];
-    field_fade_set_fadeout();
-
-    A0 = 0;
-    field_transition_set_color_for_packets();
-
-    S1 = 0;
-    for( int i = 0; i < w[800ad014]; ++i )
-    {
-        func7743c();
-
-        field_transition_calculate_add_to_render();
-
-        func74bdc(); // move and update sprite and model here
-
-        func78170();
-
-        A0 = S1 >> 10;
-        field_transition_set_color_for_packets();
-
-        S1 = S1 + (00800000 / w[800ad014]);
-    }
-
-    while( true )
-    {
-        if( w[800ad010] != 3 )
-        {
-            break;
-        }
-
-        func7743c();
-
-        field_transition_calculate_add_to_render();
-
-        func74bdc(); // move and update sprite and model here
-
-        func78170();
-    }
-}
-
-if( w[800ad010] >= 4 )
-{
-    if( w[800ad010] == 4 )
-    {
-        A0 = 1; // transparency
-        A1 = 1; // semi_tr
-        field_transition_create_add_transp_render();
-
-        funca6348(); // create packets unk1
-
-        [800ad0e0] = h(1);
-
-        A0 = w[800ad014];
-        field_fade_set_fadein();
-
-        [800c2f14] = w(0);
-
-        for( int i = 0; i < w[800ad014]; ++i )
-        {
-            func7743c();
-
-            funca6118(); // render unk1
-
-            func74bdc(); // move and update sprite and model here
-
-            func78170();
-
-            [800c2f14] = w(w[800c2f14] + 6);
-        }
-
-        A0 = 0;
-        system_draw_sync();
-
-        funca653c(); // unk1 deinit
-    }
-
-    [800ad010] = w(0);
-
-    field_particle_load_texture();
-
-    func76bd4();
-
-    return;
-}
-
-if( w[800ad010] > 0 ) // 1 2
-{
-    A0 = 1; // transparency
-    A1 = 1; // semi_tr
-    field_transition_create_add_transp_render();
-
-    [800ad0e0] = h(1);
-
-    A0 = w[800ad014];
-    field_fade_set_fadein();
-
-    S1 = 00800000;
-    for( int i = 0; i < w[800ad014]; ++i )
-    {
-        func7743c();
-
-        field_transition_calculate_add_to_render();
-
-        func74bdc(); // move and update sprite and model here
-
-        func78170();
-
-        A0 = S1 >> 10;
-        field_transition_set_color_for_packets();
-
-        S1 = S1 - (00800000 / w[800ad014]);
-        if( S1 < 0 )
-        {
-            S1 = 0;
-        }
-    }
-}
-
-[800ad010] = w(0);
-
-field_particle_load_texture();
-
-func76bd4();
-
-return;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_transition_start()
+// field_transition_load_map()
 
 system_print_clear_memory();
 
@@ -384,12 +89,12 @@ switch( w[800af51c] )
 
                 field_transition_calculate_add_to_render();
 
-                funca5dfc(); // draw otag
+                field_transition_draw_otag();
         }
 
         func73670(); // clear otagr
 
-        funca5dfc(); // draw otag
+        field_transition_draw_otag();
 
         func1aed8(); // load field
 
@@ -438,7 +143,7 @@ switch( w[800af51c] )
 
                 field_transition_calculate_add_to_render();
 
-                funca5dfc(); // draw otag
+                field_transition_draw_otag();
         }
 
         field_draw_sync();
@@ -503,7 +208,7 @@ switch( w[800af51c] )
 
                 field_transition_calculate_add_to_render();
 
-                funca5dfc(); // draw otag
+                field_transition_draw_otag();
 
                 if( w[800c1b58] < 22c0 )
                 {
@@ -574,7 +279,7 @@ switch( w[800af51c] )
 
         field_transition_calculate_add_to_render();
 
-        funca5dfc(); // draw otag
+        field_transition_draw_otag();
 
         func1aed8(); // load field
 
@@ -625,7 +330,7 @@ switch( w[800af51c] )
 
         field_transition_calculate_add_to_render();
 
-        funca5dfc(); // draw otag
+        field_transition_draw_otag();
 
         func1aed8(); // load field
 
@@ -686,12 +391,12 @@ switch( w[800af51c] )
             A1 = w[800acfe0];
             field_fade_update_and_add_to_render();
 
-            funca5dfc(); // draw otag
+            field_transition_draw_otag();
         }
 
         func73670(); // clear otagr
 
-        funca5dfc(); // draw otag
+        field_transition_draw_otag();
 
         func1aed8(); // load field
 
@@ -739,63 +444,172 @@ system_memory_clean_removed_alloc();
 
 
 ////////////////////////////////
-// field_transition_calculate_add_to_render()
+// field_transition_same_map()
 
-A0 = 800af58c; // rot vector
-A1 = SP + 28;
-system_calculate_rotation_matrix();
-
-// set translation vector
-[SP + 3c] = w(0); // translation x
-[SP + 40] = w(0); // translation x
-[SP + 44] = w(0); // translation x
-
-// scale
-[SP + 48] = w(w[800c1b58]);
-[SP + 4c] = w(w[800c1b58]);
-[SP + 50] = w(w[800c1b58]);
-
-A0 = SP + 28;
-A1 = SP + 48;
-system_gte_multiply_matrix_by_vector();
-
-A0 = SP + 28;
-system_gte_set_rotation_matrix();
-
-A0 = SP + 28;
-system_gte_set_translation_vector();
-
-for( int i = 0; i < 5; ++i )
+if( w[800ad010] == 0 )
 {
-    rdata = w[800c3740];
-    rb = w[800acfe0];
+    return;
+}
 
-    if( w[800c1b58] != 1000 ) // scale not 1
+system_print_clear_memory();
+
+func70314();
+
+field_particle_store_texture();
+
+if( ( w[800ad010] == 1 ) || ( w[800ad010] == 4 ) )
+{
+    field_copy_screen_to_2c0_100();
+
+    A0 = 0;
+    system_draw_sync();
+
+    func73670(); // clear otagr
+
+    field_draw_sync();
+}
+
+field_draw_sync();
+
+if( w[800ad010] == 3 )
+{
+    A0 = 1; // transparency
+    A1 = 1; // semi_tr
+    field_transition_create_packets();
+
+    for( int i = 0; i < 5; ++i )
     {
-        // src
-        A0 = 800b0748 + 190 + i * 20 +  0; // xyz1
-        A1 = 800b0748 + 190 + i * 20 +  8; // xyz2
-        A2 = 800b0748 + 190 + i * 20 + 10; // xyz3
-        A3 = 800b0748 + 190 + i * 20 + 18; // xyz4
-        // save here
-        A4 = 800b0748 + i * 50 + rb * 28 +  8; // xy1
-        A5 = 800b0748 + i * 50 + rb * 28 + 10; // xy2
-        A6 = 800b0748 + i * 50 + rb * 28 + 18; // xy3
-        A7 = 800b0748 + i * 50 + rb * 28 + 20; // xy4
-        // ret
-        A8 = SP + 58; // Interpolation value for depth queing. (not used)
-        A9 = SP + 5c; // return flags (not used)
-        system_psyq_rot_average_4(); // transform 4 points by rotation matrix
+        A0 = 2c0 + i * 40; // tex x
+        A1 = 100;          // tex y
+        A2 = e0;           // tex h
+        field_transition_add_transparency_to_tex();
     }
 
-    A1 = 800b0748 + i * 50 + rb * 28;
-    [A1] = w((w[A1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
-    [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (A1 & 00ffffff));
+    A0 = w[800ad014];
+    field_fade_set_fadeout();
 
-    V1 = 800b0748 - c8 + i * 18 + rb * c;
-    [V1] = w((w[V1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
-    [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (V1 & 00ffffff));
+    A0 = 0;
+    field_transition_set_color_for_packets();
+
+    S1 = 0;
+    for( int i = 0; i < w[800ad014]; ++i )
+    {
+        func7743c();
+
+        field_transition_calculate_add_to_render();
+
+        func74bdc(); // move and update sprite and model here
+
+        func78170();
+
+        A0 = S1 >> 10;
+        field_transition_set_color_for_packets();
+
+        S1 = S1 + (00800000 / w[800ad014]);
+    }
+
+    while( true )
+    {
+        if( w[800ad010] != 3 )
+        {
+            break;
+        }
+
+        func7743c();
+
+        field_transition_calculate_add_to_render();
+
+        func74bdc(); // move and update sprite and model here
+
+        func78170();
+    }
 }
+
+if( w[800ad010] >= 4 )
+{
+    if( w[800ad010] == 4 )
+    {
+        A0 = 1; // transparency
+        A1 = 1; // semi_tr
+        field_transition_create_add_transp_render();
+
+        field_transition_central_init(); // create packets unk1
+
+        [800ad0e0] = h(1);
+
+        A0 = w[800ad014];
+        field_fade_set_fadein();
+
+        [800c2f14] = w(0);
+
+        for( int i = 0; i < w[800ad014]; ++i )
+        {
+            func7743c();
+
+            field_transition_central_update_add_to_render(); // render unk1
+
+            func74bdc(); // move and update sprite and model here
+
+            func78170();
+
+            [800c2f14] = w(w[800c2f14] + 6);
+        }
+
+        A0 = 0;
+        system_draw_sync();
+
+        field_transition_central_deinit(); // unk1 deinit
+    }
+
+    [800ad010] = w(0);
+
+    field_particle_load_texture();
+
+    func76bd4();
+
+    return;
+}
+
+if( w[800ad010] > 0 ) // 1 2
+{
+    A0 = 1; // transparency
+    A1 = 1; // semi_tr
+    field_transition_create_add_transp_render();
+
+    [800ad0e0] = h(1);
+
+    A0 = w[800ad014];
+    field_fade_set_fadein();
+
+    S1 = 00800000;
+    for( int i = 0; i < w[800ad014]; ++i )
+    {
+        func7743c();
+
+        field_transition_calculate_add_to_render();
+
+        func74bdc(); // move and update sprite and model here
+
+        func78170();
+
+        A0 = S1 >> 10;
+        field_transition_set_color_for_packets();
+
+        S1 = S1 - (00800000 / w[800ad014]);
+        if( S1 < 0 )
+        {
+            S1 = 0;
+        }
+    }
+}
+
+[800ad010] = w(0);
+
+field_particle_load_texture();
+
+func76bd4();
+
+return;
 ////////////////////////////////
 
 
@@ -919,37 +733,171 @@ for( int i = 0; i < 5; ++i )
 
 
 ////////////////////////////////
-// funca5dfc()
-// map transition
+// field_transition_add_transparency_to_tex()
+
+tex_x = A0;
+tex_y = A1;
+tex_h = A2;
+
+A0 = tex_h * 40 * 2;
+A1 = 1;
+system_memory_allocate();
+S1 = V0;
+
+[SP + 10] = h(tex_x);
+[SP + 12] = h(tex_y);
+[SP + 14] = h(40);
+[SP + 16] = h(tex_h);
+
+A0 = SP + 10;
+A1 = S1; // dst
+system_store_image();
 
 A0 = 0;
 system_draw_sync();
 
-A0 = 2;
-system_psyq_wait_frames();
+// add alpha for tex
+for( int i = 0; i < (tex_h * 20); i += 8 )
+{
+    [S1 + i * 20 + 0] = w(w[S1 + i * 20 + 0] | 80008000);
+    [S1 + i * 20 + 4] = w(w[S1 + i * 20 + 4] | 80008000);
+    [S1 + i * 20 + 8] = w(w[S1 + i * 20 + 8] | 80008000);
+    [S1 + i * 20 + c] = w(w[S1 + i * 20 + c] | 80008000);
+    [S1 + i * 20 + 10] = w(w[S1 + i * 20 + 10] | 80008000);
+    [S1 + i * 20 + 14] = w(w[S1 + i * 20 + 14] | 80008000);
+    [S1 + i * 20 + 18] = w(w[S1 + i * 20 + 18] | 80008000);
+    [S1 + i * 20 + 1c] = w(w[S1 + i * 20 + 1c] | 80008000);
+}
 
-A0 = w[800c3740];
-A1 = 0;
-A2 = 0;
-A3 = 0;
-system_clear_image();
+A0 = SP + 10;
+A1 = S1;
+system_load_image();
 
-A0 = w[800c3740];
-system_psyq_put_draw_env();
+A0 = 0;
+system_draw_sync();
 
-A0 = w[800c3740];
-A0 = A0 + 00b8;
-system_psyq_put_disp_env();
-
-A0 = w[800c3740] + 80f0;
-system_psyq_draw_otag();
+A0 = S1;
+system_memory_mark_removed_alloc();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca5e70()
-// update vertex color
+// field_transition_create_add_transp_render()
+
+A0 = A0; // transparency
+A1 = A1; // semi_tr
+field_transition_create_packets();
+
+for( int i = 0; i < 2; ++i )
+{
+    func73670(); // clear otagr
+
+    field_transition_calculate_add_to_render();
+
+    field_transition_draw_otag();
+}
+
+for( int i = 0; i < 5; ++i )
+{
+    A0 = 2c0 + i * 40; // tex x
+    A1 = 100;          // tex y
+    A2 = e0;           // tex h
+    field_transition_add_transparency_to_tex();
+}
+
+for( int i = 0; i < 2; ++i )
+{
+    func73670(); // clear otagr
+
+    field_transition_calculate_add_to_render();
+
+    field_transition_draw_otag();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_transition_set_color_for_packets()
+
+for( int i = 0; i < 5; ++i )
+{
+    rb = (w[800acfe0] + 1) & 1;
+
+    V0 = 800b0748 + i * 50 + rb * 28;
+    [V0 + 4] = b(A0);
+    [V0 + 5] = b(A0);
+    [V0 + 6] = b(A0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_transition_calculate_add_to_render()
+
+A0 = 800af58c; // rot vector
+A1 = SP + 28;
+system_calculate_rotation_matrix();
+
+// set translation vector
+[SP + 3c] = w(0); // translation x
+[SP + 40] = w(0); // translation x
+[SP + 44] = w(0); // translation x
+
+// scale
+[SP + 48] = w(w[800c1b58]);
+[SP + 4c] = w(w[800c1b58]);
+[SP + 50] = w(w[800c1b58]);
+
+A0 = SP + 28;
+A1 = SP + 48;
+system_gte_multiply_matrix_by_vector();
+
+A0 = SP + 28;
+system_gte_set_rotation_matrix();
+
+A0 = SP + 28;
+system_gte_set_translation_vector();
+
+for( int i = 0; i < 5; ++i )
+{
+    rdata = w[800c3740];
+    rb = w[800acfe0];
+
+    if( w[800c1b58] != 1000 ) // scale not 1
+    {
+        // src
+        A0 = 800b0748 + 190 + i * 20 +  0; // xyz1
+        A1 = 800b0748 + 190 + i * 20 +  8; // xyz2
+        A2 = 800b0748 + 190 + i * 20 + 10; // xyz3
+        A3 = 800b0748 + 190 + i * 20 + 18; // xyz4
+        // save here
+        A4 = 800b0748 + i * 50 + rb * 28 +  8; // xy1
+        A5 = 800b0748 + i * 50 + rb * 28 + 10; // xy2
+        A6 = 800b0748 + i * 50 + rb * 28 + 18; // xy3
+        A7 = 800b0748 + i * 50 + rb * 28 + 20; // xy4
+        // ret
+        A8 = SP + 58; // Interpolation value for depth queing. (not used)
+        A9 = SP + 5c; // return flags (not used)
+        system_psyq_rot_average_4(); // transform 4 points by rotation matrix
+    }
+
+    A1 = 800b0748 + i * 50 + rb * 28;
+    [A1] = w((w[A1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+    [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (A1 & 00ffffff));
+
+    V1 = 800b0748 - c8 + i * 18 + rb * c;
+    [V1] = w((w[V1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+    [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (V1 & 00ffffff));
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_transition_central_update_vertex_by_distance()
 
 packet = A0;
 id = A1;
@@ -958,6 +906,7 @@ color = A3;
 
 if( id == 0 )
 {
+    // center of screen
     [SP + 10] = w(a0 - h[packet + 8]); // x1
     [SP + 14] = w(70 - h[packet + a]); // y1
     [SP + 18] = w(0);
@@ -1049,57 +998,7 @@ else if( id == 3 )
 
 
 ////////////////////////////////
-// funca6118()
-
-rb = w[800acfe0];
-rdata = w[800c3740];
-packet = w[800af598];
-
-for( int i = 0; i < e; ++i )
-{
-    for( int j = 0; j < 14; ++j )
-    {
-        S0 = packet + rb * 38e0 + (i * 14 + j) * 34;
-
-        A0 = S0;
-        A1 = 0; // vertex1
-        A2 = w[800c2f14];
-        A3 = packet + 71c0 + (i * 14 + j) * 2;
-        funca5e70();
-
-        A0 = S0;
-        A1 = 1; // vertex2
-        A2 = w[800c2f14];
-        A3 = packet + 73f0 + (i * 14 + j) * 2;
-        funca5e70();
-
-        A0 = S0;
-        A1 = 2; // vertex3
-        A2 = w[800c2f14];
-        A3 = packet + 7620 + (i * 14 + j) * 2;
-        funca5e70();
-
-        A0 = S0;
-        A1 = 3; // vertex4
-        A2 = w[800c2f14];
-        A3 = packet + 7850 + (i * 14 + j) * 2;
-        funca5e70();
-
-        [S0] = w((w[S0] & ff000000) | (w[rdata + 80d4] & 00ffffff));
-        [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (S0 & 00ffffff));
-    }
-}
-
-V1 = 800b12f8 + rb * c0;
-[V1] = w((w[V1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
-[rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (V1 & 00ffffff));
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca6348()
-// create packets
+// field_transition_central_init()
 
 A0 = 7a80;
 A1 = 1;
@@ -1182,9 +1081,87 @@ for( int y = 0; y < e; ++y )
 
 
 ////////////////////////////////
-// funca653c()
+// field_transition_central_deinit()
 // clear memory
 
 A0 = w[800af598];
 system_memory_mark_removed_alloc();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_transition_central_update_add_to_render()
+
+rb = w[800acfe0];
+rdata = w[800c3740];
+packet = w[800af598];
+
+for( int i = 0; i < e; ++i )
+{
+    for( int j = 0; j < 14; ++j )
+    {
+        S0 = packet + rb * 38e0 + (i * 14 + j) * 34;
+
+        A0 = S0;
+        A1 = 0; // vertex1
+        A2 = w[800c2f14];
+        A3 = packet + 71c0 + (i * 14 + j) * 2;
+        field_transition_central_update_vertex_by_distance();
+
+        A0 = S0;
+        A1 = 1; // vertex2
+        A2 = w[800c2f14];
+        A3 = packet + 73f0 + (i * 14 + j) * 2;
+        field_transition_central_update_vertex_by_distance();
+
+        A0 = S0;
+        A1 = 2; // vertex3
+        A2 = w[800c2f14];
+        A3 = packet + 7620 + (i * 14 + j) * 2;
+        field_transition_central_update_vertex_by_distance();
+
+        A0 = S0;
+        A1 = 3; // vertex4
+        A2 = w[800c2f14];
+        A3 = packet + 7850 + (i * 14 + j) * 2;
+        field_transition_central_update_vertex_by_distance();
+
+        [S0] = w((w[S0] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+        [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (S0 & 00ffffff));
+    }
+}
+
+V1 = 800b12f8 + rb * c0;
+[V1] = w((w[V1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+[rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (V1 & 00ffffff));
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_transition_draw_otag()
+// render top screen layer
+
+A0 = 0;
+system_draw_sync();
+
+A0 = 2;
+system_psyq_wait_frames();
+
+A0 = w[800c3740];
+A1 = 0;
+A2 = 0;
+A3 = 0;
+system_clear_image();
+
+A0 = w[800c3740];
+system_psyq_put_draw_env();
+
+A0 = w[800c3740];
+A0 = A0 + 00b8;
+system_psyq_put_disp_env();
+
+A0 = w[800c3740] + 80f0;
+system_psyq_draw_otag();
 ////////////////////////////////
