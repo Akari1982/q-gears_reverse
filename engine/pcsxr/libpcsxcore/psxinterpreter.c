@@ -738,7 +738,7 @@ void psxJAL()
     //    doBranch(0x800aa324);
     //    GPU_displayText("CALL RENDER EFFECT");
     //}
-    else if( _JumpTarget_ == 0x8007a058)
+    else if( _JumpTarget_ == 0x80346ac)
     {
         execI();
         GPU_displayText("CALL DISABLED");
@@ -804,7 +804,7 @@ void psxJALR()
     if (0)
     {
     }
-    else if (temp == 0x800863f0) { execI(); GPU_displayText("CALL THAT FUNC"); }
+    //else if (temp == 0x800863f0) { execI(); GPU_displayText("CALL THAT FUNC"); }
 
     //else if (temp == 0x8003cbd8) { execI(); P_Opcode81(); }
     //else if (temp == 0x8003CC34) { execI(); P_Opcode90(); }
@@ -1334,7 +1334,13 @@ static void intShutdown() {
 }
 
 // interpreter execution
-static inline void execI() { 
+static inline void execI() {
+    if( psxRegs.pc == 0x8007DFCC )
+    {
+        GPU_displayText("SKIP PART");
+        psxRegs.pc = 0x8007E060;
+    }
+
 	u32 *code = Read_ICache(psxRegs.pc, FALSE);
 	psxRegs.code = ((code == NULL) ? 0 : SWAP32(*code));
 

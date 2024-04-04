@@ -54,6 +54,8 @@
 
 800ad0f4 array of 1 bytes of camera rotation mask for each direction.
 
+800ad36c [][][][] messages continue arrow animation frame.
+
 800ad43c [][][][] store here 0, 1 during entity script2 3 call checking.
 
 800ad440 array of rotations. Used if 800b1828 == 0. (size 0x02. items 0x10).
@@ -634,21 +636,24 @@
 800c1b68 [][]     pressed button mask for controller 1 (details in 800af370).
 
 800c1b6c dialogs struct (0x498 size)(4 items)
-    + 18 [][]     store 0x64 here in case of new row. Maybe how much symbols in new row we can put.
-    + 1a [][]     index into +40 array.
-    + 1c [][]     position x.
-    + 1e [][]     position y.
-    + 20 [][]     width in pixels.
-    + 22 [][]     width in something (multiply by 4 to get width in pixels).
-    + 24 [][]     height in number of rows.
-    + 26 [][]     texture V (ty).
-    + 28 [][]     some flags. Init with 0.
-                    0x0008: wait for player input flag. Add this flag if we met 0x00_Return text opcode and there is no stored pointer or if we met 0x03_Wait text opcode.
-                    0x0048: add this flags if we met 0x02_New text opcode.
-                    0x0080: stored pointer for text. If set and met 0x00_Return() in text then we remove this flag, and jump to stored pointer +38.
-                    0x0200: add this flag in 0x0F0D text opcode.
-    + 2a [][]     width in something + 3.
-    + 2c [][]     row height. Store 0xe here.
+    +  0 2 tex settings packet for buffers (size 0xc).
+    + 18 messages data.
+        + 0 (18) [][]     store 0x64 here in case of new row. Maybe how much symbols in new row we can put.
+        + 2 (1a) [][]     index into +40 array.
+        + 4 (1c) [][]     position x.
+        + 6 (1e) [][]     position y.
+        + 8 (20) [][]     width in pixels.
+        + a (22) [][]     width in something (multiply by 4 to get width in pixels).
+        + c (24) [][]     height in number of rows.
+        + e (26) [][]     texture V (ty).
+        +10 (28) [][]     some flags. Init with 0.
+                          0x0008: wait for player input flag. Add this flag if we met 0x00_Return text opcode and there is no stored pointer or if we met 0x03_Wait text opcode.
+                          0x0048: add this flags if we met 0x02_New text opcode.
+                          0x0080: stored pointer for text. If set and met 0x00_Return() in text then we remove this flag, and jump to stored pointer +38.
+                          0x0200: add this flag in 0x0F0D text opcode.
+        +12 (2a) [][]     width in something + 3.
+        +14 (2c) [][]     row height. Store 0xe here.
+        +16      [][]     some row.
     + 34 [][][][] pointer to current position in text data
     + 38 [][][][] some pointer.
     + 40 [][][][] pointer to memory with size number of rows * 0x60.
@@ -686,37 +691,42 @@
     + 9c [][]     wait timer. Init with 0.
     + 9e [][]     store value for 0x0F0E text opcode here.
     + a0 [][]     store value for 0x0F0E text opcode here.
-    + a4 [][][][] init with 0. Pointer to list of allocated memory for dialog text data.
+    + a4 [][][][] init with 0. Pointer to list of allocated memory for message text data.
         +00 [][][][] pointer to next allocated memory element.
-        +08 [][][][] offset to dialog text data.
-    + a8 [][][][] offset to dialog text data.
-    + ac [][]     dialog x.
-    + ae [][]     dialog y.
-    + b0 [][]     dialog width.
-    + b2 [][]     dialog height.
-    +37c [][]     store -1 during dialog init.
-    +37e []       sum this and 382 and store to scruct 138 + 81 in entity when circle is pressed. Maybe start pos of cursor in select dialog.
-    +382 []       related with +37e. Maybe offset pos of cursor in select dialog.
+        +08 [][][][] offset to message text data.
+    + a8 [][][][] offset to message text data.
+    + ac [][]     message x.
+    + ae [][]     message y.
+    + b0 [][]     message width.
+    + b2 [][]     message height.
+    + c4 background packets
+        + 0 texture settings (each buffer 0x1 items 0xc size).
+        +18 packets (each buffer 0x1 items 0x10 size).
+    + fc texture settings for border packets (0x2 items 0x78 size) (each buffer 0x9 items 0xc size).
+    +1ec border packets (0x2 items 0xc8 size) (each buffer 0xa items 0x14 size).
+    +37c [][]     store -1 during message init.
+    +37e [][]     sum this and 382 and store to scruct 138 + 81 in entity when circle is pressed. Maybe start pos of cursor in select message.
+    +380 [][]     cursor pos (start or current)
+    +382 []       related with +37e. Maybe offset pos of cursor in select message.
     +3c4 [][]     we store 0 here if 37c != 0 and 83 != 0 and 28 flag 0x0008 is set
+    +3c8 continue arrow packets
+        + 0 texture settings (each buffer 0x1 items 0xc size).
+        +18 packets (each buffer 0x1 items 0x14 size).
+    +408 end of continue arrow packets
+    +408 [][]     checked if 0 - continue arrow can be shown
+    +40a [][]     wait timer for continue arrow add to render.
     +40c [][]     some flags.
+                  0x0040 - if set then we will nor add border of continue arrow to render.
     +40e [][]     checked if this == 0 when search for dialog.
     +410 [][]     looks like order of dialogs. 0-top. 0xffff if window not inited.
     +412 [][]     ???
     +414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
     +416 [][]     some entity id??? maybe owner.
     +418 [][]     some entity id???
-    +450 buffer1 for avatar.
-    +478 buffer2 for avatar.
-        +00 []       u0.
-        +01 []       v0.
-        +02 [][]     CLUT.
-        +08 []       u1.
-        +09 []       v1.
-        +10 []       u2.
-        +11 []       v2.
-        +18 []       u3.
-        +19 []       u4.
-    +47a [][]     buf2 CLUT for avatar.
+    +42c avatar packets
+        + 0 texture settings (each buffer 0x1 items 0xc size).
+        +18 packets (each buffer 0x1 items 0x14 size).
+    +474 end of avatar packets
     +494 []       1 if we render avatar, 0 otherwise.
     +495 []       store here avatar id from +80 from entity 138 struct.
 

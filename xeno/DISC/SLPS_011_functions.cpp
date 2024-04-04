@@ -76,6 +76,7 @@ while( true )
 
 ////////////////////////////////
 // func32d78()
+
 offset_18 = A0;
 u_tex = A1;
 v_tex = A2;
