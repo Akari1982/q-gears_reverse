@@ -153,7 +153,7 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
     field_debug_add_timer();
 }
 
-func73798(); // render compass
+field_compass_update_add_to_render();
 
 T1 = 1f8003fc;
 T0 = T1;
@@ -200,11 +200,11 @@ system_psyq_wait_frames();
 A0 = 0;
 system_draw_sync();
 
-80074D3C	jal    func7fc08 [$8007fc08]
+func7fc08();
 
 A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
-func7f660(); // dialog function
+func7f660(); // dialog add to render
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -317,11 +317,11 @@ field_update_buttons();
 
 call_run_script_8();
 
-80074FB8	jal    func7fc08 [$8007fc08]
+func7fc08();
 
 A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
-func7f660(); // dialog function
+func7f660(); // dialog add to render
 
 A0 = 0;
 system_draw_sync();
@@ -1786,9 +1786,7 @@ A1 = 0;
 [S2 + 0000] = h(0);
 [S2 + 0002] = h(0);
 [S2 + 0004] = h(0);
-8007720C	lui    at, $800b
-AT = AT + S4;
-V1 = bu[AT + 1637];
+V1 = bu[800b1637 + S4];
 S4 = S4 + 0001;
 [SP + 0020] = w(S2);
 S2 = S2 + 0008;

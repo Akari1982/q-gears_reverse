@@ -8,7 +8,7 @@ A0 = S1;
 A1 = S1 - 110;
 A2 = S1 - 100;
 A3 = S1 - f0;
-8006F4A8	jal    func72de0 [$80072de0]
+func72de0();
 
 S2 = S1 + d4;
 
@@ -136,7 +136,7 @@ system_gte_set_translation_vector();
 A0 = S1 + cc;
 A1 = S1 + e8;
 A2 = SP + 10;
-8006F6E0	jal    system_gte_rotate_translate_vector [$8004a584]
+8006F6E0	jal    system_gte_rotate_translate_vector [$system_gte_rotate_translate_vector]
 
 A0 = S2; // original light matrix without rotation.
 system_gte_calculate_and_set_lighting_matrix();
@@ -593,8 +593,7 @@ loop6ffe0:	; 8006FFE0
 8006FFEC	addiu  s0, s0, $fffe (=-$2)
 A3 = 001d;
 A1 = 000f;
-8006FFF8	lui    v1, $800b
-V1 = V1 + 16a8;
+V1 = 800b16a8;
 A2 = V1 + 00ba;
 [800ad0e0] = h(1);
 V0 = 0720;
@@ -768,8 +767,8 @@ A1 = 8006f184;
 func6fc6c(); // init values
 
 // copy first 0x100 byte of field file
-A2 = w[80059b70]; // field file
-A3 = 800b144c;
+A2 = w[80059b70]; // src field file
+A3 = 800b144c; // dst
 T0 = A2 + 100;
 while( A2 != T0 )
 {
@@ -837,17 +836,11 @@ A0 = V0 + w[V0 + 130];
 A1 = S2;
 system_extract_archive();
 
-S3 = w[S2 + 0];
-if( S3 > 0 )
+S3 = w[S2];
+for( int i = 0; i < S3; ++i )
 {
-    S4 = 0;
-    loop7056c:	; 8007056C
-        A0 = S2 + w[S2 + 4 + S4 * 4];
-        func76888(); // load tim by tim file pointer
-
-        S4 = S4 + 1;
-        V0 = S4 < S3;
-    80070580	bne    v0, zero, loop7056c [$8007056c]
+    A0 = S2 + w[S2 + 4 + i * 4];
+    func76888(); // load tim by tim file pointer
 }
 
 // sprite texture extraction (part 4 of field file)
@@ -863,20 +856,15 @@ A1 = S4;
 system_extract_archive();
 
 number_of_textures = w[S4];
-if( number_of_textures > 0 )
+for( int i = 0; i < number_of_textures; ++i )
 {
-    S0 = 0;
-    func705e0:	; 800705E0
-        if( h[800b144c + S0 * 8 + 6] == 0 )
-        {
-            A0 = S4 + w[S4 + 4 + S0 * 4]; // texture pack pointer
-            A1 = hu[800b144c + S0 * 8 + 0]; // x offset in vram to load to
-            A2 = hu[800b144c + S0 * 8 + 2]; // y pos in vram to load to
-            func228fc();
-        }
-        S0 = S0 + 1;
-        V0 = S0 < number_of_textures;
-    80070620	bne    v0, zero, func705e0 [$800705e0]
+    if( h[800b144c + i * 8 + 6] == 0 )
+    {
+        A0 = S4 + w[S4 + 4 + i * 4]; // texture pack pointer
+        A1 = hu[800b144c + i * 8 + 0]; // x offset in vram to load to
+        A2 = hu[800b144c + i * 8 + 2]; // y pos in vram to load to
+        func228fc();
+    }
 }
 
 A0 = 0; // wait for termination
@@ -1456,11 +1444,11 @@ func2de00();
 
 
 ////////////////////////////////
-// func717d0
-[A0 + 001c] = w(0);
-[A0 + 0018] = w(0);
-800717D8	jr     ra 
-[A0 + 0014] = w(0);
+// field_set_zero_translation_vector()
+
+[A0 + 1c] = w(0);
+[A0 + 18] = w(0);
+[A0 + 14] = w(0);
 ////////////////////////////////
 
 
@@ -1475,14 +1463,16 @@ A1 = S0;
 
 system_calculate_rotation_matrix();
 
-80071810	jal    func717d0 [$800717d0]
 A0 = S0;
+field_set_zero_translation_vector();
+
 A0 = S0;
 8007181C	addiu  s2, s1, $ffc0 (=-$40)
 A1 = S2;
 S0 = SP + 0040;
-80071828	jal    $system_gte_matrix_mult_and_trans
 A2 = S0;
+system_gte_matrix_mult_and_trans();
+
 A0 = S2;
 A1 = S0;
 field_copy_full_matrix();
@@ -1493,33 +1483,41 @@ S0 = S1 + 00d4;
 A1 = S0;
 system_calculate_rotation_matrix();
 
-80071850	jal    func717d0 [$800717d0]
 A0 = S0;
+field_set_zero_translation_vector();
+
 A0 = S3;
 S0 = S1 + 0094;
 A1 = S0;
 system_calculate_rotation_matrix();
 
 A0 = S2;
-8007186C	jal    $system_gte_matrix_multiplication_to_A1
 A1 = S0;
-80071874	jal    $system_gte_set_rotation_matrix
+system_gte_matrix_multiplication_to_A1();
+
 A0 = S2;
-8007187C	jal    $system_gte_set_translation_vector
+system_gte_set_rotation_matrix();
+
 A0 = S2;
+system_gte_set_translation_vector();
+
 A0 = S1 + 008c;
 A1 = S1 + 00a8;
-8007188C	jal    $8004a584
 A2 = SP + 0060;
+system_gte_rotate_translate_vector();
+
 A0 = S0;
 V0 = w[800aef98];
 A1 = SP + 0010;
 [SP + 0010] = w(V0);
 [SP + 0014] = w(V0);
-800718AC	jal    $system_gte_multiply_matrix_by_vector
 [SP + 0018] = w(V0);
-800718B4	jal    $system_gte_set_rotation_matrix
+
+system_gte_multiply_matrix_by_vector();
+
 A0 = S0;
+system_gte_set_rotation_matrix();
+
 800718BC	jal    $system_gte_set_translation_vector
 A0 = S0;
 
@@ -2691,245 +2689,6 @@ field_copy_translation_vector();
 [A0 + c] = h(hu[A1 + c]);
 [A0 + e] = h(hu[A1 + e]);
 [A0 + 10] = h(hu[A1 + 10]);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func73798()
-
-rb = w[800acfe0];
-rdata = w[800c3740];
-
-for( int i = 0; i < 8; ++i )
-{
-    if( hu[800ad0fc + i * 2] & bu[800aeec9] )
-    {
-        for( int j = 0; j < 10; ++j )
-        {
-            [800af1f8 + (i * 10 + j) * 2] = h(0);
-        }
-    }
-    else
-    {
-        for( int j = 0; j < 10; ++j )
-        {
-            [800af1f8 + (i * 10 + j) * 2] = h(hu[800af0dc + j * 2]);
-        }
-    }
-}
-
-[800af524] = h(80);
-
-A0 = 800af520;
-A1 = 800af1f8;
-system_load_image();
-
-A0 = 80;
-system_gte_set_projection_plane_distance();
-
-A0 = 10a;
-A1 = a6;
-system_gte_set_screen_offset();
-
-[SP + b8] = w(0);
-[SP + bc] = w(w[800aed58] - w[800aed68]);
-[SP + c8] = w(0);
-[SP + cc] = w(0);
-[SP + d0] = w(0);
-
-
-A0 = (w[800aed54] - w[800aed64]) >> 10;
-A1 = (w[800aed5c] - w[800aed6c]) >> 10;
-length_of_vector_by_x_y();
-[SP + c0] = w((0 - V0) << 10);
-
-A0 = SP + 30;
-A1 = SP + b8;
-A2 = SP + c8;
-A3 = 800aed58 + 1c;
-func72de0();
-
-A0 = SP + 10;
-field_get_identity_matrix();
-
-[SP + 2c] = w(80);
-
-A0 = SP + 10;
-system_gte_set_rotation_matrix();
-
-A0 = SP + 10;
-system_gte_set_translation_vector();
-
-pc_entity_id = hu[800b1812];
-struct_5c_p = w[800aefe4];
-struct_138 = w[struct_5c_p + pc_entity_id * 5c + 4c];
-
-[800ad022] = h(hu[struct_138 + 106] + hu[800aee62] + 400);
-
-A0 = h[800ad020];
-A1 = h[800ad022];
-A2 = 40;
-func73018();
-
-[800ad020] = h(V0);
-[SP + b0] = h(0);
-[SP + b2] = h(V0);
-[SP + b4] = h(0);
-
-A0 = SP + 50;
-func717d0();
-
-A0 = SP + b0;
-A1 = SP + 50;
-system_calculate_rotation_matrix();
-
-A0 = SP + 30;
-A1 = SP + 50;
-system_gte_matrix_multiplication_to_A1();
-
-[SP + 6c] = w(1000);
-
-A0 = SP + 10;
-A1 = SP + 50;
-A2 = SP + 70;
-system_gte_matrix_mult_and_trans();
-
-if( bu[800b16a5] == 0 ) // compas render on (script)
-{
-    if( w[800ad0f0] == 0 ) // compas render on (some timer)
-    {
-        if( w[8004ea1c] == 0 ) // compas render on (debug)
-        {
-            for( int i = 14; i < 15; ++i ) // render arrow
-            {
-                A0 = rdata + 80d4; // otag
-                A1 = 800afb90 + i * 70;
-                A2 = SP + 70; // matrix
-                A3 = rb;
-                field_compass_disc_add_to_render();
-            }
-        }
-    }
-}
-
-A0 = SP + 50;
-field_get_identity_matrix();
-
-A0 = SP + 30;
-A1 = SP + 50;
-system_gte_matrix_multiplication_to_A1();
-
-[SP + 6c] = w(1000);
-
-A0 = SP + 10;
-A1 = SP + 50;
-A2 = SP + 70;
-system_gte_matrix_mult_and_trans();
-
-A0 = SP + 10;
-A1 = SP + 50;
-A2 = 800aef58;
-system_gte_matrix_multiplication_to_A2();
-
-A0 = SP + 10;
-system_gte_set_rotation_matrix();
-
-A0 = SP + 10;
-system_gte_set_translation_vector();
-
-A0 = SP + 50;
-field_get_identity_matrix();
-
-A0 = 800aef54;
-A1 = SP + 50;
-system_gte_matrix_multiplication_to_A1();
-
-[SP + 6c] = w(1000);
-
-A0 = SP + 10;
-A1 = SP + 50;
-A2 = SP + 70;
-system_gte_matrix_mult_and_trans();
-
-A0 = SP + 10;
-A1 = SP + 70;
-field_copy_full_matrix();
-
-[SP + b0] = h(400);
-[SP + b2] = h(0);
-[SP + b4] = h(0);
-
-A0 = SP + b0;
-A1 = SP + 90;
-system_calculate_rotation_matrix();
-
-if( bu[800b16a5] == 0 ) // compas render on (script)
-{
-    if( w[800ad0f0] == 0 ) // compas render on (some timer)
-    {
-        if( w[8004ea1c] == 0 ) // compas render on (debug)
-        {
-            for( int i = 10; i < 14; ++i )
-            {
-                A0 = SP + 50;
-                field_get_identity_matrix();
-
-                // // data hardcoded in field.lib (0x3df4c + 0x40)
-                // 10 0000 0005
-                // 11 0005 0000
-                // 12 0000 00FB
-                // 13 00FB 0000
-                [SP + 64] = w(h[800ad0cc + 40 + (i - 10) * 4 + 0]); // trans x
-                [SP + 6c] = w(h[800ad0cc + 40 + (i - 10) * 4 + 2]); // trans z
-
-                A0 = SP + 10; // matrix1
-                A1 = SP + 50; // matrix + vector2
-                A2 = SP + 70; // result matrix + vector
-                system_gte_matrix_mult_and_trans();
-
-                A0 = SP + 70; // dst
-                A1 = SP + 90; // src
-                field_copy_rotation_matrix(); // copy matrix without translation part
-
-                A0 = rdata + 80d4; // otag
-                A1 = 800afb90 + i * 70; // packet
-                A2 = SP + 70; // matrix + translation
-                A3 = rb;
-                field_compass_letters_add_to_render();
-            }
-
-            for( int i = 0; i < 10; ++i )
-            {
-                A0 = rdata + 80d4; // otag
-                A1 = 800afb90 + i * 70;
-                A2 = SP + 10; // matrix
-                A3 = rb;
-                field_compass_disc_add_to_render();
-            }
-
-            for( int i = 15; i < 19; ++i )
-            {
-                A0 = rdata + 80d4; // otag
-                A1 = 800afb90 + i * 70;
-                A2 = SP + 10; // matrix
-                A3 = rb;
-                field_compass_disc_add_to_render();
-            }
-        }
-    }
-}
-
-V1 = 800b12d4 + rb * c0;
-[V1] = w((w[V1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
-[rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (V1 & 00ffffff));
-
-A0 = a0;
-A1 = 70;
-system_gte_set_screen_offset();
-
-A0 = w[800aeecc];
-system_gte_set_projection_plane_distance();
 ////////////////////////////////
 
 

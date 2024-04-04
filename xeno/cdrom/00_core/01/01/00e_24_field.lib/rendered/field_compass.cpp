@@ -243,3 +243,242 @@ for( int i = 0; i < 4; ++i )
     [A3 + 4] = w(w[A2 + 4]);
 }
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// field_compass_update_add_to_render()
+
+rb = w[800acfe0];
+rdata = w[800c3740];
+
+for( int i = 0; i < 8; ++i )
+{
+    if( hu[800ad0fc + i * 2] & bu[800aeec9] )
+    {
+        for( int j = 0; j < 10; ++j )
+        {
+            [800af1f8 + (i * 10 + j) * 2] = h(0);
+        }
+    }
+    else
+    {
+        for( int j = 0; j < 10; ++j )
+        {
+            [800af1f8 + (i * 10 + j) * 2] = h(hu[800af0dc + j * 2]);
+        }
+    }
+}
+
+[800af520 + 4] = h(80); // width
+
+A0 = 800af520; // rect
+A1 = 800af1f8; // src
+system_load_image();
+
+A0 = 80;
+system_gte_set_projection_plane_distance();
+
+A0 = 10a;
+A1 = a6;
+system_gte_set_screen_offset();
+
+[SP + b8] = w(0);
+[SP + bc] = w(w[800aed58] - w[800aed68]);
+[SP + c8] = w(0);
+[SP + cc] = w(0);
+[SP + d0] = w(0);
+
+
+A0 = (w[800aed54] - w[800aed64]) >> 10;
+A1 = (w[800aed5c] - w[800aed6c]) >> 10;
+length_of_vector_by_x_y();
+[SP + c0] = w((0 - V0) << 10);
+
+A0 = SP + 30;
+A1 = SP + b8;
+A2 = SP + c8;
+A3 = 800aed58 + 1c;
+func72de0();
+
+A0 = SP + 10;
+field_get_identity_matrix();
+
+[SP + 2c] = w(80);
+
+A0 = SP + 10;
+system_gte_set_rotation_matrix();
+
+A0 = SP + 10;
+system_gte_set_translation_vector();
+
+pc_entity_id = hu[800b1812];
+struct_5c_p = w[800aefe4];
+struct_138 = w[struct_5c_p + pc_entity_id * 5c + 4c];
+
+[800ad022] = h(hu[struct_138 + 106] + hu[800aee62] + 400);
+
+A0 = h[800ad020];
+A1 = h[800ad022];
+A2 = 40;
+func73018();
+
+[800ad020] = h(V0);
+[SP + b0] = h(0);
+[SP + b2] = h(V0);
+[SP + b4] = h(0);
+
+A0 = SP + 50;
+field_set_zero_translation_vector();
+
+A0 = SP + b0;
+A1 = SP + 50;
+system_calculate_rotation_matrix();
+
+A0 = SP + 30;
+A1 = SP + 50;
+system_gte_matrix_multiplication_to_A1();
+
+[SP + 6c] = w(1000);
+
+A0 = SP + 10;
+A1 = SP + 50;
+A2 = SP + 70;
+system_gte_matrix_mult_and_trans();
+
+if( bu[800b16a5] == 0 ) // compas render on (script)
+{
+    if( w[800ad0f0] == 0 ) // compas render on (some timer)
+    {
+        if( w[8004ea1c] == 0 ) // compas render on (debug)
+        {
+            for( int i = 14; i < 15; ++i ) // render arrow
+            {
+                A0 = rdata + 80d4; // otag
+                A1 = 800afb90 + i * 70;
+                A2 = SP + 70; // matrix
+                A3 = rb;
+                field_compass_disc_add_to_render();
+            }
+        }
+    }
+}
+
+A0 = SP + 50;
+field_get_identity_matrix();
+
+A0 = SP + 30;
+A1 = SP + 50;
+system_gte_matrix_multiplication_to_A1();
+
+[SP + 6c] = w(1000);
+
+A0 = SP + 10;
+A1 = SP + 50;
+A2 = SP + 70;
+system_gte_matrix_mult_and_trans();
+
+A0 = SP + 10;
+A1 = SP + 50;
+A2 = 800aef58;
+system_gte_matrix_multiplication_to_A2();
+
+A0 = SP + 10;
+system_gte_set_rotation_matrix();
+
+A0 = SP + 10;
+system_gte_set_translation_vector();
+
+A0 = SP + 50;
+field_get_identity_matrix();
+
+A0 = 800aef54;
+A1 = SP + 50;
+system_gte_matrix_multiplication_to_A1();
+
+[SP + 6c] = w(1000);
+
+A0 = SP + 10;
+A1 = SP + 50;
+A2 = SP + 70;
+system_gte_matrix_mult_and_trans();
+
+A0 = SP + 10;
+A1 = SP + 70;
+field_copy_full_matrix();
+
+[SP + b0] = h(400);
+[SP + b2] = h(0);
+[SP + b4] = h(0);
+
+A0 = SP + b0;
+A1 = SP + 90;
+system_calculate_rotation_matrix();
+
+if( bu[800b16a5] == 0 ) // compas render on (script)
+{
+    if( w[800ad0f0] == 0 ) // compas render on (some timer)
+    {
+        if( w[8004ea1c] == 0 ) // compas render on (debug)
+        {
+            for( int i = 10; i < 14; ++i )
+            {
+                A0 = SP + 50;
+                field_get_identity_matrix();
+
+                // // data hardcoded in field.lib (0x3df4c + 0x40)
+                // 10 0000 0005
+                // 11 0005 0000
+                // 12 0000 00FB
+                // 13 00FB 0000
+                [SP + 64] = w(h[800ad0cc + 40 + (i - 10) * 4 + 0]); // trans x
+                [SP + 6c] = w(h[800ad0cc + 40 + (i - 10) * 4 + 2]); // trans z
+
+                A0 = SP + 10; // matrix1
+                A1 = SP + 50; // matrix + vector2
+                A2 = SP + 70; // result matrix + vector
+                system_gte_matrix_mult_and_trans();
+
+                A0 = SP + 70; // dst
+                A1 = SP + 90; // src
+                field_copy_rotation_matrix(); // copy matrix without translation part
+
+                A0 = rdata + 80d4; // otag
+                A1 = 800afb90 + i * 70; // packet
+                A2 = SP + 70; // matrix + translation
+                A3 = rb;
+                field_compass_letters_add_to_render();
+            }
+
+            for( int i = 0; i < 10; ++i )
+            {
+                A0 = rdata + 80d4; // otag
+                A1 = 800afb90 + i * 70;
+                A2 = SP + 10; // matrix
+                A3 = rb;
+                field_compass_disc_add_to_render();
+            }
+
+            for( int i = 15; i < 19; ++i )
+            {
+                A0 = rdata + 80d4; // otag
+                A1 = 800afb90 + i * 70;
+                A2 = SP + 10; // matrix
+                A3 = rb;
+                field_compass_disc_add_to_render();
+            }
+        }
+    }
+}
+
+V1 = 800b12d4 + rb * c0;
+[V1] = w((w[V1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
+[rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (V1 & 00ffffff));
+
+A0 = a0;
+A1 = 70;
+system_gte_set_screen_offset();
+
+A0 = w[800aeecc];
+system_gte_set_projection_plane_distance();
+////////////////////////////////
