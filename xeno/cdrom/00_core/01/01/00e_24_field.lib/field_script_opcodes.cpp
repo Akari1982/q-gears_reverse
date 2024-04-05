@@ -21414,8 +21414,6 @@ if( A0 != ff && V0 == -1 )
 
 [800c373c] = w(w[800c373c] + 1);
 
-
-
 A0 = SP + 30;
 func9c2a8(); // search dialog for current entity
 if( V0 != -1 )
@@ -21429,13 +21427,9 @@ if( V0 != -1 )
 
 [800af150] = w(w[800af150] + 8); // increase number of opcodes in current script
 
-
-
 A0 = 1;
 field_script_help_read_u16();
 dialog_id = V0;
-
-
 
 func7fd34(); // search for not opened window slot
 if( V0 != 0 ) // if not found
@@ -21446,27 +21440,19 @@ if( V0 != 0 ) // if not found
     return -1;
 }
 
-
-
 func7fdc8(); // get free window slot
 window_id = V0;
 
-
-
 S3 = 0;
 S2 = 0;
-A0 = 0;
-loop9bd3c:	; 8009BD3C
-    if( h[800c1b6c + A0 * 498 + 40e] == 0 )
+for( int i = 0; i < 4; ++i )
+{
+    if( h[800c1b6c + i * 498 + 40e] == 0 )
     {
         S3 = S3 + 1;
-        S2 = S2 | h[800c1b6c + A0 * 498 + 40c];
+        S2 = S2 | h[800c1b6c + i * 498 + 40c];
     }
-    A0 = A0 + 1;
-    V0 = A0 < 4;
-8009BD70	bne    v0, zero, loop9bd3c [$8009bd3c]
-
-
+}
 
 A0 = w[800ad0c8]; // offset to dialogs part of field file
 A1 = dialog_id;
@@ -21479,8 +21465,6 @@ func33584();
 dialog_rows = V0;
 
 y_pos = 10;
-
-
 
 A2 = w[struct_138 + 84];
 A0 = A2 & 0000ffff;
@@ -21685,11 +21669,7 @@ else if( V1 == 2 )
     }
 }
 
-
-
 x_pos = w[SP + 34] - 8 - dialog_width * 2;
-
-
 
 if( x_pos < c )
 {
@@ -21707,8 +21687,6 @@ if( ( y_pos + dialog_rows * e + 8 ) >= d5 )
 {
     y_pos = cc - dialog_rows * e;
 }
-
-
 
 if( ( type == 0 ) || ( type == 3 ) )
 {
@@ -21738,8 +21716,6 @@ if( ( type == 0 ) || ( type == 3 ) )
 
 }
 
-
-
 if( S6 & 0040 )
 {
     [800c1b6c + window_id * 498 + 40c] = h(hu[800c1b6c + window_id * 498 + 40c] + 40);
@@ -21761,8 +21737,6 @@ else if( S6 & 0004 )
     rotation = 0400;
 }
 
-
-
 A0 = x_pos;
 A1 = y_pos;
 A2 = dialog_id;
@@ -21776,13 +21750,9 @@ A9 = rotation;
 A10 = S6; // flags
 func7eef0();
 
-
-
 // add window to activated windows mask
 A0 = window_id;
 func9c288();
-
-
 
 [struct_138 + 104] = h(hu[struct_138 + 104] | 8000);
 [struct_138 + cc] = h(hu[struct_138 + cc] + 4)

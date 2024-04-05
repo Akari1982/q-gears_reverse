@@ -1,40 +1,40 @@
 ////////////////////////////////
-// func7d30c()
+// field_message_update_cursor_pos_based_on_input()
 
-id = A2;
+id = A0;
 
 if( ( h[800c1ee8 + id * 498] == 0 ) && ( h[800c1f74 + id * 498] == 0 ) )
 {
-    if( hu[800c1f7c + id * 498] == 0 )
+    if( hu[800c1b6c + id * 498 + 410] == 0 ) // cursor enabled
     {
-        if( hu[800c2dd4] & 4000 )
+        if( hu[800c2dd4] & 4000 ) // repeated down
         {
-            [800c1eee + id * 498] = h(hu[800c1eee + id * 498] + 1);
+            [800c1b6c + id * 498 + 382] = h(hu[800c1b6c + id * 498 + 382] + 1);
 
-            if( ( h[800c1eec + id * 498] - 1 ) < h[800c1eee + id * 498] )
+            if( h[800c1b6c + id * 498 + 382] >= h[800c1b6c + id * 498 + 380] )
             {
 
-                [800c1eee + id * 498] = h(0);
+                [800c1b6c + id * 498 + 382] = h(0);
             }
         }
 
-        if( hu[800c2dd4] & 1000 )
+        if( hu[800c2dd4] & 1000 ) // repeated up
         {
-            [800c1eee + id * 498] = h(hu[800c1eee + id * 498] - 1);
+            [800c1b6c + id * 498 + 382] = h(hu[800c1b6c + id * 498 + 382] - 1);
 
-            if( h[800c1eee + id * 498] < 0 )
+            if( h[800c1b6c + id * 498 + 382] < 0 )
             {
-                [800c1eee + id * 498] = h(hu[800c1eec + id * 498] - 1);
+                [800c1b6c + id * 498 + 382] = h(hu[800c1b6c + id * 498 + 380] - 1);
             }
         }
 
-        A0 = 800c1b84 + id * 498;
-        A1 = h[800c1eee + id * 498] + h[800c1eea + id * 498];
+        A0 = 800c1b6c + id * 498 + 18;
+        A1 = h[800c1b6c + id * 498 + 382] + h[800c1b6c + id * 498 + 37e]; // cursor pos
         func34698();
     }
     else
     {
-        A0 = 800c1b84 + id * 498; // 800c1b6c + 18
+        A0 = 800c1b6c + id * 498 + 18;
         func346a0();
     }
 }
@@ -182,8 +182,7 @@ else
 
 
 ////////////////////////////////
-// func7d7d4()
-// render border and avatar
+// field_message_window_and_elements_add_to_render()
 
 otag = A0;
 rb = A1;
@@ -230,7 +229,7 @@ if( A3 != 0 )
 }
 
 if( (  h[800c1b6c + id * 498 + 3c4] != 0 )
- || ( hu[800c1b6c + id * 498 + 410] != 0 ) // order check - not top window or not inited
+ || ( hu[800c1b6c + id * 498 + 410] != 0 ) // order check - not top window
  || (  h[800c1b6c + id * 498 + 408] != 0 )
  || ( hu[800c1b6c + id * 498 + 40c] & 0040 )
  || (  h[800c1b6c + id * 498 + 37c] == 0 ) )
@@ -272,12 +271,13 @@ else // continue arrow add to render
     A4 = SP + 18;
     system_gpu_create_texture_setting_packet();
 
-    [800c1b6c + id * 498 + 3c8 + 18 + rb * 14 + 8] = h(text_end_x);
-    [800c1b6c + id * 498 + 3c8 + 18 + rb * 14 + a] = h(text_end_y + 4);
+    arrow = 800c1b6c + id * 498 + 3c8 + 18 + rb * 14;
 
-    A1 = 800c1b6c + id * 498 + 3c8 + 18 + rb * 14;
-    [A1] = w((w[A1] & ff000000) | (w[otag] & 00ffffff));
-    [otag] = w((w[otag] & ff000000) | (A1 & 00ffffff));
+    [arrow + 8] = h(text_end_x);
+    [arrow + a] = h(text_end_y + 4);
+
+    [arrow] = w((w[arrow] & ff000000) | (w[otag] & 00ffffff));
+    [otag] = w((w[otag] & ff000000) | (arrow & 00ffffff));
 
     [settings] = w((w[settings] & ff000000) | (w[otag] & 00ffffff));
     [otag] = w((w[otag] & ff000000) | (settings & 00ffffff));
@@ -286,46 +286,48 @@ else // continue arrow add to render
 T1 = message_h - 12
 if( T1 < 0 ) T1 = 0;
 
+borders = 800c1b6c + id * 498 + 1ec + rb * c8;
+
 // top left
-[800c1b6c + id * 498 + 1ec + rb * c8 + 0 * 14 +  8] = h(message_x - 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 0 * 14 +  a] = h(message_y - 7);
+[borders + 0 * 14 +  8] = h(message_x - 8);
+[borders + 0 * 14 +  a] = h(message_y - 7);
 // right
-[800c1b6c + id * 498 + 1ec + rb * c8 + 1 * 14 +  8] = h(message_x + message_w - 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 1 * 14 +  a] = h(message_y + 9);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 1 * 14 + 12] = h(T1);
+[borders + 1 * 14 +  8] = h(message_x + message_w - 8);
+[borders + 1 * 14 +  a] = h(message_y + 9);
+[borders + 1 * 14 + 12] = h(T1);
 // top right
-[800c1b6c + id * 498 + 1ec + rb * c8 + 2 * 14 +  8] = h(message_x + message_w - 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 2 * 14 +  a] = h(message_y - 7);
+[borders + 2 * 14 +  8] = h(message_x + message_w - 8);
+[borders + 2 * 14 +  a] = h(message_y - 7);
 // left
-[800c1b6c + id * 498 + 1ec + rb * c8 + 3 * 14 +  8] = h(message_x - 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 3 * 14 +  a] = h(message_y + 9);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 3 * 14 + 12] = h(T1);
+[borders + 3 * 14 +  8] = h(message_x - 8);
+[borders + 3 * 14 +  a] = h(message_y + 9);
+[borders + 3 * 14 + 12] = h(T1);
 // bottom right
-[800c1b6c + id * 498 + 1ec + rb * c8 + 4 * 14 +  8] = h(message_x - 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 4 * 14 +  a] = h(message_y + message_h - 9);
+[borders + 4 * 14 +  8] = h(message_x - 8);
+[borders + 4 * 14 +  a] = h(message_y + message_h - 9);
 // top
-[800c1b6c + id * 498 + 1ec + rb * c8 + 5 * 14 +  8] = h(message_x + 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 5 * 14 +  a] = h(message_y - 7);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 5 * 14 + 10] = h(message_w - 10);
+[borders + 5 * 14 +  8] = h(message_x + 8);
+[borders + 5 * 14 +  a] = h(message_y - 7);
+[borders + 5 * 14 + 10] = h(message_w - 10);
 // bottom left
-[800c1b6c + id * 498 + 1ec + rb * c8 + 6 * 14 +  8] = h(message_x + message_w - 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 6 * 14 +  a] = h(message_y + message_h - 9);
+[borders + 6 * 14 +  8] = h(message_x + message_w - 8);
+[borders + 6 * 14 +  a] = h(message_y + message_h - 9);
 // bottom
-[800c1b6c + id * 498 + 1ec + rb * c8 + 7 * 14 +  8] = h(message_x + 8);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 7 * 14 +  a] = h((message_y + message_h) - 9);
-[800c1b6c + id * 498 + 1ec + rb * c8 + 7 * 14 + 10] = h(message_w - 10);
+[borders + 7 * 14 +  8] = h(message_x + 8);
+[borders + 7 * 14 +  a] = h((message_y + message_h) - 9);
+[borders + 7 * 14 + 10] = h(message_w - 10);
 
 if( ( hu[800c1b6c + id * 498 + 40c] & 0040 ) == 0 )
 {
     for( int i = 0; i < 8 ; ++i ) // border add to render
     {
-        A0 = 800c1b6c + id * 498 + 1ec + rb * c8 + i * 14;
-        [A0] = w((w[A0] & ff000000) | (w[otag] & 00ffffff));
-        [otag] = w((w[otag] & ff000000) | (A0 & 00ffffff));
+        border = borders + i * 14;
+        [border] = w((w[border] & ff000000) | (w[otag] & 00ffffff));
+        [otag] = w((w[otag] & ff000000) | (border & 00ffffff));
 
-        A2 = 800c1b6c + id * 498 + fc + rb * 78 + i * c;
-        [A2] = w((w[A2] & ff000000) | (w[otag] & 00ffffff));
-        [otag] = w((w[otag] & ff000000) | (A2 & 00ffffff));
+        settings = 800c1b6c + id * 498 + fc + rb * 78 + i * c;
+        [settings] = w((w[settings] & ff000000) | (w[otag] & 00ffffff));
+        [otag] = w((w[otag] & ff000000) | (settings & 00ffffff));
     }
 }
 
@@ -357,31 +359,30 @@ if( bu[800c1b6c + id * 498 + 494] == 1 ) // avatar render
     [avatar] = w((w[avatar] & ff000000) | (w[otag] & 00ffffff));
     [otag] = w((w[otag] & ff000000) | (avatar & 00ffffff));
 
-    A1 = 800c1b6c + id * 498 + 42c + rb * c;
-    [A1] = w((w[A1] & ff000000) | (w[otag] & 00ffffff));
-    [otag] = w((w[otag] & ff000000) | (A1 & 00ffffff));
+    settings = 800c1b6c + id * 498 + 42c + rb * c;
+    [settings] = w((w[settings] & ff000000) | (w[otag] & 00ffffff));
+    [otag] = w((w[otag] & ff000000) | (settings & 00ffffff));
 }
 
 // cursor render
 if( h[800c1b6c + id * 498 + 37c] == 0 )
 {
-    if( hu[800c1b6c + id * 498 + 410] == 0 )
+    if( hu[800c1b6c + id * 498 + 410] == 0 ) // order check - top window
     {
         if( h[800c1b6c + id * 498 + 408] == 0 )
         {
+            cursor = 800c1b6c + id * 498 + 384 + 18 + rb * 14;
+
             // if we render avatar and it not mirrored
             if( ( bu[800c1b6c + id * 498 + 494] == 1 ) && ( ( hu[800c1b6c + id * 498 + 40c] & 0020 ) == 0 ) )
             {
-                V1 = message_x + 5a;
+                [cursor + 8] = h(message_x + 5a);
             }
             else
             {
-                V1 = message_x + 16;
+                [cursor + 8] = h(message_x + 16);
             }
-            [800c1b6c + id * 498 + 3a4 + rb * 14] = h(V1);
-
-            V1 = h[800c1b6c + id * 498 + 380] + h[800c1b6c + id * 498 + 37e];
-            [800c1f12 + id * 498 + rb * c] = h(message_y + V1 * e + 8);
+            [cursor + a] = h(message_y + (h[800c1b6c + id * 498 + 37e] + h[800c1b6c + id * 498 + 382]) * e + 8);
 
             frame_id = w[800ad36c];
             [SP + 18] = h(hu[800ad3b4 + frame_id * 8]);
@@ -395,22 +396,20 @@ if( h[800c1b6c + id * 498 + 37c] == 0 )
             A3 = 1c0;
             system_graphic_get_texpage_by_param();
 
-            S4 = 800c1ee8 + id * 498 + rb * c + 8;
+            settings = 800c1b6c + id * 498 + 384 + rb * c;
 
-            A0 = S4;
+            A0 = settings;
             A1 = 0;
             A2 = 0;
             A3 = V0 & ffff;
             A4 = SP + 18;
             system_gpu_create_texture_setting_packet();
 
-            S6 = 800c1ee8 + id * 498 + rb * c + 20;
-            [S6] = w((w[S6] & ff000000) | (w[otag] & 00ffffff));
-            [otag] = w((w[otag] & ff000000) | (S6 & 00ffffff));
+            [cursor] = w((w[cursor] & ff000000) | (w[otag] & 00ffffff));
+            [otag] = w((w[otag] & ff000000) | (cursor & 00ffffff));
 
-            S0 = 800c1ee8 + id * 498 + rb * c + 8;
-            [S0] = w((w[S0] & ff000000) | (V1 & 00ffffff));
-            [otag] = w((w[otag] & ff000000) | (S4 & 00ffffff));
+            [settings] = w((w[settings] & ff000000) | (V1 & 00ffffff));
+            [otag] = w((w[otag] & ff000000) | (settings & 00ffffff));
         }
     }
 }
@@ -427,9 +426,9 @@ if( ( hu[800c1b6c + id * 498 + 40c] & 0040 ) == 0 ) // render background
     [A0] = w((w[A0] & ff000000) | (w[otag] & 00ffffff));
     [otag] = w((w[otag] & ff000000) | (A0 & 00ffffff));
 
-    A0 = 800c1b6c + id * 498 + c4 + rb * c;
-    [A0] = w((w[A0] & ff000000) | (w[otag] & 00ffffff));
-    [otag] = w((w[otag] & ff000000) | (A0 & 00ffffff));
+    settings = 800c1b6c + id * 498 + c4 + rb * c;
+    [settings] = w((w[settings] & ff000000) | (w[otag] & 00ffffff));
+    [otag] = w((w[otag] & ff000000) | (settings & 00ffffff));
 }
 ////////////////////////////////
 
@@ -924,6 +923,7 @@ system_gte_vector_perspective_transform();
 
 ////////////////////////////////
 // func7eef0()
+// init dialog?
 
 x_pos = [SP + 28] = A0;
 y_pos = [SP + 30] = A1 - 8;
@@ -940,8 +940,6 @@ flags = A10;
 struct_5c_p = w[800aefe4];
 struct_138_cur = w[struct_5c_p + current_entity_id * 5c + 4c];
 
-
-
 if( ( w[struct_138_cur + 84] >> 10 ) == 0 )
 {
     S3 = w[struct_138_cur + 84] & ffff;
@@ -952,10 +950,8 @@ else
 }
 S3 = S3 | rotation;
 
-
-
-A1 = 0;
-loop7ef9c:	; 8007EF9C
+for( int i = 0; i < 4; ++i )
+{
     S5 = w[800ad368] & 3;
     [800ad368] = w(w[800ad368] + 1);
 
@@ -965,11 +961,7 @@ loop7ef9c:	; 8007EF9C
         [800afb60 + S5 * 4] = w(0);
         break;
     }
-    A1 = A1 + 1;
-    V0 = A1 < 4;
-8007EFD0	bne    v0, zero, loop7ef9c [$8007ef9c]
-
-
+}
 
 A0 = 16;
 get_bytes_from_800C2F3C();
@@ -987,8 +979,6 @@ A0 = 1c;
 get_bytes_from_800C2F3C();
 [800c1b6c + window_id * 498 + 94] = w(V0);
 [800c1b6c + window_id * 498 + 98] = h(V0);
-
-
 
 if( type == 2 )
 {
@@ -1008,8 +998,6 @@ else
     A3 = -40;
     func7ee28();
 }
-
-
 
 // avatar exist
 if( ( bu[struct_138_cur + 80] != ff ) && ( ( S3 & 0002 ) == 0 ) )
@@ -1031,11 +1019,7 @@ else
     [800c1b6c + window_id * 498 + 495] = b(80);
 }
 
-
-
 [800c1b6c + window_id * 498 + 37c] = h(-1);
-
-
 
 A0 = window_id;
 A1 = x_pos;
@@ -1043,8 +1027,6 @@ A2 = y_pos;
 A3 = dialog_width * 4 + 10;
 A4 = dialog_rows * e + 10;
 func7d728(); // store window position and size
-
-
 
 A3 = 0;
 if( bu[struct_138_cur + 80] != ff ) // avatar exist
@@ -1055,8 +1037,6 @@ if( bu[struct_138_cur + 80] != ff ) // avatar exist
     }
 }
 
-
-
 A0 = 800c1b6c + window_id * 498 + 18;
 A1 = hu[800ad42c + window_id * 4]; // texture u
 A2 = hu[800ad42e + window_id * 4]; // texture v
@@ -1066,14 +1046,10 @@ A5 = dialog_width;
 A6 = dialog_rows;
 func32d78(); // init window struct and packet here
 
-
-
 if( S3 & 0400 )
 {
     [800c1b6c + window_id * 498 + 40c] = h(hu[800c1b6c + window_id * 498 + 40c] | 0020);
 }
-
-
 
 // set default text speed
 if( h[800b16aa] == 8 )
@@ -1085,15 +1061,11 @@ else
     [800c1b6c + window_id * 498 + 80] = b(2);
 }
 
-
-
 // get offset to dialog data
 A0 = w[800ad0c8]; // dialog file
 A1 = dialog_id;
 func3354c();
 [800c1b6c + window_id * 498 + a8] = w(V0);
-
-
 
 [800c1f7a + window_id * 498 + 0] = h(0);
 [800c1b94 + window_id * 498 + 0] = h(hu[800c1b94 + window_id * 498 + 0] | 0002);
@@ -1110,8 +1082,6 @@ else
     [800c1f7e + window_id * 498 + 0] = h(1);
 }
 
-
-
 V0 = FP << 01;
 FP = V0 + 0008;
 V0 = S2 << 03;
@@ -1125,7 +1095,7 @@ V0 = V0 << 02;
 V0 = V0 - S1;
 A1 = V0 << 03;
 V1 = w[SP + 0020];
-T0 = hu[SP + 0028];
+T0 = x_pos;
 A0 = w[SP + 0024];
 V1 = V1 - FP;
 V0 = T0 << 10;
@@ -1141,38 +1111,31 @@ A0 = A0 - V0;
 A0 = A0 << 10;
 V0 = S3 & 0100;
 [800c1f8c + A1] = w(A0);
-8007F494	bne    v0, zero, L7f50c [$8007f50c]
-V0 = 0001;
-A0 = 800b16aa;
-V1 = h[A0 + 0000];
-V0 = w[800c1f88 + A1];
-8007F4B4	nop
-8007F4B8	div    v0, v1
-8007F4BC	mflo   v0
-8007F4C0	nop
-V0 = 0 - V0;
-[800c1f90 + A1] = w(V0);
-V1 = h[A0 + 0000];
-V0 = w[800c1f8c + A1];
-8007F4E4	nop
-8007F4E8	div    v0, v1
-8007F4EC	mflo   v0
-8007F4F0	nop
-V0 = 0 - V0;
-[800c1f94 + A1] = w(V0);
-8007F504	j      L7f550 [$8007f550]
-8007F508	nop
+if( V0 == 0 )
+{
+    A0 = 800b16aa;
+    V1 = h[A0 + 0000];
+    V0 = w[800c1f88 + A1];
+    V0 = V0 / V1;
+    V0 = 0 - V0;
+    [800c1f90 + A1] = w(V0);
+    V1 = h[A0 + 0000];
+    V0 = w[800c1f8c + A1];
+    V0 = V0 / V1;
+    V0 = 0 - V0;
+    [800c1f94 + A1] = w(V0);
+}
+else
+{
+    [800c1f74 + A1] = h(1);
+    V0 = w[800c1f88 + A1];
+    V1 = w[800c1f8c + A1];
+    V0 = 0 - V0;
+    V1 = 0 - V1;
+    [800c1f90 + A1] = w(V0);
+    [800c1f94 + A1] = w(V1);
+}
 
-L7f50c:	; 8007F50C
-[800c1f74 + A1] = h(V0);
-V0 = w[800c1f88 + A1];
-V1 = w[800c1f8c + A1];
-V0 = 0 - V0;
-V1 = 0 - V1;
-[800c1f90 + A1] = w(V0);
-[800c1f94 + A1] = w(V1);
-
-L7f550:	; 8007F550
 T0 = entity_id;
 V1 = w[800aefe4];
 V0 = T0 << 01;
@@ -1182,23 +1145,17 @@ V0 = V0 - T0;
 V0 = V0 << 02;
 V0 = V0 + V1;
 V0 = w[V0 + 004c];
-8007F578	nop
 V0 = w[V0 + 0004];
-8007F580	nop
-V0 = V0 & 0200;
-8007F588	beq    v0, zero, L7f5c4 [$8007f5c4]
-V0 = S3 & 0001;
-8007F590	bne    v0, zero, L7f5c4 [$8007f5c4]
 
-V0 = S1 * 498;
-[800c1f80 + V0] = h(0);
-8007F5BC	j      L7f5c8 [$8007f5c8]
-8007F5C0	addiu  v0, zero, $ffff (=-$1)
-
-L7f5c4:	; 8007F5C4
-V0 = 0;
-
-L7f5c8:	; 8007F5C8
+if( ( V0 & 0200 ) && ( ( S3 & 0001 ) == 0 ) )
+{
+    [800c1f80 + S1 * 498] = h(0);
+    return -1;
+}
+else
+{
+    return 0;
+}
 ////////////////////////////////
 
 
@@ -1231,12 +1188,12 @@ struct_5c_p = w[800aefe4];
 
 if( ( w[800ad370] & 3 ) == 0 )
 {
-    [800ad36c] = w(w[800ad36c] + 1); // continue arrow animation frame
+    [800ad36c] = w(w[800ad36c] + 1); // continue arrow and cursor animation frame
 }
 if( w[800ad36c] >= 5 ) [800ad36c] = w(0);
 
-[SP + 28] = w(ff);
 
+[SP + 28] = w(ff);
 if( int i = 0; i < 4; ++i )
 {
     if( h[800c1b6c + i * 498 + 412] != 0 )
@@ -1245,17 +1202,18 @@ if( int i = 0; i < 4; ++i )
     }
 }
 
-[SP + 10] = w(ffff);
-[SP + 14] = w(ffff);
-[SP + 18] = w(ffff);
-[SP + 1c] = w(ffff);
-[SP + 20] = w(0);
+[SP + 10 +  0 * 4] = w(ffff);
+[SP + 10 +  1 * 4] = w(ffff);
+[SP + 10 +  2 * 4] = w(ffff);
+[SP + 10 +  3 * 4] = w(ffff);
+new_order = 0;
 
 for( int i = 0; i < 4; ++i )
 {
     if( ( h[800c1b6c + i * 498 + 40e] == 0 ) && ( h[800c1b6c + i * 498 + 412] != 0 ) )
     {
         [800c1b6c + i * 498 + 3c4] = h(-1);
+
         if( h[800c1b6c + i * 498 + 408] == 0 )
         {
             V0 = 0;
@@ -1271,11 +1229,11 @@ for( int i = 0; i < 4; ++i )
 
             if( hu[800c1b68] & 0020 ) // circle pressed
             {
-                [800c1b6c + i * 498 + 37c] = h(-1);
+                [800c1b6c + i * 498 + 37c] = h(-1); // disable cursor
 
                 owner_id = h[800c1b6c + i * 498 + 416];
                 struct_138 = w[struct_5c_p + owner_id * 5c + 4c];
-                [struct_138 + 81] = b(bu[800c1b6c + i * 498 + 382] + bu[800c1b6c + i * 498 + 37e]);
+                [struct_138 + 81] = b(bu[800c1b6c + i * 498 + 37e] + bu[800c1b6c + i * 498 + 382]);
 
                 A0 = 800c1b6c + i * 498 + 18;
                 func34404(); // clear some text related things
@@ -1295,19 +1253,17 @@ for( int i = 0; i < 4; ++i )
             func346ac(); // text parsing
         }
 
-        A3 = 800c1b6c + rb * c + i * 498;
-        [800c1b6c + rb * c + i * 498] = w((w[800c1b6c + rb * c + i * 498] & ff000000) | (w[otag] & 00ffffff));
-        [otag] = w((w[otag] & ff000000) | (A3 & 00ffffff));
+        settings = 800c1b6c + i * 498 + rb * c;
+        [settings] = w((w[settings] & ff000000) | (w[otag] & 00ffffff));
+        [otag] = w((w[otag] & ff000000) | (settings & 00ffffff));
 
         A0 = otag;
         A1 = rb;
         A2 = i;
-        func7d7d4(); // render border and avatar
+        field_message_window_and_elements_add_to_render();
 
         A0 = i;
-        A1 = otag;
-        A2 = rb;
-        func7d30c();
+        field_message_update_cursor_pos_based_on_input();
     }
 }
 
@@ -1315,22 +1271,16 @@ for( int i = 0; i < 4; ++i )
 {
     for( int j = 0; j < 4; ++j )
     {
-        if( hu[800c1f7c + j * 498] == i )
+        if( hu[800c1b6c + j * 498 + 410] == i ) // render by order
         {
-            V0 = SP + 10;
-            T0 = w[SP + 20];
-            V0 = V0 + j * 4;
-            [V0] = w(T0);
-            T0 = T0 + 1;
-            [SP + 20] = w(T0);
+            [SP + 10 + j * 4] = w(new_order);
+            ++new_order;
 
-            if( h[800c1f7a + j * 498] == 0 )
+            if( h[800c1b6c + j * 498 + 40e] == 0 )
             {
                 if( w[SP + 28] != j )
                 {
                     [800c1f30 + j * 498] = h(-1);
-
-                    S1 = 800c1b6c + j * 498 + 18;
 
                     if( h[800c1f74 + j * 498] == 0 )
                     {
@@ -1338,45 +1288,36 @@ for( int i = 0; i < 4; ++i )
                         {
                             if( hu[800c1f7c + j * 498] == 0 )
                             {
-                                A0 = S1;
-                                V1 = h[800c1f82 + j * 498];
-                                A1 = bu[800c1eea + j * 498];
-                                [800c1ee8 + j * 498] = h(-1);
-                                V0 = V1 << 01;
-                                V0 = V0 + V1;
-                                V0 = V0 << 03;
-                                V0 = V0 - V1;
-                                V1 = w[800aefe4];
-                                V0 = V0 << 02;
-                                V0 = V0 + V1;
-                                V1 = bu[800c1eee + j * 498];
-                                V0 = w[V0 + 004c];
-                                V1 = V1 + A1;
-                                [V0 + 0081] = b(V1);
+                                [800c1b6c + i * 498 + 37c] = h(-1); // disable cursor
+
+                                owner_id = h[800c1b6c + i * 498 + 416];
+                                struct_138 = w[struct_5c_p + owner_id * 5c + 4c];
+                                [struct_138 + 81] = b(bu[800c1b6c + i * 498 + 37e] + bu[800c1b6c + i * 498 + 382]);
+
+                                A0 = 800c1b6c + j * 498 + 18;
                                 func34404();
                             }
                         }
 
-                        if( h[S1 + 82] == 0 ) // +9a
+                        if( h[800c1b6c + j * 498 + 18 + 82] == 0 ) // +9a
                         {
-                            A0 = S1;
-                            A1 = w[800c1b6c + j * 498 + a8]; // offset to dialog text data
+                            A0 = 800c1b6c + j * 498 + 18;
+                            A1 = w[800c1b6c + j * 498 + 18 + 90]; // offset to dialog text data
                             func34538;
                         }
 
-                        A0 = S1;
+                        A0 = 800c1b6c + j * 498 + 18;
                         A1 = otag;
                         A2 = rb;
                         func346ac(); // text render here
 
-                        A0 = S1;
-                        V0 = 0;
-                        if( hu[A0 + 10] & 0008 )
+                        state = 0;
+                        if( hu[800c1b6c + j * 498 + 18 + 10] & 0008 )
                         {
-                            V0 =  bu[A0 + 6b];
+                            state =  bu[800c1b6c + j * 498 + 18 + 6b];
                         }
 
-                        if( ( V0 != 0 ) && ( h[800c1b6c + j * 498 + 37c] != 0 ) )
+                        if( ( state != 0 ) && ( h[800c1b6c + j * 498 + 37c] != 0 ) )
                         {
                             [800c1b6c + j * 498 + 3c4] = h(0);
                         }
@@ -1390,16 +1331,14 @@ for( int i = 0; i < 4; ++i )
                     A0 = otag;
                     A1 = rb;
                     A2 = j;
-                    func7d7d4(); // render border and avatar
+                    field_message_window_and_elements_add_to_render();
 
                     A0 = j;
-                    A1 = otag;
-                    A2 = rb;
-                    func7d30c();
+                    field_message_update_cursor_pos_based_on_input();
                 }
             }
 
-            if( hu[800c1f7c + j * 498] == ffff )
+            if( hu[800c1b6c + j * 498 + 410] == ffff ) // if message was disables store it
             {
                 [SP + 10 + j * 4] = w(ffff);
             }
@@ -1407,9 +1346,9 @@ for( int i = 0; i < 4; ++i )
     }
 }
 
-for( int i = 0; i < 4; ++i )
+for( int i = 0; i < 4; ++i ) // update order
 {
-    [800c1f7c + i * 498] = h(w[SP + 10 + i * 4]);
+    [800c1b6c + i * 498 + 410] = h(w[SP + 10 + i * 4]);
 }
 
 rb = w[800acfe0];

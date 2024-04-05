@@ -365,7 +365,7 @@
 // field_fade_add_to_render
 8007D058-8007D308
 ////////////////////////////////
-// func7d30c
+// field_message_update_cursor_pos_based_on_input
 8007D30C-8007D4DC
 ////////////////////////////////
 // func7d4e0
@@ -377,7 +377,7 @@
 // field_message_set_avatar_packet_pos
 8007D780-8007D7D0
 ////////////////////////////////
-// func7d7d4
+// field_message_window_and_elements_add_to_render
 8007D7D4-8007E41C
 ////////////////////////////////
 // func7e420

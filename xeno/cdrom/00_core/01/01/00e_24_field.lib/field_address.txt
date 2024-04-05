@@ -54,7 +54,8 @@
 
 800ad0f4 array of 1 bytes of camera rotation mask for each direction.
 
-800ad36c [][][][] messages continue arrow animation frame.
+800ad36c [][][][] messages continue arrow and cursor animation frame.
+800ad370 [][][][] delay before update continue arrow and cursor animation frame.
 
 800ad43c [][][][] store here 0, 1 during entity script2 3 call checking.
 
@@ -635,7 +636,7 @@
 
 800c1b68 [][]     pressed button mask for controller 1 (details in 800af370).
 
-800c1b6c dialogs struct (0x498 size)(4 items)
+800c1b6c messages struct (0x498 size)(4 items)
     +  0 2 tex settings packet for buffers (size 0xc).
     + 18 messages data.
         + 0 (18) [][]     store 0x64 here in case of new row. Maybe how much symbols in new row we can put.
@@ -678,23 +679,23 @@
     + 80 []       default number of letters to read.
     + 81 []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
     + 82 []       stored number of letters to read (to restore if we want).
-    + 83 []       state. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
-    + 84 []       if 1 then window needs to be closed. Init with 0.
-    + 85 []       init with 0.
-    + 86 []       init with 0xff.
+        + 6b (83) []       state. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
+        + 6c (84) []       if 1 then window needs to be closed. Init with 0.
+        + 6d (85) []       init with 0.
+        + 6e (86) []       init with 0xff. Cursor pos.
     + 88 [][][][] +0016 from memory block.
     + 8c [][][][] +0018 from memory block.
     + 90 [][][][] +001a from memory block.
     + 94 [][][][] +001c from memory block.
     + 98 [][]     +001c from memory block.
-    + 9a [][]     init with 0. Number of +a4 element in list.
+        + 82 (9a) [][]     init with 0. Number of +a4 element in list.
     + 9c [][]     wait timer. Init with 0.
     + 9e [][]     store value for 0x0F0E text opcode here.
     + a0 [][]     store value for 0x0F0E text opcode here.
     + a4 [][][][] init with 0. Pointer to list of allocated memory for message text data.
         +00 [][][][] pointer to next allocated memory element.
         +08 [][][][] offset to message text data.
-    + a8 [][][][] offset to message text data.
+        + 90 (a8) [][][][] offset to message text data.
     + ac [][]     message x.
     + ae [][]     message y.
     + b0 [][]     message width.
@@ -702,12 +703,17 @@
     + c4 background packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x10 size).
+    + fc end of background packets
     + fc texture settings for border packets (0x2 items 0x78 size) (each buffer 0x9 items 0xc size).
     +1ec border packets (0x2 items 0xc8 size) (each buffer 0xa items 0x14 size).
-    +37c [][]     store -1 during message init.
-    +37e [][]     sum this and 382 and store to scruct 138 + 81 in entity when circle is pressed. Maybe start pos of cursor in select message.
-    +380 [][]     cursor pos (start or current)
-    +382 []       related with +37e. Maybe offset pos of cursor in select message.
+    +37c [][]     store -1 during message init. If 0 then we can render cursor. When circle pressed disable cursor
+    +37e [][]     start cursor pos.
+    +380 [][]     max cursor pos.
+    +382 []       current cursor pos (real position is start pos + cur pos).
+    +384 cursor packets
+        + 0 texture settings (each buffer 0x1 items 0xc size).
+        +18 packets (each buffer 0x1 items 0x14 size).
+    +3c4 end of cursor packets
     +3c4 [][]     we store 0 here if 37c != 0 and 83 != 0 and 28 flag 0x0008 is set
     +3c8 continue arrow packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
@@ -718,15 +724,17 @@
     +40c [][]     some flags.
                   0x0040 - if set then we will nor add border of continue arrow to render.
     +40e [][]     checked if this == 0 when search for dialog.
-    +410 [][]     looks like order of dialogs. 0-top. 0xffff if window not inited.
+    +410 [][]     messages order. 0-top. 0xffff if window not inited.
     +412 [][]     ???
     +414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
-    +416 [][]     some entity id??? maybe owner.
+    +416 [][]     owner entity id. We store result of selection in this entity +81.
     +418 [][]     some entity id???
+
     +42c avatar packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x14 size).
     +474 end of avatar packets
+
     +494 []       1 if we render avatar, 0 otherwise.
     +495 []       store here avatar id from +80 from entity 138 struct.
 
