@@ -107,23 +107,17 @@ dialog_rows = A6;
 [offset_18 + 84] = h(0); // text delay
 [offset_18 + 8c] = w(0);
 
-
-
 [GP + 1a8] = h(29);
 A0 = h[offset_18 + c] * 60;
 A1 = 2;
 system_memory_allocate();
 [offset_18 + 28] = w(V0);
 
-
-
 [GP + 1a8] = h(28);
 A0 = h[offset_18 + 12] * 1c;
 A1 = 2;
 system_memory_allocate();
 [offset_18 + 2c] = w(V0);
-
-
 
 // prepare packet for rectangle
 [offset_18 + 4b] = b(03);
@@ -141,8 +135,6 @@ system_set_draw_packet_transparency();
 [offset_18 + 5c] = w(w[offset_18 + 4c]);
 [offset_18 + 60] = w(w[offset_18 + 50]);
 [offset_18 + 64] = w(w[offset_18 + 54]);
-
-
 
 if( h[offset_18 + c] > 0 ) // dialog rows
 {
@@ -216,8 +208,6 @@ if( h[offset_18 + c] > 0 ) // dialog rows
         V0 = T1 < h[offset_18 + c];
     800331C0	bne    v0, zero, L32f10 [$80032f10]
 }
-
-
 
 A0 = 0;
 A1 = 0;

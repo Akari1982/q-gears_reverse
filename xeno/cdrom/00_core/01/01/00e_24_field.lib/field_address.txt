@@ -651,51 +651,52 @@
                           0x0008: wait for player input flag. Add this flag if we met 0x00_Return text opcode and there is no stored pointer or if we met 0x03_Wait text opcode.
                           0x0048: add this flags if we met 0x02_New text opcode.
                           0x0080: stored pointer for text. If set and met 0x00_Return() in text then we remove this flag, and jump to stored pointer +38.
+                          0x0100: speed increased (button pressed).
                           0x0200: add this flag in 0x0F0D text opcode.
         +12 (2a) [][]     width in something + 3.
         +14 (2c) [][]     row height. Store 0xe here.
         +16      [][]     some row.
-    + 34 [][][][] pointer to current position in text data
-    + 38 [][][][] some pointer.
-    + 40 [][][][] pointer to memory with size number of rows * 0x60.
-        + 00 buffer1 packet for sprite 0x65 (0x14 size).
-        + 14 buffer1 packet for sprite 0x65 (0x14 size).
-        + 28 buffer2 packet for sprite 0x65 (0x14 size).
-        + 3c buffer2 packet for sprite 0x65 (0x14 size).
-        + 50 [][]     texture u.
-        + 52 [][]     texture v.
-        + 54 [][]     dialog_width + 3 in something.
-        + 56 [][]     init with 0xd. texture height.
-        + 58 [][]     init with 0x0. Store here rendered width in something (same as +18 in window)
-        + 5a []       current row & 1.
-        + 5b []       current row.
-        + 5c []       texture v.
-        + 5e [][]     hu[80058c70] or hu[80058ab0].
-    + 44 [][][][] pointer to memory with size (width in something + 3) * 0x1c.
-    + 48 buffer1 packet for render settings 0xe1 and 0xe2 (0xc size).
-    + 54 buffer2 packet for render settings 0xe1 and 0xe2 (0xc size).
-    + 60 buffer1 packet transparent black rectangle (0x10 size).
-    + 70 buffer2 packet transparent black rectangle (0x10 size).
-    + 80 []       default number of letters to read.
-    + 81 []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
-    + 82 []       stored number of letters to read (to restore if we want).
-        + 6b (83) []       state. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
-        + 6c (84) []       if 1 then window needs to be closed. Init with 0.
-        + 6d (85) []       init with 0.
-        + 6e (86) []       init with 0xff. Cursor pos.
-    + 88 [][][][] +0016 from memory block.
-    + 8c [][][][] +0018 from memory block.
-    + 90 [][][][] +001a from memory block.
-    + 94 [][][][] +001c from memory block.
-    + 98 [][]     +001c from memory block.
-        + 82 (9a) [][]     init with 0. Number of +a4 element in list.
-    + 9c [][]     wait timer. Init with 0.
-    + 9e [][]     store value for 0x0F0E text opcode here.
-    + a0 [][]     store value for 0x0F0E text opcode here.
-    + a4 [][][][] init with 0. Pointer to list of allocated memory for message text data.
-        +00 [][][][] pointer to next allocated memory element.
-        +08 [][][][] offset to message text data.
-        + 90 (a8) [][][][] offset to message text data.
+        +1c (34)[][][][] pointer to current position in text data
+        +20 (38) [][][][] some pointer.
+        +28 (40) [][][][] pointer to memory with size number of rows * 0x60.
+            + 00 buffer1 packet for sprite 0x65 (0x14 size).
+            + 14 buffer1 packet for sprite 0x65 (0x14 size).
+            + 28 buffer2 packet for sprite 0x65 (0x14 size).
+            + 3c buffer2 packet for sprite 0x65 (0x14 size).
+            + 50 [][]     texture u.
+            + 52 [][]     texture v.
+            + 54 [][]     dialog_width + 3 in something.
+            + 56 [][]     init with 0xd. texture height.
+            + 58 [][]     init with 0x0. Store here rendered width in something (same as +18 in window)
+            + 5a []       current row & 1.
+            + 5b []       current row.
+            + 5c []       texture v.
+            + 5e [][]     hu[80058c70] or hu[80058ab0].
+        +2c (44)  [][][][] pointer to memory with size (width in something + 3) * 0x1c.
+        +30 (48) buffer1 packet for render settings 0xe1 and 0xe2 (0xc size).
+        +3c (54) buffer2 packet for render settings 0xe1 and 0xe2 (0xc size).
+        +48 (60) buffer1 packet transparent black rectangle (0x10 size).
+        +58 (70) buffer2 packet transparent black rectangle (0x10 size).
+        +68 (80) []       default number of letters to read.
+        +69 (81) []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
+        +6a (82) []       stored number of letters to read (to restore if we want).
+        +6b (83) []       state. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
+        +6c (84) []       if 1 then window needs to be closed. Init with 0.
+        +6d (85) []       init with 0.
+        +6e (86) []       init with 0xff. Cursor pos.
+        +70 (88) [][][][] +0016 from memory block.
+        +74 (8c) [][][][] +0018 from memory block.
+        +78 (90) [][][][] +001a from memory block.
+        +7c (94) [][][][] +001c from memory block.
+        +80 (98) [][]     +001c from memory block.
+        +82 (9a) [][]     init with 0. Number of +a4 element in list.
+        +84 (9c) [][]     wait timer. Init with 0.
+        +86 (9e) [][]     store value for 0x0F0E text opcode here.
+        +88 (a0) [][]     store value for 0x0F0E text opcode here.
+        +8c (a4) [][][][] init with 0. Pointer to list of allocated memory for message text data.
+            +00 [][][][] pointer to next allocated memory element.
+            +08 [][][][] offset to message text data.
+        +90 (a8) [][][][] offset to message text data.
     + ac [][]     message x.
     + ae [][]     message y.
     + b0 [][]     message width.
@@ -723,18 +724,16 @@
     +40a [][]     wait timer for continue arrow add to render.
     +40c [][]     some flags.
                   0x0040 - if set then we will nor add border of continue arrow to render.
-    +40e [][]     checked if this == 0 when search for dialog.
+    +40e [][]     checked if this == 0 when search for dialog. Not render message window if != 0.
     +410 [][]     messages order. 0-top. 0xffff if window not inited.
     +412 [][]     ???
     +414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
     +416 [][]     owner entity id. We store result of selection in this entity +81.
     +418 [][]     some entity id???
-
     +42c avatar packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x14 size).
     +474 end of avatar packets
-
     +494 []       1 if we render avatar, 0 otherwise.
     +495 []       store here avatar id from +80 from entity 138 struct.
 
