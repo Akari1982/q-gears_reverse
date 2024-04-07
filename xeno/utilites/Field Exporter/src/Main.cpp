@@ -1,5 +1,6 @@
 #include "FieldPackFile.h"
 #include "ScriptFile.h"
+#include "MessageFile.h"
 #include <format>
 
 
@@ -16,22 +17,47 @@ main()
 
         FieldPackFile* field_pack = new FieldPackFile( path );
 
-        File* temp;
-        temp = field_pack->Extract( 5 ); // script
-        ScriptFile* script_file = new ScriptFile( temp );
+        // EXPORT  SCRIPT
+        {
+            File* temp;
+            temp = field_pack->Extract( 5 ); // scripts
+            ScriptFile* file = new ScriptFile( temp );
 
-        std::string save;
-        save += "scripts_raw/";
-        save += std::format( "{:03d}", i );
-        temp->WriteFile( save );
-        delete temp;
+            std::string save;
+            save += "fields_raw/";
+            save += std::format( "{:03d}", i );
+            save += ".scr";
+            temp->WriteFile( save );
+            delete temp;
 
-        std::string script;
-        script += "scripts/";
-        script += std::format( "{:03d}", i );
-        script += ".lua";
-        script_file->GetScripts( script );
-        delete script_file;
+            save = "";
+            save += "fields/";
+            save += std::format( "{:03d}", i );
+            save += ".lua";
+            file->GetScripts( save );
+            delete file;
+        }
+
+        // EXPORT MESSAGES
+        {
+            File* temp;
+            temp = field_pack->Extract( 7 ); // messages
+            MessageFile* file = new MessageFile( temp );
+
+            std::string save;
+            save += "fields_raw/";
+            save += std::format( "{:03d}", i );
+            save += ".mes";
+            temp->WriteFile( save );
+            delete temp;
+
+            save = "";
+            save += "fields/";
+            save += std::format( "{:03d}", i );
+            save += "_mes.xml";
+            file->GetMessages( save );
+            delete file;
+        }
 
         delete field_pack;
     }

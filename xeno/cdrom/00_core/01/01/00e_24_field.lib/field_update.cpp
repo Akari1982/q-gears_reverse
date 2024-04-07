@@ -1485,7 +1485,7 @@ if( w[800c1b60] == 0 ) // debug
 
 A0 = 100; // x
 A1 = f0;  // y
-func334bc();
+system_message_load_font_clut_to_vram();
 ////////////////////////////////
 
 

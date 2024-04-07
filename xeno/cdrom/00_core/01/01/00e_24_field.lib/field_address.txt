@@ -639,44 +639,52 @@
 800c1b6c messages struct (0x498 size)(4 items)
     +  0 2 tex settings packet for buffers (size 0xc).
     + 18 messages data.
-        + 0 (18) [][]     store 0x64 here in case of new row. Maybe how much symbols in new row we can put.
-        + 2 (1a) [][]     index into +40 array.
+        + 0 (18) [][]     current row width in 0x4 chanks (multiply by 4 to get pixels).
+        + 2 (1a) [][]     current row.
         + 4 (1c) [][]     position x.
         + 6 (1e) [][]     position y.
         + 8 (20) [][]     width in pixels.
-        + a (22) [][]     width in something (multiply by 4 to get width in pixels).
-        + c (24) [][]     height in number of rows.
-        + e (26) [][]     texture V (ty).
+        + a (22) [][]     max width in 0x4 chanks (multiply by 4 to get pixels).
+        + c (24) [][]     max rows.
+        + e (26) [][]     start texture V (ty).
         +10 (28) [][]     some flags. Init with 0.
+                          0x0001: set when max row packet achieved.
+                          0x0002: ???
+                          0x0004: ???
                           0x0008: wait for player input flag. Add this flag if we met 0x00_Return text opcode and there is no stored pointer or if we met 0x03_Wait text opcode.
+                          0x0010: remove when wait timer +84 ends.
+                          0x0020: reset text.
+                          0x0040: ???
                           0x0048: add this flags if we met 0x02_New text opcode.
                           0x0080: stored pointer for text. If set and met 0x00_Return() in text then we remove this flag, and jump to stored pointer +38.
                           0x0100: speed increased (button pressed).
                           0x0200: add this flag in 0x0F0D text opcode.
-        +12 (2a) [][]     width in something + 3.
-        +14 (2c) [][]     row height. Store 0xe here.
-        +16      [][]     some row.
-        +1c (34)[][][][] pointer to current position in text data
+        +12 (2a) [][]     current row width.
+        +14 (2c) [][]     current row height. Store 0xe here.
+        +16 (2e) [][]     start row to add packets to render.
+        +18 (30) [][]     current texture row.
+        +1c (34) [][][][] pointer to current position in text data
         +20 (38) [][][][] some pointer.
-        +28 (40) [][][][] pointer to memory with size number of rows * 0x60.
+        +28 (40) [][][][] pointer to rows data (size number of rows * 0x60).
             + 00 buffer1 packet for sprite 0x65 (0x14 size).
             + 14 buffer1 packet for sprite 0x65 (0x14 size).
             + 28 buffer2 packet for sprite 0x65 (0x14 size).
             + 3c buffer2 packet for sprite 0x65 (0x14 size).
-            + 50 [][]     texture u.
-            + 52 [][]     texture v.
-            + 54 [][]     dialog_width + 3 in something.
-            + 56 [][]     init with 0xd. texture height.
-            + 58 [][]     init with 0x0. Store here rendered width in something (same as +18 in window)
-            + 5a []       current row & 1.
-            + 5b []       current row.
+            + 50 texture rect.
+                    +0 [][]     x.
+                    +2 [][]     y.
+                    +4 [][]     w.
+                    +6 [][]     h.
+            + 58 [][]     row width in 0x4 chanks (multiply by 4 to get pixels).
+            + 5a []       use even or odd part of texture.
+            + 5b []       texture row.
             + 5c []       texture v.
-            + 5e [][]     hu[80058c70] or hu[80058ab0].
-        +2c (44)  [][][][] pointer to memory with size (width in something + 3) * 0x1c.
-        +30 (48) buffer1 packet for render settings 0xe1 and 0xe2 (0xc size).
-        +3c (54) buffer2 packet for render settings 0xe1 and 0xe2 (0xc size).
-        +48 (60) buffer1 packet transparent black rectangle (0x10 size).
-        +58 (70) buffer2 packet transparent black rectangle (0x10 size).
+            + 5e [][]     clut.
+        +2c (44)  [][][][] pointer to rendered text texture in memory (size (width in something + 3) * 0x1c).
+        +30 background under text (transparent black rectangle)
+            + 0 texture settings (each buffer 0x1 items 0xc size).
+            +18 packets (each buffer 0x1 items 0x10 size).
+        +68 end of background under text
         +68 (80) []       default number of letters to read.
         +69 (81) []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
         +6a (82) []       stored number of letters to read (to restore if we want).
@@ -690,9 +698,9 @@
         +7c (94) [][][][] +001c from memory block.
         +80 (98) [][]     +001c from memory block.
         +82 (9a) [][]     init with 0. Number of +a4 element in list.
-        +84 (9c) [][]     wait timer. Init with 0.
-        +86 (9e) [][]     store value for 0x0F0E text opcode here.
-        +88 (a0) [][]     store value for 0x0F0E text opcode here.
+        +84 (9c) [][]     wait timer for text render.
+        +86 (9e) [][]     current wait before next letter render.
+        +88 (a0) [][]     base wait before next letter render.
         +8c (a4) [][][][] init with 0. Pointer to list of allocated memory for message text data.
             +00 [][][][] pointer to next allocated memory element.
             +08 [][][][] offset to message text data.

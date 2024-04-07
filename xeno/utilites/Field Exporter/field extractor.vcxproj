@@ -24,14 +24,18 @@
     <ClCompile Include="src\File.cpp" />
     <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\MessageFile.cpp" />
     <ClCompile Include="src\ScriptFile.cpp" />
+    <ClCompile Include="src\TextParse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ArchiveFile.h" />
     <ClInclude Include="src\FieldPackFile.h" />
     <ClInclude Include="src\File.h" />
     <ClInclude Include="src\Logger.h" />
+    <ClInclude Include="src\MessageFile.h" />
     <ClInclude Include="src\ScriptFile.h" />
+    <ClInclude Include="src\TextParse.h" />
     <ClInclude Include="src\TypeDefine.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -143,7 +147,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>

@@ -84,578 +84,489 @@ offset_18 = A0;
 
 offset_18 = A0;
 
-V1 = h[offset_18 + 0];
-V0 = h[offset_18 + a]; // dialog width
-letters_to_read = bu[offset_18 + 69];
+letters = bu[offset_18 + 69];
+struct_60 = w[offset_18 + 28];
 
-if( V0 < V1 )
+if( h[offset_18 + 0] > h[offset_18 + a] ) // current row width greater than max row width
 {
-    V0 = hu[offset_18 + 2] + 1; // pixel_width
-    A0 = h[offset_18 + c];
-    [offset_18 + 0] = h(0);
-    [offset_18 + 2] = h(V0);
+    [offset_18 + 0] = h(0); // reset row width
+    [offset_18 + 2] = h(hu[offset_18 + 2] + 1);   // move to next row packet
+    [offset_18 + 18] = h(hu[offset_18 + 18] + 1); // move to next row texture
 
-    V0 = hu[offset_18 + 0018];
-    V1 = h[offset_18 + 0002];
-    V0 = V0 + 0001;
-    V1 = V1 < A0;
-    80033C78	bne    v1, zero, L33c90 [$80033c90]
-    [offset_18 + 0018] = h(V0);
-    V0 = hu[offset_18 + 0010];
-    [offset_18 + 0002] = h(0);
-    V0 = V0 | 0001;
-    [offset_18 + 0010] = h(V0);
-
-    L33c90:	; 80033C90
-    V0 = hu[offset_18 + 0010];
-    V0 = V0 & 0001;
-    80033C9C	beq    v0, zero, L33cec [$80033cec]
-
-    V1 = h[offset_18 + 0016];
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V1 = w[offset_18 + 0028];
-    V0 = V0 << 05;
-    V0 = V0 + V1;
-    [V0 + 0058] = h(0);
-    V0 = hu[offset_18 + 0016];
-    V1 = h[offset_18 + 000c];
-    V0 = V0 + 0001;
-    [offset_18 + 0016] = h(V0);
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < V1;
-    if( V0 == 0 )
+    if( h[offset_18 + 2] >= h[offset_18 + c] ) // warp around row packet
     {
-        [offset_18 + 16] = h(0);
+        [offset_18 + 2] = h(0);
+        [offset_18 + 10] = h(hu[offset_18 + 10] | 0001);
     }
 
-    L33cec:	; 80033CEC
-    V0 = h[offset_18 + 000c];
-    V1 = h[offset_18 + 0018];
-    V0 = V0 + 0001;
-    80033CF8	div    v1, v0
-    80033CFC	mfhi   a3
-    T0 = h[offset_18 + 0002];
-    A2 = w[offset_18 + 0028];
-    A0 = bu[offset_18 + 000e];
-    A1 = T0 << 01;
-    A1 = A1 + T0;
-    A1 = A1 << 05;
-    A2 = A1 + A2;
-    V1 = A3 >> 1f;
-    V1 = A3 + V1;
-    V1 = V1 >> 01;
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + V1;
-    V0 = V0 + A0;
-    [A2 + 005c] = b(V0);
-    V0 = w[offset_18 + 0028];
-    80033D44	nop
-    A1 = A1 + V0;
-    V0 = A3 & 0001;
+    if( hu[offset_18 + 10] & 0001 )
+    {
+        V1 = h[offset_18 + 16];
+        [struct_60 + V1 * 60 + 58] = h(0); // reset row width
 
-    L33d50:	; 80033D50
-    80033D50	beq    v0, zero, L33d68 [$80033d68]
-    80033D54	nop
-    V0 = hu[80058ab0];
-    80033D60	j      L33d78 [$80033d78]
-    [A1 + 005e] = h(V0);
+        [offset_18 + 16] = h(h[offset_18 + 16] + 1);
 
-    L33d68:	; 80033D68
-    V0 = hu[80058c70];
-    80033D70	nop
-    [A1 + 005e] = h(V0);
+        if( h[offset_18 + 16] >= h[offset_18 + c] ) // warp around start row to render
+        {
+            [offset_18 + 16] = h(0);
+        }
+    }
 
-    L33d78:	; 80033D78
-    A1 = T0 << 01;
-    A1 = A1 + T0;
-    A1 = A1 << 05;
-    V0 = w[offset_18 + 0028];
-    V1 = A3 & 0001;
-    V0 = A1 + V0;
-    [V0 + 005a] = b(V1);
-    V1 = A3 >> 1f;
-    V1 = A3 + V1;
-    V0 = w[offset_18 + 0028];
-    V1 = V1 >> 01;
-    V0 = A1 + V0;
-    [V0 + 005b] = b(A3);
-    V0 = w[offset_18 + 0028];
-    A0 = hu[offset_18 + 000e];
-    A1 = A1 + V0;
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + V1;
-    A0 = A0 + V0;
-    [A1 + 0052] = h(A0);
+    tex_row = h[offset_18 + 18] % (h[offset_18 + c] + 1);
+    row_id = h[offset_18 + 2];
+    [struct_60 + row_id * 60 + 5c] = b(bu[offset_18 + e] + ((tex_row / 2) * d));
+
+    if( tex_row & 1 )
+    {
+        [struct_60 + row_id * 60 + 5e] = h(hu[80058ab0]);
+    }
+    else
+    {
+        [struct_60 + row_id * 60 + 5e] = h(hu[80058c70]);
+    }
+
+    [struct_60 + row_id * 60 + 5a] = b(tex_row & 1);
+    [struct_60 + row_id * 60 + 5b] = b(tex_row);
+    [struct_60 + row_id * 60 + 50 + 2] = h(hu[offset_18 + e] + ((tex_row / 2) * d));
 }
 
+letters = letters - 1;
 
-
-letters_to_read = letters_to_read - 1;
-
-
-
-if( bu[offset_18 + 6c] != 0 ) // +84
+if( bu[offset_18 + 6c] != 0 )
 {
-    [offset_18 + 10] = h(hu[offset_18 + 10] & fffb);
     [offset_18 + 6c] = b(0);
+    [offset_18 + 10] = h(hu[offset_18 + 10] & fffb);
     return;
 }
 
-
-
-if( letters_to_read != -1 )
+while( letters != -1 )
 {
-    L33e48:	; 80033E48
-        A1 = w[offset_18 + 1c]; // +34
-        opcode = bu[A1]; // read text data
+    A1 = w[offset_18 + 1c];
+    opcode = bu[A1];
 
-        // close
-        if( opcode == 0 )
+    if( opcode == 0 ) // close
+    {
+        A0 = hu[offset_18 + 10];
+
+        if( ( A0 & 0080 ) == 0 )
         {
-            if( hu[offset_18 + 10] & 0080 )
+            [offset_18 + 10] = h(A0 | 0008);
+            [offset_18 + 6b] = b(1);
+            [offset_18 + 6c] = b(1);
+            return;
+        }
+
+        [offset_18 + 10] = h(A0 & ff7f);
+        [offset_18 + 1c] = w(w[offset_18 + 20] + 1);
+    }
+    else if( opcode == 1 ) // new row
+    {
+        [offset_18 + 0] = h(64); // set max row width to calculate new row next update
+        [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
+        return;
+    }
+    else if( opcode == 2 ) // new window
+    {
+        [offset_18 + 6b] = b(2);
+
+        V1 = w[offset_18 + 1c];
+        [offset_18 + 10] = h(hu[offset_18 + 10] | 0048);
+        [offset_18 + 1c] = w(V1 + 1);
+
+        if( bu[V1 + 1] == 1 ) // if there is new row opcode after new window - skip it
+        {
+            [offset_18 + 1c] = w(V1 + 2);
+        }
+        return;
+    }
+    else if( opcode == 3 ) // wait
+    {
+        [offset_18 + 6b] = b(3);
+        [offset_18 + 10] = h(hu[offset_18 + 10] | 0008);
+        [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
+        return;
+    }
+    else if( opcode == f ) // special
+    {
+        V1 = bu[A1 + 1];
+
+        switch( V1 )
+        {
+            case 0: // wait
             {
-                [offset_18 + 10] = h(hu[offset_18 + 10] & ff7f);
-                [offset_18 + 1c] = w(w[offset_18 + 20] + 1);
-            }
-            else
-            {
-                [offset_18 + 10] = h(hu[offset_18 + 10] | 0008); // +28
-                [offset_18 + 6b] = b(1); // +83
-                [offset_18 + 6c] = b(1); // +84
+                V0 = w[offset_18 + 1c];
+                [offset_18 + 1c] = w(V0 + 3);
+                [offset_18 + 84] = h(bu[V0 + 2]);
                 return;
             }
-        }
-        // new row
-        else if( opcode == 1 )
-        {
-            [offset_18 + 0] = h(64); // +18
-            [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
-            return;
-        }
-        // new window
-        else if( opcode == 2 )
-        {
-            [offset_18 + 6b] = b(2); // +83
-            [offset_18 + 10] = h(hu[offset_18 + 10] | 0048);
+            break;
 
-            V1 = w[offset_18 + 1c];
-            [offset_18 + 1c] = w(V1 + 1);
-            if( [V1 + 1] == 1 ) // if there is new row opcode after new window - skip it
+            case 1: // accelerate
             {
-                [offset_18 + 1c] = w(V1 + 2);
+                V0 = w[offset_18 + 1c];
+                A3 = bu[V0 + 2];
+                V1 = A3 & ffff;
+                if( V1 != 0 )
+                {
+                    V0 = bu[offset_18 + 68];
+                    [offset_18 + 68] = b(A3);
+                    [offset_18 + 69] = b(A3);
+                    [offset_18 + 6a] = b(V0);
+
+                    letters = letters + V1;
+                }
+                else
+                {
+                    V0 = bu[offset_18 + 6a];
+                    [offset_18 + 68] = b(V0);
+                    [offset_18 + 69] = b(V0);
+                    [offset_18 + 6a] = b(0);
+                }
+
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
             }
-            return;
-        }
-        // wait
-        else if( opcode == 3 )
-        {
-            [offset_18 + 10] = h(hu[offset_18 + 10] | 0008); // +28
-            [offset_18 + 6b] = b(3); // +83
-            [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
-            return;
-        }
-        // special
-        else if( opcode == f )
-        {
-            switch( bu[A1 + 1] )
+            break;
+
+            case 2: // wait and close
             {
-                case 0: // wait
-                {
-                    V0 = w[offset_18 + 1c];
-                    [offset_18 + 84] = h(bu[V0 + 2]);
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
-                    return;
-                }
-                break;
+                V1 = w[offset_18 + 1c];
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
+                [offset_18 + 6c] = b(1);
+                [offset_18 + 84] = h(bu[V1 + 2]);
+                return;
+            }
+            break;
 
-                case 1: // accelerate
-                {
-                    V0 = w[offset_18 + 1c];
-                    A3 = bu[V0 + 2];
-                    if( A3 != 0 )
-                    {
-                        // store default number of letters to read
-                        [offset_18 + 6a] = b(bu[offset_18 + 68]);
-                        // set new number of letters to read
-                        [offset_18 + 68] = b(A3); // 80
-                        [offset_18 + 69] = b(A3); // 81
-                        letters_to_read = letters_to_read + A3;
-                    }
-                    else
-                    {
-                        [offset_18 + 68] = b(bu[offset_18 + 6a]);
-                        [offset_18 + 69] = b(bu[offset_18 + 6a]);
-                        [offset_18 + 6a] = b(0); // 82
-                    }
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
-                }
-                break;
+            case 3: // not used
+            {
+                V1 = w[800589fc];
+                A3 = bu[V0 + 2];
+                A1 = bu[V0 + 3];
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
 
-                case 2: // wait and close
-                {
-                    V0 = w[offset_18 + 1c];
-                    [offset_18 + 84] = h(bu[V0 + 2]);
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
-                    [offset_18 + 6c] = b(1);
-                    return;
-                }
-                break;
+                A0 = w[V1 + A3 * 4];
+                system_message_get_text_pointer();
 
-                case 3: // not used
-                {
-                    V0 = w[offset_18 + 1c];
-                    category_id = bu[V0 + 2];
-                    text_id = bu[V0 + 3];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
+                A0 = offset_18;
+                A1 = V0;
+                func33bf8();
 
-                    letters_to_read = letters_to_read + 1;
+                letters = letters + 1;
+            }
+            break;
+
+            case 4:
+            {
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
+
+                V1 = h[offset_18 + 80];
+
+                text_id = V1;
+                V1 = V1 & ff00;
+
+                V0 = w[800589fc];
+
+                if( V1 == 0 )
+                {
+                    A0 = w[V0 + 58];
+                    A1 = text_id & 00ff;
+                    system_message_get_text_pointer();
 
                     A0 = offset_18;
-                    V1 = w[800589fc];
-                    category = w[V1 + category_id * 4];
-                    A1 = category + hu[category + 4 + text_id * 2];
-
-801EBFA0 0
-801EC05C 1
-801EC110 2
-801EC190 3
-801EC21C 4
-801EC2A8 5
-801EC334 6
-801EC3B8 7
-801EC3E0 8
-801EC3EC 9
-801EC47C a
-801EC500 b
-801EC50C c
-801EC518 d
-801EC524 e
-801EC530 f
-801EC53C 10
-801EC548 11
-801ECC0C 12
-801ECD24 13
-801ECD30 14
-801ED368 15
-801ED374 16
-801EDC70 17
-801EE0CC 18
-801EEED0 19
-801EFDD4 1a
-801EFE2C 1b
-801F00B4 1c
-801F016C 1d
-801F0224 1e
-801F02DC 1f
-801F0360 20
-801F0418 21
-801F04D4 22
-801F0588 23
-801F0638 24
-801F06EC 25
-801F0798 26
-801F0850 27
-801F08D4 28
-801F098C 29
-801F0A48 2a
-801F0AFC 2b
-801F0BB4 2c
-801F0C38 2d
-801F0CF4 2e
-801F0DB0 2f
-801F0DBC 30
-801F1938 31
-801F1998 32
-801F1F34 33
-801F2378 34
-
-                    func33bf8(); // set subtext to read
+                    A1 = V0;
+                    func33bf8();
                 }
-                break;
-
-                case 4:
+                else if( V1 == 100 )
                 {
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
-                    V1 = h[offset_18 + 80];
+                    A0 = w[V0 + 5c];
+                    A1 = text_id & 00ff;
+                    system_message_get_text_pointer();
 
+                    A0 = offset_18;
+                    A1 = V0;
+                    func33bf8();
+                }
+                else if( V1 == 200 )
+                {
+                    A0 = w[V0 + 44];
+                    A1 = text_id & 00ff;
+                    system_message_get_text_pointer();
+
+                    A0 = offset_18;
+                    A1 = V0;
+                    func33bf8();
+                }
+                else if( V1 == 300 )
+                {
+                    A0 = w[V0 + cc];
+                    A1 = text_id & 00ff;
+                    system_message_get_text_pointer();
+
+                    A0 = offset_18;
+                    A1 = V0;
+                    func33bf8();
+                }
+                else if( V1 == 400 )
+                {
+                    A0 = w[V0 + c8];
+                    A1 = text_id & 00ff;
+                    system_message_get_text_pointer();
+
+                    A0 = offset_18;
+                    A1 = V0;
+                    func33bf8();
+                }
+            }
+            break;
+
+            case 5:
+            {
+                V0 = w[offset_18 + 1c];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+
+                V1 = A3 & ffff;
+
+                if( ( V1 >= 80 ) && ( bu[8006e978 + V1] == ff ) )
+                {
                     V0 = w[800589fc];
-                    text_id = V1 & 00ff;
-                    A0 = offset_18;
-
-                    if( ( V1 & ff00 ) == 0 )
-                    {
-                        category = w[V0 + 16 * 4];
-                        A1 = category + hu[category + 4 + text_id * 2];
-                        func33bf8(); // set subtext to read
-                    }
-                    else if( ( V1 & ff00 ) == 100 )
-                    {
-                        category = w[V0 + 17 * 4];
-                        A1 = category + hu[category + 4 + text_id * 2];
-                        func33bf8(); // set subtext to read
-                    }
-                    else if( ( V1 & ff00 ) == 200 )
-                    {
-                        category = w[V0 + 11 * 4];
-                        A1 = category + hu[category + 4 + text_id * 2];
-                        func33bf8(); // set subtext to read
-                    }
-                    else if( ( V1 & ff00 ) == 300 )
-                    {
-                        category = w[V0 + 33 * 4];
-                        A1 = category + hu[category + 4 + text_id * 2];
-                        func33bf8(); // set subtext to read
-                    }
-                    else if( ( V1 & ff00 ) == 400 )
-                    {
-                        category = w[V0 + 32 * 4];
-                        A1 = category + hu[category + 4 + text_id * 2];
-                        func33bf8(); // set subtext to read
-                    }
-                }
-                break;
-
-                case 5:
-                {
-                    V0 = w[offset_18 + 1c];
-                    V1 = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    if( V1 >= 80 )
-                    {
-                        V1 = bu[8006e978 + V1];
-                    }
-
-                    if( V1 == ff )
-                    {
-                        V0 = w[800589fc];
-                        category = w[V0 + 1a * 4];
-                        text_id = 0;
-                        A1 = category + hu[category + 4 + text_id * 2];
-                    }
-                    else
-                    {
-                        A1 = 8006ccc4 + V1 * 14;
-                    }
-
-                    letters_to_read = letters_to_read + 1;
+                    A0 = w[V0 + 0068];
+                    A1 = 0;
+                    system_message_get_text_pointer();
 
                     A0 = offset_18;
-                    func33bf8(); // set subtext to read
+                    A1 = V0;
                 }
-                break;
-
-                case 6:
+                else
                 {
-                    letters_to_read = letters_to_read + 1;
-
-                    V0 = w[offset_18 + 1c];
-                    text_id = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    V1 = w[800589fc];
-                    category = w[V1 + 17 * 4];
-
                     A0 = offset_18;
-                    A1 = category + hu[category + 4 + text_id * 2];
-                    func33bf8(); // set subtext to read
-                }
-                break;
-
-                case 7:
-                {
-                    letters_to_read = letters_to_read + 1;
-
-                    V0 = w[offset_18 + 1c];
-                    text_id = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    V1 = w[800589fc];
-                    category = w[V1 + 18 * 4];
-
-                    A0 = offset_18;
-                    A1 = category + hu[category + 4 + text_id * 2];
-                    func33bf8(); // set subtext to read
-                }
-                break;
-
-                case 8:
-                {
-                    letters_to_read = letters_to_read + 1;
-
-                    V0 = w[offset_18 + 1c];
-                    text_id = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    V1 = w[800589fc];
-                    category = w[V1 + 19 * 4];
-
-                    A0 = offset_18;
-                    A1 = category + hu[category + 4 + text_id * 2];
-                    func33bf8(); // set subtext to read
-                }
-                break;
-
-                case 9: // use for variable from script
-                {
-                    letters_to_read = letters_to_read + 1;
-
-                    V0 = w[offset_18 + 1c];
-                    A3 = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    A0 = w[offset_18 + 70 + A3 * 4]; // +88 +8c +90 +94
-                    A1 = 0; // normal numbers
-                    A2 = 0; // unsigned
-                    func33b14();
-
-                    A0 = offset_18;
-                    A1 = 80059780;
-                    func33bf8();
-                }
-                break;
-
-                case a: // use for variable from script
-                {
-                    letters_to_read = letters_to_read + 1;
-
-                    V0 = w[offset_18 + 1c];
-                    A3 = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    A0 = w[offset_18 + 70 + A3 * 4]; // +88 +8c +90 +94
-                    A1 = 1; // special numbers
-                    A2 = 0; // unsigned
-                    func33b14();
-
-                    A0 = offset_18;
-                    A1 = 80059780;
-                    func33bf8();
-                }
-                break;
-
-                case b:
-                {
-                    V1 = w[offset_18 + 1c];
-                    [offset_18 + 1c] = w(V1 + 2);
-                    [offset_18 + 6d] = b(bu[V1 + 2]);
+                    A1 = V1 << 02;
+                    A1 = A1 + V1;
+                    A1 = A1 << 02;
+                    V0 = 8006ccc4;
+                    A1 = A1 + V0;
                 }
 
-                case c: // use for variable from script
-                {
-                    letters_to_read = letters_to_read + 1;
+                func33bf8();
 
-                    V0 = w[offset_18 + 1c];
-                    A3 = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    A0 = w[offset_18 + 70 + A3 * 4]; // +88 +8c +90 +94
-                    A1 = 1; // special numbers
-                    A2 = 1; // signed
-                    func33b14();
-
-                    A0 = offset_18;
-                    A1 = 80059780;
-                    func33bf8();
-                }
-                break;
-
-                case d: // wait and close.. and something???
-                {
-                    V1 = w[offset_18 + 1c];
-                    [offset_18 + 1c] = w(V1 + 3);
-                    [offset_18 + 10] = h(hu[offset_18 + 10] | 0200);
-                    [offset_18 + 6c] = b(1);
-                    [offset_18 + 84] = h(bu[V0 + 2]);
-                    return;
-                }
-                break;
-
-                case e:
-                {
-                    // store default number of letters to read
-                    [offset_18 + 6a] = b(bu[offset_18 + 68]);
-                    // set new number of letters to read
-                    [offset_18 + 68] = b(1);
-                    [offset_18 + 69] = b(1);
-
-                    V1 = w[offset_18 + 1c];
-                    [offset_18 + 1c] = w(V1 + 3);
-                    [offset_18 + 86] = h(bu[V1 + 2]); // 9e
-                    [offset_18 + 88] = h(bu[V1 + 2]);
-                    return;
-                }
-                break;
-
-                case f:
-                {
-                    V0 = w[offset_18 + 1c];
-                    A3 = bu[V0 + 2];
-                    [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
-
-                    letters_to_read = letters_to_read + 1;
-
-                    A0 = offset_18;
-                    V1 = w[800589fc];
-                    category = w[V1 + 31 * 4];
-                    text_id = bu[8004f8d8 + A3];
-                    A1 = category + hu[category + 4 + text_id * 2];
-                    func33bf8(); // set subtext to read
-                }
-                break;
+                letters = letters + 1;
             }
+            break;
+
+            case 6:
+            {
+                V0 = w[offset_18 + 1c];
+                V1 = w[800589fc];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+                A0 = w[V1 + 5c];
+                A1 = A3;
+                system_message_get_text_pointer();
+
+                A0 = offset_18;
+                A1 = V0;
+                func33bf8();
+
+                letters = letters + 1;
+            }
+            break;
+
+            case 7:
+            {
+                V0 = w[offset_18 + 1c];
+                V1 = w[800589fc];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+
+                A0 = w[V1 + 60];
+                A1 = A3;
+                system_message_get_text_pointer();
+
+                A0 = offset_18;
+                A1 = V0;
+                func33bf8();
+
+                letters = letters + 1;
+            }
+            break;
+
+            case 8:
+            {
+                V0 = w[offset_18 + 1c];
+                V1 = w[800589fc];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+
+                A0 = w[V1 + 64];
+                A1 = A3;
+                system_message_get_text_pointer();
+
+                A0 = offset_18;
+                A1 = V0;
+                func33bf8();
+
+                letters = letters + 1;
+            }
+            break;
+
+            case 9: // use for variable from script
+            {
+                A1 = 0;
+                A2 = 0;
+                V0 = w[offset_18 + 1c];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+
+                A0 = w[offset_18 + A3 * 4 + 70];
+                func33b14();
+
+                A0 = offset_18;
+                A1 = 80059780;
+                func33bf8();
+
+                letters = letters + 1;
+            }
+            break;
+
+            case a: // use for variable from script
+            {
+                A1 = 1;
+                A2 = 0;
+                V0 = w[offset_18 + 1c];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+
+                A0 = w[offset_18 + A3 * 4 + 70];
+                func33b14();
+
+                A0 = offset_18;
+                A1 = 80059780;
+                func33bf8();
+
+                letters = letters + 1;
+            }
+            break;
+
+            case b:
+            {
+                V0 = w[offset_18 + 1c];
+                V0 = bu[V0 + 2];
+                [offset_18 + 6d] = b(V0);
+
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
+            }
+            break;
+
+            case c: // use for variable from script
+            {
+                A1 = 1;
+                A2 = 1;
+                V0 = w[offset_18 + 1c];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+
+                A0 = w[offset_18 + A3 * 4 + 70];
+                func33b14();
+
+                A0 = offset_18;
+                A1 = 80059780;
+                func33bf8();
+
+                letters = letters + 1;
+            }
+            break;
+
+            case d: // wait and close.. and something???
+            {
+                V1 = w[offset_18 + 1c];
+                A0 = bu[V1 + 2];
+                [offset_18 + 84] = h(A0);
+
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
+                [offset_18 + 6c] = b(1);
+                [offset_18 + 10] = h(hu[offset_18 + 10] | 0200);
+                return;
+            }
+            break;
+
+            case e:
+            {
+                // store default number of letters to read
+                [offset_18 + 6a] = b(bu[offset_18 + 68]);
+                // set new number of letters to read
+                [offset_18 + 68] = b(1);
+                [offset_18 + 69] = b(1);
+
+                V1 = w[offset_18 + 1c];
+                [offset_18 + 88] = h(bu[V1 + 2]);
+                [offset_18 + 86] = h(bu[V1 + 2]);
+
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
+                return;
+            }
+            break;
+
+            case f:
+            {
+                V0 = w[offset_18 + 1c];
+                V1 = w[800589fc];
+                A3 = bu[V0 + 2];
+                [offset_18 + 1c] = w(V0 + 2);
+                A0 = w[V1 + c4];
+                V0 = A3 & ffff;
+                A1 = bu[8004f8d8 + V0];
+                system_message_get_text_pointer();
+
+                A0 = offset_18;
+                A1 = V0;
+                func33bf8();
+
+                letters = letters + 1;
+            }
+            break;
         }
-        // usual letter
+    }
+    else // usual letter
+    {
+        if( opcode < w[800589e8] ) // 0xf8 here
+        {
+            byte1 = 0;
+            byte2 = opcode;
+            size = 1;
+        }
         else
         {
-            if( opcode < w[800589e8] ) // 0xf8 here
-            {
-                byte1 = 0;
-                byte2 = opcode & ff; // readed byte
-                size = 1;
-            }
-            else
-            {
-                byte1 = opcode;
-                byte2 = bu[A1 + 1]; // read extended byte
-                size = 2;
-            }
-
-            A0 = byte1;
-            A1 = byte2;
-            func34dbc();
-            S4 = V0; // 2 - 0x10-0x4f, 0xf800-0xf814, 3 - otherwise
-
-            // need new row
-            if(  h[offset_18 + 0] + S4 > h[offset_18 + a] ) // +22 width in something (from dialog settings)
-            {
-                [offset_18 + 0] = h( h[offset_18 + 0] + S4);
-                return;
-            }
-
-            row_id = h[offset_18 + 2];
-            struct_60 = w[offset_18 + 28]; // +40
-
-            A0 = byte1;
-            A1 = byte2;
-            A2 = w[offset_18 + 2c] + h[offset_18 + 0] * 2;
-            A3 = h[offset_18 + 12]; // width in something + 3
-            A4 = bu[struct_60 + row_id * 60 + 5a]; // odd or even row
-            func34e20();
-
-            [offset_18 + 1c] = w(w[offset_18 + 1c] + size); // increment pointer
-            [offset_18 + 0] = h(hu[offset_18 + 0] + S4);
-            [struct_60 + row_id * 60 + 58] = h(hu[offset_18 + 0] + S4);
+            byte1 = opcode;     // extended chat table
+            byte2 = bu[A1 + 1]; // read char in extended
+            size = 2;
         }
 
-        letters_to_read = letters_to_read - 1;
-    800343D0	bne    letters_to_read, -1, L33e48 [$80033e48]
+        A0 = byte1;
+        A1 = byte2;
+        system_message_get_char_width(); // 2 - 8 pixels, 3 - c pixels
+        char_w = V0;
+
+        if( h[offset_18 + 0] + char_w > h[offset_18 + a] ) // current row width will be greater than max row width
+        {
+            [offset_18 + 0] = h(h[offset_18 + 0] + char_w); // store and stop render
+            return;
+        }
+
+        row_id = h[offset_18 + 2];
+
+        A0 = byte1;
+        A1 = byte2;
+        A2 = w[offset_18 + 2c] + h[offset_18 + 0] * 2; // offset in tex
+        A3 = h[offset_18 + 12];                        // row width
+        A4 = bu[struct_60 + row_id * 60 + 5a];         // even or odd part of texture
+        system_message_generate_char_into_row_tex();
+
+        [offset_18 + 0] = h(hu[offset_18 + 0] + char_w);
+        [offset_18 + 1c] = w(w[offset_18 + 1c] + size);
+        [struct_60 + row_id * 60 + 58] = h(hu[offset_18 + 0]);
+    }
+
+    letters = letters - 1;
 }
 ////////////////////////////////
 
@@ -663,6 +574,7 @@ if( letters_to_read != -1 )
 
 ////////////////////////////////
 // func34404()
+
 offset_18 = A0;
 
 [offset_18 + 10] = h(hu[offset_18 + 10] & fff7);
@@ -743,12 +655,14 @@ system_memory_mark_removed_alloc();
 
 ////////////////////////////////
 // func34538()
+
 offset_18 = A0;
 text_data = A1;
 
 [offset_18 + 82] = h(hu[offset_18 + 82] + 1);
 
 [GP + 1a8] = h(2a);
+
 A0 = 8;
 A1 = 2;
 system_memory_allocate();
@@ -908,6 +822,7 @@ if( hu[offset_18 + 10] & 0040 )
 {
     if( ( hu[offset_18 + 10] & 0008 ) == 0 )
     {
+        // remove 0x0040 flag
         [offset_18 + 10] = h((hu[offset_18 + 10] & ffbf) | 0020);
     }
 }
@@ -919,215 +834,105 @@ if( hu[offset_18 + 10] & 0020 )
     [offset_18 + 16] = h(0);
     [offset_18 + 18] = h(0);
 
+    // set first row
     V0 = w[offset_18 + 28];
-    [V0 + 52] = h(hu[offset_18 + e]);
-    [V0 + 5a] = b(0);
-    [V0 + 5c] = b(hu[offset_18 + e]);
-    [V0 + 5e] = h(hu[80058c70]);
+    [V0 + 0 * 60 + 52] = h(hu[offset_18 + e]);
+    [V0 + 0 * 60 + 5a] = b(0);
+    [V0 + 0 * 60 + 5c] = b(hu[offset_18 + e]);
+    [V0 + 0 * 60 + 5e] = h(hu[80058c70]);
 
     for( int i = 0; i < h[offset_18 + c]; ++i )
     {
-        V0 = w[offset_18 + 28] + i * 60;
-        [V0 + 58] = h(0);
+        [V0 + i * 60 + 58] = h(0);
     }
 
-    [offset_18 + 10] = h(hu[offset_18 + 10] & ffde);
+    [offset_18 + 10] = h(hu[offset_18 + 10] & ffde); // remove 0x0021
 }
 
-S3 = h[offset_18 + 0016];
-V0 = h[offset_18 + 000c];
-V1 = hu[offset_18 + 000c];
-if( V0 > 0 )
+row_id = h[offset_18 + 16];
+
+// unknown render
+for( int i = 0; i < h[offset_18 + c]; ++i )
 {
-    S4 = 0;
-    V0 = S3 << 01;
-    V0 = V0 + S3;
-    S1 = V0 << 05;
+    if( row_id >= h[offset_18 + c] )
+    {
+        row_id = 0;
+    }
 
-    loop3488c:	; 8003488C
-        V0 = V1 << 10;
-        V0 = V0 >> 10;
-        V0 = S3 < V0;
-        if( V0 == 0 )
-        {
-            S1 = 0;
-            S3 = 0;
-        }
+    packet = w[offset_18 + 28] + row_id * 60 + rb * 28 + 14;
+    row = w[offset_18 + 28] + row_id * 60;
 
-        V0 = bu[offset_18 + 006e];
-        if( V0 != S4 )
-        {
-            V1 = w[offset_18 + 0028];
-            V1 = S1 + V1;
-            V1 = rb * 28 + V1;
-            V0 = bu[V1 + 001b];
-            V0 = V0 | 0001;
-        }
-        else
-        {
-            V1 = w[offset_18 + 0028];
-            800348D8	nop
-            V1 = S1 + V1;
-            V1 = rb * 28 + V1;
-            V0 = bu[V1 + 001b];
-            800348E8	nop
-            V0 = V0 & 00fe;
-        }
+    if( bu[offset_18 + 6e] != i )
+    {
+        [packet + 7] = b(bu[packet + 7] | 01); // Textured Rectangle, variable size, opaque, raw-texture
+    }
+    else // cursor selected row
+    {
+        [packet + 7] = b(bu[packet + 7] & fe); // Textured Rectangle, variable size, opaque, texture-blending
+    }
 
-        [V1 + 001b] = b(V0);
-        V0 = w[offset_18 + 0028];
-        800348F8	nop
-        A0 = S1 + V0;
-        V0 = h[A0 + 0058];
-        80034904	nop
-        V0 = V0 < 0041;
-        if( V0 == 0 )
-        {
-            V0 = A0 + rb * 28;
-            V1 = bu[A0 + 005c];
-            [V0 + 0021] = b(V1);
-            V0 = w[offset_18 + 0028];
-            80034924	nop
-            V0 = S1 + V0;
-            V1 = hu[V0 + 005e];
-            V0 = V0 + rb * 28;
-            [V0 + 0022] = h(V1);
-            V0 = h[offset_18 + 0014];
-            80034940	mult   v0, s4
-            V1 = w[offset_18 + 0028];
-            80034948	nop
-            V1 = S1 + V1;
-            V1 = V1 + rb * 28;
-            V0 = hu[offset_18 + 0006];
-            80034958	mflo   t0
-            V0 = V0 + T0;
-            [V1 + 001e] = h(V0);
-            V1 = w[offset_18 + 0028];
-            80034968	nop
-            V1 = S1 + V1;
-            V0 = h[V1 + 0058];
-            V1 = V1 + rb * 28;
-            80034978	addiu  v0, v0, $ffc0 (=-$40)
-            V0 = V0 << 02;
-            [V1 + 0024] = h(V0);
-            A1 = w[offset_18 + 0028];
-            A0 = otag;
-            A1 = A1 + S1;
-            A1 = A1 + rb * 28;
-            A1 = A1 + 0014;
-            80034994	jal    func315a8 [$800315a8]
-        }
+    if( h[row + 58] >= 41 )
+    {
+        [packet + a] = h(hu[offset_18 + 6] + h[offset_18 + 14] * i); // y
+        [packet + d] = b(bu[row + 5c]);                              // v
+        [packet + e] = h(hu[row + 5e]);                              // clut
+        [packet + 10] = h((h[row + 58] - 40) * 4);                   // w
 
-        S1 = S1 + 0060;
-        S4 = S4 + 0001;
-        V0 = h[offset_18 + 000c];
-        V1 = hu[offset_18 + 000c];
-        S3 = S3 + 0001;
-        V0 = S4 < V0;
-    800349B0	bne    v0, zero, loop3488c [$8003488c]
+        A0 = otag;
+        A1 = packet;
+        func315a8(); // add textured rectangle to render
+    }
+
+    row_id += 1;
 }
 
 A0 = otag;
-A1 = offset_18 + 003c;
+A1 = offset_18 + 30 + c;
 system_psyq_add_prim();
 
-S3 = h[offset_18 + 16];
-V0 = h[offset_18 + c];
-V1 = hu[offset_18 + c];
-if( V0 > 0 )
+row_id = h[offset_18 + 16];
+
+// text render
+for( int i = 0; i < h[offset_18 + c]; ++i )
 {
-    S4 = 0;
-    V0 = S3 << 01;
-    V0 = V0 + S3;
-    S1 = V0 << 05;
+    if( row_id >= h[offset_18 + c] )
+    {
+        row_id = 0;
+    }
 
-    loop349f0:	; 800349F0
-        V0 = V1 << 10;
-        V0 = V0 >> 10;
-        V0 = S3 < V0;
-        if( V0 == 0 )
-        {
-            S1 = 0;
-            S3 = 0;
-        }
+    packet = w[offset_18 + 28] + row_id * 60 + rb * 28;
+    row = w[offset_18 + 28] + row_id * 60;
 
-        V0 = bu[offset_18 + 006e];
-        if( V0 != S4 )
+    if( bu[offset_18 + 6e] != i )
+    {
+        [packet + 7] = b(bu[packet + 7] | 01); // Textured Rectangle, variable size, opaque, raw-texture
+    }
+    else // cursor selected row
+    {
+        [packet + 7] = b(bu[packet + 7] & fe); // Textured Rectangle, variable size, opaque, texture-blending
+    }
+
+    if( h[row + 58] != 0 ) // if current row width exist
+    {
+        [packet + a] = h(hu[offset_18 + 6] + h[offset_18 + 14] * i); // y
+        [packet + d] = b(bu[row + 5c]);                              // v
+        [packet + e] = h(hu[row + 5e]);                              // clut
+
+        if( h[row + 58] >= 41 )
         {
-            V1 = w[offset_18 + 0028];
-            V1 = S1 + V1;
-            V1 = rb * 28 + V1;
-            V0 = bu[V1 + 0007];
-            V0 = V0 | 0001;
+            [packet + 10] = h(100);                                  // w
         }
         else
         {
-            V1 = w[offset_18 + 0028];
-            V1 = S1 + V1;
-            V1 = rb * 28 + V1;
-            V0 = bu[V1 + 0007];
-            V0 = V0 & 00fe;
+            [packet + 10] = h(h[row + 58] * 4);                      // w
         }
 
-        [V1 + 0007] = b(V0);
-        V0 = w[offset_18 + 0028];
-        80034A5C	nop
-        A0 = S1 + V0;
-        V0 = h[A0 + 0058];
-        80034A68	nop
-        if( V0 != 0 )
-        {
-            V0 = A0 + rb * 28;
-            V1 = bu[A0 + 005c];
-            [V0 + 000d] = b(V1);
-            V0 = w[offset_18 + 0028];
-            V0 = S1 + V0;
-            V1 = hu[V0 + 005e];
-            V0 = V0 + rb * 28;
-            [V0 + 000e] = h(V1);
-            V0 = h[offset_18 + 0014];
-            80034A9C	nop
-            80034AA0	mult   v0, s4
-            V1 = w[offset_18 + 0028];
-            80034AA8	nop
-            V1 = S1 + V1;
-            V1 = V1 + rb * 28;
-            V0 = hu[offset_18 + 0006];
-            80034AB8	mflo   t0
-            V0 = V0 + T0;
-            [V1 + 000a] = h(V0);
-            V0 = w[offset_18 + 0028];
-            80034AC8	nop
-            V1 = S1 + V0;
-            A0 = h[V1 + 0058];
-            80034AD4	nop
-            V0 = A0 < 0041;
-            if( V0 == 0 )
-            {
-                V1 = V1 + rb * 28;
-                V0 = 0100;
-            }
-            else
-            {
-                V0 = A0 << 02;
-                V1 = V1 + rb * 28;
-            }
+        A0 = otag;
+        A1 = packet;
+        func315a8(); // add textured rectangle to render
+    }
 
-            [V1 + 0010] = h(V0);
-            A1 = w[offset_18 + 0028];
-            A0 = otag;
-            A1 = A1 + S1;
-            A1 = A1 + rb * 28;
-            80034B04	jal    func315a8 [$800315a8]
-        }
-
-        S1 = S1 + 0060;
-        S4 = S4 + 0001;
-        V0 = h[offset_18 + 000c];
-        V1 = hu[offset_18 + 000c];
-        S3 = S3 + 0001;
-        V0 = S4 < V0;
-    80034B20	bne    v0, zero, loop349f0 [$800349f0]
+    row_id += 1;
 }
 
 if( h[offset_18 + 84] == 0 )
@@ -1139,10 +944,10 @@ if( h[offset_18 + 84] == 0 )
         if( ( hu[offset_18 + 10] & 0058 ) == 0 )
         {
             A0 = offset_18;
-            func33c14();
+            func33c14(); // create text texture
 
-            A0 = w[offset_18 + 28] + h[offset_18 + 2] * 60 + 50;
-            A1 = w[offset_18 + 2c];
+            A0 = w[offset_18 + 28] + h[offset_18 + 2] * 60 + 50; // rect
+            A1 = w[offset_18 + 2c]; // src
             system_load_image();
         }
     }
@@ -1156,7 +961,7 @@ else
     [offset_18 + 84] = h(h[offset_18 + 84] - 1);
 }
 
-if( h[offset_18 + 84] != 0 )
+if( h[offset_18 + 84] != 0 ) // wait
 {
     [offset_18 + 84] = h(h[offset_18 + 84] - 1);
     if( h[offset_18 + 84] == -1 )
@@ -1165,27 +970,23 @@ if( h[offset_18 + 84] != 0 )
     }
 }
 
-if( ( hu[offset_18 + 10] & 0002 ) == 0 )
+if( ( hu[offset_18 + 10] & 0002 ) == 0 ) // render background under text
 {
-    A3 = offset_18 + rb * 10;
-    [A3 + 50] = w((h[offset_18 + 4] - 7) | ((h[offset_18 + 6] - 5) << 10));
-    T0 = h[offset_18 + c] * h[offset_18 + 14];
-    A1 = offset_18 + 48 + rb * 10;
-    A0 = w[A3 + 48];
-    V0 = hu[offset_18 + a] | 1;
-    V0 = V0 << 10;
-    V0 = V0 >> e;
-    V0 = V0 + d;
-    [A3 + 54] = w(V0 | ((T0 + a) << 10));
+    packet = offset_18 + 30 + 18 + rb * 10;
 
-    [A3 + 48] = w((A0 & ff000000) | (w[otag] & 00ffffff));
-    [otag] = w((w[otag] & ff000000) | (A1 & 00ffffff));
+    [packet + 8] = h(h[offset_18 + 4] - 7);                       // x
+    [packet + a] = h(h[offset_18 + 6] - 5);                       // y
+    [packet + c] = h(((h[offset_18 + a] | 1) * 4) + d);           // w
+    [packet + e] = h((h[offset_18 + c] * h[offset_18 + 14]) + a); // h
+
+    [packet] = w((w[packet] & ff000000) | (w[otag] & 00ffffff));
+    [otag] = w((w[otag] & ff000000) | (packet & 00ffffff));
 }
 
 [offset_18 + 10] = h(hu[offset_18 + 10] & feff);
 
 A0 = otag;
-A1 = offset_18 + 30;
+A1 = offset_18 + 30; // settings
 system_psyq_add_prim();
 ////////////////////////////////
 
@@ -1228,18 +1029,22 @@ return h[V0 + 58] * 4;
 
 
 ////////////////////////////////
-// func34dbc()
+// system_message_get_char_width()
 // 2 - 0x10-0x4f, 0xf800-0xf814, 3 otherwise
-if( A0 == 0 )
+
+byte1 = A0;
+byte2 = A1;
+
+if( byte1 == 0 ) // normal characters
 {
-    if( A1 - w[80058a00] < w[800589f0] ) // 10-4f
+    if( ( byte2 - w[80058a00] ) < w[800589f0] ) // if symbols 10-4f
     {
         return 2;
     }
 }
-else if( A0 == w[800589e8] ) // f8
+else if( byte1 == w[800589e8] ) // f8 first extended table
 {
-    if( A1 < w[800589f4] ) // 15
+    if( byte2 < w[800589f4] ) // first 15 symbols in extended
     {
         return 2;
     }
@@ -1250,538 +1055,182 @@ return 3;
 
 
 ////////////////////////////////
-// func34e20()
-
-//            A2 = w[offset_18 + 2c] + h[offset_18 + 0] * 2;
-//            A3 = h[offset_18 + 12]; // width in something + 3
-//            A4 = bu[struct_60 + row_id * 60 + 5a]; // odd or even row
+// system_message_generate_char_into_row_tex()
 
 byte1 = A0;
 byte2 = A1;
+dst = A2;
+row_w = A3;
 row_odd = A4;
 
-
-
-if( byte1 == 0 )
+if( byte1 == 0 ) // normal chars
 {
-    A0 = w[800589f8] + (byte2 - w[80058a00]) * 16;
+    src = w[800589f8] + (byte2 - w[80058a00]) * 16;
 }
-else
+else if( ( byte1 == ff ) && ( byte2 == ff ) )
 {
-    if( ( byte1 == ff ) && ( byte2 == ff ) )
-    {
-        A0 = 8004f874;
-    }
-    else
-    {
-        A0 = w[800589f8] + w[800589ec] + (byte1 - w[800589e8]) * 1600 + byte2 * 16;
-    }
+    src = 8004f874;
 }
-
-
-
-T5 = 0;
-
-
+else // extended chars
+{
+    src = w[800589f8] + w[800589ec] + (byte1 - w[800589e8]) * 16 * 100 + byte2 * 16;
+}
 
 if( row_odd == 0 )
 {
-    V0 = hu[A2 + 0000];
-    V1 = hu[A2 + 0004];
-    V0 = V0 & cccc;
-    V1 = V1 & cccc;
-    [A2 + 0004] = h(V1);
-    V1 = A3 << 10;
-    [A2 + 0000] = h(V0);
-    V0 = hu[A2 + 0002];
-    V1 = V1 >> 10;
-    V0 = V0 & cccc;
-    [A2 + 0002] = h(V0);
-    V0 = V1 << 01;
-    A2 = A2 + V0;
-    T3 = A2 + 0004;
-    T4 = V0;
-    T1 = A2 + T4;
-    V1 = V1 << 01;
-    T2 = A2 - V1;
-    V0 = hu[A2 + 0000];
-    V1 = hu[A2 + 0004];
-    V0 = V0 & cccc;
-    [A2 + 0000] = h(V0);
-    V0 = hu[A2 + 0002];
-    V1 = V1 & cccc;
-    [A2 + 0004] = h(V1);
-    V0 = V0 & cccc;
-    [A2 + 0002] = h(V0);
+    // 4 bit textures
+    [dst + 0] = h(hu[dst + 0] & cccc);
+    [dst + 2] = h(hu[dst + 2] & cccc);
+    [dst + 4] = h(hu[dst + 4] & cccc);
 
-    L34f54:	; 80034F54
-        V0 = hu[T1 + 0000];
-        V1 = hu[T1 + 0004];
-        V0 = V0 & cccc;
-        [T1 + 0000] = h(V0);
-        V0 = hu[T1 + 0002];
-        V1 = V1 & cccc;
-        [T1 + 0004] = h(V1);
-        V0 = V0 & cccc;
-        [T1 + 0002] = h(V0);
-        T0 = hu[A0 + 0000];
-        80034F7C	nop
-        V0 = T0 & 0080;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        V1 = V0 & 0222;
-        V0 = T0 & 0040;
-        80034F94	beq    v0, zero, L34fa0 [$80034fa0]
-        A0 = A0 + 0002;
-        V1 = V1 | 2220;
+    dst = dst + row_w * 2;
 
-        L34fa0:	; 80034FA0
-        V0 = T0 & 0020;
-        80034FA4	beq    v0, zero, L34fb0 [$80034fb0]
-        V0 = T0 & 0010;
-        V1 = V1 | 2200;
+    [dst + 0] = h(hu[dst + 0] & cccc);
+    [dst + 2] = h(hu[dst + 2] & cccc);
+    [dst + 4] = h(hu[dst + 4] & cccc);
 
-        L34fb0:	; 80034FB0
-        80034FB0	bne    v0, zero, L34fbc [$80034fbc]
-        A1 = V1 | 2000;
-        A1 = V1;
+    for( int i = 0; i < b; ++i ) // char height
+    {
+        [dst + row_w * 2 + 0] = h(hu[dst + row_w * 2 + 0] & cccc);
+        [dst + row_w * 2 + 2] = h(hu[dst + row_w * 2 + 2] & cccc);
+        [dst + row_w * 2 + 4] = h(hu[dst + row_w * 2 + 4] & cccc);
 
-        L34fbc:	; 80034FBC
-        V0 = hu[T2 + 0000];
-        80034FC0	nop
-        V0 = V0 | A1;
-        [T2 + 0000] = h(V0);
-        V0 = T0 & 0080;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        A3 = V0 & 0212;
-        V1 = hu[T1 + 0000];
-        V0 = T0 & 0040;
-        V1 = V1 | A1;
-        80034FE8	beq    v0, zero, L34ff4 [$80034ff4]
-        [T1 + 0000] = h(V1);
-        A3 = A3 | 2120;
+        mask = hu[src];
 
-        L34ff4:	; 80034FF4
-        V0 = T0 & 0020;
-        80034FF8	beq    v0, zero, L35004 [$80035004]
-        V1 = A3;
-        V1 = V1 | 1200;
+        if( mask & 0080 )      V1 = 0222;
+        else                   V1 = 0000;
+        if( mask & 0040 ) V1 = V1 | 2220;
+        if( mask & 0020 ) V1 = V1 | 2200;
+        if( mask & 0010 ) V1 = V1 | 2000;
+        [dst - row_w * 2] = h(hu[dst - row_w * 2] | V1);
+        [dst + row_w * 2] = h(hu[dst + row_w * 2] | V1);
 
-        L35004:	; 80035004
-        A1 = hu[A2 + 0000];
-        V0 = T0 & 0010;
-        8003500C	beq    v0, zero, L3501c [$8003501c]
-        V0 = A1 | 2000;
-        80035014	j      L35020 [$80035020]
-        V0 = V0 | V1;
+        if( mask & 0080 )      A3 = 0212;
+        else                   A3 = 0000;
+        if( mask & 0040 ) A3 = A3 | 2120;
+        if( mask & 0020 ) V1 = V1 | 1200;
+        if( mask & 0010 ) V1 = V1 | 2000;
+        [dst] = h(hu[dst] | V1);
 
-        L3501c:	; 8003501C
-        V0 = A1 | V1;
+             if( mask & 0008 ) V1 = 0222;
+        else if( mask & 0010 ) V1 = 0022;
+        else if( mask & 0020 ) V1 = 0002;
+        else                   V1 = 0000;
+        if( mask & 0004 ) V1 = V1 | 2220;
+        if( mask & 0002 ) V1 = V1 | 2200;
+        if( mask & 0001 ) V1 = V1 | 2000;
+        [dst - row_w * 2 + 2] = h(hu[dst - row_w * 2 + 2] | V1);
+        [dst + row_w * 2 + 2] = h(hu[dst + row_w * 2 + 2] | V1);
 
-        L35020:	; 80035020
-        [A2 + 0000] = h(V0);
-        V0 = T0 & 0008;
-        80035028	bne    v0, zero, L35048 [$80035048]
-        V0 = 0222;
-        V0 = T0 & 0010;
-        80035034	bne    v0, zero, L35044 [$80035044]
-        V0 = T0 >> 04;
-        8003503C	j      L35048 [$80035048]
-        V0 = V0 & 0002;
+        if( mask & 0020 )      V1 = 0002;
+        else                   V1 = 0000;
+        if( mask & 0010 ) V1 = V1 | 0021;
+        if( mask & 0008 ) V1 = V1 | 0212;
+        if( mask & 0004 ) V1 = V1 | 2120;
+        if( mask & 0002 ) V1 = V1 | 1200;
+        if( mask & 0001 ) V1 = V1 | 2000;
+        [dst + 2] = h(hu[dst + 2] | V1);
 
-        L35044:	; 80035044
-        V0 = 0022;
+             if( mask & 8000 ) V0 = 0222;
+        else if( mask & 0001 ) V0 = 0022;
+        else if( mask & 0002 ) V1 = 0002;
+        else                   V1 = 0000;
+        if( mask & 4000 ) V1 = V1 | 2220;
+        if( mask & 2000 ) V1 = V1 | 2200;
+        if( mask & 1000 ) V1 = V1 | 2000;
+        [dst - row_w * 2 + 4] = h(hu[dst - row_w * 2 + 4] | V1);
+        [dst + row_w * 2 + 4] = h(hu[dst + row_w * 2 + 4] | V1);
 
-        L35048:	; 80035048
-        V1 = V0;
-        V0 = T0 & 0004;
-        80035050	beq    v0, zero, L3505c [$8003505c]
-        V0 = T0 & 0002;
-        V1 = V1 | 2220;
+        if( mask & 0002 )      V1 = 0002;
+        else                   V1 = 0000;
+        if( mask & 0001 ) V1 = V1 | 0021;
+        if( mask & 8000 ) V1 = V1 | 0212;
+        if( mask & 4000 ) V1 = V1 | 2120;
+        if( mask & 2000 ) V1 = V1 | 1200;
+        if( mask & 1000 ) V1 = V1 | 2000;
+        [dst + 4] = h(hu[dst + 4] | V1);
 
-        L3505c:	; 8003505C
-        8003505C	beq    v0, zero, L35068 [$80035068]
-        V0 = T0 & 0001;
-        V1 = V1 | 2200;
-
-        L35068:	; 80035068
-        80035068	bne    v0, zero, L35074 [$80035074]
-        A1 = V1 | 2000;
-        A1 = V1;
-
-        L35074:	; 80035074
-        V0 = hu[T2 + 0002];
-        V1 = T0 >> 04;
-        V0 = V0 | A1;
-        [T2 + 0002] = h(V0);
-        V0 = hu[T1 + 0002];
-        80035088	nop
-        V0 = V0 | A1;
-        [T1 + 0002] = h(V0);
-        V0 = T0 & 0010;
-        80035098	beq    v0, zero, L350a4 [$800350a4]
-        V1 = V1 & 0002;
-        V1 = V1 | 0021;
-
-        L350a4:	; 800350A4
-        V0 = T0 & 0008;
-        800350A8	beq    v0, zero, L350b4 [$800350b4]
-        V0 = T0 & 0004;
-        V1 = V1 | 0212;
-
-        L350b4:	; 800350B4
-        800350B4	beq    v0, zero, L350c0 [$800350c0]
-        V0 = T0 & 0002;
-        V1 = V1 | 2120;
-
-        L350c0:	; 800350C0
-        800350C0	beq    v0, zero, L350cc [$800350cc]
-        800350C4	nop
-        V1 = V1 | 1200;
-
-        L350cc:	; 800350CC
-        A1 = hu[T3 + fffe];
-        V0 = T0 & 0001;
-        800350D4	beq    v0, zero, L350e4 [$800350e4]
-        V0 = A1 | 2000;
-        800350DC	j      L350e8 [$800350e8]
-        V0 = V0 | V1;
-
-        L350e4:	; 800350E4
-        V0 = A1 | V1;
-
-        L350e8:	; 800350E8
-        [T3 + fffe] = h(V0);
-        V0 = T0 & 8000;
-        800350F0	bne    v0, zero, L35108 [$80035108]
-        V0 = 0222;
-        V0 = T0 & 0001;
-        800350FC	bne    v0, zero, L35108 [$80035108]
-        V0 = 0022;
-        V0 = T0 & 0002;
-
-        L35108:	; 80035108
-        V1 = V0;
-        V0 = T0 & 4000;
-        80035110	beq    v0, zero, L3511c [$8003511c]
-        V0 = T0 & 2000;
-        V1 = V1 | 2220;
-
-        L3511c:	; 8003511C
-        8003511C	beq    v0, zero, L35128 [$80035128]
-        V0 = T0 & 1000;
-        V1 = V1 | 2200;
-
-        L35128:	; 80035128
-        80035128	bne    v0, zero, L35134 [$80035134]
-        A1 = V1 | 2000;
-        A1 = V1;
-
-        L35134:	; 80035134
-        V0 = hu[T2 + 0004];
-        80035138	nop
-        V0 = V0 | A1;
-        [T2 + 0004] = h(V0);
-        V0 = hu[T1 + 0004];
-        80035148	nop
-        V0 = V0 | A1;
-        [T1 + 0004] = h(V0);
-        V0 = T0 & 0001;
-        80035158	beq    v0, zero, L35164 [$80035164]
-        V1 = T0 & 0002;
-        V1 = V1 | 0021;
-
-        L35164:	; 80035164
-        V0 = T0 & 8000;
-        80035168	beq    v0, zero, L35174 [$80035174]
-        V0 = T0 & 4000;
-        V1 = V1 | 0212;
-
-        L35174:	; 80035174
-        80035174	beq    v0, zero, L35180 [$80035180]
-        V0 = T0 & 2000;
-        V1 = V1 | 2120;
-
-        L35180:	; 80035180
-        80035180	beq    v0, zero, L3518c [$8003518c]
-        80035184	nop
-        V1 = V1 | 1200;
-
-        L3518c:	; 8003518C
-        A1 = hu[T3 + 0000];
-        V0 = T0 & 1000;
-        80035194	beq    v0, zero, L351a4 [$800351a4]
-        V0 = A1 | 2000;
-        8003519C	j      L351a8 [$800351a8]
-        V0 = V0 | V1;
-
-        L351a4:	; 800351A4
-        V0 = A1 | V1;
-
-        L351a8:	; 800351A8
-        [T3 + 0000] = h(V0);
-        T3 = T3 + T4;
-        T1 = T1 + T4;
-        T2 = T2 + T4;
-        A2 = A2 + T4;
-
-        T5 = T5 + 1;
-        V0 = T5 < b;
-    800351C0	bne    v0, zero, L34f54 [$80034f54]
+        src = src + 2;
+        dst = dst + row_w * 2;
+    }
 }
 else
 {
-    V0 = hu[A2 + 0000];
-    V1 = hu[A2 + 0004];
-    V0 = V0 & 3333;
-    V1 = V1 & 3333;
-    [A2 + 0004] = h(V1);
-    V1 = A3 << 10;
-    [A2 + 0000] = h(V0);
-    V0 = hu[A2 + 0002];
-    V1 = V1 >> 10;
-    V0 = V0 & 3333;
-    [A2 + 0002] = h(V0);
-    V0 = V1 << 01;
-    A2 = A2 + V0;
-    T3 = A2 + 0004;
-    T4 = V0;
-    T1 = A2 + T4;
-    V1 = V1 << 01;
-    T2 = A2 - V1;
-    V0 = hu[A2 + 0000];
-    V1 = hu[A2 + 0004];
-    V0 = V0 & 3333;
-    [A2 + 0000] = h(V0);
-    V0 = hu[A2 + 0002];
-    V1 = V1 & 3333;
-    [A2 + 0004] = h(V1);
-    V0 = V0 & 3333;
-    [A2 + 0002] = h(V0);
+    [dst + 0] = h(hu[dst + 0] & 3333);
+    [dst + 2] = h(hu[dst + 2] & 3333);
+    [dst + 4] = h(hu[dst + 4] & 3333);
 
-    L3523c:	; 8003523C
-        V0 = hu[T1 + 0000];
-        V1 = hu[T1 + 0004];
-        V0 = V0 & 3333;
-        [T1 + 0000] = h(V0);
-        V0 = hu[T1 + 0002];
-        V1 = V1 & 3333;
-        [T1 + 0004] = h(V1);
-        V0 = V0 & 3333;
-        [T1 + 0002] = h(V0);
-        T0 = hu[A0 + 0000];
-        80035264	nop
-        V0 = T0 & 0080;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        V1 = V0 & 0888;
-        V0 = T0 & 0040;
-        8003527C	beq    v0, zero, L35288 [$80035288]
-        A0 = A0 + 0002;
-        V1 = V1 | 8880;
+    dst = dst + row_w * 2;
 
-        L35288:	; 80035288
-        V0 = T0 & 0020;
-        8003528C	beq    v0, zero, L35298 [$80035298]
-        V0 = T0 & 0010;
-        V1 = V1 | 8800;
+    [dst + 0] = h(hu[dst + 0] & 3333);
+    [dst + 2] = h(hu[dst + 2] & 3333);
+    [dst + 4] = h(hu[dst + 4] & 3333);
 
-        L35298:	; 80035298
-        80035298	bne    v0, zero, L352a4 [$800352a4]
-        A1 = V1 | 8000;
-        A1 = V1;
 
-        L352a4:	; 800352A4
-        V0 = hu[T2 + 0000];
-        800352A8	nop
-        V0 = V0 | A1;
-        [T2 + 0000] = h(V0);
-        V0 = T0 & 0080;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        A3 = V0 & 0848;
-        V1 = hu[T1 + 0000];
-        V0 = T0 & 0040;
-        V1 = V1 | A1;
-        800352D0	beq    v0, zero, L352dc [$800352dc]
-        [T1 + 0000] = h(V1);
-        A3 = A3 | 8480;
+    for( it i = 0; i < b; ++i )
+    {
+        [dst + row_w * 2 + 0] = h(hu[dst + row_w * 2 + 0] & 3333);
+        [dst + row_w * 2 + 2] = h(hu[dst + row_w * 2 + 2] & 3333);
+        [dst + row_w * 2 + 4] = h(hu[dst + row_w * 2 + 4] & 3333);
 
-        L352dc:	; 800352DC
-        V0 = T0 & 0020;
-        800352E0	beq    v0, zero, L352ec [$800352ec]
-        V1 = A3;
-        V1 = V1 | 4800;
+        mask = hu[src];
 
-        L352ec:	; 800352EC
-        A1 = hu[A2 + 0000];
-        V0 = T0 & 0010;
-        800352F4	beq    v0, zero, L35304 [$80035304]
-        V0 = A1 | 8000;
-        800352FC	j      L35308 [$80035308]
-        V0 = V0 | V1;
+        if( mask & 0080 )      V1 = 0888;
+        else                   V1 = 0000;
+        if( mask & 0040 ) V1 = V1 | 8880;
+        if( mask & 0020 ) V1 = V1 | 8800;
+        if( mask & 0010 ) V1 = V1 | 8000;
+        [dst - row_w * 2] = h(hu[dst - row_w * 2] | V1);
+        [dst + row_w * 2] = h(hu[dst + row_w * 2] | V1);
 
-        L35304:	; 80035304
-        V0 = A1 | V1;
+        if( mask & 0080 )      V1 = 0848;
+        else                   V1 = 0000;
+        if( mask & 0040 ) V1 = V1 | 8480;
+        if( mask & 0020 ) V1 = V1 | 4800;
+        if( mask & 0010 ) V1 = V1 | 8000;
+        [dst] = h(hu[dst] | V1);
 
-        L35308:	; 80035308
-        [A2 + 0000] = h(V0);
-        V0 = T0 & 0008;
-        80035310	bne    v0, zero, L35330 [$80035330]
-        V0 = 0888;
-        V0 = T0 & 0010;
-        8003531C	bne    v0, zero, L3532c [$8003532c]
-        V0 = T0 >> 02;
-        80035324	j      L35330 [$80035330]
-        V0 = V0 & 0008;
+             if( mask & 0008 ) V1 = 0888;
+        else if( mask & 0010 ) V1 = 0088;
+        else if( mask & 0020 ) V1 = 0008;
+        else                   V1 = 0000;
+        if( mask & 0004 ) V1 = V1 | 8880;
+        if( mask & 0002 ) V1 = V1 | 8800;
+        if( mask & 0001 ) V1 = V1 | 8000;
+        [dst - row_w * 2 + 2] = h(hu[dst - row_w * 2 + 2] | V1);
+        [dst + row_w * 2 + 2] = h(hu[dst + row_w * 2 + 2] | V1);
 
-        L3532c:	; 8003532C
-        V0 = 0088;
+        if( mask & 0020 )      V1 = 0008;
+        else                   V1 = 0000;
+        if( mask & 0010 ) V1 = V1 | 0084;
+        if( mask & 0008 ) V1 = V1 | 0848;
+        if( mask & 0004 ) V1 = V1 | 8480;
+        if( mask & 0002 ) V1 = V1 | 4800;
+        if( mask & 0001 ) V1 = V1 | 8000;
+        [dst + 2] = h(hu[dst + 2] | V1);
 
-        L35330:	; 80035330
-        V1 = V0;
-        V0 = T0 & 0004;
-        80035338	beq    v0, zero, L35344 [$80035344]
-        V0 = T0 & 0002;
-        V1 = V1 | 8880;
+             if( mask & 8000 ) V1 = 0888;
+        else if( mask & 0001 ) V1 = 0088;
+        else if( mask & 0002 ) V1 = 0008;
+        else                   V1 = 0000;
+        if( mask & 4000 ) V1 = V1 | 8880;
+        if( mask & 2000 ) V1 = V1 | 8800;
+        if( mask & 1000 ) V1 = V1 | 8000;
+        [dst - row_w * 2 + 4] = h(hu[dst - row_w * 2 + 4] | V1);
+        [dst + row_w * 2 + 4] = h(hu[dst + row_w * 2 + 4] | V1);
 
-        L35344:	; 80035344
-        80035344	beq    v0, zero, L35350 [$80035350]
-        V0 = T0 & 0001;
-        V1 = V1 | 8800;
+        if( mask & 0002 )      V1 = 0008;
+        else                   V1 = 0000;
+        if( mask & 0001 ) V1 = V1 | 0084;
+        if( mask & 8000 ) V1 = V1 | 0848;
+        if( mask & 4000 ) V1 = V1 | 8480;
+        if( mask & 2000 ) V1 = V1 | 4800;
+        if( mask & 1000 ) V1 = V1 | 8000
+        [dst + 4] = h(hu[dst + 4] | V1);
 
-        L35350:	; 80035350
-        80035350	bne    v0, zero, L3535c [$8003535c]
-        A1 = V1 | 8000;
-        A1 = V1;
-
-        L3535c:	; 8003535C
-        V0 = hu[T2 + 0002];
-        V1 = T0 >> 02;
-        V0 = V0 | A1;
-        [T2 + 0002] = h(V0);
-        V0 = hu[T1 + 0002];
-        80035370	nop
-        V0 = V0 | A1;
-        [T1 + 0002] = h(V0);
-        V0 = T0 & 0010;
-        80035380	beq    v0, zero, L3538c [$8003538c]
-        V1 = V1 & 0008;
-        V1 = V1 | 0084;
-
-        L3538c:	; 8003538C
-        V0 = T0 & 0008;
-        80035390	beq    v0, zero, L3539c [$8003539c]
-        V0 = T0 & 0004;
-        V1 = V1 | 0848;
-
-        L3539c:	; 8003539C
-        8003539C	beq    v0, zero, L353a8 [$800353a8]
-        V0 = T0 & 0002;
-        V1 = V1 | 8480;
-
-        L353a8:	; 800353A8
-        800353A8	beq    v0, zero, L353b4 [$800353b4]
-        800353AC	nop
-        V1 = V1 | 4800;
-
-        L353b4:	; 800353B4
-        A1 = hu[T3 + fffe];
-        V0 = T0 & 0001;
-        800353BC	beq    v0, zero, L353cc [$800353cc]
-        V0 = A1 | 8000;
-        800353C4	j      L353d0 [$800353d0]
-        V0 = V0 | V1;
-
-        L353cc:	; 800353CC
-        V0 = A1 | V1;
-
-        L353d0:	; 800353D0
-        [T3 + fffe] = h(V0);
-        V0 = T0 & 8000;
-        800353D8	bne    v0, zero, L353f8 [$800353f8]
-        V0 = 0888;
-        V0 = T0 & 0001;
-
-        L353e4:	; 800353E4
-        800353E4	bne    v0, zero, L353f4 [$800353f4]
-        V0 = T0 << 02;
-        800353EC	j      L353f8 [$800353f8]
-        V0 = V0 & 0008;
-
-        L353f4:	; 800353F4
-        V0 = 0088;
-
-        L353f8:	; 800353F8
-        V1 = V0;
-        V0 = T0 & 4000;
-        80035400	beq    v0, zero, L3540c [$8003540c]
-        V0 = T0 & 2000;
-        V1 = V1 | 8880;
-
-        L3540c:	; 8003540C
-        8003540C	beq    v0, zero, L35418 [$80035418]
-        V0 = T0 & 1000;
-        V1 = V1 | 8800;
-
-        L35418:	; 80035418
-        80035418	bne    v0, zero, L35424 [$80035424]
-        A1 = V1 | 8000;
-        A1 = V1;
-
-        L35424:	; 80035424
-        V0 = hu[T2 + 0004];
-        V1 = T0 << 02;
-        V0 = V0 | A1;
-
-        L35430:	; 80035430
-        [T2 + 0004] = h(V0);
-        V0 = hu[T1 + 0004];
-        80035438	nop
-        V0 = V0 | A1;
-        [T1 + 0004] = h(V0);
-        V0 = T0 & 0001;
-        80035448	beq    v0, zero, L35454 [$80035454]
-        V1 = V1 & 0008;
-        V1 = V1 | 0084;
-
-        L35454:	; 80035454
-        V0 = T0 & 8000;
-        80035458	beq    v0, zero, L35464 [$80035464]
-        V0 = T0 & 4000;
-        V1 = V1 | 0848;
-
-        L35464:	; 80035464
-        80035464	beq    v0, zero, L35470 [$80035470]
-        V0 = T0 & 2000;
-        V1 = V1 | 8480;
-
-        L35470:	; 80035470
-        80035470	beq    v0, zero, L3547c [$8003547c]
-        80035474	nop
-        V1 = V1 | 4800;
-
-        L3547c:	; 8003547C
-        A1 = hu[T3 + 0000];
-        V0 = T0 & 1000;
-        80035484	beq    v0, zero, L35494 [$80035494]
-        V0 = A1 | 8000;
-        8003548C	j      L35498 [$80035498]
-        V0 = V0 | V1;
-
-        L35494:	; 80035494
-        V0 = A1 | V1;
-
-        L35498:	; 80035498
-        [T3 + 0000] = h(V0);
-        T3 = T3 + T4;
-        T1 = T1 + T4;
-        T2 = T2 + T4;
-        A2 = A2 + T4;
-        T5 = T5 + 0001;
-        V0 = T5 < 000b;
-    800354B0	bne    v0, zero, L3523c [$8003523c]
+        src = src + 2;
+        dst = dst + row_w * 2;
+    }
 }
 ////////////////////////////////
 

@@ -249,12 +249,8 @@ return V0 < 1;
 ot = A0;
 p = A1;
 
-ot_next = w[ot] & 00ffffff;
-ot_size = w[ot] & ff000000;
-p_size = w[p] & ff000000;
-
-[p] = w(p_size | ot_next);
-[ot] = w(ot_size | p & 00ffffff);
+[p] = w(w[p] & ff000000 | w[ot] & 00ffffff);
+[ot] = w(w[ot] & ff000000 | p & 00ffffff);
 ////////////////////////////////
 
 
@@ -270,12 +266,8 @@ ot = A0;
 p0 = A1;
 p1 = A2;
 
-ot_next = w[ot] & 00ffffff;
-ot_size = w[ot] & ff000000;
-p1_size = w[p1] & ff000000;
-
-[p1] = w(p1_size | ot_next);
-[ot] = w(ot_size | p0 & 00ffffff);
+[p1] = w(w[p1] & ff000000 | w[ot] & 00ffffff);
+[ot] = w(w[ot] & ff000000 | p0 & 00ffffff);
 ////////////////////////////////
 
 
@@ -1765,7 +1757,7 @@ return V0 >> 1f;
 
 S0 = A0;
 
-A0 = A1;
+A0 = A1; // rect
 system_gpu_get_texture_window_setting_command();
 
 [S0 + 3] = b(2);
@@ -1844,20 +1836,23 @@ if( A2 != 0 )
 ////////////////////////////////
 // system_gpu_create_texture_setting_packet()
 
-S0 = A0;
-S1 = A4;
+packet = A0;
+dfe = A1;
+dtd = A2;
+tpage = A3;
+rect = A4;
 
-[S0 + 3] = b(02);
+[packet + 3] = b(02);
 
-A0 = A1;
-A1 = A2;
-A2 = A3 & ffff; // tex page
+A0 = dfe;
+A1 = dtd;
+A2 = tpage & ffff;
 system_gpu_get_draw_mode_setting_command(); // set md me dtd dfe
-[S0 + 4] = w(V0); // draw mode settings command to GPU (e1)
+[packet + 4] = w(V0); // draw mode settings command to GPU (e1)
 
-A0 = S1;
+A0 = rect;
 system_gpu_get_texture_window_setting_command();
-[S0 + 8] = w(V0); // texture window setting (e2)
+[packet + 8] = w(V0); // texture window setting (e2)
 ////////////////////////////////
 
 

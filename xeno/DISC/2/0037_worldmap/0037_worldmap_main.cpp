@@ -1617,7 +1617,7 @@ A0 = 0130;
 A0 = 0130;
 
 L71fa4:	; 80071FA4
-80071FA4	jal    $func334bc
+80071FA4	jal    $system_message_load_font_clut_to_vram
 A1 = 01e0;
 RA = w[SP + 0020];
 S1 = w[SP + 001c];
@@ -4719,7 +4719,7 @@ A0 = w[8009bc78];
 80075310	jal    func853c8 [$800853c8]
 80075314	nop
 A0 = 0130;
-8007531C	jal    $func334bc
+8007531C	jal    $system_message_load_font_clut_to_vram
 A1 = 01e0;
 80075324	jal    $system_psyq_wait_frames
 A0 = 0;

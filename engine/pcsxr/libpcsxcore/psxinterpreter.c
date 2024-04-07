@@ -738,14 +738,14 @@ void psxJAL()
     //    doBranch(0x800aa324);
     //    GPU_displayText("CALL RENDER EFFECT");
     //}
-    else if( _JumpTarget_ == 0x80346ac)
-    {
-        execI();
-        GPU_displayText("CALL DISABLED");
-    }
+    //else if( _JumpTarget_ == 0x80346ac)
+    //{
+        //execI();
+        //GPU_displayText("CALL DISABLED");
+    //}
 
 
-    else if( _JumpTarget_ == 0x800AAF70) // call given func when SELECT is pressed instead of map
+    else if( _JumpTarget_ == 0x800AAF70 ) // call given func when SELECT is pressed instead of map
     {
         _SetLink(31);
         doBranch(0x800a807c);
@@ -1335,10 +1335,15 @@ static void intShutdown() {
 
 // interpreter execution
 static inline void execI() {
-    if( psxRegs.pc == 0x8007DFCC )
+    //if( psxRegs.pc == 0x80034BE0 )
     {
-        GPU_displayText("SKIP PART");
-        psxRegs.pc = 0x8007E060;
+        //char Text[ 256 ];
+        //psxRegs.GPR.n.v0 &= 0xfffd;
+        //sprintf( Text, _( "+10: 0x%x" ), psxRegs.GPR.n.v0 );
+        //GPU_displayText( Text );
+
+        //GPU_displayText("SKIP PART");
+        //psxRegs.pc = 0x80034B28;
     }
 
 	u32 *code = Read_ICache(psxRegs.pc, FALSE);

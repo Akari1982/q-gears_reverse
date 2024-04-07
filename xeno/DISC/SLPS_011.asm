@@ -1225,16 +1225,16 @@
 // func3348c
 8003348C-800334B8
 ////////////////////////////////
-// func334bc
+// system_message_load_font_clut_to_vram
 800334BC-80033548
 ////////////////////////////////
-// func3354c
+// system_message_get_text_pointer
 8003354C-8003355C
 ////////////////////////////////
-// func33560
+// system_message_get_width
 80033560-80033580
 ////////////////////////////////
-// func33584
+// system_message_get_rows
 80033584-800335A4
 ////////////////////////////////
 // func335a8
@@ -1356,10 +1356,10 @@
 // func34cd0
 80034CD0-80034DB8
 ////////////////////////////////
-// func34dbc
+// system_message_get_char_width
 80034DBC-80034E1C
 ////////////////////////////////
-// func34e20
+// system_message_generate_char_into_row_tex
 80034E20-800354BC
 ////////////////////////////////
 // system_controller_get_pressed_button_mask

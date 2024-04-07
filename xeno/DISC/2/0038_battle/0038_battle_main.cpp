@@ -632,7 +632,7 @@ V0 = V0 & V1;
 80071038	bne    v0, zero, L71090 [$80071090]
 8007103C	nop
 A0 = w[800d3110];
-80071048	jal    $func3354c
+80071048	jal    $system_message_get_text_pointer
 S1 = 0003;
 A0 = V0;
 S0 = 800d30e0;
@@ -847,7 +847,7 @@ V0 = w[800c35cc];
 V0 = bu[V0 + 02d3];
 A0 = w[800c3504];
 A1 = bu[800c355d + V0];
-800713EC	jal    $func3354c
+800713EC	jal    $system_message_get_text_pointer
 800713F0	nop
 A0 = V0;
 S0 = 800d2e40;

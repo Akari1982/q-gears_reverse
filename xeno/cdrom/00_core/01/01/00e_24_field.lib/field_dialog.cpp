@@ -445,9 +445,7 @@ A2 = 280;
 A3 = 1f0;
 system_graphic_get_texpage_by_param();
 
-S0 = 
-
-S1 = 800c1c18 + id * 498;
+S1 = 800c1b6c + id * 498 + ac;
 
 A0 = S1 + 18;
 A1 = 0;
@@ -483,7 +481,7 @@ T2 = 0140;
 [SP + 0020] = w(T2);
 T2 = 00c8;
 [SP + 0030] = w(T2);
-T2 = 800c1c18;
+T2 = 800c1b6c + ac;
 S1 = T2 + 0030;
 V0 = bu[80058b70];
 S1 = S1 + id * 498;
@@ -494,7 +492,7 @@ T2 = 0050;
 [SP + 0038] = w(T2);
 [S1 + 0005] = b(V0);
 V0 = bu[80058b72];
-T2 = 800ad374;
+T2 = 800c1b6c + ac;
 [SP + 0040] = w(T2);
 [S1 + 0006] = b(V0);
 system_set_draw_packet_transparency();
@@ -920,10 +918,10 @@ system_gte_vector_perspective_transform();
 
 x_pos = A0;
 y_pos = A1 - 8;
-text_id = A2;
+message_id = A2;
 id = A3;
 message_w = A4;
-dialog_rows = S2 = A5;
+message_rows = A5;
 current_entity_id = A6;
 entity_id = A7;
 type = A8;
@@ -980,7 +978,7 @@ if( type == 2 )
 else if( type == 3 )
 {
     [SP + 20] = w(x_pos + 8 + message_w * 2); // x
-    [SP + 24] = w(y_pos + 8 + dialog_rows * 7); // y
+    [SP + 24] = w(y_pos + 8 + message_rows * 7); // y
 }
 else
 {
@@ -1017,7 +1015,7 @@ A0 = id;
 A1 = x_pos;
 A2 = y_pos;
 A3 = message_w * 4 + 10;
-A4 = dialog_rows * e + 10;
+A4 = message_rows * e + 10;
 func7d728(); // store window position and size
 
 A3 = 0;
@@ -1035,7 +1033,7 @@ A2 = hu[800ad42e + id * 4]; // texture v
 A3 = x_pos + A3 + 8;
 A4 = y_pos + 8;
 A5 = message_w;
-A6 = dialog_rows;
+A6 = message_rows;
 func32d78(); // init window struct and packet here
 
 if( S3 & 0400 )
@@ -1053,46 +1051,47 @@ else
     [800c1b6c + id * 498 + 80] = b(2);
 }
 
-// get offset to dialog data
-A0 = w[800ad0c8]; // dialog file
-A1 = text_id;
-func3354c();
-[800c1b6c + id * 498 + a8] = w(V0);
+// get offset to message text
+A0 = w[800ad0c8]; // message file
+A1 = message_id;
+system_message_get_text_pointer();
+[800c1b6c + id * 498 + 18 + 90] = w(V0);
 
-[800c1f7a + id * 498 + 0] = h(0);
-[800c1b94 + id * 498 + 0] = h(hu[800c1b94 + id * 498 + 0] | 0002);
-[800c1f82 + id * 498 + 0] = h(current_entity_id);
-[800c1f84 + id * 498 + 0] = h(entity_id);
-[800c1f74 + id * 498 + 0] = h(hu[800b16aa]);
+[800c1b6c + id * 498 + 40e] = h(0);
+[800c1b6c + id * 498 + 18 + 10] = h(hu[800c1b6c + id * 498 + 18 + 10] | 0002);
+[800c1b6c + id * 498 + 416] = h(current_entity_id);
+[800c1b6c + id * 498 + 418] = h(entity_id);
+[800c1b6c + id * 498 + 408] = h(hu[800b16aa]);
 
 if( ( flags & 0800 ) == 0 )
 {
-    [800c1f7e + id * 498 + 0] = h(0);
+    [800c1b6c + id * 498 + 412] = h(0);
 }
 else
 {
-    [800c1f7e + id * 498 + 0] = h(1);
+    [800c1b6c + id * 498 + 412] = h(1);
 }
 
-[800c1f88 + id * 498] = w(((w[SP + 20] - (message_w   * 2 + 8)) - ((x_pos << 10) >> 10)) << 10);
-[800c1f8c + id * 498] = w(((w[SP + 24] - (dialog_rows * 7 + 8)) - ((y_pos << 10) >> 10)) << 10);
+[800c1b6c + id * 498 + 41c] = w(((w[SP + 20] - (message_w   * 2 + 8)) - ((x_pos << 10) >> 10)) << 10);
+[800c1b6c + id * 498 + 420] = w(((w[SP + 24] - (message_rows * 7 + 8)) - ((y_pos << 10) >> 10)) << 10);
 
 if( ( S3 & 0100 ) == 0 )
 {
-    [800c1f90 + id * 498] = w(0 - (w[800c1f88 + id * 498] / h[800b16aa]));
-    [800c1f94 + id * 498] = w(0 - (w[800c1f8c + id * 498] / h[800b16aa]));
+    [800c1b6c + id * 498 + 424] = w(0 - (w[800c1b6c + id * 498 + 41c] / h[800b16aa]));
+    [800c1b6c + id * 498 + 428] = w(0 - (w[800c1b6c + id * 498 + 420] / h[800b16aa]));
 }
 else
 {
-    [800c1f74 + id * 498] = h(1);
-    [800c1f90 + id * 498] = w(0 - w[800c1f88 + id * 498]);
-    [800c1f94 + id * 498] = w(0 - w[800c1f8c + id * 498]);
+    [800c1b6c + id * 498 + 408] = h(1);
+
+    [800c1b6c + id * 498 + 424] = w(0 - w[800c1b6c + id * 498 + 41c]);
+    [800c1b6c + id * 498 + 428] = w(0 - w[800c1b6c + id * 498 + 420]);
 }
 
 struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
 if( ( w[struct_138 + 4] & 0200 ) && ( ( S3 & 0001 ) == 0 ) )
 {
-    [800c1f80 + id * 498] = h(0);
+    [800c1b6c + id * 498 + 414] = h(0);
 
     return -1;
 }
@@ -1187,14 +1186,14 @@ for( int i = 0; i < 4; ++i )
             if( h[800c1b6c + i * 498 + 9a] == 0 )
             {
                 A0 = 800c1b6c + i * 498 + 18;
-                A1 = w[800c1b6c + i * 498 + a8];
+                A1 = w[800c1b6c + i * 498 + 18 + 90];
                 func34538();
             }
 
             A0 = 800c1b6c + i * 498 + 18;
             A1 = otag;
             A2 = rb;
-            func346ac(); // text parsing
+            func346ac(); // text update add to render
         }
 
         settings = 800c1b6c + i * 498 + rb * c;
@@ -1253,7 +1252,7 @@ for( int i = 0; i < 4; ++i )
                         A0 = 800c1b6c + j * 498 + 18;
                         A1 = otag;
                         A2 = rb;
-                        func346ac(); // text render here
+                        func346ac(); // text update add to render
 
                         state = 0;
                         if( hu[800c1b6c + j * 498 + 18 + 10] & 0008 )

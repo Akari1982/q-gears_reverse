@@ -20745,8 +20745,8 @@ if( V0 == -1 ) // if this entity don't have opened dialogs
 }
 else
 {
-    dialog_id = w[SP + 10];
-    V1 = h[800c1b6c + dialog_id * 498 + 418];
+    window_id = w[SP + 10];
+    V1 = h[800c1b6c + window_id * 498 + 418];
     V0 = w[800aefe4] + V1 * 5c;
     V0 = w[V0 + 4c];
     if( w[V0 + 4] & 00000200 )
@@ -20771,7 +20771,7 @@ else
                 funca1100(); // this is return opcode
             }
 
-            [800c1b6c + dialog_id * 498 + 414] = h(0);
+            [800c1b6c + window_id * 498 + 414] = h(0);
         }
     }
 
@@ -20927,7 +20927,7 @@ V0 = hu[A0 + cc];
 if (bu[V1 + V0 + 1] == 0)
 {
     A0 = SP + 10;
-    func9c2a8(); // search dialog for current entity
+    func9c2a8(); // search message for current entity
 
     if (V0 == 0) // if it is
     {
@@ -20997,47 +20997,30 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0xD4
 // func9b5f0
-8009B5F0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8009B5F8	jal    get_entity_id_from_opcode [$8009c344]
-A0 = 0001;
-V1 = 00ff;
-8009B604	beq    v0, v1, L9b65c [$8009b65c]
-8009B608	nop
-8009B60C	jal    get_entity_id_from_opcode [$8009c344]
-A0 = 0001;
-V1 = w[800af54c];
-8009B61C	nop
-A1 = hu[V1 + 00cc];
-A0 = V0;
-A1 = A1 + 0001;
-[V1 + 00cc] = h(A1);
-8009B630	jal    func9bb7c [$8009bb7c]
-A1 = 0;
-8009B638	addiu  v1, zero, $ffff (=-$1)
-8009B63C	bne    v0, v1, L9b678 [$8009b678]
-8009B640	nop
-V1 = w[800af54c];
-8009B64C	nop
-V0 = hu[V1 + 00cc];
-8009B654	j      L9b674 [$8009b674]
-8009B658	addiu  v0, v0, $ffff (=-$1)
 
-L9b65c:	; 8009B65C
-V1 = w[800af54c];
-8009B664	nop
-V0 = hu[V1 + 00cc];
-8009B66C	nop
-V0 = V0 + 0006;
+A0 = 1;
+get_entity_id_from_opcode();
 
-L9b674:	; 8009B674
-[V1 + 00cc] = h(V0);
+if( V0 != ff )
+{
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 1);
 
-L9b678:	; 8009B678
-RA = w[SP + 0010];
-SP = SP + 0018;
-8009B680	jr     ra 
-8009B684	nop
+    A0 = V0;
+    A1 = 0;
+    func9bb7c();
+
+    if( V0 == -1 )
+    {
+        V1 = w[800af54c];
+        [V1 + cc] = h(hu[V1 + cc] - 1);
+    }
+}
+else
+{
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 6);
+}
 ////////////////////////////////
 
 
@@ -21416,12 +21399,13 @@ if( A0 != ff && V0 == -1 )
 [800c373c] = w(w[800c373c] + 1);
 
 A0 = SP + 30;
-func9c2a8(); // search dialog for current entity
-if( V0 != -1 )
+func9c2a8(); // search message window for current entity
+
+if( V0 != -1 ) // if already opened
 {
     // close and wait
-    dialog_id = w[SP + 30];
-    [800c1b6c + dialog_id * 4a8 + 414] = h(0);
+    window_id = w[SP + 30];
+    [800c1b6c + window_id * 4a8 + 414] = h(0);
     [800af594] = w(1); // wait
     return -1;
 }
@@ -21430,7 +21414,7 @@ if( V0 != -1 )
 
 A0 = 1;
 field_script_help_read_u16();
-dialog_id = V0;
+message_id = V0;
 
 func7fd34(); // search for not opened window slot
 if( V0 != 0 ) // if not found
@@ -21456,14 +21440,14 @@ for( int i = 0; i < 4; ++i )
 }
 
 A0 = w[800ad0c8]; // offset to dialogs part of field file
-A1 = dialog_id;
-func33560();
-dialog_width = V0;
+A1 = message_id;
+system_message_get_width();
+message_w = V0;
 
 A0 = w[800ad0c8];
-A1 = dialog_id;
-func33584();
-dialog_rows = V0;
+A1 = message_id;
+system_message_get_rows();
+message_rows = V0;
 
 y_pos = 10;
 
@@ -21505,7 +21489,7 @@ if( V1 == 0 )
 
             if( type == 0 )
             {
-                y_pos = w[SP + 38] - dialog_rows * e - 24;
+                y_pos = w[SP + 38] - message_rows * e - 24;
             }
             else
             {
@@ -21517,20 +21501,20 @@ if( V1 == 0 )
             {
                 if( ( S6 & 0002 ) == 0 )
                 {
-                    dialog_rows = 4;
-                    if( dialog_width < 18 )
+                    message_rows = 4;
+                    if( message_w < 18 )
                     {
-                        dialog_width = 18;
+                        message_w = 18;
                     }
-                    dialog_width = dialog_width + 11;
+                    message_w = message_w + 11;
                     y_pos = 10;
                 }
             }
         }
         else
         {
-            dialog_width = 48;
-            dialog_rows = 4;
+            message_w = 48;
+            message_rows = 4;
             y_pos = 10;
             [SP + 34] = w(a0);
         }
@@ -21561,20 +21545,20 @@ if( V1 == 0 )
             {
                 if( ( S6 & 2 ) == 0 )
                 {
-                    if( dialog_width < 18 )
+                    if( message_w < 18 )
                     {
-                        dialog_width = 18;
+                        message_w = 18;
                     }
-                    dialog_width = dialog_width + 11;
-                    dialog_rows = 5;
+                    message_w = message_w + 11;
+                    message_rows = 5;
                     y_pos = 94;
                 }
             }
         }
         else
         {
-            dialog_width = 48;
-            dialog_rows = 4;
+            message_w = 48;
+            message_rows = 4;
             y_pos = 10;
             [SP + 34] = w(a0);
         }
@@ -21595,7 +21579,7 @@ else if( V1 == 1 )
         if( type == 0 )
         {
             V1 = w[SP + 38];
-            y_pos = V1 - dialog_rows * e - 24;
+            y_pos = V1 - message_rows * e - 24;
         }
         else
         {
@@ -21607,20 +21591,20 @@ else if( V1 == 1 )
         {
             if( ( S6 & 0002 ) == 0 )
             {
-                dialog_rows = 4;
-                if( dialog_width < 18 )
+                message_rows = 4;
+                if( message_w < 18 )
                 {
-                    dialog_width = 18;
+                    message_w = 18;
                 }
-                dialog_width = dialog_width + 11;
+                message_w = message_w + 11;
                 y_pos = 10;
             }
         }
     }
     else
     {
-        dialog_width = 48;
-        dialog_rows = 4;
+        message_w = 48;
+        message_rows = 4;
         y_pos = 10;
         [SP + 34] = w(a0);
     }
@@ -21651,42 +21635,42 @@ else if( V1 == 2 )
         {
             if( ( S6 & 2 ) == 0 )
             {
-                if( dialog_width < 18 )
+                if( message_w < 18 )
                 {
-                    dialog_width = 18;
+                    message_w = 18;
                 }
-                dialog_width = dialog_width + 11;
-                dialog_rows = 5;
+                message_w = message_w + 11;
+                message_rows = 5;
                 y_pos = 94;
             }
         }
     }
     else
     {
-        dialog_width = 48;
-        dialog_rows = 4;
+        message_w = 48;
+        message_rows = 4;
         y_pos = 94;
         [SP + 34] = w(a0);
     }
 }
 
-x_pos = w[SP + 34] - 8 - dialog_width * 2;
+x_pos = w[SP + 34] - 8 - message_w * 2;
 
 if( x_pos < c )
 {
     x_pos = c;
 }
-if( ( x_pos + dialog_width * 4 + 10 ) >= 135 )
+if( ( x_pos + message_w * 4 + 10 ) >= 135 )
 {
-    x_pos = 124 - dialog_width * 4;
+    x_pos = 124 - message_w * 4;
 }
 if( y_pos < 10 )
 {
     y_pos = 10;
 }
-if( ( y_pos + dialog_rows * e + 8 ) >= d5 )
+if( ( y_pos + message_rows * e + 8 ) >= d5 )
 {
-    y_pos = cc - dialog_rows * e;
+    y_pos = cc - message_rows * e;
 }
 
 if( ( type == 0 ) || ( type == 3 ) )
@@ -21701,17 +21685,17 @@ if( ( type == 0 ) || ( type == 3 ) )
     }
     if( bu[struct_138 + 82] != 0 )
     {
-        dialog_width = bu[struct_138 + 82];
+        message_w = bu[struct_138 + 82];
     }
     if( bu[struct_138 + 83] != 0 )
     {
-        dialog_rows = bu[struct_138 + 83];
+        message_rows = bu[struct_138 + 83];
     }
     if( bu[struct_138 + 80] != ff )
     {
         if( ( S6 & 0002 ) == 0 )
         {
-            dialog_rows = 4;
+            message_rows = 4;
         }
     }
 
@@ -21740,10 +21724,10 @@ else if( S6 & 0004 )
 
 A0 = x_pos;
 A1 = y_pos;
-A2 = dialog_id;
+A2 = message_id;
 A3 = window_id;
-A4 = dialog_width;
-A5 = dialog_rows;
+A4 = message_w;
+A5 = message_rows;
 A6 = w[800af1f0]; // current entity id
 A7 = entity_id;
 A8 = type;
@@ -21771,17 +21755,16 @@ return 0;
 
 ////////////////////////////////
 // func9c2a8()
-dialog_id = 0;
-loop9c2b0:	; 8009C2B0
-    // if this dialog owned by current entity and 
-    if( ( h[800c1b6c + dialog_id * 498 + 416] == w[800af1f0] ) && ( h[800c1b6c + dialog_id * 498 + 40e] == 0 ) )
+
+for( int i = 0; i < 4; ++i )
+{
+    // if this dialog owned by current entity
+    if( ( h[800c1b6c + i * 498 + 416] == w[800af1f0] ) && ( h[800c1b6c + i * 498 + 40e] == 0 ) )
     {
-        [A0] = w(dialog_id);
+        [A0] = w(i);
         return 0;
     }
-    dialog_id = dialog_id + 1;
-    V0 = dialog_id < 4;
-8009C2F8	bne    v0, zero, loop9c2b0 [$8009c2b0]
+}
 
 return -1;
 ////////////////////////////////
@@ -22596,11 +22579,11 @@ if( entity_id != ff )
 
     // say to close dialog
     A0 = SP + 10;
-    func9c2a8(); // search for dialog for this entity
+    func9c2a8(); // search for window for this entity
     if( V0 == 0 )
     {
-        dialog_id = w[SP + 10];
-        [800c1b6c + dialog_id * 498 + 414] = h(0);
+        window_id = w[SP + 10];
+        [800c1b6c + window_id * 498 + 414] = h(0);
     }
 }
 
@@ -22674,8 +22657,8 @@ if( V0 != ff )
     func9c2a8(); // search dialog for current entity
     if( V0 == 0 )
     {
-        dialog_id = w[SP + 10];
-        [800c1b6c + dialog_id * 498 + 414] = h(0);
+        window_id = w[SP + 10];
+        [800c1b6c + window_id * 498 + 414] = h(0);
     }
 }
 

@@ -181,33 +181,36 @@ system_sound_load_snd_file();
 S4 = hu[GP + 1ac];
 [GP + 1ac] = h(6);
 
-A0 = 6; // STRIPCD1\1\0028
-system_cdrom2_get_filesize_by_dir_file_id();
-A0 = V0;
-A1 = 0;
-system_memory_allocate();
-S5 = V0;
+// load fonts
+{
+    A0 = 6; // fonts.lzs
+    system_cdrom2_get_filesize_by_dir_file_id();
+    A0 = V0;
+    A1 = 0;
+    system_memory_allocate();
+    S5 = V0;
 
-A0 = 6;
-A1 = S5;
-A2 = 0;
-A3 = 0;
-system_cdrom2_load_file_by_dir_file_id();
+    A0 = 6;
+    A1 = S5;
+    A2 = 0;
+    A3 = 0;
+    system_cdrom2_load_file_by_dir_file_id();
 
-A0 = 0;
-system_cdrom_action_sync(); // ececute till cd sync
+    A0 = 0;
+    system_cdrom_action_sync(); // ececute till cd sync
 
-[GP + 1a8] = h(30);
+    [GP + 1a8] = h(30);
 
-A0 = S5;
-A1 = 1;
-func32cac(); // extract archive to any free space
+    A0 = S5;
+    A1 = 1;
+    func32cac(); // extract archive to any free space
 
-A0 = V0;
-func3337c(); // set some font related settings
+    A0 = V0;
+    func3337c(); // set some font related settings
 
-A0 = S5;
-system_memory_mark_removed_alloc();
+    A0 = S5;
+    system_memory_mark_removed_alloc();
+}
 
 A0 = 7; // STRIPCD1\1\0029
 system_cdrom2_get_filesize_by_dir_file_id();

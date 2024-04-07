@@ -28,7 +28,7 @@ if( data < 9 )
     // get offset to string
     A0 = w[800c3504];
     A1 = bu[800d257c + row * 8 + 3];
-    func3354c();
+    system_message_get_text_pointer();
 
     A0 = V0;
     A1 = w[800d2e40 + data * 60];

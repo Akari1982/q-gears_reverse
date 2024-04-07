@@ -19895,7 +19895,7 @@ A0 = S1;
 8008D378	jal    $system_memzero
 A1 = 0618;
 A0 = w[800d29bc];
-8008D388	jal    $func3354c
+8008D388	jal    $system_message_get_text_pointer
 A1 = S0;
 A0 = V0;
 A1 = S1;
@@ -21246,7 +21246,7 @@ S0 = S0 & ffff;
 
 A0 = w[800d2d9c]; // dialog file
 A1 = S0; // dialog_id
-func3354c();
+system_message_get_text_pointer();
 
 A0 = V0;
 A1 = S2;
@@ -21257,7 +21257,7 @@ S1 = V0;
 
 A0 = w[800d2d9c]; // dialog file
 A1 = S0 | 1; // dialog_id
-func3354c();
+system_message_get_text_pointer();
 
 A0 = V0;
 A1 = S2;
@@ -23048,7 +23048,7 @@ A1 = 0618;
 S0 = S0 & ffff;
 A0 = w[800c3508];
 A1 = S0;
-func3354c();
+system_message_get_text_pointer();
 
 A0 = V0;
 A1 = S2;
@@ -23058,7 +23058,7 @@ A3 = 0;
 A1 = S0 | 0001;
 S1 = V0;
 A0 = w[800c3508];
-func3354c();
+system_message_get_text_pointer();
 
 A0 = V0;
 A1 = S2;
