@@ -1,5 +1,6 @@
 0013-mdec.lib
-001c-fonts_bitmap.lzs
+001c-mes_font.lzs
+001d-mes_sysdata.lzs
 
 0023-battling.lib
 0024-field.lib

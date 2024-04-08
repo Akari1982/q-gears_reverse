@@ -1832,7 +1832,6 @@ if( A2 != 0 )
 
 
 
-
 ////////////////////////////////
 // system_gpu_create_texture_setting_packet()
 

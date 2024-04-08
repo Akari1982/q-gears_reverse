@@ -860,7 +860,7 @@ A0 = 800c1b6c + dialog_id * 498 + 18;
 func34404();
 
 A0 = 800c1b6c + dialog_id * 498 + 18;
-func344f8();
+system_message_deinit_text();
 
 [800c1f82] = h(00ff);
 
@@ -1034,7 +1034,7 @@ A3 = x_pos + A3 + 8;
 A4 = y_pos + 8;
 A5 = message_w;
 A6 = message_rows;
-func32d78(); // init window struct and packet here
+system_message_init_text();
 
 if( S3 & 0400 )
 {

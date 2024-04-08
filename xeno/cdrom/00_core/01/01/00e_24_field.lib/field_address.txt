@@ -663,7 +663,7 @@
         +14 (2c) [][]     current row height. Store 0xe here.
         +16 (2e) [][]     start row to add packets to render.
         +18 (30) [][]     current texture row.
-        +1c (34) [][][][] pointer to current position in text data
+        +1c (34) [][][][] pointer to current position in text data.
         +20 (38) [][][][] some pointer.
         +28 (40) [][][][] pointer to rows data (size number of rows * 0x60).
             + 00 buffer1 packet for sprite 0x65 (0x14 size).

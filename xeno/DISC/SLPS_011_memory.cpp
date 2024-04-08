@@ -1055,3 +1055,79 @@ system_devkit_pc_close();
 80032CA4	jr     ra 
 80032CA8	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// func32cac()
+
+src = A0;
+
+A0 = w[src + 0];
+A1 = A1;
+system_memory_allocate();
+
+if( V0 == 0 )
+{
+    return 0;
+}
+
+A0 = src;
+A1 = V0;
+system_extract_archive();
+
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_extract_archive()
+
+src = A0;
+dst = A1;
+
+size = w[src];
+src = src + 4;
+end = dst + size;
+start = dst;
+
+while( true )
+{
+    if( dst == end )
+    {
+        return start;
+    }
+
+    control = bu[src];
+    src = src + 1;
+
+    for( int i = 8; i != 0; --i )
+    {
+        data = bu[src];
+        src = src + 1;
+
+        if( control & 1 )
+        {
+            repeat = dst - (((bu[src] & f) << 8) | data);
+            repeat_end = repeat + (bu[src] >> 4) + 3;
+
+            do
+            {
+                [dst] = b(b[repeat]);
+                repeat = repeat + 1;
+                dst = dst + 1;
+            } while( repeat != repeat_end )
+
+            src = src + 1;
+        }
+        else
+        {
+            [dst] = b(data);
+            dst = dst + 1;
+        }
+
+        control = control >> 1;
+    }
+}
+////////////////////////////////
