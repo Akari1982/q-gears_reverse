@@ -230,7 +230,7 @@ if( step != 0 )
 
 if( (  h[800c1b6c + id * 498 + 3c4] != 0 )
  || ( hu[800c1b6c + id * 498 + 410] != 0 ) // order check - not top window
- || (  h[800c1b6c + id * 498 + 408] != 0 )
+ || (  h[800c1b6c + id * 498 + 408] != 0 ) // do not show if window not fully opened
  || ( hu[800c1b6c + id * 498 + 40c] & 0040 )
  || (  h[800c1b6c + id * 498 + 37c] == 0 ) )
 {
@@ -369,7 +369,7 @@ if( h[800c1b6c + id * 498 + 37c] == 0 )
 {
     if( hu[800c1b6c + id * 498 + 410] == 0 ) // order check - top window
     {
-        if( h[800c1b6c + id * 498 + 408] == 0 )
+        if( h[800c1b6c + id * 498 + 408] == 0 ) // if window fully opened
         {
             cursor = 800c1b6c + id * 498 + 384 + 18 + rb * 14;
 
@@ -849,7 +849,7 @@ system_graphic_get_clut_by_param();
 
 id = A0;
 
-if( h[800c1b6c + id * 498 + 40e] == 0 )
+if( h[800c1b6c + id * 498 + 40e] == 0 ) // if message enabled
 {
     A0 = 800c1b6c + id * 498 + 18;
     func34438();
@@ -867,8 +867,8 @@ if( h[800c1b6c + id * 498 + 40e] == 0 )
     [800afb60 + id * 4] = w(-1);
 
     [800c1b6c + id * 498 + 37c] = h(-1);
-    [800c1b6c + id * 498 + 40e] = h(-1);
-    [800c1b6c + id * 498 + 410] = h(ffff);
+    [800c1b6c + id * 498 + 40e] = h(-1); // disable window
+    [800c1b6c + id * 498 + 410] = h(ffff); // messages order
     [800c1b6c + id * 498 + 412] = h(0);
     [800c1b6c + id * 498 + 414] = h(-1);
 
@@ -957,20 +957,20 @@ for( int i = 0; i < 4; ++i )
 
 A0 = 16;
 get_bytes_from_800C2F3C();
-[800c1b6c + id * 498 + 88] = w(V0);
+[800c1b6c + id * 498 + 18 + 70] = w(V0);
 
 A0 = 18;
 get_bytes_from_800C2F3C();
-[800c1b6c + id * 498 + 8c] = w(V0);
+[800c1b6c + id * 498 + 18 + 74] = w(V0);
 
 A0 = 1a;
 get_bytes_from_800C2F3C();
-[800c1b6c + id * 498 + 90] = w(V0);
+[800c1b6c + id * 498 + 18 + 78] = w(V0);
 
 A0 = 1c;
 get_bytes_from_800C2F3C();
-[800c1b6c + id * 498 + 94] = w(V0);
-[800c1b6c + id * 498 + 98] = h(V0);
+[800c1b6c + id * 498 + 18 + 7c] = w(V0);
+[800c1b6c + id * 498 + 18 + 80] = h(V0);
 
 if( type == 2 )
 {
@@ -985,9 +985,9 @@ else if( type == 3 )
 else
 {
     A0 = entity_id;
-    A1 = SP + 20; // x
-    A2 = SP + 24; // y
-    A3 = -40;
+    A1 = SP + 20; // ret x
+    A2 = SP + 24; // ret y
+    A3 = -40; // offset
     func7ee28();
 }
 
@@ -1061,8 +1061,8 @@ system_message_get_text_pointer();
 
 [800c1b6c + id * 498 + 18 + 10] = h(hu[800c1b6c + id * 498 + 18 + 10] | 0002); // do not render background under text
 
-[800c1b6c + id * 498 + 408] = h(hu[800b16aa]);
-[800c1b6c + id * 498 + 40e] = h(0);
+[800c1b6c + id * 498 + 408] = h(hu[800b16aa]); // initial steps for window open
+[800c1b6c + id * 498 + 40e] = h(0); // enable this message
 [800c1b6c + id * 498 + 416] = h(current_entity_id);
 [800c1b6c + id * 498 + 418] = h(entity_id);
 
@@ -1076,8 +1076,8 @@ else
     [800c1b6c + id * 498 + 412] = h(1);
 }
 
-[800c1b6c + id * 498 + 41c] = w(((w[SP + 20] - (message_w   * 2 + 8)) - ((x_pos << 10) >> 10)) << 10);
-[800c1b6c + id * 498 + 420] = w(((w[SP + 24] - (message_rows * 7 + 8)) - ((y_pos << 10) >> 10)) << 10);
+[800c1b6c + id * 498 + 41c] = w(((w[SP + 20] - (message_w    * 2 + 8)) - x_pos) << 10);
+[800c1b6c + id * 498 + 420] = w(((w[SP + 24] - (message_rows * 7 + 8)) - y_pos) << 10);
 
 if( ( S3 & 0100 ) == 0 )
 {
@@ -1086,7 +1086,7 @@ if( ( S3 & 0100 ) == 0 )
 }
 else
 {
-    [800c1b6c + id * 498 + 408] = h(1);
+    [800c1b6c + id * 498 + 408] = h(1); // open immediately
 
     [800c1b6c + id * 498 + 424] = w(0 - w[800c1b6c + id * 498 + 41c]);
     [800c1b6c + id * 498 + 428] = w(0 - w[800c1b6c + id * 498 + 420]);
@@ -1157,21 +1157,22 @@ new_order = 0;
 
 for( int i = 0; i < 4; ++i )
 {
+    // window enabled and 
     if( ( h[800c1b6c + i * 498 + 40e] == 0 ) && ( h[800c1b6c + i * 498 + 412] != 0 ) )
     {
-        [800c1b6c + i * 498 + 3c4] = h(-1);
+        [800c1b6c + i * 498 + 3c4] = h(-1); // dont show continue arrow by default
 
-        if( h[800c1b6c + i * 498 + 408] == 0 )
+        if( h[800c1b6c + i * 498 + 408] == 0 ) // window opened
         {
-            V0 = 0;
-            if( hu[800c1b6c + i * 498 + 28] & 0008 )
+            state = 0;
+            if( hu[800c1b6c + i * 498 + 18 + 10] & 0008 )
             {
-                V0 = bu[800c1b6c + i * 498 + 83];
+                state = bu[800c1b6c + i * 498 + 18 + 6b];
             }
 
-            if( ( V0 != 0 ) && ( h[800c1b6c + i * 498 + 37c] != 0 ) )
+            if( ( state != 0 ) && ( h[800c1b6c + i * 498 + 37c] != 0 ) )
             {
-                [800c1b6c + i * 498 + 3c4] = h(0);
+                [800c1b6c + i * 498 + 3c4] = h(0); // show continue arrow
             }
 
             if( hu[800c1b68] & 0020 ) // circle pressed
@@ -1229,7 +1230,7 @@ for( int i = 0; i < 4; ++i )
                 {
                     [800c1f30 + j * 498] = h(-1);
 
-                    if( h[800c1b6c + j * 498 + 408] == 0 )
+                    if( h[800c1b6c + j * 498 + 408] == 0 ) // window opened
                     {
                         if( hu[800c1b68] & 0020 ) // circle pressed
                         {
@@ -1246,7 +1247,7 @@ for( int i = 0; i < 4; ++i )
                             }
                         }
 
-                        if( h[800c1b6c + j * 498 + 18 + 82] == 0 ) // +9a
+                        if( h[800c1b6c + j * 498 + 18 + 82] == 0 )
                         {
                             A0 = 800c1b6c + j * 498 + 18;
                             A1 = w[800c1b6c + j * 498 + 18 + 90]; // offset to dialog text data
@@ -1264,9 +1265,10 @@ for( int i = 0; i < 4; ++i )
                             state =  bu[800c1b6c + j * 498 + 18 + 6b];
                         }
 
+                        // and cursor not rendered
                         if( ( state != 0 ) && ( h[800c1b6c + j * 498 + 37c] != 0 ) )
                         {
-                            [800c1b6c + j * 498 + 3c4] = h(0);
+                            [800c1b6c + j * 498 + 3c4] = h(0); // show continue arrow
                         }
                     }
 
@@ -1313,7 +1315,7 @@ for( int i = 0; i < 4; ++i )
 {
     if( h[800c1b6c + i * 498 + 40e] == 0 ) // if message enabled
     {
-        if( h[800c1b6c + i * 498 + 408] == 0 )
+        if( h[800c1b6c + i * 498 + 408] == 0 ) // window opened
         {
             if( ( hu[800c1b6c + i * 498 + 18 + 10] & 0004 ) == 0 ) // set window to close
             {
@@ -1328,7 +1330,7 @@ for( int i = 0; i < 4; ++i )
             func7ed0c(); // close message
         }
 
-        if( h[800c1b6c + i * 498 + 408] != 0 )
+        if( h[800c1b6c + i * 498 + 408] != 0 ) // update window opened steps
         {
             [800c1b6c + i * 498 + 408] = h(h[800c1b6c + i * 498 + 408] - 1);
         }

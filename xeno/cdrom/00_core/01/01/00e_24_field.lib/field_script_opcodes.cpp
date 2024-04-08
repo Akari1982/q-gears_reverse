@@ -21002,7 +21002,7 @@ func9bb7c();
 
 
 ////////////////////////////////
-// 0xD3_DialogShow1()
+// field_script_opD3_dialog_show_1()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 1;
@@ -21012,7 +21012,7 @@ func9bb7c();
 
 
 ////////////////////////////////
-// 0x03_DialogShow2()
+// field_script_op03_dialog_show_2()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 2;
@@ -21022,7 +21022,7 @@ func9bb7c();
 
 
 ////////////////////////////////
-// 0xF5_DialogShow3()
+// field_script_opF5_dialog_show_3()
 
 A0 = w[8009f1f0];
 A1 = 3;
@@ -21428,14 +21428,12 @@ V1 = bu[V0 + 3];
 S6 = A0;
 if( V1 != 0 )
 {
-    V0 = A2 & ff00;
-    S6 = V0 | V1;
-    V0 = S6 << 10;
-    [struct_138 + 84] = w(A0 | V0);
+    S6 = (A2 & ff00) | V1;
+    [struct_138 + 84] = w((S6 << 10) | A0);
 }
 
-V0 = S6 >> 4;
-V1 = V0 & 3;
+V1 = (S6 >> 4) & 3;
+
 if( V1 == 0 )
 {
     V0 = (7 - ((h[800aee60] - 100) >> 9)) & 7;
