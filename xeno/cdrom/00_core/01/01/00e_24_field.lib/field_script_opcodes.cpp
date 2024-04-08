@@ -10956,65 +10956,31 @@ L91b6c:	; 80091B6C
 
 
 ////////////////////////////////
-// func91b74
-80091B74	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80091B7C	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
-V1 = V0;
-V0 = 0001;
-[800b1650] = w(V1);
-80091B94	beq    v1, v0, L91bc8 [$80091bc8]
-V0 = V1 < 0002;
-80091B9C	beq    v0, zero, L91bb4 [$80091bb4]
-80091BA0	nop
-80091BA4	beq    v1, zero, L91bcc [$80091bcc]
-V0 = 0008;
-80091BAC	j      L91bd4 [$80091bd4]
-80091BB0	nop
+// field_script_opD6_message_set_speed()
 
-L91bb4:	; 80091BB4
-V0 = 0002;
-80091BB8	beq    v1, v0, L91bcc [$80091bcc]
-V0 = 0004;
-80091BC0	j      L91bd4 [$80091bd4]
-80091BC4	nop
+A0 = 1;
+field_script_help_read_v80();
+[800b1650] = w(V0);
 
-L91bc8:	; 80091BC8
-V0 = 0006;
+     if( V0 == 0 ) [800b16aa] = h(8);
+else if( V0 == 1 ) [800b16aa] = h(6);
+else if( V0 == 2 ) [800b16aa] = h(4);
 
-L91bcc:	; 80091BCC
-[800b16aa] = h(V0);
-
-L91bd4:	; 80091BD4
 V1 = w[800af54c];
-80091BDC	nop
-V0 = hu[V1 + 00cc];
-80091BE4	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80091BF4	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func91bfc
-80091BFC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80091C04	jal    field_script_help_read_u16 [$800ac290]
-A0 = 0001;
-V1 = w[800af54c];
+// func91bfc()
+
+A0 = 1;
+field_script_help_read_u16();
 [800b164e] = h(V0);
-V0 = hu[V1 + 00cc];
-80091C20	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80091C30	jr     ra 
-SP = SP + 0018;
+
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 

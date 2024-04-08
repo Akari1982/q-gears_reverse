@@ -593,7 +593,7 @@
 800b16a4 []       1 - disable menu, 0 - enable menu.
 800b16a5 []       1 - disable compass, 0 - enable compass.
 
-800b16aa [][]     if this != 8 then dialog speed doubled (store 2 instead of 1)
+800b16aa [][]     speed of dialog. Less is faster.
 800b16ac [][][][] increase by 2 if we set camera direction by opcode 0xC7 CameraRotate to 0. Store 1 to 800aee58 and 800aee5c if this not 0 and decrement.
 
 800b1740 [][][][] store entity id which controls party leader here.
@@ -732,12 +732,16 @@
     +40a [][]     wait timer for continue arrow add to render.
     +40c [][]     some flags.
                   0x0040 - if set then we will nor add border of continue arrow to render.
-    +40e [][]     checked if this == 0 when search for dialog. Not render message window if != 0.
+    +40e [][]     0 - enabled message, -1 - disabled.
     +410 [][]     messages order. 0-top. 0xffff if window not inited.
     +412 [][]     ???
     +414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
     +416 [][]     owner entity id. We store result of selection in this entity +81.
     +418 [][]     some entity id???
+    +41c [][][][] ???
+    +420 [][][][] ???
+    +424 [][][][] ???
+    +428 [][][][] ???
     +42c avatar packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x14 size).

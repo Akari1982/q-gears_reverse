@@ -198,16 +198,16 @@ message_y = h[800c1b6c + id * 498 + ae];
 message_w = h[800c1b6c + id * 498 + b0];
 message_h = h[800c1b6c + id * 498 + b2];
 
-A3 = h[800c1b6c + id * 498 + 408];
-if( A3 != 0 )
+step = h[800c1b6c + id * 498 + 408];
+if( step != 0 )
 {
-    A1 = (message_w / (h[800b16aa] * 2)) * (h[800b16aa] - A3);
-    A0 = (message_h / (h[800b16aa] * 2)) * (h[800b16aa] - A3);
+    offst_x = (message_w / (h[800b16aa] * 2)) * (h[800b16aa] - step);
+    offst_y = (message_h / (h[800b16aa] * 2)) * (h[800b16aa] - step);
 
-    message_x = message_x + message_w / 2 - A1;
-    message_w = A1 * 2;
-    message_y = message_y + message_h / 2 - A0;
-    message_h = A0 * 2;
+    message_x = message_x + message_w / 2 - offst_x;
+    message_y = message_y + message_h / 2 - offst_y;
+    message_w = offst_x * 2;
+    message_h = offst_y * 2;
 
     if( message_w < 10 )
     {
@@ -224,8 +224,8 @@ if( A3 != 0 )
     [800c1b6c + id * 498 + 41c] = w(w[800c1b6c + id * 498 + 41c] + w[800c1b6c + id * 498 + 424]);
     [800c1b6c + id * 498 + 420] = w(w[800c1b6c + id * 498 + 420] + w[800c1b6c + id * 498 + 428]);
 
-    message_y = message_y + h[800c1b6c + id * 498 + 422];
     message_x = message_x + h[800c1b6c + id * 498 + 41e];
+    message_y = message_y + h[800c1b6c + id * 498 + 422];
 }
 
 if( (  h[800c1b6c + id * 498 + 3c4] != 0 )
@@ -847,33 +847,35 @@ system_graphic_get_clut_by_param();
 ////////////////////////////////
 // func7ed0c()
 
-dialog_id = A0;
-if( h[800c1b6c + dialog_id * 498 + 40e] != 0 )
+id = A0;
+
+if( h[800c1b6c + id * 498 + 40e] == 0 )
 {
-    return -1;
+    A0 = 800c1b6c + id * 498 + 18;
+    func34438();
+
+    A0 = 800c1b6c + id * 498 + 18;
+    func34404();
+
+    A0 = 800c1b6c + id * 498 + 18;
+    system_message_deinit_text();
+
+    [800c1f82] = h(00ff);
+
+    [800b1648] = h(hu[800b1648] & ((1 << id) XOR ff));
+
+    [800afb60 + id * 4] = w(-1);
+
+    [800c1b6c + id * 498 + 37c] = h(-1);
+    [800c1b6c + id * 498 + 40e] = h(-1);
+    [800c1b6c + id * 498 + 410] = h(ffff);
+    [800c1b6c + id * 498 + 412] = h(0);
+    [800c1b6c + id * 498 + 414] = h(-1);
+
+    return 0;
 }
 
-A0 = 800c1b6c + dialog_id * 498 + 18;
-func34438();
-
-A0 = 800c1b6c + dialog_id * 498 + 18;
-func34404();
-
-A0 = 800c1b6c + dialog_id * 498 + 18;
-system_message_deinit_text();
-
-[800c1f82] = h(00ff);
-
-[800b1648] = h(hu[800b1648] & ((1 << dialog_id) XOR ff));
-
-[800afb60 + dialog_id * 4] = w(-1);
-
-[800c1b6c + dialog_id * 498 + 37c] = h(-1);
-[800c1b6c + dialog_id * 498 + 40e] = h(-1);
-[800c1b6c + dialog_id * 498 + 410] = h(ffff);
-[800c1b6c + dialog_id * 498 + 412] = h(0);
-[800c1b6c + dialog_id * 498 + 414] = h(-1);
-return 0;
+return -1;
 ////////////////////////////////
 
 
@@ -1044,11 +1046,11 @@ if( S3 & 0400 )
 // set default text speed
 if( h[800b16aa] == 8 )
 {
-    [800c1b6c + id * 498 + 80] = b(1);
+    [800c1b6c + id * 498 + 18 + 68] = b(1);
 }
 else
 {
-    [800c1b6c + id * 498 + 80] = b(2);
+    [800c1b6c + id * 498 + 18 + 68] = b(2);
 }
 
 // get offset to message text
@@ -1057,11 +1059,13 @@ A1 = message_id;
 system_message_get_text_pointer();
 [800c1b6c + id * 498 + 18 + 90] = w(V0);
 
+[800c1b6c + id * 498 + 18 + 10] = h(hu[800c1b6c + id * 498 + 18 + 10] | 0002); // do not render background under text
+
+[800c1b6c + id * 498 + 408] = h(hu[800b16aa]);
 [800c1b6c + id * 498 + 40e] = h(0);
-[800c1b6c + id * 498 + 18 + 10] = h(hu[800c1b6c + id * 498 + 18 + 10] | 0002);
 [800c1b6c + id * 498 + 416] = h(current_entity_id);
 [800c1b6c + id * 498 + 418] = h(entity_id);
-[800c1b6c + id * 498 + 408] = h(hu[800b16aa]);
+
 
 if( ( flags & 0800 ) == 0 )
 {
@@ -1077,8 +1081,8 @@ else
 
 if( ( S3 & 0100 ) == 0 )
 {
-    [800c1b6c + id * 498 + 424] = w(0 - (w[800c1b6c + id * 498 + 41c] / h[800b16aa]));
-    [800c1b6c + id * 498 + 428] = w(0 - (w[800c1b6c + id * 498 + 420] / h[800b16aa]));
+    [800c1b6c + id * 498 + 424] = w(0 - (w[800c1b6c + id * 498 + 41c] / h[800b16aa])); // x move add
+    [800c1b6c + id * 498 + 428] = w(0 - (w[800c1b6c + id * 498 + 420] / h[800b16aa])); // y move add
 }
 else
 {
@@ -1111,7 +1115,7 @@ for( int i = 0; i < 4; ++i )
     if( h[800c1b6c + i * 498 + 40e] == 0 )
     {
         A0 = i;
-        func7ed0c();
+        func7ed0c(); // close message
     }
 }
 ////////////////////////////////
@@ -1225,7 +1229,7 @@ for( int i = 0; i < 4; ++i )
                 {
                     [800c1f30 + j * 498] = h(-1);
 
-                    if( h[800c1f74 + j * 498] == 0 )
+                    if( h[800c1b6c + j * 498 + 408] == 0 )
                     {
                         if( hu[800c1b68] & 0020 ) // circle pressed
                         {
@@ -1307,26 +1311,26 @@ V1 = 800b12c8 + rb * c0;
 
 for( int i = 0; i < 4; ++i )
 {
-    if( h[800c1f7a + i * 498] == 0 )
+    if( h[800c1b6c + i * 498 + 40e] == 0 ) // if message enabled
     {
-        if( h[800c1f74 + i * 498] == 0 )
+        if( h[800c1b6c + i * 498 + 408] == 0 )
         {
-            if( ( hu[800c1b94 + i * 498] & 0004 ) == 0 )
+            if( ( hu[800c1b6c + i * 498 + 18 + 10] & 0004 ) == 0 ) // set window to close
             {
-                A0 = (i * 10000) >> 10;
-                func7ed0c();
+                A0 = i;
+                func7ed0c(); // close message
             }
         }
 
-        if( h[800c1f80 + i * 498] == 0 )
+        if( h[800c1b6c + i * 498 + 414] == 0 ) // set window to close
         {
-            A0 = (i * 10000) >> 10;
-            func7ed0c();
+            A0 = i;
+            func7ed0c(); // close message
         }
 
-        if( h[800c1f74 + i * 498] != 0 )
+        if( h[800c1b6c + i * 498 + 408] != 0 )
         {
-            [800c1f74 + i * 498] = h(h[800c1f74 + i * 498] - 1);
+            [800c1b6c + i * 498 + 408] = h(h[800c1b6c + i * 498 + 408] - 1);
         }
     }
 }

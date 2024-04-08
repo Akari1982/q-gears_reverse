@@ -1170,7 +1170,7 @@ Entity[ "41" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x40 ) -- 0x0d56 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x40 ) -- 0x0d56 0xd2
         -- 0x9C() -- 0x0d5a 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0d74 ) -- 0x0d5b 0x31
         opcodeFE54() -- 0x0d60 0xfe
@@ -1306,7 +1306,7 @@ Entity[ "45" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x40 ) -- 0x0e20 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x40 ) -- 0x0e20 0xd2
         -- 0x9C() -- 0x0e24 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0e31 ) -- 0x0e25 0x31
         opcodeFE54() -- 0x0e2a 0xfe
@@ -1417,7 +1417,7 @@ Entity[ "48" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x40 ) -- 0x0ebd 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x40 ) -- 0x0ebd 0xd2
         -- 0x9C() -- 0x0ec1 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0ece ) -- 0x0ec2 0x31
         opcodeFE54() -- 0x0ec7 0xfe
@@ -1584,10 +1584,10 @@ Entity[ "54" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=161, jump=0x112b ) -- 0x111e 0x84
-        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x00 ) -- 0x1123 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000b, ???=0x00 ) -- 0x1123 0xd2
         -- 0x9C() -- 0x1127 0x9c
         -- 0x01_JumpTo( 0x1130 ) -- 0x1128 0x01
-        opcodeD2_DialogShow0( dialog_id=0x000c, ???=0x00 ) -- 0x112b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000c, ???=0x00 ) -- 0x112b 0xd2
         -- 0x9C() -- 0x112f 0x9c
         -- MISSING OPCODE 0x2c
     end,

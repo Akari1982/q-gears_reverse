@@ -396,14 +396,14 @@ Entity[ "11" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x03e8 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x03e8 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0533 ) -- 0x051b 0x02
         opcodeFE54() -- 0x0523 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x0525 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0006, ???=0x00 ) -- 0x0525 0xd2
         -- 0x9C() -- 0x0529 0x9c
         -- 0x05_CallFunction( 0x03e8 ) -- 0x052a 0x05
         -- MISSING OPCODE 0x36
@@ -425,14 +425,14 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0549 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0549 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040a ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x06af ) -- 0x0697 0x02
         opcodeFE54() -- 0x069f 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x06a1 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x00 ) -- 0x06a1 0xd2
         -- 0x9C() -- 0x06a5 0x9c
         -- 0x05_CallFunction( 0x0549 ) -- 0x06a6 0x05
         -- MISSING OPCODE 0x36

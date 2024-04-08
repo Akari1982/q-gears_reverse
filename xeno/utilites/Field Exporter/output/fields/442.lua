@@ -499,7 +499,7 @@ Entity[ "15" ] = {
     script_0x08 = function( self )
         opcode26_Wait( time=20 ) -- 0x097a 0x26
         -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x097d 0xfe
-        -- 0xF5_DialogShow3( dialog_id=0x000d, flag=0x25 ) -- 0x0981 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000d, flag=0x25 ) -- 0x0981 0xf5
         -- 0x9C() -- 0x0985 0x9c
         -- MISSING OPCODE 0x36
     end,

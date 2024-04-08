@@ -537,7 +537,7 @@ Entity[ "22" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000f, ???=0x01 ) -- 0x051d 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000f, ???=0x01 ) -- 0x051d 0xd2
         -- 0x9C() -- 0x0521 0x9c
         return 0 -- 0x0522 0x00
     end,
@@ -629,12 +629,12 @@ Entity[ "26" ] = {
     on_talk = function( self )
         opcode15() -- 0x07bf 0x15
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ba ), value2=(s16)0x03e8, condition="value1 == value2", jump_if_false=0x07d3 ) -- 0x07c0 0x02
-        opcodeD2_DialogShow0( dialog_id=0x001d, ???=0x00 ) -- 0x07c8 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x001d, ???=0x00 ) -- 0x07c8 0xd2
         -- 0x9C() -- 0x07cc 0x9c
         -- 0x05_CallFunction( 0x087a ) -- 0x07cd 0x05
         -- 0x01_JumpTo( 0x0839 ) -- 0x07d0 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ba ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x07e3 ) -- 0x07d3 0x02
-        opcodeD2_DialogShow0( dialog_id=0x001e, ???=0x00 ) -- 0x07db 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x001e, ???=0x00 ) -- 0x07db 0xd2
         -- 0x9C() -- 0x07df 0x9c
         opcodeFE54() -- 0x07e0 0xfe
         return 0 -- 0x07e2 0x00
@@ -1092,7 +1092,7 @@ Entity[ "38" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x00c3, ???=0x03 ) -- 0x1cb8 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x00c3, ???=0x03 ) -- 0x1cb8 0xd2
         -- 0x9C() -- 0x1cbc 0x9c
         return 0 -- 0x1cbd 0x00
     end,

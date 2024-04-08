@@ -497,7 +497,7 @@ Entity[ "20" ] = {
 
     script_0x04 = function( self )
         -- 0xD0() -- 0x0170 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x017b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x017b 0xd2
         -- 0x9C() -- 0x017f 0x9c
         return 0 -- 0x0180 0x00
     end,
@@ -533,7 +533,7 @@ Entity[ "21" ] = {
 
     script_0x04 = function( self )
         -- 0xD0() -- 0x018c 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0197 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0197 0xd2
         -- 0x9C() -- 0x019b 0x9c
         -- 0xF4() -- 0x019c 0xf4
         return 0 -- 0x019e 0x00
@@ -643,7 +643,10 @@ Entity[ "25" ] = {
         opcode25_EntityDisable( entity=(entity)0xff ) -- 0x0284 0x25
         opcode25_EntityDisable( entity=(entity)0xfe ) -- 0x0286 0x25
         opcode25_EntityDisable( entity=(entity)0xfd ) -- 0x0288 0x25
-        -- MISSING OPCODE 0xd6
+        opcodeD6_MessageSetSpeed( speed=0x8001 ) -- 0x028a 0xd6
+        opcode25_EntityDisable( entity=(entity)0x01 ) -- 0x028d 0x25
+        -- 0x09_EntityCallScriptEW( entity=0x1b, script=0x64 ) -- 0x028f 0x09
+        -- MISSING OPCODE 0xf2
     end,
 
     on_talk = function( self )

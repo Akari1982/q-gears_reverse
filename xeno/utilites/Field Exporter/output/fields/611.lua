@@ -122,7 +122,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x10 ) -- 0x0294 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x10 ) -- 0x0294 0xd2
         -- 0x9C() -- 0x0298 0x9c
         return 0 -- 0x0299 0x00
     end,
@@ -144,7 +144,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x0a = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x10 ) -- 0x02c3 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x10 ) -- 0x02c3 0xd2
         -- 0x9C() -- 0x02c7 0x9c
         return 0 -- 0x02c8 0x00
     end,
@@ -213,13 +213,13 @@ Entity[ "5" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x11 ) -- 0x031b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x11 ) -- 0x031b 0xd2
         -- 0x9C() -- 0x031f 0x9c
         return 0 -- 0x0320 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x21 ) -- 0x0321 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000a, ???=0x21 ) -- 0x0321 0xd2
         -- 0x9C() -- 0x0325 0x9c
         return 0 -- 0x0326 0x00
     end,

@@ -150,7 +150,7 @@ Entity[ "4" ] = {
     script_0x05 = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x24 ) -- 0x0243 0x09
         opcode26_Wait( time=32 ) -- 0x0246 0x26
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x10 ) -- 0x0249 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x10 ) -- 0x0249 0xd2
         -- 0x9C() -- 0x024d 0x9c
         return 0 -- 0x024e 0x00
     end,

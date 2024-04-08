@@ -64,7 +64,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0105 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0105 0xd2
         -- 0x9C() -- 0x0109 0x9c
         return 0 -- 0x010a 0x00
     end,
@@ -145,7 +145,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x06 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x02be 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x02be 0xd2
         -- 0x9C() -- 0x02c2 0x9c
         return 0 -- 0x02c3 0x00
     end,
@@ -157,7 +157,7 @@ Entity[ "2" ] = {
 
     script_0x08 = function( self )
         -- 0xD0() -- 0x0330 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x000c, ???=0x00 ) -- 0x033b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000c, ???=0x00 ) -- 0x033b 0xd2
         -- 0x9C() -- 0x033f 0x9c
         return 0 -- 0x0340 0x00
     end,
@@ -176,7 +176,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x0c = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0015, ???=0x00 ) -- 0x03ae 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0015, ???=0x00 ) -- 0x03ae 0xd2
         -- 0x9C() -- 0x03b2 0x9c
         return 0 -- 0x03b3 0x00
     end,
@@ -490,11 +490,11 @@ Entity[ "13" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0214 ), value2=(s16)0x8000, condition="value1 & value2", jump_if_false=0x04d9 ) -- 0x04c6 0x02
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x2d ) -- 0x04ce 0x09
-        opcodeD2_DialogShow0( dialog_id=0x0016, ???=0x00 ) -- 0x04d1 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0016, ???=0x00 ) -- 0x04d1 0xd2
         -- 0x9C() -- 0x04d5 0x9c
         -- 0x01_JumpTo( 0x04f7 ) -- 0x04d6 0x01
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x2e ) -- 0x04d9 0x09
-        opcodeD2_DialogShow0( dialog_id=0x0017, ???=0x00 ) -- 0x04dc 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0017, ???=0x00 ) -- 0x04dc 0xd2
         -- 0x9C() -- 0x04e0 0x9c
         -- MISSING OPCODE 0xFE5d
     end,

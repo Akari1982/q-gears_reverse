@@ -281,7 +281,7 @@ Entity[ "9" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x0201 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x0203 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x0203 0xd2
         -- 0x9C() -- 0x0207 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -307,7 +307,7 @@ Entity[ "10" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x024e 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x0250 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0004, ???=0x00 ) -- 0x0250 0xd2
         -- 0x9C() -- 0x0254 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -333,7 +333,7 @@ Entity[ "11" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x029e 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x02a0 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x02a0 0xd2
         -- 0x9C() -- 0x02a4 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -359,7 +359,7 @@ Entity[ "12" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x02ee 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x02f0 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0006, ???=0x00 ) -- 0x02f0 0xd2
         -- 0x9C() -- 0x02f4 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -385,7 +385,7 @@ Entity[ "13" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x033b 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x033d 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x033d 0xd2
         -- 0x9C() -- 0x0341 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -411,7 +411,7 @@ Entity[ "14" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x038b 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x00 ) -- 0x038d 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0008, ???=0x00 ) -- 0x038d 0xd2
         -- 0x9C() -- 0x0391 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -437,7 +437,7 @@ Entity[ "15" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x03dd 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x03df 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x00 ) -- 0x03df 0xd2
         -- 0x9C() -- 0x03e3 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -463,7 +463,7 @@ Entity[ "16" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x0434 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x00 ) -- 0x0436 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000a, ???=0x00 ) -- 0x0436 0xd2
         -- 0x9C() -- 0x043a 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -489,7 +489,7 @@ Entity[ "17" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x048e 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x00 ) -- 0x0490 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000b, ???=0x00 ) -- 0x0490 0xd2
         -- 0x9C() -- 0x0494 0x9c
         -- MISSING OPCODE 0x74
     end,

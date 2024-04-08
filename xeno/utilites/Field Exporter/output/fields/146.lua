@@ -326,7 +326,7 @@ Entity[ "13" ] = {
 
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x0145 ) -- 0x010e 0x86
-        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x0113 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0004, ???=0x00 ) -- 0x0113 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -351,7 +351,7 @@ Entity[ "14" ] = {
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x019c ) -- 0x0164 0x86
         opcode15() -- 0x0169 0x15
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x016a 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x016a 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

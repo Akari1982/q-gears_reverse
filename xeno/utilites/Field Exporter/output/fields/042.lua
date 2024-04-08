@@ -92,7 +92,7 @@ Entity[ "4" ] = {
 
     on_talk = function( self )
         -- 0x5A() -- 0x004a 0x5a
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x2a ) -- 0x004b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x2a ) -- 0x004b 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

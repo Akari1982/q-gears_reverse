@@ -210,14 +210,14 @@ Entity[ "6" ] = {
     script_0x04 = function( self )
         -- 0xFE0D_SetAvatar( character_id=51 ) -- 0x038b 0xfe
         -- 0xD0() -- 0x038f 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x039a 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x039a 0xd2
         -- 0x9C() -- 0x039e 0x9c
         return 0 -- 0x039f 0x00
     end,
 
     script_0x05 = function( self )
         -- 0xFE0D_SetAvatar( character_id=51 ) -- 0x03a0 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x21 ) -- 0x03a4 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x21 ) -- 0x03a4 0xd2
         -- 0x9C() -- 0x03a8 0x9c
         -- MISSING OPCODE 0x21
     end,

@@ -75,7 +75,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x12 ) -- 0x008f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x12 ) -- 0x008f 0xd2
         -- 0x9C() -- 0x0093 0x9c
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0094 0xfe
         -- MISSING OPCODE 0xd4

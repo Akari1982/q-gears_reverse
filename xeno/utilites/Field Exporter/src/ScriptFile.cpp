@@ -128,6 +128,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log("\", jump_if_false=" + GetU16Variable( pointer + 6 ) + " )" );
                     pointer += 8;
                 }
+                else if( opcode == 0x03 )
+                {
+                    exp->Log( "opcode03_MessageShow2( dialog_id=" + GetU16Variable( pointer + 1 ) + ", ???=" + GetU8Variable( pointer + 3 ) + " )" );
+                    pointer += 4;
+                }
                 else if( opcode == 0x05 )
                 {
                     exp->Log( "-- 0x05_CallFunction( " + GetU16Variable( pointer + 1 ) + " )" );
@@ -348,8 +353,18 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0xd2 )
                 {
-                    exp->Log( "opcodeD2_DialogShow0( dialog_id=" + GetU16Variable( pointer + 1 ) + ", ???=" + GetU8Variable( pointer + 3 ) + " )" );
+                    exp->Log( "opcodeD2_MessageShow0( dialog_id=" + GetU16Variable( pointer + 1 ) + ", ???=" + GetU8Variable( pointer + 3 ) + " )" );
                     pointer += 4;
+                }
+                else if( opcode == 0xd3 )
+                {
+                    exp->Log( "opcodeD3_MessageShow1( dialog_id=" + GetU16Variable( pointer + 1 ) + ", ???=" + GetU8Variable( pointer + 3 ) + " )" );
+                    pointer += 4;
+                }
+                else if( opcode == 0xd6 )
+                {
+                    exp->Log( "opcodeD6_MessageSetSpeed( speed=" + GetU16Variable( pointer + 1 ) + " )" );
+                    pointer += 3;
                 }
                 else if( opcode == 0xef )
                 {
@@ -368,7 +383,7 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0xf5 )
                 {
-                    exp->Log( "-- 0xF5_DialogShow3( dialog_id=" + GetU16Variable( pointer + 1 ) + ", flag=" + GetU8Variable( pointer + 3 ) + " )");
+                    exp->Log( "opcodeF5_MessageShow3( dialog_id=" + GetU16Variable( pointer + 1 ) + ", flag=" + GetU8Variable( pointer + 3 ) + " )");
                     pointer += 4;
                 }
                 else if( opcode == 0xfe )

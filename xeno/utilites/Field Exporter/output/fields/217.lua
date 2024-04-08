@@ -387,7 +387,7 @@ Entity[ "8" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0022, ???=0x00 ) -- 0x059f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0022, ???=0x00 ) -- 0x059f 0xd2
         -- 0x9C() -- 0x05a3 0x9c
         return 0 -- 0x05a4 0x00
     end,
@@ -431,7 +431,7 @@ Entity[ "9" ] = {
     end,
 
     script_0x06 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0025, ???=0x00 ) -- 0x061f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0025, ???=0x00 ) -- 0x061f 0xd2
         -- 0x9C() -- 0x0623 0x9c
         return 0 -- 0x0624 0x00
     end,
@@ -481,7 +481,7 @@ Entity[ "10" ] = {
     end,
 
     script_0x06 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0029, ???=0x00 ) -- 0x06a4 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0029, ???=0x00 ) -- 0x06a4 0xd2
         -- 0x9C() -- 0x06a8 0x9c
         return 0 -- 0x06a9 0x00
     end,
@@ -512,7 +512,7 @@ Entity[ "11" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x002b, ???=0x00 ) -- 0x06fb 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x002b, ???=0x00 ) -- 0x06fb 0xd2
         -- 0x9C() -- 0x06ff 0x9c
         return 0 -- 0x0700 0x00
     end,
@@ -535,7 +535,7 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x002c, ???=0x00 ) -- 0x0716 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x002c, ???=0x00 ) -- 0x0716 0xd2
         -- 0x9C() -- 0x071a 0x9c
         return 0 -- 0x071b 0x00
     end,
@@ -602,7 +602,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0031, ???=0x00 ) -- 0x0782 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0031, ???=0x00 ) -- 0x0782 0xd2
         -- 0x9C() -- 0x0786 0x9c
         return 0 -- 0x0787 0x00
     end,
@@ -625,7 +625,7 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0032, ???=0x00 ) -- 0x079b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0032, ???=0x00 ) -- 0x079b 0xd2
         -- 0x9C() -- 0x079f 0x9c
         return 0 -- 0x07a0 0x00
     end,

@@ -262,7 +262,7 @@ Entity[ "9" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0007, flag=0x62 ) -- 0x0378 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0007, flag=0x62 ) -- 0x0378 0xf5
         -- 0x9C() -- 0x037c 0x9c
         return 0 -- 0x037d 0x00
     end,
@@ -333,7 +333,7 @@ Entity[ "11" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0008, flag=0x62 ) -- 0x040d 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0008, flag=0x62 ) -- 0x040d 0xf5
         -- 0x9C() -- 0x0411 0x9c
         return 0 -- 0x0412 0x00
     end,
@@ -427,7 +427,7 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0009, flag=0x62 ) -- 0x0494 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0009, flag=0x62 ) -- 0x0494 0xf5
         -- 0x9C() -- 0x0498 0x9c
         return 0 -- 0x0499 0x00
     end,
@@ -502,7 +502,7 @@ Entity[ "15" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x000a, flag=0x62 ) -- 0x0517 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000a, flag=0x62 ) -- 0x0517 0xf5
         -- 0x9C() -- 0x051b 0x9c
         return 0 -- 0x051c 0x00
     end,
@@ -620,7 +620,7 @@ Entity[ "18" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x000b, flag=0x62 ) -- 0x05df 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000b, flag=0x62 ) -- 0x05df 0xf5
         -- 0x9C() -- 0x05e3 0x9c
         return 0 -- 0x05e4 0x00
     end,
@@ -702,7 +702,7 @@ Entity[ "20" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x000c, flag=0x62 ) -- 0x064a 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000c, flag=0x62 ) -- 0x064a 0xf5
         -- 0x9C() -- 0x064e 0x9c
         return 0 -- 0x064f 0x00
     end,
@@ -784,7 +784,7 @@ Entity[ "22" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x000d, flag=0x62 ) -- 0x06b5 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000d, flag=0x62 ) -- 0x06b5 0xf5
         -- 0x9C() -- 0x06b9 0x9c
         return 0 -- 0x06ba 0x00
     end,
@@ -866,7 +866,7 @@ Entity[ "24" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x000e, flag=0x62 ) -- 0x0720 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000e, flag=0x62 ) -- 0x0720 0xf5
         -- 0x9C() -- 0x0724 0x9c
         return 0 -- 0x0725 0x00
     end,
@@ -948,7 +948,7 @@ Entity[ "26" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x000f, flag=0x62 ) -- 0x07aa 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000f, flag=0x62 ) -- 0x07aa 0xf5
         -- 0x9C() -- 0x07ae 0x9c
         return 0 -- 0x07af 0x00
     end,
@@ -1085,21 +1085,21 @@ Entity[ "30" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0027, flag=0x53 ) -- 0x0d28 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0027, flag=0x53 ) -- 0x0d28 0xf5
         -- 0x9C() -- 0x0d2c 0x9c
-        -- 0xF5_DialogShow3( dialog_id=0x0028, flag=0x63 ) -- 0x0d2d 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0028, flag=0x63 ) -- 0x0d2d 0xf5
         -- 0x9C() -- 0x0d31 0x9c
         return 0 -- 0x0d32 0x00
     end,
 
     script_0x05 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0029, flag=0x63 ) -- 0x0d33 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0029, flag=0x63 ) -- 0x0d33 0xf5
         -- 0x9C() -- 0x0d37 0x9c
         return 0 -- 0x0d38 0x00
     end,
 
     script_0x06 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x002a, flag=0x53 ) -- 0x0d39 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x002a, flag=0x53 ) -- 0x0d39 0xf5
         -- 0x9C() -- 0x0d3d 0x9c
         return 0 -- 0x0d3e 0x00
     end,

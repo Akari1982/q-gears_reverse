@@ -218,7 +218,7 @@ Entity[ "7" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x02c9 ) -- 0x02b9 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x02c1 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x02c1 0xd2
         -- 0x9C() -- 0x02c5 0x9c
         -- 0x01_JumpTo( 0x02e7 ) -- 0x02c6 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x02e2 ) -- 0x02c9 0x02

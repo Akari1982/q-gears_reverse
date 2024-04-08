@@ -598,7 +598,7 @@ Entity[ "20" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x4946 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x4948 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x4948 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -786,13 +786,13 @@ Entity[ "27" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x4c6f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x00 ) -- 0x4c6f 0xd2
         -- 0x9C() -- 0x4c73 0x9c
         return 0 -- 0x4c74 0x00
     end,
 
     on_push = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x4c6f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x00 ) -- 0x4c6f 0xd2
         -- 0x9C() -- 0x4c73 0x9c
         return 0 -- 0x4c74 0x00
     end,

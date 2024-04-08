@@ -189,7 +189,8 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd6
+        opcodeD6_MessageSetSpeed( speed=0x8002 ) -- 0x01b4 0xd6
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x05 = function( self )
@@ -625,7 +626,7 @@ Entity[ "17" ] = {
     script_0x05 = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x04, script=0x24 ) -- 0x04af 0x09
         opcode26_Wait( time=15 ) -- 0x04b2 0x26
-        -- 0xF5_DialogShow3( dialog_id=0x0001, flag=0x53 ) -- 0x04b5 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0001, flag=0x53 ) -- 0x04b5 0xf5
         -- 0x9C() -- 0x04b9 0x9c
         return 0 -- 0x04ba 0x00
     end,

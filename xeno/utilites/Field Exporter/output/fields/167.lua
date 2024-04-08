@@ -84,12 +84,12 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0095 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0095 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x01 ) -- 0x00c2 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x01 ) -- 0x00c2 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

@@ -73,7 +73,7 @@ Entity[ "1" ] = {
 
     script_0x07 = function( self )
         opcode26_Wait( time=10 ) -- 0x0113 0x26
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x04 ) -- 0x0116 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x04 ) -- 0x0116 0xd2
         -- 0x9C() -- 0x011a 0x9c
         -- MISSING OPCODE 0x38
     end,

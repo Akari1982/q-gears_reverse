@@ -303,7 +303,7 @@ Entity[ "12" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00a1 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00a1 0xd2
         -- 0x9C() -- 0x00a5 0x9c
         return 0 -- 0x00a6 0x00
     end,

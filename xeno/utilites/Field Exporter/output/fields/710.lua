@@ -117,7 +117,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000e, ???=0x00 ) -- 0x461a 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000e, ???=0x00 ) -- 0x461a 0xd2
         -- 0x9C() -- 0x461e 0x9c
         -- MISSING OPCODE 0x36
     end,
@@ -461,7 +461,7 @@ Entity[ "16" ] = {
 
     script_0x07 = function( self )
         -- 0xFE0D_SetAvatar( character_id=26 ) -- 0x47e4 0xfe
-        -- 0xF5_DialogShow3( dialog_id=0x000f, flag=0x01 ) -- 0x47e8 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000f, flag=0x01 ) -- 0x47e8 0xf5
         -- 0x9C() -- 0x47ec 0x9c
         return 0 -- 0x47ed 0x00
     end,

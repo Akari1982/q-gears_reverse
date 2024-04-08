@@ -228,13 +228,13 @@ Entity[ "6" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x11 ) -- 0x030a 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0004, ???=0x11 ) -- 0x030a 0xd2
         -- 0x9C() -- 0x030e 0x9c
         return 0 -- 0x030f 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x11 ) -- 0x0310 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x11 ) -- 0x0310 0xd2
         -- 0x9C() -- 0x0314 0x9c
         return 0 -- 0x0315 0x00
     end,
@@ -277,25 +277,25 @@ Entity[ "7" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x20 ) -- 0x0538 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0008, ???=0x20 ) -- 0x0538 0xd2
         -- 0x9C() -- 0x053c 0x9c
         return 0 -- 0x053d 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x20 ) -- 0x053e 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x20 ) -- 0x053e 0xd2
         -- 0x9C() -- 0x0542 0x9c
         return 0 -- 0x0543 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x20 ) -- 0x0544 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000a, ???=0x20 ) -- 0x0544 0xd2
         -- 0x9C() -- 0x0548 0x9c
         return 0 -- 0x0549 0x00
     end,
 
     script_0x0a = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x20 ) -- 0x054a 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000b, ???=0x20 ) -- 0x054a 0xd2
         -- 0x9C() -- 0x054e 0x9c
         return 0 -- 0x054f 0x00
     end,

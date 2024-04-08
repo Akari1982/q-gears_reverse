@@ -349,7 +349,7 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0002, flag=0x00 ) -- 0x0117 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0002, flag=0x00 ) -- 0x0117 0xf5
         -- 0x9C() -- 0x011b 0x9c
         return 0 -- 0x011c 0x00
     end,

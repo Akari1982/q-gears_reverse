@@ -60,7 +60,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x011b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x011b 0xd2
         -- 0x9C() -- 0x011f 0x9c
         return 0 -- 0x0120 0x00
     end,
@@ -704,7 +704,7 @@ Entity[ "17" ] = {
 
     script_0x05 = function( self )
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0517 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0016, ???=0x00 ) -- 0x051b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0016, ???=0x00 ) -- 0x051b 0xd2
         -- 0x9C() -- 0x051f 0x9c
         opcode26_Wait( time=6 ) -- 0x0520 0x26
         -- 0x09_EntityCallScriptEW( entity=0x20, script=0xc4 ) -- 0x0523 0x09
@@ -714,14 +714,14 @@ Entity[ "17" ] = {
 
     script_0x06 = function( self )
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x052d 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0017, ???=0x00 ) -- 0x0531 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0017, ???=0x00 ) -- 0x0531 0xd2
         -- 0x9C() -- 0x0535 0x9c
         return 0 -- 0x0536 0x00
     end,
 
     script_0x07 = function( self )
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0537 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0018, ???=0x00 ) -- 0x053b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0018, ???=0x00 ) -- 0x053b 0xd2
         -- 0x9C() -- 0x053f 0x9c
         return 0 -- 0x0540 0x00
     end,
@@ -793,7 +793,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0021, ???=0x00 ) -- 0x06ac 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0021, ???=0x00 ) -- 0x06ac 0xd2
         -- 0x9C() -- 0x06b0 0x9c
         return 0 -- 0x06b1 0x00
     end,

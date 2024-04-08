@@ -179,10 +179,10 @@ Entity[ "4" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x0238 ) -- 0x0228 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0230 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0230 0xd2
         -- 0x9C() -- 0x0234 0x9c
         -- 0x01_JumpTo( 0x023d ) -- 0x0235 0x01
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0238 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0238 0xd2
         -- 0x9C() -- 0x023c 0x9c
         return 0 -- 0x023d 0x00
     end,

@@ -377,7 +377,7 @@ Entity[ "12" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000d, ???=0x00 ) -- 0x05ac 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000d, ???=0x00 ) -- 0x05ac 0xd2
         -- 0x9C() -- 0x05b0 0x9c
         opcode26_Wait( time=20 ) -- 0x05b1 0x26
         -- MISSING OPCODE 0x69
@@ -412,7 +412,7 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x000f, flag=0x20 ) -- 0x05f5 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000f, flag=0x20 ) -- 0x05f5 0xf5
         -- 0x9C() -- 0x05f9 0x9c
         return 0 -- 0x05fa 0x00
     end,
@@ -506,7 +506,7 @@ Entity[ "15" ] = {
 
     script_0x04 = function( self )
         -- 0xD0() -- 0x0763 0xd0
-        -- 0xF5_DialogShow3( dialog_id=0x0013, flag=0x00 ) -- 0x076e 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0013, flag=0x00 ) -- 0x076e 0xf5
         -- 0x9C() -- 0x0772 0x9c
         return 0 -- 0x0773 0x00
     end,
@@ -514,7 +514,7 @@ Entity[ "15" ] = {
     script_0x05 = function( self )
         -- 0xD0() -- 0x0774 0xd0
         -- 0xFE0D_SetAvatar( character_id=22 ) -- 0x077f 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0014, ???=0x08 ) -- 0x0783 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0014, ???=0x08 ) -- 0x0783 0xd2
         -- 0x9C() -- 0x0787 0x9c
         return 0 -- 0x0788 0x00
     end,
@@ -555,7 +555,7 @@ Entity[ "16" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0017, ???=0x01 ) -- 0x07c0 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0017, ???=0x01 ) -- 0x07c0 0xd2
         -- 0x9C() -- 0x07c4 0x9c
         return 0 -- 0x07c5 0x00
     end,
@@ -592,13 +592,13 @@ Entity[ "17" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0019, ???=0x00 ) -- 0x07f6 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0019, ???=0x00 ) -- 0x07f6 0xd2
         -- 0x9C() -- 0x07fa 0x9c
         return 0 -- 0x07fb 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x001a, ???=0x00 ) -- 0x07fc 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x001a, ???=0x00 ) -- 0x07fc 0xd2
         -- 0x9C() -- 0x0800 0x9c
         return 0 -- 0x0801 0x00
     end,

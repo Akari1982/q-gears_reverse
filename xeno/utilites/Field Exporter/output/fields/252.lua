@@ -200,7 +200,7 @@ Entity[ "6" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x01c8 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x01c8 0xd2
         -- 0x9C() -- 0x01cc 0x9c
         return 0 -- 0x01cd 0x00
     end,
@@ -291,7 +291,7 @@ Entity[ "9" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x02f7 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x02f7 0xd2
         -- 0x9C() -- 0x02fb 0x9c
         return 0 -- 0x02fc 0x00
     end,
@@ -301,7 +301,7 @@ Entity[ "9" ] = {
     end,
 
     script_0x06 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x0314 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x00 ) -- 0x0314 0xd2
         -- 0x9C() -- 0x0318 0x9c
         return 0 -- 0x0319 0x00
     end,
@@ -358,7 +358,7 @@ Entity[ "11" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0001, condition="value1 & value2", jump_if_false=0x03ba ) -- 0x03a0 0x02
         opcodeFE54() -- 0x03a8 0xfe
         opcode26_Wait( time=10 ) -- 0x03aa 0x26
-        -- 0xF5_DialogShow3( dialog_id=0x000a, flag=0x01 ) -- 0x03ad 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x000a, flag=0x01 ) -- 0x03ad 0xf5
         -- 0x9C() -- 0x03b1 0x9c
         -- 0x98_MapLoad( field_id=259, value=4 ) -- 0x03b2 0x98
         -- 0x01_JumpTo( 0x044d ) -- 0x03b7 0x01

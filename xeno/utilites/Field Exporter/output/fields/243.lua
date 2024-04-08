@@ -332,7 +332,7 @@ Entity[ "10" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0000, flag=0x63 ) -- 0x057e 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0000, flag=0x63 ) -- 0x057e 0xf5
         -- 0x9C() -- 0x0582 0x9c
         return 0 -- 0x0583 0x00
     end,
@@ -344,7 +344,7 @@ Entity[ "10" ] = {
     end,
 
     script_0x06 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0002, flag=0x63 ) -- 0x05a1 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0002, flag=0x63 ) -- 0x05a1 0xf5
         -- 0x9C() -- 0x05a5 0x9c
         return 0 -- 0x05a6 0x00
     end,

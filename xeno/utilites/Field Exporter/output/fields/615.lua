@@ -460,7 +460,7 @@ Entity[ "13" ] = {
 
     script_0x07 = function( self )
         opcode26_Wait( time=45 ) -- 0x01da 0x26
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x02 ) -- 0x01dd 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x02 ) -- 0x01dd 0xd2
         -- 0x9C() -- 0x01e1 0x9c
         return 0 -- 0x01e2 0x00
     end,

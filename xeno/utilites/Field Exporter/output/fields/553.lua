@@ -222,7 +222,7 @@ Entity[ "6" ] = {
 
     on_talk = function( self )
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x01ac 0x09
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x01af 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x01af 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

@@ -414,13 +414,13 @@ Entity[ "14" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x21 ) -- 0x067b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x21 ) -- 0x067b 0xd2
         -- 0x9C() -- 0x067f 0x9c
         return 0 -- 0x0680 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x21 ) -- 0x0681 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x21 ) -- 0x0681 0xd2
         -- 0x9C() -- 0x0685 0x9c
         return 0 -- 0x0686 0x00
     end,

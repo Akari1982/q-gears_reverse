@@ -262,7 +262,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x0f = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x01bf 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x01bf 0xd2
         -- 0x9C() -- 0x01c3 0x9c
         return 0 -- 0x01c4 0x00
     end,
@@ -1193,7 +1193,7 @@ Entity[ "18" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x08f5 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0014, ???=0x00 ) -- 0x08f7 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0014, ???=0x00 ) -- 0x08f7 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

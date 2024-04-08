@@ -51,13 +51,13 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x11 ) -- 0x0253 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x11 ) -- 0x0253 0xd2
         -- 0x9C() -- 0x0257 0x9c
         return 0 -- 0x0258 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x11 ) -- 0x0259 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x11 ) -- 0x0259 0xd2
         -- 0x9C() -- 0x025d 0x9c
         return 0 -- 0x025e 0x00
     end,
@@ -84,7 +84,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x11 ) -- 0x027b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x11 ) -- 0x027b 0xd2
         -- 0x9C() -- 0x027f 0x9c
         return 0 -- 0x0280 0x00
     end,
@@ -263,7 +263,7 @@ Entity[ "9" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x11 ) -- 0x035f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0006, ???=0x11 ) -- 0x035f 0xd2
         -- 0x9C() -- 0x0363 0x9c
         opcode26_Wait( time=32 ) -- 0x0364 0x26
         -- MISSING OPCODE 0x5f
@@ -297,19 +297,19 @@ Entity[ "10" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x11 ) -- 0x0393 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x11 ) -- 0x0393 0xd2
         -- 0x9C() -- 0x0397 0x9c
         return 0 -- 0x0398 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x11 ) -- 0x0399 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0008, ???=0x11 ) -- 0x0399 0xd2
         -- 0x9C() -- 0x039d 0x9c
         return 0 -- 0x039e 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x11 ) -- 0x039f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x11 ) -- 0x039f 0xd2
         -- 0x9C() -- 0x03a3 0x9c
         return 0 -- 0x03a4 0x00
     end,

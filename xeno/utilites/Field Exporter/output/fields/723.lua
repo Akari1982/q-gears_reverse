@@ -403,7 +403,7 @@ Entity[ "16" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x01 ) -- 0x45ca 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x01 ) -- 0x45ca 0xd2
         -- 0x9C() -- 0x45ce 0x9c
         -- MISSING OPCODE 0x2c
     end,
@@ -451,7 +451,7 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0004, flag=0x00 ) -- 0x4604 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0004, flag=0x00 ) -- 0x4604 0xf5
         -- MISSING OPCODE 0xa9
     end,
 
@@ -480,7 +480,7 @@ Entity[ "19" ] = {
         -- 0x35() -- 0x49d4 0x35
         -- 0x35() -- 0x49da 0x35
         -- 0xD0() -- 0x49e0 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x000b, ???=0x00 ) -- 0x49eb 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000b, ???=0x00 ) -- 0x49eb 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -532,7 +532,7 @@ Entity[ "21" ] = {
         -- 0xF4() -- 0x538c 0xf4
         -- 0xD0() -- 0x538e 0xd0
         opcodeFE51() -- 0x5399 0xfe
-        -- 0xF5_DialogShow3( dialog_id=0x001d, flag=0x01 ) -- 0x539b 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x001d, flag=0x01 ) -- 0x539b 0xf5
         -- 0x9C() -- 0x539f 0x9c
         -- MISSING OPCODE 0x37
     end,

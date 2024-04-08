@@ -139,14 +139,14 @@ Entity[ "3" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x020c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x00 ) -- 0x020c 0xd2
         -- 0x9C() -- 0x0210 0x9c
         return 0 -- 0x0211 0x00
     end,
 
     script_0x06 = function( self )
         opcode26_Wait( time=20 ) -- 0x0212 0x26
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x0215 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x0215 0xd2
         -- 0x9C() -- 0x0219 0x9c
         return 0 -- 0x021a 0x00
     end,

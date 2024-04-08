@@ -529,7 +529,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x05cc 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x05cc 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -1325,7 +1325,7 @@ Entity[ "44" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x117e 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x117e 0xd2
         -- 0x9C() -- 0x1182 0x9c
         -- MISSING OPCODE 0x36
     end,

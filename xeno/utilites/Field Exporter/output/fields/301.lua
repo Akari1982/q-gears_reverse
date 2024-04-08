@@ -567,7 +567,7 @@ Entity[ "13" ] = {
 
     script_0x04 = function( self )
         -- 0x05_CallFunction( 0x09ae ) -- 0x0759 0x05
-        opcodeD2_DialogShow0( dialog_id=0x0048, ???=0x02 ) -- 0x075c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0048, ???=0x02 ) -- 0x075c 0xd2
         -- 0x9C() -- 0x0760 0x9c
         -- MISSING OPCODE 0x6f
     end,

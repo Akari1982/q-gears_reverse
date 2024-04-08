@@ -54,7 +54,7 @@ Entity[ "1" ] = {
 
     script_0x05 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x00bc ) -- 0x00ac 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00b4 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00b4 0xd2
         -- 0x9C() -- 0x00b8 0x9c
         -- 0x01_JumpTo( 0x00e5 ) -- 0x00b9 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x00d1 ) -- 0x00bc 0x02
@@ -72,7 +72,7 @@ Entity[ "1" ] = {
 
     script_0x08 = function( self )
         -- 0xD0() -- 0x0104 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x010f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0004, ???=0x00 ) -- 0x010f 0xd2
         -- 0x9C() -- 0x0113 0x9c
         -- MISSING OPCODE 0x21
     end,

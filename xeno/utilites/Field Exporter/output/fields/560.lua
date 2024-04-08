@@ -149,7 +149,7 @@ Entity[ "4" ] = {
         -- 0x98_MapLoad( field_id=555, value=3 ) -- 0x023d 0x98
         -- 0x5B() -- 0x0242 0x5b
         -- 0x01_JumpTo( 0x024b ) -- 0x0243 0x01
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0246 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0246 0xd2
         -- 0x9C() -- 0x024a 0x9c
         return 0 -- 0x024b 0x00
     end,
@@ -174,7 +174,7 @@ Entity[ "5" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0263 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0263 0xd2
         -- 0x9C() -- 0x0267 0x9c
         return 0 -- 0x0268 0x00
     end,

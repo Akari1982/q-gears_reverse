@@ -107,13 +107,13 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0000, flag=0x11 ) -- 0x031e 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0000, flag=0x11 ) -- 0x031e 0xf5
         -- 0x9C() -- 0x0322 0x9c
         -- MISSING OPCODE 0xFE65
     end,
 
     script_0x05 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0001, flag=0x21 ) -- 0x032a 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0001, flag=0x21 ) -- 0x032a 0xf5
         -- 0x9C() -- 0x032e 0x9c
         return 0 -- 0x032f 0x00
     end,

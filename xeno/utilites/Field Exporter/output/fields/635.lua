@@ -658,7 +658,7 @@ Entity[ "16" ] = {
 
     on_push = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x020c ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x0c03 ) -- 0x0bd5 0x02
-        opcodeD2_DialogShow0( dialog_id=0x002f, ???=0x00 ) -- 0x0bdd 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x002f, ???=0x00 ) -- 0x0bdd 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -770,7 +770,7 @@ Entity[ "20" ] = {
 
     script_0x04 = function( self )
         -- 0xD0() -- 0x0cfe 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x0030, ???=0x00 ) -- 0x0d09 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0030, ???=0x00 ) -- 0x0d09 0xd2
         -- 0x9C() -- 0x0d0d 0x9c
         return 0 -- 0x0d0e 0x00
     end,

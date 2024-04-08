@@ -1063,7 +1063,7 @@ Entity[ "37" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0e45 ) -- 0x0d92 0x02
         opcodeFE54() -- 0x0d9a 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0029, ???=0x00 ) -- 0x0d9c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0029, ???=0x00 ) -- 0x0d9c 0xd2
         -- 0x9C() -- 0x0da0 0x9c
         -- 0xC6() -- 0x0da1 0xc6
         -- MISSING OPCODE 0x74

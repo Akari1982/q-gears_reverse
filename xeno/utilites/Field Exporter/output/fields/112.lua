@@ -322,7 +322,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x011c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x011c 0xd2
         -- 0x9C() -- 0x0120 0x9c
         -- MISSING OPCODE 0x74
     end,

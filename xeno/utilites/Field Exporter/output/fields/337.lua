@@ -1064,7 +1064,7 @@ Entity[ "38" ] = {
 
     on_talk = function( self )
         opcode3A_VariableBitSet( address=0x00c4, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x1595 0x3a
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x01 ) -- 0x159b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x01 ) -- 0x159b 0xd2
         -- 0x9C() -- 0x159f 0x9c
         return 0 -- 0x15a0 0x00
     end,

@@ -18,7 +18,7 @@ Entity[ "1" ] = {
 
     on_update = function( self )
         -- 0xFEA0() -- 0x000d 0xfe
-        return 0 -- 0x001a 0x00
+        -- MISSING OPCODE 0x74
     end,
 
     on_talk = function( self )

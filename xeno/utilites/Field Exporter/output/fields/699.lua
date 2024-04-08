@@ -985,7 +985,7 @@ Entity[ "13" ] = {
     on_talk = function( self )
         opcodeFE54() -- 0x05c8 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c6 ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x0769 ) -- 0x05ca 0x02
-        -- 0xF5_DialogShow3( dialog_id=0x0001, flag=0x20 ) -- 0x05d2 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0001, flag=0x20 ) -- 0x05d2 0xf5
         -- MISSING OPCODE 0xa9
     end,
 

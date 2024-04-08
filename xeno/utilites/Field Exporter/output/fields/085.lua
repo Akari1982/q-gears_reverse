@@ -153,7 +153,7 @@ Entity[ "5" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x20 ) -- 0x00ff 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x20 ) -- 0x00ff 0xd2
         -- 0x9C() -- 0x0103 0x9c
         return 0 -- 0x0104 0x00
     end,
@@ -356,7 +356,7 @@ Entity[ "13" ] = {
         opcode15() -- 0x01cf 0x15
         -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x01d0 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0041, condition="value1 == value2", jump_if_false=0x01e4 ) -- 0x01d4 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x10 ) -- 0x01dc 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x10 ) -- 0x01dc 0xd2
         -- 0x9C() -- 0x01e0 0x9c
         -- 0x01_JumpTo( 0x025f ) -- 0x01e1 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0042, condition="value1 >= value2", jump_if_false=0x01ff ) -- 0x01e4 0x02

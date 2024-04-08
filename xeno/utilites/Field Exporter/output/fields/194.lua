@@ -295,7 +295,7 @@ Entity[ "11" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0012, flag=0x62 ) -- 0x0349 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0012, flag=0x62 ) -- 0x0349 0xf5
         -- 0x9C() -- 0x034d 0x9c
         return 0 -- 0x034e 0x00
     end,
@@ -366,7 +366,7 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0013, flag=0x62 ) -- 0x03d2 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0013, flag=0x62 ) -- 0x03d2 0xf5
         -- 0x9C() -- 0x03d6 0x9c
         return 0 -- 0x03d7 0x00
     end,
@@ -461,7 +461,7 @@ Entity[ "15" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0014, flag=0x62 ) -- 0x0448 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0014, flag=0x62 ) -- 0x0448 0xf5
         -- 0x9C() -- 0x044c 0x9c
         return 0 -- 0x044d 0x00
     end,
@@ -556,7 +556,7 @@ Entity[ "17" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0015, flag=0x62 ) -- 0x04be 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0015, flag=0x62 ) -- 0x04be 0xf5
         -- 0x9C() -- 0x04c2 0x9c
         return 0 -- 0x04c3 0x00
     end,
@@ -651,7 +651,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0016, flag=0x62 ) -- 0x0534 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0016, flag=0x62 ) -- 0x0534 0xf5
         -- 0x9C() -- 0x0538 0x9c
         return 0 -- 0x0539 0x00
     end,
@@ -734,7 +734,7 @@ Entity[ "21" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0017, flag=0x62 ) -- 0x058e 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0017, flag=0x62 ) -- 0x058e 0xf5
         -- 0x9C() -- 0x0592 0x9c
         return 0 -- 0x0593 0x00
     end,
@@ -817,7 +817,7 @@ Entity[ "23" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0018, flag=0x62 ) -- 0x05e8 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0018, flag=0x62 ) -- 0x05e8 0xf5
         -- 0x9C() -- 0x05ec 0x9c
         return 0 -- 0x05ed 0x00
     end,
@@ -900,7 +900,7 @@ Entity[ "25" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0019, flag=0x62 ) -- 0x0642 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0019, flag=0x62 ) -- 0x0642 0xf5
         -- 0x9C() -- 0x0646 0x9c
         return 0 -- 0x0647 0x00
     end,

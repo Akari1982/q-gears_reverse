@@ -151,13 +151,13 @@ Entity[ "4" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x016f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x016f 0xd2
         -- 0x9C() -- 0x0173 0x9c
         return 0 -- 0x0174 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x0175 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0004, ???=0x00 ) -- 0x0175 0xd2
         -- 0x9C() -- 0x0179 0x9c
         return 0 -- 0x017a 0x00
     end,

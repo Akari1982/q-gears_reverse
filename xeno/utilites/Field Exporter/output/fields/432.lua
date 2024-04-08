@@ -988,7 +988,7 @@ Entity[ "13" ] = {
     on_talk = function( self )
         opcodeFE54() -- 0x05d5 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c6 ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x0653 ) -- 0x05d7 0x02
-        -- 0xF5_DialogShow3( dialog_id=0x0002, flag=0x20 ) -- 0x05df 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0002, flag=0x20 ) -- 0x05df 0xf5
         -- MISSING OPCODE 0xa9
     end,
 
@@ -1928,7 +1928,7 @@ Entity[ "29" ] = {
         -- 0x01_JumpTo( 0x1243 ) -- 0x1225 0x01
         opcodeFE54() -- 0x1228 0xfe
         -- 0x09_EntityCallScriptEW( entity=0x01, script=0x73 ) -- 0x122a 0x09
-        -- 0xF5_DialogShow3( dialog_id=0x0005, flag=0x21 ) -- 0x122d 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0005, flag=0x21 ) -- 0x122d 0xf5
         -- 0x9C() -- 0x1231 0x9c
         -- MISSING OPCODE 0x74
     end,

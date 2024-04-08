@@ -48,7 +48,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0022 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0022 0xd2
         -- 0x9C() -- 0x0026 0x9c
         return 0 -- 0x0027 0x00
     end,
@@ -63,7 +63,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x003c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x003c 0xd2
         -- 0x9C() -- 0x0040 0x9c
         return 0 -- 0x0041 0x00
     end,
@@ -130,13 +130,13 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x007d 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x007d 0xd2
         -- 0x9C() -- 0x0081 0x9c
         return 0 -- 0x0082 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x00 ) -- 0x0083 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0008, ???=0x00 ) -- 0x0083 0xd2
         -- 0x9C() -- 0x0087 0x9c
         return 0 -- 0x0088 0x00
     end,
@@ -395,13 +395,13 @@ Entity[ "13" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e4 ), value2=(s16)0x0800, condition="value1 & value2", jump_if_false=0x01be ) -- 0x016a 0x02
         opcodeFE54() -- 0x0172 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e4 ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x0184 ) -- 0x0174 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0011, ???=0x00 ) -- 0x017c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0011, ???=0x00 ) -- 0x017c 0xd2
         -- 0x9C() -- 0x0180 0x9c
         -- 0x01_JumpTo( 0x0189 ) -- 0x0181 0x01
-        opcodeD2_DialogShow0( dialog_id=0x0012, ???=0x00 ) -- 0x0184 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0012, ???=0x00 ) -- 0x0184 0xd2
         -- 0x9C() -- 0x0188 0x9c
         -- 0x09_EntityCallScriptEW( entity=0x03, script=0xc6 ) -- 0x0189 0x09
-        opcodeD2_DialogShow0( dialog_id=0x0013, ???=0x00 ) -- 0x018c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0013, ???=0x00 ) -- 0x018c 0xd2
         -- 0x9C() -- 0x0190 0x9c
         -- 0x09_EntityCallScriptEW( entity=0x03, script=0xc7 ) -- 0x0191 0x09
         opcode26_Wait( time=2 ) -- 0x0194 0x26
@@ -456,7 +456,7 @@ Entity[ "15" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x001e, flag=0x00 ) -- 0x026a 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x001e, flag=0x00 ) -- 0x026a 0xf5
         -- 0x9C() -- 0x026e 0x9c
         return 0 -- 0x026f 0x00
     end,

@@ -325,7 +325,7 @@ Entity[ "13" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00c7 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x00c7 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -349,7 +349,7 @@ Entity[ "14" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x02cc 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x00 ) -- 0x02cc 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -374,7 +374,7 @@ Entity[ "15" ] = {
 
     on_talk = function( self )
         -- 0x0A() -- 0x05c2 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x05c6 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x05c6 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -399,7 +399,7 @@ Entity[ "16" ] = {
 
     on_talk = function( self )
         -- 0x0A() -- 0x07af 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x07b3 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x07b3 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -427,7 +427,7 @@ Entity[ "17" ] = {
         -- 0x0A() -- 0x08ed 0xfe
         -- 0x0A() -- 0x08f1 0xfe
         -- 0x0A() -- 0x08f5 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x08f9 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0006, ???=0x00 ) -- 0x08f9 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -451,7 +451,7 @@ Entity[ "18" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0a45 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0a45 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -475,7 +475,7 @@ Entity[ "19" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x00 ) -- 0x0c13 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000a, ???=0x00 ) -- 0x0c13 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

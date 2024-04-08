@@ -584,7 +584,7 @@ Entity[ "19" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x044a 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x00 ) -- 0x044c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x00 ) -- 0x044c 0xd2
         -- 0x9C() -- 0x0450 0x9c
         -- MISSING OPCODE 0x74
     end,
@@ -635,7 +635,7 @@ Entity[ "21" ] = {
 
     on_push = function( self )
         opcodeFE54() -- 0x04de 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x04e0 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x04e0 0xd2
         -- 0x9C() -- 0x04e4 0x9c
         -- MISSING OPCODE 0x74
     end,

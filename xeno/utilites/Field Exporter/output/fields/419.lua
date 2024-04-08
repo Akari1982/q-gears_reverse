@@ -131,7 +131,7 @@ Entity[ "4" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x43bb 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x43bb 0xd2
         -- 0x9C() -- 0x43bf 0x9c
         -- MISSING OPCODE 0x36
     end,
@@ -747,7 +747,7 @@ Entity[ "29" ] = {
         opcodeFE54() -- 0x484c 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4859 ) -- 0x484e 0x02
         -- 0x09_EntityCallScriptEW( entity=0x04, script=0x25 ) -- 0x4856 0x09
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x4859 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x4859 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -756,7 +756,7 @@ Entity[ "29" ] = {
         opcodeFE54() -- 0x484c 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4859 ) -- 0x484e 0x02
         -- 0x09_EntityCallScriptEW( entity=0x04, script=0x25 ) -- 0x4856 0x09
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x4859 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x4859 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

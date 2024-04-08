@@ -541,7 +541,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0024, ???=0x10 ) -- 0x0831 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0024, ???=0x10 ) -- 0x0831 0xd2
         -- 0x9C() -- 0x0835 0x9c
         return 0 -- 0x0836 0x00
     end,

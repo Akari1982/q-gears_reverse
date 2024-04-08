@@ -75,7 +75,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0240 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0240 0xd2
         -- 0x9C() -- 0x0244 0x9c
         opcode26_Wait( time=60 ) -- 0x0245 0x26
         -- MISSING OPCODE 0xFE4a
@@ -87,7 +87,7 @@ Entity[ "1" ] = {
 
     script_0x0d = function( self )
         -- 0xD0() -- 0x026d 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x0278 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x00 ) -- 0x0278 0xd2
         -- 0x9C() -- 0x027c 0x9c
         return 0 -- 0x027d 0x00
     end,
@@ -101,25 +101,25 @@ Entity[ "1" ] = {
     end,
 
     script_0x10 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000e, ???=0x00 ) -- 0x02b9 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000e, ???=0x00 ) -- 0x02b9 0xd2
         -- 0x9C() -- 0x02bd 0x9c
         return 0 -- 0x02be 0x00
     end,
 
     script_0x11 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000f, ???=0x00 ) -- 0x02bf 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000f, ???=0x00 ) -- 0x02bf 0xd2
         -- 0x9C() -- 0x02c3 0x9c
         return 0 -- 0x02c4 0x00
     end,
 
     script_0x12 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0010, ???=0x00 ) -- 0x02c5 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0010, ???=0x00 ) -- 0x02c5 0xd2
         -- 0x9C() -- 0x02c9 0x9c
         return 0 -- 0x02ca 0x00
     end,
 
     script_0x13 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0011, ???=0x00 ) -- 0x02cb 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0011, ???=0x00 ) -- 0x02cb 0xd2
         -- 0x9C() -- 0x02cf 0x9c
         return 0 -- 0x02d0 0x00
     end,
@@ -133,7 +133,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x16 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0015, ???=0x00 ) -- 0x02f2 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0015, ???=0x00 ) -- 0x02f2 0xd2
         -- 0x9C() -- 0x02f6 0x9c
         return 0 -- 0x02f7 0x00
     end,
@@ -143,13 +143,13 @@ Entity[ "1" ] = {
     end,
 
     script_0x18 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0017, ???=0x00 ) -- 0x0300 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0017, ???=0x00 ) -- 0x0300 0xd2
         -- 0x9C() -- 0x0304 0x9c
         return 0 -- 0x0305 0x00
     end,
 
     script_0x19 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0018, ???=0x00 ) -- 0x0306 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0018, ???=0x00 ) -- 0x0306 0xd2
         -- 0x9C() -- 0x030a 0x9c
         return 0 -- 0x030b 0x00
     end,
@@ -244,25 +244,25 @@ Entity[ "3" ] = {
 
     script_0x07 = function( self )
         -- 0xD0() -- 0x03e5 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x001f, ???=0x00 ) -- 0x03f0 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x001f, ???=0x00 ) -- 0x03f0 0xd2
         -- 0x9C() -- 0x03f4 0x9c
         return 0 -- 0x03f5 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0020, ???=0x00 ) -- 0x03f6 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0020, ???=0x00 ) -- 0x03f6 0xd2
         -- 0x9C() -- 0x03fa 0x9c
         return 0 -- 0x03fb 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0021, ???=0x00 ) -- 0x03fc 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0021, ???=0x00 ) -- 0x03fc 0xd2
         -- 0x9C() -- 0x0400 0x9c
         return 0 -- 0x0401 0x00
     end,
 
     script_0x0a = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0022, ???=0x00 ) -- 0x0402 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0022, ???=0x00 ) -- 0x0402 0xd2
         -- 0x9C() -- 0x0406 0x9c
         return 0 -- 0x0407 0x00
     end,
@@ -276,7 +276,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x0d = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0026, ???=0x00 ) -- 0x0433 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0026, ???=0x00 ) -- 0x0433 0xd2
         -- 0x9C() -- 0x0437 0x9c
         return 0 -- 0x0438 0x00
     end,

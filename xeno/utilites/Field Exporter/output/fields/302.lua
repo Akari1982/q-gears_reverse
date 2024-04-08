@@ -525,7 +525,7 @@ Entity[ "15" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x03d1 ) -- 0x039a 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c8 ), value2=(s16)0x2000, condition="value1 & value2", jump_if_false=0x03c9 ) -- 0x03a2 0x02
         opcodeFE54() -- 0x03aa 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x03ac 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0006, ???=0x00 ) -- 0x03ac 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

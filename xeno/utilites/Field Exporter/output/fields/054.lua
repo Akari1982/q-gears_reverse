@@ -47,7 +47,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x10 ) -- 0x009f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x10 ) -- 0x009f 0xd2
         -- 0x9C() -- 0x00a3 0x9c
         return 0 -- 0x00a4 0x00
     end,
@@ -84,7 +84,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x0c = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0128 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0128 0xd2
         -- 0x9C() -- 0x012c 0x9c
         -- MISSING OPCODE 0x2c
     end,
@@ -95,7 +95,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x0e = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x01a7 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x01a7 0xd2
         -- 0x9C() -- 0x01ab 0x9c
         return 0 -- 0x01ac 0x00
     end,
@@ -127,7 +127,7 @@ Entity[ "2" ] = {
 
     script_0x05 = function( self )
         -- 0xD0() -- 0x01f6 0xd0
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x0201 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x00 ) -- 0x0201 0xd2
         -- 0x9C() -- 0x0205 0x9c
         -- MISSING OPCODE 0x5f
     end,
@@ -149,13 +149,13 @@ Entity[ "2" ] = {
     end,
 
     script_0x0a = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0010, ???=0x00 ) -- 0x029c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0010, ???=0x00 ) -- 0x029c 0xd2
         -- 0x9C() -- 0x02a0 0x9c
         return 0 -- 0x02a1 0x00
     end,
 
     script_0x0b = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0011, ???=0x00 ) -- 0x02a2 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0011, ???=0x00 ) -- 0x02a2 0xd2
         -- 0x9C() -- 0x02a6 0x9c
         return 0 -- 0x02a7 0x00
     end,
@@ -165,7 +165,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x0d = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0014, ???=0x00 ) -- 0x02c2 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0014, ???=0x00 ) -- 0x02c2 0xd2
         -- 0x9C() -- 0x02c6 0x9c
         return 0 -- 0x02c7 0x00
     end,
@@ -215,7 +215,8 @@ Entity[ "3" ] = {
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0xd6
+        opcodeD6_MessageSetSpeed( speed=0x8001 ) -- 0x0345 0xd6
+        -- MISSING OPCODE 0xFE46
     end,
 
     script_0x0a = function( self )

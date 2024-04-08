@@ -134,7 +134,7 @@ Entity[ "5" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x442a 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x01 ) -- 0x442c 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x01 ) -- 0x442c 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

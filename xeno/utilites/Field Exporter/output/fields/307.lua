@@ -121,7 +121,7 @@ Entity[ "4" ] = {
 
     on_update = function( self )
         -- 0xD0() -- 0x040c 0xd0
-        -- 0xF5_DialogShow3( dialog_id=0x001c, flag=0x00 ) -- 0x0417 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x001c, flag=0x00 ) -- 0x0417 0xf5
         -- 0x9C() -- 0x041b 0x9c
         -- MISSING OPCODE 0x36
     end,

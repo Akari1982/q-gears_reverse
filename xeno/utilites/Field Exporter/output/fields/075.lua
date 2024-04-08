@@ -518,7 +518,7 @@ Entity[ "14" ] = {
     end,
 
     script_0x12 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x11 ) -- 0x03fe 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x11 ) -- 0x03fe 0xd2
         -- 0x9C() -- 0x0402 0x9c
         return 0 -- 0x0403 0x00
     end,
@@ -764,7 +764,7 @@ Entity[ "23" ] = {
     on_talk = function( self )
         -- 0x2A() -- 0x0b4a 0x2a
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c2 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x0b5c ) -- 0x0b4b 0x02
-        opcodeD2_DialogShow0( dialog_id=0x003b, ???=0x02 ) -- 0x0b53 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x003b, ???=0x02 ) -- 0x0b53 0xd2
         -- 0x9C() -- 0x0b57 0x9c
         return 0 -- 0x0b58 0x00
     end,

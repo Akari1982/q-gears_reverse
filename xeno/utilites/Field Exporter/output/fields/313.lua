@@ -529,10 +529,10 @@ Entity[ "18" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=161, jump=0x0355 ) -- 0x0348 0x84
-        opcodeD2_DialogShow0( dialog_id=0x0006, ???=0x00 ) -- 0x034d 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0006, ???=0x00 ) -- 0x034d 0xd2
         -- 0x9C() -- 0x0351 0x9c
         -- 0x01_JumpTo( 0x035a ) -- 0x0352 0x01
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0355 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x0355 0xd2
         -- 0x9C() -- 0x0359 0x9c
         return 0 -- 0x035a 0x00
     end,
@@ -611,7 +611,7 @@ Entity[ "21" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0008, ???=0x00 ) -- 0x0398 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0008, ???=0x00 ) -- 0x0398 0xd2
         -- 0x9C() -- 0x039c 0x9c
         return 0 -- 0x039d 0x00
     end,
@@ -658,7 +658,7 @@ Entity[ "23" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000a, ???=0x00 ) -- 0x03d7 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000a, ???=0x00 ) -- 0x03d7 0xd2
         -- 0x9C() -- 0x03db 0x9c
         return 0 -- 0x03dc 0x00
     end,

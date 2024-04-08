@@ -140,19 +140,19 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x21 ) -- 0x027e 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x21 ) -- 0x027e 0xd2
         -- 0x9C() -- 0x0282 0x9c
         return 0 -- 0x0283 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x21 ) -- 0x0284 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x21 ) -- 0x0284 0xd2
         -- 0x9C() -- 0x0288 0x9c
         return 0 -- 0x0289 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x21 ) -- 0x028a 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x21 ) -- 0x028a 0xd2
         -- 0x9C() -- 0x028e 0x9c
         return 0 -- 0x028f 0x00
     end,

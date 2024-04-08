@@ -100,13 +100,13 @@ Entity[ "2" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0000, flag=0x11 ) -- 0x0128 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0000, flag=0x11 ) -- 0x0128 0xf5
         -- 0x9C() -- 0x012c 0x9c
         -- MISSING OPCODE 0xFE65
     end,
 
     script_0x05 = function( self )
-        -- 0xF5_DialogShow3( dialog_id=0x0001, flag=0x21 ) -- 0x0134 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0001, flag=0x21 ) -- 0x0134 0xf5
         -- 0x9C() -- 0x0138 0x9c
         return 0 -- 0x0139 0x00
     end,

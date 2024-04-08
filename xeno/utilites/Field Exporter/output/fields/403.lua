@@ -177,13 +177,13 @@ Entity[ "6" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x01 ) -- 0x450f 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x01 ) -- 0x450f 0xd2
         -- 0x9C() -- 0x4513 0x9c
         return 0 -- 0x4514 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0003, ???=0x01 ) -- 0x4515 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x01 ) -- 0x4515 0xd2
         -- 0x9C() -- 0x4519 0x9c
         return 0 -- 0x451a 0x00
     end,

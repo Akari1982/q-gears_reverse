@@ -91,7 +91,7 @@ Entity[ "3" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0067 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0067 0xd2
         -- 0x9C() -- 0x006b 0x9c
         return 0 -- 0x006c 0x00
     end,
@@ -158,7 +158,7 @@ Entity[ "6" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x00b1 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x00b1 0xd2
         -- 0x9C() -- 0x00b5 0x9c
         return 0 -- 0x00b6 0x00
     end,

@@ -327,13 +327,13 @@ Entity[ "12" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x10 ) -- 0x02b4 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x10 ) -- 0x02b4 0xd2
         -- 0x9C() -- 0x02b8 0x9c
         return 0 -- 0x02b9 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x10 ) -- 0x02ba 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x10 ) -- 0x02ba 0xd2
         -- 0x9C() -- 0x02be 0x9c
         return 0 -- 0x02bf 0x00
     end,
@@ -363,7 +363,7 @@ Entity[ "13" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x10 ) -- 0x02db 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x10 ) -- 0x02db 0xd2
         -- 0x9C() -- 0x02df 0x9c
         return 0 -- 0x02e0 0x00
     end,
@@ -1626,7 +1626,7 @@ Entity[ "57" ] = {
         -- 0xF4() -- 0x1a84 0xf4
         -- 0xD0() -- 0x1a86 0xd0
         opcodeFE51() -- 0x1a91 0xfe
-        -- 0xF5_DialogShow3( dialog_id=0x001b, flag=0x01 ) -- 0x1a93 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x001b, flag=0x01 ) -- 0x1a93 0xf5
         -- 0x9C() -- 0x1a97 0x9c
         -- MISSING OPCODE 0x37
     end,

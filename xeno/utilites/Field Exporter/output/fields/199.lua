@@ -72,7 +72,7 @@ Entity[ "1" ] = {
     end,
 
     script_0x09 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0211 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x0211 0xd2
         -- 0x9C() -- 0x0215 0x9c
         return 0 -- 0x0216 0x00
     end,
@@ -325,13 +325,13 @@ Entity[ "10" ] = {
 
     script_0x06 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0080, condition="value1 & value2", jump_if_false=0x04f5 ) -- 0x04e4 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0002, ???=0x00 ) -- 0x04ec 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x00 ) -- 0x04ec 0xd2
         -- 0x9C() -- 0x04f0 0x9c
         return 0 -- 0x04f1 0x00
     end,
 
     script_0x07 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0004, ???=0x00 ) -- 0x04fc 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0004, ???=0x00 ) -- 0x04fc 0xd2
         -- 0x9C() -- 0x0500 0x9c
         return 0 -- 0x0501 0x00
     end,
@@ -376,7 +376,7 @@ Entity[ "11" ] = {
 
     script_0x06 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x0579 ) -- 0x0568 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0570 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0570 0xd2
         -- 0x9C() -- 0x0574 0x9c
         return 0 -- 0x0575 0x00
     end,
@@ -421,7 +421,7 @@ Entity[ "12" ] = {
 
     script_0x06 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x05fa ) -- 0x05e9 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0007, ???=0x00 ) -- 0x05f1 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x00 ) -- 0x05f1 0xd2
         -- 0x9C() -- 0x05f5 0x9c
         return 0 -- 0x05f6 0x00
     end,
@@ -469,7 +469,7 @@ Entity[ "13" ] = {
 
     script_0x06 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x0674 ) -- 0x0663 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0009, ???=0x00 ) -- 0x066b 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x00 ) -- 0x066b 0xd2
         -- 0x9C() -- 0x066f 0x9c
         return 0 -- 0x0670 0x00
     end,
@@ -670,7 +670,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x08 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x000c, ???=0x00 ) -- 0x0888 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x000c, ???=0x00 ) -- 0x0888 0xd2
         -- 0x9C() -- 0x088c 0x9c
         -- MISSING OPCODE 0x2c
     end,
@@ -704,7 +704,7 @@ Entity[ "19" ] = {
     end,
 
     script_0x0f = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x001a, ???=0x00 ) -- 0x09e1 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x001a, ???=0x00 ) -- 0x09e1 0xd2
         -- 0x9C() -- 0x09e5 0x9c
         -- MISSING OPCODE 0x5f
     end,

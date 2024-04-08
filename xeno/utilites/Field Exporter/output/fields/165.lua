@@ -183,7 +183,7 @@ Entity[ "5" ] = {
 
     script_0x06 = function( self )
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x018e 0xfe
-        opcodeD2_DialogShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0192 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x0192 0xd2
         -- 0x9C() -- 0x0196 0x9c
         -- MISSING OPCODE 0x6f
     end,

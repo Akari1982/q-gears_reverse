@@ -852,8 +852,6 @@ if( h[offset_18 + 0] > h[offset_18 + a] ) // current row width greater than max 
     [struct_60 + row_id * 60 + 50 + 2] = h(hu[offset_18 + e] + ((tex_row / 2) * d));
 }
 
-letters = letters - 1;
-
 if( bu[offset_18 + 6c] != 0 )
 {
     [offset_18 + 6c] = b(0);
@@ -861,25 +859,25 @@ if( bu[offset_18 + 6c] != 0 )
     return;
 }
 
-while( letters != -1 )
+while( letters != 0 )
 {
     A1 = w[offset_18 + 1c];
     opcode = bu[A1];
 
     if( opcode == 0 ) // close
     {
-        A0 = hu[offset_18 + 10];
-
-        if( ( A0 & 0080 ) == 0 )
+        if( hu[offset_18 + 10] & 0080 )
         {
-            [offset_18 + 10] = h(A0 | 0008);
+            [offset_18 + 10] = h(hu[offset_18 + 10] & ff7f);
+            [offset_18 + 1c] = w(w[offset_18 + 20] + 1);
+        }
+        else
+        {
+            [offset_18 + 10] = h(hu[offset_18 + 10] | 0008);
             [offset_18 + 6b] = b(1);
             [offset_18 + 6c] = b(1);
             return;
         }
-
-        [offset_18 + 10] = h(A0 & ff7f);
-        [offset_18 + 1c] = w(w[offset_18 + 20] + 1);
     }
     else if( opcode == 1 ) // new row
     {

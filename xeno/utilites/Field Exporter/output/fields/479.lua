@@ -773,7 +773,7 @@ Entity[ "13" ] = {
 
     on_talk = function( self )
         -- 0x09_EntityCallScriptEW( entity=0xff, script=0x64 ) -- 0x08c5 0x09
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x00 ) -- 0x08c8 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x08c8 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

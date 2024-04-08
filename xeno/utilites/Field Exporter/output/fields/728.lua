@@ -20,9 +20,9 @@ Entity[ "0" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0418 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x051c ) -- 0x0500 0x02
         -- 0x35() -- 0x0508 0x35
         opcodeFE54() -- 0x050e 0xfe
-        -- 0xF5_DialogShow3( dialog_id=0x003f, flag=0x12 ) -- 0x0510 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x003f, flag=0x12 ) -- 0x0510 0xf5
         -- 0x9C() -- 0x0514 0x9c
-        -- 0xF5_DialogShow3( dialog_id=0x0040, flag=0x12 ) -- 0x0515 0xf5
+        opcodeF5_MessageShow3( dialog_id=0x0040, flag=0x12 ) -- 0x0515 0xf5
         -- 0x9C() -- 0x0519 0x9c
         opcodeFE54() -- 0x051a 0xfe
         -- 0x5B() -- 0x051c 0x5b
@@ -144,7 +144,7 @@ Entity[ "2" ] = {
     end,
 
     script_0x09 = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0041, ???=0x00 ) -- 0x06c9 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0041, ???=0x00 ) -- 0x06c9 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -202,7 +202,7 @@ Entity[ "4" ] = {
 
     on_talk = function( self )
         -- 0x35() -- 0x20f9 0x35
-        opcodeD2_DialogShow0( dialog_id=0x00ce, ???=0x00 ) -- 0x20ff 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x00ce, ???=0x00 ) -- 0x20ff 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -256,7 +256,7 @@ Entity[ "6" ] = {
     on_talk = function( self )
         -- 0xF4() -- 0x244c 0xf4
         opcode26_Wait( time=1 ) -- 0x244e 0x26
-        opcodeD2_DialogShow0( dialog_id=0x00d2, ???=0x02 ) -- 0x2451 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x00d2, ???=0x02 ) -- 0x2451 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
@@ -324,7 +324,7 @@ Entity[ "9" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x0167, ???=0x00 ) -- 0x57cb 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0167, ???=0x00 ) -- 0x57cb 0xd2
         -- MISSING OPCODE 0xa9
     end,
 

@@ -358,11 +358,11 @@ Entity[ "9" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_DialogShow0( dialog_id=0x001c, ???=0x01 ) -- 0x4ab3 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x001c, ???=0x01 ) -- 0x4ab3 0xd2
         -- 0x9C() -- 0x4ab7 0x9c
         -- 0x86_ProgressNotEqualJumpTo( value=51, jump=0x4adb ) -- 0x4ab8 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00c0 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x4ace ) -- 0x4abd 0x02
-        opcodeD2_DialogShow0( dialog_id=0x001d, ???=0x01 ) -- 0x4ac5 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x001d, ???=0x01 ) -- 0x4ac5 0xd2
         -- 0x9C() -- 0x4ac9 0x9c
         return 0 -- 0x4aca 0x00
     end,

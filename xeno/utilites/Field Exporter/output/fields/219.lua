@@ -112,14 +112,14 @@ Entity[ "3" ] = {
     on_talk = function( self )
         opcodeFE54() -- 0x009f 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x012a ) -- 0x00a1 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x03 ) -- 0x00a9 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x03 ) -- 0x00a9 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
     on_push = function( self )
         opcodeFE54() -- 0x009f 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x012a ) -- 0x00a1 0x02
-        opcodeD2_DialogShow0( dialog_id=0x0000, ???=0x03 ) -- 0x00a9 0xd2
+        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x03 ) -- 0x00a9 0xd2
         -- MISSING OPCODE 0xa9
     end,
 
