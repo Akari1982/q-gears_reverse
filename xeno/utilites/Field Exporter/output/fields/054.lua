@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- MISSING OPCODE 0xFEa4
@@ -24,7 +24,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0077 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x007a 0xfe
@@ -104,7 +104,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE21
     end,
@@ -174,7 +174,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -228,7 +228,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -270,7 +270,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x069d 0xbc
         -- MISSING OPCODE 0xFE1c
@@ -292,7 +292,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -317,7 +317,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x06e4 0xbc
         -- 0x2A() -- 0x06e5 0x2a
@@ -341,7 +341,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x09c9 0xbc
         -- 0x2A() -- 0x09ca 0x2a
@@ -497,7 +497,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0c98 0xbc
         -- 0x2A() -- 0x0c99 0x2a
@@ -525,7 +525,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0cf6 0xbc
         -- 0x2A() -- 0x0cf7 0x2a

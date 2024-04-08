@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- MISSING OPCODE 0xFE8e
@@ -27,7 +27,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0171 0xbc
         -- 0x2A() -- 0x0172 0x2a
@@ -60,7 +60,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01de 0xbc
         -- 0x2A() -- 0x01df 0x2a
@@ -99,7 +99,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0225 0xbc
         -- 0x2A() -- 0x0226 0x2a
@@ -123,7 +123,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -144,7 +144,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x059c 0xbc
         -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x059d 0xfe
@@ -179,7 +179,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x05cf 0x16
         -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x05d2 0xfe
@@ -203,7 +203,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x05fb 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x05fe 0xfe
@@ -226,7 +226,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0626 0xbc
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0627 0xfe
@@ -294,7 +294,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x067f 0xbc
         -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x0680 0xfe
@@ -347,7 +347,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x06c6 0x16
         -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x06c9 0xfe
@@ -371,7 +371,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x06f4 0x0b
         -- MISSING OPCODE 0x69
@@ -393,7 +393,7 @@ Entity[ "11" ] = {
 
 
 
-Entity[ "12" ] = {
+Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x071d 0xbc
         -- 0x2A() -- 0x071e 0x2a
@@ -416,7 +416,7 @@ Entity[ "12" ] = {
 
 
 
-Entity[ "13" ] = {
+Entity[ "0x0d" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0722 0xbc
         -- 0x2A() -- 0x0723 0x2a
@@ -440,7 +440,7 @@ Entity[ "13" ] = {
 
 
 
-Entity[ "14" ] = {
+Entity[ "0x0e" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x072f 0xbc
         -- 0x2A() -- 0x0730 0x2a
@@ -464,7 +464,7 @@ Entity[ "14" ] = {
 
 
 
-Entity[ "15" ] = {
+Entity[ "0x0f" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x073c 0xbc
         -- 0x2A() -- 0x073d 0x2a
@@ -488,7 +488,7 @@ Entity[ "15" ] = {
 
 
 
-Entity[ "16" ] = {
+Entity[ "0x10" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0749 0xbc
         -- 0x2A() -- 0x074a 0x2a
@@ -512,7 +512,7 @@ Entity[ "16" ] = {
 
 
 
-Entity[ "17" ] = {
+Entity[ "0x11" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0756 0xbc
         -- 0x2A() -- 0x0757 0x2a
@@ -536,7 +536,7 @@ Entity[ "17" ] = {
 
 
 
-Entity[ "18" ] = {
+Entity[ "0x12" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0763 0xbc
         -- 0x2A() -- 0x0764 0x2a
@@ -560,7 +560,7 @@ Entity[ "18" ] = {
 
 
 
-Entity[ "19" ] = {
+Entity[ "0x13" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE1c
     end,

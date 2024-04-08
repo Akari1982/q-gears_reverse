@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x000f 0xbc
         -- 0xA0() -- 0x0010 0xa0
@@ -36,7 +36,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x04ae 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x04b1 0xfe
@@ -139,7 +139,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x05ac 0x16
         -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x05af 0xfe
@@ -249,7 +249,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x06ac 0x0b
         -- 0xFE0D_SetAvatar( character_id=74 ) -- 0x06af 0xfe
@@ -345,7 +345,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x09fe ) -- 0x09e3 0x02
         -- MISSING OPCODE 0x93
@@ -399,7 +399,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0af2 0xbc
         -- 0x2A() -- 0x0af3 0x2a

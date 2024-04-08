@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- 0x2A() -- 0x0009 0x2a
@@ -17,21 +17,21 @@ Entity[ "0" ] = {
         -- 0xFE0E_SoundSetVolume( volume=0, steps=1000 ) -- 0x0042 0xfe
         -- 0x07( entity=0x01, script=0x24 ) -- 0x0048 0x07
         opcode26_Wait( time=24 ) -- 0x004b 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x05, script=0x24 ) -- 0x004e 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x0051 0x09
+        opcode09_EntityCallScriptEW( entity=0x05, script=04, priority=01 ) -- 0x004e 0x09
+        opcode09_EntityCallScriptEW( entity=0x06, script=04, priority=01 ) -- 0x0051 0x09
         opcode26_Wait( time=12 ) -- 0x0054 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x08, script=0x24 ) -- 0x0057 0x09
+        opcode09_EntityCallScriptEW( entity=0x08, script=04, priority=01 ) -- 0x0057 0x09
         opcode26_Wait( time=24 ) -- 0x005a 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x07, script=0x24 ) -- 0x005d 0x09
+        opcode09_EntityCallScriptEW( entity=0x07, script=04, priority=01 ) -- 0x005d 0x09
         opcode26_Wait( time=32 ) -- 0x0060 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x04, script=0x24 ) -- 0x0063 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x05, script=0x25 ) -- 0x0066 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x24 ) -- 0x0069 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x05, script=0x26 ) -- 0x006c 0x09
+        opcode09_EntityCallScriptEW( entity=0x04, script=04, priority=01 ) -- 0x0063 0x09
+        opcode09_EntityCallScriptEW( entity=0x05, script=05, priority=01 ) -- 0x0066 0x09
+        opcode09_EntityCallScriptEW( entity=0x02, script=04, priority=01 ) -- 0x0069 0x09
+        opcode09_EntityCallScriptEW( entity=0x05, script=06, priority=01 ) -- 0x006c 0x09
         -- 0x07( entity=0x02, script=0x25 ) -- 0x006f 0x07
         opcode26_Wait( time=23 ) -- 0x0072 0x26
         -- 0x75() -- 0x0075 0x75
-        -- 0x09_EntityCallScriptEW( entity=0x04, script=0x25 ) -- 0x0078 0x09
+        opcode09_EntityCallScriptEW( entity=0x04, script=05, priority=01 ) -- 0x0078 0x09
         -- MISSING OPCODE 0x36
     end,
 
@@ -47,7 +47,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00c7 0xbc
         -- 0x2A() -- 0x00c8 0x2a
@@ -75,7 +75,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x00f0 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x00f3 0xfe
@@ -120,7 +120,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0130 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0133 0xfe
@@ -144,7 +144,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x0145 0x16
         -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0148 0xfe
@@ -186,7 +186,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,
@@ -223,7 +223,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,
@@ -254,7 +254,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,
@@ -283,7 +283,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,
@@ -312,7 +312,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,
@@ -337,7 +337,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,

@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
         -- MISSING OPCODE 0xFE1e
@@ -24,7 +24,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x5c
     end,
@@ -46,7 +46,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x5c
     end,
@@ -68,7 +68,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x5c
     end,
@@ -90,7 +90,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x003e ) ) -- 0x42ce 0x16
         -- 0xFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x42d1 0xfe
@@ -114,7 +114,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0040 ) ) -- 0x42d9 0x16
         -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x42dc 0xfe
@@ -138,7 +138,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0042 ) ) -- 0x42e4 0x16
         -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x42e7 0xfe
@@ -162,7 +162,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x42ef 0xbc
         -- 0x19_SetPosition( x=(vf80)0x000d, z=(vf40)0xf9d8, flag=(flag)0xc0 ) -- 0x42f0 0x19
@@ -191,7 +191,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x430a 0xbc
         -- MISSING OPCODE 0x1b
@@ -219,7 +219,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x4326 0xbc
         -- 0x19_SetPosition( x=(vf80)0x0000, z=(vf40)0x0736, flag=(flag)0xc0 ) -- 0x4327 0x19
@@ -248,7 +248,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x4341 0xbc
         -- 0x2A() -- 0x4342 0x2a
@@ -272,7 +272,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x4355 0xbc
         -- 0x2A() -- 0x4356 0x2a

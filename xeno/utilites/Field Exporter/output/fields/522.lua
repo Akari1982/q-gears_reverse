@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xA0() -- 0x0008 0xa0
         -- 0x2A() -- 0x000f 0x2a
@@ -26,7 +26,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0015 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0018 0xfe
@@ -65,7 +65,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0044 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0047 0xfe
@@ -100,7 +100,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0075 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0078 0xfe
@@ -124,7 +124,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=210, jump=0x00a0 ) -- 0x007f 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c6 ), value2=(s16)0x4000, condition="value1 & value2", jump_if_false=0x0091 ) -- 0x0084 0x02
@@ -151,7 +151,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x02d7 0xbc
         -- 0x2A() -- 0x02d8 0x2a
@@ -179,7 +179,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x02db 0xbc
         -- MISSING OPCODE 0xf8
@@ -190,7 +190,7 @@ Entity[ "6" ] = {
     end,
 
     on_talk = function( self )
-        -- 0x09_EntityCallScriptEW( entity=0x07, script=0x64 ) -- 0x02f1 0x09
+        opcode09_EntityCallScriptEW( entity=0x07, script=04, priority=03 ) -- 0x02f1 0x09
         opcode99() -- 0x02f4 0x99
         -- 0x35() -- 0x02f5 0x35
         -- 0x35() -- 0x02fb 0x35
@@ -208,7 +208,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0315 0xbc
         -- 0x2A() -- 0x0316 0x2a
@@ -239,7 +239,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0350 0xbc
         -- 0x2A() -- 0x0351 0x2a

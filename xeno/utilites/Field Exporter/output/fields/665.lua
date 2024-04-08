@@ -2,12 +2,12 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
 }
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0042 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0045 0xfe
@@ -68,7 +68,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x00d8 0x0b
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 < value2", jump_if_false=0x00e5 ) -- 0x00db 0x02
@@ -104,7 +104,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x012e 0x0b
         -- 0x2A() -- 0x0131 0x2a
@@ -153,7 +153,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01a5 0xbc
         -- 0x2A() -- 0x01a6 0x2a
@@ -193,7 +193,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x028a 0xbc
         -- 0x2A() -- 0x028b 0x2a
@@ -211,7 +211,7 @@ Entity[ "5" ] = {
         opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x43 ) -- 0x02b6 0xd2
         -- 0x9C() -- 0x02ba 0x9c
         -- 0x07( entity=0x06, script=0x25 ) -- 0x02bb 0x07
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x24 ) -- 0x02be 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=04, priority=01 ) -- 0x02be 0x09
         -- 0xD0() -- 0x02c1 0xd0
         opcode26_Wait( time=30 ) -- 0x02cc 0x26
         -- MISSING OPCODE 0xFE17
@@ -229,7 +229,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x059d 0xbc
         -- 0x2A() -- 0x059e 0x2a
@@ -416,7 +416,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0834 0xbc
         -- 0x2A() -- 0x0835 0x2a
@@ -439,7 +439,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0838 0xbc
         -- 0x2A() -- 0x0839 0x2a

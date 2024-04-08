@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x000f 0xbc
         -- 0x75() -- 0x0010 0x75
@@ -25,7 +25,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x003e ) ) -- 0x001e 0x16
         -- 0xFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x0021 0xfe
@@ -73,7 +73,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0040 ) ) -- 0x007c 0x16
         -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x007f 0xfe
@@ -109,7 +109,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0042 ) ) -- 0x00b9 0x16
         -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x00bc 0xfe
@@ -145,7 +145,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00f6 0xbc
         -- MISSING OPCODE 0x1b
@@ -157,7 +157,7 @@ Entity[ "4" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x010d 0xfe
-        -- 0x09_EntityCallScriptEW( entity=0x05, script=0x24 ) -- 0x010f 0x09
+        opcode09_EntityCallScriptEW( entity=0x05, script=04, priority=01 ) -- 0x010f 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x0112 0x07
         opcode26_Wait( time=10 ) -- 0x0115 0x26
         -- 0x98_MapLoad( field_id=556, value=0 ) -- 0x0118 0x98
@@ -179,7 +179,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0127 0xbc
         -- 0x2A() -- 0x0128 0x2a
@@ -207,7 +207,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0130 0xbc
         -- MISSING OPCODE 0x1b
@@ -219,12 +219,12 @@ Entity[ "6" ] = {
         -- 0xB4_FadeIn() -- 0x0150 0xb4
         -- 0x07( entity=0x01, script=0x27 ) -- 0x0153 0x07
         -- 0x07( entity=0x02, script=0x24 ) -- 0x0156 0x07
-        -- 0x09_EntityCallScriptEW( entity=0x03, script=0x24 ) -- 0x0159 0x09
+        opcode09_EntityCallScriptEW( entity=0x03, script=04, priority=01 ) -- 0x0159 0x09
         -- MISSING OPCODE 0xFE23
     end,
 
     on_talk = function( self )
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x01a1 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=05, priority=01 ) -- 0x01a1 0x09
         opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x01a4 0xd2
         -- MISSING OPCODE 0xa9
     end,
@@ -237,7 +237,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x021e 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x022d ) -- 0x021f 0x02
@@ -270,7 +270,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0250 0xbc
         -- MISSING OPCODE 0xf9
@@ -292,7 +292,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0256 0xbc
         -- MISSING OPCODE 0xf9
@@ -314,7 +314,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x025c 0xbc
         -- MISSING OPCODE 0xf9
@@ -336,7 +336,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0262 0xbc
         -- MISSING OPCODE 0xf9
@@ -358,7 +358,7 @@ Entity[ "11" ] = {
 
 
 
-Entity[ "12" ] = {
+Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0268 0xbc
         -- MISSING OPCODE 0xf9

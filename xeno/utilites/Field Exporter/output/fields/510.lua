@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x000f 0xbc
         -- 0xA0() -- 0x0010 0xa0
@@ -46,7 +46,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x00e0 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x00e3 0xfe
@@ -81,7 +81,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x010c 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x010f 0xfe
@@ -120,7 +120,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x013b 0xbc
         -- 0x2A() -- 0x013c 0x2a
@@ -145,7 +145,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01b0 0xbc
         -- MISSING OPCODE 0xFE1c
@@ -153,7 +153,7 @@ Entity[ "4" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x001e, condition="value1 > value2", jump_if_false=0x01d6 ) -- 0x01c4 0x02
-        -- 0x09_EntityCallScriptEW( entity=0x05, script=0x25 ) -- 0x01cc 0x09
+        opcode09_EntityCallScriptEW( entity=0x05, script=05, priority=01 ) -- 0x01cc 0x09
         -- MISSING OPCODE 0x29
     end,
 
@@ -170,7 +170,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01de 0xbc
         -- MISSING OPCODE 0xFE07
@@ -202,7 +202,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x056d 0x0b
         -- 0x2A() -- 0x0570 0x2a
@@ -226,7 +226,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0585 0xbc
         -- 0x2A() -- 0x0586 0x2a
@@ -250,7 +250,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x05dc 0xbc
         -- 0x2A() -- 0x05dd 0x2a
@@ -274,7 +274,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( GetVar( 0x043c ) ) -- 0x0932 0x0b
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0448 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0940 ) -- 0x0935 0x02
@@ -298,7 +298,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( GetVar( 0x044e ) ) -- 0x09d8 0x0b
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x045a ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x09e6 ) -- 0x09db 0x02
@@ -322,7 +322,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( GetVar( 0x0460 ) ) -- 0x0a7e 0x0b
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x046c ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0a8c ) -- 0x0a81 0x02

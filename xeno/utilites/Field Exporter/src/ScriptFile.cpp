@@ -27,7 +27,7 @@ ScriptFile::GetScripts( const std::string& path )
 
     for( u32 i = 0; i < number_of_entity; ++i )
     {
-        exp->Log( "Entity[ \"" + IntToString( i ) + "\" ] = {\n" );
+        exp->Log( "Entity[ \"0x" + HexToString( i, 2, '0' ) + "\" ] = {\n" );
 
         for( u8 j = 0; j < 0x20; ++j )
         {
@@ -145,12 +145,12 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( opcode == 0x08 )
                 {
-                    exp->Log( "-- 0x08_EntityCallScriptSW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
+                    exp->Log( "opcode08_EntityCallScriptSW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + HexToString( GetU8( pointer + 2 ) & 0x1f, 2, '0' )  + ", priority=" + HexToString( ( GetU8( pointer + 2 ) & 0xe0) >> 5, 2, '0' )  + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x09 )
                 {
-                    exp->Log( "-- 0x09_EntityCallScriptEW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
+                    exp->Log( "opcode09_EntityCallScriptEW( entity=" + GetU8Variable( pointer + 1 ) + ", script=" + HexToString( GetU8( pointer + 2 ) & 0x1f, 2, '0' )  + ", priority=" + HexToString( ( GetU8( pointer + 2 ) & 0xe0) >> 5, 2, '0' )  + " )" );
                     pointer += 3;
                 }
                 else if( opcode == 0x0b )

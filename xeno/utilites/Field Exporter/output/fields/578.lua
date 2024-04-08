@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x015e 0xbc
         -- 0x75() -- 0x015f 0x75
@@ -25,7 +25,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0169 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x016c 0xfe
@@ -57,7 +57,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0186 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0189 0xfe
@@ -81,7 +81,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0191 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0194 0xfe
@@ -105,7 +105,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x019c 0xbc
         -- 0x19_SetPosition( x=(vf80)0xfdbc, z=(vf40)0x0244, flag=(flag)0xc0 ) -- 0x019d 0x19
@@ -129,7 +129,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01c8 0xbc
         -- 0x19_SetPosition( x=(vf80)0x0244, z=(vf40)0xfdbc, flag=(flag)0xc0 ) -- 0x01c9 0x19
@@ -142,7 +142,7 @@ Entity[ "5" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x01de 0xfe
-        -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x01e0 0x09
+        opcode09_EntityCallScriptEW( entity=0x06, script=04, priority=01 ) -- 0x01e0 0x09
         -- 0x07( entity=0x01, script=0x25 ) -- 0x01e3 0x07
         opcode26_Wait( time=10 ) -- 0x01e6 0x26
         -- 0x98_MapLoad( field_id=564, value=0 ) -- 0x01e9 0x98
@@ -158,7 +158,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01f1 0xbc
         -- 0x2A() -- 0x01f2 0x2a
@@ -186,7 +186,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x2A() -- 0x01fa 0x2a
         return 0 -- 0x01fb 0x00

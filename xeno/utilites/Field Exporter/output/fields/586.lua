@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x000f 0xbc
         -- MISSING OPCODE 0xf7
@@ -29,7 +29,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0057 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x005a 0xfe
@@ -65,7 +65,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0077 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x007a 0xfe
@@ -89,7 +89,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0082 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0085 0xfe
@@ -113,7 +113,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x008d 0xbc
         -- 0x19_SetPosition( x=(vf80)0xff6f, z=(vf40)0xff6f, flag=(flag)0xc0 ) -- 0x008e 0x19
@@ -126,7 +126,7 @@ Entity[ "4" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x00a3 0xfe
-        -- 0x09_EntityCallScriptEW( entity=0x07, script=0x24 ) -- 0x00a5 0x09
+        opcode09_EntityCallScriptEW( entity=0x07, script=04, priority=01 ) -- 0x00a5 0x09
         -- 0x07( entity=0x01, script=0x24 ) -- 0x00a8 0x07
         opcode26_Wait( time=10 ) -- 0x00ab 0x26
         -- 0x98_MapLoad( field_id=565, value=3 ) -- 0x00ae 0x98
@@ -142,7 +142,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00b6 0xbc
         -- MISSING OPCODE 0x1b
@@ -154,7 +154,7 @@ Entity[ "5" ] = {
 
     on_talk = function( self )
         opcodeFE54() -- 0x00cd 0xfe
-        -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x00cf 0x09
+        opcode09_EntityCallScriptEW( entity=0x06, script=04, priority=01 ) -- 0x00cf 0x09
         -- 0x07( entity=0x01, script=0x25 ) -- 0x00d2 0x07
         opcode26_Wait( time=10 ) -- 0x00d5 0x26
         -- 0x98_MapLoad( field_id=566, value=2 ) -- 0x00d8 0x98
@@ -170,7 +170,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00e0 0xbc
         -- 0x2A() -- 0x00e1 0x2a
@@ -198,7 +198,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00e9 0xbc
         -- 0x2A() -- 0x00ea 0x2a
@@ -226,7 +226,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00f2 0xbc
         -- 0x2A() -- 0x00f3 0x2a
@@ -249,7 +249,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( GetVar( 0x0400 ) ) -- 0x0101 0x0b
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040c ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x010f ) -- 0x0104 0x02

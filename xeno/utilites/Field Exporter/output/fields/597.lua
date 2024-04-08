@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x001d 0xbc
         -- 0xA0() -- 0x001e 0xa0
@@ -26,7 +26,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0037 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x003a 0xfe
@@ -51,7 +51,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0046 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0049 0xfe
@@ -76,7 +76,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x0055 0x16
         -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x0058 0xfe
@@ -101,7 +101,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x0064 0x16
         -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0067 0xfe
@@ -126,7 +126,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x0073 0x16
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0076 0xfe
@@ -151,7 +151,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x0082 0x16
         -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x0085 0xfe
@@ -176,7 +176,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x0091 0x16
         -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x0094 0xfe
@@ -201,7 +201,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x00a0 0x16
         -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x00a3 0xfe
@@ -226,7 +226,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x00af 0x16
         -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x00b2 0xfe
@@ -251,7 +251,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00be 0xbc
         -- 0x19_SetPosition( x=(vf80)0x00fd, z=(vf40)0x03e1, flag=(flag)0xc0 ) -- 0x00bf 0x19
@@ -275,7 +275,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00ee 0xbc
         -- 0x19_SetPosition( x=(vf80)0x020b, z=(vf40)0x0062, flag=(flag)0xc0 ) -- 0x00ef 0x19
@@ -299,7 +299,7 @@ Entity[ "11" ] = {
 
 
 
-Entity[ "12" ] = {
+Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x011e 0xbc
         -- 0x19_SetPosition( x=(vf80)0xffc8, z=(vf40)0x0036, flag=(flag)0xc0 ) -- 0x011f 0x19
@@ -323,7 +323,7 @@ Entity[ "12" ] = {
 
 
 
-Entity[ "13" ] = {
+Entity[ "0x0d" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x014e 0xbc
         -- 0x19_SetPosition( x=(vf80)0xfe14, z=(vf40)0xfdc2, flag=(flag)0xc0 ) -- 0x014f 0x19
@@ -347,7 +347,7 @@ Entity[ "13" ] = {
 
 
 
-Entity[ "14" ] = {
+Entity[ "0x0e" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x017e 0xbc
         -- 0x2A() -- 0x017f 0x2a
@@ -374,7 +374,7 @@ Entity[ "14" ] = {
 
 
 
-Entity[ "15" ] = {
+Entity[ "0x0f" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x019f 0xbc
         -- 0x2A() -- 0x01a0 0x2a
@@ -401,7 +401,7 @@ Entity[ "15" ] = {
 
 
 
-Entity[ "16" ] = {
+Entity[ "0x10" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01c0 0xbc
         -- 0x2A() -- 0x01c1 0x2a
@@ -428,7 +428,7 @@ Entity[ "16" ] = {
 
 
 
-Entity[ "17" ] = {
+Entity[ "0x11" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01e1 0xbc
         -- 0x2A() -- 0x01e2 0x2a

@@ -2,12 +2,12 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
 }
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0093 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0096 0xfe
@@ -31,7 +31,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x00a8 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x00ab 0xfe
@@ -62,7 +62,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00cf 0xbc
         -- MISSING OPCODE 0x5f
@@ -84,7 +84,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00e2 0xbc
         -- 0x2A() -- 0x00e3 0x2a
@@ -107,7 +107,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -136,7 +136,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -177,7 +177,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01ae 0xbc
         -- 0x2A() -- 0x01af 0x2a
@@ -188,13 +188,13 @@ Entity[ "7" ] = {
         opcode26_Wait( time=30 ) -- 0x01b1 0x26
         -- 0xF1() -- 0x01b4 0xf1
         opcode26_Wait( time=50 ) -- 0x01bf 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x06, script=0x24 ) -- 0x01c2 0x09
+        opcode09_EntityCallScriptEW( entity=0x06, script=04, priority=01 ) -- 0x01c2 0x09
         -- 0xF1() -- 0x01c5 0xf1
         -- 0xFE0E_SoundSetVolume( volume=0, steps=960 ) -- 0x01d0 0xfe
         opcode26_Wait( time=30 ) -- 0x01d6 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x08, script=0x24 ) -- 0x01d9 0x09
+        opcode09_EntityCallScriptEW( entity=0x08, script=04, priority=01 ) -- 0x01d9 0x09
         opcode26_Wait( time=90 ) -- 0x01dc 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x06, script=0x25 ) -- 0x01df 0x09
+        opcode09_EntityCallScriptEW( entity=0x06, script=05, priority=01 ) -- 0x01df 0x09
         -- 0xF1() -- 0x01e2 0xf1
         opcode26_Wait( time=200 ) -- 0x01ed 0x26
         -- MISSING OPCODE 0xd4
@@ -212,7 +212,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x03a8 0xbc
         -- 0x2A() -- 0x03a9 0x2a
@@ -261,7 +261,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x04d8 0xbc
         -- 0x2A() -- 0x04d9 0x2a
@@ -284,7 +284,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0521 0xbc
         -- 0x2A() -- 0x0522 0x2a
@@ -307,7 +307,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x05ae 0xbc
         -- 0x2A() -- 0x05af 0x2a

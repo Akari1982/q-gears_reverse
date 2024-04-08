@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xA0() -- 0x0016 0xa0
         -- 0x2A() -- 0x001d 0x2a
@@ -26,7 +26,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0049 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x004c 0xfe
@@ -98,7 +98,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0145 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0148 0xfe
@@ -182,7 +182,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0235 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0238 0xfe
@@ -256,7 +256,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0302 0xbc
         -- MISSING OPCODE 0xf8
@@ -279,7 +279,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0349 0xbc
         -- 0x2A() -- 0x034a 0x2a
@@ -303,7 +303,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0398 0xbc
         -- 0x2A() -- 0x0399 0x2a
@@ -326,7 +326,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x03a5 0xbc
         -- 0x2A() -- 0x03a6 0x2a
@@ -348,14 +348,14 @@ Entity[ "7" ] = {
     script_0x04 = function( self )
         -- 0x07( entity=0x09, script=0x64 ) -- 0x03a9 0x07
         -- 0x07( entity=0x0b, script=0x64 ) -- 0x03ac 0x07
-        -- 0x09_EntityCallScriptEW( entity=0x0d, script=0x64 ) -- 0x03af 0x09
+        opcode09_EntityCallScriptEW( entity=0x0d, script=04, priority=03 ) -- 0x03af 0x09
         return 0 -- 0x03b2 0x00
     end,
 
     script_0x05 = function( self )
         -- 0x07( entity=0x0d, script=0x65 ) -- 0x03b3 0x07
         -- 0x07( entity=0x0b, script=0x65 ) -- 0x03b6 0x07
-        -- 0x09_EntityCallScriptEW( entity=0x09, script=0x65 ) -- 0x03b9 0x09
+        opcode09_EntityCallScriptEW( entity=0x09, script=05, priority=03 ) -- 0x03b9 0x09
         return 0 -- 0x03bc 0x00
     end,
 
@@ -363,7 +363,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x03bd 0xbc
         -- MISSING OPCODE 0xf9
@@ -385,7 +385,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x03cf 0xbc
         -- MISSING OPCODE 0xf9
@@ -419,7 +419,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0411 0xbc
         -- MISSING OPCODE 0xf9
@@ -441,7 +441,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0424 0xbc
         -- MISSING OPCODE 0xf9
@@ -475,7 +475,7 @@ Entity[ "11" ] = {
 
 
 
-Entity[ "12" ] = {
+Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0466 0xbc
         -- MISSING OPCODE 0xf9
@@ -497,7 +497,7 @@ Entity[ "12" ] = {
 
 
 
-Entity[ "13" ] = {
+Entity[ "0x0d" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0479 0xbc
         -- MISSING OPCODE 0xf9
@@ -531,7 +531,7 @@ Entity[ "13" ] = {
 
 
 
-Entity[ "14" ] = {
+Entity[ "0x0e" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x04bb 0xbc
         -- MISSING OPCODE 0xf9
@@ -553,7 +553,7 @@ Entity[ "14" ] = {
 
 
 
-Entity[ "15" ] = {
+Entity[ "0x0f" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x04ce 0xbc
         -- MISSING OPCODE 0xf8
@@ -575,7 +575,7 @@ Entity[ "15" ] = {
 
 
 
-Entity[ "16" ] = {
+Entity[ "0x10" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0634 0xbc
         -- 0x2A() -- 0x0635 0x2a
@@ -600,7 +600,7 @@ Entity[ "16" ] = {
 
 
 
-Entity[ "17" ] = {
+Entity[ "0x11" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x072d 0xbc
         -- 0x2A() -- 0x072e 0x2a
@@ -624,7 +624,7 @@ Entity[ "17" ] = {
 
 
 
-Entity[ "18" ] = {
+Entity[ "0x12" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x077c 0xbc
         -- 0x2A() -- 0x077d 0x2a
@@ -651,7 +651,7 @@ Entity[ "18" ] = {
 
 
 
-Entity[ "19" ] = {
+Entity[ "0x13" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0795 0xbc
         -- 0x2A() -- 0x0796 0x2a
@@ -678,7 +678,7 @@ Entity[ "19" ] = {
 
 
 
-Entity[ "20" ] = {
+Entity[ "0x14" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x07ae 0xbc
         -- 0x2A() -- 0x07af 0x2a
@@ -705,7 +705,7 @@ Entity[ "20" ] = {
 
 
 
-Entity[ "21" ] = {
+Entity[ "0x15" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x07c7 0xbc
         -- 0x2A() -- 0x07c8 0x2a
@@ -732,7 +732,7 @@ Entity[ "21" ] = {
 
 
 
-Entity[ "22" ] = {
+Entity[ "0x16" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x07e0 0xbc
         -- 0x2A() -- 0x07e1 0x2a
@@ -759,7 +759,7 @@ Entity[ "22" ] = {
 
 
 
-Entity[ "23" ] = {
+Entity[ "0x17" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x07f9 0xbc
         -- 0x2A() -- 0x07fa 0x2a
@@ -786,7 +786,7 @@ Entity[ "23" ] = {
 
 
 
-Entity[ "24" ] = {
+Entity[ "0x18" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0812 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0067, z=(vf40)0x0107, flag=(flag)0xc0 ) -- 0x0815 0x19
@@ -816,7 +816,7 @@ Entity[ "24" ] = {
 
 
 
-Entity[ "25" ] = {
+Entity[ "0x19" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x085b 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0053, z=(vf40)0x0178, flag=(flag)0xc0 ) -- 0x085e 0x19
@@ -846,7 +846,7 @@ Entity[ "25" ] = {
 
 
 
-Entity[ "26" ] = {
+Entity[ "0x1a" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x08a4 0x0b
         -- 0x19_SetPosition( x=(vf80)0x00ad, z=(vf40)0x014d, flag=(flag)0xc0 ) -- 0x08a7 0x19
@@ -876,7 +876,7 @@ Entity[ "26" ] = {
 
 
 
-Entity[ "27" ] = {
+Entity[ "0x1b" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x08ed 0x0b
         -- MISSING OPCODE 0x5f
@@ -972,7 +972,7 @@ Entity[ "27" ] = {
 
 
 
-Entity[ "28" ] = {
+Entity[ "0x1c" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0bf3 0xbc
         -- 0x2A() -- 0x0bf4 0x2a
@@ -995,7 +995,7 @@ Entity[ "28" ] = {
 
 
 
-Entity[ "29" ] = {
+Entity[ "0x1d" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0bf7 0xbc
         -- 0x2A() -- 0x0bf8 0x2a
@@ -1018,7 +1018,7 @@ Entity[ "29" ] = {
 
 
 
-Entity[ "30" ] = {
+Entity[ "0x1e" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0bfb 0xbc
         -- 0x2A() -- 0x0bfc 0x2a
@@ -1041,7 +1041,7 @@ Entity[ "30" ] = {
 
 
 
-Entity[ "31" ] = {
+Entity[ "0x1f" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0bff 0xbc
         -- 0x2A() -- 0x0c00 0x2a
@@ -1064,7 +1064,7 @@ Entity[ "31" ] = {
 
 
 
-Entity[ "32" ] = {
+Entity[ "0x20" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0c03 0xbc
         -- 0x2A() -- 0x0c04 0x2a

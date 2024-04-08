@@ -2,12 +2,12 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
 }
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0006 0xbc
         opcodeFE52() -- 0x0007 0xfe
@@ -18,7 +18,8 @@ Entity[ "1" ] = {
 
     on_update = function( self )
         -- 0xFEA0() -- 0x000d 0xfe
-        -- MISSING OPCODE 0x74
+        opcode3A_VariableBitSet( address=0x4100, bit_num=(vf40)0x7000, flag=0x00 ) -- 0x001a 0x3a
+        -- MISSING OPCODE 0x72
     end,
 
     on_talk = function( self )

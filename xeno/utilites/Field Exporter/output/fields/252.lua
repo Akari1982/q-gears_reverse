@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
         -- MISSING OPCODE 0xa4
@@ -26,7 +26,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0027 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x002a 0xfe
@@ -65,7 +65,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x007c 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x007f 0xfe
@@ -92,7 +92,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -122,7 +122,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -152,7 +152,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x00bc 0xbc
         -- 0x19_SetPosition( x=(vf80)0x010a, z=(vf40)0xff21, flag=(flag)0xc0 ) -- 0x00bd 0x19
@@ -178,7 +178,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,
@@ -213,7 +213,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,
@@ -242,7 +242,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x021b 0x0b
         -- MISSING OPCODE 0x1f
@@ -272,7 +272,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x02c9 0x0b
         -- MISSING OPCODE 0x1f
@@ -318,7 +318,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x033a 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0190, z=(vf40)0x005a, flag=(flag)0xc0 ) -- 0x033d 0x19
@@ -345,7 +345,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0356 0xbc
         -- 0x2A() -- 0x0357 0x2a
@@ -373,9 +373,9 @@ Entity[ "11" ] = {
         opcodeAC_MoveCamera( control=0x80, steps=60 ) -- 0x03d7 0xac
         opcodeAC_MoveCamera( control=0x81, steps=60 ) -- 0x03db 0xac
         opcode26_Wait( time=15 ) -- 0x03df 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x07, script=0x04 ) -- 0x03e2 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x06, script=0x05 ) -- 0x03e5 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x09, script=0x04 ) -- 0x03e8 0x09
+        opcode09_EntityCallScriptEW( entity=0x07, script=04, priority=00 ) -- 0x03e2 0x09
+        opcode09_EntityCallScriptEW( entity=0x06, script=05, priority=00 ) -- 0x03e5 0x09
+        opcode09_EntityCallScriptEW( entity=0x09, script=04, priority=00 ) -- 0x03e8 0x09
         opcode60() -- 0x03eb 0x60
         opcode64() -- 0x03ec 0x64
         opcode63() -- 0x03ed 0x63
@@ -384,7 +384,7 @@ Entity[ "11" ] = {
         opcodeAC_MoveCamera( control=0x81, steps=60 ) -- 0x0401 0xac
         -- 0x07( entity=0x06, script=0x06 ) -- 0x0405 0x07
         opcode26_Wait( time=20 ) -- 0x0408 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x07, script=0x05 ) -- 0x040b 0x09
+        opcode09_EntityCallScriptEW( entity=0x07, script=05, priority=00 ) -- 0x040b 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x0419 ) -- 0x040e 0x02
         -- 0x01_JumpTo( 0x0448 ) -- 0x0416 0x01
         opcode60() -- 0x0419 0x60
@@ -393,9 +393,9 @@ Entity[ "11" ] = {
         opcodeA3() -- 0x0423 0xa3
         opcodeAC_MoveCamera( control=0x80, steps=60 ) -- 0x042b 0xac
         opcodeAC_MoveCamera( control=0x81, steps=60 ) -- 0x042f 0xac
-        -- 0x09_EntityCallScriptEW( entity=0x09, script=0x05 ) -- 0x0433 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x08, script=0x04 ) -- 0x0436 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x09, script=0x06 ) -- 0x0439 0x09
+        opcode09_EntityCallScriptEW( entity=0x09, script=05, priority=00 ) -- 0x0433 0x09
+        opcode09_EntityCallScriptEW( entity=0x08, script=04, priority=00 ) -- 0x0436 0x09
+        opcode09_EntityCallScriptEW( entity=0x09, script=06, priority=00 ) -- 0x0439 0x09
         -- 0x07( entity=0x09, script=0x07 ) -- 0x043c 0x07
         opcode26_Wait( time=45 ) -- 0x043f 0x26
         opcode3A_VariableBitSet( address=0x0184, bit_num=(vf40)0x0006, flag=0x40 ) -- 0x0442 0x3a

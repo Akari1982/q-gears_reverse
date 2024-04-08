@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x000f 0xbc
         -- 0x2A() -- 0x0010 0x2a
@@ -26,7 +26,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x001b 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x001e 0xfe
@@ -84,7 +84,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x00a4 0x0b
         -- 0x19_SetPosition( x=(vf80)0xff74, z=(vf40)0xfff0, flag=(flag)0xc0 ) -- 0x00a7 0x19
@@ -111,7 +111,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x00d3 0x0b
         -- 0x19_SetPosition( x=(vf80)0x00d9, z=(vf40)0x000b, flag=(flag)0xc0 ) -- 0x00d6 0x19
@@ -136,7 +136,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x05e3 0xbc
         -- 0x2A() -- 0x05e4 0x2a
@@ -145,7 +145,7 @@ Entity[ "4" ] = {
 
     on_update = function( self )
         -- 0xCB_TriggerJumpTo( trigger_id=28416, jump=0x9805 ) -- 0x05e6 0xcb
-        -- 0x08_EntityCallScriptSW( entity=0x80, script=0x00 ) -- 0x05eb 0x08
+        opcode08_EntityCallScriptSW( entity=0x80, script=00, priority=00 ) -- 0x05eb 0x08
         -- MISSING OPCODE 0x80
     end,
 
@@ -165,7 +165,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x05f6 0xbc
         -- MISSING OPCODE 0x46
@@ -188,7 +188,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0606 0xbc
         -- 0x2A() -- 0x0607 0x2a
@@ -211,7 +211,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x063e 0xbc
         -- MISSING OPCODE 0x1d
@@ -233,7 +233,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         return 0 -- 0x0651 0x00
     end,

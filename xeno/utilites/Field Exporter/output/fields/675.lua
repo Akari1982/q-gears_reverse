@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- 0x2A() -- 0x0009 0x2a
@@ -26,7 +26,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x003d 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0040 0xfe
@@ -54,7 +54,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x2A() -- 0x007b 0x2a
         -- 0xBC_EntityNoModelInit() -- 0x007c 0xbc
@@ -83,7 +83,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x00a5 0x0b
         -- MISSING OPCODE 0xFE1c
@@ -106,7 +106,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x00b8 0x0b
         -- 0x19_SetPosition( x=(vf80)0xff5e, z=(vf40)0x003e, flag=(flag)0xc0 ) -- 0x00bb 0x19
@@ -130,7 +130,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x00c8 0x0b
         -- 0x19_SetPosition( x=(vf80)0xff5e, z=(vf40)0xffc2, flag=(flag)0xc0 ) -- 0x00cb 0x19
@@ -154,7 +154,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 2 ) -- 0x00d8 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0004, z=(vf40)0xff6b, flag=(flag)0xc0 ) -- 0x00db 0x19

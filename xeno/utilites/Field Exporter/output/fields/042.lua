@@ -2,12 +2,12 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
 }
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0004 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0007 0xfe
@@ -31,7 +31,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x000f 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0012 0xfe
@@ -55,7 +55,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x001a 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x001d 0xfe
@@ -79,7 +79,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0025 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0000, z=(vf40)0x0190, flag=(flag)0xc0 ) -- 0x0028 0x19
@@ -104,7 +104,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x00d3 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0064, z=(vf40)0x0064, flag=(flag)0xc0 ) -- 0x00d6 0x19

@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
         -- 0x2A() -- 0x0017 0x2a
@@ -49,7 +49,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0185 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0188 0xfe
@@ -115,7 +115,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0239 0x16
         -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x023c 0xfe
@@ -171,7 +171,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0333 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0336 0xfe
@@ -222,7 +222,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x0366 0x16
         -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0369 0xfe
@@ -273,7 +273,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x0399 0x16
         -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x039c 0xfe
@@ -324,7 +324,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x03cc 0x16
         -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x03cf 0xfe
@@ -375,7 +375,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x03ff 0x16
         -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x0402 0xfe
@@ -426,7 +426,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x0432 0x16
         -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x0435 0xfe
@@ -477,7 +477,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x0468 0x16
         -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x046b 0xfe
@@ -536,7 +536,7 @@ Entity[ "9" ] = {
 
 
 
-Entity[ "10" ] = {
+Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x0519 0x16
         -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x051c 0xfe
@@ -587,7 +587,7 @@ Entity[ "10" ] = {
 
 
 
-Entity[ "11" ] = {
+Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x0543 0x16
         -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x0546 0xfe
@@ -634,7 +634,7 @@ Entity[ "11" ] = {
 
 
 
-Entity[ "12" ] = {
+Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x056c 0xbc
         -- MISSING OPCODE 0x1b
@@ -661,7 +661,7 @@ Entity[ "12" ] = {
 
 
 
-Entity[ "13" ] = {
+Entity[ "0x0d" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x066d 0xbc
         -- MISSING OPCODE 0x1b
@@ -686,7 +686,7 @@ Entity[ "13" ] = {
 
 
 
-Entity[ "14" ] = {
+Entity[ "0x0e" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x068f 0xbc
         -- MISSING OPCODE 0xFE1c
@@ -709,7 +709,7 @@ Entity[ "14" ] = {
 
 
 
-Entity[ "15" ] = {
+Entity[ "0x0f" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x069f 0xbc
         -- MISSING OPCODE 0x21
@@ -720,9 +720,9 @@ Entity[ "15" ] = {
         -- 0x5B() -- 0x06e0 0x5b
         -- 0x86_ProgressNotEqualJumpTo( value=179, jump=0x07e8 ) -- 0x06e1 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c6 ), value2=(s16)0x2000, condition="value1 & value2", jump_if_false=0x074b ) -- 0x06e6 0x02
-        -- 0x08_EntityCallScriptSW( entity=0xff, script=0x64 ) -- 0x06ee 0x08
-        -- 0x08_EntityCallScriptSW( entity=0xfe, script=0x65 ) -- 0x06f1 0x08
-        -- 0x08_EntityCallScriptSW( entity=0xfd, script=0x66 ) -- 0x06f4 0x08
+        opcode08_EntityCallScriptSW( entity=0xff, script=04, priority=03 ) -- 0x06ee 0x08
+        opcode08_EntityCallScriptSW( entity=0xfe, script=05, priority=03 ) -- 0x06f1 0x08
+        opcode08_EntityCallScriptSW( entity=0xfd, script=06, priority=03 ) -- 0x06f4 0x08
         opcode26_Wait( time=3 ) -- 0x06f7 0x26
         -- MISSING OPCODE 0x10
     end,
@@ -736,9 +736,9 @@ Entity[ "15" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x08_EntityCallScriptSW( entity=0xff, script=0x64 ) -- 0x0829 0x08
-        -- 0x08_EntityCallScriptSW( entity=0xfe, script=0x65 ) -- 0x082c 0x08
-        -- 0x08_EntityCallScriptSW( entity=0xfd, script=0x66 ) -- 0x082f 0x08
+        opcode08_EntityCallScriptSW( entity=0xff, script=04, priority=03 ) -- 0x0829 0x08
+        opcode08_EntityCallScriptSW( entity=0xfe, script=05, priority=03 ) -- 0x082c 0x08
+        opcode08_EntityCallScriptSW( entity=0xfd, script=06, priority=03 ) -- 0x082f 0x08
         opcode26_Wait( time=3 ) -- 0x0832 0x26
         -- MISSING OPCODE 0x10
     end,
@@ -747,7 +747,7 @@ Entity[ "15" ] = {
 
 
 
-Entity[ "16" ] = {
+Entity[ "0x10" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0841 0xbc
         -- MISSING OPCODE 0xf9
@@ -770,7 +770,7 @@ Entity[ "16" ] = {
 
 
 
-Entity[ "17" ] = {
+Entity[ "0x11" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x084c 0xbc
         -- MISSING OPCODE 0xf9
@@ -792,7 +792,7 @@ Entity[ "17" ] = {
 
 
 
-Entity[ "18" ] = {
+Entity[ "0x12" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0853 0xbc
         -- MISSING OPCODE 0xf9
@@ -814,7 +814,7 @@ Entity[ "18" ] = {
 
 
 
-Entity[ "19" ] = {
+Entity[ "0x13" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x085a 0xbc
         -- MISSING OPCODE 0xf9
@@ -836,7 +836,7 @@ Entity[ "19" ] = {
 
 
 
-Entity[ "20" ] = {
+Entity[ "0x14" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0861 0xbc
         -- MISSING OPCODE 0xf9
@@ -858,7 +858,7 @@ Entity[ "20" ] = {
 
 
 
-Entity[ "21" ] = {
+Entity[ "0x15" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0868 0xbc
         -- 0x2A() -- 0x0869 0x2a
@@ -888,7 +888,7 @@ Entity[ "21" ] = {
 
 
 
-Entity[ "22" ] = {
+Entity[ "0x16" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x088b 0xbc
         -- 0x2A() -- 0x088c 0x2a
@@ -923,7 +923,7 @@ Entity[ "22" ] = {
 
 
 
-Entity[ "23" ] = {
+Entity[ "0x17" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x08ea 0xbc
         -- 0x2A() -- 0x08eb 0x2a
@@ -943,10 +943,10 @@ Entity[ "23" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0x08_EntityCallScriptSW( entity=0x18, script=0x64 ) -- 0x08ef 0x08
+        opcode08_EntityCallScriptSW( entity=0x18, script=04, priority=03 ) -- 0x08ef 0x08
         -- 0xB3() -- 0x08f2 0xb3
         opcode26_Wait( time=180 ) -- 0x08f5 0x26
-        -- 0x08_EntityCallScriptSW( entity=0x18, script=0x45 ) -- 0x08f8 0x08
+        opcode08_EntityCallScriptSW( entity=0x18, script=05, priority=02 ) -- 0x08f8 0x08
         opcode26_Wait( time=20 ) -- 0x08fb 0x26
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01b5, condition="value1 == value2", jump_if_false=0x0911 ) -- 0x08fe 0x02
         -- 0xB4_FadeIn() -- 0x0906 0xb4
@@ -957,7 +957,7 @@ Entity[ "23" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0x08_EntityCallScriptSW( entity=0x18, script=0x64 ) -- 0x0917 0x08
+        opcode08_EntityCallScriptSW( entity=0x18, script=04, priority=03 ) -- 0x0917 0x08
         -- 0xB3() -- 0x091a 0xb3
         return 0 -- 0x091d 0x00
     end,
@@ -966,7 +966,7 @@ Entity[ "23" ] = {
 
 
 
-Entity[ "24" ] = {
+Entity[ "0x18" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x091e 0xbc
         -- 0x2A() -- 0x091f 0x2a
@@ -998,7 +998,7 @@ Entity[ "24" ] = {
 
 
 
-Entity[ "25" ] = {
+Entity[ "0x19" ] = {
     on_start = function( self )
         return 0 -- 0x0938 0x00
     end,

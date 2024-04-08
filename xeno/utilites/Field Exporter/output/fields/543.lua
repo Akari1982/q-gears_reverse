@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
         -- 0xA0() -- 0x0017 0xa0
@@ -13,7 +13,7 @@ Entity[ "0" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x004e ) -- 0x0032 0x02
         opcodeFE54() -- 0x003a 0xfe
         opcode26_Wait( time=30 ) -- 0x003c 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x64 ) -- 0x003f 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=04, priority=03 ) -- 0x003f 0x09
         -- MISSING OPCODE 0x80
     end,
 
@@ -29,7 +29,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0076 0x16
         -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0079 0xfe
@@ -68,7 +68,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x009f 0x16
         -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x00a2 0xfe
@@ -111,7 +111,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x011b 0xbc
         -- 0x2A() -- 0x011c 0x2a
@@ -142,7 +142,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0140 0xbc
         -- 0x2A() -- 0x0141 0x2a
@@ -172,7 +172,7 @@ Entity[ "4" ] = {
 
 
 
-Entity[ "5" ] = {
+Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0163 0xbc
         -- 0x2A() -- 0x0164 0x2a
@@ -203,7 +203,7 @@ Entity[ "5" ] = {
 
 
 
-Entity[ "6" ] = {
+Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01a0 0xbc
         -- MISSING OPCODE 0xf8
@@ -216,7 +216,7 @@ Entity[ "6" ] = {
     on_talk = function( self )
         opcodeFE54() -- 0x01bc 0xfe
         -- 0x07( entity=0x07, script=0x64 ) -- 0x01be 0x07
-        -- 0x09_EntityCallScriptEW( entity=0x08, script=0x64 ) -- 0x01c1 0x09
+        opcode09_EntityCallScriptEW( entity=0x08, script=04, priority=03 ) -- 0x01c1 0x09
         -- MISSING OPCODE 0xFE68
     end,
 
@@ -228,7 +228,7 @@ Entity[ "6" ] = {
 
 
 
-Entity[ "7" ] = {
+Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01d2 0xbc
         -- 0x2A() -- 0x01d3 0x2a
@@ -255,7 +255,7 @@ Entity[ "7" ] = {
 
 
 
-Entity[ "8" ] = {
+Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x01f5 0xbc
         -- 0x2A() -- 0x01f6 0x2a
@@ -282,7 +282,7 @@ Entity[ "8" ] = {
 
 
 
-Entity[ "9" ] = {
+Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0215 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 != value2", jump_if_false=0x0220 ) -- 0x0216 0x02

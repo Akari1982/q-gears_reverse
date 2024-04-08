@@ -745,7 +745,7 @@ void psxJAL()
     //}
 
 
-    else if( _JumpTarget_ == 0x800AAF70 ) // call given func when SELECT is pressed instead of map
+    else if( _JumpTarget_ == 0x80AAF70 ) // call given func when SELECT is pressed instead of map
     {
         _SetLink(31);
         doBranch(0x800a807c);
@@ -753,7 +753,7 @@ void psxJAL()
     }
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }
     //else if( _JumpTarget_ == 0x8003c36c ) { execI(); P_Xeno_System_SoundUpdateBaseValues(); }
-    //else if (_JumpTarget_ == 0x8003c590) { execI(); P_Xeno_System_SoundUpdateSequence(); }
+    //else if (_JumpTarget_ == 0x8003c590 ) { execI(); P_Xeno_System_SoundUpdateSequence(); }
 
     // FFVII DEBUG
     //else if (_JumpTarget_ == 0x800AB5E8)

@@ -2,7 +2,7 @@ Entity = {}
 
 
 
-Entity[ "0" ] = {
+Entity[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
         -- 0xA0() -- 0x0009 0xa0
@@ -16,22 +16,22 @@ Entity[ "0" ] = {
         opcode26_Wait( time=32 ) -- 0x0037 0x26
         -- 0x07( entity=0x03, script=0x24 ) -- 0x003a 0x07
         opcode26_Wait( time=12 ) -- 0x003d 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x25 ) -- 0x0040 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x25 ) -- 0x0043 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x26 ) -- 0x0046 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x26 ) -- 0x0049 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x27 ) -- 0x004c 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x27 ) -- 0x004f 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x28 ) -- 0x0052 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=05, priority=01 ) -- 0x0040 0x09
+        opcode09_EntityCallScriptEW( entity=0x02, script=05, priority=01 ) -- 0x0043 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=06, priority=01 ) -- 0x0046 0x09
+        opcode09_EntityCallScriptEW( entity=0x02, script=06, priority=01 ) -- 0x0049 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=07, priority=01 ) -- 0x004c 0x09
+        opcode09_EntityCallScriptEW( entity=0x02, script=07, priority=01 ) -- 0x004f 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=08, priority=01 ) -- 0x0052 0x09
         -- 0x07( entity=0x03, script=0x26 ) -- 0x0055 0x07
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x29 ) -- 0x0058 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x28 ) -- 0x005b 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=09, priority=01 ) -- 0x0058 0x09
+        opcode09_EntityCallScriptEW( entity=0x02, script=08, priority=01 ) -- 0x005b 0x09
         opcode26_Wait( time=45 ) -- 0x005e 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x03, script=0x27 ) -- 0x0061 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x29 ) -- 0x0064 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x2a ) -- 0x0067 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x02, script=0x2a ) -- 0x006a 0x09
-        -- 0x09_EntityCallScriptEW( entity=0x01, script=0x2b ) -- 0x006d 0x09
+        opcode09_EntityCallScriptEW( entity=0x03, script=07, priority=01 ) -- 0x0061 0x09
+        opcode09_EntityCallScriptEW( entity=0x02, script=09, priority=01 ) -- 0x0064 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=0a, priority=01 ) -- 0x0067 0x09
+        opcode09_EntityCallScriptEW( entity=0x02, script=0a, priority=01 ) -- 0x006a 0x09
+        opcode09_EntityCallScriptEW( entity=0x01, script=0b, priority=01 ) -- 0x006d 0x09
         opcode26_Wait( time=12 ) -- 0x0070 0x26
         -- MISSING OPCODE 0x12
     end,
@@ -48,7 +48,7 @@ Entity[ "0" ] = {
 
 
 
-Entity[ "1" ] = {
+Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x007f 0x0b
         -- 0xFE0D_SetAvatar( character_id=33 ) -- 0x0082 0xfe
@@ -88,7 +88,7 @@ Entity[ "1" ] = {
         opcodeD2_MessageShow0( dialog_id=0x0002, ???=0x11 ) -- 0x00a6 0xd2
         -- 0x9C() -- 0x00aa 0x9c
         opcode26_Wait( time=23 ) -- 0x00ab 0x26
-        -- 0x09_EntityCallScriptEW( entity=0x03, script=0x25 ) -- 0x00ae 0x09
+        opcode09_EntityCallScriptEW( entity=0x03, script=05, priority=01 ) -- 0x00ae 0x09
         opcodeD2_MessageShow0( dialog_id=0x0003, ???=0x11 ) -- 0x00b1 0xd2
         -- 0x9C() -- 0x00b5 0x9c
         return 0 -- 0x00b6 0x00
@@ -125,7 +125,7 @@ Entity[ "1" ] = {
 
 
 
-Entity[ "2" ] = {
+Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x00d7 0x0b
         -- 0xFE0D_SetAvatar( character_id=41 ) -- 0x00da 0xfe
@@ -190,7 +190,7 @@ Entity[ "2" ] = {
 
 
 
-Entity[ "3" ] = {
+Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0122 0xbc
         -- 0x2A() -- 0x0123 0x2a
@@ -233,7 +233,7 @@ Entity[ "3" ] = {
 
 
 
-Entity[ "4" ] = {
+Entity[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0xFE15
     end,

@@ -14257,8 +14257,8 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0xCB_TriggerJumpTo
-current_entity_data = w[800af54c];
-A0 = hu[current_entity_data + cc];
+struct_138 = w[800af54c];
+A0 = hu[struct_138 + cc];
 script_offset = w[800ad0d8];
 param = bu[script_offset + A0 + 1];
 
@@ -14303,7 +14303,7 @@ if( ( trigger_height < entity_y ) && ( entity_y - hu[A2 + 1a] < trigger_height )
                 system_side_of_vector;
                 if( V0 >= 0 )
                 {
-                    [current_entity_data + cc] = h(hu[current_entity_data + cc] + 4);
+                    [struct_138 + cc] = h(hu[struct_138 + cc] + 4);
                     return;
                 }
             }
@@ -14313,7 +14313,7 @@ if( ( trigger_height < entity_y ) && ( entity_y - hu[A2 + 1a] < trigger_height )
 
 A0 = 2;
 field_script_help_read_u16;
-[current_entity_data + cc] = h(V0);
+[struct_138 + cc] = h(V0);
 
 [800af150] = w(w[800af150] + 1);
 ////////////////////////////////
@@ -15141,7 +15141,7 @@ V0 = V0 + 0002;
 ////////////////////////////////
 // 0x84_ProgressLessEqualJumpTo()
 
-current_entity_data = w[800af54c];
+struct_138 = w[800af54c];
 
 A0 = 1;
 field_script_help_read_v80();
@@ -15152,13 +15152,13 @@ get_bytes_from_800C2F3C();
 
 if( V0 < S0 )
 {
-    [current_entity_data + cc] = h(hu[current_entity_data + cc] + 5);
+    [struct_138 + cc] = h(hu[struct_138 + cc] + 5);
 }
 else
 {
     A0 = 3;
     field_script_help_read_u16();
-    [current_entity_data + cc] = h(V0);
+    [struct_138 + cc] = h(V0);
 }
 ////////////////////////////////
 
@@ -15202,7 +15202,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x86_ProgressNotEqualJumpTo
-current_entity_data = w[800af54c];
+struct_138 = w[800af54c];
 
 A0 = 1;
 field_script_help_read_v80;
@@ -15213,13 +15213,13 @@ get_bytes_from_800C2F3C;
 
 if( V0 == S0 )
 {
-    [current_entity_data + cc] = h(hu[current_entity_data + cc] + 5);
+    [struct_138 + cc] = h(hu[struct_138 + cc] + 5);
 }
 else
 {
     A0 = 3;
     field_script_help_read_u16;
-    [current_entity_data + cc] = h(V0);
+    [struct_138 + cc] = h(V0);
 }
 ////////////////////////////////
 
@@ -20992,7 +20992,7 @@ else
 
 
 ////////////////////////////////
-// field_script_opD2_dialog_show_0()
+// field_script_opD2_message_show_0()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 0;
@@ -21002,7 +21002,7 @@ func9bb7c();
 
 
 ////////////////////////////////
-// field_script_opD3_dialog_show_1()
+// field_script_opD3_message_show_1()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 1;
@@ -21012,7 +21012,7 @@ func9bb7c();
 
 
 ////////////////////////////////
-// field_script_op03_dialog_show_2()
+// field_script_op03_message_show_2()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 2;
@@ -21022,7 +21022,7 @@ func9bb7c();
 
 
 ////////////////////////////////
-// field_script_opF5_dialog_show_3()
+// field_script_opF5_message_show_3()
 
 A0 = w[8009f1f0];
 A1 = 3;
@@ -22634,24 +22634,24 @@ if( V0 != ff )
 ////////////////////////////////
 // 0x26_Wait()
 
-current_entity_data = w[800af54c];
-slot_id = bu[current_entity_data + ce];
+struct_138 = w[800af54c];
+slot_id = bu[struct_138 + ce];
 
-V0 = bu[current_entity_data + 8c + slot_id * 8 + 2];
+V0 = bu[struct_138 + 8c + slot_id * 8 + 2];
 if( V0 == 0 )
 {
     A0 = 1;
     field_script_help_read_v80();
-    [current_entity_data + 8c + slot_id * 8 + 2] = b(V0);
+    [struct_138 + 8c + slot_id * 8 + 2] = b(V0);
 }
 else
 {
-    [current_entity_data + 8c + slot_id * 8 + 2] = b(V0 - 1);
+    [struct_138 + 8c + slot_id * 8 + 2] = b(V0 - 1);
 }
 
 if( V0 == 0 )
 {
-    [current_entity_data + cc] = h(hu[current_entity_data + cc] + 3);
+    [struct_138 + cc] = h(hu[struct_138 + cc] + 3);
 }
 
 [800af594] = w(1); // wait
@@ -23573,83 +23573,63 @@ L9e2e0:	; 8009E2E0
 ////////////////////////////////
 // 0x08_EntityCallScriptSW()
 
-current_entity_data = w[800AF54C];
+struct_138 = w[800af54c];
+script = w[800ad0d8];
+current_pos = hu[struct_138 + cc];
 
 A0 = 1;
 get_entity_id_from_opcode();
-param_entity_id = V0;
+entity_id = V0;
 
-if( param_entity_id == ff )
+if( entity_id == ff )
 {
-    [current_entity_data + cc] = hu[current_entity_data + cc] + 3;
+    [struct_138 + cc] = h(current_pos + 3);
     return;
 }
 
-V1 = w[800AD0D8];
-V0 = hu[current_entity_data + CC];
-param2 = bu[V1 + V0 + 2];
-script_to_run = param2 & 1F;
+param2 = bu[script + current_pos + 2];
+script_to_run = param2 & 1f;
 
-
-
-V1 = w[800AEFE4];
-S2 = w[V1 + param_entity_id * 5C + 4C];
-V0 = w[S2 + 4];
-if (V0 & 00100000)
+V1 = w[800aefe4];
+S2 = w[V1 + entity_id * 5c + 4c];
+if( w[S2 + 4] & 00100000 )
 {
-    V1 = bu[current_entity_data + CE];
-    V0 = w[current_entity_data + 90 + V1 * 8];
-    V0 = V0 & FFFCFFFF;
-    [current_entity_data + 90 + V1 * 8] = w(V0);
+    V1 = bu[struct_138 + ce];
+    [struct_138 + 90 + V1 * 8] = w(w[struct_138 + 90 + V1 * 8] & fffcffff);
 
-    V1 = bu[current_entity_data + CF];
-    V0 = w[S2 + 90 + V1 * 8];
-    V0 = V0 & FFBFFFFF;
-    [S2 + 90 + V1 * 8] = w(V0);
+    V1 = bu[struct_138 + cf];
+    [S2 + 90 + V1 * 8] = w(w[S2 + 90 + V1 * 8] & ffbfffff);
 
-    V0 = hu[current_entity_data + CC];
-    V0 = V0 + 3;
-    [current_entity_data + CC] = V0;
+    [struct_138 + cc] = h(current_pos + 3);
     return;
 }
 
-V0 = bu[current_entity_data + CE];
-V0 = hu[current_entity_data + V0 * 8 + 92];
-if (V0 & 0003)
+V0 = bu[struct_138 + ce];
+V0 = hu[struct_138 + V0 * 8 + 92];
+if( V0 & 0003 )
 {
-    if (V0 & 0003 == 1)
+    if( ( V0 & 0003 ) == 1 )
     {
-        V0 = bu[S2 + CE];
-        V1 = bu[A1 + CF];
-        if (V0 != V1)
+        if( bu[S2 + ce] != bu[A1 + cf] )
         {
-            V0 = w[S2 + V1 * 8 + 90];
-            V0 = V0 >>> 12;
-            V0 = V0 & F;
-            if (V0 != F)
+            if( ( ( w[S2 + V1 * 8 + 90] >>> 12 ) & f ) != f )
             {
                 [800AF594] = w(1); // wait
                 return;
             }
         }
 
-        [current_entity_data + c] = h(hu[current_entity_data + cc] + 3);
+        [struct_138 + cc] = h(current_pos + 3);
 
-        V1 = bu[current_entity_data + CE];
-        V0 = w[current_entity_data + V1 * 8 + 90];
-        V0 = V0 & FFFCFFFF;
-        [current_entity_data + V1 * 8 + 90] = w(V0);
+        V1 = bu[struct_138 + ce];
+        [struct_138 + V1 * 8 + 90] = w(w[struct_138 + V1 * 8 + 90] & fffcffff);
 
-        V1 = bu[current_entity_data + CF];
-        V0 = w[S2 + V1 * 8 + 90];
-        V0 = V0 & FFBFFFFF;
-        [S2 + V1 * 8 + 90] = w(V0);
+        V1 = bu[struct_138 + cf];
+        [S2 + V1 * 8 + 90] = w(w[S2 + V1 * 8 + 90] & ffbfffff);
     }
 
     return;
 }
-
-
 
 A0 = S2;
 A1 = script_to_run;
@@ -23657,56 +23637,40 @@ check_script_execution();
 
 if( V0 == -1 )
 {
-    [current_entity_data + cc] = h(hu[current_entity_data + cc] + 3);
+    [struct_138 + cc] = h(current_pos + 3);
     return;
 }
 
-S1 = 0;
 S0 = S2;
-loop9e434:	; 8009E434
+for( int i = 0; i < 8; ++i )
+{
     V1 = w[S0 + 90];
-    V0 = V1 >>> 12;
-    V0 = V0 & F;
-    if (V0 == F)
+    if( ( (V1 >>> 12) & f ) == f )
     {
-        V0 = V1 >>> 16;
-        V0 = V0 & 1;
-        if (V0 == 0)
+        if( ( ( V1 >>> 16 ) & 1 ) == 0 )
         {
-            A0 = param_entity_id;
+            A0 = entity_id;
             A1 = script_to_run;
-            get_script_offset;
-            [S0 + 8C] = h(V0);
+            get_script_offset();
+            [S0 + 8c] = h(V0);
 
-            V1 = w[S0 + 90];
-            V1 = V1 & FFC3FFFF;
-            V0 = param2 & E0;
-            V0 = V0 << D;
-            V1 = V1 | V0;
-            [S0 + 90] = w(V1);
+            [S0 + 90] = w((w[S0 + 90] & ffc3ffff) | ((param2 & e0) << d));
 
-            V1 = bu[current_entity_data + CF]
-            V0 = w[S2 + 90 + V1 * 8];
-            V0 = V0 | 00400000;
-            [S2 + 90 + V1 * 8] = w(V0);
+            V1 = bu[struct_138 + cf]
+            [S2 + 90 + V1 * 8] = w(w[S2 + 90 + V1 * 8] | 00400000);
 
-            [S0 + 8F] = b(script_to_run);
+            [S0 + 8f] = b(script_to_run);
 
-            [current_entity_data + CF] = b(S1);
+            [struct_138 + cf] = b(i);
 
-            V0 = bu[current_entity_data + CE];
-            V0 = w[current_entity_data + 90 + V0 * 8];
-            V0 = V0 & FFFCFFFF;
-            V0 = V0 | 00010000;
-            [current_entity_data + 90 + V0 * 8] = w(V0);
+            V0 = bu[struct_138 + ce];
+            [struct_138 + 90 + V0 * 8] = w((w[struct_138 + 90 + V0 * 8] & fffcffff) | 00010000);
             return;
         }
     }
 
-    S1 = S1 + 1;
     S0 = S0 + 8;
-    V0 = S1 < 8;
-8009E464	bne    v0, zero, loop9e434 [$8009e434]
+}
 ////////////////////////////////
 
 
@@ -23714,69 +23678,55 @@ loop9e434:	; 8009E434
 ////////////////////////////////
 // 0x09_EntityCallScriptEW()
 
-current_entity_data = w[800AF54C];
+struct_138 = w[800af54c];
 
 A0 = 1;
-get_entity_id_from_opcode;
-param_entity_id = V0;
+get_entity_id_from_opcode();
+entity_id = V0;
 
-if (param_entity_id == FF)
+if( entity_id == ff )
 {
-    V0 = hu[current_entity_data + CC];
-    V0 = V0 + 3;
-    [current_entity_data + CC] = h(V0);
+    [struct_138 + cc] = h(hu[struct_138 + cc] + 3);
     return;
 }
 
-V1 = w[800AD0D8];
-V0 = hu[current_entity_data + CC];
+V1 = w[800ad0d8];
+V0 = hu[struct_138 + cc];
 param2 = bu[V1 + V0 + 2];
-script_to_run = param2 & 1F;
+script_to_run = param2 & 1f;
 
-
-
-V1 = w[800AEFE4];
-S2 = w[V1 + param_entity_id * 5C + 4C];
+V1 = w[800aefe4];
+S2 = w[V1 + entity_id * 5c + 4c];
 V0 = w[S2 + 4];
-if (V0 & 00100000)
+if( V0 & 00100000 )
 {
-    V1 = bu[current_entity_data + CE];
-    V0 = w[current_entity_data + 90 + V1 * 8];
-    V0 = V0 & FFFCFFFF;
-    [current_entity_data + 90 + V1 * 8] = w(V0);
+    V1 = bu[struct_138 + ce];
+    [struct_138 + 90 + V1 * 8] = w(w[struct_138 + 90 + V1 * 8] & fffcffff);
 
-    V1 = bu[current_entity_data + CF];
-    V0 = w[S2 + 90 + V1 * 8];
-    V0 = V0 & FFBFFFFF;
-    [S2 + 90 + V1 * 8] = w(V0);
+    V1 = bu[struct_138 + cf];
+    [S2 + 90 + V1 * 8] = w(w[S2 + 90 + V1 * 8] & ffbfffff);
 
-    V0 = hu[current_entity_data + CC];
-    V0 = V0 + 3;
-    [current_entity_data + CC] = V0;
+    [struct_138 + cc] = h(hu[struct_138 + cc] + 3);
     return;
 }
 
-
-
-V0 = bu[current_entity_data + CE];
-A0 = w[current_entity_data + 90 + V0 * 8];
+V0 = bu[struct_138 + ce];
+A0 = w[struct_138 + 90 + V0 * 8];
 V0 = A0 >>> 10;
 V1 = V0 & 0003;
-if (V1 != 1)
+if( V1 != 1 )
 {
-    if (V1 < 2)
+    if( V1 < 2 )
     {
-        if (V1 == 0)
+        if( V1 == 0 )
         {
             A0 = S2;
             A1 = script_to_run;
-            check_script_execution;
+            check_script_execution();
 
-            if (V0 == -1)
+            if( V0 == -1 )
             {
-                V0 = hu[current_entity_data + CC];
-                V0 = V0 + 3;
-                [current_entity_data + CC] = h(V0);
+                [struct_138 + cc] = h(hu[struct_138 + cc] + 3);
                 return;
             }
 
@@ -23784,40 +23734,32 @@ if (V1 != 1)
             loop9e788:	; 8009E788
                 V1 = w[S2 + 90 + slot * 8];
                 V0 = V1 >>> 12;
-                V0 = V0 & F;
-                if (V0 == F)
+                V0 = V0 & f;
+                if( V0 == f )
                 {
                     V0 = V1 >>> 16;
                     V0 = V0 & 1;
-                    if (V0 == 0)
+                    if( V0 == 0 )
                     {
-                        A0 = param_entity_id;
+                        A0 = entity_id;
                         A1 = script_to_run;
-                        get_script_offset;
-                        [S2 + 8C + slot * 8] = h(V0);
+                        get_script_offset();
+                        [S2 + 8c + slot * 8] = h(V0);
 
-                        V1 = w[S2 + 90 + slot * 8];
-                        V1 = V1 & FFC3FFFF;
-                        V0 = param2;
-                        V0 = V0 >>> 5;
-                        V0 = V0 << 12;
-                        V1 = V0 | V0;
-                        [S2 + 90 + slot * 8] = w(V1);
+                        [S2 + 90 + slot * 8] = w((w[S2 + 90 + slot * 8] & ffc3ffff) | ((param2 >>> 5) << 12));
 
-                        V1 = bu[current_entity_data + CF];
-                        V0 = w[S2 + 90 + V1 * 8];
-                        V0 = V0 | 00400000;
-                        [S2 + 90 + V1 * 8] = w(V0);
-                        [current_entity_data + CF] = b(slot);
+                        V1 = bu[struct_138 + cf];
+                        [S2 + 90 + V1 * 8] = w(w[S2 + 90 + V1 * 8] | 00400000);
+                        [struct_138 + cf] = b(slot);
 
-                        A0 = bu[current_entity_data + CE];
-                        V0 = w[current_entity_data + 90 + A0 * 8];
-                        V0 = V0 & FFFCFFFF;
+                        A0 = bu[struct_138 + ce];
+                        V0 = w[struct_138 + 90 + A0 * 8];
+                        V0 = V0 & fffcffff;
                         V0 = V0 | 00010000;
-                        [current_entity_data + 90 + A0 * 8] = w(V0);
+                        [struct_138 + 90 + A0 * 8] = w(V0);
 
-                        V0 = param2 & 1F;
-                        [S2 + slot * 8 + 8F] = b(V0);
+                        V0 = param2 & 1f;
+                        [S2 + slot * 8 + 8f] = b(V0);
 
                         return;
                     }
@@ -23828,26 +23770,24 @@ if (V1 != 1)
             8009E7B8	bne    v0, zero, loop9e788 [$8009e788]
         }
     }
-    else if (V1 == 2)
+    else if( V1 == 2 )
     {
-        V0 = bu[current_entity_data + CF];
+        V0 = bu[struct_138 + cf];
         V0 = w[S2 + 90 + V0 * 8];
         V0 = V0 >>> 12;
-        V0 = V0 & F;
-        if (V0 == F)
+        V0 = V0 & f;
+        if( V0 == f )
         {
-            V0 = A0 & FFFCFFFF;
-            V1 = bu[current_entity_data + CE];
-            [current_entity_data + 90 + V1 * 8] = w(V0);
+            V0 = A0 & fffcffff;
+            V1 = bu[struct_138 + ce];
+            [struct_138 + 90 + V1 * 8] = w(V0);
 
-            V1 = bu[current_entity_data + CF];
+            V1 = bu[struct_138 + cf];
             V0 = w[S2 + 90 + V1 * 8];
-            V0 = V0 & FFBFFFFF;
+            V0 = V0 & ffbfffff;
             [S2 + V1 * 8 + 90] = w(V0);
 
-            V0 = hu[current_entity_data + CC];
-            V0 = V0 + 3;
-            [current_entity_data + CC] = h(V0);
+            [struct_138 + cc] = h(hu[struct_138 + cc] + 3);
         }
         else
         {
@@ -23858,26 +23798,24 @@ if (V1 != 1)
     return;
 }
 
-V0 = bu[S2 + CE];
-V1 = bu[current_entity_data + CF];
-if (V0 != V1)
+V0 = bu[S2 + ce];
+V1 = bu[struct_138 + cf];
+if( V0 != V1 )
 {
     V0 = w[S2 + V1 * 8 + 90];
     V0 = V0 >>> 12;
-    V0 = V0 & F;
-    if (V0 != F)
+    V0 = V0 & f;
+    if( V0 != f )
     {
         [800af594] = w(1); // wait
         return;
     }
 }
 
-V0 = A0 & FFFCFFFF;
+V0 = A0 & fffcffff;
 V0 = V0 | 00020000;
-V1 = bu[current_entity_data + CE];
-[current_entity_data + 90 + V1 * 8] = w(V0);
-
-return;
+V1 = bu[struct_138 + ce];
+[struct_138 + 90 + V1 * 8] = w(V0);
 ////////////////////////////////
 
 
@@ -26161,13 +26099,13 @@ SP = SP + 0020;
 ////////////////////////////////
 // 0x00_Return
 // funca1100
-current_entity_data = w[800af54c];
-slot = bu[current_entity_data + ce];
+struct_138 = w[800af54c];
+slot = bu[struct_138 + ce];
 
 // set lowest priority
-[current_entity_data + 8c + slot * 8 + 4] = w(w[current_entity_data + 90 + slot * 8] | 003c0000);
+[struct_138 + 8c + slot * 8 + 4] = w(w[struct_138 + 90 + slot * 8] | 003c0000);
 // remove script from this slot
-[current_entity_data + 8c + slot * 8 + 3] = b(ff);
+[struct_138 + 8c + slot * 8 + 3] = b(ff);
 
 // end script execution
 [800af4c0] = w(1);
@@ -26178,13 +26116,13 @@ slot = bu[current_entity_data + ce];
 
 ////////////////////////////////
 // 0x02_ConditionalJumpTo
-current_entity_data = w[800af54c];
+struct_138 = w[800af54c];
 
 S0 = 0;
 S1 = 0;
 
 script_offset = w[800ad0d8];
-V0 = hu[current_entity_data + cc];
+V0 = hu[struct_138 + cc];
 flag = bu[script_offset + V0 + 5];
 
 V1 = flag & 00f0;
@@ -26280,13 +26218,13 @@ switch( flag & 0f )
 
 if( V1 == 1 )
 {
-    [current_entity_data + cc] = h(hu[current_entity_data + cc] + 8);
+    [struct_138 + cc] = h(hu[struct_138 + cc] + 8);
 }
 else
 {
     A0 = 6;
     field_script_help_read_u16;
-    [current_entity_data + cc] = h(V0);
+    [struct_138 + cc] = h(V0);
 }
 ////////////////////////////////
 
@@ -26294,11 +26232,11 @@ else
 
 ////////////////////////////////
 // 0x01_JumpTo
-current_entity_data = w[800af54c];
+struct_138 = w[800af54c];
 
 A0 = 1;
 field_script_help_read_u16();
-[current_entity_data + cc] = h(V0);
+[struct_138 + cc] = h(V0);
 ////////////////////////////////
 
 

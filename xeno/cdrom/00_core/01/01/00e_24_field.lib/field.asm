@@ -1995,16 +1995,16 @@
 // func9b5f0
 8009B5F0-8009B684
 ////////////////////////////////
-// field_script_opD2_dialog_show_0
+// field_script_opD2_message_show_0
 8009B688-8009B6AC
 ////////////////////////////////
-// field_script_opD3_dialog_show_1
+// field_script_opD3_message_show_1
 8009B6B0-8009B6D4
 ////////////////////////////////
-// field_script_op03_dialog_show_2
+// field_script_op03_message_show_2
 8009B6D8-8009B6FC
 ////////////////////////////////
-// field_script_opF5_dialog_show_3
+// field_script_opF5_message_show_3
 8009B700-8009B724
 ////////////////////////////////
 // func9b728

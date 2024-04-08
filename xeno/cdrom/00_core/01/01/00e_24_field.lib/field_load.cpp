@@ -1100,7 +1100,7 @@ if( w[800c1b60] == 0 ) // DEBUG
     func2812bc(); // create debug lines packets
 }
 
-func7d4e0();
+func7d4e0(); // init messages
 
 field_fade_both_init();
 
