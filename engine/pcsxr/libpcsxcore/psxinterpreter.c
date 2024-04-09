@@ -1335,15 +1335,15 @@ static void intShutdown() {
 
 // interpreter execution
 static inline void execI() {
-    //if( psxRegs.pc == 0x80034BE0 )
+    if( psxRegs.pc == 0x8007F3E4 )
     {
-        //char Text[ 256 ];
-        //psxRegs.GPR.n.v0 &= 0xfffd;
-        //sprintf( Text, _( "+10: 0x%x" ), psxRegs.GPR.n.v0 );
-        //GPU_displayText( Text );
+        char Text[ 256 ];
+        sprintf( Text, _( "FLAGS: 0x%x" ), psxRegs.GPR.n.t0 );
+        GPU_displayText( Text );
+        psxRegs.GPR.n.t0 |= 0x0800;
 
         //GPU_displayText("SKIP PART");
-        //psxRegs.pc = 0x80034B28;
+        //psxRegs.pc = 0x8007F918;
     }
 
 	u32 *code = Read_ICache(psxRegs.pc, FALSE);

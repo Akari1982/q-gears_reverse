@@ -792,7 +792,7 @@ func338e0();
 
 
 ////////////////////////////////
-// func33bf8()
+// system_message_text_insert_text()
 
 offset_18 = A0;
 [offset_18 + 20] = w(w[offset_18 + 1c]);
@@ -853,10 +853,10 @@ if( h[offset_18 + 0] > h[offset_18 + a] ) // current row width greater than max 
     [struct_60 + row_id * 60 + 50 + 2] = h(hu[offset_18 + e] + ((tex_row / 2) * d));
 }
 
-if( bu[offset_18 + 6c] != 0 )
+if( bu[offset_18 + 6c] != 0 ) // window needs to be closed
 {
     [offset_18 + 6c] = b(0);
-    [offset_18 + 10] = h(hu[offset_18 + 10] & fffb);
+    [offset_18 + 10] = h(hu[offset_18 + 10] & fffb); // remove everything except 0x0004
     return;
 }
 
@@ -865,12 +865,12 @@ while( letters != 0 )
     A1 = w[offset_18 + 1c];
     opcode = bu[A1];
 
-    if( opcode == 0 ) // close
+    if( opcode == 0 ) // end of text
     {
-        if( hu[offset_18 + 10] & 0080 )
+        if( hu[offset_18 + 10] & 0080 ) // if there is next text in text queue
         {
             [offset_18 + 10] = h(hu[offset_18 + 10] & ff7f);
-            [offset_18 + 1c] = w(w[offset_18 + 20] + 1);
+            [offset_18 + 1c] = w(w[offset_18 + 20] + 1); // pointer to continue
         }
         else
         {
@@ -882,7 +882,7 @@ while( letters != 0 )
     }
     else if( opcode == 1 ) // new row
     {
-        [offset_18 + 0] = h(64); // set max row width to calculate new row next update
+        [offset_18 + 0] = h(64); // set current row width to max to calculate new row next update
         [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
         return;
     }
@@ -900,7 +900,7 @@ while( letters != 0 )
         }
         return;
     }
-    else if( opcode == 3 ) // wait
+    else if( opcode == 3 ) // wait for player input to continue
     {
         [offset_18 + 6b] = b(3);
         [offset_18 + 10] = h(hu[offset_18 + 10] | 0008);
@@ -909,15 +909,13 @@ while( letters != 0 )
     }
     else if( opcode == f ) // special
     {
-        V1 = bu[A1 + 1];
-
-        switch( V1 )
+        switch( bu[A1 + 1] )
         {
-            case 0: // wait
+            case 0: // wait timer
             {
                 V0 = w[offset_18 + 1c];
                 [offset_18 + 1c] = w(V0 + 3);
-                [offset_18 + 84] = h(bu[V0 + 2]);
+                [offset_18 + 84] = h(bu[V0 + 2]); // set wait timer
                 return;
             }
             break;
@@ -925,22 +923,18 @@ while( letters != 0 )
             case 1: // accelerate
             {
                 V0 = w[offset_18 + 1c];
-                A3 = bu[V0 + 2];
-                V1 = A3 & ffff;
-                if( V1 != 0 )
+                speed = bu[V0 + 2];
+                if( speed & ffff )
                 {
-                    V0 = bu[offset_18 + 68];
-                    [offset_18 + 68] = b(A3);
-                    [offset_18 + 69] = b(A3);
-                    [offset_18 + 6a] = b(V0);
-
+                    [offset_18 + 6a] = b(bu[offset_18 + 68]); // store
+                    [offset_18 + 68] = b(speed);
+                    [offset_18 + 69] = b(speed);
                     letters = letters + V1;
                 }
                 else
                 {
-                    V0 = bu[offset_18 + 6a];
-                    [offset_18 + 68] = b(V0);
-                    [offset_18 + 69] = b(V0);
+                    [offset_18 + 68] = b(bu[offset_18 + 6a]); // restore
+                    [offset_18 + 69] = b(bu[offset_18 + 6a]); // restore
                     [offset_18 + 6a] = b(0);
                 }
 
@@ -951,26 +945,27 @@ while( letters != 0 )
             case 2: // wait and close
             {
                 V1 = w[offset_18 + 1c];
-                [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
-                [offset_18 + 6c] = b(1);
                 [offset_18 + 84] = h(bu[V1 + 2]);
+                [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
+                [offset_18 + 6c] = b(1); // set end of text
                 return;
             }
             break;
 
-            case 3: // not used
+            case 3: // insert text from sys_data
             {
-                V1 = w[800589fc];
-                A3 = bu[V0 + 2];
-                A1 = bu[V0 + 3];
+                sys_data = w[800589fc];
+                sys_id = bu[V0 + 2];
+                text_id = bu[V0 + 3];
                 [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
 
-                A0 = w[V1 + A3 * 4];
+                A0 = w[sys_data + sys_id * 4];
+                A1 = text_id;
                 system_message_get_text_pointer();
 
                 A0 = offset_18;
                 A1 = V0;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -980,62 +975,60 @@ while( letters != 0 )
             {
                 [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
 
-                V1 = h[offset_18 + 80];
+                sys_id = h[offset_18 + 80] & ff00;
+                text_id = h[offset_18 + 80] & 00ff;
 
-                text_id = V1;
-                V1 = V1 & ff00;
+                sys_data = w[800589fc];
 
-                V0 = w[800589fc];
-
-                if( V1 == 0 )
+                if( sys_id == 0 )
                 {
-                    A0 = w[V0 + 58];
+                    A0 = w[sys_data + 58];
                     A1 = text_id & 00ff;
                     system_message_get_text_pointer();
 
                     A0 = offset_18;
                     A1 = V0;
-                    func33bf8();
+                    system_message_text_insert_text();
                 }
-                else if( V1 == 100 )
+                else if( sys_id == 100 )
                 {
-                    A0 = w[V0 + 5c];
+                    A0 = w[sys_data + 5c];
                     A1 = text_id & 00ff;
                     system_message_get_text_pointer();
 
                     A0 = offset_18;
                     A1 = V0;
-                    func33bf8();
+                    system_message_text_insert_text();
                 }
-                else if( V1 == 200 )
+                else if( sys_id == 200 )
                 {
-                    A0 = w[V0 + 44];
+                    A0 = w[sys_data + 44];
                     A1 = text_id & 00ff;
                     system_message_get_text_pointer();
 
                     A0 = offset_18;
                     A1 = V0;
-                    func33bf8();
+                    system_message_text_insert_text();
                 }
-                else if( V1 == 300 )
+                else if( sys_id == 300 )
                 {
-                    A0 = w[V0 + cc];
+                    A0 = w[sys_data + cc];
                     A1 = text_id & 00ff;
                     system_message_get_text_pointer();
 
                     A0 = offset_18;
                     A1 = V0;
-                    func33bf8();
+                    system_message_text_insert_text();
                 }
-                else if( V1 == 400 )
+                else if( sys_id == 400 )
                 {
-                    A0 = w[V0 + c8];
+                    A0 = w[sys_data + c8];
                     A1 = text_id & 00ff;
                     system_message_get_text_pointer();
 
                     A0 = offset_18;
                     A1 = V0;
-                    func33bf8();
+                    system_message_text_insert_text();
                 }
             }
             break;
@@ -1043,32 +1036,24 @@ while( letters != 0 )
             case 5:
             {
                 V0 = w[offset_18 + 1c];
-                A3 = bu[V0 + 2];
+                char_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
 
-                V1 = A3 & ffff;
-
-                if( ( V1 >= 80 ) && ( bu[8006e978 + V1] == ff ) )
+                if( ( char_id >= 80 ) && ( bu[8006e978 + char_id] == ff ) )
                 {
-                    V0 = w[800589fc];
-                    A0 = w[V0 + 0068];
+                    sys_data = w[800589fc];
+                    A0 = w[sys_data + 68];
                     A1 = 0;
                     system_message_get_text_pointer();
-
-                    A0 = offset_18;
-                    A1 = V0;
                 }
                 else
                 {
-                    A0 = offset_18;
-                    A1 = V1 << 02;
-                    A1 = A1 + V1;
-                    A1 = A1 << 02;
-                    V0 = 8006ccc4;
-                    A1 = A1 + V0;
+                    V0 = 8006ccc4 + char_id * 14;
                 }
 
-                func33bf8();
+                A0 = offset_18;
+                A1 = V0;
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1077,16 +1062,17 @@ while( letters != 0 )
             case 6:
             {
                 V0 = w[offset_18 + 1c];
-                V1 = w[800589fc];
-                A3 = bu[V0 + 2];
+                sys_data = w[800589fc];
+                text_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
-                A0 = w[V1 + 5c];
-                A1 = A3;
+
+                A0 = w[sys_data + 5c];
+                A1 = text_id;
                 system_message_get_text_pointer();
 
                 A0 = offset_18;
                 A1 = V0;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1095,17 +1081,17 @@ while( letters != 0 )
             case 7:
             {
                 V0 = w[offset_18 + 1c];
-                V1 = w[800589fc];
-                A3 = bu[V0 + 2];
+                sys_data = w[800589fc];
+                text_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
 
-                A0 = w[V1 + 60];
-                A1 = A3;
+                A0 = w[sys_data + 60];
+                A1 = text_id;
                 system_message_get_text_pointer();
 
                 A0 = offset_18;
                 A1 = V0;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1114,17 +1100,17 @@ while( letters != 0 )
             case 8:
             {
                 V0 = w[offset_18 + 1c];
-                V1 = w[800589fc];
-                A3 = bu[V0 + 2];
+                sys_data = w[800589fc];
+                text_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
 
-                A0 = w[V1 + 64];
-                A1 = A3;
+                A0 = w[sys_data + 64];
+                A1 = text_id;
                 system_message_get_text_pointer();
 
                 A0 = offset_18;
                 A1 = V0;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1132,18 +1118,18 @@ while( letters != 0 )
 
             case 9: // use for variable from script
             {
-                A1 = 0;
-                A2 = 0;
                 V0 = w[offset_18 + 1c];
-                A3 = bu[V0 + 2];
+                var_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
 
-                A0 = w[offset_18 + A3 * 4 + 70];
+                A0 = w[offset_18 + 70 + var_id * 4];
+                A1 = 0;
+                A2 = 0;
                 func33b14();
 
                 A0 = offset_18;
                 A1 = 80059780;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1151,18 +1137,18 @@ while( letters != 0 )
 
             case a: // use for variable from script
             {
-                A1 = 1;
-                A2 = 0;
                 V0 = w[offset_18 + 1c];
-                A3 = bu[V0 + 2];
+                var_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
 
-                A0 = w[offset_18 + A3 * 4 + 70];
+                A0 = w[offset_18 + 70 + var_id * 4];
+                A1 = 1;
+                A2 = 0;
                 func33b14();
 
                 A0 = offset_18;
                 A1 = 80059780;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1171,27 +1157,25 @@ while( letters != 0 )
             case b:
             {
                 V0 = w[offset_18 + 1c];
-                V0 = bu[V0 + 2];
-                [offset_18 + 6d] = b(V0);
-
+                [offset_18 + 6d] = b(bu[V0 + 2]);
                 [offset_18 + 1c] = w(w[offset_18 + 1c] + 2);
             }
             break;
 
             case c: // use for variable from script
             {
-                A1 = 1;
-                A2 = 1;
                 V0 = w[offset_18 + 1c];
-                A3 = bu[V0 + 2];
+                var_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
 
-                A0 = w[offset_18 + A3 * 4 + 70];
+                A0 = w[offset_18 + 70 + var_id * 4];
+                A1 = 1;
+                A2 = 1;
                 func33b14();
 
                 A0 = offset_18;
                 A1 = 80059780;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1200,11 +1184,9 @@ while( letters != 0 )
             case d: // wait and close.. and something???
             {
                 V1 = w[offset_18 + 1c];
-                A0 = bu[V1 + 2];
-                [offset_18 + 84] = h(A0);
-
+                [offset_18 + 84] = h(bu[V1 + 2]);
                 [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
-                [offset_18 + 6c] = b(1);
+                [offset_18 + 6c] = b(1); // set end of text
                 [offset_18 + 10] = h(hu[offset_18 + 10] | 0200);
                 return;
             }
@@ -1219,8 +1201,8 @@ while( letters != 0 )
                 [offset_18 + 69] = b(1);
 
                 V1 = w[offset_18 + 1c];
+                [offset_18 + 86] = h(bu[V1 + 2]); // wait before letter render
                 [offset_18 + 88] = h(bu[V1 + 2]);
-                [offset_18 + 86] = h(bu[V1 + 2]);
 
                 [offset_18 + 1c] = w(w[offset_18 + 1c] + 3);
                 return;
@@ -1230,17 +1212,17 @@ while( letters != 0 )
             case f:
             {
                 V0 = w[offset_18 + 1c];
-                V1 = w[800589fc];
-                A3 = bu[V0 + 2];
+                sys_data = w[800589fc];
+                text_id = bu[V0 + 2];
                 [offset_18 + 1c] = w(V0 + 2);
-                A0 = w[V1 + c4];
-                V0 = A3 & ffff;
-                A1 = bu[8004f8d8 + V0];
+
+                A0 = w[sys_data + c4];
+                A1 = bu[8004f8d8 + text_id];
                 system_message_get_text_pointer();
 
                 A0 = offset_18;
                 A1 = V0;
-                func33bf8();
+                system_message_text_insert_text();
 
                 letters = letters + 1;
             }
@@ -1380,7 +1362,7 @@ system_memory_mark_removed_alloc();
 
 
 ////////////////////////////////
-// func34538()
+// system_message_push_new_pointer_to_text()
 
 offset_18 = A0;
 text_data = A1;
@@ -1398,23 +1380,18 @@ V1 = V0;
 [V1 + 4] = w(text_data);
 
 S1 = w[offset_18 + 8c];
+
 if( S1 == 0 )
 {
     [offset_18 + 8c] = w(V1);
 }
 else
 {
-    loop34594:	; 80034594
-        V0 = w[S1 + 0];
-        if( V0 == 0 )
-        {
-            break;
-        }
-        S1 = w[S1 + 0];
-    800345A4	bne    v0, zero, loop34594 [$80034594]
+    while( w[S1] != 0 ) S1 = w[S1];
 
-    [S1 + 0] = w(V1);
+    [S1] = w(V1);
 }
+
 return h[offset_18 + 82];
 ////////////////////////////////
 
@@ -1496,7 +1473,7 @@ L3468c:	; 8003468C
 
 
 ////////////////////////////////
-// func346ac()
+// system_message_text_update_add_to_render()
 
 offset_18 = A0;
 otag = A1;
@@ -1509,27 +1486,28 @@ if( ( hu[offset_18 + 10] & 0004 ) == 0 )
         return;
     }
 
-    A0 = w[offset_18 + 8c];
-    V1 = w[offset_18 + 8c];
+    text_stack = w[offset_18 + 8c];
 
-    [offset_18 + 1c] = w(w[A0 + 4]);
-    [offset_18 + 8c] = w(w[V1]);
+    [offset_18 + 1c] = w(w[text_stack + 4]);
+    [offset_18 + 8c] = w(w[text_stack + 0]);
 
+    A0 = text_stack;
     system_memory_mark_removed_alloc();
 
     [offset_18 + 82] = h(hu[offset_18 + 82] - 1);
     [offset_18 + 10] = h((hu[offset_18 + 10] & 0002) | 0024);
 
-    if( bu[offset_18 + 6a] != 0 )
+    default_num = bu[offset_18 + 6a]
+    if( default_num != 0 ) // restore number of letters to read
     {
-        [offset_18 + 68] = b(bu[offset_18 + 6a]);
+        [offset_18 + 68] = b(default_num);
+        [offset_18 + 69] = b(default_num);
         [offset_18 + 6a] = b(0);
-        [offset_18 + 69] = b(bu[offset_18 + 6a]);
     }
 
     [offset_18 + 69] = b(bu[offset_18 + 68]); // set number of letters to read from default
-    [offset_18 + 86] = h(0);
-    [offset_18 + 88] = h(0);
+    [offset_18 + 86] = h(0); // current wait before next letter render
+    [offset_18 + 88] = h(0); // base wait before next letter render
 }
 
 if( hu[offset_18 + 10] & 0100 )
@@ -1541,21 +1519,23 @@ else
     [offset_18 + 69] = b(bu[offset_18 + 68]);
 }
 
+// if text is full and there is now wait for player input flag
 if( hu[offset_18 + 10] & 0040 )
 {
     if( ( hu[offset_18 + 10] & 0008 ) == 0 )
     {
-        // remove 0x0040 flag
+        // remove 0x0040 flag and set text to reset
         [offset_18 + 10] = h((hu[offset_18 + 10] & ffbf) | 0020);
     }
 }
 
+// reset text
 if( hu[offset_18 + 10] & 0020 )
 {
-    [offset_18 +  0] = h(0);
-    [offset_18 +  2] = h(0);
-    [offset_18 + 16] = h(0);
-    [offset_18 + 18] = h(0);
+    [offset_18 +  0] = h(0); // current row width in 0x4 chanks
+    [offset_18 +  2] = h(0); // current row
+    [offset_18 + 16] = h(0); // start row to add packets to render
+    [offset_18 + 18] = h(0); // current texture row
 
     // set first row
     V0 = w[offset_18 + 28];
@@ -1574,41 +1554,42 @@ if( hu[offset_18 + 10] & 0020 )
 
 row_id = h[offset_18 + 16];
 
-// unknown render
+// render oversized row
 for( int i = 0; i < h[offset_18 + c]; ++i )
 {
-    if( row_id >= h[offset_18 + c] )
+    if( row_id >= h[offset_18 + c] ) // warp row over
     {
         row_id = 0;
     }
 
-    packet = w[offset_18 + 28] + row_id * 60 + rb * 28 + 14;
+    text2 = w[offset_18 + 28] + row_id * 60 + rb * 28 + 14;
     row = w[offset_18 + 28] + row_id * 60;
 
     if( bu[offset_18 + 6e] != i )
     {
-        [packet + 7] = b(bu[packet + 7] | 01); // Textured Rectangle, variable size, opaque, raw-texture
+        [text2 + 7] = b(bu[text2 + 7] | 01); // Textured Rectangle, variable size, opaque, raw-texture
     }
     else // cursor selected row
     {
-        [packet + 7] = b(bu[packet + 7] & fe); // Textured Rectangle, variable size, opaque, texture-blending
+        [text2 + 7] = b(bu[text2 + 7] & fe); // Textured Rectangle, variable size, opaque, texture-blending
     }
 
-    if( h[row + 58] >= 41 )
+    if( h[row + 58] >= 41 ) // render only if row width greater than screen
     {
-        [packet + a] = h(hu[offset_18 + 6] + h[offset_18 + 14] * i); // y
-        [packet + d] = b(bu[row + 5c]);                              // v
-        [packet + e] = h(hu[row + 5e]);                              // clut
-        [packet + 10] = h((h[row + 58] - 40) * 4);                   // w
+        [text2 + a] = h(hu[offset_18 + 6] + h[offset_18 + 14] * i); // y
+        [text2 + d] = b(bu[row + 5c]);                              // v
+        [text2 + e] = h(hu[row + 5e]);                              // clut
+        [text2 + 10] = h((h[row + 58] - 40) * 4);                   // w
 
         A0 = otag;
-        A1 = packet;
+        A1 = text2;
         func315a8(); // add textured rectangle to render
     }
 
     row_id += 1;
 }
 
+// add settngs
 A0 = otag;
 A1 = offset_18 + 30 + c;
 system_psyq_add_prim();
@@ -1618,49 +1599,50 @@ row_id = h[offset_18 + 16];
 // text render
 for( int i = 0; i < h[offset_18 + c]; ++i )
 {
-    if( row_id >= h[offset_18 + c] )
+    if( row_id >= h[offset_18 + c] ) // warp row over
     {
         row_id = 0;
     }
 
-    packet = w[offset_18 + 28] + row_id * 60 + rb * 28;
+    text1 = w[offset_18 + 28] + row_id * 60 + rb * 28;
     row = w[offset_18 + 28] + row_id * 60;
 
     if( bu[offset_18 + 6e] != i )
     {
-        [packet + 7] = b(bu[packet + 7] | 01); // Textured Rectangle, variable size, opaque, raw-texture
+        [text1 + 7] = b(bu[text1 + 7] | 01); // Textured Rectangle, variable size, opaque, raw-texture
     }
     else // cursor selected row
     {
-        [packet + 7] = b(bu[packet + 7] & fe); // Textured Rectangle, variable size, opaque, texture-blending
+        [text1 + 7] = b(bu[text1 + 7] & fe); // Textured Rectangle, variable size, opaque, texture-blending
     }
 
     if( h[row + 58] != 0 ) // if current row width exist
     {
-        [packet + a] = h(hu[offset_18 + 6] + h[offset_18 + 14] * i); // y
-        [packet + d] = b(bu[row + 5c]);                              // v
-        [packet + e] = h(hu[row + 5e]);                              // clut
+        [text1 + a] = h(hu[offset_18 + 6] + h[offset_18 + 14] * i); // y
+        [text1 + d] = b(bu[row + 5c]);                              // v
+        [text1 + e] = h(hu[row + 5e]);                              // clut
 
-        if( h[row + 58] >= 41 )
+        if( h[row + 58] >= 41 ) // limit width
         {
-            [packet + 10] = h(100);                                  // w
+            [text1 + 10] = h(100);                                  // w
         }
         else
         {
-            [packet + 10] = h(h[row + 58] * 4);                      // w
+            [text1 + 10] = h(h[row + 58] * 4);                      // w
         }
 
         A0 = otag;
-        A1 = packet;
+        A1 = text1;
         func315a8(); // add textured rectangle to render
     }
 
     row_id += 1;
 }
 
-if( h[offset_18 + 84] == 0 )
+// update wait timers for text render.
+if( h[offset_18 + 84] == 0 ) // global
 {
-    if( h[offset_18 + 86] == 0 )
+    if( h[offset_18 + 86] == 0 ) // letter
     {
         [offset_18 + 86] = h(hu[offset_18 + 88]);
 
@@ -1687,9 +1669,10 @@ else
 if( h[offset_18 + 84] != 0 ) // wait
 {
     [offset_18 + 84] = h(h[offset_18 + 84] - 1);
+
     if( h[offset_18 + 84] == -1 )
     {
-        [offset_18 + 10] = h(hu[offset_18 + 10] & ffef);
+        [offset_18 + 10] = h(hu[offset_18 + 10] & ffef); // remove 0x0010
     }
 }
 

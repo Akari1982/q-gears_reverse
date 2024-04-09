@@ -5,7 +5,7 @@ id = A0;
 
 if( ( h[800c1ee8 + id * 498] == 0 ) && ( h[800c1f74 + id * 498] == 0 ) )
 {
-    if( hu[800c1b6c + id * 498 + 410] == 0 ) // cursor enabled
+    if( hu[800c1b6c + id * 498 + 410] == 0 ) // top window
     {
         if( hu[800c2dd4] & 4000 ) // repeated down
         {
@@ -873,8 +873,7 @@ system_gte_vector_perspective_transform();
 
 
 ////////////////////////////////
-// func7eef0()
-// init message?
+// system_message_init_to_show()
 
 x_pos = A0;
 y_pos = A1 - 8;
@@ -1011,7 +1010,6 @@ else
     [800c1b6c + id * 498 + 18 + 68] = b(2);
 }
 
-// get offset to message text
 A0 = w[800ad0c8]; // message file
 A1 = message_id;
 system_message_get_text_pointer();
@@ -1089,17 +1087,14 @@ rb = A1;
 
 struct_5c_p = w[800aefe4];
 
+// update animation
 [800ad370] = w(w[800ad370] + 1);
-
-if( ( w[800ad370] & 3 ) == 0 )
-{
-    [800ad36c] = w(w[800ad36c] + 1); // continue arrow and cursor animation frame
-}
+if( ( w[800ad370] & 3 ) == 0 ) [800ad36c] = w(w[800ad36c] + 1); // continue arrow and cursor animation frame
 if( w[800ad36c] >= 5 ) [800ad36c] = w(0);
 
-
+// exclude one window from render
 [SP + 28] = w(ff);
-if( int i = 0; i < 4; ++i )
+for( int i = 0; i < 4; ++i )
 {
     if( h[800c1b6c + i * 498 + 412] != 0 )
     {
@@ -1113,6 +1108,7 @@ if( int i = 0; i < 4; ++i )
 [SP + 10 +  3 * 4] = w(ffff);
 new_order = 0;
 
+// not found where this render used
 for( int i = 0; i < 4; ++i )
 {
     // window enabled and 
@@ -1146,17 +1142,17 @@ for( int i = 0; i < 4; ++i )
             }
 
             // if there is no element in list - add text data pointer to it
-            if( h[800c1b6c + i * 498 + 9a] == 0 )
+            if( h[800c1b6c + i * 498 + 18 + 82] == 0 )
             {
                 A0 = 800c1b6c + i * 498 + 18;
                 A1 = w[800c1b6c + i * 498 + 18 + 90];
-                func34538();
+                system_message_push_new_pointer_to_text();
             }
 
             A0 = 800c1b6c + i * 498 + 18;
             A1 = otag;
             A2 = rb;
-            func346ac(); // text update add to render
+            system_message_text_update_add_to_render();
         }
 
         settings = 800c1b6c + i * 498 + rb * c;
@@ -1173,6 +1169,7 @@ for( int i = 0; i < 4; ++i )
     }
 }
 
+// usual text render
 for( int i = 0; i < 4; ++i )
 {
     for( int j = 0; j < 4; ++j )
@@ -1184,24 +1181,24 @@ for( int i = 0; i < 4; ++i )
 
             if( h[800c1b6c + j * 498 + 40e] == 0 )
             {
-                if( w[SP + 28] != j )
+                if( w[SP + 28] != j ) // render not excluded windows
                 {
-                    [800c1f30 + j * 498] = h(-1);
+                    [800c1b6c + j * 498 + 3c4] = h(-1); // dont show continue arrow by default
 
                     if( h[800c1b6c + j * 498 + 408] == 0 ) // window opened
                     {
                         if( hu[800c1b68] & 0020 ) // circle pressed
                         {
-                            if( hu[800c1f7c + j * 498] == 0 )
+                            if( hu[800c1b6c + j * 498 + 410] == 0 )
                             {
-                                [800c1b6c + i * 498 + 37c] = h(-1); // disable cursor
+                                [800c1b6c + j * 498 + 37c] = h(-1); // disable cursor
 
-                                owner_id = h[800c1b6c + i * 498 + 416];
+                                owner_id = h[800c1b6c + j * 498 + 416];
                                 struct_138 = w[struct_5c_p + owner_id * 5c + 4c];
-                                [struct_138 + 81] = b(bu[800c1b6c + i * 498 + 37e] + bu[800c1b6c + i * 498 + 382]);
+                                [struct_138 + 81] = b(bu[800c1b6c + j * 498 + 37e] + bu[800c1b6c + j * 498 + 382]);
 
                                 A0 = 800c1b6c + j * 498 + 18;
-                                func34404();
+                                func34404(); // clear some text related things
                             }
                         }
 
@@ -1209,13 +1206,13 @@ for( int i = 0; i < 4; ++i )
                         {
                             A0 = 800c1b6c + j * 498 + 18;
                             A1 = w[800c1b6c + j * 498 + 18 + 90]; // offset to dialog text data
-                            func34538;
+                            system_message_push_new_pointer_to_text();
                         }
 
                         A0 = 800c1b6c + j * 498 + 18;
                         A1 = otag;
                         A2 = rb;
-                        func346ac(); // text update add to render
+                        system_message_text_update_add_to_render();
 
                         state = 0;
                         if( hu[800c1b6c + j * 498 + 18 + 10] & 0008 )
@@ -1231,9 +1228,9 @@ for( int i = 0; i < 4; ++i )
                     }
 
                     // add tex settings to render
-                    A2 = 800c1b6c + j * 498 + rb * c;
-                    [A2] = w((w[A2] & ff000000) | (w[otag] & 00ffffff));
-                    [otag] = w((w[otag] & ff000000) | (A2 & 00ffffff));
+                    settings = 800c1b6c + j * 498 + rb * c;
+                    [settings] = w((w[settings] & ff000000) | (w[otag] & 00ffffff));
+                    [otag] = w((w[otag] & ff000000) | (settings & 00ffffff));
 
                     A0 = otag;
                     A1 = rb;

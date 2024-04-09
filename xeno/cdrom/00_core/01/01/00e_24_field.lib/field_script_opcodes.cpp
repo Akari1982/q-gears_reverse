@@ -21382,16 +21382,17 @@ A0 = 1;
 field_script_help_read_u16();
 message_id = V0;
 
-func7fd34(); // search for not opened window slot
+func7fd34(); // search for not opened window
 if( V0 != 0 ) // if not found
 {
     func7fd74(); // search lowest opened window
     [800c1b6c + V0 * 498 + 414] = h(0); // say it to close
     [800af594] = w(1); // wait
+
     return -1;
 }
 
-func7fdc8(); // get free window slot
+func7fdc8(); // get free window
 window_id = V0;
 
 S3 = 0;
@@ -21697,7 +21698,7 @@ A7 = entity_id;
 A8 = type;
 A9 = rotation;
 A10 = S6; // flags
-func7eef0();
+system_message_init_to_show();
 
 // add window to activated windows mask
 A0 = window_id;

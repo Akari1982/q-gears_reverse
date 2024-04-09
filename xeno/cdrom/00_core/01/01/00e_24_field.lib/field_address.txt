@@ -649,22 +649,21 @@
         + e (26) [][]     start texture V (ty).
         +10 (28) [][]     some flags. Init with 0.
                           0x0001: set when max row packet achieved.
-                          0x0002: ???
-                          0x0004: not close window. If set to 0 - window set to close during update.
-                          0x0008: wait for player input flag. Add this flag if we met 0x00_Return text opcode and there is no stored pointer or if we met 0x03_Wait text opcode.
+                          0x0002: not render background under text.
+                          0x0004: not close window. If set to 0 - window set to close during update. If 0 then we move to next block in text queue.
+                          0x0008: text ended via end of text or new window or wait text opcode (wait for player input).
                           0x0010: remove when wait timer +84 ends.
                           0x0020: reset text.
-                          0x0040: ???
-                          0x0048: add this flags if we met 0x02_New text opcode.
-                          0x0080: stored pointer for text. If set and met 0x00_Return() in text then we remove this flag, and jump to stored pointer +38.
-                          0x0100: speed increased (button pressed).
+                          0x0040: text area is full.
+                          0x0080: text pointer stored.
+                          0x0100: speed increased.
                           0x0200: add this flag in 0x0F0D text opcode.
         +12 (2a) [][]     current row width.
         +14 (2c) [][]     current row height. Store 0xe here.
         +16 (2e) [][]     start row to add packets to render.
         +18 (30) [][]     current texture row.
         +1c (34) [][][][] pointer to current position in text data.
-        +20 (38) [][][][] some pointer.
+        +20 (38) [][][][] stored text pointer.
         +28 (40) [][][][] pointer to rows data (size number of rows * 0x60).
             + 00 buffer1 packet for sprite 0x65 (0x14 size).
             + 14 buffer1 packet for sprite 0x65 (0x14 size).
@@ -687,9 +686,9 @@
         +68 end of background under text
         +68 (80) []       default number of letters to read.
         +69 (81) []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
-        +6a (82) []       stored number of letters to read (to restore if we want).
+        +6a (82) []       stored number of letters to read (if we need to reed from other text block).
         +6b (83) []       state of text render. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
-        +6c (84) []       if 1 then window needs to be closed. Init with 0.
+        +6c (84) []       set to 1 when end of text opcode is met. Init with 0.
         +6d (85) []       init with 0.
         +6e (86) []       init with 0xff. Cursor pos.
         +70 (88) [][][][] +0016 from memory block.
@@ -697,11 +696,11 @@
         +78 (90) [][][][] +001a from memory block.
         +7c (94) [][][][] +001c from memory block.
         +80 (98) [][]     +001c from memory block.
-        +82 (9a) [][]     init with 0. Number of +a4 element in list.
+        +82 (9a) [][]     number of elements in text queue.
         +84 (9c) [][]     wait timer for text render.
         +86 (9e) [][]     current wait before next letter render.
         +88 (a0) [][]     base wait before next letter render.
-        +8c (a4) [][][][] init with 0. Pointer to list of allocated memory for message text data.
+        +8c (a4) [][][][] text queue.
             +00 [][][][] pointer to next allocated memory element.
             +08 [][][][] offset to message text data.
         +90 (a8) [][][][] offset to message text data.

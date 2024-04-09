@@ -18,8 +18,7 @@ Entity[ "0x01" ] = {
 
     on_update = function( self )
         -- 0xFEA0() -- 0x000d 0xfe
-        opcode3A_VariableBitSet( address=0x4100, bit_num=(vf40)0x7000, flag=0x00 ) -- 0x001a 0x3a
-        -- MISSING OPCODE 0x72
+        -- MISSING OPCODE 0x65
     end,
 
     on_talk = function( self )

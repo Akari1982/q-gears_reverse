@@ -1306,7 +1306,7 @@
 // func33b14
 80033B14-80033BF4
 ////////////////////////////////
-// func33bf8
+// system_message_text_insert_text
 80033BF8-80033C10
 ////////////////////////////////
 // system_message_parse_text
@@ -1327,7 +1327,7 @@
 // system_message_deinit_text
 800344F8-80034534
 ////////////////////////////////
-// func34538
+// system_message_push_new_pointer_to_text
 80034538-800345CC
 ////////////////////////////////
 // func345d0
@@ -1345,7 +1345,7 @@
 // func346a0
 800346A0-800346A8
 ////////////////////////////////
-// func346ac
+// system_message_text_update_add_to_render
 800346AC-80034CCC
 ////////////////////////////////
 // func34cd0

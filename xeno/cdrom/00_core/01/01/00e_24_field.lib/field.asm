@@ -392,7 +392,7 @@
 // func7ee28
 8007EE28-8007EEEC
 ////////////////////////////////
-// func7eef0
+// system_message_init_to_show
 8007EEF0-8007F5F8
 ////////////////////////////////
 // func7f5fc
