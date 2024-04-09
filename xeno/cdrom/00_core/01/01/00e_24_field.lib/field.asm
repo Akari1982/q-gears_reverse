@@ -377,10 +377,10 @@
 // field_message_set_avatar_packet_pos
 8007D780-8007D7D0
 ////////////////////////////////
-// field_message_window_and_elements_add_to_render
+// field_message_window_update_add_to_render
 8007D7D4-8007E41C
 ////////////////////////////////
-// func7e420
+// field_message_window_create_packets
 8007E420-8007EBBC
 ////////////////////////////////
 // func7ebc0

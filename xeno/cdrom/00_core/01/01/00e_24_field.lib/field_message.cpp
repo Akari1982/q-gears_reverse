@@ -90,19 +90,17 @@ for( int i = 0; i < 10; ++i )
 
 for( int i = 0; i < 4; ++i )
 {
-    [800c1b6c + i * 498 + 37c] = h(-1);
-    [800c1b6c + i * 498 + 3c4] = h(-1);
-
-    [800c1b6c + i * 498 + 40e] = h(-1);
-    [800c1b6c + i * 498 + 410] = h(ffff);
+    [800c1b6c + i * 498 + 37c] = h(-1); // hide cursor
+    [800c1b6c + i * 498 + 3c4] = h(-1); // hide continue arrow
+    [800c1b6c + i * 498 + 40e] = h(-1); // disable message
+    [800c1b6c + i * 498 + 410] = h(ffff); // disabled order
     [800c1b6c + i * 498 + 412] = h(0);
     [800c1b6c + i * 498 + 414] = h(-1);
-    [800c1b6c + i * 498 + 416] = h(ff);
-    [800c1b6c + i * 498 + 416] = h(ff);
-    [800c1b6c + i * 498 + 418] = h(ff);
+    [800c1b6c + i * 498 + 416] = h(ff); // owner entity id
+    [800c1b6c + i * 498 + 418] = h(ff); // some entity id
 
     A0 = i;
-    func7e420();
+    field_message_window_create_packets();
 
     [800afb60 + i * 4] = w(-1);
 
@@ -139,11 +137,11 @@ for( int i = 0; i < 4; ++i )
 ////////////////////////////////
 // func7d728()
 
-window_id = A0;
-[800c1b6c + window_id * 498 + ac] = h(A1);
-[800c1b6c + window_id * 498 + ae] = h(A2);
-[800c1b6c + window_id * 498 + b0] = h(A3);
-[800c1b6c + window_id * 498 + b2] = h(A4);
+id = A0;
+[800c1b6c + id * 498 + ac] = h(A1);
+[800c1b6c + id * 498 + ae] = h(A2);
+[800c1b6c + id * 498 + b0] = h(A3);
+[800c1b6c + id * 498 + b2] = h(A4);
 ////////////////////////////////
 
 
@@ -182,7 +180,7 @@ else
 
 
 ////////////////////////////////
-// field_message_window_and_elements_add_to_render()
+// field_message_window_update_add_to_render()
 
 otag = A0;
 rb = A1;
@@ -435,221 +433,13 @@ if( ( hu[800c1b6c + id * 498 + 40c] & 0040 ) == 0 ) // render background
 
 
 ////////////////////////////////
-// func7e420()
+// field_message_window_create_packets()
 
 id = A0;
 
-A0 = 0;
-A1 = 2;
-A2 = 280;
-A3 = 1f0;
-system_graphic_get_texpage_by_param();
-
-S1 = 800c1b6c + id * 498 + ac;
-
-A0 = S1 + 18;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = 0;
-system_gpu_create_texture_setting_packet();
-
-A0 = 0;
-A1 = 2;
-A2 = 280;
-A3 = 1f0;
-system_graphic_get_texpage_by_param();
-
-A0 = S1 + 24;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = 0;
-system_gpu_create_texture_setting_packet();
-
-S1 = S1 + 0030;
-A0 = S1;
-system_graphic_monochrome_rectangle_header();
-
-A0 = S1;
-A1 = 0001;
-V0 = SP + 0018;
-FP = V0;
-S2 = 800ad3dc;
-8007E4F8	addiu  s7, s2, $ff9e (=-$62)
-T2 = 0140;
-[SP + 0020] = w(T2);
-T2 = 00c8;
-[SP + 0030] = w(T2);
-T2 = 800c1b6c + ac;
-S1 = T2 + 0030;
-V0 = bu[80058b70];
-S1 = S1 + id * 498;
-[SP + 0028] = w(0);
-[S1 + 0004] = b(V0);
-V0 = bu[80058b71];
-T2 = 0050;
-[SP + 0038] = w(T2);
-[S1 + 0005] = b(V0);
-V0 = bu[80058b72];
-T2 = 800c1b6c + ac;
-[SP + 0040] = w(T2);
-[S1 + 0006] = b(V0);
-system_set_draw_packet_transparency();
-
-T2 = 800c1c18;
-V0 = T2 + 0040;
-V0 = V0 + id * 498;
-[V0 + 0000] = w(w[S1 + 0000]);
-[V0 + 0004] = w(w[S1 + 0004]);
-[V0 + 0008] = w(w[S1 + 0008]);
-[V0 + 000c] = w(w[S1 + 000c]);
-A0 = 0;
-A1 = 0;
-A2 = 0298;
-V0 = hu[S2 + 0000];
-V1 = hu[800ad3de];
-T0 = hu[800ad3e0];
-T1 = hu[800ad3e2];
-A3 = 01c0;
-[SP + 0018] = h(V0);
-[SP + 001a] = h(V1);
-[SP + 001c] = h(T0);
-[SP + 001e] = h(T1);
-system_graphic_get_texpage_by_param();
-
-T2 = 800c1c18;
-S1 = T2 + 0318;
-S1 = S1 + id * 498;
-A0 = S1 + 0004;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = FP;
-system_gpu_create_texture_setting_packet();
-
-A0 = 0;
-A1 = 0;
-A2 = 298;
-A3 = 1c0;
-system_graphic_get_texpage_by_param();
-
-A0 = S1 + 0010;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = FP;
-system_gpu_create_texture_setting_packet();
-
-A0 = S1 + 1c;
-system_graphic_textured_rectangle_header();
-
-A0 = 0100;
-A1 = 00f6;
-T2 = 800c1c18;
-S1 = T2 + 0334;
-S1 = S1 + id * 498;
-S2 = 0080;
-[S1 + 0004] = b(S2);
-[S1 + 0005] = b(S2);
-[S1 + 0006] = b(S2);
-system_graphic_get_clut_by_param();
-
-S4 = 00c0;
-T2 = 000c;
-S3 = 0008;
-[800c1f5c + id * 498] = h(T2);
-T2 = 800c1c18;
-[800c1f5a + id * 498] = h(V0);
-V0 = T2 + 0348;
-V0 = V0 + id * 498;
-[800c1f58 + id * 498] = b(S2);
-[800c1f59 + id * 498] = b(S4);
-[800c1f5e + id * 498] = h(S3);
-[800c1f54 + id * 498] = h(0);
-[800c1f56 + id * 498] = h(0);
-
-[V0 + 0000] = w(w[S1 + 0000]);
-[V0 + 0004] = w(w[S1 + 0004]);
-[V0 + 0008] = w(w[S1 + 0008]);
-[V0 + 000c] = w(w[S1 + 000c]);
-V1 = w[S1 + 0010];
-[V0 + 0010] = w(V1);
-A0 = 0;
-A1 = 0;
-A2 = 0288;
-A3 = 01c0;
-[SP + 0018] = h(hu[800ad3b4]);
-[SP + 001a] = h(hu[800ad3b6]);
-[SP + 001c] = h(hu[800ad3b8]);
-[SP + 001e] = h(hu[800ad3ba]);
-
-system_graphic_get_texpage_by_param();
-
-T2 = 800c1c18;
-S1 = T2 + 02d0;
-S1 = S1 + id * 498;
-A0 = S1 + 0008;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = FP;
-system_gpu_create_texture_setting_packet();
-
-A0 = 0;
-A1 = 0;
-A2 = 288;
-A3 = 1c0;
-system_graphic_get_texpage_by_param();
-
-A0 = S1 + 0014;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = FP;
-system_gpu_create_texture_setting_packet();
-
-A0 = S1 + 20;
-system_graphic_textured_rectangle_header();
-
-A0 = 0100;
-A1 = 00f6;
-T2 = 800c1c18;
-S1 = T2 + 02f0;
-S1 = S1 + id * 498;
-[S1 + 0004] = b(S2);
-[S1 + 0005] = b(S2);
-[S1 + 0006] = b(S2);
-system_graphic_get_clut_by_param();
-
-T2 = 000c;
-[800c1f1a + id * 498] = h(T2);
-T2 = 800c1c18;
-[800c1f16 + id * 498] = h(V0);
-V0 = T2 + 0304;
-V0 = V0 + id * 498;
-[800c1f14 + id * 498] = b(S2);
-[800c1f15 + id * 498] = b(S4);
-[800c1f18 + id * 498] = h(S3);
-[800c1f10 + id * 498] = h(0);
-[800c1f12 + id * 498] = h(0);
-[V0 + 0000] = w(w[S1 + 0000]);
-[V0 + 0004] = w(w[S1 + 0004]);
-[V0 + 0008] = w(w[S1 + 0008]);
-[V0 + 000c] = w(w[S1 + 000c]);
-V1 = w[S1 + 0010];
-[V0 + 0010] = w(V1);
-[800c1f76 + id * 498] = h(2);
-
-for( int i = 0; i < 8; ++i )
+// create background settings
 {
-    T2 = w[SP + 0040];
-    [SP + 0018] = h(hu[T2 + 0000]);
-    [SP + 001a] = h(hu[800ad374 + S3 + 0002]);
-    S3 = 800ad374 + 4 + i * 8;
-    [SP + 0040] = w(w[SP + 0040] + 8);
-    [SP + 001c] = h(hu[S3 + 0000]);
-    [SP + 001e] = h(hu[S7 + 0000]);
+    settings = 800c1b6c + id * 498 + c4;
 
     A0 = 0;
     A1 = 2;
@@ -657,14 +447,11 @@ for( int i = 0; i < 8; ++i )
     A3 = 1f0;
     system_graphic_get_texpage_by_param();
 
-    S1 = 800c1c18 + id * 498;
-    T2 = w[SP + 38];
-
-    A0 = S1 + T2;
+    A0 = settings;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
-    A4 = FP;
+    A4 = 0;
     system_gpu_create_texture_setting_packet();
 
     A0 = 0;
@@ -673,142 +460,313 @@ for( int i = 0; i < 8; ++i )
     A3 = 1f0;
     system_graphic_get_texpage_by_param();
 
+    A0 = settings + с;
     A1 = 0;
     A2 = 0;
-    T2 = w[SP + 0030];
     A3 = V0 & ffff;
-    A0 = S1 + T2;
-    A4 = FP;
+    A4 = 0;
     system_gpu_create_texture_setting_packet();
-
-    T2 = w[SP + 0020];
-    8007E930	nop
-    S1 = S1 + T2;
-    A0 = S1;
-    system_graphic_textured_rectangle_header();
-
-    A0 = 0100;
-    T2 = w[SP + 0028];
-    A1 = 00f4;
-    S0 = T2 + id * 498;
-    T2 = 800c1d58;
-    S2 = S0 + T2;
-    T2 = 0080;
-    [S2 + 0004] = b(T2);
-    [S2 + 0005] = b(T2);
-    [S2 + 0006] = b(T2);
-    system_graphic_get_clut_by_param();
-
-    A0 = S1;
-    [800c1d66 + S0] = h(V0);
-    A1 = 0001;
-    system_set_draw_packet_transparency();
-
-    T2 = w[SP + 0020];
-    T2 = T2 + 0014;
-    [SP + 0020] = w(T2);
-    T2 = w[SP + 0028];
-    T2 = T2 + 0014;
-    [SP + 0028] = w(T2);
-    T2 = w[SP + 0030];
-    V0 = 00c0;
-    T2 = T2 + 000c;
-    [SP + 0030] = w(T2);
-    T2 = 0080;
-    [800c1d64 + S0] = b(T2);
-    [800c1d65 + S0] = b(V0);
-    T2 = w[SP + 0038];
-    V0 = hu[S3 + 0000];
-    T2 = T2 + 000c;
-    [SP + 0038] = w(T2);
-    [800c1d68 + S0] = h(V0);
-    [800c1d60 + S0] = h(0);
-    [800c1d62 + S0] = h(0);
-    [800c1d6a + S0] = h(hu[S7 + 0000]);
-    S0 = 800c1e20 + S0;
-
-    [S0 + 0000] = w(w[S2 + 0000]);
-    [S0 + 0004] = w(w[S2 + 0004]);
-    [S0 + 0008] = w(w[S2 + 0008]);
-    [S0 + 000c] = w(w[S2 + 000c]);
-    [S0 + 0010] = w(w[S2 + 0010]);
-
-    S7 = S7 + 0008;
 }
 
-[SP + 18] = h(0);
-[SP + 1a] = h(0);
-[SP + 1c] = h(f);
-[SP + 1e] = h(ff);
+// create background packets
+{
+    background = 800c1b6c + id * 498 + c4 + 18;
 
-A0 = 1;
-A1 = 0;
-A2 = 2c0;
-A3 = 100;
-system_graphic_get_texpage_by_param();
+    A0 = background;
+    system_graphic_monochrome_rectangle_header();
 
-T2 = 800c1d58;
-S0 = T2 + 0240;
-S0 = S0 + id * 498;
+    [background + 4] = b(bu[80058b70]);
+    [background + 5] = b(bu[80058b71]);
+    [background + 6] = b(bu[80058b72]);
 
-A0 = S0;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = SP + 18;
-system_gpu_create_texture_setting_packet();
+    A0 = background;
+    A1 = 1;
+    system_set_draw_packet_transparency();
 
-A0 = 1;
-A1 = 0;
-A2 = 2c0;
-A3 = 100;
-system_graphic_get_texpage_by_param();
+    [background + 10 + 0] = w(w[background + 0]);
+    [background + 10 + 4] = w(w[background + 4]);
+    [background + 10 + 8] = w(w[background + 8]);
+    [background + 10 + c] = w(w[background + c]);
+}
 
-A0 = S0 + c;
-A1 = 0;
-A2 = 0;
-A3 = V0 & ffff;
-A4 = SP + 18;
-system_gpu_create_texture_setting_packet();
+// create continue arrow settings
+{
+    settings = 800c1b6c + id * 498 + 3c8;
+    [SP + 18] = h(hu[800ad3dc]);
+    [SP + 1a] = h(hu[800ad3de]);
+    [SP + 1c] = h(hu[800ad3e0]);
+    [SP + 1e] = h(hu[800ad3e2]);
 
-T2 = 800c1d58;
-S0 = T2 + 0258;
-S0 = S0 + id * 498;
-A0 = S0;
-system_graphic_textured_quad_header();
+    A0 = 0;
+    A1 = 0;
+    A2 = 298;
+    A3 = 1c0;
+    system_graphic_get_texpage_by_param();
 
-[S0 + 4] = b(80); // r
-[S0 + 5] = b(80); // g
-[S0 + 6] = b(80); // b
+    A0 = settings;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
 
-A0 = 0;
-A1 = e0;
-system_graphic_get_clut_by_param();
-[800c1fbe + id * 498] = h(V0);
+    A0 = 0;
+    A1 = 0;
+    A2 = 298;
+    A3 = 1c0;
+    system_graphic_get_texpage_by_param();
 
-A0 = 1;
-A1 = 0;
-A2 = 2c0;
-A3 = 100;
-system_graphic_get_texpage_by_param();
+    A0 = settings + c;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+}
 
-T2 = 800c1d58;
-V1 = T2 + 0280;
-A2 = V1 + id * 498;
-A3 = S0 + 0020;
-[800c1fc6 + id * 498] = h(V0);
+// create continue arrow packets
+{
+    arrow = 800c1b6c + id * 498 + 3c8 + 18;
 
-loop7eb50:	; 8007EB50
+    A0 = arrow;
+    system_graphic_textured_rectangle_header();
+
+    [arrow + 4] = b(80);
+    [arrow + 5] = b(80);
+    [arrow + 6] = b(80);
+
+    A0 = 100;
+    A1 = f6;
+    system_graphic_get_clut_by_param();
+    [arrow + e] = h(V0);
+
+    [arrow +  8] = h(0);  // x
+    [arrow +  a] = h(0);  // y
+    [arrow +  c] = b(80); // u
+    [arrow +  d] = b(c0); // v
+    [arrow + 10] = h(c);  // w
+    [arrow + 12] = h(8);  // h
+
+    [arrow + 14 +  0] = w(w[arrow +  0]);
+    [arrow + 14 +  4] = w(w[arrow +  4]);
+    [arrow + 14 +  8] = w(w[arrow +  8]);
+    [arrow + 14 +  c] = w(w[arrow +  c]);
+    [arrow + 14 + 10] = w(w[arrow + 10]);
+}
+
+// create cursor settings
+{
+    [SP + 18] = h(hu[800ad3b4]);
+    [SP + 1a] = h(hu[800ad3b6]);
+    [SP + 1c] = h(hu[800ad3b8]);
+    [SP + 1e] = h(hu[800ad3ba]);
+
+    A0 = 0;
+    A1 = 0;
+    A2 = 288;
+    A3 = 1c0;
+    system_graphic_get_texpage_by_param();
+
+    settings = 800c1b6c + id * 498 + 384;
+
+    A0 = settings;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+
+    A0 = 0;
+    A1 = 0;
+    A2 = 288;
+    A3 = 1c0;
+    system_graphic_get_texpage_by_param();
+
+    A0 = settings + c;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+}
+
+// create cursor packets
+{
+    cursor = 800c1b6c + id * 498 + 384 + 18;
+
+    A0 = cursor;
+    system_graphic_textured_rectangle_header();
+
+    [cursor + 4] = b(80);
+    [cursor + 5] = b(80);
+    [cursor + 6] = b(80);
+
+    A0 = 100;
+    A1 = f6;
+    system_graphic_get_clut_by_param();
+
+    [cursor +  8] = h(0);  // x
+    [cursor +  a] = h(0);  // y
+    [cursor +  c] = b(80); // u
+    [cursor +  d] = b(c0); // v
+    [cursor +  e] = h(V0); // clut
+    [cursor + 10] = h(8);  // w
+    [cursor + 12] = h(c);  // h
+
+    [cursor + 14 +  0] = w(w[cursor +  0]);
+    [cursor + 14 +  4] = w(w[cursor +  4]);
+    [cursor + 14 +  8] = w(w[cursor +  8]);
+    [cursor + 14 +  c] = w(w[cursor +  c]);
+    [cursor + 14 + 10] = w(w[cursor + 10]);
+}
+
+[800c1b6c + id * 498 + 40a] = h(2); // wait timer for continue arrow
+
+// create border settings and packets
+for( int i = 0; i < 8; ++i )
+{
+    // create border settings
+    {
+        settings = 800c1b6c + id * 498 + fc + i * c;
+
+        [SP + 18] = h(hu[800ad374 + i * 8 + 0]);
+        [SP + 1a] = h(hu[800ad374 + i * 8 + 2]);
+        [SP + 1c] = h(hu[800ad374 + i * 8 + 4]);
+        [SP + 1e] = h(hu[800ad374 + i * 8 + 6]);
+
+        A0 = 0;
+        A1 = 2;
+        A2 = 280;
+        A3 = 1f0;
+        system_graphic_get_texpage_by_param();
+
+        A0 = settings;
+        A1 = 0;
+        A2 = 0;
+        A3 = V0 & ffff;
+        A4 = SP + 18;
+        system_gpu_create_texture_setting_packet();
+
+        A0 = 0;
+        A1 = 2;
+        A2 = 280;
+        A3 = 1f0;
+        system_graphic_get_texpage_by_param();
+
+        A0 = settings + 78;
+        A1 = 0;
+        A2 = 0;
+        A3 = V0 & ffff;
+        A4 = SP + 18;
+        system_gpu_create_texture_setting_packet();
+    }
+
+    // create border packets
+    {
+        border = 800c1b6c + id * 498 + fc + f0 + i * 14;
+
+        A0 = border;
+        system_graphic_textured_rectangle_header();
+
+        [border + 4] = b(80);
+        [border + 5] = b(80);
+        [border + 6] = b(80);
+
+        A0 = 100;
+        A1 = f4;
+        system_graphic_get_clut_by_param();
+        [border + e] = h(V0);
+
+        A0 = border;
+        A1 = 1;
+        system_set_draw_packet_transparency();
+
+        [border +  8] = h(0);
+        [border +  a] = h(0);
+        [border +  c] = b(80);
+        [border +  d] = b(c0);
+        [border + 10] = h(hu[800ad374 + i * 8 + 4]);
+        [border + 12] = h(hu[800ad374 + i * 8 + 6]);
+
+        [border + c8 +  0] = w(w[border +  0]);
+        [border + c8 +  4] = w(w[border +  4]);
+        [border + c8 +  8] = w(w[border +  8]);
+        [border + c8 +  c] = w(w[border +  c]);
+        [border + c8 + 10] = w(w[border + 10]);
+    }
+}
+
+// create avatar settings
+{
+    settings = 800c1b6c + id * 498 + 42c;
+
+    A0 = 1;
+    A1 = 0;
+    A2 = 2c0;
+    A3 = 100;
+    system_graphic_get_texpage_by_param();
+
+    [SP + 18] = h(0);
+    [SP + 1a] = h(0);
+    [SP + 1c] = h(f);
+    [SP + 1e] = h(ff);
+
+    A0 = settings;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+
+    A0 = 1;
+    A1 = 0;
+    A2 = 2c0;
+    A3 = 100;
+    system_graphic_get_texpage_by_param();
+
+    A0 = settings + c;
+    A1 = 0;
+    A2 = 0;
+    A3 = V0 & ffff;
+    A4 = SP + 18;
+    system_gpu_create_texture_setting_packet();
+}
+
+// create avatar packets
+{
+    avatar = 800c1b6c + id * 498 + 42c + 18;
+
+    A0 = avatar;
+    system_graphic_textured_quad_header();
+
+    [avatar + 4] = b(80); // r
+    [avatar + 5] = b(80); // g
+    [avatar + 6] = b(80); // b
+
+    A0 = 0;
+    A1 = e0;
+    system_graphic_get_clut_by_param();
+    [800c1b6c + id * 498 + 42c + 18 + e] = h(V0);
+
+    A0 = 1;
+    A1 = 0;
+    A2 = 2c0;
+    A3 = 100;
+    system_graphic_get_texpage_by_param();
+    [800c1b6c + id * 498 + 42c + 18 + 16] = h(V0);
+
+    S0 = avatar;
+    A2 = avatar + 28;
+    A3 = avatar + 20;
+    while( S0 != A3 )
+    {
+        [A2 + 0] = w(w[S0 + 0]);
+        S0 = S0 + 4;
+        A2 = A2 + 4;
+    }
     [A2 + 0] = w(w[S0 + 0]);
     [A2 + 4] = w(w[S0 + 4]);
-    [A2 + 8] = w(w[S0 + 8]);
-    [A2 + c] = w(w[S0 + c]);
-    S0 = S0 + 0010;
-    A2 = A2 + 0010;
-8007EB74	bne    s0, a3, loop7eb50 [$8007eb50]
-
-[A2 + 0] = w(w[S0 + 0]);
-[A2 + 4] = w(w[S0 + 4]);
+}
 ////////////////////////////////
 
 
@@ -1208,7 +1166,7 @@ for( int i = 0; i < 4; ++i )
         A0 = otag;
         A1 = rb;
         A2 = i;
-        field_message_window_and_elements_add_to_render();
+        field_message_window_update_add_to_render();
 
         A0 = i;
         field_message_update_cursor_pos_based_on_input();
@@ -1280,7 +1238,7 @@ for( int i = 0; i < 4; ++i )
                     A0 = otag;
                     A1 = rb;
                     A2 = j;
-                    field_message_window_and_elements_add_to_render();
+                    field_message_window_update_add_to_render();
 
                     A0 = j;
                     field_message_update_cursor_pos_based_on_input();

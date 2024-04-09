@@ -715,7 +715,7 @@
     + fc end of background packets
     + fc texture settings for border packets (0x2 items 0x78 size) (each buffer 0x9 items 0xc size).
     +1ec border packets (0x2 items 0xc8 size) (each buffer 0xa items 0x14 size).
-    +37c [][]     store -1 during message init. If 0 then we can render cursor. When circle pressed disable cursor
+    +37c [][]     show cursor (0 - show, -1 dont show).
     +37e [][]     start cursor pos.
     +380 [][]     max cursor pos.
     +382 []       current cursor pos (real position is start pos + cur pos).
@@ -723,7 +723,7 @@
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x14 size).
     +3c4 end of cursor packets
-    +3c4 [][]     show cintinue arrow (0 - show, -1 dont show)
+    +3c4 [][]     show continue arrow (0 - show, -1 dont show).
     +3c8 continue arrow packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x14 size).
@@ -744,8 +744,8 @@
     +428 [][][][] position offset y add.
     +42c avatar packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
-        +18 packets (each buffer 0x1 items 0x14 size).
-    +474 end of avatar packets
+        +18 packets (each buffer 0x1 items 0x28 size).
+    +494 end of avatar packets
     +494 []       1 if we render avatar, 0 otherwise.
     +495 []       store here avatar id from +80 from entity 138 struct.
 
