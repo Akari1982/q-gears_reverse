@@ -690,7 +690,7 @@
         +6b (83) []       state of text render. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
         +6c (84) []       set to 1 when end of text opcode is met. Init with 0.
         +6d (85) []       init with 0.
-        +6e (86) []       init with 0xff. Cursor pos.
+        +6e (86) []       cursor position.
         +70 (88) [][][][] +0016 from memory block.
         +74 (8c) [][][][] +0018 from memory block.
         +78 (90) [][][][] +001a from memory block.

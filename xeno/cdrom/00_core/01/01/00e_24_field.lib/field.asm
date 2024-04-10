@@ -392,7 +392,7 @@
 // func7ee28
 8007EE28-8007EEEC
 ////////////////////////////////
-// system_message_init_to_show
+// field_message_init_to_show
 8007EEF0-8007F5F8
 ////////////////////////////////
 // func7f5fc
@@ -401,16 +401,16 @@
 // func7f660
 8007F660-8007FC04
 ////////////////////////////////
-// func7fc08
+// field_message_update_state
 8007FC08-8007FCF4
 ////////////////////////////////
 // func7fcf8
 8007FCF8-8007FD30
 ////////////////////////////////
-// func7fd34
+// field_message_find_free_slot
 8007FD34-8007FD70
 ////////////////////////////////
-// func7fd74
+// field_message_find_lowest_opened_slot
 8007FD74-8007FDC4
 ////////////////////////////////
 // func7fdc8

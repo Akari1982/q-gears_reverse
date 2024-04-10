@@ -21382,10 +21382,10 @@ A0 = 1;
 field_script_help_read_u16();
 message_id = V0;
 
-func7fd34(); // search for not opened window
+field_message_find_free_slot();
 if( V0 != 0 ) // if not found
 {
-    func7fd74(); // search lowest opened window
+    field_message_find_lowest_opened_slot();
     [800c1b6c + V0 * 498 + 414] = h(0); // say it to close
     [800af594] = w(1); // wait
 
@@ -21698,7 +21698,7 @@ A7 = entity_id;
 A8 = type;
 A9 = rotation;
 A10 = S6; // flags
-system_message_init_to_show();
+field_message_init_to_show();
 
 // add window to activated windows mask
 A0 = window_id;

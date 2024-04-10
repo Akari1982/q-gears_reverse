@@ -1286,8 +1286,8 @@ offset_18 = A0;
 
 if( h[offset_18 + 84] == 0 ) // wait timer
 {
-    [offset_18 + 10] = h(hu[offset_18 + 10] & 0002); // reset flags
-    [offset_18 + 6c] = b(0);
+    [offset_18 + 10] = h(hu[offset_18 + 10] & 0002); // remove all flags except background flag
+    [offset_18 + 6c] = b(0); // reset end of text
 }
 ////////////////////////////////
 
@@ -1444,7 +1444,7 @@ L3468c:	; 8003468C
 
 
 ////////////////////////////////
-// func34698()
+// system_message_store_cursor_position()
 
 [A0 + 6e] = b(A1);
 ////////////////////////////////
@@ -1452,7 +1452,7 @@ L3468c:	; 8003468C
 
 
 ////////////////////////////////
-// func346a0()
+// system_message_store_null_cursor_position()
 
 [A0 + 6e] = b(ff);
 ////////////////////////////////
@@ -1986,6 +1986,7 @@ return -1;
 
 ////////////////////////////////
 // func355e4()
+
 res = A0 & ff00;
 V1 = 0;
 loop355fc:	; 800355FC

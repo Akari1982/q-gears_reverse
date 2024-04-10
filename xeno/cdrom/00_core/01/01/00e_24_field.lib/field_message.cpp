@@ -3,7 +3,8 @@
 
 id = A0;
 
-if( ( h[800c1ee8 + id * 498] == 0 ) && ( h[800c1f74 + id * 498] == 0 ) )
+// if show cursor and window completly opened
+if( ( h[800c1b6c + id * 498 + 37c] == 0 ) && ( h[800c1b6c + id * 498 + 408] == 0 ) )
 {
     if( hu[800c1b6c + id * 498 + 410] == 0 ) // top window
     {
@@ -30,12 +31,12 @@ if( ( h[800c1ee8 + id * 498] == 0 ) && ( h[800c1f74 + id * 498] == 0 ) )
 
         A0 = 800c1b6c + id * 498 + 18;
         A1 = h[800c1b6c + id * 498 + 382] + h[800c1b6c + id * 498 + 37e]; // cursor pos
-        func34698();
+        system_message_store_cursor_position();
     }
     else
     {
         A0 = 800c1b6c + id * 498 + 18;
-        func346a0();
+        system_message_store_null_cursor_position();
     }
 }
 ////////////////////////////////
@@ -873,7 +874,7 @@ system_gte_vector_perspective_transform();
 
 
 ////////////////////////////////
-// system_message_init_to_show()
+// field_message_init_to_show()
 
 x_pos = A0;
 y_pos = A1 - 8;
@@ -1264,7 +1265,7 @@ V1 = 800b12c8 + rb * c0;
 
 
 ////////////////////////////////
-// func7fc08()
+// field_message_update_state()
 
 for( int i = 0; i < 4; ++i )
 {
@@ -1312,8 +1313,7 @@ return ffff;
 
 
 ////////////////////////////////
-// func7fd34()
-// is there are not opened windows
+// field_message_find_free_slot()
 
 for( int i = 0; i < 4; ++i )
 {
@@ -1329,7 +1329,7 @@ return ffff;
 
 
 ////////////////////////////////
-// func7fd74()
+// field_message_find_lowest_opened_slot()
 
 order = 0;
 A3 = ffff;

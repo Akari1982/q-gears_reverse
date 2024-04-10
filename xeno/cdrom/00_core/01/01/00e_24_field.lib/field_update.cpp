@@ -200,7 +200,7 @@ system_psyq_wait_frames();
 A0 = 0;
 system_draw_sync();
 
-func7fc08(); // update messeges state
+field_message_update_state();
 
 A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
@@ -317,7 +317,7 @@ field_update_buttons();
 
 call_run_script_8();
 
-func7fc08();
+field_message_update_state();
 
 A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];

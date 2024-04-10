@@ -1339,10 +1339,10 @@
 // func34624
 80034624-80034694
 ////////////////////////////////
-// func34698
+// system_message_store_cursor_position
 80034698-8003469C
 ////////////////////////////////
-// func346a0
+// system_message_store_null_cursor_position
 800346A0-800346A8
 ////////////////////////////////
 // system_message_text_update_add_to_render
