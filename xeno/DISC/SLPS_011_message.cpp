@@ -166,12 +166,14 @@ system_gpu_create_texture_setting_packet();
 ////////////////////////////////
 // system_set_pack_global_pointers()
 
-number_of_files = w[A0];
-for( int i = 1; i < number_of_files; ++i )
+num = w[A0];
+
+for( int i = 1; i < num; ++i )
 {
     [A0 + i * 4] = w(A0 + w[A0 + i * 4]); // set global offset
 }
-return number_of_files;
+
+return num;
 ////////////////////////////////
 
 
@@ -179,25 +181,12 @@ return number_of_files;
 ////////////////////////////////
 // func33298()
 
-A1 = 0001;
-V0 = w[A0 + 0000];
+num = w[A0];
 
-800332A4	beq    v0, zero, L332d4 [$800332d4]
-A2 = A0;
-V1 = A0 + 0004;
-
-loop332b0:	; 800332B0
-V0 = w[V1 + 0000];
-A1 = A1 + 0001;
-V0 = V0 + A2;
-[V1 + 0000] = w(V0);
-V0 = w[A0 + 0000];
-800332C4	nop
-V0 = V0 < A1;
-800332CC	beq    v0, zero, loop332b0 [$800332b0]
-V1 = V1 + 0004;
-
-L332d4:	; 800332D4
+for( int i = 1; i < num; ++i )
+{
+    [A0 + i * 4] = w(A0 + w[A0 + i * 4]); // set global offset
+}
 ////////////////////////////////
 
 
@@ -558,34 +547,31 @@ system_message_get_text_pointer();
 
 
 ////////////////////////////////
-// func338e0()
-number_array = A0;
+// system_message_generate_text_from_array()
 
-A1 = 80059780;
+array = A0;
 
-V1 = w[800589fc];
-category = w[V1 + 1b * 4];
+result = 80059780;
 
-A2 = hu[number_array];
-if( A2 != ffff )
+sys_data = w[800589fc];
+category = w[sys_data + 1b * 4];
+
+A2 = hu[array];
+while( A2 != ffff )
 {
-    loop3390c:	; 8003390C
-        V1 = bu[category + A2 * 2 + 0];
-        if( V1 != 0 )
-        {
-            [A1] = b(V1);
-            A1 = A1 + 1;
-        }
-        V0 = bu[category + A2 * 2 + 1];
+    if( bu[category + A2 * 2 + 0] != 0 )
+    {
+        [result] = b(bu[category + A2 * 2 + 0]);
+        result = result + 1;
+    }
 
-        [A1] = b(V0);
-        A1 = A1 + 1;
+    [result] = b(bu[category + A2 * 2 + 1]);
+    result += 1;
 
-        number_array = number_array + 2;
-        A2 = hu[number_array];
-    80033948	bne    a2, ffff, loop3390c [$8003390c]
+    array += 2;
+    A2 = hu[array];
 }
-[A1] = b(0);
+[result] = b(0);
 ////////////////////////////////
 
 
@@ -733,60 +719,61 @@ return 0;
 
 
 ////////////////////////////////
-// func33b14()
-number = A0;
+// system_message_generate_text_from_number()
 
-A1 = A1 << 4; // addition 0x10
+number = A0;
+charset = A1 * 10;
+sign = A2;
 
 // if we use signed number
-if( A2 != 0 )
+if( sign != 0 )
 {
     if( number < 0 )
     {
         number = -number;
-        A2 = a;
+        sign = a;
     }
     else
     {
-        A2 = b;
+        sign = b;
     }
 }
 
 // generate 0xa decimal numbers from given value
-T0 = 0;
-A3 = 3b9aca00; // 1 000 000 000
-loop33b54:	; 80033B54
-    V0 = number / A3;
-    number = number % A3;
-    A3 = A3 / a;
-    [80059766 + T0 * 2] = h(V0 + A1); // index in category 1b
-    T0 = T0 + 1;
-    V0 = T0 < a;
-80033B84	bne    v0, zero, loop33b54 [$80033b54]
+div = 3b9aca00; // 1 000 000 000
+for( int i = 0; i < a; ++i  )
+{
+    [80059764 + 2 + i * 2] = h(number / div + charset); // index in category 1b
+
+    number %= div;
+    div /= a;
+}
 
 [8005977a] = h(ffff);
-[80059764] = h(A1);
+[80059764] = h(charset);
 
-// ignore leading zeroes
-A0 = 80059764;
-loop33bb4:	; 80033BB4
-    if( A0 == 80059778 ) // end of array
+array = 80059764;
+
+// skip leading zeroes
+do
+{
+    if( array == 80059778 ) // end of array
     {
         break;
     }
-    A0 = A0 + 2;
-    V0 = hu[A0];
-80033BC8	beq    v0, a1, loop33bb4 [$80033bb4]
+    array += 2;
+    V0 = hu[array];
+} while( V0 == charset );
 
 // add sign
-if( A2 != 0 )
+if( sign != 0 )
 {
-    A0 = A0 - 2;
-    [A0] = h(A1 + A2);
+    array -= 2;
+    [array] = h(sign + charset);
 }
 
-// generate text from numbers
-func338e0();
+A0 = array;
+system_message_generate_text_from_array();
 ////////////////////////////////
 
 
@@ -1123,9 +1110,9 @@ while( letters != 0 )
                 [offset_18 + 1c] = w(V0 + 2);
 
                 A0 = w[offset_18 + 70 + var_id * 4];
-                A1 = 0;
-                A2 = 0;
-                func33b14();
+                A1 = 0; // charset 1
+                A2 = 0; // unsigned
+                system_message_generate_text_from_number();
 
                 A0 = offset_18;
                 A1 = 80059780;
@@ -1142,9 +1129,9 @@ while( letters != 0 )
                 [offset_18 + 1c] = w(V0 + 2);
 
                 A0 = w[offset_18 + 70 + var_id * 4];
-                A1 = 1;
-                A2 = 0;
-                func33b14();
+                A1 = 1; // charset 2
+                A2 = 0; // unsighed
+                system_message_generate_text_from_number();
 
                 A0 = offset_18;
                 A1 = 80059780;
@@ -1169,9 +1156,9 @@ while( letters != 0 )
                 [offset_18 + 1c] = w(V0 + 2);
 
                 A0 = w[offset_18 + 70 + var_id * 4];
-                A1 = 1;
-                A2 = 1;
-                func33b14();
+                A1 = 1; // charset 2
+                A2 = 1; // signed
+                system_message_generate_text_from_number();
 
                 A0 = offset_18;
                 A1 = 80059780;

@@ -212,9 +212,9 @@ S4 = hu[GP + 1ac];
     system_memory_mark_removed_alloc();
 }
 
-// load kernel text
+// load sysdata text
 {
-    A0 = 7; // STRIPCD1\1\0029
+    A0 = 7; // mes_sysdata.lzs
     system_cdrom2_get_filesize_by_dir_file_id();
     A0 = V0;
     A1 = 0;

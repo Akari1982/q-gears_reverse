@@ -10,7 +10,7 @@ class FieldPackFile : public File
 public:
     FieldPackFile( const std::string& path );
     virtual ~FieldPackFile();
-    File* Extract( u32 file_number );
+    File* Extract( u32 id );
 };
 
 

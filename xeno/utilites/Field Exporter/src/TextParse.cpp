@@ -253,7 +253,7 @@ TextParse( Logger* exp, File* file, const int offset )
             }
             else if( sub_opcode == 0x02 )
             {
-                exp->LogW( u"<WaitAndClose time=\"" + HexToU16String( file->GetU8( data_offset ), 2, '0' ) + u"\">" );
+                exp->LogW( u"<Close time=\"" + HexToU16String( file->GetU8( data_offset ), 2, '0' ) + u"\">" );
                 data_offset += 1;
             }
             else if( sub_opcode == 0x03 )

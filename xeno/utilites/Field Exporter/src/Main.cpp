@@ -7,6 +7,36 @@
 int
 main()
 {
+    {
+        printf( "Extract sys_data texts.\n" );
+
+        std::string path;
+        path += "cdrom/mes_sysdata.lzs";
+
+        ArchiveFile* arch = new ArchiveFile( path );
+        File* temp;
+        temp = arch->Extract();
+        PackFile* sys_data = PackFile( temp );
+        delete temp
+        delete arch;
+
+        for( int i = 0; i <= sys_data->GetNumberOfFiles(); ++i )
+        {
+            temp = sys_data->Extract( i );
+            MessageFile* file = new MessageFile( temp );
+            delete temp;
+
+            save = "";
+            save += "sys_data/";
+            save += std::format( "{:02d}", i );
+            save += "_mes.xml";
+            file->GetMessages( save );
+            delete file;
+        }
+
+        delete sys_data;
+    }
+
     for( int i = 0; i <= 729; ++i )
     {
         printf( "Extract script for field %d.\n", i );

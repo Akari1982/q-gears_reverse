@@ -1288,7 +1288,7 @@
 // func338b0
 800338B0-800338DC
 ////////////////////////////////
-// func338e0
+// system_message_generate_text_from_array
 800338E0-80033954
 ////////////////////////////////
 // func33958
@@ -1303,7 +1303,7 @@
 // func33af4
 80033AF4-80033B10
 ////////////////////////////////
-// func33b14
+// system_message_generate_text_from_number
 80033B14-80033BF4
 ////////////////////////////////
 // system_message_text_insert_text

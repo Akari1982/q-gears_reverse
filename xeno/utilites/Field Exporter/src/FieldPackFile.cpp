@@ -17,19 +17,19 @@ FieldPackFile::~FieldPackFile()
 
 
 File*
-FieldPackFile::Extract( u32 file_number )
+FieldPackFile::Extract( u32 id )
 {
-    if( file_number > 8 )
+    if( id > 8 )
     {
         return NULL;
     }
 
-    u32 length_uncompressed = GetU32LE( 0x010c + file_number * 0x04 );
-    u32 first_file = GetU32LE( 0x0130 + file_number * 0x04 );
+    u32 length_uncompressed = GetU32LE( 0x010c + id * 0x04 );
+    u32 first_file = GetU32LE( 0x0130 + id * 0x04 );
     u32 length = 0;
-    if( file_number < 8 )
+    if( id < 8 )
     {
-        length = GetU32LE( 0x0130 + ( file_number + 1 ) * 0x04 ) - first_file;
+        length = GetU32LE( 0x0130 + ( id + 1 ) * 0x04 ) - first_file;
     }
     else
     {
