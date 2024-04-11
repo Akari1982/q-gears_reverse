@@ -4,15 +4,17 @@
 /engine/build/obj
 /engine/pcsxr/win32/.vs
 build
+/xeno/utilites/cd extractor/compile
+/utilites/asm_to_string/.vs
+/utilites/asm_to_string/*.user
 /xeno/utilites/cd extractor/output/cdrom.bin
 /xeno/utilites/cd extractor/output/cdrom.fig
 /xeno/utilites/cd extractor/output/cdrom.mdg
-/xeno/utilites/cd extractor/compile
-/utilites/asm_to_string/.vs/asm_to_string/v17
-/utilites/asm_to_string/.vs/asm_to_string/FileContentIndex
-/utilites/asm_to_string/asm_to_string.vcxproj.user
-/xeno/utilites/cd extractor/.vs/cd extractor/v17
-/xeno/utilites/cd extractor/cd extractor.vcxproj.user
+/xeno/utilites/cd extractor/.vs
+/xeno/utilites/cd extractor/*.user
 /xeno/utilites/cd extractor/output/cdrom
 /xeno/utilites/field exporter/output/cdrom
-/xeno/utilites/field exporter/compile/debug
+/xeno/utilites/field exporter/compile
+/xeno/utilites/field exporter/.vs
+/xeno/utilites/field exporter/output/*.pdb
+/xeno/utilites/field exporter/*.user
