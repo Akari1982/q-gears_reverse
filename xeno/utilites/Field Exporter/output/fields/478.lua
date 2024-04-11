@@ -49,8 +49,8 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0046 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0049 0xfe
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x004d 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0049 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x004d 0xfe
         return 0 -- 0x0051 0x00
     end,
 
@@ -165,8 +165,8 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0153 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0156 0xfe
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x015a 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0156 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x015a 0xfe
         return 0 -- 0x015e 0x00
     end,
 
@@ -281,8 +281,8 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0260 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0263 0xfe
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0267 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0263 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0267 0xfe
         return 0 -- 0x026b 0x00
     end,
 
@@ -396,8 +396,8 @@ Entity[ "0x04" ] = {
 Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x0365 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0368 0xfe
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x036c 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x0368 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x036c 0xfe
         return 0 -- 0x0370 0x00
     end,
 
@@ -512,8 +512,8 @@ Entity[ "0x05" ] = {
 Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x0484 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0487 0xfe
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x048b 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x0487 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x048b 0xfe
         return 0 -- 0x048f 0x00
     end,
 
@@ -628,8 +628,8 @@ Entity[ "0x06" ] = {
 Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x0591 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x0594 0xfe
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x0598 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x0594 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x0598 0xfe
         return 0 -- 0x059c 0x00
     end,
 
@@ -744,8 +744,8 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x069e 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x06a1 0xfe
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x06a5 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x06a1 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x06a5 0xfe
         return 0 -- 0x06a9 0x00
     end,
 
@@ -860,8 +860,8 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x07ab 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x07ae 0xfe
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x07b2 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x07ae 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x07b2 0xfe
         return 0 -- 0x07b6 0x00
     end,
 
@@ -976,8 +976,8 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x08b8 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x08bb 0xfe
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x08bf 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x08bb 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x08bf 0xfe
         return 0 -- 0x08c3 0x00
     end,
 
@@ -1092,8 +1092,8 @@ Entity[ "0x0a" ] = {
 Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 14 ) -- 0x09c5 0x16
-        -- 0xFE0D_SetAvatar( character_id=14 ) -- 0x09c8 0xfe
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x09cc 0xfe
+        opcodeFE0D_SetAvatar( character_id=14 ) -- 0x09c8 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x09cc 0xfe
         return 0 -- 0x09d0 0x00
     end,
 
@@ -1204,8 +1204,8 @@ Entity[ "0x0b" ] = {
 Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x0a9f 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x0aa2 0xfe
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0aa6 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x0aa2 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0aa6 0xfe
         return 0 -- 0x0aaa 0x00
     end,
 
@@ -1525,11 +1525,13 @@ Entity[ "0x11" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x11, dialog_id=0x0003, ???=0x00 ) -- 0x0e80 0xd4
+        return 0 -- 0x0e86 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x11, dialog_id=0x0004, ???=0x00 ) -- 0x0e87 0xd4
+        return 0 -- 0x0e8d 0x00
     end,
 
     script_0x08 = function( self )

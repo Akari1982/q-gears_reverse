@@ -652,7 +652,7 @@
                           0x0002: not render background under text.
                           0x0004: not close window. If set to 0 - window set to close during update. If 0 then we move to next block in text queue.
                           0x0008: text ended via end of text or new window or wait text opcode (wait for player input).
-                          0x0010: remove when wait timer +84 ends.
+                          0x0010: wait flag (not set anywhere).
                           0x0020: reset text.
                           0x0040: text area is full.
                           0x0080: text pointer stored.

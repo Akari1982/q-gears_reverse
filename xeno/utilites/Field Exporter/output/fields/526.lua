@@ -30,7 +30,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x004e 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0051 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0051 0xfe
         return 0 -- 0x0055 0x00
     end,
 
@@ -54,7 +54,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0058 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x005b 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x005b 0xfe
         return 0 -- 0x005f 0x00
     end,
 
@@ -78,7 +78,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0062 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0065 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0065 0xfe
         return 0 -- 0x0069 0x00
     end,
 

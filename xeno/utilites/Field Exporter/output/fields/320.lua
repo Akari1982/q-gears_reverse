@@ -10,7 +10,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0021 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0024 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0024 0xfe
         -- 0x19_SetPosition( x=(vf80)0x0234, z=(vf40)0xfe89, flag=(flag)0xc0 ) -- 0x0028 0x19
         -- MISSING OPCODE 0x5f
     end,
@@ -70,7 +70,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0072 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0075 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0075 0xfe
         -- 0x19_SetPosition( x=(vf80)0xffa6, z=(vf40)0xfd27, flag=(flag)0xc0 ) -- 0x0079 0x19
         -- 0x23() -- 0x007f 0x23
         return 0 -- 0x0080 0x00
@@ -111,7 +111,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x00a8 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x00ab 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x00ab 0xfe
         -- 0x19_SetPosition( x=(vf80)0x021a, z=(vf40)0xfee3, flag=(flag)0xc0 ) -- 0x00af 0x19
         -- MISSING OPCODE 0x5f
     end,
@@ -157,7 +157,7 @@ Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 2 ) -- 0x00ef 0x0b
         -- 0x19_SetPosition( x=(vf80)0x012f, z=(vf40)0xff7b, flag=(flag)0xc0 ) -- 0x00f2 0x19
-        -- 0xFE0D_SetAvatar( character_id=18 ) -- 0x00f8 0xfe
+        opcodeFE0D_SetAvatar( character_id=18 ) -- 0x00f8 0xfe
         -- MISSING OPCODE 0x5f
     end,
 
@@ -398,7 +398,7 @@ Entity[ "0x0a" ] = {
         -- 0x19_SetPosition( x=(vf80)0xff96, z=(vf40)0x0228, flag=(flag)0xc0 ) -- 0x02b7 0x19
         -- 0x23() -- 0x02bd 0x23
         -- 0x2A() -- 0x02be 0x2a
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x02bf 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x02bf 0xfe
         return 0 -- 0x02c3 0x00
     end,
 
@@ -468,7 +468,10 @@ Entity[ "0x0c" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x05, dialog_id=0x0000, ???=0x12 ) -- 0x030c 0xd4
+        -- 0x07( entity=0x01, script=0xc4 ) -- 0x0312 0x07
+        -- 0x07( entity=0x03, script=0xc4 ) -- 0x0315 0x07
+        -- MISSING OPCODE 0xfc
     end,
 
     on_talk = function( self )

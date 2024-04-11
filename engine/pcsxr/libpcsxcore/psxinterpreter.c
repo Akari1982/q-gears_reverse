@@ -1335,14 +1335,14 @@ static void intShutdown() {
 
 // interpreter execution
 static inline void execI() {
-    if( psxRegs.pc == 0x8007F3E4 )
+    if( psxRegs.pc == 0x8007F9CC )
     {
-        char Text[ 256 ];
-        sprintf( Text, _( "FLAGS: 0x%x" ), psxRegs.GPR.n.t0 );
-        GPU_displayText( Text );
-        psxRegs.GPR.n.t0 |= 0x0800;
+        //char Text[ 256 ];
+        //sprintf( Text, _( "FLAGS: 0x%x" ), psxRegs.GPR.n.t0 );
+        //GPU_displayText( Text );
+        //psxRegs.GPR.n.t0 |= 0x0800;
 
-        //GPU_displayText("SKIP PART");
+        GPU_displayText("SKIP PART");
         //psxRegs.pc = 0x8007F918;
     }
 

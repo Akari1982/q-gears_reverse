@@ -39,7 +39,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x04ae 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x04b1 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x04b1 0xfe
         -- 0x84_ProgressLessEqualJumpTo( value=50, jump=0x04c0 ) -- 0x04b5 0x84
         -- 0x19_SetPosition( x=(vf80)0x0028, z=(vf40)0x0640, flag=(flag)0xc0 ) -- 0x04ba 0x19
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x04d3 ) -- 0x04c0 0x02
@@ -142,7 +142,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x05ac 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x05af 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x05af 0xfe
         -- 0x84_ProgressLessEqualJumpTo( value=50, jump=0x05be ) -- 0x05b3 0x84
         -- 0x19_SetPosition( x=(vf80)0xffd8, z=(vf40)0x0640, flag=(flag)0xc0 ) -- 0x05b8 0x19
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x05ce ) -- 0x05be 0x02
@@ -252,7 +252,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x06ac 0x0b
-        -- 0xFE0D_SetAvatar( character_id=74 ) -- 0x06af 0xfe
+        opcodeFE0D_SetAvatar( character_id=74 ) -- 0x06af 0xfe
         -- 0x19_SetPosition( x=(vf80)0x014f, z=(vf40)0x0087, flag=(flag)0xc0 ) -- 0x06b3 0x19
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00c0 ), value2=(s16)0x0080, condition="value1 & value2", jump_if_false=0x06c7 ) -- 0x06b9 0x02
         -- 0x19_SetPosition( x=(vf80)0xffe2, z=(vf40)0xfb50, flag=(flag)0xc0 ) -- 0x06c1 0x19

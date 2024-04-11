@@ -10,7 +10,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0052 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0055 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0055 0xfe
         -- 0x23() -- 0x0059 0x23
         return 0 -- 0x005a 0x00
     end,

@@ -32,7 +32,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0093 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0096 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0096 0xfe
         return 0 -- 0x009a 0x00
     end,
 
@@ -282,7 +282,7 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x1dc4 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x1dc7 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x1dc7 0xfe
         return 0 -- 0x1dcb 0x00
     end,
 
@@ -329,7 +329,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x1dfc 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x1dff 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x1dff 0xfe
         return 0 -- 0x1e03 0x00
     end,
 
@@ -376,7 +376,7 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x1e34 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x1e37 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x1e37 0xfe
         return 0 -- 0x1e3b 0x00
     end,
 
@@ -423,7 +423,7 @@ Entity[ "0x0a" ] = {
 Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x1e6c 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x1e6f 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x1e6f 0xfe
         return 0 -- 0x1e73 0x00
     end,
 
@@ -470,7 +470,7 @@ Entity[ "0x0b" ] = {
 Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x1ea4 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x1ea7 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x1ea7 0xfe
         return 0 -- 0x1eab 0x00
     end,
 
@@ -517,7 +517,7 @@ Entity[ "0x0c" ] = {
 Entity[ "0x0d" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x1edc 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x1edf 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x1edf 0xfe
         return 0 -- 0x1ee3 0x00
     end,
 
@@ -564,7 +564,7 @@ Entity[ "0x0d" ] = {
 Entity[ "0x0e" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x1f14 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x1f17 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x1f17 0xfe
         return 0 -- 0x1f1b 0x00
     end,
 
@@ -611,7 +611,7 @@ Entity[ "0x0e" ] = {
 Entity[ "0x0f" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x1f4c 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x1f4f 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x1f4f 0xfe
         return 0 -- 0x1f53 0x00
     end,
 
@@ -658,7 +658,7 @@ Entity[ "0x0f" ] = {
 Entity[ "0x10" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x1f84 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x1f87 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x1f87 0xfe
         return 0 -- 0x1f8b 0x00
     end,
 
@@ -700,7 +700,7 @@ Entity[ "0x10" ] = {
 Entity[ "0x11" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x1fb8 0x16
-        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x1fbb 0xfe
+        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x1fbb 0xfe
         return 0 -- 0x1fbf 0x00
     end,
 
@@ -818,7 +818,10 @@ Entity[ "0x14" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x03, dialog_id=0x00fc, ???=0x03 ) -- 0x2174 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x03, dialog_id=0x00fd, ???=0x03 ) -- 0x217a 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x03, dialog_id=0x00fe, ???=0x03 ) -- 0x2180 0xd4
+        -- MISSING OPCODE 0xfc
     end,
 
     script_0x05 = function( self )
@@ -830,7 +833,9 @@ Entity[ "0x14" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x03, dialog_id=0x0117, ???=0x03 ) -- 0x2334 0xd4
+        opcodeFE54() -- 0x233a 0xfe
+        return 0 -- 0x233c 0x00
     end,
 
     script_0x08 = function( self )

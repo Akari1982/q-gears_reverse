@@ -43,8 +43,26 @@ main()
             {
                 File* temp;
                 temp = sys_data->Extract( i );
+
                 Logger* exp = new Logger( save );
-                TextParse( exp, temp, 0 );
+
+                for( int i = 0; i < temp->GetFileSize(); i += 2 )
+                {
+                    File* file;
+                    u8 val = temp->GetU8( i );
+                    if( val == 0 )
+                    {
+                        file = new File( temp, i + 1, 1 );
+                    }
+                    else
+                    {
+                        file = new File( temp, i, 2 );
+                    }
+
+                    TextParse( exp, file, 0 );
+                    delete file;
+                }
+
                 delete temp;
             }
         }

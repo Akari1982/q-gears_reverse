@@ -35,7 +35,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0082 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0085 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0085 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x009b ) -- 0x0089 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -124,7 +124,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x013b 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x013e 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x013e 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -196,7 +196,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0220 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0223 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0223 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -259,7 +259,7 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x0288 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x028b 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x028b 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -310,7 +310,7 @@ Entity[ "0x04" ] = {
 Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x02e7 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x02ea 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x02ea 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -337,7 +337,7 @@ Entity[ "0x05" ] = {
 Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x0308 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x030b 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x030b 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0324 ) -- 0x030f 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -365,7 +365,7 @@ Entity[ "0x06" ] = {
 Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x033e 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x0341 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x0341 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -392,7 +392,7 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x035f 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x0362 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x0362 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x037b ) -- 0x0366 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -420,7 +420,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x0395 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x0398 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x0398 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x03b1 ) -- 0x039c 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -448,7 +448,7 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x03cb 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x03ce 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x03ce 0xfe
         return 0 -- 0x03d2 0x00
     end,
 
@@ -475,7 +475,7 @@ Entity[ "0x0a" ] = {
 Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x03e2 0x16
-        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x03e5 0xfe
+        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x03e5 0xfe
         return 0 -- 0x03e9 0x00
     end,
 
@@ -578,7 +578,7 @@ Entity[ "0x0e" ] = {
 Entity[ "0x0f" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 12 ) -- 0x0873 0x0b
-        -- 0xFE0D_SetAvatar( character_id=27 ) -- 0x0876 0xfe
+        opcodeFE0D_SetAvatar( character_id=27 ) -- 0x0876 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -617,7 +617,7 @@ Entity[ "0x0f" ] = {
 Entity[ "0x10" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 11 ) -- 0x089c 0x0b
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x089f 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x089f 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -679,7 +679,7 @@ Entity[ "0x11" ] = {
 Entity[ "0x12" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 4 ) -- 0x08e6 0x0b
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x08e9 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x08e9 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -718,7 +718,7 @@ Entity[ "0x12" ] = {
 Entity[ "0x13" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 3 ) -- 0x0914 0x0b
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0917 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x0917 0xfe
         -- MISSING OPCODE 0x69
     end,
 
@@ -765,7 +765,7 @@ Entity[ "0x13" ] = {
 Entity[ "0x14" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 2 ) -- 0x096e 0x0b
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0971 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x0971 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x098a ) -- 0x0975 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -789,7 +789,7 @@ Entity[ "0x14" ] = {
 Entity[ "0x15" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 6 ) -- 0x099f 0x0b
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x09a2 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x09a2 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x09bb ) -- 0x09a6 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -813,7 +813,7 @@ Entity[ "0x15" ] = {
 Entity[ "0x16" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 7 ) -- 0x09d0 0x0b
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x09d3 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x09d3 0xfe
         -- MISSING OPCODE 0x1b
     end,
 
@@ -836,7 +836,7 @@ Entity[ "0x16" ] = {
 Entity[ "0x17" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 10 ) -- 0x09ec 0x0b
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x09ef 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x09ef 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0a08 ) -- 0x09f3 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -860,7 +860,7 @@ Entity[ "0x17" ] = {
 Entity[ "0x18" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 9 ) -- 0x0a20 0x0b
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x0a23 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x0a23 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0a3c ) -- 0x0a27 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -884,7 +884,7 @@ Entity[ "0x18" ] = {
 Entity[ "0x19" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x0a51 0x0b
-        -- 0xFE0D_SetAvatar( character_id=18 ) -- 0x0a54 0xfe
+        opcodeFE0D_SetAvatar( character_id=18 ) -- 0x0a54 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0a6d ) -- 0x0a58 0x02
         -- MISSING OPCODE 0x1b
     end,
@@ -917,7 +917,7 @@ Entity[ "0x19" ] = {
 Entity[ "0x1a" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0a8b 0x0b
-        -- 0xFE0D_SetAvatar( character_id=19 ) -- 0x0a8e 0xfe
+        opcodeFE0D_SetAvatar( character_id=19 ) -- 0x0a8e 0xfe
         -- MISSING OPCODE 0x69
     end,
 

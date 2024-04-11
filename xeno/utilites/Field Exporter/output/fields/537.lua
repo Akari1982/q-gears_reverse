@@ -24,7 +24,8 @@ Entity[ "0x00" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x03, dialog_id=0x0000, ???=0x12 ) -- 0x0032 0xd4
+        return 0 -- 0x0038 0x00
     end,
 
 }
@@ -34,7 +35,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0039 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x003c 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x003c 0xfe
         return 0 -- 0x0040 0x00
     end,
 
@@ -89,7 +90,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x00d0 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x00d3 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x00d3 0xfe
         return 0 -- 0x00d7 0x00
     end,
 
@@ -132,7 +133,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x016a 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x016d 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x016d 0xfe
         return 0 -- 0x0171 0x00
     end,
 
@@ -209,7 +210,7 @@ Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 3 ) -- 0x0235 0x0b
         -- 0x2A() -- 0x0238 0x2a
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0239 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x0239 0xfe
         return 0 -- 0x023d 0x00
     end,
 
@@ -278,7 +279,7 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 4 ) -- 0x02a2 0x0b
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x02a5 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x02a5 0xfe
         -- 0x2A() -- 0x02a9 0x2a
         return 0 -- 0x02aa 0x00
     end,
@@ -302,7 +303,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 8 ) -- 0x02c9 0x0b
-        -- 0xFE0D_SetAvatar( character_id=78 ) -- 0x02cc 0xfe
+        opcodeFE0D_SetAvatar( character_id=78 ) -- 0x02cc 0xfe
         -- 0x2A() -- 0x02d0 0x2a
         return 0 -- 0x02d1 0x00
     end,

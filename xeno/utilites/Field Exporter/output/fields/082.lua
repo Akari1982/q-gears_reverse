@@ -31,7 +31,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x003e ) ) -- 0x0045 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x0048 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x0048 0xfe
         -- 0x20_SpriteSetSolid() -- 0x004c 0x20
         -- 0x2A() -- 0x004f 0x2a
         return 0 -- 0x0050 0x00
@@ -57,7 +57,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0040 ) ) -- 0x0053 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x0056 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x0056 0xfe
         -- 0x20_SpriteSetSolid() -- 0x005a 0x20
         -- 0x2A() -- 0x005d 0x2a
         return 0 -- 0x005e 0x00
@@ -83,7 +83,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0042 ) ) -- 0x0061 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x0064 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x0064 0xfe
         -- 0x20_SpriteSetSolid() -- 0x0068 0x20
         -- 0x2A() -- 0x006b 0x2a
         return 0 -- 0x006c 0x00

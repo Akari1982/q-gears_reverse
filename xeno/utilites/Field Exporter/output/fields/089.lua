@@ -56,8 +56,8 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x027c 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x027f 0xfe
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0283 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x027f 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0283 0xfe
         return 0 -- 0x0287 0x00
     end,
 
@@ -81,8 +81,8 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x028b 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x028e 0xfe
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0292 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x028e 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0292 0xfe
         -- MISSING OPCODE 0xFE07
     end,
 
@@ -106,8 +106,8 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x029d 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x02a0 0xfe
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x02a4 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x02a0 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x02a4 0xfe
         return 0 -- 0x02a8 0x00
     end,
 
@@ -132,7 +132,7 @@ Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x02ac 0x0b
         -- 0x19_SetPosition( x=(vf80)0x000a, z=(vf40)0xff9c, flag=(flag)0xc0 ) -- 0x02af 0x19
-        -- 0xFE0D_SetAvatar( character_id=27 ) -- 0x02b5 0xfe
+        opcodeFE0D_SetAvatar( character_id=27 ) -- 0x02b5 0xfe
         return 0 -- 0x02b9 0x00
     end,
 
@@ -157,7 +157,7 @@ Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x02bd 0x0b
         -- 0x19_SetPosition( x=(vf80)0xfff6, z=(vf40)0xff9c, flag=(flag)0xc0 ) -- 0x02c0 0x19
-        -- 0xFE0D_SetAvatar( character_id=19 ) -- 0x02c6 0xfe
+        opcodeFE0D_SetAvatar( character_id=19 ) -- 0x02c6 0xfe
         return 0 -- 0x02ca 0x00
     end,
 

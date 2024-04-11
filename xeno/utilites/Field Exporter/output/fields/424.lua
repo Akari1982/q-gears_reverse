@@ -78,7 +78,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x01dc 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x01df 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x01df 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01ac, condition="value1 == value2", jump_if_false=0x01f2 ) -- 0x01e3 0x02
         -- MISSING OPCODE 0x1d
     end,
@@ -145,7 +145,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x02c9 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x02cc 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x02cc 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x02d0 0x05
         return 0 -- 0x02d3 0x00
     end,
@@ -210,7 +210,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x02f7 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x02fa 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x02fa 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x02fe 0x05
         return 0 -- 0x0301 0x00
     end,
@@ -275,7 +275,7 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x0325 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0328 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x0328 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x032c 0x05
         return 0 -- 0x032f 0x00
     end,
@@ -340,7 +340,7 @@ Entity[ "0x04" ] = {
 Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x0353 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x0356 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x0356 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x035a 0x05
         return 0 -- 0x035d 0x00
     end,
@@ -405,7 +405,7 @@ Entity[ "0x05" ] = {
 Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x0381 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0384 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x0384 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x0388 0x05
         return 0 -- 0x038b 0x00
     end,
@@ -470,7 +470,7 @@ Entity[ "0x06" ] = {
 Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x03af 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x03b2 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x03b2 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x03b6 0x05
         return 0 -- 0x03b9 0x00
     end,
@@ -535,7 +535,7 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x03dd 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x03e0 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x03e0 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x03e4 0x05
         return 0 -- 0x03e7 0x00
     end,
@@ -600,7 +600,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x040b 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x040e 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x040e 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x0412 0x05
         return 0 -- 0x0415 0x00
     end,
@@ -665,7 +665,7 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x0439 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x043c 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x043c 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x0440 0x05
         return 0 -- 0x0443 0x00
     end,
@@ -730,7 +730,7 @@ Entity[ "0x0a" ] = {
 Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x0467 0x16
-        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x046a 0xfe
+        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x046a 0xfe
         -- 0x05_CallFunction( 0x01e3 ) -- 0x046e 0x05
         return 0 -- 0x0471 0x00
     end,

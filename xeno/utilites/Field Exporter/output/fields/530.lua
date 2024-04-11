@@ -30,7 +30,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0031 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0034 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0034 0xfe
         return 0 -- 0x0038 0x00
     end,
 
@@ -54,7 +54,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x003c 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x003f 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x003f 0xfe
         return 0 -- 0x0043 0x00
     end,
 
@@ -78,7 +78,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0046 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0049 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0049 0xfe
         return 0 -- 0x004d 0x00
     end,
 
@@ -405,7 +405,8 @@ Entity[ "0x0f" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x0469 ) -- 0x045b 0x02
         -- 0x05_CallFunction( 0x002b ) -- 0x0463 0x05
         -- 0x01_JumpTo( 0x0475 ) -- 0x0466 0x01
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x04, dialog_id=0x0014, ???=0x00 ) -- 0x0469 0xd4
+        -- MISSING OPCODE 0xFE59
     end,
 
     on_push = function( self )
@@ -431,7 +432,8 @@ Entity[ "0x10" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x04a2 ) -- 0x0494 0x02
         -- 0x05_CallFunction( 0x002b ) -- 0x049c 0x05
         -- 0x01_JumpTo( 0x04ae ) -- 0x049f 0x01
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x05, dialog_id=0x0015, ???=0x00 ) -- 0x04a2 0xd4
+        -- MISSING OPCODE 0xFE59
     end,
 
     on_push = function( self )
@@ -456,7 +458,8 @@ Entity[ "0x11" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x04d9 ) -- 0x04cb 0x02
         -- 0x05_CallFunction( 0x002b ) -- 0x04d3 0x05
         -- 0x01_JumpTo( 0x051b ) -- 0x04d6 0x01
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x06, dialog_id=0x0016, ???=0x00 ) -- 0x04d9 0xd4
+        -- MISSING OPCODE 0x13
     end,
 
     on_push = function( self )
@@ -613,7 +616,8 @@ Entity[ "0x18" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x01, dialog_id=0x001b, ???=0x02 ) -- 0x05e0 0xd4
+        return 0 -- 0x05e6 0x00
     end,
 
     on_push = function( self )

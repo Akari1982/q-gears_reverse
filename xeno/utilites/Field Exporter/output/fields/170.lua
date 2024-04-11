@@ -73,11 +73,11 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=65 ) -- 0x00fd 0xfe
+        opcodeFE0D_SetAvatar( character_id=65 ) -- 0x00fd 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0000, flag=0xa9 ) -- 0x0101 0xf5
         -- 0x9C() -- 0x0105 0x9c
         -- 0x07( entity=0x03, script=0x06 ) -- 0x0106 0x07
-        -- 0xFE0D_SetAvatar( character_id=67 ) -- 0x0109 0xfe
+        opcodeFE0D_SetAvatar( character_id=67 ) -- 0x0109 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0001, flag=0xa9 ) -- 0x010d 0xf5
         -- 0x9C() -- 0x0111 0x9c
         opcode26_Wait( time=30 ) -- 0x0112 0x26
@@ -87,71 +87,71 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x011b 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x011b 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0003, flag=0xa1 ) -- 0x011f 0xf5
         -- 0x9C() -- 0x0123 0x9c
-        -- 0xFE0D_SetAvatar( character_id=69 ) -- 0x0124 0xfe
+        opcodeFE0D_SetAvatar( character_id=69 ) -- 0x0124 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0004, flag=0xa5 ) -- 0x0128 0xf5
         -- 0x9C() -- 0x012c 0x9c
         return 0 -- 0x012d 0x00
     end,
 
     script_0x06 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x012e 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x012e 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0005, flag=0xa9 ) -- 0x0132 0xf5
         -- 0x9C() -- 0x0136 0x9c
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0137 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0137 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0006, flag=0xa5 ) -- 0x013b 0xf5
         -- 0x9C() -- 0x013f 0x9c
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x0140 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x0140 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0007, flag=0xa9 ) -- 0x0144 0xf5
         -- 0x9C() -- 0x0148 0x9c
         -- MISSING OPCODE 0x67
     end,
 
     script_0x07 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x015e 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x015e 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0009, flag=0xa9 ) -- 0x0162 0xf5
         -- 0x9C() -- 0x0166 0x9c
         opcode26_Wait( time=30 ) -- 0x0167 0x26
         -- 0x07( entity=0x05, script=0x09 ) -- 0x016a 0x07
         opcode26_Wait( time=10 ) -- 0x016d 0x26
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x0170 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x0170 0xfe
         opcodeF5_MessageShow3( dialog_id=0x000a, flag=0xa5 ) -- 0x0174 0xf5
         -- 0x9C() -- 0x0178 0x9c
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0179 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0179 0xfe
         opcodeF5_MessageShow3( dialog_id=0x000b, flag=0xa9 ) -- 0x017d 0xf5
         -- 0x9C() -- 0x0181 0x9c
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x0182 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x0182 0xfe
         opcodeF5_MessageShow3( dialog_id=0x000c, flag=0xa5 ) -- 0x0186 0xf5
         -- 0x9C() -- 0x018a 0x9c
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x018b 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x018b 0xfe
         opcodeF5_MessageShow3( dialog_id=0x000d, flag=0xa9 ) -- 0x018f 0xf5
         -- 0x9C() -- 0x0193 0x9c
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x0194 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x0194 0xfe
         opcodeF5_MessageShow3( dialog_id=0x000e, flag=0xa5 ) -- 0x0198 0xf5
         -- 0x9C() -- 0x019c 0x9c
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x019d 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x019d 0xfe
         opcodeF5_MessageShow3( dialog_id=0x000f, flag=0xa9 ) -- 0x01a1 0xf5
         -- 0x9C() -- 0x01a5 0x9c
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x01a6 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x01a6 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0010, flag=0xa5 ) -- 0x01aa 0xf5
         -- 0x9C() -- 0x01ae 0x9c
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x01af 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x01af 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0011, flag=0xa9 ) -- 0x01b3 0xf5
         -- 0x9C() -- 0x01b7 0x9c
         -- 0x07( entity=0x05, script=0x08 ) -- 0x01b8 0x07
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x01bb 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x01bb 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0012, flag=0xa5 ) -- 0x01bf 0xf5
         -- 0x9C() -- 0x01c3 0x9c
         opcode26_Wait( time=60 ) -- 0x01c4 0x26
         -- 0x07( entity=0x05, script=0x09 ) -- 0x01c7 0x07
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x01ca 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x01ca 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0013, flag=0xa5 ) -- 0x01ce 0xf5
         -- 0x9C() -- 0x01d2 0x9c
         opcode09_EntityCallScriptEW( entity=0x05, script=07, priority=00 ) -- 0x01d3 0x09
         opcode26_Wait( time=10 ) -- 0x01d6 0x26
-        -- 0xFE0D_SetAvatar( character_id=11 ) -- 0x01d9 0xfe
+        opcodeFE0D_SetAvatar( character_id=11 ) -- 0x01d9 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0014, flag=0xa5 ) -- 0x01dd 0xf5
         -- 0x9C() -- 0x01e1 0x9c
         -- 0xB4_FadeIn() -- 0x01e2 0xb4
@@ -220,7 +220,7 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x03d5 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x03d8 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x03d8 0xfe
         -- 0x86_ProgressNotEqualJumpTo( value=120, jump=0x03f3 ) -- 0x03dc 0x86
         -- MISSING OPCODE 0xFE03
     end,

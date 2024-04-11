@@ -10,7 +10,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0006 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0009 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0009 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0020 ) -- 0x000d 0x02
         -- 0x19_SetPosition( x=(vf80)0x06a4, z=(vf40)0xff43, flag=(flag)0xc0 ) -- 0x0015 0x19
         -- MISSING OPCODE 0x5f

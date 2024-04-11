@@ -10,7 +10,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0d56 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0d59 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0d59 0xfe
         -- 0x19_SetPosition( x=(vf80)0xff69, z=(vf40)0x06ee, flag=(flag)0xc0 ) -- 0x0d5d 0x19
         -- 0x20_SpriteSetSolid() -- 0x0d63 0x20
         -- MISSING OPCODE 0x69
@@ -120,7 +120,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0ef3 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0ef6 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0ef6 0xfe
         -- 0x19_SetPosition( x=(vf80)0xff4f, z=(vf40)0x05aa, flag=(flag)0xc0 ) -- 0x0efa 0x19
         -- MISSING OPCODE 0x69
     end,
@@ -540,7 +540,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x17f0 0x0b
-        -- 0xFE0D_SetAvatar( character_id=20 ) -- 0x17f3 0xfe
+        opcodeFE0D_SetAvatar( character_id=20 ) -- 0x17f3 0xfe
         -- 0x19_SetPosition( x=(vf80)0xff52, z=(vf40)0x038f, flag=(flag)0xc0 ) -- 0x17f7 0x19
         -- MISSING OPCODE 0x69
     end,
@@ -726,7 +726,7 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 4 ) -- 0x1b12 0x0b
-        -- 0xFE0D_SetAvatar( character_id=17 ) -- 0x1b15 0xfe
+        opcodeFE0D_SetAvatar( character_id=17 ) -- 0x1b15 0xfe
         -- 0x19_SetPosition( x=(vf80)0xff85, z=(vf40)0x039d, flag=(flag)0xc0 ) -- 0x1b19 0x19
         -- MISSING OPCODE 0x69
     end,
@@ -1731,7 +1731,7 @@ Entity[ "0x1f" ] = {
 
     script_0x05 = function( self )
         opcode26_Wait( time=30 ) -- 0x2ac4 0x26
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x2ac7 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x2ac7 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0034, flag=0x29 ) -- 0x2acb 0xf5
         -- 0x9C() -- 0x2acf 0x9c
         -- MISSING OPCODE 0x36

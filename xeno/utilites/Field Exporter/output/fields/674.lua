@@ -28,7 +28,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0051 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0054 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0054 0xfe
         return 0 -- 0x0058 0x00
     end,
 
@@ -75,7 +75,7 @@ Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0082 0x0b
         -- 0x19_SetPosition( x=(vf80)0x00b3, z=(vf40)0x000c, flag=(flag)0xc0 ) -- 0x0085 0x19
-        -- 0xFE0D_SetAvatar( character_id=51 ) -- 0x008b 0xfe
+        opcodeFE0D_SetAvatar( character_id=51 ) -- 0x008b 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x009c ) -- 0x008f 0x02
         -- MISSING OPCODE 0x5f
     end,
@@ -167,7 +167,7 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 2 ) -- 0x011b 0x0b
-        -- 0xFE0D_SetAvatar( character_id=61 ) -- 0x011e 0xfe
+        opcodeFE0D_SetAvatar( character_id=61 ) -- 0x011e 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0133 ) -- 0x0122 0x02
         -- 0x19_SetPosition( x=(vf80)0xff35, z=(vf40)0x001c, flag=(flag)0xc0 ) -- 0x012a 0x19
         -- 0x01_JumpTo( 0x013b ) -- 0x0130 0x01

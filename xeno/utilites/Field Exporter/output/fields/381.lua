@@ -76,7 +76,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x00ef 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x00f2 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x00f2 0xfe
         -- 0x86_ProgressNotEqualJumpTo( value=234, jump=0x0109 ) -- 0x00f6 0x86
         -- MISSING OPCODE 0xFE1c
     end,

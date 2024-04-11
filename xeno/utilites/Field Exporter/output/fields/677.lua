@@ -29,7 +29,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x005d 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0060 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0060 0xfe
         return 0 -- 0x0064 0x00
     end,
 
@@ -115,7 +115,7 @@ Entity[ "0x04" ] = {
 
     on_update = function( self )
         opcode26_Wait( time=200 ) -- 0x0164 0x26
-        -- 0xFE0D_SetAvatar( character_id=51 ) -- 0x0167 0xfe
+        opcodeFE0D_SetAvatar( character_id=51 ) -- 0x0167 0xfe
         opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x016b 0xd2
         -- 0x9C() -- 0x016f 0x9c
         opcode26_Wait( time=60 ) -- 0x0170 0x26

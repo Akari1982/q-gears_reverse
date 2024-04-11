@@ -29,7 +29,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0027 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x002a 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x002a 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0037 ) -- 0x002e 0x02
         -- 0x23() -- 0x0036 0x23
         return 0 -- 0x0037 0x00
@@ -68,7 +68,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x007c 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x007f 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x007f 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x008c ) -- 0x0083 0x02
         -- 0x23() -- 0x008b 0x23
         -- 0x2A() -- 0x008c 0x2a

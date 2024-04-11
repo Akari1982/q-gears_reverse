@@ -54,7 +54,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0110 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0113 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0113 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01d8, condition="value1 == value2", jump_if_false=0x0128 ) -- 0x0117 0x02
         -- MISSING OPCODE 0xFE1c
     end,
@@ -113,7 +113,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x019f 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x01a2 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x01a2 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01d8, condition="value1 == value2", jump_if_false=0x01da ) -- 0x01a6 0x02
         -- MISSING OPCODE 0xFE8b
     end,
@@ -178,7 +178,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x027b 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x027e 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x027e 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x0282 0x01
         return 0 -- 0x0285 0x00
     end,
@@ -235,7 +235,7 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x02c6 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x02c9 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x02c9 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x02cd 0x01
         return 0 -- 0x02d0 0x00
     end,
@@ -292,7 +292,7 @@ Entity[ "0x04" ] = {
 Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x0311 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x0314 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x0314 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x0318 0x01
         return 0 -- 0x031b 0x00
     end,
@@ -349,7 +349,7 @@ Entity[ "0x05" ] = {
 Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x035c 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x035f 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x035f 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x0363 0x01
         return 0 -- 0x0366 0x00
     end,
@@ -406,7 +406,7 @@ Entity[ "0x06" ] = {
 Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x03a7 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x03aa 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x03aa 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x03ae 0x01
         return 0 -- 0x03b1 0x00
     end,
@@ -463,7 +463,7 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x03f2 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x03f5 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x03f5 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x03f9 0x01
         return 0 -- 0x03fc 0x00
     end,
@@ -520,7 +520,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x043d 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x0440 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x0440 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x0444 0x01
         return 0 -- 0x0447 0x00
     end,
@@ -577,7 +577,7 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x0488 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x048b 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x048b 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x048f 0x01
         return 0 -- 0x0492 0x00
     end,
@@ -634,7 +634,7 @@ Entity[ "0x0a" ] = {
 Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x04d3 0x16
-        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x04d6 0xfe
+        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x04d6 0xfe
         -- 0x01_JumpTo( 0x01a6 ) -- 0x04da 0x01
         return 0 -- 0x04dd 0x00
     end,

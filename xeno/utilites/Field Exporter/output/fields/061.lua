@@ -170,7 +170,7 @@ Entity[ "0x04" ] = {
 Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0273 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0276 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0276 0xfe
         -- 0x2A() -- 0x027a 0x2a
         -- 0x23() -- 0x027b 0x23
         return 0 -- 0x027c 0x00
@@ -195,8 +195,8 @@ Entity[ "0x05" ] = {
 Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x027f 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0282 0xfe
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0286 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0282 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0286 0xfe
         -- 0x2A() -- 0x028a 0x2a
         -- 0x19_SetPosition( x=(vf80)0x0127, z=(vf40)0x0417, flag=(flag)0xc0 ) -- 0x028b 0x19
         -- MISSING OPCODE 0x5f

@@ -577,11 +577,11 @@ while( A2 != ffff )
 
 
 ////////////////////////////////
-// func33958
-80033958	addiu  sp, sp, $fff8 (=-$8)
+// func33958()
+
 V0 = w[800589fc];
 80033964	nop
-T0 = w[V0 + 006c];
+T0 = w[V0 + 6c];
 8003396C	beq    a2, zero, L339c0 [$800339c0]
 80033970	addiu  a3, a2, $ffff (=-$1)
 80033974	addiu  a2, zero, $ffff (=-$1)
@@ -612,11 +612,13 @@ A1 = A1 + 0001;
 
 L339c0:	; 800339C0
 [A1 + 0000] = b(0);
-SP = SP + 0008;
-800339C8	jr     ra 
-800339CC	nop
 ////////////////////////////////
-// func339d0
+
+
+
+////////////////////////////////
+// func339d0()
+
 A3 = 0;
 A0 = A0 & 00ff;
 V0 = w[800589fc];
@@ -649,14 +651,12 @@ V0 = A3 << 10;
 V0 = 8000;
 
 L33a3c:	; 80033A3C
-80033A3C	jr     ra 
-80033A40	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func33a44
+// func33a44()
 
 S0 = A0;
 S1 = A1;
@@ -1634,7 +1634,9 @@ if( h[offset_18 + 84] == 0 ) // global
     {
         [offset_18 + 86] = h(hu[offset_18 + 88]);
 
-        // there is no wait for player input
+        // no wait for player input 0008
+        // no ???                   0010
+        // no full textarea         0040
         if( ( hu[offset_18 + 10] & 0058 ) == 0 )
         {
             A0 = offset_18;
@@ -1661,7 +1663,7 @@ if( h[offset_18 + 84] != 0 ) // wait
 
     if( h[offset_18 + 84] == -1 )
     {
-        [offset_18 + 10] = h(hu[offset_18 + 10] & ffef); // remove 0x0010
+        [offset_18 + 10] = h(hu[offset_18 + 10] & ffef); // remove 0010
     }
 }
 

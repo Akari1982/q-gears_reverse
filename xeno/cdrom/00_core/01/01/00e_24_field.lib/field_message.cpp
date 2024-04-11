@@ -1193,9 +1193,6 @@ for( int i = 0; i < 4; ++i )
                         {
                             if( hu[800c1b6c + j * 498 + 410] == 0 ) // top window
                             {
-
-address inside 8007F9CC
-
                                 [800c1b6c + j * 498 + 37c] = h(-1); // disable cursor
 
                                 owner_id = h[800c1b6c + j * 498 + 416];

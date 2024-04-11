@@ -10,7 +10,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x00e4 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x00e7 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x00e7 0xfe
         -- MISSING OPCODE 0x21
     end,
 
@@ -714,7 +714,8 @@ Entity[ "0x15" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x11b0 ) -- 0x0f34 0x02
         -- 0x75() -- 0x0f3c 0x75
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x01, dialog_id=0x0007, ???=0x62 ) -- 0x0f3f 0xd4
+        -- MISSING OPCODE 0xb5
     end,
 
     on_talk = function( self )

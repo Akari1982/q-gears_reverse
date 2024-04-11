@@ -397,7 +397,7 @@ Entity[ "0x0d" ] = {
 Entity[ "0x0e" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0669 0xbc
-        -- 0xFE0D_SetAvatar( character_id=26 ) -- 0x066a 0xfe
+        opcodeFE0D_SetAvatar( character_id=26 ) -- 0x066a 0xfe
         -- MISSING OPCODE 0xFE1c
     end,
 

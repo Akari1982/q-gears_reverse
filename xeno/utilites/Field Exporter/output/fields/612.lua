@@ -37,7 +37,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0067 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x006a 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x006a 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c0 ), value2=(s16)0x8000, condition="value1 & value2", jump_if_false=0x0079 ) -- 0x006e 0x02
         -- MISSING OPCODE 0x29
     end,
@@ -87,7 +87,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x00d9 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x00dc 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x00dc 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c0 ), value2=(s16)0x8000, condition="value1 & value2", jump_if_false=0x00eb ) -- 0x00e0 0x02
         -- MISSING OPCODE 0x29
     end,

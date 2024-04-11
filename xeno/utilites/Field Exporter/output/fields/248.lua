@@ -10,7 +10,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0093 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0096 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0096 0xfe
         -- MISSING OPCODE 0xFE1c
     end,
 
@@ -34,7 +34,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x00a8 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x00ab 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x00ab 0xfe
         -- MISSING OPCODE 0xFE1c
     end,
 
@@ -197,7 +197,30 @@ Entity[ "0x07" ] = {
         opcode09_EntityCallScriptEW( entity=0x06, script=05, priority=01 ) -- 0x01df 0x09
         -- 0xF1() -- 0x01e2 0xf1
         opcode26_Wait( time=200 ) -- 0x01ed 0x26
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x02, dialog_id=0x0000, ???=0x52 ) -- 0x01f0 0xd4
+        opcode26_Wait( time=10 ) -- 0x01f6 0x26
+        opcodeFE9B_SlideShow1( steps=100 ) -- 0x01f9 0xfe
+        -- 0x5A() -- 0x01fd 0x5a
+        -- 0x07( entity=0x00, script=0x44 ) -- 0x01fe 0x07
+        opcode09_EntityCallScriptEW( entity=0x08, script=05, priority=01 ) -- 0x0201 0x09
+        opcode26_Wait( time=100 ) -- 0x0204 0x26
+        opcodeD4_MessageShowE( entity=(entity)0x05, dialog_id=0x0001, ???=0x63 ) -- 0x0207 0xd4
+        opcode09_EntityCallScriptEW( entity=0x06, script=06, priority=01 ) -- 0x020d 0x09
+        opcodeFE9B_SlideShow1( steps=80 ) -- 0x0210 0xfe
+        -- 0x5A() -- 0x0214 0x5a
+        -- 0x07( entity=0x06, script=0x27 ) -- 0x0215 0x07
+        -- 0x07( entity=0x00, script=0x25 ) -- 0x0218 0x07
+        opcode09_EntityCallScriptEW( entity=0x08, script=04, priority=01 ) -- 0x021b 0x09
+        -- 0xF1() -- 0x021e 0xf1
+        opcode26_Wait( time=50 ) -- 0x0229 0x26
+        -- 0x07( entity=0x06, script=0x28 ) -- 0x022c 0x07
+        opcode26_Wait( time=29 ) -- 0x022f 0x26
+        opcodeD4_MessageShowE( entity=(entity)0x02, dialog_id=0x0002, ???=0x52 ) -- 0x0232 0xd4
+        -- 0xF1() -- 0x0238 0xf1
+        opcode26_Wait( time=90 ) -- 0x0243 0x26
+        -- 0x07( entity=0x08, script=0x26 ) -- 0x0246 0x07
+        opcode26_Wait( time=1 ) -- 0x0249 0x26
+        -- MISSING OPCODE 0xFE66
     end,
 
     on_talk = function( self )

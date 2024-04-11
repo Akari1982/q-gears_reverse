@@ -142,8 +142,8 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x02b2 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x02b5 0xfe
-        -- 0xFE0D_SetAvatar( character_id=32 ) -- 0x02b9 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x02b5 0xfe
+        opcodeFE0D_SetAvatar( character_id=32 ) -- 0x02b9 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0140 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x02d4 ) -- 0x02bd 0x02
         -- 0x19_SetPosition( x=(vf80)0x00dc, z=(vf40)0xfe5c, flag=(flag)0xc0 ) -- 0x02c5 0x19
         -- 0x35() -- 0x02cb 0x35

@@ -147,7 +147,7 @@ Entity[ "0x04" ] = {
 Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x059c 0xbc
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x059d 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x059d 0xfe
         return 0 -- 0x05a1 0x00
     end,
 
@@ -182,8 +182,8 @@ Entity[ "0x05" ] = {
 Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x05cf 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x05d2 0xfe
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x05d6 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x05d2 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x05d6 0xfe
         return 0 -- 0x05da 0x00
     end,
 
@@ -206,7 +206,7 @@ Entity[ "0x06" ] = {
 Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x05fb 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x05fe 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x05fe 0xfe
         -- MISSING OPCODE 0x2c
     end,
 
@@ -229,7 +229,7 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x0626 0xbc
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0627 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0627 0xfe
         return 0 -- 0x062b 0x00
     end,
 
@@ -297,7 +297,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x067f 0xbc
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x0680 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x0680 0xfe
         -- MISSING OPCODE 0x2c
     end,
 
@@ -350,8 +350,8 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x06c6 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x06c9 0xfe
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x06cd 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x06c9 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x06cd 0xfe
         -- MISSING OPCODE 0x2c
     end,
 

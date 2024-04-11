@@ -37,7 +37,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x023d 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0240 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0240 0xfe
         -- MISSING OPCODE 0xFE07
     end,
 
@@ -1672,7 +1672,7 @@ Entity[ "0x3a" ] = {
 Entity[ "0x3b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x20e6 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x20e9 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x20e9 0xfe
         return 0 -- 0x20ed 0x00
     end,
 
@@ -1696,7 +1696,7 @@ Entity[ "0x3b" ] = {
 Entity[ "0x3c" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x20f1 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x20f4 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x20f4 0xfe
         return 0 -- 0x20f8 0x00
     end,
 
@@ -1779,7 +1779,7 @@ Entity[ "0x3c" ] = {
 Entity[ "0x3d" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x2253 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x2256 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x2256 0xfe
         return 0 -- 0x225a 0x00
     end,
 
@@ -1803,7 +1803,7 @@ Entity[ "0x3d" ] = {
 Entity[ "0x3e" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x225e 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x2261 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x2261 0xfe
         return 0 -- 0x2265 0x00
     end,
 
@@ -1827,7 +1827,7 @@ Entity[ "0x3e" ] = {
 Entity[ "0x3f" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x2269 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x226c 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x226c 0xfe
         -- 0xD0() -- 0x2270 0xd0
         return 0 -- 0x227b 0x00
     end,
@@ -1857,7 +1857,7 @@ Entity[ "0x3f" ] = {
 Entity[ "0x40" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x2298 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x229b 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x229b 0xfe
         return 0 -- 0x229f 0x00
     end,
 
@@ -1881,7 +1881,7 @@ Entity[ "0x40" ] = {
 Entity[ "0x41" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x22a3 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x22a6 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x22a6 0xfe
         return 0 -- 0x22aa 0x00
     end,
 
@@ -1905,7 +1905,7 @@ Entity[ "0x41" ] = {
 Entity[ "0x42" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x22ae 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x22b1 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x22b1 0xfe
         return 0 -- 0x22b5 0x00
     end,
 
@@ -1929,7 +1929,7 @@ Entity[ "0x42" ] = {
 Entity[ "0x43" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x22b9 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x22bc 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x22bc 0xfe
         return 0 -- 0x22c0 0x00
     end,
 
@@ -1953,7 +1953,7 @@ Entity[ "0x43" ] = {
 Entity[ "0x44" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x22c4 0x16
-        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x22c7 0xfe
+        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x22c7 0xfe
         return 0 -- 0x22cb 0x00
     end,
 
@@ -2153,28 +2153,47 @@ Entity[ "0x48" ] = {
     end,
 
     script_0x0f = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x29, dialog_id=0x0081, ???=0x03 ) -- 0x2579 0xd4
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x4000, condition="value1 & value2", jump_if_false=0x259c ) -- 0x257f 0x02
+        -- MISSING OPCODE 0xfc
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x2a, dialog_id=0x0086, ???=0x03 ) -- 0x25b0 0xd4
+        -- MISSING OPCODE 0xfc
     end,
 
     script_0x11 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x2b, dialog_id=0x0088, ???=0x03 ) -- 0x25bd 0xd4
+        -- MISSING OPCODE 0xfc
     end,
 
     script_0x12 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x29, dialog_id=0x008a, ???=0x03 ) -- 0x25ca 0xd4
+        opcodeFE54() -- 0x25d0 0xfe
+        return 0 -- 0x25d2 0x00
     end,
 
     script_0x13 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x2a, dialog_id=0x008b, ???=0x03 ) -- 0x25d3 0xd4
+        return 0 -- 0x25d9 0x00
     end,
 
     script_0x14 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0080, condition="value1 & value2", jump_if_false=0x25eb ) -- 0x25da 0x02
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x2b, dialog_id=0x008c, ???=0x03 ) -- 0x25e2 0xd4
+        -- 0x01_JumpTo( 0x2624 ) -- 0x25e8 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x25fc ) -- 0x25eb 0x02
+        opcodeD4_MessageShowE( entity=(entity)0x2b, dialog_id=0x008d, ???=0x03 ) -- 0x25f3 0xd4
+        -- 0x01_JumpTo( 0x2624 ) -- 0x25f9 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x260d ) -- 0x25fc 0x02
+        opcodeD4_MessageShowE( entity=(entity)0x2b, dialog_id=0x008e, ???=0x03 ) -- 0x2604 0xd4
+        -- 0x01_JumpTo( 0x2624 ) -- 0x260a 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0242 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x261e ) -- 0x260d 0x02
+        opcodeD4_MessageShowE( entity=(entity)0x2b, dialog_id=0x008f, ???=0x03 ) -- 0x2615 0xd4
+        -- 0x01_JumpTo( 0x2624 ) -- 0x261b 0x01
+        opcodeD4_MessageShowE( entity=(entity)0x2b, dialog_id=0x0090, ???=0x03 ) -- 0x261e 0xd4
+        return 0 -- 0x2624 0x00
     end,
 
     script_0x15 = function( self )

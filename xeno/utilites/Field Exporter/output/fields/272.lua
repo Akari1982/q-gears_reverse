@@ -140,8 +140,9 @@ Entity[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=26 ) -- 0x0215 0xfe
-        -- MISSING OPCODE 0xd4
+        opcodeFE0D_SetAvatar( character_id=26 ) -- 0x0215 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x04, dialog_id=0x0000, ???=0x80 ) -- 0x0219 0xd4
+        -- MISSING OPCODE 0xFE17
     end,
 
     script_0x05 = function( self )
@@ -149,17 +150,31 @@ Entity[ "0x03" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x0e, dialog_id=0x0013, ???=0x23 ) -- 0x0375 0xd4
+        opcodeFE0D_SetAvatar( character_id=26 ) -- 0x037b 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x04, dialog_id=0x0014, ???=0xa0 ) -- 0x037f 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x0d, dialog_id=0x0015, ???=0x13 ) -- 0x0385 0xd4
+        -- 0x98_MapLoad( field_id=273, value=1 ) -- 0x038b 0x98
+        -- 0x5B() -- 0x0390 0x5b
+        return 0 -- 0x0391 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x0c, dialog_id=0x0016, ???=0x03 ) -- 0x0392 0xd4
+        opcode26_Wait( time=60 ) -- 0x0398 0x26
+        -- MISSING OPCODE 0xFE8d
     end,
 
     script_0x08 = function( self )
         -- 0x07( entity=0x02, script=0x07 ) -- 0x03a6 0x07
-        -- 0xFE0D_SetAvatar( character_id=28 ) -- 0x03a9 0xfe
-        -- MISSING OPCODE 0xd4
+        opcodeFE0D_SetAvatar( character_id=28 ) -- 0x03a9 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x05, dialog_id=0x0017, ???=0xa0 ) -- 0x03ad 0xd4
+        opcodeFE0D_SetAvatar( character_id=26 ) -- 0x03b3 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x04, dialog_id=0x0018, ???=0xa0 ) -- 0x03b7 0xd4
+        opcodeFE0D_SetAvatar( character_id=28 ) -- 0x03bd 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x05, dialog_id=0x0019, ???=0xa0 ) -- 0x03c1 0xd4
+        opcode26_Wait( time=30 ) -- 0x03c7 0x26
+        -- MISSING OPCODE 0x67
     end,
 
 }

@@ -89,7 +89,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0xBC_EntityNoModelInit() -- 0x012b 0xbc
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x012c 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x012c 0xfe
         -- 0x2A() -- 0x0130 0x2a
         return 0 -- 0x0131 0x00
     end,

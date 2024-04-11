@@ -171,8 +171,21 @@ Entity[ "0x04" ] = {
 
     script_0x06 = function( self )
         opcode26_Wait( time=30 ) -- 0x0228 0x26
-        -- 0xFE0D_SetAvatar( character_id=88 ) -- 0x022b 0xfe
-        -- MISSING OPCODE 0xd4
+        opcodeFE0D_SetAvatar( character_id=88 ) -- 0x022b 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x04, dialog_id=0x0003, ???=0x29 ) -- 0x022f 0xd4
+        -- 0x07( entity=0x05, script=0x24 ) -- 0x0235 0x07
+        opcode26_Wait( time=60 ) -- 0x0238 0x26
+        opcodeFE0D_SetAvatar( character_id=88 ) -- 0x023b 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x04, dialog_id=0x0004, ???=0x29 ) -- 0x023f 0xd4
+        opcode26_Wait( time=50 ) -- 0x0245 0x26
+        opcodeFE0D_SetAvatar( character_id=24 ) -- 0x0248 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x05, dialog_id=0x0005, ???=0x25 ) -- 0x024c 0xd4
+        -- 0x07( entity=0x05, script=0x05 ) -- 0x0252 0x07
+        opcode26_Wait( time=20 ) -- 0x0255 0x26
+        opcodeFE0D_SetAvatar( character_id=88 ) -- 0x0258 0xfe
+        opcodeD4_MessageShowE( entity=(entity)0x04, dialog_id=0x0006, ???=0x29 ) -- 0x025c 0xd4
+        -- 0x0B_InitNPC( 2 ) -- 0x0262 0x0b
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }

@@ -32,7 +32,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x003e ) ) -- 0x0030 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x0033 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x0033 0xfe
         return 0 -- 0x0037 0x00
     end,
 
@@ -56,7 +56,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0040 ) ) -- 0x003a 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x003d 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x003d 0xfe
         return 0 -- 0x0041 0x00
     end,
 
@@ -80,7 +80,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0042 ) ) -- 0x0044 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x0047 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x0047 0xfe
         return 0 -- 0x004b 0x00
     end,
 
@@ -1106,7 +1106,7 @@ Entity[ "0x1b" ] = {
     end,
 
     script_0x17 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=48 ) -- 0x092a 0xfe
+        opcodeFE0D_SetAvatar( character_id=48 ) -- 0x092a 0xfe
         opcodeD2_MessageShow0( dialog_id=0x0018, ???=0x20 ) -- 0x092e 0xd2
         -- 0x9C() -- 0x0932 0x9c
         return 0 -- 0x0933 0x00

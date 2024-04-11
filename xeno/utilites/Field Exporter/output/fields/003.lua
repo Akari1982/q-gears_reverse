@@ -29,7 +29,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0476 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0479 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0479 0xfe
         -- 0x19_SetPosition( x=(vf80)0x0467, z=(vf40)0xfbab, flag=(flag)0xc0 ) -- 0x047d 0x19
         -- 0x20_SpriteSetSolid() -- 0x0483 0x20
         -- MISSING OPCODE 0x69
@@ -121,7 +121,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0601 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0604 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0604 0xfe
         -- 0x19_SetPosition( x=(vf80)0x0526, z=(vf40)0xfa3a, flag=(flag)0xc0 ) -- 0x0608 0x19
         -- MISSING OPCODE 0x69
     end,
@@ -157,7 +157,7 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x08 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x067b 0xfe
+        opcodeFE0D_SetAvatar( character_id=252 ) -- 0x067b 0xfe
         -- 0xD0() -- 0x067f 0xd0
         opcodeF5_MessageShow3( dialog_id=0x0011, flag=0x01 ) -- 0x068a 0xf5
         -- 0x9C() -- 0x068e 0x9c
@@ -215,7 +215,7 @@ Entity[ "0x02" ] = {
 
     script_0x11 = function( self )
         opcode26_Wait( time=160 ) -- 0x074e 0x26
-        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x0751 0xfe
+        opcodeFE0D_SetAvatar( character_id=252 ) -- 0x0751 0xfe
         opcodeF5_MessageShow3( dialog_id=0x001b, flag=0x61 ) -- 0x0755 0xf5
         -- 0x9C() -- 0x0759 0x9c
         return 0 -- 0x075a 0x00
@@ -273,14 +273,14 @@ Entity[ "0x03" ] = {
     end,
 
     script_0x09 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x07fa 0xfe
+        opcodeFE0D_SetAvatar( character_id=252 ) -- 0x07fa 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0024, flag=0x61 ) -- 0x07fe 0xf5
         -- 0x9C() -- 0x0802 0x9c
         -- MISSING OPCODE 0x36
     end,
 
     script_0x0a = function( self )
-        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x0807 0xfe
+        opcodeFE0D_SetAvatar( character_id=252 ) -- 0x0807 0xfe
         opcodeF5_MessageShow3( dialog_id=0x0025, flag=0x61 ) -- 0x080b 0xf5
         -- 0x9C() -- 0x080f 0x9c
         return 0 -- 0x0810 0x00
@@ -309,11 +309,11 @@ Entity[ "0x04" ] = {
 
     script_0x04 = function( self )
         opcode26_Wait( time=10 ) -- 0x0835 0x26
-        -- 0xFE0D_SetAvatar( character_id=16 ) -- 0x0838 0xfe
+        opcodeFE0D_SetAvatar( character_id=16 ) -- 0x0838 0xfe
         -- 0xD0() -- 0x083c 0xd0
         opcodeF5_MessageShow3( dialog_id=0x0026, flag=0x00 ) -- 0x0847 0xf5
         -- 0x9C() -- 0x084b 0x9c
-        -- 0xFE0D_SetAvatar( character_id=252 ) -- 0x084c 0xfe
+        opcodeFE0D_SetAvatar( character_id=252 ) -- 0x084c 0xfe
         return 0 -- 0x0850 0x00
     end,
 

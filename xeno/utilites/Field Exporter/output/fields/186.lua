@@ -289,9 +289,9 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0887 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x088a 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x088a 0xfe
         -- 0x23() -- 0x088e 0x23
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x088f 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x088f 0xfe
         -- 0x2A() -- 0x0893 0x2a
         -- MISSING OPCODE 0x5f
     end,

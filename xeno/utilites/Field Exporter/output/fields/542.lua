@@ -36,7 +36,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x008e 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0091 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0091 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00a6 ) -- 0x0095 0x02
         -- 0x19_SetPosition( x=(vf80)0x00f7, z=(vf40)0x019e, flag=(flag)0xc0 ) -- 0x009d 0x19
         -- MISSING OPCODE 0x69
@@ -130,7 +130,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x015a 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x015d 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x015d 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0175 ) -- 0x0161 0x02
         -- 0x19_SetPosition( x=(vf80)0x0084, z=(vf40)0x0111, flag=(flag)0xc0 ) -- 0x0169 0x19
         -- MISSING OPCODE 0x69
@@ -222,12 +222,12 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x14 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=39 ) -- 0x0249 0xfe
+        opcodeFE0D_SetAvatar( character_id=39 ) -- 0x0249 0xfe
         return 0 -- 0x024d 0x00
     end,
 
     script_0x15 = function( self )
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x024e 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x024e 0xfe
         return 0 -- 0x0252 0x00
     end,
 
@@ -329,7 +329,11 @@ Entity[ "0x06" ] = {
 
     on_update = function( self )
         -- 0x07( entity=0x08, script=0x64 ) -- 0x05ba 0x07
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x08, dialog_id=0x002c, ???=0x13 ) -- 0x05bd 0xd4
+        opcode26_Wait( time=10 ) -- 0x05c3 0x26
+        opcodeD4_MessageShowE( entity=(entity)0x02, dialog_id=0x002d, ???=0x12 ) -- 0x05c6 0xd4
+        opcode26_Wait( time=20 ) -- 0x05cc 0x26
+        -- MISSING OPCODE 0xfc
     end,
 
     on_talk = function( self )

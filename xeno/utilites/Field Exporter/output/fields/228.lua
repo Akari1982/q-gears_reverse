@@ -53,7 +53,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x003e ) ) -- 0x009c 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x009f 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x009f 0xfe
         return 0 -- 0x00a3 0x00
     end,
 
@@ -76,7 +76,7 @@ Entity[ "0x01" ] = {
 
     script_0x05 = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x00b2 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x00b5 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x00b5 0xfe
         -- 0x19_SetPosition( x=(vf80)0xff64, z=(vf40)0x02ea, flag=(flag)0xc0 ) -- 0x00b9 0x19
         return 0 -- 0x00bf 0x00
     end,
@@ -104,7 +104,7 @@ Entity[ "0x01" ] = {
 Entity[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0040 ) ) -- 0x0102 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x0105 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x0105 0xfe
         return 0 -- 0x0109 0x00
     end,
 
@@ -128,7 +128,7 @@ Entity[ "0x02" ] = {
 Entity[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( GetVar( 0x0042 ) ) -- 0x010d 0x16
-        -- 0xFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x0110 0xfe
+        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x0110 0xfe
         return 0 -- 0x0114 0x00
     end,
 
@@ -260,7 +260,7 @@ Entity[ "0x07" ] = {
 
     script_0x04 = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x03b7 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x03ba 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x03ba 0xfe
         -- 0x20_SpriteSetSolid() -- 0x03be 0x20
         -- 0x23() -- 0x03c1 0x23
         return 0 -- 0x03c2 0x00

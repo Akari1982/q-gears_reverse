@@ -31,7 +31,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x020b 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x020e 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x020e 0xfe
         -- MISSING OPCODE 0xFE09
     end,
 

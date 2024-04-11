@@ -115,7 +115,7 @@ Entity[ "0x03" ] = {
 Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x44b1 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x44b4 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x44b4 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x44ca ) -- 0x44b8 0x02
         -- MISSING OPCODE 0x1d
     end,
@@ -156,7 +156,7 @@ Entity[ "0x04" ] = {
 Entity[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x4531 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x4534 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x4534 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x4538 0x05
         return 0 -- 0x453b 0x00
     end,
@@ -185,7 +185,7 @@ Entity[ "0x05" ] = {
 Entity[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x4547 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x454a 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x454a 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x454e 0x05
         return 0 -- 0x4551 0x00
     end,
@@ -215,7 +215,7 @@ Entity[ "0x06" ] = {
 Entity[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x4559 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x455c 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x455c 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x4560 0x05
         return 0 -- 0x4563 0x00
     end,
@@ -245,7 +245,7 @@ Entity[ "0x07" ] = {
 Entity[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x456b 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x456e 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x456e 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x4572 0x05
         return 0 -- 0x4575 0x00
     end,
@@ -275,7 +275,7 @@ Entity[ "0x08" ] = {
 Entity[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x457d 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x4580 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x4580 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x4584 0x05
         return 0 -- 0x4587 0x00
     end,
@@ -305,7 +305,7 @@ Entity[ "0x09" ] = {
 Entity[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x458f 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x4592 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x4592 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x4596 0x05
         return 0 -- 0x4599 0x00
     end,
@@ -335,7 +335,7 @@ Entity[ "0x0a" ] = {
 Entity[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x45a1 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x45a4 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x45a4 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x45a8 0x05
         return 0 -- 0x45ab 0x00
     end,
@@ -365,7 +365,7 @@ Entity[ "0x0b" ] = {
 Entity[ "0x0c" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x45b3 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x45b6 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x45b6 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x45ba 0x05
         return 0 -- 0x45bd 0x00
     end,
@@ -395,7 +395,7 @@ Entity[ "0x0c" ] = {
 Entity[ "0x0d" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x45c5 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x45c8 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x45c8 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x45cc 0x05
         return 0 -- 0x45cf 0x00
     end,
@@ -425,7 +425,7 @@ Entity[ "0x0d" ] = {
 Entity[ "0x0e" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x45d7 0x16
-        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x45da 0xfe
+        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x45da 0xfe
         -- 0x05_CallFunction( 0x44b8 ) -- 0x45de 0x05
         return 0 -- 0x45e1 0x00
     end,

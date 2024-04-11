@@ -29,7 +29,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0020 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0023 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0023 0xfe
         return 0 -- 0x0027 0x00
     end,
 
@@ -497,7 +497,8 @@ Entity[ "0x14" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x05, dialog_id=0x0022, ???=0x03 ) -- 0x05ac 0xd4
+        return 0 -- 0x05b2 0x00
     end,
 
     on_push = function( self )
@@ -541,7 +542,7 @@ Entity[ "0x15" ] = {
 Entity[ "0x16" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 1 ) -- 0x0dcc 0x16
-        -- 0xFE0D_SetAvatar( character_id=1 ) -- 0x0dcf 0xfe
+        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0dcf 0xfe
         return 0 -- 0x0dd3 0x00
     end,
 
@@ -565,7 +566,7 @@ Entity[ "0x16" ] = {
 Entity[ "0x17" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 2 ) -- 0x0dd7 0x16
-        -- 0xFE0D_SetAvatar( character_id=2 ) -- 0x0dda 0xfe
+        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0dda 0xfe
         return 0 -- 0x0dde 0x00
     end,
 
@@ -589,7 +590,7 @@ Entity[ "0x17" ] = {
 Entity[ "0x18" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 3 ) -- 0x0de2 0x16
-        -- 0xFE0D_SetAvatar( character_id=3 ) -- 0x0de5 0xfe
+        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x0de5 0xfe
         return 0 -- 0x0de9 0x00
     end,
 
@@ -613,7 +614,7 @@ Entity[ "0x18" ] = {
 Entity[ "0x19" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 4 ) -- 0x0ded 0x16
-        -- 0xFE0D_SetAvatar( character_id=4 ) -- 0x0df0 0xfe
+        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x0df0 0xfe
         return 0 -- 0x0df4 0x00
     end,
 
@@ -637,7 +638,7 @@ Entity[ "0x19" ] = {
 Entity[ "0x1a" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 5 ) -- 0x0df8 0x16
-        -- 0xFE0D_SetAvatar( character_id=5 ) -- 0x0dfb 0xfe
+        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x0dfb 0xfe
         return 0 -- 0x0dff 0x00
     end,
 
@@ -661,7 +662,7 @@ Entity[ "0x1a" ] = {
 Entity[ "0x1b" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 6 ) -- 0x0e03 0x16
-        -- 0xFE0D_SetAvatar( character_id=6 ) -- 0x0e06 0xfe
+        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x0e06 0xfe
         return 0 -- 0x0e0a 0x00
     end,
 
@@ -685,7 +686,7 @@ Entity[ "0x1b" ] = {
 Entity[ "0x1c" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 7 ) -- 0x0e0e 0x16
-        -- 0xFE0D_SetAvatar( character_id=7 ) -- 0x0e11 0xfe
+        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x0e11 0xfe
         return 0 -- 0x0e15 0x00
     end,
 
@@ -709,7 +710,7 @@ Entity[ "0x1c" ] = {
 Entity[ "0x1d" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 8 ) -- 0x0e19 0x16
-        -- 0xFE0D_SetAvatar( character_id=8 ) -- 0x0e1c 0xfe
+        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x0e1c 0xfe
         return 0 -- 0x0e20 0x00
     end,
 
@@ -733,7 +734,7 @@ Entity[ "0x1d" ] = {
 Entity[ "0x1e" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 9 ) -- 0x0e24 0x16
-        -- 0xFE0D_SetAvatar( character_id=9 ) -- 0x0e27 0xfe
+        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x0e27 0xfe
         return 0 -- 0x0e2b 0x00
     end,
 
@@ -757,7 +758,7 @@ Entity[ "0x1e" ] = {
 Entity[ "0x1f" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 10 ) -- 0x0e2f 0x16
-        -- 0xFE0D_SetAvatar( character_id=10 ) -- 0x0e32 0xfe
+        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x0e32 0xfe
         return 0 -- 0x0e36 0x00
     end,
 
@@ -797,11 +798,17 @@ Entity[ "0x20" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x0d, dialog_id=0x0063, ???=0x00 ) -- 0x0e4c 0xd4
+        -- 0xFE0E_SoundSetVolume( volume=0, steps=64 ) -- 0x0e52 0xfe
+        opcode26_Wait( time=5 ) -- 0x0e58 0x26
+        -- MISSING OPCODE 0x74
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xd4
+        opcodeD4_MessageShowE( entity=(entity)0x0d, dialog_id=0x0065, ???=0x00 ) -- 0x0e6e 0xd4
+        -- 0xFE0E_SoundSetVolume( volume=0, steps=64 ) -- 0x0e74 0xfe
+        opcode26_Wait( time=5 ) -- 0x0e7a 0x26
+        -- MISSING OPCODE 0x74
     end,
 
 }

@@ -28,7 +28,7 @@ Entity[ "0x00" ] = {
 Entity[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_EntityPCInit( 0 ) -- 0x0022 0x16
-        -- 0xFE0D_SetAvatar( character_id=0 ) -- 0x0025 0xfe
+        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0025 0xfe
         return 0 -- 0x0029 0x00
     end,
 
@@ -68,7 +68,7 @@ Entity[ "0x02" ] = {
         -- 0x0B_InitNPC( 0 ) -- 0x004c 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0061, z=(vf40)0xffb0, flag=(flag)0xc0 ) -- 0x004f 0x19
         -- 0x20_SpriteSetSolid() -- 0x0055 0x20
-        -- 0xFE0D_SetAvatar( character_id=51 ) -- 0x0058 0xfe
+        opcodeFE0D_SetAvatar( character_id=51 ) -- 0x0058 0xfe
         -- MISSING OPCODE 0xFE07
     end,
 
@@ -141,7 +141,7 @@ Entity[ "0x03" ] = {
         -- 0x0B_InitNPC( 1 ) -- 0x0137 0x0b
         -- 0x19_SetPosition( x=(vf80)0xffab, z=(vf40)0x006a, flag=(flag)0xc0 ) -- 0x013a 0x19
         -- 0x20_SpriteSetSolid() -- 0x0140 0x20
-        -- 0xFE0D_SetAvatar( character_id=30 ) -- 0x0143 0xfe
+        opcodeFE0D_SetAvatar( character_id=30 ) -- 0x0143 0xfe
         -- MISSING OPCODE 0x5f
     end,
 
@@ -197,7 +197,7 @@ Entity[ "0x04" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 2 ) -- 0x0200 0x0b
         -- 0x19_SetPosition( x=(vf80)0x0088, z=(vf40)0xff54, flag=(flag)0xc0 ) -- 0x0203 0x19
-        -- 0xFE0D_SetAvatar( character_id=49 ) -- 0x0209 0xfe
+        opcodeFE0D_SetAvatar( character_id=49 ) -- 0x0209 0xfe
         -- MISSING OPCODE 0x5f
     end,
 
