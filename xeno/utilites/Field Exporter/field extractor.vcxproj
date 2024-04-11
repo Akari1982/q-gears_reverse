@@ -25,6 +25,7 @@
     <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MessageFile.cpp" />
+    <ClCompile Include="src\PackFile.cpp" />
     <ClCompile Include="src\ScriptFile.cpp" />
     <ClCompile Include="src\TextParse.cpp" />
   </ItemGroup>
@@ -34,6 +35,7 @@
     <ClInclude Include="src\File.h" />
     <ClInclude Include="src\Logger.h" />
     <ClInclude Include="src\MessageFile.h" />
+    <ClInclude Include="src\PackFile.h" />
     <ClInclude Include="src\ScriptFile.h" />
     <ClInclude Include="src\TextParse.h" />
     <ClInclude Include="src\TypeDefine.h" />

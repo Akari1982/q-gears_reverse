@@ -1,7 +1,7 @@
 #ifndef PACK_FILE_H
 #define PACK_FILE_H
 
-#include "common/File.h"
+#include "File.h"
 
 
 
@@ -14,7 +14,7 @@ public:
     PackFile( u8* buffer, u32 offset, u32 length );
     virtual ~PackFile();
 
-    virtual File* ExtractFile( const u32 id );
+    virtual File* Extract( const u32 id );
 
     const u32 GetNumberOfFiles();
 

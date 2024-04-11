@@ -1,6 +1,10 @@
 #include "FieldPackFile.h"
 #include "ScriptFile.h"
+#include "ArchiveFile.h"
+#include "PackFile.h"
 #include "MessageFile.h"
+#include "Logger.h"
+#include "TextParse.h"
 #include <format>
 
 
@@ -14,24 +18,35 @@ main()
         path += "cdrom/mes_sysdata.lzs";
 
         ArchiveFile* arch = new ArchiveFile( path );
-        File* temp;
-        temp = arch->Extract();
-        PackFile* sys_data = PackFile( temp );
-        delete temp
+        arch->WriteFile( "sys_data/mes_sysdata.pack" );
+        PackFile* sys_data = new PackFile( arch );
         delete arch;
 
-        for( int i = 0; i <= sys_data->GetNumberOfFiles(); ++i )
+        for( int i = 0; i < sys_data->GetNumberOfFiles(); ++i )
         {
-            temp = sys_data->Extract( i );
-            MessageFile* file = new MessageFile( temp );
-            delete temp;
-
-            save = "";
+            std::string save = "";
             save += "sys_data/";
             save += std::format( "{:02d}", i );
             save += "_mes.xml";
-            file->GetMessages( save );
-            delete file;
+
+            if( i != 27 )
+            {
+                File* temp;
+                temp = sys_data->Extract( i );
+                MessageFile* file = new MessageFile( temp );
+                delete temp;
+
+                file->GetMessages( save );
+                delete file;
+            }
+            else
+            {
+                File* temp;
+                temp = sys_data->Extract( i );
+                Logger* exp = new Logger( save );
+                TextParse( exp, temp, 0 );
+                delete temp;
+            }
         }
 
         delete sys_data;

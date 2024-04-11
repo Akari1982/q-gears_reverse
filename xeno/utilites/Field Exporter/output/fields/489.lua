@@ -18,8 +18,7 @@ Entity[ "0x01" ] = {
 
     on_update = function( self )
         -- 0xFEA0() -- 0x000d 0xfe
-        -- 0x20_SpriteSetSolid() -- 0x001a 0x20
-        -- MISSING OPCODE 0x04
+        -- MISSING OPCODE 0x8d
     end,
 
     on_talk = function( self )
