@@ -361,6 +361,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "opcodeD3_MessageShow1( dialog_id=" + GetU16Variable( pointer + 1 ) + ", ???=" + GetU8Variable( pointer + 3 ) + " )" );
                     pointer += 4;
                 }
+                else if( opcode == 0xd4 )
+                {
+                    exp->Log( "opcodeD4_MessageShowE( entity=" + GetEVariable( pointer + 1 ) + ", dialog_id=" + GetU16Variable( pointer + 2 ) + ", ???=" + GetU8Variable( pointer + 4 ) + " )" );
+                    pointer += 6;
+                }
                 else if( opcode == 0xd6 )
                 {
                     exp->Log( "opcodeD6_MessageSetSpeed( speed=" + GetU16Variable( pointer + 1 ) + " )" );
@@ -398,7 +403,7 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     else if( eo_opcode == 0x0d )
                     {
-                        exp->Log( "-- 0xFE0D_SetAvatar( character_id=" + GetV80Variable( pointer + 1 ) + " )" );
+                        exp->Log( "opcodeFE0D_SetAvatar( character_id=" + GetV80Variable( pointer + 1 ) + " )" );
                         pointer += 3;
                     }
                     else if( eo_opcode == 0x0e )

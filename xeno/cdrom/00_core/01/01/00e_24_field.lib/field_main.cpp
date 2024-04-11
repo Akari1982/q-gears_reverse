@@ -316,7 +316,7 @@ while( true )
                         S5 = 1;
                     }
 
-                    func7f5fc(); // close and clean dialogs
+                    field_message_close_all_messages();
 
                     if( w[800ad0a8] == 1 )
                     {
@@ -590,7 +590,7 @@ while( true )
 
                 if( ( V0 & 00001800 ) == 0 )
                 {
-                    func7f5fc(); // close and clean dialogs
+                    field_message_close_all_messages();
 
                     func78fe8(); // call menu
 
@@ -628,7 +628,7 @@ field_particle_clear_all();
 
 func85b04();
 
-func7f5fc(); // close and clean dialogs
+field_message_close_all_messages();
 
 A0 = 0;
 system_draw_sync();

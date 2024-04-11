@@ -202,9 +202,9 @@ system_draw_sync();
 
 field_message_update_state();
 
-A0 = w[800c3740] + 80d4;
-A1 = w[800acfe0];
-func7f660(); // dialog add to render
+A0 = w[800c3740] + 80d4; // otag
+A1 = w[800acfe0]; // rb
+field_message_update_add_to_render();
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -321,7 +321,7 @@ field_message_update_state();
 
 A0 = w[800c3740] + 80d4;
 A1 = w[800acfe0];
-func7f660(); // dialog add to render
+field_message_update_add_to_render(); // dialog add to render
 
 A0 = 0;
 system_draw_sync();

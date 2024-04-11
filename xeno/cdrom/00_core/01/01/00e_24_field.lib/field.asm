@@ -368,10 +368,10 @@
 // field_message_update_cursor_pos_based_on_input
 8007D30C-8007D4DC
 ////////////////////////////////
-// func7d4e0
+// field_message_init
 8007D4E0-8007D724
 ////////////////////////////////
-// func7d728
+// field_message_set_window_rect
 8007D728-8007D77C
 ////////////////////////////////
 // field_message_set_avatar_packet_pos
@@ -383,22 +383,22 @@
 // field_message_window_create_packets
 8007E420-8007EBBC
 ////////////////////////////////
-// func7ebc0
+// field_message_set_avatar_uv_clut
 8007EBC0-8007ED08
 ////////////////////////////////
-// func7ed0c
+// field_message_close_message
 8007ED0C-8007EE24
 ////////////////////////////////
 // func7ee28
 8007EE28-8007EEEC
 ////////////////////////////////
-// field_message_init_to_show
+// field_message_set_to_show
 8007EEF0-8007F5F8
 ////////////////////////////////
-// func7f5fc
+// field_message_close_all_messages
 8007F5FC-8007F65C
 ////////////////////////////////
-// func7f660
+// field_message_update_add_to_render
 8007F660-8007FC04
 ////////////////////////////////
 // field_message_update_state
@@ -956,7 +956,7 @@
 // convert_magic_to_pc_id
 8008C510-8008C56C
 ////////////////////////////////
-// 0xFE0D_SetAvatar
+// field_script_opFE0D_set_avatar
 8008C570-8008C5BC
 ////////////////////////////////
 // func8c5c0
@@ -1991,8 +1991,7 @@
 // 0xFC
 8009B560-8009B5EC
 ////////////////////////////////
-// 0xD4
-// func9b5f0
+// field_script_opD4_message_show_e
 8009B5F0-8009B684
 ////////////////////////////////
 // field_script_opD2_message_show_0

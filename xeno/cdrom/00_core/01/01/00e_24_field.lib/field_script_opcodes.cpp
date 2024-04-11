@@ -5868,7 +5868,7 @@ return A0;
 
 
 ////////////////////////////////
-// 0xFE0D_SetAvatar()
+// field_script_opFE0D_set_avatar()
 
 A0 = 1;
 field_script_help_read_v80();
@@ -5885,35 +5885,38 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func8c5c0
-8008C5C0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008C5C8	jal    field_script_help_read_u16 [$800ac290]
-A0 = 0001;
+// func8c5c0()
+
+A0 = 1;
+field_script_help_read_u16();
 [800b1674] = h(V0);
-8008C5D8	jal    field_script_help_read_u16 [$800ac290]
-A0 = 0003;
+
+A0 = 3;
+field_script_help_read_u16();
 [800b1678] = h(V0);
-8008C5E8	jal    field_script_help_read_u16 [$800ac290]
-A0 = 0005;
+
+A0 = 5;
+field_script_help_read_u16();
 [800b1676] = h(V0);
-8008C5F8	jal    field_script_help_read_u16 [$800ac290]
-A0 = 0007;
+
+A0 = 7;
+field_script_help_read_u16();
 [800b167a] = h(V0);
-8008C608	jal    field_script_help_read_u16 [$800ac290]
-A0 = 0009;
+
+A0 = 9;
+field_script_help_read_u16();
 [800b167e] = h(V0);
-8008C618	jal    field_script_help_read_u16 [$800ac290]
-A0 = 000b;
-V1 = w[800af54c];
+
+A0 = b;
+field_script_help_read_u16();
 [800b167c] = h(V0);
-V0 = hu[V1 + 00cc];
-8008C634	nop
-V0 = V0 + 000d;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008C644	jr     ra 
-SP = SP + 0018;
+
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + d);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8c64c
 8008C64C	addiu  sp, sp, $ffe8 (=-$18)
@@ -20938,7 +20941,7 @@ V1 = V1 + V0;
 V0 = w[V1 + 004c];
 V1 = w[800af54c];
 V0 = bu[V0 + 0080];
-8009B5B4	jal    func9b5f0 [$8009b5f0]
+8009B5B4	jal    field_script_opD4_message_show_e [$8009b5f0]
 [V1 + 0080] = b(V0);
 8009B5BC	j      L9b5e0 [$8009b5e0]
 8009B5C0	nop
@@ -20961,8 +20964,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0xD4
-// func9b5f0
+// field_script_opD4_message_show_e()
 
 A0 = 1;
 get_entity_id_from_opcode();
@@ -20972,7 +20974,7 @@ if( V0 != ff )
     V1 = w[800af54c];
     [V1 + cc] = h(hu[V1 + cc] + 1);
 
-    A0 = V0;
+    A0 = V0; // entity_id
     A1 = 0;
     func9bb7c();
 
@@ -21698,7 +21700,7 @@ A7 = entity_id;
 A8 = type;
 A9 = rotation;
 A10 = S6; // flags
-field_message_init_to_show();
+field_message_set_to_show();
 
 // add window to activated windows mask
 A0 = window_id;

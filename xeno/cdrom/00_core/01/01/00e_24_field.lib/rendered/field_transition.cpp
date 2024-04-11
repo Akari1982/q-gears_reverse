@@ -7,7 +7,7 @@ field_particle_clear_all();
 
 func85b04(); // stops first 8 chanels (4 left, 4 right) if requested
 
-func7f5fc(); // close and clean dialogs
+field_message_close_all_messages();
 
 if( w[800af51c] != 6 )
 {

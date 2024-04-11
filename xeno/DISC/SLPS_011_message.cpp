@@ -709,7 +709,8 @@ L33ad8:	; 80033AD8
 // func33af4()
 
 offset_18 = A0;
-if( hu[offset_18 + 10] & 0008 )
+
+if( hu[offset_18 + 10] & 0008 ) // wait for player input
 {
     return bu[offset_18 + 6b];
 }
@@ -840,7 +841,7 @@ if( h[offset_18 + 0] > h[offset_18 + a] ) // current row width greater than max 
     [struct_60 + row_id * 60 + 50 + 2] = h(hu[offset_18 + e] + ((tex_row / 2) * d));
 }
 
-if( bu[offset_18 + 6c] != 0 ) // window needs to be closed
+if( bu[offset_18 + 6c] != 0 ) // end of text met
 {
     [offset_18 + 6c] = b(0);
     [offset_18 + 10] = h(hu[offset_18 + 10] & fffb); // remove everything except 0x0004
@@ -854,14 +855,14 @@ while( letters != 0 )
 
     if( opcode == 0 ) // end of text
     {
-        if( hu[offset_18 + 10] & 0080 ) // if there is next text in text queue
+        if( hu[offset_18 + 10] & 0080 ) // if we in subtext
         {
-            [offset_18 + 10] = h(hu[offset_18 + 10] & ff7f);
+            [offset_18 + 10] = h(hu[offset_18 + 10] & ff7f); // remove 0x0080
             [offset_18 + 1c] = w(w[offset_18 + 20] + 1); // pointer to continue
         }
         else
         {
-            [offset_18 + 10] = h(hu[offset_18 + 10] | 0008);
+            [offset_18 + 10] = h(hu[offset_18 + 10] | 0008); // wait for player input
             [offset_18 + 6b] = b(1);
             [offset_18 + 6c] = b(1);
             return;
@@ -878,7 +879,7 @@ while( letters != 0 )
         [offset_18 + 6b] = b(2);
 
         V1 = w[offset_18 + 1c];
-        [offset_18 + 10] = h(hu[offset_18 + 10] | 0048);
+        [offset_18 + 10] = h(hu[offset_18 + 10] | 0048); // wait for player input and textarea is full
         [offset_18 + 1c] = w(V1 + 1);
 
         if( bu[V1 + 1] == 1 ) // if there is new row opcode after new window - skip it
@@ -890,7 +891,7 @@ while( letters != 0 )
     else if( opcode == 3 ) // wait for player input to continue
     {
         [offset_18 + 6b] = b(3);
-        [offset_18 + 10] = h(hu[offset_18 + 10] | 0008);
+        [offset_18 + 10] = h(hu[offset_18 + 10] | 0008); // wait for player input
         [offset_18 + 1c] = w(w[offset_18 + 1c] + 1);
         return;
     }
@@ -1267,13 +1268,13 @@ while( letters != 0 )
 
 offset_18 = A0;
 
-[offset_18 + 10] = h(hu[offset_18 + 10] & fff7);
+[offset_18 + 10] = h(hu[offset_18 + 10] & fff7); // remove 0x0008 wait for player input
 
 if( hu[offset_18 + 10] & 0200 )
 {
     [offset_18 + 84] = h(0); // delay time
-    [offset_18 + 6c] = b(0);
-    [offset_18 + 10] = h(hu[offset_18 + 10] & fdff);
+    [offset_18 + 6c] = b(0); // remove end of text
+    [offset_18 + 10] = h(hu[offset_18 + 10] & fdff); // remove 0x0200
 }
 ////////////////////////////////
 
@@ -1506,7 +1507,7 @@ else
     [offset_18 + 69] = b(bu[offset_18 + 68]);
 }
 
-// if text is full and there is now wait for player input flag
+// if text is full and there is no wait for player input flag
 if( hu[offset_18 + 10] & 0040 )
 {
     if( ( hu[offset_18 + 10] & 0008 ) == 0 )
@@ -1633,6 +1634,7 @@ if( h[offset_18 + 84] == 0 ) // global
     {
         [offset_18 + 86] = h(hu[offset_18 + 88]);
 
+        // there is no wait for player input
         if( ( hu[offset_18 + 10] & 0058 ) == 0 )
         {
             A0 = offset_18;
@@ -1676,7 +1678,7 @@ if( ( hu[offset_18 + 10] & 0002 ) == 0 ) // render background under text
     [otag] = w((w[otag] & ff000000) | (packet & 00ffffff));
 }
 
-[offset_18 + 10] = h(hu[offset_18 + 10] & feff);
+[offset_18 + 10] = h(hu[offset_18 + 10] & feff); // remove 0x0100
 
 A0 = otag;
 A1 = offset_18 + 30; // settings

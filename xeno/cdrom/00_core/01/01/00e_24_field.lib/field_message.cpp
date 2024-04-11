@@ -44,13 +44,14 @@ if( ( h[800c1b6c + id * 498 + 37c] == 0 ) && ( h[800c1b6c + id * 498 + 408] == 0
 
 
 ////////////////////////////////
-// func7d4e0()
+// field_message_init()
 
 [SP + 18] = h(0);
 [SP + 1a] = h(0);
 [SP + 1c] = h(ff);
 [SP + 1e] = h(ff);
 
+// create some tex settings
 for( int i = 0; i < 10; ++i )
 {
     [800af154 + i * 8 + 0] = h(0);
@@ -89,6 +90,7 @@ for( int i = 0; i < 10; ++i )
     system_gpu_create_texture_setting_packet();
 }
 
+// init messages
 for( int i = 0; i < 4; ++i )
 {
     [800c1b6c + i * 498 + 37c] = h(-1); // hide cursor
@@ -136,13 +138,13 @@ for( int i = 0; i < 4; ++i )
 
 
 ////////////////////////////////
-// func7d728()
+// field_message_set_window_rect()
 
 id = A0;
-[800c1b6c + id * 498 + ac] = h(A1);
-[800c1b6c + id * 498 + ae] = h(A2);
-[800c1b6c + id * 498 + b0] = h(A3);
-[800c1b6c + id * 498 + b2] = h(A4);
+[800c1b6c + id * 498 + ac] = h(A1); // x
+[800c1b6c + id * 498 + ae] = h(A2); // y
+[800c1b6c + id * 498 + b0] = h(A3); // w
+[800c1b6c + id * 498 + b2] = h(A4); // h
 ////////////////////////////////
 
 
@@ -155,9 +157,9 @@ x = A1;
 y = A2;
 w = A3
 h = A4;
-flag = A5;
+fliped = A5;
 
-if( flag == 0 )
+if( fliped == 0 )
 {
     [packet +  8] = h(x);
     [packet + 10] = h(x + w - 1);
@@ -338,7 +340,7 @@ av_h = 40;
 if( (message_w - 4) < 40 ) av_w = message_w - 8;
 if( (message_h - 4) < 40 ) av_h = message_h - 8;
 
-if( hu[800c1b6c + id * 498 + 40c] & 0020 ) // mirror avatar
+if( hu[800c1b6c + id * 498 + 40c] & 0020 ) // flip avatar
 {
     av_x = message_x + message_w - av_w - 4;
 }
@@ -350,7 +352,7 @@ A1 = av_x;
 A2 = av_y;
 A3 = av_w;
 A4 = av_h;
-A5 = hu[800c1b6c + id * 498 + 40c] & 0020; // if set then mirror avatar
+A5 = hu[800c1b6c + id * 498 + 40c] & 0020; // if set then flip avatar
 field_message_set_avatar_packet_pos();
 
 if( bu[800c1b6c + id * 498 + 494] == 1 ) // avatar render
@@ -773,29 +775,31 @@ for( int i = 0; i < 8; ++i )
 
 
 ////////////////////////////////
-// func7ebc0()
+// field_message_set_avatar_uv_clut()
 
 id = A0;
+avatar_slot = A1;
 
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 +  с] = b(bu[800ad40c + A1 * 4 + 0]);      // u1
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 +  с] = b(bu[800ad40c + A1 * 4 + 0]);      // u1
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 +  d] = b(bu[800ad40c + A1 * 4 + 2]);      // v1
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 +  d] = b(bu[800ad40c + A1 * 4 + 2]);      // v1
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 14] = b(bu[800ad40c + A1 * 4 + 0] + 40); // u2
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 14] = b(bu[800ad40c + A1 * 4 + 0] + 40); // u2
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 15] = b(bu[800ad40c + A1 * 4 + 2]);      // v2
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 15] = b(bu[800ad40c + A1 * 4 + 2]);      // v2
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 1с] = b(bu[800ad40c + A1 * 4 + 0]);      // u3
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 1с] = b(bu[800ad40c + A1 * 4 + 0]);      // u3
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 1e] = b(bu[800ad40c + A1 * 4 + 2] + 40); // v3
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 1e] = b(bu[800ad40c + A1 * 4 + 2] + 40); // v3
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 24] = b(bu[800ad40c + A1 * 4 + 0] + 40); // u4
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 24] = b(bu[800ad40c + A1 * 4 + 0] + 40); // u4
-[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 25] = b(bu[800ad40c + A1 * 4 + 2] + 40); // v4
-[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 25] = b(bu[800ad40c + A1 * 4 + 2] + 40); // v4
+// load avatar presets
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 +  с] = b(bu[800ad40c + avatar_slot * 4 + 0]);      // u1
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 +  с] = b(bu[800ad40c + avatar_slot * 4 + 0]);      // u1
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 +  d] = b(bu[800ad40c + avatar_slot * 4 + 2]);      // v1
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 +  d] = b(bu[800ad40c + avatar_slot * 4 + 2]);      // v1
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 14] = b(bu[800ad40c + avatar_slot * 4 + 0] + 40); // u2
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 14] = b(bu[800ad40c + avatar_slot * 4 + 0] + 40); // u2
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 15] = b(bu[800ad40c + avatar_slot * 4 + 2]);      // v2
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 15] = b(bu[800ad40c + avatar_slot * 4 + 2]);      // v2
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 1с] = b(bu[800ad40c + avatar_slot * 4 + 0]);      // u3
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 1с] = b(bu[800ad40c + avatar_slot * 4 + 0]);      // u3
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 1e] = b(bu[800ad40c + avatar_slot * 4 + 2] + 40); // v3
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 1e] = b(bu[800ad40c + avatar_slot * 4 + 2] + 40); // v3
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 24] = b(bu[800ad40c + avatar_slot * 4 + 0] + 40); // u4
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 24] = b(bu[800ad40c + avatar_slot * 4 + 0] + 40); // u4
+[800c1b6c + id * 498 + 42с + 18 + 0 * 28 + 25] = b(bu[800ad40c + avatar_slot * 4 + 2] + 40); // v4
+[800c1b6c + id * 498 + 42с + 18 + 1 * 28 + 25] = b(bu[800ad40c + avatar_slot * 4 + 2] + 40); // v4
 
 A0 = 0; // clut X
-A1 = A1 + e0; // clut Y
+A1 = avatar_slot + e0; // clut Y
 system_graphic_get_clut_by_param();
 [800c1b6c + id * 498 + 42с + 18 + 0 * 28 + e] = h(V0);
 [800c1b6c + id * 498 + 42с + 18 + 1 * 28 + e] = h(V0);
@@ -804,7 +808,7 @@ system_graphic_get_clut_by_param();
 
 
 ////////////////////////////////
-// func7ed0c()
+// field_message_close_message()
 
 id = A0;
 
@@ -874,7 +878,7 @@ system_gte_vector_perspective_transform();
 
 
 ////////////////////////////////
-// field_message_init_to_show()
+// field_message_set_to_show()
 
 x_pos = A0;
 y_pos = A1 - 8;
@@ -958,14 +962,14 @@ if( ( bu[struct_138_cur + 80] != ff ) && ( ( S3 & 0002 ) == 0 ) )
     {
         A1 = A1 | 1; // increase clut Y
     }
-    func7ebc0(); // set up clut and uv for avatar
+    field_message_set_avatar_uv_clut();
 
-    [800c1b6c + id * 498 + 494] = b(1);
+    [800c1b6c + id * 498 + 494] = b(1); // render avatar
     [800c1b6c + id * 498 + 495] = b(bu[struct_138_cur + 80]); // avatar character id
 }
 else
 {
-    [800c1b6c + id * 498 + 494] = b(0);
+    [800c1b6c + id * 498 + 494] = b(0); // dont render avatar
     [800c1b6c + id * 498 + 495] = b(80);
 }
 
@@ -976,7 +980,7 @@ A1 = x_pos;
 A2 = y_pos;
 A3 = message_w * 4 + 10;
 A4 = message_rows * e + 10;
-func7d728(); // store window position and size
+field_message_set_window_rect();
 
 A3 = 0;
 if( bu[struct_138_cur + 80] != ff ) // avatar exist
@@ -996,7 +1000,7 @@ A5 = message_w;
 A6 = message_rows;
 system_message_init_text();
 
-if( S3 & 0400 )
+if( S3 & 0400 ) // flip avatar
 {
     [800c1b6c + id * 498 + 40c] = h(hu[800c1b6c + id * 498 + 40c] | 0020);
 }
@@ -1065,14 +1069,14 @@ else
 
 
 ////////////////////////////////
-// func7f5fc()
+// field_message_close_all_messages()
 
 for( int i = 0; i < 4; ++i )
 {
     if( h[800c1b6c + i * 498 + 40e] == 0 )
     {
         A0 = i;
-        func7ed0c(); // close message
+        field_message_close_message();
     }
 }
 ////////////////////////////////
@@ -1080,8 +1084,7 @@ for( int i = 0; i < 4; ++i )
 
 
 ////////////////////////////////
-// func7f660()
-// whole message render
+// field_message_update_add_to_render()
 
 otag = A0;
 rb = A1;
@@ -1119,11 +1122,9 @@ for( int i = 0; i < 4; ++i )
 
         if( h[800c1b6c + i * 498 + 408] == 0 ) // window opened
         {
-            state = 0;
-            if( hu[800c1b6c + i * 498 + 18 + 10] & 0008 )
-            {
-                state = bu[800c1b6c + i * 498 + 18 + 6b];
-            }
+            A0 = 800c1b6c + i * 498 + 18;
+            func33af4();
+            state = V0;
 
             if( ( state != 0 ) && ( h[800c1b6c + i * 498 + 37c] != 0 ) )
             {
@@ -1180,7 +1181,7 @@ for( int i = 0; i < 4; ++i )
             [SP + 10 + j * 4] = w(new_order);
             ++new_order;
 
-            if( h[800c1b6c + j * 498 + 40e] == 0 )
+            if( h[800c1b6c + j * 498 + 40e] == 0 ) // enabled message
             {
                 if( w[SP + 28] != j ) // render not excluded windows
                 {
@@ -1190,8 +1191,11 @@ for( int i = 0; i < 4; ++i )
                     {
                         if( hu[800c1b68] & 0020 ) // circle pressed
                         {
-                            if( hu[800c1b6c + j * 498 + 410] == 0 )
+                            if( hu[800c1b6c + j * 498 + 410] == 0 ) // top window
                             {
+
+address inside 8007F9CC
+
                                 [800c1b6c + j * 498 + 37c] = h(-1); // disable cursor
 
                                 owner_id = h[800c1b6c + j * 498 + 416];
@@ -1215,13 +1219,11 @@ for( int i = 0; i < 4; ++i )
                         A2 = rb;
                         system_message_text_update_add_to_render();
 
-                        state = 0;
-                        if( hu[800c1b6c + j * 498 + 18 + 10] & 0008 )
-                        {
-                            state =  bu[800c1b6c + j * 498 + 18 + 6b];
-                        }
+                        A0 = 800c1b6c + j * 498 + 18;
+                        func33af4();
+                        state = V0;
 
-                        // and cursor not rendered
+                        // cursor not rendered
                         if( ( state != 0 ) && ( h[800c1b6c + j * 498 + 37c] != 0 ) )
                         {
                             [800c1b6c + j * 498 + 3c4] = h(0); // show continue arrow
@@ -1276,14 +1278,14 @@ for( int i = 0; i < 4; ++i )
             if( ( hu[800c1b6c + i * 498 + 18 + 10] & 0004 ) == 0 ) // set window to close
             {
                 A0 = i;
-                func7ed0c(); // close message
+                field_message_close_message();
             }
         }
 
         if( h[800c1b6c + i * 498 + 414] == 0 ) // set window to close
         {
             A0 = i;
-            func7ed0c(); // close message
+            field_message_close_message();
         }
 
         if( h[800c1b6c + i * 498 + 408] != 0 ) // update window opened steps

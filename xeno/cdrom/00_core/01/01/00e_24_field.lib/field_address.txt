@@ -638,7 +638,7 @@
 
 800c1b6c messages struct (0x498 size)(4 items)
     +  0 2 tex settings packet for buffers (size 0xc).
-    + 18 messages data.
+    + 18 text data.
         + 0 (18) [][]     current row width in 0x4 chanks (multiply by 4 to get pixels).
         + 2 (1a) [][]     current row.
         + 4 (1c) [][]     position x.
@@ -657,7 +657,7 @@
                           0x0040: text area is full.
                           0x0080: text pointer stored.
                           0x0100: speed increased.
-                          0x0200: add this flag in 0x0F0D text opcode.
+                          0x0200: add this flag in 0x0F0D text opcode (Close after time).
         +12 (2a) [][]     current row width.
         +14 (2c) [][]     current row height. Store 0xe here.
         +16 (2e) [][]     start row to add packets to render.
@@ -687,7 +687,7 @@
         +68 (80) []       default number of letters to read.
         +69 (81) []       letters to read at once. How much text read in one function call. 2 symbols opcodes counted as one.
         +6a (82) []       stored number of letters to read (if we need to reed from other text block).
-        +6b (83) []       state of text render. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
+        +6b (83) []       state of end of text. Init with 0. Set to 1 if we met 0x00 text opcode. Set to 2 if we met 0x02 opcode. Set to 3 if we met 0x03 text opcode.
         +6c (84) []       set to 1 when end of text opcode is met. Init with 0.
         +6d (85) []       init with 0.
         +6e (86) []       cursor position.
@@ -704,10 +704,10 @@
             +00 [][][][] pointer to next allocated memory element.
             +08 [][][][] offset to message text data.
         +90 (a8) [][][][] offset to message text data.
-    + ac [][]     message x.
-    + ae [][]     message y.
-    + b0 [][]     message width.
-    + b2 [][]     message height.
+    + ac [][]     message x in pixels.
+    + ae [][]     message y in pixels.
+    + b0 [][]     message width in pixels.
+    + b2 [][]     message height in pixels.
     + c4 background packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x10 size).
@@ -730,7 +730,10 @@
     +408 [][]     steps of window opening.
     +40a [][]     wait timer for continue arrow add to render.
     +40c [][]     some flags.
-                  0x0040 - if set then we will nor add border of continue arrow to render.
+                  0x0001 - ???
+                  0x0020 - flip avatar.
+                  0x0040 - don't render border and background and continue arrow.
+                  0x0080 - ???
     +40e [][]     0 - enabled message, -1 - disabled.
     +410 [][]     messages order. 0-top. 0xffff if window not inited.
     +412 [][]     ???
@@ -746,7 +749,7 @@
         +18 packets (each buffer 0x1 items 0x28 size).
     +494 end of avatar packets
     +494 []       1 if we render avatar, 0 otherwise.
-    +495 []       store here avatar id from +80 from entity 138 struct.
+    +495 []       avatar id.
 
 800c2dcc [][]     pressed button mask for controller 2 (details in 800af370).
 800c2dd4 [][]     repeated button mask for controller 1 (details in 800af370).
