@@ -14,3 +14,5 @@ build
 /xeno/utilites/cd extractor/.vs/cd extractor/v17
 /xeno/utilites/cd extractor/cd extractor.vcxproj.user
 /xeno/utilites/cd extractor/output/cdrom
+/xeno/utilites/field exporter/output/cdrom
+/xeno/utilites/field exporter/compile/debug
