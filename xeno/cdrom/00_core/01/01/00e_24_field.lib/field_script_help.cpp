@@ -39,3 +39,23 @@ else
 }
 return V0;
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// field_script_help_message_find_for_current_entity()
+
+ret = A0;
+
+for( int i = 0; i < 4; ++i )
+{
+    // if this message enabled and owned by current entity
+    if( ( h[800c1b6c + i * 498 + 416] == w[800af1f0] ) && ( h[800c1b6c + i * 498 + 40e] == 0 ) )
+    {
+        [ret] = w(i);
+        return 0;
+    }
+}
+
+return -1;
+////////////////////////////////

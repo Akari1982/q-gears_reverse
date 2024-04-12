@@ -303,6 +303,12 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xA7()");
                     pointer += 1;
                 }
+                else if( opcode == 0xa9 )
+                {
+                    u8 val = GetU8( pointer + 1 );
+                    exp->Log( "opcodeA9_MessageSetSelectionSync( start_row=" + HexToString( val >> 4 , 2, '0' )  + ", end_row=" + HexToString( val & 0xf ), 2, '0' )  + " )" );
+                    pointer += 2;
+                }
                 else if( opcode == 0xac )
                 {
                     u8 control = GetU8( pointer + 1 ) & 0xf;

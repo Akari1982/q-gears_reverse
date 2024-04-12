@@ -229,11 +229,11 @@ if( step != 0 )
     message_y = message_y + h[800c1b6c + id * 498 + 422];
 }
 
-if( (  h[800c1b6c + id * 498 + 3c4] != 0 )
- || ( hu[800c1b6c + id * 498 + 410] != 0 ) // order check - not top window
- || (  h[800c1b6c + id * 498 + 408] != 0 ) // do not show if window not fully opened
- || ( hu[800c1b6c + id * 498 + 40c] & 0040 )
- || (  h[800c1b6c + id * 498 + 37c] == 0 ) )
+if( (  h[800c1b6c + id * 498 + 3c4] != 0 )   // dont show continue arrow
+ || ( hu[800c1b6c + id * 498 + 410] != 0 )   // order check - not top window
+ || (  h[800c1b6c + id * 498 + 408] != 0 )   // do not show if window not fully opened
+ || ( hu[800c1b6c + id * 498 + 40c] & 0040 ) // dont render window and it elements
+ || (  h[800c1b6c + id * 498 + 37c] == 0 ) ) // show cursor
 {
     [800c1b6c + id * 498 + 40a] = h(2);
 }
@@ -829,8 +829,8 @@ if( h[800c1b6c + id * 498 + 40e] == 0 ) // if message enabled
 
     [800afb60 + id * 4] = w(-1);
 
-    [800c1b6c + id * 498 + 37c] = h(-1);
-    [800c1b6c + id * 498 + 40e] = h(-1); // disable window
+    [800c1b6c + id * 498 + 37c] = h(-1);   // hide cursor
+    [800c1b6c + id * 498 + 40e] = h(-1);   // disable window
     [800c1b6c + id * 498 + 410] = h(ffff); // messages order
     [800c1b6c + id * 498 + 412] = h(0);
     [800c1b6c + id * 498 + 414] = h(-1);
@@ -973,7 +973,7 @@ else
     [800c1b6c + id * 498 + 495] = b(80);
 }
 
-[800c1b6c + id * 498 + 37c] = h(-1);
+[800c1b6c + id * 498 + 37c] = h(-1); // hide cursor
 
 A0 = id;
 A1 = x_pos;
@@ -1133,7 +1133,7 @@ for( int i = 0; i < 4; ++i )
 
             if( hu[800c1b68] & 0020 ) // circle pressed
             {
-                [800c1b6c + i * 498 + 37c] = h(-1); // disable cursor
+                [800c1b6c + i * 498 + 37c] = h(-1); // hide cursor
 
                 owner_id = h[800c1b6c + i * 498 + 416];
                 struct_138 = w[struct_5c_p + owner_id * 5c + 4c];
@@ -1193,7 +1193,7 @@ for( int i = 0; i < 4; ++i )
                         {
                             if( hu[800c1b6c + j * 498 + 410] == 0 ) // top window
                             {
-                                [800c1b6c + j * 498 + 37c] = h(-1); // disable cursor
+                                [800c1b6c + j * 498 + 37c] = h(-1); // hide cursor
 
                                 owner_id = h[800c1b6c + j * 498 + 416];
                                 struct_138 = w[struct_5c_p + owner_id * 5c + 4c];

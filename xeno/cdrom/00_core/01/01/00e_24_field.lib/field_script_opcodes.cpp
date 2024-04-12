@@ -20697,11 +20697,13 @@ V1 = w[800af54c];
 
 ////////////////////////////////
 // 0x9C()
+// message sync
 
 struct_138 = w[800af54c];
 
 A0 = SP + 10;
-func9c2a8(); // search dialog for current entity
+field_script_help_message_find_for_current_entity();
+
 if( V0 == -1 ) // if this entity don't have opened dialogs
 {
     [800af150] = w(w[800af150] + 8); // increase number of executed opcodes
@@ -20714,10 +20716,12 @@ if( V0 == -1 ) // if this entity don't have opened dialogs
 }
 else
 {
-    window_id = w[SP + 10];
-    V1 = h[800c1b6c + window_id * 498 + 418];
-    V0 = w[800aefe4] + V1 * 5c;
-    V0 = w[V0 + 4c];
+    message_id = w[SP + 10];
+    entity_id = h[800c1b6c + message * 498 + 418];
+    V0 = w[800aefe4];
+    V0 = w[V0 + entity_id * 5c + 4c];
+
+    // if target entity not on screen close dialog and related entity script
     if( w[V0 + 4] & 00000200 )
     {
         V1 = w[struct_138 + 84];
@@ -20727,20 +20731,20 @@ else
         }
         else
         {
-            V0 = V0 & ffff;
+            V0 = (V1 >> 10) & ffff;
         }
 
         if( ( V0 & 0001 ) == 0 )
         {
-            slot_id = bu[struct_138 + ce];
+            slot_id = bu[struct_138 + ce]; // current script slot id
             script_priority = (w[struct_138 + 8c + slot_id * 8 + 4] >> 12) & f;
             if( script_priority != 7 )
             {
-                // end script execution
+                // end this entity script execution
                 funca1100(); // this is return opcode
             }
 
-            [800c1b6c + window_id * 498 + 414] = h(0);
+            [800c1b6c + message * 498 + 414] = h(0); // close window
         }
     }
 
@@ -20751,116 +20755,53 @@ else
 
 
 ////////////////////////////////
-// 0xA9
+// field_script_opA9_message_set_selection_sync()
+
+struct_138 = w[800af54c];
 
 A0 = SP + 10;
-func9c2a8(); // search dialog for current entity
+field_script_help_message_find_for_current_entity();
 
-8009B280	bne    v0, zero, L9b3f0 [$8009b3f0]
-8009B284	nop
-V0 = w[SP + 0010];
-S0 = 800c1b84;
-A0 = V0 << 03;
-A0 = A0 + V0;
-A0 = A0 << 02;
-A0 = A0 + V0;
-A0 = A0 << 02;
-A0 = A0 - V0;
-A0 = A0 << 03;
-V0 = w[800af150];
-8009B2B8	nop
-V0 = V0 + 0008;
-[800af150] = w(V0);
-8009B2C8	jal    func33af4 [$80033af4]
-A0 = A0 + S0;
-V1 = 0001;
-8009B2D4	beq    v0, v1, L9b324 [$8009b324]
-8009B2D8	nop
-V0 = w[SP + 0010];
-8009B2E0	nop
-V1 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V1 = V1 - V0;
-V1 = V1 << 03;
-V1 = V1 + S0;
-V0 = h[V1 + 0084];
-8009B308	nop
-8009B30C	beq    v0, zero, L9b410 [$8009b410]
-V0 = 0001;
-V0 = bu[V1 + 006c];
-8009B318	nop
-8009B31C	beq    v0, zero, L9b410 [$8009b410]
-V0 = 0001;
+if( V0 == 0 )
+{
+    message_id = w[SP + 10];
 
-L9b324:	; 8009B324
-V1 = w[SP + 0010];
-A3 = 00f0;
-V0 = V1 << 03;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 - V1;
-V1 = w[800af54c];
-V0 = V0 << 03;
-8009B350	lui    at, $800c
-AT = AT + V0;
-[AT + 1ee8] = h(0);
-V0 = 00ff;
-[V1 + 0081] = b(V0);
-A2 = w[800af54c];
-A0 = w[800ad0d8];
-V0 = hu[A2 + 00cc];
-V1 = w[SP + 0010];
-V0 = V0 + A0;
-A1 = bu[V0 + 0001];
-V0 = V1 << 03;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 - V1;
-V0 = V0 << 03;
-A1 = A1 >> 04;
-8009B3A4	lui    at, $800c
-AT = AT + V0;
-[AT + 1eea] = h(A1);
-V1 = hu[A2 + 00cc];
-A2 = 001e;
-V1 = V1 + A0;
-V1 = bu[V1 + 0001];
-A0 = V0 + S0;
-8009B3C4	lui    at, $800c
-AT = AT + V0;
-[AT + 1eee] = h(0);
-V1 = V1 & 000f;
-V1 = V1 - A1;
-V1 = V1 + 0001;
-8009B3DC	lui    at, $800c
-AT = AT + V0;
-[AT + 1eec] = h(V1);
-8009B3E8	jal    func34624 [$80034624]
-A1 = 00ef;
+    [800af150] = w(w[800af150] + 8); // increase number of executed opcodes
 
-L9b3f0:	; 8009B3F0
-V1 = w[800af54c];
-8009B3F8	nop
-V0 = hu[V1 + 00cc];
-8009B400	nop
-V0 = V0 + 0002;
-[V1 + 00cc] = h(V0);
-V0 = 0001;
+    A0 = 800c1b6c + message_id * 498 + 18;
+    func33af4(); // get state of text
 
-L9b410:	; 8009B410
-[800af594] = w(V0);
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-8009B424	jr     ra 
-8009B428	nop
+    if( V0 != 1 )
+    {
+        // if wait timer 0
+        // if end of text opcode is not met
+        if( ( h[800c1b6c + message_id * 498 + 18 + 84] == 0 ) || ( bu[800c1b6c + message_id * 498 + 18 + 6c] == 0 ) )
+        {
+            [800af594] = w(1);
+            return;
+        }
+    }
+
+    [struct_138 + 81] = b(ff); // stored cursor value
+
+    A0 = w[800ad0d8];
+    V0 = hu[struct_138 + cc] + A0;
+    val = bu[V0 + 1];
+    A1 = val >> 4;
+    [800c1b6c + message_id * 498 + 37c] = h(0); // show cursor
+    [800c1b6c + message_id * 498 + 37e] = h(A1); // start cursor pos
+    [800c1b6c + message_id * 498 + 380] = h((val & f) - A1 + 1); // max cursor pos
+    [800c1b6c + message_id * 498 + 382] = h(0); // current cursor pos
+
+    A0 = 800c1b6c + message_id * 498 + 18;
+    A1 = ef;
+    A2 = 1e;
+    A3 = f0;
+    func34624();
+}
+
+[struct_138 + cc] = h(hu[struct_138 + cc] + 2);
+[800af594] = w(1);
 ////////////////////////////////
 
 
@@ -20896,12 +20837,12 @@ V0 = hu[A0 + cc];
 if (bu[V1 + V0 + 1] == 0)
 {
     A0 = SP + 10;
-    func9c2a8(); // search message for current entity
+    field_script_help_message_find_for_current_entity();
 
     if (V0 == 0) // if it is
     {
         V1 = w[SP + 10];
-        [800c1b6c + V1 * 4a8 + 414] = h(0);
+        [800c1b6c + V1 * 498 + 414] = h(0);
     }
 }
 else
@@ -21294,6 +21235,7 @@ SP = SP + 0048;
 
 ////////////////////////////////
 // func9bb0c
+
 A1 = 0;
 A2 = 0001;
 V1 = 0;
@@ -21322,7 +21264,7 @@ L9bb60:	; 8009BB60
 A1 = A1 + 0001;
 V0 = A1 < 0004;
 8009BB68	bne    v0, zero, loop9bb18 [$8009bb18]
-V1 = V1 + 0498;
+V1 = V1 + 498;
 V0 = 0;
 
 L9bb74:	; 8009BB74
@@ -21367,13 +21309,13 @@ if( A0 != ff && V0 == -1 )
 [800c373c] = w(w[800c373c] + 1);
 
 A0 = SP + 30;
-func9c2a8(); // search message window for current entity
+field_script_help_message_find_for_current_entity(); // search message window for current entity
 
 if( V0 != -1 ) // if already opened
 {
     // close and wait
     window_id = w[SP + 30];
-    [800c1b6c + window_id * 4a8 + 414] = h(0);
+    [800c1b6c + window_id * 498 + 414] = h(0);
     [800af594] = w(1); // wait
     return -1;
 }
@@ -21716,24 +21658,6 @@ return 0;
 ////////////////////////////////
 // func9c288()
 [800b1648] = h(hu[800b1648] | (1 << A0));
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func9c2a8()
-
-for( int i = 0; i < 4; ++i )
-{
-    // if this dialog owned by current entity
-    if( ( h[800c1b6c + i * 498 + 416] == w[800af1f0] ) && ( h[800c1b6c + i * 498 + 40e] == 0 ) )
-    {
-        [A0] = w(i);
-        return 0;
-    }
-}
-
-return -1;
 ////////////////////////////////
 
 
@@ -22531,6 +22455,7 @@ V0 = V0 & A1;
 
 ////////////////////////////////
 // 0x29_EntityTurnOff
+
 A0 = 1;
 get_entity_id_from_opcode();
 entity_id = V0;
@@ -22544,13 +22469,12 @@ if( entity_id != ff )
     [A1 + 4] = w(w[A1 + 4] | 00100000);
     [V0 + entity_id * 5c + 58] = h(hu[V0 + entity_id * 5c + 58] | 0020);
 
-    // say to close dialog
     A0 = SP + 10;
-    func9c2a8(); // search for window for this entity
+    field_script_help_message_find_for_current_entity();
     if( V0 == 0 )
     {
-        window_id = w[SP + 10];
-        [800c1b6c + window_id * 498 + 414] = h(0);
+        message_id = w[SP + 10];
+        [800c1b6c + message_id * 498 + 414] = h(0); // say to close dialog
     }
 }
 
@@ -22601,6 +22525,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x27
+
 struct_138 = w[800af54c];
 
 A0 = 1;
@@ -22621,7 +22546,7 @@ if( V0 != ff )
 
     // close dialog if exist
     A0 = SP + 10;
-    func9c2a8(); // search dialog for current entity
+    field_script_help_message_find_for_current_entity();
     if( V0 == 0 )
     {
         window_id = w[SP + 10];
@@ -26102,6 +26027,7 @@ SP = SP + 0020;
 ////////////////////////////////
 // 0x00_Return
 // funca1100
+
 struct_138 = w[800af54c];
 slot = bu[struct_138 + ce];
 

@@ -370,7 +370,8 @@
         +  81 []       store something from here to memory block + 14. Dialog related. Maybe cursor position.
         +  82 []       dialog width. Init with 0.
         +  83 []       dialog height. Init with 0.
-        +  84 [][][][] something dialog related. Init with 0.
+        +  84 [][][][] flags dialog related. Init with 0. 0xffff0000 0x0000ffff if top part is 0 then use bottom part
+                        0x0001 dont close offscreen entity message and dont stop low priority script.
         +  88 [][]     dialog pixel width. Init with 0.
         +  8a [][]     dialog pixel height. Init with 0.
         +  8c start of slots (0x8 size 0x8 items)
@@ -739,7 +740,7 @@
     +412 [][]     ???
     +414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
     +416 [][]     owner entity id. We store result of selection in this entity +81.
-    +418 [][]     some entity id???
+    +418 [][]     target entity id.
     +41c [][][][] position offset x.
     +420 [][][][] position offset y.
     +424 [][][][] position offset x add.

@@ -1979,7 +1979,7 @@
 // 0x9C
 8009B0E0-8009B268
 ////////////////////////////////
-// 0xA9
+// field_script_opA9_message_set_selection_sync
 8009B26C-8009B428
 ////////////////////////////////
 // func9b42c
@@ -2018,7 +2018,7 @@
 // func9c288
 8009C288-8009C2A4
 ////////////////////////////////
-// func9c2a8
+// field_script_help_message_find_for_current_entity
 8009C2A8-8009C308
 ////////////////////////////////
 // func9c30c
