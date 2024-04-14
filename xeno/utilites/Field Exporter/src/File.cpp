@@ -92,7 +92,7 @@ File::~File()
 void
 File::WriteFile( const std::string& path ) const
 {
-    FILE* file = fopen( path.c_str(), "ab" );
+    FILE* file = fopen( path.c_str(), "wb" );
 
     if( file == NULL )
     {
