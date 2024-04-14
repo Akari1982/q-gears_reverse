@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
         -- 0x2A() -- 0x0009 0x2a
         return 0 -- 0x000a 0x00
     end,
@@ -25,10 +25,10 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x000b 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x000e 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x000b 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x000e 0xfe
         return 0 -- 0x0012 0x00
     end,
 
@@ -49,10 +49,10 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 1 ) -- 0x0016 0x16
-        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0019 0xfe
+        -- 0x16_ActorPCInit( char_id=1 ) -- 0x0016 0x16
+        opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x0019 0xfe
         return 0 -- 0x001d 0x00
     end,
 
@@ -73,10 +73,10 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 2 ) -- 0x0021 0x16
-        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0024 0xfe
+        -- 0x16_ActorPCInit( char_id=2 ) -- 0x0021 0x16
+        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x0024 0xfe
         return 0 -- 0x0028 0x00
     end,
 
@@ -97,10 +97,10 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 3 ) -- 0x002c 0x16
-        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x002f 0xfe
+        -- 0x16_ActorPCInit( char_id=3 ) -- 0x002c 0x16
+        opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x002f 0xfe
         return 0 -- 0x0033 0x00
     end,
 
@@ -121,10 +121,10 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 4 ) -- 0x0037 0x16
-        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x003a 0xfe
+        -- 0x16_ActorPCInit( char_id=4 ) -- 0x0037 0x16
+        opcodeFE0D_MessageSetFace( char_id=4 ) -- 0x003a 0xfe
         return 0 -- 0x003e 0x00
     end,
 
@@ -145,10 +145,10 @@ Entity[ "0x05" ] = {
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 5 ) -- 0x0042 0x16
-        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x0045 0xfe
+        -- 0x16_ActorPCInit( char_id=5 ) -- 0x0042 0x16
+        opcodeFE0D_MessageSetFace( char_id=5 ) -- 0x0045 0xfe
         return 0 -- 0x0049 0x00
     end,
 
@@ -169,10 +169,10 @@ Entity[ "0x06" ] = {
 
 
 
-Entity[ "0x07" ] = {
+Actor[ "0x07" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 6 ) -- 0x004d 0x16
-        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x0050 0xfe
+        -- 0x16_ActorPCInit( char_id=6 ) -- 0x004d 0x16
+        opcodeFE0D_MessageSetFace( char_id=6 ) -- 0x0050 0xfe
         return 0 -- 0x0054 0x00
     end,
 
@@ -193,10 +193,10 @@ Entity[ "0x07" ] = {
 
 
 
-Entity[ "0x08" ] = {
+Actor[ "0x08" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 7 ) -- 0x0058 0x16
-        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x005b 0xfe
+        -- 0x16_ActorPCInit( char_id=7 ) -- 0x0058 0x16
+        opcodeFE0D_MessageSetFace( char_id=7 ) -- 0x005b 0xfe
         return 0 -- 0x005f 0x00
     end,
 
@@ -217,10 +217,10 @@ Entity[ "0x08" ] = {
 
 
 
-Entity[ "0x09" ] = {
+Actor[ "0x09" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 8 ) -- 0x0063 0x16
-        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x0066 0xfe
+        -- 0x16_ActorPCInit( char_id=8 ) -- 0x0063 0x16
+        opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x0066 0xfe
         return 0 -- 0x006a 0x00
     end,
 
@@ -241,10 +241,10 @@ Entity[ "0x09" ] = {
 
 
 
-Entity[ "0x0a" ] = {
+Actor[ "0x0a" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 10 ) -- 0x006e 0x16
-        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x0071 0xfe
+        -- 0x16_ActorPCInit( char_id=10 ) -- 0x006e 0x16
+        opcodeFE0D_MessageSetFace( char_id=10 ) -- 0x0071 0xfe
         return 0 -- 0x0075 0x00
     end,
 
@@ -265,7 +265,7 @@ Entity[ "0x0a" ] = {
 
 
 
-Entity[ "0x0b" ] = {
+Actor[ "0x0b" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0079 0x0b
         -- MISSING OPCODE 0x85
@@ -277,11 +277,11 @@ Entity[ "0x0b" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x009e ) -- 0x0091 0x84
-        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x0096 0xd2
-        -- 0x9C() -- 0x009a 0x9c
+        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0096 0xd2
+        opcode9C_MessageSync() -- 0x009a 0x9c
         -- 0x01_JumpTo( 0x00a3 ) -- 0x009b 0x01
-        opcodeD2_MessageShow0( dialog_id=0x0001, ???=0x00 ) -- 0x009e 0xd2
-        -- 0x9C() -- 0x00a2 0x9c
+        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x009e 0xd2
+        opcode9C_MessageSync() -- 0x00a2 0x9c
         return 0 -- 0x00a3 0x00
     end,
 
@@ -293,7 +293,7 @@ Entity[ "0x0b" ] = {
 
 
 
-Entity[ "0x0c" ] = {
+Actor[ "0x0c" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -306,7 +306,9 @@ Entity[ "0x0c" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00b3 ) -- 0x00a7 0x02
         -- 0x5A() -- 0x00af 0x5a
         -- 0x01_JumpTo( 0x00a7 ) -- 0x00b0 0x01
-        -- MISSING OPCODE 0x27
+        -- 0x27( actor_id=(entity)0x0d ) -- 0x00b3 0x27
+        -- 0x15() -- 0x00b5 0x15
+        -- MISSING OPCODE 0xc4
     end,
 
     on_push = function( self )
@@ -317,9 +319,9 @@ Entity[ "0x0c" ] = {
 
 
 
-Entity[ "0x0d" ] = {
+Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x00c2 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x00c2 0xbc
         -- 0x2A() -- 0x00c3 0x2a
         -- 0x23() -- 0x00c4 0x23
         -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x00cd ) -- 0x00c5 0x86

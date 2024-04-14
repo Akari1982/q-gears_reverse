@@ -1,11 +1,11 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
-        opcodeFE52() -- 0x0009 0xfe
+        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
+        -- 0xFE52() -- 0x0009 0xfe
         -- MISSING OPCODE 0xFE81
     end,
 
@@ -42,10 +42,10 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 1 ) -- 0x00d4 0x16
-        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x00d7 0xfe
+        -- 0x16_ActorPCInit( char_id=1 ) -- 0x00d4 0x16
+        opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x00d7 0xfe
         -- MISSING OPCODE 0x1d
     end,
 
@@ -69,7 +69,7 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -78,7 +78,8 @@ Entity[ "0x02" ] = {
         -- 0x05_CallFunction( 0x0159 ) -- 0x012c 0x05
         -- 0x5A() -- 0x012f 0x5a
         -- 0x05_CallFunction( 0x02bf ) -- 0x0130 0x05
-        -- MISSING OPCODE 0xf6
+        -- 0xF6( ???=0x01 ) -- 0x0133 0xf6
+        -- MISSING OPCODE 0x21
     end,
 
     on_talk = function( self )
@@ -93,9 +94,9 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0560 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0560 0xbc
         -- 0x2A() -- 0x0561 0x2a
         return 0 -- 0x0562 0x00
     end,
@@ -117,7 +118,7 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -127,7 +128,7 @@ Entity[ "0x04" ] = {
         -- 0x5A() -- 0x068d 0x5a
         -- 0x01_JumpTo( 0x0685 ) -- 0x068e 0x01
         -- 0x05_CallFunction( 0x08f0 ) -- 0x0691 0x05
-        -- 0x35() -- 0x0694 0x35
+        opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x0694 0x35
         -- MISSING OPCODE 0x22
     end,
 
@@ -143,7 +144,7 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,

@@ -1,17 +1,17 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
 }
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 3 ) -- 0x0048 0x16
-        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x004b 0xfe
-        -- 0x19_SetPosition( x=(vf80)0xff22, z=(vf40)0xff43, flag=(flag)0xc0 ) -- 0x004f 0x19
+        -- 0x16_ActorPCInit( char_id=3 ) -- 0x0048 0x16
+        opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x004b 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0xff22, z=(vf40)0xff43, flag=(flag)0xc0 ) -- 0x004f 0x19
         -- 0x2A() -- 0x0055 0x2a
         return 0 -- 0x0056 0x00
     end,
@@ -30,37 +30,55 @@ Entity[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x005a 0x4a
+        opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x0060 0x2c
+        -- 0x5A() -- 0x0062 0x5a
+        -- MISSING OPCODE 0x57
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xFE4a
+        opcodeFE4A_SpriteAddAnimLoad( file=20 ) -- 0x0080 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x0084 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x00 ) -- 0x0086 0xfe
+        opcode26_Wait( time=90 ) -- 0x0089 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x008c 0x2c
+        opcodeFE4A_SpriteAddAnimLoad( file=21 ) -- 0x008e 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x0092 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x02 ) -- 0x0094 0xfe
+        return 0 -- 0x0097 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0098 0x2c
+        -- 0xF6( ???=0x01 ) -- 0x009a 0xf6
+        -- MISSING OPCODE 0x4e
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00a3 0x2c
+        -- 0xF6( ???=0x01 ) -- 0x00a5 0xf6
+        -- MISSING OPCODE 0x4e
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0xf6
+        -- 0xF6( ???=0x00 ) -- 0x00ae 0xf6
+        opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x00b0 0x2c
+        -- 0x5A() -- 0x00b2 0x5a
+        -- MISSING OPCODE 0x57
     end,
 
 }
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
 
     on_update = function( self )
         -- 0xC6() -- 0x00e7 0xc6
-        -- 0xFE8F_ParticleSystemInit1( entity=(entity)0xfb, render_settings=1, rot_x=0, rot_y=0 ) -- 0x00e8 0xfe
+        -- 0xFE8F_ParticleSystemInit1( actor_id=(entity)self, render_settings=1, rot_x=0, rot_y=0 ) -- 0x00e8 0xfe
         -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=30, wait=20, ttl=32767 ) -- 0x00f1 0xfe
         -- 0xFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x0000, speed_z=(vf04)0x0000, flag=(flag)0xfc ) -- 0x00fb 0xfe
         -- 0xFE92_ParticleSpeed( speed=(vf80)0x0190, acc_x=(vf40)0xffa6, acc_y=(vf20)0xe890, acc_z=(vf10)0x0000, rand_start=(vf08)0x14e6, rand_speed=(vf04)0x0dac, flag=(flag)0xfc ) -- 0x010a 0xfe
@@ -113,9 +131,9 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x02ec 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x02ec 0xbc
         -- 0x2A() -- 0x02ed 0x2a
         return 0 -- 0x02ee 0x00
     end,
@@ -136,9 +154,9 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x034a 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x034a 0xbc
         opcode99() -- 0x034b 0x99
         -- MISSING OPCODE 0x61
     end,

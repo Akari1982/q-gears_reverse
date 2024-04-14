@@ -1,17 +1,19 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
-        -- MISSING OPCODE 0xFE3a
+        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
+        opcodeFE3A( char_id=2 ) -- 0x0009 0xfe
+        -- 0x2A() -- 0x000d 0x2a
+        return 0 -- 0x000e 0x00
     end,
 
     on_update = function( self )
         opcode26_Wait( time=90 ) -- 0x000f 0x26
-        -- 0x07( entity=0x02, script=0x02 ) -- 0x0012 0x07
-        -- 0x07( entity=0x03, script=0x04 ) -- 0x0015 0x07
+        -- 0x07( actor_id=0x02, script=0x02 ) -- 0x0012 0x07
+        -- 0x07( actor_id=0x03, script=0x04 ) -- 0x0015 0x07
         -- 0x5B() -- 0x0018 0x5b
         return 0 -- 0x0019 0x00
     end,
@@ -37,9 +39,9 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x002a 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x002a 0xbc
         -- 0x2A() -- 0x002b 0x2a
         -- MISSING OPCODE 0xb6
     end,
@@ -60,7 +62,7 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -86,9 +88,9 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x023f 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x023f 0xbc
         -- 0x2A() -- 0x0240 0x2a
         return 0 -- 0x0241 0x00
     end,

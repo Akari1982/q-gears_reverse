@@ -461,8 +461,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
 
     T0 = hu[struct_5c + 58];
 
-    // model or sprite loaded
-    if( hu[struct_5c + 58] & 0040 )
+    if( hu[struct_5c + 58] & 0040 ) // model or sprite loaded
     {
         struct_138 = w[struct_5c + 4c];
         struct_164 = w[struct_5c + 4];
@@ -536,10 +535,10 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
             [SP + a0] = w(FLAG);
             [SP + a4] = w(SZ3 / 4);
 
-            V1 = (w[SP + 98] >> 10) + 9;
-            V0 = ((w[SP + 98] << 10) >> 10) + 27;
+            x = ((w[SP + 98] << 10) >> 10) + 27;
+            y = (w[SP + 98] >> 10) + 9;
 
-            if( ( V1 >= 143 ) || ( V0 >= 18f ) )
+            if( ( y >= 143 ) || ( x >= 18f ) )
             {
                 [struct_138 + 4] = w(w[struct_138 + 4] | 00000200);
             }

@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0016 0xbc
         -- MISSING OPCODE 0xa4
     end,
 
@@ -24,10 +24,10 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x0022 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0025 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x0022 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0025 0xfe
         return 0 -- 0x0029 0x00
     end,
 
@@ -48,10 +48,10 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 2 ) -- 0x003f 0x16
-        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x0042 0xfe
+        -- 0x16_ActorPCInit( char_id=2 ) -- 0x003f 0x16
+        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x0042 0xfe
         -- 0x2A() -- 0x0046 0x2a
         return 0 -- 0x0047 0x00
     end,
@@ -73,9 +73,9 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x004a 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x004a 0xbc
         -- MISSING OPCODE 0xf8
     end,
 
@@ -95,7 +95,7 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -108,10 +108,10 @@ Entity[ "0x04" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x0088 ) -- 0x005c 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x006f ) -- 0x0064 0x02
         -- 0x01_JumpTo( 0x007a ) -- 0x006c 0x01
-        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x006f 0xd2
-        -- 0x9C() -- 0x0073 0x9c
+        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x006f 0xd2
+        opcode9C_MessageSync() -- 0x0073 0x9c
         opcode3A_VariableBitSet( address=0x0184, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x0074 0x3a
-        opcode15() -- 0x007a 0x15
+        -- 0x15() -- 0x007a 0x15
         -- MISSING OPCODE 0xc4
     end,
 
@@ -123,7 +123,7 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,

@@ -2,6 +2,9 @@
 800acfda [][]     looks like this is timer when we stack during auto slide down.
 
 800acfe0 [][][][] render buffer index (0 or 1).
+800acfe4 [][][][] next to load face slot.
+800acfe8 [][][][] memory for first face loading.
+800acfec [][][][] memory for second face loading.
 
 800acff4 [][][][] we read something from here during rotation set. We will not set 80115cdc + 108 if this is not 0.
 
@@ -19,6 +22,7 @@
 
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
 
+800ad048 [][][][] movie play.
 800ad04c [][][][] if this is 1 then we set number of entities to 1 in script call call_run_script_8().
 
 800ad054 [][][][] init with 0.
@@ -324,9 +328,11 @@
                        0x000000c0: for follow entity follow move.
                        0x00000180: ???
                        0x00000200: set if entity not on screen.
+                       0x00000400: ??? set in 0xfe07 opcode in script.
                        0x00000800: remove this flag during initialization in 0x0B opcode (with model). Add it in 0xBC opcode. Looks like if this entity has model or not.
                        0x00001000: remove this flag after move is done.
-                       0x00002000:
+                       0x00002000: 0 - sprite else model.
+                       0x00010000: ???
                        0x00080000: managed in opcode 0xF6.
                        0x00200000: removed in 0x19_SetPosition.
                        0x00400000: maybe means that we checked this entity during movement collision check.
@@ -366,15 +372,15 @@
         +  75 []       init with 0xff.
         +  76 [][]     move speed. Init with 0x0100.
         +  78          stored script pointers stack (2 size 4 item) (when we go to subroutine we store here return pointer).
-        +  80 []       store character id here when we set avatar. Init with 0xff.
+        +  80 []       face id.
         +  81 []       store something from here to memory block + 14. Dialog related. Maybe cursor position.
         +  82 []       dialog width. Init with 0.
         +  83 []       dialog height. Init with 0.
         +  84 [][][][] flags dialog related. Init with 0. 0xffff0000 0x0000ffff if top part is 0 then use bottom part
-                        0x0001 dont close offscreen entity message and dont stop low priority script.
+                        0x00000001 dont close offscreen entity message and dont stop low priority script.
         +  88 [][]     dialog pixel width. Init with 0.
         +  8a [][]     dialog pixel height. Init with 0.
-        +  8c start of slots (0x8 size 0x8 items)
+        +  8c start of script slots (0x8 size 0x8 items)
             +0 [][]     pointer to requested script this slot. Init with 0xffff.
             +2 []       wait byte in this slot. Init with 0.
             +3 []       script id in this slot. Store 0xff  in 0x00_Return. Init with 0xff.
@@ -425,17 +431,17 @@
             +  0 [][][][] init with 0.
         + 11c [][]     rotation stored to +106 sometimes.
         + 11e [][]     init with 0x0200.
-        + 120 [][][][] init with 0. Pointer to some data.
+        + 120 [][][][] pointer to files 0x77a in dir 4 0. Init with 0.
         + 124 [][]     init with -1. If this not -1 then we allocate +120 struct.
-        + 126 [][]     init with 0.
         + 124 [][][][] init with 0x0000ffff.
+        + 126 [][]     init with 0.
         + 128 [][][][] init with 0x0000ffff.
         + 12c [][][][] flags.
                         0x00000003 - remove during entity init.
-                        0x0000001c - remove during entity init. clut Y. used for avatar render.
+                        0x0000001c - face slot used by this entity.
                         0x00000020 - if set - door opening or closing. Remove during init.
                         0x000001c0 - current script stack pointer.
-                        0x00000e00 - remove during entity init. Rotation dir.
+                        0x00000e00 - interaction direction (from leader entity to current). Remove during entity init.
                         0x00001000 - remove during entity init. Checked in func81aa8(). If set then struct_138 + 114 allocated.
                         0x0000e000 - index in model pointers 801e8670.
                         0x00030000 - remove during entity init.
@@ -547,6 +553,11 @@
 800af588 [][][][] used for particle scaled render.
 
 800afb8c [][][][] offset to struct 0x5c for current entity in script call.
+
+800afb78 array of 3 face states for handle (items 3 size 6).
+    +0 [][]     face id.
+    +2 [][]     state (0 - no operations, 2 - start load to vram).
+    +4 [][]     second face (from different side) (1 - exist)
 
 800afb90 array of 0x16 structs 0x70 size.
 
@@ -731,10 +742,10 @@
     +408 [][]     steps of window opening.
     +40a [][]     wait timer for continue arrow add to render.
     +40c [][]     some flags.
-                  0x0001 - ???
-                  0x0020 - flip avatar.
+                  0x0001 - set when top message init and bottom.
+                  0x0020 - flip face.
                   0x0040 - don't render border and background and continue arrow.
-                  0x0080 - ???
+                  0x0080 - set when bottom message init.
     +40e [][]     0 - enabled message, -1 - disabled.
     +410 [][]     messages order. 0-top. 0xffff if window not inited.
     +412 [][]     ???
@@ -745,12 +756,12 @@
     +420 [][][][] position offset y.
     +424 [][][][] position offset x add.
     +428 [][][][] position offset y add.
-    +42c avatar packets
+    +42c face packets
         + 0 texture settings (each buffer 0x1 items 0xc size).
         +18 packets (each buffer 0x1 items 0x28 size).
-    +494 end of avatar packets
-    +494 []       1 if we render avatar, 0 otherwise.
-    +495 []       avatar id.
+    +494 end of face packets
+    +494 []       1 if we render face, 0 otherwise.
+    +495 []       face id.
 
 800c2dcc [][]     pressed button mask for controller 2 (details in 800af370).
 800c2dd4 [][]     repeated button mask for controller 1 (details in 800af370).
@@ -857,7 +868,7 @@
 800c2f24 [][][][] max horizontal movement for mouse controller.
 800c2f28 [][][][] max vertical movement for mouse controller.
 
-800c2f3c memory block. used in get_bytes_from_800C2F3C.
+800c2f3c memory block. used in field_script_help_read_bytes_from_800C2F3C.
 + 0000 [][]     progress.
 + 0002 [][]     spawn slot id (used when spawn pc).
 + 0004 [][]     current field id.
@@ -870,7 +881,7 @@
 + 001a [][]     slot3 for dialog temp variable.
 + 001c [][]     slot4 for dialog temp variable.
 + 003c [][]     store loaded field id to load here.
-800c373c [][][][] maybe number of inited windows.
+800c373c [][][][] message currently opening.
 800c3740          end of memory block.
 
 800c3740 [][][][] pointer to 800b1970 (otag).

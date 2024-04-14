@@ -1239,7 +1239,7 @@ Sprite struct 0x164. Can be allocated anywhere.
                     0x00100000 - add when we starting animation. If 0 and +3c 0x00000003 == 1 and b4+34 != 0 then reset all data in +124 (add rot and trans).
     + 44 [][][][] pointer to loaded sprite pack.
     + 48 [][][][] pointer to sprite pack.
-    + 4c [][][][] pointer to some sprite pack (used if animation id < 0).
+    + 4c [][][][] additional sprite animation pack (used if animation id < 0).
     + 50 [][][][] init with 0.
     + 54 [][][][] pointer to some start frame id for different directions in sprite data file 0. Pointer to first direction start frame.
     + 58 [][][][] pointer to animation data in sprite data file 0.

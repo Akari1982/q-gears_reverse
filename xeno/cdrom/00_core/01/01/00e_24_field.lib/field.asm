@@ -374,7 +374,7 @@
 // field_message_set_window_rect
 8007D728-8007D77C
 ////////////////////////////////
-// field_message_set_avatar_packet_pos
+// field_message_set_face_packet_pos
 8007D780-8007D7D0
 ////////////////////////////////
 // field_message_window_update_add_to_render
@@ -383,13 +383,13 @@
 // field_message_window_create_packets
 8007E420-8007EBBC
 ////////////////////////////////
-// field_message_set_avatar_uv_clut
+// field_message_set_face_uv_clut
 8007EBC0-8007ED08
 ////////////////////////////////
 // field_message_close_message
 8007ED0C-8007EE24
 ////////////////////////////////
-// func7ee28
+// field_message_get_entity_screen_pos
 8007EE28-8007EEEC
 ////////////////////////////////
 // field_message_set_to_show
@@ -413,7 +413,7 @@
 // field_message_find_lowest_opened_slot
 8007FD74-8007FDC4
 ////////////////////////////////
-// func7fdc8
+// field_message_open_new_slot_on_top
 8007FDC8-8007FE4C
 ////////////////////////////////
 // func7fe50
@@ -680,19 +680,19 @@
 // func875e0
 800875E0-80087768
 ////////////////////////////////
-// func8776c
+// field_script_opFEA4
 8008776C-800877B8
 ////////////////////////////////
 // func877bc
 800877BC-8008782C
 ////////////////////////////////
-// func87830
+// field_script_opFEA2
 80087830-80087888
 ////////////////////////////////
 // func8788c
 8008788C-80087930
 ////////////////////////////////
-// func87934
+// field_script_opFEA1
 80087934-800879A4
 ////////////////////////////////
 // func879a8
@@ -845,22 +845,22 @@
 // func89db0
 80089DB0-80089F0C
 ////////////////////////////////
-// func89f10
+// field_script_opFE4D_sprite_play_add_animation
 80089F10-80089F44
 ////////////////////////////////
 // func89f48
 80089F48-80089F7C
 ////////////////////////////////
-// func89f80
+// field_script_opFE4B_sprite_add_anim_sync
 80089F80-8008A030
 ////////////////////////////////
-// func8a034
+// field_script_opFE4E_sprite_add_anim_unload
 8008A034-8008A09C
 ////////////////////////////////
 // func8a0a0
 8008A0A0-8008A2B8
 ////////////////////////////////
-// func8a2bc
+// field_script_opFE4A_sprite_add_anim_load
 8008A2BC-8008A42C
 ////////////////////////////////
 // func8a430
@@ -920,7 +920,7 @@
 // func8b754
 8008B754-8008B904
 ////////////////////////////////
-// func8b908
+// field_script_opFE19
 8008B908-8008BDA8
 ////////////////////////////////
 // func8bdac
@@ -950,13 +950,13 @@
 // func8c438
 8008C438-8008C4A0
 ////////////////////////////////
-// func8c4a4
+// field_script_opFE3A
 8008C4A4-8008C50C
 ////////////////////////////////
 // convert_magic_to_pc_id
 8008C510-8008C56C
 ////////////////////////////////
-// field_script_opFE0D_set_avatar
+// field_script_opFE0D_set_face
 8008C570-8008C5BC
 ////////////////////////////////
 // func8c5c0
@@ -995,10 +995,10 @@
 // func8cb9c
 8008CB9C-8008CBD4
 ////////////////////////////////
-// func8cbd8
+// field_script_opFE07
 8008CBD8-8008CC54
 ////////////////////////////////
-// func8cc58
+// field_script_opFE0A
 8008CC58-8008CCD0
 ////////////////////////////////
 // func8ccd4
@@ -1103,13 +1103,13 @@
 // 0xF7
 8008DE30-8008DE98
 ////////////////////////////////
-// 0xF6
+// field_script_opF6
 8008DE9C-8008DFC8
 ////////////////////////////////
 // func8dfcc
 8008DFCC-8008E028
 ////////////////////////////////
-// func8e02c
+// field_script_opFEA0
 8008E02C-8008E200
 ////////////////////////////////
 // func8e204
@@ -1163,16 +1163,16 @@
 // func8ebb8
 8008EBB8-8008EC38
 ////////////////////////////////
-// func8ec3c
+// field_script_op74_sound_play_fixed_volume
 8008EC3C-8008EC7C
 ////////////////////////////////
-// 0x5D_PlaySoundWithVolumeIn3
+// field_script_opFE5D_play_sound_with_volume_in_3
 8008EC80-8008ECF4
 ////////////////////////////////
 // func8ecf8
 8008ECF8-8008ED3C
 ////////////////////////////////
-// func8ed40
+// field_script_op75
 8008ED40-8008ED88
 ////////////////////////////////
 // func8ed8c
@@ -1277,7 +1277,7 @@
 // func90fdc
 80090FDC-80091048
 ////////////////////////////////
-// func9104c
+// field_script_opE7
 8009104C-800910A4
 ////////////////////////////////
 // func910a8
@@ -1358,7 +1358,7 @@
 // func92588
 80092588-800925E4
 ////////////////////////////////
-// func925e8
+// field_script_op56
 800925E8-800927C8
 ////////////////////////////////
 // func927cc
@@ -1696,10 +1696,10 @@
 // func967d4
 800967D4-80096834
 ////////////////////////////////
-// func96838
+// field_script_op79
 80096838-8009687C
 ////////////////////////////////
-// func96880
+// field_script_op7A
 80096880-800968C4
 ////////////////////////////////
 // func968c8
@@ -1780,7 +1780,7 @@
 // func97f70
 80097F70-80097FC0
 ////////////////////////////////
-// func97fc4
+// field_script_opFE75
 80097FC4-8009804C
 ////////////////////////////////
 // func98050
@@ -1795,10 +1795,10 @@
 // func98280
 80098280-800987E4
 ////////////////////////////////
-// 0x57
+// field_script_op57
 800987E8-80098F50
 ////////////////////////////////
-// 0x4A_SpriteGoToPosition
+// field_script_op4A_actor_go_to_position
 80098F54-80098FD4
 ////////////////////////////////
 // func98fd8
@@ -1825,23 +1825,23 @@
 // 0x2D
 800995F8-800996CC
 ////////////////////////////////
-// 0xFE45_SpritePlayAnimation2
+// field_script_opFE45_sprite_set_default_animation
 800996D0-80099700
 ////////////////////////////////
-// 0x2C_SpritePlayAnimation
+// field_script_op2C_sprite_play_animation
 // func99704
 80099704-80099744
 ////////////////////////////////
-// 0x5D
+// field_script_op5D
 80099748-8009977C
 ////////////////////////////////
-// 0x5E
+// field_script_op5E
 80099780-800997B4
 ////////////////////////////////
 // func997b8
 800997B8-80099878
 ////////////////////////////////
-// 0x6F_SpriteRotateToEntity
+// field_script_op6F_actor_rotate_to_actor
 8009987C-8009991C
 ////////////////////////////////
 // 0x9D
@@ -1895,10 +1895,10 @@
 // func9a0dc
 8009A0DC-8009A12C
 ////////////////////////////////
-// 0x6B_SpriteRotateClockwise
+// field_script_op6B_actor_rotate_clockwise
 8009A130-8009A17C
 ////////////////////////////////
-// 0x6C_SpriteRotateAntiClockwise
+// field_script_op6C_actor_rotate_anticlockwise
 8009A180-8009A1CC
 ////////////////////////////////
 // func9a1d0
@@ -1907,7 +1907,7 @@
 // func9a208
 8009A208-8009A24C
 ////////////////////////////////
-// 0x69_SetRotation
+// field_script_op69_actor_set_rotation
 8009A250-8009A284
 ////////////////////////////////
 // func9a288
@@ -1976,7 +1976,7 @@
 // 0xA0
 8009B050-8009B0DC
 ////////////////////////////////
-// 0x9C
+// field_script_op9C_message_sync
 8009B0E0-8009B268
 ////////////////////////////////
 // field_script_opA9_message_set_selection_sync
@@ -1985,10 +1985,10 @@
 // func9b42c
 8009B42C-8009B46C
 ////////////////////////////////
-// 0xF4
+// field_script_opF4_message_close
 8009B470-8009B55C
 ////////////////////////////////
-// 0xFC
+// field_script_opFC_message_show_e_copy_face
 8009B560-8009B5EC
 ////////////////////////////////
 // field_script_opD4_message_show_e
@@ -2006,10 +2006,10 @@
 // field_script_opF5_message_show_3
 8009B700-8009B724
 ////////////////////////////////
-// func9b728
+// field_script_help_message_load_face
 8009B728-8009BB08
 ////////////////////////////////
-// func9bb0c
+// field_script_help_message_check_face_used
 8009BB0C-8009BB78
 ////////////////////////////////
 // func9bb7c
@@ -2024,7 +2024,7 @@
 // func9c30c
 8009C30C-8009C340
 ////////////////////////////////
-// get_entity_id_from_opcode
+// field_script_help_read_entity
 8009C344-8009C3D4
 ////////////////////////////////
 // func9c3d8
@@ -2036,82 +2036,82 @@
 // func9c500
 8009C500-8009C504
 ////////////////////////////////
-// read_two_bytes_based_on_flag_80
+// field_script_help_read_u16_by_flag_80
 8009C508-8009C548
 ////////////////////////////////
-// read_two_bytes_based_on_flag_40
+// field_script_help_read_u16_by_flag_40
 8009C54C-8009C58C
 ////////////////////////////////
-// read_two_bytes_based_on_flag_20
+// field_script_help_read_u16_by_flag_20
 8009C590-8009C5D0
 ////////////////////////////////
-// read_two_bytes_based_on_flag_10
+// field_script_help_read_u16_by_flag_10
 8009C5D4-8009C614
 ////////////////////////////////
-// read_two_bytes_based_on_flag_08
+// field_script_help_read_u16_by_flag_08
 8009C618-8009C658
 ////////////////////////////////
-// read_two_bytes_based_on_flag_04
+// field_script_help_read_u16_by_flag_04
 8009C65C-8009C69C
 ////////////////////////////////
-// read_two_bytes_based_on_flag_02
+// field_script_help_read_u16_by_flag_02
 8009C6A0-8009C6E0
 ////////////////////////////////
-// read_two_bytes_based_on_flag_01
+// field_script_help_read_u16_by_flag_01
 8009C6E4-8009C724
 ////////////////////////////////
-// func9c728
+// field_script_op43_variable_random
 8009C728-8009C77C
 ////////////////////////////////
-// 0xA8_VariableRandom
+// field_script_opA8
 8009C780-8009C7EC
 ////////////////////////////////
-// func9c7f0
+// field_script_op42_variable_shift_right
 8009C7F0-8009C85C
 ////////////////////////////////
-// func9c860
+// field_script_op41_variable_shift_left
 8009C860-8009C8CC
 ////////////////////////////////
-// func9c8d0
+// field_script_op3C_variable_inc
 8009C8D0-8009C930
 ////////////////////////////////
-// func9c934
+// field_script_op3D_variable_dec
 8009C934-8009C994
 ////////////////////////////////
-// func9c998
+// field_script_op3B_variable_bit_unset
 8009C998-8009CA2C
 ////////////////////////////////
-// func9ca30
+// field_script_op40_variable_xor
 8009CA30-8009CAB8
 ////////////////////////////////
-// func9cabc
+// field_script_op3F_variable_or
 8009CABC-8009CB44
 ////////////////////////////////
-// func9cb48
+// field_script_op3E_variable_and
 8009CB48-8009CBD0
 ////////////////////////////////
 // field_script_op3A_variable_bit_set
 8009CBD4-8009CC64
 ////////////////////////////////
-// func9cc68
+// field_script_opDE_variable_multiply
 8009CC68-8009CCF4
 ////////////////////////////////
-// func9ccf8
+// field_script_opDF_variable_divide
 8009CCF8-8009CD90
 ////////////////////////////////
-// func9cd94
+// field_script_op39_variable_subtract
 8009CD94-8009CE1C
 ////////////////////////////////
-// func9ce20
+// field_script_op38_variable_add
 8009CE20-8009CEA8
 ////////////////////////////////
-// 0x37_VariableSetFalse
+// field_script_op37_variable_set_false
 8009CEAC-8009CEEC
 ////////////////////////////////
-// 0x36_VariableSetTrue
+// field_script_op36_variable_set_true
 8009CEF0-8009CF30
 ////////////////////////////////
-// func9cf34
+// field_script_op35_variable_set
 8009CF34-8009CFA8
 ////////////////////////////////
 // 0x2A
@@ -2132,7 +2132,7 @@
 // func9d158
 8009D158-8009D1D8
 ////////////////////////////////
-// 0x27
+// field_script_op27
 8009D1DC-8009D2C0
 ////////////////////////////////
 // 0x26_Wait
@@ -2159,7 +2159,7 @@
 // 0x21
 8009D624-8009D698
 ////////////////////////////////
-// 0x20_SpriteSetSolid
+// field_script_op20_actor_set_flags0
 8009D69C-8009D72C
 ////////////////////////////////
 // 0x1F
@@ -2216,7 +2216,7 @@
 // func9ea5c
 8009EA5C-8009EB34
 ////////////////////////////////
-// 0x0C
+// field_script_op0C
 8009EB38-8009EB80
 ////////////////////////////////
 // 0xA7
@@ -2238,7 +2238,7 @@
 // func9f1d8
 8009F1D8-8009F238
 ////////////////////////////////
-// func9f23c
+// field_script_opFE42
 8009F23C-8009F29C
 ////////////////////////////////
 // func9f2a0
@@ -2265,7 +2265,7 @@
 // func9fc78
 8009FC78-8009FE44
 ////////////////////////////////
-// 0x16_EntityPCInit
+// field_script_op16_actor_pc_init
 8009FE48-800A01D8
 ////////////////////////////////
 // funca01dc
@@ -2308,7 +2308,7 @@
 // 0x06
 800A0CC0-800A0D80
 ////////////////////////////////
-// funca0d84
+// field_script_op05_call_function
 800A0D84-800A0E44
 ////////////////////////////////
 // funca0e48
@@ -2357,13 +2357,13 @@
 // funca2550
 800A2550-800A256C
 ////////////////////////////////
-// get_bytes_sign
+// field_script_help_get_bytes_sign
 800A2570-800A25A4
 ////////////////////////////////
-// get_bytes_from_800C2F3C
+// field_script_help_read_bytes_from_800C2F3C
 800A25A8-800A25FC
 ////////////////////////////////
-// put_bytes_to_800C2F3C
+// field_script_help_write_bytes_to_800C2F3C
 800A2604-800A261C
 ////////////////////////////////
 // get_script_offset

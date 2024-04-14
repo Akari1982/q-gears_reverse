@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0024 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0024 0xbc
         -- MISSING OPCODE 0xf7
     end,
 
@@ -24,10 +24,10 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x00c5 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x00c8 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x00c5 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x00c8 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -48,10 +48,10 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 1 ) -- 0x00d2 0x16
-        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x00d5 0xfe
+        -- 0x16_ActorPCInit( char_id=1 ) -- 0x00d2 0x16
+        opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x00d5 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -72,10 +72,10 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 2 ) -- 0x00df 0x16
-        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x00e2 0xfe
+        -- 0x16_ActorPCInit( char_id=2 ) -- 0x00df 0x16
+        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x00e2 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -96,10 +96,10 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 3 ) -- 0x00ec 0x16
-        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x00ef 0xfe
+        -- 0x16_ActorPCInit( char_id=3 ) -- 0x00ec 0x16
+        opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x00ef 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -120,10 +120,10 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 4 ) -- 0x00f9 0x16
-        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x00fc 0xfe
+        -- 0x16_ActorPCInit( char_id=4 ) -- 0x00f9 0x16
+        opcodeFE0D_MessageSetFace( char_id=4 ) -- 0x00fc 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -144,10 +144,10 @@ Entity[ "0x05" ] = {
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 5 ) -- 0x0106 0x16
-        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x0109 0xfe
+        -- 0x16_ActorPCInit( char_id=5 ) -- 0x0106 0x16
+        opcodeFE0D_MessageSetFace( char_id=5 ) -- 0x0109 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -168,10 +168,10 @@ Entity[ "0x06" ] = {
 
 
 
-Entity[ "0x07" ] = {
+Actor[ "0x07" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 6 ) -- 0x0113 0x16
-        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x0116 0xfe
+        -- 0x16_ActorPCInit( char_id=6 ) -- 0x0113 0x16
+        opcodeFE0D_MessageSetFace( char_id=6 ) -- 0x0116 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -192,10 +192,10 @@ Entity[ "0x07" ] = {
 
 
 
-Entity[ "0x08" ] = {
+Actor[ "0x08" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 7 ) -- 0x0120 0x16
-        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x0123 0xfe
+        -- 0x16_ActorPCInit( char_id=7 ) -- 0x0120 0x16
+        opcodeFE0D_MessageSetFace( char_id=7 ) -- 0x0123 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -216,10 +216,10 @@ Entity[ "0x08" ] = {
 
 
 
-Entity[ "0x09" ] = {
+Actor[ "0x09" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 8 ) -- 0x012d 0x16
-        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x0130 0xfe
+        -- 0x16_ActorPCInit( char_id=8 ) -- 0x012d 0x16
+        opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x0130 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -240,10 +240,10 @@ Entity[ "0x09" ] = {
 
 
 
-Entity[ "0x0a" ] = {
+Actor[ "0x0a" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 9 ) -- 0x013a 0x16
-        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x013d 0xfe
+        -- 0x16_ActorPCInit( char_id=9 ) -- 0x013a 0x16
+        opcodeFE0D_MessageSetFace( char_id=9 ) -- 0x013d 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -264,10 +264,10 @@ Entity[ "0x0a" ] = {
 
 
 
-Entity[ "0x0b" ] = {
+Actor[ "0x0b" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 10 ) -- 0x0147 0x16
-        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x014a 0xfe
+        -- 0x16_ActorPCInit( char_id=10 ) -- 0x0147 0x16
+        opcodeFE0D_MessageSetFace( char_id=10 ) -- 0x014a 0xfe
         -- MISSING OPCODE 0x1f
     end,
 
@@ -288,7 +288,7 @@ Entity[ "0x0b" ] = {
 
 
 
-Entity[ "0x0c" ] = {
+Actor[ "0x0c" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0154 0x0b
         -- MISSING OPCODE 0xFE03
@@ -307,14 +307,16 @@ Entity[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x016a 0xfe
+        opcode26_Wait( time=1 ) -- 0x016d 0x26
+        -- MISSING OPCODE 0x22
     end,
 
 }
 
 
 
-Entity[ "0x0d" ] = {
+Actor[ "0x0d" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x01b6 0x0b
         -- MISSING OPCODE 0xFE03
@@ -333,14 +335,16 @@ Entity[ "0x0d" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x01cb 0xfe
+        opcode26_Wait( time=6 ) -- 0x01ce 0x26
+        -- MISSING OPCODE 0x22
     end,
 
 }
 
 
 
-Entity[ "0x0e" ] = {
+Actor[ "0x0e" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0217 0x0b
         -- MISSING OPCODE 0xFE03
@@ -359,14 +363,16 @@ Entity[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x022c 0xfe
+        opcode26_Wait( time=11 ) -- 0x022f 0x26
+        -- MISSING OPCODE 0x22
     end,
 
 }
 
 
 
-Entity[ "0x0f" ] = {
+Actor[ "0x0f" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0278 0x0b
         -- MISSING OPCODE 0xFE03
@@ -385,14 +391,16 @@ Entity[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x028d 0xfe
+        opcode26_Wait( time=16 ) -- 0x0290 0x26
+        -- MISSING OPCODE 0x22
     end,
 
 }
 
 
 
-Entity[ "0x10" ] = {
+Actor[ "0x10" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x02d9 0x0b
         -- MISSING OPCODE 0xFE03
@@ -411,14 +419,16 @@ Entity[ "0x10" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x02ee 0xfe
+        opcode26_Wait( time=11 ) -- 0x02f1 0x26
+        -- MISSING OPCODE 0x22
     end,
 
 }
 
 
 
-Entity[ "0x11" ] = {
+Actor[ "0x11" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x033a 0x0b
         -- MISSING OPCODE 0xFE03
@@ -439,14 +449,16 @@ Entity[ "0x11" ] = {
     script_0x04 = function( self )
         -- 0x05_CallFunction( 0x05a7 ) -- 0x034f 0x05
         -- 0x05_CallFunction( 0x04ef ) -- 0x0352 0x05
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x0355 0xfe
+        opcode26_Wait( time=6 ) -- 0x0358 0x26
+        -- MISSING OPCODE 0x22
     end,
 
 }
 
 
 
-Entity[ "0x12" ] = {
+Actor[ "0x12" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x03ab 0x0b
         -- MISSING OPCODE 0xFE03
@@ -465,24 +477,26 @@ Entity[ "0x12" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x03c0 0xfe
+        opcode26_Wait( time=1 ) -- 0x03c3 0x26
+        -- MISSING OPCODE 0x22
     end,
 
 }
 
 
 
-Entity[ "0x13" ] = {
+Actor[ "0x13" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x040c 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x040c 0xbc
         -- 0x2A() -- 0x040d 0x2a
         return 0 -- 0x040e 0x00
     end,
 
     on_update = function( self )
-        -- 0x75() -- 0x040f 0x75
+        -- 0x75( ???=45 ) -- 0x040f 0x75
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0465 ) -- 0x0412 0x02
-        opcodeFE54() -- 0x041a 0xfe
+        -- 0xFE54() -- 0x041a 0xfe
         opcode26_Wait( time=30 ) -- 0x041c 0x26
         -- MISSING OPCODE 0x67
     end,
@@ -499,9 +513,9 @@ Entity[ "0x13" ] = {
 
 
 
-Entity[ "0x14" ] = {
+Actor[ "0x14" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0477 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0477 0xbc
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x04a9 ) -- 0x0478 0x02
         opcode99() -- 0x0480 0x99
         -- MISSING OPCODE 0x61
@@ -527,9 +541,9 @@ Entity[ "0x14" ] = {
 
 
 
-Entity[ "0x15" ] = {
+Actor[ "0x15" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x05ab 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x05ab 0xbc
         -- 0x2A() -- 0x05ac 0x2a
         return 0 -- 0x05ad 0x00
     end,
@@ -548,39 +562,39 @@ Entity[ "0x15" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x05c6 ) -- 0x05b0 0x02
-        -- 0x35() -- 0x05b8 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0000, flag=0x40 ) -- 0x05b8 0x35
         -- 0x98_MapLoad( field_id=47, value=0 ) -- 0x05be 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x05c3 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x05dc ) -- 0x05c6 0x02
-        -- 0x35() -- 0x05ce 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0001, flag=0x40 ) -- 0x05ce 0x35
         -- 0x98_MapLoad( field_id=47, value=0 ) -- 0x05d4 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x05d9 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x05f2 ) -- 0x05dc 0x02
-        -- 0x35() -- 0x05e4 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0002, flag=0x40 ) -- 0x05e4 0x35
         -- 0x98_MapLoad( field_id=47, value=0 ) -- 0x05ea 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x05ef 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x0608 ) -- 0x05f2 0x02
-        -- 0x35() -- 0x05fa 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000d, flag=0x40 ) -- 0x05fa 0x35
         -- 0x98_MapLoad( field_id=48, value=4 ) -- 0x0600 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x0605 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x061e ) -- 0x0608 0x02
-        -- 0x35() -- 0x0610 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000a, flag=0x40 ) -- 0x0610 0x35
         -- 0x98_MapLoad( field_id=48, value=0 ) -- 0x0616 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x061b 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000a, condition="value1 == value2", jump_if_false=0x0634 ) -- 0x061e 0x02
-        -- 0x35() -- 0x0626 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000a, flag=0x40 ) -- 0x0626 0x35
         -- 0x98_MapLoad( field_id=48, value=0 ) -- 0x062c 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x0631 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000b, condition="value1 == value2", jump_if_false=0x064a ) -- 0x0634 0x02
-        -- 0x35() -- 0x063c 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000b, flag=0x40 ) -- 0x063c 0x35
         -- 0x98_MapLoad( field_id=48, value=0 ) -- 0x0642 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x0647 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000c, condition="value1 == value2", jump_if_false=0x0660 ) -- 0x064a 0x02
-        -- 0x35() -- 0x0652 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000c, flag=0x40 ) -- 0x0652 0x35
         -- 0x98_MapLoad( field_id=48, value=0 ) -- 0x0658 0x98
         -- 0x01_JumpTo( 0x0686 ) -- 0x065d 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000d, condition="value1 == value2", jump_if_false=0x0686 ) -- 0x0660 0x02
-        -- 0x35() -- 0x0668 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0004, flag=0x40 ) -- 0x0668 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0180 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x067e ) -- 0x066e 0x02
         -- 0x98_MapLoad( field_id=51, value=0 ) -- 0x0676 0x98
         -- 0x01_JumpTo( 0x0683 ) -- 0x067b 0x01
@@ -592,42 +606,42 @@ Entity[ "0x15" ] = {
 
     script_0x05 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x069e ) -- 0x0688 0x02
-        -- 0x35() -- 0x0690 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0006, flag=0x40 ) -- 0x0690 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x0696 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x069b 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x06b4 ) -- 0x069e 0x02
-        -- 0x35() -- 0x06a6 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0007, flag=0x40 ) -- 0x06a6 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x06ac 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x06b1 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x06ca ) -- 0x06b4 0x02
-        -- 0x35() -- 0x06bc 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0007, flag=0x40 ) -- 0x06bc 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x06c2 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x06c7 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x06e0 ) -- 0x06ca 0x02
-        -- 0x35() -- 0x06d2 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0008, flag=0x40 ) -- 0x06d2 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x06d8 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x06dd 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x06f6 ) -- 0x06e0 0x02
-        -- 0x35() -- 0x06e8 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0009, flag=0x40 ) -- 0x06e8 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x06ee 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x06f3 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000a, condition="value1 == value2", jump_if_false=0x070c ) -- 0x06f6 0x02
-        -- 0x35() -- 0x06fe 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000a, flag=0x40 ) -- 0x06fe 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x0704 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x0709 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000b, condition="value1 == value2", jump_if_false=0x0722 ) -- 0x070c 0x02
-        -- 0x35() -- 0x0714 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000b, flag=0x40 ) -- 0x0714 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x071a 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x071f 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000c, condition="value1 == value2", jump_if_false=0x0748 ) -- 0x0722 0x02
-        -- 0x35() -- 0x072a 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0004, flag=0x40 ) -- 0x072a 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0180 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x0740 ) -- 0x0730 0x02
         -- 0x98_MapLoad( field_id=51, value=1 ) -- 0x0738 0x98
         -- 0x01_JumpTo( 0x0745 ) -- 0x073d 0x01
         -- 0x98_MapLoad( field_id=52, value=1 ) -- 0x0740 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x0745 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000d, condition="value1 == value2", jump_if_false=0x075e ) -- 0x0748 0x02
-        -- 0x35() -- 0x0750 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000d, flag=0x40 ) -- 0x0750 0x35
         -- 0x98_MapLoad( field_id=48, value=1 ) -- 0x0756 0x98
         -- 0x01_JumpTo( 0x075e ) -- 0x075b 0x01
         -- 0x5B() -- 0x075e 0x5b
@@ -636,42 +650,42 @@ Entity[ "0x15" ] = {
 
     script_0x06 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0776 ) -- 0x0760 0x02
-        -- 0x35() -- 0x0768 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0005, flag=0x40 ) -- 0x0768 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x076e 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x0773 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x078c ) -- 0x0776 0x02
-        -- 0x35() -- 0x077e 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0006, flag=0x40 ) -- 0x077e 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x0784 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x0789 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x07a2 ) -- 0x078c 0x02
-        -- 0x35() -- 0x0794 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0007, flag=0x40 ) -- 0x0794 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x079a 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x079f 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x07b8 ) -- 0x07a2 0x02
-        -- 0x35() -- 0x07aa 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0008, flag=0x40 ) -- 0x07aa 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x07b0 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x07b5 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x07ce ) -- 0x07b8 0x02
-        -- 0x35() -- 0x07c0 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0009, flag=0x40 ) -- 0x07c0 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x07c6 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x07cb 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000a, condition="value1 == value2", jump_if_false=0x07e4 ) -- 0x07ce 0x02
-        -- 0x35() -- 0x07d6 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000a, flag=0x40 ) -- 0x07d6 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x07dc 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x07e1 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000b, condition="value1 == value2", jump_if_false=0x080a ) -- 0x07e4 0x02
-        -- 0x35() -- 0x07ec 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0004, flag=0x40 ) -- 0x07ec 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0180 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x0802 ) -- 0x07f2 0x02
         -- 0x98_MapLoad( field_id=51, value=2 ) -- 0x07fa 0x98
         -- 0x01_JumpTo( 0x0807 ) -- 0x07ff 0x01
         -- 0x98_MapLoad( field_id=52, value=2 ) -- 0x0802 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x0807 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000c, condition="value1 == value2", jump_if_false=0x0820 ) -- 0x080a 0x02
-        -- 0x35() -- 0x0812 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0003, flag=0x40 ) -- 0x0812 0x35
         -- 0x98_MapLoad( field_id=46, value=0 ) -- 0x0818 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x081d 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000d, condition="value1 == value2", jump_if_false=0x0836 ) -- 0x0820 0x02
-        -- 0x35() -- 0x0828 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0008, flag=0x40 ) -- 0x0828 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x082e 0x98
         -- 0x01_JumpTo( 0x0836 ) -- 0x0833 0x01
         -- 0x5B() -- 0x0836 0x5b
@@ -680,42 +694,42 @@ Entity[ "0x15" ] = {
 
     script_0x07 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x084e ) -- 0x0838 0x02
-        -- 0x35() -- 0x0840 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0005, flag=0x40 ) -- 0x0840 0x35
         -- 0x98_MapLoad( field_id=48, value=3 ) -- 0x0846 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x084b 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x0864 ) -- 0x084e 0x02
-        -- 0x35() -- 0x0856 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0005, flag=0x40 ) -- 0x0856 0x35
         -- 0x98_MapLoad( field_id=48, value=3 ) -- 0x085c 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x0861 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x087a ) -- 0x0864 0x02
-        -- 0x35() -- 0x086c 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0006, flag=0x40 ) -- 0x086c 0x35
         -- 0x98_MapLoad( field_id=48, value=3 ) -- 0x0872 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x0877 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x0890 ) -- 0x087a 0x02
-        -- 0x35() -- 0x0882 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0002, flag=0x40 ) -- 0x0882 0x35
         -- 0x98_MapLoad( field_id=47, value=3 ) -- 0x0888 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x088d 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x08a6 ) -- 0x0890 0x02
-        -- 0x35() -- 0x0898 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000d, flag=0x40 ) -- 0x0898 0x35
         -- 0x98_MapLoad( field_id=48, value=2 ) -- 0x089e 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x08a3 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000a, condition="value1 == value2", jump_if_false=0x08cc ) -- 0x08a6 0x02
-        -- 0x35() -- 0x08ae 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0004, flag=0x40 ) -- 0x08ae 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0180 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x08c4 ) -- 0x08b4 0x02
         -- 0x98_MapLoad( field_id=51, value=3 ) -- 0x08bc 0x98
         -- 0x01_JumpTo( 0x08c9 ) -- 0x08c1 0x01
         -- 0x98_MapLoad( field_id=52, value=3 ) -- 0x08c4 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x08c9 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000b, condition="value1 == value2", jump_if_false=0x08e2 ) -- 0x08cc 0x02
-        -- 0x35() -- 0x08d4 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000b, flag=0x40 ) -- 0x08d4 0x35
         -- 0x98_MapLoad( field_id=48, value=3 ) -- 0x08da 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x08df 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000c, condition="value1 == value2", jump_if_false=0x08f8 ) -- 0x08e2 0x02
-        -- 0x35() -- 0x08ea 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x000c, flag=0x40 ) -- 0x08ea 0x35
         -- 0x98_MapLoad( field_id=48, value=3 ) -- 0x08f0 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x08f5 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x018e ), value2=(s16)0x000d, condition="value1 == value2", jump_if_false=0x090e ) -- 0x08f8 0x02
-        -- 0x35() -- 0x0900 0x35
+        opcode35_VariableSet( address=0x018e, value=(vf40)0x0003, flag=0x40 ) -- 0x0900 0x35
         -- 0x98_MapLoad( field_id=46, value=0 ) -- 0x0906 0x98
         -- 0x01_JumpTo( 0x090e ) -- 0x090b 0x01
         -- 0x5B() -- 0x090e 0x5b

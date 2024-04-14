@@ -2036,6 +2036,7 @@ if( number_of_entity > 0 )
                 {
                     [800ad43c] = w(0);
                 }
+                // circle not pressed
                 else if( ( ( hu[800c1b68] & 0020 ) == 0 ) || ( already_talk != 0 ) || ( w[data_138 + 4] & 04000000 ) )
                 {
                     if( ( w[data_138 + 0] & 00a20000 ) == 0 )
@@ -3688,23 +3689,20 @@ return 0;
 
 
 ////////////////////////////////
-// func85500
-A0 = w[8004e9a0];
-80085508	addiu  sp, sp, $ffe8 (=-$18)
-8008550C	beq    a0, zero, L85534 [$80085534]
-[SP + 0010] = w(RA);
-80085514	jal    $80039af4
-80085518	nop
-A0 = w[8004e9a0];
-80085524	jal    $8003987c
-80085528	nop
-[8004e9a0] = w(0);
+// func85500()
 
-L85534:	; 80085534
-RA = w[SP + 0010];
-SP = SP + 0018;
-8008553C	jr     ra 
-80085540	nop
+main = w[8004e9a0];
+
+if( main != 0 )
+{
+    A0 = main;
+    system_sound_stop_main();
+ 
+    A0 = main;
+    func3987c();
+ 
+    [8004e9a0] = w(0);
+}
 ////////////////////////////////
 
 
@@ -3929,7 +3927,7 @@ S3 = A1;
 S2 = A2;
 A0 = 0001;
 [SP + 0058] = w(RA);
-80085838	jal    get_entity_id_from_opcode [$8009c344]
+80085838	jal    field_script_help_read_entity [$8009c344]
 [SP + 004c] = w(S1);
 V1 = 800aefe4;
 80085848	addiu  a0, v1, $ff54 (=-$ac)

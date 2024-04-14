@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0016 0xbc
         -- 0x2A() -- 0x0017 0x2a
         -- MISSING OPCODE 0xFEb7
     end,
@@ -13,7 +13,9 @@ Entity[ "0x00" ] = {
         -- 0xC6() -- 0x0098 0xc6
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00a7 ) -- 0x0099 0x02
         opcode26_Wait( time=3 ) -- 0x00a1 0x26
-        -- MISSING OPCODE 0x36
+        opcode36_VariableSetTrue( address=0x0410 ) -- 0x00a4 0x36
+        -- 0xC6() -- 0x00a7 0xc6
+        -- MISSING OPCODE 0x2d
     end,
 
     on_talk = function( self )
@@ -28,7 +30,7 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x5c
     end,
@@ -50,7 +52,7 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x5c
     end,
@@ -72,7 +74,7 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x5c
     end,
@@ -94,10 +96,10 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x15c1 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x15c4 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x15c1 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x15c4 0xfe
         return 0 -- 0x15c8 0x00
     end,
 
@@ -118,10 +120,10 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 1 ) -- 0x15cc 0x16
-        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x15cf 0xfe
+        -- 0x16_ActorPCInit( char_id=1 ) -- 0x15cc 0x16
+        opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x15cf 0xfe
         return 0 -- 0x15d3 0x00
     end,
 
@@ -142,10 +144,10 @@ Entity[ "0x05" ] = {
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 2 ) -- 0x15d7 0x16
-        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x15da 0xfe
+        -- 0x16_ActorPCInit( char_id=2 ) -- 0x15d7 0x16
+        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x15da 0xfe
         return 0 -- 0x15de 0x00
     end,
 
@@ -166,10 +168,10 @@ Entity[ "0x06" ] = {
 
 
 
-Entity[ "0x07" ] = {
+Actor[ "0x07" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 3 ) -- 0x15e2 0x16
-        opcodeFE0D_SetAvatar( character_id=3 ) -- 0x15e5 0xfe
+        -- 0x16_ActorPCInit( char_id=3 ) -- 0x15e2 0x16
+        opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x15e5 0xfe
         return 0 -- 0x15e9 0x00
     end,
 
@@ -190,10 +192,10 @@ Entity[ "0x07" ] = {
 
 
 
-Entity[ "0x08" ] = {
+Actor[ "0x08" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 4 ) -- 0x15ed 0x16
-        opcodeFE0D_SetAvatar( character_id=4 ) -- 0x15f0 0xfe
+        -- 0x16_ActorPCInit( char_id=4 ) -- 0x15ed 0x16
+        opcodeFE0D_MessageSetFace( char_id=4 ) -- 0x15f0 0xfe
         return 0 -- 0x15f4 0x00
     end,
 
@@ -214,10 +216,10 @@ Entity[ "0x08" ] = {
 
 
 
-Entity[ "0x09" ] = {
+Actor[ "0x09" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 5 ) -- 0x15f8 0x16
-        opcodeFE0D_SetAvatar( character_id=5 ) -- 0x15fb 0xfe
+        -- 0x16_ActorPCInit( char_id=5 ) -- 0x15f8 0x16
+        opcodeFE0D_MessageSetFace( char_id=5 ) -- 0x15fb 0xfe
         return 0 -- 0x15ff 0x00
     end,
 
@@ -238,10 +240,10 @@ Entity[ "0x09" ] = {
 
 
 
-Entity[ "0x0a" ] = {
+Actor[ "0x0a" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 6 ) -- 0x1603 0x16
-        opcodeFE0D_SetAvatar( character_id=6 ) -- 0x1606 0xfe
+        -- 0x16_ActorPCInit( char_id=6 ) -- 0x1603 0x16
+        opcodeFE0D_MessageSetFace( char_id=6 ) -- 0x1606 0xfe
         return 0 -- 0x160a 0x00
     end,
 
@@ -262,10 +264,10 @@ Entity[ "0x0a" ] = {
 
 
 
-Entity[ "0x0b" ] = {
+Actor[ "0x0b" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 7 ) -- 0x160e 0x16
-        opcodeFE0D_SetAvatar( character_id=7 ) -- 0x1611 0xfe
+        -- 0x16_ActorPCInit( char_id=7 ) -- 0x160e 0x16
+        opcodeFE0D_MessageSetFace( char_id=7 ) -- 0x1611 0xfe
         return 0 -- 0x1615 0x00
     end,
 
@@ -286,10 +288,10 @@ Entity[ "0x0b" ] = {
 
 
 
-Entity[ "0x0c" ] = {
+Actor[ "0x0c" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 8 ) -- 0x1619 0x16
-        opcodeFE0D_SetAvatar( character_id=8 ) -- 0x161c 0xfe
+        -- 0x16_ActorPCInit( char_id=8 ) -- 0x1619 0x16
+        opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x161c 0xfe
         return 0 -- 0x1620 0x00
     end,
 
@@ -310,10 +312,10 @@ Entity[ "0x0c" ] = {
 
 
 
-Entity[ "0x0d" ] = {
+Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 9 ) -- 0x1624 0x16
-        opcodeFE0D_SetAvatar( character_id=9 ) -- 0x1627 0xfe
+        -- 0x16_ActorPCInit( char_id=9 ) -- 0x1624 0x16
+        opcodeFE0D_MessageSetFace( char_id=9 ) -- 0x1627 0xfe
         return 0 -- 0x162b 0x00
     end,
 
@@ -334,10 +336,10 @@ Entity[ "0x0d" ] = {
 
 
 
-Entity[ "0x0e" ] = {
+Actor[ "0x0e" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 10 ) -- 0x162f 0x16
-        opcodeFE0D_SetAvatar( character_id=10 ) -- 0x1632 0xfe
+        -- 0x16_ActorPCInit( char_id=10 ) -- 0x162f 0x16
+        opcodeFE0D_MessageSetFace( char_id=10 ) -- 0x1632 0xfe
         return 0 -- 0x1636 0x00
     end,
 
@@ -358,9 +360,9 @@ Entity[ "0x0e" ] = {
 
 
 
-Entity[ "0x0f" ] = {
+Actor[ "0x0f" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x163a 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x163a 0xbc
         -- 0x2A() -- 0x163b 0x2a
         opcode99() -- 0x163c 0x99
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x1665 ) -- 0x163d 0x02

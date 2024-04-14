@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0016 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0016 0xbc
         -- MISSING OPCODE 0xf7
     end,
 
@@ -24,10 +24,10 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x001f 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0022 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x001f 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0022 0xfe
         return 0 -- 0x0026 0x00
     end,
 
@@ -48,10 +48,10 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 2 ) -- 0x002a 0x16
-        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x002d 0xfe
+        -- 0x16_ActorPCInit( char_id=2 ) -- 0x002a 0x16
+        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x002d 0xfe
         return 0 -- 0x0031 0x00
     end,
 
@@ -72,7 +72,7 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -82,7 +82,7 @@ Entity[ "0x03" ] = {
     end,
 
     on_talk = function( self )
-        opcode15() -- 0x0038 0x15
+        -- 0x15() -- 0x0038 0x15
         -- MISSING OPCODE 0xc4
     end,
 
@@ -94,7 +94,7 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -104,7 +104,7 @@ Entity[ "0x04" ] = {
     end,
 
     on_talk = function( self )
-        opcode15() -- 0x0048 0x15
+        -- 0x15() -- 0x0048 0x15
         -- MISSING OPCODE 0xc4
     end,
 
@@ -116,7 +116,7 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -129,10 +129,10 @@ Entity[ "0x05" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x0084 ) -- 0x0058 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x006b ) -- 0x0060 0x02
         -- 0x01_JumpTo( 0x0076 ) -- 0x0068 0x01
-        opcodeD2_MessageShow0( dialog_id=0x0000, ???=0x00 ) -- 0x006b 0xd2
-        -- 0x9C() -- 0x006f 0x9c
+        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x006b 0xd2
+        opcode9C_MessageSync() -- 0x006f 0x9c
         opcode3A_VariableBitSet( address=0x0184, bit_num=(vf40)0x0005, flag=0x40 ) -- 0x0070 0x3a
-        opcode15() -- 0x0076 0x15
+        -- 0x15() -- 0x0076 0x15
         -- MISSING OPCODE 0xc4
     end,
 

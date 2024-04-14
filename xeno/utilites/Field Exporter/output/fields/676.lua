@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
         -- 0x2A() -- 0x0009 0x2a
         -- 0xA0() -- 0x000a 0xa0
         return 0 -- 0x0011 0x00
@@ -26,15 +26,15 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x003d 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0040 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x003d 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0040 0xfe
         return 0 -- 0x0044 0x00
     end,
 
     on_update = function( self )
-        -- 0x0C_Encounter() -- 0x0045 0x0c
+        -- 0x0C() -- 0x0045 0x0c
         return 0 -- 0x0046 0x00
     end,
 
@@ -54,10 +54,10 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
         -- 0x2A() -- 0x007b 0x2a
-        -- 0xBC_EntityNoModelInit() -- 0x007c 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x007c 0xbc
         return 0 -- 0x007d 0x00
     end,
 
@@ -83,7 +83,7 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x00a5 0x0b
         -- MISSING OPCODE 0xFE1c
@@ -106,11 +106,12 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x00b8 0x0b
-        -- 0x19_SetPosition( x=(vf80)0xff5e, z=(vf40)0x003e, flag=(flag)0xc0 ) -- 0x00bb 0x19
-        -- MISSING OPCODE 0x69
+        -- 0x19_ActorSetPosition( x=(vf80)0xff5e, z=(vf40)0x003e, flag=(flag)0xc0 ) -- 0x00bb 0x19
+        opcode69_ActorSetRotation( rot=2 ) -- 0x00c1 0x69
+        return 0 -- 0x00c4 0x00
     end,
 
     on_update = function( self )
@@ -130,11 +131,12 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x00c8 0x0b
-        -- 0x19_SetPosition( x=(vf80)0xff5e, z=(vf40)0xffc2, flag=(flag)0xc0 ) -- 0x00cb 0x19
-        -- MISSING OPCODE 0x69
+        -- 0x19_ActorSetPosition( x=(vf80)0xff5e, z=(vf40)0xffc2, flag=(flag)0xc0 ) -- 0x00cb 0x19
+        opcode69_ActorSetRotation( rot=2 ) -- 0x00d1 0x69
+        return 0 -- 0x00d4 0x00
     end,
 
     on_update = function( self )
@@ -154,11 +156,12 @@ Entity[ "0x05" ] = {
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 2 ) -- 0x00d8 0x0b
-        -- 0x19_SetPosition( x=(vf80)0x0004, z=(vf40)0xff6b, flag=(flag)0xc0 ) -- 0x00db 0x19
-        -- MISSING OPCODE 0x69
+        -- 0x19_ActorSetPosition( x=(vf80)0x0004, z=(vf40)0xff6b, flag=(flag)0xc0 ) -- 0x00db 0x19
+        opcode69_ActorSetRotation( rot=1 ) -- 0x00e1 0x69
+        return 0 -- 0x00e4 0x00
     end,
 
     on_update = function( self )

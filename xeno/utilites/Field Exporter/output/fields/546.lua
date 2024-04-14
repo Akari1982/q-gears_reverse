@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x015e 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x015e 0xbc
         -- MISSING OPCODE 0xf7
     end,
 
@@ -24,10 +24,10 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( GetVar( 0x003e ) ) -- 0x0168 0x16
-        opcodeFE0D_SetAvatar( character_id=GetVar( 0x003e ) ) -- 0x016b 0xfe
+        -- 0x16_ActorPCInit( char_id=GetVar( 0x003e ) ) -- 0x0168 0x16
+        opcodeFE0D_MessageSetFace( char_id=GetVar( 0x003e ) ) -- 0x016b 0xfe
         return 0 -- 0x016f 0x00
     end,
 
@@ -56,10 +56,10 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( GetVar( 0x0040 ) ) -- 0x0185 0x16
-        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0040 ) ) -- 0x0188 0xfe
+        -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) ) -- 0x0185 0x16
+        opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) ) -- 0x0188 0xfe
         return 0 -- 0x018c 0x00
     end,
 
@@ -80,10 +80,10 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( GetVar( 0x0042 ) ) -- 0x0190 0x16
-        opcodeFE0D_SetAvatar( character_id=GetVar( 0x0042 ) ) -- 0x0193 0xfe
+        -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) ) -- 0x0190 0x16
+        opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) ) -- 0x0193 0xfe
         return 0 -- 0x0197 0x00
     end,
 
@@ -104,9 +104,9 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x019b 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x019b 0xbc
         -- 0x2A() -- 0x019c 0x2a
         return 0 -- 0x019d 0x00
     end,
@@ -132,9 +132,9 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x01a4 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x01a4 0xbc
         -- 0x2A() -- 0x01a5 0x2a
         return 0 -- 0x01a6 0x00
     end,
@@ -160,10 +160,10 @@ Entity[ "0x05" ] = {
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x01ad 0xbc
-        -- 0x19_SetPosition( x=(vf80)0x006e, z=(vf40)0xff92, flag=(flag)0xc0 ) -- 0x01ae 0x19
+        -- 0xBC_ActorNoModelInit() -- 0x01ad 0xbc
+        -- 0x19_ActorSetPosition( x=(vf80)0x006e, z=(vf40)0xff92, flag=(flag)0xc0 ) -- 0x01ae 0x19
         -- MISSING OPCODE 0xf8
     end,
 
@@ -172,9 +172,9 @@ Entity[ "0x06" ] = {
     end,
 
     on_talk = function( self )
-        opcodeFE54() -- 0x01c3 0xfe
-        opcode09_EntityCallScriptEW( entity=0x04, script=04, priority=01 ) -- 0x01c5 0x09
-        -- 0x07( entity=0x01, script=0x24 ) -- 0x01c8 0x07
+        -- 0xFE54() -- 0x01c3 0xfe
+        opcode09_ActorCallScriptEW( actor_id=0x04, script=04, priority=01 ) -- 0x01c5 0x09
+        -- 0x07( actor_id=0x01, script=0x24 ) -- 0x01c8 0x07
         opcode26_Wait( time=10 ) -- 0x01cb 0x26
         -- 0x98_MapLoad( field_id=544, value=1 ) -- 0x01ce 0x98
         -- 0x5B() -- 0x01d3 0x5b
@@ -189,9 +189,9 @@ Entity[ "0x06" ] = {
 
 
 
-Entity[ "0x07" ] = {
+Actor[ "0x07" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x01d6 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x01d6 0xbc
         -- MISSING OPCODE 0x1b
     end,
 
@@ -200,9 +200,9 @@ Entity[ "0x07" ] = {
     end,
 
     on_talk = function( self )
-        opcodeFE54() -- 0x01ed 0xfe
-        opcode09_EntityCallScriptEW( entity=0x05, script=04, priority=01 ) -- 0x01ef 0x09
-        -- 0x07( entity=0x01, script=0x25 ) -- 0x01f2 0x07
+        -- 0xFE54() -- 0x01ed 0xfe
+        opcode09_ActorCallScriptEW( actor_id=0x05, script=04, priority=01 ) -- 0x01ef 0x09
+        -- 0x07( actor_id=0x01, script=0x25 ) -- 0x01f2 0x07
         opcode26_Wait( time=10 ) -- 0x01f5 0x26
         -- 0x98_MapLoad( field_id=545, value=0 ) -- 0x01f8 0x98
         -- 0x5B() -- 0x01fd 0x5b

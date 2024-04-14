@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
         -- 0x2A() -- 0x0009 0x2a
         -- 0xA0() -- 0x000a 0xa0
         return 0 -- 0x0011 0x00
@@ -26,15 +26,23 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x004a 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x004d 0xfe
-        -- MISSING OPCODE 0x69
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x004a 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x004d 0xfe
+        opcode69_ActorSetRotation( rot=2 ) -- 0x0051 0x69
+        -- 0xFE07( ???=0x01 ) -- 0x0054 0xfe
+        -- 0xD0() -- 0x0057 0xd0
+        opcode20_ActorSetFlags0( flags=13 ) -- 0x0062 0x20
+        -- 0x2A() -- 0x0065 0x2a
+        return 0 -- 0x0066 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE4a
+        opcodeFE4A_SpriteAddAnimLoad( file=0 ) -- 0x0067 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x006b 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x00 ) -- 0x006d 0xfe
+        -- MISSING OPCODE 0x2d
     end,
 
     on_talk = function( self )
@@ -46,17 +54,22 @@ Entity[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00bc 0x2c
+        opcode26_Wait( time=1 ) -- 0x00be 0x26
+        -- 0xF6( ???=0x01 ) -- 0x00c1 0xf6
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00c3 0x4a
+        -- 0xF6( ???=0x00 ) -- 0x00c9 0xf6
+        return 0 -- 0x00cb 0x00
     end,
 
 }
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
         -- 0x2A() -- 0x00cc 0x2a
-        -- 0xBC_EntityNoModelInit() -- 0x00cd 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x00cd 0xbc
         return 0 -- 0x00ce 0x00
     end,
 
@@ -93,11 +106,16 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0142 0x0b
-        -- 0x19_SetPosition( x=(vf80)0x010a, z=(vf40)0xfe10, flag=(flag)0xc0 ) -- 0x0145 0x19
-        -- MISSING OPCODE 0x69
+        -- 0x19_ActorSetPosition( x=(vf80)0x010a, z=(vf40)0xfe10, flag=(flag)0xc0 ) -- 0x0145 0x19
+        opcode69_ActorSetRotation( rot=0 ) -- 0x014b 0x69
+        -- 0xFE07( ???=0x01 ) -- 0x014e 0xfe
+        -- 0xD0() -- 0x0151 0xd0
+        opcode20_ActorSetFlags0( flags=13 ) -- 0x015c 0x20
+        -- 0x2A() -- 0x015f 0x2a
+        return 0 -- 0x0160 0x00
     end,
 
     on_update = function( self )
@@ -116,11 +134,14 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x01c8 0x0b
-        -- 0x19_SetPosition( x=(vf80)0xfcae, z=(vf40)0x00e1, flag=(flag)0xc0 ) -- 0x01cb 0x19
-        -- MISSING OPCODE 0x69
+        -- 0x19_ActorSetPosition( x=(vf80)0xfcae, z=(vf40)0x00e1, flag=(flag)0xc0 ) -- 0x01cb 0x19
+        opcode69_ActorSetRotation( rot=2 ) -- 0x01d1 0x69
+        -- 0xFE07( ???=0x01 ) -- 0x01d4 0xfe
+        -- 0xD0() -- 0x01d7 0xd0
+        return 0 -- 0x01e2 0x00
     end,
 
     on_update = function( self )
@@ -140,7 +161,7 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -165,7 +186,7 @@ Entity[ "0x05" ] = {
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x01ed 0x0b
         -- MISSING OPCODE 0x5f
@@ -173,7 +194,7 @@ Entity[ "0x06" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x03ea ) -- 0x01fe 0x02
-        -- 0xFE8F_ParticleSystemInit1( entity=(entity)0xfb, render_settings=0, rot_x=0, rot_y=0 ) -- 0x0206 0xfe
+        -- 0xFE8F_ParticleSystemInit1( actor_id=(entity)self, render_settings=0, rot_x=0, rot_y=0 ) -- 0x0206 0xfe
         -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=255, wait=0, ttl=32767 ) -- 0x020f 0xfe
         -- 0xFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x012c, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfed4, speed_z=(vf04)0x0000, flag=(flag)0xfc ) -- 0x0219 0xfe
         -- 0xFE92_ParticleSpeed( speed=(vf80)0x7530, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0118, rand_speed=(vf04)0x0190, flag=(flag)0xfc ) -- 0x0228 0xfe
@@ -215,7 +236,8 @@ Entity[ "0x06" ] = {
         -- 0xFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=1000 ) -- 0x03d5 0xfe
         -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x03dd 0xfe
         -- 0xFE96_ParticleCreate() -- 0x03e5 0xfe
-        -- MISSING OPCODE 0x36
+        opcode36_VariableSetTrue( address=0x040e ) -- 0x03e7 0x36
+        -- MISSING OPCODE 0xFEa8
     end,
 
     on_talk = function( self )

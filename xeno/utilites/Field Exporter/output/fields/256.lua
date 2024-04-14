@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x000f 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x000f 0xbc
         -- MISSING OPCODE 0xf7
     end,
 
@@ -29,10 +29,10 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x004e 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0051 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x004e 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0051 0xfe
         return 0 -- 0x0055 0x00
     end,
 
@@ -53,10 +53,10 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 2 ) -- 0x0059 0x16
-        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x005c 0xfe
+        -- 0x16_ActorPCInit( char_id=2 ) -- 0x0059 0x16
+        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x005c 0xfe
         return 0 -- 0x0060 0x00
     end,
 
@@ -77,7 +77,7 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -87,7 +87,7 @@ Entity[ "0x03" ] = {
     end,
 
     on_talk = function( self )
-        opcode15() -- 0x0067 0x15
+        -- 0x15() -- 0x0067 0x15
         -- MISSING OPCODE 0xc4
     end,
 
@@ -99,7 +99,7 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x46
     end,
@@ -109,7 +109,7 @@ Entity[ "0x04" ] = {
     end,
 
     on_talk = function( self )
-        opcode15() -- 0x0077 0x15
+        -- 0x15() -- 0x0077 0x15
         -- MISSING OPCODE 0xc4
     end,
 
@@ -121,7 +121,7 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( GetVar( 0x0400 ) ) -- 0x0084 0x0b
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040c ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0092 ) -- 0x0087 0x02
@@ -133,7 +133,7 @@ Entity[ "0x05" ] = {
     end,
 
     on_talk = function( self )
-        opcodeFE54() -- 0x00ce 0xfe
+        -- 0xFE54() -- 0x00ce 0xfe
         -- MISSING OPCODE 0x34
     end,
 

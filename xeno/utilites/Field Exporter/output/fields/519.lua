@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0040 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0040 0xbc
         -- 0xA0() -- 0x0041 0xa0
         -- MISSING OPCODE 0xFE8e
     end,
@@ -22,17 +22,18 @@ Entity[ "0x00" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=269 ) -- 0x0054 0x74
+        -- MISSING OPCODE 0xFE65
     end,
 
 }
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x0064 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x0067 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x0064 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0067 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x007c ) -- 0x006b 0x02
         -- MISSING OPCODE 0xFE1c
     end,
@@ -92,25 +93,31 @@ Entity[ "0x01" ] = {
     end,
 
     script_0x0e = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x02af 0x2c
+        opcode69_ActorSetRotation( rot=4 ) -- 0x02b1 0x69
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x0f = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x02c9 0x2c
+        opcode69_ActorSetRotation( rot=4 ) -- 0x02cb 0x69
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x02e3 0x2c
+        opcode26_Wait( time=0 ) -- 0x02e5 0x26
+        -- MISSING OPCODE 0x57
     end,
 
 }
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 1 ) -- 0x0303 0x16
-        opcodeFE0D_SetAvatar( character_id=1 ) -- 0x0306 0xfe
+        -- 0x16_ActorPCInit( char_id=1 ) -- 0x0303 0x16
+        opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x0306 0xfe
         -- 0x01_JumpTo( 0x006b ) -- 0x030a 0x01
         return 0 -- 0x030d 0x00
     end,
@@ -193,10 +200,10 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 2 ) -- 0x0349 0x16
-        opcodeFE0D_SetAvatar( character_id=2 ) -- 0x034c 0xfe
+        -- 0x16_ActorPCInit( char_id=2 ) -- 0x0349 0x16
+        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x034c 0xfe
         -- 0x01_JumpTo( 0x006b ) -- 0x0350 0x01
         return 0 -- 0x0353 0x00
     end,
@@ -279,9 +286,9 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x038f 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x038f 0xbc
         -- MISSING OPCODE 0xFE1c
     end,
 
@@ -301,15 +308,16 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x03ca 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x03ca 0xbc
         -- 0x2A() -- 0x03cb 0x2a
-        -- MISSING OPCODE 0x27
+        -- 0x27( actor_id=(entity)0x05 ) -- 0x03cc 0x27
+        return 0 -- 0x03ce 0x00
     end,
 
     on_update = function( self )
-        opcodeFE54() -- 0x03cf 0xfe
+        -- 0xFE54() -- 0x03cf 0xfe
         -- MISSING OPCODE 0xb8
     end,
 
@@ -325,9 +333,9 @@ Entity[ "0x05" ] = {
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0432 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0432 0xbc
         -- 0x2A() -- 0x0433 0x2a
         return 0 -- 0x0434 0x00
     end,
@@ -349,15 +357,15 @@ Entity[ "0x06" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeFE54() -- 0x0491 0xfe
+        -- 0xFE54() -- 0x0491 0xfe
         -- MISSING OPCODE 0x9b
     end,
 
     script_0x06 = function( self )
         opcode99() -- 0x0538 0x99
-        opcode60() -- 0x0539 0x60
-        opcode64() -- 0x053a 0x64
-        opcode63() -- 0x053b 0x63
+        -- 0x60() -- 0x0539 0x60
+        -- 0x64() -- 0x053a 0x64
+        -- 0x63( ???=(vf80)0x0540, ???=(vf40)0xfdcc, ???=(vf20)0xff03, flag=0xe0 ) -- 0x053b 0x63
         opcodeA3() -- 0x0543 0xa3
         opcodeAC_MoveCamera( control=0x00, steps=60 ) -- 0x054b 0xac
         opcodeAC_MoveCamera( control=0x01, steps=60 ) -- 0x054f 0xac
@@ -367,8 +375,8 @@ Entity[ "0x06" ] = {
 
     script_0x07 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0412 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0579 ) -- 0x0557 0x02
-        opcode60() -- 0x055f 0x60
-        opcode64() -- 0x0560 0x64
+        -- 0x60() -- 0x055f 0x60
+        -- 0x64() -- 0x0560 0x64
         -- MISSING OPCODE 0x62
     end,
 
@@ -376,21 +384,21 @@ Entity[ "0x06" ] = {
 
 
 
-Entity[ "0x07" ] = {
+Actor[ "0x07" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x057a 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x057a 0xbc
         -- 0x2A() -- 0x057b 0x2a
         return 0 -- 0x057c 0x00
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x05a4 ) -- 0x057d 0x02
-        opcodeFE54() -- 0x0585 0xfe
-        -- 0x07( entity=0x06, script=0x64 ) -- 0x0587 0x07
-        -- 0x07( entity=0xfd, script=0x6e ) -- 0x058a 0x07
-        -- 0x07( entity=0xfe, script=0x6e ) -- 0x058d 0x07
-        -- 0x07( entity=0xff, script=0x6e ) -- 0x0590 0x07
-        -- 0x07( entity=0x32, script=0x64 ) -- 0x0593 0x07
+        -- 0xFE54() -- 0x0585 0xfe
+        -- 0x07( actor_id=0x06, script=0x64 ) -- 0x0587 0x07
+        -- 0x07( actor_id=0xfd, script=0x6e ) -- 0x058a 0x07
+        -- 0x07( actor_id=0xfe, script=0x6e ) -- 0x058d 0x07
+        -- 0x07( actor_id=0xff, script=0x6e ) -- 0x0590 0x07
+        -- 0x07( actor_id=0x32, script=0x64 ) -- 0x0593 0x07
         opcode26_Wait( time=60 ) -- 0x0596 0x26
         -- 0xB4_FadeIn() -- 0x0599 0xb4
         opcode26_Wait( time=30 ) -- 0x059c 0x26
@@ -411,21 +419,21 @@ Entity[ "0x07" ] = {
 
 
 
-Entity[ "0x08" ] = {
+Actor[ "0x08" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x05a6 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x05a6 0xbc
         -- 0x2A() -- 0x05a7 0x2a
         return 0 -- 0x05a8 0x00
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x05c7 ) -- 0x05a9 0x02
-        opcodeFE54() -- 0x05b1 0xfe
-        -- 0x07( entity=0x06, script=0x64 ) -- 0x05b3 0x07
-        -- 0x07( entity=0xfd, script=0x6f ) -- 0x05b6 0x07
-        -- 0x07( entity=0xfe, script=0x6f ) -- 0x05b9 0x07
-        -- 0x07( entity=0xff, script=0x6f ) -- 0x05bc 0x07
-        opcode09_EntityCallScriptEW( entity=0x32, script=05, priority=03 ) -- 0x05bf 0x09
+        -- 0xFE54() -- 0x05b1 0xfe
+        -- 0x07( actor_id=0x06, script=0x64 ) -- 0x05b3 0x07
+        -- 0x07( actor_id=0xfd, script=0x6f ) -- 0x05b6 0x07
+        -- 0x07( actor_id=0xfe, script=0x6f ) -- 0x05b9 0x07
+        -- 0x07( actor_id=0xff, script=0x6f ) -- 0x05bc 0x07
+        opcode09_ActorCallScriptEW( actor_id=0x32, script=05, priority=03 ) -- 0x05bf 0x09
         -- 0x98_MapLoad( field_id=513, value=0 ) -- 0x05c2 0x98
         -- 0x5B() -- 0x05c7 0x5b
         return 0 -- 0x05c8 0x00
@@ -443,9 +451,9 @@ Entity[ "0x08" ] = {
 
 
 
-Entity[ "0x09" ] = {
+Actor[ "0x09" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x05c9 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x05c9 0xbc
         -- 0x2A() -- 0x05ca 0x2a
         return 0 -- 0x05cb 0x00
     end,
@@ -467,9 +475,9 @@ Entity[ "0x09" ] = {
 
 
 
-Entity[ "0x0a" ] = {
+Actor[ "0x0a" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x05f0 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x05f0 0xbc
         -- 0x2A() -- 0x05f1 0x2a
         return 0 -- 0x05f2 0x00
     end,
@@ -487,16 +495,20 @@ Entity[ "0x0a" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x0424 ) -- 0x05f4 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x05f7 0x74
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0424 ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x0610 ) -- 0x05fa 0x02
+        opcode38_VariableAdd( address=0x0424, value=(vf40)0x0100, flag=0x40 ) -- 0x0602 0x38
+        -- MISSING OPCODE 0xdb
     end,
 
 }
 
 
 
-Entity[ "0x0b" ] = {
+Actor[ "0x0b" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0611 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0611 0xbc
         -- 0x2A() -- 0x0612 0x2a
         return 0 -- 0x0613 0x00
     end,
@@ -514,16 +526,20 @@ Entity[ "0x0b" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x0426 ) -- 0x0615 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x0618 0x74
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0426 ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x0631 ) -- 0x061b 0x02
+        opcode38_VariableAdd( address=0x0426, value=(vf40)0x0100, flag=0x40 ) -- 0x0623 0x38
+        -- MISSING OPCODE 0xdb
     end,
 
 }
 
 
 
-Entity[ "0x0c" ] = {
+Actor[ "0x0c" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0632 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0632 0xbc
         -- 0x2A() -- 0x0633 0x2a
         return 0 -- 0x0634 0x00
     end,
@@ -541,16 +557,20 @@ Entity[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x0428 ) -- 0x0636 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x0639 0x74
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0428 ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x0652 ) -- 0x063c 0x02
+        opcode38_VariableAdd( address=0x0428, value=(vf40)0x0100, flag=0x40 ) -- 0x0644 0x38
+        -- MISSING OPCODE 0xdb
     end,
 
 }
 
 
 
-Entity[ "0x0d" ] = {
+Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0653 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0653 0xbc
         -- 0x2A() -- 0x0654 0x2a
         return 0 -- 0x0655 0x00
     end,
@@ -568,16 +588,20 @@ Entity[ "0x0d" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x042a ) -- 0x0657 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x065a 0x74
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x042a ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x0673 ) -- 0x065d 0x02
+        opcode38_VariableAdd( address=0x042a, value=(vf40)0x0100, flag=0x40 ) -- 0x0665 0x38
+        -- MISSING OPCODE 0xdb
     end,
 
 }
 
 
 
-Entity[ "0x0e" ] = {
+Actor[ "0x0e" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0674 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0674 0xbc
         -- 0x2A() -- 0x0675 0x2a
         return 0 -- 0x0676 0x00
     end,
@@ -595,16 +619,20 @@ Entity[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x042c ) -- 0x0678 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x067b 0x74
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x042c ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x0694 ) -- 0x067e 0x02
+        opcode38_VariableAdd( address=0x042c, value=(vf40)0x0100, flag=0x40 ) -- 0x0686 0x38
+        -- MISSING OPCODE 0xdb
     end,
 
 }
 
 
 
-Entity[ "0x0f" ] = {
+Actor[ "0x0f" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0695 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0695 0xbc
         -- 0x2A() -- 0x0696 0x2a
         return 0 -- 0x0697 0x00
     end,
@@ -622,16 +650,21 @@ Entity[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x042e ) -- 0x0699 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x069c 0x74
+        opcode37_VariableSetFalse( address=0x042e ) -- 0x069f 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x042e ), value2=(s16)0x001e, condition="value1 < value2", jump_if_false=0x06ba ) -- 0x06a2 0x02
+        -- 0xC6() -- 0x06aa 0xc6
+        -- MISSING OPCODE 0xFE1b
     end,
 
 }
 
 
 
-Entity[ "0x10" ] = {
+Actor[ "0x10" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x06bb 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x06bb 0xbc
         -- 0x2A() -- 0x06bc 0x2a
         return 0 -- 0x06bd 0x00
     end,
@@ -649,16 +682,20 @@ Entity[ "0x10" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x0430 ) -- 0x06bf 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x06c2 0x74
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0430 ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x06db ) -- 0x06c5 0x02
+        opcode38_VariableAdd( address=0x0430, value=(vf40)0x0100, flag=0x40 ) -- 0x06cd 0x38
+        -- MISSING OPCODE 0xdb
     end,
 
 }
 
 
 
-Entity[ "0x11" ] = {
+Actor[ "0x11" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x06dc 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x06dc 0xbc
         -- MISSING OPCODE 0xf8
     end,
 
@@ -678,9 +715,9 @@ Entity[ "0x11" ] = {
 
 
 
-Entity[ "0x12" ] = {
+Actor[ "0x12" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0717 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0717 0xbc
         -- 0x2A() -- 0x0718 0x2a
         -- MISSING OPCODE 0x1f
     end,
@@ -698,16 +735,17 @@ Entity[ "0x12" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=395 ) -- 0x0726 0x74
+        -- MISSING OPCODE 0xFE65
     end,
 
 }
 
 
 
-Entity[ "0x13" ] = {
+Actor[ "0x13" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x075b 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x075b 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -727,9 +765,9 @@ Entity[ "0x13" ] = {
 
 
 
-Entity[ "0x14" ] = {
+Actor[ "0x14" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0777 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0777 0xbc
         -- 0x2A() -- 0x0778 0x2a
         -- MISSING OPCODE 0xf9
     end,
@@ -747,16 +785,20 @@ Entity[ "0x14" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x37
+        opcode37_VariableSetFalse( address=0x0432 ) -- 0x0793 0x37
+        opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x0796 0x74
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0432 ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x07af ) -- 0x0799 0x02
+        opcode38_VariableAdd( address=0x0432, value=(vf40)0x0100, flag=0x40 ) -- 0x07a1 0x38
+        -- MISSING OPCODE 0xdb
     end,
 
 }
 
 
 
-Entity[ "0x15" ] = {
+Actor[ "0x15" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x07b0 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x07b0 0xbc
         -- 0x2A() -- 0x07b1 0x2a
         -- 0x23() -- 0x07b2 0x23
         return 0 -- 0x07b3 0x00
@@ -778,9 +820,9 @@ Entity[ "0x15" ] = {
 
 
 
-Entity[ "0x16" ] = {
+Actor[ "0x16" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x07b5 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x07b5 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -800,16 +842,54 @@ Entity[ "0x16" ] = {
 
 
 
-Entity[ "0x17" ] = {
+Actor[ "0x17" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x07d2 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x07d2 0xbc
         -- 0x2A() -- 0x07d3 0x2a
         return 0 -- 0x07d4 0x00
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x07f8 ) -- 0x07d5 0x02
-        -- MISSING OPCODE 0x36
+        opcode36_VariableSetTrue( address=0x0414 ) -- 0x07dd 0x36
+        opcode09_ActorCallScriptEW( actor_id=0x1a, script=05, priority=03 ) -- 0x07e0 0x09
+        -- 0x07( actor_id=0xfd, script=0x64 ) -- 0x07e3 0x07
+        -- 0x07( actor_id=0xfe, script=0x64 ) -- 0x07e6 0x07
+        -- 0x07( actor_id=0xff, script=0x64 ) -- 0x07e9 0x07
+        opcode09_ActorCallScriptEW( actor_id=0x19, script=04, priority=03 ) -- 0x07ec 0x09
+        opcode36_VariableSetTrue( address=0x0406 ) -- 0x07ef 0x36
+        opcode26_Wait( time=10 ) -- 0x07f2 0x26
+        opcode37_VariableSetFalse( address=0x0414 ) -- 0x07f5 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x080f ) -- 0x07f8 0x02
+        -- 0x07( actor_id=0xfd, script=0x65 ) -- 0x0800 0x07
+        -- 0x07( actor_id=0xfe, script=0x65 ) -- 0x0803 0x07
+        -- 0x07( actor_id=0xff, script=0x65 ) -- 0x0806 0x07
+        opcode09_ActorCallScriptEW( actor_id=0x1e, script=04, priority=03 ) -- 0x0809 0x09
+        opcode36_VariableSetTrue( address=0x0408 ) -- 0x080c 0x36
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0832 ) -- 0x080f 0x02
+        opcode36_VariableSetTrue( address=0x0414 ) -- 0x0817 0x36
+        opcode09_ActorCallScriptEW( actor_id=0x24, script=05, priority=03 ) -- 0x081a 0x09
+        -- 0x07( actor_id=0xfd, script=0x66 ) -- 0x081d 0x07
+        -- 0x07( actor_id=0xfe, script=0x66 ) -- 0x0820 0x07
+        -- 0x07( actor_id=0xff, script=0x66 ) -- 0x0823 0x07
+        opcode09_ActorCallScriptEW( actor_id=0x23, script=04, priority=03 ) -- 0x0826 0x09
+        opcode36_VariableSetTrue( address=0x040a ) -- 0x0829 0x36
+        opcode26_Wait( time=10 ) -- 0x082c 0x26
+        opcode37_VariableSetFalse( address=0x0414 ) -- 0x082f 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0849 ) -- 0x0832 0x02
+        -- 0x07( actor_id=0xfd, script=0x67 ) -- 0x083a 0x07
+        -- 0x07( actor_id=0xfe, script=0x67 ) -- 0x083d 0x07
+        -- 0x07( actor_id=0xff, script=0x67 ) -- 0x0840 0x07
+        opcode09_ActorCallScriptEW( actor_id=0x28, script=04, priority=03 ) -- 0x0843 0x09
+        opcode36_VariableSetTrue( address=0x040c ) -- 0x0846 0x36
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0860 ) -- 0x0849 0x02
+        -- 0x07( actor_id=0xfd, script=0x68 ) -- 0x0851 0x07
+        -- 0x07( actor_id=0xfe, script=0x68 ) -- 0x0854 0x07
+        -- 0x07( actor_id=0xff, script=0x68 ) -- 0x0857 0x07
+        opcode09_ActorCallScriptEW( actor_id=0x2d, script=04, priority=03 ) -- 0x085a 0x09
+        opcode36_VariableSetTrue( address=0x040e ) -- 0x085d 0x36
+        -- 0x5B() -- 0x0860 0x5b
+        return 0 -- 0x0861 0x00
     end,
 
     on_talk = function( self )
@@ -824,9 +904,9 @@ Entity[ "0x17" ] = {
 
 
 
-Entity[ "0x18" ] = {
+Actor[ "0x18" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0862 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0862 0xbc
         -- 0x2A() -- 0x0863 0x2a
         return 0 -- 0x0864 0x00
     end,
@@ -848,9 +928,9 @@ Entity[ "0x18" ] = {
 
 
 
-Entity[ "0x19" ] = {
+Actor[ "0x19" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0879 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0879 0xbc
         -- MISSING OPCODE 0xf8
     end,
 
@@ -859,7 +939,7 @@ Entity[ "0x19" ] = {
     end,
 
     on_talk = function( self )
-        opcodeFE54() -- 0x08a2 0xfe
+        -- 0xFE54() -- 0x08a2 0xfe
         -- MISSING OPCODE 0xb8
     end,
 
@@ -869,16 +949,17 @@ Entity[ "0x19" ] = {
 
     script_0x04 = function( self )
         -- 0x2A() -- 0x08f9 0x2a
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=120 ) -- 0x08fa 0x74
+        -- MISSING OPCODE 0x10
     end,
 
 }
 
 
 
-Entity[ "0x1a" ] = {
+Actor[ "0x1a" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x091a 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x091a 0xbc
         -- 0x2A() -- 0x091b 0x2a
         -- MISSING OPCODE 0xf9
     end,
@@ -909,9 +990,9 @@ Entity[ "0x1a" ] = {
 
 
 
-Entity[ "0x1b" ] = {
+Actor[ "0x1b" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0970 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0970 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -931,9 +1012,9 @@ Entity[ "0x1b" ] = {
 
 
 
-Entity[ "0x1c" ] = {
+Actor[ "0x1c" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0982 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0982 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -953,9 +1034,9 @@ Entity[ "0x1c" ] = {
 
 
 
-Entity[ "0x1d" ] = {
+Actor[ "0x1d" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0994 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0994 0xbc
         -- 0x2A() -- 0x0995 0x2a
         -- MISSING OPCODE 0xf8
     end,
@@ -976,9 +1057,9 @@ Entity[ "0x1d" ] = {
 
 
 
-Entity[ "0x1e" ] = {
+Actor[ "0x1e" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x09a8 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x09a8 0xbc
         -- MISSING OPCODE 0xf8
     end,
 
@@ -988,8 +1069,8 @@ Entity[ "0x1e" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c6 ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x09df ) -- 0x09d1 0x02
-        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x00 ) -- 0x09d9 0xd2
-        -- 0x9C() -- 0x09dd 0x9c
+        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x09d9 0xd2
+        opcode9C_MessageSync() -- 0x09dd 0x9c
         return 0 -- 0x09de 0x00
     end,
 
@@ -999,16 +1080,17 @@ Entity[ "0x1e" ] = {
 
     script_0x04 = function( self )
         -- 0x2A() -- 0x0a36 0x2a
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=120 ) -- 0x0a37 0x74
+        -- MISSING OPCODE 0x10
     end,
 
 }
 
 
 
-Entity[ "0x1f" ] = {
+Actor[ "0x1f" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0a7a 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0a7a 0xbc
         -- 0x2A() -- 0x0a7b 0x2a
         -- MISSING OPCODE 0xf9
     end,
@@ -1030,9 +1112,9 @@ Entity[ "0x1f" ] = {
 
 
 
-Entity[ "0x20" ] = {
+Actor[ "0x20" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0aac 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0aac 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1052,9 +1134,9 @@ Entity[ "0x20" ] = {
 
 
 
-Entity[ "0x21" ] = {
+Actor[ "0x21" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0abe 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0abe 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1074,9 +1156,9 @@ Entity[ "0x21" ] = {
 
 
 
-Entity[ "0x22" ] = {
+Actor[ "0x22" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0ad0 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0ad0 0xbc
         -- 0x2A() -- 0x0ad1 0x2a
         -- MISSING OPCODE 0xf8
     end,
@@ -1097,9 +1179,9 @@ Entity[ "0x22" ] = {
 
 
 
-Entity[ "0x23" ] = {
+Actor[ "0x23" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0ae4 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0ae4 0xbc
         -- MISSING OPCODE 0xf8
     end,
 
@@ -1108,7 +1190,7 @@ Entity[ "0x23" ] = {
     end,
 
     on_talk = function( self )
-        opcodeFE54() -- 0x0b0d 0xfe
+        -- 0xFE54() -- 0x0b0d 0xfe
         -- MISSING OPCODE 0xb8
     end,
 
@@ -1118,16 +1200,17 @@ Entity[ "0x23" ] = {
 
     script_0x04 = function( self )
         -- 0x2A() -- 0x0b64 0x2a
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=120 ) -- 0x0b65 0x74
+        -- MISSING OPCODE 0x10
     end,
 
 }
 
 
 
-Entity[ "0x24" ] = {
+Actor[ "0x24" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0b85 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0b85 0xbc
         -- 0x2A() -- 0x0b86 0x2a
         -- MISSING OPCODE 0xf9
     end,
@@ -1158,9 +1241,9 @@ Entity[ "0x24" ] = {
 
 
 
-Entity[ "0x25" ] = {
+Actor[ "0x25" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0bd7 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0bd7 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1180,9 +1263,9 @@ Entity[ "0x25" ] = {
 
 
 
-Entity[ "0x26" ] = {
+Actor[ "0x26" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0bea 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0bea 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1202,9 +1285,9 @@ Entity[ "0x26" ] = {
 
 
 
-Entity[ "0x27" ] = {
+Actor[ "0x27" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0bfc 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0bfc 0xbc
         -- 0x2A() -- 0x0bfd 0x2a
         -- MISSING OPCODE 0xf8
     end,
@@ -1225,9 +1308,9 @@ Entity[ "0x27" ] = {
 
 
 
-Entity[ "0x28" ] = {
+Actor[ "0x28" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0c10 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0c10 0xbc
         -- MISSING OPCODE 0xf8
     end,
 
@@ -1236,7 +1319,7 @@ Entity[ "0x28" ] = {
     end,
 
     on_talk = function( self )
-        opcodeFE54() -- 0x0c36 0xfe
+        -- 0xFE54() -- 0x0c36 0xfe
         -- MISSING OPCODE 0xb8
     end,
 
@@ -1246,16 +1329,17 @@ Entity[ "0x28" ] = {
 
     script_0x04 = function( self )
         -- 0x2A() -- 0x0c8d 0x2a
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=120 ) -- 0x0c8e 0x74
+        -- MISSING OPCODE 0x10
     end,
 
 }
 
 
 
-Entity[ "0x29" ] = {
+Actor[ "0x29" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0cae 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0cae 0xbc
         -- 0x2A() -- 0x0caf 0x2a
         -- MISSING OPCODE 0xf9
     end,
@@ -1277,9 +1361,9 @@ Entity[ "0x29" ] = {
 
 
 
-Entity[ "0x2a" ] = {
+Actor[ "0x2a" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0ce0 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0ce0 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1299,9 +1383,9 @@ Entity[ "0x2a" ] = {
 
 
 
-Entity[ "0x2b" ] = {
+Actor[ "0x2b" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0cf2 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0cf2 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1321,9 +1405,9 @@ Entity[ "0x2b" ] = {
 
 
 
-Entity[ "0x2c" ] = {
+Actor[ "0x2c" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0d04 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0d04 0xbc
         -- 0x2A() -- 0x0d05 0x2a
         -- MISSING OPCODE 0xf8
     end,
@@ -1344,9 +1428,9 @@ Entity[ "0x2c" ] = {
 
 
 
-Entity[ "0x2d" ] = {
+Actor[ "0x2d" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0d18 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0d18 0xbc
         -- MISSING OPCODE 0xf8
     end,
 
@@ -1355,7 +1439,7 @@ Entity[ "0x2d" ] = {
     end,
 
     on_talk = function( self )
-        opcodeFE54() -- 0x0d3e 0xfe
+        -- 0xFE54() -- 0x0d3e 0xfe
         -- MISSING OPCODE 0xb8
     end,
 
@@ -1365,16 +1449,17 @@ Entity[ "0x2d" ] = {
 
     script_0x04 = function( self )
         -- 0x2A() -- 0x0d95 0x2a
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=120 ) -- 0x0d96 0x74
+        -- MISSING OPCODE 0x10
     end,
 
 }
 
 
 
-Entity[ "0x2e" ] = {
+Actor[ "0x2e" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0db6 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0db6 0xbc
         -- 0x2A() -- 0x0db7 0x2a
         -- MISSING OPCODE 0xf9
     end,
@@ -1396,9 +1481,9 @@ Entity[ "0x2e" ] = {
 
 
 
-Entity[ "0x2f" ] = {
+Actor[ "0x2f" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0de8 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0de8 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1418,9 +1503,9 @@ Entity[ "0x2f" ] = {
 
 
 
-Entity[ "0x30" ] = {
+Actor[ "0x30" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0dfa 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0dfa 0xbc
         -- MISSING OPCODE 0xf9
     end,
 
@@ -1440,9 +1525,9 @@ Entity[ "0x30" ] = {
 
 
 
-Entity[ "0x31" ] = {
+Actor[ "0x31" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0e0c 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0e0c 0xbc
         -- 0x2A() -- 0x0e0d 0x2a
         -- MISSING OPCODE 0xf8
     end,
@@ -1463,9 +1548,9 @@ Entity[ "0x31" ] = {
 
 
 
-Entity[ "0x32" ] = {
+Actor[ "0x32" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0e20 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0e20 0xbc
         -- 0x2A() -- 0x0e21 0x2a
         -- MISSING OPCODE 0xf8
     end,
@@ -1483,7 +1568,8 @@ Entity[ "0x32" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x74
+        opcode74_SoundPlayFixedVolume( sound_id=120 ) -- 0x0e28 0x74
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -1494,10 +1580,10 @@ Entity[ "0x32" ] = {
 
 
 
-Entity[ "0x33" ] = {
+Actor[ "0x33" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 7 ) -- 0x0e55 0x0b
-        -- 0x19_SetPosition( x=(vf80)0xfad9, z=(vf40)0xfccf, flag=(flag)0xc0 ) -- 0x0e58 0x19
+        -- 0x19_ActorSetPosition( x=(vf80)0xfad9, z=(vf40)0xfccf, flag=(flag)0xc0 ) -- 0x0e58 0x19
         return 0 -- 0x0e5e 0x00
     end,
 
@@ -1506,7 +1592,10 @@ Entity[ "0x33" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0e61 0x6f
+        opcodeD2_MessageShow0( text_id=0x000a, ???=0x00 ) -- 0x0e63 0xd2
+        opcode9C_MessageSync() -- 0x0e67 0x9c
+        return 0 -- 0x0e68 0x00
     end,
 
     on_push = function( self )
@@ -1517,10 +1606,10 @@ Entity[ "0x33" ] = {
 
 
 
-Entity[ "0x34" ] = {
+Actor[ "0x34" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 2 ) -- 0x0e6a 0x0b
-        -- 0x19_SetPosition( x=(vf80)0xff14, z=(vf40)0xffe9, flag=(flag)0xc0 ) -- 0x0e6d 0x19
+        -- 0x19_ActorSetPosition( x=(vf80)0xff14, z=(vf40)0xffe9, flag=(flag)0xc0 ) -- 0x0e6d 0x19
         return 0 -- 0x0e73 0x00
     end,
 
@@ -1529,7 +1618,10 @@ Entity[ "0x34" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0e76 0x6f
+        opcodeD2_MessageShow0( text_id=0x000b, ???=0x00 ) -- 0x0e78 0xd2
+        opcode9C_MessageSync() -- 0x0e7c 0x9c
+        return 0 -- 0x0e7d 0x00
     end,
 
     on_push = function( self )
@@ -1540,10 +1632,10 @@ Entity[ "0x34" ] = {
 
 
 
-Entity[ "0x35" ] = {
+Actor[ "0x35" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 3 ) -- 0x0e7f 0x0b
-        -- 0x19_SetPosition( x=(vf80)0x0190, z=(vf40)0xffee, flag=(flag)0xc0 ) -- 0x0e82 0x19
+        -- 0x19_ActorSetPosition( x=(vf80)0x0190, z=(vf40)0xffee, flag=(flag)0xc0 ) -- 0x0e82 0x19
         return 0 -- 0x0e88 0x00
     end,
 
@@ -1552,7 +1644,10 @@ Entity[ "0x35" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0e8b 0x6f
+        opcodeD2_MessageShow0( text_id=0x000c, ???=0x00 ) -- 0x0e8d 0xd2
+        opcode9C_MessageSync() -- 0x0e91 0x9c
+        return 0 -- 0x0e92 0x00
     end,
 
     on_push = function( self )
@@ -1563,10 +1658,10 @@ Entity[ "0x35" ] = {
 
 
 
-Entity[ "0x36" ] = {
+Actor[ "0x36" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 4 ) -- 0x0e94 0x0b
-        -- 0x19_SetPosition( x=(vf80)0x032d, z=(vf40)0xfeb8, flag=(flag)0xc0 ) -- 0x0e97 0x19
+        -- 0x19_ActorSetPosition( x=(vf80)0x032d, z=(vf40)0xfeb8, flag=(flag)0xc0 ) -- 0x0e97 0x19
         return 0 -- 0x0e9d 0x00
     end,
 
@@ -1575,7 +1670,10 @@ Entity[ "0x36" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0ea0 0x6f
+        opcodeD2_MessageShow0( text_id=0x000d, ???=0x00 ) -- 0x0ea2 0xd2
+        opcode9C_MessageSync() -- 0x0ea6 0x9c
+        return 0 -- 0x0ea7 0x00
     end,
 
     on_push = function( self )
@@ -1586,22 +1684,23 @@ Entity[ "0x36" ] = {
 
 
 
-Entity[ "0x37" ] = {
+Actor[ "0x37" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 5 ) -- 0x0ea9 0x0b
-        -- 0x19_SetPosition( x=(vf80)0xf9c1, z=(vf40)0xfcae, flag=(flag)0xc0 ) -- 0x0eac 0x19
+        -- 0x19_ActorSetPosition( x=(vf80)0xf9c1, z=(vf40)0xfcae, flag=(flag)0xc0 ) -- 0x0eac 0x19
         return 0 -- 0x0eb2 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x38 ) -- 0x0eb3 0x6f
+        return 0 -- 0x0eb5 0x00
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( dialog_id=0x000e, ???=0x00 ) -- 0x0eb6 0xd2
-        -- 0x9C() -- 0x0eba 0x9c
+        opcodeD2_MessageShow0( text_id=0x000e, ???=0x00 ) -- 0x0eb6 0xd2
+        opcode9C_MessageSync() -- 0x0eba 0x9c
         opcode26_Wait( time=10 ) -- 0x0ebb 0x26
-        opcodeD4_MessageShowE( entity=(entity)0x38, dialog_id=0x000f, ???=0x00 ) -- 0x0ebe 0xd4
+        opcodeD4_MessageShowE( actor_id=(entity)0x38, text_id=0x000f, ???=0x00 ) -- 0x0ebe 0xd4
         return 0 -- 0x0ec4 0x00
     end,
 
@@ -1613,19 +1712,23 @@ Entity[ "0x37" ] = {
 
 
 
-Entity[ "0x38" ] = {
+Actor[ "0x38" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 6 ) -- 0x0ec6 0x0b
-        -- 0x19_SetPosition( x=(vf80)0xf9c1, z=(vf40)0xfc04, flag=(flag)0xc0 ) -- 0x0ec9 0x19
+        -- 0x19_ActorSetPosition( x=(vf80)0xf9c1, z=(vf40)0xfc04, flag=(flag)0xc0 ) -- 0x0ec9 0x19
         return 0 -- 0x0ecf 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x37 ) -- 0x0ed0 0x6f
+        return 0 -- 0x0ed2 0x00
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0ed3 0x6f
+        opcodeD2_MessageShow0( text_id=0x0010, ???=0x00 ) -- 0x0ed5 0xd2
+        opcode9C_MessageSync() -- 0x0ed9 0x9c
+        return 0 -- 0x0eda 0x00
     end,
 
     on_push = function( self )
@@ -1636,10 +1739,10 @@ Entity[ "0x38" ] = {
 
 
 
-Entity[ "0x39" ] = {
+Actor[ "0x39" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 8 ) -- 0x0edc 0x0b
-        -- 0x19_SetPosition( x=(vf80)0x0779, z=(vf40)0xfb1d, flag=(flag)0xc0 ) -- 0x0edf 0x19
+        -- 0x19_ActorSetPosition( x=(vf80)0x0779, z=(vf40)0xfb1d, flag=(flag)0xc0 ) -- 0x0edf 0x19
         return 0 -- 0x0ee5 0x00
     end,
 
@@ -1648,7 +1751,10 @@ Entity[ "0x39" ] = {
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0ee8 0x6f
+        opcodeD2_MessageShow0( text_id=0x0011, ???=0x00 ) -- 0x0eea 0xd2
+        opcode9C_MessageSync() -- 0x0eee 0x9c
+        return 0 -- 0x0eef 0x00
     end,
 
     on_push = function( self )
@@ -1659,10 +1765,10 @@ Entity[ "0x39" ] = {
 
 
 
-Entity[ "0x3a" ] = {
+Actor[ "0x3a" ] = {
     on_start = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c6 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x0efe ) -- 0x0ef1 0x02
-        -- 0xBC_EntityNoModelInit() -- 0x0ef9 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0ef9 0xbc
         -- 0x2A() -- 0x0efa 0x2a
         -- 0x01_JumpTo( 0x0f0a ) -- 0x0efb 0x01
         -- 0x0B_InitNPC( 4 ) -- 0x0efe 0x0b
@@ -1670,7 +1776,8 @@ Entity[ "0x3a" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x69
+        opcode69_ActorSetRotation( rot=5 ) -- 0x0f0b 0x69
+        return 0 -- 0x0f0e 0x00
     end,
 
     on_talk = function( self )
@@ -1686,14 +1793,15 @@ Entity[ "0x3a" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x36
+        opcode36_VariableSetTrue( address=0x044e ) -- 0x0f4d 0x36
+        -- MISSING OPCODE 0x21
     end,
 
 }
 
 
 
-Entity[ "0x3b" ] = {
+Actor[ "0x3b" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x0f63 0x0b
         -- MISSING OPCODE 0xFE1c
@@ -1715,14 +1823,15 @@ Entity[ "0x3b" ] = {
 
 
 
-Entity[ "0x3c" ] = {
+Actor[ "0x3c" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x0f74 0x0b
         -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0f84 0x2c
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -1737,17 +1846,21 @@ Entity[ "0x3c" ] = {
 
 
 
-Entity[ "0x3d" ] = {
+Actor[ "0x3d" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x85
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x69
+        opcode69_ActorSetRotation( rot=4 ) -- 0x0fc7 0x69
+        return 0 -- 0x0fca 0x00
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0fcb 0x6f
+        opcodeD2_MessageShow0( text_id=0x0012, ???=0x00 ) -- 0x0fcd 0xd2
+        opcode9C_MessageSync() -- 0x0fd1 0x9c
+        return 0 -- 0x0fd2 0x00
     end,
 
     on_push = function( self )
@@ -1758,20 +1871,28 @@ Entity[ "0x3d" ] = {
 
 
 
-Entity[ "0x3e" ] = {
+Actor[ "0x3e" ] = {
     on_start = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=210, jump=0x0fe8 ) -- 0x0fd4 0x86
         -- 0x0B_InitNPC( 1 ) -- 0x0fd9 0x0b
-        -- 0x19_SetPosition( x=(vf80)0x02bd, z=(vf40)0x006c, flag=(flag)0xc0 ) -- 0x0fdc 0x19
-        -- MISSING OPCODE 0x69
+        -- 0x19_ActorSetPosition( x=(vf80)0x02bd, z=(vf40)0x006c, flag=(flag)0xc0 ) -- 0x0fdc 0x19
+        opcode69_ActorSetRotation( rot=5 ) -- 0x0fe2 0x69
+        -- 0x01_JumpTo( 0x0fea ) -- 0x0fe5 0x01
+        -- 0xBC_ActorNoModelInit() -- 0x0fe8 0xbc
+        -- 0x2A() -- 0x0fe9 0x2a
+        return 0 -- 0x0fea 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x69
+        opcode69_ActorSetRotation( rot=5 ) -- 0x0feb 0x69
+        return 0 -- 0x0fee 0x00
     end,
 
     on_talk = function( self )
-        -- MISSING OPCODE 0x6f
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0fef 0x6f
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c6 ), value2=(s16)0x4000, condition="value1 & value2", jump_if_false=0x1018 ) -- 0x0ff1 0x02
+        -- 0xFE54() -- 0x0ff9 0xfe
+        -- MISSING OPCODE 0xb8
     end,
 
     on_push = function( self )
@@ -1782,11 +1903,11 @@ Entity[ "0x3e" ] = {
 
 
 
-Entity[ "0x3f" ] = {
+Actor[ "0x3f" ] = {
     on_start = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=210, jump=0x104b ) -- 0x101f 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c6 ), value2=(s16)0x4000, condition="value1 & value2", jump_if_false=0x1030 ) -- 0x1024 0x02
-        -- 0xBC_EntityNoModelInit() -- 0x102c 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x102c 0xbc
         -- 0x01_JumpTo( 0x1048 ) -- 0x102d 0x01
         -- MISSING OPCODE 0xFE15
     end,
@@ -1808,7 +1929,7 @@ Entity[ "0x3f" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeFE54() -- 0x10a8 0xfe
+        -- 0xFE54() -- 0x10a8 0xfe
         -- MISSING OPCODE 0xb8
     end,
 
@@ -1816,9 +1937,9 @@ Entity[ "0x3f" ] = {
 
 
 
-Entity[ "0x40" ] = {
+Actor[ "0x40" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x10bb 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x10bb 0xbc
         -- 0x2A() -- 0x10bc 0x2a
         return 0 -- 0x10bd 0x00
     end,
@@ -1839,11 +1960,11 @@ Entity[ "0x40" ] = {
 
 
 
-Entity[ "0x41" ] = {
+Actor[ "0x41" ] = {
     on_start = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=210, jump=0x1117 ) -- 0x10eb 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c6 ), value2=(s16)0x4000, condition="value1 & value2", jump_if_false=0x10fc ) -- 0x10f0 0x02
-        -- 0xBC_EntityNoModelInit() -- 0x10f8 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x10f8 0xbc
         -- 0x01_JumpTo( 0x1114 ) -- 0x10f9 0x01
         -- MISSING OPCODE 0xFE15
     end,
@@ -1862,11 +1983,12 @@ Entity[ "0x41" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xf6
+        -- 0xF6( ???=0x02 ) -- 0x1166 0xf6
+        -- MISSING OPCODE 0x21
     end,
 
     script_0x05 = function( self )
-        opcodeFE54() -- 0x1179 0xfe
+        -- 0xFE54() -- 0x1179 0xfe
         -- MISSING OPCODE 0xb8
     end,
 
@@ -1882,9 +2004,9 @@ Entity[ "0x41" ] = {
 
 
 
-Entity[ "0x42" ] = {
+Actor[ "0x42" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x11b2 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x11b2 0xbc
         -- 0x2A() -- 0x11b3 0x2a
         return 0 -- 0x11b4 0x00
     end,
@@ -1905,9 +2027,9 @@ Entity[ "0x42" ] = {
 
 
 
-Entity[ "0x43" ] = {
+Actor[ "0x43" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x11e2 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x11e2 0xbc
         -- 0x2A() -- 0x11e3 0x2a
         -- MISSING OPCODE 0x29
     end,

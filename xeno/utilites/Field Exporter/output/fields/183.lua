@@ -1,10 +1,10 @@
-Entity = {}
+Actor = {}
 
 
 
-Entity[ "0x00" ] = {
+Actor[ "0x00" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0008 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
         -- 0x2A() -- 0x0009 0x2a
         -- MISSING OPCODE 0xFE8e
     end,
@@ -25,11 +25,11 @@ Entity[ "0x00" ] = {
 
 
 
-Entity[ "0x01" ] = {
+Actor[ "0x01" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0239 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x0239 0xbc
         -- 0x2A() -- 0x023a 0x2a
-        -- 0x35() -- 0x023b 0x35
+        opcode35_VariableSet( address=0x0406, value=(vf40)0x0800, flag=0x40 ) -- 0x023b 0x35
         return 0 -- 0x0241 0x00
     end,
 
@@ -51,17 +51,17 @@ Entity[ "0x01" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0xF1() -- 0x0265 0xf1
+        opcodeF1_FadeSetUp( steps=1, r=255, g=255, b=150, semi_tr=3 ) -- 0x0265 0xf1
         opcode26_Wait( time=3 ) -- 0x0270 0x26
-        -- 0xF1() -- 0x0273 0xf1
+        opcodeF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=3 ) -- 0x0273 0xf1
         opcode26_Wait( time=3 ) -- 0x027e 0x26
-        -- 0xF1() -- 0x0281 0xf1
+        opcodeF1_FadeSetUp( steps=1, r=255, g=255, b=150, semi_tr=3 ) -- 0x0281 0xf1
         opcode26_Wait( time=180 ) -- 0x028c 0x26
         return 0 -- 0x028f 0x00
     end,
 
     script_0x06 = function( self )
-        -- 0xF1() -- 0x0290 0xf1
+        opcodeF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=1 ) -- 0x0290 0xf1
         return 0 -- 0x029b 0x00
     end,
 
@@ -69,9 +69,9 @@ Entity[ "0x01" ] = {
 
 
 
-Entity[ "0x02" ] = {
+Actor[ "0x02" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x029c 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x029c 0xbc
         -- 0x2A() -- 0x029d 0x2a
         return 0 -- 0x029e 0x00
     end,
@@ -93,16 +93,16 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x05 = function( self )
-        opcode60() -- 0x02e8 0x60
-        opcode63() -- 0x02e9 0x63
-        opcode64() -- 0x02f1 0x64
+        -- 0x60() -- 0x02e8 0x60
+        -- 0x63( ???=(vf80)0xa650, ???=(vf40)0x0170, ???=(vf20)0xeb5b, flag=0xe0 ) -- 0x02e9 0x63
+        -- 0x64() -- 0x02f1 0x64
         opcodeA3() -- 0x02f2 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x02fa 0xac
         opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x02fe 0xac
         opcodeEF_MoveCameraSync() -- 0x0302 0xef
-        opcode60() -- 0x0305 0x60
-        opcode63() -- 0x0306 0x63
-        opcode64() -- 0x030e 0x64
+        -- 0x60() -- 0x0305 0x60
+        -- 0x63( ???=(vf80)0xab93, ???=(vf40)0xffd7, ???=(vf20)0xfdc1, flag=0xe0 ) -- 0x0306 0x63
+        -- 0x64() -- 0x030e 0x64
         opcodeA3() -- 0x030f 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=25 ) -- 0x0317 0xac
         opcodeAC_MoveCamera( control=0x00, steps=25 ) -- 0x031b 0xac
@@ -115,9 +115,9 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x07 = function( self )
-        opcode60() -- 0x03f6 0x60
-        opcode63() -- 0x03f7 0x63
-        opcode64() -- 0x03ff 0x64
+        -- 0x60() -- 0x03f6 0x60
+        -- 0x63( ???=(vf80)0xff37, ???=(vf40)0xf96d, ???=(vf20)0xff56, flag=0xe0 ) -- 0x03f7 0x63
+        -- 0x64() -- 0x03ff 0x64
         opcodeA3() -- 0x0400 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0408 0xac
         opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x040c 0xac
@@ -126,9 +126,9 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x08 = function( self )
-        opcode60() -- 0x0443 0x60
-        opcode63() -- 0x0444 0x63
-        opcode64() -- 0x044c 0x64
+        -- 0x60() -- 0x0443 0x60
+        -- 0x63( ???=(vf80)0x0506, ???=(vf40)0x0082, ???=(vf20)0xfe5e, flag=0xe0 ) -- 0x0444 0x63
+        -- 0x64() -- 0x044c 0x64
         opcodeA3() -- 0x044d 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x0455 0xac
         opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x0459 0xac
@@ -137,16 +137,16 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x09 = function( self )
-        opcode60() -- 0x0470 0x60
-        opcode63() -- 0x0471 0x63
-        opcode64() -- 0x0479 0x64
+        -- 0x60() -- 0x0470 0x60
+        -- 0x63( ???=(vf80)0x0102, ???=(vf40)0x003e, ???=(vf20)0xff80, flag=0xe0 ) -- 0x0471 0x63
+        -- 0x64() -- 0x0479 0x64
         opcodeA3() -- 0x047a 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0482 0xac
         opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x0486 0xac
         opcodeEF_MoveCameraSync() -- 0x048a 0xef
-        opcode60() -- 0x048d 0x60
-        opcode63() -- 0x048e 0x63
-        opcode64() -- 0x0496 0x64
+        -- 0x60() -- 0x048d 0x60
+        -- 0x63( ???=(vf80)0x0154, ???=(vf40)0xffd5, ???=(vf20)0xff80, flag=0xe0 ) -- 0x048e 0x63
+        -- 0x64() -- 0x0496 0x64
         opcodeA3() -- 0x0497 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=100 ) -- 0x049f 0xac
         opcodeAC_MoveCamera( control=0x00, steps=100 ) -- 0x04a3 0xac
@@ -155,9 +155,9 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x0a = function( self )
-        opcode60() -- 0x04ab 0x60
-        opcode63() -- 0x04ac 0x63
-        opcode64() -- 0x04b4 0x64
+        -- 0x60() -- 0x04ab 0x60
+        -- 0x63( ???=(vf80)0x0630, ???=(vf40)0x0016, ???=(vf20)0xfd07, flag=0xe0 ) -- 0x04ac 0x63
+        -- 0x64() -- 0x04b4 0x64
         opcodeA3() -- 0x04b5 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x04bd 0xac
         opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x04c1 0xac
@@ -166,9 +166,9 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x0b = function( self )
-        opcode60() -- 0x04c9 0x60
-        opcode63() -- 0x04ca 0x63
-        opcode64() -- 0x04d2 0x64
+        -- 0x60() -- 0x04c9 0x60
+        -- 0x63( ???=(vf80)0x033a, ???=(vf40)0x01ea, ???=(vf20)0xfed2, flag=0xe0 ) -- 0x04ca 0x63
+        -- 0x64() -- 0x04d2 0x64
         opcodeA3() -- 0x04d3 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x04db 0xac
         opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x04df 0xac
@@ -177,9 +177,9 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x0c = function( self )
-        opcode60() -- 0x04e7 0x60
-        opcode63() -- 0x04e8 0x63
-        opcode64() -- 0x04f0 0x64
+        -- 0x60() -- 0x04e7 0x60
+        -- 0x63( ???=(vf80)0x02e2, ???=(vf40)0xfe5a, ???=(vf20)0xfe66, flag=0xe0 ) -- 0x04e8 0x63
+        -- 0x64() -- 0x04f0 0x64
         opcodeA3() -- 0x04f1 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x04f9 0xac
         opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x04fd 0xac
@@ -188,19 +188,19 @@ Entity[ "0x02" ] = {
     end,
 
     script_0x0d = function( self )
-        opcode60() -- 0x0505 0x60
-        opcode63() -- 0x0506 0x63
-        opcode64() -- 0x050e 0x64
+        -- 0x60() -- 0x0505 0x60
+        -- 0x63( ???=(vf80)0x03f7, ???=(vf40)0x002b, ???=(vf20)0xff8c, flag=0xe0 ) -- 0x0506 0x63
+        -- 0x64() -- 0x050e 0x64
         opcodeA3() -- 0x050f 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=0 ) -- 0x0517 0xac
         opcodeAC_MoveCamera( control=0x00, steps=0 ) -- 0x051b 0xac
         opcodeEF_MoveCameraSync() -- 0x051f 0xef
-        opcode09_EntityCallScriptEW( entity=0x04, script=08, priority=01 ) -- 0x0522 0x09
+        opcode09_ActorCallScriptEW( actor_id=0x04, script=08, priority=01 ) -- 0x0522 0x09
         opcode26_Wait( time=12 ) -- 0x0525 0x26
-        -- 0x07( entity=0x04, script=0x29 ) -- 0x0528 0x07
-        opcode60() -- 0x052b 0x60
-        opcode63() -- 0x052c 0x63
-        opcode64() -- 0x0534 0x64
+        -- 0x07( actor_id=0x04, script=0x29 ) -- 0x0528 0x07
+        -- 0x60() -- 0x052b 0x60
+        -- 0x63( ???=(vf80)0x0000, ???=(vf40)0xfff7, ???=(vf20)0xfef8, flag=0xe0 ) -- 0x052c 0x63
+        -- 0x64() -- 0x0534 0x64
         opcodeA3() -- 0x0535 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=45 ) -- 0x053d 0xac
         opcodeAC_MoveCamera( control=0x00, steps=45 ) -- 0x0541 0xac
@@ -212,10 +212,10 @@ Entity[ "0x02" ] = {
 
 
 
-Entity[ "0x03" ] = {
+Actor[ "0x03" ] = {
     on_start = function( self )
-        -- 0x16_EntityPCInit( 0 ) -- 0x0549 0x16
-        opcodeFE0D_SetAvatar( character_id=0 ) -- 0x054c 0xfe
+        -- 0x16_ActorPCInit( char_id=0 ) -- 0x0549 0x16
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x054c 0xfe
         -- 0x23() -- 0x0550 0x23
         -- 0x2A() -- 0x0551 0x2a
         return 0 -- 0x0552 0x00
@@ -237,7 +237,7 @@ Entity[ "0x03" ] = {
 
 
 
-Entity[ "0x04" ] = {
+Actor[ "0x04" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
@@ -255,28 +255,62 @@ Entity[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x14 ) -- 0x05ae 0x2c
+        opcode26_Wait( time=5 ) -- 0x05b0 0x26
+        return 0 -- 0x05b3 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x14 ) -- 0x05b4 0x2c
+        -- MISSING OPCODE 0xFE47
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x13 ) -- 0x0624 0x2c
+        opcode26_Wait( time=0 ) -- 0x0626 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x16 ) -- 0x0629 0x2c
+        opcode26_Wait( time=25 ) -- 0x062b 0x26
+        -- 0x05_CallFunction( 0x07b3 ) -- 0x062e 0x05
+        opcode74_SoundPlayFixedVolume( sound_id=156 ) -- 0x0631 0x74
+        opcode26_Wait( time=30 ) -- 0x0634 0x26
+        opcode74_SoundPlayFixedVolume( sound_id=0 ) -- 0x0637 0x74
+        opcodeD2_MessageShow0( text_id=0x0001, ???=0x21 ) -- 0x063a 0xd2
+        opcode9C_MessageSync() -- 0x063e 0x9c
+        return 0 -- 0x063f 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x13 ) -- 0x0640 0x2c
+        opcode26_Wait( time=0 ) -- 0x0642 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x16 ) -- 0x0645 0x2c
+        -- 0xFE97_ParticleReset( all=0x00 ) -- 0x0647 0xfe
+        opcode26_Wait( time=25 ) -- 0x064a 0x26
+        -- 0x05_CallFunction( 0x07b3 ) -- 0x064d 0x05
+        opcode74_SoundPlayFixedVolume( sound_id=156 ) -- 0x0650 0x74
+        opcode26_Wait( time=30 ) -- 0x0653 0x26
+        opcode74_SoundPlayFixedVolume( sound_id=0 ) -- 0x0656 0x74
+        opcodeD2_MessageShow0( text_id=0x0002, ???=0x21 ) -- 0x0659 0xd2
+        opcode9C_MessageSync() -- 0x065d 0x9c
+        return 0 -- 0x065e 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x13 ) -- 0x065f 0x2c
+        opcode26_Wait( time=0 ) -- 0x0661 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x16 ) -- 0x0664 0x2c
+        opcode26_Wait( time=25 ) -- 0x0666 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x17 ) -- 0x0669 0x2c
+        -- 0xFE97_ParticleReset( all=0x00 ) -- 0x066b 0xfe
+        opcode26_Wait( time=50 ) -- 0x066e 0x26
+        -- 0x05_CallFunction( 0x07b3 ) -- 0x0671 0x05
+        opcodeD2_MessageShow0( text_id=0x0003, ???=0x21 ) -- 0x0674 0xd2
+        opcode9C_MessageSync() -- 0x0678 0x9c
+        -- MISSING OPCODE 0xFE65
     end,
 
     script_0x09 = function( self )
         -- 0xC6() -- 0x068c 0xc6
-        -- 0xFE8F_ParticleSystemInit1( entity=(entity)0xfb, render_settings=1, rot_x=0, rot_y=21 ) -- 0x068d 0xfe
+        -- 0xFE8F_ParticleSystemInit1( actor_id=(entity)self, render_settings=1, rot_x=0, rot_y=21 ) -- 0x068d 0xfe
         -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=21, wait=30, ttl=32767 ) -- 0x0696 0xfe
         -- 0xFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x0000, z=(vf20)0x0000, speed_x=(vf10)0x3e80, speed_y=(vf08)0x7530, speed_z=(vf04)0x0000, flag=(flag)0xfc ) -- 0x06a0 0xfe
         -- 0xFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc ) -- 0x06af 0xfe
@@ -309,12 +343,13 @@ Entity[ "0x04" ] = {
 
 
 
-Entity[ "0x05" ] = {
+Actor[ "0x05" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x0918 0xbc
-        opcodeFE0D_SetAvatar( character_id=24 ) -- 0x0919 0xfe
+        -- 0xBC_ActorNoModelInit() -- 0x0918 0xbc
+        opcodeFE0D_MessageSetFace( char_id=24 ) -- 0x0919 0xfe
         -- 0x2A() -- 0x091d 0x2a
-        -- MISSING OPCODE 0xFE07
+        -- 0xFE07( ???=0x01 ) -- 0x091e 0xfe
+        return 0 -- 0x0921 0x00
     end,
 
     on_update = function( self )
@@ -331,37 +366,40 @@ Entity[ "0x05" ] = {
 
     script_0x04 = function( self )
         opcode26_Wait( time=16 ) -- 0x0924 0x26
-        opcodeD2_MessageShow0( dialog_id=0x0004, ???=0x21 ) -- 0x0927 0xd2
-        -- 0x9C() -- 0x092b 0x9c
+        opcodeD2_MessageShow0( text_id=0x0004, ???=0x21 ) -- 0x0927 0xd2
+        opcode9C_MessageSync() -- 0x092b 0x9c
         return 0 -- 0x092c 0x00
     end,
 
     script_0x05 = function( self )
         opcode26_Wait( time=16 ) -- 0x092d 0x26
-        opcodeD2_MessageShow0( dialog_id=0x0005, ???=0x21 ) -- 0x0930 0xd2
-        -- 0x9C() -- 0x0934 0x9c
+        opcodeD2_MessageShow0( text_id=0x0005, ???=0x21 ) -- 0x0930 0xd2
+        opcode9C_MessageSync() -- 0x0934 0x9c
         return 0 -- 0x0935 0x00
     end,
 
     script_0x06 = function( self )
         opcode26_Wait( time=16 ) -- 0x0936 0x26
-        opcodeD2_MessageShow0( dialog_id=0x0006, ???=0x20 ) -- 0x0939 0xd2
-        -- 0x9C() -- 0x093d 0x9c
-        -- MISSING OPCODE 0x74
+        opcodeD2_MessageShow0( text_id=0x0006, ???=0x20 ) -- 0x0939 0xd2
+        opcode9C_MessageSync() -- 0x093d 0x9c
+        opcode74_SoundPlayFixedVolume( sound_id=434 ) -- 0x093e 0x74
+        return 0 -- 0x0941 0x00
     end,
 
 }
 
 
 
-Entity[ "0x06" ] = {
+Actor[ "0x06" ] = {
     on_start = function( self )
         -- MISSING OPCODE 0x93
     end,
 
     on_update = function( self )
         -- 0x5A() -- 0x095e 0x5a
-        -- MISSING OPCODE 0x2c
+        opcode2C_SpritePlayAnim( anim_id=0x19 ) -- 0x095f 0x2c
+        -- 0x5B() -- 0x0961 0x5b
+        return 0 -- 0x0962 0x00
     end,
 
     on_talk = function( self )
@@ -374,32 +412,32 @@ Entity[ "0x06" ] = {
 
     script_0x04 = function( self )
         opcode26_Wait( time=16 ) -- 0x0964 0x26
-        opcodeD2_MessageShow0( dialog_id=0x0007, ???=0x20 ) -- 0x0967 0xd2
-        -- 0x9C() -- 0x096b 0x9c
+        opcodeD2_MessageShow0( text_id=0x0007, ???=0x20 ) -- 0x0967 0xd2
+        opcode9C_MessageSync() -- 0x096b 0x9c
         return 0 -- 0x096c 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( dialog_id=0x0008, ???=0x20 ) -- 0x096d 0xd2
-        -- 0x9C() -- 0x0971 0x9c
+        opcodeD2_MessageShow0( text_id=0x0008, ???=0x20 ) -- 0x096d 0xd2
+        opcode9C_MessageSync() -- 0x0971 0x9c
         return 0 -- 0x0972 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( dialog_id=0x0009, ???=0x20 ) -- 0x0973 0xd2
-        -- 0x9C() -- 0x0977 0x9c
+        opcodeD2_MessageShow0( text_id=0x0009, ???=0x20 ) -- 0x0973 0xd2
+        opcode9C_MessageSync() -- 0x0977 0x9c
         return 0 -- 0x0978 0x00
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( dialog_id=0x000a, ???=0x20 ) -- 0x0979 0xd2
-        -- 0x9C() -- 0x097d 0x9c
+        opcodeD2_MessageShow0( text_id=0x000a, ???=0x20 ) -- 0x0979 0xd2
+        opcode9C_MessageSync() -- 0x097d 0x9c
         return 0 -- 0x097e 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( dialog_id=0x000b, ???=0x20 ) -- 0x097f 0xd2
-        -- 0x9C() -- 0x0983 0x9c
+        opcodeD2_MessageShow0( text_id=0x000b, ???=0x20 ) -- 0x097f 0xd2
+        opcode9C_MessageSync() -- 0x0983 0x9c
         return 0 -- 0x0984 0x00
     end,
 
@@ -415,9 +453,9 @@ Entity[ "0x06" ] = {
 
 
 
-Entity[ "0x07" ] = {
+Actor[ "0x07" ] = {
     on_start = function( self )
-        -- 0xBC_EntityNoModelInit() -- 0x098f 0xbc
+        -- 0xBC_ActorNoModelInit() -- 0x098f 0xbc
         return 0 -- 0x0990 0x00
     end,
 
@@ -435,7 +473,7 @@ Entity[ "0x07" ] = {
 
     script_0x04 = function( self )
         -- 0xC6() -- 0x0994 0xc6
-        -- 0xFE8F_ParticleSystemInit1( entity=(entity)0x04, render_settings=1, rot_x=0, rot_y=47 ) -- 0x0995 0xfe
+        -- 0xFE8F_ParticleSystemInit1( actor_id=(entity)0x04, render_settings=1, rot_x=0, rot_y=47 ) -- 0x0995 0xfe
         -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=9, wait=15, ttl=32767 ) -- 0x099e 0xfe
         -- 0xFE91_ParticlePos( x=(vf80)0xff38, y=(vf40)0xff38, z=(vf20)0x0000, speed_x=(vf10)0xff38, speed_y=(vf08)0xff38, speed_z=(vf04)0x0000, flag=(flag)0xfc ) -- 0x09a8 0xfe
         -- 0xFE92_ParticleSpeed( speed=(vf80)0x03e8, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x00c8, rand_speed=(vf04)0x01f4, flag=(flag)0xfc ) -- 0x09b7 0xfe

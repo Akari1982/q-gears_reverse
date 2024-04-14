@@ -69,25 +69,12 @@ loopa1488:	; 800A1488
 34 800957E8
 36 8009CEF0
 37 8009CEAC
-38 8009CE20
-39 8009CD94
-3a 8009CBD4
-3b 8009C998
-3c 8009C8D0
-3d 8009C934
-3e 8009CB48
-3f 8009CABC
-40 8009CA30
-41 8009C860
-42 8009C7F0
-43 8009C728
 44 80097758
 45 80096E38
 46 80091DDC
 47 80092474
 48 800932A4
 49 8009331C
-4a 80098F54
 4b 80097A04
 4c 80096FC4
 4d 80096F28
@@ -99,13 +86,9 @@ loopa1488:	; 800A1488
 53 8009760C
 54 80096B94
 55 80096A70
-56 800925E8
-57 800987E8
 58 80093EEC
 59 8009EA5C
 5c 8009F7B8
-5d 80099748
-5e 80099780
 5f 8009A340
 61 8008F400
 62 8008F4D8
@@ -113,22 +96,15 @@ loopa1488:	; 800A1488
 66 8008F770
 67 8009A1D0
 68 8009A208
-69 8009A250
 6a 8009A288
-6b 8009A130
-6c 8009A180
 6d 80099C80
 6e 80099D3C
-6f 8009987C
 70 800997B8
 71 80092B3C
 72 8008ECF8
-74 8008EC3C
 76 8009303C
 77 8009306C
 78 80096978
-79 80096838
-7a 80096880
 7b 80095FD0
 7c 800964EC
 7d 800965E4
@@ -195,7 +171,6 @@ cb 80094E94
 cc 80094AF4
 cd 8009D000
 ce 8009D028
-cf 8009C3D8
 d1 8009C500
 d5 80091BFC
 d7 80093C90
@@ -205,8 +180,6 @@ da 800917BC
 db 80091558
 dc 80091618
 dd 800913D4
-de 8009CC68
-df 8009CCF8
 e0 8009146C
 e1 80091190
 e2 80095724
@@ -214,7 +187,6 @@ e3 8009574C
 e4 800910A8
 e5 80090F18
 e6 80090FDC
-e7 8009104C
 e8 8009372C
 e9 80093980
 ea 800923D0
@@ -272,7 +244,7 @@ else
 }
 
 [800ad040] = w(0);
-[800c373c] = w(0); // maybe number of inited windows.
+[800c373c] = w(0); // message currently opening
 
 if( number_of_entity <= 0 )
 {
@@ -683,7 +655,7 @@ if( w[8004e9b0] != 0 )
 
     A0 = 10;
     A1 = 0;
-    put_bytes_to_800C2F3C();
+    field_script_help_write_bytes_to_800C2F3C();
 
     funca2644(); // store some data
 
@@ -1012,7 +984,7 @@ if( V0 != 0 )
 else
 {
     A0 = 0010;
-    800A2374	jal    put_bytes_to_800C2F3C [$800a2604]
+    800A2374	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
     A1 = 0;
     800A237C	jal    funca2644 [$800a2644]
     S1 = 0;
@@ -1137,50 +1109,6 @@ V0 = V0 + 0001;
 
 
 ////////////////////////////////
-// get_bytes_sign()
-// [00000000][00xxxxx0] => x     (sign_mask)
-// [xxxxxxxx][xx000000] => x * 4 (sign_data id)
-script_file = w[800ad0d0];
-sign_data = w[script_file + (A0 >> 6) * 4];
-sign_mask = 1 << ((A0 >> 1) & 1f);
-
-return 0 - (0 < (sign_data & sign_mask)); // 0 - signed, -1 unsigned
-////////////////////////////////
-
-
-
-////////////////////////////////
-// get_bytes_from_800C2F3C()
-// [xxxxxxxx][xxxxxxx0] => x (offset to read)
-// [xxxxxxxx][xx000000] => x * 4 (offset to sign)
-
-slot = A0 / 2;
-
-script_file = w[800ad0d0];
-sign_data = w[script_file + (slot >> 5) * 4]; // sign block
-sign_bit = 1 << (slot & 1f);
-
-if( sign_data & sign_bit ) // if bit in sign block is set
-{
-    return hu[800c2f3c + slot * 2];
-}
-else
-{
-    return h[800c2f3c + slot * 2];
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// put_bytes_to_800C2F3C()
-
-[800c2f3c + ((A0 >> 1) << 1)] = h(A1);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // get_script_offset()
 V0 = w[800ad0d0];
 return hu[V0 + 84 + A0 * 40 + A1 * 2];
@@ -1193,15 +1121,15 @@ return hu[V0 + 84 + A0 * 40 + A1 * 2];
 
 A0 = 3e;
 A1 = w[80061c20];
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 A0 = 40;
 A1 = w[80061c24];
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 A0 = 42;
 A1 = w[80061c28];
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 ////////////////////////////////
 
 
@@ -1217,29 +1145,29 @@ V0 = w[80059a38];
 
 A0 = 44;
 A1 = hu[80058ab8];
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 A0 = 46;
 A1 = bu[80058b6c];
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 func96a20();
 A0 = 6; // direction of pc entity during spawn.
 A1 = V0;
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 func99ae8();
 A0 = 8; // direction of camera.
 A1 = V0;
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 A0 = 24;
 A1 = h[800aeed0];
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 A0 = 3c;
 A1 = w[8004e9f0]; // field id to load
-put_bytes_to_800C2F3C();
+field_script_help_write_bytes_to_800C2F3C();
 
 funca2644();
 
@@ -1311,7 +1239,7 @@ V0 = w[8004e9cc];
 V0 = V0 & 0080;
 800A2870	bne    v0, zero, La2900 [$800a2900]
 A0 = 000c;
-800A2878	jal    get_bytes_from_800C2F3C [$800a25a8]
+800A2878	jal    field_script_help_read_bytes_from_800C2F3C [$800a25a8]
 A0 = 000a;
 A1 = V0 & 00ff;
 V0 = V0 >> 08;
@@ -1347,7 +1275,7 @@ La28e8:	; 800A28E8
 A0 = 000a;
 V0 = A2 << 08;
 A1 = A1 & 00ff;
-800A28F4	jal    put_bytes_to_800C2F3C [$800a2604]
+800A28F4	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
 A1 = V0 | A1;
 
 La28fc:	; 800A28FC
@@ -1357,10 +1285,10 @@ La2900:	; 800A2900
 A1 = bu[80058abc];
 V0 = bu[80058ab4];
 A1 = A1 << 08;
-800A2914	jal    put_bytes_to_800C2F3C [$800a2604]
+800A2914	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
 A1 = V0 | A1;
 A1 = bu[80058b20];
-800A2924	jal    put_bytes_to_800C2F3C [$800a2604]
+800A2924	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 000e;
 V1 = w[800b1740];
 800A2934	nop
@@ -1374,7 +1302,7 @@ V0 = V0 + V1;
 V0 = w[V0 + 004c];
 800A295C	nop
 A1 = h[V0 + 0022];
-800A2964	jal    put_bytes_to_800C2F3C [$800a2604]
+800A2964	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 001e;
 V1 = w[800b1740];
 800A2974	nop
@@ -1388,7 +1316,7 @@ V0 = V0 + V1;
 V0 = w[V0 + 004c];
 800A299C	nop
 A1 = h[V0 + 002a];
-800A29A4	jal    put_bytes_to_800C2F3C [$800a2604]
+800A29A4	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 0020;
 V1 = w[800b1740];
 800A29B4	nop
@@ -1402,7 +1330,7 @@ V0 = V0 + V1;
 V0 = w[V0 + 004c];
 800A29DC	nop
 A1 = h[V0 + 0026];
-800A29E4	jal    put_bytes_to_800C2F3C [$800a2604]
+800A29E4	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 0022;
 
 La29ec:	; 800A29EC
@@ -2409,8 +2337,7 @@ V0 = w[800aefe4];
 V0 = S0 + V0;
 A0 = w[V0 + 004c];
 800A3A94	nop
-V0 = w[A0 + 012c];
-800A3A9C	nop
+V0 = w[A0 + 12c];
 V0 = V0 & 1000;
 800A3AA4	beq    v0, zero, La3b14 [$800a3b14]
 800A3AA8	nop
