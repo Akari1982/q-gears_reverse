@@ -214,9 +214,23 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x1f:
+                    {
+                        exp->Log( "-- 0x1F( ???=" + GetU8Variable( pointer + 1 ) + " )" );
+                        pointer += 2;
+                    }
+                    break;
+
                     case 0x20:
                     {
                         exp->Log( "opcode20_ActorSetFlags0( flags=" + GetV80Variable( pointer + 1 ) + " )");
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x21:
+                    {
+                        exp->Log( "-- 0x21( ???=" + GetV80Variable( pointer + 1 ) + " )");
                         pointer += 3;
                     }
                     break;
@@ -396,6 +410,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x57:
+                    {
+                        exp->Log( "-- 0x57( type=" + GetU8Variable( pointer + 1 ) + ", x=" + GetVF80Variable( pointer + 2 ) + ", z=" + GetVF40Variable( pointer + 4 ) + ", y/walkmesh_id=" + GetVF20Variable( pointer + 6 ) + ", ???=" + GetVF10Variable( pointer + 8 ) + ", flag=" + GetU8Variable( pointer + 10 ) + " )" );
+                        pointer += 11;
+                    }
+                    break;
+
                     case 0x5a:
                     {
                         exp->Log( "-- 0x5A()" );
@@ -518,6 +539,13 @@ ScriptFile::GetScripts( const std::string& path )
                     case 0x87:
                     {
                         exp->Log( "-- 0x87_SetProgress( progress=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x93:
+                    {
+                        exp->Log( "-- 0x93( ???=" + GetV80Variable( pointer + 1 ) + " )" );
                         pointer += 3;
                     }
                     break;

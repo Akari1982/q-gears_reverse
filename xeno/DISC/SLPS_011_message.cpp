@@ -908,7 +908,7 @@ while( letters != 0 )
             }
             break;
 
-            case 1: // accelerate
+            case 1: // speed (number of letters to render per frame)
             {
                 V0 = w[offset_18 + 1c];
                 speed = bu[V0 + 2];

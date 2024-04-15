@@ -397,6 +397,7 @@
         +  d0 [][][][] maybe current X. Init with 0 when set position by x z
         +  d4 [][][][] maybe current Y. Init with 0 when set position by x z
         +  d8 [][][][] maybe current Z. Init with 0 when set position by x z
+        +  e0 [][]     ???
         +  e2 []       init with 0. Current step when opening or closing door.
         +  e3 []       if this is >= 9 then we discrease it by 1 every step in move function. Init with 0. Used as push timer. When this > 20 then we push entity.
         +  e4 [][]     we store character id here. Init with 0x00ff.
